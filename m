@@ -1,40 +1,52 @@
-Return-Path: <linux-arm-msm+bounces-76728-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-76732-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id C1B48BCA502
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 09 Oct 2025 19:04:01 +0200 (CEST)
+Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [142.0.200.124])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7B82BBCAA03
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 09 Oct 2025 20:58:33 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 6574F19E30F6
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Oct 2025 17:04:11 +0000 (UTC)
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 3F60A4E69A8
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Oct 2025 18:58:32 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A265223717F;
-	Thu,  9 Oct 2025 17:03:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id ED8242505AF;
+	Thu,  9 Oct 2025 18:58:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=fail reason="signature verification failed" (1024-bit key) header.d=minlexx.ru header.i=@minlexx.ru header.b="V6pGM0mx"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E34C621C9E5;
-	Thu,  9 Oct 2025 17:03:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
+Received: from sm24.hosting.reg.ru (sm24.hosting.reg.ru [31.31.198.150])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 715C0A31;
+	Thu,  9 Oct 2025 18:58:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=31.31.198.150
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760029422; cv=none; b=GZxIb6f5wiI+5mGgpEYqQZ6hHYJ1du+SVTHS4CzH7ZWE0uo5F0c4PVzc2Wv2p9et75kNuoiiT5/ib/6pFLhbptTr7f2F/0o/t93raf+D4cxOmesPOr2QlRciJOEGw0BLXK8cRm+s8DuefptTF791YYMKiCRlVo7Tqz7Gh7u87BA=
+	t=1760036308; cv=none; b=pSNjP9c+AHkDtDfSuBEN7c9biDWGqGQttHvmce7BC59DxweNiPzXZq4HZtGa9pkOoy4U61zVEjrO8wi4vPXX316VGQlttfcv3LvbIUoZOqxwcRLXfBZPDfhsPcmTcoH3kijshKvEVb+Ss9Q1W8pXHYXTVNuCxcH0Hf6CCCjq3ao=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760029422; c=relaxed/simple;
-	bh=dvZuHKC+jRuZ29hsRElrVWZQ0CVV3aVULPajs+QQGIQ=;
+	s=arc-20240116; t=1760036308; c=relaxed/simple;
+	bh=53IsFJzxWMMzkLYYiPkY/Tnkn8LYqqQNK+5NClvvDsA=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=UUaGiPPX3EQViPKPb78k5LBRz5yAAmtpHIZgizYC1pmgxWDtX46x8HwxpaOqL2uo2Pr4h4nPfZiOBzTj6Tf7fOVKPoAhkIj18E2TUf7jda09fo6Ae59ga7FV3Nr+x2Lciq3MWNKV4kbyGnP2jg2Q1wSyyOx9tCHCWXAY4N/aTjE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; arc=none smtp.client-ip=217.140.110.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 42A761762;
-	Thu,  9 Oct 2025 10:03:32 -0700 (PDT)
-Received: from [10.57.3.102] (unknown [10.57.3.102])
-	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 75D333F66E;
-	Thu,  9 Oct 2025 10:03:35 -0700 (PDT)
-Message-ID: <9d3eeb9f-b8ea-48e5-a1d9-0865f63ef991@arm.com>
-Date: Thu, 9 Oct 2025 18:03:29 +0100
+	 In-Reply-To:Content-Type; b=HqKEwe8sWLzOdDeQOFSwDX57DrE90+BOZ9lpBu+zQ9nw4DIgHNfCSCzCQVHhDn4PcoHQFyXz1OORfYZHQNWzJtT0LjSn1hcTFrMZejPVFVRnuDoTJR0+HHi15BYk6CH4LuI1+dP35EvW1qkPdoZxNftljf2dFFOvug+KUnX7puQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=minlexx.ru; spf=none smtp.mailfrom=minlexx.ru; dkim=pass (1024-bit key) header.d=minlexx.ru header.i=@minlexx.ru header.b=V6pGM0mx; arc=none smtp.client-ip=31.31.198.150
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=minlexx.ru
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=minlexx.ru
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=minlexx.ru;
+	s=dkim; h=Content-Transfer-Encoding:Content-Type:In-Reply-To:From:References:
+	Cc:To:Subject:MIME-Version:Date:Message-ID:Sender:Reply-To:Content-ID:
+	Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
+	:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
+	List-Post:List-Owner:List-Archive;
+	bh=sx163Q/gDcDwLx9ge5Ng5N0+91L1RQp4JmKODFf4mnM=; b=V6pGM0mx5cjSI85VCugECNBUyB
+	xFJ2h7e6mZnw7ETMED0qJvFAJjwWnbLNXNuPM4WXa6+2j6fg14ioNDj46godWlzTL379AMr2ee8bb
+	wG+wR9AepAIbMhJDAMjD7hYROpOBw404Ay/ngu6A2EnuRUne7rbXhWcHBQrCkog7ist0=;
+Received: 
+	by sm24.hosting.reg.ru with esmtpsa (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
+	(envelope-from <alexeymin@minlexx.ru>)
+	id 1v6uy5-000000003N5-2qya;
+	Thu, 09 Oct 2025 21:02:21 +0300
+Message-ID: <6bc54f43-63c4-4523-9dfd-d74cdaceef58@minlexx.ru>
+Date: Thu, 9 Oct 2025 21:02:19 +0300
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -42,125 +54,51 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH 0/3] Introduce iommu-map-masked for platform devices
-To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Cc: Charan Teja Kalla <charan.kalla@oss.qualcomm.com>, joro@8bytes.org,
- will@kernel.org, saravanak@google.com, conor+dt@kernel.org, robh@kernel.org,
- mchehab@kernel.org, bod@kernel.org, krzk+dt@kernel.org,
- abhinav.kumar@linux.dev, vikash.garodia@oss.qualcomm.com,
- dikshita.agarwal@oss.qualcomm.com,
- Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
- bjorn.andersson@oss.qualcomm.com, linux-media@vger.kernel.org,
- linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, iommu@lists.linux.dev
-References: <20250928171718.436440-1-charan.kalla@oss.qualcomm.com>
- <aec0f40a-8346-4194-8b18-1022fe3366bb@arm.com>
- <0d0560cc-9757-4c7b-8de4-170148d99481@oss.qualcomm.com>
- <ead7cf8b-fbc4-4242-a9da-b313dded1abc@arm.com>
- <nzqte4glwtpjs5bhkxz43yhdufelxvqvzmg5tepudxwetimir3@bvlw5csjizsh>
-From: Robin Murphy <robin.murphy@arm.com>
-Content-Language: en-GB
-In-Reply-To: <nzqte4glwtpjs5bhkxz43yhdufelxvqvzmg5tepudxwetimir3@bvlw5csjizsh>
+Subject: Re: [PATCH v2 09/13] arm64: dts: qcom: sdm845-lg-judyln: Add fb_panel
+ dimensions
+To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+ Paul Sajna <sajattack@postmarketos.org>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, David Heidelberg <david@ixit.cz>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org, phone-devel@vger.kernel.org,
+ Amir Dahan <system64fumo@protonmail.com>,
+ Christopher Brown <crispybrown@gmail.com>
+References: <20250916-judyln-dts-v2-0-5e16e60263af@postmarketos.org>
+ <20250916-judyln-dts-v2-9-5e16e60263af@postmarketos.org>
+ <de1a7ecb-924d-4ed2-8034-721b8dce69d4@oss.qualcomm.com>
+ <ac2d419d-a1b4-4b3f-a07a-4f5d047901aa@minlexx.ru>
+ <e58978d6-dc6a-468f-91d5-29d7b0755e79@oss.qualcomm.com>
+Content-Language: en-US
+From: Alexey Minnekhanov <alexeymin@minlexx.ru>
+In-Reply-To: <e58978d6-dc6a-468f-91d5-29d7b0755e79@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-On 2025-10-09 2:19 pm, Dmitry Baryshkov wrote:
-> On Thu, Oct 09, 2025 at 11:46:55AM +0100, Robin Murphy wrote:
->> On 2025-10-08 8:10 pm, Charan Teja Kalla wrote:
->>>
->>> On 9/29/2025 3:50 PM, Robin Murphy wrote:
->>>>> USECASE [1]:
->>>>> -----------
->>>>> Video IP, 32bit, have 2 hardware sub blocks(or can be called as
->>>>> functions) called as pixel and nonpixel blocks, that does decode and
->>>>> encode of the video stream. These sub blocks are __configured__ to
->>>>> generate different stream IDs.
->>>>
->>>> So please clarify why you can't:
->>>>
->>>> a) Describe the sub-blocks as individual child nodes each with their own
->>>> distinct "iommus" property
->>>>
->>>
->>> Thanks Robin for your time. Sorry for late reply as I really didn't have
->>> concrete answer for this question.
->>>
->>> First let me clarify the word "sub blocks" -- This is just the logical
->>> separation with no separate address space to really able to define them
->>> as sub devices. Think of it like a single video IP with 2 dma
->>> engines(used for pixel and non-pixel purpose).
->>>
->>> I should agree that the child-nodes in the device tree is the easy one
->>> and infact, it is how being used in downstream.
->>>
->>> For upstream -- Since there is no real address space to interact with
->>> these sub-blocks(or logical blocks), does it really qualify to define as
->>> child nodes in the device tree? I see there is some push back[1].
->>
->> Who says you need an address space? Child nodes without "reg" properties,
->> referenced by name, compatible or phandle, exist all over the place for all
->> manner of reasons. If there are distinct logical functions with their own
->> distinct hardware properties, then I would say having child nodes to
->> describe and associate those properties with their respective functions is
->> entirely natural and appropriate. The first example that comes to mind of
->> where this is a well-established practice is PMICs - to pick one at random:
->> Documentation/devicetree/bindings/regulator/qcom,rpmh-regulator.yaml
+On 07.10.2025 16:55, Konrad Dybcio wrote:
+
+> Would adding post-init-providers = <&real_panel> help?
 > 
-> Logical function, that's correct. And also note, for PMICs that practice
-> has bitten us back. For PM8008 we switched back to a non-subdevice
-> representation.
-> 
->> For bonus irony, you can't take the other approaches without inherently
->> *introducing* a notional address space in the form of your logical function
->> IDs anyway.
->>
->>>     > or:
->>>>
->>>> b) Use standard "iommu-map" which already supports mapping a masked
->>>> input ID to an arbitrary IOMMU specifier
->>>>
->>>
->>> I think clients is also required to program non-zero smr mask, where as
->>> iommu-map just maps the id to an IOMMU specifier(sid). Please LMK if I
->>> am unable to catch your thought here.
->> An IOMMU specifier is whatever the target IOMMU node's #iommu-cells says it
->> is. The fact that Linux's parsing code only works properly for #iommu-cells
->> = 1 is not really a DT binding problem (other than it stemming from a loose
->> assumption stated in the PCI binding's use of the property).
-> 
-> I really don't like the idea of extending the #iommu-cells. The ARM SMMU
-> has only one cell, which is correct even for our platforms. The fact
-> that we need to identify different IOMMU SIDs (and handle them in a
-> differnt ways) is internal to the video device (and several other
-> devices). There is nothing to be handled on the ARM SMMU side.
+> Konrad
 
-Huh? So if you prefer not to change anything, are you suggesting this 
-series doesn't need to exist at all? Now I'm thoroughly confused...
 
-If you want to use SMR masks, then you absolutely need #iommu-cells = 2, 
-because that is the SMMU binding for using SMR masks. It would 
-definitely not be OK to have some magic property trying to smuggle 
-IOMMU-driver-specific data contrary to what the IOMMU node itself says. 
-As for iommu-map, I don't see what would be objectionable about 
-improving the parsing to respect a real #iommu-cells value rather than 
-hard-coding an assumption. Yes, we'd probably need to forbid entries 
-with length > 1 targeting IOMMUs with #iommu-cells > 1, since the notion 
-of a linear relationship between the input ID and the output specifier 
-falls apart when the specifier is complex, but that seems simple enough 
-to implement and document (even if it's too fiddly to describe in the 
-schema itself), and still certainly no worse than having another 
-property that *is* just iommu-map with implicit length = 1.
+I suppose it should, as means to break devlink dependency, but I
+personally haven't tried it yet.
 
-And if you want individual StreamIDs for logical functions to be 
-attachable to distinct contexts then those functions absolutely must be 
-visible to the IOMMU layer and the SMMU driver as independent devices 
-with their own unique properties, which means either they come that way 
-from the DT as of_platform devices in the first place, or you implement 
-a full bus_type abstraction which will have to be hooked up to the IOMMU 
-layer. You cannot make IOMMU configuration "internal" to the actual 
-client driver which is only allowed to bind *after* said IOMMU 
-configuration has already been made.
+It's easier to just have "msm" and "panel-*" modules in initramfs and
+leave simpledrm node be with invalid scaling, because it doesn't live
+long enough to display anything (maybe a fraction of a second) due to
+being quickly replaced by msm drm framebuffer emulation.
 
-Thanks,
-Robin.
+Framebuffer-only display with proper scaling is only needed for devices
+without display/panel drivers, perhaps temporarily during early porting
+stage, so this all is minor issue.
+
+Still would be nice to have a proper solution for this of course.
+
+-- 
+Regards,
+Alexey Minnekhanov
 
