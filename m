@@ -1,59 +1,59 @@
-Return-Path: <linux-arm-msm+bounces-76711-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-76712-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 623BBBC9F48
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 09 Oct 2025 18:06:49 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id DB2BFBC9F57
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 09 Oct 2025 18:07:18 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id A9A2F3A5DCB
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Oct 2025 16:05:48 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id A97623BB305
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Oct 2025 16:06:15 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BDB162F9D94;
-	Thu,  9 Oct 2025 15:59:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C21852FABE1;
+	Thu,  9 Oct 2025 15:59:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Te51cwza"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Cv7t7SIK"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F5EA226D1F;
-	Thu,  9 Oct 2025 15:59:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 997F922688C;
+	Thu,  9 Oct 2025 15:59:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760025550; cv=none; b=f6XnzIbVYx3dLDsQmmQ2WmqpPElr62xtdS6T++J1HvliPhQuhu4QxyyuLm57li2K6HewjddBRGlbskOkHxdOC9NkpQfzbTfcdvunY3SFG/jqJ+OlSptrmG/6k4sR1j9N1L7LcVNTBRLdwLpIDsHlJ9k9nXIPwMmBFYmVA/LkPBE=
+	t=1760025564; cv=none; b=U07JGe4P1d/JOA8zyL690EU/0HWFITbKzbxJLXrNz0oBkTP+VCAIxR3u8ywavATdj+zU5tbK2it25SbjYag12nhYKKaph+9sRSBH81RZ1VMZtjeTgv2f1nhS4x1jTOVKt9a8uRYpuLDpDQFCWh53HvN+P9n8Yu6DD2j0K+/K6V4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760025550; c=relaxed/simple;
-	bh=nq4hSRuc108cZ+gbbKt4dz8F1xQ/Lm6bx8p+H6MO4tI=;
+	s=arc-20240116; t=1760025564; c=relaxed/simple;
+	bh=W0q9E9dwLuU2298rxDy314pKXPzdQyQMN2XcPsthuwQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=W4ZJDRgbf4QHIi59kYxDxqY/jAFJtQc/IQakkmBXLNY/MDB46A/goIlc9jDYTJanMz4WMsFPHr4PZf6S5FMkA1GF8JEFbEcXzsK+YR0h+TpBOqNzU4WZnxJGA9tOX2OpmPfYHZn7X6TZu1TDgnTUjmbEWJuQxSC8F+DRpmqduV0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Te51cwza; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7145BC4CEE7;
-	Thu,  9 Oct 2025 15:59:09 +0000 (UTC)
+	 MIME-Version:Content-Type; b=cG0DG7OFlobnQg/OFBvCDxPZY5lbwMfQqPAEbdtCIz9QeeReQkv3EZwzhJqTukfKohBbFfvYUdKSIUoGTXlYOjNRV559Eit7MrS94jIRy4smKljQreokq6iPmnVo/arboN6wQY3rZ7qcPpF7DXZDqSfecdZhEBCS9/nWKE5YWaI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Cv7t7SIK; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D726C4CEFE;
+	Thu,  9 Oct 2025 15:59:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1760025550;
-	bh=nq4hSRuc108cZ+gbbKt4dz8F1xQ/Lm6bx8p+H6MO4tI=;
+	s=k20201202; t=1760025564;
+	bh=W0q9E9dwLuU2298rxDy314pKXPzdQyQMN2XcPsthuwQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Te51cwzaWpuEMrWCMJYE4Kv1mt26a03bf3NuunZd3G83LQQn2v2m4MdeiyQm05TR/
-	 aQEXS7jWSPV9wlIDi3ErynTusCPI2Zs5aU5qjv6jRF3YFBXl3l7MWCwwI75qhM4Xor
-	 /wA1vhAtzC4h9jIAeZyRXZBD6C3APlSu8wQ6Hi5yaAQ4/59cF+fbLtbVQC/flPN3Yt
-	 QeqVCPdB30jOf1lWoQS3B1POMvWQ67TVK/fRGGVDpbY3JkGsrHO76tRxHdW5PbTbk3
-	 PTGUSvc9yCWRS2Lzv3dIki7x6ahuY3kD9173znTZafRfUzH8nslOzt2pRo6LGqX43M
-	 uBxXivNlLVMVQ==
+	b=Cv7t7SIK3rrd2jfqLzFqg7GD/K6Y+ks9E5yb3llp+7l7FbEXzkslhmFHM1kHMm8M/
+	 WSR6QKtSWw1pJ6yBjhdr/52KuiGrI4DuoFSrLfCrZ1sRMMktigDb9nAu11TbBNpvu0
+	 sDRhs9nv26JdHr06P4WTmOKvb60Lg7Ns1ZrjRid6Dpv5ob8xSyu6PWrSyLaX5eLrBD
+	 5bL6wGdlUYy/5h9mw7EWeSKJDQ7aUsxrCsaLbmBvIX/xwmQZaTNnHccL6iwWvzooZQ
+	 G4LkSrXZt0ewcvcWBU1OoTwPmwU1rKloKztl2hjXAOcKyYWLtGQPRF9Vn/1bl4ZE++
+	 hVmiLlru22m/Q==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Christopher Ruehl <chris.ruehl@gtsys.com.hk>,
+Cc: Nikita Travkin <nikita@trvn.ru>,
 	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	Sebastian Reichel <sebastian.reichel@collabora.com>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	sre@kernel.org,
-	linux-arm-msm@vger.kernel.org,
-	linux-pm@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.17-6.6] power: supply: qcom_battmgr: add OOI chemistry
-Date: Thu,  9 Oct 2025 11:55:08 -0400
-Message-ID: <20251009155752.773732-42-sashal@kernel.org>
+	bartosz.golaszewski@linaro.org,
+	konradybcio@kernel.org,
+	linux-arm-msm@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.17-6.12] firmware: qcom: tzmem: disable sc7180 platform
+Date: Thu,  9 Oct 2025 11:55:15 -0400
+Message-ID: <20251009155752.773732-49-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251009155752.773732-1-sashal@kernel.org>
 References: <20251009155752.773732-1-sashal@kernel.org>
@@ -69,64 +69,72 @@ X-stable-base: Linux 6.17.1
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Christopher Ruehl <chris.ruehl@gtsys.com.hk>
+From: Nikita Travkin <nikita@trvn.ru>
 
-[ Upstream commit fee0904441325d83e7578ca457ec65a9d3f21264 ]
+[ Upstream commit 3cc9a8cadaf66e1a53e5fee48f8bcdb0a3fd5075 ]
 
-The ASUS S15 xElite model report the Li-ion battery with an OOI, hence this
-update the detection and return the appropriate type.
+When SHM bridge is enabled, assigning RMTFS memory causes the calling
+core to hang if the system is running in EL1.
 
-Signed-off-by: Christopher Ruehl <chris.ruehl@gtsys.com.hk>
+Disable SHM bridge on sc7180 devices to avoid that hang.
+
+Signed-off-by: Nikita Travkin <nikita@trvn.ru>
 Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
+Link: https://lore.kernel.org/r/20250721-sc7180-shm-hang-v1-1-99ad9ffeb5b4@trvn.ru
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-YES – this patch is a focused bug fix that lets the Qualcomm battery
-manager report the correct technology for hardware already supported by
-stable kernels.
+YES – Disabling the SHM bridge for sc7180 is a focused bug fix that
+should be backported.
 
-- `drivers/power/supply/qcom_battmgr.c:986` broadens the existing Li-ion
-  match to accept the firmware string `OOI`, which the ASUS S15 xElite
-  uses for its Li-ion pack; without this, the driver falls through to
-  the error path.
-- Because the fallback logs `pr_err("Unknown battery technology '%s'")`
-  at `drivers/power/supply/qcom_battmgr.c:990`, affected systems
-  currently emit misleading kernel errors and expose
-  `POWER_SUPPLY_PROP_TECHNOLOGY` as `UNKNOWN`, confusing user space (see
-  the assignment at `drivers/power/supply/qcom_battmgr.c:1039`).
-- The change mirrors the earlier `LIP` support that was already accepted
-  upstream for another device, touches only a single helper, and has no
-  dependencies, so it is safe to integrate into older stable trees that
-  already ship this driver.
-- Risk is minimal: it simply recognizes an existing firmware identifier
-  and maps it to the already-supported `POWER_SUPPLY_TECHNOLOGY_LION`
-  value, with no architectural impact or behavioral change for other
-  devices.
+- `drivers/firmware/qcom/qcom_tzmem.c:79-86` keeps a blacklist of SoCs
+  where SHM bridge must not be activated. Adding `"qcom,sc7180"` there
+  makes the `for` loop in `qcom_tzmem_init()` bail out early
+  (`drivers/firmware/qcom/qcom_tzmem.c:93-109`), leaving
+  `qcom_tzmem_using_shm_bridge` false so the allocator stays in the safe
+  generic mode.
+- Without this change, sc7180 boots with SHM bridge enabled (arm64
+  defconfig selects `CONFIG_QCOM_TZMEM_MODE_SHMBRIDGE=y`, see
+  `arch/arm64/configs/defconfig:265`), so `qcom_scm_shm_bridge_enable()`
+  (`drivers/firmware/qcom/qcom_scm.c:1612-1636`) runs on every boot. On
+  EL1-only firmware this causes the subsequent `qcom_scm_assign_mem()`
+  from the RMTFS driver (`drivers/soc/qcom/rmtfs_mem.c:272-276`) to hang
+  the CPU when it shares the modem buffer—an unrecoverable failure
+  affecting common sc7180 Chromebooks and reference boards.
+- The fix is consistent with earlier stable backports that blacklisted
+  other SoCs for the same hazard (e.g. commits `55751d3e9e96d`,
+  `8342009efa2a5`, `db3de3ff2611f`), underscoring that the risk is real
+  and the mitigation is accepted practice.
+- Impact is tightly scoped: only SHM-bridge builds on sc7180 change
+  behaviour, falling back to the pre-existing generic allocator. No API,
+  ABI, or architectural changes are involved, so regression risk is
+  minimal while it prevents a hard hang.
+- The underlying bug dates back to the SHM-bridge enablement
+  (`f86c61498a573`, in v6.11-rc1), so all stable lines derived from 6.11
+  (and newer) can be affected and benefit from the blacklist entry.
 
-Natural next step: 1) Queue for the stable trees that include
-`drivers/power/supply/qcom_battmgr.c` so ASUS S15 xElite users stop
-seeing bogus error logs and get the correct battery technology reported.
+This satisfies stable-tree criteria: it fixes a severe runtime hang, the
+patch is tiny and self-contained, and it simply restores the proven-safe
+allocation mode on the affected hardware.
 
- drivers/power/supply/qcom_battmgr.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/firmware/qcom/qcom_tzmem.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/power/supply/qcom_battmgr.c b/drivers/power/supply/qcom_battmgr.c
-index 99808ea9851f6..fdb2d1b883fc5 100644
---- a/drivers/power/supply/qcom_battmgr.c
-+++ b/drivers/power/supply/qcom_battmgr.c
-@@ -982,7 +982,8 @@ static void qcom_battmgr_sc8280xp_strcpy(char *dest, const char *src)
+diff --git a/drivers/firmware/qcom/qcom_tzmem.c b/drivers/firmware/qcom/qcom_tzmem.c
+index ea0a353556570..12e448669b8bd 100644
+--- a/drivers/firmware/qcom/qcom_tzmem.c
++++ b/drivers/firmware/qcom/qcom_tzmem.c
+@@ -77,6 +77,7 @@ static bool qcom_tzmem_using_shm_bridge;
  
- static unsigned int qcom_battmgr_sc8280xp_parse_technology(const char *chemistry)
- {
--	if (!strncmp(chemistry, "LIO", BATTMGR_CHEMISTRY_LEN))
-+	if ((!strncmp(chemistry, "LIO", BATTMGR_CHEMISTRY_LEN)) ||
-+	    (!strncmp(chemistry, "OOI", BATTMGR_CHEMISTRY_LEN)))
- 		return POWER_SUPPLY_TECHNOLOGY_LION;
- 	if (!strncmp(chemistry, "LIP", BATTMGR_CHEMISTRY_LEN))
- 		return POWER_SUPPLY_TECHNOLOGY_LIPO;
+ /* List of machines that are known to not support SHM bridge correctly. */
+ static const char *const qcom_tzmem_blacklist[] = {
++	"qcom,sc7180", /* hang in rmtfs memory assignment */
+ 	"qcom,sc8180x",
+ 	"qcom,sdm670", /* failure in GPU firmware loading */
+ 	"qcom,sdm845", /* reset in rmtfs memory assignment */
 -- 
 2.51.0
 
