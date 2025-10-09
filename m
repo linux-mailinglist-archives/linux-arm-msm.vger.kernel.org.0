@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-76675-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-76676-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ams.mirrors.kernel.org (ams.mirrors.kernel.org [213.196.21.55])
-	by mail.lfdr.de (Postfix) with ESMTPS id DE42BBC96BB
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 09 Oct 2025 16:05:12 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 056ECBC96D3
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 09 Oct 2025 16:06:50 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ams.mirrors.kernel.org (Postfix) with ESMTPS id 7E57935175D
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Oct 2025 14:05:12 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id B361C3A4B6B
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Oct 2025 14:06:48 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 234172EA168;
-	Thu,  9 Oct 2025 14:05:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4DAC42E9759;
+	Thu,  9 Oct 2025 14:06:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="UMEJRivS"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="FbC0h8MK"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD6A62E9EDF;
-	Thu,  9 Oct 2025 14:05:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CE1F1E47A3;
+	Thu,  9 Oct 2025 14:06:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760018706; cv=none; b=AlIXJPLqgFYBtBxxpRhIaCjhGb/RsTqWSKeRgjvcmtdvmbbibtf9MzJRMGTd/PazJEDAGEXE24YThVhFNOsjc4+Giohm+8JdHoqJQBwqYJ4z6NtyNprlC8quNAQ05PmDGLE71SiGcCt5pL0D+3eHbC9IhLuuosyEA1E0UPmgBE4=
+	t=1760018805; cv=none; b=BsOKW2uSUj57Td+gaYT7C+VnR8TSrbk7TYdSBEX4b0R56ziL0AQMUic0um2OaDTeF0jaVlIgzAbmor6j+OUIAh7/WHSmHIRR3LOpEGgFFZRRIu/0fDJUZ+idqaEh3F0YSyNbPhMymRIX9SDUCxwopyDUGCUjj9fMXXSbbTxN/x4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760018706; c=relaxed/simple;
-	bh=WLhi32NPEL2WKm5nIoaPi0xO40awBkC3FZnjkY7m/T8=;
+	s=arc-20240116; t=1760018805; c=relaxed/simple;
+	bh=9lGa0HwxRZ9Hy5gQI123eetQttvhSlWwIzzBFIMUFkk=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=lrF6Tgvys2/dShYBObyhMovMpCSBgQBxS5CA4x0ALYDJdv5SVpzAsfxfi0z3dnYI1rlri27bCoOtNPtBIkd3LsBJY4KY2s0Qa8fz5Lj+5/fcSwIJBX21NRwGaAmO54xiZ8fcKCdm9Prbp70Kt1ucBAHEv/Weo8zytgNHeALPOF4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=UMEJRivS; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 27FE0C4CEF5;
-	Thu,  9 Oct 2025 14:04:59 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=jf1eFRuDmfeA1M2F6HcTMSgnfCYub7/apXzxPMu2BA5dR6Wl/8meKmmWi0IIYAeIi027cVS/zAhfB7lFGZEr7nl6frPL+10VwrRGSTSq1rbl2ENfoKJ2YEQTCK2H6LNUaPqxIQtxJFDWK/YZ9paMBy5U0JQObhDORRticcsL55k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=FbC0h8MK; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D29EC4CEE7;
+	Thu,  9 Oct 2025 14:06:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1760018705;
-	bh=WLhi32NPEL2WKm5nIoaPi0xO40awBkC3FZnjkY7m/T8=;
+	s=k20201202; t=1760018804;
+	bh=9lGa0HwxRZ9Hy5gQI123eetQttvhSlWwIzzBFIMUFkk=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=UMEJRivSAqXA3JoOn9ih8es12ZHbQqqBa2MsQN60A2YNmG0Z7jEgRj1SDLEbQucSG
-	 tgwMhXvM1qNWcAfHyrkQlKNW1U6qh/IqQyF9UKpJgQtjHjbWrvUG22tyWpq+U18AW4
-	 ll18stGF3pxzvG54QvBrFwQHWNkCRMi0bqn7rFP1jp5WmNEdWa1bDzZ+yaOY+bNU3s
-	 11nFR3fIQFY0WkAukU5svz0bFsZpvs6QokHhBc33Un4bhhfmeF66w8CzEL59+qcCkj
-	 pJrvX88Gib2CnQEBmXnjpghMVBK3v3A+kUFSUf5B77OJawyyO4/kouMoBTNla6p4id
-	 pBDdmCk4dqcPg==
-Message-ID: <8bc67638-6269-406d-9429-07e13e839740@kernel.org>
-Date: Thu, 9 Oct 2025 23:04:56 +0900
+	b=FbC0h8MKo7AodbU1nhaCdAj8zcH1dE+EaQjaekvgxOiY8MxWE7PR57aJ9AH+nUMM+
+	 Gb8uOzmcLxCdWoukRtpyblJPVfjGU8UNu5jlnWsdE1D6eSxyG99mVRGW/s65jgQaKm
+	 qEu9lpPuDAxv4YiSwhoPEihFBVX5OyG79jutS+Rw1kzARZQku7Y9UpQKIeBeWRv2Z/
+	 hlhlQIEpdECp5jWzAvh8l2EeF6DDsDmKGSZFZbsNoBOvS2Sonu0nxEn9bAfNMA+wmV
+	 Bt1OZceukkKqCEE4C8FPpe1r8A1QPiQ61/6RBcPRYkd6yvphf6wsILqsahrsvkNJ73
+	 w1zKduIseM5fQ==
+Message-ID: <c0b71974-65df-47ad-902b-45c2dbe66be0@kernel.org>
+Date: Thu, 9 Oct 2025 15:06:42 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,75 +50,112 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH RFC 1/3] dt-bindings: media: i2c: ak7375: Document AK7377
-To: Griffin Kroah-Hartman <griffin.kroah@fairphone.com>,
- Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
+Subject: Re: [PATCH RFC v2 2/6] ASoC: dt-bindings: qcom,sm8250: Add clocks
+ properties for I2S
+To: Neil Armstrong <neil.armstrong@linaro.org>,
+ Srinivas Kandagatla <srini@kernel.org>, Liam Girdwood <lgirdwood@gmail.com>,
+ Mark Brown <broonie@kernel.org>, Jaroslav Kysela <perex@perex.cz>,
+ Takashi Iwai <tiwai@suse.com>, Rob Herring <robh@kernel.org>,
  Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Sakari Ailus <sakari.ailus@linux.intel.com>,
- Tianshu Qiu <tian.shu.qiu@intel.com>,
- Mauro Carvalho Chehab <mchehab@kernel.org>,
- Luca Weiss <luca.weiss@fairphone.com>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, linux-media@vger.kernel.org
-References: <20251009-ak7377-driver-v1-0-29e4f6e16ed3@fairphone.com>
- <20251009-ak7377-driver-v1-1-29e4f6e16ed3@fairphone.com>
-From: Krzysztof Kozlowski <krzk@kernel.org>
+ <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>
+Cc: linux-sound@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+ linux-kernel@vger.kernel.org, devicetree@vger.kernel.org
+References: <20251008-topic-sm8x50-next-hdk-i2s-v2-0-6b7d38d4ad5e@linaro.org>
+ <20251008-topic-sm8x50-next-hdk-i2s-v2-2-6b7d38d4ad5e@linaro.org>
+ <44606de8-3446-472f-aa6b-25ff8b76e0ec@kernel.org>
+ <3620feb6-12bf-48c1-b47a-ccb486e5b5de@linaro.org>
 Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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 a/A=
-In-Reply-To: <20251009-ak7377-driver-v1-1-29e4f6e16ed3@fairphone.com>
+From: Srinivas Kandagatla <srini@kernel.org>
+In-Reply-To: <3620feb6-12bf-48c1-b47a-ccb486e5b5de@linaro.org>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 
-On 09/10/2025 21:23, Griffin Kroah-Hartman wrote:
-> Document the Asahi Kasei AK7377.
+
+
+On 10/9/25 3:03 PM, Neil Armstrong wrote:
+> On 10/9/25 15:36, Srinivas Kandagatla wrote:
+>>
+>>
+>> On 10/8/25 7:56 PM, Neil Armstrong wrote:
+>>> In order to describe the block and master clock of each I2S bus, add
+>>> the first 5 I2S busses clock entries.
+>>>
+>>> The names (primary, secondary, tertiarty, quaternary, quinary, senary)
+>>> uses the LPASS clock naming which were used for a long time on Qualcomm
+>>> LPASS firmware interfaces.
+>>>
+>>> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+>>> ---
+>>>   .../devicetree/bindings/sound/qcom,sm8250.yaml      | 21 ++++++++++
+>>> +++++++++++
+>>>   1 file changed, 21 insertions(+)
+>>>
+>>> diff --git a/Documentation/devicetree/bindings/sound/qcom,sm8250.yaml
+>>> b/Documentation/devicetree/bindings/sound/qcom,sm8250.yaml
+>>> index
+>>> 8ac91625dce5ccba5c5f31748c36296b12fac1a6..d1420d138b7ed8152aa53769c4d495e1674275e6 100644
+>>> --- a/Documentation/devicetree/bindings/sound/qcom,sm8250.yaml
+>>> +++ b/Documentation/devicetree/bindings/sound/qcom,sm8250.yaml
+>>> @@ -64,6 +64,27 @@ properties:
+>>>       $ref: /schemas/types.yaml#/definitions/string
+>>>       description: User visible long sound card name
+>>>   +  clocks:
+>>> +    minItems: 2
+>>> +    maxItems: 12
+>>> +
+>>> +  clock-names:
+>>> +    minItems: 2
+>>> +    items:
+>>> +      # mclk is the I2S Master Clock, mi2s the I2S Bit Clock
+>>> +      - const: primary-mi2s
+>>> +      - const: primary-mclk
+>>> +      - const: secondary-mi2s
+>>> +      - const: secondary-mclk
+>>> +      - const: tertiary-mi2s
+>>> +      - const: tertiary-mclk
+>>> +      - const: quaternary-mi2s
+>>> +      - const: quaternary-mclk
+>>> +      - const: quinary-mi2s
+>>> +      - const: quinary-mclk
+>>> +      - const: senary-mi2s
+>>> +      - const: senary-mclk
+>>> +
+>>
+>> I don't this is correct way to handling bitclk and mclks for I2S, these
+>> are normally handled as part of snd_soc_dai_set_sysclk() transparently
+>> without need of any device tree description.
+>>
+>> Also doing this way is an issue as this is going to break existing Elite
+>> based platforms, and the device description should not change across
+>> these both audio firmwares.
 > 
-> Signed-off-by: Griffin Kroah-Hartman <griffin.kroah@fairphone.com>
+> This is only for AudioReach platforms, on those platforms the
+> clocks are registered in DT and are not accessible by the card.
+> 
+Clocks will be acessable via snd_soc_dai_set_sysclk ->
+q6prm_set_lpass_clock once set_sysclk support is added to q6apm-lpass
+i2s dai ops.
 
-Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-Best regards,
-Krzysztof
+> Device description is obviously different for the AudioReach platforms.
+
+Why should it be different, its same device.
+We have platforms that use both Elite and Audioreach.
+
+--srini
+> 
+> Neil
+> 
+>>
+>> thanks,
+>> Srini
+>>
+>>>   patternProperties:
+>>>     ".*-dai-link$":
+>>>       description:
+>>>
+>>
+> 
+
 
