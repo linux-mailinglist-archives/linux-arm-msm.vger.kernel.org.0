@@ -1,48 +1,81 @@
-Return-Path: <linux-arm-msm+bounces-76507-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-76508-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [IPv6:2605:f480:58:1:0:1994:3:14])
-	by mail.lfdr.de (Postfix) with ESMTPS id ADD0EBC6F42
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 09 Oct 2025 01:52:44 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 75E09BC6F9A
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 09 Oct 2025 02:10:56 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 90A4A4E9CDB
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Oct 2025 23:52:43 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 5C42919E228B
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Oct 2025 00:11:19 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B561D2C326E;
-	Wed,  8 Oct 2025 23:52:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E12F7F50F;
+	Thu,  9 Oct 2025 00:10:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="sH3L1Cyk"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="oyS3McjQ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f42.google.com (mail-ed1-f42.google.com [209.85.208.42])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B52A4A06;
-	Wed,  8 Oct 2025 23:52:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE4DFDF6C
+	for <linux-arm-msm@vger.kernel.org>; Thu,  9 Oct 2025 00:10:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759967560; cv=none; b=gjEl3gcWvSwFNfMR219M9wmlS0RznalpqpKSY13SlmpLIP9MwZC7j+fh3go97h9hI5nnEr+NsxdzUsBDfnsDOZuB7Id7GRXx2uMSzhvHufKXIztbxLNFAthabJhJpAMxf0To5edJVP7g7TB8BTfI3WsaoUY3h3J3Ik2Va9xBLdg=
+	t=1759968652; cv=none; b=eW0eqiQ83xENjng+coKVgquLuUp6XOZtbO8eybW+3EnCNkKoPN+0p/+ZKUyOWMQ2n5bM/+P/Q/HCcVF582tjn3ZnZYNfPxwuP5qyc1GAaqFFMpeWR4Et3gAvJa89WCTI6hW3MEOQSJ/4jgsAhP+4AKB0OVL8iTKQwBdpqFxkLEk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759967560; c=relaxed/simple;
-	bh=OJ+hwh1sqGOf99NdhUVXQqjYuq37xpta7BF0DZ7PRno=;
+	s=arc-20240116; t=1759968652; c=relaxed/simple;
+	bh=+NpJNfi5TLX6c2dQPOrHEKvQBRW5JoX0643mzmit8a0=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=FvFhNSoHJcdoz7DwGOriVqUqN+5E+lST4yvCCPZmWS+CVII9hotUb+/q3/jq8yV2Thn7ent+58WlbqCL1Mu8tbUmRnSa2eE2R47jtQ7zYjpAoGnOySYnR4bC/0b6LqTXrDNnX045ykOJ6mG+aRJmUwbmf9C/ZgEFnPbhLeMKJFE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=sH3L1Cyk; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F417C4CEE7;
-	Wed,  8 Oct 2025 23:52:27 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1759967560;
-	bh=OJ+hwh1sqGOf99NdhUVXQqjYuq37xpta7BF0DZ7PRno=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=sH3L1CykXXKsnu5TF6elR7SZ5qdLe3dpScWlT9makIzIxtzFuzgU2LeLGmFJEy7kd
-	 wnlWXmXAHmExTP8RQB2VR3tGwt7R2iYRxWzvPO65dxQACPqsBaOUKapw9BKfsNcwP7
-	 N5XXGC5GL7ERUJNkorVuMbmF2NCijIi7tYnDSo7TyrF2mF8hwkxo+AwGHi9J4CpxTv
-	 KXGRiMTgG52641Arfo9fyu/ZQCliGUHC4uZ30PEtzhkcZzaR8gy7Q9GvWTUelLakd0
-	 wjZ7b7U07kVMQDnBvi1b2hEQcZ2t9IV/AA4tx9Yo+x6aP8OIiAn4gCkBDzS19WYoxX
-	 x0ycTdvZ6PhhA==
-Message-ID: <08eb477f-ea34-4a31-b181-bfc629aef4c8@kernel.org>
-Date: Thu, 9 Oct 2025 08:52:25 +0900
+	 In-Reply-To:Content-Type; b=cUlud4afM3DdaLiUPk0uVGyRzHUSOag1LvcXp78mgh4+slbAfKVtdmceBGDxzgTSF5BY3BanLVLSQ193POy2Sk9EJPtPb3bGnS3EJMWCp/dnIHOlrGWK0egtBArbyXgHmIGalBmFu7zZvfrla4Q7GPS4yZfgO82rObrTEu6IFZ4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=oyS3McjQ; arc=none smtp.client-ip=209.85.208.42
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-ed1-f42.google.com with SMTP id 4fb4d7f45d1cf-637e74e9104so494270a12.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 08 Oct 2025 17:10:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1759968649; x=1760573449; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=nqeVt9CA6ZZE5iXwL1K4ytAUwC5/DAyBd/WUJk984Wc=;
+        b=oyS3McjQu0OGkm38rp9J+GgPCaRyWcqk/4fjpF5idtkcHi6aTPgp7/8sF+BxmbmZl5
+         1jDZLg8dChkqB3LhUMc5m72Cl59cCj92Uq5ibC0fjdhsrc24KcLBeWkEEKMeYENLA3dM
+         4pJJCwldYTGvng8+nPvsSj4C5cN1qn/xfUQeKGWGpttp7nPoNi6XOzgh1v/fB2oDX5GA
+         eb9J4Go83yirZUa/xtBjqQk56wTtpl6ti+723IeuwhsOuWvYsXNP77CDF3RvHxefUpSz
+         PMe0GYFlK4oCago5ApP7nUfd67Lgq5hQ4llhdnL4mU3nA7OPTYT5Y77vFeZbQqdEeIAr
+         sBiw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1759968649; x=1760573449;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=nqeVt9CA6ZZE5iXwL1K4ytAUwC5/DAyBd/WUJk984Wc=;
+        b=PAwtDwTOFUnjVKNw79gY1EsZfB1xBMV9a2xZohGoNICu4wbXLfiSKXW2h4cmdy/6v5
+         yKXzV9OOTiFwqx9GUlv0hOeCI7c9ueb2bGFKUW+GhmL756gVuPmtpvL5Jts1zPH94OAi
+         ElUSUx4bP0+Goq4ObZz2Ajf72dkaagmvnHBIbfLut1ehanFbq2NTcerH3z72kfpmAwdH
+         M5QKE8FyvkohadQor/0C8HKyW4j4OJlSGVy+jsRsekHdCLKlo0YbRDUiM57MdEabtcve
+         LcekhETYjW+JDFDMU3Q7BRLtOzy+sPXlafzof0QJ/Shua6XiahXn4C4B+5O4nDuyOpNv
+         mpsg==
+X-Forwarded-Encrypted: i=1; AJvYcCXAfe4ruZ+Mo405V7/Ea7jE/j1dAyyjGXLf24EfIUXW9FkJTUDIFOe/rksW7Woiiya40z08MW6gSAJNf1e4@vger.kernel.org
+X-Gm-Message-State: AOJu0YxUYU+c+np6ObdRrNPYzUtOeYegwS7TtNqgcVnixexDGeDOTROB
+	fS6Zs7jt6Ffq7gk5rcKBxk9O5EGNqP98Vvu9LKj2uvads6TrNzZMifVyf872ARE8tkg=
+X-Gm-Gg: ASbGncu7cx+GvF3FvffGQiHmp0r5dIBaOtiA2lBhueMc784bmST73hr5mySoYgAFCKT
+	zriWZlQINqG1T/EnKZn5CaPwCvZUImRT/6HCCzm+OHrOW2Iakjrw/iw1g2oFE+xdsfUe3LZUOdO
+	4AMXyFHO08lUnU4A9Tuq/C7aovU3ogCzPjRtso6CcK9r7SfIX/I5HJnZzWm6XsUpv25b4v/D2RV
+	4TS4+NE1PCHB35u3hOS/asFtM3WQlCUSUvruo+o8LzY1P27GejDT4NKn6EcnJ8oVMYwibGKih7n
+	rkR0YwEgpfa2ET3i07L/uPQws2zQ9rOWvT5ImGTGXZiBV8pk/md10zv+yGR0jZfdHdnhL3UjO2l
+	TQNtt63yclmgqNZziD6x4RrttnjFIDX3kn6tIXTJ+KgTwAoZE/0WEhYFgw4UqQySL35d2abEqG6
+	iaXMmATId9IqrD7a5Q
+X-Google-Smtp-Source: AGHT+IEcPQu/d3ZxrGPE3fTVd6s5KBDE/uPgAxO+8YlkcXC3pZrWzpe9zN32/G2VY+n+7l9susSC/w==
+X-Received: by 2002:a05:6402:90c:b0:634:cb54:810e with SMTP id 4fb4d7f45d1cf-639d5c57aa7mr4407819a12.31.1759968649066;
+        Wed, 08 Oct 2025 17:10:49 -0700 (PDT)
+Received: from [192.168.0.19] (188-141-3-146.dynamic.upc.ie. [188.141.3.146])
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-639f30d9963sm1119645a12.15.2025.10.08.17.10.47
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 08 Oct 2025 17:10:48 -0700 (PDT)
+Message-ID: <9bae595a-597e-46e6-8eb2-44424fe21db6@linaro.org>
+Date: Thu, 9 Oct 2025 01:10:46 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,204 +83,126 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH V7 3/5] dt-bindings: iio: adc: Add support for QCOM PMIC5
- Gen3 ADC
-To: Jishnu Prakash <jishnu.prakash@oss.qualcomm.com>,
- Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc: Jonathan Cameron <jic23@kernel.org>, robh@kernel.org, krzk+dt@kernel.org,
- conor+dt@kernel.org, agross@kernel.org, andersson@kernel.org,
- lumag@kernel.org, dmitry.baryshkov@oss.qualcomm.com, konradybcio@kernel.org,
- daniel.lezcano@linaro.org, sboyd@kernel.org, amitk@kernel.org,
- thara.gopinath@gmail.com, lee@kernel.org, rafael@kernel.org,
- subbaraman.narayanamurthy@oss.qualcomm.com, david.collins@oss.qualcomm.com,
- anjelique.melendez@oss.qualcomm.com, kamal.wadhwa@oss.qualcomm.com,
- rui.zhang@intel.com, lukasz.luba@arm.com, devicetree@vger.kernel.org,
- linux-arm-msm@vger.kernel.org, linux-iio@vger.kernel.org,
- linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org,
- cros-qcom-dts-watchers@chromium.org, quic_kotarake@quicinc.com,
- neil.armstrong@linaro.org, stephan.gerhold@linaro.org,
- Jonathan Cameron <Jonathan.Cameron@huawei.com>
-References: <20250826083657.4005727-1-jishnu.prakash@oss.qualcomm.com>
- <20250826083657.4005727-4-jishnu.prakash@oss.qualcomm.com>
- <20250829-classic-dynamic-clam-addbd8@kuoka>
- <5d662148-408f-49e1-a769-2a5d61371cae@oss.qualcomm.com>
- <4e974e77-adfc-49e5-90c8-cf8996ded513@kernel.org>
- <a0e885be-e87d-411a-884e-3e38a0d761e5@oss.qualcomm.com>
- <8c90cc3f-115e-4362-9293-05d9bee24214@linaro.org>
- <5d4edecf-51f3-4d4a-861f-fce419e3a314@oss.qualcomm.com>
- <20250927144757.4d36d5c8@jic23-huawei>
- <a3158843-dfac-4adc-838a-35bb4b0cbea4@oss.qualcomm.com>
- <CAGE=qrrCvq28pr9Y7it-CGMW=szKUnU+XBj1TmpoUwuASM05ig@mail.gmail.com>
- <31bd08ce-823a-4a71-baca-a9d1e02fcb6a@oss.qualcomm.com>
-From: Krzysztof Kozlowski <krzk@kernel.org>
+Subject: Re: [PATCH v3 0/5] Introduce "non-pixel" sub node within iris video
+ node
+To: Charan Teja Kalla <charan.kalla@oss.qualcomm.com>,
+ Bryan O'Donoghue <bod@kernel.org>, Bryan O'Donoghue <bod.linux@nxsw.ie>,
+ Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Cc: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+ Krzysztof Kozlowski <krzk@kernel.org>,
+ Vikash Garodia <quic_vgarodia@quicinc.com>,
+ Dikshita Agarwal <quic_dikshita@quicinc.com>,
+ Abhinav Kumar <abhinav.kumar@linux.dev>,
+ Mauro Carvalho Chehab <mchehab@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, linux-media@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org
+References: <7b6db4fa-2f73-376d-4eb3-64c1c7e6cda3@quicinc.com>
+ <4f38058d-a2f1-4ac5-b234-228cfb2e85ff@kernel.org>
+ <1ad2ca1e-1d57-4ad8-a057-ab0d804f1d49@oss.qualcomm.com>
+ <7da769b4-88e9-401f-bb21-0ff123818b9c@kernel.org>
+ <6840d462-8269-4359-a6e5-d154842b62db@oss.qualcomm.com>
+ <af0da28c-3ca0-41dc-aaa4-572723ea74bf@linaro.org>
+ <klhvgzizub33f46buqsog54wqksqp24a5tijwyv355l2ao2imo@wdkojfebc6s2>
+ <e1a6e75a-2a5d-44a2-8bbc-140eb86d1806@linaro.org>
+ <2hh3zkdwgqbdurpr4tibr3gjat6arwl3dd3gxakdaagafwjdrm@aj5em4tbsjen>
+ <Ujyoj3HGLVFhS2b0XzcYAMjSiCAuO-lSJ8PMEQLOaaX83tk_0D5zjrL0VDyZAmD3i4zLB3ElKSZBltISb5jJHA==@protonmail.internalid>
+ <4a32bbec-2baf-4210-a7c1-1ddcd45d30c8@oss.qualcomm.com>
+ <SuwJuCIcLVJwN3YeN1il6tB9wO9OH6bYcnbRpxpuI9Dl7piYLN-hVdnyv0Mal6N-W5pi2aCZI8MxHZDEkoE63A==@protonmail.internalid>
+ <4d87d1ca-55b2-426e-aa73-e3fd8c6fe7bd@kernel.org>
+ <10a8ccda-4e27-4b06-9a0e-608d6ade5354@nxsw.ie>
+ <4cb4a92d-2f20-47c7-881e-aadcc6f83aa0@kernel.org>
+ <1516f21e-aee3-42cf-b75e-61142dc9578d@oss.qualcomm.com>
+From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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 a/A=
-In-Reply-To: <31bd08ce-823a-4a71-baca-a9d1e02fcb6a@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+In-Reply-To: <1516f21e-aee3-42cf-b75e-61142dc9578d@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-On 08/10/2025 23:20, Jishnu Prakash wrote:
-> Hi Krzysztof,
+On 08/10/2025 19:03, Charan Teja Kalla wrote:
+>>>> Couldn't we list the entire set of iommus - then detach - subsequently
+>>>> re-attaching in our platform code with FUNCTION_IDs we keep listed in
+>>>> our drivers ?
+>>>>
+> TMK, there is no api exist to detach a device once it is attached to
+> smmu. We used to have one but removed[1], not sure how well it will be
+> received to introduce it again.
 > 
-> On 10/4/2025 12:22 PM, Krzysztof Kozlowski wrote:
->> On Sat, 4 Oct 2025 at 11:42, Jishnu Prakash
->> <jishnu.prakash@oss.qualcomm.com> wrote:
+> There is other problem exist attaching the entire set of iommus in the
+> first place: Usually writes to SMR registers are protected through
+> emulation by hyp. Thus adding the sids of protected/non-protected
+> usecases in the same iommu set will not allowed by the
+> hypervisors(eg:gunyah), as all will end up in using the same context
+> bank, thus there can be failure to attach to smmu in the first place.
+> 
+> 
+> [1]
+> https://lore.kernel.org/all/20230110025408.667767-1- 
+> baolu.lu@linux.intel.com/
+> 
+>>>> That way the DT is complete and correct, we have a compliant upstream DT
+>>>> but we also find a way to make the FUNCTION_ID specific setup we need.
+>>> i.e. you can keep the FUNCTION_ID "metadata" in the driver and
+>>> associate specific iommu indexes with the FUNCTION_ID you want in there.
 >>>
->>> Hi Jonathan,
+>>> That way you could have multiple FUNCTION_ID smmu entries in the DT
+>>> and just associate the DT indexes locally in drivers/platform/qcom/
+>>> iris_metadata_goes_here.c
 >>>
->>> On 9/27/2025 7:17 PM, Jonathan Cameron wrote:
->>>> On Fri, 19 Sep 2025 20:17:43 +0530
->>>> Jishnu Prakash <jishnu.prakash@oss.qualcomm.com> wrote:
->>>>
->>>>> Hi Krzysztof,
->>>>>
->>>>> On 9/18/2025 5:45 AM, Krzysztof Kozlowski wrote:
->>>>>> On 18/09/2025 04:47, Jishnu Prakash wrote:
->>>>>>> Hi Krzysztof,
->>>>>>>
->>>>>>> On 9/17/2025 5:59 AM, Krzysztof Kozlowski wrote:
->>>>>>>> On 16/09/2025 16:28, Jishnu Prakash wrote:
->>>>>>>>>> You cannot have empty spaces in ID constants. These are abstract
->>>>>>>>>> numbers.
->>>>>>>>>>
->>>>>>>>>> Otherwise please point me to driver using this constant.
->>>>>>>>>
->>>>>>>>> These constants are for ADC channel numbers, which are fixed in HW.
->>>>>>>>>
->>>>>>>>> They are used in this driver: drivers/iio/adc/qcom-spmi-adc5-gen3.c,
->>>>>>>>> which is added in patch 4 of this series.
->>>>>>>>>
->>>>>>>>> They can be found in the array named adc5_gen3_chans_pmic[].
->>>>>>>>
->>>>>>>> Really? So point me to the line there using ADC5_GEN3_VREF_BAT_THERM.
->>>>>>>>
->>>>>>>
->>>>>>> We may not be using all of these channels right now - we can add them
->>>>>>> later based on requirements coming up. For now, I'll remove the channels
->>>>>>> not used in adc5_gen3_chans_pmic[].
->>>>>>
->>>>>> You are not implementing the feedback then. Please read it carefully.
->>>>>>
->>>>>
->>>>> Sorry, I misunderstood - so you actually meant I should remove the
->>>>> empty spaces in the definitions, like this?
->>>>>
->>>>> -#define ADC5_GEN3_VREF_BAT_THERM               0x15
->>>>> +#define ADC5_GEN3_VREF_BAT_THERM 0x15
->>>>>
->>>>> I thought this at first, but I somehow doubted this later, as I saw some
->>>>> other recently added files with empty spaces in #define lines, like:
->>>>>
->>>>> include/dt-bindings/iio/adc/mediatek,mt6373-auxadc.h
->>>>> include/dt-bindings/regulator/st,stm32mp15-regulator.h
->>>>>
->>>>> I can make this change, if you prefer this. Please let me know
->>>>> if I'm still missing something.
->>>>>
->>>>> Also please let me know if you want me to remove the unused
->>>>> channels - I would prefer to keep them if there's no issue,
->>>>> as we might need them later.
->>>>>
->>>> He is referring to 0x14 and below not being defined values.  So what
->>>> do they mean if they turn up in the DT?
->>>>
->>>
->>> Thanks for your clarification. To address your first point above, the macros
->>> added here only represent the ADC channel numbers which are supported for
->>> ADC5 Gen3 devices. If there are numbers missing in between (like 0x14),
->>> that is because there exist no valid ADC channels in HW matching those
->>> channel numbers.
->>>
->>> For your question above, if any of the undefined channels are used in the DT,
->>> they should ideally be treated as invalid when parsed in the driver probe and
->>> lead to an error. When I checked the code again, I saw we do not have such an
->>> explicit check right now, so I will add that in the next patch series.
->>>
->>> And to be clear on which channel numbers are supported, I think it may be
->>> best if, for now, we only add support for the channel numbers referenced in
->>> the array adc5_gen3_chans_pmic[] in drivers/iio/adc/qcom-spmi-adc5-gen3.c.
->>>
->>> There are only 18 channel numbers used in this array and I would remove
->>> all channels except for these from the binding files. During parsing, we
->>> would use this array to confirm if an ADC channel added in DT is supported.
->>>
->>> In case we need to add support for any more channels later, we could add
->>> their macros in the binding file and update the array correspondingly at
->>> that time.
->>>
->>> Does all this sound fine? Please let me know if you have any more concerns
->>> or queries.
+>>> ---
+>>> bod
+>> Actually why can't we specify FUNCTION_ID in the iommus = <entries>
 >>
->> No, it doesn't.  You keep ignoring my arguments and responding to
->> something else. I prefer not to store hardware values as bindings,
->> because these are not bindings (and you failed to prove which SW
->> interface they bind) and it's really not necessary.
-> 
-> In my previous replies in this thread, I missed mentioning that the macros
-> defined in include/dt-bindings/iio/adc/qcom,spmi-vadc.h are also used in
-> other places than the driver file - they are also used in the PMIC-specific
-> binding files added in this patch, for channel definitions. Considering
-> one channel for example:
->  
-> We have this in include/dt-bindings/iio/adc/qcom,spmi-vadc.h:
-> +#define ADC5_GEN3_DIE_TEMP			0x03
->  
-> The above is used in include/dt-bindings/iio/adc/qcom,pm8550vx-adc5-gen3.h:
-> +#define PM8550VS_ADC5_GEN3_DIE_TEMP(sid)			((sid) << 8 | ADC5_GEN3_DIE_TEMP)
->  
-> And the above definition may be used in device tree, like in the example added
-> in Documentation/devicetree/bindings/iio/adc/qcom,spmi-adc5-gen3.yaml:
->  
-> +        channel@203 {
-> +          reg = <PM8550VS_ADC5_GEN3_DIE_TEMP(2)>;
-> +          label = "pm8550vs_c_die_temp";
-> +          qcom,pre-scaling = <1 1>;
-> +        };
+>> Surely we could do
+>>
+>>      #iommu-cells = <4>;
+>>      iommus = <&apps_smmu 0x420 0x2 FUNCTION_ID>;
+>>
+>> and encode the real data we need directly in the iommus list...
+>>
+> Since it is the smmu device property , this suggestion expects all the
+> devices, not just video, to define additional argument. Does this look
+> valid?
 
-This is not a driver. I do not understand your argumentation at all.
+If it is legitimate meta-data for the SMMU setup then why _shouldn't_ it 
+go into the DT ?
 
-Best regards,
-Krzysztof
+We've basically identified that the smmu entries - for qcom platforms 
+should encode the FUNCTION_ID. Rather than shy away from fixing the DT 
+we should work back from the principle "DT should represent the 
+hardware" and then if necessary update the upstream descriptions to capture.
+
+Surely then we can teach the mapping routines to consume the 
+FUNCTION_ID. Rob suggested an implied FUNCTION_ID based on index.
+
+I think we need to have something like:
+
+#1
+iommus = <&apps_smmu 0x420 0x2 FUNCTION_ID0>,
+          <&apps_smmu 0x424 0x2 FUNCTION_ID0>,
+          <&apps_smmu 0x428 0x2 FUNCTION_ID1>;
+
+or with implied indexes..
+
+#2
+/* implied FUNCTION_ID0 */
+iommus = <&apps_smmu 0x420 0x2>,
+          <&apps_smmu 0x424 0x2>;
+
+/* implied FUNCTION_ID1 */
+iommus =  <&apps_smmu 0x428 0x2>;
+
+Either way the DT should not contain fake devices or fake sub-nodes and 
+IMO should contain either explicitly with another field or implicitly 
+with an index the FUNCTION_IDs in the DT itself - the FUNCTION_ID.
+
+For devices that don't currently require the FUNCTION_ID parameter the 
+FUNCTION_ID is the APPS so you could infer that by the absence of 
+FUNCTION_ID for older platforms and require FUNCTION_ID for new 
+platforms #1 or again infer it via an implied index if you have multiple 
+iommus = <> per #2.
+
+---
+bod
 
