@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-76610-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-76611-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [142.0.200.124])
-	by mail.lfdr.de (Postfix) with ESMTPS id 99F55BC887C
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 09 Oct 2025 12:37:05 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2A619BC888A
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 09 Oct 2025 12:40:08 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 885FE4EB0D4
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Oct 2025 10:37:04 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 4284818933AE
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Oct 2025 10:40:31 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 319A22D8390;
-	Thu,  9 Oct 2025 10:37:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5269B2D73A5;
+	Thu,  9 Oct 2025 10:40:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="U9ITglQg"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="WlkXQMbb"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04C8D2C15A0;
-	Thu,  9 Oct 2025 10:37:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1EBFD248166;
+	Thu,  9 Oct 2025 10:40:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760006221; cv=none; b=JCoAryNdgb/GjYfhywTUULN9xZCBSDMf0wFx3xIiCdsbkVnATeJBAtC3OkJ9MD62mlUIvdkc5kstU7t2405mvSqDEk5Pa8tBuRaH8sKRj1bMntHcNkpA7LlLaz3rOtezqrpicXvKocJJqhlPPB/QSnXmYzWzzt48V7/znhRwijg=
+	t=1760006404; cv=none; b=lPS0EkIrgfierGBq+bC/wmS6Shtwlf8SpXPEOIjIvPFpd3Omia1HeiJ9wEEDO0R6fVkipfARzGBGAt4gJgJ1Z0UyRkzGn+zgC1HS9nYBI6L2qrT36SBpTHMIENYiVyZ0qNSRo8P7SIch/fUQkmeT8BUVCdhVw/xNh3IOEop94V0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760006221; c=relaxed/simple;
-	bh=3WyAaoY3uboWOMvlGqpNAI/qNAG+WwtC49AhCd/akkI=;
+	s=arc-20240116; t=1760006404; c=relaxed/simple;
+	bh=M3JTX4HviPwB3YtqlqmKExB4KOQANPCsK9ksVtIDN/g=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=NjGenPl8fRgXn2PCz+wnAy0ZixIrHQulx3jl2NIgScGwNhdqXHTjARxHktrqHUR7XMS9WitqMSq/6z2uooImRvWG+1Ewn7/bHNyicCzx8UbSFa4jlXc6ikgHFdYBTqDsGjiKHWGE5unSsyTuH86n/+JWVXqVmvvXDOaBAGcjNPE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=U9ITglQg; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B674C4CEF5;
-	Thu,  9 Oct 2025 10:36:56 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=nK0wfXRmipAf+rC1QQ/77Zuwvxq/TjjQU3riS9ClaHHsP7pRfre2gHtQJCUUwb8ClyYKANz932r63X/p7aQHcBL5ZGt+Rky7v9xed8mXI9iKKzBlBZTX1VtX8PPOM58FjKq++h9UgfmdJKhOH4aRMeFLY2b6nDd4MVlPbh9N/IU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=WlkXQMbb; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D939CC4CEE7;
+	Thu,  9 Oct 2025 10:39:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1760006220;
-	bh=3WyAaoY3uboWOMvlGqpNAI/qNAG+WwtC49AhCd/akkI=;
+	s=k20201202; t=1760006403;
+	bh=M3JTX4HviPwB3YtqlqmKExB4KOQANPCsK9ksVtIDN/g=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=U9ITglQgVswMP9NzW2XNl045eyd1DW/DdVfjJwxYG9U3Zlj76DPz0Inu1yAmkohTT
-	 v5YcgzspOxm4RI0J8P6eexkRlnjLmuirANd4HhqNc9gfM8mvEqyFgWhvstMxIAwc6c
-	 SSVmmU/GkyQfWv+MWs79fe41YZIUVNe5rXA6s0nzCYKJab43m8pq8idm1aaeEPOyJv
-	 3tgG2I4hsPqoK6TiY2ETo3ymm59ml9CMukAPKYhK7sfbwXmgN484ON7CC82ucJCYZ7
-	 npsRkrmq7VfCOMVtCsdynLL7ESjr2+2BQZ0nRZJMa1YuYVzL5bfJvXCEDEq9NQ48cL
-	 lM7E+itSJfPKg==
-Message-ID: <764c93c2-535f-450e-b395-4a0090cc3ab8@kernel.org>
-Date: Thu, 9 Oct 2025 19:36:54 +0900
+	b=WlkXQMbbJr607oxPeNhjNJZ6BcITVOMtc5xMBwdX8RWXJ5pQQdTw71f0Br9kI9u7A
+	 6jW94CGa10OX7nqPD5GkAjz6WPuWdBRTKgPlmzSboq0GJBZWPg3mkjFmQE2F/z/9uH
+	 uaNHnogoriKughHTet38/577W+mXOwIogT09jIi+ee5EIKTHYkuysuk0ZtYsM5OwEa
+	 jLoZj58ViRtLLTt7p8FNhW0swyfZJQFchgui/z3iQ3RkQMNDi17hZDcTIsDSmc7FJM
+	 cnaamwrckGm4C0KQMjJUuMiW72EdPCVFeM8o2ZuP6GwLsZyNED5vy3ed3HfPB6Wf6l
+	 +hebDTCaQLMRw==
+Message-ID: <2acd8a45-cb92-42ad-83e6-1fb990d254d6@kernel.org>
+Date: Thu, 9 Oct 2025 19:39:54 +0900
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,16 +50,17 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] dt-bindings: remoteproc: qcom,pas: Document SoCCP PAS for
- Glymur
-To: Bjorn Andersson <andersson@kernel.org>,
- Sibi Sankar <sibi.sankar@oss.qualcomm.com>
-Cc: robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org,
- jingyi.wang@oss.qualcomm.com, mathieu.poirier@linaro.org,
- linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
- devicetree@vger.kernel.org
-References: <20250925002034.856692-1-sibi.sankar@oss.qualcomm.com>
- <ydfiugeifs5c6v7dzms5tlkkmhf26q42pav2ugfuxjytugr5nc@ppxoiize27ug>
+Subject: Re: [PATCH 1/2] dt-bindings: pinctrl: describe Kaanapali TLMM
+To: Jingyi Wang <jingyi.wang@oss.qualcomm.com>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Linus Walleij <linus.walleij@linaro.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+ aiqun.yu@oss.qualcomm.com, tingwei.zhang@oss.qualcomm.com,
+ trilok.soni@oss.qualcomm.com, yijie.yang@oss.qualcomm.com
+References: <20250924-knp-tlmm-v1-0-acabb59ae48c@oss.qualcomm.com>
+ <20250924-knp-tlmm-v1-1-acabb59ae48c@oss.qualcomm.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -105,36 +106,20 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  jWt87ecuHlpL3uuQ0ZZNWqHgZoQLXoqC2ZV5KrtKWb/jyiFX/sxSrodALf0zf+tfHv0FZWT2
  zHjUqd0t4njD/UOsuIMOQn4Ig0SdivYPfZukb5cdasKJukG1NOpbW7yRNivaCnfZz6dTawXw
  XRIV/KDsHQiyVxKvN73bThKhONkcX2LWuD928tAR6XMM2G5ovxLe09vuOzzfTWQDsm++9UKF a/A=
-In-Reply-To: <ydfiugeifs5c6v7dzms5tlkkmhf26q42pav2ugfuxjytugr5nc@ppxoiize27ug>
+In-Reply-To: <20250924-knp-tlmm-v1-1-acabb59ae48c@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 26/09/2025 02:22, Bjorn Andersson wrote:
-> On Thu, Sep 25, 2025 at 05:50:34AM +0530, Sibi Sankar wrote:
->> Document compatible for Qualcomm Glymur SoC SoCCP (SoC Control Processor)
->> PAS which is fully compatible with Kaanapali.
->>
->> Signed-off-by: Sibi Sankar <sibi.sankar@oss.qualcomm.com>
->> ---
->>
->> Dependencies:
->> [1] Add initial remoteproc support for Kaanapali SoC
->> https://lore.kernel.org/linux-arm-msm/20250924-knp-remoteproc-v1-0-611bf7be8329@oss.qualcomm.com/T/#t
+On 25/09/2025 08:16, Jingyi Wang wrote:
+> The Top Level Mode Multiplexer (TLMM) in the Kaanapali SoC provide GPIO and
+> pinctrl functionality for UFS, SDC and 217 GPIO pins.
 > 
-> Please don't send out patches that depend on other patches sent out the
-> same day. This just assumes that the maintainer will keep track of
-> dependencies and figure out when a future version of that dependency
-> meets the needs of this version.
+> Add a DeviceTree binding to describe the Kaanapali TLMM block.
 > 
-> Work with Jingyi to handle dependencies on your side.
-@Bjorn, it is getting better.
+> Signed-off-by: Jingyi Wang <jingyi.wang@oss.qualcomm.com>
+> ---
 
-This part of Glymur depends on Kaanapali patches. But there are
-Kaanapali patches depending on Glymur!
-
-There is absolutely zero coordination between these two and total mess
-of multiplying patches instead of sending ONE thing. Submitting Glymur
-and Kaanapali was really screwed.
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
 Best regards,
 Krzysztof
