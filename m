@@ -1,47 +1,47 @@
-Return-Path: <linux-arm-msm+bounces-76748-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-76749-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id C9E06BCB024
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Oct 2025 00:03:53 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 46EADBCB030
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Oct 2025 00:04:03 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 7C2FE48032B
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Oct 2025 22:03:52 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 589DE1A62113
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Oct 2025 22:04:26 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0E374284693;
-	Thu,  9 Oct 2025 22:03:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 986242853F7;
+	Thu,  9 Oct 2025 22:03:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="geM3ZBad"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Nd3js3x9"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0B3E283FFD;
-	Thu,  9 Oct 2025 22:03:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 622A028506A;
+	Thu,  9 Oct 2025 22:03:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760047423; cv=none; b=dtuPtHrcgm04lZFsI+12aK7tHKIhuzgLrIUFQHdeloWFHH6j7hTur0wrNyA/TKrcw8LXbIUo7XTcV8YxoyK9z0yE7zKjoIuUH0QYSVK0atWowML3rR+aWnPd/HIFnp/YfMpRhvluEGyC5a0+x/oNYwa/myTOOpYI5IlbNJhmneo=
+	t=1760047425; cv=none; b=QoXgZ7+7wJYD/CDGjEFAVQsc0mJcOlfpYoICAY8QIWUfqyMwZ4vobihfV7i8POa/X+ZUvizv3KeU+vRDRFn8wMTmR+mxz4c36o4WDxF9QfyOhhEtj6XQn6iUhqgS7OXhRhkvsDL+KD7CnaJjHG/hvPx0BTR+bR+rcZVi1OHzuSE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760047423; c=relaxed/simple;
-	bh=Naant3+DVN5aKIknLH/h0l05Wkcr6CNf2egBKXHt1Fg=;
+	s=arc-20240116; t=1760047425; c=relaxed/simple;
+	bh=VdbrDBnRuw407eUM1cGjE4TdP1tU6b5L/a2r2dVm2yo=;
 	h=Date:Content-Type:MIME-Version:From:Cc:To:In-Reply-To:References:
-	 Message-Id:Subject; b=RudETkvBQPaLSXb63wH/LJZDZGOK17qedXx70bBYi4HgvZMLg2NcoUx/4gJHjtP+VnOuW3KRRa7N/rjFLk9iOCECeLaaw3DrgZU8BveuxKQBejbwnf1IbDLFMqyRj54rW1iucUHk0OWSR2sI2+TWhf0wGuNDuhCnCRKkTT2TOCA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=geM3ZBad; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40A45C4CEF5;
-	Thu,  9 Oct 2025 22:03:43 +0000 (UTC)
+	 Message-Id:Subject; b=lqvO9Sae8Xl1WPwFHWQd6Pk5JZoRFLMyr3EsWYqktWl64I8qH5A8AO5mn3NVslTurcKi3I6u2m/CiK2ehw7bv939eQnPd+GmsCy/bWGCg2/Ro6VXC5uzqDUpcTzy2p33FA0zd85aZ+7Nw6/kLo+c3PIedHzwj44i1OfUJLh37o0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Nd3js3x9; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD803C4CEF5;
+	Thu,  9 Oct 2025 22:03:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1760047423;
-	bh=Naant3+DVN5aKIknLH/h0l05Wkcr6CNf2egBKXHt1Fg=;
+	s=k20201202; t=1760047424;
+	bh=VdbrDBnRuw407eUM1cGjE4TdP1tU6b5L/a2r2dVm2yo=;
 	h=Date:From:Cc:To:In-Reply-To:References:Subject:From;
-	b=geM3ZBadakY68lqNrnzv2rvFUGrTp0gdXIY7QM5cMcViEKc2X/47wLd+rTcaqOaUi
-	 5II/k3kEOnQJXoXcbgTq6b+2K9c/TKHZKITdwotshVDYFbaP9545ZATnoBapwXHZjL
-	 uF9qmjH7G5SfnFINnvUYwE7BFwF2Ipy3MdVIpWmQ03XcJf5HTbUc6N4PAxikRcVCz4
-	 8nHAE4Y3H64dwhosJn1ScPVrRZo4v4AA5t9cYm1At0G00BI5mDQltr9QFnMNKeCmfu
-	 YsaH5XQtGXkmBjpDwrVhndqOXaO+R6cIF81aPU1QOCsw1UF23aghSvLNYkFmUSrxuZ
-	 Zq6YtJOMmxz2Q==
-Date: Thu, 09 Oct 2025 17:03:42 -0500
+	b=Nd3js3x9H6Sj6EzdFe4btIdQ6XUEFFxsbvfrci8JDS1tq+0yV1wTBYFJyfXdWEjf/
+	 gs6R8isUssy4lu938tGThvQAWSa9R3H055mgfiRzWaJYTAMLHLYQXTd3kmmMi3T5oI
+	 YJ+6z9/kdTWUAFRTpLmo1P1J+uuJ8f8EyFr+AcokycQdEyxzB5ydWaEngPC/Ak4uKd
+	 cqvRXUL5AFokPvzXcLV6R1pRg52jL7I0W+IfE6yyJaLGUpHpX5VoXl/FATKkdRjPD1
+	 ZIUFPh9KVumQGo2aTBv5YK4wF+KkITvPy/IqRimdorRJ63KsVsXElTVUi+glaJ642w
+	 fXTSzeKfUopYg==
+Date: Thu, 09 Oct 2025 17:03:43 -0500
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
@@ -51,50 +51,55 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 From: "Rob Herring (Arm)" <robh@kernel.org>
-Cc: devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
- phone-devel@vger.kernel.org, Konrad Dybcio <konradybcio@kernel.org>, 
+Cc: linux-arm-msm@vger.kernel.org, linux-crypto@vger.kernel.org, 
+ linux-mmc@vger.kernel.org, Konrad Dybcio <konradybcio@kernel.org>, 
+ Bjorn Andersson <andersson@kernel.org>, devicetree@vger.kernel.org, 
  Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- ~postmarketos/upstreaming@lists.sr.ht, 
- Bjorn Andersson <andersson@kernel.org>, linux-arm-msm@vger.kernel.org, 
+ Ulf Hansson <ulf.hansson@linaro.org>, 
+ "David S. Miller" <davem@davemloft.net>, 
+ Herbert Xu <herbert@gondor.apana.org.au>, linux-kernel@vger.kernel.org, 
  Conor Dooley <conor+dt@kernel.org>
-To: Erikas Bitovtas <xerikasxx@gmail.com>
-In-Reply-To: <20251008182106.217340-1-xerikasxx@gmail.com>
-References: <20251008182106.217340-1-xerikasxx@gmail.com>
-Message-Id: <176004726783.3398685.3709173362814048798.robh@kernel.org>
-Subject: Re: [PATCH v2 0/2] arm64: dts: qcom: msm8939-asus-z00t: add
- initial device tree
+To: Abhinaba Rakshit <abhinaba.rakshit@oss.qualcomm.com>
+In-Reply-To: <20251009-add-separate-ice-ufs-and-emmc-device-nodes-for-qcs615-platform-v1-0-2a34d8d03c72@oss.qualcomm.com>
+References: <20251009-add-separate-ice-ufs-and-emmc-device-nodes-for-qcs615-platform-v1-0-2a34d8d03c72@oss.qualcomm.com>
+Message-Id: <176004726840.3398717.5566698340633844509.robh@kernel.org>
+Subject: Re: [PATCH 0/5] Add separate ICE UFS and eMMC device nodes for
+ QCS615 platform
 
 
-On Wed, 08 Oct 2025 21:20:18 +0300, Erikas Bitovtas wrote:
-> This dts adds support for Asus ZenFone 2 Laser/Selfie (1080p) smartphone released in 2015.
+On Thu, 09 Oct 2025 11:48:50 +0530, Abhinaba Rakshit wrote:
+> This patch series introduces support for representing the Inline Crypto Engine (ICE)
+> as separate device nodes for both UFS and eMMC on the QCS615 platform.
+> Previously, ICE functionality was implicitly tied to the UFS/eMMC controllers.
+> With this update, ICE is modeled as an independent hardware block, allowing its
+> clock and frequency configuration to be managed directly by the ICE driver.
+> This separation improves modularity, aligns with hardware architecture.
 > 
-> Add an initial device tree support for Z00T with support for:
-> - GPIO keys
-> - SDHCI (Internal and external storage)
-> - WCNSS (WiFi/BT)
-> - Sensors (accelerometer and magnetometer)
-> - Touchscreen
-> - Audio input and output
-> - Vibrator
+> The change allows the MMC/UFS controller to link to the ICE node for
+> crypto operations without embedding ICE-specific properties directly
+> in the MMC nodes.
+> 
+> Signed-off-by: Abhinaba Rakshit <abhinaba.rakshit@oss.qualcomm.com>
 > ---
-> Changes in v2:
-> - added customary newline before 'status' properties
-> - removed odd newlines in pin configuration nodes
-> - reordered pin configuration nodes by their 'pins' properties
-> Link to v1: https://lore.kernel.org/linux-arm-msm/20250930132556.266434-1-xerikasxx@gmail.com/
+> Abhinaba Rakshit (5):
+>       dt-bindings: mmc: add qcom,ice phandle to mmc
+>       dt-bindings: crypto: ice: add freq-table-hz property to ICE schema
+>       dt-bindings: crypto: ice: document the qcs615 inline crypto engine
+>       arm64: dts: qcom: qcs615: add ufs and emmc inline crypto engine nodes
+>       dts: qcom: qcs615-ride: Enable ice ufs and emmc
 > 
-> Erikas Bitovtas (2):
->   dt-bindings: arm: qcom: Add Asus ZenFone 2 Laser/Selfie
->   arm64: dts: qcom: msm8939-asus-z00t: add initial device tree
+>  .../bindings/crypto/qcom,inline-crypto-engine.yaml |  7 +++
+>  .../devicetree/bindings/mmc/sdhci-msm.yaml         |  4 ++
+>  arch/arm64/boot/dts/qcom/qcs615-ride.dts           |  8 ++++
+>  arch/arm64/boot/dts/qcom/sm6150.dtsi               | 51 +++++++++++++---------
+>  4 files changed, 49 insertions(+), 21 deletions(-)
+> ---
+> base-commit: 47a8d4b89844f5974f634b4189a39d5ccbacd81c
+> change-id: 20251006-add-separate-ice-ufs-and-emmc-device-nodes-for-qcs615-platform-83ebc37bdddc
 > 
->  .../devicetree/bindings/arm/qcom.yaml         |   1 +
->  arch/arm64/boot/dts/qcom/Makefile             |   1 +
->  .../arm64/boot/dts/qcom/msm8939-asus-z00t.dts | 256 ++++++++++++++++++
->  3 files changed, 258 insertions(+)
->  create mode 100644 arch/arm64/boot/dts/qcom/msm8939-asus-z00t.dts
-> 
+> Best regards,
 > --
-> 2.51.0
+> Abhinaba Rakshit <abhinaba.rakshit@oss.qualcomm.com>
 > 
 > 
 > 
@@ -115,19 +120,25 @@ make sure dt-schema is up to date:
 
 
 This patch series was applied (using b4) to base:
- Base: attempting to guess base-commit...
- Base: remotes/arm-soc/qcom/dt64-51-gc11645afb0e2 (best guess, 1/2 blobs matched)
- Base: remotes/arm-soc/qcom/dt64-51-gc11645afb0e2 (use --merge-base to override)
+ Base: 47a8d4b89844f5974f634b4189a39d5ccbacd81c (use --merge-base to override)
 
 If this is not the correct base, please add 'base-commit' tag
 (or use b4 which does this automatically)
 
-New warnings running 'make CHECK_DTBS=y for arch/arm64/boot/dts/qcom/' for 20251008182106.217340-1-xerikasxx@gmail.com:
+New warnings running 'make CHECK_DTBS=y for arch/arm64/boot/dts/qcom/' for 20251009-add-separate-ice-ufs-and-emmc-device-nodes-for-qcs615-platform-v1-0-2a34d8d03c72@oss.qualcomm.com:
 
-arch/arm64/boot/dts/qcom/msm8939-asus-z00t.dtb: iommu@1f08000 (qcom,msm8916-iommu): clock-names: ['iface', 'bus', 'tbu'] is too long
-	from schema $id: http://devicetree.org/schemas/iommu/qcom,iommu.yaml#
-arch/arm64/boot/dts/qcom/msm8939-asus-z00t.dtb: iommu@1f08000 (qcom,msm8916-iommu): clocks: [[31, 129], [31, 140], [31, 175]] is too long
-	from schema $id: http://devicetree.org/schemas/iommu/qcom,iommu.yaml#
+arch/arm64/boot/dts/qcom/qcs615-ride.dtb: ufshc@1d84000 (qcom,qcs615-ufshc): clock-names: ['core_clk', 'bus_aggr_clk', 'iface_clk', 'core_clk_unipro', 'ref_clk', 'tx_lane0_sync_clk', 'rx_lane0_sync_clk'] is too short
+	from schema $id: http://devicetree.org/schemas/ufs/qcom,ufs.yaml#
+arch/arm64/boot/dts/qcom/qcs615-ride.dtb: ufshc@1d84000 (qcom,qcs615-ufshc): clocks: [[46, 126], [46, 10], [46, 125], [46, 134], [44, 0], [46, 133], [46, 132]] is too short
+	from schema $id: http://devicetree.org/schemas/ufs/qcom,ufs.yaml#
+arch/arm64/boot/dts/qcom/qcs615-ride.dtb: ufshc@1d84000 (qcom,qcs615-ufshc): reg: [[0, 30949376, 0, 12288]] is too short
+	from schema $id: http://devicetree.org/schemas/ufs/qcom,ufs.yaml#
+arch/arm64/boot/dts/qcom/qcs615-ride.dtb: ufshc@1d84000 (qcom,qcs615-ufshc): reg-names: ['std'] is too short
+	from schema $id: http://devicetree.org/schemas/ufs/qcom,ufs.yaml#
+arch/arm64/boot/dts/qcom/qcs615-ride.dtb: ufshc@1d84000 (qcom,qcs615-ufshc): reg-names: ['std'] is too short
+	from schema $id: http://devicetree.org/schemas/ufs/qcom,ufs.yaml#
+arch/arm64/boot/dts/qcom/qcs615-ride.dtb: ufshc@1d84000 (qcom,qcs615-ufshc): Unevaluated properties are not allowed ('reg-names' was unexpected)
+	from schema $id: http://devicetree.org/schemas/ufs/qcom,ufs.yaml#
 
 
 
