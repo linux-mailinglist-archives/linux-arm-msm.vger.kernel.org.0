@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-76512-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-76513-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id BEFBEBC7025
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 09 Oct 2025 02:38:16 +0200 (CEST)
+Received: from ams.mirrors.kernel.org (ams.mirrors.kernel.org [IPv6:2a01:60a::1994:3:14])
+	by mail.lfdr.de (Postfix) with ESMTPS id 43419BC7031
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 09 Oct 2025 02:38:54 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 781693E342B
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Oct 2025 00:38:15 +0000 (UTC)
+	by ams.mirrors.kernel.org (Postfix) with ESMTPS id B0DF63490FB
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Oct 2025 00:38:53 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DE36F1898F8;
-	Thu,  9 Oct 2025 00:38:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 52430189906;
+	Thu,  9 Oct 2025 00:38:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="TwrPUAsP"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="dae4ilUD"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A61EC2EB10;
-	Thu,  9 Oct 2025 00:38:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 208D8173;
+	Thu,  9 Oct 2025 00:38:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759970292; cv=none; b=dgKvgrZr/ukvQ4ppBYUJQXDTXPgl5V62Iy4n5MOkSpFQliABTCcFAVPpFktYCbl1rPn9GC62Jni++G/EtCpVkzzsH3mrMO/Kmg6bUz6mhRgwGdPV+acgb4q5utT670Ggy6pyqsUrFCPL9M31HMYwv0HaeZ5rXd3XEGJ7rjobC48=
+	t=1759970329; cv=none; b=Am6vU5f/upkETJwSKrKjKo/JHKG5E9RpsuelEzpvBUSqSB6F+9cCCbrE2IJ6UqyQOiAM89sm/3DxHBAkqj/BZyLkOO+m0mOrAsAgjHGwKTZONhOkNxVEyddHBix4f8B+3vH4iWVfjinvxnr6jD1MhurxCfp0ROcvC9olN/AVGv4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759970292; c=relaxed/simple;
-	bh=pPDnQSYrVg1lOYSSPGKTxtNng+HWYl6ubuaugXLPVN0=;
+	s=arc-20240116; t=1759970329; c=relaxed/simple;
+	bh=4af9T1lxJU3LloEhBWzPPrD9fOssMZnCjaQvopWfElI=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=RD7paizEyaMTSd/3Cc50zxAvs90zqHa/D57v2JZ3xRdWmxHgWQn8EDlLaGhdMMkNrEgApNQLftfIsL1pjLNj5IquqqcZPaLDFGRLDkACaDsMJBcrLr+MbQFqaDGoit3TCPpk0d4NjTr3t9ANsoqDVq+RLQ31pZqeyMkJdvntHE8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=TwrPUAsP; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7555BC4CEE7;
-	Thu,  9 Oct 2025 00:38:04 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=jN6Fns2umXQTz/f7eQFhZYrOSgC0pKijH4Rjk07pTqzUBeIhIo+BIDLiWekQUQ1ia6x1UqFDS1iLLaFIx1ILed6lqh1MSsdGCSO+1doCX1u5YeqxJoFIgkx1CFyKFdbmxTjVOrvmooE2ZRLX4iYeX3BKGvsKC361RyNBt4WsqJY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=dae4ilUD; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2917FC4CEE7;
+	Thu,  9 Oct 2025 00:38:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1759970290;
-	bh=pPDnQSYrVg1lOYSSPGKTxtNng+HWYl6ubuaugXLPVN0=;
+	s=k20201202; t=1759970329;
+	bh=4af9T1lxJU3LloEhBWzPPrD9fOssMZnCjaQvopWfElI=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=TwrPUAsPJaQ9z9oc9KPs7Jt0WxmxzNVCduaPn+oW8J3mYDEzZXsYUToM2yU8XiHj9
-	 EA3UcOv5MJac5WiIsGtliBl5nXWmY9iS85oO4qCLAWgwcjI2deIaaJbD7jJvM4Nvmg
-	 JxtepzijqFpiIPpTrubRnmiC7HvF2+InGOPPdsOdDFWM4v2jhOnnT0g+ugeKRbtyPX
-	 67faxsFdDgnsE+Mw2mh4mjsIoqTg6EZf1OOmVj/EMCiW2JWWNhI3aw8SU+gPAHzPct
-	 Vn9JAUYcIqb/54a5v3PvHQ679//CvzS4GVNCERI0DZpvQn99+cvDRV+b4HpvxU1Fhd
-	 g9MQH1no33iQg==
-Message-ID: <8c70c910-e004-4d7f-bb61-0f18a804a199@kernel.org>
-Date: Thu, 9 Oct 2025 09:38:01 +0900
+	b=dae4ilUDxwTwUa9BjMT611VROHEMb7QjADBE7hJV6/qfet4qNZVGk6XYt9s1B7+kf
+	 aGrKNZQ9ye8/Dwm3vKv0kHy+r+4IjkqwcqKqsKiumopdZBk5YOpi34IZ5PAE89INyV
+	 vVX1vUrDkXeT5ImWfMjJdftGmgsxqyOeTCKAyIRlfw8wusKPtXXtuab2fhFLVfcY0a
+	 K4ya51fxFL2J9/4gp1ud0Uq1UnIWn4hNfJB/dh3OeFlCK7MmdHndxr8ap3WxKIiWX2
+	 ujPJIIneLrCqbAthGBw7QeSCp429WtTXuM1H0jnKY1CCcktprXn1fHQXdCD58dcLtj
+	 T2B3T4aA0OXhw==
+Message-ID: <ffe1eeb8-cf20-4011-8ed7-a677f6aacbdc@kernel.org>
+Date: Thu, 9 Oct 2025 09:38:39 +0900
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,8 +50,8 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/2] dt-bindings: arm: qcom: Add Asus ZenFone 2
- Laser/Selfie
+Subject: Re: [PATCH v2 2/2] arm64: dts: qcom: msm8939-asus-z00t: add initial
+ device tree
 To: Erikas Bitovtas <xerikasxx@gmail.com>,
  Bjorn Andersson <andersson@kernel.org>,
  Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
@@ -60,7 +60,7 @@ To: Erikas Bitovtas <xerikasxx@gmail.com>,
  devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
 Cc: phone-devel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht
 References: <20251008182106.217340-1-xerikasxx@gmail.com>
- <20251008182106.217340-2-xerikasxx@gmail.com>
+ <20251008182106.217340-3-xerikasxx@gmail.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -106,15 +106,18 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  jWt87ecuHlpL3uuQ0ZZNWqHgZoQLXoqC2ZV5KrtKWb/jyiFX/sxSrodALf0zf+tfHv0FZWT2
  zHjUqd0t4njD/UOsuIMOQn4Ig0SdivYPfZukb5cdasKJukG1NOpbW7yRNivaCnfZz6dTawXw
  XRIV/KDsHQiyVxKvN73bThKhONkcX2LWuD928tAR6XMM2G5ovxLe09vuOzzfTWQDsm++9UKF a/A=
-In-Reply-To: <20251008182106.217340-2-xerikasxx@gmail.com>
+In-Reply-To: <20251008182106.217340-3-xerikasxx@gmail.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
 On 09/10/2025 03:20, Erikas Bitovtas wrote:
-> Add a compatible for Asus ZenFone 2 Laser/Selfie (1080p)
-> 
-> Signed-off-by: Erikas Bitovtas <xerikasxx@gmail.com>
-> ---
+> Add an initial device tree for Asus ZenFone 2 Laser/Selfie. This
+> includes support for:
+> - UART
+> - USB
+> - Internal storage
+> - MicroSD
+> - Volume keys
 
 <form letter>
 This is a friendly reminder during the review process.
