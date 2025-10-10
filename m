@@ -1,134 +1,171 @@
-Return-Path: <linux-arm-msm+bounces-76818-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-76819-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9798FBCE913
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Oct 2025 22:56:40 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0079FBCEB1A
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 11 Oct 2025 00:30:32 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 557B418982C0
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Oct 2025 20:57:03 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id C7A8C3A50A8
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Oct 2025 22:30:26 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id AE02225A32E;
-	Fri, 10 Oct 2025 20:56:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C96162773CA;
+	Fri, 10 Oct 2025 22:30:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=baylibre-com.20230601.gappssmtp.com header.i=@baylibre-com.20230601.gappssmtp.com header.b="iFLkQlRf"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="o1eYd7dH"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-oi1-f182.google.com (mail-oi1-f182.google.com [209.85.167.182])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6D89258ED1
-	for <linux-arm-msm@vger.kernel.org>; Fri, 10 Oct 2025 20:56:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A48592765E6
+	for <linux-arm-msm@vger.kernel.org>; Fri, 10 Oct 2025 22:30:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760129796; cv=none; b=kS/DXiSDqci3lcMT8bIZq9eIy0TE9eVBKGn+zfYDNtXmbWjwnzWfFpytiKdY9CQNa1nvuWefv7PhAjqSDTOnh1cyqLESfrM174BIUQxDQlWoABtA0aJe++Y2JW26qabAbArtchtw4E1QyZUI4QZny+BUB4LXXzSIMRzDjbxrsHs=
+	t=1760135425; cv=none; b=O7CML9hpzLiKaOUQxjHQUcIEJVU5v44CprVgiAlDUjcxiYmVjrDBrDLd2/vR5O3II4F2/yvmEL4QXoFdf8zxFLZ1Pod1B2WGiFo1n4cG2hLIPXUrnpFfxIw/YeDtBi8YXSpOOGutMquMOUKJDOfwpKFsamSMaWx2ETWU2TFmBJI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760129796; c=relaxed/simple;
-	bh=CCuYNuIIVsY7FaNQiEz2s+18rwWUhIG0BCeJOEXr7Zc=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=qM8jbcwHHfOmVn0AqD/nc0/mjnT6J07mNl/MTd0dKJZdZcRHYiNrPIQhZsdo+CdmWAsiUiJz8Zu7lxgJZpGAotUwNAPxAXadzC8gebf7aaZ9S9mx9IPQ3JDM0aKuXs93e60MO9hZ3Qiv/kawds/9z3b8TYVGtLAyd4SehouyD4E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=baylibre.com; spf=pass smtp.mailfrom=baylibre.com; dkim=pass (2048-bit key) header.d=baylibre-com.20230601.gappssmtp.com header.i=@baylibre-com.20230601.gappssmtp.com header.b=iFLkQlRf; arc=none smtp.client-ip=209.85.167.182
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=baylibre.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=baylibre.com
-Received: by mail-oi1-f182.google.com with SMTP id 5614622812f47-43f8116a163so1162096b6e.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 10 Oct 2025 13:56:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=baylibre-com.20230601.gappssmtp.com; s=20230601; t=1760129794; x=1760734594; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=EpaXFAs8jrvhj5Iwajcw+7el/YiNtrh4pH3E6yC24YI=;
-        b=iFLkQlRfKAxRQ6MLGsgDryfgmis9DO4UmlLwTj6IOitWDT2N6udOwDK2I/b8wr4h3z
-         6NCYAIBWqfrZL3cFwJRP+F0xb6t0r/HpWQcAvdhMaOK6jo+1+NvLyLkqN3iSv/WjATSl
-         qPX3xdlR1sT23/gRer7D0dis1yu1iw02luV8hQSgmAs6N9SmykQpZLEv4PPuXoj3sb8m
-         NZ+8x1dvsyafeR0GyvVLlB5AjsQhwfPP21eRS5CZLVywWn3PmNxq2WG4wxaIu+sJdoph
-         y/FV8l9+RSWWLv3/rmRArBgB2LBfvhCh2vwTr1YuPPlynT0oVzaE4k/TmVCNMpUMOf2Y
-         3lfg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1760129794; x=1760734594;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=EpaXFAs8jrvhj5Iwajcw+7el/YiNtrh4pH3E6yC24YI=;
-        b=QRRGvjiMvxRvJqb0WcjtjbESLc3bSVt9iawGwSrDBe9sRgy9paiN6nPcc9POcRuZco
-         PRZCgdw2d1AVbEJ/1s/ot4k1bE6DAb0KvDqAW5vQ10RyJLeKy4Xg1Ec8x3TskjN/dWyo
-         4CMn3AyFHXuvAjg1wiNqODQsxWhXsuaKUnTjes1dchkRbcXz6g1AE3Z9DPpDXLBTncGe
-         sBgJUwqOOuneLw416r66RLQbl6KHB+J/2yLBr4n/X2NPENPEH00Ss+n8rXaRlA7sVlg1
-         151rhLt0zQjSXipDTffND0bm2IrqwV4kGXdELWHfrbBzevyhF0KsiVStq/OUBCYgir9e
-         y/uA==
-X-Forwarded-Encrypted: i=1; AJvYcCU7ZMzi6k7Oof06d9qQheIUU9HzRIFsl7sspDUuLC06A25PkZkSgAMlNUkpwWsk4XoReuH3vTTcJoTrU0BV@vger.kernel.org
-X-Gm-Message-State: AOJu0Yyfz+HSphjjEtmFf/uVdAb11/TRWvSP1tyL0DwHDLP+HRg2M4bM
-	7GtR7Kl+vaUnNb5rMliqLLFc++wIj8BpLVLVR/8x15HP5u8xEZDxBZDC1gKjqxGXx/M=
-X-Gm-Gg: ASbGncvmqQVD4kj71pf89l+udHP+XfK+/297tqWoQnYU1Gdayr8cGzxgkvthcrxGkx2
-	wJ2s3cnjsftKc2qWlmnvmP8qLZKLghZAkaZcxllh18megjszjVgGf7j94p/sUxdD0gvQYNk18Fm
-	5c2jUOeLuF7hF+oRjyIfeetCDGjToUUUUKsFjIp4jNfFlpobH7MighT5+BeY2fd6XZIYsTf0MPx
-	Qb6QFpyc+iClkQSdsRlqS2YaJBRpVWeKqmtYAOxyjWCrenC/MwU46YTmU9Ay8BC/7ZcmrBv9PZL
-	J9r9J93hBzzqPjn2ATmCl/KBt1TAOCtyZXl59cCi5r9r3YQzp3rbNcX5mcmLY8eg5nq+FJZXIJ2
-	nrqzM8Uc7gYJbkJOH62Or8nhxgIkea5/XUE+fHsjkWFatXiBnSBq92Igy37liLveXe7nzJ/3BZs
-	nMmr6tUnaZFfCJZR7B4c5fb0XZgA==
-X-Google-Smtp-Source: AGHT+IFDRZYD0tvp0ZMbppnD3D1rHut3LIprbR5X32btFAwVwdld60PTV7/IdSY1ynz2HldpOFeF3Q==
-X-Received: by 2002:a05:6808:4f4f:b0:43f:7940:69bf with SMTP id 5614622812f47-4417b3acf95mr6013690b6e.26.1760129793687;
-        Fri, 10 Oct 2025 13:56:33 -0700 (PDT)
-Received: from ?IPV6:2600:8803:e7e4:500:8a0c:c02d:81d3:2e7f? ([2600:8803:e7e4:500:8a0c:c02d:81d3:2e7f])
-        by smtp.gmail.com with ESMTPSA id 006d021491bc7-65018200761sm952285eaf.19.2025.10.10.13.56.32
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 10 Oct 2025 13:56:33 -0700 (PDT)
-Message-ID: <c770c799-4318-4c40-bd62-3cefbbbef731@baylibre.com>
-Date: Fri, 10 Oct 2025 15:56:32 -0500
+	s=arc-20240116; t=1760135425; c=relaxed/simple;
+	bh=sx8RlxKZpctnoFBweJS6xvncbNrY1voIIKFf38weEJU=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=QjBQSI4aMZh4ZPKkeM8q/LHxEKzxM/uhjV73CyDJ7VzxCFQTrDl1Cm01uiQEAZaQYFZuJfgJmvvHZH5Mm6fOIt8jWjbBjl/2J/qrmOucmcuOcYq9UqwvSMoD9zr0LhmG4yb9hzVPfQFXPOHacO8CrXh8Cw/7UWV8qhOk+U2Y9y8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=o1eYd7dH; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59190C19423
+	for <linux-arm-msm@vger.kernel.org>; Fri, 10 Oct 2025 22:30:25 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1760135425;
+	bh=sx8RlxKZpctnoFBweJS6xvncbNrY1voIIKFf38weEJU=;
+	h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+	b=o1eYd7dHZIXngemP67EIzsgbqIA0L3klykBwdyF6/bIPZbplABgEjsmZ/9NcBEvGi
+	 eLJSlaczmFYktWp1kIZKiDYsW+QF1mq/6Ys/PGAfsdOocOXHkB+hZQKlvE9rq3bIjD
+	 kozFm5JTqkqKPLBE9Qtd13pOdxy2b+S/hqmupQsrKSpdDju1gOnbQfS31FNzLXarUO
+	 CyaIrF+/V/dnzgD7jB12p6ZO30rOEXp1U21RphIuuQPFGj/cz3ItnvjHGsyaP+VfYb
+	 fSVwe4lf+k0hZS71b9u5GvZ+3Z13YaPl/ifDug/hdQWwsZeNtFifS+Tkm696qMVGqo
+	 dCtJjv5yakJGQ==
+Received: by mail-ej1-f42.google.com with SMTP id a640c23a62f3a-b3ee18913c0so398571466b.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 10 Oct 2025 15:30:25 -0700 (PDT)
+X-Forwarded-Encrypted: i=1; AJvYcCU9kIgGMZLLouAYc14c0wkhW0nde054NNFCYo1W4O//Q8ySksYf25f4pWJolDrlGd80dkc6OqK5iSjIT8WR@vger.kernel.org
+X-Gm-Message-State: AOJu0Yw6LpiPWddCMPkJ9gCPSvnVc8K6Z1n5XonyBT67+SHilDGr9nGV
+	SAVdMXOrUH7yyhTSWlNyCUrQeyJvapIaBn2IE1c3vzTRluBknFKxRyCcnJu2MWA4snocOOwLrnt
+	wsrji/x7NbKdsBZgDI6Vzrfc5JEZFdQ==
+X-Google-Smtp-Source: AGHT+IGdYPfHL1gnUujQzCp8M6WogUc1LbdE4xIMlDxV2yOAQw/4MfeeyPV2JzMy1aQ4kJRIZ9ePrEIFshlr8zpVXxg=
+X-Received: by 2002:a17:907:a909:b0:b3e:5f20:888d with SMTP id
+ a640c23a62f3a-b50aa7a1685mr1585501166b.27.1760135423725; Fri, 10 Oct 2025
+ 15:30:23 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH RFC 0/6] Battery temperature ADC plumbing on Qualcomm
- platforms
-To: Luca Weiss <luca.weiss@fairphone.com>, Jonathan Cameron
- <jic23@kernel.org>, =?UTF-8?Q?Nuno_S=C3=A1?= <nuno.sa@analog.com>,
- Andy Shevchenko <andy@kernel.org>, "Rafael J. Wysocki" <rafael@kernel.org>,
- Daniel Lezcano <daniel.lezcano@linaro.org>, Zhang Rui <rui.zhang@intel.com>,
- Lukasz Luba <lukasz.luba@arm.com>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Laxman Dewangan <ldewangan@nvidia.com>,
- Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>, Hans de Goede <hansg@kernel.org>,
- Jens Reidel <adrian@mainlining.org>,
- Casey Connolly <casey.connolly@linaro.org>
-Cc: ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
- linux-arm-msm@vger.kernel.org, linux-iio@vger.kernel.org,
- linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org,
- devicetree@vger.kernel.org
-References: <20251010-bat-temp-adc-v1-0-d51ec895dac6@fairphone.com>
-Content-Language: en-US
-From: David Lechner <dlechner@baylibre.com>
-In-Reply-To: <20251010-bat-temp-adc-v1-0-d51ec895dac6@fairphone.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+References: <20250928171718.436440-1-charan.kalla@oss.qualcomm.com>
+ <aec0f40a-8346-4194-8b18-1022fe3366bb@arm.com> <0d0560cc-9757-4c7b-8de4-170148d99481@oss.qualcomm.com>
+ <ead7cf8b-fbc4-4242-a9da-b313dded1abc@arm.com> <nzqte4glwtpjs5bhkxz43yhdufelxvqvzmg5tepudxwetimir3@bvlw5csjizsh>
+ <9d3eeb9f-b8ea-48e5-a1d9-0865f63ef991@arm.com> <fhb4woejzh3r6v5dxvdiopnsbuwstucfuuzbiymxg4wrxrjc7t@dt3z3utq6lwd>
+ <c863f6a7-b117-4444-ae6d-1d525b572be2@oss.qualcomm.com>
+In-Reply-To: <c863f6a7-b117-4444-ae6d-1d525b572be2@oss.qualcomm.com>
+From: Rob Herring <robh@kernel.org>
+Date: Fri, 10 Oct 2025 17:30:11 -0500
+X-Gmail-Original-Message-ID: <CAL_Jsq+LPpJxVRUP4b9Gt40t=Wr=2B+697Jv2sjtDqTpqwGezQ@mail.gmail.com>
+X-Gm-Features: AS18NWAgf_96UGCOZLypid2OePxqb7YT8CX9tJwVzXdlzHqYAmMGtDO6SoLnFQ8
+Message-ID: <CAL_Jsq+LPpJxVRUP4b9Gt40t=Wr=2B+697Jv2sjtDqTpqwGezQ@mail.gmail.com>
+Subject: Re: [RFC PATCH 0/3] Introduce iommu-map-masked for platform devices
+To: Charan Teja Kalla <charan.kalla@oss.qualcomm.com>
+Cc: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>, Robin Murphy <robin.murphy@arm.com>, 
+	joro@8bytes.org, will@kernel.org, saravanak@google.com, conor+dt@kernel.org, 
+	mchehab@kernel.org, bod@kernel.org, krzk+dt@kernel.org, 
+	abhinav.kumar@linux.dev, vikash.garodia@oss.qualcomm.com, 
+	dikshita.agarwal@oss.qualcomm.com, 
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, bjorn.andersson@oss.qualcomm.com, 
+	linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	iommu@lists.linux.dev
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On 10/10/25 6:21 AM, Luca Weiss wrote:
-> This is an RFC which implements a potential solution to get battery
-> temperature readings working on for example smartphones with Qualcomm
-> SoCs.
-> 
+On Fri, Oct 10, 2025 at 2:53=E2=80=AFPM Charan Teja Kalla
+<charan.kalla@oss.qualcomm.com> wrote:
+>
+>
+>
+> On 10/9/2025 11:55 PM, Dmitry Baryshkov wrote:
+> >>> I really don't like the idea of extending the #iommu-cells. The ARM S=
+MMU
+> >>> has only one cell, which is correct even for our platforms. The fact
+> >>> that we need to identify different IOMMU SIDs (and handle them in a
+> >>> differnt ways) is internal to the video device (and several other
+> >>> devices). There is nothing to be handled on the ARM SMMU side.
+> >> Huh? So if you prefer not to change anything, are you suggesting this =
+series
+> >> doesn't need to exist at all? Now I'm thoroughly confused...
+> > Hmm. We need changes, but I don't feel like adding the FUNCTION_ID to
+> > #iommu-cells is the best idea.
+> >
+> >> If you want to use SMR masks, then you absolutely need #iommu-cells =
+=3D 2,
+> >> because that is the SMMU binding for using SMR masks. It would definit=
+ely
+> > I'm sorry. Yes, we have #iommu-cells =3D <2>.
+> >
+> >> not be OK to have some magic property trying to smuggle
+> >> IOMMU-driver-specific data contrary to what the IOMMU node itself says=
+. As
+> >> for iommu-map, I don't see what would be objectionable about improving=
+ the
+> >> parsing to respect a real #iommu-cells value rather than hard-coding a=
+n
+> >> assumption. Yes, we'd probably need to forbid entries with length > 1
+> >> targeting IOMMUs with #iommu-cells > 1, since the notion of a linear
+> > This will break e.g. PCIe on Qualcomm platforms:
+> >
+> >                         iommu-map =3D <0x0   &apps_smmu 0x1400 0x1>,
+> >                                     <0x100 &apps_smmu 0x1401 0x1>;
+> >
+> >
+> > But this seems unlogical anyway wrt. apps_smmu having #iommu-cells =3D
+> > <2>. It depends on ARM SMMU ignoring the second cell when it's not
+> > present.
+> >
+> >> relationship between the input ID and the output specifier falls apart=
+ when
+> >> the specifier is complex, but that seems simple enough to implement an=
+d
+> >> document (even if it's too fiddly to describe in the schema itself), a=
+nd
+> >> still certainly no worse than having another property that *is* just
+> >> iommu-map with implicit length =3D 1.
+> >>
+> >> And if you want individual StreamIDs for logical functions to be attac=
+hable
+> >> to distinct contexts then those functions absolutely must be visible t=
+o the
+> >> IOMMU layer and the SMMU driver as independent devices with their own =
+unique
+> >> properties, which means either they come that way from the DT as of_pl=
+atform
+> >> devices in the first place, or you implement a full bus_type abstracti=
+on
+>
+> I don't want to dilute what Dmitry is saying here, but the below is what
+> i can make out of Robin comments, please CMIW:
+>
+> iommu {
+>         #iommu-cells =3D <2>;
+> }
+>
+> video {
+>    iommu =3D <iommu sid1 mask1>, <iommu sid2 mask2>;
+>    #iommu-map-cells =3D 2; /* does it look weird to define here, even if
+> it is SMMU property? */
 
-...
+No, not weird. interrupt-map similarly requires #interrupt-cells. So
+it would be just #iommu-cells here.
 
-> 3. Add temperature-lookup-table as property to simple-battery
-> 
-> Since the NTC is a part of the battery pack, adding a
-> temperature-lookup-table property to simple-battery would make sense
-> instead of having this lookup table be standalone in the
-> generic-adc-thermal node. However being able to re-use the existing code
-> in generic-adc-thermal lead me to the current proposal.
-> 
-Did you consider creating a specific compatible string for the battery pack?
-Then the battery node could have the io-channels property for the ADC
-connected to the temperature sensor. Then a specific battery driver could
-handle the conversion as needed rather than filling the devicetree with
-conversion tables.
+>    iommu-map =3D <0 smmu sid3 mask3>,
+>                <0 smmu sid4 mask4>;
 
-The simple-battery bindings are already far from simple! So I would not
-be inclined to add more to it.
+But you only have 1 cell, not 2 here. The #iommu-cells in this node
+would define the number of cells before 'smmu'. The #iommu-cells in
+the &smmu node is the number of cells after the &smmu phandle.
+
+Rob
 
