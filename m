@@ -1,123 +1,83 @@
-Return-Path: <linux-arm-msm+bounces-76793-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-76794-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 77613BCD632
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Oct 2025 16:07:26 +0200 (CEST)
+Received: from ams.mirrors.kernel.org (ams.mirrors.kernel.org [213.196.21.55])
+	by mail.lfdr.de (Postfix) with ESMTPS id DB0E8BCD818
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Oct 2025 16:24:19 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 122F7421E04
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Oct 2025 14:07:25 +0000 (UTC)
+	by ams.mirrors.kernel.org (Postfix) with ESMTPS id 66F57347E15
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Oct 2025 14:24:16 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9A5622F1FC7;
-	Fri, 10 Oct 2025 14:07:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1E9932F533F;
+	Fri, 10 Oct 2025 14:24:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="lZLZwCgd"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="b/2bOU4q"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f48.google.com (mail-wm1-f48.google.com [209.85.128.48])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC1EC34BA3A
-	for <linux-arm-msm@vger.kernel.org>; Fri, 10 Oct 2025 14:07:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2C2A2673B0;
+	Fri, 10 Oct 2025 14:24:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760105238; cv=none; b=c+77IN13gf4qCMfAWO/UqIk1pCW0r+9UPFfycFqGZhcRjyBcwVOs3BNluo7ZTUC4Wo59w4tGJnnk6XrkHnQrRbRZP3+PXNgj0MK6+9BVXec8iESf7jmyyzc3hvfrBxsiUvSKmvcyUNO8KOGh4w6vMp64q11AxLN5wwSxcKAEcEo=
+	t=1760106247; cv=none; b=cXB/hoVY2+kRPWBiAXp3Y+cE+UwpWxvmKqSplhJNwC+pnIP5kCyPZTK9hl3myLQXiepFELMYHuSbOypRETZ+HpfpzLP1E4ah8hjJZQy3DgmZlKR8jTG/UklaArPYdUQs9ekHDB0g+c6RrirfweD3FmrRTEkCPx2iAAY475wa3po=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760105238; c=relaxed/simple;
-	bh=EpvvbYbzvU6zmy28zGsL/hrDErMFtA16oSibI9TggNs=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=C0ls0AhATYZkAyPchs9lkrVM24ITK0HEOTDfLP2RBbDi4V+HKVZX0rYpfxK/y8WBCoAaxmF9e6lqJeQqCaXedHdojVcQ27K0Mb0lOpRXGIUCOFQYxhjzStEVcYpXR5QNiyc6EcdtpMQQcs/g6ucKncUezVXAEiiNnS4E6hFxWuo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=lZLZwCgd; arc=none smtp.client-ip=209.85.128.48
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f48.google.com with SMTP id 5b1f17b1804b1-46e6a689bd0so14625945e9.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 10 Oct 2025 07:07:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1760105234; x=1760710034; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=Enu1DPq85k1M2WpWSEeI3rs72YHXo8vk1sE+FawP+Qo=;
-        b=lZLZwCgdincZK8sEABhFZMr0j9WNDZ4uPN4WK/DvAn026vQAcW5o5YK5QHcF+wiBrI
-         Uwgzn4TlduPRKm8j+0sjSq6AekZY32zPs3MgWugCxV+hkGBcbmGMXX44ghV0MC94LGKg
-         NEJGxN3jnKHXtYaMhTa7VXCcasAtY21Wtm1pxv3wTmsXBI07CIRi4vkhW91WWuY9wlKw
-         VLixueMZgw/NoUkB9d0Ey21l1zSp0G3D5/dXM68c1d2Seq7no5ONZ/MU7kLzl8AB2YRl
-         bm4eKyarbpUi4HpQV/rEoP8QJpT9jz9A8FMynLzG6YTkPjUzUAdQnUh3opbL6Bm2wWJ1
-         3AiA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1760105234; x=1760710034;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Enu1DPq85k1M2WpWSEeI3rs72YHXo8vk1sE+FawP+Qo=;
-        b=vUh28J0DyxgOvtXTbEBcW0XsTFYfIMmxIRuW0VyNgdtJ5Pqw4tfLpqtcWRLQ/65X8R
-         9SJx+4p3V/ou7w7ALWdMT1Gha0TvW3uKEyT6Hn7Jrsr+EfZYZ2IYdgTWJmEENgv1nZW/
-         wNvMFXfB2pOpF1Dwn+ZbF21huxau2OvKD18vwYXxVDxFFa8MKW9XEwF43PKkEwpyTLoZ
-         3JNFeFCxvgiuSo70UM1QnaNqLvkd4wnJFyWx7pa7dtCP+fPLheiIXQt8SPBNBHQEG+gM
-         7vQrYV7mClHvSg1BYEzOXYniAqsGSRr7llol+P4XVmlaPlNENG6l7xgOgUwTgah7sMtT
-         jQaQ==
-X-Gm-Message-State: AOJu0YwpOBCOIDbJId1MVsekiB1gTayr8WSDJxvYMU7pNBW5211KE840
-	wlwbgFFFoCzT/XP76/VfJGxcGlYfW7j66/79e1Kun4ls1Bl0Mr6Wx1/2OCYG5g1Z2mM=
-X-Gm-Gg: ASbGnctySECxFSSpKYcKt4p8DbKbJbl3DFpJPDIWZn9r1qYVxLsrWvqyvtYniYRIDnN
-	jk2P+6Dx3McNUIerTpPzPSLhvgYK3ikq6ndT4brB23Xt+EoS/WvRs1Zl3j1NnMHG9k4Y//yAgsh
-	jiFo5ZdUI6KFQLKx2k/FIKTIxupmV+WwJu+G2kUkxJzudiEOfVdWXcncwkXDQdWwLeJTfJ8ldmn
-	GPgmeOR1agh7WiI7N9ldCm0Scjvja4zBRAKs5CWJzzAn/UuZdSJfNAmpXlC/YC7N62G7aRvkiDj
-	0Wo41D5OZD8PILwj6YpwTUOXx98SZGUp9GJiLMUmwLvfGb/h3kQYCHwEuzzRHBL1GhJl6yThTXn
-	kfT+flNT6nG6eeISl0x+S0sagRrvereWuweiOPjUhCzVBnCPmZiPh+n0isu9UVvg=
-X-Google-Smtp-Source: AGHT+IFolS4C8hT0Zmg7bmr6SzhI/cPbFJ3OA3Pjp2+/sYyehoF+n9CTxeFrReeZKbRbn30lJJ9YTw==
-X-Received: by 2002:a05:600c:138a:b0:45f:2ed1:d1c5 with SMTP id 5b1f17b1804b1-46fa9b171f2mr80864615e9.36.1760105234051;
-        Fri, 10 Oct 2025 07:07:14 -0700 (PDT)
-Received: from [192.168.0.36] ([82.76.24.202])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-426ce583335sm4343474f8f.18.2025.10.10.07.07.12
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 10 Oct 2025 07:07:13 -0700 (PDT)
-Message-ID: <f033a8eb-df80-4f71-a941-09ba209f5901@linaro.org>
-Date: Fri, 10 Oct 2025 17:07:12 +0300
+	s=arc-20240116; t=1760106247; c=relaxed/simple;
+	bh=g/CCLFYJth2UWZIRrD9Q/CZFla4xPgWxZ+t6woi5ZUU=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=BGQ7LqgdWErb41HS8+FCZOsr0o33b3OrsPoiwcYXmb6E8rH8ID2VUAy6RQ86R0B7SpIv9jg0qC1USn2Z/WAjJV8raPsntuWKbsCFYclyJJkUxePsNRM/AhxuxY1NIrZT30NWpDXbizRfS6WvRrUk5qa0Yj8w7zflCg8F4NhpkrU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=b/2bOU4q; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B2F5C4CEF8;
+	Fri, 10 Oct 2025 14:24:06 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1760106246;
+	bh=g/CCLFYJth2UWZIRrD9Q/CZFla4xPgWxZ+t6woi5ZUU=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=b/2bOU4qvv1Y1gvxd3uTWsxHGG33oTre9jFhgeoxJHjbyXyZAiS8W37Ctp154law9
+	 54a9B5TRQTsaKdqbxbcaZbhc71O2kbXk+qxLJznBInC0xTCSFNq8IZekTVfmvB+Zpr
+	 XufCbxrS0vI3UJGh6EJsuFsjZYufbIHU/CSQWU2O8xmb1Cc5pe0LNJDWrSukj3Syxc
+	 zs25Nn94Qrl4JxxfRaPIfa3v9ezQPVb3NVzzq55gVQPHk+j8JIO4CK5g5JMdIT3/FR
+	 tUeiA09ul6mTekNTbpDA0MiABz4wluy9gIQLe7NtT8aEhwlVuP4gvG/s9iCBdOynec
+	 c1LKn/XYNcT3g==
+Date: Fri, 10 Oct 2025 09:24:04 -0500
+From: "Rob Herring (Arm)" <robh@kernel.org>
+To: Sarthak Garg <sarthak.garg@oss.qualcomm.com>
+Cc: Bjorn Andersson <andersson@kernel.org>, quic_nguyenb@quicinc.com,
+	quic_nitirawa@quicinc.com, quic_bhaskarv@quicinc.com,
+	linux-arm-msm@vger.kernel.org, kernel@oss.qualcomm.com,
+	devicetree@vger.kernel.org, linux-mmc@vger.kernel.org,
+	quic_sayalil@quicinc.com, Konrad Dybcio <konradybcio@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, quic_rampraka@quicinc.com,
+	Ulf Hansson <ulf.hansson@linaro.org>, quic_pragalla@quicinc.com,
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH V1 1/3] dt-bindings: mmc: sdhci-msm: Add sm8750 compatible
+Message-ID: <176010624404.239496.14425678947212580288.robh@kernel.org>
+References: <20251007054445.4096630-1-sarthak.garg@oss.qualcomm.com>
+ <20251007054445.4096630-2-sarthak.garg@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] dt-bindings: crypto: qcom,inline-crypto-engine: Document
- the kaanapali ICE
-To: Krzysztof Kozlowski <krzk@kernel.org>,
- Jingyi Wang <jingyi.wang@oss.qualcomm.com>,
- Herbert Xu <herbert@gondor.apana.org.au>,
- "David S. Miller" <davem@davemloft.net>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, linux-crypto@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- aiqun.yu@oss.qualcomm.com, tingwei.zhang@oss.qualcomm.com,
- trilok.soni@oss.qualcomm.com, yijie.yang@oss.qualcomm.com,
- Gaurav Kashyap <gaurav.kashyap@oss.qualcomm.com>
-References: <20250924-knp-ice-v1-1-1adfc2d9e83c@oss.qualcomm.com>
- <36759154-4e7b-4cc9-b50f-ffb51a0b8aaf@kernel.org>
-From: Eugen Hristev <eugen.hristev@linaro.org>
-Content-Language: en-US
-In-Reply-To: <36759154-4e7b-4cc9-b50f-ffb51a0b8aaf@kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20251007054445.4096630-2-sarthak.garg@oss.qualcomm.com>
 
 
-
-On 10/9/25 13:51, Krzysztof Kozlowski wrote:
-> On 25/09/2025 08:29, Jingyi Wang wrote:
->> From: Gaurav Kashyap <gaurav.kashyap@oss.qualcomm.com>
->>
->> Document the Inline Crypto Engine (ICE) on the kaanapali platform.
->>
->> Signed-off-by: Gaurav Kashyap <gaurav.kashyap@oss.qualcomm.com>
->> Signed-off-by: Jingyi Wang <jingyi.wang@oss.qualcomm.com>
+On Tue, 07 Oct 2025 11:14:43 +0530, Sarthak Garg wrote:
+> Document the compatible string for the SDHCI controller on the
+> sm8750 platform.
 > 
-> Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> 
-> Best regards,
-> Krzysztof
+> Signed-off-by: Sarthak Garg <sarthak.garg@oss.qualcomm.com>
+> ---
+>  Documentation/devicetree/bindings/mmc/sdhci-msm.yaml | 1 +
+>  1 file changed, 1 insertion(+)
 > 
 
-Reviewed-by: Eugen Hristev <eugen.hristev@linaro.org>
+Acked-by: Rob Herring (Arm) <robh@kernel.org>
+
 
