@@ -1,109 +1,189 @@
-Return-Path: <linux-arm-msm+bounces-76776-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-76777-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [IPv6:2605:f480:58:1:0:1994:3:14])
-	by mail.lfdr.de (Postfix) with ESMTPS id 35EDABCCB78
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Oct 2025 13:14:38 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2D319BCCBDE
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Oct 2025 13:24:04 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id E4F7C4E14C3
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Oct 2025 11:14:36 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 20FEA19E6AC7
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Oct 2025 11:24:27 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8A6182ED87F;
-	Fri, 10 Oct 2025 11:14:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5B41F2EF64D;
+	Fri, 10 Oct 2025 11:23:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=ideasonboard.com header.i=@ideasonboard.com header.b="HLgTreB5"
+	dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b="aG3Gy6mi"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from perceval.ideasonboard.com (perceval.ideasonboard.com [213.167.242.64])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f41.google.com (mail-ed1-f41.google.com [209.85.208.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07B7E24167A;
-	Fri, 10 Oct 2025 11:14:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=213.167.242.64
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2840283FC3
+	for <linux-arm-msm@vger.kernel.org>; Fri, 10 Oct 2025 11:23:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760094875; cv=none; b=JjN9FyXeKqT1gBe2lOHp+l7LTVVfBtDLuM5TE6ApdQluc7ZjS6l4XvyCxQNzabWFyGr7Mx+04EbDkIirfn8pPeL91oDxs7g1VssLCPFNujy0MGXBJAiK4yjiMvSJlkvyQN5q1fVuMB5rVgbNjVS4r/GwL8Zrrtx4KeR94WDeXd0=
+	t=1760095435; cv=none; b=luUgXwvTmHfYY9kvLSGl1nRueeM4mF/9riyPyFT79/nuK4A2wGnqYB2e/AfQfiuJjOpk/Umt9ZoaqK5EtKIT/uVZIwrYU6vDk5+rQ/ovyG45aQbdgmQdJxDuQhGSOzQumAalokbbYpEPhXzsIBi8zu8yT7m+dOj7cpJi3ynBsag=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760094875; c=relaxed/simple;
-	bh=mmFDUXArGPtUvHOrQ2jILNGevxhRGaAHHeRtvHFSaC0=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=uAI3StZNvXTGdyjiY57fV5eh04XMv6/5ig8Ep3d1FVayUa6o/tK3imZknh4nvsnqE6sPDNBgijsEANac+h8MB760IIsh0xEtbFkuGvsUUS0VD3x1psxclFEzgfDm0PjqTiMETyi18JjYREa/OaqGIBPmvxlkXYCuO1WOTkwOhu4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ideasonboard.com; spf=pass smtp.mailfrom=ideasonboard.com; dkim=pass (1024-bit key) header.d=ideasonboard.com header.i=@ideasonboard.com header.b=HLgTreB5; arc=none smtp.client-ip=213.167.242.64
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ideasonboard.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ideasonboard.com
-Received: from pendragon.ideasonboard.com (82-203-166-19.bb.dnainternet.fi [82.203.166.19])
-	by perceval.ideasonboard.com (Postfix) with UTF8SMTPSA id B6669593;
-	Fri, 10 Oct 2025 13:12:56 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=ideasonboard.com;
-	s=mail; t=1760094777;
-	bh=mmFDUXArGPtUvHOrQ2jILNGevxhRGaAHHeRtvHFSaC0=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=HLgTreB5qJ4zGZIoixBsQONAUL0bBsvHKS2AswtZL8lQc/ptIceK/L+nCVw+3hqVl
-	 mFy5oAYm/h7eYoyxsOV7hUy5V24KDOKxW+El1qNpnq5W60ZHmtnRZxiTsXuqOfU6Yj
-	 Vo646t9o/Afhki6gLZCP0OVj1S5qeJ1Svyr+jIp4=
-Date: Fri, 10 Oct 2025 14:14:24 +0300
-From: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-To: Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>
-Cc: linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-	Nicolas Dufresne <nicolas.dufresne@collabora.com>,
-	Vikash Garodia <quic_vgarodia@quicinc.com>,
-	Abhinav Kumar <abhinav.kumar@linux.dev>,
-	Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Subject: Re: [PATCH 15/25] media: qcom: iris: Drop unneeded v4l2_m2m_get_vq()
- NULL check
-Message-ID: <20251010111424.GA28598@pendragon.ideasonboard.com>
-References: <20251008175052.19925-1-laurent.pinchart@ideasonboard.com>
- <20251008175052.19925-16-laurent.pinchart@ideasonboard.com>
- <e9e353e5-76b4-49a1-e845-c8fb3be91a62@oss.qualcomm.com>
+	s=arc-20240116; t=1760095435; c=relaxed/simple;
+	bh=H5LgljmnkNjvXD6n5IG7Ap4WWlw3CGfBh7hhGFd2RjQ=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=vDpgFiadRQX+2OIns5hZ088prhrpHb7RxZZ54HNKU477UZvsgWhrUqye6M+WCcSqb8xGSO3xXJNXId6zA2W5CF96NZ5RnhLr1gBCumsMsY8JESDVEXCRGxqKKxD8Zsm6aopK0OqaIByNwNpIusrtdyyt/pg1pdsnAqzELeWUr4k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=fairphone.com; spf=pass smtp.mailfrom=fairphone.com; dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b=aG3Gy6mi; arc=none smtp.client-ip=209.85.208.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=fairphone.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fairphone.com
+Received: by mail-ed1-f41.google.com with SMTP id 4fb4d7f45d1cf-62fc89cd68bso3910832a12.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 10 Oct 2025 04:23:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=fairphone.com; s=fair; t=1760095430; x=1760700230; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=3+WH0817Ps1vnRuu5RpMwf3DsYHgJQPb6FKq+YW7fXM=;
+        b=aG3Gy6mievSarLUblY8MnPhoFwA24TWyRie0zu0FDAw72b3CC3USj7pflnz8rmOoi7
+         mJcxBfpQanJv0YRDLT+V9CkoIbF7yMt+rBME24l+T8OZkRWhGW5ciFY70rrXo5l5yQZe
+         enCfzlLwok9bR9N66/5cwlodlNyvu35wyMiZ74c94v5Hvwem9h3daWgXiWErihs27qMm
+         eLGwo8Qi8N9nUtqhKUGQqgEYl1GQe0Vfwiow6YX0UxYznpR9WMno93yOoa8T+urHQbI2
+         Xo9hyd5Hv/4BHJwkdUYehe5nZj/nMv62ip/xqGijTdZ0WJ93gYyk55Zlrv22zezcYCLN
+         PIBw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1760095430; x=1760700230;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=3+WH0817Ps1vnRuu5RpMwf3DsYHgJQPb6FKq+YW7fXM=;
+        b=lnLXJYTYKPKHsbfBBk+8ToTpZdgDxbQa1mRwW9MSu3r99wITBSLcorHcHCUs4PU/hk
+         20crTHDZrnNJ2y/a5ZK0s6DgfHAfDHFK+FYL9KqDm3UNHGaZUE9zlBXXTQVQSNxFHhD8
+         lbX+604f+FWOHwOboyQYNY7+ons1ClkVgIFFTOdBW1s79P/57vWVBD/Tr73bvKCtVwP6
+         lvYwfehB5UYpxqgjErWD//icWh9Bgx4ij7vXgEsbDIok3K9+uyh6KTd95cni+aq+JaLJ
+         2a8cXuaeMDLqHzFvBwPSD2pfrOvGPpCKdTBtP7funWvo4Nt1wKmMMpvmRgXV3AnTGBkk
+         g+IQ==
+X-Forwarded-Encrypted: i=1; AJvYcCXSQ8D77e6kTYsTQ/NeXiJMjxQDIvuFi06uWq6KjRj/6fpPJ3GmQHTjq8/S0qps27p+NUbX8C+HcBgL08/Z@vger.kernel.org
+X-Gm-Message-State: AOJu0YwIVqrpfjPWzlVsnJ/ZEx1vUUJwGxzi05uA7lHKSgJuDLNyUDu7
+	/8Ak3nRnTuzZbbH4KzN+vTfVYdKKva2Wse9bCXFiln5/KTF7enXUSe9vP8NgJQSMioI=
+X-Gm-Gg: ASbGnctMe8Zox6fVfZgs0krHRQfr+dJ88UqYfIwvV5VMp/gtbmSgz1uA9Qo1hXKi+M9
+	SFcp6AUrNSaXljZpY82YixyVPJ1Y/FFbbyf4qsdm33x0Taw81tlqWB/W+DPQF83FMXfdS8ATVSt
+	EFWw947BwYlgn18h3p7PiE4fLsflAkOw6P+tSJ54dJh6zWQq4qQQs71B/3aaSj0Ck1J7FFH5lHw
+	RcHtV3Yo2ZZIFNSsH7poEzs98bZSGhRhq5rGCfLgsOU6qwiEg2kpJxgqj06GoZVh9O8Q10CpWJ3
+	oRX2daU1hFJIbYPkYfagBW8qMv7w3L9P952oi3cKYjPnS+UCyWgJfiAbDY0L/UYF/IarkLCKAcF
+	N+JJ5rGOKiS45/nBCHxE07LbC+XZS55pBN67Db6D3hzCA3aMSKrky0mqclLgla8JrRXTgvLwsgn
+	tAdmijSzMh4T3IkO6ZZD9bDpVdWlp3uA==
+X-Google-Smtp-Source: AGHT+IGElPVM7npd0iZwM5139p5UTz/fZNApktIfn5kuKF28780Gdo3rcyMkFKGp/gW1Ak6ZBaU1Dw==
+X-Received: by 2002:a17:907:86a6:b0:b41:b5df:89bd with SMTP id a640c23a62f3a-b50a9d59b0amr1084043166b.6.1760095430130;
+        Fri, 10 Oct 2025 04:23:50 -0700 (PDT)
+Received: from [172.16.240.99] (144-178-202-138.static.ef-service.nl. [144.178.202.138])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-b55d900bf8csm209905766b.59.2025.10.10.04.23.49
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 10 Oct 2025 04:23:49 -0700 (PDT)
+From: Luca Weiss <luca.weiss@fairphone.com>
+Subject: [PATCH RFC 0/6] Battery temperature ADC plumbing on Qualcomm
+ platforms
+Date: Fri, 10 Oct 2025 13:21:58 +0200
+Message-Id: <20251010-bat-temp-adc-v1-0-d51ec895dac6@fairphone.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <e9e353e5-76b4-49a1-e845-c8fb3be91a62@oss.qualcomm.com>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAFbs6GgC/y2MQQ6CMBBFr9LM2jEtpopsSTyAW8OiUwadRQHbS
+ kwId7dRl+//vLdC4iicoFErRF4kyTQWMDsF/uHGO6P0haHSlTXaaCSXMXOY0fUea3s406CptuS
+ hKHPkQd7f3A2ulxa63xj5+Srp/H/IJUY/hSC5Uctxb07QbdsHiZxYBowAAAA=
+X-Change-ID: 20251010-bat-temp-adc-8539bf0b85bc
+To: Jonathan Cameron <jic23@kernel.org>, 
+ David Lechner <dlechner@baylibre.com>, 
+ =?utf-8?q?Nuno_S=C3=A1?= <nuno.sa@analog.com>, 
+ Andy Shevchenko <andy@kernel.org>, "Rafael J. Wysocki" <rafael@kernel.org>, 
+ Daniel Lezcano <daniel.lezcano@linaro.org>, Zhang Rui <rui.zhang@intel.com>, 
+ Lukasz Luba <lukasz.luba@arm.com>, Rob Herring <robh@kernel.org>, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>, Laxman Dewangan <ldewangan@nvidia.com>, 
+ Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konradybcio@kernel.org>, Hans de Goede <hansg@kernel.org>, 
+ Jens Reidel <adrian@mainlining.org>, 
+ Casey Connolly <casey.connolly@linaro.org>
+Cc: ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org, 
+ linux-arm-msm@vger.kernel.org, linux-iio@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org, 
+ devicetree@vger.kernel.org, Luca Weiss <luca.weiss@fairphone.com>
+X-Mailer: b4 0.14.3
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1760095429; l=3344;
+ i=luca.weiss@fairphone.com; s=20250611; h=from:subject:message-id;
+ bh=H5LgljmnkNjvXD6n5IG7Ap4WWlw3CGfBh7hhGFd2RjQ=;
+ b=KqE1fucyVBMu5pDrzDvyF2Qfx4PQfSPiXKQSTi2ahEjUJqOFT2+W5qVs5saLypTG4U/fyL7it
+ zKBR8HeuueiAJt0bc/93C0oNwirkBkYPymSh2RKCm0IlwVpMQU3uPIs
+X-Developer-Key: i=luca.weiss@fairphone.com; a=ed25519;
+ pk=O1aw+AAust5lEmgrNJ1Bs7PTY0fEsJm+mdkjExA69q8=
 
-Hi Dikshita,
+This is an RFC which implements a potential solution to get battery
+temperature readings working on for example smartphones with Qualcomm
+SoCs.
 
-On Thu, Oct 09, 2025 at 07:23:20PM +0530, Dikshita Agarwal wrote:
-> On 10/8/2025 11:20 PM, Laurent Pinchart wrote:
-> > The v4l2_m2m_get_vq() function never returns NULL. The check may have
-> > been intended to catch invalid format types, but that's not needed as
-> > the V4L2 core picks the appropriate VIDIOC_S_FMT ioctl handler based on
-> > the format type, so the type can't be incorrect. Drop the unneeded
-> > return value check.
-> > 
-> > Signed-off-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-> > ---
-> >  drivers/media/platform/qcom/iris/iris_vdec.c | 2 --
-> >  1 file changed, 2 deletions(-)
-> > 
-> > diff --git a/drivers/media/platform/qcom/iris/iris_vdec.c b/drivers/media/platform/qcom/iris/iris_vdec.c
-> > index d670b51c5839..1e9ffdbb6e18 100644
-> > --- a/drivers/media/platform/qcom/iris/iris_vdec.c
-> > +++ b/drivers/media/platform/qcom/iris/iris_vdec.c
-> > @@ -191,8 +191,6 @@ int iris_vdec_s_fmt(struct iris_inst *inst, struct v4l2_format *f)
-> >  	u32 codec_align;
-> >  
-> >  	q = v4l2_m2m_get_vq(inst->m2m_ctx, f->type);
-> > -	if (!q)
-> > -		return -EINVAL;
-> >  
-> >  	if (vb2_is_busy(q))
-> >  		return -EBUSY;
-> 
-> The same change would be required for iris_venc.c as well which is part of
-> linux-next[1]
+The solution chosen in downstream Qualcomm kernels is exposing
+ADC_BAT_THERM_PU* in the ADC driver as temperature channels with the
+lookup table ("struct vadc_map_pt") for the specific NTC found in a
+device's battery patched to adjust the lookup table.
 
-Thank you for noticing. I'll rebase this series on v6.18-rc1 once it
-gets released and will make sure iris_venc.c is addressed.
+The high level solution proposed here:
+* ADC driver provides temperature channel in (milli)volt as IIO channel
+* generic-adc-thermal driver converts voltage to temperature based on
+  provided lookup table from DT (driver has one IIO channel input, one
+  IIO channel output)
+* The fuel gauge driver can use that temperature IIO channel to expose
+  battery temperature via the power supply device
 
-> [1]: https://git.kernel.org/pub/scm/linux/kernel/git/next/linux-next.git/tree/drivers/media/platform/qcom/iris/iris_venc.c#n271
+Variants/alternatives considered:
 
+1. Do not implement IIO device in generic-adc-thermal
+
+Without an IIO channel and using thermal zone directly it becomes more
+difficult. You cannot get thermal zone by reference (e.g.
+thermal-sensors = <&foo>;). The function thermal_zone_get_zone_by_name()
+exists but lookup by name is kinda clunky. Adding by-phandle support
+might be possible but is lots of work. It also doesn't really look like
+thermal-sensor is really meant to be used by other drivers. E.g.
+there's also no "thermal-sensor-names" property to designate passing
+multiple thermal sensors. So I believe IIO is a better fitting API for
+this.
+
+2. Expose IIO channel as temperature in ADC driver
+
+This would require passing in the temperature lookup table somehow to
+the ADC driver via DT. I think this passes too many details about the
+hardware that's connected into the ADC driver. While possible, at least
+for Qcom ADC there's no precedent yet.
+
+3. Add temperature-lookup-table as property to simple-battery
+
+Since the NTC is a part of the battery pack, adding a
+temperature-lookup-table property to simple-battery would make sense
+instead of having this lookup table be standalone in the
+generic-adc-thermal node. However being able to re-use the existing code
+in generic-adc-thermal lead me to the current proposal.
+
+Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
+---
+Luca Weiss (6):
+      iio: adc: qcom-spmi-adc5: Add battery thermal channels
+      dt-bindings: thermal: generic-adc: Document #io-channel-cells
+      thermal/drivers/generic-adc: Register as IIO device
+      thermal/drivers/generic-adc: Allow probe without TZ registration
+      arm64: dts: qcom: pm7250b: Define battery temperature ADC channels
+      arm64: dts: qcom: sm7225-fairphone-fp4: Add battery temperature node
+
+ .../bindings/thermal/generic-adc-thermal.yaml      |  4 ++
+ arch/arm64/boot/dts/qcom/pm7250b.dtsi              | 24 +++++++
+ arch/arm64/boot/dts/qcom/sm7225-fairphone-fp4.dts  | 83 ++++++++++++++++++++++
+ drivers/iio/adc/qcom-spmi-adc5.c                   |  6 ++
+ drivers/iio/adc/qcom-vadc-common.c                 | 16 +++++
+ drivers/thermal/thermal-generic-adc.c              | 68 ++++++++++++++++--
+ include/linux/iio/adc/qcom-vadc-common.h           |  3 +
+ 7 files changed, 198 insertions(+), 6 deletions(-)
+---
+base-commit: 6063257da111c7639d020c5f15bfb37fb839d8b6
+change-id: 20251010-bat-temp-adc-8539bf0b85bc
+
+Best regards,
 -- 
-Regards,
+Luca Weiss <luca.weiss@fairphone.com>
 
-Laurent Pinchart
 
