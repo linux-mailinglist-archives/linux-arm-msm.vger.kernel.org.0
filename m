@@ -1,83 +1,165 @@
-Return-Path: <linux-arm-msm+bounces-76794-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-76795-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ams.mirrors.kernel.org (ams.mirrors.kernel.org [213.196.21.55])
-	by mail.lfdr.de (Postfix) with ESMTPS id DB0E8BCD818
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Oct 2025 16:24:19 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id B8203BCD8F5
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Oct 2025 16:39:55 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ams.mirrors.kernel.org (Postfix) with ESMTPS id 66F57347E15
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Oct 2025 14:24:16 +0000 (UTC)
+	by ams.mirrors.kernel.org (Postfix) with ESMTPS id 3D5783472C5
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Oct 2025 14:39:55 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1E9932F533F;
-	Fri, 10 Oct 2025 14:24:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C2F6E2F3601;
+	Fri, 10 Oct 2025 14:39:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="b/2bOU4q"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hEW/ICgG"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f49.google.com (mail-ed1-f49.google.com [209.85.208.49])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2C2A2673B0;
-	Fri, 10 Oct 2025 14:24:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC6322F3C20
+	for <linux-arm-msm@vger.kernel.org>; Fri, 10 Oct 2025 14:39:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760106247; cv=none; b=cXB/hoVY2+kRPWBiAXp3Y+cE+UwpWxvmKqSplhJNwC+pnIP5kCyPZTK9hl3myLQXiepFELMYHuSbOypRETZ+HpfpzLP1E4ah8hjJZQy3DgmZlKR8jTG/UklaArPYdUQs9ekHDB0g+c6RrirfweD3FmrRTEkCPx2iAAY475wa3po=
+	t=1760107192; cv=none; b=iLuhMjumCuoEfUEa/fGxgr8DpNRi8M7sFF7NNK0jcdamBYf8U57kWOHlPs0ohHkLQ0H8IXjy82yPiqV5QN4SxGp+kbKp5SW96NZ3k0t7G4GjfGOyJc5DHiu0VvIYmDsI0Agm3YK6sjJteZvKOdo+DaD04Zl+Dkdzl2hy+89oGIw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760106247; c=relaxed/simple;
-	bh=g/CCLFYJth2UWZIRrD9Q/CZFla4xPgWxZ+t6woi5ZUU=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=BGQ7LqgdWErb41HS8+FCZOsr0o33b3OrsPoiwcYXmb6E8rH8ID2VUAy6RQ86R0B7SpIv9jg0qC1USn2Z/WAjJV8raPsntuWKbsCFYclyJJkUxePsNRM/AhxuxY1NIrZT30NWpDXbizRfS6WvRrUk5qa0Yj8w7zflCg8F4NhpkrU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=b/2bOU4q; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B2F5C4CEF8;
-	Fri, 10 Oct 2025 14:24:06 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1760106246;
-	bh=g/CCLFYJth2UWZIRrD9Q/CZFla4xPgWxZ+t6woi5ZUU=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=b/2bOU4qvv1Y1gvxd3uTWsxHGG33oTre9jFhgeoxJHjbyXyZAiS8W37Ctp154law9
-	 54a9B5TRQTsaKdqbxbcaZbhc71O2kbXk+qxLJznBInC0xTCSFNq8IZekTVfmvB+Zpr
-	 XufCbxrS0vI3UJGh6EJsuFsjZYufbIHU/CSQWU2O8xmb1Cc5pe0LNJDWrSukj3Syxc
-	 zs25Nn94Qrl4JxxfRaPIfa3v9ezQPVb3NVzzq55gVQPHk+j8JIO4CK5g5JMdIT3/FR
-	 tUeiA09ul6mTekNTbpDA0MiABz4wluy9gIQLe7NtT8aEhwlVuP4gvG/s9iCBdOynec
-	 c1LKn/XYNcT3g==
-Date: Fri, 10 Oct 2025 09:24:04 -0500
-From: "Rob Herring (Arm)" <robh@kernel.org>
-To: Sarthak Garg <sarthak.garg@oss.qualcomm.com>
-Cc: Bjorn Andersson <andersson@kernel.org>, quic_nguyenb@quicinc.com,
-	quic_nitirawa@quicinc.com, quic_bhaskarv@quicinc.com,
-	linux-arm-msm@vger.kernel.org, kernel@oss.qualcomm.com,
-	devicetree@vger.kernel.org, linux-mmc@vger.kernel.org,
-	quic_sayalil@quicinc.com, Konrad Dybcio <konradybcio@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, quic_rampraka@quicinc.com,
-	Ulf Hansson <ulf.hansson@linaro.org>, quic_pragalla@quicinc.com,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH V1 1/3] dt-bindings: mmc: sdhci-msm: Add sm8750 compatible
-Message-ID: <176010624404.239496.14425678947212580288.robh@kernel.org>
-References: <20251007054445.4096630-1-sarthak.garg@oss.qualcomm.com>
- <20251007054445.4096630-2-sarthak.garg@oss.qualcomm.com>
+	s=arc-20240116; t=1760107192; c=relaxed/simple;
+	bh=JLP84YwDYtnkcXuPlWz/96ycTDjsV2Qn2l1fDXZT63Y=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=uhe1fOG3RZ35+Ao1Z2eLQlSrC450FYMcILpjQMhdDh8FcxFpElySRQssvvBnA+bK5hmZXgqMYPblD5pM0DjzjBOsxY8rw+Us2JoqTY+xAxm4uR5wrIv0mQBWoVTcTSGQxqO6o/nSN94jI2CstcMrpubNOoz+hiC7iPcP964YTmA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=hEW/ICgG; arc=none smtp.client-ip=209.85.208.49
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-ed1-f49.google.com with SMTP id 4fb4d7f45d1cf-639102bba31so4276963a12.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 10 Oct 2025 07:39:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1760107189; x=1760711989; darn=vger.kernel.org;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=FwwnIs4n2nwe2j9PHCbA/jSqUczTe3Hq9okgytcenuo=;
+        b=hEW/ICgGgkkqUIBz6ZImRyOhnF8jcM3w2AmlQ4mAwVAN09pifbFLGkCdlYGVjHc7aw
+         cHopX6hMOz6C3ayn4+l4UXo49TsoK8gIrsH5yWKIxZvPNFozPWzN1YwhP+/3tUXjmnKI
+         ZXQnQvn5zmgdfnJ12+jvaWxTVjPiYObL7uzrjHGEvAm1HaML1/gFcvlWceQKbuDTJy6S
+         S8OhGawr/DH+vO4RqVEzQwdEv2svHrquyNoM/ggPAtlHuy1a4RvqeImYw1/FNOFzUYKk
+         QtswCFkY/ItSIXRh71LySNRRmG+YNba6eRM2gTsSrWxJ3YYzuneBsmmXWtBKcMbZuXyi
+         bVnQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1760107189; x=1760711989;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=FwwnIs4n2nwe2j9PHCbA/jSqUczTe3Hq9okgytcenuo=;
+        b=u0kkI7YlT6N3hqqba26PmZNxIfwiATUZcTcaaGEM7xSBPFBifMucQUS84bWvcMBYBw
+         AD81I2VMo88g0YkJ5aAP97HOsVauZ9bBuKqr6f4INOZftStpREQEB6QMZ60wOylbPk+K
+         tc/E9vvqK5qyAbGR/zDG6DJ536uDjfW+UHbg8/57Q4HDsI8nK+pePhuErt6tRl48tdcg
+         +2xBSucd9aJU4vUoCR1BA2mScN7yK+sGFvYIVz5K3iBcGVHgvirBKiGFI5RTgL0UzXyF
+         lY979AktJDS3e//59Os9n5tdiwT8qTnpo93hIIM9OdDT/k0CCjAWuvILzXU76BbCw9/3
+         2Y8Q==
+X-Gm-Message-State: AOJu0YxSNA1joYNGKCsKIZyJFM67QpvpKjuOeexYHTqeBXOSRVvBGTQJ
+	O0VI5e4D7mAo7eNwgzCmI9snVUw+eCI+8R+cB8KorJEyeAQPcLVavz4=
+X-Gm-Gg: ASbGncvmJ8Pzsuz/w1lGAmWmYn+CWX3QjV6VyBAv5a3CEjHLME+/DyNGx0H6VNZqxGY
+	kMsKCF+0rIJMKbUob3zMwT4PL1baZB/PDUfgH0qkH6R5B8SIXqYVOHgOGWbmxj6QEc+kRSFSe/s
+	rwoistyPXnNd9mxTDKTXoWl5EOxJA6dk11AjuXPVqoYAAyDvxw4/fLF0u7jbSMifgpVKrq2GeBb
+	9JIXkWtEsp1lP4jWLx0kBQmqLIyN0yJOSkvAF72MAxCLDwemN/laj9lMsEUnEsedFO+u3lpXreM
+	J7/Oo5ngHCHMlj8hUEStqsmdjPFkm4Ul9sKHnKR8YScKZJD6mxfcn36/3lmfEpXM08BV2GNqtss
+	ZuU+6H2IU/On0YyULdtK+QXfn8K0LlPQpbBaQl+KM0ZFs8frPeB+c4wv+pNs9xLed0oMojCRZIa
+	XQ3M8YSIwu6iItoE7qbVMamkh1p5IHNjBTn0IBbxz/y/Ugv2E=
+X-Google-Smtp-Source: AGHT+IGOxrusc6smb8SBR5+x6xl3cRKldjSb/YyljGP/mQFy81n104iuywGj7F8eOKDVZgA1+4ttoA==
+X-Received: by 2002:a05:6402:50d1:b0:634:a32f:abbc with SMTP id 4fb4d7f45d1cf-639d5c53171mr10356947a12.25.1760107188733;
+        Fri, 10 Oct 2025 07:39:48 -0700 (PDT)
+Received: from [192.168.1.17] (host-79-26-169-51.retail.telecomitalia.it. [79.26.169.51])
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-63a5c321453sm2488482a12.39.2025.10.10.07.39.47
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 10 Oct 2025 07:39:48 -0700 (PDT)
+From: Anna Maniscalco <anna.maniscalco2000@gmail.com>
+Date: Fri, 10 Oct 2025 16:39:13 +0200
+Subject: [PATCH v2] drm/msm: make sure last_fence is always updated
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20251007054445.4096630-2-sarthak.garg@oss.qualcomm.com>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20251010-close_fence_wait_fix-v2-1-adb332dbff65@gmail.com>
+X-B4-Tracking: v=1; b=H4sIAJAa6WgC/22NQQqDMBREryJ/3ZT8WBd21XsUkZCM+kFNScS2i
+ HdvKl12+R7Mm40SoiDRtdgoYpUkYc5gTgW5wc49lPjMZLSpWOtauTEktB1mh/ZpZWk7eSmtwc5
+ UhgFQnj4isj6y9ybzIGkJ8X28rPy1vyDr/8GVFavOlyjri3fW+1s/WRnPLkzU7Pv+AXHhIvu4A
+ AAA
+X-Change-ID: 20251009-close_fence_wait_fix-00e1c2521eee
+To: Rob Clark <robin.clark@oss.qualcomm.com>, 
+ Dmitry Baryshkov <lumag@kernel.org>, 
+ Abhinav Kumar <abhinav.kumar@linux.dev>, 
+ Jessica Zhang <jessica.zhang@oss.qualcomm.com>, Sean Paul <sean@poorly.run>, 
+ Marijn Suijten <marijn.suijten@somainline.org>, 
+ David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, 
+ Antonino Maniscalco <antomani103@gmail.com>
+Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, 
+ freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org, 
+ Anna Maniscalco <anna.maniscalco2000@gmail.com>
+X-Mailer: b4 0.14.2
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1760107187; l=1927;
+ i=anna.maniscalco2000@gmail.com; s=20240815; h=from:subject:message-id;
+ bh=JLP84YwDYtnkcXuPlWz/96ycTDjsV2Qn2l1fDXZT63Y=;
+ b=r93EYYuxOS7qVpQn9TokcRRHfgbS1UN9XfMZSXufiJ35KVgn9pUtggYZJti3JgShe7zze7EqV
+ sbCZEmnUlg6CLUfVvrDIgKLtFk5jdMJy033dsQQyz3R0nViU5K6XefK
+X-Developer-Key: i=anna.maniscalco2000@gmail.com; a=ed25519;
+ pk=0zicFb38tVla+iHRo4kWpOMsmtUrpGBEa7LkFF81lyY=
 
+Update last_fence in the vm-bind path instead of kernel managed path.
 
-On Tue, 07 Oct 2025 11:14:43 +0530, Sarthak Garg wrote:
-> Document the compatible string for the SDHCI controller on the
-> sm8750 platform.
-> 
-> Signed-off-by: Sarthak Garg <sarthak.garg@oss.qualcomm.com>
-> ---
->  Documentation/devicetree/bindings/mmc/sdhci-msm.yaml | 1 +
->  1 file changed, 1 insertion(+)
-> 
+last_fence is used to wait for work to finish in vm_bind contexts but not
+used for kernel managed contexts.
 
-Acked-by: Rob Herring (Arm) <robh@kernel.org>
+This fixes a bug where last_fence is not waited on context close leading
+to faults as resources are freed while in use.
+
+Fixes: 92395af63a99 ("drm/msm: Add VM_BIND submitqueue")
+---
+Signed-off-by: Anna Maniscalco <anna.maniscalco2000@gmail.com>
+---
+Changes in v2:
+- Only update last_fence on vm_bind path
+- Link to v1: https://lore.kernel.org/r/20251010-close_fence_wait_fix-v1-1-fd3e394dcadd@gmail.com
+---
+ drivers/gpu/drm/msm/msm_gem_submit.c | 9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
+
+diff --git a/drivers/gpu/drm/msm/msm_gem_submit.c b/drivers/gpu/drm/msm/msm_gem_submit.c
+index 3ab3b27134f93b01236fec5833a18a6e2ad2cf5e..75d9f357437006ff261db148901e176eae670d41 100644
+--- a/drivers/gpu/drm/msm/msm_gem_submit.c
++++ b/drivers/gpu/drm/msm/msm_gem_submit.c
+@@ -414,6 +414,11 @@ static void submit_attach_object_fences(struct msm_gem_submit *submit)
+ 					 submit->user_fence,
+ 					 DMA_RESV_USAGE_BOOKKEEP,
+ 					 DMA_RESV_USAGE_BOOKKEEP);
++
++		last_fence = vm->last_fence;
++		vm->last_fence = dma_fence_unwrap_merge(submit->user_fence, last_fence);
++		dma_fence_put(last_fence);
++
+ 		return;
+ 	}
+ 
+@@ -427,10 +432,6 @@ static void submit_attach_object_fences(struct msm_gem_submit *submit)
+ 			dma_resv_add_fence(obj->resv, submit->user_fence,
+ 					   DMA_RESV_USAGE_READ);
+ 	}
+-
+-	last_fence = vm->last_fence;
+-	vm->last_fence = dma_fence_unwrap_merge(submit->user_fence, last_fence);
+-	dma_fence_put(last_fence);
+ }
+ 
+ static int submit_bo(struct msm_gem_submit *submit, uint32_t idx,
+
+---
+base-commit: b5bad77e1e3c7249e4c0c88f98477e1ee7669b63
+change-id: 20251009-close_fence_wait_fix-00e1c2521eee
+
+Best regards,
+-- 
+Anna Maniscalco <anna.maniscalco2000@gmail.com>
 
 
