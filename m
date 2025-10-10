@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-76754-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-76755-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ams.mirrors.kernel.org (ams.mirrors.kernel.org [213.196.21.55])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3BFBDBCB476
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Oct 2025 02:28:22 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id E8CCBBCB487
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Oct 2025 02:33:14 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ams.mirrors.kernel.org (Postfix) with ESMTPS id 8D33F34FE61
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Oct 2025 00:28:21 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id D4EB519E62EC
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Oct 2025 00:33:37 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 184001DE2D8;
-	Fri, 10 Oct 2025 00:28:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 87468190664;
+	Fri, 10 Oct 2025 00:33:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="PAyCuDQE"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="c8TSKr/0"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBDF24414;
-	Fri, 10 Oct 2025 00:28:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 537CB2868B;
+	Fri, 10 Oct 2025 00:33:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760056097; cv=none; b=el+oG6HS8hGQD3c24znWAUqBMzrS8zUjlOJMhdSfKbphzL8HZHy8GCbak3MKLkL304hoc9a143f4OuxaPgyA/IX7THfC4NZaLMlXrHmJWuFyBbZCixkOqMOMQ9CkOo1iFQ+qL4JDuh+b/B7XvUN5O+g7r/FNXhtsM77MiOZZhfk=
+	t=1760056389; cv=none; b=LCMJXgkXNOVmJkdgBDkobCOkHIRc5NJkZHO44HcnjfB4c0mrfqv3NYBR7xFfV9+lv12sxIc0aDIzp1wD5/HX2j+6GRbBMx8xd2Zo58K2EFXkvuWu63qVJFY0Lck+wsGnqTR0NOgEkvYrO21Y6O5yzCOYnaw+3DHAikgmv04tR0E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760056097; c=relaxed/simple;
-	bh=r+IB3bjlxVE4UZfdyGBoACXcUzSfEz6TRkoXVY68f5o=;
+	s=arc-20240116; t=1760056389; c=relaxed/simple;
+	bh=xsZLpUTd6ZTK65e7bMtoQS9JRzxyuvAYRVqbj4aTgek=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=CD+9jy8n77cdKesWoapI9YPX4Wp/BugbMe/Fzp+bLaUzkctKJRU3UDX/CD/7JTL60/JN6UgyWOmsEPraFm1Svi6YC1Weirh85+iMpzA0ZvaGJ9EEpqHFRVkrIHcp9/qHsGJcYkxIySOremIW4HfJxISP25PtAEqJheSWtU4fO+Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=PAyCuDQE; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CAA6FC4CEE7;
-	Fri, 10 Oct 2025 00:28:09 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=t73MKSstEVVeF4jaXeA3/3la0CSi29TRGcQHMOWWmhccltPx3t+t2IYTygo58xV+eV9y73LYVirXm7ysALFJgyQwIK/o4zSJovUiP/Z0GKeXPHadLGWwIMpFQzm2vFOL5ZNzYFOFAw7G5DzTJySbSyKN1xVH2guXQhL6qM96CNg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=c8TSKr/0; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 919CCC4CEE7;
+	Fri, 10 Oct 2025 00:33:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1760056096;
-	bh=r+IB3bjlxVE4UZfdyGBoACXcUzSfEz6TRkoXVY68f5o=;
+	s=k20201202; t=1760056388;
+	bh=xsZLpUTd6ZTK65e7bMtoQS9JRzxyuvAYRVqbj4aTgek=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=PAyCuDQEI/Iez0kOq+6ZIe5Etk9PdQaLRaDnif7p1u8MIZxk98HwwHnuPCeU11jjV
-	 DVhPX0JKlkxAUFWA2aJzAkCR5t+KlwHb5pvVvPsVGchpMXvSXRlMPSUAJH+4ZqV6B6
-	 tNBX+IZ/t5bO0V9VCijGdHULR1GyhUEZB4QWDJqM6T7UZq9SEc6wVZ+ZtXWXix2UsC
-	 7pV07CHhjdO7hYPAUorp5iYh27h/Kd//jbUpQ+Zzr+Q/wOiCzqc4RhwHnp3W7czS+t
-	 MnHINBZrz2htlhGLGzV1d/JdXwsGvu9TS6dlfu2ve7bNaPfWFjZfFwm3nvF3j/Lu9O
-	 t/is5fPshPGxw==
-Message-ID: <d6fda12d-a334-4243-b71c-463c36e5298e@kernel.org>
-Date: Fri, 10 Oct 2025 02:28:06 +0200
+	b=c8TSKr/0t/FbqVip1LLM9ZPZciprfQ0o2wwRdgt3GGqMcCClwQ6ebY+jCMHLIhGn0
+	 gvOl3s2/JFpLPiDXpqAtz7/qGaflEUx9Ams22/MYw3zMFr0m3IdU65wQV6hfX5BFpw
+	 DEdxvdx1IuVR4igsEACUDOAhQiRLyd+WVqMSk8XUtLqwSk8iWwWCif0VoIQx3VFoBZ
+	 MgPl8+bnUQxSJPuTNw3qfW4EC26fqG2jhuDFIIVl8eGEFcE2Bzi/BaEkQGIYEB/M3l
+	 obqAb3QqiEclT/yAJf6QtIWlZZVToq2Q/yBM3XP2xHvUqeGGsfZw42jngSbAcb634T
+	 m2wXpxQLW8fkg==
+Message-ID: <b79fd81a-e127-4558-8732-3adebb8ab2c6@kernel.org>
+Date: Fri, 10 Oct 2025 02:33:02 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,23 +50,18 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 4/5] dt-bindings: soundwire: qcom: Add SoundWire v2.2.0
- compatible
-To: Prasad Kumpatla <prasad.kumpatla@oss.qualcomm.com>,
- Srinivas Kandagatla <srini@kernel.org>, Liam Girdwood <lgirdwood@gmail.com>,
- Mark Brown <broonie@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Jaroslav Kysela <perex@perex.cz>,
- Takashi Iwai <tiwai@suse.com>, Rao Mandadapu <quic_srivasam@quicinc.com>
-Cc: linux-arm-msm@vger.kernel.org, linux-sound@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- kernel@oss.qualcomm.com, aiqun.yu@oss.qualcomm.com,
- tingwei.zhang@oss.qualcomm.com, trilok.soni@oss.qualcomm.com,
- yijie.yang@oss.qualcomm.com, jingyi.wang@oss.qualcomm.com,
- konrad.dybcio@oss.qualcomm.com,
- Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-References: <20251009143644.3296208-1-prasad.kumpatla@oss.qualcomm.com>
- <20251009143644.3296208-5-prasad.kumpatla@oss.qualcomm.com>
+Subject: Re: [PATCH v2 1/2] dt-bindings: spmi: add bindings for
+ glymur-spmi-pmic-arb (arbiter v8)
+To: Kamal Wadhwa <kamal.wadhwa@oss.qualcomm.com>,
+ Stephen Boyd <sboyd@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+ devicetree@vger.kernel.org, Jishnu Prakash
+ <jishnu.prakash@oss.qualcomm.com>,
+ David Collins <david.collins@oss.qualcomm.com>,
+ Pankaj Patil <pankaj.patil@oss.qualcomm.com>
+References: <20250924-glymur-spmi-v8-v2-0-202fc7a66a97@oss.qualcomm.com>
+ <20250924-glymur-spmi-v8-v2-1-202fc7a66a97@oss.qualcomm.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -112,23 +107,114 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  jWt87ecuHlpL3uuQ0ZZNWqHgZoQLXoqC2ZV5KrtKWb/jyiFX/sxSrodALf0zf+tfHv0FZWT2
  zHjUqd0t4njD/UOsuIMOQn4Ig0SdivYPfZukb5cdasKJukG1NOpbW7yRNivaCnfZz6dTawXw
  XRIV/KDsHQiyVxKvN73bThKhONkcX2LWuD928tAR6XMM2G5ovxLe09vuOzzfTWQDsm++9UKF a/A=
-In-Reply-To: <20251009143644.3296208-5-prasad.kumpatla@oss.qualcomm.com>
+In-Reply-To: <20250924-glymur-spmi-v8-v2-1-202fc7a66a97@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 09/10/2025 23:36, Prasad Kumpatla wrote:
-> Add qcom,soundwire-v2.2.0 to the list of supported Qualcomm
-> SoundWire controller versions. This version falls back to
-> qcom,soundwire-v2.0.0 if not explicitly handled by the driver.
+On 24/09/2025 01:57, Kamal Wadhwa wrote:
+> From: Jishnu Prakash <jishnu.prakash@oss.qualcomm.com>
 > 
-> Signed-off-by: Prasad Kumpatla <prasad.kumpatla@oss.qualcomm.com>
-> Signed-off-by: Jingyi Wang <jingyi.wang@oss.qualcomm.com>
+> SPMI PMIC Arbiter version 8 builds upon version 7 with support for
+> up to four SPMI buses.  To achieve this, the register map was
 
-Wrong DCO chain.
 
-> Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+A nit, subject: drop second/last, redundant "bindings for". The
+"dt-bindings" prefix is already stating that these are bindings.
+See also:
+https://elixir.bootlin.com/linux/v6.17-rc3/source/Documentation/devicetree/bindings/submitting-patches.rst#L18
 
-I reviewed previous patch which was not sent by you.
+> slightly rearranged.  Add a new binding file and compatible string
+> for version 8 using the name 'glymur' as the Qualcomm Technologies,
+> Inc. Glymur SoC is the first one to use PMIC arbiter version 8.  This
+> specifies the new register ranges needed only for version 8.
+> 
+> Signed-off-by: David Collins <david.collins@oss.qualcomm.com>
+> Signed-off-by: Jishnu Prakash <jishnu.prakash@oss.qualcomm.com>
+> Signed-off-by: Pankaj Patil <pankaj.patil@oss.qualcomm.com>
+> Signed-off-by: Kamal Wadhwa <kamal.wadhwa@oss.qualcomm.com>
+> ---
+>  .../bindings/spmi/qcom,glymur-spmi-pmic-arb.yaml   | 158 +++++++++++++++++++++
+>  1 file changed, 158 insertions(+)
+> 
+> diff --git a/Documentation/devicetree/bindings/spmi/qcom,glymur-spmi-pmic-arb.yaml b/Documentation/devicetree/bindings/spmi/qcom,glymur-spmi-pmic-arb.yaml
+> new file mode 100644
+> index 0000000000000000000000000000000000000000..e80997a5fb4bcf59328e49c8b3e68c9511176a8c
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/spmi/qcom,glymur-spmi-pmic-arb.yaml
+> @@ -0,0 +1,158 @@
+> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+> +%YAML 1.2
+> +---
+> +$id: http://devicetree.org/schemas/spmi/qcom,glymur-spmi-pmic-arb.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> +
+> +title: Qualcomm Technologies, Inc. Glymur SPMI Controller (PMIC Arbiter v8)
+> +
+> +maintainers:
+> +  - Stephen Boyd <sboyd@kernel.org>
+
+
+I don't think so, why would Stephen care about Glymur? Did I miss some
+job change? And if I did not miss, then when you don't want to maintain
+your own stuff, neither we want.
+
+> +
+> +description: |
+> +  The Glymur SPMI PMIC Arbiter implements HW version 8 and it's an SPMI
+> +  controller with wrapping arbitration logic to allow for multiple on-chip
+> +  devices to control up to 4 SPMI separate buses.
+> +
+> +  The PMIC Arbiter can also act as an interrupt controller, providing interrupts
+> +  to slave devices.
+> +
+> +properties:
+> +  compatible:
+> +    enum:
+> +      - qcom,glymur-spmi-pmic-arb
+> +
+> +  reg:
+> +    items:
+> +      - description: core registers
+> +      - description: tx-channel per virtual slave registers
+> +      - description: rx-channel (called observer) per virtual slave registers
+> +      - description: channel to PMIC peripheral mapping registers
+> +
+> +  reg-names:
+> +    items:
+> +      - const: core
+> +      - const: chnls
+> +      - const: obsrvr
+> +      - const: chnl_map
+> +
+> +  ranges: true
+> +
+> +  '#address-cells':
+> +    const: 2
+> +
+> +  '#size-cells':
+> +    const: 2
+> +
+> +  qcom,ee:
+> +    $ref: /schemas/types.yaml#/definitions/uint32
+> +    minimum: 0
+> +    maximum: 5
+> +    description: >
+
+Drop >
+
+> +      indicates the active Execution Environment identifier
+> +
+> +  qcom,channel:
+> +    $ref: /schemas/types.yaml#/definitions/uint32
+> +    minimum: 0
+> +    maximum: 5
+> +    description: >
+
+Drop >
+
+> +      which of the PMIC Arb provided channels to use for accesses
+> +
+
 
 Best regards,
 Krzysztof
