@@ -1,348 +1,157 @@
-Return-Path: <linux-arm-msm+bounces-76789-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-76790-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id E30B8BCCDA6
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Oct 2025 14:19:53 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id B7336BCCE5E
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Oct 2025 14:30:07 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id ECBB5189D142
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Oct 2025 12:20:16 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 67DC91A662C9
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Oct 2025 12:30:30 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DCD6F23E347;
-	Fri, 10 Oct 2025 12:19:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 470E32EFD8F;
+	Fri, 10 Oct 2025 12:29:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="babjanoT"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="DRZMrdRV"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f46.google.com (mail-wm1-f46.google.com [209.85.128.46])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4709023D7FC
-	for <linux-arm-msm@vger.kernel.org>; Fri, 10 Oct 2025 12:19:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A2642EF66D
+	for <linux-arm-msm@vger.kernel.org>; Fri, 10 Oct 2025 12:29:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760098790; cv=none; b=rVObUHasQUJe6a0sqcZ4GYtaRwDKbb6PmOA2QlY7Dm9wroWGhRpruQdPXigXe5+o8GQVY1akqxNLACEDRbj5HoQUPaMmOYBbd005/3uPd3dw8miJJno02cO1UjBoCknObURejFVC5nfVlq/Y6IdyxgGpHjdjLWa3pczZuA9Rygo=
+	t=1760099383; cv=none; b=QpmRfw1byPSZmM2a0EeKeG7jlOi+i7K2EZVoYHbIj23h2dzzQ4LKP9gQODjbwy0mA0HSyFvgwbqSFfB7ZI8y7/FN329MQZfKaQIMrl4rmRgzw3V0WLwLfg/PZsJSYxcAVJ45eiFfcjRjHJ5mR/Bm7k+WN5JULWoLHzIB0Ii7Dn0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760098790; c=relaxed/simple;
-	bh=HT+JCCqaZ1q90NmqpixoMzg8teS2H4eFeALphqxd/Cw=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=JZ5lPaNtJCUrnvxjPkbfFhTudketcdjrhT62LWYrUwEEnGyrCII18vQG75pPDp9BSU3Qlibe8EK3LFmIcY+WTDX7oU+cY+UbtKVZ8LeUOdB5hWZ4KTgbxCcBcJvG6OmDPAfx8kvfLvgt+jZeCX/ygjcRnZxqTOcmS4CNKCmGCEA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=babjanoT; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 59A6WxaR032492
-	for <linux-arm-msm@vger.kernel.org>; Fri, 10 Oct 2025 12:19:48 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to; s=qcppdkim1; bh=lvFWwKyOCjvPuAG00qQuUT8b
-	fdOszIjBy5BDHZQzJX8=; b=babjanoTp4TUypi+xWk97cg1DH6GCJNjyr/q8ThQ
-	urEBzNyGtRJvPlDvgCxy3zf9D+0aCAzImF0rzrt7F28t5fKdyqWrwB1P2NcXNZhy
-	GbFuQnKxfXOzDCgF/UGTc4rTexjR94cLcQet9q/kZRlTA18uTDAsbzPiP0akrkxj
-	65a1WAZzIuaG/RZ97loo4BDMb6bnjvXYgZUZdS1oGj8bs5JdohULycIMPlCvgow6
-	pK80mLG7HY3Glo8Mx52fPsEuq4JpQd/FXTbqSrI6muMJYzZp7Id1lrIGvRXAkp9s
-	Cga+GU94eAvQaJ8J4FmGXYhX5M1oO50ueYUDyKGQJFHKTg==
-Received: from mail-qt1-f197.google.com (mail-qt1-f197.google.com [209.85.160.197])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 49nv4kx9eq-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Fri, 10 Oct 2025 12:19:48 +0000 (GMT)
-Received: by mail-qt1-f197.google.com with SMTP id d75a77b69052e-4df7cdf22cbso142645251cf.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 10 Oct 2025 05:19:48 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1760098787; x=1760703587;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+	s=arc-20240116; t=1760099383; c=relaxed/simple;
+	bh=m1wtM/Q36F3ke3zT/mN2EGUWRd5HFQIpRI6HpOMa2zE=;
+	h=Mime-Version:Content-Type:Date:Message-Id:From:To:Cc:Subject:
+	 References:In-Reply-To; b=rwjGuR5E/BcudpXDDZJwwHP3UzPYTuoyYissec4HMG+fU9I0Xh002IC0FbJLDZ8GVRecff9fxdWOCQBofprqXpM99BuKWcV11Pxtme5AiW8J2tM93srqJa/I1F53qP0fqeRAkpxe0ZbjMXUE++f4134P4ibKEY7LGeqUuxfPxck=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=DRZMrdRV; arc=none smtp.client-ip=209.85.128.46
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wm1-f46.google.com with SMTP id 5b1f17b1804b1-46e2e6a708fso13381275e9.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 10 Oct 2025 05:29:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1760099379; x=1760704179; darn=vger.kernel.org;
+        h=in-reply-to:references:subject:cc:to:from:message-id:date
+         :content-transfer-encoding:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=lvFWwKyOCjvPuAG00qQuUT8bfdOszIjBy5BDHZQzJX8=;
-        b=uI1tw5MjYFcd2j316tefa0DmcGVMM1y+euyZN3ulwG8ZHM4bgId3urEnwYsIrNNzTO
-         W2iG4zbo83vc9VacvUnWcLJgp82S5ACB++THYSnTWfZDhbYqeLWcBoeaEH4LV+O92yPn
-         qmrUXQ/3o5KIxPIh9qsgfFJtXoiGnieGfGcIrwDqgHaHLDtRTHKmFc8K2Isr1mMl4Njq
-         6iTNibF8Qsw0ltBEvd/b2DhoLIK4jItKMe4RxiftGjDCdjZ/gBehenMGD3sQjfseizIY
-         RsTZ/fzgHaLWeUG1sULo+g2DQLlf2LeJTYm7JQqwRB0EButTgFNU0/HhKHGQTViITRgs
-         IphQ==
-X-Forwarded-Encrypted: i=1; AJvYcCVEIS9JpyrC6dPXPaY105S+UbIj7CNC4g4KMYw3qqWrOf16gR4kAmCNAFdti47VSPq3Fgz/IEVXHKUj8OfX@vger.kernel.org
-X-Gm-Message-State: AOJu0Yzb8VviJ3cS3/U9oCy2yYQugWW0ObyC7wp2xQ0zkn2gOYqPwkkd
-	p0hUtC9dw2xvw8m9ZjcTz+8ryLl/+UoycdwYYW6V6dtaFSYpeIyuJoFgma4KTKrygwFfpbRIQzB
-	7Gy+cAiniNuS8deHGAu74o2GhjuiMN+mNyXqX+uuIdLeQMTMtrvcf8aToJIKVS0TclWop
-X-Gm-Gg: ASbGncuQcn3VoakNu2ouwjtwfSh7ztWlTWXZK6h6KSqzN6Q7swrdut24pe0eAMWLtJ3
-	meqNoSQBJkKbyz4G+3KcRqU5YUbx4LCh51Q0OfcHchzNGJFDkPf9K8EG/YpIQTJroB74ABD/RqH
-	NY8k7oEzsx3+4kXoF5KMv/hsuEnwgAZusA/CJ84o+CtL2NFjP0JfrMHZYnQ+vm4+8UaUhRhFSrd
-	iDDdxEGal4jeGIcJLJmycTcAZBZ6jrOaWIcJ7fOZAAOeysemu/a7e//vnH1ZEsY0lZyJMiLxteG
-	POH2J3n/QAj0e6RjLuU9GNmDIvd8iVi12NXXVC0FCxMjBhFUBkZwWhdwXPbDIAirJuD/VJqrYe9
-	fTMOuE5dF/pQarIuan3BdRNryREtURkxAfP8pTFBEl0H+LLRHjsSB
-X-Received: by 2002:a05:622a:1651:b0:4b7:a1b6:cf29 with SMTP id d75a77b69052e-4e6de928b64mr200323501cf.41.1760098786949;
-        Fri, 10 Oct 2025 05:19:46 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEqF3OeFFz961cC5H5LveXGud7hymmIq4uOMYlN8XBu2oeW98QjyLegjaL0mcBo3AoEoWwaPA==
-X-Received: by 2002:a05:622a:1651:b0:4b7:a1b6:cf29 with SMTP id d75a77b69052e-4e6de928b64mr200323071cf.41.1760098786419;
-        Fri, 10 Oct 2025 05:19:46 -0700 (PDT)
-Received: from umbar.lan (2001-14ba-a0c3-3a00-264b-feff-fe8b-be8a.rev.dnainternet.fi. [2001:14ba:a0c3:3a00:264b:feff:fe8b:be8a])
-        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-3762e77ca04sm5952731fa.4.2025.10.10.05.19.45
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 10 Oct 2025 05:19:45 -0700 (PDT)
-Date: Fri, 10 Oct 2025 15:19:43 +0300
-From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-To: Sudarshan Shetty <tessolveupstream@gmail.com>
-Cc: andersson@kernel.org, konradybcio@kernel.org, robh@kernel.org,
-        krzk+dt@kernel.org, conor+dt@kernel.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2 2/2] arm64: dts: qcom: Add support for QCS615 talos
- evk board
-Message-ID: <q32oj6ry7ixulfaxzkm63nidg7ddmdl2moaakmx6rlv77p3wzl@wd2ekastvyms>
-References: <qq4aak33bn3mqxd2edu6zgkkshby63mmitg7zqkly2rj4c2lh7@4s7sndb7e2jr>
- <20251010114745.1897293-1-tessolveupstream@gmail.com>
- <20251010114745.1897293-2-tessolveupstream@gmail.com>
+        bh=vYMGQwZbrkqXXfmRn4FZdpSz5oqSucZM1pi40huO1ec=;
+        b=DRZMrdRV+Z7AOt2j3NT/pgUP4UzEXdxIMgHs7HJiAigBN8Yr//Fyi5ghKZLVI0KMr3
+         vhCnf9VSuH+vryIkrv2rC77HULFvgki0QuED2mD4cExxEc4h6sOCOlofOLHEWg46sCRp
+         TGl5nPoI67IHz+TmR/v4ARQo5MlUbtD+aWLjOHCWE9BfM5aht7ia+Cg9j819ea6TVC1o
+         czF5uB7FK2+9iFgyoVe+MsvdILYnaANCXdbrKZXzaAgXtUAO9QWymKObPF1Mk/xLsMRB
+         wI9JFgvUOf5z3i0PDsOlgmoyFA+o00csP/DY6IYojpg99CeZ0QjSoJtdDu3+vZ5UT+GK
+         Rwrw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1760099379; x=1760704179;
+        h=in-reply-to:references:subject:cc:to:from:message-id:date
+         :content-transfer-encoding:mime-version:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=vYMGQwZbrkqXXfmRn4FZdpSz5oqSucZM1pi40huO1ec=;
+        b=NMHy6ecLXEFBAt7Fq6zgL6zwwu7ShUIOG2hoKL1Nk7O5zcowogrRxsqWCmklp9s+g6
+         ub1DAdSHshEUR5LPLACEVOpbMN+G6Q5QlrJ8Q++xRTwZjoJvegd2Xcmw/VmG52hRTgi3
+         FRIor+6rkZyCOCfVQDcxlqoK2fDZRHCBg0r4hmewC/IDHrUAaHfORmbc7otpmccsC+hY
+         g1plWd/pkP9Zfd2/1K0+kdyQaIUyLZ9q1ftrjlO4/Sv+dENNk4xu1LBeP2dxuKlAvMa1
+         hTg0jJAnKb8OeO4gJwHk21wGXM9BWndhDNoP9GrInb/06Hk7O20Hw/TV6NUJiBZ9bWim
+         6RfQ==
+X-Forwarded-Encrypted: i=1; AJvYcCWc03FLBp/cFmd+rH45nbV/1iOXBnbYrMttB+VfP+Y4239AVnwVn29K53G6nl7KUSmE+9LDB9550Kog6+Xc@vger.kernel.org
+X-Gm-Message-State: AOJu0YwAVy7E+CAvoAteuUefQil3YnwZmn/iMbC2OXmFc/u3VL2solCu
+	9MQ15gOBi7KMx1TOWgvZh6ze2Q2+OE5IXAY0GxnCQT7PYmMaBkL84adqfcP53tb6CIs=
+X-Gm-Gg: ASbGncsSAjE7IQCj8NnVRHbCBAr47zHgIO8DuFeHUXcQDfo3Hq7SN9m1H+cuBkfMwYQ
+	7Qpb3/MSpaTHxPmEN/NXYI9MuvRHO8aMC4V9RdvilR929EbTVESwOe5B3vLoyQmpAiG3s4l0UvD
+	6ZiJGkL+qW/99HputBrhc/L8zezkzGJjjT+xAOEkp9mOa+VBcZ4IULM3b6fgUjLmc0BlKCJQBjs
+	9sXa3IyQNZ23OF+Y/tV9Zn3IuGp1yDLuxbmpNfCFO+J60P+tUk78Q0YdUydL+3skYMVccWGL08i
+	PkIqbCEimAVOLHHw2b17GZAygBkIzdhGL6nkL3bxbEk402JdaCftDuWOHPgPSfG3skQRXywIMTK
+	/Xp7p44JxE+g71BXDZu7dy0UzjDGVGhJCKOfQr96WA0Dt3ar0bmNxTl9iwH98ygNLgIMzaog=
+X-Google-Smtp-Source: AGHT+IGoFKx9FL3rwMgBVIjzsX+nvkrUpEkSRitHHR0xBr1fRpbwIRCWVFTLZ13CTdC6I1m0m5CVFw==
+X-Received: by 2002:a05:600c:34c2:b0:46e:21c8:ad37 with SMTP id 5b1f17b1804b1-46fa9b06d3dmr72900375e9.25.1760099379460;
+        Fri, 10 Oct 2025 05:29:39 -0700 (PDT)
+Received: from localhost (054722ac.skybroadband.com. [5.71.34.172])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-46fab3e3520sm62462795e9.2.2025.10.10.05.29.38
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 10 Oct 2025 05:29:38 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20251010114745.1897293-2-tessolveupstream@gmail.com>
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDA4MDEyMSBTYWx0ZWRfX+0vJbQD3/+uQ
- OKssZhj2ymEDMwu9Q+qVnDZfS7btS3MJhbdJyZbOgMV+VKp6h7IPn47D+qEVPkR/1jw2Xf5Mb3B
- 6TSjKsdgryvdx+17GDX1Jjb0SjBqn0vpux0aHC/2DYg53ibS1wVAS/E4Km7imKmhiQUfMjipgN1
- OaJ/I30YfBUCsIj9yVr2M7x/qC9GYnmtDTpuhrlftSnKP2pXQkrbP4c9cysAiNGFquS4Obzmvk8
- KB0NPpHtF08uXbHtfwx/0fS6T42f2uo2a6pW8BXQoMZZKa2WOaAmS1DVWE4ftQvsZfJkRji+Lky
- XT8PCC1Yw4bzaRdsGvRhBuI2hQxEe0v+EXnztG/ngc+XT8hAMBfB9eNRwz6zcleIaLtT42yJL7L
- /1L3ldDuX3oJVJSTAygIqvqkc8Bo0g==
-X-Authority-Analysis: v=2.4 cv=CbcFJbrl c=1 sm=1 tr=0 ts=68e8f9e4 cx=c_pps
- a=EVbN6Ke/fEF3bsl7X48z0g==:117 a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10
- a=x6icFKpwvdMA:10 a=pGLkceISAAAA:8 a=2vav2hW6rFjcptNlzBEA:9 a=CjuIK1q_8ugA:10
- a=a_PwQJl-kcHnX1M80qC6:22
-X-Proofpoint-GUID: 4FP4wfIJpFYOM0-YD6G4PHaAbZA5YTIG
-X-Proofpoint-ORIG-GUID: 4FP4wfIJpFYOM0-YD6G4PHaAbZA5YTIG
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1117,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-10-10_02,2025-10-06_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- adultscore=0 priorityscore=1501 malwarescore=0 spamscore=0 impostorscore=0
- lowpriorityscore=0 bulkscore=0 clxscore=1015 phishscore=0 suspectscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2510020000 definitions=main-2510080121
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Fri, 10 Oct 2025 13:29:38 +0100
+Message-Id: <DDEN5NSLDIHD.C1IELQW0VOG3@linaro.org>
+From: "Alexey Klimov" <alexey.klimov@linaro.org>
+To: "Konrad Dybcio" <konrad.dybcio@oss.qualcomm.com>, "Bjorn Andersson"
+ <andersson@kernel.org>, "Linus Walleij" <linus.walleij@linaro.org>, "Rob
+ Herring" <robh@kernel.org>, "Krzysztof Kozlowski" <krzk+dt@kernel.org>,
+ "Conor Dooley" <conor+dt@kernel.org>, "Konrad Dybcio"
+ <konradybcio@kernel.org>, "Srinivas Kandagatla" <srini@kernel.org>
+Cc: "Dmitry Baryshkov" <dmitry.baryshkov@oss.qualcomm.com>,
+ <linux-arm-msm@vger.kernel.org>, <linux-gpio@vger.kernel.org>,
+ <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+ <linux-sound@vger.kernel.org>
+Subject: Re: [PATCH v2 3/4] arm64: dts: qcom: qcm2290: add LPASS LPI pin
+ controller
+X-Mailer: aerc 0.20.1
+References: <20251007-rb1_hdmi_audio-v2-0-821b6a705e4c@linaro.org>
+ <20251007-rb1_hdmi_audio-v2-3-821b6a705e4c@linaro.org>
+ <b6223af9-2d9e-4ccd-b297-79f63167242b@oss.qualcomm.com>
+In-Reply-To: <b6223af9-2d9e-4ccd-b297-79f63167242b@oss.qualcomm.com>
 
-On Fri, Oct 10, 2025 at 05:17:45PM +0530, Sudarshan Shetty wrote:
-> Introduce the device tree support for the QCS615-based talos-evk
-> platform, which follows the SMARC (Smart Mobility ARChitecture)
-> standard. The platform is composed of two main hardware
-> components: the talos-evk-som and the talos-evk carrier board.
-> 
-> The talos-evk-som is a compact System on Module that integrates the
-> QCS615 SoC, PMIC, and essential GPIO connectivity. It follows the
-> SMARC standard, which defines a modular form factor allowing the SoM
-> to be paired with different carrier boards for varied applications.
-> 
-> The talos-evk is one such carrier board, designed for evaluation
-> and development purposes. It provides additional peripherals
-> such as UART, USB, and other interfaces to enable rapid
-> prototyping and hardware bring-up.
-> 
-> This initial device tree provides the basic configuration needed
-> to boot the platform to a UART shell. Further patches will extend
-> support for additional peripherals and subsystems.
-> 
-> The initial device tree includes basic support for:
-> 
-> - CPU and memory
-> 
-> - UART
-> 
-> - GPIOs
-> 
-> - Regulators
-> 
-> - PMIC
-> 
-> - Early console
-> 
-> - AT24MAC602 EEPROM
-> 
-> - MCP2515 SPI to CAN
-> 
-> QCS615 talos-evk uses a Quectel AF68E WiFi/BT module (PCIe for
-> WiFi and UART for Bluetooth), which is different from the RIDE
-> platform. Plan to enable these in a follow-up patch series.
-> 
-> Signed-off-by: Sudarshan Shetty <tessolveupstream@gmail.com>
-> ---
-> Changes in v2:
->  - Rename compatible to "qcom,talos-evk" (suggested by Dmitry/Bjorn)
->  - Merge enum entry with existing qcs615-ride block (suggested by Krzysztof)
->  - Fix subject and commit message to use imperative mood
-> 
->  arch/arm64/boot/dts/qcom/Makefile           |   1 +
->  arch/arm64/boot/dts/qcom/talos-evk-som.dtsi | 406 ++++++++++++++++++++
->  arch/arm64/boot/dts/qcom/talos-evk.dts      |  42 ++
->  3 files changed, 449 insertions(+)
->  create mode 100644 arch/arm64/boot/dts/qcom/talos-evk-som.dtsi
->  create mode 100644 arch/arm64/boot/dts/qcom/talos-evk.dts
-> 
-> +
-> +	vreg_v3p3_can: regulator-v3p3-can {
-> +		compatible = "regulator-fixed";
-> +		regulator-name = "vreg-v3p3-can";
-> +		regulator-min-microvolt = <3300000>;
-> +		regulator-max-microvolt = <3300000>;
-> +		regulator-boot-on;
-> +		regulator-always-on;
-> +	};
-> +
-> +	vreg_v5p0_can: regulator-v5p0-can {
-> +		compatible = "regulator-fixed";
-> +		regulator-name = "vreg-v5p0-can";
-> +		regulator-min-microvolt = <5000000>;
-> +		regulator-max-microvolt = <5000000>;
-> +		regulator-boot-on;
-> +		regulator-always-on;
-> +	};
+On Tue Oct 7, 2025 at 1:39 PM BST, Konrad Dybcio wrote:
+> On 10/7/25 4:03 AM, Alexey Klimov wrote:
+>> Add the Low Power Audio SubSystem Low Power Island (LPASS LPI) pin
+>> controller device node required for audio subsystem on Qualcomm
+>> QRB2210 RB1. QRB2210 is based on qcm2290 which is based on sm6115.
+>>=20
+>> While at this, also add description of lpi_i2s2 pins (active state)
+>> required for audio playback via HDMI/I2S.
+>>=20
+>> Cc: Srinivas Kandagatla <srini@kernel.org>
+>> Signed-off-by: Alexey Klimov <alexey.klimov@linaro.org>
+>> ---
+>
+> [...]
+>
+>> +			lpi_i2s2_active: lpi-i2s2-active-state {
+>> +				data-pins {
+>> +					pins =3D "gpio12";
+>> +					function =3D "i2s2_data";
+>> +					bias-disable;
+>> +					drive-strength =3D <8>;
+>> +					output-high;
+>
+> I.. doubt output-high is what you want?
 
-Is there a way to control those regulators or are they always enabled by
-the hardware?
+Why? Or is it because of some in-kernel gpiod?
 
-> +};
-> +
+https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/arc=
+h/arm64/boot/dts/qcom/sm4250.dtsi#n66
 
-[...]
+>> +				};
+>> +
+>> +				sck-pins {
+>> +					pins =3D "gpio10";
+>> +					function =3D "i2s2_clk";
+>> +					bias-disable;
+>> +					drive-strength =3D <8>;
+>> +					output-high;
+>> +				};
+>> +
+>> +				ws-pins {
+>> +					pins =3D "gpio11";
+>
+> Please re-sort pin entries by the gpio index
+>
+> https://docs.kernel.org/devicetree/bindings/dts-coding-style.html#order-o=
+f-nodes
 
-> +
-> +&tlmm {
-> +	pcie_default_state: pcie-default-state {
-> +		clkreq-pins {
-> +			pins = "gpio90";
-> +			function = "pcie_clk_req";
-> +			drive-strength = <2>;
-> +			bias-pull-up;
-> +		};
-> +
-> +		perst-pins {
-> +			pins = "gpio101";
-> +			function = "gpio";
-> +			drive-strength = <2>;
-> +			bias-pull-down;
-> +		};
-> +
-> +		wake-pins {
-> +			pins = "gpio100";
-> +			function = "gpio";
-> +			drive-strength = <2>;
-> +			bias-pull-up;
-> +		};
-> +	};
-> +};
-> +
-> +&sdhc_1 {
+Ok.
 
-tlmm > sdhc_1
+Thanks,
+Alexey.
 
-> +	pinctrl-0 = <&sdc1_state_on>;
-> +	pinctrl-1 = <&sdc1_state_off>;
-> +	pinctrl-names = "default", "sleep";
-> +
-> +	bus-width = <8>;
-> +	mmc-ddr-1_8v;
-> +	mmc-hs200-1_8v;
-> +	mmc-hs400-1_8v;
-> +	mmc-hs400-enhanced-strobe;
-> +	vmmc-supply = <&vreg_l17a>;
-> +	vqmmc-supply = <&vreg_s4a>;
-> +
-> +	non-removable;
-> +	no-sd;
-> +	no-sdio;
-> +
-> +	status = "okay";
-> +};
-> +
-> +&spi6 {
-> +	status = "okay";
-> +
-> +	mcp2515@0 {
-> +		compatible = "microchip,mcp2515";
-> +		reg = <0>;
-> +		clock-frequency = <20000000>;
-> +		interrupts-extended = <&tlmm 87 IRQ_TYPE_LEVEL_LOW>;
-> +		spi-max-frequency = <10000000>;
-> +		vdd-supply = <&vreg_v3p3_can>;
-> +		xceiver-supply = <&vreg_v5p0_can>;
-> +	};
-> +};
-> +
-> +&uart0 {
-> +	status = "okay";
-> +};
-> +
-> +&usb_1_hsphy {
-> +	vdd-supply = <&vreg_l5a>;
-> +	vdda-pll-supply = <&vreg_l12a>;
-> +	vdda-phy-dpdm-supply = <&vreg_l13a>;
-> +
-> +	status = "okay";
-> +};
-> +
-> +&usb_qmpphy {
-> +	vdda-phy-supply = <&vreg_l5a>;
-> +	vdda-pll-supply = <&vreg_l12a>;
-> +
-> +	status = "okay";
-> +};
-
-Please keep all the nodes sorted.
-
-> +
-> +&usb_1 {
-> +	status = "okay";
-> +};
-> +
-> +&usb_1_dwc3 {
-> +	dr_mode = "host";
-
-Is it really host-only?
-
-> +};
-> +
-> +&usb_hsphy_2 {
-> +	vdd-supply = <&vreg_l5a>;
-> +	vdda-pll-supply = <&vreg_l12a>;
-> +	vdda-phy-dpdm-supply = <&vreg_l13a>;
-> +
-> +	status = "okay";
-> +};
-> +
-> +&usb_2 {
-> +	status = "okay";
-> +};
-> +
-> +&usb_2_dwc3 {
-> +	dr_mode = "host";
-
-Is it really host-only?
-
-> +};
-> +
-> +&ufs_mem_hc {
-> +	reset-gpios = <&tlmm 123 GPIO_ACTIVE_LOW>;
-> +	vcc-supply = <&vreg_l17a>;
-> +	vcc-max-microamp = <600000>;
-> +	vccq2-supply = <&vreg_s4a>;
-> +	vccq2-max-microamp = <600000>;
-> +
-> +	status = "okay";
-> +};
-> +
-> +&ufs_mem_phy {
-> +	vdda-phy-supply = <&vreg_l5a>;
-> +	vdda-pll-supply = <&vreg_l12a>;
-> +
-> +	status = "okay";
-> +};
-> +
-> +&venus {
-> +	status = "okay";
-> +};
-
--- 
-With best wishes
-Dmitry
 
