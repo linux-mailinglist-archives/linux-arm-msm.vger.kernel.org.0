@@ -1,153 +1,128 @@
-Return-Path: <linux-arm-msm+bounces-76841-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-76842-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [IPv6:2605:f480:58:1:0:1994:3:14])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5EA46BCFA7A
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 11 Oct 2025 20:12:40 +0200 (CEST)
+Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [142.0.200.124])
+	by mail.lfdr.de (Postfix) with ESMTPS id D8A09BCFB3E
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 11 Oct 2025 20:58:33 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 90CF04E45B5
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 11 Oct 2025 18:12:34 +0000 (UTC)
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 2C3D74E866A
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 11 Oct 2025 18:58:32 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 56DA3283FD0;
-	Sat, 11 Oct 2025 18:12:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E7EAD283FD3;
+	Sat, 11 Oct 2025 18:58:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="pYJ6svKO"
+	dkim=pass (2048-bit key) header.d=protonmail.com header.i=@protonmail.com header.b="r6xpKVio"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f54.google.com (mail-wm1-f54.google.com [209.85.128.54])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mail-08.mail-europe.com (mail-08.mail-europe.com [57.129.93.249])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67E802836B0
-	for <linux-arm-msm@vger.kernel.org>; Sat, 11 Oct 2025 18:12:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9933283FFB;
+	Sat, 11 Oct 2025 18:58:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=57.129.93.249
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760206345; cv=none; b=hIkmiG70duywx2sX9HLaai21vQn7Luml0yCn0BxDUfZp5W4DNTZc1gmdN2QRqaD/iESj9/TTxaOskEa3Ur63LWsNvcAfLEvNv/+suOLephNMuoMelItvM4ooAbFGfQ73dKsESIIy/aSfdigAcv0PqlcW63dt6Lr7+dp1UVOOvXU=
+	t=1760209105; cv=none; b=czxt/1rZjGVc7jBzb66AzbXsfmg2SBDrKm+I9lZNrpeOCdwRfkBWl+rCqS9zfq1WEs9727NZbFvXJaA/x47I3OLtAEM3ibsjjI9V0Kj7pQIsyAz66vTCdyjC09wcfC8p5tHTuUHZSQy26CybQ0FdQxRVWSf3rqaJFEWeGhmRPlE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760206345; c=relaxed/simple;
-	bh=JVyCen9ID7WfgBvuuobCEwAfQIMD3ZOSiRB+hExPSss=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=LXwX4K12OEuQV97cj/150JZqPdv8Gw56jjB4wX+/wdIaGxEkEJ/7mskF3pmt7pQi8wPfsAUZ2DHFM5aRi3JKLpHgBW9ElZ9XeInxuUpuZ3UDBOjjK9SGEpYTqBX8pjVGcMirxbEjVG1dmu0kSCDoZrVMs408l6klWRscnjum5AY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=pYJ6svKO; arc=none smtp.client-ip=209.85.128.54
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f54.google.com with SMTP id 5b1f17b1804b1-46e3cdc1a6aso22369115e9.1
-        for <linux-arm-msm@vger.kernel.org>; Sat, 11 Oct 2025 11:12:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1760206342; x=1760811142; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=byehOKya7clPyuO5oMzDVY12ALhC721UTQrHitcR078=;
-        b=pYJ6svKOgToqWXUuYXTx61dpPMlgW7jhUHGKFN056+Wl5/PaqRfFKckKmiQkgyk+HS
-         b4lqtABL8odPVXTjKgkazMPDktwkScfGLz8qZk4i7JVzzNBtCWdMvMD279o7uLMNJsM/
-         rNh62sc4LYwoi++GI6Cse4Yk/ib9UxNiwDl27NUAyRbVRoOLi3gs7sH8RyqQ1Yp46DT9
-         guqfCvAlf9iPIfRGquzuPOx/5QewdgIj9GybE7lXuxaRhljxJZBTBIG8e1Kk0/GWvO3k
-         hAgOoOgmSm1C9/QmHdWmMSRKJXj1lD35YCo3UIwnHgc5Po46xh1BiAPmw+A+HgcSic79
-         nh/A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1760206342; x=1760811142;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=byehOKya7clPyuO5oMzDVY12ALhC721UTQrHitcR078=;
-        b=uysUCl9SYDAhJTod5iQN24ZDqvrMYCQ6uDOrPlJjzUYmwxSFbOXgv/5vVq369xvnPq
-         LHUDeBH1bowD8Owm2yOUUjsP4upDIsFyutc7h/oiGI5w5G4tj8gt7V+VtiCVH7aPupzN
-         EiZk2z/INwwY0jyOkIOgcAv9SAH8FQzaabrRi0Zjhmx3opCLqCR+XcwKOoyokKYGRXyn
-         xC8arpzeV9zWmbYBlAUDgq/MEssWNd5x4HE6kHyc2hmLrOvVQ8QHD+ldnhR/n44KQqKZ
-         RU4ACChiC56scfYM/ZcIDmENHFGCquOILKMkY02qsTQXkbYK2QQMPwxqEP/H+9RmGGz0
-         GhBw==
-X-Forwarded-Encrypted: i=1; AJvYcCV55fKVg1cBXeglTlgQagzx4Ba9LkQxOGhFMAj/njwABfuwmNeQ6VRuag9frk4iyxW8yFSv7yDcLPw8P4jI@vger.kernel.org
-X-Gm-Message-State: AOJu0YzeZA/t/coKWcLTva7juO8Oz5r2hyBf+abrlTWrVZWdE5DmIED9
-	M8y7kYsl78X4mX83HhB8aTccgqHwYeszqmzKs3BSgmJBWmaoWYlRLk2cVeNkVzrQhn8=
-X-Gm-Gg: ASbGnctoxgwDs4svUGF9cHhOiLjmIP9upKq7H0tN0EG6AN+VWiXWqwMysuZ507QLjCw
-	f7VuNpCvoieetc6t/sku+wRmY/q3p++BuEyY2oGQ6i2Lmuv33aRXdlcWCBp/IlAqCaWMiu2RDYp
-	B6zglfNhdDJ7V3D5g9gokadLZQY/bv8Ol57lpbdKm/yzY19n8qyMFO/qRghgRHw3eaIxBM303N7
-	vwozdpzbRbcPt1UQcEWDxCk603B9QbZrUikkLJIZ3vcp1PBALx3ss5S8Oorr8rfhVn2iJSpxAS1
-	EyxwTriA+0sairqKCgXOfbzDRrpKZeAOirUZwZlYRPgUYX82Y+e31hRH48OhtNAToAWZTjNpfhP
-	Sn9mEpvLkC6i5GL25RYwUVwe59zDuTDNcmyi77f+sEQ==
-X-Google-Smtp-Source: AGHT+IFJWjfI1n1Q1BGzFtpXqGVeGA3bk9apqrt0phLLs0Zin2ROyJdGQPpLFkG37xNdDNcr+MYP9g==
-X-Received: by 2002:a05:600c:b96:b0:46e:59bd:f7e2 with SMTP id 5b1f17b1804b1-46fa9ebe245mr116042085e9.11.1760206341387;
-        Sat, 11 Oct 2025 11:12:21 -0700 (PDT)
-Received: from linaro.org ([86.121.7.169])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-426ce57d3b9sm9936139f8f.11.2025.10.11.11.12.19
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 11 Oct 2025 11:12:20 -0700 (PDT)
-Date: Sat, 11 Oct 2025 21:12:17 +0300
-From: Abel Vesa <abel.vesa@linaro.org>
-To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Cc: Qiang Yu <qiang.yu@oss.qualcomm.com>, 
-	Pankaj Patil <pankaj.patil@oss.qualcomm.com>, Bjorn Andersson <andersson@kernel.org>, 
-	Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	Prudhvi Yarlagadda <quic_pyarlaga@quicinc.com>
-Subject: Re: [PATCH 19/24] arm64: dts: qcom: glymur: Add support for PCIe5
-Message-ID: <7tvwxsdzkyh5ncsm4x5p26qdc2lhuecqecou6aectezdqxz2sf@4wsq3sppx6b4>
-References: <20250925-v3_glymur_introduction-v1-0-24b601bbecc0@oss.qualcomm.com>
- <20250925-v3_glymur_introduction-v1-19-24b601bbecc0@oss.qualcomm.com>
- <da2vvejbqdteaszzwyktczqivjblyawzh2k2giyoxdxlxcdrcb@fkuqivjmaggf>
- <aOiw75D0RhDNLZLQ@hu-qianyu-lv.qualcomm.com>
- <ilr7iaasabiwynzdu4ca6bhcyu5ubznc4yw4chfa3hkqsxjauw@2y6smgstv624>
- <a75ndv2mzwy3niihi3o2ux7lrkue7h5avj2vcxgqhs3hasunfg@cosy2knsveey>
+	s=arc-20240116; t=1760209105; c=relaxed/simple;
+	bh=1v8nHY4EpqYJa5+tPbItKCvOHDogDdxlqBPb40TYXvI=;
+	h=Date:To:From:Cc:Subject:Message-ID:MIME-Version:Content-Type; b=U4cvBSywi4DvzaL8XNOT8vTuKvuhCqI7dqJls6OuiepmnbA3Xxm11eGQBnzcNYZ1gwmm6jMi3TuTVpbBNsqLl8e2BioAxCLFJDPtFy2a4i0h18BD47L5GteMXAfIJjy9w3EPitFBeJn1bnGQ+a0Ve0Bvsu0t50s0isHAE+/rxpc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=protonmail.com; spf=pass smtp.mailfrom=protonmail.com; dkim=pass (2048-bit key) header.d=protonmail.com header.i=@protonmail.com header.b=r6xpKVio; arc=none smtp.client-ip=57.129.93.249
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=protonmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=protonmail.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=protonmail.com;
+	s=protonmail3; t=1760209087; x=1760468287;
+	bh=cnHuHQrVVXZKpXeZNEipH+LyE/5HXlwHBeSny7rKcS8=;
+	h=Date:To:From:Cc:Subject:Message-ID:Feedback-ID:From:To:Cc:Date:
+	 Subject:Reply-To:Feedback-ID:Message-ID:BIMI-Selector;
+	b=r6xpKVioJXUbvIl1i6WAq3wRqejMRWv1E5J3nSlAqgNUHjoIhn5dfQyAnOWIb/FjG
+	 8UlvDnG3+C5GGJyDHzcau4UymBQe1L2+Vw56pOfngCEs5qxCcjr3Y1SPAZH6V6V29P
+	 awxabGRdGXfh2RoJV6l9foia+PNb4W+iz3hoaUi57135lsgFPDu7/dMhniLfYOjMd6
+	 lFRwtby3Kf0uH950Nbsgx4rcISoLKmPhY7KQUvHAl0hbDQW/lmeleyTT0WbPO7Sm8C
+	 AU3GylGEkOIaLBSUevRMQooGO9SWrM95fQJQ+cFMt/wHlB4Fc9sIzUHDYqdZvTEH9S
+	 qSVi7z6UpVk9Q==
+Date: Sat, 11 Oct 2025 18:58:00 +0000
+To: linux-kernel@vger.kernel.org
+From: Raymond Hackley <raymondhackley@protonmail.com>
+Cc: Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, phone-devel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht, Raymond Hackley <raymondhackley@protonmail.com>
+Subject: [PATCH] ARM: dts: qcom: qcom-msm8226-samsung-ms013g: add simple-framebuffer
+Message-ID: <20251011185750.743615-1-raymondhackley@protonmail.com>
+Feedback-ID: 49437091:user:proton
+X-Pm-Message-ID: c3fd6412242376b6324f202df282fc65579a2ae6
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <a75ndv2mzwy3niihi3o2ux7lrkue7h5avj2vcxgqhs3hasunfg@cosy2knsveey>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-On 25-10-11 18:57:56, Dmitry Baryshkov wrote:
-> On Sat, Oct 11, 2025 at 02:43:14PM +0300, Abel Vesa wrote:
-> > On 25-10-10 00:08:31, Qiang Yu wrote:
-> > > On Wed, Oct 08, 2025 at 04:36:59PM +0300, Abel Vesa wrote:
-> > > > On 25-09-25 12:02:27, Pankaj Patil wrote:
-> > > > > From: Prudhvi Yarlagadda <quic_pyarlaga@quicinc.com>
-> > > > > 
-> > > > > Describe PCIe5 controller and PHY. Also add required system resources like
-> > > > > regulators, clocks, interrupts and registers configuration for PCIe5.
-> > > > > 
-> > > > > Signed-off-by: Prudhvi Yarlagadda <quic_pyarlaga@quicinc.com>
-> > > > > Signed-off-by: Qiang Yu <qiang.yu@oss.qualcomm.com>
-> > > > > Signed-off-by: Pankaj Patil <pankaj.patil@oss.qualcomm.com>
-> > > > > ---
-> > > > >  arch/arm64/boot/dts/qcom/glymur.dtsi | 208 ++++++++++++++++++++++++++++++++++-
-> > > > >  1 file changed, 207 insertions(+), 1 deletion(-)
-> > > > > 
-> > > > > diff --git a/arch/arm64/boot/dts/qcom/glymur.dtsi b/arch/arm64/boot/dts/qcom/glymur.dtsi
-> > > > > index e6e001485747785fd29c606773cba7793bbd2a5c..17a07d33b9396dba00e61a3b4260fa1a535600f2 100644
-> > > > > --- a/arch/arm64/boot/dts/qcom/glymur.dtsi
-> > > > > +++ b/arch/arm64/boot/dts/qcom/glymur.dtsi
-> > > > > @@ -951,7 +951,7 @@ gcc: clock-controller@100000 {
-> > > > >  				 <0>,
-> > > > >  				 <0>,
-> > > > >  				 <0>,
-> > > > > -				 <0>;
-> > > > > +				 <&pcie5_phy>;
-> > > > >  			#clock-cells = <1>;
-> > > > >  			#reset-cells = <1>;
-> > > > >  			#power-domain-cells = <1>;
-> > > > > @@ -2511,6 +2511,212 @@ pcie_west_slv_noc: interconnect@1920000 {
-> > > > >  			#interconnect-cells = <2>;
-> > > > >  		};
-> > > > >  
-> > > > > +		pcie5: pci@1b40000 {
-> > > > > +			device_type = "pci";
-> > > > > +			compatible = "qcom,glymur-pcie", "qcom,pcie-x1e80100";
-> > > > 
-> > > > The first compatible is definitely "qcom,pcie-glymur".
-> > > 
-> > > According to Documentation/devicetree/bindings/arm/qcom-soc.yaml
-> > > the preferred order is qcom,socname-ipblock.
-> > 
-> > Fair enough.
-> > 
-> > Now I wonder what happened when we added the one for x1e80100.
-> 
-> Our PCIe hosts mostly follow the legacy approach and nobody wanted to
-> change it up to now.
+Add simple-framebuffer, necessary power-domains and clocks for ms013g.
 
-Yeah, makes sense. Thanks.
+Signed-off-by: Raymond Hackley <raymondhackley@protonmail.com>
+---
+ .../dts/qcom/qcom-msm8226-samsung-ms013g.dts  | 31 ++++++++++++++++++-
+ 1 file changed, 30 insertions(+), 1 deletion(-)
+
+diff --git a/arch/arm/boot/dts/qcom/qcom-msm8226-samsung-ms013g.dts b/arch/=
+arm/boot/dts/qcom/qcom-msm8226-samsung-ms013g.dts
+index 08b50dc63923..80fe2916501a 100644
+--- a/arch/arm/boot/dts/qcom/qcom-msm8226-samsung-ms013g.dts
++++ b/arch/arm/boot/dts/qcom/qcom-msm8226-samsung-ms013g.dts
+@@ -13,13 +13,37 @@ / {
+ =09chassis-type =3D "handset";
+=20
+ =09aliases {
++=09=09display0 =3D &framebuffer0;
+ =09=09mmc0 =3D &sdhc_1; /* SDC1 eMMC slot */
+ =09=09mmc1 =3D &sdhc_2; /* SDC2 SD card slot */
+ =09=09serial0 =3D &blsp1_uart3;
+ =09};
+=20
+ =09chosen {
+-=09=09stdout-path =3D "serial0:115200n8";
++=09=09#address-cells =3D <1>;
++=09=09#size-cells =3D <1>;
++=09=09ranges;
++
++=09=09stdout-path =3D "display0";
++
++=09=09framebuffer0: framebuffer@3200000 {
++=09=09=09compatible =3D "simple-framebuffer";
++=09=09=09reg =3D <0x03200000 0x800000>;
++=09=09=09memory-region =3D <&cont_splash_region>;
++
++=09=09=09width =3D <720>;
++=09=09=09height =3D <1280>;
++=09=09=09stride =3D <(720 * 3)>;
++=09=09=09format =3D "r8g8b8";
++
++=09=09=09clocks =3D <&mmcc MDSS_AHB_CLK>,
++=09=09=09=09 <&mmcc MDSS_AXI_CLK>,
++=09=09=09=09 <&mmcc MDSS_BYTE0_CLK>,
++=09=09=09=09 <&mmcc MDSS_MDP_CLK>,
++=09=09=09=09 <&mmcc MDSS_PCLK0_CLK>,
++=09=09=09=09 <&mmcc MDSS_VSYNC_CLK>;
++=09=09=09power-domains =3D <&mmcc MDSS_GDSC>;
++=09=09};
+ =09};
+=20
+ =09gpio-hall-sensor {
+@@ -93,6 +117,11 @@ reg_vdd_tsp_a: regulator-vdd-tsp-a {
+ =09};
+=20
+ =09reserved-memory {
++=09=09cont_splash_region: cont-splash@3200000 {
++=09=09=09reg =3D <0x03200000 0x800000>;
++=09=09=09no-map;
++=09=09};
++
+ =09=09smem_region: smem@fa00000 {
+ =09=09=09reg =3D <0x0fa00000 0x100000>;
+ =09=09=09no-map;
+--=20
+2.47.3
+
+
 
