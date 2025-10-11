@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-76820-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-76821-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 98311BCEC81
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 11 Oct 2025 02:02:06 +0200 (CEST)
+Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [142.0.200.124])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5E078BCEC93
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 11 Oct 2025 02:04:32 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 615FC19A2363
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 11 Oct 2025 00:02:29 +0000 (UTC)
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 0A9AD4F3988
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 11 Oct 2025 00:04:31 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4F197184;
-	Sat, 11 Oct 2025 00:02:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4A56128E5;
+	Sat, 11 Oct 2025 00:04:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="gkTaRb9G"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="cyjm9Lz+"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A296111A8;
-	Sat, 11 Oct 2025 00:02:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A1ED10957;
+	Sat, 11 Oct 2025 00:04:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760140923; cv=none; b=Bp2wFTgH0UFIHLdElTYQ5L6GsNdaLlZ2uZ44lcHcJGvzCc4r5vvF2Ze1eDsfAV6zhtl7GEVV7Sr0IBo+vDB/Ph8u9KSUDilWGvHA2U8dnPxskx8WfDBXxA2RAE4dtrhraCbhNXbML1HfdwEkSR9sC1oDZqQ9N+Rj5tM4Ynx3r6E=
+	t=1760141065; cv=none; b=X3+qAeEwIvRI6imx5NkuJaE1ym1XbY/N9Pp4SAsQOt0R0zqVzqdtZjsw1WgJgoX/6ewiGUeVmwKO0FWP9vezTVLmBZ20xO8KdiHKXsY/bRMxpqiPRxkRuB0gRwELjw5nUMJnnHTRjE4sMv4B1yf0tLglDoqK2btE2WeLpuTmZ2Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760140923; c=relaxed/simple;
-	bh=97luAzmYrWuVvl8+wQcQMdNLrZMIJtCogPvCBYkvxDE=;
+	s=arc-20240116; t=1760141065; c=relaxed/simple;
+	bh=mJ41Y5fDZZ97ISik92YPqXu65NYHcU13ShVWUzupqf8=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=p0QZ/pxds+YcWuk6UuuY3uaD3voxxxC0XU3SDK41yLgKy6xYA5LBpme0cpWnFFo7SgMRuwPzPsYH0n4L5OUanXVnUK5BlVgtxA35cZ7L8a8wR0CKACI5WFr/KA8X3dNuo4/pPMQx4dskV34QKs8NsSOJQ3vClvLj0VZIZB+alZs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=gkTaRb9G; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E35AC4CEF1;
-	Sat, 11 Oct 2025 00:01:55 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=LB36//jtNy1S+QPfTQbxjOKUQEfbVdZrKI8gbbp2axjk5uUu7K+DvXcEc65cPzHnesHBL7a1TCfs0tDV2mB9JWv75/4VdwgQuY6Oo3zCHtCrbKtDw/dTa8LLXLANOzqEQEPbyuAm9D5zCwimWAABkCZ8tV/u4bvo78j+oUOLH9k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=cyjm9Lz+; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E871C4CEF1;
+	Sat, 11 Oct 2025 00:04:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1760140922;
-	bh=97luAzmYrWuVvl8+wQcQMdNLrZMIJtCogPvCBYkvxDE=;
+	s=k20201202; t=1760141064;
+	bh=mJ41Y5fDZZ97ISik92YPqXu65NYHcU13ShVWUzupqf8=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=gkTaRb9GM6iP6MptnJB+GK5jSM3ndtkcIDuBC0irctDFE9qHkuXhHhmQ3PlV60DBO
-	 LbWJlfFkwzZuqn3VmF/k6FftaXISXA08GM1m6auro+bK8kdKbkvhkj36hfwWtO5YWz
-	 GjlK2SJFhV4ECBhn8V14ulwLYMFxJ/vVIjAWG4wtr9jHBtcv1bwwLix9MF086OSkAG
-	 GK8ydz3Cld8B3drv7N+q3SX8NxYegeB3BNqbe5SKMXC9XN5O6ufqT5LFI7cYnuH4jI
-	 1Qe0SGyMgIaCoorhcoyP76tIK7wyqzopLwLpbw7Vpv7h3yYw5UCEMCE2pMMu3FmvnP
-	 EE5+X70/ohf4A==
-Message-ID: <cae78078-e8f8-402c-a9f5-f9a9731e4a0a@kernel.org>
-Date: Sat, 11 Oct 2025 02:01:51 +0200
+	b=cyjm9Lz+tXpB1GzWxuW4NUzWPia+m1E+4W3SYUO3/Xu3Cv8yy8NWvHmFeJCYTjMQn
+	 2oz7byruuC/Qlo5wtiqTG4nN5o2/kUwTLTw9OR0M4EkqtbR1aWku3RkgBnE1L1nwX9
+	 h0gJAXEy+Su+pKul0MtqhJINt1/7ftjobYvHwmHytGCfPhB1BUDTJo6ajojg1+vP9r
+	 PE0isLHPkGb1co8YT3kB2rYF97F+F59g+IdCID4XNrgUCZsdz2825tFbuy3RZAoGP9
+	 6QvY3cgKG+67Arg/BfbwxlrgmTuTByY57VOYXq38/tQBC+anwCSbNDw3j5nw1m460F
+	 zx/+fZ4fu7JUg==
+Message-ID: <f5e4ae02-b8fa-4406-b2e0-3602b07b7e23@kernel.org>
+Date: Sat, 11 Oct 2025 02:04:15 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,8 +50,8 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 03/10] dt-bindings: phy: qcom-m31-eusb2: Add Glymur
- compatible
+Subject: Re: [PATCH v5 02/10] dt-bindings: phy: qcom,qmp-usb: Add Glymur USB
+ UNI PHY compatible
 To: Wesley Cheng <wesley.cheng@oss.qualcomm.com>, krzk+dt@kernel.org,
  conor+dt@kernel.org, konrad.dybcio@oss.qualcomm.com,
  dmitry.baryshkov@oss.qualcomm.com, kishon@kernel.org, vkoul@kernel.org,
@@ -60,7 +60,7 @@ Cc: linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
  linux-usb@vger.kernel.org, devicetree@vger.kernel.org,
  linux-kernel@vger.kernel.org
 References: <20251006222002.2182777-1-wesley.cheng@oss.qualcomm.com>
- <20251006222002.2182777-4-wesley.cheng@oss.qualcomm.com>
+ <20251006222002.2182777-3-wesley.cheng@oss.qualcomm.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -106,28 +106,67 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  jWt87ecuHlpL3uuQ0ZZNWqHgZoQLXoqC2ZV5KrtKWb/jyiFX/sxSrodALf0zf+tfHv0FZWT2
  zHjUqd0t4njD/UOsuIMOQn4Ig0SdivYPfZukb5cdasKJukG1NOpbW7yRNivaCnfZz6dTawXw
  XRIV/KDsHQiyVxKvN73bThKhONkcX2LWuD928tAR6XMM2G5ovxLe09vuOzzfTWQDsm++9UKF a/A=
-In-Reply-To: <20251006222002.2182777-4-wesley.cheng@oss.qualcomm.com>
+In-Reply-To: <20251006222002.2182777-3-wesley.cheng@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
 On 07/10/2025 00:19, Wesley Cheng wrote:
-> +allOf:
-> +  - if:
-> +      properties:
-> +        compatible:
-> +          const: qcom,sm8750-m31-eusb2-phy
+> The Glymur USB subsystem contains a multiport controller, which utilizes
+> two QMP UNI PHYs.  Add the proper compatible string for the Glymur SoC, and
+> the required clkref clock name.
+> 
+> Signed-off-by: Wesley Cheng <wesley.cheng@oss.qualcomm.com>
+> ---
+>  .../phy/qcom,sc8280xp-qmp-usb3-uni-phy.yaml   | 35 +++++++++++++++++++
+>  1 file changed, 35 insertions(+)
+> 
+> diff --git a/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-usb3-uni-phy.yaml b/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-usb3-uni-phy.yaml
+> index a1b55168e050..b0ce803d2b49 100644
+> --- a/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-usb3-uni-phy.yaml
+> +++ b/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-usb3-uni-phy.yaml
+> @@ -16,6 +16,7 @@ description:
+>  properties:
+>    compatible:
+>      enum:
+> +      - qcom,glymur-qmp-usb3-uni-phy
+>        - qcom,ipq5424-qmp-usb3-phy
+>        - qcom,ipq6018-qmp-usb3-phy
+>        - qcom,ipq8074-qmp-usb3-phy
+> @@ -62,6 +63,8 @@ properties:
+>  
+>    vdda-pll-supply: true
+>  
+> +  refgen-supply: true
+> +
+>    "#clock-cells":
+>      const: 0
+>  
+> @@ -157,6 +160,25 @@ allOf:
+>          compatible:
+>            contains:
+>              enum:
+> +              - qcom,glymur-qmp-usb3-uni-phy
 > +    then:
-> +      required:
-> +        - clocks
-> +        - clock-names
+> +      properties:
+> +        clocks:
 
-Nothing in commit msg explains why the new phy can run magically without
-any clock. Seems unlikely, hardware does not work like that, so this
-seems wrong.
+Missing minItems.
 
+> +          maxItems: 5
+> +        clock-names:
+> +          items:
+> +            - const: aux
+> +            - const: clkref
+> +            - const: ref
 
-Also, don't combine USB patches into other subsystems. I already asked
-about this qcom few times.
+What is the difference between these two? Which block INPUTs
+(important!) they represent?
+
+> +            - const: com_aux
+> +            - const: pipe
+> +
+> +  - if:
+
 
 Best regards,
 Krzysztof
