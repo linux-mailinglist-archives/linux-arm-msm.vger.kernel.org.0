@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-76848-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-76849-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id DB21ABCFF1C
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 12 Oct 2025 05:08:32 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 21391BCFF28
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 12 Oct 2025 05:09:07 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 9A0F33C00B3
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 12 Oct 2025 03:08:31 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id D613B3C02A6
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 12 Oct 2025 03:09:05 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CBC771DD877;
-	Sun, 12 Oct 2025 03:08:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4E0441DE4DC;
+	Sun, 12 Oct 2025 03:09:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="TrwPM09L"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="WsYufddM"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9AFE62B2D7;
-	Sun, 12 Oct 2025 03:08:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CF532B2D7;
+	Sun, 12 Oct 2025 03:09:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760238508; cv=none; b=gh5+ULsxL+Sd/heks8r8NUOqHvKlGo5UK1MtvbZkLeg5gYaF6WysZD4HTRklzIVfKKrOJh57elXRNArc6SW7zYGJWSI2Qx5cWpFqkI9umBV3zvD/jkAoO9LL21IuUy5rL4LETDVLNJAAqKDcjVfiqQNYjBEJUf1QK2S4ofn5/AM=
+	t=1760238543; cv=none; b=ZCs85uaBVdzoL8VDxXhQT40pUIyf0AKO3krluERRd7RiCoRlKZ/ec+ql9dZZ6M3vlf1VI6fWnbMB/8niBOu7gohMq3VF4tYH+4RyFXnufg02y4hrpmC3520nJH7yc8Y+9EKH4U93IG/O9u5Sxem90VSP0PYxIB/4IivI3g/lB/c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760238508; c=relaxed/simple;
-	bh=a0B/3/IMMDde1Kgn4DWqCPNin7xvdApoB+bc1/3Ktts=;
+	s=arc-20240116; t=1760238543; c=relaxed/simple;
+	bh=S/HR+Xd9sr9GlCbnKOs44IVbH8l2IniCyJKnoK/8JeY=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=eWmjGRWXfUiGyUzdD7RzsS72RoMOz7nb+pXC01Gtp6ZfhvTpDMb0Pyj8ZtK5rR/TyzOvDIKXsVj6b4JZhBOf58oeEdAgWdrH4hqAx7BRdPj0lwOAPbDX+bogX3bDPdyrJdVRJONbmt14N24l2D8feOULPBGwjGrGJPUJ0ezv+eU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=TrwPM09L; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4F49C4CEE7;
-	Sun, 12 Oct 2025 03:08:19 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=YfNfVVZ3oavndXx0EbYVKkBR5p8JItTX6PfZBQ5JkWalajCscxvO2miAP1ODiE2xsa4127JLaHOHGDfir1EKa4y5OkQa5upkNHW9t8qmaHPgw3Le4KdA86dG4Lu6+dSOxobwIZLe1VAZrjLl0YTouAIKu1ac3Z6MRhjeDTEjp0M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=WsYufddM; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39FDFC4CEE7;
+	Sun, 12 Oct 2025 03:08:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1760238508;
-	bh=a0B/3/IMMDde1Kgn4DWqCPNin7xvdApoB+bc1/3Ktts=;
+	s=k20201202; t=1760238542;
+	bh=S/HR+Xd9sr9GlCbnKOs44IVbH8l2IniCyJKnoK/8JeY=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=TrwPM09LyhM7rIYOocDrpSDTQWqhMsNqfMh1gfJWBAdDHdKgYMSv5h4QGjqfezDJS
-	 CIqfhmMVFnlHf/KPrDH3Q2NMzVIQhPHr1PwBUbv0On897qGRCdLiTIOK951rEwzc1v
-	 ztoeObsMmipRchZxu3U07hsuSP44IlQ47eNCqMjgfCyPi652HP/oD4Kj7FZPeQpNYZ
-	 Yof3rc24fgaoEJeGzs/g38HvSnFYsfz9HcMFgqWStBfPk3Rt5OJk879aVgQi9QQyEt
-	 kUAUoeyhbKjGPmOjopkz/X8RtRVjbAPYGuTSekz1yZLYFIGpsbdsTwu8BA8xf48dwt
-	 1kCIdF7S/+++w==
-Message-ID: <aeed33fa-8659-4141-86ea-5b75541989b7@kernel.org>
-Date: Sun, 12 Oct 2025 05:08:16 +0200
+	b=WsYufddM7INh801LEc3qFr07oSdD0rxydscGDtYiWI0sx2vWM5aEnuQObZLevV76b
+	 7V5BQiMkivivM9CkcVIA78ial3U9repU8XwlQUMC8Andf6nhHF742bEUSUsc3Rut4C
+	 Ap7KyRQRUzLNKtPJtoZ4E5WVazdI6nN1qmG3dg0ei2OFcXH6hDfWuuv3bzfwXMuiXt
+	 ORBHos3g5/5Y60GSoQ1Wao4qtmiVPKRWyWqO6LWydQfsrviODIIlS1zsJtZBCk55+g
+	 ZVIh4Q+gYAfvCgxW4RzVLlujMvylmiLDlUKJzwgcaTin769gzJoS6teVGUTDbevN+F
+	 tKDX+AS81t4KQ==
+Message-ID: <b3551b42-9d63-4173-9c14-356db4ec6639@kernel.org>
+Date: Sun, 12 Oct 2025 05:08:54 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,8 +50,8 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/3] dt-bindings: crypto: qcom,prng: Document kaanapali
- RNG
+Subject: Re: [PATCH 2/3] dt-bindings: crypto: qcom-qce: Document the kaanapli
+ crypto engine
 To: Jingyi Wang <jingyi.wang@oss.qualcomm.com>,
  Herbert Xu <herbert@gondor.apana.org.au>,
  "David S. Miller" <davem@davemloft.net>, Rob Herring <robh@kernel.org>,
@@ -66,9 +66,9 @@ Cc: linux-arm-msm@vger.kernel.org, linux-crypto@vger.kernel.org,
  trilok.soni@oss.qualcomm.com, yijie.yang@oss.qualcomm.com,
  Gaurav Kashyap <gaurav.kashyap@oss.qualcomm.com>
 References: <20250924-knp-crypto-v1-0-49af17a231b7@oss.qualcomm.com>
- <20250924-knp-crypto-v1-1-49af17a231b7@oss.qualcomm.com>
-From: Krzysztof Kozlowski <krzk@kernel.org>
+ <20250924-knp-crypto-v1-2-49af17a231b7@oss.qualcomm.com>
 Content-Language: en-US
+From: Krzysztof Kozlowski <krzk@kernel.org>
 Autocrypt: addr=krzk@kernel.org; keydata=
  xsFNBFVDQq4BEAC6KeLOfFsAvFMBsrCrJ2bCalhPv5+KQF2PS2+iwZI8BpRZoV+Bd5kWvN79
  cFgcqTTuNHjAvxtUG8pQgGTHAObYs6xeYJtjUH0ZX6ndJ33FJYf5V3yXqqjcZ30FgHzJCFUu
@@ -112,19 +112,18 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  jWt87ecuHlpL3uuQ0ZZNWqHgZoQLXoqC2ZV5KrtKWb/jyiFX/sxSrodALf0zf+tfHv0FZWT2
  zHjUqd0t4njD/UOsuIMOQn4Ig0SdivYPfZukb5cdasKJukG1NOpbW7yRNivaCnfZz6dTawXw
  XRIV/KDsHQiyVxKvN73bThKhONkcX2LWuD928tAR6XMM2G5ovxLe09vuOzzfTWQDsm++9UKF a/A=
-In-Reply-To: <20250924-knp-crypto-v1-1-49af17a231b7@oss.qualcomm.com>
+In-Reply-To: <20250924-knp-crypto-v1-2-49af17a231b7@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
 On 25/09/2025 01:38, Jingyi Wang wrote:
 > From: Gaurav Kashyap <gaurav.kashyap@oss.qualcomm.com>
 > 
-> Document kaanapali compatible for the True Random Number Generator.
+> Document the crypto engine on the kaanapali platform.
 > 
 > Signed-off-by: Gaurav Kashyap <gaurav.kashyap@oss.qualcomm.com>
 > Signed-off-by: Jingyi Wang <jingyi.wang@oss.qualcomm.com>
 > ---
->  Documentation/devicetree/bindings/crypto/qcom,prng.yaml | 1 +
 
 Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
