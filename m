@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-76844-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-76845-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id A256FBCFEDD
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 12 Oct 2025 05:02:02 +0200 (CEST)
+Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [142.0.200.124])
+	by mail.lfdr.de (Postfix) with ESMTPS id 36C10BCFEFB
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 12 Oct 2025 05:06:21 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id A00741895826
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 12 Oct 2025 03:02:25 +0000 (UTC)
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 08FC24E21FA
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 12 Oct 2025 03:06:20 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1878715E5C2;
-	Sun, 12 Oct 2025 03:01:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 82BD01A76BB;
+	Sun, 12 Oct 2025 03:06:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="uUqmgb7S"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="iY4pqfbJ"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA8F42B2D7;
-	Sun, 12 Oct 2025 03:01:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CBBF2B2D7;
+	Sun, 12 Oct 2025 03:06:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760238118; cv=none; b=lrxtf9NdIerYMkZn6PHVSpydxAu0R3nDpT9zQG7t8BuDEuHWV0TBi3T92VPdgXgf1in0OGujm1BqbWI/gY+Mds/LIdltYinRMu04v7SDPiv9z9K1eSq9W3qwJXWG2RzYAUK+HsmnzEl6xBXrKdRx4PpNJejxdvYjsis/zzgAAOw=
+	t=1760238376; cv=none; b=Qzn15O7/wYhcwsG+Tj4iSLYS2yZ/Kfeh7C3pFQVdR4CGljxLLhV8bZnDRUAc9f1Wmm/0FPN5Qycrl/Kn9Zb6TZ4RwHjX6KuQMPblOAXoDJSX40QIoEHyvHfa19j5a52BtFN4AhPEemmm2/flclAoQj0HfdrUa8kxmjiUL0MsSYY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760238118; c=relaxed/simple;
-	bh=7uGW8tZKzB3sWjg7FgYq8BRxUDuNHFhXJDVn7AAo0zg=;
+	s=arc-20240116; t=1760238376; c=relaxed/simple;
+	bh=oJBIBGmGc2UVG1f9io7PwU/NblfEGrzQ2juq1Q6617g=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=EJAB46VtwWPjQhg4bPj0t8l4dTrHYqux/iCNty1jdroPILip9XF2oTaKkQ6biTYHu9D6CGtA8hK6p+vKll+jaSTViztsqwSPwtPFZWTjMhLLg2WKZzT+9nqxla5RmgPXRBrc6lej4KZXwZsJ9nBkjObEi74ZRNpf34vU7EEPMU0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=uUqmgb7S; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D420C4CEF9;
-	Sun, 12 Oct 2025 03:01:47 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=UvfnZPicbg1PqfnXQWgAMGckM/L1ukvZhPcECS7MIKH/jBIg/MvIst69vX/ghQrT7j0MeA0dD5X1aHuWCBLYUh/08f7esOuYYyrmRkrgc7gxaFaYTrMuWcKyO+cDqosQkPYSHIC4sqFp11BG1vh1gRAc4GmpW9zjKpxabDQ4L2Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=iY4pqfbJ; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA4B7C4CEF9;
+	Sun, 12 Oct 2025 03:06:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1760238117;
-	bh=7uGW8tZKzB3sWjg7FgYq8BRxUDuNHFhXJDVn7AAo0zg=;
+	s=k20201202; t=1760238376;
+	bh=oJBIBGmGc2UVG1f9io7PwU/NblfEGrzQ2juq1Q6617g=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=uUqmgb7SRsNizNab/qtPW4WAqIMthIHa6AX1U52JzPxoLrnRhMyiqzxzVjVZbo37p
-	 bhQt7ktpHOs4MvZB8Xuva5fir2ldRVTnGsnhpjfD7SgYBL+cCJQoxZ/xMYoEHG9IqK
-	 2kPD87Eq8FzZ6Hz7U9NW+GvUUfuVG8dFAlWDvxquqrN9epkFu5TejdVc0JqXzbkd4H
-	 JZEPgvbPNFAjpNqlJ3CoB05/VCKYl9zyXusZRZBHHSyhKYMBMBnM6HQwjLkSs0OUMy
-	 N5enJODK8DY0gdDP9/srAJg42gQsFNIzNXbKhvGGPu7fAVjP2ksesqTVlYuwxG39O9
-	 CXPAsvqYki2GA==
-Message-ID: <7dadc4bb-43a1-4d53-bd6a-68ff76f06555@kernel.org>
-Date: Sun, 12 Oct 2025 05:01:45 +0200
+	b=iY4pqfbJkcEADLLq4wIpu9FgTvyCUOGIMOf8e/JXAsEMiYutDl3mTIiP2qTuWnwSu
+	 qfauMkaqm16kaEytB8FJmI692U2YAQJDxSZYvz4ukiYvvBdhUqwtCnoSr9xQFfUKAG
+	 6rxAl0vbJU7OpTWb1IOJT9xYbXRRlfOv+QcUqMfvxHemX3qAeDeIMwqCNSr2SxHzBg
+	 fRkQ9niEr0VXhPBLQvmeLfQbK6It/xV6YpfbPhCRd2Cn6gaahdrsoiC6b+EyK2JeuS
+	 7/NO1VE2HXwAPFL+ieNPqMet42h+xBP9ehHxBcqeT0KqZ26VY5IVH3UkJjIV5fPURV
+	 mRt1ZVzVzrMcQ==
+Message-ID: <adc9094e-08b2-4c07-9c80-118a6ffdc4fd@kernel.org>
+Date: Sun, 12 Oct 2025 05:06:04 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,23 +50,21 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 2/4] dt-bindings: PCI: qcom: Document the Glymur PCIe
- Controller
-To: Abel Vesa <abel.vesa@linaro.org>, Wenbin Yao <wenbin.yao@oss.qualcomm.com>
-Cc: Vinod Koul <vkoul@kernel.org>, Kishon Vijay Abraham I
- <kishon@kernel.org>, Rob Herring <robh@kernel.org>,
+Subject: Re: [PATCH 3/9] dt-bindings: clock: qcom: Add Kaanapali Global clock
+ controller
+To: Jingyi Wang <jingyi.wang@oss.qualcomm.com>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Michael Turquette <mturquette@baylibre.com>, Stephen Boyd
+ <sboyd@kernel.org>, Rob Herring <robh@kernel.org>,
  Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Lorenzo Pieralisi <lpieralisi@kernel.org>,
- =?UTF-8?Q?Krzysztof_Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
- Manivannan Sadhasivam <mani@kernel.org>, Bjorn Helgaas
- <bhelgaas@google.com>, Bjorn Andersson <andersson@kernel.org>,
- linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
+ <conor+dt@kernel.org>, Taniya Das <quic_tdas@quicinc.com>,
+ Taniya Das <taniya.das@oss.qualcomm.com>
+Cc: linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
  devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- linux-pci@vger.kernel.org, konrad.dybcio@oss.qualcomm.com,
- qiang.yu@oss.qualcomm.com, Prudhvi Yarlagadda <quic_pyarlaga@quicinc.com>
-References: <20250903-glymur_pcie5-v4-0-c187c2d9d3bd@oss.qualcomm.com>
- <20250903-glymur_pcie5-v4-2-c187c2d9d3bd@oss.qualcomm.com>
- <w2r4yh2mgdjytteawyyh6h3kyxy36bnbfbfw4wir7jju7grldx@rypy6qjjy3a3>
+ aiqun.yu@oss.qualcomm.com, tingwei.zhang@oss.qualcomm.com,
+ trilok.soni@oss.qualcomm.com, yijie.yang@oss.qualcomm.com
+References: <20250924-knp-clk-v1-0-29b02b818782@oss.qualcomm.com>
+ <20250924-knp-clk-v1-3-29b02b818782@oss.qualcomm.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -112,39 +110,21 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  jWt87ecuHlpL3uuQ0ZZNWqHgZoQLXoqC2ZV5KrtKWb/jyiFX/sxSrodALf0zf+tfHv0FZWT2
  zHjUqd0t4njD/UOsuIMOQn4Ig0SdivYPfZukb5cdasKJukG1NOpbW7yRNivaCnfZz6dTawXw
  XRIV/KDsHQiyVxKvN73bThKhONkcX2LWuD928tAR6XMM2G5ovxLe09vuOzzfTWQDsm++9UKF a/A=
-In-Reply-To: <w2r4yh2mgdjytteawyyh6h3kyxy36bnbfbfw4wir7jju7grldx@rypy6qjjy3a3>
+In-Reply-To: <20250924-knp-clk-v1-3-29b02b818782@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 11/10/2025 14:15, Abel Vesa wrote:
->>  
->>  properties:
->>    compatible:
->> -    const: qcom,pcie-x1e80100
->> +    oneOf:
->> +      - const: qcom,pcie-x1e80100
->> +      - items:
->> +          - enum:
->> +              - qcom,glymur-pcie
->> +          - const: qcom,pcie-x1e80100
->>  
+On 25/09/2025 00:58, Jingyi Wang wrote:
+> From: Taniya Das <taniya.das@oss.qualcomm.com>
 > 
-> The cnoc_sf_axi clock is not found on Glymur, at least according to this:
+> Add device tree bindings for the global clock controller on Qualcomm
+> Kaanapali platform.
 > 
-> https://lore.kernel.org/all/20250925-v3_glymur_introduction-v1-19-24b601bbecc0@oss.qualcomm.com/
-> 
-> And dtbs_check reports the following:
-> 
-> arch/arm64/boot/dts/qcom/glymur-crd.dtb: pci@1b40000 (qcom,glymur-pcie): clock-names: ['aux', 'cfg', 'bus_master', 'bus_slave', 'slave_q2a', 'noc_aggr'] is too short
->         from schema $id: http://devicetree.org/schemas/pci/qcom,pcie-x1e80100.yaml#
-> 
-> One more thing:
-> 
-> arch/arm64/boot/dts/qcom/glymur-crd.dtb: pci@1b40000 (qcom,glymur-pcie): max-link-speed: 5 is not one of [1, 2, 3, 4]
->         from schema $id: http://devicetree.org/schemas/pci/qcom,pcie-x1e80100.yaml#
-> 
+> Signed-off-by: Taniya Das <taniya.das@oss.qualcomm.com>
+> Signed-off-by: Jingyi Wang <jingyi.wang@oss.qualcomm.com>
+> ---
 
-So that's another Glymur patch which wasn't ever tested?
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
 Best regards,
 Krzysztof
