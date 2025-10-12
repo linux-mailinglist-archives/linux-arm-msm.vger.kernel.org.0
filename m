@@ -1,128 +1,143 @@
-Return-Path: <linux-arm-msm+bounces-76842-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-76843-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [142.0.200.124])
-	by mail.lfdr.de (Postfix) with ESMTPS id D8A09BCFB3E
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 11 Oct 2025 20:58:33 +0200 (CEST)
+Received: from ams.mirrors.kernel.org (ams.mirrors.kernel.org [213.196.21.55])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8C108BCFEBC
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 12 Oct 2025 04:46:16 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 2C3D74E866A
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 11 Oct 2025 18:58:32 +0000 (UTC)
+	by ams.mirrors.kernel.org (Postfix) with ESMTPS id 11AEA349063
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 12 Oct 2025 02:46:16 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E7EAD283FD3;
-	Sat, 11 Oct 2025 18:58:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 100C122097;
+	Sun, 12 Oct 2025 02:46:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=protonmail.com header.i=@protonmail.com header.b="r6xpKVio"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="HfzR8v8f"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-08.mail-europe.com (mail-08.mail-europe.com [57.129.93.249])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9933283FFB;
-	Sat, 11 Oct 2025 18:58:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=57.129.93.249
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4B7E34BA41;
+	Sun, 12 Oct 2025 02:46:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760209105; cv=none; b=czxt/1rZjGVc7jBzb66AzbXsfmg2SBDrKm+I9lZNrpeOCdwRfkBWl+rCqS9zfq1WEs9727NZbFvXJaA/x47I3OLtAEM3ibsjjI9V0Kj7pQIsyAz66vTCdyjC09wcfC8p5tHTuUHZSQy26CybQ0FdQxRVWSf3rqaJFEWeGhmRPlE=
+	t=1760237171; cv=none; b=pmcVjGQHsAnvX3rKoGEdEH0wFzi8/GGSj+bMstvbb3uhGsB63yrhA1AGsLGBKo/VTv+vU7UurvTRS8fNbw6eanOAHqfrj2nkWBTOEwYXF8RsAtYSGJpMSMPlPm7ksW+oapFZNaHCUTKsXCD8yywtsRuSaj0JjqHFqencgO86RIM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760209105; c=relaxed/simple;
-	bh=1v8nHY4EpqYJa5+tPbItKCvOHDogDdxlqBPb40TYXvI=;
-	h=Date:To:From:Cc:Subject:Message-ID:MIME-Version:Content-Type; b=U4cvBSywi4DvzaL8XNOT8vTuKvuhCqI7dqJls6OuiepmnbA3Xxm11eGQBnzcNYZ1gwmm6jMi3TuTVpbBNsqLl8e2BioAxCLFJDPtFy2a4i0h18BD47L5GteMXAfIJjy9w3EPitFBeJn1bnGQ+a0Ve0Bvsu0t50s0isHAE+/rxpc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=protonmail.com; spf=pass smtp.mailfrom=protonmail.com; dkim=pass (2048-bit key) header.d=protonmail.com header.i=@protonmail.com header.b=r6xpKVio; arc=none smtp.client-ip=57.129.93.249
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=protonmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=protonmail.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=protonmail.com;
-	s=protonmail3; t=1760209087; x=1760468287;
-	bh=cnHuHQrVVXZKpXeZNEipH+LyE/5HXlwHBeSny7rKcS8=;
-	h=Date:To:From:Cc:Subject:Message-ID:Feedback-ID:From:To:Cc:Date:
-	 Subject:Reply-To:Feedback-ID:Message-ID:BIMI-Selector;
-	b=r6xpKVioJXUbvIl1i6WAq3wRqejMRWv1E5J3nSlAqgNUHjoIhn5dfQyAnOWIb/FjG
-	 8UlvDnG3+C5GGJyDHzcau4UymBQe1L2+Vw56pOfngCEs5qxCcjr3Y1SPAZH6V6V29P
-	 awxabGRdGXfh2RoJV6l9foia+PNb4W+iz3hoaUi57135lsgFPDu7/dMhniLfYOjMd6
-	 lFRwtby3Kf0uH950Nbsgx4rcISoLKmPhY7KQUvHAl0hbDQW/lmeleyTT0WbPO7Sm8C
-	 AU3GylGEkOIaLBSUevRMQooGO9SWrM95fQJQ+cFMt/wHlB4Fc9sIzUHDYqdZvTEH9S
-	 qSVi7z6UpVk9Q==
-Date: Sat, 11 Oct 2025 18:58:00 +0000
-To: linux-kernel@vger.kernel.org
-From: Raymond Hackley <raymondhackley@protonmail.com>
-Cc: Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, phone-devel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht, Raymond Hackley <raymondhackley@protonmail.com>
-Subject: [PATCH] ARM: dts: qcom: qcom-msm8226-samsung-ms013g: add simple-framebuffer
-Message-ID: <20251011185750.743615-1-raymondhackley@protonmail.com>
-Feedback-ID: 49437091:user:proton
-X-Pm-Message-ID: c3fd6412242376b6324f202df282fc65579a2ae6
+	s=arc-20240116; t=1760237171; c=relaxed/simple;
+	bh=97y8CLaEqPcGlAOhyFl3DhHr/P0M/87L3FqQSYGMBFM=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=RC29khWQF2Wf9PLGqupHRhuu/u2zi/lVEvDt/1wzNxAK1xNBWlFhvKoFZtxVDq+GdTolG9s5zOSVAIuUjQsrviy1uVk084IRku4qsFg33Rvpd2lGk/ywn8nZldxx151jmG1OTrfo0/19igooc4UXbbayr/WtyOLvGg+JtWB5PRo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=HfzR8v8f; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CFEA6C4CEF4;
+	Sun, 12 Oct 2025 02:46:04 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1760237168;
+	bh=97y8CLaEqPcGlAOhyFl3DhHr/P0M/87L3FqQSYGMBFM=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=HfzR8v8fvMIMxramujDPwrJg/N+OcvmArt4IcayW/zvJHd7LWskcNMG/epj70HCbB
+	 q+3ObCGy6a0Ew/492y9vDhhAos5mrXdy5uImwTIVoP6w8m8XT5zh7Oru/f4Oo6NXah
+	 JhxbOBUBkACj+z4GBpl0tBLVLO7Rd1uYBgW+TDm0yFcfsKPA8D1//HOrMM3Uq6RUCT
+	 oZ+NKqFR3Bv/0M3ppWdpF2yZHG3gVgR49NM1LM1D2D4DI1jq2nfD9QwITNltym0m4L
+	 nxWJrnKcBXpIGvrfSr6+ILd542lOKIBcrfluy7Rwt44iFkc4Hx5aYE1jdLWoP6TkHk
+	 IxBS7m6NNWpBQ==
+Message-ID: <912c0ccd-40cd-402e-ac9f-f86be48aa072@kernel.org>
+Date: Sun, 12 Oct 2025 04:46:02 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 04/24] arm64: dts: qcom: glymur: Add QUPv3 configuration
+ for serial engines
+To: Abel Vesa <abel.vesa@linaro.org>,
+ Pankaj Patil <pankaj.patil@oss.qualcomm.com>
+Cc: Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+ Jyothi Kumar Seerapu <jyothi.seerapu@oss.qualcomm.com>
+References: <20250925-v3_glymur_introduction-v1-0-24b601bbecc0@oss.qualcomm.com>
+ <20250925-v3_glymur_introduction-v1-4-24b601bbecc0@oss.qualcomm.com>
+ <3af57kktkwevbxkno4o54w3o2qajoco5x7dlj3ckepcutlzmdh@2bnqqxndbvf3>
+ <odjto4fjqoi5ct33unring22s3p6vwnbrafyrcmrppwcdnm4zq@aabot4m6q2rm>
+From: Krzysztof Kozlowski <krzk@kernel.org>
+Content-Language: en-US
+Autocrypt: addr=krzk@kernel.org; keydata=
+ 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 a/A=
+In-Reply-To: <odjto4fjqoi5ct33unring22s3p6vwnbrafyrcmrppwcdnm4zq@aabot4m6q2rm>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-Add simple-framebuffer, necessary power-domains and clocks for ms013g.
-
-Signed-off-by: Raymond Hackley <raymondhackley@protonmail.com>
----
- .../dts/qcom/qcom-msm8226-samsung-ms013g.dts  | 31 ++++++++++++++++++-
- 1 file changed, 30 insertions(+), 1 deletion(-)
-
-diff --git a/arch/arm/boot/dts/qcom/qcom-msm8226-samsung-ms013g.dts b/arch/=
-arm/boot/dts/qcom/qcom-msm8226-samsung-ms013g.dts
-index 08b50dc63923..80fe2916501a 100644
---- a/arch/arm/boot/dts/qcom/qcom-msm8226-samsung-ms013g.dts
-+++ b/arch/arm/boot/dts/qcom/qcom-msm8226-samsung-ms013g.dts
-@@ -13,13 +13,37 @@ / {
- =09chassis-type =3D "handset";
-=20
- =09aliases {
-+=09=09display0 =3D &framebuffer0;
- =09=09mmc0 =3D &sdhc_1; /* SDC1 eMMC slot */
- =09=09mmc1 =3D &sdhc_2; /* SDC2 SD card slot */
- =09=09serial0 =3D &blsp1_uart3;
- =09};
-=20
- =09chosen {
--=09=09stdout-path =3D "serial0:115200n8";
-+=09=09#address-cells =3D <1>;
-+=09=09#size-cells =3D <1>;
-+=09=09ranges;
-+
-+=09=09stdout-path =3D "display0";
-+
-+=09=09framebuffer0: framebuffer@3200000 {
-+=09=09=09compatible =3D "simple-framebuffer";
-+=09=09=09reg =3D <0x03200000 0x800000>;
-+=09=09=09memory-region =3D <&cont_splash_region>;
-+
-+=09=09=09width =3D <720>;
-+=09=09=09height =3D <1280>;
-+=09=09=09stride =3D <(720 * 3)>;
-+=09=09=09format =3D "r8g8b8";
-+
-+=09=09=09clocks =3D <&mmcc MDSS_AHB_CLK>,
-+=09=09=09=09 <&mmcc MDSS_AXI_CLK>,
-+=09=09=09=09 <&mmcc MDSS_BYTE0_CLK>,
-+=09=09=09=09 <&mmcc MDSS_MDP_CLK>,
-+=09=09=09=09 <&mmcc MDSS_PCLK0_CLK>,
-+=09=09=09=09 <&mmcc MDSS_VSYNC_CLK>;
-+=09=09=09power-domains =3D <&mmcc MDSS_GDSC>;
-+=09=09};
- =09};
-=20
- =09gpio-hall-sensor {
-@@ -93,6 +117,11 @@ reg_vdd_tsp_a: regulator-vdd-tsp-a {
- =09};
-=20
- =09reserved-memory {
-+=09=09cont_splash_region: cont-splash@3200000 {
-+=09=09=09reg =3D <0x03200000 0x800000>;
-+=09=09=09no-map;
-+=09=09};
-+
- =09=09smem_region: smem@fa00000 {
- =09=09=09reg =3D <0x0fa00000 0x100000>;
- =09=09=09no-map;
---=20
-2.47.3
+On 11/10/2025 13:11, Abel Vesa wrote:
+> On 25-10-11 14:06:44, Abel Vesa wrote:
+>> On 25-09-25 12:02:12, Pankaj Patil wrote:
+>>> From: Jyothi Kumar Seerapu <jyothi.seerapu@oss.qualcomm.com>
+>>> +			dma-channels = <16>;
+>>> +			dma-channel-mask = <0x3f>;
+>>> +			#dma-cells = <3>;
+>>> +			iommus = <&apps_smmu 0xd76 0x0>;
+>>> +			status = "ok";
+>>
+>> s/ok/okay/
+>>
+>> Everywhere actually.
+>>
+> 
+> Actually no. Maybe drop entirely like Konrad already suggested.
+> 
+> But then everywhere else you do "ok" please replace with "okay",
+> otherwise dtbs_check complains.
 
 
+I actually wonder how this passed any dtbs tests... or it wasn't tested
+at all?
+
+
+Best regards,
+Krzysztof
 
