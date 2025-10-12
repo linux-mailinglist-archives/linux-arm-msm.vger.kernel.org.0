@@ -1,175 +1,176 @@
-Return-Path: <linux-arm-msm+bounces-76861-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-76862-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [142.0.200.124])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6EC97BD08AE
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 12 Oct 2025 19:39:07 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id BC44DBD09C4
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 12 Oct 2025 20:24:43 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 082354E14CE
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 12 Oct 2025 17:39:06 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id DFF901891114
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 12 Oct 2025 18:25:06 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6A17027B33B;
-	Sun, 12 Oct 2025 17:39:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B24BF2F068E;
+	Sun, 12 Oct 2025 18:24:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="Z6PSS6q7"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Zy4G4+OC"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8CE41DF252;
-	Sun, 12 Oct 2025 17:38:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A1292EFDA2;
+	Sun, 12 Oct 2025 18:24:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760290743; cv=none; b=eRdmj5P2bLGmAIaGT0+9lziWLyzkWnjIJDUVARmxEaZf9edvUgOzx5NVXPPe6l7bvhQLzi49huf2QwY92Om02yK16cE+VjDv5itb7eBTa00Ss3KISZe2o0oiYzf53g/tCYpCCt5orK7Kk2ddA56C2sGN2ZMfZDse07J4v4UBY3A=
+	t=1760293474; cv=none; b=imHd9OPqi2hEGcJGk80ct1RXVsTKMRPIv4PWyGGr/R/xkyqEsUE/AajLNT+arUQFhqgZGE+i4D7Cj8ROuaxy9UxzjPrmTrHOzJfUVqmAkU6SinzvoedrqKBBJsnjsbbEjuiYheCqJlounoY/0BHdkBEmclySyI8PDUvKbiXx2Gg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760290743; c=relaxed/simple;
-	bh=5I7ykGiAAOk6BgGy8HWD3BZzlBv59Rkn365TTJ8b+KA=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=XTk2Knw0J+v00PAuY/PHbWvzeO5p/pREpIDwtHGGk3cJMHqhB8pdixO0poX8HVMIGq/uJ7YEXEV7LXPXrhJS+1qctZsEJbHsWBfynzv/dkND9ua/hzOBFtjhgulgQRlwe/V2WSXd9pcOStV6nrtB1mJ+k/L9DXFMGbI+h2DjaG8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=Z6PSS6q7; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=qualcomm.com
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 59CCUFda003614;
-	Sun, 12 Oct 2025 17:38:35 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:date:from:message-id:mime-version
-	:subject:to; s=qcppdkim1; bh=764uBY9ag12bRJrfxTMRZfhol4GFWWG44oa
-	B8K1Qi2A=; b=Z6PSS6q7oDAyymmAYdvh2gNcCI0GMXtbnG+QSK0nRqaUn0En4IH
-	+6FTHPEj+TZ1jUd/t9an9roaysbkq1VPvXK+YYz6jNRVEnMbGM3ZDkKt0e394k57
-	NxxuKFooDJe5nM3TMqJsWMdlrPhXdaSDaqAVLMZgRShXnbtOVWIZMBg8ULEgIJOP
-	+0BSRlauZi3hi7VBUsgcWbWcuVrKI30Z1OhkcfJv27qd2wrBJMDsBNMsTS8+GG2P
-	F1mOcHQF/kVmrJlNM/CwGgEKkkn05L2/AyF8+Zx0L/Ph/SWAA9W7yTi8OoLlj7BJ
-	J2dxGQOyRlI+QASfjaZPuq5PYCyPDzWQg1A==
-Received: from apblrppmta01.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 49qgh628jd-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Sun, 12 Oct 2025 17:38:35 +0000 (GMT)
-Received: from pps.filterd (APBLRPPMTA01.qualcomm.com [127.0.0.1])
-	by APBLRPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTP id 59CHcVPt007557;
-	Sun, 12 Oct 2025 17:38:31 GMT
-Received: from pps.reinject (localhost [127.0.0.1])
-	by APBLRPPMTA01.qualcomm.com (PPS) with ESMTP id 49qgakks6h-1;
-	Sun, 12 Oct 2025 17:38:31 +0000
-Received: from APBLRPPMTA01.qualcomm.com (APBLRPPMTA01.qualcomm.com [127.0.0.1])
-	by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 59CHcVm5007551;
-	Sun, 12 Oct 2025 17:38:31 GMT
-Received: from hu-maiyas-hyd.qualcomm.com (hu-nitirawa-hyd.qualcomm.com [10.213.109.152])
-	by APBLRPPMTA01.qualcomm.com (PPS) with ESMTP id 59CHcU0x007550;
-	Sun, 12 Oct 2025 17:38:31 +0000
-Received: by hu-maiyas-hyd.qualcomm.com (Postfix, from userid 2342877)
-	id 3540B603540; Sun, 12 Oct 2025 23:08:30 +0530 (+0530)
-From: Nitin Rawat <nitin.rawat@oss.qualcomm.com>
-To: mani@kernel.org, James.Bottomley@HansenPartnership.com,
-        martin.petersen@oracle.com, bvanassche@acm.org,
-        konrad.dybcio@oss.qualcomm.com
-Cc: linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-scsi@vger.kernel.org, Nitin Rawat <nitin.rawat@oss.qualcomm.com>
-Subject: [PATCH V1] ufs: ufs-qcom: Fix UFS OCP issue during UFS power down(PC=3)
-Date: Sun, 12 Oct 2025 23:08:28 +0530
-Message-ID: <20251012173828.9880-1-nitin.rawat@oss.qualcomm.com>
-X-Mailer: git-send-email 2.50.1
+	s=arc-20240116; t=1760293474; c=relaxed/simple;
+	bh=txxPlbpyx3vQKhi9nz3pfg6ck8R1K4SwlLeAQZv2X7c=;
+	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=cDzjkSxTo71Q7WR8ddH2sqa8MIJA27luqrenJh+iSLUgGlbkgbbAzNYjKUj1ZNMRkTgkRNiBHJ53HUuCvf5+Ea32zkQaDI3uy+LcNIBivb+xQXjA1YWj4KEXpTvZAJ+CshSv0BmdKxWslEbihHjrAlC2DYTDGye2hwj0lkx18oA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Zy4G4+OC; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EED81C4CEE7;
+	Sun, 12 Oct 2025 18:24:26 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1760293474;
+	bh=txxPlbpyx3vQKhi9nz3pfg6ck8R1K4SwlLeAQZv2X7c=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+	b=Zy4G4+OCIG/0CdyakHTuZLbFC5q8C1zoD6N1vQKl/4OOToHtevVoYp+TepcMqz5pP
+	 HzU+blhg+y7/Y1DeKvV8l2bC4epgP9muK5dnGDQPadfeKmvLrHnZLXT+ZI+AW/Tz+2
+	 A0c6Vu+FKUqrmV+1HQjp+LakYH2czp6R6GGbOqQZ58PVhtKvENAdeLfneVeQUIamWg
+	 SS75X3zojQIC7ieqk4MVS4eQY4LOhDxYhrDBG5A0YTjezW3Jms+F0H2CF83u0sm+Vs
+	 JmlBysNay4kFAWBGvoEHSBL8LP8DIUGYgF1Zkn8qXW0jiicWDIwPWmX+ZEQY+B6d+4
+	 Wf3TQ+DbDZWzw==
+Date: Sun, 12 Oct 2025 19:24:22 +0100
+From: Jonathan Cameron <jic23@kernel.org>
+To: Hans de Goede <hansg@kernel.org>
+Cc: David Lechner <dlechner@baylibre.com>, Luca Weiss
+ <luca.weiss@fairphone.com>, Nuno =?UTF-8?B?U8Oh?= <nuno.sa@analog.com>,
+ Andy Shevchenko <andy@kernel.org>, "Rafael J. Wysocki" <rafael@kernel.org>,
+ Daniel Lezcano <daniel.lezcano@linaro.org>, Zhang Rui
+ <rui.zhang@intel.com>, Lukasz Luba <lukasz.luba@arm.com>, Rob Herring
+ <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Laxman Dewangan <ldewangan@nvidia.com>, Bjorn
+ Andersson <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>,
+ Jens Reidel <adrian@mainlining.org>, Casey Connolly
+ <casey.connolly@linaro.org>, ~postmarketos/upstreaming@lists.sr.ht,
+ phone-devel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+ linux-iio@vger.kernel.org, linux-kernel@vger.kernel.org,
+ linux-pm@vger.kernel.org, devicetree@vger.kernel.org
+Subject: Re: [PATCH RFC 0/6] Battery temperature ADC plumbing on Qualcomm
+ platforms
+Message-ID: <20251012192422.46775ad1@jic23-huawei>
+In-Reply-To: <0beae4dd-2feb-4891-b7b0-0f63db8f5615@kernel.org>
+References: <20251010-bat-temp-adc-v1-0-d51ec895dac6@fairphone.com>
+	<c770c799-4318-4c40-bd62-3cefbbbef731@baylibre.com>
+	<0beae4dd-2feb-4891-b7b0-0f63db8f5615@kernel.org>
+X-Mailer: Claws Mail 4.3.1 (GTK 3.24.51; x86_64-pc-linux-gnu)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-QCInternal: smtphost
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Authority-Analysis: v=2.4 cv=H/zWAuYi c=1 sm=1 tr=0 ts=68ebe79b cx=c_pps
- a=Ou0eQOY4+eZoSc0qltEV5Q==:117 a=Ou0eQOY4+eZoSc0qltEV5Q==:17
- a=x6icFKpwvdMA:10 a=EUspDBNiAAAA:8 a=ldyrZXJ3T4YXRkzK03AA:9
- a=cPQSjfK2_nFv0Q5t_7PE:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDExMDAyNiBTYWx0ZWRfXwOb+7oYHDYRZ
- GkVtvz60AXbHXxpfuUiSQLOC6KuPp3DSHCxikOnwRh2r0hO1SXJn8mGbOefMNJzkktMXpp9l/ct
- NWghO3LxFGM+4U7DQG7euxrBNnbm+rYJDODc6YeWs9pO91YPctAfl9bmMGVqLmpa8dpmY4+7gUQ
- Nsy6CBXsKWsAwMowYk4I5XXxwdtxnpJGeckn+TW9r3EtkTQlMngqsQxv8X3SDucv/ciDObGrGu9
- JcJ/JEf+2yRwqeK1YJJLHc8EEBzjSyVaLxynmLLEbYKgnD65gP789sLLy2cv1DlCFwtg+AG6zva
- URrLQvoBEZq7UiYt1lDyIKYRWbeXcORZWoIFbEmMdufSUD7tz4cTPpTtRlRb3dXjnJjG5Y4tx5K
- wzqb2+LigHAmsYX0oKZ7EJwVAcktEQ==
-X-Proofpoint-ORIG-GUID: t9-cGvjqQYsJIZ1ukQAkVF7_xzYK2pQ9
-X-Proofpoint-GUID: t9-cGvjqQYsJIZ1ukQAkVF7_xzYK2pQ9
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1117,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-10-12_07,2025-10-06_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0 adultscore=0 priorityscore=1501 bulkscore=0 malwarescore=0
- clxscore=1011 impostorscore=0 spamscore=0 lowpriorityscore=0 suspectscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2510020000 definitions=main-2510110026
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 
-According to UFS specifications, the power-off sequence for a UFS
-device includes:
+On Sat, 11 Oct 2025 11:52:43 +0200
+Hans de Goede <hansg@kernel.org> wrote:
 
-- Sending an SSU command with Power_Condition=3 and await a
-  response.
-- Asserting RST_N low.
-- Turning off REF_CLK.
-- Turning off VCC.
-- Turning off VCCQ/VCCQ2.
+> Hi All,
+> 
+> Luca thank you for Cc-ing me.
+> 
+> On 10-Oct-25 10:56 PM, David Lechner wrote:
+> > On 10/10/25 6:21 AM, Luca Weiss wrote:  
+> >> This is an RFC which implements a potential solution to get battery
+> >> temperature readings working on for example smartphones with Qualcomm
+> >> SoCs.
+> >>  
+> > 
+> > ...
+> >   
+> >> 3. Add temperature-lookup-table as property to simple-battery
+> >>
+> >> Since the NTC is a part of the battery pack, adding a
+> >> temperature-lookup-table property to simple-battery would make sense
+> >> instead of having this lookup table be standalone in the
+> >> generic-adc-thermal node. However being able to re-use the existing code
+> >> in generic-adc-thermal lead me to the current proposal.
+> >>  
+> > Did you consider creating a specific compatible string for the battery pack?
+> > Then the battery node could have the io-channels property for the ADC
+> > connected to the temperature sensor. Then a specific battery driver could
+> > handle the conversion as needed rather than filling the devicetree with
+> > conversion tables.  
+> 
+> That will require a driver update, filling the driver (and thus memory)
+> with conversion tables each time a new battery model (one model phone
+> can have multiple battery revisions) comes out.
+> 
+> That seems undesirable. To me these conversion tables are very much
+> something which belongs in DT rather then being hardcoded in
+> the driver.
+> 
+> Also contrast this to ACPI where there actually is a mechanism defined
+> for thermal lookup tables and there all these things typically just
+> work when the ACPI tables are written properly. IMHO we want to move
+> more towards this direction where things just work without requiring
+> kernel code changes for every new model.
+> 
+> And we already have a mechanism in DT to map an ADC voltage to
+> a temperature in the generic-adc-thermal driver.
+> 
+> So all that is left to do really is to come up with a clean way
+> to export the temperature from the generic-adc-thermal driver
+> to the generic-adc-battery driver.
+> 
+> > The simple-battery bindings are already far from simple! So I would not
+> > be inclined to add more to it.  
+> 
+> I think we all agree on this and we also don't want to duplicate
+> the generic-adc-thermal bindings + code implementing that functionality.
+> 
+> IMHO not wanting to duplicate the bindings + functionality applies to
+> both: a) directly exporting an IIO temp channel from the ADC driver and
+> b) adding volt -> temp mapping functionality to the simple-battery bindings.
+> 
+> So that basically leaves us with coming up with a way for
+> the generic-adc-battery code to consume the temperature coming out of
+> the generic-adc-thermal code and there are 2 ways to do this:
+> 
+> 1. Modify the generic-adc-thermal driver to export an IIO channel
 
-As part of ufs shutdown , after the SSU command completion, asserting
-hardware reset (HWRST) triggers the device firmware to wake up and
-execute its reset routine. This routine initializes hardware blocks
-and takes a few milliseconds to complete. During this time, the
-ICCQ draws a large current.
+Other than the fact this is embedded in an existing driver, this is just
+a case of modelling an analog sensor in IIO. There's an ancient accelerometer
+that does this and the analog fronted ends handle things like potential dividers
+which are similar but with far simpler DT than this.
 
-This large ICCQ current may cause issues for the regulator which
-is supplying power to UFS, because the turn off request from UFS
-driver to the regulator framework will be immediately followed by
-low power mode(LPM) request by regulator framework. This is done
-by framework because UFS which is the only client is requesting
-for disable. So if the rail is still in the process of shutting down
-while ICCQ exceeds LPM current thresholds, and LPM mode is activated
-in hardware during this state, it may trigger an overcurrent
-protection (OCP) fault in the regulator.
+So conceptually I have no problem with the approach.
 
-To prevent this, a 10ms delay is added after asserting HWRST. This
-allows the reset operation to complete while power rails remain active
-and in high-power mode.
+If we were starting from scratch we might have had an explicit representation
+of the thermal sensor analog part (like our accelerometer), and then done
 
-Currently there is no way for Host to query whether the reset is
-completed or not and hence this the delay is based on experiments
-with Qualcomm UFS controllers across multiple UFS vendors.
+Generic temperature device sensor driver is consumer of the ADC channel.
+generic-adc-thermal is consumer of the generic temp device sensor.
 
-Signed-off-by: Nitin Rawat <nitin.rawat@oss.qualcomm.com>
----
- drivers/ufs/host/ufs-qcom.c | 15 ++++++++++++++-
- 1 file changed, 14 insertions(+), 1 deletion(-)
-
-diff --git a/drivers/ufs/host/ufs-qcom.c b/drivers/ufs/host/ufs-qcom.c
-index 89a3328a7a75..cb54628be466 100644
---- a/drivers/ufs/host/ufs-qcom.c
-+++ b/drivers/ufs/host/ufs-qcom.c
-@@ -744,8 +744,21 @@ static int ufs_qcom_suspend(struct ufs_hba *hba, enum ufs_pm_op pm_op,
+But retrofitting that split may be a pain (I haven't looked at this though so
+maybe not!)
 
 
- 	/* reset the connected UFS device during power down */
--	if (ufs_qcom_is_link_off(hba) && host->device_reset)
-+	if (ufs_qcom_is_link_off(hba) && host->device_reset) {
- 		ufs_qcom_device_reset_ctrl(hba, true);
-+		/*
-+		 * After sending the SSU command, asserting the rst_n
-+		 * line causes the device firmware to wake up and
-+		 * execute its reset routine.
-+		 *
-+		 * During this process, the device may draw current
-+		 * beyond the permissible limit for low-power mode (LPM).
-+		 * A 10ms delay, based on experimental observations,
-+		 * allows the UFS device to complete its hardware reset
-+		 * before transitioning the power rail to LPM.
-+		 */
-+		usleep_range(10000, 11000);
-+	}
 
- 	return ufs_qcom_ice_suspend(host);
- }
---
-2.50.1
+> 2. Modify the thermal-zone core to allow referencing to a thermal-zone
+>    with a phandle *and* modify generic-adc-battery to be able to
+>    optionally get the temperature from a thermal-zone instead of
+>    from an IIO-channel
+> 
+> Of these two options 1. clear is the most KISS option. SO I agree with
+> Luca that 1. as implemented in this series is the best way forward.
+> 
+> Regards,
+> 
+> Hans
+> 
+> 
 
 
