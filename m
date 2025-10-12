@@ -1,93 +1,104 @@
-Return-Path: <linux-arm-msm+bounces-76867-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-76868-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 82EF8BD0CE1
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 12 Oct 2025 23:57:23 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 07E94BD0D30
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Oct 2025 00:48:02 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id BD8FF1894418
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 12 Oct 2025 21:57:46 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 0DB4B3B8C5B
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 12 Oct 2025 22:47:52 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 901F3241679;
-	Sun, 12 Oct 2025 21:57:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 46ABC241139;
+	Sun, 12 Oct 2025 22:47:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="L4HoqRS6"
+	dkim=pass (2048-bit key) header.d=packett.cool header.i=@packett.cool header.b="O+Uv3TnQ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from out-173.mta0.migadu.com (out-173.mta0.migadu.com [91.218.175.173])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51ACA1F4C9F;
-	Sun, 12 Oct 2025 21:57:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CB31221D92
+	for <linux-arm-msm@vger.kernel.org>; Sun, 12 Oct 2025 22:47:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.173
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760306237; cv=none; b=hbbfycNIa/IaJw5D1Ul0ifhNn2cJvWxXvR1TYk5QZIDX9dIslKUPS7xuSSJ1uT3/JzHPBp3NuqML+1Uz4fNqHj8nTOutc2oqS7JLCUU+FINvYV7ChmtKyxqCv4I3oqZp3v0RHA0BdSFnhAzBhOV/ncepO+xH22Gs0SSNcPi3y5g=
+	t=1760309271; cv=none; b=uCUelQQpqX5KPRCa9wZAKMBfgeoOJVjFuZvmRQP05fa2pWYgNthH6RravoWwL+A50+rWSTR0w6lQsI+w99Vj0F5hx3swKq8mTaaBGqqN9vU6iT61nUiF+OFPjnD9hq9Dc3g2AJSS+3RVUM9bO4wfmQ4axwBF5hyyICUrLF/8OWE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760306237; c=relaxed/simple;
-	bh=uzV5vowCQeEOgjTPvkvfljcgwJJ5ZIZy7v5txVIJAzc=;
-	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
-	 In-Reply-To:Content-Type; b=Hs6FnX4MULCjZMUHbYdLvYN7YblaSdckSDIotsMGPBdhP+bnmzTo2zSd5GHpvhdSzTxrlp+lo0wsXTtn6PhzPCRgjqPE0Ey4MvtR1e0mXw8eUqctuQA50e4Wm2+KZzsd5jC51jF9ALEYhRKA+K2Gzr6wsa1+GMVsQykePCKhmZQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=L4HoqRS6; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2BE86C4CEE7;
-	Sun, 12 Oct 2025 21:57:11 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1760306236;
-	bh=uzV5vowCQeEOgjTPvkvfljcgwJJ5ZIZy7v5txVIJAzc=;
-	h=Date:Subject:From:To:Cc:References:In-Reply-To:From;
-	b=L4HoqRS63ozDSEZzo2i1g/A5gwW+zu16JQ8rYoGMUePKS2UzjkcUGSLKLJr4Y7E2p
-	 7sxFDsncKUj2Zh1xqK4yU9aqFiGqRf5Ut5beC56jU8BHjrOKRgwAuqFifxZIVm5LKR
-	 oxZN0MONxSHjfSgB8X0KYeqKTdAy0unCKv0G+Ma2eLU4fGNwYur9kxEV6L1wigpwSo
-	 MYJiQl/qzqXnknz2f+0ASanZ7zHzTNFtOOMryjQyldzdPYoXVzNctdceynm9gr7X4W
-	 LMY86fHO8MXwL7GejIp1SOH2I7W8JmoOiUJAaMNJ7jKW0W467tFZxbtu9sGCP0a+Pu
-	 20OB6T7Y5S/qw==
-Message-ID: <3cbf1d5d-e0a5-4c9f-88c3-eaacc6cb47d3@kernel.org>
-Date: Sun, 12 Oct 2025 22:57:09 +0100
+	s=arc-20240116; t=1760309271; c=relaxed/simple;
+	bh=EyPG3Fi950uiyAJD5Mohk3oQRg/ePz+PGzh3DjGatOs=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=F5xL5QMyK/xjU8fhjSoZHv5ryyxWpaYPhSvS0jzA9nFumKzuWA1J70nFeMUEEAzVWYW4NWBFLsARg9ut3bC3tsUCa0f6vj/DuwwR4ed48MGkBsW6dru5wTz531B9AI1xnS82sK7j0xoGhWCR/FA99mzhBslm3L1pM8n15WFNGN8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=packett.cool; spf=pass smtp.mailfrom=packett.cool; dkim=pass (2048-bit key) header.d=packett.cool header.i=@packett.cool header.b=O+Uv3TnQ; arc=none smtp.client-ip=91.218.175.173
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=packett.cool
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=packett.cool
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=packett.cool;
+	s=key1; t=1760309256;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:
+	 content-transfer-encoding:content-transfer-encoding;
+	bh=bcjVnsy37RIrdVgMtxg7YSO76T0MhxQKRy53qIOEJRA=;
+	b=O+Uv3TnQt7MwbJw+HsFtOncgRcYm6qsFe0yqil7KNbWr9PGWi75Rv0zeAspofP8jhunsPn
+	UftV6XtJ1pWqgCl5uybdT5CXQEo14ua4rD2TWUie2DD9x3Z1VNQZKvOfaxjDMdgKf1Tdxq
+	v/jYRdNO/AOV/UvP0Z8KtZe3VxZjINEVfHvg5KRNX8n0RZyFP3YmLcI6xDisZ9iuR3HHPj
+	jp9sAqs7OVp0EqXbA+/ThVVjtgYzFBfnbdEX7meYjmTTXFASaFIy8Ps3IX8j/GcglX/Lcs
+	Ypd5wt1IPfgm3i3dhSVx6eImdSSPORjI9UP0y9kHHnTCnZp+od9QZGHIvZ6GSw==
+From: Val Packett <val@packett.cool>
+To: Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	"Bryan O'Donoghue" <bryan.odonoghue@linaro.org>,
+	Val Packett <val@packett.cool>,
+	Laurentiu Tudor <laurentiu.tudor1@dell.com>
+Cc: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	linux-arm-msm@vger.kernel.org,
+	devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Subject: [PATCH v2] arm64: dts: qcom: x1-dell-thena: Add missing pinctrl for eDP HPD
+Date: Sun, 12 Oct 2025 19:40:08 -0300
+Message-ID: <20251012224706.14311-1-val@packett.cool>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH 0/3] Introduce iommu-map-masked for platform devices
-From: Bryan O'Donoghue <bod@kernel.org>
-To: Charan Teja Kalla <charan.kalla@oss.qualcomm.com>,
- Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
- Robin Murphy <robin.murphy@arm.com>
-Cc: joro@8bytes.org, will@kernel.org, saravanak@google.com,
- conor+dt@kernel.org, robh@kernel.org, mchehab@kernel.org,
- krzk+dt@kernel.org, abhinav.kumar@linux.dev,
- vikash.garodia@oss.qualcomm.com, dikshita.agarwal@oss.qualcomm.com,
- Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
- bjorn.andersson@oss.qualcomm.com, linux-media@vger.kernel.org,
- linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, iommu@lists.linux.dev
-References: <20250928171718.436440-1-charan.kalla@oss.qualcomm.com>
- <aec0f40a-8346-4194-8b18-1022fe3366bb@arm.com>
- <0d0560cc-9757-4c7b-8de4-170148d99481@oss.qualcomm.com>
- <ead7cf8b-fbc4-4242-a9da-b313dded1abc@arm.com>
- <nzqte4glwtpjs5bhkxz43yhdufelxvqvzmg5tepudxwetimir3@bvlw5csjizsh>
- <9d3eeb9f-b8ea-48e5-a1d9-0865f63ef991@arm.com>
- <fhb4woejzh3r6v5dxvdiopnsbuwstucfuuzbiymxg4wrxrjc7t@dt3z3utq6lwd>
- <0zcQcB2YYWH_ufElq3ptqtLsGDsxvMEAkHCt_jYaSpwV597VFc22pFWzyMz0rSY-DKqWCQgOCiKpsIRNA0Fisw==@protonmail.internalid>
- <c863f6a7-b117-4444-ae6d-1d525b572be2@oss.qualcomm.com>
- <3c1eb276-abde-4af4-ab39-c934c30aa447@kernel.org>
-Content-Language: en-US
-In-Reply-To: <3c1eb276-abde-4af4-ab39-c934c30aa447@kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
+X-Migadu-Flow: FLOW_OUT
 
-> 6. We should on introduction of a new SoC
-> 
->     - Fix the iommus = <> for "qcom,newsoc-iris" to contain
->       only what is pertinent to S1_VIDEO_HLOS
-> 
->     - Make new devices in the DT for each FUNCTION_ID
-> 
->     - Then look at how - if - that fix can be brought back to Lemans
-[sic] Lanai/sm8550
+The commit a41d23142d87 ("arm64: dts: qcom: x1e80100-dell-xps13-9345:
+Add missing pinctrl for eDP HPD") has applied this change to a very
+similar machine, so apply it here too.
 
+This allows us not to rely on the boot firmware to set up the pinctrl
+for the eDP HPD line of the internal display.
+
+Fixes: e7733b42111c ("arm64: dts: qcom: Add support for Dell Inspiron 7441 / Latitude 7455")
+Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Signed-off-by: Val Packett <val@packett.cool>
 ---
-bod
+v2: fixed commit msg style, pulled R-b
+v1: https://lore.kernel.org/all/20250927032330.21091-1-val@packett.cool/
+---
+ arch/arm64/boot/dts/qcom/x1-dell-thena.dtsi | 3 +++
+ 1 file changed, 3 insertions(+)
+
+diff --git a/arch/arm64/boot/dts/qcom/x1-dell-thena.dtsi b/arch/arm64/boot/dts/qcom/x1-dell-thena.dtsi
+index ef83e87e1b7a..0aad80a1159c 100644
+--- a/arch/arm64/boot/dts/qcom/x1-dell-thena.dtsi
++++ b/arch/arm64/boot/dts/qcom/x1-dell-thena.dtsi
+@@ -1104,6 +1104,9 @@ &mdss_dp1_out {
+ &mdss_dp3 {
+ 	/delete-property/ #sound-dai-cells;
+ 
++	pinctrl-0 = <&edp0_hpd_default>;
++	pinctrl-names = "default";
++
+ 	status = "okay";
+ 
+ 	aux-bus {
+-- 
+2.51.0
+
 
