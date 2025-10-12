@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-76843-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-76844-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ams.mirrors.kernel.org (ams.mirrors.kernel.org [213.196.21.55])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8C108BCFEBC
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 12 Oct 2025 04:46:16 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id A256FBCFEDD
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 12 Oct 2025 05:02:02 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ams.mirrors.kernel.org (Postfix) with ESMTPS id 11AEA349063
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 12 Oct 2025 02:46:16 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id A00741895826
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 12 Oct 2025 03:02:25 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 100C122097;
-	Sun, 12 Oct 2025 02:46:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1878715E5C2;
+	Sun, 12 Oct 2025 03:01:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="HfzR8v8f"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="uUqmgb7S"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4B7E34BA41;
-	Sun, 12 Oct 2025 02:46:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA8F42B2D7;
+	Sun, 12 Oct 2025 03:01:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760237171; cv=none; b=pmcVjGQHsAnvX3rKoGEdEH0wFzi8/GGSj+bMstvbb3uhGsB63yrhA1AGsLGBKo/VTv+vU7UurvTRS8fNbw6eanOAHqfrj2nkWBTOEwYXF8RsAtYSGJpMSMPlPm7ksW+oapFZNaHCUTKsXCD8yywtsRuSaj0JjqHFqencgO86RIM=
+	t=1760238118; cv=none; b=lrxtf9NdIerYMkZn6PHVSpydxAu0R3nDpT9zQG7t8BuDEuHWV0TBi3T92VPdgXgf1in0OGujm1BqbWI/gY+Mds/LIdltYinRMu04v7SDPiv9z9K1eSq9W3qwJXWG2RzYAUK+HsmnzEl6xBXrKdRx4PpNJejxdvYjsis/zzgAAOw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760237171; c=relaxed/simple;
-	bh=97y8CLaEqPcGlAOhyFl3DhHr/P0M/87L3FqQSYGMBFM=;
+	s=arc-20240116; t=1760238118; c=relaxed/simple;
+	bh=7uGW8tZKzB3sWjg7FgYq8BRxUDuNHFhXJDVn7AAo0zg=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=RC29khWQF2Wf9PLGqupHRhuu/u2zi/lVEvDt/1wzNxAK1xNBWlFhvKoFZtxVDq+GdTolG9s5zOSVAIuUjQsrviy1uVk084IRku4qsFg33Rvpd2lGk/ywn8nZldxx151jmG1OTrfo0/19igooc4UXbbayr/WtyOLvGg+JtWB5PRo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=HfzR8v8f; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CFEA6C4CEF4;
-	Sun, 12 Oct 2025 02:46:04 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=EJAB46VtwWPjQhg4bPj0t8l4dTrHYqux/iCNty1jdroPILip9XF2oTaKkQ6biTYHu9D6CGtA8hK6p+vKll+jaSTViztsqwSPwtPFZWTjMhLLg2WKZzT+9nqxla5RmgPXRBrc6lej4KZXwZsJ9nBkjObEi74ZRNpf34vU7EEPMU0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=uUqmgb7S; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D420C4CEF9;
+	Sun, 12 Oct 2025 03:01:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1760237168;
-	bh=97y8CLaEqPcGlAOhyFl3DhHr/P0M/87L3FqQSYGMBFM=;
+	s=k20201202; t=1760238117;
+	bh=7uGW8tZKzB3sWjg7FgYq8BRxUDuNHFhXJDVn7AAo0zg=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=HfzR8v8fvMIMxramujDPwrJg/N+OcvmArt4IcayW/zvJHd7LWskcNMG/epj70HCbB
-	 q+3ObCGy6a0Ew/492y9vDhhAos5mrXdy5uImwTIVoP6w8m8XT5zh7Oru/f4Oo6NXah
-	 JhxbOBUBkACj+z4GBpl0tBLVLO7Rd1uYBgW+TDm0yFcfsKPA8D1//HOrMM3Uq6RUCT
-	 oZ+NKqFR3Bv/0M3ppWdpF2yZHG3gVgR49NM1LM1D2D4DI1jq2nfD9QwITNltym0m4L
-	 nxWJrnKcBXpIGvrfSr6+ILd542lOKIBcrfluy7Rwt44iFkc4Hx5aYE1jdLWoP6TkHk
-	 IxBS7m6NNWpBQ==
-Message-ID: <912c0ccd-40cd-402e-ac9f-f86be48aa072@kernel.org>
-Date: Sun, 12 Oct 2025 04:46:02 +0200
+	b=uUqmgb7SRsNizNab/qtPW4WAqIMthIHa6AX1U52JzPxoLrnRhMyiqzxzVjVZbo37p
+	 bhQt7ktpHOs4MvZB8Xuva5fir2ldRVTnGsnhpjfD7SgYBL+cCJQoxZ/xMYoEHG9IqK
+	 2kPD87Eq8FzZ6Hz7U9NW+GvUUfuVG8dFAlWDvxquqrN9epkFu5TejdVc0JqXzbkd4H
+	 JZEPgvbPNFAjpNqlJ3CoB05/VCKYl9zyXusZRZBHHSyhKYMBMBnM6HQwjLkSs0OUMy
+	 N5enJODK8DY0gdDP9/srAJg42gQsFNIzNXbKhvGGPu7fAVjP2ksesqTVlYuwxG39O9
+	 CXPAsvqYki2GA==
+Message-ID: <7dadc4bb-43a1-4d53-bd6a-68ff76f06555@kernel.org>
+Date: Sun, 12 Oct 2025 05:01:45 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,20 +50,23 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 04/24] arm64: dts: qcom: glymur: Add QUPv3 configuration
- for serial engines
-To: Abel Vesa <abel.vesa@linaro.org>,
- Pankaj Patil <pankaj.patil@oss.qualcomm.com>
-Cc: Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
+Subject: Re: [PATCH v4 2/4] dt-bindings: PCI: qcom: Document the Glymur PCIe
+ Controller
+To: Abel Vesa <abel.vesa@linaro.org>, Wenbin Yao <wenbin.yao@oss.qualcomm.com>
+Cc: Vinod Koul <vkoul@kernel.org>, Kishon Vijay Abraham I
+ <kishon@kernel.org>, Rob Herring <robh@kernel.org>,
  Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
+ <conor+dt@kernel.org>, Lorenzo Pieralisi <lpieralisi@kernel.org>,
+ =?UTF-8?Q?Krzysztof_Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
+ Manivannan Sadhasivam <mani@kernel.org>, Bjorn Helgaas
+ <bhelgaas@google.com>, Bjorn Andersson <andersson@kernel.org>,
+ linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
  devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- Jyothi Kumar Seerapu <jyothi.seerapu@oss.qualcomm.com>
-References: <20250925-v3_glymur_introduction-v1-0-24b601bbecc0@oss.qualcomm.com>
- <20250925-v3_glymur_introduction-v1-4-24b601bbecc0@oss.qualcomm.com>
- <3af57kktkwevbxkno4o54w3o2qajoco5x7dlj3ckepcutlzmdh@2bnqqxndbvf3>
- <odjto4fjqoi5ct33unring22s3p6vwnbrafyrcmrppwcdnm4zq@aabot4m6q2rm>
+ linux-pci@vger.kernel.org, konrad.dybcio@oss.qualcomm.com,
+ qiang.yu@oss.qualcomm.com, Prudhvi Yarlagadda <quic_pyarlaga@quicinc.com>
+References: <20250903-glymur_pcie5-v4-0-c187c2d9d3bd@oss.qualcomm.com>
+ <20250903-glymur_pcie5-v4-2-c187c2d9d3bd@oss.qualcomm.com>
+ <w2r4yh2mgdjytteawyyh6h3kyxy36bnbfbfw4wir7jju7grldx@rypy6qjjy3a3>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -109,34 +112,39 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  jWt87ecuHlpL3uuQ0ZZNWqHgZoQLXoqC2ZV5KrtKWb/jyiFX/sxSrodALf0zf+tfHv0FZWT2
  zHjUqd0t4njD/UOsuIMOQn4Ig0SdivYPfZukb5cdasKJukG1NOpbW7yRNivaCnfZz6dTawXw
  XRIV/KDsHQiyVxKvN73bThKhONkcX2LWuD928tAR6XMM2G5ovxLe09vuOzzfTWQDsm++9UKF a/A=
-In-Reply-To: <odjto4fjqoi5ct33unring22s3p6vwnbrafyrcmrppwcdnm4zq@aabot4m6q2rm>
+In-Reply-To: <w2r4yh2mgdjytteawyyh6h3kyxy36bnbfbfw4wir7jju7grldx@rypy6qjjy3a3>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 11/10/2025 13:11, Abel Vesa wrote:
-> On 25-10-11 14:06:44, Abel Vesa wrote:
->> On 25-09-25 12:02:12, Pankaj Patil wrote:
->>> From: Jyothi Kumar Seerapu <jyothi.seerapu@oss.qualcomm.com>
->>> +			dma-channels = <16>;
->>> +			dma-channel-mask = <0x3f>;
->>> +			#dma-cells = <3>;
->>> +			iommus = <&apps_smmu 0xd76 0x0>;
->>> +			status = "ok";
->>
->> s/ok/okay/
->>
->> Everywhere actually.
->>
+On 11/10/2025 14:15, Abel Vesa wrote:
+>>  
+>>  properties:
+>>    compatible:
+>> -    const: qcom,pcie-x1e80100
+>> +    oneOf:
+>> +      - const: qcom,pcie-x1e80100
+>> +      - items:
+>> +          - enum:
+>> +              - qcom,glymur-pcie
+>> +          - const: qcom,pcie-x1e80100
+>>  
 > 
-> Actually no. Maybe drop entirely like Konrad already suggested.
+> The cnoc_sf_axi clock is not found on Glymur, at least according to this:
 > 
-> But then everywhere else you do "ok" please replace with "okay",
-> otherwise dtbs_check complains.
+> https://lore.kernel.org/all/20250925-v3_glymur_introduction-v1-19-24b601bbecc0@oss.qualcomm.com/
+> 
+> And dtbs_check reports the following:
+> 
+> arch/arm64/boot/dts/qcom/glymur-crd.dtb: pci@1b40000 (qcom,glymur-pcie): clock-names: ['aux', 'cfg', 'bus_master', 'bus_slave', 'slave_q2a', 'noc_aggr'] is too short
+>         from schema $id: http://devicetree.org/schemas/pci/qcom,pcie-x1e80100.yaml#
+> 
+> One more thing:
+> 
+> arch/arm64/boot/dts/qcom/glymur-crd.dtb: pci@1b40000 (qcom,glymur-pcie): max-link-speed: 5 is not one of [1, 2, 3, 4]
+>         from schema $id: http://devicetree.org/schemas/pci/qcom,pcie-x1e80100.yaml#
+> 
 
-
-I actually wonder how this passed any dtbs tests... or it wasn't tested
-at all?
-
+So that's another Glymur patch which wasn't ever tested?
 
 Best regards,
 Krzysztof
