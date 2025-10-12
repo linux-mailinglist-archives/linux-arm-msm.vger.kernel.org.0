@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-76847-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-76848-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id BAF8ABCFF11
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 12 Oct 2025 05:07:55 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id DB21ABCFF1C
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 12 Oct 2025 05:08:32 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 27ED03C010C
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 12 Oct 2025 03:07:44 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 9A0F33C00B3
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 12 Oct 2025 03:08:31 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3630E1DC988;
-	Sun, 12 Oct 2025 03:07:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CBC771DD877;
+	Sun, 12 Oct 2025 03:08:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="gLoo4HBX"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="TrwPM09L"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07DFB2B2D7;
-	Sun, 12 Oct 2025 03:07:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9AFE62B2D7;
+	Sun, 12 Oct 2025 03:08:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760238461; cv=none; b=XJ+AQN6QYCiT6z+/RdZngVvKe1XOZaTQeUlD7nXCB5mviTK9QgNBRii22s53R9o4NmPUMCs1yn8+rc4Q56wePArzYzbew5tB6EFwwr23rUoPnaaHyV9OP7C10XVOMQqY875Kh+tknOouRloegsLV/VqWa4tFHb4UAatxTgCHUDA=
+	t=1760238508; cv=none; b=gh5+ULsxL+Sd/heks8r8NUOqHvKlGo5UK1MtvbZkLeg5gYaF6WysZD4HTRklzIVfKKrOJh57elXRNArc6SW7zYGJWSI2Qx5cWpFqkI9umBV3zvD/jkAoO9LL21IuUy5rL4LETDVLNJAAqKDcjVfiqQNYjBEJUf1QK2S4ofn5/AM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760238461; c=relaxed/simple;
-	bh=t+2K6zhAR/Rn9Pl8G3GvcK0lPXwArO9kPmcmnrRjPSM=;
+	s=arc-20240116; t=1760238508; c=relaxed/simple;
+	bh=a0B/3/IMMDde1Kgn4DWqCPNin7xvdApoB+bc1/3Ktts=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=dInOBBVQ3lXxpQpLytysTtLYSQ32ym5hFd0GdPFQ6mMnOWTSwuj8y1aAxcGDS58Np/MRO6k15WHJKBzTyeXhaiuQLFEq8AK9eOC3sCKSaT/s5u2iND23mlXhDvONfMdvWtsx5yI+Btu4ovRtoB2WsPeIHyq447rHdYk8mYTDfj8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=gLoo4HBX; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E677C4CEE7;
-	Sun, 12 Oct 2025 03:07:33 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=eWmjGRWXfUiGyUzdD7RzsS72RoMOz7nb+pXC01Gtp6ZfhvTpDMb0Pyj8ZtK5rR/TyzOvDIKXsVj6b4JZhBOf58oeEdAgWdrH4hqAx7BRdPj0lwOAPbDX+bogX3bDPdyrJdVRJONbmt14N24l2D8feOULPBGwjGrGJPUJ0ezv+eU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=TrwPM09L; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4F49C4CEE7;
+	Sun, 12 Oct 2025 03:08:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1760238460;
-	bh=t+2K6zhAR/Rn9Pl8G3GvcK0lPXwArO9kPmcmnrRjPSM=;
+	s=k20201202; t=1760238508;
+	bh=a0B/3/IMMDde1Kgn4DWqCPNin7xvdApoB+bc1/3Ktts=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=gLoo4HBXvDesgp9visy+BMC9DOZYbI0gPWRsfxWhOVAxPJPXKoOH6M65w3nmuWpx5
-	 nW3BPWVi+rcLMyS81FERrp8LFEonqt+/2q98GLuYrRyQKmXD9Hq1r8T7NxpBdB8ic5
-	 ST3uJqw30Iqa7Rf0m1MJPqeE28kZySLWC7pd8jUROo7fOA2FJZdYnLqIi5mDhtrbOj
-	 J7tNF4QnsUo8tugOBMrX1CL2bfkeVtJKajxZNYGEvaO3kBkpeugfIt+aawuWY1V8SS
-	 +mRz0eE0xBBNWxQfJ3F5ISrARK5iopZ0c6O9KKNDmELnoSs6IzgOioFMjTDVyxxnVR
-	 klkjHPf7Y5Eyw==
-Message-ID: <1eb88960-2b7f-4eaa-8694-5a5ad4298b4e@kernel.org>
-Date: Sun, 12 Oct 2025 05:07:32 +0200
+	b=TrwPM09LyhM7rIYOocDrpSDTQWqhMsNqfMh1gfJWBAdDHdKgYMSv5h4QGjqfezDJS
+	 CIqfhmMVFnlHf/KPrDH3Q2NMzVIQhPHr1PwBUbv0On897qGRCdLiTIOK951rEwzc1v
+	 ztoeObsMmipRchZxu3U07hsuSP44IlQ47eNCqMjgfCyPi652HP/oD4Kj7FZPeQpNYZ
+	 Yof3rc24fgaoEJeGzs/g38HvSnFYsfz9HcMFgqWStBfPk3Rt5OJk879aVgQi9QQyEt
+	 kUAUoeyhbKjGPmOjopkz/X8RtRVjbAPYGuTSekz1yZLYFIGpsbdsTwu8BA8xf48dwt
+	 1kCIdF7S/+++w==
+Message-ID: <aeed33fa-8659-4141-86ea-5b75541989b7@kernel.org>
+Date: Sun, 12 Oct 2025 05:08:16 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,21 +50,23 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/9] dt-bindings: clock: qcom: Document the Kaanapali TCSR
- Clock Controller
+Subject: Re: [PATCH 1/3] dt-bindings: crypto: qcom,prng: Document kaanapali
+ RNG
 To: Jingyi Wang <jingyi.wang@oss.qualcomm.com>,
- Bjorn Andersson <andersson@kernel.org>,
- Michael Turquette <mturquette@baylibre.com>, Stephen Boyd
- <sboyd@kernel.org>, Rob Herring <robh@kernel.org>,
+ Herbert Xu <herbert@gondor.apana.org.au>,
+ "David S. Miller" <davem@davemloft.net>, Rob Herring <robh@kernel.org>,
  Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Taniya Das <quic_tdas@quicinc.com>,
- Taniya Das <taniya.das@oss.qualcomm.com>
-Cc: linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+ <conor+dt@kernel.org>, Vinod Koul <vkoul@kernel.org>,
+ Thara Gopinath <thara.gopinath@gmail.com>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, linux-crypto@vger.kernel.org,
  devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
  aiqun.yu@oss.qualcomm.com, tingwei.zhang@oss.qualcomm.com,
- trilok.soni@oss.qualcomm.com, yijie.yang@oss.qualcomm.com
-References: <20250924-knp-clk-v1-0-29b02b818782@oss.qualcomm.com>
- <20250924-knp-clk-v1-2-29b02b818782@oss.qualcomm.com>
+ trilok.soni@oss.qualcomm.com, yijie.yang@oss.qualcomm.com,
+ Gaurav Kashyap <gaurav.kashyap@oss.qualcomm.com>
+References: <20250924-knp-crypto-v1-0-49af17a231b7@oss.qualcomm.com>
+ <20250924-knp-crypto-v1-1-49af17a231b7@oss.qualcomm.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -110,18 +112,19 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  jWt87ecuHlpL3uuQ0ZZNWqHgZoQLXoqC2ZV5KrtKWb/jyiFX/sxSrodALf0zf+tfHv0FZWT2
  zHjUqd0t4njD/UOsuIMOQn4Ig0SdivYPfZukb5cdasKJukG1NOpbW7yRNivaCnfZz6dTawXw
  XRIV/KDsHQiyVxKvN73bThKhONkcX2LWuD928tAR6XMM2G5ovxLe09vuOzzfTWQDsm++9UKF a/A=
-In-Reply-To: <20250924-knp-clk-v1-2-29b02b818782@oss.qualcomm.com>
+In-Reply-To: <20250924-knp-crypto-v1-1-49af17a231b7@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 25/09/2025 00:58, Jingyi Wang wrote:
-> From: Taniya Das <taniya.das@oss.qualcomm.com>
+On 25/09/2025 01:38, Jingyi Wang wrote:
+> From: Gaurav Kashyap <gaurav.kashyap@oss.qualcomm.com>
 > 
-> Add bindings documentation for the Kaanapali Clock Controller.
+> Document kaanapali compatible for the True Random Number Generator.
 > 
-> Signed-off-by: Taniya Das <taniya.das@oss.qualcomm.com>
+> Signed-off-by: Gaurav Kashyap <gaurav.kashyap@oss.qualcomm.com>
 > Signed-off-by: Jingyi Wang <jingyi.wang@oss.qualcomm.com>
 > ---
+>  Documentation/devicetree/bindings/crypto/qcom,prng.yaml | 1 +
 
 Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
