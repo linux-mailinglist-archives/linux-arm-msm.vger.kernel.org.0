@@ -1,61 +1,61 @@
-Return-Path: <linux-arm-msm+bounces-76874-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-76875-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 837B8BD0D8E
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Oct 2025 01:35:45 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 71A55BD0D9A
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Oct 2025 01:36:10 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 0D6DF3A6C6C
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 12 Oct 2025 23:35:37 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 6B3833AE595
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 12 Oct 2025 23:35:53 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2C2242ED15F;
-	Sun, 12 Oct 2025 23:35:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 92E0C2F1FD6;
+	Sun, 12 Oct 2025 23:35:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=packett.cool header.i=@packett.cool header.b="D9dxE88R"
+	dkim=pass (2048-bit key) header.d=packett.cool header.i=@packett.cool header.b="b/q4eQxk"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from out-189.mta1.migadu.com (out-189.mta1.migadu.com [95.215.58.189])
+Received: from out-179.mta1.migadu.com (out-179.mta1.migadu.com [95.215.58.179])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0315D23E32B
-	for <linux-arm-msm@vger.kernel.org>; Sun, 12 Oct 2025 23:35:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.189
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 796C32EFDAC
+	for <linux-arm-msm@vger.kernel.org>; Sun, 12 Oct 2025 23:35:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760312127; cv=none; b=Kj07JH8ug1grzORBhSMm4cpOXP4xdpCS+wZsZ/yP9DTHEM/csLyCgLOyTBdL/P24hApaeov0MWk2KFbjdBF6Ih+pQMSLhoeW39w7qYJQftETVepMss0pp8ClKW849cNRePsqYcylHE0oKnF3ZXSDBtXKnsttRUCbYq/eJpHODkM=
+	t=1760312131; cv=none; b=qMs7ZYlAO8eeBmZxezSgu2hNbdmGYyOGLtPTInaTWHW+/1H4eGQ6u0DcKlrRpIOlUBLaWbgjrOhNEoWvB1xzzeA4zJfvwtyfXyhexXZXvCQFdAr5sBdZxyGI00ypsBRuP1nb5pK5epkqjmOaoAcsAUlHf6ood6mT5eFBEyp+BxM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760312127; c=relaxed/simple;
-	bh=gkLy2Qgcq7gN47EkW82rgH1br37FBToXcsjbZlxUg0U=;
+	s=arc-20240116; t=1760312131; c=relaxed/simple;
+	bh=HcgvRsl6W0SNKxZG8xv51myRgFtAdDrV+t95LVLew9E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Vsiv5clxow9TbYNOk5OrFkZR2vNMy/QS1Qwx0/1sJKxA4VMh9E+rqOcx/n3ARhfFSyF2BoYwMcNYVyfHeHH+rsmVVIi4IZ/DFdt1rxiOsR6VwnCzWAWIVTdhRMdKOsg1Vg5zMOYSrB9d5N3a1VoaaWtW8QkY1dtiwt6rRayJYV0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=packett.cool; spf=pass smtp.mailfrom=packett.cool; dkim=pass (2048-bit key) header.d=packett.cool header.i=@packett.cool header.b=D9dxE88R; arc=none smtp.client-ip=95.215.58.189
+	 MIME-Version; b=REbOyRApxSDQ8HB4Rr0r1JWtyJ2tkllA90yEBotzLOHEAVD0qfo4jAdTySdsO2hxSiFFv4BFEtR7+X6PYLzT787X3oguh+1n21zCAQQgEhv7r1lk5yEhQZLJb2FMFxJ5uby1gJcOmXmm51ZP35fumyGvZEmsVxwiugneEad+5t4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=packett.cool; spf=pass smtp.mailfrom=packett.cool; dkim=pass (2048-bit key) header.d=packett.cool header.i=@packett.cool header.b=b/q4eQxk; arc=none smtp.client-ip=95.215.58.179
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=packett.cool
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=packett.cool
 X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=packett.cool;
-	s=key1; t=1760312123;
+	s=key1; t=1760312126;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=aMQxUdZpKenu9e4nFmMim5iXKBYHWVcK5NULU+g21sU=;
-	b=D9dxE88R60fxDnkI3tHA8ApGl7LoVnog7o4mCXbJ0I6yg7FmmVNauMJuXlCWIXoboQe+SI
-	AFqAjTmXT5bhnGP0x96VTO5FpvHNo/vsxmB4a2y56Brdb9bhQJgOH3Wg0OEG8xfCPR1AUG
-	H2wz/tlhDlW31WPEofYF2kcee7xS+e0Yc3neKItfxuBZB0L4DhOifKNpoJ3Grcioqoyrd0
-	s93BbVG78dIVvjMdYUjyfBbvhWodQ8Dt43uGMwmatkckFRGoimAaeACR0082946XeCdWOc
-	7jHP/pQEeF2WJdnGAVa88oX9WT9hX0hEpLMUrcd+5yYIrZrIZcRB/e8yESiQBg==
+	bh=AqflzUk4CL99JJ1fV54jyel3/p1XOOUdQirvgksUsSo=;
+	b=b/q4eQxk/ANOiFw2WPA0ueuB18mLKM4tT6KpP1YKLLmJu02BUe5P1xL7zcggCDf1Jc5hWp
+	XI5JhZaWLzc3nhR/UeINo22TzmEnpFTnzsUO1k/nYFtRXpNX3Sogd16adwque1ZzUo6jK9
+	yvHmC58EIPRXi86h9CYouE51suEXVJTcoqYJTo8dqa5emMFGtrV08qMQ0gmI6LV2aKcfxD
+	kTvUq7BSHrkjnbM+kVMnlG8gATGyClKrIlXCdoSzbwFDg06pcaRyWdl7CDIeEhKUSDf5MV
+	vDqxXZhM+jLR+uR+mSY8BJQ2Xk6sWKQLZ6VpArBsV8Qt53Q8Mo+si/nc0J2wLw==
 From: Val Packett <val@packett.cool>
 To: Sebastian Reichel <sre@kernel.org>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	Fenglin Wu <fenglin.wu@oss.qualcomm.com>
+	Fenglin Wu <fenglin.wu@oss.qualcomm.com>,
+	Neil Armstrong <neil.armstrong@linaro.org>
 Cc: Val Packett <val@packett.cool>,
 	Sebastian Reichel <sebastian.reichel@collabora.com>,
 	linux-arm-msm@vger.kernel.org,
 	linux-pm@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH 1/2] power: supply: qcom_battmgr: clamp charge control thresholds
-Date: Sun, 12 Oct 2025 20:32:18 -0300
-Message-ID: <20251012233333.19144-3-val@packett.cool>
+Subject: [PATCH 2/2] power: supply: qcom_battmgr: support disabling charge control
+Date: Sun, 12 Oct 2025 20:32:19 -0300
+Message-ID: <20251012233333.19144-4-val@packett.cool>
 In-Reply-To: <20251012233333.19144-2-val@packett.cool>
 References: <20251012233333.19144-2-val@packett.cool>
 Precedence: bulk
@@ -67,50 +67,83 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Migadu-Flow: FLOW_OUT
 
-The sysfs API documentation says that drivers "round written values to
-the nearest supported value" for charge_control_end_threshold.
+Existing userspace (in particular, upower) disables charge control by
+setting the start threshold to 0 and the stop threshold to 100.
 
-Let's do this for both thresholds, as userspace (e.g. upower) generally
-does not expect these writes to fail at all.
+Handle that by actually setting the enable bit to 0 when a start
+threshold of 0 was requested.
 
 Fixes: cc3e883a0625 ("power: supply: qcom_battmgr: Add charge control support")
 Signed-off-by: Val Packett <val@packett.cool>
 ---
- drivers/power/supply/qcom_battmgr.c | 14 ++------------
- 1 file changed, 2 insertions(+), 12 deletions(-)
+ drivers/power/supply/qcom_battmgr.c | 12 ++++++++----
+ 1 file changed, 8 insertions(+), 4 deletions(-)
 
 diff --git a/drivers/power/supply/qcom_battmgr.c b/drivers/power/supply/qcom_battmgr.c
-index 3c2837ef3461..c8028606bba0 100644
+index c8028606bba0..e6f01e0122e1 100644
 --- a/drivers/power/supply/qcom_battmgr.c
 +++ b/drivers/power/supply/qcom_battmgr.c
-@@ -678,12 +678,7 @@ static int qcom_battmgr_set_charge_start_threshold(struct qcom_battmgr *battmgr,
+@@ -257,6 +257,7 @@ struct qcom_battmgr_info {
+ 	unsigned int capacity_warning;
+ 	unsigned int cycle_count;
+ 	unsigned int charge_count;
++	bool charge_ctrl_enable;
+ 	unsigned int charge_ctrl_start;
+ 	unsigned int charge_ctrl_end;
+ 	char model_number[BATTMGR_STRING_LEN];
+@@ -659,13 +660,13 @@ static int qcom_battmgr_bat_get_property(struct power_supply *psy,
+ }
+ 
+ static int qcom_battmgr_set_charge_control(struct qcom_battmgr *battmgr,
+-					   u32 target_soc, u32 delta_soc)
++					   bool enable, u32 target_soc, u32 delta_soc)
+ {
+ 	struct qcom_battmgr_charge_ctrl_request request = {
+ 		.hdr.owner = cpu_to_le32(PMIC_GLINK_OWNER_BATTMGR),
+ 		.hdr.type = cpu_to_le32(PMIC_GLINK_REQ_RESP),
+ 		.hdr.opcode = cpu_to_le32(BATTMGR_CHG_CTRL_LIMIT_EN),
+-		.enable = cpu_to_le32(1),
++		.enable = cpu_to_le32(enable),
+ 		.target_soc = cpu_to_le32(target_soc),
+ 		.delta_soc = cpu_to_le32(delta_soc),
+ 	};
+@@ -677,6 +678,7 @@ static int qcom_battmgr_set_charge_start_threshold(struct qcom_battmgr *battmgr,
+ {
  	u32 target_soc, delta_soc;
  	int ret;
++	bool enable = start_soc != 0;
  
--	if (start_soc < CHARGE_CTRL_START_THR_MIN ||
--	    start_soc > CHARGE_CTRL_START_THR_MAX) {
--		dev_err(battmgr->dev, "charge control start threshold exceed range: [%u - %u]\n",
--			CHARGE_CTRL_START_THR_MIN, CHARGE_CTRL_START_THR_MAX);
--		return -EINVAL;
--	}
-+	start_soc = clamp(start_soc, CHARGE_CTRL_START_THR_MIN, CHARGE_CTRL_START_THR_MAX);
+ 	start_soc = clamp(start_soc, CHARGE_CTRL_START_THR_MIN, CHARGE_CTRL_START_THR_MAX);
  
- 	/*
- 	 * If the new start threshold is larger than the old end threshold,
-@@ -716,12 +711,7 @@ static int qcom_battmgr_set_charge_end_threshold(struct qcom_battmgr *battmgr, i
+@@ -696,9 +698,10 @@ static int qcom_battmgr_set_charge_start_threshold(struct qcom_battmgr *battmgr,
+ 	}
+ 
+ 	mutex_lock(&battmgr->lock);
+-	ret = qcom_battmgr_set_charge_control(battmgr, target_soc, delta_soc);
++	ret = qcom_battmgr_set_charge_control(battmgr, enable, target_soc, delta_soc);
+ 	mutex_unlock(&battmgr->lock);
+ 	if (!ret) {
++		battmgr->info.charge_ctrl_enable = enable;
+ 		battmgr->info.charge_ctrl_start = start_soc;
+ 		battmgr->info.charge_ctrl_end = target_soc;
+ 	}
+@@ -710,6 +713,7 @@ static int qcom_battmgr_set_charge_end_threshold(struct qcom_battmgr *battmgr, i
+ {
  	u32 delta_soc = CHARGE_CTRL_DELTA_SOC;
  	int ret;
++	bool enable = battmgr->info.charge_ctrl_enable;
  
--	if (end_soc < CHARGE_CTRL_END_THR_MIN ||
--	    end_soc > CHARGE_CTRL_END_THR_MAX) {
--		dev_err(battmgr->dev, "charge control end threshold exceed range: [%u - %u]\n",
--			CHARGE_CTRL_END_THR_MIN, CHARGE_CTRL_END_THR_MAX);
--		return -EINVAL;
--	}
-+	end_soc = clamp(end_soc, CHARGE_CTRL_END_THR_MIN, CHARGE_CTRL_END_THR_MAX);
+ 	end_soc = clamp(end_soc, CHARGE_CTRL_END_THR_MIN, CHARGE_CTRL_END_THR_MAX);
  
- 	if (battmgr->info.charge_ctrl_start && end_soc > battmgr->info.charge_ctrl_start)
+@@ -717,7 +721,7 @@ static int qcom_battmgr_set_charge_end_threshold(struct qcom_battmgr *battmgr, i
  		delta_soc = end_soc - battmgr->info.charge_ctrl_start;
+ 
+ 	mutex_lock(&battmgr->lock);
+-	ret = qcom_battmgr_set_charge_control(battmgr, end_soc, delta_soc);
++	ret = qcom_battmgr_set_charge_control(battmgr, enable, end_soc, delta_soc);
+ 	mutex_unlock(&battmgr->lock);
+ 	if (!ret) {
+ 		battmgr->info.charge_ctrl_start = end_soc - delta_soc;
 -- 
 2.51.0
 
