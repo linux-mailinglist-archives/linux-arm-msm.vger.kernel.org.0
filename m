@@ -1,171 +1,184 @@
-Return-Path: <linux-arm-msm+bounces-76935-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-76937-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ams.mirrors.kernel.org (ams.mirrors.kernel.org [213.196.21.55])
-	by mail.lfdr.de (Postfix) with ESMTPS id A79E3BD1980
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Oct 2025 08:11:24 +0200 (CEST)
+Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [142.0.200.124])
+	by mail.lfdr.de (Postfix) with ESMTPS id C1F41BD199D
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Oct 2025 08:11:46 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ams.mirrors.kernel.org (Postfix) with ESMTPS id 12D31347C30
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Oct 2025 06:11:24 +0000 (UTC)
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id AF0334E964A
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Oct 2025 06:11:45 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BDF112E03F0;
-	Mon, 13 Oct 2025 06:11:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 997EA2E0412;
+	Mon, 13 Oct 2025 06:11:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="IOSUmqLL"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="BX7bU1Fp"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51BEE2DF13D;
-	Mon, 13 Oct 2025 06:11:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 154F62E040E
+	for <linux-arm-msm@vger.kernel.org>; Mon, 13 Oct 2025 06:11:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760335879; cv=none; b=ffflGXiK3iSZIWFTnKa9/EfhdN5TgLdzeknFHhay4faJ2ei1RJDdgraI05VlFyorx1JkV/1t7R+yrbRx4NPsXduGiL/tK5ZuylJp/RvdANSYdPbYVUOtod5IgrvAu/whSdWe3z1vt4aGoymVUZIEhlRS9FtlP13LD7wxKcZ0KoI=
+	t=1760335901; cv=none; b=W9HRwSx0IRj0lw5vFHl9uYrnS0MBOAhbUWSgjMOHe9Ehu71T7fQxoUFIwxWyK1VoGBomP75+U1weJ9ZWFArjjfVVhnxR/UHfl9gkJbM3EBbeFIy7t/O6YqpGXJtljOzc1BUQRbt78GA5OORf5bZofViNZmZTMcv+rudMmioTcbs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760335879; c=relaxed/simple;
-	bh=onl0j6bdyhT9DH9bqjt4WlDV+fWx2qh3hcPmRsTdJI4=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=jpByKk/T5pXcA9fthlop8f24PzlB5Sfn4K1g/1sN2FaHzeEQ80p+2vhzQB539tdJa4d7NNvmw5NNXn0FkXzE6dIkB1V7XSHjrg53rHx3ce8dkkr3TMxDh32QiOAS+XQVxwuPXgDCWYxvrOlln4qpKQ5j/8ixStOY7tWk55e0yIY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=IOSUmqLL; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 59D2nwOV030097;
-	Mon, 13 Oct 2025 06:11:12 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	6f2Kjqvq0ksqPu84UkGwHHIkwRR6OKDutnZzPrjhMNU=; b=IOSUmqLLkeKJxOmA
-	TuUlEmNFQokk1wUFZMzpVyO/A7B/LA6afOh4HX0cSGJEETCkpTlC/6hN7YLEDMBj
-	OwOc7ox5IL69zHEajE8S8CsSR3MMXU0u4TKMROBNWxtgiP4BnKfNPvJze8YB7bv2
-	DWv0M3sU2iNaL2hewU1R0q7+fzmqJ77Blni+GkIkNF397OdHplg/zAPDDIz5NfE3
-	08ljrnmgHHlE8h2bGCF4WgkTbsggZAnUZCoPnO5i5Z0xuXrhcAhUQaRWkkdUyXjS
-	+uTk8f+9oqRUpMXMMbB5dqUT7DAhf6DxNR4hHIoB0VPkzGyUUJ72G6pV22gXHc2D
-	pIgaCA==
-Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 49qff0ke1d-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 13 Oct 2025 06:11:12 +0000 (GMT)
-Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
-	by NASANPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 59D6BBTw022098
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 13 Oct 2025 06:11:11 GMT
-Received: from [10.151.36.184] (10.80.80.8) by nasanex01a.na.qualcomm.com
- (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1748.24; Sun, 12 Oct
- 2025 23:10:34 -0700
-Message-ID: <911ee444-25a9-a645-d14f-72fc239e5eb7@quicinc.com>
-Date: Mon, 13 Oct 2025 11:40:22 +0530
+	s=arc-20240116; t=1760335901; c=relaxed/simple;
+	bh=m3igMj4R7s1y9FpKNJWImJDhwhMcIhXy+s3EIqKrm+A=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=N10RQfH2tcZHb7aAGJvMYqSE8VMT4EFgVSCFlTmHrALWgN+uygonm6NWvidqj+pmwwgaEtdnGWjZYaVqSMhT/RN4UanM3NgwRYxvgoYY0xz1KQrHAWIOjv8f6y5xFfyU0jd9a/JE3HSNXDbA4Z9TzYrdb/5mM2VC3AMvoiBKD0o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=BX7bU1Fp; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 59D2ns6S023476
+	for <linux-arm-msm@vger.kernel.org>; Mon, 13 Oct 2025 06:11:39 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=qcppdkim1; bh=GrDvM6oXP/TotZ8t4JES1P
+	UvRpzDQj/VgtwmagjYzTo=; b=BX7bU1FpfzEFXW5zNUpNNdrG9L0/i3KXwm4O1T
+	E0NGwU/L4O/BNOsBvMnoNRvvXChnRHi9po6gqLt5zQWDExhFd3Drqe4dRe+kEfG2
+	zblTOoWZEqeRDbeLa4ErC4p1uXcg9oZzxOXKqT2xmPF8lJjgHzmkYHk1arqLebbY
+	90eoRJU7JoXy+bs6W39I13EJ6YO0n0iydgFypAIhitUYPAD9uu6F69meBalRkLBP
+	JrVO4yBD5Yio2jwQrtiiezdIMbHC5TDREIzYoOb3VNIJVg1dfva66TvlZxsWE1bb
+	BwTKL1Z8Gw7+Nk3RJqGj86MuMLe5RwmKu/UIYO7DUrXt+cqw==
+Received: from mail-pl1-f197.google.com (mail-pl1-f197.google.com [209.85.214.197])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 49qgdfubpm-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Mon, 13 Oct 2025 06:11:39 +0000 (GMT)
+Received: by mail-pl1-f197.google.com with SMTP id d9443c01a7336-28a5b8b12bbso167336345ad.2
+        for <linux-arm-msm@vger.kernel.org>; Sun, 12 Oct 2025 23:11:39 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1760335898; x=1760940698;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=GrDvM6oXP/TotZ8t4JES1PUvRpzDQj/VgtwmagjYzTo=;
+        b=pxD4TXmvv3RqPRWTf4rIj/xe2TtwFpvm57WWGpco1pRzKG8Fo8743b4ian37csQvFj
+         ab55bjs9fWGb7pOPsugO+7LQY9j/hb39LhQG5A04GuxJekjc5Ib9FO/9FDUGdqQCpVXi
+         rdPif/U32Tq4I9zbsa+tDXk/yFTL2/UjSQcD4UgvI8O3bXQuTiRnJDA5pxX/dYzFfS6T
+         PGVTQD1RoE5H/dA4tcbciq/1B54QINLRfgvmGNtDeC9rlHabatJX7RfQOfzoUjgVSXs7
+         8xNk4Yg2NwC/Cp0HP77WGnVyTToHVitYNAyeeAqKoLVKUun3EGmu81on0kc3+sTZlQ5q
+         7ITw==
+X-Gm-Message-State: AOJu0Yy2ky3w736Iwbmf8ZtuzPWnvzVLC+HP/IArfhaGn3vpZdrvG47E
+	NU6Osnu4+CJVKeqvcl613L/1XGZ204+VR3Iaq86+wRMvmeyUzWnSRUX1K00LFVgdXwxfvMkCIGi
+	blEzGKhsgyJnfbY1lM43FE5eqjQ7jh3FKf7U92YeUjlyaG+3SwQjiF0nDsPbKQ2/1VpyY
+X-Gm-Gg: ASbGncuVYsbyWkaon1zXiriVA6ZwFA2Wr6MB37zkmc8SMDfOw0IU5KEjY4bU8jk3XeZ
+	KXnufbws2YhAsCmGxQP2/VbJ6v6dA5Jrxdhc51fNg/WWvAD7HuefFzHoHyc+mne9+Y+7JZTap6R
+	pWKLAmYOSNxAJDSeploxZCO8a/V0VMTf3cTR2lKPKKXhV29fPplbffUjKgErBARE9RCQdzOo5Fn
+	7IfhFJq5uUdMckz01y189yJEj7+TuXyxaQsnMnG3+BLnr9vjD9zBGeDdo1Ja+2O0EANe39xzQ1G
+	00Jmv/nZamDPen4fn7+B8UREzzcWOPLg8MLCwJlSyFfVZJsj6Q8kB5SmniyLRKczvyJ9tp/+BMI
+	ioYiuPct2GzGQjFIvMica3QUfv3g=
+X-Received: by 2002:a17:903:2d1:b0:277:3488:787e with SMTP id d9443c01a7336-29027356933mr247429355ad.12.1760335898256;
+        Sun, 12 Oct 2025 23:11:38 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGVYUXzidkgUFrV2iPv99/ku+8bVfeLUvYnCfbn4pDK8/n2MNSkCO63ZBGJ6gT8lPzqENwpIQ==
+X-Received: by 2002:a17:903:2d1:b0:277:3488:787e with SMTP id d9443c01a7336-29027356933mr247429035ad.12.1760335897783;
+        Sun, 12 Oct 2025 23:11:37 -0700 (PDT)
+Received: from jiegan-gv.ap.qualcomm.com (tpe-colo-wan-fw-bordernet.qualcomm.com. [103.229.16.4])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2904f61a1desm64388675ad.82.2025.10.12.23.11.32
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 12 Oct 2025 23:11:37 -0700 (PDT)
+From: Jie Gan <jie.gan@oss.qualcomm.com>
+Subject: [PATCH v3 0/3] coresight: add static TPDM support
+Date: Mon, 13 Oct 2025 14:11:15 +0800
+Message-Id: <20251013-add-static-tpdm-support-v3-0-a720b73e83db@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.15.1
-Subject: Re: [PATCH v2 4/9] arm64: dts: qcom: ipq5424: Add QPIC SPI NAND
- controller support
-To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, <broonie@kernel.org>,
-        <robh@kernel.org>, <krzk+dt@kernel.org>, <conor+dt@kernel.org>,
-        <andersson@kernel.org>, <konradybcio@kernel.org>, <vkoul@kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-spi@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <dmaengine@vger.kernel.org>
-CC: <quic_varada@quicinc.com>
-References: <20251008090413.458791-1-quic_mdalam@quicinc.com>
- <20251008090413.458791-5-quic_mdalam@quicinc.com>
- <c7848ee9-dc00-48c1-a9b9-a0650238e3a1@oss.qualcomm.com>
-Content-Language: en-US
-From: Md Sadre Alam <quic_mdalam@quicinc.com>
-In-Reply-To: <c7848ee9-dc00-48c1-a9b9-a0650238e3a1@oss.qualcomm.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01a.na.qualcomm.com (10.52.223.231)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDExMDAxOCBTYWx0ZWRfX56iU6SxsKBJI
- VevmlD/xoMeE2UYYrCuJ0LIAIYakd/xqKotB1WFJORttpN5jykJsYV5vttmcDpcF5ZBOEnmBnO6
- Hz0+pq+r5j7YQD6kg/OLP+QvJcB7eL0nIGFxHniWXAvF7yujzOOdu4DzkCa59EF4ziFfBDtAnyC
- leMP/4U/BxqMNUh6DVJ2h5oCWsNbkL+ZUg1tjdMK1XR/ZZSx3PUWsFJd/RsZKUpOL3XHiFC4g9m
- gjLppPoIBn3iG9zJs7yKaUbUiY4vcqlDcnr4xHJoRy8t4r9OKyvu8/5qgkb04WA2XS/pKKSU3t2
- fxJh9LLszIFqsfyvWSvyVL4Xx0gsDrg5eMq4OgtVGFdEwwtB9qGtZENQVOwCzv+oFiPbn6RbApq
- z69uVhQh/yeYRlaOpMRrv7wg1/GksQ==
-X-Proofpoint-GUID: ZURUd54dx-qjd1YpqyyPTswHPdJOlCiR
-X-Authority-Analysis: v=2.4 cv=PriergM3 c=1 sm=1 tr=0 ts=68ec9800 cx=c_pps
- a=JYp8KDb2vCoCEuGobkYCKw==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17
- a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=x6icFKpwvdMA:10 a=COk6AnOGAAAA:8
- a=49Cd_CDO6GkvCW0xFaYA:9 a=QEXdDO2ut3YA:10 a=TjNXssC_j7lpFel5tvFf:22
- a=cPQSjfK2_nFv0Q5t_7PE:22
-X-Proofpoint-ORIG-GUID: ZURUd54dx-qjd1YpqyyPTswHPdJOlCiR
+X-B4-Tracking: v=1; b=H4sIAAWY7GgC/x3MQQqEMAxA0atI1hNoLergVWQW1UTNYrQ0VYTi3
+ S0u3+L/DMpRWKGvMkQ+RWXfCtyngmn128IoVAy1qRtrrENPhJp8kglToD/qEcIeEzpnxs5SS2b
+ +QqlD5Fmu9zz87vsBw+t+Z2kAAAA=
+To: Suzuki K Poulose <suzuki.poulose@arm.com>,
+        Mike Leach <mike.leach@linaro.org>,
+        James Clark <james.clark@linaro.org>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Tingwei Zhang <tingwei.zhang@oss.qualcomm.com>,
+        Mao Jinlong <jinlong.mao@oss.qualcomm.com>,
+        Tao Zhang <tao.zhang@oss.qualcomm.com>,
+        Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, coresight@lists.linaro.org,
+        linux-arm-kernel@lists.infradead.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, Jie Gan <jie.gan@oss.qualcomm.com>,
+        Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+X-Mailer: b4 0.14.0
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1760335892; l=1812;
+ i=jie.gan@oss.qualcomm.com; s=20250909; h=from:subject:message-id;
+ bh=m3igMj4R7s1y9FpKNJWImJDhwhMcIhXy+s3EIqKrm+A=;
+ b=gcdfQfaDmMEaFKBEjYpbgmeW/uSoRcEwX+ppPkiBB+DRMJInxmaqgMFqFzaBJODKMmWiMVmkx
+ F3Gb7ccw0aQBZkip7Tv53zEw0TTgHXqtUdvnmKX2l6NPxUNo//ABJ8y
+X-Developer-Key: i=jie.gan@oss.qualcomm.com; a=ed25519;
+ pk=3LxxUZRPCNkvPDlWOvXfJNqNO4SfGdy3eghMb8puHuk=
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDExMDAyNSBTYWx0ZWRfX3HrpMEHWHGPE
+ Axe001BpQZqzgAr+TkMm1tGK75BMz01jigx4R3cY4G1eZt1VsU3T9SHyiY0BA/tCihpYd/jYE/c
+ c097jYCnUHBLVAmvEVkD7IX+x3Z+GOcnKcSiU2jR/3N1AKAy+vpuSFpGv4+qjEKJT3EiZHlewUl
+ zRZB8q/tHrEZbFrjYnz2XD1y0BQfkaZAUo8+p62C6hwo0uXq0DeY6wNd5OmFgFkXwP+wSv8WHdk
+ b7/GQ8ujKkMEtjwxZgPWOvYp3rwCAjNBalcF4oyOJZ0uGTYpehktFsTEwhg6alx5iJgPMg5tO46
+ yunE2V0zqf6H12lXYlExNg8M8EszTRjdQWw5Nqg69XfjunJ6rZicKjaLCxvdmms+YlbX355kq6M
+ 0GbC5MMjn+o77SvKlrwS0xCHhsMZsg==
+X-Proofpoint-GUID: N64eurhSMmx0EnbA_pco9am_9trgTBSr
+X-Proofpoint-ORIG-GUID: N64eurhSMmx0EnbA_pco9am_9trgTBSr
+X-Authority-Analysis: v=2.4 cv=J4ynLQnS c=1 sm=1 tr=0 ts=68ec981b cx=c_pps
+ a=cmESyDAEBpBGqyK7t0alAg==:117 a=nuhDOHQX5FNHPW3J6Bj6AA==:17
+ a=IkcTkHD0fZMA:10 a=x6icFKpwvdMA:10 a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8
+ a=nhnTKuEOM_5bWBThM9gA:9 a=QEXdDO2ut3YA:10 a=1OuFwYUASf3TG4hYMiVC:22
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1117,Hydra:6.1.9,FMLib:17.12.80.40
  definitions=2025-10-13_03,2025-10-06_01,2025-03-28_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 adultscore=0 clxscore=1015 bulkscore=0 phishscore=0
- lowpriorityscore=0 spamscore=0 suspectscore=0 impostorscore=0
- priorityscore=1501 classifier=typeunknown authscore=0 authtc= authcc=
+ impostorscore=0 lowpriorityscore=0 priorityscore=1501 adultscore=0
+ bulkscore=0 suspectscore=0 clxscore=1015 phishscore=0 spamscore=0
+ malwarescore=0 classifier=typeunknown authscore=0 authtc= authcc=
  route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2510020000
- definitions=main-2510110018
+ definitions=main-2510110025
 
+The static TPDM function as a dummy source, however, it is essential
+to enable the port connected to the TPDA and configure the element size.
+Without this, the TPDA cannot correctly receive trace data from the
+static TPDM. Since the static TPDM does not require MMIO mapping to
+access its registers, a clock controller is not mandatory for its
+operation.
 
+Meanwhile, a function has been introduced to determine whether the
+current csdev is a static TPDM. This check enables the TPDA device
+to correctly read the element size and activate its port accordingly.
+Otherwise the TPDA cannot receive the trace data from the TPDM device.
 
-On 10/8/2025 6:00 PM, Konrad Dybcio wrote:
-> On 10/8/25 11:04 AM, Md Sadre Alam wrote:
->> Add device tree nodes for QPIC SPI NAND flash controller support
->> on IPQ5424 SoC.
->>
->> The IPQ5424 SoC includes a QPIC controller that supports SPI NAND flash
->> devices with hardware ECC capabilities and DMA support through BAM
->> (Bus Access Manager).
->>
->> Signed-off-by: Md Sadre Alam <quic_mdalam@quicinc.com>
->> ---
-> 
-> [...]
-> 
->> +		qpic_bam: dma-controller@7984000 {
->> +			compatible = "qcom,bam-v1.7.4", "qcom,bam-v1.7.0";
->> +			reg = <0x0 0x07984000 0x0 0x1c000>;
->> +			interrupts = <GIC_SPI 109 IRQ_TYPE_LEVEL_HIGH>;
->> +			clocks = <&gcc GCC_QPIC_AHB_CLK>;
->> +			clock-names = "bam_clk";
->> +			#dma-cells = <1>;
->> +			qcom,ee = <0>;
->> +			status = "disabled";
->> +		};
->> +
->> +		qpic_nand: spi@79b0000 {
->> +			compatible = "qcom,ipq5424-snand", "qcom,ipq9574-snand";
->> +			reg = <0x0 0x079b0000 0x0 0x10000>;
->> +			#address-cells = <1>;
->> +			#size-cells = <0>;
->> +			clocks = <&gcc GCC_QPIC_CLK>,
->> +				 <&gcc GCC_QPIC_AHB_CLK>,
->> +				 <&gcc GCC_QPIC_IO_MACRO_CLK>;
->> +			clock-names = "core", "aon", "iom";
-> 
-> 1 a line, please, also below
-ok
-> 
->> +			dmas = <&qpic_bam 0>,
->> +			       <&qpic_bam 1>,
->> +			       <&qpic_bam 2>;
->> +			dma-names = "tx", "rx", "cmd";
->> +			status = "disabled";
-> 
-> Is there anything preventing us from enabling both these nodes by
-> default on all boards (maybe secure configuration or required
-> regulators)?
-We can't enable NAND by default in the common DTSI because the GPIOs are 
-shared between eMMC and NAND.The decision to enable NAND must be made at 
-the board-specific level, depending on the flash type used on that
-particular board or RDP.Enabling it globally could lead to conflicts on 
-platforms where eMMC is present.
+Changes in V3:
+1. rebased on next-20251010
+Link to V2 - https://lore.kernel.org/all/20250911-add_static_tpdm_support-v2-0-608559d36f74@oss.qualcomm.com/
 
-Thanks,
-Alam.
+Changes in V2:
+1. Remove the dependency.
+2. Collect tags from Rob and Konard for patchset 1 and patchset 3.
+Link to V1 - https://lore.kernel.org/all/20250822103008.1029-1-jie.gan@oss.qualcomm.com/
+
+Signed-off-by: Jie Gan <jie.gan@oss.qualcomm.com>
+---
+Jie Gan (3):
+      dt-bindings: arm: document the static TPDM compatible
+      coresight: tpdm: add static tpdm support
+      arm64: dts: qcom: lemans: enable static TPDM
+
+ .../bindings/arm/qcom,coresight-tpdm.yaml          |  23 +++-
+ arch/arm64/boot/dts/qcom/lemans.dtsi               | 105 +++++++++++++++
+ drivers/hwtracing/coresight/coresight-tpda.c       |   9 ++
+ drivers/hwtracing/coresight/coresight-tpdm.c       | 148 ++++++++++++++++-----
+ drivers/hwtracing/coresight/coresight-tpdm.h       |   8 ++
+ 5 files changed, 256 insertions(+), 37 deletions(-)
+---
+base-commit: 2b763d4652393c90eaa771a5164502ec9dd965ae
+change-id: 20251013-add-static-tpdm-support-330b71d6d0f8
+
+Best regards,
+-- 
+Jie Gan <jie.gan@oss.qualcomm.com>
+
 
