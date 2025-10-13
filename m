@@ -1,226 +1,113 @@
-Return-Path: <linux-arm-msm+bounces-76981-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-76982-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2272ABD2846
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Oct 2025 12:18:15 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id ABBB2BD2855
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Oct 2025 12:18:53 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 428C01889EF7
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Oct 2025 10:18:38 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 6C50F3B3250
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Oct 2025 10:18:52 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 96AFB2FE57B;
-	Mon, 13 Oct 2025 10:18:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3DA132FE57F;
+	Mon, 13 Oct 2025 10:18:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="EnXlRhX8"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="iOYeIodv"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f52.google.com (mail-lf1-f52.google.com [209.85.167.52])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E5C628000A;
-	Mon, 13 Oct 2025 10:18:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53AE22D0C8F
+	for <linux-arm-msm@vger.kernel.org>; Mon, 13 Oct 2025 10:18:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760350691; cv=none; b=nvHI3g8DMafaDzp/uThoI34cQ9VMqJbQgcsMHPNoN4XjGO6f5ZNMzXShL/TCGFje1kUyzkkPsG3/lqfPRDeUfqnTjDXv11q+pmIx+0Lodt0yb+A448hZnf16AY4rYKXF3cpItOGUJCETGbKCTLsQajB+wubYykjmOLFTIplRpAE=
+	t=1760350730; cv=none; b=SSD6rRncYWX4povb3+H/woBOL26dbglprt3f8UyHcwc0pD3bQYH8IKGbOJ9PBV360ZXwPxxns6QIlaltOfOAlJZIDtfTFEn2X0A8DgWp3NlJTlTZj8ab8cfYTfLRYHcSX4CUdTZNBsdyK6jLh+z+DfclL+AO+Gvt/YGKC4d5t8I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760350691; c=relaxed/simple;
-	bh=YthDpkR+oLWgZls0ALfZLAM7hGcGSvH5hlnAbWxBnjw=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=rW5B63EpuQCKOW+McpXgzGTrsYbxs/iVC/bfispVqeQ7m2adPyg89ZZBf04pQSNn2qbcA83Wq38HNvc3ECNcCMttR3lZrCSipNrCzX9Ks/fZLNasx1ESQV7uTkvHwaxVcpi/1zWkZ+TuIe8azvKoY+lDd9JliYip1TEizLCynUE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=EnXlRhX8; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E29D9C4CEF8;
-	Mon, 13 Oct 2025 10:18:03 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1760350688;
-	bh=YthDpkR+oLWgZls0ALfZLAM7hGcGSvH5hlnAbWxBnjw=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=EnXlRhX8sw9r8Eas+JakkwrvLXvw39f8en3ub8q2m/JAsTD6u8qkc9L8qTFAbhwDY
-	 w9/3zDRUC4kpkJfNVNtFmLRMwjk+zYzJyBtr3vzu1CnYD1pJudxQ2VlLmqF2bfiyB8
-	 DiaGPKgL0dqatbCMpmbx0c9jLLF+jAqMcQ+Bu5oF5Dddm2ZoLfmIfFGmmu4tUQ5r5h
-	 zy0nZA1jO0ob7DjsM1LrSvCx66YzghMtXXfmLlFiD1kfAyAhGFupC1QlAM0bmP7nIs
-	 s/kjrpVuz2VVLNlBM+3yckQeilU1KDVWtHso3PNbppyuBkHY/gi8WWa5dAyLUj8qJ4
-	 ZZhLWpCM64WpQ==
-Message-ID: <452c8af1-7ec0-4bc3-9d85-8993c0773c86@kernel.org>
-Date: Mon, 13 Oct 2025 11:18:01 +0100
+	s=arc-20240116; t=1760350730; c=relaxed/simple;
+	bh=KFlkKhsToSNiIVYTfCINycSlYKnfIJUcU3TZviU7e8s=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=Ce3jb2T97FZfe3BjUTpbm/WCBq8B8Rn74kxaYcUxBOhs0xDN7Ba6DQqVrRz7ZkhgUam+4qHAK0zhn8/+kID6hMMu8gzftq7AKdkPfWALXiWw2xc05Rre0Bf7MgV6b8bP0WTn/j3yFOICCLeWA2uUV96zWLTcf2bnCNNZBVwHY9s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=iOYeIodv; arc=none smtp.client-ip=209.85.167.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lf1-f52.google.com with SMTP id 2adb3069b0e04-57f0aa38aadso4694732e87.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 13 Oct 2025 03:18:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1760350726; x=1760955526; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=KFlkKhsToSNiIVYTfCINycSlYKnfIJUcU3TZviU7e8s=;
+        b=iOYeIodvXtyaDUddlGM3xY01yXtcs4HazKQJXzb7o04o2e+Kpc92Ho1TVxyKcXNhFB
+         eOau02nQeA7e1WlcsHmrBVIUA8efKRqzGfzkUjMnPCjv2FBSPWOZyHlGs0bVCVkmg2Mx
+         kK7T16uivR7cXXl4Y+H0zQqI0vySyTNuLZAPSNYweaS0MqUkpF6dsCsxFgsRqUKwCWB4
+         4zoFW43ef7+wSOMasn8lqZKpeMWZBcx14JRNJoHtt+aUiTSuiVms05MQWNq/AxYQYEyw
+         aQ+ft//IRDU2OXVJQd9cHvgmpWMqjEK6b3leILKyem3Rhg57l3ieCIys7lEpeHwQE6FI
+         4sAg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1760350726; x=1760955526;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=KFlkKhsToSNiIVYTfCINycSlYKnfIJUcU3TZviU7e8s=;
+        b=XNdGEfMRkv+r8RyCjSKrx0PPhK2GPQRCxawD/Ffra477rXJm0rPZerkryYmdfqqWP7
+         ewDFFgfhabrXjN8rZ2UZJuvKJQwKp+oc9mb+8CtAY04wjkYeZPypH3fov+A8w3wY2T5o
+         A/7dLBOIUNxKYg5akNZ0Ln7Uym1wEsOTKuJArH3sCxmQvvjwHoAm3xsBFffmd53swc6W
+         R45Pf8tKp2pHn5+cx8QROSePq7tk1j8gBM3wWUCXGs7mh6Z7yV1Fi/VIQYFXnORi0EtC
+         Lg2oUK1zyYcMcgTtRHhEAD3vpUWn3knKpLqJium6T1FvENJL4xzt8HIVIghjLP5gb3+x
+         nd5w==
+X-Forwarded-Encrypted: i=1; AJvYcCVUF+Typ4OUaQaRS58y/BircXmuw+0plbGEuiMKo6Qf/qoFs+PXNeCz3RNGuK70WjbO1b+9bz1XkeDTGcG5@vger.kernel.org
+X-Gm-Message-State: AOJu0YyrzIukKD1vcc3oo0uzEKdv+QteqfLXZMoaMj9oW0t7VAUzDd2T
+	6uHZIUc7/xJX47pFPAu47BdsQuWnMwaakMwaa6vA/+55nApWMnO7uTLyioZ63jpP/yRvU9+EAE9
+	in9l+FUVGtLz/782zDxLbcshFbR2+wX+t50hS+qqPGQ==
+X-Gm-Gg: ASbGncvZVTbR7D6gZUO7So3HrllxsAVCRucFltNXrchOiSa0nyrbT0fQSN1+UMUXdNq
+	C0ZKE7n68Yt24k4Kl3UVOgZbJVoBwZwHbGDYwV3H1gDS+F3qHU1Z6BDOxStcjaVI/UcaYsDSd3S
+	xDUC5OTWorIKPHrYUY9I/GDhKDTE2O4Cvrw57+uSJ80fqMzu/LelxecZyftxrENaP8pyaqWsYpn
+	l39Vcpco1gykH9B6tyPUDWEXsiToGKxPP2ndhpB
+X-Google-Smtp-Source: AGHT+IHH9tVr2y31C2s758P1Y1iCzf5CBBO+mUKp+b25MmlZjZZyEk+h30As98u2vagbtvUMjxHrZsPQPtd3jW6D2mg=
+X-Received: by 2002:a05:6512:3c87:b0:58b:23e:5ec with SMTP id
+ 2adb3069b0e04-5906d8e5b43mr5753879e87.26.1760350726407; Mon, 13 Oct 2025
+ 03:18:46 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH 0/3] Introduce iommu-map-masked for platform devices
-To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Cc: Charan Teja Kalla <charan.kalla@oss.qualcomm.com>,
- Robin Murphy <robin.murphy@arm.com>, joro@8bytes.org, will@kernel.org,
- saravanak@google.com, conor+dt@kernel.org, robh@kernel.org,
- mchehab@kernel.org, krzk+dt@kernel.org, abhinav.kumar@linux.dev,
- vikash.garodia@oss.qualcomm.com, dikshita.agarwal@oss.qualcomm.com,
- Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
- bjorn.andersson@oss.qualcomm.com, linux-media@vger.kernel.org,
- linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, iommu@lists.linux.dev
-References: <20250928171718.436440-1-charan.kalla@oss.qualcomm.com>
- <aec0f40a-8346-4194-8b18-1022fe3366bb@arm.com>
- <0d0560cc-9757-4c7b-8de4-170148d99481@oss.qualcomm.com>
- <ead7cf8b-fbc4-4242-a9da-b313dded1abc@arm.com>
- <nzqte4glwtpjs5bhkxz43yhdufelxvqvzmg5tepudxwetimir3@bvlw5csjizsh>
- <9d3eeb9f-b8ea-48e5-a1d9-0865f63ef991@arm.com>
- <fhb4woejzh3r6v5dxvdiopnsbuwstucfuuzbiymxg4wrxrjc7t@dt3z3utq6lwd>
- <0zcQcB2YYWH_ufElq3ptqtLsGDsxvMEAkHCt_jYaSpwV597VFc22pFWzyMz0rSY-DKqWCQgOCiKpsIRNA0Fisw==@protonmail.internalid>
- <c863f6a7-b117-4444-ae6d-1d525b572be2@oss.qualcomm.com>
- <3c1eb276-abde-4af4-ab39-c934c30aa447@kernel.org>
- <4yMPpVuyUWPNYEAfCpYtZnf3fgFlbDavEA9cqVIJTTOufoxdbJmQ8sWMiK5afpKXUwLZMQGhm1UbHtBaAnV5Iw==@protonmail.internalid>
- <mtt7x2fqvuotwko6ztczosiep5ofyaupayumyggch6e2piqxmr@4v5tb5u2a5u3>
-From: Bryan O'Donoghue <bod@kernel.org>
-Content-Language: en-US
-In-Reply-To: <mtt7x2fqvuotwko6ztczosiep5ofyaupayumyggch6e2piqxmr@4v5tb5u2a5u3>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+References: <20250921-msm8960-sdcard-dtbindings-v1-1-5a2455a30a06@smankusors.com>
+In-Reply-To: <20250921-msm8960-sdcard-dtbindings-v1-1-5a2455a30a06@smankusors.com>
+From: Linus Walleij <linus.walleij@linaro.org>
+Date: Mon, 13 Oct 2025 12:18:35 +0200
+X-Gm-Features: AS18NWAFBvRQlnNgwdeWFM-KX-enH6YfuOQVQqYG2hxpjoeevDbWK0MYvNQNYmo
+Message-ID: <CACRpkdYJPjf7VX_b3u74UhNQz-kTzmvEkdo-YWYNn9fF7+T0ZQ@mail.gmail.com>
+Subject: Re: [PATCH] dt-bindings: pinctrl: qcom: msm8960: rename msmgpio node
+ to tlmm
+To: Antony Kurniawan Soemardi <linux@smankusors.com>
+Cc: Bjorn Andersson <andersson@kernel.org>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, linux-arm-msm@vger.kernel.org, 
+	linux-gpio@vger.kernel.org, devicetree@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, David Heidelberg <david@ixit.cz>, 
+	Max Shevchenko <wctrl@proton.me>, Rudraksha Gupta <guptarud@gmail.com>, Shinjo Park <peremen@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On 12/10/2025 23:47, Dmitry Baryshkov wrote:
-> On Sun, Oct 12, 2025 at 09:44:43PM +0100, Bryan O'Donoghue wrote:
->> On 10/10/2025 20:53, Charan Teja Kalla wrote:
->>> I don't want to dilute what Dmitry is saying here, but the below is what
->>> i can make out of Robin comments, please CMIW:
->>>
->>> iommu {
->>> 	#iommu-cells = <2>;
->>> }
->>>
->>> video {
->>>      iommu = <iommu sid1 mask1>, <iommu sid2 mask2>;
->>>      #iommu-map-cells = 2; /* does it look weird to define here, even if
->>> it is SMMU property? */
->>>      iommu-map = <0 smmu sid3 mask3>,
->>> 	       <0 smmu sid4 mask4>;
->>> };
->>
->>
->> This whole iommu-map thing is a wrong direction, its a workaround.
->>
->> It stems from here:
->>
->> 1. Vikash posted a series adding a platform device
->> https://lore.kernel.org/linux-media/20250627-video_cb-v3-0-51e18c0ffbce@quicinc.com/
->>
->>     The two objectives of this are
->>
->>     a. Allow Linux, the APPS as qcom calls it,@ EL1 or EL2
->>        to setup iommu entries for function_ids that are
->>        not the APPS @ EL1/EL2.
-> 
-> No.
-> 
-> Up to now we were talking only about the non-pixel bitstreams and secure
-> en-/decoding data.  None of that is related to anything except Linux
-> running in EL1/EL2. Only Linux consumes / provides normal non-pixel
-> data. Only Linux handles decoded secure buffers. Only Linux sets up the
-> video decoding of secure data and then blending of that data inside DPU.
+On Sun, Sep 21, 2025 at 5:26=E2=80=AFAM Antony Kurniawan Soemardi
+<linux@smankusors.com> wrote:
 
-As I understand some of these >>        For example the APPS running in 
-TEE or one of the
->>        various co-processors - like say the Compute DSP cDSP.
-> 
-> How did CDSP or TEE get into the picture?
+> Rename the GPIO controller node from "msmgpio" to "tlmm" to match the
+> convention used by other Qualcomm SoCs.
+>
+> Suggested-by: Shinjo Park <peremen@gmail.com>
+> Signed-off-by: Antony Kurniawan Soemardi <linux@smankusors.com>
+> ---
+> This patch was originally part of msm8960 cleanup series [1], but as
+> Bjorn pointed out, dt-bindings live in a different subsystem and should
+> be submitted independently.
 
-Hypothetical examples of the non-HLOS VMID. Call these AC_VM_CP_BITSREAM 
-or AC_VM_CP_NON_PIXEL to use values from the documentation.
+I already applied the other one, but thanks!
 
->>
->>     b. Allowing for each device to have a full IOVA range.
->>
->> 2. Krzysztof queried about changing _existing_ entries e.g.
->> https://lore.kernel.org/linux-media/6fd3fa34-69e1-484f-ad6f-8caa852f1a6c@kernel.org/
->>
->>     The point about ABI breakage.
->>
->> 3. This proposal to introduce iommu-map as a workaround
->>     Gets the FUNCTION_ID APPS v cDSP v TZ into the DT
-> 
-> It's neither CDSP nor TZ. The source or the consumer of the data might
-> be crypto core or just Linux process. For non-secured non-pixel data it
-> _is_ Linux process.
-> 
->>
->>     So it solves 1/a I'm not sure it solves 1/b
->>
->>     However if you were designing from scratch you wouldn't
->>     have a motivation to assign this additional property.
->>
->>     The motivation is to not break the ABI I think.
->>
->> 4. Robin said
->>
->>     "And if you want individual StreamIDs for logical functions to be
->>      attachable to distinct contexts then those functions absolutely
->>      must be visible to the IOMMU layer and the SMMU driver as
->>      independent devices"
-> 
-> Correct. But it doesn't require separate OF device nodes. See
-> host1x_memory_context_list_init().
-
-Fine could be platform code too.
-
-
->>
->> 5. If you think about this, its actually the right long term solution
->>
->>     - Individual devices means something like:
->>
->>       video-codec@aa00000 {
->>           /* Any SID mapping to S1_VIDEO_HLOS belongs here */
->>           compatible = "qcom,sm8550-iris";
->>           iommus = <&apps_smmu 0x1947 0x0000>;
->>       };
->>
->>       video-codec-non-pixel {
->>           /* Any SID mapping to S1_VIDEO_HLOS_P belongs here */
->>           compatible = "qcom,sm8550-iris-non-pixel";
->>           iommus = <&apps_smmu 0x1940 0x0000>;
->>       };
-> 
-> Which piece of hardware is described by this node? Why is it separate
-> from the main video-codec? The IOMMU stream doesn't have any specifics,
-> it's just a part of the video codec core.
-
-You could conceivably start associating /dev/video entries with a device 
-that maps to AC_VM_CP_PIXEL - the protected video stream.
-
-There may be data other than SID/FUNCTION_ID that we would want to 
-associate with those devices, I'll stipulate to further discussion there.
->>
->>     - Or do something like that above again in platform code.
->>
->> 6. We should on introduction of a new SoC
->>
->>     - Fix the iommus = <> for "qcom,newsoc-iris" to contain
->>       only what is pertinent to S1_VIDEO_HLOS
->>
->>     - Make new devices in the DT for each FUNCTION_ID
->>
->>     - Then look at how - if - that fix can be brought back to Lemans
->>
->> My problem with introducing the iommu-map is that it bakes into the video
->> codec definitions a fixup which then gets carried forward.
->>
->> But the right thing to do is individual devices so, let's do that and worry
->> about how to back-port that fix to older SoCs once done.
-
-So really whether we end up representing these devices in DT or platform 
-code, separate devices are the answer - both for the FUNCTION_ID mapping 
-and the IOVA range.
-
-You just need to carefully think about what ends up being a device if 
-the IOVA range is a concern.
-
-Its unfortunate that sm8550 has an addtional iommu entry that wants to 
-live in a different device - but, that's a problem for sm8550.
-
-Perhaps something we can backport to Lanai, Lemans and friends once we 
-get the new submissions right..
-
----
-bod
+Yours,
+Linus Walleij
 
