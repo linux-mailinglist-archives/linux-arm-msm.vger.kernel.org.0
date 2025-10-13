@@ -1,251 +1,340 @@
-Return-Path: <linux-arm-msm+bounces-76954-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-76955-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [IPv6:2605:f480:58:1:0:1994:3:14])
-	by mail.lfdr.de (Postfix) with ESMTPS id CFCA6BD22B8
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Oct 2025 10:56:35 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 854E6BD2324
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Oct 2025 11:04:22 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 8B7924EDA5D
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Oct 2025 08:56:34 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id A19FD18993C5
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Oct 2025 09:04:45 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 30A562FC01F;
-	Mon, 13 Oct 2025 08:55:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id AA5BE2FB999;
+	Mon, 13 Oct 2025 09:04:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Oji2zlUp"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Nmad1u4r"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f54.google.com (mail-wr1-f54.google.com [209.85.221.54])
+Received: from mail-pj1-f49.google.com (mail-pj1-f49.google.com [209.85.216.49])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06D3E2FB988
-	for <linux-arm-msm@vger.kernel.org>; Mon, 13 Oct 2025 08:55:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F056D2FBDE8
+	for <linux-arm-msm@vger.kernel.org>; Mon, 13 Oct 2025 09:04:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760345755; cv=none; b=OZo7KUboiohgRcGgw6oh/M/OI4aSNEYstHcsLiau9zXL7BaB9xnF4/Wc3Er/wHIf3WgbXFov7wOq/o13DNTepXFHu9EVHcq+Pf8tS+WtHzpKrRPDSrq79sNyxUpIbKgclVLIwXdfFukEa4Zb4hZxJWYpnzvBLkACwRWtMLEcZqU=
+	t=1760346258; cv=none; b=j0jlD3suCGKLG92J/yI5Xt3DBf5/+v3VueBIAvDLBaeTbIDnoamnXhasiAo+1ngx5r/ee1B8ZnT06cYQ1ldmMGlDJWAMWWmlvW7h2d+8oDV6yFu8AXG1XGSVxIv0kMyAhOvmuncQxHohZtgWPR93h/qOMSaBvLkJmsQzf53io44=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760345755; c=relaxed/simple;
-	bh=wNTs0h0y/mlTB3wnqH1wfrtLFenOEC7p4UTXqV1uWNo=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=btLwX4L1WrZB2zBABuVHbcoFLdbftia1hCOb6AVMQ47+GLIUB4ScaLJ6UTwsX0xEOx5rkEPubBEI4S8kIE6ZrcKD++szgGnjRUVocn8YadSoDrQTILsc5b7mPmtspPzFNLxOGGs1EWxUH1lZq/ONfIGqa7dTuwcYfy1Wf2eD2+c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Oji2zlUp; arc=none smtp.client-ip=209.85.221.54
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wr1-f54.google.com with SMTP id ffacd0b85a97d-3ece0e4c5faso3819903f8f.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 13 Oct 2025 01:55:51 -0700 (PDT)
+	s=arc-20240116; t=1760346258; c=relaxed/simple;
+	bh=wbSo47kYEos7Y92XqeQiw+W6T5uonoM59324W0iyjH8=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=L6qS4Q1a/v9usTuB58zazIA793d4TUVLZIIh7QoqFJpqCbBTGMSiXhIIv6FMzycZLxor0IjK8SbSlf8Q+v814qgZ9VRYaB0hx6UO5AUzNGfLoZStvmsOicLISzGnKLT6xC35BFcEBsBjl9nFqMoziON08U1H/eETWtXvovSI/HQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Nmad1u4r; arc=none smtp.client-ip=209.85.216.49
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-pj1-f49.google.com with SMTP id 98e67ed59e1d1-339d7c4039aso3601823a91.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 13 Oct 2025 02:04:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1760345750; x=1760950550; darn=vger.kernel.org;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=Fqs1h8Bd8tnY+khxrYUQ40FHMHiv2RkeVoWTqnCne3w=;
-        b=Oji2zlUp5RUad48mlshMmLEEEzPw4A8Cwc182nhgyH/6P82VkK0lcGEB6VpjhgG2m5
-         g3sBpzsvKimxwmgKX7BOpYAt0O3pKqw39pocbQvVWDQ19S6vPkZFqtpmODE8x0PouBsw
-         jqh87F+VUATt6GwwuvUwJ+eL7q2CxVH4m9iG3vJMu/SS/y3O5LWIsv3EsHbS1SbiB+ZZ
-         yood4Qrk1HV1K63A8uNzkxje6HslPNdR3HUUZjoUZDC/hEmDS3fmbhet/+XrdNfa1ZI3
-         wsx2T2JiCWSDkz6xmo6iW4H3vcFlht4BQPbeGLnlEZKfqc7E2cCcMjIcauf69aFTbLCg
-         EeDA==
+        d=gmail.com; s=20230601; t=1760346256; x=1760951056; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=cUw0f1LukBSPwks2koY7/GQ0Hj/EqUjJnkuqS1d8pp8=;
+        b=Nmad1u4r1Og7/jfTbxrOgDAVVvqTW8CSmIfU3kHAH3j+ZXEt8TO75XW0aWrvfq4zkd
+         n9P5WC2Qj1pa92k4858dgLcQLOVe4VCP1Pu1tM+7a33AwyhbyWFWMjPuDj8dZKbEOIHC
+         sWltPHePBycjkOfSc8QNGNMj9amwLuG2zC1JRR//JlQzkml4unIxmChpCT3BZHlD0kgJ
+         2lVwiiDqsbdeiF8wDxTBIJ378UmsbcxQRtz0psB4+zY4QWMplPtCqVyStvs6zqV2KaSd
+         dmJi/c9pnuCd8zf5PE0XFB0ImoiVTvpNO2Gn9qWw3Xt3F/4+uGYGppAH0+dcWHfPpfry
+         zjrQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1760345750; x=1760950550;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=Fqs1h8Bd8tnY+khxrYUQ40FHMHiv2RkeVoWTqnCne3w=;
-        b=IRmYqiLeQP3cbtEdtQvErRP6mNVakwL0AqwcF8Dsrqd1WyCyKUQy9NuiUIE4/ImFgy
-         WUfwzeuJUR6VXhnrCPzT/6j5lezZpSu4b88QEVcfbl3JPQ3BKe4qFhl94TPwyqwFJ6i3
-         9bMyeEa6bML0GkGFpM7bL5WqGQOtA38n3nxBiVX6TVWtR2JRrhXndhjuSqm9v7quNB/E
-         JWbssX8GjqDIRz/Hh4QumVlnpIR69+f2wbAus51RpBeP7BhWQ55LXTsHKkEcnrmcl1oF
-         hb7yMj07CpaQNWacHr5V5ocAjUCrUbq/dpAfypGo+Ps1Vc+b16dL3mcRjUWQqARU+lqj
-         l6Gg==
-X-Forwarded-Encrypted: i=1; AJvYcCXLA5uvNUbLAMiauuF7sLOUBitrrQ0//FwPmXQBksZZPwaNEVq9cv51dykVX3UtflpQBkH1xgpM/7CmWCjk@vger.kernel.org
-X-Gm-Message-State: AOJu0Yxq/Sn44ZAmSLwlIA2Cb4F7AaDuFEQ+cXRM13kdhblfSU0oGkMs
-	OKMKrTob1Hd0akCL+X+jZ1FzADSiz40tED+tn8ezByYCtb9JGbuHBeIKO8GA8NZmBEQ=
-X-Gm-Gg: ASbGnct/q+HsVOU/ROsSKL4wPMZeNbruADXxkDhx41MKu7+Yar3s6PYht3MyzvHEfDk
-	VCFMyVdxn7YZUNM52aiQCHBsk0RH0jQ7wd1aZ4F95KU5L1QMz9u4OEAHZhEo5faah76qrblKiAf
-	hyKsh9XGx/K1iigSjOfVgPe9qI4cTQ84BP1wh5qzBJflnM4s4PqIiYg2lAxPWh8WEJ8D4zv1mlr
-	v8oWv8HwV7MKXA0wsfTrFOaunYOvvzbVosGTnqPPaX0w2qzGmlJCAS/np+qYc7FI3lZjzevmcCz
-	HUa6LsXpmVBNiJDUioqv0So5puabx+1URKUxNq7Jm7AoX7pgRlgz2kZRht9fV54/Z1P+iP30LIi
-	X4JYojmCtDRuKolyq+5//COmsz6E59SBwJPiNzXJEhd8bxrteNcSa7rWrBJPYaMstizdBPd/uu3
-	gF
-X-Google-Smtp-Source: AGHT+IGP5IDXQAmHWOWz6/zckhmsPQrndtPggKZTPs6kb5X7JCxQcZO9bc2Qh688Ni5MHdA3GNrqkw==
-X-Received: by 2002:a05:6000:24ca:b0:3ea:15cd:ac3b with SMTP id ffacd0b85a97d-4266e7e15eemr11113987f8f.30.1760345750168;
-        Mon, 13 Oct 2025 01:55:50 -0700 (PDT)
-Received: from arrakeen.starnux.net ([2a01:e0a:3d9:2080:8261:5fff:fe11:bdda])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-46fb482b99fsm180016185e9.3.2025.10.13.01.55.49
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 13 Oct 2025 01:55:49 -0700 (PDT)
-From: Neil Armstrong <neil.armstrong@linaro.org>
-Date: Mon, 13 Oct 2025 10:55:46 +0200
-Subject: [PATCH v6 3/3] arm64: dts: qcom: x1e78100-lenovo-thinkpad-t14s:
- add HDMI nodes
+        d=1e100.net; s=20230601; t=1760346256; x=1760951056;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=cUw0f1LukBSPwks2koY7/GQ0Hj/EqUjJnkuqS1d8pp8=;
+        b=hLwtW9I6oJUt+mWdTOCu86KQu92VuZLRk5GAsm940LXWXJwfTUdhGjbPW1wlLElYGE
+         XHY/UuSKs8hpj5+lArbsXGsZF0NnCbwsnfpmZtXN43dOm5MMyxF05BXVd89Rxz3TcJIV
+         f+GcM+CEckx/TrDKjHg2G+NAOBkjMS6BxXRVMV0eZwyeiT11DSu26SUzo2CKJJx44Rei
+         nZOV4JxpdPSR7DIFCqXpVbKK4w0VOVAT52aGr/ayTDhXOWPfqXthqKWQpKKuGOfpNl9o
+         3q2m1Qa+AuJ/PdNVqu1WRFBuqqsgfRj/CVymrajgiwajVMBEcAJu/bqzg+0uJ+bZ6IvD
+         ofJg==
+X-Forwarded-Encrypted: i=1; AJvYcCVNG2Rj1eBq9yWGtwxcHnDqgNTDPibqWQd1ACHi895yrj3x1AvoZATjlXGcoSp3bq2jKHgmHtSqC8UoTlwd@vger.kernel.org
+X-Gm-Message-State: AOJu0Yxp0wYRQh7ot9gekyxwPcSRHFsBY2YofRwaQfzaM1z90Azg3De7
+	fLU4qMJKzPhH81QBXOviK7A+Xlzco5iwvOBegit4zeO8k2Zc8n5Q92ba
+X-Gm-Gg: ASbGncu31r4Av4t112HUpRT8F1agNY1AXm308sDdmkT3BA0Wvd1iTg78nchZ0APn24W
+	1fxGtx87ix4jwJulzxLV4Rh1Hp2P7U5iJhofi00ggKJ163VFREd6MCJJ2EHKPD6qASs8GNSBHKO
+	MA/mUHmdLXHd/cAJgLxM/4ag9VP9rKseEsatTeigWFGPvvhJfG8nxo3OBjHagKi2ZCn7mqqkHKN
+	BEbJlkY8HOrs4zk372yR9tXu3fVxJF/U/uo/ZlfaiKBqILK62Zp59g1mM/l10tppSP2MB1jzmDv
+	QCaqxqr/20O66cgrczfsn4EpC1L6GsHnMoj8RW8tylKDtx/BqzhvaAOKWG1UNWby7XVeVFwfHIf
+	BmkxUd71/Z9lwaey/CZMbfRMy6AlhQ2j/BWxTwPTWETqjx8cZGFC1+Q==
+X-Google-Smtp-Source: AGHT+IFScGKQhEpOKLhKDecX+TciUhn1UzLJUB13F6c9ifu8lHOpJuAJdGV1SmC5JN1HIruxp5MbpQ==
+X-Received: by 2002:a17:90b:1d06:b0:32e:2c90:99a with SMTP id 98e67ed59e1d1-33b513b4b51mr30624757a91.35.1760346256102;
+        Mon, 13 Oct 2025 02:04:16 -0700 (PDT)
+Received: from [172.17.49.162] ([103.218.174.2])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-33b61a1d7e4sm11716942a91.3.2025.10.13.02.04.11
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 13 Oct 2025 02:04:15 -0700 (PDT)
+Message-ID: <2d5a3fa5-3882-4859-96fd-3ff2174e655d@gmail.com>
+Date: Mon, 13 Oct 2025 14:34:10 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20251013-topic-x1e80100-hdmi-v6-3-3a9c8f7506d6@linaro.org>
-References: <20251013-topic-x1e80100-hdmi-v6-0-3a9c8f7506d6@linaro.org>
-In-Reply-To: <20251013-topic-x1e80100-hdmi-v6-0-3a9c8f7506d6@linaro.org>
-To: Vinod Koul <vkoul@kernel.org>, 
- Kishon Vijay Abraham I <kishon@kernel.org>, Rob Herring <robh@kernel.org>, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konradybcio@kernel.org>
-Cc: Xilin Wu <sophon@radxa.com>, linux-arm-msm@vger.kernel.org, 
- linux-phy@lists.infradead.org, devicetree@vger.kernel.org, 
- linux-kernel@vger.kernel.org, Neil Armstrong <neil.armstrong@linaro.org>, 
- Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, 
- Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=3047;
- i=neil.armstrong@linaro.org; h=from:subject:message-id;
- bh=wNTs0h0y/mlTB3wnqH1wfrtLFenOEC7p4UTXqV1uWNo=;
- b=owEBbQKS/ZANAwAKAXfc29rIyEnRAcsmYgBo7L6Sb8/jIFHNl0mZLen92n4SCFHIDHBjot2TJdk7
- KJMvytmJAjMEAAEKAB0WIQQ9U8YmyFYF/h30LIt33NvayMhJ0QUCaOy+kgAKCRB33NvayMhJ0Q3zD/
- 9L6F7G6cDWgL+5CXPMwystvEJj2Ra0aiMFSJOtPHvXjnwBEQbVkLAdiwlj/0tWMymdThJ1Tzpp28sB
- DzF+hBVkGtYyC6qb4GFiHhPaOWfoaJMRmO8RWKCc6jY2EyDNCj9vvF6uSKh2SaSRFJRLfOPjSzJAhv
- BxQTn6/tHmtEMHoNcLBW3h8lRObtzCSywFXLz9xV+6syQT8QUkHlyKUiWXpsWjkKQEmebj5DtFtfrD
- m+o1bP2lzCYUgbvoQPAACFrqmYGSoF+EFAt+zMFyQsCOqesTpRU/KTn2CvF/byLRRCSyOJXi1VaQrK
- iGhIuxf7eOYu4PlLXCYPpD9EneX66R/PYs/nMC4kRh1eWQSY3XlHEsCYhuctIEs2ZF6wWD77XeuqIP
- o4rTF0m+QHeKOcPo7Z9p09l+yS95Qo4WihBpKmfxt1Asj1H0IBAp/Vgjnl6o8V2B5eaQDNc9ParGaH
- kHAKMEeYlCK5B4cZ4AbYPcp1YDlLA8D99rRW2W4B+hmMQh4JBQHUaCo+pHi28KXnNaQt4PkcMPJht+
- GDPddmetVnMGAcrg3TCFXNmXyvCZsVTwfcofq4pvL+8u+rZVcflG4uDnasY7BiwR16FqSnodBRV7fG
- UnqvllzaWC60JnjeDX7895JxrwIETobwi/q3uPKWBhrCfJFWho85MxKN9EmA==
-X-Developer-Key: i=neil.armstrong@linaro.org; a=openpgp;
- fpr=89EC3D058446217450F22848169AB7B1A4CFF8AE
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 2/2] arm64: dts: qcom: Add support for QCS615 talos evk
+ board
+To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Cc: andersson@kernel.org, konradybcio@kernel.org, robh@kernel.org,
+ krzk+dt@kernel.org, conor+dt@kernel.org, linux-arm-msm@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <qq4aak33bn3mqxd2edu6zgkkshby63mmitg7zqkly2rj4c2lh7@4s7sndb7e2jr>
+ <20251010114745.1897293-1-tessolveupstream@gmail.com>
+ <20251010114745.1897293-2-tessolveupstream@gmail.com>
+ <q32oj6ry7ixulfaxzkm63nidg7ddmdl2moaakmx6rlv77p3wzl@wd2ekastvyms>
+Content-Language: en-US
+From: Tessolve Upstream <tessolveupstream@gmail.com>
+In-Reply-To: <q32oj6ry7ixulfaxzkm63nidg7ddmdl2moaakmx6rlv77p3wzl@wd2ekastvyms>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-The Thinkpad T14s embeds a transparent 4lanes DP->HDMI transceiver
-connected to the third QMP Combo PHY 4 lanes.
 
-Add all the data routing, disable mode switching and specify the
-QMP Combo PHY should be in DP-Only mode to route the 4 lanes to
-the underlying DP phy.
 
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
----
- .../dts/qcom/x1e78100-lenovo-thinkpad-t14s.dtsi    | 81 ++++++++++++++++++++++
- 1 file changed, 81 insertions(+)
+On 10/10/25 17:49, Dmitry Baryshkov wrote:
+> On Fri, Oct 10, 2025 at 05:17:45PM +0530, Sudarshan Shetty wrote:
+>> Introduce the device tree support for the QCS615-based talos-evk
+>> platform, which follows the SMARC (Smart Mobility ARChitecture)
+>> standard. The platform is composed of two main hardware
+>> components: the talos-evk-som and the talos-evk carrier board.
+>>
+>> The talos-evk-som is a compact System on Module that integrates the
+>> QCS615 SoC, PMIC, and essential GPIO connectivity. It follows the
+>> SMARC standard, which defines a modular form factor allowing the SoM
+>> to be paired with different carrier boards for varied applications.
+>>
+>> The talos-evk is one such carrier board, designed for evaluation
+>> and development purposes. It provides additional peripherals
+>> such as UART, USB, and other interfaces to enable rapid
+>> prototyping and hardware bring-up.
+>>
+>> This initial device tree provides the basic configuration needed
+>> to boot the platform to a UART shell. Further patches will extend
+>> support for additional peripherals and subsystems.
+>>
+>> The initial device tree includes basic support for:
+>>
+>> - CPU and memory
+>>
+>> - UART
+>>
+>> - GPIOs
+>>
+>> - Regulators
+>>
+>> - PMIC
+>>
+>> - Early console
+>>
+>> - AT24MAC602 EEPROM
+>>
+>> - MCP2515 SPI to CAN
+>>
+>> QCS615 talos-evk uses a Quectel AF68E WiFi/BT module (PCIe for
+>> WiFi and UART for Bluetooth), which is different from the RIDE
+>> platform. Plan to enable these in a follow-up patch series.
+>>
+>> Signed-off-by: Sudarshan Shetty <tessolveupstream@gmail.com>
+>> ---
+>> Changes in v2:
+>>  - Rename compatible to "qcom,talos-evk" (suggested by Dmitry/Bjorn)
+>>  - Merge enum entry with existing qcs615-ride block (suggested by Krzysztof)
+>>  - Fix subject and commit message to use imperative mood
+>>
+>>  arch/arm64/boot/dts/qcom/Makefile           |   1 +
+>>  arch/arm64/boot/dts/qcom/talos-evk-som.dtsi | 406 ++++++++++++++++++++
+>>  arch/arm64/boot/dts/qcom/talos-evk.dts      |  42 ++
+>>  3 files changed, 449 insertions(+)
+>>  create mode 100644 arch/arm64/boot/dts/qcom/talos-evk-som.dtsi
+>>  create mode 100644 arch/arm64/boot/dts/qcom/talos-evk.dts
+>>
+>> +
+>> +	vreg_v3p3_can: regulator-v3p3-can {
+>> +		compatible = "regulator-fixed";
+>> +		regulator-name = "vreg-v3p3-can";
+>> +		regulator-min-microvolt = <3300000>;
+>> +		regulator-max-microvolt = <3300000>;
+>> +		regulator-boot-on;
+>> +		regulator-always-on;
+>> +	};
+>> +
+>> +	vreg_v5p0_can: regulator-v5p0-can {
+>> +		compatible = "regulator-fixed";
+>> +		regulator-name = "vreg-v5p0-can";
+>> +		regulator-min-microvolt = <5000000>;
+>> +		regulator-max-microvolt = <5000000>;
+>> +		regulator-boot-on;
+>> +		regulator-always-on;
+>> +	};
+> 
+> Is there a way to control those regulators or are they always enabled by
+> the hardware?
 
-diff --git a/arch/arm64/boot/dts/qcom/x1e78100-lenovo-thinkpad-t14s.dtsi b/arch/arm64/boot/dts/qcom/x1e78100-lenovo-thinkpad-t14s.dtsi
-index 654cbce9d6ecb61c8a6e874d16385d66e362e439..7aa7ae66f49a7a179652757fd826e9d11b9b29da 100644
---- a/arch/arm64/boot/dts/qcom/x1e78100-lenovo-thinkpad-t14s.dtsi
-+++ b/arch/arm64/boot/dts/qcom/x1e78100-lenovo-thinkpad-t14s.dtsi
-@@ -62,6 +62,45 @@ switch-lid {
- 		};
- 	};
- 
-+	hdmi-bridge {
-+		compatible = "realtek,rtd2171";
-+
-+		pinctrl-0 = <&hdmi_hpd_default>;
-+		pinctrl-names = "default";
-+
-+		ports {
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+
-+			port@0 {
-+				reg = <0>;
-+
-+				hdmi_bridge_dp_in: endpoint {
-+					remote-endpoint = <&usb_1_ss2_qmpphy_out_dp>;
-+				};
-+			};
-+
-+			port@1 {
-+				reg = <1>;
-+
-+				hdmi_bridge_tmds_out: endpoint {
-+					remote-endpoint = <&hdmi_con>;
-+				};
-+			};
-+		};
-+	};
-+
-+	hdmi-connector {
-+		compatible = "hdmi-connector";
-+		type = "a";
-+
-+		port {
-+			hdmi_con: endpoint {
-+				remote-endpoint = <&hdmi_bridge_tmds_out>;
-+			};
-+		};
-+	};
-+
- 	pmic-glink {
- 		compatible = "qcom,x1e80100-pmic-glink",
- 			     "qcom,sm8550-pmic-glink",
-@@ -1028,6 +1067,14 @@ &mdss_dp1_out {
- 	link-frequencies = /bits/ 64 <1620000000 2700000000 5400000000 8100000000>;
- };
- 
-+&mdss_dp2 {
-+	status = "okay";
-+};
-+
-+&mdss_dp2_out {
-+	link-frequencies = /bits/ 64 <1620000000 2700000000 5400000000 8100000000>;
-+};
-+
- &mdss_dp3 {
- 	/delete-property/ #sound-dai-cells;
- 
-@@ -1317,6 +1364,12 @@ eusb6_reset_n: eusb6-reset-n-state {
- 		output-low;
- 	};
- 
-+	hdmi_hpd_default: hdmi-hpd-default-state {
-+		pins = "gpio126";
-+		function = "usb2_dp";
-+		bias-disable;
-+	};
-+
- 	tpad_default: tpad-default-state {
- 		pins = "gpio3";
- 		function = "gpio";
-@@ -1548,6 +1601,34 @@ &usb_1_ss1_qmpphy_out {
- 	remote-endpoint = <&retimer_ss1_ss_in>;
- };
- 
-+&usb_1_ss2_qmpphy {
-+	vdda-phy-supply = <&vreg_l2j_1p2>;
-+	vdda-pll-supply = <&vreg_l2d_0p9>;
-+
-+	/delete-property/ mode-switch;
-+	/delete-property/ orientation-switch;
-+
-+	status = "okay";
-+
-+	ports {
-+		port@0 {
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+
-+			/delete-node/ endpoint;
-+
-+			usb_1_ss2_qmpphy_out_dp: endpoint@0 {
-+				reg = <0>;
-+
-+				data-lanes = <3 2 1 0>;
-+				remote-endpoint = <&hdmi_bridge_dp_in>;
-+			};
-+
-+			/* No USB3 lanes connected */
-+		};
-+	};
-+};
-+
- &usb_2 {
- 	status = "okay";
- };
+The regulator are always enabled by the hardware.
+> 
+>> +};
+>> +
+> 
+> [...]
+> 
+>> +
+>> +&tlmm {
+>> +	pcie_default_state: pcie-default-state {
+>> +		clkreq-pins {
+>> +			pins = "gpio90";
+>> +			function = "pcie_clk_req";
+>> +			drive-strength = <2>;
+>> +			bias-pull-up;
+>> +		};
+>> +
+>> +		perst-pins {
+>> +			pins = "gpio101";
+>> +			function = "gpio";
+>> +			drive-strength = <2>;
+>> +			bias-pull-down;
+>> +		};
+>> +
+>> +		wake-pins {
+>> +			pins = "gpio100";
+>> +			function = "gpio";
+>> +			drive-strength = <2>;
+>> +			bias-pull-up;
+>> +		};
+>> +	};
+>> +};
+>> +
+>> +&sdhc_1 {
+> 
+> tlmm > sdhc_1
 
--- 
-2.34.1
+ok, will sort it in v3 path.
+> 
+>> +	pinctrl-0 = <&sdc1_state_on>;
+>> +	pinctrl-1 = <&sdc1_state_off>;
+>> +	pinctrl-names = "default", "sleep";
+>> +
+>> +	bus-width = <8>;
+>> +	mmc-ddr-1_8v;
+>> +	mmc-hs200-1_8v;
+>> +	mmc-hs400-1_8v;
+>> +	mmc-hs400-enhanced-strobe;
+>> +	vmmc-supply = <&vreg_l17a>;
+>> +	vqmmc-supply = <&vreg_s4a>;
+>> +
+>> +	non-removable;
+>> +	no-sd;
+>> +	no-sdio;
+>> +
+>> +	status = "okay";
+>> +};
+>> +
+>> +&spi6 {
+>> +	status = "okay";
+>> +
+>> +	mcp2515@0 {
+>> +		compatible = "microchip,mcp2515";
+>> +		reg = <0>;
+>> +		clock-frequency = <20000000>;
+>> +		interrupts-extended = <&tlmm 87 IRQ_TYPE_LEVEL_LOW>;
+>> +		spi-max-frequency = <10000000>;
+>> +		vdd-supply = <&vreg_v3p3_can>;
+>> +		xceiver-supply = <&vreg_v5p0_can>;
+>> +	};
+>> +};
+>> +
+>> +&uart0 {
+>> +	status = "okay";
+>> +};
+>> +
+>> +&usb_1_hsphy {
+>> +	vdd-supply = <&vreg_l5a>;
+>> +	vdda-pll-supply = <&vreg_l12a>;
+>> +	vdda-phy-dpdm-supply = <&vreg_l13a>;
+>> +
+>> +	status = "okay";
+>> +};
+>> +
+>> +&usb_qmpphy {
+>> +	vdda-phy-supply = <&vreg_l5a>;
+>> +	vdda-pll-supply = <&vreg_l12a>;
+>> +
+>> +	status = "okay";
+>> +};
+> 
+> Please keep all the nodes sorted.
+
+ok, will sort it.
+> 
+>> +
+>> +&usb_1 {
+>> +	status = "okay";
+>> +};
+>> +
+>> +&usb_1_dwc3 {
+>> +	dr_mode = "host";
+> 
+> Is it really host-only?
+
+The USB1 port supports both device and host modes, and the ID pin
+is available on the hardware. By default, it operates in device mode,
+and switching to host mode requires a hardware switch on the SoM.
+In the current patch, I’ve set dr_mode = "host" for host operation.
+I plan to add proper role-switch logic (using the ID pin) in the
+next patch version, so the controller can dynamically switch between
+device and host modes.
+> 
+>> +};
+>> +
+>> +&usb_hsphy_2 {
+>> +	vdd-supply = <&vreg_l5a>;
+>> +	vdda-pll-supply = <&vreg_l12a>;
+>> +	vdda-phy-dpdm-supply = <&vreg_l13a>;
+>> +
+>> +	status = "okay";
+>> +};
+>> +
+>> +&usb_2 {
+>> +	status = "okay";
+>> +};
+>> +
+>> +&usb_2_dwc3 {
+>> +	dr_mode = "host";
+> 
+> Is it really host-only?
+
+Yes, it is host-only.
+> 
+>> +};
+>> +
+>> +&ufs_mem_hc {
+>> +	reset-gpios = <&tlmm 123 GPIO_ACTIVE_LOW>;
+>> +	vcc-supply = <&vreg_l17a>;
+>> +	vcc-max-microamp = <600000>;
+>> +	vccq2-supply = <&vreg_s4a>;
+>> +	vccq2-max-microamp = <600000>;
+>> +
+>> +	status = "okay";
+>> +};
+>> +
+>> +&ufs_mem_phy {
+>> +	vdda-phy-supply = <&vreg_l5a>;
+>> +	vdda-pll-supply = <&vreg_l12a>;
+>> +
+>> +	status = "okay";
+>> +};
+>> +
+>> +&venus {
+>> +	status = "okay";
+>> +};
+> 
 
 
