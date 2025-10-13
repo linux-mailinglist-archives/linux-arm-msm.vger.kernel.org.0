@@ -1,170 +1,138 @@
-Return-Path: <linux-arm-msm+bounces-76949-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-76950-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [142.0.200.124])
-	by mail.lfdr.de (Postfix) with ESMTPS id 03B66BD21E0
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Oct 2025 10:39:01 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 56842BD226A
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Oct 2025 10:52:14 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id BE87F4EB210
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Oct 2025 08:38:59 +0000 (UTC)
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 575E14EC60B
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Oct 2025 08:52:13 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DF9D02EC0B7;
-	Mon, 13 Oct 2025 08:38:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id EF11E2FB619;
+	Mon, 13 Oct 2025 08:52:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="Fnhd6Zvz"
+	dkim=pass (1024-bit key) header.d=samsung.com header.i=@samsung.com header.b="BQoGMpil"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from mailout2.w1.samsung.com (mailout2.w1.samsung.com [210.118.77.12])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C87E2F90D3
-	for <linux-arm-msm@vger.kernel.org>; Mon, 13 Oct 2025 08:38:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C1C92E7BCB;
+	Mon, 13 Oct 2025 08:52:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=210.118.77.12
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760344736; cv=none; b=ifZEdIIN1S8rxEU8buugkE1jkizabuYgroLJdv+4rnw6eGkbGeZpUuvVpGqM32YyPLS21GLtRjgxzphGR2IqpdX9RR3/F0vUp1s0sv9fTb2HOMTQj3sHKrj3K6WhdpXnLtnuhUvLfUWEC3fRu5g66JE1Jt4FhnI9qxchICL9NHA=
+	t=1760345525; cv=none; b=C4XYXhCWRoOMpNcfWHYFol6PnFRFuho+2sEsUDQCsOM7OBwfbGuUcy6NN+Q0BhCb00VLS7ixht/g3tmOqx6pZJgX/iGCm+Jog44GsYzC0hJlFH5nqgys3yVPPa8CyL4zvLzBOscseYY09miELxoHK4/3bpJEWnz3kT97CpJZYzw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760344736; c=relaxed/simple;
-	bh=aM9wpYz7D19h0818wM71Oi/TLVEQrjtN25oiHTy769Y=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Ye8SgSrBpJvv1LMG94YOWTLM4pWjJFYlnXeyboCxWJXBY+FJvqHZEuVw2TLxJYtwZHZt/xk7xbiOCxf15SWQNgds62NlAOWVsR4SNEVHLfH+CFv/b1NxOoOMG8e7C/f41rpnC/ybq6a47+u4gFJDTf2GQXuntERWGR2iismYZXA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=Fnhd6Zvz; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 59D2n7Ka022220
-	for <linux-arm-msm@vger.kernel.org>; Mon, 13 Oct 2025 08:38:54 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	kBVT1f4LC7X+qF9EMdOlijngoSBVrKJPfb4IYgGz1Hk=; b=Fnhd6ZvzNmGrNqKr
-	Ta2fhVD20s5qTfXx9lhoSl+Wt8fBhPijpEtd9jaETgbvk49+jcBOzd0r2Bmuzq3y
-	q5kmT14AE6nRXQMn5+ccH9QDFph6/6HxlxjYg9A/bOfwZKd/2G1JhXrT5i9UYB9I
-	DYrKyJeD5QE1+9U5peP40Cv5Tugu7YDSg2qZ9phCesD/KQ3xnIuGsZZq7yZ0C5Kd
-	847H3V1GnXZZhPLHXfkDTxmhZ6E2fdcHy3bp7YCp4p6dUKmrdCoMgKdQMCwbKRK+
-	8NktZxu6jgb8ANoeD+ZPqxU7ggt3zGJd6nEG3qaAURKGz6sVc/G1URbqdsJl2ZLn
-	nspLIw==
-Received: from mail-pj1-f69.google.com (mail-pj1-f69.google.com [209.85.216.69])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 49qgdfut6d-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Mon, 13 Oct 2025 08:38:54 +0000 (GMT)
-Received: by mail-pj1-f69.google.com with SMTP id 98e67ed59e1d1-330a4d5c4efso7967559a91.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 13 Oct 2025 01:38:54 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1760344734; x=1760949534;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=kBVT1f4LC7X+qF9EMdOlijngoSBVrKJPfb4IYgGz1Hk=;
-        b=YNlUlmNhYPaPIBlwoI3JaZSR2tea4VIVvLD2uhBP3W711+7Z8YjRb0Ws46v5gpqtl2
-         2viJ11FFxuKp6Z4lvnNjK1cyymOGrTZ1K3QDQ+mah19t/SBUhnYoeHmkDn0kJuWlPHdh
-         2gByME4nSs8bGQyX0pGLgSVaRhWAoi9SUcsGkuQPWsDURLuHW16kMEQguTWwlNBPe8+i
-         LBLXvZCTebUV2WO4moj24OkA8cHgutQhEwZG0mg8Ra1iJzjUwU7HaVsbAuzJRcktDNC8
-         Ef/VWTM8Xs7Ef+oeINH/htkEpW8fzZRnZhvvNdeFQEZTz//Cb6bSRrRo9gt8F/p7uhG9
-         kFlw==
-X-Forwarded-Encrypted: i=1; AJvYcCXCDgozt6DCFCDuUkmJ+tP+fjl8OFmaFuUMjmQTPsWp7TW7SPI99o1NyS7GpZFp8iT+R4qokEbMrdiJmagF@vger.kernel.org
-X-Gm-Message-State: AOJu0YzuscVdlUBmvSZz37C2/a5cUtYTPOqF4P+Q4ViyKUAvoARMeMm4
-	nsVzRRN3NAh1Y/XlMJ6WD4SdXpRiFfIw8lrwkUMWLHHPKTYsGtXSgaZvTz1WG2Y1Q4kOUhgB6Iv
-	VkJ+6nFzRNnZSjSsqhhEMoPTAMw16OCPzBAeFCvTqlazRQm9bpvYpmfBvENnNoOyykyBu
-X-Gm-Gg: ASbGncsP3FZWVLSdkqMEPKfO3h4OvGUzWFJF3e1gvXwrixFIHySEI/XjYJvguq6QMdV
-	y1gNH5zww6uJwVPDjSo+rzdAGm/1s54KtCLDoYcCV4meun8L8VWwxW/e0tFlMRIcJmPhxTu3Owo
-	utjhg4xCkb+HXq1PVAuyag8dfvpDum90JLWPnwJVVdvvE/Li5ZmOsFG6dawnedNGgbuTBsiW0hL
-	WYVx410YMnMszyjyKsqetUOUWoHjaBGSP/A12f8TgK58LK0WbkkFV/Aj2nDhinK8o4hl8c+Dl01
-	lbsD+9dm137s8I8By/58SMYyb9ejAs1mp9Yk/+5RfoBc41a3yI9In9ctsJG+eEL6/H32m4l4zG7
-	t82iHTp5ySNbwiiNk2iOaYddfTdrz6A==
-X-Received: by 2002:a17:90b:4a8e:b0:32b:dfdb:b27f with SMTP id 98e67ed59e1d1-33b5138e27emr30306516a91.17.1760344733568;
-        Mon, 13 Oct 2025 01:38:53 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGs7ZzJjXcOdRj1a6iEgitTMaufzAdrFWCf6u6RbYV0u2V2fa3XRScqidAK8Ls4TD09WlYnzw==
-X-Received: by 2002:a17:90b:4a8e:b0:32b:dfdb:b27f with SMTP id 98e67ed59e1d1-33b5138e27emr30306487a91.17.1760344733107;
-        Mon, 13 Oct 2025 01:38:53 -0700 (PDT)
-Received: from [10.133.33.133] (tpe-colo-wan-fw-bordernet.qualcomm.com. [103.229.16.4])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-33b626bb72dsm11172324a91.14.2025.10.13.01.38.48
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 13 Oct 2025 01:38:52 -0700 (PDT)
-Message-ID: <4d6a74e6-53fd-4749-8839-907a9d0d11d3@oss.qualcomm.com>
-Date: Mon, 13 Oct 2025 16:38:45 +0800
+	s=arc-20240116; t=1760345525; c=relaxed/simple;
+	bh=D0Pm5gDAEf/J/fLMJeYhII2rupxN55IU1PVARShdLz8=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:From:In-Reply-To:
+	 Content-Type:References; b=rfM1wRomOUfd+XYcPqYCWIB0APG5z7CRIlW/9u7tcd7H8jNFwzjOVf7fe/0Zdj+ns6UPjn7Btwpr7naShEeTX34O6XSxdvMhNLevwN1GIOT198EOBVDObxX4cWtBuaSeLbEsRoqKNrZgbXrdYDEmnSEiz2aJmTdeBenK9R8hT4Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=samsung.com; spf=pass smtp.mailfrom=samsung.com; dkim=pass (1024-bit key) header.d=samsung.com header.i=@samsung.com header.b=BQoGMpil; arc=none smtp.client-ip=210.118.77.12
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=samsung.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=samsung.com
+Received: from eucas1p2.samsung.com (unknown [182.198.249.207])
+	by mailout2.w1.samsung.com (KnoxPortal) with ESMTP id 20251013085200euoutp0266e34edf90c863a4c01eb72fc5c48eb3~uAOyYTX0q1874618746euoutp02G;
+	Mon, 13 Oct 2025 08:52:00 +0000 (GMT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 mailout2.w1.samsung.com 20251013085200euoutp0266e34edf90c863a4c01eb72fc5c48eb3~uAOyYTX0q1874618746euoutp02G
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
+	s=mail20170921; t=1760345520;
+	bh=JyDd/uFH2Am1LZ5SPDN+k8UExukF9D/xq2Z7HY8ZnFU=;
+	h=Date:Subject:To:Cc:From:In-Reply-To:References:From;
+	b=BQoGMpilRJCUe8Y44BcqjJWkeRiS+JPfur3kcgk/2YoTAS+ViVlUzaRYX89zuEjDq
+	 wkZ//2bWyV40qfk9fRhKG5W52cbl/HFo0RcqE6+fae76UZ4N7VyDdV6dd9ILg/D8OP
+	 faJI0JVLj/Gc3HQk8b0emDKXb80ilcDcD66u6PCM=
+Received: from eusmtip2.samsung.com (unknown [203.254.199.222]) by
+	eucas1p2.samsung.com (KnoxPortal) with ESMTPA id
+	20251013085200eucas1p2f4ded79121c5a222f59ecf4ddda0816c~uAOx-fHcX0880708807eucas1p26;
+	Mon, 13 Oct 2025 08:52:00 +0000 (GMT)
+Received: from [106.210.134.192] (unknown [106.210.134.192]) by
+	eusmtip2.samsung.com (KnoxPortal) with ESMTPA id
+	20251013085157eusmtip27fccd916a2ad4442a7f4d1fa1f91c70b~uAOvsyZiW2933229332eusmtip2d;
+	Mon, 13 Oct 2025 08:51:57 +0000 (GMT)
+Message-ID: <e1d3661d-26ba-49ae-a124-dc5233c9107d@samsung.com>
+Date: Mon, 13 Oct 2025 10:51:57 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1] dt-binding: Update oss email address for Coresight
- documents
-To: Suzuki K Poulose <suzuki.poulose@arm.com>,
-        "Rob Herring (Arm)" <robh@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Tingwei Zhang <tingwei.zhang@oss.qualcomm.com>,
-        Mao Jinlong <jinlong.mao@oss.qualcomm.com>,
-        Yuanfang Zhang <yuanfang.zhang@oss.qualcomm.com>,
-        James Clark <james.clark@linaro.org>,
-        Tao Zhang
- <tao.zhang@oss.qualcomm.com>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Mike Leach <mike.leach@linaro.org>
-Cc: linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        coresight@lists.linaro.org, devicetree@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org
-References: <20250902042143.1010-1-jie.gan@oss.qualcomm.com>
- <175684936304.1217220.3167248149687349464.robh@kernel.org>
+User-Agent: Betterbird (Windows)
+Subject: Re: [PATCH v1 3/6] iommu/exynos-iommu: Set release_domain to
+ exynos_identity_domain
+To: Nicolin Chen <nicolinc@nvidia.com>, joro@8bytes.org, jgg@nvidia.com,
+	kevin.tian@intel.com
+Cc: suravee.suthikulpanit@amd.com, will@kernel.org, robin.murphy@arm.com,
+	sven@kernel.org, j@jannau.net, robin.clark@oss.qualcomm.com,
+	krzk@kernel.org, dwmw2@infradead.org, baolu.lu@linux.intel.com,
+	yong.wu@mediatek.com, matthias.bgg@gmail.com,
+	angelogioacchino.delregno@collabora.com, tjeznach@rivosinc.com,
+	pjw@kernel.org, palmer@dabbelt.com, aou@eecs.berkeley.edu, heiko@sntech.de,
+	schnelle@linux.ibm.com, mjrosato@linux.ibm.com, orsonzhai@gmail.com,
+	baolin.wang@linux.alibaba.com, wens@csie.org, jernej.skrabec@gmail.com,
+	samuel@sholland.org, thierry.reding@gmail.com, jonathanh@nvidia.com,
+	jean-philippe@linaro.org, iommu@lists.linux.dev,
+	linux-kernel@vger.kernel.org, asahi@lists.linux.dev,
+	linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org,
+	linux-samsung-soc@vger.kernel.org, linux-mediatek@lists.infradead.org,
+	linux-riscv@lists.infradead.org, linux-rockchip@lists.infradead.org,
+	linux-s390@vger.kernel.org, linux-sunxi@lists.linux.dev,
+	linux-tegra@vger.kernel.org, virtualization@lists.linux.dev,
+	patches@lists.linux.dev
 Content-Language: en-US
-From: Jie Gan <jie.gan@oss.qualcomm.com>
-In-Reply-To: <175684936304.1217220.3167248149687349464.robh@kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+From: Marek Szyprowski <m.szyprowski@samsung.com>
+In-Reply-To: <56175bec385d24af9eb2a38632e1d6ce889025e3.1760312540.git.nicolinc@nvidia.com>
 Content-Transfer-Encoding: 7bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDExMDAyNSBTYWx0ZWRfX0MtHesDq+ITm
- 2OHcF//W8gWU1q+aLfKevUQdAAQZv9LB/fLNrOu4iwNpuqH2lADfQTimavLNPEksLwDAnp5mOAJ
- eM2Vb6okbpr6AC42jdFk4soLe8CUHCUlsrNUk/tbvksYJSLXY/Ow96fK8uFV6AMREqAUgk1ZrHK
- 8MoU9uAUYw/IBSiprD4gNfyRBJ4udC2DpKzFeCJLcyPZ5/pAiuTfy5rlb8i4jttS8N91lxp4VVk
- AS6rJyg51S1JR5p/nk2JM7ZJIcGrfLWINB7auKyvLtsK/OCnJzeZrAU7FoaOgXue9unQ4haQm5c
- EkJuVnmP3ZJMza33Y02xR1F63D1wUmeUsBxH96kT3/9CoYq4Hq45AZdLiRPhuc3tIqxi6N8EpW6
- kcW099XKStBCYr1Fda9lZT4o9dPBHA==
-X-Proofpoint-GUID: qg5TxIsx90bsOv-Y9jKKMSP6Ip7p6Eti
-X-Proofpoint-ORIG-GUID: qg5TxIsx90bsOv-Y9jKKMSP6Ip7p6Eti
-X-Authority-Analysis: v=2.4 cv=J4ynLQnS c=1 sm=1 tr=0 ts=68ecba9e cx=c_pps
- a=vVfyC5vLCtgYJKYeQD43oA==:117 a=nuhDOHQX5FNHPW3J6Bj6AA==:17
- a=IkcTkHD0fZMA:10 a=x6icFKpwvdMA:10 a=EUspDBNiAAAA:8 a=VwQbUJbxAAAA:8
- a=TojU4j7_S79YkeO3qSUA:9 a=QEXdDO2ut3YA:10 a=rl5im9kqc5Lf4LNbBjHf:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1117,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-10-13_03,2025-10-06_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 lowpriorityscore=0 priorityscore=1501 adultscore=0
- bulkscore=0 suspectscore=0 clxscore=1015 phishscore=0 spamscore=0
- malwarescore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2510020000
- definitions=main-2510110025
+X-CMS-MailID: 20251013085200eucas1p2f4ded79121c5a222f59ecf4ddda0816c
+X-Msg-Generator: CA
+Content-Type: text/plain; charset="utf-8"
+X-RootMTR: 20251012235812eucas1p1209a75bffb5a4784955781d437746731
+X-EPHeader: CA
+X-CMS-RootMailID: 20251012235812eucas1p1209a75bffb5a4784955781d437746731
+References: <cover.1760312540.git.nicolinc@nvidia.com>
+	<CGME20251012235812eucas1p1209a75bffb5a4784955781d437746731@eucas1p1.samsung.com>
+	<56175bec385d24af9eb2a38632e1d6ce889025e3.1760312540.git.nicolinc@nvidia.com>
 
+On 13.10.2025 01:57, Nicolin Chen wrote:
+> Following a coming core change to pass in the old domain pointer into the
+> attach_dev op and its callbacks, exynos_iommu_identity_attach() will need
+> this new argument too, which the release_device op doesn't provide.
+>
+> Instead, the core provides a release_domain to attach to the device prior
+> to invoking the release_device callback. Thus, simply use that.
+>
+> Signed-off-by: Nicolin Chen <nicolinc@nvidia.com>
+Acked-by: Marek Szyprowski <m.szyprowski@samsung.com>
+> ---
+>   drivers/iommu/exynos-iommu.c | 3 +--
+>   1 file changed, 1 insertion(+), 2 deletions(-)
+>
+> diff --git a/drivers/iommu/exynos-iommu.c b/drivers/iommu/exynos-iommu.c
+> index b6edd178fe25e..0857519ca7188 100644
+> --- a/drivers/iommu/exynos-iommu.c
+> +++ b/drivers/iommu/exynos-iommu.c
+> @@ -1429,8 +1429,6 @@ static void exynos_iommu_release_device(struct device *dev)
+>   	struct exynos_iommu_owner *owner = dev_iommu_priv_get(dev);
+>   	struct sysmmu_drvdata *data;
+>   
+> -	WARN_ON(exynos_iommu_identity_attach(&exynos_identity_domain, dev));
+> -
+>   	list_for_each_entry(data, &owner->controllers, owner_node)
+>   		device_link_del(data->link);
+>   }
+> @@ -1476,6 +1474,7 @@ static int exynos_iommu_of_xlate(struct device *dev,
+>   
+>   static const struct iommu_ops exynos_iommu_ops = {
+>   	.identity_domain = &exynos_identity_domain,
+> +	.release_domain = &exynos_identity_domain,
+>   	.domain_alloc_paging = exynos_iommu_domain_alloc_paging,
+>   	.device_group = generic_device_group,
+>   	.probe_device = exynos_iommu_probe_device,
 
-
-On 9/3/2025 5:42 AM, Rob Herring (Arm) wrote:
-> 
-> On Tue, 02 Sep 2025 12:21:43 +0800, Jie Gan wrote:
->> Update the OSS email addresses across all Coresight documents, as the
->> previous addresses have been deprecated.
->>
->> Signed-off-by: Jie Gan <jie.gan@oss.qualcomm.com>
->> ---
->>   .../sysfs-bus-coresight-devices-dummy-source  |  4 +-
->>   .../testing/sysfs-bus-coresight-devices-tpdm  | 56 +++++++++----------
->>   .../arm/arm,coresight-dummy-sink.yaml         |  2 +-
->>   .../arm/arm,coresight-dummy-source.yaml       |  2 +-
->>   .../bindings/arm/qcom,coresight-ctcu.yaml     |  6 +-
->>   .../arm/qcom,coresight-remote-etm.yaml        |  4 +-
->>   .../bindings/arm/qcom,coresight-tnoc.yaml     |  2 +-
->>   .../bindings/arm/qcom,coresight-tpda.yaml     |  4 +-
->>   .../bindings/arm/qcom,coresight-tpdm.yaml     |  4 +-
->>   9 files changed, 42 insertions(+), 42 deletions(-)
->>
-> 
-> Acked-by: Rob Herring (Arm) <robh@kernel.org>
-
-Gentle ping. Is that possible to get this patch applied?
-
-Thanks,
-Jie
-
-> 
+Best regards
+-- 
+Marek Szyprowski, PhD
+Samsung R&D Institute Poland
 
 
