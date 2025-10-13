@@ -1,197 +1,105 @@
-Return-Path: <linux-arm-msm+bounces-77013-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-77014-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ams.mirrors.kernel.org (ams.mirrors.kernel.org [213.196.21.55])
-	by mail.lfdr.de (Postfix) with ESMTPS id B5492BD329D
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Oct 2025 15:18:39 +0200 (CEST)
+Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [IPv6:2605:f480:58:1:0:1994:3:14])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6EE94BD33DB
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Oct 2025 15:40:39 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ams.mirrors.kernel.org (Postfix) with ESMTPS id 1FB82349732
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Oct 2025 13:18:39 +0000 (UTC)
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 5FB4B4EDC35
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Oct 2025 13:40:38 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A8F781F4CBC;
-	Mon, 13 Oct 2025 13:18:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jjkak5kN"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 917D830649D;
+	Mon, 13 Oct 2025 13:40:34 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-f66.google.com (mail-ed1-f66.google.com [209.85.208.66])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from exchange.fintech.ru (exchange.fintech.ru [195.54.195.159])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC0C972612
-	for <linux-arm-msm@vger.kernel.org>; Mon, 13 Oct 2025 13:18:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.66
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9EFC3064A5;
+	Mon, 13 Oct 2025 13:40:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.54.195.159
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760361514; cv=none; b=OuSNe1/sbeY4OFzceGUKUcA2rVF0GFH+qgKTt5ypgC6vz1Cgy5ph9vWq9tYM7JzLohZD5jjQe7yQy7K1KH7ivezl6e3aVjZGo4ZqKi+n8yYYn/W4uVZFQNcz27Mh213rdVvSEgJj6KCoo4ydj/x7naRAJEuNsh9kWfVdkNfdg2o=
+	t=1760362834; cv=none; b=Y4Mx8Y6Rdh/asaDY1NxvycPova1HCZTEbygSujn4vabHl5mAz0YZy3bdGynU4jjymZNHjhkoCWINugPfQM9EPP/jwbOk2xtWJy5vxG4GcjzB4Oy2BZQrhaWBbi6wGpiO6YPJp6RpWT1T+JIoA1VP2FczqkX7OMbKjascLcJpnDw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760361514; c=relaxed/simple;
-	bh=XATrkBbENj2WWue2qtMkrJM0HdkQdLuq3HBs+91K598=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=s2yieDLtxd1VIY+hoSu/2+wgRmF1HsEopCZ1XLZEtIkIEqAPoU3tBmO6JQ+9CTuO8BpsutpnphFypF65W1vJXM7Huivx2GPChfumN7ZAvofn3rxI425PjO2tQZ5bxtiIyGviZMYQJfOT4B29ObstI2RxehPBJwA9ZQexs1USX+k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=jjkak5kN; arc=none smtp.client-ip=209.85.208.66
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-ed1-f66.google.com with SMTP id 4fb4d7f45d1cf-63963066fb0so8743442a12.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 13 Oct 2025 06:18:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1760361511; x=1760966311; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=W9AiQH+p3Zc9JwwBJl7QXYeZboD0M4kQBWEkieM2TAA=;
-        b=jjkak5kNId9EdTiHW57STf68uKURxy1S3HdTL+pBU9sZeqH8FbaQcjklRF0Umbhhht
-         U2MUVJOyQ3N1LzPCz2ceLD7SiULWm63vaZ3pCIkmF8ZZlTmaf0aMIjcMCaCxcqdBTSaL
-         gHcHZPCo8WuHj4AirbFEcHlwWkFZubl4dJ/UajiBzZGrxaWowmCj8JTCPj/xJtk9e6+w
-         vsrX4Zhi7ty+4YczQiFWa00E7hbYf5KKqkuYx/OiwmSdiWrcAZ8EepG/4db+w5y40Tzc
-         9rmE1rbkYnNMYJ2N8t/yQ+BzDm2uEPpC/CjsQO+FOGKUUsPvyZPhBL0Lcz6HqvRMICvN
-         w8HA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1760361511; x=1760966311;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=W9AiQH+p3Zc9JwwBJl7QXYeZboD0M4kQBWEkieM2TAA=;
-        b=Favh6rG2PZ7bzVZj5fDf3b2BeEizP0bvgcEBSASn+YtvmsZYPnKW94YV02SJTInHB5
-         4/bVKuxIOAjN6BF0EI+kk9gSy+eHDjhCPY4S0qlYuQEh5HbW0hahfVKS8MGfBloNNOuU
-         lwIDwzv13R7OB3qLS2Ox5DgxKLzjM/Ry3I64WvXUAusENnjg/AcViB/ZTm0GVoh6fgUU
-         pJJxxL5fi4ae27jAum3ckTg4e1UmnkidwMKt2PKFznK2kSrMhBMDbChx7TlaSex6FJoI
-         STQkc6yrN5UzNqaYBwewCuMk7yor/oR7ddB9aHtv4ElQIJkQgEJ11TzV8nwf8jnHCnlp
-         ywyg==
-X-Forwarded-Encrypted: i=1; AJvYcCXXkwsKLigNxxBoRaKPW53sd2FU5Gsy9VBgm+6m6w41JCbEdnURK3yrYsYd4EgnUPLU+F9XMQh3OP0q0HLx@vger.kernel.org
-X-Gm-Message-State: AOJu0YyiDHA6KV3ZcmEVWZKymNaxPKkHcz5nFwuX1Amwug4EZ5Y+JdL/
-	fMWYAgl/tDRJZiEfVqgPNN/ojcj1D2lhzbG/KNa85ZP3l5MKqzccfpvQGfY5RtjsoA5fZ6MDXPF
-	f4Fv3xfOKWwZIcFviTj9xFdK0xf7ena8=
-X-Gm-Gg: ASbGncuWuSPgZ1bo2r+G3E9XTYkUFF3qeoaaQbkVKkPpMfGFel8vq1g0RWugnYs6flS
-	wzI0I3MdTzpal4w6QQsPhgxXf1ff/t8ZqsPWE66YTJqAkQ+k4Ryz+OVPu+BMhemSMa3e+dAusPv
-	HOfnK9dDhz1qFnQPflArln8xI8ZC7uEcWeVRknpk/jQnT7WbBhc20OoRSss3HuuUyomZGJt8L/r
-	r+p8EeIhkMAjBBg56Sl+qoaYZA98huiCYy6
-X-Google-Smtp-Source: AGHT+IHv7bID+xbm7RowzwKtepEJM2QOtT7nCXsATO274uCHhG9AaqRttSiuceRtheBHXIXQGcJxOUqKR8B8nZHeuYE=
-X-Received: by 2002:a05:6402:3554:b0:639:fb11:9935 with SMTP id
- 4fb4d7f45d1cf-639fb119b08mr13930852a12.4.1760361510947; Mon, 13 Oct 2025
- 06:18:30 -0700 (PDT)
+	s=arc-20240116; t=1760362834; c=relaxed/simple;
+	bh=7IitNfFxeuRtQCQPMlEdaH3Q/Xv+smTip+tkaLsWJws=;
+	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=se9Js2g5YBUlnLxOr4DDsrfeH1ocTTtXD2Od7B6idguaJc48zyFd8Lq6NJPlIExZ+blfXW0hboNBm6RfcLB1mVVhrHoa6IsPAwcmnuoHN01D2qa/cfC+5PIwsk3YQb5xKfcrw1XUYVVN5WdUTb+yNakvfOkYCZB2PyUAmmJ6abw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=fintech.ru; spf=pass smtp.mailfrom=fintech.ru; arc=none smtp.client-ip=195.54.195.159
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=fintech.ru
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fintech.ru
+Received: from Ex16-01.fintech.ru (10.0.10.18) by exchange.fintech.ru
+ (195.54.195.169) with Microsoft SMTP Server (TLS) id 14.3.498.0; Mon, 13 Oct
+ 2025 16:39:18 +0300
+Received: from localhost (10.0.253.101) by Ex16-01.fintech.ru (10.0.10.18)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2242.4; Mon, 13 Oct
+ 2025 16:39:17 +0300
+From: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
+To: Srinivas Kandagatla <srini@kernel.org>, Liam Girdwood
+	<lgirdwood@gmail.com>, Jaroslav Kysela <perex@perex.cz>, Takashi Iwai
+	<tiwai@suse.com>
+CC: Nikita Zhandarovich <n.zhandarovich@fintech.ru>,
+	<linux-sound@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+	<linux-kernel@vger.kernel.org>, <lvc-project@linuxtesting.org>
+Subject: [PATCH v2] ASoC: q6apm: fix potential overflow in q6hdmi_hw_params
+Date: Mon, 13 Oct 2025 16:39:04 +0300
+Message-ID: <20251013133906.3299497-1-n.zhandarovich@fintech.ru>
+X-Mailer: git-send-email 2.43.0
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20251001135914.13754-1-caojunjie650@gmail.com>
- <20251001135914.13754-3-caojunjie650@gmail.com> <cwgn24f6tnmytd4omr2tul4e5jjin3ijji3ff3qkumqm2xe3t3@ntayu3m5kai3>
- <CAK6c68jBwykcWZm3ckm3nwab-X9Are4rD-eauE4rXA2+XvuX1w@mail.gmail.com>
- <9cafccd5-35d4-46c5-aa57-1b0b8ec116e8@oss.qualcomm.com> <CAK6c68iV=n3BvMMa30FuehbMs7-U01s0saZnsYwPVoiyw0VTrg@mail.gmail.com>
- <icj24ghckurcunjormsfhhscng4wfcxiyadl2z5xduitxxqqmp@iws3pssew5dx>
-In-Reply-To: <icj24ghckurcunjormsfhhscng4wfcxiyadl2z5xduitxxqqmp@iws3pssew5dx>
-From: Junjie Cao <caojunjie650@gmail.com>
-Date: Mon, 13 Oct 2025 21:17:04 +0800
-X-Gm-Features: AS18NWACwn3Ejqy7Cy6CMtpi1wwkfKvIy2-Q1E725iHTCiZTeN8KHYUSRZ_-JDg
-Message-ID: <CAK6c68hZq2o9YXxzd2dv5AXw5-UfKv_58MoUrQfGyfPiONArEg@mail.gmail.com>
-Subject: Re: [PATCH 2/3] drm/msm/dsi: support DSC configurations with
- slice_per_pkt > 1
-To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Cc: Neil Armstrong <neil.armstrong@linaro.org>, 
-	Jessica Zhang <jessica.zhang@oss.qualcomm.com>, 
-	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, Maxime Ripard <mripard@kernel.org>, 
-	Thomas Zimmermann <tzimmermann@suse.de>, David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, 
-	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Rob Clark <robin.clark@oss.qualcomm.com>, Dmitry Baryshkov <lumag@kernel.org>, 
-	Abhinav Kumar <abhinav.kumar@linux.dev>, Sean Paul <sean@poorly.run>, 
-	Marijn Suijten <marijn.suijten@somainline.org>, Antonino Maniscalco <antomani103@gmail.com>, 
-	Jonathan Marek <jonathan@marek.ca>, Eugene Lepshy <fekz115@gmail.com>, Jun Nie <jun.nie@linaro.org>, 
-	dri-devel@lists.freedesktop.org, devicetree@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
-	freedreno@lists.freedesktop.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ClientProxiedBy: Ex16-02.fintech.ru (10.0.10.19) To Ex16-01.fintech.ru
+ (10.0.10.18)
 
-Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com> =E4=BA=8E2025=E5=B9=B4=
-10=E6=9C=8813=E6=97=A5=E5=91=A8=E4=B8=80 20:31=E5=86=99=E9=81=93=EF=BC=9A
-> On Mon, Oct 13, 2025 at 07:04:43PM +0800, Junjie Cao wrote:
-> > Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com> =E4=BA=8E2025=E5=
-=B9=B410=E6=9C=8813=E6=97=A5=E5=91=A8=E4=B8=80 17:39=E5=86=99=E9=81=93=EF=
-=BC=9A
-> > > On 13/10/2025 04:52, =E6=9B=B9=E4=BF=8A=E6=9D=B0 wrote:
-> > > >  >Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com
-> > > > <mailto:dmitry.baryshkov@oss.qualcomm.com>> =E4=BA=8E2025=E5=B9=B41=
-0=E6=9C=882=E6=97=A5=E5=91=A8=E5=9B=9B 10:04=E5=86=99=E9=81=93=EF=BC=9A
-> > > >  >On Wed, Oct 01, 2025 at 09:59:13PM +0800, Junjie Cao wrote:
-> > > >  >> From: Jun Nie <jun.nie@linaro.org <mailto:jun.nie@linaro.org>>
-> > > >  >>
-> > > >  >> Some panels support multiple slice to be sent in a single DSC
-> > > > packet. And
-> > > >  >> this feature is a must for specific panels, such as JDI LPM026M=
-648C.
-> > > > Add a
-> > > >  >> dsc_slice_per_pkt member into struct mipi_dsi_device and suppor=
-t the
-> > > >  >> feature in msm mdss driver.
-> > > >  >>
-> > > >  >> Co-developed-by: Jonathan Marek <jonathan@marek.ca
-> > > > <mailto:jonathan@marek.ca>>
-> > > >  >> Signed-off-by: Jonathan Marek <jonathan@marek.ca
-> > > > <mailto:jonathan@marek.ca>>
-> > > >  >> Signed-off-by: Jun Nie <jun.nie@linaro.org <mailto:jun.nie@lina=
-ro.org>>
-> > > >  >> Signed-off-by: Junjie Cao <caojunjie650@gmail.com
-> > > > <mailto:caojunjie650@gmail.com>>
-> > > >  >> ---
-> > > >  >>  drivers/gpu/drm/msm/dsi/dsi_host.c | 25 ++++++++++------------=
+Since 'module_config' array in struct 'q6apm_lpass_dai_data' has fixed
+size APM_PORT_MAX (127), function q6hdmi_hw_params() may hit
+accidental buffer overflow. Specifically, in case 'dai->id' has
+values ranging between DISPLAY_PORT_RX_1 and DISPLAY_PORT_RX_7,
+DISPLAY_PORT_RX_1 being equal 129, module_config[] array will
+attempt to access elements out of reach.
+
+Mitigate this issue by expanding the maximum possible size of
+'module_config' and increasing APM_PORT_MAX to account for bigger
+possible values for indexes.
+
+Found by Linux Verification Center (linuxtesting.org) with static
+analysis tool SVACE.
+
+Fixes: 2f6860e6133f ("ASoC: qcom: q6apm: add support to display ports in lpass dais")
+Signed-off-by: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
 ---
-> > > >  >>  include/drm/drm_mipi_dsi.h         |  2 ++
-> > > >  >>  2 files changed, 12 insertions(+), 15 deletions(-)
-> > > >  >
-> > > >  >Please extract the generic part, so that it can be merged through=
- a
-> > > >  >generic tree.
-> > > >  >
-> > > >
-> > > > Sorry, I don't get it.  The generic part, generic tree? Do you mean
-> > > > the drm tree? `slice_per_pkt >=3D 2` is seen on the panels of these
-> > > > tablets that are equipped with qcom chips. I don't know if these
-> > > > panels are used on other platforms, and if it is necessary to do it
-> > > > in drm.
-> > >
-> > > There are two changes here:
-> > > - MIPI DSI header change
-> > > - msm DSI driver
-> > >
-> > > I've asked to split it to those two commits so that he change for
-> > > drm_mipi_dsi.h is more obvious for reviewers and so that it can be
-> > > merged through a drm-misc tree (or through drm-msm tree provided it g=
-ets
-> > > a necessary ack).
-> > >
-> >
-> > Thanks for your clear explanation.
-> >
-> > I don't mind to add the field separately. But should I submit it
-> > with the panel driver together? Otherwise, this field is unused
-> > for a while.
-> >
-> > However, as you mentioned, this is not a part of standard, neither
-> > mipi dsi nor VESA DSC. Recently, only Qualcomm devices require it
-> > to calculate parameters, then we use them to program registers. Why
-> > don't we parse the field from devicetree?
->
-> Because the value is uniquelly identified by the panel's compat string.
->
+P.S. This issue is quite similar to another, already fixed one, see
+commit a31a4934b31f ("ASoC: qcom: Fix sc7280 lpass potential buffer
+overflow").
 
-Yes, it is panel specified.
-But can we set it for every panel like
+v1 -> v2: increase APM_PORT_MAX by 1 to ensure that no overflow
+occurs if dai->id is equal to max possible value (DISPLAY_PORT_RX_7).
+Thanks to Fedor Pchelkin <pchelkin@ispras.ru> for the suggestion.
+Also, expand description a tiny bit.
+---
+ sound/soc/qcom/qdsp6/q6apm.h | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-&mdss_dsi0 {
-    qcom,mdss-dsc-slice-per-pkt =3D <2>;
-
-    status =3D "okay";
-
-    panel: panel@0 {
-        compatible =3D "foo,bar";
-        reg =3D <0>;
-    };
-};
-
-or moving the property to panel node? We access it from child node.
-
-> --
-> With best wishes
-> Dmitry
+diff --git a/sound/soc/qcom/qdsp6/q6apm.h b/sound/soc/qcom/qdsp6/q6apm.h
+index 7ce08b401e31..fa766c038d78 100644
+--- a/sound/soc/qcom/qdsp6/q6apm.h
++++ b/sound/soc/qcom/qdsp6/q6apm.h
+@@ -14,9 +14,10 @@
+ #include <linux/of_platform.h>
+ #include <linux/jiffies.h>
+ #include <linux/soc/qcom/apr.h>
++#include <dt-bindings/sound/qcom,q6dsp-lpass-ports.h>
+ #include "audioreach.h"
+ 
+-#define APM_PORT_MAX		127
++#define APM_PORT_MAX		(DISPLAY_PORT_RX_7 + 1)
+ #define APM_PORT_MAX_AUDIO_CHAN_CNT 8
+ #define PCM_CHANNEL_NULL 0
+ #define PCM_CHANNEL_FL    1	/* Front left channel. */
 
