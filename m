@@ -1,83 +1,83 @@
-Return-Path: <linux-arm-msm+bounces-76962-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-76963-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id D94FCBD263A
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Oct 2025 11:54:48 +0200 (CEST)
+Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [142.0.200.124])
+	by mail.lfdr.de (Postfix) with ESMTPS id 46A68BD2692
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Oct 2025 12:00:05 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 0375F1887656
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Oct 2025 09:55:12 +0000 (UTC)
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 908124EFFA6
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Oct 2025 10:00:02 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 88508246797;
-	Mon, 13 Oct 2025 09:54:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6EBFE2FE06C;
+	Mon, 13 Oct 2025 09:59:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b="Qw+WLgxe"
+	dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b="EongFvxo"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com [148.163.156.1])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1AE5239E63;
-	Mon, 13 Oct 2025 09:54:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBF362E5430;
+	Mon, 13 Oct 2025 09:59:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.163.156.1
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760349282; cv=none; b=k515P7/oAUjZm08PcSAozNO/PKbMLkmi/nEaCYKbUPuRWNFJNiDvYi3riJvfgrO0XgtEZefNbamVIl9j24KBv7hVJZ+BIslWjONNOpfpXKr+i6ndEKfvPnZen9j3IPR/Z9J18L+ZX3ZMrgxE7tTsGs4oed7ywZQ/t35y/fnaCZY=
+	t=1760349598; cv=none; b=jrxjELWyEu/SwHoSOHleHhcE5mKI77qeITnfsWWmOi3Rk/RXSclOMPepOK9a3onhqNddLuNMMTSH0WGGKxFdUk5bnH0aDLoCNQhmcw3JDKavd+Ei8YkJKwBcsu4jkpt9jHrSYHdu+KYYz1G33MEd90n1Fpykt1vWeV4Kq7x+nPc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760349282; c=relaxed/simple;
-	bh=OFh9hDOVFllt2rVDIRFxQ9NT7M4HjzwSQAiZb7BddRI=;
+	s=arc-20240116; t=1760349598; c=relaxed/simple;
+	bh=VvJ6LiAl6bxxjZu/VsVT7anbbFmjNtSEFhVe43hw+d4=;
 	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=Z9dzKn7AnsTyiA8t+LMX4gdV/SBkI0xyvK9tbYoaa4J58gvsi/th9aoqk/hiXWabvHZuCH2ATe2K/FE91cBG83k+3yDBx3l64NNMeqHPYL9V2M89Xv6p0C+aqZ5G4ZXqQ1FJuUaOO1Ldj6Hi0SNvwnhy5bnaGP7Kd/kMsi8r9+k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com; spf=pass smtp.mailfrom=linux.ibm.com; dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b=Qw+WLgxe; arc=none smtp.client-ip=148.163.156.1
+	 Content-Type:MIME-Version; b=CN9g1nQRrS7S70MFnkWeYKV4x6gDbpEEyk7m3OCiSStOgUhVtgt1jSiTcS7P8LaCisf54vaXBy3YAYIIWENks6fBomklrqTg8p21LoDtgGHcbxKXa2M17ep4Fp88L7qlTDXcUGFLB3FIN4BTXF+9yvucNG+TJ9nadGO5kJLdZIE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com; spf=pass smtp.mailfrom=linux.ibm.com; dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b=EongFvxo; arc=none smtp.client-ip=148.163.156.1
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.ibm.com
-Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
-	by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 59CItNjC016803;
-	Mon, 13 Oct 2025 09:54:04 GMT
+Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
+	by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 59D2jFYk019492;
+	Mon, 13 Oct 2025 09:59:23 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
 	:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=pp1; bh=Z4zvsJ
-	gRbqk2uOgXGdCBLemP+s3D2MhNTErwRnrv45Y=; b=Qw+WLgxeXvUW6V8iM0+k6s
-	kA3H6QLObi5JJmvPMKCOtXTlnNKd60rJxP/orofeYoab9gjCaxJP7GQMccIJbVCw
-	64Tuei/2QQByB/2ZrCglB7QWowuw2LqoGHtcUZeogLriSmjlKmsPMlcDrBIIy7yi
-	MAmE+24pxTfxq53q51aq7ggsbbV59cJHtnwkIgO491yKyam5VyiMTAOLP3UtzXNZ
-	Q8OLEuVCXh09frmVwZ7qsJni+ZlH4osUl7uqoMUpjA4aH5r6uh3CTW2Kg1gegmzZ
-	q3or63P3s9ZlhuhF1+X0EjI5goxMTHroXjCowhFaDNzPNhTWXe+tEp6LKoirTq0w
+	:message-id:mime-version:references:subject:to; s=pp1; bh=jBhMnJ
+	zS9Z83HawXd2RDjG6FUzPokDAbz28bCdes0uc=; b=EongFvxo6BXKZiclVAOOwL
+	AOYamchoR70Fn0GCwC6K6KhzPFG1WOTXVvUA7zuGzVyBMGj173W7bHlFEE5Ha69b
+	7Dyaz4PufpMn4vCEPnuD3QhY4/S9KKICmr3J9cMqON5TezlIgnFR5WMpKBZMn0r+
+	ePLsISL9KNaDLensRtoE9VU0J6Zj6uXvvqhTgobB96YEXnMg8wL93j7WMmXMSMqb
+	VppdkLhN7M7CkguOOJdc/sORjwM0SjIwVsYerhuk91pHRzGUeHF+kddMt+K1zdNz
+	crJ9mzQ8Q7xis9ZNCmnJuoe5zZSz6Ss10ZjacDkaTFG6jtfaku2TUUYtVE4TuKtA
 	==
 Received: from pps.reinject (localhost [127.0.0.1])
-	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 49qewtr6rj-1
+	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 49qey8g7gr-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 13 Oct 2025 09:54:04 +0000 (GMT)
-Received: from m0353729.ppops.net (m0353729.ppops.net [127.0.0.1])
-	by pps.reinject (8.18.1.12/8.18.0.8) with ESMTP id 59D9s3j8013035;
-	Mon, 13 Oct 2025 09:54:03 GMT
-Received: from ppma12.dal12v.mail.ibm.com (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
-	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 49qewtr6rf-1
+	Mon, 13 Oct 2025 09:59:23 +0000 (GMT)
+Received: from m0356517.ppops.net (m0356517.ppops.net [127.0.0.1])
+	by pps.reinject (8.18.1.12/8.18.0.8) with ESMTP id 59D9uBsM025567;
+	Mon, 13 Oct 2025 09:59:22 GMT
+Received: from ppma11.dal12v.mail.ibm.com (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
+	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 49qey8g7gm-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 13 Oct 2025 09:54:03 +0000 (GMT)
-Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
-	by ppma12.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 59D99IXs015178;
-	Mon, 13 Oct 2025 09:54:02 GMT
-Received: from smtprelay06.dal12v.mail.ibm.com ([172.16.1.8])
-	by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 49r1jrwdnc-1
+	Mon, 13 Oct 2025 09:59:22 +0000 (GMT)
+Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
+	by ppma11.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 59D7ONg6003928;
+	Mon, 13 Oct 2025 09:59:21 GMT
+Received: from smtprelay03.dal12v.mail.ibm.com ([172.16.1.5])
+	by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 49r490vxee-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 13 Oct 2025 09:54:02 +0000
-Received: from smtpav04.dal12v.mail.ibm.com (smtpav04.dal12v.mail.ibm.com [10.241.53.103])
-	by smtprelay06.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 59D9s17c33096440
+	Mon, 13 Oct 2025 09:59:21 +0000
+Received: from smtpav06.dal12v.mail.ibm.com (smtpav06.dal12v.mail.ibm.com [10.241.53.105])
+	by smtprelay03.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 59D9xL5f12321512
 	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-	Mon, 13 Oct 2025 09:54:01 GMT
-Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id CB3AA5805E;
-	Mon, 13 Oct 2025 09:54:01 +0000 (GMT)
-Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id DC4D558052;
-	Mon, 13 Oct 2025 09:53:55 +0000 (GMT)
+	Mon, 13 Oct 2025 09:59:21 GMT
+Received: from smtpav06.dal12v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 1391D58043;
+	Mon, 13 Oct 2025 09:59:21 +0000 (GMT)
+Received: from smtpav06.dal12v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 25AB65805D;
+	Mon, 13 Oct 2025 09:59:15 +0000 (GMT)
 Received: from [9.111.15.176] (unknown [9.111.15.176])
-	by smtpav04.dal12v.mail.ibm.com (Postfix) with ESMTP;
-	Mon, 13 Oct 2025 09:53:55 +0000 (GMT)
-Message-ID: <5165448792268e184e508a9c76fa0ce382a4a389.camel@linux.ibm.com>
-Subject: Re: [PATCH v1 02/20] iommu: Introduce a test_dev domain op and an
- internal helper
+	by smtpav06.dal12v.mail.ibm.com (Postfix) with ESMTP;
+	Mon, 13 Oct 2025 09:59:14 +0000 (GMT)
+Message-ID: <ca1980887ae352811b922fca28965f5cd4639f97.camel@linux.ibm.com>
+Subject: Re: [PATCH v1 17/20] iommu/s390-iommu: Implement
+ s390_iommu_domain_test_device
 From: Niklas Schnelle <schnelle@linux.ibm.com>
 To: Nicolin Chen <nicolinc@nvidia.com>, joro@8bytes.org, jgg@nvidia.com,
         kevin.tian@intel.com
@@ -96,10 +96,10 @@ Cc: suravee.suthikulpanit@amd.com, will@kernel.org, robin.murphy@arm.com,
         linux-rockchip@lists.infradead.org, linux-s390@vger.kernel.org,
         linux-sunxi@lists.linux.dev, linux-tegra@vger.kernel.org,
         virtualization@lists.linux.dev, patches@lists.linux.dev
-Date: Mon, 13 Oct 2025 11:53:55 +0200
-In-Reply-To: <32ce256a2ece5d63e99d5858f953586859818ffc.1760312725.git.nicolinc@nvidia.com>
+Date: Mon, 13 Oct 2025 11:59:14 +0200
+In-Reply-To: <792e825476efe58d14cc16cca18209a2b6088a4b.1760312725.git.nicolinc@nvidia.com>
 References: <cover.1760312725.git.nicolinc@nvidia.com>
-	 <32ce256a2ece5d63e99d5858f953586859818ffc.1760312725.git.nicolinc@nvidia.com>
+	 <792e825476efe58d14cc16cca18209a2b6088a4b.1760312725.git.nicolinc@nvidia.com>
 Autocrypt: addr=schnelle@linux.ibm.com; prefer-encrypt=mutual;
  keydata=mQINBGHm3M8BEAC+MIQkfoPIAKdjjk84OSQ8erd2OICj98+GdhMQpIjHXn/RJdCZLa58k
  /ay5x0xIHkWzx1JJOm4Lki7WEzRbYDexQEJP0xUia0U+4Yg7PJL4Dg/W4Ho28dRBROoJjgJSLSHwc
@@ -165,145 +165,90 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: ja8dMn81Ji4yLbr55cE_Ms7S-Y6FhoQZ
-X-Authority-Analysis: v=2.4 cv=Kr1AGGWN c=1 sm=1 tr=0 ts=68eccc3c cx=c_pps
- a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
+X-Proofpoint-ORIG-GUID: NN1Ri8As_3unIKGQxOhzOqdABPZbGliV
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDExMDAxMSBTYWx0ZWRfX45iRCyF/SmFv
+ cyiVovpS/6ywmKLxXcBh911mDAD1a/uE1ZJVHH+T4fqvvvXPLgRolkAfzOO+tyjaDLnEWQV8PdJ
+ jS0/+OinbIirD1CVSTGTLrkWiDwPkkwkr2FJjbJp1LjnjkD82S13ZCVAs3RjcRfzSDQnFW5FpJA
+ EWTJ5vXcjMRPcCOBJsK8j6rE5RRQwMbfjD+atUGZaTTJ91nYv81GBBzyYGnScyKR3dOo4qqYnW/
+ os4utCq2Vs8j3b/mq+L4eiKocAiXmFpV6znl27PwFplis4+OPCqmLUYQA09S3RQxaxPBCw8+DQq
+ xKYI0W9ufg3wQqtORL3Z8jp5od/JaXrRGdtKm2DSRarkvg/p9zNySmBmTrSxczOsjXxAsY4VCJ8
+ khdZJE5p5+V8uWHZCdU8K2rIisdWOg==
+X-Proofpoint-GUID: WDeGIxavFBN_1amMctHLvXj_kQ_5X7Wg
+X-Authority-Analysis: v=2.4 cv=QZ5rf8bv c=1 sm=1 tr=0 ts=68eccd7b cx=c_pps
+ a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
  a=IkcTkHD0fZMA:10 a=x6icFKpwvdMA:10 a=Ikd4Dj_1AAAA:8 a=VnNF1IyMAAAA:8
- a=2r8vE0gUvGf4FGDepHgA:9 a=QEXdDO2ut3YA:10 a=DXsff8QfwkrTrK3sU8N1:22
+ a=Vk_oO6w6bVgZBSUyZL0A:9 a=QEXdDO2ut3YA:10 a=DXsff8QfwkrTrK3sU8N1:22
  a=Z5ABNNGmrOfJ6cZ5bIyy:22 a=bWyr8ysk75zN3GCy5bjg:22
-X-Proofpoint-ORIG-GUID: W_vlSK1gr5FYYE4DJOMkPdPg_D8wMkht
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDExMDAxNCBTYWx0ZWRfX5ZHcU7Bp3WCb
- OcOu2OBfw8Sh3iGoeLPLO48LoatK4FR/vYxBENU6+YeNkaHuYg7bQUMAJX9bxXTbHD7H0mZb+TZ
- 2m/uxx1NV+Q05fWL3vuFTP0nd7yoRlL5eGr6NzjGUImm95PRC68gGIQocOtzIpmCWriF8QwHXGu
- yUpjQ/l1cBKGzGS5D4xiwB/3T3aYg4Kzoa4AgmbMqzdSwnBpbOF2YCpuuiyG1E7PtdePeweCobZ
- Y5LaAjzvml1CN8wR1K0KIVfjU6FiS7odd8x0PckUi4/xxiigPnm2A5rBbhaCMMOoZ7PWhaZ5Bpm
- WXdkfRFixjkEuyv75YMa5J/HWXNa6/w2gf+ZdwO8oRInZZRVgDaJZb3xjE0iVaZD2aimoYcxXPO
- b9SXrfyC8KmYW8cwpBtmJf1mYePvDQ==
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1117,Hydra:6.1.9,FMLib:17.12.80.40
  definitions=2025-10-13_03,2025-10-06_01,2025-03-28_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 priorityscore=1501 lowpriorityscore=0 bulkscore=0 adultscore=0
- phishscore=0 suspectscore=0 malwarescore=0 clxscore=1011 impostorscore=0
+ lowpriorityscore=0 priorityscore=1501 phishscore=0 bulkscore=0 suspectscore=0
+ spamscore=0 malwarescore=0 impostorscore=0 clxscore=1015 adultscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2510020000 definitions=main-2510110014
+ reason=mlx scancount=1 engine=8.19.0-2510020000 definitions=main-2510110011
 
-On Sun, 2025-10-12 at 17:04 -0700, Nicolin Chen wrote:
-> Add a new test_dev domain op for driver to test the compatibility between
-> a domain and a device at the driver level, before calling into the actual
-> attachment/replacement of a domain. Support pasid for set_dev_pasid call.
+On Sun, 2025-10-12 at 17:05 -0700, Nicolin Chen wrote:
+> Move sanity and compatibility tests from the attach_dev callback to the
+> new test_dev callback function. The IOMMU core makes sure an attach_dev
+> call must be invoked after a successful test_dev call.
 >=20
-> Move existing core-level compatibility tests to a helper function. Invoke
-> it prior to:
->  * __iommu_attach_device() or its wrapper __iommu_device_set_domain()
->  * __iommu_set_group_pasid()
-
-Should this list also include iommu_deferred_attach()? The code does
-include it.
-
->=20
-> And keep them within the group->mutex, so drivers can simply move all the
-> sanity and compatibility tests from their attach_dev callbacks to the new
-> test_dev callbacks without concerning about a race condition.
->=20
-> This may be a public API someday for VFIO/IOMMUFD to run a list of attach
-> tests without doing any actual attachment, which may result in a list of
-> failed tests. So encourage drivers to avoid printks to prevent kernel log
-> spam.
->=20
-> Suggested-by: Jason Gunthorpe <jgg@nvidia.com>
 > Signed-off-by: Nicolin Chen <nicolinc@nvidia.com>
 > ---
->  include/linux/iommu.h |  17 +++++--
->  drivers/iommu/iommu.c | 111 ++++++++++++++++++++++++++++++------------
->  2 files changed, 93 insertions(+), 35 deletions(-)
+>  drivers/iommu/s390-iommu.c | 22 +++++++++++++++-------
+>  1 file changed, 15 insertions(+), 7 deletions(-)
 >=20
-> diff --git a/include/linux/iommu.h b/include/linux/iommu.h
-> index 801b2bd9e8d49..2ec99502dc29c 100644
-> --- a/include/linux/iommu.h
-> +++ b/include/linux/iommu.h
-> @@ -714,7 +714,12 @@ struct iommu_ops {
+> diff --git a/drivers/iommu/s390-iommu.c b/drivers/iommu/s390-iommu.c
+> index 366e47978ac07..3c6141a4a1faf 100644
+> --- a/drivers/iommu/s390-iommu.c
+> +++ b/drivers/iommu/s390-iommu.c
+> @@ -694,6 +694,20 @@ static int blocking_domain_attach_device(struct iomm=
+u_domain *domain,
+>  	return 0;
+>  }
 > =20
->  /**
->   * struct iommu_domain_ops - domain specific operations
-> - * @attach_dev: attach an iommu domain to a device
-> + * @test_dev: Test compatibility prior to an @attach_dev or @set_dev_pas=
-id call.
-> + *            A driver-level callback of this op should do a thorough sa=
-nity, to
-
-You're missing the word "check" above.
-
-> + *            make sure a device is compatible with the domain. So the f=
-ollowing
-> + *            @attach_dev and @set_dev_pasid functions would likely succ=
-eed with
-> + *            only one exception due to a temporary failure like out of =
-memory.
-
-Nit: "=E2=80=A6 only one exception =E2=80=A6" / "=E2=80=A6 like out of memo=
-ry =E2=80=A6" this sounds a
-bit odd to me because on the one hand it's one exception but then also
-a group (temporary failures).
-
-Maybe better:
-"=E2=80=A6 would likely succeed with only the exception of temporary failur=
-es
-like out of memory."?
-
-> + *            It's suggested to avoid the kernel prints in this op.
->   *  Return:
->   * * 0		- success
->   * * EINVAL	- can indicate that device and domain are incompatible due t=
-o
-> @@ -722,11 +727,15 @@ struct iommu_ops {
->   *		  driver shouldn't log an error, since it is legitimate for a
->   *		  caller to test reuse of existing domains. Otherwise, it may
->   *		  still represent some other fundamental problem
-> - * * ENOMEM	- out of memory
-> - * * ENOSPC	- non-ENOMEM type of resource allocation failures
->   * * EBUSY	- device is attached to a domain and cannot be changed
->   * * ENODEV	- device specific errors, not able to be attached
->   * * <others>	- treated as ENODEV by the caller. Use is discouraged
-> + * @attach_dev: attach an iommu domain to a device
-> + *  Return:
-> + * * 0		- success
-> + * * ENOMEM	- out of memory
-> + * * ENOSPC	- non-ENOMEM type of resource allocation failures
-> + * * <others>	- Use is discouraged
->   * @set_dev_pasid: set or replace an iommu domain to a pasid of device. =
-The pasid of
->   *                 the device should be left in the old config in error =
-case.
->   * @map_pages: map a physically contiguous set of pages of the same size=
- to
-> @@ -751,6 +760,8 @@ struct iommu_ops {
->   * @free: Release the domain after use.
->   */
->  struct iommu_domain_ops {
-> +	int (*test_dev)(struct iommu_domain *domain, struct device *dev,
-> +			ioasid_t pasid, struct iommu_domain *old);
->  	int (*attach_dev)(struct iommu_domain *domain, struct device *dev,
->  			  struct iommu_domain *old);
->  	int (*set_dev_pasid)(struct iommu_domain *domain, struct device *dev,
->=20
---- snip ---
-> @@ -3615,6 +3657,11 @@ int iommu_replace_device_pasid(struct iommu_domain=
- *domain,
->  	ret =3D 0;
-> =20
->  	if (curr_domain !=3D domain) {
-> +		ret =3D __iommu_domain_test_device(domain, dev, pasid,
-> +						 curr_domain);
-> +		if (ret)
-> +			goto out_unlock;
+> +static int s390_iommu_domain_test_device(struct iommu_domain *domain,
+> +					 struct device *dev, ioasid_t pasid,
+> +					 struct iommu_domain *old)
+> +{
+> +	struct zpci_dev *zdev =3D to_zpci_dev(dev);
 > +
->  		ret =3D __iommu_set_group_pasid(domain, group,
->  					      pasid, curr_domain);
->  		if (ret)
+> +	if (!zdev)
+> +		return -ENODEV;
+> +	if (WARN_ON(domain->geometry.aperture_start > zdev->end_dma ||
+> +		    domain->geometry.aperture_end < zdev->start_dma))
+> +		return -EINVAL;
+> +	return 0;
+> +}
+> +
+>  static int s390_iommu_attach_device(struct iommu_domain *domain,
+>  				    struct device *dev,
+>  				    struct iommu_domain *old)
+> @@ -704,13 +718,6 @@ static int s390_iommu_attach_device(struct iommu_dom=
+ain *domain,
+>  	u8 status;
+>  	int cc;
+> =20
+> -	if (!zdev)
+> -		return -ENODEV;
+> -
+> -	if (WARN_ON(domain->geometry.aperture_start > zdev->end_dma ||
+> -		domain->geometry.aperture_end < zdev->start_dma))
+> -		return -EINVAL;
+> -
+>  	blocking_domain_attach_device(&blocking_domain, dev);
+> =20
+>  	/* If we fail now DMA remains blocked via blocking domain */
+> @@ -1177,6 +1184,7 @@ static struct iommu_domain blocking_domain =3D {
+>  	.device_group =3D generic_device_group, \
+>  	.get_resv_regions =3D s390_iommu_get_resv_regions, \
+>  	.default_domain_ops =3D &(const struct iommu_domain_ops) { \
+> +		.test_dev	=3D s390_iommu_domain_test_device, \
+>  		.attach_dev	=3D s390_iommu_attach_device, \
+>  		.map_pages	=3D s390_iommu_map_pages, \
+>  		.unmap_pages	=3D s390_iommu_unmap_pages, \
 
-Apart from the comment and commit description nits mentioned above this
-looks good to me.
+Looks good to me, thanks!
 
 Reviewed-by: Niklas Schnelle <schnelle@linux.ibm.com>
 
