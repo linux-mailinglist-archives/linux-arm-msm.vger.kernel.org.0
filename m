@@ -1,162 +1,124 @@
-Return-Path: <linux-arm-msm+bounces-77077-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-77078-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 37FF1BD7448
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Oct 2025 06:36:39 +0200 (CEST)
+Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [IPv6:2605:f480:58:1:0:1994:3:14])
+	by mail.lfdr.de (Postfix) with ESMTPS id EC131BD7481
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Oct 2025 06:42:28 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id E17143A4F61
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Oct 2025 04:36:37 +0000 (UTC)
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 981724E5772
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Oct 2025 04:42:27 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2EB873043D3;
-	Tue, 14 Oct 2025 04:36:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id F0C4430BB87;
+	Tue, 14 Oct 2025 04:42:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="vAg+7F//"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="H7tyuqn8"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pf1-f172.google.com (mail-pf1-f172.google.com [209.85.210.172])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED05321E0AD;
-	Tue, 14 Oct 2025 04:36:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F96730B534
+	for <linux-arm-msm@vger.kernel.org>; Tue, 14 Oct 2025 04:42:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760416595; cv=none; b=fl7vgsLdPpmODjV8r4SRX/1aQwv6VQlpdv6Ap5YRNbtrH0I47pS+UpksG4FBM/rAI8S1CWiiOdfMZDPGHu5k5+r1KOKGnfw3pM/6PLnf+L3VmoZkANzorjmvxRHdXSpvkLwBLtumI3OnjM54GLqGOPzOPXOSl73cepMKIOzukbk=
+	t=1760416944; cv=none; b=UgMWCZYEW2mHPDnc+zScj4aw718iEb0vRgg0ysdHYQdQoEgMjpMZHuT+dU7O8quJgcRWXZpmmWEdJpBW8pxg7YWCJNcmWkaVHvEi7TZPjEMRC05X7QuGBY6D/XZfLy2G+ckbhsm5AU5qOdSEtaJ/DxK1Mht4tiRDdhLH/tuBsdk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760416595; c=relaxed/simple;
-	bh=aW/NTHsOt/IPR1PHHfFumqBVIbTK5xUuGQk3VXrjcSg=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=DVbpYtNO2HqwHknvIRWITyN0LS5Dorm1ntQbnm+8drlrLyQMPg7sKiUuapRQXLeR0xkjS7WiHsL9oZkKD/2KGALbV469V1nuwfj38y/mPQyNj5gQTnzrz/iaMixzNCAHtAN97g9EjrUjsbaJ1ion4wQMFxajQrTFvDOcZcpb3qk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=vAg+7F//; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BDF46C4CEE7;
-	Tue, 14 Oct 2025 04:36:26 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1760416594;
-	bh=aW/NTHsOt/IPR1PHHfFumqBVIbTK5xUuGQk3VXrjcSg=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=vAg+7F//rLkVVaJ+vozD+8rX7iUvMTprQK6ps0lIuf6cx2UXxnlqDUdXo5GeYMNUP
-	 GOkagGdcE8nZSl9nEGYEv1KpSkKB2S6F9R3WevNv03T3lHc6LBw6s7RUMX3rYmXY4u
-	 kz/sva7sydefaZp5rfTgw9Z264fYqYyhTuh0x3Og5rua4HVubLtnGBiyS+7hgioYMw
-	 3dc06ORzx7dcGxzP4qY2oahUD2ayjbRTKA+xPuoFP2pIPWb8SGzxvcA6s2ISQWyb4E
-	 EtS/ISSZBUE6nTCaWr52mPgM74wpmQw3Z7kbMFdKm1kQ1yq/sf7kZPzrGBHpP/xApM
-	 4MEKqS8Xo4ZUQ==
-Message-ID: <99ab26d3-eb44-401d-8a7c-1d9efd2a1a10@kernel.org>
-Date: Tue, 14 Oct 2025 06:36:21 +0200
+	s=arc-20240116; t=1760416944; c=relaxed/simple;
+	bh=c7qQh2kUkHkXde9RLibpCWvlirMSQzaQtOoZRDsl33k=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=h3dClQ0VZFglLftd15k04m6AcRg49dX0I+fG4gBpeg/ygIPJiBzfcsNUBGIj4kPDO5YFGa2tRzNyvmVmW2ih+k0NqWj/FtkMZ/Sd3Ci1XnirDvI1mGhaev5Tdt2HUYE0j3aeku8FG+rTeQ4RlRwXofD0pROJfUTGBJdCHBD4SUQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=H7tyuqn8; arc=none smtp.client-ip=209.85.210.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-pf1-f172.google.com with SMTP id d2e1a72fcca58-7841da939deso4249607b3a.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 13 Oct 2025 21:42:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1760416943; x=1761021743; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=Ml+6wIQdksUetc3TuDYTabUXSFcNi4s6JHEPJWiU1o8=;
+        b=H7tyuqn8lmfigmDQetbUcls8UWGJIqNXhz4IY4WiugFolO2KQQkyBPciwY23nHvO1k
+         wohKKVQFkYTO3lil6fx/iYgwyr4OVUJj/V5I0z7BDPKMOWeswvzgq20Nhd8fybijWV/Y
+         0w/cOx8SCepbzzJ1iSqrz+KAILq1pC5zNAgBSMdY3BaCYhDgTfSdqLl2lEyrefU6+L5F
+         pWjN8Begq63iyCepV1QMHW7MjQEbxGVjW/TfSgrBHRLnyrAW2JwFGDkXAwongbKJ3wRs
+         USXjXpt+b104vjn3DLIE1Ev9Xw0Yaem+9Mcx4YTyCfPT+ItAlhu97pgvYqPfeBIPKFXc
+         d5nA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1760416943; x=1761021743;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=Ml+6wIQdksUetc3TuDYTabUXSFcNi4s6JHEPJWiU1o8=;
+        b=ROn1HTFBu1HcdCXyXmYshMmbmobZ+/sVhdim73cmLbTmndx7hZX4mB9O2H7f/MpaME
+         /K768/RKeNdgMDz+JjKQaiUsFp9rKHpjFMadjuNoR5EFI2rz3tAQYUjfkkx86tvYrxSp
+         N3VhvH8tF3l/8VgfvgEOf9Z+lJzWPabXvAVAwDrLrLzvVPYTIerwkc+A1X4CCI9Kb9Ke
+         dq6OcNFhgWpQ0iXWX8eI5dPSm4a7l1TZVj5YSA3/fMrJePVyVBvPsRxrPn3yIZ1apB28
+         ye/XmYlcbkMIcr9dcTETSaD5HGBq1iSHdoGEHTyAoUq7NgBwziBgV8m+Vcxrw2jQBFVJ
+         hEYQ==
+X-Gm-Message-State: AOJu0YwmR/WNJnKZASaiACs6cjkiXnn0wKQkLgLKKGh1209dtrvKfb5p
+	6Agsm2o2QoURGK8PFiqR+44F5WGuBVytCHk7B2hHpmmSWnVQBV8l36qNfsKNvW40
+X-Gm-Gg: ASbGncsBEZeNKWI8YBAirRxUtkwEowDaUcM4EBnUlSUxoEwNBd+rFg6k38BmmR20x5M
+	3z2Os480cAFHW7j23yhNk8Ng6fmVCWg2FdD7c6YNci0zF+Mp6WcILGw860QuGHLM9tLOoM4Cvj2
+	K45wd/QMMyyc+FNWhfwgCJW00kVnaW7xnt2rpMbd2OfivQPTzflKqPhYarYSio5+UVFCZ966QXb
+	dwv/mxD+E7yUFqvOA/E9b2IwpSAQ/5sH1w18b/mrr7nMcpZSylSbmdevDUx4kz/z0gB/ADNtCVt
+	jPP1HX+FpiD1xboHIN9+eaUA5Il4X+Yhy8Geo0wHti4CP07u7uOUDLxi5H31RiOPBDiZAwTegf1
+	aJVRUY1Epn4D/EZlVW3drRM9xzS7Rj0xSv25LvNxWrtHgr1k=
+X-Google-Smtp-Source: AGHT+IEewoEl16TbW/c0YEE3/3VAqPolvV7asqs9adJ3dRmcP4Di1uWVWrX5HIFD5WO8itFdDK3MqQ==
+X-Received: by 2002:a05:6a00:a14:b0:77f:23dd:1e20 with SMTP id d2e1a72fcca58-793876373f8mr28886161b3a.24.1760416942652;
+        Mon, 13 Oct 2025 21:42:22 -0700 (PDT)
+Received: from archlinux ([177.9.216.59])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-79b65528a51sm8440684b3a.85.2025.10.13.21.42.20
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 13 Oct 2025 21:42:22 -0700 (PDT)
+From: =?UTF-8?q?Eric=20Gon=C3=A7alves?= <ghatto404@gmail.com>
+To: Krzysztof Kozlowski <krzk@kernel.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	Rob Herring <robh@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org,
+	devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Subject: [PATCH v2 0/6] arm64: dts: qcom: r0q: enable more peripherals
+Date: Tue, 14 Oct 2025 00:41:29 -0400
+Message-ID: <20251014044135.177210-1-ghatto404@gmail.com>
+X-Mailer: git-send-email 2.51.0
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 02/10] dt-bindings: phy: qcom,qmp-usb: Add Glymur USB
- UNI PHY compatible
-To: Wesley Cheng <wesley.cheng@oss.qualcomm.com>, krzk+dt@kernel.org,
- conor+dt@kernel.org, konrad.dybcio@oss.qualcomm.com,
- dmitry.baryshkov@oss.qualcomm.com, kishon@kernel.org, vkoul@kernel.org,
- gregkh@linuxfoundation.org, robh@kernel.org
-Cc: linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
- linux-usb@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org
-References: <20251006222002.2182777-1-wesley.cheng@oss.qualcomm.com>
- <20251006222002.2182777-3-wesley.cheng@oss.qualcomm.com>
- <f5e4ae02-b8fa-4406-b2e0-3602b07b7e23@kernel.org>
- <00408896-2e25-2dd1-6e6e-2195317ee7fb@oss.qualcomm.com>
- <14bc2a85-0f1d-3834-9b9c-32654348603a@oss.qualcomm.com>
- <387c707e-613d-433b-a76d-16ef10dabc59@kernel.org>
- <2a70f878-269c-1b40-2e8c-77b5851de9a1@oss.qualcomm.com>
-From: Krzysztof Kozlowski <krzk@kernel.org>
-Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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 a/A=
-In-Reply-To: <2a70f878-269c-1b40-2e8c-77b5851de9a1@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-On 14/10/2025 03:16, Wesley Cheng wrote:
->>>
->>>>>> +          maxItems: 5
->>>>>> +        clock-names:
->>>>>> +          items:
->>>>>> +            - const: aux
->>>>>> +            - const: clkref
->>>>>> +            - const: ref
->>>>>
->>>>> What is the difference between these two? Which block INPUTs
->>>>> (important!) they represent?
->>>>>
->>>>
->>>> clkref is the TCSR reference clock switch, and the ref is the actual CXO
->>>> handle.
->>
->>
->> Then this should be named somehow differently. CXO is clock. Reference
->> clock is clock... To me it feels like you are describing the same clock,
->> just missing some gate in TCSR. But in case these are not the same
->> clocks, you need to name it accurately.
->>
-> 
-> Technically its all handling the same clock branch (CXO), we have the 
-> TCSR clkref register that allows us to gate the CXO to the USB PHY, as 
+This patchset adds support for multiple devices found on the Galaxy S22,
+side buttons, touchscreen, max77705 charger/fuelgauge, RTC and UFS. It
+depends on "Input: add support for the STM FTS2BA61Y touchscreen" for
+TS to be enabled - and for the fuelgauge/charger to work,
+"mfd: max77705: support revision 0x2" is needed too.
 
+Thanks!
 
-Ah, exactly. Then clkref is not a clock. You need rather proper clock
-hierarchy.
+Changes in v2:
+- split the gpio keys patch into 2 for small refactor
+- rename spi-gpio: spi-gpio@0 to spi8
+- use tabs instead of spaces on max77705 nodes
+- added new patch that fixes adsp_mem and video_mem memory regions
+I couldn't find the clock-frequency for i2c5 bus :(
 
-> CXO is shared across several HW blocks, so it allows us to properly 
-> powerdown the PHY even though other clients are voting for CXO on.  Then 
-> we obviously have to remove our vote to the overall CXO, so that it can 
-> potentially be shutdown.
-> 
-> Maybe we can rename it to "clkref" for the CXO handle and 
-> "clkref_switch" for the TCSRCC handle?
+Eric Gonçalves (6):
+  arm64: dts: qcom: r0q: small refactor
+  arm64: dts: qcom: r0q: add gpio keys
+  arm64: dts: qcom: r0q: add touchscreen support
+  arm64: dts: qcom: r0q: enable max77705 fuelgauge
+  arm64: dts: qcom: r0q: enable ufs storage
+  arm64: dts: qcom: r0q: fix reserved memory regions
 
-Naming is better, but it is still not correct. This is not independent
-clock signal. It is the same clock.
+ .../boot/dts/qcom/sm8450-samsung-r0q.dts      | 278 +++++++++++++++++-
+ 1 file changed, 270 insertions(+), 8 deletions(-)
 
+-- 
+2.51.0
 
-Best regards,
-Krzysztof
 
