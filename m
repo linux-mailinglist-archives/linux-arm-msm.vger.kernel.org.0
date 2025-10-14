@@ -1,141 +1,176 @@
-Return-Path: <linux-arm-msm+bounces-77084-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-77085-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ams.mirrors.kernel.org (ams.mirrors.kernel.org [IPv6:2a01:60a::1994:3:14])
-	by mail.lfdr.de (Postfix) with ESMTPS id 88E91BD74AE
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Oct 2025 06:43:31 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4E0DCBD74DE
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Oct 2025 06:47:33 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ams.mirrors.kernel.org (Postfix) with ESMTPS id 32906343C72
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Oct 2025 04:43:31 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 090FD3B9CC5
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Oct 2025 04:47:32 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 81ABD30DEA0;
-	Tue, 14 Oct 2025 04:42:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6758B30BF7F;
+	Tue, 14 Oct 2025 04:47:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ZezoxSMQ"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="bligJCtf"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pf1-f170.google.com (mail-pf1-f170.google.com [209.85.210.170])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13F4D30DD35
-	for <linux-arm-msm@vger.kernel.org>; Tue, 14 Oct 2025 04:42:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.170
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 272E830BF52;
+	Tue, 14 Oct 2025 04:47:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760416969; cv=none; b=T3cUgbH2V0/szcQhhMWbujrETjogAJ2/hv2ygu4Rmp9QwGH+5p/bEBq8eaLNieEtyjtP+HdEKLFAvnJXz62iXCad/DL9A+If21NOwhVBUpeLRXpIJHDglqTdG7cGEAiyIhiwR5lPS41vAm7HkER4zKq5ImfIyx6gJTsnjGYIWik=
+	t=1760417250; cv=none; b=HU99giPK5nbhGqZS6VON4NSJ1dRNe62hDpfzP4vJMd7QQbE3OUsevas7WfJdIMH7SY07qAGP+zpW27OhSY6qbpfx2+/TKrQkAGvsx4gyv5zK9g8B1JoqNBRHFQw+oQtcBrs8t0uwKKDbfQYrZUzngUX5CMnKjjT+7k3PInAFQ9Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760416969; c=relaxed/simple;
-	bh=isCQg2Qmxa9ipukkV50sTI8P8heS155Zat21GVABUs8=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=nFXU8BjrDLOBavHch+xj387Fb7zFJa+ZkcparWqgvvC2frfQ9kqZ+bsB8VCJcCmhpFVpDxYHTXoNq2BGRTn5rSn1qMZn+2z+1a1uyvwIffvaVx48kFSkpaQykwgGM3GzSZddlMOdn3D/BD6UnTCwMauHgpVUPkvTZxp8PMUbSFc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ZezoxSMQ; arc=none smtp.client-ip=209.85.210.170
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-pf1-f170.google.com with SMTP id d2e1a72fcca58-793021f348fso4453959b3a.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 13 Oct 2025 21:42:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1760416967; x=1761021767; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=TdehfY3g3zjxWma/hGhUnMxogBhAstUttJRuG22ztsE=;
-        b=ZezoxSMQfVQTYisSNqoIJYa7PSe+sePD5iG2SLuEBg6p/jYCNQ6QoxV+KMmB2qsCQ+
-         YJ0ABhuB5QvXwvtC1Q6DHmiqmXlKvc3+4EmiP+0FY+xSFlGHgzrddyvpavxo4djpZqbP
-         lal8PVygauJtNBJ3PTcQ6e1+6Ly9qLWPrHhKCN13CPPtYW8j+NY6bbJwpn1Y6H8owno4
-         k46HPOE0pzNSF4LCgm/3lXN/4s914MK1eecCw+DKBvOf6QBShTHyH9MWOScm+iAHSN0p
-         YzlJeLZGbITW1AZ9id83ij6xHsXmvK/6uimXEQbLJ1EHLpBOMQHlSDVfRwgL2EnHgmYV
-         8A0w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1760416967; x=1761021767;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=TdehfY3g3zjxWma/hGhUnMxogBhAstUttJRuG22ztsE=;
-        b=Pqef/qZu7slnPFFSQCkSEWXMR5ClZxxG60MFh8P8h0kFH7Lv4VDYaB84j1ZT4uDnju
-         1ob3LL8gb6DTv9mtBgtC6FwlUx0LZ07Ga0qRxUr3PaR+p4sDbuU29d2DCJAaWs+zYphX
-         dNKfCoE63KliS3Kdyu0PZNKRvEH+oG2P9/eGIc3MLtURKOwhU19GFfh/kZBbn3IHaz/U
-         tt5r1RGIY1bcU/yB+EfcPa15nTAigsVR59QHTqjA7ASi252Au5tYXCOaJN+bHfkv1r9p
-         GqWq5/4vm9zDdntI/oUKWa1oKPKnlt3vruBJh5WWovJbvjKf2j3DjCrhmavFGaA/2Uwa
-         uJGA==
-X-Gm-Message-State: AOJu0YwLXDKS2/mZcs6u3Opb92wbaajU8epMAw54C6aogVBxICLcKxzY
-	LM27NNxWlx4iNyagbpJ2xMCO+Oz05wNesha0dJugHbxB9E4Ze8svwK6D
-X-Gm-Gg: ASbGnctM+fbNpWILsk8dMPu1ss/JWm8H2+rFgpz5v/+iibVncQGT6qkJD8BadlHWJVu
-	tOZckBu5/ER8rmZqHkhukLHvnutWcc98od0zt/wrL7/8zcYFu59K4SWKhJTYWMoZpknWp2oxcYI
-	sv25JctJ9ucm7s0mHuC0df63wP9yvS0ycmDdB9uVlPT0RfIZ4n/8kYBcCF4w9ERa+3AGokl4Ucj
-	NcxULXjgmWSO6wT0BvphAajQFEhwDlFTxdgAlTYKWdp7XUmGwvg5T6HZSfX3fYzcQBnBbOcvaAs
-	kJIT6DBd+p8aC+337OI9zwMN7EqnnitWqWtINxM2rGIPAhBgOlyIj9/8owoZLsISpa5bh7TP0I9
-	yHt2RiiXggH4j4w5klYNY4MxRUEgHGXLBKmLE
-X-Google-Smtp-Source: AGHT+IFVo7nH9HmOWaQJIpTOa8xxtz0naCajk8mBW0l5w2WcBlbPqaeuoOio18OCz3U68lcFPbDpDg==
-X-Received: by 2002:a05:6a00:a14:b0:781:171f:df6f with SMTP id d2e1a72fcca58-7938762f586mr31416228b3a.18.1760416967419;
-        Mon, 13 Oct 2025 21:42:47 -0700 (PDT)
-Received: from archlinux ([177.9.216.59])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-79b65528a51sm8440684b3a.85.2025.10.13.21.42.45
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 13 Oct 2025 21:42:47 -0700 (PDT)
-From: =?UTF-8?q?Eric=20Gon=C3=A7alves?= <ghatto404@gmail.com>
-To: Krzysztof Kozlowski <krzk@kernel.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	Rob Herring <robh@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org,
-	devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: [PATCH v2 6/6] arm64: dts: qcom: r0q: fix reserved memory regions
-Date: Tue, 14 Oct 2025 00:41:35 -0400
-Message-ID: <20251014044135.177210-7-ghatto404@gmail.com>
-X-Mailer: git-send-email 2.51.0
-In-Reply-To: <20251014044135.177210-1-ghatto404@gmail.com>
-References: <20251014044135.177210-1-ghatto404@gmail.com>
+	s=arc-20240116; t=1760417250; c=relaxed/simple;
+	bh=5DQI0Fe06+ZJbvuBOZfkOypz087y12M4OqIjdRJ3LNo=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=d6uuvcc98JZyoXKoQ0DvVu5flVd6v7gHWG0EXHgAWmHKqp8aBAHkKoE9OR0EPVZrmwAVnrxYW97GjwFOWCzjlFgymv4qyQXoWpiUO167moMK08Pt1uh3CG+s59B+ibkR2wEfKWbhlnEeSCfpmneatM2BUsh+ZP2/R6v9tfFlj3w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=bligJCtf; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4826CC4CEE7;
+	Tue, 14 Oct 2025 04:47:23 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1760417249;
+	bh=5DQI0Fe06+ZJbvuBOZfkOypz087y12M4OqIjdRJ3LNo=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=bligJCtfsWIdOWU2vyKm0g4YM+3BZC2A1CXGh/0y1zL4395pIpmIgvRTh+x/aiZyT
+	 QkrcpYwlD64emuQulDtewS6u99WgC4RTEyqTPQxqs7GxOHXAWEiHg5K9pmLH/eVppA
+	 hkLVvrls8XxJbUiRE8hUpZBCI9bTI2YB3EZZ5hDGgmW7DKeVtvB9Czf7KnkweALz07
+	 tdMJforhXrEMkopQvxI6ww80g/eFfOlG/1zerdEBY5Qe3YYc3y8HsIj7lqshUe9Wg5
+	 jCyTObQvBYYAaUbSZ8SECn6HKtLsZ2YVAU7DicVDjm7g5gfS6BZcO4nRdFeH4kmjfh
+	 hQo/e1/R0j56w==
+Message-ID: <40af8d13-1bee-49f7-946e-043b920d83fe@kernel.org>
+Date: Tue, 14 Oct 2025 06:47:21 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 4/6] dt-bindings: remoteproc: qcom,pas: Document pas for
+ Kaanapali SoCCP
+To: Jingyi Wang <jingyi.wang@oss.qualcomm.com>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Mathieu Poirier <mathieu.poirier@linaro.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Manivannan Sadhasivam <mani@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+ aiqun.yu@oss.qualcomm.com, tingwei.zhang@oss.qualcomm.com,
+ trilok.soni@oss.qualcomm.com, yijie.yang@oss.qualcomm.com
+References: <20250924-knp-remoteproc-v1-0-611bf7be8329@oss.qualcomm.com>
+ <20250924-knp-remoteproc-v1-4-611bf7be8329@oss.qualcomm.com>
+ <a8796335-bec3-4c1f-afea-b5b7909d8ba3@kernel.org>
+ <e9813a47-c40b-475a-8faf-de0811c9066e@oss.qualcomm.com>
+From: Krzysztof Kozlowski <krzk@kernel.org>
+Content-Language: en-US
+Autocrypt: addr=krzk@kernel.org; keydata=
+ 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 a/A=
+In-Reply-To: <e9813a47-c40b-475a-8faf-de0811c9066e@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 
-ADSP and video memory regions in SoC dtsi is misplaced on this
-platform, fix them by deleting those nodes and redefining them.
+On 14/10/2025 06:28, Jingyi Wang wrote:
+> 
+> 
+> On 10/9/2025 6:27 PM, Krzysztof Kozlowski wrote:
+>> On 25/09/2025 08:37, Jingyi Wang wrote:
+>>> +
+>>> +  glink-edge:
+>>> +    $ref: /schemas/remoteproc/qcom,glink-edge.yaml#
+>>> +    unevaluatedProperties: false
+>>> +    description: |
+>>
+>> Drop |
+>>
+>>
+> 
+> Will fix
+> 
+>>> +      Qualcomm G-Link subnode which represents communication edge, channels
+>>> +      and devices related to the Remoteproc.
+>>> +
+>>> +required:
+>>> +  - compatible
+>>> +  - reg
+>>> +  - memory-region
+>>> +  - clocks
+>>> +  - clock-names
+>>> +  - interrupts
+>>> +  - interrupt-names
+>>> +  - qcom,smem-states
+>>> +  - qcom,smem-state-names
+>>> +
+>>> +unevaluatedProperties: false
+>>
+>> That's wrong in this context. But if you add missing (and corrected
+>> pas-common) then it would make sense.
+>>
+> 
+> Sorry I didn't get this point, could you make it more clear?
+> 
+> The property for Kaanapali SoCCP doesn't follow qcom,pas-common.yaml
+> (the interrupts are different) so it was not included here, like
+> "qcom,qcs404-cdsp-pil.yaml"
 
-Signed-off-by: Eric Gonçalves <ghatto404@gmail.com>
----
- arch/arm64/boot/dts/qcom/sm8450-samsung-r0q.dts | 13 +++++++++++++
- 1 file changed, 13 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/qcom/sm8450-samsung-r0q.dts b/arch/arm64/boot/dts/qcom/sm8450-samsung-r0q.dts
-index a3b81403d180..8ed8a67aae0d 100644
---- a/arch/arm64/boot/dts/qcom/sm8450-samsung-r0q.dts
-+++ b/arch/arm64/boot/dts/qcom/sm8450-samsung-r0q.dts
-@@ -10,6 +10,9 @@
- #include "pm8350c.dtsi"
- #include "pmk8350.dtsi"
- 
-+/delete-node/ &adsp_mem;
-+/delete-node/ &video_mem;
-+
- / {
- 	model = "Samsung Galaxy S22 5G";
- 	compatible = "samsung,r0q", "qcom,sm8450";
-@@ -64,6 +67,16 @@ splash-region@b8000000 {
- 			reg = <0x0 0xb8000000 0x0 0x2b00000>;
- 			no-map;
- 		};
-+
-+		adsp_mem: memory@84500000 {
-+			reg = <0x0 0x84500000 0x0 0x3b00000>;
-+			no-map;
-+		};
-+
-+		video_mem: memory@83e00000 {
-+			reg = <0x0 0x83e00000 0x0 0x700000>;
-+			no-map;
-+		};
- 	};
- 
- 	/*
--- 
-2.51.0
+It should follow. We want the common properties to be common. You cannot
+have new binding not using common properties, because you duplicate
+property definition.
 
+> 
+> So I think just adding the missing "power-domains","power-domain-names"
+> under "required" will be okay?
+
+
+You need to adjust pas-common.yaml, all other bindings and this binding
+so there is a common part.
+
+Best regards,
+Krzysztof
 
