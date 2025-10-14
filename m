@@ -1,152 +1,173 @@
-Return-Path: <linux-arm-msm+bounces-77152-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-77153-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [142.0.200.124])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3644EBD8AB5
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Oct 2025 12:09:30 +0200 (CEST)
+Received: from ams.mirrors.kernel.org (ams.mirrors.kernel.org [IPv6:2a01:60a::1994:3:14])
+	by mail.lfdr.de (Postfix) with ESMTPS id D3C88BD8AD6
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Oct 2025 12:10:54 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id D82C14EE78F
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Oct 2025 10:09:28 +0000 (UTC)
+	by ams.mirrors.kernel.org (Postfix) with ESMTPS id 563123442C8
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Oct 2025 10:10:54 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3C2D42F1FD9;
-	Tue, 14 Oct 2025 10:09:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B8AE02F5322;
+	Tue, 14 Oct 2025 10:10:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="HgM6NoUj"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="ENOCMBvR"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f41.google.com (mail-wm1-f41.google.com [209.85.128.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A3642EBB9D
-	for <linux-arm-msm@vger.kernel.org>; Tue, 14 Oct 2025 10:09:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 343BE2ED14B
+	for <linux-arm-msm@vger.kernel.org>; Tue, 14 Oct 2025 10:10:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760436564; cv=none; b=POJrNuau1iD2q9PNz8ZN1I99/9ROVEYXZJ6itCmJhNr+jL8AsSkO4QB/cTzlfglQQNqr8j328aevfKDBanoLLymW/F7Kzvs7m6C+p9hL/OniOECIoVSs0EYuq4WiiKZsgp7kyG75fj6jj1gDqL4rhdtSR2qsHoh5Oiq/VkTEo4o=
+	t=1760436651; cv=none; b=UxWhuHa9aEAK7ve4onE8Ud2PS23xPCN2kLl+6c1/s8+uMTIZhbNLI2PRJIo5oltnI1gc/EuxoBPKf2575M70D3h2tkM9Zqk8uZZdhtbZuqXQvyCriRdQMTXcabOftzJmEWOsyvuiVCh/SdiMhgzGMPYZBbMgjzHRKSBymn5PpWI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760436564; c=relaxed/simple;
-	bh=8NXJFlFsvTG3EbIAl4tjRuPzI2AZxM6EiXric7dRspY=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=FPvg4ew/6zoQQ8dz+5gJfOAbHx06w7zxE5sYItMeQHwosYVLFmSBPmRPE5CNNKbry+wADfJ6Ov3dWDl0IdONHBisD/ZkvkUVQqjTaVowSXnqusrce/I4uZ4vdS4B3nbu6BqwesCjXzkTNA6buAmSZ2iUjlnHA7LYXfrbMGOe6CY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=HgM6NoUj; arc=none smtp.client-ip=209.85.128.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f41.google.com with SMTP id 5b1f17b1804b1-46e4ad36541so53718305e9.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 14 Oct 2025 03:09:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1760436561; x=1761041361; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=d/ttxF/dZw7J4JSYZeZOo0fN3D/uqFn7kWok+tyJugc=;
-        b=HgM6NoUjMJKx6ah9M6XamaxyIR72OUtfBcmpK/K9DgIWDCvzVIAzlq9XpiuoI5N0Sm
-         ReB62m+bwuHjf9mVxPQHRyjeLtMqPFxQ98q5+G4TAt1C2IDNtcoVCWSLJnUjQ3a7zPKr
-         yeXC3Co0GuptdgKf9dgSu95lxCDZvA1E1TY20QA2AI/4gKEk2wqyGHKYAtX7nUMTyWGt
-         Z2HzsxV3bPCbFV9uXXrz7skMvl96QwHKuMdRuDJrFxLhJjRrUeSEt3hL6eOBtwMe+QwU
-         +jWeNOiHp6f+CY1pjSxBV3xGhWe0sgpOeE9WkwV87aadaN/aJD4ugnE1jTqvqtqnUiIS
-         a4Hg==
+	s=arc-20240116; t=1760436651; c=relaxed/simple;
+	bh=6UNxFkPs7S0fth1zlm3KPMvDq2slzrLkx1c/5aAf7/o=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=gvzMBU8poPzvdgnh1g/ef8D92DvNGkDSuCnM+jbmxqWVP7Hrx4tx1yGQvwvMhP9gAn8tpA/i9SI7GgyfPH9g/SB2XCUJKzmJ30bOweI8a/ilKcp2Zt8X5V/v0RDx8+E4/9P/VuYLjC7d9rI+XdHjFcjI8nOXKX2V3HC5AKBccac=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=ENOCMBvR; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 59E87KPN016292
+	for <linux-arm-msm@vger.kernel.org>; Tue, 14 Oct 2025 10:10:49 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	+GDf+gAOY9mdDvVU8qCaZ3Le3uxmX96IsgcRA5hA398=; b=ENOCMBvReXNVx7ga
+	EOmOXAyXdH53PeiVHByaKn5Kj9ItG2NqsAfiLnOYhYzzWx4blee9BcF02t4kmF1V
+	rpN192Yfde/xFzrBfqmsDIOYMdb1zNfWRDZw4AFZ7yU/gDklvhabmz0A86zSctqW
+	XLFZILWJbSNltVWQ+DvyvCqzRtg2swzbAa3EjoYA9PfAyjtWBHmKVFiBVT1e01Eo
+	/HAgtSa5LWRik0bYhf9R55jn9rgUNXmrrDwkO2trHXRiWo9DEV6ZMtQTZbokyRve
+	SCKnXwaHDDMYqJYbzLbxDwhg8sLi7PHvg3lCVk81BI6ghjhO4fnO7QqZLA514ONs
+	cRGK6g==
+Received: from mail-pf1-f200.google.com (mail-pf1-f200.google.com [209.85.210.200])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 49qfd9046f-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Tue, 14 Oct 2025 10:10:49 +0000 (GMT)
+Received: by mail-pf1-f200.google.com with SMTP id d2e1a72fcca58-7810289cd5eso15385561b3a.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 14 Oct 2025 03:10:49 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1760436561; x=1761041361;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=d/ttxF/dZw7J4JSYZeZOo0fN3D/uqFn7kWok+tyJugc=;
-        b=p2ktJss66D4gSAH6+yRtWgsnneku8PeDHJSSeRUNBhlerB/C7i1NdAUeXANzwwDWsY
-         oiOqP/jllFIRZP7W/ZyqHZhFJXI4BK6aM76mgvFLgjS65RsdCA6MQ6lyKVJcZIWd+pqX
-         U1L1bLOGN8BpCoPgopzD6QyOJ2+1qnRhj3lBe1lfxAcyY5X1NEPh7jcustCXORb7XyZJ
-         IatJlPNuo/4AnFLLcaDDBj0tJcBzVdo2Vxm9BJEx/wARkMBWYDc3+DNwyiK8swaeDH/A
-         dR4ki+ZlcYy3cnsepEAGCdgAqC0GFIYpqb9pKVuF9D1+NkfBbjc23CntDx2680Jk5zvX
-         87ag==
-X-Forwarded-Encrypted: i=1; AJvYcCV8IrQXobEtzEHHYXSStygo0xgtVV3xeTTYhuZP75o8bAI9pj//rYiujBzpQgBXREqPvsg4fDmDurGQwPbB@vger.kernel.org
-X-Gm-Message-State: AOJu0YzyQ/QgKrWszSENCEsztferM26EFYTPjcRfRSlCQCK5KWDaEPj7
-	Np0gaC19kKbvEN1I2mEzgFHGbkyp4a4HgSxdCrC5bXj536tD6WHBhF1JIEko3g5OrJ0=
-X-Gm-Gg: ASbGnctuiHDCVn3rF6yK+qfDed0lUxpwS3xMxwBx4tjevrygT2VN+fZpRV+JENBMTkP
-	El1+0LflV2qYZdrQn2IWljM19C+HdnUgFFfwBFOCN7ymREVUnr0Od0y0ue2Yqp/sR03akRH2e5U
-	eiV9fYtUhLEHXEPbLp0bQV26aYEs9MSsM9hYiw3/pXvwfp2BdKFXWaUdVYAhRlGpHHQS3hkTgiS
-	DfRB2Tg6veKKkES8AturluBfRcU9QJFU0v8p3TrWjArDLX47pjCpSSR5SZStCS8GiRG3EBR8dZb
-	A04hzCIWpUOxnpEqxr0P2LZG7A/zGgToRCah/+stiwPJbOt0i/bXTgMWKHp5O+/pfMi81SvA7WL
-	SOe1bJpNKkzJr+vM1j5gMNS6j+Qtktk3/mQ7iw8hBZQ==
-X-Google-Smtp-Source: AGHT+IGhYcM1EjuHseqFI8tRZvchmyS35I7xUk/4EU6AC6XLlnEooj6iq3rh59ZcN+RWuk1UNgay5A==
-X-Received: by 2002:a05:600c:a341:b0:46e:74bb:6bc with SMTP id 5b1f17b1804b1-46fa9a8932cmr155892235e9.5.1760436560606;
-        Tue, 14 Oct 2025 03:09:20 -0700 (PDT)
-Received: from linaro.org ([86.121.7.169])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-46fab3d2c1asm149604235e9.1.2025.10.14.03.09.18
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 14 Oct 2025 03:09:19 -0700 (PDT)
-Date: Tue, 14 Oct 2025 13:09:17 +0300
-From: Abel Vesa <abel.vesa@linaro.org>
-To: Vinod Koul <vkoul@kernel.org>, 
-	Kishon Vijay Abraham I <kishon@kernel.org>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Bjorn Andersson <andersson@kernel.org>
-Cc: Dmitry Baryshkov <lumag@kernel.org>, 
-	Konrad Dybcio <konradybcio@kernel.org>, Neil Armstrong <neil.armstrong@linaro.org>, 
-	linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org, devicetree@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, 
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Subject: Re: [PATCH v3 0/4] phy: qcom: edp: Add support for Glymur platform
-Message-ID: <c6w5wqjqdimn3cfex3n6aynol4hfqejct23ziq4wcwj2svuk5g@tzfi6fnbpc4k>
-References: <20251014-phy-qcom-edp-add-glymur-support-v3-0-2772837032ef@linaro.org>
+        d=1e100.net; s=20230601; t=1760436648; x=1761041448;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=+GDf+gAOY9mdDvVU8qCaZ3Le3uxmX96IsgcRA5hA398=;
+        b=EH/81jZRwKdRRPXNHC9dJ17AatmF9IHw52bALm3yHjsP3DKlXOpUHSR0CBAtbuL7pB
+         UtwCcS7cV0Ax9du34FCzoEeaw848XgLQQYHX1m0EmGf5NWxBgmo0WPWMMVWCQR6cOEzq
+         ak98lLUC6CXtPOy8quCaGytiA0VUCl9OeNHg3i8d/WUOq7U3H8rSgwPlsZ7l48tqC29L
+         NQzsqjsxb+hFJ9tSJfyzmBdra8EnHTn6Lqk+7Lo8KIzqpOCvG0kAz8/Ok8ygARcaW49Y
+         tuW+9HY0GAcEkhgMVj19jdsbXmkuD/bX3GrzN1mwQ/EkssCOBCdzeuR5ffBaex4JpR+u
+         o2NA==
+X-Forwarded-Encrypted: i=1; AJvYcCUI8yirLE7g1irmXc4Zt1NsPFK++LtBruu/B8e6apQFfuKxknFPhTdzzrUMpgNRkOXln2kP336KSM++SG5F@vger.kernel.org
+X-Gm-Message-State: AOJu0Yws/raX4RW6pGgAeDUDPZKSZTRpu9C8hrZYGIYeF7GmFemyt6AS
+	gvroIYwBBd8+/igF+ag4qOO7vHA4PERWzgdlJzWgQmNoKbvgKei7s1+oKCt2I3iGbI+PR0OVoWe
+	oHSZVqG0/bv/0qrkI8Zhs3JwlBXQCyvwqljTGilsqsVGTfGfpXnFGc97Njt5DAdIldom7
+X-Gm-Gg: ASbGncv+ik7HgJnCB8gxLmrHbpUxZ49Yh/yOcxdgBL1TNTPC/I4zkSn+5xWZQifg1X1
+	9BTKKMX2n9UM43cBgn91try3EB9N6ASyA1SNTr/Ric9xDcrMI2OU1I3kcG5TUKiHN/txCoiErnM
+	1haC6dlYPTdIPlVq8v74lIMqT1Yil/QkqNgkALFE1ZGHMYboArLYFco03XWgUdbnWhI4nJvRbS+
+	YNgMsXUuoQBxJeSsme0OUdL+efAhtmm6YbFIuPhhHhZvsMezkPLDaklHV2AVx1HvrhFYST6u+3T
+	mfyix9c67ZIjtLU1kMw8LzGBdw0UIrb0zRgvqCffx1niFfs5zyuJy/Kk9Z9B6QNURRt8Dx95
+X-Received: by 2002:a05:6a20:2451:b0:24a:b9e:4a6c with SMTP id adf61e73a8af0-32da845e56amr32763020637.44.1760436648466;
+        Tue, 14 Oct 2025 03:10:48 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IH4+I2XVu7f/J1cjzoxMqKeCVBL6tL6m/uv3wlVqh90v+MzZWe5SVtdgYsVmRmojAWrthABug==
+X-Received: by 2002:a05:6a20:2451:b0:24a:b9e:4a6c with SMTP id adf61e73a8af0-32da845e56amr32762977637.44.1760436647980;
+        Tue, 14 Oct 2025 03:10:47 -0700 (PDT)
+Received: from [10.206.101.41] ([202.46.23.25])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-7992b060962sm14772927b3a.1.2025.10.14.03.10.44
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 14 Oct 2025 03:10:47 -0700 (PDT)
+Message-ID: <2d581ed7-f240-6b84-3bd9-eadc3c1041fa@oss.qualcomm.com>
+Date: Tue, 14 Oct 2025 15:40:39 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20251014-phy-qcom-edp-add-glymur-support-v3-0-2772837032ef@linaro.org>
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.15.1
+Subject: Re: [PATCH 7/8] media: iris: move common register definitions to the
+ header
+Content-Language: en-US
+To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Cc: Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>,
+        Abhinav Kumar <abhinav.kumar@linux.dev>,
+        Bryan O'Donoghue <bod@kernel.org>,
+        Mauro Carvalho Chehab <mchehab@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+        linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20251008-iris-sc7280-v1-0-def050ba5e1f@oss.qualcomm.com>
+ <20251008-iris-sc7280-v1-7-def050ba5e1f@oss.qualcomm.com>
+ <b7eba4b5-1189-7506-4767-0ef3234fc6f2@oss.qualcomm.com>
+ <dzorzudzpjipvlkwik3uylomwi2dy5ticxromzegzgi2jhibot@reqv5ul5ifuc>
+ <3802fe42-0c94-8c10-7b6c-6c3adf863ef9@oss.qualcomm.com>
+ <t5obao7tm34uilnzoa24shknvdtzqkc5uwek4cxwbof3tgqylb@jehfugyxvups>
+From: Vikash Garodia <vikash.garodia@oss.qualcomm.com>
+In-Reply-To: <t5obao7tm34uilnzoa24shknvdtzqkc5uwek4cxwbof3tgqylb@jehfugyxvups>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-ORIG-GUID: nU5hWqg-GVo-ilGNU85DT4TApowGspw9
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDExMDAxOCBTYWx0ZWRfXxSymYaxqU+tn
+ 5sursPCQ1qK6mySnMyHBLLEo6aTLLde57lajkYX3B1i93nFTSnDh9BvC89HBt9/mIhhrZVuLf8y
+ S57HZivDiJFM/eHIE7W4rvPM0Z0geMr6bDgDV3AUVwzMgejQx0ZZ7FMuOK1grV4+GLLX+iLPOml
+ bRdPyZgQG9smlPEA/wzLYVoOPgsu+b0yBd/a0l9OMGTB4uYSpqUlMkb5qlIA3eSvkuPOHwBCIdU
+ II5nZKjP2C9tYS0HkBZMIZQ4PWV97lIHkDVO66JtxHBUKK/L51F+ETWSTxlQDJ4c/Hs4yVGWEGi
+ td2l06OLCus8bhsYKSKpVO6BsysjSvwiqmR8KUbAMVC63L2GPOLgE8jvUR8QcVuxOhJT33N/K5r
+ 2zYx4sWkRPlf9d2YgrdyAg7ZxOuR/w==
+X-Proofpoint-GUID: nU5hWqg-GVo-ilGNU85DT4TApowGspw9
+X-Authority-Analysis: v=2.4 cv=PdTyRyhd c=1 sm=1 tr=0 ts=68ee21a9 cx=c_pps
+ a=mDZGXZTwRPZaeRUbqKGCBw==:117 a=ZePRamnt/+rB5gQjfz0u9A==:17
+ a=IkcTkHD0fZMA:10 a=x6icFKpwvdMA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8 a=UHACNdNzX4dSgP2fR3kA:9 a=QEXdDO2ut3YA:10
+ a=zc0IvFSfCIW2DFIPzwfm:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-10-14_02,2025-10-13_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ malwarescore=0 phishscore=0 bulkscore=0 clxscore=1015 adultscore=0
+ lowpriorityscore=0 impostorscore=0 priorityscore=1501 spamscore=0
+ suspectscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2510020000
+ definitions=main-2510110018
 
-On 25-10-14 13:02:26, Abel Vesa wrote:
-> The Glymur platform implements the eDP/DP PHY version 8.
-> Add the necessary registers, rework the driver to accommodate
-> this new version and add the Glymur specific configuration data.
-> 
-> This patchset depends on:
-> https://lore.kernel.org/all/20250909-phy-qcom-edp-add-missing-refclk-v3-0-4ec55a0512ab@linaro.org/
-> 
-> Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
-> ---
 
-Urgh, for some reason, b4 re-enrolled (lost old branch) this one as v3 instead.
+On 10/14/2025 3:21 PM, Dmitry Baryshkov wrote:
+> On Tue, Oct 14, 2025 at 02:43:56PM +0530, Vikash Garodia wrote:
+>>
+>> On 10/9/2025 8:18 PM, Dmitry Baryshkov wrote:
+>>> On Thu, Oct 09, 2025 at 11:40:25AM +0530, Dikshita Agarwal wrote:
+>>>>
+>>>>
+>>>> On 10/8/2025 10:03 AM, Dmitry Baryshkov wrote:
+>>>>> Simplify adding new platforms by moving common registers definitions
+>>>>> from VPU 3.x and "common" file to the header with other register
+>>>>> defines.
+>>>>>
+>>>>
+>>>> Similar to
+>>>> https://lore.kernel.org/all/20250925-knp_video-v1-5-e323c0b3c0cd@oss.qualcomm.com/
+>>>> ?
+>>>
+>>> Yes, but moving more registers. I can rebase on top of that series if it
+>>> lands first. Or I can just pick that patch into the series, to remove
+>>> the dependency. What would be yours / Bryan's preference?
+>>>
+>>
+>> My vote would be to rebase this one on top of earlier one.
+> 
+> Ack, I will rebase. Seeing that none of the patches in that series are
+> in R-B state, I will probably pick up just that patch into this series.
+> I hope it's fine with everybody.
+> 
 
-This is actually v4. Hopefully, v4 will know to pick this one up when applying.
+Should be good. I can keep the patch in my series as well, in my next rev, so
+whichever lands first, Bryan can simply drop the patch in later series.
 
-Sorry about the mess.
-
-> Changes in v4:
-> - Force fallthrough for 5400 and 8100 link rates in qcom_edp_com_configure_pll_v8,
->   as they use the same values.
-> - Picked up Rob's and Konrad's R-b tags.
-> 
-> Changes in v3:
-> - Split the DP_AUX_CFG_SIZE change into as separate patch, as per
->   Konrad's request.
-> - Re-worded the dt-bindings commit, as per Krzysztof's request.
-> - Link to v2: https://lore.kernel.org/r/20250909-phy-qcom-edp-add-glymur-support-v2-0-02553381e47d@linaro.org
-> 
-> Changes in v2:
-> - Sorted alphabetically the both the compatible and v8 specific
->   configuration.
-> - Prefixed the new offsets with DP in order differentiate from PCIe ones
-> - Link to v1: https://lore.kernel.org/r/20250904-phy-qcom-edp-add-glymur-support-v1-0-e83c6b9a145b@linaro.org
-> 
-> ---
-> Abel Vesa (4):
->       dt-bindings: phy: Add DP PHY compatible for Glymur
->       phy: qcom: edp: Fix the DP_PHY_AUX_CFG registers count
->       phy: qcom-qmp: qserdes-com: Add v8 DP-specific qserdes register offsets
->       phy: qcom: edp: Add Glymur platform support
-> 
->  .../devicetree/bindings/phy/qcom,edp-phy.yaml      |   2 +
->  drivers/phy/qualcomm/phy-qcom-edp.c                | 232 ++++++++++++++++++++-
->  .../phy/qualcomm/phy-qcom-qmp-dp-qserdes-com-v8.h  |  52 +++++
->  3 files changed, 279 insertions(+), 7 deletions(-)
-> ---
-> base-commit: b529e9498b7948df2be579282cbf0d5a9a3b7f9a
-> change-id: 20250903-phy-qcom-edp-add-glymur-support-2a8117d92b89
-> 
-> Best regards,
-> -- 
-> Abel Vesa <abel.vesa@linaro.org>
-> 
+Regards,
+Vikash
 
