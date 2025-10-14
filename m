@@ -1,489 +1,356 @@
-Return-Path: <linux-arm-msm+bounces-77234-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-77235-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [IPv6:2605:f480:58:1:0:1994:3:14])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3B548BDA78B
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Oct 2025 17:47:43 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id A1925BDA7A0
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Oct 2025 17:48:39 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 8D40B4E84DC
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Oct 2025 15:35:56 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id B0ED819A0CF1
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Oct 2025 15:49:02 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 535FC770FE;
-	Tue, 14 Oct 2025 15:35:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 82AA13002B9;
+	Tue, 14 Oct 2025 15:48:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="c9HDrotK"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="hKjkkwy1"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 664F1246BDE
-	for <linux-arm-msm@vger.kernel.org>; Tue, 14 Oct 2025 15:35:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6655A301466
+	for <linux-arm-msm@vger.kernel.org>; Tue, 14 Oct 2025 15:48:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760456154; cv=none; b=MV4qJJF8q1PYjNLkUtXOh+X+WcD9uuL62xnxKJuovsUgtH2aYfcJraPbe+WfkNZOYy14njAnGbXCAhLD6wYy94mrzWsoqQn8E1WELr5TwDkQg2egUo+6bJX4WcDaRbPrfAUCZ0yTWewXGuFAN4tKLd0FA5WsFwkB0lsUddF0r4M=
+	t=1760456908; cv=none; b=GKEpY+k/DZnKjEfIqDm4EC8VxTdPB7O98OAM1NI2L+1KucUN9UYonD3Ia+MNeQ+tGaL9Sim95SrsW93U+/Zkz9DhearrSUxiMm0GsWjAZy35TuhznlNHPCxgfHfxC8FUZRDT+p0XGQ/HCSUUKOk/7YnZQEUK8/UXbBrzmebWj2U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760456154; c=relaxed/simple;
-	bh=h9O9YfvHgRK4pYbs4jacz0KXOEx7UP+LwPtZLz0f32U=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=NJFFySmzBlqA1xP0Tt+o8G5hzaaByu1dWer+1fWyOcicyGuE5nvAzMBvk7QhBpD6Dzc1aOj5noAvxI3/mhkM5lcGvmjvC7Bi1d4tCaaXilyIaCjmy0XwFEV7dkAtP+9K/DRvYTVRpIZLFxNFsQ794EbqM4Sk4UTGHnP5nOUgcHk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=c9HDrotK; arc=none smtp.client-ip=205.220.168.131
+	s=arc-20240116; t=1760456908; c=relaxed/simple;
+	bh=AnyUasWkeoB8jjew4eeBbK3ca6UTXtNvks6eEnN1E58=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Il78dtcJiauRovYRTmDy7IxqE7tsiB/la9Nqd93gl08O0XsYVryIAl9uvTeHpZ4bVf81ZZMIYsddSXISCUJ1qbkOGTemlviRyGPOXw8ekRbH6ubpSp3KDkSh8DXFfP812SaFHzFkjADCHgobRR7WnMiL5f3LViPgECDPtr9113c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=hKjkkwy1; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 59E87Hhh019867
-	for <linux-arm-msm@vger.kernel.org>; Tue, 14 Oct 2025 15:35:51 GMT
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 59E87Jm8031029
+	for <linux-arm-msm@vger.kernel.org>; Tue, 14 Oct 2025 15:48:25 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:date:from:message-id:mime-version
-	:subject:to; s=qcppdkim1; bh=8b75bEAsWB9Fz6VWxCILAoiZY0eXy9b9mMB
-	Cdy3bt/Y=; b=c9HDrotK9WRvzSvH+E4RTMrgFphFWCCR2X8lSVcERRRttoawZM4
-	cuWVKt29G/BVS9TkfGgyZKYZCre55Owd72wdUfxI2U4nV8JVlhidd+CrwJ9Xger0
-	jK639aviu498OTXwRLHZU4F6scTgWwWnr3AXctnVLfNA2FWzhoGOhWvZylklPSAZ
-	ov1xqhg+iWGgtqqp2uPCAPx7/6kdnMRn2W7edSOi6CAN40emqGESOEQZBe3mcbyl
-	/PSznWS6ERhx1LnCzkEIB28R9Lx9dSR3loS+AO8W678JxGKFsgqB57H2BcNup/LR
-	Pc4kknzGtRdJFGBpNKKFVKHhJpvj8Nhi/Cg==
-Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com [209.85.222.197])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 49qg0c10q6-1
+	cc:content-type:date:from:in-reply-to:message-id:mime-version
+	:references:subject:to; s=qcppdkim1; bh=bnUd9WqqTC6gg1NeEhBqMnCO
+	5PDnLeEfEL4vvYOYjD8=; b=hKjkkwy1uKNr0ggYlgTQObOeDp6guhKz/etIqcij
+	MYvHfh3wvPphite+QMe/OB7W8Cjs/6SXnqBp4D2aqRnmooKmp/ITECvo8QQO4/DR
+	nOts7Rqq9O3L2g5cFMGaZINOIMx3zeremL+MJtBgM6TWzFcbwGTwAJeqVSRfD94h
+	xqe5T2wcbsZQhMvURH/eASTgGUnT4ehOVSWWsZmDoDqBZ83QbA+JTJ9cqujcHPV7
+	oHT29VVuff8nfWz4FstI6wMC/8M6XbbLWaTx64duHptIuTTuIig7JGXs6DfkFqv7
+	jpr6yIP9SM8xO/cJkBu33lh1T7wfAdiv1CZF6TY66BDabg==
+Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com [209.85.222.200])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 49qff0s3ae-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Tue, 14 Oct 2025 15:35:51 +0000 (GMT)
-Received: by mail-qk1-f197.google.com with SMTP id af79cd13be357-87ae13cc97cso3141129185a.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 14 Oct 2025 08:35:51 -0700 (PDT)
+	for <linux-arm-msm@vger.kernel.org>; Tue, 14 Oct 2025 15:48:25 +0000 (GMT)
+Received: by mail-qk1-f200.google.com with SMTP id af79cd13be357-8544316ef6aso1260368185a.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 14 Oct 2025 08:48:25 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1760456150; x=1761060950;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=8b75bEAsWB9Fz6VWxCILAoiZY0eXy9b9mMBCdy3bt/Y=;
-        b=rkOQJZpAKH6VrEmGFc8uddXsCsJGyGaRMsEkwU4JkHKLyVgwHWweEx4nzsKuXkeNaB
-         EDudqUuCK//kXJfGJCqaRHSNRqW1PMIPTCBMs78+k6oOPUDU9818TFFNe4xaM2Qwj3gb
-         LSiavsjDAZh1xJa8PIxQyL7B5c+9lUl3xiqpKXzhdewjuRbyF/AI99LOpuAKPxNAANOz
-         Q5xhgu9n+7DMn7H4G7j/BBYfvRIw06E0cWgWl5SOP0cS/xI8wdm774gcO3/cwlpI78/n
-         CAht7ntpjbN4R+HeIJQ+zPSJbQ4DpP9EAheilvmaURJRiKx7IygqxXfunn/yMpKhO9MU
-         WsSA==
-X-Forwarded-Encrypted: i=1; AJvYcCVIKMn+1djUi1YVkiXvE/raMoEpf87+BNFnlg468x6JMnrGVr8pXXWaN/Xwdgks3BNicpe9KByz5cz9audM@vger.kernel.org
-X-Gm-Message-State: AOJu0YzUlv3W7ewHKehAY0qBMUXDbcGuiXCFYrlXDQzcaqMXWa56rhOt
-	+vYQyfV+EOVB9PcXfrQFKSC968k0Gjryuy+Hp26Z3JhZoNaeMTKtJVrSXpmGnE9D/b1UJXvJm0u
-	gyj7gqaNLEw9Mmmvelp7zcTLbXwMhBUuIYEiKoiUg7fGkvUm4qTygMqL0Cr3YaB05b0oIDU4BvF
-	uo
-X-Gm-Gg: ASbGncvaXnF62iN9f4Cqgy8l1EMErJ2fPC0N3vjW58BMdIwTJVXlpcZaFbNWIcOxs3O
-	YVYU4FfdI5amy+QDEArf2hOy2F4n/vLi+4Uq4OJZOsqVFJi1ZbBVOXgB1G0HLnBTIRu8QZnMBmn
-	SoCEzZJwPHvuo/eSVrzEpbBNis29Xu6AGsbq2qsu5Uu8TQriGRsG1Cuy/7ZRSzVREQrDWK80/kp
-	3q59GIcodKKVYCwWeae4DPwEKyYGjNu8xmJoGrXZlzSo9vfl+nizVCARLho6vbXpmQx9nZSrYvy
-	WwihYrPJomzfw+A/mCNjAn+6DAfHihJxrdMGiiDxVPTgJTe6dUMpyg==
-X-Received: by 2002:a05:620a:1a9f:b0:864:c43:865d with SMTP id af79cd13be357-883523d711cmr3619230985a.54.1760456149793;
-        Tue, 14 Oct 2025 08:35:49 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IG9B7zyZg3oK/9ofrQ2WZP0uWvK03uQ3Ex+n06/Ha3FxT+8LJtWjP9Tb3y1S2Fn4mVp8vMjDA==
-X-Received: by 2002:a05:620a:1a9f:b0:864:c43:865d with SMTP id af79cd13be357-883523d711cmr3619223685a.54.1760456149116;
-        Tue, 14 Oct 2025 08:35:49 -0700 (PDT)
-Received: from debian ([5.133.47.210])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-426ce583316sm24108193f8f.20.2025.10.14.08.35.47
+        d=1e100.net; s=20230601; t=1760456904; x=1761061704;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=bnUd9WqqTC6gg1NeEhBqMnCO5PDnLeEfEL4vvYOYjD8=;
+        b=jzUBaplR4Pv6JkBS4wE91LBpcJT+tHVsis0p+Ad7vZOMrYoPsVjlGb0N7lcxfWS2Qb
+         f5HP3ON8lyQ5opABy3z97TF/wKtOEouclvElLAt4EuDezdkqz6qcbmKZxpHJktDZ2M/3
+         /gc7oYS5JxdAT3GUCB7qG+baXDfQqiHoJxTxBYWTRWB8YVcC6vtU9w3VYIhSozQ9VCGV
+         C+nLQ4fAvtINTayuFVAHbiZJnJ3BvICw26bDuczARwjzYTDIlsPohPDju1+eYls+lxja
+         qebuQ/+mCCvv/CAkHZHrWAe/NYkH8s/lFyN3TQThJG0uaAxqMwEUnDM9QWsQLWSCpG5P
+         aNCA==
+X-Forwarded-Encrypted: i=1; AJvYcCVMm0VMXdDRLILln3yWAHbANLM6j74PW/QbEkwil1eRWkiLNwJWar92iS+Fz4YFXGnDS2zNORZcRWLHTDb0@vger.kernel.org
+X-Gm-Message-State: AOJu0Yyo7/KL4EgdTbr9ovLGzfjKIj9zHHxvvpgjm+8RKIldLmlXuWJg
+	DS7mfrlgTHmK3bti6X5otwWCLzTmkoMMyQEFC20TuZ0ytzSW4+8+35EJRWDi9YTIgZLUvKzV9Q2
+	HKXSI5HXpdJF7ma4kVbgeVF+5cL0w+5eD0yP0Bjz1BuXK7ndxZSn/bLtpnhqaQT2c3s2/
+X-Gm-Gg: ASbGnctdEPX3dTYSaw31DJRzxbGrkKjouGCSNbppX56iqipqKd5+FCG0iKeBvDE0ihl
+	NZOFTYNTxbTW/LjF/VpSVAx3mT8WLT7q1Ve+rOQl3UlG5w+kgsgPSXe+7FAIp4ejgAYXDo/YS1q
+	v/Ca7kBOA5yUzlkE/svqrfyyOmmgMIPPmWIOYzNYp2IgVQDlNFh9tL7hqp4S4maSXoD+s70FcAW
+	ahgGnQoXXdIzNaKBRghbci9QJ9gMTSGHskqBW2xT2+mtL7ZxXYYbm9Of34xZRk7ckHmOLOZOyyb
+	dkyWmKsU4B4AbXSrk4WY0D8PRBgoAuhD/bLCyMSA9PcpjU6tDaNhPLdboxeTYK3jvBAEW97Ki7g
+	4+lNUke8GGsYw1J+bzowZVjywM/y+dCKy6blC6Dqm1ZeiFkXsAlhE
+X-Received: by 2002:a05:620a:1a13:b0:85c:bb2:ad8e with SMTP id af79cd13be357-88353b341admr3454184485a.48.1760456904035;
+        Tue, 14 Oct 2025 08:48:24 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IH1kVRNLAt5bA1+d0KSwa3ylw1lBL0Up7cJNOapKT1tEcg4YRx4k8gLeEELCdscxWsjHRglgw==
+X-Received: by 2002:a05:620a:1a13:b0:85c:bb2:ad8e with SMTP id af79cd13be357-88353b341admr3454175485a.48.1760456903342;
+        Tue, 14 Oct 2025 08:48:23 -0700 (PDT)
+Received: from umbar.lan (2001-14ba-a0c3-3a00-264b-feff-fe8b-be8a.rev.dnainternet.fi. [2001:14ba:a0c3:3a00:264b:feff:fe8b:be8a])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-590881f919fsm5367578e87.36.2025.10.14.08.48.20
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 14 Oct 2025 08:35:48 -0700 (PDT)
-From: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
-To: broonie@kernel.org
-Cc: perex@perex.cz, tiwai@suse.com, srini@kernel.org, alexey.klimov@linaro.org,
-        linux-sound@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org,
-        Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
-Subject: [PATCH] ASoC: codecs: pm4125: remove duplicate code
-Date: Tue, 14 Oct 2025 16:35:41 +0100
-Message-ID: <20251014153541.283899-1-srinivas.kandagatla@oss.qualcomm.com>
-X-Mailer: git-send-email 2.51.0
+        Tue, 14 Oct 2025 08:48:21 -0700 (PDT)
+Date: Tue, 14 Oct 2025 18:48:19 +0300
+From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+To: Maxime Ripard <mripard@kernel.org>
+Cc: Daniel Stone <daniel@fooishbar.org>,
+        Andrzej Hajda <andrzej.hajda@intel.com>,
+        Neil Armstrong <neil.armstrong@linaro.org>,
+        Robert Foss <rfoss@kernel.org>,
+        Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
+        Jonas Karlman <jonas@kwiboo.se>,
+        Jernej Skrabec <jernej.skrabec@gmail.com>,
+        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+        Thomas Zimmermann <tzimmermann@suse.de>,
+        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+        Sandy Huang <hjc@rock-chips.com>,
+        Heiko =?utf-8?Q?St=C3=BCbner?= <heiko@sntech.de>,
+        Andy Yan <andy.yan@rock-chips.com>, Chen-Yu Tsai <wens@csie.org>,
+        Samuel Holland <samuel@sholland.org>,
+        Dave Stevenson <dave.stevenson@raspberrypi.com>,
+        =?utf-8?B?TWHDrXJh?= Canal <mcanal@igalia.com>,
+        Raspberry Pi Kernel Maintenance <kernel-list@raspberrypi.com>,
+        Liu Ying <victor.liu@nxp.com>,
+        Rob Clark <robin.clark@oss.qualcomm.com>,
+        Dmitry Baryshkov <lumag@kernel.org>,
+        Abhinav Kumar <abhinav.kumar@linux.dev>,
+        Jessica Zhang <jessica.zhang@oss.qualcomm.com>,
+        Sean Paul <sean@poorly.run>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org,
+        linux-rockchip@lists.infradead.org, linux-sunxi@lists.linux.dev,
+        linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org
+Subject: Re: [PATCH v3 00/11] drm/connector: hdmi: limit infoframes per
+ driver capabilities
+Message-ID: <pibxhl5hlcpuk3zsgyienfdlda5cwuxrnofwlw356scuzzplqy@zw3ofelgvwik>
+References: <pe6g2fanw65p67kfy5blbtiytngxmr6nkbazymojs4a66yvpl3@7j4ccnsvc6az>
+ <20250910-didactic-honored-chachalaca-f233b2@houat>
+ <x562ueky2z5deqqmhl222moyrbylfwi35u4hb34dpl3z52ra4c@dyw4iayrewnz>
+ <20250925-fervent-merry-beagle-2baba3@penduick>
+ <qx5ashx62pufott6hnsfna3qntnoyvxwxze4rihhuxcsdxi37s@bbdvc3sfsgne>
+ <20250929-gregarious-worm-of-memory-c5354d@houat>
+ <itgffxygopi7etkt7xhvmyuvyl5ad3k43nsxvjzw3ubtwiikn7@ocugfdaigtu7>
+ <20251003-uptight-echidna-of-stamina-815305@houat>
+ <zpygq4kapil3swsmhhqkdwny4ry2dznnzixsw5rkza5p2kqnvp@abvf2vxlbwif>
+ <2a5fitdzr2bz235fj6rvqzxr6ckszkjbazjfszlvnizdh2cvbt@w3ypjo7vahhs>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-GUID: QR6dRxbzfyBoZd56T2ihIKtkKUhff2db
-X-Proofpoint-ORIG-GUID: QR6dRxbzfyBoZd56T2ihIKtkKUhff2db
-X-Authority-Analysis: v=2.4 cv=eaIwvrEH c=1 sm=1 tr=0 ts=68ee6dd7 cx=c_pps
- a=50t2pK5VMbmlHzFWWp8p/g==:117 a=ZsC4DHZuhs/kKio7QBcDoQ==:17
- a=x6icFKpwvdMA:10 a=VkNPw1HP01LnGYTKEx00:22 a=EUspDBNiAAAA:8
- a=iXy9AVFDh87vi-9b7QEA:9 a=IoWCM6iH3mJn3m4BftBB:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDExMDAyMiBTYWx0ZWRfX03D8j6dl1ftn
- PW+HV4DsTGMFxis4lOHJ2gkKSjx5Cpe0JhPobvlDzbDa2lBhGT9m2XzLUw4QDOFceQTt/nMjpbs
- aICmN1EY9HDoK7Of09C/CoORDe8kSEXACpbvjZaQCkrfrZsFBGCFhtZXmG6G4KosVFE8w4qjpZZ
- egHlkoXiH/52Ovx7ts8X4rGtrt9XkKHmsfJpow/0j6GhRuLVnc14HyBBfSceKui5BUXqajrz05Q
- HuO24sAmrxH00krlvq3BfN7BDAVP76/6M0PbOmNtVGoE+2g6I16Td1QAmBOkRUI9gu7/I2MgvAP
- 2IVJJr53UDDyFqzRhQU5KMxa4hn2nES7b9lZ7016A9MEQlvFljqBQFM4yIxd3Hv2mvF2o/lFbQc
- T9o25i36ri+TI8DPXGe2NO5OP4l4qw==
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <2a5fitdzr2bz235fj6rvqzxr6ckszkjbazjfszlvnizdh2cvbt@w3ypjo7vahhs>
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDExMDAxOCBTYWx0ZWRfX5ympZf+zdUHC
+ /1l0xyOIW2ny4osdqTv6eF8QN4WG8m4/Gc1c4FctFMsv5WIiUh1vC0vmGGPbq+DHS9D6v8vSMpw
+ g3bdbSdeF9g87BOMvt9dpfZfhXd6T831OoMpMtGakCmhZHNDMFEWFakx4STNPS0TtNi2zSZ8/Vq
+ 82URyD170yGAupxEKJi+xBLZyKYdmdUbILfs2hMURy8hAVuA017bLX0FWYaYGQdQJHGpIvToFMV
+ YmSW5D0ueKopD39WSrO/c6fDQ4s1mrHNrb/oUV3KuiMoKSctgw0mJnmd+RS9T+nJ0ncftRP9FQk
+ BcOnsjBV+KxnaAasW4tbUaI1f6sw19p9th+RjeXYg==
+X-Proofpoint-GUID: 6xR_8fhrANEnrKLvQrmVTdVF6DoENcY7
+X-Authority-Analysis: v=2.4 cv=PriergM3 c=1 sm=1 tr=0 ts=68ee70c9 cx=c_pps
+ a=hnmNkyzTK/kJ09Xio7VxxA==:117 a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10
+ a=x6icFKpwvdMA:10 a=VkNPw1HP01LnGYTKEx00:22 a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8
+ a=Vph1PE5xcNG2gXNXWn0A:9 a=CjuIK1q_8ugA:10 a=PEH46H7Ffwr30OY-TuGO:22
+X-Proofpoint-ORIG-GUID: 6xR_8fhrANEnrKLvQrmVTdVF6DoENcY7
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.80.40
  definitions=2025-10-14_03,2025-10-13_01,2025-03-28_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- bulkscore=0 priorityscore=1501 spamscore=0 impostorscore=0 phishscore=0
- adultscore=0 lowpriorityscore=0 clxscore=1015 suspectscore=0 malwarescore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2510020000 definitions=main-2510110022
+ malwarescore=0 adultscore=0 bulkscore=0 phishscore=0 lowpriorityscore=0
+ spamscore=0 suspectscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2510020000
+ definitions=main-2510110018
 
-With recent addition of wcd-common, lot of code duplication in
-pm4125 codec can be removed now.
+On Tue, Oct 14, 2025 at 02:59:43PM +0200, Maxime Ripard wrote:
+> On Fri, Oct 03, 2025 at 06:54:47PM +0300, Dmitry Baryshkov wrote:
+> > On Fri, Oct 03, 2025 at 03:22:23PM +0200, Maxime Ripard wrote:
+> > > On Tue, Sep 30, 2025 at 10:02:28AM +0300, Dmitry Baryshkov wrote:
+> > > > On Mon, Sep 29, 2025 at 03:00:04PM +0200, Maxime Ripard wrote:
+> > > > > On Thu, Sep 25, 2025 at 05:16:07PM +0300, Dmitry Baryshkov wrote:
+> > > > > > On Thu, Sep 25, 2025 at 03:13:47PM +0200, Maxime Ripard wrote:
+> > > > > > > On Wed, Sep 10, 2025 at 06:26:56PM +0300, Dmitry Baryshkov wrote:
+> > > > > > > > On Wed, Sep 10, 2025 at 09:30:19AM +0200, Maxime Ripard wrote:
+> > > > > > > > > On Wed, Sep 03, 2025 at 03:03:43AM +0300, Dmitry Baryshkov wrote:
+> > > > > > > > > > On Tue, Sep 02, 2025 at 08:06:54PM +0200, Maxime Ripard wrote:
+> > > > > > > > > > > On Tue, Sep 02, 2025 at 06:45:44AM +0300, Dmitry Baryshkov wrote:
+> > > > > > > > > > > > On Mon, Sep 01, 2025 at 09:07:02AM +0200, Maxime Ripard wrote:
+> > > > > > > > > > > > > On Sun, Aug 31, 2025 at 01:29:13AM +0300, Dmitry Baryshkov wrote:
+> > > > > > > > > > > > > > On Sat, Aug 30, 2025 at 09:30:01AM +0200, Daniel Stone wrote:
+> > > > > > > > > > > > > > > Hi Dmitry,
+> > > > > > > > > > > > > > > 
+> > > > > > > > > > > > > > > On Sat, 30 Aug 2025 at 02:23, Dmitry Baryshkov
+> > > > > > > > > > > > > > > <dmitry.baryshkov@oss.qualcomm.com> wrote:
+> > > > > > > > > > > > > > > > It's not uncommon for the particular device to support only a subset of
+> > > > > > > > > > > > > > > > HDMI InfoFrames. It's not a big problem for the kernel, since we adopted
+> > > > > > > > > > > > > > > > a model of ignoring the unsupported Infoframes, but it's a bigger
+> > > > > > > > > > > > > > > > problem for the userspace: we end up having files in debugfs which do
+> > > > > > > > > > > > > > > > mot match what is being sent on the wire.
+> > > > > > > > > > > > > > > >
+> > > > > > > > > > > > > > > > Sort that out, making sure that all interfaces are consistent.
+> > > > > > > > > > > > > > > 
+> > > > > > > > > > > > > > > Thanks for the series, it's a really good cleanup.
+> > > > > > > > > > > > > > > 
+> > > > > > > > > > > > > > > I know that dw-hdmi-qp can support _any_ infoframe, by manually
+> > > > > > > > > > > > > > > packing it into the two GHDMI banks. So the supported set there is
+> > > > > > > > > > > > > > > 'all of the currently well-known ones, plus any two others, but only
+> > > > > > > > > > > > > > > two and not more'. I wonder if that has any effect on the interface
+> > > > > > > > > > > > > > > you were thinking about for userspace?
+> > > > > > > > > > > > > > 
+> > > > > > > > > > > > > > I was mostly concerned with the existing debugfs interface (as it is
+> > > > > > > > > > > > > > also used e.g. for edid-decode, etc).
+> > > > > > > > > > > > > > 
+> > > > > > > > > > > > > > It seems "everything + 2 spare" is more or less common (ADV7511, MSM
+> > > > > > > > > > > > > > HDMI also have those. I don't have at hand the proper datasheet for
+> > > > > > > > > > > > > > LT9611 (non-UXC one), but I think its InfoFrames are also more or less
+> > > > > > > > > > > > > > generic).  Maybe we should change debugfs integration to register the
+> > > > > > > > > > > > > > file when the frame is being enabled and removing it when it gets unset.
+> > > > > > > > > > > > > 
+> > > > > > > > > > > > > But, like, for what benefit?
+> > > > > > > > > > > > > 
+> > > > > > > > > > > > > It's a debugfs interface for userspace to consume. The current setup
+> > > > > > > > > > > > > works fine with edid-decode already. Why should we complicate the design
+> > > > > > > > > > > > > that much and create fun races like "I'm running edid-decode in parallel
+> > > > > > > > > > > > > to a modeset that would remove the file I just opened, what is the file
+> > > > > > > > > > > > > now?".
+> > > > > > > > > > > > 
+> > > > > > > > > > > > Aren't we trading that with the 'I'm running edid-decode in paralle with
+> > > > > > > > > > > > to a modeset and the file suddenly becomes empty'?
+> > > > > > > > > > > 
+> > > > > > > > > > > In that case, you know what the file is going to be: empty. And you went
+> > > > > > > > > > > from a racy, straightforward, design to a racy, complicated, design.
+> > > > > > > > > > > 
+> > > > > > > > > > > It was my question before, but I still don't really see what benefits it
+> > > > > > > > > > > would have, and why we need to care about it in the core, when it could
+> > > > > > > > > > > be dealt with in the drivers just fine on a case by case basis.
+> > > > > > > > > > 
+> > > > > > > > > > Actually it can not: debugfs files are registered from the core, not
+> > > > > > > > > > from the drivers. That's why I needed all the supported_infoframes
+> > > > > > > > > > (which later became software_infoframes).
+> > > > > > > > > 
+> > > > > > > > > That's one thing we can change then.
+> > > > > > > > > 
+> > > > > > > > > > Anyway, I'm fine with having empty files there.
+> > > > > > > > > > 
+> > > > > > > > > > > > > > Then in the long run we can add 'slots' and allocate some of the frames
+> > > > > > > > > > > > > > to the slots. E.g. ADV7511 would get 'software AVI', 'software SPD',
+> > > > > > > > > > > > > > 'auto AUDIO' + 2 generic slots (and MPEG InfoFrame which can probably be
+> > > > > > > > > > > > > > salvaged as another generic one)). MSM HDMI would get 'software AVI',
+> > > > > > > > > > > > > > 'software AUDIO' + 2 generic slots (+MPEG + obsucre HDMI which I don't
+> > > > > > > > > > > > > > want to use). Then the framework might be able to prioritize whether to
+> > > > > > > > > > > > > > use generic slots for important data (as DRM HDR, HDMI) or less important
+> > > > > > > > > > > > > > (SPD).
+> > > > > > > > > > > > > 
+> > > > > > > > > > > > > Why is it something for the framework to deal with? If you want to have
+> > > > > > > > > > > > > extra infoframes in there, just go ahead and create additional debugfs
+> > > > > > > > > > > > > files in your driver.
+> > > > > > > > > > > > > 
+> > > > > > > > > > > > > If you want to have the slot mechanism, check in your atomic_check that
+> > > > > > > > > > > > > only $NUM_SLOT at most infoframes are set.
+> > > > > > > > > > > > 
+> > > > > > > > > > > > The driver can only decide that 'we have VSI, SPD and DRM InfoFrames
+> > > > > > > > > > > > which is -ETOOMUCH for 2 generic slots'. The framework should be able to
+> > > > > > > > > > > > decide 'the device has 2 generic slots, we have HDR data, use VSI and
+> > > > > > > > > > > > DRM InfoFrames and disable SPD for now'.
+> > > > > > > > > > > 
+> > > > > > > > > > > I mean... the spec does? The spec says when a particular feature
+> > > > > > > > > > > requires to send a particular infoframe. If your device cannot support
+> > > > > > > > > > > to have more than two "features" enabled at the same time, so be it. It
+> > > > > > > > > > > something that should be checked in that driver atomic_check.
+> > > > > > > > > > 
+> > > > > > > > > > Sounds good to me. Let's have those checks in the drivers until we
+> > > > > > > > > > actually have seveal drivers performing generic frame allocation.
+> > > > > > > > > > 
+> > > > > > > > > > > Or just don't register the SPD debugfs file, ignore it, put a comment
+> > > > > > > > > > > there, and we're done too.
+> > > > > > > > > > 
+> > > > > > > > > > It's generic code.
+> > > > > > > > > > 
+> > > > > > > > > > > > But... We are not there yet and I don't have clear usecase (we support
+> > > > > > > > > > > > HDR neither on ADV7511 nor on MSM HDMI, after carefully reading the
+> > > > > > > > > > > > guide I realised that ADV7511 has normal audio infoframes). Maybe I
+> > > > > > > > > > > > should drop all the 'auto' features, simplifying this series and land
+> > > > > > > > > > > > [1] for LT9611UXC as I wanted origianlly.
+> > > > > > > > > > > > 
+> > > > > > > > > > > > [1] https://lore.kernel.org/dri-devel/20250803-lt9611uxc-hdmi-v1-2-cb9ce1793acf@oss.qualcomm.com/
+> > > > > > > > > > > 
+> > > > > > > > > > > Looking back at that series, I think it still has value to rely on the
+> > > > > > > > > > > HDMI infrastructure at the very least for the atomic_check sanitization.
+> > > > > > > > > > > 
+> > > > > > > > > > > But since you wouldn't use the generated infoframes, just skip the
+> > > > > > > > > > > debugfs files registration. You're not lying to userspace anymore, and
+> > > > > > > > > > > you get the benefits of the HDMI framework.
+> > > > > > > > > > 
+> > > > > > > > > > We create all infoframe files for all HDMI connectors.
+> > > > > > > > > 
+> > > > > > > > > Then we can provide a debugfs_init helper to register all of them, or
+> > > > > > > > > only some of them, and let the drivers figure it out.
+> > > > > > > > > 
+> > > > > > > > > Worst case scenario, debugfs files will not get created, which is a much
+> > > > > > > > > better outcome than having to put boilerplate in every driver that will
+> > > > > > > > > get inconsistent over time.
+> > > > > > > > 
+> > > > > > > > debugfs_init() for each infoframe or taking some kind of bitmask?
+> > > > > > > 
+> > > > > > > I meant turning hdmi_debugfs_add and create_hdmi_*_infoframe_file into
+> > > > > > > public helpers. That way, drivers that don't care can use the (renamed)
+> > > > > > > hdmi_debugfs_add, and drivers with different constraints can register
+> > > > > > > the relevant infoframes directly.
+> > > > > > 
+> > > > > > Doesn't that mean more boilerplate?
+> > > > > 
+> > > > > I don't think it would? In the general case, it wouldn't change
+> > > > > anything, and in special cases, then it's probably going to be different
+> > > > > from one driver to the next so there's not much we can do.
+> > > > > 
+> > > > > > In the end, LT9611UXC is a special case, for which I'm totally fine
+> > > > > > not to use HDMI helpers at this point: we don't control infoframes
+> > > > > > (hopefully that can change), we don't care about the TMDS clock, no
+> > > > > > CEC, etc.
+> > > > > 
+> > > > > Not using the helpers sound pretty reasonable here too.
+> > > > > 
+> > > > > > For all other usecases I'm fine with having atomic_check() unset all
+> > > > > > unsupported infoframes and having empty files in debugfs. Then we can
+> > > > > > evolve over the time, once we see a pattern. We had several drivers
+> > > > > > which had very limited infoframes support, but I think this now gets
+> > > > > > sorted over the time.
+> > > > > 
+> > > > > I never talked about atomic_check()? You were initially concerned that
+> > > > > the framework would expose data in debugfs that it's not using. Not
+> > > > > registering anything in debugfs solves that, but I'm not sure we need to
+> > > > > special case atomic_check.
+> > > > 
+> > > > Well... I ended up with [1], handling infoframes in the atomic_check()
+> > > > rather than registering fewer infoframe debugfs files. This way device
+> > > > state is consistent, we don't have enabled instances, etc. However it
+> > > > results in repetetive code in atomic_check().
+> > > > 
+> > > > [1] https://lore.kernel.org/dri-devel/20250928-limit-infoframes-2-v2-0-6f8f5fd04214@oss.qualcomm.com/
+> > > 
+> > > I guess we can continue the discussion there, but I'm not sure we want
+> > > to have more boilerplate in drivers, and especially in the atomic_check
+> > > part. If drivers are inconsistent or wrong in the debugfs path, there's
+> > > no major issue. If they are wrong in the atomic_check path, it will lead
+> > > to regressions, possibly in paths that are pretty hard to test.
+> > 
+> > You've responded there and I can drop the extra handling for HDR DRM and
+> > audio infoframes in the atomic_check(). What is your opinion about the
+> > atomic_check() unsetting the infoframe->set for SPD and HDMI infoframes?
+> 
+> HDMI infoframes are mandatory, so that's a big no-no.
 
-Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
----
- sound/soc/codecs/Kconfig      |  2 +
- sound/soc/codecs/pm4125-sdw.c | 64 ++++---------------------------
- sound/soc/codecs/pm4125.c     | 71 +++++++----------------------------
- sound/soc/codecs/pm4125.h     | 18 +--------
- 4 files changed, 25 insertions(+), 130 deletions(-)
+Nevertheless... There are drivers (sun4i, inno_hdmi, rk3066, dw_hdmi_qp)
+which don't (yet) implement VSI support.
 
-diff --git a/sound/soc/codecs/Kconfig b/sound/soc/codecs/Kconfig
-index 160c07699a8b..a952ca0d09c4 100644
---- a/sound/soc/codecs/Kconfig
-+++ b/sound/soc/codecs/Kconfig
-@@ -1567,6 +1567,7 @@ config SND_SOC_PEB2466
- 
- config SND_SOC_PM4125
- 	depends on SND_SOC_PM4125_SDW
-+	select SND_SOC_WCD_COMMON
- 	tristate
- 	depends on SOUNDWIRE || !SOUNDWIRE
- 
-@@ -1575,6 +1576,7 @@ config SND_SOC_PM4125_SDW
- 	select SND_SOC_PM4125
- 	select SND_SOC_WCD_MBHC
- 	select REGMAP_IRQ
-+	select SND_SOC_WCD_COMMON
- 	depends on SOUNDWIRE
- 	select REGMAP_SOUNDWIRE
- 	help
-diff --git a/sound/soc/codecs/pm4125-sdw.c b/sound/soc/codecs/pm4125-sdw.c
-index 4ed09fbe3f54..3167b38e2876 100644
---- a/sound/soc/codecs/pm4125-sdw.c
-+++ b/sound/soc/codecs/pm4125-sdw.c
-@@ -20,12 +20,12 @@
- #include <sound/soc.h>
- #include "pm4125.h"
- 
--static struct pm4125_sdw_ch_info pm4125_sdw_rx_ch_info[] = {
-+static struct wcd_sdw_ch_info pm4125_sdw_rx_ch_info[] = {
- 	WCD_SDW_CH(PM4125_HPH_L, PM4125_HPH_PORT, BIT(0)),
- 	WCD_SDW_CH(PM4125_HPH_R, PM4125_HPH_PORT, BIT(1)),
- };
- 
--static struct pm4125_sdw_ch_info pm4125_sdw_tx_ch_info[] = {
-+static struct wcd_sdw_ch_info pm4125_sdw_tx_ch_info[] = {
- 	WCD_SDW_CH(PM4125_ADC1, PM4125_ADC_1_2_DMIC1L_BCS_PORT, BIT(0)),
- 	WCD_SDW_CH(PM4125_ADC2, PM4125_ADC_1_2_DMIC1L_BCS_PORT, BIT(1)),
- };
-@@ -46,12 +46,6 @@ static struct sdw_dpn_prop pm4125_dpn_prop[PM4125_MAX_SWR_PORTS] = {
- 	}
- };
- 
--struct device *pm4125_sdw_device_get(struct device_node *np)
--{
--	return bus_find_device_by_of_node(&sdw_bus_type, np);
--}
--EXPORT_SYMBOL_GPL(pm4125_sdw_device_get);
--
- int pm4125_sdw_hw_params(struct pm4125_sdw_priv *priv, struct snd_pcm_substream *substream,
- 			 struct snd_pcm_hw_params *params, struct snd_soc_dai *dai)
- {
-@@ -83,19 +77,6 @@ int pm4125_sdw_hw_params(struct pm4125_sdw_priv *priv, struct snd_pcm_substream
- }
- EXPORT_SYMBOL_GPL(pm4125_sdw_hw_params);
- 
--static int pm4125_update_status(struct sdw_slave *slave, enum sdw_slave_status status)
--{
--	struct pm4125_sdw_priv *priv = dev_get_drvdata(&slave->dev);
--
--	if (priv->regmap && status == SDW_SLAVE_ATTACHED) {
--		/* Write out any cached changes that happened between probe and attach */
--		regcache_cache_only(priv->regmap, false);
--		return regcache_sync(priv->regmap);
--	}
--
--	return 0;
--}
--
- /*
-  * Handle Soundwire out-of-band interrupt event by triggering the first irq of the slave_irq
-  * irq domain, which then will be handled by the regmap_irq threaded irq.
-@@ -104,18 +85,9 @@ static int pm4125_update_status(struct sdw_slave *slave, enum sdw_slave_status s
- static int pm4125_interrupt_callback(struct sdw_slave *slave, struct sdw_slave_intr_status *status)
- {
- 	struct pm4125_sdw_priv *priv = dev_get_drvdata(&slave->dev);
--	struct irq_domain *slave_irq = priv->slave_irq;
--	u32 sts1, sts2, sts3;
--
--	do {
--		handle_nested_irq(irq_find_mapping(slave_irq, 0));
--		regmap_read(priv->regmap, PM4125_DIG_SWR_INTR_STATUS_0, &sts1);
--		regmap_read(priv->regmap, PM4125_DIG_SWR_INTR_STATUS_1, &sts2);
--		regmap_read(priv->regmap, PM4125_DIG_SWR_INTR_STATUS_2, &sts3);
- 
--	} while (sts1 || sts2 || sts3);
--
--	return IRQ_HANDLED;
-+	return wcd_interrupt_callback(slave, priv->slave_irq, PM4125_DIG_SWR_INTR_STATUS_0,
-+				PM4125_DIG_SWR_INTR_STATUS_1, PM4125_DIG_SWR_INTR_STATUS_2);
- }
- 
- static const struct reg_default pm4125_defaults[] = {
-@@ -369,32 +341,10 @@ static const struct regmap_config pm4125_regmap_config = {
- };
- 
- static const struct sdw_slave_ops pm4125_slave_ops = {
--	.update_status = pm4125_update_status,
-+	.update_status = wcd_update_status,
- 	.interrupt_callback = pm4125_interrupt_callback,
- };
- 
--static int pm4125_sdw_component_bind(struct device *dev, struct device *master, void *data)
--{
--	pm_runtime_set_autosuspend_delay(dev, 3000);
--	pm_runtime_use_autosuspend(dev);
--	pm_runtime_set_active(dev);
--	pm_runtime_enable(dev);
--
--	return 0;
--}
--
--static void pm4125_sdw_component_unbind(struct device *dev, struct device *master, void *data)
--{
--	pm_runtime_disable(dev);
--	pm_runtime_set_suspended(dev);
--	pm_runtime_dont_use_autosuspend(dev);
--}
--
--static const struct component_ops pm4125_sdw_component_ops = {
--	.bind = pm4125_sdw_component_bind,
--	.unbind = pm4125_sdw_component_unbind,
--};
--
- static int pm4125_probe(struct sdw_slave *pdev, const struct sdw_device_id *id)
- {
- 	struct device *dev = &pdev->dev;
-@@ -476,7 +426,7 @@ static int pm4125_probe(struct sdw_slave *pdev, const struct sdw_device_id *id)
- 			priv->ch_info[i].master_ch_mask = PM4125_SWRM_CH_MASK(master_ch_mask[i]);
- 	}
- 
--	ret = component_add(dev, &pm4125_sdw_component_ops);
-+	ret = component_add(dev, &wcd_sdw_component_ops);
- 	if (ret)
- 		return ret;
- 
-@@ -490,7 +440,7 @@ static int pm4125_remove(struct sdw_slave *pdev)
- {
- 	struct device *dev = &pdev->dev;
- 
--	component_del(dev, &pm4125_sdw_component_ops);
-+	component_del(dev, &wcd_sdw_component_ops);
- 
- 	return 0;
- }
-diff --git a/sound/soc/codecs/pm4125.c b/sound/soc/codecs/pm4125.c
-index 706fc668ffe2..27fe363db8b9 100644
---- a/sound/soc/codecs/pm4125.c
-+++ b/sound/soc/codecs/pm4125.c
-@@ -69,6 +69,7 @@ struct pm4125_priv {
- 	struct wcd_mbhc *wcd_mbhc;
- 	struct wcd_mbhc_config mbhc_cfg;
- 	struct wcd_mbhc_intr intr_ids;
-+	struct wcd_common common;
- 	struct irq_domain *virq;
- 	const struct regmap_irq_chip *pm4125_regmap_irq_chip;
- 	struct regmap_irq_chip_data *irq_chip;
-@@ -76,9 +77,6 @@ struct pm4125_priv {
- 	unsigned long status_mask;
- 	s32 micb_ref[PM4125_MAX_MICBIAS];
- 	s32 pullup_ref[PM4125_MAX_MICBIAS];
--	u32 micb1_mv;
--	u32 micb2_mv;
--	u32 micb3_mv;
- 
- 	int hphr_pdm_wd_int;
- 	int hphl_pdm_wd_int;
-@@ -644,16 +642,6 @@ static int pm4125_codec_enable_ear_pa(struct snd_soc_dapm_widget *w,
- 	return 0;
- }
- 
--static int pm4125_get_micb_vout_ctl_val(struct device *dev, u32 micb_mv)
--{
--	if (micb_mv < 1600 || micb_mv > 2850) {
--		dev_err(dev, "%s: unsupported micbias voltage (%u mV)\n", __func__, micb_mv);
--		return -EINVAL;
--	}
--
--	return (micb_mv - 1600) / 50;
--}
--
- static int pm4125_codec_enable_adc(struct snd_soc_dapm_widget *w,
- 				   struct snd_kcontrol *kcontrol, int event)
- {
-@@ -855,7 +843,7 @@ static int pm4125_codec_enable_micbias_pullup(struct snd_soc_dapm_widget *w,
- static int pm4125_connect_port(struct pm4125_sdw_priv *sdw_priv, u8 port_idx, u8 ch_id, bool enable)
- {
- 	struct sdw_port_config *port_config = &sdw_priv->port_config[port_idx - 1];
--	const struct pm4125_sdw_ch_info *ch_info = &sdw_priv->ch_info[ch_id];
-+	const struct wcd_sdw_ch_info *ch_info = &sdw_priv->ch_info[ch_id];
- 	struct sdw_slave *sdev = sdw_priv->sdev;
- 	u8 port_num = ch_info->port_num;
- 	u8 ch_mask = ch_info->ch_mask;
-@@ -1266,15 +1254,8 @@ static const struct snd_soc_dapm_route pm4125_audio_map[] = {
- 
- static int pm4125_set_micbias_data(struct device *dev, struct pm4125_priv *pm4125)
- {
--	int vout_ctl;
--
--	/* Set micbias voltage */
--	vout_ctl = pm4125_get_micb_vout_ctl_val(dev, pm4125->micb1_mv);
--	if (vout_ctl < 0)
--		return -EINVAL;
--
- 	regmap_update_bits(pm4125->regmap, PM4125_ANA_MICBIAS_LDO_1_SETTING,
--			   PM4125_ANA_MICBIAS_MICB_OUT_VAL_MASK, vout_ctl << 3);
-+			   PM4125_ANA_MICBIAS_MICB_OUT_VAL_MASK, pm4125->common.micb_vout[0]);
- 	return 0;
- }
- 
-@@ -1418,31 +1399,6 @@ static const struct snd_soc_component_driver soc_codec_dev_pm4125 = {
- 	.endianness = 1,
- };
- 
--static void pm4125_dt_parse_micbias_info(struct device *dev, struct pm4125_priv *priv)
--{
--	struct device_node *np = dev->of_node;
--	u32 prop_val = 0;
--	int ret;
--
--	ret = of_property_read_u32(np, "qcom,micbias1-microvolt", &prop_val);
--	if (!ret)
--		priv->micb1_mv = prop_val / 1000;
--	else
--		dev_warn(dev, "Micbias1 DT property not found\n");
--
--	ret = of_property_read_u32(np, "qcom,micbias2-microvolt", &prop_val);
--	if (!ret)
--		priv->micb2_mv = prop_val / 1000;
--	else
--		dev_warn(dev, "Micbias2 DT property not found\n");
--
--	ret = of_property_read_u32(np, "qcom,micbias3-microvolt", &prop_val);
--	if (!ret)
--		priv->micb3_mv = prop_val / 1000;
--	else
--		dev_warn(dev, "Micbias3 DT property not found\n");
--}
--
- static int pm4125_codec_hw_params(struct snd_pcm_substream *substream,
- 				  struct snd_pcm_hw_params *params,
- 				  struct snd_soc_dai *dai)
-@@ -1560,7 +1516,7 @@ static int pm4125_bind(struct device *dev)
- 		return ret;
- 	}
- 
--	pm4125->rxdev = pm4125_sdw_device_get(pm4125->rxnode);
-+	pm4125->rxdev = of_sdw_find_device_by_node(pm4125->rxnode);
- 	if (!pm4125->rxdev) {
- 		dev_err(dev, "could not find rxslave with matching of node\n");
- 		ret = -EINVAL;
-@@ -1570,7 +1526,7 @@ static int pm4125_bind(struct device *dev)
- 	pm4125->sdw_priv[AIF1_PB] = dev_get_drvdata(pm4125->rxdev);
- 	pm4125->sdw_priv[AIF1_PB]->pm4125 = pm4125;
- 
--	pm4125->txdev = pm4125_sdw_device_get(pm4125->txnode);
-+	pm4125->txdev = of_sdw_find_device_by_node(pm4125->txnode);
- 	if (!pm4125->txdev) {
- 		dev_err(dev, "could not find txslave with matching of node\n");
- 		ret = -EINVAL;
-@@ -1615,7 +1571,7 @@ static int pm4125_bind(struct device *dev)
- 		goto link_remove_dev_tx;
- 	}
- 
--	pm4125->regmap = dev_get_regmap(&pm4125->tx_sdw_dev->dev, NULL);
-+	pm4125->regmap = pm4125->sdw_priv[AIF1_CAP]->regmap;
- 	if (!pm4125->regmap) {
- 		dev_err(dev, "could not get TX device regmap\n");
- 		ret = -EINVAL;
-@@ -1631,11 +1587,7 @@ static int pm4125_bind(struct device *dev)
- 	pm4125->sdw_priv[AIF1_PB]->slave_irq = pm4125->virq;
- 	pm4125->sdw_priv[AIF1_CAP]->slave_irq = pm4125->virq;
- 
--	ret = pm4125_set_micbias_data(dev, pm4125);
--	if (ret < 0) {
--		dev_err(dev, "Bad micbias pdata\n");
--		goto link_remove_dev_rx;
--	}
-+	pm4125_set_micbias_data(dev, pm4125);
- 
- 	ret = snd_soc_register_component(dev, &soc_codec_dev_pm4125,
- 					 pm4125_dais, ARRAY_SIZE(pm4125_dais));
-@@ -1716,7 +1668,12 @@ static int pm4125_probe(struct platform_device *pdev)
- 
- 	pm4125_reset(pm4125);
- 
--	pm4125_dt_parse_micbias_info(dev, pm4125);
-+	pm4125->common.dev = dev;
-+	pm4125->common.max_bias = 3;
-+	ret = wcd_dt_parse_micbias_info(&pm4125->common);
-+	if (ret)
-+		return dev_err_probe(dev, ret, "Failed to get micbias\n");
-+
- 	atomic_set(&pm4125->gloal_mbias_cnt, 0);
- 
- 	cfg = &pm4125->mbhc_cfg;
-@@ -1724,7 +1681,7 @@ static int pm4125_probe(struct platform_device *pdev)
- 	cfg->anc_micbias = MIC_BIAS_2;
- 	cfg->v_hs_max = WCD_MBHC_HS_V_MAX;
- 	cfg->num_btn = PM4125_MBHC_MAX_BUTTONS;
--	cfg->micb_mv = pm4125->micb2_mv;
-+	cfg->micb_mv = pm4125->common.micb_mv[1];
- 	cfg->linein_th = 5000;
- 	cfg->hs_thr = 1700;
- 	cfg->hph_thr = 50;
-diff --git a/sound/soc/codecs/pm4125.h b/sound/soc/codecs/pm4125.h
-index 3520c711b744..25fd3106f44f 100644
---- a/sound/soc/codecs/pm4125.h
-+++ b/sound/soc/codecs/pm4125.h
-@@ -7,6 +7,7 @@
- 
- #include <linux/soundwire/sdw.h>
- #include <linux/soundwire/sdw_type.h>
-+#include "wcd-common.h"
- 
- #define PM4125_ANA_BASE_ADDR			0x3000
- #define PM4125_DIG_BASE_ADDR			0x3400
-@@ -202,26 +203,13 @@ enum pm4125_rx_sdw_ports {
- 	PM4125_MAX_SWR_PORTS = PM4125_COMP_PORT,
- };
- 
--struct pm4125_sdw_ch_info {
--	int port_num;
--	unsigned int ch_mask;
--	unsigned int master_ch_mask;
--};
--
--#define WCD_SDW_CH(id, pn, cmask)		\
--	[id] = {				\
--		.port_num = pn,			\
--		.ch_mask = cmask,		\
--		.master_ch_mask = cmask,	\
--	}
--
- struct pm4125_priv;
- struct pm4125_sdw_priv {
- 	struct sdw_slave *sdev;
- 	struct sdw_stream_config sconfig;
- 	struct sdw_stream_runtime *sruntime;
- 	struct sdw_port_config port_config[PM4125_MAX_SWR_PORTS];
--	struct pm4125_sdw_ch_info *ch_info;
-+	struct wcd_sdw_ch_info *ch_info;
- 	bool port_enable[PM4125_MAX_SWR_CH_IDS];
- 	unsigned int master_channel_map[SDW_MAX_PORTS];
- 	int active_ports;
-@@ -240,8 +228,6 @@ int pm4125_sdw_set_sdw_stream(struct pm4125_sdw_priv *pm4125, struct snd_soc_dai
- int pm4125_sdw_hw_params(struct pm4125_sdw_priv *pm4125, struct snd_pcm_substream *substream,
- 			 struct snd_pcm_hw_params *params, struct snd_soc_dai *dai);
- 
--struct device *pm4125_sdw_device_get(struct device_node *np);
--
- #else
- static inline int pm4125_sdw_free(struct pm4125_sdw_priv *pm4125,
- 				  struct snd_pcm_substream *substream, struct snd_soc_dai *dai)
+> For SPD, It's really not clear to me why atomic_check should do that in
+> the first place. Your initial concern was about exposing infoframes in
+> debugfs that wouldn't be used by the driver.
+> 
+> If the driver doesn't register a debugfs file for SPD, and ignores
+> whatever is in the atomic state, what's should we force drivers to do
+> that?
+
+I really don't think that drivers should mess up with debugfs on their
+own. Making atomic_check() disable the unsupported InfoFrames makes the
+picture perfect: the DRM no longer tries to program them to the
+hardware, DebugFS files stay empty, so the whole state becomes
+consistent.
+
+
 -- 
-2.51.0
-
+With best wishes
+Dmitry
 
