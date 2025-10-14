@@ -1,81 +1,82 @@
-Return-Path: <linux-arm-msm+bounces-77147-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-77148-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ams.mirrors.kernel.org (ams.mirrors.kernel.org [IPv6:2a01:60a::1994:3:14])
-	by mail.lfdr.de (Postfix) with ESMTPS id 796D2BD8A31
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Oct 2025 12:03:21 +0200 (CEST)
+Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [IPv6:2605:f480:58:1:0:1994:3:14])
+	by mail.lfdr.de (Postfix) with ESMTPS id 02029BD8A43
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Oct 2025 12:03:55 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ams.mirrors.kernel.org (Postfix) with ESMTPS id F1057344ADD
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Oct 2025 10:03:20 +0000 (UTC)
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 568904F03C9
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Oct 2025 10:03:32 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id F2CC82F9DB7;
-	Tue, 14 Oct 2025 10:02:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8D7ED3081B7;
+	Tue, 14 Oct 2025 10:03:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="rg+Vx0Oy"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Yxdma8ai"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f41.google.com (mail-wm1-f41.google.com [209.85.128.41])
+Received: from mail-wm1-f43.google.com (mail-wm1-f43.google.com [209.85.128.43])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A6622F549C
-	for <linux-arm-msm@vger.kernel.org>; Tue, 14 Oct 2025 10:02:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F6DC2FE04A
+	for <linux-arm-msm@vger.kernel.org>; Tue, 14 Oct 2025 10:02:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760436178; cv=none; b=ck+hX+XlinmHNve6hsiyLWMPFI8Y2stZaNV77hRDTQZtZTOdEEZWFT/bJrDgac2ZGEkQ6AC/5GMY2EtFmkz7wR8T/Uj5/tWkvUZ9wacgdki34CAAbGv6TrA6zarGhvC9ouwaEYk44oitZo5GOFNCPejfMy+9WB5kQ8kBnzTn65Q=
+	t=1760436181; cv=none; b=HT+ylT8PkiCI4enH55+aUdrMkmzsyl2WiJlAfQ3Qu34dZRn286wKBiyHcvrFd590PD0qtl5/93zBCm7QsBNwD6SI5rllnKT2jUEL+EMlEC13P8P6uhHka9Ep2dKuxv/d/ovrBQu/q7R7hZ2Ot/fqU2SirQlsqecwlZgG67eqFhE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760436178; c=relaxed/simple;
-	bh=SjQNMcKFiFxf1UzqcFbV5V5FIrz1nf5P1xbHJ87t43c=;
+	s=arc-20240116; t=1760436181; c=relaxed/simple;
+	bh=S/KD30P8NP0mNcehUP8pNGC81/R9glKXIgh5wrx2AKc=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=jD/Gt+5yuKeMtSwVz8lWg5tA0pNcOmtOVpthzMco9fCTc7in9It1kcEF05ZLdCnQU8ScQjObScCr9fccPQpb3zImGOv0YMAmcoSxC+ysfFA/Qg2LgYENTKWN+Pvyq6vvmJOG+nb7yTx5zJq7/NuBGwtHOB9SKKmr9kRjGOHCTnQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=rg+Vx0Oy; arc=none smtp.client-ip=209.85.128.41
+	 In-Reply-To:To:Cc; b=IpaCbhZxPdY/EQr3sGM/iAXaD5HCIkIj3RMPEYNhLk4BeieGe+DyYlIXsLugygEo/K2wuyTPtJ4MjZEi2pKG5IKBYYpc1n1oO+C13UtdNIyoTfyAdKxxTLMM9EClHZ0i1EwUWq/uxe6V+5s0aZh1s8QhDl2fbekrBa0usWcO9ZQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Yxdma8ai; arc=none smtp.client-ip=209.85.128.43
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f41.google.com with SMTP id 5b1f17b1804b1-46e6ba26c50so31919365e9.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 14 Oct 2025 03:02:56 -0700 (PDT)
+Received: by mail-wm1-f43.google.com with SMTP id 5b1f17b1804b1-46e4ad36541so53646195e9.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 14 Oct 2025 03:02:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1760436175; x=1761040975; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1760436177; x=1761040977; darn=vger.kernel.org;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=cVJfqn+CURZR5kgzfDjtV++23e8mA5V4+ieWpLbcMzI=;
-        b=rg+Vx0OyC0tKcb+PkXiZfGOl3Wxsg+Ht/I4kztmIH7KvASEMHNz7KHbBTf76rS4r5U
-         b+3sgrQta9u/XoKTRefaOncJ1aLQ+I4l6Hctxf1w1NQB8ZNpygG1hOlzzNFJQs0iCbK8
-         KR/7ce3g7xI9c7PhUMs8SXVWyccNRtNvKVtyfiks5F9ahCzxr5H6p3aUhFHzWllWkdCK
-         RyZho6Wui23kftLL7Jp9cn8V7uPtQYUFt+ID3r8fZ66wsUG+t3slaibv735VkD/A//kN
-         xgFe7e6dLO5z1SCoobg554dOHN9MXVWr5U4AwZ48hsfogNg+tTdaDCBd+Fnh674jEAVt
-         DHyA==
+        bh=vaS07fRAp2KaqILcMQz5dgQ+s6oWbriezT3s15GrHVk=;
+        b=Yxdma8aiLQ93OFxDCuGOp+G+5fdfAdevdgwyJbx/MFxCZSkSSHpb3S5XJECnvak8qe
+         FPQ/YoSNalIXS4P12iAeOtwF6JP11r4LC+4L9qLmZqcBmPfL0lPbB8NBxvO8t44hO4/a
+         N4xJj/xJNUHX9Juk7+WB1Xg2hGxt9n3GYlZzJSchReup72sICnV8BFtnpbus6b+Cv8OM
+         UqlebTnScMmcpXZz5GsMnnljWzK0sh1tCm5aX7NTAbUr2hxvRBj3xpOuTG5RmjHSZ4EJ
+         vjt9YrtBYoAjYUDrKnIN4bMyDqKTABZi6jNELqpOM0jVPHPoX8hw9unbo+VveUTSoxGE
+         tpmQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1760436175; x=1761040975;
+        d=1e100.net; s=20230601; t=1760436177; x=1761040977;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=cVJfqn+CURZR5kgzfDjtV++23e8mA5V4+ieWpLbcMzI=;
-        b=GxqCwa9yUTEb4kQ0LW5ONGOdEVgley+nfgaaPCvNNP1w2RfjGzoOeK+xpY9WsLlOvi
-         elrgxr7iPJrbywNSdcaPfS9eWE9pOCpfYG5kWlHV8cAlCBYOHCDtMId3OCQ5rTmkXRgz
-         rbJkV34Jxo3L9Xbuk7InpAcmbMBzm37T4e07gFzQEUxXqjWp97bVnvxBGzC6cfIxr8RL
-         xk9w/nI4N8BaVoCRgD+bjkfkP2VvGl4NCl7Mvdu7nsw4j2npHQvSQmJVBe6GxK6QoJKe
-         qx95+0dyBQin0b2FIrMaOAwmxKIRLDRdJZxiubafvjpVdkeN7cokc8Ja9gsNvo9V9A/O
-         ovzA==
-X-Forwarded-Encrypted: i=1; AJvYcCWKHSJkbNou4IQQgGr3oyIL87s/9LiFw6/jrUvzyJ6ifT1lA28KLmRcsPZNIBIjCM8GdFAW22cEo7tHyxqu@vger.kernel.org
-X-Gm-Message-State: AOJu0YzELwzhEDnLVU4i78GqMOrMJAOwMIYkOuKJ+9yC/41r3Hc5UVot
-	rJVL8eJ+39gXSjFkSHJ4mLow3wWYzhZJi2ITFCy61+gtofa+uoFT/8DGWSSG7Y3iZ2k=
-X-Gm-Gg: ASbGncsHjKclth59YTC1imWhZPspzvofrnjf4KxgM9JNKTbnEEbT9HDMk6pfyhtPqGA
-	dcnmwOSysrPb8h8OotfaZpl3WsmD7FwhGvDcV9fIRYYWOuwmhJRhvN+61zqNezRjkT2ItM7UMcB
-	LPXWjvi/mR6arIya+TRGLqLBLNwI4SR75/QYlfe75V5drTQOH1exepIW61DzEujvkENqEpmhCDj
-	oWQ3rVfdfpTIB9K+jaEfw9UWV7h+xsdXvdN1Rs+euJhJvVOU7rphhUZD5RAf8puMorGOX5plYCz
-	dR8mHR1l+YgtT5nmiMmBOWMHX+oH7FdduHu8m3gDG1AOnzs77VATAX2gzJc6UaO+tX+BZuM23ew
-	NIL1on5nNejZFnBgOUgoTRzNexrORYGMf9Mg0QaEberM=
-X-Google-Smtp-Source: AGHT+IHn1J3P6w0TT3kflXZRWIHbxv02CVqgaJ7Zj1UOEcse11mXhprORjqLY8jjisVskI0JowAdcg==
-X-Received: by 2002:a05:600c:1e86:b0:46e:4581:6634 with SMTP id 5b1f17b1804b1-46fa9b018e1mr176937295e9.29.1760436175311;
-        Tue, 14 Oct 2025 03:02:55 -0700 (PDT)
+        bh=vaS07fRAp2KaqILcMQz5dgQ+s6oWbriezT3s15GrHVk=;
+        b=myyt5DWJqcPJUx4uPwqj03J3k2yM8++JVh1rCtLzIB/yyhO7GgoAO8dk03m04jQbh9
+         Yx2gLTlKEbESk6EKNZzs2k916YVsr/kuLsJyo1keEtbuFivRyhdO8eVdJUgNZhSHyxlx
+         XD0vdwVNbiwz7yhTpjbNYixMESuAoHBSE1YojAu71guUkydPgOEGm+0ZB2hRKtPKbk/V
+         ywe0G8AH9N1TmS0bZ7Ov9j/odTDytcOT1CYg86EmqBJmpWXC44ukB0VG+zfDhCZEzKWA
+         jW9zNI/BheamxOWPZw73y6ZhXBlM++ZorNzk1nrdUIbmvi+NIpO7n8olmdEJwjcgIGHf
+         3U2Q==
+X-Forwarded-Encrypted: i=1; AJvYcCUpFbxqWnz6pHmINWOy80yyKxoof4qIVKJ9N9yvew9LNPexk724OVAGZWu6Dlkc4e3qK/QwYnRRrd3VFNWB@vger.kernel.org
+X-Gm-Message-State: AOJu0YzYfgDEpFTU+sao1j/wsztJuJlHeGBocykmB6b89F9vkgHdxJ3+
+	w0o1WtrMH+aggpQona5r/7CTdwaCiPbpiUyjyWLbqjdNL1Aip2atDjzECXS6uBUJFAo=
+X-Gm-Gg: ASbGncvXwVxJyTEHActHTSjzsSR0AxP7Mj5Y4b+GUDAuVPseAjoEiZopNKaOo+WVHGQ
+	4EKzSjMANg1lB/nSCkbTtZh0L1Ck7ebiTyo0NxtnOXiEiP3hmgVVGwqRyYI87uHywjlKBk6oKs8
+	kRJ5sQQP2nppdmDobv2HNVJGlxfyE/6G8BrC/F1hKKUQqHBKH+vi5+vx3W8XAoMGYYdpjeN6Mcp
+	a/47zd5wny/bUTqcf2YVGGXMOOT6+/MXnp7J8STA+9aB+bQHRE9LKM2D4BFNISBewMpfh/Zqryy
+	g/PNGizchKjMSDA0YGe3bEAief6b7JHsTwL7tpAuTVxciMrp672TvAYEmX6AP249Mjih1SOfmfo
+	3Zm7bmNRyT8KRjNVuO6GVFX2rggccMtVW8LHaqOjTgvcMTTn4gUhIPw==
+X-Google-Smtp-Source: AGHT+IFl2VtEUnOc7K7cnKyCXWZQmxxjgC+HM/RYs8PRHoUIntYpayCUFq/QGa3L5ZN0P6heHafASA==
+X-Received: by 2002:a05:600c:1d1a:b0:46e:4a78:dea9 with SMTP id 5b1f17b1804b1-46fa9af17d4mr168450155e9.17.1760436177412;
+        Tue, 14 Oct 2025 03:02:57 -0700 (PDT)
 Received: from hackbox.lan ([86.121.7.169])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-46fb489197dsm239615305e9.10.2025.10.14.03.02.52
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-46fb489197dsm239615305e9.10.2025.10.14.03.02.55
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 14 Oct 2025 03:02:53 -0700 (PDT)
+        Tue, 14 Oct 2025 03:02:56 -0700 (PDT)
 From: Abel Vesa <abel.vesa@linaro.org>
-Date: Tue, 14 Oct 2025 13:02:27 +0300
-Subject: [PATCH v3 1/4] dt-bindings: phy: Add DP PHY compatible for Glymur
+Date: Tue, 14 Oct 2025 13:02:28 +0300
+Subject: [PATCH v3 2/4] phy: qcom: edp: Fix the DP_PHY_AUX_CFG registers
+ count
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -84,7 +85,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20251014-phy-qcom-edp-add-glymur-support-v3-1-2772837032ef@linaro.org>
+Message-Id: <20251014-phy-qcom-edp-add-glymur-support-v3-2-2772837032ef@linaro.org>
 References: <20251014-phy-qcom-edp-add-glymur-support-v3-0-2772837032ef@linaro.org>
 In-Reply-To: <20251014-phy-qcom-edp-add-glymur-support-v3-0-2772837032ef@linaro.org>
 To: Vinod Koul <vkoul@kernel.org>, 
@@ -95,55 +96,54 @@ Cc: Dmitry Baryshkov <lumag@kernel.org>,
  Konrad Dybcio <konradybcio@kernel.org>, 
  Neil Armstrong <neil.armstrong@linaro.org>, linux-arm-msm@vger.kernel.org, 
  linux-phy@lists.infradead.org, devicetree@vger.kernel.org, 
- linux-kernel@vger.kernel.org, Abel Vesa <abel.vesa@linaro.org>
+ linux-kernel@vger.kernel.org, Abel Vesa <abel.vesa@linaro.org>, 
+ Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 X-Mailer: b4 0.15-dev-dedf8
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1167; i=abel.vesa@linaro.org;
- h=from:subject:message-id; bh=SjQNMcKFiFxf1UzqcFbV5V5FIrz1nf5P1xbHJ87t43c=;
- b=owEBbQKS/ZANAwAKARtfRMkAlRVWAcsmYgBo7h+/P9kfefQL9Xhu238N4OW/+ki3a8ZQcLA+5
- /LnZTJxNsaJAjMEAAEKAB0WIQRO8+4RTnqPKsqn0bgbX0TJAJUVVgUCaO4fvwAKCRAbX0TJAJUV
- Vg0BD/0TH9WNgHrWjeqkeEuXihRVj7jKEy9+iMDKrSQ8/rwR7ChvS6cRGpe+u/O4DAzGomvgO8Q
- lx7b2fwpoWlEowETy6PImWEB2TmpNXUBdD4zo/BDHLaoISEcdcHToJpihgWYI5rMnQ9zhRIKshe
- q9ufkvxu3L/+/u+FG9LCc7sES2xB8WjJFaoPQpROLNfaNB+9455YfeteCb3SvePUAzbtO3qJavG
- P4igEdfz7GaknEHv9wlIiYb08v5jJJKCc+PROmlHQfojvQvbED6Rn9+YuymS57MnV0bhTRt8Mb9
- QVXW6+6YpfLU3eTjLBgPlrGF4wjF0kuAl766P+FjYwDscU0MUaTXk3FVehoO2uLB3KXmXJpvpQT
- zTlh2jLKjy/lJk9aHxChoS/hVQk3Ac+U6LPqYcfEplRrKF9nXeBWYoRbQ4+olOltcY01+QnIeKx
- 1Pp/9Wx2UxS4HDM3pFw8g3MvCkA8FRpo5kcQXqDBFVt1+kFy0vUhmlD3SIzpzohIgWX4m1+tx3X
- WsPCgPkRq9UoKN9VSpzP1urz1ueT52u2OrGpa1X0AbIvOCaE+eBdacV669Tgx/F1mk6nR5OynX7
- lar0vq/2GI9bGPxHKSu0ZAvctRDk2YWF6csnxydqF1krfDNbM0Gh7dxwEVGM05IFMnpuhpkrJLX
- dxT0tKQyUxjylrQ==
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1247; i=abel.vesa@linaro.org;
+ h=from:subject:message-id; bh=S/KD30P8NP0mNcehUP8pNGC81/R9glKXIgh5wrx2AKc=;
+ b=owEBbQKS/ZANAwAKARtfRMkAlRVWAcsmYgBo7h/Chm3XpAOoZ+7P1ptsAjAqkDalQY4X3MdGn
+ QpOsnA+z8iJAjMEAAEKAB0WIQRO8+4RTnqPKsqn0bgbX0TJAJUVVgUCaO4fwgAKCRAbX0TJAJUV
+ Vt/EEADIKuOmzt2Kab1SDBpuRUMisq3zDdHGoozaSKWUjDdjzmyUsli4WK+J726o7f+wz/nl35c
+ p/kuytzWM6WmVhNy2uKr3bTBevx3TTZ/khpJOTvjXJD88U0nkiJKFKSw7OtjbRDsPfHNVMRckEI
+ XmOO5XxbfoXMDIA9zzEL85yyhcVCvSwMxm4Jl90kloBBBIQxQbfQoeSQtvSVtGxSAE6LW30lW3+
+ K59yh/TgbMvl6RCnVS6DJPdiHMvJAk0Zt3fW73KrH1m34+c06n0M0495ABtxd9noT7yP5milXcb
+ GP6dGequX+u4P/yA3tM9vyd6GgTPHb3TBnQQ7bDQkIPyEe1F4o/vcW9q2q4G1bmFVNKKw+pnvqp
+ DSOPcGQ9W/P8RpEoBDU7b4hrVm4LjeNT2IQvjjH8OVXQPzaMDJ3zvAWvYJsJbiXLSak1LyfIXxi
+ ryttjR+DDMutxAj5gh/8PLigLof3N8WYn5Caauk361g5UyeS1y1xRkL9QQyeB+/TrRPuXnqy5DH
+ 6O1uIIO6JmbCQEqTMEaZ7lSouhkkmKaS5QFZQgo8rT7UqNQGenxFOkqEUc5tvnDup5hsF3YGDoM
+ DWtAWrgFO65A/6Guiq6jnkc+Y5YXtji5LchjQCmvHYyCQXiCTCL+11Q+GG6JEJeiTg5ITXHTkSb
+ sYesTJCzcqS3h9A==
 X-Developer-Key: i=abel.vesa@linaro.org; a=openpgp;
  fpr=6AFF162D57F4223A8770EF5AF7BF214136F41FAE
 
-The Glymur platform is the first one to use the eDP PHY version 8.
-This makes it incompatible with any of the earlier platforms and therefore
-requires a dedicated compatible. So document it.
+On all platforms supported by this driver, there are 13 DP_PHY_AUX_CFGx
+registers. This hasn't been an issue so far on currently supported
+platforms, because the init sequence never spanned beyond DP_PHY_AUX_CFG9.
 
-Acked-by: Rob Herring (Arm) <robh@kernel.org>
+However, on the new upcoming Glymur platform, these are updated along
+with the rest of the init sequence.
+
+So update the size of the array holding the config to 13.
+
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
 ---
- Documentation/devicetree/bindings/phy/qcom,edp-phy.yaml | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/phy/qualcomm/phy-qcom-edp.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/Documentation/devicetree/bindings/phy/qcom,edp-phy.yaml b/Documentation/devicetree/bindings/phy/qcom,edp-phy.yaml
-index bfc4d75f50ff9e31981fe602478f28320545e52b..4a1daae3d8d47ca5f08d97a1864cfd615dcf108d 100644
---- a/Documentation/devicetree/bindings/phy/qcom,edp-phy.yaml
-+++ b/Documentation/devicetree/bindings/phy/qcom,edp-phy.yaml
-@@ -18,6 +18,7 @@ properties:
-   compatible:
-     oneOf:
-       - enum:
-+          - qcom,glymur-dp-phy
-           - qcom,sa8775p-edp-phy
-           - qcom,sc7280-edp-phy
-           - qcom,sc8180x-edp-phy
-@@ -72,6 +73,7 @@ allOf:
-       properties:
-         compatible:
-           enum:
-+            - qcom,glymur-dp-phy
-             - qcom,x1e80100-dp-phy
-     then:
-       properties:
+diff --git a/drivers/phy/qualcomm/phy-qcom-edp.c b/drivers/phy/qualcomm/phy-qcom-edp.c
+index ca9bb9d70e29e1a132bd499fb9f74b5837acf45b..7b642742412e63149442e4befeb095307ec38173 100644
+--- a/drivers/phy/qualcomm/phy-qcom-edp.c
++++ b/drivers/phy/qualcomm/phy-qcom-edp.c
+@@ -32,7 +32,7 @@
+ #define DP_PHY_PD_CTL                           0x001c
+ #define DP_PHY_MODE                             0x0020
+ 
+-#define DP_AUX_CFG_SIZE                         10
++#define DP_AUX_CFG_SIZE                         13
+ #define DP_PHY_AUX_CFG(n)                       (0x24 + (0x04 * (n)))
+ 
+ #define DP_PHY_AUX_INTERRUPT_MASK		0x0058
 
 -- 
 2.48.1
