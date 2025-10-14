@@ -1,149 +1,246 @@
-Return-Path: <linux-arm-msm+bounces-77212-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-77213-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [142.0.200.124])
-	by mail.lfdr.de (Postfix) with ESMTPS id DD39BBDA05A
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Oct 2025 16:34:16 +0200 (CEST)
+Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [IPv6:2605:f480:58:1:0:1994:3:14])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1EC20BDA069
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Oct 2025 16:36:08 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 675E94E124E
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Oct 2025 14:33:44 +0000 (UTC)
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 275424EE5D6
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Oct 2025 14:36:02 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 195D02C17A8;
-	Tue, 14 Oct 2025 14:33:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4EE882ECD0E;
+	Tue, 14 Oct 2025 14:35:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="PWTeXclo"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="bjkKe4IG"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4555E1D7E4A
-	for <linux-arm-msm@vger.kernel.org>; Tue, 14 Oct 2025 14:33:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3420A28751D;
+	Tue, 14 Oct 2025 14:35:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760452423; cv=none; b=Dymt+bSUbzfdZ6hLfRadrRwW+baDSgE47fUKeQGyc6oKtKhduAD8sPlbXqkpNoxnYYF8mmlGBlhP3Wm/bZmIwjNdC9ugthxqxX2wphmxQuJA9ESVp2aiTc53JeHDVTe6F0eaHKgUtGDOH6Zp4eAmTJ3hTVFcuLYwXg1lVAO2v7c=
+	t=1760452556; cv=none; b=NrsM313nHuEz3FSAKk/mkcz6Rt2vD3djhRdC6B1X/0TeirJ1sAD63LrjISPxUgKmRGcbRFUAboNZbUI1hfH7pslKKl6vbzc9TrxWhveqbH437/glzs0QCTyKnbAUSu/QQa3f3Xok3VPy7ha1lFgUSgH2FoJLutdzLoBXwRnp344=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760452423; c=relaxed/simple;
-	bh=4wuswNzB600J7UAiTusoiuO6/KQ5VzhjGz2I/Vgs4os=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=LSEGCr5c19V7ZcVu49z7cEe5fb5Wh+H9c3Ydz/92PC4kUdmnSX5fVfJPvDa8SBvVz1Sf/fbaBC0uUS0Tk0/nrA5QP6j2/Xt2dJoZkCONwLWTqwTudvH1VFiPDaY0DnnsKlLJYxMimDyImHPcbVcHH0DDG5hSTONdS4GGIVQ8/lI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=PWTeXclo; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 59E87FRt018068
-	for <linux-arm-msm@vger.kernel.org>; Tue, 14 Oct 2025 14:33:40 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	qAzKzbxqDfzAkYWr9ZLxclptMlt9B8P0XjiWP/VJuk0=; b=PWTeXcloVkNryC4/
-	S48HGe3TUdIIpgcTqaE/X3Md0nS0AKuwX6YfbRo597/BHaXaxBlKJMcUzfoj0I4O
-	Sa0ZoN/VDMHmt+HQr3zHJgP/9YfDzViZ0uPcJDC6kwKwMJNV1H3kuZo82BUlC4vX
-	rY1YMBhVATQHtVeXgdPR3bIvx911WRMSMEH/iYSmU/Cf7A6gMV1ynUkldXCqLbzB
-	J3tqZE4yKWFN89GtP/o1ETW/QtaimVLfLprMbZzeVwwhtQVHOvuDWPilicuDcrjo
-	dW6d7Z+VQ3j/IRk8uuaK8D2bz9Ai0rZNPEiviAVmdxINflRca8Gq2MGUJGhlVxWp
-	UoHp4Q==
-Received: from mail-pg1-f197.google.com (mail-pg1-f197.google.com [209.85.215.197])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 49qfes0uny-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Tue, 14 Oct 2025 14:33:39 +0000 (GMT)
-Received: by mail-pg1-f197.google.com with SMTP id 41be03b00d2f7-b62f9247dd1so8992830a12.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 14 Oct 2025 07:33:39 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1760452419; x=1761057219;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=qAzKzbxqDfzAkYWr9ZLxclptMlt9B8P0XjiWP/VJuk0=;
-        b=uh6LDpQ8CLBh1CQMFxG7Nv2LIX4MT8I8ge2XniY+GZO1UU8R9MxUllrjfYLtGpz6E9
-         HbyZbl/kTZAuxehoibIEUFG0jX0t970Z+qxLpNR7t6Dr47XW4+L4QHeCZJFyA7TrCeV3
-         y6bh/sSVVMQwxVpmWe0VcHS0++JM/EdfhfDCDm7Tsz/BweYzqVCdS9YD4QCy2TRGnMRR
-         ti8SQnBWttOOoz6L9m2Yb2tyonUf6/aAeIZxhGFn5YjRc0QffAbQNfeYJIue+6sEwFk0
-         KtBnFlteMVMSBWsqHYyMxK1MhDosRCJf+HgN6guONY1rHabSBqj4qo+tsUJmkbvFg8OX
-         cJGg==
-X-Forwarded-Encrypted: i=1; AJvYcCWdkX+fXtGvPP59kPOSFqnmiJrnQs0KUXh/wD5gNtY2RhgEZZ15nAaPsLGPta1VBBUUbuuQ14IdnLSPLoKR@vger.kernel.org
-X-Gm-Message-State: AOJu0YwDIxTzbNzrjTo+zEqa7tz7PwdEDI1GVuo6R/ARIEXlnCHpTSCL
-	HxHymMgsARTNVtFtQxcJc3RlU1Xzgy5DFlpz9sGi7Ki9DUB92bkFwnwS8jfjf/6rnoUy9TVfhCO
-	6jRRCd8Dw929ebxjZdYS0Mvew0Fhv+N3vU0bHNJcUnc6xzYG6UXwVPvGtWvWUPxaKohrO
-X-Gm-Gg: ASbGncv6PmFJ67ecpNiAuV1Qp3iBb/Qo4Dle1pjQ/K5Z1PmG+UmjsDbelHUHyKM2h/c
-	XxJvfHgpCZCin1YYap0pPG1Z6oKHm7u/uI5ynwemYZ1vO2cDXJDHry9RHQ/B5Cgzlm9ydKxut9X
-	OyVDsQ/qJA98m6uvLFgVZ7wpa2LR/gFeuv7XCss1DjQFxDL6tk0zs/s7qP86heLCtCuI6uS/xto
-	vlkGrva4hr/lffbwZSKPnIumHZNDcLRtPMciWkqtJT8hLDDWHGBPnRhj1kkdlsbgm6zPGeyq9dK
-	AA8DIg8b04s+fRt/AQQ2Cxb9TZG3WhwOhnyUHtnjFCTo0A6p9lznk0G1xynAviuVdzXvgSqgbVC
-	NoPlHFR7JIYBhIA==
-X-Received: by 2002:a17:90b:1d87:b0:32e:a54a:be53 with SMTP id 98e67ed59e1d1-33b51119064mr35989590a91.16.1760452418529;
-        Tue, 14 Oct 2025 07:33:38 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGMR1cZWKq3oXTUBikthfy+B64hVWltts966nj25RJLPKLNaduOsMk1kbBMWbVIZSLsww3vdw==
-X-Received: by 2002:a17:90b:1d87:b0:32e:a54a:be53 with SMTP id 98e67ed59e1d1-33b51119064mr35989530a91.16.1760452417956;
-        Tue, 14 Oct 2025 07:33:37 -0700 (PDT)
-Received: from [10.226.59.182] (i-global254.qualcomm.com. [199.106.103.254])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-33b61a1d3cfsm16181220a91.2.2025.10.14.07.33.36
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 14 Oct 2025 07:33:37 -0700 (PDT)
-Message-ID: <a351fffd-997d-4ec8-b4bc-9279b79a489a@oss.qualcomm.com>
-Date: Tue, 14 Oct 2025 08:33:36 -0600
+	s=arc-20240116; t=1760452556; c=relaxed/simple;
+	bh=7KNa7wMTbQbmZ467rE28JO0t2zhoYtNlOvlIQNscl48=;
+	h=From:Subject:Date:Message-ID:MIME-Version:Content-Type:To:CC; b=OdrplKkSt9w3xTWhxvQQhUE7xZjEu4LJIIhjUbC51O5Qje/pANXplajpXXwobn7jd0VhLQlmxz/vuFeNWUk17uvsr5ubrXU7kOAhtnMpLarxqIyN3m8pr05Zn7a+NB2CJgNbM6MSXtNwDdS5lLV41R0qD90niZuodYzWxtdHTvQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=bjkKe4IG; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 59E87G6b019855;
+	Tue, 14 Oct 2025 14:35:43 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=qcppdkim1; bh=moyjh2Z/8bfDBFji1OPTFR
+	7wVBaNaU9yBpbA9EtFOc4=; b=bjkKe4IGIVd6nTwf0SWq/2ajHCCxlMcskWXl+E
+	JBLIR3HWOQ6lqAVNUFyosziC23uyhzI/Vna4r/MW5rvwLZ4+zShJLSLYj+V3Js1e
+	QtJT6ekRRVHCEd3ibADeA3MXhQn+cxtYeFlYlOXhpX438es2tT9+8KBZKGvrIOnx
+	ZUJemVDdpb+Hj4BfQdW/eAK9RvAOrNVR+SHfx9mXlvgQKnZdcrYEgMdFbH7H/r0k
+	oqC8k8lo1Dp9DrPKz5JDiHjr1vmV0WJ/cqxbqwdSDh2yGy8FCHSm9Zlzdcr7r+eQ
+	CPCVh24XTbNN0UUQliZiE/MEaPGqfF8HN+iwSWYHU9/1GsVw==
+Received: from nasanppmta04.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 49qg0c0sy6-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 14 Oct 2025 14:35:43 +0000 (GMT)
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+	by NASANPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 59EEZgKh004513
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 14 Oct 2025 14:35:42 GMT
+Received: from nsssdc-sh01-lnx.ap.qualcomm.com (10.80.80.8) by
+ nasanex01b.na.qualcomm.com (10.46.141.250) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1748.24; Tue, 14 Oct 2025 07:35:37 -0700
+From: Luo Jie <quic_luoj@quicinc.com>
+Subject: [PATCH v7 00/10] Add Network Subsystem (NSS) clock controller
+ support for IPQ5424 SoC
+Date: Tue, 14 Oct 2025 22:35:25 +0800
+Message-ID: <20251014-qcom_ipq5424_nsscc-v7-0-081f4956be02@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] accel/qaic: Fix bootlog initialization ordering
-To: Youssef Samir <youssef.abdulrahman@oss.qualcomm.com>,
-        carl.vanderlip@oss.qualcomm.com, troy.hanson@oss.qualcomm.com,
-        zachary.mckevitt@oss.qualcomm.com
-Cc: ogabbay@kernel.org, linux-arm-msm@vger.kernel.org,
-        dri-devel@lists.freedesktop.org
-References: <20251007115750.332169-1-youssef.abdulrahman@oss.qualcomm.com>
-Content-Language: en-US
-From: Jeff Hugo <jeff.hugo@oss.qualcomm.com>
-In-Reply-To: <20251007115750.332169-1-youssef.abdulrahman@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Authority-Analysis: v=2.4 cv=R64O2NRX c=1 sm=1 tr=0 ts=68ee5f43 cx=c_pps
- a=rz3CxIlbcmazkYymdCej/Q==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17
- a=IkcTkHD0fZMA:10 a=x6icFKpwvdMA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=COk6AnOGAAAA:8 a=EUspDBNiAAAA:8 a=haWFd_X1g-iGgqmt7XIA:9 a=QEXdDO2ut3YA:10
- a=bFCP_H2QrGi7Okbo017w:22 a=TjNXssC_j7lpFel5tvFf:22
-X-Proofpoint-GUID: GDF-DjAq7UK6PHicSENotGVe8of3z1ZW
-X-Proofpoint-ORIG-GUID: GDF-DjAq7UK6PHicSENotGVe8of3z1ZW
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDExMDAxOCBTYWx0ZWRfX+XEKVfwNURB1
- J88nrjfBzHP0IAhEFovOiGVsjSx3neWXPI/C5r/iO5yzPeGuqSXxFzB4AAphqbtxHDMgbkhcFED
- qLBxOifqvVlseEQdEZFsA1rR1VZZY0RlVq4hy301ZdPKxOpY4SO1qjl+mQUDru5Lqd/Bx87lY5N
- XIG7cSniY66YBeRzzFNdfKXTPHujsdylYfe/eckPX4PMc0yhq7iEr2oaWoYXOdcr7SVmY9K25xn
- 3hfOFefWBco//y+2malBs6ODJHne6IqLl4Swpe3ZlfDwry4ta1cDQF3+yp8/R19waihCf8WYUp4
- q4K08s3YmFUlFUFMVzd9kytqC7eyPu+F6A7Yt/McJ0Lb/Mls5Gwd0BeP5ddJ0hE1eR4K5I72Y5H
- +1BjA5inKoDaTPiE3lFXSMJZazyYYg==
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+X-B4-Tracking: v=1; b=H4sIAK5f7mgC/22NQQ6CMBREr0L+2pq2tEVYeQ9DCJSP/IUFWiUa0
+ rtbu3b5JjNvDgjoCQM0xQEedwq0uATVqQA79+6OjMbEILnUggvFNrs8Olo3raTqXAjWMsRhNLI
+ vBVYK0nD1ONE7S29t4pnCc/Gf/LGbX5p1vJb6n243jLNq6kdTD0KV+nLdXmTJ2XPqQhtj/AJSs
+ 3FKtgAAAA==
+To: Bjorn Andersson <andersson@kernel.org>,
+        Michael Turquette
+	<mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        "Varadarajan
+ Narayanan" <quic_varada@quicinc.com>,
+        Rob Herring <robh@kernel.org>,
+        "Krzysztof Kozlowski" <krzk+dt@kernel.org>,
+        Conor Dooley
+	<conor+dt@kernel.org>,
+        "Anusha Rao" <quic_anusha@quicinc.com>,
+        Devi Priya
+	<quic_devipriy@quicinc.com>,
+        Manikanta Mylavarapu
+	<quic_mmanikan@quicinc.com>,
+        Georgi Djakov <djakov@kernel.org>,
+        Philipp Zabel
+	<p.zabel@pengutronix.de>,
+        Richard Cochran <richardcochran@gmail.com>,
+        Konrad
+ Dybcio <konradybcio@kernel.org>
+CC: <linux-arm-msm@vger.kernel.org>, <linux-clk@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>,
+        Krzysztof Kozlowski
+	<krzysztof.kozlowski@linaro.org>,
+        <devicetree@vger.kernel.org>, <linux-pm@vger.kernel.org>,
+        <netdev@vger.kernel.org>, <quic_kkumarcs@quicinc.com>,
+        <quic_linchen@quicinc.com>, <quic_leiwei@quicinc.com>,
+        <quic_pavir@quicinc.com>, <quic_suruchia@quicinc.com>,
+        Luo Jie <quic_luoj@quicinc.com>,
+        Konrad Dybcio
+	<konrad.dybcio@oss.qualcomm.com>
+X-Mailer: b4 0.14.1
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1760452536; l=5119;
+ i=quic_luoj@quicinc.com; s=20250209; h=from:subject:message-id;
+ bh=7KNa7wMTbQbmZ467rE28JO0t2zhoYtNlOvlIQNscl48=;
+ b=SulFvGhg7QlW1UrWht7gQbOVva0v6rrAT+WRheLpyOe5cAJytMygDjadhGti9edzT4p2K5hJV
+ rraTPg+2zWXBNPy9juNxL9Xu/Xpa2Sdr49USyeNUYBlNvQGW38suZ9d
+X-Developer-Key: i=quic_luoj@quicinc.com; a=ed25519;
+ pk=pzwy8bU5tJZ5UKGTv28n+QOuktaWuriznGmriA9Qkfc=
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: _6Jkyj4yyEGTHcVvLS2jWlAe-Ml-dNBT
+X-Proofpoint-ORIG-GUID: _6Jkyj4yyEGTHcVvLS2jWlAe-Ml-dNBT
+X-Authority-Analysis: v=2.4 cv=eaIwvrEH c=1 sm=1 tr=0 ts=68ee5fbf cx=c_pps
+ a=JYp8KDb2vCoCEuGobkYCKw==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17
+ a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=x6icFKpwvdMA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=VwQbUJbxAAAA:8 a=COk6AnOGAAAA:8
+ a=ZVt5iEiquArM4_yOc0kA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=TjNXssC_j7lpFel5tvFf:22 a=cPQSjfK2_nFv0Q5t_7PE:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDExMDAyMiBTYWx0ZWRfXxelgXNtMd6YY
+ w5t8iM4+RzsFyhDO7Z5qsSXtfax/+zlsRapncbfWEMPwDWAK7hdh8KXCK1CwHER0SHNwKzA7pum
+ Biy+cU7EKvw6kNw+E2SXzK+RjYgV5DkQCArMsEULwSJeZ/kAlc87XSebed2zwKKPQahqDKiDusv
+ pczO/r7bqZO09fU1QSMF8t7U81in6mlS1jRMSdFpfTvvxcMG5UeC69aMNSC6isPVVyjxVv30sv3
+ aHfhtV4V0v4fzANXaj6Pemqm31jyROteSvorOQ/KEP+lCita2fKZT4WwrFXhE4BF8Xq4OxKphz2
+ 9yq4ZUjNHR3Z3NJjVyn4ZVBE722wcECMQ5jhhyCd+V9ma4bNxqqeAusvFC38gXc+i4A4HkKRSNT
+ L8Qti4qRFgxCLz1AFJjHtk08j6czkw==
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.80.40
  definitions=2025-10-14_03,2025-10-13_01,2025-03-28_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 phishscore=0 bulkscore=0 spamscore=0 lowpriorityscore=0
- priorityscore=1501 malwarescore=0 adultscore=0 impostorscore=0 clxscore=1015
+ bulkscore=0 priorityscore=1501 spamscore=0 impostorscore=0 phishscore=0
+ adultscore=0 lowpriorityscore=0 clxscore=1015 suspectscore=0 malwarescore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2510020000 definitions=main-2510110018
+ reason=mlx scancount=1 engine=8.19.0-2510020000 definitions=main-2510110022
 
-On 10/7/2025 5:57 AM, Youssef Samir wrote:
-> From: Jeffrey Hugo <quic_jhugo@quicinc.com>
-> 
-> As soon as we queue MHI buffers to receive the bootlog from the device,
-> we could be receiving data. Therefore all the resources needed to
-> process that data need to be setup prior to queuing the buffers.
-> 
-> We currently initialize some of the resources after queuing the buffers
-> which creates a race between the probe() and any data that comes back
-> from the device. If the uninitialized resources are accessed, we could
-> see page faults.
-> 
-> Fix the init ordering to close the race.
-> 
-> Fixes: 5f8df5c6def6 ("accel/qaic: Add bootlog debugfs")
-> Signed-off-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
-> Signed-off-by: Youssef Samir <youssef.abdulrahman@oss.qualcomm.com>
+The NSS clock controller on the IPQ5424 SoC provides clocks and resets
+to the networking related hardware blocks such as the Packet Processing
+Engine (PPE) and UNIPHY (PCS). Its parent clocks are sourced from the
+GCC, CMN PLL, and UNIPHY blocks.
 
-Applied to drm-misc-fixes.
+Additionally, register the gpll0_out_aux GCC clock, which serves as one
+of the parent clocks for some of the NSS clocks.
 
--Jeff
+The NSS NoC clocks are also enabled to use the icc-clk framework, enabling
+the creation of interconnect paths for the network subsystem’s connections
+with these NoCs.
+
+The NSS clock controller receives its input clocks from the CMN PLL outputs.
+The related patch series which adds support for IPQ5424 SoC in the CMN PLL
+driver is listed below.
+https://lore.kernel.org/all/20250610-qcom_ipq5424_cmnpll-v3-0-ceada8165645@quicinc.com/
+
+Signed-off-by: Luo Jie <quic_luoj@quicinc.com>
+---
+Changes in v7:
+- Update the commit title to use #interconnect-cells as recommended.
+- Collect the reviewed-by tags.
+- Link to v6: https://lore.kernel.org/r/20250925-qcom_ipq5424_nsscc-v6-0-7fad69b14358@quicinc.com
+
+Changes in v6:
+- Remove '#interconnect-cells' from the list of required properties in the
+  DT binding.
+- Add the Reviewed-by tag to the IPQ5424 DT binding patch.
+- Link to v5: https://lore.kernel.org/r/20250909-qcom_ipq5424_nsscc-v5-0-332c49a8512b@quicinc.com
+
+Changes in v5:
+- Reorder the fixes patch "Add required "interconnect-cells" property"
+  to the beginning of the series.
+- Enhance the commit message to clearly explain the necessity of the
+  #interconnect-cells property for interconnect providers, and why
+  there is no ABI breakage for currently supported SoC IPQ9574.
+- Collect the reviewed-by tags.
+- Link to v4: https://lore.kernel.org/r/20250828-qcom_ipq5424_nsscc-v4-0-cb913b205bcb@quicinc.com
+
+Changes in v4:
+- Add new, generic clock names "nss" and "ppe" in DT bindings to support
+  the newer SoC such as IPQ5424 SoC, while retaining existing clock names
+  for IPQ9574.
+- Register all necessary NoC clocks as interconnect paths.
+- Separate the fix for correcting icc_first_node_id into its own patch.
+- Separate the fix requiring the "#interconnect-cells" property for NSS
+  clock controller node.
+- Update commit titles from "clock:" to "clk:" for consistency.
+- Update copyright to remove year as per guidelines in all driver files.
+- Remove the Acked-by tag from the "Add Qualcomm IPQ5424 NSSNOC IDs" patch"
+  as the new NOC IDs are added.
+- Link to v3: https://lore.kernel.org/r/20250710-qcom_ipq5424_nsscc-v3-0-f149dc461212@quicinc.com
+
+Changes in v3:
+- Remove frequency suffix from clock names for PPE and NSS clocks in
+  IPQ9574 DT binding and DTS.
+- Update IPQ5424 DT bindings and DTS to as per new PPE and NSS clock names.
+- Expand the register region of IPQ5424 NSSCC to utilize the entire 0x100_000
+  address range, ensuring inclusion of the wrapper region.
+- Collect the reviewed-by tags.
+- Link to v2: https://lore.kernel.org/r/20250627-qcom_ipq5424_nsscc-v2-0-8d392f65102a@quicinc.com
+
+Changes in v2:
+- Add new, separate clock names "nss" and "ppe" in dtbindings to support
+  the IPQ5424 SoC.
+- Wrap the commit message body at 75 columns.
+- Fix the indentation issue in the `IPQ_NSSCC_5424` Kconfig entry.
+- Enhance the commit message for the defconfig patch to clarify the requirement
+  for enabling `IPQ_NSSCC_5424`.
+- Link to v1: https://lore.kernel.org/r/20250617-qcom_ipq5424_nsscc-v1-0-4dc2d6b3cdfc@quicinc.com
+
+---
+Luo Jie (10):
+      clk: qcom: gcc-ipq5424: Correct the icc_first_node_id
+      dt-bindings: clock: Add "#interconnect-cells" property in IPQ9574 example
+      dt-bindings: interconnect: Add Qualcomm IPQ5424 NSSNOC IDs
+      clk: qcom: gcc-ipq5424: Enable NSS NoC clocks to use icc-clk
+      dt-bindings: clock: gcc-ipq5424: Add definition for GPLL0_OUT_AUX
+      clk: qcom: gcc-ipq5424: Add gpll0_out_aux clock
+      dt-bindings: clock: qcom: Add NSS clock controller for IPQ5424 SoC
+      clk: qcom: Add NSS clock controller driver for IPQ5424
+      arm64: dts: qcom: ipq5424: Add NSS clock controller node
+      arm64: defconfig: Build NSS clock controller driver for IPQ5424
+
+ .../bindings/clock/qcom,ipq9574-nsscc.yaml         |   63 +-
+ arch/arm64/boot/dts/qcom/ipq5424.dtsi              |   32 +-
+ arch/arm64/configs/defconfig                       |    1 +
+ drivers/clk/qcom/Kconfig                           |   11 +
+ drivers/clk/qcom/Makefile                          |    1 +
+ drivers/clk/qcom/gcc-ipq5424.c                     |   28 +-
+ drivers/clk/qcom/nsscc-ipq5424.c                   | 1340 ++++++++++++++++++++
+ include/dt-bindings/clock/qcom,ipq5424-gcc.h       |    3 +-
+ include/dt-bindings/clock/qcom,ipq5424-nsscc.h     |   65 +
+ include/dt-bindings/interconnect/qcom,ipq5424.h    |   33 +
+ include/dt-bindings/reset/qcom,ipq5424-nsscc.h     |   46 +
+ 11 files changed, 1612 insertions(+), 11 deletions(-)
+---
+base-commit: 13863a59e410cab46d26751941980dc8f088b9b3
+change-id: 20251014-qcom_ipq5424_nsscc-eebd62a31e74
+
+Best regards,
+-- 
+Luo Jie <quic_luoj@quicinc.com>
+
 
