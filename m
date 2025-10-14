@@ -1,121 +1,157 @@
-Return-Path: <linux-arm-msm+bounces-77178-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-77180-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ams.mirrors.kernel.org (ams.mirrors.kernel.org [IPv6:2a01:60a::1994:3:14])
-	by mail.lfdr.de (Postfix) with ESMTPS id C9FFDBD91FE
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Oct 2025 13:52:47 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1FC8DBD9243
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Oct 2025 13:55:17 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ams.mirrors.kernel.org (Postfix) with ESMTPS id 3B388352D90
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Oct 2025 11:52:47 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 60DD43A77EA
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Oct 2025 11:55:15 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id F1E853101BF;
-	Tue, 14 Oct 2025 11:52:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B25AB3101C5;
+	Tue, 14 Oct 2025 11:55:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=sang-engineering.com header.i=@sang-engineering.com header.b="lHlc4Mk/"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ac0wAHH2"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail.zeus03.de (zeus03.de [194.117.254.33])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 260183101BB
-	for <linux-arm-msm@vger.kernel.org>; Tue, 14 Oct 2025 11:52:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=194.117.254.33
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FA0B30FF23;
+	Tue, 14 Oct 2025 11:55:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760442759; cv=none; b=oLBcHyHzeE90h9tJiXgqB7Bmny0QzIBWzLqO6uTdjcJDIUJRDcy14qsAln7ehojBoYhIDQKMDgjuuMkBdPL4arnKkw5jQHdqYpPTo/m3uYtTI6bP6yVWZ5kX/6D98FzB38HXc6VTcpdedB+6UrD03qlL+I1G3R1t98JojIrCNx4=
+	t=1760442912; cv=none; b=cQkjaVKss0kkTOqW79mJ7mj2nkcntqYOlqY0y6q7SQ+zO2jKPjyn0Tamm1TK5bZMml5WHyyUsGr4uhTX96R00UrVXjZxylHXnwk7SfawXs6srF8G7HXNTGgjvu/rQFRrbM7v1XehKsd35SlE+sD2Dy6mgHNJar5/+y1xJatRLQk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760442759; c=relaxed/simple;
-	bh=x1brUYGY3NW2WQ2EAUXI9/nXmf4kZlLdpbpO/yh7tw4=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=rwWDJAT0R4XFfUgz4cEh14oBNcMbHvv8+mWaWL6wXNhNdcRfhjMsgBUAlkskBX80TRc2Ucpm32iaOg84Y7I/DoCyXU9Hn2H4makHnZSaeuCLLFWsjS9H8ki5qFzfH7Rt7GR4sryz7Y2/KCxhn2njSv3DnCV0TE35ZxatRGyi3ns=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sang-engineering.com; spf=pass smtp.mailfrom=sang-engineering.com; dkim=pass (2048-bit key) header.d=sang-engineering.com header.i=@sang-engineering.com header.b=lHlc4Mk/; arc=none smtp.client-ip=194.117.254.33
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sang-engineering.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=sang-engineering.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	sang-engineering.com; h=date:from:to:cc:subject:message-id
-	:references:mime-version:content-type:in-reply-to; s=k1; bh=vZpO
-	rc8jIqdudWaU55WhDn+MoeYiJWe7gJ48hDY+d1M=; b=lHlc4Mk/T4KsX8seSNJQ
-	vvL90nUOyuUxzJ/sq5J3piw1hVW61or4bFrdau3nnoyj3BFHrxN3871raQO/I1my
-	Bz2hxNc6FqCtd7PgKMnKFKb4zz5l0ZkRZrRwumRqR9BKuI1SJ2ADJNcz2IFKsFdU
-	7nuBCXwtqXb1hDr3WwWQTUQ9u509yeoTAuKhGd6ojJX525GWTZA+l2Y1cCCedxki
-	RoGYmMz1ynzbjCONDddHsTpxmDfBZnv+OBHrb9nSx93bzg7mxVHuiXUmbzunV9v2
-	qfLQ147EJ76zXvWtGcSHT5C/ArHdi6hIp1iJlb+s0EIXecC51hGviWUiT95BVFMO
-	+g==
-Received: (qmail 2951131 invoked from network); 14 Oct 2025 13:52:28 +0200
-Received: by mail.zeus03.de with UTF8SMTPSA (TLS_AES_256_GCM_SHA384 encrypted, authenticated); 14 Oct 2025 13:52:28 +0200
-X-UD-Smtp-Session: l3s3148p1@0cGqBB1B1OIgAwDPXwQHAL/S9V79e5yL
-Date: Tue, 14 Oct 2025 13:52:28 +0200
-From: Wolfram Sang <wsa+renesas@sang-engineering.com>
-To: Sakari Ailus <sakari.ailus@linux.intel.com>
-Cc: Elie Morisse <syniurge@gmail.com>,
-	Shyam Sundar S K <shyam-sundar.s-k@amd.com>,
-	Andi Shyti <andi.shyti@kernel.org>,
-	Codrin Ciubotariu <codrin.ciubotariu@microchip.com>,
-	Nicolas Ferre <nicolas.ferre@microchip.com>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>,
-	Claudiu Beznea <claudiu.beznea@tuxon.dev>,
-	Michal Simek <michal.simek@amd.com>,
-	Bartosz Golaszewski <brgl@bgdev.pl>,
-	Jarkko Nikula <jarkko.nikula@linux.intel.com>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Mika Westerberg <mika.westerberg@linux.intel.com>,
-	Jan Dabros <jsd@semihalf.com>, Jean Delvare <jdelvare@suse.com>,
-	Dong Aisheng <aisheng.dong@nxp.com>,
-	Shawn Guo <shawnguo@kernel.org>,
-	Sascha Hauer <s.hauer@pengutronix.de>,
-	Pengutronix Kernel Team <kernel@pengutronix.de>,
-	Fabio Estevam <festevam@gmail.com>,
-	Oleksij Rempel <o.rempel@pengutronix.de>,
-	Gregory CLEMENT <gregory.clement@bootlin.com>,
-	Ajay Gupta <ajayg@nvidia.com>, Aaro Koskinen <aaro.koskinen@iki.fi>,
-	Andreas Kemnade <andreas@kemnade.info>,
-	Kevin Hilman <khilman@baylibre.com>,
-	Roger Quadros <rogerq@kernel.org>, Tony Lindgren <tony@atomide.com>,
-	Janusz Krzysztofik <jmkrzyszt@gmail.com>,
-	Vignesh R <vigneshr@ti.com>,
-	Loic Poulain <loic.poulain@oss.qualcomm.com>,
-	Robert Foss <rfoss@kernel.org>,
-	Mukesh Kumar Savaliya <quic_msavaliy@quicinc.com>,
-	Viken Dadhaniya <quic_vdadhani@quicinc.com>,
-	Chris Brandt <chris.brandt@renesas.com>,
-	Fabrizio Castro <fabrizio.castro.jz@renesas.com>,
-	Orson Zhai <orsonzhai@gmail.com>,
-	Baolin Wang <baolin.wang@linux.alibaba.com>,
-	Chunyan Zhang <zhang.lyra@gmail.com>,
-	Pierre-Yves MORDRET <pierre-yves.mordret@foss.st.com>,
-	Alain Volmat <alain.volmat@foss.st.com>,
-	Maxime Coquelin <mcoquelin.stm32@gmail.com>,
-	Alexandre Torgue <alexandre.torgue@foss.st.com>,
-	linux-i2c@vger.kernel.org, linux-kernel@vger.kernel.org,
-	linux-arm-kernel@lists.infradead.org, imx@lists.linux.dev,
-	linux-omap@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-	linux-renesas-soc@vger.kernel.org,
-	linux-stm32@st-md-mailman.stormreply.com
-Subject: Re: [PATCH 23/80] i2c: Remove redundant pm_runtime_mark_last_busy()
- calls
-Message-ID: <aO45fBIEqFyRq3_k@shikoro>
-References: <20250704075225.3212486-1-sakari.ailus@linux.intel.com>
- <20250704075415.3218608-1-sakari.ailus@linux.intel.com>
+	s=arc-20240116; t=1760442912; c=relaxed/simple;
+	bh=5QysjArlLvVj9vb89PbOImCsPn/7ZhWrnV4+464hrmE=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=o+fgyZwwAfXF9tb4zoq2te9SNnhvI0T6x+ioFLAEIMZVozAoGhFdLMtmRdAVb22R3js6j8/4lgpw352nfY0hghrytY6hd59ACa0hGspCWXIcOK7+yaLJAJw0vtSKwwQhscec+F8/ZvAv8qqDro61Si10C8Uy8DuKGN2RzST3Fc8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ac0wAHH2; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 0A51FC116C6;
+	Tue, 14 Oct 2025 11:55:12 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1760442912;
+	bh=5QysjArlLvVj9vb89PbOImCsPn/7ZhWrnV4+464hrmE=;
+	h=From:Subject:Date:To:Cc:Reply-To:From;
+	b=ac0wAHH2aFmFtmfTHPJZ6KesAwUtuRXczDE5adklRM2lyxGcHuqUcZW+UytrprKYc
+	 Sh6dCAR6olS5UnDjX1afigGkUxTA2MQZIlqXcOGH29FL8Rr3gPhc0Qjq3zDWhdl7CQ
+	 V9OwgbTjtYlX007qVigAP23lJaNX1lhUvz6SuNcoEvgJKsn5y8mxHQS1RqPkzLP9in
+	 Fb9Wba7CtyHA+iasVQHzfr46uKaK7z1w+cjR5QsPiAo7znJ757XsYswa9WUMMQRKnb
+	 MCCKfilHpynJyQq8LeucgqewJM0z5qrQkr6uTOA97BCdy3h3dLe8Cqwz5XOfdKqh/X
+	 dAhbEsYAF3TwA==
+Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E7816CCD18E;
+	Tue, 14 Oct 2025 11:55:11 +0000 (UTC)
+From: Xiangxu Yin via B4 Relay <devnull+xiangxu.yin.oss.qualcomm.com@kernel.org>
+Subject: [PATCH v3 0/3] Add DisplayPort support to QCS615 devicetree
+Date: Tue, 14 Oct 2025 19:54:53 +0800
+Message-Id: <20251014-add-displayport-support-to-qcs615-devicetree-v3-0-74ec96ba8144@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250704075415.3218608-1-sakari.ailus@linux.intel.com>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIABI67mgC/53RQWrDMBAF0KsYrasgjW05DqXkHqULWRo3AttyJ
+ MU0hNy9Y5uUlqbQdiVmFv8xXxcWMTiMbJddWMDJRecHGvKHjJmDHl6RO0szAwGlFLLg2lpuXRw
+ 7fR59SDyexuVNnh9NVLLklmIMpoDI0WhtFVRatJpR5BiwdW8L9/xC88HF5MN50Sc5b2eokCDF3
+ 6BJcsEFtNtC12CKotkfT864wWyM79lMTXCL/8cdE1C8BFHbtipsIcXex7g5nnRH8f1qXNf7ApI
+ cXVqPZD3GqJcWd9njjIta5J/xD7j14SbTPtHY82lLblVX0ojSSlDwzX2aa72DSLUiIzd+SMF3H
+ YYvVOxJEnzKueTWKoFNY6kY/LUA6scO755S0SnWlGi1NspAcx9qdEQ+b1zaZSU0ulI50KdaKvj
+ 6DinT/4yuAgAA
+X-Change-ID: 20251014-add-displayport-support-to-qcs615-devicetree-ecaad627a0fa
+To: Rob Clark <robin.clark@oss.qualcomm.com>, 
+ Dmitry Baryshkov <lumag@kernel.org>, 
+ Abhinav Kumar <abhinav.kumar@linux.dev>, 
+ Jessica Zhang <jessica.zhang@oss.qualcomm.com>, Sean Paul <sean@poorly.run>, 
+ Marijn Suijten <marijn.suijten@somainline.org>, 
+ David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, 
+ Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, 
+ Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>, 
+ Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konradybcio@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, 
+ freedreno@lists.freedesktop.org, devicetree@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, fange.zhang@oss.qualcomm.com, 
+ yongxing.mou@oss.qualcomm.com, li.liu@oss.qualcomm.com, 
+ Xiangxu Yin <xiangxu.yin@oss.qualcomm.com>
+X-Mailer: b4 0.14.2
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1760442909; l=3363;
+ i=xiangxu.yin@oss.qualcomm.com; s=20241125; h=from:subject:message-id;
+ bh=5QysjArlLvVj9vb89PbOImCsPn/7ZhWrnV4+464hrmE=;
+ b=wbbBrLhaT6QyslhYkCjUI2mN5i8ELMJLggyOoZlHW8kIDq0z7x+VHPMBLQtOkF3LhDqjIGFUk
+ k5yKtzyOoUIAnlTuFwIXhvfsSl9vlACtsWNgjq4gDcHFxWC6Nr/rTBv
+X-Developer-Key: i=xiangxu.yin@oss.qualcomm.com; a=ed25519;
+ pk=F1TwipJzpywfbt3n/RPi4l/A4AVF+QC89XzCHgZYaOc=
+X-Endpoint-Received: by B4 Relay for xiangxu.yin@oss.qualcomm.com/20241125
+ with auth_id=542
+X-Original-From: Xiangxu Yin <xiangxu.yin@oss.qualcomm.com>
+Reply-To: xiangxu.yin@oss.qualcomm.com
 
-On Fri, Jul 04, 2025 at 10:54:15AM +0300, Sakari Ailus wrote:
-> pm_runtime_put_autosuspend(), pm_runtime_put_sync_autosuspend(),
-> pm_runtime_autosuspend() and pm_request_autosuspend() now include a call
-> to pm_runtime_mark_last_busy(). Remove the now-reduntant explicit call to
-> pm_runtime_mark_last_busy().
-> 
-> Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
-> Acked-by: Andi Shyti <andi.shyti@kernel.org>
+This series enables DisplayPort functionality on QCS615 platforms.
+It introduces the required bindings, updates SM6150 dtsi for DP controller
+and QMP USB3-DP PHY, and enables DP on the QCS615 Ride board with 
+connector and link configuration.
 
-With the dependencies being upstream now, applied to for-current,
-thanks!
+Depends-on:
+https://lore.kernel.org/all/20250903-add-display-support-for-qcs615-platform-v8-1-7971c05d1262@oss.qualcomm.com/
+https://lore.kernel.org/all/20250916-add-dp-controller-support-for-sm6150-v3-1-dd60ebbd101e@oss.qualcomm.com/
+https://lore.kernel.org/all/20250926-add-displayport-support-for-qcs615-platform-v7-1-dc5edaac6c2b@oss.qualcomm.com/
+
+Signed-off-by: Xiangxu Yin <xiangxu.yin@oss.qualcomm.com>
+---
+Changes in v3:
+- Move data-lanes from board DTS to SoC DTS [Dmitry]
+- Add missing assigned-clock PIXEL1_CLK_SRC [Dmitry]
+- Update subject prefix to qcom: qcs615-ride: for DTS patch [Konrad]
+- Link to v2: https://lore.kernel.org/r/20251014-add-displayport-support-to-qcs615-devicetree-v2-0-1209df74d410@oss.qualcomm.com
+
+Changes in v2:
+- Update register padding and ordering [Dmitry]
+- Rebase the series on the latest driver
+- Link to v1: https://lore.kernel.org/all/20241210-add-displayport-support-to-qcs615-devicetree-v1-0-02f84a92c44b@quicinc.com/
+
+---
+Xiangxu Yin (3):
+      dt-bindings: display/msm: Add SM6150 DisplayPort controller
+      arm64: dts: qcom: Add DisplayPort and QMP USB3DP PHY for SM6150
+      arm64: dts: qcom: qcs615-ride: Enable DisplayPort
+
+ .../bindings/display/msm/qcom,sm6150-mdss.yaml     |  11 ++
+ arch/arm64/boot/dts/qcom/qcs615-ride.dts           |  30 ++++++
+ arch/arm64/boot/dts/qcom/sm6150.dtsi               | 113 ++++++++++++++++++++-
+ 3 files changed, 152 insertions(+), 2 deletions(-)
+---
+base-commit: 52ba76324a9d7c39830c850999210a36ef023cde
+change-id: 20251014-add-displayport-support-to-qcs615-devicetree-ecaad627a0fa
+prerequisite-message-id: <20250903-add-display-support-for-qcs615-platform-v8-0-7971c05d1262@oss.qualcomm.com>
+prerequisite-patch-id: 58be7053007469980bd7cc9fe315b66bbe021c31
+prerequisite-patch-id: 3c2120117f72c64f69beff32c0239fbc7f808f36
+prerequisite-message-id: <20250916-add-dp-controller-support-for-sm6150-v3-1-dd60ebbd101e@oss.qualcomm.com>
+prerequisite-patch-id: eb07ea58347e77ee18fb6dade040affb0ab68954
+prerequisite-message-id: <20250926-add-displayport-support-for-qcs615-platform-v7-0-dc5edaac6c2b@oss.qualcomm.com>
+prerequisite-patch-id: 8c6c905df7ee55a92a4e52362c8fa7cd9742de04
+prerequisite-patch-id: 0dba0fafd032bbd6cd117175f61efd1e56ae9228
+prerequisite-patch-id: d954b18774cfc0cfdb23de09aab3c56cefb8e1ea
+prerequisite-patch-id: 13f2d2efbcee6337001b5f8519a6da9a41d05276
+prerequisite-patch-id: 3a7144645ede23ccc7d54420e5a32e5bfa3bb776
+prerequisite-patch-id: b3ea55e92953c1526eaf7c5c21d939a5f8502711
+prerequisite-patch-id: 977189ef7cecbe7237175a8ef611fffb814193b0
+prerequisite-patch-id: 3a12c1b4f00eb1d074e51d586f2dae3a44de0613
+prerequisite-patch-id: 7f80e93057c1fd088ac6b4b0652cdfe2ea221cd5
+prerequisite-patch-id: 8b29d292717782982e4450a509f4428fe6e895f2
+prerequisite-patch-id: 621c3ba6bcf5b5782a5264faed72fdadfd47c630
+prerequisite-patch-id: 9c63f2c5bb39527e3031b2d168e3c9419441e8df
+prerequisite-patch-id: 364f6a7d8f4e1bc79a8f236b8d5a2425ffd225fe
+prerequisite-patch-id: eb09ea48625b5c0d39ffb37babe7d8c32a4b3122
+
+Best regards,
+-- 
+Xiangxu Yin <xiangxu.yin@oss.qualcomm.com>
+
 
 
