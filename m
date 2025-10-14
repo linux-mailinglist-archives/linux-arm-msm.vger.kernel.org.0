@@ -1,87 +1,87 @@
-Return-Path: <linux-arm-msm+bounces-77151-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-77145-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ams.mirrors.kernel.org (ams.mirrors.kernel.org [213.196.21.55])
-	by mail.lfdr.de (Postfix) with ESMTPS id B5306BD8A49
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Oct 2025 12:04:07 +0200 (CEST)
+Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [142.0.200.124])
+	by mail.lfdr.de (Postfix) with ESMTPS id 21294BD8A34
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Oct 2025 12:03:33 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ams.mirrors.kernel.org (Postfix) with ESMTPS id 61C7F348F26
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Oct 2025 10:04:07 +0000 (UTC)
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 1C87C4FD088
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Oct 2025 10:03:03 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 50F1D2EBB9D;
-	Tue, 14 Oct 2025 10:03:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 692DB2D5955;
+	Tue, 14 Oct 2025 10:02:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="ogaP22rO"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="PIzByqpz"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 403CD30DED0
-	for <linux-arm-msm@vger.kernel.org>; Tue, 14 Oct 2025 10:03:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78C8F2EB5A1
+	for <linux-arm-msm@vger.kernel.org>; Tue, 14 Oct 2025 10:02:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760436191; cv=none; b=RCrz+lKS0uuhcDQU+NlGJTRYqvmzImanInUjWdp0G92Wl1E/gdgl8PuoG9T+flNifFaQm014SwYSgXHJcsut74RRYxxbGiu0FO17uJXAoz8vSz4R7sQITX9H2fwnPRCmx7tl+g+Dxe4KcrDdLX2mUdZ8+43QxeKSt3xfQhdCkP8=
+	t=1760436175; cv=none; b=dey91fA4ZiqEkHwpUwEm/w5rB/wsNa9eYFbNT9aUDI7fvnBD7gHhSFocyZPoLQAVhz3kW0jfIyklEzZ/NhZXyMOTYeNjTc/7/fmQR6eozIQzYjAFwDq6Ke2zNtEGZmUPkIlf9h6DNh0rWMHEp9rnezz2YZJpezh0BJtIWjNB8Ts=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760436191; c=relaxed/simple;
-	bh=pN21Y/mlFy4wSxMkjNgxJeTfBPTXMlYf+2hBZ8yW5DE=;
-	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
-	 In-Reply-To:Content-Type; b=cGHl+8rqPpyNSS7rmA27HYYVDadLnfr0nvwJY6uM4hyj6cAuREgqCFeGqMpFAUME6/FCG9tplTQFG7p6vnstHaZMq9ZwTxyIDo3iaOu5eVNJ5eujZxYkV1qlugf0CoJcL0xny7kwGorOEjtAM/PnTz1y0oq95dtBkeVITNvX+iI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=ogaP22rO; arc=none smtp.client-ip=205.220.168.131
+	s=arc-20240116; t=1760436175; c=relaxed/simple;
+	bh=bVhHjhDLmZz3sKkTchRJtm+6H7mXSchASd7zOLrW230=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=TvYPor98hr4ZIT5emIRlWbIJ5i1dXBp1TTvRh7lrn34nvs5Cu3yqsLxZGg9KQXYumNVR/uenu/zwiv0dO4lNVv5RN2dV7cHF1tiM0HllYSGhZKD64ytq7sZFKmfpeZK7mIQuIUhVjK9mgpGWhNOLQK+8JZqM82FmG2uWiYtEoPw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=PIzByqpz; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 59E87OOf021148
-	for <linux-arm-msm@vger.kernel.org>; Tue, 14 Oct 2025 10:03:08 GMT
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 59E87Ngs020222
+	for <linux-arm-msm@vger.kernel.org>; Tue, 14 Oct 2025 10:02:53 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	YpMjtNS2t8Qsmkv7Ge8cz+FmpPP0fXDLuqM5OfZKDac=; b=ogaP22rO7+NPhQxR
-	TNl7vl3Pj0k9mStaduw0OP7EwFbB99CiJMY5tJHvo9wJn5ick554S/FbItxOVfxn
-	I6vRFSdJXT5BQxOoI+E3dNWYMzk5X9DOPXsVCpUA3A6OMJFJ66REAGG7eTSIRJIy
-	iqEYUBErCClc1I1VvNZ3CoSgRBFjf9wEOMbrnp2DCraUDfcR53paDA7hnG09R9Bz
-	dnf3Ye+hUOy7nvl6IKY8hhMYEw01M3FfDKMJ/t4Mn87a3i+U7gTjtJ7oAv7dibsA
-	tD587XVjtsHELsQm5XxaKXhiOhhhDq1wGn3Z03iif7KJ05RTFOZNSxrSPJXJk97q
-	fkEvtA==
-Received: from mail-pl1-f197.google.com (mail-pl1-f197.google.com [209.85.214.197])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 49s6mwjaku-1
+	JYjKTtUvBgaZV/+iOUpoJCKb8Vbb1mGbZF2yoFSadIw=; b=PIzByqpzBz4RzqVC
+	viA+Qv4gO7W9o09y0BuAfFyqv+iX8wqDAr8Gy0vHqDMRcbRBpwLwqMA7gcrjmFsz
+	yzJVCjSFFCZltpiZmHBmVk76nL3yQqZRf55wMwTEP4CzvGWkomuqIvehBEVOYueV
+	ahNedIy9a39946/RS9+/dl7xN3xeNFGrrYVIxCMIsrznPV+pkPFctS0DUuMOmS/h
+	NTlH0YITczx/cysla8tkpajRe5ac4KyKLXJCS4JslVd34l3E0wlTmWAvdgJCX7fU
+	r1D6qRyXRWSyhmsjNlrOtQldHb7hj6fFB+TiiFo8JHJy+WPHzkl93E3q3O4mlPWK
+	Ox3iog==
+Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com [209.85.222.197])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 49qg0c006n-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Tue, 14 Oct 2025 10:03:08 +0000 (GMT)
-Received: by mail-pl1-f197.google.com with SMTP id d9443c01a7336-2904e9e0ef9so115665285ad.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 14 Oct 2025 03:03:08 -0700 (PDT)
+	for <linux-arm-msm@vger.kernel.org>; Tue, 14 Oct 2025 10:02:52 +0000 (GMT)
+Received: by mail-qk1-f197.google.com with SMTP id af79cd13be357-85696c12803so377090885a.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 14 Oct 2025 03:02:52 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1760436187; x=1761040987;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:from:subject:user-agent:mime-version:date:message-id
+        d=1e100.net; s=20230601; t=1760436171; x=1761040971;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=YpMjtNS2t8Qsmkv7Ge8cz+FmpPP0fXDLuqM5OfZKDac=;
-        b=Lbj2EvkJC/bwWyN907vc5xchiLWANHZccOFJIgdF4/iTBIVEqIj462KVVD9QdCW4tO
-         jx1ccfr4s8Q7fNZu8VF2r/m4tfty4mjseUMdmzDoyr14xbHpwTFoqc1vNWoWU72Dh1+r
-         FtlhA9CtU/8ZUu0eBWoKzNRdAU4b8EYWK/zgMQSz0ho/PhK87xcOdUBu+MoYjzlmyPND
-         XUkIYrXef24ba2Nf92HeVjupo9h23K1UyHtUNQ8fNretUNUZ6cNsDkVbA1anOxCQHE/g
-         HICwRCYnOZ9iZ5HhMWvyzkQK2iCEcLgz2h219db6i/Db5foTVbD4yW2g5jP655Mti59x
-         NQJQ==
-X-Forwarded-Encrypted: i=1; AJvYcCVtTf4UJBwPm6o13bCFCAhxgJSQjV1wzDQwOGEx6j/Y6DgVlEcM4sq9XzpzXRSD0lk4L7eovxhSRoQOU2nR@vger.kernel.org
-X-Gm-Message-State: AOJu0Yyi51ZMKm81365CqBgW8/0B6eDEGG53Y/j25qOd6C51xXexAC+q
-	zHgMup5L8dUZBuCK4SXCGPRe6OX/FeSMTJhCpVf8uZJcXP8qiwdQRd91XvJS45L47GczgCCQnJG
-	7a3fyFLlu8HXlRTTWPSnj6Bzj0+5BA/SBDW4Gmb5VmjELJdyJUgkmQBbCCyYUSNlpqX8d
-X-Gm-Gg: ASbGncv2hTdedQ/o5p40aHrcXn/u3xLkokPicGrPzCntH6cyMC5UXAWKv8z3uDl51WR
-	Ar5tfNqL7ihE4tHArIULXpGwRxDKNa1VGFQ5C5e8MEMYmKa852yBIdp3v+nGfcrnzv5ErRcQHgh
-	VY8yExpkLBPAYu+BrHm/KdyeFomhdvDqHdGObBPZMDl4AXwejjhhAZ9TrsmbY0BVjnGg/x6lOgH
-	1W/lHcKokiznan6sbvg4nkZQZi5rmAi4inXco1O8Sfoho0YGtGsMYC8UpWbNIuBV1Q7bvmx7j8o
-	703jT/xMmxF/13a8AP4aFuScJSjYv0Z3VVT9xCHDtdVpfIQ3jRjARvl4lBfY8eFJN+Q=
-X-Received: by 2002:a17:903:910:b0:258:9d26:1860 with SMTP id d9443c01a7336-290273ffeb7mr333722635ad.40.1760436187368;
-        Tue, 14 Oct 2025 03:03:07 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFaR4sHqbZzJquEl4UlTgUvAbfqjTkOISLr3MINnz0WCArr+8zC5qPyhZB1fBpUV5mZajByaA==
-X-Received: by 2002:a17:903:910:b0:258:9d26:1860 with SMTP id d9443c01a7336-290273ffeb7mr333722105ad.40.1760436186736;
-        Tue, 14 Oct 2025 03:03:06 -0700 (PDT)
-Received: from [10.218.33.29] ([202.46.22.19])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-29034f87b23sm160005665ad.113.2025.10.14.03.03.03
+        bh=JYjKTtUvBgaZV/+iOUpoJCKb8Vbb1mGbZF2yoFSadIw=;
+        b=qyS9PzZNRkKsCbUreV8NFx7uRzmIwfUPhowPZ4Fny+i1bLBVjROcE5KsldlASBDAXJ
+         rrBQlYrsZvPMt84ENKRaJLJE/nmZ+wzqHMRzehXIS6ydvRQa24hCpFtRzTMBWMW7/yyB
+         K9Ca6L1g/VzivzTmHTYhaCzX5+ldhgnsUpz97X0QWlDbO4l2i29tVSNMPFihNa/CKDa8
+         DRbWZJ25L2yHXAxtzNpdh/msxtawhr4dYf04o8YHtM8MRl4c8oZPKYRFBVkkeKstlyEw
+         1JF85xwk7D0zHEYoMiziaNE0h3cJDE73RTJbIaM7/zfm8qhwn06jci/6olCdnT8rAzgT
+         XK9Q==
+X-Gm-Message-State: AOJu0YyFxhoFqIzwrD1QVeFD3MXdYHl9QbnPkuEdpysUDEFtw0OmqBQV
+	SIrYlDQQfi8QiajLTBWKmuvB96Lyc8HBAOcQZtfXOtlglszMTZFKRp3p1Etd75buNso/Ej//CUr
+	WBp4xLNNF2ecdZqxdT7errSPLV+dkkjwt23on0ckluk1pDVDKY6lXjg32SCYxaBiOx8Ar
+X-Gm-Gg: ASbGncvB9EJIjTcawHfoGbkZ0KPnnMGk35w3sRSyIoC/4/E7wcw6Z/lyXSmNQ20HVkP
+	UrQaa9/8e3gTBBMwf2YP4KGmGJDsThFjlmQJNQCrZyWd5DExj8oa+rIt1av2TS2XQCMfTppxtSk
+	7yZYcln3Yi4e9TECANf4M26X0Fgss5w46vQy0YL+eq35lU3KLWo4dKKtk8Wu9TM/x4XWGyq6DXG
+	LMVxtnAqBR/xpJNTfNyUu2OpmH3vcM8+tFRA5o1DZXmUsBFL+FUrs4VC+qUsyI6ErPmnahyDg3O
+	vEFKSFmOV0O6BEFDXydEfF0uBGugmi9Y9kV+eWmMjml7sfpabny2maL7fkRfhGU/dTBAlI7kWec
+	G5YdOKthC0Ea5lQVWt3L7yg==
+X-Received: by 2002:a05:620a:440a:b0:861:ed2a:2f9a with SMTP id af79cd13be357-88352ba651fmr2122068585a.5.1760436171322;
+        Tue, 14 Oct 2025 03:02:51 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGt0D7zWO7HIZAtXl1MAeQkSXOlc60URKPIzuUVE8zwNTntzw8XcV/pBFh7aasaW8fEsIs7/g==
+X-Received: by 2002:a05:620a:440a:b0:861:ed2a:2f9a with SMTP id af79cd13be357-88352ba651fmr2122065185a.5.1760436170724;
+        Tue, 14 Oct 2025 03:02:50 -0700 (PDT)
+Received: from [192.168.149.223] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-63a52b1e89csm10859296a12.19.2025.10.14.03.02.49
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 14 Oct 2025 03:03:06 -0700 (PDT)
-Message-ID: <486d9339-c7c0-462a-97e2-92a243bbf200@oss.qualcomm.com>
-Date: Tue, 14 Oct 2025 15:32:42 +0530
+        Tue, 14 Oct 2025 03:02:50 -0700 (PDT)
+Message-ID: <ea12c0c7-c629-4014-8bbf-862264182c0b@oss.qualcomm.com>
+Date: Tue, 14 Oct 2025 12:02:48 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -89,96 +89,84 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 5/5] bus: mhi: host: mhi_phc: Add support for PHC over MHI
-From: Imran Shaik <imran.shaik@oss.qualcomm.com>
-To: Jakub Kicinski <kuba@kernel.org>,
-        Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
-Cc: Manivannan Sadhasivam <mani@kernel.org>,
-        Richard Cochran <richardcochran@gmail.com>, mhi@lists.linux.dev,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        netdev@vger.kernel.org, taniya.das@oss.qualcomm.com,
-        quic_vbadigan@quicinc.com, quic_mrana@quicinc.com
-References: <20250818-tsc_time_sync-v1-0-2747710693ba@oss.qualcomm.com>
- <20250818-tsc_time_sync-v1-5-2747710693ba@oss.qualcomm.com>
- <20250821180247.29d0f4b3@kernel.org>
- <0b950a45-21e5-4c8d-bc76-1c801b86e2ef@oss.qualcomm.com>
+Subject: Re: [PATCH v2 6/6] arm64: dts: qcom: r0q: fix reserved memory regions
+To: =?UTF-8?Q?Eric_Gon=C3=A7alves?= <ghatto404@gmail.com>,
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        Bjorn Andersson
+ <andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20251014044135.177210-1-ghatto404@gmail.com>
+ <20251014044135.177210-7-ghatto404@gmail.com>
 Content-Language: en-US
-In-Reply-To: <0b950a45-21e5-4c8d-bc76-1c801b86e2ef@oss.qualcomm.com>
+From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+In-Reply-To: <20251014044135.177210-7-ghatto404@gmail.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDEzMDA4MyBTYWx0ZWRfX5j7IZlXRLdER
- aX2ie0Qa1WlQybMzZLDkr4Tu7Qxv3uq/jHlJGuRrlg7qFwv7XWD0ClEq4KwlOrp0BmKYiqSdNGN
- yNPeovBHUuiaNFmv0tQAc+b+YRXJ8+5KjPRA3dlTVNkQkjt1edF6nsKSRRz2luD2FvoovAOdu57
- mvkK93gVWKchCercGK/tSThX1fDBB5iX9413yvHRh6YO0Jpl0PRVg7ZIlN98Yd5tIyK/a0KR4yM
- cKD5elHfimrQwh1TqpJeUwhK/+pfyiCDMalfwIVHdDMbcozNt8DtXY7t3OtdgsRUcfBIw2RaXb5
- Wh7hWQiHT+t1BwIzAzuxwmwMZRl2LdGjO3P+nZMuZfimt1MaeNG2ShBKNKqvYqn4lVwZ5X/lrhw
- wTgfU+h4kfnidDCORxXOqHcpDnMQWg==
-X-Authority-Analysis: v=2.4 cv=Fr4IPmrq c=1 sm=1 tr=0 ts=68ee1fdc cx=c_pps
- a=cmESyDAEBpBGqyK7t0alAg==:117 a=fChuTYTh2wq5r3m49p7fHw==:17
+X-Proofpoint-GUID: 4QpC2-uUt19lMMo_m44T4ULI807Q8uUE
+X-Proofpoint-ORIG-GUID: 4QpC2-uUt19lMMo_m44T4ULI807Q8uUE
+X-Authority-Analysis: v=2.4 cv=eaIwvrEH c=1 sm=1 tr=0 ts=68ee1fcc cx=c_pps
+ a=50t2pK5VMbmlHzFWWp8p/g==:117 a=FpWmc02/iXfjRdCD7H54yg==:17
  a=IkcTkHD0fZMA:10 a=x6icFKpwvdMA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=VwQbUJbxAAAA:8 a=elLdLcMF98_VclgcXSwA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=1OuFwYUASf3TG4hYMiVC:22
-X-Proofpoint-GUID: EBiZIKFd7DDE-EFNgJn1GG1Wzqt-4l_f
-X-Proofpoint-ORIG-GUID: EBiZIKFd7DDE-EFNgJn1GG1Wzqt-4l_f
+ a=pGLkceISAAAA:8 a=w6xXu69wQtdwpxc7i3IA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=IoWCM6iH3mJn3m4BftBB:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDExMDAyMiBTYWx0ZWRfX/hx4h5MS/oIi
+ jsNHSe/ZAn/3yDMfPkjQ4lMRVFUQs6VvxXhZMDnEEaodIBCI8aMVBoT0xVUX1vwcrCZ/+kDiKDz
+ CUlQ+1fzB7xAMuFJCU4sMairiqVLPBTBmUFCrbF2GrczK+BmSK/J4oqoWxgY1k/2gsgSJtH+5zH
+ Df/P1dN/nPsbSUeOKXNuA9RZjSP4LLYJ4rGarEAk/GaVRlwI/3zgWdGAHpUIH3fnGMFd51ZZvdw
+ i4rHnRip2/x6cI3pFZe4lI/kwKNJj1MxjYZK4ZvV0b9ZF3uve9wDZmPpY++bNUnnldVEZJjLLL8
+ ykF1ba4Mrr0n5f6kW+b+CzkrTxF5SQKf4LR2GvzJko9cbpM07hGjyr8Rj7virW9ZbMUAnmLauet
+ NNpI5fvKQ4NNyUKdEBDgbdkpPzqFWg==
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.80.40
  definitions=2025-10-14_02,2025-10-13_01,2025-03-28_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 impostorscore=0 spamscore=0 phishscore=0 malwarescore=0
- adultscore=0 lowpriorityscore=0 bulkscore=0 suspectscore=0 clxscore=1015
+ bulkscore=0 priorityscore=1501 spamscore=0 impostorscore=0 phishscore=0
+ adultscore=0 lowpriorityscore=0 clxscore=1015 suspectscore=0 malwarescore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2510020000 definitions=main-2510130083
+ reason=mlx scancount=1 engine=8.19.0-2510020000 definitions=main-2510110022
 
-
-
-On 9/16/2025 2:47 PM, Imran Shaik wrote:
+On 10/14/25 6:41 AM, Eric Gonçalves wrote:
+> ADSP and video memory regions in SoC dtsi is misplaced on this
+> platform, fix them by deleting those nodes and redefining them.
 > 
+> Signed-off-by: Eric Gonçalves <ghatto404@gmail.com>
+> ---
+>  arch/arm64/boot/dts/qcom/sm8450-samsung-r0q.dts | 13 +++++++++++++
+>  1 file changed, 13 insertions(+)
 > 
-> On 8/22/2025 6:32 AM, Jakub Kicinski wrote:
->> On Mon, 18 Aug 2025 12:25:50 +0530 Krishna Chaitanya Chundru wrote:
->>> This patch introduces the MHI PHC (PTP Hardware Clock) driver, which
->>> registers a PTP (Precision Time Protocol) clock and communicates with
->>> the MHI core to get the device side timestamps. These timestamps are
->>> then exposed to the PTP subsystem, enabling precise time synchronization
->>> between the host and the device.
->>
->>> +static struct ptp_clock_info qcom_ptp_clock_info = {
->>> +	.owner    = THIS_MODULE,
->>> +	.gettimex64 =  qcom_ptp_gettimex64,
->>> +};
->>
->> Yet another device to device clock sync driver. Please see the
->> discussion here:
->> https://lore.kernel.org/all/20250815113814.5e135318@kernel.org/
->> I think we have a consensus within the community that we should 
->> stop cramming random clocks into the PTP subsystem.
->>
->> Exporting read-only clocks from another processor is not what PTP
->> is for.
-> 
-> Hi Jakub,
+> diff --git a/arch/arm64/boot/dts/qcom/sm8450-samsung-r0q.dts b/arch/arm64/boot/dts/qcom/sm8450-samsung-r0q.dts
+> index a3b81403d180..8ed8a67aae0d 100644
+> --- a/arch/arm64/boot/dts/qcom/sm8450-samsung-r0q.dts
+> +++ b/arch/arm64/boot/dts/qcom/sm8450-samsung-r0q.dts
+> @@ -10,6 +10,9 @@
+>  #include "pm8350c.dtsi"
+>  #include "pmk8350.dtsi"
 >  
-> Thank you for the review and for sharing the link to the ongoing discussion.
-> 
-> I understand the concerns about using the PTP subsystem for read-only clocks.
-> The idea behind this patch was to use a standard interface for syncing time
-> between the host and device, and also to make use of existing tools like
-> phc2sys from userspace.
->  
-> I have looked into the on going discussion you pointed, and we’re facing
-> a similar challenge. Based on internal discussion with the PCIe team, we’ve
-> confirmed that PCIe PTM isn’t applicable for this hardware use case.
->  
-> That said, since it seems the community prefers not to use PTP for such
-> requirement, could you please suggest any other way to support this time
-> sync requirement that would be acceptable upstream?
-> 
-> Appreciate your guidance!
->  
+> +/delete-node/ &adsp_mem;
+> +/delete-node/ &video_mem;
+> +
+>  / {
+>  	model = "Samsung Galaxy S22 5G";
+>  	compatible = "samsung,r0q", "qcom,sm8450";
+> @@ -64,6 +67,16 @@ splash-region@b8000000 {
+>  			reg = <0x0 0xb8000000 0x0 0x2b00000>;
+>  			no-map;
+>  		};
+> +
+> +		adsp_mem: memory@84500000 {
+> +			reg = <0x0 0x84500000 0x0 0x3b00000>;
+> +			no-map;
+> +		};
+> +
+> +		video_mem: memory@83e00000 {
+> +			reg = <0x0 0x83e00000 0x0 0x700000>;
+> +			no-map;
+> +		};
 
-Hi, Could you please share your thoughts on other approaches or directions we could
-take to support the above requirement in a way that’s acceptable upstream?
+Please keep the entries sorted, also with regards to the existing ones
 
-Thanks,
-Imran
+Konrad
 
