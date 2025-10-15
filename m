@@ -1,195 +1,222 @@
-Return-Path: <linux-arm-msm+bounces-77412-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-77413-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ams.mirrors.kernel.org (ams.mirrors.kernel.org [213.196.21.55])
-	by mail.lfdr.de (Postfix) with ESMTPS id 57A6ABDEF29
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Oct 2025 16:12:33 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 03C19BDEFE7
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Oct 2025 16:22:28 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ams.mirrors.kernel.org (Postfix) with ESMTPS id CA3473579B5
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Oct 2025 14:12:32 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 7119B486046
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Oct 2025 14:20:21 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 95BD225333F;
-	Wed, 15 Oct 2025 14:12:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 804FA243969;
+	Wed, 15 Oct 2025 14:20:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="bGlp81zB"
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=armlinux.org.uk header.i=@armlinux.org.uk header.b="bleYCwZ6"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from pandora.armlinux.org.uk (pandora.armlinux.org.uk [78.32.30.218])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0EE821CAA7B
-	for <linux-arm-msm@vger.kernel.org>; Wed, 15 Oct 2025 14:12:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0AD96224AED;
+	Wed, 15 Oct 2025 14:20:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=78.32.30.218
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760537550; cv=none; b=iNpUbnwRYe042ky38Slg5YTTd3pYrIrfLQNp7qwmHIXDDCCDs+7gf6y/vtjINZ4V8LYOfxWA/IWK324HreD7xd5Lhu6+Q93Z8Y6QbFlMg2D8RwWNt2I11qKDfPcFHbyz9ZzPMtj8uLitHGSITYl3uVWkvgPYDLxrYG5C7D3nZvg=
+	t=1760538019; cv=none; b=fKFCnQAFYMPY9GQ2flMfZE2bP/OrZnUacnL0/14n/2cqkxBSYD2GOOI8e/8qItp6kz/mGdMrXr3EJ2ePVCzIXOmk1lBMCPx+gj7jn/Sb+RZFUjIo7HF0XqqOaG6Q4O4WA1e1Vch1DiFoYrAR54k+hpXWcUqA/pZb0oMOgbxeMJI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760537550; c=relaxed/simple;
-	bh=0/Nkjxawte1xSGWBAeAz4zNlicLOOiHatyq2kN/fkSw=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=clDwW40hHj56HAVXGDUVOkUVcgTHG2VnRqTx4egb7guFs3wBLs1aYkkJiaXhoDx+KTyRWGBxjzsSYT0Mii5uIUuZNj7RoOQbIkDVoHgK8P02ONKoMAHKTOyXug2S5YDWiaAvfDebYt4xlFPIDBjvCK/ZZBhgxTjnx5R3xrUuh9g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=bGlp81zB; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 59FAVo9V024777
-	for <linux-arm-msm@vger.kernel.org>; Wed, 15 Oct 2025 14:12:28 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	4wHo8Vra1vzjyqc4KdZsz2I/6mrjzzqutTDTJTdctpY=; b=bGlp81zB3/kC2eot
-	K4nsU9MxuIjed8SJ9zqWT6ieOCVdE/XPJQvJJbm40hs2/N53lU5JKl8EWJVBaHc0
-	cLz8jE4DFKcrnpKdvIymQz/3pwKl8rkGVMp6SLxlMcxseiiem57JtO+MvG+/sFLd
-	l+5x24nBoiamMx6DDqLjUVPzXEf+6vuyZC/QDMvKnWS86tjdMfRG5wKU/Hhqp0XK
-	uprIPQYD2wY8gu+BYF/Maskebbc7ImLW0lD15BQ3LXXfrJlFXMWm7HDIjFECxxbk
-	Tz9AfW9BesxLbxqyLe13HJkukWjywcTcbn5q3GFtAS+tAGZrkHZ22B9J3KQxcrhb
-	m8J4vw==
-Received: from mail-pf1-f198.google.com (mail-pf1-f198.google.com [209.85.210.198])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 49qff0vmsw-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Wed, 15 Oct 2025 14:12:28 +0000 (GMT)
-Received: by mail-pf1-f198.google.com with SMTP id d2e1a72fcca58-780f82484faso7010254b3a.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Oct 2025 07:12:28 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1760537547; x=1761142347;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=4wHo8Vra1vzjyqc4KdZsz2I/6mrjzzqutTDTJTdctpY=;
-        b=Ngay/xkMEGmnfXnxStyjS/lUKXioQLat19tIIelEXn2adTDcrGnRMIJWTvn/UiHVRX
-         ZicZjuMFzL7BG3evgYv46yU7l+95knOUtgDwoaipM8rqPsrs/5xlachScRFQIkpX8un5
-         DTIQ76iOsJjJd1F7MUAsSGdWcYZwMJzZEKMP58WZj2DhV3JWfwhsD2axs6JYAoNmNLAU
-         xODnpKwGGaPduFzruYoUJwN6FYOYcIZAZ7gNEG124iI6rPOgRpkID2x+1WDzAyqEdz/6
-         ZrdTVRW5XxWLcmpV8pmCQUztf4Se7sPd4O17pjscw6my0QK9fFJIPSfMDqLusUIHyAZc
-         poOg==
-X-Forwarded-Encrypted: i=1; AJvYcCUac/h7OTY60ZvzkSQcPrjNsi12AO2Ayc8qdRyFwtEroZ4IufgISv6ZUjx/v0bc1ld3zYMA0K4pQL1pkMkg@vger.kernel.org
-X-Gm-Message-State: AOJu0YyRX8UlaKQv5fLbyHCFhblMiRrqGzu5nLKKqsL1ca0TZFsBmo58
-	kXgtSXJoOCvc9EqM3shG+kBu474xCoAJB2VUynJYKDGBGbbIXgz17ywmQeUgPq/GmBhXbZKU2UU
-	mntE2aah+slYoPiTuhA5tHLbxQfu9ognMyvqCORfPh2QxXlJydRpbpuTEf5Zs03wMCE3P
-X-Gm-Gg: ASbGncuJaU3PfjjMcqfoddFzGsVPdrWARreaWOPhZ69kDLCiqLFYQElGH8NRldmlVV6
-	FA7+uNcxnDIcFyKONcErAkcXlfUJTs0xB4CayrQDE8JgiVuv1QDUUzUV4GvbcLhZOgTeLlxSlzQ
-	xRCFx9vnMI2Qz1uQKViapaolGo91+a3ggeOjvVQI+4loTIj6YszpmzfOTMJqPyT5Y0urowGlSXB
-	1l/TF5vLGQr4YjO4BNH1mcjM6T7hBFjZ6ybdskT7UGY+/ZgIP8Q5YaFHa6vFYgIwvHDMmaQQS5O
-	/W03kM01yRno5x1hNon7ZaZptZh09Tf77jtDybgql5E4x2Jp+IzJ1jw3Joy/2qW5OcEW47s=
-X-Received: by 2002:a05:6a00:3e27:b0:77f:2899:d443 with SMTP id d2e1a72fcca58-79385ce7d1emr33730444b3a.10.1760537547291;
-        Wed, 15 Oct 2025 07:12:27 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IG9O/0dJRMlLmSW2AYZVzbX7T6xJcZVwENkY02XFT5vDOdiAN4Kwxk2zeM2DZtd/QPojIZL9Q==
-X-Received: by 2002:a05:6a00:3e27:b0:77f:2899:d443 with SMTP id d2e1a72fcca58-79385ce7d1emr33730391b3a.10.1760537546628;
-        Wed, 15 Oct 2025 07:12:26 -0700 (PDT)
-Received: from [10.218.44.34] ([202.46.22.19])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-7992d09f407sm19119352b3a.43.2025.10.15.07.12.23
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 15 Oct 2025 07:12:26 -0700 (PDT)
-Message-ID: <6b6a6cd1-faf7-4ef5-ab24-171a59c99085@oss.qualcomm.com>
-Date: Wed, 15 Oct 2025 19:42:21 +0530
+	s=arc-20240116; t=1760538019; c=relaxed/simple;
+	bh=+fp4oQ/3yyn9S+l1Agz8qFnINHQ32q1ZmJr9Ejfxkrc=;
+	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition; b=ab+Yw5Y8lBGEd0pHJ0LVjTokrOE935co0WaLJpy9lu1sJn6a/JWex8uoH1JrH7MHZg+DMh4E7vHFIwZBWAXnMx1VFyzWyQjjoqa4EVuCXt9IEsLKuCdOWB3BHVV42UPkb1NLktTtSIs3+90Hxr7Bnq08CzO3lv/fe8qSyUE7P70=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=armlinux.org.uk; spf=none smtp.mailfrom=armlinux.org.uk; dkim=pass (2048-bit key) header.d=armlinux.org.uk header.i=@armlinux.org.uk header.b=bleYCwZ6; arc=none smtp.client-ip=78.32.30.218
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=armlinux.org.uk
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=armlinux.org.uk
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=armlinux.org.uk; s=pandora-2019; h=Sender:Content-Type:MIME-Version:
+	Message-ID:Subject:Cc:To:From:Date:Reply-To:Content-Transfer-Encoding:
+	Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
+	Resent-To:Resent-Cc:Resent-Message-ID:In-Reply-To:References:List-Id:
+	List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
+	bh=Cd+vnc5+2R6vO0E42gKoeqL/Lm72sDaXvug1pdMXk+E=; b=bleYCwZ6e9k8KI/AZUcw/0mN5x
+	XDEE8vjEzTMt/+6uSPa63ftpsRMY4htwHlql8pMUz3+0VZozXUAOT4QGKpTq9ehE+hYDvYe7UKWqP
+	WVur47biWXiBt6sotW/N8jLKOnSTG44pE0v2eVLpQn7pqpokXPgo+5L9wm7DTbh3A2a8fCaseTcfY
+	TilXzGcq+cFtkzIlSC0/Sq1vbVEpaK+6FCQ3vle5P5vt4eHebtdYOTnsA8v47tU8Ivf9z0hsShO+i
+	XXSefj6hPUCwC52GpDDetTntyxCgyYqC2KkDIHvDnSfkNW3es1lc+KNIrSx9sqi8jv8N3JAdzjFnB
+	rx0X6IIA==;
+Received: from shell.armlinux.org.uk ([fd8f:7570:feb6:1:5054:ff:fe00:4ec]:58174)
+	by pandora.armlinux.org.uk with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.98.2)
+	(envelope-from <linux@armlinux.org.uk>)
+	id 1v92Lq-000000004dh-3LdE;
+	Wed, 15 Oct 2025 15:19:38 +0100
+Received: from linux by shell.armlinux.org.uk with local (Exim 4.98.2)
+	(envelope-from <linux@shell.armlinux.org.uk>)
+	id 1v92Ld-000000002KU-2IwM;
+	Wed, 15 Oct 2025 15:19:25 +0100
+Date: Wed, 15 Oct 2025 15:19:25 +0100
+From: "Russell King (Oracle)" <linux@armlinux.org.uk>
+To: Andrew Lunn <andrew@lunn.ch>, Heiner Kallweit <hkallweit1@gmail.com>
+Cc: Abhishek Chauhan <quic_abchauha@quicinc.com>,
+	Alexandre Torgue <alexandre.torgue@foss.st.com>,
+	Alexis Lothore <alexis.lothore@bootlin.com>,
+	Andrew Lunn <andrew+netdev@lunn.ch>,
+	Boon Khai Ng <boon.khai.ng@altera.com>,
+	Choong Yong Liang <yong.liang.choong@linux.intel.com>,
+	Daniel Machon <daniel.machon@microchip.com>,
+	"David S. Miller" <davem@davemloft.net>,
+	Drew Fustini <dfustini@tenstorrent.com>,
+	Emil Renner Berthing <emil.renner.berthing@canonical.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Faizal Rahim <faizal.abdul.rahim@linux.intel.com>,
+	Furong Xu <0x1207@gmail.com>, Inochi Amaoto <inochiama@gmail.com>,
+	Jacob Keller <jacob.e.keller@intel.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	"Jan Petrous (OSS)" <jan.petrous@oss.nxp.com>,
+	Jisheng Zhang <jszhang@kernel.org>, Kees Cook <kees@kernel.org>,
+	Kunihiko Hayashi <hayashi.kunihiko@socionext.com>,
+	Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>,
+	Ley Foon Tan <leyfoon.tan@starfivetech.com>,
+	linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org,
+	linux-stm32@st-md-mailman.stormreply.com,
+	Matthew Gerlach <matthew.gerlach@altera.com>,
+	Maxime Chevallier <maxime.chevallier@bootlin.com>,
+	Maxime Coquelin <mcoquelin.stm32@gmail.com>,
+	Michal Swiatkowski <michal.swiatkowski@linux.intel.com>,
+	netdev@vger.kernel.org, Oleksij Rempel <o.rempel@pengutronix.de>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Rohan G Thomas <rohan.g.thomas@altera.com>,
+	Shenwei Wang <shenwei.wang@nxp.com>,
+	Simon Horman <horms@kernel.org>,
+	Song Yoong Siang <yoong.siang.song@intel.com>,
+	Swathi K S <swathi.ks@samsung.com>,
+	Tiezhu Yang <yangtiezhu@loongson.cn>, Vinod Koul <vkoul@kernel.org>,
+	Vladimir Oltean <olteanv@gmail.com>,
+	Vladimir Oltean <vladimir.oltean@nxp.com>,
+	Yu-Chun Lin <eleanor15x@gmail.com>
+Subject: [PATCH net-next 00/14] net: stmmac: phylink PCS conversion
+Message-ID: <aO-tbQCVu47R3izM@shell.armlinux.org.uk>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 04/24] arm64: dts: qcom: glymur: Add QUPv3 configuration
- for serial engines
-To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Cc: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-        Pankaj Patil <pankaj.patil@oss.qualcomm.com>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley
- <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20250925-v3_glymur_introduction-v1-0-24b601bbecc0@oss.qualcomm.com>
- <20250925-v3_glymur_introduction-v1-4-24b601bbecc0@oss.qualcomm.com>
- <8828946b-3979-4e7b-a11c-740d8a6253ce@oss.qualcomm.com>
- <235cf6b7-e758-4d16-b5a1-182cc869b2e4@oss.qualcomm.com>
- <bngdsqmcxtlolmwr4it3wy7rldikzffgwwuyj443dc3v3ilaju@eiveujsf4up4>
-Content-Language: en-US
-From: Jyothi Kumar Seerapu <jyothi.seerapu@oss.qualcomm.com>
-In-Reply-To: <bngdsqmcxtlolmwr4it3wy7rldikzffgwwuyj443dc3v3ilaju@eiveujsf4up4>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDExMDAxOCBTYWx0ZWRfXwv3++PRIdXYE
- zTC+4E7zEzXTNJLJ8R5oDr5diY1a8hFVV8bevM3mdBQwnI+GQYSatg0EvHL2bK1pC1CtQoO9CvE
- RCiYaXzYG3toBeTSX9kqbk8nWYS5odiYGJH6JN5KRojGHUUyM+evYcgqBV3puuUIr1nzbpt+K/m
- YzqOctB6tB0vlrsctzV90Pbw08WiHqPn8Rz7DqwZ+JGZHzTMqIvcaGCcjqkVScNyKWCF69nPrD+
- RMJQcwqME7yh58Gec+nJI/FUEea3RkOD6pe9tA6wajbaNXrjUgbxxfYAIC2mf2nSIsH0ZI34gPF
- PC2rts+7i/XgYYwRqcYAmUCl1qYOu7n8Lt1sUq5cA==
-X-Proofpoint-GUID: F7I6iciRKxcCaXbBFXf5LCZr5g-Ved2l
-X-Authority-Analysis: v=2.4 cv=PriergM3 c=1 sm=1 tr=0 ts=68efabcc cx=c_pps
- a=m5Vt/hrsBiPMCU0y4gIsQw==:117 a=fChuTYTh2wq5r3m49p7fHw==:17
- a=IkcTkHD0fZMA:10 a=x6icFKpwvdMA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=EUspDBNiAAAA:8 a=b3unEIaTcIFgp9XBJ8sA:9 a=QEXdDO2ut3YA:10
- a=IoOABgeZipijB_acs4fv:22
-X-Proofpoint-ORIG-GUID: F7I6iciRKxcCaXbBFXf5LCZr5g-Ved2l
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-10-15_05,2025-10-13_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 adultscore=0 bulkscore=0 phishscore=0 lowpriorityscore=0
- spamscore=0 suspectscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2510020000
- definitions=main-2510110018
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Sender: Russell King (Oracle) <linux@armlinux.org.uk>
 
+This series is radical - it takes the brave step of ripping out much of
+the existing PCS support code and throwing it all away.
 
+I have discussed the introduction of the STMMAC_FLAG_HAS_INTEGRATED_PCS
+flag with Bartosz Golaszewski, and the conclusion I came to is that
+this is to workaround the breakage that I've been going on about
+concerning the phylink conversion for the last five or six years.
 
-On 10/15/2025 7:03 PM, Dmitry Baryshkov wrote:
-> On Wed, Oct 15, 2025 at 03:58:31PM +0530, Jyothi Kumar Seerapu wrote:
->>
->>
->> On 9/25/2025 3:48 PM, Konrad Dybcio wrote:
->>> On 9/25/25 8:32 AM, Pankaj Patil wrote:
->>>> From: Jyothi Kumar Seerapu <jyothi.seerapu@oss.qualcomm.com>
->>>>
->>>> Add device tree support for QUPv3 serial engine protocols on Glymur.
->>>> Glymur has 24 QUP serial engines across 3 QUP wrappers, each with
->>>> support of GPI DMA engines.
->>>>
->>>> Signed-off-by: Jyothi Kumar Seerapu <jyothi.seerapu@oss.qualcomm.com>
->>>> Signed-off-by: Pankaj Patil <pankaj.patil@oss.qualcomm.com>
->>>> ---
->>>
->>> [...]
->>>
->>>> +		gpi_dma2: dma-controller@800000 {
->>>> +			compatible = "qcom,glymur-gpi-dma", "qcom,sm6350-gpi-dma";
->>>> +			reg = <0 0x00800000 0 0x60000>;
->>>> +			interrupts = <GIC_SPI 588 IRQ_TYPE_LEVEL_HIGH>,
->>>> +				     <GIC_SPI 589 IRQ_TYPE_LEVEL_HIGH>,
->>>> +				     <GIC_SPI 590 IRQ_TYPE_LEVEL_HIGH>,
->>>> +				     <GIC_SPI 591 IRQ_TYPE_LEVEL_HIGH>,
->>>> +				     <GIC_SPI 592 IRQ_TYPE_LEVEL_HIGH>,
->>>> +				     <GIC_SPI 593 IRQ_TYPE_LEVEL_HIGH>,
->>>> +				     <GIC_SPI 594 IRQ_TYPE_LEVEL_HIGH>,
->>>> +				     <GIC_SPI 595 IRQ_TYPE_LEVEL_HIGH>,
->>>> +				     <GIC_SPI 596 IRQ_TYPE_LEVEL_HIGH>,
->>>> +				     <GIC_SPI 597 IRQ_TYPE_LEVEL_HIGH>,
->>>> +				     <GIC_SPI 598 IRQ_TYPE_LEVEL_HIGH>,
->>>> +				     <GIC_SPI 599 IRQ_TYPE_LEVEL_HIGH>,
->>>> +				     <GIC_ESPI 129 IRQ_TYPE_LEVEL_HIGH>,
->>>> +				     <GIC_ESPI 130 IRQ_TYPE_LEVEL_HIGH>,
->>>> +				     <GIC_ESPI 131 IRQ_TYPE_LEVEL_HIGH>,
->>>> +				     <GIC_ESPI 132 IRQ_TYPE_LEVEL_HIGH>;
->>>> +			dma-channels = <16>;
->>>> +			dma-channel-mask = <0x3f>;
->>>> +			#dma-cells = <3>;
->>>> +			iommus = <&apps_smmu 0xd76 0x0>;
->>>> +			status = "ok";
->>>
->>> this is implied by default, drop
->>
->> Hi Konard,
->>
->> Do you mean we should remove the status property for all QUPs and GPI_DMAs
->> from the common device tree (SOC) and enable them only in the board-specific
->> device tree files?
-> 
-> Could you please check how it is done for all other platforms?
-In other platforms, the status is set to 'disabled' in the SoC device 
-tree file and enabled in the board-specific device tree files.
-I believe it's fine to make the same change here.
-> 
-> 
+The problem is that the stmmac PCS code manipulates the netif carrier
+state, which confuses phylink.
 
+There is a way of testing this out on the Jetson Xavier NX platform as
+the "PCS" code paths can be exercised while in RGMII mode - because
+RGMII also has in-band status and the status register is shared with
+SGMII. Testing this out confirms my long held theory: the interrupt
+handler manipulates the netif carrier state before phylink gets a
+look-in, which means that the mac_link_up() and mac_link_down() methods
+are never called, resulting in the device being non-functional.
+
+Moreover, on dwmac4 cores, ethtool reports incorrect information -
+despite having a full-duplex link, ethtool reports that it is
+half-dupex.
+
+Thus, this code is completely broken - anyone using it will not have
+a functional platform, and thus it doesn't deserve to live any longer,
+especially as it's a thorn in phylink.
+
+Rip all this out, leaving just the bare bones initialisation in place.
+
+However, this is not the last of what's broken. We have this hw->ps
+integer which is really not descriptive, and the DT property from
+which it comes from does little to help understand what's going on.
+Putting all the clues together:
+
+- early configuration of the GMAC configuration register for the
+  speed.
+- setting the SGMII rate adapter layer to take its speed from the
+  GMAC configuration register.
+
+Lastly, setting the transmit enable (TE) bit, which is a typo that puts
+the nail in the coffin of this code. It should be the transmit
+configuration (TC) bit. Given that when the link comes up, phylink
+will call mac_link_up() which will overwrite the speed in the GMAC
+configuration register, the only part of this that is functional is
+changing where the SGMII rate adapter layer gets its speed from,
+which is a boolean.
+
+From what I've found so far, everyone who sets the snps,ps-speed
+property which configures this mode also configures a fixed link,
+so the pre-configuration is unnecessary - the link will come up
+anyway.
+
+So, this series rips that out the preconfiguration as well, and
+replaces hw->ps with a boolean hw->reverse_sgmii_enable flag.
+
+We then move the sole PCS configuration into a phylink_pcs instance,
+which configures the PCS control register in the same way as is done
+during the probe function.
+
+Thus, we end up with much easier and simpler conversion to phylink PCS
+than previous attempts.
+
+Even so, this still results in inband mode always being enabled at the
+moment in the new .pcs_config() method to reflect what the probe
+function was doing. The next stage will be to change that to allow
+phylink to correctly configure the PCS. This needs fixing to allow
+platform glue maintainers who are currently blocked to progress.
+
+Please note, however, that this has not been tested with any SGMII
+platform.
+
+I've tried to get as many people into the Cc list with get_maintainers,
+I hope that's sufficient to get enough eyeballs on this.
+
+Changes since RFC:
+- new patch (7) to remove RGMII "pcs" mode
+- new patch (8) to move reverse "pcs" mode to stmmac_check_pcs_mode()
+- new patch (9) to simplify the code moved in the previous patch
+- new patch (10) to rename the confusing hw->ps to something more
+  understandable.
+- new patch (11) to shut up inappropriate complaints about
+  "snps,ps-speed" being invalid.
+- new patch (13) to add a MAC .pcs_init method, which will only be
+  called when core has PCS present.
+- modify patch 14 to use this new pcs_init method.
+
+Despite getting a couple of responses to the RFC series posted in
+September, I have had nothing testing this on hardware. I have tested
+this on the Jetson Xavier NX, which included trial runs with enabling
+the RGMII "pcs" mode, hence the new patches that rip out this mode. I
+have come to the conclusion that the only way to get stmmac changes
+tested is to get them merged into net-next, thereby forcing people to
+have to run with them... and we'll deal with any fallout later.
+
+ drivers/net/ethernet/stmicro/stmmac/Makefile       |  2 +-
+ drivers/net/ethernet/stmicro/stmmac/common.h       |  5 +-
+ .../ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c    |  6 +-
+ drivers/net/ethernet/stmicro/stmmac/dwmac1000.h    |  6 +-
+ .../net/ethernet/stmicro/stmmac/dwmac1000_core.c   | 65 ++-------------------
+ drivers/net/ethernet/stmicro/stmmac/dwmac4.h       |  3 +-
+ drivers/net/ethernet/stmicro/stmmac/dwmac4_core.c  | 66 ++-------------------
+ .../net/ethernet/stmicro/stmmac/dwxgmac2_core.c    | 25 +-------
+ drivers/net/ethernet/stmicro/stmmac/hwif.h         |  4 +-
+ drivers/net/ethernet/stmicro/stmmac/stmmac.h       |  4 ++
+ .../net/ethernet/stmicro/stmmac/stmmac_ethtool.c   | 68 +---------------------
+ drivers/net/ethernet/stmicro/stmmac/stmmac_main.c  | 24 ++++----
+ drivers/net/ethernet/stmicro/stmmac/stmmac_pcs.c   | 47 +++++++++++++++
+ drivers/net/ethernet/stmicro/stmmac/stmmac_pcs.h   | 23 ++++++--
+ include/linux/stmmac.h                             |  1 -
+ 15 files changed, 104 insertions(+), 245 deletions(-)
+
+-- 
+RMK's Patch system: https://www.armlinux.org.uk/developer/patches/
+FTTP is here! 80Mbps down 10Mbps up. Decent connectivity at last!
 
