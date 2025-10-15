@@ -1,105 +1,66 @@
-Return-Path: <linux-arm-msm+bounces-77497-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-77498-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 30764BE0E8B
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Oct 2025 00:13:04 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id AE54FBE0FA6
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Oct 2025 00:50:39 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id E25B3485E14
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Oct 2025 22:13:02 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id EEFFE1895D7D
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Oct 2025 22:51:02 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B945430597C;
-	Wed, 15 Oct 2025 22:13:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 38F63314D3E;
+	Wed, 15 Oct 2025 22:50:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=armlinux.org.uk header.i=@armlinux.org.uk header.b="nCY1sWW7"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="AUvJmCsS"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from pandora.armlinux.org.uk (pandora.armlinux.org.uk [78.32.30.218])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28F90305962;
-	Wed, 15 Oct 2025 22:12:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=78.32.30.218
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F38C3270542;
+	Wed, 15 Oct 2025 22:50:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760566380; cv=none; b=WcAqQOsRQNPbaLPwaA3rD8b25CeyjjwsKhMx6aMLpI6u95byNVFFOZD/K0gOetF3k2SfodfQqIGLWfjP4HDJZxtC/XNV+G8+8wSZhP3D9IK7PCUODUO1Nmdq3IQkutz3TuRBNWRxELKCk24nZ43Q0OlnwV2+K6Mbbpluvyq5Bl0=
+	t=1760568635; cv=none; b=TeZc/vJ0rtrwwFNWCqPeP1+XHNJeW1RfL/I6zywHP3X16DeHyEkGQ/qrj7sk2UMDmALERMk30ds9cKDcwmN33d4bXA5GG3NWNhIfhxO+SwwGp9Z6PEg5K4cFBQh8NqMAzeNEIWWsIooHaz2nmgNqhtia76SiTgxTFf/bQ6Mp/q8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760566380; c=relaxed/simple;
-	bh=auKodTEfole9ZQK5krUjhG8iUg2KzBm+f1CLzenb3p0=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=YR8K8V2HLpj3kLV6lcaccMbeaswK49K2cwShW/iOfr/O9z5eBpw3f0gCTmKr1lE5jlZtlCxW3tBxlgTswIxjimXCMni3g7r3RIsHE0Tln0x8yet0on9J7ql3wsMzGTUPevQ5Ajc68NFTm/Ft3CI9ro3Ha+TJmWnwkwpDlysRyTg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=armlinux.org.uk; spf=none smtp.mailfrom=armlinux.org.uk; dkim=pass (2048-bit key) header.d=armlinux.org.uk header.i=@armlinux.org.uk header.b=nCY1sWW7; arc=none smtp.client-ip=78.32.30.218
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=armlinux.org.uk
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=armlinux.org.uk
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=armlinux.org.uk; s=pandora-2019; h=Sender:In-Reply-To:Content-Type:
-	MIME-Version:References:Message-ID:Subject:Cc:To:From:Date:Reply-To:
-	Content-Transfer-Encoding:Content-ID:Content-Description:Resent-Date:
-	Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:
-	List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
-	bh=4wDM7ea8WG0qsfgvvugn/KuHahIyav7ggrd+qRRZvlA=; b=nCY1sWW7An16x4rxXvqnUl+x5I
-	ASEGspy2pshjRY27ot+WelX1sdCT93Ru/31qG21JGNHm3IX/VDc0T7EZjjsbWBGKf8cDAoeBFIr4G
-	df98PLQtMI52u+kz/qQK/ZopYCjHVgn3Owizi0rSwURl8JZRsAlNEzZOTilLqdr4kd93JpRw5317R
-	X1z9CrnKnVl0YVEaQ5DB+UDV3bZHtoRxnTBPWeRxW2T0r+AzJRb0SBM/Fgwl3+2H0wgDhgXVKU2hJ
-	PkGNeKSGvo3v4BcbU7C8Cph6wGmHy5WQ7sqLOlEHub3BDyhUQo9++/c8Pj+gv6Pqv1ou05ulxEtX2
-	c0Vp6ubQ==;
-Received: from shell.armlinux.org.uk ([fd8f:7570:feb6:1:5054:ff:fe00:4ec]:36642)
-	by pandora.armlinux.org.uk with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-	(Exim 4.98.2)
-	(envelope-from <linux@armlinux.org.uk>)
-	id 1v99jS-000000005X8-1PdH;
-	Wed, 15 Oct 2025 23:12:30 +0100
-Received: from linux by shell.armlinux.org.uk with local (Exim 4.98.2)
-	(envelope-from <linux@shell.armlinux.org.uk>)
-	id 1v99jJ-000000002ei-0dcB;
-	Wed, 15 Oct 2025 23:12:21 +0100
-Date: Wed, 15 Oct 2025 23:12:20 +0100
-From: "Russell King (Oracle)" <linux@armlinux.org.uk>
-To: Andrew Lunn <andrew@lunn.ch>
-Cc: Heiner Kallweit <hkallweit1@gmail.com>,
-	Abhishek Chauhan <quic_abchauha@quicinc.com>,
-	Alexandre Torgue <alexandre.torgue@foss.st.com>,
-	Alexis Lothore <alexis.lothore@bootlin.com>,
-	Andrew Lunn <andrew+netdev@lunn.ch>,
-	Boon Khai Ng <boon.khai.ng@altera.com>,
-	Choong Yong Liang <yong.liang.choong@linux.intel.com>,
-	Daniel Machon <daniel.machon@microchip.com>,
-	"David S. Miller" <davem@davemloft.net>,
-	Drew Fustini <dfustini@tenstorrent.com>,
-	Emil Renner Berthing <emil.renner.berthing@canonical.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Faizal Rahim <faizal.abdul.rahim@linux.intel.com>,
-	Furong Xu <0x1207@gmail.com>, Inochi Amaoto <inochiama@gmail.com>,
-	Jacob Keller <jacob.e.keller@intel.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	"Jan Petrous (OSS)" <jan.petrous@oss.nxp.com>,
-	Jisheng Zhang <jszhang@kernel.org>, Kees Cook <kees@kernel.org>,
-	Kunihiko Hayashi <hayashi.kunihiko@socionext.com>,
-	Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>,
-	Ley Foon Tan <leyfoon.tan@starfivetech.com>,
-	linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org,
-	linux-stm32@st-md-mailman.stormreply.com,
-	Matthew Gerlach <matthew.gerlach@altera.com>,
-	Maxime Chevallier <maxime.chevallier@bootlin.com>,
-	Maxime Coquelin <mcoquelin.stm32@gmail.com>,
-	Michal Swiatkowski <michal.swiatkowski@linux.intel.com>,
-	netdev@vger.kernel.org, Oleksij Rempel <o.rempel@pengutronix.de>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Rohan G Thomas <rohan.g.thomas@altera.com>,
-	Shenwei Wang <shenwei.wang@nxp.com>,
-	Simon Horman <horms@kernel.org>,
-	Song Yoong Siang <yoong.siang.song@intel.com>,
-	Swathi K S <swathi.ks@samsung.com>,
-	Tiezhu Yang <yangtiezhu@loongson.cn>, Vinod Koul <vkoul@kernel.org>,
-	Vladimir Oltean <olteanv@gmail.com>,
-	Vladimir Oltean <vladimir.oltean@nxp.com>,
-	Yu-Chun Lin <eleanor15x@gmail.com>
-Subject: Re: [PATCH net-next 03/14] net: stmmac: remove SGMII/RGMII/SMII
- interrupt handling
-Message-ID: <aPAcRNeFa5heydq7@shell.armlinux.org.uk>
-References: <aO-tbQCVu47R3izM@shell.armlinux.org.uk>
- <E1v92MO-0000000AmGP-2hFV@rmk-PC.armlinux.org.uk>
- <51db1103-afd7-430d-9038-7094032347fc@lunn.ch>
+	s=arc-20240116; t=1760568635; c=relaxed/simple;
+	bh=YLBO0n7kCNA2DNr4AULWGXKmK1HQxkDhSaZZFEgXrjw=;
+	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition:In-Reply-To; b=GIyqIQjNbU6MI6a6xawNwmYumaMhEvMpJiP/bNKQ7rn0hA9mSWDIaPBaxu5O16yVMBi019rrxBBwURRn/8r8k/ki4PidBNa0GlaR9kYcdrnPtIWoj1tjWmaR/OrS13W2+04hZKlWtzt+gfFl7dh92SXb0+6h4oke5BkqdbIcrso=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=AUvJmCsS; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C64CC4CEF8;
+	Wed, 15 Oct 2025 22:50:34 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1760568634;
+	bh=YLBO0n7kCNA2DNr4AULWGXKmK1HQxkDhSaZZFEgXrjw=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:From;
+	b=AUvJmCsSG4A8dOgYSfL3n/ufhUIE/Ip9vzQ6rrDJrXcsR7571piThJsUq7u6K65Cd
+	 57tGEB3YaFAQ6OBlhXIhEnEYxnIl3qPqRdaXCDZlUzT36zCH6HHUDOIFC/0l86h4S/
+	 cDKUb8kw3Dgpf2E2jE6lli1G3V4seucF4/bKrhO/NOb0dkP8QLv2JdyPv3IeADCvIU
+	 F/+NJIuDi9qIn9oH407Ws30IHA1spx6HPn1NF0YsxM4gEFas8vJSZex+PFQNOfNjkG
+	 FWnT8PB5YDapki8wyOGfGRhvgXzrNTLYZQA0+XHfqBR4OKbhvYc93OI6pitZp2ABc6
+	 ZM+kxKC/7W54w==
+Date: Wed, 15 Oct 2025 17:50:33 -0500
+From: Bjorn Helgaas <helgaas@kernel.org>
+To: Diederik de Haas <diederik@cknow-tech.com>
+Cc: FUKAUMI Naoki <naoki@radxa.com>, manivannan.sadhasivam@oss.qualcomm.com,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Manivannan Sadhasivam <mani@kernel.org>,
+	Lorenzo Pieralisi <lpieralisi@kernel.org>,
+	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
+	Rob Herring <robh@kernel.org>, linux-pci@vger.kernel.org,
+	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+	"David E. Box" <david.e.box@linux.intel.com>,
+	Kai-Heng Feng <kai.heng.feng@canonical.com>,
+	"Rafael J. Wysocki" <rafael@kernel.org>,
+	Heiner Kallweit <hkallweit1@gmail.com>,
+	Chia-Lin Kao <acelan.kao@canonical.com>,
+	Dragan Simic <dsimic@manjaro.org>,
+	linux-rockchip@lists.infradead.org, regressions@lists.linux.dev
+Subject: Re: [PATCH v2 1/2] PCI/ASPM: Override the ASPM and Clock PM states
+ set by BIOS for devicetree platforms
+Message-ID: <20251015225033.GA945930@bhelgaas>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -108,52 +69,157 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <51db1103-afd7-430d-9038-7094032347fc@lunn.ch>
-Sender: Russell King (Oracle) <linux@armlinux.org.uk>
+In-Reply-To: <DDIW7ZP5K1VR.2I7VW56B9CZLF@cknow-tech.com>
 
-On Wed, Oct 15, 2025 at 11:35:40PM +0200, Andrew Lunn wrote:
-> On Wed, Oct 15, 2025 at 03:20:12PM +0100, Russell King (Oracle) wrote:
-> > Now that the only use for the interrupt is to clear it and increment a
-> > statistic counter (which is not that relevant anymore) remove all this
-> > code and ensure that the interrupt remains disabled to avoid a stuck
-> > interrupt.
+On Wed, Oct 15, 2025 at 02:26:30PM +0200, Diederik de Haas wrote:
+> On Tue Oct 14, 2025 at 8:49 PM CEST, Bjorn Helgaas wrote:
+> > On Wed, Oct 15, 2025 at 01:30:16AM +0900, FUKAUMI Naoki wrote:
+> >> I've noticed an issue on Radxa ROCK 5A/5B boards, which are based on the
+> >> Rockchip RK3588(S) SoC.
+> >> 
+> >> When running Linux v6.18-rc1 or linux-next since 20250924, the kernel either
+> >> freezes or fails to probe M.2 Wi-Fi modules. This happens with several
+> >> different modules I've tested, including the Realtek RTL8852BE, MediaTek
+> >> MT7921E, and Intel AX210.
+> >> 
+> >> I've found that reverting the following commit (i.e., the patch I'm replying
+> >> to) resolves the problem:
+> >> commit f3ac2ff14834a0aa056ee3ae0e4b8c641c579961
+> >
+> > Thanks for the report, and sorry for the regression.
+> >
+> > Since this affects several devices from different manufacturers and (I
+> > assume) different drivers, it seems likely that there's some issue
+> > with the Rockchip end, since ASPM probably works on these devices in
+> > other systems.  So we should figure out if there's something wrong
+> > with the way we configure ASPM, which we could potentially fix, or if
+> > there's a hardware issue and we need some king of quirk to prevent
+> > usage of ASPM on the affected platforms.
+> >
+> > Can you collect a complete dmesg log when booting with
+> >
+> >   ignore_loglevel pci=earlydump dyndbg="file drivers/pci/* +p"
+> >
+> > and the output of "sudo lspci -vv"?
 > 
-> Will this interrupt come back later, as part of the PCS? Or will the
-> PCS be polled?
+> I have a Rock 5B as well, but I don't have a Wi-Fi module, but I do have
+> a NVMe drive connected. That boots fine with 6.17, but I end up in a
+> rescue shell with 6.18-rc1. I haven't verified that it's caused by the
+> same commit, but it does sound plausible.
 
-It depends whether it has any users - given the scrappy nature of all
-this, and the fact it's never been properly implemented, I need to
-hear from the platform glue people to really know what's going on.
+FWIW, my expectation is that booting with "pcie_aspm=off" should
+effectively avoid the ASPM enabling and behave similarly to reverting
+f3ac2ff14834 ("PCI/ASPM: Enable all ClockPM and ASPM states for
+devicetree platforms").  My hope was that we could boot that way and
+incrementally enable ASPM via sysfs a device at a time for testing.
 
-Right now, all I'm doing is removing loads of code that has been proven
-to be broken, and re-implementing what is left in a way that will work
-for people who are using the internal PCS (in other words, where the
-STMMAC_FLAG_HAS_INTEGRATED_PCS was set which disabled much of the
-broken code anyway.)
+If hardware implements ASPM correctly, enabling it should have no
+functional impact at all, so we might be tripping over some kind of
+hardware bug or maybe a generic Linux issue (ASPM has to be enabled in
+a very specific order, and it's conceivable we messed that up).
 
-> This leaves this counter unused, as you said. It does not look trivial
-> to remove it, it is part of the statistics ABI. But if the interrupt
-> comes back in a later patch, this counter could also be brought back
-> to life?
+> On this device, the NVMe isn't strictly needed (I used it to compile my
+> kernels on), so I added 'noauto' to the NVMe line in /etc/fstab ... and
+> that made it boot successfully into 6.18-rc1. Then running the 'mount'
+> command wrt that NVMe drive failed with this message:
+> 
+>   EXT4-fs (nvme0n1p1): unable to read superblock
+> 
+> The log of my attempts can be found here:
+> https://paste.sr.ht/~diederik/f435eb258dca60676f7ac5154c00ddfdc24ac0b7
+> 
+> > When the kernel freezes, can you give us any information about where,
+> > e.g., a log or screenshot?
+> 
+> For me, there is no kernel freeze. I ended up in a rescue shell as it
+> couldn't mount the NVMe drive. As described above, when not letting it
+> auto-mount that drive, the boot completed normally.
 
-Sadly, it's not quite unused - see dwmac-sun8i.c:
+Thanks for the log, it's very useful.  This is pieced together from
+the serial console log and the "dmesg --level" output, but I think
+it's all the same boot:
 
-        if (v & EMAC_RGMII_STA_INT)
-                x->irq_rgmii_n++;
+  [    2.872094] rockchip-dw-pcie a40000000.pcie: PCI host bridge to bus 0000:00
+  [    2.885904] pci 0000:00:00.0: [1d87:3588] type 01 class 0x060400 PCIe Root Port
+  [    2.888237] pci 0000:00:00.0: PCI bridge to [bus 01-ff]
+  [    3.143823] pci 0000:01:00.0: [144d:a80a] type 00 class 0x010802 PCIe Endpoint
+  [    3.144646] pci 0000:01:00.0: BAR 0 [mem 0x00000000-0x00003fff 64bit]
+  [    3.162748] pci 0000:01:00.0: BAR 0 [mem 0xf0200000-0xf0203fff 64bit]: assigned
+  [    3.298198] nvme nvme0: pci function 0000:01:00.0
+  [    3.298901] nvme 0000:01:00.0: enabling device (0000 -> 0002)
+  [    3.316695] nvme nvme0: D3 entry latency set to 10 seconds
+  ...
+  [   18.921811] rockchip-pm-domain fd8d8000.power-management:power-controller: sync_state() pending due to fdad0000.npu
+  [   18.922737] rockchip-pm-domain fd8d8000.power-management:power-controller: sync_state() pending due to fdb50000.video-codec
+  ...
+  [   39.971050] nvme nvme0: controller is down; will reset: CSTS=0xffffffff, PCI_STATUS read failed (134)
+  [   39.971945] nvme nvme0: Does your device have a faulty power saving mode enabled?
+  [   39.972609] nvme nvme0: Try "nvme_core.default_ps_max_latency_us=0 pcie_aspm=off pcie_port_pm=off" and report a bug
+  [   42.357637] nvme0n1: I/O Cmd(0x2) @ LBA 0, 8 blocks, I/O Error (sct 0x3 / sc 0x71)
+  [   42.358644] I/O error, dev nvme0n1, sector 0 op 0x0:(READ) flags 0x80700 phys_seg 1 prio class 2
+  [   42.391612] nvme 0000:01:00.0: Unable to change power state from D3cold to D0, device inaccessible
+  [   42.443644] nvme nvme0: Disabling device after reset failure: -19
+  [   42.459544] Buffer I/O error on dev nvme0n1, logical block 0, async page read
+  [   42.607749] EXT4-fs (nvme0n1p1): unable to read superblock
 
-This is more than glue, but is almost an entire core implementation as
-well - the original commit introducing it says:
+The earlydump info shows the 00:00.0 Root Port had I/O+ Mem+
+BusMaster+ (0x0107) and the 01:00.0 NVMe initially had I/O- Mem-
+BusMaster- (0x0000).  We were able to enumerate the NVMe device and
+assign its BAR, and the nvme driver turned on Mem+ (0x002).
 
-    The dwmac-sun8i is a heavy hacked version of stmmac hardware by
-    allwinner.
-    In fact the only common part is the descriptor management and the first
-    register function.
+  nvme_timeout
+    csts = readl(dev->bar + NVME_REG_CSTS)
+    if (nvme_should_reset(csts))
+      nvme_warn_reset(csts)
+        result = pci_read_config_word(PCI_STATUS)
+        "controller is down; will reset: CSTS=0xffffffff, ... failed (134)"
+    nvme_dev_disable
 
-So, rather than remove the statistic entirely, as I'm not touching this
-hacked version, I decided to keep the statistic counter as there is
-still something using it.
+But I think the NVMe device was powered down to D3cold somewhere
+before 39.971050.  I don't know if the power-controller messages at
+18.921811 have any connection, and I don't know why ASPM would be
+related.
 
--- 
-RMK's Patch system: https://www.armlinux.org.uk/developer/patches/
-FTTP is here! 80Mbps down 10Mbps up. Decent connectivity at last!
+In any event, the NVME_REG_CSTS mem read returned ~0, probably because
+the device didn't respond and the RC fabricated ~0.  The PCI_STATUS
+config read failed with 134 (PCIBIOS_DEVICE_NOT_FOUND).  The config
+read should be this path, which probably failed because the link was
+down, which would happen if NVMe is in D3cold:
+
+  pci_read_config_word
+    if (pci_dev_is_disconnected())
+      return PCIBIOS_DEVICE_NOT_FOUND
+    pci_bus_read_config_word
+      ret = bus->ops->read
+        dw_pcie_rd_other_conf
+          pci_generic_config_read
+            addr = bus->ops->map_bus
+              dw_pcie_other_conf_map_bus
+                if (!dw_pcie_link_up())
+                  return pci->ops->link_up
+                    rockchip_pcie_link_up   # .link_up
+                  return NULL               # link was down
+            if (!addr)                      # .map_bus() failed b/c link down
+              return PCIBIOS_DEVICE_NOT_FOUND
+
+Your lspci shows no response, i.e., config reads to the device
+returned ~0:
+
+  0000:01:00.0 Non-Volatile memory controller: Samsung Electronics Co Ltd NVMe SSD Controller PM9A1/PM9A3/980PRO (prog-if 02 [NVM Express])
+        Subsystem: Samsung Electronics Co Ltd SSD 980 PRO
+        !!! Unknown header type 7f
+        Interrupt: pin ? routed to IRQ 94
+
+The Root Port shows a Completion Timeout error, which might be a
+consequence of NVMe being powered off:
+
+  0000:00:00.0 PCI bridge: Rockchip Electronics Co., Ltd RK3588 (rev 01) (prog-if 00 [Normal decode])
+        Capabilities: [100 v2] Advanced Error Reporting
+                UESta:  DLP- SDES- TLP- FCP- CmpltTO+ CmpltAbrt- UnxCmplt- RxOF- MalfTLP-
+
+Bottom line, I don't think I can get any further with this particular
+issue until we confirm that f3ac2ff14834 ("PCI/ASPM: Enable all
+ClockPM and ASPM states for devicetree platforms") is the cause.
+
+Bjorn
 
