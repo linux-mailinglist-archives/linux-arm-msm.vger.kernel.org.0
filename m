@@ -1,211 +1,138 @@
-Return-Path: <linux-arm-msm+bounces-77353-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-77364-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [142.0.200.124])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2BAA0BDDE9E
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Oct 2025 12:08:07 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id E6FD9BDE075
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Oct 2025 12:35:43 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id AE2334FEDD3
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Oct 2025 10:07:56 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 551DF192539F
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Oct 2025 10:36:07 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id F16B131BCA9;
-	Wed, 15 Oct 2025 10:07:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id DE78B2010EE;
+	Wed, 15 Oct 2025 10:35:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="h/duVX+7"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fp4K/hmm"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f53.google.com (mail-wm1-f53.google.com [209.85.128.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FAC731BC8B
-	for <linux-arm-msm@vger.kernel.org>; Wed, 15 Oct 2025 10:07:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 032132494ED
+	for <linux-arm-msm@vger.kernel.org>; Wed, 15 Oct 2025 10:35:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760522870; cv=none; b=b1JObaY3EgVe0+768nC1o4w7isU3Oz0GB1yr36l4CPMKVHFC4iiyEMUivdPKDdU+7TBvKtUCRNyHEe9vayQut8yXRXIsQ71iBL/wcQ6Ndzbq1X8zZnTKDraCKaEiZnjfMnl8ABzw7b94s1SZiHd56SgwjSgSHh4A/pqoIJbwpIA=
+	t=1760524540; cv=none; b=NNCmCk9bi1xqIlXEeLUA/iUyCaaVLLU2npIsKsCBse0ZUVK6G/CFeVaJqGTyY5NOURxb+mCiHMFdkq/lJ/d+x6HqPrKHFL2HNttJrQ/7JiJ35KCb0QxgOXSSoh+EPPY//yxgbPXe0vJilyx1KJZ+LN3zwWp2UwcUzYp6WJwYO7Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760522870; c=relaxed/simple;
-	bh=AyERBfq+RQvAoN1T4iTzBY9LK80j7jh40Ick5el4NFI=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ObPAT/43YqlS+E0xg/LUA+3yuvq0204iG+J8sgT/DIq9UxCF71DghsKDRa3CeJs6tZ34ciDcx7Xd8377/GG9RjbC7XSniSJOFnCckL8e2oYYkk+dqgxRirs2KHnXicDlyPXKBrG6p3U+EjK8J/NbwCPHJ0wNkEcBIr3Cr9Gxit4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=h/duVX+7; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 59F2slYg005001
-	for <linux-arm-msm@vger.kernel.org>; Wed, 15 Oct 2025 10:07:48 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to; s=qcppdkim1; bh=Plo72r9vuYhq4837E+ASzQQ2
-	vnfrofTlUlT0CX2gzYU=; b=h/duVX+7IQp+5tGiv//K47kPEZI6Sd+OSPcI2CLa
-	9bT52LvhylH+y/nrtLRNw7kR+bEr6GrNI1yRfEMNWOWQZXnA3vmeD7VABIBDPqYa
-	yAsgZHcWcyUZkRdToQDtaEQW/gfMqxJfPpUX+HnicxRctVxLf4o8mCUUHQDYtsnC
-	SkG9P7Q+Bia6h3m6pMddEZi5kiGo9QCmQ/tst0oFwKu3On+k82nGHtk8UpK52xQf
-	ABYdzboo2MR6C47R2YOlKhmbCEc70AnSCebok9N5RzwyMT5tnO8I3Fix2NjSmJud
-	fNJG9JCUGmU4MiSkEQ7kuUS8j0bh6xExyi2H1bJYfqqRLg==
-Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com [209.85.219.72])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 49s6mwp9ux-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Wed, 15 Oct 2025 10:07:48 +0000 (GMT)
-Received: by mail-qv1-f72.google.com with SMTP id 6a1803df08f44-818bf399f8aso398736666d6.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Oct 2025 03:07:47 -0700 (PDT)
+	s=arc-20240116; t=1760524540; c=relaxed/simple;
+	bh=wrYtQbKMdePmpurgrmRwrJx3mIKCnYPozkCXHxbd1is=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=m8Iys1NBG0dhTCnIkNWhNZ3snysVsFqsTr/zZU5BD+e8kJzOQQj28vZYBGgqDnjqtExmbrHufdgem20vEeyW27aCnr9qJ6VGob2XBNU4jJbI2kTUfgYT6V7tT5om3uFPm7cnzIgRNE7zUCZQYSjRlz52VzTDFdjWYi9cZCjZ/2w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=fp4K/hmm; arc=none smtp.client-ip=209.85.128.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-wm1-f53.google.com with SMTP id 5b1f17b1804b1-470ffbf2150so2514745e9.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Oct 2025 03:35:37 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1760524536; x=1761129336; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=Gu1nsBP84jDmwrrdXdGOmf9QTsYF1hFDTo/FbFzpjBE=;
+        b=fp4K/hmmWl1k8QCqcernq+Ki8fc8ZFDcZxKJAEMB+W6Wad0lUQtZm2BwWTrojYBqu+
+         7b4zpN1G6JsbNJwaed7iN3//8Tolvzb0699lpdIRbQLvzRBCw6Rn+YR4hOGqXUngmNX8
+         7gCXRm5ZwDgqwfRcoJSMRZSEjhv0Xsq9R2uLzuJTGBHfWiRLNDH9qbM3EeiMtQ2gT41V
+         qoRp3oXiay+yw+EqCmHN1d3dGWB3g5fRY1lZcHHBPxIm8efXExkt/LP+nHB4NpfQe/vk
+         7DY8HXn6YA039qR6gzBVp41dep3QySRhWJbMp6W5tSDC/AVkHRMDysVJ501jFqJi3q/c
+         Srvw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1760522867; x=1761127667;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=Plo72r9vuYhq4837E+ASzQQ2vnfrofTlUlT0CX2gzYU=;
-        b=fwvFZwVQ56Fo/5PA6yh6q5XGwb5/Ni3L9u2OZCBrWzr2sPglmADCJTwim90DyzUprH
-         r8kMkyt1NBIYffdg1Mfvldv5/nmY9f0WhjClXF7z5fayB+jm3dMuz1DQf57qf9nFKdLh
-         6GAwRAAZcLo5g0ddY4/2aT+eWU5SwpRFS+vxr1qvFH74MNGdsrSggmz4pUx1EG7AbQnI
-         RfVUVl8papfc4VVkBBFIcfWBMt4w9HLGhB9vKH9Xs79Z7n+DzsfS+ZQID8CW4gQSRvNt
-         ikdGwYpvpN+vQmVeJ8RW4CNHCVQ7s+2WCirwWPnAJAoL0UmZTaSWaNKAvg15FQLaNsZG
-         0CwQ==
-X-Forwarded-Encrypted: i=1; AJvYcCVVRylNd+fjLzR2gbC62F1RrB4T+P95vxNpW/irigeMUyfIJiW9VWrxXkjy3dxanN5DIv251a93y68xMlWC@vger.kernel.org
-X-Gm-Message-State: AOJu0YwobjZ+MFmsjIRZF/THxZu062p8vJ74oN1AaTHM6dA8rspmEtV2
-	dTRu8Axhb3Gkdqgxe/DyWQ0ngCMmMIJjDLMsdLBvGZ7XC46ACgObbwOS5ryAhbxlJlpbAN9WZKM
-	HWN7NMeudit52Vin0xJKBZwzyC+oeObPUQ1Z/a2vQjecLM/TAJ2oC0KKQGYIHbI7y2NS3
-X-Gm-Gg: ASbGncsTVVLymELOraMS7fSySDj4o8wvBtAGmA5nlks6kqvItam5nNFMlFJ17U6z5pH
-	JB9uu400AyIXADBSp1PvDv5fasjWGX9KC3CatvlPkepkZPWt4LGIl7MhPwQpnQKkPdpK7JKNWQ1
-	vuLiGvPsSZo+QNr770i4+3aA0ijp5hNXrkaikHZLUclyo4pTL8HvUpJWZJm+FNqFnSR90I1JNAw
-	U1wP9fy3F8bZHsJ1wOVqg9J6LsW38mGZ6FW3GLCY0VBLwbJQrqIbt+nmNttSYa8pgGzFFdg5Rj4
-	RVXwb985VXUsoERpXoVdb2TC4iOa31uikEFA79ZDQpJu+lS7gUiGmGQPxDbE1w/TNAgzPokEDpE
-	XG/31Jlr2OAnSZLzvFKD20u9YOiLV+dfBse3GH2/auQGApzsUt/NX
-X-Received: by 2002:a05:622a:5592:b0:4df:6583:a5c3 with SMTP id d75a77b69052e-4e6eacfad65mr397959691cf.31.1760522866703;
-        Wed, 15 Oct 2025 03:07:46 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IG720qHgaxVVn/tMDskc+Fb5CVEdJRkO+FFfXZC4YdLvxqG8hCwJFnA1hXqIvZ1BHwzYpNiuw==
-X-Received: by 2002:a05:622a:5592:b0:4df:6583:a5c3 with SMTP id d75a77b69052e-4e6eacfad65mr397959141cf.31.1760522866163;
-        Wed, 15 Oct 2025 03:07:46 -0700 (PDT)
-Received: from umbar.lan (2001-14ba-a0c3-3a00-264b-feff-fe8b-be8a.rev.dnainternet.fi. [2001:14ba:a0c3:3a00:264b:feff:fe8b:be8a])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-590885784e7sm6098047e87.111.2025.10.15.03.07.44
+        d=1e100.net; s=20230601; t=1760524536; x=1761129336;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=Gu1nsBP84jDmwrrdXdGOmf9QTsYF1hFDTo/FbFzpjBE=;
+        b=MKDoo52kMlUxwno4KgcDbvv+khE7+uYnBfSfDwjh943ke0Oqm8Yk7fyaUHSIQGkRo+
+         JqLrxrte+4+8OUJVSzgDhJIIstwLEBu1sSp3Bz0MqTQRZxhDtkt8Dxou74PcUwRfdx3t
+         EPrQOJjsLSLAZipLcECdKsTUbUF/B8bYjH2/2LxKtIkVmQwhpKxP5iglNENdlhTA0Hl4
+         ghdcLYQt0/kuLq1gu5BFtmWIjKfXOivFOEl/pRTZXPBvdfYWvslMyfDvLWYbcLwjfPTT
+         PS1x6Fgyu1Ttsts0UXSHDCpsmQtiOgEyMcNX87PvQ9giqkvHa4/LxG4lSr0kp80502R5
+         j4Hw==
+X-Forwarded-Encrypted: i=1; AJvYcCXSiWFxNs8OufevTwmvBQq0rUQpGCm5QM3+7T3TW4wtZORQIUrSTn9HSAxxUVARtFbBIZg88KQ8hYdakiPn@vger.kernel.org
+X-Gm-Message-State: AOJu0Ywuv/qOCI/45i93wFqNqbAijMJiSPodbHjE2qqIGtmCeDJk+XY4
+	xTSZvD1qJ6zTezqfIkjhPZKNubt9NaEtt20ow2ZYI1XrDiR6dun9yzcY
+X-Gm-Gg: ASbGncslICQDJSa8lOpwruS09WcMPi/8ZmjfzzdKrGMjy4WXeNVtjv4dDlD4ztXoD08
+	BUmwnocAXL+T46fnnYE4qH/3VOiQMTFUvZpyhV4kNFO457maqTmljKpqr8XJUVLU3IE7CuVJ/YE
+	hEKM0ZtNEtj25Dlm5Mos10KKpCKFqhyVkOHIRvWnTo9S6vYAm/0vUKFWf4Rb5jPMv96Dawe3n9H
+	233528cVheGkmXUiXvoEDT7iCVyMtvbiEs3us8vGbBpxw5JZLuZkn3/UgmbT+cKJX0fOn9yoDPC
+	LF9tkbmqD2Nl8JdTkV0e8fEUWXAoz1qrMdb5/IJkZSE6mQxo1NyiVPXR4wQe/osmvg+WsqJPjmn
+	eEuzAQUzJ/cUsJjAxNuwkoT6M99XG2spYGUmDzN2O2/gimo35yazt+v82+8yMFVI+tYZQ/OqGzr
+	lh9YKPSDB9kUmN9GAD3v89JKp0o5Q=
+X-Google-Smtp-Source: AGHT+IGXXSxOEnx0micwjWYM8733husUPk8MH/ndkS4hv+5XE6L0m44UB2hxHV1pzm56wpUwxdpWpA==
+X-Received: by 2002:a05:600c:6215:b0:471:846:80ac with SMTP id 5b1f17b1804b1-47108468140mr698725e9.18.1760524536016;
+        Wed, 15 Oct 2025 03:35:36 -0700 (PDT)
+Received: from ThinkStation-P340.tmt.telital.com (static-82-85-31-68.clienti.tiscali.it. [82.85.31.68])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-426ce5e13b6sm28580093f8f.44.2025.10.15.03.35.35
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 15 Oct 2025 03:07:45 -0700 (PDT)
-Date: Wed, 15 Oct 2025 13:07:43 +0300
-From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-To: Kumari Pallavi <kumari.pallavi@oss.qualcomm.com>
-Cc: kpallavi@qti.qualcomm.com, srini@kernel.org, amahesh@qti.qualcomm.com,
-        arnd@arndb.de, gregkh@linuxfoundation.org, quic_bkumar@quicinc.com,
-        ekansh.gupta@oss.qualcomm.com, linux-kernel@vger.kernel.org,
-        quic_chennak@quicinc.com, dri-devel@lists.freedesktop.org,
-        linux-arm-msm@vger.kernel.org, jingyi.wang@oss.qualcomm.com,
-        aiqun.yu@oss.qualcomm.com, ktadakam@qti.qualcomm.com
-Subject: Re: [PATCH v2 1/3] misc: fastrpc: Rename phys to dma_addr for clarity
-Message-ID: <svekpvatqpymzxprc5n2tlndqlwze3tj6kr3bzszjnoay7oulk@zslcxpsyuzdo>
-References: <20251015045702.3022060-1-kumari.pallavi@oss.qualcomm.com>
- <20251015045702.3022060-2-kumari.pallavi@oss.qualcomm.com>
+        Wed, 15 Oct 2025 03:35:35 -0700 (PDT)
+From: Daniele Palmas <dnlplm@gmail.com>
+To: Manivannan Sadhasivam <mani@kernel.org>
+Cc: mhi@lists.linux.dev,
+	linux-arm-msm@vger.kernel.org,
+	Daniele Palmas <dnlplm@gmail.com>
+Subject: [PATCH 1/1] bus: mhi: host: pci_generic: Add Telit FE990B40 modem support
+Date: Wed, 15 Oct 2025 12:20:59 +0200
+Message-Id: <20251015102059.1781001-1-dnlplm@gmail.com>
+X-Mailer: git-send-email 2.37.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20251015045702.3022060-2-kumari.pallavi@oss.qualcomm.com>
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDEzMDA4MyBTYWx0ZWRfXxrzhotrddADc
- ZG8l3il2oEgPJuBXxbpqEyM2ItI9hoVj5DejyUKeFCM71K2CbMhlxszCfO0FUSVJhcP6UdfM5Zf
- XOpQJ7g0mTt6tttBcB/DWMUINOJm291Fp+xQMjU2xSFGmaKrm6CnuZpXRnsiBTRujBU0P29NjEG
- iwZyoYypGtEFO1zsRLhZcrEk+uP3hRc9KAKJg9qvy4j6qYbeg0coTV2T9Lno6W45R6Vf2momFiQ
- eskoyzENBay+5UmLlmEbod5mNrOOS9fdoolSAkMAlTZQ+jAtpsBItSmQ00vfqszJyEh5rOiMtUX
- vjUcZZLDCUAW6ZbdO7v7LJ9phhclaloLfuTSW3J/pF1HR+ZGiw6NuTDu+cIp+1fSNbmBGW8D7Z+
- aSSyflf60tuF8BqfTl3ewn3kQ8E4KA==
-X-Authority-Analysis: v=2.4 cv=Fr4IPmrq c=1 sm=1 tr=0 ts=68ef7274 cx=c_pps
- a=7E5Bxpl4vBhpaufnMqZlrw==:117 a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10
- a=x6icFKpwvdMA:10 a=VkNPw1HP01LnGYTKEx00:22 a=EUspDBNiAAAA:8
- a=ieKUWAqLYShgQCTD6ZgA:9 a=CjuIK1q_8ugA:10 a=pJ04lnu7RYOZP9TFuWaZ:22
-X-Proofpoint-GUID: xIZcfNQ2d2Gaobg5B8Tdl24MlGR6z04O
-X-Proofpoint-ORIG-GUID: xIZcfNQ2d2Gaobg5B8Tdl24MlGR6z04O
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-10-15_04,2025-10-13_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 impostorscore=0 spamscore=0 phishscore=0 malwarescore=0
- adultscore=0 lowpriorityscore=0 bulkscore=0 suspectscore=0 clxscore=1015
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2510020000 definitions=main-2510130083
+Content-Transfer-Encoding: 8bit
 
-On Wed, Oct 15, 2025 at 10:27:00AM +0530, Kumari Pallavi wrote:
-> Update all references of buf->phys and map->phys to buf->dma_addr and
-> map->dma_addr to accurately represent that these fields store DMA
-> addresses, not physical addresses. This change improves code clarity
-> and aligns with kernel conventions for dma_addr_t usage.
-> 
-> Signed-off-by: Kumari Pallavi <kumari.pallavi@oss.qualcomm.com>
-> ---
->  drivers/misc/fastrpc.c | 68 +++++++++++++++++++++---------------------
->  1 file changed, 34 insertions(+), 34 deletions(-)
-> 
-> diff --git a/drivers/misc/fastrpc.c b/drivers/misc/fastrpc.c
-> index 621bce7e101c..975be54a2491 100644
-> --- a/drivers/misc/fastrpc.c
-> +++ b/drivers/misc/fastrpc.c
-> @@ -194,7 +194,7 @@ struct fastrpc_buf {
->  	struct dma_buf *dmabuf;
->  	struct device *dev;
->  	void *virt;
-> -	u64 phys;
-> +	u64 dma_addr;
+Add SDX72 based modem Telit FE990B40, reusing FN920C04 configuration.
 
-If it is dma_addr, why isn't it dma_addr_t?
+01:00.0 Unassigned class [ff00]: Qualcomm Device 0309
+        Subsystem: Device 1c5d:2025
 
+Signed-off-by: Daniele Palmas <dnlplm@gmail.com>
+---
+ drivers/bus/mhi/host/pci_generic.c | 13 +++++++++++++
+ 1 file changed, 13 insertions(+)
 
->  	u64 size;
->  	/* Lock for dma buf attachments */
->  	struct mutex lock;
-> @@ -217,7 +217,7 @@ struct fastrpc_map {
->  	struct dma_buf *buf;
->  	struct sg_table *table;
->  	struct dma_buf_attachment *attach;
-> -	u64 phys;
-> +	u64 dma_addr;
+diff --git a/drivers/bus/mhi/host/pci_generic.c b/drivers/bus/mhi/host/pci_generic.c
+index b188bbf7de04..3d8c9729fcfc 100644
+--- a/drivers/bus/mhi/host/pci_generic.c
++++ b/drivers/bus/mhi/host/pci_generic.c
+@@ -877,6 +877,16 @@ static const struct mhi_pci_dev_info mhi_telit_fn990b40_info = {
+ 	.edl_trigger = true,
+ };
+ 
++static const struct mhi_pci_dev_info mhi_telit_fe990b40_info = {
++	.name = "telit-fe990b40",
++	.config = &modem_telit_fn920c04_config,
++	.bar_num = MHI_PCI_DEFAULT_BAR_NUM,
++	.dma_data_width = 32,
++	.sideband_wake = false,
++	.mru_default = 32768,
++	.edl_trigger = true,
++};
++
+ static const struct mhi_pci_dev_info mhi_netprisma_lcur57_info = {
+ 	.name = "netprisma-lcur57",
+ 	.edl = "qcom/prog_firehose_sdx24.mbn",
+@@ -933,6 +943,9 @@ static const struct pci_device_id mhi_pci_id_table[] = {
+ 	/* Telit FN990B40 (sdx72) */
+ 	{ PCI_DEVICE_SUB(PCI_VENDOR_ID_QCOM, 0x0309, 0x1c5d, 0x201a),
+ 		.driver_data = (kernel_ulong_t) &mhi_telit_fn990b40_info },
++	/* Telit FE990B40 (sdx72) */
++	{ PCI_DEVICE_SUB(PCI_VENDOR_ID_QCOM, 0x0309, 0x1c5d, 0x2025),
++		.driver_data = (kernel_ulong_t) &mhi_telit_fe990b40_info },
+ 	{ PCI_DEVICE(PCI_VENDOR_ID_QCOM, 0x0309),
+ 		.driver_data = (kernel_ulong_t) &mhi_qcom_sdx75_info },
+ 	/* QDU100, x100-DU */
 
-And this one.
-
->  	u64 size;
->  	void *va;
->  	u64 len;
-> @@ -406,12 +406,12 @@ static int __fastrpc_buf_alloc(struct fastrpc_user *fl, struct device *dev,
->  
->  	buf->fl = fl;
->  	buf->virt = NULL;
-> -	buf->phys = 0;
-> +	buf->dma_addr = 0;
->  	buf->size = size;
->  	buf->dev = dev;
->  	buf->raddr = 0;
->  
-> -	buf->virt = dma_alloc_coherent(dev, buf->size, (dma_addr_t *)&buf->phys,
-> +	buf->virt = dma_alloc_coherent(dev, buf->size, (dma_addr_t *)&buf->dma_addr,
->  				       GFP_KERNEL);
-
-If it was dma_addr_t, you wouldn't have had to typecast here.
-
->  	if (!buf->virt) {
->  		mutex_destroy(&buf->lock);
-> @@ -437,7 +437,7 @@ static int fastrpc_buf_alloc(struct fastrpc_user *fl, struct device *dev,
->  	buf = *obuf;
->  
->  	if (fl->sctx && fl->sctx->sid)
-> -		buf->phys += ((u64)fl->sctx->sid << 32);
-> +		buf->dma_addr += ((u64)fl->sctx->sid << 32);
->  
->  	return 0;
->  }
-> @@ -682,7 +682,7 @@ static int fastrpc_dma_buf_attach(struct dma_buf *dmabuf,
->  		return -ENOMEM;
->  
->  	ret = dma_get_sgtable(buffer->dev, &a->sgt, buffer->virt,
-> -			      FASTRPC_PHYS(buffer->phys), buffer->size);
-> +			      FASTRPC_PHYS(buffer->dma_addr), buffer->size);
-
-FASTRPC_PHYS trunates addr to 32 bits. Is it expected? Is it a DMA
-address on the  Linux or on the DSP side?
-
->  	if (ret < 0) {
->  		dev_err(buffer->dev, "failed to get scatterlist from DMA API\n");
->  		kfree(a);
-
+base-commit: 54c67740fff7360b6607d02b8499d09b944b3fda
 -- 
-With best wishes
-Dmitry
+2.37.1
+
 
