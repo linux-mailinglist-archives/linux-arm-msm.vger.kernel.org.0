@@ -1,87 +1,87 @@
-Return-Path: <linux-arm-msm+bounces-77367-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-77368-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [IPv6:2605:f480:58:1:0:1994:3:14])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9C19CBDE135
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Oct 2025 12:48:00 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id A3B9DBDE142
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Oct 2025 12:50:07 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 3CA914E7E75
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Oct 2025 10:47:56 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id DE67519C31CE
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Oct 2025 10:50:30 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B1C3C30B518;
-	Wed, 15 Oct 2025 10:47:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5AD563176EE;
+	Wed, 15 Oct 2025 10:50:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="gw+DwNSx"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="CNO8yCUz"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 234E331A573
-	for <linux-arm-msm@vger.kernel.org>; Wed, 15 Oct 2025 10:47:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C655630CD8E
+	for <linux-arm-msm@vger.kernel.org>; Wed, 15 Oct 2025 10:50:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760525271; cv=none; b=LzybUHozlkyNYPdfSPlDt0uUbcUMUA0zqbthSrsubM8Rz5YReBBl/Eb92/eD03dVTPLaAkmHKOK0KoTrIG253WqHMryi0zw84AlO8Y0VYCGhG09QOWPw/RelydDLTZFmyhjw8eSZNjZu1hMafxsHRsjV6CsefuXwv7UxPjp3E6A=
+	t=1760525403; cv=none; b=fbzJElITW/XFPYeDvPyswg1XJ+m5nPL3QofFa8TpRZ/viMDzfROw3Q+VusRNBNnG1fyYakv/L9RljL5giZ8dVMau0oVZeSrpjARv+jH3Ry605Paj1JkGsHixpGbK19WElwnktoLQv6S7D5OlJDGHwL4AdQjsn3Cddk0KirSj2UU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760525271; c=relaxed/simple;
-	bh=Z/+W43/kgGZy+ENnnhS/XSfFbJZCLvOI+kuHbmyg53k=;
+	s=arc-20240116; t=1760525403; c=relaxed/simple;
+	bh=Hx93Wgign7RSXIZo3cjvp4Gt4ieYFePmA4uY3hkd+ww=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Td+Cf/mA1QFR3SBSp6M2Vf4GZvRSaDTo1dqFShH54iUx/x+lLo4wj17i6a1Wejc2Jtz2LWEUhI6qC8TuzH29IJYhGQT6guiEflpCDg6sgOkWgHsF2neZCMTQ9wSujr9b4t1HdRQHHOd/rvWghzleHjpiyZPifcm6xidrUi+NE9E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=gw+DwNSx; arc=none smtp.client-ip=205.220.168.131
+	 In-Reply-To:Content-Type; b=O8+eQtkbiNFH3DIT1UdISjT4r+08+bkmN5576RFKzvwr2rMvkogbc4Hn4U+f03rriRfCHD7xErFcg/6b4EPiIuz+AL5hvgOLRKIXEzhpT8fSRS1ZkZoJ9+ktwQGKozy2iuVGMeHSoxk6yRx3t+hMtNVFadQWR6Zd7T9KxF2JSqg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=CNO8yCUz; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 59F2siuM005528
-	for <linux-arm-msm@vger.kernel.org>; Wed, 15 Oct 2025 10:47:48 GMT
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 59FA3wtm003995
+	for <linux-arm-msm@vger.kernel.org>; Wed, 15 Oct 2025 10:50:01 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	AZJrvGptOrqMXPxOcK2AJ2pnSX3xUzKaHvxbZnXr0gE=; b=gw+DwNSxlGiCxlmC
-	Ex0JbeWJ3ZjFv2iPiIcE2ibawqIMmixh58og6wTMvs5xC5TLkQH4UrhE2f/WwWZp
-	u4Bj+r5fKHw+9BMXymEBao88hVRV9YGemE3bA39QSgAiXM87s2yCA1KOEb1plOpD
-	RRv0Q3a0w3Z7MqrLWAWXFHhTuUk9lGcYEjeDCqLCDJDxH8516jRxkJI+p6AZQYnf
-	OIIspFfdbP8S7g3PJmTfZZBK+1Y8ko5JFR9mnHl5yZgFGVVZnsDZirAOPO0RAZ7v
-	4svUtHd0ihI0m91n7ZTKi1pCSBczNZk4ksPn0iO2GIcrpU/dYUlurPRflnn+8KnM
-	+/tbIw==
-Received: from mail-pf1-f199.google.com (mail-pf1-f199.google.com [209.85.210.199])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 49rw1agdbk-1
+	MNOL1mDXjuJoXB7sRKlJwzRGYo1qn26ZWmE/m3MrxZs=; b=CNO8yCUzx3I5q1q2
+	VxwaQZtWJxMAtdsf3zXS1vlxkZl7aLUUH5X5WUTYAAuTFE1VE8zpPNhLTTiFEDjF
+	RCmvTWMuQnlcxTzWnZ9vrQgP9+OWHUEWNnvJSoorj2s+QxC3G4wW8pPF5kOfQ338
+	E7eAfar+WVE56Ov9DD957fuw+Pp6Chuttk5svY8amFF/7/Hs/FkhCg2GhJDlHEtY
+	dbr+6DMd3k7kreaTmWgkDYeLeYsRHenCN7NscdVbgeKwvzSGbo9A9eQ7pEI5s5/t
+	ZxmHfXj8af5/x3j2+B2DCnJkNXHfRP7HWaFBklWgnwO64Qisl1s2E48MHRDLaOJu
+	zOpsvA==
+Received: from mail-pf1-f197.google.com (mail-pf1-f197.google.com [209.85.210.197])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 49s6mwpdeb-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Wed, 15 Oct 2025 10:47:48 +0000 (GMT)
-Received: by mail-pf1-f199.google.com with SMTP id d2e1a72fcca58-780f914b5a4so8849223b3a.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Oct 2025 03:47:48 -0700 (PDT)
+	for <linux-arm-msm@vger.kernel.org>; Wed, 15 Oct 2025 10:50:01 +0000 (GMT)
+Received: by mail-pf1-f197.google.com with SMTP id d2e1a72fcca58-781253de15aso18663123b3a.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Oct 2025 03:50:00 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1760525267; x=1761130067;
+        d=1e100.net; s=20230601; t=1760525400; x=1761130200;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=AZJrvGptOrqMXPxOcK2AJ2pnSX3xUzKaHvxbZnXr0gE=;
-        b=bl1w3tBdKqwPyJvWyuHKy9p16JT3TrZ8QmeOmkmWiwWCtopQPgJOpt3ij7oVf4XaHl
-         PxE25IniNMoBA7qubMpNxl8IsWhPeesY+j3jFV5Bxi93WgmIZ78ab4Y/puE4mDJZvVYq
-         QzhwLzZt/d/Uc1ldeXqIiqtPWGLdQCQ71QtSo4WVvaH1RjdNwokCr+YzmiqpkXwUbcYG
-         H2ChCDxxuvWqImWQIGFY0+EEzxvI5+gOFELreYkc06bGlWklu0w0dHowROCPo1a/nf7u
-         BTFp9upZzJHc2O2ClvMrNHxFSaZAKcSIoqHEg9fbME43iBdxCL1Zd7G5lMA/CLzJ9X5I
-         SFsQ==
-X-Forwarded-Encrypted: i=1; AJvYcCXClJlRU4fkvAvG0Q2H/wm7SwYPl6sO18etkcM7BFItwj8hDNYvPUxzu+wZ0VFq3A42je/bOQHn7tNKRLta@vger.kernel.org
-X-Gm-Message-State: AOJu0YxSpdOSIiLAUcCJo4Suhq05xbxJRbuK1LDuJamQ4z5p7J4fNvM9
-	4iRS5CjB6DWoQlEytrCxd2CH9vSSUYkEKeL1pNGY+EPFQy72EYRKEiGrFYS6D1ms7L4FAxFkH9I
-	2phKG9ANoeyIHPGa/8HDgQswGbFJ4LbynCL3hUlnqiyZ2GANcSwCAhFrkAk320jyiLIzN
-X-Gm-Gg: ASbGncsvyPsv5HsQm8KAmKeWuqPuIWqTFqfc+7G/QFeamV+QnV8tmKXGDkcJyvW+kP8
-	JiNu0ZQrPx7a3bxwno5jW4EJWK7pGyHuGMJWyMger0st1CbMYm2WCYPYQSkaskPg6OXk9AjTvBn
-	bqp9chJ/Jhm3sbGG0eI2iJvDLuf3FucJtyyau66dGBlr7g929B1U6VZ/ZfIdUtMcM7UNF+q9BsC
-	2Niq+8Csu2vyqYvOQcazviGvtFYT3heDuerAJAkoKi2LDHpVjhA8Ux+lZuTgcPos6cx92JWyGzh
-	DFsnUEJRK4DGdAzd+560NLzV546ZJ0Mg7QBPLMeZb1634sDyBusW36UFN5SoGOQF5uhWEEhh
-X-Received: by 2002:a05:6a20:6a06:b0:24c:dd96:54f2 with SMTP id adf61e73a8af0-32da81393f5mr39849153637.1.1760525267450;
-        Wed, 15 Oct 2025 03:47:47 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGd6TU44teoR5OvLjOqJ/FtQbppc7nt+u/aqL5WddhJGIWMv34ctNW6A7b1YLMaWOrgl3CC+A==
-X-Received: by 2002:a05:6a20:6a06:b0:24c:dd96:54f2 with SMTP id adf61e73a8af0-32da81393f5mr39849118637.1.1760525266962;
-        Wed, 15 Oct 2025 03:47:46 -0700 (PDT)
+        bh=MNOL1mDXjuJoXB7sRKlJwzRGYo1qn26ZWmE/m3MrxZs=;
+        b=iaESB1/ZXFQHw8WGfUpE3hET49FypdkQWHRS5r7DBxGkl0cHhRIvfCCJ1IdEm0oz8K
+         FP8eprdDHbteyuLraIekXUrFlx5a0YcAqoM0Qa0zSyUnbAQt3HKArFE5x0vXNrIc6Q6r
+         PbsoB1oPbHUkXJyWfunR2LBPqSUl+dly/ewSytStQKN1zkslD+QS00BNB7b+uQPtx2WZ
+         +Xw+nOLJzjhel6aDk17j2tuHjXh/gBWCTa/KbYirCAeorXdLZKBHhNplW9g6F+lbYmuc
+         Ka9jwzQNrhO3vS5Z5VdiU2T79hz7AdrgNh9KA1pvG92mkk6TRQLWk9jbxpxNA2oC96IB
+         ZTtg==
+X-Forwarded-Encrypted: i=1; AJvYcCXA2a0jd1QEinZADr47MNdYH436VV5VXXoZrSnZqvoLsmVP1DS3vmzoDpuH+FfzR83v7OKD1Bq88td3mfXc@vger.kernel.org
+X-Gm-Message-State: AOJu0YxphDV1M/+cQCshaUP9ZTMKq32IMdG9/wJpZAc1Gg6yJYcmKZjA
+	WlGPEGOJQJ+RiNqfkfh/GW2c/vnnMcmPopHIRe2OXvw1GW5JY1iArk06754eldR0AMShpaGuNpF
+	ZOuwb124I66sz4PPO7hYBVasA+qUntO2D12wrOeYWX1F5YkipddnUqtZQuxSqXD3JoeAy
+X-Gm-Gg: ASbGncuYQR46Ypl02qIjdCi2ldCm5vufbBo0RWApf/a/noKrw9XLVg0dprs1UN6LmUR
+	3wVjb2G+dZT+hOGwhKTcIkMBg4Q7IuVeroaXGZPbXPuHbPmVGzEpm3QXU4IZHAyTe1QnGi+KgOT
+	C5NkJ5XrI+7U9BaPoS/WORchfTasPhDvj4RE547LUeVnQgA05xETo428rGKS4alyFbPEDFRflOw
+	m2pDT8fiscK44tLW4Gbzd/q8NDDGri5Y5Rnb0YenooJ5W+oqrVW1dpOS9pzEzJHzcV7zcuDauAO
+	3noAq6vb3WQeyUk36/xrOnQ2VQGAA9i0VbFwDe2Xkg7hhcwnUy63Pr6IR7dkgpL0frmzoBIr
+X-Received: by 2002:a05:6a20:2595:b0:2c6:85b9:1e0d with SMTP id adf61e73a8af0-32da8138fb8mr36423192637.21.1760525400138;
+        Wed, 15 Oct 2025 03:50:00 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHCkvgwYwtp+G1Fo5ZZlGjsfYndNgAhiGmdAmlQNBGcdbkCj9GHS3/hxCWXELKdQdDs4BpuuQ==
+X-Received: by 2002:a05:6a20:2595:b0:2c6:85b9:1e0d with SMTP id adf61e73a8af0-32da8138fb8mr36423159637.21.1760525399659;
+        Wed, 15 Oct 2025 03:49:59 -0700 (PDT)
 Received: from [10.206.107.23] ([202.46.23.25])
-        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-b678de09cb3sm15634186a12.18.2025.10.15.03.47.41
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-33b529f51b5sm9844853a91.7.2025.10.15.03.49.54
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 15 Oct 2025 03:47:46 -0700 (PDT)
-Message-ID: <0000ffec-c17d-40a4-950b-5cafcbbad5ac@oss.qualcomm.com>
-Date: Wed, 15 Oct 2025 16:17:39 +0530
+        Wed, 15 Oct 2025 03:49:59 -0700 (PDT)
+Message-ID: <295fa681-2977-4ab7-b543-a3515b3010be@oss.qualcomm.com>
+Date: Wed, 15 Oct 2025 16:19:52 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -89,123 +89,160 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 3/3] misc: fastrpc: Update dma_mask for CDSP support on
- Kaanapali SoC
-To: Srinivas Kandagatla <srini@kernel.org>, kpallavi@qti.qualcomm.com,
-        amahesh@qti.qualcomm.com, arnd@arndb.de, gregkh@linuxfoundation.org
+Subject: Re: [PATCH v2 1/3] misc: fastrpc: Rename phys to dma_addr for clarity
+To: Arnd Bergmann <arnd@arndb.de>, kpallavi@qti.qualcomm.com,
+        Srinivas Kandagatla <srini@kernel.org>,
+        Amol Maheshwari <amahesh@qti.qualcomm.com>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Cc: quic_bkumar@quicinc.com, ekansh.gupta@oss.qualcomm.com,
         linux-kernel@vger.kernel.org, quic_chennak@quicinc.com,
         dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        jingyi.wang@oss.qualcomm.com, aiqun.yu@oss.qualcomm.com,
+        Jingyi Wang <jingyi.wang@oss.qualcomm.com>, aiqun.yu@oss.qualcomm.com,
         ktadakam@qti.qualcomm.com
 References: <20251015045702.3022060-1-kumari.pallavi@oss.qualcomm.com>
- <20251015045702.3022060-4-kumari.pallavi@oss.qualcomm.com>
- <2a6319e5-15e5-4cb7-a2f3-7521383fc30e@kernel.org>
+ <20251015045702.3022060-2-kumari.pallavi@oss.qualcomm.com>
+ <2e571b41-0006-4a37-9e3b-d333bf5eb7ed@app.fastmail.com>
 Content-Language: en-US
 From: Kumari Pallavi <kumari.pallavi@oss.qualcomm.com>
-In-Reply-To: <2a6319e5-15e5-4cb7-a2f3-7521383fc30e@kernel.org>
+In-Reply-To: <2e571b41-0006-4a37-9e3b-d333bf5eb7ed@app.fastmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Authority-Analysis: v=2.4 cv=K88v3iWI c=1 sm=1 tr=0 ts=68ef7bd4 cx=c_pps
- a=WW5sKcV1LcKqjgzy2JUPuA==:117 a=ZePRamnt/+rB5gQjfz0u9A==:17
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDEzMDA4MyBTYWx0ZWRfX5WpZz/mizqO6
+ qQmiI3MsrpXa9ToLn76sHqDCExBzckbpmzwrYwxqKBjHtb+hcDgGS0WHCTc1dvxow2lBwVj61+S
+ 9ddOWYdCLCLzitTdt5mTjKudsDxQAXuYMWg2jd/7isztJq0Glyr85RBKQeppDc1hQRUHHvLAulZ
+ JpEGfMx93v2Gkqm+vCDX2/RukrF2J/iahZQ432kK3MEjtRJrjeq5jSjnDOSNzlxvIdQdMYeDXBn
+ HfVjF9QdOFcR+kIYwj/ScRBg6DVFvRdchx9s1yEPsVMUf/6BkVGu6J5Yvhmh/6hVEx8DcFeZ347
+ Mum6oE6BjPfxNZzjRttuybNK/YOFThuN+DQXJSKyH5QXjhDiF0cOreB6BykGz5PNaA77iB7B76A
+ eGcF8q9VqsmM42QI86EuepoTxlN61w==
+X-Authority-Analysis: v=2.4 cv=Fr4IPmrq c=1 sm=1 tr=0 ts=68ef7c59 cx=c_pps
+ a=rEQLjTOiSrHUhVqRoksmgQ==:117 a=ZePRamnt/+rB5gQjfz0u9A==:17
  a=IkcTkHD0fZMA:10 a=x6icFKpwvdMA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=EUspDBNiAAAA:8 a=66apGkFR6lJs1WKMTdsA:9 a=QEXdDO2ut3YA:10
- a=OpyuDcXvxspvyRM73sMx:22
-X-Proofpoint-GUID: l6AHNFhACm-pFp1OLYqNOXU9JJMnBQC6
-X-Proofpoint-ORIG-GUID: l6AHNFhACm-pFp1OLYqNOXU9JJMnBQC6
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDEzMDAzNSBTYWx0ZWRfX0X3JP25PFpXs
- n0L4p6mj6QENVqosW6xAhTO8/OVtWF+TH4vnY1zXcd43M97zZ8yjVQNC34oFrSrUnc6J3CdoMQJ
- 4aCd/fRLDkeUo4AFxYfcDyjIOTvAKkqc0HwWLlcpPbo5BeK/8vDMk/M5geaKx2NIkTwjrF4UY7o
- j6tVcPslqfspvHn+b7eZYy4dpFdZyfnnByVx/kSft+TQJu2E8Pv5BvVH37kALjROE4bVnYhsHu0
- 3Yp83SePqf6eLOq/McTD5cws0lYQq+bTf8LC04bZ9kTufhcmLE6kg5kUjdn69GXC0FtHrUZqDcV
- /eglJwdYVcbKE/GubXSf0EHoRFmunve2O6KlQ2ecp1uicq1GLRjb40pFIfUPIYfMnY0igdwu3mN
- r/FGlvG6QCksr3rUk3xTqHoAPE53rg==
+ a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8 a=YTqRmuibImJoxezxnT0A:9 a=QEXdDO2ut3YA:10
+ a=2VI0MkxyNR6bbpdq8BZq:22
+X-Proofpoint-GUID: MsLfRmcKOjVlcEiyHzFxBAJs4yzj5POh
+X-Proofpoint-ORIG-GUID: MsLfRmcKOjVlcEiyHzFxBAJs4yzj5POh
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.80.40
  definitions=2025-10-15_04,2025-10-13_01,2025-03-28_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 spamscore=0 impostorscore=0 priorityscore=1501 phishscore=0
- adultscore=0 clxscore=1015 bulkscore=0 suspectscore=0 lowpriorityscore=0
+ priorityscore=1501 impostorscore=0 spamscore=0 phishscore=0 malwarescore=0
+ adultscore=0 lowpriorityscore=0 bulkscore=0 suspectscore=0 clxscore=1015
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2510020000 definitions=main-2510130035
+ reason=mlx scancount=1 engine=8.19.0-2510020000 definitions=main-2510130083
 
 
 
-On 10/15/2025 2:55 PM, Srinivas Kandagatla wrote:
-> 
-> 
-> On 10/15/25 5:57 AM, Kumari Pallavi wrote:
->> DSP currently supports 32-bit IOVA (32-bit PA + 4-bit SID) for
->> both Q6 and user DMA (uDMA) access. This is being upgraded to
->> 34-bit PA + 4-bit SID due to a hardware revision in CDSP for
->> Kaanapali SoC, which expands the DMA addressable range.
->> Update DMA mask configuration in the driver to support CDSP on
->> Kaanapali SoC. Set the default `dma_mask` to 32-bit and update
->> it to 34-bit based on CDSP and SoC-specific compatible string.
+On 10/15/2025 12:50 PM, Arnd Bergmann wrote:
+> On Wed, Oct 15, 2025, at 06:57, Kumari Pallavi wrote:
+>> Update all references of buf->phys and map->phys to buf->dma_addr and
+>> map->dma_addr to accurately represent that these fields store DMA
+>> addresses, not physical addresses. This change improves code clarity
+>> and aligns with kernel conventions for dma_addr_t usage.
 >>
 >> Signed-off-by: Kumari Pallavi <kumari.pallavi@oss.qualcomm.com>
->> ---
->>   drivers/misc/fastrpc.c | 9 +++++++--
->>   1 file changed, 7 insertions(+), 2 deletions(-)
+> 
+> Thanks for the update!
+> 
+>>   				&src_perms, &perm, 1);
+>>   			if (err) {
+>> -				dev_err(map->fl->sctx->dev, "Failed to assign memory phys 0x%llx
+>> size 0x%llx err %d\n",
+>> -						map->phys, map->len, err);
+>> +				dev_err(map->fl->sctx->dev, "Failed to assign memory dma_addr
+>> 0x%llx size 0x%llx err %d\n",
+>> +						map->dma_addr, map->len, err);
+>>   				return;
+> 
+> Note that using %llx is not a portable way to print a dma_addr_t,
+> you should use %pad instead even if your method works on all
+> arm64 configurations.
+> 
+> %pad requires passing the dma_addr_t variable by reference though.
+> 
+
+Ack.
+
+>> @@ -783,10 +783,10 @@ static int fastrpc_map_attach(struct fastrpc_user
+>> *fl, int fd,
+>>   	map->table = table;
 >>
->> diff --git a/drivers/misc/fastrpc.c b/drivers/misc/fastrpc.c
->> index 1a5d620b23f2..f2e5e53e9067 100644
->> --- a/drivers/misc/fastrpc.c
->> +++ b/drivers/misc/fastrpc.c
->> @@ -267,6 +267,7 @@ struct fastrpc_session_ctx {
->>   
->>   struct fastrpc_soc_data {
->>   	u32 sid_pos;
->> +	u32 cdsp_dma_mask;
-> How about making this an actual dmamask ex:
+>>   	if (attr & FASTRPC_ATTR_SECUREMAP) {
+>> -		map->phys = sg_phys(map->table->sgl);
+>> +		map->dma_addr = sg_phys(map->table->sgl);
+>>   	} else {
 > 
-> 	u64 cdsp_dma_mask == DMA_BIT_MASK(64),
-> 	u64 dma_mask == DMA_BIT_MASK(32),
-> 
-> This will give more clear picture of what is going on,
+> This is technically still wrong, because sg_phys() returns
+> a phys_addr_t that is only the same as the dma_addr_t value
+> if there is no iommu or dma offset.
 > 
 
-The current approach of assigning a value to cdsp_dma_mask allows for 
-adaptable logging behavior, making it easier to trace.
+Based on historical behavior, when the FASTRPC_ATTR_SECUREMAP flag is 
+set, S2 mapping expects a physical address to be passed to the 
+qcom_scm_assign_mem() API.
+reference- 
+https://git.kernel.org/pub/scm/linux/kernel/git/next/linux-next.git/commit/drivers/misc/fastrpc.c?id=e90d911906196bf987492c94e38f10ca611dfd7b
 
-> BTW, these values are not set in the patch for some reason for both
-> default and soc specific soc data>
-
-Ack.
-
->>   struct fastrpc_channel_ctx {
->> @@ -2178,6 +2179,7 @@ static int fastrpc_cb_probe(struct platform_device *pdev)
->>   	int i, sessions = 0;
->>   	unsigned long flags;
->>   	int rc;
->> +	u32 dma_mask = 32;this should come from default soc_data, do not hardcode this here.
-> 	u64 dma_mask = default_soc_data->dma_mask;>
-
-Ack.
-
->>   	cctx = dev_get_drvdata(dev->parent);
->>   	if (!cctx)
->> @@ -2197,6 +2199,9 @@ static int fastrpc_cb_probe(struct platform_device *pdev)
->>   	sess->dev = dev;
->>   	dev_set_drvdata(dev, sess);> +	if (cctx->domain_id == CDSP_DOMAIN_ID)
->> +		dma_mask = cctx->soc_data->cdsp_dma_mask;
->> +
+> At the minimum, this requires a comment explaining what you
+> are doing here, and I would add a '(dma_addr_t)' cast as
+> well.
 > 
->>   	if (of_property_read_u32(dev->of_node, "reg", &sess->sid))
->>   		dev_info(dev, "FastRPC Session ID not specified in DT\n");
->>   
->> @@ -2211,9 +2216,9 @@ static int fastrpc_cb_probe(struct platform_device *pdev)
+
+To ensure clarity, i will add the comment. Adding '(dma_addr_t)' cast
+result in incorrect behavior due to potential offsets.
+
+> If possible, use sg_dma_address() instead of sg_phys() for
+> portability if they produce the same bit value.
+> 
+>> @@ -813,10 +813,10 @@ static int fastrpc_map_attach(struct fastrpc_user
+>> *fl, int fd,
+>>   		dst_perms[1].vmid = fl->cctx->vmperms[0].vmid;
+>>   		dst_perms[1].perm = QCOM_SCM_PERM_RWX;
+>>   		map->attr = attr;
+>> -		err = qcom_scm_assign_mem(map->phys, (u64)map->len, &src_perms,
+>> dst_perms, 2);
+>> +		err = qcom_scm_assign_mem(map->dma_addr, (u64)map->len, &src_perms,
+> 
+> This one has the reverse problem, as qcom_scm_assign_mem() takes
+> a phys_addr_t instead of a dma_addr_t, again relying on the
+> absence of an iommu.
+> 
+>> dst_perms, 2);
+>>   		if (err) {
+>> -			dev_err(sess->dev, "Failed to assign memory with phys 0x%llx size
+>> 0x%llx err %d\n",
+>> -					map->phys, map->len, err);
+>> +			dev_err(sess->dev, "Failed to assign memory with dma_addr 0x%llx
+>> size 0x%llx err %d\n",
+>> +					map->dma_addr, map->len, err);
+>>   			goto map_err;
+> 
+> %pad
+> 
+
+Ack
+
 >>   		}
 >>   	}
->>   	spin_unlock_irqrestore(&cctx->lock, flags);
->> -	rc = dma_set_mask(dev, DMA_BIT_MASK(32));
->> +	rc = dma_set_mask(dev, DMA_BIT_MASK(dma_mask));
->>   	if (rc) {
->> -		dev_err(dev, "32-bit DMA enable failed\n");
->> +		dev_err(dev, "%u-bit DMA enable failed\n", dma_mask);
->>   		return rc;
->>   	}
->>   
+>> @@ -1007,7 +1007,7 @@ static int fastrpc_get_args(u32 kernel, struct
+>> fastrpc_invoke_ctx *ctx)
+>>   			struct vm_area_struct *vma = NULL;
+>>
+>>   			rpra[i].buf.pv = (u64) ctx->args[i].ptr;
+>> -			pages[i].addr = ctx->maps[i]->phys;
+>> +			pages[i].addr = ctx->maps[i]->dma_addr;
+>>
 > 
+> pages[i].addr is declared as
+> 
+>        "u64 addr;               /* physical address */"
+> 
+> I guess the other side of this is the same CPU in a different
+> exception level instead of an external device, right? This
+> could also use a clarification.
+> 
+
+Ack
+
+>          Arnd
 
 
