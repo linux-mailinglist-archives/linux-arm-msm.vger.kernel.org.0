@@ -1,34 +1,34 @@
-Return-Path: <linux-arm-msm+bounces-77482-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-77483-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id AA8BCBE0B91
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Oct 2025 22:58:03 +0200 (CEST)
+Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [142.0.200.124])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7A7E6BE0BB5
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Oct 2025 23:00:40 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id EB80C1A22F0D
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Oct 2025 20:58:26 +0000 (UTC)
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 662694EC5B6
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Oct 2025 21:00:39 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id F3F072D061B;
-	Wed, 15 Oct 2025 20:57:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 109B91A08CA;
+	Wed, 15 Oct 2025 21:00:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=lunn.ch header.i=@lunn.ch header.b="zVHiGGVy"
+	dkim=pass (1024-bit key) header.d=lunn.ch header.i=@lunn.ch header.b="bWeEwmMz"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from vps0.lunn.ch (vps0.lunn.ch [156.67.10.101])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 669D83254BB;
-	Wed, 15 Oct 2025 20:57:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7334B19F48D;
+	Wed, 15 Oct 2025 21:00:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=156.67.10.101
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760561878; cv=none; b=Q06r3hKlpF4Sp0sVOYyS8w1kievCqwY6IkoMCVsfU2llGQl13jg5aKKBOIMeo77/tzJpRzFg5ZQEP2qixnIzTaxVVgMKsBDe3ohRJKtikh82Ui8+YAe6LIs65k5ZrmpEMibqliPp/QrHC/HLnfAiHbTWozTCP3P7uxMQvZ+Su08=
+	t=1760562037; cv=none; b=U0dsZR3flcGPpCsGbXjSV6UWDThCfpphyiY1FiE78yYC3jRaT31TyCDLrqXkkJRTzP6sQ1/Qim/5IvyM3RfNeTT5ZYB1nr0jzqSzKFmTjR1co5gzYwWPO92foGxet4FGg47Yl+4P2BufdkKpHy51KfkDPv6h2Gm69ctYc99wKkc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760561878; c=relaxed/simple;
-	bh=A2EmM14UgIybkpDAhtPGzwAIrkqTt8Bkgh5dENUO8BM=;
+	s=arc-20240116; t=1760562037; c=relaxed/simple;
+	bh=M1qczSmkw0158XadgJhT0mwOxC+0MpFlEOPojPneZxM=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=WLCZh2uiEf3SYIK0qBssE5w0sHxtGR1JhXnzqmmAVP6BRpWXZSGq+yJEnWciIm+rgxcy1IFxzqgWZFRlllm8CYlGlTgsoWwX8aiTorRb+RlufLF1v2nAKXIczLwESupOEnvkeEY0NU93cFD0R3T+krCBvG7ByS5U01CS6FHsbUU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lunn.ch; spf=pass smtp.mailfrom=lunn.ch; dkim=pass (1024-bit key) header.d=lunn.ch header.i=@lunn.ch header.b=zVHiGGVy; arc=none smtp.client-ip=156.67.10.101
+	 Content-Type:Content-Disposition:In-Reply-To; b=o65yMBOftS8mmyR8QKVYQd68+93VXcI0WNJ9FTXPBeW2IwPXnrD7etdZuNsixBkmm4DgMW/3M6tpKmELCAV/2mcqe/5bLVYMV7md92e8qwpmx/HvrvCCPtq6s9WAdcFXzdgiMPFlwsSXzHJfZCti5W3tpfIZzNX5eanW3FzgW7M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lunn.ch; spf=pass smtp.mailfrom=lunn.ch; dkim=pass (1024-bit key) header.d=lunn.ch header.i=@lunn.ch header.b=bWeEwmMz; arc=none smtp.client-ip=156.67.10.101
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lunn.ch
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=lunn.ch
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=lunn.ch;
@@ -36,13 +36,13 @@ DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=lunn.ch;
 	References:Message-ID:Subject:Cc:To:From:Date:From:Sender:Reply-To:Subject:
 	Date:Message-ID:To:Cc:MIME-Version:Content-Type:Content-Transfer-Encoding:
 	Content-ID:Content-Description:Content-Disposition:In-Reply-To:References;
-	bh=rYViK2r1T71M2+Mis9SxRUmDdzKfk6SqvpEWpgz3kvo=; b=zVHiGGVy0h3E/jEQbeDIh6RSqN
-	90BHubtm5Z/mgcH8PheoZp3NsoVzWp1atu16K3T917zee7OvdjkD3yE+3NMVj0+QMnaQ4o0KRLSwr
-	ug5KHEXooK6EKbrGPbLNhhlS8+R6izPxhgsVsG0JHGy8PHJJJMYRLeYe7nno4tg3nhyk=;
+	bh=Qzau+2IiMd5fmjjZsXIksbdqUfY4ALqFsU+r0yQdOvs=; b=bWeEwmMzbtp8+O05AdPNYgUu/p
+	IHmi13D2KzF4+B2uUu7P5mN5YC0vx9H9yt1W3M/jt5+nyXLLufX1sIpO1lHgAwuVQYtjGGCXU+283
+	Teq6AgAqfQtLuX4SjkpxzdGWvUhiN0AIeYSMOf9IUphj3KXEAsvZEZdIns31ljTxiYLQ=;
 Received: from andrew by vps0.lunn.ch with local (Exim 4.94.2)
 	(envelope-from <andrew@lunn.ch>)
-	id 1v98Z0-00B4kS-2a; Wed, 15 Oct 2025 22:57:38 +0200
-Date: Wed, 15 Oct 2025 22:57:38 +0200
+	id 1v98bR-00B4m9-2I; Wed, 15 Oct 2025 23:00:09 +0200
+Date: Wed, 15 Oct 2025 23:00:09 +0200
 From: Andrew Lunn <andrew@lunn.ch>
 To: "Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>
 Cc: Heiner Kallweit <hkallweit1@gmail.com>,
@@ -83,11 +83,11 @@ Cc: Heiner Kallweit <hkallweit1@gmail.com>,
 	Vladimir Oltean <olteanv@gmail.com>,
 	Vladimir Oltean <vladimir.oltean@nxp.com>,
 	Yu-Chun Lin <eleanor15x@gmail.com>
-Subject: Re: [PATCH net-next 10/14] net: stmmac: hw->ps becomes
- hw->reverse_sgmii_enable
-Message-ID: <7a935c07-4e1b-40c8-bf9f-00576fb465e7@lunn.ch>
+Subject: Re: [PATCH net-next 11/14] net: stmmac: do not require snps,ps-speed
+ for SGMII
+Message-ID: <5c5b0dd4-0c08-48f0-bbb8-21afcdfc102e@lunn.ch>
 References: <aO-tbQCVu47R3izM@shell.armlinux.org.uk>
- <E1v92My-0000000AmHJ-3chv@rmk-PC.armlinux.org.uk>
+ <E1v92N3-0000000AmHQ-4Bm2@rmk-PC.armlinux.org.uk>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -96,30 +96,20 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <E1v92My-0000000AmHJ-3chv@rmk-PC.armlinux.org.uk>
+In-Reply-To: <E1v92N3-0000000AmHQ-4Bm2@rmk-PC.armlinux.org.uk>
 
-On Wed, Oct 15, 2025 at 03:20:48PM +0100, Russell King (Oracle) wrote:
-> After a lot of digging, it seems that the oddly named hw->ps member
-> is all about setting the core into reverse SGMII speed. When set to
-> a non-zero value, it:
+On Wed, Oct 15, 2025 at 03:20:53PM +0100, Russell King (Oracle) wrote:
+> SGMII mode does not require port-speed to be specified; this only
+> switches SGMII to use the MAC configuration register speed settings
+> and the actual value is irrelevant when the link comes up.
 > 
-> 1. Configures the MAC at initialisation time to operate at a specific
->    speed.
-> 2. It _incorrectly_ enables the transmitter (GMAC_CONFIG_TE) which
->    makes no sense, rather than enabling the "transmit configuration"
->    bit (GMAC_CONFIG_TC).
-> 3. It configures the SGMII rate adapter layer to retrieve its speed
->    setting from the MAC configuration register rather than the PHY.
+> As it seems the intention was to support "reverse SGMII" with this
+> setting, but the code didn't actually configure that due to a typo,
+> the warning and bad DT binding documentation has led people to
+> specify snps,ps-speed in their DT files inappropriately.
 > 
-> In the previous commit, we removed (1) and (2) as phylink overwrites
-> the configuration set at that step.
-> 
-> Thus, the only functional aspect is (3), which is a boolean operation.
-> This means there is no need to store the actual speed, and just have a
-> boolean flag.
-> 
-> Convert the priv->ps member to a boolean, and rename it to
-> priv->reverse_sgmii_enable to make it more understandable.
+> If mac_port_sel_speed is zero, then don't complain that the speed
+> is invalid, as this means we're using "normal" SGMII.
 > 
 > Signed-off-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
 
