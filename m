@@ -1,81 +1,81 @@
-Return-Path: <linux-arm-msm+bounces-77333-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-77334-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9F87ABDD5DE
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Oct 2025 10:23:59 +0200 (CEST)
+Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [142.0.200.124])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6AD26BDD5FF
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Oct 2025 10:24:47 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 5152E425439
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Oct 2025 08:23:58 +0000 (UTC)
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 6A14C4F0D59
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Oct 2025 08:24:46 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D2EC52D8DDF;
-	Wed, 15 Oct 2025 08:23:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 722682F618F;
+	Wed, 15 Oct 2025 08:24:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="uur9uFih"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="UWrYX04b"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-f43.google.com (mail-ed1-f43.google.com [209.85.208.43])
+Received: from mail-ej1-f54.google.com (mail-ej1-f54.google.com [209.85.218.54])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DEBF12D3725
-	for <linux-arm-msm@vger.kernel.org>; Wed, 15 Oct 2025 08:23:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F38332D46B2
+	for <linux-arm-msm@vger.kernel.org>; Wed, 15 Oct 2025 08:24:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760516633; cv=none; b=UZPH9+jglg+osvNp16qEKlDBjJb7PzlW3pNApLvSHiZ1CXvSL9KQlq/y6v92ltwUmSSTBfokn1+WaC5K0/Z80nLALByQCi6eyjl84XxMHOJLlE/whcNL3vDWgzRS4AXKyx/NsohV3NQwQ0zNxnlclXXL3QNXL8xEY+shct7DYvI=
+	t=1760516669; cv=none; b=McJHwgBpyE80/4VtgKck7Crkm9OCZnw9Z/V3JbbJYsvQ6D7n8mCVhYeO1JDlbqgcF0hp2f5APzkhvi+LMo/4E1MRCXmw9JaZXAq5IOD4Hw6ugFTXPFCNCRoT0idqEYwFZxcfOJEtSmCmO5XvosoGBDHo8ISk8JLjSRySTW/wLEE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760516633; c=relaxed/simple;
-	bh=zjowPA6LA2JyKNy8/VG7vz2tOZi4UHzYurZ1ohlQmjA=;
+	s=arc-20240116; t=1760516669; c=relaxed/simple;
+	bh=KxWKmiu9Rjq1K6P3jRxYwsFZIUByeyZ59tHsbEg2yjE=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=MYTcKVeiyQNHauBdZHQSQ6uQW/D1OcXtjjMe1cXqFk5gs/oPavTynvoPCimt0qQrw/0q0sSHLA4JsN2hqL4LMJfwX8i5sGMMm4TjU/29a6hTfhs9/WJWWXp97Y31D4iVb3XqM/ZfWgVoqqkA9VyER2SIXsG37JZ7ZrlJsxKz4dQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=uur9uFih; arc=none smtp.client-ip=209.85.208.43
+	 In-Reply-To:Content-Type; b=XiBoKN4EgwEctVTeZruciw3Yn3E1mzdlCAZYRWe4iDnhNIEl9bdSgjygRdsaoKnaOTGUtnoyBm8dEC380ItT9lcjflcdhfRwePgyQjXf8e1/+OCwj0JVfZ2FLHynsSH1QjwtvNJmLP/xn7ooB3LQRwsHRvEssSTuKiXUfJzrEuU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=UWrYX04b; arc=none smtp.client-ip=209.85.218.54
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ed1-f43.google.com with SMTP id 4fb4d7f45d1cf-63beb2653dbso1076774a12.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Oct 2025 01:23:51 -0700 (PDT)
+Received: by mail-ej1-f54.google.com with SMTP id a640c23a62f3a-b4f323cf89bso1124731466b.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Oct 2025 01:24:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1760516630; x=1761121430; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1760516663; x=1761121463; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:content-language:from
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=xEWfeOPoDT8hEUhHinrJj37kfG+XXphWeZaOer8q0XA=;
-        b=uur9uFihiQuKWrBEgfq/R4pBrAvhOye4itMhsn3NjK82CW1bFW//9TO2z6VKRXB/7D
-         OFt8DenKT1PrwX6bdCtax8ry5QOICiZ6o8yQyhZEqoCS/gRHZgphi2mnXChMgWXton0y
-         PiW3PEUIyB0aB77+Yc5XS4luA/Yks+o9P2QDwnx56yC3w07Qv7Ws+nGvXjiss3Ts1BXI
-         PAD57dapqzgZRM9gwIZquYPBb8V0nnfIqIHD6o03mw49/FO4zIId9iw4+MiAFpcpJue+
-         YkBz/W99QUPHu4yW05LggXa4zd7NHdbUaqApYnbEUw61ZOlKXIIBQKPGOl2Ve7q9tJP8
-         EDnA==
+        bh=TtE/vZEnFRO/O0aDzTmOM5exa4aoLNDYIYIf8N0xWSo=;
+        b=UWrYX04bzyITFxVRkRV21xGHmLGQ9ozgyijXXGsaZ6q9eOYagkQovXkZTCq+qrlyI1
+         DAD2pPpF7WHyPX/GVm4q4QBf0MR9/P0zu574oi+fzy5mUHsCVpahBeOYfalCftNgoS5S
+         7NvUxDi3jJcRQTOlLizX/1W+oQZn9G+qVLztGr6JN4CtpZrqQVsG7gEi67C6m5cw2f4X
+         Hp/CgEV8kYdOpFrx2ppjhh718rFr3x4F4J4cNBq+WEGYQ7WCF3Q0lRahC/QvnpD95NEn
+         0DJlPXYNUAiUpv/+hVN2zyurfYqaC0FwuKZAJdpKqKSARiFSk4r3ooV0UejoN//fIwSo
+         QqAA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1760516630; x=1761121430;
+        d=1e100.net; s=20230601; t=1760516663; x=1761121463;
         h=content-transfer-encoding:in-reply-to:content-language:from
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=xEWfeOPoDT8hEUhHinrJj37kfG+XXphWeZaOer8q0XA=;
-        b=OGrxcZCWQBJm/npsW0ruiC9iQ2e71DJ186HIez3QnZqE/q4n89S1Hj7k+S2BWhr6m3
-         SgHpkUuOBvbf+rrAKTBzwhdKL0awWpBZN4rf76sIl0sIbQU39RTXWaXgLqmN9ZsD30ft
-         oyLmdmE6l2XAJsjxwpNZQtsZ5tdv/lfSRPLh6K1e2zyCHFKrykrgviSx7ZpBXnJHww6w
-         KN/hNDJrw0oRLgTBXOHAW4fh1Pmn9gmCg8tkvfqc0iNbosEpXtPhCa1QZYZHzGM9aOLy
-         LsZwrV2rHHtBKu40sUKSQvS2efRqX/88GyekqZBpB6Aup1T6OfVpFn36/O0/YzwqFOJ5
-         KOhA==
-X-Forwarded-Encrypted: i=1; AJvYcCVsf4TgG/WhYjyXv2Wi9qrR5mx3bAE87ZgFlcqCT9gHaorcxyOyYqcLuptG6RoAWhULMyzEwepYnfr5cQzL@vger.kernel.org
-X-Gm-Message-State: AOJu0YxH8S2tLeEUjqc8Xv9jO2p+5AqJdDUmkO1BicVJl6xnqEKsrMWc
-	KhLmOv8A+bYUQOFJyUmnUL2NgFbOzllYtvdKWgC+QcdxMcZu0fATWjRVHv4JIVTPyAY=
-X-Gm-Gg: ASbGncsIpJMoqNFDFo/m9RUP+934VvXIAfOFo2A3zdgKH1/KkCzeGgBNMQe1uKtEJ8Z
-	8gs3E/CfB70kVWVX9IpDbMVoLsrDlY0YnownqZr+CcAE5rSaejJeTR/hxEorLuobMpzvBLFVOgb
-	BAW/z+Xum/KmlttD8dq2PR9RacrhFN3Cu+ns/1HFj9pIxBM+1YG4E9hyDFwjUAalwXVB0df7wep
-	M5Xvq90CdPw+bexstO/keGwuwj1syJ8LnyQfVRu+ftTi2x642h9F5IFMUULI4KVXRLNTBOGamuz
-	sz8l95eh58mn9QIioxKClYHg7I9Rcbj+MqMEVsRAgOJDuEw2pi7HuYVp2ImA24ROQAkls9XGa/B
-	c9QdZgox6LorhWu1tsDgpUZK7vv9P5RyZdn1YRbAI92KM43ILHqV9Wsu5yq8E7DzzBCDB65uCCG
-	w+gQMlrZLg1Cl0uqbI2/APE5ZLpF4NXIH6
-X-Google-Smtp-Source: AGHT+IHxbqlKJ1VsMlPtKXhUfB9UFCf51KlIdgD/eUSC/bM2tWlthk0OOIVYAVvC9wH/4v5Ovq+w4g==
-X-Received: by 2002:a05:6402:2812:b0:632:d9b:271e with SMTP id 4fb4d7f45d1cf-639d5c3630emr27126917a12.22.1760516630160;
-        Wed, 15 Oct 2025 01:23:50 -0700 (PDT)
+        bh=TtE/vZEnFRO/O0aDzTmOM5exa4aoLNDYIYIf8N0xWSo=;
+        b=EExNbTt5/ITDoeQUjC3Qsh/NBfl0M+GpCdPSizpfD/330NiVtQnytETxRbYvUb3oCZ
+         WMGDWYGSMDJVWd2DesyKs1NN5+n/qmStjYQ5QYe3b9/v0NN44MXSWH7H6UDbUE+/jeMh
+         VSjx8EAO7uqtkLQmXx5AeJ7NBXORqJL6hKPVpZ9uZyZN250Hzo/3WdwphIw7fb3/7uNE
+         EN45nOOS+gFLvw2+WCQlLGT/pcneq8CZqeHZ18OMrvIe3QjEa77jo2xnBvBMSNvT6pZF
+         PY8hPLLR4c9nG/znHKA1juwDCe2vl6mpWI30TyFbbyFUhYHjxl0lSSAD5jnsCOm0hVdK
+         jwIA==
+X-Forwarded-Encrypted: i=1; AJvYcCV7L1DtzhqfrylJc5Ios1NEzD7hfxIGYeq82iHyhWbqgM12FfuubDcHfaJ41fKXzV19QDF2nd9bYmcRkONe@vger.kernel.org
+X-Gm-Message-State: AOJu0YxO8mfJ6cV+/GK2APLNSaW3lJwdTsq6Vzj1BnEAwxdnf3Qdubq2
+	7sN5rVzNxPEFrp3hlol0CuH9JyDbMrzWyU6JSt5rvguGDotloamH8vldUPowP4ne+3s=
+X-Gm-Gg: ASbGncsMNkPnZFkC68zkuUMkxm7LDcBP5ISCGVhuJCdKC6p7xNi1sbkOa3iZRSb+FlP
+	31etvuZc1dCWHWKzuOiqamWXdxk1CB9YPtraHaXNmf2Z3saAiR/gmBN8hfgz9yg779ME+TAxPKM
+	zbYefhdQuztuTKFR0t38dBE4pV5sjdnSto9TYiZiOcUagGAoMKng62yV6+2I/X4pc0iPtsPNicE
+	smAIpvqppTF6SlkjhqMFsXltZRKoJ1brE2Jiq3JG30QYPipPrs4DgUD6SS+1rkIqXbHCNK66qQ/
+	74l8X7pT5SAL9SC4CrK4vfdfH50OsGi76dP47owIv67k9SCoG+PYa+DsdTG1k55GGh4e45hPKU3
+	qfh+Pzezyk9neOATqsBSAo1zNp1GToI5sGrqW3MCyE7wvYEZUOJIClJNHWTgDCh7JoxA44ZcuXK
+	Nru6YQQwtbN1Ra9tZel7jRSw==
+X-Google-Smtp-Source: AGHT+IGevrv/qqYOxvgpm3B6QvO6hWcybEKVbjZIiQDfLWE4gSlzL7mBitr4uu2g2PmlFXgFdhalWg==
+X-Received: by 2002:a17:907:934d:b0:b32:8943:7884 with SMTP id a640c23a62f3a-b50abfd6a1fmr2836258966b.45.1760516663245;
+        Wed, 15 Oct 2025 01:24:23 -0700 (PDT)
 Received: from [192.168.0.19] (188-141-3-146.dynamic.upc.ie. [188.141.3.146])
-        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-63a5235e7ebsm12712602a12.1.2025.10.15.01.23.48
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-b5cb9e813acsm169952566b.27.2025.10.15.01.24.22
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 15 Oct 2025 01:23:49 -0700 (PDT)
-Message-ID: <1c422fbb-dd93-46ce-9227-57c94eb55db4@linaro.org>
-Date: Wed, 15 Oct 2025 09:23:47 +0100
+        Wed, 15 Oct 2025 01:24:22 -0700 (PDT)
+Message-ID: <06043c1b-b261-4469-b897-66e8173588ab@linaro.org>
+Date: Wed, 15 Oct 2025 09:24:21 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -83,8 +83,8 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] media: qcom: camss: Enable setting the rate to
- camnoc_rt_axi clock
+Subject: Re: [PATCH] media: qcom: camss: Use a macro to specify the initial
+ buffer count
 To: Hangxiang Ma <hangxiang.ma@oss.qualcomm.com>,
  Loic Poulain <loic.poulain@oss.qualcomm.com>, Robert Foss
  <rfoss@kernel.org>, Andi Shyti <andi.shyti@kernel.org>,
@@ -95,48 +95,59 @@ To: Hangxiang Ma <hangxiang.ma@oss.qualcomm.com>,
 Cc: linux-i2c@vger.kernel.org, linux-arm-msm@vger.kernel.org,
  devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
  linux-media@vger.kernel.org
-References: <20251014-add-new-clock-in-vfe-matching-list-v1-1-0d965ccc8a3a@oss.qualcomm.com>
+References: <20251014-use-marco-to-denote-image-buffer-number-v1-1-f782e4cc622d@oss.qualcomm.com>
 From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 Content-Language: en-US
-In-Reply-To: <20251014-add-new-clock-in-vfe-matching-list-v1-1-0d965ccc8a3a@oss.qualcomm.com>
+In-Reply-To: <20251014-use-marco-to-denote-image-buffer-number-v1-1-f782e4cc622d@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-On 15/10/2025 03:43, Hangxiang Ma wrote:
-> On hardware architectures where a single CAMNOC module is split into
-> two, one for each of the real time (RT) and non real time (NRT) modules
-> within camera sub system, processing VFE output over the AXI bus
-> requires enabling and setting the appropriate clock rate for the RT
-> CAMNOC. This change lays the groundwork for supporting such
-> configurations.
+On 15/10/2025 03:42, Hangxiang Ma wrote:
+> Replace the hardcoded buffer count value with a macro to enable
+> operating on these buffers elsewhere in the CAMSS driver based on this
+> count. Some of the hardware architectures require deferring the AUP and
+> REG update until after the CSID configuration and this macro is expected
+> to be useful in such scenarios.
 > 
 > Signed-off-by: Hangxiang Ma <hangxiang.ma@oss.qualcomm.com>
 > ---
-> This change lays the groundwork for supporting configurations for
-> hardware architectures that split a single CAMNOC module into real time
-> (RT) and non real time (NRT).
+> This change use a global macro to specify the initial buffer count. It
+> meets the requirement that some hardware architectures need to defer the
+> AUP and REG update to CSID configuration stage.
 > ---
->   drivers/media/platform/qcom/camss/camss-vfe.c | 3 ++-
->   1 file changed, 2 insertions(+), 1 deletion(-)
+>   drivers/media/platform/qcom/camss/camss-vfe.c | 2 +-
+>   drivers/media/platform/qcom/camss/camss.h     | 1 +
+>   2 files changed, 2 insertions(+), 1 deletion(-)
 > 
 > diff --git a/drivers/media/platform/qcom/camss/camss-vfe.c b/drivers/media/platform/qcom/camss/camss-vfe.c
-> index ee08dbbddf88..09b29ba383f1 100644
+> index 09b29ba383f1..2753c2bb6c04 100644
 > --- a/drivers/media/platform/qcom/camss/camss-vfe.c
 > +++ b/drivers/media/platform/qcom/camss/camss-vfe.c
-> @@ -914,7 +914,8 @@ static int vfe_match_clock_names(struct vfe_device *vfe,
->   	return (!strcmp(clock->name, vfe_name) ||
->   		!strcmp(clock->name, vfe_lite_name) ||
->   		!strcmp(clock->name, "vfe_lite") ||
-> -		!strcmp(clock->name, "camnoc_axi"));
-> +		!strcmp(clock->name, "camnoc_axi") ||
-> +		!strcmp(clock->name, "camnoc_rt_axi"));
->   }
+> @@ -541,7 +541,7 @@ int vfe_enable_output_v2(struct vfe_line *line)
 >   
->   /*
+>   	ops->vfe_wm_start(vfe, output->wm_idx[0], line);
+>   
+> -	for (i = 0; i < 2; i++) {
+> +	for (i = 0; i < CAMSS_INIT_BUF_COUNT; i++) {
+>   		output->buf[i] = vfe_buf_get_pending(output);
+>   		if (!output->buf[i])
+>   			break;
+> diff --git a/drivers/media/platform/qcom/camss/camss.h b/drivers/media/platform/qcom/camss/camss.h
+> index a70fbc78ccc3..901f84efaf7d 100644
+> --- a/drivers/media/platform/qcom/camss/camss.h
+> +++ b/drivers/media/platform/qcom/camss/camss.h
+> @@ -41,6 +41,7 @@
+>   	(to_camss_index(ptr_module, index)->dev)
+>   
+>   #define CAMSS_RES_MAX 17
+> +#define CAMSS_INIT_BUF_COUNT 2
+>   
+>   struct camss_subdev_resources {
+>   	char *regulators[CAMSS_RES_MAX];
 > 
 > ---
-> base-commit: 69a67cb382f428c6dd8ba63e44cd2c59cb84f736
-> change-id: 20251012-add-new-clock-in-vfe-matching-list-25fb1e378c49
+> base-commit: 59a69ef338920ca6a5bca3ec0e13ce32809cea23
+> change-id: 20251012-use-marco-to-denote-image-buffer-number-cbec071b8436
 > 
 > Best regards,
 Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
