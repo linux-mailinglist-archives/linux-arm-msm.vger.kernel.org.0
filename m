@@ -1,462 +1,105 @@
-Return-Path: <linux-arm-msm+bounces-77460-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-77461-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 553EABE0475
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Oct 2025 20:57:28 +0200 (CEST)
+Received: from ams.mirrors.kernel.org (ams.mirrors.kernel.org [IPv6:2a01:60a::1994:3:14])
+	by mail.lfdr.de (Postfix) with ESMTPS id 11C78BE0511
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Oct 2025 21:09:42 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 04B3E543A2B
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Oct 2025 18:57:27 +0000 (UTC)
+	by ams.mirrors.kernel.org (Postfix) with ESMTPS id B1BA63537C2
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Oct 2025 19:09:41 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 50D75302151;
-	Wed, 15 Oct 2025 18:57:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E1B62302CCD;
+	Wed, 15 Oct 2025 19:09:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="sHpTziac"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Mb9w4PZa"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f50.google.com (mail-lf1-f50.google.com [209.85.167.50])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0076930149C
-	for <linux-arm-msm@vger.kernel.org>; Wed, 15 Oct 2025 18:57:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4B752BDC3B;
+	Wed, 15 Oct 2025 19:09:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760554644; cv=none; b=Jafey329ssR2sPHGR8y3HUzga5zrwt7s00+GeXmSWCiexeK8grDXgeeJNE3ETVUkwCm2B4k7RcgFcFkapSULR+FZmctCseOF07pjqmz+wog0V97c2iYv/BUs/mf2PMbew4iFhrk7MNeMfORCl1L6EMSEaLvTXhzH0u67jGF9gW0=
+	t=1760555379; cv=none; b=Yzj8FaU7IOndW7HvtlQ7YfnosOrcGxIfmQQZF9sc2voFwzjZOkQn3qBj9FJYXH7yyflMmsCPS/xtAJWx9U1qarge30TLmNWlbRN3wzbCv17s9cqamXF9v4Oluf+r14dMW/18LpCmKkFiG3THKcSYxHArtquqx27Y9K/XNxTNTL0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760554644; c=relaxed/simple;
-	bh=yFAYAzsCtahC4P6JDRX/+JDxOrD86QZ4jTF69Kbzd3w=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=IzUa20J0WQIOWMqkF8Cgr+cgSvvahoyqVfzUJ8rllGDwNKVcw4VM++/tSwAy6Z4ZDUwA0QxFcob7Y6tJqrrBaaL4L44Op9qgnlE+oWgB0fiY/Vs2cYc2rB7xJFpU72tNvPxGAm1zWTnKJmdNuGWxMLmakD+HwQ2OELgGxAkiQJw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=sHpTziac; arc=none smtp.client-ip=209.85.167.50
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f50.google.com with SMTP id 2adb3069b0e04-58b037243d5so1213187e87.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Oct 2025 11:57:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1760554640; x=1761159440; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=fbGZO2JzBM3C8yY+OgT+lQXCHpnKxv2MA/NXQz9rs8k=;
-        b=sHpTziacj22NVGC2NljTPiAe3abMAgojwhnh7itAWHvNWRnaKLkKgMpqSHzlcCE0Jk
-         7YUD4LwSolRWJrU3PC/pMeoUsNiRXd29Me8th+Ng38BA5k/qAxyFCliSN2qogakBmP33
-         FxvbpA9udU5gDi//rRm5q+inBtS8gWPaKlxhbkrzI24k2nNi+5NHFpNWZm9WKHLBq4Jj
-         uA45xd+bBr8tBDFpEX/I72D3MOx7wG4rVtGIAmqdq6BFW6tf75djFXO/zp+Gpln3USH2
-         yPDCom7m/kT3//sb67jWvgRUfFQv2AIfZ1ypM2ceUkXrZfogagFIBe/eF4TPgCIWjLi7
-         qQjw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1760554640; x=1761159440;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=fbGZO2JzBM3C8yY+OgT+lQXCHpnKxv2MA/NXQz9rs8k=;
-        b=DxwxGIbptb9KHc5xVCFdnEm7/1WmbKvOKKD/MCAezADs7kTkaJFTzlQE2AjP9udZS7
-         x3Y2m5R5q2mK8xJEDUYwFDR7ZYer4a4moBx1le+WQYbFWVV1RfGM1VpzZtXkuESziJnr
-         Z3xMSdKvG/FOtHks5ckMB3icl3dpepD6pIgPT18Rwmcn/WZfv7YGcNe30L+68xt6YLGw
-         h8GyRma4fMxvE7tRTQE+Ccgz5ObRQk16Rko+oA5PzghfDYnxNL7aLKYmAO5U1EooucwF
-         fQzhXAQ0sriqNHOvc55WlWnDM2+TJADW/mKcXw2a2rlWdWLs2+p0PVz34TJ1m2T26K7f
-         /8+g==
-X-Forwarded-Encrypted: i=1; AJvYcCUju0B+JEEo8IFFGqjQSSsuKjqljp0J2VCpHTTdyeGFtxVYR35Ly3W5jA0VdXjtxeESaV1b7nI7f/2FeiNN@vger.kernel.org
-X-Gm-Message-State: AOJu0YyTForP6yqDMeTChRdfo3XIil9UV8ZwTYftVr5WW8cgcNnIsFVs
-	VcIKGzHj9rXaJ6iopQMsgAHIeNg7UyviRsYpkTqE6KCsiJ5hWg06KvnmUs86FrA0Xe8=
-X-Gm-Gg: ASbGncu2XHKnaAf0ZCmOa7FIJUYoyo89VyvoDKzeul52f3fmT1IZjHSXFbecIX5BKwh
-	DHRi/qLmfBM3uVQGXXg8qNP5wsrbkSRC0fALZtJcbW0duzWUViuiozJHxbVLZIrN75V3NSSJGYB
-	Dw9AmaECDmaiAGfJvC4nOv5DYZC7jVlwkkXmMx6+SfFOg2OjOg5jnE/1IdrYONraIXUXtzeStLj
-	tyHrIyG4VEIbDsS6Iqg/jmujCw5wJjmCmTaTh6q4W0FDMkomdH8iE0BtnaHoofXOz8beKxauYgn
-	eSe4Sm2v3IqVey/rCVXxiSkwhoU4yc2IUhLzY/JAqPxGYgB9FSkDdGfm39PQyOmSSSVExqRLsmh
-	OqNtKMQ7n4lhURe2f979SqjJo5Wpcyb2vUskhRq1DjG2K9Ocqh0KFf3cVq8ylb44SO8BWr/THPN
-	tSGOKC8VXpjQt36yz0t03oWrodKu1Mf2MHDR15RBbS9sci/Tk5O9a5kEKV84W7sYztKExyoQ==
-X-Google-Smtp-Source: AGHT+IFyiRTaSwsEIiGfhDM9ts2EzTtk0FkdwXLTAfK+ZuWckcwevLUv7QKNU/w7vv2dJ6g6w2mcFg==
-X-Received: by 2002:a05:6512:2c03:b0:585:229a:22 with SMTP id 2adb3069b0e04-5906d8b20e0mr4959112e87.3.1760554639869;
-        Wed, 15 Oct 2025 11:57:19 -0700 (PDT)
-Received: from [192.168.1.100] (91-159-24-186.elisa-laajakaista.fi. [91.159.24.186])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-590881f8c85sm6423982e87.32.2025.10.15.11.57.17
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 15 Oct 2025 11:57:18 -0700 (PDT)
-Message-ID: <90cb8d1b-ebed-434e-9efd-9357e10a6ee0@linaro.org>
-Date: Wed, 15 Oct 2025 21:57:17 +0300
+	s=arc-20240116; t=1760555379; c=relaxed/simple;
+	bh=WwwXtbAybha3ZLb6O/IGC6PpjE2KyRiKGEVICuAujsc=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=gpf5imTZ6srmuUWjCmx3b+6WSj9iCaFeOAgVk29qlmG9Lpc9DTdBM0FMdSkrSTNMbXsIsk22pw4gdPzbHX/Aw1CFmQXXJWIH01lOinU+rgAuoneu6R5Sp24ZrvuJvtigizsoMccRI4G6ylmGOmSVgeb/GiTqJjvQrYz/90UaO6I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Mb9w4PZa; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F02FAC4CEF8;
+	Wed, 15 Oct 2025 19:09:35 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1760555379;
+	bh=WwwXtbAybha3ZLb6O/IGC6PpjE2KyRiKGEVICuAujsc=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=Mb9w4PZamSvMwkj5Q/1eUT1San+uCbMMNeL6JIjr4yT4V9EI4C0j1UjLBWKn+7HvL
+	 ZAS841iK6XpqRVu62Enyamca4tOQE/2gtb8vkrkj6xJDDMUv7BeZequoGSkkKB4ZsI
+	 Arb4TTjQFhS28CSRqSkmS6UGA6xZFtjhtcqFEQ/p6rIGtU9jmrIAR/3aafQcuicdhY
+	 VV6BYOydBosXSCizIFmfOlPhb+cJtaD8OYgZnwIsmfhz3Rwok+sr+kGlX39VebwENQ
+	 6teBLyPhs17sB5gDQ/j4PRWXFsfDi8BIYE/GAEDyFUJlQMBHp8yuFD0UHcV0zyF+MK
+	 oPGncWYI28v4w==
+Date: Wed, 15 Oct 2025 20:09:32 +0100
+From: Mark Brown <broonie@kernel.org>
+To: Kamal Wadhwa <kamal.wadhwa@oss.qualcomm.com>
+Cc: Liam Girdwood <lgirdwood@gmail.com>, Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	linux-arm-msm@vger.kernel.org,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
+	Jishnu Prakash <jishnu.prakash@oss.qualcomm.com>
+Subject: Re: [PATCH v3 0/4] rpmh-regulators: Update rpmh-regulator driver and
+ dt-bindings for Glymur
+Message-ID: <022305e8-a2ea-4013-9ee0-41e83e5f41bc@sirena.org.uk>
+References: <20250918-glymur-rpmh-regulator-driver-v3-0-184c09678be3@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 2/3] arm64: dts: qcom: qcs8300: Add CCI definitions
-Content-Language: ru-RU
-To: Vikram Sharma <quic_vikramsa@quicinc.com>, bryan.odonoghue@linaro.org,
- mchehab@kernel.org, robh@kernel.org, krzk+dt@kernel.org,
- conor+dt@kernel.org, andersson@kernel.org, konradybcio@kernel.org,
- hverkuil-cisco@xs4all.nl, cros-qcom-dts-watchers@chromium.org,
- catalin.marinas@arm.com, will@kernel.org
-Cc: linux-arm-kernel@lists.infradead.org, quic_svankada@quicinc.com,
- quic_nihalkum@quicinc.com, linux-media@vger.kernel.org,
- linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, Ravi Shankar <quic_rshankar@quicinc.com>,
- Vishal Verma <quic_vishverm@quicinc.com>
-References: <20251015131303.2797800-1-quic_vikramsa@quicinc.com>
- <20251015131303.2797800-3-quic_vikramsa@quicinc.com>
-From: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
-In-Reply-To: <20251015131303.2797800-3-quic_vikramsa@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="ASrrcNOedjRtYOLD"
+Content-Disposition: inline
+In-Reply-To: <20250918-glymur-rpmh-regulator-driver-v3-0-184c09678be3@oss.qualcomm.com>
+X-Cookie: Long life is in store for you.
 
-On 10/15/25 16:13, Vikram Sharma wrote:
-> From: Nihal Kumar Gupta <quic_nihalkum@quicinc.com>
-> 
-> Qualcomm QCS8300 SoC contains 3 Camera Control Interface (CCI). Compared
-> to lemans, the key difference is in SDA/SCL GPIO assignments and number
-> of CCIs.
-> 
-> Co-developed-by: Ravi Shankar <quic_rshankar@quicinc.com>
-> Signed-off-by: Ravi Shankar <quic_rshankar@quicinc.com>
-> Co-developed-by: Vishal Verma <quic_vishverm@quicinc.com>
-> Signed-off-by: Vishal Verma <quic_vishverm@quicinc.com>
-> Co-developed-by: Suresh Vankadara <quic_svankada@quicinc.com>
-> Signed-off-by: Suresh Vankadara <quic_svankada@quicinc.com>
-> Signed-off-by: Nihal Kumar Gupta <quic_nihalkum@quicinc.com>
-> Signed-off-by: Vikram Sharma <quic_vikramsa@quicinc.com>
-> ---
->   arch/arm64/boot/dts/qcom/qcs8300.dtsi | 303 ++++++++++++++++++++++++++
->   1 file changed, 303 insertions(+)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/qcs8300.dtsi b/arch/arm64/boot/dts/qcom/qcs8300.dtsi
-> index 75fafbcea845..8f2b5f40ce14 100644
-> --- a/arch/arm64/boot/dts/qcom/qcs8300.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/qcs8300.dtsi
-> @@ -4769,6 +4769,117 @@ videocc: clock-controller@abf0000 {
->   			#power-domain-cells = <1>;
->   		};
->   
-> +		cci0: cci@ac13000 {
-> +			compatible = "qcom,qcs8300-cci", "qcom,msm8996-cci";
-> +			reg = <0x0 0x0ac13000 0x0 0x1000>;
-> +
-> +			interrupts = <GIC_SPI 460 IRQ_TYPE_EDGE_RISING>;
-> +
-> +			clocks = <&camcc CAM_CC_CPAS_AHB_CLK>,
-> +				 <&camcc CAM_CC_CCI_0_CLK>;
-> +			clock-names = "cpas_ahb",
-> +				      "cci";
-> +
-> +			power-domains = <&camcc CAM_CC_TITAN_TOP_GDSC>;
-> +
-> +			pinctrl-0 = <&cci0_i2c0_default &cci0_i2c1_default>;
-> +			pinctrl-1 = <&cci0_i2c0_sleep &cci0_i2c1_sleep>;
-> +			pinctrl-names = "default", "sleep";
-> +
-> +			#address-cells = <1>;
-> +			#size-cells = <0>;
-> +
-> +			status = "disabled";
 
-Please remove empty lines between individual properties above and in two
-other introduced device tree nodes.
+--ASrrcNOedjRtYOLD
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-> +
-> +			cci0_i2c0: i2c-bus@0 {
-> +				reg = <0>;
-> +				clock-frequency = <1000000>;
-> +				#address-cells = <1>;
-> +				#size-cells = <0>;
-> +			};
-> +
-> +			cci0_i2c1: i2c-bus@1 {
-> +				reg = <1>;
-> +				clock-frequency = <1000000>;
-> +				#address-cells = <1>;
-> +				#size-cells = <0>;
-> +			};
-> +		};
-> +
-> +		cci1: cci@ac14000 {
-> +			compatible = "qcom,qcs8300-cci", "qcom,msm8996-cci";
-> +			reg = <0x0 0x0ac14000 0x0 0x1000>;
-> +
-> +			interrupts = <GIC_SPI 271 IRQ_TYPE_EDGE_RISING>;
-> +
-> +			clocks = <&camcc CAM_CC_CPAS_AHB_CLK>,
-> +				 <&camcc CAM_CC_CCI_1_CLK>;
-> +			clock-names = "cpas_ahb",
-> +				      "cci";
-> +
-> +			power-domains = <&camcc CAM_CC_TITAN_TOP_GDSC>;
-> +
-> +			pinctrl-0 = <&cci1_i2c0_default &cci1_i2c1_default>;
-> +			pinctrl-1 = <&cci1_i2c0_sleep &cci1_i2c1_sleep>;
-> +			pinctrl-names = "default", "sleep";
-> +
-> +			#address-cells = <1>;
-> +			#size-cells = <0>;
-> +
-> +			status = "disabled";
-> +
-> +			cci1_i2c0: i2c-bus@0 {
-> +				reg = <0>;
-> +				clock-frequency = <1000000>;
-> +				#address-cells = <1>;
-> +				#size-cells = <0>;
-> +			};
-> +
-> +			cci1_i2c1: i2c-bus@1 {
-> +				reg = <1>;
-> +				clock-frequency = <1000000>;
-> +				#address-cells = <1>;
-> +				#size-cells = <0>;
-> +			};
-> +		};
-> +
-> +		cci2: cci@ac15000 {
-> +			compatible = "qcom,qcs8300-cci", "qcom,msm8996-cci";
-> +			reg = <0x0 0x0ac15000 0x0 0x1000>;
-> +
-> +			interrupts = <GIC_SPI 651 IRQ_TYPE_EDGE_RISING>;
-> +
-> +			clocks = <&camcc CAM_CC_CPAS_AHB_CLK>,
-> +				 <&camcc CAM_CC_CCI_2_CLK>;
-> +			clock-names = "cpas_ahb",
-> +				      "cci";
-> +
-> +			power-domains = <&camcc CAM_CC_TITAN_TOP_GDSC>;
-> +
-> +			pinctrl-0 = <&cci2_i2c0_default &cci2_i2c1_default>;
-> +			pinctrl-1 = <&cci2_i2c0_sleep &cci2_i2c1_sleep>;
-> +			pinctrl-names = "default", "sleep";
-> +
-> +			#address-cells = <1>;
-> +			#size-cells = <0>;
-> +
-> +			status = "disabled";
-> +
-> +			cci2_i2c0: i2c-bus@0 {
-> +				reg = <0>;
-> +				clock-frequency = <1000000>;
-> +				#address-cells = <1>;
-> +				#size-cells = <0>;
-> +			};
-> +
-> +			cci2_i2c1: i2c-bus@1 {
-> +				reg = <1>;
-> +				clock-frequency = <1000000>;
-> +				#address-cells = <1>;
-> +				#size-cells = <0>;
-> +			};
-> +		};
-> +
->   		camss: isp@ac78000 {
->   			compatible = "qcom,qcs8300-camss";
->   
-> @@ -5063,6 +5174,198 @@ tlmm: pinctrl@f100000 {
->   			#interrupt-cells = <2>;
->   			wakeup-parent = <&pdc>;
->   
-> +			cci0_i2c0_default: cci0-0-default-state {
+On Thu, Sep 18, 2025 at 02:57:00PM +0530, Kamal Wadhwa wrote:
+> This series contains patches to update rpmh-regulator driver and
+> dt-bindings for supporting the PMIC voltage regulators present on the
+> boards with Qualcomm's next gen compute SoC - Glymur.
 
-I'd suggest to rename cciX_i2cY_* to cciX_Y_* to shorten the labels,
-also it will match device tree nodes. Here "i2c" suffix brings no
-valuable information.
+Please submit patches using subject lines reflecting the style for the
+subsystem, this makes it easier for people to identify relevant patches.
+Look at what existing commits in the area you're changing are doing and
+make sure your subject lines visually resemble what they're doing.
+There's no need to resubmit to fix this alone.
 
-Please reference to lemans.dtsi and sm8550.dtsi examples.
+--ASrrcNOedjRtYOLD
+Content-Type: application/pgp-signature; name="signature.asc"
 
-> +				sda-pins {
-> +					pins = "gpio57";
-> +					function = "cci_i2c_sda";
-> +					drive-strength = <2>;
-> +					bias-pull-up = <2200>;
-> +				};
-> +
-> +				scl-pins {
-> +					pins = "gpio58";
-> +					function = "cci_i2c_scl";
-> +					drive-strength = <2>;
-> +					bias-pull-up = <2200>;
-> +				};
-> +			};
-> +
-> +			cci0_i2c0_sleep: cci0-0-sleep-state {
-> +				sda-pins {
-> +					pins = "gpio57";
-> +					function = "cci_i2c_sda";
-> +					drive-strength = <2>;
-> +					bias-pull-down;
-> +				};
-> +
-> +				scl-pins {
-> +					pins = "gpio58";
-> +					function = "cci_i2c_scl";
-> +					drive-strength = <2>;
-> +					bias-pull-down;
-> +				};
-> +			};
-> +
-> +			cci0_i2c1_default: cci0-1-default-state {
-> +				sda-pins {
-> +					pins = "gpio29";
-> +					function = "cci_i2c_sda";
-> +					drive-strength = <2>;
-> +					bias-pull-up = <2200>;
-> +				};
-> +
-> +				scl-pins {
-> +					pins = "gpio30";
-> +					function = "cci_i2c_scl";
-> +					drive-strength = <2>;
-> +					bias-pull-up = <2200>;
-> +				};
-> +			};
-> +
-> +			cci0_i2c1_sleep: cci0-1-sleep-state {
-> +				sda-pins {
-> +					pins = "gpio29";
-> +					function = "cci_i2c_sda";
-> +					drive-strength = <2>;
-> +					bias-pull-down;
-> +				};
-> +
-> +				scl-pins {
-> +					pins = "gpio30";
-> +					function = "cci_i2c_scl";
-> +					drive-strength = <2>;
-> +					bias-pull-down;
-> +				};
-> +			};
-> +
-> +			cci1_i2c0_default: cci1-0-default-state {
-> +				sda-pins {
-> +					pins = "gpio59";
-> +					function = "cci_i2c_sda";
-> +					drive-strength = <2>;
-> +					bias-pull-up = <2200>;
-> +				};
-> +
-> +				scl-pins {
-> +					pins = "gpio60";
-> +					function = "cci_i2c_scl";
-> +					drive-strength = <2>;
-> +					bias-pull-up = <2200>;
-> +				};
-> +			};
-> +
-> +			cci1_i2c0_sleep: cci1-0-sleep-state {
-> +				sda-pins {
-> +					pins = "gpio59";
-> +					function = "cci_i2c_sda";
-> +					drive-strength = <2>;
-> +					bias-pull-down;
-> +				};
-> +
-> +				scl-pins {
-> +					pins = "gpio60";
-> +					function = "cci_i2c_scl";
-> +					drive-strength = <2>;
-> +					bias-pull-down;
-> +				};
-> +			};
-> +
-> +			cci1_i2c1_default: cci1-1-default-state {
-> +				sda-pins {
-> +					pins = "gpio31";
-> +					function = "cci_i2c_sda";
-> +					drive-strength = <2>;
-> +					bias-pull-up = <2200>;
-> +				};
-> +
-> +				scl-pins {
-> +					pins = "gpio32";
-> +					function = "cci_i2c_scl";
-> +					drive-strength = <2>;
-> +					bias-pull-up = <2200>;
-> +				};
-> +			};
-> +
-> +			cci1_i2c1_sleep: cci1-1-sleep-state {
-> +				sda-pins {
-> +					pins = "gpio31";
-> +					function = "cci_i2c_sda";
-> +					drive-strength = <2>;
-> +					bias-pull-down;
-> +				};
-> +
-> +				scl-pins {
-> +					pins = "gpio32";
-> +					function = "cci_i2c_scl";
-> +					drive-strength = <2>;
-> +					bias-pull-down;
-> +				};
-> +			};
-> +
-> +			cci2_i2c0_default: cci2-0-default-state {
-> +				sda-pins {
-> +					pins = "gpio61";
-> +					function = "cci_i2c_sda";
-> +					drive-strength = <2>;
-> +					bias-pull-up = <2200>;
-> +				};
-> +
-> +				scl-pins {
-> +					pins = "gpio62";
-> +					function = "cci_i2c_scl";
-> +					drive-strength = <2>;
-> +					bias-pull-up = <2200>;
-> +				};
-> +			};
-> +
-> +			cci2_i2c0_sleep: cci2-0-sleep-state {
-> +				sda-pins {
-> +					pins = "gpio61";
-> +					function = "cci_i2c_sda";
-> +					drive-strength = <2>;
-> +					bias-pull-down;
-> +				};
-> +
-> +				scl-pins {
-> +					pins = "gpio62";
-> +					function = "cci_i2c_scl";
-> +					drive-strength = <2>;
-> +					bias-pull-down;
-> +				};
-> +			};
-> +
-> +			cci2_i2c1_default: cci2-1-default-state {
-> +				sda-pins {
-> +					pins = "gpio54";
-> +					function = "cci_i2c_sda";
-> +					drive-strength = <2>;
-> +					bias-pull-up = <2200>;
-> +				};
-> +
-> +				scl-pins {
-> +					pins = "gpio55";
-> +					function = "cci_i2c_scl";
-> +					drive-strength = <2>;
-> +					bias-pull-up = <2200>;
-> +				};
-> +			};
-> +
-> +			cci2_i2c1_sleep: cci2-1-sleep-state {
-> +				sda-pins {
-> +					pins = "gpio54";
-> +					function = "cci_i2c_sda";
-> +					drive-strength = <2>;
-> +					bias-pull-down;
-> +				};
-> +
-> +				scl-pins {
-> +					pins = "gpio55";
-> +					function = "cci_i2c_scl";
-> +					drive-strength = <2>;
-> +					bias-pull-down;
-> +				};
-> +			};
-> +
->   			hs0_mi2s_active: hs0-mi2s-active-state {
->   				pins = "gpio106", "gpio107", "gpio108", "gpio109";
->   				function = "hs0_mi2s";
+-----BEGIN PGP SIGNATURE-----
 
-Reviewed-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmjv8WwACgkQJNaLcl1U
+h9AARwf+P2aR6rY0tK0PJGHF5nRvv5/IN1Tp/IS6+yqv8I8YqGUbUeoKbZIngyCS
+a131hECghbQXTgxfwlB1R6fltTtSRkGlyDjQJvToxNWKn+S+UWqUfcgnh8dppypu
+t5pGvr0RFRbIEFvgWVkNUy+8H1w4PCCSV4jQQlJMGCeJxrIdLIB0jzcPd1pji6os
+4QBU0zm5/wrciZtkfu5hAJZIw7qFpbIESMcl/hBfAMHjamGSxIUCPbADsbJY1aGY
+ZvUSJjlow7mbUkxaK6kHRv4TUPimRFdZe8Ap06Zfl1YzmZM6vhbbbTlYNItPgVvr
+NDqr5M+8OhEhyv84/sUD//hFrRyo1g==
+=AZ3I
+-----END PGP SIGNATURE-----
 
--- 
-Best wishes,
-Vladimir
+--ASrrcNOedjRtYOLD--
 
