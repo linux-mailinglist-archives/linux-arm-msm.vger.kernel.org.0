@@ -1,123 +1,104 @@
-Return-Path: <linux-arm-msm+bounces-77458-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-77459-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ams.mirrors.kernel.org (ams.mirrors.kernel.org [213.196.21.55])
-	by mail.lfdr.de (Postfix) with ESMTPS id 54575BE0417
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Oct 2025 20:50:51 +0200 (CEST)
+Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [142.0.200.124])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4041FBE0468
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Oct 2025 20:54:04 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ams.mirrors.kernel.org (Postfix) with ESMTPS id F3D8B354AE0
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Oct 2025 18:50:50 +0000 (UTC)
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id A72FB5057E8
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Oct 2025 18:53:37 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 51AD530146E;
-	Wed, 15 Oct 2025 18:50:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9DF3030216B;
+	Wed, 15 Oct 2025 18:52:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="zQGngk2D"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="kwERAraI"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f43.google.com (mail-lf1-f43.google.com [209.85.167.43])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D6BB2D6E72
-	for <linux-arm-msm@vger.kernel.org>; Wed, 15 Oct 2025 18:50:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F6303254A0;
+	Wed, 15 Oct 2025 18:52:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760554246; cv=none; b=jtNEt6+R+WWApbzMrKOG7pSHlk/2TbKhUil6SntMDfDnX3bCVXGZ/tvl6FLyifeLeD5dpXinQnxlXlFCnJHXn8WeIBr8MH3MU41bviPQXUW3+X6tGjpNQON1/LY8G6ni+D8pKWxqQF91+lqC+Y8D16JaPlhzkmNtfcdg+7h6BQE=
+	t=1760554373; cv=none; b=PKNd8D+uflEjXV2qkJT11Ys8o3R505Py4jwKrofQBhptJeIyf3fOrBd7Bmm/dVLl1SEcwAZ4R7FHBkIIHvlnu0UJ0YfNulTCriFjeYuYGMBJE6QYO3fQax9krqAInE+ywEEyYGws0PZjzUZT5kNKDg7s6hDQTqnjoSv1pPD31Qk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760554246; c=relaxed/simple;
-	bh=swdv/wTY0LTvBv/YcthMcjAr/gt2RxtK+9y/lOz8BJQ=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=PAEDh9cCAs5yX9wa/7hSbqHUc5U3Hj7GCazriQL0dKJlICw3CaVduMsuz0+sntzkqX6B+Fj2/AmrjWne222a/0kLLaQbnNyAwhAEGTODc1ehsUvo2K/3CvSvFbGRQ9jJktWCmbAVueVwugRKovXJxRvjXSCDuP438sOt2HwyJeY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=zQGngk2D; arc=none smtp.client-ip=209.85.167.43
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f43.google.com with SMTP id 2adb3069b0e04-591b99cb0c4so475727e87.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Oct 2025 11:50:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1760554243; x=1761159043; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to:subject
-         :user-agent:mime-version:date:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=hukg1h3ozHOZYYKzu8a9q8XV+g6fS+oS92fdsP1ACq0=;
-        b=zQGngk2DmzXh1R9zj8rYdKMA9zBpfYEb4NiHomF4okkjw2x3VAZwzsoyIKHCaIZMwQ
-         UiqLBK/j5yeu28iAbi6dZMZ4FkaaFxNtMSj/+NmEM5+Alt3o75U91N/KaA6IYIJVFeI4
-         1ihD1sRVH5x4oUcGyVPGHh4OuxFnNk6v7Tn+aw/uBuHCOSqDmtZoQse3wYAIEwlzWbDe
-         2RgrvExnBd3CeejXUbzGWlAxKhiTJxMP75h9nLekzpMKKZZ7pgL/DVZMSNe/men5Mncv
-         qoS0P4mcHe6sVvLcmdG5QRTqtUMclmF4Ire4AcSHf0NieCUdS3AM4bALOKbzG7Uiw1bQ
-         tRhA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1760554243; x=1761159043;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to:subject
-         :user-agent:mime-version:date:message-id:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=hukg1h3ozHOZYYKzu8a9q8XV+g6fS+oS92fdsP1ACq0=;
-        b=c/4et4bKnISVm+/nqwvD+MFLesb9ARvndx1IG1i0HVQH11eGpwuE4xGmXOWS/YefM6
-         hbCU75U7l5Q7ff4dphvnGBASfIgh8/R9slTaKaA2MQgBNju5dlYLD3rynT+gkZlBR11W
-         max84j3/2zbHmLPTtVjs3tK/cPm1Aaf0E8ht3zIlvZau73Mzf2i5XvFWGTrfczP/EyOs
-         lThCve4u+dDAjteNRBAnvgmtD4CF7f7JsV9IDNtUJUt8dEYO5er/r9ZSVx4onauRI8gd
-         Ki6l4ht7pl3l33NMPKFxzaRv3RwZ7Fq+YrGhms0/hjvuFvUEaGG2WU952faV0qaNUThD
-         dzQA==
-X-Forwarded-Encrypted: i=1; AJvYcCUoKo8FSjtW3N8138qSaDm2GzJz4eCg7PUy0jP3NpQKY5oW/uSsGWtTZqLWxuVsOt3KcRpTsv/UfubDPdD9@vger.kernel.org
-X-Gm-Message-State: AOJu0YzDhrlWf+7Qn5H/mt9U/7vRFRXWjNmdgEA/MTl6PhpVZsB/WL7n
-	wzrdh9paV0EVC1LFstYr19abvi/6jHACgC222y8B6wcnlH3nhk/NRKSbFedBHSR0Msk=
-X-Gm-Gg: ASbGnct6M16BAWD9vy08ZwlFGi7BX4SoC4wAv//nPojX7vqHvE9w08VoJLvtaP4+GZd
-	6vasjhtRPqt0MRfJiC+xPPQVYMUuPyiDbyzc7NtlMXJS2veakfttZuD6AJwRioOpIW/HDHfJFXq
-	wDV6MIm25RGQc53xkI4WZAPwQnejOVBeGU6OAy2B1KjtEfoyixILfk8hjD++3ZNUHEejxhhrdLJ
-	EbW/qXe5dCZ/O2KO4z78mwv+o0DLscazADrcNcja+5gqGeXJQoh+CewracKZOCkOh7AixyWm6Ht
-	UYQKDTPWmcHNVhME3Bwyr0Iiae31SeQZlglWa+NAX522RiCXKPT8wDsrOD101KxPS4wzN4Ny4ZG
-	bNnxD2KZwvRhNFg6Sm692FqG87oHU3htk40y96xdXw+N+203jGsFEYpmArrIOxOBctxLCU/naDz
-	pLox1Wv7av9wSzWYEUuZ7SO1l5faTb+FrT4DY=
-X-Google-Smtp-Source: AGHT+IG+0JkONJK7diPS9LC4IMA7PvSE07P+bqP1KzE0xk93DSkWmTXn5VqwKTon3a4GXj+CVo91gA==
-X-Received: by 2002:a05:6512:3b14:b0:581:9295:1b10 with SMTP id 2adb3069b0e04-591c9017360mr816502e87.5.1760554242641;
-        Wed, 15 Oct 2025 11:50:42 -0700 (PDT)
-Received: from [192.168.1.100] (91-159-24-186.elisa-laajakaista.fi. [91.159.24.186])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-590881e4e09sm6425776e87.23.2025.10.15.11.50.41
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 15 Oct 2025 11:50:42 -0700 (PDT)
-Message-ID: <365d2e55-8ed8-432a-964c-b57601fd2385@linaro.org>
-Date: Wed, 15 Oct 2025 21:50:41 +0300
+	s=arc-20240116; t=1760554373; c=relaxed/simple;
+	bh=i0+X3nOUGvzMFvFCisMg5FLUBu9o5WalxuWHZrsg4wI=;
+	h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date:
+	 MIME-Version:Content-Type; b=Zl+Os1bRLh9SAhDA54arEjda5V4M+RCGND+vjEZmj+9YaZ3il6INWG3oIVIA7Zzi0QcMpf59Yr4jSsprAhPsral6I2LFh8nJq6onw9KDoa2V7i+mNXjh/IVwDsgXK3PObvGuqK2FkgTNzEnjLY9VZywfWsHE8pZqTKo9IWpsaLQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=kwERAraI; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC437C4CEF8;
+	Wed, 15 Oct 2025 18:52:50 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1760554372;
+	bh=i0+X3nOUGvzMFvFCisMg5FLUBu9o5WalxuWHZrsg4wI=;
+	h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
+	b=kwERAraIux4js8B2HUR/dqYvM5KEdx531bVcPsL9Q3t35UC8Km8GgpBCxR5ZcamhZ
+	 +dacXCfwYHGolouQqF3bAJJt5xpILDUnJaYFptMg7wfq/QxmcqdgfxO4R6+ziF3Gcw
+	 V7Gr8vT6Pgn6tU3ZrYpzkHStZhYorZ66k7EJiTEgVg7VtRpRrN5oBHtlWcT796N8L6
+	 3FC8vRKL7/ZkdlreEw5g7jiRckhRHe4BzfWjdz+N2LLqunv1CsrRf7GgevFY6Dl2rR
+	 3meFIU4YOW8TcPXHT0lRNBUJ4QwEOwC2XTMoiBEUaWKrCSGIVq4o0OEdzL4Q1GFcYO
+	 Ypb/AsAVoIxNA==
+From: Mark Brown <broonie@kernel.org>
+To: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
+Cc: srini@kernel.org, perex@perex.cz, tiwai@suse.com, 
+ dmitry.baryshkov@oss.qualcomm.com, linux-sound@vger.kernel.org, 
+ linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, 
+ Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+In-Reply-To: <20251008145801.3479-1-srinivas.kandagatla@oss.qualcomm.com>
+References: <20251008145801.3479-1-srinivas.kandagatla@oss.qualcomm.com>
+Subject: Re: [PATCH] ASoC: codecs: wcd938x-sdw: remove redundant runtime pm
+ calls
+Message-Id: <176055437050.231901.9790775935564885133.b4-ty@kernel.org>
+Date: Wed, 15 Oct 2025 19:52:50 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 1/3] dt-bindings: i2c: qcom-cci: Document qcs8300
- compatible
-To: Vikram Sharma <quic_vikramsa@quicinc.com>, bryan.odonoghue@linaro.org,
- mchehab@kernel.org, robh@kernel.org, krzk+dt@kernel.org,
- conor+dt@kernel.org, andersson@kernel.org, konradybcio@kernel.org,
- hverkuil-cisco@xs4all.nl, cros-qcom-dts-watchers@chromium.org,
- catalin.marinas@arm.com, will@kernel.org
-Cc: linux-arm-kernel@lists.infradead.org, quic_svankada@quicinc.com,
- quic_nihalkum@quicinc.com, linux-media@vger.kernel.org,
- linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org
-References: <20251015131303.2797800-1-quic_vikramsa@quicinc.com>
- <20251015131303.2797800-2-quic_vikramsa@quicinc.com>
-From: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
-In-Reply-To: <20251015131303.2797800-2-quic_vikramsa@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
+X-Mailer: b4 0.15-dev-2a268
 
-On 10/15/25 16:13, Vikram Sharma wrote:
-> From: Nihal Kumar Gupta <quic_nihalkum@quicinc.com>
+On Wed, 08 Oct 2025 15:58:01 +0100, Srinivas Kandagatla wrote:
+> Component bind callbacks already does runtime pm calls, soundwire codec
+> also tries to do the exactly same thing resulting in Unbalanced
+> pm_runtime_enable and disable calls.
 > 
-> The three instances of CCI found on the QCS8300 are functionally the same
-> as on a number of existing Qualcomm SoCs.
+> Remove the redundant calls from wcd938x-sdw driver.
 > 
-> Introduce a new SoC-specific compatible string "qcom,qcs8300-cci" with a
-> common fallback.
 > 
-> Signed-off-by: Nihal Kumar Gupta <quic_nihalkum@quicinc.com>
-> Signed-off-by: Vikram Sharma <quic_vikramsa@quicinc.com>
-> Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-> Acked-by: Rob Herring (Arm) <robh@kernel.org>
+> [...]
 
-Reviewed-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+Applied to
 
--- 
-Best wishes,
-Vladimir
+   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/sound.git for-next
+
+Thanks!
+
+[1/1] ASoC: codecs: wcd938x-sdw: remove redundant runtime pm calls
+      commit: d5cda96d0130effd4255f7c5e720a58760a032a4
+
+All being well this means that it will be integrated into the linux-next
+tree (usually sometime in the next 24 hours) and sent to Linus during
+the next merge window (or sooner if it is a bug fix), however if
+problems are discovered then the patch may be dropped or reverted.
+
+You may get further e-mails resulting from automated or manual testing
+and review of the tree, please engage with people reporting problems and
+send followup patches addressing any issues that are reported if needed.
+
+If any updates are required or you are submitting further changes they
+should be sent as incremental updates against current git, existing
+patches will not be replaced.
+
+Please add any relevant lists and maintainers to the CCs when replying
+to this mail.
+
+Thanks,
+Mark
+
 
