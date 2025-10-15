@@ -1,149 +1,139 @@
-Return-Path: <linux-arm-msm+bounces-77310-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-77311-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4BFC5BDCCF1
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Oct 2025 08:58:43 +0200 (CEST)
+Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [IPv6:2605:f480:58:1:0:1994:3:14])
+	by mail.lfdr.de (Postfix) with ESMTPS id F116DBDCD30
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Oct 2025 09:07:30 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id ED0E84245A4
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Oct 2025 06:58:41 +0000 (UTC)
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id E25B34E89DB
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Oct 2025 07:07:04 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9F63B3126CF;
-	Wed, 15 Oct 2025 06:58:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3C9682C0296;
+	Wed, 15 Oct 2025 07:07:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="sJKXWdA8"
+	dkim=pass (2048-bit key) header.d=arndb.de header.i=@arndb.de header.b="oVKmUxp4";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="GS2h8t8v"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f51.google.com (mail-wr1-f51.google.com [209.85.221.51])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-b3-smtp.messagingengine.com (fhigh-b3-smtp.messagingengine.com [202.12.124.154])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 940C63126C8
-	for <linux-arm-msm@vger.kernel.org>; Wed, 15 Oct 2025 06:58:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70E5029BDBC;
+	Wed, 15 Oct 2025 07:06:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.154
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760511518; cv=none; b=RCUaESaCSxjPZ/wiHVfmgCOxLSrKytYwWlbgEnzA2ZEjRnhEpOpf9pJ97jPastj29q7qeZDCpTK2QC8D/rjtfOUtgdzvJco1S52FAQCewICXvmluLp+YAv0lQ57tkc+bSFnyKJV3ZIFL2kZtFJcs0G6TcJEpka3JXRo39CZ/bWQ=
+	t=1760512022; cv=none; b=pn4IntvKRxIYZuq/xF4HiCveVNvlaA0aHFUIGSrGAGMdNmXAhilZWPDXqlod8zuS0iUzADheQeisAjqBouGOXeX2zxM6fa2Z1zCxz2fxNRakf/fv28cy+PX6sju5Lkai56ZD4vN3iK76LqmjN5mnCkUof9JVO+Piy7/RNRC/REM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760511518; c=relaxed/simple;
-	bh=+Jv5HGJSVBgQqOwu2En1DyoXH708B/JmeMuHSxfKmh4=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=BkotjUkQm6KGWAG02qX6svmNOZS5gN6ctwZRa6rgyj6VnpTtnPq97KJr6nguzyi8RYIVBhrAOpP5WobnmkXheafPNswEtVWQHqS7zgy13+bXyvJNXZQrv6CXXvABuGviUjTPmPoj3vI8iZvicOZoofHMdcGjy5NkIbSwBgKWCWQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=sJKXWdA8; arc=none smtp.client-ip=209.85.221.51
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wr1-f51.google.com with SMTP id ffacd0b85a97d-3f2cf786abeso5264697f8f.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 14 Oct 2025 23:58:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1760511515; x=1761116315; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=GgRnhCs3Gb02J6lHdQZQG9KVskN5VfKfIDHxr0XwQeA=;
-        b=sJKXWdA83oHjbort4/YxOtK8eHo/wfCjnzgtbe2GOFURilmzsfGQvZisWTH8a6BCZw
-         fHVFkxwoS+6OfjTTl+U5JvHUGocxdvV/gGG3MpoMtC/x0y8sIOQFDXHIOPfMc+Jbx0GZ
-         y3tBCA1uxWn5Yhi1XDsQZx9ETbbZaB8oXdbMqC+pn1L7qD2GF2SYCavKdedOOIKg6Nmm
-         ASlKiTcwvxBZ/cb+2jS1ufwnbMiBOeLnt6B6IpRqui39unnGrXjS0UZXKg185Y7S2JbO
-         n0pefa253hIhwS7XQ+DMVkjXd3OVjZB84ykz9CpHSKD9zOJo3k1LUG5uKAjQ2kvynf/Q
-         wjgw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1760511515; x=1761116315;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=GgRnhCs3Gb02J6lHdQZQG9KVskN5VfKfIDHxr0XwQeA=;
-        b=M/41A3I7nS6cJpx+lEYvzFg4hsV5PpHd8C/FYMTp6YY3zMGA7da7XysWOLRcxObbLA
-         26SpsXfu0/DdW+aMhTkIRKiM98TIeoarAHYVvuUPx/+SkhcugO+RmJF9QZ18YI5hd9tJ
-         OstWsMKRjosop1ganXpc59ThtTm33726n20G15VWlSDub33H/1DEWPlJW9hKEsrQkDP1
-         bjop3xKxvExoJjl6Mtc/3tHVFmEESEjSgEukZVOTw7CFbzlb0JVt9WxCD/u9l8+wvmjb
-         VgYxd5QJl7OfHABwZVoQucivvAUdEeB68+zHpPrIxfDf9xywSw1PVdoMYmt0OSoW+mPU
-         Y8+Q==
-X-Forwarded-Encrypted: i=1; AJvYcCU7nlxwtvwKT4/U8b54qqj1OPdkDA0BActzZZ4clOyz8M4cZ1hADcbBNPsksBKx9sc/Fu87ee8QstKVyuIx@vger.kernel.org
-X-Gm-Message-State: AOJu0YxSsy+YSpB/ZN2zLbM25ACuEBGBwtTxop/DzafJjjdyU/cl/s82
-	P510Xlm0w5OYJPID9GWq8ESlKGjic83KrPk6x5GRP6BMqVouDzwzqT5vtO3tXAA0V8Y=
-X-Gm-Gg: ASbGncvTv4TeHJzu25iR5oJz8aWiT0D7e9G6jBb5G/GjJpnVThSZ17LFQs9ifehioqh
-	16Z9gM9eRiaUqLAX1Gycoq0zDMVzq+1h22eGkn4kB93MVeStCAY5Aqn8BwfQ4WIxj0sZyCXRKM8
-	DwzZ0zN6K6cIMpYN1/xHWT8nXJvPWj+Ad1tMkd90W6Y4S3Cnw5s3dN2l+cXltklUPvcLZM49//K
-	6btGiUZC+Gcms/FA4+AisH6jIWVOPbRH6oTE1SEIQ3Qp9JV1WFX+cCpOVUzOuDp5uSuLA1MsTch
-	1vDIFPmzPF4HIId0GPanZ2tIU/YqiNjRHE9hfaFVHpEWzatuTvNTcNTu8tQc3Hp5uWjtcYhsK6F
-	BKhu38VXbDt7yqt7ISeoZ/wVkNDgr1oTeEjV0Rjua6Zbw2vpoCa+2
-X-Google-Smtp-Source: AGHT+IEllritvV6gUtVnvU1/0n+3EqQhpY1ZhJDfrcQqre3L8Vnk9RNk1LBszLebiaD5fS4LgmqBcw==
-X-Received: by 2002:a05:6000:603:b0:401:5ad1:682 with SMTP id ffacd0b85a97d-4266e7bf04fmr18097453f8f.14.1760511514704;
-        Tue, 14 Oct 2025 23:58:34 -0700 (PDT)
-Received: from linaro.org ([86.121.7.169])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-46fab656554sm169458625e9.11.2025.10.14.23.58.31
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 14 Oct 2025 23:58:33 -0700 (PDT)
-Date: Wed, 15 Oct 2025 09:58:31 +0300
-From: Abel Vesa <abel.vesa@linaro.org>
-To: Qiang Yu <qiang.yu@oss.qualcomm.com>
-Cc: Krzysztof Kozlowski <krzk@kernel.org>, 
-	Wenbin Yao <wenbin.yao@oss.qualcomm.com>, Vinod Koul <vkoul@kernel.org>, 
-	Kishon Vijay Abraham I <kishon@kernel.org>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Lorenzo Pieralisi <lpieralisi@kernel.org>, Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kwilczynski@kernel.org>, 
-	Manivannan Sadhasivam <mani@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>, 
-	Bjorn Andersson <andersson@kernel.org>, linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org, 
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, linux-pci@vger.kernel.org, 
-	konrad.dybcio@oss.qualcomm.com, Prudhvi Yarlagadda <quic_pyarlaga@quicinc.com>
-Subject: Re: [PATCH v4 2/4] dt-bindings: PCI: qcom: Document the Glymur PCIe
- Controller
-Message-ID: <w4kphey3icpiln2sd5ucmxgo7yp72twwtnloi5z7a3r3a63fri@fbebffeibb7p>
-References: <20250903-glymur_pcie5-v4-0-c187c2d9d3bd@oss.qualcomm.com>
- <20250903-glymur_pcie5-v4-2-c187c2d9d3bd@oss.qualcomm.com>
- <w2r4yh2mgdjytteawyyh6h3kyxy36bnbfbfw4wir7jju7grldx@rypy6qjjy3a3>
- <7dadc4bb-43a1-4d53-bd6a-68ff76f06555@kernel.org>
- <aO797ZyWIrm0jx2y@hu-qianyu-lv.qualcomm.com>
+	s=arc-20240116; t=1760512022; c=relaxed/simple;
+	bh=bK4clQRkMh97itDqxQEXotJ97EdHRTkSSeuEySEb7iM=;
+	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
+	 Subject:Content-Type; b=YE+06Hev3WSfoMowf12oU2OfOmHEQ4vhIg5nhHcWa+U8CJK4q3s39k4/XwNZXm2B9e12FCI/haaPYHWREEq0z2AaBnUXtKCz3NzGLaEe+TkRbuePdnssB+cMq3bbTUVQQ6GyJtFlt//xWv9LJYw/tOY0o7egoTheKXxWKvZyYOQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arndb.de; spf=pass smtp.mailfrom=arndb.de; dkim=pass (2048-bit key) header.d=arndb.de header.i=@arndb.de header.b=oVKmUxp4; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=GS2h8t8v; arc=none smtp.client-ip=202.12.124.154
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arndb.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arndb.de
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 3976B7A0199;
+	Wed, 15 Oct 2025 03:06:58 -0400 (EDT)
+Received: from phl-imap-02 ([10.202.2.81])
+  by phl-compute-05.internal (MEProxy); Wed, 15 Oct 2025 03:06:58 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=arndb.de; h=cc
+	:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1760512018;
+	 x=1760598418; bh=ihTX14CCnGZh2yCohCI2HJ86LjAi76UHdq/41TZfvYQ=; b=
+	oVKmUxp4m/sW/KDei9klcN0VCiSvhu+zuPESVJg+vRInkCiudaQL2mEBvZVR8xKO
+	ZC/QXJzIZNH+XImb0D1QbHxWEHOlrVEZlwDfDUePx+1ll7/Yz7Lk1LgFaQA2udAg
+	bIU9pTO2RDbYIb0deMgR+Ni61DaCLZd6gIJwR4dYxFJjCfrX5+V6oGeU2eSFL0J0
+	5zJ7ICSFoh+STgHWuHwOr1bgBAlX0SkKgbMq/f4V8ZNFRPDBeWmylvnsjN28qAyL
+	HF03NeW02zNXAryFtEFu4Kfxxbo81ov6yPKVSieCi6uGyhMa4N0Muwkzm41YmJrg
+	M6M96Wi19r+H9CHlHGRiww==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1760512018; x=
+	1760598418; bh=ihTX14CCnGZh2yCohCI2HJ86LjAi76UHdq/41TZfvYQ=; b=G
+	S2h8t8vhkqb0qKYX1mJA2REBNk1c+upesEOyZiLAbtuSTAsRrN8Q3jwnHa8nzxVH
+	jONvVoGdH0b4rK6Q/RoYV0xt3JaV9wI2DFoZuK0naZp3fzgvJut4yu60gvutCpvk
+	P7OMCR2cCVZEwTT/ejwOCy9qB9jUYpxJeXBFtzAy6wOhhzYw68drTMcjQByqmKP5
+	5R2aivdTkSA5RIL/pXvQhEQKQEk5nsJRan0ejaHTjJXyH+wMQ5u5FsVDB5rEeXtN
+	NHkZccpv8Ac/TupkETuPkCTuKVOQQqnfp9h8EQhJG7W9avbuhlzpCW/rfPVgVDAj
+	hb+l5BA7qytaCUbc1aPMw==
+X-ME-Sender: <xms:EUjvaLPrwtcFXyuHi8d_N4IMgFnkTvMtNBNGr7dXHWqcFRV3b1t5ag>
+    <xme:EUjvaAwBVFw1Kg8ex26yNrxNa07SNnTOgyQdPGetZLWvZZgibZXgq6tWZHs_bvaq0
+    CF_AQEfo3SaXqTuPWa_Vab2NC5aIRoesfhOs3dc1f8LHaZPjhibE6MQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdduvddvjeejucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhepofggfffhvfevkfgjfhfutgfgsehtjeertdertddtnecuhfhrohhmpedftehrnhgu
+    uceuvghrghhmrghnnhdfuceorghrnhgusegrrhhnuggsrdguvgeqnecuggftrfgrthhtvg
+    hrnhephfdthfdvtdefhedukeetgefggffhjeeggeetfefggfevudegudevledvkefhvdei
+    necuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomheprghrnh
+    gusegrrhhnuggsrdguvgdpnhgspghrtghpthhtohepudegpdhmohguvgepshhmthhpohhu
+    thdprhgtphhtthhopehsrhhinhhisehkvghrnhgvlhdrohhrghdprhgtphhtthhopehgrh
+    gvghhkhheslhhinhhugihfohhunhgurghtihhonhdrohhrghdprhgtphhtthhopegurhhi
+    qdguvghvvghlsehlihhsthhsrdhfrhgvvgguvghskhhtohhprdhorhhgpdhrtghpthhtoh
+    eprghiqhhunhdrhihusehoshhsrdhquhgrlhgtohhmmhdrtghomhdprhgtphhtthhopegv
+    khgrnhhshhdrghhuphhtrgesohhsshdrqhhurghltghomhhmrdgtohhmpdhrtghpthhtoh
+    epjhhinhhghihirdifrghnghesohhsshdrqhhurghltghomhhmrdgtohhmpdhrtghpthht
+    ohepkhhumhgrrhhirdhprghllhgrvhhisehoshhsrdhquhgrlhgtohhmmhdrtghomhdprh
+    gtphhtthhopegrmhgrhhgvshhhsehqthhirdhquhgrlhgtohhmmhdrtghomhdprhgtphht
+    thhopehkphgrlhhlrghvihesqhhtihdrqhhurghltghomhhmrdgtohhm
+X-ME-Proxy: <xmx:EUjvaMSwEu2JmVjqg3D5_DHXJHB-iCalyE1Ylmnbl7m384Y_LYELyA>
+    <xmx:EUjvaDKn23nYoPFxbonnlv61eCpxN1FCFHoKX19TjW5CKSIUz8MyUQ>
+    <xmx:EUjvaCVa1IipiWVcxJIz7jd2r_Zd4liCwEtqT1w8usbGSDDDccr0Qg>
+    <xmx:EUjvaPgdvHdWzbCZPIuJzjP-puDkersyfQ4FsnP-EU0YogI48A1c9Q>
+    <xmx:EkjvaFY0SIJ5VuagyDc2ukvZ6oW3vbhm8RGuKp04iPE7yAohf0i7vqFh>
+Feedback-ID: i56a14606:Fastmail
+Received: by mailuser.phl.internal (Postfix, from userid 501)
+	id 9E045700054; Wed, 15 Oct 2025 03:06:57 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <aO797ZyWIrm0jx2y@hu-qianyu-lv.qualcomm.com>
+X-ThreadId: AVCRraWH2f2c
+Date: Wed, 15 Oct 2025 09:06:37 +0200
+From: "Arnd Bergmann" <arnd@arndb.de>
+To: "Kumari Pallavi" <kumari.pallavi@oss.qualcomm.com>,
+ kpallavi@qti.qualcomm.com, "Srinivas Kandagatla" <srini@kernel.org>,
+ "Amol Maheshwari" <amahesh@qti.qualcomm.com>,
+ "Greg Kroah-Hartman" <gregkh@linuxfoundation.org>
+Cc: quic_bkumar@quicinc.com, ekansh.gupta@oss.qualcomm.com,
+ linux-kernel@vger.kernel.org, quic_chennak@quicinc.com,
+ dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+ "Jingyi Wang" <jingyi.wang@oss.qualcomm.com>, aiqun.yu@oss.qualcomm.com,
+ ktadakam@qti.qualcomm.com
+Message-Id: <4dcbf05b-1da6-417e-8d37-2756762fed94@app.fastmail.com>
+In-Reply-To: <20251015045702.3022060-4-kumari.pallavi@oss.qualcomm.com>
+References: <20251015045702.3022060-1-kumari.pallavi@oss.qualcomm.com>
+ <20251015045702.3022060-4-kumari.pallavi@oss.qualcomm.com>
+Subject: Re: [PATCH v2 3/3] misc: fastrpc: Update dma_mask for CDSP support on
+ Kaanapali SoC
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
 
-On 25-10-14 18:50:37, Qiang Yu wrote:
-> On Sun, Oct 12, 2025 at 05:01:45AM +0200, Krzysztof Kozlowski wrote:
-> > On 11/10/2025 14:15, Abel Vesa wrote:
-> > >>  
-> > >>  properties:
-> > >>    compatible:
-> > >> -    const: qcom,pcie-x1e80100
-> > >> +    oneOf:
-> > >> +      - const: qcom,pcie-x1e80100
-> > >> +      - items:
-> > >> +          - enum:
-> > >> +              - qcom,glymur-pcie
-> > >> +          - const: qcom,pcie-x1e80100
-> > >>  
-> > > 
-> > > The cnoc_sf_axi clock is not found on Glymur, at least according to this:
-> > > 
-> > > https://lore.kernel.org/all/20250925-v3_glymur_introduction-v1-19-24b601bbecc0@oss.qualcomm.com/
-> > > 
-> > > And dtbs_check reports the following:
-> > > 
-> > > arch/arm64/boot/dts/qcom/glymur-crd.dtb: pci@1b40000 (qcom,glymur-pcie): clock-names: ['aux', 'cfg', 'bus_master', 'bus_slave', 'slave_q2a', 'noc_aggr'] is too short
-> > >         from schema $id: http://devicetree.org/schemas/pci/qcom,pcie-x1e80100.yaml#
-> > > 
-> > > One more thing:
-> > > 
-> > > arch/arm64/boot/dts/qcom/glymur-crd.dtb: pci@1b40000 (qcom,glymur-pcie): max-link-speed: 5 is not one of [1, 2, 3, 4]
-> > >         from schema $id: http://devicetree.org/schemas/pci/qcom,pcie-x1e80100.yaml#
-> > > 
-> > 
-> > So that's another Glymur patch which wasn't ever tested?
+On Wed, Oct 15, 2025, at 06:57, Kumari Pallavi wrote:
+> diff --git a/drivers/misc/fastrpc.c b/drivers/misc/fastrpc.c
+> index 1a5d620b23f2..f2e5e53e9067 100644
+> --- a/drivers/misc/fastrpc.c
+> +++ b/drivers/misc/fastrpc.c
+> @@ -267,6 +267,7 @@ struct fastrpc_session_ctx {
 > 
-> I tested all of these patch and also did dtb checks. That's how I found
-> cnoc_sf_axi clock is not required. There was a discussion about whether we
-> need to limit max speed to 16 GT and I limited it. I may forget to do dtb
-> checks again after changing it to 32 GT. Let me push another patch to fix
-> this.
+>  struct fastrpc_soc_data {
+>  	u32 sid_pos;
+> +	u32 cdsp_dma_mask;
+>  };
 
-Still, you need to add glymur specific clocks entry then, to fix the schema
-w.r.t cnoc_sf_axi not being needed.
+I see that you add the field here, but it is not initialized
+anywhere. Did the initialization get lost in a rebase?
 
+Also, this is not the mask but the address width,
+so maybe rename it to cdsp_dma_bits?
 
-Best regards,
-Abel
+       Arnd
 
