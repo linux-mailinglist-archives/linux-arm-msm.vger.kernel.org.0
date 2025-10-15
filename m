@@ -1,184 +1,150 @@
-Return-Path: <linux-arm-msm+bounces-77331-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-77332-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 71D3EBDD4E8
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Oct 2025 10:05:34 +0200 (CEST)
+Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [142.0.200.124])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6B7CBBDD5A2
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Oct 2025 10:21:09 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 612A83A054A
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Oct 2025 08:05:30 +0000 (UTC)
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 59B4B4F87EF
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Oct 2025 08:20:53 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C37C226E6F2;
-	Wed, 15 Oct 2025 08:05:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1A331239E7D;
+	Wed, 15 Oct 2025 08:20:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="V8nmNDdJ"
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="JOfLyAd5"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29CE12D061B
-	for <linux-arm-msm@vger.kernel.org>; Wed, 15 Oct 2025 08:05:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34CBD2D3EFC
+	for <linux-arm-msm@vger.kernel.org>; Wed, 15 Oct 2025 08:20:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.129.124
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760515527; cv=none; b=LMwMBTCvMr/zFpZU8wBiGr67TMSl1u0XXYpnOnftBYPpPgs6OuCIjvjTjzcU/+Hvh+s63d0bZhhf6jRW4TqS4DNHrLhlR2SZaSmqcJIrWRM5YcAdF9b+7/AYDqQlPRbn37vg3X+Q03NHQPPLsYmzS5cKEuKA63gKZ98A2jXDFXI=
+	t=1760516452; cv=none; b=JA2zamhEGwEZzxYSRuzh86I5nkip/B71Uft/fquyhiaDhkllTEbLvgsQY/A6kxoCstD9l4OzFJUQGD19LtE+oT4HS2l1S/Q8ic8lMiBWtqLNWYSU46KzGZeX9vLdEs/n1JcgkHUl9SwaAKDVQwUFCaexOLaNgTvn5s7/Z5pIXG0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760515527; c=relaxed/simple;
-	bh=jb5eUCp9yhOc0e25r/IYBA5EJMkAmd76xiXvXoc/QbM=;
+	s=arc-20240116; t=1760516452; c=relaxed/simple;
+	bh=gdBDLPt4sGdp4vau56vsKCZGKHYOD8ibbTQ+im2l4Ho=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=j0NmuSTdAc30ry+loSgTNCHEYn/aYjKKJQ6Zh+TZkHd3C1Z/GqTgDuizduexL5dblTwUI8gQ3xAotIW3FiV4zJNKeEY6RFx9YJ/jl+lbNuLdZ6BEyXKkSBSWCscahGk5bT+wJ7bvBCD5oOkPSV8kCQCr2lYOY1gfR3qoBeHyIf4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=V8nmNDdJ; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 59F2s8kl016143
-	for <linux-arm-msm@vger.kernel.org>; Wed, 15 Oct 2025 08:05:24 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	puE9uyHsdgGpcWDL8ZAvftsmoS6a2wcnSO713QdrpnM=; b=V8nmNDdJ5v6JovWw
-	OPjTCi4E5CP51EdGMPNgZ404Y/QnKBzfPesP+0qx12jNT3VmBYeDL2ZxlOW2Urg5
-	D1j8aO1ssJFIoengDxrhP1+YHDTLl6Err8rs0BmML2ztwREjgfij5DTF71NE6c4+
-	ZsL14FH0o0Ltewf+g1pAjggxJyfB9XqICLfbbyWQz4EgV4lguGXTYMpXqSSWpV6P
-	Oets5Yk+OAjVK7TC4hXOk1C5jQivKZeGcsvKYub/enVhOzhLN46xwRpfDHPhQfxr
-	jYBOX/VOfetkOrZZlgiqEUm9skIJK6MlGt8d60hwIjeN3+BljWmzSRdCfh7kjfMO
-	BsoEYg==
-Received: from mail-pj1-f71.google.com (mail-pj1-f71.google.com [209.85.216.71])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 49qfdkbm36-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Wed, 15 Oct 2025 08:05:24 +0000 (GMT)
-Received: by mail-pj1-f71.google.com with SMTP id 98e67ed59e1d1-33428befc49so960088a91.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Oct 2025 01:05:23 -0700 (PDT)
+	 In-Reply-To:Content-Type; b=Fac+KNh6eGC16FtDDqW4PoM6byl6NpDlQoZYIM8ewfOEP/BUUFCAnpb1IOqIckJw2bEU+gjJ7+iP3GaVI9NNLLMsOsX6nsZXq+v56wrAJcWqQwtnAsrPWuRE4dBDdYLzqDm06OPIR1d0NCOuaEEuLaG3mKvrIZ2+aGHz8mGzaJY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=JOfLyAd5; arc=none smtp.client-ip=170.10.129.124
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1760516449;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=HU62gMpjIaFZFXMtNGaeiDMNZ4Zv7CCqH8t0PFzlFoY=;
+	b=JOfLyAd5BIsXGsx9Oz7hu9boXLH2G0GAoB0pGg+5hMITbciLUmHJ/pwTqK7nKg5VLJ8CVz
+	GN2unXteq7eMZjrO5FgTys+huHsyPcDK8tBtP21nKcN5v33oRKZnVBZKTTZlET/6ooe6Y0
+	9HL6RXykMK5POxtcNcfVVI8x6vvLa1c=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-607-saAbmDLvO0moMk1tpgoiQA-1; Wed, 15 Oct 2025 04:20:47 -0400
+X-MC-Unique: saAbmDLvO0moMk1tpgoiQA-1
+X-Mimecast-MFC-AGG-ID: saAbmDLvO0moMk1tpgoiQA_1760516446
+Received: by mail-wm1-f69.google.com with SMTP id 5b1f17b1804b1-47105bfcf15so1611285e9.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Oct 2025 01:20:47 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1760515522; x=1761120322;
+        d=1e100.net; s=20230601; t=1760516446; x=1761121246;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=puE9uyHsdgGpcWDL8ZAvftsmoS6a2wcnSO713QdrpnM=;
-        b=bpPSBsTUEDuyxNA93t/AN2IO2siyJ37TyP6zFWXZVp0GFDo4UbM+BjDK2wrOBt4FE6
-         vEMm9bN+fdP+jTvOZnyNOSXzdpvFKq0NaJ9S1mzNlExIO3Ls7KBYlOMGClTZzFyL6T05
-         deNnNQh3gCK+VQiC4BcB2f1ccGF02sG3v/tfxRmyIb015c+u4CT5d3bOj7EsPaeFccWp
-         L0HOHRhfurCw3BKc48uTFGrvDc9ZHP+iAnZ1rtkdH9yVyxdOw46F+LYhd7I5c5rm7SMz
-         7cxdrWBF0G5B4E1p0kd4tdRiHQEFbfiEhrrqBeFmPJpIpxXOFaLtujETlqPIRA/m/6bg
-         p4TA==
-X-Forwarded-Encrypted: i=1; AJvYcCVpVAwQIECf4o5RdBly2T80cOIwpTDm5G7CiSA3DDUf+UxslvNxQdWftmiyS9C8+657c+d8cvFEvE79rW50@vger.kernel.org
-X-Gm-Message-State: AOJu0YzQH9Ve4dI4D/0CM3B80QezE0u4DowGdhVmtwixZYWFM4AieGZW
-	icYMPOb7fDCOJ3B8eewHpjylHS6G40F0i8ygaQB5Ig1dE19SS61Q9psUHlP4v3ZXhNNOFMdc+4n
-	7evwTyaClnRBvgvX8kkFrnoEd91S/p52Y52+3/WM6c8lLlEgBE/7sOJ/V2quL0eYglHlH
-X-Gm-Gg: ASbGnctvI7vOtulrmIEHA/ntSdZBb4GdsLR1y89Fst3q/f+gChrPvzgBsClNmhv7Rmq
-	92UTaDdT4OdR16VDKHp3eXvP1dHoz76RV7ZOTKb0En3debiyWjKygmOlF5Lmx1fPiK1VTTsSG3H
-	u1mYf0vsqD2wmKUqhtHyM03Xj/xnGJXOP7HVojCj/7fXntxNYUCUQWkrWYE1NEla56lz7vKzLXC
-	+tvbLJAxHel+j3cJgwCH8J27TvdSYFy0Wq9Q74KW6TYVNONsudjT6BRjeN3zZJr7ZQV7vH6rhtX
-	bHHSkLPS1jR1V23a7d3sJLJy9MDM+1ZwgE2T1fdjVmesqWgKxYrxHUbBc3v9+Plen+kEzR8E
-X-Received: by 2002:a17:90b:384f:b0:330:c522:6138 with SMTP id 98e67ed59e1d1-339eda603a7mr42073140a91.8.1760515521486;
-        Wed, 15 Oct 2025 01:05:21 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHsUhr0x5bG5wc9zkEY1X2zXtv4THXFhdtP8ZdIeEC4XZTagaRI2yDrH/qESOvqeJ4sCfq8Dg==
-X-Received: by 2002:a17:90b:384f:b0:330:c522:6138 with SMTP id 98e67ed59e1d1-339eda603a7mr42073112a91.8.1760515520964;
-        Wed, 15 Oct 2025 01:05:20 -0700 (PDT)
-Received: from [10.0.0.3] ([106.222.229.252])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-33b978607cfsm1474942a91.9.2025.10.15.01.05.18
+        bh=HU62gMpjIaFZFXMtNGaeiDMNZ4Zv7CCqH8t0PFzlFoY=;
+        b=jZrRiMoEjR3gAcvJRZRe26VrLnU9hnOFYbDw/8hOM6WTeReTy44xF6F+MRRY0SKuQJ
+         yIbJbn44l+QB8me0HmT2Fl51EM0p+bUyp4lravpGvkP+Nt9xHaTVuYHO9ARQiiFYUbYH
+         eU3dUy2lEWTEKPzp08jqH4ob7/lCF9bsRp+dZkS4N+5yLzJwpzDT8jeMXIMvjCtbNj7f
+         wqo6VQ1g9NAojYu0iYFoFMbsBhHRaPfSLvx4kGHUHiEcEY59zWAGL7cYFQw5Ol3zCEnP
+         Uu1uu+t8IV04vG05Kr3jwVghJNzoRSf1q/I9aT/IYbaeQXZZbSrmkmwBSWAHNFMfnraE
+         n0PA==
+X-Forwarded-Encrypted: i=1; AJvYcCVcVUZ1YGFJOw3gl+uah4lpvrjAM5sVVY8NY4E3N/NP3ZqW+dDe3hj40wqZw9+pD5NMaIvHRJYXePfEDxHg@vger.kernel.org
+X-Gm-Message-State: AOJu0YxrBBC9zQt/pxH8Z5VhYpe/eYXnTn0NoY13OJ/x1plaKCWx4Oh5
+	tTOWf+ZPAec5PefXnTr7R1ZU5V3ODrYvhBe9I+7V1VZtC4X4he2QyLFGY6BlHpcaNguckYh9AVs
+	wghS9wqVTDYWZoEpFDIpgyKtOud/s6lf0wg4m8Bahq38jzq/mYkX7AywdhlXToTe6GWM=
+X-Gm-Gg: ASbGncvsonF+QBZR1NBCl5sioMzJQ+ISt7bmgNxOjZBwiHuibn++aXc/E1maQM8y9M/
+	nBxdwL7u4XpHMs0fpqvI0k67XKz0wVAkXicSCgz9g3ph3/NKajElHHUBzF2eEjiKHwLOwXWIiPd
+	aljlKw0dk92Zo+e10YRI+USK+ifItByEL7n+xTlQ9pIdO3sXfJy1TRhR9zw4DbrUt24beoG7tJv
+	Ls/9IOhOhL0Mzyh+a95DcPV2LkBTls5uTrmQBbiiy/jNAn7//L87Z/hU0bYTYJscKNeMqNervgl
+	QUp/KfS9lWF5/6RTsU9zyd70IAXOj7WOO6MUaYUtV5bExgbxRm136qV2dG8WBpRCOOI8qr8YePt
+	/ExvX
+X-Received: by 2002:a05:600d:41c4:b0:471:7a:791a with SMTP id 5b1f17b1804b1-471007a7a96mr9522755e9.7.1760516446518;
+        Wed, 15 Oct 2025 01:20:46 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEKG0piBaN7As1r+PD/K5QtUV2Z28HHZlEUD35iBfCWvoyf69YaDGLCaS5NwDRxAhyjJ4bu3g==
+X-Received: by 2002:a05:600d:41c4:b0:471:7a:791a with SMTP id 5b1f17b1804b1-471007a7a96mr9522475e9.7.1760516446097;
+        Wed, 15 Oct 2025 01:20:46 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:c:37e0:8998:e0cf:68cc:1b62? ([2a01:e0a:c:37e0:8998:e0cf:68cc:1b62])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-46fb482b9absm327503135e9.2.2025.10.15.01.20.45
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 15 Oct 2025 01:05:20 -0700 (PDT)
-Message-ID: <9a946ac2-7452-9ca3-e75a-0d9abdc21f56@oss.qualcomm.com>
-Date: Wed, 15 Oct 2025 13:35:16 +0530
+        Wed, 15 Oct 2025 01:20:45 -0700 (PDT)
+Message-ID: <c85d528c-6787-4023-8883-3519b7498627@redhat.com>
+Date: Wed, 15 Oct 2025 10:20:42 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.13.0
-Subject: Re: [PATCH v2 15/25] media: qcom: iris: Drop unneeded
- v4l2_m2m_get_vq() NULL check
-To: Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
-        linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org
-Cc: Nicolas Dufresne <nicolas.dufresne@collabora.com>,
-        Vikash Garodia <vikash.garodia@oss.qualcomm.com>,
-        Abhinav Kumar <abhinav.kumar@linux.dev>,
-        Bryan O'Donoghue <bod@kernel.org>
-References: <20251015075353.22625-1-laurent.pinchart@ideasonboard.com>
- <20251015075353.22625-16-laurent.pinchart@ideasonboard.com>
-Content-Language: en-US
-From: Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>
-In-Reply-To: <20251015075353.22625-16-laurent.pinchart@ideasonboard.com>
-Content-Type: text/plain; charset=UTF-8
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 4/4] drm/client: Do not free client memory by default
+To: Thomas Zimmermann <tzimmermann@suse.de>, javierm@redhat.com,
+ mripard@kernel.org, maarten.lankhorst@linux.intel.com
+Cc: dri-devel@lists.freedesktop.org, linux-arm-kernel@lists.infradead.org,
+ linux-samsung-soc@vger.kernel.org, intel-gfx@lists.freedesktop.org,
+ intel-xe@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+ freedreno@lists.freedesktop.org, amd-gfx@lists.freedesktop.org,
+ linux-tegra@vger.kernel.org
+References: <20251009132006.45834-1-tzimmermann@suse.de>
+ <20251009132006.45834-5-tzimmermann@suse.de>
+Content-Language: en-US, fr
+From: Jocelyn Falempe <jfalempe@redhat.com>
+In-Reply-To: <20251009132006.45834-5-tzimmermann@suse.de>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Proofpoint-ORIG-GUID: 4wAKHtwhkD_1ShOdzyGIwoC8xk6WU162
-X-Authority-Analysis: v=2.4 cv=MrNfKmae c=1 sm=1 tr=0 ts=68ef55c4 cx=c_pps
- a=UNFcQwm+pnOIJct1K4W+Mw==:117 a=L4UNg9I9cQSOxNpRiiGXlA==:17
- a=IkcTkHD0fZMA:10 a=x6icFKpwvdMA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=P1BnusSwAAAA:8 a=KKAkSRfTAAAA:8 a=EUspDBNiAAAA:8 a=uC0m2VHO6b9A_3DEsbIA:9
- a=QEXdDO2ut3YA:10 a=uKXjsCUrEbL0IQVhDsJ9:22 a=D0XLA9XvdZm18NrgonBM:22
- a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-GUID: 4wAKHtwhkD_1ShOdzyGIwoC8xk6WU162
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDExMDAxOCBTYWx0ZWRfXy1Vcn/wlig69
- 1MD9DaIIGcXeaSpX+RlY+k0L7WPHPMItfWc60ldL2GVvkJAlzCictRrWjmoMOQe4Mr73q5OK4LS
- CefnAQc3a9p3D65+8qmLa1inU/28i1xkpUTyDpIHQdd+jHqSKtFv5gGUpLFo8Eb98POJVHfu/6f
- zYH2+B5Nr0zC+hKaE7gaPNkSkTErFdoLyozaZTg/ZknHc6YvyAwdCDRhTCpII8mL+Oncv4Wy1OK
- 5W/P7NZxTV+xZAQA9g1Epms12ju2S8BD1DojB9HOW6brSwkRsntpCkUlM2pE4S/8QdexvtoyCwh
- Ko8N312k3yZNqyI4Kyg6uRotFuMLUgoZpeLEZfWFCkAbP4g0zCqRR80BQ4R6+xW9hWwKEEty02h
- mHdn/h8df8LdiDBebxvtK6rSDUMVtA==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-10-15_04,2025-10-13_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 bulkscore=0 clxscore=1015 adultscore=0 phishscore=0
- impostorscore=0 priorityscore=1501 malwarescore=0 lowpriorityscore=0
- suspectscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2510020000
- definitions=main-2510110018
 
-
-
-On 10/15/2025 1:23 PM, Laurent Pinchart wrote:
-> The v4l2_m2m_get_vq() function never returns NULL. The check may have
-> been intended to catch invalid format types, but that's not needed as
-> the V4L2 core picks the appropriate VIDIOC_S_FMT ioctl handler based on
-> the format type, so the type can't be incorrect. Drop the unneeded
-> return value check.
+On 09/10/2025 15:16, Thomas Zimmermann wrote:
+> Make no assumption on the allocation of the client's memory. For
+> example, amdgpu stores a client within another data structures,
+> where it cannot be freed by itself.
 > 
-> Signed-off-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-> Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+> The correct place to free the client's memory is the client's free
+> callback. All existing clients implement this.
+
+Thanks, it looks good to me.
+
+Reviewed-by: Jocelyn Falempe <jfalempe@redhat.com>
+
+
+> 
+> Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
 > ---
-> Changes since v1:
+>   drivers/gpu/drm/drm_client_event.c | 9 +++++----
+>   1 file changed, 5 insertions(+), 4 deletions(-)
 > 
-> - Address iris_venc_s_fmt()
-> ---
->  drivers/media/platform/qcom/iris/iris_vdec.c | 2 --
->  drivers/media/platform/qcom/iris/iris_venc.c | 2 --
->  2 files changed, 4 deletions(-)
-> 
-> diff --git a/drivers/media/platform/qcom/iris/iris_vdec.c b/drivers/media/platform/qcom/iris/iris_vdec.c
-> index ae13c3e1b426..3926ed513f08 100644
-> --- a/drivers/media/platform/qcom/iris/iris_vdec.c
-> +++ b/drivers/media/platform/qcom/iris/iris_vdec.c
-> @@ -190,8 +190,6 @@ int iris_vdec_s_fmt(struct iris_inst *inst, struct v4l2_format *f)
->  	u32 codec_align;
->  
->  	q = v4l2_m2m_get_vq(inst->m2m_ctx, f->type);
-> -	if (!q)
-> -		return -EINVAL;
->  
->  	if (vb2_is_busy(q))
->  		return -EBUSY;
-> diff --git a/drivers/media/platform/qcom/iris/iris_venc.c b/drivers/media/platform/qcom/iris/iris_venc.c
-> index 099bd5ed4ae0..8a65c9cc6010 100644
-> --- a/drivers/media/platform/qcom/iris/iris_venc.c
-> +++ b/drivers/media/platform/qcom/iris/iris_venc.c
-> @@ -269,8 +269,6 @@ int iris_venc_s_fmt(struct iris_inst *inst, struct v4l2_format *f)
->  	struct vb2_queue *q;
->  
->  	q = v4l2_m2m_get_vq(inst->m2m_ctx, f->type);
-> -	if (!q)
-> -		return -EINVAL;
->  
->  	if (vb2_is_busy(q))
->  		return -EBUSY;
+> diff --git a/drivers/gpu/drm/drm_client_event.c b/drivers/gpu/drm/drm_client_event.c
+> index c83196ad8b59..f36fe0392ce6 100644
+> --- a/drivers/gpu/drm/drm_client_event.c
+> +++ b/drivers/gpu/drm/drm_client_event.c
+> @@ -39,12 +39,13 @@ void drm_client_dev_unregister(struct drm_device *dev)
+>   	mutex_lock(&dev->clientlist_mutex);
+>   	list_for_each_entry_safe(client, tmp, &dev->clientlist, list) {
+>   		list_del(&client->list);
+> -		if (client->funcs && client->funcs->unregister) {
+> +		/*
+> +		 * Unregistering consumes and frees the client.
+> +		 */
+> +		if (client->funcs && client->funcs->unregister)
+>   			client->funcs->unregister(client);
+> -		} else {
+> +		else
+>   			drm_client_release(client);
+> -			kfree(client);
+> -		}
+>   	}
+>   	mutex_unlock(&dev->clientlist_mutex);
+>   }
 
-Reviewed-by: Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>
-
-Thanks,
-Dikshita
 
