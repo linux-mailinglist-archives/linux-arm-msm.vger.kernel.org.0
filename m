@@ -1,156 +1,291 @@
-Return-Path: <linux-arm-msm+bounces-77428-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-77429-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 351E7BDF104
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Oct 2025 16:32:41 +0200 (CEST)
+Received: from ams.mirrors.kernel.org (ams.mirrors.kernel.org [IPv6:2a01:60a::1994:3:14])
+	by mail.lfdr.de (Postfix) with ESMTPS id 60302BDF0E3
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Oct 2025 16:32:24 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id E21A41A20181
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Oct 2025 14:32:32 +0000 (UTC)
+	by ams.mirrors.kernel.org (Postfix) with ESMTPS id DAA65357CC7
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Oct 2025 14:32:23 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 44E3127F727;
-	Wed, 15 Oct 2025 14:31:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6E89A283FDF;
+	Wed, 15 Oct 2025 14:32:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="KjRVU9yK"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="I11VRqau"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f54.google.com (mail-ej1-f54.google.com [209.85.218.54])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABF6522128D
-	for <linux-arm-msm@vger.kernel.org>; Wed, 15 Oct 2025 14:31:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34C8B1EC01B
+	for <linux-arm-msm@vger.kernel.org>; Wed, 15 Oct 2025 14:32:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760538704; cv=none; b=ufllK5L8JTlwe60d8h/X0fbqedpu5fkGXBPZdMtMZRiAA5CCnmGDpAu96OmhknFPiOqgoofdoMgWeC2V6M0leGoHDKB+jALy78Ho8qkcgaF6ktCCJKY1aoSEG1/XtY5dJvcaNe/khP0lXQ0f5N3mOcqwTZIUwEfL+/YO7Lpew6w=
+	t=1760538737; cv=none; b=Amg9Kx3VD1oQ3PZWy/3UezcbGMFjuQwa37HrL2djHqQBlHL6T6F+qgb3gCe5qPXUj0NzvBJvM2VAOG7mHjKFWvzjm/ea3tCU+QiyhlACFhRXNKdskHervbtyhCFuj3UQhSSdg6QXHCfQGkUd+dK2vG0IVmeWQxTAT9iWFp5kVEY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760538704; c=relaxed/simple;
-	bh=7C1kqUL2+pSHhXzgLUx/+UHRV9bHHrUHqpI6u3kSEJ0=;
+	s=arc-20240116; t=1760538737; c=relaxed/simple;
+	bh=zgjScSg8gxQVegmaLTY1qc+sG3oeDoXkbobmP8U+jSQ=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=GZc4rGSfRxigw1q2QczMWpDsJCd0lcmh/6tqcEgMRjJx4Lrt44P1KS0XjM7Pfb1U5tEIpWxS6kyF8phGi1zD1bo4CrXSJoJWVApxs6moWg9fbWEwzEt2HQHzmmkueOd0dhAknPOkhlalGA6xUJR9Gz35ppChQ0UQR8HsPIHGGw4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=KjRVU9yK; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 59FBCHib009199
-	for <linux-arm-msm@vger.kernel.org>; Wed, 15 Oct 2025 14:31:42 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	7C1kqUL2+pSHhXzgLUx/+UHRV9bHHrUHqpI6u3kSEJ0=; b=KjRVU9yK9J2g5XfN
-	WYApyw9hUCwkyWoVPN8+r/Gg7hC4gSr2Aru5jR1TFD3Ex34N4kp9PdmptUQSytay
-	1vuz2iDWXUEKRvEcT75gj2eJ3Din9JaeqMzEPQflAoreKHovs5aIgPbYi7uh/m8h
-	V+FOJxAUKMfVpqYRCuEfDmk8JW6PPKrl3cOiou/a51j1Tg8HbwkOHY8zG07O5Kky
-	qK5ODp9OIA1TIc4klrUCu4F/WyzxRvueBYpt6zgPK2N5TlZG95zObj/436166S8I
-	YZSrOYnO5Ftd+vGLnp8vthQl7E7yhCzAuigycyyQOUYPdD0QhkQx9h4GswzSlUCD
-	jbov3Q==
-Received: from mail-vk1-f198.google.com (mail-vk1-f198.google.com [209.85.221.198])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 49qg0c4n2v-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Wed, 15 Oct 2025 14:31:41 +0000 (GMT)
-Received: by mail-vk1-f198.google.com with SMTP id 71dfb90a1353d-554e68b14cbso2294812e0c.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Oct 2025 07:31:41 -0700 (PDT)
+	 To:Cc:Content-Type; b=Ze4OiGLEaksZcnAyGUCvlLxDhxcrNiU/2o07G0VLo9VShsdYwKEBp9MRh6e7hiIpr2BdsbUNS0POGLZo+N66blVko5Qi0h3yXwHBGF8p3V0V//bhtidLDlfoDQ4/geAVXoxJahLpdtVl8ctFdXO8Do4Moyonid9bU/KMgrCOdLA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=I11VRqau; arc=none smtp.client-ip=209.85.218.54
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-ej1-f54.google.com with SMTP id a640c23a62f3a-b4c89df6145so1118894866b.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Oct 2025 07:32:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1760538732; x=1761143532; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=/GGPPAy1fHT4f0hgkyN0lKffg2M7YAAILDfIXtiBKFM=;
+        b=I11VRqauvz2Md9yzxVKhi/ql4GEIbHYh68mXiqzbEUpeacbu6x9biKT1X45i9OkPia
+         WQP+kNhDx22Yq0SxvtFyyI2nUVjA9mQT4/lWSXkz4sm4DRIMPaXX1BpJcB5VJ4fWakhF
+         k1pwi7zoOxyLLZY1nqGemhzvD3mdgVFoIP1MmFRBm2ePgnB+N8JGuaP3cWOOLPx8klwl
+         as2Ox4LQQy02EuCw6nS6PFveJ8+a3SRAH1D4PY7EhA1Pu6Qy4iYxtYwUFmTyJYnzWpZq
+         b86gi50olKDJzNmieFJjSC9YmCZ5IONirampH5uQMR4LOLiPYNv46ckKbVhL7FLa2j16
+         QY9w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1760538700; x=1761143500;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=7C1kqUL2+pSHhXzgLUx/+UHRV9bHHrUHqpI6u3kSEJ0=;
-        b=KYP5RGzCFoRxR/wDGELrb9vF8AxUwozj/yfyLe1Fwr1cKdqhX4jitiSodUtW0f9uxJ
-         zeXqI2SFdbG5t6UUJPzSfy7gmPg8krFIr9SAz54YE/vd6tznhwSCum5+EYK+GlW2UgwP
-         ZV1gPNXr0OOjwsWbn8EY2LcfO4NJsrwUWOcqNRonQB5pJcvz/AIHmKlKpm4M8iHwd1ZB
-         XCHi4v90/dY08lqGRH+h6Sog0qz9hUZGICYDseWfhrrdRmcyx05bvgVv/5BMLWwGQaEe
-         My1KLnKDdg5OtTXsrYqZpgbhobMOoRWmAhPmTzh5YoUeYxLt8YYO01NiN9lVQVrbpPIH
-         mTmA==
-X-Forwarded-Encrypted: i=1; AJvYcCWroqpnUKIP0hXuCrlZ2+OkWH6ZZp5m4T98jJd74H2uLqLBM6VaWjwBmp3PufiPiBdEAEE9+g45TzUMD3+D@vger.kernel.org
-X-Gm-Message-State: AOJu0YwSObj9QqB3FIlPpLjjfpZcW+Jd6bu3BIDRmRApaKyiFNStfYcS
-	yeN+Wc1akDbJXQ0g6XTo7FKr+NgBDpOb5gEGbIPAY8XYC207CqwRKzkXItsI53h8wLeWrd4E4MJ
-	rruwuRapEfU4aIzWTo1ctKshgUbdWrrRqH86/wp+o5z9f0UzeUjChkEcNRsJo5KS1uydaQmuwzT
-	ekpI5fwZk9skoJLAekODGc3Jl2beiWV+as1AJQ5PXBcNw=
-X-Gm-Gg: ASbGncssM86PTBEz4NytLEVSiYvjTYUXAibhR6E1zZVrLCKvtHu/qLddjMRvp39sEDm
-	S4prtHocDMcEuyu3BvjSjPX2PySqcJWexBqp0FQTyxRciiTOlNXishvFpnDOlTguDRmExpsfLRt
-	jT7WIXzNzWH4UWydvvQRRolg==
-X-Received: by 2002:a05:6122:3c46:b0:54a:1e96:e958 with SMTP id 71dfb90a1353d-554b88e4b6emr8902480e0c.0.1760538700179;
-        Wed, 15 Oct 2025 07:31:40 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFoCzMasGr9ydKzAL8etqZmuW94HxQ8w3vyPkrOTkAFlVbqRQfNuVAEq7kcm1c8bivioVTyL9H6cLg28nkgV54=
-X-Received: by 2002:a05:6122:3c46:b0:54a:1e96:e958 with SMTP id
- 71dfb90a1353d-554b88e4b6emr8902363e0c.0.1760538699592; Wed, 15 Oct 2025
- 07:31:39 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1760538732; x=1761143532;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=/GGPPAy1fHT4f0hgkyN0lKffg2M7YAAILDfIXtiBKFM=;
+        b=emQGcHT6OqoB0kD53UI89ycWlfNpsWLVITzz/PjBQCsBSWebYO+NFG6Y/IzNBhIW6x
+         0KjpC1IZ80ALIBv91ddDMtmFMepySKXIwW0/me6Ygi+hIqdpUsUZNBKVGib5V36AkOFT
+         rI19M8Q4b3fKbBeUqIq3TM30wBNvn81gBYuer3ancfAkfnh28y9d68qGb5nk51N7BG63
+         8v39nDYBr9DT8qNmItWaxl/PnWh2DyhtwNnErzF4WPo0MG/H4cKo0SdvtX0pVPQVdUMA
+         grzNB/2NJ/YzSUhK9WNrWTi84DZfBR/4eCo2eQnj1cEQRaB9uNOrb46KO4/ucb9HCY9F
+         vqDw==
+X-Forwarded-Encrypted: i=1; AJvYcCUuexZ8jyIfsYRQbh1PK56hSy/Y2NBC5nsHfWOBbfELd7/A1Bu/uhP2mx7pkldk7GY52X6wiVJkdz7Zqx57@vger.kernel.org
+X-Gm-Message-State: AOJu0YxucBFku4yew3GNxmxV/rhKyBOsov+GxH0HFuQDsiJ8kGahhRpp
+	x8VA+GlWD75d5SB6hmxpg6wfYNzTeBSt0Epz22jYl+RPZ9iT54oa03XDQJa1hrY3j6ytGgROFpD
+	D2n2Yb7bWkMLYvLRtdb4cDSZJkyQ7CSDCXXj5UYMDcA==
+X-Gm-Gg: ASbGnctlTcSzS84fT7WtwF9UFyWpWH5Nyg7fAJZh+Kjv1O81xcZhbzlJqzX3vbXVqBv
+	+OqdYJxJjEZqKLfo6mdP+e6VMs66lOJNwZsjKd4tBq4CiUI2t7Ge0mn5yu5MDygdVQ0BFncgidI
+	E45+syAPKNN/v20c6Y1yYFEeS+YL7/2+M0kGT+15JSNm3v7B//NodU1+Nz+ntGomurbssGs6/zN
+	bu3PxIMsL64x9TV/GGJH6w3URnVySzXvIk06X6AlSp7wyFJ/HtQkjpu8A8R8Tp4mbEurd+L
+X-Google-Smtp-Source: AGHT+IGvbF9vBWEbG0yxHrHoIRF115LWGGkIrcNil1qvyPeGnU0jWQdwZ6i5CqfPgqW4PnBPT+plyU0IoAr45ong62E=
+X-Received: by 2002:a17:907:9448:b0:b40:a71b:151f with SMTP id
+ a640c23a62f3a-b50ac1c4e7cmr3318624966b.30.1760538732189; Wed, 15 Oct 2025
+ 07:32:12 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20251014170927.3908383-1-youssef.abdulrahman@oss.qualcomm.com> <830edf8e-8cbc-41ee-874d-5ecb6450e182@oss.qualcomm.com>
-In-Reply-To: <830edf8e-8cbc-41ee-874d-5ecb6450e182@oss.qualcomm.com>
-From: Youssef Abdulrahman <youssef.abdulrahman@oss.qualcomm.com>
-Date: Wed, 15 Oct 2025 15:31:28 +0100
-X-Gm-Features: AS18NWDbmFbR4RZnRdVwXgxdX68v5vDxEZfeiuQ_jxKhyvKegSFVH4tvSCmYZZg
-Message-ID: <CANyhwx1QScQkR=MFRdmV3Fd8R6QJjq+1=esB_NNSq47FuBWCcQ@mail.gmail.com>
-Subject: Re: [PATCH v2] accel/qaic: Use check_add_overflow in sahara for 64b types
-To: Jeff Hugo <jeff.hugo@oss.qualcomm.com>
-Cc: carl.vanderlip@oss.qualcomm.com, troy.hanson@oss.qualcomm.com,
-        zachary.mckevitt@oss.qualcomm.com, ogabbay@kernel.org,
-        lizhi.hou@amd.com, karol.wachowski@linux.intel.com,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org
+References: <20251015-arm-psci-system_reset2-vendor-reboots-v16-0-b98aedaa23ee@oss.qualcomm.com>
+ <20251015-arm-psci-system_reset2-vendor-reboots-v16-1-b98aedaa23ee@oss.qualcomm.com>
+In-Reply-To: <20251015-arm-psci-system_reset2-vendor-reboots-v16-1-b98aedaa23ee@oss.qualcomm.com>
+From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Date: Wed, 15 Oct 2025 16:32:01 +0200
+X-Gm-Features: AS18NWDYlSPyX3_l7fQSeSlc4Ni_BqTNtU4UYXiSbDcs8VqP7UVRqIDp11dg6gU
+Message-ID: <CACMJSeu_Y2Rra8x22kWN0B38jKZEwq7=B9C75zH18QdjDHAWqg@mail.gmail.com>
+Subject: Re: [PATCH v16 01/14] power: reset: reboot-mode: Synchronize list traversal
+To: Shivendra Pratap <shivendra.pratap@oss.qualcomm.com>
+Cc: Bjorn Andersson <andersson@kernel.org>, Sebastian Reichel <sre@kernel.org>, Rob Herring <robh@kernel.org>, 
+	Sudeep Holla <sudeep.holla@arm.com>, Souvik Chakravarty <Souvik.Chakravarty@arm.com>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Andy Yan <andy.yan@rock-chips.com>, Mark Rutland <mark.rutland@arm.com>, 
+	Lorenzo Pieralisi <lpieralisi@kernel.org>, Arnd Bergmann <arnd@arndb.de>, 
+	Konrad Dybcio <konradybcio@kernel.org>, cros-qcom-dts-watchers@chromium.org, 
+	Vinod Koul <vkoul@kernel.org>, Catalin Marinas <catalin.marinas@arm.com>, 
+	Will Deacon <will@kernel.org>, Florian Fainelli <florian.fainelli@broadcom.com>, 
+	Moritz Fischer <moritz.fischer@ettus.com>, John Stultz <john.stultz@linaro.org>, 
+	Matthias Brugger <matthias.bgg@gmail.com>, Krzysztof Kozlowski <krzk@kernel.org>, 
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>, 
+	Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>, Stephen Boyd <swboyd@chromium.org>, 
+	Andre Draszik <andre.draszik@linaro.org>, 
+	Kathiravan Thirumoorthy <kathiravan.thirumoorthy@oss.qualcomm.com>, linux-pm@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, devicetree@vger.kernel.org, 
+	linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org, 
+	Elliot Berman <quic_eberman@quicinc.com>, Srinivas Kandagatla <srini@kernel.org>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Proofpoint-GUID: ePQ_qB7XdzmwLPfiIbbGiS1qRDEh7zsw
-X-Proofpoint-ORIG-GUID: ePQ_qB7XdzmwLPfiIbbGiS1qRDEh7zsw
-X-Authority-Analysis: v=2.4 cv=eaIwvrEH c=1 sm=1 tr=0 ts=68efb04d cx=c_pps
- a=1Os3MKEOqt8YzSjcPV0cFA==:117 a=IkcTkHD0fZMA:10 a=x6icFKpwvdMA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=EUspDBNiAAAA:8 a=-g8CD2O9qlXXIwQv6SoA:9
- a=QEXdDO2ut3YA:10 a=hhpmQAJR8DioWGSBphRh:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDExMDAyMiBTYWx0ZWRfX53nEpGqdmoAo
- aloLMpY/5BbYHUN3tuSxuTmBRdvTLK7hnL57BL5hg9uvL975pzgLKEkGJHbGvDwgfvGBQmq97ni
- qMM1SiMWmWskJLlnwHQ5o6khLyGlMORAC36G2upQrVKnKOfZLCNYpPfMF20MLvI58/FUJW5roni
- n448Q7JvJUxA1nVokaRKz0M9973AnGIQEOaSpmU2q0ge7QX6+NVM+Op7cPf+4gzQPaZllGHdMnA
- ei2Gg0ojIaRAkA5dpld7CyUd/auEAV2d3GKcAkAl4Q/TJan2QDVE+/igihUmddEmMlp7gGluBvo
- VJvnp8sboqaDk+C5xtoFR5zWyInrqis/GRA/+bIF8271C8bdi6EtTrse9qnokKY5iJ53BWFrum/
- zUFlVyebQKCZaJz3zPWQZnCHzI+eNA==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-10-15_05,2025-10-13_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- bulkscore=0 priorityscore=1501 spamscore=0 impostorscore=0 phishscore=0
- adultscore=0 lowpriorityscore=0 clxscore=1015 suspectscore=0 malwarescore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2510020000 definitions=main-2510110022
 
-Will send a V3 with only the explicit cast, and send a separate patch
-for the min_t() change. Sorry for the inconvenience.
+On Wed, 15 Oct 2025 at 06:38, Shivendra Pratap
+<shivendra.pratap@oss.qualcomm.com> wrote:
+>
+> List traversals must be synchronized to prevent race conditions
+> and data corruption. The reboot-mode list is not protected by a
+> lock currently, which can lead to concurrent access and race.
+>
+> Introduce a mutex lock to guard all operations on the reboot-mode
+> list and ensure thread-safe access. The change prevents unsafe
+> concurrent access on reboot-mode list.
+>
+> Fixes: 4fcd504edbf7 ("power: reset: add reboot mode driver")
+> Fixes: ca3d2ea52314 ("power: reset: reboot-mode: better compatibility with DT (replace ' ,/')")
+>
+> Signed-off-by: Shivendra Pratap <shivendra.pratap@oss.qualcomm.com>
+> ---
+>  drivers/power/reset/reboot-mode.c | 96 +++++++++++++++++++++------------------
+>  include/linux/reboot-mode.h       |  4 ++
+>  2 files changed, 57 insertions(+), 43 deletions(-)
+>
+> diff --git a/drivers/power/reset/reboot-mode.c b/drivers/power/reset/reboot-mode.c
+> index fba53f638da04655e756b5f8b7d2d666d1379535..8fc3e14638ea757c8dc3808c240ff569cbd74786 100644
+> --- a/drivers/power/reset/reboot-mode.c
+> +++ b/drivers/power/reset/reboot-mode.c
+> @@ -29,9 +29,11 @@ static unsigned int get_reboot_mode_magic(struct reboot_mode_driver *reboot,
+>         if (!cmd)
+>                 cmd = normal;
+>
+> -       list_for_each_entry(info, &reboot->head, list)
+> -               if (!strcmp(info->mode, cmd))
+> -                       return info->magic;
+> +       scoped_guard(mutex, &reboot->rb_lock) {
+> +               list_for_each_entry(info, &reboot->head, list)
+> +                       if (!strcmp(info->mode, cmd))
+> +                               return info->magic;
+> +       }
+>
+>         /* try to match again, replacing characters impossible in DT */
+>         if (strscpy(cmd_, cmd, sizeof(cmd_)) == -E2BIG)
+> @@ -41,9 +43,11 @@ static unsigned int get_reboot_mode_magic(struct reboot_mode_driver *reboot,
+>         strreplace(cmd_, ',', '-');
+>         strreplace(cmd_, '/', '-');
+>
+> -       list_for_each_entry(info, &reboot->head, list)
+> -               if (!strcmp(info->mode, cmd_))
+> -                       return info->magic;
+> +       scoped_guard(mutex, &reboot->rb_lock) {
+> +               list_for_each_entry(info, &reboot->head, list)
+> +                       if (!strcmp(info->mode, cmd_))
+> +                               return info->magic;
+> +       }
+>
+>         return 0;
+>  }
+> @@ -78,46 +82,50 @@ int reboot_mode_register(struct reboot_mode_driver *reboot)
+>
+>         INIT_LIST_HEAD(&reboot->head);
+>
+> -       for_each_property_of_node(np, prop) {
+> -               if (strncmp(prop->name, PREFIX, len))
+> -                       continue;
+> -
+> -               info = devm_kzalloc(reboot->dev, sizeof(*info), GFP_KERNEL);
+> -               if (!info) {
+> -                       ret = -ENOMEM;
+> -                       goto error;
+> -               }
+> -
+> -               if (of_property_read_u32(np, prop->name, &info->magic)) {
+> -                       dev_err(reboot->dev, "reboot mode %s without magic number\n",
+> -                               info->mode);
+> -                       devm_kfree(reboot->dev, info);
+> -                       continue;
+> -               }
+> -
+> -               info->mode = kstrdup_const(prop->name + len, GFP_KERNEL);
+> -               if (!info->mode) {
+> -                       ret =  -ENOMEM;
+> -                       goto error;
+> -               } else if (info->mode[0] == '\0') {
+> -                       kfree_const(info->mode);
+> -                       ret = -EINVAL;
+> -                       dev_err(reboot->dev, "invalid mode name(%s): too short!\n",
+> -                               prop->name);
+> -                       goto error;
+> +       mutex_init(&reboot->rb_lock);
+> +
+> +       scoped_guard(mutex, &reboot->rb_lock) {
+> +               for_each_property_of_node(np, prop) {
+> +                       if (strncmp(prop->name, PREFIX, len))
+> +                               continue;
+> +
+> +                       info = devm_kzalloc(reboot->dev, sizeof(*info), GFP_KERNEL);
+> +                       if (!info) {
+> +                               ret = -ENOMEM;
+> +                               goto error;
+> +                       }
+> +
+> +                       if (of_property_read_u32(np, prop->name, &info->magic)) {
+> +                               dev_err(reboot->dev, "reboot mode %s without magic number\n",
+> +                                       info->mode);
+> +                               devm_kfree(reboot->dev, info);
+> +                               continue;
+> +                       }
+> +
+> +                       info->mode = kstrdup_const(prop->name + len, GFP_KERNEL);
+> +                       if (!info->mode) {
+> +                               ret =  -ENOMEM;
+> +                               goto error;
+> +                       } else if (info->mode[0] == '\0') {
+> +                               kfree_const(info->mode);
+> +                               ret = -EINVAL;
+> +                               dev_err(reboot->dev, "invalid mode name(%s): too short!\n",
+> +                                       prop->name);
+> +                               goto error;
+> +                       }
+> +
+> +                       list_add_tail(&info->list, &reboot->head);
 
--Youssef
+This seems to be the only call that actually needs synchronization.
+All of the above can be run outside the critical section.
 
-On Tue, Oct 14, 2025 at 7:31=E2=80=AFPM Jeff Hugo <jeff.hugo@oss.qualcomm.c=
-om> wrote:
+>                 }
 >
-> On 10/14/2025 11:09 AM, Youssef Samir wrote:
-> > From: Zack McKevitt <zmckevit@qti.qualcomm.com>
-> >
-> > Use check_add_overflow instead of size_add in sahara when
-> > 64b types are being added to ensure compatibility with 32b
-> > systems. The size_add function parameters are of size_t, so
-> > 64b data types may be truncated when cast to size_t on 32b
-> > systems. When using check_add_overflow, no type casts are made,
-> > making it a more portable option.
-> >
-> > Signed-off-by: Zack McKevitt <zmckevit@qti.qualcomm.com>
-> > Signed-off-by: Youssef Samir <youssef.abdulrahman@oss.qualcomm.com>
+> -               list_add_tail(&info->list, &reboot->head);
+> -       }
+> -
+> -       reboot->reboot_notifier.notifier_call = reboot_mode_notify;
+> -       register_reboot_notifier(&reboot->reboot_notifier);
+> +               reboot->reboot_notifier.notifier_call = reboot_mode_notify;
+> +               register_reboot_notifier(&reboot->reboot_notifier);
 >
-> I think you are missing two reviewed-by tags from v1.
+> -       return 0;
+> +               return 0;
 >
-> > ---
-> > Changes in V2:
-> > - Use explicit casts with check_*_overflow() calls
-> > - Replace min() with min_t()
-> Fixing typecast warnings with explicit casts seems good, but min->min_t
-> seems outside of scope. It doesn't match with the commit text, and I
-> don't see a good way to include it without making this patch look like
-> it should be split into two. Thus, lets do the typecast fixes for the
-> min usage as a follow up.
+>  error:
+> -       list_for_each_entry(info, &reboot->head, list)
+> -               kfree_const(info->mode);
+> +               list_for_each_entry(info, &reboot->head, list)
+> +                       kfree_const(info->mode);
+> +       }
 >
-> -Jeff
+>         return ret;
+>  }
+> @@ -133,8 +141,10 @@ int reboot_mode_unregister(struct reboot_mode_driver *reboot)
+>
+>         unregister_reboot_notifier(&reboot->reboot_notifier);
+>
+> -       list_for_each_entry(info, &reboot->head, list)
+> -               kfree_const(info->mode);
+> +       scoped_guard(mutex, &reboot->rb_lock) {
+> +               list_for_each_entry(info, &reboot->head, list)
+> +                       kfree_const(info->mode);
+> +       }
+
+Please destroy the mutex here.
+
+Bart
+
+>
+>         return 0;
+>  }
+> diff --git a/include/linux/reboot-mode.h b/include/linux/reboot-mode.h
+> index 4a2abb38d1d612ec0fdf05eb18c98b210f631b7f..b73f80708197677db8dc2e43affc519782b7146e 100644
+> --- a/include/linux/reboot-mode.h
+> +++ b/include/linux/reboot-mode.h
+> @@ -2,11 +2,15 @@
+>  #ifndef __REBOOT_MODE_H__
+>  #define __REBOOT_MODE_H__
+>
+> +#include <linux/mutex.h>
+> +
+>  struct reboot_mode_driver {
+>         struct device *dev;
+>         struct list_head head;
+>         int (*write)(struct reboot_mode_driver *reboot, unsigned int magic);
+>         struct notifier_block reboot_notifier;
+> +       /*Protects access to reboot mode list*/
+> +       struct mutex rb_lock;
+>  };
+>
+>  int reboot_mode_register(struct reboot_mode_driver *reboot);
+>
+> --
+> 2.34.1
 >
 
