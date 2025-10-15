@@ -1,34 +1,34 @@
-Return-Path: <linux-arm-msm+bounces-77483-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-77484-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [142.0.200.124])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7A7E6BE0BB5
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Oct 2025 23:00:40 +0200 (CEST)
+Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [IPv6:2605:f480:58:1:0:1994:3:14])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9F086BE0BF3
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Oct 2025 23:02:50 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 662694EC5B6
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Oct 2025 21:00:39 +0000 (UTC)
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 485584FB1AA
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Oct 2025 21:02:49 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 109B91A08CA;
-	Wed, 15 Oct 2025 21:00:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 19F1626B942;
+	Wed, 15 Oct 2025 21:02:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=lunn.ch header.i=@lunn.ch header.b="bWeEwmMz"
+	dkim=pass (1024-bit key) header.d=lunn.ch header.i=@lunn.ch header.b="lPN1FzPv"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from vps0.lunn.ch (vps0.lunn.ch [156.67.10.101])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7334B19F48D;
-	Wed, 15 Oct 2025 21:00:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 727A41C84AB;
+	Wed, 15 Oct 2025 21:01:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=156.67.10.101
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760562037; cv=none; b=U0dsZR3flcGPpCsGbXjSV6UWDThCfpphyiY1FiE78yYC3jRaT31TyCDLrqXkkJRTzP6sQ1/Qim/5IvyM3RfNeTT5ZYB1nr0jzqSzKFmTjR1co5gzYwWPO92foGxet4FGg47Yl+4P2BufdkKpHy51KfkDPv6h2Gm69ctYc99wKkc=
+	t=1760562120; cv=none; b=nm0hknOpA/ysVRmA1IybUCtbj6XaqxQydHe5KaMOns7T83FgBPiCvxyv+Vz5/P+3hCsPq2FD3e29MCEhLhsl+XCHM+rkxk4VAKMt7GcZ2YnG4DLDIBuqpayzM/3TojU0274m12h/khB68GpIwnnkgvLf4GiV9q8iJckaCBPpVgw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760562037; c=relaxed/simple;
-	bh=M1qczSmkw0158XadgJhT0mwOxC+0MpFlEOPojPneZxM=;
+	s=arc-20240116; t=1760562120; c=relaxed/simple;
+	bh=oPqga1R+Lw5csFQdmxSTZ2j5nvk6/0nsHqsHDe3Scrw=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=o65yMBOftS8mmyR8QKVYQd68+93VXcI0WNJ9FTXPBeW2IwPXnrD7etdZuNsixBkmm4DgMW/3M6tpKmELCAV/2mcqe/5bLVYMV7md92e8qwpmx/HvrvCCPtq6s9WAdcFXzdgiMPFlwsSXzHJfZCti5W3tpfIZzNX5eanW3FzgW7M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lunn.ch; spf=pass smtp.mailfrom=lunn.ch; dkim=pass (1024-bit key) header.d=lunn.ch header.i=@lunn.ch header.b=bWeEwmMz; arc=none smtp.client-ip=156.67.10.101
+	 Content-Type:Content-Disposition:In-Reply-To; b=mCTUVhEA1p0Jfb+ACeGvq3KUcQj8JQ3Kth5MkVEd+dfSEz5tOSHYipMZSrcl+UjMni4Xnvk1s/yPfvT9NUAL3xDa2Ru+Zvenj0uBTVFK+9x4TPmb/WhQ4sEeuOa1jTVokkDApKMgcRAig+sRnrmpXLNF0OjEYD6ohlNUBLkBJww=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lunn.ch; spf=pass smtp.mailfrom=lunn.ch; dkim=pass (1024-bit key) header.d=lunn.ch header.i=@lunn.ch header.b=lPN1FzPv; arc=none smtp.client-ip=156.67.10.101
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lunn.ch
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=lunn.ch
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=lunn.ch;
@@ -36,13 +36,13 @@ DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=lunn.ch;
 	References:Message-ID:Subject:Cc:To:From:Date:From:Sender:Reply-To:Subject:
 	Date:Message-ID:To:Cc:MIME-Version:Content-Type:Content-Transfer-Encoding:
 	Content-ID:Content-Description:Content-Disposition:In-Reply-To:References;
-	bh=Qzau+2IiMd5fmjjZsXIksbdqUfY4ALqFsU+r0yQdOvs=; b=bWeEwmMzbtp8+O05AdPNYgUu/p
-	IHmi13D2KzF4+B2uUu7P5mN5YC0vx9H9yt1W3M/jt5+nyXLLufX1sIpO1lHgAwuVQYtjGGCXU+283
-	Teq6AgAqfQtLuX4SjkpxzdGWvUhiN0AIeYSMOf9IUphj3KXEAsvZEZdIns31ljTxiYLQ=;
+	bh=u9Vd50llGKlJUDtO+EduzVWWAqtczGOx8sjS49cA9dk=; b=lPN1FzPvrEnEGdf/5DGvQidRRO
+	KJ5J8zqk9k3JB5y6fJ14/5mp2e7wWv7356ulG6IYc49OvXw1+rc7IsCUxnOMNW0jrCSAwMv5KTL9J
+	n5pz55iGmNuvnBdS7skj93TFnJjxmMFG6vWzjb/DsgBMNNgo/nn4VPY8j77XEDzXTMyQ=;
 Received: from andrew by vps0.lunn.ch with local (Exim 4.94.2)
 	(envelope-from <andrew@lunn.ch>)
-	id 1v98bR-00B4m9-2I; Wed, 15 Oct 2025 23:00:09 +0200
-Date: Wed, 15 Oct 2025 23:00:09 +0200
+	id 1v98cr-00B4oN-8p; Wed, 15 Oct 2025 23:01:37 +0200
+Date: Wed, 15 Oct 2025 23:01:37 +0200
 From: Andrew Lunn <andrew@lunn.ch>
 To: "Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>
 Cc: Heiner Kallweit <hkallweit1@gmail.com>,
@@ -83,11 +83,11 @@ Cc: Heiner Kallweit <hkallweit1@gmail.com>,
 	Vladimir Oltean <olteanv@gmail.com>,
 	Vladimir Oltean <vladimir.oltean@nxp.com>,
 	Yu-Chun Lin <eleanor15x@gmail.com>
-Subject: Re: [PATCH net-next 11/14] net: stmmac: do not require snps,ps-speed
- for SGMII
-Message-ID: <5c5b0dd4-0c08-48f0-bbb8-21afcdfc102e@lunn.ch>
+Subject: Re: [PATCH net-next 12/14] net: stmmac: only call
+ stmmac_pcs_ctrl_ane() for integrated SGMII PCS
+Message-ID: <79822da1-d797-43f5-b0d3-533d5e914b07@lunn.ch>
 References: <aO-tbQCVu47R3izM@shell.armlinux.org.uk>
- <E1v92N3-0000000AmHQ-4Bm2@rmk-PC.armlinux.org.uk>
+ <E1v92N9-0000000AmHV-0WAA@rmk-PC.armlinux.org.uk>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -96,20 +96,17 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <E1v92N3-0000000AmHQ-4Bm2@rmk-PC.armlinux.org.uk>
+In-Reply-To: <E1v92N9-0000000AmHV-0WAA@rmk-PC.armlinux.org.uk>
 
-On Wed, Oct 15, 2025 at 03:20:53PM +0100, Russell King (Oracle) wrote:
-> SGMII mode does not require port-speed to be specified; this only
-> switches SGMII to use the MAC configuration register speed settings
-> and the actual value is irrelevant when the link comes up.
+On Wed, Oct 15, 2025 at 03:20:59PM +0100, Russell King (Oracle) wrote:
+> The internal PCS registers only exist if the core is synthesized with
+> SGMII, TBI or RTBI support. They have no relevance for RGMII.
 > 
-> As it seems the intention was to support "reverse SGMII" with this
-> setting, but the code didn't actually configure that due to a typo,
-> the warning and bad DT binding documentation has led people to
-> specify snps,ps-speed in their DT files inappropriately.
-> 
-> If mac_port_sel_speed is zero, then don't complain that the speed
-> is invalid, as this means we're using "normal" SGMII.
+> However, priv->hw->pcs contains a STMMAC_PCS_RGMII flag, which is set
+> if a PCS has been synthesized but we are operating in RGMII mode. As
+> the register has no effect for RGMII, there is no point calling
+> stmmac_pcs_ctrl_ane() in this case. Add a comment describing this
+> and make it conditional on STMMAC_PCS_SGMII.
 > 
 > Signed-off-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
 
