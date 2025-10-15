@@ -1,225 +1,216 @@
-Return-Path: <linux-arm-msm+bounces-77361-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-77363-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ams.mirrors.kernel.org (ams.mirrors.kernel.org [213.196.21.55])
-	by mail.lfdr.de (Postfix) with ESMTPS id 96C91BDE01E
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Oct 2025 12:32:38 +0200 (CEST)
+Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [IPv6:2605:f480:58:1:0:1994:3:14])
+	by mail.lfdr.de (Postfix) with ESMTPS id 30DB4BDE055
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Oct 2025 12:34:57 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ams.mirrors.kernel.org (Postfix) with ESMTPS id 1D62F355882
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Oct 2025 10:32:38 +0000 (UTC)
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 0B0A3500BE9
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Oct 2025 10:34:56 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 82678306483;
-	Wed, 15 Oct 2025 10:28:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E962031D371;
+	Wed, 15 Oct 2025 10:34:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="F77YPgJu"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="FVmt3Dq9"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D53CF31D743
-	for <linux-arm-msm@vger.kernel.org>; Wed, 15 Oct 2025 10:28:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B592231D367;
+	Wed, 15 Oct 2025 10:34:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760524120; cv=none; b=JkDnvsuwnuI5lbSs3k3kCJUBkcULthY29ehDg59REI5ErMOCx96p4uHhB+pzz0U92huq2LmcJbD8GaQtZf5kHUEaj6pYLj3YlrU0gGEG2/icnUTeshaLMFsBq4yCPXw01r5d+A8UV2rqFZ3WvyZCo1/BhfaqV0tSu8Jf8pTd0pk=
+	t=1760524449; cv=none; b=utRvvKUBZfog5kw7wCB+TCaTQedcCxuKEQXaoz4mHRHT48K7Ze4s4ldB7mXnbjxyTfu787Fhh+Z2T9dOw1wl4H/ow4Ln4/3gwEl8whepbBqgK7lYwIhtl/uStBCUY5w5vqtrkYdW1Pz0/xx3TUpsdf1ZDrhGPsIsf8qlNVehla0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760524120; c=relaxed/simple;
-	bh=0tvqjA5g5nXTtWkmeWJomxbNRZvUvJaMshuYYM2spUk=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Hp6341ztZ/G0iwUoRYQsVpp7FPKWQtjDYK/9F+BdvqSrt71oKrHK/J4+goVjHvDIxMtmuooDgrEJ+T2J3jsh7CgZJeLEoTQldC7Q44GzSH/3PnqknUY2guESg/qzvO2uWGWUKaZcICt0NdcBYZVQz3vfLIo6K6NS1PnxcAwuf28=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=F77YPgJu; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 59F2sSMU004236
-	for <linux-arm-msm@vger.kernel.org>; Wed, 15 Oct 2025 10:28:38 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	OtCuBzfMS782vxBLNrbSA6yWo7+oKeRaHTDzQnpUByc=; b=F77YPgJufPc4+VPB
-	aUtGpNZb3u+Dncakf0e5YdtCVESkYOjvfINYg9aELyOuCiVDpJ5pH1msWoAFcyHv
-	Y/X6bs6PBZcefBcZpBnd7F9mO/WjgV00kDq5xn3bc5LA9nHMig7YUi5TKUBd+yVN
-	hf+R3TL6qk0yCfw2iuW4NapYMXl4YD3foUZma4eZKTGuRhlImkgaPq0nhqiHg3XD
-	xQoPvgtNAHYzuaVebEKjOeH7wtVp0cNxbW9V/hF1zWKG3F0zLW40JsINdcxto74X
-	h3xzv5YGfJzg2kayjecLmRgcNrGNwvavhlhtYEQeEIxYnwVGPjwmrfclCslDiaso
-	dunnDA==
-Received: from mail-pg1-f198.google.com (mail-pg1-f198.google.com [209.85.215.198])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 49s6mwpbnt-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Wed, 15 Oct 2025 10:28:38 +0000 (GMT)
-Received: by mail-pg1-f198.google.com with SMTP id 41be03b00d2f7-b6474cf4573so7082807a12.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Oct 2025 03:28:38 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1760524117; x=1761128917;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=OtCuBzfMS782vxBLNrbSA6yWo7+oKeRaHTDzQnpUByc=;
-        b=uCh4jSfyo9HOxsIKyK48CWhD43IeJEquhGuglPLkrQ1w9JaA37z7nj/IyZYs5ATm7b
-         FLn3UgLx1xEEj1oEQ+Za2QiLLRl/BEBMemYAkZyjMUuQwm8R9MG21wkg6LTXguut011X
-         b2jJ8zOE1aaV6zroHSUllGkYMD9gs13pYOB8Kc03X89jctCOx1m2UGg8k9dNEVAjm4hd
-         /ip0cmcvROkCcjKXhsip4SdRcmKj8tKGJ34E025HpN4wgECOULi7TaUIsKUOdAOyuPMq
-         SlU0KCDcZjGs7nottNiUxU84gh/xCMXgFDAo/omM3C9gOv/c7Dg6/LS/TR/s9WnKL46o
-         EgpA==
-X-Gm-Message-State: AOJu0Yw60UEZSuF1BpX+nu+SeRn+GuAvnr+I5kXKhqC5JkOvCUeGd+1f
-	3VYY1MnUEeA7L1yLyArMCgtSSA3PC1KOaGPHkiYYLbVF59//ZZfou6EOkLhOQfwlWEoMnrlZ/8c
-	QHs9mIdxrjgr6X74Q2J0rxz77QszrfQeIGLce0I9HR2XFdCIxDpTHCIFqlPGOwFAOYYCL
-X-Gm-Gg: ASbGncsCSukN0qQ6q88mFAZZ/Tc7L6rwCArStNaiMkhdwZyWz/acvWi7bNl2kJ8E8xR
-	AISfiytvbezBQHbKpcrZdTSGPejhnmyF/AQdU7wuUXyYXFm49AwMprh5QqPz4ADKKTBrv1yMuYb
-	wf59AH/5zCE7D569I+2A45bzvNAai1c3G7q0rjD8KYUVMR22Je/CDbzXsOSGzkEocMminSsN07B
-	vlvVqonY/UV18z36o8QkSifSO7tVtzpQnYabvcONRjYCZgIRNc/GAYSvtQ8jW7dajSYle2b/tz7
-	5pS/MBABkw/FBdybdY+/oUQnfWNWoslhqHRPCmud5lRLtlxcZljxf/B89cNh3esJitVov9g=
-X-Received: by 2002:a05:6a21:32a3:b0:303:b64b:e44 with SMTP id adf61e73a8af0-32da83e38bemr35878496637.43.1760524117202;
-        Wed, 15 Oct 2025 03:28:37 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHFMeBDWmLwGmtvM1sNbU+BcXtiGukpKU9b6FpL+kUTBWyczFWyDH0DN4wWF25eRGbf5yYZSg==
-X-Received: by 2002:a05:6a21:32a3:b0:303:b64b:e44 with SMTP id adf61e73a8af0-32da83e38bemr35878463637.43.1760524116776;
-        Wed, 15 Oct 2025 03:28:36 -0700 (PDT)
-Received: from [10.218.44.34] ([202.46.22.19])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-7992bb1e50dsm18263043b3a.33.2025.10.15.03.28.33
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 15 Oct 2025 03:28:36 -0700 (PDT)
-Message-ID: <235cf6b7-e758-4d16-b5a1-182cc869b2e4@oss.qualcomm.com>
-Date: Wed, 15 Oct 2025 15:58:31 +0530
+	s=arc-20240116; t=1760524449; c=relaxed/simple;
+	bh=we5XZGH463fQf5FOxBGiKZ2kHsrJYRcfoRoeknDdXek=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=jsjmcHQcvtyI4S82LqDWptPmOjgytfSSxPLDRMshuQFmMAPKMlhhbUhkTO8csYeo7gOJd7yXTE5RsJ2lM8qtM+NtK9e6WY8rKPjvJ3rJ/Ia0jqbD0MyoSIkAapwmAGP/gHD6qmj3O8TX75zXKMuazIxkKnHQ4VnmeGSTHtEJmbE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=FVmt3Dq9; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 190B7C4CEF8;
+	Wed, 15 Oct 2025 10:33:57 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1760524449;
+	bh=we5XZGH463fQf5FOxBGiKZ2kHsrJYRcfoRoeknDdXek=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=FVmt3Dq9lv0UC6WD3DjEG/aZebzv/6H7E1P/BwkYqM1tsJoM7ByLGWND33B55jtEy
+	 PaM+9XEs8Op4I60AW18JqjYOATwWAQNKx9vISfEdqQH+h8hhjHE0fuaeSTS2+kfTYb
+	 E+UiPH4brjRJUUhANQdz2eagmsh4mnC49fcqAIJnUQi4dDmVaV/n7QWjBkF2knERKj
+	 G187Ua7V4UjcGzMMWTyV1GheA3wWjeBQKSFqYqKSWj7QSbF8eTSr311GS9tD3Dy5L1
+	 BnHypEnUC7EhTMzkVBJdHYzlCvrP30s5FwOmHzIwrs+7HzkXz02E7c/QxV/p7spSfS
+	 QqjgX4z7+Et2w==
+Date: Wed, 15 Oct 2025 16:03:53 +0530
+From: Manivannan Sadhasivam <mani@kernel.org>
+To: Niklas Cassel <cassel@kernel.org>
+Cc: Shawn Lin <shawn.lin@rock-chips.com>, 
+	Bjorn Helgaas <helgaas@kernel.org>, manivannan.sadhasivam@oss.qualcomm.com, 
+	Bjorn Helgaas <bhelgaas@google.com>, Lorenzo Pieralisi <lpieralisi@kernel.org>, 
+	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kwilczynski@kernel.org>, Rob Herring <robh@kernel.org>, linux-pci@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+	"David E. Box" <david.e.box@linux.intel.com>, Kai-Heng Feng <kai.heng.feng@canonical.com>, 
+	"Rafael J. Wysocki" <rafael@kernel.org>, Heiner Kallweit <hkallweit1@gmail.com>, 
+	Chia-Lin Kao <acelan.kao@canonical.com>, Dragan Simic <dsimic@manjaro.org>, 
+	linux-rockchip@lists.infradead.org, regressions@lists.linux.dev, FUKAUMI Naoki <naoki@radxa.com>
+Subject: Re: [PATCH v2 1/2] PCI/ASPM: Override the ASPM and Clock PM states
+ set by BIOS for devicetree platforms
+Message-ID: <ud72uxkobylkwy5q5gtgoyzf24ewm7mveszfxr3o7tortwrvw5@kc3pfjr3dtaj>
+References: <22594781424C5C98+22cb5d61-19b1-4353-9818-3bb2b311da0b@radxa.com>
+ <20251014184905.GA896847@bhelgaas>
+ <5ivvb3wctn65obgqvnajpxzifhndza65rsoiqgracfxl7iiimt@oym345d723o2>
+ <823262AB21C8D981+8c1b9d50-5897-432b-972e-b7bb25746ba5@radxa.com>
+ <7ugvxl3g5szxhc5ebxnlfllp46lhprjvcg5xp75mobsa44c6jv@h2j3dvm5a4lq>
+ <a9ca7843-b780-45aa-9f62-3f443ae06eee@rock-chips.com>
+ <aO9tWjgHnkATroNa@ryzen>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 04/24] arm64: dts: qcom: glymur: Add QUPv3 configuration
- for serial engines
-To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-        Pankaj Patil <pankaj.patil@oss.qualcomm.com>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20250925-v3_glymur_introduction-v1-0-24b601bbecc0@oss.qualcomm.com>
- <20250925-v3_glymur_introduction-v1-4-24b601bbecc0@oss.qualcomm.com>
- <8828946b-3979-4e7b-a11c-740d8a6253ce@oss.qualcomm.com>
-Content-Language: en-US
-From: Jyothi Kumar Seerapu <jyothi.seerapu@oss.qualcomm.com>
-In-Reply-To: <8828946b-3979-4e7b-a11c-740d8a6253ce@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDEzMDA4MyBTYWx0ZWRfX80JpQqOH97kH
- KDmjGtOv5ACYaC5aw01BO3fw34f+EFBGpOoLhf+XWcuSSjU7g4aZoeauWygxGqxC+cNoGIawMq4
- P/buZOkQm8Njyy7lcFucoDjkOjOWjXJ7nwQHkUxMN3UUUHrSBH2JsiXp/gWZhnoAWVyUz36plfQ
- lr+BxFE93qImjpNGQdNgL2woSUFs0eow6SaINyOnSlhPFBupmu3DGaB8P10n+Bcd/IwLamY1ftx
- hxiybylzYMUA+aatEyNPEpRWh99ia06h9z06nexow4y85oBDdI1IM75PP8ooTFYF6CQUdqu3yEE
- HmpT3dLdfl01WS359rAnZYWhpryDYAEuW4hc1/SU219O7nLUFBAGv2D6NocrnWMbD21i5jDtnwN
- RksDgA0xvG7P6KWEcTS2gZv8EONAFg==
-X-Authority-Analysis: v=2.4 cv=Fr4IPmrq c=1 sm=1 tr=0 ts=68ef7756 cx=c_pps
- a=Qgeoaf8Lrialg5Z894R3/Q==:117 a=fChuTYTh2wq5r3m49p7fHw==:17
- a=IkcTkHD0fZMA:10 a=x6icFKpwvdMA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=EUspDBNiAAAA:8 a=5RRmG2Rm61FAXBKOsCEA:9 a=QEXdDO2ut3YA:10
- a=x9snwWr2DeNwDh03kgHS:22
-X-Proofpoint-GUID: S6TKTVkD3OikaKXfhrrWnhqVkcutC8Ge
-X-Proofpoint-ORIG-GUID: S6TKTVkD3OikaKXfhrrWnhqVkcutC8Ge
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-10-15_04,2025-10-13_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 impostorscore=0 spamscore=0 phishscore=0 malwarescore=0
- adultscore=0 lowpriorityscore=0 bulkscore=0 suspectscore=0 clxscore=1015
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2510020000 definitions=main-2510130083
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <aO9tWjgHnkATroNa@ryzen>
 
+On Wed, Oct 15, 2025 at 11:46:02AM +0200, Niklas Cassel wrote:
+> Hello Shawn,
+> 
+> On Wed, Oct 15, 2025 at 05:11:39PM +0800, Shawn Lin wrote:
+> > > 
+> > > Thanks! Could you please try the below diff with f3ac2ff14834 applied?
+> > > 
+> > > diff --git a/drivers/pci/quirks.c b/drivers/pci/quirks.c
+> > > index 214ed060ca1b..0069d06c282d 100644
+> > > --- a/drivers/pci/quirks.c
+> > > +++ b/drivers/pci/quirks.c
+> > > @@ -2525,6 +2525,15 @@ static void quirk_disable_aspm_l0s_l1(struct pci_dev *dev)
+> > >    */
+> > >   DECLARE_PCI_FIXUP_FINAL(PCI_VENDOR_ID_ASMEDIA, 0x1080, quirk_disable_aspm_l0s_l1);
+> > > 
+> > > +
+> > > +static void quirk_disable_aspm_all(struct pci_dev *dev)
+> > > +{
+> > > +       pci_info(dev, "Disabling ASPM\n");
+> > > +       pci_disable_link_state(dev, PCIE_LINK_STATE_ALL);
+> > > +}
+> > > +
+> > > +DECLARE_PCI_FIXUP_FINAL(PCI_VENDOR_ID_ROCKCHIP, 0x3588, quirk_disable_aspm_all);
+> > 
+> > That's not true from my POV. Rockchip platform supports all ASPM policy
+> > after mass production verification. I also verified current upstream
+> > code this morning with RK3588-EVB and can check L0s/L1/L1ss work fine.
+> > 
+> > The log and lspci output could be found here:
+> > https://pastebin.com/qizeYED7
+> > 
+> > Moreover, I disscussed this issue with FUKAUMI today off-list and his
+> > board seems to work when only disable L1ss by patching:
+> > 
+> > --- a/drivers/pci/pcie/aspm.c
+> > +++ b/drivers/pci/pcie/aspm.c
+> > @@ -813,7 +813,7 @@ static void pcie_aspm_override_default_link_state(struct
+> > pcie_link_state *link)
+> > 
+> >         /* For devicetree platforms, enable all ASPM states by default */
+> >         if (of_have_populated_dt()) {
+> > -               link->aspm_default = PCIE_LINK_STATE_ASPM_ALL;
+> > +               link->aspm_default = PCIE_LINK_STATE_L0S |
+> > PCIE_LINK_STATE_L1;
+> >                 override = link->aspm_default & ~link->aspm_enabled;
+> >                 if (override)
+> >                         pci_info(pdev, "ASPM: DT platform,
+> > 
+> > 
+> > So, is there a proper way to just disable this feature for spec boards
+> > instead of this Soc?
+> 
+> This fix seems do the trick, without needing to patch common code (aspm.c):
+> 
+> diff --git a/drivers/pci/controller/dwc/pcie-dw-rockchip.c b/drivers/pci/controller/dwc/pcie-dw-rockchip.c
+> index 3e2752c7dd09..f5e1aaa97719 100644
+> --- a/drivers/pci/controller/dwc/pcie-dw-rockchip.c
+> +++ b/drivers/pci/controller/dwc/pcie-dw-rockchip.c
+> @@ -200,6 +200,19 @@ static bool rockchip_pcie_link_up(struct dw_pcie *pci)
+>  	return FIELD_GET(PCIE_LINKUP_MASK, val) == PCIE_LINKUP;
+>  }
+>  
+> +static void rockchip_pcie_disable_l1sub(struct dw_pcie *pci)
+> +{
+> +	u32 cap, l1subcap;
+> +
+> +	cap = dw_pcie_find_ext_capability(pci, PCI_EXT_CAP_ID_L1SS);
+> +	if (cap) {
+> +		l1subcap = dw_pcie_readl_dbi(pci, cap + PCI_L1SS_CAP);
+> +		l1subcap &= ~(PCI_L1SS_CAP_ASPM_L1_1 | PCI_L1SS_CAP_ASPM_L1_2 | PCI_L1SS_CAP_L1_PM_SS);
+> +		dw_pcie_writel_dbi(pci, cap + PCI_L1SS_CAP, l1subcap);
+> +		l1subcap = dw_pcie_readl_dbi(pci, cap + PCI_L1SS_CAP);
+> +	}
+> +}
+> +
+>  static void rockchip_pcie_enable_l0s(struct dw_pcie *pci)
+>  {
+>  	u32 cap, lnkcap;
+> @@ -264,6 +277,7 @@ static int rockchip_pcie_host_init(struct dw_pcie_rp *pp)
+>  	irq_set_chained_handler_and_data(irq, rockchip_pcie_intx_handler,
+>  					rockchip);
+>  
+> +	rockchip_pcie_disable_l1sub(pci);
+>  	rockchip_pcie_enable_l0s(pci);
+>  
+>  	return 0;
+> @@ -301,6 +315,7 @@ static void rockchip_pcie_ep_init(struct dw_pcie_ep *ep)
+>  	struct dw_pcie *pci = to_dw_pcie_from_ep(ep);
+>  	enum pci_barno bar;
+>  
+> +	rockchip_pcie_disable_l1sub(pci);
+>  	rockchip_pcie_enable_l0s(pci);
+>  	rockchip_pcie_ep_hide_broken_ats_cap_rk3588(ep);
+> 
 
-
-On 9/25/2025 3:48 PM, Konrad Dybcio wrote:
-> On 9/25/25 8:32 AM, Pankaj Patil wrote:
->> From: Jyothi Kumar Seerapu <jyothi.seerapu@oss.qualcomm.com>
->>
->> Add device tree support for QUPv3 serial engine protocols on Glymur.
->> Glymur has 24 QUP serial engines across 3 QUP wrappers, each with
->> support of GPI DMA engines.
->>
->> Signed-off-by: Jyothi Kumar Seerapu <jyothi.seerapu@oss.qualcomm.com>
->> Signed-off-by: Pankaj Patil <pankaj.patil@oss.qualcomm.com>
->> ---
-> 
-> [...]
-> 
->> +		gpi_dma2: dma-controller@800000 {
->> +			compatible = "qcom,glymur-gpi-dma", "qcom,sm6350-gpi-dma";
->> +			reg = <0 0x00800000 0 0x60000>;
->> +			interrupts = <GIC_SPI 588 IRQ_TYPE_LEVEL_HIGH>,
->> +				     <GIC_SPI 589 IRQ_TYPE_LEVEL_HIGH>,
->> +				     <GIC_SPI 590 IRQ_TYPE_LEVEL_HIGH>,
->> +				     <GIC_SPI 591 IRQ_TYPE_LEVEL_HIGH>,
->> +				     <GIC_SPI 592 IRQ_TYPE_LEVEL_HIGH>,
->> +				     <GIC_SPI 593 IRQ_TYPE_LEVEL_HIGH>,
->> +				     <GIC_SPI 594 IRQ_TYPE_LEVEL_HIGH>,
->> +				     <GIC_SPI 595 IRQ_TYPE_LEVEL_HIGH>,
->> +				     <GIC_SPI 596 IRQ_TYPE_LEVEL_HIGH>,
->> +				     <GIC_SPI 597 IRQ_TYPE_LEVEL_HIGH>,
->> +				     <GIC_SPI 598 IRQ_TYPE_LEVEL_HIGH>,
->> +				     <GIC_SPI 599 IRQ_TYPE_LEVEL_HIGH>,
->> +				     <GIC_ESPI 129 IRQ_TYPE_LEVEL_HIGH>,
->> +				     <GIC_ESPI 130 IRQ_TYPE_LEVEL_HIGH>,
->> +				     <GIC_ESPI 131 IRQ_TYPE_LEVEL_HIGH>,
->> +				     <GIC_ESPI 132 IRQ_TYPE_LEVEL_HIGH>;
->> +			dma-channels = <16>;
->> +			dma-channel-mask = <0x3f>;
->> +			#dma-cells = <3>;
->> +			iommus = <&apps_smmu 0xd76 0x0>;
->> +			status = "ok";
-> 
-> this is implied by default, drop
-
-Hi Konard,
-
-Do you mean we should remove the status property for all QUPs and 
-GPI_DMAs from the common device tree (SOC) and enable them only in the 
-board-specific device tree files?
+But this patch removes the L1SS CAP for all boards, isn't it?
 
 > 
->> +		};
->> +
->>   		qupv3_2: geniqup@8c0000 {
->>   			compatible = "qcom,geni-se-qup";
->>   			reg = <0x0 0x008c0000 0x0 0x3000>;
->> @@ -718,6 +744,339 @@ qupv3_2: geniqup@8c0000 {
->>   			#address-cells = <2>;
->>   			#size-cells = <2>;
->>   			ranges;
->> +			status = "ok";
 > 
-> ditto
 > 
-> (please resolve all occurences)
+> In reality, I think that pcie-dw-rockchip.c should check 'supports-clkreq',
+> and only if it doesn't support clkreq, it should disable L1 substates, similar
+> to how the Tegra driver does things:
+> https://github.com/torvalds/linux/blob/v6.18-rc1/drivers/pci/controller/dwc/pcie-tegra194.c#L934-L938
+> https://github.com/torvalds/linux/blob/v6.18-rc1/drivers/pci/controller/dwc/pcie-tegra194.c#L1164-L1165
 > 
-> [...]
+> In fact, that is also how the downstream rockchip drives does things:
+> https://github.com/rockchip-linux/kernel/blob/develop-6.6/drivers/pci/controller/dwc/pcie-dw-rockchip.c#L200-L233
+> https://github.com/rockchip-linux/kernel/blob/develop-6.6/drivers/pci/controller/dwc/pcie-dw-rockchip.c#L725
 > 
->> +		cnoc_main: interconnect@1500000 {
->> +			compatible = "qcom,glymur-cnoc-main";
->> +			reg = <0x0 0x01500000 0x0 0x17080>;
->> +			qcom,bcm-voters = <&apps_bcm_voter>;
->> +			#interconnect-cells = <2>;
->> +		};
->> +
->> +		config_noc: interconnect@1600000 {
->> +			compatible = "qcom,glymur-cnoc-cfg";
->> +			reg = <0x0 0x01600000 0x0 0x6600>;
->> +			qcom,bcm-voters = <&apps_bcm_voter>;
->> +			#interconnect-cells = <2>;
->> +		};
->> +
->> +		system_noc: interconnect@1680000 {
->> +			compatible = "qcom,glymur-system-noc";
->> +			reg = <0x0 0x01680000 0x0 0x1c080>;
->> +			qcom,bcm-voters = <&apps_bcm_voter>;
->> +			#interconnect-cells = <2>;
->> +		};
+> So I guess we either:
+> 1) Add code to pcie-dw-rockchip.c to unconditionally disable L1 substates, or
+> 2) We add code to:
+> - If have 'supports-clkreq' property, set PCIE_CLIENT_POWER_CON.app_clk_req_n=1
+> - If don't have 'supports-clkreq' property, disable L1 substates.
 > 
-> This diff becomes unreadable really fast.. please play with git
-> format-patch's --patience option
+> I think we need to do either 1) or 2), because a user can build the kernel with
+> CONFIG_PCIEASPM_POWER_SUPERSAVE=y
+> and that would break things even on older kernels, that don't have Mani's recent
+> commit.
 > 
-> Konrad
+> 
+> 
+> Mani, perhaps common code (aspm.c) should enable L1 substates only if
+> 'supports-clkreq' DT property exists?
+> 
 
+Unfortunately, not all DTs define this property even though the platforms
+support CLKREQ#. Right now, only Nvidia defines this property in the binding,
+but not in upstream DTS. But I would expect the platforms to support CLKREQ# if
+the Root Port supports L1SS CAP.
+
+So removing the L1SS CAP for Root Port in the controller driver makes sense to
+me.
+
+- Mani
+
+-- 
+மணிவண்ணன் சதாசிவம்
 
