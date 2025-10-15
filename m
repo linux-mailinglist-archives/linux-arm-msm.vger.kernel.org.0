@@ -1,273 +1,215 @@
-Return-Path: <linux-arm-msm+bounces-77348-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-77349-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 10BC0BDDCBF
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Oct 2025 11:32:32 +0200 (CEST)
+Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [142.0.200.124])
+	by mail.lfdr.de (Postfix) with ESMTPS id A63E2BDDD56
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Oct 2025 11:43:31 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 8A2F41887632
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Oct 2025 09:32:29 +0000 (UTC)
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 7FCF74E3289
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Oct 2025 09:43:25 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A580531BCB1;
-	Wed, 15 Oct 2025 09:30:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CDD70311C36;
+	Wed, 15 Oct 2025 09:43:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="AQZCVr/j"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="jSVBijxE"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B809B31A06F
-	for <linux-arm-msm@vger.kernel.org>; Wed, 15 Oct 2025 09:30:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9ADE32BCF7F;
+	Wed, 15 Oct 2025 09:43:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760520659; cv=none; b=bYpN60vydbSb+N3xYjmrJ3Z/ZTyP3p1Mh4vuTZwjV06jVPWuIMswx2e0JxVzLcZ2GMBPmecUmZqaNQCkCkjUhhKNVdyVngMCdTm5f50J2rtGmsBgoS1ChYAtY/7XwXK+PdH8CYZldSZ4nt6Rj+GjScjVMEtrr78hJXydrLeo29g=
+	t=1760521403; cv=none; b=IQgt0gGTMQDerwUV2ja86WDjaDvIU/vQGrLBWfnBrJlBbYxjEjPTw8TngtBCgDxyW2E++rHh3RcFEaLHwBwhIGcHxcrjUSlIClvU+3/+8J1PaChPEqPRZsTGQkqDOY0xBlCiNrypPicmMLOM3XQo9NN9eGbbtasT+VBpObFYbHE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760520659; c=relaxed/simple;
-	bh=SuVduaVkXgdGwLoV7y1FfPaaAzaHrO7lkHsSN7jXI8k=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Eq3XvL+Hvob4ykWa0hHPVxZYZcRvdIwQ8+nrC9cpnp9s9efAozEFCZ+gVdKn1MwIRpqIBEowCoy+xDY9X6NoSQvag1KbJenZ3kYPn7C1XcM8Iyltmu60Ac2XaZvzr/DGI6dPAOw/5RKqgXS/VYwgZwjKB5f9u41C0iRk/4GVyWY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=AQZCVr/j; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 59F2s7EX015154
-	for <linux-arm-msm@vger.kernel.org>; Wed, 15 Oct 2025 09:30:56 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:date:from:in-reply-to:message-id
-	:mime-version:references:subject:to; s=qcppdkim1; bh=Y1kg+p2rK68
-	ERP1p7EJ2CvNyyeJCHrKuUOCUWlCgr48=; b=AQZCVr/jamPPGrufNMeHn99mcbF
-	ox8UuevguLnyrNSez+q5/73TZgJCTVg+m0RKjDouVtiQvod/MwOT6sYtF0HWEvjp
-	EuM7MTqt9tuOG32YK8lweziFrhclLua0N4U/mQ1l5NGOqlSua+bB0B4dRAOJkvgr
-	eKCcEWInXd5M71KVxYAc+8pDhWuJBepmhnp2MoSvMU5vgLU8xi5Tw4pNXQv013LC
-	2HMmM8Mx3CJsArzoPMRVHGPayfKDquk9ly9p2YcNwZ1VOUyFXZTKkt+tcJ69/13/
-	plPM1N5Ozn1fZxItpdM01QyMNuELPLWCLyiR4IAOfsHvU3bi/8PxmxKLtnQ==
-Received: from mail-pf1-f197.google.com (mail-pf1-f197.google.com [209.85.210.197])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 49qfm5m026-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Wed, 15 Oct 2025 09:30:56 +0000 (GMT)
-Received: by mail-pf1-f197.google.com with SMTP id d2e1a72fcca58-7a153ba0009so1649551b3a.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Oct 2025 02:30:56 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1760520654; x=1761125454;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=Y1kg+p2rK68ERP1p7EJ2CvNyyeJCHrKuUOCUWlCgr48=;
-        b=RkAb7TxIYGNiMxLt6lYRvJBIFvKx80jnXoezg6+tS7vWNBLRqQOiGRtdJ2rtCg7tTQ
-         ukXDt03p8/hflTTO/Bd+S2zetyUPrIIeuOgRwf53EzxoJgvG0D/TYh99PQ34VzpUzXuO
-         h6E1L1jBeKHX46EgOSktBGU/ATongfAwoQrKmAxHDz/LX5YTz5MuWFdi8fG1XdZm9D8n
-         fufGt/416Q19A44j5dUD1tXnUw1zAGcPTdG1NwNDC/aAcY7eRvH9r5gG8JKExQ25Cd0I
-         SjAdTQXPW52iepd+J39vCrYUC4akoIC6ugdvtzwsIERNhD1yCovpOfROnPIPjaoivjEx
-         bIrQ==
-X-Forwarded-Encrypted: i=1; AJvYcCVUMleF5jj6biUvtFhukSW7b/eaC3KOeSgb9O+vzUGdWGqr2+rv1/LBkF9/8xmxe4Jn1+dMIIeuMVgtjg+N@vger.kernel.org
-X-Gm-Message-State: AOJu0YypA/WLupr2YQOZvflwTAvjCfr0UXExDTbnjUtzIVpi4EQ2I+41
-	52AQAT13aW8g2DN5i8q0a37dgPiaFEUb+SkbOhFCSz7pE8XY4alD7E0h18bQbdjVn7KQperohst
-	WW4Nb5FFrZ8ZzMa3XdgDSH0PIpk1wPrAp8jclz/RxEByVEBfZyr+cZ+NYaiYZT8LCF54C
-X-Gm-Gg: ASbGncs8fbptg7yLdnFjxYSsT/dkNDWE26Bd+i4wRqQlgIcs3jfyi3gVBGMK7h8t4We
-	trwzNwgV78yX+vDDW9wbUP25cheswXHgYGxvg0GfmuO5ZUdzt79tGqHEhWeJnHBq37d7mMcqbhN
-	aPFTpv3OWmTHIxI9sZtFiFbp89Gr6gSFwKCcrQDwC3ueU5EB4xoIvY93IdhxkwVKxU0vPE61mRE
-	P4nYqO20lZ/BylEM5mGlTIe7zNTSgfIpOHNJU9ryKztuGo7wjvSyyQOIntC2ltTfGJRAhXO+gRY
-	m/JQLt3IPKzgN7fRxCfd1p3DeZRddhLE461ZVlBDnVbzJLFw0GqZQ3mA4SZNl8a+cCPorlb5f+g
-	P2z+7vodkY35xokIafokUjP3/bCCG3A1ng6A=
-X-Received: by 2002:a05:6a00:4fd4:b0:78a:f784:e8cf with SMTP id d2e1a72fcca58-79387829619mr30058007b3a.27.1760520654304;
-        Wed, 15 Oct 2025 02:30:54 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFJ0soQb9bDnXm++IjhuW3gJpSyFFoMQSKckUa9K+r8CuCGeYh6rZgqF92eLptBNZ/sV3Ez2A==
-X-Received: by 2002:a05:6a00:4fd4:b0:78a:f784:e8cf with SMTP id d2e1a72fcca58-79387829619mr30057984b3a.27.1760520653790;
-        Wed, 15 Oct 2025 02:30:53 -0700 (PDT)
-Received: from WANGAOW-LAB01.qualcomm.com (tpe-colo-wan-fw-bordernet.qualcomm.com. [103.229.16.4])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-7992d09aa20sm17946745b3a.39.2025.10.15.02.30.50
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 15 Oct 2025 02:30:53 -0700 (PDT)
-From: Wangao Wang <wangao.wang@oss.qualcomm.com>
-To: vikash.garodia@oss.qualcomm.com, dikshita.agarwal@oss.qualcomm.com,
-        abhinav.kumar@linux.dev, bod@kernel.org, mchehab@kernel.org
-Cc: linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, quic_qiweil@quicinc.com,
-        quic_renjiang@quicinc.com, Wangao Wang <wangao.wang@oss.qualcomm.com>
-Subject: [PATCH v1 4/4] media: qcom: iris: Add intra refresh support for encoder
-Date: Wed, 15 Oct 2025 17:27:08 +0800
-Message-ID: <20251015092708.3703-5-wangao.wang@oss.qualcomm.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20251015092708.3703-1-wangao.wang@oss.qualcomm.com>
-References: <20251015092708.3703-1-wangao.wang@oss.qualcomm.com>
+	s=arc-20240116; t=1760521403; c=relaxed/simple;
+	bh=ohU9p2wj4W925yjMw6YOgURwMS4OKHFNYtatSsax8Zs=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=cgArI9wufETc2D3lrGJWZiOIFJ65x9EzSuInoOkavISnzf/VI98RHITK1yzojzG62H5Yc5LAsSyNtwUl1Hw7j6zjGMOSqtNMgRAbSF/91rbjiSu3CXAzR3Sel4dpDgoXQzjTOjQUWA8qr8o6zxNVQ+LDcww170XAHJtOIT+dOkc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=jSVBijxE; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B427C4CEF8;
+	Wed, 15 Oct 2025 09:43:11 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1760521403;
+	bh=ohU9p2wj4W925yjMw6YOgURwMS4OKHFNYtatSsax8Zs=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=jSVBijxENX5rGNw3FqGWtQjw84u1qLNtOFXu2j+AGJI7Cqh5Sr2ec3rzfmGIYfGGF
+	 bg2eQ5kBAfmjbmjFxV8bMOx/dh2sZh2Bny2IGuh0HUusCBF2mfYYzrjzAu09mz+R8P
+	 8dEnM9AR/Md1hWK2jPW3Pl2dSvSIjELA2jKS+gSq5vWQvQXOm5Wg1qnrDnMDH9cFAw
+	 KtrZryZNPL5NJNyM8QE3b5jHa15rEjotRyWsGtUXqEBUzQYKeVIBKwNI1fSt6UJ+wH
+	 /rHyTFTonsvVUouTuL2hIVB2d8Qv/QlCuhnMwo/7irr6uXEI1r0KLevfXPO+g4rQUl
+	 rnoxSJcKjPc6Q==
+Date: Wed, 15 Oct 2025 15:13:06 +0530
+From: Manivannan Sadhasivam <mani@kernel.org>
+To: Shawn Lin <shawn.lin@rock-chips.com>
+Cc: Bjorn Helgaas <helgaas@kernel.org>, 
+	manivannan.sadhasivam@oss.qualcomm.com, Bjorn Helgaas <bhelgaas@google.com>, 
+	Lorenzo Pieralisi <lpieralisi@kernel.org>, Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kwilczynski@kernel.org>, 
+	Rob Herring <robh@kernel.org>, linux-pci@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	linux-arm-msm@vger.kernel.org, "David E. Box" <david.e.box@linux.intel.com>, 
+	Kai-Heng Feng <kai.heng.feng@canonical.com>, "Rafael J. Wysocki" <rafael@kernel.org>, 
+	Heiner Kallweit <hkallweit1@gmail.com>, Chia-Lin Kao <acelan.kao@canonical.com>, 
+	Dragan Simic <dsimic@manjaro.org>, linux-rockchip@lists.infradead.org, regressions@lists.linux.dev, 
+	FUKAUMI Naoki <naoki@radxa.com>
+Subject: Re: [PATCH v2 1/2] PCI/ASPM: Override the ASPM and Clock PM states
+ set by BIOS for devicetree platforms
+Message-ID: <armtyxe7yab6l3sqiu6tsnnnuhzhhv6k63x2w4vdpenvramgof@26cqfazuyfog>
+References: <22594781424C5C98+22cb5d61-19b1-4353-9818-3bb2b311da0b@radxa.com>
+ <20251014184905.GA896847@bhelgaas>
+ <5ivvb3wctn65obgqvnajpxzifhndza65rsoiqgracfxl7iiimt@oym345d723o2>
+ <823262AB21C8D981+8c1b9d50-5897-432b-972e-b7bb25746ba5@radxa.com>
+ <7ugvxl3g5szxhc5ebxnlfllp46lhprjvcg5xp75mobsa44c6jv@h2j3dvm5a4lq>
+ <a9ca7843-b780-45aa-9f62-3f443ae06eee@rock-chips.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-GUID: ZKh099ATooD5gUm46lp-aJfRNSsXdTGX
-X-Proofpoint-ORIG-GUID: ZKh099ATooD5gUm46lp-aJfRNSsXdTGX
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDExMDAyMCBTYWx0ZWRfXwpApgKJ34e6i
- l6YkHn/kZuwoNZkbAyxMpR8h9dzCh6MV60PqNmmeVEy5Q1OMfNI5a7ddwpWkC1bCJxyWOVKJrs1
- ZkAFu7wcg/6AYZerBxSxgC82rJ5H00bgiPDkFfiz+oyXFPSKvf9SQ6My54K0Zu/LnbnP5xj48LC
- ZYCFptayCcbE5eiOLmtRywkrccf5Qx7sCI2s2X5DTao7ABNEkMSjryjjxKMOgApnzJiE0l0D877
- /eMS0TOzvvkls+jTfMXsn6cjnVmtnnkaseX3YzCVkYCtwa+T+qcY6Iae9G49Vk3TaT/jfJLhEkP
- S4aQoKkLkAu8WCg+sujG2wpwUc9Sc8XtHXYLXXsqpA/C6FW6LHlODsvyGe7nEbd3ufhdqfH3PVV
- 9YsZ2aYW7+5Dfq35r3mmK7Jn9/B50A==
-X-Authority-Analysis: v=2.4 cv=V71wEOni c=1 sm=1 tr=0 ts=68ef69d0 cx=c_pps
- a=rEQLjTOiSrHUhVqRoksmgQ==:117 a=nuhDOHQX5FNHPW3J6Bj6AA==:17
- a=x6icFKpwvdMA:10 a=VkNPw1HP01LnGYTKEx00:22 a=EUspDBNiAAAA:8
- a=l_OZQY5ESRzjHvheC7cA:9 a=2VI0MkxyNR6bbpdq8BZq:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-10-15_04,2025-10-13_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- bulkscore=0 malwarescore=0 spamscore=0 adultscore=0 suspectscore=0
- impostorscore=0 phishscore=0 clxscore=1015 lowpriorityscore=0
- priorityscore=1501 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2510020000
- definitions=main-2510110020
+In-Reply-To: <a9ca7843-b780-45aa-9f62-3f443ae06eee@rock-chips.com>
 
-Add support for V4L2_CID_MPEG_VIDEO_INTRA_REFRESH_PERIOD and
-V4L2_CID_MPEG_VIDEO_INTRA_REFRESH_PERIOD_TYPE controls.
+On Wed, Oct 15, 2025 at 05:11:39PM +0800, Shawn Lin wrote:
+> Hi Mani
+> 
+> 在 2025/10/15 星期三 15:50, Manivannan Sadhasivam 写道:
+> > On Wed, Oct 15, 2025 at 04:13:41PM +0900, FUKAUMI Naoki wrote:
+> > > Hi,
+> > > 
+> > > On 10/15/25 15:26, Manivannan Sadhasivam wrote:
+> > > > On Tue, Oct 14, 2025 at 01:49:05PM -0500, Bjorn Helgaas wrote:
+> > > > > [+cc regressions]
+> > > > > 
+> > > > > On Wed, Oct 15, 2025 at 01:30:16AM +0900, FUKAUMI Naoki wrote:
+> > > > > > Hi Manivannan Sadhasivam,
+> > > > > > 
+> > > > > > I've noticed an issue on Radxa ROCK 5A/5B boards, which are based on the
+> > > > > > Rockchip RK3588(S) SoC.
+> > > > > > 
+> > > > > > When running Linux v6.18-rc1 or linux-next since 20250924, the kernel either
+> > > > > > freezes or fails to probe M.2 Wi-Fi modules. This happens with several
+> > > > > > different modules I've tested, including the Realtek RTL8852BE, MediaTek
+> > > > > > MT7921E, and Intel AX210.
+> > > > > > 
+> > > > > > I've found that reverting the following commit (i.e., the patch I'm replying
+> > > > > > to) resolves the problem:
+> > > > > > commit f3ac2ff14834a0aa056ee3ae0e4b8c641c579961
+> > > > > 
+> > > > > Thanks for the report, and sorry for the regression.
+> > > > > 
+> > > > > Since this affects several devices from different manufacturers and (I
+> > > > > assume) different drivers, it seems likely that there's some issue
+> > > > > with the Rockchip end, since ASPM probably works on these devices in
+> > > > > other systems.  So we should figure out if there's something wrong
+> > > > > with the way we configure ASPM, which we could potentially fix, or if
+> > > > > there's a hardware issue and we need some king of quirk to prevent
+> > > > > usage of ASPM on the affected platforms.
+> > > > > 
+> > > > 
+> > > > I believe it is the latter. The Root Port is having trouble with ASPM.
+> > > > 
+> > > > FUKAUMI Naoki, could you please share the 'sudo lspci -vv' output so that we
+> > > > know what kind of Root Port we are dealing with? You can revert the offending
+> > > > patch and share the output.
+> > > 
+> > > Here is dmesg/lspci output on ROCK 5A(RK3588S):
+> > >   https://gist.github.com/RadxaNaoki/1355a0b4278b6e51a61d89df7a535a5d
+> > > 
+> > 
+> > Thanks! Could you please try the below diff with f3ac2ff14834 applied?
+> > 
+> > diff --git a/drivers/pci/quirks.c b/drivers/pci/quirks.c
+> > index 214ed060ca1b..0069d06c282d 100644
+> > --- a/drivers/pci/quirks.c
+> > +++ b/drivers/pci/quirks.c
+> > @@ -2525,6 +2525,15 @@ static void quirk_disable_aspm_l0s_l1(struct pci_dev *dev)
+> >    */
+> >   DECLARE_PCI_FIXUP_FINAL(PCI_VENDOR_ID_ASMEDIA, 0x1080, quirk_disable_aspm_l0s_l1);
+> > 
+> > +
+> > +static void quirk_disable_aspm_all(struct pci_dev *dev)
+> > +{
+> > +       pci_info(dev, "Disabling ASPM\n");
+> > +       pci_disable_link_state(dev, PCIE_LINK_STATE_ALL);
+> > +}
+> > +
+> > +DECLARE_PCI_FIXUP_FINAL(PCI_VENDOR_ID_ROCKCHIP, 0x3588, quirk_disable_aspm_all);
+> 
+> That's not true from my POV. Rockchip platform supports all ASPM policy
+> after mass production verification. I also verified current upstream
+> code this morning with RK3588-EVB and can check L0s/L1/L1ss work fine.
+> 
+> The log and lspci output could be found here:
+> https://pastebin.com/qizeYED7
+> 
+> Moreover, I disscussed this issue with FUKAUMI today off-list and his
+> board seems to work when only disable L1ss by patching:
+> 
+> --- a/drivers/pci/pcie/aspm.c
+> +++ b/drivers/pci/pcie/aspm.c
+> @@ -813,7 +813,7 @@ static void pcie_aspm_override_default_link_state(struct
+> pcie_link_state *link)
+> 
+>         /* For devicetree platforms, enable all ASPM states by default */
+>         if (of_have_populated_dt()) {
+> -               link->aspm_default = PCIE_LINK_STATE_ASPM_ALL;
+> +               link->aspm_default = PCIE_LINK_STATE_L0S |
+> PCIE_LINK_STATE_L1;
+>                 override = link->aspm_default & ~link->aspm_enabled;
+>                 if (override)
+>                         pci_info(pdev, "ASPM: DT platform,
+> 
+> 
 
-Signed-off-by: Wangao Wang <wangao.wang@oss.qualcomm.com>
----
- drivers/media/platform/qcom/iris/iris_ctrls.c | 33 +++++++++++++++++++
- drivers/media/platform/qcom/iris/iris_ctrls.h |  1 +
- .../qcom/iris/iris_hfi_gen2_defines.h         |  2 ++
- .../platform/qcom/iris/iris_platform_common.h |  2 ++
- .../platform/qcom/iris/iris_platform_gen2.c   | 19 +++++++++++
- 5 files changed, 57 insertions(+)
+Thanks a lot for debugging the issue. Now it is clear that the board routing is
+on play and ASPM works fine on Rockchip Root Ports.
 
-diff --git a/drivers/media/platform/qcom/iris/iris_ctrls.c b/drivers/media/platform/qcom/iris/iris_ctrls.c
-index 8f74c12f2f41..148915692473 100644
---- a/drivers/media/platform/qcom/iris/iris_ctrls.c
-+++ b/drivers/media/platform/qcom/iris/iris_ctrls.c
-@@ -104,6 +104,10 @@ static enum platform_inst_fw_cap_type iris_get_cap_id(u32 id)
- 		return HFLIP;
- 	case V4L2_CID_VFLIP:
- 		return VFLIP;
-+	case V4L2_CID_MPEG_VIDEO_INTRA_REFRESH_PERIOD_TYPE:
-+		return IR_TYPE;
-+	case V4L2_CID_MPEG_VIDEO_INTRA_REFRESH_PERIOD:
-+		return IR_PERIOD;
- 	default:
- 		return INST_FW_CAP_MAX;
- 	}
-@@ -197,6 +201,10 @@ static u32 iris_get_v4l2_id(enum platform_inst_fw_cap_type cap_id)
- 		return V4L2_CID_HFLIP;
- 	case VFLIP:
- 		return V4L2_CID_VFLIP;
-+	case IR_TYPE:
-+		return V4L2_CID_MPEG_VIDEO_INTRA_REFRESH_PERIOD_TYPE;
-+	case IR_PERIOD:
-+		return V4L2_CID_MPEG_VIDEO_INTRA_REFRESH_PERIOD;
- 	default:
- 		return 0;
- 	}
-@@ -944,6 +952,31 @@ int iris_set_flip(struct iris_inst *inst, enum platform_inst_fw_cap_type cap_id)
- 					     &hfi_val, sizeof(u32));
- }
- 
-+int iris_set_ir_period(struct iris_inst *inst, enum platform_inst_fw_cap_type cap_id)
+> So, is there a proper way to just disable this feature for spec boards
+> instead of this Soc?
+> 
+
+Below should work:
+
+diff --git a/drivers/pci/quirks.c b/drivers/pci/quirks.c
+index 214ed060ca1b..9864b2c91399 100644
+--- a/drivers/pci/quirks.c
++++ b/drivers/pci/quirks.c
+@@ -29,6 +29,7 @@
+ #include <linux/ktime.h>
+ #include <linux/mm.h>
+ #include <linux/nvme.h>
++#include <linux/of.h>
+ #include <linux/platform_data/x86/apple.h>
+ #include <linux/pm_runtime.h>
+ #include <linux/sizes.h>
+@@ -2525,6 +2526,19 @@ static void quirk_disable_aspm_l0s_l1(struct pci_dev *dev)
+  */
+ DECLARE_PCI_FIXUP_FINAL(PCI_VENDOR_ID_ASMEDIA, 0x1080, quirk_disable_aspm_l0s_l1);
+
++
++static void quirk_disable_aspm_radxa(struct pci_dev *dev)
 +{
-+	const struct iris_hfi_command_ops *hfi_ops = inst->core->hfi_ops;
-+	struct vb2_queue *q = v4l2_m2m_get_dst_vq(inst->m2m_ctx);
-+	u32 ir_period = inst->fw_caps[cap_id].value;
-+	u32 ir_type = 0;
-+
-+	if (inst->fw_caps[IR_TYPE].value ==
-+			V4L2_CID_MPEG_VIDEO_INTRA_REFRESH_PERIOD_TYPE_RANDOM) {
-+		if (vb2_is_streaming(q))
-+			return 0;
-+		ir_type = HFI_PROP_IR_RANDOM_PERIOD;
-+	} else if (inst->fw_caps[IR_TYPE].value ==
-+			V4L2_CID_MPEG_VIDEO_INTRA_REFRESH_PERIOD_TYPE_CYCLIC) {
-+		ir_type = HFI_PROP_IR_CYCLIC_PERIOD;
-+	} else
-+		return -EINVAL;
-+
-+	return hfi_ops->session_set_property(inst, ir_type,
-+					     HFI_HOST_FLAGS_NONE,
-+					     iris_get_port_info(inst, cap_id),
-+					     HFI_PAYLOAD_U32,
-+					     &ir_period, sizeof(u32));
++       if (of_machine_is_compatible("radxa,rock-5a") ||
++          (of_machine_is_compatible("radxa,rock-5b"))) {
++               pci_info(dev, "Disabling ASPM L1ss\n");
++               pci_disable_link_state(dev, PCIE_LINK_STATE_L1_1 |
++                                      PCIE_LINK_STATE_L1_2);
++       }
 +}
 +
- int iris_set_properties(struct iris_inst *inst, u32 plane)
- {
- 	const struct iris_hfi_command_ops *hfi_ops = inst->core->hfi_ops;
-diff --git a/drivers/media/platform/qcom/iris/iris_ctrls.h b/drivers/media/platform/qcom/iris/iris_ctrls.h
-index 355a592049f3..9518803577bc 100644
---- a/drivers/media/platform/qcom/iris/iris_ctrls.h
-+++ b/drivers/media/platform/qcom/iris/iris_ctrls.h
-@@ -34,6 +34,7 @@ int iris_set_frame_qp(struct iris_inst *inst, enum platform_inst_fw_cap_type cap
- int iris_set_qp_range(struct iris_inst *inst, enum platform_inst_fw_cap_type cap_id);
- int iris_set_rotation(struct iris_inst *inst, enum platform_inst_fw_cap_type cap_id);
- int iris_set_flip(struct iris_inst *inst, enum platform_inst_fw_cap_type cap_id);
-+int iris_set_ir_period(struct iris_inst *inst, enum platform_inst_fw_cap_type cap_id);
- int iris_set_properties(struct iris_inst *inst, u32 plane);
- 
- #endif
-diff --git a/drivers/media/platform/qcom/iris/iris_hfi_gen2_defines.h b/drivers/media/platform/qcom/iris/iris_hfi_gen2_defines.h
-index 0f92468dca91..9e8fdddf2aef 100644
---- a/drivers/media/platform/qcom/iris/iris_hfi_gen2_defines.h
-+++ b/drivers/media/platform/qcom/iris/iris_hfi_gen2_defines.h
-@@ -70,6 +70,7 @@ enum hfi_rate_control {
- #define HFI_PROP_QP_PACKED			0x0300012e
- #define HFI_PROP_MIN_QP_PACKED			0x0300012f
- #define HFI_PROP_MAX_QP_PACKED			0x03000130
-+#define HFI_PROP_IR_RANDOM_PERIOD		0x03000131
- #define HFI_PROP_TOTAL_BITRATE			0x0300013b
- #define HFI_PROP_MAX_GOP_FRAMES			0x03000146
- #define HFI_PROP_MAX_B_FRAMES			0x03000147
-@@ -108,6 +109,7 @@ enum hfi_flip {
- #define HFI_PROP_BUFFER_MARK			0x0300016c
- #define HFI_PROP_RAW_RESOLUTION		0x03000178
- #define HFI_PROP_TOTAL_PEAK_BITRATE		0x0300017C
-+#define HFI_PROP_IR_CYCLIC_PERIOD		0x0300017E
- #define HFI_PROP_COMV_BUFFER_COUNT		0x03000193
- #define HFI_PROP_END				0x03FFFFFF
- 
-diff --git a/drivers/media/platform/qcom/iris/iris_platform_common.h b/drivers/media/platform/qcom/iris/iris_platform_common.h
-index 284d6bde6d6b..30b98e769ad3 100644
---- a/drivers/media/platform/qcom/iris/iris_platform_common.h
-+++ b/drivers/media/platform/qcom/iris/iris_platform_common.h
-@@ -143,6 +143,8 @@ enum platform_inst_fw_cap_type {
- 	ROTATION,
- 	HFLIP,
- 	VFLIP,
-+	IR_TYPE,
-+	IR_PERIOD,
- 	INST_FW_CAP_MAX,
- };
- 
-diff --git a/drivers/media/platform/qcom/iris/iris_platform_gen2.c b/drivers/media/platform/qcom/iris/iris_platform_gen2.c
-index 5d76f638020f..35915c87c5b1 100644
---- a/drivers/media/platform/qcom/iris/iris_platform_gen2.c
-+++ b/drivers/media/platform/qcom/iris/iris_platform_gen2.c
-@@ -620,6 +620,25 @@ static struct platform_inst_fw_cap inst_fw_cap_sm8550_enc[] = {
- 			CAP_FLAG_DYNAMIC_ALLOWED,
- 		.set = iris_set_flip,
- 	},
-+	{
-+		.cap_id = IR_TYPE,
-+		.min = V4L2_CID_MPEG_VIDEO_INTRA_REFRESH_PERIOD_TYPE_RANDOM,
-+		.max = V4L2_CID_MPEG_VIDEO_INTRA_REFRESH_PERIOD_TYPE_CYCLIC,
-+		.step_or_mask = BIT(V4L2_CID_MPEG_VIDEO_INTRA_REFRESH_PERIOD_TYPE_RANDOM) |
-+			BIT(V4L2_CID_MPEG_VIDEO_INTRA_REFRESH_PERIOD_TYPE_CYCLIC),
-+		.value = V4L2_CID_MPEG_VIDEO_INTRA_REFRESH_PERIOD_TYPE_RANDOM,
-+		.flags = CAP_FLAG_OUTPUT_PORT | CAP_FLAG_MENU,
-+	},
-+	{
-+		.cap_id = IR_PERIOD,
-+		.min = 0,
-+		.max = INT_MAX,
-+		.step_or_mask = 1,
-+		.value = 0,
-+		.flags = CAP_FLAG_OUTPUT_PORT |
-+			CAP_FLAG_DYNAMIC_ALLOWED,
-+		.set = iris_set_ir_period,
-+	},
- };
- 
- static struct platform_inst_caps platform_inst_cap_sm8550 = {
--- 
-2.43.0
++DECLARE_PCI_FIXUP_FINAL(PCI_VENDOR_ID_ROCKCHIP, 0x3588, quirk_disable_aspm_radxa);
++
+ /*
+  * Some Pericom PCIe-to-PCI bridges in reverse mode need the PCIe Retrain
+  * Link bit cleared after starting the link retrain process to allow this
 
+
+- Mani
+
+-- 
+மணிவண்ணன் சதாசிவம்
 
