@@ -1,34 +1,34 @@
-Return-Path: <linux-arm-msm+bounces-77484-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-77485-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [IPv6:2605:f480:58:1:0:1994:3:14])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9F086BE0BF3
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Oct 2025 23:02:50 +0200 (CEST)
+Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [142.0.200.124])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0FD49BE0C37
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Oct 2025 23:11:54 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 485584FB1AA
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Oct 2025 21:02:49 +0000 (UTC)
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 4AB5D4E4107
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Oct 2025 21:11:50 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 19F1626B942;
-	Wed, 15 Oct 2025 21:02:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C91542EBDD0;
+	Wed, 15 Oct 2025 21:11:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=lunn.ch header.i=@lunn.ch header.b="lPN1FzPv"
+	dkim=pass (1024-bit key) header.d=lunn.ch header.i=@lunn.ch header.b="II9+KuIH"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from vps0.lunn.ch (vps0.lunn.ch [156.67.10.101])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 727A41C84AB;
-	Wed, 15 Oct 2025 21:01:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B4212D7DDD;
+	Wed, 15 Oct 2025 21:11:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=156.67.10.101
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760562120; cv=none; b=nm0hknOpA/ysVRmA1IybUCtbj6XaqxQydHe5KaMOns7T83FgBPiCvxyv+Vz5/P+3hCsPq2FD3e29MCEhLhsl+XCHM+rkxk4VAKMt7GcZ2YnG4DLDIBuqpayzM/3TojU0274m12h/khB68GpIwnnkgvLf4GiV9q8iJckaCBPpVgw=
+	t=1760562704; cv=none; b=EO/vME3yA98cgnEnEYik0Ds0Lyf+WhJ0DOg83PZl/icCJWPzTNfiFUBtHEIVXaalczT1FTgr9YDh+3Po64bcRHkV2o1hVMAWKjA5AAAAZsQge9/hdXPTEpM0h/qRq8/Ze0f7kt9C9kKyDrspJVQDOL9STNacXOy39iyvc67U1Bc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760562120; c=relaxed/simple;
-	bh=oPqga1R+Lw5csFQdmxSTZ2j5nvk6/0nsHqsHDe3Scrw=;
+	s=arc-20240116; t=1760562704; c=relaxed/simple;
+	bh=qBLSwv+yCCOqYdSP/9odJfd9AbbK2v4pcqe6JTmq4eI=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=mCTUVhEA1p0Jfb+ACeGvq3KUcQj8JQ3Kth5MkVEd+dfSEz5tOSHYipMZSrcl+UjMni4Xnvk1s/yPfvT9NUAL3xDa2Ru+Zvenj0uBTVFK+9x4TPmb/WhQ4sEeuOa1jTVokkDApKMgcRAig+sRnrmpXLNF0OjEYD6ohlNUBLkBJww=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lunn.ch; spf=pass smtp.mailfrom=lunn.ch; dkim=pass (1024-bit key) header.d=lunn.ch header.i=@lunn.ch header.b=lPN1FzPv; arc=none smtp.client-ip=156.67.10.101
+	 Content-Type:Content-Disposition:In-Reply-To; b=YpDpjw0xc3MYUW3dWNEvmf9vCfvXk94FmWO7sjiZ6PR+z4XyzNp7Bm3q2zd8cBF33eQatkW5kR1/NQLRmn+qVr/Qa5C6wxqzTYAEjrJvubygTmxDc+8djTzpIxsOQw1gG6u0n0HA/lCUD8lkSVCox4Gk5Z9irzJBz92OyD6xIac=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lunn.ch; spf=pass smtp.mailfrom=lunn.ch; dkim=pass (1024-bit key) header.d=lunn.ch header.i=@lunn.ch header.b=II9+KuIH; arc=none smtp.client-ip=156.67.10.101
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lunn.ch
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=lunn.ch
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=lunn.ch;
@@ -36,13 +36,13 @@ DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=lunn.ch;
 	References:Message-ID:Subject:Cc:To:From:Date:From:Sender:Reply-To:Subject:
 	Date:Message-ID:To:Cc:MIME-Version:Content-Type:Content-Transfer-Encoding:
 	Content-ID:Content-Description:Content-Disposition:In-Reply-To:References;
-	bh=u9Vd50llGKlJUDtO+EduzVWWAqtczGOx8sjS49cA9dk=; b=lPN1FzPvrEnEGdf/5DGvQidRRO
-	KJ5J8zqk9k3JB5y6fJ14/5mp2e7wWv7356ulG6IYc49OvXw1+rc7IsCUxnOMNW0jrCSAwMv5KTL9J
-	n5pz55iGmNuvnBdS7skj93TFnJjxmMFG6vWzjb/DsgBMNNgo/nn4VPY8j77XEDzXTMyQ=;
+	bh=lU7P2fdQo33lU9CWhezw41R+YVngVYZZxsfcPjczaD8=; b=II9+KuIHljJ6JNDxMUJKU01/u3
+	uxihvz7A22UHG+HrN8nFhiN08qiIE2YtWRxywh6a75ozBXd4Vw3LIgxhASL1ia9K6gG/GS+vhow8h
+	RK362b8jZiT2G1M5x86ohZlL4jW0+caGkcN9BbcCHHUEZIAzIc5392OGlZ1ytEfoTDJo=;
 Received: from andrew by vps0.lunn.ch with local (Exim 4.94.2)
 	(envelope-from <andrew@lunn.ch>)
-	id 1v98cr-00B4oN-8p; Wed, 15 Oct 2025 23:01:37 +0200
-Date: Wed, 15 Oct 2025 23:01:37 +0200
+	id 1v98mI-00B4sb-D1; Wed, 15 Oct 2025 23:11:22 +0200
+Date: Wed, 15 Oct 2025 23:11:22 +0200
 From: Andrew Lunn <andrew@lunn.ch>
 To: "Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>
 Cc: Heiner Kallweit <hkallweit1@gmail.com>,
@@ -83,11 +83,11 @@ Cc: Heiner Kallweit <hkallweit1@gmail.com>,
 	Vladimir Oltean <olteanv@gmail.com>,
 	Vladimir Oltean <vladimir.oltean@nxp.com>,
 	Yu-Chun Lin <eleanor15x@gmail.com>
-Subject: Re: [PATCH net-next 12/14] net: stmmac: only call
- stmmac_pcs_ctrl_ane() for integrated SGMII PCS
-Message-ID: <79822da1-d797-43f5-b0d3-533d5e914b07@lunn.ch>
+Subject: Re: [PATCH net-next 13/14] net: stmmac: provide PCS initialisation
+ hook
+Message-ID: <96842284-8d92-46b8-8b28-2b20755c3523@lunn.ch>
 References: <aO-tbQCVu47R3izM@shell.armlinux.org.uk>
- <E1v92N9-0000000AmHV-0WAA@rmk-PC.armlinux.org.uk>
+ <E1v92NE-0000000AmHd-15fv@rmk-PC.armlinux.org.uk>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -96,19 +96,28 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <E1v92N9-0000000AmHV-0WAA@rmk-PC.armlinux.org.uk>
+In-Reply-To: <E1v92NE-0000000AmHd-15fv@rmk-PC.armlinux.org.uk>
 
-On Wed, Oct 15, 2025 at 03:20:59PM +0100, Russell King (Oracle) wrote:
-> The internal PCS registers only exist if the core is synthesized with
-> SGMII, TBI or RTBI support. They have no relevance for RGMII.
-> 
-> However, priv->hw->pcs contains a STMMAC_PCS_RGMII flag, which is set
-> if a PCS has been synthesized but we are operating in RGMII mode. As
-> the register has no effect for RGMII, there is no point calling
-> stmmac_pcs_ctrl_ane() in this case. Add a comment describing this
-> and make it conditional on STMMAC_PCS_SGMII.
-> 
-> Signed-off-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
+> +	/* Unimplemented PCS init (as indicated by stmmac_do_callback()
+> +	 * perversely returning -EINVAL) is non-fatal.
+> +	 */
+> +	ret = stmmac_mac_pcs_init(priv);
+> +	if (ret != -EINVAL)
+> +		return ret;
+
+Oh, that's ugly.
+
+Looking back at
+
+commit 42de047d60bc5d87e369c36115058b9dacc5683c
+Author: Jose Abreu <Jose.Abreu@synopsys.com>
+Date:   Mon Apr 16 16:08:12 2018 +0100
+
+    net: stmmac: Switch stmmac_desc_ops to generic HW Interface Helpers
+
+which added this, i don't actually see a user of the returned EINVAL.
+EOPNOTSUPP would of been better. But changing it now will need quite a
+bit of review work :-(
 
 Reviewed-by: Andrew Lunn <andrew@lunn.ch>
 
