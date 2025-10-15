@@ -1,161 +1,143 @@
-Return-Path: <linux-arm-msm+bounces-77494-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-77495-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [IPv6:2605:f480:58:1:0:1994:3:14])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9B1F4BE0E09
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Oct 2025 23:55:53 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 508C5BE0E26
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Oct 2025 23:57:46 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 8105C4EE098
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Oct 2025 21:55:52 +0000 (UTC)
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 3F7A44E817B
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Oct 2025 21:57:45 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0CC0B3043D4;
-	Wed, 15 Oct 2025 21:55:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4AA983043C4;
+	Wed, 15 Oct 2025 21:57:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="XTvrSye8"
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=armlinux.org.uk header.i=@armlinux.org.uk header.b="mn7QF/uG"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from pandora.armlinux.org.uk (pandora.armlinux.org.uk [78.32.30.218])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA22B3043B3
-	for <linux-arm-msm@vger.kernel.org>; Wed, 15 Oct 2025 21:55:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71F0729D279;
+	Wed, 15 Oct 2025 21:57:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=78.32.30.218
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760565347; cv=none; b=WG5l8hepb3/MvsOX7f8A6BpNkSxHqK2IQwjD29TfIXeJG4vHSMeFbEIY8EKBfEP33ZLcKBabmBYUv9yfHpCLQZflNub9+JbLNI3tgz/CeA6TgFnD4JS6/oVI8ScD3AB/8x4cp7cD/niYow11FY2BlMR6vLEt6SWhts0PII7vbsM=
+	t=1760565461; cv=none; b=Vs2pEguLTGxrjGWK/O6G4iJthDxWYPpSz/xhieMIFw/gvG0TqOmpyKWZX+x+Cy8UVTmRBeOt75tEWR9RE1hv4ScI/YkaPf4COSrf91qfNG15YG7JuEHBy+NL1bCHccjsavjm9uccEeRuIlwUYqW7nD+oNCo7L8JSkI5y2wXfPr8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760565347; c=relaxed/simple;
-	bh=OFUZEAn0tJfrAUbL/6gUV+/vHKjKd4aU7a2bK6qndOU=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=hMz0dfj1nACnEASdWYVCQAKC/jUEy22bolKgBLzDp1UbxGq9e2Y97cIQPvE0IPhNrPt/35JrYrOY8sLoVWaOmNIZpQsj2XVrITi2jVL7K/RUNA5ieACJbuhgK5xhaaMxhqPmb0UITQr/rDzfFslsyU9coZn7NAY4op6ToDkXDL0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=XTvrSye8; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B58D5C19424
-	for <linux-arm-msm@vger.kernel.org>; Wed, 15 Oct 2025 21:55:47 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1760565347;
-	bh=OFUZEAn0tJfrAUbL/6gUV+/vHKjKd4aU7a2bK6qndOU=;
-	h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-	b=XTvrSye8LFx8I2EDZvSsssU9YDxQRmbmqRHNq8mr4JGiVimliYi1AnVP7b4fPYwBk
-	 +RXItK/h6ga30VZfNUIUCRqViNq/TEoBTBBAT/qyoYGyhA5uZ71K0K39dyO4M1+dIE
-	 3n2kFV9I4hTnwqSsp32+okXPWp35yrE4hKJey33ew9IbxD+Dc29TJ/w917qC4+cIBZ
-	 UDCCsIJGA+X2/B/dH1KQYLXYuliBREwLhSyHzMGlP+2PjtPVPlile8xwTNCb2Rko7z
-	 yjqZK/MR+tLdUGxeuk2yGm+H0a4+wskRo83Xd8EJKyXOQkG9Gs4Gz/sI/PMLaJJhBI
-	 210BLmVi4phPQ==
-Received: by mail-ej1-f48.google.com with SMTP id a640c23a62f3a-b5b823b4f3dso7533466b.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Oct 2025 14:55:47 -0700 (PDT)
-X-Forwarded-Encrypted: i=1; AJvYcCVwAFln02dz0mmjScs6VhBGkR3CILinmC3jxHkHVEATw0SNgLjhfeK1WV5GqFX0NHP680JEipsJ5BY7bZ0g@vger.kernel.org
-X-Gm-Message-State: AOJu0YzQlhczj3OZGSqocLR+Fjhj/3kwh+6vLo7dYfXPEI7iD7Wy2JjX
-	RAWuJbfjjwfvY5CU9l7lT07KRXCCDlQ+IsgG4CxkLetKLsDeX1ph/3G9l58EZsKh3SSMs7rtjji
-	hIQ5kabaXeJ2EQDBI9n2Bn4PYuvn3CA==
-X-Google-Smtp-Source: AGHT+IFHESWupx/CTqIl66Cowsu3EvMAI/+jJbfasG4ZKwZXkzIfC23I0vb6ITIupl3h7wZ6qWU0Vk2BmLWIuje8Wec=
-X-Received: by 2002:a17:906:ee89:b0:b3b:679d:7f4a with SMTP id
- a640c23a62f3a-b50aa387331mr3022927066b.5.1760565346012; Wed, 15 Oct 2025
- 14:55:46 -0700 (PDT)
+	s=arc-20240116; t=1760565461; c=relaxed/simple;
+	bh=WUMK/p1NpKi6lgRs+bVf1M0kCd8OsC05g8BX3feRS7I=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=gVhFauIrHKH+vM6/5db/oczeg6QexGGCj2HYdQg7DkVU8dGScciG/YpQn4ESi2rVzKKsM0YO0udWvmmaZvVCmQ4u8W8V60FuAfFZOgotavfSK4j02CsTgqYYpOQREyjHqKNo8ONujVlADNH7iMoOCGn5b3QBhjNZWW919YHo+0c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=armlinux.org.uk; spf=none smtp.mailfrom=armlinux.org.uk; dkim=pass (2048-bit key) header.d=armlinux.org.uk header.i=@armlinux.org.uk header.b=mn7QF/uG; arc=none smtp.client-ip=78.32.30.218
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=armlinux.org.uk
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=armlinux.org.uk
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=armlinux.org.uk; s=pandora-2019; h=Sender:In-Reply-To:Content-Type:
+	MIME-Version:References:Message-ID:Subject:Cc:To:From:Date:Reply-To:
+	Content-Transfer-Encoding:Content-ID:Content-Description:Resent-Date:
+	Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:
+	List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
+	bh=w4Vhb+pWajT1Ug9vm6p2q425XInEco8nPyGgnsCFC6I=; b=mn7QF/uGABpKN3xNzZQhmz2z8B
+	o11ld6ctbXR/ky2Bzy9GmguS3MZrXnF1v2rYnkjP5YhUCZo59ImkCcNqhMFbUqqZQngxwTgx92ZgP
+	uUcm3aQsK5C3oeuTJBBTA4Gjy7CdOrDM7lZERKde429KjydqJBEKRvmUAlv4qS4lv/4CxMntHi6Ri
+	B4m95goSjEKH1jPj2ZEIvSgu3K+3K8pRLhYL5jP6gUIBKXXpuBTVy5nhRltxZuXFPSEphg8trRGUe
+	DyxHgnVYT6D5oWp5MRGliTSF6l4qTUbUxfZn86zYEQT44SrSmakBSNxf9lqsMxS+akwDPJ+7/yJjR
+	NxC1+iNw==;
+Received: from shell.armlinux.org.uk ([fd8f:7570:feb6:1:5054:ff:fe00:4ec]:33366)
+	by pandora.armlinux.org.uk with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.98.2)
+	(envelope-from <linux@armlinux.org.uk>)
+	id 1v99Uh-000000005Vv-0ZMi;
+	Wed, 15 Oct 2025 22:57:15 +0100
+Received: from linux by shell.armlinux.org.uk with local (Exim 4.98.2)
+	(envelope-from <linux@shell.armlinux.org.uk>)
+	id 1v99Ua-000000002di-3k6X;
+	Wed, 15 Oct 2025 22:57:08 +0100
+Date: Wed, 15 Oct 2025 22:57:08 +0100
+From: "Russell King (Oracle)" <linux@armlinux.org.uk>
+To: Andrew Lunn <andrew@lunn.ch>
+Cc: Heiner Kallweit <hkallweit1@gmail.com>,
+	Abhishek Chauhan <quic_abchauha@quicinc.com>,
+	Alexandre Torgue <alexandre.torgue@foss.st.com>,
+	Alexis Lothore <alexis.lothore@bootlin.com>,
+	Andrew Lunn <andrew+netdev@lunn.ch>,
+	Boon Khai Ng <boon.khai.ng@altera.com>,
+	Choong Yong Liang <yong.liang.choong@linux.intel.com>,
+	Daniel Machon <daniel.machon@microchip.com>,
+	"David S. Miller" <davem@davemloft.net>,
+	Drew Fustini <dfustini@tenstorrent.com>,
+	Emil Renner Berthing <emil.renner.berthing@canonical.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Faizal Rahim <faizal.abdul.rahim@linux.intel.com>,
+	Furong Xu <0x1207@gmail.com>, Inochi Amaoto <inochiama@gmail.com>,
+	Jacob Keller <jacob.e.keller@intel.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	"Jan Petrous (OSS)" <jan.petrous@oss.nxp.com>,
+	Jisheng Zhang <jszhang@kernel.org>, Kees Cook <kees@kernel.org>,
+	Kunihiko Hayashi <hayashi.kunihiko@socionext.com>,
+	Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>,
+	Ley Foon Tan <leyfoon.tan@starfivetech.com>,
+	linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org,
+	linux-stm32@st-md-mailman.stormreply.com,
+	Matthew Gerlach <matthew.gerlach@altera.com>,
+	Maxime Chevallier <maxime.chevallier@bootlin.com>,
+	Maxime Coquelin <mcoquelin.stm32@gmail.com>,
+	Michal Swiatkowski <michal.swiatkowski@linux.intel.com>,
+	netdev@vger.kernel.org, Oleksij Rempel <o.rempel@pengutronix.de>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Rohan G Thomas <rohan.g.thomas@altera.com>,
+	Shenwei Wang <shenwei.wang@nxp.com>,
+	Simon Horman <horms@kernel.org>,
+	Song Yoong Siang <yoong.siang.song@intel.com>,
+	Swathi K S <swathi.ks@samsung.com>,
+	Tiezhu Yang <yangtiezhu@loongson.cn>, Vinod Koul <vkoul@kernel.org>,
+	Vladimir Oltean <olteanv@gmail.com>,
+	Vladimir Oltean <vladimir.oltean@nxp.com>,
+	Yu-Chun Lin <eleanor15x@gmail.com>
+Subject: Re: [PATCH net-next 14/14] net: stmmac: convert to phylink PCS
+ support
+Message-ID: <aPAYtHPcF5bes7Xi@shell.armlinux.org.uk>
+References: <aO-tbQCVu47R3izM@shell.armlinux.org.uk>
+ <E1v92NJ-0000000AmHi-1ZGJ@rmk-PC.armlinux.org.uk>
+ <040a2f29-4c95-4561-87c0-2a70308d3f00@lunn.ch>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <nzqte4glwtpjs5bhkxz43yhdufelxvqvzmg5tepudxwetimir3@bvlw5csjizsh>
- <9d3eeb9f-b8ea-48e5-a1d9-0865f63ef991@arm.com> <fhb4woejzh3r6v5dxvdiopnsbuwstucfuuzbiymxg4wrxrjc7t@dt3z3utq6lwd>
- <8d88cd9d-16e8-43f9-8eb3-89862da1d0c1@arm.com> <hOs24ZavnUyKYyNwBWwRpYnrsefzBfp95yuy9zyp1ByxR9_3VacGX1Yntt8pCE4w3gllPwvevs1AZqghmwKoFg==@protonmail.internalid>
- <zcgn4xw2xghyna2eysavujbzbiydyki7p7upzzv7one5mdyjy6@sj7f75kc4vwu>
- <fb767586-a376-48eb-97b4-bf33061642b9@kernel.org> <a4WDx80rJP1GnGNEK0OOD5lh-m-MiAvireXdpiM9ETLKZ084sBJ2UthU_QqRbU_nwD4XtsdiyEqQ0AhxguzJ6g==@protonmail.internalid>
- <6gx74wxie4wcabq27wo5y7v36uuurez4jxlzanroepqazdlgtw@sdtv2ld47d3q>
- <fa3c1732-328d-46a2-8514-2e7f9ca6c63f@kernel.org> <aE5RMDRfrr2wxUAqjjsBMcodNQxLsUT_Soi_LXMJXYcfmmeBSHnPM3e5JUPOb89tSfeI1jQbt9LfLCOXFBZFSA==@protonmail.internalid>
- <mwthowuei7pcqp2b4hg5c45n47iakclkioumc6diyznhnldfv5@wloeoys224bg> <796770d1-024e-4967-a96a-b7f32b28ca64@kernel.org>
-In-Reply-To: <796770d1-024e-4967-a96a-b7f32b28ca64@kernel.org>
-From: Rob Herring <robh@kernel.org>
-Date: Wed, 15 Oct 2025 16:55:34 -0500
-X-Gmail-Original-Message-ID: <CAL_JsqKNS9meBRxhMQvEym+yOK2r9ddpn4Q-FKb1efSm9sT3Bw@mail.gmail.com>
-X-Gm-Features: AS18NWAIHJjzHLZj2uLa3SUxLobahI_sXDbl6LjepNIuAadyImOTozg2xUTbUqI
-Message-ID: <CAL_JsqKNS9meBRxhMQvEym+yOK2r9ddpn4Q-FKb1efSm9sT3Bw@mail.gmail.com>
-Subject: Re: [RFC PATCH 0/3] Introduce iommu-map-masked for platform devices
-To: "Bryan O'Donoghue" <bod@kernel.org>
-Cc: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>, Robin Murphy <robin.murphy@arm.com>, 
-	Charan Teja Kalla <charan.kalla@oss.qualcomm.com>, joro@8bytes.org, will@kernel.org, 
-	saravanak@google.com, conor+dt@kernel.org, mchehab@kernel.org, 
-	krzk+dt@kernel.org, abhinav.kumar@linux.dev, vikash.garodia@oss.qualcomm.com, 
-	dikshita.agarwal@oss.qualcomm.com, 
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, bjorn.andersson@oss.qualcomm.com, 
-	linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	iommu@lists.linux.dev
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <040a2f29-4c95-4561-87c0-2a70308d3f00@lunn.ch>
+Sender: Russell King (Oracle) <linux@armlinux.org.uk>
 
-On Wed, Oct 15, 2025 at 3:53=E2=80=AFAM Bryan O'Donoghue <bod@kernel.org> w=
-rote:
->
-> On 14/10/2025 23:18, Dmitry Baryshkov wrote:
-> > On Tue, Oct 14, 2025 at 09:49:17PM +0100, Bryan O'Donoghue wrote:
-> >> On 14/10/2025 19:35, Dmitry Baryshkov wrote:
-> >>>> Each function id can be associated with a device and a compat string
-> >>>> associated with it.
-> >>> So, which part of the hardware is described by the -cb device? What d=
-oes
-> >>> it mean_here_?
-> >>
-> >> The non-pixel path video encoder, the tz video encoder...
-> >>
-> >> What's not clear about that ?
-> >
-> > Where do you have pixel encoders in the fastrpc device node?
-> >
-> > --
-> > With best wishes
-> > Dmitry
->
-> Haha, no sorry I didn't mean to suggest that at all.
->
-> I mean do something _like_ that, for these FUNCION_IDs.
->
-> We could replicate that for a new iris add for say Glymur or Kanaapali.
->
-> Sub-nodes of the main iris device. They have a real purpose in that the
-> 'device' requirement is full range IOVA for the SID and implicit
-> identification of the FUNCTION_ID with the compat string
->
-> iris-video@0xdeadbeef {
->         video@0 {
->                 reg =3D <0>;  /* FUNCTION_ID HLOS could also go here */
->                 compat =3D "qcom,glymur-iris";
->
->                 iommus =3D <&apps_smmu 0x1940 0x0000>;
->         };
->
->         video@1 {
->                 reg =3D <1>;
->                 compat =3D "qcom,glymur-iris-non-pixel";
->                 iommus =3D <&apps_smmu 0x1947 0x0000>;
->         };
-> };
->
-> The reg property could also be the function_id
->
-> video@FUNC_ID_HLOS {
->         reg =3D <FUNC_ID_HLOS>;
->         ...
-> };
->
-> There's no need for a new iommu specific property to help us fixup
-> sm8550 iommu definition.
->
-> As I say if that error wasn't already in sm8550, we wouldn't be trying
-> to solve the problem this way.
->
-> So lets solve the problem for Glymur and Kanaapali and then backport
-> upstream if we can or downstream if we can't.
->
-> What we need are new devices what we will do with the data in
-> iommu-map-masked is make new devices. We are mapping data - iommu SID to
-> device and implicit FUNCTION_ID to a device.
->
-> So we should be declaring devices, instead of burying the data in a new
-> property that is not obvious what it does or why it exists.
+On Wed, Oct 15, 2025 at 11:31:37PM +0200, Andrew Lunn wrote:
+> > - create stmmac_pcs.c, which contains the phylink_pcs_ops structure, a
+> >   dummy .pcs_get_state() method which always reports link-down
+> 
+> I've not followed the PCS code too closely. Why always report link
+> down? Why is a dummy method needed?
 
-No, these aren't separate devices. Please stop going down this route.
+If phylink is put into inband mode, and a PCS is supplied to phylink
+where this method left NULL, the kernel will oops.
 
-Rob
+As the code stands today in mainline, if phylink were to be put into
+inband mode with the integrated PCS, then there will be no phylink PCS,
+and so phylink_mac_pcs_get_state() will fall into the "else" path of:
+
+        pcs = pl->pcs;
+        if (pcs)
+                pcs->ops->pcs_get_state(pcs, pl->pcs_neg_mode, state);
+        else
+                state->link = 0;
+
+and force the link down.
+
+So, adding this method keeps the status quo - not oopsing the kernel
+and not allowing the link to come up. No unintended behavioural
+change in this regard from how it would behave today. :)
+
+-- 
+RMK's Patch system: https://www.armlinux.org.uk/developer/patches/
+FTTP is here! 80Mbps down 10Mbps up. Decent connectivity at last!
 
