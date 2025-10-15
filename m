@@ -1,105 +1,154 @@
-Return-Path: <linux-arm-msm+bounces-77461-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-77462-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ams.mirrors.kernel.org (ams.mirrors.kernel.org [IPv6:2a01:60a::1994:3:14])
-	by mail.lfdr.de (Postfix) with ESMTPS id 11C78BE0511
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Oct 2025 21:09:42 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 72088BE0526
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Oct 2025 21:12:31 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ams.mirrors.kernel.org (Postfix) with ESMTPS id B1BA63537C2
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Oct 2025 19:09:41 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 3596D427BF5
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Oct 2025 19:12:30 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E1B62302CCD;
-	Wed, 15 Oct 2025 19:09:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 54F12302CCD;
+	Wed, 15 Oct 2025 19:12:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Mb9w4PZa"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="pJG/aXgq"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f48.google.com (mail-wm1-f48.google.com [209.85.128.48])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4B752BDC3B;
-	Wed, 15 Oct 2025 19:09:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A011283686
+	for <linux-arm-msm@vger.kernel.org>; Wed, 15 Oct 2025 19:12:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760555379; cv=none; b=Yzj8FaU7IOndW7HvtlQ7YfnosOrcGxIfmQQZF9sc2voFwzjZOkQn3qBj9FJYXH7yyflMmsCPS/xtAJWx9U1qarge30TLmNWlbRN3wzbCv17s9cqamXF9v4Oluf+r14dMW/18LpCmKkFiG3THKcSYxHArtquqx27Y9K/XNxTNTL0=
+	t=1760555547; cv=none; b=EjvmNl8Cy/WtGCpntHZGN9kX8FQV1bDuzfoYuHYAU0TvuUqaC+5vl3WUGPl5tY3gnegIjoi9248jzyYsbARb7BF5mzMIIcWy6Smv+sYbNkf9diOJX1qjNWguFXcNKWc5rhcC2R6AQsIucLq/g3kmDOGDNXwRZGrH4ZUhcCM0TT4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760555379; c=relaxed/simple;
-	bh=WwwXtbAybha3ZLb6O/IGC6PpjE2KyRiKGEVICuAujsc=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=gpf5imTZ6srmuUWjCmx3b+6WSj9iCaFeOAgVk29qlmG9Lpc9DTdBM0FMdSkrSTNMbXsIsk22pw4gdPzbHX/Aw1CFmQXXJWIH01lOinU+rgAuoneu6R5Sp24ZrvuJvtigizsoMccRI4G6ylmGOmSVgeb/GiTqJjvQrYz/90UaO6I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Mb9w4PZa; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F02FAC4CEF8;
-	Wed, 15 Oct 2025 19:09:35 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1760555379;
-	bh=WwwXtbAybha3ZLb6O/IGC6PpjE2KyRiKGEVICuAujsc=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=Mb9w4PZamSvMwkj5Q/1eUT1San+uCbMMNeL6JIjr4yT4V9EI4C0j1UjLBWKn+7HvL
-	 ZAS841iK6XpqRVu62Enyamca4tOQE/2gtb8vkrkj6xJDDMUv7BeZequoGSkkKB4ZsI
-	 Arb4TTjQFhS28CSRqSkmS6UGA6xZFtjhtcqFEQ/p6rIGtU9jmrIAR/3aafQcuicdhY
-	 VV6BYOydBosXSCizIFmfOlPhb+cJtaD8OYgZnwIsmfhz3Rwok+sr+kGlX39VebwENQ
-	 6teBLyPhs17sB5gDQ/j4PRWXFsfDi8BIYE/GAEDyFUJlQMBHp8yuFD0UHcV0zyF+MK
-	 oPGncWYI28v4w==
-Date: Wed, 15 Oct 2025 20:09:32 +0100
-From: Mark Brown <broonie@kernel.org>
-To: Kamal Wadhwa <kamal.wadhwa@oss.qualcomm.com>
-Cc: Liam Girdwood <lgirdwood@gmail.com>, Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	linux-arm-msm@vger.kernel.org,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
-	Jishnu Prakash <jishnu.prakash@oss.qualcomm.com>
-Subject: Re: [PATCH v3 0/4] rpmh-regulators: Update rpmh-regulator driver and
- dt-bindings for Glymur
-Message-ID: <022305e8-a2ea-4013-9ee0-41e83e5f41bc@sirena.org.uk>
-References: <20250918-glymur-rpmh-regulator-driver-v3-0-184c09678be3@oss.qualcomm.com>
+	s=arc-20240116; t=1760555547; c=relaxed/simple;
+	bh=4QK2T6kGZyFylzPYSzPxH+9bXfmmQQta6fIUzxi82kw=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=DpS/+ccwCMswY9/SxsOUuaJ6NQ+62QpsBzmlOueR37tRtsPlJSsk/TddoRZms4xM4i9aMcWqwFr3KRIEoc5aLELAsG/o2wJdbK49ar4lgql0OgWNA7ahZp8EpVnfHslU20YsKt7QS6jdC9EABM6tU5CpZ1MP3f523/hmPxmLjaw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=pJG/aXgq; arc=none smtp.client-ip=209.85.128.48
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wm1-f48.google.com with SMTP id 5b1f17b1804b1-46e6a689bd0so52332945e9.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Oct 2025 12:12:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1760555544; x=1761160344; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=zX0FQJMNOkesxTSiczvMscK9aHeUEgUhQXWADwrmqhs=;
+        b=pJG/aXgqTPZ6GB70+XnOb3h9OZZnIcsS0otLdSaGUVnkmYKNx3qz8fuMEtTm+nec2i
+         356bG56xys9klBWxh+4vX/HXlMhSQesz0UeFhRVLfCd86ms8XizN40N8lANcmaQ5cggX
+         PWVdsrcL85RtAIW15UT+Xw+fE+JssJhyDjAMydB5o2wcIA8XIeVg8fEhCTYQTG/DmYoU
+         RMWyfK43dGV5ApmMTKCg5zZg2q1RR1rjVZG2FMJ1DziiKwmRvEmr4BCFvCEeR1jJ56uq
+         GrBOfA0e+EJg+3VQSbQYmQq74bOpbyYcSeh/3e6KTt/KyaEnkEHj5RjdpV4m4F0Pjcqt
+         Euvg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1760555544; x=1761160344;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=zX0FQJMNOkesxTSiczvMscK9aHeUEgUhQXWADwrmqhs=;
+        b=t6Vw0XqGCPGy0tKY5wYWFfxBsJYzqCEPNp0e3qqxxFWF9nD07BqOoZo3z9xS/DhZcg
+         WtcNL+UIs0W2gha7U6lY9koXEil5qKlcxJJYL53tM6LAUoaOSb6OXMDpDk5QQQTd8PHO
+         rZB8WuczE5hhshPYBNtYd0qF7VclSnd9eEZ58N7n9lOU6tkJZeEPiCPx9v25jBpRsqAd
+         agYMAVl/AWcLRYfOffdSlxIHVDZj7sGSEk5pFBUO9fsMNEOWYoJdvQRlOrnnMlUnhAXA
+         vKxILMOQFXRZJEyU5hneFiCbCMPc4IrRr0Anxo28Y4q8AGpxr+Dj9rIeevXFndKAFhAb
+         zmGQ==
+X-Forwarded-Encrypted: i=1; AJvYcCXZIshSXO6KgM4g/V6r7LQuwthvomEP5Jri7LOU2eAyzRaXV+hba1Gj26oVWYNOTUFY53CBoQHVdP9kJg7l@vger.kernel.org
+X-Gm-Message-State: AOJu0Yy4TrNBXA3/NpqKC0/bTGCDS33XBKwqjwBI2yyIeCtncJi4GhyV
+	rtK8DOkPdBA951HGwxUwI/ddm0WEU2AROC6HBOgLrme42hpCvNeQ8RlO149nraGgfA0=
+X-Gm-Gg: ASbGncu+6s35MEmnVG2C07QnaSfdCSZ5TJ3xzKkjrSElohorUzc5sDkd6fEOnOiZjR4
+	H0l9RqTzdHxEFPdULLprU/UNmzHI9Az/64ldgDraWq+/QOdSen2zM3WrDKkNRyXrv7vxHZf0DKy
+	HDMtvSg8J/stthc/4cOALR2eF68N/qkoO0xn3BCzflcoo9yZse+4WVgB5qdVMXYdjcT7zHu7iiS
+	MzX0nauFWk6ZJg5P9jPNP8mB097BBul9bpBxao3sRPNMQMC9k1dgWpivuzGMZ6Xg1ke8+sm/cua
+	OW2mGEuE6EjZa97vwKTsDNfiFqO6DxSEENUzpW1ctVTfNFv5CgUszgC+3T49LArJLhqK8Kasz7B
+	ZF1ScVdg4gr7NmjWNHY1xrNrf+vEKlzq8SUQ/oAQ4RfHayGh/lRqe/AU+tTVZB1cXvVScyVdYqh
+	XRr2JPSsKPi8/3Fv1AfkNnGA==
+X-Google-Smtp-Source: AGHT+IHbd0cW44W3/gflLhZW99H6UzVn2a320v+osYcGxzgftCt49JmvdlRHRiYyZeC4FCtJAzNpwA==
+X-Received: by 2002:a05:600c:6383:b0:465:a51d:d4 with SMTP id 5b1f17b1804b1-46fa9a8b48dmr229438345e9.6.1760555543790;
+        Wed, 15 Oct 2025 12:12:23 -0700 (PDT)
+Received: from [192.168.0.19] (188-141-3-146.dynamic.upc.ie. [188.141.3.146])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-426ce57d49bsm32016093f8f.10.2025.10.15.12.12.22
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 15 Oct 2025 12:12:23 -0700 (PDT)
+Message-ID: <15b35191-eaff-4971-bae5-2d5a8cb9f864@linaro.org>
+Date: Wed, 15 Oct 2025 20:12:21 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="ASrrcNOedjRtYOLD"
-Content-Disposition: inline
-In-Reply-To: <20250918-glymur-rpmh-regulator-driver-v3-0-184c09678be3@oss.qualcomm.com>
-X-Cookie: Long life is in store for you.
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 1/2] dt-bindings: media: qcom,qcs8300-camss: Add
+ missing power supplies
+To: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
+ Vikram Sharma <quic_vikramsa@quicinc.com>, mchehab@kernel.org,
+ robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org,
+ andersson@kernel.org, konradybcio@kernel.org, hverkuil-cisco@xs4all.nl,
+ cros-qcom-dts-watchers@chromium.org, catalin.marinas@arm.com, will@kernel.org
+Cc: linux-arm-kernel@lists.infradead.org, quic_svankada@quicinc.com,
+ linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+ Nihal Kumar Gupta <quic_nihalkum@quicinc.com>
+References: <20251015130130.2790829-1-quic_vikramsa@quicinc.com>
+ <20251015130130.2790829-2-quic_vikramsa@quicinc.com>
+ <bfa0d4f2-45c6-463e-8afc-d90edcf8cf2f@linaro.org>
+From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Content-Language: en-US
+In-Reply-To: <bfa0d4f2-45c6-463e-8afc-d90edcf8cf2f@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
+On 15/10/2025 19:41, Vladimir Zapolskiy wrote:
+> On 10/15/25 16:01, Vikram Sharma wrote:
+>> Add support for vdda-phy-supply and vdda-pll-supply in the QCS8300
+>> CAMSS binding to reflect camera sensor hardware requirements.
+> 
+> What are "camera sensor hardware requirements"? You do add properties
+> to the ISP.
+> 
+>>
+>> Co-developed-by: Nihal Kumar Gupta <quic_nihalkum@quicinc.com>
+>> Signed-off-by: Nihal Kumar Gupta <quic_nihalkum@quicinc.com>
+>> Signed-off-by: Vikram Sharma <quic_vikramsa@quicinc.com>
+>> ---
+>>   .../bindings/media/qcom,qcs8300-camss.yaml          | 13 +++++++++++++
+>>   1 file changed, 13 insertions(+)
+>>
+>> diff --git a/Documentation/devicetree/bindings/media/qcom,qcs8300- 
+>> camss.yaml b/Documentation/devicetree/bindings/media/qcom,qcs8300- 
+>> camss.yaml
+>> index 80a4540a22dc..dce0a1fcb10c 100644
+>> --- a/Documentation/devicetree/bindings/media/qcom,qcs8300-camss.yaml
+>> +++ b/Documentation/devicetree/bindings/media/qcom,qcs8300-camss.yaml
+>> @@ -120,6 +120,14 @@ properties:
+>>       items:
+>>         - const: top
+>> +  vdda-phy-supply:
+>> +    description:
+>> +      Phandle to a regulator supply to PHY core block.
+> 
+> What is "PHY core block" here?
 
---ASrrcNOedjRtYOLD
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+I mean come on, I think the meaning is clear.
 
-On Thu, Sep 18, 2025 at 02:57:00PM +0530, Kamal Wadhwa wrote:
-> This series contains patches to update rpmh-regulator driver and
-> dt-bindings for supporting the PMIC voltage regulators present on the
-> boards with Qualcomm's next gen compute SoC - Glymur.
+>> +
+>> +  vdda-pll-supply:
+>> +    description:
+>> +      Phandle to 1.8V regulator supply to PHY refclk pll block.
+> 
+> This is a copy-paste example of a known to be wrong pattern.
 
-Please submit patches using subject lines reflecting the style for the
-subsystem, this makes it easier for people to identify relevant patches.
-Look at what existing commits in the area you're changing are doing and
-make sure your subject lines visually resemble what they're doing.
-There's no need to resubmit to fix this alone.
+You're right about the name, please align with this commit
 
---ASrrcNOedjRtYOLD
-Content-Type: application/pgp-signature; name="signature.asc"
+git show cba308979b012664c7fe7c5baa818fcb68e86363
 
------BEGIN PGP SIGNATURE-----
+Thanks for spotting.
 
-iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmjv8WwACgkQJNaLcl1U
-h9AARwf+P2aR6rY0tK0PJGHF5nRvv5/IN1Tp/IS6+yqv8I8YqGUbUeoKbZIngyCS
-a131hECghbQXTgxfwlB1R6fltTtSRkGlyDjQJvToxNWKn+S+UWqUfcgnh8dppypu
-t5pGvr0RFRbIEFvgWVkNUy+8H1w4PCCSV4jQQlJMGCeJxrIdLIB0jzcPd1pji6os
-4QBU0zm5/wrciZtkfu5hAJZIw7qFpbIESMcl/hBfAMHjamGSxIUCPbADsbJY1aGY
-ZvUSJjlow7mbUkxaK6kHRv4TUPimRFdZe8Ap06Zfl1YzmZM6vhbbbTlYNItPgVvr
-NDqr5M+8OhEhyv84/sUD//hFrRyo1g==
-=AZ3I
------END PGP SIGNATURE-----
-
---ASrrcNOedjRtYOLD--
+---
+bod
 
