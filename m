@@ -1,194 +1,108 @@
-Return-Path: <linux-arm-msm+bounces-77437-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-77438-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 83DB4BDF6F6
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Oct 2025 17:40:49 +0200 (CEST)
+Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [IPv6:2605:f480:58:1:0:1994:3:14])
+	by mail.lfdr.de (Postfix) with ESMTPS id 13DA0BDF76E
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Oct 2025 17:46:19 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id C9571189EA15
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Oct 2025 15:41:09 +0000 (UTC)
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 368C64FE3B4
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Oct 2025 15:45:49 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 324E0326D77;
-	Wed, 15 Oct 2025 15:40:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 423CE335BA3;
+	Wed, 15 Oct 2025 15:45:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="fFifcm06"
+	dkim=pass (2048-bit key) header.d=acm.org header.i=@acm.org header.b="49uwCEF3"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from 004.mia.mailroute.net (004.mia.mailroute.net [199.89.3.7])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7AC31322DD0
-	for <linux-arm-msm@vger.kernel.org>; Wed, 15 Oct 2025 15:40:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40C9B33438C;
+	Wed, 15 Oct 2025 15:45:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=199.89.3.7
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760542842; cv=none; b=kAvEw1iqNbZ1RZOd3ERY7yRpIEiA02ndHejIAeXSIVOmfuS7NA5GBXMRUZk05Pf6D0aaqC79ZhV7MudAr9PJjH9Z6LcopuqdfG0tzNhxAwdIHPFxRxQlXTuP3C0n+Kc1576sXY4TmalCYdPnQ1tl6hdIM587Od9iLB2RkD6tzmY=
+	t=1760543142; cv=none; b=fg9Y2J0XVRSQ5sakTRVjWVnQ5Lh3VQ7S7NYlj7A3hlGOI2vCtpQCKHi5CGSX+twUjHOK7Vck1zXWQfwF+MhmOcDxmStmPvQMZXI0b5pnfWJukEGC5fmNSC0twaovQyot0EObtRI4odzfUU/e0vrnIMyE6HTECBIAWDB3FbrgMEw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760542842; c=relaxed/simple;
-	bh=8yIzlOJSXfO6YXhbSck71FcfdlxfIEO0W1rlhZ3Foj0=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=RWgyBMsS8+/xQd+Zq+JfninvYHEeZjYVUNW8sHAer3e2YxE7EIGBsRdURaVKxz2U9jNrYGV/ZLaXOxLU3jFz81CrxG4MKcWD14nRFbwdqth4TwprpW/DTqLaRV22+m2Geq2AnAocpn6EWXyTIfRTiZNGXApNkHrNoQ6rmbALHLA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=fFifcm06; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 59FAoY9q014770
-	for <linux-arm-msm@vger.kernel.org>; Wed, 15 Oct 2025 15:40:39 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to; s=qcppdkim1; bh=v51xGGLBzfthpJ6uAG1FtfpT
-	PpeQpU30JZDZNcynxBI=; b=fFifcm06MJtVgPqG3E+gCnYpVvRuDmp8Kd5uoQhJ
-	KU8sxlsS/ZEY2VcwhzOQaw5i1Qtdshl/deNlyb8C9HL7eC0cQqMiBfIz+wje3iFa
-	evnphpSb97MAd9bPeNhrZxG6HlnL530o9Ej323pF1JFTaBf54WAKcsbffE0ujUBe
-	zZrvzCnoyKpJk33+0stXq639TgJd2N9UgnwjFHfsjKlaCifQlz+1yU14zd464FAT
-	uINnJbFeeEXWLjF3ZrNXEMUfP00/kPcglhFjYRRjRPstwTQy7aQryG5+Sq+8K9S3
-	v3GKHBAfFKsxohCoV8AEAKDVkeLxiTuhey1ErGpQ0gKqwQ==
-Received: from mail-pl1-f198.google.com (mail-pl1-f198.google.com [209.85.214.198])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 49qfbj4ywb-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Wed, 15 Oct 2025 15:40:39 +0000 (GMT)
-Received: by mail-pl1-f198.google.com with SMTP id d9443c01a7336-2699ed6d43dso112123615ad.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Oct 2025 08:40:39 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1760542838; x=1761147638;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=v51xGGLBzfthpJ6uAG1FtfpTPpeQpU30JZDZNcynxBI=;
-        b=j7Fmpaaq+a1zzegfULXpzwsX3j3MHOUpcvERS5zri8CCFlzHR/Faf4JZcGrw9CDrlL
-         j5Q9JvBv5NQ7qkzZyeC5h9to6arsc9sj0VsCdHDpKw2nCgCnD/CnYrue9KWZIiRNW/k5
-         WGheki9JNv5EYc6CZtJ2NEx8cJwdtZSNE8xPolt+bKnO29TK+IxQyo9aBf+xVHpngY6j
-         fKsAKXeWM318Cg1YKdpr/XWAQBDpqiI2vIvGhuGIipojkIxg9l0tF3Y3KOyQuc6vK9fY
-         uN9G+sFVGJuW8IoxBUmVPcNecqDw/6KWAn6/BngLlhXgONf49RuB+c7wGo7YRQUBFcWU
-         FfdA==
-X-Forwarded-Encrypted: i=1; AJvYcCVan9CVad3QlHwEU+tZTTw57hepGvWf1f2ViDGfe065Bgjm9bTKwwdKa7mVjL980OFOHnX3RiPNEYUJX7uW@vger.kernel.org
-X-Gm-Message-State: AOJu0Yx55oiLZGOwSu3nOv90eQDet1WYn8KDcESMUKSW2VLkW10FgUO1
-	q2Rn1w4R2BspT1ym1qRs3axXBvkhRCR4nZRaXMNhwFjbRQuN2PEKKHCV+SLP2r3dpkaFiEllkQW
-	jGo5e0DZPtt8YR31wTR1XiAoD2q2ymXTwWw1ABxhGm0FQEk8PHsaCJBVs8i1J+AS2KVe1
-X-Gm-Gg: ASbGncsjULGxcf0XMCql6HqwFstYIVf7iRMCbygNnNJkcYG6j5xRSVlnBCqEbYE/m/t
-	1ymmHRor+u/POORtyDepyJR6eXMXQzieA3OT0zTsQo0dlld2SnFS/W3Y7CX/pZ2lKlDt7aTRFnQ
-	aA/YUhledzJvwrUYnim1sAde91aAM4dwkjqxQ0VNrebpiOH2RqI70Ip7hCfRysYRXgKwNr1/6HW
-	YuLr30aK7cfas4WrZTey6wzzOc4b0LAtKIQ7qOR/dlnl4deTS8APy8X0BpJFqqlAop7csrDIDEp
-	yH6HaIQHduaG+DP9kGBJwu02rFJ0jY6mpEdxs/7u3o/DEGMsgC2+OfFU1BgynUAvd7jNp/RlkMX
-	qnTGZl/3TcLed9XAxKbJKad76ng==
-X-Received: by 2002:a17:903:94f:b0:250:643e:c947 with SMTP id d9443c01a7336-290273ee209mr362922995ad.28.1760542837806;
-        Wed, 15 Oct 2025 08:40:37 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IH0flfR5h7EFdAnGkZA4xK4OhgMnYLtcfmupB0TvW9tUJ2NNuuPUm+lRnMe685BmxN8pgVIOg==
-X-Received: by 2002:a17:903:94f:b0:250:643e:c947 with SMTP id d9443c01a7336-290273ee209mr362922665ad.28.1760542837307;
-        Wed, 15 Oct 2025 08:40:37 -0700 (PDT)
-Received: from hu-kamalw-hyd.qualcomm.com ([202.46.22.19])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-29034e1cbcbsm200774325ad.45.2025.10.15.08.40.33
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 15 Oct 2025 08:40:36 -0700 (PDT)
-Date: Wed, 15 Oct 2025 21:10:31 +0530
-From: Kamal Wadhwa <kamal.wadhwa@oss.qualcomm.com>
-To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Cc: Pankaj Patil <pankaj.patil@oss.qualcomm.com>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 09/24] arm64: dts: qcom: glymur-crd: Add RPMH regulator
- rails
-Message-ID: <20251015154031.hbifj6khno3gi3mz@hu-kamalw-hyd.qualcomm.com>
-References: <20250925-v3_glymur_introduction-v1-0-24b601bbecc0@oss.qualcomm.com>
- <20250925-v3_glymur_introduction-v1-9-24b601bbecc0@oss.qualcomm.com>
- <a49f3f75-c882-4635-9be3-a433b7fe32c8@oss.qualcomm.com>
+	s=arc-20240116; t=1760543142; c=relaxed/simple;
+	bh=yaz2Z85tZytlPOi/nqyuR3FEP2uD07pWIvLcsG6hU9U=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=mHYFxtmOID8FD8H6UjkX1WJ05DuzO7asf5AXJwq+5XBY0leNzKC6rBGfAWqgngpfMJyphBfymKFRvFSWbZPy+sGpBrr27rZigjZjrjmXb1BjM1SzJEMJc+D9DbxklMO2zeIaspuKESrqcGpQhG0WqFT9ct/8BcvB/W89DjzQfss=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=acm.org; spf=pass smtp.mailfrom=acm.org; dkim=pass (2048-bit key) header.d=acm.org header.i=@acm.org header.b=49uwCEF3; arc=none smtp.client-ip=199.89.3.7
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=acm.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=acm.org
+Received: from localhost (localhost [127.0.0.1])
+	by 004.mia.mailroute.net (Postfix) with ESMTP id 4cmwQp6yVhzm16kw;
+	Wed, 15 Oct 2025 15:45:38 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=acm.org; h=
+	content-transfer-encoding:content-type:content-type:in-reply-to
+	:from:from:content-language:references:subject:subject
+	:user-agent:mime-version:date:date:message-id:received:received;
+	 s=mr01; t=1760543135; x=1763135136; bh=QyuuKfs99l8LLYj4BWxd1Wj9
+	tzofVCbfQMiYUa/Hx7k=; b=49uwCEF3y3Dj6ZyMxsuJUYPhktLVKwzkkMNzSWs+
+	L/iPzcEguQfpc8KxFrvq9+xpzexPJNTIbcZOpuy00yga6CGtSkdczrftK+87EFOC
+	qCLXLSQabNmlJV5YdKhgNh5BVhoFCt4qW4ZZ/Ly1Yo679E6yeWkP44Qp4YsFevCJ
+	7w4/s11OvqBk9NR98q5z1Nz6NlNghY1zrz9WKVkkowuJ4x2d0RLnFJ/WQBAUdKox
+	Qj0QOwHs74bfi9YA1EG+SkOZKmChkqZHIa3Ht7nyTYyAMLpkvw62EHutORG4girJ
+	jN8uqwLva0Mlp8dXhQp6m4G4fx1eDsFP+E0N4jVx6fu1PA==
+X-Virus-Scanned: by MailRoute
+Received: from 004.mia.mailroute.net ([127.0.0.1])
+ by localhost (004.mia [127.0.0.1]) (mroute_mailscanner, port 10029) with LMTP
+ id xR_7uzTFA2B9; Wed, 15 Oct 2025 15:45:35 +0000 (UTC)
+Received: from [100.119.48.131] (unknown [104.135.180.219])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	(No client certificate requested)
+	(Authenticated sender: bvanassche@acm.org)
+	by 004.mia.mailroute.net (Postfix) with ESMTPSA id 4cmwQS2KXhzm16l9;
+	Wed, 15 Oct 2025 15:45:19 +0000 (UTC)
+Message-ID: <bb9c7926-4820-4922-a67d-65a6b1bace9a@acm.org>
+Date: Wed, 15 Oct 2025 08:45:18 -0700
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <a49f3f75-c882-4635-9be3-a433b7fe32c8@oss.qualcomm.com>
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDExMDAxOCBTYWx0ZWRfX18kr+1HEhyid
- 4AxAq00/GjbL/KLNsiHVzgOZ2bZy9jEC5WU7FGW8sLbU3sQSjdtrc5rruAvxzjFCVroTuyiHOkx
- vEXhbXk42Lmdv0kaN+rlV7L7VCzvIdzilfOCKVR573K41pB2S4jYrOrlKx6q9Qgz6l3O0uidINg
- bCF/2ayNSvLpwYjQrkMnh247GKG1RXZ2KzaHm3geMC56wz9Vp59uUN9oA1r6cJQlq0Ltb+TiW5R
- JAMu3jwvQZk846Le21DJf1TkQ+i1Hgj8gwGm88BKjYtbX3WYsOkz7vG0silxYv4PRmWtWHqWTqI
- nwLKa7sX4bh35jzpc8LUrFKP1k75/8+BudiinLlhS08IOyT4K6jwgr8dFMS4BxEFZqmVQ/S82N8
- H4AmVRRO3huINRJcKGaeGHLjJMEktA==
-X-Proofpoint-ORIG-GUID: lN2oTP2TE9JsDNodXCYC9k9GLidcqzjN
-X-Authority-Analysis: v=2.4 cv=bodBxUai c=1 sm=1 tr=0 ts=68efc077 cx=c_pps
- a=MTSHoo12Qbhz2p7MsH1ifg==:117 a=fChuTYTh2wq5r3m49p7fHw==:17
- a=kj9zAlcOel0A:10 a=x6icFKpwvdMA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=EUspDBNiAAAA:8 a=VNp9kv7xENmXbawpSbEA:9 a=CjuIK1q_8ugA:10
- a=GvdueXVYPmCkWapjIL-Q:22
-X-Proofpoint-GUID: lN2oTP2TE9JsDNodXCYC9k9GLidcqzjN
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-10-15_05,2025-10-13_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0 lowpriorityscore=0 adultscore=0 impostorscore=0 suspectscore=0
- bulkscore=0 priorityscore=1501 clxscore=1015 malwarescore=0 spamscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2510020000 definitions=main-2510110018
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH V1 2/2] ufs: ufs-qcom: Disable AHIT before SQ tail update
+ to prevent race in MCQ mode
+To: Palash Kambar <palash.kambar@oss.qualcomm.com>
+Cc: mani@kernel.org, alim.akhtar@samsung.com, avri.altman@wdc.com,
+ peter.griffin@linaro.org, krzk@kernel.org, peter.wang@mediatek.com,
+ beanhuo@micron.com, quic_nguyenb@quicinc.com, adrian.hunter@intel.com,
+ ebiggers@kernel.org, neil.armstrong@linaro.org,
+ James.Bottomley@hansenpartnership.com, martin.petersen@oracle.com,
+ linux-arm-msm@vger.kernel.org, linux-scsi@vger.kernel.org,
+ linux-kernel@vger.kernel.org, quic_cang@quicinc.com,
+ quic_nitirawa@quicinc.com
+References: <20251014060406.1420475-1-palash.kambar@oss.qualcomm.com>
+ <20251014060406.1420475-3-palash.kambar@oss.qualcomm.com>
+ <f2b56041-b418-4ca9-a84a-ac662a850207@acm.org>
+ <CAGbPq5dhUXr59U_J3W4haNHughkaiXpnc4kAZWXB0SjPdFQMhg@mail.gmail.com>
+Content-Language: en-US
+From: Bart Van Assche <bvanassche@acm.org>
+In-Reply-To: <CAGbPq5dhUXr59U_J3W4haNHughkaiXpnc4kAZWXB0SjPdFQMhg@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Thu, Sep 25, 2025 at 01:01:56PM +0200, Konrad Dybcio wrote:
-> On 9/25/25 8:32 AM, Pankaj Patil wrote:
-> > From: Kamal Wadhwa <kamal.wadhwa@oss.qualcomm.com>
-> > 
-> > Add RPMH regulator rails for Glymur CRD.
-> > 
-> > Signed-off-by: Kamal Wadhwa <kamal.wadhwa@oss.qualcomm.com>
-> > Signed-off-by: Pankaj Patil <pankaj.patil@oss.qualcomm.com>
-> > ---
-> 
-> [...]
-> 
-> > +	regulators-1 {
-> > +		compatible = "qcom,pmcx0102-rpmh-regulators";
-> > +		qcom,pmic-id = "C_E0";
-> > +		vdd-s1-supply = <&vph_pwr>;
-> > +		vdd-s8-supply = <&vph_pwr>;
-> > +
-> > +		vreg_s1c_e0_0p3: smps1 {
-> > +			regulator-name = "vreg_s1c_e0_0p3";
-> > +			regulator-min-microvolt = <300000>;
-> > +			regulator-max-microvolt = <1200000>;
-> > +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-> > +		};
-> > +
-> > +		vreg_s8c_e0_0p3: smps8 {
-> > +			regulator-name = "vreg_s8c_e0_0p3";
-> > +			regulator-min-microvolt = <300000>;
-> > +			regulator-max-microvolt = <1200000>
-> 
-> Both of these regulators, having no consumers, will be parked to 0.3 V
-> (the lower bound)
-> 
-> There are other similar cases in this patch
+On 10/15/25 7:08 AM, Palash Kambar wrote:
+> Since AHIT is a hardware-based power-saving feature, disabling it 
+> entirely
+> could lead to significant power penalties. Therefore, this patch aims to 
+> preserve
+> power efficiency while resolving the race condition.
+> We have tested this change and observed no noticeable performance 
+> degradation.
+> Also, adding in RPM callbacks will not solve the power penalty as it 
+> autosuspend timer is
+> 3 secs in comparision to AHIT timer which is 5ms.
 
-Ok. I will remove the unused rails.
+The runtime power management timeout can be modified. Please verify
+whether the power consumption with AHIT disabled and the runtime power
+management timeout set to 5 ms is acceptable.
 
-But just wanted to let you know currently i have exposed all the rails that
-are allowed to be controlled from APPS, mostly these rails will be staying
-OFF if no clients in SW are there to vote on them.
+Thanks,
 
-But do note that some of the clients may be getting added as more features
-get added, as lot of these rails are not unused in the HW. The client driver
-just isnt enabled as of now.
-
-So wanted to check if I should remove ALL rails that are unused in SW?
- or
-Can i keep the ones for which clients will be getting added in near future.
-
-(i would prefer the later option, if that is ok with you?)
-
-> 
-> Does the board still boot with all the expected functionality with only
-> patches 1-9 applied?
-
-No. just tested, it seems not able to boot properly with just 1-9 patches.
-is your concern about squashing of the patches?
-(just trying to understand)
-
-> 
-> Konrad
-
-Regards,
-Kamal
+Bart.
 
