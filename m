@@ -1,190 +1,198 @@
-Return-Path: <linux-arm-msm+bounces-77375-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-77376-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [142.0.200.124])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1FACABDE19F
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Oct 2025 12:54:38 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2722EBDE3F6
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Oct 2025 13:23:57 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 6100B4F024F
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Oct 2025 10:54:35 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id B2CEA400DC3
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Oct 2025 11:23:55 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 44B6E31CA78;
-	Wed, 15 Oct 2025 10:54:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 39660319870;
+	Wed, 15 Oct 2025 11:23:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="fXa2dftG"
+	dkim=pass (2048-bit key) header.d=cknow-tech.com header.i=@cknow-tech.com header.b="Ns/qkxdG"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from out-174.mta1.migadu.com (out-174.mta1.migadu.com [95.215.58.174])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81FBA31A57E
-	for <linux-arm-msm@vger.kernel.org>; Wed, 15 Oct 2025 10:54:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A97C630649F
+	for <linux-arm-msm@vger.kernel.org>; Wed, 15 Oct 2025 11:23:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760525649; cv=none; b=CO+3wa9HWZXaZPYDrx7jYV8Cptso5Lj8oPV5eD5xDkcIR04Sm4ErSV8QsPklYINSWFmSQg5sR1+9JuTMxsNJ5yzvbu9UddRFuVEpYlZ2zSR13DvI6q5PSBCF0Ok3JoDKEyes7c9p3r289bsBbkOwQv5XLpV4K0I8/GaKE7E9YCg=
+	t=1760527426; cv=none; b=g+bhBkfpYCUUWfphr3Kwcb5ZPlS2yNpKOKXvJxJ3LDgBk/kEzUSwX4cRlnBciCtC3J0cuZHZohNW6vKLIQzZ9/Z+ros7Gcq2JHN8Y7UIRQ30OAUKFZwoIMnzhOS4X8v/4Yx0zqUv0vAdp7KnJnJUhtuw+FWD2Un8fkmyEUPBAkI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760525649; c=relaxed/simple;
-	bh=MbXfnKMiKPD634gmC7bM2JdzXeP/4dF+XYw/yV19hGc=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=AaTCAwLxNix1ZoQrrAziMRfA/xrMbOxX4X3QQfxtEo9yBuSnx9xhx4G9uo89hZG+DnxteMJ/4uMsm7O791VQkkh+XCdxLV4eTTTjpDX1SfVru/suiltpvfinwVmooPZ4xiJUPm4BtfXvkfCoNGuiYNfzSqseNXdfi2oyvWXjdkg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=fXa2dftG; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 59FAWJEc004000
-	for <linux-arm-msm@vger.kernel.org>; Wed, 15 Oct 2025 10:54:05 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	ytoLl0rwr/qVPKTq0TG/t4qw9GJbq9gcztEQZCkXQn8=; b=fXa2dftGNZpo7L5m
-	JR5o4M9LMmnNQIBRt5OL1TXhnnsaOza6nKpBt161X+LTrvHXGtpzwAAUKn5pvi/l
-	rZHxvtGFiQvEfQ/L4uQxxtiHn67k4L3iHRXNkEfpqFDII9jmIDUBUtWYyz65LWlP
-	Iv2kKtDWT79i28NxnNbi/iwaXSs4wVtQkfzBBZQnfC7QbGxFGOFentXoVu+q6H+d
-	nc/7bzkejNFARlazGR4teEIeMogDYTnP8hBe9F/sD6JDZPLUEQnzmUd8H2vyQVaM
-	21eyva8giuwRxcLZIu95pXnunPSP/pm4FmCVgrwd+/hDdfCVOpztZyA5lnW2fIO2
-	D/61qQ==
-Received: from mail-pg1-f197.google.com (mail-pg1-f197.google.com [209.85.215.197])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 49s6mwpdu8-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Wed, 15 Oct 2025 10:54:05 +0000 (GMT)
-Received: by mail-pg1-f197.google.com with SMTP id 41be03b00d2f7-b631ba3d31eso9517506a12.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Oct 2025 03:54:05 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1760525645; x=1761130445;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=ytoLl0rwr/qVPKTq0TG/t4qw9GJbq9gcztEQZCkXQn8=;
-        b=tF12nY9s/QsYmSuSZX4HJqoWc8QtDF6i2IBOVDWHin7PpiiD7wv7uN8ISxS198720q
-         g1nxmeiE+7FjLEUiz68QvX/Z0h1LnSgPGzeB3mT+c3jM33hsiurpcG6+yPnju0JelLav
-         UJOF1s6FlxZeTDr9rjPbRKgXhbbQaPrfQff6DnkofAgKSQZLPE4Ito0QgWTxsRcKhl+D
-         1kbybsA6yRgs7pkRSsxVCN/EOq4RwpSD9CIf2XCuIW9lE52KpfLZDjg3HygTue6zDvq5
-         R13XNlqnGKAm0X72ELllduSmTUqjoftWOJPInb9OwSmdrRUX/H2WTRxkjtP32KCAalCz
-         xJyg==
-X-Forwarded-Encrypted: i=1; AJvYcCWwEws2v8sTv8vY5OnyCqTdU9Sb3UuA1OmL4O6zfyBlb4cJU92Q36or2OavAfAQP43NVuMGNLmRiGFfhb6x@vger.kernel.org
-X-Gm-Message-State: AOJu0YwlzUAMKfZ02YbW1aO7myCiqadZdanYhWxuYKdDmXd0hjdtjyOM
-	GZ5hE3Y2UlyQMoHki6lUcyJASq08Au23PIS3eZhb7b2NefS33o9ETzACugPCuIn4TY60IeeVrSa
-	mO/Bzo2OyfBxQ8LZ5orOIVccQlEf9dVIairVCTpNArcxF2znOy0gS8IPJfiN83B1oEuhx
-X-Gm-Gg: ASbGncvWkSnsX+lRc8vmOH33i3wwiUwMloEqRPxOrNnR7bKwZXTQ7yc21PnWXCvacci
-	g0aDUtNoQU2327++G3KuaaZyx7tHZrhnRJiuCQWgFnuMP6AM2tKXABMFR4HHF+cn7o4uWmMxgb3
-	n1stUicDL8oRRNGIJnEUQuW3mBFi8X+byljc5jXSKTrRu/YZWaqujEx1rW87lPmszaBB3XdZndI
-	AdE6gPqDU2ZRGMILOGgaEBy5GK4iCxhn2t8vqFQfRo2YhKLwuwe3HIYGMDu3BFObarxFV113JE9
-	/zX7VBWJufikpc3n+7AWwvQJXCb+dUYtxQk8UDN2c2JuC8X7+BtCoslZoT90mz67QS6Jd50=
-X-Received: by 2002:a05:6a20:a128:b0:32b:721d:37ea with SMTP id adf61e73a8af0-32da81303d1mr38253407637.16.1760525644710;
-        Wed, 15 Oct 2025 03:54:04 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEMZ2LsLEh0Qr1mBvJggyLP38lECWomJIQg5Rfi0tsF1jrllNMdpOSuP9+V7wgwuseQXiJsGA==
-X-Received: by 2002:a05:6a20:a128:b0:32b:721d:37ea with SMTP id adf61e73a8af0-32da81303d1mr38253375637.16.1760525644265;
-        Wed, 15 Oct 2025 03:54:04 -0700 (PDT)
-Received: from [10.218.44.34] ([202.46.22.19])
-        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-b678df66ab0sm14552514a12.35.2025.10.15.03.54.00
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 15 Oct 2025 03:54:03 -0700 (PDT)
-Message-ID: <026dffcf-f674-4481-b86d-07c28933c97b@oss.qualcomm.com>
-Date: Wed, 15 Oct 2025 16:23:58 +0530
+	s=arc-20240116; t=1760527426; c=relaxed/simple;
+	bh=CpGOzMU0fwoe6i5d3r5OB2Uo9e6IHzCntzlcK873gO8=;
+	h=Mime-Version:Content-Type:Date:Message-Id:Subject:From:To:Cc:
+	 References:In-Reply-To; b=uvwHpX6+QizNadwlSyTbZX56iTmyEJIaldI/4UAPOubas4T3EHUjHKqmaNwND4kgmbmgmlYRA8iJNKaGXeZ8O1Seo0Mdwkx6lsp0XGTBDhzBoInvUl7SXq4rTaFKvf/b3TPhWOm9JrnJz09NUzCa1xa8+4wl1WU0woP7db+NKcI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=cknow-tech.com; spf=pass smtp.mailfrom=cknow-tech.com; dkim=pass (2048-bit key) header.d=cknow-tech.com header.i=@cknow-tech.com header.b=Ns/qkxdG; arc=none smtp.client-ip=95.215.58.174
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=cknow-tech.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=cknow-tech.com
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 04/24] arm64: dts: qcom: glymur: Add QUPv3 configuration
- for serial engines
-To: Abel Vesa <abel.vesa@linaro.org>,
-        Pankaj Patil <pankaj.patil@oss.qualcomm.com>
-Cc: Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley
- <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20250925-v3_glymur_introduction-v1-0-24b601bbecc0@oss.qualcomm.com>
- <20250925-v3_glymur_introduction-v1-4-24b601bbecc0@oss.qualcomm.com>
- <bkenlzhh5fwspxkrq5jdcpfaxtc5hxg7w6sb6i46ohicdomed2@r2zvqvffmegt>
-Content-Language: en-US
-From: Jyothi Kumar Seerapu <jyothi.seerapu@oss.qualcomm.com>
-In-Reply-To: <bkenlzhh5fwspxkrq5jdcpfaxtc5hxg7w6sb6i46ohicdomed2@r2zvqvffmegt>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDEzMDA4MyBTYWx0ZWRfX5EakRh/kC+eA
- Jw+2APaIQkgViWAetLuCD43PnY+IeCvYDVtDUoXFpyL+DUgWFoDGm4WNxiNm1q6LuqGnk7AtB9a
- c1WSz9UQIXB6gvSLGHXXVFCkMVgKL3f9J5nx2qxQuu1/y90ZW4WlZtDy+bTHFd2aDwYFfM3eaCQ
- D9UHodbccVUjWNwWV7B4w9nNH69y55pd1wOHeauZxvZMgEkApJI1zTW2MSpmMfjxdrb1ytD/UEx
- hRw/7tWiBOAfb/5XAXcMQCF1B3FVhF9j7xwlo5oQXKwwkh2oxJfa1EJW9fxpoYkdhllu0DHD4fm
- If0miHQPyy3eKfVN6YUIH04snsoFnKZSCylKfZ+pm7Y/cz0BPDbkFFfVIi543Th9c9HQlnShu90
- bOa5e/W/hDa78S9xPiziSuYMXDF+gw==
-X-Authority-Analysis: v=2.4 cv=Fr4IPmrq c=1 sm=1 tr=0 ts=68ef7d4d cx=c_pps
- a=rz3CxIlbcmazkYymdCej/Q==:117 a=fChuTYTh2wq5r3m49p7fHw==:17
- a=IkcTkHD0fZMA:10 a=x6icFKpwvdMA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=EUspDBNiAAAA:8 a=eQg-hl6CXMczGQ9MqUoA:9 a=QEXdDO2ut3YA:10
- a=bFCP_H2QrGi7Okbo017w:22
-X-Proofpoint-GUID: rz7-EAz1nFdghhlN3SwZs8yjF-3a-3-r
-X-Proofpoint-ORIG-GUID: rz7-EAz1nFdghhlN3SwZs8yjF-3a-3-r
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-10-15_04,2025-10-13_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 impostorscore=0 spamscore=0 phishscore=0 malwarescore=0
- adultscore=0 lowpriorityscore=0 bulkscore=0 suspectscore=0 clxscore=1015
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2510020000 definitions=main-2510130083
+Mime-Version: 1.0
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cknow-tech.com;
+	s=key1; t=1760527411;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=u7suAm308V4lZ0hWGhrJ2JZyDcNujKQFY+XgzAQyH74=;
+	b=Ns/qkxdG4Rn4EJ6K7SljnQBvNEjMaDrTB1/ElfNZiulj3sQwibhvq0PesIrmmY9Q+1Fjyh
+	W6KEAEZMP4FHHqQXoPQkIGtpTnZTo3mGwN+zRnb9//J8E8WST3wXkpfQhVAP5YmQ4XUseb
+	2ZoztiG2+qY0MkG4AoM+KPkAjPkwwWLx8yPwhvjnfrkQ8xeOEgQoyCQRF+2yAEEanIgmyb
+	WbOxFaMqFU0rqn7Gs8QJBI21LssXjs1jwsEp9rMbsWRQkvhQo902VwYlMmEANvpyOsP3qP
+	76AQOGgWsDq0ZZrJe2F+dNLnvCGZlyTWU2VtEEQ2Uk4m/zine4e/pTswHh4E4Q==
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Wed, 15 Oct 2025 13:23:10 +0200
+Message-Id: <DDIUVHT9W10K.2SHEZ7YWCDXL3@cknow-tech.com>
+Subject: Re: [PATCH v2 1/2] PCI/ASPM: Override the ASPM and Clock PM states
+ set by BIOS for devicetree platforms
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
+From: "Diederik de Haas" <diederik@cknow-tech.com>
+To: "Manivannan Sadhasivam" <mani@kernel.org>, "Dragan Simic"
+ <dsimic@manjaro.org>
+Cc: "Bjorn Helgaas" <helgaas@kernel.org>, "FUKAUMI Naoki" <naoki@radxa.com>,
+ <manivannan.sadhasivam@oss.qualcomm.com>, "Bjorn Helgaas"
+ <bhelgaas@google.com>, "Lorenzo Pieralisi" <lpieralisi@kernel.org>,
+ =?utf-8?q?Krzysztof_Wilczy=C5=84ski?= <kwilczynski@kernel.org>, "Rob
+ Herring" <robh@kernel.org>, <linux-pci@vger.kernel.org>,
+ <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>, "David E.
+ Box" <david.e.box@linux.intel.com>, "Kai-Heng Feng"
+ <kai.heng.feng@canonical.com>, "Rafael J. Wysocki" <rafael@kernel.org>,
+ "Heiner Kallweit" <hkallweit1@gmail.com>, "Chia-Lin Kao"
+ <acelan.kao@canonical.com>, <linux-rockchip@lists.infradead.org>,
+ <regressions@lists.linux.dev>
+References: <20251014184905.GA896847@bhelgaas>
+ <0899e629-eaaf-1000-72b5-52ad977677a8@manjaro.org>
+ <fxakjhx7lrikgs4x3nbwgnhhcwmlum3esxp2dj5d26xc5iyg22@wkbbwysh3due>
+In-Reply-To: <fxakjhx7lrikgs4x3nbwgnhhcwmlum3esxp2dj5d26xc5iyg22@wkbbwysh3due>
+X-Migadu-Flow: FLOW_OUT
 
+On Wed Oct 15, 2025 at 8:22 AM CEST, Manivannan Sadhasivam wrote:
+> On Wed, Oct 15, 2025 at 01:33:35AM +0200, Dragan Simic wrote:
+>> On Tuesday, October 14, 2025 20:49 CEST, Bjorn Helgaas <helgaas@kernel.o=
+rg> wrote:
+>> > On Wed, Oct 15, 2025 at 01:30:16AM +0900, FUKAUMI Naoki wrote:
+>> > > I've noticed an issue on Radxa ROCK 5A/5B boards, which are based on=
+ the
+>> > > Rockchip RK3588(S) SoC.
+>> > >=20
+>> > > When running Linux v6.18-rc1 or linux-next since 20250924, the kerne=
+l either
+>> > > freezes or fails to probe M.2 Wi-Fi modules. This happens with sever=
+al
+>> > > different modules I've tested, including the Realtek RTL8852BE, Medi=
+aTek
+>> > > MT7921E, and Intel AX210.
+>> > >=20
+>> > > I've found that reverting the following commit (i.e., the patch I'm =
+replying
+>> > > to) resolves the problem:
+>> > > commit f3ac2ff14834a0aa056ee3ae0e4b8c641c579961
+>> >=20
+>> > <snip>
+>> >=20
+>> > Do you know if any platforms other than Radxa ROCK 5A/5B have this
+>> > problem?
+>> >=20
+>> After thinking quite a bit about it, I think we should revert this
+>> patch and replace it with another patch that allows per-SoC, or
+>> maybe even per-board, opting into the forced enablement of PCIe
+>> ASPM.  Let me explain, please.
+>
+> ASPM is a PCIe device specific feature, nothing related to SoC/board. Eve=
+n if
+> you limit it to certain platforms, there is no guarantee that it will be =
+safe as
+> the users can connect a buggy device to the slot and it could lead to the=
+ same
+> issue.
+>
+>> When a new feature is introduced, it's expected that it may fail
+>> on some hardware or with some specific setups, so quirking off such
+>> instances, as time passes, is perfectly fine.  Such a new feature
+>> didn't work before it was implemented, so it's acceptable that it
+>> fails in some instances after the introduction, and that it gets
+>> quirked off as time passes and more testing is performed.
+>
+> ASPM is not a new feature. It was introduced more than a decade before. B=
+ut we
+> somehow procastinated the enablement for so long until we realized that i=
+f we
+> don't do it now, we wouldn't be able to do it anytime in the future.
 
+Do you mean literally *now* or more like "we need to do it sometime"?
 
-On 10/11/2025 4:46 PM, Abel Vesa wrote:
-> On 25-09-25 12:02:12, Pankaj Patil wrote:
->> From: Jyothi Kumar Seerapu <jyothi.seerapu@oss.qualcomm.com>
->>
->> Add device tree support for QUPv3 serial engine protocols on Glymur.
->> Glymur has 24 QUP serial engines across 3 QUP wrappers, each with
->> support of GPI DMA engines.
->>
->> Signed-off-by: Jyothi Kumar Seerapu <jyothi.seerapu@oss.qualcomm.com>
->> Signed-off-by: Pankaj Patil <pankaj.patil@oss.qualcomm.com>
->> ---
->>   arch/arm64/boot/dts/qcom/glymur-crd.dts |   43 +
->>   arch/arm64/boot/dts/qcom/glymur.dtsi    | 3041 +++++++++++++++++++++++++++++--
->>   2 files changed, 2936 insertions(+), 148 deletions(-)
->>
->> diff --git a/arch/arm64/boot/dts/qcom/glymur.dtsi b/arch/arm64/boot/dts/qcom/glymur.dtsi
->> index f1c5a0cb483670e9f8044e250950693b4a015479..8674465b22707207523caa8ad635d95a3396497a 100644
->> --- a/arch/arm64/boot/dts/qcom/glymur.dtsi
->> +++ b/arch/arm64/boot/dts/qcom/glymur.dtsi
-> 
-> [...]
-> 
->> +			qup_i2c22_data_clk: qup-i2c22-data-clk-state {
->> +				sda_pins {
->> +					/* SDA */
->> +					pins = "gpio88";
->> +					function = "qup2_se6";
->> +					drive-strength = <2>;
->> +					bias-pull-up = <2200>;
->> +				};
->> +
->> +				scl-pins {
->> +					/* SCL */
->> +					pins = "gpio89";
->> +					function = "qup2_se6";
->> +					drive-strength = <2>;
->> +					bias-pull-up = <2200>;
->> +				};
->> +			};
-> 
-> Re-write all of these like the following:
-> 
-> qup_i2c22_data_clk: qup-i2c22-data-clk-state {
-> 	/* SDA, SCL */
-> 	pins = "gpio88", "gpio89";
-> 	function = "qup2_se6";
-> 	drive-strength = <2>;
-> 	bias-pull-up = <2200>;
-> };
-> 
-> Just like we did on X1E80100.
+>> However, when some widespread feature, such as PCIe, has already
+>> been in production for quite a while, introducing high-risk changes
+>> to it in a blanket fashion, while intending to have the incompatible
+>> or not-yet-ready platforms quirked off over time, simply isn't the
+>> way to go.  Breaking stuff intentionally to find out what actually
+>> doesn't work is rarely a good option.
+>
+> The issue is due to devices exposing ASPM capability, but behaving errati=
+cally
+> when enabled. Until, we enable ASPM on these devices, we cannot know whet=
+her
+> they are working or not. To avoid mass chaos, we decided to enable it onl=
+y for
+> devicetree platforms as a start.
+>
+>> Thus, I'd suggest that this patch is replaced with nother patches,
+>> which would introduce an additional ASPM opt-in switch to the PCI
+>> binding, allowing SoCs or boards to have it enabled _after_ proper
+>> testing is performed.  The PCIe driver may emit a warning that ASPM
+>> is to be enabled at some point in the future, to "bug" people about
+>> the need to perform the testing, etc.
+>
+> Even if we emit a "YOUR DEVICE MAY BREAK" warning, nobody would care as l=
+ong as
+> the device works for them. We didn't decide to enable this feature overni=
+ght to
+> trouble users. The fact that ASPM saves runtime power, which will benefit=
+ users
+> and ofc the environment as a whole, should not be kept disabled.
+>
+> But does that mean, we wanted to have breakages, NO. We expected breakage=
+s as
+> not all devices will play nicely with ASPM, but there is only one way to =
+find
+> out. And we do want to disable ASPM only for those devices.
 
-Sure, that makes sense, as the same properties apply to both the SCL and 
-SDA pins.
+I understand this logic. And I'm very much in favor of changes that
+reduce power usage.
+I suspect that 6.18 will become a LTS kernel, so introducing a change
+which may break many devices, sounds less then ideal for such a kernel.
+Kernel 6.19 OTOH sounds perfect for that. Then there's plenty of time to
+encounter and fix issues which may/will come up before there is another
+LTS kernel, namely ~ a year.
+
+My 0.02.
+
+Cheers,
+  Diederik
+
+PS: will send my bug/debug report separately
+
+>> With all that in place, we could expect that in a year or two PCIe ASPM
+>> could eventually be enabled everywhere. Getting everything tested is a
+>> massive endeavor, but that's the only way not to break stuff.
+>>=20
+>> Biting the bullet and hoping that it all goes well, I'd say, isn't
+>> the right approach here.
+>
+> Your two year phased approach would never work as that's what we have hop=
+ed for
+> more than a decade.
+>
+> - Mani
 
 
