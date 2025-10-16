@@ -1,129 +1,295 @@
-Return-Path: <linux-arm-msm+bounces-77625-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-77628-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [142.0.200.124])
-	by mail.lfdr.de (Postfix) with ESMTPS id 94490BE48A2
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Oct 2025 18:21:00 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id A0DAEBE4D1B
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Oct 2025 19:19:52 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 70BD7543230
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Oct 2025 16:18:24 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 5D068586AFB
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Oct 2025 17:19:51 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BCDCD350D6C;
-	Thu, 16 Oct 2025 16:17:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6DCF821FF3E;
+	Thu, 16 Oct 2025 17:19:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="KKrO6Uux"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="gohw4ps1"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 811A7350D40;
-	Thu, 16 Oct 2025 16:17:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADD1F21C173
+	for <linux-arm-msm@vger.kernel.org>; Thu, 16 Oct 2025 17:19:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760631420; cv=none; b=r0whXddkeWBxDLHapxy2pJHXseRKoGHGnQoRw3/Qeo+zWXAm23GROR1h3owkY0gkRqr8QFW237kjY7sd5eWkGKvQHXzUl1goZXloxv8kRyUylepfhgARRV1Ym1YHzzk3Ksi9D/U93tmwXZKqbKlfr0pwvjRpLNSSEFZBXMj3UK8=
+	t=1760635187; cv=none; b=G6przrJ0YDrL58OBMntreEJqXVp4oL7ZhtRNlpzP8ZvEKiuVhRc6umHu0kAlLnBcr1/gVGWwcgSvjfQygcFPsqsmh+M+NqFiQNFONEZJWOud+60IIxrFtI07v7/n9BIPXtG4zXlpRxqMtIYZQCAMYQcuuu0fvWctocSa3HovxN0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760631420; c=relaxed/simple;
-	bh=S0WNir74N579R+w69D4wF91+c/pfRD4OlqxTVOoiYX0=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=ql6tDkrVkhVyXh+jTh+C8ypkavI2cauA0270sTm1XiZGpv1fvNvAvP7j2VvqSwe1Uc17vQgr/KZvg/6foDkav80A9dLEnDp3JJo+spTyLV/5oSm/ohmiwffCgUYkgxza1nELa6jNkH0K1nvO7/N/Nhc42c0XjjxlJYHhReKa3EM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=KKrO6Uux; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 56654C116B1;
-	Thu, 16 Oct 2025 16:17:00 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1760631420;
-	bh=S0WNir74N579R+w69D4wF91+c/pfRD4OlqxTVOoiYX0=;
-	h=From:Date:Subject:References:In-Reply-To:To:Cc:Reply-To:From;
-	b=KKrO6Uuxsk+TvShgLxzPf855uttAmdkAsJwQ5n2mbc+69uXlq3BD5aDk0mM3cVKGS
-	 4OKXWCKB/0dR7spuwqtrBXr5qVxIxQSfyDfofo5JUVRPeen5fVk6+p9ojkquZu3Vpq
-	 pNmkhkSP0KT/cDkq0qNHQMXpeOQbH92fSHW3Iuvz1ZmWzAVBFm5auj6bPsLu53DCpx
-	 HrO16A3HbFDfLVnUQBSqzrXzAvCSp3hifd9Jn3lXAG0v6uOCpgZXOlMhI1tGLf851O
-	 OMvAAaZmV413NtsiCKi7ZCwqYjn4gYQZezNV1YIzX7HpeATgsRBEcun6JG3z/p+R73
-	 YSsahB2yj229Q==
-Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4CA1BCCD183;
-	Thu, 16 Oct 2025 16:17:00 +0000 (UTC)
-From: David Heidelberg via B4 Relay <devnull+david.ixit.cz@kernel.org>
-Date: Thu, 16 Oct 2025 18:17:03 +0200
-Subject: [PATCH v3 8/8] dt-bindings: display: panel-simple-dsi: Remove
- Samsung S6E3FC2 compatible
+	s=arc-20240116; t=1760635187; c=relaxed/simple;
+	bh=iCjjuLaISQPhiPCfSVOWiLqhl9nvQ9Mx8UGWwvNy8QM=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=EISjAI07VnvM+GThCRXNcKecIYFeeFL1OQsIJaALeuiS8qPGASD7buaSqTdmkL23u28NGmeq3/D3RfpLVbvkr/avbE+0ADoPAuxRf0wH2ESH5Gy+mhnLiNAJiHJVZP5qx+3+3VBNaS3mOYsdS716LI1Xj+Ijdlaf4wA5ZLEhNc8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=gohw4ps1; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 59GEvmTf016165
+	for <linux-arm-msm@vger.kernel.org>; Thu, 16 Oct 2025 17:19:44 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	Ax94yOZGpPbJi/xkHkGG7O7SwfDjw1ym9nOUmMgbPc8=; b=gohw4ps1ahNQxtjY
+	g6HwKuJdWImMQBH6Aa7c0ZA/c+8LQdaiGrfY9ChqFh/Ei+np3e02R7TOn/kqd0a6
+	8FOsqmqtGAqrFyXEFn+JBz3bTgFQFceGi2CbXY6/Z490iaVL7L4RRiKyj3NBCSGU
+	0OhgQnxhh4OBjFxPAINLgzVuaQ3rtOqTgomhenXRH4SlZSd4A3DKe5WOMisk0AoF
+	uLHer1wLpjUwfMahIOTLgk6cUB5gCbfyYeNj1EDyOQ38cYZp8mPX2uGssJWx1K3w
+	Xlstm/3v2XABbh1YLdullQ3cL4ptI92ZxF/IZlId/CXQKp6cRg+GY9tOqmheutIK
+	gXJiqA==
+Received: from mail-pj1-f69.google.com (mail-pj1-f69.google.com [209.85.216.69])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 49qfm5s9ws-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Thu, 16 Oct 2025 17:19:44 +0000 (GMT)
+Received: by mail-pj1-f69.google.com with SMTP id 98e67ed59e1d1-33bbbb41a84so1142911a91.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 16 Oct 2025 10:19:43 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1760635183; x=1761239983;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=Ax94yOZGpPbJi/xkHkGG7O7SwfDjw1ym9nOUmMgbPc8=;
+        b=PzDSHu3N06dWE8HRtVPESwdvkmeokGWGBomdM456vpJvQgjHaEt5MD7J6cVfSn0D0U
+         8oV89/Dq462DlLrMVrcnWW6E2oncnW4jmai8JV57IjiJlQxyWhyKpLsMtB2K55Dl6gT0
+         P1euYXTruy+AXmzTUTS2BsY4Gtywbcpeg+vnLodPcwhVIUbZ4it2gP60zPMaQUNIVTRy
+         H7B4LQ5dUdsCSiC365A92v2NVU2+yDylVLl37NunA4HJ1mzqkz7uUQywF1Y6oA3BOBr7
+         EV5QNnygVaZgsesfIecrSy/mJKJlKHwZY7SZ9B+TbTHgfaHeE5lFuEPXGCAFlz/wApKw
+         DOtw==
+X-Forwarded-Encrypted: i=1; AJvYcCVJ5GVeW9pZP3TQNbMrwj7ndS+Qo39hgURxKy7nj0rVEjkl5sHTsstr9qK7D/cMWM2sevZnmjT9JrArAGEH@vger.kernel.org
+X-Gm-Message-State: AOJu0Ywd/S75K8a2lLPMy7cYr4lF1uOfwgmaU08I/xiOtiNvp85yfNDP
+	VdBrdlTHLNxMZ0tEp9mshDGX4WIMSkER79aOyU9u19zwZbFzCtFncj74EywSPWg/YrgM54JyUwh
+	zYEBabHTdK7Kym1GCIDQHZoQDnW6pK6KN+4mNNs2MUIOpgxX44X3BjcVXk/dhFb0bjE1s
+X-Gm-Gg: ASbGnctynCfdIhqmJsZ+5JF9pAvebpwi6VSBVyuOMRRd986QwXjULqyOME3agcX/t/7
+	gomrS17Pm0zcRPOXG0N6CIaiyE5EC/zovOf0mLi48fxaXCUYrOt4nQdl+/phXU99sIHSjboO9Rh
+	nX/sJXjth8+rIrfxSO9VmFPD0ppXqJLW4vetN0QKWLFlAT4ThoA08p+k3fr8C7q9QXfnaq4s5ed
+	4O/vTLDDEc1nAb0kLSa7OoiSWSxAxQM57ZZirQLLRwphF996py/hHv3/eTkOoZkM6IdZ+LqzF5v
+	JZDaB96jYSUXrXrFJPpRnY4ccpOrQebNlE1JBKWvzI4HObLVS0YJk5gICnmQPZtXJR2GKUgTgae
+	MbpN9sKkr3AR9ToDccotzmTpP3Lu5rmHj
+X-Received: by 2002:a17:90b:3f8d:b0:33b:be31:8193 with SMTP id 98e67ed59e1d1-33bcf85d59dmr763842a91.6.1760635182606;
+        Thu, 16 Oct 2025 10:19:42 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IF1rRrAo2QPBaKZifUQLJIoZpvDEaFp+zcbkMAZ+fOe6tW2DlqTpsxyKkKUiFkWY1Ph4rjsWQ==
+X-Received: by 2002:a17:90b:3f8d:b0:33b:be31:8193 with SMTP id 98e67ed59e1d1-33bcf85d59dmr763793a91.6.1760635182106;
+        Thu, 16 Oct 2025 10:19:42 -0700 (PDT)
+Received: from [10.216.0.133] ([202.46.23.19])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-33bb65222b1sm2611494a91.6.2025.10.16.10.19.29
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 16 Oct 2025 10:19:41 -0700 (PDT)
+Message-ID: <fa42adf0-8f15-ad4c-3788-578b1bee1c72@oss.qualcomm.com>
+Date: Thu, 16 Oct 2025 22:49:26 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.5.1
+Subject: Re: [PATCH v16 02/14] power: reset: reboot-mode: Add device tree
+ node-based registration
+Content-Language: en-US
+To: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Cc: Bjorn Andersson <andersson@kernel.org>,
+        Sebastian Reichel
+ <sre@kernel.org>, Rob Herring <robh@kernel.org>,
+        Sudeep Holla <sudeep.holla@arm.com>,
+        Souvik Chakravarty <Souvik.Chakravarty@arm.com>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley
+ <conor+dt@kernel.org>,
+        Andy Yan <andy.yan@rock-chips.com>,
+        Mark Rutland <mark.rutland@arm.com>,
+        Lorenzo Pieralisi <lpieralisi@kernel.org>,
+        Arnd Bergmann <arnd@arndb.de>, Konrad Dybcio <konradybcio@kernel.org>,
+        cros-qcom-dts-watchers@chromium.org, Vinod Koul <vkoul@kernel.org>,
+        Catalin Marinas <catalin.marinas@arm.com>,
+        Will Deacon <will@kernel.org>,
+        Florian Fainelli <florian.fainelli@broadcom.com>,
+        Moritz Fischer <moritz.fischer@ettus.com>,
+        John Stultz <john.stultz@linaro.org>,
+        Matthias Brugger <matthias.bgg@gmail.com>,
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+        Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Andre Draszik
+ <andre.draszik@linaro.org>,
+        Kathiravan Thirumoorthy <kathiravan.thirumoorthy@oss.qualcomm.com>,
+        linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org,
+        Elliot Berman <quic_eberman@quicinc.com>,
+        Srinivas Kandagatla <srini@kernel.org>
+References: <20251015-arm-psci-system_reset2-vendor-reboots-v16-0-b98aedaa23ee@oss.qualcomm.com>
+ <20251015-arm-psci-system_reset2-vendor-reboots-v16-2-b98aedaa23ee@oss.qualcomm.com>
+ <CACMJSesvTLe28Jz83b=zfHD2rvmf7-i_2+2DoV=dgooVqFEYbA@mail.gmail.com>
+From: Shivendra Pratap <shivendra.pratap@oss.qualcomm.com>
+In-Reply-To: <CACMJSesvTLe28Jz83b=zfHD2rvmf7-i_2+2DoV=dgooVqFEYbA@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Message-Id: <20251016-s6e3fc2x01-v3-8-ce0f3566b903@ixit.cz>
-References: <20251016-s6e3fc2x01-v3-0-ce0f3566b903@ixit.cz>
-In-Reply-To: <20251016-s6e3fc2x01-v3-0-ce0f3566b903@ixit.cz>
-To: Neil Armstrong <neil.armstrong@linaro.org>, 
- Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, 
- Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>, 
- David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, 
- Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>, 
- Thierry Reding <thierry.reding@gmail.com>, Sam Ravnborg <sam@ravnborg.org>, 
- Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konradybcio@kernel.org>, 
- Casey Connolly <casey.connolly@linaro.org>, 
- Jessica Zhang <jesszhan0024@gmail.com>
-Cc: dri-devel@lists.freedesktop.org, devicetree@vger.kernel.org, 
- linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
- phone-devel@vger.kernel.org, David Heidelberg <david@ixit.cz>
-X-Mailer: b4 0.14.3
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1158; i=david@ixit.cz;
- h=from:subject:message-id;
- bh=4+Nx6clkhCkST//F+2BMd0nBGtyNIXUCEfb23utzTYI=;
- b=owEBbQKS/ZANAwAIAWACP8TTSSByAcsmYgBo8Rp5wt2y0Xc1+GKJ2t1MY4XOuvPZTZP7bPEqj
- ByfvV+qXciJAjMEAAEIAB0WIQTXegnP7twrvVOnBHRgAj/E00kgcgUCaPEaeQAKCRBgAj/E00kg
- clAqEACCZWBWo0npnp0kidoPHG1Pd/dBw56Sdxumg+7kDxKkJfyDDdLxF/y48pxHpeBvbyINosc
- 5v3HFOzDHjiBQRQMcg/sP2rr18XF6B0U4h03JqtLbaT7F6+C9UpUz+mxNmePtIz2rvn4mzNa/Ln
- gATpba3HePKXgXnGiIvBavkGW7EsQsSjiu4x2o9NbqSdE73w3tfbyCMVpdst6iXhWJLpyfH8iX5
- vxhNnr6zMZLUKidz2R/FwC0HnYE1yFU5XtUFt7bWJYh9O8SmneXpnLPKrBTH95GJVJEmvFQgtoO
- KXWLDfk2p5ZOAvIF977zt0GHzmljRvFkdhRwhXq1qfMN+HaO9IzqyIaAV8igUB548ujoguRn2Gs
- FlcN4XDl+EqaCGYZp4WjzbKwou57szMjuvFypcXxIyrIwhOR+/HPw8b7kRH1L8Sg2+FuOeEZAq4
- fgPYxtYbEaWi/dMNvJe3Bid/uymgELyqAbBhpL1gjLwznIxqJ6RGPOOjvLUU/Uk3pPwgsx1Brm4
- Cd209RKQxjTwKL8OfnBwqd1Krts46M4FPDyZXdZmgkHFRl5XFBgDXGa4A8WY80U0nHkoOvQGV3J
- KmQ/mcJenWBqi2NgUszoRJAiPBCbQCmEDF/Yfs+StH5zzoyVn1iZ51fuPyO6eQGT1MGgFCgcdAW
- KRMl6fLfDTNCrNg==
-X-Developer-Key: i=david@ixit.cz; a=openpgp;
- fpr=D77A09CFEEDC2BBD53A7047460023FC4D3492072
-X-Endpoint-Received: by B4 Relay for david@ixit.cz/default with auth_id=355
-X-Original-From: David Heidelberg <david@ixit.cz>
-Reply-To: david@ixit.cz
-
-From: David Heidelberg <david@ixit.cz>
-
-Samsung S6E3FC2X01 DDIC isn't Simple DSI panel.
-
-This panel has three supplies, while panel-simple-dsi is limited to one.
-There is no user of this compatible, nor the compatible make sense.
-Remove it.
-
-Signed-off-by: David Heidelberg <david@ixit.cz>
----
- Documentation/devicetree/bindings/display/panel/panel-simple-dsi.yaml | 2 --
- 1 file changed, 2 deletions(-)
-
-diff --git a/Documentation/devicetree/bindings/display/panel/panel-simple-dsi.yaml b/Documentation/devicetree/bindings/display/panel/panel-simple-dsi.yaml
-index 9b92a05791ccf..6c1249a224c8a 100644
---- a/Documentation/devicetree/bindings/display/panel/panel-simple-dsi.yaml
-+++ b/Documentation/devicetree/bindings/display/panel/panel-simple-dsi.yaml
-@@ -56,8 +56,6 @@ properties:
-       - panasonic,vvx10f034n00
-         # Samsung s6e3fa7 1080x2220 based AMS559NK06 AMOLED panel
-       - samsung,s6e3fa7-ams559nk06
--        # Samsung s6e3fc2x01 1080x2340 AMOLED panel
--      - samsung,s6e3fc2x01
-         # Samsung sofef00 1080x2280 AMOLED panel
-       - samsung,sofef00
-         # Shangai Top Display Optoelectronics 7" TL070WSH30 1024x600 TFT LCD panel
-
--- 
-2.51.0
+X-Proofpoint-GUID: S3ZANsa2q3O5m7UdUOlLxTkXG3eGNtxI
+X-Proofpoint-ORIG-GUID: S3ZANsa2q3O5m7UdUOlLxTkXG3eGNtxI
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDExMDAyMCBTYWx0ZWRfX1pZPxr9I9L2+
+ YDAoq2CKFCKCt1VkrKFQXsU5OIXT95HqJ6j1kwnbz0blmD0vlgFnW10Fepg9zbQw04P/p94oJIf
+ cd3w8H4vtbog1vpGGmY2xjgr3YLNPNIfl1oHpGt9J6gKI8pgQAhspXsyc8i66iPf+7ChWM4InQI
+ mQzAKSFrcwyZQ1lW5vN+i5LDwwdzZbDUUjaMrlpDmFVdVJ/UkX/mynsofppK76vTGxIz3mfa3aH
+ 5FdWJsW+cuyfsRV22yCzRKPdwy3u0YJZt+7RudqR0g4qTiZmG3+fxDi/qfMvCT/TNUm4LFYzsVM
+ eWqwtVBETAFKpMmrQyEWpwHaDYx5DToFPRj84W6tghg/mKHdFowCY2b0pVdyX+5h7UUOCP4Keq5
+ jYYX/VX5lghXGe8uUyvfZFjc/2V5eA==
+X-Authority-Analysis: v=2.4 cv=V71wEOni c=1 sm=1 tr=0 ts=68f12930 cx=c_pps
+ a=vVfyC5vLCtgYJKYeQD43oA==:117 a=j4ogTh8yFefVWWEFDRgCtg==:17
+ a=IkcTkHD0fZMA:10 a=x6icFKpwvdMA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=EUspDBNiAAAA:8 a=8ps4eDoI1eVci98EcxQA:9 a=QEXdDO2ut3YA:10
+ a=rl5im9kqc5Lf4LNbBjHf:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-10-16_03,2025-10-13_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ bulkscore=0 malwarescore=0 spamscore=0 adultscore=0 suspectscore=0
+ impostorscore=0 phishscore=0 clxscore=1015 lowpriorityscore=0
+ priorityscore=1501 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2510020000
+ definitions=main-2510110020
 
 
+
+On 10/15/2025 8:10 PM, Bartosz Golaszewski wrote:
+> On Wed, 15 Oct 2025 at 06:38, Shivendra Pratap
+> <shivendra.pratap@oss.qualcomm.com> wrote:
+>>
+>> The reboot-mode driver does not have a strict requirement for
+>> device-based registration. It primarily uses the device's of_node
+>> to read mode-<cmd> properties and the device pointer for logging.
+>>
+>> Remove the dependency on struct device and introduce support for
+>> firmware node (fwnode) based registration. This enables drivers
+>> that are not associated with a struct device to leverage the
+>> reboot-mode framework.
+>>
+>> Signed-off-by: Shivendra Pratap <shivendra.pratap@oss.qualcomm.com>
+>> ---
+>>  drivers/power/reset/reboot-mode.c | 45 +++++++++++++++++++++++++++++----------
+>>  include/linux/reboot-mode.h       |  3 ++-
+>>  2 files changed, 36 insertions(+), 12 deletions(-)
+>>
+>> diff --git a/drivers/power/reset/reboot-mode.c b/drivers/power/reset/reboot-mode.c
+>> index 8fc3e14638ea757c8dc3808c240ff569cbd74786..c8f71e6f661ae14eb72bdcb1f412cd05faee3dd9 100644
+>> --- a/drivers/power/reset/reboot-mode.c
+>> +++ b/drivers/power/reset/reboot-mode.c
+>> @@ -3,13 +3,17 @@
+>>   * Copyright (c) 2016, Fuzhou Rockchip Electronics Co., Ltd
+>>   */
+>>
+>> +#define pr_fmt(fmt)    "reboot-mode: " fmt
+>> +
+>>  #include <linux/device.h>
+>>  #include <linux/init.h>
+>>  #include <linux/kernel.h>
+>> +#include <linux/list.h>
+>>  #include <linux/module.h>
+>>  #include <linux/of.h>
+>>  #include <linux/reboot.h>
+>>  #include <linux/reboot-mode.h>
+>> +#include <linux/slab.h>
+>>
+>>  #define PREFIX "mode-"
+>>
+>> @@ -69,17 +73,26 @@ static int reboot_mode_notify(struct notifier_block *this,
+>>  /**
+>>   * reboot_mode_register - register a reboot mode driver
+>>   * @reboot: reboot mode driver
+>> + * @fwnode: Firmware node with reboot-mode configuration
+>>   *
+>>   * Returns: 0 on success or a negative error code on failure.
+>>   */
+>> -int reboot_mode_register(struct reboot_mode_driver *reboot)
+>> +int reboot_mode_register(struct reboot_mode_driver *reboot, struct fwnode_handle *fwnode)
+>>  {
+>>         struct mode_info *info;
+>> +       struct mode_info *next;
+>> +       struct device_node *np;
+>>         struct property *prop;
+>> -       struct device_node *np = reboot->dev->of_node;
+>>         size_t len = strlen(PREFIX);
+>>         int ret;
+>>
+>> +       if (!fwnode)
+>> +               return -EINVAL;
+>> +
+>> +       np = to_of_node(fwnode);
+>> +       if (!np)
+>> +               return -EINVAL;
+>> +
+>>         INIT_LIST_HEAD(&reboot->head);
+>>
+>>         mutex_init(&reboot->rb_lock);
+>> @@ -89,28 +102,28 @@ int reboot_mode_register(struct reboot_mode_driver *reboot)
+>>                         if (strncmp(prop->name, PREFIX, len))
+>>                                 continue;
+>>
+>> -                       info = devm_kzalloc(reboot->dev, sizeof(*info), GFP_KERNEL);
+> 
+> This change is good - devres should not be used in subsystem library
+> code, only in drivers - but it doesn't seem to belong here, can you
+> please separate it out and make it backportable?
+
+sure. Just to confirm we should separate out the devm_kzalloc part of the
+change and add a fixes tag.
+ 
+> 
+>> +                       info = kzalloc(sizeof(*info), GFP_KERNEL);
+>>                         if (!info) {
+>>                                 ret = -ENOMEM;
+>>                                 goto error;
+>>                         }
+>>
+>>                         if (of_property_read_u32(np, prop->name, &info->magic)) {
+>> -                               dev_err(reboot->dev, "reboot mode %s without magic number\n",
+>> -                                       info->mode);
+>> -                               devm_kfree(reboot->dev, info);
+>> +                               pr_err("reboot mode %s without magic number\n", info->mode);
+>> +                               kfree(info);
+>>                                 continue;
+>>                         }
+>>
+>>                         info->mode = kstrdup_const(prop->name + len, GFP_KERNEL);
+>>                         if (!info->mode) {
+>>                                 ret =  -ENOMEM;
+>> +                               kfree(info);
+>>                                 goto error;
+>>                         } else if (info->mode[0] == '\0') {
+>>                                 kfree_const(info->mode);
+>> +                               kfree(info);
+>>                                 ret = -EINVAL;
+>> -                               dev_err(reboot->dev, "invalid mode name(%s): too short!\n",
+>> -                                       prop->name);
+>> +                               pr_err("invalid mode name(%s): too short!\n", prop->name);
+>>                                 goto error;
+>>                         }
+>>
+>> @@ -123,8 +136,11 @@ int reboot_mode_register(struct reboot_mode_driver *reboot)
+>>                 return 0;
+>>
+>>  error:
+>> -               list_for_each_entry(info, &reboot->head, list)
+>> +               list_for_each_entry_safe(info, next, &reboot->head, list) {
+>> +                       list_del(&info->list);
+> 
+> Same here, not deleting the entries currently seems like a bug? Do we
+> depend on the driver detach to clean up the resources on failure?
+
+sure, so this should also go as fixes? and should we remove the other
+dev_err(printk) also as fixes? or that can still got with the change
+where we add fwnode based registration?
+
+thanks for review!
+
+-
+Shivendra
 
