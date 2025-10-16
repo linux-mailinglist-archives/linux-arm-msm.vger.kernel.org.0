@@ -1,295 +1,178 @@
-Return-Path: <linux-arm-msm+bounces-77628-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-77629-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id A0DAEBE4D1B
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Oct 2025 19:19:52 +0200 (CEST)
+Received: from ams.mirrors.kernel.org (ams.mirrors.kernel.org [213.196.21.55])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5553FBE4E1E
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Oct 2025 19:39:32 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 5D068586AFB
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Oct 2025 17:19:51 +0000 (UTC)
+	by ams.mirrors.kernel.org (Postfix) with ESMTPS id A9A663543C6
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Oct 2025 17:39:31 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6DCF821FF3E;
-	Thu, 16 Oct 2025 17:19:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1591D221F13;
+	Thu, 16 Oct 2025 17:39:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="gohw4ps1"
+	dkim=pass (2048-bit key) header.d=cknow-tech.com header.i=@cknow-tech.com header.b="QI/JRjrJ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from out-170.mta1.migadu.com (out-170.mta1.migadu.com [95.215.58.170])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADD1F21C173
-	for <linux-arm-msm@vger.kernel.org>; Thu, 16 Oct 2025 17:19:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A10A8221F12
+	for <linux-arm-msm@vger.kernel.org>; Thu, 16 Oct 2025 17:39:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760635187; cv=none; b=G6przrJ0YDrL58OBMntreEJqXVp4oL7ZhtRNlpzP8ZvEKiuVhRc6umHu0kAlLnBcr1/gVGWwcgSvjfQygcFPsqsmh+M+NqFiQNFONEZJWOud+60IIxrFtI07v7/n9BIPXtG4zXlpRxqMtIYZQCAMYQcuuu0fvWctocSa3HovxN0=
+	t=1760636363; cv=none; b=JNWOunGo+3kY1nx9+iLeZ1jxHtnGJ+0pJYetYlKx+2JkPecNw5rrGpgughhR/eRx5zptdgfSNdWSEHWM7xgKG4NlYghqUyOwm2ucju56AVufLsnyiuXPVeTdpt5VDIPnBAc/w9l4j6rTNMzRmvcIXbCc/8Smshmy+z13uM6fzws=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760635187; c=relaxed/simple;
-	bh=iCjjuLaISQPhiPCfSVOWiLqhl9nvQ9Mx8UGWwvNy8QM=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=EISjAI07VnvM+GThCRXNcKecIYFeeFL1OQsIJaALeuiS8qPGASD7buaSqTdmkL23u28NGmeq3/D3RfpLVbvkr/avbE+0ADoPAuxRf0wH2ESH5Gy+mhnLiNAJiHJVZP5qx+3+3VBNaS3mOYsdS716LI1Xj+Ijdlaf4wA5ZLEhNc8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=gohw4ps1; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 59GEvmTf016165
-	for <linux-arm-msm@vger.kernel.org>; Thu, 16 Oct 2025 17:19:44 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	Ax94yOZGpPbJi/xkHkGG7O7SwfDjw1ym9nOUmMgbPc8=; b=gohw4ps1ahNQxtjY
-	g6HwKuJdWImMQBH6Aa7c0ZA/c+8LQdaiGrfY9ChqFh/Ei+np3e02R7TOn/kqd0a6
-	8FOsqmqtGAqrFyXEFn+JBz3bTgFQFceGi2CbXY6/Z490iaVL7L4RRiKyj3NBCSGU
-	0OhgQnxhh4OBjFxPAINLgzVuaQ3rtOqTgomhenXRH4SlZSd4A3DKe5WOMisk0AoF
-	uLHer1wLpjUwfMahIOTLgk6cUB5gCbfyYeNj1EDyOQ38cYZp8mPX2uGssJWx1K3w
-	Xlstm/3v2XABbh1YLdullQ3cL4ptI92ZxF/IZlId/CXQKp6cRg+GY9tOqmheutIK
-	gXJiqA==
-Received: from mail-pj1-f69.google.com (mail-pj1-f69.google.com [209.85.216.69])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 49qfm5s9ws-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Thu, 16 Oct 2025 17:19:44 +0000 (GMT)
-Received: by mail-pj1-f69.google.com with SMTP id 98e67ed59e1d1-33bbbb41a84so1142911a91.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 16 Oct 2025 10:19:43 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1760635183; x=1761239983;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Ax94yOZGpPbJi/xkHkGG7O7SwfDjw1ym9nOUmMgbPc8=;
-        b=PzDSHu3N06dWE8HRtVPESwdvkmeokGWGBomdM456vpJvQgjHaEt5MD7J6cVfSn0D0U
-         8oV89/Dq462DlLrMVrcnWW6E2oncnW4jmai8JV57IjiJlQxyWhyKpLsMtB2K55Dl6gT0
-         P1euYXTruy+AXmzTUTS2BsY4Gtywbcpeg+vnLodPcwhVIUbZ4it2gP60zPMaQUNIVTRy
-         H7B4LQ5dUdsCSiC365A92v2NVU2+yDylVLl37NunA4HJ1mzqkz7uUQywF1Y6oA3BOBr7
-         EV5QNnygVaZgsesfIecrSy/mJKJlKHwZY7SZ9B+TbTHgfaHeE5lFuEPXGCAFlz/wApKw
-         DOtw==
-X-Forwarded-Encrypted: i=1; AJvYcCVJ5GVeW9pZP3TQNbMrwj7ndS+Qo39hgURxKy7nj0rVEjkl5sHTsstr9qK7D/cMWM2sevZnmjT9JrArAGEH@vger.kernel.org
-X-Gm-Message-State: AOJu0Ywd/S75K8a2lLPMy7cYr4lF1uOfwgmaU08I/xiOtiNvp85yfNDP
-	VdBrdlTHLNxMZ0tEp9mshDGX4WIMSkER79aOyU9u19zwZbFzCtFncj74EywSPWg/YrgM54JyUwh
-	zYEBabHTdK7Kym1GCIDQHZoQDnW6pK6KN+4mNNs2MUIOpgxX44X3BjcVXk/dhFb0bjE1s
-X-Gm-Gg: ASbGnctynCfdIhqmJsZ+5JF9pAvebpwi6VSBVyuOMRRd986QwXjULqyOME3agcX/t/7
-	gomrS17Pm0zcRPOXG0N6CIaiyE5EC/zovOf0mLi48fxaXCUYrOt4nQdl+/phXU99sIHSjboO9Rh
-	nX/sJXjth8+rIrfxSO9VmFPD0ppXqJLW4vetN0QKWLFlAT4ThoA08p+k3fr8C7q9QXfnaq4s5ed
-	4O/vTLDDEc1nAb0kLSa7OoiSWSxAxQM57ZZirQLLRwphF996py/hHv3/eTkOoZkM6IdZ+LqzF5v
-	JZDaB96jYSUXrXrFJPpRnY4ccpOrQebNlE1JBKWvzI4HObLVS0YJk5gICnmQPZtXJR2GKUgTgae
-	MbpN9sKkr3AR9ToDccotzmTpP3Lu5rmHj
-X-Received: by 2002:a17:90b:3f8d:b0:33b:be31:8193 with SMTP id 98e67ed59e1d1-33bcf85d59dmr763842a91.6.1760635182606;
-        Thu, 16 Oct 2025 10:19:42 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IF1rRrAo2QPBaKZifUQLJIoZpvDEaFp+zcbkMAZ+fOe6tW2DlqTpsxyKkKUiFkWY1Ph4rjsWQ==
-X-Received: by 2002:a17:90b:3f8d:b0:33b:be31:8193 with SMTP id 98e67ed59e1d1-33bcf85d59dmr763793a91.6.1760635182106;
-        Thu, 16 Oct 2025 10:19:42 -0700 (PDT)
-Received: from [10.216.0.133] ([202.46.23.19])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-33bb65222b1sm2611494a91.6.2025.10.16.10.19.29
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 16 Oct 2025 10:19:41 -0700 (PDT)
-Message-ID: <fa42adf0-8f15-ad4c-3788-578b1bee1c72@oss.qualcomm.com>
-Date: Thu, 16 Oct 2025 22:49:26 +0530
+	s=arc-20240116; t=1760636363; c=relaxed/simple;
+	bh=LbYf6I98/WH0RIxNWHEI4QVgY4YtUTKk80hGt/CmH5k=;
+	h=Mime-Version:Content-Type:Date:Message-Id:Subject:From:To:Cc:
+	 References:In-Reply-To; b=dRDwO8Li3NfP98NElpvrAH8frriMjT5agCXfDKehSME9lEOgoInfZIJzWQre+FAc+Gk0GLas+7E4n4DKCwX+zujDogRhRG8xvsIsxHEaW+hVdQ/Q+jNL3iorR64cJxdAWZ8RZIFPRWjMm8OnuMAzt3viSjNnBTEIsqnp4octgD0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=cknow-tech.com; spf=pass smtp.mailfrom=cknow-tech.com; dkim=pass (2048-bit key) header.d=cknow-tech.com header.i=@cknow-tech.com header.b=QI/JRjrJ; arc=none smtp.client-ip=95.215.58.170
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=cknow-tech.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=cknow-tech.com
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.5.1
-Subject: Re: [PATCH v16 02/14] power: reset: reboot-mode: Add device tree
- node-based registration
-Content-Language: en-US
-To: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Cc: Bjorn Andersson <andersson@kernel.org>,
-        Sebastian Reichel
- <sre@kernel.org>, Rob Herring <robh@kernel.org>,
-        Sudeep Holla <sudeep.holla@arm.com>,
-        Souvik Chakravarty <Souvik.Chakravarty@arm.com>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley
- <conor+dt@kernel.org>,
-        Andy Yan <andy.yan@rock-chips.com>,
-        Mark Rutland <mark.rutland@arm.com>,
-        Lorenzo Pieralisi <lpieralisi@kernel.org>,
-        Arnd Bergmann <arnd@arndb.de>, Konrad Dybcio <konradybcio@kernel.org>,
-        cros-qcom-dts-watchers@chromium.org, Vinod Koul <vkoul@kernel.org>,
-        Catalin Marinas <catalin.marinas@arm.com>,
-        Will Deacon <will@kernel.org>,
-        Florian Fainelli <florian.fainelli@broadcom.com>,
-        Moritz Fischer <moritz.fischer@ettus.com>,
-        John Stultz <john.stultz@linaro.org>,
-        Matthias Brugger <matthias.bgg@gmail.com>,
-        Krzysztof Kozlowski <krzk@kernel.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-        Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Andre Draszik
- <andre.draszik@linaro.org>,
-        Kathiravan Thirumoorthy <kathiravan.thirumoorthy@oss.qualcomm.com>,
-        linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org,
-        Elliot Berman <quic_eberman@quicinc.com>,
-        Srinivas Kandagatla <srini@kernel.org>
-References: <20251015-arm-psci-system_reset2-vendor-reboots-v16-0-b98aedaa23ee@oss.qualcomm.com>
- <20251015-arm-psci-system_reset2-vendor-reboots-v16-2-b98aedaa23ee@oss.qualcomm.com>
- <CACMJSesvTLe28Jz83b=zfHD2rvmf7-i_2+2DoV=dgooVqFEYbA@mail.gmail.com>
-From: Shivendra Pratap <shivendra.pratap@oss.qualcomm.com>
-In-Reply-To: <CACMJSesvTLe28Jz83b=zfHD2rvmf7-i_2+2DoV=dgooVqFEYbA@mail.gmail.com>
+Mime-Version: 1.0
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cknow-tech.com;
+	s=key1; t=1760636348;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=QxNz2ubVhmwaha5Dqcv6zgBsEC/I+M6eOK/y6A/nxQo=;
+	b=QI/JRjrJcWwm7qCShTbcH1hAx/WOPeP9mCfiyD27m2c29VqT1yZhG7vae0/qHoRYSf1Icd
+	mgq+glxC/dq6OQ05VctLPoDzYQ2feuIx7C7wtpO9IRufsqnwq3TRM/epaKQtdOeiUJS8Ju
+	3FN8/dvb9cshxlJOAz1Lcf2XiGShgLp7PTQna+rg1nIS+pMBLb71oh5UUh/hwAL1YPO0bv
+	1j9bHXdIF/x15JE2q+f7P8Ao9E0guri6YdR7ny3s+la0DByxYdXb0wcb2KTpkqYG3BEkgN
+	Qq/lcGJLlVpfAWZemabMQeZjl53GCKeNqT4CrlAwoeNIl2nT8EsajYTHACCT6w==
+Content-Transfer-Encoding: quoted-printable
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-GUID: S3ZANsa2q3O5m7UdUOlLxTkXG3eGNtxI
-X-Proofpoint-ORIG-GUID: S3ZANsa2q3O5m7UdUOlLxTkXG3eGNtxI
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDExMDAyMCBTYWx0ZWRfX1pZPxr9I9L2+
- YDAoq2CKFCKCt1VkrKFQXsU5OIXT95HqJ6j1kwnbz0blmD0vlgFnW10Fepg9zbQw04P/p94oJIf
- cd3w8H4vtbog1vpGGmY2xjgr3YLNPNIfl1oHpGt9J6gKI8pgQAhspXsyc8i66iPf+7ChWM4InQI
- mQzAKSFrcwyZQ1lW5vN+i5LDwwdzZbDUUjaMrlpDmFVdVJ/UkX/mynsofppK76vTGxIz3mfa3aH
- 5FdWJsW+cuyfsRV22yCzRKPdwy3u0YJZt+7RudqR0g4qTiZmG3+fxDi/qfMvCT/TNUm4LFYzsVM
- eWqwtVBETAFKpMmrQyEWpwHaDYx5DToFPRj84W6tghg/mKHdFowCY2b0pVdyX+5h7UUOCP4Keq5
- jYYX/VX5lghXGe8uUyvfZFjc/2V5eA==
-X-Authority-Analysis: v=2.4 cv=V71wEOni c=1 sm=1 tr=0 ts=68f12930 cx=c_pps
- a=vVfyC5vLCtgYJKYeQD43oA==:117 a=j4ogTh8yFefVWWEFDRgCtg==:17
- a=IkcTkHD0fZMA:10 a=x6icFKpwvdMA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=EUspDBNiAAAA:8 a=8ps4eDoI1eVci98EcxQA:9 a=QEXdDO2ut3YA:10
- a=rl5im9kqc5Lf4LNbBjHf:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-10-16_03,2025-10-13_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- bulkscore=0 malwarescore=0 spamscore=0 adultscore=0 suspectscore=0
- impostorscore=0 phishscore=0 clxscore=1015 lowpriorityscore=0
- priorityscore=1501 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2510020000
- definitions=main-2510110020
+Date: Thu, 16 Oct 2025 19:38:57 +0200
+Message-Id: <DDJXHRIRGTW9.GYC2ULZ5WQAL@cknow-tech.com>
+Subject: Re: [PATCH v2 1/2] PCI/ASPM: Override the ASPM and Clock PM states
+ set by BIOS for devicetree platforms
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
+From: "Diederik de Haas" <diederik@cknow-tech.com>
+To: "Bjorn Helgaas" <helgaas@kernel.org>
+Cc: "FUKAUMI Naoki" <naoki@radxa.com>,
+ <manivannan.sadhasivam@oss.qualcomm.com>, "Bjorn Helgaas"
+ <bhelgaas@google.com>, "Manivannan Sadhasivam" <mani@kernel.org>, "Lorenzo
+ Pieralisi" <lpieralisi@kernel.org>, =?utf-8?q?Krzysztof_Wilczy=C5=84ski?=
+ <kwilczynski@kernel.org>, "Rob Herring" <robh@kernel.org>,
+ <linux-pci@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+ <linux-arm-msm@vger.kernel.org>, "David E. Box"
+ <david.e.box@linux.intel.com>, "Kai-Heng Feng"
+ <kai.heng.feng@canonical.com>, "Rafael J. Wysocki" <rafael@kernel.org>,
+ "Heiner Kallweit" <hkallweit1@gmail.com>, "Chia-Lin Kao"
+ <acelan.kao@canonical.com>, "Dragan Simic" <dsimic@manjaro.org>,
+ <linux-rockchip@lists.infradead.org>, <regressions@lists.linux.dev>, "Ulf
+ Hansson" <ulf.hansson@linaro.org>
+References: <DDIW7ZP5K1VR.2I7VW56B9CZLF@cknow-tech.com>
+ <20251015225033.GA945930@bhelgaas>
+In-Reply-To: <20251015225033.GA945930@bhelgaas>
+X-Migadu-Flow: FLOW_OUT
 
+On Thu Oct 16, 2025 at 12:50 AM CEST, Bjorn Helgaas wrote:
+> On Wed, Oct 15, 2025 at 02:26:30PM +0200, Diederik de Haas wrote:
+>> On Tue Oct 14, 2025 at 8:49 PM CEST, Bjorn Helgaas wrote:
+>> > On Wed, Oct 15, 2025 at 01:30:16AM +0900, FUKAUMI Naoki wrote:
+>> >> I've noticed an issue on Radxa ROCK 5A/5B boards, which are based on =
+the
+>> >> Rockchip RK3588(S) SoC.
+>> >>=20
+>> >> When running Linux v6.18-rc1 or linux-next since 20250924, the kernel=
+ either
+>> >> freezes or fails to probe M.2 Wi-Fi modules. This happens with severa=
+l
+>> >> different modules I've tested, including the Realtek RTL8852BE, Media=
+Tek
+>> >> MT7921E, and Intel AX210.
+>> >>=20
+>> >> I've found that reverting the following commit (i.e., the patch I'm r=
+eplying
+>> >> to) resolves the problem:
+>> >> commit f3ac2ff14834a0aa056ee3ae0e4b8c641c579961
+>> >
+>> > Can you collect a complete dmesg log when booting with
+>> >
+>> >   ignore_loglevel pci=3Dearlydump dyndbg=3D"file drivers/pci/* +p"
+>> >
+>> > and the output of "sudo lspci -vv"?
+>>=20
+>> I have a Rock 5B as well, but I don't have a Wi-Fi module, but I do have
+>> a NVMe drive connected. That boots fine with 6.17, but I end up in a
+>> rescue shell with 6.18-rc1. I haven't verified that it's caused by the
+>> same commit, but it does sound plausible.
+>
+> FWIW, my expectation is that booting with "pcie_aspm=3Doff" should
+> effectively avoid the ASPM enabling and behave similarly to reverting
+> f3ac2ff14834 ("PCI/ASPM: Enable all ClockPM and ASPM states for
+> devicetree platforms").  My hope was that we could boot that way and
+> incrementally enable ASPM via sysfs a device at a time for testing.
+>
+> [Moved last lines up here]
+> Bottom line, I don't think I can get any further with this particular
+> issue until we confirm that f3ac2ff14834 ("PCI/ASPM: Enable all
+> ClockPM and ASPM states for devicetree platforms") is the cause.
 
+I built a 6.18-rc1 kernel with that commit reverted and when booted up,
+I could mount my NVMe drive. Next I removed the 'noauto' from /etc/fstab
+and rebooted and that succeeded as well.
+So I think we can conclude that commit f3ac2ff14834 is the cause.
 
-On 10/15/2025 8:10 PM, Bartosz Golaszewski wrote:
-> On Wed, 15 Oct 2025 at 06:38, Shivendra Pratap
-> <shivendra.pratap@oss.qualcomm.com> wrote:
->>
->> The reboot-mode driver does not have a strict requirement for
->> device-based registration. It primarily uses the device's of_node
->> to read mode-<cmd> properties and the device pointer for logging.
->>
->> Remove the dependency on struct device and introduce support for
->> firmware node (fwnode) based registration. This enables drivers
->> that are not associated with a struct device to leverage the
->> reboot-mode framework.
->>
->> Signed-off-by: Shivendra Pratap <shivendra.pratap@oss.qualcomm.com>
->> ---
->>  drivers/power/reset/reboot-mode.c | 45 +++++++++++++++++++++++++++++----------
->>  include/linux/reboot-mode.h       |  3 ++-
->>  2 files changed, 36 insertions(+), 12 deletions(-)
->>
->> diff --git a/drivers/power/reset/reboot-mode.c b/drivers/power/reset/reboot-mode.c
->> index 8fc3e14638ea757c8dc3808c240ff569cbd74786..c8f71e6f661ae14eb72bdcb1f412cd05faee3dd9 100644
->> --- a/drivers/power/reset/reboot-mode.c
->> +++ b/drivers/power/reset/reboot-mode.c
->> @@ -3,13 +3,17 @@
->>   * Copyright (c) 2016, Fuzhou Rockchip Electronics Co., Ltd
->>   */
->>
->> +#define pr_fmt(fmt)    "reboot-mode: " fmt
->> +
->>  #include <linux/device.h>
->>  #include <linux/init.h>
->>  #include <linux/kernel.h>
->> +#include <linux/list.h>
->>  #include <linux/module.h>
->>  #include <linux/of.h>
->>  #include <linux/reboot.h>
->>  #include <linux/reboot-mode.h>
->> +#include <linux/slab.h>
->>
->>  #define PREFIX "mode-"
->>
->> @@ -69,17 +73,26 @@ static int reboot_mode_notify(struct notifier_block *this,
->>  /**
->>   * reboot_mode_register - register a reboot mode driver
->>   * @reboot: reboot mode driver
->> + * @fwnode: Firmware node with reboot-mode configuration
->>   *
->>   * Returns: 0 on success or a negative error code on failure.
->>   */
->> -int reboot_mode_register(struct reboot_mode_driver *reboot)
->> +int reboot_mode_register(struct reboot_mode_driver *reboot, struct fwnode_handle *fwnode)
->>  {
->>         struct mode_info *info;
->> +       struct mode_info *next;
->> +       struct device_node *np;
->>         struct property *prop;
->> -       struct device_node *np = reboot->dev->of_node;
->>         size_t len = strlen(PREFIX);
->>         int ret;
->>
->> +       if (!fwnode)
->> +               return -EINVAL;
->> +
->> +       np = to_of_node(fwnode);
->> +       if (!np)
->> +               return -EINVAL;
->> +
->>         INIT_LIST_HEAD(&reboot->head);
->>
->>         mutex_init(&reboot->rb_lock);
->> @@ -89,28 +102,28 @@ int reboot_mode_register(struct reboot_mode_driver *reboot)
->>                         if (strncmp(prop->name, PREFIX, len))
->>                                 continue;
->>
->> -                       info = devm_kzalloc(reboot->dev, sizeof(*info), GFP_KERNEL);
-> 
-> This change is good - devres should not be used in subsystem library
-> code, only in drivers - but it doesn't seem to belong here, can you
-> please separate it out and make it backportable?
+>> On this device, the NVMe isn't strictly needed (I used it to compile my
+>> kernels on), so I added 'noauto' to the NVMe line in /etc/fstab ... and
+>> that made it boot successfully into 6.18-rc1. Then running the 'mount'
+>> command wrt that NVMe drive failed with this message:
+>>=20
+>>   EXT4-fs (nvme0n1p1): unable to read superblock
+>>=20
+>> The log of my attempts can be found here:
+>> https://paste.sr.ht/~diederik/f435eb258dca60676f7ac5154c00ddfdc24ac0b7
+>
+> Thanks for the log, it's very useful.  This is pieced together from
+> the serial console log and the "dmesg --level" output, but I think
+> it's all the same boot:
 
-sure. Just to confirm we should separate out the devm_kzalloc part of the
-change and add a fixes tag.
- 
-> 
->> +                       info = kzalloc(sizeof(*info), GFP_KERNEL);
->>                         if (!info) {
->>                                 ret = -ENOMEM;
->>                                 goto error;
->>                         }
->>
->>                         if (of_property_read_u32(np, prop->name, &info->magic)) {
->> -                               dev_err(reboot->dev, "reboot mode %s without magic number\n",
->> -                                       info->mode);
->> -                               devm_kfree(reboot->dev, info);
->> +                               pr_err("reboot mode %s without magic number\n", info->mode);
->> +                               kfree(info);
->>                                 continue;
->>                         }
->>
->>                         info->mode = kstrdup_const(prop->name + len, GFP_KERNEL);
->>                         if (!info->mode) {
->>                                 ret =  -ENOMEM;
->> +                               kfree(info);
->>                                 goto error;
->>                         } else if (info->mode[0] == '\0') {
->>                                 kfree_const(info->mode);
->> +                               kfree(info);
->>                                 ret = -EINVAL;
->> -                               dev_err(reboot->dev, "invalid mode name(%s): too short!\n",
->> -                                       prop->name);
->> +                               pr_err("invalid mode name(%s): too short!\n", prop->name);
->>                                 goto error;
->>                         }
->>
->> @@ -123,8 +136,11 @@ int reboot_mode_register(struct reboot_mode_driver *reboot)
->>                 return 0;
->>
->>  error:
->> -               list_for_each_entry(info, &reboot->head, list)
->> +               list_for_each_entry_safe(info, next, &reboot->head, list) {
->> +                       list_del(&info->list);
-> 
-> Same here, not deleting the entries currently seems like a bug? Do we
-> depend on the driver detach to clean up the resources on failure?
+Correct.
 
-sure, so this should also go as fixes? and should we remove the other
-dev_err(printk) also as fixes? or that can still got with the change
-where we add fwnode based registration?
+>   ...
+>   [   18.921811] rockchip-pm-domain fd8d8000.power-management:power-contr=
+oller: sync_state() pending due to fdad0000.npu
+>   [   18.922737] rockchip-pm-domain fd8d8000.power-management:power-contr=
+oller: sync_state() pending due to fdb50000.video-codec
+>   ...
+>
+> The earlydump info shows the 00:00.0 Root Port had I/O+ Mem+
+> BusMaster+ (0x0107) and the 01:00.0 NVMe initially had I/O- Mem-
+> BusMaster- (0x0000).  We were able to enumerate the NVMe device and
+> assign its BAR, and the nvme driver turned on Mem+ (0x002).
+>
+>   nvme_timeout
+>     csts =3D readl(dev->bar + NVME_REG_CSTS)
+>     if (nvme_should_reset(csts))
+>       nvme_warn_reset(csts)
+>         result =3D pci_read_config_word(PCI_STATUS)
+>         "controller is down; will reset: CSTS=3D0xffffffff, ... failed (1=
+34)"
+>     nvme_dev_disable
+>
+> But I think the NVMe device was powered down to D3cold somewhere
+> before 39.971050.  I don't know if the power-controller messages at
+> 18.921811 have any connection, and I don't know why ASPM would be
+> related.
 
-thanks for review!
+I highly doubt they're connected. These threads are relevant:
+https://lore.kernel.org/all/20250701114733.636510-1-ulf.hansson@linaro.org/
+https://lore.kernel.org/all/20250909111130.132976-1-ulf.hansson@linaro.org/
+https://lore.kernel.org/all/20251007094312.590819-1-ulf.hansson@linaro.org/
 
--
-Shivendra
+TL;DR: Those warnings will (likely) be downgraded to 'info'.
+
+Cheers,
+  Diederik
 
