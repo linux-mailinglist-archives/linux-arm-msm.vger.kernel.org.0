@@ -1,82 +1,82 @@
-Return-Path: <linux-arm-msm+bounces-77567-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-77570-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [IPv6:2605:f480:58:1:0:1994:3:14])
-	by mail.lfdr.de (Postfix) with ESMTPS id A1A74BE3188
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Oct 2025 13:35:51 +0200 (CEST)
+Received: from ams.mirrors.kernel.org (ams.mirrors.kernel.org [213.196.21.55])
+	by mail.lfdr.de (Postfix) with ESMTPS id 787E8BE3191
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Oct 2025 13:36:10 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id A30064E56F3
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Oct 2025 11:35:47 +0000 (UTC)
+	by ams.mirrors.kernel.org (Postfix) with ESMTPS id F2487357D7B
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Oct 2025 11:36:09 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id ACE1931B116;
-	Thu, 16 Oct 2025 11:35:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 27AED326D4C;
+	Thu, 16 Oct 2025 11:35:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b="hjElTdis"
+	dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b="aNYUIh8z"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-f42.google.com (mail-ed1-f42.google.com [209.85.208.42])
+Received: from mail-ed1-f45.google.com (mail-ed1-f45.google.com [209.85.208.45])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E37DD2E1757
-	for <linux-arm-msm@vger.kernel.org>; Thu, 16 Oct 2025 11:35:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9EAF31A813
+	for <linux-arm-msm@vger.kernel.org>; Thu, 16 Oct 2025 11:35:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760614541; cv=none; b=aam0tlHYghmy0aSnffT6FNhfTmorQQsn3VkQ2h7IM2fJdKPH2gCHeDg0ke65ki46wdjkSZJEQy4CGrYE9fughc1JUT6nwzrYgGg8yLr6E2mi7wL6JoEkpt5ACWeP5OkqEVIxDYTYx3zdcsg0itIFMyHX/pSpm6PrD1OtpEeGacE=
+	t=1760614544; cv=none; b=iqNOB+bL2Ym+3IHvTWOiJg3TvdkUnR2zsUWwv2yJFrrr2i6DEmqY0eu2REvIAPSqvu/E+dhmTGzqDYRbkEdBeZfTD0YgMquIAIK7yjOi4H/zpfhghiHdlBwLyNV/JFX9JLkgXo1qhxDJML2xf0EB80m22KvGYmKUsDAc5WY7mvk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760614541; c=relaxed/simple;
-	bh=DC16tUoCJGqdCaZCKlPxmdAri6UTD51Yi97Na91Z5Ew=;
+	s=arc-20240116; t=1760614544; c=relaxed/simple;
+	bh=O4rKc5sy4aBgNGWvywdtU9qBCzmUASThUm+1bKVdk1Q=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=Yp2eYO3zPkPIJ+z6MIax4RsXyyAKvt9Y+l5qhrRTW9P+oA/wM87VAVQqmGC6AZAIuNKG40H+7njm6ZcdUe5fcKFC1bzq6A810CzESV6xiJUk9fijv0P4ZKIxC0klxxpvRgXvC+uCat5SNZfGDuyz/TzqxrehHgPwFiFz6zanHjk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=fairphone.com; spf=pass smtp.mailfrom=fairphone.com; dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b=hjElTdis; arc=none smtp.client-ip=209.85.208.42
+	 In-Reply-To:To:Cc; b=lE1C3Zn4INiGs9sBkov/X7C/uuvUT2Ek3MT321JJP7kqnnTXXW5VPiFA6lYCH5fOqUB1ixFZ5Z7MvW/aNBclDDenIv3DOAzjYi8Vn/HoywiUGKeCHPhjF5Ob+2vapqEm00nq7SZAXV/QPFxWCQMd5SMa5SI0AlpxhO0sbI0lLh4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=fairphone.com; spf=pass smtp.mailfrom=fairphone.com; dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b=aNYUIh8z; arc=none smtp.client-ip=209.85.208.45
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=fairphone.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fairphone.com
-Received: by mail-ed1-f42.google.com with SMTP id 4fb4d7f45d1cf-637dbabdb32so1181245a12.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 16 Oct 2025 04:35:39 -0700 (PDT)
+Received: by mail-ed1-f45.google.com with SMTP id 4fb4d7f45d1cf-63994113841so1035729a12.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 16 Oct 2025 04:35:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=fairphone.com; s=fair; t=1760614538; x=1761219338; darn=vger.kernel.org;
+        d=fairphone.com; s=fair; t=1760614539; x=1761219339; darn=vger.kernel.org;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=dlfDjHrcdfKrGBvOyIQt5Lw/+fx5LVzeszJPP8D8ljg=;
-        b=hjElTdishWAVozrMa4Qqu1zkvA4d8d6JAzOE4N9xkkCh51RjH7Nlm/7eSXmWQ4dKvb
-         e2sb5AIAI7vUiJpIy5AYtAXlGvJDHNeFVXf7wWa8axF///63+qy4Bif6aHAJcG2lutRT
-         qvfaSYq+BzFxHvCIc1QOHBqNDGdLt/No7mUyU2aG4b73CFfriopDIZlvhBEJ7BmQFgb9
-         4XipoIdZbrCWFEY+y+FZKNzJ7ymorTA5TBdV9zjvIAAPY1dV6LyfZq+K6ejdI+sk7HGG
-         CJWMojUAsgcsmKmjCU+BbRywbRz3/5dge9ByALS08Slyf7A5OzuX2mALmIFXtTTf20AE
-         473w==
+        bh=J0FpJ3krtfpqdj7q9wHL/cml6yEqlBhsQEIvVzkEwck=;
+        b=aNYUIh8z3Q/QOqW6tjPAaXuI6u56lhNqP8CF/HE8zwgOxD5TKpjIw9NPOyyifbKMWj
+         6jKUa+nxs+FlUE0S0nd9kmmRNGCyY+9FMX2+E8JpQ2Btco1mgywPF7CoM/zlAc1xwFsU
+         +205bTa0cR0p4NSUu5pYamqslvmwGEtrJoVMzzKd++kQmcbtNhbi8qZjFY49bxCV+Q+T
+         yenjh8Y9+JDYwVXaPRXQWWy8xoPaa4LkWprTQIgOq/K2t42gDmW65iilbzKNV93al8ug
+         dSOc1RbGx/VYjjksCgXvdQ5z2qonFY+a1a/k/0N45C7zdssqfSJI2BiVmTCZrj+4qLQP
+         pORA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1760614538; x=1761219338;
+        d=1e100.net; s=20230601; t=1760614539; x=1761219339;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=dlfDjHrcdfKrGBvOyIQt5Lw/+fx5LVzeszJPP8D8ljg=;
-        b=oXLJVUJuN6XBiilnqIQCls0GU0EvRJmYHPFeO32Zv3wQCFzgVtT06thv5fGde21AzW
-         InBS6BApnWTCNX/hgzCLxN94GOX/cTZfu3z9YNYXfmRpDnwxT/h/2cchZzUA2YT6pDI5
-         5zNx+ItLxZxIycj5vKI9vQr7t18U7FZqTFPvQsdEb4QJSeFmXhsje8puKcvzH6m1u+OB
-         q00G1KloMvumnKwTpZIsZRoFtApnzCLX7T2w0iMCh8yrO051pxAYRW7NJeuCJ85wT2X2
-         ttTquI8oxVjdGaqhmYLbj1+duNu2kSUFazf2yejnsizByRny1XPesUXwJOoLqxk41NOa
-         7qMA==
-X-Forwarded-Encrypted: i=1; AJvYcCXlD87CDA2VV2xGdaSyt1Iiu2gE2DDAFLPpdJ2ZZHvbPAqROCUubrylAAlNxk7fBesWWhhcuCz8NyPRFD5p@vger.kernel.org
-X-Gm-Message-State: AOJu0YwFhLF9PFsJLvEo9llyTYNtjRGrJV+ElKX21uOuLmlNui3wAoMi
-	lny3gFKBejPW9AmMr6ZqstK7pSzit8EJNFofHTsXJGibGyCOkVcfgymNA4VVdmnQzn8=
-X-Gm-Gg: ASbGncvnNulfA/3MqieSl7hP/ILIUon9SatbsvQxag47yw1KeCrPMro617es4fOY13G
-	NS2BA/E9jgEfUfgHOVxNrygG7zKRye48fUck7HVqdKdfBus8k3sdyeq+1CKnrHsDiwj9Q2qAmS7
-	841U57bnBENlQXdpF3Cx0S6UugdEnUKZbbEqCENfRWjJaKDMYOQ9rAMkj5x8eNGVUWqifPk98RS
-	2EiycI403doGrwIBdsjIenQtDuENv/D3bB+DUS7K/85rwYv8ieYobW6p9KS1X3Oj6FuvnCzIcmz
-	TunYWAcC6KyMYszlrOB8IBIBXMxGTaSmj5lZ4Y5gx61MEfitFQnP4llIb11H2qLFOz73eSVvx67
-	0rGxdDI4DNVUt9V+xlrp4dlOuSFdazPxIsB8PpHUig/FoURbSYueyxobkWkMiUBncDktsQuvred
-	/II/dnCg5C/Xls5ZW5lPEVsUnopPEIvWCUNumB8O0DodSupo6VI8jyE5+2Ag==
-X-Google-Smtp-Source: AGHT+IHJ/BAd/YZqX1JBpTnZFq0JCBUuUuBHCuxb8Ss+zVnUBV31V1Tin8ZI1NwrXSvqwfYqO72CDA==
-X-Received: by 2002:a05:6402:358e:b0:63b:ee76:3f5c with SMTP id 4fb4d7f45d1cf-63bee764a26mr6128995a12.15.1760614538176;
-        Thu, 16 Oct 2025 04:35:38 -0700 (PDT)
+        bh=J0FpJ3krtfpqdj7q9wHL/cml6yEqlBhsQEIvVzkEwck=;
+        b=uZeueo10j+IIE15MY0fKbuhPrn72o3R9kWxus3tc9KLq3ZmotpImLW7voU/lldAKas
+         8t0syDWSVB84ZmpaGwa1u7NBHCsACRlaAYo8r26gaG1fS0sXxcQy2xoV03ffnEao2XHh
+         emHt/tGCxmexqfmg2YgsHpoGT3MXPHdESFjf93urF0TzVeD4AVG+sXA3cn2sTEvQ2LpW
+         cOl1dAJ0SiodrUuUUXiQhyiAJm2yfzzkiZZWs/dk0QnVO0n6Hkbj7tGmETX7OVCqRneF
+         9nhX2hb6Sn2vE/H60w7/Y6jb3LWr60WpK60CaFFdsh51LV6l0v2cvqOwq56MgyeNT5ug
+         Kblg==
+X-Forwarded-Encrypted: i=1; AJvYcCUju5lFy0bYRImiL24vUyYJrhTGFYyku3yXRx9Z4VADgxEErqADUJIxmZHj/CukHkZUUW41pguboo0JcRMl@vger.kernel.org
+X-Gm-Message-State: AOJu0YzX7phubrcdzcfz2n7KzZWBCPSnxauxV0ICqvTG9/1VCSlU5/0Q
+	iEXPJyIz7X8i8GXSSIz6y7fqyZ2WrobkOV6SJ34XY4BGOQtY1HL2JoF6bpuOkE6pKbc=
+X-Gm-Gg: ASbGncu/1ijUA0jkuDW1pq0SyvltbGe9m6OTMsGvIdfq1Ci0k7WNggR+OftzevkyMZI
+	j9I3x8xq2H0FjwHd0sRXwKHZRowmxXSRmh/mEpolTVu2mR6Gv+1pWtLiA/pF1GgiuKRoJDdLrBr
+	uD4bXGMBw7498W72LgWTs7tEqm7b0DMARtuiU8utfGdDcTQ8Oavsx4x3HhqLW9zQhzUhWVbrqmM
+	CjWN+XmbEFOtynkss0piUakK4qLwhlUoF+/UBQv/mFxuzMCH2HYIOP8izdOpFH0qUBdmdjYrRgI
+	duv7NyWYet6miCfcCJ7PWe1MXTSDKXYoQb6nQpEZXNoheQueH7iArzNKBxxoyxp0x76vE563e/v
+	cwh8JULrxLiRBY/PbR3j6J9kka1Y6BctEFr0+yjrzPSO7aT+G62s/zjKaPbfCGGQ8dauOE1tLKg
+	IvNCu6l0nbE8Ws54BCh6FPxBNO2ol27fg7n4GBlb/OD3VmVcI5Z/3Y3Ejwjg==
+X-Google-Smtp-Source: AGHT+IEG3dCpKcVJYID+c0OWz372qjRoKiSXU0T4AZRS/rp11xQVeouzN18fTWfpzl+bcSHxHxRnzg==
+X-Received: by 2002:a05:6402:40d5:b0:63b:ed9c:dd16 with SMTP id 4fb4d7f45d1cf-63bed9cdf34mr6705502a12.3.1760614539082;
+        Thu, 16 Oct 2025 04:35:39 -0700 (PDT)
 Received: from [172.16.220.227] (144-178-202-139.static.ef-service.nl. [144.178.202.139])
-        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-63a52b1e89csm15849397a12.19.2025.10.16.04.35.37
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-63a52b1e89csm15849397a12.19.2025.10.16.04.35.38
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 16 Oct 2025 04:35:37 -0700 (PDT)
+        Thu, 16 Oct 2025 04:35:38 -0700 (PDT)
 From: Griffin Kroah-Hartman <griffin.kroah@fairphone.com>
-Date: Thu, 16 Oct 2025 13:35:22 +0200
-Subject: [PATCH v3 1/4] dt-bindings: media: i2c: dw9719: Document DW9800K
+Date: Thu, 16 Oct 2025 13:35:23 +0200
+Subject: [PATCH v3 2/4] media: i2c: dw9719: Add DW9800K support
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -85,7 +85,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20251016-dw9800-driver-v3-1-d7058f72ead4@fairphone.com>
+Message-Id: <20251016-dw9800-driver-v3-2-d7058f72ead4@fairphone.com>
 References: <20251016-dw9800-driver-v3-0-d7058f72ead4@fairphone.com>
 In-Reply-To: <20251016-dw9800-driver-v3-0-d7058f72ead4@fairphone.com>
 To: Mauro Carvalho Chehab <mchehab@kernel.org>, 
@@ -101,34 +101,90 @@ Cc: linux-media@vger.kernel.org, linux-kernel@vger.kernel.org,
  linux-arm-msm@vger.kernel.org, 
  Griffin Kroah-Hartman <griffin.kroah@fairphone.com>
 X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1760614534; l=839;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1760614534; l=2782;
  i=griffin.kroah@fairphone.com; s=20250804; h=from:subject:message-id;
- bh=DC16tUoCJGqdCaZCKlPxmdAri6UTD51Yi97Na91Z5Ew=;
- b=f8/xkxRl7QiZRrstdSBVPFUpP2voe/77bGBdMjvQ37AZ7h39ZjJyHUPpa8Lipcvz1EMHgxG+w
- 0Fu9lE4y61/DGbzympht0OaCB5KU4AmiRMFG6PeCNgDvyFcywXnCcZF
+ bh=O4rKc5sy4aBgNGWvywdtU9qBCzmUASThUm+1bKVdk1Q=;
+ b=Jrp8bJ8iQSh0riK68tm9jxFjE9G7FmGLLB9PaFBqVDrh7pHupDGsgfvgJ+E66QztssfS5zewt
+ KdgSq2Et5JFBbu2aQu5a+v8+gCKDD7v3GgPvs02HHtoBZ017S3kX4G/
 X-Developer-Key: i=griffin.kroah@fairphone.com; a=ed25519;
  pk=drSBvqKFiR+xucmLWONHSq/wGrW+YvcVtBXFYnYzn8U=
 
-Document the Dongwoon Anatech DW9800K.
+The DW9800K is a similar part to the DW9719. The method for operation is
+the same as the DW9719, but the register set is different. Add support
+for this part to the existing dw9719 driver.
 
-Acked-by: Rob Herring (Arm) <robh@kernel.org>
+Tested on the Fairphone 5 smartphone.
+
+Tested-by: Luca Weiss <luca.weiss@fairphone.com>
 Signed-off-by: Griffin Kroah-Hartman <griffin.kroah@fairphone.com>
 ---
- Documentation/devicetree/bindings/media/i2c/dongwoon,dw9719.yaml | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/media/i2c/dw9719.c | 22 ++++++++++++++++++++--
+ 1 file changed, 20 insertions(+), 2 deletions(-)
 
-diff --git a/Documentation/devicetree/bindings/media/i2c/dongwoon,dw9719.yaml b/Documentation/devicetree/bindings/media/i2c/dongwoon,dw9719.yaml
-index 38db0764c0f70ad49295dcddc182b7e100a68b29..8e8d62436e0d0c4f9af9e52262b23881abd37cec 100644
---- a/Documentation/devicetree/bindings/media/i2c/dongwoon,dw9719.yaml
-+++ b/Documentation/devicetree/bindings/media/i2c/dongwoon,dw9719.yaml
-@@ -21,6 +21,7 @@ properties:
-       - dongwoon,dw9718s
-       - dongwoon,dw9719
-       - dongwoon,dw9761
-+      - dongwoon,dw9800k
+diff --git a/drivers/media/i2c/dw9719.c b/drivers/media/i2c/dw9719.c
+index 3627e78b8b6668933c4ecd92231465ce4105ff0c..59558335989ed2825ef7a0d356ddfe10f001716a 100644
+--- a/drivers/media/i2c/dw9719.c
++++ b/drivers/media/i2c/dw9719.c
+@@ -68,6 +68,9 @@
+ #define DW9761_VCM_PRELOAD		CCI_REG8(8)
+ #define DW9761_DEFAULT_VCM_PRELOAD	0x73
  
-   reg:
-     maxItems: 1
++#define DW9800K_DEFAULT_SAC		1
++#define DW9800K_MODE_SAC_SHIFT		6
++#define DW9800K_DEFAULT_VCM_FREQ		0x10
+ 
+ #define to_dw9719_device(x) container_of(x, struct dw9719_device, sd)
+ 
+@@ -75,6 +78,7 @@ enum dw9719_model {
+ 	DW9718S,
+ 	DW9719,
+ 	DW9761,
++	DW9800K,
+ };
+ 
+ struct dw9719_device {
+@@ -130,11 +134,18 @@ static int dw9719_power_up(struct dw9719_device *dw9719, bool detect)
+ 	cci_write(dw9719->regmap, reg_pwr, DW9719_STANDBY, &ret);
+ 
+ 	if (detect) {
+-		/* This model does not have an INFO register */
+-		if (dw9719->model == DW9718S) {
++		/* These models do not have an INFO register */
++		switch (dw9719->model) {
++		case DW9718S:
+ 			dw9719->sac_mode = DW9718S_DEFAULT_SAC;
+ 			dw9719->vcm_freq = DW9718S_DEFAULT_VCM_FREQ;
+ 			goto props;
++		case DW9800K:
++			dw9719->sac_mode = DW9800K_DEFAULT_SAC;
++			dw9719->vcm_freq = DW9800K_DEFAULT_VCM_FREQ;
++			goto props;
++		default:
++			break;
+ 		}
+ 
+ 		ret = cci_read(dw9719->regmap, DW9719_INFO, &val, NULL);
+@@ -177,6 +188,12 @@ static int dw9719_power_up(struct dw9719_device *dw9719, bool detect)
+ 	}
+ 
+ 	switch (dw9719->model) {
++	case DW9800K:
++		cci_write(dw9719->regmap, DW9719_CONTROL, DW9719_ENABLE_RINGING, &ret);
++		cci_write(dw9719->regmap, DW9719_MODE,
++			  dw9719->sac_mode << DW9800K_MODE_SAC_SHIFT, &ret);
++		cci_write(dw9719->regmap, DW9719_VCM_FREQ, dw9719->vcm_freq, &ret);
++		break;
+ 	case DW9718S:
+ 		/* Datasheet says [OCP/UVLO] should be disabled below 2.5V */
+ 		dw9719->sac_mode &= DW9718S_CONTROL_SAC_MASK;
+@@ -426,6 +443,7 @@ static const struct of_device_id dw9719_of_table[] = {
+ 	{ .compatible = "dongwoon,dw9718s", .data = (const void *)DW9718S },
+ 	{ .compatible = "dongwoon,dw9719", .data = (const void *)DW9719 },
+ 	{ .compatible = "dongwoon,dw9761", .data = (const void *)DW9761 },
++	{ .compatible = "dongwoon,dw9800k", .data = (const void *)DW9800K },
+ 	{ }
+ };
+ MODULE_DEVICE_TABLE(of, dw9719_of_table);
 
 -- 
 2.43.0
