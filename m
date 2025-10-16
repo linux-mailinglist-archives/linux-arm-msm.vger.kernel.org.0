@@ -1,34 +1,34 @@
-Return-Path: <linux-arm-msm+bounces-77602-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-77603-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [IPv6:2605:f480:58:1:0:1994:3:14])
-	by mail.lfdr.de (Postfix) with ESMTPS id 85E5ABE3F23
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Oct 2025 16:38:25 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 41B7ABE3F2F
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Oct 2025 16:38:58 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id CA1004E72CF
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Oct 2025 14:37:59 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 065171A65142
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Oct 2025 14:38:46 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C4CB733EB1D;
-	Thu, 16 Oct 2025 14:37:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E00702E1744;
+	Thu, 16 Oct 2025 14:38:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=armlinux.org.uk header.i=@armlinux.org.uk header.b="eQJYOeSB"
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=armlinux.org.uk header.i=@armlinux.org.uk header.b="z8riJzNu"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from pandora.armlinux.org.uk (pandora.armlinux.org.uk [78.32.30.218])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CEEC339B5C;
-	Thu, 16 Oct 2025 14:37:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3688E2DF141;
+	Thu, 16 Oct 2025 14:38:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=78.32.30.218
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760625477; cv=none; b=lVGM+Z17kpVZHiqBhL2HGrMjgZPSAJmMFLLBh5XHWBjDmWPqhPZgOPKBidj7qOuCXy/9mOhLJ1OySvSTAaofs230DOeZn4ox6itH/9R5rcuRZ+yMf+PtFouGW2PbSxBeQRZNA+ot9kkfO0054EHSC0sDzs43iMFtVe9GUXP4/MA=
+	t=1760625498; cv=none; b=q8OH+UQc6SXTQN/lZYETbY+OTOZQIV+DtVIYv94Wnmst++I7Rb3qpGZYDXUETh0xfP+tlWmqqTstErYZNJcFT3uzgkURn3NEm0USfUsNrZujY6PowfNJ46DFGo07kqKqQhnbJ3IDGOh0J135xE/3dUDhpAV3juyWTIzW63N0JeQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760625477; c=relaxed/simple;
-	bh=zZQOnguWAvfz4TmbUkaZlAM1zO4+J5b4Rr8YI+S01b4=;
+	s=arc-20240116; t=1760625498; c=relaxed/simple;
+	bh=PSNhIQJ5dHUJhXGenqDrXxR9rFvhGoywIsXmitfW1Ag=;
 	h=In-Reply-To:References:From:To:Cc:Subject:MIME-Version:
-	 Content-Disposition:Content-Type:Message-Id:Date; b=K11NVNedFjbEF1OY9/zbAbNtkzvUDsvfd/ZXflu+lpa85iJzjj+SdlOYmygWtSd0bJqe/W/HZdKTPbeSplsGeu8hLMqVQkFsiiaV8xss4qmbyEhhLtPpSp4yS4yswFHhfX2cs5ONIjToP6MQ0qe0KRl+dFRlMPs/mUz4v2KGaes=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=armlinux.org.uk; spf=none smtp.mailfrom=armlinux.org.uk; dkim=pass (2048-bit key) header.d=armlinux.org.uk header.i=@armlinux.org.uk header.b=eQJYOeSB; arc=none smtp.client-ip=78.32.30.218
+	 Content-Disposition:Content-Type:Message-Id:Date; b=HxKQ60r5FV6o+ySzzGO1yBwnFdJ41B9pe5t1TSXZbsnWVrXsSqysKjItwRDTJ8ON61N6LvdpUcWm5jsmp6S+qz4CjTV1fEA81F/tQ3pGzZfFNWcTMCnaR9aX2P0VCP3D1ku88N91bhW1gqtILBVPVAwQAWrh6rQLfQNnqo+ihQk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=armlinux.org.uk; spf=none smtp.mailfrom=armlinux.org.uk; dkim=pass (2048-bit key) header.d=armlinux.org.uk header.i=@armlinux.org.uk header.b=z8riJzNu; arc=none smtp.client-ip=78.32.30.218
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=armlinux.org.uk
 Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=armlinux.org.uk
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
@@ -37,22 +37,22 @@ DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
 	In-Reply-To:Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:
 	Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:
 	List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
-	bh=dPZZ7DD90YwuQyGRIQcy3Gxn1BELcAQxJojKpnYWtJU=; b=eQJYOeSBf6rlzvdzJZvj4q8Ghm
-	R66thFCLOOCpKPDJGrccQN9bYGgl8eAghwTjckIMv6h6UzojDaUVoxLSw1wXgPAlMSfTuy8RT15pm
-	me4UP8EmWn+OyaqwOZYKkVtXMMqWA+JJHK3Bk4Zc6B+X6CwhokcQVKyMFB+gmy98kx8Y6NgXNepdO
-	5y/zx9GwQL9KQIlGf68J4bUtKAleBJyhZ748yCDCD9MFiOVb7Zdyl9Lk9X3evafTxgQaciHmnBjLA
-	s5Yw87hxGvYsR/LP48MD637TobjFGpr4rkL+EtcRrDBXQFbKM+PKv44unppJOBw4F7YPl29UJpYzR
-	ukXmtBKg==;
-Received: from e0022681537dd.dyn.armlinux.org.uk ([fd8f:7570:feb6:1:222:68ff:fe15:37dd]:55334 helo=rmk-PC.armlinux.org.uk)
+	bh=LnT7JfBCNmEWz2g/aWwe7MrIzD7zex1wxEX8kYAK9Sc=; b=z8riJzNuyWE9CUM7x2goHSVE0x
+	O9p6i28HE1cKlvCUKzFiAa9YV2+4cEXsuTtnWbvH7VmhLA/MJdVzYMlRNkoo5Z5Rsp2KAde573QCm
+	vVxZA94FsXur9yzXH+QCc7EKpOScJkUdFn4GdGfc3K5F3RUK2s9KOZ0Tk3ASNBjkY4E60zeC9N6UW
+	JrvmH18WIxP2V9IogMnfHTag9ZOdp5tSGfnrJzx6uFen6+iXEMGJZNI8hQPGHId09srliJvkoEFw+
+	CijY6+YSU6wqQ/igDzn7RGDMgeMlLSIEJF6Om3ds+NIVQI3a/a6JwMbx+IbsK5ePWE8fosGsJ9+VC
+	vjB5DKNQ==;
+Received: from e0022681537dd.dyn.armlinux.org.uk ([fd8f:7570:feb6:1:222:68ff:fe15:37dd]:40658 helo=rmk-PC.armlinux.org.uk)
 	by pandora.armlinux.org.uk with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
 	(Exim 4.98.2)
 	(envelope-from <rmk@armlinux.org.uk>)
-	id 1v9P69-000000006QN-3q1p;
-	Thu, 16 Oct 2025 15:36:58 +0100
+	id 1v9P6G-000000006Qj-47y7;
+	Thu, 16 Oct 2025 15:37:05 +0100
 Received: from rmk by rmk-PC.armlinux.org.uk with local (Exim 4.98.2)
 	(envelope-from <rmk@rmk-PC.armlinux.org.uk>)
-	id 1v9P68-0000000AolO-2W5s;
-	Thu, 16 Oct 2025 15:36:56 +0100
+	id 1v9P6D-0000000AolU-2zjv;
+	Thu, 16 Oct 2025 15:37:01 +0100
 In-Reply-To: <aPECqg0vZGnBFCbh@shell.armlinux.org.uk>
 References: <aPECqg0vZGnBFCbh@shell.armlinux.org.uk>
 From: "Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>
@@ -99,8 +99,8 @@ Cc: Abhishek Chauhan <quic_abchauha@quicinc.com>,
 	Vladimir Oltean <olteanv@gmail.com>,
 	Vladimir Oltean <vladimir.oltean@nxp.com>,
 	Yu-Chun Lin <eleanor15x@gmail.com>
-Subject: [PATCH net-next v2 03/14] net: stmmac: remove SGMII/RGMII/SMII
- interrupt handling
+Subject: [PATCH net-next v2 04/14] net: stmmac: remove PCS "mode" pause
+ handling
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -110,116 +110,55 @@ MIME-Version: 1.0
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
 Content-Type: text/plain; charset="utf-8"
-Message-Id: <E1v9P68-0000000AolO-2W5s@rmk-PC.armlinux.org.uk>
+Message-Id: <E1v9P6D-0000000AolU-2zjv@rmk-PC.armlinux.org.uk>
 Sender: Russell King <rmk@armlinux.org.uk>
-Date: Thu, 16 Oct 2025 15:36:56 +0100
+Date: Thu, 16 Oct 2025 15:37:01 +0100
 
-Now that the only use for the interrupt is to clear it and increment a
-statistic counter (which is not that relevant anymore) remove all this
-code and ensure that the interrupt remains disabled to avoid a stuck
-interrupt.
+Remove the "we always autoneg pause" forcing when the stmmac driver
+decides that a "PCS" is present, which blocks passing the ethtool
+pause calls to phylink when using SGMII mode.
 
-dwmac-sun8i still uses this statistic counter, so it is inappropriate
-for this patch to remove it.
+This prevents the pause results being reported when a PHY is attached
+using SGMII mode, or the pause settings being changed in SGMII mode.
+There is no reason to prevent this.
 
 Reviewed-by: Andrew Lunn <andrew@lunn.ch>
 Signed-off-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
---
-v2: add comment about why the statistic counter needs to stay.
 ---
- drivers/net/ethernet/stmicro/stmmac/dwmac1000.h      |  6 +++---
- drivers/net/ethernet/stmicro/stmmac/dwmac1000_core.c | 10 ----------
- drivers/net/ethernet/stmicro/stmmac/dwmac4.h         |  3 +--
- drivers/net/ethernet/stmicro/stmmac/dwmac4_core.c    |  9 ---------
- 4 files changed, 4 insertions(+), 24 deletions(-)
+ .../net/ethernet/stmicro/stmmac/stmmac_ethtool.c    | 13 ++-----------
+ 1 file changed, 2 insertions(+), 11 deletions(-)
 
-diff --git a/drivers/net/ethernet/stmicro/stmmac/dwmac1000.h b/drivers/net/ethernet/stmicro/stmmac/dwmac1000.h
-index 0c011a47d5a3..8f3002d9de78 100644
---- a/drivers/net/ethernet/stmicro/stmmac/dwmac1000.h
-+++ b/drivers/net/ethernet/stmicro/stmmac/dwmac1000.h
-@@ -38,10 +38,10 @@
- #define	GMAC_INT_DISABLE_PCSAN		BIT(2)
- #define	GMAC_INT_DISABLE_PMT		BIT(3)
- #define	GMAC_INT_DISABLE_TIMESTAMP	BIT(9)
--#define	GMAC_INT_DISABLE_PCS	(GMAC_INT_DISABLE_RGMII | \
--				 GMAC_INT_DISABLE_PCSLINK | \
-+#define	GMAC_INT_DISABLE_PCS	(GMAC_INT_DISABLE_PCSLINK | \
- 				 GMAC_INT_DISABLE_PCSAN)
--#define	GMAC_INT_DEFAULT_MASK	(GMAC_INT_DISABLE_TIMESTAMP | \
-+#define	GMAC_INT_DEFAULT_MASK	(GMAC_INT_DISABLE_RGMII | \
-+				 GMAC_INT_DISABLE_TIMESTAMP | \
- 				 GMAC_INT_DISABLE_PCS)
- 
- /* PMT Control and Status */
-diff --git a/drivers/net/ethernet/stmicro/stmmac/dwmac1000_core.c b/drivers/net/ethernet/stmicro/stmmac/dwmac1000_core.c
-index 2c5ee59c3208..654331b411f4 100644
---- a/drivers/net/ethernet/stmicro/stmmac/dwmac1000_core.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/dwmac1000_core.c
-@@ -263,13 +263,6 @@ static void dwmac1000_pmt(struct mac_device_info *hw, unsigned long mode)
- 	writel(pmt, ioaddr + GMAC_PMT);
- }
- 
--/* RGMII or SMII interface */
--static void dwmac1000_rgsmii(void __iomem *ioaddr, struct stmmac_extra_stats *x)
--{
--	readl(ioaddr + GMAC_RGSMIIIS);
--	x->irq_rgmii_n++;
--}
--
- static int dwmac1000_irq_status(struct mac_device_info *hw,
- 				struct stmmac_extra_stats *x)
+diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_ethtool.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_ethtool.c
+index d89662b48087..c60cd948311e 100644
+--- a/drivers/net/ethernet/stmicro/stmmac/stmmac_ethtool.c
++++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_ethtool.c
+@@ -424,11 +424,7 @@ stmmac_get_pauseparam(struct net_device *netdev,
  {
-@@ -311,9 +304,6 @@ static int dwmac1000_irq_status(struct mac_device_info *hw,
+ 	struct stmmac_priv *priv = netdev_priv(netdev);
  
- 	dwmac_pcs_isr(ioaddr, GMAC_PCS_BASE, intr_status, x);
- 
--	if (intr_status & PCS_RGSMIIIS_IRQ)
--		dwmac1000_rgsmii(ioaddr, x);
--
- 	return ret;
+-	if (priv->hw->pcs) {
+-		pause->autoneg = 1;
+-	} else {
+-		phylink_ethtool_get_pauseparam(priv->phylink, pause);
+-	}
++	phylink_ethtool_get_pauseparam(priv->phylink, pause);
  }
  
-diff --git a/drivers/net/ethernet/stmicro/stmmac/dwmac4.h b/drivers/net/ethernet/stmicro/stmmac/dwmac4.h
-index 3dec1a264cf6..6dd84b6544cc 100644
---- a/drivers/net/ethernet/stmicro/stmmac/dwmac4.h
-+++ b/drivers/net/ethernet/stmicro/stmmac/dwmac4.h
-@@ -106,8 +106,7 @@
- #define GMAC_INT_LPI_EN			BIT(5)
- #define GMAC_INT_TSIE			BIT(12)
- 
--#define	GMAC_PCS_IRQ_DEFAULT	(GMAC_INT_RGSMIIS | GMAC_INT_PCS_LINK |	\
--				 GMAC_INT_PCS_ANE)
-+#define	GMAC_PCS_IRQ_DEFAULT	(GMAC_INT_PCS_LINK | GMAC_INT_PCS_ANE)
- 
- #define	GMAC_INT_DEFAULT_ENABLE	(GMAC_INT_PMT_EN | GMAC_INT_LPI_EN | \
- 				 GMAC_INT_TSIE)
-diff --git a/drivers/net/ethernet/stmicro/stmmac/dwmac4_core.c b/drivers/net/ethernet/stmicro/stmmac/dwmac4_core.c
-index 8a19df7b0577..bff4c371c1d2 100644
---- a/drivers/net/ethernet/stmicro/stmmac/dwmac4_core.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/dwmac4_core.c
-@@ -589,13 +589,6 @@ static void dwmac4_ctrl_ane(struct stmmac_priv *priv, bool ane, bool srgmi_ral,
- 	dwmac_ctrl_ane(priv->ioaddr, GMAC_PCS_BASE, ane, srgmi_ral, loopback);
- }
- 
--/* RGMII or SMII interface */
--static void dwmac4_phystatus(void __iomem *ioaddr, struct stmmac_extra_stats *x)
--{
--	readl(ioaddr + GMAC_PHYIF_CONTROL_STATUS);
--	x->irq_rgmii_n++;
--}
--
- static int dwmac4_irq_mtl_status(struct stmmac_priv *priv,
- 				 struct mac_device_info *hw, u32 chan)
+ static int
+@@ -437,12 +433,7 @@ stmmac_set_pauseparam(struct net_device *netdev,
  {
-@@ -667,8 +660,6 @@ static int dwmac4_irq_status(struct mac_device_info *hw,
- 	}
+ 	struct stmmac_priv *priv = netdev_priv(netdev);
  
- 	dwmac_pcs_isr(ioaddr, GMAC_PCS_BASE, intr_status, x);
--	if (intr_status & PCS_RGSMIIIS_IRQ)
--		dwmac4_phystatus(ioaddr, x);
- 
- 	return ret;
+-	if (priv->hw->pcs) {
+-		pause->autoneg = 1;
+-		return 0;
+-	} else {
+-		return phylink_ethtool_set_pauseparam(priv->phylink, pause);
+-	}
++	return phylink_ethtool_set_pauseparam(priv->phylink, pause);
  }
+ 
+ static u64 stmmac_get_rx_normal_irq_n(struct stmmac_priv *priv, int q)
 -- 
 2.47.3
 
