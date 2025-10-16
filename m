@@ -1,378 +1,216 @@
-Return-Path: <linux-arm-msm+bounces-77554-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-77555-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id ADFA6BE2F19
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Oct 2025 12:52:46 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 38D5FBE2F97
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Oct 2025 12:57:02 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id E97773A6ACA
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Oct 2025 10:52:41 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 7CC7E403221
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Oct 2025 10:57:00 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 89EE232F76A;
-	Thu, 16 Oct 2025 10:43:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id AF66D31CA4A;
+	Thu, 16 Oct 2025 10:44:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="R9MdsCrK"
+	dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b="dOu9B2Py"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from bali.collaboradmins.com (bali.collaboradmins.com [148.251.105.195])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58C9731AF30;
-	Thu, 16 Oct 2025 10:43:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FA2831A810;
+	Thu, 16 Oct 2025 10:44:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.251.105.195
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760611409; cv=none; b=onE/XY/Ax7wuGNVLcY6o4+fjSkbAJea88yFxBRG3H83M7/Nsbslqyyrkw6IM8GlhUzkwswgxNRP1aQU3qlZ4hINvJLEElfJCGUljV9dnhGfhFE7a28+4YS+wwH1J9RczNsnF+bfG8NojF44eRiEmAHA983NHCz+SRJwmHF5emA8=
+	t=1760611459; cv=none; b=Nh+u4prUaMhQDlatUGpyiIklycElE3ao6Q/wQFxQwzp5I4/V+qNQVIhCMzVtuwOd43QHx9z/TUGgxOijdLyEtSbvtBiwQSrVH5fgy03GQsHtlOOcax2b6U0+LDnVB6azSZ1jiEkLX+ItAAXpCLuBruJr+58lc/YT15B9hJmiXs8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760611409; c=relaxed/simple;
-	bh=2XOMkiJOY/4oMEMAJ4fhJh85KKZmUqpNPCfnq7C2Xmk=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=kOwT02bqCIs8ZqGG+2mMdsIAA/THmEB15qtOpSvbGPXBdw2qtOp2RqtWKQbws2l9gl9OJf4fp2Q4o3JqT6bIN384rkHdZYfc1Gxc4mW4azWYiVTQ6u9bpUGqbYTTmGpL6RR4mYIaJzulasXCzH9E0OuduWYVj+G3RY8mwaBnKOI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=R9MdsCrK; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8ECAC4CEF1;
-	Thu, 16 Oct 2025 10:43:25 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1760611408;
-	bh=2XOMkiJOY/4oMEMAJ4fhJh85KKZmUqpNPCfnq7C2Xmk=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=R9MdsCrKrbrzqpaEn9hL8SOWQHnR17ROOHPy/VO6nwswnhb9gY+wVhfsaefNiV8cM
-	 cxi5D+B/ImJg7S8zccWg4z258mHs/5xKcZr6NBYdfldoFGpmZOeurg0z7BQ77mLGHe
-	 dSO6NtbJaIloyD5nx5GLfPaEL/SRwIL/JQJ0ciQel4C7wM87rmUgIuXaMcfGhesyGN
-	 HpwXBtosv0Vs8xuDIlnVG7Jij0mDqGeeSM//vmUxoI4+lXeowhEkUWA5jjpEPvkqqL
-	 6ZclUVaRiofQWqpvzpqxrgkYaB+8+FYkH+vTIuIFOvCzC+N8WBZVl+RO03F6e4vhmH
-	 /g6wgzxfAVULA==
-Message-ID: <edcdb19f-619b-4dc8-b3d2-8d54c9594aeb@kernel.org>
-Date: Thu, 16 Oct 2025 11:43:23 +0100
+	s=arc-20240116; t=1760611459; c=relaxed/simple;
+	bh=ki1jW1xE7FsNZGSor8wBrPPrVeH9trwZ5/k0qvbMPiU=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=uCNPB//oEaCDgbgS2FWTihjHJVMIWpHwKgxa4QmdQRjO7qA+rcOj6ndoszweRb1T4D5ccRa8tSsLhFAm66EqJwp1rMF/E3/3ANcwqJzJTA3qnmDCN58uNRPiPK/hkcyZ4OiZX9IykNZQ4wMZMp9YlFWsbXDheq31ZyyIMJkMIS4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b=dOu9B2Py; arc=none smtp.client-ip=148.251.105.195
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
+	s=mail; t=1760611455;
+	bh=ki1jW1xE7FsNZGSor8wBrPPrVeH9trwZ5/k0qvbMPiU=;
+	h=From:To:Cc:Subject:Date:From;
+	b=dOu9B2PyakLYBLQA2FRd4kQBMet2kYOVvfLi7p5rEXptxqAWFv0lMO2bxgiAVIheI
+	 +nraJfj3ZqaF/wI4E7WoAIzwFfnQMPk4DRxxpmrOPT4zJ7Kr+H1eCPoSJQV+tRKWn4
+	 LevyU8Nq7BD4QOThGoasXZzdp8vz3ppAY/Q66HtnRDaduCn/UGx9UwIHckGgpCGVB3
+	 CKhTN7yX7KfxC0vS65EXJXTYXN/qrKBftRpnoIIjP2TsmJgJ5hUEHTrHj9RguXVIme
+	 dPLxhWr7PQvhHJ++KTZtEi7b4tWM17GyWFoPTCIcK63x54O7r3rH/oqBKIxRfDQ2jx
+	 KcB3kcFxRiH1g==
+Received: from IcarusMOD.eternityproject.eu (2-237-20-237.ip236.fastwebnet.it [2.237.20.237])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	(Authenticated sender: kholk11)
+	by bali.collaboradmins.com (Postfix) with ESMTPSA id 8B0E217E05FE;
+	Thu, 16 Oct 2025 12:44:14 +0200 (CEST)
+From: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+To: sboyd@kernel.org
+Cc: jic23@kernel.org,
+	dlechner@baylibre.com,
+	nuno.sa@analog.com,
+	andy@kernel.org,
+	arnd@arndb.de,
+	gregkh@linuxfoundation.org,
+	srini@kernel.org,
+	vkoul@kernel.org,
+	kishon@kernel.org,
+	sre@kernel.org,
+	krzysztof.kozlowski@linaro.org,
+	u.kleine-koenig@baylibre.com,
+	angelogioacchino.delregno@collabora.com,
+	linux-arm-msm@vger.kernel.org,
+	linux-iio@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	linux-phy@lists.infradead.org,
+	linux-pm@vger.kernel.org,
+	kernel@collabora.com,
+	wenst@chromium.org,
+	casey.connolly@linaro.org
+Subject: [PATCH v6 0/8] SPMI: Implement sub-devices and migrate drivers
+Date: Thu, 16 Oct 2025 12:43:54 +0200
+Message-ID: <20251016104402.338246-1-angelogioacchino.delregno@collabora.com>
+X-Mailer: git-send-email 2.51.0
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/3] media: dt-bindings: Add qcom,sm6150-camss
-To: Wenmeng Liu <wenmeng.liu@oss.qualcomm.com>, Robert Foss
- <rfoss@kernel.org>, Todor Tomov <todor.too@gmail.com>,
- Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
- Mauro Carvalho Chehab <mchehab@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>
-Cc: linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20251016-sm6150-camss-v1-0-e7f64ac32370@oss.qualcomm.com>
- <20251016-sm6150-camss-v1-1-e7f64ac32370@oss.qualcomm.com>
-From: Bryan O'Donoghue <bod@kernel.org>
-Content-Language: en-US
-In-Reply-To: <20251016-sm6150-camss-v1-1-e7f64ac32370@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 
-On 16/10/2025 11:22, Wenmeng Liu wrote:
-> Add bindings for qcom,sm6150-camss in order to support the camera
-> subsystem found in Qualcomm Talos EVK board.
+Changes in v6:
+ - Added commit to convert spmi.c to %pe error format and used
+   %pe error format in spmi_subdevice code as wanted by Uwe Kleine-Konig
 
-Understood you are doing this to support the Talos EVK but the yaml 
-should describe the specific SoC.
+Changes in v5:
+ - Changed dev_err to dev_err_probe in qcom-spmi-sdam (and done
+   that even though I disagree - because I wanted this series to
+   *exclusively* introduce the minimum required changes to
+   migrate to the new API, but okay, whatever....!);
+ - Added missing REGMAP dependency in Kconfig for qcom-spmi-sdam,
+   phy-qcom-eusb2-repeater and qcom-coincell to resolve build
+   issues when the already allowed COMPILE_TEST is enabled
+   as pointed out by the test robot's randconfig builds.
 
-> 
-> Signed-off-by: Wenmeng Liu <wenmeng.liu@oss.qualcomm.com>
-> ---
->   .../bindings/media/qcom,sm6150-camss.yaml          | 283 +++++++++++++++++++++
->   1 file changed, 283 insertions(+)
-> 
-> diff --git a/Documentation/devicetree/bindings/media/qcom,sm6150-camss.yaml b/Documentation/devicetree/bindings/media/qcom,sm6150-camss.yaml
-> new file mode 100644
-> index 0000000000000000000000000000000000000000..758bed0970f2ceee7df30b579a0f60d583a9230c
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/media/qcom,sm6150-camss.yaml
-> @@ -0,0 +1,283 @@
-> +# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
-> +%YAML 1.2
-> +---
-> +$id: http://devicetree.org/schemas/media/qcom,sm6150-camss.yaml#
-> +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> +
-> +title: Qualcomm SM6150 Camera Subsystem (CAMSS)
-> +
-> +maintainers:
-> +  - Wenmeng Liu <wenmeng.liu@oss.qualcomm.com>
-> +
-> +description:
-> +  The CAMSS IP is a CSI decoder and ISP present on Qualcomm platforms.
-> +
-> +properties:
-> +  compatible:
-> +    const: qcom,sm6150-camss
-> +
-> +  reg:
-> +    maxItems: 9
-> +
-> +  reg-names:
-> +    items:
-> +      - const: csid0
-> +      - const: csid1
-> +      - const: csid_lite
-> +      - const: csiphy0
-> +      - const: csiphy1
-> +      - const: csiphy2
-> +      - const: vfe0
-> +      - const: vfe1
-> +      - const: vfe_lite
-> +
-> +  clocks:
-> +    maxItems: 21
-> +
-> +  clock-names:
-> +    items:
-> +      - const: camnoc_axi
-> +      - const: cpas_ahb
-> +      - const: csiphy0
-> +      - const: csiphy0_timer
-> +      - const: csiphy1
-> +      - const: csiphy1_timer
-> +      - const: csiphy2
-> +      - const: csiphy2_timer
-> +      - const: gcc_axi_hf
-> +      - const: soc_ahb
-> +      - const: vfe0
-> +      - const: vfe0_axi
-> +      - const: vfe0_cphy_rx
-> +      - const: vfe0_csid
-> +      - const: vfe1
-> +      - const: vfe1_axi
-> +      - const: vfe1_cphy_rx
-> +      - const: vfe1_csid
-> +      - const: vfe_lite
-> +      - const: vfe_lite_cphy_rx
-> +      - const: vfe_lite_csid
-> +
-> +  interrupts:
-> +    maxItems: 9
-> +
-> +  interrupt-names:
-> +    items:
-> +      - const: csid0
-> +      - const: csid1
-> +      - const: csid_lite
-> +      - const: csiphy0
-> +      - const: csiphy1
-> +      - const: csiphy2
-> +      - const: vfe0
-> +      - const: vfe1
-> +      - const: vfe_lite
-> +
-> +  interconnects:
-> +    maxItems: 2
-> +
-> +  interconnect-names:
-> +    items:
-> +      - const: ahb
-> +      - const: hf_mnoc
-> +
-> +  iommus:
-> +    maxItems: 1
-> +
-> +  power-domains:
-> +    items:
-> +      - description: IFE0 GDSC - Image Front End, Global Distributed Switch Controller.
-> +      - description: IFE1 GDSC - Image Front End, Global Distributed Switch Controller.
-> +      - description: Titan GDSC - Titan ISP Block, Global Distributed Switch Controller.
-> +
-> +  power-domain-names:
-> +    items:
-> +      - const: ife0
-> +      - const: ife1
-> +      - const: top
-> +
-> +  vdd-csiphy-1p2-supply:
-> +    description:
-> +      Phandle to a 1.2V regulator supply to CSI PHYs.
-> +
-> +  vdd-csiphy-1p8-supply:
-> +    description:
-> +      Phandle to 1.8V regulator supply to CSI PHYs pll block.
-> +
-> +  ports:
-> +    $ref: /schemas/graph.yaml#/properties/ports
-> +
-> +    description:
-> +      CSI input ports.
-> +
-> +    patternProperties:
-> +      "^port@[0-2]+$":
-> +        $ref: /schemas/graph.yaml#/$defs/port-base
-> +        unevaluatedProperties: false
-> +
-> +        description:
-> +          Input port for receiving CSI data from a CSIPHY.
-> +
-> +        properties:
-> +          endpoint:
-> +            $ref: video-interfaces.yaml#
-> +            unevaluatedProperties: false
-> +
-> +            properties:
-> +              data-lanes:
-> +                minItems: 1
-> +                maxItems: 4
-> +
-> +            required:
-> +              - data-lanes
-> +
-> +required:
-> +  - compatible
-> +  - reg
-> +  - reg-names
-> +  - clocks
-> +  - clock-names
-> +  - interrupts
-> +  - interrupt-names
-> +  - interconnects
-> +  - interconnect-names
-> +  - iommus
-> +  - power-domains
-> +  - power-domain-names
-> +  - vdd-csiphy-1p2-supply
-> +  - vdd-csiphy-1p8-supply
-> +
-> +additionalProperties: false
-> +
-> +examples:
-> +  - |
-> +    #include <dt-bindings/clock/qcom,rpmh.h>
-> +    #include <dt-bindings/clock/qcom,qcs615-camcc.h>
-> +    #include <dt-bindings/clock/qcom,qcs615-gcc.h>
+Changes in v4:
+ - Added selection of REGMAP_SPMI in Kconfig for qcom-coincell and
+   for phy-qcom-eusb2-repeater to resolve undefined references when
+   compiled with some randconfig
 
-rpmh should come after qcs615.
+Changes in v3:
+ - Fixed importing "SPMI" namespace in spmi-devres.c
+ - Removed all instances of defensive programming, as pointed out by
+   jic23 and Sebastian
+ - Removed explicit casting as pointed out by jic23
+ - Moved ida_free call to spmi_subdev_release() and simplified error
+   handling in spmi_subdevice_alloc_and_add() as pointed out by jic23
 
-> +    #include <dt-bindings/interconnect/qcom,icc.h>
-> +    #include <dt-bindings/interconnect/qcom,qcs615-rpmh.h>
-> +    #include <dt-bindings/interrupt-controller/arm-gic.h>
-> +    #include <dt-bindings/power/qcom-rpmpd.h>
-> +
-> +    soc {
-> +        #address-cells = <2>;
-> +        #size-cells = <2>;
-> +
-> +        camss: isp@acb3000 {
-> +            compatible = "qcom,sm6150-camss";
-> +
-> +            reg = <0x0 0x0acb3000 0x0 0x1000>,
-> +                  <0x0 0x0acba000 0x0 0x1000>,
-> +                  <0x0 0x0acc8000 0x0 0x1000>,
-> +                  <0x0 0x0ac65000 0x0 0x1000>,
-> +                  <0x0 0x0ac66000 0x0 0x1000>,
-> +                  <0x0 0x0ac67000 0x0 0x1000>,
-> +                  <0x0 0x0acaf000 0x0 0x4000>,
-> +                  <0x0 0x0acb6000 0x0 0x4000>,
-> +                  <0x0 0x0acc4000 0x0 0x4000>;
-> +            reg-names = "csid0",
-> +                        "csid1",
-> +                        "csid_lite",
-> +                        "csiphy0",
-> +                        "csiphy1",
-> +                        "csiphy2",
-> +                        "vfe0",
-> +                        "vfe1",
-> +                        "vfe_lite";
-> +
-> +            clocks = <&camcc CAM_CC_CAMNOC_AXI_CLK>,
-> +                     <&camcc CAM_CC_CPAS_AHB_CLK>,
-> +                     <&camcc CAM_CC_CSIPHY0_CLK>,
-> +                     <&camcc CAM_CC_CSI0PHYTIMER_CLK>,
-> +                     <&camcc CAM_CC_CSIPHY1_CLK>,
-> +                     <&camcc CAM_CC_CSI1PHYTIMER_CLK>,
-> +                     <&camcc CAM_CC_CSIPHY2_CLK>,
-> +                     <&camcc CAM_CC_CSI2PHYTIMER_CLK>,
-> +                     <&gcc GCC_CAMERA_HF_AXI_CLK>,
-> +                     <&camcc CAM_CC_SOC_AHB_CLK>,
-> +                     <&camcc CAM_CC_IFE_0_CLK>,
-> +                     <&camcc CAM_CC_IFE_0_AXI_CLK>,
-> +                     <&camcc CAM_CC_IFE_0_CPHY_RX_CLK>,
-> +                     <&camcc CAM_CC_IFE_0_CSID_CLK>,
-> +                     <&camcc CAM_CC_IFE_1_CLK>,
-> +                     <&camcc CAM_CC_IFE_1_AXI_CLK>,
-> +                     <&camcc CAM_CC_IFE_1_CPHY_RX_CLK>,
-> +                     <&camcc CAM_CC_IFE_1_CSID_CLK>,
-> +                     <&camcc CAM_CC_IFE_LITE_CLK>,
-> +                     <&camcc CAM_CC_IFE_LITE_CPHY_RX_CLK>,
-> +                     <&camcc CAM_CC_IFE_LITE_CSID_CLK>;
-> +
-> +            clock-names = "camnoc_axi",
-> +                          "cpas_ahb",
-> +                          "csiphy0",
-> +                          "csiphy0_timer",
-> +                          "csiphy1",
-> +                          "csiphy1_timer",
-> +                          "csiphy2",
-> +                          "csiphy2_timer",
-> +                          "gcc_axi_hf",
-> +                          "soc_ahb",
-> +                          "vfe0",
-> +                          "vfe0_axi",
-> +                          "vfe0_cphy_rx",
-> +                          "vfe0_csid",
-> +                          "vfe1",
-> +                          "vfe1_axi",
-> +                          "vfe1_cphy_rx",
-> +                          "vfe1_csid",
-> +                          "vfe_lite",
-> +                          "vfe_lite_cphy_rx",
-> +                          "vfe_lite_csid";
-> +
-> +            interconnects = <&gem_noc MASTER_APPSS_PROC QCOM_ICC_TAG_ACTIVE_ONLY
-> +                             &config_noc SLAVE_CAMERA_CFG QCOM_ICC_TAG_ACTIVE_ONLY>,
-> +                            <&mmss_noc MASTER_CAMNOC_HF0 QCOM_ICC_TAG_ALWAYS
-> +                             &mc_virt SLAVE_EBI1 QCOM_ICC_TAG_ALWAYS>;
-> +            interconnect-names = "ahb",
-> +                                 "hf_mnoc";
-> +
-> +            interrupts = <GIC_SPI 464 IRQ_TYPE_EDGE_RISING>,
-> +                         <GIC_SPI 466 IRQ_TYPE_EDGE_RISING>,
-> +                         <GIC_SPI 468 IRQ_TYPE_EDGE_RISING>,
-> +                         <GIC_SPI 477 IRQ_TYPE_EDGE_RISING>,
-> +                         <GIC_SPI 478 IRQ_TYPE_EDGE_RISING>,
-> +                         <GIC_SPI 479 IRQ_TYPE_EDGE_RISING>,
-> +                         <GIC_SPI 465 IRQ_TYPE_EDGE_RISING>,
-> +                         <GIC_SPI 467 IRQ_TYPE_EDGE_RISING>,
-> +                         <GIC_SPI 469 IRQ_TYPE_EDGE_RISING>;
-> +            interrupt-names = "csid0",
-> +                              "csid1",
-> +                              "csid_lite",
-> +                              "csiphy0",
-> +                              "csiphy1",
-> +                              "csiphy2",
-> +                              "vfe0",
-> +                              "vfe1",
-> +                              "vfe_lite";
-> +
-> +            iommus = <&apps_smmu 0x820 0x40>;
-> +
-> +            power-domains = <&camcc IFE_0_GDSC>,
-> +                            <&camcc IFE_1_GDSC>,
-> +                            <&camcc TITAN_TOP_GDSC>;
-> +            power-domain-names = "ife0",
-> +                                 "ife1",
-> +                                 "top";
-> +
-> +            vdd-csiphy-1p2-supply = <&vreg_l11a_1p2>;
-> +            vdd-csiphy-1p8-supply = <&vreg_l12a_1p8>;
-> +
-> +            ports {
-> +                #address-cells = <1>;
-> +                #size-cells = <0>;
-> +
-> +                port@0 {
-> +                    reg = <0>;
-> +                    csiphy_ep0: endpoint {
-> +                        data-lanes = <0 1>;
-> +                        remote-endpoint = <&sensor_ep>;
-> +                    };
-> +                };
-> +            };
-> +        };
-> +    };
-> 
+Changes in v2:
+ - Fixed missing `sparent` initialization in phy-qcom-eusb2-repeater
+ - Changed val_bits to 8 in all Qualcomm drivers to ensure
+   compatibility as suggested by Casey
+ - Added struct device pointer in all conversion commits as suggested
+   by Andy
+ - Exported newly introduced functions with a new "SPMI" namespace
+   and imported the same in all converted drivers as suggested by Andy
+ - Added missing error checking for dev_set_name() call in spmi.c
+   as suggested by Andy
+ - Added comma to last entry of regmap_config as suggested by Andy
+
+While adding support for newer MediaTek platforms, featuring complex
+SPMI PMICs, I've seen that those SPMI-connected chips are internally
+divided in various IP blocks, reachable in specific contiguous address
+ranges... more or less like a MMIO, but over a slow SPMI bus instead.
+
+I recalled that Qualcomm had something similar... and upon checking a
+couple of devicetrees, yeah - indeed it's the same over there.
+
+What I've seen then is a common pattern of reading the "reg" property
+from devicetree in a struct member and then either
+ A. Wrapping regmap_{read/write/etc}() calls in a function that adds
+    the register base with "base + ..register", like it's done with
+    writel()/readl() calls; or
+ B. Doing the same as A. but without wrapper functions.
+
+Even though that works just fine, in my opinion it's wrong.
+
+The regmap API is way more complex than MMIO-only readl()/writel()
+functions for multiple reasons (including supporting multiple busses
+like SPMI, of course) - but everyone seemed to forget that regmap
+can manage register base offsets transparently and automatically in
+its API functions by simply adding a `reg_base` to the regmap_config
+structure, which is used for initializing a `struct regmap`.
+
+So, here we go: this series implements the software concept of an SPMI
+Sub-Device (which, well, also reflects how Qualcomm and MediaTek's
+actual hardware is laid out anyway).
+
+               SPMI Controller
+                     |                ______
+                     |               /       Sub-Device 1
+                     V              /
+              SPMI Device (PMIC) ----------- Sub-Device 2
+                                    \
+                                     \______ Sub-Device 3
+
+As per this implementation, an SPMI Sub-Device can be allocated/created
+and added in any driver that implements a... well.. subdevice (!) with
+an SPMI "main" device as its parent: this allows to create and finally
+to correctly configure a regmap that is specific to the sub-device,
+operating on its specific address range and reading, and writing, to
+its registers with the regmap API taking care of adding the base address
+of a sub-device's registers as per regmap API design.
+
+All of the SPMI Sub-Devices are therefore added as children of the SPMI
+Device (usually a PMIC), as communication depends on the PMIC's SPMI bus
+to be available (and the PMIC to be up and running, of course).
+
+Summarizing the dependency chain (which is obvious to whoever knows what
+is going on with Qualcomm and/or MediaTek SPMI PMICs):
+    "SPMI Sub-Device x...N" are children "SPMI Device"
+    "SPMI Device" is a child of "SPMI Controller"
+
+(that was just another way to say the same thing as the graph above anyway).
+
+Along with the new SPMI Sub-Device registration functions, I have also
+performed a conversion of some Qualcomm SPMI drivers and only where the
+actual conversion was trivial.
+
+I haven't included any conversion of more complex Qualcomm SPMI drivers
+because I don't have the required bandwidth to do so (and besides, I think,
+but haven't exactly verified, that some of those require SoCs that I don't
+have for testing anyway).
+
+AngeloGioacchino Del Regno (8):
+  spmi: Print error status with %pe format
+  spmi: Implement spmi_subdevice_alloc_and_add() and devm variant
+  nvmem: qcom-spmi-sdam: Migrate to devm_spmi_subdevice_alloc_and_add()
+  power: reset: qcom-pon: Migrate to devm_spmi_subdevice_alloc_and_add()
+  phy: qualcomm: eusb2-repeater: Migrate to
+    devm_spmi_subdevice_alloc_and_add()
+  misc: qcom-coincell: Migrate to devm_spmi_subdevice_alloc_and_add()
+  iio: adc: qcom-spmi-iadc: Migrate to
+    devm_spmi_subdevice_alloc_and_add()
+  iio: adc: qcom-spmi-iadc: Remove regmap R/W wrapper functions
+
+ drivers/iio/adc/qcom-spmi-iadc.c              | 109 ++++++++----------
+ drivers/misc/Kconfig                          |   2 +
+ drivers/misc/qcom-coincell.c                  |  38 ++++--
+ drivers/nvmem/Kconfig                         |   1 +
+ drivers/nvmem/qcom-spmi-sdam.c                |  36 ++++--
+ drivers/phy/qualcomm/Kconfig                  |   2 +
+ .../phy/qualcomm/phy-qcom-eusb2-repeater.c    |  53 ++++++---
+ drivers/power/reset/qcom-pon.c                |  34 ++++--
+ drivers/spmi/spmi-devres.c                    |  24 ++++
+ drivers/spmi/spmi.c                           |  89 +++++++++++++-
+ include/linux/spmi.h                          |  16 +++
+ 11 files changed, 288 insertions(+), 116 deletions(-)
+
+-- 
+2.51.0
 
 
