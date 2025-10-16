@@ -1,178 +1,201 @@
-Return-Path: <linux-arm-msm+bounces-77629-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-77630-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ams.mirrors.kernel.org (ams.mirrors.kernel.org [213.196.21.55])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5553FBE4E1E
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Oct 2025 19:39:32 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id A2AF0BE5126
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Oct 2025 20:37:21 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ams.mirrors.kernel.org (Postfix) with ESMTPS id A9A663543C6
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Oct 2025 17:39:31 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 0569D1A64D7F
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Oct 2025 18:37:45 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1591D221F13;
-	Thu, 16 Oct 2025 17:39:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1DEA7235BE8;
+	Thu, 16 Oct 2025 18:37:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=cknow-tech.com header.i=@cknow-tech.com header.b="QI/JRjrJ"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="dYm4RAxv"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from out-170.mta1.migadu.com (out-170.mta1.migadu.com [95.215.58.170])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A10A8221F12
-	for <linux-arm-msm@vger.kernel.org>; Thu, 16 Oct 2025 17:39:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.170
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43A80231836
+	for <linux-arm-msm@vger.kernel.org>; Thu, 16 Oct 2025 18:37:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760636363; cv=none; b=JNWOunGo+3kY1nx9+iLeZ1jxHtnGJ+0pJYetYlKx+2JkPecNw5rrGpgughhR/eRx5zptdgfSNdWSEHWM7xgKG4NlYghqUyOwm2ucju56AVufLsnyiuXPVeTdpt5VDIPnBAc/w9l4j6rTNMzRmvcIXbCc/8Smshmy+z13uM6fzws=
+	t=1760639834; cv=none; b=tuwTOlkhvek3Jj25Y8X19DBisEPcDC7ZbDaD6xz8gAF1rnJbzk9FZbnhOOJ/6Px65FbGcKjwFUFSkEKcJPtpNhJanbb0/N6iVKRDcFkBwUMYRZ3fM7lkh16cab9mTwXMn4oaceoDBaOUOIvcis1MkAQHJNBK32Wgzf6XmN7cPxo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760636363; c=relaxed/simple;
-	bh=LbYf6I98/WH0RIxNWHEI4QVgY4YtUTKk80hGt/CmH5k=;
-	h=Mime-Version:Content-Type:Date:Message-Id:Subject:From:To:Cc:
-	 References:In-Reply-To; b=dRDwO8Li3NfP98NElpvrAH8frriMjT5agCXfDKehSME9lEOgoInfZIJzWQre+FAc+Gk0GLas+7E4n4DKCwX+zujDogRhRG8xvsIsxHEaW+hVdQ/Q+jNL3iorR64cJxdAWZ8RZIFPRWjMm8OnuMAzt3viSjNnBTEIsqnp4octgD0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=cknow-tech.com; spf=pass smtp.mailfrom=cknow-tech.com; dkim=pass (2048-bit key) header.d=cknow-tech.com header.i=@cknow-tech.com header.b=QI/JRjrJ; arc=none smtp.client-ip=95.215.58.170
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=cknow-tech.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=cknow-tech.com
+	s=arc-20240116; t=1760639834; c=relaxed/simple;
+	bh=OB5eSYWFZISVNnfXCEn0GDxedvGCMQF6SoJ+Ow7mZKQ=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=P7DrjMqiWDBtk+Qz+unR6BiWG0YFmDQ5yJVqNFYtdVgO+46LlAWdGf+h3XF0cgUOjBBcPUJLddhIjDjNRmpF3xb6yIJoWV+YgrMc8wKU+eORvDBXqJFZlh7a8nKjIsU4d1WQL3ehcD2Ypi7f3qCYk7ThKV2zVj1ncWVgjYndFRQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=dYm4RAxv; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 59GBPYX3022317
+	for <linux-arm-msm@vger.kernel.org>; Thu, 16 Oct 2025 18:37:11 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	+/Uh0mqL0LErWoe7liCsyTCPPXrnktV2gL3UQ900aTY=; b=dYm4RAxvOcNd8pKf
+	wLZRQWzDYFESSAXoZVX+5lcwFmJb8ZOC5HQq3U6Lr2DL0+7l7FbQ7atF3fkU5mCn
+	iTPEDGxWHJr9i3EJi2YpJxtnDTlGuZeWE8G37vo/OZoeC+uFGzsu+JurLfvAMEWI
+	lsISHFnuy11JtNbGyzQhWZZ/LaK6+PKLelOq99T2oin12NUhgbMtxIbTHw74N0wC
+	xPAf2OOgKVeSpaVA5Jjio6m5S53gJlnEu19uIEw9jQiwnMR708cSFCiP9aYGm4wK
+	XKdy0AitUNOZjxIv2yKPan5hV3/nNvqRpYrSqctjnAN0JFmJCkviY251u9YfcdsS
+	IfZpjw==
+Received: from mail-pg1-f199.google.com (mail-pg1-f199.google.com [209.85.215.199])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 49tqvpjqxr-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Thu, 16 Oct 2025 18:37:10 +0000 (GMT)
+Received: by mail-pg1-f199.google.com with SMTP id 41be03b00d2f7-b56ae0c8226so691906a12.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 16 Oct 2025 11:37:10 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1760639830; x=1761244630;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=+/Uh0mqL0LErWoe7liCsyTCPPXrnktV2gL3UQ900aTY=;
+        b=EFIgVUhwrvu5PEkdFzKOTBqgMLO/99fDDEhMo5gxD8n3I8wGoT6qA+o8vAMeZQbJXW
+         INTFujdRLpx5scJ97zy+Q3Yko6CBd/pxzQmZ1V6pPXOvnI4J+/gSaTLWOTng2JZjVKZw
+         Q/oicT15pZukFveCT8THZCYTl2v4ws66vV/28nTACtT9T09JoHj4cUtGNHFlv6pJm31l
+         5qJM9ZM8B6MXBpseV8BRBWy8/onEci4EOQuVtyvfZY+OqQMON+5hnLHjnZEIbNkRMW60
+         RNXtJ/YGt3TJ8pwAKTPJuWEVEy2uCa6SZ1Qqtc7+FwEXH98oFL1W1RAGT84q/hGd8N3j
+         A/4g==
+X-Forwarded-Encrypted: i=1; AJvYcCUb7Kqse9TuEi3X5jpWzQ6pZoXd2pC9nD58nDfuD0mXU4IvCwKA/bMPHXI07VQ8oFLaj9arFcyAULlPy/0m@vger.kernel.org
+X-Gm-Message-State: AOJu0Yxb4G4Kox3fK1NQCwbiaoJ4h7YpAfi7S4IScitkIQGqqZY2vPth
+	y/fqciUnY3+IDTfTF//6qFRZ03edcyGXOyo7bi9RD8c4tBfZEUk22QryIK1I/2+sjxjJ7HUigQr
+	3kkfe0+POCmJ+9R9c9iNnIZ73Sa8CK2vAgFwJWlKHP1XPf7iFgYlck9WUUi57DhtKbLGw
+X-Gm-Gg: ASbGncuc48Fcf7unymj80xJEStoICjTiiW+tPRdavaB5rujcqYY405oH5xR1bCBUwDa
+	ZcsD1Cux3eAbJAxCmFiK1CS0kOifcKLb4w46r0exf8j1y30EBA4gKCfrPfwRwMVbKdc3IsEsWTF
+	2tfKxOyv5lUzBUb7qm6Z67bKJ+oKjDiVRHYLI2Sjgj6ZVpPAMQ7g1PUvQSxL/Sw0Fxtc2wFU8j5
+	paWTj08RRbdV2+hK3AeTlHvNbYomOArTyV59CmhyrTL6ZPogVFMQmRAIP3oGYmpVWaNPozCLarx
+	71IMLTtZleS4oYI231Y7XCiNSDQXogx7jZAUJYKLgbIrVj4RO27OW4CNRcGaEAcljHSEAKvzz+N
+	ZNIMPKr9qU26AFVg5b5AWvjPw8oYVXsn24w==
+X-Received: by 2002:a17:902:d584:b0:275:f156:965c with SMTP id d9443c01a7336-290cb65b61dmr10962955ad.52.1760639829646;
+        Thu, 16 Oct 2025 11:37:09 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFopTCf5Sn+ugIQazeLjzMKZ4AaB+rCH/4DczDVKRWHWy44mdCx7hroKoHEE+1V8Q7zPobuqA==
+X-Received: by 2002:a17:902:d584:b0:275:f156:965c with SMTP id d9443c01a7336-290cb65b61dmr10962635ad.52.1760639829227;
+        Thu, 16 Oct 2025 11:37:09 -0700 (PDT)
+Received: from [192.168.0.167] ([49.205.248.221])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-290c5c7d305sm11890295ad.70.2025.10.16.11.37.05
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 16 Oct 2025 11:37:08 -0700 (PDT)
+Message-ID: <c4c40efb-ceda-c13c-115f-a473af5e8fcb@oss.qualcomm.com>
+Date: Fri, 17 Oct 2025 00:07:02 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cknow-tech.com;
-	s=key1; t=1760636348;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=QxNz2ubVhmwaha5Dqcv6zgBsEC/I+M6eOK/y6A/nxQo=;
-	b=QI/JRjrJcWwm7qCShTbcH1hAx/WOPeP9mCfiyD27m2c29VqT1yZhG7vae0/qHoRYSf1Icd
-	mgq+glxC/dq6OQ05VctLPoDzYQ2feuIx7C7wtpO9IRufsqnwq3TRM/epaKQtdOeiUJS8Ju
-	3FN8/dvb9cshxlJOAz1Lcf2XiGShgLp7PTQna+rg1nIS+pMBLb71oh5UUh/hwAL1YPO0bv
-	1j9bHXdIF/x15JE2q+f7P8Ao9E0guri6YdR7ny3s+la0DByxYdXb0wcb2KTpkqYG3BEkgN
-	Qq/lcGJLlVpfAWZemabMQeZjl53GCKeNqT4CrlAwoeNIl2nT8EsajYTHACCT6w==
-Content-Transfer-Encoding: quoted-printable
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.15.1
+Subject: Re: [PATCH 5/8] media: iris: Move vpu register defines to common
+ header file
+Content-Language: en-US
+To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Cc: Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>,
+        Abhinav Kumar <abhinav.kumar@linux.dev>,
+        Bryan O'Donoghue <bod@kernel.org>,
+        Mauro Carvalho Chehab <mchehab@kernel.org>,
+        Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley
+ <conor+dt@kernel.org>,
+        Philipp Zabel <p.zabel@pengutronix.de>, linux-arm-msm@vger.kernel.org,
+        linux-media@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, Vishnu Reddy <quic_bvisredd@quicinc.com>
+References: <20250925-knp_video-v1-0-e323c0b3c0cd@oss.qualcomm.com>
+ <20250925-knp_video-v1-5-e323c0b3c0cd@oss.qualcomm.com>
+ <gbwjh4tqaoxq2ng7moytv5vtalxpajdid5capjfqzare6dmphz@cmnv4p2q4eov>
+From: Vikash Garodia <vikash.garodia@oss.qualcomm.com>
+In-Reply-To: <gbwjh4tqaoxq2ng7moytv5vtalxpajdid5capjfqzare6dmphz@cmnv4p2q4eov>
 Content-Type: text/plain; charset=UTF-8
-Date: Thu, 16 Oct 2025 19:38:57 +0200
-Message-Id: <DDJXHRIRGTW9.GYC2ULZ5WQAL@cknow-tech.com>
-Subject: Re: [PATCH v2 1/2] PCI/ASPM: Override the ASPM and Clock PM states
- set by BIOS for devicetree platforms
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
-From: "Diederik de Haas" <diederik@cknow-tech.com>
-To: "Bjorn Helgaas" <helgaas@kernel.org>
-Cc: "FUKAUMI Naoki" <naoki@radxa.com>,
- <manivannan.sadhasivam@oss.qualcomm.com>, "Bjorn Helgaas"
- <bhelgaas@google.com>, "Manivannan Sadhasivam" <mani@kernel.org>, "Lorenzo
- Pieralisi" <lpieralisi@kernel.org>, =?utf-8?q?Krzysztof_Wilczy=C5=84ski?=
- <kwilczynski@kernel.org>, "Rob Herring" <robh@kernel.org>,
- <linux-pci@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
- <linux-arm-msm@vger.kernel.org>, "David E. Box"
- <david.e.box@linux.intel.com>, "Kai-Heng Feng"
- <kai.heng.feng@canonical.com>, "Rafael J. Wysocki" <rafael@kernel.org>,
- "Heiner Kallweit" <hkallweit1@gmail.com>, "Chia-Lin Kao"
- <acelan.kao@canonical.com>, "Dragan Simic" <dsimic@manjaro.org>,
- <linux-rockchip@lists.infradead.org>, <regressions@lists.linux.dev>, "Ulf
- Hansson" <ulf.hansson@linaro.org>
-References: <DDIW7ZP5K1VR.2I7VW56B9CZLF@cknow-tech.com>
- <20251015225033.GA945930@bhelgaas>
-In-Reply-To: <20251015225033.GA945930@bhelgaas>
-X-Migadu-Flow: FLOW_OUT
+Content-Transfer-Encoding: 7bit
+X-Authority-Analysis: v=2.4 cv=aPD9aL9m c=1 sm=1 tr=0 ts=68f13b56 cx=c_pps
+ a=Oh5Dbbf/trHjhBongsHeRQ==:117 a=LqmlnLjRnrQCSl2bsDkM0Q==:17
+ a=IkcTkHD0fZMA:10 a=x6icFKpwvdMA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=Da5OPgB5uXQvAvJx2EkA:9 a=QEXdDO2ut3YA:10 a=_Vgx9l1VpLgwpw_dHYaR:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDE2MDAxNyBTYWx0ZWRfXxB3YNJ21i0Oa
+ j9So5McFw+d4YAH95hDICR481lH/JjxnSVxokPSwj2Jrmb9AEmx4uQFuNqpIY3AOzoebnDanb0C
+ WCBROlLC5dZkTFJ8PnUqKHdROAWRbtbVPemd55Myc88dM3XC8MZp4L0BIL6CfEn5mqNoWOOW4TJ
+ HJwq7ElvZnX8NZJNcpEzobIEjr7KR4S/OxMmEgTlR+hOQVfyyo7tsSRA+gqvv6eDmzzvtD6UOlO
+ KoZshj2bqaszEBM58cMIKygZWK0qB05WECHR/2DSWuifhjW0or8+e93unVDWo6Tbi94ErwpSmBz
+ dL2HmfL3iD5Pqd6UP+gUJad81x2kqYlP+Jk/RX1HhwSLrYO5nSacqDoAwljThBiQNppqst9cbcb
+ 1NsV+O0HlYmGdnoQyIRLvz3TLJXDpw==
+X-Proofpoint-ORIG-GUID: RRi0GOycYU34GaVMMNq3RkPY-zYXCadA
+X-Proofpoint-GUID: RRi0GOycYU34GaVMMNq3RkPY-zYXCadA
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-10-16_03,2025-10-13_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ spamscore=0 adultscore=0 impostorscore=0 lowpriorityscore=0 clxscore=1015
+ bulkscore=0 suspectscore=0 malwarescore=0 phishscore=0 priorityscore=1501
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.19.0-2510020000 definitions=main-2510160017
 
-On Thu Oct 16, 2025 at 12:50 AM CEST, Bjorn Helgaas wrote:
-> On Wed, Oct 15, 2025 at 02:26:30PM +0200, Diederik de Haas wrote:
->> On Tue Oct 14, 2025 at 8:49 PM CEST, Bjorn Helgaas wrote:
->> > On Wed, Oct 15, 2025 at 01:30:16AM +0900, FUKAUMI Naoki wrote:
->> >> I've noticed an issue on Radxa ROCK 5A/5B boards, which are based on =
-the
->> >> Rockchip RK3588(S) SoC.
->> >>=20
->> >> When running Linux v6.18-rc1 or linux-next since 20250924, the kernel=
- either
->> >> freezes or fails to probe M.2 Wi-Fi modules. This happens with severa=
-l
->> >> different modules I've tested, including the Realtek RTL8852BE, Media=
-Tek
->> >> MT7921E, and Intel AX210.
->> >>=20
->> >> I've found that reverting the following commit (i.e., the patch I'm r=
-eplying
->> >> to) resolves the problem:
->> >> commit f3ac2ff14834a0aa056ee3ae0e4b8c641c579961
->> >
->> > Can you collect a complete dmesg log when booting with
->> >
->> >   ignore_loglevel pci=3Dearlydump dyndbg=3D"file drivers/pci/* +p"
->> >
->> > and the output of "sudo lspci -vv"?
->>=20
->> I have a Rock 5B as well, but I don't have a Wi-Fi module, but I do have
->> a NVMe drive connected. That boots fine with 6.17, but I end up in a
->> rescue shell with 6.18-rc1. I haven't verified that it's caused by the
->> same commit, but it does sound plausible.
->
-> FWIW, my expectation is that booting with "pcie_aspm=3Doff" should
-> effectively avoid the ASPM enabling and behave similarly to reverting
-> f3ac2ff14834 ("PCI/ASPM: Enable all ClockPM and ASPM states for
-> devicetree platforms").  My hope was that we could boot that way and
-> incrementally enable ASPM via sysfs a device at a time for testing.
->
-> [Moved last lines up here]
-> Bottom line, I don't think I can get any further with this particular
-> issue until we confirm that f3ac2ff14834 ("PCI/ASPM: Enable all
-> ClockPM and ASPM states for devicetree platforms") is the cause.
 
-I built a 6.18-rc1 kernel with that commit reverted and when booted up,
-I could mount my NVMe drive. Next I removed the 'noauto' from /etc/fstab
-and rebooted and that succeeded as well.
-So I think we can conclude that commit f3ac2ff14834 is the cause.
+On 10/16/2025 7:17 PM, Dmitry Baryshkov wrote:
+>> diff --git a/drivers/media/platform/qcom/iris/iris_vpu_register_defines.h b/drivers/media/platform/qcom/iris/iris_vpu_register_defines.h
+>> index fe8a39e5e5a3fc68dc3a706ffdba07a5558163cf..6474f561c8dc29d1975bb44792595d86f16b6cff 100644
+>> --- a/drivers/media/platform/qcom/iris/iris_vpu_register_defines.h
+>> +++ b/drivers/media/platform/qcom/iris/iris_vpu_register_defines.h
+>> @@ -9,9 +9,38 @@
+>>  #define VCODEC_BASE_OFFS			0x00000000
+>>  #define CPU_BASE_OFFS				0x000A0000
+>>  #define WRAPPER_BASE_OFFS			0x000B0000
+>> +#define AON_BASE_OFFS				0x000E0000
+>> +#define WRAPPER_TZ_BASE_OFFS			0x000C0000
+>> +#define AON_MVP_NOC_RESET			0x0001F000
+>>  
+>>  #define CPU_CS_BASE_OFFS			(CPU_BASE_OFFS)
+>>  
+>>  #define WRAPPER_CORE_POWER_STATUS		(WRAPPER_BASE_OFFS + 0x80)
+>> +#define WRAPPER_CORE_CLOCK_CONFIG		(WRAPPER_BASE_OFFS + 0x88)
+>> +#define AON_WRAPPER_MVP_NOC_LPI_CONTROL		(AON_BASE_OFFS)
+>> +#define WRAPPER_DEBUG_BRIDGE_LPI_CONTROL	(WRAPPER_BASE_OFFS + 0x54)
+>> +#define WRAPPER_DEBUG_BRIDGE_LPI_STATUS		(WRAPPER_BASE_OFFS + 0x58)
+>> +#define WRAPPER_IRIS_CPU_NOC_LPI_CONTROL	(WRAPPER_BASE_OFFS + 0x5C)
+>> +#define WRAPPER_IRIS_CPU_NOC_LPI_STATUS		(WRAPPER_BASE_OFFS + 0x60)
+>> +#define WRAPPER_TZ_CTL_AXI_CLOCK_CONFIG		(WRAPPER_TZ_BASE_OFFS + 0x14)
+>> +#define CPU_CS_AHB_BRIDGE_SYNC_RESET		(CPU_CS_BASE_OFFS + 0x160)
+>> +#define CPU_CS_X2RPMH				(CPU_CS_BASE_OFFS + 0x168)
+>> +#define AON_WRAPPER_MVP_NOC_RESET_REQ		(AON_MVP_NOC_RESET + 0x000)
+>> +#define AON_WRAPPER_MVP_NOC_RESET_ACK		(AON_MVP_NOC_RESET + 0x004)
+>> +#define VCODEC_SS_IDLE_STATUSN			(VCODEC_BASE_OFFS + 0x70)
+>> +#define AON_WRAPPER_MVP_NOC_LPI_STATUS		(AON_BASE_OFFS + 0x4)
+>> +#define WRAPPER_TZ_QNS4PDXFIFO_RESET		(WRAPPER_TZ_BASE_OFFS + 0x18)
+> Registers here got totally unsorted (they were in the original source
+> file). Seeing this makes me sad.
+> 
 
->> On this device, the NVMe isn't strictly needed (I used it to compile my
->> kernels on), so I added 'noauto' to the NVMe line in /etc/fstab ... and
->> that made it boot successfully into 6.18-rc1. Then running the 'mount'
->> command wrt that NVMe drive failed with this message:
->>=20
->>   EXT4-fs (nvme0n1p1): unable to read superblock
->>=20
->> The log of my attempts can be found here:
->> https://paste.sr.ht/~diederik/f435eb258dca60676f7ac5154c00ddfdc24ac0b7
->
-> Thanks for the log, it's very useful.  This is pieced together from
-> the serial console log and the "dmesg --level" output, but I think
-> it's all the same boot:
+Sure, i will be improving this part in v2.
 
-Correct.
+>> +
+>> +#define CORE_BRIDGE_SW_RESET			BIT(0)
+>> +#define CORE_BRIDGE_HW_RESET_DISABLE		BIT(1)
+>> +#define MSK_SIGNAL_FROM_TENSILICA		BIT(0)
+>> +#define MSK_CORE_POWER_ON			BIT(1)
+>> +#define CTL_AXI_CLK_HALT			BIT(0)
+>> +#define CTL_CLK_HALT				BIT(1)
+>> +#define REQ_POWER_DOWN_PREP			BIT(0)
+>> +#define RESET_HIGH				BIT(0)
+>> +#define NOC_LPI_STATUS_DONE			BIT(0) /* Indicates the NOC handshake is complete */
+>> +#define NOC_LPI_STATUS_DENY			BIT(1) /* Indicates the NOC handshake is denied */
+>> +#define NOC_LPI_STATUS_ACTIVE			BIT(2) /* Indicates the NOC is active */
+> Ugh. This mixed all the bits, loosing connection between the register
+> and the corresponding bits. I'm going to pick up this patch into the
+> sc7280 series and I will improve it there, keeping the link between
+> registers and bit fields.
+> 
 
->   ...
->   [   18.921811] rockchip-pm-domain fd8d8000.power-management:power-contr=
-oller: sync_state() pending due to fdad0000.npu
->   [   18.922737] rockchip-pm-domain fd8d8000.power-management:power-contr=
-oller: sync_state() pending due to fdb50000.video-codec
->   ...
->
-> The earlydump info shows the 00:00.0 Root Port had I/O+ Mem+
-> BusMaster+ (0x0107) and the 01:00.0 NVMe initially had I/O- Mem-
-> BusMaster- (0x0000).  We were able to enumerate the NVMe device and
-> assign its BAR, and the nvme driver turned on Mem+ (0x002).
->
->   nvme_timeout
->     csts =3D readl(dev->bar + NVME_REG_CSTS)
->     if (nvme_should_reset(csts))
->       nvme_warn_reset(csts)
->         result =3D pci_read_config_word(PCI_STATUS)
->         "controller is down; will reset: CSTS=3D0xffffffff, ... failed (1=
-34)"
->     nvme_dev_disable
->
-> But I think the NVMe device was powered down to D3cold somewhere
-> before 39.971050.  I don't know if the power-controller messages at
-> 18.921811 have any connection, and I don't know why ASPM would be
-> related.
+Ok, not updating this part in the next revision of my series. Do you mean
+something like
 
-I highly doubt they're connected. These threads are relevant:
-https://lore.kernel.org/all/20250701114733.636510-1-ulf.hansson@linaro.org/
-https://lore.kernel.org/all/20250909111130.132976-1-ulf.hansson@linaro.org/
-https://lore.kernel.org/all/20251007094312.590819-1-ulf.hansson@linaro.org/
+#define CORE_BRIDGE_SW_RESET_BIT0		BIT(0)
+#define CORE_BRIDGE_HW_RESET_DISABLE_BIT1	BIT(1)
 
-TL;DR: Those warnings will (likely) be downgraded to 'info'.
-
-Cheers,
-  Diederik
+Regards,
+Vikash
 
