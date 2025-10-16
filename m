@@ -1,165 +1,170 @@
-Return-Path: <linux-arm-msm+bounces-77524-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-77525-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [142.0.200.124])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1320DBE1EAA
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Oct 2025 09:26:33 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id E2B61BE1ECA
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Oct 2025 09:29:46 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 2E1B24F8BDF
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Oct 2025 07:25:36 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 989EE3A5FBE
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Oct 2025 07:29:45 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 40FD32EA726;
-	Thu, 16 Oct 2025 07:25:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id EA44D2E62A4;
+	Thu, 16 Oct 2025 07:29:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="cTYxcLiX"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="pIF8MKaD"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F89F194137
-	for <linux-arm-msm@vger.kernel.org>; Thu, 16 Oct 2025 07:25:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7084D1DC985
+	for <linux-arm-msm@vger.kernel.org>; Thu, 16 Oct 2025 07:29:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760599531; cv=none; b=ZMM0aCyTV7wDzMtmPQTyXgXL7yArTUpqSo3P47GjgBJKkol7OYL88V3cc8rnr5ucqpHKhhyF21PYELzL7C/4YUa7mMyKOfKAblxy1TZbWfCSXUbJi+V3xCXfEe505hQ7nLVdzL+k8Y2flmruECKXq8RQ0ckm3SdTek4fezAUusY=
+	t=1760599783; cv=none; b=UDvbdySrNizyBvkPGqnlNA9yoTRMHo2gTpMp8xbACO/aJ6YgFoeNE5qolPnpkkGCjcd+cUDxpH0dKeNRurSgE9o0uciPnNJyolEC9b2dTWChYdin5ZTKvACrhCd2DNYpgD0fVwS4gh98O+08YSaIwYkOYN6atEkrtLJH1PGO5kc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760599531; c=relaxed/simple;
-	bh=UL1DxIhLTDNdEMRngw5CUum4btc2pYG9yp7myJlu1xM=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=OGITFFy0ws+qo0lPddGVrYYxYrFCsS68B8d+2ndcEHPwqQ7X3MeAJPQotoz9YzIr44KL4jkpYp8e0KSIrDDnsN2FM72ww+4nrtGsO8w9fVIIR+TTti+zcvXcwXgrlCGjUHiKECVMsyR+sJTQaaQHGl+olyxAbHRnpmFMTFvyrgo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=cTYxcLiX; arc=none smtp.client-ip=205.220.168.131
+	s=arc-20240116; t=1760599783; c=relaxed/simple;
+	bh=vOWUD51lLgmsalGC6T8618w1NX1MikJVVjmSDLYiA2c=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=cf+ON/ASa1oJE1hWvQOhF0jr8oTMxtEz1SPo2PTts4O0mgjNu+XrneYuhwMUilL5upQ2sU9RApIRyaiUxNoC9zN9yIrdf2wl+NJ0R5bF/DzgyZdVsy4//E1C+1oJ9vsvi1q7PpUJvJRypsGpDBMMdc946VwQBXUv0mMoW+MOc7Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=pIF8MKaD; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 59FJoSnb009231
-	for <linux-arm-msm@vger.kernel.org>; Thu, 16 Oct 2025 07:25:28 GMT
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 59FJPaVT004300
+	for <linux-arm-msm@vger.kernel.org>; Thu, 16 Oct 2025 07:29:42 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:date:from:message-id:mime-version
-	:subject:to; s=qcppdkim1; bh=PYLX8mTWQSyaQ2t9hxMxmjQVF4OOp3VkZF2
-	bVL4kQk4=; b=cTYxcLiXmgVfohQr2jgxpETSOxsQb4atb7aq8BmMeFHdDHB12Bv
-	7oHURSVfikjORwLj5vGtwxQV0PLra3knbcjZEOW2o7/Rx8po+lhoaEAo8RAJ9mIE
-	lEE/AHHbUn4itY5lZmFvyLbir64XNI+bdvsjfUn0nf6M5XTlnWYpSRzvddPDWJTY
-	w9nQqLf0RWWVWjEMbPZQ8qFYteN5oi/ClLF9bbXVao5qpag7Kfo/rkM9saWHFZWE
-	UEX6qCT0iVePJwOlC+/BAOLzjXtKXveg5VpeTO/taMCvmtTlhmIY8RA4zXiZB1R9
-	dpbX+5H+vdknUkdVzQMjsE4wrnwzSoS2nVQ==
-Received: from mail-pj1-f70.google.com (mail-pj1-f70.google.com [209.85.216.70])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 49qg0c78yh-1
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	1Ul+cS2P/8sZ0yvovVHbSWbxCfkZYKO7WdKq0EttCbU=; b=pIF8MKaD73gBUnDN
+	TvjBLzaC8dQG6jfnwYBSgUrb2uvvOeQczYw8pF/mK63VW1fJ6vQUMACQ/JEc82AR
+	ZdtnL3HclhjJpwVrdyfIT8EtjfN1Cz/YkqAS4+lnIWR2LViDOk1fm5OZ4bU2/00C
+	vCECIxtiqZGblaD+vHxzKauyyjzaoZQPO6VcPTSh1VB8v2ZNJOPTFAJrgJMoJW/9
+	mI9cMOF/WSdELLFbzE+0/8z7Zazf+MmHAsMjbj1r/h6pHPhhLr7QBDxYxGPYXwtM
+	K1/R1KR2VPSMte7KvLe96hPZEFqqUsDZ0yq2o5Ggr3vs2Qfwrc2cXIzQXz5m2tus
+	1BvO+w==
+Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com [209.85.222.200])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 49rw1akp6m-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Thu, 16 Oct 2025 07:25:28 +0000 (GMT)
-Received: by mail-pj1-f70.google.com with SMTP id 98e67ed59e1d1-32eb864fe90so832709a91.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 16 Oct 2025 00:25:28 -0700 (PDT)
+	for <linux-arm-msm@vger.kernel.org>; Thu, 16 Oct 2025 07:29:41 +0000 (GMT)
+Received: by mail-qk1-f200.google.com with SMTP id af79cd13be357-88f3a065311so15525185a.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 16 Oct 2025 00:29:41 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1760599527; x=1761204327;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=PYLX8mTWQSyaQ2t9hxMxmjQVF4OOp3VkZF2bVL4kQk4=;
-        b=MXFSk/QRfKlUo9MrekB7ovNdApFG6P7kWaHzxBU7oOFP5Yxm31RRPXF07gymZ5ojH2
-         vdyeWTlFemqhd9mOTEt8JRVzVhGkth9bgorYRot/exS+xqGmEQsk0mmraSAl6PJJ8ct1
-         h+rOmx50QctX/VqsGwlDqHGoy4Rz1LZtltkb4zAiK5AjwRPUgXtC78XKXKJQ9rH/p/z6
-         hQIzsXI+ng7QYA/6xexDIbJAnLjed/4P1D56pBdP2eZ+hdtprPsMc5ar0HDA0uusEEXW
-         cdArs5WJNr3+9wM0RsuAjdsgH4275JI3vxt+dkE31PYHn2RI3ehWhGl0+BRoD3hQqa+i
-         rycA==
-X-Forwarded-Encrypted: i=1; AJvYcCX/4/DIR3xI+1pc2ttgjgMXfQ8CZA/8pCh1RI4RVRo8Ctw3pZ/wlV4GNeQpSYxLpnrJuCVAoJqj/Eg8W0VG@vger.kernel.org
-X-Gm-Message-State: AOJu0YxHEo9xmrA+Z2Qx6G7AaW7OfbdmyCs+/tGk+Fcn2sjY4BSfWGKT
-	ViT1oIb3np/XPP2u8jowMlqS24p+M9wmbWglGT6zeMxKTT2XXF1rvs8kFFdSchVkiKp9Mj3cBwq
-	gcg4mpkCBEJ7wnCECDg45SdLtZ0RDw31Gyie8OjilTkifrxdT3SbnQrXYB6unCRptJVww
-X-Gm-Gg: ASbGncthlxGKyrJv/yOmanPmuCCKf7FX58Pj0v1OKqKIMaAemFGuoWTw/jdzcSzIE1g
-	YzcrfOg7e4RWzQSJtvMm42iHbg4Xh79U/0hnxoU6QprYvPAopcsNa9onGwvSSFFNSFzvAgSbM6E
-	H9wS1oCbJAC07qK61T9j33NGOu8mwJA1LIEkEbFCnpaH9zQ0wW81FTyIlPxh+Llc1TIipWxKdKk
-	4leYfKv5YpScuNpOmEoC9W8cGRgqrXXMzNJyWsS38zJgXj5HqioQ7muGWh0kwyzWP+OzpSJ1lH2
-	tj1EmlneM3pjqm2YolO7PJBmIyOQ+XoeFsAo5pifF8ldOrNypVYQ0wOp9kHkxgcA+OUXfZXwiXd
-	30qmlYWjFq+YU3Bf1dLXIQus9aerYw1Yrn69kKcZMQS2n32tBtOTp80Z2RlRbI9RUICRQTA==
-X-Received: by 2002:a17:90a:e7c4:b0:33b:8b82:98cc with SMTP id 98e67ed59e1d1-33b8b829c10mr12376898a91.14.1760599527393;
-        Thu, 16 Oct 2025 00:25:27 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IG8EKOUJ8xGsupmOiisrAsUTMSki73ipiDYPVq89pIraBuMMaoKj84FJrrdjz62zznsHQL1Vw==
-X-Received: by 2002:a17:90a:e7c4:b0:33b:8b82:98cc with SMTP id 98e67ed59e1d1-33b8b829c10mr12376874a91.14.1760599526961;
-        Thu, 16 Oct 2025 00:25:26 -0700 (PDT)
-Received: from WANGAOW-LAB01.qualcomm.com (tpe-colo-wan-fw-bordernet.qualcomm.com. [103.229.16.4])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-33bb663f591sm725450a91.21.2025.10.16.00.25.23
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 16 Oct 2025 00:25:26 -0700 (PDT)
-From: Wangao Wang <wangao.wang@oss.qualcomm.com>
-To: vikash.garodia@oss.qualcomm.com, dikshita.agarwal@oss.qualcomm.com,
-        abhinav.kumar@linux.dev, bod@kernel.org, mchehab@kernel.org
-Cc: linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, quic_qiweil@quicinc.com,
-        quic_renjiang@quicinc.com, Wangao Wang <wangao.wang@oss.qualcomm.com>
-Subject: [PATCH v1] media: qcom: iris: Add sanity check for stop streaming
-Date: Thu, 16 Oct 2025 15:25:17 +0800
-Message-ID: <20251016072517.4845-1-wangao.wang@oss.qualcomm.com>
-X-Mailer: git-send-email 2.43.0
+        d=1e100.net; s=20230601; t=1760599780; x=1761204580;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=1Ul+cS2P/8sZ0yvovVHbSWbxCfkZYKO7WdKq0EttCbU=;
+        b=qP2CaL3qT+Hub/oid7AKJr2o4JPTnaMm0vCYOqMBsaHu5iMW6fOoifxHa5FpfZTPCs
+         ESv/gzNz5ovq9HekKiZ+m2+JpMQK1HafdZtvfxeAaRWSlzmaO1rbdpzuKEANykNTz1TN
+         NxskWLEcF6G5bdxOFXUu8zERL5ifxvmfUcAfw52glsVJ/KGI9608FWklgnkh/81Zlv5J
+         C0awjLRNJtHDSisrI+vkSkdgpHhnv3IhFbAnpC6rFHp7eFv3e+feG89IswMIaSOtVE7z
+         weuP1TJzMh48uhY6KVs8/YTRZ3xLNmYXvxxjMQCVsy3TTjTycydU0CIVB+rcK2frg6Ik
+         K8Bw==
+X-Gm-Message-State: AOJu0Yz55SGxxK7rkITd10Unm+rvIETlpNFp9fWa5lG/Kb7QO4ZRiySw
+	xvBTkzO7oDNgs/aAumEiyy4AXCCbyfyggN5oJtkvfcZu84u1Wm/yYNf1AaUhOi+16Vzb1xPEIYO
+	7cUjesI5OX9Gqp23cQlrbC6DpQYvOh5UOY4IXEFCYCPSyrvLLLQYRtP6+5e/uKElB8NiB
+X-Gm-Gg: ASbGncsoBl4m2N6bEnzMQoF1EuXZwTgsRWGbjoxqZAMg8r1DR8wmTuicS6rTLhIS/3z
+	1yB3gUKgJGXN3hXzJxciic5FOyCyOiX7cwB88fzlkRQfYzAzsDtEN2Qcf2h9sNwaGMK7y8PtT6I
+	PeSsr6ZGbSzX7A5BYBHZVjFdp7asdcgZajgSFy7ZYyGtvKWm7aqyR3x+m4ufNfBEGIPmG9S7YuB
+	Lf++DPZaYiqqVfdhuHh7L2eZJC1YKDSc2TlwJRh/aMKKFAho0aTBLFPhdzQPXz+IOgy7592Np++
+	QV5H7pgnBhgOnXh5eyfOhwg4RGmAjqgPDGi9fJIi71b9n2m2NsAlDIErAIQX8AvPrUOOOpWlPnt
+	MwKjeYA8zFIn1Jogc1LuDd9WJnpc9h6P2V5B5OzYgiWUpOXLxiqaRddw4
+X-Received: by 2002:a05:622a:1aa5:b0:4e8:97b1:2f00 with SMTP id d75a77b69052e-4e897b155e2mr2758981cf.0.1760599780423;
+        Thu, 16 Oct 2025 00:29:40 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEZPVvx/y5rXszJuqXQFALq9qWPHwXrn3tefhQ1e+HrqCDMb/uqpc5hc+tncqvs1nrxQRHx2A==
+X-Received: by 2002:a05:622a:1aa5:b0:4e8:97b1:2f00 with SMTP id d75a77b69052e-4e897b155e2mr2758851cf.0.1760599779868;
+        Thu, 16 Oct 2025 00:29:39 -0700 (PDT)
+Received: from [192.168.119.202] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-b5cba06c187sm431603466b.31.2025.10.16.00.29.37
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 16 Oct 2025 00:29:39 -0700 (PDT)
+Message-ID: <80c71cfd-e12a-4707-ad03-e03b0ac48838@oss.qualcomm.com>
+Date: Thu, 16 Oct 2025 09:29:36 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-GUID: vb9WnGCgO1OI37PVzaYwhdvAJ1FDLGK6
-X-Proofpoint-ORIG-GUID: vb9WnGCgO1OI37PVzaYwhdvAJ1FDLGK6
-X-Authority-Analysis: v=2.4 cv=eaIwvrEH c=1 sm=1 tr=0 ts=68f09de8 cx=c_pps
- a=0uOsjrqzRL749jD1oC5vDA==:117 a=nuhDOHQX5FNHPW3J6Bj6AA==:17
- a=x6icFKpwvdMA:10 a=VkNPw1HP01LnGYTKEx00:22 a=EUspDBNiAAAA:8
- a=cYsYxGlOpVVTreCKc7QA:9 a=mQ_c8vxmzFEMiUWkPHU9:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDExMDAyMiBTYWx0ZWRfX3jpVmilfp6pZ
- mX7553lkUnGUi0l+EIMyMlkUhTo3hKsWz/hXvxILkkPgL5In/cpPraTQdOWbx2L59c5QcXTYqao
- cJp0+G/k4VkM+JZ9aMPpW6R5pOCzZAe2pZ1OZcup8h62rYA9iW/UoQXbXp35xnzHvIZVXx7lfHh
- XpMAuMDpqeLIaHnFCuTXQs/QlKROGYeV1kbw0mQJQTphwXAJcxbKnHn2woy1PPH51kJOWguqXW7
- MKhbytI8GU6IVGW6rGoCHM1/HZKDtDMINvO9hwRop8fAveRxxL+S4w989dXSy1VDSJukhPtinm7
- KsHdTTLvu35N8MY/uUwoYxtSLBNGwnrdSL/bA8DViVF5cmYyy/7zLvVihbMONyQjZd8cHOnxWA2
- O/4QTf69W2Nxmg7jkzmpgwdXqnYXpg==
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v7 1/4] arm64: dts: qcom: sm8750: Add USB support to
+ SM8750 SoCs
+To: Krishna Kurapati <krishna.kurapati@oss.qualcomm.com>,
+        Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>,
+        Geert Uytterhoeven <geert+renesas@glider.be>,
+        Arnd Bergmann <arnd@arndb.de>, Nishanth Menon <nm@ti.com>,
+        Eric Biggers <ebiggers@kernel.org>, nfraprado@collabora.com,
+        Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>,
+        Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, Wesley Cheng <quic_wcheng@quicinc.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Melody Olvera <melody.olvera@oss.qualcomm.com>
+References: <20251015105231.2819727-1-krishna.kurapati@oss.qualcomm.com>
+ <20251015105231.2819727-2-krishna.kurapati@oss.qualcomm.com>
+Content-Language: en-US
+From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+In-Reply-To: <20251015105231.2819727-2-krishna.kurapati@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Authority-Analysis: v=2.4 cv=K88v3iWI c=1 sm=1 tr=0 ts=68f09ee5 cx=c_pps
+ a=hnmNkyzTK/kJ09Xio7VxxA==:117 a=FpWmc02/iXfjRdCD7H54yg==:17
+ a=IkcTkHD0fZMA:10 a=x6icFKpwvdMA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=COk6AnOGAAAA:8 a=EUspDBNiAAAA:8 a=KKAkSRfTAAAA:8 a=f22nYxuSTbU4L-cX1K0A:9
+ a=QEXdDO2ut3YA:10 a=PEH46H7Ffwr30OY-TuGO:22 a=TjNXssC_j7lpFel5tvFf:22
+ a=cvBusfyB2V15izCimMoJ:22
+X-Proofpoint-GUID: ja5_KSDA8toN2mzLHOqW-yEIlTG7_wHM
+X-Proofpoint-ORIG-GUID: ja5_KSDA8toN2mzLHOqW-yEIlTG7_wHM
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDEzMDAzNSBTYWx0ZWRfX+BTbHSvMvlHr
+ rcSJXSNGelnwo06mn6VIoBphh6Sf682vlKgvCzmJTlQiX+Fu7GHFUh9p+meKKoxpWH/yWWMDLmg
+ zn4t3O3t7o17etBBsyNVdKz3+f9q7auF2uuTCNUoOiKz4nUr5CRMkNiv5L2vM6NWFJhhq1T4Dnx
+ LctJ02dNhm7CQY2pHJ0kwAptMOQevqCApzxl7dStnkPa/Njz+qrmbDqtL96t/CRpxn9SMSfbgfk
+ AxaySummgXkLr+kqQAYiiaYPl0TLnZO5b5Vm+q86p4PbJW8g200P3wqNKCm0INXzZIZjyjOL8ux
+ dJaXSufIQljSFNwWGlARFPl6X0cHB/ovZBL1Bs9o6EmURwF+1FmIQSa72PXviraQhx5abnQIkXF
+ ZYDE7cGbC12WGmzNs/IQU07Wya8r4A==
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.80.40
  definitions=2025-10-16_01,2025-10-13_01,2025-03-28_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- bulkscore=0 priorityscore=1501 spamscore=0 impostorscore=0 phishscore=0
- adultscore=0 lowpriorityscore=0 clxscore=1015 suspectscore=0 malwarescore=0
+ malwarescore=0 spamscore=0 impostorscore=0 priorityscore=1501 phishscore=0
+ adultscore=0 clxscore=1015 bulkscore=0 suspectscore=0 lowpriorityscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2510020000 definitions=main-2510110022
+ reason=mlx scancount=1 engine=8.19.0-2510020000 definitions=main-2510130035
 
-Add sanity check in iris_vb2_stop_streaming. If inst->state is
-already IRIS_INST_ERROR, we should skip the stream_off operation
-because it would still send packets to the firmware.
+On 10/15/25 12:52 PM, Krishna Kurapati wrote:
+> From: Wesley Cheng <quic_wcheng@quicinc.com>
+> 
+> Add the base USB devicetree definitions for SM8750 platforms.  The overall
+> chipset contains a single DWC3 USB3 controller (rev. 200a), SS QMP PHY
+> (rev. v8) and M31 eUSB2 PHY.  The major difference for SM8750 is the
+> transition to using the M31 eUSB2 PHY compared to previous SoCs.
+> 
+> Enable USB support on SM8750 MTP and QRD variants. SM8750 has a QMP combo
+> PHY for the SSUSB path, and a M31 eUSB2 PHY for the HSUSB path.
+> 
+> Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+> Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> Signed-off-by: Wesley Cheng <quic_wcheng@quicinc.com>
+> Signed-off-by: Melody Olvera <melody.olvera@oss.qualcomm.com>
+> Signed-off-by: Krishna Kurapati <krishna.kurapati@oss.qualcomm.com>
+> ---
 
-In iris_vdec_kill_session, inst->state is set to IRIS_INST_ERROR
-and session_close is executed, which will kfree(inst_hfi_gen2->packet).
-If stop_streaming is called afterward, it will cause a crash.
+[...]
 
-Signed-off-by: Wangao Wang <wangao.wang@oss.qualcomm.com>
----
- drivers/media/platform/qcom/iris/iris_vb2.c | 10 +++++++---
- 1 file changed, 7 insertions(+), 3 deletions(-)
+> +		usb_1: usb@a6f8800 {
+> +			compatible = "qcom,sm8750-dwc3", "qcom,dwc3";
+> +			reg = <0x0 0x0a6f8800 0x0 0x400>;
 
-diff --git a/drivers/media/platform/qcom/iris/iris_vb2.c b/drivers/media/platform/qcom/iris/iris_vb2.c
-index 139b821f7952..c1647fb4f0cc 100644
---- a/drivers/media/platform/qcom/iris/iris_vb2.c
-+++ b/drivers/media/platform/qcom/iris/iris_vb2.c
-@@ -231,16 +231,20 @@ void iris_vb2_stop_streaming(struct vb2_queue *q)
- 		return;
- 
- 	mutex_lock(&inst->lock);
-+	if (inst->state == IRIS_INST_ERROR) {
-+		ret = -EBUSY;
-+		goto error;
-+	}
- 
- 	if (!V4L2_TYPE_IS_OUTPUT(q->type) &&
- 	    !V4L2_TYPE_IS_CAPTURE(q->type))
--		goto exit;
-+		goto error;
- 
- 	ret = iris_session_streamoff(inst, q->type);
- 	if (ret)
--		goto exit;
-+		goto error;
- 
--exit:
-+error:
- 	iris_helper_buffers_done(inst, q->type, VB2_BUF_STATE_ERROR);
- 	if (ret)
- 		iris_inst_change_state(inst, IRIS_INST_ERROR);
--- 
-2.43.0
+Please resend this using the flattened model
+
+Konrad
 
 
