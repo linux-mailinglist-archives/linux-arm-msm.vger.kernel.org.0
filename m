@@ -1,104 +1,176 @@
-Return-Path: <linux-arm-msm+bounces-77581-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-77582-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ams.mirrors.kernel.org (ams.mirrors.kernel.org [IPv6:2a01:60a::1994:3:14])
-	by mail.lfdr.de (Postfix) with ESMTPS id B24CFBE3752
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Oct 2025 14:42:18 +0200 (CEST)
+Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [142.0.200.124])
+	by mail.lfdr.de (Postfix) with ESMTPS id 46C43BE3818
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Oct 2025 14:53:38 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ams.mirrors.kernel.org (Postfix) with ESMTPS id 8CB6035730A
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Oct 2025 12:42:17 +0000 (UTC)
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id EAE934E7660
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Oct 2025 12:53:36 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0F36D32D7E1;
-	Thu, 16 Oct 2025 12:42:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 063FE334381;
+	Thu, 16 Oct 2025 12:53:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="bJA/b4q4"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="i2LfPzHA"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2C3E32D7D9;
-	Thu, 16 Oct 2025 12:42:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A852262FE9;
+	Thu, 16 Oct 2025 12:53:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760618522; cv=none; b=O5idfPYZDu4OFz74RV4NSCf4NRp0H2xSUD7NgMcMsnVGysmCFCXCAuhXjSMh2zbSrp6bMsQVDwjxTqVQuB08wrnkiRYNln4zL0vXeobQBGQrVAFkKZShR39vebQ1IybiISCGkc+z8a+CZAAsV4/LLvvOelqdes1+cT/4Dxbpi3M=
+	t=1760619213; cv=none; b=rH8SpB86HkPCEvsh2uQ46nmW+jd58hyG2EJFzBFlFd1KnNW/dEn33Eh4SVE3eto64RSI0zuuh/IZAK0ueH5TNI/gd/s9oOyCDPtfrvJOh394s+GAQRRDTtVh77uBoWX3j2aknXDJ2yRw3G0kbppjH0+W1j2Ag/2U3mBW3Hj9X8E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760618522; c=relaxed/simple;
-	bh=capGskoZmjMJHMDq30MZgjnjSp0ctvHfRPAsE6z4KLg=;
-	h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date:
-	 MIME-Version:Content-Type; b=RulVQiS7xrwyvJyPlTgvI5yrDCE8LAVdtnIC+2W6qJpUCaoX6laOIXwaBuSLBAPtf6DXzWS7B4Vfa8pZQ3QOHXN4iVqLiKQ4RTFGi5SwBmiHR3CLKLc2fYaalgHYdva5DEzqvNxZXS3a0UqJB6qAEnpjRgwuBS4SA6GuIG6NMsA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=bJA/b4q4; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40AC4C4CEFE;
-	Thu, 16 Oct 2025 12:41:58 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1760618520;
-	bh=capGskoZmjMJHMDq30MZgjnjSp0ctvHfRPAsE6z4KLg=;
-	h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
-	b=bJA/b4q4k13X3gyyiNae7f4498AGyd+HylQrw8Cecqj4mwpf0PpHPUfSPCzPayBVb
-	 XEVdPl3yMpZ5jPeQ1bor2ur9k+JQORr65Fop06IiHoeyTBav4RenuANXsna5dzktBL
-	 ujU5Wtj8ouhPXpOmcjjZ0HwT6JqkinFjAXZX9Ypjv2qt0p6dKRzz3N+ADmX2FTncqI
-	 lpZ70XzKlKUnkFuv/fI3KaKIVlFaCHzts6ysrfF30OSJ/95iS1krKhj9wj9R5uJgn7
-	 Vxhura0Vf7nAzr71jGdFBuoNUTQ7wbwT62TyLHj5rTISaBnlnPltBLsLhFW0SC4Vy1
-	 hCK/+ZdpgtmIg==
-From: Mark Brown <broonie@kernel.org>
-To: Srinivas Kandagatla <srini@kernel.org>, 
- Liam Girdwood <lgirdwood@gmail.com>, Rob Herring <robh@kernel.org>, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>, Jaroslav Kysela <perex@perex.cz>, 
- Takashi Iwai <tiwai@suse.com>, Le Qi <le.qi@oss.qualcomm.com>
-Cc: linux-sound@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
- kernel@oss.qualcomm.com
-In-Reply-To: <20251009090619.1097388-1-le.qi@oss.qualcomm.com>
-References: <20251009090619.1097388-1-le.qi@oss.qualcomm.com>
-Subject: Re: [PATCH v2 0/2] ASoC: Add QCS615 sound card support
-Message-Id: <176061851800.55339.9213487570026484712.b4-ty@kernel.org>
-Date: Thu, 16 Oct 2025 13:41:58 +0100
+	s=arc-20240116; t=1760619213; c=relaxed/simple;
+	bh=+sjguuQF9veMh/XDulGaaJkoj9vbjMeKiKeAv2UoE68=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:CC:References:
+	 In-Reply-To:Content-Type; b=tWOHrC5RjGGd8t7ahlG+jSYLFFh7CvUPKVDfVb2dXNSaozdxwF2E115A75lBt4+6238mlLG1Co4m4vPP1rjrfO7i2u+5uXjse/WGyo5x4Is0AQBMgR0hmKE849VZMGDw8Dj7KusOHFNptjh2e6iaY4jKb4Djln/fq+2nl6JpbAc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=i2LfPzHA; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 59G7ks50016276;
+	Thu, 16 Oct 2025 12:53:23 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	b8UnPcHh8kcwrSfAcGYTzDXv1L8RUlX1O3Kk3RXFStU=; b=i2LfPzHABBf26XBu
+	vqC0xFUplzYzmHoKgqtcWauwWsbIRQ9uAOikv99AVY2ncaLQ4LjeCehhYlog6wFe
+	YYcY247InTChJrg+nXz3IEWqDOEbfzcz7JVHMf3Zu2AAY2owl53C+yB2G0d2Q+fP
+	6RrKwGLx5YRbW1Q9rkx069eZUWo0COydE3Z0BH/IY5gMO5HI6mCh6DriDjcVnNiY
+	GYUmqtTBfgBg/AQ3Tj571pN6dVLN+wW4zdxfZofFE3MwpLJ3n2GoBdRSkqjVZO/y
+	hjJ9npnA5ZVGi1ek8nFYNM9ZcUKtHeRkaWH4XEIWDm4K6EfKIxqyBIUZ2rWSCzTu
+	3+eACA==
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 49qfdkga3x-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 16 Oct 2025 12:53:22 +0000 (GMT)
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+	by NALASPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 59GCrLak032071
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 16 Oct 2025 12:53:21 GMT
+Received: from [10.206.103.106] (10.80.80.8) by nalasex01c.na.qualcomm.com
+ (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1748.24; Thu, 16 Oct
+ 2025 05:53:15 -0700
+Message-ID: <564165ba-38ae-4c86-a980-b2342aa20695@quicinc.com>
+Date: Thu, 16 Oct 2025 18:23:12 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-X-Mailer: b4 0.15-dev-2a268
+User-Agent: Mozilla Thunderbird
+From: Nihal Kumar Gupta <quic_nihalkum@quicinc.com>
+Subject: Re: [PATCH v4 3/3] arm64: dts: qcom: monaco-evk-camera: Add DT
+ overlay
+To: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
+        Vikram Sharma
+	<quic_vikramsa@quicinc.com>,
+        <bryan.odonoghue@linaro.org>, <mchehab@kernel.org>, <robh@kernel.org>,
+        <krzk+dt@kernel.org>, <conor+dt@kernel.org>, <andersson@kernel.org>,
+        <konradybcio@kernel.org>, <hverkuil-cisco@xs4all.nl>,
+        <cros-qcom-dts-watchers@chromium.org>, <catalin.marinas@arm.com>,
+        <will@kernel.org>
+CC: <linux-arm-kernel@lists.infradead.org>, <quic_svankada@quicinc.com>,
+        <linux-media@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        Ravi Shankar
+	<quic_rshankar@quicinc.com>,
+        Vishal Verma <quic_vishverm@quicinc.com>
+References: <20251015131303.2797800-1-quic_vikramsa@quicinc.com>
+ <20251015131303.2797800-4-quic_vikramsa@quicinc.com>
+ <ec23a3b2-fb50-4da7-8912-512b0a741ecf@linaro.org>
+Content-Language: en-US
+In-Reply-To: <ec23a3b2-fb50-4da7-8912-512b0a741ecf@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: odQb8elHaFhJptGVdwMceWWzXct9Is-S
+X-Authority-Analysis: v=2.4 cv=MrNfKmae c=1 sm=1 tr=0 ts=68f0eac2 cx=c_pps
+ a=ouPCqIW2jiPt+lZRy3xVPw==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
+ a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=x6icFKpwvdMA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=COk6AnOGAAAA:8 a=4uKfaDAKpMznJALyaWEA:9
+ a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=TjNXssC_j7lpFel5tvFf:22
+ a=cPQSjfK2_nFv0Q5t_7PE:22
+X-Proofpoint-GUID: odQb8elHaFhJptGVdwMceWWzXct9Is-S
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDExMDAxOCBTYWx0ZWRfX6zGPZNqJl59G
+ s8ESr0GZMW16IRYwpG+LcHv1qx/Rou8m+Ozcp9A7l2CWkKJMzQI9Wbn4OxJZlRsRZyuRoUc+LxL
+ lm8hZ9WKXT+/Xm0ciVzxkgVklgfQ6qNlet6v1PMf+eds6B2tUMOAcQdTY+vCf3klOrNBgzJf6n1
+ R2UL/5CyCdFvBUFE5tikKX/OIO+tx1hC6NciH2onqF0ebOKo6Wewt54c8egLtZunBV5IGmc3Hxf
+ g0C2gi7n6fpAtl6mhLdZJzdQlreWvP3y/goiPYfcLhkTyK9Nk0dn6jR2NIoTiP8zOt4V4nah80n
+ CExRENyXgHySmCLOC509/xkc1DQsjIDkLsZe2YsmuJUb/dacSlNJxXWbGSI00vb7FK5aq2deor5
+ 2SmdHkSjdHoef3xI7l74EpuB55GmNQ==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-10-16_02,2025-10-13_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ spamscore=0 bulkscore=0 clxscore=1015 adultscore=0 phishscore=0
+ impostorscore=0 priorityscore=1501 malwarescore=0 lowpriorityscore=0
+ suspectscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2510020000
+ definitions=main-2510110018
 
-On Thu, 09 Oct 2025 17:06:17 +0800, Le Qi wrote:
-> This patch series adds support for the QCS615 sound card:
-> - Updates device tree bindings for SM8250 to include QCS615.
-> - Adds QCS615 support in the SC8280XP ASoC driver.
+
+
+On 16-10-2025 00:45, Vladimir Zapolskiy wrote:
+>> configuration. Introducing a device tree overlay to support optional
 > 
+> s/Introducing/Introduce
+> 
+ACK
 
-Applied to
+>> Co-developed-by: Ravi Shankar <quic_rshankar@quicinc.com>
+>> Signed-off-by: Ravi Shankar <quic_rshankar@quicinc.com>
+> 
+> The first expected Signed-off-by tag shall be from the change author, and
+> it is not.
+ACK
 
-   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/sound.git for-next
+>> + * Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
+> 
+> Year is missing.
+> 
+This is as per new yearless copyright format.
 
-Thanks!
+>> +        avdd-supply = <&vreg_cam1_2p8>;
+>> +
+> 
+> Please remove empty lines between individual properties.
+> 
+ACK
 
-[1/2] ASoC: dt-bindings: qcom,sm8250: Add QCS615 sound card
-      commit: 6079165e6e027c03e06556ff3df0ed03a34d68f0
-[2/2] ASoC: qcom: sc8280xp: Add support for QCS615
-      commit: dee4ef0ebe4dee655657ead30892aeca16462823
+> Remove 'clock-lanes' property, first of all it is non-configurable,
+> and definitely it's hypothetical value can not be equal to '7'.
+ACK
 
-All being well this means that it will be integrated into the linux-next
-tree (usually sometime in the next 24 hours) and sent to Linus during
-the next merge window (or sooner if it is a bug fix), however if
-problems are discovered then the patch may be dropped or reverted.
+>> +        };
+> 
+> I'd suggest to add a description of pins with MCLK function in a separate
+> change to the SoC specific .dtsi file. It will cover gpio67, gpio68, gpio74
+> and gpio69, so here it's a MCLK1 pin for instance.
+We are currently enabling sensor only on CCI1.  Pins gpio67–gpio69 are used by mclk for cam0–cam2, and gpio74 enables the regulator.
+Since mclk is sensor-specific, it's added in the sensor dtso.
 
-You may get further e-mails resulting from automated or manual testing
-and review of the tree, please engage with people reporting problems and
-send followup patches addressing any issues that are reported if needed.
+Would it be appropriate to extend mclk support to all CCI instances, even if some are not actively used?
 
-If any updates are required or you are submitting further changes they
-should be sent as incremental updates against current git, existing
-patches will not be replaced.
+@Konrad, @Bryan, Could you please share your thoughts on the above?
 
-Please add any relevant lists and maintainers to the CCs when replying
-to this mail.
+If valid, then cam0_default, cam1_default, cam2_default should be added in SoC dtsi, with references used in sensor dtso.
 
-Thanks,
-Mark
+> 
+>> +
+>> +        ldo-avdd-pins { 
+
+-- 
+Regards,
+Nihal Kumar Gupta
 
 
