@@ -1,34 +1,34 @@
-Return-Path: <linux-arm-msm+bounces-77587-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-77588-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 46C2FBE397C
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Oct 2025 15:05:34 +0200 (CEST)
+Received: from ams.mirrors.kernel.org (ams.mirrors.kernel.org [213.196.21.55])
+	by mail.lfdr.de (Postfix) with ESMTPS id D733FBE39BF
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Oct 2025 15:07:48 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id CC5E51886ABE
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Oct 2025 13:05:57 +0000 (UTC)
+	by ams.mirrors.kernel.org (Postfix) with ESMTPS id 1811E358A8D
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Oct 2025 13:07:39 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 931E130648D;
-	Thu, 16 Oct 2025 13:05:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6763132D458;
+	Thu, 16 Oct 2025 13:07:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=lunn.ch header.i=@lunn.ch header.b="PpMxU/p7"
+	dkim=pass (1024-bit key) header.d=lunn.ch header.i=@lunn.ch header.b="1DghSIi6"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from vps0.lunn.ch (vps0.lunn.ch [156.67.10.101])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90F9E262FE9;
-	Thu, 16 Oct 2025 13:05:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C25AD32D430;
+	Thu, 16 Oct 2025 13:07:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=156.67.10.101
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760619931; cv=none; b=FsnhXH10p/RrNU+imJSgzhkR+tYNRIbXCQlVI/SMaRwDq8pQ7X5yqwrrbiOX5bynTz9Xqt8d8M390XEjmrI0tHLoCjEARzCHYB+jLLc2TfZI4xPpDHGUxGH2BEysx0OHXVdNeZ2XFaKeIec2G5KEMP9iyn7jCqK2lZyU9TqtVec=
+	t=1760620048; cv=none; b=B+5KIoAgL0YV6aS3tDaJf2YXqm45nINjXNW2CThRefFJplzhYtFW/cZzUq2EH2rOcutfpfHfIOfDlAxQi8i190/Q5WvT72bbSUIsk9YuEzfuGOEZgsjlf8wb8PEGEjqWHK5UohDvmExypMKJDJQ3W7bI155llhrTmKo4Eckzf/4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760619931; c=relaxed/simple;
-	bh=Xc+JnWWIVTtBIWG68HCmHHhZPmalnHRd17m0GQ7lgko=;
+	s=arc-20240116; t=1760620048; c=relaxed/simple;
+	bh=ONcEzksXvU0Hzsn1Zneiq4npucSOXSmSVnVeoTR6tGY=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=jOAKT+KTKS9Jqe96ICID8hZfJpYXaSaZcmfrMyo0ZRBJWk/LDzLaQMvfdOYwzTGPbmNccnkRG4MwqNPEQ+gS6A/3CoNug4cPIoBzXZA7rCW5ZBjFDMM5LPc9Fq5fovEIMc8NkdeLPQ2vKQJ4MFH/4Ct6PavUmbcIV9iIzD0o3N4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lunn.ch; spf=pass smtp.mailfrom=lunn.ch; dkim=pass (1024-bit key) header.d=lunn.ch header.i=@lunn.ch header.b=PpMxU/p7; arc=none smtp.client-ip=156.67.10.101
+	 Content-Type:Content-Disposition:In-Reply-To; b=WG90jvSI57xj7qr37m4WfYOcifgmO2JghdETpXXdhk7Mr/HhVbTKJsImVkbxxIkBjTeRpZopCG2pjDFpF6P+qlUVfImLanVHan+29FAYjELuA8o8cYzrojnXcsyoqTZ+dx5zwRsQ2lY+xQF9Nelz/vpQEsM0ix2OJCzRQxQYVg8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lunn.ch; spf=pass smtp.mailfrom=lunn.ch; dkim=pass (1024-bit key) header.d=lunn.ch header.i=@lunn.ch header.b=1DghSIi6; arc=none smtp.client-ip=156.67.10.101
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lunn.ch
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=lunn.ch
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=lunn.ch;
@@ -36,13 +36,13 @@ DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=lunn.ch;
 	References:Message-ID:Subject:Cc:To:From:Date:From:Sender:Reply-To:Subject:
 	Date:Message-ID:To:Cc:MIME-Version:Content-Type:Content-Transfer-Encoding:
 	Content-ID:Content-Description:Content-Disposition:In-Reply-To:References;
-	bh=7JL0+bGL0quldkyb9VQbHQdNgKSc3xiY2NepKrKb++8=; b=PpMxU/p7fUKKQlOiZqqqwDSEji
-	di6xnJgDpt9A/EQjc6G6lZ21lW1ubDumlrkPQ81fdB7bIgY69YC7xNcceeXX/beuXtk5oiTY20wh8
-	fg6X7PzcuVy0PsHdmMJts3ln/HOIspaXYXr+SDGGPX+LsQZJ2Y+OaGTT2J3QFWawmhgo=;
+	bh=bTX/SxuL6PMsQdK1U3XWoqoo19lAlZGpcm62kFUrRjY=; b=1DghSIi6UnO2MhInx1oOB3c3b9
+	eck9TaS3dRL5XiHskCcpj+2DbG3l+ctf/6myn3ZfE5ADVigGhNfjK3I5YYsriwIpWsPIXenOW39Yo
+	0r2H3B1UppJgOz4nK0opSVoSVgY3+vmgdSEeORq3dQIaca/45FCnUwagqURGB2Xsk344=;
 Received: from andrew by vps0.lunn.ch with local (Exim 4.94.2)
 	(envelope-from <andrew@lunn.ch>)
-	id 1v9NfH-00B9TY-Rk; Thu, 16 Oct 2025 15:05:07 +0200
-Date: Thu, 16 Oct 2025 15:05:07 +0200
+	id 1v9NhD-00B9VF-En; Thu, 16 Oct 2025 15:07:07 +0200
+Date: Thu, 16 Oct 2025 15:07:07 +0200
 From: Andrew Lunn <andrew@lunn.ch>
 To: "Russell King (Oracle)" <linux@armlinux.org.uk>
 Cc: Heiner Kallweit <hkallweit1@gmail.com>,
@@ -83,13 +83,13 @@ Cc: Heiner Kallweit <hkallweit1@gmail.com>,
 	Vladimir Oltean <olteanv@gmail.com>,
 	Vladimir Oltean <vladimir.oltean@nxp.com>,
 	Yu-Chun Lin <eleanor15x@gmail.com>
-Subject: Re: [PATCH net-next 14/14] net: stmmac: convert to phylink PCS
- support
-Message-ID: <5f0c7653-30e4-486a-ae5d-9d20d5e7ac43@lunn.ch>
+Subject: Re: [PATCH net-next 03/14] net: stmmac: remove SGMII/RGMII/SMII
+ interrupt handling
+Message-ID: <8e71c26c-49be-435b-8cde-0f2faf5b805e@lunn.ch>
 References: <aO-tbQCVu47R3izM@shell.armlinux.org.uk>
- <E1v92NJ-0000000AmHi-1ZGJ@rmk-PC.armlinux.org.uk>
- <040a2f29-4c95-4561-87c0-2a70308d3f00@lunn.ch>
- <aPAYtHPcF5bes7Xi@shell.armlinux.org.uk>
+ <E1v92MO-0000000AmGP-2hFV@rmk-PC.armlinux.org.uk>
+ <51db1103-afd7-430d-9038-7094032347fc@lunn.ch>
+ <aPAcRNeFa5heydq7@shell.armlinux.org.uk>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -98,36 +98,14 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <aPAYtHPcF5bes7Xi@shell.armlinux.org.uk>
+In-Reply-To: <aPAcRNeFa5heydq7@shell.armlinux.org.uk>
 
-On Wed, Oct 15, 2025 at 10:57:08PM +0100, Russell King (Oracle) wrote:
-> On Wed, Oct 15, 2025 at 11:31:37PM +0200, Andrew Lunn wrote:
-> > > - create stmmac_pcs.c, which contains the phylink_pcs_ops structure, a
-> > >   dummy .pcs_get_state() method which always reports link-down
-> > 
-> > I've not followed the PCS code too closely. Why always report link
-> > down? Why is a dummy method needed?
+> Sadly, it's not quite unused - see dwmac-sun8i.c:
 > 
-> If phylink is put into inband mode, and a PCS is supplied to phylink
-> where this method left NULL, the kernel will oops.
-> 
-> As the code stands today in mainline, if phylink were to be put into
-> inband mode with the integrated PCS, then there will be no phylink PCS,
-> and so phylink_mac_pcs_get_state() will fall into the "else" path of:
-> 
->         pcs = pl->pcs;
->         if (pcs)
->                 pcs->ops->pcs_get_state(pcs, pl->pcs_neg_mode, state);
->         else
->                 state->link = 0;
-> 
-> and force the link down.
-> 
-> So, adding this method keeps the status quo - not oopsing the kernel
-> and not allowing the link to come up. No unintended behavioural
-> change in this regard from how it would behave today. :)
+>         if (v & EMAC_RGMII_STA_INT)
+>                 x->irq_rgmii_n++;
 
-O.K. Maybe some of this text could be added to the commit message?
+Ah, i missed that. So yes, it needs to stay.
 
 Thanks
 	Andrew
