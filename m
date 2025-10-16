@@ -1,392 +1,173 @@
-Return-Path: <linux-arm-msm+bounces-77612-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-77608-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id A62A1BE4128
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Oct 2025 17:02:04 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 853DABE4059
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Oct 2025 16:53:03 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id E1290584BF9
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Oct 2025 15:01:12 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 1649E1891836
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Oct 2025 14:53:27 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C004B34AAE4;
-	Thu, 16 Oct 2025 15:00:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3D70C3451AD;
+	Thu, 16 Oct 2025 14:52:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=armlinux.org.uk header.i=@armlinux.org.uk header.b="EzU5Fsnp"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="oK0IvGUF"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from pandora.armlinux.org.uk (pandora.armlinux.org.uk [78.32.30.218])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93378346A0A;
-	Thu, 16 Oct 2025 15:00:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=78.32.30.218
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65CA23451C6
+	for <linux-arm-msm@vger.kernel.org>; Thu, 16 Oct 2025 14:52:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760626823; cv=none; b=Iu1CVb0i9vuUr0agAkzO2jgodMZFfH0KdkzZJviQ/zs/zcwfXplm/E6IIU9S0DGB9bi54usqw4KxyQLA4OSYGtlPZD1NRDUrbQjG6wR7mAvP8tWFIc1qcd7u8U5P2GRpXXUsL/Dy4ycKdnjHICPzpgSqHWoH0/CNRzlEVmmETM8=
+	t=1760626359; cv=none; b=DXAwicNFDjwTjPVykIVnPRdOKM6tsnpPJKPQhH7WUGhM+SHnAGxjODtM3ODtAvlLJKctX9/tb1rvOLRKZuniP7/xOG/pmSpyDXTG4/WOBjFstg1CQUA3vFFkjLIhwh037aAKvo0RQ926RUdfLpY/G5o+aGgbiCqEZ4+A/E/FIyY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760626823; c=relaxed/simple;
-	bh=LLrjcGKYYSgcPgs7kae+mDqeVpl+BDaHS4G86zuh3UI=;
-	h=In-Reply-To:References:From:To:Cc:Subject:MIME-Version:
-	 Content-Disposition:Content-Type:Message-Id:Date; b=mp29mWquIlfHr9yqPgWiBiGWpTUrrYYbKQuqYKONW+UjMVgUOkGJ2IFSvct9bWI7ZK7gpwz1gZPGjFr+lt2wXyglATM4jy4/TPOz8H3/E8pWRfWRdiWVQ7b1j9hqHcpe1uLqsgcb6oZlGvzfQHfS+e/gHm4o4frwJqYILhxFJl4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=armlinux.org.uk; spf=none smtp.mailfrom=armlinux.org.uk; dkim=pass (2048-bit key) header.d=armlinux.org.uk header.i=@armlinux.org.uk header.b=EzU5Fsnp; arc=none smtp.client-ip=78.32.30.218
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=armlinux.org.uk
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=armlinux.org.uk
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=armlinux.org.uk; s=pandora-2019; h=Date:Sender:Message-Id:Content-Type:
-	Content-Transfer-Encoding:MIME-Version:Subject:Cc:To:From:References:
-	In-Reply-To:Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:
-	Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:
-	List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
-	bh=s74ElwPBIEXc0Zyt7YMHbYnv2zAHeVKDhcI1T/Ytvko=; b=EzU5FsnpBlMV3GFIWDtLqoWk2+
-	esrfcbjyeD5Nf5kAj2o0MG0TYLglRD4MWmco2Eqbv7GGqVfUL68ofQ8RoE/K7gsfGLOpm0sCuT3w/
-	h39yzEDxKheNahYCZbHbsLL4XMhmgbghynT3UGhEsmaIXas6ASviNAnh05n2re+Ha4fzLP4Wx/OmT
-	skgBqjw+GZ1Hul/bd4N9hNVpn7yMVKX99/Yt+xJIQSvf/wPws/3rEFaG+b1kz62hulHN84DXRN28G
-	To1RYTY9Z32SV8i2452OwoFCNqA/kHy0IxBYzOS1GEBeyc6sVNdBPJQ4IFR5d5fI4h2jJWFpm4sRh
-	OcELO2IQ==;
-Received: from e0022681537dd.dyn.armlinux.org.uk ([fd8f:7570:feb6:1:222:68ff:fe15:37dd]:50480 helo=rmk-PC.armlinux.org.uk)
-	by pandora.armlinux.org.uk with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-	(Exim 4.98.2)
-	(envelope-from <rmk@armlinux.org.uk>)
-	id 1v9P7A-000000006Sd-46CR;
-	Thu, 16 Oct 2025 15:38:02 +0100
-Received: from rmk by rmk-PC.armlinux.org.uk with local (Exim 4.98.2)
-	(envelope-from <rmk@rmk-PC.armlinux.org.uk>)
-	id 1v9P72-0000000AomR-3ro4;
-	Thu, 16 Oct 2025 15:37:52 +0100
-In-Reply-To: <aPECqg0vZGnBFCbh@shell.armlinux.org.uk>
-References: <aPECqg0vZGnBFCbh@shell.armlinux.org.uk>
-From: "Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>
-To: Andrew Lunn <andrew@lunn.ch>,
-	Heiner Kallweit <hkallweit1@gmail.com>
-Cc: Abhishek Chauhan <quic_abchauha@quicinc.com>,
-	Alexandre Torgue <alexandre.torgue@foss.st.com>,
-	Alexis Lothore <alexis.lothore@bootlin.com>,
-	Andrew Lunn <andrew+netdev@lunn.ch>,
-	Boon Khai Ng <boon.khai.ng@altera.com>,
-	Daniel Machon <daniel.machon@microchip.com>,
-	"David S. Miller" <davem@davemloft.net>,
-	Drew Fustini <dfustini@tenstorrent.com>,
-	Emil Renner Berthing <emil.renner.berthing@canonical.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Faizal Rahim <faizal.abdul.rahim@linux.intel.com>,
-	Furong Xu <0x1207@gmail.com>,
-	Inochi Amaoto <inochiama@gmail.com>,
-	Jacob Keller <jacob.e.keller@intel.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	"Jan Petrous (OSS)" <jan.petrous@oss.nxp.com>,
-	Jisheng Zhang <jszhang@kernel.org>,
-	Kees Cook <kees@kernel.org>,
-	Kunihiko Hayashi <hayashi.kunihiko@socionext.com>,
-	Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>,
-	Ley Foon Tan <leyfoon.tan@starfivetech.com>,
-	linux-arm-kernel@lists.infradead.org,
-	linux-arm-msm@vger.kernel.org,
-	linux-stm32@st-md-mailman.stormreply.com,
-	Matthew Gerlach <matthew.gerlach@altera.com>,
-	Maxime Chevallier <maxime.chevallier@bootlin.com>,
-	Maxime Coquelin <mcoquelin.stm32@gmail.com>,
-	Michal Swiatkowski <michal.swiatkowski@linux.intel.com>,
-	netdev@vger.kernel.org,
-	Oleksij Rempel <o.rempel@pengutronix.de>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Rohan G Thomas <rohan.g.thomas@altera.com>,
-	Shenwei Wang <shenwei.wang@nxp.com>,
-	Simon Horman <horms@kernel.org>,
-	Song Yoong Siang <yoong.siang.song@intel.com>,
-	Swathi K S <swathi.ks@samsung.com>,
-	Tiezhu Yang <yangtiezhu@loongson.cn>,
-	Vinod Koul <vkoul@kernel.org>,
-	Vladimir Oltean <olteanv@gmail.com>,
-	Vladimir Oltean <vladimir.oltean@nxp.com>,
-	Yu-Chun Lin <eleanor15x@gmail.com>
-Subject: [PATCH net-next v2 14/14] net: stmmac: convert to phylink PCS support
+	s=arc-20240116; t=1760626359; c=relaxed/simple;
+	bh=bb2uPhrku27uZPv/Jf75e5nhpowUMYOiMnBB5KihFPo=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=rbhDiJDPI0f0uiXwxi+KMJ5J38b6C9mPXATj690MZ6VkoGETGToh3J5xE7gOvFPPKoM3m+u8po2a7dqIQFxhzjFUc4qW/WgEY+b38R7gSgpmBCouVOBRsjP+9NR1kyIan75fdVOvRRV+EKAODUPI4kvbjoq4ppAe9yGD3Mq8i1U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=oK0IvGUF; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 59GEFpx5016271
+	for <linux-arm-msm@vger.kernel.org>; Thu, 16 Oct 2025 14:52:36 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:to; s=
+	qcppdkim1; bh=jPmtY2bWstZxGYrHD2oLA4kDgMlBAGLM7cSsgPby8R8=; b=oK
+	0IvGUFq5Jpvs+nDFM/Il2MpT/ilhF7MHPLO+EQjXbkTN5WAB2rI0VHOSOOV+Qzxv
+	sRtsBKGetq9wWxLEcY2lXvRoMYL7LPpZ9pIVBfAimdy6R2mv9p6gAudwk8iSrs25
+	65FvBqQsyi+Yt4UDL56r1HgrPj1Jwtkn5AOnrPf0622q69XSNno8TLBKC0CUEYol
+	ixpON2jXbKn9SfLTwAQqtm6rDhMB2kh0BfyW/hagjxvIxYHeAEDIseAWzJedm9W+
+	vK8BUcdjcOH0s4pKDHXdtZfLjAruVuPpD/VTQr//0Fa2Z6QX9Ou1aNUUAQRav4qz
+	6q8Ce5vsU3zTX1Onw0lQ==
+Received: from mail-oa1-f70.google.com (mail-oa1-f70.google.com [209.85.160.70])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 49qfdkgn9y-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Thu, 16 Oct 2025 14:52:36 +0000 (GMT)
+Received: by mail-oa1-f70.google.com with SMTP id 586e51a60fabf-3c97be590afso161377fac.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 16 Oct 2025 07:52:36 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1760626355; x=1761231155;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :reply-to:in-reply-to:references:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=jPmtY2bWstZxGYrHD2oLA4kDgMlBAGLM7cSsgPby8R8=;
+        b=rGMAQ2G2jUm3IVNqrupQk1pzX6De2tWI/K3CBmdlzHmC9MmIvZvZfbmFi8DFsmcuTR
+         5stWSppNX5pI4F6U8FMaeNhVd7ro04Zl7IfYoDdfBsYu8K620xZLhOvrcTSxl9gYdjwI
+         t/62zpvWJUGAG/m7RhnMWNOKwpwUBvvYtmGvb2EJstoS4NwtrBkxbzRS9vJzQBW369zS
+         IdjphtAe/uM0W8rvKiNW2eb1z6lX2ygDjO1N6uLPPahUygKBepvpZmrLBxVxvp9/JcfP
+         Ha+VhHQwL8nhBS0iekHABKiY81i8Mr0q2TyK24NNggACNrZ/PDkZs87iuD3ZZUMD8+Qo
+         7+TA==
+X-Forwarded-Encrypted: i=1; AJvYcCWwchPb43SSexrzuDDjDkeAgBapU7+b7AsMfOmeoE0BGslE6ATqxJHh4v5EH8OecMxrweRObLIq3N7az35R@vger.kernel.org
+X-Gm-Message-State: AOJu0YzpFo7Jhc18hlLTUe0urpbycgrtP7fjBHdcfR/qZy4Jmai6TJNJ
+	PNRX6v9yya4N2F4zvl8FUewUUqqO0oWhMjo76wftjiGsJoSRI6kdaJblrJmejBqELB9YUYocvus
+	Nhnt7AUdagfoXLHA08xFY/qVAwuOarvfXWLTuy4pG30frRXjH8UcRCLX9LrJq5DsUUyN0+jeVTl
+	Qr0i/BM1bC4yXnxIPVwrAz5//Pb3m+2tVT/YYfKQSoNe0=
+X-Gm-Gg: ASbGncs13PeEAX17qCsuliNm9R54eEKYvteRv5bPRQU91KLtz66g9c1yMMM0aCr7eqt
+	r6MgTJtD2+7wXpaS50I6ThXtTe9G1FymZyh9vpGJwni6WcAYtYWcxgxp3qtm72kA/H43tvYQH8I
+	bb9P6xCPNRoUvxoZu2ZoZJIFO0WQfy7d2Ew0PTqRX/ee2F1uaSW9lqrWRcySGkmFRToGTvJtIoY
+	+NXhFl1WjTBnUk=
+X-Received: by 2002:a05:6871:2e88:b0:35d:a9e2:fbd1 with SMTP id 586e51a60fabf-3c98cfa8295mr10099fac.21.1760626355281;
+        Thu, 16 Oct 2025 07:52:35 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IF39ocujuIwT0Et62sHrBT+rRRN4wBRxOHxmKLmre65EnhOwqDPEsCuGBua+8VJiCAAa15gVkxk2D9mH6TwzQ8=
+X-Received: by 2002:a05:6871:2e88:b0:35d:a9e2:fbd1 with SMTP id
+ 586e51a60fabf-3c98cfa8295mr10075fac.21.1760626354773; Thu, 16 Oct 2025
+ 07:52:34 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain; charset="utf-8"
-Message-Id: <E1v9P72-0000000AomR-3ro4@rmk-PC.armlinux.org.uk>
-Sender: Russell King <rmk@armlinux.org.uk>
-Date: Thu, 16 Oct 2025 15:37:52 +0100
+References: <20250718105407.32878-1-vignesh.raman@collabora.com> <20250718105407.32878-2-vignesh.raman@collabora.com>
+In-Reply-To: <20250718105407.32878-2-vignesh.raman@collabora.com>
+Reply-To: rob.clark@oss.qualcomm.com
+From: Rob Clark <rob.clark@oss.qualcomm.com>
+Date: Thu, 16 Oct 2025 07:52:23 -0700
+X-Gm-Features: AS18NWBmqrEUHFQlSWdIGqm2-_tBPDNsmr766wJpJByzaFclGFLQ0RGnzuLEsPQ
+Message-ID: <CACSVV029ueL_4Y5irmmOwy_9QDQGqDe_1wCGUe22FdefQiNjkw@mail.gmail.com>
+Subject: Re: [PATCH v1 1/7] drm/ci: disable apq8016 and apq8096 bare-metal jobs
+To: Vignesh Raman <vignesh.raman@collabora.com>
+Cc: dri-devel@lists.freedesktop.org, daniels@collabora.com,
+        helen.fornazier@gmail.com, airlied@gmail.com, simona.vetter@ffwll.ch,
+        robdclark@gmail.com, guilherme.gallo@collabora.com,
+        sergi.blanch.torne@collabora.com, valentine.burley@collabora.com,
+        lumag@kernel.org, linux-mediatek@lists.infradead.org,
+        linux-amlogic@lists.infradead.org, linux-rockchip@lists.infradead.org,
+        amd-gfx@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        intel-gfx@lists.freedesktop.org, virtualization@lists.linux.dev,
+        linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Proofpoint-ORIG-GUID: t2Wz21QhPPXQvlSiwA-0wmv0YeawQi1F
+X-Authority-Analysis: v=2.4 cv=MrNfKmae c=1 sm=1 tr=0 ts=68f106b4 cx=c_pps
+ a=nSjmGuzVYOmhOUYzIAhsAg==:117 a=IkcTkHD0fZMA:10 a=x6icFKpwvdMA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=QX4gbG5DAAAA:8 a=Gxbm4VOBLxWGKnsTXboA:9
+ a=QEXdDO2ut3YA:10 a=1zu1i0D7hVQfj8NKfPKu:22 a=AbAUZ8qAyYyZVLSsDulk:22
+X-Proofpoint-GUID: t2Wz21QhPPXQvlSiwA-0wmv0YeawQi1F
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDExMDAxOCBTYWx0ZWRfXyquOHVyoJlA+
+ PDWwO0PEkOwmJBu2+HcRq/n8acEEe6eAsHjKLXjT+Vow7xv+K9IYDZTKT0vnZFxlfgTeICXpaeD
+ IhCqHdgXqV8fFJifTUIZ2Qhtf7kOidHBzK7xv8vM4A1UJi2f/bkqJ+GknVZ2rwkE13zG1eQZH98
+ CxRXHKlLa5Ay5GndZZFQ4PTx7qJKbzNgBaeJO+KuS53AstacQtUpK05bMQPkRGlvtHru1pYJJep
+ Jkbo4jEaalx5BcOTVOyGMm6pe0b3Jd9kZkxrdZ5H4qRuuN4QWa3CtOE4hcRV34oVHngRV7XAyCP
+ CDq7vdHKUjBxfdEaClbqUP+mIj2Pi2+8Ul10VsSmfoKyPCwza3fPr+fyTdOokfovaRmILgUIQct
+ 3cc8jB/YvX64dl2+50jvHgBakIBU+w==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-10-16_03,2025-10-13_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ spamscore=0 bulkscore=0 clxscore=1015 adultscore=0 phishscore=0
+ impostorscore=0 priorityscore=1501 malwarescore=0 lowpriorityscore=0
+ suspectscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2510020000
+ definitions=main-2510110018
 
-Now that stmmac's PCS support is much more simple - just a matter of
-configuring the control register - the basic conversion to phylink PCS
-support becomes straight forward.
+On Fri, Jul 18, 2025 at 3:54=E2=80=AFAM Vignesh Raman
+<vignesh.raman@collabora.com> wrote:
+>
+> These devices are being moved to LAVA. The jobs will be enabled and the
+> job definitions will be updated once the move is complete.
 
-Create the infrastructure to setup a phylink_pcs instance for the
-integrated PCS:
-- add a struct stmmac_pcs to encapsulate the phylink_pcs structure,
-  pointer to stmmac_priv, and the core-specific base address of the PCS
-  registers.
-- modify stmmac_priv and stmmac_mac_select_pcs() to return the embedded
-  phylink_pcs structure when setup and STMMAC_PCS_SGMII is in use, and
-  move the comment from stmmac_hw_setup() to here.
-- create stmmac_pcs.c, which contains the phylink_pcs_ops structure, a
-  dummy .pcs_get_state() method which always reports link-down, and
-  .pcs_config() method, moving the call to stmmac_pcs_ctrl_ane() here,
-  but without indirecting through the dwmac specific core code. The
-  link-down behaviour mentioned above maintains the current behaviour
-  when phylink is used with inband but without a PCS.
+fwiw, the runners are up and running in LAVA now
 
-This will ensure that the PCS control register is configured to the
-same settings as before, but will now happen when the netdev is opened
-or reusmed rather than only during probe time. However, this will be
-before the .fix_mac_speed() method is called, which is critical for the
-behaviour in dwmac-qcom-ethqos's ethqos_configure_sgmii() function to
-be maintained.
+BR,
+-R
 
-Signed-off-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
----
-v2: add comment about why the link-down function is added.
----
- drivers/net/ethernet/stmicro/stmmac/Makefile  |  2 +-
- .../ethernet/stmicro/stmmac/dwmac1000_core.c  |  9 ++++
- .../net/ethernet/stmicro/stmmac/dwmac4_core.c | 11 +++++
- drivers/net/ethernet/stmicro/stmmac/stmmac.h  |  4 ++
- .../net/ethernet/stmicro/stmmac/stmmac_main.c | 15 +++---
- .../net/ethernet/stmicro/stmmac/stmmac_pcs.c  | 47 +++++++++++++++++++
- .../net/ethernet/stmicro/stmmac/stmmac_pcs.h  | 17 +++++++
- 7 files changed, 97 insertions(+), 8 deletions(-)
- create mode 100644 drivers/net/ethernet/stmicro/stmmac/stmmac_pcs.c
-
-diff --git a/drivers/net/ethernet/stmicro/stmmac/Makefile b/drivers/net/ethernet/stmicro/stmmac/Makefile
-index 51e068e26ce4..11c0ba2ccdb1 100644
---- a/drivers/net/ethernet/stmicro/stmmac/Makefile
-+++ b/drivers/net/ethernet/stmicro/stmmac/Makefile
-@@ -7,7 +7,7 @@ stmmac-objs:= stmmac_main.o stmmac_ethtool.o stmmac_mdio.o ring_mode.o	\
- 	      dwmac4_dma.o dwmac4_lib.o dwmac4_core.o dwmac5.o hwif.o \
- 	      stmmac_tc.o dwxgmac2_core.o dwxgmac2_dma.o dwxgmac2_descs.o \
- 	      stmmac_xdp.o stmmac_est.o stmmac_fpe.o stmmac_vlan.o \
--	      $(stmmac-y)
-+	      stmmac_pcs.o $(stmmac-y)
- 
- stmmac-$(CONFIG_STMMAC_SELFTESTS) += stmmac_selftests.o
- 
-diff --git a/drivers/net/ethernet/stmicro/stmmac/dwmac1000_core.c b/drivers/net/ethernet/stmicro/stmmac/dwmac1000_core.c
-index d35db8958be1..571e48362444 100644
---- a/drivers/net/ethernet/stmicro/stmmac/dwmac1000_core.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/dwmac1000_core.c
-@@ -22,6 +22,14 @@
- #include "stmmac_ptp.h"
- #include "dwmac1000.h"
- 
-+static int dwmac1000_pcs_init(struct stmmac_priv *priv)
-+{
-+	if (!priv->dma_cap.pcs)
-+		return 0;
-+
-+	return stmmac_integrated_pcs_init(priv, GMAC_PCS_BASE);
-+}
-+
- static void dwmac1000_core_init(struct mac_device_info *hw,
- 				struct net_device *dev)
- {
-@@ -435,6 +443,7 @@ static void dwmac1000_set_mac_loopback(void __iomem *ioaddr, bool enable)
- }
- 
- const struct stmmac_ops dwmac1000_ops = {
-+	.pcs_init = dwmac1000_pcs_init,
- 	.core_init = dwmac1000_core_init,
- 	.set_mac = stmmac_set_mac,
- 	.rx_ipc = dwmac1000_rx_ipc_enable,
-diff --git a/drivers/net/ethernet/stmicro/stmmac/dwmac4_core.c b/drivers/net/ethernet/stmicro/stmmac/dwmac4_core.c
-index d855ab6b9145..0b785389b7ef 100644
---- a/drivers/net/ethernet/stmicro/stmmac/dwmac4_core.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/dwmac4_core.c
-@@ -22,6 +22,14 @@
- #include "dwmac4.h"
- #include "dwmac5.h"
- 
-+static int dwmac4_pcs_init(struct stmmac_priv *priv)
-+{
-+	if (!priv->dma_cap.pcs)
-+		return 0;
-+
-+	return stmmac_integrated_pcs_init(priv, GMAC_PCS_BASE);
-+}
-+
- static void dwmac4_core_init(struct mac_device_info *hw,
- 			     struct net_device *dev)
- {
-@@ -875,6 +883,7 @@ static int dwmac4_config_l4_filter(struct mac_device_info *hw, u32 filter_no,
- }
- 
- const struct stmmac_ops dwmac4_ops = {
-+	.pcs_init = dwmac4_pcs_init,
- 	.core_init = dwmac4_core_init,
- 	.update_caps = dwmac4_update_caps,
- 	.set_mac = stmmac_set_mac,
-@@ -909,6 +918,7 @@ const struct stmmac_ops dwmac4_ops = {
- };
- 
- const struct stmmac_ops dwmac410_ops = {
-+	.pcs_init = dwmac4_pcs_init,
- 	.core_init = dwmac4_core_init,
- 	.update_caps = dwmac4_update_caps,
- 	.set_mac = stmmac_dwmac4_set_mac,
-@@ -945,6 +955,7 @@ const struct stmmac_ops dwmac410_ops = {
- };
- 
- const struct stmmac_ops dwmac510_ops = {
-+	.pcs_init = dwmac4_pcs_init,
- 	.core_init = dwmac4_core_init,
- 	.update_caps = dwmac4_update_caps,
- 	.set_mac = stmmac_dwmac4_set_mac,
-diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac.h b/drivers/net/ethernet/stmicro/stmmac/stmmac.h
-index 7ca5477be390..34f62993a4da 100644
---- a/drivers/net/ethernet/stmicro/stmmac/stmmac.h
-+++ b/drivers/net/ethernet/stmicro/stmmac/stmmac.h
-@@ -25,6 +25,8 @@
- #include <net/xdp.h>
- #include <uapi/linux/bpf.h>
- 
-+struct stmmac_pcs;
-+
- struct stmmac_resources {
- 	void __iomem *addr;
- 	u8 mac[ETH_ALEN];
-@@ -273,6 +275,8 @@ struct stmmac_priv {
- 	unsigned int pause_time;
- 	struct mii_bus *mii;
- 
-+	struct stmmac_pcs *integrated_pcs;
-+
- 	struct phylink_config phylink_config;
- 	struct phylink *phylink;
- 
-diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-index 35cd881b3496..b2c23ace49b6 100644
---- a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-@@ -46,6 +46,7 @@
- #include "stmmac_ptp.h"
- #include "stmmac_fpe.h"
- #include "stmmac.h"
-+#include "stmmac_pcs.h"
- #include "stmmac_xdp.h"
- #include <linux/reset.h>
- #include <linux/of_mdio.h>
-@@ -850,6 +851,13 @@ static struct phylink_pcs *stmmac_mac_select_pcs(struct phylink_config *config,
- 			return pcs;
- 	}
- 
-+	/* The PCS control register is only relevant for SGMII, TBI and RTBI
-+	 * modes. We no longer support TBI or RTBI, so only configure this
-+	 * register when operating in SGMII mode with the integrated PCS.
-+	 */
-+	if (priv->hw->pcs & STMMAC_PCS_SGMII && priv->integrated_pcs)
-+		return &priv->integrated_pcs->pcs;
-+
- 	return NULL;
- }
- 
-@@ -3487,13 +3495,6 @@ static int stmmac_hw_setup(struct net_device *dev)
- 		}
- 	}
- 
--	/* The PCS control register is only relevant for SGMII, TBI and RTBI
--	 * modes. We no longer support TBI or RTBI, so only configure this
--	 * register when operating in SGMII mode with the integrated PCS.
--	 */
--	if (priv->hw->pcs & STMMAC_PCS_SGMII)
--		stmmac_pcs_ctrl_ane(priv, 1, priv->hw->reverse_sgmii_enable);
--
- 	/* set TX and RX rings length */
- 	stmmac_set_rings_length(priv);
- 
-diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_pcs.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_pcs.c
-new file mode 100644
-index 000000000000..50ea51d7a1cc
---- /dev/null
-+++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_pcs.c
-@@ -0,0 +1,47 @@
-+// SPDX-License-Identifier: GPL-2.0-only
-+#include "stmmac.h"
-+#include "stmmac_pcs.h"
-+
-+static void dwmac_integrated_pcs_get_state(struct phylink_pcs *pcs,
-+					   unsigned int neg_mode,
-+					   struct phylink_link_state *state)
-+{
-+	state->link = false;
-+}
-+
-+static int dwmac_integrated_pcs_config(struct phylink_pcs *pcs,
-+				       unsigned int neg_mode,
-+				       phy_interface_t interface,
-+				       const unsigned long *advertising,
-+				       bool permit_pause_to_mac)
-+{
-+	struct stmmac_pcs *spcs = phylink_pcs_to_stmmac_pcs(pcs);
-+
-+	dwmac_ctrl_ane(spcs->base, 0, 1, spcs->priv->hw->reverse_sgmii_enable);
-+
-+	return 0;
-+}
-+
-+static const struct phylink_pcs_ops dwmac_integrated_pcs_ops = {
-+	.pcs_get_state = dwmac_integrated_pcs_get_state,
-+	.pcs_config = dwmac_integrated_pcs_config,
-+};
-+
-+int stmmac_integrated_pcs_init(struct stmmac_priv *priv, unsigned int offset)
-+{
-+	struct stmmac_pcs *spcs;
-+
-+	spcs = devm_kzalloc(priv->device, sizeof(*spcs), GFP_KERNEL);
-+	if (!spcs)
-+		return -ENOMEM;
-+
-+	spcs->priv = priv;
-+	spcs->base = priv->ioaddr + offset;
-+	spcs->pcs.ops = &dwmac_integrated_pcs_ops;
-+
-+	__set_bit(PHY_INTERFACE_MODE_SGMII, spcs->pcs.supported_interfaces);
-+
-+	priv->integrated_pcs = spcs;
-+
-+	return 0;
-+}
-diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_pcs.h b/drivers/net/ethernet/stmicro/stmmac/stmmac_pcs.h
-index 5778f5b2f313..64397ac8ecab 100644
---- a/drivers/net/ethernet/stmicro/stmmac/stmmac_pcs.h
-+++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_pcs.h
-@@ -9,6 +9,7 @@
- #ifndef __STMMAC_PCS_H__
- #define __STMMAC_PCS_H__
- 
-+#include <linux/phylink.h>
- #include <linux/slab.h>
- #include <linux/io.h>
- #include "common.h"
-@@ -46,6 +47,22 @@
- #define GMAC_ANE_RFE_SHIFT	12
- #define GMAC_ANE_ACK		BIT(14)
- 
-+struct stmmac_priv;
-+
-+struct stmmac_pcs {
-+	struct stmmac_priv *priv;
-+	void __iomem *base;
-+	struct phylink_pcs pcs;
-+};
-+
-+static inline struct stmmac_pcs *
-+phylink_pcs_to_stmmac_pcs(struct phylink_pcs *pcs)
-+{
-+	return container_of(pcs, struct stmmac_pcs, pcs);
-+}
-+
-+int stmmac_integrated_pcs_init(struct stmmac_priv *priv, unsigned int offset);
-+
- /**
-  * dwmac_pcs_isr - TBI, RTBI, or SGMII PHY ISR
-  * @ioaddr: IO registers pointer
--- 
-2.47.3
-
+> Signed-off-by: Vignesh Raman <vignesh.raman@collabora.com>
+> ---
+>  drivers/gpu/drm/ci/test.yml | 6 ++++--
+>  1 file changed, 4 insertions(+), 2 deletions(-)
+>
+> diff --git a/drivers/gpu/drm/ci/test.yml b/drivers/gpu/drm/ci/test.yml
+> index 81147e86bfd0..53d19ffaaf61 100644
+> --- a/drivers/gpu/drm/ci/test.yml
+> +++ b/drivers/gpu/drm/ci/test.yml
+> @@ -148,7 +148,9 @@ msm:sc7180-trogdor-kingoftown:
+>      GPU_VERSION: ${DEVICE_TYPE}
+>      RUNNER_TAG: mesa-ci-x86-64-lava-sc7180-trogdor-kingoftown
+>
+> -msm:apq8016:
+> +# FIXME: Disable the bare-metal jobs. These devices are being moved to L=
+AVA.
+> +# Once the move is complete, update the job definitions accordingly.
+> +.msm:apq8016:
+>    extends:
+>      - .baremetal-igt-arm64
+>    stage: msm
+> @@ -165,7 +167,7 @@ msm:apq8016:
+>    script:
+>      - ./install/bare-metal/fastboot.sh || exit $?
+>
+> -msm:apq8096:
+> +.msm:apq8096:
+>    extends:
+>      - .baremetal-igt-arm64
+>    stage: msm
+> --
+> 2.47.2
+>
 
