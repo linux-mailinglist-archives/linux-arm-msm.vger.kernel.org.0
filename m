@@ -1,88 +1,81 @@
-Return-Path: <linux-arm-msm+bounces-77529-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-77530-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id A1D95BE20C0
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Oct 2025 09:56:54 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id E1FACBE2157
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Oct 2025 10:03:55 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id B71FD405E89
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Oct 2025 07:56:50 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 3F2A33A886C
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Oct 2025 08:03:51 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E2BBA2FE056;
-	Thu, 16 Oct 2025 07:56:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 53F262FF145;
+	Thu, 16 Oct 2025 08:03:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="F6bmnbrS"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="gWlGH7Os"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f46.google.com (mail-lf1-f46.google.com [209.85.167.46])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FEAD23AB95
-	for <linux-arm-msm@vger.kernel.org>; Thu, 16 Oct 2025 07:56:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CCFE284B2E
+	for <linux-arm-msm@vger.kernel.org>; Thu, 16 Oct 2025 08:03:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760601404; cv=none; b=oyAsFDkTpX3x3Z54RGUqkc4TN6UHALEK6crk0b2I/bpPezAvjbZHvyYkcP9XpWAcVYjWE/ATUiLHHcfMZDWxTfIUdj68jKsbq/MYXgp3ybuFWt4GV8r8lTSugCn5vIz0Ir8wmaVchWXIRoXQMy1sVdWlcWAkAoSGGhhY6VkXmts=
+	t=1760601828; cv=none; b=Nu5nX+31Lzzvm5Wa61U0MrbFIB+ue6lxdD0NvB7d3SAz+uqosGo6iaTg76oRg2s7Yfn7Iz/LfSM/Sy82mSNJWC9DcXbO+B3fuvFsRmytaqxn6JhCW4e9yVcBOpAehF/+HljNxQqyqLOEW9hXCxZCpM453/ubFnwtkqI2XtNbS8Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760601404; c=relaxed/simple;
-	bh=Jh1z2qwS+DdEu4z545f3xi+xVgiwgZciXQlB+qgqp6E=;
+	s=arc-20240116; t=1760601828; c=relaxed/simple;
+	bh=Upf+vZPf5FtAc5nFbo/GsuIEVrSiRNpKkQuMnHoDkKY=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=QsYIdpMP/i5pXwghILk6vI1TgDM/MrukONBNDT6swmQcvkDT879M9hw0NlwyTu+inVCITU/M/chnsfU/8Kx4+nEDm6VbmmfBlEmGMDh/O2AvU+MZyhmnUIukPWRprUT+xKGthfDM4NYOX3LKERfjP6opMk3Td3AYnNufFGPfd+0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=F6bmnbrS; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 59G2OZt8023535
-	for <linux-arm-msm@vger.kernel.org>; Thu, 16 Oct 2025 07:56:41 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	u4HgNC7aJrqDGVyNBmRY6dlyNS/Fi4BfzYUKhOJfqN0=; b=F6bmnbrSrzGPZ0Tf
-	Dp1aRK2t/IlRZOCD9IFw7m5t1ia7V3sdnJpne5pfBMgyHE1e+SwRZEpPntd+OZA4
-	1QDGc7OtFosRWbe5dV1ZKMQZdt00Ix0+qTQKl1aitCb5RmM4n3MDfbcI9rF/sKTk
-	QwFhT+64/cjG4HPcJtkJelCWeX+sgUtsYVKbF4SID29AAeJ+YjDJTsDS4KYZKj/G
-	m4kKjpVLCEUI2E1JNtzXPnh35eR4J+RxsrzcYqd7ofopnMt6NemwhzESrUVshhQI
-	9klBz0BKLsSqE1Dp5jIkbZ7TcmS4jkLYWIxPggoMUW+MKDJZEglkwIHdXGfxPL//
-	itzVlA==
-Received: from mail-qv1-f70.google.com (mail-qv1-f70.google.com [209.85.219.70])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 49tqvpgu06-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Thu, 16 Oct 2025 07:56:41 +0000 (GMT)
-Received: by mail-qv1-f70.google.com with SMTP id 6a1803df08f44-850553dfef2so1919426d6.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 16 Oct 2025 00:56:41 -0700 (PDT)
+	 In-Reply-To:Content-Type; b=ChEHVvqUwlTYySByL73yTwBzQKr/FFSeSTryoJdkR3iNzba/voDAChC6l3ZeITlIiWvEx38dId/s4oLPwXRULajvz4/Y+nKkRgdPWuQl/GWcXuS2yNvvGcsheAqxHB8B2awZ609aGrAt6Z54ovHPqP0m8f8+CBd2DWIVa3tJleU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=gWlGH7Os; arc=none smtp.client-ip=209.85.167.46
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lf1-f46.google.com with SMTP id 2adb3069b0e04-5903e6fc386so74894e87.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 16 Oct 2025 01:03:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1760601824; x=1761206624; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to:subject
+         :user-agent:mime-version:date:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=SI3iJaG6AehsZaDVHen+J6EpKqRu7s9HPBybFYzEdgw=;
+        b=gWlGH7Os+/ZnhKC7HSZP/PbQmY20AL8hDGE96MbwYi57o/couwbx84q3/gZyYBA4dJ
+         optOTlN5VLfwO+ZaAjT7MX8446a/jfp0CBtJO0LTADsCzz7PvIS3bitSYM6vAviYn8OX
+         SfxXF0zzCqCLrbD3/ARobYWmVM0NU02IqvP2bb87vWi4soAfHwHhHu9c/5ifAkhgnuXg
+         WJI0miFxLcfCFGkMKPQFIJWWIbgluWUPyS34r/wStU7eyf4fvT4Sd4zOg7rSxAiHp7Ah
+         ZZq6EYUUocgvij1x3Vq3SX9KOnTzFSOEfU6Vm3Q1lEEhcqCHaosbJSoJoXM8oy16AYsg
+         mbhg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1760601401; x=1761206201;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=u4HgNC7aJrqDGVyNBmRY6dlyNS/Fi4BfzYUKhOJfqN0=;
-        b=funFs1dgQ2mwj15ZmMkaE0DFVPv/lE9Fgtli7/BmGrLntctegSV+aiPXptJDHryb6Q
-         U+ZPdusv2/N8bYMVB4NXyjihih/PFyBItMDGjXusREJ/Q/jwDEDTjo2jjLDRDZQp7fGJ
-         3EwEL0l0Ov5PueAf5WiwoOzyY3bro1+SJCOQdicXpzQI/alHwRNpN9VdbnzWK8Yds9yZ
-         gYSWZcfXWAf22izuaWfN58clqnLjdFzxkFEJSXm9ThxgkDcYycXKUE6617uZWbMXynJt
-         uKSZTODxm3xJrAUvcQ+h+Ir5kci2pA9l1g32F2Drl0uVhOt16C6vHwm3iWtA1wAzfqAn
-         MMbw==
-X-Forwarded-Encrypted: i=1; AJvYcCUZQVmvKKWFbggQFpMtcs80L7D1LdgojnjRM5iDxroXGqTpjZHYguzIYTXpr67xclyvEEKy9/qIzuNY/0jy@vger.kernel.org
-X-Gm-Message-State: AOJu0YzDTNgtdfsk0e0tQggi1edCb3sz5h5R5Hb+h8hNa0gRhqto/Ot1
-	/6JWhLqPJcUcOG1kPKxJmA2U/z484xK09h443o1QTsX+1/geMOjyPgmowvuZQwISOTLyW9/Djbz
-	g1Hkpu7mug6uSzAtgulxU79fzbn3aiSycTTcwlH+cNOG1YZaFA8RJ2Ae6TXWxOGWXSFTT
-X-Gm-Gg: ASbGnctm1ODO3Z94+OXBR3qqtbBEHo4jUtSsrUaBLAW+YM69+/S42u3VCRNiEzyR6cK
-	afiRpEXoe+fyzjDzPFmfJPhC4UQMpd26XyRezXLhetmluQYSgb5kLmY5LvyyxZhYAIfvjetowtV
-	JogFQWNoZkfz2ajHayRwyawttuMAPAO1rQxbFK2Tydz2OD+eOpEKa8THydv5pC3KuJAXAD9f729
-	l8STMGNPOpsYdwSuhKX+5JljWnCpLEmKRhumaY+phxmSenoYzhuVJy35XkFltClrQHbYiFZJ4U9
-	dg8Vp8EgP/6oL/Jp4rqm8hREjSBwSQzoKqlC1HUrMtx1srYGV0K6Z3fmEifBEKKuMI3ZGv4G5YJ
-	a/DiB5cbxwcQ1/nYGJpzmCryhduzZwYSZ1g8fVS6646kC/bqbTAJOcLVn
-X-Received: by 2002:ac8:5f14:0:b0:4ce:8b2e:feaa with SMTP id d75a77b69052e-4e6eacc8772mr273177361cf.6.1760601400658;
-        Thu, 16 Oct 2025 00:56:40 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEVX7ZQEtzFyJmnhIE9yt6cHr2wIqLsibKBKtjRREvjjvyyBcO5SEJwCNH5bR44oCWeIBhpyQ==
-X-Received: by 2002:ac8:5f14:0:b0:4ce:8b2e:feaa with SMTP id d75a77b69052e-4e6eacc8772mr273177161cf.6.1760601400213;
-        Thu, 16 Oct 2025 00:56:40 -0700 (PDT)
-Received: from [192.168.119.202] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
-        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-63be969163csm4142038a12.13.2025.10.16.00.56.37
+        d=1e100.net; s=20230601; t=1760601824; x=1761206624;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to:subject
+         :user-agent:mime-version:date:message-id:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=SI3iJaG6AehsZaDVHen+J6EpKqRu7s9HPBybFYzEdgw=;
+        b=szvAvkN/yNxJFEKFLmflNVVHvICiP+IHMP2a0c27i4lk/wkvUlvwu4uD7u4Zk5pJ1/
+         sUkQYaIJkPVOLHltW1D/6njFP31I/GarC6J9uqRTiZo5sorS0MPOuXnKu1iDtF+6kOdl
+         Sog510rEVtSumpw0a0cmrJVd38CaFQpNPcREY1L81N7o9zRjb2DX2jyE2zH4PaltX3Uq
+         SHJpYaefKTFaBk458Q3MDjgq5LRVt24cDOU6IAU313i22/nArbILbT2NgR10A9k6cZKF
+         YAQ6+ai1oRVmJSkwfjy81Oebz7NXySWaS9rvJv+dvgFImww9iHDr8F1KzYEyr+zTSTry
+         iAKw==
+X-Forwarded-Encrypted: i=1; AJvYcCVoM4qMPyIUaDFa8DqCJvoJXnVA9kZG1qDpoi7Xg+kuETtxDFxfpDD7pWEOZKvRTG+cYxYuyCBMTXKyW7Un@vger.kernel.org
+X-Gm-Message-State: AOJu0YwANhHQqdKxbvbXPsY6VQh+tTRinAhMXf78Xq//Ug3zt9IKrzH4
+	kKusp5nNNjssxJmhJgbhxnhNE+g8SXr9RKn4OmMpS7+NFudh+RVDAh1BS7fHvU6bSqM=
+X-Gm-Gg: ASbGncugcWOvPbwllpD9Ktuc2Gn/Dg40K+IshfzHAKEHwJ0xWel9+uxY241iPeHMdit
+	4Zn0PNC5+REO4CRnuQ3cJgqBG2WPHQzAlvmqv/sDuMDCPyjhvTcb7+cHiD6Uxu6or1vHXuR2Sic
+	pUcRxnT+ziqiD+M22bNuPgnmgDPUBKxyLdJBcNo1JZuIM4eMXirQ6uVroWpg58gED+UKdI9h4Kd
+	U734xhdaXj0nal9SY75okIpyHtYodhVo6h08HKxXGYNpHSLmSFJdoUf5BfE0w6lwVGyoFFgiEhj
+	udvo2hMAMQcIBdcwKu1eqwvbSm+Kg4Nr7Hw514B+3ZLqXT3hVHMMNboRISYppqTf+GujMsqvnkO
+	bMnBu1Xflk+NT6oBkdcgsCIhsO8vCKjBobIGYO4fjSO5eiBljwAKZzzMVSIe57fQwT6cliIbiHF
+	LZ2f4xEDqaeCEckoTzLnkOaCmD4IhL1OLWg+KhUDQY/uVCNHIp999+DlTdrUN/QadqGP+alw==
+X-Google-Smtp-Source: AGHT+IHcAxdLhGzdW1NI2UBF0IVQHMl6HFpUd/jJYBtOzICKf88GKwgE5spfrmYtn/8eULnHs4lGZg==
+X-Received: by 2002:a05:6512:3dac:b0:57a:8ae1:6a8e with SMTP id 2adb3069b0e04-5906d8ec20bmr5447249e87.6.1760601824219;
+        Thu, 16 Oct 2025 01:03:44 -0700 (PDT)
+Received: from [192.168.1.100] (91-159-24-186.elisa-laajakaista.fi. [91.159.24.186])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-590881f88ddsm6922497e87.31.2025.10.16.01.03.43
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 16 Oct 2025 00:56:39 -0700 (PDT)
-Message-ID: <abc9d825-1e98-4838-9e9c-ca18ba191e11@oss.qualcomm.com>
-Date: Thu, 16 Oct 2025 09:56:36 +0200
+        Thu, 16 Oct 2025 01:03:43 -0700 (PDT)
+Message-ID: <3202275a-25ec-435a-93ff-80a7ff8a8153@linaro.org>
+Date: Thu, 16 Oct 2025 11:03:42 +0300
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -90,113 +83,113 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/6] dt-bindings: i2c: qcom-cci: Document Kaanapali
- compatible
-To: Hangxiang Ma <hangxiang.ma@oss.qualcomm.com>,
-        Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
-        Loic Poulain <loic.poulain@oss.qualcomm.com>,
-        Robert Foss
+Subject: Re: [PATCH v2 2/6] dt-bindings: media: camss: Add
+ qcom,kaanapali-camss binding
+To: Vijay Kumar Tumati <vijay.tumati@oss.qualcomm.com>,
+ Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+ Hangxiang Ma <hangxiang.ma@oss.qualcomm.com>,
+ Loic Poulain <loic.poulain@oss.qualcomm.com>, Robert Foss
  <rfoss@kernel.org>, Andi Shyti <andi.shyti@kernel.org>,
-        Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>, Todor Tomov <todor.too@gmail.com>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
-        Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+ Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
+ Conor Dooley <conor+dt@kernel.org>, Todor Tomov <todor.too@gmail.com>,
+ Mauro Carvalho Chehab <mchehab@kernel.org>
 Cc: linux-i2c@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-media@vger.kernel.org, aiqun.yu@oss.qualcomm.com,
-        tingwei.zhang@oss.qualcomm.com, trilok.soni@oss.qualcomm.com,
-        yijie.yang@oss.qualcomm.com,
-        Jingyi Wang <jingyi.wang@oss.qualcomm.com>,
-        Atiya Kailany <atiya.kailany@oss.qualcomm.com>
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+ linux-media@vger.kernel.org, aiqun.yu@oss.qualcomm.com,
+ tingwei.zhang@oss.qualcomm.com, trilok.soni@oss.qualcomm.com,
+ yijie.yang@oss.qualcomm.com, Jingyi Wang <jingyi.wang@oss.qualcomm.com>,
+ Atiya Kailany <atiya.kailany@oss.qualcomm.com>
 References: <20251014-add-support-for-camss-on-kaanapali-v2-0-f5745ba2dff9@oss.qualcomm.com>
- <20251014-add-support-for-camss-on-kaanapali-v2-1-f5745ba2dff9@oss.qualcomm.com>
- <e2c43a8c-a9cc-46a1-9ddd-5d6dfc7e917b@linaro.org>
- <49eaf7ec-ac71-4bf3-9a4e-25fa633d815e@oss.qualcomm.com>
-Content-Language: en-US
-From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-In-Reply-To: <49eaf7ec-ac71-4bf3-9a4e-25fa633d815e@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8
+ <20251014-add-support-for-camss-on-kaanapali-v2-2-f5745ba2dff9@oss.qualcomm.com>
+ <dce1018c-6165-407c-8f3d-40859cb36b11@linaro.org>
+ <0b6c157a-3d8d-4251-a704-31f8369f6a4e@linaro.org>
+ <a0d9389b-67a5-458a-858b-ffdd95f7ccc6@linaro.org>
+ <62a3f09b-50d6-4ace-8229-d71585378ae1@oss.qualcomm.com>
+From: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+In-Reply-To: <62a3f09b-50d6-4ace-8229-d71585378ae1@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Authority-Analysis: v=2.4 cv=aPD9aL9m c=1 sm=1 tr=0 ts=68f0a539 cx=c_pps
- a=oc9J++0uMp73DTRD5QyR2A==:117 a=FpWmc02/iXfjRdCD7H54yg==:17
- a=IkcTkHD0fZMA:10 a=x6icFKpwvdMA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=EUspDBNiAAAA:8 a=UKwaH1GiQmKLMY0bYhoA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=iYH6xdkBrDN1Jqds4HTS:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDE2MDAxNyBTYWx0ZWRfX2fuEJpgKtkYb
- nJFxyfKXTOwbL98HAsWIM0BjaG/HVApIt5kQi3IjlDi/VlmWebTkcoMLpEwTedZxgk5gLEDAiU7
- gXDzTemqCGqyWfkEqTGP+4PF07xhN2AwcLV+WD6O3tBK4I4ic1PJ0hf5/3VflxYCsaNID2Zkh91
- wZIPdWgqDi0PZ7Icv/4OrU38UM6UhAyVyVNCMgq7ZY/ay28VcW72gR7S/ebHxAdRg1GS4OiWKUp
- e9vNUp8IUPmOuKkRKhbRTf67jxMSJbHdy1qNQlWzGzaFtCG8tbWn8s5w8YlH+4moIAnDtuniHw3
- wDXX45BTogjUWWYsj38MMEEIJm62VdLPKvLGN32EU+rNaqYmbfeS49DDJJi6Nz0ltun7u+1ofbn
- ruPq1GWGUon6iGno7Y+H7VWDS5m0RQ==
-X-Proofpoint-ORIG-GUID: moyhInydqtP43UfNix4kU_1-fcRWx4bh
-X-Proofpoint-GUID: moyhInydqtP43UfNix4kU_1-fcRWx4bh
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-10-16_01,2025-10-13_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 adultscore=0 impostorscore=0 lowpriorityscore=0 clxscore=1015
- bulkscore=0 suspectscore=0 malwarescore=0 phishscore=0 priorityscore=1501
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2510020000 definitions=main-2510160017
 
-On 10/16/25 3:56 AM, Hangxiang Ma wrote:
-> On 10/16/2025 3:30 AM, Vladimir Zapolskiy wrote:
+On 10/16/25 06:46, Vijay Kumar Tumati wrote:
 > 
->> On 10/15/25 05:56, Hangxiang Ma wrote:
->>> Add Kaanapali compatible consistent with CAMSS CCI interfaces. The list
->>> of clocks for Kaanapali requires its own compat string 'cam_top_ahb',
->>> aggregated into 'qcom,qcm2290-cci' node.
+> On 10/15/2025 4:32 PM, Vladimir Zapolskiy wrote:
+>> On 10/16/25 00:43, Bryan O'Donoghue wrote:
+>>> On 15/10/2025 20:45, Vladimir Zapolskiy wrote:
+>>>>> +  power-domains:
+>>>>> +    items:
+>>>>> +      - description:
+>>>>> +          TFE0 GDSC - Thin Front End, Global Distributed Switch
+>>>>> Controller.
+>>>>> +      - description:
+>>>>> +          TFE1 GDSC - Thin Front End, Global Distributed Switch
+>>>>> Controller.
+>>>>> +      - description:
+>>>>> +          TFE2 GDSC - Thin Front End, Global Distributed Switch
+>>>>> Controller.
+>>>>> +      - description:
+>>>>> +          Titan GDSC - Titan ISP Block Global Distributed Switch
+>>>>> Controller.
+>>>>> +
+>>>>> +  power-domain-names:
+>>>>> +    items:
+>>>>> +      - const: tfe0
+>>>>> +      - const: tfe1
+>>>>> +      - const: tfe2
+>>>>
+>>>> Please remove all 'tfeX' power domains, they are not going to be
+>>>> utilized
+>>>> any time soon.
+>>>>
+>>>> When 'power-domains' list is just a single Titan GDSC,
+>>>> 'power-domain-names'
+>>>> property is not needed.
 >>>
->>> Signed-off-by: Hangxiang Ma <hangxiang.ma@oss.qualcomm.com>
->>> ---
->>>   Documentation/devicetree/bindings/i2c/qcom,i2c-cci.yaml | 6 +++++-
->>>   1 file changed, 5 insertions(+), 1 deletion(-)
+>>> Each one of these TFEs powers an individually power-collapsible TFEs.
 >>>
->>> diff --git a/Documentation/devicetree/bindings/i2c/qcom,i2c-cci.yaml b/Documentation/devicetree/bindings/i2c/qcom,i2c-cci.yaml
->>> index 9bc99d736343..0140c423f6f4 100644
->>> --- a/Documentation/devicetree/bindings/i2c/qcom,i2c-cci.yaml
->>> +++ b/Documentation/devicetree/bindings/i2c/qcom,i2c-cci.yaml
->>> @@ -25,6 +25,7 @@ properties:
->>>         - items:
->>>             - enum:
->>> +              - qcom,kaanapali-cci
->>>                 - qcom,qcm2290-cci
->>>                 - qcom,sa8775p-cci
->>>                 - qcom,sc7280-cci
->>> @@ -128,6 +129,7 @@ allOf:
->>>           compatible:
->>>             contains:
->>>               enum:
->>> +              - qcom,kaanapali-cci
->>>                 - qcom,qcm2290-cci
->>>       then:
->>>         properties:
->>> @@ -136,7 +138,9 @@ allOf:
->>>             maxItems: 2
->>>           clock-names:
->>>             items:
->>> -            - const: ahb
->>> +            - enum:
->>> +                - ahb
->>> +                - cam_top_ahb
+>>> This is also so with the other xFE power-domains on previous SoC
+>>> generations.
 >>
->> Why is not to give the clock "ahb" name like on QCM2290?
+>> This is false, for instance there is no management of SFEx power domains
+>> in SM8550 or X1E80100 CAMSS in the upstrem, neither there is no
+>> management
+>> of SBI, IPE, BPS, CPP and so on GDSC power domans given by CAMCCs.
 >>
->> On QCM2290 the macro in front of the vlaue is GCC_CAMSS_TOP_AHB_CLK,
->> and name "ahb" is good for both, I believe.
+>> TFEx is no more special, if it's unused, then it should not be added.
+> I agree with Bryan, if I understood the original comment correctly. This
+> is no different to the IFE0/1/2 GDSCs on SM8550. All the other modules
+> listed above (SFE, IPE, BPS etc.) are not supported by the CAMSS driver
+> and hence there is no management. However, we need to manage the TOP and
+> TFE0/1/2 GDSCs for the real time RDI paths.
+
+Agreed, at first glance I didn't find the management of the TFE power domains
+in the driver's change 3/6 from this series, however now I see it was added
+along with the 6/6 change.
+
+This my comment is answered, thank you.
+
 >>
->>>               - const: cci
->>>     - if:
 >>>
+>>> You'll need the TFEx power-domain to process any data on TFEx with the
+>>> 'lite' versions being tied to the TOP GDSC.
 >>
+>> When it is needed, the documentation will be updated accordingly,
+>> right now
+>> it is unknown what a data processing on TFEx looks like, it might happen
+>> that there will be separate device tree nodes for TFEx.
+>>
+>> TFEx power domains shall be removed right now, unti; a usecase in the
+>> upstream
+>> CAMSS appears to use them, I haven't seen such code at the moment.
+>>
+> We attach these power power domains by name in the corresponding driver.
+> For instance, the VFE driver attaches the TFE power domains mentioned
+> here and are exercised from vfe_set_power() -> vfe_get()
+> ->vfe_pm_domain_on(). You can also see the related codes with '.has_pd'
+> and '.pd_name' properties in the CAMSS subdev resource structures. Hope
+> this clarifies.
 > 
-> On Kaanapali the macro has been changed to CAM_CC_CAM_TOP_AHB_CLK. GCC clock domain doesn't manage the AHB clock but CAMCC does. I think it's better to create a new and more complete clock name to denote the differences between them.
 
-Are there any other "AHB" clocks going to this block?
-
-If not, then this is more confusing instead
-
-Konrad
+-- 
+Best wishes,
+Vladimir
 
