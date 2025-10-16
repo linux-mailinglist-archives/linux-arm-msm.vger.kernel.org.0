@@ -1,81 +1,81 @@
-Return-Path: <linux-arm-msm+bounces-77534-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-77535-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id B3414BE23BB
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Oct 2025 10:54:53 +0200 (CEST)
+Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [IPv6:2605:f480:58:1:0:1994:3:14])
+	by mail.lfdr.de (Postfix) with ESMTPS id 06AE4BE23CA
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Oct 2025 10:55:49 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 0795319A6701
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Oct 2025 08:55:17 +0000 (UTC)
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 4145A4EFE07
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Oct 2025 08:55:47 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 42BC52E612D;
-	Thu, 16 Oct 2025 08:54:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8291430CD92;
+	Thu, 16 Oct 2025 08:55:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="U1QxQ0f9"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="J7jC1FQs"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pg1-f169.google.com (mail-pg1-f169.google.com [209.85.215.169])
+Received: from mail-wr1-f51.google.com (mail-wr1-f51.google.com [209.85.221.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C54B2DF6E6
-	for <linux-arm-msm@vger.kernel.org>; Thu, 16 Oct 2025 08:54:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0E8630C60C
+	for <linux-arm-msm@vger.kernel.org>; Thu, 16 Oct 2025 08:55:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760604890; cv=none; b=pdi+/9mC6+E0XycJfFQ5ynLLBWWiiXVCUqL0jTUWQcihSNJFxJYIzr38RU3IGWvLpUVmh6Wra83TelSzlnOmhE4nRNUa0zHxEg/c3FSIkudfKzZ6mIlWHrmgUiPCACXUSNK1hHUqg2oEG1XC6BnRYXUyojQLu7MqwoXdgRtJTk8=
+	t=1760604939; cv=none; b=UX02VolApno/hyb1cb3/+Voiidu9VoWl6j20HnlvYuTu6LfgcFVfD5xzotX45afVK53glaRtCS7Io/E0VFxyMkn93DMjKw/nIae6IHqHPynFM/ZGZVh7Eizh1JZ4Po57ii9hCAGog8XrXx8pGwYDNx+Pdt1sJdr0shrDAGA6lyY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760604890; c=relaxed/simple;
-	bh=2rafzbMdaFeNafw0cDwUzS/gvaRAPFh8RUG59mmAZ9k=;
+	s=arc-20240116; t=1760604939; c=relaxed/simple;
+	bh=VnQz3tD5fL1+HIoA2SNYDkA9Yt4wrKPvx5cxJ2QaVMc=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Et/cyRGCDP0dSmTVY82C8n2wI0hq8chn6DR5IWQ3FVr5boaIRdDOXYZnW/mDCNFCYyqC9/yJ5BmIJu12Kz5LT2FVAdd09hIRoMVWbJYoNSEA0zhPfJvdCNDML3EXmuJtY8bk7aBfnE4f1+NqLuGr9HQXdt7dRN6iNlTjVby/SIw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=U1QxQ0f9; arc=none smtp.client-ip=209.85.215.169
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-pg1-f169.google.com with SMTP id 41be03b00d2f7-b58445361e8so1459427a12.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 16 Oct 2025 01:54:47 -0700 (PDT)
+	 In-Reply-To:Content-Type; b=nx2NtKlzaKgFIDq/CE7ZICHT5xe9tMcUBj/gIPoRliSvzlFw8cX8n5Vsr6uowQJnXBLIWP4p/PTW5C74znde6XoFVe2bHt9kDgAQ7T6lqMTVRbDO2qdfZbGEG8IsXvNysTRLNdBSxdzSy1bncDZuDC3cGOkPeDNBCKhtnMZhFH4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=J7jC1FQs; arc=none smtp.client-ip=209.85.221.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wr1-f51.google.com with SMTP id ffacd0b85a97d-3ed20bdfdffso491533f8f.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 16 Oct 2025 01:55:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1760604887; x=1761209687; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
+        d=linaro.org; s=google; t=1760604936; x=1761209736; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:from
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=4MgLhWrjcTr2cAQ96NvgwB/k2TVFLBgEuk088GaLCgY=;
-        b=U1QxQ0f9SMhcZLFc+jR1xLB7zZbSxZR4OwlrqaB5TJU7As0P5O3rasRdvPT3jos4C/
-         0ZnHx0N68ma6orHXjpGfibuvq8OXoSqaZC+dtJNFwqbAgXExR54BBAKYHQjrmxRx3mrc
-         QSRGTNYbVPzqaX4g7mFG7kM9mMaP/RQxRoFtbhVRvDQ8llIUrOJjOciwUWz23OZVYTp1
-         7ebzLq33w9EWpTWivd/IKXTxyiW9b3umx3Hr7gx1ycQdNv/nKGTY+usV3vodcpxwmGpn
-         maq3MZIFjd1BMp/f8JCTaDQ6VcaMA7wCcXbVvjbA8JY8kQ3f+sGYlNLyUcR3lbQp54tk
-         QPTA==
+        bh=LsrVJFlpunpde7Grn4QhbslhAz4SkbZMhPQmJfh5ifo=;
+        b=J7jC1FQsia1Ozl10hqIc4820I8fK2dmnbTgS+4izjsjoPjwS5UO3BL9sjUqxqk95dp
+         aZVcLB9coP7RrbCVwk54KNwcIfy2cN6qp2i7VYPPIl4rPWMy/whg1PPNxHkR3gNcvLfj
+         5JHylF32mCMprnaAODuDTxI78uuHmmDI1g+3UI3Iyq2ObVGPRqkpMpqdf9s9Tsi4NfjK
+         wyI4bMYfEufYtV7ors4pkCCG7niU/PigtohpPCG5Z7E+z5aUIds4PDgYS7EJkXPXT12k
+         156b5v4PjEO+cbrVC9ONZFlO+YhNyn4MyfW1LK0Q+jK1M4T3VmxXEuoufcsZ4mGBgsV7
+         WEPg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1760604887; x=1761209687;
-        h=content-transfer-encoding:in-reply-to:from:content-language
+        d=1e100.net; s=20230601; t=1760604936; x=1761209736;
+        h=content-transfer-encoding:in-reply-to:content-language:from
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=4MgLhWrjcTr2cAQ96NvgwB/k2TVFLBgEuk088GaLCgY=;
-        b=rIUVxy1088wCWgrWK/c1gTj8F56Ww78uE4JpxqWAnPE19P9ZpKrMrHeXOtwotDk1xc
-         b3aKy2SzvpmcGDvlhXL3M1ksgUKGdqtAaxMu9Zi8PqkwWjYBmHamTjqAVuVJldvBWV//
-         w1cNj2FvefE5SErNyGaY5a/GB0/GZRSKGlHALCtkgG83HJUKVvMgCOB3YCWHFutgq1rL
-         2v+Pm6z8tf+qZWotArTkaKU4WJHSOVXQvQOS801d+/rXi6vf4ISipshO2iPlOUjSHw5c
-         DrXnvDtN1Z/BxSSahg95PU+aaJOkUO0h4n/A5XijA2veAItC79M2mdu7BPRE4a8vbuWv
-         Fhbg==
-X-Forwarded-Encrypted: i=1; AJvYcCXjerh8i3wwyLfBAp43Bn3WEd/NCdTipz+6o41/7LEUnWUU4S7FPRDgSdZkkzNexxeOdNZdXaPBB73SKhPJ@vger.kernel.org
-X-Gm-Message-State: AOJu0Yx7u11Tm1Fk6Zcykae5koBYl8TGE4FqY9CgiQGCNALtgdPuptza
-	HZaTiKolZy52WsCyqPbynwtpkGFW7J1wCi8+4Pv21Lxa5RF/Hxw49eTJ
-X-Gm-Gg: ASbGnctbRhZJD80t9yPI8wVLlqUBd+IDplt12dsRISdMQ/83DS2rnntjedu2yvqpeFk
-	+pvwA7cGRPzAmyzkNOwg/zefxCqCQ0g7wKU9pSfhvt0uKsYzqFdJr3UdhtHvDOk551izVjKK0xi
-	UsL6Mew5Uk1hbZcM8mxg/3W9vP+nnYY8XgsGFfwOTHbPm6zRaBcBTs60ojFgrEox6/MX/4ZgRzd
-	USvW4wxp3h3EjypKRnHxLRYgFrnNVd6FL0ztbo7/8QMeqNf0Zycr88aPpxwIlhcMsszbncysQPd
-	Ry8MVNBDEJWVppMy/EDO/tBZ07pwzZDgvPzpVHOpSS4/weI/lBySyjxfIx5FS4fpJVst09/Dz34
-	FH05u1YAzwEra5Uap7I6sxKqyyQi6RLBNvJl5HEhNFKyovks1DvHp6GJGu0UkdFgW9qfWYmwRjI
-	PmjarxYz+ZUmT+
-X-Google-Smtp-Source: AGHT+IGxQpJfY65arfEGOquKzS1b9C8R+GcQ0oDHqQfexd6OPIIVXxr+NOuDLtw1djCFkYpeS7J+QQ==
-X-Received: by 2002:a17:902:d4c2:b0:274:506d:7fcc with SMTP id d9443c01a7336-290918cbc9bmr44520025ad.6.1760604886790;
-        Thu, 16 Oct 2025 01:54:46 -0700 (PDT)
-Received: from [172.17.49.162] ([103.218.174.2])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-33bb66a22a6sm1043470a91.15.2025.10.16.01.54.42
+        bh=LsrVJFlpunpde7Grn4QhbslhAz4SkbZMhPQmJfh5ifo=;
+        b=Wmyw5TSfEwHADRa/g5Og1G7K6MGkrkHEGzcbbRc9cF0trh0znw3TF6kdPwAK2ACUxe
+         koPwnFw5DvvfTlRaeb2CEBuvoGFSV9ebDgsDBE5AyZO6VEYUOW0dS4sIQO9sMGStYvp5
+         kXJXGSwYsvnrTKl8jFDRYh1wevW0ebkT0rTFUGLKA7yi6TT/BaFBXLDxx4OMoou61u6B
+         MWWfOTAiRR1mdecayr27HdluSYVDpVx/Dm0GA7cN/3gRTMomPOwRUTeO/tNfk6bVCBZm
+         0zJLvwQmnELTT5PUAtW30Ek3zd+jq98/Vs7SdF3KD+eOaJ37J6/3B0JBIRI4theEMNsY
+         59Xg==
+X-Forwarded-Encrypted: i=1; AJvYcCXGaCBfNNC4oEIbO9UoPyupi+Nq0l5NkRG3EGJsNrsBE1B1h1cSoY5pfxQKOuplbTDfl9K8x4oR8pC+OFnX@vger.kernel.org
+X-Gm-Message-State: AOJu0YxuVn6kfa2+tbLunNxGXhZRalGq7WD4isqMBwxUyCz4hhDIdo/H
+	dYIlQP0GPIoYKvRZ9NhCmaXpJ5iNeBOeQLCG+kjn1i17qlCxRp65l7CMycM58tpDDt4=
+X-Gm-Gg: ASbGncuwE0NuQyBBPRS2c8cJTJY7fc1HZRbRUWNelWZJ+1XyqhuTZ78NdlWTzJYiJ64
+	gI/PTsyj76ymNxl7lt65Y2bxBomPtJ4/0g5udmBD70Gg1HnhmYykwo/EGrMgXYtJOkbXFk6EXSz
+	dHlJc6vJp329enX4xw2yu8Zu4gwnbRlvN3qBQV1Ln2h14ctthhqOJxxSmgXfGlOsYtbvnxT8+2x
+	Uhbhh28A+/pKYKmG1QCQ003Yq2P2Y6Bdo/Nwioz038vOphsBqpOgMVCl1mzbSKmKc3xbhwp0P23
+	hQ9J+V2kR6SmCMBMN8Lm52cDgVie8UepZu6uv7+ppNBuJRgbD8HmkWtCRITM0Qr0IvnEVHkFPcx
+	cATNSPSLvh2yKXCYDWCGWu0C9rViq3mAaFIWpaIPB+m+DBVqD6+V3ePT6X9A61JqrT1xw5iMRG6
+	coJy6tX8M0f/igHUBtNR3v+2hBfBdTotoltWbB4ccVAEwWa0QRPda6sYpN
+X-Google-Smtp-Source: AGHT+IHAmY3cKpb9sKauDzAPuMRSBw4scaCwVsJY6UgUsWKiz8av6DfzkDhrWM75GsjBU5op+ncafw==
+X-Received: by 2002:a05:6000:2207:b0:426:d5ab:789 with SMTP id ffacd0b85a97d-426d5ab07a9mr13486191f8f.53.1760604935890;
+        Thu, 16 Oct 2025 01:55:35 -0700 (PDT)
+Received: from [192.168.0.19] (188-141-3-146.dynamic.upc.ie. [188.141.3.146])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-426ce5e8141sm32874494f8f.48.2025.10.16.01.55.34
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 16 Oct 2025 01:54:46 -0700 (PDT)
-Message-ID: <b3390184-a3ef-49f6-8b68-dbf94564ab43@gmail.com>
-Date: Thu, 16 Oct 2025 14:24:40 +0530
+        Thu, 16 Oct 2025 01:55:35 -0700 (PDT)
+Message-ID: <0fe25ca8-8dd4-42c7-a818-a803a256f42f@linaro.org>
+Date: Thu, 16 Oct 2025 09:55:34 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -83,188 +83,42 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1] arm64: dts: qcom: talos-evk: Add ADV7535 DSI-to-HDMI
- bridge
-To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Cc: andersson@kernel.org, konradybcio@kernel.org, robh@kernel.org,
- krzk+dt@kernel.org, conor+dt@kernel.org, linux-arm-msm@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20251015122808.1986627-1-tessolveupstream@gmail.com>
- <53ef53b423uespn7xspqfxnnvqvhzb5b22a4oaimf6g2qy7ruo@273oegazxbaz>
+Subject: Re: [PATCH v2 3/6] media: qcom: camss: Add Kaanapali compatible camss
+ driver
+To: Hangxiang Ma <hangxiang.ma@oss.qualcomm.com>,
+ Loic Poulain <loic.poulain@oss.qualcomm.com>, Robert Foss
+ <rfoss@kernel.org>, Andi Shyti <andi.shyti@kernel.org>,
+ Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
+ Conor Dooley <conor+dt@kernel.org>, Todor Tomov <todor.too@gmail.com>,
+ Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
+ Mauro Carvalho Chehab <mchehab@kernel.org>
+Cc: linux-i2c@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+ linux-media@vger.kernel.org, aiqun.yu@oss.qualcomm.com,
+ tingwei.zhang@oss.qualcomm.com, trilok.soni@oss.qualcomm.com,
+ yijie.yang@oss.qualcomm.com, Jingyi Wang <jingyi.wang@oss.qualcomm.com>,
+ Atiya Kailany <atiya.kailany@oss.qualcomm.com>
+References: <20251014-add-support-for-camss-on-kaanapali-v2-0-f5745ba2dff9@oss.qualcomm.com>
+ <20251014-add-support-for-camss-on-kaanapali-v2-3-f5745ba2dff9@oss.qualcomm.com>
+From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 Content-Language: en-US
-From: Tessolve Upstream <tessolveupstream@gmail.com>
-In-Reply-To: <53ef53b423uespn7xspqfxnnvqvhzb5b22a4oaimf6g2qy7ruo@273oegazxbaz>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+In-Reply-To: <20251014-add-support-for-camss-on-kaanapali-v2-3-f5745ba2dff9@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
+On 15/10/2025 03:56, Hangxiang Ma wrote:
+> +static const struct resources_icc icc_res_kaanapali[] = {
+> +	/* Based on 4096 x 3072 30 FPS 2496 Mbps mode */
+> +	{
+> +		.name = "ahb",
+> +		.icc_bw_tbl.avg = 925857,
+> +		.icc_bw_tbl.peak = 925857,
+> +	},
 
+Looking at other implementations I realise we've been adding avg and 
+peak without too much review however, wouldn't 925857 / 2 => 462928 be a 
+better value for the average ?
 
-On 15/10/25 18:34, Dmitry Baryshkov wrote:
-> On Wed, Oct 15, 2025 at 05:58:08PM +0530, Sudarshan Shetty wrote:
->> Hook up the ADV7535 DSI-to-HDMI bridge on the QCS615 Talos EVK board.
->> This provides HDMI output through the external DSI-to-HDMI converter.
->>
->> Signed-off-by: Sudarshan Shetty <tessolveupstream@gmail.com>
->> ---
->>  arch/arm64/boot/dts/qcom/talos-evk-som.dtsi | 21 ++++++
->>  arch/arm64/boot/dts/qcom/talos-evk.dts      | 76 +++++++++++++++++++++
->>  2 files changed, 97 insertions(+)
->>
->> diff --git a/arch/arm64/boot/dts/qcom/talos-evk-som.dtsi b/arch/arm64/boot/dts/qcom/talos-evk-som.dtsi
->> index 55ec8034103d..b58cae02c9cb 100644
->> --- a/arch/arm64/boot/dts/qcom/talos-evk-som.dtsi
->> +++ b/arch/arm64/boot/dts/qcom/talos-evk-som.dtsi
->> @@ -244,6 +244,27 @@ eeprom@5f {
->>  	};
->>  };
->>  
->> +&mdss {
->> +	status = "okay";
->> +};
->> +
->> +&mdss_dsi0 {
->> +	vdda-supply = <&vreg_l11a>;
->> +
->> +	status = "okay";
->> +};
->> +
->> +&mdss_dsi0_out {
->> +	remote-endpoint = <&adv7535_in>;
->> +	data-lanes = <0 1 2 3>;
->> +};
->> +
->> +&mdss_dsi0_phy {
->> +	vdds-supply = <&vreg_l5a>;
->> +
->> +	status = "okay";
->> +};
->> +
->>  &pcie {
->>  	perst-gpios = <&tlmm 101 GPIO_ACTIVE_LOW>;
->>  	wake-gpios = <&tlmm 100 GPIO_ACTIVE_HIGH>;
->> diff --git a/arch/arm64/boot/dts/qcom/talos-evk.dts b/arch/arm64/boot/dts/qcom/talos-evk.dts
->> index 25057f4f6a91..f7e8be3667d1 100644
->> --- a/arch/arm64/boot/dts/qcom/talos-evk.dts
->> +++ b/arch/arm64/boot/dts/qcom/talos-evk.dts
->> @@ -14,6 +14,82 @@ / {
->>  	aliases {
->>  		mmc1 = &sdhc_2;
->>  	};
->> +
->> +	hdmi-out {
->> +		compatible = "hdmi-connector";
->> +		type = "d";
->> +
->> +		port {
->> +			hdmi_con_out: endpoint {
->> +				remote-endpoint = <&adv7535_out>;
->> +			};
->> +		};
->> +	};
->> +
->> +	vreg_v1p2_out: regulator-v1p2-out {
->> +		compatible = "regulator-fixed";
->> +		regulator-name = "vreg-v1p2-out";
->> +		regulator-min-microvolt = <1200000>;
->> +		regulator-max-microvolt = <1200000>;
->> +		regulator-boot-on;
->> +		regulator-always-on;
->> +	};
->> +
->> +	vreg_v1p8_out: regulator-v1p8-out {
->> +		compatible = "regulator-fixed";
->> +		regulator-name = "vreg-v1p8-out";
->> +		regulator-min-microvolt = <1800000>;
->> +		regulator-max-microvolt = <1800000>;
->> +		regulator-boot-on;
->> +		regulator-always-on;
->> +	};
->> +
->> +	vreg_v3p3_out: regulator-v3p3-out {
->> +		compatible = "regulator-fixed";
->> +		regulator-name = "vreg-v3p3-out";
->> +		regulator-min-microvolt = <3300000>;
->> +		regulator-max-microvolt = <3300000>;
->> +		regulator-boot-on;
->> +		regulator-always-on;
->> +	};
-> 
-> Please describe the power grid. Are these regulators being fed by
-> nothing and generating energy from the thin air?
-
-Thanks for the feedback.
-You are right — in the previous patch, the regulators appeared
-to have no source, which was incorrect.
-
-To clarify the hardware design:
-The 3.3 V and 1.8 V supplies to the HDMI controller are not coming 
-from the PMIC. They are generated on the carrier board as follows:
-
-20 V (USBC_VBUS_IN) → 5 V rail (V5P0_OUT)
-→ 3.3 V buck regulator (RAA211250) and 1.8 V LDO (TPS7A9101).
-
-The 5 V rail (V5P0_OUT) acts as the input supply for both regulators.
-Both regulators are always on.
-
-example:
-v5p0_out: regulator-v5p0-out {
-    compatible = "regulator-fixed";
-    regulator-name = "v5p0_out";
-    regulator-min-microvolt = <5000000>;
-    regulator-max-microvolt = <5000000>;
-    regulator-always-on;
-    regulator-boot-on;
-};
-
-v3p3_out: regulator-v3p3-out {
-    compatible = "regulator-fixed";
-    regulator-name = "v3p3_out";
-    regulator-min-microvolt = <3300000>;
-    regulator-max-microvolt = <3300000>;
-    vin-supply = <&v5p0_out>;
-    regulator-always-on;
-    regulator-boot-on;
-};
-
-v1p8_out: regulator-v1p8-out {
-    compatible = "regulator-fixed";
-    regulator-name = "v1p8_out";
-    regulator-min-microvolt = <1800000>;
-    regulator-max-microvolt = <1800000>;
-    vin-supply = <&v5p0_out>;
-    regulator-always-on;
-    regulator-boot-on;
-};
-
-These reflect the actual power grid of the board.
-The 20 V input is not modeled since it’s a raw external
-supply and not managed by Linux.
-
-Please let me know if this structure looks acceptable,
-Thanks again for the review and guidance!
-> 
->> +};
->> +
->> +&i2c1 {
->> +	clock-frequency = <400000>;
->> +
->> +	status = "okay";
->> +
->> +	adv7535: adv7535@3d {
->> +		compatible = "adi,adv7535";
->> +		reg = <0x3d>;
->> +		avdd-supply = <&vreg_v1p8_out>;
->> +		dvdd-supply = <&vreg_v1p8_out>;
->> +		pvdd-supply = <&vreg_v1p8_out>;
->> +		a2vdd-supply = <&vreg_v1p8_out>;
->> +		v3p3-supply = <&vreg_v3p3_out>;
->> +		v1p2-supply = <&vreg_v1p2_out>;
-> 
-> I think this is not correct. Please consult your schematics isntead of
-> adding dummy regulators.
-
-Will take care in v2 patch.
-> 
-> 
-
+---
+bod
 
