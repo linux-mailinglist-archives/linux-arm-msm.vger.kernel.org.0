@@ -1,159 +1,105 @@
-Return-Path: <linux-arm-msm+bounces-77596-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-77597-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 21981BE3CF3
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Oct 2025 15:52:28 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1507DBE3D14
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Oct 2025 15:55:30 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 6AC7519A753D
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Oct 2025 13:52:51 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 913A619C4E34
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Oct 2025 13:55:53 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id F265A3376A5;
-	Thu, 16 Oct 2025 13:52:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5598333CE8E;
+	Thu, 16 Oct 2025 13:55:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=armlinux.org.uk header.i=@armlinux.org.uk header.b="0+dTZXBd"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="jcvMWYo6"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from pandora.armlinux.org.uk (pandora.armlinux.org.uk [78.32.30.218])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C86242DF141;
-	Thu, 16 Oct 2025 13:52:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=78.32.30.218
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 245892E7179;
+	Thu, 16 Oct 2025 13:55:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760622742; cv=none; b=r0DFwYrCPn9XZ60FzhNC+HHakHV1KjcVkN5aAriiVGH5R2BU2mUmK0M4SonFN+U4wC5+75YSDHXjvQouDHP1oAfSLVLXHgSFMTYefYfNMzQ46l5fln2AsXGB/ZenAUEOObhBZCR/ngfuTdnXSCvBRiWYcOpbTOMD0abr4oDWLz0=
+	t=1760622926; cv=none; b=oAHtL31Yu1WYkjzZ4Rm30A8PmNefp+MCjwZM70CCJah7xJR2916AlYkVPYRYGpB6mjmD7KGXR5BjzLcJYBsu/vGiBB4lIgbVbkVIYScAQCCkEbBLr2XTmVLbR3jzeM9lu5pTsS+VtxGGScuujiuYmQsSi/TvqVXNbMvwbrEOik8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760622742; c=relaxed/simple;
-	bh=ULeaJJUMe/wC90ReLYUVCqTHShIiS1YZvkS1YfAkp5s=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Fl5rsVGGz4GXijoowVxjxUFNxl7MyOg9GVASRKXOgxr9aPnJa+aCI9lJej+9BUANUPZ6bwWAWyhKiUhEdzz0zTZOGjTLGlcPmTsrSxm3reAJXnI/2502pYIb7E3XJZMtxSgcSt5ALh8kh2lICCR8SEsMamUSXIi9zAv/mDMnqAU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=armlinux.org.uk; spf=none smtp.mailfrom=armlinux.org.uk; dkim=pass (2048-bit key) header.d=armlinux.org.uk header.i=@armlinux.org.uk header.b=0+dTZXBd; arc=none smtp.client-ip=78.32.30.218
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=armlinux.org.uk
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=armlinux.org.uk
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=armlinux.org.uk; s=pandora-2019; h=Sender:In-Reply-To:Content-Type:
-	MIME-Version:References:Message-ID:Subject:Cc:To:From:Date:Reply-To:
-	Content-Transfer-Encoding:Content-ID:Content-Description:Resent-Date:
-	Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:
-	List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
-	bh=UmCdG/YPwALyDLpBb5siWg/i3BOrWdjDOVrZPQUGrZ8=; b=0+dTZXBd5lApnHs2iQaBbz/W/V
-	Q7bJFJnGIA2uG8tjS5UsEsS5Zf8UZNrrq2xOtoMqAw1ePzjfdRuqYhMDAbHp9IA6SKikFFdvxfcwL
-	dzr4TP20v7Ikpb4eFepO6AgDnISJvNmQnXw09aUuufpFMWhnQxXRnGKqTiGPvjrCQbdma4YuvvwtH
-	YVPgtZbE5K1ZsOHDzJG50RAIpAUra2yfNcA0krjXV1cBF/ch9+Buy3F6o2btiNcTXkFL0ICrSNJZY
-	pxEOMeHRoS1NJFq8P6hRm8ihzKlijAE+794qKuQIu2Wqr0T2GPcn5xYNKe/fQcEoCLoRgAVrs5uRJ
-	eOda1ZYw==;
-Received: from shell.armlinux.org.uk ([fd8f:7570:feb6:1:5054:ff:fe00:4ec]:38764)
-	by pandora.armlinux.org.uk with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-	(Exim 4.98.2)
-	(envelope-from <linux@armlinux.org.uk>)
-	id 1v9OON-000000006M1-0eca;
-	Thu, 16 Oct 2025 14:51:43 +0100
-Received: from linux by shell.armlinux.org.uk with local (Exim 4.98.2)
-	(envelope-from <linux@shell.armlinux.org.uk>)
-	id 1v9OO9-000000003K9-3HzO;
-	Thu, 16 Oct 2025 14:51:29 +0100
-Date: Thu, 16 Oct 2025 14:51:29 +0100
-From: "Russell King (Oracle)" <linux@armlinux.org.uk>
-To: Andrew Lunn <andrew@lunn.ch>
-Cc: Heiner Kallweit <hkallweit1@gmail.com>,
-	Abhishek Chauhan <quic_abchauha@quicinc.com>,
-	Alexandre Torgue <alexandre.torgue@foss.st.com>,
-	Alexis Lothore <alexis.lothore@bootlin.com>,
-	Andrew Lunn <andrew+netdev@lunn.ch>,
-	Boon Khai Ng <boon.khai.ng@altera.com>,
-	Choong Yong Liang <yong.liang.choong@linux.intel.com>,
-	Daniel Machon <daniel.machon@microchip.com>,
-	"David S. Miller" <davem@davemloft.net>,
-	Drew Fustini <dfustini@tenstorrent.com>,
-	Emil Renner Berthing <emil.renner.berthing@canonical.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Faizal Rahim <faizal.abdul.rahim@linux.intel.com>,
-	Furong Xu <0x1207@gmail.com>, Inochi Amaoto <inochiama@gmail.com>,
-	Jacob Keller <jacob.e.keller@intel.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	"Jan Petrous (OSS)" <jan.petrous@oss.nxp.com>,
-	Jisheng Zhang <jszhang@kernel.org>, Kees Cook <kees@kernel.org>,
-	Kunihiko Hayashi <hayashi.kunihiko@socionext.com>,
-	Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>,
-	Ley Foon Tan <leyfoon.tan@starfivetech.com>,
-	linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org,
-	linux-stm32@st-md-mailman.stormreply.com,
-	Matthew Gerlach <matthew.gerlach@altera.com>,
-	Maxime Chevallier <maxime.chevallier@bootlin.com>,
-	Maxime Coquelin <mcoquelin.stm32@gmail.com>,
-	Michal Swiatkowski <michal.swiatkowski@linux.intel.com>,
-	netdev@vger.kernel.org, Oleksij Rempel <o.rempel@pengutronix.de>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Rohan G Thomas <rohan.g.thomas@altera.com>,
-	Shenwei Wang <shenwei.wang@nxp.com>,
-	Simon Horman <horms@kernel.org>,
-	Song Yoong Siang <yoong.siang.song@intel.com>,
-	Swathi K S <swathi.ks@samsung.com>,
-	Tiezhu Yang <yangtiezhu@loongson.cn>, Vinod Koul <vkoul@kernel.org>,
-	Vladimir Oltean <olteanv@gmail.com>,
-	Vladimir Oltean <vladimir.oltean@nxp.com>,
-	Yu-Chun Lin <eleanor15x@gmail.com>
-Subject: Re: [PATCH net-next 11/14] net: stmmac: do not require snps,ps-speed
- for SGMII
-Message-ID: <aPD4YRH6ih93jQXH@shell.armlinux.org.uk>
-References: <aO-tbQCVu47R3izM@shell.armlinux.org.uk>
- <E1v92N3-0000000AmHQ-4Bm2@rmk-PC.armlinux.org.uk>
- <15ea57e0-d127-4722-b752-4989d5a443c0@lunn.ch>
- <aPAWoDGVgeRFV95b@shell.armlinux.org.uk>
- <6545b453-e99e-4f44-a206-ef14deb7f96a@lunn.ch>
+	s=arc-20240116; t=1760622926; c=relaxed/simple;
+	bh=UEKp1DHAqPsI6gpkgu9tC/Ox9lhUWrYCS7E0VTkLkKc=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=lft8FyiTfu0RFdDtMp5Y0s6HrKurivCBrRxC5vCht+E6rYH9YhVQC2SWuDd+CucbK09bi0S/LyxqGRmJlqw/LW2DXnzBpQogyrNQSHdgxbIP/qWF6I2Ntm/ho0AlBdPgAUVouHzZYK0BL3X1+63myrMgLbTOkbG+W5EMD+bAODE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=jcvMWYo6; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44DE0C4CEF1;
+	Thu, 16 Oct 2025 13:55:22 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1760622925;
+	bh=UEKp1DHAqPsI6gpkgu9tC/Ox9lhUWrYCS7E0VTkLkKc=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=jcvMWYo6bGSIeoJKKdb+YNp0NXUn0fAq+GEtFWjhyKip2w94+ZO0nUQSCsCnc1Cjm
+	 tvaNWT34osvZA7pQbxGx+/9qinfl/czRRNmBS/RzKqi1vpADnqqEpcVpEn+Oy6CiIm
+	 lgtOYCE7iif0mFWCoStXSGRDTByDvZIV23kFwWUdokLx2iMCkTQ21gnlCh19tCA+kT
+	 4CUhGXBiSlHFJwJs2CW8OIdsqCSmuDoYQ0KyaTKNn11j1bnf5dqb8n1JYwxPj6Vb8F
+	 BzpbqWKTDfZcnMHzDkOBJwOd2E0do98bEuUHqH4Vmx2u1e3kL0ACz2L05wE8zJM80U
+	 Xcmj0IeY6QclQ==
+Message-ID: <aedc5761-75da-42bf-9147-dcde24c8e976@kernel.org>
+Date: Thu, 16 Oct 2025 14:55:20 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <6545b453-e99e-4f44-a206-ef14deb7f96a@lunn.ch>
-Sender: Russell King (Oracle) <linux@armlinux.org.uk>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 2/3] media: qcom: camss: add support for SM6150 camss
+To: Wenmeng Liu <quic_wenmliu@qualcomm.com>,
+ Wenmeng Liu <wenmeng.liu@oss.qualcomm.com>, Robert Foss <rfoss@kernel.org>,
+ Todor Tomov <todor.too@gmail.com>,
+ Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
+ Mauro Carvalho Chehab <mchehab@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>
+Cc: linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20251016-sm6150-camss-v1-0-e7f64ac32370@oss.qualcomm.com>
+ <20251016-sm6150-camss-v1-2-e7f64ac32370@oss.qualcomm.com>
+ <1d4d4627-7fe9-43b2-8622-8ffc078e30a6@kernel.org>
+ <JB8KRP8D1088VuLugU36X7P6tKDpkMBU5kGjc3Ctu2fJYw-lIui1NJQiQUwjwRGSdVwJ0VlOP7LPWlKMTU7OZw==@protonmail.internalid>
+ <e4be125c-752e-46c9-9637-fe23cbf04b1a@qualcomm.com>
+From: Bryan O'Donoghue <bod@kernel.org>
+Content-Language: en-US
+In-Reply-To: <e4be125c-752e-46c9-9637-fe23cbf04b1a@qualcomm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-On Thu, Oct 16, 2025 at 03:03:34PM +0200, Andrew Lunn wrote:
-> > I don't at present, and I'm not sure what the point of updating it
-> > would actually be, because this is another thing that's just broken.
-> 
-> > Hence, I would like this property a slow and painful^h^h^hfree death.
-> > Maybe mark the property deprecated, and remove all explanation of it
-> > apart from stating that it's obsolete after this patch series has
-> > been merged and we've proven that it's never been useful.
-> 
-> And this is what i was thinking. At least mark it deprecated. If you
-> want to remove the documentation late, i'm fine with that as well.
+On 16/10/2025 13:36, Wenmeng Liu wrote:
+>>> +    case CAMSS_6150:
+>>>            regs->lane_regs = &lane_regs_qcm2290[0];
+>> You don't need to specify the array index for that.
+>>
+> Here I have only added "case CAMSS_6150:", then do I need to modify the
+> part of "&lane_regs_qcm2290[0]"?
 
-It's rather premature to do this - this series doesn't change anything
-in the way that snps,ps-speed behaves.
+Hmm no I'm wrong - again.
 
-Setting this still:
-1. sets the SGMII rate adapter to take its speed configuration from the
-   MAC control register rather than the in-band config.
-2. enables the exchange of the SGMII in-band config.
+Please don't be afraid to call people out on being wrong - like I am now.
 
-What it doesn't do, and has never done, is to ensure that the in-band
-config that is sent contains the speed and duplex information for the
-SGMII link partner due to a repeated typo in the individual core sub-
-drivers.
+Existing code is:
 
-I'm not intending removing this until we have a different way to
-specify it, e.g. PHY_INTERFACE_MODE_REVSGMII, but that is currently
-looking unlikely. However, with PHY_INTERFACE_MODE_REVSGMII, we would
-need to make the change (fix the typo bug) to publish the correct
-in-band config.
+         case CAMSS_X1E80100:
+                 regs->lane_regs = &lane_regs_x1e80100[0];
+                 regs->lane_array_size = ARRAY_SIZE(lane_regs_x1e80100);
+                 regs->offset = 0x1000;
+                 break;
+         case CAMSS_8550:
+                 regs->lane_regs = &lane_regs_sm8550[0];
+                 regs->lane_array_size = ARRAY_SIZE(lane_regs_sm8550);
+                 regs->offset = 0x1000;
 
-I think a bit more thought is needed before going down that path,
-because if we're publishing the config, is it a fixed-link. That's
-something that we need to sort out in the PHY_INTERFACE_MODE_REVSGMII
-discussions... if we're still going with it.
+Your comment is consistent with existing code.
 
-So, right now what happens here entirely depends on stuff we have
-yet to make decisions on, and so marking it deprecated now is too
-early.
+You may ignore the previous statement.
 
--- 
-RMK's Patch system: https://www.armlinux.org.uk/developer/patches/
-FTTP is here! 80Mbps down 10Mbps up. Decent connectivity at last!
+---
+bod
 
