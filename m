@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-77670-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-77671-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id C0A6ABE6535
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Oct 2025 06:41:45 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id C7FF8BE654A
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Oct 2025 06:46:13 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 068F619A0F95
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Oct 2025 04:42:09 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 70EAA3B288F
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Oct 2025 04:46:12 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B50923093CB;
-	Fri, 17 Oct 2025 04:41:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 93D601C84C0;
+	Fri, 17 Oct 2025 04:46:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="XmLws7r8"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="BVRSV0PN"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E1AB334689;
-	Fri, 17 Oct 2025 04:41:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 647E37081E;
+	Fri, 17 Oct 2025 04:46:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760676100; cv=none; b=hWNGD/mEGaHGNQsiaDuXIz9rNLBP8O+J5FaXrdxLZNHvz5vdtr0iwAg4tu460BaBY0LzGTOM2U4wARJy4HDa9prkVrleLGJnL0jLgAYlGCJ4NzloQaWAeHl7OxGKUGPXkxsSddOctfIGa+CYxTolO/6gjIzOaZcY6gocmcKFbdw=
+	t=1760676370; cv=none; b=VFKarb9zFUNzPrQy3z7ri9hPD3MC216qyzgbJ21wHypKv1veC/JOPqALz96zA1U+v0xe00WVbGFzTh59pudx8kXl7SJDoOZT9jUxOeEUhIxwNCXYEjgGUNLscxQXny1gvGzsRYVq8FTftu0PHfI5xx+n8NiE8O13k1BAsz+fCwU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760676100; c=relaxed/simple;
-	bh=KYWPYbj9AgafJeUcobj6pYXOKDICTH/bM9n4lOeI20M=;
+	s=arc-20240116; t=1760676370; c=relaxed/simple;
+	bh=MIF8uQjD6xOBCpoIO6NDT758UQrT+Sn42yH6L3Es73A=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=mBNn0hE1rC9LEokT8jRPf1CFrvkTwwQAjimgZhtRO0bEn+7kPXp+9XxTXxzHb+97DDtQcxc1fZqjWIoJfFX04eUhwp4vZZRNwTnB/MJ7P6xGTBYW/voDzZOYRhne/Pjaf6zbwcM11NrZaNdbvbiMZy3jRWu2uIngEhfrYfbmJns=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=XmLws7r8; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51051C4CEE7;
-	Fri, 17 Oct 2025 04:41:36 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=F95YG6lcFDeWkG1fVV59095GLNQTO2ad5Q6VAUBK9wPielY7pmlqFI7ETCanqWGWYXn9SgDqmkw0d9R2iMH/SQDDfzIttY6AnoVM+SF3oNTFfYdkeuoPXaITf6KbeHPbq7FDpM4uMoFW7k1ejstbHH5XMNk4G67Cu2IIJ8Pa4fg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=BVRSV0PN; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5AB03C4CEE7;
+	Fri, 17 Oct 2025 04:46:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1760676100;
-	bh=KYWPYbj9AgafJeUcobj6pYXOKDICTH/bM9n4lOeI20M=;
+	s=k20201202; t=1760676368;
+	bh=MIF8uQjD6xOBCpoIO6NDT758UQrT+Sn42yH6L3Es73A=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=XmLws7r8GpULkOh63waqJm7oKgNtCNBRmv5zeAjqQD7UyYE9LoRJAk9O+oxS6Jf+g
-	 nvfqRPDubwxUdR0hSb9AajRCqamgjPStE3uW7bkWarP2f6GEIHo7S1INwzGU1Fz/Vx
-	 KoHtdBnBs/SlYezVMIkvMWBsqYwTxDKUhggD0kAPJ5eWeeGTvaZ1nrfidxW+Zevft5
-	 JeR47JaIVrMnfKg6y1Y19tKpsULsblZNtDo+XD0Pv6zIauXYkUy1S94QFHUwNH+wph
-	 Ex0iX7FGggXaJFhBIgRYmRuJX0baubB0fNyjFRtK2GLB1/3OG/odcvgo5jQg0QGU7n
-	 ciRwD03hOrE6Q==
-Message-ID: <bb299df0-58b9-4a6e-9625-305785d38eb4@kernel.org>
-Date: Fri, 17 Oct 2025 06:41:34 +0200
+	b=BVRSV0PNJIAOQAo7vWbfR1iPpHUOAaQjluWHCv/3+VSvuafzMs12kiUf/MqYd6uCq
+	 95vPhhztXtYmXVaf0YJXwKqoQyrYtCkYw8IxObAV7bYritZr/DnM56xFizivJptBzd
+	 4IPSJNM6purJ3GqhGNXdQo//9xR9OvaTVututDXNmWmD3jt0xWvJOUfeVBv0ZfjA3B
+	 /2KNnmqJrcvxt95Z6gy+fjXedwJ7drWEq54ynNNZc5sbHLEkN1T68MISKqF+HjOM0+
+	 FAHEWFvPP1DZFdcm+BSkRIHU08vvdTbNOLtg2IXZA0bWTBrBmyaWLLguT0BTEERdB9
+	 UMnSHy9M10NAQ==
+Message-ID: <56c23e19-90c6-4e2f-afe9-ae7a83d15390@kernel.org>
+Date: Fri, 17 Oct 2025 06:46:02 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,24 +50,21 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 02/10] dt-bindings: phy: qcom,qmp-usb: Add Glymur USB
- UNI PHY compatible
-To: Wesley Cheng <wesley.cheng@oss.qualcomm.com>, krzk+dt@kernel.org,
- conor+dt@kernel.org, konrad.dybcio@oss.qualcomm.com,
- dmitry.baryshkov@oss.qualcomm.com, kishon@kernel.org, vkoul@kernel.org,
- gregkh@linuxfoundation.org, robh@kernel.org
-Cc: linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
- linux-usb@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org
-References: <20251006222002.2182777-1-wesley.cheng@oss.qualcomm.com>
- <20251006222002.2182777-3-wesley.cheng@oss.qualcomm.com>
- <f5e4ae02-b8fa-4406-b2e0-3602b07b7e23@kernel.org>
- <00408896-2e25-2dd1-6e6e-2195317ee7fb@oss.qualcomm.com>
- <14bc2a85-0f1d-3834-9b9c-32654348603a@oss.qualcomm.com>
- <387c707e-613d-433b-a76d-16ef10dabc59@kernel.org>
- <2a70f878-269c-1b40-2e8c-77b5851de9a1@oss.qualcomm.com>
- <99ab26d3-eb44-401d-8a7c-1d9efd2a1a10@kernel.org>
- <b2b68430-5127-5eca-6bd8-4af31eb9fbed@oss.qualcomm.com>
+Subject: Re: [PATCH v2 1/6] dt-bindings: PCI: qcom,pcie-sm8550: Add Kaanapali
+ compatible
+To: Qiang Yu <qiang.yu@oss.qualcomm.com>,
+ Lorenzo Pieralisi <lpieralisi@kernel.org>,
+ =?UTF-8?Q?Krzysztof_Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
+ Manivannan Sadhasivam <mani@kernel.org>, Rob Herring <robh@kernel.org>,
+ Bjorn Helgaas <bhelgaas@google.com>, Krzysztof Kozlowski
+ <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>,
+ Bjorn Andersson <andersson@kernel.org>, Vinod Koul <vkoul@kernel.org>,
+ Kishon Vijay Abraham I <kishon@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+ linux-phy@lists.infradead.org, Jingyi Wang <jingyi.wang@oss.qualcomm.com>
+References: <20251015-kaanapali-pcie-upstream-v2-0-84fa7ea638a1@oss.qualcomm.com>
+ <20251015-kaanapali-pcie-upstream-v2-1-84fa7ea638a1@oss.qualcomm.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -113,47 +110,19 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  jWt87ecuHlpL3uuQ0ZZNWqHgZoQLXoqC2ZV5KrtKWb/jyiFX/sxSrodALf0zf+tfHv0FZWT2
  zHjUqd0t4njD/UOsuIMOQn4Ig0SdivYPfZukb5cdasKJukG1NOpbW7yRNivaCnfZz6dTawXw
  XRIV/KDsHQiyVxKvN73bThKhONkcX2LWuD928tAR6XMM2G5ovxLe09vuOzzfTWQDsm++9UKF a/A=
-In-Reply-To: <b2b68430-5127-5eca-6bd8-4af31eb9fbed@oss.qualcomm.com>
+In-Reply-To: <20251015-kaanapali-pcie-upstream-v2-1-84fa7ea638a1@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 17/10/2025 02:15, Wesley Cheng wrote:
->>> Technically its all handling the same clock branch (CXO), we have the
->>> TCSR clkref register that allows us to gate the CXO to the USB PHY, as
->>
->>
->> Ah, exactly. Then clkref is not a clock. You need rather proper clock
->> hierarchy.
->>
->>> CXO is shared across several HW blocks, so it allows us to properly
->>> powerdown the PHY even though other clients are voting for CXO on.  Then
->>> we obviously have to remove our vote to the overall CXO, so that it can
->>> potentially be shutdown.
->>>
->>> Maybe we can rename it to "clkref" for the CXO handle and
->>> "clkref_switch" for the TCSRCC handle?
->>
->> Naming is better, but it is still not correct. This is not independent
->> clock signal. It is the same clock.
->>
+On 15/10/2025 12:27, Qiang Yu wrote:
+> On the Qualcomm Kaanapali platform the PCIe host is compatible with the
+> DWC controller present on the SM8550 platform.
 > 
-> Hmmm... I guess that's why I kept the same clkref tag, to denote that 
-> its the same clock, but one is a switch/gate for it.  Would you happen 
-> to have any suggestions you might have that makes it clearer for 
-> everyone to understand?
-To me it looks like:
+> Signed-off-by: Jingyi Wang <jingyi.wang@oss.qualcomm.com>
+> Signed-off-by: Qiang Yu <qiang.yu@oss.qualcomm.com>
+> ---
 
-|-----|            |-----------|           |------------------|
-|clock|------------|TCSRCC gate|-----------|clkref to this dev|
-|-----|            |-----------|           |------------------|
-
-So you need proper clock controller for TCSR (TCSR Clock Controller, in
-short TCSRCC, what a surprise!) which will take input, add gate and
-produce clock for this device.
-
-Nothing non-standard, all Qualcomm SoCs have it, every other platform
-has it in some way.
-
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
 Best regards,
 Krzysztof
