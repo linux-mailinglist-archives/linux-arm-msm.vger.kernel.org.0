@@ -1,210 +1,110 @@
-Return-Path: <linux-arm-msm+bounces-77694-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-77695-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [IPv6:2605:f480:58:1:0:1994:3:14])
-	by mail.lfdr.de (Postfix) with ESMTPS id 37D6FBE6DF8
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Oct 2025 09:05:44 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 29673BE6E16
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Oct 2025 09:07:07 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id E5DF24E1201
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Oct 2025 07:05:42 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id B65DB1A62153
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Oct 2025 07:07:30 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8BB762222C4;
-	Fri, 17 Oct 2025 07:05:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7BC172222C4;
+	Fri, 17 Oct 2025 07:07:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b="sjVqtIm4"
+	dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b="smX0nXXb"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtpout-03.galae.net (smtpout-03.galae.net [185.246.85.4])
+Received: from bombadil.infradead.org (bombadil.infradead.org [198.137.202.133])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A89804400
-	for <linux-arm-msm@vger.kernel.org>; Fri, 17 Oct 2025 07:05:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.246.85.4
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E93F62882CF;
+	Fri, 17 Oct 2025 07:07:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.137.202.133
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760684740; cv=none; b=XsGhHgWdnjwE/X3UaDEmBp3/mo46w0i3fqBTlt9GNvjOmfXcERlKBL2Z79dCvYJU2EcnYqa3OyjekaLgL65izlHEvpVsb3oVaQLi0BZ9JicfZcYHYmTX+vxLbAEVtZoP2Z/DS1fuVbZMyrzfyzRJdXePy2R1JM92u5l5qbYUyAA=
+	t=1760684825; cv=none; b=ZBhnNv+pBWIC9j8Oc5gCd/04njzAsP/tLoheoDNoo5FaivnsxQWSor4oyoNlVwHEyi3HmimCuE2PwFlQls+2NVBkJ2uWdyQvOxi9xnZtRO3vyltk9PmBiF9qGBdxzxz/xWaZHVJP1BOH+/qfGFAkVTvrmFNDpjjT/RlfQ/zFyek=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760684740; c=relaxed/simple;
-	bh=l9RIq9pv47w7bEV5KWrnvIb9LJMvjqefg4292JUfx3g=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=f/gwcQLY3CLaUk+4XWg0TN+JZc0sWKI+gqth5ltUVFoIRrgfjKdZg5SHX1BaKnLEoz0nmPdYJ6IUHAFitkqGYhNmfXZ4/la2jHEXPrkQOTMmf7+O7C2jXNQ1mN/sT0VxDvfWZ7bAktbeTXTd0vaIY4GP64jYtbFmdTrSYvwxV8E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com; spf=pass smtp.mailfrom=bootlin.com; dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b=sjVqtIm4; arc=none smtp.client-ip=185.246.85.4
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bootlin.com
-Received: from smtpout-01.galae.net (smtpout-01.galae.net [212.83.139.233])
-	by smtpout-03.galae.net (Postfix) with ESMTPS id 9CF034E41115;
-	Fri, 17 Oct 2025 07:05:35 +0000 (UTC)
-Received: from mail.galae.net (mail.galae.net [212.83.136.155])
-	by smtpout-01.galae.net (Postfix) with ESMTPS id 651C9606DB;
-	Fri, 17 Oct 2025 07:05:35 +0000 (UTC)
-Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon) with ESMTPSA id 00B0D102F22FF;
-	Fri, 17 Oct 2025 09:04:57 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=dkim;
-	t=1760684733; h=from:subject:date:message-id:to:cc:mime-version:content-type:
-	 content-transfer-encoding:content-language:in-reply-to:references;
-	bh=8Txvygtf95T8nvPnqElNFv3jlBIUlCRN1Ha31LP6OZM=;
-	b=sjVqtIm4RJwQ4q/9IDLKMSW6riYcV/yNt+HFk6E2Z9iRJ7mcel14odvS1qcyV6Zojb2ZL/
-	UjK86X1GZjeFt8l4tTWqqX5GMkhp2tz//ZFswJJxaec0tbucR/wHOUZPsTXsOTWqF6Hkcy
-	PsT3RCGuLuL3pIzCuxEBS19909xxzsZzs/iU/so1N2Ny/VakwLErGxdMdFvoTDEZfIGP7c
-	1q7q03jcaA/Jdyzq66uIb9IX6f6YcMZtfsL6xNXl25uo1acubbem9B/PXBj+xHKuu2fXEd
-	CJGlJW9d8NPHglu7w1OISAR7MVpEiXJ497Z1xlPBUvJt0TtWvMd4li2EVhgW5g==
-Message-ID: <1f9d856f-4cfb-472c-abec-96ce55f4db81@bootlin.com>
-Date: Fri, 17 Oct 2025 09:04:55 +0200
+	s=arc-20240116; t=1760684825; c=relaxed/simple;
+	bh=xBh1R3UthDEmxmkM8IMXCgp+M1OFHkv/MTrcimlOEDM=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=RJi0T4QyiPlLL7YN/eWl6t0gtnyB73+vrklVkvCfmbtMhKBskWBbQbzUKBt2hKIXm2BeYI5saxFB3FkSmh0BrkxQykLEAYSuGa+CgJVYOodzmiILUYRSqsA7rCiwYgE5C6djH6hOtoeyj/5J1AMXkzWmffDW5tm1XCKE0Ntn/4E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=infradead.org; spf=none smtp.mailfrom=infradead.org; dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b=smX0nXXb; arc=none smtp.client-ip=198.137.202.133
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=infradead.org
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=infradead.org
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=infradead.org; s=bombadil.20210309; h=Content-Transfer-Encoding:
+	MIME-Version:Message-ID:Date:Subject:Cc:To:From:Sender:Reply-To:Content-Type:
+	Content-ID:Content-Description:In-Reply-To:References;
+	bh=vy03HBxcOKZ1/JJzbpc0jDLnVA41ktEh3OYdHPxBGuY=; b=smX0nXXbiOm8leylrnmbwToSK2
+	LOzDEp94Q4H2wKC6xxHgPugiFRdIDOc3kPdsFzXtBzYxwDiUCJVNfolCnl0jXpRIt5pT8ao5y5T2E
+	misgK3OX/amIMCmBSG/xTV4geCqgVYRKmC4AuYY1gcNq5H+/xjVKfhR6fDVg8tVC+i7K03RpsFjF4
+	xTkpivFwSkle2c2MeMvaarfBFZDUx4PGQ/xXFo88KumG4nTiQpm439Reh/rXAtpqzGhbE5sBjBqvv
+	qS88FTlQ+tupyL1majtv2lXcvVOI67H4p0xEt25GBRyvQuXtPim0UOxLd6BL7SIGYlEbeztDFDv9Y
+	Ay996eyQ==;
+Received: from [50.53.43.113] (helo=bombadil.infradead.org)
+	by bombadil.infradead.org with esmtpsa (Exim 4.98.2 #2 (Red Hat Linux))
+	id 1v9eYJ-00000006viL-2AdD;
+	Fri, 17 Oct 2025 07:07:03 +0000
+From: Randy Dunlap <rdunlap@infradead.org>
+To: linux-kernel@vger.kernel.org
+Cc: Randy Dunlap <rdunlap@infradead.org>,
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	linux-arm-msm@vger.kernel.org
+Subject: [PATCH] firmware: qcom: tzmem: area: fix qcom_tzmem_policy kernel-doc
+Date: Fri, 17 Oct 2025 00:07:02 -0700
+Message-ID: <20251017070702.1637092-1-rdunlap@infradead.org>
+X-Mailer: git-send-email 2.51.0
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH net-next v2 00/14] net: stmmac: phylink PCS conversion
-To: "Russell King (Oracle)" <linux@armlinux.org.uk>,
- Andrew Lunn <andrew@lunn.ch>, Heiner Kallweit <hkallweit1@gmail.com>
-Cc: Abhishek Chauhan <quic_abchauha@quicinc.com>,
- Alexandre Torgue <alexandre.torgue@foss.st.com>,
- Alexis Lothore <alexis.lothore@bootlin.com>,
- Andrew Lunn <andrew+netdev@lunn.ch>, Boon Khai Ng <boon.khai.ng@altera.com>,
- Choong Yong Liang <yong.liang.choong@linux.intel.com>,
- Daniel Machon <daniel.machon@microchip.com>,
- "David S. Miller" <davem@davemloft.net>,
- Drew Fustini <dfustini@tenstorrent.com>,
- Emil Renner Berthing <emil.renner.berthing@canonical.com>,
- Eric Dumazet <edumazet@google.com>,
- Faizal Rahim <faizal.abdul.rahim@linux.intel.com>,
- Furong Xu <0x1207@gmail.com>, Inochi Amaoto <inochiama@gmail.com>,
- Jacob Keller <jacob.e.keller@intel.com>, Jakub Kicinski <kuba@kernel.org>,
- "Jan Petrous (OSS)" <jan.petrous@oss.nxp.com>,
- Jisheng Zhang <jszhang@kernel.org>, Kees Cook <kees@kernel.org>,
- Kunihiko Hayashi <hayashi.kunihiko@socionext.com>,
- Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>,
- Ley Foon Tan <leyfoon.tan@starfivetech.com>,
- linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org,
- linux-stm32@st-md-mailman.stormreply.com,
- Matthew Gerlach <matthew.gerlach@altera.com>,
- Maxime Coquelin <mcoquelin.stm32@gmail.com>,
- Michal Swiatkowski <michal.swiatkowski@linux.intel.com>,
- netdev@vger.kernel.org, Oleksij Rempel <o.rempel@pengutronix.de>,
- Paolo Abeni <pabeni@redhat.com>, Rohan G Thomas <rohan.g.thomas@altera.com>,
- Shenwei Wang <shenwei.wang@nxp.com>, Simon Horman <horms@kernel.org>,
- Song Yoong Siang <yoong.siang.song@intel.com>,
- Swathi K S <swathi.ks@samsung.com>, Tiezhu Yang <yangtiezhu@loongson.cn>,
- Vinod Koul <vkoul@kernel.org>, Vladimir Oltean <olteanv@gmail.com>,
- Vladimir Oltean <vladimir.oltean@nxp.com>, Yu-Chun Lin <eleanor15x@gmail.com>
-References: <aPECqg0vZGnBFCbh@shell.armlinux.org.uk>
-From: Maxime Chevallier <maxime.chevallier@bootlin.com>
-Content-Language: en-US
-In-Reply-To: <aPECqg0vZGnBFCbh@shell.armlinux.org.uk>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Last-TLS-Session-Version: TLSv1.3
+Content-Transfer-Encoding: 8bit
 
-Hello,
+Fix kernel-doc warnings by using correct kernel-doc syntax and
+formatting to prevent warnings:
 
-On 16/10/2025 16:35, Russell King (Oracle) wrote:
-> This series is radical - it takes the brave step of ripping out much of
-> the existing PCS support code and throwing it all away.
-> 
-> I have discussed the introduction of the STMMAC_FLAG_HAS_INTEGRATED_PCS
-> flag with Bartosz Golaszewski, and the conclusion I came to is that
-> this is to workaround the breakage that I've been going on about
-> concerning the phylink conversion for the last five or six years.
-> 
-> The problem is that the stmmac PCS code manipulates the netif carrier
-> state, which confuses phylink.
-> 
-> There is a way of testing this out on the Jetson Xavier NX platform as
-> the "PCS" code paths can be exercised while in RGMII mode - because
-> RGMII also has in-band status and the status register is shared with
-> SGMII. Testing this out confirms my long held theory: the interrupt
-> handler manipulates the netif carrier state before phylink gets a
-> look-in, which means that the mac_link_up() and mac_link_down() methods
-> are never called, resulting in the device being non-functional.
-> 
-> Moreover, on dwmac4 cores, ethtool reports incorrect information -
-> despite having a full-duplex link, ethtool reports that it is
-> half-dupex.
-> 
-> Thus, this code is completely broken - anyone using it will not have
-> a functional platform, and thus it doesn't deserve to live any longer,
-> especially as it's a thorn in phylink.
-> 
-> Rip all this out, leaving just the bare bones initialisation in place.
-> 
-> However, this is not the last of what's broken. We have this hw->ps
-> integer which is really not descriptive, and the DT property from
-> which it comes from does little to help understand what's going on.
-> Putting all the clues together:
-> 
-> - early configuration of the GMAC configuration register for the
->   speed.
-> - setting the SGMII rate adapter layer to take its speed from the
->   GMAC configuration register.
-> 
-> Lastly, setting the transmit enable (TE) bit, which is a typo that puts
-> the nail in the coffin of this code. It should be the transmit
-> configuration (TC) bit. Given that when the link comes up, phylink
-> will call mac_link_up() which will overwrite the speed in the GMAC
-> configuration register, the only part of this that is functional is
-> changing where the SGMII rate adapter layer gets its speed from,
-> which is a boolean.
-> 
-> From what I've found so far, everyone who sets the snps,ps-speed
-> property which configures this mode also configures a fixed link,
-> so the pre-configuration is unnecessary - the link will come up
-> anyway.
-> 
-> So, this series rips that out the preconfiguration as well, and
-> replaces hw->ps with a boolean hw->reverse_sgmii_enable flag.
-> 
-> We then move the sole PCS configuration into a phylink_pcs instance,
-> which configures the PCS control register in the same way as is done
-> during the probe function.
-> 
-> Thus, we end up with much easier and simpler conversion to phylink PCS
-> than previous attempts.
-> 
-> Even so, this still results in inband mode always being enabled at the
-> moment in the new .pcs_config() method to reflect what the probe
-> function was doing. The next stage will be to change that to allow
-> phylink to correctly configure the PCS. This needs fixing to allow
-> platform glue maintainers who are currently blocked to progress.
-> 
-> Please note, however, that this has not been tested with any SGMII
-> platform.
-> 
-> I've tried to get as many people into the Cc list with get_maintainers,
-> I hope that's sufficient to get enough eyeballs on this.
-> 
-> Changes since RFC:
-> - new patch (7) to remove RGMII "pcs" mode
-> - new patch (8) to move reverse "pcs" mode to stmmac_check_pcs_mode()
-> - new patch (9) to simplify the code moved in the previous patch
-> - new patch (10) to rename the confusing hw->ps to something more
->   understandable.
-> - new patch (11) to shut up inappropriate complaints about
->   "snps,ps-speed" being invalid.
-> - new patch (13) to add a MAC .pcs_init method, which will only be
->   called when core has PCS present.
-> - modify patch 14 to use this new pcs_init method.
-> 
-> Despite getting a couple of responses to the RFC series posted in
-> September, I have had nothing testing this on hardware. I have tested
-> this on the Jetson Xavier NX, which included trial runs with enabling
-> the RGMII "pcs" mode, hence the new patches that rip out this mode. I
-> have come to the conclusion that the only way to get stmmac changes
-> tested is to get them merged into net-next, thereby forcing people to
-> have to run with them... and we'll deal with any fallout later.
+Warning: include/linux/firmware/qcom/qcom_tzmem.h:25 Enum value
+ 'QCOM_TZMEM_POLICY_STATIC' not described in enum 'qcom_tzmem_policy'
+Warning: ../include/linux/firmware/qcom/qcom_tzmem.h:25 Enum value
+ 'QCOM_TZMEM_POLICY_MULTIPLIER' not described in enum 'qcom_tzmem_policy'
+Warning: ../include/linux/firmware/qcom/qcom_tzmem.h:25 Enum value
+ 'QCOM_TZMEM_POLICY_ON_DEMAND' not described in enum 'qcom_tzmem_policy'
 
-I have tested this on :
- - dwmac-socfpga w/ Lynx, SGMII and 1000BaseX mode
- - dwmac-socfpga w/ RGMII mode
- - stm32-dwmac (on stm32mp157a), w/ RGMII mode
+Fixes: 84f5a7b67b61 ("firmware: qcom: add a dedicated TrustZone buffer allocator")
+Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
+---
+Cc: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Cc: Bjorn Andersson <andersson@kernel.org>
+Cc: Konrad Dybcio <konradybcio@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org
+---
+ include/linux/firmware/qcom/qcom_tzmem.h |   12 +++++++++---
+ 1 file changed, 9 insertions(+), 3 deletions(-)
 
-I don't have any device available with stmmac using the internal PCS
-implementation, but at least the 2 platforms above don't regress with
-this series.
-
-Tested-by: Maxime Chevallier <maxime.chevallier@bootlin.com>
-
-Maxime
+--- linux-next-20251016.orig/include/linux/firmware/qcom/qcom_tzmem.h
++++ linux-next-20251016/include/linux/firmware/qcom/qcom_tzmem.h
+@@ -17,11 +17,17 @@ struct qcom_tzmem_pool;
+  * enum qcom_tzmem_policy - Policy for pool growth.
+  */
+ enum qcom_tzmem_policy {
+-	/**< Static pool, never grow above initial size. */
++	/**
++	 * @QCOM_TZMEM_POLICY_STATIC: Static pool,
++	 * never grow above initial size. */
+ 	QCOM_TZMEM_POLICY_STATIC = 1,
+-	/**< When out of memory, add increment * current size of memory. */
++	/**
++	 * @QCOM_TZMEM_POLICY_MULTIPLIER: When out of memory,
++	 * add increment * current size of memory. */
+ 	QCOM_TZMEM_POLICY_MULTIPLIER,
+-	/**< When out of memory add as much as is needed until max_size. */
++	/**
++	 * @QCOM_TZMEM_POLICY_ON_DEMAND: When out of memory
++	 * add as much as is needed until max_size. */
+ 	QCOM_TZMEM_POLICY_ON_DEMAND,
+ };
+ 
 
