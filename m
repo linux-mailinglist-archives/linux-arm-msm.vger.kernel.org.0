@@ -1,199 +1,208 @@
-Return-Path: <linux-arm-msm+bounces-77796-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-77797-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id E5C22BE92C3
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Oct 2025 16:24:31 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 651A9BE92ED
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Oct 2025 16:28:18 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 5DD72188F77D
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Oct 2025 14:24:55 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 3E9643A4BB5
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Oct 2025 14:25:25 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 711F63396F2;
-	Fri, 17 Oct 2025 14:24:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5186033971F;
+	Fri, 17 Oct 2025 14:25:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=w6rz.net header.i=@w6rz.net header.b="Svnw1jhg"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="V9pErdmI"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from omta38.uswest2.a.cloudfilter.net (omta38.uswest2.a.cloudfilter.net [35.89.44.37])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55D66339713
-	for <linux-arm-msm@vger.kernel.org>; Fri, 17 Oct 2025 14:24:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=35.89.44.37
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5096339718
+	for <linux-arm-msm@vger.kernel.org>; Fri, 17 Oct 2025 14:25:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760711069; cv=none; b=Asx/rqau433XXOs6QcIeQxeP59OihTxgP7y8qceNMqJrrnenNVO5IlMrWq9IJLF/APf/rr+OkXb7AQYWMvFAfKescd6F7YZzvrtTUa37hoPSroM5fBNlSdVMrZoAAq0+OzPnqi7z7mSMrT9MauHu5ltHSEMz9WJhsoN7grQ33vk=
+	t=1760711123; cv=none; b=ccPBMe4jYb9e/8yX0Xn0SWX5MltYjWORNolHNcMftxBDiRysu6rwuvyd8B/a5smr7/r0XXwYwrimcvi8LNaOE1E5xkLE01RUTVYgKgJI2CpAmD6y9W4a6GFfBzqgq3GFY4Bjy2ib18tP+205drkS9IVgnAELHXWSOAyOXr8dSmk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760711069; c=relaxed/simple;
-	bh=706xBnB4fYLv2jjlmSiFVHGjWvbAX3OJViQ92vBMWWs=;
+	s=arc-20240116; t=1760711123; c=relaxed/simple;
+	bh=WvPiwTls8EwkUxiAY19dvsorF4ZCWBhUHbOY89tSmC4=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=CJmsipZkqBodV87YkASxhduT5mV1DkiyKTp8pw9LUCHfjA2W5i9JCiQ+X3sDf5BVQC0N9aMePoDypSEizobgMW0uw2XouBuKDOcGl8uNsL6trGTP3fgk4zYsw7xlKAay6zagsATw/s3ckKwicuRGE9JccOjJQ4JuRlZeDP8Vy68=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=w6rz.net; spf=pass smtp.mailfrom=w6rz.net; dkim=pass (2048-bit key) header.d=w6rz.net header.i=@w6rz.net header.b=Svnw1jhg; arc=none smtp.client-ip=35.89.44.37
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=w6rz.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=w6rz.net
-Received: from eig-obgw-6002b.ext.cloudfilter.net ([10.0.30.203])
-	by cmsmtp with ESMTPS
-	id 9jBDv6fqYeNqi9lNVv0vub; Fri, 17 Oct 2025 14:24:21 +0000
-Received: from box5620.bluehost.com ([162.241.219.59])
-	by cmsmtp with ESMTPS
-	id 9lNUvlqfwwoI29lNUvJzUZ; Fri, 17 Oct 2025 14:24:20 +0000
-X-Authority-Analysis: v=2.4 cv=PZX/hjhd c=1 sm=1 tr=0 ts=68f25194
- a=30941lsx5skRcbJ0JMGu9A==:117 a=30941lsx5skRcbJ0JMGu9A==:17
- a=IkcTkHD0fZMA:10 a=x6icFKpwvdMA:10 a=7vwVE5O1G3EA:10 a=VwQbUJbxAAAA:8
- a=HaFmDPmJAAAA:8 a=EUspDBNiAAAA:8 a=3N43v1ldxO06oT20SBYA:9 a=QEXdDO2ut3YA:10
- a=nmWuMzfKamIsx3l42hEX:22 a=Wh1V8bzkS9CpCxOpQUxp:22
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=w6rz.net;
-	s=default; h=Content-Transfer-Encoding:Content-Type:In-Reply-To:From:
-	References:Cc:To:Subject:MIME-Version:Date:Message-ID:Sender:Reply-To:
-	Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
-	Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
-	List-Subscribe:List-Post:List-Owner:List-Archive;
-	bh=Whjp/o8gAymLru/lmY44LsapSkUqY4dx4+MOKj6v9O4=; b=Svnw1jhgLJAK9WG4DToR+cIyEA
-	7HkdsRua88axA2oaNpeNKx9BEaY+qoekWcfNr8xNnGtRijTGlpgNQCQlL9EyMVm8la2IRME9BEtNe
-	vBQiyv4A9c4D36aLWtKkutdkzzWWHnMd9oJ+gSi8R7JaqaSHAvZ87Uzpi1vfSfnSVB8/puikTvUO1
-	u2/M1LxXRVXGMFbgGOo4CieNfPRE5rX+J3r2YW0EpR4PtS/xGJinYiV224n9iXN6nSPAGR22AXbnZ
-	AsQdgVhlDWw/gn1CS53IKkmshlIxL5JT27EDrQJnWbkSVynuSw7PMPSxKNTUP8EJFOgkt4w87245o
-	l0g5OTXg==;
-Received: from c-73-92-56-26.hsd1.ca.comcast.net ([73.92.56.26]:52300 helo=[10.0.1.116])
-	by box5620.bluehost.com with esmtpsa  (TLS1.3) tls TLS_AES_128_GCM_SHA256
-	(Exim 4.98.2)
-	(envelope-from <re@w6rz.net>)
-	id 1v9lNU-00000002ibW-0AQJ;
-	Fri, 17 Oct 2025 08:24:20 -0600
-Message-ID: <ce932cec-e9e2-4322-a68c-cef5c01b3b16@w6rz.net>
-Date: Fri, 17 Oct 2025 07:24:18 -0700
+	 In-Reply-To:Content-Type; b=kPCFJWrNZwOMj3+uTspUuv1YoIR12W9Dv6nvPyxktvcUx3SnuTj7OQEHUkdKq8vdDquoHnK+ff10b0Xw0xdvPtuc8JsdMVzlaNX7kONXhzYwR153hfwSB7lMvihfNASdcvOUp2ooil05O/mUKmh6RSJ+Ha11r9pGVALl5mfreeY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=V9pErdmI; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 59H8IPbQ002098
+	for <linux-arm-msm@vger.kernel.org>; Fri, 17 Oct 2025 14:25:20 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	X6I4YOibOxnI0AMuF9jQqhBPQ7jDc9rITl8QqtHTs9g=; b=V9pErdmIvPeRmzT8
+	Fo9QxijlwjOsM/Tl3rHj8cXNaN4ElNURNUB9PNqCurg1wp6PgVRfhZoMOh7ohSB9
+	ciz518YlXJjgB5jyj/bWOor02A7aQZurvS4YTPzsY+r9Tu5oczy2q/3xPZctY/1C
+	adSCpm9pQU5xAdbuQ8OG2AA5q5QUap0EHmo8sRIMS8e/2vDSe2I3MChYFMbnrRcj
+	0pW9Hhl4u2oyBu7QkDidC/eNg5kHGvSBRe5sTWqA2uHy2tD0eazWN+vf0kullEVu
+	BYihnVk2HjBjeIWuO+d8aV57ns5OsDa6Pj4EF6gDuLaxQcPyG2K634F4fFPM3N33
+	iWbU0Q==
+Received: from mail-pj1-f69.google.com (mail-pj1-f69.google.com [209.85.216.69])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 49qfa8mgej-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Fri, 17 Oct 2025 14:25:20 +0000 (GMT)
+Received: by mail-pj1-f69.google.com with SMTP id 98e67ed59e1d1-33428befc49so3311668a91.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 17 Oct 2025 07:25:20 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1760711112; x=1761315912;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=X6I4YOibOxnI0AMuF9jQqhBPQ7jDc9rITl8QqtHTs9g=;
+        b=TvlZy/fUs3jBosWblYsBSd8F1NqJ3GCnXNzYKt3vnymUBnX6Wu4YCvLQNSYeNEj9xs
+         Zi/XNp7riBICNz0SvjSt96eQnLQX3dbclO71NjRRt+JoIg23lGrmW8WmVq1hJFh4W4jr
+         bvF/t8OqeVXrZN1toHig/CZXKwIJUrWaCXb2Vw2qknyCfj5YMi1D/uWlkaU7Whdl9jGo
+         TQcnu8y34vw25lSMn1jMw24bNXft6ymGzzECMbhBaz0eOmbWnsq3V45qs9GUgzHHrv36
+         4EbYh/tOF24RcXh7Q81gwXcwG21Uh10CeWi60YCtklt7hJ2MbbqF/u+RZk/hmTcOqhn/
+         OICA==
+X-Forwarded-Encrypted: i=1; AJvYcCUn5XWl3VFEbva5NkWVcKkypDY6DoUbSpOi+6nc0X3/Jds40pwho/9OHj+N4jXu6cQqcaC8qnkcApWbZTpu@vger.kernel.org
+X-Gm-Message-State: AOJu0YyJ18aq6QZJLpQNYGtulkth3BdjYx5bkfKkiwA8vVS7qk/Y08bT
+	y0ccQb+tcFV31RVLkZ8uEJXDcZvoS/SCZT/OtmY+Oq8RaQW3hsMtXQmyM+vTOwyRqlmWx3nBTNA
+	4IKjzTt/NBCRxNcPPOUoMMh7K42RJOCI0hVTFJTRStkSIlGmiKF7y0tRAUkqSXVUrKd3Q
+X-Gm-Gg: ASbGncuKxmj4ThtSKBW8cYS7+nQdTL5QZcQjT4nEMM1MB1G9un9YoxADVGRzR4r07v9
+	ZckmtHjnAtwXqgLdOkermparBnxEgpgRXuHFFc0zgC1gkAN95b5bJ529gMLUjKIT7sgyMohFh9n
+	BvUMon/mfqXZHpTJ4c+G7bZKJXGqHIhcqknJCjTa1II50hcDhPyieXMc3l5m5QptMvNoU7Gobj9
+	aGwCm5959TSI5B8v/9P1wG+fFSCmzBELhqJ/j4dXhJLkPgd9Mqi1JvTPMcuDcxJWXIGHrA9bn3v
+	/cO88C+wppeS9OELp+ZyGPA0EFyFvsGa8Jgqki8AKuiauTVsRAsFB+LnFRKgHWY5KvNszUqWvu7
+	822GTnbqvczMj6QQX9FjVH8q6fsZu6k25Aw==
+X-Received: by 2002:a17:90a:d004:b0:32b:94a2:b0c4 with SMTP id 98e67ed59e1d1-33b9e2925e2mr10031254a91.16.1760711112025;
+        Fri, 17 Oct 2025 07:25:12 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEpzi1hN1yMdY6cSIJhZZaWyqTeCWz6N72ovTz031iQmmVMeTy7gJVlncPuK2idTupafEuVXw==
+X-Received: by 2002:a17:90a:d004:b0:32b:94a2:b0c4 with SMTP id 98e67ed59e1d1-33b9e2925e2mr10031171a91.16.1760711111346;
+        Fri, 17 Oct 2025 07:25:11 -0700 (PDT)
+Received: from [10.216.52.245] ([202.46.23.19])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-33bd79b344dsm3149510a91.3.2025.10.17.07.25.00
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 17 Oct 2025 07:25:10 -0700 (PDT)
+Message-ID: <0683413c-b447-8e3e-8bfd-3edce5a0e14f@oss.qualcomm.com>
+Date: Fri, 17 Oct 2025 19:54:58 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/2] PCI: dwc: Fix ECAM enablement when used with vendor
- drivers
-To: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>,
- Jingoo Han <jingoohan1@gmail.com>, Manivannan Sadhasivam <mani@kernel.org>,
- Lorenzo Pieralisi <lpieralisi@kernel.org>,
- =?UTF-8?Q?Krzysztof_Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
- Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>
-Cc: linux-pci@vger.kernel.org, linux-kernel@vger.kernel.org,
- linux-arm-msm@vger.kernel.org
-References: <20251017-ecam_fix-v1-0-f6faa3d0edf3@oss.qualcomm.com>
- <20251017-ecam_fix-v1-1-f6faa3d0edf3@oss.qualcomm.com>
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.5.1
+Subject: Re: [PATCH v16 02/14] power: reset: reboot-mode: Add device tree
+ node-based registration
+To: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Cc: Bjorn Andersson <andersson@kernel.org>,
+        Sebastian Reichel
+ <sre@kernel.org>, Rob Herring <robh@kernel.org>,
+        Sudeep Holla <sudeep.holla@arm.com>,
+        Souvik Chakravarty <Souvik.Chakravarty@arm.com>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley
+ <conor+dt@kernel.org>,
+        Andy Yan <andy.yan@rock-chips.com>,
+        Mark Rutland <mark.rutland@arm.com>,
+        Lorenzo Pieralisi <lpieralisi@kernel.org>,
+        Arnd Bergmann <arnd@arndb.de>, Konrad Dybcio <konradybcio@kernel.org>,
+        cros-qcom-dts-watchers@chromium.org, Vinod Koul <vkoul@kernel.org>,
+        Catalin Marinas <catalin.marinas@arm.com>,
+        Will Deacon <will@kernel.org>,
+        Florian Fainelli <florian.fainelli@broadcom.com>,
+        Moritz Fischer <moritz.fischer@ettus.com>,
+        John Stultz <john.stultz@linaro.org>,
+        Matthias Brugger <matthias.bgg@gmail.com>,
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+        Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Andre Draszik
+ <andre.draszik@linaro.org>,
+        Kathiravan Thirumoorthy <kathiravan.thirumoorthy@oss.qualcomm.com>,
+        linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org,
+        Elliot Berman <quic_eberman@quicinc.com>,
+        Srinivas Kandagatla <srini@kernel.org>
+References: <20251015-arm-psci-system_reset2-vendor-reboots-v16-0-b98aedaa23ee@oss.qualcomm.com>
+ <20251015-arm-psci-system_reset2-vendor-reboots-v16-2-b98aedaa23ee@oss.qualcomm.com>
+ <CACMJSesvTLe28Jz83b=zfHD2rvmf7-i_2+2DoV=dgooVqFEYbA@mail.gmail.com>
+ <fa42adf0-8f15-ad4c-3788-578b1bee1c72@oss.qualcomm.com>
+ <CACMJSesxazA7Nf6sAhUT16KfwtiUNjvb5JOEWkEb1B5fJtihMQ@mail.gmail.com>
 Content-Language: en-US
-From: Ron Economos <re@w6rz.net>
-In-Reply-To: <20251017-ecam_fix-v1-1-f6faa3d0edf3@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+From: Shivendra Pratap <shivendra.pratap@oss.qualcomm.com>
+In-Reply-To: <CACMJSesxazA7Nf6sAhUT16KfwtiUNjvb5JOEWkEb1B5fJtihMQ@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - box5620.bluehost.com
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - w6rz.net
-X-BWhitelist: no
-X-Source-IP: 73.92.56.26
-X-Source-L: No
-X-Exim-ID: 1v9lNU-00000002ibW-0AQJ
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
-X-Source-Sender: c-73-92-56-26.hsd1.ca.comcast.net ([10.0.1.116]) [73.92.56.26]:52300
-X-Source-Auth: re@w6rz.net
-X-Email-Count: 13
-X-Org: HG=bhshared;ORG=bluehost;
-X-Source-Cap: d3NpeHJ6bmU7d3NpeHJ6bmU7Ym94NTYyMC5ibHVlaG9zdC5jb20=
-X-Local-Domain: yes
-X-CMAE-Envelope: MS4xfNufjx/ylXdeldKJk3NPqflBalFQcqsoU4e+3mJguqUZynsELcGtq0Zo+kXWdpUDm3uwOSPe6kb8ptSwCuCkvkSqBPNDwzLmqObsDONx+ViixHV7cqWz
- zt8mIPNHe3BaCmifCVwONHKqiFq4tLpB9o9W3YJa8jFJvMzuKnmx5lgSUuAffPI1cdHi/WfSRZQhj1AWmodKqhf/6nyfc7bnQaQ=
+X-Proofpoint-GUID: -8bC3wLGg45vrstlXjkz4nV22s1zqHd1
+X-Proofpoint-ORIG-GUID: -8bC3wLGg45vrstlXjkz4nV22s1zqHd1
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDExMDAxNyBTYWx0ZWRfX0ccJBns7dXnl
+ tGtUBTDbIAx/0CjS/25tm5EM5vFrvptBY6Iez971IbHd+AONfbg8vbpQhTRKj2qN9o1m5gYpyCs
+ rNQ8cH4pk6+pt20vy0PP5cD/OOqAT0TuWiGbl+9RkV4uYnmHplfnH1jGoOZidkhzoQBfD7JowTc
+ D3YkrjgKKpoE/pG+FvuQ+ybRDmZt6llPqP8o4Vxt3eQ+RJnNlGimj9dwxE50H7CVZMW36xBkgTY
+ RLSscEbFXDiEl6v6FPWml4udaYu9ThEJUJRvIIyqwTyGKc7Z5l/Fa38C+M/P5p4M/NmsDOy9kOI
+ RLMLWm53CMzofAvZ2xSsd14ZRUi//mEnHVcmTP2EK05mzIcRjBlNL/btgJNtjWlk/jQ0jk+OVKL
+ ZkCCzsmSGL+w0B+w8I57ecwQ+Z3CnA==
+X-Authority-Analysis: v=2.4 cv=JLw2csKb c=1 sm=1 tr=0 ts=68f251d0 cx=c_pps
+ a=vVfyC5vLCtgYJKYeQD43oA==:117 a=j4ogTh8yFefVWWEFDRgCtg==:17
+ a=IkcTkHD0fZMA:10 a=x6icFKpwvdMA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=EUspDBNiAAAA:8 a=9sdP-RPgOja0Ng7vnc8A:9 a=QEXdDO2ut3YA:10
+ a=rl5im9kqc5Lf4LNbBjHf:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-10-17_05,2025-10-13_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ lowpriorityscore=0 phishscore=0 adultscore=0 bulkscore=0 priorityscore=1501
+ impostorscore=0 suspectscore=0 malwarescore=0 spamscore=0 clxscore=1015
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.19.0-2510020000 definitions=main-2510110017
 
-On 10/17/25 04:40, Krishna Chaitanya Chundru wrote:
-> When the vendor configuration space is 256MB aligned, the DesignWare
-> PCIe host driver enables ECAM access and sets the DBI base to the start
-> of the config space. This causes vendor drivers to incorrectly program
-> iATU regions, as they rely on the DBI address for internal accesses.
->
-> To fix this, avoid overwriting the DBI base when ECAM is enabled.
-> Instead, introduce a custom ECAM PCI ops implementation that accesses
-> the DBI region directly for bus 0 and uses ECAM for other buses.
->
-> Fixes: f6fd357f7afb ("PCI: dwc: Prepare the driver for enabling ECAM mechanism using iATU 'CFG Shift Feature'")
-> Reported-by: Ron Economos <re@w6rz.net>
-> Closes: https://lore.kernel.org/all/eac81c57-1164-4d74-a1b4-6f353c577731@w6rz.net/
-> Suggested-by: Manivannan Sadhasivam <mani@kernel.org>
-> Signed-off-by: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
-> ---
->   drivers/pci/controller/dwc/pcie-designware-host.c | 28 +++++++++++++++++++----
->   1 file changed, 24 insertions(+), 4 deletions(-)
->
-> diff --git a/drivers/pci/controller/dwc/pcie-designware-host.c b/drivers/pci/controller/dwc/pcie-designware-host.c
-> index 20c9333bcb1c4812e2fd96047a49944574df1e6f..e92513c5bda51bde3a7157033ddbd73afa370d78 100644
-> --- a/drivers/pci/controller/dwc/pcie-designware-host.c
-> +++ b/drivers/pci/controller/dwc/pcie-designware-host.c
-> @@ -23,6 +23,7 @@
->   #include "pcie-designware.h"
->   
->   static struct pci_ops dw_pcie_ops;
-> +static struct pci_ops dw_pcie_ecam_ops;
->   static struct pci_ops dw_child_pcie_ops;
->   
->   #define DW_PCIE_MSI_FLAGS_REQUIRED (MSI_FLAG_USE_DEF_DOM_OPS		| \
-> @@ -471,9 +472,6 @@ static int dw_pcie_create_ecam_window(struct dw_pcie_rp *pp, struct resource *re
->   	if (IS_ERR(pp->cfg))
->   		return PTR_ERR(pp->cfg);
->   
-> -	pci->dbi_base = pp->cfg->win;
-> -	pci->dbi_phys_addr = res->start;
-> -
->   	return 0;
->   }
->   
-> @@ -529,7 +527,7 @@ static int dw_pcie_host_get_resources(struct dw_pcie_rp *pp)
->   		if (ret)
->   			return ret;
->   
-> -		pp->bridge->ops = (struct pci_ops *)&pci_generic_ecam_ops.pci_ops;
-> +		pp->bridge->ops = &dw_pcie_ecam_ops;
->   		pp->bridge->sysdata = pp->cfg;
->   		pp->cfg->priv = pp;
->   	} else {
-> @@ -842,12 +840,34 @@ void __iomem *dw_pcie_own_conf_map_bus(struct pci_bus *bus, unsigned int devfn,
->   }
->   EXPORT_SYMBOL_GPL(dw_pcie_own_conf_map_bus);
->   
-> +static void __iomem *dw_pcie_ecam_conf_map_bus(struct pci_bus *bus, unsigned int devfn, int where)
-> +{
-> +	struct pci_config_window *cfg = bus->sysdata;
-> +	struct dw_pcie_rp *pp = cfg->priv;
-> +	struct dw_pcie *pci = to_dw_pcie_from_pp(pp);
-> +	unsigned int busn = bus->number;
-> +
-> +	if (busn > 0)
-> +		return pci_ecam_map_bus(bus, devfn, where);
-> +
-> +	if (PCI_SLOT(devfn) > 0)
-> +		return NULL;
-> +
-> +	return pci->dbi_base + where;
-> +}
-> +
->   static struct pci_ops dw_pcie_ops = {
->   	.map_bus = dw_pcie_own_conf_map_bus,
->   	.read = pci_generic_config_read,
->   	.write = pci_generic_config_write,
->   };
->   
-> +static struct pci_ops dw_pcie_ecam_ops = {
-> +	.map_bus = dw_pcie_ecam_conf_map_bus,
-> +	.read = pci_generic_config_read,
-> +	.write = pci_generic_config_write,
-> +};
-> +
->   static int dw_pcie_iatu_setup(struct dw_pcie_rp *pp)
->   {
->   	struct dw_pcie *pci = to_dw_pcie_from_pp(pp);
->
-Works good on the SiFive FU740 controller.
 
-Tested-by: Ron Economos <re@w6rz.net>
 
+On 10/17/2025 2:36 PM, Bartosz Golaszewski wrote:
+> On Thu, 16 Oct 2025 at 19:19, Shivendra Pratap
+> <shivendra.pratap@oss.qualcomm.com> wrote:
+>>>>
+>>>> -                       info = devm_kzalloc(reboot->dev, sizeof(*info), GFP_KERNEL);
+>>>
+>>> This change is good - devres should not be used in subsystem library
+>>> code, only in drivers - but it doesn't seem to belong here, can you
+>>> please separate it out and make it backportable?
+>>
+>> sure. Just to confirm we should separate out the devm_kzalloc part of the
+>> change and add a fixes tag.
+>>
+> 
+> And preferably put it first in the series to avoid conflicts.
+
+Ack.
+
+> 
+>>>> @@ -123,8 +136,11 @@ int reboot_mode_register(struct reboot_mode_driver *reboot)
+>>>>                 return 0;
+>>>>
+>>>>  error:
+>>>> -               list_for_each_entry(info, &reboot->head, list)
+>>>> +               list_for_each_entry_safe(info, next, &reboot->head, list) {
+>>>> +                       list_del(&info->list);
+>>>
+>>> Same here, not deleting the entries currently seems like a bug? Do we
+>>> depend on the driver detach to clean up the resources on failure?
+>>
+>> sure, so this should also go as fixes? and should we remove the other
+>> dev_err(printk) also as fixes? or that can still got with the change
+>> where we add fwnode based registration?
+>>
+> 
+> It doesn't seem to be strictly required by current code as the users
+> use it "correctly" but if the API becomes used in different ways - for
+> instance the structure may be reused after failure - it's a good idea
+> to backport it. In general we should undo everything we did in the
+> same function if we fail at some point.
+
+sure. will update it.
+
+thanks,
+Shivendra
 
