@@ -1,310 +1,178 @@
-Return-Path: <linux-arm-msm+bounces-77666-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-77667-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id C67FEBE6319
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Oct 2025 05:12:06 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id F13E3BE6350
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Oct 2025 05:27:38 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 855BA3ADE1C
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Oct 2025 03:12:04 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 9CBC24034B1
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Oct 2025 03:27:37 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id F35E12550CC;
-	Fri, 17 Oct 2025 03:11:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6EA3B23A564;
+	Fri, 17 Oct 2025 03:27:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Y+ZgB4Hn"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="j7CiWD4X"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f43.google.com (mail-lf1-f43.google.com [209.85.167.43])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E875B25A321
-	for <linux-arm-msm@vger.kernel.org>; Fri, 17 Oct 2025 03:11:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE54933F9
+	for <linux-arm-msm@vger.kernel.org>; Fri, 17 Oct 2025 03:27:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760670713; cv=none; b=WvgSSNpIpaJCCoigRoj1welcGOUdtfBxMd3bkddXaotXTTJJqFcUPViV1knZgrFKHvqpTyrjgn2ZipujdRPPkORWFklZyhzuv9hayTYMLpz7FOVTzSSI+AJzeDi/Ac9Ue8krqrULNMuCurZADjBBzehvkRRzfOn5clpJg/UFW7Y=
+	t=1760671656; cv=none; b=KL+QsEY7rjJ3/tWFrfkxT8tpd5ZS0pq0YtbkL+kmD7Xyj/RU3reqOmGltTVe9J6SCxihufH0A+gdPSJGtNvxAKEpqOgX2qkt6cLtaoXKNHQtCy3pdsT0XMV1jjQJ8ozLqZC++Sm/SO2IxujcKKcprQiBptYQrN5b3vY1RduchhE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760670713; c=relaxed/simple;
-	bh=wXZFPgYH70cmZX6EYNF3mM2sZEWe8tVseMuqUQBxWu0=;
+	s=arc-20240116; t=1760671656; c=relaxed/simple;
+	bh=bpxlvObGWZqlXhfi4AkPZMu6AjrfNg8tFGT5e+6zURE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UuwmyL3bgFy4XSbMql3YZJWZR/03GkBFWOTgCT0xDZQciHx54tTzNycDSUfWbLFnQHZZBS9z1MTmgTo8+WHrazQRgLOFOO1II1OaVzvgMRIhg7dzzBN41gsZwRmRf9PS06+U7DRwPo8d3eTvqsQjpRGa+nE/kCLpMwy0hdIGUJM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Y+ZgB4Hn; arc=none smtp.client-ip=209.85.167.43
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f43.google.com with SMTP id 2adb3069b0e04-57e7aae5af9so227536e87.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 16 Oct 2025 20:11:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1760670710; x=1761275510; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=QA9hqAjwG1E9jDqSO/KlB8EGiH+7nWQhHT2HL2H+WO0=;
-        b=Y+ZgB4Hn0czYixtJ+8sgnCkCxDj6SyH0RCmyivGraTNTyKL3/yYfGnQE6XActCNUWG
-         d8Lt76EAVQXvyktbDmgFFFU5+yv0yBgLpqCsOQfqdZdvaBh+oE13CEtjkFj+6P5iIr7U
-         Y6k9DgL9qxOCE8tTi2O4u5CYAsU0HLvwIFbkN0QDnpvR5bEYaFa+0huKog8+5IDnEGr3
-         3xc2ffzBaqnVXjItOT0IapT4Jgyk3pDqANwkSZ6k18POn6HCwdEPGVOVjWnJxtqn6BUr
-         FTwIXcG+2cyTwhJoVPTMvNifl94BoqlIxMOeNYp4b9TUmYF1iqAklq3UhjFx7JglECzJ
-         FTYg==
+	 MIME-Version:Content-Type; b=U7affB/nsH5xg9vqnsD8i/OtOaQUXSh9HPj0XgDKfGocPUj9Pi5j1ggFMueS6sc7ihHsFEFE3ywAjdebyEydyIZGqmYH1FLanfJH7Uk2c9kBspVYLv7yyTFHrRftG0J/U348Tk3E+Ox/+6eGsziO2Y29TgwT3GaLtWOYDOBLAlY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=j7CiWD4X; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 59GKLdvu009737
+	for <linux-arm-msm@vger.kernel.org>; Fri, 17 Oct 2025 03:27:34 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	/89NhQKdqoqte+xpicQhKtPZGxqewp0bE+hnVypDqXQ=; b=j7CiWD4XczloLFYf
+	uQx26OVr+Du/JH01q7B/GVcvRHccunIjpiE55veS1fKcp4E446GtmNt124MNEqQW
+	Rse+DjfwmKz75fOvsuc/eLtW6UPXoXs4kqOPLtlJd5H4ozKjKV9LVBdBe24qYJdk
+	OE9Pc+R+kfl6KyfNNSEuTE8kc5QuSNKMMh0MarkwSt7w5PS0n+6ZZ+EoxXhZAcU9
+	ddgihQhzrdTZlwMuifO3JvxBvvA/+ngrV4c9/OB9P4iOfKzbdzw25wIFLmpk97+Z
+	pzZVpe5xqmVlt5VH3htaUuhjzdEWGx5qwFyZN2bI/r0zw64I+b19VHewYX4PeJn/
+	ECYiWg==
+Received: from mail-pj1-f72.google.com (mail-pj1-f72.google.com [209.85.216.72])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 49rw1apxbq-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Fri, 17 Oct 2025 03:27:33 +0000 (GMT)
+Received: by mail-pj1-f72.google.com with SMTP id 98e67ed59e1d1-32edda89a37so1405616a91.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 16 Oct 2025 20:27:33 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1760670710; x=1761275510;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=QA9hqAjwG1E9jDqSO/KlB8EGiH+7nWQhHT2HL2H+WO0=;
-        b=M6feJN5OuMEYkj5OaTSr7lF1Fa2uvFb8imG7/F7AVwAhsEdX65oAcvrR9zmud0N2Ea
-         hBAI6a8TxX7+PbFwTbJC1xhXP0XYYuMSFHNKBp2eYNbCzXOaVFwUiNnYdgQXp8SIh2ct
-         N72/7FZP3LBl0DNgw3TbW/RxbKsvQXYIs6cuWEH8yp/s3D8TWa/+Gp7Fg3cEG21xlt+p
-         inaaOo9LaeJNUcvNzADaPfNJ0UlGl0iO9lRcuDVvwUTkrT3HB0AYY4Fb0LALytNeXg+Q
-         YDlPSkY6//PU5Z2/CPWkxI2jXkV2Dei/4s5DCNKgvMO1FY823wSZhJZS4vfz4L92hXPO
-         JClw==
-X-Forwarded-Encrypted: i=1; AJvYcCVGzOYMCwFhFGLSdifK6A5zFw9hB+oNsshBeveepdqK206qX4siHxRMhHZ1j0h4WGUECSbSe74T2caFXe6F@vger.kernel.org
-X-Gm-Message-State: AOJu0Yw0nCVJIbI4Y3fWSvIjn+OpBZZHZ0SaWMc+OVciv+JfDa/a1c0B
-	RuzccJC7KP9krQ7bAgNaRXyb1/DVP/uEzlkwcGNEEmu4qMtDmBlQGjogJbgogp6483Y=
-X-Gm-Gg: ASbGncsNDfMspC0hrpOh7SsYOpH+dUiyRepfYc7af2dGN2rb9FxJS8Agmv/8q3QxqcV
-	lKaRuLNbgjT9VSxdO9tLB0rdn7B3mTAD5XBiRLkPXEWdLnaSUp08iELcOsabVJ772atJuJrREdX
-	NCtz7r6HInqAnbLoF7zDtwHkv7km3h6fxF4Vf6Rw2s+D6DRs52yPIX2WQK9mBAC4H4TX+08AXnm
-	rJ6F2yftcbcNkxiGPmU8LOUGBboOeTNvmOTdbk40ye86ukrnYBr0A8HbC7ZEYlmn3qsRp6+CP+W
-	heXcWWKc5yEPjtBLM58w4KMDjs9CN3YnrmoDs74i00D0IRpoyMyaYC3L6ESNh2+HqdY6ped0Shu
-	MKZcUlR3KvIWpVR1uapxkqigT7EiqU/2FcjM6wyqDho/1niaK3/QxeRmB1cBsdAiugl414M9D0g
-	wRRCPibouXOOVgsJSC9CCh2WpZOgm/GhIVIE7Q9i+M1AQ=
-X-Google-Smtp-Source: AGHT+IECks8I3mYWx2PUIbg7ewNMlGfHX1YiKCcgj3by7xQkWiPnfR6l1obsEgPSWsZwQ8dRAVIVMQ==
-X-Received: by 2002:a05:6512:2209:b0:57a:2be1:d766 with SMTP id 2adb3069b0e04-591d854a5a5mr435142e87.4.1760670710259;
-        Thu, 16 Oct 2025 20:11:50 -0700 (PDT)
-Received: from thyme.. (91-159-24-186.elisa-laajakaista.fi. [91.159.24.186])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-59088563844sm7496077e87.69.2025.10.16.20.11.47
+        d=1e100.net; s=20230601; t=1760671653; x=1761276453;
+        h=content-transfer-encoding:fcc:content-language:user-agent
+         :mime-version:references:in-reply-to:message-id:date:subject:cc:to
+         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=/89NhQKdqoqte+xpicQhKtPZGxqewp0bE+hnVypDqXQ=;
+        b=ElxOAtYZVQUmYliVIJyrwiF6YC0gc3YJiOT1gMxfZohka6H+tS2KsveCWxWDvzCXQj
+         8ivzquP7/wQQ7k0BHL5YIOIrpcnVdEuX3zWr7weGe/QDQKCEDYOXfgj8gkjpNvSyr7pt
+         kH4ihHfygDFnybI/3xPMQoCWMUtpmerLniJD0VMfosZ9lz4SKyI8rMsjcJ8UpzSzx52T
+         73e841OtEJizOukfBZo6IaI7hNYsMayl7EnT99d88BXi1y64GPtvh8nPzccKb27xBOBL
+         /eaCi4TlVjsSE9MpRCyTZBybhoI9pnrgNdROVyS1jnzHC2RuHdae0MLTm1Xh/V32w3Wi
+         qSUg==
+X-Forwarded-Encrypted: i=1; AJvYcCU97z7BX59EsY48p0rDXskecxEzwfNQR62/M7lYE5IoSZI7+fD4WiuaPRqwNRW54QraiKMafYfg9Au8W2aw@vger.kernel.org
+X-Gm-Message-State: AOJu0YwELtWU11aao1gUrKJqvJlaExshFbGDh1kTb8n/A7tkYY98fL9B
+	jor6dnN1mgu1E8AM5X8wJ5ZxaCau9mvQDeiD+/vlgWPD+HMUWb9ZkF028e6zIi2WcGGURkqGd40
+	JoRXFCBrv4NEofVwdxE9eRH06+tdTTomE2cMLfoYuyGRQpexx43G/czRXyO5Yaizw+x02
+X-Gm-Gg: ASbGncv/ybVZmQkPQuivZwHV2679n3cdK8SNt2T6sHDmyOZuWg3w80QSIcxls2meq4j
+	iKCQSJAxHggEEF0VgwzcZjc3rtzJw5kuhupKhQl70Z0aYe4Te+QHwrPetQxNtJlSqfvoCKZwGV/
+	IUB6hK0AO8wIEI4xdelXgDQyD/vRYh0waorzg8cHk+q7WRAG/9EQFEZhA72hkBvNwS4wk2bLWh7
+	Q6uEjSfJDtX4H5mh+Gh05vdcXouDWsIOx+hHeZnZakgk4C+3isceHMV08rFM9KZ4p5g/Z0xKPNT
+	UHPx7j2u4AcFdPJHxcyxhNtMS3aF+I2hjEv+gDGND49o8OOxuoAJ9r+FsM9cksG+92nvqs5N/uo
+	Hpx+RjcwkMKDwAxKNUdJdpfwMOncN
+X-Received: by 2002:a17:903:2343:b0:290:a3b9:d4c3 with SMTP id d9443c01a7336-290cb7594d6mr24632355ad.56.1760671652956;
+        Thu, 16 Oct 2025 20:27:32 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IE9L7F90cxwCk31VMkjU5gCAsBpLq95tQORQNvi3x3FLHAzsKadq8hknCImdNDErBQ2m48CHQ==
+X-Received: by 2002:a17:903:2343:b0:290:a3b9:d4c3 with SMTP id d9443c01a7336-290cb7594d6mr24632095ad.56.1760671652548;
+        Thu, 16 Oct 2025 20:27:32 -0700 (PDT)
+Received: from cbsp-sz01-lnx.qualcomm.com ([114.94.8.21])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-33be54cad3esm104753a91.12.2025.10.16.20.27.28
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 16 Oct 2025 20:11:48 -0700 (PDT)
-From: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
-To: Bryan O'Donoghue <bod@kernel.org>,
-	Robert Foss <rfoss@kernel.org>,
-	Todor Tomov <todor.too@gmail.com>,
-	Mauro Carvalho Chehab <mchehab@kernel.org>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konradybcio@kernel.org>
-Cc: Neil Armstrong <neil.armstrong@linaro.org>,
-	linux-arm-msm@vger.kernel.org,
-	linux-media@vger.kernel.org,
-	devicetree@vger.kernel.org
-Subject: [PATCH v3 4/4] arm64: dts: qcom: sm8650: Add CAMSS device tree node
-Date: Fri, 17 Oct 2025 06:11:31 +0300
-Message-ID: <20251017031131.2232687-5-vladimir.zapolskiy@linaro.org>
-X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20251017031131.2232687-1-vladimir.zapolskiy@linaro.org>
-References: <20251017031131.2232687-1-vladimir.zapolskiy@linaro.org>
+        Thu, 16 Oct 2025 20:27:32 -0700 (PDT)
+From: Tingguo Cheng <tingguo.cheng@oss.qualcomm.com>
+To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>
+Cc: Tingguo Cheng <tingguo.cheng@oss.qualcomm.com>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, kernel@oss.qualcomm.com,
+        Kamal Wadhwa <kamal.wadhwa@oss.qualcomm.com>,
+        Rakesh Kota <rakesh.kota@oss.qualcomm.com>
+Subject: Re: [PATCH] arm64: dts: qcom: lemans: pmic: enable rtc
+Date: Fri, 17 Oct 2025 11:26:26 +0800
+Message-ID: <794c77bb-db9b-4b34-b632-62ea56616213@oss.qualcomm.com>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <0dd6a528-d204-4073-a4b6-76356e71c5fc@oss.qualcomm.com>
+References: <20250925-add-rtc-for-lemans-v1-1-17fc56451c84@oss.qualcomm.com>
+ <0dd6a528-d204-4073-a4b6-76356e71c5fc@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+Content-Language: en-US
+X-Mozilla-Draft-Info: internal/draft; vcard=0; receipt=0; DSN=0; uuencode=0;
+ attachmentreminder=0; deliveryformat=0
+X-Identity-Key: id1
+Fcc: imap://tingguo.cheng%40oss.qualcomm.com@imap.gmail.com/[Gmail]/Sent Mail
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: quoted-printable
+X-Authority-Analysis: v=2.4 cv=K88v3iWI c=1 sm=1 tr=0 ts=68f1b7a5 cx=c_pps
+ a=RP+M6JBNLl+fLTcSJhASfg==:117 a=Uz3yg00KUFJ2y2WijEJ4bw==:17
+ a=IkcTkHD0fZMA:10 a=x6icFKpwvdMA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8 a=rOiIU-5ZP3SxAgHWUzgA:9 a=QEXdDO2ut3YA:10
+ a=iS9zxrgQBfv6-_F4QbHw:22
+X-Proofpoint-GUID: LguRm2UO-EyABsY6rDTfGjrgcepLWa5u
+X-Proofpoint-ORIG-GUID: LguRm2UO-EyABsY6rDTfGjrgcepLWa5u
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDEzMDAzNSBTYWx0ZWRfX7EmUYhsyQlr1
+ 7VAsLNmgtXH+fYGhoIMCF7uw+JMBLKdYzKHvXrSKTEtnki9lSCyj1T8iGGorHfWKPx9yUks2/lD
+ UuJNgPV22/y2QgNwkyQZqKnQF5NuHmur1RgzCaMxTz1kbHX9JbXVKbg3KJCJloBKlfLphvMjcv2
+ sHEHVtDKLo76Hstvhq8dHQAAy6FeM4+HknkcMvTtJsxKAC9GZPzVtfxiRfr5ATPmNammJ99018n
+ +Io4JsdVa73qbDh7FDEGZQaNa+czoyTmKxOTb94uclAsaJkqyd7gtaISCsVKuZJCZKKpCYAErFe
+ r5VRzRbgBxjLNEbSOvh7HqdPuviX32Q+nf07W/EtttXP4VKNqeDv3+feS3X7cozTGoLBapdoG54
+ DbLAkqzetFxlEddT8cid8km/I/1lJg==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-10-17_02,2025-10-13_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ malwarescore=0 spamscore=0 impostorscore=0 priorityscore=1501 phishscore=0
+ adultscore=0 clxscore=1015 bulkscore=0 suspectscore=0 lowpriorityscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.19.0-2510020000 definitions=main-2510130035
 
-Add Qualcomm SM8650 CAMSS device tree node to the platform dtsi file,
-the SM8650 CAMSS IP contains
-* 6 x CSIPHY,
-* 3 x CSID, 2 x CSID Lite,
-* 3 x IFE, 2 x IFE Lite.
-
-Signed-off-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
----
- arch/arm64/boot/dts/qcom/sm8650.dtsi | 180 +++++++++++++++++++++++++++
- 1 file changed, 180 insertions(+)
-
-diff --git a/arch/arm64/boot/dts/qcom/sm8650.dtsi b/arch/arm64/boot/dts/qcom/sm8650.dtsi
-index ebf1971b1bfb..555305c1c70d 100644
---- a/arch/arm64/boot/dts/qcom/sm8650.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8650.dtsi
-@@ -5343,6 +5343,186 @@ cci2_i2c1: i2c-bus@1 {
- 			};
- 		};
- 
-+		camss: isp@acb6000 {
-+			compatible = "qcom,sm8650-camss";
-+			reg = <0 0x0acb6000 0 0x1000>,
-+			      <0 0x0acb8000 0 0x1000>,
-+			      <0 0x0acba000 0 0x1000>,
-+			      <0 0x0acbc000 0 0x1000>,
-+			      <0 0x0accb000 0 0x1000>,
-+			      <0 0x0acd0000 0 0x1000>,
-+			      <0 0x0ace4000 0 0x2000>,
-+			      <0 0x0ace6000 0 0x2000>,
-+			      <0 0x0ace8000 0 0x2000>,
-+			      <0 0x0acea000 0 0x2000>,
-+			      <0 0x0acec000 0 0x2000>,
-+			      <0 0x0acee000 0 0x2000>,
-+			      <0 0x0ac62000 0 0xf000>,
-+			      <0 0x0ac71000 0 0xf000>,
-+			      <0 0x0ac80000 0 0xf000>,
-+			      <0 0x0accc000 0 0x2000>,
-+			      <0 0x0acd1000 0 0x2000>;
-+			reg-names = "csid_wrapper",
-+				    "csid0",
-+				    "csid1",
-+				    "csid2",
-+				    "csid_lite0",
-+				    "csid_lite1",
-+				    "csiphy0",
-+				    "csiphy1",
-+				    "csiphy2",
-+				    "csiphy3",
-+				    "csiphy4",
-+				    "csiphy5",
-+				    "vfe0",
-+				    "vfe1",
-+				    "vfe2",
-+				    "vfe_lite0",
-+				    "vfe_lite1";
-+			clocks = <&camcc CAM_CC_CAMNOC_AXI_RT_CLK>,
-+				 <&camcc CAM_CC_CPAS_AHB_CLK>,
-+				 <&camcc CAM_CC_CPAS_FAST_AHB_CLK>,
-+				 <&camcc CAM_CC_CPAS_IFE_0_CLK>,
-+				 <&camcc CAM_CC_CPAS_IFE_1_CLK>,
-+				 <&camcc CAM_CC_CPAS_IFE_2_CLK>,
-+				 <&camcc CAM_CC_CPAS_IFE_LITE_CLK>,
-+				 <&camcc CAM_CC_CSID_CLK>,
-+				 <&camcc CAM_CC_CSIPHY0_CLK>,
-+				 <&camcc CAM_CC_CSI0PHYTIMER_CLK>,
-+				 <&camcc CAM_CC_CSI1PHYTIMER_CLK>,
-+				 <&camcc CAM_CC_CSIPHY1_CLK>,
-+				 <&camcc CAM_CC_CSI2PHYTIMER_CLK>,
-+				 <&camcc CAM_CC_CSIPHY2_CLK>,
-+				 <&camcc CAM_CC_CSI3PHYTIMER_CLK>,
-+				 <&camcc CAM_CC_CSIPHY3_CLK>,
-+				 <&camcc CAM_CC_CSI4PHYTIMER_CLK>,
-+				 <&camcc CAM_CC_CSIPHY4_CLK>,
-+				 <&camcc CAM_CC_CSI5PHYTIMER_CLK>,
-+				 <&camcc CAM_CC_CSIPHY5_CLK>,
-+				 <&camcc CAM_CC_CSID_CSIPHY_RX_CLK>,
-+				 <&gcc GCC_CAMERA_HF_AXI_CLK>,
-+				 <&camcc CAM_CC_QDSS_DEBUG_XO_CLK>,
-+				 <&camcc CAM_CC_IFE_0_CLK>,
-+				 <&camcc CAM_CC_IFE_0_FAST_AHB_CLK>,
-+				 <&camcc CAM_CC_IFE_1_CLK>,
-+				 <&camcc CAM_CC_IFE_1_FAST_AHB_CLK>,
-+				 <&camcc CAM_CC_IFE_2_CLK>,
-+				 <&camcc CAM_CC_IFE_2_FAST_AHB_CLK>,
-+				 <&camcc CAM_CC_IFE_LITE_CLK>,
-+				 <&camcc CAM_CC_IFE_LITE_AHB_CLK>,
-+				 <&camcc CAM_CC_IFE_LITE_CPHY_RX_CLK>,
-+				 <&camcc CAM_CC_IFE_LITE_CSID_CLK>;
-+			clock-names = "camnoc_axi",
-+				      "cpas_ahb",
-+				      "cpas_fast_ahb",
-+				      "cpas_vfe0",
-+				      "cpas_vfe1",
-+				      "cpas_vfe2",
-+				      "cpas_vfe_lite",
-+				      "csid",
-+				      "csiphy0",
-+				      "csiphy0_timer",
-+				      "csiphy1",
-+				      "csiphy1_timer",
-+				      "csiphy2",
-+				      "csiphy2_timer",
-+				      "csiphy3",
-+				      "csiphy3_timer",
-+				      "csiphy4",
-+				      "csiphy4_timer",
-+				      "csiphy5",
-+				      "csiphy5_timer",
-+				      "csiphy_rx",
-+				      "gcc_axi_hf",
-+				      "qdss_debug_xo",
-+				      "vfe0",
-+				      "vfe0_fast_ahb",
-+				      "vfe1",
-+				      "vfe1_fast_ahb",
-+				      "vfe2",
-+				      "vfe2_fast_ahb",
-+				      "vfe_lite",
-+				      "vfe_lite_ahb",
-+				      "vfe_lite_cphy_rx",
-+				      "vfe_lite_csid";
-+			interrupts = <GIC_SPI 601 IRQ_TYPE_EDGE_RISING 0>,
-+				     <GIC_SPI 603 IRQ_TYPE_EDGE_RISING 0>,
-+				     <GIC_SPI 431 IRQ_TYPE_EDGE_RISING 0>,
-+				     <GIC_SPI 605 IRQ_TYPE_EDGE_RISING 0>,
-+				     <GIC_SPI 376 IRQ_TYPE_EDGE_RISING 0>,
-+				     <GIC_SPI 477 IRQ_TYPE_EDGE_RISING 0>,
-+				     <GIC_SPI 478 IRQ_TYPE_EDGE_RISING 0>,
-+				     <GIC_SPI 479 IRQ_TYPE_EDGE_RISING 0>,
-+				     <GIC_SPI 448 IRQ_TYPE_EDGE_RISING 0>,
-+				     <GIC_SPI 122 IRQ_TYPE_EDGE_RISING 0>,
-+				     <GIC_SPI 89 IRQ_TYPE_EDGE_RISING 0>,
-+				     <GIC_SPI 602 IRQ_TYPE_EDGE_RISING 0>,
-+				     <GIC_SPI 604 IRQ_TYPE_EDGE_RISING 0>,
-+				     <GIC_SPI 688 IRQ_TYPE_EDGE_RISING 0>,
-+				     <GIC_SPI 606 IRQ_TYPE_EDGE_RISING 0>,
-+				     <GIC_SPI 377 IRQ_TYPE_EDGE_RISING 0>;
-+			interrupt-names = "csid0",
-+					  "csid1",
-+					  "csid2",
-+					  "csid_lite0",
-+					  "csid_lite1",
-+					  "csiphy0",
-+					  "csiphy1",
-+					  "csiphy2",
-+					  "csiphy3",
-+					  "csiphy4",
-+					  "csiphy5",
-+					  "vfe0",
-+					  "vfe1",
-+					  "vfe2",
-+					  "vfe_lite0",
-+					  "vfe_lite1";
-+			interconnects = <&gem_noc MASTER_APPSS_PROC 0
-+					 &config_noc SLAVE_CAMERA_CFG 0>,
-+					<&mmss_noc MASTER_CAMNOC_HF 0
-+					 &mc_virt SLAVE_EBI1 0>;
-+			interconnect-names = "ahb",
-+					     "hf_mnoc";
-+			iommus = <&apps_smmu 0x800 0x20>,
-+				 <&apps_smmu 0x18a0 0x40>,
-+				 <&apps_smmu 0x1860 0x00>;
-+			power-domains = <&camcc CAM_CC_IFE_0_GDSC>,
-+					<&camcc CAM_CC_IFE_1_GDSC>,
-+					<&camcc CAM_CC_IFE_2_GDSC>,
-+					<&camcc CAM_CC_TITAN_TOP_GDSC>;
-+			power-domain-names = "ife0", "ife1", "ife2", "top";
-+			status = "disabled";
-+
-+			ports {
-+				#address-cells = <1>;
-+				#size-cells = <0>;
-+
-+				port@0 {
-+					reg = <0>;
-+				};
-+
-+				port@1 {
-+					reg = <1>;
-+				};
-+
-+				port@2 {
-+					reg = <2>;
-+				};
-+
-+				port@3 {
-+					reg = <3>;
-+				};
-+
-+				port@4 {
-+					reg = <4>;
-+				};
-+
-+				port@5 {
-+					reg = <5>;
-+				};
-+			};
-+		};
-+
- 		camcc: clock-controller@ade0000 {
- 			compatible = "qcom,sm8650-camcc";
- 			reg = <0 0x0ade0000 0 0x20000>;
--- 
-2.49.0
-
+=0D
+On 9/25/2025 7:34 PM, Konrad Dybcio wrote:=0D
+> On 9/25/25 9:48 AM, Tingguo Cheng wrote:=0D
+>> Add RTC node, the RTC is controlled by PMIC device via spmi bus.=0D
+> subject: "arm64: dts: qcom: lemans-pmics: foo"=0D
+>=0D
+> (following the style for the directory)=0D
+Posted v2 to modify this.=0D
+>> Signed-off-by: Tingguo Cheng <tingguo.cheng@oss.qualcomm.com>=0D
+>> ---=0D
+>>   arch/arm64/boot/dts/qcom/lemans-pmics.dtsi | 7 +++++++=0D
+>>   1 file changed, 7 insertions(+)=0D
+>>=0D
+>> diff --git a/arch/arm64/boot/dts/qcom/lemans-pmics.dtsi b/arch/arm64/boo=
+t/dts/qcom/lemans-pmics.dtsi=0D
+>> index 1369c3d43f866de9d8cd5cd4985241b99c0a0454..9e0d05c1b39ce229d5d4310e=
+a1df1bf02e689178 100644=0D
+>> --- a/arch/arm64/boot/dts/qcom/lemans-pmics.dtsi=0D
+>> +++ b/arch/arm64/boot/dts/qcom/lemans-pmics.dtsi=0D
+>> @@ -132,6 +132,13 @@ pmm8654au_0_pon_resin: resin {=0D
+>>   			};=0D
+>>   		};=0D
+>>   =0D
+>> +		pmm8654au_0_rtc: rtc@6100 {=0D
+>> +			compatible =3D "qcom,pmk8350-rtc";=0D
+>> +			reg =3D <0x6100>, <0x6200>;=0D
+>> +			reg-names =3D "rtc", "alarm";=0D
+> 1 reg and name a line, please=0D
+Posted v2 for this: =0D
+https://lore.kernel.org/all/20251017-add-rtc-for-lemans-v2-1-0aaf174b25b9@o=
+ss.qualcomm.com/=0D
+ >> +			interrupts =3D <0x0 0x62 0x1 IRQ_TYPE_EDGE_RISING>;=0D
+> Do we not need "qcom,no-alarm" on lemans?=0D
+=0D
+No, it's not needed on lemans. "no-alarm" is only needed on compute =0D
+targets where windows TAD feature will support it.=0D
+=0D
+>=0D
+> Konrad=0D
 
