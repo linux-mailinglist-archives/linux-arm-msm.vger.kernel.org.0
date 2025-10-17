@@ -1,130 +1,180 @@
-Return-Path: <linux-arm-msm+bounces-77824-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-77825-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ams.mirrors.kernel.org (ams.mirrors.kernel.org [213.196.21.55])
-	by mail.lfdr.de (Postfix) with ESMTPS id E4F42BEB550
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Oct 2025 21:05:46 +0200 (CEST)
+Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [142.0.200.124])
+	by mail.lfdr.de (Postfix) with ESMTPS id 217ECBEB5D7
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Oct 2025 21:10:54 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ams.mirrors.kernel.org (Postfix) with ESMTPS id 6FDC735D9C7
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Oct 2025 19:05:46 +0000 (UTC)
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id A4145586AAE
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Oct 2025 19:10:15 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 33E6433F8B3;
-	Fri, 17 Oct 2025 19:05:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id EB72B2FB99F;
+	Fri, 17 Oct 2025 19:10:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b="j0xAkt8F"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="tQIuYTX7"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from bombadil.infradead.org (bombadil.infradead.org [198.137.202.133])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 549E533F8A7;
-	Fri, 17 Oct 2025 19:05:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.137.202.133
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 758F12FE587;
+	Fri, 17 Oct 2025 19:10:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760727941; cv=none; b=JzDMR6ndwCNS8YEOLVybPr1HLx8urtjAE3mqsWh/BhdLMjE21Tyg2jVCtxGmYzPhV9hJHPf9JQV0pLzNP3j91AHRUpRJQ5CmwzH2oDaNSae/vSMFUV4FTNPdofjWXwFXRFWc8+jKAzAycZxDVdsjfod/qD1JagID3Fs7eV/r8IE=
+	t=1760728209; cv=none; b=nUDbiKxS2XA1BsOLC/vP+a7jUQrt29Kuds/ZfWEycfueNypkCnBOG+idIJs2HVjI0ykQvF8WKf/Z2yYyz7z8yDeFGHCCq6XXE/MjdKamujzj++snavfSu21RQ6t/BrWCAI9lD4dLIXzXHUkx/gLBnpo9nuafCRWrtmRdq94GucA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760727941; c=relaxed/simple;
-	bh=EAZ20eAFYtrCKWFpLn1xY8QMM/Vv8cQrzxqTpD3ltts=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=AjT9J55/dHsZE+4EWBb4HrxGwBKJAA14bWWl3Sb0LmU7RU2Us/G0ZJHrAENygpDuHjJeikhw8EWY3mXcAXEetyYyT/r9lExmO74jcDm3mgZym+mo0vpQAZf66jfellCFpLEgdgrysNIX0RsoY8kA63purM7wAIja4f5gGYrgaq4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=infradead.org; spf=none smtp.mailfrom=infradead.org; dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b=j0xAkt8F; arc=none smtp.client-ip=198.137.202.133
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=infradead.org
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=infradead.org
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=infradead.org; s=bombadil.20210309; h=Content-Transfer-Encoding:
-	Content-Type:In-Reply-To:From:References:Cc:To:Subject:MIME-Version:Date:
-	Message-ID:Sender:Reply-To:Content-ID:Content-Description;
-	bh=+wIx9xQFFwn6Kvjt5KdJkNScO1SwKhEm4dQYZjip9DQ=; b=j0xAkt8FRdmIAXtBxWlVY+EOjN
-	GADL9Mv/sIOWib0yRu2vlh/z1GX8FDUZX3+BTcIXwO+6aQiv7aVk2JBJHus3PyDg0a/hlgF3sIZXl
-	bRVeMNQHq6S10vWAczH76Ev5OAn3GhAKPMobtLddNfbLPP9Ia8oZe570hIkuFoVUx7XOW61gk2LV7
-	ZW7Nnb74JcCy4zeQWgZr7y3gUcUQu7XYBJmmHqlANIGqN4hn2FqMe5Nf8hp39qNlRfx2pungyscut
-	FTTHbSkIo6iZKkt9MhNm6WwN/mL21E+4eCu5qWI8EA5+5ZfOCbskFgX6YcPZMjm/sWhx/PJV4uIVz
-	bA2lu7Lw==;
-Received: from [50.53.43.113] (helo=[192.168.254.34])
-	by bombadil.infradead.org with esmtpsa (Exim 4.98.2 #2 (Red Hat Linux))
-	id 1v9pli-00000008nXm-3laS;
-	Fri, 17 Oct 2025 19:05:38 +0000
-Message-ID: <dcb8e0ac-ed47-42a2-9882-c2cd6d6cd6fe@infradead.org>
-Date: Fri, 17 Oct 2025 12:05:38 -0700
+	s=arc-20240116; t=1760728209; c=relaxed/simple;
+	bh=0f9esdWuiStJECWkAZn/SOlcYyopP8tRdxicHx6d+OE=;
+	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition:In-Reply-To; b=sfos71s2ArwfzIVmIy1w0gWOlvOaVMiG5VJL2SkxAJxxk4+zib7R7b6kpGMTnK573JqlX9Cw/eFAQEuR2s1I04bvHNLyi7qMIAXvlztImXCeInkm/qHQsbE41Kfxma1R6H4llIqQdE8A18Kkfb4s75sMkUTaOriIZX6yU2YxOtg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=tQIuYTX7; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48629C4CEE7;
+	Fri, 17 Oct 2025 19:10:07 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1760728207;
+	bh=0f9esdWuiStJECWkAZn/SOlcYyopP8tRdxicHx6d+OE=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:From;
+	b=tQIuYTX7Y8ndmbugWjDJuqFowJB7D7ZiJxGsYXMan2X1frNeiQ8YGxQbMg/3yjLaC
+	 mqcqv8ai0cWhv8xBVcbfBQpuQ5wQ0hZVJkOV7CsP44+KjcBLqFev+qnLGGbZIvaZp5
+	 Iw6JDOMtoJtnRmlC4yfsSzjwuCDB8EyyQXkNoxXOLyB+CYFj1SNTamNdmpO1LynQVA
+	 8NTSwP3+ugqRYINZ0tVfKinm8YF9hz2cD2+xDPe+Hzu1PCLOy/GHfbhg6Ti4v5S968
+	 9IYlgNeSyv5X7YRW6lgBAjuE10VbPCOosZNhY+J2bpgkX+BawOq3FAYObFLenZM1y1
+	 23bIt1hqFSnqQ==
+Date: Fri, 17 Oct 2025 14:10:05 -0500
+From: Bjorn Helgaas <helgaas@kernel.org>
+To: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
+Cc: Jingoo Han <jingoohan1@gmail.com>,
+	Manivannan Sadhasivam <mani@kernel.org>,
+	Lorenzo Pieralisi <lpieralisi@kernel.org>,
+	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
+	Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>,
+	linux-pci@vger.kernel.org, linux-kernel@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org, Ron Economos <re@w6rz.net>
+Subject: Re: [PATCH 1/2] PCI: dwc: Fix ECAM enablement when used with vendor
+ drivers
+Message-ID: <20251017191005.GA1041995@bhelgaas>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] firmware: qcom: tzmem: area: fix qcom_tzmem_policy
- kernel-doc
-To: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
- Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Cc: linux-kernel@vger.kernel.org, Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>, linux-arm-msm@vger.kernel.org
-References: <20251017070702.1637092-1-rdunlap@infradead.org>
- <dfc03399-d4f8-4e52-b097-75fbbfd1c8f7@oss.qualcomm.com>
- <CACMJSetEtS6n8cA0bnH2VORw_4b3Jpw74nqNAqE4W8XLKo6grg@mail.gmail.com>
-Content-Language: en-US
-From: Randy Dunlap <rdunlap@infradead.org>
-In-Reply-To: <CACMJSetEtS6n8cA0bnH2VORw_4b3Jpw74nqNAqE4W8XLKo6grg@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20251017-ecam_fix-v1-1-f6faa3d0edf3@oss.qualcomm.com>
 
-
-
-On 10/17/25 1:25 AM, Bartosz Golaszewski wrote:
-> On Fri, 17 Oct 2025 at 10:17, Konrad Dybcio
-> <konrad.dybcio@oss.qualcomm.com> wrote:
->>
->> On 10/17/25 9:07 AM, Randy Dunlap wrote:
->>> Fix kernel-doc warnings by using correct kernel-doc syntax and
->>> formatting to prevent warnings:
->>>
->>> Warning: include/linux/firmware/qcom/qcom_tzmem.h:25 Enum value
->>>  'QCOM_TZMEM_POLICY_STATIC' not described in enum 'qcom_tzmem_policy'
->>> Warning: ../include/linux/firmware/qcom/qcom_tzmem.h:25 Enum value
->>>  'QCOM_TZMEM_POLICY_MULTIPLIER' not described in enum 'qcom_tzmem_policy'
->>> Warning: ../include/linux/firmware/qcom/qcom_tzmem.h:25 Enum value
->>>  'QCOM_TZMEM_POLICY_ON_DEMAND' not described in enum 'qcom_tzmem_policy'
->>>
->>> Fixes: 84f5a7b67b61 ("firmware: qcom: add a dedicated TrustZone buffer allocator")
->>> Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
->>> ---
->>> Cc: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
->>> Cc: Bjorn Andersson <andersson@kernel.org>
->>> Cc: Konrad Dybcio <konradybcio@kernel.org>
->>> Cc: linux-arm-msm@vger.kernel.org
->>> ---
->>>  include/linux/firmware/qcom/qcom_tzmem.h |   12 +++++++++---
->>>  1 file changed, 9 insertions(+), 3 deletions(-)
->>>
->>> --- linux-next-20251016.orig/include/linux/firmware/qcom/qcom_tzmem.h
->>> +++ linux-next-20251016/include/linux/firmware/qcom/qcom_tzmem.h
->>> @@ -17,11 +17,17 @@ struct qcom_tzmem_pool;
->>>   * enum qcom_tzmem_policy - Policy for pool growth.
->>>   */
->>>  enum qcom_tzmem_policy {
->>> -     /**< Static pool, never grow above initial size. */
->>> +     /**
->>> +      * @QCOM_TZMEM_POLICY_STATIC: Static pool,
->>> +      * never grow above initial size. */
->>
->> Didn't know inline '*/' was cool, but if the checkers I'm happy, I'm not
->> going to complain either
->>
->> Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
->>
->> Konrad
+On Fri, Oct 17, 2025 at 05:10:53PM +0530, Krishna Chaitanya Chundru wrote:
+> When the vendor configuration space is 256MB aligned, the DesignWare
+> PCIe host driver enables ECAM access and sets the DBI base to the start
+> of the config space. This causes vendor drivers to incorrectly program
+> iATU regions, as they rely on the DBI address for internal accesses.
 > 
-> Yes, very surprising. Almost doesn't look "right".
+> To fix this, avoid overwriting the DBI base when ECAM is enabled.
+> Instead, introduce a custom ECAM PCI ops implementation that accesses
+> the DBI region directly for bus 0 and uses ECAM for other buses.
 > 
-> Anyway:
-> Reviewed-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+> Fixes: f6fd357f7afb ("PCI: dwc: Prepare the driver for enabling ECAM mechanism using iATU 'CFG Shift Feature'")
+> Reported-by: Ron Economos <re@w6rz.net>
+> Closes: https://lore.kernel.org/all/eac81c57-1164-4d74-a1b4-6f353c577731@w6rz.net/
+> Suggested-by: Manivannan Sadhasivam <mani@kernel.org>
+> Signed-off-by: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
+> ---
+>  drivers/pci/controller/dwc/pcie-designware-host.c | 28 +++++++++++++++++++----
+>  1 file changed, 24 insertions(+), 4 deletions(-)
+> 
+> diff --git a/drivers/pci/controller/dwc/pcie-designware-host.c b/drivers/pci/controller/dwc/pcie-designware-host.c
+> index 20c9333bcb1c4812e2fd96047a49944574df1e6f..e92513c5bda51bde3a7157033ddbd73afa370d78 100644
+> --- a/drivers/pci/controller/dwc/pcie-designware-host.c
+> +++ b/drivers/pci/controller/dwc/pcie-designware-host.c
+> @@ -23,6 +23,7 @@
+>  #include "pcie-designware.h"
+>  
+>  static struct pci_ops dw_pcie_ops;
+> +static struct pci_ops dw_pcie_ecam_ops;
+>  static struct pci_ops dw_child_pcie_ops;
+>  
+>  #define DW_PCIE_MSI_FLAGS_REQUIRED (MSI_FLAG_USE_DEF_DOM_OPS		| \
+> @@ -471,9 +472,6 @@ static int dw_pcie_create_ecam_window(struct dw_pcie_rp *pp, struct resource *re
+>  	if (IS_ERR(pp->cfg))
+>  		return PTR_ERR(pp->cfg);
+>  
+> -	pci->dbi_base = pp->cfg->win;
+> -	pci->dbi_phys_addr = res->start;
+> -
+>  	return 0;
+>  }
+>  
+> @@ -529,7 +527,7 @@ static int dw_pcie_host_get_resources(struct dw_pcie_rp *pp)
+>  		if (ret)
+>  			return ret;
+>  
+> -		pp->bridge->ops = (struct pci_ops *)&pci_generic_ecam_ops.pci_ops;
+> +		pp->bridge->ops = &dw_pcie_ecam_ops;
+>  		pp->bridge->sysdata = pp->cfg;
+>  		pp->cfg->priv = pp;
+>  	} else {
+> @@ -842,12 +840,34 @@ void __iomem *dw_pcie_own_conf_map_bus(struct pci_bus *bus, unsigned int devfn,
+>  }
+>  EXPORT_SYMBOL_GPL(dw_pcie_own_conf_map_bus);
+>  
+> +static void __iomem *dw_pcie_ecam_conf_map_bus(struct pci_bus *bus, unsigned int devfn, int where)
+> +{
+> +	struct pci_config_window *cfg = bus->sysdata;
+> +	struct dw_pcie_rp *pp = cfg->priv;
+> +	struct dw_pcie *pci = to_dw_pcie_from_pp(pp);
+> +	unsigned int busn = bus->number;
+> +
+> +	if (busn > 0)
+> +		return pci_ecam_map_bus(bus, devfn, where);
 
-Darn. It looks OK but it totally confuses scripts/kernel-doc.
-It has to end with a separate */ for each comment.
-I'll have to resend this patch.
+Is there a way to avoid the "root bus is bus 00" assumption here?  It
+looks like something like this might work (it inverts the condition
+to take care of the root bus special case first):
 
--- 
-~Randy
+  if (bus == pp->bridge->bus) {
+    if (PCI_SLOT(devfn) > 0)
+      return NULL;
 
+    return pci->dbi_base + where;
+  }
+
+  return pci_ecam_map_bus(bus, devfn, where);
+
+> +	if (PCI_SLOT(devfn) > 0)
+> +		return NULL;
+
+This essentially says only one function (00.0) can be on the root bus.
+I assume that someday that will be relaxed and there may be multiple
+Root Ports and maybe RCiEPs on the root bus, so it would be nice if we
+didn't have to have this check.
+
+What happens without it?  Does the IP return the ~0 data that the PCI
+core would interpret as "there's no device here"?
+
+Regardless, I love this series because it removes quite a bit of code
+and seems so much cleaner.
+
+> +	return pci->dbi_base + where;
+> +}
+> +
+>  static struct pci_ops dw_pcie_ops = {
+>  	.map_bus = dw_pcie_own_conf_map_bus,
+>  	.read = pci_generic_config_read,
+>  	.write = pci_generic_config_write,
+>  };
+>  
+> +static struct pci_ops dw_pcie_ecam_ops = {
+> +	.map_bus = dw_pcie_ecam_conf_map_bus,
+> +	.read = pci_generic_config_read,
+> +	.write = pci_generic_config_write,
+> +};
+> +
+>  static int dw_pcie_iatu_setup(struct dw_pcie_rp *pp)
+>  {
+>  	struct dw_pcie *pci = to_dw_pcie_from_pp(pp);
+> 
+> -- 
+> 2.34.1
+> 
 
