@@ -1,157 +1,177 @@
-Return-Path: <linux-arm-msm+bounces-77835-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-77836-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [IPv6:2605:f480:58:1:0:1994:3:14])
-	by mail.lfdr.de (Postfix) with ESMTPS id D7537BEB6F3
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Oct 2025 22:02:42 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 02877BEBB24
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Oct 2025 22:34:57 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id BFFBA4E2402
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Oct 2025 20:02:41 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id B0B39408537
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Oct 2025 20:34:55 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DD45723A98E;
-	Fri, 17 Oct 2025 20:02:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 671892417DE;
+	Fri, 17 Oct 2025 20:34:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ndufresne-ca.20230601.gappssmtp.com header.i=@ndufresne-ca.20230601.gappssmtp.com header.b="VV1XvIul"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="YE0P+VuH"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-qk1-f175.google.com (mail-qk1-f175.google.com [209.85.222.175])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 432B314F125
-	for <linux-arm-msm@vger.kernel.org>; Fri, 17 Oct 2025 20:02:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.175
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B89A6354AFA
+	for <linux-arm-msm@vger.kernel.org>; Fri, 17 Oct 2025 20:34:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760731359; cv=none; b=u7SDfuRd46NzjBnov05pQBwCSpLlw1RqaW9NHYxRyzdg2hxks0p64l+q+Wznj+FcRX+YbaZc5y6HCbiNqJCCyvSylrFiTkYb8jKrBN+p3kZkXwhE/L4pkUFdVMfkpXCDBuMTgpwvIEvqOaieNN4aDonDBUmBlqFCg1q98VYxK0k=
+	t=1760733295; cv=none; b=PvZqw6Nlorl3CR//7Zb8jWzeg+sAoG3V1VBj1EzkO5SuS2TRb7LWsbxaO6QCDJzJlw2PXW0AgKSR4u0eMD4UvNUJtSSYYqUhEbp2q9PWOvGEk9gzKX4oB4ZLIvU3lB0qp6AAYNExNEyDTAlor+aureRy226wgkf3vrYgjWOZ2+U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760731359; c=relaxed/simple;
-	bh=YEmcixcro8qq5jyMdQ3+GPIbFdsNJT56ZX2qwi+396s=;
-	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=Xo+Dfz4ZtVSuiN9v/CD4Y0oMVgCBDLtkdLGrNMrUcIps4VwLCLQgjOAkraoqFyzqFO4i4CZNhs2fdec2dvlF6IAqkjyGoKgyuYqIvZnEA+yRhZLuCcrUkBn4yquLz/g6SmoEuX+VOkjk1WA3nJjLZEeB/4kho2M0TgiZijOqCjs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ndufresne.ca; spf=pass smtp.mailfrom=ndufresne.ca; dkim=pass (2048-bit key) header.d=ndufresne-ca.20230601.gappssmtp.com header.i=@ndufresne-ca.20230601.gappssmtp.com header.b=VV1XvIul; arc=none smtp.client-ip=209.85.222.175
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ndufresne.ca
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ndufresne.ca
-Received: by mail-qk1-f175.google.com with SMTP id af79cd13be357-816ac9f9507so500612885a.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 17 Oct 2025 13:02:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ndufresne-ca.20230601.gappssmtp.com; s=20230601; t=1760731357; x=1761336157; darn=vger.kernel.org;
-        h=mime-version:user-agent:references:in-reply-to:date:cc:to:from
-         :subject:message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=J2tuttkyULuzLdFnQ9MtmS6DjBEIf7L0xEYqV2T+pNs=;
-        b=VV1XvIulPtxO17/390LOp7rnC5kYGHLIF1e9gGzKuMqTUG0mfDoMFYjoFWqFF76IH4
-         4Ac71YbDh59Ph/0pAUxCXrur7kz4LFILk/kwYG42zSPyo1uI+TMxzlOgj4EVwrceKAmg
-         dCw9+F6cdfGm5ZLB1v8Rb1/bk95IK6G0EInPK10EcnPiOJjqEP/xVQYWAvMSPIwWjOYf
-         RGS0UsCDHq72g4OeDTVUqEYOk7grJDIxftl13L+H0w27OYOUaz6V6OZRExsseL4NCwvt
-         YB4cVIddo3OMNHXPx9a4Bq9bpI3I47TaoZb2BlCul8Xo+akzRToBfvx5YH1+xkcrsAEU
-         bWcg==
+	s=arc-20240116; t=1760733295; c=relaxed/simple;
+	bh=42h9WSzMxsMUKDKrWXddy7f79A2qL8IcQSDKGHUFEPs=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=T+xhEc7YsEklsRyzWUf/3fXe/zEfQ0sBsaoJQ+Ewur7YMxnz2uQMUpxZNC9HXM/mQ8Fi7aQDRzNK+P/bdv0cym6S7FmM9IZ7rDVqde2VID3+zSwKwlcZLLZHFsbl3O8siQUg6QdsVKxQQF84sOpPwbdZtEx4RCr4bFmjQwbMAF8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=YE0P+VuH; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 59HJGjBq005384
+	for <linux-arm-msm@vger.kernel.org>; Fri, 17 Oct 2025 20:34:52 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:date:from:message-id:mime-version
+	:subject:to; s=qcppdkim1; bh=oEl0y/mrPeKiP6ZEhHI8gxlLx/zzQxxwPZk
+	FL4UCulg=; b=YE0P+VuHAAntcQPIu2XocWH6w7YDJMBwSwQ9FxrOSkyTvJGBAkj
+	S0EGsr93+tWrkjXOyJ2H117yW9hS1Pkw5hsn+meKiA66/SVBr4i1YPEVibM5YTZ7
+	cYMaABFuXOFbZOhdTUFkroNa7WBRcEOCkRJO13w5vWthUm/xcgqsnge7QjF24zyx
+	Aa6yziQ9K73GZmHkW0qrCzAFrhiU/e5/vF310rOIWkOWTdwIv+GhYNHuRbbLh66C
+	fuqYCoOWFnd0Ao6knx20Mp+C0ngXFyoqk9wsOcXjkAUXZtrioC2vesFBSHtQuIVX
+	+oCITS47+sqdIATiJNndv5PjzCn5pSMRI3g==
+Received: from mail-pl1-f199.google.com (mail-pl1-f199.google.com [209.85.214.199])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 49qfm5wt3n-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Fri, 17 Oct 2025 20:34:52 +0000 (GMT)
+Received: by mail-pl1-f199.google.com with SMTP id d9443c01a7336-26e4fcc744dso15511635ad.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 17 Oct 2025 13:34:52 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1760731357; x=1761336157;
-        h=mime-version:user-agent:references:in-reply-to:date:cc:to:from
-         :subject:message-id:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=J2tuttkyULuzLdFnQ9MtmS6DjBEIf7L0xEYqV2T+pNs=;
-        b=aB2l4rz6C06r1Tdqbupi03DkHQ8SjUEdFUnMzlqnGr5q80Q4G95y75D6cpVLIS/Ngn
-         SbmAzPllQogYurmnwyo5v01MR0LcfR2JZ/RhiJFIinF3DfEFTnIC1hZI7pCOeN+QmGsf
-         nxlsMe3aO5yB8JpqmGOVyXv8wZb61mWggHcu2aMLBZa9L/Gk5+MPPjfDLpctode3F7hS
-         IvXXBC4Fb4x3uQSWlbwlgWQakT4xK2P9c17VTjGS1Hc8GxQx/YKJVpMrjyt9wG24iGbU
-         Yq321EmE+0RS9BcY6YyPeWsNonqLfHJ0SiCDTZ6WbUnwDKmzBsLYH9mzw68qk5QXlYoq
-         vLBA==
-X-Forwarded-Encrypted: i=1; AJvYcCV9MtXdx5q4IEGG+kicy8i+IrLVp6qm60TOpUkaqD/o22DL8EDC/85mah1GLQfK+lOuLE1ad+ctKEpTEP3j@vger.kernel.org
-X-Gm-Message-State: AOJu0Yx0xxYdfUEhPZp8YazTbXopvXm/o3AVUKRUO5jGtR8KYxfDt1gV
-	lnE/xqqEWUtlBQ+M7rZym6XIBLs85mMLUAUfSpMQyJif0NsIqgcrOjaAp3I0GhXw16c=
-X-Gm-Gg: ASbGncvA99QhIYc9HkMV1fCI02qDq/GrRtVAy1fc55vdwsgB9XVigzQap0tc0Uv2sWO
-	6s5RxFxIGC2uUZX6JlwiC2Tme37M95+tNunUPg2JPRE/7g6d+1tjVO8Zj8UTyzB3oNQfjTDPGz0
-	M7LESqnnwmB6YLv23AolxZmU2WoVA6Cw7/BCP8dpFdMmufsTKXYNAkchAJrR/0EczpSw7uddmrT
-	E6lo/kpIWvLClqcTyN8kovOXBUb58n7uRY8jtMoeQNQSUeSMHf9teW3yJRXGVvlVGN72OQrwCvT
-	NW/rrkr33E9TfyglJvPBE6tvMih4IzTFEyOgNYcfAQDpFfFfmyFCsfn0OgGBu0Ti4PD6AKuB726
-	W+Kf3/faGMTbDC+hMvWdyHWwSrqmXz5NlhFsu7XgyJs+qlW9W5jqOOuvaXIeJ13HtlB0ylRGdcG
-	7A4o9aPnKZ467/ZEVQ/Td2L/A/FVQ=
-X-Google-Smtp-Source: AGHT+IHSMUePxe/bPZ29PJJFlHHcFR6pMPe4oHFJ8eKH5Fc8kGyfOKlZkSlsIdgsAAbV4DdfW1pCaA==
-X-Received: by 2002:ac8:7d05:0:b0:4e8:aaa3:8b6a with SMTP id d75a77b69052e-4e8aaa38d5cmr16697371cf.25.1760731356941;
-        Fri, 17 Oct 2025 13:02:36 -0700 (PDT)
-Received: from ?IPv6:2606:6d00:17:ebd3::5ac? ([2606:6d00:17:ebd3::5ac])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-87cf51fc208sm4660666d6.13.2025.10.17.13.02.35
+        d=1e100.net; s=20230601; t=1760733291; x=1761338091;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=oEl0y/mrPeKiP6ZEhHI8gxlLx/zzQxxwPZkFL4UCulg=;
+        b=MhPoJUGDYsKEx5FdTh73/uTZ4ndb8Z4s7epKR0TgbkuEf5zdmQeIHnD+6GcneNVOAt
+         C1MFeBoG31A+3XqLGtiW7qqkRmai+u67ShbM8wvvywCLPZexSZlynLn1Aw7SMdfBkkNh
+         rW98KvaOPak0C0oUIz7VM0r+YxcLLOwCpcZd9Yi74tLykHMmqrJg7awCh369kExkOejZ
+         eAXWz2UJ0zxGERO/D5/t2Q5+fQuq0d5k28hGeB1hnp68Csc+gJYEc/zv1cYdc1ScYQl5
+         Y/0KwW44CVykD5fwnmZuUXMnaq+SILmcIAnKG0yiuwaAL1XNfIM6UryuyHA8HqdYt7o0
+         lrHg==
+X-Gm-Message-State: AOJu0YwfV8tIdP37i2njNt+gUVeIyuaxwKC2gLG3ntKJEfU1OBsUiRrK
+	3y5G65zaBxgGI/baSYHQSgdAHNgE5WURhDQG8YzGBC4MxXXcd7Lcx+FECQS9St30W1BbDRPgeg6
+	ao0sGGlEUHo2qbHg2d6oq8Rz5rgbKZxmVa4zyV8ARFhpvztyA8ly58lJcRzP/J7A+zn7l
+X-Gm-Gg: ASbGncs0tEbdcF4VSys91f4NSwVqqaUA2+XamkE4lrLrbNz3jpa0AGyspg/9Kb0LEv7
+	iJ4uEjvcU2qZyUKTl8+B7eI3dTbWtJ2Eg1KkxZjip3zsgJujttofDBFPS4EC0TA9SpSRu8W+q+j
+	GUjwWq0nQL106S+NDSoJLb1Zi7hKf2tOXdw+D71jWpHeMPLHcg9ugREzFfEQOsSdBEO9PSU4OAE
+	oWllHgfZ4IHlqHuwCrEuCYmSVduxPEsXQJzkq+4cP+5zTtJnYj/4GuEAThPKrmnRhOkMWtuMd9y
+	K6S7v4MkhgMJ4amGJS4N0+Hi4FRGShm/cUuWWp3dRNBEOiD2spftl9ISyM6FOUaxDQ4OOrxvEur
+	V+Szv+/D2tgCqia6Ckbp+hWmuu8g+7Rk85V4u
+X-Received: by 2002:a17:902:f70f:b0:290:c3ad:8432 with SMTP id d9443c01a7336-290cb65b628mr57435395ad.46.1760733291378;
+        Fri, 17 Oct 2025 13:34:51 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHyX8Pk5DWSmJTsM6HLUZcbzX8C/j29RAvl1Yd/dyx9V0AATvuYl8gaM8mWgVvFK0PQX18sbg==
+X-Received: by 2002:a17:902:f70f:b0:290:c3ad:8432 with SMTP id d9443c01a7336-290cb65b628mr57435115ad.46.1760733290959;
+        Fri, 17 Oct 2025 13:34:50 -0700 (PDT)
+Received: from hu-kriskura-hyd.qualcomm.com ([202.46.22.19])
+        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-b6a76b33505sm627897a12.22.2025.10.17.13.34.47
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 17 Oct 2025 13:02:36 -0700 (PDT)
-Message-ID: <342257a17444d96eaaaa9392d157e85de679723b.camel@ndufresne.ca>
-Subject: Re: [PATCH v2 2/5] media: v4l2: Add description for
- V4L2_PIX_FMT_AV1 in v4l_fill_fmtdesc()
-From: Nicolas Dufresne <nicolas@ndufresne.ca>
-To: Deepa Guthyappa Madivalara <deepa.madivalara@oss.qualcomm.com>, Mauro
- Carvalho Chehab <mchehab@kernel.org>, Vikash Garodia
- <vikash.garodia@oss.qualcomm.com>, Dikshita Agarwal	
- <dikshita.agarwal@oss.qualcomm.com>, Abhinav Kumar
- <abhinav.kumar@linux.dev>,  Bryan O'Donoghue	 <bod@kernel.org>
-Cc: linux-media@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	linux-arm-msm@vger.kernel.org, kernel test robot <lkp@intel.com>
-Date: Fri, 17 Oct 2025 16:02:35 -0400
-In-Reply-To: <20251017-av1_irisdecoder-v2-2-964a5478139e@oss.qualcomm.com>
-References: <20251017-av1_irisdecoder-v2-0-964a5478139e@oss.qualcomm.com>
-	 <20251017-av1_irisdecoder-v2-2-964a5478139e@oss.qualcomm.com>
-Content-Type: multipart/signed; micalg="pgp-sha512";
-	protocol="application/pgp-signature"; boundary="=-Urt5bDwGCibGgnCKgiP9"
-User-Agent: Evolution 3.56.2 (3.56.2-2.fc42) 
+        Fri, 17 Oct 2025 13:34:50 -0700 (PDT)
+From: Krishna Kurapati <krishna.kurapati@oss.qualcomm.com>
+To: Vinod Koul <vkoul@kernel.org>, Kishon Vijay Abraham I <kishon@kernel.org>,
+        Dmitry Baryshkov <lumag@kernel.org>,
+        Neil Armstrong <neil.armstrong@linaro.org>,
+        Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc: linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
+        linux-kernel@vger.kernel.org,
+        Krishna Kurapati <krishna.kurapati@oss.qualcomm.com>
+Subject: [PATCH] phy: qcom: qmp-combo: Add polarity inversion support for SAR2130P
+Date: Sat, 18 Oct 2025 02:04:38 +0530
+Message-Id: <20251017203438.744197-1-krishna.kurapati@oss.qualcomm.com>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-GUID: 2-8muAYTVkCRgLA5WVtw4IBmcDosOyPX
+X-Proofpoint-ORIG-GUID: 2-8muAYTVkCRgLA5WVtw4IBmcDosOyPX
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDExMDAyMCBTYWx0ZWRfX7XAPJe9uFoqY
+ 2BK+7nZBb1jA2SsdfzRLwxLlRZ8aww/EXUua3i82xh4tC9fwwLheV5jh5j9Yht2qHANaHH+StSK
+ 9mPCWFzqujLmmDg8fWbmfw/AZcssmcNiz4oEY0UBuayPv3SGSDQOVFN69X35MKMfOv8Qs3b9bae
+ +U0MJYmpZP2AnY6kilCJT0vDMJXoJ/g70lO7LUuUKPLc880EwWVWhXyJQZ84xg3rPTNjdQLin+c
+ Ym6XJ6IVzgryTWSzd5qIe58o+UyOYdYrGWpDkxoPBCA8LdS6dbGNvh48P70TMJIhpy3lq/Mf/W/
+ cwvbF+Cvp14kw2jVilytg43E4VvNBa5tlO+yR9d/sGzDS9W6dKiyz+EB6e2eiG4msycWdER9BNt
+ Vw869LlUlDdYlOQC9GqytNt/s7FO5w==
+X-Authority-Analysis: v=2.4 cv=V71wEOni c=1 sm=1 tr=0 ts=68f2a86c cx=c_pps
+ a=JL+w9abYAAE89/QcEU+0QA==:117 a=fChuTYTh2wq5r3m49p7fHw==:17
+ a=x6icFKpwvdMA:10 a=VkNPw1HP01LnGYTKEx00:22 a=EUspDBNiAAAA:8
+ a=LWLmvgxapxzxGbpwlLUA:9 a=324X-CrmTo6CU4MGRt3R:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-10-17_07,2025-10-13_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ bulkscore=0 malwarescore=0 spamscore=0 adultscore=0 suspectscore=0
+ impostorscore=0 phishscore=0 clxscore=1015 lowpriorityscore=0
+ priorityscore=1501 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2510020000
+ definitions=main-2510110020
 
+On SAR2130P QXR Platform, the CC Lines are inverted and the lane
+programming is to be done reverse compared to other targets.
 
---=-Urt5bDwGCibGgnCKgiP9
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+As per the HW specifics, Bit-2 of TYPEC_CTRL register indicates
+port select polarity. This bit is to be set for SAR2130P.
 
-Le vendredi 17 octobre 2025 =C3=A0 11:35 -0700, Deepa Guthyappa Madivalara =
-a =C3=A9crit=C2=A0:
-> Add a descriptive string for the AV1 pixel format to v4l_fill_fmtdesc(),
-> enabling proper reporting of AV1 support via VIDIOC_ENUM_FMT.
->=20
-> Signed-off-by: Deepa Guthyappa Madivalara <deepa.madivalara@oss.qualcomm.=
-com>
+Signed-off-by: Krishna Kurapati <krishna.kurapati@oss.qualcomm.com>
+---
+ drivers/phy/qualcomm/phy-qcom-qmp-combo.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-Reviewed-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
+diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-combo.c b/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
+index 7b5af30f1d02..813c88f0a16f 100644
+--- a/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
++++ b/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
+@@ -60,6 +60,7 @@
+ /* QPHY_V3_DP_COM_TYPEC_CTRL register bits */
+ #define SW_PORTSELECT_VAL			BIT(0)
+ #define SW_PORTSELECT_MUX			BIT(1)
++#define INVERT_CC_POLARITY			BIT(2)
+ 
+ #define PHY_INIT_COMPLETE_TIMEOUT		10000
+ 
+@@ -1820,6 +1821,7 @@ struct qmp_phy_cfg {
+ 	/* Offset from PCS to PCS_USB region */
+ 	unsigned int pcs_usb_offset;
+ 
++	bool invert_cc_polarity;
+ };
+ 
+ struct qmp_combo {
+@@ -2010,6 +2012,7 @@ static const struct qmp_phy_cfg sar2130p_usb3dpphy_cfg = {
+ 	.num_resets		= ARRAY_SIZE(msm8996_usb3phy_reset_l),
+ 	.vreg_list		= qmp_phy_vreg_l,
+ 	.num_vregs		= ARRAY_SIZE(qmp_phy_vreg_l),
++	.invert_cc_polarity     = true,
+ };
+ 
+ static const struct qmp_phy_cfg sc7180_usb3dpphy_cfg = {
+@@ -3046,6 +3049,10 @@ static int qmp_combo_com_init(struct qmp_combo *qmp, bool force)
+ 	val = SW_PORTSELECT_MUX;
+ 	if (qmp->orientation == TYPEC_ORIENTATION_REVERSE)
+ 		val |= SW_PORTSELECT_VAL;
++
++	if (cfg->invert_cc_polarity)
++		val |= INVERT_CC_POLARITY;
++
+ 	writel(val, com + QPHY_V3_DP_COM_TYPEC_CTRL);
+ 
+ 	switch (qmp->qmpphy_mode) {
+-- 
+2.34.1
 
-> ---
-> =C2=A0drivers/media/v4l2-core/v4l2-ioctl.c | 1 +
-> =C2=A01 file changed, 1 insertion(+)
->=20
-> diff --git a/drivers/media/v4l2-core/v4l2-ioctl.c b/drivers/media/v4l2-
-> core/v4l2-ioctl.c
-> index
-> 01cf52c3ea33e1a01e1b306036ba4e57ef5c95d0..bdfdf45c5de2f2ce885f219007718a5=
-4b5c8
-> 6251 100644
-> --- a/drivers/media/v4l2-core/v4l2-ioctl.c
-> +++ b/drivers/media/v4l2-core/v4l2-ioctl.c
-> @@ -1542,6 +1542,7 @@ static void v4l_fill_fmtdesc(struct v4l2_fmtdesc *f=
-mt)
-> =C2=A0		case V4L2_PIX_FMT_QC10C:	descr =3D "QCOM Compressed 10-
-> bit Format"; break;
-> =C2=A0		case V4L2_PIX_FMT_AJPG:		descr =3D "Aspeed
-> JPEG"; break;
-> =C2=A0		case V4L2_PIX_FMT_AV1_FRAME:	descr =3D "AV1 Frame"; break;
-> +		case V4L2_PIX_FMT_AV1:		descr =3D "AV1 OBU stream";
-> break;
-> =C2=A0		case V4L2_PIX_FMT_MT2110T:	descr =3D "Mediatek 10bit Tile
-> Mode"; break;
-> =C2=A0		case V4L2_PIX_FMT_MT2110R:	descr =3D "Mediatek 10bit
-> Raster Mode"; break;
-> =C2=A0		case V4L2_PIX_FMT_HEXTILE:	descr =3D "Hextile Compressed
-> Format"; break;
-
---=-Urt5bDwGCibGgnCKgiP9
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: This is a digitally signed message part
-
------BEGIN PGP SIGNATURE-----
-
-iHUEABYKAB0WIQTvDVKBFcTDwhoEbxLZQZRRKWBy9AUCaPKg2wAKCRDZQZRRKWBy
-9FtGAP9GU55FUgYIUK7UMe4RWo1rWcRc/rK/aIKD3lFJ+Tf72AEAyzhydjJDt7q0
-d+DNRq/gFNH5HTnd8V7SL298V0H6TAc=
-=gGm2
------END PGP SIGNATURE-----
-
---=-Urt5bDwGCibGgnCKgiP9--
 
