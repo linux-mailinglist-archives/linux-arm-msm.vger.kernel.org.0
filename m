@@ -1,226 +1,228 @@
-Return-Path: <linux-arm-msm+bounces-77785-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-77786-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 25ADEBE90E7
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Oct 2025 15:50:14 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9414FBE9193
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Oct 2025 16:06:11 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 284381A6600B
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Oct 2025 13:50:37 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 1A0871AA2627
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Oct 2025 14:06:22 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0B21F3570DC;
-	Fri, 17 Oct 2025 13:50:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1E38436998D;
+	Fri, 17 Oct 2025 14:05:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="EGgdHgrH"
+	dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b="HnzF4Fov"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f41.google.com (mail-ed1-f41.google.com [209.85.208.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5AE903570D1
-	for <linux-arm-msm@vger.kernel.org>; Fri, 17 Oct 2025 13:50:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8FCA369977
+	for <linux-arm-msm@vger.kernel.org>; Fri, 17 Oct 2025 14:05:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760709008; cv=none; b=mmzkgoQWGpI4IT6UXDHq1yMs+t2DKXpL0PezaWR0H7G4yv73sLRdc+x1W4lswuUeQi5Jzzuzeg8yx/CBM9I+ihkZgrKnZlTmZ8fzS1RfnAVRK1QFmOQoxB+vVdTU3DHK+yx3USCMKmdjlJkQyE7mMQ8kk0vMvus7JRrerfW8YAE=
+	t=1760709955; cv=none; b=FOw7LM63THUzlaVfk4gF7jw56Xyk96mqBKPt9BLIkBy068N25coQN3q9qb7/23HK9IirW0Heb2vTM9aQlTJK4zuuNkr4kGC6eeWabAIX8GvtwC1m4iafR2FliO4lqtBXovsd/0GqU8Ja6G9bpAB+ua11VSPdIFem926gEIeb3GU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760709008; c=relaxed/simple;
-	bh=jCBPLoxbTcXpoIwMI2KLBvHfzepQyipbiJBh3dpz68c=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=WPCmjF2VYGI7ijU8zDLM30+YdI/cklG5PktNqEVI690PO8qmj3iCr0f/H4b+ii1jZA5P9s6b0Z9qBF++LO7KTcrrj06rRfKrs1nxRi8pcJ4Epz+tyFCruA4G6PePYx9bQvSMQB4cM0yzaTOadlnDA6nRDzZqr8CbE1C2Pq5Z8Xk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=EGgdHgrH; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 59H81vKY001997
-	for <linux-arm-msm@vger.kernel.org>; Fri, 17 Oct 2025 13:50:06 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to; s=qcppdkim1; bh=ZHoSt8IC5bzvZIWqy3/h7W7Z
-	nm3mbkyJccsL7Jtnypg=; b=EGgdHgrHUeYOSzONZ1dvDgqvKZBzBXV5hNBuI4Rk
-	PMWVOPYkR/Nh2baIuHd0phzSpHUdtMytajldPPvIN2RkAIyxbPbKI9rRDiy+fNLn
-	Ig1A0QKZ/O16ppCMd6MAXE8MeSbZo5BxwGu9LVbbKER4UVYM5ZcnAB1Ow9+RezQq
-	/IMAI9XcZlm4KelCMOqoE6J8cvsUKWgfsY6n0QXQEFHcEPgsLtBE5ac8i7ZrtagN
-	PIQ2TuxHr8rfx/Zi3yxZYNLT8a71uk/QumF1Anew/duUbumGQTDYzDct41C5EiR/
-	IPE/hocQLFWong6vYT9wtts9duqmoAdv8GCguTwm9AfG5g==
-Received: from mail-qv1-f71.google.com (mail-qv1-f71.google.com [209.85.219.71])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 49qfa8md52-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Fri, 17 Oct 2025 13:50:05 +0000 (GMT)
-Received: by mail-qv1-f71.google.com with SMTP id 6a1803df08f44-818bf399f8aso93801156d6.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 17 Oct 2025 06:50:05 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1760709005; x=1761313805;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+	s=arc-20240116; t=1760709955; c=relaxed/simple;
+	bh=y2j14fKCfSUEyLu3qKfrbsyP8qXM57xWfcpUmJOscjA=;
+	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
+	 References:In-Reply-To; b=CrBKeAG0MuWsNJdSaQ1XYYGmVnFog2AcwKg9ufmdUlddy+urL6K0eJb1Si/xdhO9yW3/GcMqi4HALsf/rpb585rnWCSCjQ/IObp84xwIlG3Q0wb3UgZ2V5L+MOsxMWb6w9CmX9CvaiCJdE+ko6QplVJSDtVGEuJR+yH3EJx6Iqg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=fairphone.com; spf=pass smtp.mailfrom=fairphone.com; dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b=HnzF4Fov; arc=none smtp.client-ip=209.85.208.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=fairphone.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fairphone.com
+Received: by mail-ed1-f41.google.com with SMTP id 4fb4d7f45d1cf-63c2d72582cso1151346a12.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 17 Oct 2025 07:05:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=fairphone.com; s=fair; t=1760709951; x=1761314751; darn=vger.kernel.org;
+        h=in-reply-to:references:to:from:subject:cc:message-id:date
+         :content-transfer-encoding:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=ZHoSt8IC5bzvZIWqy3/h7W7Znm3mbkyJccsL7Jtnypg=;
-        b=iWBsBqe+jg/idGAMyy58pWIo5vd6jr8XN4IMXeafDDWovQBrRzX2AhuvZA3kgOAeXT
-         EitTawCLUT1j+/uWzDDvCbHyaFRIze+qbI1AtefrEtilE1CYg91BuSmqciGWjE7oEiFT
-         +pEpTwoQMg6ATfXz6bLIO9sSP0y0F2rLoM25NC0LOAMu+RyEiLXXc6fYYRvtBUj11iXK
-         ioTNBywCGwC+ujpV0S57OehptTHeNm3iu+C5TyK8yCusU2faHOT5VzseKoPrzEMt80qO
-         exAEZs0ClHn0d8G/UOpDU2vb5M0Ssi+A4MpBofWUFGCVLXlHSufcq55mXyIhYpzX5QVm
-         UhxA==
-X-Forwarded-Encrypted: i=1; AJvYcCXQsv4siHAU8gGUYc3M+b1/drQW/+G9gZD3pUu0BcZxWP5ua4CoBUKipMHEyOKWeMh5oMuSWRU6eeifGff+@vger.kernel.org
-X-Gm-Message-State: AOJu0Ywc1V201MLHTWhsiAO53dTjROoG7cAYPlPABCfwikRBJMP5T2bq
-	bygwLpI7TPDemm8DHaZ9zU8UtY0g+K3DXUG5witz9pKjQJPZU+rAS5UsRQhlcUFC+oQzBR0SJMQ
-	Cn3d7lwEp8r13iRjrLlVlZpXcnz/+hEJUkbbopK+IkVGefoEYd4EtGCOK/5GcIVj3ectJ
-X-Gm-Gg: ASbGncs9Q21sB9i7c6bnZMGlo1eWVsaTXXVT/xbCoyo+X5zieAFvRPGfjfKoJfVHWLR
-	N9Dtuke1dUJnVxkpr4cFYNGPqbKeqwoIQkKmjnZKp8vSwYJFtRLDaBHveC+yZiknNmbWnzxIq6X
-	D6PSh6UdTifEJTRY2h8fyffpDx6O8L431eUa8d0KGkTvhb8du4KQZqdertNksG8w9lmPYVrzaxM
-	UXe49cS1yq4yjvQIJiF7s8+hGwIUX5rpm65hBF0oJ25efSKYZvaJjrL6h9jG8MJ5mCncnt2vcBu
-	IfsT1PeWJXiFzRmJJu56euCqdLzhpOCbdIQik22wB5ixhUFhIHUr2iWwyh9sbgK9FD23NqutPt7
-	uU7i+A2KgQl1WLk2FQodzdmlyLoXi8GSoPlpl0XFNXLwX3DhJni4W6QJHQXaYR5jMqw4AddIUYM
-	Mzfmpf8LSDa68=
-X-Received: by 2002:ac8:5a0d:0:b0:4e8:a8df:805b with SMTP id d75a77b69052e-4e8a8df895emr7962311cf.19.1760709004401;
-        Fri, 17 Oct 2025 06:50:04 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHqUsEYIEcVJGSkj8DFafEbyFH2GPX9JGyMRzPejQmO1qiuEIsTN6uOm85wuZR70D1tQtNygw==
-X-Received: by 2002:ac8:5a0d:0:b0:4e8:a8df:805b with SMTP id d75a77b69052e-4e8a8df895emr7961881cf.19.1760709003805;
-        Fri, 17 Oct 2025 06:50:03 -0700 (PDT)
-Received: from umbar.lan (2001-14ba-a0c3-3a00-264b-feff-fe8b-be8a.rev.dnainternet.fi. [2001:14ba:a0c3:3a00:264b:feff:fe8b:be8a])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-5908820d1f5sm7917522e87.55.2025.10.17.06.50.02
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 17 Oct 2025 06:50:02 -0700 (PDT)
-Date: Fri, 17 Oct 2025 16:50:01 +0300
-From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-To: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
-Cc: Alexey Klimov <alexey.klimov@linaro.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Srinivas Kandagatla <srini@kernel.org>,
-        Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>,
-        Rob Herring <robh@kernel.org>, Conor Dooley <conor+dt@kernel.org>,
-        Jaroslav Kysela <perex@perex.cz>, Takashi Iwai <tiwai@suse.com>,
-        linux-sound@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 1/2] dt-bindings: sound: qcom,sm8250: add QRB2210 and RB1
- soundcards
-Message-ID: <kh54xgfvp6rypbvk7eyemg7zsvum2krhsyh6dqa5ck6zf3ph24@szxffcrzngd7>
-References: <20251007-qrb2210-qcm2290-sndcard-v1-0-8222141bca79@linaro.org>
- <20251007-qrb2210-qcm2290-sndcard-v1-1-8222141bca79@linaro.org>
- <b0d9cec5-1162-476b-8438-8239e1458927@oss.qualcomm.com>
- <CAO9ioeVcqT_Yhvz-RMCucLtcpa4xCLrA+srM8Vy_ZZ-650ZQnw@mail.gmail.com>
- <DDKF9YV37ETZ.3DXIDZA4ZU6I3@linaro.org>
- <695ff482-ad53-45fc-9ab0-ad69d8bc89d5@oss.qualcomm.com>
+        bh=NDtFkvW71ZpCBo0DPDG4zvNO/0+/N+iEEt28V0Z9TN4=;
+        b=HnzF4FovcXOObmvLMUbPJTiOwxK3ehxfgyH7u84LetBoLjc5H7FG1kqIFLSH5jTjaf
+         OGh4df+M7VWi13/QZgAdVYq/3yJWXT/MtRt1ezmVRJC/27CTPtD14AdNMaxMQx4jQUwr
+         +2eWFU5CH5l8RWXG+G799vZhBvt6UAQNTpYwFjl/5e/2QuS9JPIu7vj+tuglbusVRJ6u
+         fHPziA8qXIg5RkJreJB+d46gKllAOzl2/ZNC2Scj/By3O2QmhqzRmJwRGgevaBWDagBC
+         W7StOWDa+9qrCUhfxY1/XACFSr50Nvz1kc7byZzZwu6OhAaSkAcQQZ33wR9Np/ynfEG2
+         USjg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1760709951; x=1761314751;
+        h=in-reply-to:references:to:from:subject:cc:message-id:date
+         :content-transfer-encoding:mime-version:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=NDtFkvW71ZpCBo0DPDG4zvNO/0+/N+iEEt28V0Z9TN4=;
+        b=J+SOa6VYVaiqQeD7q+cl91M/yWq98En6rhGNwdk2YSzfp/2h40IWeByZFfALAiyO4Q
+         E2SeTFpKWsP/e5aStQo9UK1SmH03QNLdIGuWhJ8P0tJ4Lp8RVYSURLvsr2yEMohFQU7u
+         zg7ch85NOKdDaJ6UkUFjIqOQmgUFWfKjecO1MaNHqjjEiCduXL//vlcywJgnD3lSRWQ0
+         Me+2/HTQioULZrztrQ/rTypm+zAEfZa79mFiuIunqCPsYVcGt5kkvkNe2J3jvz9M0cAn
+         1sFb1x1bPSHjNog0RZYm/hSKoAzlFQDeapiE724wgg3BHzrxmeriL1qtnFYB09Fh2lqL
+         yZRQ==
+X-Forwarded-Encrypted: i=1; AJvYcCVYZNjNUK7ZTAHBSf2EwZg5uMO4BmLviryZ1icJuLJ9GECTGsQnlu94MRNH+64isfDGKd4ZHJ7IkfMFRjBU@vger.kernel.org
+X-Gm-Message-State: AOJu0YzZ8Mg5RvQWPp5X9VL8sebgNLbI9dCC17xnOcmgqgQxzAXwgIhq
+	FMZH6M60W1gFDSNBhbvj9W6CIhWaeBWIjH3KKFhZCnM4K353js+WUfN+Jl4JPB8I3I4=
+X-Gm-Gg: ASbGncuHC/JVOTq5RNy5Fa4Hr/WJJhSqYJZQwxQKX+7eaDZuRg0/l6V5txEbZBwozDi
+	qdKojyd/QL2K97oAuffFQ7tHHlVRByhlbBK6DAPuVknypATiVZa8vuqBIALESED2FzOzt23zr49
+	cAij+M1GEUuVlFldXEZvMC+Y7XqL6iKER1x2ULcrnE9czOzbP0kfFM2ABTeWTN4wI8afqOmrW1M
+	i4xyTxzZkf9s6p9j5RkvwSG3lubH+UPXGtmlIR3kjKFy7qZD0yw5bPlR02K2T24cFb/N36FH2p8
+	/xFMtSSA/rKTHpvrsBfeDF1VVhhPNNdK2ywiV+IqWTk9r6gnX49VbBQiZ6yMBW4A3Ip+mhwkrqa
+	bP5AJbEKDfUxY3ekZW/azkH4P1Py4ldZVF+4FZLJAZNyRC3dgARjgx7JGnzXyRkq6aTGVCp21or
+	nlq1Z69QbkPlkM5R4am05uxca3eLAU9RJDJFfv9ARSrW883KDSKYPTG8GS
+X-Google-Smtp-Source: AGHT+IHD0zQCxNlY8i8goUteHIFFoUwCmKep+B7VhLiGVGAGPiHMCDPi+AsNJHLKrrEXZzT+k7ZWpg==
+X-Received: by 2002:a05:6402:3552:b0:639:e30c:2477 with SMTP id 4fb4d7f45d1cf-63c1f636789mr3573697a12.7.1760709951080;
+        Fri, 17 Oct 2025 07:05:51 -0700 (PDT)
+Received: from localhost (144-178-202-139.static.ef-service.nl. [144.178.202.139])
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-63a5c134062sm18799571a12.36.2025.10.17.07.05.49
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 17 Oct 2025 07:05:49 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <695ff482-ad53-45fc-9ab0-ad69d8bc89d5@oss.qualcomm.com>
-X-Proofpoint-GUID: zifLZ27xTweOLJqUqCwBBVZdZGFkuSTm
-X-Proofpoint-ORIG-GUID: zifLZ27xTweOLJqUqCwBBVZdZGFkuSTm
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDExMDAxNyBTYWx0ZWRfX2M38d8Yd7wUl
- CVtaHhkHP5Ej7c3fRQhN5HbRzvmsBPJc5b54iT/c4ATdecPMJmj0QXaRyMUqc5OUpX0DoIBVVkq
- fBEFsAB5AOymmomyeRaE5Q8n9A3bFwruPFt0K6f+JzAJYDCSsvfqRa4CS1w8OO/TtJtZugmey57
- ScPHYxiccolZyhyRiNfybSiiBDEW1wBYo37MaCBWABmkUfELc1jbuXU8mea12EOu/ijMyOTN+yx
- E0hcy3+OdhJhZvX2LMD+/cFPvlNLnlcgJ93H9W0rY5FtvA1awv1GlNYL1xGBdLFAQIFefZKBuEN
- 05pYjadyS/NWAcuzURYUlBOhEL3oWp7t6DE2VytiIiPJV+Rva5VU5+fOZzKTPWO3GeYPco+yFIR
- ymSDrB43LarW+9ehqtcxKxIjTdoq5g==
-X-Authority-Analysis: v=2.4 cv=JLw2csKb c=1 sm=1 tr=0 ts=68f2498d cx=c_pps
- a=UgVkIMxJMSkC9lv97toC5g==:117 a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10
- a=x6icFKpwvdMA:10 a=VkNPw1HP01LnGYTKEx00:22 a=EUspDBNiAAAA:8 a=VwQbUJbxAAAA:8
- a=KKAkSRfTAAAA:8 a=q5sTpNs5cBplgk-z1f0A:9 a=CjuIK1q_8ugA:10
- a=1HOtulTD9v-eNWfpl4qZ:22 a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-10-17_05,2025-10-13_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- lowpriorityscore=0 phishscore=0 adultscore=0 bulkscore=0 priorityscore=1501
- impostorscore=0 suspectscore=0 malwarescore=0 spamscore=0 clxscore=1015
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2510020000 definitions=main-2510110017
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Fri, 17 Oct 2025 16:05:48 +0200
+Message-Id: <DDKNL43NWFMA.1S03T0SUYFVMY@fairphone.com>
+Cc: "Bjorn Andersson" <andersson@kernel.org>, "Rob Herring"
+ <robh@kernel.org>, "Krzysztof Kozlowski" <krzk+dt@kernel.org>, "Jagadeesh
+ Kona" <quic_jkona@quicinc.com>, "Bryan O'Donoghue"
+ <bryan.odonoghue@linaro.org>, "Michael Turquette"
+ <mturquette@baylibre.com>, "Stephen Boyd" <sboyd@kernel.org>, "Conor
+ Dooley" <conor+dt@kernel.org>, <linux-arm-msm@vger.kernel.org>,
+ <devicetree@vger.kernel.org>, <linux-clk@vger.kernel.org>
+Subject: Re: [PATCH 2/2] arm64: dts: qcom: sm8550: Additionally manage MXC
+ power domain in camcc
+From: "Luca Weiss" <luca.weiss@fairphone.com>
+To: "Taniya Das" <taniya.das@oss.qualcomm.com>, "Luca Weiss"
+ <luca.weiss@fairphone.com>, "Dmitry Baryshkov"
+ <dmitry.baryshkov@oss.qualcomm.com>, "Vladimir Zapolskiy"
+ <vladimir.zapolskiy@linaro.org>
+X-Mailer: aerc 0.21.0-0-g5549850facc2
+References: <20250303225521.1780611-1-vladimir.zapolskiy@linaro.org>
+ <20250303225521.1780611-3-vladimir.zapolskiy@linaro.org>
+ <dbxvzgqs5slrl5edqunal3wplg5jiszqv46dr4nzgowwlhkhxa@qwtfq7nfjwfo>
+ <3210a484-b9c3-4399-bee1-9f5bbc90034c@linaro.org>
+ <CAA8EJprP9Z181VDCT=xfyrBipzgiB0tfb8M_XZ4H=yOrvEnB0w@mail.gmail.com>
+ <f41061a2-cf45-4588-8df7-22270c936ee2@quicinc.com>
+ <D8EZ47Z557OX.37FDVYA5AHET0@fairphone.com>
+ <d64c0776-0b12-42d3-aed3-4e6a13487f51@quicinc.com>
+In-Reply-To: <d64c0776-0b12-42d3-aed3-4e6a13487f51@quicinc.com>
 
-On Fri, Oct 17, 2025 at 12:27:55PM +0100, Srinivas Kandagatla wrote:
-> On 10/17/25 8:35 AM, Alexey Klimov wrote:
-> > On Thu Oct 16, 2025 at 8:46 PM BST, Dmitry Baryshkov wrote:
-> >> On Thu, 16 Oct 2025 at 18:08, Srinivas Kandagatla
-> >> <srinivas.kandagatla@oss.qualcomm.com> wrote:
-> >>>
-> >>>
-> >>>
-> >>> On 10/7/25 2:26 AM, Alexey Klimov wrote:
-> >>>> Add soundcard compatible for QRB2210 (QCM2290) platforms.
-> >>>> While at this, also add QRB2210 RB1 entry which is set to be
-> >>>> compatible with QRB2210 soundcard.
-> >>>>
-> >>>> Cc: Srinivas Kandagatla <srini@kernel.org>
-> >>>> Signed-off-by: Alexey Klimov <alexey.klimov@linaro.org>
-> >>>> ---
-> >>>>  Documentation/devicetree/bindings/sound/qcom,sm8250.yaml | 5 +++++
-> >>>>  1 file changed, 5 insertions(+)
-> >>>>
-> >>>> diff --git a/Documentation/devicetree/bindings/sound/qcom,sm8250.yaml b/Documentation/devicetree/bindings/sound/qcom,sm8250.yaml
-> >>>> index 8ac91625dce5ccba5c5f31748c36296b12fac1a6..c29e59d0e8043fe2617b969be216525b493458c4 100644
-> >>>> --- a/Documentation/devicetree/bindings/sound/qcom,sm8250.yaml
-> >>>> +++ b/Documentation/devicetree/bindings/sound/qcom,sm8250.yaml
-> >>>> @@ -21,6 +21,10 @@ properties:
-> >>>>                - lenovo,yoga-c630-sndcard
-> >>>>                - qcom,db845c-sndcard
-> >>>>            - const: qcom,sdm845-sndcard
-> >>>> +      - items:
-> >>>> +          - enum:
-> >>>> +              - qcom,qrb2210-rb1-sndcard
-> >>> I don't think you need rb1 specific compatible here, unless there this
-> >>> is totally different to what the base compatible can provide.
-> >>
-> >> Why do we need to deviate from other platforms which declare
-> >> board-specific compat too?
-> > 
-> > There seems to be now a few incompatible suggestions for rb1 sndcard:
-> > - make it compatible/fallback to qcom,sm8250-sndcard (1);
-> > - make it compatible/fallback to qcom,qrb4210-rb2-sndcard (2);
-> > - add separate compatible/enum for rb1 sndcard as qcom,qrb2210-rb1-sndcard (3);
-> > - add base compatible as qcom,qrb2210-sndcard and fallback
-> > rb1 sndcard compatible to it.
-> > 
-> > The latter one is ruled out because base compatible should be used and
-> > it is not going to.
-> > 
-> > As far as I can see the last addition went simply with (3).
-> > Which one finally you all want?
-> 
-> Am fine with either "qcom,sm8250-sndcard" or "qcom,qrb4210-rb1-sndcard"
-> as long as we reflect that correct driver name in machine driver.
-> 
-> traditionally we have SoC level compatible which works fine for 99% of
-> the boards for that SoC, expectation was that if there is any deviation
-> or board specific changes required, this can be accommodate using model
-> information. am fine with board specific compatible too, however am not
-> okay with both "qcom,sm8250-sndcard" and "qcom,qrb4210-rb1-sndcard"  or
-> falling back to another board compatible for various reason one being ucm.
-> 
-> So 1 and 2 re *NOK*
-> 
-> I hope this provides some clarity here.
+Hi Taniya,
 
-My preference would be to follow the established pattern, unless there
-is a good reason to deviate from it. And... it seems we have several
-trends there.
+On Thu Mar 13, 2025 at 12:57 PM CET, Taniya Das wrote:
+>
+>
+> On 3/13/2025 1:22 PM, Luca Weiss wrote:
+>> Hi Taniya,
+>>=20
+>> On Thu Mar 13, 2025 at 5:39 AM CET, Taniya Das wrote:
+>>>
+>>>
+>>> On 3/4/2025 2:10 PM, Dmitry Baryshkov wrote:
+>>>> On Tue, 4 Mar 2025 at 09:37, Vladimir Zapolskiy
+>>>> <vladimir.zapolskiy@linaro.org> wrote:
+>>>>>
+>>>>> On 3/4/25 01:53, Dmitry Baryshkov wrote:
+>>>>>> On Tue, Mar 04, 2025 at 12:55:21AM +0200, Vladimir Zapolskiy wrote:
+>>>>>>> SM8550 Camera Clock Controller shall enable both MXC and MMCX power
+>>>>>>> domains.
+>>>>>>
+>>>>>> Are those really required to access the registers of the cammcc? Or =
+is
+>>>>>> one of those (MXC?) required to setup PLLs? Also, is this applicable
+>>>>>> only to sm8550 or to other similar clock controllers?
+>>>>>
+>>>>> Due to the described problem I experience a fatal CPU stall on SM8550=
+-QRD,
+>>>>> not on any SM8450 or SM8650 powered board for instance, however it do=
+es
+>>>>> not exclude an option that the problem has to be fixed for other cloc=
+k
+>>>>> controllers, but it's Qualcomm to confirm any other touched platforms=
+,
+>>>>
+>>>> Please work with Taniya to identify used power domains.
+>>>>
+>>>
+>>> CAMCC requires both MMCX and MXC to be functional.
+>>=20
+>> Could you check whether any clock controllers on SM6350/SM7225 (Bitra)
+>> need multiple power domains, or in general which clock controller uses
+>> which power domain.
+>>=20
+>> That SoC has camcc, dispcc, gcc, gpucc, npucc and videocc.
+>>=20
+>> That'd be highly appreciated since I've been hitting weird issues there
+>> that could be explained by some missing power domains.
+>>=20
+>
+> Hi Luca,
+>
+> The targets you mentioned does not have any have multiple rail
+> dependency, but could you share the weird issues with respect to clock
+> controller I can take a look.
 
-- qcom,SoC-sndcard (with possible fallback to earlier SoC). 35 usages
-  out of 49, including the recent ones as X1E8, SM[4567]50, SC8280XP,
-  QCS8300 and others
+Coming back to this, I've taken a shot at camera on SM6350 (Fairphone 4)
+again, but again hitting some clock issues.
 
-- Two users of qcom,SoC-qdsp6-sndcard, let's ignore them.
+For reference, I am testing with following change:
+https://lore.kernel.org/linux-arm-msm/20250911011218.861322-3-vladimir.zapo=
+lskiy@linaro.org/
 
-- 12 users of Board-specific compat string, which includes RB2, RB3,
-  RB5, RB3 Gen2, FP4 and FP5 (and several other platforms). Some (3
-  SDM845 devices) of these devices use an SoC compat as a fallback
-  string, which adds weight to the first bucket.
+Trying to enable CAMCC_MCLK1_CLK - wired up to the IMX576 camera sensor
+on this phone - results in following error.
 
-The "winner" is obvious, but I couldn't help but notice the lack of
-generic approach (and yes, before i grepped '-sndcard' I was under
-assumption that the board-specific sndcard is a recommended approach,
-looking at the boards and phones I cared most).
+[    3.140232] ------------[ cut here ]------------
+[    3.141264] camcc_mclk1_clk status stuck at 'off'
+[    3.141276] WARNING: CPU: 6 PID: 12 at drivers/clk/qcom/clk-branch.c:87 =
+clk_branch_toggle+0x170/0x190
 
-TL;DR. Alexey, I'm sorry for the possible misguidance earlier. It seems
-this device should also use a generic name "qcom,qcm2290-sndcard" (or
-"qcom,qrb2210-sndcard").
+Checking the driver against downstream driver, it looks like the RCGs
+should be using clk_rcg2_shared_ops because of enable_safe_config in
+downstream, but changing that doesn't really improve the situation, but
+it does change the error message to this:
 
--- 
-With best wishes
-Dmitry
+[    2.933254] ------------[ cut here ]------------
+[    2.933961] camcc_mclk1_clk_src: rcg didn't update its configuration.
+[    2.933970] WARNING: CPU: 7 PID: 12 at drivers/clk/qcom/clk-rcg2.c:136 u=
+pdate_config+0xd4/0xe4
+
+I've also noticed that some camcc drivers take in GCC_CAMERA_AHB_CLK as
+iface clk, could something like this be missing on sm6350?
+
+I'd appreciate any help or tips for resolving this.
+
+Regards
+Luca
+
+>
+>> Regards
+>> Luca
+>>=20
+>>>
+>>>>> for instance x1e80100-camcc has it resolved right at the beginning.
+>>>>>
+>>>>> To my understanding here 'required-opps' shall also be generalized, s=
+o
+>>>>> the done copy from x1e80100-camcc was improper, and the latter dt-bin=
+ding
+>>>>> should be fixed.
+>>>>
+>>>> Yes
+>>>>
+>>>
+>>> required-opps is not mandatory for MXC as we ensure that MxC would neve=
+r
+>>> hit retention.
+>>>
+>>> https://lore.kernel.org/r/20240625-avoid_mxc_retention-v2-1-af9c2f549a5=
+f@quicinc.com
+>>>
+>>>
+>>>>
+>>>>
+>>=20
+
 
