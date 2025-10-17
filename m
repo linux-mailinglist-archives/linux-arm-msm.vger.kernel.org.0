@@ -1,161 +1,117 @@
-Return-Path: <linux-arm-msm+bounces-77711-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-77712-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5F9C9BE7367
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Oct 2025 10:39:39 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id B7C33BE736A
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Oct 2025 10:40:21 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 657AF622E75
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Oct 2025 08:35:10 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 554FD1A61F24
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Oct 2025 08:40:45 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9513E296BA5;
-	Fri, 17 Oct 2025 08:34:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="tBURSOf1"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C3BEA29D269;
+	Fri, 17 Oct 2025 08:40:16 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from smtpbguseast3.qq.com (smtpbguseast3.qq.com [54.243.244.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BB0E269AE9;
-	Fri, 17 Oct 2025 08:34:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B861021B185;
+	Fri, 17 Oct 2025 08:40:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=54.243.244.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760690068; cv=none; b=lZgoH4tR7H+8dDjgAlzdU1d3jN965ZtqitaU4RHr191gG5tTkQScDtKn2PIw8iRK+2hv7TsxwASPF0cYUwWdfiknMKEsw76rjZ0tC4kKvKTvTqY6vclIwUzEattWim4WflpBgTDgRRJEsQsyj5wVCzVPJhg55ojbWo8H7NH68Lo=
+	t=1760690416; cv=none; b=R62wCbWkOliWKVDvBySslLwzwdDAy9MgAxkQgBQx5vT+2IUkjkuVcvZ+4Qx0hYZ1IfiKILJdcaoHbqClAbRW6kXqSQXfWPd93uleCOEh4HWs+g6hlexKb0F9PujZDtfBKsI7fX5E0Owi9WXDA0spEfZlhlGx/Eevh31q6V4hsR8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760690068; c=relaxed/simple;
-	bh=w3Jtbc7P9k3PPr7nIVh983//ubXEPnmSoqZwGmDBXrk=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=DnP7yqwp9YyMui+OVDVRe7reKYIwHtMRh03O4iHwek7hvRDHlGNxS+niBb8L/iqFG7FS6oxIvWQLq4RAVgkXglkn7idTGDoGM/eJIMkk25thhgQ84fCeq4RewE2EF1Ce8beJq/uOdOpZf585d9wpQPHkiUkTI1PtjnEqHisH0/o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=tBURSOf1; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80F82C4CEF9;
-	Fri, 17 Oct 2025 08:34:25 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1760690067;
-	bh=w3Jtbc7P9k3PPr7nIVh983//ubXEPnmSoqZwGmDBXrk=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=tBURSOf1n1gAe4wuT1WyYiBXXL0n4H1eV34vl60JDzY1kfH5x0va0pTUZzw46QfON
-	 44YdA+pobnFwaecgLz6QSBEVbPWsC5+Rd96IabcLUdGAzeqLqH+n3vCpvEuNfZ9qrO
-	 DWYY3kbxMoGvDtAyQYpfaBjeIrgs38GMRq7uGwS86DiM1aEsNdmvCrtQ+F3kVCYhNe
-	 g5fgrWwvl/cGqiaYTUFEj0gQ37qLq/S1Qr2fcudgvMJ0hluVJzJ9xBko2C0xcNLyWq
-	 gY1rLyNmgXbzQ4A/XtfuywKcILMUH8i6XMus/6tx/aiivjkzEkjK/XuqQjn9awXHF0
-	 vL93gvQw3wHiQ==
-Message-ID: <94ae58e4-4fd2-4c29-a060-986d84309f94@kernel.org>
-Date: Fri, 17 Oct 2025 10:34:23 +0200
+	s=arc-20240116; t=1760690416; c=relaxed/simple;
+	bh=dsZvQxJtweRSbWprsBUkU2SOnynoqRWoBCApBCXh3Qg=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=baqDEEOF/fKZFnRY5uzmi/kCrhudUfpW63761ASUlsnjKERvjza0snx6yjNvO1WKy/DTZHMoWV+gzWre3gwCVUDpCJ1dr6c7NUJMtJAYpBM0BDBC52j85luyN/uys9nfCFsvRn+RV647vKk01GSMZzELCHnX7qAE+yeSjo8kX9A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=radxa.com; spf=pass smtp.mailfrom=radxa.com; arc=none smtp.client-ip=54.243.244.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=radxa.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=radxa.com
+X-QQ-mid: zesmtpsz3t1760690358tf89476e9
+X-QQ-Originating-IP: /A5aLrgRw/j8SKmd3JVMi6f9jX/yuWXc2XR2LUdo+jU=
+Received: from bigfoot-server-arm-node1.classf ( [183.250.239.212])
+	by bizesmtp.qq.com (ESMTP) with 
+	id ; Fri, 17 Oct 2025 16:39:16 +0800 (CST)
+X-QQ-SSF: 0000000000000000000000000000000
+X-QQ-GoodBg: 0
+X-BIZMAIL-ID: 10021269870126242908
+EX-QQ-RecipientCnt: 12
+From: Junhao Xie <bigfoot@radxa.com>
+To: Srinivas Kandagatla <srini@kernel.org>,
+	Amol Maheshwari <amahesh@qti.qualcomm.com>
+Cc: Arnd Bergmann <arnd@arndb.de>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	Ling Xu <quic_lxu5@quicinc.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	linux-arm-msm@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	stable@vger.kernel.org,
+	Junhao Xie <bigfoot@radxa.com>,
+	stable@kernel.org,
+	Xilin Wu <sophon@radxa.com>
+Subject: [PATCH] misc: fastrpc: Fix dma_buf object leak in fastrpc_map_lookup
+Date: Fri, 17 Oct 2025 16:39:06 +0800
+Message-ID: <48B368FB4C7007A7+20251017083906.3259343-1-bigfoot@radxa.com>
+X-Mailer: git-send-email 2.50.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] arm64: defconfig: Change CONFIG_SM_TCSRCC_8750 from m to
- y
-To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
- Taniya Das <quic_tdas@quicinc.com>, Taniya Das
- <taniya.das@oss.qualcomm.com>, Bjorn Andersson <andersson@kernel.org>,
- linux-arm-msm@vger.kernel.org
-Cc: linux-arm-kernel@lists.infradead.org,
- Ajit Pandey <ajit.pandey@oss.qualcomm.com>,
- Imran Shaik <imran.shaik@oss.qualcomm.com>,
- Jagadeesh Kona <jagadeesh.kona@oss.qualcomm.com>,
- linux-kernel@vger.kernel.org
-References: <20251017-update_defconfig_tcsrcc_sm8750-v1-1-34b1b47a0bda@oss.qualcomm.com>
- <30390038-0f90-48a4-befe-475cf88ba1fb@kernel.org>
- <37f54b76-a274-4ce2-aaa9-88ba0eb84199@oss.qualcomm.com>
- <90c8dda3-f753-43dc-8bb9-d03a808c8704@kernel.org>
- <38b8468f-5006-46a3-a4ea-28e6692ef14a@quicinc.com>
- <03ac36fb-a227-438e-bdf6-f787e26008b3@kernel.org>
- <8580ae8e-50e9-481c-b9f3-125b6d1cb494@kernel.org>
- <0a9874d4-29e4-477e-a675-c4534658f9d9@oss.qualcomm.com>
-From: Krzysztof Kozlowski <krzk@kernel.org>
-Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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 a/A=
-In-Reply-To: <0a9874d4-29e4-477e-a675-c4534658f9d9@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
+X-QQ-SENDSIZE: 520
+Feedback-ID: zesmtpsz:radxa.com:qybglogicsvrgz:qybglogicsvrgz7a-0
+X-QQ-XMAILINFO: OYM3GZRvbPalLiATFyBjHVySEMnZJbrPaHEmf0UANKERrzk59tlfdMzE
+	1xVTYc05P4fnjfJf28d2OOdTKxK30dnaWuuB7Nu5kL3M5l6e546UvECTxFlLljqwE9s0PeL
+	uS5gOemc3MZYV16PsD7c0yH0Y7QzDc+mlpQ7W6aX6KiNoCL97HEYM+hu3uUNqq5Hte7fWn/
+	7ol9cdSXCzLv+ERwWrjbaMQ6RJAd487S9M8l/0+JV3qcOqW2ActcHnDhCmQ/LR2C9dQzpYD
+	SnmIol/jN5MVdChcxjZLRZ1mOLKzPao/Hy+5/yq1wy1A1N0lOYCThR+jm4h89/bmPK/Qq6l
+	dJNE/7nj6ekgz3cANWfPr5c+Vn7EgpP0P2At+PoKELaFqIkceDT0j7M3yjk66U+gCRpy8FK
+	E0bipQx8dowM0eSgzFUzXfqcYkjVf2RZ+VKplS6Z7FxvH+QSiV3SQxaX03z5Mly27nm5QV3
+	hxYAIUKXHh7UC0top63w1ACj4lH8Llkpp7TA6eaiUZ6Zb+WPfYbzUojPIJZRPba++Yopghx
+	QvfAVnrTEEs306aSLr8xSpxIkZ9Blevq5I9x4FsSZ6nhvZO66iPn6JchUloSj7n2hJpztW2
+	EhIFRoVv1+6dM9xJdOrGZiCNYleuB/hI/T9U9w6DUazM3eXeA8k1vyGE2+If524evhKdCdW
+	vFAVprC0v/NmMyKDCZbQr3HXQuqj+L2VISrWecmWAPxzxJaXSqP5vVmGs8Rbo9yjOf6Oe1n
+	TDPMJvW5gFbsueQYlfIPZeft+3HFd7QD4uxmO+jYniGTYrh38B7GXqDMT06vpEroKhre2us
+	bofaZWb4Is5ySxdEZhTyC2+isAuz7OZPUQagdkxSWaKcxH6xPrOzsDop0gRAs+VEnqSdFms
+	bjVAjF2sYg//ngFTNpMBfpkSf8gZZgxBYRYhxT+h3e6IaOijTTw8HZCfuPVWo7c6b1plh6a
+	VWpgg23v/RHreGIgctvr1Xg0SDgsTxM3xhvW+CNasByBbcbiL8sPLRzWznzG2wVn3BF/AJp
+	cgRnwohQ==
+X-QQ-XMRINFO: NI4Ajvh11aEj8Xl/2s1/T8w=
+X-QQ-RECHKSPAM: 0
 
-On 17/10/2025 10:15, Konrad Dybcio wrote:
-> On 10/17/25 8:54 AM, Krzysztof Kozlowski wrote:
->> On 17/10/2025 07:56, Krzysztof Kozlowski wrote:
->>> On 17/10/2025 07:49, Taniya Das wrote:
->>>>
->>>>
->>>> On 10/17/2025 10:51 AM, Krzysztof Kozlowski wrote:
->>>>> On 17/10/2025 07:16, Taniya Das wrote:
-> 
-> [...]
-> 
->>>> We have tried booting up recently and and that is what we observed. The
->>>> patch from 'm' to 'y' helps the UFS probe is successful and the rootfs
->>>> is picked from ufs partitions. I will add these fail & success log
->>>> snippets in the commit text.
->>>
->>> That's not enough. You need to explain why UFS fails. After explaining
->>> this, I guess bug in UFS would be exposed thus that one should be fixed.
->>> You just provided band-aid without fixing the real problem.
->>>
->>> NAK
->>
->>
->> ... and to prove your analysis is wrong (because your setup is likely
->> having issues) I even tested now linux next with defconfig. Works all
->> fine on next-20251013. You did not share which kernel even has this
->> issue, maybe some downstream tree?
-> 
-> Is there a chance you have the TCSR module packed in initramfs and
-> Taniya doesn't?
+In fastrpc_map_lookup, dma_buf_get is called to obtain a reference to
+the dma_buf for comparison purposes. However, this reference is never
+released when the function returns, leading to a dma_buf memory leak.
 
-Of course that's a chance, since I have all modules packed. Why would
-someone pack UFS to initramfs but not its dependencies? It would never
-work, actually, nothing would work...
+Fix this by adding dma_buf_put before returning from the function,
+ensuring that the temporarily acquired reference is properly released
+regardless of whether a matching map is found.
 
-If initramfs does not have necessary modules, way to fix it is to add
-these modules, not make the symbol enabled.
+Fixes: 9031626ade38 ("misc: fastrpc: Fix fastrpc_map_lookup operation")
+Cc: stable@kernel.org
+Signed-off-by: Junhao Xie <bigfoot@radxa.com>
+Tested-by: Xilin Wu <sophon@radxa.com>
+---
+ drivers/misc/fastrpc.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-Best regards,
-Krzysztof
+diff --git a/drivers/misc/fastrpc.c b/drivers/misc/fastrpc.c
+index 621bce7e101c1..ee652ef01534a 100644
+--- a/drivers/misc/fastrpc.c
++++ b/drivers/misc/fastrpc.c
+@@ -381,6 +381,8 @@ static int fastrpc_map_lookup(struct fastrpc_user *fl, int fd,
+ 	}
+ 	spin_unlock(&fl->lock);
+ 
++	dma_buf_put(buf);
++
+ 	return ret;
+ }
+ 
+-- 
+2.50.1
+
 
