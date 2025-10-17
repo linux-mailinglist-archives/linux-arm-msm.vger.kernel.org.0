@@ -1,146 +1,184 @@
-Return-Path: <linux-arm-msm+bounces-77690-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-77691-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id B6314BE6C20
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Oct 2025 08:46:42 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id B1C06BE6D65
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Oct 2025 08:57:06 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 3A86418889DB
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Oct 2025 06:47:06 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 0ED201AA00B0
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Oct 2025 06:57:08 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6CE2031197E;
-	Fri, 17 Oct 2025 06:45:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C9B833126DB;
+	Fri, 17 Oct 2025 06:54:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="uc+OZZt6"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="mdHkbG4T"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f46.google.com (mail-wm1-f46.google.com [209.85.128.46])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F447310782
-	for <linux-arm-msm@vger.kernel.org>; Fri, 17 Oct 2025 06:45:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 991B6313E34;
+	Fri, 17 Oct 2025 06:54:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760683556; cv=none; b=NkgCsAJCeZ4OFA/mr5u2iRy5Z7tcmSF1CVhdgSpXspxANTPQZM6aJAxklUchCkBDSal3Q1cc3lGwfHCx+lcPDfEJybEFlJyak2bYKQFQHAehiPi4agk8NmHKO6nEzswMs0KGn/ELJ5NoIfgKp5xHubBMUj3H+wiVzZ4+Vizd+Ic=
+	t=1760684089; cv=none; b=lwIvAath6ttZLxO/uLuZgAe6cDQgsY7slv7QvQ+ybpgAW4gz2UBCNgnuRWUHA3eAesr7NLSZSMASuXKB6dsNYRejn9VSMuXj6vH2Kg7TVOUeE4WBwo2Vmr9+Avd+h7ohsZSw7EYV9xwHZElLgUUlqHkGw791w2ZKyVLZeTEgKdg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760683556; c=relaxed/simple;
-	bh=Y8VoXhImxF1w1dbi0lgAcXI04oMk6uKN2d6iSlSdjTk=;
-	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
-	 References:In-Reply-To; b=InBFv5TNEHSyCKgIVsPwjEW6GG+Ne+38D39PKsovLEgzffBSJMey2WKD8txmrvMNvMXSLQHPqCvf6P9T2p+t0UgqvCi3ufcWtf0KlGWOO6dcQLmKlAG3UTF1NRjgvbviYsGQU2mclcL1vJwYaqIoPgYkI6RdmHjLPNgBJsf9/BE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=uc+OZZt6; arc=none smtp.client-ip=209.85.128.46
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f46.google.com with SMTP id 5b1f17b1804b1-4711f3c386eso947225e9.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 16 Oct 2025 23:45:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1760683552; x=1761288352; darn=vger.kernel.org;
-        h=in-reply-to:references:to:from:subject:cc:message-id:date
-         :content-transfer-encoding:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=cxXwBRH3OdLI6ivv4eNJ4mVtVC/UotONZ6PQtTD+YIs=;
-        b=uc+OZZt6bbuvCyutKKMIvPG3rVkJ2GIgOy5aVU3oE7vOzD4iXxA9OBh6ERxTy7Z306
-         6oMQlEyYtTEcY6RMqDgtMo0KBk3c7SQTGcZx4O0PkbSbZeh5Lj/f3ET5DX448msxCLIp
-         fIlPrD5ofd6qLa8I0I+vilTBnCF6OpGa0Pl41MZmELHLG7WEb/gGLSGT8UEnJme0OREz
-         80XFbD/F4+ZGdgeRXqyWNQ5v06bb+q2uI1hguEZdJvA61akneZyY8cIbE8y0ftpS1EN7
-         SnggNWsBVgZtWXUFnaDcjnY0DoAazpF6WIC8i6pZmE0i3wcCaWHfoyazoFoaHC8e1dX2
-         g7UA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1760683552; x=1761288352;
-        h=in-reply-to:references:to:from:subject:cc:message-id:date
-         :content-transfer-encoding:mime-version:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=cxXwBRH3OdLI6ivv4eNJ4mVtVC/UotONZ6PQtTD+YIs=;
-        b=PS8zRDpV+OeUpNiKN/8g0j7ABBrPsX48q08AvGWZNWsOa43NNCkhq3nBFjaV+pBVou
-         HZFIWrxWt1oMjarxVJ+vHmqMGNNse3pytJgIJZmqx1WPKm8gkZuhml+UEbayZu14jLE1
-         625A0zJOqAn1BQwM2z8WN9AOavSPvKudBuKk6WI+5ipFfW+t3p0HvL4kxZBQtCCJsxje
-         wiDDxBE3aU2TE4vdtnkSuOkdN5LuDmk6ac/3ZRhqWNYQt1wAQgJR4MwkiY9qmAsRmhSz
-         LX/wkde88R49+ffUI10l0Ua6htEH1lqGeMkYKPQx6llPLpSaiVdyMlgnt6IKPAzNbKIK
-         WkLg==
-X-Gm-Message-State: AOJu0YziyHO3QbewHcEyCSXXv2AIYCOlFaIFD4Qfqhjdrj9MeFqaF4zc
-	0qdmMst6aoJ7Yp53ehDHiZuudeEeI086No84H+OWZRYrxhwWXJ7STC48iQyKQRZRSPc=
-X-Gm-Gg: ASbGncsDOR5q2qS5PPRDorPdHka9uO0I2KjzL/WVMq1nVAgdJoEit4humldGAMoh/k2
-	uCyy620c4kePrzyAov1vIc5u4WMz+Dhp8DrAvpk8YMHsXxD4BO9mZCNo6R9NVhLNO1v10O3qY6l
-	jNpStF4ZDOUL/HDUSx0dgqgplzy4WwadA4V4Ny4epIcWXs2W90iH/XUSN62qks4BgrzHxB9MkeK
-	+LX5eDZXIdaswoAvWdPkEbhLucRTyBqtOajk1/XEZ65a2o15AOsLyZYD0sTpyuvV9CfrPvN6VJz
-	VdK7w3tkiL919kSP3c+bCeoQ81xs3vO4m6mCF+JbKobDXXm1jr5XWZcfDZQ/FSTP6TqBU8yJQad
-	n8yl4kLHRfG53cIeNk1rz2DYjnBeraRAFo67RsVdPg0PzDJcfskA6JGx6cUDYd7gEBuKqpLHVOP
-	m01BSK
-X-Google-Smtp-Source: AGHT+IGkGQlk9WZP2Ulpn4AcpV8f96nPE/t/dP3omgDpA/THfd4k+GylVoGgGF64mCc4wmfibWovUA==
-X-Received: by 2002:a05:600c:1551:b0:46e:2801:84aa with SMTP id 5b1f17b1804b1-471177b143emr18469735e9.0.1760683551674;
-        Thu, 16 Oct 2025 23:45:51 -0700 (PDT)
-Received: from localhost ([2a02:c7c:7259:a00:6426:9b9b:6d3d:1da8])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-471144b5c91sm63630395e9.11.2025.10.16.23.45.50
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 16 Oct 2025 23:45:51 -0700 (PDT)
+	s=arc-20240116; t=1760684089; c=relaxed/simple;
+	bh=1JZmJiFo8oUcLKlECBlUmb3PrlN6gPc3xOaEfyecm4k=;
+	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
+	 In-Reply-To:Content-Type; b=kDheQzHACfwBY5E0MSK1aV4rvsjpx50NoA4AptZfDDyCiCiArzPJoJDXhrvPhyE06UDKwiq8rj7ErZLNDzadmIFfn/OCNwIx6nmEj3PB3ulVDB+fznfo23kibFPzfBnmbR45dckdBz+WTjuDiVpFoDtc3XWNCp/5NRD6fkwG2go=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=mdHkbG4T; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2ED2C4CEF9;
+	Fri, 17 Oct 2025 06:54:45 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1760684088;
+	bh=1JZmJiFo8oUcLKlECBlUmb3PrlN6gPc3xOaEfyecm4k=;
+	h=Date:Subject:From:To:Cc:References:In-Reply-To:From;
+	b=mdHkbG4TxAB8Bs5b2cwI4RvkwO+5CFjhRD3wO2Pp7IvKkWfPRsXo3K3+qFRrxReaf
+	 KnqtBXjHNUN3AqXHFQ3qdNp7nMXiV5Dmr7NyAR7qjCu88lPJZ9oqoEPPjLCZCzhuhl
+	 lUbu3eeZAlxBGDkiGCgruyW4dDXoVjNFvUk8okr5WH+mFUSY4wFepaMesVdoG5rMLJ
+	 UaivwXG/GAmX/SvX+0svaeWYMZzBjwuZ/XQpKEKpzaSYy69xLkuv265px85GmR2QcE
+	 gGOq1bBC5UpFCXjDWsc6TjhJrauiIAt61S/Tp0ifBgndaqNmESCRilVRhuF/15bbq9
+	 vamZ+Zc5FDtlA==
+Message-ID: <8580ae8e-50e9-481c-b9f3-125b6d1cb494@kernel.org>
+Date: Fri, 17 Oct 2025 08:54:44 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] arm64: defconfig: Change CONFIG_SM_TCSRCC_8750 from m to
+ y
+From: Krzysztof Kozlowski <krzk@kernel.org>
+To: Taniya Das <quic_tdas@quicinc.com>,
+ Taniya Das <taniya.das@oss.qualcomm.com>,
+ Bjorn Andersson <andersson@kernel.org>, linux-arm-msm@vger.kernel.org
+Cc: linux-arm-kernel@lists.infradead.org,
+ Ajit Pandey <ajit.pandey@oss.qualcomm.com>,
+ Imran Shaik <imran.shaik@oss.qualcomm.com>,
+ Jagadeesh Kona <jagadeesh.kona@oss.qualcomm.com>,
+ linux-kernel@vger.kernel.org
+References: <20251017-update_defconfig_tcsrcc_sm8750-v1-1-34b1b47a0bda@oss.qualcomm.com>
+ <30390038-0f90-48a4-befe-475cf88ba1fb@kernel.org>
+ <37f54b76-a274-4ce2-aaa9-88ba0eb84199@oss.qualcomm.com>
+ <90c8dda3-f753-43dc-8bb9-d03a808c8704@kernel.org>
+ <38b8468f-5006-46a3-a4ea-28e6692ef14a@quicinc.com>
+ <03ac36fb-a227-438e-bdf6-f787e26008b3@kernel.org>
+Content-Language: en-US
+Autocrypt: addr=krzk@kernel.org; keydata=
+ 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 a/A=
+In-Reply-To: <03ac36fb-a227-438e-bdf6-f787e26008b3@kernel.org>
 Content-Type: text/plain; charset=UTF-8
-Date: Fri, 17 Oct 2025 07:45:50 +0100
-Message-Id: <DDKE88TY46WS.1XKHP5I1S3CF6@linaro.org>
-Cc: <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
- <linux-kernel@vger.kernel.org>, <srini@kernel.org>,
- <krzysztof.kozlowski@linaro.org>, <linux-sound@vger.kernel.org>
-Subject: Re: [PATCH v5] dt-bindings: mfd: qcom,spmi-pmic: add compatibles
- for audio blocks
-From: "Alexey Klimov" <alexey.klimov@linaro.org>
-To: "Krzysztof Kozlowski" <krzk@kernel.org>, <lee@kernel.org>,
- <robh@kernel.org>, <krzk+dt@kernel.org>, <conor+dt@kernel.org>,
- <sboyd@kernel.org>
-X-Mailer: aerc 0.20.0
-References: <20251017061314.644783-1-alexey.klimov@linaro.org>
- <2e4e0ad1-a030-4933-8bc9-7b9782234a15@kernel.org>
-In-Reply-To: <2e4e0ad1-a030-4933-8bc9-7b9782234a15@kernel.org>
+Content-Transfer-Encoding: 7bit
 
-On Fri Oct 17, 2025 at 7:25 AM BST, Krzysztof Kozlowski wrote:
-> On 17/10/2025 08:13, Alexey Klimov wrote:
->> If/when pm4125 audio codec will be added to a device tree file, then dtb=
-s
->> check will emit messages that pmic audio-codec@f000 doesn't match any
->> of the regexes: '^pinctrl-[0-9]+$'.
->
->
-> Future errors because of present mistakes are not a reason to do
-> something. This makes no sense because there is no DTBs with that
-> compatible, so drop this sentence. We never document compatibles,
-> because in the future they will be errors (if I get it right?).
+On 17/10/2025 07:56, Krzysztof Kozlowski wrote:
+> On 17/10/2025 07:49, Taniya Das wrote:
+>>
+>>
+>> On 10/17/2025 10:51 AM, Krzysztof Kozlowski wrote:
+>>> On 17/10/2025 07:16, Taniya Das wrote:
+>>>>
+>>>>
+>>>> On 10/17/2025 10:00 AM, Krzysztof Kozlowski wrote:
+>>>>> On 16/10/2025 20:53, Taniya Das wrote:
+>>>>>> The TCSR clock controller is required  during boot to provide the ref
+>>>>>> clocks to the UFS controller. Setting CONFIG_SM_TCSRCC_8750 to y ensures
+>>>>>> the UFS driver successfully probe and initialize the device.
+>>>>>>
+>>>>>> Without this change, the UFS subsystem fails to mount as a usable file
+>>>>>> system during boot.
+>>>>>
+>>>>>
+>>>>> That's not what I observed. UFS works fine, especially that it is a
+>>>>> module, so no, this is not a desired change and explanation is not only
+>>>>> insufficient but actually incorrect.
+>>>>>
+>>>>
+>>>> Krzysztof, on Pakala MTP we are observing the below issue and it
+>>>> requires the module of tscrcc to be loaded explicitly. This patch also
+>>>> aligns to how it is on all other targets.
+>>>>
+>>>> /soc@0/phy@1d80000: Failed to get clk index: 2 ret: -517
+>>>> [   10.496570] ufshcd-qcom 1d84000.ufs: freq-table-hz property not specified
+>>>> [   10.503660] ufshcd-qcom 1d84000.ufs: ufshcd_populate_vreg: Unable to
+>>>> find vdd-hba-supply regulator, assuming enabled
+>>>> [   10.514548] ufshcd-qcom 1d84000.ufs: ufshcd_populate_vreg: Unable to
+>>>> find vccq2-supply regulator, assuming enabled
+>>>> [   10.565955] platform 1d80000.phy: deferred probe pending: (reason
+>>>> unknown)
+>>>> [   10.573078] platform 1d84000.ufs: deferred probe pending:
+>>>> ufshcd-qcom: ufshcd_pltfrm_init() failed
+>>>>
+>>>
+>>>
+>>> I don't and I am testing regularly, so I assume you have incorrect
+>>> config. Maybe I have incorrect one (which works), but then commit msg is
+>>> incomplete - you must explain the bug and provide proof that this is the
+>>> correct fix for it.
+>>>
+>>
+>> We have tried booting up recently and and that is what we observed. The
+>> patch from 'm' to 'y' helps the UFS probe is successful and the rootfs
+>> is picked from ufs partitions. I will add these fail & success log
+>> snippets in the commit text.
+> 
+> That's not enough. You need to explain why UFS fails. After explaining
+> this, I guess bug in UFS would be exposed thus that one should be fixed.
+> You just provided band-aid without fixing the real problem.
+> 
+> NAK
 
-Ok. I can hold it off till it will be started to be used then.
 
->> Add the compatibles for two possible audio codecs so the devicetree for
->> such audio blocks of PMIC can be validated properly while also
->> removing reference to qcom,pm8916-wcd-analog-codec schema file.
->
-> And that's now incomplete. You add new device here and because preferred
-> and sufficient is to list compatibles, you change existing audio codec
-> child schema reference into just list of compatibles.
+... and to prove your analysis is wrong (because your setup is likely
+having issues) I even tested now linux next with defconfig. Works all
+fine on next-20251013. You did not share which kernel even has this
+issue, maybe some downstream tree?
 
-So the way I understand this is that commit description is incomplete.
-I can change it to your liking, okay.
-FWIW, "add new device here" is said as
-"Add the compatibles for two possible audio codecs" and removal of
-child schema reference is also mentioned as "while also                    =
-                   =20
-removing reference to qcom,pm8916-wcd-analog-codec schema file".
-But I can change it, okay.
-
->> Suggested-by: Krzysztof Kozlowski <krzk@kernel.org>
->
->
-> I don't think I suggested this patch. What's more, it wasn't here at v4.
-
-The original idea was to fix the warning or error emitted by dtbs check
-but now the whole body os the change is your suggestion. Now it seems
-it was not even needed at that point earlier which is a new finding.
-Your prefference -- drop it or keep it.
-
->> Signed-off-by: Alexey Klimov <alexey.klimov@linaro.org>
 
 Best regards,
-Alexey
+Krzysztof
 
