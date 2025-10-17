@@ -1,137 +1,155 @@
-Return-Path: <linux-arm-msm+bounces-77696-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-77697-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id AB2DABE6E6A
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Oct 2025 09:13:35 +0200 (CEST)
+Received: from ams.mirrors.kernel.org (ams.mirrors.kernel.org [IPv6:2a01:60a::1994:3:14])
+	by mail.lfdr.de (Postfix) with ESMTPS id A4B0DBE6E7C
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Oct 2025 09:16:20 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 631ED3A7048
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Oct 2025 07:13:34 +0000 (UTC)
+	by ams.mirrors.kernel.org (Postfix) with ESMTPS id 5106735A8EC
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Oct 2025 07:16:20 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id AC262311586;
-	Fri, 17 Oct 2025 07:13:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id BE05C14F125;
+	Fri, 17 Oct 2025 07:16:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=joelselvaraj.com header.i=@joelselvaraj.com header.b="mR9mfrq9"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="xy4csbes"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-24420.protonmail.ch (mail-24420.protonmail.ch [109.224.244.20])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f50.google.com (mail-wm1-f50.google.com [209.85.128.50])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FBC123B60C;
-	Fri, 17 Oct 2025 07:13:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=109.224.244.20
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 019FB1519A6
+	for <linux-arm-msm@vger.kernel.org>; Fri, 17 Oct 2025 07:16:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760685211; cv=none; b=cxGdM1WZuhOsW49RKjJYG7uh4S5vjswRA4GYCnJrdEnUQYrF+g5bxp3+t53EVXUzQ78uKV8x6TcmPSzH/bOPO1kgYYhmrA/Z9wIsWfDHjikscRKlrOj9XHmn6+5FoXhI22xA3YRfl2pgtYv8oBRTbC/LtPqs77IK27LS/SM01l0=
+	t=1760685373; cv=none; b=GJ4kqHuRf2svnxj/gUjnetwcPCcyXiLT1AihOpLHj0Yfa/JMQuo9T4jFGfBm35Z4wR63MwIrXJiKUh8nc3NpMPxMFkXuS+VqXGGUn1gA6MPFnMX8L/UN0jqb0GVGJTlf0eAcTOEvmUCgC7uFOhXTD5JrmKFtsJlfdGKKTsond3o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760685211; c=relaxed/simple;
-	bh=xN4LN3ZOHc6lC4RDOQKMn7iNewkLfY6kTLmXWvcDkCs=;
-	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=EA85j25kVXRHnwW4Yen1CdHVpJLQh2Lr9ZCx+lwG+4CSbG4GUCB2hHy3Ck5HAQTZKuCdNtC7gXY05/l+vnWQMBwUmTLDIEkFfDssHaBsMCaRrBFVXCQwn+jzFoZpGa42vsZZEhBtAC2RelgFIVaOtckoJJM/V55Vm1Dvqp7/8Rw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=joelselvaraj.com; spf=pass smtp.mailfrom=joelselvaraj.com; dkim=pass (2048-bit key) header.d=joelselvaraj.com header.i=@joelselvaraj.com header.b=mR9mfrq9; arc=none smtp.client-ip=109.224.244.20
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=joelselvaraj.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=joelselvaraj.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=joelselvaraj.com;
-	s=protonmail3; t=1760685199; x=1760944399;
-	bh=XZ0y0x47KXEaW/FqBaoha0+6MvP5HERJCdzBJ7hziJo=;
-	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
-	 Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
-	 Message-ID:BIMI-Selector;
-	b=mR9mfrq94vGkrvWy0W0qS7mNkXAcgKzI5fuspU/OBawddPbWmnnUO9EaCPdO3M7lX
-	 pbH04+99ox3kQ376hpnjs/dlghlmu0pK6Wr2+YZ1YbCRdNfnbsizmaCkH9XkT2RCog
-	 apEpkmtspj8lBO1W+zVJrWBKh1+w6b8pyQ87uMgd8m2xAm4oFf51WhEW2C25+iqv9E
-	 FhkpPmay678p9OKWR9S6nParXcTtNTTmId8e63uHAJZ/fCl/9Z3K/m1d4AopVckZ9i
-	 Pk4+BhahsinbY0ujVYJIQrdSl7IEw7CxWNjxayIxL1Nz06nuuhWpRySu6MqJEG4Ixo
-	 OrXiEdzRyH02w==
-Date: Fri, 17 Oct 2025 07:13:15 +0000
-To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
-From: Joel Selvaraj <foss@joelselvaraj.com>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] arm64: dts: qcom: sdm845-shift-axolotl: fix touchscreen properties
-Message-ID: <267eb29d-b506-43df-9380-3d79798c772c@joelselvaraj.com>
-In-Reply-To: <8a5eecdd-d80f-4955-8ab7-cf6fd991a3b7@oss.qualcomm.com>
-References: <20250919-shift-axolotl-fix-touchscreen-dts-v1-1-60e26ad4e038@joelselvaraj.com> <8a5eecdd-d80f-4955-8ab7-cf6fd991a3b7@oss.qualcomm.com>
-Feedback-ID: 113812696:user:proton
-X-Pm-Message-ID: cfc2211d903c068688da7ddae29ce3a7fa9c81b6
+	s=arc-20240116; t=1760685373; c=relaxed/simple;
+	bh=31nASrMlEYhjgquLurvUbraovx4gJmOk1TIzPuG4tJo=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=opGyNsov1MfJUBylhlk31rvTaAPUt2niIvRaJcN+F84ycMda6imlueK0j723Ss6HHt/5xiW0mtid5ulXBoTc3z0goZ5UUw4md2N4Te0Z7wlEaMeSJ7N0JdVQRxBu1fmCFKNb0CxXe7Uye4C6+hGZ2KuPfC1mbuD+EiDf3e+Gzqg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=xy4csbes; arc=none smtp.client-ip=209.85.128.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wm1-f50.google.com with SMTP id 5b1f17b1804b1-4711825a02bso4840045e9.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 17 Oct 2025 00:16:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1760685369; x=1761290169; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:organization:autocrypt
+         :content-language:from:references:cc:to:subject:reply-to:user-agent
+         :mime-version:date:message-id:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=AVXbG5CCxVfM6hnx09YFhTKic442YEoyyW/cetRSyDM=;
+        b=xy4csbeslMAdKa9FtqLMz5JyNJNRMOtOh3lgbzuXjVgHZyFyaHQRJjbxmRMuk0zjk7
+         x17Rxf0CAIP2FUXNEdi5wDGv8y3MJz+2T0ckf5s5kDiVkCC3fdWwohe3egyeS+NFtPKo
+         wuRjlUzO+oOZtV8nhI+nkHwzmcHKhdLgdusL3s+QXAU1+c+vMUQzMT9c0AMVZ6ab97Bn
+         Lm6jNur2MxWz3svGBBCZDdRU3Ax85tnKChmql+RunzLgyPhWWOh5iFfgr1W36uJEW+mB
+         Y91UqH4JXe/0f8LocOs3nWrJNZtp0G1hmynHvaS1+SXf1BOCPTJjVTXm9n+a6noov4fR
+         UQsA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1760685369; x=1761290169;
+        h=content-transfer-encoding:in-reply-to:organization:autocrypt
+         :content-language:from:references:cc:to:subject:reply-to:user-agent
+         :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=AVXbG5CCxVfM6hnx09YFhTKic442YEoyyW/cetRSyDM=;
+        b=YoOPY5QzSVbghCaNhU54AMaUElB+s+bAcp1zlxUnMhHjp6WxvoQiB6F0su7b3ASWWw
+         VoabGUAqtTVX5ksuOWhFTNQG7GdaEFyqLU2s/cnIrCCjlvLlphTVeYkPwvd4r29s9XQp
+         DIhrtn1emNvmlsYt+hEXa3oL6sDhGyDc5qtmcXmo/q2RpSkoOY6yViteIUDTF5dNtsq6
+         mxmVs02ttGaYHZ05ORvwwPEh+XwIm6Im3uk9lR4zSsvs25ugqvVzFdkTfFgLdEjRE3xZ
+         U4sC81r7lu+H6Tp7le/Fo1x7Qm2EtJnTAEh444GajVgoZsJeTt9ilIE9xRAdS3LSLZGp
+         yskA==
+X-Forwarded-Encrypted: i=1; AJvYcCX6kC9UzjviFgmjDHMLpnyEs7uJMIdXP1ytrZaJmYxwubE/fakpr9HYnbuhawHBD3kTZomCXcOa/n5UPa05@vger.kernel.org
+X-Gm-Message-State: AOJu0YxqbXdd+nfDArgNT7bYuXi4IOLa4rL5Vb+cf7Ispd7PINEV/WEj
+	Suo5/Sbpkh0Q6DfK2CdtRNgbVDpW4KcPU7fvJW5QmsRKhkboqXbD37s2EMcdtn7TkYo4pBxALx2
+	vYKrY7bk=
+X-Gm-Gg: ASbGncvv4tr8UB9pBDM9byZ+9i6vt1UmEqwHObUOqw1QvVAdrtxTA+5VsfQEeN3/aY+
+	mi512FrHci5CrVvyzWgnIhL0tgfqD7lc+341agRrx4I9XVVH8ny0rLO7zcSLw5xjJx2xHZqgxnv
+	qO1X1jhfUVCi54WERgc55sB/TriVb2yqTFFiBduaXJ9Dxwx72ekoecj3nSuIHyuyU2Dm49+7Z6s
+	1//G9NU4cMUlDeVwh1Qdnm8Pg8uAp4pO5uoO9TGCy0hx8gqUep5CW8wTCC8iZa+PXQ1wmSghLkQ
+	jl7CSKtzIjHI6pe+Q/Gr3qfepIfx9TYHwb+GDB2CC9VyRj+ZHOJp0chY25dkRMc6kaybkTvcsCu
+	ghiP3FYionlKOEVp8GfcCrlTYTMQibhBzyjaeX4Tiv96z5qZFDo3um6lVd3GNcXeyGPSKG533wC
+	JBufVRGP+ojxu33VZWzqeJ2oQOIegGUcOfjSjF4RX1Pxh8sPOdisWFewdAqmzIdE9vuYJzoQ93y
+	A==
+X-Google-Smtp-Source: AGHT+IFkD17oo+usX5kpsOF/sHUM1VRDulZyCLwFUAsMU9A/TQDJb3xLY6V6voxUAp7hqzT/TMO5XQ==
+X-Received: by 2002:a05:600c:3b8d:b0:46d:27b7:e7e5 with SMTP id 5b1f17b1804b1-47117917572mr24984885e9.32.1760685369119;
+        Fri, 17 Oct 2025 00:16:09 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:3d9:2080:5849:4623:6b2a:2be9? ([2a01:e0a:3d9:2080:5849:4623:6b2a:2be9])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-471144b5d48sm67532085e9.9.2025.10.17.00.16.08
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 17 Oct 2025 00:16:08 -0700 (PDT)
+Message-ID: <ff687b51-5f47-4edf-9611-d3730397c830@linaro.org>
+Date: Fri, 17 Oct 2025 09:16:08 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+Reply-To: Neil Armstrong <neil.armstrong@linaro.org>
+Subject: Re: [PATCH 0/3] arm64: dts: qcom: sm8550: Enable S5K3M5 image sensor
+To: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>
+Cc: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
+ Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
+ devicetree@vger.kernel.org
+References: <20251013235500.1883847-1-vladimir.zapolskiy@linaro.org>
+From: Neil Armstrong <neil.armstrong@linaro.org>
+Content-Language: en-US, fr
+Autocrypt: addr=neil.armstrong@linaro.org; keydata=
+ xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
+ GTjuhvbleoQ5Cxjr+v+1ARGCH46MxFP5DwauzPekwJUD5QKZlaw/bURTLmS2id5wWi3lqVH4
+ BVF2WzvGyyeV1o4RTCYDnZ9VLLylJ9bneEaIs/7cjCEbipGGFlfIML3sfqnIvMAxIMZrvcl9
+ qPV2k+KQ7q+aXavU5W+yLNn7QtXUB530Zlk/d2ETgzQ5FLYYnUDAaRl+8JUTjc0CNOTpCeik
+ 80TZcE6f8M76Xa6yU8VcNko94Ck7iB4vj70q76P/J7kt98hklrr85/3NU3oti3nrIHmHABEB
+ AAHNKk5laWwgQXJtc3Ryb25nIDxuZWlsLmFybXN0cm9uZ0BsaW5hcm8ub3JnPsLAkQQTAQoA
+ OwIbIwULCQgHAwUVCgkICwUWAgMBAAIeAQIXgBYhBInsPQWERiF0UPIoSBaat7Gkz/iuBQJk
+ Q5wSAhkBAAoJEBaat7Gkz/iuyhMIANiD94qDtUTJRfEW6GwXmtKWwl/mvqQtaTtZID2dos04
+ YqBbshiJbejgVJjy+HODcNUIKBB3PSLaln4ltdsV73SBcwUNdzebfKspAQunCM22Mn6FBIxQ
+ GizsMLcP/0FX4en9NaKGfK6ZdKK6kN1GR9YffMJd2P08EO8mHowmSRe/ExAODhAs9W7XXExw
+ UNCY4pVJyRPpEhv373vvff60bHxc1k/FF9WaPscMt7hlkbFLUs85kHtQAmr8pV5Hy9ezsSRa
+ GzJmiVclkPc2BY592IGBXRDQ38urXeM4nfhhvqA50b/nAEXc6FzqgXqDkEIwR66/Gbp0t3+r
+ yQzpKRyQif3OwE0ETVkGzwEIALyKDN/OGURaHBVzwjgYq+ZtifvekdrSNl8TIDH8g1xicBYp
+ QTbPn6bbSZbdvfeQPNCcD4/EhXZuhQXMcoJsQQQnO4vwVULmPGgtGf8PVc7dxKOeta+qUh6+
+ SRh3vIcAUFHDT3f/Zdspz+e2E0hPV2hiSvICLk11qO6cyJE13zeNFoeY3ggrKY+IzbFomIZY
+ 4yG6xI99NIPEVE9lNBXBKIlewIyVlkOaYvJWSV+p5gdJXOvScNN1epm5YHmf9aE2ZjnqZGoM
+ Mtsyw18YoX9BqMFInxqYQQ3j/HpVgTSvmo5ea5qQDDUaCsaTf8UeDcwYOtgI8iL4oHcsGtUX
+ oUk33HEAEQEAAcLAXwQYAQIACQUCTVkGzwIbDAAKCRAWmrexpM/4rrXiB/sGbkQ6itMrAIfn
+ M7IbRuiSZS1unlySUVYu3SD6YBYnNi3G5EpbwfBNuT3H8//rVvtOFK4OD8cRYkxXRQmTvqa3
+ 3eDIHu/zr1HMKErm+2SD6PO9umRef8V82o2oaCLvf4WeIssFjwB0b6a12opuRP7yo3E3gTCS
+ KmbUuLv1CtxKQF+fUV1cVaTPMyT25Od+RC1K+iOR0F54oUJvJeq7fUzbn/KdlhA8XPGzwGRy
+ 4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
+ QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
+Organization: Linaro
+In-Reply-To: <20251013235500.1883847-1-vladimir.zapolskiy@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-Hi Konrad Dybcio,
+On 10/14/25 01:54, Vladimir Zapolskiy wrote:
+> Enable Samsung S5K3M5 image sensor on SM8550-QRD and SM8550-HDK boards.
+> 
+> The compatible property of the S5K3M5 image sensor along with the driver
+> is added in a recent changeset:
+> * https://lore.kernel.org/linux-media/20251012231102.1797408-1-vladimir.zapolskiy@linaro.org
+> 
+> Vladimir Zapolskiy (3):
+>    arm64: dts: qcom: sm8550: Add description of MCLK pins
+>    arm64: dts: qcom: sm8550-qrd: Enable CAMSS and S5K3M5 camera sensor
+>    arm64: dts: qcom: sm8550-hdk: Add SM8550-HDK Rear Camera Card overlay
+> 
+>   arch/arm64/boot/dts/qcom/Makefile             |   4 +
+>   .../dts/qcom/sm8550-hdk-rear-camera-card.dtso |  91 +++++++++++
+>   arch/arm64/boot/dts/qcom/sm8550-qrd.dts       |  46 ++++++
+>   arch/arm64/boot/dts/qcom/sm8550.dtsi          | 144 ++++++++++++++++++
+>   4 files changed, 285 insertions(+)
+>   create mode 100644 arch/arm64/boot/dts/qcom/sm8550-hdk-rear-camera-card.dtso
+> 
 
-On 10/6/25 9:49 AM, Konrad Dybcio wrote:
-> On 9/19/25 11:02 AM, Joel Selvaraj via B4 Relay wrote:
->> From: Joel Selvaraj <foss@joelselvaraj.com>
->> ---
->>   arch/arm64/boot/dts/qcom/sdm845-shift-axolotl.dts | 17 ++++++++-------=
---
->>   1 file changed, 8 insertions(+), 9 deletions(-)
->>
->> diff --git a/arch/arm64/boot/dts/qcom/sdm845-shift-axolotl.dts b/arch/ar=
-m64/boot/dts/qcom/sdm845-shift-axolotl.dts
->> index 89260fce6513937224f76a94e1833a5a8d59faa4..d4062844234e33b0d501bcb7=
-d0b6d5386c822937 100644
->> --- a/arch/arm64/boot/dts/qcom/sdm845-shift-axolotl.dts
->> +++ b/arch/arm64/boot/dts/qcom/sdm845-shift-axolotl.dts
->> @@ -434,20 +434,19 @@ &i2c5 {
->>   =09status =3D "okay";
->>
->>   =09touchscreen@38 {
->> -=09=09compatible =3D "focaltech,fts8719";
->> +=09=09compatible =3D "focaltech,ft5452";
->>   =09=09reg =3D <0x38>;
->> -=09=09wakeup-source;
->=20
-> All the changes look good given your commit message, but you dropped
-> this wakeup-source property without explanation. It's fine to do so
-> if it's intended, but please mention it if so
-
-In reference to the touchscreen/edt-ft5x06.c driver which is used here,=20
-I am bit confused how wakeup-source works. Does specifying wakeup-source=20
-in dts automatically makes "device_may_wakeup(dev)" return true, even if=20
-device_init_wakeup is NOT configured in the driver? I noticed some=20
-drivers do:
-
-device_init_wakeup(dev,device_property_read_bool(dev, "wakeup-source"));
-
-but the edt-ft5x06 driver doesnt do the init, but directly checks for=20
-may_wakeup in suspend/resume.
-
-Few scenarios based on the driver code and my understanding:
-1. if device_may_wakeup will return true when wakeup-source is=20
-specified, I probably want to just remove it, because irq and regulator=20
-is not disabled during suspend and this will likely cause power drain.
-
-2. The driver has an option to specify wake-gpio. In which case, the=20
-touchscreen is put in some low power hibernate mode with irq and=20
-regulators still enabled. But the touchscreen controller used in this=20
-device doesn't seem to have support for a wake-gpio (atleast based on=20
-downstream code). So that is not an option.
-
-3. if device_may_wakeup will always return false since=20
-device_init_wakeup is not configured and since no wake-gpio is=20
-available, the irq and regulators will be disabled during suspend.=20
-Therefore, the device will not wake up from sleep even if wakeup-source=20
-is specified as the irq is not going to be triggered.
-
-So probably no point in specifying wakeup-source either way I think? But=20
-I am not sure which of these explanation is correct and thus not sure=20
-what to mention in the v2 patch commit message. Also, there is a=20
-possibility I am not understanding something. A little help from someone=20
-will be very nice and sorry if I am obviously missing something.
+For the serie:
+Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
 
 Thanks,
-Joel Selvaraj
-
-
->=20
-> Konrad
->=20
-
-
+Neil
 
