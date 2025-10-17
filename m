@@ -1,132 +1,124 @@
-Return-Path: <linux-arm-msm+bounces-77767-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-77768-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [142.0.200.124])
-	by mail.lfdr.de (Postfix) with ESMTPS id DF03DBE8709
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Oct 2025 13:42:10 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 46867BE87CC
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Oct 2025 13:59:43 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id D72884E681A
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Oct 2025 11:42:09 +0000 (UTC)
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 0B6454E845F
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Oct 2025 11:59:42 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id AF534332EC5;
-	Fri, 17 Oct 2025 11:42:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 92A522DA74C;
+	Fri, 17 Oct 2025 11:59:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="P97FLqP9"
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cSItTMlZ"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7258D332EA1;
-	Fri, 17 Oct 2025 11:42:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CE4A332ED1;
+	Fri, 17 Oct 2025 11:59:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760701325; cv=none; b=UYjaqWWlioeDgMNPQwZ7CHszNAAD3CkdfyHZNKRcxRI4G7VISEbmwtZSB+hhI46ky7D5+nTQav3hUMiKn4NZGTCGKTvcDykKYTBvWm+vf7rptP6j8c7Bk3JEezEJVoz99x9ZLNwlXPQkAUmHq2hfNyt9O/bqFtag1K07YWA6zJY=
+	t=1760702378; cv=none; b=G7JpNuCNKR2mhPYB8ZwkaT8d9NNwHoKr8HEbg1vCJdTpMtg2BKK0QC0OQ7ydMishGnFPbX5U0cHBcWu6R2uzQmUDzLhXJR54TJ4lfAoHNr+rkEdjCXpItPEAdnpAl7C+Gfzl0fsshjXb+zlNl5LeRw9J0IaCFQnlvPup4/4Q2zQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760701325; c=relaxed/simple;
-	bh=mthe/fF4A22byCBSStC36YOCfUhCaOvhjMSwfA73/EA=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=KTugtVKWglc/pwscKlCjTnulhCty/sZ31XyYrfXvZ7zZmb4iEVcBztaMCrEhpN5wNUTism6yZzmxr0QyTEqZqM1f82kQSq2G33+ebNsuAFRZOI95siEg80RiAbxelXQtqD+AJmBNGKD5vKjDWa3Rz6wZvzET65LDBaF93JbxJ40=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=P97FLqP9; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E4BDC4CEE7;
-	Fri, 17 Oct 2025 11:42:00 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1760701324;
-	bh=mthe/fF4A22byCBSStC36YOCfUhCaOvhjMSwfA73/EA=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=P97FLqP9G+N+fKUKy53p1Vg6dEouJyimIoskR4qIouCpT5SEnt1tXdRdSZz68f9u3
-	 PJujblplMHVI/eEHv3tLM62AGr1covLYv3SeembHwiIfZuMiHjKkJdPQeSGJxz0EXd
-	 gGXJnO2kKWW14PgJIXgx9v8dIKQW1/w8ToC6UXwSAJNxE00owIGYtanTwt/iPCutw6
-	 I3Gd3az58N4QsWKg65SLqFcDyvHvZ1mCBwOOeUKVqsPzZtLuACEgJuKKKvdWTY2+l0
-	 rj5k+dLE4e+ljxQSqBMGOy2XOMvi6Q4eR84nRrdKnnHDcht4qwCgwoOqcO6mblHQ0o
-	 Fwgw0hf+O5JvA==
-Message-ID: <0e6e1b8a-d9ae-42d1-b1ad-4314e0d76ab7@kernel.org>
-Date: Fri, 17 Oct 2025 12:41:59 +0100
+	s=arc-20240116; t=1760702378; c=relaxed/simple;
+	bh=38uFLiDTAO+A1PWpRP2bVJ1ijHpCWsegoKBcJwzF2PE=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=oRSqkmkyU//E0j9tu3ocppmmZp9yoeSdaF+D/IibHAvxEELpeO/gp0nFLJTngjol7puHPS1LrLq+pfV9gzqTSpTXr7CGp8PkepomT0mdrViS5eBGLimTHRtVfgIHoC6pdu719NNFqOLnkMKSWs/ANV+dCqAo4T/hBgfHOoM4RzU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cSItTMlZ; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3037FC4CEE7;
+	Fri, 17 Oct 2025 11:59:36 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1760702377;
+	bh=38uFLiDTAO+A1PWpRP2bVJ1ijHpCWsegoKBcJwzF2PE=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=cSItTMlZ+xkWo77L3dJDjTz61eq44oatBXCgbcCC5ycxjVd62F5ZBD5t/I/P7IMAl
+	 lQe+zy+uvgq1Iphq58yIzjQNmbjsJLGcQk9xMD89Oyn29Qra+kKcuYPJON2XTLg6Wc
+	 Tx4/0gvLYtBA9RdvGnygRkoazMU/mLdzs1fx2bZA=
+Date: Fri, 17 Oct 2025 13:59:33 +0200
+From: Greg KH <gregkh@linuxfoundation.org>
+To: Eliav Farber <farbere@amazon.com>
+Cc: stable@vger.kernel.org, linux@armlinux.org.uk, jdike@addtoit.com,
+	richard@nod.at, anton.ivanov@cambridgegreys.com,
+	dave.hansen@linux.intel.com, luto@kernel.org, peterz@infradead.org,
+	tglx@linutronix.de, mingo@redhat.com, bp@alien8.de, x86@kernel.org,
+	hpa@zytor.com, tony.luck@intel.com, qiuxu.zhuo@intel.com,
+	mchehab@kernel.org, james.morse@arm.com, rric@kernel.org,
+	harry.wentland@amd.com, sunpeng.li@amd.com,
+	alexander.deucher@amd.com, christian.koenig@amd.com,
+	airlied@linux.ie, daniel@ffwll.ch, evan.quan@amd.com,
+	james.qian.wang@arm.com, liviu.dudau@arm.com,
+	mihail.atanassov@arm.com, brian.starkey@arm.com,
+	maarten.lankhorst@linux.intel.com, mripard@kernel.org,
+	tzimmermann@suse.de, robdclark@gmail.com, sean@poorly.run,
+	jdelvare@suse.com, linux@roeck-us.net, fery@cypress.com,
+	dmitry.torokhov@gmail.com, agk@redhat.com, snitzer@redhat.com,
+	dm-devel@redhat.com, rajur@chelsio.com, davem@davemloft.net,
+	kuba@kernel.org, peppe.cavallaro@st.com, alexandre.torgue@st.com,
+	joabreu@synopsys.com, mcoquelin.stm32@gmail.com, malattia@linux.it,
+	hdegoede@redhat.com, mgross@linux.intel.com,
+	intel-linux-scu@intel.com, artur.paszkiewicz@intel.com,
+	jejb@linux.ibm.com, martin.petersen@oracle.com,
+	sakari.ailus@linux.intel.com, clm@fb.com, josef@toxicpanda.com,
+	dsterba@suse.com, xiang@kernel.org, chao@kernel.org, jack@suse.com,
+	tytso@mit.edu, adilger.kernel@dilger.ca, dushistov@mail.ru,
+	luc.vanoostenryck@gmail.com, rostedt@goodmis.org, pmladek@suse.com,
+	sergey.senozhatsky@gmail.com, andriy.shevchenko@linux.intel.com,
+	linux@rasmusvillemoes.dk, minchan@kernel.org, ngupta@vflare.org,
+	akpm@linux-foundation.org, kuznet@ms2.inr.ac.ru,
+	yoshfuji@linux-ipv6.org, pablo@netfilter.org, kadlec@netfilter.org,
+	fw@strlen.de, jmaloy@redhat.com, ying.xue@windriver.com,
+	willy@infradead.org, sashal@kernel.org, ruanjinjie@huawei.com,
+	David.Laight@aculab.com, herve.codina@bootlin.com, Jason@zx2c4.com,
+	keescook@chromium.org, kbusch@kernel.org, nathan@kernel.org,
+	bvanassche@acm.org, ndesaulniers@google.com,
+	linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+	linux-um@lists.infradead.org, linux-edac@vger.kernel.org,
+	amd-gfx@lists.freedesktop.org, dri-devel@lists.freedesktop.org,
+	linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
+	linux-hwmon@vger.kernel.org, linux-input@vger.kernel.org,
+	linux-media@vger.kernel.org, netdev@vger.kernel.org,
+	linux-stm32@st-md-mailman.stormreply.com,
+	platform-driver-x86@vger.kernel.org, linux-scsi@vger.kernel.org,
+	linux-staging@lists.linux.dev, linux-btrfs@vger.kernel.org,
+	linux-erofs@lists.ozlabs.org, linux-ext4@vger.kernel.org,
+	linux-sparse@vger.kernel.org, linux-mm@kvack.org,
+	netfilter-devel@vger.kernel.org, coreteam@netfilter.org,
+	tipc-discussion@lists.sourceforge.net,
+	Arnd Bergmann <arnd@arndb.de>,
+	Dan Williams <dan.j.williams@intel.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Isabella Basso <isabbasso@riseup.net>,
+	Josh Poimboeuf <jpoimboe@kernel.org>,
+	Masami Hiramatsu <mhiramat@kernel.org>,
+	Sander Vanheule <sander@svanheule.net>,
+	Vlastimil Babka <vbabka@suse.cz>, Yury Norov <yury.norov@gmail.com>
+Subject: Re: [PATCH v2 01/27 5.10.y] overflow, tracing: Define the
+ is_signed_type() macro once
+Message-ID: <2025101708-obtuse-ellipse-e355@gregkh>
+References: <20251017090519.46992-1-farbere@amazon.com>
+ <20251017090519.46992-2-farbere@amazon.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] media: qcom: camss: Enable setting the rate to
- camnoc_rt_axi clock
-To: Vijay Kumar Tumati <vijay.tumati@oss.qualcomm.com>,
- Loic Poulain <loic.poulain@oss.qualcomm.com>
-Cc: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
- Krzysztof Kozlowski <krzk@kernel.org>,
- Hangxiang Ma <hangxiang.ma@oss.qualcomm.com>, Robert Foss
- <rfoss@kernel.org>, Andi Shyti <andi.shyti@kernel.org>,
- Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
- Conor Dooley <conor+dt@kernel.org>, Todor Tomov <todor.too@gmail.com>,
- Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
- Mauro Carvalho Chehab <mchehab@kernel.org>, linux-i2c@vger.kernel.org,
- linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, linux-media@vger.kernel.org
-References: <20251014-add-new-clock-in-vfe-matching-list-v1-1-0d965ccc8a3a@oss.qualcomm.com>
- <9984bc23-05ef-4d46-aeb8-feb0a18e5762@kernel.org>
- <bc0caeb8-c99b-4bef-a69e-5ce433e6b890@oss.qualcomm.com>
- <c4fd6bfc-cc9a-4f37-99b3-f36466691a1e@linaro.org>
- <CAFEp6-2=GJL-gc+PSyAL4=prp_sXdZJS=Ewg5nP2kcp_Gu85Fw@mail.gmail.com>
- <33513b43-f6d1-4c76-887b-39611a75e1f4@kernel.org>
- <WnfCknsSyJK68PQZkE2q7COZHRpsLOFlr3dcbwiVR6SBWtF9iRQ4MGzp_9q31O0kyhZwoncQWfHjJQvpz7nyfw==@protonmail.internalid>
- <ab43c5c9-edc5-459e-8ef7-2aa8bec559c0@oss.qualcomm.com>
-From: Bryan O'Donoghue <bod@kernel.org>
-Content-Language: en-US
-In-Reply-To: <ab43c5c9-edc5-459e-8ef7-2aa8bec559c0@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20251017090519.46992-2-farbere@amazon.com>
 
-On 16/10/2025 21:53, Vijay Kumar Tumati wrote:
+On Fri, Oct 17, 2025 at 09:04:53AM +0000, Eliav Farber wrote:
+> From: Bart Van Assche <bvanassche@acm.org>
 > 
-> On 10/16/2025 8:31 AM, Bryan O'Donoghue wrote:
->> On 16/10/2025 13:22, Loic Poulain wrote:
->>>> I'm - perhaps naively - assuming this clock really is required ... and
->>>> that both will be needed concurrently.
->>> AFAIU, the NRT clock is not in use for the capture part, and only
->>> required for the offline processing engine (IPE, OPE), which will
->>> likely be described as a separated node.
->>
->> Maybe yeah though we already have bindings.
->>
->> @Hangxiang I thought we had discussed this clock was required for your
->> setup.
->>
->> Can you confirm with a test and then
->>
->> 1. Repost with my RB - I assume you included this on purpose
->> 2. Respond that you can live without it.
->>
->> ---
->> bod
->>
-> @Bryan and others, sorry, I am just trying to understand the exact ask
-> here. Just to add a bit more detail here, On certain architectures,
-> there is one CAMNOC module that connects all of the camera modules (RT
-> and NRT) to MMNOC. In these, there is one 'camnoc_axi' clock that needs
-> to be enabled for it's operation. However, on the newer architectures,
-> this single CAMNOC is split into two, one for RT modules (TFEs and IFE
-> Lites) and the other for NRT (IPE and OFE). So, on a given architecture,
-> we either require 'camnoc_axi' or 'camnoc_rt_axi' for RT operation, not
-> both. And yes, one of them is a must. As you know, adding the support
-> for the newer clock in "vfe_match_clock_names" will only enable the
-> newer chip sets to define this in it's resource information and set the
-> rate to it based on the pixel clock. In kaanapali vfe resources, we do
-> not give the 'camnoc_axi_clk'. Hopefully we are all on the same page
-> now, is it the suggestion to use 'camnoc_axi_clk' name for
-> CAM_CC_CAMNOC_RT_AXI_CLK ? We thought it would be clearer to use the
-> name the matches the exact clock. Please advise and thank you.
+> [ Upstream commit 92d23c6e94157739b997cacce151586a0d07bb8a ]
 
-The ask is to make sure this clock is needed @ the same time as the 
-other camnoc clock.
+This isn't in 5.15.y, why is it needed in 5.10.y?
 
-If so then update the commit log on v2 to address the concerns given 
-that it may not be necessary.
+thanks,
 
-If not then just pining back to this patch "we checked and its not 
-needed" will do.
-
----
-bod
+greg k-h
 
