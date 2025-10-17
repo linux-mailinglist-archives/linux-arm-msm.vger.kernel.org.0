@@ -1,184 +1,160 @@
-Return-Path: <linux-arm-msm+bounces-77815-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-77816-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [IPv6:2605:f480:58:1:0:1994:3:14])
-	by mail.lfdr.de (Postfix) with ESMTPS id 17511BEB15D
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Oct 2025 19:34:41 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 05752BEB193
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Oct 2025 19:40:13 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 04E234E1335
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Oct 2025 17:34:40 +0000 (UTC)
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id E98C34E50DE
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Oct 2025 17:40:11 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 46E292E4254;
-	Fri, 17 Oct 2025 17:34:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5C8CC3081C2;
+	Fri, 17 Oct 2025 17:40:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="Ii/BKSqw"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="PCYhCFuD"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B85791C6A3
-	for <linux-arm-msm@vger.kernel.org>; Fri, 17 Oct 2025 17:34:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E025307ACE;
+	Fri, 17 Oct 2025 17:40:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760722478; cv=none; b=VQN+yGQd6PbGlpxjC7y+0rVogLnohy3cY2nxeLkI173iLjLMUqPr1LEQk7qwEplxJFib5h0kRfV9yBenEaeo0ZFxqv/Z4bag3ZKSHiv9RZuiEbLMcN6ZEPDRR4ifPUJFu82aS08zIIkb0Xy6/OUShq2iczYfA7g1uT3Mqf7y76k=
+	t=1760722809; cv=none; b=LwGPrFffVVDLaBZW7/x3AT2i+K+68hXDrW4eP+HuB5MR1Jyfg0m4wOZofvB92GE1FI6cAG+TKW6r49/Fu/KZrEXr91X0rO5GqGRzZ8DIGalu0NElqLa03u7Z1O+5sRZC60JYKWB0zDKD8tkgr89l5BHe8lIGT4w/hdD5QR8fqnk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760722478; c=relaxed/simple;
-	bh=moluQ7YQvV+lODlr1HDCncFWiXQzoc4SVhiJwuxXt5o=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=uer6qMhvbLAMhhTyOJ0ZH78ORHSQo16zVTviRW+loWNMfptWUy4RorK7cfCH159SaVcK66x30vJIQEo7Mh+hCQXgDaDCEM4qa9BulAtumj+/nLeV/6nojMSOQu39kwRwQKC7UKDfN76HZztn3+w0LraGwEo8yy5Ni4z4NOCbffc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=Ii/BKSqw; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 59HEkAUB031041
-	for <linux-arm-msm@vger.kernel.org>; Fri, 17 Oct 2025 17:34:36 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:date:from:message-id:mime-version
-	:subject:to; s=qcppdkim1; bh=dYsd/GjttT2s05A76WlHpo8PTH2x+Xn4E45
-	9h0a1my8=; b=Ii/BKSqwm3695AX3YrUPuzlQ2KCdAOwKktM6md3eSxnTbmsrXg7
-	6rOMtAW/QbXbY62xCiHXrKhZDgMeEZVk9xpn+xEFwx+P2mhjRRWDBTIKAdm+I8mX
-	QTQ0uS10LIX8VGLmjqyu8+MjeHG+NiNTeDC1ASmbW/2Ll8/LG9r+pmVQOh8l654F
-	skUJISQBPOG6se/pP5XI83va7z/AyH5omYlzNBat8D86kwPdTBNmcEgmKXj1KoAT
-	bP0dSCVtQXhXv13kSBgt0PT2FE8enIVq27vZo9eixuYl83FJ2hGOjOZjsiMVOg0F
-	ppeYeSsyFlKShHUDN5G6nWIegIceSY+fWYg==
-Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com [209.85.222.197])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 49uqun8k1f-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Fri, 17 Oct 2025 17:34:35 +0000 (GMT)
-Received: by mail-qk1-f197.google.com with SMTP id af79cd13be357-88e91599ee5so112806685a.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 17 Oct 2025 10:34:35 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1760722474; x=1761327274;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=dYsd/GjttT2s05A76WlHpo8PTH2x+Xn4E459h0a1my8=;
-        b=CQBIHha5/cKlUcySfj8DYw9F7PDUzMGoEKw1ccVU+F42n8/DbNoYFPjHjjk7+vXC/p
-         PAdAEtdxZvHjsD1DjN5IcTwz0theMO9+Y3WkQO9XEyCdOwNLUxfs9MUDxDjjr59TqC0W
-         316AGUT/BK2LlyyMQnVO4irNDIcW1JaWqgxnoP3XlSYbU2lxH0tqCvygkTOMgM7o0xcU
-         2FXEsXQIVCNFHcbKOFs6zcLBhXJ/vpWmJ3lx9SmaVegDft11YM4gHEBtNJ3mFLXV0gHy
-         F+vY7lRuxeYzHe7LJ6DRPuK0q6n0HjTb/yILICnY7XTJoyWcygu3e3kvf6iMCZEl6ajY
-         psOw==
-X-Forwarded-Encrypted: i=1; AJvYcCU2FO744JZVtahwqUW/EiFCpasyQ3KOp5VuWl8HbqK7FWFiTNPtNH5m/u+zOWuMFkVxtkb2QH9FvNgRF8nc@vger.kernel.org
-X-Gm-Message-State: AOJu0YwUBm7AsanbCNg9gOzfrDEp8hKWLOMx7R4LJ4uRrDpOD+V8VLHq
-	gRGU/VhIQzkehbxelKWHbTkvnzOXIUyKNQbe/NovoqCFN8eRjaU6OgAj2daahGDRp2R5cRyXWVG
-	MHTl5brPS28Ik5d59yuK6DCnAunAkRRdcqQmHe7DXvQHlKT7a7GQFcWHGYuL//hc6xF8D
-X-Gm-Gg: ASbGncuCfoBF2utSmJs0tM0GolSs5hsMOH1HHTamAU8+mqvNzS7c5y6U5cmTUfvZ6d1
-	3LntBpN+ylgMuJi3f6FW3ia/cL8Jnh4c7+REof8ZTpHucrlYxVSxd24+1zhdsMnV/RJ5cY1FjsB
-	O/6Bvv+/9bnU3DeWFK/mJaHfiVrGqow4zxrNgq2UW9MjBQRjpNlETdRtjhpJAPrfiGZmjS2xHGl
-	sXhCglOUBDgl1FrVol2Ohu41aMM5ReBAGd9JPVAil7krsSmgyu16xUc4hKmwl8XEfh51Ai/1ptx
-	6VbAMG8olvS9Nn+QkGok6g/XHwXjlmSgwmeMCJDH5DUVvf9oH7Diw9ZIkdb6eZs0ZV0wnkOtjH+
-	6EfaHeHM0BC9TUcGf/Z8EuIm26GAtfT/M9HsW/zo=
-X-Received: by 2002:a05:622a:1391:b0:4e8:a6f8:e3cb with SMTP id d75a77b69052e-4e8a6f90f50mr25648971cf.69.1760722474185;
-        Fri, 17 Oct 2025 10:34:34 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IH/lFBuKecVPkwVpoCgUiysER1QwLu9lFDIt77lLJKQKBmlHT/8S8jGBtBO6C7Dk7rpmiTB+g==
-X-Received: by 2002:a05:622a:1391:b0:4e8:a6f8:e3cb with SMTP id d75a77b69052e-4e8a6f90f50mr25648441cf.69.1760722473712;
-        Fri, 17 Oct 2025 10:34:33 -0700 (PDT)
-Received: from hu-yabdulra-ams.qualcomm.com ([212.136.9.4])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-b65e8395a34sm27284766b.29.2025.10.17.10.34.33
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 17 Oct 2025 10:34:33 -0700 (PDT)
-From: Youssef Samir <youssef.abdulrahman@oss.qualcomm.com>
-To: jeff.hugo@oss.qualcomm.com, carl.vanderlip@oss.qualcomm.com,
-        troy.hanson@oss.qualcomm.com, zachary.mckevitt@oss.qualcomm.com
-Cc: ogabbay@kernel.org, lizhi.hou@amd.com, karol.wachowski@linux.intel.com,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        Zack McKevitt <zmckevit@qti.qualcomm.com>,
-        Aswin Venkatesan <aswivenk@qti.qualcomm.com>
-Subject: [PATCH v2] accel/qaic: Update the sahara image table for AIC200
-Date: Fri, 17 Oct 2025 19:34:32 +0200
-Message-ID: <20251017173432.1207656-1-youssef.abdulrahman@oss.qualcomm.com>
-X-Mailer: git-send-email 2.43.0
+	s=arc-20240116; t=1760722809; c=relaxed/simple;
+	bh=k9b1mXzMWi5+ag/o4MoRly+N/Vmf2GG6Dk0obDic1rI=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=prPxBqTrgJR4N528YQfcgghrA2Oe9oeDgoypogsjpihAiSP40BM7mrnQhLUZLJayE8+ukrtO7bjzOf0mjnBaMITsDBBhltzUueHIqCiFDPMBnY4HNi+Qy4gyXxOg+XL6i5t40j/PPHBYc4KUIw3RdoMIna0HimzWsOLkjIikxD8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=PCYhCFuD; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75765C4CEE7;
+	Fri, 17 Oct 2025 17:40:08 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1760722808;
+	bh=k9b1mXzMWi5+ag/o4MoRly+N/Vmf2GG6Dk0obDic1rI=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=PCYhCFuDxRC2QibdvAbD5CmMMGI03vqqEMfhZ5/7BlO3EHbIF9xDHGbVzZcjonhtx
+	 LiuaE3084aMcg+y1elHFZTBcZVsOBfMgQIdz/5dwNHRN3EzOjk6bRcbBY4xfL/XeAX
+	 eHmqwojAIOVa3QCXmPUsyLkkgcj1unz5jyatpMq5Oiz8qM2v3+BgDsKijhDqEUMwVh
+	 2cqtRPaERYAWIT3hXavq/i/KB+YmZAbAq401tFuSHUDN2uWEL6wlXTZyDzb4S5SftD
+	 wzR5sotACf7MCuIrPSr/Z6SxNKW1r6zpTdUTqVtpT0icFqwVrPsxYGp7Lw1WV6IZ2y
+	 KUMf2VNDpTYUQ==
+Date: Fri, 17 Oct 2025 10:38:35 -0700
+From: Eric Biggers <ebiggers@kernel.org>
+To: Md Sadre Alam <quic_mdalam@quicinc.com>
+Cc: adrian.hunter@intel.com, ulf.hansson@linaro.org,
+	linux-arm-msm@vger.kernel.org, linux-mmc@vger.kernel.org,
+	linux-kernel@vger.kernel.org, quic_varada@quicinc.com
+Subject: Re: [PATCH v2] mmc: sdhci-msm: Enable ICE support for non-cmdq eMMC
+ devices
+Message-ID: <20251017173835.GA161400@sol>
+References: <20251014093503.347678-1-quic_mdalam@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Authority-Analysis: v=2.4 cv=aM/9aL9m c=1 sm=1 tr=0 ts=68f27e2b cx=c_pps
- a=50t2pK5VMbmlHzFWWp8p/g==:117 a=dNlqnMcrdpbb+gQrTujlOQ==:17
- a=x6icFKpwvdMA:10 a=VkNPw1HP01LnGYTKEx00:22 a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8
- a=COk6AnOGAAAA:8 a=FaqWTh5nWRqmHptS-xsA:9 a=IoWCM6iH3mJn3m4BftBB:22
- a=TjNXssC_j7lpFel5tvFf:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDE3MDEwOSBTYWx0ZWRfXyIyqVoK0pvb5
- IdprD5NdPjjhkGkIJ1Bce0H8QCzy4CwqRdkErz3EFK1iEmy1UlqL25B4a3a7m9rES6EcIj6AyIu
- F9+0A6lqxX6o31daqeP65HZLDuTrC7LcKrW16/IFrrQ3wore0cU6QP2vrjMx/1D9ZJZIoGNS4ix
- 9Ud7drjnfnOb8vs3lYCqkMoI6KBTgMixPaiuOjV7RY9h/OKzq1T3xhLVhgK0BqM6V02HdZvGeMA
- qJOc8K+P/e/ivdzZyHd65baUPSw5gbAmxym+NFr9fI3XWt0fbiIu2TQBHBWuSSdoxbjVOzRjuPy
- k20wsgeQl8ElyNGAZbbV/YsWwN0btOFlI7r31FQn7JkHMGwiKfTWKug1ERBAc18aPvV5eU9M/nT
- lvSXNw8PwBxRjPsk7hfV8JCvR5hpZA==
-X-Proofpoint-ORIG-GUID: -k4TGvBRL67FZLFD2oCthjppuZZNpIBd
-X-Proofpoint-GUID: -k4TGvBRL67FZLFD2oCthjppuZZNpIBd
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-10-17_06,2025-10-13_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 phishscore=0 clxscore=1015 malwarescore=0 adultscore=0
- lowpriorityscore=0 spamscore=0 suspectscore=0 bulkscore=0 priorityscore=1501
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2510020000 definitions=main-2510170109
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20251014093503.347678-1-quic_mdalam@quicinc.com>
 
-From: Youssef Samir <quic_yabdulra@quicinc.com>
+On Tue, Oct 14, 2025 at 03:05:03PM +0530, Md Sadre Alam wrote:
+> Enable Inline Crypto Engine (ICE) support for eMMC devices that operate
+> without Command Queue Engine (CQE).This allows hardware-accelerated
+> encryption and decryption for standard (non-CMDQ) requests.
+> 
+> This patch:
+> - Adds ICE register definitions for non-CMDQ crypto configuration
+> - Implements a per-request crypto setup via sdhci_msm_ice_cfg()
+> - Hooks into the request path via mmc_host_ops.request
+> - Initializes ICE hardware during CQE setup for compatible platforms
+> 
+> With this, non-CMDQ eMMC devices can benefit from inline encryption,
+> improving performance for encrypted I/O while maintaining compatibility
+> with existing CQE crypto support.
+> 
+> Signed-off-by: Md Sadre Alam <quic_mdalam@quicinc.com>
 
-Update the Sahara image table for the AIC200 to add entries for:
-- qupv3fw.elf at id 54
-- xbl_config.elf at id 38
-- tz_qti_config.mbn at id 76
-And move pvs.bin to id 78 to avoid firmware conflict.
+How was this tested?
 
-Co-developed-by: Zack McKevitt <zmckevit@qti.qualcomm.com>
-Signed-off-by: Zack McKevitt <zmckevit@qti.qualcomm.com>
-Co-developed-by: Aswin Venkatesan <aswivenk@qti.qualcomm.com>
-Signed-off-by: Aswin Venkatesan <aswivenk@qti.qualcomm.com>
-Signed-off-by: Youssef Samir <quic_yabdulra@quicinc.com>
-Signed-off-by: Youssef Samir <youssef.abdulrahman@oss.qualcomm.com>
----
-Changes in V2:
-- Squashed the following patches:
-  * accel/qaic: Add QuPFW image entry for AIC200
-    Link: https://lore.kernel.org/all/20251007161733.424647-1-youssef.abdulrahman@oss.qualcomm.com
-  * accel/qaic: Add tz_qti_config.mbn entry for AIC200
-    Link: https://lore.kernel.org/all/20251007161929.426336-1-youssef.abdulrahman@oss.qualcomm.com
-  * accel/qaic: Add xbl_config image entry for AIC200
-    Link: https://lore.kernel.org/all/20251007221528.561242-1-youssef.abdulrahman@oss.qualcomm.com
-- Moved pvs.bin to id 78
----
- drivers/accel/qaic/sahara.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+>  #ifdef CONFIG_MMC_CRYPTO
+>  
+> +static int sdhci_msm_ice_cfg(struct sdhci_host *host, struct mmc_request *mrq,
+> +			     u32 slot)
+> +{
+> +	struct sdhci_pltfm_host *pltfm_host = sdhci_priv(host);
+> +	struct sdhci_msm_host *msm_host = sdhci_pltfm_priv(pltfm_host);
+> +	struct mmc_host *mmc = msm_host->mmc;
+> +	struct cqhci_host *cq_host = mmc->cqe_private;
+> +	unsigned int crypto_params = 0;
+> +	int key_index = 0;
+> +	bool bypass = true;
+> +	u64 dun = 0;
+> +
+> +	if (mrq->crypto_ctx) {
+> +		dun = mrq->crypto_ctx->bc_dun[0];
+> +		bypass = false;
+> +		key_index = mrq->crypto_key_slot;
+> +	}
+> +
+> +	crypto_params = FIELD_PREP(ICE_HCI_PARAM_CE, !bypass) |
+> +			FIELD_PREP(ICE_HCI_PARAM_CCI, key_index);
+> +
+> +	cqhci_writel(cq_host, crypto_params, NONCQ_CRYPTO_PARM);
+> +
+> +	if (mrq->crypto_ctx)
+> +		cqhci_writel(cq_host, lower_32_bits(dun), NONCQ_CRYPTO_DUN);
+> +
+> +	/* Ensure crypto configuration is written before proceeding */
+> +	wmb();
+> +
+> +	return 0;
+> +}
 
-diff --git a/drivers/accel/qaic/sahara.c b/drivers/accel/qaic/sahara.c
-index 3ebcc1f7ff58..6ac0384c7dc2 100644
---- a/drivers/accel/qaic/sahara.c
-+++ b/drivers/accel/qaic/sahara.c
-@@ -194,6 +194,7 @@ static const char * const aic200_image_table[] = {
- 	[23] = "qcom/aic200/aop.mbn",
- 	[32] = "qcom/aic200/tz.mbn",
- 	[33] = "qcom/aic200/hypvm.mbn",
-+	[38] = "qcom/aic200/xbl_config.elf",
- 	[39] = "qcom/aic200/aic200_abl.elf",
- 	[40] = "qcom/aic200/apdp.mbn",
- 	[41] = "qcom/aic200/devcfg.mbn",
-@@ -202,6 +203,7 @@ static const char * const aic200_image_table[] = {
- 	[49] = "qcom/aic200/shrm.elf",
- 	[50] = "qcom/aic200/cpucp.elf",
- 	[51] = "qcom/aic200/aop_devcfg.mbn",
-+	[54] = "qcom/aic200/qupv3fw.elf",
- 	[57] = "qcom/aic200/cpucp_dtbs.elf",
- 	[62] = "qcom/aic200/uefi_dtbs.elf",
- 	[63] = "qcom/aic200/xbl_ac_config.mbn",
-@@ -213,7 +215,8 @@ static const char * const aic200_image_table[] = {
- 	[69] = "qcom/aic200/dcd.mbn",
- 	[73] = "qcom/aic200/gearvm.mbn",
- 	[74] = "qcom/aic200/sti.bin",
--	[75] = "qcom/aic200/pvs.bin",
-+	[76] = "qcom/aic200/tz_qti_config.mbn",
-+	[78] = "qcom/aic200/pvs.bin",
- };
- 
- static int sahara_find_image(struct sahara_context *context, u32 image_id)
--- 
-2.43.0
+This would probably be easier to read with separate code paths for
+crypto_ctx != NULL and crypto_ctx == NULL.  Also 'bypass' should be
+inverted and renamed to 'crypto_enable' to match the bitfield.  Or just
+prepare the bitfield directly, without an intermediate variable.
 
+> @@ -2131,6 +2185,8 @@ static int sdhci_msm_cqe_add_host(struct sdhci_host *host,
+>  	struct cqhci_host *cq_host;
+>  	bool dma64;
+>  	u32 cqcfg;
+> +	u32 config;
+> +	u32 ice_cap;
+>  	int ret;
+>  
+>  	/*
+> @@ -2185,6 +2241,18 @@ static int sdhci_msm_cqe_add_host(struct sdhci_host *host,
+>  	if (ret)
+>  		goto cleanup;
+>  
+> +	/* Initialize ICE for non-CMDQ eMMC devices */
+> +	config = sdhci_readl(host, HC_VENDOR_SPECIFIC_FUNC4);
+> +	config &= ~DISABLE_CRYPTO;
+> +	sdhci_writel(host, config, HC_VENDOR_SPECIFIC_FUNC4);
+> +	ice_cap = cqhci_readl(cq_host, CQHCI_CAP);
+> +	if (ice_cap & ICE_HCI_SUPPORT) {
+> +		config = cqhci_readl(cq_host, CQHCI_CFG);
+> +		config |= CRYPTO_GENERAL_ENABLE;
+> +		cqhci_writel(cq_host, config, CQHCI_CFG);
+> +	}
+> +	sdhci_msm_ice_enable(msm_host);
+
+This is after __sdhci_add_host() was called, which is probably too late.
+
+> +#ifdef CONFIG_MMC_CRYPTO
+> +	host->mmc_host_ops.request = sdhci_msm_request;
+> +#endif
+>  	/* Set the timeout value to max possible */
+>  	host->max_timeout_count = 0xF;
+
+A lot of the code in this patch also seems to actually run on
+CQE-capable hosts.  Can you explain?  Why is it needed?  Is there any
+change in behavior on them?
+
+- Eric
 
