@@ -1,154 +1,140 @@
-Return-Path: <linux-arm-msm+bounces-77760-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-77761-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [IPv6:2605:f480:58:1:0:1994:3:14])
-	by mail.lfdr.de (Postfix) with ESMTPS id 96578BE7F0B
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Oct 2025 12:05:51 +0200 (CEST)
+Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [142.0.200.124])
+	by mail.lfdr.de (Postfix) with ESMTPS id B925FBE8303
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Oct 2025 12:58:47 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 4A3394FEB06
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Oct 2025 10:05:30 +0000 (UTC)
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id BB737566E45
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Oct 2025 10:56:18 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8733130DEA3;
-	Fri, 17 Oct 2025 10:05:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9B7F7328B4E;
+	Fri, 17 Oct 2025 10:55:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Pn/pxqk9"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="tRBDPW4E"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f43.google.com (mail-wm1-f43.google.com [209.85.128.43])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5449130B525;
-	Fri, 17 Oct 2025 10:05:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 683D2328B58
+	for <linux-arm-msm@vger.kernel.org>; Fri, 17 Oct 2025 10:55:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760695508; cv=none; b=be2Qf6zXGWY9D33ei4LfBFWojGVKm+sdglNREuoSIrgaa0kZ93xkmV5FEgdLf73oQ+WkAu85GqWlcR6diBXrpZYj4fRAgx+1/NjSBSnDrZnOEXtMeO37GlfYKMjD/Ve3Hajuwk1ubpwA1WqVBLydvcAsA3dZpK+h6wv2VOqwxtY=
+	t=1760698559; cv=none; b=qo4Uw1/tI5yWbZgW4nnMS6Gx8kSaiCjU6Xyu7rkSv3gj3cieFpLNFXCSrzBFXreUxYGmi06xjt1gOI393RW1vpG6tvpq1ILyQw+ZVG087HJy/JVSVioraqi90Zjd0luyG7UWI4wIsvXGhOM4sMW+JqJVyFVyqUXhIaNcw45iux0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760695508; c=relaxed/simple;
-	bh=d27FnODMUOTQgewcjbJxNy4ZOjzPLw8pcBAW8xniqKc=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=eir44Q1brq21tKZT+7T2Q4sipfxebNGWK1qHcMI62Sx6IBC9puRBsNOdfQheIywggw3jom+5swpqDWdXjQ0V9ou6d7J/ydv78+wMOBZvQ6fMMdgD7wOEtuv2Z3ftUvWupMebWi6otEALZiVL7U8Taw9NeH2eUj+S8nSrpHk0TMo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Pn/pxqk9; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8282C4CEE7;
-	Fri, 17 Oct 2025 10:04:56 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1760695507;
-	bh=d27FnODMUOTQgewcjbJxNy4ZOjzPLw8pcBAW8xniqKc=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=Pn/pxqk9AqSC3QFrOOd7LLwBp4ePoZ1T9yh86VDVXBsW5Gq3/wIsU5yXbDIGM7GVq
-	 PvQIRqzMmxMVWIIS3ZO+YbNMqsw9rISbkqG46JqUszkWEKOdS4DIDs66v6UqK12K+7
-	 KlxyuhRHYpmifcmbMVwfH6iEHPSt84mkXY7LpM0vaYK21qfN3iMTt1ESP3D/iI9Qua
-	 WpEZLRAotG6oXakdDm7fvqYsWsIW5khfRfpSsxd+rZEZNeqpfyiK+WRawf0ye65MZw
-	 Snf9HP2LbS18RSzM4svYqEw3jqH8qu/Q24iOhCCZOp+YYA7MHF3F7aC/TBnaXiHIs4
-	 6xSMhDBRFkATw==
-Date: Fri, 17 Oct 2025 15:34:51 +0530
-From: Manivannan Sadhasivam <mani@kernel.org>
-To: Shawn Lin <shawn.lin@rock-chips.com>
-Cc: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>, 
-	Bjorn Helgaas <helgaas@kernel.org>, Niklas Cassel <cassel@kernel.org>, 
-	Bjorn Helgaas <bhelgaas@google.com>, Lorenzo Pieralisi <lpieralisi@kernel.org>, 
-	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kwilczynski@kernel.org>, Rob Herring <robh@kernel.org>, linux-pci@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
-	"David E. Box" <david.e.box@linux.intel.com>, Kai-Heng Feng <kai.heng.feng@canonical.com>, 
-	"Rafael J. Wysocki" <rafael@kernel.org>, Heiner Kallweit <hkallweit1@gmail.com>, 
-	Chia-Lin Kao <acelan.kao@canonical.com>, Dragan Simic <dsimic@manjaro.org>, 
-	linux-rockchip@lists.infradead.org, regressions@lists.linux.dev, FUKAUMI Naoki <naoki@radxa.com>
-Subject: Re: [PATCH v2 1/2] PCI/ASPM: Override the ASPM and Clock PM states
- set by BIOS for devicetree platforms
-Message-ID: <22owgu6qb34bh47cevupnwnvwwfhtn4lwfav6fuxfydaiujw6y@oeh3q2u4wo2h>
-References: <7df0bf91-8ab1-4e76-83fa-841a4059c634@rock-chips.com>
- <20251015233054.GA961172@bhelgaas>
- <hwueivbm2taxwb2iowkvblzvdv2xqnsapx6lenv56vuz7ye6do@fugjdkoyk5gy>
- <0dd51970-a7ac-4500-b96f-d1e328e7a3b2@rock-chips.com>
+	s=arc-20240116; t=1760698559; c=relaxed/simple;
+	bh=QhbR/JjQWPtQ/x1b2TheNvaNWi3shmk+1FrIu7SH6pQ=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=OdPhFsXwFYaoD2fuRJZZil3H8H14SYaaoTm/4dpN8LByVzJTp51bfLApVcd08ZpwpH6d3qwbxT5ZPvl/SlCI1fRUV1S1QyA0VnYa8+vW8nxyZLcbuXwIsv1zTES54WoWi6VuraCvXO8pjBt3UXVffRhQ7ZkwbX8/8qlB5jRj/Os=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=tRBDPW4E; arc=none smtp.client-ip=209.85.128.43
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wm1-f43.google.com with SMTP id 5b1f17b1804b1-46e29d65728so12447945e9.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 17 Oct 2025 03:55:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1760698556; x=1761303356; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=Zm39IA4ufngTEzNdFDfCyY58vQQ04XFQ+LhrxSHjP0I=;
+        b=tRBDPW4EERC3ojOuyQ5T8K/1L45lexggVloFbUqgO06yZ401Xs06SpJMqixS3LRM4i
+         gphbPrhJ+9zVz4EgwfEVpqybJA9/cHXvvzqNyyFsCguSX8UHoqZB17fQAYPLfpJJNVmL
+         UaBl3Clpq7TjAKZMsjBEZ7Vrgz6I4jDSDHg8uyIIgpoaI1zK1ZhyVAQ/vy8PMveQgKJi
+         oYKIdtAScOaIfg5oJl6ZNkbQEWWWBfWd3TWyeYjMb8xLbwIank8aZTlfTTxlHiBA2+/c
+         HOMDKTfarZ8GA2wi3oBv3Y3AO6lFWUAF1od4DrhyKE08SITcm40ZG75LewmzMRxxHYux
+         SnNw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1760698556; x=1761303356;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=Zm39IA4ufngTEzNdFDfCyY58vQQ04XFQ+LhrxSHjP0I=;
+        b=syWBO7tX1VYSIsZhKJYe4zZX0by1NF4x3MzR3ZHgyLV7Mle3QBocZE5G6Q8jrFzFD8
+         lSQm9qAylMe1J8e0MlY/CohmJJ1FVdmWeHp6wTLz1x+q1orxgH1JvcBOBtt7QBPjWeEz
+         6lx+Lp6v5zB+j4Wr0CdySzFsTYsk6OWdFgRCp5nl5QFgneGDC7e1XztQkkzE1QeyV/yw
+         6MZxhW0YJOaJxQhAmXzQEIxLvgNDwKC/F4SfTE3X7UnOIQthwHMz6Uz+tBdYuDAzekPJ
+         4GrYZCtiQdS+hBFZkDstxveTugCSUoWnn1w7EntyN0B3DzgUiYqZd+H8xx8gQjdgyyPc
+         7mhg==
+X-Forwarded-Encrypted: i=1; AJvYcCX1Ra2bXniKKhJbPRE4qVsQ0zBqtG2t2KAN7H4IcSWEp6trAa/eaQ4miCdE2hCduuQ7VHJb7OfkA2u2Ab4i@vger.kernel.org
+X-Gm-Message-State: AOJu0YyW8/8EcyYd1fzJjMHFyDqaCGu+aP+n1RT5ld+JX9T7XKdRcloN
+	RKPetgQZxFK8EXb6umlMC42adg9hzBijZcYMTrMVk/m+xZwoNz6PcrkypgrgKdq1HQ4=
+X-Gm-Gg: ASbGncuh8IjAhYVnSEKdgM3KLbkwaT0OVo2u2GCTo/qJhsUBXgdzpHNy5xe3aeNF9Mq
+	vbBCBQ9l1HzA9+1E1aIBlsIGAgu/AAdPqayLQYdHVU4CAnZXBkUANFV3TayvYyHBW0nHTGWjnPW
+	1ALPqFRh0ca0Cb/Dxzfcwu4UAr6Txy3mNWbmDiOGYfH2b2972kStw67juECkz2cCufegoyKcUYe
+	EBuUoserblgPM1bvhx5HcKsa/MlniD1+AB28PFl7cMmy2NwzRVQUGG8EpS9tAxh+b/JJ1BePE00
+	mlsTIM6e6RgaHeyT0Jn1sWqX+VBZuTbBLMMz7Fspa3c05MBLuN8r1DMHZL0mTR63/v0yVlfcvBw
+	LqjTAGDc2zP7XsR3bJy5rwfD8tohq1PiQdVNgbbdMWqH/M7gQ73QMhKqKqrNOBSvw5JFi5Vpnd/
+	no4MIOSQgkmajYbwUFGUvwCHTnEFGIwLwINH1S3xXEiPEvVpVn6i71
+X-Google-Smtp-Source: AGHT+IF8gPde+0trw5hh+B8v1QbyRWDt3jn/AE9oBYuoF3drrlJJjQtos2JhgYi0PkWXHZD9B2bx/g==
+X-Received: by 2002:a05:600c:6290:b0:46e:2cfe:971c with SMTP id 5b1f17b1804b1-471177c0f91mr24694175e9.0.1760698555593;
+        Fri, 17 Oct 2025 03:55:55 -0700 (PDT)
+Received: from [192.168.0.19] (188-141-3-146.dynamic.upc.ie. [188.141.3.146])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-47114429679sm73229585e9.8.2025.10.17.03.55.54
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 17 Oct 2025 03:55:55 -0700 (PDT)
+Message-ID: <19a59be0-9b5f-4a93-bdd6-0592f291dca7@linaro.org>
+Date: Fri, 17 Oct 2025 11:55:52 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 4/6] media: qcom: camss: csiphy: Add support for v2.4.0
+ two-phase CSIPHY
+To: Vijay Kumar Tumati <vijay.tumati@oss.qualcomm.com>,
+ Hangxiang Ma <hangxiang.ma@oss.qualcomm.com>,
+ Loic Poulain <loic.poulain@oss.qualcomm.com>, Robert Foss
+ <rfoss@kernel.org>, Andi Shyti <andi.shyti@kernel.org>,
+ Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
+ Conor Dooley <conor+dt@kernel.org>, Todor Tomov <todor.too@gmail.com>,
+ Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
+ Mauro Carvalho Chehab <mchehab@kernel.org>
+Cc: linux-i2c@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+ linux-media@vger.kernel.org, aiqun.yu@oss.qualcomm.com,
+ tingwei.zhang@oss.qualcomm.com, trilok.soni@oss.qualcomm.com,
+ yijie.yang@oss.qualcomm.com, Jingyi Wang <jingyi.wang@oss.qualcomm.com>,
+ Atiya Kailany <atiya.kailany@oss.qualcomm.com>
+References: <20251014-add-support-for-camss-on-kaanapali-v2-0-f5745ba2dff9@oss.qualcomm.com>
+ <20251014-add-support-for-camss-on-kaanapali-v2-4-f5745ba2dff9@oss.qualcomm.com>
+ <059a2e7b-f399-44d9-9f32-cd01e573d954@linaro.org>
+ <eb7992e4-f0a8-4266-ac4a-3de7694ac582@oss.qualcomm.com>
+From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Content-Language: en-US
+In-Reply-To: <eb7992e4-f0a8-4266-ac4a-3de7694ac582@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <0dd51970-a7ac-4500-b96f-d1e328e7a3b2@rock-chips.com>
 
-On Fri, Oct 17, 2025 at 05:47:44PM +0800, Shawn Lin wrote:
-> Hi Mani and Bjorn
+On 17/10/2025 00:10, Vijay Kumar Tumati wrote:
 > 
-> 在 2025/10/17 星期五 11:36, Manivannan Sadhasivam 写道:
-> > On Wed, Oct 15, 2025 at 06:30:54PM -0500, Bjorn Helgaas wrote:
-> > > On Wed, Oct 15, 2025 at 09:00:41PM +0800, Shawn Lin wrote:
-> > > > ...
-> > > 
-> > > > For now, this is a acceptable option if default ASPM policy enable
-> > > > L1ss w/o checking if the HW could supports it... But how about
-> > > > adding supports-clkreq stuff to upstream host driver directly? That
-> > > > would help folks enable L1ss if the HW is ready and they just need
-> > > > adding property to the DT.
-> > > > ...
-> > > 
-> > > > The L1ss support is quite strict and need several steps to check, so we
-> > > > didn't add supports-clkreq for them unless the HW is ready to go...
-> > > > 
-> > > > For adding supports of L1ss,
-> > > > [1] the HW should support CLKREQ#, expecially for PCIe3.0 case on Rockchip
-> > > > SoCs , since both  CLKREQ# of RC and EP should connect to the
-> > > > 100MHz crystal generator's enable pin, as L1.2 need to disable refclk as
-> > > > well. If the enable pin is high active, the HW even need a invertor....
-> > > > 
-> > > > [2] define proper clkreq iomux to pinctrl of pcie node
-> > > > [3] make sure the devices work fine with L1ss.(It's hard to check the slot
-> > > > case with random devices in the wild )
-> > > > [4] add supports-clkreq to the DT and enable
-> > > > CONFIG_PCIEASPM_POWER_SUPERSAVE
-> > > 
-> > > I don't understand the details of the supports-clkreq issue.
-> > > 
-> > > If we need to add supports-clkreq to devicetree, I want to understand
-> > > why we need it there when we don't seem to need it for ACPI systems.
-> > > 
-> > > Generally the OS relies on what the hardware advertises, e.g., in Link
-> > > Capabilities and the L1 PM Substates Capability, and what is available
-> > > from firmware, e.g., the ACPI _DSM for Latency Tolerance Reporting.
-> > > 
-> > > On the ACPI side, I don't think we get any specific information about
-> > > CLKREQ#.  Can somebody explain why we do need it on the devicetree
-> > > side?
-> > > 
-> > 
-> > I think there is a disconnect between enabling L1ss CAP and CLKREQ#
-> > availability.. When L1ss CAP is enabled for the Root Port in the hardware, there
-> > is no guarantee that CLKREQ# is also available. If CLKREQ# is not available,
-> > then if L1ss is enabled by the OS, it is not possible to exit the L1ss states
-> > (assuming that L1ss is entered due to CLKREQ# in deassert (default) state).
-> > 
-> > Yes, there seems to be no standard way to know CLKREQ# presence in ACPI, but
-> > in devicetree, we have this 'supports-clkreq' property to tell the OS that
-> > CLKREQ# is available in the platform. But unfortunately, this property is not
-> > widely used by the devicetrees out there. So we cannot use it in generic
-> > pci/aspm.c driver.
-> > 
-> > We can certainly rely on the BIOS to enable L1ss as the fw developers would
-> > have the knowledge of the CLKREQ# availability. But BIOS is not a thing on
-> > mobile and embedded platforms where L1ss would come handy.
-> > 
-> > What I would suggest is, the host controller drivers (mostly for devicetree
-> > platforms) should enable L1ss CAP for the Root Port only if they know that
-> > CLKREQ# is available. They can either rely on the 'supports-clkreq' property or
-> > some platform specific knowledge (for instance, on all Qcom platforms, we
-> > certainly know that CLKREQ# is available, but we don't set the DT property).
+> There are three offsets in the picture here wrt the CSIPHY instance base 
+> address
 > 
-> While we're on the topic of ASPM, may I ask a silly question?
-> I saw the ASPM would only be configured once the function driver calling
-> pci_enable_device. So if the modular driver hasn't been insmoded, the
-> link will be in L0 even though there is no transcation on-going. What is
-> the intention behind it?
+> 1. First offset to the common registers of the PHY, 'regs->offset' (that 
+> follows the lane registers)
 > 
+> 2. Second offset to the status registers within the common registers . 
+> This has been historically the same and hard coded 
+> in 'CSIPHY_3PH_CMN_CSI_COMMON_STATUSn' to 0xb0 but this is now changing 
+> on Kaanapali.
+> 
+> 3. Third set of offsets (12, 13, 14 and 15) are to the version registers 
+> within the status registers.
+> 
+> This change merely generalizes the CSIPHY_3PH_CMN_CSI_COMMON_STATUSn 
+> macro for chip sets with different second offset using "regs- 
+>  >common_status_offset". There should not be any impact to the other 
+> chip sets, for which it is set to the same 0xb0 in csiphy_init().
+> 
+> Please advise if you still think it requires a patch series for itself 
+> and we can do that. Thanks.
 
-I don't see where ASPM is configured during pci_enable_device(). It is currently
-configured for all devices during pci_scan_slot().
+This should be a separate patch yes.
 
-- Mani
-
--- 
-மணிவண்ணன் சதாசிவம்
+---
+bod
 
