@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-77672-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-77673-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 344B4BE655E
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Oct 2025 06:47:57 +0200 (CEST)
+Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [142.0.200.124])
+	by mail.lfdr.de (Postfix) with ESMTPS id 73802BE656E
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Oct 2025 06:53:53 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id A9F8D585157
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Oct 2025 04:47:55 +0000 (UTC)
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 2E9E24E3E32
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Oct 2025 04:53:52 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D810123EAAB;
-	Fri, 17 Oct 2025 04:47:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 28726256C9F;
+	Fri, 17 Oct 2025 04:53:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="jH54JWc9"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="qNSKGaHh"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A947B4204E;
-	Fri, 17 Oct 2025 04:47:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBF8C4204E;
+	Fri, 17 Oct 2025 04:53:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760676472; cv=none; b=WAw2IdHWCJun9RbkHqaurW9NnjIL/WdvBZNNIofkdJPH2PNcGB/T8sRQbjxNt+pyouWDyJan+jnCTyFemtTbf0LjbhlEom/9zZJsZhc2xPBi8YPsXLlQVsJWNK16BopQNr0GTSi0R5HUeAE7XOaC245PjUOCC6iW59ePKQEIpCE=
+	t=1760676829; cv=none; b=g/HOwClRQcZ3HwdAcErubs974sKwNuAgZU3EhOmLQ2rS8wTdvAWLmgcYKA8uJFVgrqjTRDWKaLnML0M7ErTAElvJcTliMifISawzmJfSnVZGTJewiw5PaEe07qXXbTlOz6zeROHnTG2SE2AtdMLPAppbkB7ZzffGC+kwCr9mhLs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760676472; c=relaxed/simple;
-	bh=fFBUVrLXLmK+7dkfnlQFimDw5NCqhbq3Uzb47zqYK7I=;
+	s=arc-20240116; t=1760676829; c=relaxed/simple;
+	bh=yeMEF4gNtC3q7QR4LJe1fupjs7MGZspMqUp74dGRsi0=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=NSJzBLv3k2IghDp8MfLfc+0uPkWNhBJsr82HLz5BZ7uu97S92Kx9mAFOI70x5x4etuiHWdsPsrKLQpO9KXU+SdCWnHLojPRv567qmhP1F5RrYP0UGgJqNjkzDkqbErDlGXouDpdBff7Eiy+Fl2CXF2rAl30VKlpqsYYZxipaK/k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=jH54JWc9; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D642C4CEE7;
-	Fri, 17 Oct 2025 04:47:48 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=U46G6VrowLFqfSkr7GRncSlj5Vb0tQvXRJ/4is7/Tk0PZXxLSFSrvMXTewBRK6ijzRSZVDqzX1e3V7UkcotDdd+Awbl2cyPJtPRadKfyYimfMU6C+5xGZ4PTw0w8SNMbfVQxH03tYC9EGNOAowIk9nLygjHHlilfgx6i9Awk9FQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=qNSKGaHh; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40FA9C4CEE7;
+	Fri, 17 Oct 2025 04:53:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1760676472;
-	bh=fFBUVrLXLmK+7dkfnlQFimDw5NCqhbq3Uzb47zqYK7I=;
+	s=k20201202; t=1760676828;
+	bh=yeMEF4gNtC3q7QR4LJe1fupjs7MGZspMqUp74dGRsi0=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=jH54JWc9ydk4nEXraailgIY0KL9F+Q+8HbHnHEhDyo9PLPLwlFMVF5hkYUXoSG31z
-	 eTtIEsVrikb+QU1GvbaTpkTzFE2HzaWgKk0t/m0YB8jCgWgVFwXcuuWTrbkV2qMrxl
-	 /AVKw+gqRmvnN+FULA4Zahbsby3jrJEzV+VmFAlYCvvGvUT+JL6NPNbahxil8HGEUo
-	 +Oo4eKSphGpak77CX57SkZGhzw9qJGCQwRK1t0FiLmxsuSbucmtWLxvLlurMyDPv/1
-	 TXW8/T3+54FjtPHbcA/Kryt9x8gF0wZW5as8UBTockSFkwco5l3YVPNa3jejT00+Zm
-	 HG9Yq0gutXJIQ==
-Message-ID: <32a14a2e-f61e-422a-ae77-f60ea44581eb@kernel.org>
-Date: Fri, 17 Oct 2025 06:47:46 +0200
+	b=qNSKGaHhJH9Wt+3sj6jBiqQNGLPCH2nOlkAgIhxk0Mgqio4xah+bIjw2wpxocCrL5
+	 eTknW1t8XavhH6xl+7DzeeMwZjEhkjoapwdcFBfkiyj8YFdfZ9QW37upMywBNhhvl+
+	 mEmQOPsd5QR+8i+acqXximEvY2QI/HnNXpSvSoJ+EShwsMLrbdYG3l/kQuaA37iWhs
+	 cmg3uhTS+vbxYfZPLDCbOylsc/4PE37Dn5SpsJONpxWeiUj3UhrAP9bpff/nV9WmaU
+	 miNTl1Nz2sJMFMw7u4QcwxJgLS6aU3M0xblduGe/ZlgLAtYEgdKsvTPzmw1nsBhADh
+	 QuEgOZKVcclJQ==
+Message-ID: <4c48be2d-4bb6-4289-8a48-0d916be253b9@kernel.org>
+Date: Fri, 17 Oct 2025 06:53:44 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,21 +50,15 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 2/6] dt-bindings: phy: qcom,sc8280xp-qmp-pcie-phy: Add
- Kaanapali compatible
-To: Qiang Yu <qiang.yu@oss.qualcomm.com>,
- Lorenzo Pieralisi <lpieralisi@kernel.org>,
- =?UTF-8?Q?Krzysztof_Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
- Manivannan Sadhasivam <mani@kernel.org>, Rob Herring <robh@kernel.org>,
- Bjorn Helgaas <bhelgaas@google.com>, Krzysztof Kozlowski
- <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>,
- Bjorn Andersson <andersson@kernel.org>, Vinod Koul <vkoul@kernel.org>,
- Kishon Vijay Abraham I <kishon@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- linux-phy@lists.infradead.org, Jingyi Wang <jingyi.wang@oss.qualcomm.com>
-References: <20251015-kaanapali-pcie-upstream-v2-0-84fa7ea638a1@oss.qualcomm.com>
- <20251015-kaanapali-pcie-upstream-v2-2-84fa7ea638a1@oss.qualcomm.com>
+Subject: Re: [PATCH 1/3] dt-bindings: soc: qcom: qcom,pmic-glink: Add
+ Kaanapali and Glymur compatibles
+To: Anjelique Melendez <anjelique.melendez@oss.qualcomm.com>,
+ andersson@kernel.org, konradybcio@kernel.org, robh@kernel.org,
+ krzk+dt@kernel.org, conor+dt@kernel.org
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org
+References: <20251017003033.268567-1-anjelique.melendez@oss.qualcomm.com>
+ <20251017003033.268567-2-anjelique.melendez@oss.qualcomm.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -110,25 +104,55 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  jWt87ecuHlpL3uuQ0ZZNWqHgZoQLXoqC2ZV5KrtKWb/jyiFX/sxSrodALf0zf+tfHv0FZWT2
  zHjUqd0t4njD/UOsuIMOQn4Ig0SdivYPfZukb5cdasKJukG1NOpbW7yRNivaCnfZz6dTawXw
  XRIV/KDsHQiyVxKvN73bThKhONkcX2LWuD928tAR6XMM2G5ovxLe09vuOzzfTWQDsm++9UKF a/A=
-In-Reply-To: <20251015-kaanapali-pcie-upstream-v2-2-84fa7ea638a1@oss.qualcomm.com>
+In-Reply-To: <20251017003033.268567-2-anjelique.melendez@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 15/10/2025 12:27, Qiang Yu wrote:
-> Document compatible for the QMP PCIe PHY on Kaanapali platform.
+On 17/10/2025 02:30, Anjelique Melendez wrote:
+> Document the Kaanapali and Glymur compatibles used to describe the PMIC
+> glink on each platform. 
+
+
+
+> The Glymur compatible uses Kaanapali as
+> fallback.
+
+Why?
+
 > 
-> Signed-off-by: Jingyi Wang <jingyi.wang@oss.qualcomm.com>
-> Signed-off-by: Qiang Yu <qiang.yu@oss.qualcomm.com>
+> Signed-off-by: Anjelique Melendez <anjelique.melendez@oss.qualcomm.com>
+> ---
+>  .../devicetree/bindings/soc/qcom/qcom,pmic-glink.yaml      | 7 +++++++
+>  1 file changed, 7 insertions(+)
+> 
+> diff --git a/Documentation/devicetree/bindings/soc/qcom/qcom,pmic-glink.yaml b/Documentation/devicetree/bindings/soc/qcom/qcom,pmic-glink.yaml
+> index 7085bf88afab..42b5a5d811d0 100644
+> --- a/Documentation/devicetree/bindings/soc/qcom/qcom,pmic-glink.yaml
+> +++ b/Documentation/devicetree/bindings/soc/qcom/qcom,pmic-glink.yaml
+> @@ -37,12 +37,19 @@ properties:
+>            - const: qcom,pmic-glink
+>        - items:
+>            - enum:
+> +              - qcom,kaanapali-pmic-glink
+>                - qcom,milos-pmic-glink
+>                - qcom,sm8650-pmic-glink
+>                - qcom,sm8750-pmic-glink
+>                - qcom,x1e80100-pmic-glink
+>            - const: qcom,sm8550-pmic-glink
+>            - const: qcom,pmic-glink
+> +      - items:
+> +          - enum:
+> +              - qcom,glymur-pmic-glink
 
+That's confusing... your commit should explain why.
 
-Don't mix independent patches from different subsystems into one
-patchset. You only make it difficult for the maintainers.
+> +          - const: qcom,kaanapali-pmic-glink
+> +          - const: qcom,sm8550-pmic-glink
+> +          - const: qcom,pmic-glink
+>  
+>    '#address-cells':
+>      const: 1
 
-Really, really pay attention how your work should present itself to the
-maintainers.
-
-
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
 Best regards,
 Krzysztof
