@@ -1,305 +1,218 @@
-Return-Path: <linux-arm-msm+bounces-77771-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-77772-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 10137BE88BC
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Oct 2025 14:16:50 +0200 (CEST)
+Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [142.0.200.124])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9D7B4BE8932
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Oct 2025 14:24:37 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id CE5C8584876
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Oct 2025 12:16:44 +0000 (UTC)
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 51A5E4E06AC
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Oct 2025 12:24:36 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9F9F22E717D;
-	Fri, 17 Oct 2025 12:16:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CDC1725B1DA;
+	Fri, 17 Oct 2025 12:24:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=amazon.com header.i=@amazon.com header.b="o1TOk7qB"
+	dkim=pass (1024-bit key) header.d=rock-chips.com header.i=@rock-chips.com header.b="hWVW6u4A"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from pdx-out-013.esa.us-west-2.outbound.mail-perimeter.amazon.com (pdx-out-013.esa.us-west-2.outbound.mail-perimeter.amazon.com [34.218.115.239])
+Received: from mail-m49248.qiye.163.com (mail-m49248.qiye.163.com [45.254.49.248])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C81A025B1DA;
-	Fri, 17 Oct 2025 12:16:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=34.218.115.239
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760703394; cv=fail; b=AyEkJyY1TqvHfWYqPx+OWiPqj8aKYRVQzIsKNV7cwYPGlkM9ARdQNwvr+rhpJ0gEVLnYMByGUcZLrWGfbJ8M10Mo57KdWTAI7yE/5Hmzb7/RCpTdua2e3spifNsL1DqKFpZ+f56vpqxrkcfj5oVmip/qqHCr2wkzlDdPPobB6jA=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760703394; c=relaxed/simple;
-	bh=gYDnavJxgHF2BtLIfegCkhALowUX2Q2vhSCtPw4pBrM=;
-	h=From:To:CC:Subject:Date:Message-ID:References:In-Reply-To:
-	 Content-Type:MIME-Version; b=NQ3PHz25s1J5ccNHE94s+bTRZoQZhIw4wd0oB4ZtNinCSjhagLoCftKIewp5eph4VRm7ceSXZ6H69kLqDA1S+4vRSS7AgU/x/C26ShoF6kbeUqk8YMX7jtLw6KDuQ5CTOJ4J4RDrfp2UkQmD9lQiTldVAD1+tO8ixgS5nRNmfDw=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amazon.com; spf=pass smtp.mailfrom=amazon.com; dkim=pass (2048-bit key) header.d=amazon.com header.i=@amazon.com header.b=o1TOk7qB; arc=fail smtp.client-ip=34.218.115.239
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amazon.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=amazon.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=amazon.com; i=@amazon.com; q=dns/txt; s=amazoncorp2;
-  t=1760703393; x=1792239393;
-  h=from:to:cc:subject:date:message-id:references:
-   in-reply-to:content-transfer-encoding:mime-version;
-  bh=gYDnavJxgHF2BtLIfegCkhALowUX2Q2vhSCtPw4pBrM=;
-  b=o1TOk7qBBu5x33xnFnwqIqoeyDC9ium2Qk5rYy0WZptuz79HP29vHA7X
-   xa1r5nzvNsAt1i1DdJpAGYug08M1UXAPaQehXgq9wCsBvqRLK7CVeLkZ5
-   3LUMZKbYG9l9v63Hq1Vg0PRcy4Kat6rC/Gt6062gCX4om/b7Jqw7xDxeW
-   uFXLMRMqxvPBenSK88IRiANdAhO9tEWM0FkHQw3e44sfTm8ZdFy0genVR
-   r4sfnUg6nr5abgVIW1y9zsOM1ewh/cSN7knc1opcEPipiJqBSpyz77Qa2
-   MtsLZ4xoHAfe/ua7JLjFII/Q7tkfP/PCypScCBPekaZtmGS1fgDoVvWSn
-   w==;
-X-CSE-ConnectionGUID: xk2V0bb5TGGEVvbYDEK81w==
-X-CSE-MsgGUID: s7hY6NBYR+6Hk5G5Syn5xg==
-X-IronPort-AV: E=Sophos;i="6.19,236,1754956800"; 
-   d="scan'208";a="4891580"
-Received: from ip-10-5-6-203.us-west-2.compute.internal (HELO smtpout.naws.us-west-2.prod.farcaster.email.amazon.dev) ([10.5.6.203])
-  by internal-pdx-out-013.esa.us-west-2.outbound.mail-perimeter.amazon.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 17 Oct 2025 12:16:30 +0000
-Received: from EX19MTAUWC001.ant.amazon.com [205.251.233.105:1691]
- by smtpin.naws.us-west-2.prod.farcaster.email.amazon.dev [10.0.16.196:2525] with esmtp (Farcaster)
- id 257d7c5b-5790-4a99-ae2b-36fb774eccc3; Fri, 17 Oct 2025 12:16:30 +0000 (UTC)
-X-Farcaster-Flow-ID: 257d7c5b-5790-4a99-ae2b-36fb774eccc3
-Received: from EX19EXOUWA001.ant.amazon.com (10.250.64.209) by
- EX19MTAUWC001.ant.amazon.com (10.250.64.174) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.2562.20;
- Fri, 17 Oct 2025 12:16:29 +0000
-Received: from EX19EXOUWB001.ant.amazon.com (10.250.64.229) by
- EX19EXOUWA001.ant.amazon.com (10.250.64.209) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.2562.20;
- Fri, 17 Oct 2025 12:16:29 +0000
-Received: from PH0PR07CU006.outbound.protection.outlook.com (10.250.64.206) by
- EX19EXOUWB001.ant.amazon.com (10.250.64.229) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.2562.20
- via Frontend Transport; Fri, 17 Oct 2025 12:16:29 +0000
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=nbwhkxny5R8fdLaKd/VtBFCpv4FItEDUGYYw83CT1YGw7QS88We0f+dOIyqI1vxzcd48TsaDprHGplgQ9K/ukiQjy2PXZ1UkGuCWbx5uj9QVcNQLp5S6CDeTadIePUaKzTWOfYcXfcChz4nUV56O9W1AzXmxGwz5Vk8m99Wt0NbIsFqkhANLSbPKxGiS9X887Xg8sLTAaVy0TPdGrTnGGIBkUe1KqPPJQHnJAjOuqLZVhSdkb9FzFMrOWQTNdHTPEZ7U1Xc7YxVHbLUQpPF+NIIDp9VwIYS1hXMM3Dkfxf3AXXCXU7sV5hb4pS9q9TzxTN3YJJfvewzcI0xsWr/vfg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=gYDnavJxgHF2BtLIfegCkhALowUX2Q2vhSCtPw4pBrM=;
- b=e7y4PgWP8o/nTyV48Cp+sg3y1/2H63nTYam4EgYbJ9GRKUXQaBua6WVzXd6hnP/jVLtw4SawnwUWxVsLK3jpYII1I+vcI5yvrpDrONpTJgn1JIXZaUMZ/LuoY7bRRdsKDi3K0+Hly7DM7v9D/iTZjaLM/W8bgg4TjX/uUgsrmmHnV9WZI0Cawc823IzzqGE8dEq7xThLIN/9O5zBjpbfm5JoIIUmhvgqMbswFKmJBEbfy8rwjcVsUdf2MJ2K3Fprd6V5EUO5L7tJYy0fqcZugMuT3EDLwJCek0EBE6aPwpIqmaiaN39AdYw3drLSFB88Rd0PmZ3FEyFVsfW8IHP39w==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=amazon.com; dmarc=pass action=none header.from=amazon.com;
- dkim=pass header.d=amazon.com; arc=none
-Received: from CH0PR18MB5433.namprd18.prod.outlook.com (2603:10b6:610:181::16)
- by SJ0PR18MB3898.namprd18.prod.outlook.com (2603:10b6:a03:2e8::11) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9228.13; Fri, 17 Oct
- 2025 12:16:27 +0000
-Received: from CH0PR18MB5433.namprd18.prod.outlook.com
- ([fe80::1423:ab6b:11cc:7b0]) by CH0PR18MB5433.namprd18.prod.outlook.com
- ([fe80::1423:ab6b:11cc:7b0%7]) with mapi id 15.20.9228.012; Fri, 17 Oct 2025
- 12:16:27 +0000
-From: "Farber, Eliav" <farbere@amazon.com>
-To: Greg KH <gregkh@linuxfoundation.org>
-CC: "stable@vger.kernel.org" <stable@vger.kernel.org>, "linux@armlinux.org.uk"
-	<linux@armlinux.org.uk>, "jdike@addtoit.com" <jdike@addtoit.com>,
-	"richard@nod.at" <richard@nod.at>, "anton.ivanov@cambridgegreys.com"
-	<anton.ivanov@cambridgegreys.com>, "dave.hansen@linux.intel.com"
-	<dave.hansen@linux.intel.com>, "luto@kernel.org" <luto@kernel.org>,
-	"peterz@infradead.org" <peterz@infradead.org>, "tglx@linutronix.de"
-	<tglx@linutronix.de>, "mingo@redhat.com" <mingo@redhat.com>, "bp@alien8.de"
-	<bp@alien8.de>, "x86@kernel.org" <x86@kernel.org>, "hpa@zytor.com"
-	<hpa@zytor.com>, "tony.luck@intel.com" <tony.luck@intel.com>,
-	"qiuxu.zhuo@intel.com" <qiuxu.zhuo@intel.com>, "mchehab@kernel.org"
-	<mchehab@kernel.org>, "james.morse@arm.com" <james.morse@arm.com>,
-	"rric@kernel.org" <rric@kernel.org>, "harry.wentland@amd.com"
-	<harry.wentland@amd.com>, "sunpeng.li@amd.com" <sunpeng.li@amd.com>,
-	"alexander.deucher@amd.com" <alexander.deucher@amd.com>,
-	"christian.koenig@amd.com" <christian.koenig@amd.com>, "airlied@linux.ie"
-	<airlied@linux.ie>, "daniel@ffwll.ch" <daniel@ffwll.ch>, "evan.quan@amd.com"
-	<evan.quan@amd.com>, "james.qian.wang@arm.com" <james.qian.wang@arm.com>,
-	"liviu.dudau@arm.com" <liviu.dudau@arm.com>, "mihail.atanassov@arm.com"
-	<mihail.atanassov@arm.com>, "brian.starkey@arm.com" <brian.starkey@arm.com>,
-	"maarten.lankhorst@linux.intel.com" <maarten.lankhorst@linux.intel.com>,
-	"mripard@kernel.org" <mripard@kernel.org>, "tzimmermann@suse.de"
-	<tzimmermann@suse.de>, "robdclark@gmail.com" <robdclark@gmail.com>,
-	"sean@poorly.run" <sean@poorly.run>, "jdelvare@suse.com" <jdelvare@suse.com>,
-	"linux@roeck-us.net" <linux@roeck-us.net>, "fery@cypress.com"
-	<fery@cypress.com>, "dmitry.torokhov@gmail.com" <dmitry.torokhov@gmail.com>,
-	"agk@redhat.com" <agk@redhat.com>, "snitzer@redhat.com" <snitzer@redhat.com>,
-	"dm-devel@redhat.com" <dm-devel@redhat.com>, "rajur@chelsio.com"
-	<rajur@chelsio.com>, "davem@davemloft.net" <davem@davemloft.net>,
-	"kuba@kernel.org" <kuba@kernel.org>, "peppe.cavallaro@st.com"
-	<peppe.cavallaro@st.com>, "alexandre.torgue@st.com"
-	<alexandre.torgue@st.com>, "joabreu@synopsys.com" <joabreu@synopsys.com>,
-	"mcoquelin.stm32@gmail.com" <mcoquelin.stm32@gmail.com>, "malattia@linux.it"
-	<malattia@linux.it>, "hdegoede@redhat.com" <hdegoede@redhat.com>,
-	"mgross@linux.intel.com" <mgross@linux.intel.com>,
-	"intel-linux-scu@intel.com" <intel-linux-scu@intel.com>,
-	"artur.paszkiewicz@intel.com" <artur.paszkiewicz@intel.com>,
-	"jejb@linux.ibm.com" <jejb@linux.ibm.com>, "martin.petersen@oracle.com"
-	<martin.petersen@oracle.com>, "sakari.ailus@linux.intel.com"
-	<sakari.ailus@linux.intel.com>, "clm@fb.com" <clm@fb.com>,
-	"josef@toxicpanda.com" <josef@toxicpanda.com>, "dsterba@suse.com"
-	<dsterba@suse.com>, "xiang@kernel.org" <xiang@kernel.org>, "chao@kernel.org"
-	<chao@kernel.org>, "jack@suse.com" <jack@suse.com>, "tytso@mit.edu"
-	<tytso@mit.edu>, "adilger.kernel@dilger.ca" <adilger.kernel@dilger.ca>,
-	"dushistov@mail.ru" <dushistov@mail.ru>, "luc.vanoostenryck@gmail.com"
-	<luc.vanoostenryck@gmail.com>, "rostedt@goodmis.org" <rostedt@goodmis.org>,
-	"pmladek@suse.com" <pmladek@suse.com>, "sergey.senozhatsky@gmail.com"
-	<sergey.senozhatsky@gmail.com>, "andriy.shevchenko@linux.intel.com"
-	<andriy.shevchenko@linux.intel.com>, "linux@rasmusvillemoes.dk"
-	<linux@rasmusvillemoes.dk>, "minchan@kernel.org" <minchan@kernel.org>,
-	"ngupta@vflare.org" <ngupta@vflare.org>, "akpm@linux-foundation.org"
-	<akpm@linux-foundation.org>, "kuznet@ms2.inr.ac.ru" <kuznet@ms2.inr.ac.ru>,
-	"yoshfuji@linux-ipv6.org" <yoshfuji@linux-ipv6.org>, "pablo@netfilter.org"
-	<pablo@netfilter.org>, "kadlec@netfilter.org" <kadlec@netfilter.org>,
-	"fw@strlen.de" <fw@strlen.de>, "jmaloy@redhat.com" <jmaloy@redhat.com>,
-	"ying.xue@windriver.com" <ying.xue@windriver.com>, "willy@infradead.org"
-	<willy@infradead.org>, "sashal@kernel.org" <sashal@kernel.org>,
-	"ruanjinjie@huawei.com" <ruanjinjie@huawei.com>, "David.Laight@aculab.com"
-	<David.Laight@aculab.com>, "herve.codina@bootlin.com"
-	<herve.codina@bootlin.com>, "Jason@zx2c4.com" <Jason@zx2c4.com>,
-	"keescook@chromium.org" <keescook@chromium.org>, "kbusch@kernel.org"
-	<kbusch@kernel.org>, "nathan@kernel.org" <nathan@kernel.org>,
-	"bvanassche@acm.org" <bvanassche@acm.org>, "ndesaulniers@google.com"
-	<ndesaulniers@google.com>, "linux-arm-kernel@lists.infradead.org"
-	<linux-arm-kernel@lists.infradead.org>, "linux-kernel@vger.kernel.org"
-	<linux-kernel@vger.kernel.org>, "linux-um@lists.infradead.org"
-	<linux-um@lists.infradead.org>, "linux-edac@vger.kernel.org"
-	<linux-edac@vger.kernel.org>, "amd-gfx@lists.freedesktop.org"
-	<amd-gfx@lists.freedesktop.org>, "dri-devel@lists.freedesktop.org"
-	<dri-devel@lists.freedesktop.org>, "linux-arm-msm@vger.kernel.org"
-	<linux-arm-msm@vger.kernel.org>, "freedreno@lists.freedesktop.org"
-	<freedreno@lists.freedesktop.org>, "linux-hwmon@vger.kernel.org"
-	<linux-hwmon@vger.kernel.org>, "linux-input@vger.kernel.org"
-	<linux-input@vger.kernel.org>, "linux-media@vger.kernel.org"
-	<linux-media@vger.kernel.org>, "netdev@vger.kernel.org"
-	<netdev@vger.kernel.org>, "linux-stm32@st-md-mailman.stormreply.com"
-	<linux-stm32@st-md-mailman.stormreply.com>,
-	"platform-driver-x86@vger.kernel.org" <platform-driver-x86@vger.kernel.org>,
-	"linux-scsi@vger.kernel.org" <linux-scsi@vger.kernel.org>,
-	"linux-staging@lists.linux.dev" <linux-staging@lists.linux.dev>,
-	"linux-btrfs@vger.kernel.org" <linux-btrfs@vger.kernel.org>,
-	"linux-erofs@lists.ozlabs.org" <linux-erofs@lists.ozlabs.org>,
-	"linux-ext4@vger.kernel.org" <linux-ext4@vger.kernel.org>,
-	"linux-sparse@vger.kernel.org" <linux-sparse@vger.kernel.org>,
-	"linux-mm@kvack.org" <linux-mm@kvack.org>, "netfilter-devel@vger.kernel.org"
-	<netfilter-devel@vger.kernel.org>, "coreteam@netfilter.org"
-	<coreteam@netfilter.org>, "tipc-discussion@lists.sourceforge.net"
-	<tipc-discussion@lists.sourceforge.net>, Arnd Bergmann <arnd@arndb.de>, "Dan
- Williams" <dan.j.williams@intel.com>, Eric Dumazet <edumazet@google.com>,
-	Isabella Basso <isabbasso@riseup.net>, Josh Poimboeuf <jpoimboe@kernel.org>,
-	Masami Hiramatsu <mhiramat@kernel.org>, Sander Vanheule
-	<sander@svanheule.net>, Vlastimil Babka <vbabka@suse.cz>, Yury Norov
-	<yury.norov@gmail.com>
-Subject: RE: [PATCH v2 01/27 5.10.y] overflow, tracing: Define the
- is_signed_type() macro once
-Thread-Topic: [PATCH v2 01/27 5.10.y] overflow, tracing: Define the
- is_signed_type() macro once
-Thread-Index: AQHcP1/cJJbWkEozCEifWbQxPnjh1Q==
-Date: Fri, 17 Oct 2025 12:16:27 +0000
-Message-ID: <CH0PR18MB54337BD648C23CBE40C1060CC6F6A@CH0PR18MB5433.namprd18.prod.outlook.com>
-References: <20251017090519.46992-1-farbere@amazon.com>
- <20251017090519.46992-2-farbere@amazon.com>
- <2025101708-obtuse-ellipse-e355@gregkh>
-In-Reply-To: <2025101708-obtuse-ellipse-e355@gregkh>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach:
-X-MS-TNEF-Correlator:
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=amazon.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: CH0PR18MB5433:EE_|SJ0PR18MB3898:EE_
-x-ms-office365-filtering-correlation-id: d2272b9f-112f-46df-aed1-08de0d76ff4d
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;ARA:13230040|7416014|376014|366016|1800799024|38070700021;
-x-microsoft-antispam-message-info: =?us-ascii?Q?oH/lX6LqDPomk/HqyEBHvVh+yzsjtGo9hP4/6Jrv9HjvkWW+/Cw94zLGUlq+?=
- =?us-ascii?Q?WXEbxqDHRuXFrAfy15DECKN4MaBm6jI/AENOLxYizRuFg8EoKKUfQ/TO9tlP?=
- =?us-ascii?Q?ascSWkQ3fHQqjojnu7uhejFQc3h0LSF98BHo6l/LPvbQImfuECjNiMP/rKYi?=
- =?us-ascii?Q?bKY8edVhiZB2utV8Kix18D5LcRj8hHcp9KvX6JzO7PBKw+rcy+tp07Yco0WU?=
- =?us-ascii?Q?B7YKutFmS9oW35V7QUsxpH2GtlrACZzgbt9vPp4hi7L+WJNfQWn1+vrqLzNH?=
- =?us-ascii?Q?gQu9TxvBfQHCvZwOdYTHK7R4apLvBEIwGQ2w0ZtobEolS2PUaEsL7bPLzNY5?=
- =?us-ascii?Q?c9lftgwng+x2YwsuHnKFPlChTZWQvFRJstgD20qvO3tXbaHlJQ1XmgiVbYAV?=
- =?us-ascii?Q?PWxHF7KCfxptWQJIczRE1LS2xxtqwM7HvcV2bgT4fUG9ycZyK2X5UffIETcD?=
- =?us-ascii?Q?kQu7jmM8ppf4wfULJXrNy2SL2MjzuL7ncX30Sa1dzWB8/eHRGVGuVemfedVe?=
- =?us-ascii?Q?0ylz3AA46fkT31HNbSfxvL9p2mRkfOvt+XQdbVeXsFGlJc9MKw8dCsh0P/JR?=
- =?us-ascii?Q?QeWm73yiV/OmuEPURqXvGh7mkatKvbTXvUh2fHhU8PkwyA1oFaSF3q87FPUG?=
- =?us-ascii?Q?P0PaVH7Hb0CtrWnxdsu2p4Y9+GhX08KlLa/ayz0GLBDRKRfCQOm5D6FJI5kW?=
- =?us-ascii?Q?pF7t8QIPzRFsV3AOcHKxAsgO9kSz3QaermZXFrG61CwnWwpyXCBrz3uD6f8Y?=
- =?us-ascii?Q?M4zUcf035ipqPXEX6pjtn1Rkvqvnji/xWBKsx9+GpMPD9iLyOTvMjjw5bmFR?=
- =?us-ascii?Q?iMMLQ9nTGE0fw72wZ6k/h56MT2ZTkIdOmutKPdiVqwpXum2Y0JHzrovZF/f0?=
- =?us-ascii?Q?+AXk+iLmY22bM9c45oq/wKiqdqfh2DLS6gKYtNikrI2ZZAptnSl+K44PS09e?=
- =?us-ascii?Q?yO9hjd0Yq06hjmmo0EIyvcB9+I5wWEcpdBpAK4yH5v2GEr1XwpN8F0bR17oX?=
- =?us-ascii?Q?bhqd+xynobSgtGtbvBNBtenBlyM1/xRnsfHrPgQQLh+lVdXlwxG/LPNNG+LM?=
- =?us-ascii?Q?QdU6nsqnJvaRnlkE1Y04Oi/6YDEdcnDN3Pacv/ojVWZBXQ39f93cJ9MyYTFN?=
- =?us-ascii?Q?IpkLbAt+Yq+emScZEehGhGe+C/9gWoI0zKQBthrcZkiWNm0cSJnjg6qKe4Vs?=
- =?us-ascii?Q?aBQ6iXiEYxqvoOuQ5noDHzRIEZgbuj4b6bE6UeXSx4/WnVl/wPZ5kO04A3Ez?=
- =?us-ascii?Q?cgjGZJ0ryDcI+b5XXhO3yqQ465fHhjQaaB9796rQSyhcQaNOuhpSYCFRKYJO?=
- =?us-ascii?Q?ovwD33+FC5KiEekhb7c7OAhI6gLEFY5SiulAvfXQGKICSY+lujz90x1pbNkw?=
- =?us-ascii?Q?i1MOM+ZEI+oUaqX6bs70awvDBgSZVCbFWFiNmlsQQTOo8kNVAa7cAi8TLnN0?=
- =?us-ascii?Q?PpbXd99+RuaSNFedrephLqmAyFcQf99DewCmZF4n0SbyyfYzwl0UDx3r0ks/?=
- =?us-ascii?Q?8VRWCFBuNR70vYhOn1jVggu6pJCcWqwa+aRPam+H+hgGk9iPdFzEs4YXOg?=
- =?us-ascii?Q?=3D=3D?=
-x-forefront-antispam-report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:CH0PR18MB5433.namprd18.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(7416014)(376014)(366016)(1800799024)(38070700021);DIR:OUT;SFP:1101;
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?us-ascii?Q?2zWhqfqzxCe5eoq47fdxbmsimpshmvLNqwawP56Ucuc1Qibdfysb3A8mGU5S?=
- =?us-ascii?Q?y4i2Ss1cnYpE51JvwhzSlzEz6r29K2K6BafFiizKoMBYXim8L9LUr9NJiQUR?=
- =?us-ascii?Q?tZWATgYUG2LxG2xUn57BmF6o7cWGdtNNPnf3pGG9gw6Dzyv9nzUqNm5HL+0F?=
- =?us-ascii?Q?thXqbLJxmaLy/sg504YeXDqSwmAudkovXc+jy9iANUCvRTFuqjfRU7thZKHw?=
- =?us-ascii?Q?dSa/lCNymR2vcvO/4g0xvUusQGFuIEanQh+cPqAlGtzIgcaHNBBufDIXu8gF?=
- =?us-ascii?Q?tZXjI41HOKsRDSRxjGj1GRMv6d4ogaiEJ4CUZA0+4iH+jKNe4R+wNwZkY0eA?=
- =?us-ascii?Q?6doVAg9Io4YsoaCE95D9GCK4rCvh0WWf7RXSxIFZVNkjcM1qV2fpxdpOkUDT?=
- =?us-ascii?Q?aFlk50SEHiEtH8/FJRhFbdNY0ZVJuvmkBib1V2iUUuPbtm6svbF2WefX/oyf?=
- =?us-ascii?Q?G6OHPIZi7icoH83Cf4AyIZt8sIEK9+tkH5DSt+SlSb4zfcaZjlBhlCtrnDTD?=
- =?us-ascii?Q?8rAjIpuC6j62kHX0lE/ApoH/XcBFgaXb4PO7TwoIACCgMOYcFOhfetiakVen?=
- =?us-ascii?Q?wQ7ujDCtkpo8q05EqUy3dmQ7IHp2rb31GZ5tbsIwLgDdc4pe92ovL7f99TJz?=
- =?us-ascii?Q?Qvj00h5Jpr9v9ye760tPCc7c6/iF2p54QJDNxIIxokGa+TR5hW8+X7+x7w+e?=
- =?us-ascii?Q?XJrJmQJT/U0yFrjPZUOSk4B0IJEHDvk2dQrjAca+n4V9+C8XDq/xtwo9doIi?=
- =?us-ascii?Q?HtfgEXnWII8zUHWMFwfxVwxRly74kNBkq0MvuRXll6ufr0XNP3s1qw0rK0GC?=
- =?us-ascii?Q?3dDA/hA9PcZF12UcClbpU1eWA88m00WWNeQGnNKNjzBjvlYYINBSGNPwj9Kh?=
- =?us-ascii?Q?eOmSW7WmGTprnV16AZzA+hZXfpWv6P//2zcdaiDcrz0YMU8Wmnx0QtETH8XI?=
- =?us-ascii?Q?PKTm1GhK4y+yS44FPlgAL0/alULYDMJp6oVjXPtvuvB4W1fwM3jQGhIbeFyK?=
- =?us-ascii?Q?PkaqZMERQ0TR2Thc8aQOvG3YaSVLIu7qLCIAAfkzMheszcUkqrWD9kLQi7cz?=
- =?us-ascii?Q?ql0MSBPpNykuAMiSjpC6WJisQcScptp0YewoVtWrkvkvk6fK9k5eL1QSyDLh?=
- =?us-ascii?Q?MP64r9Ri1FzO7Eb/Sxrt893yrgGX6nyYQH/1v/uwTyEv/WXiYo419IHYysQe?=
- =?us-ascii?Q?GNY8apfrczf/AasDOzPhS4MbB4oVUJLZVtGwUT7L9mhYqmdPPjgzjpz+36Vs?=
- =?us-ascii?Q?/W7USOXU9GiZQ0jR7e0rPPZBp841ldBEkZeRyFDCXHWMCzGqV5Hm/+9W27b0?=
- =?us-ascii?Q?wVAtL+F6aa/PEVGNFDEbklQusrqFLaVTmijzdXufvnC/bvZeAzaaee6l74fu?=
- =?us-ascii?Q?jDa59Cfj6hGXGHPR3961DD51Az+PL/KRYptIRBnTtEJPYK3brWViToqz8QW+?=
- =?us-ascii?Q?bfpxyVLTi+rK2N5UiYH3XM8LxTpQhKukDcPZGYBLbjKkARks09VTTJhUUV/+?=
- =?us-ascii?Q?1X01j8icWASygDmTgvlNdEQ2Qfx4nIQze4VnvUuU5LTynDL+BJ9rW2ZQZfJ5?=
- =?us-ascii?Q?OQbktRJIGxKTNGVwvGQ=3D?=
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D4A5332EC8;
+	Fri, 17 Oct 2025 12:24:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=45.254.49.248
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1760703874; cv=none; b=R5BObVHjzP7HVeVljj32jTN4C50fpcUVVjXIntH2HdFpsDhdARCa+pnU+DdDD1BIuToLVUJBcW4d7m/Hsb+wp4fFR1CilxPItu3mxIUt9CR+rLuk5MVvJcTHt/2DdiznwfDO//WJ+QgZyQWKRGegbfzO/fYUw+I9Gc3+iNiT87s=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1760703874; c=relaxed/simple;
+	bh=skbL0vXiwm/OGYFdFrOrZIyUCIkDBHppZGY9z6R61bU=;
+	h=Message-ID:Date:MIME-Version:Cc:Subject:To:References:From:
+	 In-Reply-To:Content-Type; b=FgX/BnQYTY8WIEpzUbhOAo0V8JtjbuClKs5nFqakLNonA1Y6yVXzD2OW1lJqqnKM+2dC0mAW8VPVz3s+r1YnKpKxwIQBc6hXPQpJxslLkWjWdMLNU6mDjkRlqmyry3pXpBj5MjrYirjFAd97/k9z9tDCgWGLeEzBtV0EAZoHpJU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=rock-chips.com; spf=pass smtp.mailfrom=rock-chips.com; dkim=pass (1024-bit key) header.d=rock-chips.com header.i=@rock-chips.com header.b=hWVW6u4A; arc=none smtp.client-ip=45.254.49.248
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=rock-chips.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=rock-chips.com
+Received: from [172.16.12.129] (unknown [58.22.7.114])
+	by smtp.qiye.163.com (Hmail) with ESMTP id 2648e5f2c;
+	Fri, 17 Oct 2025 20:19:13 +0800 (GMT+08:00)
+Message-ID: <e53bd057-0bdc-4f40-acff-eba904b0a728@rock-chips.com>
+Date: Fri, 17 Oct 2025 20:19:11 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: CH0PR18MB5433.namprd18.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: d2272b9f-112f-46df-aed1-08de0d76ff4d
-X-MS-Exchange-CrossTenant-originalarrivaltime: 17 Oct 2025 12:16:27.3648
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 5280104a-472d-4538-9ccf-1e1d0efe8b1b
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: dlwakfkWPrCmyP4L3IyDhJEw/yKNGU9QXvfsoNPKhTM6UNmbIhyzw+PR2eLVNiKu9ws6u8cCmvnwkBI8/yMn8g==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SJ0PR18MB3898
-X-OriginatorOrg: amazon.com
+User-Agent: Mozilla Thunderbird
+Cc: shawn.lin@rock-chips.com,
+ Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>,
+ Bjorn Helgaas <helgaas@kernel.org>, Niklas Cassel <cassel@kernel.org>,
+ Bjorn Helgaas <bhelgaas@google.com>,
+ Lorenzo Pieralisi <lpieralisi@kernel.org>,
+ =?UTF-8?Q?Krzysztof_Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
+ Rob Herring <robh@kernel.org>, linux-pci@vger.kernel.org,
+ linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+ "David E. Box" <david.e.box@linux.intel.com>,
+ Kai-Heng Feng <kai.heng.feng@canonical.com>,
+ "Rafael J. Wysocki" <rafael@kernel.org>,
+ Heiner Kallweit <hkallweit1@gmail.com>,
+ Chia-Lin Kao <acelan.kao@canonical.com>, Dragan Simic <dsimic@manjaro.org>,
+ linux-rockchip@lists.infradead.org, regressions@lists.linux.dev,
+ FUKAUMI Naoki <naoki@radxa.com>
+Subject: Re: [PATCH v2 1/2] PCI/ASPM: Override the ASPM and Clock PM states
+ set by BIOS for devicetree platforms
+To: Manivannan Sadhasivam <mani@kernel.org>
+References: <7df0bf91-8ab1-4e76-83fa-841a4059c634@rock-chips.com>
+ <20251015233054.GA961172@bhelgaas>
+ <hwueivbm2taxwb2iowkvblzvdv2xqnsapx6lenv56vuz7ye6do@fugjdkoyk5gy>
+ <0dd51970-a7ac-4500-b96f-d1e328e7a3b2@rock-chips.com>
+ <22owgu6qb34bh47cevupnwnvwwfhtn4lwfav6fuxfydaiujw6y@oeh3q2u4wo2h>
+From: Shawn Lin <shawn.lin@rock-chips.com>
+In-Reply-To: <22owgu6qb34bh47cevupnwnvwwfhtn4lwfav6fuxfydaiujw6y@oeh3q2u4wo2h>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-HM-Tid: 0a99f21c1ead09cckunm75060bd91808e6
+X-HM-MType: 1
+X-HM-Spam-Status: e1kfGhgUHx5ZQUpXWQgPGg8OCBgUHx5ZQUlOS1dZFg8aDwILHllBWSg2Ly
+	tZV1koWUFDSUNOT01LS0k3V1ktWUFJV1kPCRoVCBIfWUFZGhhKSlZLQx9IH0MeSUkaHk1WFRQJFh
+	oXVRMBExYaEhckFA4PWVdZGBILWUFZTkNVSUlVTFVKSk9ZV1kWGg8SFR0UWUFZT0tIVUpLSU9PT0
+	hVSktLVUpCS0tZBg++
+DKIM-Signature: a=rsa-sha256;
+	b=hWVW6u4AfDreusJmmGkh9HnnM7cPb7pnKCG/NjXXavh0ASgVHddgbWaqtQ+iDB3v750uAjTzbfkmiLX+RKZzn7oLvwdlieDFkYAdJJ3Lv0n3XaVWjngoTOU6Mhhhmc0aCj4PEWI7//Oz7XwatDisxLma1rkHxBK/61JpH0/b/ks=; s=default; c=relaxed/relaxed; d=rock-chips.com; v=1;
+	bh=OSfBN7oRfpK9rtaGeovsNFo32v1GZxpNLGLxY9PVPaQ=;
+	h=date:mime-version:subject:message-id:from;
 
-> On Fri, Oct 17, 2025 at 09:04:53AM +0000, Eliav Farber wrote:
-> > From: Bart Van Assche <bvanassche@acm.org>
-> >
-> > [ Upstream commit 92d23c6e94157739b997cacce151586a0d07bb8a ]
->
-> This isn't in 5.15.y, why is it needed in 5.10.y?
+在 2025/10/17 星期五 18:04, Manivannan Sadhasivam 写道:
+> On Fri, Oct 17, 2025 at 05:47:44PM +0800, Shawn Lin wrote:
+>> Hi Mani and Bjorn
+>>
+>> 在 2025/10/17 星期五 11:36, Manivannan Sadhasivam 写道:
+>>> On Wed, Oct 15, 2025 at 06:30:54PM -0500, Bjorn Helgaas wrote:
+>>>> On Wed, Oct 15, 2025 at 09:00:41PM +0800, Shawn Lin wrote:
+>>>>> ...
+>>>>
+>>>>> For now, this is a acceptable option if default ASPM policy enable
+>>>>> L1ss w/o checking if the HW could supports it... But how about
+>>>>> adding supports-clkreq stuff to upstream host driver directly? That
+>>>>> would help folks enable L1ss if the HW is ready and they just need
+>>>>> adding property to the DT.
+>>>>> ...
+>>>>
+>>>>> The L1ss support is quite strict and need several steps to check, so we
+>>>>> didn't add supports-clkreq for them unless the HW is ready to go...
+>>>>>
+>>>>> For adding supports of L1ss,
+>>>>> [1] the HW should support CLKREQ#, expecially for PCIe3.0 case on Rockchip
+>>>>> SoCs , since both  CLKREQ# of RC and EP should connect to the
+>>>>> 100MHz crystal generator's enable pin, as L1.2 need to disable refclk as
+>>>>> well. If the enable pin is high active, the HW even need a invertor....
+>>>>>
+>>>>> [2] define proper clkreq iomux to pinctrl of pcie node
+>>>>> [3] make sure the devices work fine with L1ss.(It's hard to check the slot
+>>>>> case with random devices in the wild )
+>>>>> [4] add supports-clkreq to the DT and enable
+>>>>> CONFIG_PCIEASPM_POWER_SUPERSAVE
+>>>>
+>>>> I don't understand the details of the supports-clkreq issue.
+>>>>
+>>>> If we need to add supports-clkreq to devicetree, I want to understand
+>>>> why we need it there when we don't seem to need it for ACPI systems.
+>>>>
+>>>> Generally the OS relies on what the hardware advertises, e.g., in Link
+>>>> Capabilities and the L1 PM Substates Capability, and what is available
+>>>> from firmware, e.g., the ACPI _DSM for Latency Tolerance Reporting.
+>>>>
+>>>> On the ACPI side, I don't think we get any specific information about
+>>>> CLKREQ#.  Can somebody explain why we do need it on the devicetree
+>>>> side?
+>>>>
+>>>
+>>> I think there is a disconnect between enabling L1ss CAP and CLKREQ#
+>>> availability.. When L1ss CAP is enabled for the Root Port in the hardware, there
+>>> is no guarantee that CLKREQ# is also available. If CLKREQ# is not available,
+>>> then if L1ss is enabled by the OS, it is not possible to exit the L1ss states
+>>> (assuming that L1ss is entered due to CLKREQ# in deassert (default) state).
+>>>
+>>> Yes, there seems to be no standard way to know CLKREQ# presence in ACPI, but
+>>> in devicetree, we have this 'supports-clkreq' property to tell the OS that
+>>> CLKREQ# is available in the platform. But unfortunately, this property is not
+>>> widely used by the devicetrees out there. So we cannot use it in generic
+>>> pci/aspm.c driver.
+>>>
+>>> We can certainly rely on the BIOS to enable L1ss as the fw developers would
+>>> have the knowledge of the CLKREQ# availability. But BIOS is not a thing on
+>>> mobile and embedded platforms where L1ss would come handy.
+>>>
+>>> What I would suggest is, the host controller drivers (mostly for devicetree
+>>> platforms) should enable L1ss CAP for the Root Port only if they know that
+>>> CLKREQ# is available. They can either rely on the 'supports-clkreq' property or
+>>> some platform specific knowledge (for instance, on all Qcom platforms, we
+>>> certainly know that CLKREQ# is available, but we don't set the DT property).
+>>
+>> While we're on the topic of ASPM, may I ask a silly question?
+>> I saw the ASPM would only be configured once the function driver calling
+>> pci_enable_device. So if the modular driver hasn't been insmoded, the
+>> link will be in L0 even though there is no transcation on-going. What is
+>> the intention behind it?
+>>
+> 
+> I don't see where ASPM is configured during pci_enable_device(). It is currently
+> configured for all devices during pci_scan_slot().
 
-This is the mainline commit:
-https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/i=
-nclude/linux/overflow.h?h=3Dv6.18-rc1&id=3D92d23c6e94157739b997cacce151586a=
-0d07bb8a
+This is the dump_stack() where I observed. If I compile NVMe driver as a
+module and never insmod it, the link is always in L0, namely ASPM
+Disabled.
 
-The commit hash is 92d23c6e94157739b997cacce151586a0d07bb8a, which is
-the one I used for the backport.
+[    0.747508] pci 0000:01:00.0: ASPM: DT platform, enabling L0s-up 
+L0s-dw L1 ASPM-L1.1 ASPM-L1.2 PCI-PM-L1.1 PCI-PM-L1.2
+[    0.748509] pci 0000:01:00.0: ASPM: DT platform, enabling ClockPM
+[    0.749145] pci 0000:01:00.0: BAR 0 [mem 0xf0200000-0xf0203fff 
+64bit]: assigned
+[    0.750430] nvme nvme0: pci function 0000:01:00.0
+[    0.750850] CPU: 7 UID: 0 PID: 120 Comm: kworker/u32:7 Not tainted 
+6.18.0-rc1-00019-gb00f931c2b43-dirty #19 PREEMPT
+[    0.750854] Hardware name: Rockchip RK3588 EVB1 V10 Board (DT)
+[    0.750856] Workqueue: async async_run_entry_fn
+[    0.750863] Call trace:
+[    0.750864]  show_stack+0x18/0x24 (C)
+[    0.750869]  dump_stack_lvl+0x40/0x84
+[    0.750873]  dump_stack+0x18/0x24
+[    0.750876]  pcie_config_aspm_link+0x40/0x2dc
+[    0.750882]  pcie_aspm_powersave_config_link+0x68/0x104
+[    0.750885]  do_pci_enable_device+0x80/0x170
+[    0.750890]  pci_enable_device_flags+0x1b8/0x220
+[    0.750894]  pci_enable_device_mem+0x14/0x20
+[    0.750898]  nvme_pci_enable+0x3c/0x66c
+[    0.750904]  nvme_probe+0x5f8/0x7d4
+[    0.750908]  pci_device_probe+0x1dc/0x2ac
+[    0.750912]  really_probe+0x138/0x2d8
+[    0.750915]  __driver_probe_device+0xa0/0x128
+[    0.750918]  driver_probe_device+0x3c/0x1f8
+[    0.750921]  __device_attach_driver+0x118/0x140
+[    0.750924]  bus_for_each_drv+0xf4/0x14c
+[    0.750927]  __device_attach_async_helper+0x78/0xd0
+[    0.750930]  async_run_entry_fn+0x24/0xdc
+[    0.750933]  process_scheduled_works+0x194/0x2c4
+[    0.750937]  worker_thread+0x28c/0x394
+[    0.750939]  kthread+0x1bc/0x200
+[    0.750943]  ret_from_fork+0x10/0x20
+[    0.750947] pcie_config_aspm_link 989
+[    0.753436] ehci-platform fc800000.usb: USB 2.0 started, EHCI 1.00
+[    0.753620] pcie_config_aspm_link 997 state 0x7c
+[    0.754204] hub 4-0:1.0: USB hub found
+[    0.754279] pcie_config_aspm_link 1004 state 0x7c
+[    0.754281] pcie_config_aspm_link 1008
+[    0.754741] hub 4-0:1.0: 1 port detected
+[    0.755153] nvme 0000:01:00.0: enabling device (0000 -> 0002)
+[    0.769741] hub 1-0:1.0: USB hub found
+[    0.770084] hub 1-0:1.0: 1 port detected
+[    0.801662] hub 3-0:1.0: USB hub found
+[    0.802007] hub 3-0:1.0: 1 port detected
+[    0.806393] nvme nvme0: D3 entry latency set to 10 seconds
+[    0.810188] nvme nvme0: 8/0/0 default/read/poll queues
 
-And here is the corresponding commit in the 5.15.y branch:
-https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git/commit/inc=
-lude/linux/overflow.h?h=3Dv5.15.194&id=3Ded6e37e30826b12572636c6bbfe6319233=
-690c90
-However, the commit message there references a different hash:
-a49a64b5bf195381c09202c524f0f84b5f3e816f.
 
----
-Regards, Eliav
+> 
+> - Mani
+> 
+
 
