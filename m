@@ -1,400 +1,190 @@
-Return-Path: <linux-arm-msm+bounces-77847-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-77848-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id D4F7CBEC00C
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 18 Oct 2025 01:32:25 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 44439BEC299
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 18 Oct 2025 02:20:52 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 766D25E66DB
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Oct 2025 23:32:24 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 0A2953A62C0
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 18 Oct 2025 00:20:42 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id F01EA27B4FA;
-	Fri, 17 Oct 2025 23:32:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 646BD13D8B1;
+	Sat, 18 Oct 2025 00:20:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=ixit.cz header.i=@ixit.cz header.b="FhO8GjoK"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="MXPI+bT2"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from ixit.cz (ip-94-112-25-9.bb.vodafone.cz [94.112.25.9])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFCB923BF91;
-	Fri, 17 Oct 2025 23:32:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=94.112.25.9
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE7D33770B
+	for <linux-arm-msm@vger.kernel.org>; Sat, 18 Oct 2025 00:20:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760743940; cv=none; b=hb0UsoGyNi4sslNKlJTuma7aj5PWAmIZ92KVN6cNlIqq6fWkaFjoahj+V17TcTfnMsu/MLem0Nl6TVSTD8aS9giVzDsA1++6DpyMKBuDTTQcalrP++bGz6C2LOhUCzdtNRTzRd8OX6nBnrsTYmYDAIxHn0OlXUqTc2Uzh8XeJqY=
+	t=1760746834; cv=none; b=ujKlO0jtvNO28S2UUhVq71uXnBhmYmd7aRCXpzPGdWHpsIcA9ccEQdsxf/iVotdSwQp+xew9n7Y0VN/FbTzE+OgtPOUppcnVlpCsJ2yI5UYMhw/87YbM8BJlMH3ubsWN0AdFv16Tj0fsm5vjQTRSiNt8MFoj+kw9LgBCmvvE27w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760743940; c=relaxed/simple;
-	bh=ZLNKyTtDA/ChmpiLa9ViAwheknJfaFjfciRSC4dm3DQ=;
+	s=arc-20240116; t=1760746834; c=relaxed/simple;
+	bh=WvLGMq6zaEqJpDFxOd0WICtejDxrRPkTC0W5GIZXWRg=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=HYBoY5H5/ksHDAY59SMyvzJfTW0Y8V+K2zmFnwVDqv6OIWm9gr0s9Sck5iJ3UzZYDukeEXSlghKbSFKtzRTbawzFi9Lay+jwjZ7YgxE9iANN+A/NeTkp6j+Q2EJAKI/uq8Xib2VZKmsYa7BzMp2N8cKUh2iXkYGvIq/dJKjdoSY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ixit.cz; spf=pass smtp.mailfrom=ixit.cz; dkim=pass (1024-bit key) header.d=ixit.cz header.i=@ixit.cz header.b=FhO8GjoK; arc=none smtp.client-ip=94.112.25.9
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ixit.cz
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ixit.cz
-Received: from [10.0.0.200] (unknown [10.0.0.1])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange x25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-	(No client certificate requested)
-	by ixit.cz (Postfix) with ESMTPSA id 280D65341279;
-	Sat, 18 Oct 2025 01:32:12 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ixit.cz; s=dkim;
-	t=1760743932;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
-	bh=tqPWuoWvFyVqSUJEt2PcBhPV9rYSmY2YB6gu4jWs3qA=;
-	b=FhO8GjoK8jtaCoSAcn9bAlaY2vMaixjXvSmHz8f7AzvE1WLCb6LOD4za68MRtA7gSNXMXx
-	lTKAE6oRVi2iKbtLsYrhayDaW7evmgPCnKQK2LBwqkMva/ByscGKB1jGXyTzZ3BQ9cl77M
-	3oEQ+iznHE56QB0Eq7l9ZxZqEzJN6Qo=
-Message-ID: <d03ca3d6-cb36-4eeb-bbe2-9bd27b647a51@ixit.cz>
-Date: Sat, 18 Oct 2025 01:32:11 +0200
+	 In-Reply-To:Content-Type; b=YeeVMkbaYhjY+U83x03eeVkaYUiXBy1to9VU27Npb8Fw45LGBRBZJ8qq+uDYNaVE7ZyFOGLmgEn5kPVFIZvVXu/yFj1W5SO2QAJAxfTWOJzL4/I3+Gjbqu3lOh/bdRpTy9wa7bVqGpaJpgvbkyq7wBVvmnu60/y3tM1+65uGFoc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=MXPI+bT2; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 59HJG5jJ004435
+	for <linux-arm-msm@vger.kernel.org>; Sat, 18 Oct 2025 00:20:31 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	DjsyPZCjZ7kk7o9g7SmG+YtODp+fuqqn2GA/QpUkm0c=; b=MXPI+bT2vhUKjU85
+	seAudb4lWbh4zhIYJ4n7mtMLncvAGQy8hEB7AhZh4ouq/KGyZ9aHN1JbfAGLrdVw
+	oS7PK7FhCPB0WeiR469ssPCk0xAUOqdNLnLmWBb7CSpTJhDH7fMYcaBtqFHtI1Yo
+	sU8wdD9Wr/IY41E3KsiOvIeQr3trmAyhp5EOu7zVQe1SVV46xgHAkTshcpI/K0+M
+	YYn0Daz8DLAnXxDpFwt/ayik4CnQ79u9nzUYbaRnK4GZPlQLhuJJAmQoVsBrYe6V
+	5NqccF0tXQgtcSlCTiJiVegzQHZoa/hBV3rCdVBj7SZ93XQkVe1zV/EE4LEm3VAr
+	teVRDw==
+Received: from mail-pg1-f197.google.com (mail-pg1-f197.google.com [209.85.215.197])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 49qfm5x7tn-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Sat, 18 Oct 2025 00:20:31 +0000 (GMT)
+Received: by mail-pg1-f197.google.com with SMTP id 41be03b00d2f7-b5516e33800so3411820a12.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 17 Oct 2025 17:20:31 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1760746830; x=1761351630;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=DjsyPZCjZ7kk7o9g7SmG+YtODp+fuqqn2GA/QpUkm0c=;
+        b=DnXN8SnArA1N92M8pq4/BlTE8BDdXD3GR1yWZWnw3VGOXO6qoxG3N7+WRgRn6w7Fpy
+         u/+0430PvraStHSaG0zVnjG/QAY77odztpYbtWDsDIejPjUYIc07ORRXYO7W8PXD/Xsi
+         FXoKf7/m1qDOJexBvUqy8bVyvMTgJKr1lHE8suK8RizQwnMq9rulqnIlA8IpWBNS2q0j
+         XgfxSnJsbNP8AS5DAfhiED12PSa+RLnK/rQo4Gn4gsJbgTEk5yVnh0RhLV9v3asn9oPX
+         wxY6UsulhJNx/GayvfniYK5VrKdGb3/irwzc+uPp1SaaTlXyjrJFVRU5tAdFmQIVOmzv
+         heIg==
+X-Gm-Message-State: AOJu0YxbYnZgKWSqftUtZSyVfp6Y9pA3qCUuWKCPm8vLS4et4sojkr9k
+	qxoWcSdSKn8+O9Kj+0WAnUoelRMFf1JIjs4dfHKPI4AJXNQSR5RWXbPUo4CFfbmAfPIbxj1pAga
+	P+ihHBqeZV1oS728z8BxyoMfxl34g4HfxzU+oaN+zj53Bf7PstfbaXjWM8/ML9EpgDsrqVpYjaQ
+	6i
+X-Gm-Gg: ASbGncvhGWhYqm5KtrmHAC5nK0kjmKME2RzmkRiW1Ofcat6NCiio4qN5WV5tE/uMYSC
+	U10/DqPuJ6sACVXERK9O/xQVBtMVnuHIJNy8icPEgQ/5J7Y8KOheQg34MJIT79aip3hp4JzKoE8
+	iD3tQhI23pmu6JiIBO8wYpAGK2xgAStRS6tcUUbjyWZoj0OGCXtTwlHypCBnfuR/hXJKo4nLDhH
+	rcDQNIgMgRzpMHOreAOnBFcRQ/NAJLIyA7Id4rn6iVjORal9s/Bhfs8ps0IoCVaPCq26feyjHf5
+	aaYnqi2FNsovSa7sS7t/J3u1nGKm6Rnoh9cm8ZXU5k/JQVQtOQJlP5D+9nQnidU+yFGx+H6BQNd
+	gbp3QUunCOklCTdruIB2TsAThEJp+GW55fNsP9Pfm
+X-Received: by 2002:a17:902:f691:b0:278:bfae:3244 with SMTP id d9443c01a7336-290cba4382amr68118975ad.54.1760746829958;
+        Fri, 17 Oct 2025 17:20:29 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFh0Fb6P08hVeeiHZb3EJs27ayrDuP/pdtr+A0nVEst6kPRjwP0b3hwHB5SCbsS0Kix1+iX4w==
+X-Received: by 2002:a17:902:f691:b0:278:bfae:3244 with SMTP id d9443c01a7336-290cba4382amr68118775ad.54.1760746829523;
+        Fri, 17 Oct 2025 17:20:29 -0700 (PDT)
+Received: from [10.73.53.19] (pat_11.qualcomm.com. [192.35.156.11])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-29246fcbe80sm7840285ad.29.2025.10.17.17.20.27
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 17 Oct 2025 17:20:28 -0700 (PDT)
+Message-ID: <da34ecf0-c2eb-2afa-bd4d-9dc30fbe5cf5@oss.qualcomm.com>
+Date: Fri, 17 Oct 2025 17:20:26 -0700
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/2] arm64: dts: qcom: Add support for Pixel 3 and Pixel 3
- XL
-To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
- Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, Amit Pundir <amit.pundir@linaro.org>,
- Casey Connolly <casey@connolly.tech>, Joel Selvaraj <foss@joelselvaraj.com>,
- Sumit Semwal <sumit.semwal@linaro.org>, Vinod Koul <vkoul@kernel.org>
-References: <20251005-pixel-3-v1-0-ab8b85f6133f@ixit.cz>
- <20251005-pixel-3-v1-2-ab8b85f6133f@ixit.cz>
- <2e4b995e-57ae-412f-ae88-c3708a5f67ee@oss.qualcomm.com>
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.15.1
+Subject: Re: [PATCH v5 02/10] dt-bindings: phy: qcom,qmp-usb: Add Glymur USB
+ UNI PHY compatible
 Content-Language: en-US
-From: David Heidelberg <david@ixit.cz>
-Autocrypt: addr=david@ixit.cz; keydata=
- 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
-In-Reply-To: <2e4b995e-57ae-412f-ae88-c3708a5f67ee@oss.qualcomm.com>
+To: Krzysztof Kozlowski <krzk@kernel.org>, krzk+dt@kernel.org,
+        conor+dt@kernel.org, konrad.dybcio@oss.qualcomm.com,
+        dmitry.baryshkov@oss.qualcomm.com, kishon@kernel.org, vkoul@kernel.org,
+        gregkh@linuxfoundation.org, robh@kernel.org
+Cc: linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
+        linux-usb@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20251006222002.2182777-1-wesley.cheng@oss.qualcomm.com>
+ <20251006222002.2182777-3-wesley.cheng@oss.qualcomm.com>
+ <f5e4ae02-b8fa-4406-b2e0-3602b07b7e23@kernel.org>
+ <00408896-2e25-2dd1-6e6e-2195317ee7fb@oss.qualcomm.com>
+ <14bc2a85-0f1d-3834-9b9c-32654348603a@oss.qualcomm.com>
+ <387c707e-613d-433b-a76d-16ef10dabc59@kernel.org>
+ <2a70f878-269c-1b40-2e8c-77b5851de9a1@oss.qualcomm.com>
+ <99ab26d3-eb44-401d-8a7c-1d9efd2a1a10@kernel.org>
+ <b2b68430-5127-5eca-6bd8-4af31eb9fbed@oss.qualcomm.com>
+ <bb299df0-58b9-4a6e-9625-305785d38eb4@kernel.org>
+From: Wesley Cheng <wesley.cheng@oss.qualcomm.com>
+In-Reply-To: <bb299df0-58b9-4a6e-9625-305785d38eb4@kernel.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-GUID: OnqtnwhAIFnjfWgjX8DbID5ZNmCccFPe
+X-Proofpoint-ORIG-GUID: OnqtnwhAIFnjfWgjX8DbID5ZNmCccFPe
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDExMDAyMCBTYWx0ZWRfX6FlPPEjLcNS8
+ NcjYov2lduzzymnjqaLGyVHPLpFTIhtXvCb7R8MXzCqBbo2Vi00yEEVP/kcWUuwdr6NhAUPEIsA
+ Z8jCihR6V+YOLKNuv0/Gyod1l2GhCzcGV/zLriMud/jtaQA4ohffAqezFqywt88n0iA4NDGQmWw
+ 0qQ03e5itxwLkxtpOhEPb5Jo3tj7EmrWhQ2+eYY+tkcbbRhvrOyX8CxGuHwBv+S3fZl+xIK8afs
+ hK5YS5USz8uR1HfaDWtrHi5sw5AqDQLGsqIkauIOs/4AFq9SNvrIcsJiGt4kCkSPUoYmUK3WC5G
+ N5w751zAEebevy8dOIozlvIwyHOJhL5tWnqvQe8hun+/X6XhbNdAqGOELRGzwWLXMktGr6Zlam4
+ QfYXku9FY2A/i1cQzl9HE4O3lADYXg==
+X-Authority-Analysis: v=2.4 cv=V71wEOni c=1 sm=1 tr=0 ts=68f2dd4f cx=c_pps
+ a=rz3CxIlbcmazkYymdCej/Q==:117 a=ZdW6uxA9NKXbfdqeeS2OGA==:17
+ a=IkcTkHD0fZMA:10 a=x6icFKpwvdMA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=JAPtGALJ81qCqeSEnE8A:9 a=QEXdDO2ut3YA:10 a=bFCP_H2QrGi7Okbo017w:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-10-17_08,2025-10-13_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ bulkscore=0 malwarescore=0 spamscore=0 adultscore=0 suspectscore=0
+ impostorscore=0 phishscore=0 clxscore=1015 lowpriorityscore=0
+ priorityscore=1501 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2510020000
+ definitions=main-2510110020
 
 
 
-On 06/10/2025 14:41, Konrad Dybcio wrote:
-> On 10/5/25 3:16 PM, David Heidelberg via B4 Relay wrote:
->> From: David Heidelberg <david@ixit.cz>
+On 10/16/2025 9:41 PM, Krzysztof Kozlowski wrote:
+> On 17/10/2025 02:15, Wesley Cheng wrote:
+>>>> Technically its all handling the same clock branch (CXO), we have the
+>>>> TCSR clkref register that allows us to gate the CXO to the USB PHY, as
+>>>
+>>>
+>>> Ah, exactly. Then clkref is not a clock. You need rather proper clock
+>>> hierarchy.
+>>>
+>>>> CXO is shared across several HW blocks, so it allows us to properly
+>>>> powerdown the PHY even though other clients are voting for CXO on.  Then
+>>>> we obviously have to remove our vote to the overall CXO, so that it can
+>>>> potentially be shutdown.
+>>>>
+>>>> Maybe we can rename it to "clkref" for the CXO handle and
+>>>> "clkref_switch" for the TCSRCC handle?
+>>>
+>>> Naming is better, but it is still not correct. This is not independent
+>>> clock signal. It is the same clock.
+>>>
 >>
->> This adds initial device tree support for the following phones:
->>
->>   - Google Pixel 3 (blueline)
->>   - Google Pixel 3 XL (crosshatch)
->>
->> Both phone boards use the same identifiers and differ only slightly
->> in their connected peripherals.
->>
->> Supported functionality includes:
->>   - Debug UART
->>   - UFS
->>   - Charger
->>   - USB-C (peripheral mode)
->>   - Display (Pixel 3 only)
->>
->> GPIOs 0–3 and 81–84 are not accessible from the application CPUs,
->> so they are marked as reserved to allow the Pixel 3 to boot.
->>
->> The rmtfs region is allocated using UIO, making it technically "dynamic."
->>
->> Its address and size can be read from sysfs:
->>
->> $ cat /sys/class/uio/uio0/name
->> /sys/class/uio/uio0/maps/map0/addr
->> 0x00000000f2701000
->>
->> $ cat /sys/class/uio/uio0/maps/map0/size
->> 0x0000000000200000
->>
->> Like the OnePlus 6, the Pixel 3 requires 1 kB of reserved memory on either
->> side of the rmtfs region to work around an XPU bug that would otherwise
->> cause erroneous violations when accessing the rmtfs_mem region.
+>> Hmmm... I guess that's why I kept the same clkref tag, to denote that
+>> its the same clock, but one is a switch/gate for it.  Would you happen
+>> to have any suggestions you might have that makes it clearer for
+>> everyone to understand?
+> To me it looks like:
 > 
-> [...]
+> |-----|            |-----------|           |------------------|
+> |clock|------------|TCSRCC gate|-----------|clkref to this dev|
+> |-----|            |-----------|           |------------------|
 > 
->> +&gmu {
->> +	status = "okay";
->> +};
+> So you need proper clock controller for TCSR (TCSR Clock Controller, in
+> short TCSRCC, what a surprise!) which will take input, add gate and
+> produce clock for this device.
 > 
-> It's already enabled> +
->> +&mdss {
->> +	status = "okay";
->> +};
->> +
->> +&mdss_dsi0 {
->> +	status = "okay";
->> +	vdda-supply = <&vdda_mipi_dsi0_1p2>;
+> Nothing non-standard, all Qualcomm SoCs have it, every other platform
+> has it in some way.
 > 
-> 'status' should be last, with a \n before it
-> 
->> +
->> +	ports {
->> +		port@1 {
->> +			endpoint {
-> 
-> &mdss_dsi0_out {} instead
-> 
->> +				remote-endpoint = <&panel_in>;
->> +				data-lanes = <0 1 2 3>;
->> +				qcom,te-source = "mdp_vsync_e";
->> +			};
->> +		};
->> +	};
->> +
->> +	panel@0 {
->> +		compatible = "lg,sw43408";
->> +		reg = <0>;
->> +
->> +		vddi-supply = <&vreg_l14a_1p88>;
->> +		vpnl-supply = <&vreg_l28a_3p0>;
->> +
->> +		reset-gpios = <&tlmm 6 GPIO_ACTIVE_LOW>;
->> +
->> +		pinctrl-names = "default";
->> +		pinctrl-0 = <&panel_reset_pins &panel_te_pin &panel_pmgpio_pins>;
-> 
-> property-n
-> property-names
-> 
-> in this order, please
-> 
->> +
->> +		port {
->> +			panel_in: endpoint {
->> +				remote-endpoint = <&mdss_dsi0_out>;
->> +			};
->> +		};
->> +	};
->> +};
->> +
->> +&mdss_dsi0_out {
->> +	remote-endpoint = <&panel_in>;
->> +	data-lanes = <0 1 2 3>;
->> +};
-> 
-> (as mentioned above..)
-> 
-> [...]
-> 
->> +		/* rmtfs lower guard */
->> +		memory@f2700000 {
->> +			reg = <0 0xf2700000 0 0x1000>;
->> +			no-map;
->> +		};
->> +
->> +		rmtfs_mem: memory@f2701000 {
->> +			compatible = "qcom,rmtfs-mem";
->> +			reg = <0 0xf2701000 0 0x200000>;
->> +			no-map;
->> +
->> +			qcom,client-id = <1>;
->> +			qcom,vmid = <15>;
->> +		};
->> +
->> +		/* rmtfs upper guard */
->> +		memory@f2901000 {
->> +			reg = <0 0xf2901000 0 0x1000>;
->> +			no-map;
->> +		};
-> 
-> qcom,use-guard-pages instead
-> 
-> [...]
-> 
->> +		vreg_l14a_1p88: ldo14 {
->> +			regulator-min-microvolt = <1800000>;
->> +			regulator-max-microvolt = <1800000>;
->> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
->> +			regulator-boot-on;
->> +			/*
->> +			 * We can't properly bring the panel back if it gets turned off
->> +			 * so keep it's regulators always on for now.
->> +			 */
->> +			regulator-always-on;
-> 
-> Sounds like your panel driver is not sequencing things properly
-> 
-> [...]
-> 
->> +&uart9 {
->> +	label = "LS-UART1";
-> 
-> This is a 96boards-ism> +
->> +	status = "okay";
->> +};
->> +
->> +&usb_1 {
->> +	status = "okay";
->> +};
->> +
->> +&usb_1_dwc3 {
->> +	dr_mode = "peripheral";
-> 
-> Are you sure?
 
-For now, the peripheral usb works, haven't tried to switch to host mode yet.
+Hi Krzystof,
 
-> 
-> [...]
-> 
->> +&usb_2 {
->> +	status = "okay";
->> +};
->> +
->> +&usb_2_dwc3 {
->> +	dr_mode = "host";
-> 
-> Does the phone actually have something connected to both USB hosts?
+Yes, the design is exactly how you outlined it above.  How about clkref 
+for the clock and tcsrcc_switch for the clkref switch?  That removes any 
+notation that the gate/switch is an actual clock...
 
-I assume not,
-
-Bus 001 Device 001: ID 1d6b:0002 Linux 6.16.7-sdm845 xhci-hcd xHCI Host 
-Controller
-Bus 002 Device 001: ID 1d6b:0003 Linux 6.16.7-sdm845 xhci-hcd xHCI Host 
-Controller
-
-I looked at the downstream description and it seems usb_2 was used only 
-on sda845 devkit.
-
-David
-
-> 
-> Would that be the weasel(?) security chip?
-> 
-> [...]
-> 
->> diff --git a/arch/arm64/boot/dts/qcom/sdm845-google-crosshatch.dts b/arch/arm64/boot/dts/qcom/sdm845-google-crosshatch.dts
->> new file mode 100644
->> index 0000000000000..dc9938ffc0ab8
->> --- /dev/null
->> +++ b/arch/arm64/boot/dts/qcom/sdm845-google-crosshatch.dts
->> @@ -0,0 +1,137 @@
->> +// SPDX-License-Identifier: GPL-2.0-only
->> +
->> +/dts-v1/;
->> +
->> +#include "sdm845-google-common.dtsi"
->> +
->> +/ {
->> +	model = "Google Pixel 3 XL";
->> +	compatible = "google,crosshatch", "qcom,sdm845";
->> +
->> +	battery: battery {
->> +		compatible = "simple-battery";
->> +
->> +		charge-full-design-microamp-hours = <3480000>;
->> +		voltage-min-design-microvolt = <3600000>;
->> +		voltage-max-design-microvolt = <4400000>;
->> +	};
->> +
->> +	chosen {
->> +		#address-cells = <2>;
->> +		#size-cells = <2>;
->> +		ranges;
->> +
->> +		/* for u-boot */
->> +		framebuffer: framebuffer@9d400000 {
->> +			compatible = "simple-framebuffer";
->> +			reg = <0 0x9d400000 0 (2960 * 1440 * 4)>;
->> +			width = <1440>;
->> +			height = <2960>;
->> +			stride = <(1440 * 4)>;
->> +			format = "a8r8g8b8";
->> +		};
->> +	};
->> +
->> +	reserved-memory {
->> +		framebuffer_region@9d400000 {
->> +			no-map;
->> +			reg = <0 0x9d400000 0 0x02400000>;
->> +		};
->> +	};
->> +};
->> +
->> +&gmu {
->> +	status = "okay";
->> +};
->> +
->> +&mdss {
->> +	status = "okay";
->> +};
-> 
-> I'm sure you can push some of this into -common
-> 
->> +
->> +&mdss_dsi0 {
->> +	vdda-supply = <&vdda_mipi_dsi0_1p2>;
->> +
->> +	status = "okay";
->> +
->> +	ports {
->> +		port@1 {
->> +			endpoint {
->> +				remote-endpoint = <&panel_in>;
->> +				data-lanes = <0 1 2 3>;
->> +				qcom,te-source = "mdp_vsync_e";
->> +			};
->> +		};
->> +	};
->> +
->> +	panel@0 {
->> +		compatible = "samsung,s6e3ha8";
->> +		reg = <0>;
->> +
->> +		vci-supply = <&vreg_l28a_3p0>; // downstream
-> 
-> which supply should /* upstream */ use then? :(
-> 
-> Konrad
-
--- 
-David Heidelberg
-
+Thanks
+Wesley Cheng
 
