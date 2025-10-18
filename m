@@ -1,59 +1,58 @@
-Return-Path: <linux-arm-msm+bounces-77856-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-77857-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id A3BD7BEC651
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 18 Oct 2025 05:09:48 +0200 (CEST)
+Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [IPv6:2605:f480:58:1:0:1994:3:14])
+	by mail.lfdr.de (Postfix) with ESMTPS id 03BDCBEC68A
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 18 Oct 2025 05:44:19 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 474E1400A4E
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 18 Oct 2025 03:09:47 +0000 (UTC)
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 118604E1D78
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 18 Oct 2025 03:44:05 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CA813277819;
-	Sat, 18 Oct 2025 03:09:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 55A2727FB3C;
+	Sat, 18 Oct 2025 03:44:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="vFw0Se3q"
+	dkim=pass (2048-bit key) header.d=joelselvaraj.com header.i=@joelselvaraj.com header.b="MYBKEFOT"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mail-08.mail-europe.com (mail-08.mail-europe.com [57.129.93.249])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97D8E227B9F;
-	Sat, 18 Oct 2025 03:09:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54C732737F3;
+	Sat, 18 Oct 2025 03:43:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=57.129.93.249
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760756984; cv=none; b=WXH6FbXg+MSjhhftH6Z7JfS3agC7xI1n7rM5XLl2PVAdDo6lfxKiJVnE38izJdsmna3Bd3klwFm6MnpiMekqBsMgiZUQqrxJ1LTcNcccsEUnX+c3EQ2GyKFdLuRL0xSAcEBKlm/LNO8d84jx7Z6elFHijhpnuV+xRQCgqMC7FdY=
+	t=1760759042; cv=none; b=unGGxIlyjaRL0eB5Yn3JJC8mmv+M3Q7Ps7zhywjwHyVt4d9Qx63yAw12+nnldsMfuGmYaK1RtWYqQh2os3eHvjpxc6N1Wnmp+4soMU2HKzoMLCsQ3pMovAxToT1WrpzowNejPV38D4CksfqUiF/35Tu2Dx2rbole5ozApGSLiuE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760756984; c=relaxed/simple;
-	bh=cAbL/jQfyCOvRUIap1HBDBc5t3iLUklL4p/zWiQTiuc=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=coy9qfUWSszXDTYtsGq/pH/WXCdJ4PAdDybXW0mB/8FrjNkw06/S/bDm3IWzo85DcteVfBobEK589i1PQZGkzDRdAvSjj+BWcxEJx0ohaDLfdR6FMK8E5gW16K9CKLHpfkAmRYTfTaLILdpMA2fv0nrTDiXoAeCxvtwZZwSqfwQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=vFw0Se3q; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 000C9C4CEE7;
-	Sat, 18 Oct 2025 03:09:37 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1760756984;
-	bh=cAbL/jQfyCOvRUIap1HBDBc5t3iLUklL4p/zWiQTiuc=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=vFw0Se3qNXJGfdK1PfBZMx8EYs+tw2TpuMo5cxBHh9YdVk9MHPe50p6P/lDUdP0eT
-	 yh4vYcsVUM89Ays7DRpWCtSJ959pzM0kyO27vpdackytSe5E3HKVITKPAdiwEIZMgn
-	 I+8RGd1XWZ6aJHVbprbGHYrTcrA6JgKHPv7gYFr83rrdeFJVCAq8k9ALMntOTlEAUo
-	 W49h0QLL+9HQjB+7gKnQWEsmXKLhegdHYXHNS9FBKxHeXNRIR32m6JGb90cBpyyBGs
-	 3P+g+VeawijLwb910weFGum5PkOnJ1B++gxYAh+1oYXqyeE75VeCGcEMmkwT9GUKRu
-	 HSex7vUAMXRPw==
-Date: Sat, 18 Oct 2025 08:39:27 +0530
-From: Manivannan Sadhasivam <mani@kernel.org>
-To: Bjorn Helgaas <helgaas@kernel.org>
-Cc: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>, 
-	Jingoo Han <jingoohan1@gmail.com>, Lorenzo Pieralisi <lpieralisi@kernel.org>, 
-	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kwilczynski@kernel.org>, Rob Herring <robh@kernel.org>, 
-	Bjorn Helgaas <bhelgaas@google.com>, linux-pci@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	linux-arm-msm@vger.kernel.org, Ron Economos <re@w6rz.net>
-Subject: Re: [PATCH 1/2] PCI: dwc: Fix ECAM enablement when used with vendor
- drivers
-Message-ID: <mtxez55p4hfvtmhcnwtxeetzqxydyq5e4g5zsdhytxpzgvgeqn@s7asinok5l22>
-References: <20251017-ecam_fix-v1-1-f6faa3d0edf3@oss.qualcomm.com>
- <20251017191005.GA1041995@bhelgaas>
+	s=arc-20240116; t=1760759042; c=relaxed/simple;
+	bh=QUvK43uEdjp4VgrEbeSeV/3sAkcsewJcyFAAteaMPL8=;
+	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=MAS6Gnm1ZhUo4sBpKpcleGrFRtL2e6f4murtWcMK866E/O/yhmwS1Id0JWgiPcJ2I+fxvqcOF/3C6jz4UZ9HLR5LoG3nHCq+6zQuDRzpJ55JkANtOe4DnK/HDR4YECswl72rVO2zB2RfY9aVwFgkidDBAa+H9nthM9JTupVtmnI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=joelselvaraj.com; spf=pass smtp.mailfrom=joelselvaraj.com; dkim=pass (2048-bit key) header.d=joelselvaraj.com header.i=@joelselvaraj.com header.b=MYBKEFOT; arc=none smtp.client-ip=57.129.93.249
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=joelselvaraj.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=joelselvaraj.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=joelselvaraj.com;
+	s=protonmail3; t=1760759024; x=1761018224;
+	bh=QUvK43uEdjp4VgrEbeSeV/3sAkcsewJcyFAAteaMPL8=;
+	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
+	 Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
+	 Message-ID:BIMI-Selector;
+	b=MYBKEFOTulr7k4atKLGtbTazwgyQyOzwgxJNoO5VPW1L8mlcfNXOsRBI3EKeGxeAC
+	 X6pjklk0eWWFemYdVQgkvgcUcGfa8ks6Gtk/KaLltGGznvVi2dJxfu+fPbO1qifQ1I
+	 rvabCdNzC8izkTuuleXrmUBNB2e6YZ5+NoioC5HycjWuYWnCiUr+jIr+aiFsjTXwDs
+	 w9jGhO0bdCBnswuseFXUkxivmaCiTV/yzUldp0hbrxFP0c68LOiOtn58+SVcuVMcpz
+	 SlVn0zmr9SAUlEEvCq5yQ1q2uH2girHmImKuDDidsVw3bleOTxxH9+zFiUpgLaInU7
+	 2OxRqVO61r5vQ==
+Date: Sat, 18 Oct 2025 03:43:39 +0000
+To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
+From: Joel Selvaraj <foss@joelselvaraj.com>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] arm64: dts: qcom: sdm845-shift-axolotl: fix touchscreen properties
+Message-ID: <2a014801-e1ef-47fa-b067-9b566b9d523e@joelselvaraj.com>
+In-Reply-To: <8fd387f5-5b4c-48ea-aa3e-f453ddd5b159@oss.qualcomm.com>
+References: <20250919-shift-axolotl-fix-touchscreen-dts-v1-1-60e26ad4e038@joelselvaraj.com> <8a5eecdd-d80f-4955-8ab7-cf6fd991a3b7@oss.qualcomm.com> <267eb29d-b506-43df-9380-3d79798c772c@joelselvaraj.com> <8fd387f5-5b4c-48ea-aa3e-f453ddd5b159@oss.qualcomm.com>
+Feedback-ID: 113812696:user:proton
+X-Pm-Message-ID: 265feb92edfb20b0e6fde8ba253ef90a0d453330
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -61,109 +60,70 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20251017191005.GA1041995@bhelgaas>
+Content-Transfer-Encoding: quoted-printable
 
-On Fri, Oct 17, 2025 at 02:10:05PM -0500, Bjorn Helgaas wrote:
-> On Fri, Oct 17, 2025 at 05:10:53PM +0530, Krishna Chaitanya Chundru wrote:
-> > When the vendor configuration space is 256MB aligned, the DesignWare
-> > PCIe host driver enables ECAM access and sets the DBI base to the dw_pcie_ecam_conf_map_busstart
-> > of the config space. This causes vendor drivers to incorrectly program
-> > iATU regions, as they rely on the DBI address for internal accesses.
-> > 
-> > To fix this, avoid overwriting the DBI base when ECAM is enabled.
-> > Instead, introduce a custom ECAM PCI ops implementation that accesses
-> > the DBI region directly for bus 0 and uses ECAM for other buses.
-> > 
-> > Fixes: f6fd357f7afb ("PCI: dwc: Prepare the driver for enabling ECAM mechanism using iATU 'CFG Shift Feature'")
-> > Reported-by: Ron Economos <re@w6rz.net>
-> > Closes: https://lore.kernel.org/all/eac81c57-1164-4d74-a1b4-6f353c577731@w6rz.net/
-> > Suggested-by: Manivannan Sadhasivam <mani@kernel.org>
-> > Signed-off-by: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
-> > ---
-> >  drivers/pci/controller/dwc/pcie-designware-host.c | 28 +++++++++++++++++++----
-> >  1 file changed, 24 insertions(+), 4 deletions(-)
-> > 
-> > diff --git a/drivers/pci/controller/dwc/pcie-designware-host.c b/drivers/pci/controller/dwc/pcie-designware-host.c
-> > index 20c9333bcb1c4812e2fd96047a49944574df1e6f..e92513c5bda51bde3a7157033ddbd73afa370d78 100644
-> > --- a/drivers/pci/controller/dwc/pcie-designware-host.c
-> > +++ b/drivers/pci/controller/dwc/pcie-designware-host.c
-> > @@ -23,6 +23,7 @@
-> >  #include "pcie-designware.h"
-> >  
-> >  static struct pci_ops dw_pcie_ops;
-> > +static struct pci_ops dw_pcie_ecam_ops;
-> >  static struct pci_ops dw_child_pcie_ops;
-> >  
-> >  #define DW_PCIE_MSI_FLAGS_REQUIRED (MSI_FLAG_USE_DEF_DOM_OPS		| \
-> > @@ -471,9 +472,6 @@ static int dw_pcie_create_ecam_window(struct dw_pcie_rp *pp, struct resource *re
-> >  	if (IS_ERR(pp->cfg))
-> >  		return PTR_ERR(pp->cfg);
-> >  
-> > -	pci->dbi_base = pp->cfg->win;
-> > -	pci->dbi_phys_addr = res->start;
-> > -
-> >  	return 0;
-> >  }
-> >  
-> > @@ -529,7 +527,7 @@ static int dw_pcie_host_get_resources(struct dw_pcie_rp *pp)
-> >  		if (ret)
-> >  			return ret;
-> >  
-> > -		pp->bridge->ops = (struct pci_ops *)&pci_generic_ecam_ops.pci_ops;
-> > +		pp->bridge->ops = &dw_pcie_ecam_ops;
-> >  		pp->bridge->sysdata = pp->cfg;
-> >  		pp->cfg->priv = pp;
-> >  	} else {
-> > @@ -842,12 +840,34 @@ void __iomem *dw_pcie_own_conf_map_bus(struct pci_bus *bus, unsigned int devfn,
-> >  }
-> >  EXPORT_SYMBOL_GPL(dw_pcie_own_conf_map_bus);
-> >  
-> > +static void __iomem *dw_pcie_ecam_conf_map_bus(struct pci_bus *bus, unsigned int devfn, int where)
-> > +{
-> > +	struct pci_config_window *cfg = bus->sysdata;
-> > +	struct dw_pcie_rp *pp = cfg->priv;
-> > +	struct dw_pcie *pci = to_dw_pcie_from_pp(pp);
-> > +	unsigned int busn = bus->number;
-> > +
-> > +	if (busn > 0)
-> > +		return pci_ecam_map_bus(bus, devfn, where);
-> 
-> Is there a way to avoid the "root bus is bus 00" assumption here?  It
-> looks like something like this might work (it inverts the condition
-> to take care of the root bus special case first):
-> 
->   if (bus == pp->bridge->bus) {
->     if (PCI_SLOT(devfn) > 0)
->       return NULL;
-> 
->     return pci->dbi_base + where;
->   }
-> 
->   return pci_ecam_map_bus(bus, devfn, where);
-> 
+Hi Konrad Dybcio,
 
-I guess it will work.
+On 10/17/25 4:57 AM, Konrad Dybcio wrote:
+>>> All the changes look good given your commit message, but you dropped
+>>> this wakeup-source property without explanation. It's fine to do so
+>>> if it's intended, but please mention it if so
+>>
+>> In reference to the touchscreen/edt-ft5x06.c driver which is used here,
+>> I am bit confused how wakeup-source works. Does specifying wakeup-source
+>> in dts automatically makes "device_may_wakeup(dev)" return true, even if
+>> device_init_wakeup is NOT configured in the driver? I noticed some
+>> drivers do:
+>>
+>> device_init_wakeup(dev,device_property_read_bool(dev, "wakeup-source"));
+>>
+>> but the edt-ft5x06 driver doesnt do the init, but directly checks for
+>> may_wakeup in suspend/resume.
+>>
+>> Few scenarios based on the driver code and my understanding:
+>> 1. if device_may_wakeup will return true when wakeup-source is
+>> specified, I probably want to just remove it, because irq and regulator
+>> is not disabled during suspend and this will likely cause power drain.
+>=20
+> I think this may be the case
+>=20
+>> 2. The driver has an option to specify wake-gpio. In which case, the
+>> touchscreen is put in some low power hibernate mode with irq and
+>> regulators still enabled. But the touchscreen controller used in this
+>> device doesn't seem to have support for a wake-gpio (atleast based on
+>> downstream code). So that is not an option.
+>=20
+> IIRC Shift was pretty open about development collaboration.. maybe you
+> could reach out to them to confirm on schematics that the GPIO is
+> absent?
+>=20
+>> 3. if device_may_wakeup will always return false since
+>> device_init_wakeup is not configured and since no wake-gpio is
+>> available, the irq and regulators will be disabled during suspend.
+>> Therefore, the device will not wake up from sleep even if wakeup-source
+>> is specified as the irq is not going to be triggered.
+>>
+>> So probably no point in specifying wakeup-source either way I think? But
+>> I am not sure which of these explanation is correct and thus not sure
+>> what to mention in the v2 patch commit message. Also, there is a
+>> possibility I am not understanding something. A little help from someone
+>> will be very nice and sorry if I am obviously missing something.
+>=20
+> I think this is intended for things like double-tap-to-wake, which
+> obviously need some hw backing if you don't want to just keep the
+> touchscreen online at "full power" 24/7
+>=20
 
-> > +	if (PCI_SLOT(devfn) > 0)
-> > +		return NULL;
-> 
-> This essentially says only one function (00.0) can be on the root bus.
-> I assume that someday that will be relaxed and there may be multiple
-> Root Ports and maybe RCiEPs on the root bus, so it would be nice if we
-> didn't have to have this check.
-> 
-> What happens without it?  Does the IP return the ~0 data that the PCI
-> core would interpret as "there's no device here"?
-> 
+Yeah. I think I will remove the wakeup-source for now to avoid potential=20
+battery drain. Once I get more info on wake-gpio/low-power mode and test=20
+with users that tap-to-wake work as expected, it will be added. For now,=20
+this is not something expected to be working. Will send a v2 with=20
+updated commit message.
 
-I hope the read returns ~0, but the idea is to catch the invalid access before
-trying to read/write. In case of multi Root Port design, I don't think we have a
-way to identify it. So maybe it is safe to remove this check.
+Thank you,
+Joel Selvaraj
 
-- Mani
+> Konrad
 
--- 
-மணிவண்ணன் சதாசிவம்
+
 
