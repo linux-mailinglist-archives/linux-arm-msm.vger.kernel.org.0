@@ -1,88 +1,131 @@
-Return-Path: <linux-arm-msm+bounces-77858-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-77859-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7B37BBEC6C4
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 18 Oct 2025 05:59:12 +0200 (CEST)
+Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [IPv6:2605:f480:58:1:0:1994:3:14])
+	by mail.lfdr.de (Postfix) with ESMTPS id BBF89BEC7E6
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 18 Oct 2025 06:55:28 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 306DE421C47
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 18 Oct 2025 03:59:11 +0000 (UTC)
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 425E14E18C0
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 18 Oct 2025 04:55:26 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BA0D0263C91;
-	Sat, 18 Oct 2025 03:59:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E3BD626B96A;
+	Sat, 18 Oct 2025 04:55:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="krIfENMf"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="aW3+E4dH"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f42.google.com (mail-wr1-f42.google.com [209.85.221.42])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72BAB1E492A;
-	Sat, 18 Oct 2025 03:59:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1EE59264617
+	for <linux-arm-msm@vger.kernel.org>; Sat, 18 Oct 2025 04:55:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760759948; cv=none; b=osqxNuvbcIfRFuc0Aver4DFgX39xpmzCnWKTeDByyZRaJqaWIuW4OmELMzFvSaJGT9PpW5ozpwxBTvWKvkH+fha/LBTSgHzulRkK0gQMCBse/EHH28DaeHgZYGoo0pQ2wyifIL9zj4JInaz+DTzhDP5KkSX8f8NvawGG2rorCH8=
+	t=1760763320; cv=none; b=JFAazrIyq64Id26wIT0o1iaj9xjmWBlM9P4gLGrfIIrQnXsVjjJxXlcI85POEJDox2Az/TVbP5Nh6FzWFRmWzFb6en8WkB9fpUkVWqwUZwGYrxKgs0+ybAJyB89pwOmfTWIxHhkWesRaO046g4ConPBpW2shAh8UsquupUhw1l8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760759948; c=relaxed/simple;
-	bh=EU6U5Z1y6eCiRh+fXNU8O/thPLmzUksR4n4H3faDx18=;
-	h=Date:From:To:cc:Subject:In-Reply-To:Message-ID:References:
-	 MIME-Version:Content-Type; b=Vk9Yh0I64yw9NaYjh8qOfCU16Zxhzf5u5gZYChvgHohSahMz0nn2elYCvOPTB2wBmYdzpTQapIZZ3hHogXyzJHCddiRmmsF7xzT+oJtppgpUQQBYx3DL6DTFNJWk0WNJABiC8dUSMXAaf3KuFkrhzyNC8hae3WfTmqCCUModCvU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=krIfENMf; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E640C4CEF8;
-	Sat, 18 Oct 2025 03:59:06 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1760759947;
-	bh=EU6U5Z1y6eCiRh+fXNU8O/thPLmzUksR4n4H3faDx18=;
-	h=Date:From:To:cc:Subject:In-Reply-To:References:From;
-	b=krIfENMfuFjiHhOD9R6DJZJbEI9qyq58vTH4tVORoQRTS2pGY5lkJEIZDY6cO/JsF
-	 7rV4qf/QB3xJavBLHP0t1tOOd2ijiKeeH7r5PBJer2K+56mKaBeK4gxS6ShjW6W321
-	 VkvkNEiUhE+GJg+MsRokLA9CNBFgs7U0v7KF5BOur/qWmLZ7DKTce6BLHyqQ3UmI3d
-	 h3G0koy5DXW63vce1vAszW8CD0JUM4rwNfwwIrL7aT81malR9QIBv5/P/aZVWwdmzB
-	 yRQW1/nRqFaZ64tNvz5lQ6FqKOjnXl5DoM5YdsFKHtq3AqF25dzypI1i46AMW/sKZH
-	 62a7C0hJMLpqQ==
-Date: Fri, 17 Oct 2025 21:59:03 -0600 (MDT)
-From: Paul Walmsley <pjw@kernel.org>
-To: Trevor Woerner <twoerner@gmail.com>
-cc: linux-snps-arc@lists.infradead.org, linux-arm-kernel@lists.infradead.org, 
-    linux-aspeed@lists.ozlabs.org, linux-arm-msm@vger.kernel.org, 
-    openbmc@lists.ozlabs.org, linux-hexagon@vger.kernel.org, 
-    loongarch@lists.linux.dev, linux-m68k@lists.linux-m68k.org, 
-    linux-stm32@st-md-mailman.stormreply.com, linux-mips@vger.kernel.org, 
-    linux-parisc@vger.kernel.org, linuxppc-dev@lists.ozlabs.org, 
-    linux-riscv@lists.infradead.org, linux-sh@vger.kernel.org, 
-    sparclinux@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] defconfig: cleanup orphaned CONFIG_SCHED_DEBUG
-In-Reply-To: <20250828103828.33255-1-twoerner@gmail.com>
-Message-ID: <e88ab2ff-dc16-dab7-0ff3-702f093563ce@kernel.org>
-References: <20250828103828.33255-1-twoerner@gmail.com>
+	s=arc-20240116; t=1760763320; c=relaxed/simple;
+	bh=ylW2XE//NO5FaS2GRo3y6bDQ5bXrKLQ1fYi38QPF9Mg=;
+	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
+	 References:In-Reply-To; b=GWfWsYHFw6pv8pTeZ2uCkQc6BS/H7//7ZDyQxcfbNqvrJO4ee7vT1qza/Ug9UHTczlTWbdse1xU62RK0LSGgZawsaLNOA7dZ9Lws8SMnyuP+NMXcs7DmBuBqXb2T49wyKGNfW1TwmA/4C6TZo24KPbUjq3MvHebJh1f072HEIuM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=aW3+E4dH; arc=none smtp.client-ip=209.85.221.42
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wr1-f42.google.com with SMTP id ffacd0b85a97d-427091cd4fdso700196f8f.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 17 Oct 2025 21:55:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1760763316; x=1761368116; darn=vger.kernel.org;
+        h=in-reply-to:references:to:from:subject:cc:message-id:date
+         :content-transfer-encoding:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=Lev9x6dFfmdCM6nU9lvB+aId3gAOWip6By2m8dIzqR0=;
+        b=aW3+E4dHSrakor4dnozLsjQIlv8RN/iSsLbT3RO9FZxm/6x8ysPes4d74J9PQ0bQX0
+         0D1Ntro1d7gW9B69OndpZw0CwIIG6xm+xNVWKWPpVMgirzCGTtBZf5Y7V0vbMcp5iS/C
+         93Iy7KOOrg9g4nEjFnKyY/M59KXTlee0CaVwYUPhERI0o/e53pnu7wvRVoHLd74bi6pW
+         J1EggmDni+0Ws3Igh9uniwfjuomlsUs/g76O4uJgBnx66AdtTt3v+6v5+hJAul+8q6LD
+         Jbns83QWDNe4Ay8YrQDyDuj2qYMbPGYSsfiz9VnebaeGptMzFyMaylCFGnK8C/prL84u
+         gIXA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1760763316; x=1761368116;
+        h=in-reply-to:references:to:from:subject:cc:message-id:date
+         :content-transfer-encoding:mime-version:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=Lev9x6dFfmdCM6nU9lvB+aId3gAOWip6By2m8dIzqR0=;
+        b=TExMia9JNLTknnZ9znhweSL9skvQSieReWHpbFdmu/irvv88W01v+GB+xd7L3o5PaN
+         kBp/58QRmiDnkvLfP1btYMwVO42PJDruoj6vgEIA+qBBE418OuMuoX1V/MKDE3vPzRu9
+         jcxfyBJ62JTGQVnr+a30YSDgXifKOE1cf5L5MGJsM7IFxM5Kph1A+pn/D5Ht5bFi8Gzp
+         8OSjdYOieliv2pcXJZND/1m+g159uPobqOcpjnl6avBdD9qb6cDeePkVVPiObvwvPSJ1
+         hJM6V7OTdWuVSw234YxqA+DJ+PmVBsdIf18XbfHAcmIcTRT22cLXu0pc/20TWwS62gJP
+         J0dQ==
+X-Forwarded-Encrypted: i=1; AJvYcCUDpE1qlhn8qBs8NQ7dktaRkYU9xc6ReG+PzKZ/IXQP5hiHSE1o/iSqx7XgpsmTgee7n8+5G4M3+/NHbH9/@vger.kernel.org
+X-Gm-Message-State: AOJu0YyXZtMFC5hFNGcxu93Lpwyi/wmGFJNJkzWRSVSmwo01hgV/tSd0
+	7WCWfTtUayuop0SI5lhJ4vffkp+FK+5CaBWRT1Pei9gKeE87y2GnKnS6WTlMtXEpOnU=
+X-Gm-Gg: ASbGncveR3UMlgbbRFAKXOjdLWk9MmKC5YoPvsbvIK18UZM+0G8h73ZtkoDLj1UVOMC
+	7ARgH+rgacLcVUDnTSzDrzSkrLYI2m4GpLvtFipZUkkBUWF0W1y4F537FG1ucY0VEq7XWD/2S30
+	MAZqoYlw445qdx1A+fq8di11bQmGwljBU62y8Wf/dKKeh1qtaTtE7n8t0uxtF966EJws4eCfxYx
+	upXDwi2v5xV5yu9AC3/JUblWZ1/blJtGDmiawvyVUK2Q1r+8mbtQ1PdauuGgICSp9DYf2Mu/SjS
+	xbYxgnuyYyg3UlA6Z1utUQ+f0A2XInwv3kpgnVke6nn6gup8Z0seG0QGU8RfSlbYmkk5WYHed85
+	5LF68pNbtR1PCDLff/yP6epHtNpQ9sZOMYgBBGwpIpONIPTAzpHsyEpgrlgrGjYHlPU8JSx/NrM
+	0BP2JkokRDLbWCMQ==
+X-Google-Smtp-Source: AGHT+IGQ2PwsTgBVhX4BIKplCiN6Fm8dEPVQVzbBaqOMGQ2re1g52F54o1ZfdXxv+FuOtuW57XJ50A==
+X-Received: by 2002:a05:6000:188e:b0:428:3c66:a022 with SMTP id ffacd0b85a97d-4283c66a3a1mr577628f8f.40.1760763316335;
+        Fri, 17 Oct 2025 21:55:16 -0700 (PDT)
+Received: from localhost ([2a02:c7c:7259:a00:a618:4d7b:922:a98f])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-427f009a993sm2706026f8f.24.2025.10.17.21.55.14
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 17 Oct 2025 21:55:15 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Sat, 18 Oct 2025 05:55:14 +0100
+Message-Id: <DDL6I3XL46VX.XHDZ5GTAJK09@linaro.org>
+Cc: <broonie@kernel.org>, <perex@perex.cz>, <tiwai@suse.com>,
+ <srini@kernel.org>, <linux-sound@vger.kernel.org>, <m.facchin@arduino.cc>,
+ <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>
+Subject: Re: [PATCH 0/9] ASoC: qcom: q6dsp: fixes and updates
+From: "Alexey Klimov" <alexey.klimov@linaro.org>
+To: "Srinivas Kandagatla" <srinivas.kandagatla@oss.qualcomm.com>,
+ <broonie@kernel.org>
+X-Mailer: aerc 0.20.0
+References: <20251015131740.340258-1-srinivas.kandagatla@oss.qualcomm.com>
+In-Reply-To: <20251015131740.340258-1-srinivas.kandagatla@oss.qualcomm.com>
 
-On Thu, 28 Aug 2025, Trevor Woerner wrote:
+On Wed Oct 15, 2025 at 2:17 PM BST, Srinivas Kandagatla wrote:
+> This patchset has 4 fixes and some enhancements to the Elite DSP driver
+> support.
+> Fixes includes=20
+> 	- setting correct flags for expected behaviour of appl_ptr
+> 	- fix closing of copp instances
+> 	- fix buffer alignment.
+> 	- fix state checks before closing asm stream
+> Enhancements include:
+> 	- adding q6asm_get_hw_pointer and ack callback support
+>
+> There is another set of updates comming soon, which will add support
+> for early memory mapping and few more modules support in audioreach.
+>
+> Srinivas Kandagatla (9):
+>   ASoC: qcom: q6apm-dai: set flags to reflect correct operation of
+>     appl_ptr
+>   ASoC: qcom: q6adm: the the copp device only during last instance
+>   ASoC: qcom: qdsp6: q6asm-dai: set 10 ms period and buffer alignment.
+>   ASoC: qcom: q6asm-dai: perform correct state check before closing
+>   ASoC: qcom: q6asm: handle the responses after closing
+>   ASoC: qcom: q6asm-dai: schedule all available frames to avoid dsp
+>     under-runs
+>   ASoC: qcom: q6asm: add q6asm_get_hw_pointer
+>   ASoC: qcom: q6asm-dai: use q6asm_get_hw_pointer
+>   ASoC: qcom: q6asm: set runtime correctly for each stream
 
-> In commit b52173065e0a ("sched/debug: Remove CONFIG_SCHED_DEBUG") this
-> Kconfig option was removed since CONFIG_SCHED_DEBUG was made unconditional
-> by patches preceding it.
-> 
-> Signed-off-by: Trevor Woerner <twoerner@gmail.com>
-> ---
+I am currently testing this series, so far looks good but
+I'd like to test it on one more different board.
+I'll also have few minor comments later.
 
-[ ... ]
-
->  arch/riscv/configs/nommu_k210_defconfig        | 1 -
->  arch/riscv/configs/nommu_k210_sdcard_defconfig | 1 -
->  arch/riscv/configs/nommu_virt_defconfig        | 1 -
-
-[ ... ]
-
-Acked-by: Paul Walmsley <pjw@kernel.org>  # for arch/riscv
-
-
-- Paul
+Thanks,
+Alexey
 
