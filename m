@@ -1,129 +1,88 @@
-Return-Path: <linux-arm-msm+bounces-77857-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-77858-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [IPv6:2605:f480:58:1:0:1994:3:14])
-	by mail.lfdr.de (Postfix) with ESMTPS id 03BDCBEC68A
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 18 Oct 2025 05:44:19 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7B37BBEC6C4
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 18 Oct 2025 05:59:12 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 118604E1D78
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 18 Oct 2025 03:44:05 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 306DE421C47
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 18 Oct 2025 03:59:11 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 55A2727FB3C;
-	Sat, 18 Oct 2025 03:44:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id BA0D0263C91;
+	Sat, 18 Oct 2025 03:59:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=joelselvaraj.com header.i=@joelselvaraj.com header.b="MYBKEFOT"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="krIfENMf"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-08.mail-europe.com (mail-08.mail-europe.com [57.129.93.249])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54C732737F3;
-	Sat, 18 Oct 2025 03:43:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=57.129.93.249
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72BAB1E492A;
+	Sat, 18 Oct 2025 03:59:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760759042; cv=none; b=unGGxIlyjaRL0eB5Yn3JJC8mmv+M3Q7Ps7zhywjwHyVt4d9Qx63yAw12+nnldsMfuGmYaK1RtWYqQh2os3eHvjpxc6N1Wnmp+4soMU2HKzoMLCsQ3pMovAxToT1WrpzowNejPV38D4CksfqUiF/35Tu2Dx2rbole5ozApGSLiuE=
+	t=1760759948; cv=none; b=osqxNuvbcIfRFuc0Aver4DFgX39xpmzCnWKTeDByyZRaJqaWIuW4OmELMzFvSaJGT9PpW5ozpwxBTvWKvkH+fha/LBTSgHzulRkK0gQMCBse/EHH28DaeHgZYGoo0pQ2wyifIL9zj4JInaz+DTzhDP5KkSX8f8NvawGG2rorCH8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760759042; c=relaxed/simple;
-	bh=QUvK43uEdjp4VgrEbeSeV/3sAkcsewJcyFAAteaMPL8=;
-	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=MAS6Gnm1ZhUo4sBpKpcleGrFRtL2e6f4murtWcMK866E/O/yhmwS1Id0JWgiPcJ2I+fxvqcOF/3C6jz4UZ9HLR5LoG3nHCq+6zQuDRzpJ55JkANtOe4DnK/HDR4YECswl72rVO2zB2RfY9aVwFgkidDBAa+H9nthM9JTupVtmnI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=joelselvaraj.com; spf=pass smtp.mailfrom=joelselvaraj.com; dkim=pass (2048-bit key) header.d=joelselvaraj.com header.i=@joelselvaraj.com header.b=MYBKEFOT; arc=none smtp.client-ip=57.129.93.249
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=joelselvaraj.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=joelselvaraj.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=joelselvaraj.com;
-	s=protonmail3; t=1760759024; x=1761018224;
-	bh=QUvK43uEdjp4VgrEbeSeV/3sAkcsewJcyFAAteaMPL8=;
-	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
-	 Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
-	 Message-ID:BIMI-Selector;
-	b=MYBKEFOTulr7k4atKLGtbTazwgyQyOzwgxJNoO5VPW1L8mlcfNXOsRBI3EKeGxeAC
-	 X6pjklk0eWWFemYdVQgkvgcUcGfa8ks6Gtk/KaLltGGznvVi2dJxfu+fPbO1qifQ1I
-	 rvabCdNzC8izkTuuleXrmUBNB2e6YZ5+NoioC5HycjWuYWnCiUr+jIr+aiFsjTXwDs
-	 w9jGhO0bdCBnswuseFXUkxivmaCiTV/yzUldp0hbrxFP0c68LOiOtn58+SVcuVMcpz
-	 SlVn0zmr9SAUlEEvCq5yQ1q2uH2girHmImKuDDidsVw3bleOTxxH9+zFiUpgLaInU7
-	 2OxRqVO61r5vQ==
-Date: Sat, 18 Oct 2025 03:43:39 +0000
-To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
-From: Joel Selvaraj <foss@joelselvaraj.com>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] arm64: dts: qcom: sdm845-shift-axolotl: fix touchscreen properties
-Message-ID: <2a014801-e1ef-47fa-b067-9b566b9d523e@joelselvaraj.com>
-In-Reply-To: <8fd387f5-5b4c-48ea-aa3e-f453ddd5b159@oss.qualcomm.com>
-References: <20250919-shift-axolotl-fix-touchscreen-dts-v1-1-60e26ad4e038@joelselvaraj.com> <8a5eecdd-d80f-4955-8ab7-cf6fd991a3b7@oss.qualcomm.com> <267eb29d-b506-43df-9380-3d79798c772c@joelselvaraj.com> <8fd387f5-5b4c-48ea-aa3e-f453ddd5b159@oss.qualcomm.com>
-Feedback-ID: 113812696:user:proton
-X-Pm-Message-ID: 265feb92edfb20b0e6fde8ba253ef90a0d453330
+	s=arc-20240116; t=1760759948; c=relaxed/simple;
+	bh=EU6U5Z1y6eCiRh+fXNU8O/thPLmzUksR4n4H3faDx18=;
+	h=Date:From:To:cc:Subject:In-Reply-To:Message-ID:References:
+	 MIME-Version:Content-Type; b=Vk9Yh0I64yw9NaYjh8qOfCU16Zxhzf5u5gZYChvgHohSahMz0nn2elYCvOPTB2wBmYdzpTQapIZZ3hHogXyzJHCddiRmmsF7xzT+oJtppgpUQQBYx3DL6DTFNJWk0WNJABiC8dUSMXAaf3KuFkrhzyNC8hae3WfTmqCCUModCvU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=krIfENMf; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E640C4CEF8;
+	Sat, 18 Oct 2025 03:59:06 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1760759947;
+	bh=EU6U5Z1y6eCiRh+fXNU8O/thPLmzUksR4n4H3faDx18=;
+	h=Date:From:To:cc:Subject:In-Reply-To:References:From;
+	b=krIfENMfuFjiHhOD9R6DJZJbEI9qyq58vTH4tVORoQRTS2pGY5lkJEIZDY6cO/JsF
+	 7rV4qf/QB3xJavBLHP0t1tOOd2ijiKeeH7r5PBJer2K+56mKaBeK4gxS6ShjW6W321
+	 VkvkNEiUhE+GJg+MsRokLA9CNBFgs7U0v7KF5BOur/qWmLZ7DKTce6BLHyqQ3UmI3d
+	 h3G0koy5DXW63vce1vAszW8CD0JUM4rwNfwwIrL7aT81malR9QIBv5/P/aZVWwdmzB
+	 yRQW1/nRqFaZ64tNvz5lQ6FqKOjnXl5DoM5YdsFKHtq3AqF25dzypI1i46AMW/sKZH
+	 62a7C0hJMLpqQ==
+Date: Fri, 17 Oct 2025 21:59:03 -0600 (MDT)
+From: Paul Walmsley <pjw@kernel.org>
+To: Trevor Woerner <twoerner@gmail.com>
+cc: linux-snps-arc@lists.infradead.org, linux-arm-kernel@lists.infradead.org, 
+    linux-aspeed@lists.ozlabs.org, linux-arm-msm@vger.kernel.org, 
+    openbmc@lists.ozlabs.org, linux-hexagon@vger.kernel.org, 
+    loongarch@lists.linux.dev, linux-m68k@lists.linux-m68k.org, 
+    linux-stm32@st-md-mailman.stormreply.com, linux-mips@vger.kernel.org, 
+    linux-parisc@vger.kernel.org, linuxppc-dev@lists.ozlabs.org, 
+    linux-riscv@lists.infradead.org, linux-sh@vger.kernel.org, 
+    sparclinux@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] defconfig: cleanup orphaned CONFIG_SCHED_DEBUG
+In-Reply-To: <20250828103828.33255-1-twoerner@gmail.com>
+Message-ID: <e88ab2ff-dc16-dab7-0ff3-702f093563ce@kernel.org>
+References: <20250828103828.33255-1-twoerner@gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=US-ASCII
 
-Hi Konrad Dybcio,
+On Thu, 28 Aug 2025, Trevor Woerner wrote:
 
-On 10/17/25 4:57 AM, Konrad Dybcio wrote:
->>> All the changes look good given your commit message, but you dropped
->>> this wakeup-source property without explanation. It's fine to do so
->>> if it's intended, but please mention it if so
->>
->> In reference to the touchscreen/edt-ft5x06.c driver which is used here,
->> I am bit confused how wakeup-source works. Does specifying wakeup-source
->> in dts automatically makes "device_may_wakeup(dev)" return true, even if
->> device_init_wakeup is NOT configured in the driver? I noticed some
->> drivers do:
->>
->> device_init_wakeup(dev,device_property_read_bool(dev, "wakeup-source"));
->>
->> but the edt-ft5x06 driver doesnt do the init, but directly checks for
->> may_wakeup in suspend/resume.
->>
->> Few scenarios based on the driver code and my understanding:
->> 1. if device_may_wakeup will return true when wakeup-source is
->> specified, I probably want to just remove it, because irq and regulator
->> is not disabled during suspend and this will likely cause power drain.
->=20
-> I think this may be the case
->=20
->> 2. The driver has an option to specify wake-gpio. In which case, the
->> touchscreen is put in some low power hibernate mode with irq and
->> regulators still enabled. But the touchscreen controller used in this
->> device doesn't seem to have support for a wake-gpio (atleast based on
->> downstream code). So that is not an option.
->=20
-> IIRC Shift was pretty open about development collaboration.. maybe you
-> could reach out to them to confirm on schematics that the GPIO is
-> absent?
->=20
->> 3. if device_may_wakeup will always return false since
->> device_init_wakeup is not configured and since no wake-gpio is
->> available, the irq and regulators will be disabled during suspend.
->> Therefore, the device will not wake up from sleep even if wakeup-source
->> is specified as the irq is not going to be triggered.
->>
->> So probably no point in specifying wakeup-source either way I think? But
->> I am not sure which of these explanation is correct and thus not sure
->> what to mention in the v2 patch commit message. Also, there is a
->> possibility I am not understanding something. A little help from someone
->> will be very nice and sorry if I am obviously missing something.
->=20
-> I think this is intended for things like double-tap-to-wake, which
-> obviously need some hw backing if you don't want to just keep the
-> touchscreen online at "full power" 24/7
->=20
+> In commit b52173065e0a ("sched/debug: Remove CONFIG_SCHED_DEBUG") this
+> Kconfig option was removed since CONFIG_SCHED_DEBUG was made unconditional
+> by patches preceding it.
+> 
+> Signed-off-by: Trevor Woerner <twoerner@gmail.com>
+> ---
 
-Yeah. I think I will remove the wakeup-source for now to avoid potential=20
-battery drain. Once I get more info on wake-gpio/low-power mode and test=20
-with users that tap-to-wake work as expected, it will be added. For now,=20
-this is not something expected to be working. Will send a v2 with=20
-updated commit message.
+[ ... ]
 
-Thank you,
-Joel Selvaraj
+>  arch/riscv/configs/nommu_k210_defconfig        | 1 -
+>  arch/riscv/configs/nommu_k210_sdcard_defconfig | 1 -
+>  arch/riscv/configs/nommu_virt_defconfig        | 1 -
 
-> Konrad
+[ ... ]
+
+Acked-by: Paul Walmsley <pjw@kernel.org>  # for arch/riscv
 
 
+- Paul
 
