@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-77879-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-77880-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [IPv6:2605:f480:58:1:0:1994:3:14])
-	by mail.lfdr.de (Postfix) with ESMTPS id C0151BED514
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 18 Oct 2025 19:24:34 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 279FCBED526
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 18 Oct 2025 19:25:40 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 804234E5C0C
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 18 Oct 2025 17:24:33 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id DCE763A58E4
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 18 Oct 2025 17:25:20 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2E890246788;
-	Sat, 18 Oct 2025 17:24:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8DE1F24DFF3;
+	Sat, 18 Oct 2025 17:25:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="XSYF+3Uu"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ipRY9stZ"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06AE91FDE01;
-	Sat, 18 Oct 2025 17:24:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64FA423D28B;
+	Sat, 18 Oct 2025 17:25:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760808271; cv=none; b=f3DKAfIJhTXbOPelA4mgsv6ji+emZC6ouUX/mGhlV4uvCo4hVyWExSMjJtwKDZ3oj5rWJKixhyejfs1dkodP3anGDEEIP3vlbLr+0E/Fcxe74WebxXbFJaK/3DIBR5lUeFHJfyoZVK6XK99zlK4xeM4GJqPxm2VySeV+EAZPfOo=
+	t=1760808318; cv=none; b=KsyqAKHLwtsRj03DRU0NqmQb1iIBiIUmBjERsqvmdaB7T5TQvANkP0RJcvXqtvYvpIhgtL8nzIwQeh2u0qGo9+QMJpAbuCAlcMKPtgO5AvK9Bvk6/DSr9i7cpfBoYWYmmJAO91GMkuTnnN0RZfp/HxPrgUd2WGc5WqX9nYEduC8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760808271; c=relaxed/simple;
-	bh=KsqONM8Uey1/4uUZWdJNiRLzHIhnk7XWl6ndenefG6w=;
+	s=arc-20240116; t=1760808318; c=relaxed/simple;
+	bh=z4vHxpxpkWuFoCTs1dQ2MdWCCtzI/93rJt9ff62jGQU=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=KlgC1O43rOYknL0iX+fZfiqlI0/gEVhgHG8rMQkm4h9taUK34kb3GL5F594YJFZ9cehK6502CffvQYc2LRkbIDl3ow7KOjvsTD6SYAxdkmZPcCW+SInnLcTT1rj+Qt546rfSWv09WUZlJsAs3jdjv+Yqb757h/wzpi4omQrIcTc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=XSYF+3Uu; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2775DC4CEF8;
-	Sat, 18 Oct 2025 17:24:26 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=B4uMZU0w6DvV3ksSs3sfSE4E5DFPIPjd9DE8cPGaJK2PMuCecPvCjqyPWkk23ywJ9WBPYbOoOxubUiqj/3xOwJAuoeiS/uB5s9xLIsyMoPDGevix8zAJO1oy2WNA3TkkMT4kR5LXxoOZaNzZx3OhY4SXDUq1UB4sBTiZVkSFNqA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ipRY9stZ; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72AABC4CEF8;
+	Sat, 18 Oct 2025 17:25:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1760808270;
-	bh=KsqONM8Uey1/4uUZWdJNiRLzHIhnk7XWl6ndenefG6w=;
+	s=k20201202; t=1760808317;
+	bh=z4vHxpxpkWuFoCTs1dQ2MdWCCtzI/93rJt9ff62jGQU=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=XSYF+3UuVGb5fC+GZqdsaXHIFMw8IoNjc00ILmTEVTlKjL13L9ajPYzyRR7Z/RO6j
-	 lZtKin5Y35BhdK61OG+Ocopac8tCG63/nsRgNNGMYkWGnueE24MajSbhKFbCrsOdeb
-	 1Bq66BBabq647Be3sT1XgKmA20sprHZFfRxMfakzH3sIi7Wd3tzQRwzkSvUrpeTwfg
-	 996vz6u9rmuvtL4oyY5TmPrJREOujYPlcrxhmZHvlKWzcWylj6ETyxkKzfyuxgjo8p
-	 AoNq52J4JnI2LO+qy+fjMCLo1oYze2evLWSRLWyq3JMcgdVEFN8fvWtrJ4v7afTZME
-	 733ZpybuREb4Q==
-Message-ID: <14213195-29fa-48d9-8fc4-ccdc9b6f7ecc@kernel.org>
-Date: Sat, 18 Oct 2025 19:24:25 +0200
+	b=ipRY9stZ583DOxdeJHYmLVS8ctRKeDHhDAphCZUlzpjn01CdkQFne0Qbbf9HcNeRv
+	 AP+OAd40c92zS2O4xfIh+I3+U8J4THo50nCXwnoDla79iIUHPGicGFSQiTEyj2+22O
+	 h3xr/SR/Kwt8xjR3UHi32kmltWYB2PwXAkVsDC+35cKQuE6SKPa1TMAnIkVjjMWwBb
+	 SV1CB0MkzvTgEvB7f2rtiY/1n8p0zQSNvjNX3KaqQsYkzNDD7kevaT+PYcbw16GFCE
+	 t/M5A1/qSKz9ul18R0HDTq3DkJZrTY+rxAHOhoKxoVCFiAsTepX6DKPUrD9P+YiFoe
+	 Pb+JeyUto8KDg==
+Message-ID: <911ae16a-1cfb-4efb-a19b-3094f2db4ceb@kernel.org>
+Date: Sat, 18 Oct 2025 19:25:12 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -53,8 +53,8 @@ User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH v2 2/3] misc: fastrpc: Add support for new DSP IOVA
  formatting
 To: Kumari Pallavi <kumari.pallavi@oss.qualcomm.com>,
- kpallavi@qti.qualcomm.com, srini@kernel.org, amahesh@qti.qualcomm.com,
- arnd@arndb.de, gregkh@linuxfoundation.org
+ Srinivas Kandagatla <srini@kernel.org>, kpallavi@qti.qualcomm.com,
+ amahesh@qti.qualcomm.com, arnd@arndb.de, gregkh@linuxfoundation.org
 Cc: quic_bkumar@quicinc.com, ekansh.gupta@oss.qualcomm.com,
  linux-kernel@vger.kernel.org, quic_chennak@quicinc.com,
  dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
@@ -62,6 +62,8 @@ Cc: quic_bkumar@quicinc.com, ekansh.gupta@oss.qualcomm.com,
  ktadakam@qti.qualcomm.com
 References: <20251015045702.3022060-1-kumari.pallavi@oss.qualcomm.com>
  <20251015045702.3022060-3-kumari.pallavi@oss.qualcomm.com>
+ <75433294-4c47-4f4f-9de2-ee29af01f021@kernel.org>
+ <9e59d1dc-5805-4cd2-9a65-f3f0f45526d0@oss.qualcomm.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -107,44 +109,20 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  jWt87ecuHlpL3uuQ0ZZNWqHgZoQLXoqC2ZV5KrtKWb/jyiFX/sxSrodALf0zf+tfHv0FZWT2
  zHjUqd0t4njD/UOsuIMOQn4Ig0SdivYPfZukb5cdasKJukG1NOpbW7yRNivaCnfZz6dTawXw
  XRIV/KDsHQiyVxKvN73bThKhONkcX2LWuD928tAR6XMM2G5ovxLe09vuOzzfTWQDsm++9UKF a/A=
-In-Reply-To: <20251015045702.3022060-3-kumari.pallavi@oss.qualcomm.com>
+In-Reply-To: <9e59d1dc-5805-4cd2-9a65-f3f0f45526d0@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 15/10/2025 06:57, Kumari Pallavi wrote:
->  static int fastrpc_rpmsg_probe(struct rpmsg_device *rpdev)
->  {
->  	struct device *rdev = &rpdev->dev;
-> @@ -2291,6 +2319,22 @@ static int fastrpc_rpmsg_probe(struct rpmsg_device *rpdev)
->  	const char *domain;
->  	bool secure_dsp;
->  	unsigned int vmids[FASTRPC_MAX_VMIDS];
-> +	struct device_node *root;
-> +	const struct of_device_id *match;
-> +	const struct fastrpc_soc_data *soc_data = NULL;
-> +
-> +	root = of_find_node_by_path("/");
-> +	if (!root)
-> +		return -ENODEV;
-> +
-> +	match = of_match_node(qcom_soc_match_table, root);
-
-This is really odd way of doing things. You want to check machine, not
-some node. Use proper API for that.
-
-OTOH, I don't understand why you are checking machine in the first
-place. If your device is different, then please follow writing bindings
-- it explains exactly this case here.
-
-> +	of_node_put(root);
-> +	if (!match || !match->data) {
-> +		 soc_data = &default_soc_data;
-> +		 dev_dbg(rdev, "no compatible SoC found at root node\n");
-> +	} else {
-> +		 soc_data = match->data;
-> +	}
->  
-
+On 15/10/2025 12:47, Kumari Pallavi wrote:
+>>   /**
+>>    * of_machine_is_compatible - Test root of device tree for a given
+>> compatible value
+>>
+>> ------------------------>cut<-----------------
+>>
+> 
+> Ack.
+No. Read carefully other comments.
 
 Best regards,
 Krzysztof
