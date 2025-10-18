@@ -1,129 +1,117 @@
-Return-Path: <linux-arm-msm+bounces-77880-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-77881-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 279FCBED526
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 18 Oct 2025 19:25:40 +0200 (CEST)
+Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [142.0.200.124])
+	by mail.lfdr.de (Postfix) with ESMTPS id A1555BED884
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 18 Oct 2025 21:13:07 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id DCE763A58E4
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 18 Oct 2025 17:25:20 +0000 (UTC)
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 970EF4E3085
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 18 Oct 2025 19:13:06 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8DE1F24DFF3;
-	Sat, 18 Oct 2025 17:25:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1BC9827B4FA;
+	Sat, 18 Oct 2025 19:13:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ipRY9stZ"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="NgCMvTtv"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.13])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64FA423D28B;
-	Sat, 18 Oct 2025 17:25:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 765E925F973;
+	Sat, 18 Oct 2025 19:13:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.13
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760808318; cv=none; b=KsyqAKHLwtsRj03DRU0NqmQb1iIBiIUmBjERsqvmdaB7T5TQvANkP0RJcvXqtvYvpIhgtL8nzIwQeh2u0qGo9+QMJpAbuCAlcMKPtgO5AvK9Bvk6/DSr9i7cpfBoYWYmmJAO91GMkuTnnN0RZfp/HxPrgUd2WGc5WqX9nYEduC8=
+	t=1760814783; cv=none; b=gm8yDiYIqavqMgr7DfYQZ+lrd79karewgGBSRGotMs8rqJe710VtPAa/H9FVGjccdH5O/DtDLq7Y7bMymBUmclgocPKML9E9U6guHT4/RykJH888BKKqRcIPon93hOWEHbjqHvRKf81PfhAVmIzdPuKQEITlMNxLZJramayEZ6s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760808318; c=relaxed/simple;
-	bh=z4vHxpxpkWuFoCTs1dQ2MdWCCtzI/93rJt9ff62jGQU=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=B4uMZU0w6DvV3ksSs3sfSE4E5DFPIPjd9DE8cPGaJK2PMuCecPvCjqyPWkk23ywJ9WBPYbOoOxubUiqj/3xOwJAuoeiS/uB5s9xLIsyMoPDGevix8zAJO1oy2WNA3TkkMT4kR5LXxoOZaNzZx3OhY4SXDUq1UB4sBTiZVkSFNqA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ipRY9stZ; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72AABC4CEF8;
-	Sat, 18 Oct 2025 17:25:14 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1760808317;
-	bh=z4vHxpxpkWuFoCTs1dQ2MdWCCtzI/93rJt9ff62jGQU=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=ipRY9stZ583DOxdeJHYmLVS8ctRKeDHhDAphCZUlzpjn01CdkQFne0Qbbf9HcNeRv
-	 AP+OAd40c92zS2O4xfIh+I3+U8J4THo50nCXwnoDla79iIUHPGicGFSQiTEyj2+22O
-	 h3xr/SR/Kwt8xjR3UHi32kmltWYB2PwXAkVsDC+35cKQuE6SKPa1TMAnIkVjjMWwBb
-	 SV1CB0MkzvTgEvB7f2rtiY/1n8p0zQSNvjNX3KaqQsYkzNDD7kevaT+PYcbw16GFCE
-	 t/M5A1/qSKz9ul18R0HDTq3DkJZrTY+rxAHOhoKxoVCFiAsTepX6DKPUrD9P+YiFoe
-	 Pb+JeyUto8KDg==
-Message-ID: <911ae16a-1cfb-4efb-a19b-3094f2db4ceb@kernel.org>
-Date: Sat, 18 Oct 2025 19:25:12 +0200
+	s=arc-20240116; t=1760814783; c=relaxed/simple;
+	bh=yO1VZBeYGqh+ktpk0ausSXki7r/iZv/xg2OTt1f7N7A=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=RuJbbwJbf7xuVbBj6esqEWfxCVrdNfgU8vjS8Ilsae7bkAAFhvZ/L9Pr4A/yMfh0ww/KYTESRNbwAQhQ3RkhwkqfnKHdMw7ywAv2pQaxP3TWwN8iCH8+yJyQojU9cYekrUatdcmcuA+olYOLZ2V98L6QnYpqcoruMaOXI/p9um8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=NgCMvTtv; arc=none smtp.client-ip=192.198.163.13
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1760814781; x=1792350781;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=yO1VZBeYGqh+ktpk0ausSXki7r/iZv/xg2OTt1f7N7A=;
+  b=NgCMvTtvjrEHvVyVqBKWfpGHSaMo66RlcOtSLucNGIj7mP5GgHNwuobU
+   Q65HPnu0tZeqAQjDxuyka0JmbTujOYh4j0CJgNTBdXza0xAnrbEVnm+WI
+   bqtHc3CNym1WPcfG+9h9r3HZSP+Uzt6fMLg+J0AOYlGhJVgU1ZMlpiFGE
+   wMYuk0HoA8qmHtpnMh+V7HmatHgCP9DO7Mc8uQ0/vmaNkmGzB5BU7yO4W
+   QjP+uHGhHnxpHkbbYutLRpXv7PRdnpTbVOeAD4SNjKR2GyH6GvDpID6cp
+   KzA+BFnkFwh21N07yJ4o5+CSkb8Rb1gm+uCTzWHzNXdykCig40UvFee5b
+   A==;
+X-CSE-ConnectionGUID: d7qzkfAjTaqmUvxWkkLH/A==
+X-CSE-MsgGUID: eFoKicdcQuym+2cr5QyYMQ==
+X-IronPort-AV: E=McAfee;i="6800,10657,11586"; a="65616194"
+X-IronPort-AV: E=Sophos;i="6.19,239,1754982000"; 
+   d="scan'208";a="65616194"
+Received: from orviesa008.jf.intel.com ([10.64.159.148])
+  by fmvoesa107.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 18 Oct 2025 12:12:58 -0700
+X-CSE-ConnectionGUID: LysKdMlWQaqV0EAfAFX4RQ==
+X-CSE-MsgGUID: paAcxxzJRnCbHOe9BkCKOw==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.19,239,1754982000"; 
+   d="scan'208";a="183007278"
+Received: from pgcooper-mobl3.ger.corp.intel.com (HELO ashevche-desk.local) ([10.245.244.194])
+  by orviesa008-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 18 Oct 2025 12:12:52 -0700
+Received: from andy by ashevche-desk.local with local (Exim 4.98.2)
+	(envelope-from <andriy.shevchenko@intel.com>)
+	id 1vACMD-00000000xKO-0O5g;
+	Sat, 18 Oct 2025 22:12:49 +0300
+Date: Sat, 18 Oct 2025 22:12:48 +0300
+From: Andy Shevchenko <andriy.shevchenko@intel.com>
+To: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Cc: sboyd@kernel.org, jic23@kernel.org, dlechner@baylibre.com,
+	nuno.sa@analog.com, andy@kernel.org, arnd@arndb.de,
+	gregkh@linuxfoundation.org, srini@kernel.org, vkoul@kernel.org,
+	kishon@kernel.org, sre@kernel.org, krzysztof.kozlowski@linaro.org,
+	u.kleine-koenig@baylibre.com, linux-arm-msm@vger.kernel.org,
+	linux-iio@vger.kernel.org, linux-kernel@vger.kernel.org,
+	linux-phy@lists.infradead.org, linux-pm@vger.kernel.org,
+	kernel@collabora.com, wenst@chromium.org, casey.connolly@linaro.org,
+	AngeloGioacchino Del Regno <angleogioacchino.delregno@collabora.com>
+Subject: Re: [PATCH v6 1/8] spmi: Print error status with %pe format
+Message-ID: <aPPmsBHnmKQ1sa3O@ashevche-desk.local>
+References: <20251016104402.338246-1-angelogioacchino.delregno@collabora.com>
+ <20251016104402.338246-2-angelogioacchino.delregno@collabora.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 2/3] misc: fastrpc: Add support for new DSP IOVA
- formatting
-To: Kumari Pallavi <kumari.pallavi@oss.qualcomm.com>,
- Srinivas Kandagatla <srini@kernel.org>, kpallavi@qti.qualcomm.com,
- amahesh@qti.qualcomm.com, arnd@arndb.de, gregkh@linuxfoundation.org
-Cc: quic_bkumar@quicinc.com, ekansh.gupta@oss.qualcomm.com,
- linux-kernel@vger.kernel.org, quic_chennak@quicinc.com,
- dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
- jingyi.wang@oss.qualcomm.com, aiqun.yu@oss.qualcomm.com,
- ktadakam@qti.qualcomm.com
-References: <20251015045702.3022060-1-kumari.pallavi@oss.qualcomm.com>
- <20251015045702.3022060-3-kumari.pallavi@oss.qualcomm.com>
- <75433294-4c47-4f4f-9de2-ee29af01f021@kernel.org>
- <9e59d1dc-5805-4cd2-9a65-f3f0f45526d0@oss.qualcomm.com>
-From: Krzysztof Kozlowski <krzk@kernel.org>
-Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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 a/A=
-In-Reply-To: <9e59d1dc-5805-4cd2-9a65-f3f0f45526d0@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20251016104402.338246-2-angelogioacchino.delregno@collabora.com>
+Organization: Intel Finland Oy - BIC 0357606-4 - c/o Alberga Business Park, 6
+ krs, Bertel Jungin Aukio 5, 02600 Espoo
 
-On 15/10/2025 12:47, Kumari Pallavi wrote:
->>   /**
->>    * of_machine_is_compatible - Test root of device tree for a given
->> compatible value
->>
->> ------------------------>cut<-----------------
->>
-> 
-> Ack.
-No. Read carefully other comments.
+On Thu, Oct 16, 2025 at 12:43:55PM +0200, AngeloGioacchino Del Regno wrote:
+> Instead of printing just a number, use the %pe format for error
+> status, increasing readability of error prints.
 
-Best regards,
-Krzysztof
+...
+
+>  	err = device_add(&sdev->dev);
+>  	if (err < 0) {
+> -		dev_err(&sdev->dev, "Can't add %s, status %d\n",
+> -			dev_name(&sdev->dev), err);
+> +		dev_err(&sdev->dev, "Can't add %s, status %pe\n",
+> +			dev_name(&sdev->dev), ERR_PTR(err));
+
+LOL, I only now noticed that the parameter to dev_err() and dev_name() is the
+same. For christ's sake, why do we need dev_name()?
+
+>  		goto err_device_add;
+>  	}
+
+-- 
+With Best Regards,
+Andy Shevchenko
+
+
 
