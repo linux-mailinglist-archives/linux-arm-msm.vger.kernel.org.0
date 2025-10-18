@@ -1,125 +1,110 @@
-Return-Path: <linux-arm-msm+bounces-77877-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-77878-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ams.mirrors.kernel.org (ams.mirrors.kernel.org [213.196.21.55])
-	by mail.lfdr.de (Postfix) with ESMTPS id A3D2CBED3F6
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 18 Oct 2025 18:41:32 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9E244BED4ED
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 18 Oct 2025 19:21:59 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ams.mirrors.kernel.org (Postfix) with ESMTPS id 285BB34C620
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 18 Oct 2025 16:41:32 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id B410D5E99D7
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 18 Oct 2025 17:19:09 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9D06A24677A;
-	Sat, 18 Oct 2025 16:41:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 40832257435;
+	Sat, 18 Oct 2025 17:18:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=protonmail.com header.i=@protonmail.com header.b="k0Ut4Lyc"
+	dkim=pass (2048-bit key) header.d=mainlining.org header.i=@mainlining.org header.b="eRn7YjYp";
+	dkim=permerror (0-bit key) header.d=mainlining.org header.i=@mainlining.org header.b="nb8NctA8"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-43166.protonmail.ch (mail-43166.protonmail.ch [185.70.43.166])
+Received: from mail.mainlining.org (mail.mainlining.org [5.75.144.95])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 185B4217F33;
-	Sat, 18 Oct 2025 16:41:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.70.43.166
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70426252900;
+	Sat, 18 Oct 2025 17:18:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=5.75.144.95
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760805688; cv=none; b=nP12qdAjSag1ah2DQyQfscdql81CB6uQ52EttpcorwSLB3HF39azlwl9GubkmFb5PAS50miwfJdeQF6k9JMMJOS6qWLfczQqkX7It7AvlNGYnAaTG5ec9EzIDvvYB19HPSwuMy/WQ7rTO1m/ft2P29cDoKyQOpKIJdZ/OthltNs=
+	t=1760807934; cv=none; b=FPBrW5lCU11OTCqos/4RjtMUTCr3d8Or5aud3PEBTLKtJU8RZahTIWfh0GSpQAk7jQUkX9kxVJYQ4oKR4q2r+XhuGDs5IIHEqNbroTKBzHkPjDpLax2E21AQRIgLUJ9AJQwKWhzOWm9f6pzVSuccily8V4B3k2w43xq2sjaBp+0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760805688; c=relaxed/simple;
-	bh=TcQFWVZGs08q/95sXCl8FOxL8CeUh4aHnSknN21+alc=;
-	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=MoO2tvSpSiGlbcWAjN1eLRAND2kCBPAtWeKx517H+a81mLc0NCeCX6bSYIq2310OLeW5w2YT/nY+8N1VMvbazqpowrUCVyAKRcxPn+2oHD+7JHvtuefC7+MX4Zdd6ClzUCa+p8OTZA2CZbjKGNCGXC7KwkvtNei791+qqC3sj9U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=protonmail.com; spf=pass smtp.mailfrom=protonmail.com; dkim=pass (2048-bit key) header.d=protonmail.com header.i=@protonmail.com header.b=k0Ut4Lyc; arc=none smtp.client-ip=185.70.43.166
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=protonmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=protonmail.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=protonmail.com;
-	s=protonmail3; t=1760805682; x=1761064882;
-	bh=TcQFWVZGs08q/95sXCl8FOxL8CeUh4aHnSknN21+alc=;
-	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
-	 Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
-	 Message-ID:BIMI-Selector;
-	b=k0Ut4LycV//jYlWaBMAJ2hJ8M5LPwV7IhEgdYXu7kaePsIzKfZXMOgK80sdAk9BBO
-	 SNjUVe1Os7HeLVHr8e2nny4qK002WgWpSHm45f1bPEvTkzQZ2aiqoO7CGwBlyF7pmw
-	 DOi7pfWbV8vZ9J+wiagJH7NtPiFL6hP64egxmGqqx6RXoRmAdw4bnA7Ykr2GqdoCQt
-	 ps0FiehroiVMdDqIotmq0mwgst4q3eiqHxrukqTUadXqRNCqBoiVHNFZUWFMQ3C9Rt
-	 6+4ocmLZhYXp5ry1D7aHHyJNWigcANkQwHnMzFvQgYoiynmMPKqW518f9BitSCc3Er
-	 UcvBNInyV7OBA==
-Date: Sat, 18 Oct 2025 16:41:17 +0000
-To: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-From: cristian_ci <cristian_ci@protonmail.com>
-Cc: "~postmarketos/upstreaming@lists.sr.ht" <~postmarketosupstreaming@lists.sr.ht>, "cristian_ci@protonmail.com" <cristian_ci@protonmail.com>, "devicetree@vger.kernel.org" <devicetree@vger.kernel.org>, "linux-arm-kernel@lists.infradead.org" <linux-arm-kernel@lists.infradead.org>, "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>, "linux-mediatek@lists.infradead.org" <linux-mediatek@lists.infradead.org>, "matthias.bgg@gmail.com" <matthias.bgg@gmail.com>, "phone-devel@vger.kernel.org" <phone-devel@vger.kernel.org>
-Subject: Re: [PATCH 00/10] ARM: Add support for yarisxl mt6582 board
-Message-ID: <lOMHa6mcw10H8qfGsi25ljIEyIsio6vgGzJvT9FXWc_B4uI2kpes8OP2z_2VqnkVvQWwmQUInen4YOGg92ZgN8vbZDc1KuWNvwxjFIpBhgU=@protonmail.com>
-In-Reply-To: <6657bfa7-9a6e-49a1-890f-81cf655940a7@collabora.com>
-References: <20250920-mt6582-v1-0-b887720f577d@protonmail.com> <6657bfa7-9a6e-49a1-890f-81cf655940a7@collabora.com>
-Feedback-ID: 27475468:user:proton
-X-Pm-Message-ID: 7710293a5ab96e00a613212a51e9b751d2db05ca
+	s=arc-20240116; t=1760807934; c=relaxed/simple;
+	bh=mZDIfCjgW+4CuS/ZjYde3Fi6Ww9P4szyaVI2r1EcYxU=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=sCLG0fPMV1wJeKYS5RPTjM8m5k8HIt/8+gcJITn5bNQ7CM3eakU2I9YOnLA8yYD4vS9qUX67HRCj4YkN6OwBtjbmioYwSb62lg04RluaQW3/+KMcKqkFNTj0WOr4unkfA5z+R9QQoU6Pab4vIs5tqNwtT53s8jaV51o1ADfxBuc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=mainlining.org; spf=pass smtp.mailfrom=mainlining.org; dkim=pass (2048-bit key) header.d=mainlining.org header.i=@mainlining.org header.b=eRn7YjYp; dkim=permerror (0-bit key) header.d=mainlining.org header.i=@mainlining.org header.b=nb8NctA8; arc=none smtp.client-ip=5.75.144.95
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=mainlining.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=mainlining.org
+DKIM-Signature: v=1; a=rsa-sha256; s=202507r; d=mainlining.org; c=relaxed/relaxed;
+	h=From:To:Subject:Date:Message-ID; t=1760807922; bh=VWGBpk/Pb1PaC49QZbcNZ7f
+	NBul+/e7qAHsiMPGVHCE=; b=eRn7YjYp5es+fUVRICoOgNkZkmkzcy+f2ZAltmIEzDsiKird8q
+	GzLQr1Q9CGx4ge5vte0AYUlpfS4YppQfLf0S21AuQqrzHXWzCIlFIrMrcytHCap0AyZ5opnxuyG
+	npCx7eImRrqKQL3pf05wr7NRCBLxqVkmCihJyxOzgATAlqSuJVGBLzUHO0Z4+3tSeV9u5tThU9u
+	WOhZHZNN5T6sBLjGRtMgRWiujaqj0Z5WgGxdEFJTGtYBNZSb2bBd7Ca+r38d7cCDxRX4RHXMaL4
+	PqHrrnMTsetNViwGVOUi6n5CMlYeboI/p0eMw4I5GrXR+/g3G3LdHYmTpVHxSLOhnXw==;
+DKIM-Signature: v=1; a=ed25519-sha256; s=202507e; d=mainlining.org; c=relaxed/relaxed;
+	h=From:To:Subject:Date:Message-ID; t=1760807922; bh=VWGBpk/Pb1PaC49QZbcNZ7f
+	NBul+/e7qAHsiMPGVHCE=; b=nb8NctA8d0rcCiqs3o4N3Q8A4o8nxYvQcx20+iCuxbjD9mmZFN
+	BaadwWPGOqwotjusJqsLQfNL2+P/7d3iZJDw==;
+Message-ID: <3c4b2915-6bf0-4067-966a-8fb13a81eed7@mainlining.org>
+Date: Sat, 18 Oct 2025 20:18:26 +0300
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/2] dt-bindings: remoteproc: qcom: adsp: Add SDM660 CDSP
+ compatible
+To: Krzysztof Kozlowski <krzk@kernel.org>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Mathieu Poirier <mathieu.poirier@linaro.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Manivannan Sadhasivam <mani@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20251018-qcom-sdm660-cdsp-v1-0-042e283db29b@mainlining.org>
+ <20251018-qcom-sdm660-cdsp-v1-1-042e283db29b@mainlining.org>
+ <57f5083a-cfe3-4a2a-9d0b-fa953b8db52e@kernel.org>
+Content-Language: ru-RU, en-US
+From: Nickolay Goppen <setotau@mainlining.org>
+In-Reply-To: <57f5083a-cfe3-4a2a-9d0b-fa953b8db52e@kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-On Monday, September 22nd, 2025 at 13:05, AngeloGioacchino Del Regno <angel=
-ogioacchino.delregno@collabora.com> wrote:
 
-> Il 20/09/25 20:23, Cristian Cozzolino via B4 Relay ha scritto:
->=20
-> > This series adds support for Alcatel Pop C7 (OT-7041D) smartphone
-> > board, named yarisxl, based on MT6582 SoC. It also includes some
-> > preliminary patches. More in detail:
-> > - patches 1 and 2 add support for mt6582 to platform code
-> > (verified by looking at generic mt6582 downstream source code)
-> > - patches 3-6 do some maintenance work to mt6582.dtsi
-> > (I was unsure if squashing timer node patches into one)
-> > - patches 7 and 8 add devicetree and dt-bindings support for yarisxl
->=20
->=20
-> That's simply great! Nice cleanup and nice addition - the only thing I ca=
-n say here
-> is that seeing simple-framebuffer is a pity, and that I hope that your pl=
-ans are to
-> continue with systimer, clocks, spi, i2c, apdma, mediatek-drm components,=
- etc :-)
->=20
-> In the meanwhile, for the whole series
->=20
-> Reviewed-by: AngeloGioacchino Del Regno angelogioacchino.delregno@collabo=
-ra.com
->=20
->=20
-> Keep up the good work!
->=20
-> Cheers,
-> Angelo
->=20
+18.10.2025 18:42, Krzysztof Kozlowski пишет:
+> On 18/10/2025 12:57, Nickolay Goppen wrote:
+>> Add compatible for the compute DSP remoteproc found in SDM660.
+>>
+>> Signed-off-by: Nickolay Goppen <setotau@mainlining.org>
+>> ---
+>>   Documentation/devicetree/bindings/remoteproc/qcom,adsp.yaml | 2 ++
+>>   1 file changed, 2 insertions(+)
+>>
+>> diff --git a/Documentation/devicetree/bindings/remoteproc/qcom,adsp.yaml b/Documentation/devicetree/bindings/remoteproc/qcom,adsp.yaml
+>> index 661c2b425da3..19d16c97d8a4 100644
+>> --- a/Documentation/devicetree/bindings/remoteproc/qcom,adsp.yaml
+>> +++ b/Documentation/devicetree/bindings/remoteproc/qcom,adsp.yaml
+>> @@ -24,6 +24,7 @@ properties:
+>>         - qcom,msm8998-adsp-pas
+>>         - qcom,msm8998-slpi-pas
+>>         - qcom,sdm660-adsp-pas
+>> +      - qcom,sdm660-cdsp-pas
+>>         - qcom,sdm845-adsp-pas
+>>         - qcom,sdm845-cdsp-pas
+>>         - qcom,sdm845-slpi-pas
+>> @@ -178,6 +179,7 @@ allOf:
+>>                 - qcom,msm8998-adsp-pas
+>>                 - qcom,msm8998-slpi-pas
+>>                 - qcom,sdm660-adsp-pas
+> Where is the constrain for everything else? clocks, interrupts and domains?
+I think that cDSP and aDSP compatible should be both added to the "xo" 
+clock, interrupts and "cx" power-domain constrains, but I'm not sure 
+about that.
+> Best regards,
+> Krzysztof
 
-Hi (sorry for being late)!
-It'd be nice add more support for this old platform, though I've to say tha=
-t I've got inspiration from MT6572 patch series and this series is mostly b=
-ased on that work.
-BTW, I've tested this series together with mt6582 u-boot port (installed as=
- 2nd stage bootloader), always derived from mt65xx u-boot work.
-Since original port has been tested on mt6580 and mt6572, it's not too much=
- hard making a port for sibling SoCs like mt6582 (done) and mt6592.
-(I've also managed to boot successfully a 1st stage bootloader mt6582 u-boo=
-t port but I've not yet tried loading linux - and testing these patches - w=
-ith that).
-AS mt65xx platforms share many similarities, I hope more people could take =
-part and extend mainline linux hardware support for mt6580, mt6572 and mt65=
-82 as you wish.
+-- 
+Best regards,
+Nickolay
 
-In the meantime,
-
-Thank You very nuch and=20
-
-Best Regards,
-
-Cristian.
-
-P.S. I've made a mistake about cover letter by making reference to a number=
- of eight patches, while actually there are ten patches. BTW, that's not im=
-portant at this point.
 
