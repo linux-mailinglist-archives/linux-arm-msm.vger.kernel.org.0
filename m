@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-77936-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-77937-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id E8D25BEEA45
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 19 Oct 2025 18:50:55 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id D2120BEEA91
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 19 Oct 2025 19:11:49 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 9ED681898804
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 19 Oct 2025 16:51:19 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 805CF3E4852
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 19 Oct 2025 17:11:48 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DCA3C205E25;
-	Sun, 19 Oct 2025 16:50:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 28B901F12E9;
+	Sun, 19 Oct 2025 17:11:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="i8ukShRh"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="h5rPwysQ"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA74C1D63D8;
-	Sun, 19 Oct 2025 16:50:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDC99190473;
+	Sun, 19 Oct 2025 17:11:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760892651; cv=none; b=CgVskSy6Ki5/y3drRDgEB5kg+pdmZB4mVEGfFJb/ixubiMyWwfBdJrz7ShkwIbVcTOdTtUrvQMvWsm6J4FWiafGhPuMUFMDYUfzmwFC35eeFlRkgoFqrl+2MiopIKZOgpXA5JY7LEqxf0ldpEKBKrq8aaEc8/Nt8CIoYfw+BbwM=
+	t=1760893906; cv=none; b=fjw6L6G4AsYejGBucmIARuoaFJcvJx1oOPDf39p1+Y/XA8FHBcNaugSwKgrfseQf3cTLfFbnJkQQK4xgLCnrWNxRpYnZdISn9Pc3q65ldm0S7J7veFGWJMyjaeYgINFDN2E7c5x8mZgbCOvFPWiuD5m9QEyG4ExJHYyWy7ox3UE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760892651; c=relaxed/simple;
-	bh=D8IOfkJIFuCmakZ8zwJubM8ycAYWmXIGTJLnWYh2HZ0=;
+	s=arc-20240116; t=1760893906; c=relaxed/simple;
+	bh=pGSeByPyjXU0xF/GT6nI9BVPEVJ+TrjfUe8CJ/Y5sO4=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=OIfFaBaPHJSuDjQ0d8E+Osc/dfHwkgn6vNvSG7x77E7dL+lmxStOfWDGQ0loZmHJ6j9YFpZ2P2B1hGWebo/mzGIvzj5nah8b1omcVHHZJO1c57yD+JydXNlpVa+kO4hUiTGOFlZIuc3RUChiMEubWZJjjm8x3kwOlMBXjJUFYKM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=i8ukShRh; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8449CC4CEE7;
-	Sun, 19 Oct 2025 16:50:48 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=MC8sn4WJAMNx56B12E/PE69DklfvYGh6eNpzUFbOjN8Oy7qaw9gvF5PtwhMEm5b6TxZS/nekJvhL7MX37ZGsj9qRTgl5EPO3RWsZPmtHwYm3QsMFk5Ob1skrgxt27Fs5eFVHmWRg/bTnOdAl+3veTNDSM4PiTGcJ31b/1iWMax8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=h5rPwysQ; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 282FCC4CEE7;
+	Sun, 19 Oct 2025 17:11:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1760892651;
-	bh=D8IOfkJIFuCmakZ8zwJubM8ycAYWmXIGTJLnWYh2HZ0=;
+	s=k20201202; t=1760893905;
+	bh=pGSeByPyjXU0xF/GT6nI9BVPEVJ+TrjfUe8CJ/Y5sO4=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=i8ukShRh4rDoIWmy/eeDesOkfvi6x/onQFM9FMUInyqJi5iCdwSUThGnQACgNdX2X
-	 ZbzReqkUeiyHMh2lvG+Ox41rX4M8eqPlnmzTz2ZkvcNc0gmemdB/HpAAwgcvZk8GjE
-	 OIkQr229Sm9CL/RzFlF0DeUxEJ10OlMlobqBD83oyH6i2Z2/RqNgnSDSNq8AWxy/DE
-	 M+y719B67qxiSViXEeCwPdxZ/CBXNWAE2+v7xKQReopRmP6QR1Vz3TrsYxme8XkNJ3
-	 5we8xjfjajmwn+2F92/e0lDzuow0G6Hn8vs9GbBIJcv1Yj1XeFK9t1IfJt+x3HAKR8
-	 4eqzTAruSWIvQ==
-Message-ID: <af73c70b-7180-427d-9f52-558685093613@kernel.org>
-Date: Sun, 19 Oct 2025 18:50:46 +0200
+	b=h5rPwysQfQG1dM5SNU2O0ilf16LNEq3O5m+hOE+UZ0Jzn2OVfmwCcwLVIe0zZc94h
+	 XJbYhXvbLLqpY9d1otkGjlutVBoLOf1mj6AoIanXTirrDWfHI1qI9x83/56YNF6KkZ
+	 yzfVN5LV90itVII7jZ+tnrnee/8ZJZURdF/qIaKp5YOVniPJjQEzU9/j9c7pA/sG05
+	 ozqeYF5IY/lfhPta+FiDH7lxmiyCzSAVmurCK6/AmKfnusWIu4BUn+04UngPXldvOp
+	 zhIXUFHxIzHXqGUVbJHpRWq5FwPtzFzBNffRUWxZpEZIUg+pQvASZ1mTlKDvxR2Ayr
+	 OSZGpDI2S65BA==
+Message-ID: <13d1491a-2c5a-467d-bd55-01c0603a4b81@kernel.org>
+Date: Sun, 19 Oct 2025 19:11:38 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,18 +50,24 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 2/3] dt-bindings: remoteproc: qcom: adsp: Add SDM660
- CDSP compatible
-To: Nickolay Goppen <setotau@mainlining.org>,
- Bjorn Andersson <andersson@kernel.org>,
- Mathieu Poirier <mathieu.poirier@linaro.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Manivannan Sadhasivam <mani@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- ~postmarketos/upstreaming@lists.sr.ht, linux@mainlining.org
-References: <20251019-qcom-sdm660-cdsp-v2-0-0d3bcb468de0@mainlining.org>
- <20251019-qcom-sdm660-cdsp-v2-2-0d3bcb468de0@mainlining.org>
+Subject: Re: [PATCH v4 2/3] arm64: dts: qcom: Add DisplayPort and QMP USB3DP
+ PHY for SM6150
+To: xiangxu.yin@oss.qualcomm.com, Rob Clark <robin.clark@oss.qualcomm.com>,
+ Dmitry Baryshkov <lumag@kernel.org>, Abhinav Kumar
+ <abhinav.kumar@linux.dev>, Jessica Zhang <jessica.zhang@oss.qualcomm.com>,
+ Sean Paul <sean@poorly.run>, Marijn Suijten <marijn.suijten@somainline.org>,
+ David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+ Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+ Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>,
+ Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
+ Conor Dooley <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+ freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org, fange.zhang@oss.qualcomm.com,
+ yongxing.mou@oss.qualcomm.com, li.liu@oss.qualcomm.com
+References: <20251015-add-displayport-support-to-qcs615-devicetree-v4-0-aa2cb8470e9d@oss.qualcomm.com>
+ <20251015-add-displayport-support-to-qcs615-devicetree-v4-2-aa2cb8470e9d@oss.qualcomm.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -107,17 +113,35 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  jWt87ecuHlpL3uuQ0ZZNWqHgZoQLXoqC2ZV5KrtKWb/jyiFX/sxSrodALf0zf+tfHv0FZWT2
  zHjUqd0t4njD/UOsuIMOQn4Ig0SdivYPfZukb5cdasKJukG1NOpbW7yRNivaCnfZz6dTawXw
  XRIV/KDsHQiyVxKvN73bThKhONkcX2LWuD928tAR6XMM2G5ovxLe09vuOzzfTWQDsm++9UKF a/A=
-In-Reply-To: <20251019-qcom-sdm660-cdsp-v2-2-0d3bcb468de0@mainlining.org>
+In-Reply-To: <20251015-add-displayport-support-to-qcs615-devicetree-v4-2-aa2cb8470e9d@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 19/10/2025 16:20, Nickolay Goppen wrote:
-> Add compatible for the compute DSP remoteproc found in SDM660.
+On 15/10/2025 03:53, Xiangxu Yin via B4 Relay wrote:
+> From: Xiangxu Yin <xiangxu.yin@oss.qualcomm.com>
 > 
-> Signed-off-by: Nickolay Goppen <setotau@mainlining.org>
+> Introduce DisplayPort controller node and associated QMP USB3-DP PHY
+> for SM6150 SoC. Add data-lanes property to the DP endpoint and update
+> clock assignments for proper DP integration.
+> 
+> Signed-off-by: Xiangxu Yin <xiangxu.yin@oss.qualcomm.com>
 > ---
+>  arch/arm64/boot/dts/qcom/sm6150.dtsi | 113 ++++++++++++++++++++++++++++++++++-
+>  1 file changed, 111 insertions(+), 2 deletions(-)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/sm6150.dtsi b/arch/arm64/boot/dts/qcom/sm6150.dtsi
+> index 6128d8c48f9c0807ac488ddac3b2377678e8f8c3..36a536cef99a095938f3e18a9b5e7825308ca426 100644
+> --- a/arch/arm64/boot/dts/qcom/sm6150.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sm6150.dtsi
+> @@ -17,6 +17,7 @@
+>  #include <dt-bindings/power/qcom-rpmpd.h>
+>  #include <dt-bindings/power/qcom,rpmhpd.h>
+>  #include <dt-bindings/soc/qcom,rpmh-rsc.h>
+> +#include <dt-bindings/phy/phy-qcom-qmp.h>
 
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+
+This is ordered, don't break it.
+
 
 Best regards,
 Krzysztof
