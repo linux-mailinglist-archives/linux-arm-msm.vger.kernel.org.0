@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-77935-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-77936-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 06F13BEEA39
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 19 Oct 2025 18:50:40 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id E8D25BEEA45
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 19 Oct 2025 18:50:55 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 8639B189859F
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 19 Oct 2025 16:51:03 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 9ED681898804
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 19 Oct 2025 16:51:19 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id EAD431EB5C2;
-	Sun, 19 Oct 2025 16:50:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id DCA3C205E25;
+	Sun, 19 Oct 2025 16:50:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="FxDf0Hew"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="i8ukShRh"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5EB1354AD4;
-	Sun, 19 Oct 2025 16:50:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA74C1D63D8;
+	Sun, 19 Oct 2025 16:50:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760892634; cv=none; b=ei++PqKHZIGsPBjVWqgJ3hvhUCORysFR9qgDSHJ05OZ74TMtqhZDmjFBWmcFvVxZx6BAliaxZ7XMvZG7E9szWdUyKiRhi9SsYAW9LjZHtA2C0bW//+3VojANvDljXigM8PBMGwEhRfYNDoonBjhOC1yZSSYDxZdpq+TBnUIgqNM=
+	t=1760892651; cv=none; b=CgVskSy6Ki5/y3drRDgEB5kg+pdmZB4mVEGfFJb/ixubiMyWwfBdJrz7ShkwIbVcTOdTtUrvQMvWsm6J4FWiafGhPuMUFMDYUfzmwFC35eeFlRkgoFqrl+2MiopIKZOgpXA5JY7LEqxf0ldpEKBKrq8aaEc8/Nt8CIoYfw+BbwM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760892634; c=relaxed/simple;
-	bh=PcZLFCBtbdj6L5xTXIh8DJk4Dw7hQHSxh3x2naBs6NM=;
+	s=arc-20240116; t=1760892651; c=relaxed/simple;
+	bh=D8IOfkJIFuCmakZ8zwJubM8ycAYWmXIGTJLnWYh2HZ0=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=dBBUw3wXMfhSYbM1hrxqXmWEndJUvftMlhKvhhiYm96ZnjVuzM/qd3UkdyBAFgyV5eJakUH8AiSDqtUixpq1HXHIQXHKx1fCuZq0zPyYLJ/w7o1QSPZgFwqdWrGt1UwnJoRs/dwix6vP1VT1wmj9d9PNC+pnkuF8+LlrfBSDQCY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=FxDf0Hew; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5DD57C4CEE7;
-	Sun, 19 Oct 2025 16:50:31 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=OIfFaBaPHJSuDjQ0d8E+Osc/dfHwkgn6vNvSG7x77E7dL+lmxStOfWDGQ0loZmHJ6j9YFpZ2P2B1hGWebo/mzGIvzj5nah8b1omcVHHZJO1c57yD+JydXNlpVa+kO4hUiTGOFlZIuc3RUChiMEubWZJjjm8x3kwOlMBXjJUFYKM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=i8ukShRh; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8449CC4CEE7;
+	Sun, 19 Oct 2025 16:50:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1760892634;
-	bh=PcZLFCBtbdj6L5xTXIh8DJk4Dw7hQHSxh3x2naBs6NM=;
+	s=k20201202; t=1760892651;
+	bh=D8IOfkJIFuCmakZ8zwJubM8ycAYWmXIGTJLnWYh2HZ0=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=FxDf0Hew6qUA6g8dkNv0n4leFoeYmYIZfkSfvYPYZ3d9C8UYPLrLt1zDBawxBdAYl
-	 lk1rvoEw36Seiln08dt+xpQxb1usFoFFDvjCwgk8Ijj/kgLlolcv7kI0SwC478Qfym
-	 F8Fn2bfU5b0xEjfKRvDiUsqte/m8V9jzd/wPjyLMBvERGzk0CHapFmmSRTgt6PG6Ho
-	 FJK/cME9mdltcBhWgrlOR76X+uc6dgJFPNZGUf0ibd3DFyC/Tiyx2cL5LNqpZRLPqI
-	 qrjP2s8ObVkrUMOuLHcMDRdmK9SvDsUPcIiZZqbSngG9KXfW2ryviab4GQnnNt9EeV
-	 U86CzbkxerwPw==
-Message-ID: <005da0e4-3eb1-41fc-a0d1-0be9eb85b9c0@kernel.org>
-Date: Sun, 19 Oct 2025 18:50:29 +0200
+	b=i8ukShRh4rDoIWmy/eeDesOkfvi6x/onQFM9FMUInyqJi5iCdwSUThGnQACgNdX2X
+	 ZbzReqkUeiyHMh2lvG+Ox41rX4M8eqPlnmzTz2ZkvcNc0gmemdB/HpAAwgcvZk8GjE
+	 OIkQr229Sm9CL/RzFlF0DeUxEJ10OlMlobqBD83oyH6i2Z2/RqNgnSDSNq8AWxy/DE
+	 M+y719B67qxiSViXEeCwPdxZ/CBXNWAE2+v7xKQReopRmP6QR1Vz3TrsYxme8XkNJ3
+	 5we8xjfjajmwn+2F92/e0lDzuow0G6Hn8vs9GbBIJcv1Yj1XeFK9t1IfJt+x3HAKR8
+	 4eqzTAruSWIvQ==
+Message-ID: <af73c70b-7180-427d-9f52-558685093613@kernel.org>
+Date: Sun, 19 Oct 2025 18:50:46 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,8 +50,8 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/3] dt-bindings: remoteproc: qcom: adsp: Add missing
- constrains for SDM660 ADSP
+Subject: Re: [PATCH v2 2/3] dt-bindings: remoteproc: qcom: adsp: Add SDM660
+ CDSP compatible
 To: Nickolay Goppen <setotau@mainlining.org>,
  Bjorn Andersson <andersson@kernel.org>,
  Mathieu Poirier <mathieu.poirier@linaro.org>, Rob Herring <robh@kernel.org>,
@@ -61,7 +61,7 @@ Cc: linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
  devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
  ~postmarketos/upstreaming@lists.sr.ht, linux@mainlining.org
 References: <20251019-qcom-sdm660-cdsp-v2-0-0d3bcb468de0@mainlining.org>
- <20251019-qcom-sdm660-cdsp-v2-1-0d3bcb468de0@mainlining.org>
+ <20251019-qcom-sdm660-cdsp-v2-2-0d3bcb468de0@mainlining.org>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -107,15 +107,15 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  jWt87ecuHlpL3uuQ0ZZNWqHgZoQLXoqC2ZV5KrtKWb/jyiFX/sxSrodALf0zf+tfHv0FZWT2
  zHjUqd0t4njD/UOsuIMOQn4Ig0SdivYPfZukb5cdasKJukG1NOpbW7yRNivaCnfZz6dTawXw
  XRIV/KDsHQiyVxKvN73bThKhONkcX2LWuD928tAR6XMM2G5ovxLe09vuOzzfTWQDsm++9UKF a/A=
-In-Reply-To: <20251019-qcom-sdm660-cdsp-v2-1-0d3bcb468de0@mainlining.org>
+In-Reply-To: <20251019-qcom-sdm660-cdsp-v2-2-0d3bcb468de0@mainlining.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
 On 19/10/2025 16:20, Nickolay Goppen wrote:
-> Since SDM660 ADSP node uses "xo" clock, interrupts and "cx" power domain
-> properties add corresponding constrains for SDM660 ADSP.
+> Add compatible for the compute DSP remoteproc found in SDM660.
 > 
 > Signed-off-by: Nickolay Goppen <setotau@mainlining.org>
+> ---
 
 Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
