@@ -1,121 +1,104 @@
-Return-Path: <linux-arm-msm+bounces-77931-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-77932-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id AFFAABEE9AC
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 19 Oct 2025 18:16:11 +0200 (CEST)
+Received: from ams.mirrors.kernel.org (ams.mirrors.kernel.org [213.196.21.55])
+	by mail.lfdr.de (Postfix) with ESMTPS id F21C4BEEA00
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 19 Oct 2025 18:27:36 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 43E763AABA1
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 19 Oct 2025 16:16:10 +0000 (UTC)
+	by ams.mirrors.kernel.org (Postfix) with ESMTPS id C70A53497AA
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 19 Oct 2025 16:27:35 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B35012EBB81;
-	Sun, 19 Oct 2025 16:16:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 635402E8B93;
+	Sun, 19 Oct 2025 16:27:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="kGjOPPP3"
+	dkim=pass (2048-bit key) header.d=mainlining.org header.i=@mainlining.org header.b="LTF6yo0y";
+	dkim=permerror (0-bit key) header.d=mainlining.org header.i=@mainlining.org header.b="IdtVmqoC"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yx1-f43.google.com (mail-yx1-f43.google.com [74.125.224.43])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mail.mainlining.org (mail.mainlining.org [5.75.144.95])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C9E71F5435
-	for <linux-arm-msm@vger.kernel.org>; Sun, 19 Oct 2025 16:16:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.224.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCB4F2ECE85;
+	Sun, 19 Oct 2025 16:27:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=5.75.144.95
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760890568; cv=none; b=DVwYXfUNtuoPNWkWaFB39jUV2KgilzKj8a+Juqyl29ZDkJFPfIzLTIOEPTKDecJN9JuxnlWIoqAniwpnQsCaOV0i1t5IkCpiRzv5xbLRn9nU4m3k+rrbEC9Cwo5UD6TJTjYVaKfNS2jaPaxoucf3YiuOyKGLRDxk8rGUKZ06eZ0=
+	t=1760891244; cv=none; b=m9Lt1ur7hsjYc/QWECJkWs5Gdurmh0laZm9+oTX6cxASIX8HGFjR4adBhz0WgPbGhYU0azNd7/sFpN3cMITiS6PiMr6JC6LnHqJ+bwpBEKrqf6OhLVhH7qb0QST7KSe4okebMwlS9l14j0Y/PGNtk3weUDSp+R2ejGEuu7uTsw4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760890568; c=relaxed/simple;
-	bh=w65OdgmpV8I1cxj2sfq4rK12q9mD/l6u6jCluPLlwTY=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UMFd+3HvYrpEYgQr1FdsdXXsZ7rL9rl5UfA6aP1h2KWT8CI+rJToFcDxwvquntesunmfJoOwKCkPsOjpaGyMSIMbh7PIx818jkGpwup9BedBfuJfgKc6ljk0BlEygTTtYnnCw3pelDpA5zk4zNJ+HOZjr22OdQBuDmKFGXqJQcU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=kGjOPPP3; arc=none smtp.client-ip=74.125.224.43
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-yx1-f43.google.com with SMTP id 956f58d0204a3-63e0fa0571fso3313077d50.3
-        for <linux-arm-msm@vger.kernel.org>; Sun, 19 Oct 2025 09:16:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1760890566; x=1761495366; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=w65OdgmpV8I1cxj2sfq4rK12q9mD/l6u6jCluPLlwTY=;
-        b=kGjOPPP3AV4B15oNWUCh7zjCvw1lMZxc8GWcUcYppse9Tmq0p9m5dEEqeOh4hDgt+6
-         /U8YQXEAb+Oh4B3Iwycd2esArczN3zTEW8zGLdmFUdIiFHxQnfm6mFIk/rsnQaSRxm9V
-         XyKIBb1EpGzuMX0m+VYww5SehqGqwf2L1zToNiBNNp0IMY+YJALiPgoSRjiXVsgiIRQ4
-         5V+LdS1AupKh1LVlChSCR/RN+xxWQpiVAwfAnJ8LbaknNmuf0jGfp1sxSqTKpKzll3MI
-         HQutE1Wcnaa2JEdO64lPH3Q/e4F3UMhL1wq0cou3TetKULGj0YaMuGNahwZJwTEmXHS/
-         EyzQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1760890566; x=1761495366;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=w65OdgmpV8I1cxj2sfq4rK12q9mD/l6u6jCluPLlwTY=;
-        b=LeqzCZEXrB1zPRYH9qAEeOH5VGtOehjEaxzOlI1WOB4DFFCZJ7HncLXYZS/cjyM+YK
-         nNLmpUFAK+GlSd+P55sajIpTNZMjgjTwnkY0kUEVKeUF0+pl/NqTIha3ORxUt84XLNRp
-         a2EL6pN0sbmJRkt/XN4kTctmToS0ZuO1Jj3bKdMusbHVDHn9IEnq4y+vEA4YPUfS6kHo
-         5FlYANtWcaoE/sS4TCUtbPu/6u7VOfXvo8Vs1yfD1mXjrR7T2jyJb3K/IVBDirmU4t9+
-         A3VSg6JLfPZw+oE0DEpGpzoSsy3Urifdqhj8qK0sl2BxSOY5TPiHzMTpfijL8gxF1yjw
-         qqdQ==
-X-Forwarded-Encrypted: i=1; AJvYcCXlUKVtw6ojNKZi8cs3b/l1kCzTwywnBbPlzQJAVsHuzXygYocEhHjBWAHDYNOBiI/Iab4Idi1qJ0MKoUHo@vger.kernel.org
-X-Gm-Message-State: AOJu0YxXFEVoo+7pty6UQWnBtWQQ1YyN1wfHkRw51reJFlu5c7wM4RzB
-	plLRUyXstuAVjQUtay2cZiPv9rAnwdJrtlkPpcawCIiDP/k3Vdn346e+
-X-Gm-Gg: ASbGnctj1zgfsjnKcmdqpAla29Mmxij6jB6AFiZ4fJGvlqv5qLJMS2pm+KH9h7VaWNR
-	aH68SBAlorYU+bLffFPsRucGf8LjJ/pdpdUu9lxv5gv3SLZlP2QJv7Fraj+Kxk84/Y7hT1CaOZL
-	rvXckAmjt5nzZBbkQ5pS/xXNy5kNYXc+Jxmj/zYa5LBuHaFHH2Fx19ZuzEVhC3HLpz95b/H0VhW
-	HIi0k4JZgKRF6d9q2LcAKyq0vQ7tm6tSo0bTn6uCmxTHye7VXpGK3DCM3yUcJ67/PmqmKY54KkO
-	66M8xkUA2iY6faOj6osVYlf5+b0NoPkWFpquLTXWzWPz0kv4CHRqtIs+IJL2HyCDkD1dztYjWro
-	X1vrfKBqIjpWP/RgHlMlMQ0/5hlM7CErm7lqEnQIf889yhly8o0uoqpu5beWYaF8sUUAFPcrtBv
-	kx5FL7/IfYPnnZVNTFSUXfwo2PcZPng9yDxwHp8G40EfypCXhHk5viYl9SvIo=
-X-Google-Smtp-Source: AGHT+IElWfzAepNqK3LlpQymTFB+dnzq6dId0s4n8cc9tbggmQJHdM08XYTf6C3f7CI5MrGaIVI7tg==
-X-Received: by 2002:a05:690e:168c:b0:63c:f5a6:f30f with SMTP id 956f58d0204a3-63e1626157bmr8254979d50.57.1760890566174;
-        Sun, 19 Oct 2025 09:16:06 -0700 (PDT)
-Received: from localhost (104-48-214-220.lightspeed.snantx.sbcglobal.net. [104.48.214.220])
-        by smtp.gmail.com with UTF8SMTPSA id 956f58d0204a3-63e266bc09csm1738354d50.11.2025.10.19.09.16.05
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 19 Oct 2025 09:16:05 -0700 (PDT)
-From: Steev Klimaszewski <threeway@gmail.com>
-To: devnull+federico.izzo.pro@kernel.org
-Cc: abhinav.kumar@linux.dev,
-	agx@sigxcpu.org,
-	airlied@gmail.com,
-	david@ixit.cz,
-	dri-devel@lists.freedesktop.org,
-	federico@izzo.pro,
-	freedreno@lists.freedesktop.org,
-	jesszhan0024@gmail.com,
-	linux-arm-msm@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	lumag@kernel.org,
-	marijn.suijten@somainline.org,
-	nicola@corna.info,
-	phone-devel@vger.kernel.org,
-	robin.clark@oss.qualcomm.com,
-	sean@poorly.run,
-	simona@ffwll.ch,
-	~postmarketos/upstreaming@lists.sr.ht,
-	Steev Klimaszewski <threeway@gmail.com>
-Subject: Re: [PATCH v3] drm/msm/dpu: Add DSPP GC driver to provide GAMMA_LUT DRM property
-Date: Sun, 19 Oct 2025 11:15:59 -0500
-Message-ID: <20251019161559.6731-1-threeway@gmail.com>
-X-Mailer: git-send-email 2.51.0
-In-Reply-To: <20251019-dpu-add-dspp-gc-driver-v3-1-840491934e56@izzo.pro>
-References: <20251019-dpu-add-dspp-gc-driver-v3-1-840491934e56@izzo.pro>
+	s=arc-20240116; t=1760891244; c=relaxed/simple;
+	bh=BQ9IFJKbESKzjwKtQB3OgNBpaLL0lRHeebGjF1hqPEM=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=N6fZAWLt957KwZF91TDxm+mFei5NEbuGIyMzGJ49S9e1qlokfpQ5+w0fCKuo186f9qflGoIUTe5HPeRBDyZQGeOt8BNsQD4OlnJarWQgCArvLVWi8jTPRwiwAXQwORAgcZu/KM/yy8aHOOQX77Uce1SUb8C2LkSxFBBRqgO+i8M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=mainlining.org; spf=pass smtp.mailfrom=mainlining.org; dkim=pass (2048-bit key) header.d=mainlining.org header.i=@mainlining.org header.b=LTF6yo0y; dkim=permerror (0-bit key) header.d=mainlining.org header.i=@mainlining.org header.b=IdtVmqoC; arc=none smtp.client-ip=5.75.144.95
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=mainlining.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=mainlining.org
+DKIM-Signature: v=1; a=rsa-sha256; s=202507r; d=mainlining.org; c=relaxed/relaxed;
+	h=To:Message-Id:Date:Subject:From; t=1760891234; bh=w0QWjLgqUUCHSyCq5XlwrWc
+	zRcUMNVXdkhnMa3UOQ50=; b=LTF6yo0yn80JyuiLERwcVqAqsIY4D0KHmLCXnfDEdb33ri6otp
+	+y9yIF14F4T5PweTpUnF30Vf8dkFqFXWPDa+DgSvh0X62YQa5tGgEhdBQoN5OtAY02O3PpHT3DJ
+	gJ5cFXJbmN6ddPGGbMrpGrNX1DsEk1ymosPfy+nc1++y5xSHOgBl1ODpHGgckJTyPtu37ZCCSTx
+	QKKuZ2NZWcHLissdWMWtOumyreDPJRq0CpzHO1kOwFc0UA2P9LLEktplhMLMTl79qQnHHh70T0X
+	AeXZHAs8tAyNbnaKdZzJY/EIgXBHcv/zxoyQ6u3KLeuOgverK7sz3E/x7FNFuwjOVrg==;
+DKIM-Signature: v=1; a=ed25519-sha256; s=202507e; d=mainlining.org; c=relaxed/relaxed;
+	h=To:Message-Id:Date:Subject:From; t=1760891234; bh=w0QWjLgqUUCHSyCq5XlwrWc
+	zRcUMNVXdkhnMa3UOQ50=; b=IdtVmqoCo398ORp5qLy7n8M7MuHSmxdUTQyBAbBHZUN0RCWzs0
+	DDvO4lJ3K/jaRP/jJ3YlBqliuhe6NAN+S1Aw==;
+From: Nickolay Goppen <setotau@mainlining.org>
+Subject: [PATCH 0/2] arm64: dts: qcom: Add support for SDM660 CDSP and ADSP
+ FastRPC
+Date: Sun, 19 Oct 2025 19:27:05 +0300
+Message-Id: <20251019-qcom-sdm660-cdsp-adsp-dts-v1-0-9ab5f2865a6e@mainlining.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAFkR9WgC/2WNyQrCMBRFfyVkbSBTM/2KdJFRs+hgUotQ+u+mV
+ nDh5sK5vHfuBmssOVZowAZLXHPN09iAXAD0dzveIsqhMaSYdgQTjR5+GlANgxAY+VBnZI8IS0U
+ qWeeExIypCNv/XGLKr4/72p9c4uPZJpaz/C0Y8PWrf3+nbeiEEtISZVZ6mJ2tEbW7IS8GaJaYs
+ 44zggNPSTJMpfc8KUkkp4oHrqW0PsF+39/EGOOm7wAAAA==
+X-Change-ID: 20251019-qcom-sdm660-cdsp-adsp-dts-8fabb670338e
+To: Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht, 
+ linux@mainlining.org, Nickolay Goppen <setotau@mainlining.org>
+X-Mailer: b4 0.14.3
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1760891233; l=985;
+ i=setotau@mainlining.org; s=20250815; h=from:subject:message-id;
+ bh=BQ9IFJKbESKzjwKtQB3OgNBpaLL0lRHeebGjF1hqPEM=;
+ b=cZCTb/Ux8XMQy/3l3CkoSZjY0xE2rcvYrNmHKcb7BS9PMMqMjpMIcPtl641wunLMx3DCutuHA
+ at3rk7TVfDrC8cjIruNYaYCHCcxd18a8X8cFXYWpijSBjBDqohjq9qS
+X-Developer-Key: i=setotau@mainlining.org; a=ed25519;
+ pk=Og7YO6LfW+M2QfcJfjaUaXc8oOr5zoK8+4AtX5ICr4o=
 
-Hi Federico,
+This series adds support for SDM660 CDSP remoteproc and also adds
+FastRPC support for ADSP.
 
-With this patch applied this also works on the Thinkpad X13s (SC8280XP), thank
-you for this, I know a lot of end users have been asking about this for quite a
-long time, so nice to see that we might finally get it.
+Signed-off-by: Nickolay Goppen <setotau@mainlining.org>
+---
+Nickolay Goppen (2):
+      arm64: dts: qcom: sdm630/660: Add CDSP-related nodes
+      arm64: dts: qcom: sdm630: Add FastRPC nodes to ADSP
 
-Tested-by: Steev Klimaszewski <threeway@gmail.com>
+ arch/arm64/boot/dts/qcom/sdm630.dtsi |  40 ++++++++-
+ arch/arm64/boot/dts/qcom/sdm636.dtsi |  14 ++++
+ arch/arm64/boot/dts/qcom/sdm660.dtsi | 152 +++++++++++++++++++++++++++++++++++
+ 3 files changed, 205 insertions(+), 1 deletion(-)
+---
+base-commit: 93f3bab4310d4ff73027cc4f87174284d4977acf
+change-id: 20251019-qcom-sdm660-cdsp-adsp-dts-8fabb670338e
+prerequisite-change-id: 20251018-qcom-sdm660-cdsp-59ad56867a18:v2
+prerequisite-patch-id: a8c9703aec1663b8226556ba1770bd6c5b4ef060
+prerequisite-patch-id: 5a49b179c69e045e8003f28e8ef0e6e003c0064a
+prerequisite-patch-id: dd158e1214a7e73ac0a8f1da9d3face61ad7d5bd
 
--- steev
+Best regards,
+-- 
+Nickolay Goppen <setotau@mainlining.org>
+
 
