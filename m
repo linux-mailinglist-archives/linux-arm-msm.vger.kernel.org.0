@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-77937-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-77938-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id D2120BEEA91
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 19 Oct 2025 19:11:49 +0200 (CEST)
+Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [IPv6:2605:f480:58:1:0:1994:3:14])
+	by mail.lfdr.de (Postfix) with ESMTPS id 563D6BEEAB4
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 19 Oct 2025 19:13:45 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 805CF3E4852
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 19 Oct 2025 17:11:48 +0000 (UTC)
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 37B424E2D57
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 19 Oct 2025 17:13:44 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 28B901F12E9;
-	Sun, 19 Oct 2025 17:11:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C76DB1FFC48;
+	Sun, 19 Oct 2025 17:13:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="h5rPwysQ"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ofo4JYY+"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDC99190473;
-	Sun, 19 Oct 2025 17:11:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 971CF1E5B63;
+	Sun, 19 Oct 2025 17:13:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760893906; cv=none; b=fjw6L6G4AsYejGBucmIARuoaFJcvJx1oOPDf39p1+Y/XA8FHBcNaugSwKgrfseQf3cTLfFbnJkQQK4xgLCnrWNxRpYnZdISn9Pc3q65ldm0S7J7veFGWJMyjaeYgINFDN2E7c5x8mZgbCOvFPWiuD5m9QEyG4ExJHYyWy7ox3UE=
+	t=1760894020; cv=none; b=CWfP0h4Bylr+YQLlCD/IWW/2xUv/Of2FB6Y9lFUZZQ8Wf6zttjPIbLTwvL+JPd/yyIhrd9yq0fkr8DtFKNi/WBskHzopWHs9xCqLEKQBjxilNcVvBfxEpwa5ACM35+YsRsKnd0UsFsS3lCnzdR1qh9uDi9Ap681FkDb6jCwiS0M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760893906; c=relaxed/simple;
-	bh=pGSeByPyjXU0xF/GT6nI9BVPEVJ+TrjfUe8CJ/Y5sO4=;
+	s=arc-20240116; t=1760894020; c=relaxed/simple;
+	bh=xyEfLRN8ZylZ1U+SxjoVN+rv4eGUG+EVIb9AGdg00OM=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=MC8sn4WJAMNx56B12E/PE69DklfvYGh6eNpzUFbOjN8Oy7qaw9gvF5PtwhMEm5b6TxZS/nekJvhL7MX37ZGsj9qRTgl5EPO3RWsZPmtHwYm3QsMFk5Ob1skrgxt27Fs5eFVHmWRg/bTnOdAl+3veTNDSM4PiTGcJ31b/1iWMax8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=h5rPwysQ; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 282FCC4CEE7;
-	Sun, 19 Oct 2025 17:11:39 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=UiRZrTu2/fPLI/HsEiXm5Do93KA370BTggaRfjkm0sKBYpRSfOLN8iRFo33wqlEbujjZtIU8OBK2iaM+ZVra6x5/xp/tpvAaYFZh9wCPy0Stg4qUH1GSnHF0iEL0OAxVwmzhZxztw74k9G3XlAKCKzx/qZ5bJi3cS389WIzGbJU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ofo4JYY+; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BFAC4C4CEE7;
+	Sun, 19 Oct 2025 17:13:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1760893905;
-	bh=pGSeByPyjXU0xF/GT6nI9BVPEVJ+TrjfUe8CJ/Y5sO4=;
+	s=k20201202; t=1760894020;
+	bh=xyEfLRN8ZylZ1U+SxjoVN+rv4eGUG+EVIb9AGdg00OM=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=h5rPwysQfQG1dM5SNU2O0ilf16LNEq3O5m+hOE+UZ0Jzn2OVfmwCcwLVIe0zZc94h
-	 XJbYhXvbLLqpY9d1otkGjlutVBoLOf1mj6AoIanXTirrDWfHI1qI9x83/56YNF6KkZ
-	 yzfVN5LV90itVII7jZ+tnrnee/8ZJZURdF/qIaKp5YOVniPJjQEzU9/j9c7pA/sG05
-	 ozqeYF5IY/lfhPta+FiDH7lxmiyCzSAVmurCK6/AmKfnusWIu4BUn+04UngPXldvOp
-	 zhIXUFHxIzHXqGUVbJHpRWq5FwPtzFzBNffRUWxZpEZIUg+pQvASZ1mTlKDvxR2Ayr
-	 OSZGpDI2S65BA==
-Message-ID: <13d1491a-2c5a-467d-bd55-01c0603a4b81@kernel.org>
-Date: Sun, 19 Oct 2025 19:11:38 +0200
+	b=ofo4JYY+lLe2QPhNy5mzWgfYWwrDE48j9YfVjx7YiJXSOo0DnJyRis/T2jpXm2SuY
+	 JWF7PegfoUrbDw3/v2Dlj5T1WPVmaK3LcNdrZbOMinsmVjRc3DYBI95B1CRGimQP8J
+	 Xab2JQVQNgeWUeh4o+Q/oZWwlid+ntkNNdKXcjjZ1i9IEiBqZZgPhdzBQTxwmqu4xK
+	 SqVMGbSApmdQDvnbHq6nVQ/mM4610CviYIgAhKHuRF71634iBHnikKYmo2pRT7rJtc
+	 JPMNkC6+l3VL0CnMG732S/F9/LPMvYXsLhoxBxqJBtv4A54MfnIndkHUXti6eo9tuI
+	 I2r/wt2YApV+w==
+Message-ID: <58446b2d-560f-4a7e-890a-78ae0bb92908@kernel.org>
+Date: Sun, 19 Oct 2025 19:13:32 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,8 +50,8 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 2/3] arm64: dts: qcom: Add DisplayPort and QMP USB3DP
- PHY for SM6150
+Subject: Re: [PATCH v4 1/3] dt-bindings: display/msm: Add SM6150 DisplayPort
+ controller
 To: xiangxu.yin@oss.qualcomm.com, Rob Clark <robin.clark@oss.qualcomm.com>,
  Dmitry Baryshkov <lumag@kernel.org>, Abhinav Kumar
  <abhinav.kumar@linux.dev>, Jessica Zhang <jessica.zhang@oss.qualcomm.com>,
@@ -67,7 +67,7 @@ Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
  linux-kernel@vger.kernel.org, fange.zhang@oss.qualcomm.com,
  yongxing.mou@oss.qualcomm.com, li.liu@oss.qualcomm.com
 References: <20251015-add-displayport-support-to-qcs615-devicetree-v4-0-aa2cb8470e9d@oss.qualcomm.com>
- <20251015-add-displayport-support-to-qcs615-devicetree-v4-2-aa2cb8470e9d@oss.qualcomm.com>
+ <20251015-add-displayport-support-to-qcs615-devicetree-v4-1-aa2cb8470e9d@oss.qualcomm.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -113,34 +113,58 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  jWt87ecuHlpL3uuQ0ZZNWqHgZoQLXoqC2ZV5KrtKWb/jyiFX/sxSrodALf0zf+tfHv0FZWT2
  zHjUqd0t4njD/UOsuIMOQn4Ig0SdivYPfZukb5cdasKJukG1NOpbW7yRNivaCnfZz6dTawXw
  XRIV/KDsHQiyVxKvN73bThKhONkcX2LWuD928tAR6XMM2G5ovxLe09vuOzzfTWQDsm++9UKF a/A=
-In-Reply-To: <20251015-add-displayport-support-to-qcs615-devicetree-v4-2-aa2cb8470e9d@oss.qualcomm.com>
+In-Reply-To: <20251015-add-displayport-support-to-qcs615-devicetree-v4-1-aa2cb8470e9d@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
 On 15/10/2025 03:53, Xiangxu Yin via B4 Relay wrote:
 > From: Xiangxu Yin <xiangxu.yin@oss.qualcomm.com>
 > 
-> Introduce DisplayPort controller node and associated QMP USB3-DP PHY
-> for SM6150 SoC. Add data-lanes property to the DP endpoint and update
-> clock assignments for proper DP integration.
+> Describe the DisplayPort controller for Qualcomm SM6150 SoC.
 > 
 > Signed-off-by: Xiangxu Yin <xiangxu.yin@oss.qualcomm.com>
 > ---
->  arch/arm64/boot/dts/qcom/sm6150.dtsi | 113 ++++++++++++++++++++++++++++++++++-
->  1 file changed, 111 insertions(+), 2 deletions(-)
+>  .../devicetree/bindings/display/msm/qcom,sm6150-mdss.yaml     | 11 +++++++++++
+>  1 file changed, 11 insertions(+)
 > 
-> diff --git a/arch/arm64/boot/dts/qcom/sm6150.dtsi b/arch/arm64/boot/dts/qcom/sm6150.dtsi
-> index 6128d8c48f9c0807ac488ddac3b2377678e8f8c3..36a536cef99a095938f3e18a9b5e7825308ca426 100644
-> --- a/arch/arm64/boot/dts/qcom/sm6150.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sm6150.dtsi
-> @@ -17,6 +17,7 @@
->  #include <dt-bindings/power/qcom-rpmpd.h>
->  #include <dt-bindings/power/qcom,rpmhpd.h>
->  #include <dt-bindings/soc/qcom,rpmh-rsc.h>
-> +#include <dt-bindings/phy/phy-qcom-qmp.h>
+> diff --git a/Documentation/devicetree/bindings/display/msm/qcom,sm6150-mdss.yaml b/Documentation/devicetree/bindings/display/msm/qcom,sm6150-mdss.yaml
+> index 9ac24f99d3ada1c197c9654dc9babebccae972ed..935eca23ce6b30b81b3ad778e5fcacc817a230c3 100644
+> --- a/Documentation/devicetree/bindings/display/msm/qcom,sm6150-mdss.yaml
+> +++ b/Documentation/devicetree/bindings/display/msm/qcom,sm6150-mdss.yaml
+> @@ -51,6 +51,16 @@ patternProperties:
+>        compatible:
+>          const: qcom,sm6150-dpu
+>  
+> +  "^displayport-controller@[0-9a-f]+$":
+> +    type: object
+> +    additionalProperties: true
+> +    properties:
+> +      compatible:
+> +        items:
+> +          - const: qcom,sm6150-dp
+> +          - const: qcom,sm8150-dp
 
+6150 is compatible with 8150 or 8350? I have doubts.
 
-This is ordered, don't break it.
+> +          - const: qcom,sm8350-dp
+> +
+>    "^dsi@[0-9a-f]+$":
+>      type: object
+>      additionalProperties: true
+> @@ -132,6 +142,7 @@ examples:
+>                  port@0 {
+>                    reg = <0>;
+>                    dpu_intf0_out: endpoint {
+> +                      remote-endpoint = <&mdss_dp0_in>;
+
+Mention reason for doing this in the commit msg.
+
+Also, messed up indentation.
+
+>                    };
+>                  };
+>  
+> 
 
 
 Best regards,
