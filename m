@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-77897-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-77898-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [IPv6:2605:f480:58:1:0:1994:3:14])
-	by mail.lfdr.de (Postfix) with ESMTPS id E8677BEE173
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 19 Oct 2025 11:07:33 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id A6D48BEE185
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 19 Oct 2025 11:10:21 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 8C4BC4E2BD0
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 19 Oct 2025 09:07:32 +0000 (UTC)
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 5673F4E3BA6
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 19 Oct 2025 09:10:20 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B108F2DFA3E;
-	Sun, 19 Oct 2025 09:07:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 06CC02D3EEA;
+	Sun, 19 Oct 2025 09:10:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="UFuwr6cU"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="H4Ewit2a"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D4CF217659;
-	Sun, 19 Oct 2025 09:07:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA7D9433B3;
+	Sun, 19 Oct 2025 09:10:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760864848; cv=none; b=WGH7Ne/Od0zWXoyRlAiLMWgpBo7PSd0VEeLJ5EWr/NnaayJo8BDgw6kPMaERbbSABue0jg7zKfKy3Gt96gCdFk4zJqh9n1UElMsAcV812EdjZnxAIi4Dv2YMv7YJIRaZahdU3PoFIJ/Rqp/ZM0lpYgqaqcOLkkaqX3RMDHbU4Ww=
+	t=1760865016; cv=none; b=Es0tt1QAa1f8RFxxRLYI7esBn3I2dk2cOVewCtnnisPo/iQzz49EbkAC/uruLzU9aJ3B+oRXYNIJEtbmRDCgqKMfsjYBTNvIUZxmAsU+HhS5RcflFvqCvksqtnKDH2gECciXwHx6gw0WP0CaNuMcIOXJHoNx3Fy664Z1dxO4UUE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760864848; c=relaxed/simple;
-	bh=DLxnuLzlYVrwvJ4PIr5ccnYSEDSMx44LkMo7zrD4fGc=;
+	s=arc-20240116; t=1760865016; c=relaxed/simple;
+	bh=3shpPgiWLn2oVdcGJeEmeZTcZOfIHxZnlQlHZPS7LBE=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=ezq4YUmnsKhVgQSYvvZWF+mHv7geyYHcrqE+lLjnONIBtro+EZI2bKCdR3zkEz3+k2sth3PH8DCeUpQXeAcqtFd0hBGGVb8V5kzn8dVac40VCPHEPnKr3HuSAHo/Lf9GwYTw+BmgesOdpgn0rTXkcDAGwKvz87pDklCHj/z4LZA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=UFuwr6cU; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C283C4CEE7;
-	Sun, 19 Oct 2025 09:07:23 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=Q2mEo/Qk/SuslrcA1m44is9c8jbMQ88Mu/YWYGaIOZIoFEQ0SIk9fyZaJCiuTpRDO/iliPvYlIvt0r9oDOvMmbu8vHUXJyKoxFUlfprNmyijEErvB//8UoZHzXOG/9avq6ue+/4uymZGZYARiJZ0vv0L+TzakSAzopNRrlkmUGg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=H4Ewit2a; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 929B9C4CEE7;
+	Sun, 19 Oct 2025 09:10:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1760864848;
-	bh=DLxnuLzlYVrwvJ4PIr5ccnYSEDSMx44LkMo7zrD4fGc=;
+	s=k20201202; t=1760865016;
+	bh=3shpPgiWLn2oVdcGJeEmeZTcZOfIHxZnlQlHZPS7LBE=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=UFuwr6cUIYCdgf4jBQdTufHJCRqfH7mLGej8eu4KSN52P+3FVAZqp1kq+Dn45Pfzy
-	 nPlcOSgEkM9YW6l9FWVh2TOubeTgS8/NZnfHjaxdLTiKYtcgkVEzVdVPfqWICJWU0P
-	 IzIYGzNj1TUwbzHO1/S6bepi6A9tr4vhmt5XvrDws9tcn+o/H4BIuU/z552tPir8Ky
-	 foJ2/P0feHwp5J1I5T1SaXaDvBkIc9RJArcXIi3B7M8/6xH0UgEbGSVQOGWky7IfPS
-	 B2rAfd5krL1hJcWYRPcc7AimxcOIgZYWdU53xLMcWiFT7z/3XtfGbbopYPImCOg5iZ
-	 Mvaxuq0+ocSbA==
-Message-ID: <63776d93-a766-4fcb-a69b-96b24832eb1b@kernel.org>
-Date: Sun, 19 Oct 2025 11:07:22 +0200
+	b=H4Ewit2avuAceStAVppeXRiHyJYYTFEJIU1dLBd8NeToxy2hSxqBv4TQGGqrFzVrb
+	 3N2OXz3iJaU8WcOEVqHD3Ijij3gXzJ7Nd1Uml3iuE331cEkSXuEd0Jtu/gvqsQ7SBH
+	 q0eJRo4X91d2rdkup/yte+Y/tTt+7qbj4he+C6j3DKmXIr5W0Tkw5DC3L3vw9ewJmA
+	 NqIwo5JaIfCTqVc4NGGigvePHhOsuGD/rd/GA/OTCphYPgVmk8qnx7q0PQroRZ0Exy
+	 ly0+CGuxYx/y2E2CPx+Ro3688W/lZw0D8Vdh3EdC7/lr4N3cskuZOlwZyC7ZiWV4TM
+	 EXNKb6miJ6b9g==
+Message-ID: <811c728c-e2c9-462d-9c7a-dd79a683e301@kernel.org>
+Date: Sun, 19 Oct 2025 11:10:09 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,20 +50,23 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 2/6] dt-bindings: phy: qcom,sc8280xp-qmp-pcie-phy:
- Document the Glymur QMP PCIe Gen4 2-lane PHY
-To: Qiang Yu <qiang.yu@oss.qualcomm.com>, Vinod Koul <vkoul@kernel.org>,
- Kishon Vijay Abraham I <kishon@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Lorenzo Pieralisi <lpieralisi@kernel.org>,
- =?UTF-8?Q?Krzysztof_Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
- Manivannan Sadhasivam <mani@kernel.org>, Bjorn Helgaas
- <bhelgaas@google.com>, Bjorn Andersson <andersson@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- linux-pci@vger.kernel.org, Qiang Yu <quic_qianyu@quicinc.com>
-References: <20251017-glymur_pcie-v5-0-82d0c4bd402b@oss.qualcomm.com>
- <20251017-glymur_pcie-v5-2-82d0c4bd402b@oss.qualcomm.com>
+Subject: Re: [PATCH 2/6] dt-bindings: display/msm: gpu: Document A612 GPU
+To: Akhil P Oommen <akhilpo@oss.qualcomm.com>,
+ Rob Clark <robin.clark@oss.qualcomm.com>, Sean Paul <sean@poorly.run>,
+ Konrad Dybcio <konradybcio@kernel.org>, Dmitry Baryshkov <lumag@kernel.org>,
+ Abhinav Kumar <abhinav.kumar@linux.dev>,
+ Jessica Zhang <jessica.zhang@oss.qualcomm.com>,
+ Marijn Suijten <marijn.suijten@somainline.org>,
+ David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+ Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+ Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>,
+ Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
+ Conor Dooley <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+ freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org,
+ devicetree@vger.kernel.org
+References: <20251017-qcs615-spin-2-v1-0-0baa44f80905@oss.qualcomm.com>
+ <20251017-qcs615-spin-2-v1-2-0baa44f80905@oss.qualcomm.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -109,29 +112,77 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  jWt87ecuHlpL3uuQ0ZZNWqHgZoQLXoqC2ZV5KrtKWb/jyiFX/sxSrodALf0zf+tfHv0FZWT2
  zHjUqd0t4njD/UOsuIMOQn4Ig0SdivYPfZukb5cdasKJukG1NOpbW7yRNivaCnfZz6dTawXw
  XRIV/KDsHQiyVxKvN73bThKhONkcX2LWuD928tAR6XMM2G5ovxLe09vuOzzfTWQDsm++9UKF a/A=
-In-Reply-To: <20251017-glymur_pcie-v5-2-82d0c4bd402b@oss.qualcomm.com>
+In-Reply-To: <20251017-qcs615-spin-2-v1-2-0baa44f80905@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 18/10/2025 03:33, Qiang Yu wrote:
-> From: Qiang Yu <quic_qianyu@quicinc.com>
+On 17/10/2025 19:08, Akhil P Oommen wrote:
+> A612 GPU has a new IP called RGMU (Reduced Graphics Management Unit)
+> which replaces GMU. But it doesn't do clock or voltage scaling. So we
+> need the gpu core clock in the GPU node along with the power domain to
+> do clock and voltage scaling from the kernel. Update the bindings to
+> describe this GPU.
 > 
-> The 4th and 6th PCIe instances on Glymur have Gen4 2-lane PHY. Document it
-> as a separate compatible.
-> 
-> Signed-off-by: Qiang Yu <qiang.yu@oss.qualcomm.com>
+> Signed-off-by: Akhil P Oommen <akhilpo@oss.qualcomm.com>
 > ---
->  Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-pcie-phy.yaml | 3 +++
+>  .../devicetree/bindings/display/msm/gpu.yaml       | 31 ++++++++++++++++++++--
+>  1 file changed, 29 insertions(+), 2 deletions(-)
+> 
+> diff --git a/Documentation/devicetree/bindings/display/msm/gpu.yaml b/Documentation/devicetree/bindings/display/msm/gpu.yaml
+> index 3696b083e353031a496a1f299d8f373270ca562d..efc529e82bc198e7c3c89a5eecb6f929960a8de9 100644
+> --- a/Documentation/devicetree/bindings/display/msm/gpu.yaml
+> +++ b/Documentation/devicetree/bindings/display/msm/gpu.yaml
+> @@ -45,11 +45,11 @@ properties:
+>            - const: amd,imageon
+>  
+>    clocks:
+> -    minItems: 2
+> +    minItems: 1
+>      maxItems: 7
+>  
+>    clock-names:
+> -    minItems: 2
+> +    minItems: 1
+>      maxItems: 7
+>  
+>    reg:
+> @@ -388,6 +388,33 @@ allOf:
+>        required:
+>          - clocks
+>          - clock-names
+> +
+> +  - if:
+> +      properties:
+> +        compatible:
+> +          contains:
+> +            const: qcom,adreno-612.0
+> +    then:
+> +      properties:
+> +        clocks:
+> +          minItems: 1
 
-Nothing in the changelog explains that this patch appeared. Write
-descriptive changelogs explaining what is happening with the patches.
+Drop, it's implied.
 
-This should be squashed with previous one, it's really pointless to add
-same device - PCI PHY - in multiple steps, just because there are
-different lanes.
 
-Add complete PCI PHY - ALL OF THEM - at once.
+> +          maxItems: 1
+> +
+> +        clock-names:
+> +          items:
+> +            - const: core
+> +              description: GPU Core clock
+> +
 
+Missing constraint for 'reg'.
+
+> +        reg-names:
+> +          minItems: 1
+
+Drop. MMIO range is not flexible.
+
+> +          items:
+> +            - const: kgsl_3d0_reg_memory
+> +            - const: cx_dbgc
+> +
 Best regards,
 Krzysztof
 
