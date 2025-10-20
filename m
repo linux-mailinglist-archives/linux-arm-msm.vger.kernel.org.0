@@ -1,267 +1,123 @@
-Return-Path: <linux-arm-msm+bounces-78047-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-78048-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [IPv6:2605:f480:58:1:0:1994:3:14])
-	by mail.lfdr.de (Postfix) with ESMTPS id EA9B2BF2C7A
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Oct 2025 19:44:53 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id BE2B4BF2D3A
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Oct 2025 19:58:17 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id E03AD4F9837
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Oct 2025 17:42:18 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 8FBD418C13F3
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Oct 2025 17:58:41 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5583726B755;
-	Mon, 20 Oct 2025 17:42:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 96DFB3321D9;
+	Mon, 20 Oct 2025 17:58:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="WHyLNtPh"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="txdlpjK2"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5C0E21ABD7
-	for <linux-arm-msm@vger.kernel.org>; Mon, 20 Oct 2025 17:42:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D520331A79;
+	Mon, 20 Oct 2025 17:58:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760982137; cv=none; b=joc8W18bXJRTq0Cnf0blnTGPidmCGabEcq8tVaHgqsjkK8bypwczYnmZxdKq9qKXDdQHGPNicinfeJPcHK7kpkpUtZo5Zi3Khr4PT40tvguSwUzYlFUyrZ6y8Bu9go/Jy2SHjpE4beyNQNjgJIqffCztRwGda7F7IK8WJFY7W10=
+	t=1760983091; cv=none; b=sFoVMs3293o9xUeEggwa6W2oMh9o/ObI3I6VlNtTsbrZJSmY+xwChQhNFgnbVfvso5aurPfwr6JxXxjC0eQuCsZRFJOtlsqRVYxn1WpZu927wbLiQ3UrGWKIYx5Qynfu6k8tIZXi85JMpYet5iF1UH9OlXwFoJbmXkgof5Nc4Qw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760982137; c=relaxed/simple;
-	bh=9qA6BuFeIx5fHAIGIw0nel7ZY5DQlvVmFai+iklLtRI=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=p+9k5WfqNMOjDiRXYXd/QZrdwzyBzkfL3i/Njh1otR+uUP9CcwJK9lb7SgsjB1h7XOxI/fZUXuSrvgfOsIW/IOqznsX3P4igRdXcACawFdjdhwS33EjDhiRKzGyjzwhjZT9cIIDgXnYRAeTE3fDQCtwZI9K/B1WnZTl/iL0MyZY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=WHyLNtPh; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 59KC5IGH012696
-	for <linux-arm-msm@vger.kernel.org>; Mon, 20 Oct 2025 17:42:15 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	wuH6NKm3t0y7yTW2TM5liGhGfdwbrDlainmDiWhRs0g=; b=WHyLNtPhuwLKPt2f
-	l46aPJiAmy9GaLuPuLg5rUH09NC/JYrKTf3gQsiHkIlVhN55/kld2WCIKBYKHNpm
-	Rs9K4+PfLVVqWabGUAtVhwz6kjve4f1/FLjAe3+OVS8HEJYuWGXPJ/5rKELh2/hI
-	yY25V/ZuSq0YqmFF9z92HgAgxufq+Y5wHofNqdIrcsae9rbrRHuu8OFcbEQGnWLq
-	pOnVrr2qltSfiVIf+B8sL16AOd0QX2hsJtYedIafB6EQLsxcx7DJdF7y4RwJrXeF
-	JmVl/2zpMFPrCcwKpXfY3HbTSTgF70yZrQqzL17Usu842Ma7+0YPgNVx2Z4OdjmP
-	7s/XRg==
-Received: from mail-pl1-f198.google.com (mail-pl1-f198.google.com [209.85.214.198])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 49v42k5gdp-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Mon, 20 Oct 2025 17:42:14 +0000 (GMT)
-Received: by mail-pl1-f198.google.com with SMTP id d9443c01a7336-28eb14e3cafso92950195ad.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 20 Oct 2025 10:42:14 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1760982134; x=1761586934;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=wuH6NKm3t0y7yTW2TM5liGhGfdwbrDlainmDiWhRs0g=;
-        b=H6jMDzUudA1Hq42zxVs8df7f3Nyx3J4F7XecCa5jpWBgwegHxOgPD3fjZWZ/hctwAr
-         vcDyOGEGqDn8gNdWnDlDPuyuIJhsuUcIPL9cDmFjKuB9s+Q9hNXraSvAhkO1mSlbcq8H
-         5eBPDo4nzc1kupplAZx0Wn1PIxO86wvWIgYrGN+7k6aapBIoo8B3Y0lmVRpIAnegHnOi
-         2HiVa24ynFlxLIdfrUW3n4CgfM7OSQiqtgryjXUe4mxgRzFtJwrqV2d0r6VyvnD+2OJO
-         j3b4pXbrpVjF5zw21in8zNhA6EP2Hm1iBYB5p5+R8k+MoCQcPcnixp4MPv5JCf4opKJC
-         SPfw==
-X-Forwarded-Encrypted: i=1; AJvYcCV3RexVbXVvGfuNVcDtK1BJd3yxoh6ca0udm9UIYuCuVlEwWlQAzLD2Ik9DD3HxpWmr0Es4Cgpbqt1owgY0@vger.kernel.org
-X-Gm-Message-State: AOJu0Yx6NMBCTFVIvdh6z806Va82Su+9D2JhOPUTsWEfVXP2k2/Wgmu5
-	Sq5JVxcejEVXjx8U/Dkt07X9VHLrUlqHQw+RAqbadwbC2ubBg52/vOXAz38O0uEfl1YskivVJyg
-	QK10wr+btqgHy1DtwRrPKZKN/NIbu5P3XxmEcet7SwXA72ErMN5U9/vx56ImcCnCrHosv
-X-Gm-Gg: ASbGncsIQfuFatWpxgldWLok2O54CVkPWPOuCqsTKt3YcrNBGEuGUW5dNEtSuPSHv4O
-	iivGfqVREkKJ5uvfOsnFYYYXj6FB7BT25vQ2gV1LpuKXJBgwgER+BS7BHYh7eCx7qubD4128wa4
-	Y5D86+7h/hMRu6DG6LkBt8LAKjqZXcy7ubxrkn2I0YFhSwkyEdZ7LKvBgO4HNZbDJ17w2+5P3ZU
-	+0JbJCrJB9jCdgwdNR96hPH3yaj03JkL0FHxOpVaEg5WOn9I12bAe2wJvGon1FtlTgmDjIIgOst
-	jnaUspjwBIzNwQCEXp+5HOc5f4RqUkrpBs+rdTlyLaf1/nvXLzX/j38ih9QHVzywGpCUQpgBsv3
-	HXMtNIhejQlCGReHVC/cLGYwCOB08ehNI0pFVLCcFPuAPg526XMOEjw==
-X-Received: by 2002:a17:902:d4c4:b0:269:9ae5:26af with SMTP id d9443c01a7336-290c9d1b4d0mr172936185ad.13.1760982133866;
-        Mon, 20 Oct 2025 10:42:13 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGmgh6tUXTbf1pGfo1ASimL2b+7pT6kMnii6yInuvVAI5pWnTr0w6G4M9GWEUp4lc/J1jtUyQ==
-X-Received: by 2002:a17:902:d4c4:b0:269:9ae5:26af with SMTP id d9443c01a7336-290c9d1b4d0mr172935595ad.13.1760982133165;
-        Mon, 20 Oct 2025 10:42:13 -0700 (PDT)
-Received: from [10.62.37.19] (i-global254.qualcomm.com. [199.106.103.254])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-29246ebcf67sm85874235ad.15.2025.10.20.10.42.10
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 20 Oct 2025 10:42:12 -0700 (PDT)
-Message-ID: <63d9252c-77d5-4405-a395-d7664c35ea12@oss.qualcomm.com>
-Date: Mon, 20 Oct 2025 10:42:09 -0700
+	s=arc-20240116; t=1760983091; c=relaxed/simple;
+	bh=3eybZrHiTS9wZG23hXV62FCDJFtCcIIaUJqij9JPSCA=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=EVYAHVOVoQgJZ2Ub1P1/RLMiEQZx08buB1zvnl/gwDh7D1I5Zwj+Dbe+6FO03GHeZ/qbBADpdCc4MF/1mHcD7vumYXC+uXoxffYVglLx0zhGjeJsTm+/+4aJNsdUI0pj7EvxUOo+h43oDqR9X31ZqYE1UuPkLIgisMr6emlxnCY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=txdlpjK2; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 000F9C113D0;
+	Mon, 20 Oct 2025 17:58:04 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1760983091;
+	bh=3eybZrHiTS9wZG23hXV62FCDJFtCcIIaUJqij9JPSCA=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=txdlpjK24x3VCahUT9ZDmp1hV0WioZsFGhVrgeWjDL9cx419PRG+z1aKhv4F5V0L9
+	 JapR/jG2vy2nXcja7HIJQuklXNawrWVBoUolmzXHNRskdSKILmpFmLNOHEd+Btk5Pd
+	 qyn6a8t3q415LXmmbB0OmJ+br+Yk6RQ1zNWN7tT8gECh7sss9pQprEy62S4/LcnEEi
+	 bzGWKnucEFvyT7CGRoAUWazf3X6ltNAtyfv4e0VnzA2dTCxa2eFGSqKKQxR/kr6l2F
+	 ZCkJiMMNO3p8R/OE5SRiIEDOKEE+VOtTJOVUdsPeE+y1j3RcqM8+8331BV2BKQeHCp
+	 idWOt9+MTZi2g==
+Date: Mon, 20 Oct 2025 18:58:02 +0100
+From: Conor Dooley <conor@kernel.org>
+To: Wolfram Sang <wsa+renesas@sang-engineering.com>
+Cc: devicetree@vger.kernel.org,
+	Alexandre Torgue <alexandre.torgue@foss.st.com>,
+	Chen-Yu Tsai <wens@csie.org>, Conor Dooley <conor+dt@kernel.org>,
+	Fabio Estevam <festevam@gmail.com>,
+	Fabrice Gasnier <fabrice.gasnier@foss.st.com>,
+	Gatien Chevallier <gatien.chevallier@foss.st.com>,
+	imx@lists.linux.dev, Jernej Skrabec <jernej.skrabec@gmail.com>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Liam Girdwood <lgirdwood@gmail.com>,
+	linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org,
+	linux-sound@vger.kernel.org, linux-spi@vger.kernel.org,
+	linux-stm32@st-md-mailman.stormreply.com,
+	linux-sunxi@lists.linux.dev, Liu Ying <victor.liu@nxp.com>,
+	Mark Brown <broonie@kernel.org>,
+	Maxime Coquelin <mcoquelin.stm32@gmail.com>,
+	Maxime Ripard <mripard@kernel.org>,
+	Pengutronix Kernel Team <kernel@pengutronix.de>,
+	Rob Herring <robh@kernel.org>, Samuel Holland <samuel@sholland.org>,
+	Sascha Hauer <s.hauer@pengutronix.de>,
+	Shawn Guo <shawnguo@kernel.org>,
+	Srinivas Kandagatla <srini@kernel.org>
+Subject: Re: [PATCH 0/4] dt-bindings: treewide: don't check node names
+Message-ID: <20251020-coroner-headstone-c8685f6e3868@spud>
+References: <20251020060951.30776-6-wsa+renesas@sang-engineering.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/6] dt-bindings: media: camss: Add qcom,kaanapali-camss
- binding
-To: Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-        Krzysztof Kozlowski <krzk@kernel.org>,
-        Loic Poulain <loic.poulain@oss.qualcomm.com>
-Cc: Hangxiang Ma <hangxiang.ma@oss.qualcomm.com>,
-        Jingyi Wang <jingyi.wang@oss.qualcomm.com>,
-        Robert Foss <rfoss@kernel.org>, Andi Shyti <andi.shyti@kernel.org>,
-        Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley
- <conor+dt@kernel.org>, Bryan O'Donoghue <bod@kernel.org>,
-        Todor Tomov <todor.too@gmail.com>,
-        Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>, linux-i2c@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-media@vger.kernel.org,
-        aiqun.yu@oss.qualcomm.com, tingwei.zhang@oss.qualcomm.com,
-        trilok.soni@oss.qualcomm.com, yijie.yang@oss.qualcomm.com
-References: <20250924-knp-cam-v1-0-b72d6deea054@oss.qualcomm.com>
- <20250924-knp-cam-v1-2-b72d6deea054@oss.qualcomm.com>
- <CAFEp6-1o11B9o3HjdJY-xQhDXquOTknXo0JeW=HfpTxXcEaK3g@mail.gmail.com>
- <a7be3a42-bd4f-46dc-b6de-2b0c0320cb0d@oss.qualcomm.com>
- <d8dfe11f-c55a-4eb2-930a-bfa31670bef0@kernel.org>
- <CAFEp6-1zpobZNLHt1192Ahtn2O7bV+As0P1YvVHrkRsORyH_Aw@mail.gmail.com>
- <ac96922e-d2a3-4a99-8f34-a822c3dd2d02@kernel.org>
- <7140b8a8-1380-4859-84a3-681b3f1ce505@kernel.org>
- <f5a1076f-f06c-404d-88d4-fef4f7694c82@linaro.org>
-Content-Language: en-US
-From: Vijay Kumar Tumati <vijay.tumati@oss.qualcomm.com>
-In-Reply-To: <f5a1076f-f06c-404d-88d4-fef4f7694c82@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-GUID: oW6Sd_qPKGXYIpQGFkDM4ObS1oolIiRU
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDE4MDAzMSBTYWx0ZWRfX1oXe43AswbcH
- pfmM7/JfYDg7EftXXmP1fOVPtaxtAfD2pdMhIGX2ErdC0uMkekKSGtdvwu1kHgymvbNGB1d+Ya5
- A3xTPIL57GviQEf/Efh+LnkdI0mqHYH+ooPUi/qpewPZDahRioOyjV23tI2I1Mup7nHHQnRHThv
- EUkKV0qkMXu7r3gYP9vcOFEd3JmlSs1FjArALSjCrOb84tk4nbt26JQ8rJ4u5x9vd7DT5+Bey8m
- 8q2Z4a2wNoZN5yok+rzmUn4c6mu9H4Ade/4+sFagG7J4ZfEyvjP32aKMKgYaxSe7R5kwGF/jjby
- bNNZvYfyZyLyM/hcASZan9GVwxVjyS3J3i/iSS8donXq1G36/gVAaOza+m0zxe3ACKQ053m19Re
- EHlBTSAiyUYpBWLBQWIOqUh0ehVMDQ==
-X-Authority-Analysis: v=2.4 cv=QYNrf8bv c=1 sm=1 tr=0 ts=68f67476 cx=c_pps
- a=MTSHoo12Qbhz2p7MsH1ifg==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17
- a=IkcTkHD0fZMA:10 a=x6icFKpwvdMA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=VwQbUJbxAAAA:8 a=_kPCHQoBruyNaNDuvIAA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=GvdueXVYPmCkWapjIL-Q:22
-X-Proofpoint-ORIG-GUID: oW6Sd_qPKGXYIpQGFkDM4ObS1oolIiRU
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-10-20_05,2025-10-13_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 phishscore=0 malwarescore=0 clxscore=1015 impostorscore=0
- spamscore=0 bulkscore=0 suspectscore=0 adultscore=0 lowpriorityscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2510020000 definitions=main-2510180031
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="ifIYyPcG9nWKLWH/"
+Content-Disposition: inline
+In-Reply-To: <20251020060951.30776-6-wsa+renesas@sang-engineering.com>
 
 
-On 10/20/2025 3:56 AM, Bryan O'Donoghue wrote:
-> On 20/10/2025 11:16, Krzysztof Kozlowski wrote:
->> On 16/10/2025 12:43, Krzysztof Kozlowski wrote:
->>> On 16/10/2025 10:47, Loic Poulain wrote:
->>>> On Thu, Oct 16, 2025 at 7:52 AM Krzysztof Kozlowski 
->>>> <krzk@kernel.org> wrote:
->>>>>
->>>>> On 15/10/2025 05:21, Hangxiang Ma wrote:
->>>>>>>> +      - const: csiphy4
->>>>>>>> +      - const: csiphy5
->>>>>>>> +      - const: vfe0
->>>>>>>> +      - const: vfe1
->>>>>>>> +      - const: vfe2
->>>>>>>> +      - const: vfe_lite0
->>>>>>>> +      - const: vfe_lite1
->>>>>>> Wouldn't it make sense to simplify this and have different camss 
->>>>>>> nodes
->>>>>>> for the 'main' and 'lite' paths?
->>>>>>>
->>>>>>> [...]
->>>>>> No such plan till now. Other series may take this into 
->>>>>> consideration.
->>>>>
->>>>> We don't care much about your plan. You are expected to send correct
->>>>> hardware description.
->>>>
->>>> To be fair, other platforms like sc8280xp-camss already have the
->>>> all-in big camss node.
->>>> Point is that if Lite and Main blocks are distinct enough we could
->>>> have two simpler nodes.
->>>> Would it make things any better from a dts and camss perspective?
->>>>
->>>>   camss: isp@9253000 {
->>>>      compatible = "qcom,kaanapali-camss";
->>>>      [...]
->>>> }
->>>>
->>>> camss-lite:ips@9273000 {
->>>>     compatible = "qcom,kaanapali-lite-camss";
->>>>      [...]
->>>> }
->>>>
->>>> That approach would create two distinct CAMSS instances and separate
->>>> media pipelines.
->>>> However, it may not work with the current implementation, as the CSI
->>>> PHYs would need to be shared between them.
->>>>
->>>> I guess this should be part of the broader discussion around
->>>> splitting/busifying CAMSS.
->>>
->>> And this discussion CAN happen now, stopping this camss and any future
->>> camss till we conclude the discussion. Whatever internal plans of that
->>> teams are, rejecting technical discussion based on "no plans for that"
->>> is a really bad argument, only stalling this patchset and raising 
->>> eyebrows.
->>
->>
->> To be clear, I expect Loic's comment to be fully and technically
->> addressed, not with "no plan for that".
->>
->> This blocks this patchset and any new versions.
->>
->> Best regards,
->> Krzysztof
->
-> I think we should stick with the existing bindings.
->
-> There is no "lite" ISP there are so-called lite blocks within the 
-> CAMSS block.
->
-> It makes sense to split out the PHYs from this block as they have 
-> their own power-rails but, if you look at the block diagrams for this 
-> IP there is no specific ISP lite, there are merely blocks within the 
-> camera called lite.
->
-> It might be nice to structure things like this 
-> arch/arm64/boot/dts/rockchip/rk356x-base.dtsi with each component 
-> separated out into its own node with its own compat string but, I'd 
-> have a hard time justifying changing up the bindings we already have 
-> for that reason - aside from anything else - all of those components 
-> in CAMSS live inside of the TITAN_TOP_GDSC which is the power-domain 
-> for the whole camera system.
->
-> So not meaning to answer for Hangxiang but, I think the compelling 
-> logic here is to stick to and extend the existing bindings.
->
-> So in fact I have no problem with the bindings as submitted - not 
-> including the regular fixups these types of submissions entail.
->
-> ---
-> bod
->
-Hi @Bryan, @Krzysztof, just my two cents. I think we should consider 
-separating CSIPHY, CSID, IFE and IFE Lite into distinct DT nodes. Having 
-a modular DT structure brings in several advantages,
+--ifIYyPcG9nWKLWH/
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-     1. Simple to manage with much better readability.
-     2. Better control to disable certain HW modules from DT.
-     3. Less error prone as we don't need to maintain long lists of 
-clocks or other resources against their names. Accordingly, easy to review.
-     4. No need to maintain resource lists within the CAMSS driver to 
-identify the resources specific to the HW block. Offers centralized 
-control for the HW resources.
-     5. Allows re use between the platforms when a same version of a 
-subset of HW modules is carried over to future chip sets.
-     6. Is more scalable when we add more functionality to the CAMSS driver.
-     7. Finally, it brings in parallel development ability with 
-engineers (within the local teams) working on different HW modules 
-within camera subsystem.
+On Mon, Oct 20, 2025 at 08:09:49AM +0200, Wolfram Sang wrote:
+> Node names are already and properly checked by the core schema. No need
+> to do it again.
+>=20
+> These are all occurrences I found in linux-next as of 20251015. I did
+> run dt_bindings_check successfully. I haven't done a way to run
+> dtbs_check yet because I would need to identify the proper architecture
+> first, right? Is there some tool which tests all DTs of a certain
+> binding? At least build bot is happy, I don't know if it checks DTs as
+> well, though.
+>=20
+> I'd suggest to give subsystems some time to pick these patches before
+> Rob applies the remaining ones?
+>=20
+>=20
+> Wolfram Sang (4):
+>   dt-bindings: bus: don't check node names
+>   dt-bindings: nvmem: don't check node names
+>   ASoC: dt-bindings: don't check node names
+>   dt-bindings: spi: don't check node names
 
-If not for the current patches in the pipeline, if you are comfortable 
-with this approach, we will try to push the changes for the future chip 
-sets with the modular bindings, leaving the existing SOC drivers and 
-bindings untouched (if that's recommended). Please let us know your 
-thoughts. Thanks.
->
->
+Acked-by: Conor Dooley <conor.dooley@microchip.com>
+
+--ifIYyPcG9nWKLWH/
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iHUEABYKAB0WIQRh246EGq/8RLhDjO14tDGHoIJi0gUCaPZ4KgAKCRB4tDGHoIJi
+0nQOAP9zt58K2r6VVxQGAjEOeExklSakIE1QYNmtoG9DXBZsvAEAw5tz28SP3wVF
+gblhCrRV4FJmV7bWABaDA6WjOT5AlAI=
+=dLoT
+-----END PGP SIGNATURE-----
+
+--ifIYyPcG9nWKLWH/--
 
