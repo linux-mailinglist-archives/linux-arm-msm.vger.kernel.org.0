@@ -1,107 +1,226 @@
-Return-Path: <linux-arm-msm+bounces-78000-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-78001-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [142.0.200.124])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2D779BF11D3
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Oct 2025 14:19:55 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 65858BF1261
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Oct 2025 14:26:26 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 24C9F4F3CA8
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Oct 2025 12:19:54 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 40F423A8DCB
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Oct 2025 12:22:02 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BD6CD3126A4;
-	Mon, 20 Oct 2025 12:18:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CBC0111CAF;
+	Mon, 20 Oct 2025 12:21:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="pRj+KyPW"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="DdZqU3yU"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-f48.google.com (mail-ed1-f48.google.com [209.85.208.48])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E162731280D
-	for <linux-arm-msm@vger.kernel.org>; Mon, 20 Oct 2025 12:18:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CCE12ED872
+	for <linux-arm-msm@vger.kernel.org>; Mon, 20 Oct 2025 12:21:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760962719; cv=none; b=eH0DBrjQ8j9B93luuqhhF67DYbTmeLb7S/aWircnJOYz1FBsdwQdsXqEgihLKB1bYucVstPD50c7qgaLR0pIKPN6LUbpHE48x6ikPA2yBmO+o86rK5BI8YXutqtoBA8/sgxQsc51SmGFAQyqGFDS1s48GfKGdwUOYv/EsplDKLg=
+	t=1760962918; cv=none; b=tsy5o3oIOLx8neB+brpOvGCrK83aMP2AqyIjxYDblPKyPoKHAtVPakCe8s+qgT9NqO8V1qjWNXydmqMXA8sialixDuZUDGv9+L5FDh0f7DTjyrYoVcqcBkzU3oSqKXy5qcZX7XTpWfyUnh/pUARlJtErJrSHCZxf1JXI+wIRxao=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760962719; c=relaxed/simple;
-	bh=8a8AR6tiCU6DFQ3mg8jBjjoUZhwx7+JJL0g4l6drVNY=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=o7DvFrCf/n/sLz0AshqXiLqiIqYVSqgBJuz53sUODu07RuAYP38J2rWb+RkT4yzBT0oEiXIvPl3PT3Gai4g7Sns38kVWAokiwd6PkatJf2py6+qdg2djtjU+bj0lHpbWS+QVbOOy1QK6KDzeqtwal0e13F8AYoRGiHK3Tw3SJa4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=pRj+KyPW; arc=none smtp.client-ip=209.85.208.48
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ed1-f48.google.com with SMTP id 4fb4d7f45d1cf-63c49539cf7so3484393a12.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 20 Oct 2025 05:18:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1760962716; x=1761567516; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=mHtoWy0rW/Dfa0K/dIGZkJv1hj/FYjxxGrknVD25rf8=;
-        b=pRj+KyPWrkTIdnv7YGRt0B7woKEkF2ePySDDIiHidqCeT9jsbQWw0tmSutPgBAhJ+6
-         m1ikHhzNhPMxiDDRM64B3ZH2TrIlUYNLjv5swCCUkvL3cFzNgDboDaEC9gZrOMOegMq2
-         cvSuFABVs+fPUxYl1Kt7QKIYQpvl3kSY2rwdaWZMhArBKQX1iefhaY/fv/OcITat5o1N
-         yhiPyzT9uxZha5ZYOzP1Okocw+gGci3uqyZfwHu5vzc/qp1dYUguAIfAbKVWRT0B+0jb
-         wg0OSG3O5CYN+1nE3HoOK2kSp09Yu4gAYVzVJzHR/LLbSzEQFsSWuMUxqLkeoMaozT4c
-         UvLA==
+	s=arc-20240116; t=1760962918; c=relaxed/simple;
+	bh=VgVnyXqe3uZsYKis0PDC10eA8gOksqa5Yl7wUglsi1Y=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=eMoz3Ns+lEzjVyLuGjuyefLiG+gBG1baqSleV32ubH/5XRJUjyAxzKHBFzTQ5ZXu3+oSg9CBCNan8cVtMYUzkMUyCFggVyqZ3iLNWFHb0apVGeMODqUB7dzsYohwOAcUQiLOkPjMf+bBTFdqjF6+8pVSw2YfrV1IWYNNkdGxJ/s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=DdZqU3yU; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 59KBDxXC025907
+	for <linux-arm-msm@vger.kernel.org>; Mon, 20 Oct 2025 12:21:56 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	qKCfkUI9DYpLSsbCb7f0JpIqO0wEPZNRyKV/I77+iMc=; b=DdZqU3yU8iHDb2LR
+	wtlRcKRo+2G4azN14ruQNOxwkqxXkRLpOWrqzDXuvYLbXu5RSk1yPELb39h88RUf
+	5VGNG/WMALONbT4vVmUF4mrN3gO1J04bqNCYUvKaI2PWuoP+V9f1QJZmlYIEM6+J
+	BFhdApoM1Zj2AzA84zMKE0f893iGGl2q9KZYqhfg6L/v4bchQobJ9M39P8GLJ21r
+	LPxLJ1huJ6Ej5SfRKP5Cet6PEHww34XGIpPauNfBfC7KM2qpP0XwRDe2gkUjSdtP
+	tZGXSLuDeiyrhdN3OU/D3LGrsb5/rOx6QTA9Qzwq79ioJBOm59T4MdRVwKT20x/G
+	C2O9kQ==
+Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com [209.85.222.199])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 49w08w2b1u-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Mon, 20 Oct 2025 12:21:56 +0000 (GMT)
+Received: by mail-qk1-f199.google.com with SMTP id af79cd13be357-88f7d885f8dso169368385a.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 20 Oct 2025 05:21:56 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1760962716; x=1761567516;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=mHtoWy0rW/Dfa0K/dIGZkJv1hj/FYjxxGrknVD25rf8=;
-        b=sMjnz5mwYwOq0aalCjftZowAI6i63U23vzRrKUBCQ89X6+Vef5Uu5OgfLGO+E4JI+G
-         iT2ZRoB5NErEHnB99zGvFIeoSK45ZfIyWOakphFqvTzpOEVFTtaYoV+JDtG6EAStCSbx
-         z3sZBfA6wtkMERueJs2lwf2hNFet/k8+kyuzDHldRagS43ZaLVLOkGUrX+t2W+9pQqcy
-         K5FnlMOCp3wyV2yiTv9mnAJW4AGzTV/HZYWR6Vv3GeOshp/f226CnAHMlpzmCfEcbKxe
-         UeQey9w2+vMVtcvaDHn0F7IQ9C5h7/Dzf3l2YY2goL2yHlQdvWwsy90WL5Cu3NzlXDau
-         NDfQ==
-X-Forwarded-Encrypted: i=1; AJvYcCXYzKV2EI0cD5DQ7GxwIHN5GWLk+aupDOqQ/Q4yj4NvLjjWzTNZI5WF7Ne0VqlqDbz0ntNXMAyHcFCLovn4@vger.kernel.org
-X-Gm-Message-State: AOJu0Yy+6Y784AIS2O8avQpR/tJew6nwKviK+SAQG2Y/MvwK5QMhtBvB
-	+gnAKTX+2wLRRpFOe/Xq9VLjhLe/RlXT6xUVJmfBZGGMFNH3Y9LowHuFLx2Ga7fKsV0=
-X-Gm-Gg: ASbGnctnesGTCxthVPcH0f+ArVX2BWtM84cmJJ6Ux2GeeEn4Sv87p7HXvxG43YhQ1Ex
-	zAOF9TOQ7pKRimmBr5XHjS3Zcz8b+fb9dQocobRhBpQ1n+zadn7nE8yBLUsMPL/+ODnBxfWgylh
-	ZLpf9McZxyDdbrSF/GY8ks11EaaPIuYhi9pe3RiMVYV8q1anNeXjKOZkhVhRMGwgzNwSI4zUXZf
-	7sdtEOKq+w9Zs9b9tShzD4FvvpfLRE8xpNfqFvhC7OYcPl3uePaMAts6TW7P2DsjQs5xxco0MIJ
-	PYJBmyfxZUXo1XqpMOy+MeavqxP3gF9qJT7GRAqqmKVuWmXH8S/mDRCpSooUd85F45ADNrA74/j
-	gGhgae8cyQq9VSsoFoHR316fe8MN8tQ+PEN/K7yPUARlAuYd7yVjKKCGM6f5ec2Ka4ORQGcFWRT
-	ylEV+6YEg=
-X-Google-Smtp-Source: AGHT+IEYTKLbq7qE2pr8wxA/yckx1iXmo+BlNHAbmHOkOmRXJq652IxDbU9LA6fH4X1E2sL5qKkwnQ==
-X-Received: by 2002:a05:6402:2787:b0:63b:efa7:b0a9 with SMTP id 4fb4d7f45d1cf-63c1f633e3dmr12601718a12.9.1760962716133;
-        Mon, 20 Oct 2025 05:18:36 -0700 (PDT)
-Received: from linaro.org ([86.121.7.169])
-        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-63c494301aasm6738466a12.24.2025.10.20.05.18.34
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 20 Oct 2025 05:18:35 -0700 (PDT)
-Date: Mon, 20 Oct 2025 15:18:33 +0300
-From: Abel Vesa <abel.vesa@linaro.org>
-To: Konrad Dybcio <konradybcio@kernel.org>
-Cc: Bjorn Andersson <andersson@kernel.org>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Subject: Re: [PATCH] arm64: dts: qcom: sdx75: Fix the USB interrupt entry
- order
-Message-ID: <w7jln5k2xaq3iu23v2z3auoychicjgrbpvavsbvb2g2fjk56yq@sramtyump6s2>
-References: <20251020-topic-sdx75_usb-v1-1-1a96d5de19c9@oss.qualcomm.com>
+        d=1e100.net; s=20230601; t=1760962915; x=1761567715;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=qKCfkUI9DYpLSsbCb7f0JpIqO0wEPZNRyKV/I77+iMc=;
+        b=LdSNk8/1z8WpUiFlIrWEcHkjt/15zL9iS9SOdbzbk1n1lj59XtBp/Am3WCHxRAtGeX
+         bcB+gGOGmx94Z4jMxudJv7IF8kEy9n42kAGGpUpQXMzTvFJq96HIgEUacJnP6nmyrFp0
+         6MefpKeCPx8qGdB9COKZ8qJteBz/GoM4xRIsaK7ru6K9DnrZK7w0ttNgW7sGFrJRqcJN
+         p80mbPc5TyaU0B6kpPULapAo7cEncT61vxAEtNgYtAYS8uaQ1OpedRKs+mQc2JiT4eC1
+         J4Un25zXXBzMx6eGvvE3zCPYt9XvYTGwIoTv2tiafeOclToz2MRiNsB8041S6PNhCA2P
+         nhJg==
+X-Forwarded-Encrypted: i=1; AJvYcCXL+p13BY2gxZ/K1yCJCgNVgNke1fwa+lyqy9HkA5AaWZP7qNv2PNsLacnqUvolohu0EM3+/rUQDEg5N0iC@vger.kernel.org
+X-Gm-Message-State: AOJu0Yy7FH8azLSUAX4+C4vVJ9r24BmiceiXTapfF5kYBkrKZHvS2ZMa
+	lQaSiHEvQMrfeOPk1wf5BryVmAzwtU0wYGFxcmnX38a4l0bLCiezGIS+lUr6b0i9GJ2AsdTbg2F
+	Zr5tOWPrBIzPuwubmxbx5TboYF4xzxyMbwV7DXawdV6wKJWF0+ASO8R8YqU0Ff8GBeEAx
+X-Gm-Gg: ASbGncuDrFlMGKcKbBRinM0Ukk8fIcX2ZZi8LlKIUF9NLgIKhHAl8mJdqaKwqHgT2jk
+	VNiYbMjdvWIDfGMo+Ri2A0+6XBPUQJwX9KCHkWNw7wVZvb+e+ysNuhSAS/pEk5hBn+BhGeFqzOd
+	Ftpi1oJRqzNr29KXsV49G5082SCfZZwwZLi9MACIT/72bAsEueZW6QDzE3qEE2bIqJTEYGeEpgH
+	8kA3rWNXECJPXjOKC9FGWqEByxM1T7iHiGmAuDBdLfN40W17/U8o3DgMjoWcpjxpN+UX2NaJyoE
+	QtqMxlqDpMdV2GGEUAusN5wGvHeoCcDrxlp92kUpLKz5r99FLPb+4+I60kd8ZtipLcgWvEN6yW9
+	TN5mWnJeycSfT+wsN7dCGSymikCJaAw2fuq1I5jSMtwSF5H55K87ZUjAa
+X-Received: by 2002:a05:622a:130d:b0:4d5:eedd:6893 with SMTP id d75a77b69052e-4e89d411c5emr111741411cf.10.1760962914838;
+        Mon, 20 Oct 2025 05:21:54 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGzRsE45j1SvELohLH5CCKq4ye7i4regfvJKVczjO606BJEeqTcxSAhMC4HYbZMRn3PNcKbsQ==
+X-Received: by 2002:a05:622a:130d:b0:4d5:eedd:6893 with SMTP id d75a77b69052e-4e89d411c5emr111741041cf.10.1760962914388;
+        Mon, 20 Oct 2025 05:21:54 -0700 (PDT)
+Received: from [192.168.119.202] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-b65eb526325sm768122866b.55.2025.10.20.05.21.50
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 20 Oct 2025 05:21:53 -0700 (PDT)
+Message-ID: <85bf3468-24bf-4f14-afcd-28878ad84dc9@oss.qualcomm.com>
+Date: Mon, 20 Oct 2025 14:21:49 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20251020-topic-sdx75_usb-v1-1-1a96d5de19c9@oss.qualcomm.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 2/2] arm64: dts: qcom: sm8550: Additionally manage MXC
+ power domain in camcc
+To: Luca Weiss <luca.weiss@fairphone.com>,
+        Taniya Das <taniya.das@oss.qualcomm.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+        Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+Cc: Bjorn Andersson <andersson@kernel.org>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Jagadeesh Kona <quic_jkona@quicinc.com>,
+        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd
+ <sboyd@kernel.org>, Conor Dooley <conor+dt@kernel.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-clk@vger.kernel.org
+References: <20250303225521.1780611-1-vladimir.zapolskiy@linaro.org>
+ <20250303225521.1780611-3-vladimir.zapolskiy@linaro.org>
+ <dbxvzgqs5slrl5edqunal3wplg5jiszqv46dr4nzgowwlhkhxa@qwtfq7nfjwfo>
+ <3210a484-b9c3-4399-bee1-9f5bbc90034c@linaro.org>
+ <CAA8EJprP9Z181VDCT=xfyrBipzgiB0tfb8M_XZ4H=yOrvEnB0w@mail.gmail.com>
+ <f41061a2-cf45-4588-8df7-22270c936ee2@quicinc.com>
+ <D8EZ47Z557OX.37FDVYA5AHET0@fairphone.com>
+ <d64c0776-0b12-42d3-aed3-4e6a13487f51@quicinc.com>
+ <DDKNL43NWFMA.1S03T0SUYFVMY@fairphone.com>
+Content-Language: en-US
+From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+In-Reply-To: <DDKNL43NWFMA.1S03T0SUYFVMY@fairphone.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-ORIG-GUID: QWvkM3bef2I5ZJmtndKXB_5jCzRvDDo1
+X-Proofpoint-GUID: QWvkM3bef2I5ZJmtndKXB_5jCzRvDDo1
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDE5MDA5MCBTYWx0ZWRfX5+QEl8ll1B2B
+ 3rdoBgnr3G+Gw4O3cCktRairjQKZ1JxRN87meuYCdwdrN3pztA3TKixF2mdVPiTbTaMs2LnOlg3
+ IMaOp7s2v02ipiueYw0t1GYlzRHj+hqBl53S86ahjXPP592nlnEfmkfihZ3f2bQ/vqC5Eselu6r
+ VMCLnJBcMHQkCZlt0NbUJxfZU451qEppkf/nzWsDA8YPNuxi6ikvFVDfxteqvMdWf9matSbsGkZ
+ 6ro6KPvmFgI+89zDEk9N8Y2zpmxl+QEogps6JekbzM42GE40J7Fp9L4SkKBeeOsYUAIwrp4yUZk
+ dsFB171WHO4XuojSgEWehSMygSAS25gXlW7TvD6gDJdiCy5BXWVzO2nUelr2Mwg0xkdXgciP//i
+ A8vNy31+a3XCCapQizv2XuNdKw6GZw==
+X-Authority-Analysis: v=2.4 cv=V5NwEOni c=1 sm=1 tr=0 ts=68f62964 cx=c_pps
+ a=HLyN3IcIa5EE8TELMZ618Q==:117 a=FpWmc02/iXfjRdCD7H54yg==:17
+ a=IkcTkHD0fZMA:10 a=x6icFKpwvdMA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=VwQbUJbxAAAA:8 a=KKAkSRfTAAAA:8 a=tOHfr81QrpHVPz6DLswA:9 a=QEXdDO2ut3YA:10
+ a=bTQJ7kPSJx9SKPbeHEYW:22 a=cvBusfyB2V15izCimMoJ:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-10-20_03,2025-10-13_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ bulkscore=0 malwarescore=0 adultscore=0 priorityscore=1501 lowpriorityscore=0
+ spamscore=0 suspectscore=0 clxscore=1015 phishscore=0 impostorscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.19.0-2510020000 definitions=main-2510190090
 
-On 25-10-20 12:13:38, Konrad Dybcio wrote:
-> From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+On 10/17/25 4:05 PM, Luca Weiss wrote:
+> Hi Taniya,
 > 
-> The DP and DM interrupts are expected to come in a different order.
-> Reorder them to align with bindings.
+> On Thu Mar 13, 2025 at 12:57 PM CET, Taniya Das wrote:
+>>
+>>
+>> On 3/13/2025 1:22 PM, Luca Weiss wrote:
+>>> Hi Taniya,
+>>>
+>>> On Thu Mar 13, 2025 at 5:39 AM CET, Taniya Das wrote:
+>>>>
+>>>>
+>>>> On 3/4/2025 2:10 PM, Dmitry Baryshkov wrote:
+>>>>> On Tue, 4 Mar 2025 at 09:37, Vladimir Zapolskiy
+>>>>> <vladimir.zapolskiy@linaro.org> wrote:
+>>>>>>
+>>>>>> On 3/4/25 01:53, Dmitry Baryshkov wrote:
+>>>>>>> On Tue, Mar 04, 2025 at 12:55:21AM +0200, Vladimir Zapolskiy wrote:
+>>>>>>>> SM8550 Camera Clock Controller shall enable both MXC and MMCX power
+>>>>>>>> domains.
+>>>>>>>
+>>>>>>> Are those really required to access the registers of the cammcc? Or is
+>>>>>>> one of those (MXC?) required to setup PLLs? Also, is this applicable
+>>>>>>> only to sm8550 or to other similar clock controllers?
+>>>>>>
+>>>>>> Due to the described problem I experience a fatal CPU stall on SM8550-QRD,
+>>>>>> not on any SM8450 or SM8650 powered board for instance, however it does
+>>>>>> not exclude an option that the problem has to be fixed for other clock
+>>>>>> controllers, but it's Qualcomm to confirm any other touched platforms,
+>>>>>
+>>>>> Please work with Taniya to identify used power domains.
+>>>>>
+>>>>
+>>>> CAMCC requires both MMCX and MXC to be functional.
+>>>
+>>> Could you check whether any clock controllers on SM6350/SM7225 (Bitra)
+>>> need multiple power domains, or in general which clock controller uses
+>>> which power domain.
+>>>
+>>> That SoC has camcc, dispcc, gcc, gpucc, npucc and videocc.
+>>>
+>>> That'd be highly appreciated since I've been hitting weird issues there
+>>> that could be explained by some missing power domains.
+>>>
+>>
+>> Hi Luca,
+>>
+>> The targets you mentioned does not have any have multiple rail
+>> dependency, but could you share the weird issues with respect to clock
+>> controller I can take a look.
 > 
-> Signed-off-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-> ---
+> Coming back to this, I've taken a shot at camera on SM6350 (Fairphone 4)
+> again, but again hitting some clock issues.
+> 
+> For reference, I am testing with following change:
+> https://lore.kernel.org/linux-arm-msm/20250911011218.861322-3-vladimir.zapolskiy@linaro.org/
+> 
+> Trying to enable CAMCC_MCLK1_CLK - wired up to the IMX576 camera sensor
+> on this phone - results in following error.
+> 
+> [    3.140232] ------------[ cut here ]------------
+> [    3.141264] camcc_mclk1_clk status stuck at 'off'
+> [    3.141276] WARNING: CPU: 6 PID: 12 at drivers/clk/qcom/clk-branch.c:87 clk_branch_toggle+0x170/0x190
+> 
+> Checking the driver against downstream driver, it looks like the RCGs
+> should be using clk_rcg2_shared_ops because of enable_safe_config in
+> downstream, but changing that doesn't really improve the situation, but
+> it does change the error message to this:
+> 
+> [    2.933254] ------------[ cut here ]------------
+> [    2.933961] camcc_mclk1_clk_src: rcg didn't update its configuration.
+> [    2.933970] WARNING: CPU: 7 PID: 12 at drivers/clk/qcom/clk-rcg2.c:136 update_config+0xd4/0xe4
+> 
+> I've also noticed that some camcc drivers take in GCC_CAMERA_AHB_CLK as
+> iface clk, could something like this be missing on sm6350?
+> 
+> I'd appreciate any help or tips for resolving this.
 
-Reviewed-by: Abel Vesa <abel.vesa@linaro.org>
+Is CAMCC_PLL2 online?
+
+Konrad
 
