@@ -1,172 +1,207 @@
-Return-Path: <linux-arm-msm+bounces-77938-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-77939-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [IPv6:2605:f480:58:1:0:1994:3:14])
-	by mail.lfdr.de (Postfix) with ESMTPS id 563D6BEEAB4
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 19 Oct 2025 19:13:45 +0200 (CEST)
+Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [142.0.200.124])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2916BBEF0A2
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Oct 2025 03:56:11 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 37B424E2D57
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 19 Oct 2025 17:13:44 +0000 (UTC)
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id DE7BD4E7C88
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Oct 2025 01:56:09 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C76DB1FFC48;
-	Sun, 19 Oct 2025 17:13:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0A6911DED4C;
+	Mon, 20 Oct 2025 01:56:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ofo4JYY+"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="ZtLLZYXC"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f49.google.com (mail-wr1-f49.google.com [209.85.221.49])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 971CF1E5B63;
-	Sun, 19 Oct 2025 17:13:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C56FD1D88D7
+	for <linux-arm-msm@vger.kernel.org>; Mon, 20 Oct 2025 01:56:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760894020; cv=none; b=CWfP0h4Bylr+YQLlCD/IWW/2xUv/Of2FB6Y9lFUZZQ8Wf6zttjPIbLTwvL+JPd/yyIhrd9yq0fkr8DtFKNi/WBskHzopWHs9xCqLEKQBjxilNcVvBfxEpwa5ACM35+YsRsKnd0UsFsS3lCnzdR1qh9uDi9Ap681FkDb6jCwiS0M=
+	t=1760925363; cv=none; b=PK4C2yh6yTMOHOQlASp+j6hHxwAdgOinzarc9iyJz34WY3oUSojezCTy8VVrhrEV2ISV9/brLDPRbG5qkIWxL9XrrOVdAqNpSoqZX9fFM6vX0Ju8vBR4rdPkHwdGeApPjvwZ+oRYLwHkiRhbhNC+0uYGe8F7Ws2a2OgiF567Zgw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760894020; c=relaxed/simple;
-	bh=xyEfLRN8ZylZ1U+SxjoVN+rv4eGUG+EVIb9AGdg00OM=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=UiRZrTu2/fPLI/HsEiXm5Do93KA370BTggaRfjkm0sKBYpRSfOLN8iRFo33wqlEbujjZtIU8OBK2iaM+ZVra6x5/xp/tpvAaYFZh9wCPy0Stg4qUH1GSnHF0iEL0OAxVwmzhZxztw74k9G3XlAKCKzx/qZ5bJi3cS389WIzGbJU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ofo4JYY+; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BFAC4C4CEE7;
-	Sun, 19 Oct 2025 17:13:34 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1760894020;
-	bh=xyEfLRN8ZylZ1U+SxjoVN+rv4eGUG+EVIb9AGdg00OM=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=ofo4JYY+lLe2QPhNy5mzWgfYWwrDE48j9YfVjx7YiJXSOo0DnJyRis/T2jpXm2SuY
-	 JWF7PegfoUrbDw3/v2Dlj5T1WPVmaK3LcNdrZbOMinsmVjRc3DYBI95B1CRGimQP8J
-	 Xab2JQVQNgeWUeh4o+Q/oZWwlid+ntkNNdKXcjjZ1i9IEiBqZZgPhdzBQTxwmqu4xK
-	 SqVMGbSApmdQDvnbHq6nVQ/mM4610CviYIgAhKHuRF71634iBHnikKYmo2pRT7rJtc
-	 JPMNkC6+l3VL0CnMG732S/F9/LPMvYXsLhoxBxqJBtv4A54MfnIndkHUXti6eo9tuI
-	 I2r/wt2YApV+w==
-Message-ID: <58446b2d-560f-4a7e-890a-78ae0bb92908@kernel.org>
-Date: Sun, 19 Oct 2025 19:13:32 +0200
+	s=arc-20240116; t=1760925363; c=relaxed/simple;
+	bh=FhzgS1/MGPIfdcjIr19V6Zpkv9/EfeIlF628IPVhrec=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=SGFT4f300c+3jV9RzTf2K82lrFJ6IESsigkhocTXAsSud3vg+rIEMG+ZiEfqTE3dYgPlHV6wdmEvU4SvK73cRLVEVIgA2mswko6rRdry2e4fJBRaWduikDf0Zuh7M56YlrTeh2KasWTR6ww9sEMuKfCAkv1MMhYSL7lGcvw7agk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=ZtLLZYXC; arc=none smtp.client-ip=209.85.221.49
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wr1-f49.google.com with SMTP id ffacd0b85a97d-3ece1102998so3376512f8f.2
+        for <linux-arm-msm@vger.kernel.org>; Sun, 19 Oct 2025 18:56:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1760925359; x=1761530159; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=s+Q06UI6PhTkJgy9be05aY/Rj5+zLhZlUFJf9K2EKUA=;
+        b=ZtLLZYXCEwmFAGJ4IrUwSi2FVlzITPw5zpr2GbTDQBKg76usSjPsPQmJrB95vg843S
+         hti0GW+u+0hYVdwSUxQvq9DJvHsBch/6jlnydiDkZqQNi/6qS51dWA9FkqlTAful1qLH
+         xJYTousGr54EeYX+wr1G/TIKRc1cIib51qgY4u536WTqZH/UyuamjhWN+TumaZ9NPvTc
+         myrdEx0LNY6EI7XMIicTE5dEElfhErz+brIrIH6bnjw6oJhpEhfxEvwxBJil7MGT1v8q
+         s5+NWWuoYnSHtBtd0kxB7NqKlqTmSQxvHVO4nLFaUWMCh6E3E9TjY7qQ8bLKIpWz4iyk
+         4a6A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1760925359; x=1761530159;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=s+Q06UI6PhTkJgy9be05aY/Rj5+zLhZlUFJf9K2EKUA=;
+        b=qh3UH8wwBWTAUPBs/Cy2xd4QdTokT9aCmSFBAyvZBY6CKQ6GOwgwGlBTiWEWZX4M2F
+         Mv/4/MF5EkXG6pdbyVyJn3lh294UuVkwJd4niL88ZijeQTO/ItqpP6suDYokasqylqIy
+         F7alDzWsEO6YT111OuvoFkzDw0Lbsh6CNPO+0qzbsTfdV7t1x3ym8SdIs+vUB8IAN7xp
+         FJUvBHq+8Z/9IBia20GCx7d6whi3yrddM32HAsi5NiFRUgGdS634fDgPnCAG1jL+crmf
+         SraLXOsFGtD0/4X6eY8k6AQRHC+zfvoMBrWnWmL0WHeM667zUEfv8JlR5efgRsCIoctS
+         6MjA==
+X-Forwarded-Encrypted: i=1; AJvYcCU0KDZGBJPEHOOMwyrSsa4MA19T2UYhP0QiwkZqdnueRUSI75r7r1jmjk6HCE3KVLvWtSSd4ixvp/JCVPfC@vger.kernel.org
+X-Gm-Message-State: AOJu0Yx2jt9AIySDkJ+x/qvqB6d4klfSJHJZi+0Jbi3z6eb/IoWAheGO
+	AZ4bDs2KATkbKwIF8PujHj2Sv26omOxckiPgzdS+uzOl6a5EUvh/IFd0xclEhXDBFRI=
+X-Gm-Gg: ASbGncs2s24gtxCFgwQR6+5SIRx0JVq2r9Uzqx1ZiMvjL8wpgRTY5OAIoMD7ibDHuZE
+	UaajuiVQhXQ/K1wS8smMn1atviL5+sjcxLHC66tgmXDsryr/iJ/wXYnxSAJR5fjJaTGV274y1do
+	wzfbJkEsYq0TkyZ3bXL+3afho0MkWy9z0XMY2NtsBhTPwyWb9jnRv+cVzI8sW1E72Amq61kLQss
+	Mq/E7sNGnP1V9ypTli6bJcvyBO+tZWUw2YM/YYdyIyislToT+CusuJ3WBv88NFRIDX2Uo48Ofq8
+	U/7u8Vv9zRkHQfEiEc4AtM91jOqDCiXEPmZYTpjBzuOQuNu1+sQ6Z4dUT0/ahU9hOb3TwkNYlHm
+	K9UicDXIm+sMaaafeqB6r30egJC6SXrnrM55cLKAo7mfOf/dRZTh9vOcbapYGK5VF2GNrX4vEcw
+	bV9vK4PKxhMbGXjEw=
+X-Google-Smtp-Source: AGHT+IG6BI0NR7Fcw8+O+sc+d7pzt0R1JZXANX7cqKWtOTX4YgRgFe1wtH43dzv/ihmHpMDqYHwKTw==
+X-Received: by 2002:a05:6000:26ca:b0:428:3c66:a027 with SMTP id ffacd0b85a97d-4283c66a441mr4335994f8f.54.1760925359019;
+        Sun, 19 Oct 2025 18:55:59 -0700 (PDT)
+Received: from orion.home ([2a02:c7c:7259:a00:9f99:cf6:2e6a:c11f])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-47152959b6dsm115381535e9.7.2025.10.19.18.55.58
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 19 Oct 2025 18:55:58 -0700 (PDT)
+From: Alexey Klimov <alexey.klimov@linaro.org>
+To: broonie@kernel.org,
+	gregkh@linuxfoundation.org,
+	srini@kernel.org
+Cc: rafael@kernel.org,
+	dakr@kernel.org,
+	make24@iscas.ac.cn,
+	steev@kali.org,
+	dmitry.baryshkov@oss.qualcomm.com,
+	linux-kernel@vger.kernel.org,
+	linux-sound@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org,
+	stable@vger.kernel.org
+Subject: [PATCH] regmap: slimbus: fix bus_context pointer in __devm_regmap_init_slimbus
+Date: Mon, 20 Oct 2025 02:55:57 +0100
+Message-ID: <20251020015557.1127542-1-alexey.klimov@linaro.org>
+X-Mailer: git-send-email 2.47.3
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 1/3] dt-bindings: display/msm: Add SM6150 DisplayPort
- controller
-To: xiangxu.yin@oss.qualcomm.com, Rob Clark <robin.clark@oss.qualcomm.com>,
- Dmitry Baryshkov <lumag@kernel.org>, Abhinav Kumar
- <abhinav.kumar@linux.dev>, Jessica Zhang <jessica.zhang@oss.qualcomm.com>,
- Sean Paul <sean@poorly.run>, Marijn Suijten <marijn.suijten@somainline.org>,
- David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
- Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
- Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>,
- Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
- Conor Dooley <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
- freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, fange.zhang@oss.qualcomm.com,
- yongxing.mou@oss.qualcomm.com, li.liu@oss.qualcomm.com
-References: <20251015-add-displayport-support-to-qcs615-devicetree-v4-0-aa2cb8470e9d@oss.qualcomm.com>
- <20251015-add-displayport-support-to-qcs615-devicetree-v4-1-aa2cb8470e9d@oss.qualcomm.com>
-From: Krzysztof Kozlowski <krzk@kernel.org>
-Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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 a/A=
-In-Reply-To: <20251015-add-displayport-support-to-qcs615-devicetree-v4-1-aa2cb8470e9d@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 
-On 15/10/2025 03:53, Xiangxu Yin via B4 Relay wrote:
-> From: Xiangxu Yin <xiangxu.yin@oss.qualcomm.com>
-> 
-> Describe the DisplayPort controller for Qualcomm SM6150 SoC.
-> 
-> Signed-off-by: Xiangxu Yin <xiangxu.yin@oss.qualcomm.com>
-> ---
->  .../devicetree/bindings/display/msm/qcom,sm6150-mdss.yaml     | 11 +++++++++++
->  1 file changed, 11 insertions(+)
-> 
-> diff --git a/Documentation/devicetree/bindings/display/msm/qcom,sm6150-mdss.yaml b/Documentation/devicetree/bindings/display/msm/qcom,sm6150-mdss.yaml
-> index 9ac24f99d3ada1c197c9654dc9babebccae972ed..935eca23ce6b30b81b3ad778e5fcacc817a230c3 100644
-> --- a/Documentation/devicetree/bindings/display/msm/qcom,sm6150-mdss.yaml
-> +++ b/Documentation/devicetree/bindings/display/msm/qcom,sm6150-mdss.yaml
-> @@ -51,6 +51,16 @@ patternProperties:
->        compatible:
->          const: qcom,sm6150-dpu
->  
-> +  "^displayport-controller@[0-9a-f]+$":
-> +    type: object
-> +    additionalProperties: true
-> +    properties:
-> +      compatible:
-> +        items:
-> +          - const: qcom,sm6150-dp
-> +          - const: qcom,sm8150-dp
+Commit 4e65bda8273c ("ASoC: wcd934x: fix error handling in
+wcd934x_codec_parse_data()") revealed the problem in slimbus regmap.
+That commit breaks audio playback, for instance, on sdm845 Thundercomm
+Dragonboard 845c board:
 
-6150 is compatible with 8150 or 8350? I have doubts.
+ Unable to handle kernel paging request at virtual address ffff8000847cbad4
+ Mem abort info:
+   ESR = 0x0000000096000007
+   EC = 0x25: DABT (current EL), IL = 32 bits
+   SET = 0, FnV = 0
+   EA = 0, S1PTW = 0
+   FSC = 0x07: level 3 translation fault
+ Data abort info:
+   ISV = 0, ISS = 0x00000007, ISS2 = 0x00000000
+   CM = 0, WnR = 0, TnD = 0, TagAccess = 0
+   GCS = 0, Overlay = 0, DirtyBit = 0, Xs = 0
+ swapper pgtable: 4k pages, 48-bit VAs, pgdp=00000000a1360000
+ [ffff8000847cbad4] pgd=0000000000000000, p4d=100000010003e403, pud=100000010003f403, pmd=10000001025cf403, pte=0000000000000000
+ Internal error: Oops: 0000000096000007 [#1]  SMP
+ Modules linked in: (long list of modules...)
+ CPU: 5 UID: 0 PID: 776 Comm: aplay Not tainted 6.18.0-rc1-00028-g7ea30958b305 #11 PREEMPT
+ Hardware name: Thundercomm Dragonboard 845c (DT)
+ pstate: 60400005 (nZCv daif +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
+ pc : slim_xfer_msg+0x24/0x1ac [slimbus]
+ lr : slim_read+0x48/0x74 [slimbus]
+ sp : ffff800089113330
+ x29: ffff800089113350 x28: 00000000000000c0 x27: 0000000000000268
+ x26: 0000000000000198 x25: 0000000000000001 x24: 0000000000000000
+ x23: 0000000000000000 x22: ffff800089113454 x21: ffff00008488e800
+ x20: ffff000084b4760a x19: 0000000000000001 x18: 0000000000000be2
+ x17: 0000000000000c19 x16: ffffbcef364cd260 x15: ffffbcef36dafb10
+ x14: 0000000000000d38 x13: 0000000000000cb4 x12: 0000000000000c91
+ x11: 1fffe0001161b6e1 x10: ffff800089113470 x9 : ffff00008b0db70c
+ x8 : ffff000081479ee0 x7 : 0000000000000000 x6 : 0000000000000800
+ x5 : 0000000000000001 x4 : 0000000000000000 x3 : ffff00008263c200
+ x2 : 0000000000000060 x1 : ffff800089113368 x0 : ffff8000847cb7c8
+ Call trace:
+  slim_xfer_msg+0x24/0x1ac [slimbus] (P)
+  slim_read+0x48/0x74 [slimbus]
+  regmap_slimbus_read+0x18/0x24 [regmap_slimbus]
+  _regmap_raw_read+0xe8/0x174
+  _regmap_bus_read+0x44/0x80
+  _regmap_read+0x60/0xd8
+  _regmap_update_bits+0xf4/0x140
+  _regmap_select_page+0xa8/0x124
+  _regmap_raw_write_impl+0x3b8/0x65c
+  _regmap_bus_raw_write+0x60/0x80
+  _regmap_write+0x58/0xc0
+  regmap_write+0x4c/0x80
+  wcd934x_hw_params+0x494/0x8b8 [snd_soc_wcd934x]
+  snd_soc_dai_hw_params+0x3c/0x7c [snd_soc_core]
+  __soc_pcm_hw_params+0x22c/0x634 [snd_soc_core]
+  dpcm_be_dai_hw_params+0x1d4/0x38c [snd_soc_core]
+  dpcm_fe_dai_hw_params+0x9c/0x17c [snd_soc_core]
+  snd_pcm_hw_params+0x124/0x464 [snd_pcm]
+  snd_pcm_common_ioctl+0x110c/0x1820 [snd_pcm]
+  snd_pcm_ioctl+0x34/0x4c [snd_pcm]
+  __arm64_sys_ioctl+0xac/0x104
+  invoke_syscall+0x48/0x104
+  el0_svc_common.constprop.0+0x40/0xe0
+  do_el0_svc+0x1c/0x28
+  el0_svc+0x34/0xec
+  el0t_64_sync_handler+0xa0/0xf0
+  el0t_64_sync+0x198/0x19c
+ Code: 910083fd f9423464 f9000fe4 d2800004 (394c3003)
+ ---[ end trace 0000000000000000 ]---
 
-> +          - const: qcom,sm8350-dp
-> +
->    "^dsi@[0-9a-f]+$":
->      type: object
->      additionalProperties: true
-> @@ -132,6 +142,7 @@ examples:
->                  port@0 {
->                    reg = <0>;
->                    dpu_intf0_out: endpoint {
-> +                      remote-endpoint = <&mdss_dp0_in>;
+The __devm_regmap_init_slimbus() started to be used instead of
+__regmap_init_slimbus() after the commit mentioned above and turns out
+the incorrect bus_context pointer (3rd argument) was used in
+__devm_regmap_init_slimbus(). It should be &slimbus->dev. Correct it.
+The wcd934x codec seems to be the only (or the first) user of
+devm_regmap_init_slimbus() but we should fix till the point where
+__devm_regmap_init_slimbus() was introduced therefore two "Fixes" tags.
 
-Mention reason for doing this in the commit msg.
+Fixes: 4e65bda8273c ("ASoC: wcd934x: fix error handling in wcd934x_codec_parse_data()")
+Fixes: 7d6f7fb053ad ("regmap: add SLIMbus support")
+Cc: stable@vger.kernel.org
+Cc: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Cc: Ma Ke <make24@iscas.ac.cn>
+Cc: Steev Klimaszewski <steev@kali.org>
+Cc: Srinivas Kandagatla <srini@kernel.org>
+Signed-off-by: Alexey Klimov <alexey.klimov@linaro.org>
+---
 
-Also, messed up indentation.
+The patch/fix is for the current 6.18 development cycle
+since it is fixes the regression introduced in 6.18.0-rc1.
 
->                    };
->                  };
->  
-> 
+ drivers/base/regmap/regmap-slimbus.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
+diff --git a/drivers/base/regmap/regmap-slimbus.c b/drivers/base/regmap/regmap-slimbus.c
+index 54eb7d227cf4..edfee18fbea1 100644
+--- a/drivers/base/regmap/regmap-slimbus.c
++++ b/drivers/base/regmap/regmap-slimbus.c
+@@ -63,7 +63,7 @@ struct regmap *__devm_regmap_init_slimbus(struct slim_device *slimbus,
+ 	if (IS_ERR(bus))
+ 		return ERR_CAST(bus);
+ 
+-	return __devm_regmap_init(&slimbus->dev, bus, &slimbus, config,
++	return __devm_regmap_init(&slimbus->dev, bus, &slimbus->dev, config,
+ 				  lock_key, lock_name);
+ }
+ EXPORT_SYMBOL_GPL(__devm_regmap_init_slimbus);
+-- 
+2.47.3
 
-Best regards,
-Krzysztof
 
