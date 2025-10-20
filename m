@@ -1,121 +1,110 @@
-Return-Path: <linux-arm-msm+bounces-77963-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-77964-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [142.0.200.124])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6B11DBF049F
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Oct 2025 11:46:31 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 66CBEBF0710
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Oct 2025 12:11:35 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id AC1124F1425
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Oct 2025 09:44:01 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 6CB4818A19DD
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Oct 2025 10:10:26 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id F34172F744F;
-	Mon, 20 Oct 2025 09:42:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 534402F1FE5;
+	Mon, 20 Oct 2025 10:09:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b="IcO943AZ"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="kKbKauid"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f44.google.com (mail-lf1-f44.google.com [209.85.167.44])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 131682F5306
-	for <linux-arm-msm@vger.kernel.org>; Mon, 20 Oct 2025 09:42:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1579E2EC086;
+	Mon, 20 Oct 2025 10:09:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760953329; cv=none; b=DXjfwfQkx5PqhhgaoRq4pkPgw7Nl1l3xa14IUyHO2wX7nn6M5ibtnZYpEMzRZnt9Bsg/norZ7e4cqs9dCqMtMtnyAWP8AfU0KgW8OTVZ1Bd912FnaGbVbqiAA+YhXX8ruQ6MDeaAc/uo3T7zstWJvReF9quvWAEh6Nia8gmAG28=
+	t=1760954988; cv=none; b=pEOJNpz/JNV1UFLRPTRudcbFrULQQL34VTHEb+Ek3aAcB7ayQVBORmf9XHDNZ4OgozAa+pzqsJtShJctcEjYkLJqHYPRXIilZSVBauNa0LPI9H8Fx/Gna6GfArMU4IbYUM+2MnGXU9JhW6Ntd9avGG8XUX9Cry1gw0Uue+9qRN4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760953329; c=relaxed/simple;
-	bh=sjEUaWPd/Jj2ElIhymJE8eOmk6i+S46mwSJsA8AQ+EQ=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=LSv8jzKLYksjAT0KlnJT1PuQNeK3BVqQJFIkgmLp3jGdpLLm58bzdXcPW1GkPrWcAYK9EC8PnKi4W8kEC6AN/uQKsPtrkmaimGvLOEzV1mMfIHN3n6bCX3D1ZmCutw68efUR6CUj3RNCU5B3cWU6DgDrBfTx3ECEXNeeIZ2IFOg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl; spf=none smtp.mailfrom=bgdev.pl; dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b=IcO943AZ; arc=none smtp.client-ip=209.85.167.44
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=bgdev.pl
-Received: by mail-lf1-f44.google.com with SMTP id 2adb3069b0e04-57e36125e8aso4074248e87.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 20 Oct 2025 02:42:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=bgdev-pl.20230601.gappssmtp.com; s=20230601; t=1760953326; x=1761558126; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=sjEUaWPd/Jj2ElIhymJE8eOmk6i+S46mwSJsA8AQ+EQ=;
-        b=IcO943AZ4slbeY23j1wnDAiVcwPBPLOz6p7nwR3LnKZ0EWyuxZ1NV7vh4gmJ/DIdyO
-         6NBnVnJLgA6olIiUyrFMdxASrH1QtEFiA7r/E1llGQVLoET/fsgSRnAyAnwR8NcWStjO
-         FuT2KFRZGMEzwuOaEhqAI6OZQRNQgcs9YKKrdrTKxlFK2oJm2XQIc6nDLunQhkol1mbb
-         d70GOBwY51A3Hb51gRUwQxAzlPvGos30Z0gp/Sy15aqIdUTTrOReoH1dy+wfcjOsfgCW
-         7aj159DIeTlPLFh0St4Zk1tpfonVqFPLXNmWZp8b1j/WnRZHVRVzd4hwU/lmZADNgoht
-         oLcA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1760953326; x=1761558126;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=sjEUaWPd/Jj2ElIhymJE8eOmk6i+S46mwSJsA8AQ+EQ=;
-        b=e6D1iBP42skqHz55tHa9O1OnoEADv+b/fv0L3xLfVTzCMSLaKj5oUp1NpRJ23/bGn5
-         msYRxBgb7YywgIr8HZcvcyRvrISyIUk+U3Rj87EJ20UIVVAFa8LGmpVhC8aTKFiBmeU/
-         pLrorvyeY1SsfiI0p7e5Pbvr1Joul3oAVJ6Z5Cf3nm/xY0hbO7qk4549MJYXg0iQsHOg
-         4prRkB89EH4j3B4OxWO3Ms3vP2s4bdHbQlYkNk7cmD68SNzBltvZKQp8pENtes/Yymjl
-         5Wd1FwuYDMX+OREjYLdGiYiIKPAB4+MczJFjN/RvLsNWgUvOfoG7pI7VMAAMSth5W9Il
-         Wq6g==
-X-Forwarded-Encrypted: i=1; AJvYcCXPX3Q99lEH7MM8+BpokrqRGDJhUNbcKkoI987rZ5O8hiuFbCELH/zT8V70A3hgxjQ2jOTY1/50i9y95trM@vger.kernel.org
-X-Gm-Message-State: AOJu0YxSgVCjNeTE2xrnuNcojj5R/GbGt5GrBFDCU0g5PeoVDwEglWDd
-	ym9LXOI6VYJQTkQONtET6njipyUx6cy634yxlwuI3LWxxM/iRsNBoXl+V4q0y43nwHi0rk0bjmE
-	hhQSirHlzfaB3O8blsGz0u/O0UE5jvGcVfw+4qOof+A==
-X-Gm-Gg: ASbGncsH3VhrWiRPLfaZRT3r+3LqwjXnHBq3+Y90JdGWkMkWdfwzy6BmC9cdS9Hv+QT
-	eyAbYtxenUEWuP12lrG4M36wY7OS1Z86wdWj/3a1lU7LAeIkNOCGEHcmw7jaauxyUNH6IVqPbx0
-	82igZaIEsvvNR4rhfEzwmNbGZ7nYK97RJnK63+JWlBj9qt4pKbhk5m1dDuIg2zHw/vtEnmguRiO
-	w0KJS1BSu9pW2sVG5tznmDimeDNmhDPpSDsyLVBWOR5GtZYO+qHlp1zrQuqtMeW5woWwgzQ8IOd
-	/Pht0x+xOhvHwiL0
-X-Google-Smtp-Source: AGHT+IHY1EdCIXYngUyFFwGvzEW0znpDl77em9pEnOCmJRoroDyoIZB7DiA520ogK1u8lsISe3niq2HVycioLER4ci8=
-X-Received: by 2002:a05:6512:1052:b0:578:ed03:7b70 with SMTP id
- 2adb3069b0e04-591d8589aedmr3757333e87.28.1760953326040; Mon, 20 Oct 2025
- 02:42:06 -0700 (PDT)
+	s=arc-20240116; t=1760954988; c=relaxed/simple;
+	bh=X9Lg2JO4IruFhRgxQn0J2lbHj+iGOTg0TQ0F6mFzILY=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=C0/bNWvLvgRxCXjvZZyPwf/52JnSVISeKM06sDPBBWGrwfAHrbFilBAv8VvnYyQRO0Uw2AEv/q7hyo1rs/SKt0VlH9RWQk3eN02oqOPBLoXq3nJcHGz9txtwhhQhZlMxvXQ7LBwNsVj4kV7emtB9hn7rsX79Imhwe5YsLZoee+8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=kKbKauid; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E74FC4CEF9;
+	Mon, 20 Oct 2025 10:09:47 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1760954987;
+	bh=X9Lg2JO4IruFhRgxQn0J2lbHj+iGOTg0TQ0F6mFzILY=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=kKbKauidVwXpi1BhMalBJEErsC2r16WTq4b81i2FGvql7R/i7ghGU2CqMLRegJA3v
+	 RrSjPY608f/U50/eoukbbXDA8Uiel6Jp9ZFm2yzBqGiNITcZAYXnlVbhIhoxQlC86J
+	 eXHL/lLGkSbyGaUfKwPBYZ8+67QKQiZKz2RdYzO0Sls1f9v+Syy7cnxLQz4dTlNeKd
+	 pldHhiCs6hQJ9YMmK6z6mx63YF7ggUftEzy6+JP7AgPQgUTrdHKbbY8q/5UevdPOSe
+	 Hpc3vP5cuOZoBqpqcNhtTv/oYQB/JZ0V8UOViI1dAF1SvvHjNL+0DT0+cftS2IO/Km
+	 XJ4RCYJ19JfZA==
+Date: Mon, 20 Oct 2025 12:09:45 +0200
+From: Krzysztof Kozlowski <krzk@kernel.org>
+To: Ram Prakash Gupta <quic_rampraka@quicinc.com>, 
+	Ulf Hansson <ulf.hansson@linaro.org>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Adrian Hunter <adrian.hunter@intel.com>, Bjorn Andersson <andersson@kernel.org>, 
+	Konrad Dybcio <konradybcio@kernel.org>
+Cc: linux-mmc@vger.kernel.org, devicetree@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, dmitry.baryshkov@oss.qualcomm.com, 
+	quic_pragalla@quicinc.com, quic_sayalil@quicinc.com, quic_nitirawa@quicinc.com, 
+	quic_bhaskarv@quicinc.com, kernel@oss.qualcomm.com, 
+	Sachin Gupta <quic_sachgupt@quicinc.com>
+Subject: Re: [PATCH v5 1/4] dt-bindings: mmc: Add dll-presets values for
+ HS400 and HS200 modes
+Message-ID: <20251020-talented-inquisitive-bulldog-64aba0@kuoka>
+References: <20251013145316.1087274-1-quic_rampraka@quicinc.com>
+ <20251013145316.1087274-2-quic_rampraka@quicinc.com>
+ <cb753c72-70ca-44b9-a33c-af2b1c7e69c8@kernel.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250924-gpio-shared-v1-0-775e7efeb1a3@linaro.org>
- <CAMRc=Me4Fh5pDOF8Z2XY4MG_DYqPRN+UJh_BzKvmULL96wciYw@mail.gmail.com> <81bda56c-f18b-4bd9-abf9-9da7c2251f42@sirena.org.uk>
-In-Reply-To: <81bda56c-f18b-4bd9-abf9-9da7c2251f42@sirena.org.uk>
-From: Bartosz Golaszewski <brgl@bgdev.pl>
-Date: Mon, 20 Oct 2025 11:41:52 +0200
-X-Gm-Features: AS18NWCTv8z2cF08OaIclAyR6BuSf6xIu18qyroHsfySyW-sq8vo6xUHsWKQB4s
-Message-ID: <CAMRc=MdOCHJEyPxN+-g71ux68=Mt_Q5P9611QO7Q8J9e8UJv_A@mail.gmail.com>
-Subject: Re: [PATCH RFC 0/9] gpio: improve support for shared GPIOs
-To: Mark Brown <broonie@kernel.org>
-Cc: linux-hardening@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	linux-gpio@vger.kernel.org, linux-arm-kernel@lists.infradead.org, 
-	linux-sound@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>, Srinivas Kandagatla <srini@kernel.org>, 
-	Kees Cook <kees@kernel.org>, Mika Westerberg <westeri@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Jaroslav Kysela <perex@perex.cz>, Catalin Marinas <catalin.marinas@arm.com>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Takashi Iwai <tiwai@suse.com>, Rob Herring <robh@kernel.org>, 
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Andy Shevchenko <andy@kernel.org>, 
-	Saravana Kannan <saravanak@google.com>, Will Deacon <will@kernel.org>, 
-	Liam Girdwood <lgirdwood@gmail.com>, Andrew Morton <akpm@linux-foundation.org>, 
-	Manivannan Sadhasivam <mani@kernel.org>, Linus Walleij <linus.walleij@linaro.org>, 
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <cb753c72-70ca-44b9-a33c-af2b1c7e69c8@kernel.org>
 
-On Fri, Oct 17, 2025 at 7:32=E2=80=AFPM Mark Brown <broonie@kernel.org> wro=
-te:
->
-> On Fri, Oct 17, 2025 at 07:26:51PM +0200, Bartosz Golaszewski wrote:
->
-> > Upon a closer inspection it turns out that this is not the case - the
-> > ENABLE/DISABLE events are emitted when the *logical* regulator is
-> > enabled/disabled even if this does not involve a change in the state
-> > of the shared pin.
->
-> It really should be the actual physical state change that triggers the
-> event.
+On Tue, Oct 14, 2025 at 02:06:46AM +0200, Krzysztof Kozlowski wrote:
+> On 13/10/2025 16:53, Ram Prakash Gupta wrote:
+> > From: Sachin Gupta <quic_sachgupt@quicinc.com>
+> > 
+> > Document the 'dll-presets' property for MMC device tree bindings.
+> > The 'dll-presets' property defines the DLL configurations for HS400
+> > and HS200 modes.
+> > 
+> > QC SoCs can have 0 to 4 SDHCI instances, and each one may need
+> > different tuning.
+> > 
+> > Signed-off-by: Sachin Gupta <quic_sachgupt@quicinc.com>
+> > Signed-off-by: Ram Prakash Gupta <quic_rampraka@quicinc.com>
+> > ---
+> >  Documentation/devicetree/bindings/mmc/sdhci-msm.yaml | 5 +++++
+> >  1 file changed, 5 insertions(+)
+> > 
+> > diff --git a/Documentation/devicetree/bindings/mmc/sdhci-msm.yaml b/Documentation/devicetree/bindings/mmc/sdhci-msm.yaml
+> > index 594bd174ff21..f7b3b1ced3ce 100644
+> > --- a/Documentation/devicetree/bindings/mmc/sdhci-msm.yaml
+> > +++ b/Documentation/devicetree/bindings/mmc/sdhci-msm.yaml
+> > @@ -138,6 +138,11 @@ properties:
+> >      $ref: /schemas/types.yaml#/definitions/uint32
+> >      description: platform specific settings for DLL_CONFIG reg.
+> >  
+> > +  qcom,dll-presets:
+> > +    maxItems: 10
+> > +    $ref: /schemas/types.yaml#/definitions/uint32-array
+> > +    description: platform specific settings for DLL registers.
+> 
+> One of my questions, never answered in original submission and in your
+> versions, was to see the DTS user of it. I still do not see the DTS user.
 
-I guess so, but this would require some non-trivial rework of the
-regulator core. We'd need some list of deferred notifications stored
-in memory for when the physical state actually changes.
+There is no answer, so I mark the patch as changes requested.
 
-Bartosz
+Best regards,
+Krzysztof
+
 
