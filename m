@@ -1,81 +1,81 @@
-Return-Path: <linux-arm-msm+bounces-78059-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-78060-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 68321BF34D6
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Oct 2025 21:58:55 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 02076BF34FE
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Oct 2025 22:01:11 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id CE9EA487E36
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Oct 2025 19:58:45 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 9890C3A8688
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Oct 2025 19:59:40 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7FEF432ED58;
-	Mon, 20 Oct 2025 19:58:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1A358333434;
+	Mon, 20 Oct 2025 19:59:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="OYC4en2d"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="WkeJBh/G"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f49.google.com (mail-wr1-f49.google.com [209.85.221.49])
+Received: from mail-wm1-f45.google.com (mail-wm1-f45.google.com [209.85.128.45])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E06D13314DF
-	for <linux-arm-msm@vger.kernel.org>; Mon, 20 Oct 2025 19:58:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FBAA332EA3
+	for <linux-arm-msm@vger.kernel.org>; Mon, 20 Oct 2025 19:59:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760990320; cv=none; b=J8OT1DVFpuVblF4kq0W/P4P734Tq4utEEevRtDKiB5p4OAdCo9cUI4f2upN2Q2J0j01WpXOpsuKnah9ZrvqMdK0iDt9JdxydUcGP2YVWREAMsv90CTKlAsDyJKlc9yuad4hNcWKTPgBq0PBQS/Z7qRO/nbcXSoagEh1hcMq86zc=
+	t=1760990359; cv=none; b=eN9e9WaXXdSuRhToCMoayS+r3CSApd9qyS6vSS7y+/LQiWhE92Vmg9QnVzqJzr8euu1QIK93DbyvJb1V/UUfkMDXud7dBy24giHnxDiXUqOLwJ6CBTGBcpRzP9n040cqRmlMIB1xcCN7WHmSEWepbWu1fNQJjjBvD5QmFT3+d7M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760990320; c=relaxed/simple;
-	bh=XCwZUqmeuiWU9rzvvTjeRrWJQNzR4cssdIIcfiHwpwA=;
+	s=arc-20240116; t=1760990359; c=relaxed/simple;
+	bh=RGfpAN5rzMHTTLTFD3Loxuaxwb3861xuxa5WQkx+zXw=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=MJHOv1eLzWGU/6En1pEASRZFeBQTgJK5CMO1yOELsYQc4lLKnbvEnpC65oAbDw5uHiaznZAE0L+phNZgdX70fdikpA0dZkKsBvNhNYQCyk99lJRZhzKruv3rDUCngO4jb6GK/ghskLVtwjbyzHC31fpVqsIw3mdDWUBKHXoJGlY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=OYC4en2d; arc=none smtp.client-ip=209.85.221.49
+	 In-Reply-To:Content-Type; b=rPpT4LepcpNqyTpydYU88K1DHNVgFE26XqQpKFVIxPR2NcJWy8T59cmByZN2Xs8Icd5uMtz6rfhc+8isMlq6hYWkKmJoPNnUtMpPEf/CbMh9YI2+T0Gnipi8O8att5qkKz4NzCnoOG/W5Knc07ETo9eOXdTw+p96zAMYUa4OV5U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=WkeJBh/G; arc=none smtp.client-ip=209.85.128.45
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wr1-f49.google.com with SMTP id ffacd0b85a97d-3ee64bc6b90so3059256f8f.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 20 Oct 2025 12:58:37 -0700 (PDT)
+Received: by mail-wm1-f45.google.com with SMTP id 5b1f17b1804b1-474975af41dso1005e9.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 20 Oct 2025 12:59:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1760990316; x=1761595116; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1760990349; x=1761595149; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:content-language:from
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=9uTinkD5B7JVzNdslTmORFgXTh2TMp+mH7Qm01R70EU=;
-        b=OYC4en2dfXk3ze30N75A/w+tJC+/soiB5y7w7PaXlTgoBxQIHJd5DMBmWHPvKF8gqS
-         P585TkV0rmqX78kyhavNRvMnsEJjnDstQKcsctSraHtOaqA/HjzoDLd418EcmsdY8Zjb
-         ifkqURUVPW7/5OJOnEalXhskSmiZN5lt0Bc7STh5qXgs3GQ+jmHDeNlsQNN3v9Qz1bsz
-         /rqXzCPwaYwGXFYRx97i8xN/CV1P/onX3SkbR9SQpXQYHBIPNFfXlaupQQ4G7M9CmRpO
-         0m60FbGQnoOwe4BsStVpVtnM7grhmAsfJoFtudHbKYVMinvahDbUvMqNUsTiY3EnBDzS
-         E6aA==
+        bh=RGfpAN5rzMHTTLTFD3Loxuaxwb3861xuxa5WQkx+zXw=;
+        b=WkeJBh/GhWNSApkJsZAVMbPiFNLpdO876HgkWJdzb9VP2jbuW1zwgZglrrkN6KYALG
+         BCtVRlA5lRrBgZg+Rtw0CxE8iy0/x/spNUHaOkXaueLrK4wBDNG0l0LRP6BiSHOl+W9Q
+         1Zq5SzvKF6E9GI+zsojA72FKsiOjlLF77Me90JIkujGAZVkuxGB2MgVKdXtppKQJa34M
+         LqprURPuLU3hhqGO3LXlQHYyLX1DvUZMOp8/A5FLRgunTmc816GkVlHXjm/jnTAUVsox
+         2mAHrqOXwcyiaFc036goSvI/yg4benKqGINRMrrv2IxbM6xM5kkRudprrL/G5fKQycDq
+         7jPg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1760990316; x=1761595116;
+        d=1e100.net; s=20230601; t=1760990349; x=1761595149;
         h=content-transfer-encoding:in-reply-to:content-language:from
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=9uTinkD5B7JVzNdslTmORFgXTh2TMp+mH7Qm01R70EU=;
-        b=Tdj4GwnVRLDd8TEh5L/UQTLSHFA2k6ezEFTURct6UnjGJzu/gJbOLBbFyegyycE8xX
-         ofXoNg2DzwXXu9v4DHKgLX4wXzIzjrKO5vty9DW3dzExNssSgcsS/qOiRDaeQEX42wHs
-         kC1dp5MaJzUFvBqVAdsrl5YWxNiBfJ5grFYF9FwjWxUgJ8CbRoxelZRu0eEnsL018yol
-         nH3Gpj82dEcKufnM+ck0xd8XqAv2ifCUr3iTN53LLWLtKlR6ig2A3auDb5dvqdm+HBIc
-         RnFWdhb/U6VYthFejj6igA4u/+TYOYX+HnA3mAzIoizWawDzIiKO6k8fiv1060b05uxl
-         hbMw==
-X-Forwarded-Encrypted: i=1; AJvYcCUqHr2N7SWP3DJtAdZ9nVBYesOkQmFTklnVcJr0zBDg90pLTlqsgBI1usCK61+DyMhef75RQN+kMaAV4/BC@vger.kernel.org
-X-Gm-Message-State: AOJu0YygZnoTEvqCWYhGtI5Eka4DHCQzR/NbhUh3Err44Ij9spzpHVr0
-	E2TQgdkfC4mtIsjkrAKAOUCbFcsR2VynMQzZHP7oS7lrfjSSNDLdCN7cXjQa0fzOdv8=
-X-Gm-Gg: ASbGncsfqlqP1aidrWg5mTJyAARnAA9pxwtFLJ1fY2slSKSUTQj2nuAQbIMYOArmqN3
-	JuuNKIUlseyF7ZKwo1e2Kbp4NMD/zLWjBwur+GjMRo2/8iwrWJatvIlvo2JkPoDhRroxavRvSNF
-	l76B92C2g5zT/LLvC56YQgSyWIEX8kxRgnvykfSfOdmKygttqgpmAvVdLZtjufXvumIbV5XUH0l
-	TwceVXsN/Uai/SGJS1NqxdRgEZK0tQi8FTELRmI9RrS6rvEIFhY3M7/mpDE5Dh+EAodiW/CW7o5
-	d/xWKgrz7fSUwkldYZhX+vJh/VwcSr4wftJ8k5mmDAvvgtvOhiQrsia8nIiIguQjkEPR8SvRhvH
-	ChOTJj/zNAtBA50Ia4q9vPWZuk+0jUEx0xFnUbKyDl4s5/okDMEgeg+l+7hzewAFSbBTC3sRlKJ
-	zhTPXHDUPrGpLok3Dm22qUcFobMnf5tUydv2d54rTqLeJe0t9Av/5uXw==
-X-Google-Smtp-Source: AGHT+IHRepbyzVss0eYQtswrWO7IT6VNUaNhd8KrgYXyrpmN/FQ0ZkZPVw//zKELs8RT7Eu0xlFMJQ==
-X-Received: by 2002:a5d:5f82:0:b0:425:86c8:c4ff with SMTP id ffacd0b85a97d-42704d90011mr10997285f8f.22.1760990315993;
-        Mon, 20 Oct 2025 12:58:35 -0700 (PDT)
+        bh=RGfpAN5rzMHTTLTFD3Loxuaxwb3861xuxa5WQkx+zXw=;
+        b=eDf/mFz88qc7fNX4aDxBpxR0cHFIks0j+taSEVc+BNiFvtj8zZ2lGNAKqQjATXDXbt
+         lOnlY4ClAImTWPvTqNkW/MyfY387vuFaUC2hIv9c9OEOPBoHIny1i9h8b0m8khs5XlIt
+         hAqSSKU1zGyiM13RRUB1Ts1h0OgFzh5Aj8Az0sxcU16G70p/waEmEscADlYTGFXvk+wf
+         h0uJCA42N6GtdcIycFQCh+RSdAz0eXujlx9sZg4OD3GQ4c1h2eAhS5KkE0D7N8lD21yi
+         B1J8XQh/s1k5tA0SxaKQqYpYcWO+4nlZ9jbzbHsO7wDJe9LgC2Ziq7s209zLv79TVNZV
+         A9Ng==
+X-Forwarded-Encrypted: i=1; AJvYcCWV6ut3ReKr0XZqgBE0CQ3xWczopX9LE4PCsHbv9bcq7cNIlX8GnHkNDMQBYpV53HC2+jt4hq5LvALXHNdj@vger.kernel.org
+X-Gm-Message-State: AOJu0YxkFt7qvaob63oqCMvLzl/xFKALMoSw5BfosCa+o+dVEY9IqRk/
+	R/GomrNCoEe7QM+3q6Gj3TZOOHqTZzZ3flcTVvJdnIl5jOURqz1REXZGr+sLdfbF3YM=
+X-Gm-Gg: ASbGncujZwitFMf4KLb5Llrc3zlAUR2Lh4pqrXlMhX7HhQcHk7I5S502y8u48cr45Xz
+	l7EGkcRHhmteVpoEQS1sQzAv7AB2DocYL7m8dfpyYf4VU2ZOsdMFX4OSwRAGemhUndxaO3VtlD4
+	yQpobYfhtMD/xGMvHLUuyqvSxRdVC7rPCVd7Bei4S7nN/0Cf6T8rZW84gLjLJz3uHfm+W+R0a22
+	Il8Iuxq7IqZpB0cer3pMTg6cqvDoeItxEv+BYM5mhqGPUDK555fa7zey3GryWc5g6Hwsy/lW00L
+	xYEXiRIhCLLh/z29Pu9GMMOL/+TJkFfy6vFR2TaNGYRyVSA3+D4BE+xeTQ9dbOeGRRkVovEG+8P
+	9DfyzEhdV7FX3EfsG7aiFYptqrKwdFK1GRfc0LCEzRDCH6x270Er56v4edUTyWoKTcodB/rZeqo
+	PfyB8/LglSy7CKFdNuJA5CSeV1EH/wmkfW3lApyptjdyjjnAORYHy/1w==
+X-Google-Smtp-Source: AGHT+IGvccbSI11XJaSMgNlpFHKrVHSLfRMXa/L8Zy3VVZh4FfZmD5f/hOBseLwrd7XiHIRl8wNufg==
+X-Received: by 2002:a05:600c:5298:b0:46e:432f:32ab with SMTP id 5b1f17b1804b1-4711791d1e3mr108234665e9.33.1760990348602;
+        Mon, 20 Oct 2025 12:59:08 -0700 (PDT)
 Received: from [192.168.0.163] (188-141-3-146.dynamic.upc.ie. [188.141.3.146])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-427f009a78csm16686345f8f.26.2025.10.20.12.58.34
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-471144c900asm247164875e9.16.2025.10.20.12.59.07
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 20 Oct 2025 12:58:34 -0700 (PDT)
-Message-ID: <028a884c-1d53-46c7-8e9e-a076fd87510f@linaro.org>
-Date: Mon, 20 Oct 2025 20:58:33 +0100
+        Mon, 20 Oct 2025 12:59:08 -0700 (PDT)
+Message-ID: <c1fae486-ee56-41bf-b3e9-e2e2a9338d1f@linaro.org>
+Date: Mon, 20 Oct 2025 20:59:07 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -83,8 +83,7 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 3/3] media: qcom: camss: tpg: Add TPG support for
- LeMans and Monaco
+Subject: Re: [PATCH v5 1/3] media: qcom: camss: Add common TPG support
 To: Wenmeng Liu <wenmeng.liu@oss.qualcomm.com>, Robert Foss
  <rfoss@kernel.org>, Todor Tomov <todor.too@gmail.com>,
  Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
@@ -92,425 +91,18 @@ To: Wenmeng Liu <wenmeng.liu@oss.qualcomm.com>, Robert Foss
 Cc: linux-kernel@vger.kernel.org, linux-media@vger.kernel.org,
  linux-arm-msm@vger.kernel.org
 References: <20251017-camss_tpg-v5-0-cafe3ad42163@oss.qualcomm.com>
- <20251017-camss_tpg-v5-3-cafe3ad42163@oss.qualcomm.com>
+ <20251017-camss_tpg-v5-1-cafe3ad42163@oss.qualcomm.com>
 From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 Content-Language: en-US
-In-Reply-To: <20251017-camss_tpg-v5-3-cafe3ad42163@oss.qualcomm.com>
+In-Reply-To: <20251017-camss_tpg-v5-1-cafe3ad42163@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
 On 17/10/2025 06:06, Wenmeng Liu wrote:
-> Add support for TPG found on LeMans and Monaco.
-> 
-> Signed-off-by: Wenmeng Liu <wenmeng.liu@oss.qualcomm.com>
-> ---
->   drivers/media/platform/qcom/camss/Makefile         |   1 +
->   .../media/platform/qcom/camss/camss-csid-gen3.c    |  17 ++
->   drivers/media/platform/qcom/camss/camss-tpg-gen1.c | 220 +++++++++++++++++++++
->   drivers/media/platform/qcom/camss/camss.c          |  67 +++++++
->   4 files changed, 305 insertions(+)
-> 
-> diff --git a/drivers/media/platform/qcom/camss/Makefile b/drivers/media/platform/qcom/camss/Makefile
-> index 0eda4b18ad0e93f5e63135fabd5a02ae67bcd5ad..28bc3d9ba16dfa34a8fd35973beed0c3f2b67e00 100644
-> --- a/drivers/media/platform/qcom/camss/Makefile
-> +++ b/drivers/media/platform/qcom/camss/Makefile
-> @@ -27,5 +27,6 @@ qcom-camss-objs += \
->   		camss-video.o \
->   		camss-format.o \
->   		camss-tpg.o \
-> +		camss-tpg-gen1.o \
->   
->   obj-$(CONFIG_VIDEO_QCOM_CAMSS) += qcom-camss.o
-> diff --git a/drivers/media/platform/qcom/camss/camss-csid-gen3.c b/drivers/media/platform/qcom/camss/camss-csid-gen3.c
-> index 664245cf6eb0cac662b02f8b920cd1c72db0aeb2..8e0b0cbaa0010f4b4a156877ac2fe805e5c4422e 100644
-> --- a/drivers/media/platform/qcom/camss/camss-csid-gen3.c
-> +++ b/drivers/media/platform/qcom/camss/camss-csid-gen3.c
-> @@ -66,6 +66,8 @@
->   #define		CSI2_RX_CFG0_VC_MODE		3
->   #define		CSI2_RX_CFG0_DL0_INPUT_SEL	4
->   #define		CSI2_RX_CFG0_PHY_NUM_SEL	20
-> +#define		CSI2_RX_CFG0_TPG_NUM_EN		27
-> +#define		CSI2_RX_CFG0_TPG_NUM_SEL	28
->   
->   #define CSID_CSI2_RX_CFG1		0x204
->   #define		CSI2_RX_CFG1_ECC_CORRECTION_EN	BIT(0)
-> @@ -109,11 +111,26 @@ static void __csid_configure_rx(struct csid_device *csid,
->   				struct csid_phy_config *phy, int vc)
->   {
->   	int val;
-> +	struct camss *camss;
-> +	struct tpg_device *tpg;
->   
-> +	camss = csid->camss;
->   	val = (phy->lane_cnt - 1) << CSI2_RX_CFG0_NUM_ACTIVE_LANES;
->   	val |= phy->lane_assign << CSI2_RX_CFG0_DL0_INPUT_SEL;
->   	val |= (phy->csiphy_id + CSI2_RX_CFG0_PHY_SEL_BASE_IDX) << CSI2_RX_CFG0_PHY_NUM_SEL;
->   
-> +	if (camss->tpg) {
-> +		tpg = &camss->tpg[phy->csiphy_id];
-> +
-> +		if (tpg->testgen.mode > 0) {
-> +			val |= (phy->csiphy_id + 1) << CSI2_RX_CFG0_TPG_NUM_SEL;
-> +			val |= 1 << CSI2_RX_CFG0_TPG_NUM_EN;
-> +		} else {
-> +			val |= 0 << CSI2_RX_CFG0_TPG_NUM_SEL;
-> +			val |= 0 << CSI2_RX_CFG0_TPG_NUM_EN;
+> + * Rreturn 0 on success
 
-Zero shifted by any amount is still zero.
+You might as well zap this too since you're v6ing.
 
-Do you mean to negate these bits val &= ~ (CSI2_RX_CFG0_TPG_NUM_SEL |
-                                            CSI2_RX_CFG0_TPG_NUM_EN );
-
-Anyway I see the pattern we have, perhaps am guilty of its perpetuation, 
-also am requesting its termination.
-
-Please do something more sensible with these bits.
-> +		}
-> +	}
-> +
->   	writel(val, csid->base + CSID_CSI2_RX_CFG0);
->   
->   	val = CSI2_RX_CFG1_ECC_CORRECTION_EN;
-> diff --git a/drivers/media/platform/qcom/camss/camss-tpg-gen1.c b/drivers/media/platform/qcom/camss/camss-tpg-gen1.c
-> new file mode 100644
-> index 0000000000000000000000000000000000000000..ba463c16a8436cb40c61d1b483c6343c010b9744
-> --- /dev/null
-> +++ b/drivers/media/platform/qcom/camss/camss-tpg-gen1.c
-> @@ -0,0 +1,220 @@
-> +// SPDX-License-Identifier: GPL-2.0
-> +/*
-> + *
-> + * Qualcomm MSM Camera Subsystem - TPG (Test Patter Generator) Module
-> + *
-> + * Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
-> + */
-> +#include <linux/bitfield.h>
-> +#include <linux/completion.h>
-> +#include <linux/io.h>
-> +#include <linux/kernel.h>
-> +#include <linux/of.h>
-> +
-> +#include "camss-tpg.h"
-> +#include "camss.h"
-> +
-> +#define TPG_HW_VERSION		0x0
-> +# define HW_VERSION_STEPPING		GENMASK(15, 0)
-> +# define HW_VERSION_REVISION		GENMASK(27, 16)
-> +# define HW_VERSION_GENERATION		GENMASK(31, 28)
-> +
-> +#define TPG_HW_STATUS		0x4
-> +
-> +#define TPG_VC_n_GAIN_CFG(n)		(0x60 + (n) * 0x60)
-> +
-> +#define TPG_CTRL		0x64
-> +# define TPG_CTRL_TEST_EN		BIT(0)
-> +# define TPG_CTRL_PHY_SEL		BIT(3)
-> +# define TPG_CTRL_NUM_ACTIVE_LANES	GENMASK(5, 4)
-> +# define TPG_CTRL_VC_DT_PATTERN_ID	GENMASK(8, 6)
-> +# define TPG_CTRL_OVERLAP_SHDR_EN	BIT(10)
-> +# define TPG_CTRL_NUM_ACTIVE_VC		GENMASK(31, 30)
-> +#  define NUM_ACTIVE_VC_0_ENABLED		0
-> +#  define NUM_ACTIVE_VC_0_1_ENABLED		1
-> +#  define NUM_ACTIVE_VC_0_1_2_ENABLED		2
-> +#  define NUM_ACTIVE_VC_0_1_3_ENABLED		3
-> +
-> +#define TPG_VC_n_CFG0(n)	(0x68 + (n) * 0x60)
-> +# define TPG_VC_n_CFG0_VC_NUM			GENMASK(4, 0)
-> +# define TPG_VC_n_CFG0_NUM_ACTIVE_DT		GENMASK(9, 8)
-> +#  define NUM_ACTIVE_SLOTS_0_ENABLED			0
-> +#  define NUM_ACTIVE_SLOTS_0_1_ENABLED			1
-> +#  define NUM_ACTIVE_SLOTS_0_1_2_ENABLED		2
-> +#  define NUM_ACTIVE_SLOTS_0_1_3_ENABLED		3
-> +# define TPG_VC_n_CFG0_NUM_BATCH		GENMASK(15, 12)
-> +# define TPG_VC_n_CFG0_NUM_FRAMES		GENMASK(31, 16)
-> +
-> +#define TPG_VC_n_LSFR_SEED(n)	(0x6C + (n) * 0x60)
-> +
-> +#define TPG_VC_n_HBI_CFG(n)	(0x70 + (n) * 0x60)
-> +
-> +#define TPG_VC_n_VBI_CFG(n)	(0x74 + (n) * 0x60)
-> +
-> +#define TPG_VC_n_COLOR_BARS_CFG(n)		(0x78 + (n) * 0x60)
-> +# define TPG_VC_n_COLOR_BARS_CFG_PIX_PATTERN		GENMASK(2, 0)
-> +# define TPG_VC_n_COLOR_BARS_CFG_QCFA_EN		BIT(3)
-> +# define TPG_VC_n_COLOR_BARS_CFG_SPLIT_EN		BIT(4)
-> +# define TPG_VC_n_COLOR_BARS_CFG_NOISE_EN		BIT(5)
-> +# define TPG_VC_n_COLOR_BARS_CFG_ROTATE_PERIOD		GENMASK(13, 8)
-> +# define TPG_VC_n_COLOR_BARS_CFG_XCFA_EN		BIT(16)
-> +# define TPG_VC_n_COLOR_BARS_CFG_SIZE_X			GENMASK(26, 24)
-> +# define TPG_VC_n_COLOR_BARS_CFG_SIZE_Y			GENMASK(30, 28)
-> +
-> +#define TPG_VC_m_DT_n_CFG_0(m, n)		(0x7C + (m) * 0x60 + (n) * 0xC)
-> +# define TPG_VC_m_DT_n_CFG_0_FRAME_HEIGHT	GENMASK(15, 0)
-> +# define TPG_VC_m_DT_n_CFG_0_FRAME_WIDTH	GENMASK(31, 16)
-> +
-> +#define TPG_VC_m_DT_n_CFG_1(m, n)		(0x80 + (m) * 0x60 + (n) * 0xC)
-> +# define TPG_VC_m_DT_n_CFG_1_DATA_TYPE		GENMASK(5, 0)
-> +# define TPG_VC_m_DT_n_CFG_1_ECC_XOR_MASK	GENMASK(13, 8)
-> +# define TPG_VC_m_DT_n_CFG_1_CRC_XOR_MASK	GENMASK(31, 16)
-> +
-> +#define TPG_VC_m_DT_n_CFG_2(m, n)		(0x84 + (m) * 0x60 + (n) * 0xC)
-> +# define TPG_VC_m_DT_n_CFG_2_PAYLOAD_MODE		GENMASK(3, 0)
-> +# define TPG_VC_m_DT_n_CFG_2_USER_SPECIFIED_PAYLOAD	GENMASK(27, 4)
-> +# define TPG_VC_m_DT_n_CFG_2_ENCODE_FORMAT		GENMASK(31, 28)
-> +
-> +#define TPG_VC_n_COLOR_BAR_CFA_COLOR0(n)	(0xB0 + (n) * 0x60)
-> +#define TPG_VC_n_COLOR_BAR_CFA_COLOR1(n)	(0xB4 + (n) * 0x60)
-> +#define TPG_VC_n_COLOR_BAR_CFA_COLOR2(n)	(0xB8 + (n) * 0x60)
-> +#define TPG_VC_n_COLOR_BAR_CFA_COLOR3(n)	(0xBC + (n) * 0x60)
-> +
-> +/* Line offset between VC(n) and VC(n-1), n form 1 to 3 */
-> +#define TPG_VC_n_SHDR_CFG	(0x84 + (n) * 0x60)
-> +
-> +#define TPG_CLEAR		0x1F4
-> +
-> +#define TPG_USER_SPECIFIED_PAYLOAD_DEFAULT	0xBE
-> +#define TPG_HBI_CFG_DEFAULT			0x4701
-> +#define TPG_VBI_CFG_DEFAULT			0x438
-
-Offsets are fine to define but magic value numbers are not welcome. You 
-only have to define five bits and four bits respectively i.e. the bits 
-you use but, for preference you should define all of the fields.
-
-> +#define TPG_LFSR_SEED_DEFAULT			0x12345678
-> +#define TPG_COLOR_BARS_CFG_STANDARD \
-> +	FIELD_PREP(TPG_VC_n_COLOR_BARS_CFG_ROTATE_PERIOD, 0xA)
-> +
-> +static int tpg_stream_on(struct tpg_device *tpg)
-> +{
-> +	struct tpg_testgen_config *tg = &tpg->testgen;
-> +	struct v4l2_mbus_framefmt *input_format;
-> +	const struct tpg_format_info *format;
-> +	u8 lane_cnt = tpg->res->lane_cnt;
-> +	u8 dt_cnt = 0;
-> +	u8 i;
-> +	u32 val;
-> +
-> +	/* Loop through all enabled VCs and configure stream for each */
-> +	for (i = 0; i < tpg->res->vc_cnt; i++) {
-> +		input_format = &tpg->fmt[MSM_TPG_PAD_SRC + i];
-> +		format = tpg_get_fmt_entry(tpg,
-> +					   tpg->res->formats->formats,
-> +					   tpg->res->formats->nformats,
-> +					   input_format->code);
-> +
-> +		val = FIELD_PREP(TPG_VC_m_DT_n_CFG_0_FRAME_HEIGHT, input_format->height & 0xffff) |
-> +		      FIELD_PREP(TPG_VC_m_DT_n_CFG_0_FRAME_WIDTH, input_format->width & 0xffff);
-> +		writel(val, tpg->base + TPG_VC_m_DT_n_CFG_0(i, dt_cnt));
-> +
-> +		val = FIELD_PREP(TPG_VC_m_DT_n_CFG_1_DATA_TYPE, format->data_type);
-> +		writel(val, tpg->base + TPG_VC_m_DT_n_CFG_1(i, dt_cnt));
-> +
-> +		val = FIELD_PREP(TPG_VC_m_DT_n_CFG_2_PAYLOAD_MODE, tg->mode - 1) |
-> +		      FIELD_PREP(TPG_VC_m_DT_n_CFG_2_USER_SPECIFIED_PAYLOAD,
-> +				 TPG_USER_SPECIFIED_PAYLOAD_DEFAULT) |
-> +		      FIELD_PREP(TPG_VC_m_DT_n_CFG_2_ENCODE_FORMAT, format->encode_format);
-> +		writel(val, tpg->base + TPG_VC_m_DT_n_CFG_2(i, dt_cnt));
-> +
-> +		writel(TPG_COLOR_BARS_CFG_STANDARD, tpg->base + TPG_VC_n_COLOR_BARS_CFG(i));
-> +
-> +		writel(TPG_HBI_CFG_DEFAULT, tpg->base + TPG_VC_n_HBI_CFG(i));
-> +		writel(TPG_VBI_CFG_DEFAULT, tpg->base + TPG_VC_n_VBI_CFG(i));
-> +
-> +		writel(TPG_LFSR_SEED_DEFAULT, tpg->base + TPG_VC_n_LSFR_SEED(i));
-> +
-> +		/* configure one DT, infinite frames */
-> +		val = FIELD_PREP(TPG_VC_n_CFG0_VC_NUM, i) |
-> +		      FIELD_PREP(TPG_VC_n_CFG0_NUM_FRAMES, 0);
-> +		writel(val, tpg->base + TPG_VC_n_CFG0(i));
-> +	}
-> +
-> +	val = FIELD_PREP(TPG_CTRL_TEST_EN, 1) |
-> +		  FIELD_PREP(TPG_CTRL_PHY_SEL, 0) |
-> +		  FIELD_PREP(TPG_CTRL_NUM_ACTIVE_LANES, lane_cnt - 1) |
-> +		  FIELD_PREP(TPG_CTRL_VC_DT_PATTERN_ID, 0) |
-> +		  FIELD_PREP(TPG_CTRL_NUM_ACTIVE_VC, tpg->res->vc_cnt - 1);
-> +	writel(val, tpg->base + TPG_CTRL);
-> +
-> +	return 0;
-> +}
-> +
-> +static void tpg_stream_off(struct tpg_device *tpg)
-> +{
-> +	writel(0, tpg->base + TPG_CTRL);
-> +	writel(1, tpg->base + TPG_CLEAR);
-> +}
-> +
-> +static void tpg_configure_stream(struct tpg_device *tpg, u8 enable)
-> +{
-> +	if (enable)
-> +		tpg_stream_on(tpg);
-> +	else
-> +		tpg_stream_off(tpg);
-> +}
-> +
-> +static int tpg_configure_testgen_pattern(struct tpg_device *tpg, s32 val)
-> +{
-> +	if (val > 0 && val <= TPG_PAYLOAD_MODE_COLOR_BARS)
-> +		tpg->testgen.mode = val;
-> +
-> +	return 0;
-> +}
-> +
-> +/*
-> + * tpg_hw_version - tpg hardware version query
-> + * @tpg: tpg device
-> + *
-> + * Return HW version or error
-> + */
-> +static u32 tpg_hw_version(struct tpg_device *tpg)
-> +{
-> +	u32 hw_version;
-> +	u32 hw_gen;
-> +	u32 hw_rev;
-> +	u32 hw_step;
-> +
-> +	hw_version = readl(tpg->base + TPG_HW_VERSION);
-> +	hw_gen = FIELD_GET(HW_VERSION_GENERATION, hw_version);
-> +	hw_rev = FIELD_GET(HW_VERSION_REVISION, hw_version);
-> +	hw_step = FIELD_GET(HW_VERSION_STEPPING, hw_version);
-> +	dev_dbg_once(tpg->camss->dev, "tpg HW Version = %u.%u.%u\n",
-> +		     hw_gen, hw_rev, hw_step);
-> +
-> +	return hw_version;
-> +}
-> +
-> +/*
-> + * tpg_reset - Trigger reset on tpg module and wait to complete
-> + * @tpg: tpg device
-> + *
-> + * Return 0 on success or a negative error code otherwise
-> + */
-> +static int tpg_reset(struct tpg_device *tpg)
-> +{
-> +	writel(0, tpg->base + TPG_CTRL);
-> +	writel(1, tpg->base + TPG_CLEAR);
-> +
-> +	return 0;
-> +}
-> +
-> +static void tpg_subdev_init(struct tpg_device *tpg)
-> +{
-> +	tpg->testgen.modes = testgen_payload_modes;
-> +	tpg->testgen.nmodes = TPG_PAYLOAD_MODE_NUM_SUPPORTED_GEN1;
-> +}
-> +
-> +const struct tpg_hw_ops tpg_ops_gen1 = {
-> +	.configure_stream = tpg_configure_stream,
-> +	.configure_testgen_pattern = tpg_configure_testgen_pattern,
-> +	.hw_version = tpg_hw_version,
-> +	.reset = tpg_reset,
-> +	.subdev_init = tpg_subdev_init,
-> +};
-> diff --git a/drivers/media/platform/qcom/camss/camss.c b/drivers/media/platform/qcom/camss/camss.c
-> index 2ede19e1347ae32f2f6919905b535352bcd134be..446d3fb94f35412178b72c803274a5159c57c852 100644
-> --- a/drivers/media/platform/qcom/camss/camss.c
-> +++ b/drivers/media/platform/qcom/camss/camss.c
-> @@ -2745,6 +2745,62 @@ static const struct camss_subdev_resources csiphy_res_8775p[] = {
->   	},
->   };
->   
-> +static const struct camss_subdev_resources tpg_res_8775p[] = {
-> +	/* TPG0 */
-> +	{
-> +		.regulators = {  },
-> +		.clock = { "csiphy_rx", "camnoc_axi" },
-> +		.clock_rate = {
-> +			{ 400000000 },
-> +			{ 400000000 },
-> +		},
-> +		.reg = { "tpg0" },
-> +		.interrupt = { "tpg0" },
-> +		.tpg = {
-> +			.lane_cnt = 4,
-> +			.vc_cnt = 1,
-> +			.formats = &tpg_formats_gen1,
-> +			.hw_ops = &tpg_ops_gen1
-> +		}
-> +	},
-> +
-> +	/* TPG1 */
-> +	{
-> +		.regulators = {  },
-> +		.clock = { "csiphy_rx", "camnoc_axi" },
-> +		.clock_rate = {
-> +			{ 400000000 },
-> +			{ 400000000 },
-> +		},
-> +		.reg = { "tpg1" },
-> +		.interrupt = { "tpg1" },
-> +		.tpg = {
-> +			.lane_cnt = 4,
-> +			.vc_cnt = 1,
-> +			.formats = &tpg_formats_gen1,
-> +			.hw_ops = &tpg_ops_gen1
-> +		}
-> +	},
-> +
-> +	/* TPG2 */
-> +	{
-> +		.regulators = {  },
-> +		.clock = { "csiphy_rx", "camnoc_axi" },
-> +		.clock_rate = {
-> +			{ 400000000 },
-> +			{ 400000000 },
-> +		},
-> +		.reg = { "tpg2" },
-> +		.interrupt = { "tpg2" },
-> +		.tpg = {
-> +			.lane_cnt = 4,
-> +			.vc_cnt = 1,
-> +			.formats = &tpg_formats_gen1,
-> +			.hw_ops = &tpg_ops_gen1
-> +		}
-> +	},
-> +};
-> +
->   static const struct camss_subdev_resources csid_res_8775p[] = {
->   	/* CSID0 */
->   	{
-> @@ -4217,6 +4273,13 @@ static int camss_probe(struct platform_device *pdev)
->   	if (!camss->csiphy)
->   		return -ENOMEM;
->   
-> +	if (camss->res->tpg_num > 0) {
-> +		camss->tpg = devm_kcalloc(dev, camss->res->tpg_num,
-> +					  sizeof(*camss->tpg), GFP_KERNEL);
-> +		if (!camss->tpg)
-> +			return -ENOMEM;
-> +	}
-> +
->   	camss->csid = devm_kcalloc(dev, camss->res->csid_num, sizeof(*camss->csid),
->   				   GFP_KERNEL);
->   	if (!camss->csid)
-> @@ -4394,11 +4457,13 @@ static const struct camss_resources qcs8300_resources = {
->   	.version = CAMSS_8300,
->   	.pd_name = "top",
->   	.csiphy_res = csiphy_res_8300,
-> +	.tpg_res = tpg_res_8775p,
->   	.csid_res = csid_res_8775p,
->   	.csid_wrapper_res = &csid_wrapper_res_sm8550,
->   	.vfe_res = vfe_res_8775p,
->   	.icc_res = icc_res_qcs8300,
->   	.csiphy_num = ARRAY_SIZE(csiphy_res_8300),
-> +	.tpg_num = ARRAY_SIZE(tpg_res_8775p),
->   	.csid_num = ARRAY_SIZE(csid_res_8775p),
->   	.vfe_num = ARRAY_SIZE(vfe_res_8775p),
->   	.icc_path_num = ARRAY_SIZE(icc_res_qcs8300),
-> @@ -4408,11 +4473,13 @@ static const struct camss_resources sa8775p_resources = {
->   	.version = CAMSS_8775P,
->   	.pd_name = "top",
->   	.csiphy_res = csiphy_res_8775p,
-> +	.tpg_res = tpg_res_8775p,
->   	.csid_res = csid_res_8775p,
->   	.csid_wrapper_res = &csid_wrapper_res_sm8550,
->   	.vfe_res = vfe_res_8775p,
->   	.icc_res = icc_res_sa8775p,
->   	.csiphy_num = ARRAY_SIZE(csiphy_res_8775p),
-> +	.tpg_num = ARRAY_SIZE(tpg_res_8775p),
->   	.csid_num = ARRAY_SIZE(csid_res_8775p),
->   	.vfe_num = ARRAY_SIZE(vfe_res_8775p),
->   	.icc_path_num = ARRAY_SIZE(icc_res_sa8775p),
-> 
-
+---
+bod
 
