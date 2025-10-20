@@ -1,309 +1,167 @@
-Return-Path: <linux-arm-msm+bounces-78027-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-78028-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 24335BF1E1F
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Oct 2025 16:37:29 +0200 (CEST)
+Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [142.0.200.124])
+	by mail.lfdr.de (Postfix) with ESMTPS id 99054BF1E25
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Oct 2025 16:38:05 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id D21923AC062
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Oct 2025 14:37:27 +0000 (UTC)
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 8ECC24E1FBF
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Oct 2025 14:38:04 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id EB57E20ADD6;
-	Mon, 20 Oct 2025 14:37:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 032F71DF270;
+	Mon, 20 Oct 2025 14:38:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="FwygVMAy"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id AF56720E011;
-	Mon, 20 Oct 2025 14:37:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1DABF2144C7
+	for <linux-arm-msm@vger.kernel.org>; Mon, 20 Oct 2025 14:38:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760971045; cv=none; b=urywQ3TaZS+41Pb878fkp3Yw5SZfcAaqk4yG+UOgpSf5HpN7wJWcEK1F9Y6xbHia2c1SpVtG4HIMxXWDs2CywyY2AOnX7+9hdv/Txf5O9xHxA4Pn0Ttryw8yQJ44jx7Oe+NFin8cNmKkgtFHMWMI6/smvT62kgUlLzz2a1ItENk=
+	t=1760971082; cv=none; b=CD6XNVSxfyimrFU8Cmvp63JzCTa+MJtAEVz47foMHZWqg90H+7QI6bGD2kv9rgmsu2WpcSbAdTaEAl8yW4zH4eZ5proAcHGKNtBpBsfxvyBwlRh1scVB6yhE14CNHjxIAtgmEUrrctLJY2o63MKT5xcQ5+EyPQEGcyV+SidTX9c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760971045; c=relaxed/simple;
-	bh=iqkHEBCpELLMuqOPgBOttQb8bsGShLPfWOHh9IOLhis=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=FYtDZTfrXNmOjQ4mESWzV9t8tKLlxCQrkgKk/4DunPwOrRJp9ZjdPnRKByWrNb7dJABRxINGpOwH08xULpOC9sG5AaMbYCRS9mfIV7bXd7hvgW9oazjS6sz9UDmMcwIazRVSU1aFX/UzgDS1joA/EsO8pilz0j2BOhM7Bq3zBck=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; arc=none smtp.client-ip=217.140.110.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 2222A1063;
-	Mon, 20 Oct 2025 07:37:13 -0700 (PDT)
-Received: from localhost (e132581.arm.com [10.1.196.87])
-	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 95D9D3F63F;
-	Mon, 20 Oct 2025 07:37:20 -0700 (PDT)
-Date: Mon, 20 Oct 2025 15:37:18 +0100
-From: Leo Yan <leo.yan@arm.com>
-To: Xiaoqi Zhuang <xiaoqi.zhuang@oss.qualcomm.com>
-Cc: Suzuki K Poulose <suzuki.poulose@arm.com>,
-	Mike Leach <mike.leach@linaro.org>,
-	James Clark <james.clark@linaro.org>,
-	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-	coresight@lists.linaro.org, linux-arm-kernel@lists.infradead.org,
-	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH] coresight: ETR: Fix ETR buffer use-after-free issue
-Message-ID: <20251020143718.GH281971@e132581.arm.com>
-References: <20251020-fix_etr_issue-v1-1-902ab51770b4@oss.qualcomm.com>
+	s=arc-20240116; t=1760971082; c=relaxed/simple;
+	bh=g7vm66uFoBWXERlnSFU9QSzM2MNBZ6eB9epOObSdlZI=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=ejM7/uxjbmTc4u8jLg8jT18vvjtHqkPIMw+fUitPofQCPybLBQzWDthb9MfzrMPuMnZlJpxSnmw7yZj3k1iQvpT4lbVk1WouRv7h05Fm5RvT990/nrgcJwcToP9XEsHDSXtDz+oafWlFs9xrnROey1Hbh9J98DUwfM/zHr30UXY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=FwygVMAy; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 59KCdN2c031516
+	for <linux-arm-msm@vger.kernel.org>; Mon, 20 Oct 2025 14:38:00 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	3UWjAiIBrgLau2Sy8mogzZBA0wuWkqgwhg9kzGevk+0=; b=FwygVMAyWc+zuQTX
+	Hv71MGzGyRMmHDvdinBNXZdut3E5ZuYTkSPocn+IXkEkuCSd97ehvd00YK3/YsOO
+	cNylfGudOSyUN9Wg1wKS/GqRIG4/JcBFreXLwCaY1XzqJwIbfKBK4YCEv680AnCI
+	SreQmRw4pugK51j1wkuX0xfOX9IJMYlRpEPYM3bzAcC0htHXvs8AZg99nmsF42CO
+	jtVjAdxMgSZ1uI0gQXSj6xPwhU7zqHKU10ZSseXPjrpF0gxwKiRIiW7ERqyiMSD2
+	PmtSrMNSAY+w+qCgMVOygEm63B/Jz7cepvEHz/DqLgBVOEakUPwFrGN3cOkGYYco
+	9tpXJg==
+Received: from mail-qv1-f70.google.com (mail-qv1-f70.google.com [209.85.219.70])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 49v3984ye6-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Mon, 20 Oct 2025 14:37:59 +0000 (GMT)
+Received: by mail-qv1-f70.google.com with SMTP id 6a1803df08f44-87bf4ed75beso166446806d6.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 20 Oct 2025 07:37:59 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1760971079; x=1761575879;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=3UWjAiIBrgLau2Sy8mogzZBA0wuWkqgwhg9kzGevk+0=;
+        b=FLLvMW5lixKpdrwszJ6OxaepyD0e1+BUM2xxWYKrluCJYsUOFnTfhoIFkYYfgriTkK
+         L0SpAA8g6TSngvEkyWS7Q4jL8VQqkjA9Ks++RRQaGKmlVb097QFUcT1RGk+lNIoBUv6C
+         fjCOFuEHlpptlUgu+R/4wUxnFH1SkXCAyrqHGALp0leI5b1x0Wqt6W4StNC3tnEssiu+
+         BpXjRJfoALJwyQXRWrNJYEM2lO466jTLhCkB9cAW9LsBTLqLPKmZT6vsolLQRvcc9n7z
+         0U3asrF7VEPA/PUkJlx8cldO/4h40x8Wg5f/73OmFDmpYyJmPd7oW5AV1fgr1s4GaJ1X
+         gmRw==
+X-Forwarded-Encrypted: i=1; AJvYcCVnsUGooSeJEy0ZZD+lfSDQnwMyRZEDQh6HYLf/8loxPDXe26EJKl9kfOBPIbfL24G69rOlzCE2IN5ZtWNh@vger.kernel.org
+X-Gm-Message-State: AOJu0Yzs9ime3qY7vliygdeV1P6/KJqb7Frrwr2+/NjhBk+o01NQIXgr
+	3wR5+CokMoZb4ieVkcw+0E0aayhh51etErEXvE8RaGfAzQNO2XEFNP20zBP33e0Bn57PFQGOyMs
+	4gt/WUNxbTnQgDD7Ybjxf3ZplKLLjjggssJtBl0V/MqFQFPQhwZ7awvDecivGkPYtJH6E
+X-Gm-Gg: ASbGncufhnrIXhneCdA2L36j67BYNZLA2+u4wrPQfB1GtFlfFLiM6JplcIIrYleyxHI
+	99fjlVMhkI96IzxvemYM6kb2yeKhziaCwLYJZTrZ+Z67fAsgE40VhDDF3/K5t7sIn0XoNv7aaAP
+	9OQI5c/Fj3mlsdceeg7S/bhIIBqZkDWApORCf7Eia6nWMeC0DWNlZZ/4HWLojJfymDDmpMEWtaX
+	iXP+fReZ8gEbpnZzxrWzv4pVCQBTUn+E5UrG6JYcxW3qDsN74NS9wJVBf4IN76auViYjWbXYQXs
+	3K3sIXappN0FafGU/m8e7oMZheB39487bxb8mAhxpjx4XG4ldMsL8pFmqDmgFcXdnsMFJm1ujso
+	++K3242TcKC8/jN8+al85qM56KA==
+X-Received: by 2002:ac8:5988:0:b0:4e8:b979:c7ca with SMTP id d75a77b69052e-4e8b979cc56mr65036281cf.18.1760971078973;
+        Mon, 20 Oct 2025 07:37:58 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IG1lzeMW875NTSCbMzwfc5cSS58/qFqK7T2evBfqjYBnU2AF8O4gAA+d8fm7iX72aR+ZS5uhg==
+X-Received: by 2002:ac8:5988:0:b0:4e8:b979:c7ca with SMTP id d75a77b69052e-4e8b979cc56mr65035961cf.18.1760971078497;
+        Mon, 20 Oct 2025 07:37:58 -0700 (PDT)
+Received: from [192.168.68.121] ([5.133.47.210])
+        by smtp.googlemail.com with ESMTPSA id ffacd0b85a97d-427ea5a1056sm15657051f8f.2.2025.10.20.07.37.57
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 20 Oct 2025 07:37:58 -0700 (PDT)
+Message-ID: <7c0dad34-cb4c-4912-9406-2e559b91142a@oss.qualcomm.com>
+Date: Mon, 20 Oct 2025 15:37:57 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20251020-fix_etr_issue-v1-1-902ab51770b4@oss.qualcomm.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 5/9] ASoC: qcom: q6asm: handle the responses after closing
+To: Alexey Klimov <alexey.klimov@linaro.org>, broonie@kernel.org
+Cc: perex@perex.cz, tiwai@suse.com, srini@kernel.org,
+        linux-sound@vger.kernel.org, m.facchin@arduino.cc,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
+References: <20251015131740.340258-1-srinivas.kandagatla@oss.qualcomm.com>
+ <20251015131740.340258-6-srinivas.kandagatla@oss.qualcomm.com>
+ <DDN83LOTCUIP.5O05FBN02AZB@linaro.org>
+Content-Language: en-US
+From: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
+In-Reply-To: <DDN83LOTCUIP.5O05FBN02AZB@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Authority-Analysis: v=2.4 cv=KcvfcAYD c=1 sm=1 tr=0 ts=68f64947 cx=c_pps
+ a=oc9J++0uMp73DTRD5QyR2A==:117 a=ZsC4DHZuhs/kKio7QBcDoQ==:17
+ a=IkcTkHD0fZMA:10 a=x6icFKpwvdMA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=EUspDBNiAAAA:8 a=dtEi0ryFqlHHO-XquR8A:9 a=QEXdDO2ut3YA:10
+ a=iYH6xdkBrDN1Jqds4HTS:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDE4MDAyNSBTYWx0ZWRfX2IwQp+QM54we
+ Qr3psQ80+0131mqbvya8Ff5H46fbRH7YVVtpnI/hV+ht3UDeaT1RtHuh9Ls3WMJd2O1yWFU5SYe
+ g8xUvg/4Qh3Mr4BrwTOalkyP/Iwz4lzJgCA35GdLyS4bYyAKEY+Be4Lakk/7jezg3+c6GFygNkv
+ YEjuqsJ7FCEN+5hgc/1wM4lLh+kTLXkXELXZ3wdnttvx2BS2K4BQ+Ll57k2oO8SFWOl7bsFeMaR
+ UGadeZ+44T7uII6F4wBnaO6Bm/jlVsprlCNoddQq93B2SAesP2qz442iKQxrTcBHdTFh6GJhZDS
+ QINVQtWV1mbY+YLeAbW2RjWD+ZNdjZumJVnm3XqtyyY5ZwQ1SfNA5NZ9l1dQtKuA4Z2n+FUCUcw
+ zJ/P0D3XjAJ2BwPJg1N6lNl9bVyAGA==
+X-Proofpoint-GUID: UIIij_2mKsHo-SooiaXQhh8mZwISLE_J
+X-Proofpoint-ORIG-GUID: UIIij_2mKsHo-SooiaXQhh8mZwISLE_J
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-10-20_04,2025-10-13_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ adultscore=0 phishscore=0 priorityscore=1501 suspectscore=0 impostorscore=0
+ malwarescore=0 clxscore=1015 bulkscore=0 spamscore=0 lowpriorityscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.19.0-2510020000 definitions=main-2510180025
 
-On Mon, Oct 20, 2025 at 05:06:46PM +0800, Xiaoqi Zhuang wrote:
-> When ETR is enabled as CS_MODE_SYSFS, if the buffer size is changed
-> and enabled again, currently sysfs_buf will point to the newly
-> allocated memory(buf_new) and free the old memory(buf_old). But the
-> etr_buf that is being used by the ETR remains pointed to buf_old, not
-> updated to buf_new. In this case, it will result in a memory
-> use-after-free issue.
+On 10/20/25 3:35 PM, Alexey Klimov wrote:
+> On Wed Oct 15, 2025 at 2:17 PM BST, Srinivas Kandagatla wrote:
+>> For record path, multiple read requests are queued to dsp in advance.
+>> However when data stream is closed, the pending read requests are rejected
+>> by the dsp and a response is sent to the driver, this case is not handled
+>> in the driver resulting in errors like below
+>>
+>> q6asm-dai ab00000.remoteproc:glink-edge:apr:service@7:dais: command[0x10dac] not expecting rsp
+>> q6asm-dai ab00000.remoteproc:glink-edge:apr:service@7:dais: command[0x10dac] not expecting rsp
+>> q6asm-dai ab00000.remoteproc:glink-edge:apr:service@7:dais: command[0x10dac] not expecting rsp
+>>
+>> This is same for both write and eos.
+>>
+>> Fix this by allowing ASM_DATA_CMD_READ_V2, ASM_DATA_CMD_EOS and
+>> ASM_DATA_CMD_WRITE_V2 as expected response.
+>>
+>> Reported-by: Martino Facchin <m.facchin@arduino.cc>
+>> Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
+> 
+> I was also reporting this error months ago.
+> Thanks for fixing this.
+> 
+> FWIW there is also DSP timeout error on Audioreach-based platforms.
+there should be only one for SPF get state command.
 
-I struggled to understand how to reproduce the issue under the condition
-"if the buffer size is changed and enabled again."
+qcom-apm gprsvc:service:2:1: CMD timeout for [1001021] opcode
 
-I don't think the flow below where the trace is re-enabled would cause
-an issue:
+This is expected as we are checking for DSP readiness and it will
+timeout if the dsp is not ready.
 
-  - Step 1: Enable trace path between ETM0 -> ETR0;
-  - Step 2: Change the buffer size for ETR0;
-  - Step 3: Disable trace path between ETM0 -> ETR0;
-  - Step 4: Enable again trace path between ETM0 -> ETR0.
+--srini
 
-In this case, step3 releases the buffer and update "drvdata->etr_buf" to
-NULL, and step 4 allocates a new buffer and assign it to
-"drvdata->etr_buf".
 
-The problem should occur when operating on two trace paths, E.g.,
 
-  - Step 1: Enable trace path between ETM0 -> ETR0;
-  - Step 2: Change the buffer size for ETR0;
-  - Step 3: Enable trace path between ETM1 -> ETR0;
+> 
+> Thanks,
+> Alexey Klimov
 
-In step3, the driver releases the existed buffer and allocate a new one.
-At the meantime, "drvdata->etr_buf" still holds the buffer allocated in
-step 1.
-
-> Fix this by checking ETR's mode before updating and releasing buf_old,
-> if the mode is CS_MODE_SYSFS, then skip updating and releasing it.
-
-Given that we now have a couple of reported issues related to ETR mode,
-I'd like to refactor the ETR mode handling and its reference counting
-thoroughly.  I've drafted a large change (it's quite big, but we can
-split it into small patches if we agree to proceed).
-
-Thanks for reporting the issue!
-
-Leo
-
----8<---
-
-diff --git a/drivers/hwtracing/coresight/coresight-tmc-etr.c b/drivers/hwtracing/coresight/coresight-tmc-etr.c
-index b07fcdb3fe1a..d0fac958c614 100644
---- a/drivers/hwtracing/coresight/coresight-tmc-etr.c
-+++ b/drivers/hwtracing/coresight/coresight-tmc-etr.c
-@@ -1241,6 +1241,8 @@ static struct etr_buf *tmc_etr_get_sysfs_buffer(struct coresight_device *csdev)
- 	struct tmc_drvdata *drvdata = dev_get_drvdata(csdev->dev.parent);
- 	struct etr_buf *sysfs_buf = NULL, *new_buf = NULL, *free_buf = NULL;
- 
-+	WARN_ON(coresight_get_mode(csdev) != CS_MODE_SYSFS);
-+
- 	/*
- 	 * If we are enabling the ETR from disabled state, we need to make
- 	 * sure we have a buffer with the right size. The etr_buf is not reset
-@@ -1263,7 +1265,7 @@ static struct etr_buf *tmc_etr_get_sysfs_buffer(struct coresight_device *csdev)
- 		raw_spin_lock_irqsave(&drvdata->spinlock, flags);
- 	}
- 
--	if (drvdata->reading || coresight_get_mode(csdev) == CS_MODE_PERF) {
-+	if (drvdata->reading) {
- 		ret = -EBUSY;
- 		goto out;
- 	}
-@@ -1292,30 +1294,14 @@ static int tmc_enable_etr_sink_sysfs(struct coresight_device *csdev)
- 	int ret = 0;
- 	unsigned long flags;
- 	struct tmc_drvdata *drvdata = dev_get_drvdata(csdev->dev.parent);
--	struct etr_buf *sysfs_buf = tmc_etr_get_sysfs_buffer(csdev);
-+	struct etr_buf *sysfs_buf;
- 
-+	sysfs_buf = tmc_etr_get_sysfs_buffer(csdev);
- 	if (IS_ERR(sysfs_buf))
- 		return PTR_ERR(sysfs_buf);
- 
- 	raw_spin_lock_irqsave(&drvdata->spinlock, flags);
--
--	/*
--	 * In sysFS mode we can have multiple writers per sink.  Since this
--	 * sink is already enabled no memory is needed and the HW need not be
--	 * touched, even if the buffer size has changed.
--	 */
--	if (coresight_get_mode(csdev) == CS_MODE_SYSFS) {
--		csdev->refcnt++;
--		goto out;
--	}
--
- 	ret = tmc_etr_enable_hw(drvdata, sysfs_buf);
--	if (!ret) {
--		coresight_set_mode(csdev, CS_MODE_SYSFS);
--		csdev->refcnt++;
--	}
--
--out:
- 	raw_spin_unlock_irqrestore(&drvdata->spinlock, flags);
- 
- 	if (!ret)
-@@ -1735,11 +1721,6 @@ static int tmc_enable_etr_sink_perf(struct coresight_device *csdev, void *data)
- 	struct etr_perf_buffer *etr_perf = etm_perf_sink_config(handle);
- 
- 	raw_spin_lock_irqsave(&drvdata->spinlock, flags);
--	 /* Don't use this sink if it is already claimed by sysFS */
--	if (coresight_get_mode(csdev) == CS_MODE_SYSFS) {
--		rc = -EBUSY;
--		goto unlock_out;
--	}
- 
- 	if (WARN_ON(!etr_perf || !etr_perf->etr_buf)) {
- 		rc = -EINVAL;
-@@ -1759,18 +1740,14 @@ static int tmc_enable_etr_sink_perf(struct coresight_device *csdev, void *data)
- 	 * No HW configuration is needed if the sink is already in
- 	 * use for this session.
- 	 */
--	if (drvdata->pid == pid) {
--		csdev->refcnt++;
-+	if (drvdata->pid == pid)
- 		goto unlock_out;
--	}
- 
- 	rc = tmc_etr_enable_hw(drvdata, etr_perf->etr_buf);
- 	if (!rc) {
- 		/* Associate with monitored process. */
- 		drvdata->pid = pid;
--		coresight_set_mode(csdev, CS_MODE_PERF);
- 		drvdata->perf_buf = etr_perf->etr_buf;
--		csdev->refcnt++;
- 	}
- 
- unlock_out:
-@@ -1778,17 +1755,76 @@ static int tmc_enable_etr_sink_perf(struct coresight_device *csdev, void *data)
- 	return rc;
- }
- 
-+static int tmc_acquire_mode(struct coresight_device *csdev, enum cs_mode mode)
-+{
-+	struct tmc_drvdata *drvdata = dev_get_drvdata(csdev->dev.parent);
-+
-+	if (mode != CS_MODE_SYSFS && mode != CS_MODE_PERF)
-+		return -EINVAL;
-+
-+	scoped_guard(raw_spinlock_irqsave, &drvdata->spinlock);
-+
-+	if (coresight_get_mode(csdev) == CS_MODE_DISABLED) {
-+		if (!csdev->refcnt)
-+			coresight_set_mode(csdev, mode);
-+		csdev->refcnt++;
-+	} else if (coresight_get_mode(csdev) != mode) {
-+		ret = -EBUSY;
-+	}
-+
-+	return csdev->refcnt;
-+}
-+
-+static void tmc_release_mode(struct coresight_device *csdev, enum cs_mode mode)
-+{
-+	struct tmc_drvdata *drvdata = dev_get_drvdata(csdev->dev.parent);
-+
-+	scoped_guard(raw_spinlock_irqsave, &drvdata->spinlock);
-+
-+	if (WARN_ON(coresight_get_mode(csdev) != mode))
-+		return;
-+
-+	csdev->refcnt--;
-+	if (!csdev->refcnt)
-+		coresight_set_mode(csdev, CS_MODE_DISABLED);
-+}
-+
- static int tmc_enable_etr_sink(struct coresight_device *csdev,
- 			       enum cs_mode mode, void *data)
- {
-+	unsigned long flags;
-+	struct tmc_drvdata *drvdata = dev_get_drvdata(csdev->dev.parent);
-+	int ret;
-+
-+	ret = tmc_acquire_mode(csdev, mode);
-+	if (ret < 0)
-+		return ret;
-+
-+	/*
-+	 * For sysfs mode, the higher level mutex ensures exclusively
-+	 * enabling sink, it is safe to bail out if this is not the
-+	 * first time to enable sink.
-+	 *
-+	 * A perf session can enable the same sink simultaneously, fall
-+	 * through to call tmc_enable_etr_sink_perf() to ensure the sink
-+	 * has been enabled.
-+	 */
-+	if (mode == CS_MODE_SYSFS && ret > 1)
-+		return 0;
-+
- 	switch (mode) {
- 	case CS_MODE_SYSFS:
--		return tmc_enable_etr_sink_sysfs(csdev);
-+		ret = tmc_enable_etr_sink_sysfs(csdev);
- 	case CS_MODE_PERF:
--		return tmc_enable_etr_sink_perf(csdev, data);
-+		ret = tmc_enable_etr_sink_perf(csdev, data);
- 	default:
--		return -EINVAL;
-+		ret = -EINVAL;
- 	}
-+
-+	if (ret)
-+		tmc_release_mode(csdev, mode);
-+
-+	return ret;
- }
- 
- static int tmc_disable_etr_sink(struct coresight_device *csdev)
-@@ -1796,30 +1832,20 @@ static int tmc_disable_etr_sink(struct coresight_device *csdev)
- 	unsigned long flags;
- 	struct tmc_drvdata *drvdata = dev_get_drvdata(csdev->dev.parent);
- 
--	raw_spin_lock_irqsave(&drvdata->spinlock, flags);
-+	tmc_release_mode(csdev, mode);
- 
--	if (drvdata->reading) {
--		raw_spin_unlock_irqrestore(&drvdata->spinlock, flags);
--		return -EBUSY;
--	}
-+	scoped_guard(raw_spinlock_irqsave, &drvdata->spinlock);
- 
--	csdev->refcnt--;
--	if (csdev->refcnt) {
--		raw_spin_unlock_irqrestore(&drvdata->spinlock, flags);
-+	if (csdev->refcnt || drvdata->reading)
- 		return -EBUSY;
--	}
- 
--	/* Complain if we (somehow) got out of sync */
--	WARN_ON_ONCE(coresight_get_mode(csdev) == CS_MODE_DISABLED);
-+	if (drvdata->pid == -1)
-+		return 0;
-+
- 	tmc_etr_disable_hw(drvdata);
--	/* Dissociate from monitored process. */
--	drvdata->pid = -1;
--	coresight_set_mode(csdev, CS_MODE_DISABLED);
- 	/* Reset perf specific data */
- 	drvdata->perf_buf = NULL;
- 
--	raw_spin_unlock_irqrestore(&drvdata->spinlock, flags);
--
- 	dev_dbg(&csdev->dev, "TMC-ETR disabled\n");
- 	return 0;
- }
 
