@@ -1,88 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-78053-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-78054-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [IPv6:2605:f480:58:1:0:1994:3:14])
-	by mail.lfdr.de (Postfix) with ESMTPS id 77EE5BF2F82
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Oct 2025 20:39:20 +0200 (CEST)
+Received: from ams.mirrors.kernel.org (ams.mirrors.kernel.org [213.196.21.55])
+	by mail.lfdr.de (Postfix) with ESMTPS id B0582BF2FD3
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Oct 2025 20:46:37 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 142744F8916
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Oct 2025 18:39:13 +0000 (UTC)
+	by ams.mirrors.kernel.org (Postfix) with ESMTPS id 347DD34E48D
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Oct 2025 18:46:37 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 63A672D130C;
-	Mon, 20 Oct 2025 18:39:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 89F6C2D0C9C;
+	Mon, 20 Oct 2025 18:46:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="L5a5tW1P"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="n8wVGJLG"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5460523C4E9
-	for <linux-arm-msm@vger.kernel.org>; Mon, 20 Oct 2025 18:39:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32DB81C3314;
+	Mon, 20 Oct 2025 18:46:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760985547; cv=none; b=msdALcOVNz4YtMHwgb61hEGOnhCm+QX5fGv59Y7iP9gqbayTN/i69yuDyV3BlHm820EPS8tRU9LuwbGc+iot2ILRkRsod+paL1Gw/Xolzr3x/iySQ+tEnTynUvNtQ4lquuO7rDqrkuM4w0+Sk8YS4ztrLqvmzhIM+mGmCfGXXno=
+	t=1760985992; cv=none; b=VuXyabzlSHVP4sWpevg/T58j2q8kxDKPdefZpyUKeXHzzm73GLs6xr2F3z8dSlwa25F9mUnmWKxZL8OMTzVamTSaBHZi3G6rFXNtHy3UiXphNU2x21TPgZXlNLiv71Kl1q7glhhaFgvCThqOTuBGGX7UFBF5IrfK9XJG2iylWNU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760985547; c=relaxed/simple;
-	bh=yulSoibBDiWX6jmpP3Ns1uXrdkIcA9BOI6Zi04OhpfU=;
+	s=arc-20240116; t=1760985992; c=relaxed/simple;
+	bh=Y6cCYtHS8ljGWK/XNbrYzLPntPrCQKewobnH6mUBAbg=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=MuhdniyOUuTYvbUa2KlVb0gfSOQe1YwO971QVeqW5U9V5kLy0aCj0ce61sG8uIdbTSnTk7vEOJ5T//Fmpr1lku6wctCkAmRnA7k7/bPB30hY6OwUxKKDJe9Z1GXx4KDic00ZIKnE8gqTd3pNic5IKy1AzP/so2yyAvD2Qm21isg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=L5a5tW1P; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 59KCaOUs013587
-	for <linux-arm-msm@vger.kernel.org>; Mon, 20 Oct 2025 18:39:03 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	fcmR2kO0kprkS+hm2HYcnN1OE+DeFwRjnQPZTNVK23s=; b=L5a5tW1PBrgMDnbQ
-	86ykVpx576xBLHDMIL1J2G1cas1zjehYpfvjWU0c5sbhTqajZXcaFfopgW4KqmM8
-	A/Q7gf228qOx0umNVcSmWhaxW/golnCh69NgO5mlEIW8LpSPz+vLI6G/B9sOXTYE
-	oPAWDEAw2wNHJzJW1i2X7h4FIsfXfT61oKTn15naaxjGQnI2AUPosw6hpag+2f+O
-	nBoNHODh7MnLVM0R1Yq0dKqAY1hXCSkVbX3Q3i3Jyf4DMszQg07tIfVBW+3p2nlA
-	dMKoqqwC02rAvFzRnzD/f88bSCEmjx3rRR9XrftMyBuTreLelMfHHwY+89o19reb
-	HjXKkw==
-Received: from mail-pf1-f197.google.com (mail-pf1-f197.google.com [209.85.210.197])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 49v08pdyw7-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Mon, 20 Oct 2025 18:39:03 +0000 (GMT)
-Received: by mail-pf1-f197.google.com with SMTP id d2e1a72fcca58-780f9cc532bso4384247b3a.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 20 Oct 2025 11:39:02 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1760985542; x=1761590342;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=fcmR2kO0kprkS+hm2HYcnN1OE+DeFwRjnQPZTNVK23s=;
-        b=GKA3jD8GXygdL+m5NTpE4svAKC7zGN8EL9qPKpbAHcdyDm58ppWCvjhq6UexSxE2Zy
-         lmLDT96pAqaIaqvkRjJtXxtGLytw+YF/UPiWorVGQPqNYSsjaYN8/s/F4bdVaI6EFu/7
-         qqjUzAbEhHkZ9V64Wtl7982ChndM6q4hsUzPXhPqKOZNJm9d6OC/sSFPBuy1h4UcJ1s1
-         fvyE87RR/PS/rdXgQaTp6CmxAT68tnPRYzdrARXWA5EeNlsQuWWi/9G/5QDiYJIXxksS
-         yU4Z2sFqgHIO/AiNkGEAY59rmZ76mu9i1HUKoYqe54Pa6Zgl8SCjulFZQgJc83XR02/a
-         DUTg==
-X-Forwarded-Encrypted: i=1; AJvYcCVMJkP2qpH0fDRpGBs8cuTcXDGgtn3n5WIDnuflcyqDI4BSLwXa7AanU1nDuk6hM1UKZIQnAGY0BwlVlHpu@vger.kernel.org
-X-Gm-Message-State: AOJu0Yyn1IXoMHS6r9Mzld3bWWJwiCePtBp5ah+S1uygw6ducn5YQDLW
-	soniNkd6J2YPspyGyTuy4HwQOsqJuECInnHiQ2cHVPqktyLXXInBOifog4wkrcPbU008K7UYvjz
-	6rECqXaTjQWX91qJGLSNitlxnRJFlxNQ8cp/P2D4BuzXQEATBJaVyel6dXJ3hWtMS6L68
-X-Gm-Gg: ASbGncuXJWZ8Q9WyIGZFTZLxjNqcEti9ejiLPHcAPn8+kROluutNOYavusa4vZOP0WQ
-	wp6W8fOD6y3KdRK/YhS3S6NHvv6nuZ3Sl9UtrzD+rG7Ya8oCB2rdqVLK7urEzOEsxWSbV/HLr0m
-	nFyC9FryCAXW2FpKFirYUl8EZc8s0e8/c5Dx5xZs0Rv39zgg9MFc97BC2z3X385R4Xd77+stsFX
-	Aew6fDAjnWMuiadJZljjtMH8CPiRSakU5DWornmkHl8Td207Ji0DfamDfp5MaIKCbbjMrnocek3
-	kCCureemRqPZk7Zkjk7eOpfHg+OZ4IgTgPzHUbFXVAxDQ0mqesUz8DCUwiZJe9y4tHsaaH5eAVw
-	EQU/axzfhF5VCLolf0Z7t6YXGamZlH+UxQPjVSrrkYJRDIGCtTLaUGA==
-X-Received: by 2002:a05:6a00:1ad1:b0:783:44b9:cbc9 with SMTP id d2e1a72fcca58-7a210f59a7dmr21228059b3a.9.1760985541786;
-        Mon, 20 Oct 2025 11:39:01 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGd531l029AZFQSWcfW9dfoCX2M4tkX+bVgsI6Qgj1PP+Mt6uKXHJbY5qWihEk2UM8XaRvFog==
-X-Received: by 2002:a05:6a00:1ad1:b0:783:44b9:cbc9 with SMTP id d2e1a72fcca58-7a210f59a7dmr21228013b3a.9.1760985541129;
-        Mon, 20 Oct 2025 11:39:01 -0700 (PDT)
-Received: from [10.62.37.19] (i-global254.qualcomm.com. [199.106.103.254])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-7a22ff1599dsm9006920b3a.4.2025.10.20.11.38.59
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 20 Oct 2025 11:39:00 -0700 (PDT)
-Message-ID: <9d6b7e9d-1656-408d-ae8b-4b3dc95ba905@oss.qualcomm.com>
-Date: Mon, 20 Oct 2025 11:38:58 -0700
+	 In-Reply-To:Content-Type; b=T+2t9Bqu11LnyNnc2+fKMwB4yINU48f1rL/X1eHiN2y7GYjHWSfiLpmSJyfi13fLyUasZYo9FhGNJ1E9t+nqHzmd/A/Q/oh62nQTtHR4fsnxptj4/FxSIF7231hB1p1dvhdqJmpxrLI+LKl7PHlnVJcxDNz5OHLVnEg0yYQN5IY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=n8wVGJLG; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0ED6AC113D0;
+	Mon, 20 Oct 2025 18:46:29 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1760985991;
+	bh=Y6cCYtHS8ljGWK/XNbrYzLPntPrCQKewobnH6mUBAbg=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=n8wVGJLG2E60McizrptQi/R56kCAf0GLTZypmdPsMl7E2jpJF04r+RGYqnhqzlc7b
+	 zp87lTVXZ9suWJkqap2ZQdy1/i4B6Rz5bt9uepZUGS1dOAeitt48+iFPXqXB7jDQKz
+	 vUFCpIe/+0kh2ysIoxsvnaAcusDpwh1GIXlIFNJPzQ43J4rYyyP/+botHbxL+Kfz+d
+	 MzzkjholaxVQWWkXUiWq5yGcLVgc1Ds+j0S9ct6ONPbAA0MkgWvD0diqI/0stBJ2HY
+	 RLu0shG8/3txeeEVR7AsHQRUCX786YqH++K5FvRB3Ru6Ixi9uyiU/rq05mj21VdraL
+	 nczc6KPd1O/Cw==
+Message-ID: <79a4bc8a-18e4-4b38-ab7e-53e34d0e8dbb@kernel.org>
+Date: Mon, 20 Oct 2025 19:46:28 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -90,163 +50,250 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/6] dt-bindings: i2c: qcom-cci: Document Kaanapali
- compatible
-To: Hangxiang Ma <hangxiang.ma@oss.qualcomm.com>,
-        Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-        Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
-        Loic Poulain <loic.poulain@oss.qualcomm.com>,
-        Robert Foss
- <rfoss@kernel.org>, Andi Shyti <andi.shyti@kernel.org>,
-        Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>, Todor Tomov <todor.too@gmail.com>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
-        Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Cc: linux-i2c@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-media@vger.kernel.org, aiqun.yu@oss.qualcomm.com,
-        tingwei.zhang@oss.qualcomm.com, trilok.soni@oss.qualcomm.com,
-        yijie.yang@oss.qualcomm.com,
-        Jingyi Wang <jingyi.wang@oss.qualcomm.com>,
-        Atiya Kailany <atiya.kailany@oss.qualcomm.com>
-References: <20251014-add-support-for-camss-on-kaanapali-v2-0-f5745ba2dff9@oss.qualcomm.com>
- <20251014-add-support-for-camss-on-kaanapali-v2-1-f5745ba2dff9@oss.qualcomm.com>
- <e2c43a8c-a9cc-46a1-9ddd-5d6dfc7e917b@linaro.org>
- <49eaf7ec-ac71-4bf3-9a4e-25fa633d815e@oss.qualcomm.com>
- <abc9d825-1e98-4838-9e9c-ca18ba191e11@oss.qualcomm.com>
- <22d47da0-4912-4880-8a42-f6d4e61e094c@oss.qualcomm.com>
+Subject: Re: [PATCH v5 2/3] media: qcom: camss: Add link support for TPG
+To: Wenmeng Liu <wenmeng.liu@oss.qualcomm.com>, Robert Foss
+ <rfoss@kernel.org>, Todor Tomov <todor.too@gmail.com>,
+ Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
+ Mauro Carvalho Chehab <mchehab@kernel.org>
+Cc: linux-kernel@vger.kernel.org, linux-media@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org
+References: <20251017-camss_tpg-v5-0-cafe3ad42163@oss.qualcomm.com>
+ <20251017-camss_tpg-v5-2-cafe3ad42163@oss.qualcomm.com>
+From: Bryan O'Donoghue <bod@kernel.org>
 Content-Language: en-US
-From: Vijay Kumar Tumati <vijay.tumati@oss.qualcomm.com>
-In-Reply-To: <22d47da0-4912-4880-8a42-f6d4e61e094c@oss.qualcomm.com>
+In-Reply-To: <20251017-camss_tpg-v5-2-cafe3ad42163@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDE4MDAwMCBTYWx0ZWRfX+TX9SRtrJIcy
- 3zeajrY041+dPj2qc6vqJ1etoErAcsTl1F3Xe9WRBoZrszst0sguxJEz6PV4G3sN6heaR0e3UWe
- ozPvLNYgj6/5p/lxyzfqeWADUPviZgYVdAvDXcDyB/Sg11eCwAbTVdjtLt8c7aRmt0E3lY51+M8
- ecgf5ntRwekDn3AFwNB4acvybSAf5Y/imLjkvCCpH10ofYdj5Rez6a2gnR05UkPLlpPsMwlUCQD
- NRvMR+eY1YsKDl0+gCGuoX55XhiejCRCGufs40ljI99tFt65v/R/44izKP/mArKk3/2QEyp01yb
- 5GnN4+RZqzFn0PLUeeqJ2z54B1a2g15Z8guMnegEgOoL2QlfjYDKJB4N78ljvjX13MRjDtYoJel
- tEPrYeaGP3r6Ly0WYu53j3BAcIJxIg==
-X-Proofpoint-GUID: Iappgw35R5BARfSPejMdfCNGpCz0vN9L
-X-Authority-Analysis: v=2.4 cv=Up1u9uwB c=1 sm=1 tr=0 ts=68f681c7 cx=c_pps
- a=rEQLjTOiSrHUhVqRoksmgQ==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17
- a=IkcTkHD0fZMA:10 a=x6icFKpwvdMA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=EUspDBNiAAAA:8 a=xzpADP0L3AAWVpYwfikA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=2VI0MkxyNR6bbpdq8BZq:22
-X-Proofpoint-ORIG-GUID: Iappgw35R5BARfSPejMdfCNGpCz0vN9L
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-10-20_05,2025-10-13_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- lowpriorityscore=0 adultscore=0 suspectscore=0 malwarescore=0 clxscore=1015
- impostorscore=0 bulkscore=0 priorityscore=1501 spamscore=0 phishscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2510020000 definitions=main-2510180000
+Content-Transfer-Encoding: 7bit
 
-
-On 10/19/2025 9:13 PM, Hangxiang Ma wrote:
-> On 10/16/2025 3:56 PM, Konrad Dybcio wrote:
->> On 10/16/25 3:56 AM, Hangxiang Ma wrote:
->>> On 10/16/2025 3:30 AM, Vladimir Zapolskiy wrote:
->>>
->>>> On 10/15/25 05:56, Hangxiang Ma wrote:
->>>>> Add Kaanapali compatible consistent with CAMSS CCI interfaces. The 
->>>>> list
->>>>> of clocks for Kaanapali requires its own compat string 'cam_top_ahb',
->>>>> aggregated into 'qcom,qcm2290-cci' node.
->>>>>
->>>>> Signed-off-by: Hangxiang Ma <hangxiang.ma@oss.qualcomm.com>
->>>>> ---
->>>>>    Documentation/devicetree/bindings/i2c/qcom,i2c-cci.yaml | 6 +++++-
->>>>>    1 file changed, 5 insertions(+), 1 deletion(-)
->>>>>
->>>>> diff --git 
->>>>> a/Documentation/devicetree/bindings/i2c/qcom,i2c-cci.yaml 
->>>>> b/Documentation/devicetree/bindings/i2c/qcom,i2c-cci.yaml
->>>>> index 9bc99d736343..0140c423f6f4 100644
->>>>> --- a/Documentation/devicetree/bindings/i2c/qcom,i2c-cci.yaml
->>>>> +++ b/Documentation/devicetree/bindings/i2c/qcom,i2c-cci.yaml
->>>>> @@ -25,6 +25,7 @@ properties:
->>>>>          - items:
->>>>>              - enum:
->>>>> +              - qcom,kaanapali-cci
->>>>>                  - qcom,qcm2290-cci
->>>>>                  - qcom,sa8775p-cci
->>>>>                  - qcom,sc7280-cci
->>>>> @@ -128,6 +129,7 @@ allOf:
->>>>>            compatible:
->>>>>              contains:
->>>>>                enum:
->>>>> +              - qcom,kaanapali-cci
->>>>>                  - qcom,qcm2290-cci
->>>>>        then:
->>>>>          properties:
->>>>> @@ -136,7 +138,9 @@ allOf:
->>>>>              maxItems: 2
->>>>>            clock-names:
->>>>>              items:
->>>>> -            - const: ahb
->>>>> +            - enum:
->>>>> +                - ahb
->>>>> +                - cam_top_ahb
->>>>
->>>> Why is not to give the clock "ahb" name like on QCM2290?
->>>>
->>>> On QCM2290 the macro in front of the vlaue is GCC_CAMSS_TOP_AHB_CLK,
->>>> and name "ahb" is good for both, I believe.
->>>>
->>>>>                - const: cci
->>>>>      - if:
->>>>>
->>>>
->>>
->>> On Kaanapali the macro has been changed to CAM_CC_CAM_TOP_AHB_CLK. 
->>> GCC clock domain doesn't manage the AHB clock but CAMCC does. I 
->>> think it's better to create a new and more complete clock name to 
->>> denote the differences between them.
->>
->> Are there any other "AHB" clocks going to this block?
->>
->> If not, then this is more confusing instead
->>
->> Konrad
->
-> On 10/16/2025 6:40 PM, Krzysztof Kozlowski wrote:
->> On 16/10/2025 03:56, Hangxiang Ma wrote:
->>>>
->>>> On QCM2290 the macro in front of the vlaue is GCC_CAMSS_TOP_AHB_CLK,
->>>> and name "ahb" is good for both, I believe.
->>>>
->>>>>                - const: cci
->>>>>      - if:
->>>>>
->>>>
->>>
->>> On Kaanapali the macro has been changed to CAM_CC_CAM_TOP_AHB_CLK. GCC
->>
->>
->> It seems you do not see the difference between GCC output clock and
->> actual clock input so some other block.
->>
->>
->>
->> Best regards,
->> Krzysztof
->
-> No more clocks will be added, at least for KNP. And I acknowledge the 
-> substance of AHB clock doesn't change. I will update and keep AHB 
-> clock name the same as QCM2290. Thanks for both of you. @Konrad 
-> @Krzysztof
->
+On 17/10/2025 06:06, Wenmeng Liu wrote:
+> TPG is connected to the csid as an entity, the link
+> needs to be adapted.
+> 
+> Signed-off-by: Wenmeng Liu <wenmeng.liu@oss.qualcomm.com>
 > ---
-> Hangxiang
-There are several AHB clocks into the Titan subsystem, TOP AHB, core 
-(TFE, OFE, IPE, IFE Lit etc.)level AHBs and fast and / or slow AHB 
-variants of some of those, AHBs to the firmwares etc. It should be 
-similar for any architecture, if I am not wrong. So should we consider 
-using "cam_top_ahb" for it to be clear commonly for both Kaanapali and 
-2290? Thanks.
->
->
+>   drivers/media/platform/qcom/camss/camss-csid.c   | 43 +++++++++++++-------
+>   drivers/media/platform/qcom/camss/camss-csiphy.c |  1 +
+>   drivers/media/platform/qcom/camss/camss-csiphy.h |  2 +
+>   drivers/media/platform/qcom/camss/camss.c        | 52 ++++++++++++++++++++++++
+>   4 files changed, 84 insertions(+), 14 deletions(-)
+> 
+> diff --git a/drivers/media/platform/qcom/camss/camss-csid.c b/drivers/media/platform/qcom/camss/camss-csid.c
+> index 5284b5857368c37c202cd89dad6ae8042b637537..196cbc0b60e9bf95a06b053c69c967e345ffcd4b 100644
+> --- a/drivers/media/platform/qcom/camss/camss-csid.c
+> +++ b/drivers/media/platform/qcom/camss/camss-csid.c
+> @@ -35,6 +35,8 @@
+>   #define		HW_VERSION_REVISION	16
+>   #define		HW_VERSION_GENERATION	28
+>   
+> +#define LANE_CFG_BITWIDTH 4
+> +
+>   #define MSM_CSID_NAME "msm_csid"
+>   
+>   const char * const csid_testgen_modes[] = {
+> @@ -1227,18 +1229,22 @@ void msm_csid_get_csid_id(struct media_entity *entity, u8 *id)
+>   }
+>   
+>   /*
+> - * csid_get_lane_assign - Calculate CSI2 lane assign configuration parameter
+> - * @lane_cfg - CSI2 lane configuration
+> + * csid_get_lane_assign - Calculate lane assign by csiphy/tpg lane num
+> + * @num: lane num
+> + * @pos_array: Array of lane positions
+>    *
+>    * Return lane assign
+>    */
+> -static u32 csid_get_lane_assign(struct csiphy_lanes_cfg *lane_cfg)
+> +static u32 csid_get_lane_assign(int num, struct csiphy_lanes_cfg *lane_cfg)
+
+ah semantic commnet
+
+add your parameter to the end, not to the start please and give the "int 
+num" are more meaningful name - num_lanes ? Decided for yourself what 
+that name should be.
+
+>   {
+>   	u32 lane_assign = 0;
+> +	int pos;
+>   	int i;
+>   
+> -	for (i = 0; i < lane_cfg->num_data; i++)
+> -		lane_assign |= lane_cfg->data[i].pos << (i * 4);
+> +	for (i = 0; i < num; i++) {
+> +		pos = lane_cfg ? lane_cfg->data[i].pos : i;
+> +		lane_assign |= pos << (i * LANE_CFG_BITWIDTH);
+> +	}
+>   
+>   	return lane_assign;
+>   }
+> @@ -1266,6 +1272,7 @@ static int csid_link_setup(struct media_entity *entity,
+>   		struct csid_device *csid;
+>   		struct csiphy_device *csiphy;
+>   		struct csiphy_lanes_cfg *lane_cfg;
+> +		struct tpg_device *tpg;
+>   
+>   		sd = media_entity_to_v4l2_subdev(entity);
+>   		csid = v4l2_get_subdevdata(sd);
+> @@ -1277,18 +1284,26 @@ static int csid_link_setup(struct media_entity *entity,
+>   			return -EBUSY;
+>   
+>   		sd = media_entity_to_v4l2_subdev(remote->entity);
+> -		csiphy = v4l2_get_subdevdata(sd);
+> +		if (sd->grp_id == TPG_GUP_ID) {
+> +			tpg = v4l2_get_subdevdata(sd);
+>   
+> -		/* If a sensor is not linked to CSIPHY */
+> -		/* do no allow a link from CSIPHY to CSID */
+> -		if (!csiphy->cfg.csi2)
+> -			return -EPERM;
+> +			csid->phy.lane_cnt = tpg->res->lane_cnt;
+> +			csid->phy.csiphy_id = tpg->id;
+> +			csid->phy.lane_assign = csid_get_lane_assign(csid->phy.lane_cnt, NULL);
+> +		} else {
+> +			csiphy = v4l2_get_subdevdata(sd);
+>   
+> -		csid->phy.csiphy_id = csiphy->id;
+> +			/* If a sensor is not linked to CSIPHY */
+> +			/* do no allow a link from CSIPHY to CSID */
+> +			if (!csiphy->cfg.csi2)
+> +				return -EPERM;
+>   
+> -		lane_cfg = &csiphy->cfg.csi2->lane_cfg;
+> -		csid->phy.lane_cnt = lane_cfg->num_data;
+> -		csid->phy.lane_assign = csid_get_lane_assign(lane_cfg);
+> +			csid->phy.csiphy_id = csiphy->id;
+> +
+> +			lane_cfg = &csiphy->cfg.csi2->lane_cfg;
+> +			csid->phy.lane_cnt = lane_cfg->num_data;
+> +			csid->phy.lane_assign = csid_get_lane_assign(lane_cfg->num_data, lane_cfg);
+> +		}
+>   	}
+>   	/* Decide which virtual channels to enable based on which source pads are enabled */
+>   	if (local->flags & MEDIA_PAD_FL_SOURCE) {
+> diff --git a/drivers/media/platform/qcom/camss/camss-csiphy.c b/drivers/media/platform/qcom/camss/camss-csiphy.c
+> index 2de97f58f9ae4f91e8bba39dcadf92bea8cf6f73..680580d7fe46a215777f3fa1b347f4297deea024 100644
+> --- a/drivers/media/platform/qcom/camss/camss-csiphy.c
+> +++ b/drivers/media/platform/qcom/camss/camss-csiphy.c
+> @@ -799,6 +799,7 @@ int msm_csiphy_register_entity(struct csiphy_device *csiphy,
+>   	sd->flags |= V4L2_SUBDEV_FL_HAS_DEVNODE;
+>   	snprintf(sd->name, ARRAY_SIZE(sd->name), "%s%d",
+>   		 MSM_CSIPHY_NAME, csiphy->id);
+> +	sd->grp_id = CSIPHY_GUP_ID;
+>   	v4l2_set_subdevdata(sd, csiphy);
+>   
+>   	ret = csiphy_init_formats(sd, NULL);
+> diff --git a/drivers/media/platform/qcom/camss/camss-csiphy.h b/drivers/media/platform/qcom/camss/camss-csiphy.h
+> index 895f80003c441dcacf98435f91567f90afa29279..b7bcf2bdd2124f77b5354b15b33aa1e0983143e8 100644
+> --- a/drivers/media/platform/qcom/camss/camss-csiphy.h
+> +++ b/drivers/media/platform/qcom/camss/camss-csiphy.h
+> @@ -21,6 +21,8 @@
+>   #define MSM_CSIPHY_PAD_SRC 1
+>   #define MSM_CSIPHY_PADS_NUM 2
+>   
+> +#define CSIPHY_GUP_ID 1
+> +
+>   struct csiphy_lane {
+>   	u8 pos;
+>   	u8 pol;
+> diff --git a/drivers/media/platform/qcom/camss/camss.c b/drivers/media/platform/qcom/camss/camss.c
+> index 2fbcd0e343aac9620a5a30719c42e1b887cf34ed..2ede19e1347ae32f2f6919905b535352bcd134be 100644
+> --- a/drivers/media/platform/qcom/camss/camss.c
+> +++ b/drivers/media/platform/qcom/camss/camss.c
+> @@ -3691,6 +3691,19 @@ static int camss_init_subdevices(struct camss *camss)
+>   		}
+>   	}
+>   
+> +	if (camss->tpg) {
+> +		for (i = 0; i < camss->res->tpg_num; i++) {
+> +			ret = msm_tpg_subdev_init(camss, &camss->tpg[i],
+> +						  &res->tpg_res[i], i);
+> +			if (ret < 0) {
+> +				dev_err(camss->dev,
+> +					"Failed to init tpg%d sub-device: %d\n",
+> +					i, ret);
+> +				return ret;
+> +			}
+> +		}
+> +	}
+> +
+>   	/* note: SM8250 requires VFE to be initialized before CSID */
+>   	for (i = 0; i < camss->res->vfe_num; i++) {
+>   		ret = msm_vfe_subdev_init(camss, &camss->vfe[i],
+> @@ -3779,6 +3792,23 @@ static int camss_link_entities(struct camss *camss)
+>   		}
+>   	}
+>   
+> +	for (i = 0; i < camss->res->tpg_num; i++) {
+> +		for (j = 0; j < camss->res->csid_num; j++) {
+> +			ret = media_create_pad_link(&camss->tpg[i].subdev.entity,
+> +						    MSM_TPG_PAD_SRC,
+> +						    &camss->csid[j].subdev.entity,
+> +						    MSM_CSID_PAD_SINK,
+> +						    0);
+> +			if (ret < 0) {
+> +				camss_link_err(camss,
+> +					       camss->tpg[i].subdev.entity.name,
+> +					       camss->csid[j].subdev.entity.name,
+> +					       ret);
+> +				return ret;
+> +			}
+> +		}
+> +	}
+> +
+>   	if (camss->ispif) {
+>   		for (i = 0; i < camss->res->csid_num; i++) {
+>   			for (j = 0; j < camss->ispif->line_num; j++) {
+> @@ -3883,6 +3913,19 @@ static int camss_register_entities(struct camss *camss)
+>   		}
+>   	}
+>   
+> +	if (camss->tpg) {
+> +		for (i = 0; i < camss->res->tpg_num; i++) {
+> +			ret = msm_tpg_register_entity(&camss->tpg[i],
+> +						      &camss->v4l2_dev);
+> +			if (ret < 0) {
+> +				dev_err(camss->dev,
+> +					"Failed to register tpg%d entity: %d\n",
+> +					i, ret);
+> +				goto err_reg_tpg;
+> +			}
+> +		}
+> +	}
+> +
+>   	for (i = 0; i < camss->res->csid_num; i++) {
+>   		ret = msm_csid_register_entity(&camss->csid[i],
+>   					       &camss->v4l2_dev);
+> @@ -3926,6 +3969,10 @@ static int camss_register_entities(struct camss *camss)
+>   	for (i--; i >= 0; i--)
+>   		msm_csid_unregister_entity(&camss->csid[i]);
+>   
+> +	i = camss->res->tpg_num;
+
+\n
+
+> +err_reg_tpg:
+> +	for (i--; i >= 0; i--)
+> +		msm_tpg_unregister_entity(&camss->tpg[i]);
+
+This is broken for non-TPG cases - for example it is possible to jump to 
+err_reg_csid when camss->tpg == NULL and then to dereference &camss->tpg[i];
+
+Please fix.
+
+>   	i = camss->res->csiphy_num;
+>   err_reg_csiphy:
+>   	for (i--; i >= 0; i--)
+> @@ -3947,6 +3994,11 @@ static void camss_unregister_entities(struct camss *camss)
+>   	for (i = 0; i < camss->res->csiphy_num; i++)
+>   		msm_csiphy_unregister_entity(&camss->csiphy[i]);
+>   
+> +	if (camss->tpg) {
+> +		for (i = 0; i < camss->res->tpg_num; i++)
+> +			msm_tpg_unregister_entity(&camss->tpg[i]);
+> +	}
+> +
+>   	for (i = 0; i < camss->res->csid_num; i++)
+>   		msm_csid_unregister_entity(&camss->csid[i]);
+>   
+> 
+
 
