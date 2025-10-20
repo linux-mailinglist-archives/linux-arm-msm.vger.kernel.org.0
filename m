@@ -1,81 +1,40 @@
-Return-Path: <linux-arm-msm+bounces-77977-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-77978-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4D279BF0AFA
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Oct 2025 12:56:14 +0200 (CEST)
+Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [IPv6:2605:f480:58:1:0:1994:3:14])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6BC78BF0B0C
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Oct 2025 12:57:12 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 07BE63A9B28
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Oct 2025 10:56:13 +0000 (UTC)
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 21DC34E0376
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Oct 2025 10:57:11 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 40D7523F422;
-	Mon, 20 Oct 2025 10:56:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="uBhbmlaS"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id ECA71253957;
+	Mon, 20 Oct 2025 10:57:09 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f54.google.com (mail-wr1-f54.google.com [209.85.221.54])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06238253F11
-	for <linux-arm-msm@vger.kernel.org>; Mon, 20 Oct 2025 10:56:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.54
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CFFEF246783;
+	Mon, 20 Oct 2025 10:57:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760957771; cv=none; b=Si7vvLZQ6gxnIDa/rotMHNX4NhmoaEPkeu0nFYaZ87fTckg2Luf+cNNC3tDN2xNH0TNHI1H/pyc4jzZeNB8PggDy43iQmQPH1RX8TPvPU1Wl/xsQgLGjoL1dH8R/sgizLnIVk9TTUJfePv0wL6qzUhIn1zfNjtW4RotAcsu1L5Q=
+	t=1760957829; cv=none; b=BiiA4aDieEqQ5ScG4n+jRZmJugbEwvswxuAtq66rpPXjXU7jaxosm9WZRhjqHYed5Zdm0dpEgX8cogIdDA+Fx70MiQsTRRA+yYB9oIS0lowlsr87v6ko4g29m0Jbcx4n7bG+u+lTx6Bdx7+SMHn5ysxn3JLoryml2Vac785K7ok=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760957771; c=relaxed/simple;
-	bh=IydQHlopurRsMIlFXXQnBsVqX59j3tYYZ9wp3B4KoGw=;
+	s=arc-20240116; t=1760957829; c=relaxed/simple;
+	bh=GqzSWhkRofkBTmEG+bUCXlI1T/uWvGXwQ0mCqIaJJe0=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=qYEeDxUC9CdoJD5OU2eQkAFJ3JoUA47EDVEYEPE8wZLibwGts0fEhC641c3Y2k7nujiK3E9n7CkpTOOLTjNBU33tRBfr4nC9QUyB+2S+F98HRg8D83VM8pM5Vl6DHU2F9ureZR240TGNDm4Wek5aoJY4tb9550vnfQSAfxc8btM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=uBhbmlaS; arc=none smtp.client-ip=209.85.221.54
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wr1-f54.google.com with SMTP id ffacd0b85a97d-42701b29a7eso1886652f8f.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 20 Oct 2025 03:56:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1760957767; x=1761562567; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=O50PUVrDxE9ib0IbMfL05smlWaDICzzt8kT2K5/ErZQ=;
-        b=uBhbmlaSfddAoMrlIpZt99EKU4O+QzROEHKWlEWVOhpxCcHpRkv8nGt+Y5c6WPzV4O
-         Ol1gyPNixSQGIIbgldDyhQcmbCTP1shIv9qiScdknkmRQ217UZGu6jTtMJoORQ0XKzoD
-         T+5xbOh8wSiGQutwtzoEABqZYK8C2/MbM57QU7+lmbf7sHUAR6Mw6SEWV7dE78JpYlsq
-         8XQqm+3k2JV6XqGP9uS8wmlKDgBAIApSOziEQ8np6CfKWrIBJ1L94zj+gddnFf2WxKim
-         qT5konw3qIMntlha4nYJMt1ei7UWkhFmRhJf7RnKwAR8lcQT3OPy4O1Qml8FtGi4FFme
-         Pa2A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1760957767; x=1761562567;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=O50PUVrDxE9ib0IbMfL05smlWaDICzzt8kT2K5/ErZQ=;
-        b=WF8PO1209feTMKkKYxUdNzuD1bhpnYPPwzGBA2BbEzi8B5STW0DuOz2cM3MfSTQxVD
-         DdRNavFRXd3WsxnjYqogSKCteHc26hVHWKXaix7cMYVR4O7D29vVX7ZCCa9kltskd8aC
-         CL9U2q+XJM/xTw92rzP/FBPqjRrHKLtwbzDuQPeEyXjFJ10OutlchXdrB4GRZgKC+u5c
-         sJUF/RoU/hLJblWpsF/xtm4lf2F1+nS01LLRWgCoXXSsHjpkBOrsDPLUFW3S2ZO0kWXe
-         MXTk0zFvnp3uRmG3idGP2ZZZ3mfDMLXJLQNlofuu+ajH4LJNBa4+wiw/6Lm6b0e15LLo
-         EHrw==
-X-Forwarded-Encrypted: i=1; AJvYcCXwmZr7rljd0jDFYZLQdG2XnlIyngXRVuuOMyCeh6/eSZJZz2YgrkFxFP5s2KAkBs1cIb2xz2gbNmCOBmnS@vger.kernel.org
-X-Gm-Message-State: AOJu0YzUBMtPxa0AIxtkf/U+PejcsuzxZmnZ/FpTHYZbxfMSzw+yhloU
-	OlU3cDYfVbYVAahxqFEHvSYBGrCMAFCL2CVGF/lq0R2PwDfSj7IPvlrKIWyrlomJVs0=
-X-Gm-Gg: ASbGncsrXfZAuaun2HQuLFilBJ/umG2rU8FVCp4XYJOiywJ29boLMytG0A62Sbqjevf
-	bKNAvd4qlGQUIJXGtW62XKkjOIay6cYLHoFxJCDoBDsgJdMG7iru8FRuhpvW6WbnQBO3KYWt3nJ
-	dzA8aE/6UdsDhCbWdGja9dP9Gkn+D8BQs8Fb4Ov/R0SF+u4VnsGnuzFZRof/Hxe97YiprH3icUf
-	I4ycSS/Ny95C7HT363Bnu9G6fajZjOIZ9GSZ2OicSJosMqbS53Jq6bkqWcH8+Niboe5yoBQHJZY
-	iGt8RjUBtN4TQ2iqdBWAa8d9+tAeTb/9ut/In8gbuXwz1JrNgNZCCbybj+265awhYZPITpGFv5p
-	cs7w/yDaz86AJy/OX727EAqCRa0jeL0drl0dmDqENeU4a/qp49PEbfEfJNnSOOFPZFvEp/5ghsI
-	mNzcFzg5NoQzRu1ja0JT7WXow94eoEh19Mg95X7E0eD8U=
-X-Google-Smtp-Source: AGHT+IEnxRa9WBYZ/xihOvJBRUTwTryLwgmhlm6XUxYYKxvIXYWvfiDdFtfoAj1aZpKnj7X7vI055g==
-X-Received: by 2002:a5d:588b:0:b0:427:1ae:abc7 with SMTP id ffacd0b85a97d-42701aeaffemr10842435f8f.2.1760957767322;
-        Mon, 20 Oct 2025 03:56:07 -0700 (PDT)
-Received: from [192.168.0.163] (188-141-3-146.dynamic.upc.ie. [188.141.3.146])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-427f00ce06bsm14495252f8f.45.2025.10.20.03.56.06
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 20 Oct 2025 03:56:06 -0700 (PDT)
-Message-ID: <f5a1076f-f06c-404d-88d4-fef4f7694c82@linaro.org>
-Date: Mon, 20 Oct 2025 11:56:05 +0100
+	 In-Reply-To:Content-Type; b=CkLIRbIGLwA449tVAjGKbvvQ6WlNP2WmLYHtuPXwZ4RtH5YzcqbStRIDmgWeDlU25Lv/Mk4K+DNaFlnaPpuC+seHL0EY1m1nYlwAYNZtUier6kBJ6uvXJSkOnhijJWyMRpY/ew6AHofUxuHXpPRNewFpQ3+WYvoxUToNp8HWFlI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; arc=none smtp.client-ip=217.140.110.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 3BA451063;
+	Mon, 20 Oct 2025 03:56:59 -0700 (PDT)
+Received: from [10.57.65.154] (unknown [10.57.65.154])
+	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id E80313F66E;
+	Mon, 20 Oct 2025 03:57:05 -0700 (PDT)
+Message-ID: <9cb7bead-d0c0-4edc-a8e3-a77731e8dc8c@arm.com>
+Date: Mon, 20 Oct 2025 11:57:04 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -83,122 +42,107 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/6] dt-bindings: media: camss: Add qcom,kaanapali-camss
- binding
-To: Krzysztof Kozlowski <krzk@kernel.org>,
- Loic Poulain <loic.poulain@oss.qualcomm.com>
-Cc: Hangxiang Ma <hangxiang.ma@oss.qualcomm.com>,
- Jingyi Wang <jingyi.wang@oss.qualcomm.com>, Robert Foss <rfoss@kernel.org>,
- Andi Shyti <andi.shyti@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Bryan O'Donoghue <bod@kernel.org>,
- Todor Tomov <todor.too@gmail.com>,
- Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
- Mauro Carvalho Chehab <mchehab@kernel.org>, linux-i2c@vger.kernel.org,
- linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, linux-media@vger.kernel.org,
- aiqun.yu@oss.qualcomm.com, tingwei.zhang@oss.qualcomm.com,
- trilok.soni@oss.qualcomm.com, yijie.yang@oss.qualcomm.com
-References: <20250924-knp-cam-v1-0-b72d6deea054@oss.qualcomm.com>
- <20250924-knp-cam-v1-2-b72d6deea054@oss.qualcomm.com>
- <CAFEp6-1o11B9o3HjdJY-xQhDXquOTknXo0JeW=HfpTxXcEaK3g@mail.gmail.com>
- <a7be3a42-bd4f-46dc-b6de-2b0c0320cb0d@oss.qualcomm.com>
- <d8dfe11f-c55a-4eb2-930a-bfa31670bef0@kernel.org>
- <CAFEp6-1zpobZNLHt1192Ahtn2O7bV+As0P1YvVHrkRsORyH_Aw@mail.gmail.com>
- <ac96922e-d2a3-4a99-8f34-a822c3dd2d02@kernel.org>
- <7140b8a8-1380-4859-84a3-681b3f1ce505@kernel.org>
-From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Content-Language: en-US
-In-Reply-To: <7140b8a8-1380-4859-84a3-681b3f1ce505@kernel.org>
+Subject: Re: [PATCH] coresight: ETR: Fix ETR buffer use-after-free issue
+Content-Language: en-GB
+To: Jie Gan <jie.gan@oss.qualcomm.com>,
+ Xiaoqi Zhuang <xiaoqi.zhuang@oss.qualcomm.com>,
+ Mike Leach <mike.leach@linaro.org>, James Clark <james.clark@linaro.org>,
+ Alexander Shishkin <alexander.shishkin@linux.intel.com>
+Cc: coresight@lists.linaro.org, linux-arm-kernel@lists.infradead.org,
+ linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
+References: <20251020-fix_etr_issue-v1-1-902ab51770b4@oss.qualcomm.com>
+ <5a95ad38-0b32-4889-a8fb-af7e79c2e862@oss.qualcomm.com>
+From: Suzuki K Poulose <suzuki.poulose@arm.com>
+In-Reply-To: <5a95ad38-0b32-4889-a8fb-af7e79c2e862@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 
-On 20/10/2025 11:16, Krzysztof Kozlowski wrote:
-> On 16/10/2025 12:43, Krzysztof Kozlowski wrote:
->> On 16/10/2025 10:47, Loic Poulain wrote:
->>> On Thu, Oct 16, 2025 at 7:52 AM Krzysztof Kozlowski <krzk@kernel.org> wrote:
->>>>
->>>> On 15/10/2025 05:21, Hangxiang Ma wrote:
->>>>>>> +      - const: csiphy4
->>>>>>> +      - const: csiphy5
->>>>>>> +      - const: vfe0
->>>>>>> +      - const: vfe1
->>>>>>> +      - const: vfe2
->>>>>>> +      - const: vfe_lite0
->>>>>>> +      - const: vfe_lite1
->>>>>> Wouldn't it make sense to simplify this and have different camss nodes
->>>>>> for the 'main' and 'lite' paths?
->>>>>>
->>>>>> [...]
->>>>> No such plan till now. Other series may take this into consideration.
->>>>
->>>> We don't care much about your plan. You are expected to send correct
->>>> hardware description.
->>>
->>> To be fair, other platforms like sc8280xp-camss already have the
->>> all-in big camss node.
->>> Point is that if Lite and Main blocks are distinct enough we could
->>> have two simpler nodes.
->>> Would it make things any better from a dts and camss perspective?
->>>
->>>   camss: isp@9253000 {
->>>      compatible = "qcom,kaanapali-camss";
->>>      [...]
->>> }
->>>
->>> camss-lite:ips@9273000 {
->>>     compatible = "qcom,kaanapali-lite-camss";
->>>      [...]
->>> }
->>>
->>> That approach would create two distinct CAMSS instances and separate
->>> media pipelines.
->>> However, it may not work with the current implementation, as the CSI
->>> PHYs would need to be shared between them.
->>>
->>> I guess this should be part of the broader discussion around
->>> splitting/busifying CAMSS.
+On 20/10/2025 11:18, Jie Gan wrote:
+> 
+> 
+> On 10/20/2025 5:06 PM, Xiaoqi Zhuang wrote:
+>> When ETR is enabled as CS_MODE_SYSFS, if the buffer size is changed
+>> and enabled again, currently sysfs_buf will point to the newly
+>> allocated memory(buf_new) and free the old memory(buf_old). But the
+>> etr_buf that is being used by the ETR remains pointed to buf_old, not
+>> updated to buf_new. In this case, it will result in a memory
+>> use-after-free issue.
 >>
->> And this discussion CAN happen now, stopping this camss and any future
->> camss till we conclude the discussion. Whatever internal plans of that
->> teams are, rejecting technical discussion based on "no plans for that"
->> is a really bad argument, only stalling this patchset and raising eyebrows.
+>> Fix this by checking ETR's mode before updating and releasing buf_old,
+>> if the mode is CS_MODE_SYSFS, then skip updating and releasing it.
+>>
 > 
+> I think we need a fix tag for the fix patch:
+> Fixes: de5461970b3e ("coresight: tmc: allocating memory when needed")
 > 
-> To be clear, I expect Loic's comment to be fully and technically
-> addressed, not with "no plan for that".
+> minor comment:
+> Since ETR is enabled, we can't switch the sysfs buffer, can we exit 
+> earlier by checking the CS_MODE to avoid allocating memory unnecessarily?
+
++1
+
+Something like this:
+
+diff --git a/drivers/hwtracing/coresight/coresight-tmc-etr.c 
+b/drivers/hwtracing/coresight/coresight-tmc-etr.c
+index b07fcdb3fe1a..a9ddb05c10d9 100644
+--- a/drivers/hwtracing/coresight/coresight-tmc-etr.c
++++ b/drivers/hwtracing/coresight/coresight-tmc-etr.c
+@@ -1252,6 +1252,12 @@ static struct etr_buf 
+*tmc_etr_get_sysfs_buffer(struct coresight_device *csdev)
+         raw_spin_lock_irqsave(&drvdata->spinlock, flags);
+         sysfs_buf = READ_ONCE(drvdata->sysfs_buf);
+         if (!sysfs_buf || (sysfs_buf->size != drvdata->size)) {
++               /*
++                * If the ETR is already enabled, continue with the existing
++                * buffer.
++                */
++               if (coresight_get_mode(csdev) == CS_MODE_SYSFS)
++                       goto out;
+                 raw_spin_unlock_irqrestore(&drvdata->spinlock, flags);
+
+                 /* Allocate memory with the locks released */
+
+Suzuki>
+> Besides,
+> Looks good to me.
 > 
-> This blocks this patchset and any new versions.
+> Thanks,
+> Jie
 > 
-> Best regards,
-> Krzysztof
-
-I think we should stick with the existing bindings.
-
-There is no "lite" ISP there are so-called lite blocks within the CAMSS 
-block.
-
-It makes sense to split out the PHYs from this block as they have their 
-own power-rails but, if you look at the block diagrams for this IP there 
-is no specific ISP lite, there are merely blocks within the camera 
-called lite.
-
-It might be nice to structure things like this 
-arch/arm64/boot/dts/rockchip/rk356x-base.dtsi with each component 
-separated out into its own node with its own compat string but, I'd have 
-a hard time justifying changing up the bindings we already have for that 
-reason - aside from anything else - all of those components in CAMSS 
-live inside of the TITAN_TOP_GDSC which is the power-domain for the 
-whole camera system.
-
-So not meaning to answer for Hangxiang but, I think the compelling logic 
-here is to stick to and extend the existing bindings.
-
-So in fact I have no problem with the bindings as submitted - not 
-including the regular fixups these types of submissions entail.
-
----
-bod
-
+>> Signed-off-by: Xiaoqi Zhuang <xiaoqi.zhuang@oss.qualcomm.com>
+>> ---
+>>   drivers/hwtracing/coresight/coresight-tmc-etr.c | 7 +++++++
+>>   1 file changed, 7 insertions(+)
+>>
+>> diff --git a/drivers/hwtracing/coresight/coresight-tmc-etr.c b/ 
+>> drivers/hwtracing/coresight/coresight-tmc-etr.c
+>> index b07fcdb3fe1a..3e73cf2c38a3 100644
+>> --- a/drivers/hwtracing/coresight/coresight-tmc-etr.c
+>> +++ b/drivers/hwtracing/coresight/coresight-tmc-etr.c
+>> @@ -1268,6 +1268,13 @@ static struct etr_buf 
+>> *tmc_etr_get_sysfs_buffer(struct coresight_device *csdev)
+>>           goto out;
+>>       }
+>> +    /*
+>> +     * Since this sink is already enabled, the existing buffer should 
+>> not
+>> +     * be released even if the buffer size has changed.
+>> +     */
+>> +    if (coresight_get_mode(csdev) == CS_MODE_SYSFS)
+>> +        goto out;
+>> +
+>>       /*
+>>        * If we don't have a buffer or it doesn't match the requested 
+>> size,
+>>        * use the buffer allocated above. Otherwise reuse the existing 
+>> buffer.
+>>
+>> ---
+>> base-commit: 98ac9cc4b4452ed7e714eddc8c90ac4ae5da1a09
+>> change-id: 20251020-fix_etr_issue-02c706dbc899
+>>
+>> Best regards,
+> 
 
 
