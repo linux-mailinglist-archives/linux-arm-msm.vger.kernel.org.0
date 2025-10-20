@@ -1,48 +1,81 @@
-Return-Path: <linux-arm-msm+bounces-77976-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-77977-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [IPv6:2605:f480:58:1:0:1994:3:14])
-	by mail.lfdr.de (Postfix) with ESMTPS id E40D4BF0A4D
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Oct 2025 12:46:17 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4D279BF0AFA
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Oct 2025 12:56:14 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id AFCA44E4885
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Oct 2025 10:46:16 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 07BE63A9B28
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Oct 2025 10:56:13 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D735F24337B;
-	Mon, 20 Oct 2025 10:46:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 40D7523F422;
+	Mon, 20 Oct 2025 10:56:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="hiskMmBL"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="uBhbmlaS"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f54.google.com (mail-wr1-f54.google.com [209.85.221.54])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AAA6322AE7A;
-	Mon, 20 Oct 2025 10:46:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06238253F11
+	for <linux-arm-msm@vger.kernel.org>; Mon, 20 Oct 2025 10:56:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760957173; cv=none; b=OtVjxDIs/LieEf71MGD5wHOVzmMkFEcrHzfMvjLA3xVo6AZCeTl6BEKQyVKQqNfz5OsIbrPi88T+VEdhsBPSpaqZ4wAQkgsr7H4kA8t+i/eJC6fKlZ2kxEP9wmfZLtBoOl7HxO6atDeulte/GFmZ2TFaaPY3ZMXJonyqTAjn9U8=
+	t=1760957771; cv=none; b=Si7vvLZQ6gxnIDa/rotMHNX4NhmoaEPkeu0nFYaZ87fTckg2Luf+cNNC3tDN2xNH0TNHI1H/pyc4jzZeNB8PggDy43iQmQPH1RX8TPvPU1Wl/xsQgLGjoL1dH8R/sgizLnIVk9TTUJfePv0wL6qzUhIn1zfNjtW4RotAcsu1L5Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760957173; c=relaxed/simple;
-	bh=kl+LycU++N89AqrET5le7Buh5sd0/Kh/W0n80LMbc0A=;
-	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
-	 In-Reply-To:Content-Type; b=m8d+v1nJkeANrlu5iQRVoxvbSlLSLvrkOtSenrNji0IRmhXaYRXnjG9Sojv3F2iYqZKKH/iCTQhh1+ovYsS0pd2/HwC0VSO/fR5XKl0XANxwKn4MafWmHFhX6J3NiVMwGx67ndyNTYgH24mM4B8qJ4aIKas0xplKS/4WaLjPqBE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=hiskMmBL; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32CDDC4CEF9;
-	Mon, 20 Oct 2025 10:46:06 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1760957171;
-	bh=kl+LycU++N89AqrET5le7Buh5sd0/Kh/W0n80LMbc0A=;
-	h=Date:Subject:From:To:Cc:References:In-Reply-To:From;
-	b=hiskMmBLH8qF97XPPH8jbJpAkvRC1w98RkVkozmvarfsIxrW4zsV/HPSh8BL2f9dy
-	 3oqV977nVloKiyLsHkwhyLPpSUS7t7e14NtM/XQ8K3Zp0rm6JW+xlUw6mdqHERPg6j
-	 amtrpeKitNDVW6RXSt9dBIplEBkxPlfuPlRNnJYfLilBIuWc+zEPyCV6MmY2xE2d/4
-	 3aReZi+oTLoTmsN//LiarDDTXerUkpDYnx6rx05L3N5S5YtH0+VXG12oq7a47MjSts
-	 x63DBJ/Ekd55mtlOLoov/U5ex60zbo8FcmdF/PvpOc02Vlt3uU60RKZrdrYIYp3yQ0
-	 elDf05bHCQiMQ==
-Message-ID: <72b90092-20d6-4d66-bda3-297213749563@kernel.org>
-Date: Mon, 20 Oct 2025 12:46:04 +0200
+	s=arc-20240116; t=1760957771; c=relaxed/simple;
+	bh=IydQHlopurRsMIlFXXQnBsVqX59j3tYYZ9wp3B4KoGw=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=qYEeDxUC9CdoJD5OU2eQkAFJ3JoUA47EDVEYEPE8wZLibwGts0fEhC641c3Y2k7nujiK3E9n7CkpTOOLTjNBU33tRBfr4nC9QUyB+2S+F98HRg8D83VM8pM5Vl6DHU2F9ureZR240TGNDm4Wek5aoJY4tb9550vnfQSAfxc8btM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=uBhbmlaS; arc=none smtp.client-ip=209.85.221.54
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wr1-f54.google.com with SMTP id ffacd0b85a97d-42701b29a7eso1886652f8f.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 20 Oct 2025 03:56:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1760957767; x=1761562567; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=O50PUVrDxE9ib0IbMfL05smlWaDICzzt8kT2K5/ErZQ=;
+        b=uBhbmlaSfddAoMrlIpZt99EKU4O+QzROEHKWlEWVOhpxCcHpRkv8nGt+Y5c6WPzV4O
+         Ol1gyPNixSQGIIbgldDyhQcmbCTP1shIv9qiScdknkmRQ217UZGu6jTtMJoORQ0XKzoD
+         T+5xbOh8wSiGQutwtzoEABqZYK8C2/MbM57QU7+lmbf7sHUAR6Mw6SEWV7dE78JpYlsq
+         8XQqm+3k2JV6XqGP9uS8wmlKDgBAIApSOziEQ8np6CfKWrIBJ1L94zj+gddnFf2WxKim
+         qT5konw3qIMntlha4nYJMt1ei7UWkhFmRhJf7RnKwAR8lcQT3OPy4O1Qml8FtGi4FFme
+         Pa2A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1760957767; x=1761562567;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=O50PUVrDxE9ib0IbMfL05smlWaDICzzt8kT2K5/ErZQ=;
+        b=WF8PO1209feTMKkKYxUdNzuD1bhpnYPPwzGBA2BbEzi8B5STW0DuOz2cM3MfSTQxVD
+         DdRNavFRXd3WsxnjYqogSKCteHc26hVHWKXaix7cMYVR4O7D29vVX7ZCCa9kltskd8aC
+         CL9U2q+XJM/xTw92rzP/FBPqjRrHKLtwbzDuQPeEyXjFJ10OutlchXdrB4GRZgKC+u5c
+         sJUF/RoU/hLJblWpsF/xtm4lf2F1+nS01LLRWgCoXXSsHjpkBOrsDPLUFW3S2ZO0kWXe
+         MXTk0zFvnp3uRmG3idGP2ZZZ3mfDMLXJLQNlofuu+ajH4LJNBa4+wiw/6Lm6b0e15LLo
+         EHrw==
+X-Forwarded-Encrypted: i=1; AJvYcCXwmZr7rljd0jDFYZLQdG2XnlIyngXRVuuOMyCeh6/eSZJZz2YgrkFxFP5s2KAkBs1cIb2xz2gbNmCOBmnS@vger.kernel.org
+X-Gm-Message-State: AOJu0YzUBMtPxa0AIxtkf/U+PejcsuzxZmnZ/FpTHYZbxfMSzw+yhloU
+	OlU3cDYfVbYVAahxqFEHvSYBGrCMAFCL2CVGF/lq0R2PwDfSj7IPvlrKIWyrlomJVs0=
+X-Gm-Gg: ASbGncsrXfZAuaun2HQuLFilBJ/umG2rU8FVCp4XYJOiywJ29boLMytG0A62Sbqjevf
+	bKNAvd4qlGQUIJXGtW62XKkjOIay6cYLHoFxJCDoBDsgJdMG7iru8FRuhpvW6WbnQBO3KYWt3nJ
+	dzA8aE/6UdsDhCbWdGja9dP9Gkn+D8BQs8Fb4Ov/R0SF+u4VnsGnuzFZRof/Hxe97YiprH3icUf
+	I4ycSS/Ny95C7HT363Bnu9G6fajZjOIZ9GSZ2OicSJosMqbS53Jq6bkqWcH8+Niboe5yoBQHJZY
+	iGt8RjUBtN4TQ2iqdBWAa8d9+tAeTb/9ut/In8gbuXwz1JrNgNZCCbybj+265awhYZPITpGFv5p
+	cs7w/yDaz86AJy/OX727EAqCRa0jeL0drl0dmDqENeU4a/qp49PEbfEfJNnSOOFPZFvEp/5ghsI
+	mNzcFzg5NoQzRu1ja0JT7WXow94eoEh19Mg95X7E0eD8U=
+X-Google-Smtp-Source: AGHT+IEnxRa9WBYZ/xihOvJBRUTwTryLwgmhlm6XUxYYKxvIXYWvfiDdFtfoAj1aZpKnj7X7vI055g==
+X-Received: by 2002:a5d:588b:0:b0:427:1ae:abc7 with SMTP id ffacd0b85a97d-42701aeaffemr10842435f8f.2.1760957767322;
+        Mon, 20 Oct 2025 03:56:07 -0700 (PDT)
+Received: from [192.168.0.163] (188-141-3-146.dynamic.upc.ie. [188.141.3.146])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-427f00ce06bsm14495252f8f.45.2025.10.20.03.56.06
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 20 Oct 2025 03:56:06 -0700 (PDT)
+Message-ID: <f5a1076f-f06c-404d-88d4-fef4f7694c82@linaro.org>
+Date: Mon, 20 Oct 2025 11:56:05 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,90 +83,122 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/7] dt-bindings: display: msm: Document the Glymur
- Mobile Display SubSystem
-From: Krzysztof Kozlowski <krzk@kernel.org>
-To: Abel Vesa <abel.vesa@linaro.org>
-Cc: Rob Clark <robin.clark@oss.qualcomm.com>,
- Dmitry Baryshkov <lumag@kernel.org>, Abhinav Kumar
- <abhinav.kumar@linux.dev>, Jessica Zhang <jessica.zhang@oss.qualcomm.com>,
- Sean Paul <sean@poorly.run>, Marijn Suijten <marijn.suijten@somainline.org>,
- Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
- Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>,
- David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
- Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
- Conor Dooley <conor+dt@kernel.org>,
- Neil Armstrong <neil.armstrong@linaro.org>,
- Kuogee Hsieh <quic_khsieh@quicinc.com>,
- Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>, linux-arm-msm@vger.kernel.org,
- dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20251014-glymur-display-v2-0-ff935e2f88c5@linaro.org>
- <20251014-glymur-display-v2-1-ff935e2f88c5@linaro.org>
- <20251020-swinging-herring-of-coffee-adfdea@kuoka>
+Subject: Re: [PATCH 2/6] dt-bindings: media: camss: Add qcom,kaanapali-camss
+ binding
+To: Krzysztof Kozlowski <krzk@kernel.org>,
+ Loic Poulain <loic.poulain@oss.qualcomm.com>
+Cc: Hangxiang Ma <hangxiang.ma@oss.qualcomm.com>,
+ Jingyi Wang <jingyi.wang@oss.qualcomm.com>, Robert Foss <rfoss@kernel.org>,
+ Andi Shyti <andi.shyti@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Bryan O'Donoghue <bod@kernel.org>,
+ Todor Tomov <todor.too@gmail.com>,
+ Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
+ Mauro Carvalho Chehab <mchehab@kernel.org>, linux-i2c@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org, linux-media@vger.kernel.org,
+ aiqun.yu@oss.qualcomm.com, tingwei.zhang@oss.qualcomm.com,
+ trilok.soni@oss.qualcomm.com, yijie.yang@oss.qualcomm.com
+References: <20250924-knp-cam-v1-0-b72d6deea054@oss.qualcomm.com>
+ <20250924-knp-cam-v1-2-b72d6deea054@oss.qualcomm.com>
+ <CAFEp6-1o11B9o3HjdJY-xQhDXquOTknXo0JeW=HfpTxXcEaK3g@mail.gmail.com>
+ <a7be3a42-bd4f-46dc-b6de-2b0c0320cb0d@oss.qualcomm.com>
+ <d8dfe11f-c55a-4eb2-930a-bfa31670bef0@kernel.org>
+ <CAFEp6-1zpobZNLHt1192Ahtn2O7bV+As0P1YvVHrkRsORyH_Aw@mail.gmail.com>
+ <ac96922e-d2a3-4a99-8f34-a822c3dd2d02@kernel.org>
+ <7140b8a8-1380-4859-84a3-681b3f1ce505@kernel.org>
+From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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 a/A=
-In-Reply-To: <20251020-swinging-herring-of-coffee-adfdea@kuoka>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+In-Reply-To: <7140b8a8-1380-4859-84a3-681b3f1ce505@kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-On 20/10/2025 12:42, Krzysztof Kozlowski wrote:
-> On Tue, Oct 14, 2025 at 03:38:26PM +0300, Abel Vesa wrote:
->> Add MDSS/MDP display subsystem for Qualcomm Glymur SoC, which is
->> is 2 minor version increase compared to SM8750.
+On 20/10/2025 11:16, Krzysztof Kozlowski wrote:
+> On 16/10/2025 12:43, Krzysztof Kozlowski wrote:
+>> On 16/10/2025 10:47, Loic Poulain wrote:
+>>> On Thu, Oct 16, 2025 at 7:52 AM Krzysztof Kozlowski <krzk@kernel.org> wrote:
+>>>>
+>>>> On 15/10/2025 05:21, Hangxiang Ma wrote:
+>>>>>>> +      - const: csiphy4
+>>>>>>> +      - const: csiphy5
+>>>>>>> +      - const: vfe0
+>>>>>>> +      - const: vfe1
+>>>>>>> +      - const: vfe2
+>>>>>>> +      - const: vfe_lite0
+>>>>>>> +      - const: vfe_lite1
+>>>>>> Wouldn't it make sense to simplify this and have different camss nodes
+>>>>>> for the 'main' and 'lite' paths?
+>>>>>>
+>>>>>> [...]
+>>>>> No such plan till now. Other series may take this into consideration.
+>>>>
+>>>> We don't care much about your plan. You are expected to send correct
+>>>> hardware description.
+>>>
+>>> To be fair, other platforms like sc8280xp-camss already have the
+>>> all-in big camss node.
+>>> Point is that if Lite and Main blocks are distinct enough we could
+>>> have two simpler nodes.
+>>> Would it make things any better from a dts and camss perspective?
+>>>
+>>>   camss: isp@9253000 {
+>>>      compatible = "qcom,kaanapali-camss";
+>>>      [...]
+>>> }
+>>>
+>>> camss-lite:ips@9273000 {
+>>>     compatible = "qcom,kaanapali-lite-camss";
+>>>      [...]
+>>> }
+>>>
+>>> That approach would create two distinct CAMSS instances and separate
+>>> media pipelines.
+>>> However, it may not work with the current implementation, as the CSI
+>>> PHYs would need to be shared between them.
+>>>
+>>> I guess this should be part of the broader discussion around
+>>> splitting/busifying CAMSS.
+>>
+>> And this discussion CAN happen now, stopping this camss and any future
+>> camss till we conclude the discussion. Whatever internal plans of that
+>> teams are, rejecting technical discussion based on "no plans for that"
+>> is a really bad argument, only stalling this patchset and raising eyebrows.
 > 
-> This suggests that at least some of the compatibles listed in the
-> binding would be compatible with SM8750. None of them are, so I find the
-> message confusing.
+> 
+> To be clear, I expect Loic's comment to be fully and technically
+> addressed, not with "no plan for that".
+> 
+> This blocks this patchset and any new versions.
+> 
+> Best regards,
+> Krzysztof
 
-Heh, I found answers in individual patches. Well, this is still a bit
-misleading but does not matter that much:
+I think we should stick with the existing bindings.
 
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+There is no "lite" ISP there are so-called lite blocks within the CAMSS 
+block.
 
-Best regards,
-Krzysztof
+It makes sense to split out the PHYs from this block as they have their 
+own power-rails but, if you look at the block diagrams for this IP there 
+is no specific ISP lite, there are merely blocks within the camera 
+called lite.
+
+It might be nice to structure things like this 
+arch/arm64/boot/dts/rockchip/rk356x-base.dtsi with each component 
+separated out into its own node with its own compat string but, I'd have 
+a hard time justifying changing up the bindings we already have for that 
+reason - aside from anything else - all of those components in CAMSS 
+live inside of the TITAN_TOP_GDSC which is the power-domain for the 
+whole camera system.
+
+So not meaning to answer for Hangxiang but, I think the compelling logic 
+here is to stick to and extend the existing bindings.
+
+So in fact I have no problem with the bindings as submitted - not 
+including the regular fixups these types of submissions entail.
+
+---
+bod
+
+
 
