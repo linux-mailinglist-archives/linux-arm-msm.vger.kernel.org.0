@@ -1,88 +1,87 @@
-Return-Path: <linux-arm-msm+bounces-77995-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-77996-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2D1D2BF0FB9
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Oct 2025 14:03:39 +0200 (CEST)
+Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [142.0.200.124])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3EF9EBF0FC5
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Oct 2025 14:04:52 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 84827402CDC
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Oct 2025 12:02:38 +0000 (UTC)
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id D8AEF4E35BF
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Oct 2025 12:04:50 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C3F342DECAA;
-	Mon, 20 Oct 2025 12:02:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 44C332F657A;
+	Mon, 20 Oct 2025 12:04:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="k1lm7zi8"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="GcBW1Lig"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23EA22B9B9
-	for <linux-arm-msm@vger.kernel.org>; Mon, 20 Oct 2025 12:02:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C86AF2B9B9
+	for <linux-arm-msm@vger.kernel.org>; Mon, 20 Oct 2025 12:04:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760961756; cv=none; b=c5raC0eA/CvFgsb1RQgAu9LEATGHX2S9FKqQXtPz60Smq6h9hFqcFaED+whoSQceqLhw7+oZC/WHXsBUx/e+3SfisdBWv8WVae0R7hXnTn9UqSeaClXdvHvEl7P9bLJT7HD6OFaty8F2RWvvE2hJhe3T6BSXpy7NAF5xSL+i0AE=
+	t=1760961888; cv=none; b=bYOYT6wlwymvEkv0MP1WTY09xXGsvK0f/pBOo9GaBDt91k/A51SqcvlT/kmB7SUXRdwXu/ecaD7XDCUDJaBTFXESSRs3sIW6qlNAOBQmW8S6wzFROtXLyVdR9ENjbEQkCoAeIm7L3bZG+hWHHH22s826z9yieastEHFuXRQtZKM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760961756; c=relaxed/simple;
-	bh=PH78YdDSnzwxCHJgRiRybJMbpOqlc4brc9B+cBQ8knI=;
+	s=arc-20240116; t=1760961888; c=relaxed/simple;
+	bh=Obg9lKALKTbQbNao4PC2sY+XqF0ys1vM9SQdy1ltbZc=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=J4Y1XXFSvss/+Lk6CWriYN08gRkDp0txV9XgAv6opK96izC9ClLnaP0YlmU+RTwcXlzw2tG4GL1Qm8MtcEACbJKrXJr72DZx2RszvJU96+Mnw7/47syvvhKdLQLA2TWyQ+64jFVFY+HMQyBkhLywTO02JZn9Vh5ibnXTi6aT4P4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=k1lm7zi8; arc=none smtp.client-ip=205.220.180.131
+	 In-Reply-To:Content-Type; b=hzeRdIMAklwPuYVTpb1WBP0hJFmqZmBXzz8HrIfISszyvk8fISip+f4o58c22FUK4kf144Bcdwe+Qlu1jcqT8qk2Px7vHIfAOzQUoiEadf0w5JKN+jqX7VPSey40l/oNxrfANOr9Q3iJfgnRhUFtuXIVH0ZjaEpK0mm3by9seh0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=GcBW1Lig; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 59KB95Da023239
-	for <linux-arm-msm@vger.kernel.org>; Mon, 20 Oct 2025 12:02:34 GMT
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 59KBIufV001556
+	for <linux-arm-msm@vger.kernel.org>; Mon, 20 Oct 2025 12:04:46 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	oIG694y6bAFJewqTAATkKo0qZg41tPW6hp12LV4gekY=; b=k1lm7zi8ubgptaZY
-	JLhGvPqwvs/nB1B4ubs+IFCzETjhma39eF1OCc2WY/KcVz6r3GvJ2pxxjAbjm4mk
-	OQhmVq+YAjWp4/u1P5ACrVZKjEyfRzHMdtu1WuA9Y92FHgT1Th1UOikmKCZD455P
-	URQ0G2SN+nGvuCZVFR1PPzPoQR5W9lVLiLGzkdCOKcaQJxK2uBbzwkUgXjC+jxxX
-	vlz7dtOdNRjkYDrNhN2Qdz5Ww1oQePNQLl1MMDz/Sqz3njU64D/OQfmyXYp7OkC3
-	K3rxaxGBtSpzXyr1obmn2sALFFWEdiUMapm/OS1jB57Q5jYt6zLlkPwTQlLSdHuO
-	mbDXkA==
-Received: from mail-vk1-f197.google.com (mail-vk1-f197.google.com [209.85.221.197])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 49v27hvqwx-1
+	s4X1DztV6QvL7Pg4RXS7POemnqWPt44nKM/SFas9VSs=; b=GcBW1Ligqmux3bw+
+	jr5ENDP9AKFkPxib+ibgVqzTFHqroWRv77IzUG2MrTkubR7dE6UlYwEoGKECWDSL
+	T/3eYRTfW1b/1Kz0X0nXJYiiCQRuym4ve5TLhVnZcGudzrFmzdiTfX5IjNGklaHq
+	PW/hW9K1OhrjWqoyo3vegHqGdzF+MZiOxKd98d4bGrRd/NExOh7vIQL3SHeWxqQB
+	2ijt9VmXbfnIlz8tFdusAmmjVKTIP/yblV09pMBDxhcZ437NZcCAAFZ0VJAyUrXD
+	5RKpj4g5dnosTsu3yRXC0AuBFjiTdX4pESufdeypg5IObEcTulaXxBq3uAyW1ZXD
+	r7dANw==
+Received: from mail-vs1-f72.google.com (mail-vs1-f72.google.com [209.85.217.72])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 49v42k4jf2-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Mon, 20 Oct 2025 12:02:33 +0000 (GMT)
-Received: by mail-vk1-f197.google.com with SMTP id 71dfb90a1353d-54a989a0465so135428e0c.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 20 Oct 2025 05:02:33 -0700 (PDT)
+	for <linux-arm-msm@vger.kernel.org>; Mon, 20 Oct 2025 12:04:46 +0000 (GMT)
+Received: by mail-vs1-f72.google.com with SMTP id ada2fe7eead31-5d9650fa510so303752137.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 20 Oct 2025 05:04:45 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1760961753; x=1761566553;
+        d=1e100.net; s=20230601; t=1760961885; x=1761566685;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=oIG694y6bAFJewqTAATkKo0qZg41tPW6hp12LV4gekY=;
-        b=p0v75n9PpEoqw4CoDhg1iOHqixNbMEDONxNCJimGMCXaFTFdvtgl/YW3KxZ9KyWaYJ
-         qvip2lp2sTkd/j6hfxc1tV2omfzHltb/RDAjM/1C7zKRrnhQ+4GiUrFVjNwvj/7GqXaJ
-         JhXat3a+rFwVTrlvBMM5Ipv91kTz+GXVQvryqbfqMrtbyPg8kTcujISEEz8okgB0qT5A
-         0F5pmnPOajr5S63Lxr5w7C9xnLi4L6c9g1zatmA2GEZG1Ap3JHfzzWQ9MlQEQ0BYcUHv
-         twwAu6FLcRE71/G6HCsoHtz6vz4Kt3EvaCF4nuZ2m8rubjPunkr4/BfCAm033XtrbM7K
-         nRfg==
-X-Forwarded-Encrypted: i=1; AJvYcCX1CNR6TJSh/qd8m/Tgl0ZOfJAxPj6uSI1eix/NMrhGdR0tnFZrcXU+bb7pxiom9khe4xvi3CeWEhJeYBdB@vger.kernel.org
-X-Gm-Message-State: AOJu0Yxqj3zmlcXF6M0BUlvzAKuccDvddsqyuJcW+h/Bo6XgoP8qDPx/
-	ay7fZ7QOVRfcJp9PXCJ/f2UDGCAiqdtkyKv9vrlgBb/ZzdwVfPPwzDck1FV75mtN33Xi4ilJ4K9
-	z54WqvnBpuGPGMUNq7cS39U4HRJD+EuBHxW3I6ZUE+WYnSxZFe7vhzwnwlluNT7uOFAko
-X-Gm-Gg: ASbGncu40gy3P4TV8T4E85lLk4eFIv6Tbv4fhgSrX8PeQ2HbmH1fg2HaOhc3RGj4vW0
-	hYu6mbHaTrGIORvlhEyidBTPrzn59/iTV8bNws+37mFzZIx+VOqMy9d74zq6gUOGG1pB14hPY47
-	gSLKNTMyZxb9ZokfKAgcQSwuo8pIMfjJOnOxmALf1sDh8Gd3QJ23HGDbVBCyN4Un+SMDEsY1Lqe
-	vmxBV6/a/UrVnRizx2Cwm4trsrhg1zmPbTAv5prxdCvxh7WxAyWnlS+WLA9JuJgRYlIuVeezpl9
-	ppDxqwO1Q2S75OaBNVingrNO0Uz9yLS/A9mzD9IH7CTtSHT+WI99NfgkcVcjLvDPAKFiWJRFGdS
-	VocKbqnrAXxpQe8I4SHvOWaNri7oAVASFlhAMAkjURDP+xsyUs+qkb1Yd
-X-Received: by 2002:a05:6122:3293:b0:544:6d56:eef1 with SMTP id 71dfb90a1353d-5564ee8267amr1600200e0c.2.1760961752979;
-        Mon, 20 Oct 2025 05:02:32 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IExb3d7wrCskvILwjadrYZ35oU1mcZoo+ieMX1KAj9vst3Hy1cKTiA0tq+qNgeFvEo1O8fu3Q==
-X-Received: by 2002:a05:6122:3293:b0:544:6d56:eef1 with SMTP id 71dfb90a1353d-5564ee8267amr1600161e0c.2.1760961752579;
-        Mon, 20 Oct 2025 05:02:32 -0700 (PDT)
+        bh=s4X1DztV6QvL7Pg4RXS7POemnqWPt44nKM/SFas9VSs=;
+        b=NUauEyrht6Ycg0tinAMJkHd/vC6fDVdFYPq8WKdk9LGsAdUYwjLJVNr9gNHl8KNGFC
+         V850JY/E8PM4rdIvqOfrKuo2yGywS4/TlXcQPxKT0v44ktUBMGuXvZ+gDAdBrtyhM0UA
+         PFhAcqQZB1edkThOYvUbPtq8klNWTyjfMtnUpMttaQkh4e8HUyCexAa2tJQTisNwyggO
+         fLvG+ey4UZK5ZMXUCVsvVFYggQDmIpYdDIz/FhndFtZ2jGZOURPPXpdbfCqZBzq+1feF
+         r1j39qMGL+ch3p+yjcToTkij6AHQs5ZvpiSvpU1CccdmtnQ0fEfCeX5sj2TdhhvgOs1C
+         aR2Q==
+X-Gm-Message-State: AOJu0YwXzd36fWZfamQAVBxnG8uCX01FA521oY6PocjI30LvIdn8Jz0a
+	XYpkHgLsVkHLQ7v4ZYLSmCKu+Mb72d63GLnzCGHW6zg5nst+rGLAZfeS1VHF5x2/bUPc08REc2p
+	w7MlouTuuDDHzQf5En5PwBlmSiNdUrS8RQXjdZ0ET6ELgo/CMtUo5j6j9MGsW1ix+ytqu
+X-Gm-Gg: ASbGnct3j47XPIJbUDfIFonAfjCd+z8tLdKQPfHwp5mpbVN/IIOXsNFHVIXCYPssEoD
+	gmpUzvNm15zrplDXFEyyQDTpG0hOJcQoo2cqBA1lBPWL7nukmUMbyww/CuSDkq0DLLTpwfTSBe6
+	32V25Ta3veKx548rNsJvbs+8o6w223QeKSIhStrdhjXiSjHKrbJCt1+NHQOlcCsDWwW+Z7tZ1f9
+	TV+V+TV2Icjb4bfFTFpyhJEqdvguMo+KY2uKcu/DNz3CY0LWJ6EfxkPg3nrfKuDHtJMT689VFSx
+	nK4i2jel5IrZIfU5eIJzsqJlp9LncauuGJq7KNmYHGcjqxdXvuDoqhgmpczMOxlCODNOESKPEIM
+	JbgCUumCKsP3nfYELZ72Ndt8idT7TzMwtHPfKiaCPwUtzDezOxjTVsoOz
+X-Received: by 2002:a05:6122:2b4c:b0:554:e620:8bac with SMTP id 71dfb90a1353d-5564ed9918cmr1267937e0c.1.1760961884785;
+        Mon, 20 Oct 2025 05:04:44 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFmRXOmvT7ihS8WpjzHcUqCEKdLb08ZusiFzD7vbt9CaBBWJjy3CB5Tc0tJkowRzMpAB8eBZA==
+X-Received: by 2002:a05:6122:2b4c:b0:554:e620:8bac with SMTP id 71dfb90a1353d-5564ed9918cmr1267929e0c.1.1760961884301;
+        Mon, 20 Oct 2025 05:04:44 -0700 (PDT)
 Received: from [192.168.119.202] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-b65eb036b2bsm790493166b.49.2025.10.20.05.02.30
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-63c494301aasm6708328a12.24.2025.10.20.05.04.41
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 20 Oct 2025 05:02:31 -0700 (PDT)
-Message-ID: <41c63020-9226-45d9-979d-429b7299da41@oss.qualcomm.com>
-Date: Mon, 20 Oct 2025 14:02:29 +0200
+        Mon, 20 Oct 2025 05:04:43 -0700 (PDT)
+Message-ID: <0605aa45-f134-4298-b6d2-a64067d860de@oss.qualcomm.com>
+Date: Mon, 20 Oct 2025 14:04:40 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -90,95 +89,56 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/4] ARM: dts: qcom: msm8974pro-htc-m8: add status LEDs
-To: Alexandre Messier <alex@me.ssier.org>,
-        Bjorn Andersson <andersson@kernel.org>,
+Subject: Re: [PATCH v2] arm64: dts: qcom: hamoa-iot-evk: Fix 4-speaker
+ playback support
+To: Le Qi <le.qi@oss.qualcomm.com>, Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
         Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley
- <conor+dt@kernel.org>, Pavel Machek <pavel@kernel.org>
-Cc: Luca Weiss <luca@lucaweiss.eu>, linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht,
-        phone-devel@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20251007-m8-dts-additions-v1-0-53d7ab3594e7@me.ssier.org>
- <20251007-m8-dts-additions-v1-1-53d7ab3594e7@me.ssier.org>
- <6c791f05-70e7-49c9-a3ce-50fb82b0c894@oss.qualcomm.com>
- <fef52764-3092-4375-b9c7-793d85adc102@me.ssier.org>
+        Conor Dooley <conor+dt@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, kernel@oss.qualcomm.com
+References: <20251010033728.1808133-1-le.qi@oss.qualcomm.com>
 Content-Language: en-US
 From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-In-Reply-To: <fef52764-3092-4375-b9c7-793d85adc102@me.ssier.org>
+In-Reply-To: <20251010033728.1808133-1-le.qi@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDE4MDAxOCBTYWx0ZWRfX2PAg5I9w0oGl
- Pod1xP/mUQUoeINAv18PbpWpQd9fyk9D8TrjFmw6g6/mBBjiGViDr5zcFws+hH004RLltHXai9U
- 1J84y/3Ho3rA68AGwzW4EHyg205cMz/Z4HkxfV3y0TYNEJmwcU5SbqIZlo1kLZoI35p4EcgL3Xk
- LHLA7cP4NwqsR40SvHSJUKZhuTAfRglT13y8CiPuYd0FHDyvjqxNm0pXsiKdkKVTD41xnNu736S
- qEAfPOocVEmBA3UaX5dTLxnRq6mzI50B7cbf5K6zpsh8tDppm1Smb0n1bDT6ANrzJL6mj+/jhce
- WIvifrKyB/lZxpDMktFARUYSpCIzg+9fFvBfUqNg8dyoPu2ZhGpPH4HkXO4AHHLkGcI083Dofrk
- gEcBhJK0R8YXxDwOra5v3aO9y0mtzw==
-X-Authority-Analysis: v=2.4 cv=G4UR0tk5 c=1 sm=1 tr=0 ts=68f624d9 cx=c_pps
- a=JIY1xp/sjQ9K5JH4t62bdg==:117 a=FpWmc02/iXfjRdCD7H54yg==:17
+X-Proofpoint-GUID: eL-LX1JpwrlX6_oDn-vJtWoATrwbPJ_Y
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDE4MDAzMSBTYWx0ZWRfX2fSX9BJ0QYcp
+ fJnClZUpapM8NrznenWHt3sE5zAj6W2i8+r8cX2qo78FYlOpzx4Jlw8MBBwSLnLjvp11LdCkVQa
+ +zd93urBiVckwB70zZgDYXxxj5ByzSFiSZpcYrZabDawm8bm7zhRK1NTjZz64IthA8unBIyOvOP
+ FSJC4e4mF4yIzamu+XjpBcl1fUOEaqB9+AZC1yIY+1aQLY3uoens2YYRJVrEH82QhX19dHMgMbR
+ TcOpkzT04wXRELnE6XB27rI/iu5c8e2s/jfgLsx4rowlmwQGIuN7OxfY+TJEVYKnxP+55KpedBU
+ G0SxHPnobB1Huj8FpEGTNuM17EkOYuy1M09yg9vkxYR8+DdWEzIegZcLPes9VCGFAUJ7rdlTVZC
+ XvFcYz/CxT1ka6K7blZSESE0Ol8OiQ==
+X-Authority-Analysis: v=2.4 cv=QYNrf8bv c=1 sm=1 tr=0 ts=68f6255e cx=c_pps
+ a=DUEm7b3gzWu7BqY5nP7+9g==:117 a=FpWmc02/iXfjRdCD7H54yg==:17
  a=IkcTkHD0fZMA:10 a=x6icFKpwvdMA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=8poMKPHdAAAA:8 a=glctJ2XmOvm0yIQHyQsA:9 a=QEXdDO2ut3YA:10
- a=tNoRWFLymzeba-QzToBc:22 a=fyZPtLC9JlAwSkJ5-iUD:22
-X-Proofpoint-GUID: 5CmxGZzd6MiPVqcxwbcmycMtoX5T8fS9
-X-Proofpoint-ORIG-GUID: 5CmxGZzd6MiPVqcxwbcmycMtoX5T8fS9
+ a=EUspDBNiAAAA:8 a=rzvUMi74TO_jfAOr2FEA:9 a=QEXdDO2ut3YA:10
+ a=-aSRE8QhW-JAV6biHavz:22
+X-Proofpoint-ORIG-GUID: eL-LX1JpwrlX6_oDn-vJtWoATrwbPJ_Y
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.80.40
  definitions=2025-10-20_02,2025-10-13_01,2025-03-28_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 lowpriorityscore=0 malwarescore=0 bulkscore=0
- priorityscore=1501 spamscore=0 suspectscore=0 adultscore=0 clxscore=1015
- phishscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2510020000
- definitions=main-2510180018
+ priorityscore=1501 phishscore=0 malwarescore=0 clxscore=1015 impostorscore=0
+ spamscore=0 bulkscore=0 suspectscore=0 adultscore=0 lowpriorityscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.19.0-2510020000 definitions=main-2510180031
 
-On 10/12/25 8:03 AM, Alexandre Messier wrote:
-> On 2025-10-07 06:03, Konrad Dybcio wrote:
->> On 10/7/25 7:55 AM, Alexandre Messier via B4 Relay wrote:
->>> From: Alexandre Messier <alex@me.ssier.org>
->>>
->>> Add support for the notification LEDs on the HTC One M8.
->>>
->>> Two LEDs are available, one amber and one green.
->>
->> Do they form a single notification led, or are they supposed
->> to act separately?
+On 10/10/25 5:37 AM, Le Qi wrote:
+> On the HAMOA-IOT-EVK board only 2 out of 4 speakers were functional.
+> Unlike the CRD, which shares a single GPIO reset line for WSA1/2,
+> this board provides a dedicated GPIO reset for each WSA, resulting
+> in 4 separate reset lines.
 > 
-> Good point, I had to check the phone user manual to confirm. Indeed, it is
-> referred to as a one logical notification LED. It also mentions the color can
-> be either green or orange, it does not mention using the combined color of
-> the two LEDs.
+> Update the device tree accordingly so that all 4 speakers can
+> playback audio as expected.
 > 
-> So I would say they are supposed to act separately.
-> 
-> Hope this answers your question, and let me know if more details are needed.
-> 
-> BTW: I will be sending a V2 to update the color name, since the user
-> manual says the color is orange, not amber.
+> Signed-off-by: Le Qi <le.qi@oss.qualcomm.com>
+> ---
 
-Let's describe it as a single LED then:
-
-multi-led {
-        color = <LED_COLOR_ID_MULTI>; // notice it's not RGB
-        function = LED_FUNCTION_STATUS;
-
-        #address-cells = <1>;
-        #size-cells = <0>;
-
-        led@6 {
-                reg = <6>;
-                color = <LED_COLOR_ID_GREEN>;
-        };
-
-        led@7 {
-                reg = <7>;
-                color = <LED_COLOR_ID_ORANGE>;
-        };
-};
-
-+ Pavel the LED maintainer, please take a look if you think it makes sense
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 
 Konrad
 
