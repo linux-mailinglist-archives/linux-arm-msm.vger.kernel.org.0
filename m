@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-77971-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-77972-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id EB617BF086A
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Oct 2025 12:26:08 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 91E88BF0876
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Oct 2025 12:27:10 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id B3D54188EBA6
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Oct 2025 10:26:32 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 1D10018914CB
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Oct 2025 10:27:34 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 930472F6190;
-	Mon, 20 Oct 2025 10:26:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C422D2F5A03;
+	Mon, 20 Oct 2025 10:27:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="AGOt4Seg"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Tb4ojMzl"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C2812EC0BB;
-	Mon, 20 Oct 2025 10:26:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 944F01E9919;
+	Mon, 20 Oct 2025 10:27:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760955964; cv=none; b=DYdsIwyLHC3OflxcbQzmgEfJplksE/ztjOS51C8v+I+WpFHDShHIxG6WfF0j1+hikEd4oBkviJZNTY+a5FX4BVdAHkQoW6MStyPi9v2wuWsUZL7g0UhZ/QC0fio8RetfVyXXoI/ckNOR2z22Xu88lZJreU+y3rzWt2HwA3/U7ZQ=
+	t=1760956027; cv=none; b=eqvz7loWg4a9t+XpGr5Tv6FMhfHHa24ocpkhGUS7ssOjbxnbm8+Y/fRFhmkM31prSv/ze/NegGDdi3BGqdWCzOTgoTwTDPmkJKQNID3xtz3WE2Pv8x1ROyBV2EINe3Vo/CxoaomayEptPBM3nnZqeVgnr6E5rZmMGQyy0/T2n/s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760955964; c=relaxed/simple;
-	bh=iobSRMNBr6A6PLca5QdeARE0++ongB1tSynHaXdwxKo=;
+	s=arc-20240116; t=1760956027; c=relaxed/simple;
+	bh=Jb2vczdvJZ30sqpX69uX4UTMD12+zS5XZrvzjN8zcW8=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=hed2gJ2cpt/3utE0t4vxwphS1B6+npkzTl1npCZFGui2ApORycupGVgG+8pWEOyXYUjzctUFRJHN+Re9hcg9b5sVSZ6PgE4zmWMORupQc1Jj08NsQpF0c6q0tXZp4RoUBWU4iJA3alAClWcjTevjeDRyp4LSV96/UotVH39pSAw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=AGOt4Seg; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01AABC113D0;
-	Mon, 20 Oct 2025 10:25:59 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=d7WGbzsNhGcpkSYNijUzFNvQAx5+G2oKEsNBsWYCdfKOkcudrIzCgxdGEXAbPofnEb2SLrViQNb2m2wyOMF/rMPdqOEci30QWKKCsnBNxpBiJmPj1WmHqRq+bPmdRumz182x3YS0KvTibr6gifgd/WGScQRbiClFwpWEbbQeDQk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Tb4ojMzl; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 021F1C4CEF9;
+	Mon, 20 Oct 2025 10:27:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1760955963;
-	bh=iobSRMNBr6A6PLca5QdeARE0++ongB1tSynHaXdwxKo=;
+	s=k20201202; t=1760956027;
+	bh=Jb2vczdvJZ30sqpX69uX4UTMD12+zS5XZrvzjN8zcW8=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=AGOt4SegqfDGL8Jyvh2lgBaXNwPk7O0xo7D/6t1QCL31GOcl18nO/w57QVqrE8qnd
-	 FlEaM97xSVlBVTOmN95vqx9aaMs0Vndwp20LhfzFcADo0wdlF7UH1+hv57WiFtYMiF
-	 YA0AERx6WjrJX7nkHsm96B4MEi84GaFUBhkE95gCnwdq1hJA6GMGmaLbM88DneR5P7
-	 ZFc6lgxVL5GE6PGk1XPtx4OTbtqSCyNlMvCihjC8aICWvmkQ5YNU7hxOr3QYW64+ZK
-	 1VPHX10S6I4tXEyPAs6GS9DV3LX7XVCrAIipQzO1uGkmZ6qyEE7SB8zDUjMKSfETkO
-	 qfhEERA2mehFQ==
-Message-ID: <51264795-758b-4b54-b95d-00e39f764c4f@kernel.org>
-Date: Mon, 20 Oct 2025 12:25:58 +0200
+	b=Tb4ojMzlQcybZ1U6ULmbtJ1ZkZuar/a2L7zNXg+LiSuz0JYy1B1HKrz6v4ggAq3GF
+	 eV4F52Bx5nmejgminQ7tP5VwrfjeVUHaylZlqM5s/KPGFuG+mQFCF05wo1O7+yN4tC
+	 JA5eUjJUitmEcKfYWSXTJia+onQmCUZbfw6PWrwkckXEFkJ47rOkhoTDHSwYuL47ui
+	 //lRXHQyHiDwhDMnYG8SHTKv8JCWsDvJZkUTYO+TwTX436WdBNy1FhoBw9RB/ml+vH
+	 Y/bzm6tK4agz+ddLGX+MYVMknfH5bbVl8XsZqjlU/QX4ddlTXnsJ1vqQGzbiLSARlk
+	 SPFjlHloDYYBg==
+Message-ID: <24f3ef36-7d37-4b48-b882-4c3d1a04dabb@kernel.org>
+Date: Mon, 20 Oct 2025 12:27:01 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,8 +50,7 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 4/9] clk: qcom: rpmh: Add support for Kaanapali rpmh
- clocks
+Subject: Re: [PATCH 5/9] clk: qcom: Update TCSR clock driver for Kaanapali
 To: "Aiqun(Maria) Yu" <aiqun.yu@oss.qualcomm.com>,
  Jingyi Wang <jingyi.wang@oss.qualcomm.com>,
  Bjorn Andersson <andersson@kernel.org>,
@@ -65,8 +64,8 @@ Cc: linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
  tingwei.zhang@oss.qualcomm.com, trilok.soni@oss.qualcomm.com,
  yijie.yang@oss.qualcomm.com
 References: <20250924-knp-clk-v1-0-29b02b818782@oss.qualcomm.com>
- <20250924-knp-clk-v1-4-29b02b818782@oss.qualcomm.com>
- <1d2b6c69-4ea8-472b-a18d-0bd39042184c@oss.qualcomm.com>
+ <20250924-knp-clk-v1-5-29b02b818782@oss.qualcomm.com>
+ <c9e27a9e-2274-4b1f-9953-ca012ba2615f@oss.qualcomm.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -112,27 +111,91 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  jWt87ecuHlpL3uuQ0ZZNWqHgZoQLXoqC2ZV5KrtKWb/jyiFX/sxSrodALf0zf+tfHv0FZWT2
  zHjUqd0t4njD/UOsuIMOQn4Ig0SdivYPfZukb5cdasKJukG1NOpbW7yRNivaCnfZz6dTawXw
  XRIV/KDsHQiyVxKvN73bThKhONkcX2LWuD928tAR6XMM2G5ovxLe09vuOzzfTWQDsm++9UKF a/A=
-In-Reply-To: <1d2b6c69-4ea8-472b-a18d-0bd39042184c@oss.qualcomm.com>
+In-Reply-To: <c9e27a9e-2274-4b1f-9953-ca012ba2615f@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
 On 20/10/2025 12:11, Aiqun(Maria) Yu wrote:
->>  static struct clk_hw *of_clk_rpmh_hw_get(struct of_phandle_args *clkspec,
->>  					 void *data)
->>  {
->> @@ -990,6 +1028,7 @@ static int clk_rpmh_probe(struct platform_device *pdev)
->>  
->>  static const struct of_device_id clk_rpmh_match_table[] = {
->>  	{ .compatible = "qcom,glymur-rpmh-clk", .data = &clk_rpmh_glymur},
->> +	{ .compatible = "qcom,kaanapali-rpmh-clk", .data = &clk_rpmh_kaanapali},
->>  	{ .compatible = "qcom,milos-rpmh-clk", .data = &clk_rpmh_milos},
->>  	{ .compatible = "qcom,qcs615-rpmh-clk", .data = &clk_rpmh_qcs615},
->>  	{ .compatible = "qcom,qdu1000-rpmh-clk", .data = &clk_rpmh_qdu1000},
+> On 9/25/2025 6:58 AM, Jingyi Wang wrote:
+>> From: Taniya Das <taniya.das@oss.qualcomm.com>
 >>
-> Remind to review this patch.
+>> The TCSR clock controller found on Kaanapali provides refclks for PCIE, USB
+>> and UFS. Update the SM8750 driver to fix the offsets for the clocks.
+>>
+>> Signed-off-by: Taniya Das <taniya.das@oss.qualcomm.com>
+>> Signed-off-by: Jingyi Wang <jingyi.wang@oss.qualcomm.com>
+>> ---
+>>  drivers/clk/qcom/tcsrcc-sm8750.c | 34 ++++++++++++++++++++++++++++++++--
+>>  1 file changed, 32 insertions(+), 2 deletions(-)
+>>
+>> diff --git a/drivers/clk/qcom/tcsrcc-sm8750.c b/drivers/clk/qcom/tcsrcc-sm8750.c
+>> index 242e320986ef..f905f3824d7e 100644
+>> --- a/drivers/clk/qcom/tcsrcc-sm8750.c
+>> +++ b/drivers/clk/qcom/tcsrcc-sm8750.c
+>> @@ -100,21 +100,51 @@ static const struct regmap_config tcsr_cc_sm8750_regmap_config = {
+>>  	.fast_io = true,
+>>  };
+>>  
+>> +static const struct regmap_config tcsr_cc_kaanapali_regmap_config = {
+>> +	.reg_bits = 32,
+>> +	.reg_stride = 4,
+>> +	.val_bits = 32,
+>> +	.max_register = 0x18,
+>> +	.fast_io = true,
+>> +};
+>> +
+>>  static const struct qcom_cc_desc tcsr_cc_sm8750_desc = {
+>>  	.config = &tcsr_cc_sm8750_regmap_config,
+>>  	.clks = tcsr_cc_sm8750_clocks,
+>>  	.num_clks = ARRAY_SIZE(tcsr_cc_sm8750_clocks),
+>>  };
+>>  
+>> +static const struct qcom_cc_desc tcsr_cc_kaanapali_desc = {
+>> +	.config = &tcsr_cc_kaanapali_regmap_config,
+>> +	.clks = tcsr_cc_sm8750_clocks,
+>> +	.num_clks = ARRAY_SIZE(tcsr_cc_sm8750_clocks),
+>> +};
+>> +
+>>  static const struct of_device_id tcsr_cc_sm8750_match_table[] = {
+>> -	{ .compatible = "qcom,sm8750-tcsr" },
+>> +	{ .compatible = "qcom,kaanapali-tcsr", .data = &tcsr_cc_kaanapali_desc},
+>> +	{ .compatible = "qcom,sm8750-tcsr", .data = &tcsr_cc_sm8750_desc},
+>>  	{ }
+>>  };
+>>  MODULE_DEVICE_TABLE(of, tcsr_cc_sm8750_match_table);
+>>  
+>>  static int tcsr_cc_sm8750_probe(struct platform_device *pdev)
+>>  {
+>> -	return qcom_cc_probe(pdev, &tcsr_cc_sm8750_desc);
+>> +	const struct qcom_cc_desc *desc;
+>> +
+>> +	desc = device_get_match_data(&pdev->dev);
+>> +
+>> +	if (device_is_compatible(&pdev->dev, "qcom,kaanapali-tcsr")) {
+>> +		tcsr_ufs_clkref_en.halt_reg = 0x10;
+>> +		tcsr_ufs_clkref_en.clkr.enable_reg = 0x10;
+>> +
+>> +		tcsr_usb2_clkref_en.halt_reg = 0x18;
+>> +		tcsr_usb2_clkref_en.clkr.enable_reg = 0x18;
+>> +
+>> +		tcsr_usb3_clkref_en.halt_reg = 0x8;
+>> +		tcsr_usb3_clkref_en.clkr.enable_reg = 0x8;
+>> +	}
+>> +
+>> +	return qcom_cc_probe(pdev, desc);
+>>  }
+>>  
+>>  static struct platform_driver tcsr_cc_sm8750_driver = {
+>>
+> Remind to review the change.
+> 
 
-True, we still wait for review from you or other people from Qualcomm,
-not upstream maintainers.
+Please relax, and help out by reviewing other patches on the mailing
+lists in order to relieve the burden of maintainers and move your
+patches higher up the list. You can actually "remind" by performing
+detailed and honest review.
+
+
 
 Best regards,
 Krzysztof
