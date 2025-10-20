@@ -1,177 +1,139 @@
-Return-Path: <linux-arm-msm+bounces-77959-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-77960-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 18B28BEFDB0
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Oct 2025 10:14:32 +0200 (CEST)
+Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [142.0.200.124])
+	by mail.lfdr.de (Postfix) with ESMTPS id 375C1BEFF5B
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Oct 2025 10:31:42 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id A08EC189D328
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Oct 2025 08:14:55 +0000 (UTC)
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 025724F0772
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Oct 2025 08:31:36 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 053482E8B81;
-	Mon, 20 Oct 2025 08:14:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D28452DF71E;
+	Mon, 20 Oct 2025 08:31:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="Gf2VOWhK"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="SJb24mQ7"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 614212AE70
-	for <linux-arm-msm@vger.kernel.org>; Mon, 20 Oct 2025 08:14:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A360D2C0261;
+	Mon, 20 Oct 2025 08:31:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760948069; cv=none; b=Jn5qdYgHn85lBDihSfobvJqblGL2HEqcbh8klENC6FiK9fSRyiFKRonB2RH9wUiMvZcgBzcf+pCz6Kngg1Bz2nnfmoyYWAlterSFJ2MVNogl+oEekr6TxzJmAKLiEh01UBRcrXAk6H0HAGl02xCikcQLMNPHpEPFNNtWHYduqe8=
+	t=1760949090; cv=none; b=TLgf3z1sfWLP/KOGZv7DHQKd1qX/o6fv21DA2BpYxpmOXWTcSFKMrLVK0jXQTQHEgg+0kg+wCgMPMQ5czvR5LbnRT/rqIia6fAL7njduRuOt8xtNN2vH4WJRJvkv6NvAet4qqmpR9v3xNSj4UtqjlIpERX7zvaNGriEB/50BSXU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760948069; c=relaxed/simple;
-	bh=cs/xwuUJ3xSLb60nDjVj/RGExK63dRcpfrrA3rrfMX8=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=uFhw1Bsw3MOjGVaZOpFKe76SkiCAzQ73RQad+sKmIWDLrSXiOfegmIsRvHch+BFaV8Vr0IdddXk8BH5t+nuHAWdHITUxGgvhjWLhbycZxF9W/TWRS91f5wOr1WYQXAnujjKjrYDD4IEfByX6SSkP00G8oYcfnlslA9O9mS3Qibw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=Gf2VOWhK; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 59JMaugh015332
-	for <linux-arm-msm@vger.kernel.org>; Mon, 20 Oct 2025 08:14:27 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	cqErHmEw+q0Gb9LguQ9gJqRnV0oxz5k7O/UGJB1RlIQ=; b=Gf2VOWhKCdH1LMKb
-	9l0Yyn6xFMW3W1lHdWbQ3AeeIsfo5zo199DqRLl+stxPOmwCJOYnrwV9L6z6Mqhq
-	E+mB652cyDj/s5VjEzsHalsEwqQYEs7bJtwnWDsHkHDAJDKEgHBheuBOYuR7zkVN
-	ZbyVSSb6/3LR2Y/mD+g0PULsaXtS8i0WIXA4oi1rV3PwKwsKpnV+6kuiuIj/9eiI
-	Ll8+EwhEbUShIBW+ViBfAYsNYl468aRKFH02eyUVb2bFFIKbo7IYAnRg4t0iJK3u
-	Rg9MV6ZHGek0UzbxkGR8d78d7en4ymOJs2Zv2M1KVpyw49/tujlnGFCpZbLDuteu
-	xNgpmA==
-Received: from mail-pf1-f197.google.com (mail-pf1-f197.google.com [209.85.210.197])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 49v343v2rb-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Mon, 20 Oct 2025 08:14:27 +0000 (GMT)
-Received: by mail-pf1-f197.google.com with SMTP id d2e1a72fcca58-7811aa16c6bso655431b3a.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 20 Oct 2025 01:14:27 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1760948067; x=1761552867;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to:subject
-         :user-agent:mime-version:date:message-id:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=cqErHmEw+q0Gb9LguQ9gJqRnV0oxz5k7O/UGJB1RlIQ=;
-        b=nFbF7b2Doyx1+rez3cOlVXsvYD6A4+2lCQhwaLK31UDZ20FQwXzXzHqG1iC0sogA7b
-         IH65MgIVYSMWecn817MoOgNGY6TJgC9V3kYa9WGddlO9jFYjsZ7V4MsKjYEMzdS0l89s
-         kwUMtAw0r4mzd7EwcJCgI5ItUzi+AG0ssTIlsJmjzNSiJQ6c/5X3qgvQ1fogYnyQRYnT
-         mmutUorp7X+tH415nV8AMSrIwsliFVDktuxCjXYNDnmHYvoC9a1Gu10Er70Q6meHGVVL
-         DInVirKKD7UwbO8y2uCRz5t0MElon+WKcYA+dW/XioNNmW2ucX1dglu1CI+FUcefqKL0
-         m+4g==
-X-Gm-Message-State: AOJu0YxVca1cByEInnHDLSlIpSCdlPUKncOAM3LlEX2ADm9Wbo0s6Zfl
-	i+cS/DZYFzc+mGN0p2FWvr2Roo3w3qf/PwvyYfIlSC2mccCmkkv32I9BdGbWjy9PBrDsuMSXoWk
-	i6EFFStZR8ZmetqtxC2uvHXhvF9PNWUlYBMT2Q5doq98MYuCZAWs39xl09jCHcBNDhvyc
-X-Gm-Gg: ASbGnctFXjlzqK3zuAPA6lJeYaKgYW9xsCu/4pcjR3EWUx6euzXYYavnDcXpXD6ezct
-	DC8Vp7fTbNvOdUZDeXaVbDBTHEsFMRr+jMdfXJEj90NYUbbPdMOfbnVQuWm37aQHevRSOUEvN1P
-	HBO0qInumrAKsQUcUoU7/Nd01vQl0ffcGx7IxjakkSQer4koDNDzMOsGoosyHp47WKTteCQqkNh
-	b4uCPbIawuri0d8tNL3rD1bWXJisYPu3v3bSl/dzL1ymiu0F5HxPKNtoVmkvbOzg0Jb24a8owhC
-	KIL1CbjZGYM5+hMRE4ZrRWJ+oYYbOY1rJMPZgJh3pIL9uFq2dV4TXfTsgc2aa1vQadReJL+Y9iw
-	SaJEiPcpmPatdHqg5GNPVwXCWoKb3yBh8CcxASTXUsqrAnyTvWBIHU6K/efPwzSxQ9ZwMiw==
-X-Received: by 2002:a05:6a00:3e17:b0:781:21db:4e06 with SMTP id d2e1a72fcca58-7a21fe23a9cmr7338906b3a.0.1760948066773;
-        Mon, 20 Oct 2025 01:14:26 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEYG7VcpOs9/sXd8l28vPILUQQOWXIHteA2HclIXYOQtqaNMgzV91sC6BjxWGVMix8BHepUSw==
-X-Received: by 2002:a05:6a00:3e17:b0:781:21db:4e06 with SMTP id d2e1a72fcca58-7a21fe23a9cmr7338892b3a.0.1760948066367;
-        Mon, 20 Oct 2025 01:14:26 -0700 (PDT)
-Received: from [10.133.33.101] (tpe-colo-wan-fw-bordernet.qualcomm.com. [103.229.16.4])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-7a22ff34b8bsm7573235b3a.22.2025.10.20.01.14.18
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 20 Oct 2025 01:14:26 -0700 (PDT)
-Message-ID: <eaca20a6-5aed-4870-b45f-e341d119db3a@oss.qualcomm.com>
-Date: Mon, 20 Oct 2025 16:14:14 +0800
+	s=arc-20240116; t=1760949090; c=relaxed/simple;
+	bh=p+lVEvzAjUBlk7C1+v1sV9NpurMDFd6D+E2N5di3OWs=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=VYjqQLXGLTQ9QSgipKhxTt2YLyqbK4kUXZRyNYCmhgq+dbt+l6SaazRvUyjY3YTYCt7Kg1jEFdWliBCEOlMs+r4mFyTtOgNdmN70DpMaqgkQngd+3DTLtfyA/C/5rEnwix1TrPXDK9gCeFDWANfUO1NqUW2hMG0oV6JYCd0GW2g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=SJb24mQ7; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F2D2C4CEF9;
+	Mon, 20 Oct 2025 08:31:26 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1760949090;
+	bh=p+lVEvzAjUBlk7C1+v1sV9NpurMDFd6D+E2N5di3OWs=;
+	h=From:Date:Subject:To:Cc:From;
+	b=SJb24mQ7FlYx1WBTxPVxREIlxWtAa6f3W+H3UzZHqJV0IIM9+VOswuEk+gtKadVgm
+	 Ghq5wuXApC5LduxNom3Zdv4xWoFzcvpF0LXd0t3hLLNLlCJO/cX/tHgOkji8b1ZLC9
+	 dsKHyxRTjGIdn74dEv+ryysfPpFOQ/uI4Tsc2FjcpwQkmyd2D2BLRCoNvlXksSWrOg
+	 YWvsv1Py5EE4Loao6bo5H4o/OmOCy21VmVWiFC43hMCBYnTMbx1LqOs3qRXRBZqCPg
+	 AcPaKSk5r5mpM5BIET4WqvqTK5pweCojw6qrOtqNOMTlWbdCKbAfmHxV6UddF61LVd
+	 JUj0/1QDyDIqA==
+From: Konrad Dybcio <konradybcio@kernel.org>
+Date: Mon, 20 Oct 2025 10:31:22 +0200
+Subject: [PATCH] arm64: dts: qcom: lemans: Align ethernet
+ interconnect-names with schema
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 2/3] arm64: dts: qcom: Add DisplayPort and QMP USB3DP
- PHY for SM6150
-To: Krzysztof Kozlowski <krzk@kernel.org>,
-        Rob Clark <robin.clark@oss.qualcomm.com>,
-        Dmitry Baryshkov
- <lumag@kernel.org>,
-        Abhinav Kumar <abhinav.kumar@linux.dev>,
-        Jessica Zhang <jessica.zhang@oss.qualcomm.com>,
-        Sean Paul <sean@poorly.run>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
-        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-        Maxime Ripard <mripard@kernel.org>,
-        Thomas Zimmermann <tzimmermann@suse.de>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, fange.zhang@oss.qualcomm.com,
-        yongxing.mou@oss.qualcomm.com, li.liu@oss.qualcomm.com
-References: <20251015-add-displayport-support-to-qcs615-devicetree-v4-0-aa2cb8470e9d@oss.qualcomm.com>
- <20251015-add-displayport-support-to-qcs615-devicetree-v4-2-aa2cb8470e9d@oss.qualcomm.com>
- <13d1491a-2c5a-467d-bd55-01c0603a4b81@kernel.org>
-From: Xiangxu Yin <xiangxu.yin@oss.qualcomm.com>
-In-Reply-To: <13d1491a-2c5a-467d-bd55-01c0603a4b81@kernel.org>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-Proofpoint-GUID: JQdRlHW337tPYuEiym_7k5c8EW8WImBo
-X-Proofpoint-ORIG-GUID: JQdRlHW337tPYuEiym_7k5c8EW8WImBo
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDE4MDAyMyBTYWx0ZWRfX60OH45zWu96m
- 1+9XOgi4DixccsoNYrDbfGPWXmGvSuv7hE6rvmgfgxUz0g/I3xluVuTlWWpvaGURKA75fPk0kVg
- i1Lm5M6crAJFW/dLoG8kkmFbnqRgBLA/S35KQyrRQjDevXVvu99yQdYwRrb4azTOuzjlwDL+GT8
- 0NXCIZCsWg7+dkl8IJyzew24VcOokLdLK4TsVuY3zlhyTSlSm3MqSeLqTlOmqw6naPlxStHvT0K
- PQDw75Ts7KeTIgFaxpVycLsjj7dLL0ZoZ33EnW9igxON3efNy2Jt9EivQlGXmV6xmQeO6NQEmz/
- R69G3Ic2kqJGLPHPJGhztz5o1u4h344EU6I7AMBDQUuwNpbcbNwJgix28vK7JCbXE06swX9cU2Q
- J6Wzt5GADMOXMqozzCZlM2iNj2XYSQ==
-X-Authority-Analysis: v=2.4 cv=E/vAZKdl c=1 sm=1 tr=0 ts=68f5ef63 cx=c_pps
- a=rEQLjTOiSrHUhVqRoksmgQ==:117 a=nuhDOHQX5FNHPW3J6Bj6AA==:17
- a=IkcTkHD0fZMA:10 a=x6icFKpwvdMA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=EUspDBNiAAAA:8 a=teJiM7Ac5wN5jP0k6lIA:9 a=QEXdDO2ut3YA:10
- a=2VI0MkxyNR6bbpdq8BZq:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-10-20_02,2025-10-13_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 spamscore=0 priorityscore=1501 bulkscore=0 suspectscore=0
- lowpriorityscore=0 clxscore=1015 adultscore=0 phishscore=0 malwarescore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2510020000 definitions=main-2510180023
+Message-Id: <20251020-topic-lemans_eth_dt-v1-1-25f4532addb2@oss.qualcomm.com>
+X-B4-Tracking: v=1; b=H4sIAFnz9WgC/x3MTQqAIBBA4avErBPU/qCrRIjplANlohJBdPek5
+ bd474GEkTDBWD0Q8aJEpy8QdQXGab8hI1sMkstOcMlZPgMZtuOhfVKYnbKZaTk0ol1a7HoOpQw
+ RV7r/6zS/7wdcoZJkZQAAAA==
+X-Change-ID: 20251020-topic-lemans_eth_dt-a27314b4e560
+To: Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, 
+ Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+X-Mailer: b4 0.14.3
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1760949086; l=2255;
+ i=konrad.dybcio@oss.qualcomm.com; s=20230215; h=from:subject:message-id;
+ bh=rlZmiaYIIXnZ7mveupmWym6yKp8wCMMkO1+lzDo7VR0=;
+ b=VaFwg+p5GkkyWYzKFIqSYHBcytGXZTjIdwYfB6QuQ31WifE90qicYzSrECQDrB2GD5RUIm2uI
+ RWtHKBk2xorANv+bwfBaMIFo8l2lFeUiyGsPSFwECwRlZqjoVBfv/33
+X-Developer-Key: i=konrad.dybcio@oss.qualcomm.com; a=ed25519;
+ pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
 
+From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 
-On 10/20/2025 1:11 AM, Krzysztof Kozlowski wrote:
-> On 15/10/2025 03:53, Xiangxu Yin via B4 Relay wrote:
->> From: Xiangxu Yin <xiangxu.yin@oss.qualcomm.com>
->>
->> Introduce DisplayPort controller node and associated QMP USB3-DP PHY
->> for SM6150 SoC. Add data-lanes property to the DP endpoint and update
->> clock assignments for proper DP integration.
->>
->> Signed-off-by: Xiangxu Yin <xiangxu.yin@oss.qualcomm.com>
->> ---
->>  arch/arm64/boot/dts/qcom/sm6150.dtsi | 113 ++++++++++++++++++++++++++++++++++-
->>  1 file changed, 111 insertions(+), 2 deletions(-)
->>
->> diff --git a/arch/arm64/boot/dts/qcom/sm6150.dtsi b/arch/arm64/boot/dts/qcom/sm6150.dtsi
->> index 6128d8c48f9c0807ac488ddac3b2377678e8f8c3..36a536cef99a095938f3e18a9b5e7825308ca426 100644
->> --- a/arch/arm64/boot/dts/qcom/sm6150.dtsi
->> +++ b/arch/arm64/boot/dts/qcom/sm6150.dtsi
->> @@ -17,6 +17,7 @@
->>  #include <dt-bindings/power/qcom-rpmpd.h>
->>  #include <dt-bindings/power/qcom,rpmhpd.h>
->>  #include <dt-bindings/soc/qcom,rpmh-rsc.h>
->> +#include <dt-bindings/phy/phy-qcom-qmp.h>
->
-> This is ordered, don't break it.
+Reshuffle the entries to match the expected order.
 
+Fixes the following warnings:
 
-Ok, will update.
+(qcom,sa8775p-ethqos): interconnect-names:0: 'cpu-mac' was expected
+(qcom,sa8775p-ethqos): interconnect-names:1: 'mac-mem' was expected
 
+Signed-off-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+---
+ arch/arm64/boot/dts/qcom/lemans.dtsi | 22 ++++++++++++----------
+ 1 file changed, 12 insertions(+), 10 deletions(-)
 
->
-> Best regards,
-> Krzysztof
+diff --git a/arch/arm64/boot/dts/qcom/lemans.dtsi b/arch/arm64/boot/dts/qcom/lemans.dtsi
+index cf685cb186ed..979fb557e9e3 100644
+--- a/arch/arm64/boot/dts/qcom/lemans.dtsi
++++ b/arch/arm64/boot/dts/qcom/lemans.dtsi
+@@ -6812,11 +6812,12 @@ ethernet1: ethernet@23000000 {
+ 				      "ptp_ref",
+ 				      "phyaux";
+ 
+-			interconnects = <&aggre1_noc MASTER_EMAC_1 QCOM_ICC_TAG_ALWAYS
+-					 &mc_virt SLAVE_EBI1 QCOM_ICC_TAG_ALWAYS>,
+-					<&gem_noc MASTER_APPSS_PROC QCOM_ICC_TAG_ALWAYS
+-					 &config_noc SLAVE_EMAC1_CFG QCOM_ICC_TAG_ALWAYS>;
+-			interconnect-names = "mac-mem", "cpu-mac";
++			interconnects = <&gem_noc MASTER_APPSS_PROC QCOM_ICC_TAG_ALWAYS
++					 &config_noc SLAVE_EMAC1_CFG QCOM_ICC_TAG_ALWAYS>,
++					<&aggre1_noc MASTER_EMAC_1 QCOM_ICC_TAG_ALWAYS
++					 &mc_virt SLAVE_EBI1 QCOM_ICC_TAG_ALWAYS>;
++			interconnect-names = "cpu-mac",
++					     "mac-mem";
+ 
+ 			power-domains = <&gcc EMAC1_GDSC>;
+ 
+@@ -6853,11 +6854,12 @@ ethernet0: ethernet@23040000 {
+ 				      "ptp_ref",
+ 				      "phyaux";
+ 
+-			interconnects = <&aggre1_noc MASTER_EMAC QCOM_ICC_TAG_ALWAYS
+-					 &mc_virt SLAVE_EBI1 QCOM_ICC_TAG_ALWAYS>,
+-					<&gem_noc MASTER_APPSS_PROC QCOM_ICC_TAG_ALWAYS
+-					 &config_noc SLAVE_EMAC_CFG QCOM_ICC_TAG_ALWAYS>;
+-			interconnect-names = "mac-mem", "cpu-mac";
++			interconnects = <&gem_noc MASTER_APPSS_PROC QCOM_ICC_TAG_ALWAYS
++					 &config_noc SLAVE_EMAC_CFG QCOM_ICC_TAG_ALWAYS>,
++					<&aggre1_noc MASTER_EMAC QCOM_ICC_TAG_ALWAYS
++					 &mc_virt SLAVE_EBI1 QCOM_ICC_TAG_ALWAYS>;
++			interconnect-names = "cpu-mac",
++					     "mac-mem";
+ 
+ 			power-domains = <&gcc EMAC0_GDSC>;
+ 
+
+---
+base-commit: 606da5bb165594c052ee11de79bf05bc38bc1aa6
+change-id: 20251020-topic-lemans_eth_dt-a27314b4e560
+
+Best regards,
+-- 
+Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+
 
