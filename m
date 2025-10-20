@@ -1,88 +1,83 @@
-Return-Path: <linux-arm-msm+bounces-78022-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-78023-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [IPv6:2605:f480:58:1:0:1994:3:14])
-	by mail.lfdr.de (Postfix) with ESMTPS id 22C60BF1C75
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Oct 2025 16:16:13 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4DD95BF1C86
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Oct 2025 16:16:24 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 803814EC652
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Oct 2025 14:15:31 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 022B73B9F37
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Oct 2025 14:16:23 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7CBAE322A3E;
-	Mon, 20 Oct 2025 14:15:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B179025E44E;
+	Mon, 20 Oct 2025 14:16:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="PJUZLJik"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="nLj5Upwk"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f45.google.com (mail-wm1-f45.google.com [209.85.128.45])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2A76321457
-	for <linux-arm-msm@vger.kernel.org>; Mon, 20 Oct 2025 14:15:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC00132C8B
+	for <linux-arm-msm@vger.kernel.org>; Mon, 20 Oct 2025 14:16:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760969726; cv=none; b=Oj0fj1LjA4f1ldimWy1+w5Eiqu5f53y5oK5ciwWtM7yrAdq7t7/GwVXe5oiFp4LpzuY6cqbOkaPeZE50qhZBYKVTf72F00aSI7aBMTC3yWj1QjQyrlHG2Flu7wtLaFXsB5BBFuo7q7vUXDwzgWTV8//JNFr0TpIE2ER9oNT2JjY=
+	t=1760969781; cv=none; b=MgowZpWpfNgceob9rtd5EhE3vNzO8sa51Whk+n2TKp7srFsAc4qhf85l+2Fs95lT1vDPI7fx8NlNjfzJ3ZC5iXlcH54n2FFc4QRqhzz/IrL9veUxS/51vnld+++PQjCXDjVUHtTXMzS+6U8QRBfMxVCOGSp+xHzZbqr03XgHF/Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760969726; c=relaxed/simple;
-	bh=pclgVt1NaQFTZ+cJhZ1SnUnca/hbnaHZrZfaIkyjQ/g=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=PLx18YL3QFuEBNZEL+WCnQpFYRV7sTzhEqHa9DeLPGLQ4G7t9q64AS98VP0eBxdUmEHn8J5l4v0gvprbyIMEn+ft1non9KbKteEWMHDoy4cwZvyqYAOy7lbk7hIxoP1vIx9FKdA5yHuQAdbEFcW1G30kCjOYJZBOOuSmtxIg40k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=PJUZLJik; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 59KCFUGs002864
-	for <linux-arm-msm@vger.kernel.org>; Mon, 20 Oct 2025 14:15:23 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	LDmy2GELi7gtK/8jzxwGBbx8R1YBxICNIb8VNFsE1t4=; b=PJUZLJikmWQP3BlF
-	519kMTMz74gHVVnCpksl8pQUEKNqaYAYhqquCzDaIwYoi1bL1Nl/2mKVdCQDg27+
-	skeVLrdlFK9D3ZsItTdTKGMjYQGX3W3I+7e6DURs3uLlSJELCdnDKAg1fwrwL6PU
-	MI0ss15A6EXJtv5Pvk3kxyg/EPbBhGQTq7H9Fx7cRd4NJWIPsD2GX+Ii6kceXBOA
-	7f3R9REKSTyyqqC8t8mqLYQ0FAXz56YAHOePkbokpvLVOEeiFwt4bBkudJLTZOjb
-	EVu6y3l92CHT6xQppMYSSu9Wl+RDhyJgz0SPJ7xw6T9TvSsTHK6kh4HsP9Qc1pYp
-	blQmCQ==
-Received: from mail-qv1-f70.google.com (mail-qv1-f70.google.com [209.85.219.70])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 49v08pd76c-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Mon, 20 Oct 2025 14:15:22 +0000 (GMT)
-Received: by mail-qv1-f70.google.com with SMTP id 6a1803df08f44-87bbee3b92cso16833006d6.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 20 Oct 2025 07:15:22 -0700 (PDT)
+	s=arc-20240116; t=1760969781; c=relaxed/simple;
+	bh=5A3htDO+1VjzHSoUi8BLFJDsT21igQEQ6V/KLqB6Auw=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
+	 In-Reply-To:Content-Type; b=JpAhZKCpwaXyeWIgQCbt9wZ/WRLyQNHFLa5FRpoHbxcPtMzI4PV66v+kjkpNZmQ6P3UvGTfyKrcJIdFjshZ/pMWiGuqnacRzx+txiBf9uFFMDOw+nskcggL78HULToafN/K/lj4QdQJFMrTkmDN+DqcozOzzHuPt0gevMZyzUhQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=nLj5Upwk; arc=none smtp.client-ip=209.85.128.45
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wm1-f45.google.com with SMTP id 5b1f17b1804b1-4710665e7deso15243725e9.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 20 Oct 2025 07:16:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1760969778; x=1761574578; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:organization:autocrypt
+         :content-language:references:cc:to:subject:reply-to:from:user-agent
+         :mime-version:date:message-id:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=Fh25uPGmMGtjwugJOpAW21MuxERzASNAZ/okxFq7s0w=;
+        b=nLj5UpwkxQhqahuB037kYjdm9iNBu1XUD5XypD9SGARqYE5fFjJupYv6N1BEEpF+SO
+         48koB0OtAWKqrCfXzOZD58OqnAZzAy7Lyny6K62nxmf8+ofiAxiESqZ8U1wQE/JI2ghy
+         JaCuku9xvw5EOwitCjDldUIzj6+ztNAhSd0zEWr3fNhqPO/8cmQYUER9JYaDtgN0mNvQ
+         2RFk8f46lRm3COboS5PhsYWn4O1EoLR6xqWDWzE4vA/hT5O3JadCI9HDTz058osSU6Fu
+         vFuYAO+lMPi6ja/bsalHulP+MZtLt+D8M0gTgZjJFYGBylOOF/Zu3laPiVWN529tzi8k
+         Z7SQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1760969722; x=1761574522;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=LDmy2GELi7gtK/8jzxwGBbx8R1YBxICNIb8VNFsE1t4=;
-        b=LdWoVA6J/50S/+pSCEJKfEvhwy8JfDm4wjmeY4xMdeZ1lejk9K+SzT9XtU8HpC34vp
-         g6KVGsp8dS1yARVJpoBD78gOYtKpGt0GjEuhae7aiRy1NSEtP1AmAXpjDeKIYK6jm8Cz
-         PXYpSIPB/VJMCOBraxjXZfYzyPmplEDFi3MR1z6TkMtl1pyPsZNofWgMeDcEXK47KZ1j
-         c7YQbC1c+nUPZKJPuAtuHV6JjVw1wO92YOz+ibxZBITSBetAReBNUiCzPcJM+4CEOYqc
-         4xSpAYd3SQM9rjb76Kdxkrd9idRlmUPXUsFxgvssS/9MfzCYxcyChpW6NC7d49JtySix
-         pfeQ==
-X-Forwarded-Encrypted: i=1; AJvYcCXaRaDJLfdzoHCiL7pMTtZmxCKurZ3rC1gIBQCICaj5pJCc3k5A+d0sSPO4vKLX1AF2HOsCvGFv8pAgVkPu@vger.kernel.org
-X-Gm-Message-State: AOJu0YyLnZuRv63g+xmADhDyDnjfdSojjRFjabLethBR4djD9AIuT8dZ
-	EOG5KyRipdcWrO++IzvCkIlGMbwaUbdkFE85VAfxhRRjnkdMgekfcyDHvSrsFAVRlxd9y9taSe/
-	625QVpLw4UvPf5boa9fs5MGFRdh7UGkUwig5c0aAULqmMmWWdyC0xj3U1+8nZ6KCfzpCF
-X-Gm-Gg: ASbGnctir8ztaHweHj/pTxyCdcosO0Mv2LHxx7Cj8jO9sV2Fw4+w2Id9nuH7YJp++Wd
-	bgTqRKsLSwMumzGZ70bN1nLr1ufBDFmB0hk1/ivRWiezUQRcsLhmZkNb6AlHxRBmGKE02sVAGeE
-	/H2EGmgTCdXhRtnPpZLX3+gvHWKdcKSbewob0cN6jPT7JK+Bxawos2GDcqAZC5986et/sZ8fwsG
-	lbRPQbo4ZhtzfaJR6rm9OMy2mwCWrZ6hOM+SP83VCYaeJfc4D77wQ5L6KHYN1mJFGUO0NH8sUMy
-	vKOj/6OZOOHHO6YcTuXxnycWRrbEQkJmlzxSWCAgz+jEtSRxnyBsnXFU53JMQZS4ssG/zUuUXzX
-	SLNE3yqFDBYBVCkpx3C3w297rs82stJZJa/dINhHs3D3SJYemRlRiYJtO
-X-Received: by 2002:a05:622a:430c:b0:4e8:9ed2:78fa with SMTP id d75a77b69052e-4e89ed27b1amr70538601cf.1.1760969721852;
-        Mon, 20 Oct 2025 07:15:21 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFgFJIAqpM19kvrDWGwCuBgqCdJgurbW+8pv+OyXQ/fhgIZbl4A99RK4rC5R2fhCALO5DvG/g==
-X-Received: by 2002:a05:622a:430c:b0:4e8:9ed2:78fa with SMTP id d75a77b69052e-4e89ed27b1amr70538361cf.1.1760969721351;
-        Mon, 20 Oct 2025 07:15:21 -0700 (PDT)
-Received: from [192.168.119.202] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
-        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-63c4949bfd3sm6749303a12.41.2025.10.20.07.15.19
+        d=1e100.net; s=20230601; t=1760969778; x=1761574578;
+        h=content-transfer-encoding:in-reply-to:organization:autocrypt
+         :content-language:references:cc:to:subject:reply-to:from:user-agent
+         :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=Fh25uPGmMGtjwugJOpAW21MuxERzASNAZ/okxFq7s0w=;
+        b=tsVMOY4Z/FKE5F2hfP0Dm3rrYEpvCxf9dXbAqQb+JUGaCgM/Tmjii8W0XVj3zpvtau
+         xRIlqktNnuhcN0nynJUt46Zow1cSEdZu4Ss1lEvlTCwLbCVGGaGAuKZrCues8xJw+254
+         Ur5Gv4DDHAaS5i2XmgxOjGZLlnmvmsLo8aRYLzZcKmrCiVnCNltJ6eREUVbU4Jz3HIIq
+         3ACSMIkN5Vz+SAzV5E6/cHLD6ANNiHio7kyDcuq0Hlsut8qPw1z0NKu2Nrk8Fvj8+Eyi
+         jO4U5CiqiEoF1MDOLSkA8cAw5vsAJ7yJRPeKiSIE3W4YpB/F2O+h94m8OsdZ683TLi3t
+         GCig==
+X-Forwarded-Encrypted: i=1; AJvYcCUPGgNbisvCTaVWxjChPyzW/KZU4uvYtMQXBXlLJ/1IaTJqgn9cqlnwFj6ScVCbxia2PfmdE408e0EmLaBn@vger.kernel.org
+X-Gm-Message-State: AOJu0Yzk5IbKTEcPG2oL9yJxVDRPCQM4SzVRSXCp4Z8xAF9NlLAUtc03
+	k0S6RUjyBTWXNGBakXVD/nj2wcQDO/iWs43EtKcikp/xKyQC3qwXxn3nZf7/hr/0AKc=
+X-Gm-Gg: ASbGncu0Y6rKanSLTfD+nfKmj8/hBlm72yXYzIkRJmK2AzpUAMH3+Hl5uhGom7LK8Gb
+	/T7vUfpEENiScTL3TzsDF+99ZDCqmfpou1PqiBmPRdxqoUYkayjBFVnHr+RtLgRcwkKR6qy1rpV
+	JNSLC4zxqC/IL5NCTlMMgOAqQqhDwS0pzXg9E1xswscr8NbV+TvoDsbw/Lo/CzG7HOLn4KdP44+
+	ALX73Cq5W6jPygaBp0WxnftZctdpfAjWvkG3KIEQT/nrVCkF2znxBG8fRs5dwd8xZmzlgF8xfew
+	foa/PoBFkAwYmlnlNPA/TvXcpWc8U2Apf5u29cohrz0hfqpdXZ0HKyyFwlsXfN8S96YhYcUxD9N
+	1ROurDBD9ra5+RHFG3qhrnppU9hXnbNvcysf/ae4hxsY7L5xmCRmWVT8afUR4w7DhESxsM+NsI0
+	koljpA7N2e3YGUka8+hDYlnqXxf8rEP4cKDWvslefi1BB3mhJhbfiFD7wFGHMC
+X-Google-Smtp-Source: AGHT+IH4rwpSS/RaY2Oa3ZwU3XyWBckH6u90hy8FRnIVp3cW7pD6Y7xTDa7CDM9oadtybkKsYlMFwg==
+X-Received: by 2002:a05:600c:1907:b0:46e:206a:78cc with SMTP id 5b1f17b1804b1-4711791c3b0mr110392435e9.28.1760969777956;
+        Mon, 20 Oct 2025 07:16:17 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:3d9:2080:4f9c:f978:568:7b9c? ([2a01:e0a:3d9:2080:4f9c:f978:568:7b9c])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4711442d3ddsm228773055e9.5.2025.10.20.07.16.17
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 20 Oct 2025 07:15:20 -0700 (PDT)
-Message-ID: <88f04334-8d73-4ced-9c46-e69c3e6cbc72@oss.qualcomm.com>
-Date: Mon, 20 Oct 2025 16:15:18 +0200
+        Mon, 20 Oct 2025 07:16:17 -0700 (PDT)
+Message-ID: <e87a6ea4-dc88-485c-bee3-1d2e99081b6f@linaro.org>
+Date: Mon, 20 Oct 2025 16:16:17 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -90,77 +85,88 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
+From: Neil Armstrong <neil.armstrong@linaro.org>
+Reply-To: Neil Armstrong <neil.armstrong@linaro.org>
 Subject: Re: [PATCH v2] drm/msm/dpu: Filter modes based on adjusted mode clock
-To: Neil Armstrong <neil.armstrong@linaro.org>,
-        Jessica Zhang <jessica.zhang@oss.qualcomm.com>,
-        Rob Clark <robdclark@gmail.com>, Dmitry Baryshkov <lumag@kernel.org>,
-        Sean Paul <sean@poorly.run>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>
+To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+ Jessica Zhang <jessica.zhang@oss.qualcomm.com>,
+ Rob Clark <robdclark@gmail.com>, Dmitry Baryshkov <lumag@kernel.org>,
+ Sean Paul <sean@poorly.run>, Marijn Suijten <marijn.suijten@somainline.org>,
+ David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>
 Cc: Abhinav Kumar <quic_abhinavk@quicinc.com>, linux-arm-msm@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
-        linux-kernel@vger.kernel.org
+ dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+ linux-kernel@vger.kernel.org
 References: <20250506-filter-modes-v2-1-c20a0b7aa241@oss.qualcomm.com>
  <1b783a60-39c7-49b5-8932-e77230f6cddd@linaro.org>
-Content-Language: en-US
-From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-In-Reply-To: <1b783a60-39c7-49b5-8932-e77230f6cddd@linaro.org>
-Content-Type: text/plain; charset=UTF-8
+ <88f04334-8d73-4ced-9c46-e69c3e6cbc72@oss.qualcomm.com>
+Content-Language: en-US, fr
+Autocrypt: addr=neil.armstrong@linaro.org; keydata=
+ xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
+ GTjuhvbleoQ5Cxjr+v+1ARGCH46MxFP5DwauzPekwJUD5QKZlaw/bURTLmS2id5wWi3lqVH4
+ BVF2WzvGyyeV1o4RTCYDnZ9VLLylJ9bneEaIs/7cjCEbipGGFlfIML3sfqnIvMAxIMZrvcl9
+ qPV2k+KQ7q+aXavU5W+yLNn7QtXUB530Zlk/d2ETgzQ5FLYYnUDAaRl+8JUTjc0CNOTpCeik
+ 80TZcE6f8M76Xa6yU8VcNko94Ck7iB4vj70q76P/J7kt98hklrr85/3NU3oti3nrIHmHABEB
+ AAHNKk5laWwgQXJtc3Ryb25nIDxuZWlsLmFybXN0cm9uZ0BsaW5hcm8ub3JnPsLAkQQTAQoA
+ OwIbIwULCQgHAwUVCgkICwUWAgMBAAIeAQIXgBYhBInsPQWERiF0UPIoSBaat7Gkz/iuBQJk
+ Q5wSAhkBAAoJEBaat7Gkz/iuyhMIANiD94qDtUTJRfEW6GwXmtKWwl/mvqQtaTtZID2dos04
+ YqBbshiJbejgVJjy+HODcNUIKBB3PSLaln4ltdsV73SBcwUNdzebfKspAQunCM22Mn6FBIxQ
+ GizsMLcP/0FX4en9NaKGfK6ZdKK6kN1GR9YffMJd2P08EO8mHowmSRe/ExAODhAs9W7XXExw
+ UNCY4pVJyRPpEhv373vvff60bHxc1k/FF9WaPscMt7hlkbFLUs85kHtQAmr8pV5Hy9ezsSRa
+ GzJmiVclkPc2BY592IGBXRDQ38urXeM4nfhhvqA50b/nAEXc6FzqgXqDkEIwR66/Gbp0t3+r
+ yQzpKRyQif3OwE0ETVkGzwEIALyKDN/OGURaHBVzwjgYq+ZtifvekdrSNl8TIDH8g1xicBYp
+ QTbPn6bbSZbdvfeQPNCcD4/EhXZuhQXMcoJsQQQnO4vwVULmPGgtGf8PVc7dxKOeta+qUh6+
+ SRh3vIcAUFHDT3f/Zdspz+e2E0hPV2hiSvICLk11qO6cyJE13zeNFoeY3ggrKY+IzbFomIZY
+ 4yG6xI99NIPEVE9lNBXBKIlewIyVlkOaYvJWSV+p5gdJXOvScNN1epm5YHmf9aE2ZjnqZGoM
+ Mtsyw18YoX9BqMFInxqYQQ3j/HpVgTSvmo5ea5qQDDUaCsaTf8UeDcwYOtgI8iL4oHcsGtUX
+ oUk33HEAEQEAAcLAXwQYAQIACQUCTVkGzwIbDAAKCRAWmrexpM/4rrXiB/sGbkQ6itMrAIfn
+ M7IbRuiSZS1unlySUVYu3SD6YBYnNi3G5EpbwfBNuT3H8//rVvtOFK4OD8cRYkxXRQmTvqa3
+ 3eDIHu/zr1HMKErm+2SD6PO9umRef8V82o2oaCLvf4WeIssFjwB0b6a12opuRP7yo3E3gTCS
+ KmbUuLv1CtxKQF+fUV1cVaTPMyT25Od+RC1K+iOR0F54oUJvJeq7fUzbn/KdlhA8XPGzwGRy
+ 4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
+ QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
+Organization: Linaro
+In-Reply-To: <88f04334-8d73-4ced-9c46-e69c3e6cbc72@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDE4MDAwMCBTYWx0ZWRfX7yEwFwpBSc5w
- r5tTcsqIUCNlcAjzpW1ywdpGaf5g4Wf5shWs7MuUHotPe4a7IMRHSpLJ8XYdyd/ryDL8k790lHQ
- IqUungwtsqIHKBkekfyAvdbcF/Mb0rxmRPkkncmaUWEeMWsNCRkAVmg8QF0ZqfF817KAcYv4IbF
- dWsoBrvdSqhPSkMvyLr0EKnvG9pxWej+yao+xhFt1QlVoBKNHTGkVIuXndsqi7V2XItVpikV4vm
- 5Zx0TkhDjRnL7JKg2FfkydwP1a9W7jrnttR7HmOFmSEZJogk67HjUxFYNVYcFL+VIxhPw7erpZX
- SAz1R/rI1f+zQRQAbG8OvvqDpYwGutRY5nrm46FKHwUtpZKc3+3ijvoTofJ3JH6L/iRvqXcCsmm
- pZQnmbu0tSAYRbJ300C8MEwnwx7NhA==
-X-Proofpoint-GUID: 1MCr9L5eryEYL_0Wzc94-CeF3IvkumBz
-X-Authority-Analysis: v=2.4 cv=Up1u9uwB c=1 sm=1 tr=0 ts=68f643fa cx=c_pps
- a=oc9J++0uMp73DTRD5QyR2A==:117 a=FpWmc02/iXfjRdCD7H54yg==:17
- a=IkcTkHD0fZMA:10 a=x6icFKpwvdMA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=P-IC7800AAAA:8 a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8 a=KKAkSRfTAAAA:8
- a=QfOM7-ESXlBk_NPiMl4A:9 a=QEXdDO2ut3YA:10 a=iYH6xdkBrDN1Jqds4HTS:22
- a=d3PnA9EDa4IxuAV0gXij:22 a=cvBusfyB2V15izCimMoJ:22 a=HhbK4dLum7pmb74im6QT:22
-X-Proofpoint-ORIG-GUID: 1MCr9L5eryEYL_0Wzc94-CeF3IvkumBz
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-10-20_04,2025-10-13_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- lowpriorityscore=0 adultscore=0 suspectscore=0 malwarescore=0 clxscore=1015
- impostorscore=0 bulkscore=0 priorityscore=1501 spamscore=0 phishscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2510020000 definitions=main-2510180000
 
-On 10/20/25 4:05 PM, neil.armstrong@linaro.org wrote:
-> Hi,
-> 
-> On 5/7/25 03:38, Jessica Zhang wrote:
->> Filter out modes that have a clock rate greater than the max core clock
->> rate when adjusted for the perf clock factor
->>
->> This is especially important for chipsets such as QCS615 that have lower
->> limits for the MDP max core clock.
->>
->> Since the core CRTC clock is at least the mode clock (adjusted for the
->> perf clock factor) [1], the modes supported by the driver should be less
->> than the max core clock rate.
->>
->> [1] https://elixir.bootlin.com/linux/v6.12.4/source/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c#L83
->>
->> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
->> Signed-off-by: Jessica Zhang <jessica.zhang@oss.qualcomm.com>
-> 
-> This change breaks the T14s OLED display, no modes are reported on the eDP connector.
-> msm_dpu ae01000.display-controller: [drm:update_display_info.part.0 [drm]] [CONNECTOR:41:eDP-1] Assigning EDID-1.4 digital sink color depth as 10 bpc.
-> msm_dpu ae01000.display-controller: [drm:update_display_info.part.0 [drm]] [CONNECTOR:41:eDP-1] ELD monitor
-> msm_dpu ae01000.display-controller: [drm:update_display_info.part.0 [drm]] [CONNECTOR:41:eDP-1] ELD size 20, SAD count 0
-> [drm:drm_mode_object_put.part.0 [drm]] OBJ ID: 113 (1)
-> msm_dpu ae01000.display-controller: [drm:drm_mode_prune_invalid [drm]] Rejected mode: "2880x1800": 120 652260 2880 2912 2920 2980 1800 1808 1816 1824 0x48 0x9 (CLOCK_HIGH)
-> msm_dpu ae01000.display-controller: [drm:drm_mode_prune_invalid [drm]] Rejected mode: "2880x1800": 60 652260 2880 2888 2920 2980 1800 1808 1816 3648 0x40 0x9 (CLOCK_HIGH)
-> 
-> With this reverted on v6.18-rc, display works again.
+Hi,
 
-https://lore.kernel.org/linux-arm-msm/20250923-modeclk-fix-v2-1-01fcd0b2465a@oss.qualcomm.com/
+On 10/20/25 16:15, Konrad Dybcio wrote:
+> On 10/20/25 4:05 PM, neil.armstrong@linaro.org wrote:
+>> Hi,
+>>
+>> On 5/7/25 03:38, Jessica Zhang wrote:
+>>> Filter out modes that have a clock rate greater than the max core clock
+>>> rate when adjusted for the perf clock factor
+>>>
+>>> This is especially important for chipsets such as QCS615 that have lower
+>>> limits for the MDP max core clock.
+>>>
+>>> Since the core CRTC clock is at least the mode clock (adjusted for the
+>>> perf clock factor) [1], the modes supported by the driver should be less
+>>> than the max core clock rate.
+>>>
+>>> [1] https://elixir.bootlin.com/linux/v6.12.4/source/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c#L83
+>>>
+>>> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+>>> Signed-off-by: Jessica Zhang <jessica.zhang@oss.qualcomm.com>
+>>
+>> This change breaks the T14s OLED display, no modes are reported on the eDP connector.
+>> msm_dpu ae01000.display-controller: [drm:update_display_info.part.0 [drm]] [CONNECTOR:41:eDP-1] Assigning EDID-1.4 digital sink color depth as 10 bpc.
+>> msm_dpu ae01000.display-controller: [drm:update_display_info.part.0 [drm]] [CONNECTOR:41:eDP-1] ELD monitor
+>> msm_dpu ae01000.display-controller: [drm:update_display_info.part.0 [drm]] [CONNECTOR:41:eDP-1] ELD size 20, SAD count 0
+>> [drm:drm_mode_object_put.part.0 [drm]] OBJ ID: 113 (1)
+>> msm_dpu ae01000.display-controller: [drm:drm_mode_prune_invalid [drm]] Rejected mode: "2880x1800": 120 652260 2880 2912 2920 2980 1800 1808 1816 1824 0x48 0x9 (CLOCK_HIGH)
+>> msm_dpu ae01000.display-controller: [drm:drm_mode_prune_invalid [drm]] Rejected mode: "2880x1800": 60 652260 2880 2888 2920 2980 1800 1808 1816 3648 0x40 0x9 (CLOCK_HIGH)
+>>
+>> With this reverted on v6.18-rc, display works again.
+> 
+> https://lore.kernel.org/linux-arm-msm/20250923-modeclk-fix-v2-1-01fcd0b2465a@oss.qualcomm.com/
 
-Konrad
+Thanks,
+Neil
+
+> 
+> Konrad
+
 
