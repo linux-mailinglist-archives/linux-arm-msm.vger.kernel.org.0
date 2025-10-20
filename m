@@ -1,117 +1,140 @@
-Return-Path: <linux-arm-msm+bounces-77988-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-77989-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 520E9BF0E07
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Oct 2025 13:37:45 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id B6C8EBF0EA0
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Oct 2025 13:47:13 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 199A4188260F
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Oct 2025 11:38:09 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 1CEA64066CE
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Oct 2025 11:47:03 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3B9E72FDC59;
-	Mon, 20 Oct 2025 11:37:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id EF4DC2FDC27;
+	Mon, 20 Oct 2025 11:46:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="m6Q3p+Sm"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mailgw.kylinos.cn (mailgw.kylinos.cn [124.126.103.232])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CEA02FC862;
-	Mon, 20 Oct 2025 11:37:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=124.126.103.232
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CE7E303C9D
+	for <linux-arm-msm@vger.kernel.org>; Mon, 20 Oct 2025 11:46:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760960260; cv=none; b=cf9yKfV3oZmb6Iesr2BNUDTEQzhCZarYRmznZeihiOWeaENJKQ0we5Yq6H+Hq1ewrGN6XoMd7V+qFppjx75/eK9Kau/JddN3RuYUdggQeadxo6MeemJ6jLiPgcyunrjsfEO+y6D+sVIMyxhM920VkV9xN78k40NmixMFU+Q3u10=
+	t=1760960816; cv=none; b=k+uzeQA90Vs/NnollQjo0YAVUY3w4C/l6JMP+2tMcuRH5eN3Xs43+XrYHQyqzCwq7cWyHRQeTtAzjxANZYLMeXFUQ67gAv0KjNTwR1TYOMQj2Yf8daTz0czU+ilvsbpcc8yiaFa1zJ/g7hyXdBqUnJKIf8EotTA8j/SbZjYgQLk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760960260; c=relaxed/simple;
-	bh=hrE5ynjN4EEBaatJqh+SMhKQdi9HVeog8IGfAP6kE+k=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=crOIMbQF7lu7eekHYflVtFBddC09JWw7tCcMVSJHfVW1DorByKdYE7WloISOt1O7iXmpw+QVVCJb/WOVtDG/KsZvu0nSwKrrCn3yu6ZhRUyEtRx9TuuKCdGcKfw//4SzHaebUU+/oAd7wEZmlkUUNtez/NY7TeJ/NDIlYMsd33g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kylinos.cn; spf=pass smtp.mailfrom=kylinos.cn; arc=none smtp.client-ip=124.126.103.232
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kylinos.cn
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kylinos.cn
-X-UUID: 2883f10aada911f0a38c85956e01ac42-20251020
-X-CTIC-Tags:
-	HR_CC_COUNT, HR_CC_DOMAIN_COUNT, HR_CC_NAME, HR_CC_NO_NAME, HR_CTE_8B
-	HR_CTT_MISS, HR_DATE_H, HR_DATE_WKD, HR_DATE_ZONE, HR_FROM_NAME
-	HR_SJ_LANG, HR_SJ_LEN, HR_SJ_LETTER, HR_SJ_NOR_SYM, HR_SJ_PHRASE
-	HR_SJ_PHRASE_LEN, HR_SJ_WS, HR_TO_COUNT, HR_TO_DOMAIN_COUNT, HR_TO_NAME
-	IP_UNTRUSTED, SRC_UNTRUSTED, IP_LOWREP, SRC_LOWREP, DN_TRUSTED
-	SRC_TRUSTED, SA_EXISTED, SN_EXISTED, SPF_NOPASS, DKIM_NOPASS
-	DMARC_NOPASS, CIE_GOOD, CIE_GOOD_SPF, GTI_FG_BS, GTI_RG_INFO
-	GTI_C_BU, AMN_GOOD, ABX_MISS_RDNS
-X-CID-P-RULE: Release_Ham
-X-CID-O-INFO: VERSION:1.3.6,REQID:9e0a14a9-ab98-4269-b939-fd4775a0f249,IP:10,U
-	RL:0,TC:0,Content:0,EDM:25,RT:0,SF:-5,FILE:0,BULK:0,RULE:Release_Ham,ACTIO
-	N:release,TS:30
-X-CID-INFO: VERSION:1.3.6,REQID:9e0a14a9-ab98-4269-b939-fd4775a0f249,IP:10,URL
-	:0,TC:0,Content:0,EDM:25,RT:0,SF:-5,FILE:0,BULK:0,RULE:Release_Ham,ACTION:
-	release,TS:30
-X-CID-META: VersionHash:a9d874c,CLOUDID:5827c87bff38bde25837b5837f87607c,BulkI
-	D:251020193614H7E4RRCI,BulkQuantity:1,Recheck:0,SF:17|19|25|45|66|78|102|8
-	50,TC:nil,Content:0|50,EDM:5,IP:-2,URL:0,File:nil,RT:nil,Bulk:40,QS:nil,BE
-	C:nil,COL:0,OSI:0,OSA:0,AV:0,LES:1,SPR:NO,DKR:0,DKP:0,BRR:0,BRE:0,ARC:0
-X-CID-BVR: 2,SSN|SDN
-X-CID-BAS: 2,SSN|SDN,0,_
-X-CID-FACTOR: TF_CID_SPAM_SNR,TF_CID_SPAM_FAS,TF_CID_SPAM_FSD,TF_CID_SPAM_FSI
-X-CID-RHF: D41D8CD98F00B204E9800998ECF8427E
-X-UUID: 2883f10aada911f0a38c85956e01ac42-20251020
-X-User: hehuiwen@kylinos.cn
-Received: from localhost.localdomain [(220.202.195.150)] by mailgw.kylinos.cn
-	(envelope-from <hehuiwen@kylinos.cn>)
-	(Generic MTA with TLSv1.3 TLS_AES_256_GCM_SHA384 256/256)
-	with ESMTP id 252442399; Mon, 20 Oct 2025 19:37:28 +0800
-From: Huiwen He <hehuiwen@kylinos.cn>
-To: Rob Clark <robin.clark@oss.qualcomm.com>
-Cc: Dmitry Baryshkov <lumag@kernel.org>,
-	David Airlie <airlied@gmail.com>,
-	linux-arm-msm@vger.kernel.org,
-	dri-devel@lists.freedesktop.org,
-	freedreno@lists.freedesktop.org,
-	linux-kernel@vger.kernel.org,
-	Huiwen He <hehuiwen@kylinos.cn>
-Subject: [PATCH] drm/msm: Fix NULL pointer dereference in crashstate_get_vm_logs()
-Date: Mon, 20 Oct 2025 19:37:08 +0800
-Message-ID: <20251020113708.7403-1-hehuiwen@kylinos.cn>
-X-Mailer: git-send-email 2.43.0
+	s=arc-20240116; t=1760960816; c=relaxed/simple;
+	bh=JFiozswb4GIwcHmliKn473FjPA/idEM/isbif6byJ4U=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=c3cFzuyrIC7R9RYT4cWFb7EF/BWmV7QiwpUnBo2FY7aLFnWpb2IItw46dWPK3SwBZIFnpo5nIt5TZr0Y7hE1QBY54Xo1harM9Il8hWSqIoYxDHJzWufI/KPQBcAyLuYWYi3+Kx+HWL1GBuvjw+xv91AwbMdhUR2JPXCe+RgoL14=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=m6Q3p+Sm; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 59JLOMQA004086
+	for <linux-arm-msm@vger.kernel.org>; Mon, 20 Oct 2025 11:46:54 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	rm6MWCmMyPXrv+yc3ILYtdzHGcjXJf3gMY4k9S9ZBr4=; b=m6Q3p+SmEku7qT+Q
+	p72G+slTEFiw2gYOI2o5MzZYVzlNt6dyW/mOHHVpOcuYr0RYQklGgWaqpojzBmRf
+	OJs93sX2BXAoNc83bsmlHueMpVa626jGox5koOPpQ7iRbPQu8YPF6Fqmf1+0Bzk0
+	XuYHTuoNxHpqGqPhzUbqqdQr7PmI6oI1e9uzAIjJQCm6bG9VOZKyzyYHyMQfE7wB
+	4ptwE2mlU5d2+/V+5FmFWWj3O0BMycGFw1NS+uYyFo2J3n9NY69M4YVj+YV7Oe4B
+	gSRqyYt59BqL6d2cCZvfpIx2Cvc1bPm7GlEDwHBSPWEyybrIadK1R233+snxYxSS
+	uu2qmg==
+Received: from mail-qv1-f69.google.com (mail-qv1-f69.google.com [209.85.219.69])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 49v0kfcv92-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Mon, 20 Oct 2025 11:46:54 +0000 (GMT)
+Received: by mail-qv1-f69.google.com with SMTP id 6a1803df08f44-850553dfef2so15267946d6.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 20 Oct 2025 04:46:54 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1760960813; x=1761565613;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=rm6MWCmMyPXrv+yc3ILYtdzHGcjXJf3gMY4k9S9ZBr4=;
+        b=gHf2duVsQhWE61LG1lCUTyXajt0fhWtcEvVAkGeyQAjPiO6uCHnpVmRGPcDtONVcWt
+         nyMNWkUGii11CAy8NQf5k96+8ei11dPSVFZLoMRQZFQvm0UBWyEX1UU9p0UeSdk7Gi/E
+         ye0wrRbNBm5Vbr+jlljEPG27tY1zDWTXvE1s0p+g7TFNbLzqw/GS3RzjBmorWq6qjsD4
+         lbx9oXlTm1r1JZBvmoyMCSdvRQiWOmN0UFEnK3wtIsfpOiqSk5XCvi5ynlhn8dpda2Io
+         WAhQXMAFpYUAuF+HeoU3N6rspSLZUhWt4oLzaTm2LhzeHXs+D2+0GlpStU3Qm+NGqdcA
+         vdZw==
+X-Gm-Message-State: AOJu0YzRTg6j8mbdsLayD12rKLwnsviDYYm475lfmx9STgnd9187fDVW
+	sLUz+2Jj48vPD1T5PDgmLzHrfpjzEkAQUdtGff8hXDhMdjcenZfe21U7o3DLsSiKbzSyrsDhJR2
+	HF0KzVGMaDKhKwJ0MIbqfS9gcS9giDNOrC7AOxDV4RWYx74RzM7W5cpvDUVdASKMJxWVA
+X-Gm-Gg: ASbGnctttrw7i7iBCEjApXnLixvaif8oFhFZi9Fmr6HLZ2XktLhnPS4+ueWiENk6B8r
+	O1jKsheQ7Ut5DT212pfvikTJTjxXE/PDVQCV+vsaodPrc2rfzn8ix5R+gU0CsI7Dj7sUQDzlPri
+	/VXZ1MX/wvxyYwXEgM7mgjuecim2cwdIPZuylkYipAdjW1yJ818zYHylgiogRhmbnr3Eti0v1Rt
+	d/2lxKlRFLNcsReRlpvwmDHBZHWskBBzdYD4kEvIlt+CKH4kVqhwFeJoSEXe1RK5HvUWNoGmOUj
+	sC/e6kBbUks9iFRxjaZWUfyjG8idUP6pk/rSynZiTSWsQ9KQXWChseb5sOULEMEF1pR8Ym4KJ4B
+	iywoxjBOydHDvZFdpzNofmDosfO12Fx3cX52nuFPQmH1tBBDhy4pzx0Vy
+X-Received: by 2002:a05:622a:164b:b0:4e8:9126:31d2 with SMTP id d75a77b69052e-4e8c1ab2c0dmr25835641cf.5.1760960813376;
+        Mon, 20 Oct 2025 04:46:53 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IG0ciRktPb03dlEiAGKzDkyoD8TX52gJeD8cUeDXieeIygJWDMDsI1gkSlumLSnNzXkAMMGzw==
+X-Received: by 2002:a05:622a:164b:b0:4e8:9126:31d2 with SMTP id d75a77b69052e-4e8c1ab2c0dmr25835501cf.5.1760960812952;
+        Mon, 20 Oct 2025 04:46:52 -0700 (PDT)
+Received: from [192.168.119.202] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-b65eb526175sm770447166b.56.2025.10.20.04.46.51
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 20 Oct 2025 04:46:52 -0700 (PDT)
+Message-ID: <6491e048-eeff-4216-be03-cf14437b6788@oss.qualcomm.com>
+Date: Mon, 20 Oct 2025 13:46:50 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2] arm64: dts: qcom: lemans-pmics: enable rtc
+To: Tingguo Cheng <tingguo.cheng@oss.qualcomm.com>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, kernel@oss.qualcomm.com,
+        Kamal Wadhwa <kamal.wadhwa@oss.qualcomm.com>,
+        Rakesh Kota <rakesh.kota@oss.qualcomm.com>
+References: <20251017-add-rtc-for-lemans-v2-1-0aaf174b25b9@oss.qualcomm.com>
+Content-Language: en-US
+From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+In-Reply-To: <20251017-add-rtc-for-lemans-v2-1-0aaf174b25b9@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Authority-Analysis: v=2.4 cv=E6LAZKdl c=1 sm=1 tr=0 ts=68f6212e cx=c_pps
+ a=wEM5vcRIz55oU/E2lInRtA==:117 a=FpWmc02/iXfjRdCD7H54yg==:17
+ a=IkcTkHD0fZMA:10 a=x6icFKpwvdMA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=EUspDBNiAAAA:8 a=xE60aKYvQSwzfKn-tTsA:9 a=QEXdDO2ut3YA:10
+ a=OIgjcC2v60KrkQgK7BGD:22
+X-Proofpoint-ORIG-GUID: II_oHAMSDXVciq2FNBqSf5QpRWVFCaXA
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDE4MDAwMiBTYWx0ZWRfX314+zLO3JExi
+ a3dR86RRc8lm/XoLDLUEZ3qOclSGIuA9CGgSBhr6ITDXWIFUGMkSImxRJcGBa7FVHcGzd/Tjf3+
+ rekxuq+7uYSaBWx5bftpXIs1YFWPN+a6Gs8Y0yOONtlc6dfyLQqsubkcqMug/RD0dyEiipXlBX9
+ nL2XzssfV9xFRDEQ/N19YwJoNoNpVeaDmNWEjguN7IG7QRBnWqVOmxxxdz70tCfSlnv8U96N05T
+ RS9mHbOo5kKXWKM3Uxt/7rF/L5x9xlzoB5bJeXUpkssmV33yriPFWuduRYPSmzcEw5MOfLO9/lX
+ qGLUs4AwYhWwzIj+IEwY0zo+WtPyghHIyghJoNcotNhHq43RIxuJ+Asaa8li4FoFqxX/p48n8ey
+ OOazGb+fZz5vup52aQTVi9iFHtklkg==
+X-Proofpoint-GUID: II_oHAMSDXVciq2FNBqSf5QpRWVFCaXA
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-10-20_02,2025-10-13_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ clxscore=1015 suspectscore=0 bulkscore=0 priorityscore=1501 spamscore=0
+ phishscore=0 impostorscore=0 malwarescore=0 adultscore=0 lowpriorityscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.19.0-2510020000 definitions=main-2510180002
 
-crashstate_get_vm_logs() did not check the result of kmalloc_array()
-before using state->vm_logs. In low memory situations, kmalloc_array()
-may fail and return NULL, leading to a kernel crash when the array
-is accessed in the subsequent loop.
+On 10/17/25 4:56 AM, Tingguo Cheng wrote:
+> Add RTC node, the RTC is controlled by PMIC device via spmi bus.
+> 
+> Signed-off-by: Tingguo Cheng <tingguo.cheng@oss.qualcomm.com>
+> ---
 
-Fix this by checking the return value of kmalloc_array(). If allocation
-fails, set state->nr_vm_logs to 0, and exit the function safely.
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 
-Fixes: 9edc52967cc7 ("drm/msm: Add VM logging for VM_BIND updates")
-Signed-off-by: Huiwen He <hehuiwen@kylinos.cn>
----
- drivers/gpu/drm/msm/msm_gpu.c | 6 ++++++
- 1 file changed, 6 insertions(+)
-
-diff --git a/drivers/gpu/drm/msm/msm_gpu.c b/drivers/gpu/drm/msm/msm_gpu.c
-index 17759abc46d7..51df6ff945d2 100644
---- a/drivers/gpu/drm/msm/msm_gpu.c
-+++ b/drivers/gpu/drm/msm/msm_gpu.c
-@@ -348,6 +348,12 @@ static void crashstate_get_vm_logs(struct msm_gpu_state *state, struct msm_gem_v
- 
- 	state->vm_logs = kmalloc_array(
- 		state->nr_vm_logs, sizeof(vm->log[0]), GFP_KERNEL);
-+	if (!state->vm_logs) {
-+		state->nr_vm_logs = 0;
-+		mutex_unlock(&vm->mmu_lock);
-+		return;
-+	}
-+
- 	for (int i = 0; i < state->nr_vm_logs; i++) {
- 		int idx = (i + first) & vm_log_mask;
- 
--- 
-2.43.0
-
+Konrad
 
