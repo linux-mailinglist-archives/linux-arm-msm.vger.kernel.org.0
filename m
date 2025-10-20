@@ -1,217 +1,233 @@
-Return-Path: <linux-arm-msm+bounces-78009-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-78010-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ams.mirrors.kernel.org (ams.mirrors.kernel.org [213.196.21.55])
-	by mail.lfdr.de (Postfix) with ESMTPS id C3DD9BF15D3
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Oct 2025 14:55:33 +0200 (CEST)
+Received: from ams.mirrors.kernel.org (ams.mirrors.kernel.org [IPv6:2a01:60a::1994:3:14])
+	by mail.lfdr.de (Postfix) with ESMTPS id 921B1BF1666
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Oct 2025 15:01:53 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ams.mirrors.kernel.org (Postfix) with ESMTPS id 490E33401D7
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Oct 2025 12:55:33 +0000 (UTC)
+	by ams.mirrors.kernel.org (Postfix) with ESMTPS id 1949C34CE66
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Oct 2025 13:01:53 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6BDDF26657D;
-	Mon, 20 Oct 2025 12:55:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id DB7CE2ED16B;
+	Mon, 20 Oct 2025 13:00:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="TLajnoSD"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="ZvP4bzob"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f48.google.com (mail-ej1-f48.google.com [209.85.218.48])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4A8A258CEF
-	for <linux-arm-msm@vger.kernel.org>; Mon, 20 Oct 2025 12:55:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.133.124
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C62DE2F617E
+	for <linux-arm-msm@vger.kernel.org>; Mon, 20 Oct 2025 13:00:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760964930; cv=none; b=tiiKVPcKUe+LmjJGhnQDoawmzusWiFwrzZRPFCxxSOW2z3XMZZnXT5h4lNKNDRUQtv8yJc7OHMmQAgDn9T9SE6iCOYPf5x9MhM9erQrdqOHSS7fSG9/AOa3OE/CCtD6CffgWpMvnj+fgcap/ly49wuSx/8IzbR24TG/yveFpWKE=
+	t=1760965226; cv=none; b=JjNxAsr6LpO7cjEZ33MvCPIfHsY+mbeAp11etrQeTZJ0v6FzHO//9w1ucUBEmaptRjE4tT7JvoIM7LCDH2+AAvqjzrbADjrVsClRURg7p3BcumN1J1X/9WeXrAqLsF+wxUytUA7sU+s1+0kU84HQScHyy+CqEXNdCm6wQOWPnpw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760964930; c=relaxed/simple;
-	bh=QWslHHw3ooUL0ob80XUiTtNqA8+q6Mn8EA7SIZWCBB4=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=XxCt1lacfHB6ZNbUDzits85uG7Ca7PEzYo0Zt9qdHtigaAQjhb5/+yyHnuKgODsPR+8MzOXpelCNLqBaagJncBKJFtF1+pUsLmrOLAQxGXmPjxrsTx4ar5hoUHdk5aZ8/0sBWJKmUhBalbNSrJMciQrR3jMGehie/L+ZowDeHyY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=TLajnoSD; arc=none smtp.client-ip=170.10.133.124
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1760964927;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=MpAcUrOw214uKU85d3sQtOE461IvZvLg1M+Z0gwzSR8=;
-	b=TLajnoSD9Ua3dtEU+A6DMkNmfgHyy+yiYAN58ShCo4hLWjCKsKzFwtjlr1TSkbj1vRK9pI
-	5//qPAV3sg6bYbGNjnam2OGiB/rPD59XIUax2lENHWY4yEbmKbytpIKWtSWatPb+YP9gV2
-	o394ZVAo9jO+yoMw43aC8tRwoliHDIc=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-214-Itrzt3VwOPeXT1moOTY-eQ-1; Mon, 20 Oct 2025 08:55:26 -0400
-X-MC-Unique: Itrzt3VwOPeXT1moOTY-eQ-1
-X-Mimecast-MFC-AGG-ID: Itrzt3VwOPeXT1moOTY-eQ_1760964925
-Received: by mail-wr1-f70.google.com with SMTP id ffacd0b85a97d-426d4f59cbcso2871232f8f.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 20 Oct 2025 05:55:26 -0700 (PDT)
+	s=arc-20240116; t=1760965226; c=relaxed/simple;
+	bh=8WkbNdMuBq7DpnVFLltNV+aBM21EVH5APcxMppriAT8=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=CGQoxdo5E5BEYcz8EvQZlNXuQSeeYSoN8YSHdfrChQPz+aG2VKs8X7KBkVhLaUdDYS/EI1C6AuH2R72i0iiYsG1PwblXNYAcQv7ueDVepWCQg6dqhTh5mmdRCVyBIFVq/JZq0vxz9IhjNtVsdU7bEXKPczGDI/TGz9BeDVkHmN0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=ZvP4bzob; arc=none smtp.client-ip=209.85.218.48
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-ej1-f48.google.com with SMTP id a640c23a62f3a-b3d196b7eeeso760822466b.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 20 Oct 2025 06:00:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1760965223; x=1761570023; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=3R4NouHwR2gJkgcsNlR57aYLjQ4OTHNFMDfpxlNGqaQ=;
+        b=ZvP4bzobdSik1ScG8uFeYmTGBzPUq/7WRtdLcQsje+O6t3ZhmS2uSLbRrEJiSt90s+
+         520swG4nTipatEdgbx2Dua6oxlYspNcO7D2iGKIYGdKuhw3iwxBQI/lRAniaUja5d0uO
+         Nx6Cn2v3Yp9+fpf8BtftWzGaDLxCmm73+I8Og4dpwodMZJm6Jl4KR5uvxo8mqJToc64y
+         rmj9HKx0BoeU0l8Yy9mjoDR78vw12yqTYLmZCS0VE/1ih2cz+j47E/CsusJN/TsFl3TF
+         BU7zQQZm9wvIxfgH5Spdfj5R+LziutJwRBZvlvPoM30EjgUlvoQD/Ak1C0XpGkdO1KxY
+         NSDA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1760964925; x=1761569725;
-        h=mime-version:message-id:date:references:in-reply-to:subject:cc:to
-         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=MpAcUrOw214uKU85d3sQtOE461IvZvLg1M+Z0gwzSR8=;
-        b=mv4YtcPFvlOZ6A8BhzPFTRCnknjZi19kV0BODbHGLWWIDyaXcqIOQxE1HmL81/fQY0
-         LF0/NXXM2MHZKkEa2dNmze3PH5lWTdUL7/D6hVvj+A4O+CcaYVEo2ZvmNcmCm8JosATF
-         UnjMQ6eThiP4fDsWxrA9DAW4kXvYrTtHr96Y/8NVymmyudQoUyZfd9mYeLdp16MS1l4Y
-         D2u/JMzKfhUIX4hrDzdDllPs+BRLlWXwFvJUga5SS7idWaTtrqllpXxhGhbVkPATvWV9
-         9P4NFq3SPybEy7Ak4FG4WmHHlB+C/+ZA/LS+Vx81luzar9SjuMg8H5IsZtVEXaW3r/kp
-         kpHQ==
-X-Forwarded-Encrypted: i=1; AJvYcCXInN+Qt2KHRcdNxfOVyTP4CocmOvrejNu030NS8uqq2yqpHX81Cp4Nz9xIwT/bvAPKMT9Nr0JZzsZwOBZi@vger.kernel.org
-X-Gm-Message-State: AOJu0Yza78perpNcklln39R9ObQSlGPYy430dQ1xWDrf4oExbLDGcHRQ
-	8ZE5Bzwn4oapWs7za9qBQ2jMFgRGWZL1xcufEyFk63ciTwj5GAEWVOEI8VPDXAW0W06u9CF76gz
-	ftvXjLxltpIEyXJEsVw9jb6YeIYDyOl5+3tGvQ+gQOCpW/n106KhIgoZqIikHytc5Krh+4LTqaH
-	w=
-X-Gm-Gg: ASbGnctxqDTNLXhX2pgWP4jyTnvE2NgpCh0ZgvcnNLJEPo9DhBZi/dlJTvit3bug6rI
-	vgDbpEGGJ+6/KHXV9bbqpVtmrgbJzLsnx5PYn/bnfFQSUZ9xKAc5mC2DYmhOYWG6po5R+IKnHpA
-	xQswhn3k6Fac32zLzjMNwqB7lrdqIQZJ6GIy987hzfaimeJJtYUxG56Ym7tfWGTZT3jedwl9eq0
-	Bzx1Y5JlkMXwP2DX8+kHB5WECxJC/NxyULBBzE1Xq9HBfaco01Q8zFrLmIqjeQUoy30MqvTGf0y
-	COVA7IbgpQ/0+WDk1EsHSVk8mvkrwc0X8MW0ClBFdvRO+btCGdjujoi074qa8fBwyiQoQN32Oau
-	iZBSiAu5lYaa+ZrgGyAOGlE0YSYnyzLQpHQT1jgTQ5YBsr0AUuIz7X9bvdf02
-X-Received: by 2002:a05:6000:2f83:b0:427:151:3da6 with SMTP id ffacd0b85a97d-42701514163mr10587338f8f.29.1760964924782;
-        Mon, 20 Oct 2025 05:55:24 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGW4QT6B9QAckNTLEcThFFX2zX+LihKlhZMaBVmzKecwZvIPpPq9HRLslLYxVotWn59JjjW2A==
-X-Received: by 2002:a05:6000:2f83:b0:427:151:3da6 with SMTP id ffacd0b85a97d-42701514163mr10587314f8f.29.1760964924261;
-        Mon, 20 Oct 2025 05:55:24 -0700 (PDT)
-Received: from vschneid-thinkpadt14sgen2i.remote.csb (213-44-135-146.abo.bbox.fr. [213.44.135.146])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4715e4e267fsm62292715e9.12.2025.10.20.05.55.23
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 20 Oct 2025 05:55:23 -0700 (PDT)
-From: Valentin Schneider <vschneid@redhat.com>
-To: Tengfei Fan <tengfei.fan@oss.qualcomm.com>, Ingo Molnar
- <mingo@redhat.com>, Peter Zijlstra <peterz@infradead.org>, Juri Lelli
- <juri.lelli@redhat.com>, Vincent Guittot <vincent.guittot@linaro.org>,
- Dietmar Eggemann <dietmar.eggemann@arm.com>, Steven Rostedt
- <rostedt@goodmis.org>, Ben Segall <bsegall@google.com>, Mel Gorman
- <mgorman@suse.de>, linux-arm-msm@vger.kernel.org
-Cc: kernel@oss.qualcomm.com, linux-kernel@vger.kernel.org, Tengfei Fan
- <tengfei.fan@oss.qualcomm.com>
-Subject: Re: [PATCH] sched: Recheck the rt task's on rq state after
- double_lock_balance()
-In-Reply-To: <20251009-recheck_rt_task_enqueue_state-v1-1-5f9c96d3c4fd@oss.qualcomm.com>
-References: <20251009-recheck_rt_task_enqueue_state-v1-1-5f9c96d3c4fd@oss.qualcomm.com>
-Date: Mon, 20 Oct 2025 14:55:22 +0200
-Message-ID: <xhsmhqzuxlolh.mognet@vschneid-thinkpadt14sgen2i.remote.csb>
+        d=1e100.net; s=20230601; t=1760965223; x=1761570023;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=3R4NouHwR2gJkgcsNlR57aYLjQ4OTHNFMDfpxlNGqaQ=;
+        b=HpAIR0tGxkRVJ/ESStH3gN3dtlEJuuoBvkj/8Oot9OJnh7nfBXPyCmZPBykL2cfzJ+
+         GK9qXTlR+wuc1d+8xScmDb/v/1FqE4t8TsCLkgMs79R+mfKLQdTlDfHzj/+R6VAmlbWQ
+         HIVPTsrqZWY/bXehCAW8GVodqJElNOz2TM6j98AqhlqhTp9T1zOHFF4Wi7vyg2HClQeY
+         d54fSydHHjd1SV+Kjsl82iStlr4CrhURz0ObDG9x1IwDuJeA0sSwE00puCptdYHNcMUv
+         ZM0mG1m9bi7ZJq3pcZQMJhj+eo6mWSsG4pOoeb0j14LqHSk7P/suUUDFAMfHizwQ1UUM
+         w4SQ==
+X-Forwarded-Encrypted: i=1; AJvYcCWLwb/vqMniyFNPDubDmgaWTe9SGtkFqfkYvS28SSLAmeFpVFibYMG+9RQf20eeEiL+phFIQgnf4Ctjz4In@vger.kernel.org
+X-Gm-Message-State: AOJu0Yy/21KfUcelPR71p0mfD6gUxo04ZLv39gkYby7/cIhE0r3oDLVx
+	3ULkOMITfVeYOk/dBNXJixi4QGofInzi7lswQbBGYTLEyKJYyUj5wbj5+nW8jojQWs0=
+X-Gm-Gg: ASbGncvDpofsOrVB+vbo+2FsHJRsyhGnhoYoIWZJFe29vnAgLrkfjRUC8lGX0Hr4o6n
+	a4uPtUsDRcfwxjvHiY2Jgxr/dBkSN3nlr5r1jH0P52MQpCQxnkCf231gQlynDZ5jLh5lFPQMwop
+	aIYzspyK5uqtFfhk8wcWt3sT1YHVSXP1K5b/2q1Dh/y5SrbmNDRrtMmQqKMQ4jFtU+CbC7XzhO0
+	yHFg2iIDptR1K4YhEMBdnnz30Hop/mryi+V0O37UvcyAB9Nhn9h/H9D+aqhIIr/+gTd67QxZRsz
+	sjQ5m0eNifVf2w2X5DQDdYGbiTIAFMdmv4Dq2NdLhRl727rh9njv+GZGLfue0wDs2heGzB9J0FU
+	cMdiaLJ1dfDf/X8VLlD5cqGZRlUiI6ELmBxG9pmCVfPJLEmHRdDzvx08E0T8QxTOf/iZ4GYKeh8
+	G3ZDL3nF74sQP8WoidMdO0fd84ZgqOvYWOW7TITahIiCthVNb3YRU2dw==
+X-Google-Smtp-Source: AGHT+IGayW9zCBqvq6aXXWQ9uRWB3OMkgLybK2vzPwD7fbUYhsxu/O7OcSb2DNq+M/Bi8PvU4VO76A==
+X-Received: by 2002:a17:907:3d91:b0:b55:befd:8f8d with SMTP id a640c23a62f3a-b647500ec03mr1649485166b.57.1760965221397;
+        Mon, 20 Oct 2025 06:00:21 -0700 (PDT)
+Received: from [192.168.0.163] (188-141-3-146.dynamic.upc.ie. [188.141.3.146])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-b65eb9523a7sm803891966b.71.2025.10.20.06.00.20
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 20 Oct 2025 06:00:20 -0700 (PDT)
+Message-ID: <a3943a95-b232-4534-bd70-6d1bd405c4bd@linaro.org>
+Date: Mon, 20 Oct 2025 14:00:19 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 2/2] arm64: dts: qcom: sm8550: Additionally manage MXC
+ power domain in camcc
+To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+ Luca Weiss <luca.weiss@fairphone.com>,
+ Taniya Das <taniya.das@oss.qualcomm.com>,
+ Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+ Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+Cc: Bjorn Andersson <andersson@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>,
+ Jagadeesh Kona <quic_jkona@quicinc.com>,
+ Michael Turquette <mturquette@baylibre.com>, Stephen Boyd
+ <sboyd@kernel.org>, Conor Dooley <conor+dt@kernel.org>,
+ linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-clk@vger.kernel.org
+References: <20250303225521.1780611-1-vladimir.zapolskiy@linaro.org>
+ <20250303225521.1780611-3-vladimir.zapolskiy@linaro.org>
+ <dbxvzgqs5slrl5edqunal3wplg5jiszqv46dr4nzgowwlhkhxa@qwtfq7nfjwfo>
+ <3210a484-b9c3-4399-bee1-9f5bbc90034c@linaro.org>
+ <CAA8EJprP9Z181VDCT=xfyrBipzgiB0tfb8M_XZ4H=yOrvEnB0w@mail.gmail.com>
+ <f41061a2-cf45-4588-8df7-22270c936ee2@quicinc.com>
+ <D8EZ47Z557OX.37FDVYA5AHET0@fairphone.com>
+ <d64c0776-0b12-42d3-aed3-4e6a13487f51@quicinc.com>
+ <DDKNL43NWFMA.1S03T0SUYFVMY@fairphone.com>
+ <85bf3468-24bf-4f14-afcd-28878ad84dc9@oss.qualcomm.com>
+From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Content-Language: en-US
+In-Reply-To: <85bf3468-24bf-4f14-afcd-28878ad84dc9@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On 09/10/25 00:23, Tengfei Fan wrote:
-> Recheck whether next_task is still in the runqueue of this_rq after
-> locking this_rq and lowest_rq via double_lock_balance() in
-> push_rt_task(). This is necessary because double_lock_balance() first
-> releases this_rq->lock and then attempts to acquire both this_rq->lock
-> and lowest_rq->lock, during which next_task may have already been
-> removed from this_rq's runqueue, leading to a double dequeue issue.
->
-> The double dequeue issue can occur in the following scenario:
-> 1. Core0 call stack:
->         autoremove_wake_function
->         default_wake_function
->         try_to_wake_up
->         ttwu_do_activate
->         task_woken_rt
->         push_rt_task
->         move_queued_task_locked
->         dequeue_task
->         __wake_up
->
-> 2. Execution flow on Core0, Core1 and Core2(Core0, Core1 and Core2 are
->    contending for Core1's rq->lock):
->    - Core1: enqueue next_task on Core1
->    - Core0: lock Core1's rq->lock
->             next_task = pick_next_pushable_task()
->             unlock Core1's rq->lock via double_lock_balance()
->    - Core1: lock Core1's rq->lock
->             next_task = pick_next_task()
->             unlock Core1's rq->lock
->    - Core2: lock Core1's rq->lock in migration thread
->    - Core1: running next_task
->    - Core2: unlock Core1's rq->lock
->    - Core1: lock Core1's rq->lock
->             switches out and dequeue next_task
->             unlock Core1's rq->lock
->    - Core0: relock Core1's rq->lock from double_lock_balance()
->             try to relock Core1's rq->lock from double_lock_balance()
->             but next_task has been dequeued from Core1, causing the issue
->
-> Signed-off-by: Tengfei Fan <tengfei.fan@oss.qualcomm.com>
-> ---
->  kernel/sched/rt.c | 8 ++++++++
->  1 file changed, 8 insertions(+)
->
-> diff --git a/kernel/sched/rt.c b/kernel/sched/rt.c
-> index 7936d4333731..b4e44317a5de 100644
-> --- a/kernel/sched/rt.c
-> +++ b/kernel/sched/rt.c
-> @@ -2037,6 +2037,14 @@ static int push_rt_task(struct rq *rq, bool pull)
->  		goto retry;
->  	}
->  
-> +	/* Within find_lock_lowest_rq(), it's possible to first unlock the
-> +	 * rq->lock of the runqueue containing next_task, and the re->lock
-> +	 * it. During this window, the state of next_task might have change.
-> +	 */
-> +	if (unlikely(rq != task_rq(next_task) ||
-> +		     !task_on_rq_queued(next_task)))
-> +		goto out;
-> +
+On 20/10/2025 13:21, Konrad Dybcio wrote:
+> On 10/17/25 4:05 PM, Luca Weiss wrote:
+>> Hi Taniya,
+>>
+>> On Thu Mar 13, 2025 at 12:57 PM CET, Taniya Das wrote:
+>>>
+>>>
+>>> On 3/13/2025 1:22 PM, Luca Weiss wrote:
+>>>> Hi Taniya,
+>>>>
+>>>> On Thu Mar 13, 2025 at 5:39 AM CET, Taniya Das wrote:
+>>>>>
+>>>>>
+>>>>> On 3/4/2025 2:10 PM, Dmitry Baryshkov wrote:
+>>>>>> On Tue, 4 Mar 2025 at 09:37, Vladimir Zapolskiy
+>>>>>> <vladimir.zapolskiy@linaro.org> wrote:
+>>>>>>>
+>>>>>>> On 3/4/25 01:53, Dmitry Baryshkov wrote:
+>>>>>>>> On Tue, Mar 04, 2025 at 12:55:21AM +0200, Vladimir Zapolskiy wrote:
+>>>>>>>>> SM8550 Camera Clock Controller shall enable both MXC and MMCX power
+>>>>>>>>> domains.
+>>>>>>>>
+>>>>>>>> Are those really required to access the registers of the cammcc? Or is
+>>>>>>>> one of those (MXC?) required to setup PLLs? Also, is this applicable
+>>>>>>>> only to sm8550 or to other similar clock controllers?
+>>>>>>>
+>>>>>>> Due to the described problem I experience a fatal CPU stall on SM8550-QRD,
+>>>>>>> not on any SM8450 or SM8650 powered board for instance, however it does
+>>>>>>> not exclude an option that the problem has to be fixed for other clock
+>>>>>>> controllers, but it's Qualcomm to confirm any other touched platforms,
+>>>>>>
+>>>>>> Please work with Taniya to identify used power domains.
+>>>>>>
+>>>>>
+>>>>> CAMCC requires both MMCX and MXC to be functional.
+>>>>
+>>>> Could you check whether any clock controllers on SM6350/SM7225 (Bitra)
+>>>> need multiple power domains, or in general which clock controller uses
+>>>> which power domain.
+>>>>
+>>>> That SoC has camcc, dispcc, gcc, gpucc, npucc and videocc.
+>>>>
+>>>> That'd be highly appreciated since I've been hitting weird issues there
+>>>> that could be explained by some missing power domains.
+>>>>
+>>>
+>>> Hi Luca,
+>>>
+>>> The targets you mentioned does not have any have multiple rail
+>>> dependency, but could you share the weird issues with respect to clock
+>>> controller I can take a look.
+>>
+>> Coming back to this, I've taken a shot at camera on SM6350 (Fairphone 4)
+>> again, but again hitting some clock issues.
+>>
+>> For reference, I am testing with following change:
+>> https://lore.kernel.org/linux-arm-msm/20250911011218.861322-3-vladimir.zapolskiy@linaro.org/
+>>
+>> Trying to enable CAMCC_MCLK1_CLK - wired up to the IMX576 camera sensor
+>> on this phone - results in following error.
+>>
+>> [    3.140232] ------------[ cut here ]------------
+>> [    3.141264] camcc_mclk1_clk status stuck at 'off'
+>> [    3.141276] WARNING: CPU: 6 PID: 12 at drivers/clk/qcom/clk-branch.c:87 clk_branch_toggle+0x170/0x190
+>>
+>> Checking the driver against downstream driver, it looks like the RCGs
+>> should be using clk_rcg2_shared_ops because of enable_safe_config in
+>> downstream, but changing that doesn't really improve the situation, but
+>> it does change the error message to this:
+>>
+>> [    2.933254] ------------[ cut here ]------------
+>> [    2.933961] camcc_mclk1_clk_src: rcg didn't update its configuration.
+>> [    2.933970] WARNING: CPU: 7 PID: 12 at drivers/clk/qcom/clk-rcg2.c:136 update_config+0xd4/0xe4
+>>
+>> I've also noticed that some camcc drivers take in GCC_CAMERA_AHB_CLK as
+>> iface clk, could something like this be missing on sm6350?
+>>
+>> I'd appreciate any help or tips for resolving this.
+> 
+> Is CAMCC_PLL2 online?
+> 
+> Konrad
 
-Isn't this already covered by find_lock_lowest_rq()?
+Usually if you can't switch on a clock its because a power-domain is off 
+or a GDSC is off.
 
-if @next_task migrates during the double_lock_balance(), we'll see that
-it's no longer the next highest priority pushable task of its original rq
-(it won't be in that pushable list at all actually):
+I'd guess one of the power-domains is missing.
 
-  static struct rq *find_lock_lowest_rq(struct task_struct *task, struct rq *rq)
-  {
-          [...]
-          if (double_lock_balance(rq, lowest_rq)) {
-                  if (unlikely(is_migration_disabled(task) ||
-                               !cpumask_test_cpu(lowest_rq->cpu, &task->cpus_mask) ||
-                               task != pick_next_pushable_task(rq))) {
+Looks...
 
-                          double_unlock_balance(rq, lowest_rq);
-                          lowest_rq = NULL;
-                          break;
-                  }
-          }
-  }                
+@Luca Is this actually right ?
 
-Plus:
+camcc: clock-controller@ad00000 {
+          compatible = "qcom,sm6350-camcc";
+          reg = <0x0 0x0ad00000 0x0 0x16000>;
+          clocks = <&rpmhcc RPMH_CXO_CLK>;
+          #clock-cells = <1>;
+          #reset-cells = <1>;
+          #power-domain-cells = <1>;
+};
 
-  static int push_rt_task(struct rq *rq, bool pull)
-  {
-          [...]
-          if (!lowest_rq) {
-                  struct task_struct *task;
-                  task = pick_next_pushable_task(rq);
-                  [...]
-                  put_task_struct(next_task);
-                  next_task = task;
-                  goto retry;
-          }
-  }        
+Isn't this clock controller missing at least one power-domain ?
 
-AFAICT in the scenario you described, we'd just retry with another next
-pushable task.
+camcc: clock-controller@ad00000 {
+          compatible = "qcom,sm6350-camcc";
+          reg = <0x0 0x0ad00000 0x0 0x16000>;
+          clocks = <&rpmhcc RPMH_CXO_CLK>;
++        power-domains = <&rpmhpd SM6350_CX>;
+          #clock-cells = <1>;
+          #reset-cells = <1>;
+          #power-domain-cells = <1>;
+};
 
->  	move_queued_task_locked(rq, lowest_rq, next_task);
->  	resched_curr(lowest_rq);
->  	ret = 1;
->
-> ---
-> base-commit: 7c3ba4249a3604477ea9c077e10089ba7ddcaa03
-> change-id: 20251008-recheck_rt_task_enqueue_state-e159aa6a2749
->
-> Best regards,
-> -- 
-> Tengfei Fan <tengfei.fan@oss.qualcomm.com>
+Hmm but CX should already be on realistically..
 
+---
+bod
 
