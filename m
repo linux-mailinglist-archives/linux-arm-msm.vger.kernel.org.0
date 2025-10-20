@@ -1,144 +1,193 @@
-Return-Path: <linux-arm-msm+bounces-78062-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-78063-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [IPv6:2605:f480:58:1:0:1994:3:14])
-	by mail.lfdr.de (Postfix) with ESMTPS id A8DFFBF374B
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Oct 2025 22:32:15 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id D7805BF3AC0
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Oct 2025 23:13:07 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id AF6D24E1709
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Oct 2025 20:32:13 +0000 (UTC)
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 032634E3563
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Oct 2025 21:13:06 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C52D82C15B0;
-	Mon, 20 Oct 2025 20:32:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8223C2DF71B;
+	Mon, 20 Oct 2025 21:13:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="DAZto7Ra"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Co1KxcnQ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f48.google.com (mail-wm1-f48.google.com [209.85.128.48])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DACB229ACE5
-	for <linux-arm-msm@vger.kernel.org>; Mon, 20 Oct 2025 20:32:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DA41258ECB;
+	Mon, 20 Oct 2025 21:13:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760992331; cv=none; b=hhJ9/XdZ27JNNbWm/7m/6BUnYblSDeR8Z2zu4MsAp7UVVVNvyZDug9N+PwWvY2oxmr6NY8krkbTfSBGLEmMygAIjWxSLE7/ig7ZPE0romXuYqP7FpOsYIYhnwuN2FYUStfMrPX9T8pzPnFu6UfkIJdnQ9hOMXLEAX22CTO4vRq0=
+	t=1760994783; cv=none; b=St0+veJ/G0UzTAmzEjkr/MkrUHrcWjpPpW1TIhmsSFt20pF5AcSWnPb8SLv56VxtITbRzGM6m7NYAkfocsOjv0iQznr2t2OLLYYR9zVSkSVzLm23eRl3QIenrV1RlvsB18mATn6CM2ri2okYoRHQ60YLHK+EwixyF8Hnpa5v9cs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760992331; c=relaxed/simple;
-	bh=c7W7BdRslnUiINnTazMN+1bR68ND9emWP+ijC1QbHUE=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Q7sAv5Gh4XCPcF8GRG+tEIYOd7GeacHdpZMIkMT+qsRcgJi7i45W0/VjT3FoS5otzZD81vi9sTvlMybJTJ9fTW1uYuwpUpmh9Ck/EBJ18wfr42hTT8pjnq8635NY7IVVsEF3JDXCg7TdRbaeVqy+ToK0OAVvVAyCEOVgZoVaGbw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=DAZto7Ra; arc=none smtp.client-ip=209.85.128.48
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f48.google.com with SMTP id 5b1f17b1804b1-4711f156326so35077605e9.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 20 Oct 2025 13:32:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1760992328; x=1761597128; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=xV7aO91XA1EKltfEfLhh+WUtohK38h192UjKVGJnyJ8=;
-        b=DAZto7Ra5LVhMDVJUtOePa+CHo4Fw9i+DiMXYMM5okH65ikjVud6QaGxhytpwpldZj
-         pM2nOkcNu122J3yONuw955K3QVwhP1NwP3VHO39JOZtGkLyt9P3RL4mpIiofelnEMSAT
-         Nm733M5WlhHK83ty3myzeDSwaaEF05i53JnMwhOAPl3ePFX8KQNCFGs7DEWcqaLcWPMl
-         EDfh97eOAWdw9UqZVYe1BxqfYRYwo8hojFvHRB4vbUuNPZuXFO7CznDh1Cgh+zq2DxVY
-         TBE5I6p2gg40X6n42qPpSO6IX1/QuCCtY0LKUUfmfrhlGqeWtKurZPgjF0uN4j57OwF4
-         r46Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1760992328; x=1761597128;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=xV7aO91XA1EKltfEfLhh+WUtohK38h192UjKVGJnyJ8=;
-        b=PZFzEUEXGC7JZetWeB2yAw+N2inFns2Jnb4qSDQOiAeO/T4siDuUninlz+ZcpAGaEN
-         5jBCsm8NhA5MW7BvSI8FdIo8EMfyGz9AAP7VvkFTZRpgaJIZhev+qZRCKJ9vsAFvZl5C
-         r8nY0hc89zVijkBLNqsEnI2BR0KP++JB1EzerZi8OWumnc0CS8dQckEHTmXSYGYBH9hB
-         AFl/WdReGuv03riXXGWn41MdLx5bVuqQKttMB8BVgKu39c6qqFjFZocjmZtVcDTGwS2a
-         1FCC2LLoYLf/OfCZhwTPcR/xBbTJ0NtwVEGMiWASZHlwL78xwm6lzXkjlKQAJALEHedh
-         RLoA==
-X-Forwarded-Encrypted: i=1; AJvYcCVZG+5M1qtBdmUz6lQzSt4JyI2ajo6+qCEtlE2H8P5NYjJg37FflSn4k3HE/nuwZ2oAS8CJboXwHZJiIewi@vger.kernel.org
-X-Gm-Message-State: AOJu0YywPQa+SXqnv+WnC9q3A1XLKAlu+311853kt9iUpSwy/Ep9akUc
-	+kJW1plq7xf0TGExxlWCVcEvG1xNnizbgtw5O4akUxFeuPHfl/bdLhqHpDPECy79jbkl7aBKXoB
-	wytok
-X-Gm-Gg: ASbGncuYGmSJ/LiXxQQ9SPicTFUfBbDQXqDAvGTZKTLdCXRNpUec1SyrWNtO7zwxG3s
-	nU5TQM3dj3TCdZnagja4zvQxoQbZuk2rX6KaPncx5/lvR2K7b933v6FzzT7tFFragN+rZXWJBKz
-	b8sPFt8ZXcVR6tH8MXloPfQd2SM3/NCCdKrELf8XbTIQItA1+LqnP7E2D/wdVHx7/RY1e4xx9fy
-	9gJe25lZ21IaqI1+PRs3GZzAnsqFabiyvJyRu9KaHlJu3zxwWu3Jjw2TncvC0SxW50tRnkJ0KbC
-	Ux+7BqBs7d2OaiwN5J+xFUpAZoUjF+3lPKVmzokrqwYHlAf1PaL1cYigQ3+DR8OrcXofFTHedY9
-	rdDWLqMSyzQJ1J2E8t+JeumCuhXeNUYgQTdMIoN0e+Re6ufQNnSWTO3d3Dwgdb9DgT1AukUbeSK
-	STjo2//fO/K4yLhN+heIExbLch2WXDL3j1WBMBmegG5NKVvN00lfRepm+JBSDIoSKZ
-X-Google-Smtp-Source: AGHT+IGI2eFhwjI+QH/KTsQ5wDZc9aBnGwoN0mcHqpwVZHLVrlHx8oEYO8R9GZvWc6oAOVbJGMhxkA==
-X-Received: by 2002:a05:600c:470d:b0:471:a98:998d with SMTP id 5b1f17b1804b1-471178a4ac3mr96226545e9.12.1760992328169;
-        Mon, 20 Oct 2025 13:32:08 -0700 (PDT)
-Received: from [192.168.0.163] (188-141-3-146.dynamic.upc.ie. [188.141.3.146])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-471144c82b8sm247669905e9.15.2025.10.20.13.32.07
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 20 Oct 2025 13:32:07 -0700 (PDT)
-Message-ID: <44a3b5ff-f909-41bd-87c9-760b90d3496f@linaro.org>
-Date: Mon, 20 Oct 2025 21:32:06 +0100
+	s=arc-20240116; t=1760994783; c=relaxed/simple;
+	bh=tfk6qX8NCv5KhgKGHT4nhdjDwIFmULmDydrvZ0XRVvw=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=XcWrUdsNY6gM6rxsni5hJGJJfBx232W3wahZjH/cTl/ECTuu235BLBGmijfoTYUFEAlCqgoaetJjy8wpvxXSwjtFblySzPuQvU+UM2gDlyGI0A0ABEa/kzKFlfmWx07CfBugqkDK0Hn979CA8sXIOYeJvuaFWqm7SCEOOeTS8dk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Co1KxcnQ; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPS id A8276C113D0;
+	Mon, 20 Oct 2025 21:13:02 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1760994782;
+	bh=tfk6qX8NCv5KhgKGHT4nhdjDwIFmULmDydrvZ0XRVvw=;
+	h=From:Date:Subject:To:Cc:Reply-To:From;
+	b=Co1KxcnQqo1WvkCxtL6n/WsWCughHHLPM6+s2NInRacU2XLUYtilJ5O2BA+RerSHx
+	 A+bySGldTuH9E8oUzNXR8LvbZAYZZ8jPJcfEZl3Ev0xG5B32o28e2JtyctfyMQrj6Q
+	 7/AaMDZMdYshNlXy49MlsftTz2QjAvKf8qgHnIb8ERfK1sdF0qSf+fWKIF46WY8+1X
+	 J1r3E+HhOiJoWwnk0QXW2fgUCQwZ8nX49bwH38BS5rnYcryxCFhalvG+XZiFdtDlJT
+	 vrSySID5YtP6L3fLkD+Mh4iMAySpLgHFLhktwvRvbpjWrortZ3/rKJMzQfmpQY+Hk3
+	 zdzyCEbTvH54A==
+Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 94145CCD19F;
+	Mon, 20 Oct 2025 21:13:02 +0000 (UTC)
+From: David Heidelberg via B4 Relay <devnull+david.ixit.cz@kernel.org>
+Date: Mon, 20 Oct 2025 23:12:56 +0200
+Subject: [PATCH] arm64: dts: qcom: sdm845: Define guard pages within the
+ rmtfs region
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] media: qcom: camss: Do not enable cpas fast ahb clock for
- SM8550 VFE lite
-To: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
- Robert Foss <rfoss@kernel.org>, Todor Tomov <todor.too@gmail.com>
-Cc: Mauro Carvalho Chehab <mchehab@kernel.org>, linux-media@vger.kernel.org,
- linux-arm-msm@vger.kernel.org
-References: <20251020140227.2264634-1-vladimir.zapolskiy@linaro.org>
-From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Content-Language: en-US
-In-Reply-To: <20251020140227.2264634-1-vladimir.zapolskiy@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
+Message-Id: <20251020-sdm845-use-guard-pages-v1-1-64d714f8bd73@ixit.cz>
+X-B4-Tracking: v=1; b=H4sIANel9mgC/x3MSQqAMAxA0atI1gbaoDhcRVy0NtYsHGhQBPHuF
+ pdv8f8DyklYoS8eSHyJyr5l2LKAaXFbZJSQDWSotoYMaljbqsZTGePpUsDDRVbsJvI0O+Mby5D
+ jI/Es9z8exvf9ANN3t0RoAAAA
+X-Change-ID: 20251020-sdm845-use-guard-pages-9c2b2fa0b71e
+To: Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>, Paul Sajna <sajattack@postmarketos.org>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, phone-devel@vger.kernel.org, 
+ David Heidelberg <david@ixit.cz>
+X-Mailer: b4 0.14.3
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2915; i=david@ixit.cz;
+ h=from:subject:message-id;
+ bh=E2eVtp9CZo235rNLq7eCdbNC0gKfjdqyqcrfaduc4TA=;
+ b=owEBbQKS/ZANAwAIAWACP8TTSSByAcsmYgBo9qXdl3mY7plSvTx0oldYpigYKjtk6zobkvdyJ
+ cbZnG1oJDuJAjMEAAEIAB0WIQTXegnP7twrvVOnBHRgAj/E00kgcgUCaPal3QAKCRBgAj/E00kg
+ chXkD/9f5U607VemeAM2+jdhdbFPYzpHwX7OZtx3hLqgJkBJN1dC0xGvHiG8H0K4EUHbCQkhRxv
+ QwdSeKNbcJmUs8xH8KxYUiLo3jHCeaAyp1keRtpIdDlFBZ5L1pR+vK9LN4blahQM4bLI7ZB1W0b
+ MxurXBTOm3AGlwAhRpBv0kV7b/4N+gQnbI646YbQtobSx3glV46lXUj3BmbsLC6OcFAuRnpFU+7
+ OzNOkX2Zc9nd+ftZ1nCr4IWACQ2xXxjJWJ3upw7pk5SoLc+mrJmo0+7rpZxDtVJ0SyFsb1xoBLs
+ PaqkliW6Ncalr4WSghdwrVJ1E6n52lD3Pw5n553/CG1JD6TM5YWSCAZaeVOgXhlIdoquZL7ATeC
+ YT5jTDo0C8O4sSsvBSfgW28XtNFZJvP8EIshF1KTww8/fo+v5pxkgvpdHJVO8hG1IVgeHJC2eck
+ EYR9wcVX35nG4YQ4OyOsAX6zDrIBRhgq9C/yRJtj4kSYiNdbTFfkzU2oFQ3Q3WVSEzASkxsQtNc
+ pa/Hce6ETuvOEHLJWDk5rRfjvt/Y/BuNCAZgYU6wvHNx7ghZFuWFZJ5qffWsiJLLwIndUeH3Dpr
+ 5qbOA7GXDqXdkN0uQe5lajrqiopiU6fwLCXlCGzfzrdD2TcWftF9oCuUybgIamLwQgZzOxuAz/6
+ 1Fw6sSftNiMU1ew==
+X-Developer-Key: i=david@ixit.cz; a=openpgp;
+ fpr=D77A09CFEEDC2BBD53A7047460023FC4D3492072
+X-Endpoint-Received: by B4 Relay for david@ixit.cz/default with auth_id=355
+X-Original-From: David Heidelberg <david@ixit.cz>
+Reply-To: david@ixit.cz
 
-On 20/10/2025 15:02, Vladimir Zapolskiy wrote:
-> The clock is needed to stream images over a full VFE IP on SM8550 CAMSS,
-> and it should not be enabled, when an image stream is routed over any of
-> two lite VFE IPs on the SoC.
-> 
-> Signed-off-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
-> ---
->   drivers/media/platform/qcom/camss/camss.c | 6 ++----
->   1 file changed, 2 insertions(+), 4 deletions(-)
-> 
-> diff --git a/drivers/media/platform/qcom/camss/camss.c b/drivers/media/platform/qcom/camss/camss.c
-> index 2fbcd0e343aa..fc838b3d2203 100644
-> --- a/drivers/media/platform/qcom/camss/camss.c
-> +++ b/drivers/media/platform/qcom/camss/camss.c
-> @@ -2561,12 +2561,11 @@ static const struct camss_subdev_resources vfe_res_8550[] = {
->   	/* VFE3 lite */
->   	{
->   		.regulators = {},
-> -		.clock = { "gcc_axi_hf", "cpas_ahb", "cpas_fast_ahb_clk", "vfe_lite_ahb",
-> +		.clock = { "gcc_axi_hf", "cpas_ahb", "vfe_lite_ahb",
->   			   "vfe_lite", "cpas_ife_lite", "camnoc_axi" },
->   		.clock_rate = {	{ 0 },
->   				{ 80000000 },
->   				{ 300000000, 400000000 },
-> -				{ 300000000, 400000000 },
->   				{ 400000000, 480000000 },
->   				{ 300000000, 400000000 },
->   				{ 300000000, 400000000 } },
-> @@ -2583,12 +2582,11 @@ static const struct camss_subdev_resources vfe_res_8550[] = {
->   	/* VFE4 lite */
->   	{
->   		.regulators = {},
-> -		.clock = { "gcc_axi_hf", "cpas_ahb", "cpas_fast_ahb_clk", "vfe_lite_ahb",
-> +		.clock = { "gcc_axi_hf", "cpas_ahb", "vfe_lite_ahb",
->   			   "vfe_lite", "cpas_ife_lite", "camnoc_axi" },
->   		.clock_rate = {	{ 0 },
->   				{ 80000000 },
->   				{ 300000000, 400000000 },
-> -				{ 300000000, 400000000 },
->   				{ 400000000, 480000000 },
->   				{ 300000000, 400000000 },
->   				{ 300000000, 400000000 } },
+From: David Heidelberg <david@ixit.cz>
 
-Acked-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Use qcom,use-guard-pages property instead of polluting device-tree with
+lower and upper rmtfs guard nodes.
+
+No functional change intended.
+
+cosmetic: set name the node rmtfs-region.
+
+Signed-off-by: David Heidelberg <david@ixit.cz>
+---
+Tested on OnePlus 6T.
+---
+ arch/arm64/boot/dts/qcom/sdm845-lg-common.dtsi      | 17 +++--------------
+ arch/arm64/boot/dts/qcom/sdm845-oneplus-common.dtsi | 18 +++---------------
+ 2 files changed, 6 insertions(+), 29 deletions(-)
+
+diff --git a/arch/arm64/boot/dts/qcom/sdm845-lg-common.dtsi b/arch/arm64/boot/dts/qcom/sdm845-lg-common.dtsi
+index 99dafc6716e76..83b98bad19dd2 100644
+--- a/arch/arm64/boot/dts/qcom/sdm845-lg-common.dtsi
++++ b/arch/arm64/boot/dts/qcom/sdm845-lg-common.dtsi
+@@ -99,26 +99,15 @@ memory@9d400000 {
+ 			no-map;
+ 		};
+ 
+-		/* rmtfs lower guard */
+-		memory@f0800000 {
+-			reg = <0 0xf0800000 0 0x1000>;
+-			no-map;
+-		};
+-
+-		rmtfs_mem: memory@f0801000 {
++		rmtfs_mem: rmtfs-region@f0800000 {
+ 			compatible = "qcom,rmtfs-mem";
+-			reg = <0 0xf0801000 0 0x200000>;
++			reg = <0 0xf0800000 0 0x202000>;
++			qcom,use-guard-pages;
+ 			no-map;
+ 
+ 			qcom,client-id = <1>;
+ 			qcom,vmid = <QCOM_SCM_VMID_MSS_MSA>;
+ 		};
+-
+-		/* rmtfs upper guard */
+-		memory@f0a01000 {
+-			reg = <0 0xf0a01000 0 0x1000>;
+-			no-map;
+-		};
+ 	};
+ 
+ 	gpio-keys {
+diff --git a/arch/arm64/boot/dts/qcom/sdm845-oneplus-common.dtsi b/arch/arm64/boot/dts/qcom/sdm845-oneplus-common.dtsi
+index dcfffb271fcf3..61d63003fa371 100644
+--- a/arch/arm64/boot/dts/qcom/sdm845-oneplus-common.dtsi
++++ b/arch/arm64/boot/dts/qcom/sdm845-oneplus-common.dtsi
+@@ -75,32 +75,20 @@ key-vol-up {
+ 	};
+ 
+ 	reserved-memory {
+-		/*
+-		 * The rmtfs_mem needs to be guarded due to "XPU limitations"
+-		 * it is otherwise possible for an allocation adjacent to the
+-		 * rmtfs_mem region to trigger an XPU violation, causing a crash.
+-		 */
+-		rmtfs_lower_guard: rmtfs-lower-guard@f5b00000 {
+-			no-map;
+-			reg = <0 0xf5b00000 0 0x1000>;
+-		};
+ 		/*
+ 		 * The rmtfs memory region in downstream is 'dynamically allocated'
+ 		 * but given the same address every time. Hard code it as this address is
+ 		 * where the modem firmware expects it to be.
+ 		 */
+-		rmtfs_mem: rmtfs-mem@f5b01000 {
++		rmtfs_mem: rmtfs-region@f5b00000 {
+ 			compatible = "qcom,rmtfs-mem";
+-			reg = <0 0xf5b01000 0 0x200000>;
++			reg = <0 0xf5b00000 0 0x202000>;
++			qcom,use-guard-pages;
+ 			no-map;
+ 
+ 			qcom,client-id = <1>;
+ 			qcom,vmid = <QCOM_SCM_VMID_MSS_MSA>;
+ 		};
+-		rmtfs_upper_guard: rmtfs-upper-guard@f5d01000 {
+-			no-map;
+-			reg = <0 0xf5d01000 0 0x1000>;
+-		};
+ 
+ 		/*
+ 		 * It seems like reserving the old rmtfs_mem region is also needed to prevent
+
+---
+base-commit: 606da5bb165594c052ee11de79bf05bc38bc1aa6
+change-id: 20251020-sdm845-use-guard-pages-9c2b2fa0b71e
+
+Best regards,
+-- 
+David Heidelberg <david@ixit.cz>
+
+
 
