@@ -1,221 +1,132 @@
-Return-Path: <linux-arm-msm+bounces-78192-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-78193-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1BE75BF71CB
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Oct 2025 16:39:26 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 834ECBF7228
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Oct 2025 16:43:29 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id B294F1882EC0
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Oct 2025 14:39:49 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 6227019C1EF7
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Oct 2025 14:43:08 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B34A933892E;
-	Tue, 21 Oct 2025 14:39:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B890D33C51C;
+	Tue, 21 Oct 2025 14:42:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="jJVCQzYw"
+	dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b="toizFAjN"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lj1-f171.google.com (mail-lj1-f171.google.com [209.85.208.171])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3857E1F237A
-	for <linux-arm-msm@vger.kernel.org>; Tue, 21 Oct 2025 14:39:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B005C33DED5
+	for <linux-arm-msm@vger.kernel.org>; Tue, 21 Oct 2025 14:42:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761057561; cv=none; b=Ka5WNS1iXe2ZQSWrilgQ6/0SvKktG2QRJRwtI2lk6reUXzQ+AmvYO9b9EwpSiGgBIlJtUGSKuYnxRUanG5YEfGnO2C5E77xDK2nVzUpv7lBoKMTZDtXZvPkSGpwhJBxP7ifLcfZrZqEzPgouEW/CJyGPem/q6QLR1gY8Lh0d3wM=
+	t=1761057748; cv=none; b=KjlMP+Pvd7rPzdaL1ZK3IxdTm7WmPzug1fFIXWl4fJ2C/d4KE0/2QEu2/sRoMaAB2iX/w4J8A7WBiadheyA9lUWQVGUcgebvzHh/FVSMgL4+IZ6HIS1IiG7TaKV5KIL0vYFNCP4oU0SNVySiD6nPMGe6NTCuqF1hhnXAgyPyUSg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761057561; c=relaxed/simple;
-	bh=/hA9NoFGhfnZrNa6jkAo1og2y48VWyOMESR2eTab7Y0=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=KsDqiyfz2kAMfKM6EwFWsJiKP/QO31KGW/w29rtQvcbzSqI1GDnzBYvdZ5gTW5O+5c2DFdzunPjMvoLKbWNDPwtXBzmQSjJnYswE+16TZ3zEmLJGzgmvnzmmYslYR5g3GzhtHX3LzjUkqrdcEpTPpw1XIakld6GROtlCgjqch28=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=jJVCQzYw; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 59L8Mxcj032689
-	for <linux-arm-msm@vger.kernel.org>; Tue, 21 Oct 2025 14:39:19 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	IYiRng46K/9s0YcunKwJaYrPPhduE6KoJmzcZ76VteI=; b=jJVCQzYwQGZ2K844
-	iAMShQ/NzcPzQWK1iWtjhpn/v8B2BxbqzdaI46BQX8nO7+3oEImpKmQlHDN+L9pP
-	zBO9E4kNaRdmEmslpv7FgUeMV9VL80gOUUwQ824W6+CRiypYnxvgzVH4brIWsOpv
-	FihxEnberXZaEh9Nn8P+LxuLFpBHaeMnq0nz6dI74qjUcxP5AnFlNZMCl/MmPAdb
-	QokuSTC/9XbSJFBGgd87imZFRQi3BWy6lxtgc3FNOedJEfzSUl3MU8yRrvmHIPUG
-	+zKgY05LUKcdGB1T0+ZSXLaN36XB6D91LG5LcNWiMhCL/WhuffI4Qj3oSbj2vwO9
-	mYDJBA==
-Received: from mail-pl1-f198.google.com (mail-pl1-f198.google.com [209.85.214.198])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 49v42k8xy9-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Tue, 21 Oct 2025 14:39:19 +0000 (GMT)
-Received: by mail-pl1-f198.google.com with SMTP id d9443c01a7336-28e538b5f23so63208825ad.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 21 Oct 2025 07:39:19 -0700 (PDT)
+	s=arc-20240116; t=1761057748; c=relaxed/simple;
+	bh=VGc4m4oF+KXusmvdq7HCQy/1KNZxYxwVZz9pTwsoGlI=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=njLz7FMleOASTTXMPdH+EIxaEuYl8T/Lrz4nXq23aMPYos3hiSfNEGn47+wgx7Jw9SLAaZ8joF+8gOJwBrybp53+lY1qLVR5f6HSFzI3AGTrpXJ8KucMMlYEtqxVJIwIIsB/O8YlVN8mkufeGkjAAGkAUJoeuDbI0wviFsNMHAs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl; spf=none smtp.mailfrom=bgdev.pl; dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b=toizFAjN; arc=none smtp.client-ip=209.85.208.171
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=bgdev.pl
+Received: by mail-lj1-f171.google.com with SMTP id 38308e7fff4ca-36a6a39752bso57077091fa.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 21 Oct 2025 07:42:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=bgdev-pl.20230601.gappssmtp.com; s=20230601; t=1761057745; x=1761662545; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=mZCOMUry8QgJDtmQTlzvKx4nzmcRl8rasbY1MAd0sQY=;
+        b=toizFAjNvCxbdmiRGHruks9lNdp+nDZh6F3FBjY+riJ8JqXmbf8qB/h7+Yy/Y+PNIb
+         Y1XHXq4NDJJhOOqfxm/B+jydgEWe/9Uh/MXHDM5RbRe8a7PtdrLX+JiHKn4GDYxrYmWL
+         cOfNr6JwMpieNDY7kHJyV8HRzkNbtyzGmXnDIK4UX1Mw6dUVgzxMELa0T0vA8EOGLNMA
+         jqY7Sjbn7vgOSe5dCIsnGfecudQM+vy7tb3EJjha7NZHtBSmq2u7wekCDL4TLhwGJM5v
+         CpjZSkefszox10VDBWnaazFTX1dxZ0auiMh1zf8/hSGuMYXJbT2JkayM2lXFAhtddoeH
+         jF9A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1761057558; x=1761662358;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=IYiRng46K/9s0YcunKwJaYrPPhduE6KoJmzcZ76VteI=;
-        b=hzwWylabXh25ohXLC5Sf7dK7RFdF9JCk7iacEWYjY8nPUJX29N/QppA6WkcVJ1rkK9
-         qulwk3B4yn4UaOGVgPHndElhjGEZdjpubB2WCAX2+szI7NJtRmKJw4dnEfl5viNBfqU8
-         R6vw8g8ni1JTNqaaaTSiG/HcnM99tWAuXVJiRJjU47xJhHtMzMQZ+h+KTPnNz5vlNelK
-         rtH+a/mljlau9QnPm0/pglXirFNdIS11x118Xo/yk39OfjoWuZ1sXgHGh5e3WJgjm0Lt
-         kGWHCL1F6neRg5EqTtn+nxYY5bDffpa8SlSZH9aoF4FWeAVh9XsZpsQXpQiviFiQ8xIG
-         dfEw==
-X-Gm-Message-State: AOJu0YwCjvjd9dGRfgh8zH2YOgVt42ANT0+8AyjVs268nknIxJayA7Pf
-	gBRnTeIsMi5kdRsLUm3JUL+1N6Exaj/W4Z3EmdSJBfIth7ls4zHFCnKc0pWBg7EIityuk81Ege9
-	+pGPWRJlFd5cmGSYVj+8RDb5pjH7ewkcWepsFzx/Ew/rj1K8X5NzZ9jh/eGHuH/qZOcIv
-X-Gm-Gg: ASbGncsoQ0GcyMtw+2m13W7iquHLuXYK9mA0Xx3GnlBvcOQLpDQ5IveuP0TiP73UGzt
-	VNFt2czfMFzd5GereIBxuN/6t0v2qm94mJajjDZJ2E2vZWIBYTVKWtrnvHIsgk5PdnzhRpA4+O8
-	g2BKH5h1Q2IT3a8UeIO6t8/ZNKaaO2ILZRI9XZWQkjUXdVjyyUpv5ubfrVDgfpSD235jT23iU1D
-	bE3MaU1C7g89vAuMH4zF3EooRRXPkg2nmOUb/cvMcmXAUwdvl3NBpJwrVrY/p6FvKC0qCyydKjK
-	TPGu3G3i8bzcLUWn+WO1rQeVNNnmMO84kPE7Dzw4dk7W0i8nequR6oqDfyYDMnCIQyT09OIbhqO
-	DAU8MWr5OietmPQkgONUSwg==
-X-Received: by 2002:a17:902:e88e:b0:267:cdb8:c683 with SMTP id d9443c01a7336-290c9cf1785mr209130875ad.27.1761057558276;
-        Tue, 21 Oct 2025 07:39:18 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IF7Xu3yqvqq7tM2Hj4ax162jdVvcEgPtgB391HBWPwgMC3PxAc2yK/s89219b9zTLDa4YQfTA==
-X-Received: by 2002:a17:902:e88e:b0:267:cdb8:c683 with SMTP id d9443c01a7336-290c9cf1785mr209130335ad.27.1761057557695;
-        Tue, 21 Oct 2025 07:39:17 -0700 (PDT)
-Received: from [10.204.104.20] ([202.46.23.25])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-29246ebcdefsm111879115ad.16.2025.10.21.07.39.12
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 21 Oct 2025 07:39:17 -0700 (PDT)
-Message-ID: <769b0fb2-75b3-45ef-b798-02ae5982b736@oss.qualcomm.com>
-Date: Tue, 21 Oct 2025 20:09:10 +0530
+        d=1e100.net; s=20230601; t=1761057745; x=1761662545;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=mZCOMUry8QgJDtmQTlzvKx4nzmcRl8rasbY1MAd0sQY=;
+        b=Tvz2y/d4pYZMFFND1wRBqJCHgg+TqMB9fNlEw3dbFA7WjMN+pYMgz8FfseXseklHgQ
+         z6d8ibk+dGJRAIia00tmIyDWm/HTZ1lTdXxXeO/KouYEVAVYJN5i2MYNjP9mQV+nGjvn
+         c1T15GAg3eAfKBWq62iDDz/6BgXHMsU8tXMgi5/HpoyMxpDoEo1hgJtjLr3SbvzPWTBC
+         9hyp2PQ/Mzo6mUu0w4ob54RO68/VxSXNVAU9zlT9lT1nmObtpxFxMSUsr1EB2PF1enTO
+         pgAU0HcYB+k1rBpe4ivgoPONmvkHAQPwNWxgXW1nRxTMdJGfIW6PBEcjTkNHBM9N+/du
+         NGFg==
+X-Forwarded-Encrypted: i=1; AJvYcCUrU2y2enwBIJ4cXhQU9hdsQ4S0ubhBoy2zHpMGlUS5S6nTnfXk61f+9wvKUikm0Q/AgJ9TqJW+Y92xT69M@vger.kernel.org
+X-Gm-Message-State: AOJu0YyWI13DfjwcmP1hp6eO27mDcM+Ir44sdctu0krdhEej61hw0yC/
+	VAdbCkNRD9CEiz8IWEedptlA8V9Mvuo83pE+p+KnLv+lEXmtfqjC0BiawlqFW2q1SQj6SdcRdg0
+	H9+irKs6SFzJj0ptIzhbAG5/aWtegyaJLIq/SN41eFQ==
+X-Gm-Gg: ASbGncv/Po/pZmPZLKRbn+1GnHrSna4wYMWTXMt/SIftYRCaAsrnTKBYCU6btNxByEf
+	Zwe/1CVOyyFy/3Ax2q4Th0GpNDhNGNnSHSdiKzlGgTcg2T957+azNVd+NbKKmnbZZEpF/WQzA4w
+	T0ysjSDTIzu6/Bk0/+LjfZcwLuZDES6kWeNEO+IXzV0Hx/RmGetvz38hHukvqBes9iySt05t40v
+	n0nNNb0Mp0a+2ByYUvMQTUsB7TthnRnxJKXaeB0J0e16x/DXXqH7cZTWl7AsAhM962cW0Gyln57
+	R1ocgdvg2DZsNTCY
+X-Google-Smtp-Source: AGHT+IEAFGsFmUFG/YnJHTCDdPAr/87ZFEb44yMmd6QhcxQ6kY+xN7c3ywaYXlVUOsQLkH0hiixQGCRd64K7uAmIpvc=
+X-Received: by 2002:a05:6512:4014:b0:586:9636:6e4d with SMTP id
+ 2adb3069b0e04-591d85622ddmr6106679e87.50.1761057744764; Tue, 21 Oct 2025
+ 07:42:24 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/6] dt-bindings: display/msm: gpu: Document A612 GPU
-To: Krzysztof Kozlowski <krzk@kernel.org>,
-        Rob Clark <robin.clark@oss.qualcomm.com>, Sean Paul <sean@poorly.run>,
-        Konrad Dybcio <konradybcio@kernel.org>,
-        Dmitry Baryshkov <lumag@kernel.org>,
-        Abhinav Kumar <abhinav.kumar@linux.dev>,
-        Jessica Zhang <jessica.zhang@oss.qualcomm.com>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
-        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-        Maxime Ripard <mripard@kernel.org>,
-        Thomas Zimmermann <tzimmermann@suse.de>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org
-References: <20251017-qcs615-spin-2-v1-0-0baa44f80905@oss.qualcomm.com>
- <20251017-qcs615-spin-2-v1-2-0baa44f80905@oss.qualcomm.com>
- <811c728c-e2c9-462d-9c7a-dd79a683e301@kernel.org>
-From: Akhil P Oommen <akhilpo@oss.qualcomm.com>
-Content-Language: en-US
-In-Reply-To: <811c728c-e2c9-462d-9c7a-dd79a683e301@kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-GUID: Mmpk4rsDTjciuHJQEEGbDdMYGJqu692K
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDE4MDAzMSBTYWx0ZWRfX3Aceyn+8rfj3
- vyVXxtooHgY8HD31brSS5svSfqpbUykntOWDDRmtsEIZdGHupEpTnHThUDmAjUUGD7q5/PS5KN7
- gtU/z0+SZFyizD5L2Tj4iOo97YY2q2JF0XB2wncTckOkdGxBosXnuQiuyUrkwHKx0xSmcNsUWli
- bOHBhLTf60wWhsTqMdzAW17UqWCbyUUQS4MrNx1Hc6E0NbCNKLhjwXyIEDqA81zg20W39wX1OwU
- 8vCabOPklhXGT66FEXVzo4SHRPxK8HSo/cLGNTd4sE3FSzsaHYeia4307Njca8E/ZhteXUqL0fQ
- /s7zUmv5XryKP812q2VRoM28vwPZdDXJjsJ9ZI0ebxk+vdzsXgyIEt25zm4t1vmiMDjVw6HsWip
- P32wveHPWs4bitwTSh8n2TJVXIHGEQ==
-X-Authority-Analysis: v=2.4 cv=QYNrf8bv c=1 sm=1 tr=0 ts=68f79b17 cx=c_pps
- a=MTSHoo12Qbhz2p7MsH1ifg==:117 a=ZePRamnt/+rB5gQjfz0u9A==:17
- a=IkcTkHD0fZMA:10 a=x6icFKpwvdMA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=EUspDBNiAAAA:8 a=PLUc99ambSscJNFV4OcA:9 a=QEXdDO2ut3YA:10
- a=GvdueXVYPmCkWapjIL-Q:22
-X-Proofpoint-ORIG-GUID: Mmpk4rsDTjciuHJQEEGbDdMYGJqu692K
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-10-21_02,2025-10-13_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 phishscore=0 malwarescore=0 clxscore=1015 impostorscore=0
- spamscore=0 bulkscore=0 suspectscore=0 adultscore=0 lowpriorityscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2510020000 definitions=main-2510180031
+References: <20250924-gpio-shared-v1-0-775e7efeb1a3@linaro.org>
+ <CAMRc=Me4Fh5pDOF8Z2XY4MG_DYqPRN+UJh_BzKvmULL96wciYw@mail.gmail.com>
+ <81bda56c-f18b-4bd9-abf9-9da7c2251f42@sirena.org.uk> <CAMRc=MdOCHJEyPxN+-g71ux68=Mt_Q5P9611QO7Q8J9e8UJv_A@mail.gmail.com>
+ <0e1f3a1b-46ab-4eb5-ad05-70784f9b9103@sirena.org.uk>
+In-Reply-To: <0e1f3a1b-46ab-4eb5-ad05-70784f9b9103@sirena.org.uk>
+From: Bartosz Golaszewski <brgl@bgdev.pl>
+Date: Tue, 21 Oct 2025 16:42:11 +0200
+X-Gm-Features: AS18NWCeEZ0pLB4tS_IEx2MtW9IQz_axw-1Q3NqtyOuzDmGpEP1ZzpOriXTSxmo
+Message-ID: <CAMRc=Md1Ve4hnYQOryYEXG6_HSPJrANrr9gj2FMzCwsD+q5Cuw@mail.gmail.com>
+Subject: Re: [PATCH RFC 0/9] gpio: improve support for shared GPIOs
+To: Mark Brown <broonie@kernel.org>
+Cc: linux-hardening@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	linux-gpio@vger.kernel.org, linux-arm-kernel@lists.infradead.org, 
+	linux-sound@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>, Srinivas Kandagatla <srini@kernel.org>, 
+	Kees Cook <kees@kernel.org>, Mika Westerberg <westeri@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Jaroslav Kysela <perex@perex.cz>, Catalin Marinas <catalin.marinas@arm.com>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Takashi Iwai <tiwai@suse.com>, Rob Herring <robh@kernel.org>, 
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Andy Shevchenko <andy@kernel.org>, 
+	Saravana Kannan <saravanak@google.com>, Will Deacon <will@kernel.org>, 
+	Liam Girdwood <lgirdwood@gmail.com>, Andrew Morton <akpm@linux-foundation.org>, 
+	Manivannan Sadhasivam <mani@kernel.org>, Linus Walleij <linus.walleij@linaro.org>, 
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On 10/19/2025 2:40 PM, Krzysztof Kozlowski wrote:
-> On 17/10/2025 19:08, Akhil P Oommen wrote:
->> A612 GPU has a new IP called RGMU (Reduced Graphics Management Unit)
->> which replaces GMU. But it doesn't do clock or voltage scaling. So we
->> need the gpu core clock in the GPU node along with the power domain to
->> do clock and voltage scaling from the kernel. Update the bindings to
->> describe this GPU.
->>
->> Signed-off-by: Akhil P Oommen <akhilpo@oss.qualcomm.com>
->> ---
->>  .../devicetree/bindings/display/msm/gpu.yaml       | 31 ++++++++++++++++++++--
->>  1 file changed, 29 insertions(+), 2 deletions(-)
->>
->> diff --git a/Documentation/devicetree/bindings/display/msm/gpu.yaml b/Documentation/devicetree/bindings/display/msm/gpu.yaml
->> index 3696b083e353031a496a1f299d8f373270ca562d..efc529e82bc198e7c3c89a5eecb6f929960a8de9 100644
->> --- a/Documentation/devicetree/bindings/display/msm/gpu.yaml
->> +++ b/Documentation/devicetree/bindings/display/msm/gpu.yaml
->> @@ -45,11 +45,11 @@ properties:
->>            - const: amd,imageon
->>  
->>    clocks:
->> -    minItems: 2
->> +    minItems: 1
->>      maxItems: 7
->>  
->>    clock-names:
->> -    minItems: 2
->> +    minItems: 1
->>      maxItems: 7
->>  
->>    reg:
->> @@ -388,6 +388,33 @@ allOf:
->>        required:
->>          - clocks
->>          - clock-names
->> +
->> +  - if:
->> +      properties:
->> +        compatible:
->> +          contains:
->> +            const: qcom,adreno-612.0
->> +    then:
->> +      properties:
->> +        clocks:
->> +          minItems: 1
-> 
-> Drop, it's implied.
-> 
-> 
->> +          maxItems: 1
->> +
->> +        clock-names:
->> +          items:
->> +            - const: core
->> +              description: GPU Core clock
->> +
-> 
-> Missing constraint for 'reg'.
+On Tue, Oct 21, 2025 at 4:08=E2=80=AFPM Mark Brown <broonie@kernel.org> wro=
+te:
+>
+> On Mon, Oct 20, 2025 at 11:41:52AM +0200, Bartosz Golaszewski wrote:
+> > On Fri, Oct 17, 2025 at 7:32=E2=80=AFPM Mark Brown <broonie@kernel.org>=
+ wrote:
+>
+> > > It really should be the actual physical state change that triggers th=
+e
+> > > event.
+>
+> > I guess so, but this would require some non-trivial rework of the
+> > regulator core. We'd need some list of deferred notifications stored
+> > in memory for when the physical state actually changes.
+>
+> I'm not sure I see the need for deferred notifications?  We'd need to go
+> round all the users whenever a physical change to the GPIO happens but
+> it's not clear what we'd need to store beyond the list of users?
 
-I suppose we should add reg property with a list of (items:) reg
-descriptions. No need for 'min/minxItems constraints as it is not flexible.
+In my mind I was thinking that we only need to send the notifications
+to users who already enabled/disabled the regulator too but you're
+right, it seems like a loop over the relevant pins should be enough.
 
-> 
->> +        reg-names:
->> +          minItems: 1
-> 
-> Drop. MMIO range is not flexible.
+In any case: this is outside the scope of this series but I'll see if
+it's easy enough to add separately.
 
-Ack.
-
--Akhil
-
-> 
->> +          items:
->> +            - const: kgsl_3d0_reg_memory
->> +            - const: cx_dbgc
->> +
-> Best regards,
-> Krzysztof
-
+Bartosz
 
