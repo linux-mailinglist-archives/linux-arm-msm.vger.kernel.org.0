@@ -1,152 +1,124 @@
-Return-Path: <linux-arm-msm+bounces-78167-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-78168-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2E0EFBF6793
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Oct 2025 14:35:37 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id E6157BF6823
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Oct 2025 14:44:10 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 0517219A1142
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Oct 2025 12:36:01 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 74D1B3A706E
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Oct 2025 12:42:51 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 313201624C5;
-	Tue, 21 Oct 2025 12:35:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 09D6A30BBA6;
+	Tue, 21 Oct 2025 12:42:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="YJm9uCKn"
+	dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b="Kqkv1R9v"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f46.google.com (mail-lf1-f46.google.com [209.85.167.46])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C28B32ED24;
-	Tue, 21 Oct 2025 12:35:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F85D32E6A8
+	for <linux-arm-msm@vger.kernel.org>; Tue, 21 Oct 2025 12:42:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761050128; cv=none; b=TSexJHBzqZ3nmLzZae4Vv8eo+IPhHs6tRzrGAnkLnDZqf+Sc5tDTpPymgmypU2/Nx6SbVFrm4bBhIUnEqtCNmSgpG8LzUnxiP9kvotu56N/r80gxer1jFqsBOGEDsJBk8zXkwYQOQZTIG2jsj/JKIheAyOrh/pFKnMdzrPBoxKc=
+	t=1761050544; cv=none; b=HgdnYkHk5oSwsJyEK8dsT767eC8aVn0jD9FbZzCp5Qqk3mfKkJFBGAsFWxATFDyBSJUlTtUjIMgYz3aIKkqKu1kOI2h51Z9zaGe8thdX2ge0dFJA1DZKQmgNqzlX7+24fweKSP6puwZnxFed1qtREQlottr1H/6ETyjco7jbnnY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761050128; c=relaxed/simple;
-	bh=V8ojkgLybtZ5Y872QcEoFC6y33wkXENgdMlPGFwqi6U=;
-	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
-	 In-Reply-To:Content-Type; b=nQOM6CxOrmD7xuGfuCkwJZ8u77/1Vx5ieTJo9f13oiKTfJVowt44ebvaa8JqdLPSJ3Tewk2E24r7AZfmkISkGedjr9kHpYdBPUeM0TjNDna13R3x7kLH7xiTrS2I/TuTcnkUegBe550cG+sEvryJHbadVPle7cb1th+LtfdSrwc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=YJm9uCKn; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 59L8BdZo029817;
-	Tue, 21 Oct 2025 12:35:23 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	1P5hepNjzkMZLkylt62MKjPLYr+HOOcamjKRQWyTs+E=; b=YJm9uCKn0Rx9UN6o
-	WIb+s7kSUiLOqgiDkaA5AMS4U1UXDVAJlcgPqZMT/gi4lwtKLB1v1Mf2BHTh9V5L
-	F6VeZfKLrvSAmoyyCwlF2UL8LNmSdwedHaa0FWgR3neCediKfYkYccK8DKd7N1Ak
-	jDe+hNG2SaWZP6eoYz4lqYGXAkjPLpKd/uz6CIQvDQ9ua9e2Dm4qEDx6qAXoxNXr
-	BmfNPDtKsAnKNrrX+OGuA5x9ntrMdNksetoWpBey7UDOmADYpGR+RuaVAJVRTsh0
-	UREyUgK6nj0VQqAApqF+KTTeGQw2N4Ch9JuU/TaVkIVq87YH4tleggZn/hqoX5E1
-	SwA37Q==
-Received: from nasanppmta04.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 49v2ge0pee-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 21 Oct 2025 12:35:22 +0000 (GMT)
-Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
-	by NASANPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 59LCZKh1012046
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 21 Oct 2025 12:35:20 GMT
-Received: from [10.217.223.199] (10.80.80.8) by nasanex01a.na.qualcomm.com
- (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1748.24; Tue, 21 Oct
- 2025 05:35:18 -0700
-Message-ID: <413d84ad-0858-4e96-94e5-c0a2ed68e6a2@quicinc.com>
-Date: Tue, 21 Oct 2025 18:04:56 +0530
+	s=arc-20240116; t=1761050544; c=relaxed/simple;
+	bh=i/TX7MEsAkgjubTCatvjPm9vWeY3Nm5rFTIQuQTOHOA=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=Ys2UuLDDk0DVVVUkj6yb+5MBZMr7sgw+GFg+tN87ZaP/7cKn8toXgZSLYpAdWWGY2qNCh2ylu3b4z61LKwkyi2gCNvrlm0TdX+WE9U8ul+g41AOMkdl9XcTBf8bGXoLTOtdfKQdK5otUFXpFUTTvdiJ4Fuo2kNLrwIa5MY6EHHU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl; spf=none smtp.mailfrom=bgdev.pl; dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b=Kqkv1R9v; arc=none smtp.client-ip=209.85.167.46
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=bgdev.pl
+Received: by mail-lf1-f46.google.com with SMTP id 2adb3069b0e04-57b35e176dbso6840456e87.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 21 Oct 2025 05:42:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=bgdev-pl.20230601.gappssmtp.com; s=20230601; t=1761050541; x=1761655341; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=icUi6yhGBFPCJDF6YW0uPghHiBtXnlV2bRo9arBdueU=;
+        b=Kqkv1R9v16krjtFlriNDUeNgRMW2oEtVvgItTaKKtoSbSh4A87T4PUnVWkkD5tdSZD
+         Ziwh4L8eJh7b+06X814b163FC4yyZ33H+oLR6aI1F3TWLbHny+E1YR2nfgtW5/iEYbWN
+         bNL/YGKJyuL63tu1C9hvqH+JbLY8adDcHMptFLMJGMPMy8g2XK7rli02EfxAdEiZPL0Q
+         OJKY8DPXaW6No9CKIgvbrwXkOizxKIxIOCtd/ljARBqt7QdLCtGP5CbG/9sbiAPwWMga
+         HtEIsrKJBEU/ryFxhpGkRbKwgdchkva3VvoQYcXZYEh+go77+ZyOLjJfMPNbJFRBGVX9
+         JKtg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1761050541; x=1761655341;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=icUi6yhGBFPCJDF6YW0uPghHiBtXnlV2bRo9arBdueU=;
+        b=sInXKI9PC5IkDeU+Bv8XD0/3or1/91TSKXeJxZVanWcGd+W0SB1WVNMwrLJLpqj6z4
+         uLKGFD1G/3jyPe4LkrvIysHWn2yEXYqRM6A6gxXts+sr4ln19uEQB1LCbtar2LQlhjFp
+         gSAV0Qvxqco1VNPEIF2CD37q+E+rEvIheOxEvWP0qL5NN/ZlAFOT2BkoLJGzT+dFR4gl
+         W1kOGuJtHgyJJUdDjizopNNOT6jEYr/DkSAYNFW80IdcyN90nMBGdpSMAn+E1r1OxGix
+         1b+8Kyu6De6JiQszllGOXSiEZ3lg3AYUNOD51PKVmAlIhIx6y6Xv13nYkl6eplLZxTiL
+         o6vQ==
+X-Forwarded-Encrypted: i=1; AJvYcCW/GrouPx0tW9VWL7ZOOOZrCixfULEdLH7e6HjTO15WeqfaLJSJ8L2G+xATyXdztUXRo/uetj+OigP8gPXR@vger.kernel.org
+X-Gm-Message-State: AOJu0Yzib1Xlj9VUuVi41N2OtyRtkRMrA73TumHv58ELN6tr8IJhaA8b
+	xdWzqoo61zCX13WnvW5KCFJpso2+7oqhhIEwzapMW3Sazqth6EogMpnoj+KhOVGLcMQetxJzLke
+	HMDdmvJol715UONYfe4CVfMUKX3LJOX6aMIKKGRXLmQ==
+X-Gm-Gg: ASbGnctJYHMaEoEeav8ZCmIycR2Lrq3bAeqtlSy1QgKmqpZXIWe+Tg8GkkihqB9NnLZ
+	QdNMIyPy+ROq+hIV4bLgwSiyxYbbT4vR6FukrEkmFpCXCJGVoas+FleGmof+/L6FOlFzMTRfFTI
+	vSyC6F/TEVzxJRYyQV+3DFKkQNVIijJ6zThNN68re30z+soJOWQtUY94OLgD5+EwfgC8/5awXFl
+	UxkUB/7h3fJkgJHhV3f/3SPKi4jS0vdmQPQ6WXobQ83kUlfngrkcVl4gH3y1Nq3VZo7g/7/kAqV
+	F4UP34x25l2ssUZz
+X-Google-Smtp-Source: AGHT+IFGDPpBTeZONomFBAX1YzaiEBTSDtfpfJUCvTHtBOgU4ya2tYe3GNuR1bPQdzr+C4NaB2OPAwZEOmn27L5nTu8=
+X-Received: by 2002:a05:6512:b1e:b0:58a:92cc:5819 with SMTP id
+ 2adb3069b0e04-591d853543dmr5476524e87.36.1761050541329; Tue, 21 Oct 2025
+ 05:42:21 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] qcom: ice: Prevent client probe failures on unsupported
- ICE
-Content-Language: en-GB
-To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-        <quic_neersoni@quicinc.com>, <andersson@kernel.org>,
-        <konradybcio@kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>
-References: <20251021040337.787980-1-quic_dmukhopa@quicinc.com>
- <89150929-873f-4d09-9cec-727f92572d17@oss.qualcomm.com>
-From: Debraj Mukhopadhyay <quic_dmukhopa@quicinc.com>
-In-Reply-To: <89150929-873f-4d09-9cec-727f92572d17@oss.qualcomm.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01a.na.qualcomm.com (10.52.223.231)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDE4MDAyMCBTYWx0ZWRfXyEjT2tCMCDID
- 5Xw0gQvOtWastKMMgjsz342DNA8UoqMrBO4cGr/dIxllLLGR2EOb5rItQ52NHQJ6XyxVbDVAjvw
- GFNvHTVNZIeudacOnld0UypHK1ROPgv3J6B3j1Z3FvaUJlUicg+JCgziLA/d/YOWijgLl3IoTB8
- XgFuNACvGupaiM2ylPJnlyklDdlLYI1AixOEZlhuOQxh97YLp6N4SjTWCxb9yOjeMxLRwzHjoAA
- evR/QI924C45rctKtpl8zjA2We8/zHdZkUbyd2dT0nVZ7BaJ0AiXVyxgPQ6vMWPWrXJaxJ2q+UE
- fGl/Z7yuYiVRY11wIF6pPDDXEmSoVW8I4m0WtCTBY3NFpianCllOjMWPWGTyrHi+MsKhnLPlz1X
- 7SW1DG9XYNl67myiyZgf5qYi5BK9kw==
-X-Authority-Analysis: v=2.4 cv=KqFAGGWN c=1 sm=1 tr=0 ts=68f77e0b cx=c_pps
- a=JYp8KDb2vCoCEuGobkYCKw==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17
- a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=x6icFKpwvdMA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=COk6AnOGAAAA:8 a=D4aVSg9HDBEUpO1k-lYA:9
- a=QEXdDO2ut3YA:10 a=TjNXssC_j7lpFel5tvFf:22
-X-Proofpoint-GUID: 50PRCV7EWvA_vaPa5IddaNmag6cH101u
-X-Proofpoint-ORIG-GUID: 50PRCV7EWvA_vaPa5IddaNmag6cH101u
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-10-21_01,2025-10-13_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- bulkscore=0 clxscore=1015 phishscore=0 malwarescore=0 impostorscore=0
- lowpriorityscore=0 adultscore=0 priorityscore=1501 spamscore=0 suspectscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2510020000 definitions=main-2510180020
+References: <E1v9Tqf-0000000ApJd-3dxC@rmk-PC.armlinux.org.uk>
+In-Reply-To: <E1v9Tqf-0000000ApJd-3dxC@rmk-PC.armlinux.org.uk>
+From: Bartosz Golaszewski <brgl@bgdev.pl>
+Date: Tue, 21 Oct 2025 14:42:09 +0200
+X-Gm-Features: AS18NWCRXicscJ1flw2qh-h28tM6CuC6Xw1MuRCeg5_mvREPDMfXTaEvmtfWRbw
+Message-ID: <CAMRc=MccHEaXs6KJfG_ph=wG5TS4UTpG4Rzj25C4qbC_fCS21A@mail.gmail.com>
+Subject: Re: [PATCH RFC net-next] net: stmmac: replace has_xxxx with core_type
+To: "Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>
+Cc: Andrew Lunn <andrew@lunn.ch>, Heiner Kallweit <hkallweit1@gmail.com>, 
+	Alexandre Torgue <alexandre.torgue@foss.st.com>, Andrew Lunn <andrew+netdev@lunn.ch>, 
+	Chen-Yu Tsai <wens@csie.org>, "David S. Miller" <davem@davemloft.net>, Eric Dumazet <edumazet@google.com>, 
+	Jakub Kicinski <kuba@kernel.org>, Jan Petrous <jan.petrous@oss.nxp.com>, 
+	Jernej Skrabec <jernej.skrabec@gmail.com>, Jonathan Hunter <jonathanh@nvidia.com>, 
+	linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org, 
+	linux-stm32@st-md-mailman.stormreply.com, linux-sunxi@lists.linux.dev, 
+	linux-tegra@vger.kernel.org, 
+	Maxime Chevallier <maxime.chevallier@bootlin.com>, Maxime Coquelin <mcoquelin.stm32@gmail.com>, 
+	netdev@vger.kernel.org, Paolo Abeni <pabeni@redhat.com>, 
+	Richard Cochran <richardcochran@gmail.com>, s32@nxp.com, 
+	Samuel Holland <samuel@sholland.org>, Thierry Reding <thierry.reding@gmail.com>, 
+	Vinod Koul <vkoul@kernel.org>, Vladimir Zapolskiy <vz@mleia.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Hi Konrad,
-
-Thanks for your comment. Please find my response inline below.
-
-
-On 10/21/2025 2:57 PM, Konrad Dybcio wrote:
-> On 10/21/25 6:03 AM, Debraj Mukhopadhyay wrote:
->> Storage clients (ex. UFS and MMC) invoke of_qcom_ice_get() to obtain the
->> handle from ICE (Inline Crypto Engine) driver. Currently if ICE is
->> unsupported, the return code from probe could prevent the client
->> initialization which is a bug. To fix this a new flag
->> qcom_ice_create_error is introduced which caches the error encountered
->> during ICE probe.
-> Probe currently only happens if the ICE node is present in the DT and
-> referred to from the storage controller. What does this patch solve?
+On Thu, Oct 16, 2025 at 9:41=E2=80=AFPM Russell King (Oracle)
+<rmk+kernel@armlinux.org.uk> wrote:
 >
-> Konrad
-
-Even if the DT node is present it is possible that The SCM support for 
-ICE is unavailable in the underlying TZ framework. With the existing 
-logic, qcom_scm_ice_available() would have failed in such cases, 
-returning NULL to storage clients where the clients like storage may 
-keep retrying which potentially can cause boot up issues. This patch 
-corrects that behavior by explicitly returning -EOPNOTSUPP to the 
-clients. I will update the commit message accordingly.
-
-Thanks,
-
-Debraj
-
+> Replace the has_gmac, has_gmac4 and has_xgmac ints, of which only one
+> can be set when matching a core to its driver backend, with an
+> enumerated type carrying the DWMAC core type.
 >
->> The qcom_ice_create() and of_qcom_ice_get() functions are updated to
->> return -EOPNOTSUPP when ICE is unsupported, allowing clients to proceed
->> without ICE.
->>
->> For other failures, such as ICE not yet initialized, the existing
->> behavior (e.g., -EPROBE_DEFER) is retained to ensure proper error
->> handling.
->>
->> This improves error signaling and ensures that client initialization is
->> not blocked unnecessarily.
->>
->> Signed-off-by: Debraj Mukhopadhyay <quic_dmukhopa@quicinc.com>
->> ---
+> Signed-off-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
+> ---
+> After the five patch cleanup has been merged, I will want to submit
+> this for merging.
+>
+> The problem:
+> - Any new stmmac glue code is likely to conflict with this.
+> - Bartosz Golaszewski's qcom-ethqos patches posted on 8th October
+>   will conflict with this if resubmitted (we're changing lines that
+>   overlap in diff context.)
+> - Maxime Chevallier's tiemstamping changes will conflict with this.
+>
+
+Reviewed-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 
