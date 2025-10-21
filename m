@@ -1,193 +1,182 @@
-Return-Path: <linux-arm-msm+bounces-78104-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-78105-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ams.mirrors.kernel.org (ams.mirrors.kernel.org [IPv6:2a01:60a::1994:3:14])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9CF98BF532A
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Oct 2025 10:15:34 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 19F84BF5367
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Oct 2025 10:23:24 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ams.mirrors.kernel.org (Postfix) with ESMTPS id 69AF234F50D
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Oct 2025 08:15:31 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 8FB7518A67E7
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Oct 2025 08:23:47 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 464D33002D6;
-	Tue, 21 Oct 2025 08:15:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B41CA2ECEAC;
+	Tue, 21 Oct 2025 08:23:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="MOXwbUxU"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="ZV8wfA4m"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B175E301034
-	for <linux-arm-msm@vger.kernel.org>; Tue, 21 Oct 2025 08:15:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 237F1298CB7;
+	Tue, 21 Oct 2025 08:23:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761034529; cv=none; b=Vxs+VKQeFTftmK3NjyYv811rM1WBl13ONROlt2be0anpzKU+1+XZUiaXdP1kV2diHjSo4qEZw2GxQkCqPS/jqv9KpdZDj0RO5AMdobaNvtR6RDDk5pi9fu2Tclxmhc5KZBkVU61v41n6holxTx2NX3QJ1BZJIdyiVoBBd+CBGlQ=
+	t=1761035000; cv=none; b=oZdmAvr5ZBFVepx5QUpd4nGfsRs+awru1JIxS+VD7DvoU/Rw7sz69jUQWuzVhbQUb0h7TZMqOvt8lyTSgapCKzQn4E7UKk7aKN+Rxzhc6cuiZg2SUBHiIPf6f1IIb9B75y1G7kK0Q5xmlLGRRknhtTICf81uAhG289Jd9+V/YJY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761034529; c=relaxed/simple;
-	bh=PH/yYzPiF38Ts+PU81615VMJ5fPpJO05sQsrfNqz2SE=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=h6JNFLXFTdby6CsUNcGMTmiJeCSMTWOCTjS3RqhKdUwnnTjnj0QjbSpe4W6WslVC5QSlXjJCLGY4qHtP1xmR87odTG/0L2r1F6NVikdfSM0NYgEvIzIvWIDcwM3MycTEZQSNNBSsYECtViz+PZkOQkTiAIavrqIVdrvHqtmkFEE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=MOXwbUxU; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 59L8BKk9020645
-	for <linux-arm-msm@vger.kernel.org>; Tue, 21 Oct 2025 08:15:27 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:message-id
-	:mime-version:subject:to; s=qcppdkim1; bh=Juw2EmxApd8NApmkUfGKED
-	HjRrZ6lqgtmTTa5riScos=; b=MOXwbUxUMk2AC+VAxbLM+Vfe8Wutx9PSc8V9Kv
-	qUPWNBxojM9gs05z62i8F4Q0L4rhMUCB9OKdit34I00hWZUCU8Fsze/aMEfhUi/2
-	bzo0hNFPF4teFapBprnOH6nkDxq9KfjTJCzmfTkdUDlYxJrIPRE5MVgdDRPqDYa7
-	iFmcthj4Dsf917QgoDifVt3TQibNAkq9T9C8YebxvCSoxcU9Q084FzhRE6NipPnO
-	BD84SN13YPStxK4Uab4ribE43kTC/BxqeRus1DYIICmBl3NPWhNAFZWF5DjosxaN
-	bWBWmMd/rB/SgPTQ+tXK6aX6v254JcvTFsYiOxdzCG8NAZqA==
-Received: from mail-pg1-f198.google.com (mail-pg1-f198.google.com [209.85.215.198])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 49v343ynty-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Tue, 21 Oct 2025 08:15:27 +0000 (GMT)
-Received: by mail-pg1-f198.google.com with SMTP id 41be03b00d2f7-b55443b4110so3864611a12.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 21 Oct 2025 01:15:26 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1761034526; x=1761639326;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=Juw2EmxApd8NApmkUfGKEDHjRrZ6lqgtmTTa5riScos=;
-        b=KQfwGJt2Ay6d3J262yJI3cLPChgbXc2cHGF5RsjIgaCutgwRmLUwhsCzJov+ZCdy+v
-         H8I+4Y7Fd+/mQtCgGw60ASZKF1balfSnlG+Z5q8LVpEoKxeVAsNiMr0w+RM58u2qvm/g
-         jT80M+La0i3Ia7pisYo5NakStIh88dvZzlf+6ykA1xaYTC+JF4BZmQNxX29q1LUSlqar
-         dQP9tsk4g2AFEMVMpasiCgDh0IJaEeh6of10a5qPqryQID9k+Fvb6rvik0lDlTJy3A8i
-         Q5suWSQXKyZVe6lDEikaNlTgufCjKV4ND77AYOAorG6Qss8iBvKY8GaN2FO/kTfezFAa
-         NR1A==
-X-Forwarded-Encrypted: i=1; AJvYcCUd+RioxVyh4yuD/caZsCBHIzoUJzWulVpYDPJjghrxUxcgRmB/2pk2vHhYl7GZb//LqciUfV3MC5H9229x@vger.kernel.org
-X-Gm-Message-State: AOJu0YyVGgOBlewgqxKPVsNtPZnWTZeIBUUl90cuLOgu7rto+Z8+hMxx
-	O2FcZ+sTzFsfGtXPhUHVvQtkGd/u4+YdyYDmqzGSK/2C1+3Gi6ScEgnR/jsN4J6nwb7/NcxRb79
-	3m9swAhOrJLxpcWodDzyJwhU+k9wOQz5blnoQUPOioJ0/W7zekWV+V4ByDa/XSonV7LJO
-X-Gm-Gg: ASbGncumviOSwMB7WyxwDhzOCY8wnu22rlXcvn7ZjXRcmoPtVG3mUroXVRKuQ3GCWDu
-	66ROnp/OotKNiK0TeU0J7NZfqnCbO06yJ3i13vfiwaJfoqdzyqPd80c7vI0tE1wo3HOvHbLGD7K
-	ZFMhUnEXNwDsSCAGPuzK7jCQ/VrHT1/9J04HMNbxFw6aerOK81N34BsfzeU8j08TyJN/pdscOQj
-	T0ormohBVMZepyHdoFMYlyZcXk5R3hCO8PpGfoBqdEOI2g/LC6dx0XYwvTf/y4vpdYaUbLx/YWY
-	MjWRIR+CBfkYdQpAH45XMKrkh6S3vwOtz05TUQQ/Ucgt5gLG+JBDDp6wtvqe1ddL5WSFVo98nlr
-	HwG8NaiVL9sGbLLWxQH6h0AYjgU/09K1W2JiYmxqxz6BXCsxmnQlAwDADmG6dafG7/LZlryEhXQ
-	==
-X-Received: by 2002:a05:6a20:7486:b0:243:fe1e:2f95 with SMTP id adf61e73a8af0-33495c0e1cdmr30861211637.6.1761034526115;
-        Tue, 21 Oct 2025 01:15:26 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHUnVtE1kcR/waPYu1P5iqYPCnOVM4lKkg8WadrGpewX/U4oXJcwvTuCkipv6O+65Hv86sZvw==
-X-Received: by 2002:a05:6a20:7486:b0:243:fe1e:2f95 with SMTP id adf61e73a8af0-33495c0e1cdmr30861178637.6.1761034525684;
-        Tue, 21 Oct 2025 01:15:25 -0700 (PDT)
-Received: from WANGAOW-LAB01.ap.qualcomm.com (tpe-colo-wan-fw-bordernet.qualcomm.com. [103.229.16.4])
-        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-b6a76676c01sm9675447a12.16.2025.10.21.01.15.22
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 21 Oct 2025 01:15:25 -0700 (PDT)
-From: Wangao Wang <wangao.wang@oss.qualcomm.com>
-Date: Tue, 21 Oct 2025 16:15:10 +0800
-Subject: [PATCH v2] media: qcom: iris: Add sanity check for stop streaming
+	s=arc-20240116; t=1761035000; c=relaxed/simple;
+	bh=F22bHwYKPSzN4zjP+p99QdmH8DXqT/yvNivaihOh6iQ=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=ZAwi4OR/j0Nun+N+887i9PlrAF7nZVWhm3X2HjNvfLq9KA3Pu2t2yzD/+sopyfEWp2cJ0374cVrFj17uSdmIblEewWYNVjZFCs5Q+kGyxBGqHcaNbOXhwPzJ0T4xyRfwDTmrvlXSD3yOyBRnxjDK9oYnjw4DP1V4voVgVgg/2tc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=ZV8wfA4m; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 59L8EP6Q032755;
+	Tue, 21 Oct 2025 08:23:16 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	F78RPtllNnXhXUSY2V9DLkUzBCsTGmzWtEdBdnJK0u8=; b=ZV8wfA4mn5F4l94I
+	HSDiNC+mWm/9edxa0Vo0PSRoOISioKKySuq1AozDgwmC6kloE4Pozchtc+5QiQpx
+	Jn9cpGPCcEJmaQFN2hE5wIp/jzmtH44KmQqO2QKPWgnuyV8G/m2iUEiePRrQ9e2g
+	Kz8rOo43lc7TaBF4eqtbr26lYoYvxIC1523GD5124kmLhpWUYmDX9S2VhIA6hgcX
+	dJP/nr5HLuuhKojzAPoKx4ZsWzz6f1u5gZSICWzRhrUtICsVMBrEH11wV657t7Ee
+	AkOkMVVYk9Z2iNQMtUXsxoIoJQa+Gxvpaq6zzLQcSqe8W/Til3V37Pbz60K8ACJN
+	e1yPQg==
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 49w08w5agd-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 21 Oct 2025 08:23:16 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 59L8NGDh020284
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 21 Oct 2025 08:23:16 GMT
+Received: from [10.217.239.82] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1748.24; Tue, 21 Oct
+ 2025 01:23:13 -0700
+Message-ID: <ff382661-4d05-4f9a-8b9e-55fa9932a22a@quicinc.com>
+Date: Tue, 21 Oct 2025 13:53:10 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 2/2] soc: qcom: smp2p: Add support for smp2p v2
+To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+        Jingyi Wang
+	<jingyi.wang@oss.qualcomm.com>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>
+CC: <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        Chris Lew
+	<chris.lew@oss.qualcomm.com>
+References: <20250923-smp2p-v1-0-2c045af73dac@oss.qualcomm.com>
+ <20250923-smp2p-v1-2-2c045af73dac@oss.qualcomm.com>
+ <bb25208e-a6a6-4a81-9dd5-5c5eb1cf16b4@oss.qualcomm.com>
+Content-Language: en-US
+From: Deepak Kumar Singh <quic_deesin@quicinc.com>
+In-Reply-To: <bb25208e-a6a6-4a81-9dd5-5c5eb1cf16b4@oss.qualcomm.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
-Message-Id: <20251021-iris_add_sanity_check-v2-1-476b3107a8ef@oss.qualcomm.com>
-X-B4-Tracking: v=1; b=H4sIAA1B92gC/y2NQQ7CIBREr9L8tRBAEHXlPUzTIEX7oy3Kr9Wm6
- d2ljZuZvElmZgIKCQPBsZgghQEJY5dBbQrwjetugWGdGZRQRgolGSakytV1Ra7Dfqx8E/ydbbU
- T9mCsNhcJuftM4YrfdfdcZm6Q+pjG9WaQS/pflDths1uu99owyT7500W+2CkS8dfbPXxsW54Fy
- nmef/FQhbGyAAAA
-X-Change-ID: 20251021-iris_add_sanity_check-34a0795745b1
-To: Vikash Garodia <vikash.garodia@oss.qualcomm.com>,
-        Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>,
-        Abhinav Kumar <abhinav.kumar@linux.dev>,
-        Bryan O'Donoghue <bod@kernel.org>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>
-Cc: linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, quic_qiweil@quicinc.com,
-        quic_renjiang@quicinc.com, Wangao Wang <wangao.wang@oss.qualcomm.com>
-X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1761034522; l=1875;
- i=wangao.wang@oss.qualcomm.com; s=20251021; h=from:subject:message-id;
- bh=PH/yYzPiF38Ts+PU81615VMJ5fPpJO05sQsrfNqz2SE=;
- b=E1An26hqVbJv/w9q8H6qt5nQ2VnBcjUwUJ/C20Ko6UpOEtyGnYI9ylCYV7/mGlyR/Y5UPrZ+1
- REklUfEByD6BIHQ+Vu+W2bnKuJL/BvvB4Dmk5V/P4M79+T2bY5+zh8w
-X-Developer-Key: i=wangao.wang@oss.qualcomm.com; a=ed25519;
- pk=bUPgYblBUAsoPyGfssbNR7ZXUSGF8v1VF4FJzSO6/aA=
-X-Proofpoint-GUID: XSaVtzwjf5OR92N8B_ZTt1MqUDvRGTXM
-X-Proofpoint-ORIG-GUID: XSaVtzwjf5OR92N8B_ZTt1MqUDvRGTXM
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDE4MDAyMyBTYWx0ZWRfX/kKKR+++ir1h
- l1hx4unVSuctnmE2XYKX2PLCFjN2Q+Nmk0y4ovJDP30jaOKZe1VaMBlR0tZqtq4PQRERf6BQkos
- 0iMPqSR2h/LJMtGDaGTbH8Kc5yG6rYgm82KVXKhcP2HnllZVMTlqemXKmMhXDEywqV69fUCOyzq
- Qk+Ld4g0BHoJ8RHwea1OpDrndN3JNEPg/W6+SpXyuZV461e0lNxcmORvIxtoiC6a7l1xVYXeW8M
- REG0uNMa6eSgikAt7Y6YdKbv5XqgipgSGosCH3F2FKvl4zp03Es+D443rAs+bNaibo7WfSa3ykA
- prNCD6gQr4tIy2GIdrzlPeXVBn7AhOIl3CbO4wbvF9lPNqoeSygzzm9Gy0FeEmpQOsHm1iBQPY3
- mPJwzHuc/ai9PT2WLnQldJp5QO6LmQ==
-X-Authority-Analysis: v=2.4 cv=E/vAZKdl c=1 sm=1 tr=0 ts=68f7411f cx=c_pps
- a=Qgeoaf8Lrialg5Z894R3/Q==:117 a=nuhDOHQX5FNHPW3J6Bj6AA==:17
- a=IkcTkHD0fZMA:10 a=x6icFKpwvdMA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8 a=cYsYxGlOpVVTreCKc7QA:9 a=QEXdDO2ut3YA:10
- a=x9snwWr2DeNwDh03kgHS:22
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: 6toj0w1ete4PvMHjsYVGDyfDURbbsMn3
+X-Proofpoint-GUID: 6toj0w1ete4PvMHjsYVGDyfDURbbsMn3
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDE5MDA5MCBTYWx0ZWRfX1ikofsfvirIN
+ KxM1WgRc3gOx6mnbN/Tu9Vf4y/7p/zLB8b7ZihlaQpC92J2BanA9gV0sLPpUfIeIfckNb3Kvdrj
+ UwnZWszqq3m5cVgJPIL0nSlS9o6NbkTgWe+jKtmmu+Oeylz7mYRgk3STZatqu6fyo7YOCcAaZ4j
+ 8XX1BPbraR1R7tfVWDfSkb3NxQdy73NONnqYO9pl9TKSb/4JHh6q50O8UdH7KiSWKoQTWSAghIT
+ GQo3n3SPkeKIjh08RyqZTivpff2Y50fZE0PNnb5zdHZITXub5yKr8VCMNZhENYzztrsbq2PYE9U
+ uayjEyfwqGGvwB9KCh6lyr3nuuNYyvHrpqAxUafMDmDvMTwJo1gy/K9SqSFKjH+WcdXdCTciyL6
+ OqA+WBQKk+Zr0MpTWLnLn6F0YcdHtg==
+X-Authority-Analysis: v=2.4 cv=V5NwEOni c=1 sm=1 tr=0 ts=68f742f4 cx=c_pps
+ a=ouPCqIW2jiPt+lZRy3xVPw==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
+ a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=x6icFKpwvdMA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=EUspDBNiAAAA:8 a=SMMCJtFpidMdBd4wOSMA:9
+ a=QEXdDO2ut3YA:10
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.80.40
  definitions=2025-10-20_07,2025-10-13_01,2025-03-28_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 spamscore=0 priorityscore=1501 bulkscore=0 suspectscore=0
- lowpriorityscore=0 clxscore=1015 adultscore=0 phishscore=0 malwarescore=0
+ bulkscore=0 malwarescore=0 adultscore=0 priorityscore=1501 lowpriorityscore=0
+ spamscore=0 suspectscore=0 clxscore=1015 phishscore=0 impostorscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2510020000 definitions=main-2510180023
+ reason=mlx scancount=1 engine=8.19.0-2510020000 definitions=main-2510190090
 
-Add sanity check in iris_vb2_stop_streaming. If inst->state is
-already IRIS_INST_ERROR, we should skip the stream_off operation
-because it would still send packets to the firmware.
 
-In iris_vdec_kill_session, inst->state is set to IRIS_INST_ERROR
-and session_close is executed, which will kfree(inst_hfi_gen2->packet).
-If stop_streaming is called afterward, it will cause a crash.
 
-Signed-off-by: Wangao Wang <wangao.wang@oss.qualcomm.com>
----
-Changes in v2:
-- Remove redundant ret assignment in ERROR state.
-- Perform error handling according to the value of ret.
-- Link to v1: https://lore.kernel.org/r/20251016072517.4845-1-wangao.wang@oss.qualcomm.com
----
- drivers/media/platform/qcom/iris/iris_vb2.c | 8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
-
-diff --git a/drivers/media/platform/qcom/iris/iris_vb2.c b/drivers/media/platform/qcom/iris/iris_vb2.c
-index 139b821f7952feb33b21a7045aef9e8a4782aa3c..db8768d8a8f61c9ceb04e423d0a769d35114e20e 100644
---- a/drivers/media/platform/qcom/iris/iris_vb2.c
-+++ b/drivers/media/platform/qcom/iris/iris_vb2.c
-@@ -231,6 +231,8 @@ void iris_vb2_stop_streaming(struct vb2_queue *q)
- 		return;
- 
- 	mutex_lock(&inst->lock);
-+	if (inst->state == IRIS_INST_ERROR)
-+		goto exit;
- 
- 	if (!V4L2_TYPE_IS_OUTPUT(q->type) &&
- 	    !V4L2_TYPE_IS_CAPTURE(q->type))
-@@ -241,10 +243,10 @@ void iris_vb2_stop_streaming(struct vb2_queue *q)
- 		goto exit;
- 
- exit:
--	iris_helper_buffers_done(inst, q->type, VB2_BUF_STATE_ERROR);
--	if (ret)
-+	if (ret) {
-+		iris_helper_buffers_done(inst, q->type, VB2_BUF_STATE_ERROR);
- 		iris_inst_change_state(inst, IRIS_INST_ERROR);
--
-+	}
- 	mutex_unlock(&inst->lock);
- }
- 
-
----
-base-commit: 13863a59e410cab46d26751941980dc8f088b9b3
-change-id: 20251021-iris_add_sanity_check-34a0795745b1
-
-Best regards,
--- 
-Wangao Wang <wangao.wang@oss.qualcomm.com>
-
+On 9/24/2025 8:27 PM, Konrad Dybcio wrote:
+> On 9/24/25 6:18 AM, Jingyi Wang wrote:
+>> From: Chris Lew <chris.lew@oss.qualcomm.com>
+>>
+>> Some remoteproc need smp2p v2 support, mirror the version written by the
+>> remote if the remote supports v2. This is needed if the remote does not
+>> have backwards compatibility with v1. And reset entry last value on SSR for
+>> smp2p v2.
+>>
+>> Signed-off-by: Chris Lew <chris.lew@oss.qualcomm.com>
+>> Co-developed-by: Jingyi Wang <jingyi.wang@oss.qualcomm.com>
+>> Signed-off-by: Jingyi Wang <jingyi.wang@oss.qualcomm.com>
+>> ---
+> 
+> [...]
+> 
+>> +static int qcom_smp2p_in_version(struct qcom_smp2p *smp2p)
+>> +{
+>> +	unsigned int smem_id = smp2p->smem_items[SMP2P_INBOUND];
+>> +	unsigned int pid = smp2p->remote_pid;
+>> +	struct smp2p_smem_item *in;
+>> +	size_t size;
+>> +
+>> +	in = qcom_smem_get(pid, smem_id, &size);
+>> +	if (IS_ERR(in))
+>> +		return 0;
+>> +
+>> +	return in->version;
+> 
+> are in and out versions supposed to be out of sync in case of
+> error?
+> 
+I think that should be ok. If we return error smp2p connection will be 
+completely broken. With default version 1 partial features can be 
+supported even if remote is using version 2. Some features like smp2p 
+connection after subsystem restart may be affected by this.>> +}
+>> +
+>>   static void qcom_smp2p_start_in(struct qcom_smp2p *smp2p)
+>>   {
+>>   	unsigned int smem_id = smp2p->smem_items[SMP2P_INBOUND];
+>> @@ -516,6 +542,7 @@ static int qcom_smp2p_alloc_outbound_item(struct qcom_smp2p *smp2p)
+>>   	struct smp2p_smem_item *out;
+>>   	unsigned smem_id = smp2p->smem_items[SMP2P_OUTBOUND];
+>>   	unsigned pid = smp2p->remote_pid;
+>> +	u8 in_version;
+>>   	int ret;
+>>   
+>>   	ret = qcom_smem_alloc(pid, smem_id, sizeof(*out));
+>> @@ -537,12 +564,14 @@ static int qcom_smp2p_alloc_outbound_item(struct qcom_smp2p *smp2p)
+>>   	out->valid_entries = 0;
+>>   	out->features = SMP2P_ALL_FEATURES;
+>>   
+>> +	in_version = qcom_smp2p_in_version(smp2p);
+>> +
+>>   	/*
+>>   	 * Make sure the rest of the header is written before we validate the
+>>   	 * item by writing a valid version number.
+>>   	 */
+>>   	wmb();
+>> -	out->version = 1;
+>> +	out->version = (in_version) ? in_version : 1;
+> 
+> = in_version ?: 1
+> 
+> Konrad
+> 
+We want to assign in_version when value is 1/2 and 1 if value is 0 i.e. 
+error case.
 
