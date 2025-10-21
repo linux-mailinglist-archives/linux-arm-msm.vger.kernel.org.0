@@ -1,88 +1,128 @@
-Return-Path: <linux-arm-msm+bounces-78067-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-78068-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id ED165BF4526
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Oct 2025 03:52:56 +0200 (CEST)
+Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [142.0.200.124])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8EAEBBF452F
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Oct 2025 03:53:59 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id BCDD818884D0
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Oct 2025 01:53:20 +0000 (UTC)
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 49ACE4E929C
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Oct 2025 01:53:58 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4433615687D;
-	Tue, 21 Oct 2025 01:52:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 962F8239E61;
+	Tue, 21 Oct 2025 01:53:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="d7bFmOvY"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="lhSer6FA"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F02127E105;
-	Tue, 21 Oct 2025 01:52:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 602677E105;
+	Tue, 21 Oct 2025 01:53:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761011572; cv=none; b=O4TZo0sBA6qBow8cHPu6EDYLo8oOWz7faRV8jswK8/29C3krR6ze4zt2HOeZ3IVjY0ENFcgmT4fJwgH69qOhyewzDeBPQZXp2MsIi7F0uXwqvh7ITYjYsA74MFpXj2abFFa+m5aNUc46IVOHmNC9Xq1Rq9eggBhcbMV7Ij+4sFg=
+	t=1761011633; cv=none; b=Nan5ivN2ygUsnQmNh87iyEGnH+wBLX79LXo4KkDNOJ/xETWHTK90lRjlNPlgb++OOY9nZirMtSz6p1ApsnOTk5CeNgga9HDy7Nwl3+xfQ6ozi9vtDaTLdsaTG+QjWccOUikv1F7sR/Bx4cgOe0sTYucgDuNwhbfAIlsVPnnUaHU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761011572; c=relaxed/simple;
-	bh=DYZ+NvvXDV3GLpnrmo/lEqoRa29w7O428mCra33ZZ18=;
-	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=JDEUWXOj4Dg9//O+Ok/P8ixajHXAXOYq9/SW9D0vsFK9CwijFzQX0W+6pi9uJPr1mdH6j26QNbFx6qhwdQhDOpxF4mr6TyA+cO0594r/1jI7Odd65pYxUrd/dehBSYs1+oplbssJfgfdoA7s1uxHRt2Uae/vXyJIlamnyU+iiQY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=d7bFmOvY; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8DB1CC4CEFB;
-	Tue, 21 Oct 2025 01:52:50 +0000 (UTC)
+	s=arc-20240116; t=1761011633; c=relaxed/simple;
+	bh=gEFXq3ZbGcZ2wLt1kNCnmyzf7qCy7XGcSSRG5SuAU8w=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=UsRvVCV9Ppb7irG60tSaY2kqpg1jfIMnGFwUrkBJug0Memnyr9qzVNH8zV2R0qJb2ZR5/GoMjwEUbaoKkbfVBO3CLqlIWk4OBUkO+zFJWiG2rm5x1PA4ZTyIha0cibcUYD7gpyfFZ2pbzGGJDEOxgCF5xuDIiEGOWRwxplFY33o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=lhSer6FA; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58C0EC4CEFB;
+	Tue, 21 Oct 2025 01:53:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1761011571;
-	bh=DYZ+NvvXDV3GLpnrmo/lEqoRa29w7O428mCra33ZZ18=;
-	h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-	b=d7bFmOvYou2jVLWtmxieZwAGRgonwPmZSCPDWuIolmQx0M4Y5zhvniT/tOcwtn9RQ
-	 l2IhR3X6Al2Nb290zycAxVMwew6eXS1PI5Z67wY71A2YkQI/IfsttMCvOaqSkhvpF0
-	 th8NqPcpgNXEvT3EQhfp9MjJxqybhWV9hzuelw2I0d4fsK75z09aGiVeF9Shcgta5Y
-	 msD9yFUVjqF4ApvAhN6aqAuh2zgN4AAYin+y4AI02O5nfP5FgIbPrDykx/5mseg/SY
-	 8HriN8sx5C1HeVJBpPnNlXEY33sV04wvbvNoXZtFN0KhTuxSZjB7RrUAbb4fKtxFio
-	 Xvn8rrwWJU8Rg==
-Date: Mon, 20 Oct 2025 18:52:49 -0700
-From: Jakub Kicinski <kuba@kernel.org>
-To: Maxime Chevallier <maxime.chevallier@bootlin.com>, Andrew Lunn
- <andrew@lunn.ch>, Russell King <linux@armlinux.org.uk>, Heiner Kallweit
- <hkallweit1@gmail.com>, Vladimir Oltean <vladimir.oltean@nxp.com>
-Cc: davem@davemloft.net, netdev@vger.kernel.org,
- linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
- thomas.petazzoni@bootlin.com, Eric Dumazet <edumazet@google.com>, Paolo
- Abeni <pabeni@redhat.com>, linux-arm-kernel@lists.infradead.org, Christophe
- Leroy <christophe.leroy@csgroup.eu>, Herve Codina
- <herve.codina@bootlin.com>, Florian Fainelli <f.fainelli@gmail.com>,
- =?UTF-8?B?S8O2cnk=?= Maincent <kory.maincent@bootlin.com>, Marek
- =?UTF-8?B?QmVow7pu?= <kabel@kernel.org>, Oleksij Rempel
- <o.rempel@pengutronix.de>, =?UTF-8?B?Tmljb2zDsg==?= Veronese
- <nicveronese@gmail.com>, Simon Horman <horms@kernel.org>,
- mwojtas@chromium.org, Antoine Tenart <atenart@kernel.org>,
- devicetree@vger.kernel.org, Conor Dooley <conor+dt@kernel.org>, Krzysztof
- Kozlowski <krzk+dt@kernel.org>, Rob Herring <robh@kernel.org>, Romain
- Gantois <romain.gantois@bootlin.com>, Daniel Golle <daniel@makrotopia.org>,
- Dimitri Fedrau <dimitri.fedrau@liebherr.com>
-Subject: Re: [PATCH net-next v14 00/16] net: phy: Introduce PHY ports
- representation
-Message-ID: <20251020185249.32d93799@kernel.org>
-In-Reply-To: <20251013143146.364919-1-maxime.chevallier@bootlin.com>
-References: <20251013143146.364919-1-maxime.chevallier@bootlin.com>
+	s=k20201202; t=1761011633;
+	bh=gEFXq3ZbGcZ2wLt1kNCnmyzf7qCy7XGcSSRG5SuAU8w=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=lhSer6FAbofHcgD61qoh5QzZYC4905I96PcCZWfI86ac1ynePuJi3fg0VrjU9ztAo
+	 XkR6dgKlCQnBR0dsVJeZNZPgnQB/RUGODC9QoLTYhQjR6KMtKOAmjqopw3rdEynIfH
+	 Vmbx1RjuwgnyFqnleQEZTrdFrVMapKDurCZ6J2JRxqY/dHT6Ar+xeS0eD68/DIOKvI
+	 Ysb7LH67G5pD87/ezpN+lEAEQPCuYRmpogqeTZbdxOD/3O1PmZOJawv0JS8N3wEeMx
+	 +kifMX87l6Y3ReoHxNohaM65naJhnkJwFJXQEKTfd9ZAYoODmDf/CaWQMRURoY0Bxa
+	 xbw5EKuNfqZIA==
+Date: Tue, 21 Oct 2025 07:23:38 +0530
+From: Manivannan Sadhasivam <mani@kernel.org>
+To: Bartosz Golaszewski <brgl@bgdev.pl>
+Cc: Dmitry Torokhov <dmitry.torokhov@gmail.com>, 
+	Kees Cook <kees@kernel.org>, Mika Westerberg <westeri@kernel.org>, 
+	Andrew Morton <akpm@linux-foundation.org>, Linus Walleij <linus.walleij@linaro.org>, 
+	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+	Conor Dooley <conor+dt@kernel.org>, Saravana Kannan <saravanak@google.com>, 
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Andy Shevchenko <andy@kernel.org>, 
+	Catalin Marinas <catalin.marinas@arm.com>, Will Deacon <will@kernel.org>, 
+	Srinivas Kandagatla <srini@kernel.org>, Liam Girdwood <lgirdwood@gmail.com>, 
+	Mark Brown <broonie@kernel.org>, Jaroslav Kysela <perex@perex.cz>, Takashi Iwai <tiwai@suse.com>, 
+	linux-hardening@vger.kernel.org, linux-kernel@vger.kernel.org, linux-gpio@vger.kernel.org, 
+	linux-arm-kernel@lists.infradead.org, linux-sound@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Subject: Re: [PATCH RFC 0/9] gpio: improve support for shared GPIOs
+Message-ID: <rvsyll4u6v4tpaxs4z3k4pbusoktkaocq4o3g6rjt6d2zrzqst@raiuch3hu3ce>
+References: <20250924-gpio-shared-v1-0-775e7efeb1a3@linaro.org>
+ <hyzzrjn7jzo3tt3oyg7azijouawe3zopfjzq6zfhoo6e6z2m4t@ssl5vl4g557e>
+ <zk4ea5cibrkp4vttuy4evrqybf76b3nop5lnyck4ws4nyf2yc4@ghj2eyswsoow>
+ <CAMRc=MdWmO4wvX6zpzN0-LZF1pF5Y2=sS8fBwr=CKMGWHg+shA@mail.gmail.com>
+ <rfr5cou6jr7wmtxixfgjxhnda6yywlsxsei7md7ne3qge7r3gk@xv6n5pvcjzrm>
+ <CAMRc=Me9Td5G9qZV8A98XkGROKw1D2UeQHpFzt8uApF8995MZw@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAMRc=Me9Td5G9qZV8A98XkGROKw1D2UeQHpFzt8uApF8995MZw@mail.gmail.com>
 
-On Mon, 13 Oct 2025 16:31:26 +0200 Maxime Chevallier wrote:
-> Hi everyone,
+On Tue, Oct 07, 2025 at 02:29:01PM +0200, Bartosz Golaszewski wrote:
+> On Tue, Oct 7, 2025 at 12:09 AM Manivannan Sadhasivam <mani@kernel.org> wrote:
+> >
+> > > >
+> > > > Not always... For something like shared reset line, consumers request the line
+> > > > as GPIO and expect gpiolib to do resource manangement.
+> > > >
+> > >
+> > > They could use the reset API and it would implicitly create a virtual
+> > > device that requests the reset GPIO and controls its enable count.
+> > > Except that some devices also do a specific reset sequence with delays
+> > > etc. That would require some additional logic in reset-gpio.
+> > >
+> >
+> > I was referring to the PCIe PERST# line, for which the 'reset-gpios' property
+> > already exist in the schema. Now, you want me to model this simple GPIO as a
+> > fake reset controller and use it the PCIe Bridge nodes through 'resets'
+> > property?
+> >
 > 
-> Here is a V14 for the phy_port work, aiming at representing the
-> connectors and outputs of PHY devices.
+> No, not at all. It's just that a shared `reset-gpios` property is
+> pretty common and Krzysztof implemented the reset-gpio driver[1] to
+> address it. Drivers that request a reset control via the OF interface
+> will notice that there's no `resets` property but if there's a
+> `reset-gpios`, the reset core will create a virtual device binding to
+> the reset-gpio driver which requests the GPIO in question (once!) and
+> registers with the reset subsystem providing shared reset control to
+> users. Basically the abstraction Srini mentioned minus any reset
+> sequence.
+> 
+> That only happens if the driver uses the reset API. If you go with the
+> GPIOLIB then none of this matters. I definitely don't want to change
+> the existing DT sources either but I want to find out if the code in
+> this series is suitable (with some modifications) for supporting the
+> PERST# line or if the logic behind it is more complex and possibly
+> requires separate, more fine-grained handling.
+> 
 
-I can't help but read the lack of replies from PHY maintainers
-here as a tacit rejection. Not entirely sure what to do here.
-Should we discuss this at the netdev call tomorrow (8:30am PT)?
-Would any PHY maintainer be willing to share their opinion?
+All PCI controllers relied on '{reset/perst}-gpios' property for handling the
+PERST# signal. Now if we change it to a reset line, then the drivers have to
+first detect it as a reset line and use the reset APIs, if not fallback to gpiod
+APIs (for DT backwards compatibility), which will add unncessary churn IMO.
+
+But if there is no way the GPIO subsystem is going to support shared GPIOs, then
+we have to live with it.
+
+- Mani
+
+-- 
+மணிவண்ணன் சதாசிவம்
 
