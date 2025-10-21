@@ -1,204 +1,187 @@
-Return-Path: <linux-arm-msm+bounces-78071-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-78072-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 97686BF4615
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Oct 2025 04:26:14 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id F0726BF465D
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Oct 2025 04:50:13 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id C58773B787F
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Oct 2025 02:26:06 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 9405418C51DC
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Oct 2025 02:50:37 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 555C628469A;
-	Tue, 21 Oct 2025 02:25:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 72C99221D92;
+	Tue, 21 Oct 2025 02:50:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="oNM9JV8v"
+	dkim=pass (2048-bit key) header.d=postmarketos.org header.i=@postmarketos.org header.b="UoTwRGn+"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from out-186.mta1.migadu.com (out-186.mta1.migadu.com [95.215.58.186])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27DF7283FFB;
-	Tue, 21 Oct 2025 02:25:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33D9F354AF5
+	for <linux-arm-msm@vger.kernel.org>; Tue, 21 Oct 2025 02:50:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.186
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761013557; cv=none; b=ptS9S5BTofQBJE4PACMCNUfOQLeyZcAonzZaV2j8fkNuq77jFK6520vdoAm3ywTJjbqYP2W2we90IYcJEGEacrzk1+Q7m4zmHAwpQ4qTHXpAyh8pCYTRkN7cU8QCWJYhwp/+ZL8plkG8e2ytCyUZvWJeiBnJpldPgB5IxFu1mQw=
+	t=1761015011; cv=none; b=SwkyLVR/YyZQwzMeYz5FXiy5l3llB8kenCyZS4HNFYDfn/ewO8R1VCSiEfxfozuVYiFMkp1l9jLF2BdSGP9GfRSSiGJSwXjjOEBh+xohCB+OnEnC0xdOloDdupmUnR8FY2AbvwNz+pwFYR2XYVqCQbYg9QAYYBgaS7qLi3tOBBc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761013557; c=relaxed/simple;
-	bh=1rj/lRwD+09g4LTh/J3rOOI/5OeNJ1N0w55J9NIJXwM=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=aSqerf05P0GEtqXApb9tPy0IU1x23LQsgaFcx9AGCGJr+31KjvbbCTQHdysroUqyMyUBSpRTdD/GT8oChCksMj0oRdxIK7/K6A6vzEu2Is5SGFeVRVuYXAOPR03QbqFpUnr9qOI+uHPuH0utXa5P22vbRb5ndwvcxJcRN432vZI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=oNM9JV8v; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1210AC116B1;
-	Tue, 21 Oct 2025 02:25:51 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1761013556;
-	bh=1rj/lRwD+09g4LTh/J3rOOI/5OeNJ1N0w55J9NIJXwM=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=oNM9JV8vU0ybZx8KnAEBE3tJfVgwl4shjF8/Or7csMaZQtkwXf2d0qiTPkWSw3R0V
-	 ypzjZ3a1zf4TbmjjcE509xUqqetbBlsqxjrjmw0Es0Q17ZfXgL5ITIax94YqwCY+Nv
-	 xiVjQJZlVV1Cel+RfYXBVScRSMUID9KThJBYz0bJWhdf2lBikc5O2qOn4YJRfjj5e8
-	 GQDLs0NTOxZ7v5BNATL+RynAucia8G4lkx8WTO3K7VKX7+D2htAMNMhsyeR3Xkx3fZ
-	 H1CVcYHMdouvzcwkxQqCKNOqbjdfU2dleTL9NO90tXo8z6PYTK1FCttK3iMeJOETGE
-	 RlUeke+C1NkrA==
-Date: Tue, 21 Oct 2025 07:55:45 +0530
-From: Manivannan Sadhasivam <mani@kernel.org>
-To: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
-Cc: Bjorn Helgaas <helgaas@kernel.org>, Jingoo Han <jingoohan1@gmail.com>, 
-	Lorenzo Pieralisi <lpieralisi@kernel.org>, Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kwilczynski@kernel.org>, 
-	Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>, linux-pci@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, Ron Economos <re@w6rz.net>
-Subject: Re: [PATCH 1/2] PCI: dwc: Fix ECAM enablement when used with vendor
- drivers
-Message-ID: <mjrcz7qleml7hmwfdwxt2bbbq5qg7ko36l6zwt2snppk7ajrbj@evmvu7tzr4w2>
-References: <20251017-ecam_fix-v1-1-f6faa3d0edf3@oss.qualcomm.com>
- <20251017191005.GA1041995@bhelgaas>
- <mtxez55p4hfvtmhcnwtxeetzqxydyq5e4g5zsdhytxpzgvgeqn@s7asinok5l22>
- <0bc6eb69-029d-45f4-a723-c003ecbb11e5@oss.qualcomm.com>
- <db799304-1551-410b-af07-fb8d9b50be5c@oss.qualcomm.com>
+	s=arc-20240116; t=1761015011; c=relaxed/simple;
+	bh=nhNdircZuLH3WnRSMnhGprZ/QhVVDQhhTz+6q9e+fkk=;
+	h=MIME-Version:Date:Content-Type:From:Message-ID:Subject:To:Cc:
+	 In-Reply-To:References; b=Dhl3Nrr6ZUV8OzGfPAvuUS2hAQUh34t2lL+frL3v1unHWfUxTBHEuOZCj0JHDGqfdx+ALwZbw5YHtZl81AikXJuh2cVdB7ols/nQzaN3zU2hqOY2p62VodJ3RfjXYrGJ107fqFgKZztQE7aoH6zhmmh2W16dYSt4dUaj8p8oUGc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=postmarketos.org; spf=pass smtp.mailfrom=postmarketos.org; dkim=pass (2048-bit key) header.d=postmarketos.org header.i=@postmarketos.org header.b=UoTwRGn+; arc=none smtp.client-ip=95.215.58.186
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=postmarketos.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=postmarketos.org
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <db799304-1551-410b-af07-fb8d9b50be5c@oss.qualcomm.com>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=postmarketos.org;
+	s=key1; t=1761014996;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=VVzODfmk6H1SoQuvDEeFLaGz/W/MVo+M1LBQXK4SPTk=;
+	b=UoTwRGn+sP6zXjeZ2ck4HhCVJrJqJ7WBFDD7a0zPnLfDoRN2TG3196DmPQKhLksTala5xG
+	FEdfbvfIURGDDlMroJAl1JTHgdjginNfkCAvHQro71/mIIt3KGJrWMfrTg/v5nEchDOfm+
+	KwI/NAHfEeEemwojp81ViysN3hmUTKekIRfwpT5KdXedbIpaOTns18K5ALywmVdg6mmq7+
+	j1egp/yaadtUyYAtR5kE0s58Jdx945OSj6Uj20k250o/jHT9BceLDT4J+u60fiXHdshmxn
+	xp/zDrjh23r5BHN3tzbJotImssnG3MSj9M84nvLhb7SzEsP3tjWu/WQp+LueHw==
+Date: Tue, 21 Oct 2025 02:49:50 +0000
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
+From: "Paul Sajna" <sajattack@postmarketos.org>
+Message-ID: <789a2ffa637842215084a39eeee94993a315ccbe@postmarketos.org>
+TLS-Required: No
+Subject: Re: [PATCH] arm64: dts: qcom: sdm845: Define guard pages within the
+ rmtfs region
+To: david@ixit.cz, "Bjorn Andersson" <andersson@kernel.org>, "Konrad Dybcio"
+ <konradybcio@kernel.org>, "Rob Herring" <robh@kernel.org>, "Krzysztof
+ Kozlowski" <krzk+dt@kernel.org>, "Conor Dooley" <conor+dt@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org, phone-devel@vger.kernel.org, "David
+ Heidelberg" <david@ixit.cz>
+In-Reply-To: <20251020-sdm845-use-guard-pages-v1-1-64d714f8bd73@ixit.cz>
+References: <20251020-sdm845-use-guard-pages-v1-1-64d714f8bd73@ixit.cz>
+X-Migadu-Flow: FLOW_OUT
 
-On Sat, Oct 18, 2025 at 03:00:32PM +0530, Krishna Chaitanya Chundru wrote:
-> 
-> 
-> On 10/18/2025 2:55 PM, Krishna Chaitanya Chundru wrote:
-> > 
-> > 
-> > On 10/18/2025 8:39 AM, Manivannan Sadhasivam wrote:
-> > > On Fri, Oct 17, 2025 at 02:10:05PM -0500, Bjorn Helgaas wrote:
-> > > > On Fri, Oct 17, 2025 at 05:10:53PM +0530, Krishna Chaitanya
-> > > > Chundru wrote:
-> > > > > When the vendor configuration space is 256MB aligned, the DesignWare
-> > > > > PCIe host driver enables ECAM access and sets the DBI base
-> > > > > to the dw_pcie_ecam_conf_map_busstart
-> > > > > of the config space. This causes vendor drivers to incorrectly program
-> > > > > iATU regions, as they rely on the DBI address for internal accesses.
-> > > > > 
-> > > > > To fix this, avoid overwriting the DBI base when ECAM is enabled.
-> > > > > Instead, introduce a custom ECAM PCI ops implementation that accesses
-> > > > > the DBI region directly for bus 0 and uses ECAM for other buses.
-> > > > > 
-> > > > > Fixes: f6fd357f7afb ("PCI: dwc: Prepare the driver for
-> > > > > enabling ECAM mechanism using iATU 'CFG Shift Feature'")
-> > > > > Reported-by: Ron Economos <re@w6rz.net>
-> > > > > Closes: https://lore.kernel.org/all/eac81c57-1164-4d74-a1b4-6f353c577731@w6rz.net/
-> > > > > Suggested-by: Manivannan Sadhasivam <mani@kernel.org>
-> > > > > Signed-off-by: Krishna Chaitanya Chundru
-> > > > > <krishna.chundru@oss.qualcomm.com>
-> > > > > ---
-> > > > >   drivers/pci/controller/dwc/pcie-designware-host.c | 28
-> > > > > +++++++++++++++++++----
-> > > > >   1 file changed, 24 insertions(+), 4 deletions(-)
-> > > > > 
-> > > > > diff --git
-> > > > > a/drivers/pci/controller/dwc/pcie-designware-host.c
-> > > > > b/drivers/pci/controller/dwc/pcie-designware-host.c
-> > > > > index 20c9333bcb1c4812e2fd96047a49944574df1e6f..e92513c5bda51bde3a7157033ddbd73afa370d78
-> > > > > 100644
-> > > > > --- a/drivers/pci/controller/dwc/pcie-designware-host.c
-> > > > > +++ b/drivers/pci/controller/dwc/pcie-designware-host.c
-> > > > > @@ -23,6 +23,7 @@
-> > > > >   #include "pcie-designware.h"
-> > > > >   static struct pci_ops dw_pcie_ops;
-> > > > > +static struct pci_ops dw_pcie_ecam_ops;
-> > > > >   static struct pci_ops dw_child_pcie_ops;
-> > > > >   #define DW_PCIE_MSI_FLAGS_REQUIRED
-> > > > > (MSI_FLAG_USE_DEF_DOM_OPS        | \
-> > > > > @@ -471,9 +472,6 @@ static int
-> > > > > dw_pcie_create_ecam_window(struct dw_pcie_rp *pp, struct
-> > > > > resource *re
-> > > > >       if (IS_ERR(pp->cfg))
-> > > > >           return PTR_ERR(pp->cfg);
-> > > > > -    pci->dbi_base = pp->cfg->win;
-> > > > > -    pci->dbi_phys_addr = res->start;
-> > > > > -
-> > > > >       return 0;
-> > > > >   }
-> > > > > @@ -529,7 +527,7 @@ static int
-> > > > > dw_pcie_host_get_resources(struct dw_pcie_rp *pp)
-> > > > >           if (ret)
-> > > > >               return ret;
-> > > > > -        pp->bridge->ops = (struct pci_ops
-> > > > > *)&pci_generic_ecam_ops.pci_ops;
-> > > > > +        pp->bridge->ops = &dw_pcie_ecam_ops;
-> > > > >           pp->bridge->sysdata = pp->cfg;
-> > > > >           pp->cfg->priv = pp;
-> > > > >       } else {
-> > > > > @@ -842,12 +840,34 @@ void __iomem
-> > > > > *dw_pcie_own_conf_map_bus(struct pci_bus *bus, unsigned int
-> > > > > devfn,
-> > > > >   }
-> > > > >   EXPORT_SYMBOL_GPL(dw_pcie_own_conf_map_bus);
-> > > > > +static void __iomem *dw_pcie_ecam_conf_map_bus(struct
-> > > > > pci_bus *bus, unsigned int devfn, int where)
-> > > > > +{
-> > > > > +    struct pci_config_window *cfg = bus->sysdata;
-> > > > > +    struct dw_pcie_rp *pp = cfg->priv;
-> > > > > +    struct dw_pcie *pci = to_dw_pcie_from_pp(pp);
-> > > > > +    unsigned int busn = bus->number;
-> > > > > +
-> > > > > +    if (busn > 0)
-> > > > > +        return pci_ecam_map_bus(bus, devfn, where);
-> > > > 
-> > > > Is there a way to avoid the "root bus is bus 00" assumption here?  It
-> > > > looks like something like this might work (it inverts the condition
-> > > > to take care of the root bus special case first):
-> > > > 
-> > > >    if (bus == pp->bridge->bus) {
-> > > >      if (PCI_SLOT(devfn) > 0)
-> > > >        return NULL;
-> > > > 
-> > > >      return pci->dbi_base + where;
-> > > >    }
-> > > > 
-> > > >    return pci_ecam_map_bus(bus, devfn, where);
-> > > > 
-> > > 
-> > > I guess it will work.
-> > > 
-> > > > > +    if (PCI_SLOT(devfn) > 0)
-> > > > > +        return NULL;
-> > > > 
-> > > > This essentially says only one function (00.0) can be on the root bus.
-> > > > I assume that someday that will be relaxed and there may be multiple
-> > > > Root Ports and maybe RCiEPs on the root bus, so it would be nice if we
-> > > > didn't have to have this check.
-> > > > 
-> > > > What happens without it?  Does the IP return the ~0 data that the PCI
-> > > > core would interpret as "there's no device here"?
-> > > > 
-> > > 
-> > > I hope the read returns ~0, but the idea is to catch the invalid
-> > > access before
-> > > trying to read/write. In case of multi Root Port design, I don't
-> > > think we have a
-> > > way to identify it. So maybe it is safe to remove this check.
-> > > 
-> > For multi root port we may need to revisit this, currently along with
-> > dbi there are some other registers iATU, elbi etc. So there might be
-> > chances to read these registers like iATU as part of enumeration and
-> > these can return non ~0 values which will have adverse effects.
-> > So we should have this check for now.
-> > 
-> One more issue is some controllers may pass only 4k memory as dbi memory
-> so we might get unmapped address access issues also.
+October 20, 2025 at 9:12 PM, "David Heidelberg via B4 Relay" <devnull+dav=
+id.ixit.cz@kernel.org mailto:devnull+david.ixit.cz@kernel.org?to=3D%22Dav=
+id%20Heidelberg%20via%20B4%20Relay%22%20%3Cdevnull%2Bdavid.ixit.cz%40kern=
+el.org%3E > wrote:
 
-Oh yes. The single Root Port controllers might supply only 4KiB of the DBI
-space, so without the check, the driver could read/write past the mapped space.
 
-Good catch!
+>=20
+>=20From: David Heidelberg <david@ixit.cz>
+>=20
+>=20Use qcom,use-guard-pages property instead of polluting device-tree wi=
+th
+> lower and upper rmtfs guard nodes.
+>=20
+>=20No functional change intended.
+>=20
+>=20cosmetic: set name the node rmtfs-region.
+>=20
+>=20Signed-off-by: David Heidelberg <david@ixit.cz>
+> ---
+> Tested on OnePlus 6T.
+> ---
+>  arch/arm64/boot/dts/qcom/sdm845-lg-common.dtsi | 17 +++--------------
+>  arch/arm64/boot/dts/qcom/sdm845-oneplus-common.dtsi | 18 +++----------=
+-----
+>  2 files changed, 6 insertions(+), 29 deletions(-)
+>=20
+>=20diff --git a/arch/arm64/boot/dts/qcom/sdm845-lg-common.dtsi b/arch/ar=
+m64/boot/dts/qcom/sdm845-lg-common.dtsi
+> index 99dafc6716e76..83b98bad19dd2 100644
+> --- a/arch/arm64/boot/dts/qcom/sdm845-lg-common.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sdm845-lg-common.dtsi
+> @@ -99,26 +99,15 @@ memory@9d400000 {
+>  no-map;
+>  };
+>=20=20
+>=20- /* rmtfs lower guard */
+> - memory@f0800000 {
+> - reg =3D <0 0xf0800000 0 0x1000>;
+> - no-map;
+> - };
+> -
+> - rmtfs_mem: memory@f0801000 {
+> + rmtfs_mem: rmtfs-region@f0800000 {
+>  compatible =3D "qcom,rmtfs-mem";
+> - reg =3D <0 0xf0801000 0 0x200000>;
+> + reg =3D <0 0xf0800000 0 0x202000>;
+> + qcom,use-guard-pages;
+>  no-map;
+>=20=20
+>=20 qcom,client-id =3D <1>;
+>  qcom,vmid =3D <QCOM_SCM_VMID_MSS_MSA>;
+>  };
+> -
+> - /* rmtfs upper guard */
+> - memory@f0a01000 {
+> - reg =3D <0 0xf0a01000 0 0x1000>;
+> - no-map;
+> - };
+>  };
+>=20=20
+>=20 gpio-keys {
+> diff --git a/arch/arm64/boot/dts/qcom/sdm845-oneplus-common.dtsi b/arch=
+/arm64/boot/dts/qcom/sdm845-oneplus-common.dtsi
+> index dcfffb271fcf3..61d63003fa371 100644
+> --- a/arch/arm64/boot/dts/qcom/sdm845-oneplus-common.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sdm845-oneplus-common.dtsi
+> @@ -75,32 +75,20 @@ key-vol-up {
+>  };
+>=20=20
+>=20 reserved-memory {
+> - /*
+> - * The rmtfs_mem needs to be guarded due to "XPU limitations"
+> - * it is otherwise possible for an allocation adjacent to the
+> - * rmtfs_mem region to trigger an XPU violation, causing a crash.
+> - */
+> - rmtfs_lower_guard: rmtfs-lower-guard@f5b00000 {
+> - no-map;
+> - reg =3D <0 0xf5b00000 0 0x1000>;
+> - };
+>  /*
+>  * The rmtfs memory region in downstream is 'dynamically allocated'
+>  * but given the same address every time. Hard code it as this address =
+is
+>  * where the modem firmware expects it to be.
+>  */
+> - rmtfs_mem: rmtfs-mem@f5b01000 {
+> + rmtfs_mem: rmtfs-region@f5b00000 {
+>  compatible =3D "qcom,rmtfs-mem";
+> - reg =3D <0 0xf5b01000 0 0x200000>;
+> + reg =3D <0 0xf5b00000 0 0x202000>;
+> + qcom,use-guard-pages;
+>  no-map;
+>=20=20
+>=20 qcom,client-id =3D <1>;
+>  qcom,vmid =3D <QCOM_SCM_VMID_MSS_MSA>;
+>  };
+> - rmtfs_upper_guard: rmtfs-upper-guard@f5d01000 {
+> - no-map;
+> - reg =3D <0 0xf5d01000 0 0x1000>;
+> - };
+>=20=20
+>=20 /*
+>  * It seems like reserving the old rmtfs_mem region is also needed to p=
+revent
+>=20
+>=20---
+> base-commit: 606da5bb165594c052ee11de79bf05bc38bc1aa6
+> change-id: 20251020-sdm845-use-guard-pages-9c2b2fa0b71e
+>=20
+>=20Best regards,
+> --=20
+>=20David Heidelberg <david@ixit.cz>
+>
 
-- Mani
-
--- 
-மணிவண்ணன் சதாசிவம்
+I tried something similar before and didn't have much luck with it. I'll =
+test your patch when I have time.
 
