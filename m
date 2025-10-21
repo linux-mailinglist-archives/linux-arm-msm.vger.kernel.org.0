@@ -1,88 +1,81 @@
-Return-Path: <linux-arm-msm+bounces-78132-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-78133-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0063ABF59CD
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Oct 2025 11:49:00 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id DB121BF5A24
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Oct 2025 11:50:42 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id AF2B54845BC
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Oct 2025 09:48:59 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 3693F1981CED
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Oct 2025 09:50:32 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9B6B732B9B9;
-	Tue, 21 Oct 2025 09:47:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3003C32C95E;
+	Tue, 21 Oct 2025 09:49:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="QCS9WO1R"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="qsVt+URK"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f49.google.com (mail-lf1-f49.google.com [209.85.167.49])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9061F32B9BB
-	for <linux-arm-msm@vger.kernel.org>; Tue, 21 Oct 2025 09:47:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDD7A32D0DD
+	for <linux-arm-msm@vger.kernel.org>; Tue, 21 Oct 2025 09:48:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761040070; cv=none; b=mer37wi1MDjnVo7bES9JOJ4taf48gBp82xk31luvMa9FOfQ/NUgaNjE2ckmQHyxs0O113G//HrXvNE/bW3gRaVpGTKKdb3aV6OHrIqlkYswUavzzGGe/bgr2oq0zOjJa4DHJ//kLDcFaZY9VkDLNPfTM9Scdum+uBxOZZ9T+2fc=
+	t=1761040140; cv=none; b=okmMcbG+RcxRk4rR8EHCaPVpgXnC2G9YwfULCjGKrcGSh3WShiufpboS1S4gG/MXWitJaOtKux3Kmp3BHaNd+beAzt1VaXHGI+x5lSeWWtj0xjxlO7ThY8hWcRnnqbiIqiYdc/IjW5skjS8ZNMxREjdVYFZdIphjFj9UHE+aEvA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761040070; c=relaxed/simple;
-	bh=LWUSgs+ntXMLNrWNlpepE0odeSrrzoevlr+4MiZjHNE=;
+	s=arc-20240116; t=1761040140; c=relaxed/simple;
+	bh=Urii5iS0FhFbA8VJNfixvzWMxw1LHSaVksjMI1C9gh0=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=VCal+g27NLyDmXT/9SUKlMOk5Rrv3CDhYPauJMfeYt5Rm0VXdBTOfnGZ8nlsr0+tCBpmOWTnppgKcgP7Ff8S9CWvUn7KzkqFHIybx2iBGcOlVWtax/DecY0HZAi/A9FkeillF+AxhGxYj3H9zTCNmi9fizvAQwKgKOxPuaObb0Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=QCS9WO1R; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 59L8KSUo029822
-	for <linux-arm-msm@vger.kernel.org>; Tue, 21 Oct 2025 09:47:47 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	A5Yfri4rZctc2WzJB/Dz4Ckun09407Nsj2ZILirxlFc=; b=QCS9WO1RKabpMbvm
-	D8Jk99WmZ4BnPvq4/b5MbVO0qRmbxhUHq0bcxzRwHGDAEKBjxp+YU12o3tne3q4N
-	oHtXkdI9wFg9jTNXVUipuyWveVQFzkoeNtmJnZdRy5iGN26M0h3hDWuU8rS422/y
-	HZqHZWzWNuQvGFnMep3U+FfMRvWFWNU3vROqfQ5pu/F34HMlX7HLw814yLxSK4+Y
-	DqRWfceRUvgum819OoO/DnmXOJiNwM+bxCRuPfcEklHbFCxuLYPbebSf5Md1+6Ku
-	q/dnITCtOWDQnu7oDEo9S7snScK3dCpxT3RMWgGjhVFqCXXwd9G+BAOyJyqK5w9y
-	dnwJKA==
-Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com [209.85.222.197])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 49v2ge0821-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Tue, 21 Oct 2025 09:47:47 +0000 (GMT)
-Received: by mail-qk1-f197.google.com with SMTP id af79cd13be357-886eaf88e01so239592685a.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 21 Oct 2025 02:47:47 -0700 (PDT)
+	 In-Reply-To:Content-Type; b=rTbA0X4oy44zFr1C3u22GXqUKtbLVmf/6lD8+VqX3tq9ZTqLSZrCayu11WVWxI67WYSmlFGJVHM4fICuv7Kub+uGSP5J9SJp79RW1xBE9ICBOl3bKMTPj5qiRNKt3Sn6caK9dXsNlVVfuAJbQTIaM0jWBLUsHN5OeBvkA9GltUs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=qsVt+URK; arc=none smtp.client-ip=209.85.167.49
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lf1-f49.google.com with SMTP id 2adb3069b0e04-57a8b00108fso1294532e87.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 21 Oct 2025 02:48:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1761040136; x=1761644936; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to:subject
+         :user-agent:mime-version:date:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=640l7eT0N+MsxbJx7EeYo7wg5aE7l2Z+pdg2rWOLL0Q=;
+        b=qsVt+URKa3QTZRywQEgsuB6HiFJR2UiisACuvZWcsvdinQwCE8pDivxOL3uGps5vUx
+         TzNF+/zzifJF4N3xrxSVOBZV4ifspPesxJfTlgwP2T40JNcn1LftyTAEFCN7eZVSZbTl
+         CabckDXo65YMQ0YIAD4zv/VtGK844H1mgQ8VcQDI1JletDQUB+Pt5PAqTAjU9tKQ5yze
+         YeSjzxiB7zYCMeYaxAHm1gMgn+2+a2sDkkYdMFY+lzflabUnZ35tL9bB0oqcg+yTB8aq
+         yUKw64RQWBt1UNDGXndIY12SUinwGmBZdSyFclW0CqNIjlsV1ZX0vXS89j6h7wy80bK6
+         oxFA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1761040067; x=1761644867;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=A5Yfri4rZctc2WzJB/Dz4Ckun09407Nsj2ZILirxlFc=;
-        b=vtIVYFxbvd5QVlrl2OlReq7PiuAgLji1X3o+UID+MOV/XmMc96+D2mK+5MRXYW0iUK
-         /IAodovDLpCotSnJCu2Y3xcIkC06BAvswNgbu5xFG25XrHuYB+jERM4ZbII6eYOEiqq4
-         vh2Vryy3NxtgguSxtA2FjZctbnXXCfzj9JLHNz6n2EMsBEiucj4g3SqbX9N75B4DP0vc
-         Xp+pfzMKx/JTrZxgMS3AXkxmyrbJzh6xymJFRY2BBqfDKqysrRXRzT0bKtrn1Qmr309o
-         Sp8WqXsAC6fmEaJaFWzHstTatyRxi6qEXY+wvCyJu5m/lM/y2a2b4dBb7oEIBGNi02NG
-         Gsnw==
-X-Forwarded-Encrypted: i=1; AJvYcCU98GGPXARatA70H0jbSr23WI9+Zy91oowx1eRD9sOEYoVzhBo8f3jFYSd+Q9YmGZ0wanXEP3qrHr94sbXQ@vger.kernel.org
-X-Gm-Message-State: AOJu0YzblwKu87csITc0I1RCTAc/1g0FtjGYoAZhD2r37vqPt48VXB25
-	iIYA1m7c4+1fJk0gvTfayd04dR5j5NRsYODg0RfcEoX9NMBXFuWzIeY0pEjPVcrdOhv6EebS/Jc
-	W/33Q9QmrfR/bRfHQLVmNK1gbMZxhok/xOrLVh6r8OSTj42dMuRFarXbxBbxm7hZJLScS
-X-Gm-Gg: ASbGncsjkseTSKG/33QCNTk3dUbOyLWYsXgnwcp3sboprC9u8qD5EW1wPKY/773wjz7
-	z/z3dn7Uu2lVralIl0tAeOnWovk21BX7UJIi9pLqr870a+RvCQlmIwXr9nS7agg+NPt0YCRW8nA
-	EEIvzXGh7mPYtWGOrAXLO4xsVxxuyqPI50ngkvcrn131vzGS8Jebkajlg2FROnlWXdVVN5ngzNZ
-	Ne/tmSyrHalUPBULhP31eRKr29wVKz2VHwJYJtaM+0vqq9HJfckgT8wql9MLKYmV99Xvnlzw+Gx
-	jitfDPqFm6xSECqitorBx1WR1lmghSZ2Ir35QQKSONfZsjm+1xTXOFQvok3g9biO7rrZLIktpt/
-	yLoE5fAMPSMEquXVBKkPXyrq6BCm3AvCXNShdvS8vDrroIv34wpzl/J8d
-X-Received: by 2002:a05:622a:1ba0:b0:4e8:966b:459b with SMTP id d75a77b69052e-4ea116a557dmr18313161cf.5.1761040066618;
-        Tue, 21 Oct 2025 02:47:46 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEzeSwT4NYOPDSj7jE+oqcdo1BkVBK0JHZ61OGnrTRCQKhTR1Q5b2mB6h6qybPWjeA3f0K5vA==
-X-Received: by 2002:a05:622a:1ba0:b0:4e8:966b:459b with SMTP id d75a77b69052e-4ea116a557dmr18313091cf.5.1761040066061;
-        Tue, 21 Oct 2025 02:47:46 -0700 (PDT)
-Received: from [192.168.119.202] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-b65eb725f3fsm1027485566b.68.2025.10.21.02.47.44
+        d=1e100.net; s=20230601; t=1761040136; x=1761644936;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to:subject
+         :user-agent:mime-version:date:message-id:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=640l7eT0N+MsxbJx7EeYo7wg5aE7l2Z+pdg2rWOLL0Q=;
+        b=ARq82Rr7idS2XCHE2G36Ax0S1bUaY4ZtZt9A3D1EPPtBnHl5MiF95nl44w2bNG/8Xc
+         ROT2kXzgsllZgScArwxJzkYRxUKcWYrKxYE82Yu/kUxkl9TBNdjj3YCsCEyz2HaWQvav
+         8ngF5waVcZ/TrRSix2cH+Lx8GMw/XMc8l91QxEpff4rKWT9B5Xh/u70GIphiNONQ3YAN
+         dZWgO2VQu7CHFhyAxyw39H++vm1vrXUaNN2sM3tRQp0z7welMTMQiy3De5vJ+WXgYNfI
+         t/xOt8RUa+5eJdz2RbFvbIY4+mVAIobdSqNLlMNkkD9//bw/CtlsqA5p1Crd4mVkUhVC
+         Nc7A==
+X-Forwarded-Encrypted: i=1; AJvYcCUahZvQ+ZwOrKZ8GUTXSI7KV+WlCh4djHdpAEtvbboKeWbwoWstRqWxyyt7B1cEyeqv5fJUIJQ9FvF58p0A@vger.kernel.org
+X-Gm-Message-State: AOJu0Yyf8NjEZVVFehDp4OyV7tr8nBFOcZC50mI3QlgJymYS9L0VTZia
+	bG4Hta6T/d+Q6a6qy1OeoXSMLAvQTdluImyUG9MvpMffPqNWhhC7YsR87wqNdf/Bf18=
+X-Gm-Gg: ASbGnctK5MpL3ycpwxyZFCfrQka+/FajELUzBKsW7F2R7ODJMOs+g4fu2NEXiKUya8r
+	zsS2O/hzRUIBIStUTA+EN/fyDas+lB1oAPNg4usknxOGHjs/oXi52m0M+sb+iSPSSKnwFBttz6e
+	nfWDK/F+TpnpStigUyajQccMQ5qVCNBGqgp9juvuc4ZbXLpOLdqnBDIcabr7UY3d8oSR1luXaom
+	8NDrQvDStGRJgXZ2cc8ry8GHeKaG4uuO0bx/xvc64Y07akqVLRfHiKRZtYJCnP2UBW/Ei0/mSi/
+	/pe+j/e11OUUfwdI1epVLR3dUk+2y//l9ZdwQGEVPWOsoKVgUL27ogrOeWNXZV1z95gMDlH/KSV
+	mym34hd1FyCKEM5DNT7pJDWXt+/r59kKUpJy6BQXZwPHc5MRmgCQoP3pJkYeF+NwPjAYBi464Sd
+	LoFtiklh4AJah5b5HkYRXnpNV4WcL0Rf//CkfONTwbYdDo0Iwca/xEhSjuxHNsS8THJg==
+X-Google-Smtp-Source: AGHT+IFwNjRiyfAAPzJORtMnct1hAhGnn7VXU61bxa/Ycsnt+eqvcugl3rjHUlPkl7DsvG1Rv3GmDQ==
+X-Received: by 2002:a05:6512:15a3:b0:57b:5254:d247 with SMTP id 2adb3069b0e04-591d8464653mr2677406e87.0.1761040135951;
+        Tue, 21 Oct 2025 02:48:55 -0700 (PDT)
+Received: from [192.168.1.100] (91-159-24-186.elisa-laajakaista.fi. [91.159.24.186])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-591def1b2f6sm3462711e87.84.2025.10.21.02.48.55
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 21 Oct 2025 02:47:45 -0700 (PDT)
-Message-ID: <297c10fc-9b36-4eae-8a56-7556cc14b8c6@oss.qualcomm.com>
-Date: Tue, 21 Oct 2025 11:47:43 +0200
+        Tue, 21 Oct 2025 02:48:55 -0700 (PDT)
+Message-ID: <3854e3a0-744c-4317-a6ed-e28edbabc4a3@linaro.org>
+Date: Tue, 21 Oct 2025 12:48:54 +0300
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -90,74 +83,126 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] arm64: dts: qcom: hamoa-iot-evk: enable pwm rgb leds
-To: Tingguo Cheng <tingguo.cheng@oss.qualcomm.com>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>
-Cc: kernel@oss.qualcomm.com, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Kamal Wadhwa <kamal.wadhwa@oss.qualcomm.com>,
-        Rakesh Kota <rakesh.kota@oss.qualcomm.com>,
-        Fenglin Wu <fenglin.wu@oss.qualcomm.com>
-References: <20251017-add-rgb-led-for-hamoa-iot-evk-v1-1-6df8c109da57@oss.qualcomm.com>
- <cb973808-005e-4920-a35b-3f02a402a78b@oss.qualcomm.com>
- <ada950ed-7b51-4e62-93ff-550c427a73fa@oss.qualcomm.com>
-Content-Language: en-US
-From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-In-Reply-To: <ada950ed-7b51-4e62-93ff-550c427a73fa@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDE4MDAyMCBTYWx0ZWRfX0nc0Qx8VNhX3
- p+4w/Ki4SvoHIMCtdPVNkdUnCYF6OTdSCRgAP26Asiumk7ibIMP+eXP0InTQ1QoHsoP2fjja6+B
- YWo6coi/Q/vHGDcUf1tQt2RSp6OiRB97UdlregoSKTzZpxPIhT6E+Xo55CPbEcBlaP78bUn+LjT
- igvmzFng3eqsRMwa4LLg4LAj5B9Pz8IUmPNU6AiHCn3n3i8Z7fSGn4RrimA3D/xv1iDOZ0xIXEi
- FN+KbJOwtzV45icuO8L11JzhYsAF3VsEDDPGMzei15y+zOQD53azgun0amIuEbBTPCbTVQTdFlz
- zCVP981TmJL8qY7+v6pYnA8Qs7M3cplNLY6Si0YhXm6XLS699UW6twea1OmXTQFpsG2Wl2fGPXe
- 6RJoza6jzwBu89kqznaTcrTBH5FTKg==
-X-Authority-Analysis: v=2.4 cv=KqFAGGWN c=1 sm=1 tr=0 ts=68f756c3 cx=c_pps
- a=50t2pK5VMbmlHzFWWp8p/g==:117 a=FpWmc02/iXfjRdCD7H54yg==:17
- a=IkcTkHD0fZMA:10 a=x6icFKpwvdMA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=EUspDBNiAAAA:8 a=tnXrPiAtB4-9hrzugQcA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=IoWCM6iH3mJn3m4BftBB:22
-X-Proofpoint-GUID: CkH8EWxKVZSottm555rOOmPOA0X2SAKe
-X-Proofpoint-ORIG-GUID: CkH8EWxKVZSottm555rOOmPOA0X2SAKe
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-10-20_07,2025-10-13_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- bulkscore=0 clxscore=1015 phishscore=0 malwarescore=0 impostorscore=0
- lowpriorityscore=0 adultscore=0 priorityscore=1501 spamscore=0 suspectscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2510020000 definitions=main-2510180020
+Subject: Re: [PATCH 2/2] arm64: dts: qcom: sm8550: Additionally manage MXC
+ power domain in camcc
+To: Luca Weiss <luca.weiss@fairphone.com>,
+ Taniya Das <taniya.das@oss.qualcomm.com>
+Cc: Bjorn Andersson <andersson@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>,
+ Jagadeesh Kona <quic_jkona@quicinc.com>,
+ Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+ Michael Turquette <mturquette@baylibre.com>, Stephen Boyd
+ <sboyd@kernel.org>, Conor Dooley <conor+dt@kernel.org>,
+ linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-clk@vger.kernel.org,
+ Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+References: <20250303225521.1780611-1-vladimir.zapolskiy@linaro.org>
+ <20250303225521.1780611-3-vladimir.zapolskiy@linaro.org>
+ <dbxvzgqs5slrl5edqunal3wplg5jiszqv46dr4nzgowwlhkhxa@qwtfq7nfjwfo>
+ <3210a484-b9c3-4399-bee1-9f5bbc90034c@linaro.org>
+ <CAA8EJprP9Z181VDCT=xfyrBipzgiB0tfb8M_XZ4H=yOrvEnB0w@mail.gmail.com>
+ <f41061a2-cf45-4588-8df7-22270c936ee2@quicinc.com>
+ <D8EZ47Z557OX.37FDVYA5AHET0@fairphone.com>
+ <d64c0776-0b12-42d3-aed3-4e6a13487f51@quicinc.com>
+ <DDKNL43NWFMA.1S03T0SUYFVMY@fairphone.com>
+From: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+In-Reply-To: <DDKNL43NWFMA.1S03T0SUYFVMY@fairphone.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On 10/21/25 8:29 AM, Tingguo Cheng wrote:
+Hi Luca.
+
+On 10/17/25 17:05, Luca Weiss wrote:
+> Hi Taniya,
 > 
-> On 10/17/2025 4:09 PM, Konrad Dybcio wrote:
->> On 10/17/25 10:06 AM, Tingguo Cheng wrote:
->>> Add red, green and blue LED channels for the RGB device connected to
->>> PMC8380C PWM-LED pins.
+> On Thu Mar 13, 2025 at 12:57 PM CET, Taniya Das wrote:
+>>
+>>
+>> On 3/13/2025 1:22 PM, Luca Weiss wrote:
+>>> Hi Taniya,
 >>>
->>> Signed-off-by: Tingguo Cheng<tingguo.cheng@oss.qualcomm.com>
->>> ---
->> Just to make sure, is this a "multicolor LED" consisting of 3 ones,
->> and *not* three LEDs that are supposed to communicate different
->> functions (i.e. network, power, disk i/o)?
-> Yes, it's a multicolor LED composed of three individual LEDs within a single package—not three separate LEDs for different functions like network, power, or disk I/O.
-> However, there's one exception worth mentioning:
-> The blue channel is connected to two sourcing signals—the EDL indicator and the PMIC PWM-RGB blue LED—via two resistors. These resistors allow selection between the two sources.
-> By default, the board is configured with the resistor soldered to connect the blue LED to the EDL indicator.
-> To support software control, I’ve added the blue channel in the DTS, enabling the capability to light the blue LED from the software side.
-> Some developers may choose to re-solder the resistor to connect the blue LED to the PMIC PWM-RGB output instead, depending on their hardware setup.
+>>> On Thu Mar 13, 2025 at 5:39 AM CET, Taniya Das wrote:
+>>>>
+>>>>
+>>>> On 3/4/2025 2:10 PM, Dmitry Baryshkov wrote:
+>>>>> On Tue, 4 Mar 2025 at 09:37, Vladimir Zapolskiy
+>>>>> <vladimir.zapolskiy@linaro.org> wrote:
+>>>>>>
+>>>>>> On 3/4/25 01:53, Dmitry Baryshkov wrote:
+>>>>>>> On Tue, Mar 04, 2025 at 12:55:21AM +0200, Vladimir Zapolskiy wrote:
+>>>>>>>> SM8550 Camera Clock Controller shall enable both MXC and MMCX power
+>>>>>>>> domains.
+>>>>>>>
+>>>>>>> Are those really required to access the registers of the cammcc? Or is
+>>>>>>> one of those (MXC?) required to setup PLLs? Also, is this applicable
+>>>>>>> only to sm8550 or to other similar clock controllers?
+>>>>>>
+>>>>>> Due to the described problem I experience a fatal CPU stall on SM8550-QRD,
+>>>>>> not on any SM8450 or SM8650 powered board for instance, however it does
+>>>>>> not exclude an option that the problem has to be fixed for other clock
+>>>>>> controllers, but it's Qualcomm to confirm any other touched platforms,
+>>>>>
+>>>>> Please work with Taniya to identify used power domains.
+>>>>>
+>>>>
+>>>> CAMCC requires both MMCX and MXC to be functional.
+>>>
+>>> Could you check whether any clock controllers on SM6350/SM7225 (Bitra)
+>>> need multiple power domains, or in general which clock controller uses
+>>> which power domain.
+>>>
+>>> That SoC has camcc, dispcc, gcc, gpucc, npucc and videocc.
+>>>
+>>> That'd be highly appreciated since I've been hitting weird issues there
+>>> that could be explained by some missing power domains.
+>>>
+>>
+>> Hi Luca,
+>>
+>> The targets you mentioned does not have any have multiple rail
+>> dependency, but could you share the weird issues with respect to clock
+>> controller I can take a look.
+> 
+> Coming back to this, I've taken a shot at camera on SM6350 (Fairphone 4)
+> again, but again hitting some clock issues.
+> 
+> For reference, I am testing with following change:
+> https://lore.kernel.org/linux-arm-msm/20250911011218.861322-3-vladimir.zapolskiy@linaro.org/
+> 
+> Trying to enable CAMCC_MCLK1_CLK - wired up to the IMX576 camera sensor
+> on this phone - results in following error.
+> 
+> [    3.140232] ------------[ cut here ]------------
+> [    3.141264] camcc_mclk1_clk status stuck at 'off'
+> [    3.141276] WARNING: CPU: 6 PID: 12 at drivers/clk/qcom/clk-branch.c:87 clk_branch_toggle+0x170/0x190
+> 
+> Checking the driver against downstream driver, it looks like the RCGs
+> should be using clk_rcg2_shared_ops because of enable_safe_config in
+> downstream, but changing that doesn't really improve the situation, but
+> it does change the error message to this:
+> 
+> [    2.933254] ------------[ cut here ]------------
+> [    2.933961] camcc_mclk1_clk_src: rcg didn't update its configuration.
+> [    2.933970] WARNING: CPU: 7 PID: 12 at drivers/clk/qcom/clk-rcg2.c:136 update_config+0xd4/0xe4
+> 
+> I've also noticed that some camcc drivers take in GCC_CAMERA_AHB_CLK as
+> iface clk, could something like this be missing on sm6350?
+> 
+> I'd appreciate any help or tips for resolving this.
+> 
 
-Ehhh didn't know we had to save money on onboard LEDs..
+Recently one particular problem related to MCLK was identified by me on
+QRB5165/RB5, and it was reported to Bjorn over IRC, namely it's not possible
+to toggle MCLK clock enable/disable state, when TITAN GDSC power domain is
+set off. I'm working on fixing the issue (a change under clk/qcom), since
+it's of an importance for a customer as well.
 
-This is really inconvenient to handle in software, because if e.g.
-userspace configures RGB=0/0/255 to signal a notification, Linux
-may program the light pulse generator, but the user will never
-receive it. On the flip side, not describing it here will not let
-anyone use it.. I'm not sure which way is worse
+I can't be totally sure that it's right the same problem as the one reported
+by you above, but it looks very similar, as a fast workaround please consider
+to set an ALWAYS_ON flag of TITAN GDSC, and at least a report from you that
+this actually helps would be nice to get.
 
-Konrad
+-- 
+Best wishes,
+Vladimir
 
