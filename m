@@ -1,181 +1,121 @@
-Return-Path: <linux-arm-msm+bounces-78099-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-78100-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id E2BA9BF5089
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Oct 2025 09:44:49 +0200 (CEST)
+Received: from ams.mirrors.kernel.org (ams.mirrors.kernel.org [IPv6:2a01:60a::1994:3:14])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5D669BF5092
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Oct 2025 09:45:25 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 6D26F4200BF
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Oct 2025 07:44:29 +0000 (UTC)
+	by ams.mirrors.kernel.org (Postfix) with ESMTPS id F353D351D2E
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Oct 2025 07:45:24 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2C3C128D82A;
-	Tue, 21 Oct 2025 07:43:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 74F69284684;
+	Tue, 21 Oct 2025 07:43:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="ltFx4HXK"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="nuhjVe7d"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F304628469A
-	for <linux-arm-msm@vger.kernel.org>; Tue, 21 Oct 2025 07:43:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 501A9284670
+	for <linux-arm-msm@vger.kernel.org>; Tue, 21 Oct 2025 07:43:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761032615; cv=none; b=U6JRWR4uwh28jt5JXsSJ91DUHeOs+DlBT4vLL5B82PnpuKV11oADuDHF6zWoP9O6nWKofXy2SXcGpYBk+8bAO6PPalNeJr5+M5LCwdszWSc1KQpfmIYTfCnlD+joST7X9kl9DEAwjgXJ9TIGu+Vq5DAEQxMPiRpGuMLS14v00UA=
+	t=1761032626; cv=none; b=tOIueWkYuRcUsHAR/aBp5chlgfdMCZdnyewgM0PiXMZz6PKDNGj6Eds0rlToBsk54moaEi6tvNECzCtsyMl2lL0p7xGoCQU75Gq08BOV5criJUfYzvKAn77rWpS0xJ922NUmSs315C4M4Pyd12yv9kY5J1caNmPsztyzrDq9GJY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761032615; c=relaxed/simple;
-	bh=UOGYTjjAne7jp0gN/Bh1ycgyr9fzZfnapktjDlzWN/0=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=VwRoyAnxdI5LbIpwp3i3uxygbQFxXkLPLJO7jjMc57eHnVDnxPQ/N8QpUk/cSY7O6HapK9xQfnySMHQuP3hJ/E0U5pb9ysP0xFi/yrnngim7yYMh2xSE+SOyfbMgFUu0LiiuPxHopWlZo/e52MIFOqcgOaIrNcIYPboGdFY7zTk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=ltFx4HXK; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 59KL0rJN004647
-	for <linux-arm-msm@vger.kernel.org>; Tue, 21 Oct 2025 07:43:31 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	dVfeUMgTBM3CAu9I82wxAPql1NahbWchYps+Z870ydE=; b=ltFx4HXK32YtKoIG
-	dPPJ9j7qTS0KRq3oSn2CdYQKPnBKxUBOSpJ7njjqExchM/8QdicODlI792/0LJ+u
-	VmpAcfhLl9ImsFVWfasGE+J0gzc27btfvV9KwHaYCElLDnrKAk6pgtKX/jcuHbDq
-	3RSSYFCxQdbNyXx1ebQagbNg9M9AK3sAz2l3PETm+EeKdT6usvzNvS8rzkx70ci6
-	FwKKYrlnbs6t7UNMJFUFs2p1NG7qox8DosubMukxiGieecsVI13SY06/GRs84KP7
-	q+O30KYg/Yn+Rxxe/EGmmPOy+tI1XcTjGrm9VOnq4w8xFO5vTs0s6Os5BVlWhBUs
-	f725Jw==
-Received: from mail-pg1-f198.google.com (mail-pg1-f198.google.com [209.85.215.198])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 49v3nffhuu-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Tue, 21 Oct 2025 07:43:31 +0000 (GMT)
-Received: by mail-pg1-f198.google.com with SMTP id 41be03b00d2f7-b6a2409137dso4251699a12.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 21 Oct 2025 00:43:31 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1761032610; x=1761637410;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=dVfeUMgTBM3CAu9I82wxAPql1NahbWchYps+Z870ydE=;
-        b=HV/HzNB2MgU4hn9SEnNuadYKJdbVirpPxLKnSUy4PggpbKBlP9pwwlwFmrof1/IODJ
-         LwwOtYZA0I3VN+LE3zMf37SUdP5qqVOi7VkAD2OWIqcqbdKjXEtXjY7dQp4pYQJXSl0/
-         hZZJe+5F7cNCTXkQie51InMW/kb7OorhXabNIyvwnkBEWkpcXw1FwQgHCf+ADh4kOW/N
-         zBRNB/QOgMx3JtpuFF8AtguKd9k+8Ai7Aya68YzNisvDQZaNIM7xRzABs7/9WVfHiPaA
-         nP5lMv4jnsLD4amMdQA1j5mhGRw87vLiDvfO/Ar0Yicne6LRdR5h+0NwULa49fhcNZOK
-         ntKA==
-X-Forwarded-Encrypted: i=1; AJvYcCVpw1ZB1egxV1VrEIZcWGgCs7+7GwyASMrdQbgXRHC7osQGcVHbTegr40kGlL/NGfAVmhpmkduNCdWM1IpB@vger.kernel.org
-X-Gm-Message-State: AOJu0YzTTyDLaIMkoT/4AI673WZb/4QCm/Nbgu4dg2jnZtQmrp+DL+UR
-	QD5qae4S+P2v4nvJxjVk0ZCu5iYpVJghV8OpXBakFmTgG5wb4RNtIdBeoSEHWaKo4LN8Ekt6l3h
-	pwLb+ieRbwRtaizgK9ZULHAvDyzF4PjhN0+ETGzT5AQQI4pgNs/rIFyCpr6wCqtdHc4sw
-X-Gm-Gg: ASbGnct4zeAaIwP9g4AxZ4PScRn/MiT+XX49YKpfITtPOr7zv1fcn5+VElfc+vj0Bzi
-	+LbDe5qu7H5Uxpyu5K5q2lmCRtlTkMG9TPpV2GILvauHv/fDgX8uyJOUD9b5mbs6/wnz4HOUfnv
-	TR4vgfQLSMTi+iJSbnqNq/OFFGOY9XcVaN3rIsLgcCYZ6hGDtXjqjFRHpE11ImcSiTG9N35U0Rf
-	G2YNMYeohaC6C5ZZ0u7BrVQO1X9NxKe6knHgZSw6qCtkV71bTgqfFoataHVbDDvObZk4/sLOyVK
-	+QSIK3m4wQxwee0Um8nlUL6td7bpxpB+8wKTAZibq3IDvtppetd8c6QxvEWyQTadmwbHXn6ihoD
-	DWMRLubeDJnvVrY2ZlEa155kkiKNmW/+cjgFlsN7T3YVM2WJQxqR4CtPxLM/GOuYO
-X-Received: by 2002:a17:903:3d0b:b0:24d:1f99:713a with SMTP id d9443c01a7336-290ca30def8mr218012465ad.31.1761032610247;
-        Tue, 21 Oct 2025 00:43:30 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEr8+0hmXEglm2VrONIYQuNr3/IelIpMrr9RaoeoOUTL0/N8ALs8rMkTd/VGSWryNSxw636ig==
-X-Received: by 2002:a17:903:3d0b:b0:24d:1f99:713a with SMTP id d9443c01a7336-290ca30def8mr218012235ad.31.1761032609750;
-        Tue, 21 Oct 2025 00:43:29 -0700 (PDT)
-Received: from [10.133.33.105] (tpe-colo-wan-fw-bordernet.qualcomm.com. [103.229.16.4])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-29246ebccf3sm101559935ad.1.2025.10.21.00.43.26
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 21 Oct 2025 00:43:29 -0700 (PDT)
-Message-ID: <7d81d7be-0752-4a95-995f-3477fa274466@oss.qualcomm.com>
-Date: Tue, 21 Oct 2025 15:43:23 +0800
+	s=arc-20240116; t=1761032626; c=relaxed/simple;
+	bh=L3OSHu/zykUUrMf0jhQiVo+5X5Tp4yjmsTRArUNbg40=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=TETHzLPueOQp4s+JhuRllSsP+H16TaTDNTiEbUxR1Lm42I23Stur4/VQN2qsXEenD+Qr4Y5H4iwBySmUo3rUTfdC56gMmkiQFtsFAy+RefEnXicH8NjVQ44fxPP5G6ckU/oj7sWq/jWT7BpZUlal8h3x2EFrLqe3WUwTbKRYQ1k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=nuhjVe7d; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED95BC19423
+	for <linux-arm-msm@vger.kernel.org>; Tue, 21 Oct 2025 07:43:45 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1761032626;
+	bh=L3OSHu/zykUUrMf0jhQiVo+5X5Tp4yjmsTRArUNbg40=;
+	h=References:In-Reply-To:Reply-To:From:Date:Subject:To:Cc:From;
+	b=nuhjVe7dewQwiCcKzJosmLlrhCng/YZTQCU888Cw1JRGstMFQKq1pbud2Z8PIRkc9
+	 EL4ZiMTVQYItN2lOof0KUvZZ31mV8AJaD79wJAm7T6tlf1UMsiLQwhyZxD2MlFEqre
+	 /KQUWp71efacnNSB5bOVbi12pFYCcECOH9GuOJNF8C0PtAG9fZ6VWIuHGxpF2DaPzU
+	 poxS+KXXVMrc9lfatxufE8h9v1S3j+YDO2kfnWMICIVyKeCAjglWR2P9p6ow2sler5
+	 tOxZrlqn5eUjnCQ2qu06YvN39P83knb1R4AqEVKTZIxh0e7QWamVASXkckmlrRCqZo
+	 BFfWu0KvZIh1A==
+Received: by mail-lf1-f43.google.com with SMTP id 2adb3069b0e04-57a960fe78fso6849879e87.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 21 Oct 2025 00:43:45 -0700 (PDT)
+X-Forwarded-Encrypted: i=1; AJvYcCWF5WTW2xK7QTm2enVkPREYLc8toLQTamkbj0shh0BXLIY5/CKtbtqb05m7rU2L1MC93zVPnnJuDklTOfoI@vger.kernel.org
+X-Gm-Message-State: AOJu0Ywekz3QD0XD0AjkL3VXD0sfEi3Th8SdDypLIwTQ71g7fP263o5l
+	594kR0obWiSsM1RH/ZVFlcT39rrzA6yKiFT4NwyJpm4ixG5e/Fe3+XFDbGleCqYZkH4Ykv4KZAY
+	a8hozb6hfBBPZIgkQx9j5uHL6Midnt00=
+X-Google-Smtp-Source: AGHT+IGdlueTEgM73EYjdJJ7MYdcpYR/rotWSKlN7mFY5uUlnnqxOjkAfgQUxRhc1E7On08N06u+r1J6has1Jnhp3yI=
+X-Received: by 2002:a2e:9fcb:0:b0:375:ebfa:2986 with SMTP id
+ 38308e7fff4ca-37797a728f1mr44182921fa.34.1761032624223; Tue, 21 Oct 2025
+ 00:43:44 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] coresight: ETR: Fix ETR buffer use-after-free issue
-To: Xiaoqi Zhuang <xiaoqi.zhuang@oss.qualcomm.com>,
-        Suzuki K Poulose <suzuki.poulose@arm.com>,
-        Mike Leach
- <mike.leach@linaro.org>,
-        James Clark <james.clark@linaro.org>,
-        Alexander Shishkin <alexander.shishkin@linux.intel.com>
-Cc: coresight@lists.linaro.org, linux-arm-kernel@lists.infradead.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
-References: <20251020-fix_etr_issue-v1-1-902ab51770b4@oss.qualcomm.com>
-Content-Language: en-US
-From: Jie Gan <jie.gan@oss.qualcomm.com>
-In-Reply-To: <20251020-fix_etr_issue-v1-1-902ab51770b4@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-ORIG-GUID: w_4URVrDdDjn6MzQIMfcI9NfQfO5hWpj
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDE4MDAyNyBTYWx0ZWRfX+mXqOdKGliPf
- snIdx99bGwoakMzPxkLlO/NF+qL55ISQxzz7uoBhXrfqq7I4Fz4sX16TctlSiKqvCGQNAvwlcJw
- plfsjc9er0TiRUFw6klj9x0KM0X5vfsGVrBteqK1Js64F0Djoe+hWa4ZqKilkVI0OYx5M5s34N6
- j5zYztskjEhsS+zUpOh0TkYhWqR+xk9EIA93xqqm8szkSYRkAE69a3LCeRusz4gqDp90q40IIJq
- VpqSJ/MJtiMcJca4UMecR4aaFBG8j5D/W8V/WqP05Le1PrX45VF6Pq+hkdS5tCmgRWxI4X49OXE
- n/I01265pV7bGhzMFUxDMITCh/g7VTHvOkGubx51tVsjcCg0nGbTrxVN4pTqjFToYpEH3GmCW7R
- /k2dOTGb9Oe5vIpTMyJsMDsWwLPloQ==
-X-Proofpoint-GUID: w_4URVrDdDjn6MzQIMfcI9NfQfO5hWpj
-X-Authority-Analysis: v=2.4 cv=EYjFgfmC c=1 sm=1 tr=0 ts=68f739a3 cx=c_pps
- a=Qgeoaf8Lrialg5Z894R3/Q==:117 a=nuhDOHQX5FNHPW3J6Bj6AA==:17
- a=IkcTkHD0fZMA:10 a=x6icFKpwvdMA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=EUspDBNiAAAA:8 a=yZ5FxKY4llv7UqssUvUA:9 a=QEXdDO2ut3YA:10
- a=x9snwWr2DeNwDh03kgHS:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-10-20_07,2025-10-13_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- bulkscore=0 clxscore=1015 spamscore=0 malwarescore=0 lowpriorityscore=0
- priorityscore=1501 impostorscore=0 phishscore=0 adultscore=0 suspectscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2510020000 definitions=main-2510180027
+References: <E1vB6ld-0000000BIPy-2Qi4@rmk-PC.armlinux.org.uk>
+In-Reply-To: <E1vB6ld-0000000BIPy-2Qi4@rmk-PC.armlinux.org.uk>
+Reply-To: wens@kernel.org
+From: Chen-Yu Tsai <wens@kernel.org>
+Date: Tue, 21 Oct 2025 15:43:29 +0800
+X-Gmail-Original-Message-ID: <CAGb2v67U1KUeEvQ8yhSHP5NY1-9hGuwuTwgKMWGJB2LZn5pwqw@mail.gmail.com>
+X-Gm-Features: AS18NWBVywV_yRWAV-n1YGVmZIEA5XvU8OAR8wbCjrwgr8Xivfn8oNIG-rClQ6c
+Message-ID: <CAGb2v67U1KUeEvQ8yhSHP5NY1-9hGuwuTwgKMWGJB2LZn5pwqw@mail.gmail.com>
+Subject: Re: [PATCH net-next v2] net: stmmac: replace has_xxxx with core_type
+To: "Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>
+Cc: Andrew Lunn <andrew@lunn.ch>, Heiner Kallweit <hkallweit1@gmail.com>, 
+	Alexandre Torgue <alexandre.torgue@foss.st.com>, Andrew Lunn <andrew+netdev@lunn.ch>, 
+	"David S. Miller" <davem@davemloft.net>, Eric Dumazet <edumazet@google.com>, 
+	Jakub Kicinski <kuba@kernel.org>, Jan Petrous <jan.petrous@oss.nxp.com>, 
+	Jernej Skrabec <jernej.skrabec@gmail.com>, Jonathan Hunter <jonathanh@nvidia.com>, 
+	linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org, 
+	linux-stm32@st-md-mailman.stormreply.com, linux-sunxi@lists.linux.dev, 
+	linux-tegra@vger.kernel.org, 
+	Maxime Chevallier <maxime.chevallier@bootlin.com>, Maxime Coquelin <mcoquelin.stm32@gmail.com>, 
+	netdev@vger.kernel.org, Paolo Abeni <pabeni@redhat.com>, 
+	Richard Cochran <richardcochran@gmail.com>, s32@nxp.com, 
+	Samuel Holland <samuel@sholland.org>, Thierry Reding <thierry.reding@gmail.com>, 
+	Vinod Koul <vkoul@kernel.org>, Vladimir Zapolskiy <vz@mleia.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-
-
-On 10/20/2025 5:06 PM, Xiaoqi Zhuang wrote:
-> When ETR is enabled as CS_MODE_SYSFS, if the buffer size is changed
-> and enabled again, currently sysfs_buf will point to the newly
-> allocated memory(buf_new) and free the old memory(buf_old). But the
-> etr_buf that is being used by the ETR remains pointed to buf_old, not
-> updated to buf_new. In this case, it will result in a memory
-> use-after-free issue.
-> 
-> Fix this by checking ETR's mode before updating and releasing buf_old,
-> if the mode is CS_MODE_SYSFS, then skip updating and releasing it.
-> 
-
-missed fix tag:
-Fixes: de5461970b3e ("coresight: tmc: allocating memory when needed")
-
-Thanks,
-Jie
-
-> Signed-off-by: Xiaoqi Zhuang <xiaoqi.zhuang@oss.qualcomm.com>
+On Tue, Oct 21, 2025 at 3:27=E2=80=AFPM Russell King (Oracle)
+<rmk+kernel@armlinux.org.uk> wrote:
+>
+> Replace the has_gmac, has_gmac4 and has_xgmac ints, of which only one
+> can be set when matching a core to its driver backend, with an
+> enumerated type carrying the DWMAC core type.
+>
+> Tested-by: Maxime Chevallier <maxime.chevallier@bootlin.com>
+> Signed-off-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
 > ---
->   drivers/hwtracing/coresight/coresight-tmc-etr.c | 7 +++++++
->   1 file changed, 7 insertions(+)
-> 
-> diff --git a/drivers/hwtracing/coresight/coresight-tmc-etr.c b/drivers/hwtracing/coresight/coresight-tmc-etr.c
-> index b07fcdb3fe1a..3e73cf2c38a3 100644
-> --- a/drivers/hwtracing/coresight/coresight-tmc-etr.c
-> +++ b/drivers/hwtracing/coresight/coresight-tmc-etr.c
-> @@ -1268,6 +1268,13 @@ static struct etr_buf *tmc_etr_get_sysfs_buffer(struct coresight_device *csdev)
->   		goto out;
->   	}
->   
-> +	/*
-> +	 * Since this sink is already enabled, the existing buffer should not
-> +	 * be released even if the buffer size has changed.
-> +	 */
-> +	if (coresight_get_mode(csdev) == CS_MODE_SYSFS)
-> +		goto out;
-> +
->   	/*
->   	 * If we don't have a buffer or it doesn't match the requested size,
->   	 * use the buffer allocated above. Otherwise reuse the existing buffer.
-> 
-> ---
-> base-commit: 98ac9cc4b4452ed7e714eddc8c90ac4ae5da1a09
-> change-id: 20251020-fix_etr_issue-02c706dbc899
-> 
-> Best regards,
+> v2:
+> - fix conflict with removal with STMMAC_FLAG_HAS_INTEGRATED_PCS removal
+> - wrap 88 char line in stmmac_xmit()
+> - add Maxime's tested-by
+>
+> I haven't added Maxime's r-b because the patch has changed subtly, but
+> not in a way that invalidates testing. Given the minor changes and it's
+> possibilities for further conflicts, can we get this in sooner please?
+> Thanks.
+>
+>  drivers/net/ethernet/stmicro/stmmac/common.h  |  5 ++
+>  .../stmicro/stmmac/dwmac-dwc-qos-eth.c        |  2 +-
+>  .../net/ethernet/stmicro/stmmac/dwmac-intel.c |  5 +-
+>  .../ethernet/stmicro/stmmac/dwmac-ipq806x.c   |  2 +-
+>  .../ethernet/stmicro/stmmac/dwmac-loongson.c  |  2 +-
+>  .../ethernet/stmicro/stmmac/dwmac-lpc18xx.c   |  2 +-
+>  .../stmicro/stmmac/dwmac-qcom-ethqos.c        |  2 +-
+>  .../net/ethernet/stmicro/stmmac/dwmac-rk.c    |  4 +-
+>  .../net/ethernet/stmicro/stmmac/dwmac-s32.c   |  2 +-
+>  .../ethernet/stmicro/stmmac/dwmac-socfpga.c   |  2 +-
+>  .../net/ethernet/stmicro/stmmac/dwmac-sunxi.c |  2 +-
 
+For sunxi,
+
+Acked-by: Chen-Yu Tsai <wens@kernel.org>
 
