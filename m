@@ -1,68 +1,71 @@
-Return-Path: <linux-arm-msm+bounces-78066-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-78067-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [142.0.200.124])
-	by mail.lfdr.de (Postfix) with ESMTPS id C928EBF4344
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Oct 2025 02:55:55 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id ED165BF4526
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Oct 2025 03:52:56 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 4EB774EF3CA
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Oct 2025 00:55:50 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id BCDD818884D0
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Oct 2025 01:53:20 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 08F8520102B;
-	Tue, 21 Oct 2025 00:54:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4433615687D;
+	Tue, 21 Oct 2025 01:52:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="KHLMJ6Ey"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="d7bFmOvY"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDEA51A2392;
-	Tue, 21 Oct 2025 00:54:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F02127E105;
+	Tue, 21 Oct 2025 01:52:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761008052; cv=none; b=jiPDvXveFm+PIqdyBd4FinzmOsMhAoR00+IpCBejvAUebSbDfp9bX+Avfiniv1gAx7GllANrWtExKxFFBRes7PEmRAv7CrnUcj1qtjpqEUMongb9Is8wOfNgDP3JSFjwXOV6WmYpHyluGkzhzIlIrAXmxApbv47PEKgaXG4C3so=
+	t=1761011572; cv=none; b=O4TZo0sBA6qBow8cHPu6EDYLo8oOWz7faRV8jswK8/29C3krR6ze4zt2HOeZ3IVjY0ENFcgmT4fJwgH69qOhyewzDeBPQZXp2MsIi7F0uXwqvh7ITYjYsA74MFpXj2abFFa+m5aNUc46IVOHmNC9Xq1Rq9eggBhcbMV7Ij+4sFg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761008052; c=relaxed/simple;
-	bh=GWRxTbKMIALWDNujjpFEp+EgSzbDooDkX5Xj1E6/bxg=;
+	s=arc-20240116; t=1761011572; c=relaxed/simple;
+	bh=DYZ+NvvXDV3GLpnrmo/lEqoRa29w7O428mCra33ZZ18=;
 	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ILf+Z23c5nElSjDhxG1Y6tn0vSb8aT1yq8YIhgPWmDnbNkgwKf0rnFuNcSmATGgo+8bAIyJ58bbtT6lNQDTPfV//+KGeLqW8eFD/2WH2bUI0LvV5GlNtHhwDVjknifaKAK7xBN4R/CbrgCPXGjAitA76RLD2TPEPLWBeCN6LROo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=KHLMJ6Ey; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F40AC4CEFB;
-	Tue, 21 Oct 2025 00:54:10 +0000 (UTC)
+	 MIME-Version:Content-Type; b=JDEUWXOj4Dg9//O+Ok/P8ixajHXAXOYq9/SW9D0vsFK9CwijFzQX0W+6pi9uJPr1mdH6j26QNbFx6qhwdQhDOpxF4mr6TyA+cO0594r/1jI7Odd65pYxUrd/dehBSYs1+oplbssJfgfdoA7s1uxHRt2Uae/vXyJIlamnyU+iiQY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=d7bFmOvY; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8DB1CC4CEFB;
+	Tue, 21 Oct 2025 01:52:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1761008051;
-	bh=GWRxTbKMIALWDNujjpFEp+EgSzbDooDkX5Xj1E6/bxg=;
+	s=k20201202; t=1761011571;
+	bh=DYZ+NvvXDV3GLpnrmo/lEqoRa29w7O428mCra33ZZ18=;
 	h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-	b=KHLMJ6EyXs5/HPdCNWAj9X+qWyC60ZpVLNY2gqzR2nIfMD7otI0SfuiVYZ8jLavEV
-	 I0ElnaL32TSpS9VKMeZfyOoVVw+F7WM6w3/NBaPsjjxdfmiqNGvnBeOEIAghgsxX/9
-	 QY0Q16Ta26AdMpn+NpjO48Y8fTgmzgBHB3iWZpM6h5PZ8n10U7X4PLNYrceGxODVEh
-	 S/C9zssq5qdlAKcR560nunNsBjDCNmhc9OGkgxfbbyVHdOWrMc5DQe+IK4EGEx9Tx+
-	 i48tm5NU7Dbs7vyEkml57TR+QJTe+kZSS+5fNJPIklFpleWDWgPdQaVoCbpTXBfL96
-	 M5ioOAewcz9JA==
-Date: Mon, 20 Oct 2025 17:54:09 -0700
+	b=d7bFmOvYou2jVLWtmxieZwAGRgonwPmZSCPDWuIolmQx0M4Y5zhvniT/tOcwtn9RQ
+	 l2IhR3X6Al2Nb290zycAxVMwew6eXS1PI5Z67wY71A2YkQI/IfsttMCvOaqSkhvpF0
+	 th8NqPcpgNXEvT3EQhfp9MjJxqybhWV9hzuelw2I0d4fsK75z09aGiVeF9Shcgta5Y
+	 msD9yFUVjqF4ApvAhN6aqAuh2zgN4AAYin+y4AI02O5nfP5FgIbPrDykx/5mseg/SY
+	 8HriN8sx5C1HeVJBpPnNlXEY33sV04wvbvNoXZtFN0KhTuxSZjB7RrUAbb4fKtxFio
+	 Xvn8rrwWJU8Rg==
+Date: Mon, 20 Oct 2025 18:52:49 -0700
 From: Jakub Kicinski <kuba@kernel.org>
-To: "Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>
-Cc: Andrew Lunn <andrew@lunn.ch>, Heiner Kallweit <hkallweit1@gmail.com>,
- Alexandre Torgue <alexandre.torgue@foss.st.com>, Andrew Lunn
- <andrew+netdev@lunn.ch>, Chen-Yu Tsai <wens@csie.org>, "David S. Miller"
- <davem@davemloft.net>, Eric Dumazet <edumazet@google.com>, Jan Petrous
- <jan.petrous@oss.nxp.com>, Jernej Skrabec <jernej.skrabec@gmail.com>,
- Jonathan Hunter <jonathanh@nvidia.com>,
- linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org,
- linux-stm32@st-md-mailman.stormreply.com, linux-sunxi@lists.linux.dev,
- linux-tegra@vger.kernel.org, Maxime Chevallier
- <maxime.chevallier@bootlin.com>, Maxime Coquelin
- <mcoquelin.stm32@gmail.com>, netdev@vger.kernel.org, Paolo Abeni
- <pabeni@redhat.com>, Richard Cochran <richardcochran@gmail.com>,
- s32@nxp.com, Samuel Holland <samuel@sholland.org>, Thierry Reding
- <thierry.reding@gmail.com>, Vinod Koul <vkoul@kernel.org>, Vladimir
- Zapolskiy <vz@mleia.com>
-Subject: Re: [PATCH net-next] net: stmmac: replace has_xxxx with core_type
-Message-ID: <20251020175409.5098acd4@kernel.org>
-In-Reply-To: <E1v9gFI-0000000Azbb-44bh@rmk-PC.armlinux.org.uk>
-References: <E1v9gFI-0000000Azbb-44bh@rmk-PC.armlinux.org.uk>
+To: Maxime Chevallier <maxime.chevallier@bootlin.com>, Andrew Lunn
+ <andrew@lunn.ch>, Russell King <linux@armlinux.org.uk>, Heiner Kallweit
+ <hkallweit1@gmail.com>, Vladimir Oltean <vladimir.oltean@nxp.com>
+Cc: davem@davemloft.net, netdev@vger.kernel.org,
+ linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+ thomas.petazzoni@bootlin.com, Eric Dumazet <edumazet@google.com>, Paolo
+ Abeni <pabeni@redhat.com>, linux-arm-kernel@lists.infradead.org, Christophe
+ Leroy <christophe.leroy@csgroup.eu>, Herve Codina
+ <herve.codina@bootlin.com>, Florian Fainelli <f.fainelli@gmail.com>,
+ =?UTF-8?B?S8O2cnk=?= Maincent <kory.maincent@bootlin.com>, Marek
+ =?UTF-8?B?QmVow7pu?= <kabel@kernel.org>, Oleksij Rempel
+ <o.rempel@pengutronix.de>, =?UTF-8?B?Tmljb2zDsg==?= Veronese
+ <nicveronese@gmail.com>, Simon Horman <horms@kernel.org>,
+ mwojtas@chromium.org, Antoine Tenart <atenart@kernel.org>,
+ devicetree@vger.kernel.org, Conor Dooley <conor+dt@kernel.org>, Krzysztof
+ Kozlowski <krzk+dt@kernel.org>, Rob Herring <robh@kernel.org>, Romain
+ Gantois <romain.gantois@bootlin.com>, Daniel Golle <daniel@makrotopia.org>,
+ Dimitri Fedrau <dimitri.fedrau@liebherr.com>
+Subject: Re: [PATCH net-next v14 00/16] net: phy: Introduce PHY ports
+ representation
+Message-ID: <20251020185249.32d93799@kernel.org>
+In-Reply-To: <20251013143146.364919-1-maxime.chevallier@bootlin.com>
+References: <20251013143146.364919-1-maxime.chevallier@bootlin.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -72,13 +75,14 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7bit
 
-On Fri, 17 Oct 2025 09:55:32 +0100 Russell King (Oracle) wrote:
-> Replace the has_gmac, has_gmac4 and has_xgmac ints, of which only one
-> can be set when matching a core to its driver backend, with an
-> enumerated type carrying the DWMAC core type.
+On Mon, 13 Oct 2025 16:31:26 +0200 Maxime Chevallier wrote:
+> Hi everyone,
+> 
+> Here is a V14 for the phy_port work, aiming at representing the
+> connectors and outputs of PHY devices.
 
-Looks like this also conflicts with the just-applied PCS series?
-Either way - doesn't seem to apply for me :(
--- 
-pw-bot: cr
+I can't help but read the lack of replies from PHY maintainers
+here as a tacit rejection. Not entirely sure what to do here.
+Should we discuss this at the netdev call tomorrow (8:30am PT)?
+Would any PHY maintainer be willing to share their opinion?
 
