@@ -1,385 +1,156 @@
-Return-Path: <linux-arm-msm+bounces-78178-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-78179-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4E14ABF6C73
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Oct 2025 15:30:46 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 46CECBF6E24
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Oct 2025 15:51:11 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 17ADB3B64CC
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Oct 2025 13:29:17 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id D47E718C62FD
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Oct 2025 13:51:34 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8931433710B;
-	Tue, 21 Oct 2025 13:29:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 163453396EF;
+	Tue, 21 Oct 2025 13:51:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=ideasonboard.com header.i=@ideasonboard.com header.b="TLmFnjHZ"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="HO6NUCU5"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from perceval.ideasonboard.com (perceval.ideasonboard.com [213.167.242.64])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f45.google.com (mail-wr1-f45.google.com [209.85.221.45])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E5883019A2;
-	Tue, 21 Oct 2025 13:29:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=213.167.242.64
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00F6F338930
+	for <linux-arm-msm@vger.kernel.org>; Tue, 21 Oct 2025 13:51:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761053355; cv=none; b=lQQ2fOaHespF4ozIreml6nnDOEIj78q5gxvxu8CcwF//tfY5Cxh7m4ruHN5qGarAH3GH92GCc6vm5UoE+ZJ7JPxrymV3LPprt8PqNesFhFK6rLFhXLMcXanEg1Mp2Ua4NYCePtpFm4WbbIpguV2hjzeX93ugB1NWyxwHDD0qEkM=
+	t=1761054665; cv=none; b=vE3ZUmVHDCL3MfnoL5h1Aw16C6Ez9YA5PsvfNFG6Fovf3xVnHPuRjhkn6fIMawx1Pq9ZdeGwXk2BhMauo+mt0zmnvOKNt64KnIgQaUUB3WY2HiKaELXl7uw21IwD5uiZa1OrSIwWKy2VEN8HU02UCjfZXWWkGu+KldrmXSDh2II=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761053355; c=relaxed/simple;
-	bh=TdmnHYraVLXyq2KpB8KKjs8nVP++3l4uw6Cj2Qx6icU=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=AsGj7JTalnWk5OTjFHqU0RI3g+dIhRas5wW/pyHZdJiyqxRVBVnYxhiwKH8WPHzTJgNFJVza2q5uZiA0u7KUr66oBSzX4xn+FLg7iLZ2FuyxG6e5dVQsI7WhFx/e8X7mD6blvsf3+/agKOGlH2rPoD4LOMrgtUm7IFsndVyc7Wk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ideasonboard.com; spf=pass smtp.mailfrom=ideasonboard.com; dkim=pass (1024-bit key) header.d=ideasonboard.com header.i=@ideasonboard.com header.b=TLmFnjHZ; arc=none smtp.client-ip=213.167.242.64
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ideasonboard.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ideasonboard.com
-Received: from [192.168.88.20] (91-158-153-178.elisa-laajakaista.fi [91.158.153.178])
-	by perceval.ideasonboard.com (Postfix) with ESMTPSA id A6D036A6;
-	Tue, 21 Oct 2025 15:27:27 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=ideasonboard.com;
-	s=mail; t=1761053248;
-	bh=TdmnHYraVLXyq2KpB8KKjs8nVP++3l4uw6Cj2Qx6icU=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=TLmFnjHZ7QGrJGGch1/PS5cm/SEPmEHLgfnRuKGU633tUbrafTejahnxqwDqb8WUA
-	 BzvQIu/AKRvUSlGdmWCAqjQjW9PUt5VL1fWjA2Ktkz5YhQDUq8+cEhbqslGSWERmTI
-	 Acn2+DbnOn3ka05kWMPm1BmHMJcyPmrIx4Z+WbUg=
-Message-ID: <5ae8b52a-ff6c-4ab6-b2e6-83bd858b206a@ideasonboard.com>
-Date: Tue, 21 Oct 2025 16:29:08 +0300
+	s=arc-20240116; t=1761054665; c=relaxed/simple;
+	bh=rdLLYhnz/5uqn7buFD6pzFSbbx+bpgXyOsq7aLCDz9k=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=P/K1sQVSmMtMQUDol5+icDK0emGC6KrGgOortXFVb7otMetxoz0LGoY3Q/9Ib5urR2JqxaLETfuYCZm2569xd7zK25LbMUy1YmUuAcdmOH2wSq60OR1mta77dFrajtESr8U85DZ0v5M/zXS8gNKt58Xxfm7DMMnX7Tc5UiZckpY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=HO6NUCU5; arc=none smtp.client-ip=209.85.221.45
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wr1-f45.google.com with SMTP id ffacd0b85a97d-427015003eeso947023f8f.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 21 Oct 2025 06:51:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1761054660; x=1761659460; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=7Pj1UWMB1Vw7tjSrrq36RtqXa78b52SGuEyk/FfhX/0=;
+        b=HO6NUCU5c8+ykHKyKzohptzbcbrlXofhGwckN4PnH5oVYnRPMiGheMU6hafswb0QPE
+         CQ3oO+sEcU0+D0O9MuuVgd2mrbLSAkerubUu/nC/Ixj58RcLepQPyh+N0EJqBKgoWpga
+         7buIe9/3P1MjBAxU/zd7aVp3EztEvXiMFrE9qrZj12u1TkhhtSU7fsqy1sUwrRYWVBwT
+         TVJYRkrbiOqPmOJJhzps6t/ZlHRou50+Rt0pCwKSY9rZNKCJSCVUtVR6mCKkeFGcWox9
+         Swe2Q0j+gmom53Kil5NeMNXSi6L9psWXbUx47GVhqW7Foof9Tg/mcyErKFKYPk0qRPBr
+         nyTg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1761054660; x=1761659460;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=7Pj1UWMB1Vw7tjSrrq36RtqXa78b52SGuEyk/FfhX/0=;
+        b=OnpsC4JVTZ8HT9I98sBj+TX4bvLvEIHYAIlwNiNiT8XNCjiXLMZDyArD8kk741h35A
+         grFEmOhEbCWgCfKiBHI7AmtRF2nU4bEivRBBe9UedLrm1Ifs7OjmGF9BBTyy5fIW+F+Q
+         Yf63vk/vmEzDp+2U6/SyOMM6IZksOL9Um//8fHFf+O7OnxCQ9HT+EcdFVmP/TRurBHoL
+         ME6mfVj47VmTEoBSN9piVHDpf3FxRP/UG0f+EhQCK0OZGrHsVl+0JKf+tuY5MslVn9zY
+         P+knLP2/K8J/L83dHxC5UnnUAfSOSiL3HuETQ4hEEjjrmyAUu27eh8UHzVPR4VBzQ+q7
+         LxGQ==
+X-Forwarded-Encrypted: i=1; AJvYcCU0aPbQDQV4itl7bHWpEWWt+hU/xI10mFWx/ebJu0fybCGaBgwyM6ZM/qvxSFDaSUPl6skHFiediCTS3UK2@vger.kernel.org
+X-Gm-Message-State: AOJu0YyBaN5+CC5iLWhUvLqEm+/LcU+5BoK4c1D3ytMeDJChwKLcNM+C
+	Gvg5SB/qtWdg3KiqPNAmrygLzM27VwwU2ptwjL62hNrkCxzs8M9T5JSM9V3TZShCTpU=
+X-Gm-Gg: ASbGnct4QDW2fUWjR0KXdVFHJEyGNGkgkpsJWdPtYHf2ebILGZHjCmEQM7+QCs2LEvZ
+	smjF7N/k5qxSaOuOMaWbpu2O6Wdu0uZPBOioRR3WB9bPK9B2p0Ps4bOeppgUVI91sRiIH6yBR48
+	FfB+8QACa/+HxNanSs+bMNlLi+zvrYQPxcUeg8BGqYI0EShsoSjqmqVbhHsFBj7kOWXPrgOs1oq
+	rzsPZ0AiTntyqEoV52B7u3/VwdZNDGpcV3wi4Ew9S35R7h50NfJjwYdxLyyxPIt7/5Em6rfbcIK
+	uYRIh7ussEplx/NB4war558Ut9/qwuauKbLvDW3IA1XqyZoQxCx60wJp0RAx9SWUiYRZkXW2x85
+	supl9ZJHqAksFAp/8slvIBAGg5MyWUNcXebSYfUvX4/xBL+w4c8dk1Qz3+szZzqMVw3/+4cdAN8
+	3o6sF64Ed/
+X-Google-Smtp-Source: AGHT+IFq6wr67qH/uGO3hBDH2oknXsC+DV4koXxpX4MnvU93BRmy377dpIqcZLgtKEVXCYORZWyXkA==
+X-Received: by 2002:a5d:5f82:0:b0:3e8:9e32:38f8 with SMTP id ffacd0b85a97d-42704d8d596mr13039582f8f.14.1761054660187;
+        Tue, 21 Oct 2025 06:51:00 -0700 (PDT)
+Received: from hackbox.lan ([86.121.7.169])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-427f00b97f8sm20124378f8f.36.2025.10.21.06.50.58
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 21 Oct 2025 06:50:59 -0700 (PDT)
+From: Abel Vesa <abel.vesa@linaro.org>
+Subject: [PATCH RFC 0/3] ASoC: qcom: x1e80100: Add sound card support for
+ Dell XPS13 9345
+Date: Tue, 21 Oct 2025 16:50:43 +0300
+Message-Id: <20251021-dell-xps13-9345-enable-audio-v1-0-6f3f6bbd977b@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/4] drm/client: Add client free callback to unprepare
- fb_helper
-To: Thomas Zimmermann <tzimmermann@suse.de>, jfalempe@redhat.com,
- javierm@redhat.com, mripard@kernel.org, maarten.lankhorst@linux.intel.com
-Cc: dri-devel@lists.freedesktop.org, linux-arm-kernel@lists.infradead.org,
- linux-samsung-soc@vger.kernel.org, intel-gfx@lists.freedesktop.org,
- intel-xe@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
- freedreno@lists.freedesktop.org, amd-gfx@lists.freedesktop.org,
- linux-tegra@vger.kernel.org
-References: <20251009132006.45834-1-tzimmermann@suse.de>
- <20251009132006.45834-2-tzimmermann@suse.de>
-Content-Language: en-US
-From: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
-Autocrypt: addr=tomi.valkeinen@ideasonboard.com; keydata=
- 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
-In-Reply-To: <20251009132006.45834-2-tzimmermann@suse.de>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIALOP92gC/x3MQQrCMBAF0KuUWTvQpJYQt4IH6FZcJM6vDoS0J
+ CiF0rsbXL7N26miKCpdup0Kvlp1yQ3m1NHzHfILrNJMtrej6a1hQUq8rdUM7IfzyMghJnD4iC7
+ svI9zFAcHoVasBbNu//5O0+1Kj+P4ARJAmrZzAAAA
+X-Change-ID: 20251021-dell-xps13-9345-enable-audio-799bfbd7e7ed
+To: Srinivas Kandagatla <srini@kernel.org>, 
+ Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>, 
+ Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>, Jaroslav Kysela <perex@perex.cz>, 
+ Takashi Iwai <tiwai@suse.com>, Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konradybcio@kernel.org>
+Cc: linux-sound@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+ Abel Vesa <abel.vesa@linaro.org>, 
+ Sibi Sankar <sibi.sankar@oss.qualcomm.com>, 
+ Sibi Sankar <sibi.sankar@oss.qualcomm.com>
+X-Mailer: b4 0.15-dev-dedf8
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1325; i=abel.vesa@linaro.org;
+ h=from:subject:message-id; bh=rdLLYhnz/5uqn7buFD6pzFSbbx+bpgXyOsq7aLCDz9k=;
+ b=owEBbQKS/ZANAwAKARtfRMkAlRVWAcsmYgBo94+6bhciv61eugRTaa0thyKn4Odp79VugQm6/
+ +KHKm7InfOJAjMEAAEKAB0WIQRO8+4RTnqPKsqn0bgbX0TJAJUVVgUCaPePugAKCRAbX0TJAJUV
+ VoYoEAC/wDSEaoYU8yjuc2Yx3niR1EiFYljIEeRvCaJMVM/CS17mfo9OY5KNzlKE2mwLK9VHvqI
+ og/Kwj0PT9B531KqA9ZRU338PzAhtI/MlJyKEHSalczvbSSmE+cPkd28kO7/TGiJDoGYF5RUbIk
+ YWScPBswFwdB5RLnrZl3F6bx0QDrlieTjKyTOnZUZpCSB9dA/oT6Ux2E6Q2CTQEfEOO+hBfzgX4
+ mcQhYeGzg0JdLr/HaB7SxBTA8HGO4zpMT0Gw5aaCyUBxMvT489VXAdd0I9UDK4Q92FdZYbYL3Ht
+ pWFISA6VNab++XdP3f3mqqqnN5EonpTSzJkYxZebiYBRsFG/R5SJZPmO/WYfu0Fw5F2mdfatQ22
+ p49MhwbuD+4JlOGRLP3LMkrdehCBW14DdQfFsOinugY5en8kl/8hiZAtTOxvhTkv2MVdcNi6Jcd
+ /NKUT6sjHnb7D8dcia3QdiMXVdoFB59KDwA9IssfhQ9wJ2dS2FtgEGD1GxryhlnQIx4gRoK+gv3
+ 0C8+3EZ/P8Mj172qsy5KHZIYAuYWvBhJfLmFVCbVFvSS93WpZ2pmTTxN+H281+r7im+gPpfSK9u
+ WkiMoSwpA+9BytdzNl4Jom0siTth3b+xP/zk0ZOXp0vBnXM8V1aoumi8H9WBGHTJmz9VF+CWjIM
+ psH9VLlejLM6prg==
+X-Developer-Key: i=abel.vesa@linaro.org; a=openpgp;
+ fpr=6AFF162D57F4223A8770EF5AF7BF214136F41FAE
 
-On 09/10/2025 16:16, Thomas Zimmermann wrote:
-> Add free callback to struct drm_client_funcs. Invoke function to
-> free the client memory as part of the release process. Implement
-> free for fbdev emulation.
-> 
-> Fbdev emulation allocates and prepares client memory in
-> drm_fbdev_client_setup(). The release happens in fb_destroy from
-> struct fb_ops. Multiple implementations of this callback exist in
-> the various drivers that provide fbdev implementation. Each of them
-> needs to follow the implementation details of the fbdev setup code.
-> 
-> Adding a free callback for the client puts the unprepare and release
-> of the fbdev client in a single place.
-> 
-> Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
-> ---
->  drivers/gpu/drm/armada/armada_fbdev.c      |  2 --
->  drivers/gpu/drm/clients/drm_fbdev_client.c | 17 +++++++++++++++--
->  drivers/gpu/drm/drm_client.c               |  4 ++++
->  drivers/gpu/drm/drm_fbdev_dma.c            |  4 ----
->  drivers/gpu/drm/drm_fbdev_shmem.c          |  2 --
->  drivers/gpu/drm/drm_fbdev_ttm.c            |  2 --
->  drivers/gpu/drm/exynos/exynos_drm_fbdev.c  |  2 --
->  drivers/gpu/drm/gma500/fbdev.c             |  3 ---
->  drivers/gpu/drm/i915/display/intel_fbdev.c |  2 --
->  drivers/gpu/drm/msm/msm_fbdev.c            |  2 --
->  drivers/gpu/drm/omapdrm/omap_fbdev.c       |  2 --
+The current X Elite driver for sound card is mapping the channels from
+left to right on all X Elite based laptops. The Dell XPS13 9345 seems to
+be the one-off when the speakers/tweeters are mapped starting from right
+to left.
 
-For omapdrm:
+So rework the driver to bring in a swapped mapping for 4 channels setups
+and use it with the dedicated XPS13 compatible.
 
-Acked-by: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
+The devicetree node is included for proof-of-concept purposes.
 
- Tomi
+Sending this as an RFC since it probably will need more discussion
+before settling on the approach on how to handle this properly on future
+devices.
 
->  drivers/gpu/drm/radeon/radeon_fbdev.c      |  2 --
->  drivers/gpu/drm/tegra/fbdev.c              |  2 --
->  include/drm/drm_client.h                   | 10 ++++++++++
->  14 files changed, 29 insertions(+), 27 deletions(-)
-> 
-> diff --git a/drivers/gpu/drm/armada/armada_fbdev.c b/drivers/gpu/drm/armada/armada_fbdev.c
-> index cb53cc91bafb..22e2081bfa04 100644
-> --- a/drivers/gpu/drm/armada/armada_fbdev.c
-> +++ b/drivers/gpu/drm/armada/armada_fbdev.c
-> @@ -28,8 +28,6 @@ static void armada_fbdev_fb_destroy(struct fb_info *info)
->  	fbh->fb->funcs->destroy(fbh->fb);
->  
->  	drm_client_release(&fbh->client);
-> -	drm_fb_helper_unprepare(fbh);
-> -	kfree(fbh);
->  }
->  
->  static const struct fb_ops armada_fb_ops = {
-> diff --git a/drivers/gpu/drm/clients/drm_fbdev_client.c b/drivers/gpu/drm/clients/drm_fbdev_client.c
-> index f894ba52bdb5..5336accab1b6 100644
-> --- a/drivers/gpu/drm/clients/drm_fbdev_client.c
-> +++ b/drivers/gpu/drm/clients/drm_fbdev_client.c
-> @@ -13,16 +13,28 @@
->   * struct drm_client_funcs
->   */
->  
-> +static void drm_fbdev_client_free(struct drm_client_dev *client)
-> +{
-> +	struct drm_fb_helper *fb_helper = drm_fb_helper_from_client(client);
-> +
-> +	drm_fb_helper_unprepare(fb_helper);
-> +	kfree(fb_helper);
-> +}
-> +
->  static void drm_fbdev_client_unregister(struct drm_client_dev *client)
->  {
->  	struct drm_fb_helper *fb_helper = drm_fb_helper_from_client(client);
->  
->  	if (fb_helper->info) {
-> +		/*
-> +		 * Fully probed framebuffer device
-> +		 */
->  		drm_fb_helper_unregister_info(fb_helper);
->  	} else {
-> +		/*
-> +		 * Partially initialized client, no framebuffer device yet
-> +		 */
->  		drm_client_release(&fb_helper->client);
-> -		drm_fb_helper_unprepare(fb_helper);
-> -		kfree(fb_helper);
->  	}
->  }
->  
-> @@ -88,6 +100,7 @@ static int drm_fbdev_client_resume(struct drm_client_dev *client, bool holds_con
->  
->  static const struct drm_client_funcs drm_fbdev_client_funcs = {
->  	.owner		= THIS_MODULE,
-> +	.free		= drm_fbdev_client_free,
->  	.unregister	= drm_fbdev_client_unregister,
->  	.restore	= drm_fbdev_client_restore,
->  	.hotplug	= drm_fbdev_client_hotplug,
-> diff --git a/drivers/gpu/drm/drm_client.c b/drivers/gpu/drm/drm_client.c
-> index 3fa38d4ac70b..fe9c6d7083ea 100644
-> --- a/drivers/gpu/drm/drm_client.c
-> +++ b/drivers/gpu/drm/drm_client.c
-> @@ -168,6 +168,10 @@ void drm_client_release(struct drm_client_dev *client)
->  
->  	drm_client_modeset_free(client);
->  	drm_client_close(client);
-> +
-> +	if (client->funcs && client->funcs->free)
-> +		client->funcs->free(client);
-> +
->  	drm_dev_put(dev);
->  }
->  EXPORT_SYMBOL(drm_client_release);
-> diff --git a/drivers/gpu/drm/drm_fbdev_dma.c b/drivers/gpu/drm/drm_fbdev_dma.c
-> index 8bd626ef16c7..c6196293e424 100644
-> --- a/drivers/gpu/drm/drm_fbdev_dma.c
-> +++ b/drivers/gpu/drm/drm_fbdev_dma.c
-> @@ -57,8 +57,6 @@ static void drm_fbdev_dma_fb_destroy(struct fb_info *info)
->  	drm_client_buffer_vunmap(fb_helper->buffer);
->  	drm_client_framebuffer_delete(fb_helper->buffer);
->  	drm_client_release(&fb_helper->client);
-> -	drm_fb_helper_unprepare(fb_helper);
-> -	kfree(fb_helper);
->  }
->  
->  static const struct fb_ops drm_fbdev_dma_fb_ops = {
-> @@ -92,8 +90,6 @@ static void drm_fbdev_dma_shadowed_fb_destroy(struct fb_info *info)
->  	drm_client_buffer_vunmap(fb_helper->buffer);
->  	drm_client_framebuffer_delete(fb_helper->buffer);
->  	drm_client_release(&fb_helper->client);
-> -	drm_fb_helper_unprepare(fb_helper);
-> -	kfree(fb_helper);
->  }
->  
->  static const struct fb_ops drm_fbdev_dma_shadowed_fb_ops = {
-> diff --git a/drivers/gpu/drm/drm_fbdev_shmem.c b/drivers/gpu/drm/drm_fbdev_shmem.c
-> index 1e827bf8b815..51573058df6f 100644
-> --- a/drivers/gpu/drm/drm_fbdev_shmem.c
-> +++ b/drivers/gpu/drm/drm_fbdev_shmem.c
-> @@ -65,8 +65,6 @@ static void drm_fbdev_shmem_fb_destroy(struct fb_info *info)
->  	drm_client_buffer_vunmap(fb_helper->buffer);
->  	drm_client_framebuffer_delete(fb_helper->buffer);
->  	drm_client_release(&fb_helper->client);
-> -	drm_fb_helper_unprepare(fb_helper);
-> -	kfree(fb_helper);
->  }
->  
->  static const struct fb_ops drm_fbdev_shmem_fb_ops = {
-> diff --git a/drivers/gpu/drm/drm_fbdev_ttm.c b/drivers/gpu/drm/drm_fbdev_ttm.c
-> index 85feb55bba11..ccf460fbc1f0 100644
-> --- a/drivers/gpu/drm/drm_fbdev_ttm.c
-> +++ b/drivers/gpu/drm/drm_fbdev_ttm.c
-> @@ -53,8 +53,6 @@ static void drm_fbdev_ttm_fb_destroy(struct fb_info *info)
->  	drm_client_framebuffer_delete(fb_helper->buffer);
->  
->  	drm_client_release(&fb_helper->client);
-> -	drm_fb_helper_unprepare(fb_helper);
-> -	kfree(fb_helper);
->  }
->  
->  static const struct fb_ops drm_fbdev_ttm_fb_ops = {
-> diff --git a/drivers/gpu/drm/exynos/exynos_drm_fbdev.c b/drivers/gpu/drm/exynos/exynos_drm_fbdev.c
-> index 93de25b77e68..a3bd21a827ad 100644
-> --- a/drivers/gpu/drm/exynos/exynos_drm_fbdev.c
-> +++ b/drivers/gpu/drm/exynos/exynos_drm_fbdev.c
-> @@ -42,8 +42,6 @@ static void exynos_drm_fb_destroy(struct fb_info *info)
->  	drm_framebuffer_remove(fb);
->  
->  	drm_client_release(&fb_helper->client);
-> -	drm_fb_helper_unprepare(fb_helper);
-> -	kfree(fb_helper);
->  }
->  
->  static const struct fb_ops exynos_drm_fb_ops = {
-> diff --git a/drivers/gpu/drm/gma500/fbdev.c b/drivers/gpu/drm/gma500/fbdev.c
-> index a6af21514cff..bc92fa24a1e2 100644
-> --- a/drivers/gpu/drm/gma500/fbdev.c
-> +++ b/drivers/gpu/drm/gma500/fbdev.c
-> @@ -84,9 +84,6 @@ static void psb_fbdev_fb_destroy(struct fb_info *info)
->  	drm_gem_object_put(obj);
->  
->  	drm_client_release(&fb_helper->client);
-> -
-> -	drm_fb_helper_unprepare(fb_helper);
-> -	kfree(fb_helper);
->  }
->  
->  static const struct fb_ops psb_fbdev_fb_ops = {
-> diff --git a/drivers/gpu/drm/i915/display/intel_fbdev.c b/drivers/gpu/drm/i915/display/intel_fbdev.c
-> index 3fbdf75415cc..d5f26c8bb102 100644
-> --- a/drivers/gpu/drm/i915/display/intel_fbdev.c
-> +++ b/drivers/gpu/drm/i915/display/intel_fbdev.c
-> @@ -146,8 +146,6 @@ static void intel_fbdev_fb_destroy(struct fb_info *info)
->  	drm_framebuffer_remove(fb_helper->fb);
->  
->  	drm_client_release(&fb_helper->client);
-> -	drm_fb_helper_unprepare(fb_helper);
-> -	kfree(fb_helper);
->  }
->  
->  __diag_push();
-> diff --git a/drivers/gpu/drm/msm/msm_fbdev.c b/drivers/gpu/drm/msm/msm_fbdev.c
-> index b5969374d53f..aad6fb77f0de 100644
-> --- a/drivers/gpu/drm/msm/msm_fbdev.c
-> +++ b/drivers/gpu/drm/msm/msm_fbdev.c
-> @@ -52,8 +52,6 @@ static void msm_fbdev_fb_destroy(struct fb_info *info)
->  	drm_framebuffer_remove(fb);
->  
->  	drm_client_release(&helper->client);
-> -	drm_fb_helper_unprepare(helper);
-> -	kfree(helper);
->  }
->  
->  static const struct fb_ops msm_fb_ops = {
-> diff --git a/drivers/gpu/drm/omapdrm/omap_fbdev.c b/drivers/gpu/drm/omapdrm/omap_fbdev.c
-> index 948af7ec1130..b5df2923d2a6 100644
-> --- a/drivers/gpu/drm/omapdrm/omap_fbdev.c
-> +++ b/drivers/gpu/drm/omapdrm/omap_fbdev.c
-> @@ -103,8 +103,6 @@ static void omap_fbdev_fb_destroy(struct fb_info *info)
->  	drm_framebuffer_remove(fb);
->  
->  	drm_client_release(&helper->client);
-> -	drm_fb_helper_unprepare(helper);
-> -	kfree(helper);
->  }
->  
->  /*
-> diff --git a/drivers/gpu/drm/radeon/radeon_fbdev.c b/drivers/gpu/drm/radeon/radeon_fbdev.c
-> index dc81b0c2dbff..4df6c9167bf0 100644
-> --- a/drivers/gpu/drm/radeon/radeon_fbdev.c
-> +++ b/drivers/gpu/drm/radeon/radeon_fbdev.c
-> @@ -184,8 +184,6 @@ static void radeon_fbdev_fb_destroy(struct fb_info *info)
->  	radeon_fbdev_destroy_pinned_object(gobj);
->  
->  	drm_client_release(&fb_helper->client);
-> -	drm_fb_helper_unprepare(fb_helper);
-> -	kfree(fb_helper);
->  }
->  
->  static const struct fb_ops radeon_fbdev_fb_ops = {
-> diff --git a/drivers/gpu/drm/tegra/fbdev.c b/drivers/gpu/drm/tegra/fbdev.c
-> index 1b70f5e164af..91aece6f34e0 100644
-> --- a/drivers/gpu/drm/tegra/fbdev.c
-> +++ b/drivers/gpu/drm/tegra/fbdev.c
-> @@ -53,8 +53,6 @@ static void tegra_fbdev_fb_destroy(struct fb_info *info)
->  	drm_framebuffer_remove(fb);
->  
->  	drm_client_release(&helper->client);
-> -	drm_fb_helper_unprepare(helper);
-> -	kfree(helper);
->  }
->  
->  static const struct fb_ops tegra_fb_ops = {
-> diff --git a/include/drm/drm_client.h b/include/drm/drm_client.h
-> index bdd845e383ef..eecb8d6e15c7 100644
-> --- a/include/drm/drm_client.h
-> +++ b/include/drm/drm_client.h
-> @@ -28,6 +28,16 @@ struct drm_client_funcs {
->  	 */
->  	struct module *owner;
->  
-> +	/**
-> +	 * @free:
-> +	 *
-> +	 * Called when the client gets unregistered. Implementations should
-> +	 * release all client-specific data and free the memory.
-> +	 *
-> +	 * This callback is optional.
-> +	 */
-> +	void (*free)(struct drm_client_dev *client);
-> +
->  	/**
->  	 * @unregister:
->  	 *
+Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+---
+Abel Vesa (2):
+      ASoC: dt-bindings: qcom,sm8250: Add Dell XPS13 9345 sound card
+      ASoC: qcom: x1e80100: Add Dell XPS13 9345 support
+
+Sibi Sankar (1):
+      arm64: dts: qcom: x1e80100-dell-xps13-9345: Add Left/Right Speakers and Tweeter
+
+ .../devicetree/bindings/sound/qcom,sm8250.yaml     |   1 +
+ .../boot/dts/qcom/x1e80100-dell-xps13-9345.dts     | 139 +++++++++++++++++++++
+ sound/soc/qcom/x1e80100.c                          |  49 +++++++-
+ 3 files changed, 184 insertions(+), 5 deletions(-)
+---
+base-commit: fe45352cd106ae41b5ad3f0066c2e54dbb2dfd70
+change-id: 20251021-dell-xps13-9345-enable-audio-799bfbd7e7ed
+
+Best regards,
+-- 
+Abel Vesa <abel.vesa@linaro.org>
 
 
