@@ -1,121 +1,102 @@
-Return-Path: <linux-arm-msm+bounces-78186-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-78187-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [IPv6:2605:f480:58:1:0:1994:3:14])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1A4D1BF6FDB
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Oct 2025 16:11:43 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 57AFDBF6FF0
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Oct 2025 16:12:41 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id EFD4B4FB700
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Oct 2025 14:09:07 +0000 (UTC)
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id B9AEA4F03F9
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Oct 2025 14:10:40 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8DA5E33A027;
-	Tue, 21 Oct 2025 14:08:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4B69F33B94C;
+	Tue, 21 Oct 2025 14:10:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="h9EoWC/m"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Zqq3vw01"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE55E33B946;
-	Tue, 21 Oct 2025 14:08:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B52332B99A;
+	Tue, 21 Oct 2025 14:10:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761055731; cv=none; b=MZox9sSUU4FlMj86ujsCpCbhWSmydHwMMzlQooNagndfB1HccebzoBSZdlDyvPLBXnuDGA2J+JrXE+8HDYtXVFGTzfsETBsomHqnocQbKiex9h4aHvStGa7zxdK8V1nv6xh4XeZX20Xl7X/pjjpHvisQo2gt4ZQ0IeHpNPTZmQo=
+	t=1761055836; cv=none; b=ILNNAut1tM4GmVjDRXP9RBjRcbj46zmyJRYPwknVxVviNf+zuPJir3R7w25qouxIDDen9IG73DTXGnJlvXnAUh5lL+bRqKMo02LjTRcH7F0yUXpxkUhpGrUgSipVPQoWozPH6Isd//nDTQHJJ63XGYcK4pIq6dmMdJkRBS6tH4U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761055731; c=relaxed/simple;
-	bh=6wiuS401xDdRYtvpYyrKEXyzFHQauHIZFmJ3uP/Anok=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=FHIZo5HfGM2jbfIFJIbeAwHnUMKqH1WUpSyTWwaC+z00BeXdV+cOWj/aviGAzG/9TQ1EMmlGD0CVaF5a+jOTXTTGSo+JKQUqTfgA1wI/yA+6OCPkOeWW/TpEKndweTPbXDSVkA2ztT2BzqDuFup6JdKImRdaiUB2BUD0CKRI2kg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=h9EoWC/m; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5FE2C4CEF1;
-	Tue, 21 Oct 2025 14:08:45 +0000 (UTC)
+	s=arc-20240116; t=1761055836; c=relaxed/simple;
+	bh=JRM2odY9VW0S4l+Z2OfO9X4SU0hKm51fzDYSn1D9qOY=;
+	h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date:
+	 MIME-Version:Content-Type; b=jCGUQtk1uBO6Xcfq6tnXyBh+w3KI4JZCdMRWEVe2gAixbJ2QaWQ8dVHwXzdbAhskk2CklQqAmYj9U7z5SeszZ08dB7spJKnu2PHEEoaNJ0CdHMGOHjtKOpksd2VmQqsPV+SnQORw7D45VrYBCim6dnmRwsjytpg72qqyu5UJW2c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Zqq3vw01; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8498CC4CEF1;
+	Tue, 21 Oct 2025 14:10:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1761055730;
-	bh=6wiuS401xDdRYtvpYyrKEXyzFHQauHIZFmJ3uP/Anok=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=h9EoWC/mq7Q8GB3952OE3all4Y/oQD5FJazcpywTYBebX9RoedVedxpDNHS4PVCJB
-	 clvxh71HKix+go+cCL2UzMsHzRMMZ8ruBpQT5N9lcglWN/kJN7EEWIY1SawDc/vy3o
-	 VEaepM0CQ2LtsiW8Ij1TwZBblsp9XkcJQJ2+x5rfrSWun323p0OHBWApqr0f0X4D65
-	 nRVaaS9OnWqUfefZN1x3dgzkoRCJkh33bjuP8nnXxDN1utdIlbi21X8qf6xPys6ote
-	 HgFMOa390SZZ1ZUrb4qxdlFJIwD91zhb2ENSsirE6jUOlefx5ZFECqK9n6xSPOSLdy
-	 +Xmkzd4fZE6oA==
-Date: Tue, 21 Oct 2025 15:08:43 +0100
+	s=k20201202; t=1761055835;
+	bh=JRM2odY9VW0S4l+Z2OfO9X4SU0hKm51fzDYSn1D9qOY=;
+	h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
+	b=Zqq3vw01LYZ7LCwbJr9YNGgmjgAgPqXAd3BF6WMCeNduXlbS0kgbPtAphmnurDtlc
+	 vr6jYgHl3mTwWPsge18Mg4iNn+zuo6NH6eosBn/AAF16W4bjwx9aFzyyy3zxz6xdoh
+	 +DofeyNNQG+fQhVorrJS754m20H34cSw784xKRmyBBaB5JkVRaPsg9Wy7X1MqyoUj/
+	 qzCPTcYzM2CVUwalJVo7pJ52bZuarYWtv+kVm6xdJ4SL1xWLurhdf0/hswA5qjzp4l
+	 VVA/KMFuCu4mTr5i6cW4qEboaEOQbzOk4K5hphwPMSZ6Qvsqez+Mzck4aYWz1cLp0m
+	 Tri2lloucd8WA==
 From: Mark Brown <broonie@kernel.org>
-To: Bartosz Golaszewski <brgl@bgdev.pl>
-Cc: linux-hardening@vger.kernel.org, linux-kernel@vger.kernel.org,
-	linux-gpio@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-	linux-sound@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
-	Srinivas Kandagatla <srini@kernel.org>, Kees Cook <kees@kernel.org>,
-	Mika Westerberg <westeri@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Jaroslav Kysela <perex@perex.cz>,
-	Catalin Marinas <catalin.marinas@arm.com>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Takashi Iwai <tiwai@suse.com>, Rob Herring <robh@kernel.org>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	Andy Shevchenko <andy@kernel.org>,
-	Saravana Kannan <saravanak@google.com>,
-	Will Deacon <will@kernel.org>, Liam Girdwood <lgirdwood@gmail.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Manivannan Sadhasivam <mani@kernel.org>,
-	Linus Walleij <linus.walleij@linaro.org>,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Subject: Re: [PATCH RFC 0/9] gpio: improve support for shared GPIOs
-Message-ID: <0e1f3a1b-46ab-4eb5-ad05-70784f9b9103@sirena.org.uk>
-References: <20250924-gpio-shared-v1-0-775e7efeb1a3@linaro.org>
- <CAMRc=Me4Fh5pDOF8Z2XY4MG_DYqPRN+UJh_BzKvmULL96wciYw@mail.gmail.com>
- <81bda56c-f18b-4bd9-abf9-9da7c2251f42@sirena.org.uk>
- <CAMRc=MdOCHJEyPxN+-g71ux68=Mt_Q5P9611QO7Q8J9e8UJv_A@mail.gmail.com>
+To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, 
+ Dan Carpenter <dan.carpenter@linaro.org>
+Cc: Srinivas Kandagatla <srini@kernel.org>, 
+ Liam Girdwood <lgirdwood@gmail.com>, Jaroslav Kysela <perex@perex.cz>, 
+ Takashi Iwai <tiwai@suse.com>, Jingyi Wang <jingyi.wang@oss.qualcomm.com>, 
+ Prasad Kumpatla <prasad.kumpatla@oss.qualcomm.com>, 
+ linux-sound@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, kernel-janitors@vger.kernel.org
+In-Reply-To: <aPMyw_ryay9LA5SW@stanley.mountain>
+References: <aPMyw_ryay9LA5SW@stanley.mountain>
+Subject: Re: [PATCH next] ASoC: codecs: va-macro: Clean up on error path in
+ probe()
+Message-Id: <176105583329.178516.13846738418896857989.b4-ty@kernel.org>
+Date: Tue, 21 Oct 2025 15:10:33 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="be2R75B6whIQ+eJQ"
-Content-Disposition: inline
-In-Reply-To: <CAMRc=MdOCHJEyPxN+-g71ux68=Mt_Q5P9611QO7Q8J9e8UJv_A@mail.gmail.com>
-X-Cookie: Accordion, n.:
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-Mailer: b4 0.15-dev-2a268
 
+On Sat, 18 Oct 2025 09:25:07 +0300, Dan Carpenter wrote:
+> Do some clean up before returning the error code.
+> 
+> 
 
---be2R75B6whIQ+eJQ
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Applied to
 
-On Mon, Oct 20, 2025 at 11:41:52AM +0200, Bartosz Golaszewski wrote:
-> On Fri, Oct 17, 2025 at 7:32=E2=80=AFPM Mark Brown <broonie@kernel.org> w=
-rote:
+   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/sound.git for-next
 
-> > It really should be the actual physical state change that triggers the
-> > event.
+Thanks!
 
-> I guess so, but this would require some non-trivial rework of the
-> regulator core. We'd need some list of deferred notifications stored
-> in memory for when the physical state actually changes.
+[1/1] ASoC: codecs: va-macro: Clean up on error path in probe()
+      commit: 7e1906643a7374529af74b013bba35e4fa4e6ffc
 
-I'm not sure I see the need for deferred notifications?  We'd need to go
-round all the users whenever a physical change to the GPIO happens but
-it's not clear what we'd need to store beyond the list of users?
+All being well this means that it will be integrated into the linux-next
+tree (usually sometime in the next 24 hours) and sent to Linus during
+the next merge window (or sooner if it is a bug fix), however if
+problems are discovered then the patch may be dropped or reverted.
 
---be2R75B6whIQ+eJQ
-Content-Type: application/pgp-signature; name="signature.asc"
+You may get further e-mails resulting from automated or manual testing
+and review of the tree, please engage with people reporting problems and
+send followup patches addressing any issues that are reported if needed.
 
------BEGIN PGP SIGNATURE-----
+If any updates are required or you are submitting further changes they
+should be sent as incremental updates against current git, existing
+patches will not be replaced.
 
-iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmj3k+oACgkQJNaLcl1U
-h9BE1wf/fE5s96hdrurlAFqdd32+YZYJUqEYFJu5LZKnjuA1wTr1MHfqMigev/B6
-b/Jr686Hrm/k7WS6R4q0VG8c660FzZ1zdSt/M3AoQXiQ24DcYxb8MbAexAKFbc6g
-2UYm/hbZOIK49A5XX4XBSm+zUG7c6gII9SKcovXcNVb9N3mRnsiFmnOkyTkBnFJr
-97coLg4GMr7Hh1YQLC1dAXjdfkyttrF0R5/JiVabTqQfyD27tYYedFbfSjChRVA8
-Gw7oS3+X70V6zrG/w/9Pxq2R7ikYQSZoIt9BWSh7mGFcMVudZ/QlT1P1u9q0PpLP
-avLCRl+U9JHws84L5zHfZKX0vHlk7w==
-=8Lgz
------END PGP SIGNATURE-----
+Please add any relevant lists and maintainers to the CCs when replying
+to this mail.
 
---be2R75B6whIQ+eJQ--
+Thanks,
+Mark
+
 
