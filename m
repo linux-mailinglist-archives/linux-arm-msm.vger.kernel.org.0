@@ -1,52 +1,53 @@
-Return-Path: <linux-arm-msm+bounces-78160-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-78156-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 14F76BF650B
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Oct 2025 14:06:51 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 65582BF64EF
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Oct 2025 14:06:24 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 0C44118A6FEA
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Oct 2025 12:07:14 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 6C16F1884D41
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Oct 2025 12:06:45 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D9DCC339703;
-	Tue, 21 Oct 2025 11:53:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9A446333724;
+	Tue, 21 Oct 2025 11:53:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="uwdANdnS"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="CtaWd8R4"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A243B3396E8;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D99333342F;
 	Tue, 21 Oct 2025 11:53:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761047589; cv=none; b=ZRuqaj9SGbd04Gq4AqS0tStOndVMFiCfOPT4ypV1zm4rL0Lr9IIQThVjicnWTHpMQOVZJUprSLhaBsd2RtZMQBslanwNrRHdVSzodAIvfqX0eKrErn80hYUjgBIClNkEAh/hkkE0vs/DpYkPm7vS3PxaEG22+1mJcKCqAi+cJd4=
+	t=1761047588; cv=none; b=CTtXwyqAv80OAeI6yW+lDw+YFyYohdMV4CJh6iyNaT435Qt5vK/IWgRcEL1uRb8jSArEs2GLbcnuHbr6D/A0FzEq3ISn4mfdZUhgsQrGMPMBJrizCBLE55R3Orc6oYq41zD386a2DNnEuQkMDNvGTWOt/795HCnhOGcgAAmw/U0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761047589; c=relaxed/simple;
-	bh=+b+ylfRcIWpYeFfan3Mweh/xrrouoNn77Loht1AaAbE=;
+	s=arc-20240116; t=1761047588; c=relaxed/simple;
+	bh=0ZOyYOwg/QtwEkA51L4dZelWZkCwJZ5UZfBiyAr5WcQ=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=AxDC9lJ0Nl4HQoAHVTsNIMLUrR/uE/hb5wblDgWwXqbc24prIroPTblBZ1iRYutuM7jmcBTfXCfTUhqtwiDz57tIRl5E8YBXd1tWdPjQtP4pdnBDuSrEX0U892cyHe6zUG8ntDYidUKYZrxRi1rkh00DNZ9zlBvzUtSiGBq4tWU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=uwdANdnS; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 18D1CC4AF14;
+	 In-Reply-To:To:Cc; b=LhCGgBoE8kl7Zn8N3U7BgOfdwrWSRMCs/Qv8Qyg+UUDoiRGayN01a5lpPQb//L7RGh5SebH4UWhmC2VTRwd3P3IJsz3vNhfviybkqJiDNC5xAiqfiTVeUiBRpZd8fwdpyvtOT+K+tFUki3XQcUovFh+v00qjKcm4JPUv0YnIBls=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=CtaWd8R4; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 27317C2BCB6;
 	Tue, 21 Oct 2025 11:53:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
 	s=k20201202; t=1761047588;
-	bh=+b+ylfRcIWpYeFfan3Mweh/xrrouoNn77Loht1AaAbE=;
+	bh=0ZOyYOwg/QtwEkA51L4dZelWZkCwJZ5UZfBiyAr5WcQ=;
 	h=From:Date:Subject:References:In-Reply-To:To:Cc:Reply-To:From;
-	b=uwdANdnSoNt2+3kquVJsfxToRgng90OvQCBqGNFn1jHcVPTGJn25iBh5aXhaED4Ub
-	 Am5FjBcvEKh9YVYfIOiU0peYFYdb72bKhaj7tzixm/TEQIcR3L/ntKgfiUT0TwTh/D
-	 0YL2hlkOpn0Sa236zN4zto3Ot4r8EDwmZSeg1V+dMwgNDyg4LZOqssvtIUMLFLGydE
-	 vqE1DpS5vWcLT9LgqMysJagv6XIFq7xmkLl3ewEqBkFDsuKGU/SBeBfIl2evKVPIHt
-	 VH5T3eoabYi6Lq+WmCSqLc+UYkiH7ZsE7QudKUb8XTvjIrq3oVX4mLC4YqSbGA0De8
-	 HDWfuzbxRNwlw==
+	b=CtaWd8R4mDZEMU4TSlGrMuImTlWNhvFeF8x5qZhAN1xOBPZV8YCx1t8PaWsL3IKnc
+	 OIqOlre1iDAM8OXMjQX5gKidoWSBpJozEbvtF/0hqNvCTlXv2qrdzmp1aBY/eYQJx3
+	 Vr7rW7XSQTjcCddGOK672rQhbjqV2qnHNcZPuvjlINal+JBPha/94e/LuNHi9WsxvY
+	 ApsIyQm0J4wp5ZMZ0TAeLkZnMJvSynAEiped5EnGKT+dDb9ZNB3LsPBM8xMJlmzH/y
+	 pyVqq3fxhlURDnXckNzeLBd3F98Maq1P9eyZhrZATTpOJu7/LlehCF1ZP9ePSQrtIg
+	 N3a04Q4RUAOAA==
 Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0CF6DCCD184;
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1DCBFCCD1B9;
 	Tue, 21 Oct 2025 11:53:08 +0000 (UTC)
 From: David Heidelberg via B4 Relay <devnull+david.ixit.cz@kernel.org>
-Date: Tue, 21 Oct 2025 13:53:06 +0200
-Subject: [PATCH v4 6/7] arm64: dts: qcom: sdm845-oneplus: Describe TE gpio
+Date: Tue, 21 Oct 2025 13:53:07 +0200
+Subject: [PATCH v4 7/7] dt-bindings: display: panel-simple-dsi: Remove
+ Samsung S6E3FC2 compatible
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -55,7 +56,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20251021-s6e3fc2x01-v4-6-5e3ee21c688a@ixit.cz>
+Message-Id: <20251021-s6e3fc2x01-v4-7-5e3ee21c688a@ixit.cz>
 References: <20251021-s6e3fc2x01-v4-0-5e3ee21c688a@ixit.cz>
 In-Reply-To: <20251021-s6e3fc2x01-v4-0-5e3ee21c688a@ixit.cz>
 To: Neil Armstrong <neil.armstrong@linaro.org>, 
@@ -73,21 +74,21 @@ Cc: dri-devel@lists.freedesktop.org, devicetree@vger.kernel.org,
  linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
  phone-devel@vger.kernel.org, David Heidelberg <david@ixit.cz>
 X-Mailer: b4 0.14.3
-X-Developer-Signature: v=1; a=openpgp-sha256; l=744; i=david@ixit.cz;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1344; i=david@ixit.cz;
  h=from:subject:message-id;
- bh=4HlzjaWbltHovpW/x3csoBFsnc7NUcuYDQwYcmmZFrE=;
- b=owEBbQKS/ZANAwAIAWACP8TTSSByAcsmYgBo93Qh8qZOMkmBNVijDAoQ1Q6Qg+1c4buWwc5AM
- M+Vqm/GnOyJAjMEAAEIAB0WIQTXegnP7twrvVOnBHRgAj/E00kgcgUCaPd0IQAKCRBgAj/E00kg
- csZBEADPO5B99OhdousRGVcs4eB/tkJL/81Gj2Pkrn/gy4BEIOCxqjmp7yzWxY2llWqtL162T0g
- oivf2adFLgpVuf3UtS/1I1ZMw0adJlQVjqW7JaHZ1BzD4H8mLPF6kjsUyPBXHOw+hW5mP7ByrnV
- gHHxxdtz6e4UXHPwSJmyU51n+iC4qUXwBtUIeZeWv/WsWdj9yygPP8H8X2ggoZgiuE5h/M+nFsF
- 4J9BrY55qDvyBfEcSqEWHmelIZBX8JCc5nhcwBs/4irG7CXBA0tATdknjuTxLEExmku/3wqF81g
- TJ+eZBMJm+7sFc2NOHWG2163anq/CGjx7m98TYBZvSsk1CG2YR4k9Cwt2NsF/ujMC5oj8Jv9nn7
- 6GyELU5ywbiJCmjKz8Osdkzj/k50EcBbdZokkC+BccO4+pNe20dMQpBuKj/39GGb/Ig22DR4vFQ
- SpIrucuM+IwgCRzu3yi29u1kDizmq9By76CEganh8/W50c8sZLlu225iPbvDDDbfELP+GdvuT2i
- 9BgFpwIVMqbIUjJpqP36Z4uBdbjcd2sNwAbYNzcPajPg5gkCGv2PPClDh/269/WRT1XtOUhK8hn
- s9FYq9ndlkuQzja5FCiUBAP3wh5ID4OYziN/Yho442G+wn45dnjWOcuHBSbRDul7UvC8U0SULRf
- 2I2pd1VyCZ4asOg==
+ bh=c5fkR2jWk5YkcniO/SxqMzx6Ew0swnPogltZcHFgTB8=;
+ b=owEBbQKS/ZANAwAIAWACP8TTSSByAcsmYgBo93QiJGeCP+WQuzYRJI4TdEzwLRxRfVymzu3Yy
+ cuKKbXLmCSJAjMEAAEIAB0WIQTXegnP7twrvVOnBHRgAj/E00kgcgUCaPd0IgAKCRBgAj/E00kg
+ clZmEADEDrhcdx28UjTgVPkdnxtUE00Vgeygf8rFA5JPmVtgqJ/0bAE7X0IJJekrhjppGEngSlL
+ H2TwD14xpMLAdFV+wu4oFEtudEJXFyeI156Ze2AkBWH6Tc1XHjWgh89KJjsZKmTA9IAY8gd2S3t
+ hJ3xgLrQFXMOtaGu7MoI7rrKUU43o3LoHRXg+CF0FHq1K2ck4nXWaqy9sQtJ2pc+zLHTSFud2na
+ UC90C2/VxwoVaRugoeTBwCwLwAZM/TxNXjBiNjYlV0Gv7JIiNCp8tKavFcyC6ZCB+T7Af+8SJPv
+ pDLLitGYpppyGdi28MAT+juOy/jhKAmI7EAV72gQETQQsiUH1nliO0ENssGwphfhQmOUwijAWKg
+ YNrKCRjtLqUai9y0t2TOUGNpyegyj1LCuy5DWzLNTdpwCKIXew7yvVjcr+v3dAUryGYnba6dzI+
+ witeJRPxU77NiCLYb7aTd7RqBwH2V+JSb/lsc4WEOVREszMvLmxwew8ATVGXbfH0PJtsSLG9o0R
+ 1J3+QrJ9hAsgsGwM7zUBfCecb+vNajXCCh5x7HHKHwk8R0VlqEqokY3CGaXYsLXxnY2YBZMhCH9
+ 4Fwt1ALHkk/zI7OlRa/I/AcCQCUnRXpDtWytxzbAvBiHm1/eX+nBJaRmXwDBYqPugKA3ATLqjjn
+ zbk/08wWYl0x0jg==
 X-Developer-Key: i=david@ixit.cz; a=openpgp;
  fpr=D77A09CFEEDC2BBD53A7047460023FC4D3492072
 X-Endpoint-Received: by B4 Relay for david@ixit.cz/default with auth_id=355
@@ -96,25 +97,38 @@ Reply-To: david@ixit.cz
 
 From: David Heidelberg <david@ixit.cz>
 
-Describe panel Tearing Effect (TE) GPIO line.
+Samsung S6E3FC2X01 DDIC isn't Simple DSI panel.
+
+This panel has three supplies, while panel-simple-dsi is limited to one.
+There is no user of this compatible, nor the compatible make sense.
+Remove it.
 
 Signed-off-by: David Heidelberg <david@ixit.cz>
 ---
- arch/arm64/boot/dts/qcom/sdm845-oneplus-common.dtsi | 1 +
- 1 file changed, 1 insertion(+)
+ Documentation/devicetree/bindings/display/panel/panel-simple-dsi.yaml | 3 ---
+ 1 file changed, 3 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sdm845-oneplus-common.dtsi b/arch/arm64/boot/dts/qcom/sdm845-oneplus-common.dtsi
-index a8e87507d667b..8ccf93dec557a 100644
---- a/arch/arm64/boot/dts/qcom/sdm845-oneplus-common.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sdm845-oneplus-common.dtsi
-@@ -460,6 +460,7 @@ display_panel: panel@0 {
- 		vci-supply = <&panel_vci_3v3>;
- 		poc-supply = <&panel_vddi_poc_1p8>;
- 
-+		te-gpios = <&tlmm 10 GPIO_ACTIVE_HIGH>;
- 		reset-gpios = <&tlmm 6 GPIO_ACTIVE_LOW>;
- 
- 		pinctrl-0 = <&panel_default>;
+diff --git a/Documentation/devicetree/bindings/display/panel/panel-simple-dsi.yaml b/Documentation/devicetree/bindings/display/panel/panel-simple-dsi.yaml
+index 9b92a05791ccf..ac2db8cf5eb76 100644
+--- a/Documentation/devicetree/bindings/display/panel/panel-simple-dsi.yaml
++++ b/Documentation/devicetree/bindings/display/panel/panel-simple-dsi.yaml
+@@ -56,8 +56,6 @@ properties:
+       - panasonic,vvx10f034n00
+         # Samsung s6e3fa7 1080x2220 based AMS559NK06 AMOLED panel
+       - samsung,s6e3fa7-ams559nk06
+-        # Samsung s6e3fc2x01 1080x2340 AMOLED panel
+-      - samsung,s6e3fc2x01
+         # Samsung sofef00 1080x2280 AMOLED panel
+       - samsung,sofef00
+         # Shangai Top Display Optoelectronics 7" TL070WSH30 1024x600 TFT LCD panel
+@@ -80,7 +78,6 @@ allOf:
+       properties:
+         compatible:
+           enum:
+-            - samsung,s6e3fc2x01
+             - samsung,sofef00
+     then:
+       properties:
 
 -- 
 2.51.0
