@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-78209-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-78210-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [IPv6:2605:f480:58:1:0:1994:3:14])
-	by mail.lfdr.de (Postfix) with ESMTPS id 68768BF8360
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Oct 2025 21:15:58 +0200 (CEST)
+Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [142.0.200.124])
+	by mail.lfdr.de (Postfix) with ESMTPS id 80CEFBF838E
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Oct 2025 21:19:25 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 3F1484E4373
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Oct 2025 19:15:57 +0000 (UTC)
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id E550A4E2124
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Oct 2025 19:19:23 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 07C7A351FAE;
-	Tue, 21 Oct 2025 19:15:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 06C6834A3C9;
+	Tue, 21 Oct 2025 19:19:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ek/NIQQK"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="tSDc+/uq"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84123351FA2;
-	Tue, 21 Oct 2025 19:15:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE23C1F936;
+	Tue, 21 Oct 2025 19:19:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761074153; cv=none; b=lDnY8FSGKpYJ8R8jwc+Ud5v1lLuWRmxicRJICrC5NLYDwhWSzZaRPR9zkY2ovaOHuTOA8XtkbLmQoRG4p5AuR+FEG0EcTd80ti7dNhfmid80KnDPPbFstuhBtOk7S0HB11hVNNUJLQ2zhzuN+SrsMkKfmBbSC6FTiO/yIhIAKeI=
+	t=1761074361; cv=none; b=kxZVC0/byM9Qbn5YU6Y3x9BECX9Xd1g3x9q00FWmv1BFV2sRqV5dZ28FFmtASBfO4ci2dyJ2dkc9ull8F7oFBv1mHbxPSaRnqbqPcrc05lIDANl7IyLf/KcqGHAXnXoriXcwAUC4YTr7JcmKOCDl/lgumKuhyCok1ijMgLGmPs4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761074153; c=relaxed/simple;
-	bh=xGjfKWdynroCwIPtLKS2R4aJHqJjS/idEXZ2IRfMxf8=;
+	s=arc-20240116; t=1761074361; c=relaxed/simple;
+	bh=pWyFoPwNpfIEUwiiETXv/ApplcO4w46GMcOHiVnAie8=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=fpuatMcD2GvMl687dY4sZ9ye4X3n3Oc3kzh5sM40hszr2G8LyQMbTq3tq20WABwc+Ple5q8NJwOJXaXQVdb797wSKEDxIoNyny0inOG79ijSFL1C9ITuA3tMHQuo7jw2ZlWrQD4BpU55zXfAB0jncMIUrESABipZiXw31Ijeu3U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ek/NIQQK; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15AA2C4CEF1;
-	Tue, 21 Oct 2025 19:15:48 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=PAdh0yUFkTPxcmJy91OJDcdmUAk8ms5qY5QXOFcpaepQmlJIVAkY00PsHPA8YgwZyGS9RWaVqs3vqe/tasObe0iHIFoLx85dda1MhlAgcuSag7dz3z8bb4airmsPBSvVXW2t371pA3V9tAdK8d8vdFfMkA73Z8U/cUgwXBwmYRU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=tSDc+/uq; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A50F4C4CEF1;
+	Tue, 21 Oct 2025 19:19:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1761074152;
-	bh=xGjfKWdynroCwIPtLKS2R4aJHqJjS/idEXZ2IRfMxf8=;
+	s=k20201202; t=1761074361;
+	bh=pWyFoPwNpfIEUwiiETXv/ApplcO4w46GMcOHiVnAie8=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=ek/NIQQKkRiVlIhMzCdSAxvpnCMjF6yFxf64IUMQPVQPDCEirx7G6TNxAHVc63PLo
-	 E2rn46hjah4reO0QJupvimJuDE5McFTUGwxGht1sBsTUyjEcU79IWf1mWe0Uvu2Sdh
-	 vjylqJuqXAlmACxp/wo04BUK0uSTziaidI1vIxZBZRhUldxY+faP1KU0/dyHP4dcqq
-	 tuX4OPgYrFhe6++DqHbj/wRZEuJrCc4ypBAaD83boO9TcrBDEWveSjqiKF25VGmfqc
-	 F8ze8MVvLPb2Viv4wrNJYnRj8vEz8Arvn0226yORxhIOHA5eNsEmt2fSqcDFL1oJBU
-	 LruRXYVf6rr0Q==
-Message-ID: <d19b1279-3031-43b9-ac73-7e5f990802ed@kernel.org>
-Date: Tue, 21 Oct 2025 21:15:47 +0200
+	b=tSDc+/uq6EqEWPHzBCDcO9XR/CDsTS0e2IOthPHZI77ZgMq3jsIsyJRGs0Mcpz5vE
+	 gpbakkD+zz7vb/tcl4eF/a98gtUzBmDeGkInfm86gwbJFFbDnb3226+y07LIRUafX7
+	 Pdvjfdme04aQ1a24/x5POXnvUdwInbKILv/6E3TwOXr1Y6khWS2xvULoqjqsYfE+1I
+	 MlNWBpN/+H200wxgTu/nhXu7xuz6zyABWectLx7K8UjaPMtJUbh+XdfcPgkL6FAw76
+	 QnyIPELQFj9pa5wS+XWB4naU8BBGdaynTww39FipfjekPR3QF9scAfzJ0JljCsr3Jl
+	 J+z4hdEUYon8w==
+Message-ID: <ff37b635-b3dc-4180-8eae-e798ef6ce55a@kernel.org>
+Date: Tue, 21 Oct 2025 21:19:14 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,23 +50,24 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/8] media: dt-bindings: qcom-kaanapali-iris: Add
- kaanapali video codec binding
-To: Vikash Garodia <vikash.garodia@oss.qualcomm.com>,
- Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>,
- Abhinav Kumar <abhinav.kumar@linux.dev>, Bryan O'Donoghue <bod@kernel.org>,
- Mauro Carvalho Chehab <mchehab@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Philipp Zabel <p.zabel@pengutronix.de>,
- Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
- Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Cc: linux-arm-msm@vger.kernel.org, linux-media@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- Vishnu Reddy <quic_bvisredd@quicinc.com>
-References: <20251017-knp_video-v2-0-f568ce1a4be3@oss.qualcomm.com>
- <20251017-knp_video-v2-1-f568ce1a4be3@oss.qualcomm.com>
- <c9d8f76a-513f-4a09-bba4-cb8f0df1d2fe@kernel.org>
- <034bf6f4-0a49-4973-8536-28526b3409d1@oss.qualcomm.com>
+Subject: Re: [PATCH 3/6] dt-bindings: display/msm/gmu: Document A612 RGMU
+To: Akhil P Oommen <akhilpo@oss.qualcomm.com>
+Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+ freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org,
+ devicetree@vger.kernel.org, Rob Clark <robin.clark@oss.qualcomm.com>,
+ Sean Paul <sean@poorly.run>, Konrad Dybcio <konradybcio@kernel.org>,
+ Dmitry Baryshkov <lumag@kernel.org>, Abhinav Kumar
+ <abhinav.kumar@linux.dev>, Jessica Zhang <jessica.zhang@oss.qualcomm.com>,
+ Marijn Suijten <marijn.suijten@somainline.org>,
+ David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+ Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+ Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>,
+ Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
+ Conor Dooley <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>
+References: <20251017-qcs615-spin-2-v1-0-0baa44f80905@oss.qualcomm.com>
+ <20251017-qcs615-spin-2-v1-3-0baa44f80905@oss.qualcomm.com>
+ <8f3f4874-2e82-473e-87bd-e3bd58089b90@kernel.org>
+ <181af756-09a1-4694-98c4-53cea556e172@oss.qualcomm.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -112,98 +113,204 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  jWt87ecuHlpL3uuQ0ZZNWqHgZoQLXoqC2ZV5KrtKWb/jyiFX/sxSrodALf0zf+tfHv0FZWT2
  zHjUqd0t4njD/UOsuIMOQn4Ig0SdivYPfZukb5cdasKJukG1NOpbW7yRNivaCnfZz6dTawXw
  XRIV/KDsHQiyVxKvN73bThKhONkcX2LWuD928tAR6XMM2G5ovxLe09vuOzzfTWQDsm++9UKF a/A=
-In-Reply-To: <034bf6f4-0a49-4973-8536-28526b3409d1@oss.qualcomm.com>
+In-Reply-To: <181af756-09a1-4694-98c4-53cea556e172@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 21/10/2025 20:55, Vikash Garodia wrote:
+On 21/10/2025 17:51, Akhil P Oommen wrote:
+> On 10/19/2025 2:43 PM, Krzysztof Kozlowski wrote:
+>> On 17/10/2025 19:08, Akhil P Oommen wrote:
+>>> RGMU a.k.a Reduced Graphics Management Unit is a small state machine
+>>> with the sole purpose of providing IFPC (Inter Frame Power Collapse)
+>>> support. Compared to GMU, it doesn't manage GPU clock, voltage
+>>> scaling, bw voting or any other functionalities. All it does is detect
+>>> an idle GPU and toggle the GDSC switch. As it doesn't access DDR space,
+>>> it doesn't require iommu.
+>>>
+>>> So far, only Adreno 612 GPU has an RGMU core. Document RGMU in the GMU's
+>>> schema.
+>>>
+>>> Signed-off-by: Akhil P Oommen <akhilpo@oss.qualcomm.com>
+>>> ---
+>>>  .../devicetree/bindings/display/msm/gmu.yaml       | 98 +++++++++++++++++-----
+>>>  1 file changed, 79 insertions(+), 19 deletions(-)
+>>>
+>>> diff --git a/Documentation/devicetree/bindings/display/msm/gmu.yaml b/Documentation/devicetree/bindings/display/msm/gmu.yaml
+>>> index afc1879357440c137cadeb2d9a74ae8459570a25..a262d41755f09f21f607bf7a1fd567f386595f39 100644
+>>> --- a/Documentation/devicetree/bindings/display/msm/gmu.yaml
+>>> +++ b/Documentation/devicetree/bindings/display/msm/gmu.yaml
+>>> @@ -26,6 +26,9 @@ properties:
+>>>        - items:
+>>>            - pattern: '^qcom,adreno-gmu-x[1-9][0-9][0-9]\.[0-9]$'
+>>>            - const: qcom,adreno-gmu
+>>> +      - items:
+>>> +          - const: qcom,adreno-rgmu-612.0
+>>> +          - const: qcom,adreno-rgmu
+>>>        - const: qcom,adreno-gmu-wrapper
+>>>  
+>>>    reg:
+>>> @@ -45,24 +48,30 @@ properties:
+>>>      maxItems: 7
+>>>  
+>>>    interrupts:
+>>> -    items:
+>>> -      - description: GMU HFI interrupt
+>>> -      - description: GMU interrupt
+>>
+>>
+>> Both stay, just explain what is the first interrupt. You should not drop
+>> descriptions here. Look at every other binding - of course except that
+>> terrible Adreno GPU which is anti-example.
 > 
-> On 10/18/2025 9:28 PM, Krzysztof Kozlowski wrote:
->> On 17/10/2025 16:16, Vikash Garodia wrote:
->>> +  clock-names:
->>> +    items:
->>> +      - const: iface
->>> +      - const: core
->>> +      - const: vcodec0_core
->>> +      - const: iface1
->>> +      - const: core_freerun
->>> +      - const: vcodec0_core_freerun
->>> +      - const: vcodec_bse
->>> +      - const: vcodec_vpp0
->>> +      - const: vcodec_vpp1
->>> +      - const: vcodec_apv
->>> +
->>> +  dma-coherent: true
->>> +
->>> +  firmware-name:
->>> +    maxItems: 1
->>> +
->>> +  interconnects:
+> Do you mean we should use a OneOf and list both combo? Or elaborate the
+> description of the first interrupt to include OOB too? Something like:
+> 
+> - description: HFI interrupt on GMU and OOB interrupt on RGMU.
+
+Yes, like that.
+
+> 
+> Sorry, I am a bit confused.
+> 
+>>
+>>> +    minItems: 2
 >>> +    maxItems: 2
->>> +
->>> +  interconnect-names:
->>> +    items:
->>> +      - const: cpu-cfg
->>> +      - const: video-mem
->>> +
->>> +  interrupts:
->>> +    maxItems: 1
->>> +
->>> +  iommus:
->>> +    minItems: 3
->>> +    maxItems: 8
+>>>  
+>>>    interrupt-names:
+>>> -    items:
+>>> -      - const: hfi
+>>> -      - const: gmu
+>>> +    oneOf:
+>>> +      - items:
+>>> +          - const: hfi
+>>> +            description: GMU HFI interrupt
 >>
->> I don't understand why this is flexible. Make it fixed size and anyway -
->> list the items.
-> 
-> kaanapali vpu generates 8 different stream-ids. Now, boards running kernel in
-> EL2 mode can list all of them, while boards running in EL1 can have only non
-> secure stream IDs. Min have the list of stream ids which can be enabled for all
-> type of boards, while max is for boards which can list all in HLOS given kernel
-> is in EL2 mode.
-> 
-> Below crash would be seen if boards running kernel in EL1 mode lists the secure
-> ones.
+>> No, descriptions never go to xxx-names, but to xxx.
+>>
+>>> +          - const: gmu
+>>> +            description: GMU interrupt
+>>> +      - items:
+>>> +          - const: oob
+>>> +            description: GMU OOB interrupt
+>>> +          - const: gmu
+>>> +            description: GMU interrupt
+>>> +
+>>>  
+>>>    power-domains:
+>>> -    items:
+>>> -      - description: CX power domain
+>>> -      - description: GX power domain
+>>> +    minItems: 2
+>>> +    maxItems: 3
+>>
+>> No.
+> I will keep the 'description'. Here, RGMU has 3 power domains instead of
+> 2. I suppose we should add the description for the 3rd power domain here
+> and keep 'minItems: 2' property to override the default 3?
 
-
-That has to be explained somewhere, e.g. comment, and still we need then
-EL2 DTS in the kernel. I did not see such so far, but maybe I missed it
-- can you link it?
-
-> 
-> [    1.361157] pc : qcom_smmu_write_s2cr+0x64/0xa4
-> [    1.361165] lr : arm_smmu_write_s2cr+0x2c/0xbc
-> [    1.361168] sp : ffff80008005b8f0
-> [    1.361169] x29: ffff80008005b8f0 x28: 0000000000000000 x27: ffffc7f252f45320
-> ....
-> [    1.361195] x2 : ffff800081200c48 x1 : 0000000000000048 x0 : ffff800081200000
-> [    1.361198] Call trace:
-> [    1.361199]  qcom_smmu_write_s2cr+0x64/0xa4 (P)
-> [    1.361203]  arm_smmu_master_install_s2crs+0x7c/0xac
-> [    1.361207]  arm_smmu_attach_dev+0xb0/0x1d4
-> 
-> Could you please suggest on listing the iommu items ? I did not find the
-> relevant references in other bindings where flexible iommus is being listed.
-
-
-Just like every other list property - clocks, resets, power-domains.
+Yes.
 
 > 
 >>
->> I already asked this.
+>>>  
+>>>    power-domain-names:
+>>> -    items:
+>>> -      - const: cx
+>>> -      - const: gx
+>>> +    minItems: 2
+>>> +    maxItems: 3
+>>
+>>
+>> No. Why?
+> Same as above.
+> 
+>>
+>>>  
+>>>    iommus:
+>>>      maxItems: 1
+>>> @@ -86,6 +95,44 @@ required:
+>>>  additionalProperties: false
+>>>  
+>>>  allOf:
+>>> +  - if:
+>>> +      properties:
+>>> +        compatible:
+>>> +          contains:
+>>> +            const: qcom,adreno-rgmu-612.0
+>>> +    then:
+>>> +      properties:
+>>> +        reg:
+>>> +          items:
+>>> +            - description: Core RGMU registers
+>>> +        reg-names:
+>>> +          items:
+>>> +            - const: gmu
+>>> +        clocks:
+>>> +          items:
+>>> +            - description: GMU clock
+>>> +            - description: GPU CX clock
+>>> +            - description: GPU AXI clock
+>>> +            - description: GPU MEMNOC clock
+>>> +            - description: GPU SMMU vote clock
+>>> +        clock-names:
+>>> +          items:
+>>> +            - const: gmu
+>>> +            - const: cxo
+>>> +            - const: axi
+>>> +            - const: memnoc
+>>> +            - const: smmu_vote
+>>> +        power-domains:
+>>> +          items:
+>>> +            - description: CX power domain
+>>> +            - description: GX power domain
+>>> +            - description: VDD_CX power domain
+>>> +        power-domain-names:
+>>> +          items:
+>>> +            - const: cx
+>>> +            - const: gx
+>>> +            - const: vdd_cx
+>>
+>> This does not make even sense. Why did you remove the the common list
+>> from  power-domain-names?
 >>
 >>> +
->>> +  memory-region:
->>> +    minItems: 1
->>> +    maxItems: 2
+>>>    - if:
+>>>        properties:
+>>>          compatible:
+>>> @@ -313,13 +360,26 @@ allOf:
+>>>            items:
+>>>              - const: gmu
+>>>      else:
+>>> -      required:
+>>> -        - clocks
+>>> -        - clock-names
+>>> -        - interrupts
+>>> -        - interrupt-names
+>>> -        - iommus
+>>> -        - operating-points-v2
+>>> +      if:
+>>> +        properties:
+>>> +          compatible:
+>>> +            contains:
+>>> +              const: qcom,adreno-rgmu
+>>> +      then:
+>>> +        required:
+>>> +          - clocks
+>>> +          - clock-names
+>>> +          - interrupts
+>>> +          - interrupt-names
+>>> +          - operating-points-v2
+>>> +      else:
 >>
->> Same comment. I already asked this about iommus.
+>> No. Don't nest multiple ifs.
 > 
-> Same here, there aren't any bindings which lists for flexible memory-region.
-> Please suggest if there are any such references.
+> I guess we should split this. I will add a 'required' constraint to the
+> rgmu constraints above. And apply the below 'required' constraint
+> specifically to 'qcom,adreno-gmu' instead of the 'else' fallback case.
+> 
+> Please let me know if you have any suggestion.
 
-Because they do not matter for all other bindings, but it turned out
-recently it might matter for this device.
+Maybe the binding is getting to complicated and RGMU should have its own.
 
 
 Best regards,
