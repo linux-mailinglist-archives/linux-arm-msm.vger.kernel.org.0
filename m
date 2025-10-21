@@ -1,207 +1,360 @@
-Return-Path: <linux-arm-msm+bounces-78224-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-78225-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ams.mirrors.kernel.org (ams.mirrors.kernel.org [IPv6:2a01:60a::1994:3:14])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6BF03BF9268
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Oct 2025 00:51:44 +0200 (CEST)
+Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [IPv6:2605:f480:58:1:0:1994:3:14])
+	by mail.lfdr.de (Postfix) with ESMTPS id 25A08BF92CB
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Oct 2025 01:06:31 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ams.mirrors.kernel.org (Postfix) with ESMTPS id B09333565C2
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Oct 2025 22:51:43 +0000 (UTC)
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 026C04E812C
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Oct 2025 23:06:30 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 618F52BE620;
-	Tue, 21 Oct 2025 22:51:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6C9B92BE053;
+	Tue, 21 Oct 2025 23:06:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="agC0h8gU"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Gy2DxIAM"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f45.google.com (mail-ed1-f45.google.com [209.85.208.45])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC1CC22F177
-	for <linux-arm-msm@vger.kernel.org>; Tue, 21 Oct 2025 22:51:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7A6715CD74
+	for <linux-arm-msm@vger.kernel.org>; Tue, 21 Oct 2025 23:06:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761087083; cv=none; b=BfVDd9mnf6wLyU1QfAa8X2JxVsWrCefVoTTgbdCgGt9wGzCZ/aXvwfgRV4LOf63D3j1JzBzwN2XewZd24mE/KhItLn8b9wBFksqpbFVPFau2AWlyz7XA7Vq8XX2OJlASMu4XLS2FZs30qeuioovDFCAEjvLGs4aAUpDqXw6eFvE=
+	t=1761087982; cv=none; b=kEPK+BHX/vt6jzWXx/r/U3HgjlaAaBdP6znXabg5jlZAJ9eaBtBUAifOi3ElRvOmzN2sdiUwbdg64lit4S81kbkQxEYcKln7dhcVTYAfiMJDIwXIinxmzQGaLfFKBg+7cFrnY8JJ+gBKqGYbN5Syad+F9h/cXjDDm+9C/dwcqhk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761087083; c=relaxed/simple;
-	bh=l4MjfzttT03UpsUTS8ZIvBiJyMgPARME2XjDV2MFnqU=;
+	s=arc-20240116; t=1761087982; c=relaxed/simple;
+	bh=v9qdrPtUu7fyhR7g5W1mWsSB1mC75h6wItXGPacFG6g=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=l+b+1w7+8pOlYYvqtBArLu+UqgnK65SPKeLM+hKBPIPWO8c3NSzWPwgvrSNglECmz1shMQSLhbJO/7/0mPhdCtGNmHa5bihDck9g1m/3aT5nZZ1uONpTE9ZPz/Ma9vpepokbNHW7dHjEWUXDv/Vpnnxnt9X+uim2bVpcAPvT91Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=agC0h8gU; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 59LEdtkU027407
-	for <linux-arm-msm@vger.kernel.org>; Tue, 21 Oct 2025 22:51:20 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	GxTB0ZWx9XqHuZQWSP0z2+N5xPsBLTdahe72qllC8r4=; b=agC0h8gU8BGfDdDr
-	izilEY5lD1/0blqhbNmvyRmG6/trshnut+7brGodMDEm7Sqs9vYX1rxJMOjVq3bu
-	dkW1wdKwk77uc4JSPC9KiaF17Aw7ic+6zWyGd2ivP2D9GqZGS44owsWvfCVThoxi
-	l/RTjOT8lha61avBtIyUrPp9zZ93SOurzwcgZ5+gDOIXA62b4IC7RrYcDEM8u8gw
-	chd6KWCv5RxJSEDvDmAZRgl5eyXw0vG8FPJ+OVs+TEb4OIiFQa4DWPywMrHe4WUa
-	Kf7ovRRQtgdZJPtwUtNco8s4QJh1lJIrWFrBHS4BAudbpWt/EMzV+8LCv/7hzjCK
-	0+zrCw==
-Received: from mail-pl1-f199.google.com (mail-pl1-f199.google.com [209.85.214.199])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 49v08pjnjt-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Tue, 21 Oct 2025 22:51:20 +0000 (GMT)
-Received: by mail-pl1-f199.google.com with SMTP id d9443c01a7336-290c07feb72so48210365ad.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 21 Oct 2025 15:51:20 -0700 (PDT)
+	 In-Reply-To:Content-Type; b=ht4UhGQ/7W5ZiMSezNCK2Pjy9GKMGQQ5i/fIHjbx42/NifX2zr41AhTyVXEtWi33/fo4YPlovtR/ZPtCun16xauUWgRCJNpEOm8mL23pp4+wklGMuGw+MRk5+Vh7rFCpLsb5EbttnZPbM1k/sVPgcifjf8p2680uWkAlDKoZnfs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Gy2DxIAM; arc=none smtp.client-ip=209.85.208.45
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-ed1-f45.google.com with SMTP id 4fb4d7f45d1cf-63e076e24f2so2092910a12.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 21 Oct 2025 16:06:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1761087977; x=1761692777; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=1skSu2R/EvG/sBAR/zOuIUly/4EtcboZ1vNpxOtlC6Q=;
+        b=Gy2DxIAMz7JgiGjcHBezvujflomdr+MS5VzckydOdzppa/rnM/ky34FoE4zmYFDrB+
+         evrmIqEusTl+YDb4XcEgp+20K74ESqgGTMzp3lFP2+WP5ReMAEPkI2u7cIvTA6FY7lU9
+         fPFDRGod01pQieR5pHH2I6eTd8kQk+yMOPOg6VDNOnIzAGOWemS1qA/15MtXO7vg4nML
+         oRevTf/ewLOiMIXs6K1MEGbuO74CP3akTKKOAekmV7kOwv7M+7hBDlyoP1t84bvv8pEY
+         pVjfxf+KDGjJ5I7UaS9023P3j7oqClEyoFrQSqXbTSM+QoiLhfnOdaQxuzrvIdh1fTSz
+         Te5Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1761087079; x=1761691879;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
+        d=1e100.net; s=20230601; t=1761087977; x=1761692777;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=GxTB0ZWx9XqHuZQWSP0z2+N5xPsBLTdahe72qllC8r4=;
-        b=iNpGhskOhGjv+sUziPqznSmslD+Uhdo7dCtSUV29vGnwLUnThPjbGvLA8uB84XcJKp
-         W5PRI4vv4VAKq5Mqm0lf8NtifrMyhrEIdizkMjgPQf+GrviatzeqRN7NdA+TlFoq/47e
-         JOsM0sPN0BaRtfJDR/A6rjm1THTxn7AAgM9A14VIIR8SCUUaULU7FdJCm1lpjFqsinkf
-         2wXsDOF/htrP4ss6dQ9SjMBzJC3shvzpvReaily0//TILCEzXAMK2jBbmU3eJpBxGFn3
-         b7bnHLNcMc4p67m4vIjE1sVcZp3ykMAtUHT1WUlPjkr7IO66xgl5HoMeJjBHYmQck5Qu
-         U5uQ==
-X-Gm-Message-State: AOJu0YzbzGornGrlf4GD6kPTwHYL6l/JVNuFUcbdQen2hOhv3hHY6kia
-	gwOnC6AyKw2jZ5egdlQv9RLsrP5jOH9KsS507fVCTbRS91hDeYpRFUXT6P+pECzCXlDwQxFRjfG
-	OmHiuDaEXOTJkU5DsIo7GPQF8Str27mo3r37EblmqsgtWkyi/tYQyqAUgqTcB2ONo+7Kd
-X-Gm-Gg: ASbGncuGHvNyd9l1IBUSXr/bmlXvQlmExdbYd4wydiCJG4Nag0TS0J82KSHsrg1dPiK
-	bDZ61zv4KbE3cNsQ7t7sY7LScs4Wrwzn1ihTyIbcaM6rCQaP2jq1f55w54WAwyzfv/2jDLmYCCR
-	Swl06jlG23fV1tFJRsr9gVsHBAVT/8B7GY1TqiPl3F4zIU3XCTpaYClg61MIkpAUToaPUdMDlfC
-	z+X4JO3WndKE2ykIpLMt8WMZviiUik7OLa6/j5/kEoI5Se43DPXP2Ee3K5XNuQQoTGre2fQX0Um
-	9arSq/sLmh+uiLBxClNXo9hdbOwTFcqdynQrpX0zPNGsWLowuaEhmsb3jMhUfsyJj+DvDfgSi6+
-	FxLhIO0MsIOd8sBYdkkZeLcfULyJhpjsqDr3YSIA0
-X-Received: by 2002:a17:902:ccd2:b0:269:a23e:9fd7 with SMTP id d9443c01a7336-290c9cf2d7bmr247852995ad.26.1761087079434;
-        Tue, 21 Oct 2025 15:51:19 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGwfHJdMmdnmOW68E8w2u05X+y1KzPlmygeNE6i/MNdFbeUzbTxKUSCChF/G5ue64SrCYpVkw==
-X-Received: by 2002:a17:902:ccd2:b0:269:a23e:9fd7 with SMTP id d9443c01a7336-290c9cf2d7bmr247852605ad.26.1761087078968;
-        Tue, 21 Oct 2025 15:51:18 -0700 (PDT)
-Received: from [10.73.53.19] (pat_11.qualcomm.com. [192.35.156.11])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-29246fcc2b1sm119922605ad.27.2025.10.21.15.51.16
+        bh=1skSu2R/EvG/sBAR/zOuIUly/4EtcboZ1vNpxOtlC6Q=;
+        b=RQVum9U9S/wWl8V3/KCU8TMGA5Ok9SoQaXyA39X6KMYuenmdn0ij1XTpZMYWMNGlp6
+         3z/2Irc/WoR/uE82xCQUqIvP/IP5bHPPFGtNyqI4uAxKG7dsSvQwOoNWuyjcVaOwnRi+
+         cXOc+Bd89msfgnHbnx7xeXezaMRlgShsw2fCr4jhoNKr9JDNSh25CePo1YFaUYvxuz/R
+         E48F+dg/DSYA8xHRn5QPB/jnSwo+p351SAyn5LFUCM+ODwy9sCwn0ZmdQQxYHuXTnYaH
+         LV2/XX8/Q46t7ahsX2mERvkmaVPqqbU6LqI9wuJcI/OFfY4G8LPzuFvqLaN0vS7udgS2
+         ssjA==
+X-Gm-Message-State: AOJu0YwmNrq68hGbGDkHFS4y6hHMPK4x6IXP3KX28nChXN+WwQtkF0rM
+	e6CQAzk67zo7uh8KgzIFnsoUi3nbSt6Dd2f6ZP3V1ai0SOQ/TVSIGUZuFp+v3W65h7Y=
+X-Gm-Gg: ASbGncvbNh0/qwKoTyQtqhZQmKU5rqM9wbNdoi19g39/DgUY42KMoX3zN9Md9eZFn++
+	NV18d4PCJsVJwI+cNQppDqnMSynaSnK5I5/5mvJmQtLnAc3CvdVs2c/mnzUr4slhAL8PDa1lef6
+	KxCTyWNPRYmbmJg34wnVGrl8eMSbtNWwlQYzMVb11n908dQ3TXpLVrGERlbg5rEPKA7H49FIFhP
+	djzISPQgjW3BzTx7ByKtaSwlS5Nkrn1P4JQ3/fyA3OVhYVpppF5nSLtkWU6oDI50H4MGdpi5u37
+	w4jSFhTM39LX4lOkxX7TCdvu26xp0bybcI54ePiUHfkKFO06ED/4C8MDiuQm4Y+jIPkeKQX3IXn
+	EoANmUDN42u+TAQhvfiZ+MJGiUQ9tHqniHP0GKvXARUoiaQ4PSBpwreSclJVI1swZ7Gc9kh1oVF
+	ocJqTh9CcanMI1hl59JCXsuO/jNKusg3pP8htv09CzLR4=
+X-Google-Smtp-Source: AGHT+IFtNmFUjXoSgBEFbhWp4FEFDk6kOFYy/fkKwIxw3udp45uEWOU+nEdWHQxP3zzwua5iSJikTA==
+X-Received: by 2002:a05:6402:5650:b0:636:6801:eed7 with SMTP id 4fb4d7f45d1cf-63c1f6d05b1mr13395163a12.32.1761087976999;
+        Tue, 21 Oct 2025 16:06:16 -0700 (PDT)
+Received: from [192.168.0.163] (188-141-3-146.dynamic.upc.ie. [188.141.3.146])
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-63c48ab54fbsm10165210a12.15.2025.10.21.16.06.14
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 21 Oct 2025 15:51:17 -0700 (PDT)
-Message-ID: <7c78e0f3-7b8c-6d79-d8fa-7a4999201708@oss.qualcomm.com>
-Date: Tue, 21 Oct 2025 15:51:16 -0700
+        Tue, 21 Oct 2025 16:06:15 -0700 (PDT)
+Message-ID: <1e3053ae-3482-4388-a6e4-1edc921bfdcb@linaro.org>
+Date: Wed, 22 Oct 2025 00:06:13 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.15.1
-Subject: Re: [PATCH v5 02/10] dt-bindings: phy: qcom,qmp-usb: Add Glymur USB
- UNI PHY compatible
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 2/8] media: iris: Add support for multiple clock
+ sources
+To: Vikash Garodia <vikash.garodia@oss.qualcomm.com>,
+ Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>,
+ Abhinav Kumar <abhinav.kumar@linux.dev>,
+ Mauro Carvalho Chehab <mchehab@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Philipp Zabel <p.zabel@pengutronix.de>,
+ Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+ Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Cc: linux-arm-msm@vger.kernel.org, linux-media@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+ Vishnu Reddy <quic_bvisredd@quicinc.com>
+References: <20251017-knp_video-v2-0-f568ce1a4be3@oss.qualcomm.com>
+ <-nNKoml-evcewtxxqJqJKKjaeWf8uLZt3Vgbwq_EjIBXLfYOmkWyNTPHpARSXlsa6fjxoudnLDHuneVT6ZvCcA==@protonmail.internalid>
+ <20251017-knp_video-v2-2-f568ce1a4be3@oss.qualcomm.com>
+From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 Content-Language: en-US
-To: Krzysztof Kozlowski <krzk@kernel.org>, krzk+dt@kernel.org,
-        conor+dt@kernel.org, konrad.dybcio@oss.qualcomm.com,
-        dmitry.baryshkov@oss.qualcomm.com, kishon@kernel.org, vkoul@kernel.org,
-        gregkh@linuxfoundation.org, robh@kernel.org
-Cc: linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
-        linux-usb@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20251006222002.2182777-1-wesley.cheng@oss.qualcomm.com>
- <20251006222002.2182777-3-wesley.cheng@oss.qualcomm.com>
- <f5e4ae02-b8fa-4406-b2e0-3602b07b7e23@kernel.org>
- <00408896-2e25-2dd1-6e6e-2195317ee7fb@oss.qualcomm.com>
- <14bc2a85-0f1d-3834-9b9c-32654348603a@oss.qualcomm.com>
- <387c707e-613d-433b-a76d-16ef10dabc59@kernel.org>
- <2a70f878-269c-1b40-2e8c-77b5851de9a1@oss.qualcomm.com>
- <99ab26d3-eb44-401d-8a7c-1d9efd2a1a10@kernel.org>
- <b2b68430-5127-5eca-6bd8-4af31eb9fbed@oss.qualcomm.com>
- <bb299df0-58b9-4a6e-9625-305785d38eb4@kernel.org>
- <da34ecf0-c2eb-2afa-bd4d-9dc30fbe5cf5@oss.qualcomm.com>
- <78445973-6a5e-4dd8-a661-4e784af49b4e@kernel.org>
-From: Wesley Cheng <wesley.cheng@oss.qualcomm.com>
-In-Reply-To: <78445973-6a5e-4dd8-a661-4e784af49b4e@kernel.org>
+In-Reply-To: <20251017-knp_video-v2-2-f568ce1a4be3@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDE4MDAwMCBTYWx0ZWRfX+Ug+zvBcRyYm
- FFtIfiuCGk8YLWZnQ0OWLEWYWTRCKZZMA3CqKcoVRFb/pI+7dILiwON8+Y/6IqO2KErYtj/cxle
- pBi8toIVIKsnXpHFYO1C8IwUjkTgeGseFD9dCECexvBAjhd8++X7fVVZNIJ9nYT4OTn5HAEnq8y
- y4rQIQhdpwRGfD2bB6eRrYHv3YaCXU/4Hoe0G39L2OJfRYdR+Hz5QzoRu6gDUiK84FJemJk9n3Z
- InxOSW3UP41pOTHTqQTwMby+sun7ZS3A36A/YDNE4BI9+P/niVPqgMK0p13MUfWJGFOklnbc2NR
- QPPqyMNI2aQzWxokiaGrEcLwMMv47rQdm1IlhMivlyjoXD++/nTeIYtsp0DPRkEfenXKaqlHbI0
- 4wZuTMh0/cpHJBtKo2aACDZEqGRrXQ==
-X-Proofpoint-GUID: Q6bAxdpHvYcMLEgmACrsry4UXKd8DnoL
-X-Authority-Analysis: v=2.4 cv=Up1u9uwB c=1 sm=1 tr=0 ts=68f80e68 cx=c_pps
- a=JL+w9abYAAE89/QcEU+0QA==:117 a=ZdW6uxA9NKXbfdqeeS2OGA==:17
- a=IkcTkHD0fZMA:10 a=x6icFKpwvdMA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=pKGxRwtwl3AlX2zDoJUA:9 a=QEXdDO2ut3YA:10 a=324X-CrmTo6CU4MGRt3R:22
-X-Proofpoint-ORIG-GUID: Q6bAxdpHvYcMLEgmACrsry4UXKd8DnoL
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-10-21_03,2025-10-13_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- lowpriorityscore=0 adultscore=0 suspectscore=0 malwarescore=0 clxscore=1015
- impostorscore=0 bulkscore=0 priorityscore=1501 spamscore=0 phishscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2510020000 definitions=main-2510180000
 
-
-
-On 10/18/2025 8:39 AM, Krzysztof Kozlowski wrote:
-> On 18/10/2025 02:20, Wesley Cheng wrote:
->>
->>
->> On 10/16/2025 9:41 PM, Krzysztof Kozlowski wrote:
->>> On 17/10/2025 02:15, Wesley Cheng wrote:
->>>>>> Technically its all handling the same clock branch (CXO), we have the
->>>>>> TCSR clkref register that allows us to gate the CXO to the USB PHY, as
->>>>>
->>>>>
->>>>> Ah, exactly. Then clkref is not a clock. You need rather proper clock
->>>>> hierarchy.
->>>>>
->>>>>> CXO is shared across several HW blocks, so it allows us to properly
->>>>>> powerdown the PHY even though other clients are voting for CXO on.  Then
->>>>>> we obviously have to remove our vote to the overall CXO, so that it can
->>>>>> potentially be shutdown.
->>>>>>
->>>>>> Maybe we can rename it to "clkref" for the CXO handle and
->>>>>> "clkref_switch" for the TCSRCC handle?
->>>>>
->>>>> Naming is better, but it is still not correct. This is not independent
->>>>> clock signal. It is the same clock.
->>>>>
->>>>
->>>> Hmmm... I guess that's why I kept the same clkref tag, to denote that
->>>> its the same clock, but one is a switch/gate for it.  Would you happen
->>>> to have any suggestions you might have that makes it clearer for
->>>> everyone to understand?
->>> To me it looks like:
->>>
->>> |-----|            |-----------|           |------------------|
->>> |clock|------------|TCSRCC gate|-----------|clkref to this dev|
->>> |-----|            |-----------|           |------------------|
->>>
->>> So you need proper clock controller for TCSR (TCSR Clock Controller, in
->>> short TCSRCC, what a surprise!) which will take input, add gate and
->>> produce clock for this device.
->>>
->>> Nothing non-standard, all Qualcomm SoCs have it, every other platform
->>> has it in some way.
->>>
->>
->> Hi Krzystof,
->>
->> Yes, the design is exactly how you outlined it above.  How about clkref
+On 17/10/2025 15:16, Vikash Garodia wrote:
+> vpu4 depends on more than one clock source. Thus far hardware versions
+> up to vpu3x have been clocked by a single source.
+> This adds support for multiple clocks by,
+> - Adding a lookup table
+> - Configuring OPP table for video device with different video clocks
+> - Setting OPP for multiple clocks during dev_pm_opp_set_opp()
 > 
-> Hm? There is no connection between the clock and the device. Do you see
-> any line going there?
+> This patch extends the support for multiple clocks in driver, which
+> would be used in subsequent patch for kaanapali, when the platform data
+> is prepared.
 > 
->> for the clock and tcsrcc_switch for the clkref switch?  That removes any
->> notation that the gate/switch is an actual clock...
+> Co-developed-by: Vishnu Reddy <quic_bvisredd@quicinc.com>
+> Signed-off-by: Vishnu Reddy <quic_bvisredd@quicinc.com>
+> Signed-off-by: Vikash Garodia <vikash.garodia@oss.qualcomm.com>
+> ---
+>   .../media/platform/qcom/iris/iris_platform_common.h  |  1 +
+>   .../media/platform/qcom/iris/iris_platform_gen2.c    |  9 +++++++++
+>   .../media/platform/qcom/iris/iris_platform_sm8250.c  |  6 ++++++
+>   drivers/media/platform/qcom/iris/iris_power.c        |  2 +-
+>   drivers/media/platform/qcom/iris/iris_probe.c        | 20 ++++++++------------
+>   drivers/media/platform/qcom/iris/iris_resources.c    | 16 ++++++++++++++--
+>   drivers/media/platform/qcom/iris/iris_resources.h    |  1 +
+>   drivers/media/platform/qcom/iris/iris_vpu_common.c   |  4 ++--
+>   8 files changed, 42 insertions(+), 17 deletions(-)
 > 
-> You really did not get the point of this entire discussion.
+> diff --git a/drivers/media/platform/qcom/iris/iris_platform_common.h b/drivers/media/platform/qcom/iris/iris_platform_common.h
+> index 58d05e0a112eed25faea027a34c719c89d6c3897..df03de08c44839c1b6c137874eb7273c638d5f2c 100644
+> --- a/drivers/media/platform/qcom/iris/iris_platform_common.h
+> +++ b/drivers/media/platform/qcom/iris/iris_platform_common.h
+> @@ -206,6 +206,7 @@ struct iris_platform_data {
+>   	const char * const *opp_pd_tbl;
+>   	unsigned int opp_pd_tbl_size;
+>   	const struct platform_clk_data *clk_tbl;
+> +	const char * const *opp_clk_tbl;
+>   	unsigned int clk_tbl_size;
+>   	const char * const *clk_rst_tbl;
+>   	unsigned int clk_rst_tbl_size;
+> diff --git a/drivers/media/platform/qcom/iris/iris_platform_gen2.c b/drivers/media/platform/qcom/iris/iris_platform_gen2.c
+> index 36d69cc73986b74534a2912524c8553970fd862e..fea800811a389a58388175c733ad31c4d9c636b0 100644
+> --- a/drivers/media/platform/qcom/iris/iris_platform_gen2.c
+> +++ b/drivers/media/platform/qcom/iris/iris_platform_gen2.c
+> @@ -633,6 +633,11 @@ static const struct platform_clk_data sm8550_clk_table[] = {
+>   	{IRIS_HW_CLK,   "vcodec0_core" },
+>   };
 > 
-
-I won't argue how I interpreted this conversation vs your understanding. 
-  We can remove our vote to the clock itself, since tcsrcc registers the 
-CXO as its parent, so it'll handle the reference counting for us 
-whenever we vote on the tcsr clkref.  Thank you for taking the time to 
-explain what you were looking for.
-
-Thanks
-Wesley Cheng
+> +static const char * const sm8550_opp_clk_table[] = {
+> +	"vcodec0_core",
+> +	NULL,
+> +};
+> +
+>   static struct ubwc_config_data ubwc_config_sm8550 = {
+>   	.max_channels = 8,
+>   	.mal_length = 32,
+> @@ -756,6 +761,7 @@ struct iris_platform_data sm8550_data = {
+>   	.opp_pd_tbl_size = ARRAY_SIZE(sm8550_opp_pd_table),
+>   	.clk_tbl = sm8550_clk_table,
+>   	.clk_tbl_size = ARRAY_SIZE(sm8550_clk_table),
+> +	.opp_clk_tbl = sm8550_opp_clk_table,
+>   	/* Upper bound of DMA address range */
+>   	.dma_mask = 0xe0000000 - 1,
+>   	.fwname = "qcom/vpu/vpu30_p4.mbn",
+> @@ -848,6 +854,7 @@ struct iris_platform_data sm8650_data = {
+>   	.opp_pd_tbl_size = ARRAY_SIZE(sm8550_opp_pd_table),
+>   	.clk_tbl = sm8550_clk_table,
+>   	.clk_tbl_size = ARRAY_SIZE(sm8550_clk_table),
+> +	.opp_clk_tbl = sm8550_opp_clk_table,
+>   	/* Upper bound of DMA address range */
+>   	.dma_mask = 0xe0000000 - 1,
+>   	.fwname = "qcom/vpu/vpu33_p4.mbn",
+> @@ -930,6 +937,7 @@ struct iris_platform_data sm8750_data = {
+>   	.opp_pd_tbl_size = ARRAY_SIZE(sm8550_opp_pd_table),
+>   	.clk_tbl = sm8750_clk_table,
+>   	.clk_tbl_size = ARRAY_SIZE(sm8750_clk_table),
+> +	.opp_clk_tbl = sm8550_opp_clk_table,
+>   	/* Upper bound of DMA address range */
+>   	.dma_mask = 0xe0000000 - 1,
+>   	.fwname = "qcom/vpu/vpu35_p4.mbn",
+> @@ -1017,6 +1025,7 @@ struct iris_platform_data qcs8300_data = {
+>   	.opp_pd_tbl_size = ARRAY_SIZE(sm8550_opp_pd_table),
+>   	.clk_tbl = sm8550_clk_table,
+>   	.clk_tbl_size = ARRAY_SIZE(sm8550_clk_table),
+> +	.opp_clk_tbl = sm8550_opp_clk_table,
+>   	/* Upper bound of DMA address range */
+>   	.dma_mask = 0xe0000000 - 1,
+>   	.fwname = "qcom/vpu/vpu30_p4_s6.mbn",
+> diff --git a/drivers/media/platform/qcom/iris/iris_platform_sm8250.c b/drivers/media/platform/qcom/iris/iris_platform_sm8250.c
+> index 16486284f8acccf6a95a27f6003e885226e28f4d..1b1b6aa751106ee0b0bc71bb0df2e78340190e66 100644
+> --- a/drivers/media/platform/qcom/iris/iris_platform_sm8250.c
+> +++ b/drivers/media/platform/qcom/iris/iris_platform_sm8250.c
+> @@ -273,6 +273,11 @@ static const struct platform_clk_data sm8250_clk_table[] = {
+>   	{IRIS_HW_CLK,   "vcodec0_core" },
+>   };
+> 
+> +static const char * const sm8250_opp_clk_table[] = {
+> +	"vcodec0_core",
+> +	NULL,
+> +};
+> +
+>   static struct tz_cp_config tz_cp_config_sm8250 = {
+>   	.cp_start = 0,
+>   	.cp_size = 0x25800000,
+> @@ -333,6 +338,7 @@ struct iris_platform_data sm8250_data = {
+>   	.opp_pd_tbl_size = ARRAY_SIZE(sm8250_opp_pd_table),
+>   	.clk_tbl = sm8250_clk_table,
+>   	.clk_tbl_size = ARRAY_SIZE(sm8250_clk_table),
+> +	.opp_clk_tbl = sm8250_opp_clk_table,
+>   	/* Upper bound of DMA address range */
+>   	.dma_mask = 0xe0000000 - 1,
+>   	.fwname = "qcom/vpu-1.0/venus.mbn",
+> diff --git a/drivers/media/platform/qcom/iris/iris_power.c b/drivers/media/platform/qcom/iris/iris_power.c
+> index dbca42df0910fd3c0fb253dbfabf1afa2c3d32ad..91aa21d4070ebcebbe2ed127a03e5e49b9a2bd5c 100644
+> --- a/drivers/media/platform/qcom/iris/iris_power.c
+> +++ b/drivers/media/platform/qcom/iris/iris_power.c
+> @@ -91,7 +91,7 @@ static int iris_set_clocks(struct iris_inst *inst)
+>   	}
+> 
+>   	core->power.clk_freq = freq;
+> -	ret = dev_pm_opp_set_rate(core->dev, freq);
+> +	ret = iris_opp_set_rate(core->dev, freq);
+>   	mutex_unlock(&core->lock);
+> 
+>   	return ret;
+> diff --git a/drivers/media/platform/qcom/iris/iris_probe.c b/drivers/media/platform/qcom/iris/iris_probe.c
+> index 00e99be16e087c4098f930151fd76cd381d721ce..ad82a62f8b923d818ffe77c131d7eb6da8c34002 100644
+> --- a/drivers/media/platform/qcom/iris/iris_probe.c
+> +++ b/drivers/media/platform/qcom/iris/iris_probe.c
+> @@ -40,8 +40,6 @@ static int iris_init_icc(struct iris_core *core)
+> 
+>   static int iris_init_power_domains(struct iris_core *core)
+>   {
+> -	const struct platform_clk_data *clk_tbl;
+> -	u32 clk_cnt, i;
+>   	int ret;
+> 
+>   	struct dev_pm_domain_attach_data iris_pd_data = {
+> @@ -56,6 +54,11 @@ static int iris_init_power_domains(struct iris_core *core)
+>   		.pd_flags = PD_FLAG_DEV_LINK_ON | PD_FLAG_REQUIRED_OPP,
+>   	};
+> 
+> +	struct dev_pm_opp_config iris_opp_clk_data = {
+> +		.clk_names = core->iris_platform_data->opp_clk_tbl,
+> +		.config_clks = dev_pm_opp_config_clks_simple,
+> +	};
+> +
+>   	ret = devm_pm_domain_attach_list(core->dev, &iris_pd_data, &core->pmdomain_tbl);
+>   	if (ret < 0)
+>   		return ret;
+> @@ -64,16 +67,9 @@ static int iris_init_power_domains(struct iris_core *core)
+>   	if (ret < 0)
+>   		return ret;
+> 
+> -	clk_tbl = core->iris_platform_data->clk_tbl;
+> -	clk_cnt = core->iris_platform_data->clk_tbl_size;
+> -
+> -	for (i = 0; i < clk_cnt; i++) {
+> -		if (clk_tbl[i].clk_type == IRIS_HW_CLK) {
+> -			ret = devm_pm_opp_set_clkname(core->dev, clk_tbl[i].clk_name);
+> -			if (ret)
+> -				return ret;
+> -		}
+> -	}
+> +	ret = devm_pm_opp_set_config(core->dev, &iris_opp_clk_data);
+> +	if (ret)
+> +		return ret;
+> 
+>   	return devm_pm_opp_of_add_table(core->dev);
+>   }
+> diff --git a/drivers/media/platform/qcom/iris/iris_resources.c b/drivers/media/platform/qcom/iris/iris_resources.c
+> index cf32f268b703c1c042a9bcf146e444fff4f4990d..939f6617f2631503fa8cb3e874b9de6b2fbe7b76 100644
+> --- a/drivers/media/platform/qcom/iris/iris_resources.c
+> +++ b/drivers/media/platform/qcom/iris/iris_resources.c
+> @@ -4,6 +4,7 @@
+>    */
+> 
+>   #include <linux/clk.h>
+> +#include <linux/devfreq.h>
+>   #include <linux/interconnect.h>
+>   #include <linux/pm_domain.h>
+>   #include <linux/pm_opp.h>
+> @@ -58,11 +59,22 @@ int iris_unset_icc_bw(struct iris_core *core)
+>   	return icc_bulk_set_bw(core->icc_count, core->icc_tbl);
+>   }
+> 
+> +int iris_opp_set_rate(struct device *dev, unsigned long freq)
+> +{
+> +	struct dev_pm_opp *opp __free(put_opp);
+> +
+> +	opp = devfreq_recommended_opp(dev, &freq, 0);
+> +	if (IS_ERR(opp))
+> +		return PTR_ERR(opp);
+> +
+> +	return dev_pm_opp_set_opp(dev, opp);
+> +}
+> +
+>   int iris_enable_power_domains(struct iris_core *core, struct device *pd_dev)
+>   {
+>   	int ret;
+> 
+> -	ret = dev_pm_opp_set_rate(core->dev, ULONG_MAX);
+> +	ret = iris_opp_set_rate(core->dev, ULONG_MAX);
+>   	if (ret)
+>   		return ret;
+> 
+> @@ -77,7 +89,7 @@ int iris_disable_power_domains(struct iris_core *core, struct device *pd_dev)
+>   {
+>   	int ret;
+> 
+> -	ret = dev_pm_opp_set_rate(core->dev, 0);
+> +	ret = iris_opp_set_rate(core->dev, 0);
+>   	if (ret)
+>   		return ret;
+> 
+> diff --git a/drivers/media/platform/qcom/iris/iris_resources.h b/drivers/media/platform/qcom/iris/iris_resources.h
+> index f723dfe5bd81a9c9db22d53bde4e18743d771210..6bfbd2dc6db095ec05e53c894e048285f82446c6 100644
+> --- a/drivers/media/platform/qcom/iris/iris_resources.h
+> +++ b/drivers/media/platform/qcom/iris/iris_resources.h
+> @@ -8,6 +8,7 @@
+> 
+>   struct iris_core;
+> 
+> +int iris_opp_set_rate(struct device *dev, unsigned long freq);
+>   int iris_enable_power_domains(struct iris_core *core, struct device *pd_dev);
+>   int iris_disable_power_domains(struct iris_core *core, struct device *pd_dev);
+>   int iris_unset_icc_bw(struct iris_core *core);
+> diff --git a/drivers/media/platform/qcom/iris/iris_vpu_common.c b/drivers/media/platform/qcom/iris/iris_vpu_common.c
+> index bb98950e018fadf69ac4f41b3037f7fd6ac33c5b..bbd999a41236dca5cf5700e452a6fed69f4fc922 100644
+> --- a/drivers/media/platform/qcom/iris/iris_vpu_common.c
+> +++ b/drivers/media/platform/qcom/iris/iris_vpu_common.c
+> @@ -266,7 +266,7 @@ void iris_vpu_power_off_hw(struct iris_core *core)
+> 
+>   void iris_vpu_power_off(struct iris_core *core)
+>   {
+> -	dev_pm_opp_set_rate(core->dev, 0);
+> +	iris_opp_set_rate(core->dev, 0);
+>   	core->iris_platform_data->vpu_ops->power_off_hw(core);
+>   	core->iris_platform_data->vpu_ops->power_off_controller(core);
+>   	iris_unset_icc_bw(core);
+> @@ -352,7 +352,7 @@ int iris_vpu_power_on(struct iris_core *core)
+>   	freq = core->power.clk_freq ? core->power.clk_freq :
+>   				      (u32)ULONG_MAX;
+> 
+> -	dev_pm_opp_set_rate(core->dev, freq);
+> +	iris_opp_set_rate(core->dev, freq);
+> 
+>   	core->iris_platform_data->set_preset_registers(core);
+> 
+> 
+> --
+> 2.34.1
+> 
+> 
+Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 
