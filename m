@@ -1,200 +1,204 @@
-Return-Path: <linux-arm-msm+bounces-78070-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-78071-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7590FBF4565
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Oct 2025 03:58:51 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 97686BF4615
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Oct 2025 04:26:14 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 09CB318A76FB
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Oct 2025 01:59:15 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id C58773B787F
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Oct 2025 02:26:06 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C8AB625F973;
-	Tue, 21 Oct 2025 01:58:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 555C628469A;
+	Tue, 21 Oct 2025 02:25:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="JXBsHQWP"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="oNM9JV8v"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CC8C25A32E
-	for <linux-arm-msm@vger.kernel.org>; Tue, 21 Oct 2025 01:58:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27DF7283FFB;
+	Tue, 21 Oct 2025 02:25:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761011924; cv=none; b=o9xr7hNdxqIMV2Q9YGwY3LvfYI6YwylJvFdt2lrq3ca3Qw1CDSn+Ib+swJrYfErr7YdsLrjHW8CW2zuhZNUzm0Uv3I1WDwZ0HvdTr70//vAiUIZcDN1CTl+MDBGMtg3dvzZO43DREHeZ9X2kGxTJsOkVqOw6AUhYBi/VqB2KMUs=
+	t=1761013557; cv=none; b=ptS9S5BTofQBJE4PACMCNUfOQLeyZcAonzZaV2j8fkNuq77jFK6520vdoAm3ywTJjbqYP2W2we90IYcJEGEacrzk1+Q7m4zmHAwpQ4qTHXpAyh8pCYTRkN7cU8QCWJYhwp/+ZL8plkG8e2ytCyUZvWJeiBnJpldPgB5IxFu1mQw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761011924; c=relaxed/simple;
-	bh=TaJ6Kpu5C42O4zfV+T1Ms1+yf77uSZazTk3VhrzJq24=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=FxB6zZLZqXtLm9eQNUg4PaGd6tRqXOJbNukLWCNrGwQoZ+KgP87oijlPwEHcRl8r5FXS9lcf9nG9dCGHpv2Q03BMrByO95D0XzDb164c1PwgQxc0FGK2l6wjYaakd1iF3i85Ua9RrP0W9cnVCKbXsclKYqUQHl0G5ON9t8/RxbE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=JXBsHQWP; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 59KL0wKR010900
-	for <linux-arm-msm@vger.kernel.org>; Tue, 21 Oct 2025 01:58:42 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	TGwpn8/U0jGDBsJ9vOkeOjiPiuDIq8W2qVCHqYYf6sc=; b=JXBsHQWP/qTEPR9F
-	aj4n17ekAa9v3b3yCN3CLVOyV9Y3CFau8yYJ5UxGlaWaVCHIzJUZiNECUDH8uvfu
-	NMfAHF7EddZz90C3hfNCc8AQxdeBEKSapbVXxF4TZlUQJifc4T1/edYz/UyUh1q5
-	DRcydR/YamYHAJfLAjN1BwAgctF90VM8+41EECsk8Nozpv15KDy0lkJ8/1hpOVMZ
-	vdGudTmveBsuKN/2trnGZvx4tU0N2thLNudNnyl4xj3eBse5VjcHYb4juEZPJoEc
-	UpaomhHCr7Tnfi5Qg8pm9w4Uoeqk9iCTeFQUVZdrEjFORLuikPu3z++4sGr48i/m
-	DmFi2Q==
-Received: from mail-pl1-f199.google.com (mail-pl1-f199.google.com [209.85.214.199])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 49wtges0bf-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Tue, 21 Oct 2025 01:58:41 +0000 (GMT)
-Received: by mail-pl1-f199.google.com with SMTP id d9443c01a7336-2698b5fbe5bso79449425ad.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 20 Oct 2025 18:58:41 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1761011921; x=1761616721;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=TGwpn8/U0jGDBsJ9vOkeOjiPiuDIq8W2qVCHqYYf6sc=;
-        b=LySmUaKY3vJFyGfiuR7sPPeYSMoL1/6VtA4aMFkBH1zi8c6TAxq6rn1DBtVdLclJoV
-         JM2bn3DqenhKr3dHwd/9qxlg/2qBPAjhYfePwTN/kSHTtzeQf7y/Jd7UXiSPWAdwj5qc
-         GPkMmedQNbJQ82GQQrjenV1g1tB3j5INEtBj+6Jsu6o5YDuQROgKzfcwMr8VAH1IKEHe
-         Njmj46lc990sG1e77WdiA2Zvy7dcCe48qETE9t03kpIHyxLybbJKOAQzUPuo8hkcLWWc
-         Exxs6Dt3BRXMGppALVSezzSqXMx6nj/yQ6JwT7sb2bCUYXEqMGv3DPjCESVMbZ16pQxB
-         BpGQ==
-X-Gm-Message-State: AOJu0YymR2BEXu7ecrE8l/jMNmZp5eGGLsWCOSgxlaHol+nnZFklgieW
-	pZN9oDW6TQl6uglC/rYjDijTX1qahJNC6K0evStYXJtWgXdZf3+U63RHBkdC7ol11i1Fw8wgSNj
-	ULZFav8SR4yxWUcVEAXmBMPrPTvRW7ZsgHpqzinJhfst/EOmLqP4dJ3lZ5g3zfZseEuNk
-X-Gm-Gg: ASbGnctQrnGQXEI520mh0DvXS8okRNjG5cMEj9vIa5bFNJ2HWDlRKvrT/VzsydvmODH
-	P2Sydfg9sJWfCz1N1DEMJy9IXPoiU5wdtK1ypLRJyYYb1hiFZFAPEtC3MracNQvwtV5All4dzSE
-	v44lnP5l1WgjmSz4JbCeMez6KKfSUtZbjkQGolyHKwSMdHUQ83ouF27yy97/yA3wf05D9nOlexi
-	+TVMyPmAt+x6DDgLmoUbmVIJqwxmocVQHTsj/oX+IvG0I/ute2VTV6O2oOja1+MnRw5FXoC62iM
-	pdSzTc3J9359jGh2O8KuPR70/v8jNIiLbRGbfwYd/dRnx/SIUmwdF2Ce/qInborh8ypPTv34Brw
-	2wZjx1BYLDMSCQ3U6hwSn1ZLHiMZvgXoqZkri8273Z41v+BRp2vn53E0MiyrJqG3wnS5jyLVF
-X-Received: by 2002:a17:902:eccb:b0:278:9051:8e9c with SMTP id d9443c01a7336-290cb07a023mr215059195ad.42.1761011920708;
-        Mon, 20 Oct 2025 18:58:40 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGTGO8LNhqSw5LRNEv7/Nl+bkPzCeoLUOMnBS6Q0IAq/GhPgb1srkEd6w74xcF3soP78u6rQQ==
-X-Received: by 2002:a17:902:eccb:b0:278:9051:8e9c with SMTP id d9443c01a7336-290cb07a023mr215058935ad.42.1761011920307;
-        Mon, 20 Oct 2025 18:58:40 -0700 (PDT)
-Received: from ?IPV6:2405:201:c416:5052:e167:a6da:f5f1:b45? ([2405:201:c416:5052:e167:a6da:f5f1:b45])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-29246ec20a4sm93752155ad.7.2025.10.20.18.58.35
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 20 Oct 2025 18:58:39 -0700 (PDT)
-Message-ID: <766890b0-099c-42e0-971c-cc94114c0d7a@oss.qualcomm.com>
-Date: Tue, 21 Oct 2025 07:28:04 +0530
+	s=arc-20240116; t=1761013557; c=relaxed/simple;
+	bh=1rj/lRwD+09g4LTh/J3rOOI/5OeNJ1N0w55J9NIJXwM=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=aSqerf05P0GEtqXApb9tPy0IU1x23LQsgaFcx9AGCGJr+31KjvbbCTQHdysroUqyMyUBSpRTdD/GT8oChCksMj0oRdxIK7/K6A6vzEu2Is5SGFeVRVuYXAOPR03QbqFpUnr9qOI+uHPuH0utXa5P22vbRb5ndwvcxJcRN432vZI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=oNM9JV8v; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1210AC116B1;
+	Tue, 21 Oct 2025 02:25:51 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1761013556;
+	bh=1rj/lRwD+09g4LTh/J3rOOI/5OeNJ1N0w55J9NIJXwM=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=oNM9JV8vU0ybZx8KnAEBE3tJfVgwl4shjF8/Or7csMaZQtkwXf2d0qiTPkWSw3R0V
+	 ypzjZ3a1zf4TbmjjcE509xUqqetbBlsqxjrjmw0Es0Q17ZfXgL5ITIax94YqwCY+Nv
+	 xiVjQJZlVV1Cel+RfYXBVScRSMUID9KThJBYz0bJWhdf2lBikc5O2qOn4YJRfjj5e8
+	 GQDLs0NTOxZ7v5BNATL+RynAucia8G4lkx8WTO3K7VKX7+D2htAMNMhsyeR3Xkx3fZ
+	 H1CVcYHMdouvzcwkxQqCKNOqbjdfU2dleTL9NO90tXo8z6PYTK1FCttK3iMeJOETGE
+	 RlUeke+C1NkrA==
+Date: Tue, 21 Oct 2025 07:55:45 +0530
+From: Manivannan Sadhasivam <mani@kernel.org>
+To: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
+Cc: Bjorn Helgaas <helgaas@kernel.org>, Jingoo Han <jingoohan1@gmail.com>, 
+	Lorenzo Pieralisi <lpieralisi@kernel.org>, Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kwilczynski@kernel.org>, 
+	Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>, linux-pci@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, Ron Economos <re@w6rz.net>
+Subject: Re: [PATCH 1/2] PCI: dwc: Fix ECAM enablement when used with vendor
+ drivers
+Message-ID: <mjrcz7qleml7hmwfdwxt2bbbq5qg7ko36l6zwt2snppk7ajrbj@evmvu7tzr4w2>
+References: <20251017-ecam_fix-v1-1-f6faa3d0edf3@oss.qualcomm.com>
+ <20251017191005.GA1041995@bhelgaas>
+ <mtxez55p4hfvtmhcnwtxeetzqxydyq5e4g5zsdhytxpzgvgeqn@s7asinok5l22>
+ <0bc6eb69-029d-45f4-a723-c003ecbb11e5@oss.qualcomm.com>
+ <db799304-1551-410b-af07-fb8d9b50be5c@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/2] dt-bindings: interconnect: document the RPMh
- Network-On-Chip interconnect in Kaanapali SoC
-To: Eugen Hristev <eugen.hristev@linaro.org>,
-        Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-        Jingyi Wang <jingyi.wang@oss.qualcomm.com>,
-        Georgi Djakov
- <djakov@kernel.org>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        aiqun.yu@oss.qualcomm.com, tingwei.zhang@oss.qualcomm.com,
-        trilok.soni@oss.qualcomm.com, yijie.yang@oss.qualcomm.com
-References: <20250924-knp-interconnect-v1-0-4c822a72141c@oss.qualcomm.com>
- <20250924-knp-interconnect-v1-1-4c822a72141c@oss.qualcomm.com>
- <ea291acc-bfdc-4a04-ba60-fc59a55ada28@linaro.org>
- <f4e7a388-54fd-42a7-8960-be6a3de7ec6a@oss.qualcomm.com>
- <70569fdf-7a3a-495a-b1ca-d35ae1963592@oss.qualcomm.com>
- <f5c5254c-537e-46ad-a7cb-a8b18b07632c@linaro.org>
-Content-Language: en-US
-From: Raviteja Laggyshetty <raviteja.laggyshetty@oss.qualcomm.com>
-In-Reply-To: <f5c5254c-537e-46ad-a7cb-a8b18b07632c@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-ORIG-GUID: 4EMT2dQPBxAt7rYNztXpe6DCAEdhpotH
-X-Authority-Analysis: v=2.4 cv=JeaxbEKV c=1 sm=1 tr=0 ts=68f6e8d2 cx=c_pps
- a=JL+w9abYAAE89/QcEU+0QA==:117 a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10
- a=x6icFKpwvdMA:10 a=VkNPw1HP01LnGYTKEx00:22 a=EUspDBNiAAAA:8
- a=lx9-Q6l9dX336bKDy7QA:9 a=QEXdDO2ut3YA:10 a=324X-CrmTo6CU4MGRt3R:22
- a=HhbK4dLum7pmb74im6QT:22
-X-Proofpoint-GUID: 4EMT2dQPBxAt7rYNztXpe6DCAEdhpotH
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDIwMDE1NCBTYWx0ZWRfX0FtLj2GK21Hs
- tmdaucoFeqr+NuWA5QKMm0aM1solkqDJKk/yeEoV3dalPRGidXBuL3Yt1PgYjAfiCWM24/nh8s3
- GhMmhsVmCqlmwpkhHKRR5MDSuQRY22AGJlI705X0CEH+2sSnPyB4EO3TdPBGRzsk8eNk/vgGBSY
- oE8q1WrP+FiGp2mKU7h6AdUyQ0a0i7EheVnLA5PfuxpK2Lzw7cOk1Lap7ROUH0VNg5kBl4Hn63m
- LKJVA2fzI4TiSZLek+2AWEhjrr/Dv6PnmvV9KJVGQoSiYmn7vhZKBk6A0v6xicMgFHfCiEyD+4t
- uAWkb+lHOa3YBmIrXdX+AXtk7zaYAeAEgFVZwAHKBnc0Rs34O/J9iMgsx1Bs1tRYDKFJ3ewJPy1
- THd6fH/Rk38hwZbCQA7BhzoD4wZHoQ==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-10-20_07,2025-10-13_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0 clxscore=1015 malwarescore=0 impostorscore=0 spamscore=0
- bulkscore=0 suspectscore=0 priorityscore=1501 lowpriorityscore=0 adultscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2510020000 definitions=main-2510200154
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <db799304-1551-410b-af07-fb8d9b50be5c@oss.qualcomm.com>
 
-
-
-On 9/30/2025 3:27 PM, Eugen Hristev wrote:
+On Sat, Oct 18, 2025 at 03:00:32PM +0530, Krishna Chaitanya Chundru wrote:
 > 
 > 
-> On 9/30/25 06:06, Raviteja Laggyshetty wrote:
->>
->>
->> On 9/25/2025 6:10 PM, Konrad Dybcio wrote:
->>> On 9/25/25 10:57 AM, Eugen Hristev wrote:
->>>>
->>>>
->>>> On 9/25/25 02:02, Jingyi Wang wrote:
->>>>> From: Raviteja Laggyshetty <raviteja.laggyshetty@oss.qualcomm.com>
->>>>>
->>>>> Document the RPMh Network-On-Chip Interconnect of the Kaanapali platform.
->>>>>
->>>>> Signed-off-by: Raviteja Laggyshetty <raviteja.laggyshetty@oss.qualcomm.com>
->>>>> Signed-off-by: Jingyi Wang <jingyi.wang@oss.qualcomm.com>
->>>>> ---
->>>
->>> [...]
->>>
->>>>> +properties:
->>>>> +  compatible:
->>>>> +    enum:
->>>>> +      - qcom,kaanapali-aggre-noc
->>>>
->>>> Hi,
->>>>
->>>> Does Kaanapali have a single aggre node, or there are several ?
->>>> On previous SoC, I see there are two (aggre1 and aggre2).
->>>> Also in your driver (second patch), I notice aggre1_noc and aggre2_noc .
->>>> It would make sense to accurately describe here the hardware.
->>>
->>> They're physically separate
->>>
->> Yes, they are physically separate but the topology treats them as a single noc
->> with two slave connections to system noc which you have noticed in the topology file.
-> 
-> Is it any difference from previous sm8750 where there are two nodes ?
-> If yes, can you mention the difference and reasoning for merging them
-> into a single node.
-> If no, can you reason why the decision to merge them into a single node
-> this time instead of keeping it consistent ?
->This is due to HW design issue.
-qxm_crypto port is on aggre1_noc and it's qos config is in aggre2_noc. Since
-aggre1_noc and aggre2_noc are separate devices they can not access intra address
-space. To access qxm_crypto qos combined agree1_noc, aggre2_noc into aggre_noc.
+> On 10/18/2025 2:55 PM, Krishna Chaitanya Chundru wrote:
+> > 
+> > 
+> > On 10/18/2025 8:39 AM, Manivannan Sadhasivam wrote:
+> > > On Fri, Oct 17, 2025 at 02:10:05PM -0500, Bjorn Helgaas wrote:
+> > > > On Fri, Oct 17, 2025 at 05:10:53PM +0530, Krishna Chaitanya
+> > > > Chundru wrote:
+> > > > > When the vendor configuration space is 256MB aligned, the DesignWare
+> > > > > PCIe host driver enables ECAM access and sets the DBI base
+> > > > > to the dw_pcie_ecam_conf_map_busstart
+> > > > > of the config space. This causes vendor drivers to incorrectly program
+> > > > > iATU regions, as they rely on the DBI address for internal accesses.
+> > > > > 
+> > > > > To fix this, avoid overwriting the DBI base when ECAM is enabled.
+> > > > > Instead, introduce a custom ECAM PCI ops implementation that accesses
+> > > > > the DBI region directly for bus 0 and uses ECAM for other buses.
+> > > > > 
+> > > > > Fixes: f6fd357f7afb ("PCI: dwc: Prepare the driver for
+> > > > > enabling ECAM mechanism using iATU 'CFG Shift Feature'")
+> > > > > Reported-by: Ron Economos <re@w6rz.net>
+> > > > > Closes: https://lore.kernel.org/all/eac81c57-1164-4d74-a1b4-6f353c577731@w6rz.net/
+> > > > > Suggested-by: Manivannan Sadhasivam <mani@kernel.org>
+> > > > > Signed-off-by: Krishna Chaitanya Chundru
+> > > > > <krishna.chundru@oss.qualcomm.com>
+> > > > > ---
+> > > > >   drivers/pci/controller/dwc/pcie-designware-host.c | 28
+> > > > > +++++++++++++++++++----
+> > > > >   1 file changed, 24 insertions(+), 4 deletions(-)
+> > > > > 
+> > > > > diff --git
+> > > > > a/drivers/pci/controller/dwc/pcie-designware-host.c
+> > > > > b/drivers/pci/controller/dwc/pcie-designware-host.c
+> > > > > index 20c9333bcb1c4812e2fd96047a49944574df1e6f..e92513c5bda51bde3a7157033ddbd73afa370d78
+> > > > > 100644
+> > > > > --- a/drivers/pci/controller/dwc/pcie-designware-host.c
+> > > > > +++ b/drivers/pci/controller/dwc/pcie-designware-host.c
+> > > > > @@ -23,6 +23,7 @@
+> > > > >   #include "pcie-designware.h"
+> > > > >   static struct pci_ops dw_pcie_ops;
+> > > > > +static struct pci_ops dw_pcie_ecam_ops;
+> > > > >   static struct pci_ops dw_child_pcie_ops;
+> > > > >   #define DW_PCIE_MSI_FLAGS_REQUIRED
+> > > > > (MSI_FLAG_USE_DEF_DOM_OPS        | \
+> > > > > @@ -471,9 +472,6 @@ static int
+> > > > > dw_pcie_create_ecam_window(struct dw_pcie_rp *pp, struct
+> > > > > resource *re
+> > > > >       if (IS_ERR(pp->cfg))
+> > > > >           return PTR_ERR(pp->cfg);
+> > > > > -    pci->dbi_base = pp->cfg->win;
+> > > > > -    pci->dbi_phys_addr = res->start;
+> > > > > -
+> > > > >       return 0;
+> > > > >   }
+> > > > > @@ -529,7 +527,7 @@ static int
+> > > > > dw_pcie_host_get_resources(struct dw_pcie_rp *pp)
+> > > > >           if (ret)
+> > > > >               return ret;
+> > > > > -        pp->bridge->ops = (struct pci_ops
+> > > > > *)&pci_generic_ecam_ops.pci_ops;
+> > > > > +        pp->bridge->ops = &dw_pcie_ecam_ops;
+> > > > >           pp->bridge->sysdata = pp->cfg;
+> > > > >           pp->cfg->priv = pp;
+> > > > >       } else {
+> > > > > @@ -842,12 +840,34 @@ void __iomem
+> > > > > *dw_pcie_own_conf_map_bus(struct pci_bus *bus, unsigned int
+> > > > > devfn,
+> > > > >   }
+> > > > >   EXPORT_SYMBOL_GPL(dw_pcie_own_conf_map_bus);
+> > > > > +static void __iomem *dw_pcie_ecam_conf_map_bus(struct
+> > > > > pci_bus *bus, unsigned int devfn, int where)
+> > > > > +{
+> > > > > +    struct pci_config_window *cfg = bus->sysdata;
+> > > > > +    struct dw_pcie_rp *pp = cfg->priv;
+> > > > > +    struct dw_pcie *pci = to_dw_pcie_from_pp(pp);
+> > > > > +    unsigned int busn = bus->number;
+> > > > > +
+> > > > > +    if (busn > 0)
+> > > > > +        return pci_ecam_map_bus(bus, devfn, where);
+> > > > 
+> > > > Is there a way to avoid the "root bus is bus 00" assumption here?  It
+> > > > looks like something like this might work (it inverts the condition
+> > > > to take care of the root bus special case first):
+> > > > 
+> > > >    if (bus == pp->bridge->bus) {
+> > > >      if (PCI_SLOT(devfn) > 0)
+> > > >        return NULL;
+> > > > 
+> > > >      return pci->dbi_base + where;
+> > > >    }
+> > > > 
+> > > >    return pci_ecam_map_bus(bus, devfn, where);
+> > > > 
+> > > 
+> > > I guess it will work.
+> > > 
+> > > > > +    if (PCI_SLOT(devfn) > 0)
+> > > > > +        return NULL;
+> > > > 
+> > > > This essentially says only one function (00.0) can be on the root bus.
+> > > > I assume that someday that will be relaxed and there may be multiple
+> > > > Root Ports and maybe RCiEPs on the root bus, so it would be nice if we
+> > > > didn't have to have this check.
+> > > > 
+> > > > What happens without it?  Does the IP return the ~0 data that the PCI
+> > > > core would interpret as "there's no device here"?
+> > > > 
+> > > 
+> > > I hope the read returns ~0, but the idea is to catch the invalid
+> > > access before
+> > > trying to read/write. In case of multi Root Port design, I don't
+> > > think we have a
+> > > way to identify it. So maybe it is safe to remove this check.
+> > > 
+> > For multi root port we may need to revisit this, currently along with
+> > dbi there are some other registers iATU, elbi etc. So there might be
+> > chances to read these registers like iATU as part of enumeration and
+> > these can return non ~0 values which will have adverse effects.
+> > So we should have this check for now.
+> > 
+> One more issue is some controllers may pass only 4k memory as dbi memory
+> so we might get unmapped address access issues also.
 
-Thanks,
-Raviteja.
+Oh yes. The single Root Port controllers might supply only 4KiB of the DBI
+space, so without the check, the driver could read/write past the mapped space.
 
->>
->> Thanks,
->> Raviteja.
->>
->>> Konrad
-> 
+Good catch!
 
+- Mani
 
+-- 
+மணிவண்ணன் சதாசிவம்
 
