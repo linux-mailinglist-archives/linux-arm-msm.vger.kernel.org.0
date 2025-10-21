@@ -1,55 +1,55 @@
-Return-Path: <linux-arm-msm+bounces-78101-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-78102-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [IPv6:2605:f480:58:1:0:1994:3:14])
-	by mail.lfdr.de (Postfix) with ESMTPS id 20D70BF526D
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Oct 2025 10:07:11 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 55913BF5309
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Oct 2025 10:11:15 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id E33C44E4599
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Oct 2025 08:07:09 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id F40BA3A4316
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Oct 2025 08:09:43 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4DB01291C1F;
-	Tue, 21 Oct 2025 08:07:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1A04E2F0C6C;
+	Tue, 21 Oct 2025 08:09:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b="QA2jFApg"
+	dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b="jylajQiN"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from bali.collaboradmins.com (bali.collaboradmins.com [148.251.105.195])
+Received: from smtpout-03.galae.net (smtpout-03.galae.net [185.246.85.4])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B88B26CE39;
-	Tue, 21 Oct 2025 08:07:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.251.105.195
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 100A02F0678;
+	Tue, 21 Oct 2025 08:09:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.246.85.4
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761034027; cv=none; b=ANFQ+hGtDVzR6b0Mt9bS9KfXJiyjL/Sd2leStzZD1dH56xGETYhOtjOlc0eHMAobrHeaUqQFW4C99Q5tkNyt6Fg+NkXm9f/hkUW/4VPqLoPSeLEoey8zyjxoq6ZAezQHn/YucAUKPmkG1y/bEqRK44O+vybPV+8fBYUW/mVPsCs=
+	t=1761034182; cv=none; b=p7LQRB0RUaZnn8lka7Qa9mTNyumFC2K3quBMexKvjLbs4isYqYgfpgB7f+FRnDrbi4NiqyCKAKkPKJeEnH19JebIWBmV5pEH4J/x0kWWkAz+Im33DSUw//EOSmYogI4vY3xNNP3jc6Cfzf9NkrGA00MPBz79mU5+o4rwhMfjglE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761034027; c=relaxed/simple;
-	bh=Rehk/1A9fRtUYg+F9et0A0RhHwPHQZv605r7G7w8Cx8=;
+	s=arc-20240116; t=1761034182; c=relaxed/simple;
+	bh=2RdxWgIsanqm/sfNnjLv7GBwDmpGRLZbb1yuEaSRVlc=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=MNcqYpIO9T10KYtSDQXvmmHUJN4PNi4lkW+szi1bLpFN/1igIjyKwF0VKh47DbyWH4gCJ0SqhLP3TBQrjS5UXykHFurnS1isVJ/K6HyWEZiWEE0zO97jVtBZsT7KIMw8X893zykYvMFV9x5ecJ9JTLW93LUNvqZfOAdmwDgISAw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b=QA2jFApg; arc=none smtp.client-ip=148.251.105.195
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
-	s=mail; t=1761034023;
-	bh=Rehk/1A9fRtUYg+F9et0A0RhHwPHQZv605r7G7w8Cx8=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=QA2jFApgIehSOhr+h6MU72RM5sk8wy+gDqp4D4uIO82/Yr/3kBj51T+4Oha1Cc0p9
-	 kjxb7ouJev91hZ81J4yCDLPdur+TjgIiDT1Pq4PjfomHCYmmQ+elrkVe/7KzjK4sH+
-	 XPmyDcRL2w7eU5MFAdG2GmD9bqqEeBZEDEUa5X0m/IGmnMwlPtnxLBEWfeYDyxo0Eh
-	 VpgR0Dl1vcoOHNLU0xJNFAWm1lm+71bOIdhQnfKYA5klxWxhZDiNxVUKeJAsTyda8/
-	 T1FPwtnAJ/YQabb+3XUSL29xzHoz8TAQMyES7vlDWJjT96rA9wQFUzAa8kWByhQ513
-	 cRY+m5/uwPLmw==
-Received: from [192.168.1.100] (2-237-20-237.ip236.fastwebnet.it [2.237.20.237])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits))
-	(No client certificate requested)
-	(Authenticated sender: kholk11)
-	by bali.collaboradmins.com (Postfix) with ESMTPSA id AE38E17E0CA3;
-	Tue, 21 Oct 2025 10:07:02 +0200 (CEST)
-Message-ID: <1a5f4081-191f-49a5-b3a0-419656b04bf4@collabora.com>
-Date: Tue, 21 Oct 2025 10:07:02 +0200
+	 In-Reply-To:Content-Type; b=lK5PIBwHUq8tDFDcxQZo0qANdBchlgTClTjBRrIdn8HLczzEGt3iyeFBKp5MqOyNHLOpQ/UIWXbr0byUOBOSUy0pUvRJccp675kZUd+GhhA2a8Lo79++lBfIbn7TiqhpAMeMzVS+MwxXcvU1bG0VCTV7PAviqxlQTzm2JyGCErg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com; spf=pass smtp.mailfrom=bootlin.com; dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b=jylajQiN; arc=none smtp.client-ip=185.246.85.4
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bootlin.com
+Received: from smtpout-01.galae.net (smtpout-01.galae.net [212.83.139.233])
+	by smtpout-03.galae.net (Postfix) with ESMTPS id CF5A94E4123D;
+	Tue, 21 Oct 2025 08:09:30 +0000 (UTC)
+Received: from mail.galae.net (mail.galae.net [212.83.136.155])
+	by smtpout-01.galae.net (Postfix) with ESMTPS id 9610860680;
+	Tue, 21 Oct 2025 08:09:30 +0000 (UTC)
+Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon) with ESMTPSA id 66C00102F23E8;
+	Tue, 21 Oct 2025 10:09:19 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=dkim;
+	t=1761034169; h=from:subject:date:message-id:to:cc:mime-version:content-type:
+	 content-transfer-encoding:content-language:in-reply-to:references;
+	bh=uaJdoHn0NXDruimCAXmm8uA1Fs0q8Xm1i44RzkSnJK0=;
+	b=jylajQiNswkpvpiLrpRh5lrXTaTqojw5jEJqLhUpL/ZqFUrnBRcvcO934JwKAlNNYApAXd
+	Sa6UwGEwL9e7y7wlca6U8b/EFgTvmvkMJVHolpYSLiKOPISIh+A1ls3iURh15zFbPzjOu+
+	XPZYQBSdnp9dDMWl/ocXovDmJw7NSZe/lsy3KhCehdtTUqhpdUsOf48DKEO5LRmS4EiS5V
+	AxxsyDVpFYgG13bX5wjCFfPkuhjz12m7mTIg3OtJtfr4P4eDUthaIBQP4U1m2l7Irn8T/4
+	4dNS7GVGHbn9Ynvqgg2jAHkA+XFZjHhCzL/OG2wBsHsoHbLo5zwAWywiJObqZQ==
+Message-ID: <29322269-6d27-48da-a58b-1d2053369833@bootlin.com>
+Date: Tue, 21 Oct 2025 10:09:19 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -57,56 +57,53 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 1/8] spmi: Print error status with %pe format
-To: Andy Shevchenko <andriy.shevchenko@intel.com>
-Cc: sboyd@kernel.org, jic23@kernel.org, dlechner@baylibre.com,
- nuno.sa@analog.com, andy@kernel.org, arnd@arndb.de,
- gregkh@linuxfoundation.org, srini@kernel.org, vkoul@kernel.org,
- kishon@kernel.org, sre@kernel.org, krzysztof.kozlowski@linaro.org,
- u.kleine-koenig@baylibre.com, linux-arm-msm@vger.kernel.org,
- linux-iio@vger.kernel.org, linux-kernel@vger.kernel.org,
- linux-phy@lists.infradead.org, linux-pm@vger.kernel.org,
- kernel@collabora.com, wenst@chromium.org, casey.connolly@linaro.org,
- AngeloGioacchino Del Regno <angleogioacchino.delregno@collabora.com>
-References: <20251016104402.338246-1-angelogioacchino.delregno@collabora.com>
- <20251016104402.338246-2-angelogioacchino.delregno@collabora.com>
- <aPPmsBHnmKQ1sa3O@ashevche-desk.local>
-From: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Subject: Re: [PATCH net-next v14 00/16] net: phy: Introduce PHY ports
+ representation
+To: Jakub Kicinski <kuba@kernel.org>, Andrew Lunn <andrew@lunn.ch>,
+ Russell King <linux@armlinux.org.uk>, Heiner Kallweit
+ <hkallweit1@gmail.com>, Vladimir Oltean <vladimir.oltean@nxp.com>
+Cc: davem@davemloft.net, netdev@vger.kernel.org,
+ linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+ thomas.petazzoni@bootlin.com, Eric Dumazet <edumazet@google.com>,
+ Paolo Abeni <pabeni@redhat.com>, linux-arm-kernel@lists.infradead.org,
+ Christophe Leroy <christophe.leroy@csgroup.eu>,
+ Herve Codina <herve.codina@bootlin.com>,
+ Florian Fainelli <f.fainelli@gmail.com>,
+ =?UTF-8?Q?K=C3=B6ry_Maincent?= <kory.maincent@bootlin.com>,
+ =?UTF-8?Q?Marek_Beh=C3=BAn?= <kabel@kernel.org>,
+ Oleksij Rempel <o.rempel@pengutronix.de>,
+ =?UTF-8?Q?Nicol=C3=B2_Veronese?= <nicveronese@gmail.com>,
+ Simon Horman <horms@kernel.org>, mwojtas@chromium.org,
+ Antoine Tenart <atenart@kernel.org>, devicetree@vger.kernel.org,
+ Conor Dooley <conor+dt@kernel.org>, Krzysztof Kozlowski
+ <krzk+dt@kernel.org>, Rob Herring <robh@kernel.org>,
+ Romain Gantois <romain.gantois@bootlin.com>,
+ Daniel Golle <daniel@makrotopia.org>,
+ Dimitri Fedrau <dimitri.fedrau@liebherr.com>
+References: <20251013143146.364919-1-maxime.chevallier@bootlin.com>
+ <20251020185249.32d93799@kernel.org>
+From: Maxime Chevallier <maxime.chevallier@bootlin.com>
 Content-Language: en-US
-In-Reply-To: <aPPmsBHnmKQ1sa3O@ashevche-desk.local>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+In-Reply-To: <20251020185249.32d93799@kernel.org>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
+X-Last-TLS-Session-Version: TLSv1.3
 
-Il 18/10/25 21:12, Andy Shevchenko ha scritto:
-> On Thu, Oct 16, 2025 at 12:43:55PM +0200, AngeloGioacchino Del Regno wrote:
->> Instead of printing just a number, use the %pe format for error
->> status, increasing readability of error prints.
+Hi Jakub,
+
+On 21/10/2025 03:52, Jakub Kicinski wrote:
+> On Mon, 13 Oct 2025 16:31:26 +0200 Maxime Chevallier wrote:
+>> Hi everyone,
+>>
+>> Here is a V14 for the phy_port work, aiming at representing the
+>> connectors and outputs of PHY devices.
 > 
-> ...
-> 
->>   	err = device_add(&sdev->dev);
->>   	if (err < 0) {
->> -		dev_err(&sdev->dev, "Can't add %s, status %d\n",
->> -			dev_name(&sdev->dev), err);
->> +		dev_err(&sdev->dev, "Can't add %s, status %pe\n",
->> +			dev_name(&sdev->dev), ERR_PTR(err));
-> 
-> LOL, I only now noticed that the parameter to dev_err() and dev_name() is the
-> same. For christ's sake, why do we need dev_name()?
-> 
+> I can't help but read the lack of replies from PHY maintainers
+> here as a tacit rejection. Not entirely sure what to do here.
+> Should we discuss this at the netdev call tomorrow (8:30am PT)?
+> Would any PHY maintainer be willing to share their opinion?
 
-Just only for consistency and having the exact same message as function
-spmi_device_add() and nothing else.
+I can definitely be there to discuss this, thanks for organizing this.
 
-I agree that it's not really needed; if you want I can just change the
-error message in both spmi_device_add() and in the new function that I
-am introducing here.
-
-Cheers,
-Angelo
-
->>   		goto err_device_add;
->>   	}
-> 
-
+Maxime
 
