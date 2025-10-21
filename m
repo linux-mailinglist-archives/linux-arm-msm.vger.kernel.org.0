@@ -1,211 +1,222 @@
-Return-Path: <linux-arm-msm+bounces-78206-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-78207-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2DD0EBF827C
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Oct 2025 20:54:02 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 089D4BF82A9
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Oct 2025 20:56:17 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 7CEB8422819
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Oct 2025 18:53:29 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id B0560401F3B
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Oct 2025 18:56:08 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E54D234C14B;
-	Tue, 21 Oct 2025 18:53:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0B35B34F25E;
+	Tue, 21 Oct 2025 18:56:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="idRfU8Xx"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="POIpx/kH"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9E7134D904;
-	Tue, 21 Oct 2025 18:53:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61E0734E75D
+	for <linux-arm-msm@vger.kernel.org>; Tue, 21 Oct 2025 18:56:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761072807; cv=none; b=J1iCAMl9xuaRXbJL1NkcpjvLhXBrkhi01FhlibqOXrRLKt+m/M9iIeUhrCYfRZCk0W9V6M+zrgiqj+kBWlMTYXy1JraJUG1nRmqTqdqvuAU4NZ6Q5UHSrjak83CvzJ6EjARWk0vtgx+VRT5UV9F9iv+jvbCnqUGWLBvZ8tSfGIY=
+	t=1761072965; cv=none; b=MjuF4rZv3gczQQNVkrf89AqvD7kuNDfrPZac/Q1Yb2bEsoJ2F6oMiVaa3AJTIJgEuS2NY92FcU1+vRs6DpA8J8dSRpBAetBnLj3GjzCT7p0abTyKx6fpBM4S7Yi7WQdaCUAlg3ci+ubJhY5eZmKtkKuuzxE1E/bfAs/eqpNRlzw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761072807; c=relaxed/simple;
-	bh=C5ASNnmCmjSAcDOoSgjvozIBRKcQ5VpYkxdjPo6f1JU=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=JYmOa6ItmtiuuyOGIlJE6Eij9ioi0ZNNI1hlaYFmstmKf5x9Jb5Z6WrC7E6u0FHdR7tfhVytQOFRi4ppw+EVWnQsH8wqzUOc/9NiHAxwzUDV/PAxkIoqiiZS5JweupEg7tk1uWj/bSwrvYnsThZVjR+wf7NcsznTwrJQ2bdYoB8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=idRfU8Xx; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 283D3C4CEF1;
-	Tue, 21 Oct 2025 18:53:27 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1761072807;
-	bh=C5ASNnmCmjSAcDOoSgjvozIBRKcQ5VpYkxdjPo6f1JU=;
-	h=From:Date:Subject:To:Cc:Reply-To:From;
-	b=idRfU8XxWpxeoW4rjtH1zLNwMc22v6LSmnzNUYMKa/iUzOtgB0UEZVuyrUGhbbhFV
-	 B6I1v2+7JyR3exb9j4/kQj46qI699414511FEyWHOVYOpQtISRI2mAfKtZKJkAY9LZ
-	 PS5765rdL7aeqyg0XqjuAWAOgJxihO0jrYwD+3bGitUdJvMbiGquGyyJXKKRktDTvD
-	 zrqFnUdD4cFd+xZ1ZkRxQxcf0AXKwCAU67BvzhIpJ1ybbsFQb7HXz7rWFawv4vqLV/
-	 exxfXFPIUEJT6Sdt+TszONOYdZDBUDNE/NgtPPmQ6OPFmqFC3QxqnCO9zlGYuodKhO
-	 53WO5CEt9SnGw==
-Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 17186CCD1B9;
-	Tue, 21 Oct 2025 18:53:27 +0000 (UTC)
-From: Joel Selvaraj via B4 Relay <devnull+foss.joelselvaraj.com@kernel.org>
-Date: Tue, 21 Oct 2025 13:53:06 -0500
-Subject: [PATCH v2] backlight: qcom-wled: fix unbalanced ovp irq enable
+	s=arc-20240116; t=1761072965; c=relaxed/simple;
+	bh=eWr+h+p2rCg/f9WNSmdg2UdER2LHBNHRJNAYZOXa1Ms=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=XmOHA5jmSHRRppiotrj4TssdMhr2TpRjO1yPYAoMFnHAjkjKcyeNh+owrt7KNLFY8gySC0toI+T5PAKDqcBprzhatGg6ueMCr4zcmpShzb8CDFOlUIsiip7Jpq51zoepSF1Wjk+dFlLk0QbODH+vX6x/kAcZde5DIgSKSRFkA24=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=POIpx/kH; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 59LEdHUA024689
+	for <linux-arm-msm@vger.kernel.org>; Tue, 21 Oct 2025 18:56:03 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	HQjRoXTRcS0OPuTJGmQ0KlJhjtTIYf+L9dhy3S8Y6LA=; b=POIpx/kHMge6zSSM
+	RvH2TEWWnmpr/GYQzMYnJGaGhgOEwPMDXjWiwlVH1KA6lGzrHC8TDbC7bhNdmkch
+	/O8wFiiKRGAxBCy2v7wwg9HcPdYBsISZAM5XoAkGvaYXJnHZq0ToBizBytw1JA01
+	CrtTCRTv9PwWC30XPIiuKgLYeD+DAbU+UtMdak6KD7oXJGAZIapRkb7fQi6etUGr
+	Gm2SXZFl89r0oQy8hEcjak/AtSfv/MWTRejBwAolHwO0Lzg0LQA3NOWfcfB30Gyz
+	p+yxLDgzyhvfu8dRBy9BG+gcItSYRQ8ANNYUU9mzULxbd2dbpWSUtGKr3XnfouR0
+	lesorw==
+Received: from mail-pf1-f200.google.com (mail-pf1-f200.google.com [209.85.210.200])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 49wsws4a6u-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Tue, 21 Oct 2025 18:56:03 +0000 (GMT)
+Received: by mail-pf1-f200.google.com with SMTP id d2e1a72fcca58-7a153ba0009so10871657b3a.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 21 Oct 2025 11:56:03 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1761072962; x=1761677762;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=HQjRoXTRcS0OPuTJGmQ0KlJhjtTIYf+L9dhy3S8Y6LA=;
+        b=goBAgtBTT65rQMjuNhHcsQ4wgj5IALrqkThmQsiFHIn4P8vt9Mn7vRdGPd8DcyXUiv
+         MUb6bbnTrPVkW5qEp7W2TMwY0pL4sIEJVwMTai8Uqy9bly9QRc07zANFSESR8Cbd9aT7
+         o68eAMoHV84UK3Wm0j/qKLgB9W2DVAGFUtsgV7OhFeXZopOvKkNke3FPjLcGGhjflbyC
+         a1J2t48S+2ku8CMj0qcflpByNg8T6Z7HwwbKa5++OQPEO/d3bez4HUPQ/Z78/r1JpVy3
+         xUyl9kMBWEyT4bQ0ABpNY4KqU6tShbV/5l5wojESkMZlSeRyNexcuqEk8SXdped0/1Qc
+         k3dA==
+X-Gm-Message-State: AOJu0YxKGH24fFugt6lhT2Tsa/83T2grfjm++ZgX0FwjgTdVLOVX/6Fp
+	mCyegtF4QtjtbFWOhE2NT/4/wwzfHyYn26FKwT/M/kGffVfvIIW9KyaAQIjJjyra/7FUdGAgk1u
+	s0QbDHW+9b0IclTDktNBiO3544MOxp/G8/5SXlfHBqlVAVbuscZ97k0UcAjgY4+11YI3u
+X-Gm-Gg: ASbGncsslMG4DP2AYmeIrvCndMlyHFfhqE3GTcu8V06dGFcSFK8sbkh+mgGJjAxVAa6
+	eFIaG38moHZ0JUxeX6LZYRunFDA8NmuyY+VT3HNcAjKG0u08UpCTcsleVf/93N/+sWeU7H32OdM
+	f6B8iNC9WAeHZ+LDD7/RyAG3up1LUdYaVqo7C8Kz4vS4r2uZRCEpmdHFfS2CBf1WySbRwybf7Me
+	6ZDcNQk0aVxn6vFtnA674YkKt3ijDou8fZzCGLitKRySdLZZ1udHj/Q0zLdzm0rSkrXKu3nYNb0
+	3LruGUCZkxAgUxw8gRb9gCBj8Iy/N3jnbhohnDHq0/8g/6iijtJrQaj62gWAYQcqMcC8ehVqLDT
+	ZQgvwmQv0khJV25WqqiTANho1lJ7KAooVLA==
+X-Received: by 2002:a05:6a00:130e:b0:77c:6621:6168 with SMTP id d2e1a72fcca58-7a220d573cdmr19758662b3a.30.1761072961828;
+        Tue, 21 Oct 2025 11:56:01 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFzsxj6C+gt4pi5RK02A8fX5w9MLOUBphDfxZMgPHSW4KqbqzjV7uii4eQu4FEcJbjtpu6vig==
+X-Received: by 2002:a05:6a00:130e:b0:77c:6621:6168 with SMTP id d2e1a72fcca58-7a220d573cdmr19758622b3a.30.1761072961147;
+        Tue, 21 Oct 2025 11:56:01 -0700 (PDT)
+Received: from [192.168.0.166] ([49.205.248.205])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-7a2326ac189sm11395710b3a.29.2025.10.21.11.55.56
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 21 Oct 2025 11:56:00 -0700 (PDT)
+Message-ID: <034bf6f4-0a49-4973-8536-28526b3409d1@oss.qualcomm.com>
+Date: Wed, 22 Oct 2025 00:25:54 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.15.1
+Subject: Re: [PATCH v2 1/8] media: dt-bindings: qcom-kaanapali-iris: Add
+ kaanapali video codec binding
+Content-Language: en-US
+To: Krzysztof Kozlowski <krzk@kernel.org>,
+        Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>,
+        Abhinav Kumar <abhinav.kumar@linux.dev>,
+        Bryan O'Donoghue <bod@kernel.org>,
+        Mauro Carvalho Chehab <mchehab@kernel.org>,
+        Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley
+ <conor+dt@kernel.org>,
+        Philipp Zabel <p.zabel@pengutronix.de>,
+        Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+        Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Cc: linux-arm-msm@vger.kernel.org, linux-media@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Vishnu Reddy <quic_bvisredd@quicinc.com>
+References: <20251017-knp_video-v2-0-f568ce1a4be3@oss.qualcomm.com>
+ <20251017-knp_video-v2-1-f568ce1a4be3@oss.qualcomm.com>
+ <c9d8f76a-513f-4a09-bba4-cb8f0df1d2fe@kernel.org>
+From: Vikash Garodia <vikash.garodia@oss.qualcomm.com>
+In-Reply-To: <c9d8f76a-513f-4a09-bba4-cb8f0df1d2fe@kernel.org>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Message-Id: <20251021-qcom-wled-fix-unbalanced-ovp-irq-enable-v2-1-7ff115b4ffe7@joelselvaraj.com>
-X-B4-Tracking: v=1; b=H4sIAJHW92gC/5WNQQ7CIBBFr9KwdgxgIdGV9zBdDGW0NAgtKGqa3
- l3sDVy+n/z3FpYpOcrs1CwsUXHZxVBB7hrWDxhuBM5WZpJLJbgUMPfxDi9PFq7uDc9g0GPoK8Y
- ygUszUEDjCVTbaiO4RnvUrNqmRPWwlS5d5cHlR0yfLVzEb/2/UQQIIGsPvLVCK1TnMZLP5AsmH
- PfVwrp1Xb+2OdUg5QAAAA==
-X-Change-ID: 20251021-qcom-wled-fix-unbalanced-ovp-irq-enable-5446b106ad96
-To: Lee Jones <lee@kernel.org>, Daniel Thompson <danielt@kernel.org>, 
- Jingoo Han <jingoohan1@gmail.com>, Helge Deller <deller@gmx.de>
-Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, 
- linux-fbdev@vger.kernel.org, linux-kernel@vger.kernel.org, 
- Joel Selvaraj <foss@joelselvaraj.com>
-X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1761072806; l=4368;
- i=foss@joelselvaraj.com; s=20250919; h=from:subject:message-id;
- bh=+zxsXoGdLJQYgRVd89LWEBBj6NGtlp3Yp8wwgEWlx8w=;
- b=5LCIDELJydjgakfLZUSdmtVysbCZBFc51OM6rE+/GwWadfxB/8xX6wtr4L6MMAreYmFRTKba8
- p0+GvI2mgiIBg6NHMuFOHjhwfHWdPlAXUjEJPXkualGFTiWWFQXE7gA
-X-Developer-Key: i=foss@joelselvaraj.com; a=ed25519;
- pk=BBMos4ph15apUFh2AkG9rLZIrBWl5LD4egPOhEv63X0=
-X-Endpoint-Received: by B4 Relay for foss@joelselvaraj.com/20250919 with
- auth_id=529
-X-Original-From: Joel Selvaraj <foss@joelselvaraj.com>
-Reply-To: foss@joelselvaraj.com
-
-From: Joel Selvaraj <foss@joelselvaraj.com>
-
-In Xiaomi Poco F1 and at least few other devices, the qcom wled driver
-triggers unbalanced ovp irq enable warning like the following during
-boot up.
-
-[    1.151677] ------------[ cut here ]------------
-[    1.151680] Unbalanced enable for IRQ 176
-[    1.151693] WARNING: CPU: 0 PID: 160 at kernel/irq/manage.c:774 __enable_irq+0x50/0x80
-[    1.151710] Modules linked in:
-[    1.151717] CPU: 0 PID: 160 Comm: kworker/0:11 Not tainted 5.17.0-sdm845 #4
-[    1.151724] Hardware name: Xiaomi Pocophone F1 (DT)
-[    1.151728] Workqueue: events wled_ovp_work
-...<snip>...
-[    1.151833] Call trace:
-[    1.151836]  __enable_irq+0x50/0x80
-[    1.151841]  enable_irq+0x48/0xa0
-[    1.151846]  wled_ovp_work+0x18/0x24
-[    1.151850]  process_one_work+0x1d0/0x350
-[    1.151858]  worker_thread+0x13c/0x460
-[    1.151862]  kthread+0x110/0x114
-[    1.151868]  ret_from_fork+0x10/0x20
-[    1.151876] ---[ end trace 0000000000000000 ]---
-
-Fix it by storing and checking the state of ovp irq before enabling and
-disabling it.
-
-Signed-off-by: Joel Selvaraj <foss@joelselvaraj.com>
----
-I was able to debug the issue a little further. This happens mainly because
-devm_request_threaded_irq already enables the ovp irq during probe. Then ovp
-work gets scheduled when update_status happens and in turn enables the irq again.
-Tracking the status makes it easy to avoid the double irq enable. But I am
-open to try a different approach if there is any suggestion.
----
-Changes in v2:
-- Track ovp irq status using ovp_irq_enabled flag instead of ovp_irq_disabled. (Konrad Dybcio)
-- Use short wrapper functions for ovp irq enable and disable. (Konrad Dybcio)
-- Link to v1: https://lore.kernel.org/r/20251021-qcom-wled-fix-unbalanced-ovp-irq-enable-v1-1-edd304d165a5@joelselvaraj.com
----
- drivers/video/backlight/qcom-wled.c | 27 +++++++++++++++++++++++----
- 1 file changed, 23 insertions(+), 4 deletions(-)
-
-diff --git a/drivers/video/backlight/qcom-wled.c b/drivers/video/backlight/qcom-wled.c
-index a63bb42c8f8b0333cd6d0ddc5bda93916da3fef3..3f49e4b3cdeb12541c057e56bac871a8ff680283 100644
---- a/drivers/video/backlight/qcom-wled.c
-+++ b/drivers/video/backlight/qcom-wled.c
-@@ -197,6 +197,7 @@ struct wled {
- 	bool disabled_by_short;
- 	bool has_short_detect;
- 	bool cabc_disabled;
-+	bool ovp_irq_enabled;
- 	int short_irq;
- 	int ovp_irq;
- 
-@@ -290,11 +291,27 @@ static int wled5_set_brightness(struct wled *wled, u16 brightness)
- 	return rc;
- }
- 
-+static void wled_enable_ovp_irq(struct wled *wled)
-+{
-+	if (!wled->ovp_irq_enabled) {
-+		enable_irq(wled->ovp_irq);
-+		wled->ovp_irq_enabled = true;
-+	}
-+}
-+
-+static void wled_disable_ovp_irq(struct wled *wled)
-+{
-+	if (wled->ovp_irq_enabled) {
-+		disable_irq(wled->ovp_irq);
-+		wled->ovp_irq_enabled = false;
-+	}
-+}
-+
- static void wled_ovp_work(struct work_struct *work)
- {
- 	struct wled *wled = container_of(work,
- 					 struct wled, ovp_work.work);
--	enable_irq(wled->ovp_irq);
-+	wled_enable_ovp_irq(wled);
- }
- 
- static int wled_module_enable(struct wled *wled, int val)
-@@ -322,7 +339,7 @@ static int wled_module_enable(struct wled *wled, int val)
- 			schedule_delayed_work(&wled->ovp_work, HZ / 100);
- 		} else {
- 			if (!cancel_delayed_work_sync(&wled->ovp_work))
--				disable_irq(wled->ovp_irq);
-+				wled_disable_ovp_irq(wled);
- 		}
- 	}
- 
-@@ -1607,6 +1624,8 @@ static int wled_configure_ovp_irq(struct wled *wled,
- 		return 0;
- 	}
- 
-+	wled->ovp_irq_enabled = true;
-+
- 	rc = regmap_read(wled->regmap, wled->ctrl_addr +
- 			 WLED3_CTRL_REG_MOD_EN, &val);
- 	if (rc < 0)
-@@ -1614,7 +1633,7 @@ static int wled_configure_ovp_irq(struct wled *wled,
- 
- 	/* Keep OVP irq disabled until module is enabled */
- 	if (!(val & WLED3_CTRL_REG_MOD_EN_MASK))
--		disable_irq(wled->ovp_irq);
-+		wled_disable_ovp_irq(wled);
- 
- 	return 0;
- }
-@@ -1726,7 +1745,7 @@ static void wled_remove(struct platform_device *pdev)
- 	mutex_destroy(&wled->lock);
- 	cancel_delayed_work_sync(&wled->ovp_work);
- 	disable_irq(wled->short_irq);
--	disable_irq(wled->ovp_irq);
-+	wled_disable_ovp_irq(wled);
- }
- 
- static const struct of_device_id wled_match_table[] = {
-
----
-base-commit: fe45352cd106ae41b5ad3f0066c2e54dbb2dfd70
-change-id: 20251021-qcom-wled-fix-unbalanced-ovp-irq-enable-5446b106ad96
-
-Best regards,
--- 
-Joel Selvaraj <foss@joelselvaraj.com>
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDIwMDE0OCBTYWx0ZWRfX4M+xphGHE/WE
+ cdpn+EnUpMeCcw60bD1AfIHvKloitTj4RSmjAoZJU+Pmg2Lmme5vVLDlilnSVQQmQeBfFp86LE/
+ qk8YaMkfDRjtHRMIwC44ihR+AAHArKqnYEIQ0phMuJ+y9D6ZgNXgXh70meeT5rlRHAft39/jc1N
+ Yrj9X6i8EmE+p0C3e5AllzOQ5jzH+Q6ggfLeOwlunjS1WcwhhI39LY+qv47FZVFGYaTTqaqf3XU
+ wbJ5DtmRnqMYwp1BYPTRh2cOmx7YBepGt6FkLvmbIWqI+J16sf9DHycOzu8bEAXC7+x35jKD81L
+ nSNHNIYesxD9hlNuEchUyu7ivrKHAQQ0e0My967F1Y+cBcj5yPU4kyjLQam2XU6C/OvcRYooGlh
+ Mn5jkEv4wpyItq7DmWb9kFI8XDDUyg==
+X-Proofpoint-GUID: CztGR7TA7_6Rba-IxI7Mdh0q5l-UPbHu
+X-Proofpoint-ORIG-GUID: CztGR7TA7_6Rba-IxI7Mdh0q5l-UPbHu
+X-Authority-Analysis: v=2.4 cv=a+E9NESF c=1 sm=1 tr=0 ts=68f7d743 cx=c_pps
+ a=mDZGXZTwRPZaeRUbqKGCBw==:117 a=Ysf2FyB+yl5xZy2y99iGVQ==:17
+ a=IkcTkHD0fZMA:10 a=x6icFKpwvdMA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=xOFkI6Ot18FV97ylQRsA:9 a=QEXdDO2ut3YA:10 a=zc0IvFSfCIW2DFIPzwfm:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-10-21_02,2025-10-13_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ lowpriorityscore=0 spamscore=0 clxscore=1015 priorityscore=1501 phishscore=0
+ bulkscore=0 suspectscore=0 malwarescore=0 impostorscore=0 adultscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.19.0-2510020000 definitions=main-2510200148
 
 
+On 10/18/2025 9:28 PM, Krzysztof Kozlowski wrote:
+> On 17/10/2025 16:16, Vikash Garodia wrote:
+>> +  clock-names:
+>> +    items:
+>> +      - const: iface
+>> +      - const: core
+>> +      - const: vcodec0_core
+>> +      - const: iface1
+>> +      - const: core_freerun
+>> +      - const: vcodec0_core_freerun
+>> +      - const: vcodec_bse
+>> +      - const: vcodec_vpp0
+>> +      - const: vcodec_vpp1
+>> +      - const: vcodec_apv
+>> +
+>> +  dma-coherent: true
+>> +
+>> +  firmware-name:
+>> +    maxItems: 1
+>> +
+>> +  interconnects:
+>> +    maxItems: 2
+>> +
+>> +  interconnect-names:
+>> +    items:
+>> +      - const: cpu-cfg
+>> +      - const: video-mem
+>> +
+>> +  interrupts:
+>> +    maxItems: 1
+>> +
+>> +  iommus:
+>> +    minItems: 3
+>> +    maxItems: 8
+> 
+> I don't understand why this is flexible. Make it fixed size and anyway -
+> list the items.
+
+kaanapali vpu generates 8 different stream-ids. Now, boards running kernel in
+EL2 mode can list all of them, while boards running in EL1 can have only non
+secure stream IDs. Min have the list of stream ids which can be enabled for all
+type of boards, while max is for boards which can list all in HLOS given kernel
+is in EL2 mode.
+
+Below crash would be seen if boards running kernel in EL1 mode lists the secure
+ones.
+
+[    1.361157] pc : qcom_smmu_write_s2cr+0x64/0xa4
+[    1.361165] lr : arm_smmu_write_s2cr+0x2c/0xbc
+[    1.361168] sp : ffff80008005b8f0
+[    1.361169] x29: ffff80008005b8f0 x28: 0000000000000000 x27: ffffc7f252f45320
+....
+[    1.361195] x2 : ffff800081200c48 x1 : 0000000000000048 x0 : ffff800081200000
+[    1.361198] Call trace:
+[    1.361199]  qcom_smmu_write_s2cr+0x64/0xa4 (P)
+[    1.361203]  arm_smmu_master_install_s2crs+0x7c/0xac
+[    1.361207]  arm_smmu_attach_dev+0xb0/0x1d4
+
+Could you please suggest on listing the iommu items ? I did not find the
+relevant references in other bindings where flexible iommus is being listed.
+
+> 
+> I already asked this.
+> 
+>> +
+>> +  memory-region:
+>> +    minItems: 1
+>> +    maxItems: 2
+> 
+> Same comment. I already asked this about iommus.
+
+Same here, there aren't any bindings which lists for flexible memory-region.
+Please suggest if there are any such references.
+
+Regards,
+Vikash
+> 
+> NAK, we should not repeat the same comment.
+> 
+> Best regards,
+> Krzysztof
 
