@@ -1,88 +1,88 @@
-Return-Path: <linux-arm-msm+bounces-78162-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-78163-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [142.0.200.124])
-	by mail.lfdr.de (Postfix) with ESMTPS id 988DEBF661E
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Oct 2025 14:16:44 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 623EFBF666A
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Oct 2025 14:20:04 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id AA9CC505DC7
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Oct 2025 12:13:32 +0000 (UTC)
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 59B4F504780
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Oct 2025 12:17:48 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5FABA1EB193;
-	Tue, 21 Oct 2025 12:12:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3D1C632E74D;
+	Tue, 21 Oct 2025 12:17:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="faTPRRly"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="kx4/jx/g"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 432F5355038
-	for <linux-arm-msm@vger.kernel.org>; Tue, 21 Oct 2025 12:12:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0407A35502B
+	for <linux-arm-msm@vger.kernel.org>; Tue, 21 Oct 2025 12:17:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761048769; cv=none; b=mp0iKC7xUHRPiq+KCsWWs9/hrFexOUPn0iGIVFy3bgfwjs+3WrKvdoolPvZ1dz3/L4w1WrOeSS/7oZHr9fX8Dreb0wwJe0dZaFwYCbjC5ACVKutIgy/h3OE0B+91FonpfZpBlvAgA6UWGcgh0JpOeNN4vdtMQhsP84mOdjrhS24=
+	t=1761049056; cv=none; b=gMU1plUCq8PlgaBGGVJessVVzjz6h1zaTNtgW+L1Wo2A3YWQZqYAu9Z+KBmd373PaoeFxkBM1XDAGn+8LH0K0+qzYVSFoSzejVAsbMKWVR9rXcWTwKJMsYXoEvyJ8mivK4Nc283GxBio+BRgUrWKgNfJnNGGu+x1QjWa/9wydwE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761048769; c=relaxed/simple;
-	bh=HHLuhyjdrpYP+6RicMRAMeMaT9Q8fxefq0Y4Q+tK25c=;
+	s=arc-20240116; t=1761049056; c=relaxed/simple;
+	bh=Ik8YTK9+li2kctsxdsSAX5UkwYsN4owKy1yNpUgTOtM=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=W48+0dcwRPFFkieqLmHLOV8ZKT94oHppLPeiBP5JvqjeyVmQYHSJuZYTXJOXuwNvGk+hZZ4u6OZUkkk/xQs6Mst1TOjB2IMpYUV1eeJ1ezam5QBIAD4SDqu7p6DubprFfCFwfE5L/SWFNkEWmQYLpIdNa63k52Lm8nbfegZ0dAM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=faTPRRly; arc=none smtp.client-ip=205.220.168.131
+	 In-Reply-To:Content-Type; b=O8YQEG55mEvOOe0pZzygiwfmteaKR6fXQNsAsg93C5gZZE8/zZKI1WLjMZrVtniDAxHB9j5l0SLep3/SKZyQ0rwubRGDGG+3Q4WV47Mhg76+cYtgHXmxF4m7OtkmhpbsX+Y3X+pR6lJxM5YpiVTG8TE3it89R2bE9ovr37WBlVY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=kx4/jx/g; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 59L8EpgN031255
-	for <linux-arm-msm@vger.kernel.org>; Tue, 21 Oct 2025 12:12:45 GMT
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 59L8KDI8020308
+	for <linux-arm-msm@vger.kernel.org>; Tue, 21 Oct 2025 12:17:31 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	oWb0iuOCvOXjqmawB9cZBO7fb4qJEEBrLs9e6I4+SuQ=; b=faTPRRly9aEUDETA
-	UdqguB2P24J6VOE828KBDpzjEnexwxydEUI3mLr5MxSZs4AoLB5I2doqw8LqLDsR
-	Iyksvbcw38r3OY0JjDZFAPy/BBZBeR3BrNNYMO8Ceg6j/WtNtEO9bEkhXW2r+twV
-	T1O22IFUqBePw9lvcVzzgGlPQrSwohey8GrUOS1MnnQfgXE9fg795pC3IJM+fhVU
-	lXLBoeQ5g5eeo5hlAuyMQp42rv4g7mXNFSCsjKV0sVsgczUrwabw0JDEdTYR2Ppe
-	T0LcP6xmDCrqI/a+0v3nrr1QmXqf0+GabEHyXhcr+PIiOEqo0XZVa22IzgmagRcz
-	It3tkw==
-Received: from mail-pl1-f198.google.com (mail-pl1-f198.google.com [209.85.214.198])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 49v42k8g0t-1
+	62ij7qlH0jAbXbq+caCTrSlt+OeWrvirXMKUpKG5id8=; b=kx4/jx/gddJzriWr
+	YETzYOVX786PvozAsP/T4Wz0FOx8akCyXqVgh5Q7dVI9f9K2ulbuUv4FKE3xhdHS
+	cWXt/zrzBUWrlcTK0NHwzyeIYFcV8HPjrV+R/ojxtCu3MiFTFV8VS/aQT0FBfY8p
+	UfeYLQZQ1kplAWEuGdy0ptYjmERUddoV2/kXuh4cJwCXlC4RsyBT2bR68L/Z9HET
+	K6H89njqOkq7x+GQMrSxPN9JoCCiiqGvWscljfeGp009COA5zMeF/gtmbfAH7tFK
+	MJX7SAEZ8AFP3tOAf3KgrHvAEwgGGMi1FwrDkkpQBmGOsW3e5oMKwonatNsWa+XJ
+	6U7FSw==
+Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com [209.85.222.197])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 49v3440me4-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Tue, 21 Oct 2025 12:12:45 +0000 (GMT)
-Received: by mail-pl1-f198.google.com with SMTP id d9443c01a7336-27eca7298d9so133645355ad.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 21 Oct 2025 05:12:45 -0700 (PDT)
+	for <linux-arm-msm@vger.kernel.org>; Tue, 21 Oct 2025 12:17:31 +0000 (GMT)
+Received: by mail-qk1-f197.google.com with SMTP id af79cd13be357-88fcb38d0d9so279374385a.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 21 Oct 2025 05:17:31 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1761048764; x=1761653564;
+        d=1e100.net; s=20230601; t=1761049050; x=1761653850;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=oWb0iuOCvOXjqmawB9cZBO7fb4qJEEBrLs9e6I4+SuQ=;
-        b=k9EmjZXNdwHYQ4gAm0CwFZmV6bgFcgjvK5O5zav50PJfFvLTsrOWaXZRGGD7RoSzQN
-         Uuj88CkA1EGhOBn1DhK+Upaunzk5bwSD2fhNbF7hi+zCRoYaYtJG5JWH01zxNxdfu7Yl
-         0cyEQl20hKz3vlsBUi+tj8XUcgtyChyOyx0pNEXhQtg3mAJxe+XiKYKiVHIYa4dN9lXb
-         WNaz7ttajJ/FiE5zidhsZu/wItuTLNsKMjGm+4gRcmVD1xBKO/n4cUZPzLEYJHFrUv9c
-         p8+3W3OcgRNW0YtygQ0DSkIsCTqLPkhhP9vkTyNZUKTcR+bbKK5qoktykydNLKw7FH6a
-         eFgg==
-X-Forwarded-Encrypted: i=1; AJvYcCU+9fd4NoTEQrUuD+PwJO/leIpY5fXTsFUEYGczEgWSP4RmtVJXUbt1VkjPMI7l7sdXZSv0/JsvYGlNIgfV@vger.kernel.org
-X-Gm-Message-State: AOJu0YzyXeFwDQTY+3w9q/zugoc/tzNIrAzTEh1/mcbS5naDz7bhsXDm
-	ODeqp0ZOGkRQ68gq1/YNc43YfOBTaHEC/IystSAX5eOpQMzBEiSLWbgXmX5dW6+ShNjmVVXFNWX
-	ov32XQHCR9bQhjlTfHc32bLwxU5mY2xl2OdEkz2muF6ia4q/Crcsc35MUV/ws/jAASHez
-X-Gm-Gg: ASbGncue5pIxe2uzaEeYtHwyEiz0hxTyE0cxFCnVqBST1Wgw7aclUWtaw5JfJMEI8mq
-	er3edE31c4Kkda1cOvk2HtPrfpCZJMjTB0NH7jJ0uyqP+dwpE3Z9QWobegG1ULIfdudAySKjSXy
-	Tm0VtbxdSRukki5HJzfqNDkO4YS9YUAbD1zpd+KyDmW4eR+XxifV7yia1d9idR+TaESOBhKYRXK
-	tIJJya5i+++qD/D7GXaGGfKXrLEYGh1O4Lg2Tey15e9A6vNLwa9bNhjN9nF/Edry9q9/DW4GoZS
-	eP4oYqWJS3LKJE0TQvQomxPtlLvxj0WPR/n02dkhoiBQBL91+pIdF76YmhdTQZLlz6eaU4GBQN6
-	OELt68S8bHq4s8Z3E2zGRlXgdOot8gvyt
-X-Received: by 2002:a17:902:ef4f:b0:275:b1cf:6ddc with SMTP id d9443c01a7336-290c9cf8f20mr213534455ad.5.1761048764452;
-        Tue, 21 Oct 2025 05:12:44 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEv6jCOOD6llWl3c+F3lpCgLyEVyjBbNEywAKQpMvm+VMkm9TzNfqWByG3kTLSRh2pz87DfHQ==
-X-Received: by 2002:a17:902:ef4f:b0:275:b1cf:6ddc with SMTP id d9443c01a7336-290c9cf8f20mr213534125ad.5.1761048763979;
-        Tue, 21 Oct 2025 05:12:43 -0700 (PDT)
-Received: from [10.218.42.132] ([202.46.22.19])
-        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-b6a76b77bf6sm10254761a12.41.2025.10.21.05.12.40
+        bh=62ij7qlH0jAbXbq+caCTrSlt+OeWrvirXMKUpKG5id8=;
+        b=wjeZ8l7KdmtGXKRuF8JkGDwkQCIoXGIKkdw5NduLID9WyH+XMDm0JMqWIFwrTMrtBI
+         zdHZiwAEh2oLTPcPpJIpvEsPBXXiUUpO1LWt4iehjPXgqwZjiXsmWn6KpTCb9JWbQKKW
+         1g7aqi/pblyikIggixggAFndmMmciBzM1WinoQ1qbOtxCi3Gl+O1RZ/+cIp0wrCBun+w
+         i8X29ywKyZoSmiSj2Ha3DGGuErraS6Kfbk81qI260zi89TwK9Qatb0dOK4bIuxzmfRbF
+         QJedHdsXOUsg49OqM1F8zVVC2knUC92b15OjA7Oo73qb4sRRWHJkGR4S1sXUnO3X/aPP
+         e3IA==
+X-Forwarded-Encrypted: i=1; AJvYcCUPjpR1U84XLK+3PZj0IJv8DbHB/ZOckhyNV9YfRNXtLIEdZAJrn/CtakFE9Die5IuiK+6vcBviYEBgNAoU@vger.kernel.org
+X-Gm-Message-State: AOJu0YyIFSaOVyx/ZUhV/YYiOSdPk4qcpR6qy/5TB3Rp6fx5S4JWSi8d
+	qa54MZegEY5pFuH+BgpyPqec/LekmzLImW3ePAl49JJ/RQ+xGNX9j73Hd5W+Qi73yEYona4ipDO
+	2NMlL5dX5H7b092uGfuHRXgc0fDosYm76Qd2CgEaoTyhghqFKhSzJF7nqODGw11fOD0jj
+X-Gm-Gg: ASbGncupbKJ1Uu37lUVoboFTdOeKmTvaGbgLX2AHxw9uD+qCYtA5eMLfnJYt78C/E/4
+	7ijshr1gJDW43dJ6Z3GRyxd520EmH+ocHE2y0a+ZEFDjmXYx8hDnum9Acg/UHbuVORfo6xUJv9m
+	67i/uRTU6blqMjx2Fhq1BvXBV2Uf9AGBxPPtkCxgHJMijk4VoHi7uvGZMC5hZXrrTmZ7RYsRVm7
+	G0F08mZgihuJQ7Pw+E0Z11A4ZzKtHl9T1HHtiSocKy4zNRUm3auXuCd8E1aXp9RitXnk+TBjFIS
+	25MjKBYJA8DUXN/WqQDO3tex7eH3z/B68q39kWNMGYRnc63UIL9gtvGvebxFBw+wwkHzKI/XBkb
+	1D4SPsBIF7wGF1UdU61Z3tAPQJtQgqu/0z0Ps1IQviG2N58nA0ErI4Czg
+X-Received: by 2002:a05:622a:180f:b0:4e8:b138:2a0d with SMTP id d75a77b69052e-4e8b1382c71mr98419651cf.12.1761049049788;
+        Tue, 21 Oct 2025 05:17:29 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IG9wVa62A9QqlswXTFOtj5hMm5dxSnWe0OKPK/itVnOD6rHNI29MyrzCPqYx7/z+6jDyT0yqg==
+X-Received: by 2002:a05:622a:180f:b0:4e8:b138:2a0d with SMTP id d75a77b69052e-4e8b1382c71mr98419361cf.12.1761049049358;
+        Tue, 21 Oct 2025 05:17:29 -0700 (PDT)
+Received: from [192.168.119.202] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-63c49430145sm9225871a12.19.2025.10.21.05.17.26
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 21 Oct 2025 05:12:43 -0700 (PDT)
-Message-ID: <f80e1d58-cae1-4f3b-8b66-fc920ad4c5ba@oss.qualcomm.com>
-Date: Tue, 21 Oct 2025 17:42:39 +0530
+        Tue, 21 Oct 2025 05:17:28 -0700 (PDT)
+Message-ID: <e63dc4ce-8461-41f7-8dfc-3fe531d69f4e@oss.qualcomm.com>
+Date: Tue, 21 Oct 2025 14:17:25 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -90,162 +90,69 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/2] PCI: dwc: Fix ECAM enablement when used with vendor
- drivers
-To: Bjorn Helgaas <helgaas@kernel.org>
-Cc: Jingoo Han <jingoohan1@gmail.com>,
-        Manivannan Sadhasivam
- <mani@kernel.org>,
-        Lorenzo Pieralisi <lpieralisi@kernel.org>,
-        =?UTF-8?Q?Krzysztof_Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
-        Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>,
-        linux-pci@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, Ron Economos <re@w6rz.net>
-References: <20251017191005.GA1041995@bhelgaas>
+Subject: Re: [PATCH v4 7/7] dt-bindings: display: panel-simple-dsi: Remove
+ Samsung S6E3FC2 compatible
+To: david@ixit.cz, Neil Armstrong <neil.armstrong@linaro.org>,
+        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+        Maxime Ripard <mripard@kernel.org>,
+        Thomas Zimmermann <tzimmermann@suse.de>,
+        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+        Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Thierry Reding
+ <thierry.reding@gmail.com>,
+        Sam Ravnborg <sam@ravnborg.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>,
+        Casey Connolly <casey.connolly@linaro.org>,
+        Jessica Zhang <jesszhan0024@gmail.com>
+Cc: dri-devel@lists.freedesktop.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        phone-devel@vger.kernel.org
+References: <20251021-s6e3fc2x01-v4-0-5e3ee21c688a@ixit.cz>
+ <20251021-s6e3fc2x01-v4-7-5e3ee21c688a@ixit.cz>
 Content-Language: en-US
-From: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
-In-Reply-To: <20251017191005.GA1041995@bhelgaas>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+In-Reply-To: <20251021-s6e3fc2x01-v4-7-5e3ee21c688a@ixit.cz>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-Proofpoint-GUID: 7xqPICORltzthaUze8tdmIkkXXK0EXLL
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDE4MDAzMSBTYWx0ZWRfX8WHA+ciQwj8n
- maeiocR3grjmZpM+FNUN3DSDmjEVYlBnbPEzFrj/+tubCj/eH/DMAvguRplYv/i34SuztuMlfUH
- aSFnAtEkM+hmSsr4MtxDZZJU0QAymrsNyIoY+9oCitaj3ix3ytlLYcq0O7bydozvxrt+4i5H44E
- athopYYILDGiFaf7bBCG38nUJr+ZXp+0QdFZLDDkUNloXeDR/4IJVl7HFfE96eI14wxtdnyyR6Y
- wErFFsetza+H0mCx8Narb2P0guL6T0IE1/XELsUF1s0BKxCs8hr1iLZMgdA95tsVY8bF6PM0Do9
- CB8u099tGNOxy0uP77NShvhHGe6qPkhxqaQ/bJh3tOcua9ZRhEAC1A/QxCDZP7lmBT1TVuKiej9
- LqtgRv12N33iLmX+buB8fk5kW587XQ==
-X-Authority-Analysis: v=2.4 cv=QYNrf8bv c=1 sm=1 tr=0 ts=68f778bd cx=c_pps
- a=MTSHoo12Qbhz2p7MsH1ifg==:117 a=fChuTYTh2wq5r3m49p7fHw==:17
+X-Proofpoint-GUID: ABA1SpxBukSCqNdpt2n1p5bK6gmkrQBN
+X-Proofpoint-ORIG-GUID: ABA1SpxBukSCqNdpt2n1p5bK6gmkrQBN
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDE4MDAyMyBTYWx0ZWRfX5BVkEYTattAT
+ ugDO+6mn1tAoysBg5+h05Pur8y35ywymc9tsmMdoU3TZvVOtsIXpqYUBZEwFOcP8bQK6SAE9Q1P
+ D1Q5HjsZVX3YyKDUfid9rlxqX8IhrgCnutlSxbvDA3zhtYIEGxL86xsRsd1tXC5kaac1fm2VrfD
+ 4XRggnfmJIR96DYVLNyTpOuIv9VuY9XJSxJ4NFvc3gNSX9arMBimHNWjre/PkG7ci6Hr5BmJfHE
+ pJBPv0dmzc6ZKZDk/NgiNPnwMKmca3eUxds0KUjEXpiPz9wj3h0XR2E9AVUCb9X1NDfWJFHKTqB
+ cdgnobCe85Ximw4opThAwReGeqBROZhSdt4qEC3qeXyqZQwDR3BecWrPyjZhgP8u4WhMm2WuJqv
+ T4mtJkUJtinsT7RFj8bl+dFEO5fLvA==
+X-Authority-Analysis: v=2.4 cv=E/vAZKdl c=1 sm=1 tr=0 ts=68f779db cx=c_pps
+ a=50t2pK5VMbmlHzFWWp8p/g==:117 a=FpWmc02/iXfjRdCD7H54yg==:17
  a=IkcTkHD0fZMA:10 a=x6icFKpwvdMA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=VwQbUJbxAAAA:8 a=HaFmDPmJAAAA:8 a=EUspDBNiAAAA:8 a=fRNJI3KV-S8XUuZoZUwA:9
- a=QEXdDO2ut3YA:10 a=GvdueXVYPmCkWapjIL-Q:22 a=nmWuMzfKamIsx3l42hEX:22
-X-Proofpoint-ORIG-GUID: 7xqPICORltzthaUze8tdmIkkXXK0EXLL
+ a=BITFXGdF7uWLIDnxD84A:9 a=QEXdDO2ut3YA:10 a=IoWCM6iH3mJn3m4BftBB:22
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.80.40
  definitions=2025-10-21_01,2025-10-13_01,2025-03-28_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 phishscore=0 malwarescore=0 clxscore=1015 impostorscore=0
- spamscore=0 bulkscore=0 suspectscore=0 adultscore=0 lowpriorityscore=0
+ impostorscore=0 spamscore=0 priorityscore=1501 bulkscore=0 suspectscore=0
+ lowpriorityscore=0 clxscore=1015 adultscore=0 phishscore=0 malwarescore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2510020000 definitions=main-2510180031
+ reason=mlx scancount=1 engine=8.19.0-2510020000 definitions=main-2510180023
 
+On 10/21/25 1:53 PM, David Heidelberg via B4 Relay wrote:
+> From: David Heidelberg <david@ixit.cz>
+> 
+> Samsung S6E3FC2X01 DDIC isn't Simple DSI panel.
+> 
+> This panel has three supplies, while panel-simple-dsi is limited to one.
+> There is no user of this compatible, nor the compatible make sense.
+> Remove it.
+> 
+> Signed-off-by: David Heidelberg <david@ixit.cz>
+> ---
 
+I think you should squash this with patch 1, doesn't dt_bindings_check
+error out when a compatible is matched twice?
 
-On 10/18/2025 12:40 AM, Bjorn Helgaas wrote:
-> On Fri, Oct 17, 2025 at 05:10:53PM +0530, Krishna Chaitanya Chundru wrote:
->> When the vendor configuration space is 256MB aligned, the DesignWare
->> PCIe host driver enables ECAM access and sets the DBI base to the start
->> of the config space. This causes vendor drivers to incorrectly program
->> iATU regions, as they rely on the DBI address for internal accesses.
->>
->> To fix this, avoid overwriting the DBI base when ECAM is enabled.
->> Instead, introduce a custom ECAM PCI ops implementation that accesses
->> the DBI region directly for bus 0 and uses ECAM for other buses.
->>
->> Fixes: f6fd357f7afb ("PCI: dwc: Prepare the driver for enabling ECAM mechanism using iATU 'CFG Shift Feature'")
->> Reported-by: Ron Economos <re@w6rz.net>
->> Closes: https://lore.kernel.org/all/eac81c57-1164-4d74-a1b4-6f353c577731@w6rz.net/
->> Suggested-by: Manivannan Sadhasivam <mani@kernel.org>
->> Signed-off-by: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
->> ---
->>   drivers/pci/controller/dwc/pcie-designware-host.c | 28 +++++++++++++++++++----
->>   1 file changed, 24 insertions(+), 4 deletions(-)
->>
->> diff --git a/drivers/pci/controller/dwc/pcie-designware-host.c b/drivers/pci/controller/dwc/pcie-designware-host.c
->> index 20c9333bcb1c4812e2fd96047a49944574df1e6f..e92513c5bda51bde3a7157033ddbd73afa370d78 100644
->> --- a/drivers/pci/controller/dwc/pcie-designware-host.c
->> +++ b/drivers/pci/controller/dwc/pcie-designware-host.c
->> @@ -23,6 +23,7 @@
->>   #include "pcie-designware.h"
->>   
->>   static struct pci_ops dw_pcie_ops;
->> +static struct pci_ops dw_pcie_ecam_ops;
->>   static struct pci_ops dw_child_pcie_ops;
->>   
->>   #define DW_PCIE_MSI_FLAGS_REQUIRED (MSI_FLAG_USE_DEF_DOM_OPS		| \
->> @@ -471,9 +472,6 @@ static int dw_pcie_create_ecam_window(struct dw_pcie_rp *pp, struct resource *re
->>   	if (IS_ERR(pp->cfg))
->>   		return PTR_ERR(pp->cfg);
->>   
->> -	pci->dbi_base = pp->cfg->win;
->> -	pci->dbi_phys_addr = res->start;
->> -
->>   	return 0;
->>   }
->>   
->> @@ -529,7 +527,7 @@ static int dw_pcie_host_get_resources(struct dw_pcie_rp *pp)
->>   		if (ret)
->>   			return ret;
->>   
->> -		pp->bridge->ops = (struct pci_ops *)&pci_generic_ecam_ops.pci_ops;
->> +		pp->bridge->ops = &dw_pcie_ecam_ops;
->>   		pp->bridge->sysdata = pp->cfg;
->>   		pp->cfg->priv = pp;
->>   	} else {
->> @@ -842,12 +840,34 @@ void __iomem *dw_pcie_own_conf_map_bus(struct pci_bus *bus, unsigned int devfn,
->>   }
->>   EXPORT_SYMBOL_GPL(dw_pcie_own_conf_map_bus);
->>   
->> +static void __iomem *dw_pcie_ecam_conf_map_bus(struct pci_bus *bus, unsigned int devfn, int where)
->> +{
->> +	struct pci_config_window *cfg = bus->sysdata;
->> +	struct dw_pcie_rp *pp = cfg->priv;
->> +	struct dw_pcie *pci = to_dw_pcie_from_pp(pp);
->> +	unsigned int busn = bus->number;
->> +
->> +	if (busn > 0)
->> +		return pci_ecam_map_bus(bus, devfn, where);
-> 
-> Is there a way to avoid the "root bus is bus 00" assumption here?  It
-> looks like something like this might work (it inverts the condition
-> to take care of the root bus special case first):
-> 
->    if (bus == pp->bridge->bus) {
->      if (PCI_SLOT(devfn) > 0)
->        return NULL;
-> 
->      return pci->dbi_base + where;
->    }
-> 
->    return pci_ecam_map_bus(bus, devfn, where);
-> This is working fine Bjorn, shall I send v2 with this change.
-
-- Krishna Chaitanya.
->> +	if (PCI_SLOT(devfn) > 0)
->> +		return NULL;
-> 
-> This essentially says only one function (00.0) can be on the root bus.
-> I assume that someday that will be relaxed and there may be multiple
-> Root Ports and maybe RCiEPs on the root bus, so it would be nice if we
-> didn't have to have this check.
-> 
-> What happens without it?  Does the IP return the ~0 data that the PCI
-> core would interpret as "there's no device here"?
-> 
-> Regardless, I love this series because it removes quite a bit of code
-> and seems so much cleaner.
-> 
->> +	return pci->dbi_base + where;
->> +}
->> +
->>   static struct pci_ops dw_pcie_ops = {
->>   	.map_bus = dw_pcie_own_conf_map_bus,
->>   	.read = pci_generic_config_read,
->>   	.write = pci_generic_config_write,
->>   };
->>   
->> +static struct pci_ops dw_pcie_ecam_ops = {
->> +	.map_bus = dw_pcie_ecam_conf_map_bus,
->> +	.read = pci_generic_config_read,
->> +	.write = pci_generic_config_write,
->> +};
->> +
->>   static int dw_pcie_iatu_setup(struct dw_pcie_rp *pp)
->>   {
->>   	struct dw_pcie *pci = to_dw_pcie_from_pp(pp);
->>
->> -- 
->> 2.34.1
->>
+Konrad
 
