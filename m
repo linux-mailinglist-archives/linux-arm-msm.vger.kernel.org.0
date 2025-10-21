@@ -1,97 +1,211 @@
-Return-Path: <linux-arm-msm+bounces-78208-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-78209-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [IPv6:2605:f480:58:1:0:1994:3:14])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4CDF8BF8324
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Oct 2025 21:09:36 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 68768BF8360
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Oct 2025 21:15:58 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 2AC9F4E4373
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Oct 2025 19:09:35 +0000 (UTC)
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 3F1484E4373
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Oct 2025 19:15:57 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C64B334A3A9;
-	Tue, 21 Oct 2025 19:09:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 07C7A351FAE;
+	Tue, 21 Oct 2025 19:15:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="C9A8QkA/"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ek/NIQQK"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DB8234D925;
-	Tue, 21 Oct 2025 19:09:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84123351FA2;
+	Tue, 21 Oct 2025 19:15:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761073771; cv=none; b=R6XeXo+B+nsbak4YR5xp/cKOWHNwFI3Ibfwc10OSpPGW2PF1r1H/8PLyG8kj8eK/1kYu/vG0gzqDW5zPDfNj0xuTXhGfK6qYLTH3Lq4eS+zeacgqeqtxNifDNWssW0/XRGelayK2yeb6aVJJLPFZP5Lj6ck+8l090UIj1sD7gzo=
+	t=1761074153; cv=none; b=lDnY8FSGKpYJ8R8jwc+Ud5v1lLuWRmxicRJICrC5NLYDwhWSzZaRPR9zkY2ovaOHuTOA8XtkbLmQoRG4p5AuR+FEG0EcTd80ti7dNhfmid80KnDPPbFstuhBtOk7S0HB11hVNNUJLQ2zhzuN+SrsMkKfmBbSC6FTiO/yIhIAKeI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761073771; c=relaxed/simple;
-	bh=1ZpcLoZSoXJDjtDxiz4gSdpEpIyYXDeKX6uMtMztT3Y=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=MT+mFTafvzg9n7gh3IKZWlxPabFrQVwv69U3vt46yuTfMZeF9PEL6VlaL6rHt9kBirOi7DslRNxjP7rNcWmFp8PePntkKfbfcrUx2TY80SXzkrGh+hnhkwSzxOXxAQVy7NGzMvvcGBfRbtB+9q7XtXMDbw0Ez3RIkrgS9GUxIIg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=C9A8QkA/; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6358AC4CEF1;
-	Tue, 21 Oct 2025 19:09:28 +0000 (UTC)
+	s=arc-20240116; t=1761074153; c=relaxed/simple;
+	bh=xGjfKWdynroCwIPtLKS2R4aJHqJjS/idEXZ2IRfMxf8=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=fpuatMcD2GvMl687dY4sZ9ye4X3n3Oc3kzh5sM40hszr2G8LyQMbTq3tq20WABwc+Ple5q8NJwOJXaXQVdb797wSKEDxIoNyny0inOG79ijSFL1C9ITuA3tMHQuo7jw2ZlWrQD4BpU55zXfAB0jncMIUrESABipZiXw31Ijeu3U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ek/NIQQK; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15AA2C4CEF1;
+	Tue, 21 Oct 2025 19:15:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1761073771;
-	bh=1ZpcLoZSoXJDjtDxiz4gSdpEpIyYXDeKX6uMtMztT3Y=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=C9A8QkA/fi8WFDL5y8ml8FomW8Szdae1zj92V3zhedoVafs/nqeWyM/0kg87QxAvh
-	 la/IdHu9noB90BsVX37QLs78hySHUu4b/wnIEo5NSVTkJPQI6TRhGpNxPjcpMTIuOK
-	 8IP5aRKRg6ahrDtaKJpH5Bt8xrH7/sLhSFLqdkudKciv3Q8k92iTsK/ZB+HImcGNGF
-	 i/jFJEMmqOs6sfl+gwhMCs4S018gQpV0C8FeNs/uspKxkcexccabl3xGaqqUb4a5VW
-	 SXA8nsyEnonVj4eLt4Jk5cejK9R26uGQbA+iQcwaaYFDqwtezLJymHvzLWWtfmOmbc
-	 1wjVI8kEQX11A==
-Date: Tue, 21 Oct 2025 20:09:25 +0100
-From: Mark Brown <broonie@kernel.org>
-To: Md Sadre Alam <quic_mdalam@quicinc.com>
-Cc: robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org,
-	andersson@kernel.org, konradybcio@kernel.org, vkoul@kernel.org,
-	linux-arm-msm@vger.kernel.org, linux-spi@vger.kernel.org,
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-	dmaengine@vger.kernel.org, quic_varada@quicinc.com
-Subject: Re: [PATCH v3 1/9] spi: dt-bindings: spi-qpic-snand: Add IPQ5424
- compatible
-Message-ID: <dd1e4289-5e36-4b24-9afd-f09569459a96@sirena.org.uk>
-References: <20251014110534.480518-1-quic_mdalam@quicinc.com>
- <20251014110534.480518-2-quic_mdalam@quicinc.com>
+	s=k20201202; t=1761074152;
+	bh=xGjfKWdynroCwIPtLKS2R4aJHqJjS/idEXZ2IRfMxf8=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=ek/NIQQKkRiVlIhMzCdSAxvpnCMjF6yFxf64IUMQPVQPDCEirx7G6TNxAHVc63PLo
+	 E2rn46hjah4reO0QJupvimJuDE5McFTUGwxGht1sBsTUyjEcU79IWf1mWe0Uvu2Sdh
+	 vjylqJuqXAlmACxp/wo04BUK0uSTziaidI1vIxZBZRhUldxY+faP1KU0/dyHP4dcqq
+	 tuX4OPgYrFhe6++DqHbj/wRZEuJrCc4ypBAaD83boO9TcrBDEWveSjqiKF25VGmfqc
+	 F8ze8MVvLPb2Viv4wrNJYnRj8vEz8Arvn0226yORxhIOHA5eNsEmt2fSqcDFL1oJBU
+	 LruRXYVf6rr0Q==
+Message-ID: <d19b1279-3031-43b9-ac73-7e5f990802ed@kernel.org>
+Date: Tue, 21 Oct 2025 21:15:47 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="5HMXsR3PIyPFDxBq"
-Content-Disposition: inline
-In-Reply-To: <20251014110534.480518-2-quic_mdalam@quicinc.com>
-X-Cookie: Absinthe makes the tart grow fonder.
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 1/8] media: dt-bindings: qcom-kaanapali-iris: Add
+ kaanapali video codec binding
+To: Vikash Garodia <vikash.garodia@oss.qualcomm.com>,
+ Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>,
+ Abhinav Kumar <abhinav.kumar@linux.dev>, Bryan O'Donoghue <bod@kernel.org>,
+ Mauro Carvalho Chehab <mchehab@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Philipp Zabel <p.zabel@pengutronix.de>,
+ Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+ Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Cc: linux-arm-msm@vger.kernel.org, linux-media@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+ Vishnu Reddy <quic_bvisredd@quicinc.com>
+References: <20251017-knp_video-v2-0-f568ce1a4be3@oss.qualcomm.com>
+ <20251017-knp_video-v2-1-f568ce1a4be3@oss.qualcomm.com>
+ <c9d8f76a-513f-4a09-bba4-cb8f0df1d2fe@kernel.org>
+ <034bf6f4-0a49-4973-8536-28526b3409d1@oss.qualcomm.com>
+From: Krzysztof Kozlowski <krzk@kernel.org>
+Content-Language: en-US
+Autocrypt: addr=krzk@kernel.org; keydata=
+ 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 a/A=
+In-Reply-To: <034bf6f4-0a49-4973-8536-28526b3409d1@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+
+On 21/10/2025 20:55, Vikash Garodia wrote:
+> 
+> On 10/18/2025 9:28 PM, Krzysztof Kozlowski wrote:
+>> On 17/10/2025 16:16, Vikash Garodia wrote:
+>>> +  clock-names:
+>>> +    items:
+>>> +      - const: iface
+>>> +      - const: core
+>>> +      - const: vcodec0_core
+>>> +      - const: iface1
+>>> +      - const: core_freerun
+>>> +      - const: vcodec0_core_freerun
+>>> +      - const: vcodec_bse
+>>> +      - const: vcodec_vpp0
+>>> +      - const: vcodec_vpp1
+>>> +      - const: vcodec_apv
+>>> +
+>>> +  dma-coherent: true
+>>> +
+>>> +  firmware-name:
+>>> +    maxItems: 1
+>>> +
+>>> +  interconnects:
+>>> +    maxItems: 2
+>>> +
+>>> +  interconnect-names:
+>>> +    items:
+>>> +      - const: cpu-cfg
+>>> +      - const: video-mem
+>>> +
+>>> +  interrupts:
+>>> +    maxItems: 1
+>>> +
+>>> +  iommus:
+>>> +    minItems: 3
+>>> +    maxItems: 8
+>>
+>> I don't understand why this is flexible. Make it fixed size and anyway -
+>> list the items.
+> 
+> kaanapali vpu generates 8 different stream-ids. Now, boards running kernel in
+> EL2 mode can list all of them, while boards running in EL1 can have only non
+> secure stream IDs. Min have the list of stream ids which can be enabled for all
+> type of boards, while max is for boards which can list all in HLOS given kernel
+> is in EL2 mode.
+> 
+> Below crash would be seen if boards running kernel in EL1 mode lists the secure
+> ones.
 
 
---5HMXsR3PIyPFDxBq
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+That has to be explained somewhere, e.g. comment, and still we need then
+EL2 DTS in the kernel. I did not see such so far, but maybe I missed it
+- can you link it?
 
-On Tue, Oct 14, 2025 at 04:35:26PM +0530, Md Sadre Alam wrote:
-> IPQ5424 contains the QPIC-SPI-NAND flash controller which is the same as
-> the one found in IPQ9574. So let's document the IPQ5424 compatible and
-> use IPQ9574 as the fallback.
+> 
+> [    1.361157] pc : qcom_smmu_write_s2cr+0x64/0xa4
+> [    1.361165] lr : arm_smmu_write_s2cr+0x2c/0xbc
+> [    1.361168] sp : ffff80008005b8f0
+> [    1.361169] x29: ffff80008005b8f0 x28: 0000000000000000 x27: ffffc7f252f45320
+> ....
+> [    1.361195] x2 : ffff800081200c48 x1 : 0000000000000048 x0 : ffff800081200000
+> [    1.361198] Call trace:
+> [    1.361199]  qcom_smmu_write_s2cr+0x64/0xa4 (P)
+> [    1.361203]  arm_smmu_master_install_s2crs+0x7c/0xac
+> [    1.361207]  arm_smmu_attach_dev+0xb0/0x1d4
+> 
+> Could you please suggest on listing the iommu items ? I did not find the
+> relevant references in other bindings where flexible iommus is being listed.
 
-This doesn't apply against current code, please check and resend.
 
---5HMXsR3PIyPFDxBq
-Content-Type: application/pgp-signature; name="signature.asc"
+Just like every other list property - clocks, resets, power-domains.
 
------BEGIN PGP SIGNATURE-----
+> 
+>>
+>> I already asked this.
+>>
+>>> +
+>>> +  memory-region:
+>>> +    minItems: 1
+>>> +    maxItems: 2
+>>
+>> Same comment. I already asked this about iommus.
+> 
+> Same here, there aren't any bindings which lists for flexible memory-region.
+> Please suggest if there are any such references.
 
-iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmj32mQACgkQJNaLcl1U
-h9C/uQf+PdpQR2TcWPjk1rtRwSf5/3CwqidMjRkxczfM3UFPW6a0lrsv4BqmhyAC
-SxDdB3eCjgn4UkFQ/NiOtKAykJuusvUr9Aa2gGFzzojWSAFNC7B7KpP+geiv5UUP
-zSJtiuvEVadVj6UjiEv48nWI+BxlFOQi331kCRQJKYXMIqWc/EurvOUI3EnZyOey
-LtWy/vwXKilPCy5/idM4MzAHk1nsyG8xpt3/Tepj2dOWUYQiJmzEsqEP+0bDn7Ta
-CJwxQrcPzPSvJI4oTox2aa3op7mJzkAzAiM8C9VTxSqFSy0ez1gcBkKgONr69r5I
-zJKvUPjAVYto+P0uVFzrNN1TbPAMxg==
-=EPX2
------END PGP SIGNATURE-----
+Because they do not matter for all other bindings, but it turned out
+recently it might matter for this device.
 
---5HMXsR3PIyPFDxBq--
+
+Best regards,
+Krzysztof
 
