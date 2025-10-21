@@ -1,286 +1,150 @@
-Return-Path: <linux-arm-msm+bounces-78143-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-78144-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ams.mirrors.kernel.org (ams.mirrors.kernel.org [213.196.21.55])
-	by mail.lfdr.de (Postfix) with ESMTPS id C5B0EBF5D92
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Oct 2025 12:41:05 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2BAF2BF5F16
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Oct 2025 13:04:53 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ams.mirrors.kernel.org (Postfix) with ESMTPS id 4C3A2353A06
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Oct 2025 10:41:05 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id D44053AB9D9
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Oct 2025 11:04:51 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7C53926B2DA;
-	Tue, 21 Oct 2025 10:40:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C7CD122FE0E;
+	Tue, 21 Oct 2025 11:04:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="Tmxvpvew"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="GMLqIDqe"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4909D32D441
-	for <linux-arm-msm@vger.kernel.org>; Tue, 21 Oct 2025 10:40:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9CC34134AB;
+	Tue, 21 Oct 2025 11:04:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761043223; cv=none; b=iHvXKZUV6+iJjHaaVqsqwvwmJy6IkrQx1AnqCZVSDgpNDXcK9IaawAA9+duGj/ZXnuvajOUbtrFg99v2kz8LRmZmxGz9E43tl5E6K3kUlGK/GGpQWs/1H73lPEc6q7KMUEV+L0aeJCa3JgTFTiU0vjXHh89tXgZ+HUSkz1J6UbY=
+	t=1761044690; cv=none; b=ObFs2OT5RxHRrtHGVvXEBIi6zeyyb0PXqYY37XXUF2uCk8xfBTrFKH8IaNfRc+PQDFjUBlN4yoQE6NYSH5vYfNIf8dbB3Tj81BiXJ5d1i+t4bkO2zDLNZDhOSm1+8BrrAdMJ1/FhhlrehkHeU+d+CRMFIm5GeZQ5xhhlyh+944U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761043223; c=relaxed/simple;
-	bh=UYyYRnQbXnCvAIlE1ZdNvY1IRbRxEMbOF2tV79AsSe0=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GmLAlhPv2MkSGvey+WHXAbWZ1robY87sv+9Q2rUn3Xl62/LskIbnaDbxSq8iPPuknA6SDGGGwoXgFZH2cMDUPlorBIrcRPlbyuNnLR9lsv4QutwA22tTnzsgX/ReRysX7pm5PEWZHczuR/WqgdQFzI0mteV3jVaBFkIzd+pw1nk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=Tmxvpvew; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 59L8MQxV005407
-	for <linux-arm-msm@vger.kernel.org>; Tue, 21 Oct 2025 10:40:20 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:date:from:in-reply-to:message-id
-	:mime-version:references:subject:to; s=qcppdkim1; bh=jNy+kcNV6c4
-	PBhObCb2utKXHWJKznzQtqH7XbZIO9js=; b=Tmxvpvewo8LvbZOVtTldkjiOM67
-	bzWL/BC0F9VycNUffsUgy3R5nbf05R/nN0yAiVA5o6mzid83Mw9s+zwpvpGEI3Ev
-	ptON+BDbgCXZJ8XQsBtLgZzEFmmIBF4GINZ810qG6hEyTnyPHg2nPHl70ZWdge2W
-	iIILGHaEHQHqjLTYE0T1ZVE97TGeBca9Xc9aFtPyZGIPx128VebLDDhWf7ryTWuC
-	faJXufmOxrbETKLaevgxtWypJHnF+xtxXtVHQLA4rQ/dUnlCq+98/YfEbYJkvDwG
-	hg1aKUGpPNEgnG4RhZT1aaQ9FV05G80IVKXg2KwaKYlwoNtqlpav6WKLE5w==
-Received: from mail-qv1-f69.google.com (mail-qv1-f69.google.com [209.85.219.69])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 49v3nfgaxy-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Tue, 21 Oct 2025 10:40:20 +0000 (GMT)
-Received: by mail-qv1-f69.google.com with SMTP id 6a1803df08f44-87c1f435bd6so193936636d6.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 21 Oct 2025 03:40:20 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1761043212; x=1761648012;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=jNy+kcNV6c4PBhObCb2utKXHWJKznzQtqH7XbZIO9js=;
-        b=UYbv5HWccV3q5wP10FL1XMPJFXTjYB0K52cQdNB+eXpbslrFkB5SwbavJDduw32A8o
-         ZSpQ9CFWgJgIV1DLi9X80yXl8fzerHWacnODeG8woW491xGaL2Fl+glnR1c/fIIXs3kB
-         BP4Q8pFUEOj8Ac0lHV7Ke+qBEZ/8/H7Ex5yx5O42SEReL9F6NlHOuFfYNhNRiQMtYrua
-         G9Ht7nUkiUE403kVAxMIGNcvdhegQ0kvZfEAqz3axFMOhQXPKUJzLItdESfCXrSi/PeT
-         5vJbiAzWe2Fq49cDSgLtiBALRq04YQPW4FNwvsiGTNuCNih24ToeuCNajJFG9XelJLQd
-         vr8g==
-X-Forwarded-Encrypted: i=1; AJvYcCUmOF9iyxix6ss73nuNpKVEGMIVgxmSOChj6sekOGgzu0eXyK2Uu+l0BTvnBJlDNCrepn+Dy66xUvQLU5Vh@vger.kernel.org
-X-Gm-Message-State: AOJu0YwytjLQyNSUPEwABFi+Po5diLfFjrxHUCts0BLypic41QfsBLZS
-	HUbWehvvX8sc+gdNDbzK7JA2VRGurewkMa/mIC/fop8RGw1yYMnwKOGkkiRLXl4MKbbPc87BMpt
-	FHIrNu5RaeWLHivuehCxohhKxKpt0nSioEgB+sOdj7BmZg1cFRF+MGRlZXGODdmammpOs
-X-Gm-Gg: ASbGncs/l9MjWSv9y5r+X2HVx8NQ44Tj1nE0y+nVYJHHkbVOmiKhgd4I7vSQT85tw5y
-	9e5YabZcVEBMEevXejmTEt1rkNW+bWCegCHKQ1INR3WvhHLFaXbH8GHUPXDBQWk1ZLxLhXwIPhL
-	RnKqf32HnAQfYt/305jLbzGDZ3MHmp41QnmzvHU8TrOIT71eH5BnyCojScMRffD26itCJKX4lUG
-	lqAqopEwqjJEfI3Knt940y4bdQLnRzPJ1N9aWMG9AG18o65JZXTFb5M2xmzUWHCcFfHHR8AzaZc
-	ykc7tjhVG2nO0WRJdpEN/fwoEymWrnbX9+Ytj6J/BC1pxUGNr8MJD1pddnYF/PYZ+5fudeJ2xfK
-	pBFhgq5MLUMkh
-X-Received: by 2002:ac8:5a88:0:b0:4b7:9506:efd1 with SMTP id d75a77b69052e-4e89d1fa8f4mr160054621cf.15.1761043212081;
-        Tue, 21 Oct 2025 03:40:12 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGNwpGr5uC6St5tQQjzTYAMWepTpl6VdBTuEO/ILCKO7RvOLdLTGwCCKckadeZvFJxgQmGWJA==
-X-Received: by 2002:ac8:5a88:0:b0:4b7:9506:efd1 with SMTP id d75a77b69052e-4e89d1fa8f4mr160054401cf.15.1761043211552;
-        Tue, 21 Oct 2025 03:40:11 -0700 (PDT)
-Received: from debian ([5.133.47.210])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-427f009a976sm20087938f8f.32.2025.10.21.03.40.10
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 21 Oct 2025 03:40:10 -0700 (PDT)
-From: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
-To: broonie@kernel.org
-Cc: perex@perex.cz, tiwai@suse.com, srini@kernel.org, alexey.klimov@linaro.org,
-        linux-sound@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org,
-        Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
-Subject: [PATCH v2 4/4] ASoC: qcom: sc7280: make use of common helpers
-Date: Tue, 21 Oct 2025 11:40:02 +0100
-Message-ID: <20251021104002.249745-5-srinivas.kandagatla@oss.qualcomm.com>
-X-Mailer: git-send-email 2.51.0
-In-Reply-To: <20251021104002.249745-1-srinivas.kandagatla@oss.qualcomm.com>
-References: <20251021104002.249745-1-srinivas.kandagatla@oss.qualcomm.com>
+	s=arc-20240116; t=1761044690; c=relaxed/simple;
+	bh=e9CEg/dQb5l4GmgaPwHILbc/QI4weegnGGq+KcEsvcA=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=b7CfJP4UzAiRGkKb42vNrV1RGssKCvb9f0yIsr+nBn30MAs5AaMmENhG6GOYILTKi1JDsdN9j0fPV4QgKbIKW+k1OjLDS+t6MjFfQPe2mxrRouJif3HWFM+LPMpX5Ny0uyKkR1mhD5tloZp0hEsF3fFS/b7EkRoGma0OGh5Nl0Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=GMLqIDqe; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34945C4CEF1;
+	Tue, 21 Oct 2025 11:04:46 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1761044689;
+	bh=e9CEg/dQb5l4GmgaPwHILbc/QI4weegnGGq+KcEsvcA=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=GMLqIDqe7cqhQ76YEGkyt9SELjAbolWf6T27gLdK2U9VvFcwoKq5TQam1IzgVFTWL
+	 DpsUqqQ4MBzMcsMlCumXnFUjr9ihkKy5wp62V1QhxH/wBVDYHdafCfw5ObAkW6rmnI
+	 7fLmdRfShWoPzYaiqpXXJut59IUIzUQNo7pX2YELYYjlc5CRdZhPEAuc6wltwbXbyK
+	 hl00cCZp21dqbozPNNT+SATGnuKK+fgSdjGa9gWF0ujd7hruUu1IQjY6eupNK3+DSV
+	 BgjUqj18NbnR3zzzyrOE1JXrqgBKfPtdQNpq5shg0dZjO5DA5h+Q2yRTRpO249YhQc
+	 2GNeHZ3SI94IQ==
+Message-ID: <658446d1-5d3b-4924-a446-f26a1a8b9be6@kernel.org>
+Date: Tue, 21 Oct 2025 13:04:44 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-ORIG-GUID: VKUVbaqZH4HMIWZjOtCfe2iEYfUhUyMl
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDE4MDAyNyBTYWx0ZWRfX39cHaluAAZ1g
- P2Jgvl41Zw7+rMqt0Xnmd6MgMlRNZgDTVggm7aZXsFBZdGs1DsbX95opc5PiiAgwFgAF7rJrJG5
- 0FQMvSzFb4uziZyLVCoqbRPzeh2PVFOeL+lVxZ2XuVMoY4waytK1/hgZCl1rFTl2qZ//LtKEHvD
- o8FSp/cdTWorLXzUUMHTFI/f2UEYRujF5RPbPqT4pmmcZ6dg7j1S6ZAuDGa1CyvfeW0oUBLw6ja
- HpxsrFQ3SkUgT/Oe6qxjI6RoKcVrkyxMk5Il3f/6vBdPxvcl3p5OsJKXJHmAtl4ascykzuMFfCN
- Ao4YDGiviCk0qy3nkj0S+2xmCoCrWl35tuC0piJK7DayhsrmZM29MWshvhWlNvbBdraL37jYavQ
- a1Zb6If2nCxrfKM90HRo6N8m//2Fhg==
-X-Proofpoint-GUID: VKUVbaqZH4HMIWZjOtCfe2iEYfUhUyMl
-X-Authority-Analysis: v=2.4 cv=EYjFgfmC c=1 sm=1 tr=0 ts=68f76314 cx=c_pps
- a=wEM5vcRIz55oU/E2lInRtA==:117 a=ZsC4DHZuhs/kKio7QBcDoQ==:17
- a=x6icFKpwvdMA:10 a=VkNPw1HP01LnGYTKEx00:22 a=EUspDBNiAAAA:8
- a=xzVSZQTBi2W_vW4HIIQA:9 a=OIgjcC2v60KrkQgK7BGD:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-10-21_01,2025-10-13_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- bulkscore=0 clxscore=1015 spamscore=0 malwarescore=0 lowpriorityscore=0
- priorityscore=1501 impostorscore=0 phishscore=0 adultscore=0 suspectscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2510020000 definitions=main-2510180027
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2] drm/display: add hw_params callback function to
+ drm_connector_hdmi_audio_ops
+To: Jianfeng Liu <liujianfeng1994@gmail.com>, linux-arm-msm@vger.kernel.org
+Cc: Xilin Wu <sophon@radxa.com>, Abhinav Kumar <quic_abhinavk@quicinc.com>,
+ David Airlie <airlied@gmail.com>, Dmitry Baryshkov <lumag@kernel.org>,
+ Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+ Mark Brown <broonie@kernel.org>, Maxime Ripard <mripard@kernel.org>,
+ Simona Vetter <simona@ffwll.ch>, Thomas Zimmermann <tzimmermann@suse.de>,
+ dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org
+References: <20250925040530.20731-1-liujianfeng1994@gmail.com>
+From: Krzysztof Kozlowski <krzk@kernel.org>
+Content-Language: en-US
+Autocrypt: addr=krzk@kernel.org; keydata=
+ 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 a/A=
+In-Reply-To: <20250925040530.20731-1-liujianfeng1994@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-sc7280 machine driver can make use of common sdw functions to do most of
-the soundwire related operations. Remove such redundant code from sc7280
-driver.
+On 25/09/2025 06:05, Jianfeng Liu wrote:
+> After reusing drm_hdmi_audio_* helpers and drm_bridge_connector
+> integration in drm/msm/dp, we have dropped msm_dp_audio_hw_params and
+> use msm_dp_audio_prepare instead. While userspace is still calling
+> hw_params to do audio initialization, and we get the following errors:
+> 
+> q6apm-lpass-dais 3700000.remoteproc:glink-edge:gpr:service@1:bedais: q6apm_lpass_dai_prepare() started
+> q6apm-lpass-dais 3700000.remoteproc:glink-edge:gpr:service@1:bedais: q6apm_lpass_dai_prepare() started
+> q6apm-lpass-dais 3700000.remoteproc:glink-edge:gpr:service@1:bedais: q6apm_lpass_dai_prepare() started
+> hdmi-audio-codec hdmi-audio-codec.0.auto: hdmi_codec_hw_params() started
+> q6apm-lpass-dais 3700000.remoteproc:glink-edge:gpr:service@1:bedais: q6apm_lpass_dai_prepare() started
+> qcom-apm gprsvc:service:2:1: Error (1) Processing 0x01001002 cmd
+> qcom-apm gprsvc:service:2:1: DSP returned error[1001002] 1
+> q6apm-lpass-dais 3700000.remoteproc:glink-edge:gpr:service@1:bedais: Failed to start APM port 104
+> q6apm-lpass-dais 3700000.remoteproc:glink-edge:gpr:service@1:bedais: ASoC error (-22): at snd_soc_dai_prepare() on DISPLAY_PORT_RX_0
+> MultiMedia2 Playback: ASoC error (-22): at dpcm_run_update_startup() on MultiMedia2 Playback
+> 
+> msm_dp_audio_prepare is not called because hdmi-codec driver only checks
+> and runs hw_params before q6apm_lpass_dai_prepare(). This commit will
+> add hw_params callback same as drm_connector_hdmi_audio_prepare, so that
+> hdmi-codec driver can work with userspace alsa.
+> 
+> Tested with Radxa Dragon Q6A.
+> 
 
-Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
----
- sound/soc/qcom/sc7280.c | 67 ++---------------------------------------
- sound/soc/qcom/sdw.c    | 10 ++++++
- 2 files changed, 13 insertions(+), 64 deletions(-)
 
-diff --git a/sound/soc/qcom/sc7280.c b/sound/soc/qcom/sc7280.c
-index c444dae563c7..abdd58c1d0a4 100644
---- a/sound/soc/qcom/sc7280.c
-+++ b/sound/soc/qcom/sc7280.c
-@@ -31,7 +31,6 @@
- 
- struct sc7280_snd_data {
- 	struct snd_soc_card card;
--	struct sdw_stream_runtime *sruntime[LPASS_MAX_PORTS];
- 	u32 pri_mi2s_clk_count;
- 	struct snd_soc_jack hs_jack;
- 	struct snd_soc_jack hdmi_jack;
-@@ -207,32 +206,12 @@ static int sc7280_snd_hw_params(struct snd_pcm_substream *substream,
- {
- 	struct snd_pcm_runtime *runtime = substream->runtime;
- 	struct snd_soc_pcm_runtime *rtd = snd_soc_substream_to_rtd(substream);
--	struct snd_soc_dai *codec_dai;
--	const struct snd_soc_dai *cpu_dai = snd_soc_rtd_to_cpu(rtd, 0);
--	struct sc7280_snd_data *pdata = snd_soc_card_get_drvdata(rtd->card);
--	struct sdw_stream_runtime *sruntime;
--	int i;
- 
- 	if (!rtd->dai_link->no_pcm) {
- 		snd_pcm_hw_constraint_minmax(runtime, SNDRV_PCM_HW_PARAM_CHANNELS, 2, 2);
- 		snd_pcm_hw_constraint_minmax(runtime, SNDRV_PCM_HW_PARAM_RATE, 48000, 48000);
- 	}
- 
--	switch (cpu_dai->id) {
--	case LPASS_CDC_DMA_TX3:
--	case LPASS_CDC_DMA_RX0:
--	case RX_CODEC_DMA_RX_0:
--	case SECONDARY_MI2S_RX:
--	case TX_CODEC_DMA_TX_3:
--	case VA_CODEC_DMA_TX_0:
--		for_each_rtd_codec_dais(rtd, i, codec_dai) {
--			sruntime = snd_soc_dai_get_stream(codec_dai, substream->stream);
--			if (sruntime != ERR_PTR(-ENOTSUPP))
--				pdata->sruntime[cpu_dai->id] = sruntime;
--		}
--		break;
--	}
--
- 	return 0;
- }
- 
-@@ -241,30 +220,8 @@ static int sc7280_snd_swr_prepare(struct snd_pcm_substream *substream)
- 	struct snd_soc_pcm_runtime *rtd = snd_soc_substream_to_rtd(substream);
- 	const struct snd_soc_dai *cpu_dai = snd_soc_rtd_to_cpu(rtd, 0);
- 	struct sc7280_snd_data *data = snd_soc_card_get_drvdata(rtd->card);
--	struct sdw_stream_runtime *sruntime = data->sruntime[cpu_dai->id];
--	int ret;
- 
--	if (!sruntime)
--		return 0;
--
--	if (data->stream_prepared[cpu_dai->id]) {
--		sdw_disable_stream(sruntime);
--		sdw_deprepare_stream(sruntime);
--		data->stream_prepared[cpu_dai->id] = false;
--	}
--
--	ret = sdw_prepare_stream(sruntime);
--	if (ret)
--		return ret;
--
--	ret = sdw_enable_stream(sruntime);
--	if (ret) {
--		sdw_deprepare_stream(sruntime);
--		return ret;
--	}
--	data->stream_prepared[cpu_dai->id] = true;
--
--	return ret;
-+	return qcom_snd_sdw_prepare(substream, &data->stream_prepared[cpu_dai->id]);
- }
- 
- static int sc7280_snd_prepare(struct snd_pcm_substream *substream)
-@@ -291,24 +248,8 @@ static int sc7280_snd_hw_free(struct snd_pcm_substream *substream)
- 	struct snd_soc_pcm_runtime *rtd = snd_soc_substream_to_rtd(substream);
- 	struct sc7280_snd_data *data = snd_soc_card_get_drvdata(rtd->card);
- 	const struct snd_soc_dai *cpu_dai = snd_soc_rtd_to_cpu(rtd, 0);
--	struct sdw_stream_runtime *sruntime = data->sruntime[cpu_dai->id];
- 
--	switch (cpu_dai->id) {
--	case LPASS_CDC_DMA_RX0:
--	case LPASS_CDC_DMA_TX3:
--	case RX_CODEC_DMA_RX_0:
--	case TX_CODEC_DMA_TX_3:
--	case VA_CODEC_DMA_TX_0:
--		if (sruntime && data->stream_prepared[cpu_dai->id]) {
--			sdw_disable_stream(sruntime);
--			sdw_deprepare_stream(sruntime);
--			data->stream_prepared[cpu_dai->id] = false;
--		}
--		break;
--	default:
--		break;
--	}
--	return 0;
-+	return qcom_snd_sdw_hw_free(substream, &data->stream_prepared[cpu_dai->id]);
- }
- 
- static void sc7280_snd_shutdown(struct snd_pcm_substream *substream)
-@@ -317,7 +258,6 @@ static void sc7280_snd_shutdown(struct snd_pcm_substream *substream)
- 	struct snd_soc_card *card = rtd->card;
- 	struct sc7280_snd_data *data = snd_soc_card_get_drvdata(card);
- 	struct snd_soc_dai *cpu_dai = snd_soc_rtd_to_cpu(rtd, 0);
--	struct sdw_stream_runtime *sruntime = qcom_snd_sdw_get_stream(substream);
- 
- 	switch (cpu_dai->id) {
- 	case MI2S_PRIMARY:
-@@ -336,8 +276,7 @@ static void sc7280_snd_shutdown(struct snd_pcm_substream *substream)
- 		break;
- 	}
- 
--	data->sruntime[cpu_dai->id] = NULL;
--	sdw_release_stream(sruntime);
-+	qcom_snd_sdw_shutdown(substream);
- }
- 
- static int sc7280_snd_startup(struct snd_pcm_substream *substream)
-diff --git a/sound/soc/qcom/sdw.c b/sound/soc/qcom/sdw.c
-index c44659deea01..16bf09db29f5 100644
---- a/sound/soc/qcom/sdw.c
-+++ b/sound/soc/qcom/sdw.c
-@@ -2,6 +2,7 @@
- // Copyright (c) 2018-2023, Linaro Limited.
- // Copyright (c) 2018, The Linux Foundation. All rights reserved.
- 
-+#include <dt-bindings/sound/qcom,lpass.h>
- #include <dt-bindings/sound/qcom,q6afe.h>
- #include <linux/module.h>
- #include <sound/soc.h>
-@@ -30,6 +31,15 @@ static bool qcom_snd_is_sdw_dai(int id)
- 	case RX_CODEC_DMA_RX_6:
- 	case RX_CODEC_DMA_RX_7:
- 	case SLIMBUS_0_RX...SLIMBUS_6_TX:
-+	default:
-+		break;
-+	}
-+
-+	/* DSP Bypass usecase, cpu dai index overlaps with DSP dai ids,
-+	 * DO NOT MERGE into top switch case */
-+	switch (id) {
-+	case LPASS_CDC_DMA_TX3:
-+	case LPASS_CDC_DMA_RX0:
- 		return true;
- 	default:
- 		break;
--- 
-2.51.0
+Missing Cc stable.
+
+> Fixes: 98a8920e7b07 ("drm/msm/dp: reuse generic HDMI codec implementation")
+> Signed-off-by: Jianfeng Liu <liujianfeng1994@gmail.com>
+> ---
+
+I confirm this fixes the audio over DP/HDMI on X1E laptops. Please apply
+this for fixes.
+
+Best regards,
+Krzysztof
 
 
