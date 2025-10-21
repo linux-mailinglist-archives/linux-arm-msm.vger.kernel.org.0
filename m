@@ -1,270 +1,204 @@
-Return-Path: <linux-arm-msm+bounces-78214-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-78215-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4833DBF8E5A
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Oct 2025 23:08:16 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 07538BF8E66
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Oct 2025 23:09:08 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id E1DB519C014C
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Oct 2025 21:08:39 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id AFF453AF1F3
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Oct 2025 21:09:06 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8A79528506B;
-	Tue, 21 Oct 2025 21:08:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 66F7D27B324;
+	Tue, 21 Oct 2025 21:09:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="kfXkYWgL"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="ngoE5jwg"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5EA3284684
-	for <linux-arm-msm@vger.kernel.org>; Tue, 21 Oct 2025 21:08:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCD6015CD74
+	for <linux-arm-msm@vger.kernel.org>; Tue, 21 Oct 2025 21:09:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761080891; cv=none; b=liCfug/+Sh0vZn3OSeREY4k2mw/8lW3fI4wieK9UwmdEg9Sun+VavisAkf07fxWerDx+HXpj7sjljLbpe3RgMRe56SxYt4Bwkqpq2B8p1SqehH9APJjxZqCvm6JzL8KKy2ZlhVXMIKuPNYBE2ob4qjrZC4dv6l/CsVZWBs+YE+Y=
+	t=1761080944; cv=none; b=bgbWmhIgD3TG5t+Tl11rYmXWQFvePUoMV/UyzjvM6uldGpeNpTz70enUgZKCUOCsbmVG/YTdwJuJLP9BEGPCgmUsSOKU8hvth5ZrNQ+KXdw/UA7CXPL4Eo2UanJjC62lLApQ357mB8x32jQpjekXDo0rjBOOWV/83uAovy2xd98=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761080891; c=relaxed/simple;
-	bh=hKP7hv2q/vLR9OB/KNuT7rmHgtOvMGEK2wehJ7tZQGs=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=WZEEvO/VdDFYXiyqT9D0U0xsW73YNGhV4smRc2koaUAL+09gAiMlyMvZ7FkV/DvDMiqjRQ6vq1O/W9TocCpuMNQPO75w0QJ2i5ML66D+4Wk17/m+udLjDtLrEj9uadTul0gN7mec1CMVQwFGUfxUFkxWsH9fltLC50C4qdMMSMA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=kfXkYWgL; arc=none smtp.client-ip=205.220.180.131
+	s=arc-20240116; t=1761080944; c=relaxed/simple;
+	bh=AGCHV4jZeRYSACDXgXSzIHpr5GZWz3GvyhnV3yk/D6c=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=tQt9LWvi7189mu4fcp8EG4PnC17rC7RjoX21+DuJnGT2hoCy2hoCwOjkMsmStjqjkwSO26y75hzzwQsQWe+F01qHIexE+BAIqevRsbOthub1D6Ud04r155BghmZsO2lubiZGyUWPlMQ6jLDKuGmbzH4GvRBAh7RV/biQ5suBxg8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=ngoE5jwg; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 59LFie36026555
-	for <linux-arm-msm@vger.kernel.org>; Tue, 21 Oct 2025 21:08:08 GMT
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 59LETHE1024737
+	for <linux-arm-msm@vger.kernel.org>; Tue, 21 Oct 2025 21:09:01 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	kUHcX9qshXGQudm9WWiL14vKBawx4q0zuajE6NVvFCA=; b=kfXkYWgLZ9WSmfrm
-	+c2+EYRsE8AppJZGlB+pzMgB5LzUyRuzknjgqbeMQsYuAWojcxD05Ffuo4qTreHc
-	w5f3GkXtDXuDopf5/Ns2FcItb3TabLiPWANSR9ekBCdJbR7wGhYDS4Ew7Yx84BEm
-	OMKvPE2LOzMlD6DnXqvu3+zmTLqDv9AFpRD7j6kY0++X5gQ0kbq1K+hz8A8UYO0D
-	pjhnL7znYNbtb1BZAJGMeNPWx/myo+tuWXGUiXLbBxTX0RugG7I2JgB0JCmnD3Ye
-	LIw/RCqbcdTy3vp6ZLaKPYs4bXv9/XNVISlWtUMOhOO93+A2aOpp1c4B0KJ0WfdA
-	g2gOCA==
-Received: from mail-pf1-f198.google.com (mail-pf1-f198.google.com [209.85.210.198])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 49v27j28d3-1
+	cc:content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=qcppdkim1; bh=4XTSr1W6X5jhv/xaLPKWU4
+	3O66osxl09YjnMvID7Bzc=; b=ngoE5jwg0tdgelKZoPwB5gFMERE+I9gMPUbatA
+	gG6WdirnjgBtwxT/vU9pwo54e/E+aMr9GU6bGzgj6SXAklRcZvXbuq7iVYCJPlye
+	cUZNUMI0Tdn+svPoSvu9XzZ3DpqJEdBzywkn1cINdR+KTu2WwbzL9/uWg3KVbH0x
+	3V1qoIvZ0jhQ4+3RM0Cuwa2QkS7qhuymhr5AW2ultD/KNJWXZgAvajGn2KurkTuC
+	9kHooQ4yussTYFk02gSKf7RFU0niDSxfuhGDq4kHtreLLxWLHE4gllSXCf4mBuE4
+	k6LU0nWFw94563aSsGpAYfcVtPOV0Rq5ftjwev9uJBsNIV/w==
+Received: from mail-pj1-f70.google.com (mail-pj1-f70.google.com [209.85.216.70])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 49wsws4mdt-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Tue, 21 Oct 2025 21:08:08 +0000 (GMT)
-Received: by mail-pf1-f198.google.com with SMTP id d2e1a72fcca58-7900f597d08so5333015b3a.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 21 Oct 2025 14:08:08 -0700 (PDT)
+	for <linux-arm-msm@vger.kernel.org>; Tue, 21 Oct 2025 21:09:01 +0000 (GMT)
+Received: by mail-pj1-f70.google.com with SMTP id 98e67ed59e1d1-32eb864fe90so1075830a91.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 21 Oct 2025 14:09:01 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1761080887; x=1761685687;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=kUHcX9qshXGQudm9WWiL14vKBawx4q0zuajE6NVvFCA=;
-        b=dXi/ANESInTwRkBTIRUYWS/d7MP6T3gpxMQ8oxka4AwOLRhAj120zTwxX463GigavZ
-         Y6vX/GMC3BRWUDDnIIjlBOg2+PcXeQjV5Vw/9ktuUJRUVNTLOWZXd0UOo+nJLfRFbn7c
-         NzRyqIHDdV8P4p4iSKT/VZaeQz124JH6lQDS8RauJhwzbEBWd09TsGIVxJA0iLAmeFWx
-         KK2ynYIwwc+sNwkBY5iMVhLy3JGf5h3pI8xgQRrM1nhjuOZhX3e/Ibb+N52+YyBlX2CD
-         LfiXCDGCPwROPPYWajojNuKNK/KXnn7+9RU+5PHfMdQ7CMfY/1LqX9ZVPEMXMb5tQTnl
-         LP2w==
-X-Gm-Message-State: AOJu0Yw+tFgk4Xv29BUGZ/v3h4RWtQBj1B8eKrNt3Ohxz9NQlZ46g0tx
-	HJ70Q277PCGg9xeNjXWQ+VU01dFLu9oq4JJ/JDVNtUXBDjetT6Or5jpqabZljjYey20Hgx1O1YQ
-	XFACc01UVewG/jO/4Pi9NHKJpPl0pd91M70Gmme191LPqEgIsCzQf4snpG9XmjJiBD+an
-X-Gm-Gg: ASbGncsxRFSi5lMTUA/FVyq2YTjxnBOQGdAfR+/IAxgsSXwxSVc6uAp69zvf7FOBqza
-	yl4ga108sdpQ+h/TqppMASPLnktmUIjhUWpXE4ytgYQ1hASdHssCA9o1qkmIApdmxGFcawCaJGZ
-	qE4yXc6qhlKQrJS1AO2Bp6tzGjAMrtahlDUq1K81nfW1j47PePX9m3Npbzy8JFyRgKQoY3esfO4
-	vExxKnkYDhcSVN0Jf2q3J1ZJfbNxwpxRXsiZNnHpICbzVY6m64kGxdB6lNssTUm7yneHs8WOW8b
-	oHBst/4SXoPZRKcYcZj26oiqGRnlPAqbmtYWW4/rseL9mNCKV4e3tqle+zOtod4yf11Sw3KkjFy
-	zq/gFtH41Ddzu8iw+ToWuobcFmErRmmfzNw==
-X-Received: by 2002:a05:6a20:7287:b0:262:82a6:d932 with SMTP id adf61e73a8af0-334a86256f9mr22761797637.48.1761080887351;
-        Tue, 21 Oct 2025 14:08:07 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IESdm7op53/MzUS5K7s1gaOrJSGLx+p35WP7TbnHImOwmOCXg89kxayJjZ68H5wLE/Jqdy/hA==
-X-Received: by 2002:a05:6a20:7287:b0:262:82a6:d932 with SMTP id adf61e73a8af0-334a86256f9mr22761758637.48.1761080886737;
-        Tue, 21 Oct 2025 14:08:06 -0700 (PDT)
-Received: from [192.168.0.166] ([49.205.248.205])
-        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-b6cdafadb8dsm607908a12.1.2025.10.21.14.08.02
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 21 Oct 2025 14:08:06 -0700 (PDT)
-Message-ID: <e1bfadd4-2d53-1953-beef-1350594c5010@oss.qualcomm.com>
-Date: Wed, 22 Oct 2025 02:37:59 +0530
+        d=1e100.net; s=20230601; t=1761080940; x=1761685740;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=4XTSr1W6X5jhv/xaLPKWU43O66osxl09YjnMvID7Bzc=;
+        b=drhLyVk85n4ZFm9Yd4vfjnQ3aMiCtHc4Runnp38FGls46wukv8xRloJo6zzlyqiQE+
+         cf3disQeYTsDtD6aiLKrcwS36k4Sifws6uTgSRm5cyRauDmqrHK8idqWLqhVy+WdhmT1
+         VXbFjn0VdJTW6fhjV2aSVwgsg/LXwmJZx61UcATApFy9jC7Wb/Tydt9WI0h0mF7JMeeq
+         A/0FuCOWPA/tjYpdWWP/GWw2PLneDuAS1lNmxHCGR7hWhwuJy7hgZGADJF1z3rjSuFZ0
+         L4sG8Hn2Ait9WuD5GQ4F+Ww9kLyGVxpZjDbkHGfAHK0oy1/di+I2OfMpfNokj6uf2Pk+
+         Pa8Q==
+X-Gm-Message-State: AOJu0YzC8Qdvg+DIyxyvFkNhgtVll53JcbcPDlxLjtjNlBtS3yNdRXqg
+	2Vv3MY0bzLbqeu676KPQlU4nL2OhwQrBsI8yMQwl/3R9h4/OjHMG3W6ttzmEOPTFzqonMepwSzg
+	Pj4vtqTWFNNLqjY35TTEAady7WnnWCpPIagBhr3kLQR2zmjvm9Q6OSJgiD2/paSX+mtyU
+X-Gm-Gg: ASbGnctWqZ4zsWlJZF7tMeuTkdnB041kc6cQj2NRMFhvxTNxDFkkWGfet3n3H0ZZlSU
+	1rs+1MqZ+W2uVFqVZRtg1BKFOzsJF+Cz+JGhdnH8NUgTA5pn8AVkmijEU3VNUGUX+54iO/BUPo5
+	UGN53Y16Tex5crvazGss3W4tAQg3yzUxPI4huIavcwveaGt+X4eD8oqDvlkV4w7qp1gaa+JuxNN
+	sFlKquwkXMkAeLbbUJcjWITsN7F4EX4A6nektndHiiNAmsyXVk65z8IWZwut5K/zMpmI+yS+W9E
+	QSyUJwiAGmRFofOCaSwuQnHbiq31dZ/PgWHajwqBvPN6Fiby4LHuW95bZWFBbFirQTyDLHCFWEz
+	gTKZTLxNNaLeGA//qVb/YfB9r9r+IMdbMYRHGDpP3JpT2gLxF1eMWY2g/D5tL
+X-Received: by 2002:a17:90b:3c0c:b0:33b:c5f6:40f1 with SMTP id 98e67ed59e1d1-33bcf85d123mr25310745a91.7.1761080940176;
+        Tue, 21 Oct 2025 14:09:00 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFx6xI638rJZfuviQ2wzApZ5HGV3pqSRbJYp5jTPZWkGRauwK7uKMWBxX4XX84SqJKuHMbCEg==
+X-Received: by 2002:a17:90b:3c0c:b0:33b:c5f6:40f1 with SMTP id 98e67ed59e1d1-33bcf85d123mr25310718a91.7.1761080939760;
+        Tue, 21 Oct 2025 14:08:59 -0700 (PDT)
+Received: from hu-kamalw-hyd.qualcomm.com ([202.46.22.19])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-33e223c813fsm489833a91.4.2025.10.21.14.08.55
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 21 Oct 2025 14:08:58 -0700 (PDT)
+From: Kamal Wadhwa <kamal.wadhwa@oss.qualcomm.com>
+Subject: [PATCH v2 0/4] Add support to read RPMH regulator settings
+Date: Wed, 22 Oct 2025 02:38:52 +0530
+Message-Id: <20251022-add-rpmh-read-support-v2-0-5c7a8e4df601@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.15.1
-Subject: Re: [PATCH v2 1/8] media: dt-bindings: qcom-kaanapali-iris: Add
- kaanapali video codec binding
-Content-Language: en-US
-To: Krzysztof Kozlowski <krzk@kernel.org>,
-        Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>,
-        Abhinav Kumar <abhinav.kumar@linux.dev>,
-        Bryan O'Donoghue <bod@kernel.org>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
-        Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley
- <conor+dt@kernel.org>,
-        Philipp Zabel <p.zabel@pengutronix.de>,
-        Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-        Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Cc: linux-arm-msm@vger.kernel.org, linux-media@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Vishnu Reddy <quic_bvisredd@quicinc.com>
-References: <20251017-knp_video-v2-0-f568ce1a4be3@oss.qualcomm.com>
- <20251017-knp_video-v2-1-f568ce1a4be3@oss.qualcomm.com>
- <c9d8f76a-513f-4a09-bba4-cb8f0df1d2fe@kernel.org>
- <034bf6f4-0a49-4973-8536-28526b3409d1@oss.qualcomm.com>
- <d19b1279-3031-43b9-ac73-7e5f990802ed@kernel.org>
-From: Vikash Garodia <vikash.garodia@oss.qualcomm.com>
-In-Reply-To: <d19b1279-3031-43b9-ac73-7e5f990802ed@kernel.org>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDE4MDAxOCBTYWx0ZWRfX/2ajVrkDQPSH
- hnruq6K8+7uhLY/8dqUCuXth+LNra7vW7r3JhAOxtXq0VYTNXIoKqmeiy/bnzm7JhbXiat6jBl+
- q3I2yzEYAnXvXAXh2C9LF+dX41ZLMKSRAFd+E/Jq4oCT/LGF5hs6hci3SZgOTKiF+82TWPxNkHA
- tHgKjS456neYvwOq4GTI4Me5RCOhV9xDvNCoTmp72aEmah7KkS9kk0NRi2nlZt3ZkyW4o2DrQtq
- p4WMqz8k73b5WEA/nvyvo0wysofL1jQL+LB7pF//JhmC5ZUXrZROQg8uUo0E1++vOcLpFIgU9cs
- GGPIDGvDSfjJB86OQ1MZoDnSS7Wa3D5HAu1YtlI1lQsupywL6vWaF7XvyEn0fqO0w99On1UY9lh
- EIrppItrjlmUUYEdtcY1iBdVfbWqIg==
-X-Authority-Analysis: v=2.4 cv=G4UR0tk5 c=1 sm=1 tr=0 ts=68f7f638 cx=c_pps
- a=m5Vt/hrsBiPMCU0y4gIsQw==:117 a=Ysf2FyB+yl5xZy2y99iGVQ==:17
+X-B4-Tracking: v=1; b=H4sIAGT292gC/4WNQQqDMBBFr1Jm3ZE4QUm76j2Ki5DEGqgmnVFpE
+ e/e1At08+F9+O9vIIFjELieNuCwRolpKkDnE7jBTo+A0RcGUtSoljRa75HzOCAH61GWnBPPqMm
+ Y3mjnSFko28yhj+/De+8KD1HmxJ/jZq1/7T/jWqNCGxqjPbWqvjS3JFK9Fvt0aRyrEtDt+/4FQ
+ 6QQFcEAAAA=
+X-Change-ID: 20250623-add-rpmh-read-support-3288f83cc20a
+To: Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>,
+        Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Kamal Wadhwa <kamal.wadhwa@oss.qualcomm.com>,
+        Maulik Shah <maulik.shah@oss.qualcomm.com>,
+        David Collins <david.collins@oss.qualcomm.com>
+X-Mailer: b4 0.14.2
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1761080935; l=3228;
+ i=kamal.wadhwa@oss.qualcomm.com; s=20241018; h=from:subject:message-id;
+ bh=AGCHV4jZeRYSACDXgXSzIHpr5GZWz3GvyhnV3yk/D6c=;
+ b=f6ivcBAWiBI2ZMY23Wxj7VGH9SW+bJc7WgATz0dSN7+hRXtElcIBbNOvBGidZqSquJUfaJhpT
+ JHOtpCfzjiiC5PaI+0bgTiPexUuy9q8i2E5FLy3Q3zBQKOA7ez44L3t
+X-Developer-Key: i=kamal.wadhwa@oss.qualcomm.com; a=ed25519;
+ pk=XbPE6DM5/mJi2tsiYwMCJCZ4O5XPMqColJRlGVcM7Hs=
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDIwMDE0OCBTYWx0ZWRfX8ZR3l7o+Nw/I
+ Pq3iaZ3MLVwrBQupXjTxYsainGbcnxoudwZuX3xJ9ZBoGN112XJeBbtou/VPc8DyR4noFTO621d
+ e1khucFQHe25cLANurvk4gL+N+quNmu0HJr6saGa1+yMIqoIsnyQn7WNsRK390a6xbpq3TPFnIk
+ vJ04rRJdjZSuOAGXH0FW6iNGlK6IWSVy+6cCwZXGBtePy7W8Pau3Hw+tqvBrVwqBFwMSh4J4DWl
+ a9PeXuf0FDMyT/4wsefol2/E34CTz0H/tl1+ldj8ZxcVIbFaSNbAalyo4Qjt1uFPE+szW0rIpLJ
+ hvmxebWAKUOMGWogAuLm6+vxikGgPHyYu4JTrbl7e9oeaBAqGPPzjppu3eBwy1PxukgaTRVPGmn
+ 6BxfH8MA3GPUZQRWxjLON+TXy77/AQ==
+X-Proofpoint-GUID: vRy_p9Wj0aOW72SfAFd3U7C2FW8AdNvF
+X-Proofpoint-ORIG-GUID: vRy_p9Wj0aOW72SfAFd3U7C2FW8AdNvF
+X-Authority-Analysis: v=2.4 cv=a+E9NESF c=1 sm=1 tr=0 ts=68f7f66d cx=c_pps
+ a=0uOsjrqzRL749jD1oC5vDA==:117 a=fChuTYTh2wq5r3m49p7fHw==:17
  a=IkcTkHD0fZMA:10 a=x6icFKpwvdMA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=mYW7RsAQjGC2aXFlLLIA:9 a=QEXdDO2ut3YA:10 a=IoOABgeZipijB_acs4fv:22
-X-Proofpoint-GUID: -IL89D26lluNRtdSU2XaVn2xcNOwVyFl
-X-Proofpoint-ORIG-GUID: -IL89D26lluNRtdSU2XaVn2xcNOwVyFl
+ a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8 a=SSp4yj_AV0YVitkQLB8A:9 a=QEXdDO2ut3YA:10
+ a=mQ_c8vxmzFEMiUWkPHU9:22
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.80.40
  definitions=2025-10-21_03,2025-10-13_01,2025-03-28_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 lowpriorityscore=0 malwarescore=0 bulkscore=0
- priorityscore=1501 spamscore=0 suspectscore=0 adultscore=0 clxscore=1015
- phishscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2510020000
- definitions=main-2510180018
+ lowpriorityscore=0 spamscore=0 clxscore=1015 priorityscore=1501 phishscore=0
+ bulkscore=0 suspectscore=0 malwarescore=0 impostorscore=0 adultscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.19.0-2510020000 definitions=main-2510200148
 
+This patch series adds a new `rpmh_read()` API to allow reading RPMH
+addresses. Also, using this new API, enhances the RPMH regulator driver
+get_regulator* APIs like `get_regulator_sel()`, `get_mode()` and
+`get_status()` to allow reading voltage/mode/enable setting from H/W.
 
-On 10/22/2025 12:45 AM, Krzysztof Kozlowski wrote:
-> On 21/10/2025 20:55, Vikash Garodia wrote:
->>
->> On 10/18/2025 9:28 PM, Krzysztof Kozlowski wrote:
->>> On 17/10/2025 16:16, Vikash Garodia wrote:
->>>> +  clock-names:
->>>> +    items:
->>>> +      - const: iface
->>>> +      - const: core
->>>> +      - const: vcodec0_core
->>>> +      - const: iface1
->>>> +      - const: core_freerun
->>>> +      - const: vcodec0_core_freerun
->>>> +      - const: vcodec_bse
->>>> +      - const: vcodec_vpp0
->>>> +      - const: vcodec_vpp1
->>>> +      - const: vcodec_apv
->>>> +
->>>> +  dma-coherent: true
->>>> +
->>>> +  firmware-name:
->>>> +    maxItems: 1
->>>> +
->>>> +  interconnects:
->>>> +    maxItems: 2
->>>> +
->>>> +  interconnect-names:
->>>> +    items:
->>>> +      - const: cpu-cfg
->>>> +      - const: video-mem
->>>> +
->>>> +  interrupts:
->>>> +    maxItems: 1
->>>> +
->>>> +  iommus:
->>>> +    minItems: 3
->>>> +    maxItems: 8
->>>
->>> I don't understand why this is flexible. Make it fixed size and anyway -
->>> list the items.
->>
->> kaanapali vpu generates 8 different stream-ids. Now, boards running kernel in
->> EL2 mode can list all of them, while boards running in EL1 can have only non
->> secure stream IDs. Min have the list of stream ids which can be enabled for all
->> type of boards, while max is for boards which can list all in HLOS given kernel
->> is in EL2 mode.
->>
->> Below crash would be seen if boards running kernel in EL1 mode lists the secure
->> ones.
-> 
-> 
-> That has to be explained somewhere, e.g. comment, 
+This is needed because current design has a limitation - regulator
+framework can only get the cached values from the last voltage set
+operation. Because of this right after bootup a `get_voltage_sel()`
+from regulator framework will return -ENOTRECOVERABLE error, causing
+regulator framework to trigger an unnecessary `set_voltage_sel()` call
+with the `min_uV` value specified in the regulator's device tree
+settings, which can cause issues for consumers like the display and
+UFS that require a consistent voltage setting from the bootloader
+state until their drivers are probed.
 
-Sure, will add a description for iommus property explaining the same.
+With this change regulator framework will get the regulator voltage
+and other settings, as configured during bootloader stage, avoiding
+unnecessary voltage adjustments and maintaining consistent power
+settings across the transition from bootloader to kernel.
 
-and still we need then
-> EL2 DTS in the kernel. I did not see such so far, but maybe I missed it
-> - can you link it?
-> 
+Besides this feature this series also fixes:-
+- An existing issue with the BOB5 pass code value. This is needed
+  by `get_status()`.
+- Code format/style related errors reported by checkpatch.pl.
 
-EL2 DTS for kaanapali is not yet posted to handle secure SIDs. While it is in
-development, describing the secure stream-ids would ensure to cover all the
-hardware generated IDs.
+Signed-off-by: Kamal Wadhwa <kamal.wadhwa@oss.qualcomm.com>
+---
+Changes in v2:
+- Fixed the BOB bypass mode handling (existing issue in current driver).
+  This was needed for `get_status()` implementation.
+- Implemented `get_status()` callback.
+- Callbacks for `is_enabled()` & `get_mode()` will now be used as-is
+  ie. v1 changes reverted.
+- Bootstapped the read values for `mode` and `status` in probe, based on
+  comments recieved from reviewer. 
+- Callback for `get_voltage_sel()` has been modified to handle cases
+  where read voltage is out-of-range defined in the regulator DT settings,
+  this is needed to ensure backward compatibilty. Regulator probes may
+  fail otherwise for some older targets.
+- This patch is rebased & tested on:
+   https://lore.kernel.org/all/176070318151.57631.15443673679580823321.b4-ty@kernel.org/
+  to avoid any merge issues.
+- Fixed code style issues reported by checkpatch.pl script. 
+- Link to v1: https://lore.kernel.org/r/20250623-add-rpmh-read-support-v1-0-ae583d260195@oss.qualcomm.com
 
->>
->> [    1.361157] pc : qcom_smmu_write_s2cr+0x64/0xa4
->> [    1.361165] lr : arm_smmu_write_s2cr+0x2c/0xbc
->> [    1.361168] sp : ffff80008005b8f0
->> [    1.361169] x29: ffff80008005b8f0 x28: 0000000000000000 x27: ffffc7f252f45320
->> ....
->> [    1.361195] x2 : ffff800081200c48 x1 : 0000000000000048 x0 : ffff800081200000
->> [    1.361198] Call trace:
->> [    1.361199]  qcom_smmu_write_s2cr+0x64/0xa4 (P)
->> [    1.361203]  arm_smmu_master_install_s2crs+0x7c/0xac
->> [    1.361207]  arm_smmu_attach_dev+0xb0/0x1d4
->>
->> Could you please suggest on listing the iommu items ? I did not find the
->> relevant references in other bindings where flexible iommus is being listed.
-> 
-> 
-> Just like every other list property - clocks, resets, power-domains.
-> 
-something like
+---
+Kamal Wadhwa (3):
+      regulator: rpmh-regulator: Fix PMIC5 BOB bypass mode handling
+      regulator: qcom-rpmh: Add support to read regulator settings
+      regulators: qcom-rpmh-regulator: Fix coding style issues
 
-iommu-names:
-  items:
-    - const: 0x1943
-    - const: 0x1940
-...
+Maulik Shah (1):
+      soc: qcom: rpmh: Add support to read back resource settings
 
-given that one of vpu sub hardware generates multiple SIDs, if we go with sub
-hardware name in the list, the names would be repeated.
+ drivers/regulator/qcom-rpmh-regulator.c | 184 +++++++++++++++++++++++++++++++-
+ drivers/soc/qcom/rpmh-rsc.c             |  13 ++-
+ drivers/soc/qcom/rpmh.c                 |  47 +++++++-
+ include/soc/qcom/rpmh.h                 |   5 +
+ include/soc/qcom/tcs.h                  |   2 +
+ 5 files changed, 241 insertions(+), 10 deletions(-)
+---
+base-commit: fe45352cd106ae41b5ad3f0066c2e54dbb2dfd70
+change-id: 20250623-add-rpmh-read-support-3288f83cc20a
 
->>
->>>
->>> I already asked this.
->>>
->>>> +
->>>> +  memory-region:
->>>> +    minItems: 1
->>>> +    maxItems: 2
->>>
->>> Same comment. I already asked this about iommus.
->>
->> Same here, there aren't any bindings which lists for flexible memory-region.
->> Please suggest if there are any such references.
-> 
-> Because they do not matter for all other bindings, but it turned out
-> recently it might matter for this device.
+Best regards,
+-- 
+Kamal Wadhwa <kamal.wadhwa@oss.qualcomm.com>
 
-memory-region:
-  minItems: 1
-  maxItems: 2
-
-memory-region-names:
-  items:
-    - const video_mem
-    - const iris_resv
-
-Regards,
-Vikash
-
-> 
-> 
-> Best regards,
-> Krzysztof
 
