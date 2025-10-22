@@ -1,125 +1,135 @@
-Return-Path: <linux-arm-msm+bounces-78360-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-78361-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id DCDFCBFCD85
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Oct 2025 17:23:39 +0200 (CEST)
+Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [142.0.200.124])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2C8FBBFCD93
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Oct 2025 17:24:05 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id C30DA189C5D3
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Oct 2025 15:24:02 +0000 (UTC)
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id F0A644EFCDE
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Oct 2025 15:24:03 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5FC122BE03C;
-	Wed, 22 Oct 2025 15:23:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B8DE833891F;
+	Wed, 22 Oct 2025 15:24:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=ucw.cz header.i=@ucw.cz header.b="Z6C7Wgut"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="n3v7/V21"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from jabberwock.ucw.cz (jabberwock.ucw.cz [46.255.230.98])
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1BA3347FEC;
-	Wed, 22 Oct 2025 15:23:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=46.255.230.98
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01AD31FE47C;
+	Wed, 22 Oct 2025 15:23:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761146613; cv=none; b=djb9fQZ2sOLMdV6+njk92ojnQ/uEJNlzN+PUNVZds1ZuFds4xpv7mX86uB0bbcAX+YBf8ESD2i0e9zUxRCF01tRjRgQx3ZkumRp0geXH3/I1MsNHZ/MEWUqxmqrHvqPuI3/sn012XDs0qhtuHofeGFcpG9ys1XAS1eiUwIN6jhw=
+	t=1761146641; cv=none; b=bnBVRtovMBIxBQvv58rw/s3XKD6xPd0B+wZD3RhcbuCaGhf4wUlt5DUQCn2fXz+jYVvBuajvUElfmOD75rdxoR8fU/ZcYX3x8IZDa0UDLRzVi+qda/BRcnbKTL8d7ay60uko/+uBvRA9aPa9QyB54vFS5Uaw+ACyuE9iaktbi1M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761146613; c=relaxed/simple;
-	bh=ANQm8fWq/p+Z/WnKkV5WnEXtHhhWdDQapOL77j2cw5Y=;
+	s=arc-20240116; t=1761146641; c=relaxed/simple;
+	bh=3H2G3e9u/HWbF1bcYxs8o9niOojFUMCOW6N5igyK8zE=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=T9/foiJzxUgWUIDaRlBgHuNZkf8mNsV4jGQg3vVAlacbBwMTjQQR9ec+y75AYgk7WOxDP/mGUz9VdwVyvRbpeFNmd4eg6rg5pUN5rkUAICd+77rHHKtNcG7ipmzMbtAyeJc48Jv1SH9sT9M477mSmKH5t40cF+9eZ7FP/jl7a9Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ucw.cz; spf=pass smtp.mailfrom=ucw.cz; dkim=pass (1024-bit key) header.d=ucw.cz header.i=@ucw.cz header.b=Z6C7Wgut; arc=none smtp.client-ip=46.255.230.98
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ucw.cz
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ucw.cz
-Received: by jabberwock.ucw.cz (Postfix, from userid 1017)
-	id 14A4E1C007C; Wed, 22 Oct 2025 17:23:25 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ucw.cz; s=gen1;
-	t=1761146605;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=sTPnzWhHyeueBFfOlDmvPtS5n8v0m//b2f9NJlRltOM=;
-	b=Z6C7WgutqaVI5CazTrkU1H4soTywmUzKbH/1YU8Llowuof/Dy6EkNVUtJxUerpqseT0tBd
-	To6E0zXObsGF5g2EH0uOcjVYBw2blp3K8t66SHco9Z7br1C1IogtRdiMZ3pc7n/OZM0fVd
-	DNEIxyMC46Yav/rUXpc7vQNjUwLhGHk=
-Date: Wed, 22 Oct 2025 17:23:24 +0200
-From: Pavel Machek <pavel@ucw.cz>
-To: Luca Weiss <luca.weiss@fairphone.com>
-Cc: Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konradybcio@kernel.org>,
+	 Content-Type:Content-Disposition:In-Reply-To; b=G9HK/dj8ZmjCE2ourUGdyjTuexTUveAyRYqLKhmJvLyAj4lliPgVWyup0aODC+wqO5fbGWtXXDLbtIPLFb1Zal4uzfZTlyPkLQVINo7yzfn1JHWNCK/svL3HOtra3XkDpdQbMjft+2slBOJm3NF0Dybh3IL+jJGEKvJ59+gM+5k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=n3v7/V21; arc=none smtp.client-ip=198.175.65.18
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1761146640; x=1792682640;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:content-transfer-encoding:in-reply-to;
+  bh=3H2G3e9u/HWbF1bcYxs8o9niOojFUMCOW6N5igyK8zE=;
+  b=n3v7/V215f4BRGyXnj0oQ1ITHMGFuNdyPkAuljrhGGsQEOqj28NMbvfS
+   3xAYIW1ux6JcYcCLqOwqU+TLXFyk09xfNTdGsE4NU+cIYbBHPdj3NVwBW
+   aEAIVp0OaPpOE7TZBDfoqkrYNeAnox5Yln7Luym1viYd8jYjs7yRJ9238
+   eUaHkaCt9cu/WdNIrJ8aLhqyVpycpAcRkoH6Gerkb8eCrs4vV0kjpEdGn
+   kwyPQGXYyE5yAYQDsaBApEPb1uI2771RCeRQws+2GnIGeyE+BE3zJHIk3
+   hGH1lEy2kl7mHpWosdMUfW578X6Rp+8rEYsirLpsvVF7oUY7a7ypkHYvc
+   Q==;
+X-CSE-ConnectionGUID: Vr00pNxkTMeHPgllQsXDyA==
+X-CSE-MsgGUID: xvHiBryyTsurvSkTuWksyw==
+X-IronPort-AV: E=McAfee;i="6800,10657,11586"; a="63338941"
+X-IronPort-AV: E=Sophos;i="6.19,247,1754982000"; 
+   d="scan'208";a="63338941"
+Received: from fmviesa004.fm.intel.com ([10.60.135.144])
+  by orvoesa110.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 22 Oct 2025 08:23:59 -0700
+X-CSE-ConnectionGUID: aZfCjIYeSgCfOShAlazg4A==
+X-CSE-MsgGUID: ATEEnZdDSyiOXykbwDzTrA==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.19,247,1754982000"; 
+   d="scan'208";a="189179298"
+Received: from cpetruta-mobl1.ger.corp.intel.com (HELO ashevche-desk.local) ([10.245.244.83])
+  by fmviesa004-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 22 Oct 2025 08:23:53 -0700
+Received: from andy by ashevche-desk.local with local (Exim 4.98.2)
+	(envelope-from <andriy.shevchenko@intel.com>)
+	id 1vBago-00000001jCg-2CaW;
+	Wed, 22 Oct 2025 18:23:50 +0300
+Date: Wed, 22 Oct 2025 18:23:50 +0300
+From: Andy Shevchenko <andriy.shevchenko@intel.com>
+To: Bartosz Golaszewski <brgl@bgdev.pl>
+Cc: Andy Shevchenko <andy.shevchenko@gmail.com>,
+	Kees Cook <kees@kernel.org>, Mika Westerberg <westeri@kernel.org>,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Linus Walleij <linus.walleij@linaro.org>,
+	Manivannan Sadhasivam <mani@kernel.org>,
 	Rob Herring <robh@kernel.org>,
 	Krzysztof Kozlowski <krzk+dt@kernel.org>,
 	Conor Dooley <conor+dt@kernel.org>,
-	Casey Connolly <casey.connolly@linaro.org>,
-	Alexander Martinz <amartinz@shiftphones.com>,
-	~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 4/6] arm64: dts: qcom: qcm6490-shift-otter: Enable flash
- LED
-Message-ID: <aPj27KKCVN9Tn9qi@duo.ucw.cz>
-References: <20250930-otter-further-bringup-v1-0-7fe66f653900@fairphone.com>
- <20250930-otter-further-bringup-v1-4-7fe66f653900@fairphone.com>
+	Saravana Kannan <saravanak@google.com>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	Andy Shevchenko <andy@kernel.org>,
+	Catalin Marinas <catalin.marinas@arm.com>,
+	Will Deacon <will@kernel.org>,
+	Srinivas Kandagatla <srini@kernel.org>,
+	Liam Girdwood <lgirdwood@gmail.com>,
+	Mark Brown <broonie@kernel.org>, Jaroslav Kysela <perex@perex.cz>,
+	Takashi Iwai <tiwai@suse.com>, linux-hardening@vger.kernel.org,
+	linux-kernel@vger.kernel.org, linux-gpio@vger.kernel.org,
+	linux-arm-kernel@lists.infradead.org, linux-sound@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org,
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Subject: Re: [PATCH v2 01/10] string: provide strends()
+Message-ID: <aPj3BlmgdnJU9DM4@smile.fi.intel.com>
+References: <20251022-gpio-shared-v2-0-d34aa1fbdf06@linaro.org>
+ <20251022-gpio-shared-v2-1-d34aa1fbdf06@linaro.org>
+ <CAHp75Vewc2OoD7=eoFtrkPrGRuB9ZGT2vu4Z_wdHZUDZ8igUtw@mail.gmail.com>
+ <CAMRc=Mf_qfFzWqy6ND+YDuXcv5NOYiRTo9QY76V719PqJBMxPA@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="Fhbu73dSOXUJXCHg"
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20250930-otter-further-bringup-v1-4-7fe66f653900@fairphone.com>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAMRc=Mf_qfFzWqy6ND+YDuXcv5NOYiRTo9QY76V719PqJBMxPA@mail.gmail.com>
+Organization: Intel Finland Oy - BIC 0357606-4 - c/o Alberga Business Park, 6
+ krs, Bertel Jungin Aukio 5, 02600 Espoo
+
+On Wed, Oct 22, 2025 at 03:40:00PM +0200, Bartosz Golaszewski wrote:
+> On Wed, Oct 22, 2025 at 3:34 PM Andy Shevchenko
+> <andy.shevchenko@gmail.com> wrote:
+> > On Wed, Oct 22, 2025 at 4:11 PM Bartosz Golaszewski <brgl@bgdev.pl> wrote:
+
+...
+
+> > > static inline bool strstarts(const char *str, const char *prefix)
+
+> > >         return strncmp(str, prefix, strlen(prefix)) == 0;
+> > >  }
+> > >
+> > > +bool strends(const char *str, const char *suffix);
+> >
+> > Why not static inline as strstarts()?
+> 
+> Because it's not a oneliner.
+
+So, and how does it answer the question? What is the obstacle here that it may
+not be a static inline few-liner?
+
+-- 
+With Best Regards,
+Andy Shevchenko
 
 
---Fhbu73dSOXUJXCHg
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-
-On Tue 2025-09-30 16:32:22, Luca Weiss wrote:
-> From: Casey Connolly <casey.connolly@linaro.org>
->=20
-> Describe the flash LED on this phone.
->=20
-> Signed-off-by: Casey Connolly <casey.connolly@linaro.org>
-> Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
-
-Reviewed-by: Pavel Machek <pavel@ucw.cz>
-
->  };
-> =20
-> +&pm8350c_flash {
-> +	status =3D "okay";
-> +
-> +	led-0 {
-> +		function =3D LED_FUNCTION_FLASH;
-> +		color =3D <LED_COLOR_ID_WHITE>;
-> +		led-sources =3D <1>, <2>;
-> +		led-max-microamp =3D <500000>;
-> +		flash-max-microamp =3D <1500000>;
-> +		flash-max-timeout-us =3D <1280000>;
-> +	};
-> +};
-> +
->  &pmk8350_adc_tm {
->  	status =3D "okay";
-> =20
->=20
-
---=20
-I don't work for Nazis and criminals, and neither should you.
-Boycott Putin, Trump, Netanyahu and Musk!
-
---Fhbu73dSOXUJXCHg
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iF0EABECAB0WIQRPfPO7r0eAhk010v0w5/Bqldv68gUCaPj27AAKCRAw5/Bqldv6
-8kmFAJ4rJ8Tx4NMizkzVOiSWmcIENrA1CQCgsmG9w0ObK7yegGZ+HvSxbkhoevE=
-=HJ8o
------END PGP SIGNATURE-----
-
---Fhbu73dSOXUJXCHg--
 
