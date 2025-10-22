@@ -1,131 +1,181 @@
-Return-Path: <linux-arm-msm+bounces-78244-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-78245-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6F328BF9E53
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Oct 2025 05:59:22 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 93602BF9EC7
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Oct 2025 06:19:42 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 0970656058B
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Oct 2025 03:59:21 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 45DF3426510
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Oct 2025 04:19:41 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D09802D7813;
-	Wed, 22 Oct 2025 03:58:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6A5841E00A0;
+	Wed, 22 Oct 2025 04:19:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="nDFEm7H5"
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="LZJXU8N1"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f44.google.com (mail-wm1-f44.google.com [209.85.128.44])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F10E62D7384
-	for <linux-arm-msm@vger.kernel.org>; Wed, 22 Oct 2025 03:58:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A130E204C36
+	for <linux-arm-msm@vger.kernel.org>; Wed, 22 Oct 2025 04:19:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.129.124
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761105538; cv=none; b=s6WdoT/zz3Fqnliu1aHNYSsAFsQMpGPsnNpb5vMzTMTFqWfSSEpU7U7pv6WSiK1se9iLtwKoSPSvoXc2q45fYe4YvMBLYas9+/T8Zvo+6RB3LImud25U+ewxq+SeBcUJG09mAnrNTlQCXaPWoPhIF3vk1PRRBjPmsFZabAC7W8U=
+	t=1761106779; cv=none; b=gJakqpy3T0yX7X38FLJ/UBldUeFoiRXspzjp6GOPaa1n8L1FW5HVUNT32wBnjYqJlP/Xiq9unJeUnh1wAouz3noeAzDwkR6tfVLm1sK/Vf/kg9QmqELr0b4x9MnxQnn8pvpTHSM6MvXJM20NmoCWIWnEwyDcnvjoFRkDRb6AQAY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761105538; c=relaxed/simple;
-	bh=kvAMP3ctlHC+NcMNgJAgs9mnDMpwSkggmTJd2ypqC5M=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=H1xc/62bD/dMLQT44X7nt8ZVznhbGFQuxoio37cHr2CVVxRoXoQWt4x3D2//8dMDzB1ol/yIjTN0/LFWq94ONqTUMmW+6V8vaqGXqtliL1IVEHkYHkZni8gpI2XM2P22Zn1aiTziFbiGh1BDjSMMJKXoBghCjdyBh/RMwfrJvD4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=nDFEm7H5; arc=none smtp.client-ip=209.85.128.44
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f44.google.com with SMTP id 5b1f17b1804b1-47103b6058fso3178755e9.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 21 Oct 2025 20:58:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1761105535; x=1761710335; darn=vger.kernel.org;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=sI4ASgSpPGAj/Dv/E2slB3WMFvZC6o4/Alrjjt2Ie8Y=;
-        b=nDFEm7H5XueUDJznN5/7tYnwz3iK0QwrYwOyCuukBji2e7h+pwISx7EVtRQcGRzGpK
-         qGr+1VZT5+JVjDICQ86Jp5VGoIa4m1v2y0MqHwxkRcggJs1WXe3YudCe6FCpNKOHMs+l
-         pNIKXGr+HpZN8wu9voztnMoQbQ9T8jyDVyjBjbncnvXaVXEJDve6EEstKFp2R8OAH8ap
-         OGs1usArY3zL+KquiDXPt2zs1csl+Gipbsygn0cR12SCzc9LuwmkJUPXs0gq5jWKVGQ/
-         cabAR+CEG7G8vvPjsLbhM94j2acsrfODW9Bn7NErPK54pfxxDGLnyEvohnUxJRDtFYce
-         l+uA==
+	s=arc-20240116; t=1761106779; c=relaxed/simple;
+	bh=EgU8rnXynIPhs/BZsA64otPdBcSY9W7JNRXfkBA9twA=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=nRRS7nzf5R40NMd+1SzAnA4Qi+k8OmtjRPTCksJOO0EAscGknsA7qTSvQQliDeY0/toub1DNtbTH7BKmOJ5Xnucg8Fk+Vt7jUTKR9P/TYbUzNT1eIEA100SLWfZC67lKfVuT3X8b3V5E8jLYDlYRDcst1H/U+i983dGAKCD4C/Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=LZJXU8N1; arc=none smtp.client-ip=170.10.129.124
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1761106776;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=cEB1GkxvFRSrK09fb4q7fCqBnMrGabs898MxIlOczVU=;
+	b=LZJXU8N1fNEFr8wjO9uPdXtgWTz+npeJvn6qclp0FwFmOsegSwG9J9nulpqx3SUO1nWO/g
+	PqyNQQxiE0bID6FPMx1vEpPYV+XBc7baBDJ2Grtpd4VzMr0bTKvNO4HilwhduBCE1mIwzR
+	Qc+DY/SyOlUDuP+1A8lCNWq6jvWX8wk=
+Received: from mail-pj1-f70.google.com (mail-pj1-f70.google.com
+ [209.85.216.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-359-Vz-lRW95OIKmXb5aTE3MEQ-1; Wed, 22 Oct 2025 00:19:34 -0400
+X-MC-Unique: Vz-lRW95OIKmXb5aTE3MEQ-1
+X-Mimecast-MFC-AGG-ID: Vz-lRW95OIKmXb5aTE3MEQ_1761106773
+Received: by mail-pj1-f70.google.com with SMTP id 98e67ed59e1d1-33bb4d11f5eso6318091a91.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 21 Oct 2025 21:19:34 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1761105535; x=1761710335;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
+        d=1e100.net; s=20230601; t=1761106773; x=1761711573;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=sI4ASgSpPGAj/Dv/E2slB3WMFvZC6o4/Alrjjt2Ie8Y=;
-        b=BYMLiEY6xN8TmJfmAbus+40xeswhH93nW649QomiP2xvM+KRg5uylbvJpKXMZQnZLq
-         /WrImyqBQN1ho7FJzkAtr4xG4BuJ0HrQJX0R9Y4/Fk9r+plGhalRibS+0gRWKsLkohb6
-         vcOBwdzwbqYUBTf1fc4ZS84L0VvuX47lGpnhnbV523E3Ut0p9Uhpq1IyosFcL0ITYUj1
-         JB2AIMoz/DAZuyL0lnO2g/nYmkK8HeFbYp+wDWzleBd4v2ukB1cW8yDR4IWiz8UipZpe
-         4zzvWaWdsc8BZFT5H6INClb9wvNw4MyU0FLou0NvoCwRYFSq8C4i5sXUhIOdSCZM9f0G
-         8BiA==
-X-Forwarded-Encrypted: i=1; AJvYcCWbQkYAcSGkOEXqwrUAlfOA4P7O1QlsYITna8bwGwjoST3Rp8QfhewRI1AkUtlcwB5WVBWVdqkxy6DYPyhq@vger.kernel.org
-X-Gm-Message-State: AOJu0Yyu66vOfWx+iHqv9rX3SfVCf7tcoXODUEAz88SLen9k3aRhV88h
-	bXqmrfYQTp0uPWkvdtGqjLviRINIHk3RvbjO55WIkM3zNC+cAKLQlTu61puyCGM/RYo=
-X-Gm-Gg: ASbGncuRqWQQf8AsrPk5n7bACSOVhHPEcrm06lBX5UlRFiF93ps+OY6mboALlTpRG+2
-	Zxk44W6txnpwCOcYN6bUtn0yhlvnzQseTl6kwPSazmyMP6FFUXmRlV5WzgRcsMsFlOjpHKH072y
-	hGZFuu8MIoqfrqvXcS6M9dio9PWhzjVG3ge+78psagw+KrTTz+EAJ2Ywkz0ynvnRxvQetbkVHFk
-	k7gA7hWJGJZIkE+lpaHlZmjNZu+QwOlmDV0c8qeic2A2w+PeeHa371KQFC81g3xiOels3jPcd1b
-	1/5FLMO8W7iWEWEE9U/RbaLTrkeXJKDg6EWxjHCUNDLvq7QhjAM7fpS5zreC/uVU+3idwFSfst9
-	LJM3ebQ+i8jJqtzQrHW732HVTPEdW9e0xPBYzuaVRaLP0arWzuR2hphRBaVGQVXNv05cWQ4/ov8
-	MkPqxcQhOWYWmz/4Rt
-X-Google-Smtp-Source: AGHT+IHeEb3tGuV2cdLUPqnynhdT9+HgBOgYCBUb5B0FsyuU5f/KzVMWWrEQeBupy2nAXL/DwGwzPg==
-X-Received: by 2002:a05:600c:3505:b0:46e:59bd:f7e2 with SMTP id 5b1f17b1804b1-475c3fcb2fbmr12453345e9.11.1761105535320;
-        Tue, 21 Oct 2025 20:58:55 -0700 (PDT)
-Received: from orion.home ([2a02:c7c:7259:a00:11f4:2b3f:7c5a:5c10])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-427f009a6c5sm23637639f8f.28.2025.10.21.20.58.53
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 21 Oct 2025 20:58:54 -0700 (PDT)
-From: Alexey Klimov <alexey.klimov@linaro.org>
-Date: Wed, 22 Oct 2025 04:58:50 +0100
-Subject: [PATCH v2 2/2] ASoC: qcom: sm8250: add qrb2210-sndcard compatible
- string
+        bh=cEB1GkxvFRSrK09fb4q7fCqBnMrGabs898MxIlOczVU=;
+        b=dYQ2CyOlkqGzmIjlnP6n8w7iowoBRVzvgs2tu9ywb5sv6YEjkiDVsCRQO8+wvQunuL
+         y0ZrLQOnVt4+qSJILnMJZbNpNgdYcXzykCmqyJWUxoYu6e68Ie7vKXFvx6utJmBEoLWS
+         rx8eKtHQw5KCrTjI62Aub1hLZEEawDGZWn/qUazz5ZyYd2U7cuxDs0bGF7hl4HHJ1Vuk
+         B3H7u2PEJ8K2qvA3yg4LcKNwDpfLyfrtRhPy5O9NnJhYkKccRTvBboGjuOh2oKXA+ebh
+         4DRBnYP8kp35ONE+xEhj47v8McxQluBLCPSh3qnKucXV/YL6Ws736RfpDkB/lDRkE8uo
+         iCMQ==
+X-Forwarded-Encrypted: i=1; AJvYcCWalwphF2zfcGlfLfdLkQmWzgAnGirrF5ckir5lOUhH2SRBVaBrgZrnPRHALDjPfwatPMthB9oFBYWDoHCy@vger.kernel.org
+X-Gm-Message-State: AOJu0YxAhA6rp7fXpoyoMY5Oi0pGFwQ2dPlmUARFLTtiG5hEL4Y9/EJ7
+	LdNxcTPbDe64aWWy+CgoEm4oy3lRi8MkpT45yOKAclRQkne/jaE8/X7ZpVNlKmPbeXHuaIoS7+F
+	787VIPokuuF8fBhCxn0BI9E/nZOOLsLjWEV5THPvOHHKWtwiRv2XGIsJcYac3VwczW9Sawfgi94
+	tHGRZnLzmKxL261lMNNypmhSIpxXd/H/gXbOmtBBC/4g==
+X-Gm-Gg: ASbGncvbhWjJzPyNT35n9NQ2XHi6/h66EbCYPh0jiIw+6aMuGzzmdz7I021ySWbKFk/
+	h80kB3KCy1b18wxGoc0nLYSpz+N00xu+R2cepEnvodYpjEAWUk0u7CSsxD+lgXY4zoB6KgN/GCE
+	5rgYakPNainhCRqtu+BDCyzB4fZqWQ2dv0/DZeIJlwRp/Mp0x92BPsggkI
+X-Received: by 2002:a17:90b:3f10:b0:32e:c6b6:956b with SMTP id 98e67ed59e1d1-33bcf85aba8mr27206996a91.4.1761106773384;
+        Tue, 21 Oct 2025 21:19:33 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHxpm190zeS/O7QhosnTZCJ+sJ0OOtUfB8EF+I18t2uJyG2ctlTvkqQPBgMA4jG+/iqib9IAmxZwYBAa++FoXg=
+X-Received: by 2002:a17:90b:3f10:b0:32e:c6b6:956b with SMTP id
+ 98e67ed59e1d1-33bcf85aba8mr27206962a91.4.1761106772999; Tue, 21 Oct 2025
+ 21:19:32 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20251022-qrb2210-qcm2290-sndcard-v2-2-32e9e269a825@linaro.org>
-References: <20251022-qrb2210-qcm2290-sndcard-v2-0-32e9e269a825@linaro.org>
-In-Reply-To: <20251022-qrb2210-qcm2290-sndcard-v2-0-32e9e269a825@linaro.org>
-To: Srinivas Kandagatla <srini@kernel.org>, 
- Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>, 
- Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>
-Cc: Jaroslav Kysela <perex@perex.cz>, Takashi Iwai <tiwai@suse.com>, 
- Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>, 
- linux-sound@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
- Alexey Klimov <alexey.klimov@linaro.org>, 
- Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
-X-Mailer: b4 0.14.2
+References: <20251021-virtio_double_free-v1-1-4dd0cfd258f1@oss.qualcomm.com> <20251021085030-mutt-send-email-mst@kernel.org>
+In-Reply-To: <20251021085030-mutt-send-email-mst@kernel.org>
+From: Jason Wang <jasowang@redhat.com>
+Date: Wed, 22 Oct 2025 12:19:19 +0800
+X-Gm-Features: AS18NWCKmXJHmGDH1OnrtnkNAc2Gt2Hyx92v8bPZ5LqsjBJ7559XCA-Y6f0OWpQ
+Message-ID: <CACGkMEsU3+OWv=6mvQgP2iGL3Pe09=8PkTVA=2d9DPQ_SbTNSA@mail.gmail.com>
+Subject: Re: [PATCH] virtio_blk: NULL out vqs to avoid double free on failed resume
+To: "Michael S. Tsirkin" <mst@redhat.com>
+Cc: Cong Zhang <cong.zhang@oss.qualcomm.com>, Xuan Zhuo <xuanzhuo@linux.alibaba.com>, 
+	=?UTF-8?Q?Eugenio_P=C3=A9rez?= <eperezma@redhat.com>, 
+	Paolo Bonzini <pbonzini@redhat.com>, Stefan Hajnoczi <stefanha@redhat.com>, Jens Axboe <axboe@kernel.dk>, 
+	linux-arm-msm@vger.kernel.org, virtualization@lists.linux.dev, 
+	linux-block@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	pavan.kondeti@oss.qualcomm.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Add "qcom,qrb2210-sndcard" to the list of recognizable devices.
-Use "qcm2290" as name to let UCM to use it later. QRB2210 RB1
-and other QCM2290-based boards can use this sndcard compatible.
+On Tue, Oct 21, 2025 at 8:58=E2=80=AFPM Michael S. Tsirkin <mst@redhat.com>=
+ wrote:
+>
+> On Tue, Oct 21, 2025 at 07:07:56PM +0800, Cong Zhang wrote:
+> > The vblk->vqs releases during freeze. If resume fails before vblk->vqs
+> > is allocated, later freeze/remove may attempt to free vqs again.
+> > Set vblk->vqs to NULL after freeing to avoid double free.
+> >
+> > Signed-off-by: Cong Zhang <cong.zhang@oss.qualcomm.com>
+> > ---
+> > The patch fixes a double free issue that occurs in virtio_blk during
+> > freeze/resume.
+> > The issue is caused by:
+> > 1. During the first freeze, vblk->vqs is freed but pointer is not set t=
+o
+> >    NULL.
+> > 2. Virtio block device fails before vblk->vqs is allocated during resum=
+e.
+> > 3. During the next freeze, vblk->vqs gets freed again, causing the
+> >    double free crash.
+>
+> this part I don't get. if restore fails, how can freeze be called
+> again?
 
-Cc: Srinivas Kandagatla <srini@kernel.org>
-Reviewed-by: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
-Signed-off-by: Alexey Klimov <alexey.klimov@linaro.org>
----
- sound/soc/qcom/sm8250.c | 1 +
- 1 file changed, 1 insertion(+)
+For example, could it be triggered by the user?
 
-diff --git a/sound/soc/qcom/sm8250.c b/sound/soc/qcom/sm8250.c
-index f5b75a06e5bd20e00874f4cd29d1b947ee89d79f..bf71d9e4128873fd956750e71311a357d60099a8 100644
---- a/sound/soc/qcom/sm8250.c
-+++ b/sound/soc/qcom/sm8250.c
-@@ -210,6 +210,7 @@ static int sm8250_platform_probe(struct platform_device *pdev)
- static const struct of_device_id snd_sm8250_dt_match[] = {
- 	{ .compatible = "fairphone,fp4-sndcard", .data = "sm7225" },
- 	{ .compatible = "fairphone,fp5-sndcard", .data = "qcm6490" },
-+	{ .compatible = "qcom,qrb2210-sndcard", .data = "qcm2290" },
- 	{ .compatible = "qcom,qrb4210-rb2-sndcard", .data = "sm4250" },
- 	{ .compatible = "qcom,qrb5165-rb5-sndcard", .data = "sm8250" },
- 	{ .compatible = "qcom,sm8250-sndcard", .data = "sm8250" },
+Thanks
 
--- 
-2.47.3
+>
+> > ---
+> >  drivers/block/virtio_blk.c | 13 ++++++++++++-
+> >  1 file changed, 12 insertions(+), 1 deletion(-)
+> >
+> > diff --git a/drivers/block/virtio_blk.c b/drivers/block/virtio_blk.c
+> > index f061420dfb10c40b21765b173fab7046aa447506..746795066d7f56a01c9a9c0=
+344d24f9fa06841eb 100644
+> > --- a/drivers/block/virtio_blk.c
+> > +++ b/drivers/block/virtio_blk.c
+> > @@ -1026,8 +1026,13 @@ static int init_vq(struct virtio_blk *vblk)
+> >  out:
+> >       kfree(vqs);
+> >       kfree(vqs_info);
+> > -     if (err)
+> > +     if (err) {
+> >               kfree(vblk->vqs);
+> > +             /*
+> > +              * Set to NULL to prevent freeing vqs again during freezi=
+ng.
+> > +              */
+> > +             vblk->vqs =3D NULL;
+> > +     }
+> >       return err;
+> >  }
+> >
+>
+> > @@ -1598,6 +1603,12 @@ static int virtblk_freeze_priv(struct virtio_dev=
+ice *vdev)
+> >
+> >       vdev->config->del_vqs(vdev);
+> >       kfree(vblk->vqs);
+> > +     /*
+> > +      * Set to NULL to prevent freeing vqs again after a failed vqs
+> > +      * allocation during resume. Note that kfree() already handles NU=
+LL
+> > +      * pointers safely.
+> > +      */
+> > +     vblk->vqs =3D NULL;
+> >
+> >       return 0;
+> >  }
+> >
+> > ---
+> > base-commit: 8e2755d7779a95dd61d8997ebce33ff8b1efd3fb
+> > change-id: 20250926-virtio_double_free-7ab880d82a17
+> >
+> > Best regards,
+> > --
+> > Cong Zhang <cong.zhang@oss.qualcomm.com>
+>
 
 
