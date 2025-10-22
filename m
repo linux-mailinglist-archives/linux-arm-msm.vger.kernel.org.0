@@ -1,227 +1,157 @@
-Return-Path: <linux-arm-msm+bounces-78254-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-78255-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6FA2DBFA275
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Oct 2025 08:04:58 +0200 (CEST)
+Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [IPv6:2605:f480:58:1:0:1994:3:14])
+	by mail.lfdr.de (Postfix) with ESMTPS id 48C85BFA288
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Oct 2025 08:07:17 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 106CD1884B00
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Oct 2025 06:05:22 +0000 (UTC)
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 97DAB4F038B
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Oct 2025 06:07:10 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2DB032D94B0;
-	Wed, 22 Oct 2025 06:04:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id BFEC62EC0BF;
+	Wed, 22 Oct 2025 06:07:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="enQ4ENOz"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="GVHy7XnF"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f43.google.com (mail-wm1-f43.google.com [209.85.128.43])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6DCB15A86D;
-	Wed, 22 Oct 2025 06:04:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD00B2EC0A4
+	for <linux-arm-msm@vger.kernel.org>; Wed, 22 Oct 2025 06:07:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761113095; cv=none; b=cHS1hnqcJj4/L+5B5aQxTKlL7yVH5glnYBISSiXR0rCD+6PuU3KWcIG9u86CeArn5bQrC+TOa7RmHSYFVkquxkw2XchwWomk1R7UnoHTOh4MM0WlNWNOrqNDnHG7/JVCUNeK4Ez0Zdh7A0ZlVkzjerWP9mkRvmkspQEP5jlKTKE=
+	t=1761113228; cv=none; b=hTfeJ7mLQ0D+dQak1S94v61dH6qC7Y4FbdovrgSFBxFoTMt/qPULejghl6rcJwMP+KE5MKcI3+fzdvcRKRsojQVaOZIEZA++VfIjus3JlwaI/hUu08k2qWfRRYTQlAYZeStxroeC/p7jzFl5l3YkRRY69T84tXwZJyQtRO4MDTw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761113095; c=relaxed/simple;
-	bh=HL2GeUTTydpIWwe8FUj/+YBiyzEduRP7Fz8McSf997M=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=gTZOp4tyVOou5p+c5x6UqRhIBgdEkso9RXPfYKJDxNgtuXy4irZ14GSxhiddgDagbDd197+Wxc7YFcBLrQTeuxe/MopwH8Pfm+qz0Rqr2bSRmFK1Xz1Nt7j1v1YmGG0kDhfANgCZ7Y/fIvnbt6q5kR40drK6IqoxGjZ+KqA3MiM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=enQ4ENOz; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2F67C4CEE7;
-	Wed, 22 Oct 2025 06:04:50 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1761113094;
-	bh=HL2GeUTTydpIWwe8FUj/+YBiyzEduRP7Fz8McSf997M=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=enQ4ENOztE9ee8u006wz3GWIcSrCLKpFOFXbUM58SZL3VMaQDH86nNGOz3tZ2n4iN
-	 7hsUxeezW3eNTSXwZ+sd1++KkqofD02NqIu1yUr9aFVjRpKtdyHOeYP0UrwxCRr3mK
-	 jnvWCV41ZdOMLBgytGobrvY+dLtzJMk7slNf3aIIpxOFRcdDqigg9EvFu6FSsw0NtN
-	 gHOVhIi2Ur6GzY1BYBarIzZ91z8v9EGMQIgWzVP682fDfk+SIoLY4eUl9Swn8laCpo
-	 z98CKfHhK5s7A+9ZW91CJpyQEo5r24GLtxfQ5/92KCLGcDAZ/75xECWg63rNcqoHup
-	 MI98gY/FYZCsg==
-Message-ID: <6bcb2cad-91c6-46a7-9b67-82bd1755467a@kernel.org>
-Date: Wed, 22 Oct 2025 08:04:48 +0200
+	s=arc-20240116; t=1761113228; c=relaxed/simple;
+	bh=Wc+9aLfvtHVyed7cQcVOx9+S7rwdlkRIeIM/CGWU29w=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=TQ20BzPtlbm5vrNGeBMv7LNeRyz3k7GGjUIQ+kBXdvkjpdBd2YFelV/zCNHRETw4oTILHx/SLRk1bzs0QHETQsMu1m/X8P9N4WEG1PCYzktTEP9Anua2AnnI7wbJX9BWhxzrEkoJV9w41qErRAG28+0Of4CWg8inNYIkkiiKsNA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=GVHy7XnF; arc=none smtp.client-ip=209.85.128.43
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wm1-f43.google.com with SMTP id 5b1f17b1804b1-471191ac79dso54652645e9.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 21 Oct 2025 23:07:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1761113225; x=1761718025; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=D1ezpd/u211WU4FX5YLh5Rh1v3SfD1aW9qKd6XPe2Q0=;
+        b=GVHy7XnFwsYSba2MZonJ2Gzn2iJmRqeCVD6shwWqCChLkOHrd5JhKmfW/KYk0jJq4P
+         7Ioq6OWKgBK4gLUz7WXDGNGWOqff/fIDCJ3tE+xxiDlXPKh98QQLaWkDCcmdkN6hgIZm
+         +uWRUJQ8ifksF4VADHJ9t7lfG4ZsvOIevmtBKcLo1factVhPUfXrDt8NbRh33/kSGQ4E
+         WpNkkI8eDFTIRtVLHyx22Njb7QExaM0GRI5DHaEyDU3QrRGbDR4N4o/le+B04g2l1VJW
+         Gr3TjddUx3nKnaL1vgtaTahxaYAVxJ1LH3ue7zOjLxgsAYGmMwUovVjJPktBdxk1K/F9
+         gtJQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1761113225; x=1761718025;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=D1ezpd/u211WU4FX5YLh5Rh1v3SfD1aW9qKd6XPe2Q0=;
+        b=XdIwvazdxzibjs1HYCpATyazqHs9s1E5Rdva8R0xPYR/iYmhDQRVumEwrpTG2fW5oo
+         PB2GboCdLAXGN+Xca1Gae2WL8H6wcG4PBGtjd97XZiEfLMGzk6CCMvi0Jdii0Szlt2Y8
+         wYRsJsJzRO+6sVx7RtTjuyNhDAbULOrPpxKS5nNvItJ9JmKV5jwx6WR1TI3Wqo3fWkAK
+         5Kel34tGT6gHhcWgukTWGKpEdS113euXTJvf8NPjNNhkHO+FkNQA54+JZ4RO/Nxn38N3
+         lC3+kzy5SxU6/0XC2bLcpn2MlsdAk8NEGaeVUZ/x4yt3Ep757RmMybmUQauTz5juVYnP
+         MOeg==
+X-Forwarded-Encrypted: i=1; AJvYcCUv/Q2g3V8z8KbtxLC6CLoD54T6m+q1r8BPW8C5ytDy4ezdrNsh6EiUT+wHufmTUErYskeOhyRz5Qufn52n@vger.kernel.org
+X-Gm-Message-State: AOJu0YyJ2JxAIMrdm5R9C1/XqoukhzsiXQ6AGXwP1qSX1GND1oNfzSnu
+	IpyQxUP5BzmI6koVlOH0nGGqpjp5wftyMClwtQo9Xb7Y61wKdu7HTIOgShxUKpuWJ0Y=
+X-Gm-Gg: ASbGncvdXX/5mJMyCp67Vtytl/msj+9zwn2PQUwdltVAf0pYiXH/46VZUvlTtjfe8JY
+	XGb7pdXQqmXNiOb0J9stAxqnOYIyE/ltPaOzqi0kUiBBwhuLRj4eprdUi241BnRDayZ6vQxusFx
+	PH9nQt1NclxgGpLw49mmFTd14/+boPL9q0xuKrJnoAEThzwXwzQidKYbTsmpY1pdQwNYX0GEP3f
+	A+PSKqGKqKr/7rqeMpFD+angP2GZ37r9vTWDARIa0TtL4pmM+SugXg9V/+i2bZU5+EvVM6gjAcn
+	/L2SP5OhJO5HS0VLudF6M5UGjmTgwdqvFmkgKR14uJ1amACVkhcc5QChQPHbqr/2dlLFx6U3Op1
+	06rrKtG+rKQNgLXh7ait+SbPwEj7N/M25pKbOyXQT5hfm0IYEtBwjq6WZ7P0sKOfPupyGEsLZX5
+	awgW3jEGCBCBpBtlsy
+X-Google-Smtp-Source: AGHT+IHQlLLVtQZomqH0HG6Yx6ZDZd/udLMqmbW845DvtekPfRZWQRMJ3upIHekLHFXYi8rRCsrr5A==
+X-Received: by 2002:a05:600c:3b8d:b0:46e:35a0:3587 with SMTP id 5b1f17b1804b1-471179174cfmr140105965e9.27.1761113224875;
+        Tue, 21 Oct 2025 23:07:04 -0700 (PDT)
+Received: from orion.home ([2a02:c7c:7259:a00:11f4:2b3f:7c5a:5c10])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-427f009a75bsm23794067f8f.23.2025.10.21.23.07.04
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 21 Oct 2025 23:07:04 -0700 (PDT)
+From: Alexey Klimov <alexey.klimov@linaro.org>
+Subject: [PATCH v3 0/3] qrb2210-rb1: HDMI/I2S audio playback support
+Date: Wed, 22 Oct 2025 07:06:40 +0100
+Message-Id: <20251022-rb1_hdmi_audio-v3-0-0d38f777a547@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/8] media: dt-bindings: qcom-kaanapali-iris: Add
- kaanapali video codec binding
-To: Vikash Garodia <vikash.garodia@oss.qualcomm.com>,
- Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>,
- Abhinav Kumar <abhinav.kumar@linux.dev>, Bryan O'Donoghue <bod@kernel.org>,
- Mauro Carvalho Chehab <mchehab@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Philipp Zabel <p.zabel@pengutronix.de>,
- Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
- Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Cc: linux-arm-msm@vger.kernel.org, linux-media@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- Vishnu Reddy <quic_bvisredd@quicinc.com>
-References: <20251017-knp_video-v2-0-f568ce1a4be3@oss.qualcomm.com>
- <20251017-knp_video-v2-1-f568ce1a4be3@oss.qualcomm.com>
- <c9d8f76a-513f-4a09-bba4-cb8f0df1d2fe@kernel.org>
- <034bf6f4-0a49-4973-8536-28526b3409d1@oss.qualcomm.com>
- <d19b1279-3031-43b9-ac73-7e5f990802ed@kernel.org>
- <e1bfadd4-2d53-1953-beef-1350594c5010@oss.qualcomm.com>
-From: Krzysztof Kozlowski <krzk@kernel.org>
-Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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 a/A=
-In-Reply-To: <e1bfadd4-2d53-1953-beef-1350594c5010@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAHF0+GgC/3WPwWrDMBBEf8XoXBVpJdmNT/2PEsJKu4oFtRVLj
+ mkJ/vc6CZReenwDM7y5icolcRV9cxOF11RTnnYwL40IA05nlol2FqDAaaU6Wbw+DTSmE14pZan
+ Rm0AHE8OBxV66FI7p6zH4cXxy4fm67y7PUHisLEMex7T0TWTrjINAWrXIVnuHZKJSbRuAnSXvg
+ SJ1Svz16Ztfm7l4AK3kHEaAg5J1ooCFJKGzYB0im9ivIO4qQ6pLLt+Pq3t0d/nv1QpSyTfQvsV
+ OObbh/TNNWPJrLmdx3LbtBwpqbK44AQAA
+X-Change-ID: 20251007-rb1_hdmi_audio-1ab3cd93fc9e
+To: Bjorn Andersson <andersson@kernel.org>, Rob Herring <robh@kernel.org>, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, 
+ Srinivas Kandagatla <srini@kernel.org>
+Cc: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>, 
+ linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, linux-sound@vger.kernel.org, 
+ Alexey Klimov <alexey.klimov@linaro.org>, 
+ Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, 
+ Dmitry Baryshkov <lumag@kernel.org>
+X-Mailer: b4 0.14.2
 
-On 21/10/2025 23:07, Vikash Garodia wrote:
-> 
-> On 10/22/2025 12:45 AM, Krzysztof Kozlowski wrote:
->> On 21/10/2025 20:55, Vikash Garodia wrote:
->>>
->>> On 10/18/2025 9:28 PM, Krzysztof Kozlowski wrote:
->>>> On 17/10/2025 16:16, Vikash Garodia wrote:
->>>>> +  clock-names:
->>>>> +    items:
->>>>> +      - const: iface
->>>>> +      - const: core
->>>>> +      - const: vcodec0_core
->>>>> +      - const: iface1
->>>>> +      - const: core_freerun
->>>>> +      - const: vcodec0_core_freerun
->>>>> +      - const: vcodec_bse
->>>>> +      - const: vcodec_vpp0
->>>>> +      - const: vcodec_vpp1
->>>>> +      - const: vcodec_apv
->>>>> +
->>>>> +  dma-coherent: true
->>>>> +
->>>>> +  firmware-name:
->>>>> +    maxItems: 1
->>>>> +
->>>>> +  interconnects:
->>>>> +    maxItems: 2
->>>>> +
->>>>> +  interconnect-names:
->>>>> +    items:
->>>>> +      - const: cpu-cfg
->>>>> +      - const: video-mem
->>>>> +
->>>>> +  interrupts:
->>>>> +    maxItems: 1
->>>>> +
->>>>> +  iommus:
->>>>> +    minItems: 3
->>>>> +    maxItems: 8
->>>>
->>>> I don't understand why this is flexible. Make it fixed size and anyway -
->>>> list the items.
->>>
->>> kaanapali vpu generates 8 different stream-ids. Now, boards running kernel in
->>> EL2 mode can list all of them, while boards running in EL1 can have only non
->>> secure stream IDs. Min have the list of stream ids which can be enabled for all
->>> type of boards, while max is for boards which can list all in HLOS given kernel
->>> is in EL2 mode.
->>>
->>> Below crash would be seen if boards running kernel in EL1 mode lists the secure
->>> ones.
->>
->>
->> That has to be explained somewhere, e.g. comment, 
-> 
-> Sure, will add a description for iommus property explaining the same.
-> 
-> and still we need then
->> EL2 DTS in the kernel. I did not see such so far, but maybe I missed it
->> - can you link it?
->>
-> 
-> EL2 DTS for kaanapali is not yet posted to handle secure SIDs. While it is in
-> development, describing the secure stream-ids would ensure to cover all the
-> hardware generated IDs.
+This series adds a feature to playback/output audio via HDMI
+on the Qualcomm RB1 board. Since RB1 and RB2 are very similar
+to each and other and most likely use the same mainboard therefore
+this series is pretty much a rework of the similar patchset for RB2.
 
+Signed-off-by: Alexey Klimov <alexey.klimov@linaro.org>
+---
+Changes in v3:
+- corrected compatible for sound node for rb1;
+- sound node model name contains "Speaker" instead of "Speakers" now
+  to indicate that output is single channel (mono);
+- resorted pins by gpio indexes (as asked by Konrad), back to the initial
+  version;
+- dropped output-high from lpass pins description;
+- dropped patch ("dt-bindings: pinctrl: qcom,sm6115-lpass-lpi: add QCM2290 compatible")
+  applied by Linus;
+- Link to v2: https://lore.kernel.org/r/20251007-rb1_hdmi_audio-v2-0-821b6a705e4c@linaro.org
 
-Then maybe this binding should wait till we see entire picture of hardware.
+Changes in v2:
+- added tags;
+- patch that adds sndcard compatble is moved into separate series
+and also one new patch is added there;
+here: https://lore.kernel.org/linux-sound/20251007-qrb2210-qcm2290-sndcard-v1-0-8222141bca79@linaro.org/
+- resorted cpu,codec,platform subnodes of HDMI DAI link
+(as asked by Konrad);
+- apr => APR in "arm64: dts: qcom: qcm2290: add apr and its services"
+(as suggested by Dmitry);
+- resorted pins in LPASS TLMM node (as asked by Konrad);
 
-> 
->>>
->>> [    1.361157] pc : qcom_smmu_write_s2cr+0x64/0xa4
->>> [    1.361165] lr : arm_smmu_write_s2cr+0x2c/0xbc
->>> [    1.361168] sp : ffff80008005b8f0
->>> [    1.361169] x29: ffff80008005b8f0 x28: 0000000000000000 x27: ffffc7f252f45320
->>> ....
->>> [    1.361195] x2 : ffff800081200c48 x1 : 0000000000000048 x0 : ffff800081200000
->>> [    1.361198] Call trace:
->>> [    1.361199]  qcom_smmu_write_s2cr+0x64/0xa4 (P)
->>> [    1.361203]  arm_smmu_master_install_s2crs+0x7c/0xac
->>> [    1.361207]  arm_smmu_attach_dev+0xb0/0x1d4
->>>
->>> Could you please suggest on listing the iommu items ? I did not find the
->>> relevant references in other bindings where flexible iommus is being listed.
->>
->>
->> Just like every other list property - clocks, resets, power-domains.
->>
-> something like
-> 
-> iommu-names:
->   items:
->     - const: 0x1943
->     - const: 0x1940
-> ...
-> 
-> given that one of vpu sub hardware generates multiple SIDs, if we go with sub
-> hardware name in the list, the names would be repeated.
+Previous version:
+https://lore.kernel.org/linux-sound/20250302-rb1_hdmi_sound_first-v1-0-81a87ae1503c@linaro.org/
 
-No, we describe items, what are their meaning and purpose. In case of
-clock you say what sort of clock input is that. In case of here, you
-have IOMMUs for different purpose, you say which purpose is that.
+---
+Alexey Klimov (3):
+      arm64: dts: qcom: qcm2290: add APR and its services
+      arm64: dts: qcom: qcm2290: add LPASS LPI pin controller
+      arm64: dts: qcom: qrb2210-rb1: add HDMI/I2S audio playback support
 
+ arch/arm64/boot/dts/qcom/qcm2290.dtsi    | 110 +++++++++++++++++++++++++++++++
+ arch/arm64/boot/dts/qcom/qrb2210-rb1.dts |  55 ++++++++++++++++
+ 2 files changed, 165 insertions(+)
+---
+base-commit: fe45352cd106ae41b5ad3f0066c2e54dbb2dfd70
+change-id: 20251007-rb1_hdmi_audio-1ab3cd93fc9e
+prerequisite-change-id: 20251007-qrb2210-qcm2290-sndcard-da54245aae3f:v2
+prerequisite-patch-id: 56bfb709f3b52ca03a04df1090f3413764985be8
+prerequisite-patch-id: 986319766f2f9e41cc702af7f6ebbb764f5117da
 
 Best regards,
-Krzysztof
+-- 
+Alexey Klimov <alexey.klimov@linaro.org>
+
 
