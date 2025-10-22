@@ -1,179 +1,213 @@
-Return-Path: <linux-arm-msm+bounces-78381-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-78382-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [142.0.200.124])
-	by mail.lfdr.de (Postfix) with ESMTPS id 534DEBFD734
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Oct 2025 19:05:42 +0200 (CEST)
+Received: from ams.mirrors.kernel.org (ams.mirrors.kernel.org [213.196.21.55])
+	by mail.lfdr.de (Postfix) with ESMTPS id 99F0CBFD5C4
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Oct 2025 18:50:04 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 54AAF584C9A
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Oct 2025 16:49:34 +0000 (UTC)
+	by ams.mirrors.kernel.org (Postfix) with ESMTPS id 211D6358C2C
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Oct 2025 16:50:04 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8CE3A29BDBF;
-	Wed, 22 Oct 2025 16:46:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E1CBA2C031B;
+	Wed, 22 Oct 2025 16:47:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="PTZgqxQh"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="LZvTP+At"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f52.google.com (mail-wr1-f52.google.com [209.85.221.52])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 793D229BDB5
-	for <linux-arm-msm@vger.kernel.org>; Wed, 22 Oct 2025 16:46:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6014C1C4A24
+	for <linux-arm-msm@vger.kernel.org>; Wed, 22 Oct 2025 16:47:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761151609; cv=none; b=tOPHwoauURf9Uc7bPIR8k7ceQZ7sQG8VEKbFAOqxUlSTRwAVQNAXF4ejvssQ6O+v2R+mjoYzCUOvQhbX17awzV1rHynh8aFGyc4c6/qcqPMy0SMxqg1/2USp5/hG2fs7N8QIF4L3BGJFtpFIi9V71nF3VlawEPLq+wLDzzcWo3w=
+	t=1761151662; cv=none; b=LRg0TkeZVmIOACqwY6kPNNcTXFqO0ttmWmA/Jl+aH8n+RJn1Tkx8aMn/rq1MmLvN3Djyxi97uoZKQpwNmaYYZ2YQNsZRyeoFrCSz0+WCMP6bZFrtwkduWMBlCPJ9TiuRx/ggNw0EMkUqe0xXrZIl/8fDkEauPg6q/UpaKBwAcbk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761151609; c=relaxed/simple;
-	bh=kzK0X3PESTcd0Pn7d03B0oVRUrs6ifjmGrqa6trxFU4=;
-	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
-	 References:In-Reply-To; b=XOG8RyDgR+uSLYtxdaSC+5LKokoiOMQZi0Los2RX6GR/qrZbKiJjWKPEXaEPe35YcaNajBfDuy0N7kNxofoJjKnQsJN2xRhEyXd/svkoSuQvmaG2WszGEVsGWq0sd7V1ZBfjJIeB+yFDbDmr1+omTioq4KWTZ5SnbgT0S3vr2KQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=PTZgqxQh; arc=none smtp.client-ip=209.85.221.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wr1-f52.google.com with SMTP id ffacd0b85a97d-3ecdf2b1751so4317022f8f.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Oct 2025 09:46:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1761151606; x=1761756406; darn=vger.kernel.org;
-        h=in-reply-to:references:to:from:subject:cc:message-id:date
-         :content-transfer-encoding:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=hB/kxv3520VBWvRt90QZf897nQckO35BdxVzd7xmja0=;
-        b=PTZgqxQh0FAFLKNMK5gF/Sl/decW5TjYrWfZ+dOhQ3RDXp1tX7oQPY/9YAlUR4wBMO
-         emIb+1KUgcwNPxJQUvJewVkSts5oD+hjJA2SnXfREkVbzxosYgctYK/COSKK9mKOU3+i
-         PZlCkCtei1u6ylPJfv3z0e55lkKkWrjbxdj44D4Ec7vKHycEIXgF9qCtiGdhjDIRSvqE
-         /oijCbkj95mBAJOinAzS+QHMmpDcsJxHhgSQHxZv3jC8WMNdp8ITQikZFfffZbDQhvrI
-         eo9N6IkMNa6hCZbC2Lv49K0XJClTRfTe3V627rHQF4hlRwBhoHtgQdVXBufEOYBBCa2O
-         ZcWQ==
+	s=arc-20240116; t=1761151662; c=relaxed/simple;
+	bh=kftTvkgoB2+kmPdzHa1FhFtBi7MwxF0f8K4Ba50t7fc=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=KvYa9vbKd2LNzVWboz0xUomfXSQN4wMvBj4ztf50LROyLEctsCbUbYqcHwBIpgMaqV7FNNuu19/s5MaOsUe3WCS6WhhgtHWwZgPRMX+9q20MhROIHSWIP5Bwo0VzVY9JjkTj4DFVqz5BgUjlK/mNsuK793Zft4Hv0vH1rIuQyn4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=LZvTP+At; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 59MGSA8E003553
+	for <linux-arm-msm@vger.kernel.org>; Wed, 22 Oct 2025 16:47:40 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	J54evbYJoYZta2cuR3qWMTzZYbi8gteEdn4c6fa87tI=; b=LZvTP+AtfFxTO4X0
+	2c/n76IYrcju04gIhO+A1jF88CjV4v7u7Pq9oXLYXOu5VYY+0UD1flNyDiTFwjLd
+	+gYb2+cNUtkOCSbCrYNNNi6kSSdSLoO68a5iArJfwqww6a/OknOEqW6N+p2Ed3ea
+	xIrcALj0EsxTZG54dhRFOeuLGTHOALdsbxOLpJ/A73S+FNWc0rBL62A5pMIB6mAA
+	GejHjb3XKsfoIO2S7x7zeI9rVKH8yZPQD49dMfwfgW0m7MCMNdNJAE1WyRTir+Eb
+	9VPJzCzWU74jPwMmtSWk1Ja6/72UR8EPv5nxOCeN5PGfp0WzmoTdHD8olmNn3Xy0
+	VS/NEA==
+Received: from mail-qt1-f197.google.com (mail-qt1-f197.google.com [209.85.160.197])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 49xkpsb0gm-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Wed, 22 Oct 2025 16:47:40 +0000 (GMT)
+Received: by mail-qt1-f197.google.com with SMTP id d75a77b69052e-4e8aab76050so4949691cf.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Oct 2025 09:47:40 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1761151606; x=1761756406;
-        h=in-reply-to:references:to:from:subject:cc:message-id:date
-         :content-transfer-encoding:mime-version:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=hB/kxv3520VBWvRt90QZf897nQckO35BdxVzd7xmja0=;
-        b=Lwe4KH/9FHw1Z9GwEkztrg3ItYiOYxWZ9VoKWyTJO67ZVamPtphphcS04P56U+CkwT
-         RbLa6G9DYyLUtawJYgZuvlGEmnRWSONqFRoX5ql7OscfWayxr5aovdJ7w57e+P+zsUe9
-         OgYy6yv1GAwLCjaAjUQ9D4ofy/J9w8svjF02ZrOkjf8XAlDj6SEcMCni1pGU3W2K1+4S
-         AzHimXDFj0lBsO+lVWrDX4UQxCq422puf0z9wJIKB8rN1wa/x6zuPpOPrfrNTiFCD6YF
-         s4QDJk/VM25nPAIm7Q7Nb5KlAivsr13in86toCbOKdR82ddofCTqa94OtF3DCApoTid0
-         5O6A==
-X-Forwarded-Encrypted: i=1; AJvYcCV1agWZC5l21pDzU1H7BnCYdHsjw8tee0dlN6ZD+NGM3N94FcayGv6xTyejYrrhV8Sj74pgRWeFNRaSEsCV@vger.kernel.org
-X-Gm-Message-State: AOJu0Ywox11pD/HovY5ltHa/q4ZS2hUfGjmTJCCxr7TJd+pniuW2DGW9
-	jrOrXqLbjFzQHSU++vzAbtrkw4RB1ynq46kX4AaGPTO+dotb1qBwj/+QgBI23X6KwQQ=
-X-Gm-Gg: ASbGnctu0cIadeLR0rtUx2743oFiF3OH+QNQANvsDN9H02Uw2BjZfsTMnc+HcKlJmLQ
-	K5hegXMTsVQzyDQQ7+a8ErcvEFPycvh/lmsgOKztM1en+BRdW5hDSHEbfRG3t3MzQogCK054VIm
-	I8jW8bQm3zrOFEypPaOj/2xZmyyGCwWcouYAR2S5WdhWtJrojP0HPFHbA+QSb/VQ8Dxnlg3Bc0v
-	6GXG4nKcrVe4zmsI7Uq5wDaE/LYhrNEhPW2dcmPuZL0jbUrqvgJz6qrukp4x9/Hvz+6KiAyVQwY
-	ozEbzpvo2PvLBcXn7+A01knkjWr+Ro32Q7I27r1BmQaNBylX+p9kTkeSfAa/IVke9Yz/Wai36TA
-	4qCL3xFzzpsWAcgRI0lVy7YZCbtZxpdjoHDTNegyucdemBBPCF4wb4ZH3+NTwHzihuNradjLb6I
-	YijChEIe2Ktiynl2Y=
-X-Google-Smtp-Source: AGHT+IHC0nEVJ9kS8jNlN1CcS2Es7FqGZUD1CeVHVY8B/z53AT+D2UQg55S0hwzJKEC6PDUH79Dojg==
-X-Received: by 2002:a05:6000:26d1:b0:425:7cf6:5b9e with SMTP id ffacd0b85a97d-42704d146a5mr15287672f8f.3.1761151605615;
-        Wed, 22 Oct 2025 09:46:45 -0700 (PDT)
-Received: from localhost ([2a02:c7c:7259:a00:11f4:2b3f:7c5a:5c10])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-427f009a797sm26064120f8f.27.2025.10.22.09.46.44
+        d=1e100.net; s=20230601; t=1761151659; x=1761756459;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=J54evbYJoYZta2cuR3qWMTzZYbi8gteEdn4c6fa87tI=;
+        b=cCOiBYX9PUMwCj45xtgmai4vv6+CCOM2Xd2eHi/QAGcuGYu13Ah8q2xwgYtPsZOjrr
+         dVE9InbT6yYksEXnB2kfbIkf0X2BgfKN63VGi90r46DkGwe0PF287F89zjXUupW9bynM
+         h7nFlTdiHHxskCAObI3ar9Nyq5H2+KPa/DFUlkHWxPZkX/ScSVpJYiPqDLBRYFR5fsu+
+         +OXhhhqsoRgrQna/dapcPyWU/Zh4dvLV9hc2t4Ccwl9vunoB//Ik9hZ0b8jQqSJ55HYm
+         HqnPdFOjTkEoGn7gZZrmZ+BGO73MJy62Hf/iAP0xuIqsiZRl2Db8d7xQaRIEm+yNk6PU
+         JD8Q==
+X-Forwarded-Encrypted: i=1; AJvYcCX6q8x7t62qzk5Fh0AX5csssu3WEXYKN1gyjJohJBA0OH8FHatxo+7uDqCZaTQLmaB5Eb+8nSsQOBQb6HAz@vger.kernel.org
+X-Gm-Message-State: AOJu0YzW/ELNnQRqN4AKlKfR5jfFCjr9l/FWZ/tm/KQNjTOl28+xu08J
+	hi85C1SHSpRh2EeMCPd32Uyxk2kN39/NVtlN3A4ZosE/dVBNbPzqP5+r2TIjhiMg02DArqrYHvy
+	aYXZdgorOfJcvwB17oQFEjzUfRb27dIG70vmfM4UaAqAuaxfIdqOBEnLQAMdElx9osSIX
+X-Gm-Gg: ASbGncuRGt6Q8Wwtyg3T6scOo5QoDxMCVSexdvbospOUBoLbbCeOg4sdPr8Bo6x1INZ
+	4yfZmWFLfq3Ypdzv2CJs4QfX0HoM70oo8W5BzqkQnBew0t3DWiHO5O9j5Tvjr5vy1vbRF8HQv11
+	4v9U3ljKO0ieFZ+etimXk8tjAoM9VTvvi0KbwaeB8m7UCAEQ35y1Bc6hWaSers6nAdJAaOVhWDG
+	sCmopwTILLTqIwBNpPIBYvMgJ6dgRDjxnKDJe/NrnErq6JEWCHuL/LbjGltKMGxxEOWO4S13XW2
+	pYrCpD4b1NTiPkl/WnVCfHWqsM+BqfA65Ng9rzALyjbaspdIwYjf1e1rqwlj6F5qC4vgKHfC8Rb
+	CL5H/2BBw4wVRYMlKvHLacyM5nHjYslWHwTTXN9bG/r60fG45mBMkVsG4
+X-Received: by 2002:a05:622a:148b:b0:4b3:4590:ab6d with SMTP id d75a77b69052e-4ea11710be3mr65084281cf.7.1761151659178;
+        Wed, 22 Oct 2025 09:47:39 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEj8qiX+rxxJ2hj8wzB2Dj2Legx07HCdjLsPBTADHiywti4Ja2LxpeA8g0P+Na+7eOQovPAFg==
+X-Received: by 2002:a05:622a:148b:b0:4b3:4590:ab6d with SMTP id d75a77b69052e-4ea11710be3mr65084061cf.7.1761151658630;
+        Wed, 22 Oct 2025 09:47:38 -0700 (PDT)
+Received: from [192.168.119.202] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-b6d40790b88sm38876266b.25.2025.10.22.09.47.37
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 22 Oct 2025 09:46:45 -0700 (PDT)
+        Wed, 22 Oct 2025 09:47:38 -0700 (PDT)
+Message-ID: <dddbb37d-04a2-4f16-a9e8-cdad503c033c@oss.qualcomm.com>
+Date: Wed, 22 Oct 2025 18:47:36 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 1/2] arm64: dts: qcom: rubikpi3: Add qcs6490-rubikpi3
+ board dts
+To: Hongyang Zhao <hongyang.zhao@thundersoft.com>
+Cc: andersson@kernel.org, casey.connolly@linaro.org,
+        christopher.obbard@linaro.org, linux-arm-msm@vger.kernel.org,
+        loic.minier@oss.qualcomm.com, rosh@debian.org
+References: <27b309ab-e0b2-4f00-84d6-48fc1b027e40@oss.qualcomm.com>
+ <20251009103041.22568-1-hongyang.zhao@thundersoft.com>
+Content-Language: en-US
+From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+In-Reply-To: <20251009103041.22568-1-hongyang.zhao@thundersoft.com>
 Content-Type: text/plain; charset=UTF-8
-Date: Wed, 22 Oct 2025 17:46:44 +0100
-Message-Id: <DDP051W3LY8F.3FK5FJT1ABLTG@linaro.org>
-Cc: "Srinivas Kandagatla" <srini@kernel.org>, "Liam Girdwood"
- <lgirdwood@gmail.com>, "Mark Brown" <broonie@kernel.org>, "Rob Herring"
- <robh@kernel.org>, "Conor Dooley" <conor+dt@kernel.org>, "Jaroslav Kysela"
- <perex@perex.cz>, "Takashi Iwai" <tiwai@suse.com>,
- <linux-sound@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
- <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH 1/2] dt-bindings: sound: qcom,sm8250: add QRB2210 and
- RB1 soundcards
-From: "Alexey Klimov" <alexey.klimov@linaro.org>
-To: "Srinivas Kandagatla" <srinivas.kandagatla@oss.qualcomm.com>, "Dmitry
- Baryshkov" <dmitry.baryshkov@oss.qualcomm.com>, "Krzysztof Kozlowski"
- <krzk+dt@kernel.org>
-X-Mailer: aerc 0.20.0
-References: <20251007-qrb2210-qcm2290-sndcard-v1-0-8222141bca79@linaro.org>
- <20251007-qrb2210-qcm2290-sndcard-v1-1-8222141bca79@linaro.org>
- <b0d9cec5-1162-476b-8438-8239e1458927@oss.qualcomm.com>
- <CAO9ioeVcqT_Yhvz-RMCucLtcpa4xCLrA+srM8Vy_ZZ-650ZQnw@mail.gmail.com>
- <DDKF9YV37ETZ.3DXIDZA4ZU6I3@linaro.org>
- <695ff482-ad53-45fc-9ab0-ad69d8bc89d5@oss.qualcomm.com>
-In-Reply-To: <695ff482-ad53-45fc-9ab0-ad69d8bc89d5@oss.qualcomm.com>
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDIxMDE5MCBTYWx0ZWRfX99Gjh96R/mPA
+ rwwzt79OqFle/RRmHNj/thKfLCBh5aH+5hliIjrb3wVAriSOHLB9kfrWkPrQB4/UsLegleFWiLv
+ pHztlPVNNhumB4IsScphKaDTNUXC+sY3tA7ReHqPLqyAw8PEvH/KP4oV+/C19Ot55p3LnX7cEDs
+ qoU2Pk0wCbd0d7OLBcCBalgYXoN7g7f/6c2EtF3J8ErpyZKXJ6SKtMVW6YV5c8/m2AyWEQgLPOh
+ 3SqsUoYPSebIzHHOeBUiyfwJ537yhHKDS3BgVVom7EYqb6LbP/joMsWVAI7h/PHhZaLMLkW8ZWw
+ ikP/rm26NUDbWSkx/0P/BiCWz6xR56vbDt9pUaNyXd3RRLMVOnocFF+BHgxTUEqJvTmOcuzKtN0
+ j3+zbwlRmTwZijgcclduMFqMFA90Kg==
+X-Authority-Analysis: v=2.4 cv=FbM6BZ+6 c=1 sm=1 tr=0 ts=68f90aac cx=c_pps
+ a=EVbN6Ke/fEF3bsl7X48z0g==:117 a=FpWmc02/iXfjRdCD7H54yg==:17
+ a=IkcTkHD0fZMA:10 a=x6icFKpwvdMA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=Wdb1h0LgAAAA:8 a=xNf9USuDAAAA:8 a=KKAkSRfTAAAA:8 a=EUspDBNiAAAA:8
+ a=HdDCulNxiGjrx9QmGWMA:9 a=QEXdDO2ut3YA:10 a=a_PwQJl-kcHnX1M80qC6:22
+ a=j5gyrzqu0rbr1vhfHjzO:22 a=cvBusfyB2V15izCimMoJ:22
+X-Proofpoint-GUID: UXzwbBbux2KnXo_RP_Fbe3e7nET-Ale9
+X-Proofpoint-ORIG-GUID: UXzwbBbux2KnXo_RP_Fbe3e7nET-Ale9
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-10-22_07,2025-10-22_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ malwarescore=0 phishscore=0 bulkscore=0 lowpriorityscore=0 priorityscore=1501
+ suspectscore=0 spamscore=0 impostorscore=0 clxscore=1015 adultscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.19.0-2510020000 definitions=main-2510210190
 
-On Fri Oct 17, 2025 at 12:27 PM BST, Srinivas Kandagatla wrote:
-> On 10/17/25 8:35 AM, Alexey Klimov wrote:
->> On Thu Oct 16, 2025 at 8:46 PM BST, Dmitry Baryshkov wrote:
->>> On Thu, 16 Oct 2025 at 18:08, Srinivas Kandagatla
->>> <srinivas.kandagatla@oss.qualcomm.com> wrote:
->>>>
->>>>
->>>>
->>>> On 10/7/25 2:26 AM, Alexey Klimov wrote:
->>>>> Add soundcard compatible for QRB2210 (QCM2290) platforms.
->>>>> While at this, also add QRB2210 RB1 entry which is set to be
->>>>> compatible with QRB2210 soundcard.
->>>>>
->>>>> Cc: Srinivas Kandagatla <srini@kernel.org>
->>>>> Signed-off-by: Alexey Klimov <alexey.klimov@linaro.org>
->>>>> ---
->>>>>  Documentation/devicetree/bindings/sound/qcom,sm8250.yaml | 5 +++++
->>>>>  1 file changed, 5 insertions(+)
->>>>>
->>>>> diff --git a/Documentation/devicetree/bindings/sound/qcom,sm8250.yaml=
- b/Documentation/devicetree/bindings/sound/qcom,sm8250.yaml
->>>>> index 8ac91625dce5ccba5c5f31748c36296b12fac1a6..c29e59d0e8043fe2617b9=
-69be216525b493458c4 100644
->>>>> --- a/Documentation/devicetree/bindings/sound/qcom,sm8250.yaml
->>>>> +++ b/Documentation/devicetree/bindings/sound/qcom,sm8250.yaml
->>>>> @@ -21,6 +21,10 @@ properties:
->>>>>                - lenovo,yoga-c630-sndcard
->>>>>                - qcom,db845c-sndcard
->>>>>            - const: qcom,sdm845-sndcard
->>>>> +      - items:
->>>>> +          - enum:
->>>>> +              - qcom,qrb2210-rb1-sndcard
->>>> I don't think you need rb1 specific compatible here, unless there this
->>>> is totally different to what the base compatible can provide.
+On 10/9/25 12:30 PM, Hongyang Zhao wrote:
+>> On 9/30/25 6:32 AM, Hongyang Zhao wrote:
+>>> Add DTS for Thundercomm qcs6490-rubikpi3 board which uses
+>>> QCS6490 SoC.
 >>>
->>> Why do we need to deviate from other platforms which declare
->>> board-specific compat too?
->>=20
->> There seems to be now a few incompatible suggestions for rb1 sndcard:
->> - make it compatible/fallback to qcom,sm8250-sndcard (1);
->> - make it compatible/fallback to qcom,qrb4210-rb2-sndcard (2);
->> - add separate compatible/enum for rb1 sndcard as qcom,qrb2210-rb1-sndca=
-rd (3);
->> - add base compatible as qcom,qrb2210-sndcard and fallback
->> rb1 sndcard compatible to it.
->>=20
->> The latter one is ruled out because base compatible should be used and
->> it is not going to.
->>=20
->> As far as I can see the last addition went simply with (3).
->> Which one finally you all want?
->
-> Am fine with either "qcom,sm8250-sndcard" or "qcom,qrb4210-rb1-sndcard"
-> as long as we reflect that correct driver name in machine driver.
->
-> traditionally we have SoC level compatible which works fine for 99% of
-> the boards for that SoC, expectation was that if there is any deviation
-> or board specific changes required, this can be accommodate using model
-> information. am fine with board specific compatible too, however am not
-> okay with both "qcom,sm8250-sndcard" and "qcom,qrb4210-rb1-sndcard"  or
-> falling back to another board compatible for various reason one being ucm=
-.
->
-> So 1 and 2 re *NOK*
->
-> I hope this provides some clarity here.
+>>> Works:
+>>> - Wi-Fi (AP6256)
+>>> - Bluetooth (AP6256)
+>>> - Ethernet (AX88179B connected to UPD720201)
+>>> - USB Type-C
+>>> - USB Type-A 2.0 port
+>>> - Two USB Type-A 3.0 ports (UPD720201 connected to PCIe0)
+>>> - M.2 M-Key 2280 PCIe 3.0
+>>> - RTC
+>>> - 40PIN: I2C x1, UART x1
+>>>
+>>> Signed-off-by: Hongyang Zhao <hongyang.zhao@thundersoft.com>
+>>> Reviewed-by: Roger Shimizu <rosh@debian.org>
+>>> Cc: Casey Connolly <casey.connolly@linaro.org>
+>>> Cc: Christopher Obbard <christopher.obbard@linaro.org>
+>>> Cc: Loic Minier V1<loic.minier@oss.qualcomm.com>
 
-Yes. Thanks. I went with SoC-level compatible in the latest version.
+[...]
 
-Thanks,
-Alexey
+>>> +&thermal_zones {
+>>> +	cpu0-thermal {
+>>> +		trips {
+>>> +			cpu_tepid: cpu-tepid {
+>>> +				temperature = <65000>;
+>>> +				hysteresis = <5000>;
+>>> +				type = "active";
+>>> +			};
+>>
+>> these are not useful unless you wire up the fan here
+> 
+> I wrote a service program at the user levelthat listens for netlink messages
+> from here to control the fan.
+
+Creative!
+
+> Controlling the fan at the kernel level should be a better approach,
+> and I have verified this. I will make modifications similar to the following:
+> 
+> 	cpu0-thermal {
+> 		trips {
+> 			cpu_tepid: cpu-tepid {
+> 				temperature = <65000>;
+> 				hysteresis = <5000>;
+> 				type = "active";
+> 			};
+> 
+> 			cpu_warm: cpu-warm {
+> 				temperature = <80000>;
+> 				hysteresis = <5000>;
+> 				type = "active";
+> 			};
+> 
+> 			cpu_hot: cpu-hot {
+> 				temperature = <90000>;
+> 				hysteresis = <5000>;
+> 				type = "active";
+> 			};
+> 		};
+> 
+> 		cooling-maps {
+> 			map-cpu-tepid {
+> 				/* active: set fan to cooling level 1 */
+> 				cooling-device = <&fan0 1 1>;
+> 				trip = <&cpu_tepid>;
+> 			};
+> 
+> 			map-cpu-warm {
+> 				/* active: set fan to cooling level 2 */
+> 				cooling-device = <&fan0 2 2>;
+> 				trip = <&cpu_warm>;
+> 			};
+> 
+> 			map-cpu-hot {
+> 				/* active: set fan to cooling level 3 */
+
+You can drop these comments
+
+Konrad
 
