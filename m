@@ -1,79 +1,60 @@
-Return-Path: <linux-arm-msm+bounces-78412-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-78413-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [IPv6:2605:f480:58:1:0:1994:3:14])
-	by mail.lfdr.de (Postfix) with ESMTPS id 471A3BFE563
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Oct 2025 23:42:56 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id ADEE7BFE572
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Oct 2025 23:44:59 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id F07464F52DF
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Oct 2025 21:42:54 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 178153A2B26
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Oct 2025 21:44:58 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8B1B4303A1D;
-	Wed, 22 Oct 2025 21:42:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3CC40302166;
+	Wed, 22 Oct 2025 21:44:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=lunn.ch header.i=@lunn.ch header.b="2o0zIKaG"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="h3MjfMjD"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from vps0.lunn.ch (vps0.lunn.ch [156.67.10.101])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A6B930275C;
-	Wed, 22 Oct 2025 21:42:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=156.67.10.101
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A2AA2FF173;
+	Wed, 22 Oct 2025 21:44:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761169371; cv=none; b=GXfAm5tULy7ilnvEYEnVGDIIw72pvpzV5pUvRHeJSOxayoXXu2It7D5zL16gZwtjbS1Rsjp/Xg0+8fHNStuBFzxvS1sI3SMEKKAyvGk4a3lwmz92pnCx1E4gZw9gz8SJ31zWtwGKIwjJbQGYXWLzuh8fZIjM2kyYIbsOiEuX/iw=
+	t=1761169497; cv=none; b=oWlzhJGPwl8ZJaXfojZ4as9tlFTGQcAriVxzBresUYYfZ3aKXlv2yIwWkHYrIyqL7FQ5Newicdc8XO7N+4gfd2yVp+QibQOMcV2lbnVF6StCBu3SVn6AygCR6PockukxqQPhYLYlCZiUfaTGqSW1EUEjYnHciyskl5H3iocj0fg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761169371; c=relaxed/simple;
-	bh=cGR7lMWBKqDn3+3GH8ZZjkJeJeokkQWRL6FFJ9SDucM=;
+	s=arc-20240116; t=1761169497; c=relaxed/simple;
+	bh=HREzsZRZKfSF4vy9F0+jtVTIgRhnEycNHSGH0lTycnw=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=cKLGp7YOeWNbetPRJfSUFVz+M7qu36oLJKsXX1ckWtrBfIsuU2SUX2Np2bLAYqG0br2otnoxQOTMpPd6M4c/06UjS6M7hFz1ZaxZGhyvt47XfQkRilptmyEn1Fu77rfAWJ4RzJPqEVuFwO+tj90eUfTcZV5gL0Z41yXN+kxhFXE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lunn.ch; spf=pass smtp.mailfrom=lunn.ch; dkim=pass (1024-bit key) header.d=lunn.ch header.i=@lunn.ch header.b=2o0zIKaG; arc=none smtp.client-ip=156.67.10.101
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lunn.ch
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=lunn.ch
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=lunn.ch;
-	s=20171124; h=In-Reply-To:Content-Disposition:Content-Type:MIME-Version:
-	References:Message-ID:Subject:Cc:To:From:Date:From:Sender:Reply-To:Subject:
-	Date:Message-ID:To:Cc:MIME-Version:Content-Type:Content-Transfer-Encoding:
-	Content-ID:Content-Description:Content-Disposition:In-Reply-To:References;
-	bh=RoLMA7YAWuosvmrIBLI8Zurj/FpRrXqerMkVboDNB+Y=; b=2o0zIKaGyuU7jtl6xkuRA757+/
-	As1Ixp9TgpYCJDhpfUu1tGXwnnJp89Oxc92MQcKIqa1/B82750L/nqFG+MHAVGVbDX/ljYXwf4ptn
-	Mszwaf22Z0j5sZeu62hOivGPjEZMSXwueveV3YZbNwS/5syABoUZ7lmMIjcqFgBc2bLw=;
-Received: from andrew by vps0.lunn.ch with local (Exim 4.94.2)
-	(envelope-from <andrew@lunn.ch>)
-	id 1vBgbA-00Boc8-AG; Wed, 22 Oct 2025 23:42:24 +0200
-Date: Wed, 22 Oct 2025 23:42:24 +0200
-From: Andrew Lunn <andrew@lunn.ch>
-To: Maxime Chevallier <maxime.chevallier@bootlin.com>
-Cc: davem@davemloft.net, netdev@vger.kernel.org,
-	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-	thomas.petazzoni@bootlin.com, Jakub Kicinski <kuba@kernel.org>,
-	Eric Dumazet <edumazet@google.com>, Paolo Abeni <pabeni@redhat.com>,
-	Russell King <linux@armlinux.org.uk>,
-	linux-arm-kernel@lists.infradead.org,
-	Christophe Leroy <christophe.leroy@csgroup.eu>,
-	Herve Codina <herve.codina@bootlin.com>,
-	Florian Fainelli <f.fainelli@gmail.com>,
-	Heiner Kallweit <hkallweit1@gmail.com>,
-	Vladimir Oltean <vladimir.oltean@nxp.com>,
-	=?iso-8859-1?Q?K=F6ry?= Maincent <kory.maincent@bootlin.com>,
-	Marek =?iso-8859-1?Q?Beh=FAn?= <kabel@kernel.org>,
-	Oleksij Rempel <o.rempel@pengutronix.de>,
-	=?iso-8859-1?Q?Nicol=F2?= Veronese <nicveronese@gmail.com>,
-	Simon Horman <horms@kernel.org>, mwojtas@chromium.org,
-	Antoine Tenart <atenart@kernel.org>, devicetree@vger.kernel.org,
-	Conor Dooley <conor+dt@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Rob Herring <robh@kernel.org>,
-	Romain Gantois <romain.gantois@bootlin.com>,
-	Daniel Golle <daniel@makrotopia.org>,
-	Dimitri Fedrau <dimitri.fedrau@liebherr.com>,
-	Florian Fainelli <florian.fainelli@broadcom.com>
-Subject: Re: [PATCH net-next v14 03/16] net: ethtool: Introduce
- ETHTOOL_LINK_MEDIUM_* values
-Message-ID: <cb217bf8-763e-4c48-9233-e577b32b14a8@lunn.ch>
-References: <20251013143146.364919-1-maxime.chevallier@bootlin.com>
- <20251013143146.364919-4-maxime.chevallier@bootlin.com>
+	 Content-Type:Content-Disposition:In-Reply-To; b=IfJLadabqq3Q/npPvOqZtX9fzATPwL0EpVrXRsD5uR2q9V6LPxJiyQC6Xa13BCC3e5Ajt0iOT0+HOpVf0pJJDyEiVlUTHyzTrb7s7s0pMbxN8zJTcCJ30VT2vFZXYAOqGQMR+DvJ/WPgjmsrHDPiEjPVd0yY0iSGTZAbxo1to4o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=h3MjfMjD; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E226C4CEE7;
+	Wed, 22 Oct 2025 21:44:55 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1761169496;
+	bh=HREzsZRZKfSF4vy9F0+jtVTIgRhnEycNHSGH0lTycnw=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=h3MjfMjDd18n0WQuUJuMpX27MyH6u6ZvxQpJNS+oDNIgJnTiQoOntJMBnQ+B2DCoI
+	 e9K2LeHM0Txp7HEBrypo//LFSCUsut+4iDenT6gKtaIljLKiavXYk7aZbTLLPZz2wF
+	 wYTYzChOfE+nfmFD2Zurk9SazZKWIPPHlUmd/oVijr4j5+sTn3r1io6UpH+85XQg8R
+	 YzGffawrY4h2YLhPUrmvCT/9svwbJnxXFNnFsB9wCGp8V+34D7dKTElE0UTomO4Wrq
+	 TYCP0zHn16G4I7dSQJRGBxGVRTBvm9x9LrZJiSfP3umGCn3COTbpAH4ScEk81srnJ5
+	 gj+xlywN5Ay+w==
+Date: Wed, 22 Oct 2025 16:47:18 -0500
+From: Bjorn Andersson <andersson@kernel.org>
+To: Jingyi Wang <jingyi.wang@oss.qualcomm.com>
+Cc: Michael Turquette <mturquette@baylibre.com>, 
+	Stephen Boyd <sboyd@kernel.org>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Taniya Das <quic_tdas@quicinc.com>, Taniya Das <taniya.das@oss.qualcomm.com>, 
+	linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org, devicetree@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, aiqun.yu@oss.qualcomm.com, tingwei.zhang@oss.qualcomm.com, 
+	trilok.soni@oss.qualcomm.com, yijie.yang@oss.qualcomm.com
+Subject: Re: [PATCH 5/9] clk: qcom: Update TCSR clock driver for Kaanapali
+Message-ID: <3t2sc3ahfz4x2yjis6slcgvx6fzyr56sequzo5udyu5x3wjyc2@qa3ywq6cbdrl>
+References: <20250924-knp-clk-v1-0-29b02b818782@oss.qualcomm.com>
+ <20250924-knp-clk-v1-5-29b02b818782@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -82,78 +63,88 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20251013143146.364919-4-maxime.chevallier@bootlin.com>
+In-Reply-To: <20250924-knp-clk-v1-5-29b02b818782@oss.qualcomm.com>
 
-On Mon, Oct 13, 2025 at 04:31:29PM +0200, Maxime Chevallier wrote:
-> In an effort to have a better representation of Ethernet ports,
-> introduce enumeration values representing the various ethernet Mediums.
+On Wed, Sep 24, 2025 at 03:58:57PM -0700, Jingyi Wang wrote:
+> From: Taniya Das <taniya.das@oss.qualcomm.com>
 > 
-> This is part of the 802.3 naming convention, for example :
+> The TCSR clock controller found on Kaanapali provides refclks for PCIE, USB
+> and UFS. Update the SM8750 driver to fix the offsets for the clocks.
+
+"Update to fix the offsets" sounds like the current values are wrong,
+but that's just because the commit message is incomplete and doesn't
+mention that the 8750-driver is reused (and why it is reused).
+
+Regards,
+Bjorn
+
 > 
-> 1000 Base T 4
->  |    |   | |
->  |    |   | \_ lanes (4)
->  |    |   \___ Medium (T == Twisted Copper Pairs)
->  |    \_______ Baseband transmission
->  \____________ Speed
-
-Dumb question. Does 802.3 actually use the word lanes here?
-
-I'm looking at the commit which added lanes:
-
-commit 012ce4dd3102a0f4d80167de343e9d44b257c1b8
-
-    Add 'ETHTOOL_A_LINKMODES_LANES' attribute and expand 'struct
-    ethtool_link_settings' with lanes field in order to implement a new
-    lanes-selector that will enable the user to advertise a specific number
-    of lanes as well.
-
-    $ ethtool -s swp1 lanes 4
-    $ ethtool swp1
-      Settings for swp1:
-            Supported ports: [ FIBRE ]
-            Supported link modes:   1000baseKX/Full
-                                    10000baseKR/Full
-                                    40000baseCR4/Full
-                                    40000baseSR4/Full
-                                    40000baseLR4/Full
-                                    25000baseCR/Full
-                                    25000baseSR/Full
-                                    50000baseCR2/Full
-                                    100000baseSR4/Full
-                                    100000baseCR4/Full
-            Supported pause frame use: Symmetric Receive-only
-            Supports auto-negotiation: Yes
-            Supported FEC modes: Not reported
-            Advertised link modes:  40000baseCR4/Full
-                                    40000baseSR4/Full
-                                    40000baseLR4/Full
-                                    100000baseSR4/Full
-                                    100000baseCR4/Full
-
-
-For these link modes we are talking about 4 PCS outputs feeding an
-SFP module. The module when has one fibre pair, the media.
-
-For baseT4 what you call a lane is a twisted pair, the media.
-
-These two definitions seem to contradict each other.
-
-For SGMII, 1000BaseX, we have 1 PCS lane, feeding a PHY with 4 pairs.
-
-It gets more confusing at 10G, where the MAC might have 4 lanes
-feeding 4 pairs, or 1 lane feeding 4 pairs.
-
-Also, looking at the example above, if i have a MAC/PHY combination
-which can do 10/100/1G and i did:
-
-    $ ethtool -s swp1 lanes 2
-
-would it then only advertise 10 and 100, since 1G need four 'lanes'?
-
-Is reusing lanes going to cause us problems in the future, and maybe
-we should add a pairs member, to represent the media? And we can
-ignore bidi fibre modules for the moment :-)
-
-       Andrew
+> Signed-off-by: Taniya Das <taniya.das@oss.qualcomm.com>
+> Signed-off-by: Jingyi Wang <jingyi.wang@oss.qualcomm.com>
+> ---
+>  drivers/clk/qcom/tcsrcc-sm8750.c | 34 ++++++++++++++++++++++++++++++++--
+>  1 file changed, 32 insertions(+), 2 deletions(-)
+> 
+> diff --git a/drivers/clk/qcom/tcsrcc-sm8750.c b/drivers/clk/qcom/tcsrcc-sm8750.c
+> index 242e320986ef..f905f3824d7e 100644
+> --- a/drivers/clk/qcom/tcsrcc-sm8750.c
+> +++ b/drivers/clk/qcom/tcsrcc-sm8750.c
+> @@ -100,21 +100,51 @@ static const struct regmap_config tcsr_cc_sm8750_regmap_config = {
+>  	.fast_io = true,
+>  };
+>  
+> +static const struct regmap_config tcsr_cc_kaanapali_regmap_config = {
+> +	.reg_bits = 32,
+> +	.reg_stride = 4,
+> +	.val_bits = 32,
+> +	.max_register = 0x18,
+> +	.fast_io = true,
+> +};
+> +
+>  static const struct qcom_cc_desc tcsr_cc_sm8750_desc = {
+>  	.config = &tcsr_cc_sm8750_regmap_config,
+>  	.clks = tcsr_cc_sm8750_clocks,
+>  	.num_clks = ARRAY_SIZE(tcsr_cc_sm8750_clocks),
+>  };
+>  
+> +static const struct qcom_cc_desc tcsr_cc_kaanapali_desc = {
+> +	.config = &tcsr_cc_kaanapali_regmap_config,
+> +	.clks = tcsr_cc_sm8750_clocks,
+> +	.num_clks = ARRAY_SIZE(tcsr_cc_sm8750_clocks),
+> +};
+> +
+>  static const struct of_device_id tcsr_cc_sm8750_match_table[] = {
+> -	{ .compatible = "qcom,sm8750-tcsr" },
+> +	{ .compatible = "qcom,kaanapali-tcsr", .data = &tcsr_cc_kaanapali_desc},
+> +	{ .compatible = "qcom,sm8750-tcsr", .data = &tcsr_cc_sm8750_desc},
+>  	{ }
+>  };
+>  MODULE_DEVICE_TABLE(of, tcsr_cc_sm8750_match_table);
+>  
+>  static int tcsr_cc_sm8750_probe(struct platform_device *pdev)
+>  {
+> -	return qcom_cc_probe(pdev, &tcsr_cc_sm8750_desc);
+> +	const struct qcom_cc_desc *desc;
+> +
+> +	desc = device_get_match_data(&pdev->dev);
+> +
+> +	if (device_is_compatible(&pdev->dev, "qcom,kaanapali-tcsr")) {
+> +		tcsr_ufs_clkref_en.halt_reg = 0x10;
+> +		tcsr_ufs_clkref_en.clkr.enable_reg = 0x10;
+> +
+> +		tcsr_usb2_clkref_en.halt_reg = 0x18;
+> +		tcsr_usb2_clkref_en.clkr.enable_reg = 0x18;
+> +
+> +		tcsr_usb3_clkref_en.halt_reg = 0x8;
+> +		tcsr_usb3_clkref_en.clkr.enable_reg = 0x8;
+> +	}
+> +
+> +	return qcom_cc_probe(pdev, desc);
+>  }
+>  
+>  static struct platform_driver tcsr_cc_sm8750_driver = {
+> 
+> -- 
+> 2.25.1
+> 
 
