@@ -1,182 +1,131 @@
-Return-Path: <linux-arm-msm+bounces-78311-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-78312-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1FC2EBFB748
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Oct 2025 12:50:38 +0200 (CEST)
+Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [IPv6:2605:f480:58:1:0:1994:3:14])
+	by mail.lfdr.de (Postfix) with ESMTPS id D29F7BFB79D
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Oct 2025 12:53:49 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id C92B95631D3
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Oct 2025 10:50:36 +0000 (UTC)
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 60E47545636
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Oct 2025 10:52:30 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E4FA91ADFFB;
-	Wed, 22 Oct 2025 10:50:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A4DA5326D55;
+	Wed, 22 Oct 2025 10:51:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="fk1eGS7E"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="z3A5pfvH"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f47.google.com (mail-wm1-f47.google.com [209.85.128.47])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2EA26287257;
-	Wed, 22 Oct 2025 10:50:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C098350A0F
+	for <linux-arm-msm@vger.kernel.org>; Wed, 22 Oct 2025 10:51:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761130233; cv=none; b=T/haaJ8TJU/AfrKr7xFdFcN94z8SEc3Ca0yUIGQ5dYyXR2dHy4wzzrRbCNU52IQ73hEfPN1zdedy21jgwP7xAqJfiEmUBOF6gr7bJ9W+2g742UrAQHSiPb90GO2C6l5BI18zh3LfM/Ra7b0rH42ej/AmAQ2N2usQWek/4Nu99/o=
+	t=1761130318; cv=none; b=eUgnyLtD1x4xw2QJpYFY/ABQ0je347SajTwrUTM9z/a/mHncfNbOT5SmgyYHg3DxUwtvIV0kNRjBFdrdOllImhmbwc5CBhYvLjmJedBrZDlXsjIriGlJLU4ezBTreT0vIvVmsFuAHMvgS1x6xazG9MQM6zUQWuQIhQcEvBder6I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761130233; c=relaxed/simple;
-	bh=zTRtMT8A8AL7+WLa68QI5Ji2EVwRsB79K/8LeKNmxv0=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=q/yea0G3IZmQ4uvKjNVau/aVoPRG90PxL9KvAJZAOhJAtLAlAV4ZJ9ZEYCyQfCv3INICZ1gFO2i6EasXUn2blOV5YZgTQpDaKLIe94a4TmE4xSo/n5WHSNLdJZl1PaRNT7HLDRv7/6KHxicPDL7xSJDOqd96iOT+msstYVx054k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=fk1eGS7E; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 59MA5Zcx005410;
-	Wed, 22 Oct 2025 10:50:29 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	67R/Am/MLn/z0sUzSd2NMVnV6JzW8+wkS45v8jxjHJ4=; b=fk1eGS7EPfz4nzFu
-	uBqtscHDGrZqCRtrTikqIuUgZB981bwIjsgVRNCini8KpF0XPn0iYcOBz/qY2Y3m
-	ExcbHz7qI6QT7apsPXQp7AeLL4hGEv969R+8ygXZ+gt4wZt0d/XJ3/L4o9HXeIuD
-	35KbNYZ99ngHNz7xxqr08h3hmWz5M99jvC6LuB/gdWq0SVqZNuAU8DfGw+pJG4Uz
-	5b9ip6br0uN29XPMfd0JlSu8bhocd0vHXLuujoDtolQiVnZWIbfZJeoyT/+EAFxq
-	F+lKEVbeFHqg0fiq4W5evKiD5w5w9z+zJljnHYnfEaUNNyQ8vnZPxNjQI1VEBxrI
-	E64eXQ==
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 49v3nfm9y5-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 22 Oct 2025 10:50:29 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 59MAoSu9017419
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 22 Oct 2025 10:50:28 GMT
-Received: from [10.217.239.82] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1748.24; Wed, 22 Oct
- 2025 03:50:26 -0700
-Message-ID: <aaff2cf4-5811-4cb5-860e-b9704d152da5@quicinc.com>
-Date: Wed, 22 Oct 2025 16:20:11 +0530
+	s=arc-20240116; t=1761130318; c=relaxed/simple;
+	bh=0emIbIHta2KZrdaQPWJL6o23SZSpJgnhglkKqaRrkZo=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=gKlDcuj7UiT+RXs7gX6POfxA6I97SbKMSLg5kxOO++UqpjLxQ+j3jAxfVyJ7OCt//QN+HBMWpIars3wUSnHzokY9Q1ZsyAEmW0hW3fcJBNZYgxurDJ6GwRsnnYVoSsjqN4p7gNz9SSnIqRrtqWMDm18oZLqMPVR+4jLE6S8+V6g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=z3A5pfvH; arc=none smtp.client-ip=209.85.128.47
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wm1-f47.google.com with SMTP id 5b1f17b1804b1-47117f92e32so44801355e9.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Oct 2025 03:51:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1761130314; x=1761735114; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=wj0NZFWJVRGALI2+fvxHBDNu33Sev5bvshrkRXRWHmY=;
+        b=z3A5pfvHkk8n7wHYf6hZGe3uhD2CtjlY/40Zt9gH8422sKNt3c00rULicZ7Ay7QEXW
+         q+iQKrDqYlPbLnVEpk6cuW9idbQ4AoWC/f/r6BvtRgFpwpuIodK8+LXuDJ8Az6ukeCJO
+         U9z5AL8qT0ukpV+0GVkHtgkJkzvFfq3pX4kF1yd+8mo8KhAl3ruXfm241uKyEqMR1H6F
+         sNuv4JUhwOvyBGcmJhBi8Re77yMLsiCxOUoGJUPrveKm/aBNwJaeUIsJDyZvdtzfaEKK
+         dSm4sBG9HNn4ofHVlk6cmnX+woZTHuqgS6Z/w3mPsw0tQGX2eakfdIfe5o7sJ6xkpRiw
+         tMLg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1761130314; x=1761735114;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=wj0NZFWJVRGALI2+fvxHBDNu33Sev5bvshrkRXRWHmY=;
+        b=oAob9dLCSgHOwELFYxb4g3Pm89Fblg/wzh+UNXOKWoTnJC8MzDg07YznVQ17z0IVV0
+         q7pOHvDaQvMluJRK65LhlRqGyGwwSxQpZZ8+RQc8roVhpDytgK7m4dAtn5qEsXGE4+7L
+         G9jV9rnD0oPGNYpFVPEd2ApCecYCWcPJMNqpnU20+Rv9sfswvyl9+SDyBWYzk7KOZ/dX
+         GgjgRf36RBivOZEZsCcda0yciDouCYk5zD7HG6GnndBP1RYTEA+5JeptP/R8G6EpNTHZ
+         PP6OGjJh546x73dLMeO1Bf9YSUnGpNiz+IjhEXKEBCFsJGP1w18Ngb2ZkP+qo2g7nD2a
+         +CSQ==
+X-Forwarded-Encrypted: i=1; AJvYcCU1Ileft6vbv9gaOsw/fMZ5cy9Pay18lNFBDvNo5JZPHXkZbhDusmwh6ym+f0GC8SJXc0XDntZC/0dHs621@vger.kernel.org
+X-Gm-Message-State: AOJu0YxzUhVIoADcW/ws1SGOcKwUhx6+B1i/EfoPIZMO54pfus9HHaom
+	UpFBRC88MDAZ8WLEjLQCXSqW8CDEnZ8eo/WNeXZ9mWOP+8d552UmDWFqBlxkTI/NkTA=
+X-Gm-Gg: ASbGncslFfU2Wk+cPH1GI5P/AZPaTfYw2dLDkC5sfEJY712YA3TfJhgzIVvVBsJl6l9
+	T6//+8PaOrM8CJ3mJUo0eafDGpfwCnIHbxcvFJG9JJcbxz+VxuCMPgcEa9aXmA7wR1alFrGQ5Rm
+	/rRHW43Gd9lG1d1sxDp6OJkhv1y0hqssoWWrcUgzzyoEhnHsf5kbJyMBZY/Y6DlIxBSfLvWArcR
+	3ScxI2cu2zJaOnwaan8ftpJCzfLTCOKjHa/j/TwhPJy7WnzOZvTKCA4CrivVkoJADVea1rtqvQx
+	Yw6almuBfOfllAWxBiMC//JmhaccYF+CLPBVc+9STe2TFbpRFQMzEkOwctMGZ/btQcWOGA5hhg5
+	8O1fAP9tObu+Phvn/i225XTUMsa2hA8acNt80XAnvt0NnDdPjaZvoTHTD7xxw0yD8ubAuN5MK
+X-Google-Smtp-Source: AGHT+IFqoTQ2HPqFhE+xoTH5Tzl+i0vK7I5FUuawS0A8siSroPNadoWtujMORQ1HXcf2sw7QAqJLcA==
+X-Received: by 2002:a05:600c:548a:b0:46f:b42e:edce with SMTP id 5b1f17b1804b1-47117925db7mr136759365e9.39.1761130313599;
+        Wed, 22 Oct 2025 03:51:53 -0700 (PDT)
+Received: from linaro.org ([86.121.7.169])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-475c4342373sm43403635e9.12.2025.10.22.03.51.51
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 22 Oct 2025 03:51:52 -0700 (PDT)
+Date: Wed, 22 Oct 2025 13:51:50 +0300
+From: Abel Vesa <abel.vesa@linaro.org>
+To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc: Rob Clark <robin.clark@oss.qualcomm.com>, 
+	Dmitry Baryshkov <lumag@kernel.org>, Abhinav Kumar <abhinav.kumar@linux.dev>, 
+	Jessica Zhang <jessica.zhang@oss.qualcomm.com>, Sean Paul <sean@poorly.run>, 
+	Marijn Suijten <marijn.suijten@somainline.org>, Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, 
+	Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>, 
+	David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Neil Armstrong <neil.armstrong@linaro.org>, Kuogee Hsieh <quic_khsieh@quicinc.com>, 
+	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, 
+	linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org, 
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Subject: Re: [PATCH v2 0/7] drm/msm: Add display support for Glymur platform
+Message-ID: <d6ivp57mh77gxybjvvwpmqoc5fsy52yydtvs23bepwdxgkxhzj@ahryeick6yaw>
+References: <20251014-glymur-display-v2-0-ff935e2f88c5@linaro.org>
+ <20251020-astonishing-zebra-of-respect-1c2eca@kuoka>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/2] soc: qcom: smp2p: Add support for smp2p v2
-To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-        Jingyi Wang
-	<jingyi.wang@oss.qualcomm.com>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>
-CC: <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        Chris Lew
-	<chris.lew@oss.qualcomm.com>
-References: <20250923-smp2p-v1-0-2c045af73dac@oss.qualcomm.com>
- <20250923-smp2p-v1-2-2c045af73dac@oss.qualcomm.com>
- <bb25208e-a6a6-4a81-9dd5-5c5eb1cf16b4@oss.qualcomm.com>
- <ff382661-4d05-4f9a-8b9e-55fa9932a22a@quicinc.com>
- <15617371-0b20-4326-8e08-2c20b3d3c767@oss.qualcomm.com>
-Content-Language: en-US
-From: Deepak Kumar Singh <quic_deesin@quicinc.com>
-In-Reply-To: <15617371-0b20-4326-8e08-2c20b3d3c767@oss.qualcomm.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: aFTsgYUjhJD5zzF4ia16fOwOod9tsRhe
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDE4MDAyNyBTYWx0ZWRfX8TG1Lm/E2+Nd
- yKVZ9wSMzFbQa3C14nMa/pbg9iwKdBvMlzSreyiQFEz2R/5oZahWVikOUp3hHEpci8HX6YA6G5d
- xwXnJLr9zPogMZaTVnftH3aDijjQW0xhnWrkd6Ry9gxgItxp03r0RuwjD8la1kCtnOZuMczqsrw
- 1DLtjUznSPlRh9Ian2f6iVhqmnMC4W+sz6Sc58m/HRZ5kLr5wOmljLwO3p3E+DYjlqz4RF+aw5q
- Q1ATQpf8/cAq0eBlHzck+UNmlJ1sHTJ6Po4shhm61FcgGvhq53yFZb1FkT2EkrFF3MN47JOY2r0
- DDJAAw7axcxOaWniJ9rUvIqdVruTu9e2U69pJ4UX6hcdOx7ZxpwxJ+0aj8uSTEi62xDtXUVUFL3
- 9Q7JIzn/Bu3miI2PZpklXeO8v0Q1Jg==
-X-Proofpoint-GUID: aFTsgYUjhJD5zzF4ia16fOwOod9tsRhe
-X-Authority-Analysis: v=2.4 cv=EYjFgfmC c=1 sm=1 tr=0 ts=68f8b6f5 cx=c_pps
- a=ouPCqIW2jiPt+lZRy3xVPw==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
- a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=x6icFKpwvdMA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=EUspDBNiAAAA:8 a=vr2n7OayV0E5LLaSdscA:9
- a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-10-22_04,2025-10-13_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- bulkscore=0 clxscore=1015 spamscore=0 malwarescore=0 lowpriorityscore=0
- priorityscore=1501 impostorscore=0 phishscore=0 adultscore=0 suspectscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2510020000 definitions=main-2510180027
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20251020-astonishing-zebra-of-respect-1c2eca@kuoka>
 
+On 25-10-20 12:40:24, Krzysztof Kozlowski wrote:
+> On Tue, Oct 14, 2025 at 03:38:25PM +0300, Abel Vesa wrote:
+> > The Glymur MDSS is based on the one found in SM8750, with 2 minor number
+> > version bump. Differences are mostly in the DPU IP blocks numbers.
+> > 
+> > Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+> > ---
+> > Changes in v2:
+> >  - Picked-up Krzysztof's and Dmitry's R-b tags.
+> >  - Fixed the bindings check reported by Rob.
+> >  - Fixed indentation reported by Krzysztof.
+> >  - Re-worded the commits to better explain the incompatibility
+> >    with previous platforms.
+> >  - Add the UBWC config patch, as suggested by Dmitry.
+> 
+> Where are lore links? b4 provides them automatically.
+> 
 
+This patchset was enrolled with b4 due to logistical reasons
+which lead to losing initial kernel tree.
 
-On 10/21/2025 3:09 PM, Konrad Dybcio wrote:
-> On 10/21/25 10:23 AM, Deepak Kumar Singh wrote:
->>
->>
->> On 9/24/2025 8:27 PM, Konrad Dybcio wrote:
->>> On 9/24/25 6:18 AM, Jingyi Wang wrote:
->>>> From: Chris Lew <chris.lew@oss.qualcomm.com>
->>>>
->>>> Some remoteproc need smp2p v2 support, mirror the version written by the
->>>> remote if the remote supports v2. This is needed if the remote does not
->>>> have backwards compatibility with v1. And reset entry last value on SSR for
->>>> smp2p v2.
->>>>
->>>> Signed-off-by: Chris Lew <chris.lew@oss.qualcomm.com>
->>>> Co-developed-by: Jingyi Wang <jingyi.wang@oss.qualcomm.com>
->>>> Signed-off-by: Jingyi Wang <jingyi.wang@oss.qualcomm.com>
->>>> ---
->>>
->>> [...]
->>>
->>>> +static int qcom_smp2p_in_version(struct qcom_smp2p *smp2p)
->>>> +{
->>>> +    unsigned int smem_id = smp2p->smem_items[SMP2P_INBOUND];
->>>> +    unsigned int pid = smp2p->remote_pid;
->>>> +    struct smp2p_smem_item *in;
->>>> +    size_t size;
->>>> +
->>>> +    in = qcom_smem_get(pid, smem_id, &size);
->>>> +    if (IS_ERR(in))
->>>> +        return 0;
->>>> +
->>>> +    return in->version;
->>>
->>> are in and out versions supposed to be out of sync in case of
->>> error?
->>>
->> I think that should be ok. If we return error smp2p connection will be completely broken. With default version 1 partial features can be supported even if remote is using version 2. Some features like smp2p connection after subsystem restart may be affected by this.>> +}
-> 
-> Perhaps a different question is in order.. do we ever expect smem_get to
-> fail under normal conditions?
-> 
-> [...]
-> 
-Good point, i think that should never happen for early boot processor 
-which will use version 2. That can possibly happen for processor that is 
-coming late than local host(version 1). In that case anyway we are 
-setting default version 1 and proceeding. >>>>        /*
->>>>         * Make sure the rest of the header is written before we validate the
->>>>         * item by writing a valid version number.
->>>>         */
->>>>        wmb();
->>>> -    out->version = 1;
->>>> +    out->version = (in_version) ? in_version : 1;
->>>
->>> = in_version ?: 1
->>>
->>> Konrad
->>>
->> We want to assign in_version when value is 1/2 and 1 if value is 0 i.e. error case.
-> 
-> That's what this syntax does, with less characters
-> 
-> Konrad
-Yes in_version ?:1 is short hand but i find (in_version) ? in_version : 
-1; more readable and obvious.
+I thought the b4 prep -e should be the one to use in this case,
+but now I realized that has a different purpose. My bad.
 
+Will make sure links are there in the next version.
+
+Thanks for reviewing.
 
