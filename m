@@ -1,349 +1,168 @@
-Return-Path: <linux-arm-msm+bounces-78390-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-78392-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ams.mirrors.kernel.org (ams.mirrors.kernel.org [IPv6:2a01:60a::1994:3:14])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7F6A0BFD7F4
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Oct 2025 19:13:26 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 84AF1BFD8CA
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Oct 2025 19:23:33 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ams.mirrors.kernel.org (Postfix) with ESMTPS id DC965343EA9
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Oct 2025 17:13:25 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id BBBFE3B3FAA
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Oct 2025 17:14:49 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5028D280033;
-	Wed, 22 Oct 2025 17:13:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1541D20ADD6;
+	Wed, 22 Oct 2025 17:14:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="JGqdO3M0"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="dcfC7PHn"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from PH8PR06CU001.outbound.protection.outlook.com (mail-westus3azon11012040.outbound.protection.outlook.com [40.107.209.40])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 211EA1B7F4;
-	Wed, 22 Oct 2025 17:13:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.209.40
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761153184; cv=fail; b=VH7GFtRsDqxE3PHD8M9XaawH/GX9UEGkf3pIFnishhwzSkfFOynacdHGN2XbDVPez9NFobWMBtf12HSJL7ZQhLMOLIQZPLDhGSRysWSWoX4PhZ6sMG53xlPxrbBQGUeuv4ak5PXZQX4JkJRIGg2xURQ2NTOiWluyMSrAM6CCSSk=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761153184; c=relaxed/simple;
-	bh=kSS36jdvOrEn13beLlrLZOEWyZLEgxGtxq9gxV7q0sc=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=Lscq/7Ij7da2+fLv7IPTlaClHaDnZsngZw0kD/loHUHxSbu/K7Mjb4wun5JB9b3nQMyHuye5FobFqkjBjWnkvy73Y1xtpo45xpxuFbt2IfI1T1x4fMyJqrtDXONzW2gb0qe5mRoCEchpdZysv/qDKXEzQ59Tqp+QdjbQ6O3K7cM=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=JGqdO3M0; arc=fail smtp.client-ip=40.107.209.40
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=V3zMGqz550wRfXU/+spEay/qOaRDXsr0pcxaL6L8awiAtSnYzSVLCceFpANSek7wWRFpC+Aw6oDRv7rn2nd/yzDkZCnFd+ogMIZqq+BPzy/Mvy37dXKAeUIa2uGASyi+G/yrN9jHs72CNaZkdkK3r6iLS0bEPCgqNFdEuI7vUA7HyfQTDP6Ie9cefFmWIZB4MSY8kzn0tkToasNeRUHxXaLKu2nLNsHAfixQ81gv5YGqDpMGJDcUsMsioLViEe6HKMW8u3ruqZPIyWH+inOgRwoFrW40pJ6SBfzxJ5gbLQrgX6hnS4yG4Bo1tuYbUz4pne/go03uCCnzJn/WmKeBGA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=ek+jCZxQhzbjsE1wMxRi29Ac88OEtu6I9QS178o8CxU=;
- b=NRYNEa61Bp6C2kXZn0ibudJLYdtUFyMyK+1Q2D4iUCKj7HRyHP0Zm0x4WYnE0AOb/l9VIV9DWj5rEiIveV5vXJ3ERIdmABtIai83KXjQ1+DOpPJ8t+DJvRzEHyryZeZXGDh/569F3dZajoex0X9V1fRUAWy/9bDTOYjcOZ+IkHD0EjntLBfEdiPRqcDpaKGEoBscAmyUcDHujEZpOjFyB7r+nvBD4d7OniYCXSWUc38G4uO9HyofpbrZZ37Ev63+eZIEJ/5YCCLFuC+cUx4iIXECIH3zQ0Gihosoag2szU5EeYfhomUA3VuN1wBhanhm2j56hlVy8h6lDDQzqAKotg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
- dkim=pass header.d=nvidia.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=ek+jCZxQhzbjsE1wMxRi29Ac88OEtu6I9QS178o8CxU=;
- b=JGqdO3M0IK9uluku+Xc87R9ltrBB5SULb0ftMGZvLocaGCubqBFvTmQll+dZLD0PZ6N9rOyr3GSTUCvGPKiaVzm6IDRvafhPVov9uFrSj/iByxnD58AVZWIo8LGUxnK2B3kEVxepSESZ3lmRrddNuEjyu/HOvbof+M0YDrlWeeCRPSAnj8sz/qQpfzuHd8BrvG/jLqDxFjRferIJ2h7IyZPj8QKnmVdgCqVTowq008JR9/R6VFr9nN5OTV85Azi5O//ysK1dn1KUnSuflpu3jRNek02rJilMaxfw5cTyQ43B9qFM1gcz7MI0Qf0k84R7Wt8li/opmKs17XgLXg8IwA==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=nvidia.com;
-Received: from MN2PR12MB3613.namprd12.prod.outlook.com (2603:10b6:208:c1::17)
- by MN2PR12MB4125.namprd12.prod.outlook.com (2603:10b6:208:1d9::9) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9253.13; Wed, 22 Oct
- 2025 17:12:54 +0000
-Received: from MN2PR12MB3613.namprd12.prod.outlook.com
- ([fe80::1b3b:64f5:9211:608b]) by MN2PR12MB3613.namprd12.prod.outlook.com
- ([fe80::1b3b:64f5:9211:608b%4]) with mapi id 15.20.9253.011; Wed, 22 Oct 2025
- 17:12:54 +0000
-From: Jason Gunthorpe <jgg@nvidia.com>
-To: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	Christian Benvenuti <benve@cisco.com>,
-	Heiko Stuebner <heiko@sntech.de>,
-	iommu@lists.linux.dev,
-	Jernej Skrabec <jernej.skrabec@gmail.com>,
-	Joerg Roedel <joro@8bytes.org>,
-	Leon Romanovsky <leon@kernel.org>,
-	linux-arm-kernel@lists.infradead.org,
-	linux-arm-msm@vger.kernel.org,
-	linux-mediatek@lists.infradead.org,
-	linux-rdma@vger.kernel.org,
-	linux-rockchip@lists.infradead.org,
-	linux-sunxi@lists.linux.dev,
-	Matthias Brugger <matthias.bgg@gmail.com>,
-	Nelson Escobar <neescoba@cisco.com>,
-	Rob Clark <robin.clark@oss.qualcomm.com>,
-	Robin Murphy <robin.murphy@arm.com>,
-	Samuel Holland <samuel@sholland.org>,
-	Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>,
-	Chen-Yu Tsai <wens@csie.org>,
-	Will Deacon <will@kernel.org>,
-	Yong Wu <yong.wu@mediatek.com>
-Cc: patches@lists.linux.dev
-Subject: [PATCH 3/3] iommu: Allow drivers to say if they use report_iommu_fault()
-Date: Wed, 22 Oct 2025 14:12:52 -0300
-Message-ID: <3-v1-391058a85f30+14b-iommu_set_fault_jgg@nvidia.com>
-In-Reply-To: <0-v1-391058a85f30+14b-iommu_set_fault_jgg@nvidia.com>
-References:
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: MN2PR15CA0043.namprd15.prod.outlook.com
- (2603:10b6:208:237::12) To MN2PR12MB3613.namprd12.prod.outlook.com
- (2603:10b6:208:c1::17)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63A9227A123
+	for <linux-arm-msm@vger.kernel.org>; Wed, 22 Oct 2025 17:14:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1761153279; cv=none; b=mTzi1GgAVYLKQLv8udq0hRFnuQxaOnibAJ0o3LpNGYsFdMjQnRdy4kPizGKtnN4A9DNi4z/k7HVSX7i3Z+X/+urm7lMCW4/idnwsUVlgSukzXXZn3Mlj3BcTo103g2PEusjdFsi47ifklKxqlXg8yb8YbJmv5kk6/spa7zhUAWQ=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1761153279; c=relaxed/simple;
+	bh=W0hYyw+FFxFPIcjLI6cLC2huES89KHfpD4J6D4BemPI=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=ZDp0VYwnagIS+3q5U4QTwIklIm1UbObP0MC2MX3xTpDJ+FzQGH4jIOhxKdtVWIWgg/IeIDEGIGy+EamY2UtSxeeUUfhwJbVQT08k7IXYINGd+F0nvnAY75bbtS4cz0gYdSSEyZdDXEnOToDURyOAsPLDzZU7ro5WwcXc44UNBIs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=dcfC7PHn; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 59MBW0qF027617
+	for <linux-arm-msm@vger.kernel.org>; Wed, 22 Oct 2025 17:14:36 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	3n7GuKanrjFBNn+S6EEEj55UDKDMqVUCfv5KZTHI70M=; b=dcfC7PHnQ57SVoYy
+	5d1E8fYZT5HTzt8RzOBJJnKF8vDcrQ7Az7FqhBpcmiN9++w6o6jpWN202ZEPKQvX
+	px/aEbaUC2xuV+9jl25QCCp1xq3+/xN1GxA5TkiUwsYtjadptpbvu09aLxJai31Q
+	ZQJK0ijKHwRvgtrfPByQvk1ypRK/nGw7/OgUKU8Hv24IdZiRO8HCfUdG+96tgS1w
+	1YGptPzr5X/OWZz7iejg0kiLzIJky5sx2KV5XC1iEPybkjJhJn6Nq5iy0z2Z7X8x
+	3wHfMo7DU6VicCs8kndTmKr9Daanju4X+P20sD47KoszzHnP3wTKDP6tOaT/7R43
+	KwJ+gA==
+Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com [209.85.160.198])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 49v27j5dfe-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Wed, 22 Oct 2025 17:14:36 +0000 (GMT)
+Received: by mail-qt1-f198.google.com with SMTP id d75a77b69052e-4e89d7946a1so4141931cf.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Oct 2025 10:14:36 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1761153275; x=1761758075;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=3n7GuKanrjFBNn+S6EEEj55UDKDMqVUCfv5KZTHI70M=;
+        b=k9PPEbxg4dQoR2fG8xeHzf253CIqY9tIMAktFbu72baim2iFDzO/ZkmsREhmj6YUtT
+         s9qxyQfwO8sf1eqSBhdKVbvShu4m8hgthnu0NULKjsTPgzU9dz+YybaWCORQCBtUWJUX
+         xyV172EoZ1nxm03rlZG9HuyXDnpQp7U1c5lvMus4m+9UI0wd7Eh6TEg/ACOgegD2wvs4
+         xqV9UTXAWF9CfJULoD5axs3Kpu+bZasAB9I2Qt46IWjCjENinok15KlpvmCPSZjnie5F
+         JsqSxYR8wnyleqP5h1kRIfQFC7l9C/rCO1HDhcz+iWI2sVoFwGV0AeMgvxzVbeLv69yW
+         jsDA==
+X-Gm-Message-State: AOJu0Yy2Ea3FhhgGsOAwCye6UFO6ZlXJlRWeEHgPQa8QV30A7SNQGoeZ
+	jukq8TgnZJ5LomclirAPHful1VN8NXQvJqQJ970PV5+UPOeZaWrNIe9Ce1ME3G9M+2pY812OzWB
+	SwNo3O9HEJ7/mKGqdeGyYT1WYkp0sHqRG3EEmVIEQb2QCaNonCqMhQSdVqySDxBJZFJle
+X-Gm-Gg: ASbGncvfD+/w4xAByNUNKC8E7KqEGH/s/9mkWOAvpOPpPThWu8c+Xa+ghjA0ClJ5Kpa
+	3uzNnHy+yHTD+jmm2isvaHpnZwVnZcX95/8mIR9pWUqkqjerI5c3KbgIoRu3fGDxX/lK28iAtdd
+	wIL2MVFywaIg100fvaUfR1sVj4qTK/Rxph9xNRRcjmotmPylkS8r1rhptzKatUCb/RPEd8NWro5
+	uu/RbGrAhtcs9qRiAknjJb0Ncc0M4zkBseTW1WSxz38bAYJDUihxyFWC5FM+4ZH686jZK4LXptr
+	RQ+1MtBSTqQVnG3ICsD30cZTTsUJevr03pdBtuLUrvBV6Seo89aZYUiQ2U2qOxLDvuW0kWeV0hP
+	oq4L/G9vMeRlA6lj0mRW/F7VyMbXV4VrJfUsbN4i1mce/HBi/P23uNB/R
+X-Received: by 2002:a05:622a:1492:b0:4b7:94af:2998 with SMTP id d75a77b69052e-4e89d2cb636mr181110551cf.6.1761153275271;
+        Wed, 22 Oct 2025 10:14:35 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IElUs2ccLws+09dJCicur/nb+FwFaszJn1D/TePDNT/7C+eYSqLSDOVvQDTj/XCFdnCKCnLTw==
+X-Received: by 2002:a05:622a:1492:b0:4b7:94af:2998 with SMTP id d75a77b69052e-4e89d2cb636mr181110211cf.6.1761153274818;
+        Wed, 22 Oct 2025 10:14:34 -0700 (PDT)
+Received: from [192.168.119.202] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-b65eb0365e1sm1394344166b.48.2025.10.22.10.14.33
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 22 Oct 2025 10:14:34 -0700 (PDT)
+Message-ID: <280f1e92-36a1-450b-b6df-b36c3aed3c1c@oss.qualcomm.com>
+Date: Wed, 22 Oct 2025 19:14:32 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: MN2PR12MB3613:EE_|MN2PR12MB4125:EE_
-X-MS-Office365-Filtering-Correlation-Id: 4a5b4650-f624-4841-4bbc-08de118e3cb1
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|366016|7416014|1800799024|376014|921020;
-X-Microsoft-Antispam-Message-Info:
-	=?us-ascii?Q?l5aGC1tQ1I8vxTrRJDH/bbqcvfmDgZiVjRq/jnPAEZ+/57mfpD+8Ww1brHnN?=
- =?us-ascii?Q?3/RKm8bvpR4ktYuwoMqhK4C5a/sf0aKgWrU4zRYx2UCorJfyrhQGEPYVl0OT?=
- =?us-ascii?Q?/qMqMf6ZW1qyPjoPWN2jTqcP6mROsmFabOnfyVsb7/wJlfHDkOMnT/L2c81k?=
- =?us-ascii?Q?qPQNamM5io8+fhzS1WwgG2G1idEWiJTk7tD4P/ua/SiOdHO9PBQo9VnGzS9T?=
- =?us-ascii?Q?uWHIfZ2nsb5X3BXjo/HTyKzk+epqEnTjNDomV1y4/K4V0CQMIgdAWmugZNyF?=
- =?us-ascii?Q?mAWt/VMa5HvOEjCgMyhkMSuIooorguNXNQQK+g5O1GE9l3M5kj9IPavFn18n?=
- =?us-ascii?Q?6v3u9Yw6pdp7rnGj25DgKPeSk7aearC3Ai7FpgTJv0rkLYAO/v4G85mNel+U?=
- =?us-ascii?Q?qTbHfbi3GahinDmwWtcWsRroN8Zkv8W/mm/3QJry0DqTXvVvtljOa4vfhW5H?=
- =?us-ascii?Q?7iLBORA+8SZKLWGH93grCThfDMeVZqj0OHSy2jRxA3JPsJlnC25Ui2DZnCFc?=
- =?us-ascii?Q?GZXmXiGv00+u2hR8mOj+BP7QFTYfOrZGVcitGFdYUydEfOML2mKPST90seVM?=
- =?us-ascii?Q?Fs+nKgrTRLaDHdcPe8awEtnpQz/bDlRREK66NHb60NF2EU4YNvknuRRTFdZ2?=
- =?us-ascii?Q?Moi8GYh6a3mpAtR7iTvlYiMyDRgb8qsqNPkvpCv/4xvnGzIeltoUM0ONQbgo?=
- =?us-ascii?Q?t+9lO1UbIb2KjcN0h9u0Zk/w0l1aUhCDFWdT7TMfaQFfpA54CIwT73RHy6NE?=
- =?us-ascii?Q?6mc9vHu2CieA+fRzOocNNUW4mu7DzwOcHAjvH6Gy6H+TGxrChGeHAXSXoiox?=
- =?us-ascii?Q?rRdsSpl/EYj+NSaStc2FvkNfY/y116nbfOHhnxAnjXc5vx1zqVO2T+Efo0Fj?=
- =?us-ascii?Q?AsCJIJf1Cu9MBzFhGanD9DMf5wkTBmnCaKB5jkNQ/hRF1h+nwHD5elUk/va6?=
- =?us-ascii?Q?U5I7ZEOMwvT7uHIqJz8rCp2d6HjK4AjAK6gpFO83RGXw1lHwkkvrI9k+QPXe?=
- =?us-ascii?Q?SsAwfefUOmyUCocIeIESUw/YQLdgEgT4Dqv1kNhY5iKHKdgJeugTydPewzpO?=
- =?us-ascii?Q?N8dFvJG8oaPL0eqYF+h6aa/9vWeb9EQw8q2TNo7fwq3rDGojTx/i2vvQJk9l?=
- =?us-ascii?Q?1MJMR7i+ksgtZBC6ragxQ4FK1ENH99LcfMq56iX4fTPyPtHYho4pVXL8RUIZ?=
- =?us-ascii?Q?t9o2qI75RJD+zM2TSXqb+uJ0lAHTe8Zr1Vy8cc2ArecupD8P1zvKJ7Hwus9W?=
- =?us-ascii?Q?PVKf2aGSDHzZwKGHXN6ZagBTX7ke3cozBuvzXZnWNYkIGMkTV0TvbI2BmCSV?=
- =?us-ascii?Q?RDp1r2PK3fypwi2cG2yKslHpPKLS+Jm7Ah6oeGzfoftU7Kw/14oA+DaqUC0G?=
- =?us-ascii?Q?Yaab1vlgzeTYfMtfi23Msq8Y64ZMkqRrnQuzV4mSxU/Gr0haYChX5d0zb+xl?=
- =?us-ascii?Q?MdTNqxnpW6H42WilhqFFXJviZq8MzIlYFnQQ3YrPtaHeSsoHozRMc4a7gFlU?=
- =?us-ascii?Q?kp4BymhVPBrU7nM=3D?=
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:MN2PR12MB3613.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(7416014)(1800799024)(376014)(921020);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?rxB/RsMU2wGc18RiCmU05pspys2Zzm34wCOR/VRbnYsj2vCzjWUZXFwpu06x?=
- =?us-ascii?Q?b3DojHi2WfIoEL6QTUZJ/Guho79xW33OTr83CgiNiXohpUn8PSnRKpzoWnsS?=
- =?us-ascii?Q?I8gFXejRDxoO5Foa/lHSe5tnW6bRePIePQ672DT5+HvQCRzmYlj5lGpk0zYI?=
- =?us-ascii?Q?bKp3TRFdSHiiu5AqdWYLY/W4SSqEDCHTsAmFWevazdHjbPSq1vnLACE5jv4C?=
- =?us-ascii?Q?LZgaAIX38cq8AP2mK91GRyZBb3njjMr2AN3InOvXcNoUI3TzsXUzlleVhDAC?=
- =?us-ascii?Q?EfBnoHetmDH3couo5nWXveeRYbYrx78F4eHRMK481n+a+LuvTDKPKRGHsd1v?=
- =?us-ascii?Q?+1Pf5jRXwU5Ysz5eS9GCuNEPeGhjn3BV7zY4xECgo7lNZjg9PX+sK7H/cENJ?=
- =?us-ascii?Q?wG2vdHM2VmD53erURX8RlOrXhYntbCPaiFAY4CS81DVWeczmlwjOmim1HLzC?=
- =?us-ascii?Q?NTdIfJLTbV6BnGjUNvwlQxgRNY3ZqXZbQypM/+3eYh9KTacR0FWr+1lGDagO?=
- =?us-ascii?Q?SOi8vlf9tknX3+y/TNUT/pUDq1NvJCqcGgfmBPh0Owym6FOX5Lg8kMT0Ze0f?=
- =?us-ascii?Q?ltsS1dMjyTmSVFoNpIpW6AkJh82BkCuI67wk6FDnj/1qZjT6Yoohi/Gnq/0h?=
- =?us-ascii?Q?6JevoCNNsPYb0BzyYJJpt8R1kzxmVmWJjACXaHq1nrSBx9XzMNBfcFCtZbzY?=
- =?us-ascii?Q?Lmoluw1BUZTIoxNJzDYszxU9Z6BjRMmeeXqT8Ia0SAlin9JRInBq+0YaCj3K?=
- =?us-ascii?Q?wIy4LNKfFYzzupebHjVhoBc7sGEc/An9/mCpjsi6MF0hyoFSLVRqJWJyJoDu?=
- =?us-ascii?Q?oDvrHnt0e49B8/V9bkSMRwZ6IVtxAaeCTeLXV6w2kJDIs//pf3N8XR1Pvfql?=
- =?us-ascii?Q?DW65tmiDHwrsNEide20KuAzwJLWs090KqVNdOaE/o3DwuGFryrfB/mGkbG/L?=
- =?us-ascii?Q?SoMWBCrl0JxN8C0Dkuv2CkVEvyJZS4jtjf3PeE13fGqyxCeH5I4fQMMOgKQM?=
- =?us-ascii?Q?1HKSeE4xatvmdC0sF8MveZocDDqbTaI9DQhujmipQG8KhTWNIk2fyQEGhFwo?=
- =?us-ascii?Q?N2Ouybknmky3Gm+oWRcmuuuCINUNme47yg3I0wKLtZQYf4xNLakv9LznlwHd?=
- =?us-ascii?Q?PC1hQY3GNc65v1ejsZ+SPcI47eeO1LcCj8LK1CUVtqjFSw6PuW5CO29UJJKv?=
- =?us-ascii?Q?lw6cjyWGTvzrcWR5LwusEiKt2oPgMS7blgsJBSVxlOLjw/ZRVtJ7b5Sm2KKo?=
- =?us-ascii?Q?OWQm5HqFYEdpjWonPRrn0d5IIugD5w3yQmwGThi+5vUSnlcwnn0W/jqihH6p?=
- =?us-ascii?Q?oC7pP5oN37+DqcfmlxDlfdjg4rBL/ObWNOhr0JDZYQXb747AzKjfuto6c6hf?=
- =?us-ascii?Q?nb1s1e7JxiDM0hdo2glESpBqd1RRRLcvk06/w8NQCRicdg8vaFy6INPl67BF?=
- =?us-ascii?Q?O0ArbJuuV4EFJjOnd+z0jl5GmO5CJICSKF6FTiOpnv5Zv5p5fbzosOHJZzXo?=
- =?us-ascii?Q?TrBs9nPcYUa3ZL+EPoTEefzbjTPcQ4sM2FqL9x7w4hJIpNvqPR0rSm4HPQZ2?=
- =?us-ascii?Q?O4TpbSdhtMunbG75IfU=3D?=
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 4a5b4650-f624-4841-4bbc-08de118e3cb1
-X-MS-Exchange-CrossTenant-AuthSource: MN2PR12MB3613.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 22 Oct 2025 17:12:53.7381
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: avopQOXnISs8RTvITcLiI6C5wGVKP/gJc97eTbTMEDo/pUCftk7ZQmEu0pZHDQ91
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: MN2PR12MB4125
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2] backlight: qcom-wled: fix unbalanced ovp irq enable
+To: foss@joelselvaraj.com, Lee Jones <lee@kernel.org>,
+        Daniel Thompson <danielt@kernel.org>,
+        Jingoo Han <jingoohan1@gmail.com>, Helge Deller <deller@gmx.de>
+Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        linux-fbdev@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20251021-qcom-wled-fix-unbalanced-ovp-irq-enable-v2-1-7ff115b4ffe7@joelselvaraj.com>
+Content-Language: en-US
+From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+In-Reply-To: <20251021-qcom-wled-fix-unbalanced-ovp-irq-enable-v2-1-7ff115b4ffe7@joelselvaraj.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDE4MDAxOCBTYWx0ZWRfX81SQVg8Ize2T
+ NwhfQG83rndHMXOZehPZ96sEnz36Ps+w4VK3uMx+sHJvBgaDHWUCuNrH/D0C/ihqbteZRwmx7KB
+ 5RsIk6eFuMIEu0wY4o5dyZbofRhxxPKpMRu2b3YRrEJaJVHtCCrJpjSwOT37cr+K+K96VhcjSw3
+ Xq7f5iopwTB4XnSY8SM8qyfuV92tI0rf7yEDt4hFeNC4/FoW153yhe7vUpL1DVIkeJ2kJD1vi7h
+ TmNPXHOLJ5Zib/+lGbZJTrPTzvqNpLL9Pr9Xia0cvuvYdi1U+jOr9JYyNDF46A8MwnMd+g0vpgh
+ UF1K+nknp/zU9I+doGF0Q9CPkL8S5r2O8g8XANNNYp2I8ctNRur8iPTA5Eu6djS8/OZHs0NJQ3C
+ yMJfrxEwHO2DblIhmi/kyr3L1rUqaA==
+X-Authority-Analysis: v=2.4 cv=G4UR0tk5 c=1 sm=1 tr=0 ts=68f910fc cx=c_pps
+ a=mPf7EqFMSY9/WdsSgAYMbA==:117 a=FpWmc02/iXfjRdCD7H54yg==:17
+ a=IkcTkHD0fZMA:10 a=x6icFKpwvdMA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=WFa1dZBpAAAA:8 a=pW9aVPEJbd2O5lHr0_EA:9 a=QEXdDO2ut3YA:10
+ a=dawVfQjAaf238kedN5IG:22 a=MZguhEFr_PtxzKXayD1K:22
+X-Proofpoint-GUID: qDKnNGW0dEpJNuZtEi4OmvOa7wXe9J2c
+X-Proofpoint-ORIG-GUID: qDKnNGW0dEpJNuZtEi4OmvOa7wXe9J2c
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-10-22_07,2025-10-22_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ impostorscore=0 lowpriorityscore=0 malwarescore=0 bulkscore=0
+ priorityscore=1501 spamscore=0 suspectscore=0 adultscore=0 clxscore=1015
+ phishscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2510020000
+ definitions=main-2510180018
 
-report_iommu_fault() is an older API that has been superseded by
-iommu_report_device_fault() which is capable to support PRI.
+On 10/21/25 8:53 PM, Joel Selvaraj via B4 Relay wrote:
+> From: Joel Selvaraj <foss@joelselvaraj.com>
+> 
+> In Xiaomi Poco F1 and at least few other devices, the qcom wled driver
+> triggers unbalanced ovp irq enable warning like the following during
+> boot up.
+> 
+> [    1.151677] ------------[ cut here ]------------
+> [    1.151680] Unbalanced enable for IRQ 176
+> [    1.151693] WARNING: CPU: 0 PID: 160 at kernel/irq/manage.c:774 __enable_irq+0x50/0x80
+> [    1.151710] Modules linked in:
+> [    1.151717] CPU: 0 PID: 160 Comm: kworker/0:11 Not tainted 5.17.0-sdm845 #4
+> [    1.151724] Hardware name: Xiaomi Pocophone F1 (DT)
+> [    1.151728] Workqueue: events wled_ovp_work
+> ...<snip>...
+> [    1.151833] Call trace:
+> [    1.151836]  __enable_irq+0x50/0x80
+> [    1.151841]  enable_irq+0x48/0xa0
+> [    1.151846]  wled_ovp_work+0x18/0x24
+> [    1.151850]  process_one_work+0x1d0/0x350
+> [    1.151858]  worker_thread+0x13c/0x460
+> [    1.151862]  kthread+0x110/0x114
+> [    1.151868]  ret_from_fork+0x10/0x20
+> [    1.151876] ---[ end trace 0000000000000000 ]---
+> 
+> Fix it by storing and checking the state of ovp irq before enabling and
+> disabling it.
+> 
+> Signed-off-by: Joel Selvaraj <foss@joelselvaraj.com>
+> ---
+> I was able to debug the issue a little further. This happens mainly because
+> devm_request_threaded_irq already enables the ovp irq during probe. Then ovp
+> work gets scheduled when update_status happens and in turn enables the irq again.
+> Tracking the status makes it easy to avoid the double irq enable. But I am
+> open to try a different approach if there is any suggestion.
 
-Only two external drivers consume this, drivers/remoteproc and
-drivers/gpu/drm/msm. Ideally they would move over to the new APIs, but for
-now protect against accidentally mix and matching the wrong components.
+Would reverting this change and adding (| IRQF_NO_AUTOEN) to that call
+fix it?
 
-The iommu drivers support either the old iommu_set_fault_handler() via the
-driver calling report_iommu_fault(), or they are newer server focused
-drivers that call iommu_report_device_fault().
-
-Include a flag in the domain_ops if it calls report_iommu_fault() and
-block iommu_set_fault_handler() on iommu's that can't support it.
-
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
----
- drivers/iommu/arm/arm-smmu/arm-smmu.c   | 1 +
- drivers/iommu/arm/arm-smmu/qcom_iommu.c | 1 +
- drivers/iommu/iommu.c                   | 6 +++++-
- drivers/iommu/ipmmu-vmsa.c              | 1 +
- drivers/iommu/mtk_iommu.c               | 1 +
- drivers/iommu/mtk_iommu_v1.c            | 1 +
- drivers/iommu/omap-iommu.c              | 1 +
- drivers/iommu/rockchip-iommu.c          | 1 +
- drivers/iommu/sun50i-iommu.c            | 1 +
- include/linux/iommu.h                   | 3 +++
- 10 files changed, 16 insertions(+), 1 deletion(-)
-
-diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu.c b/drivers/iommu/arm/arm-smmu/arm-smmu.c
-index 4ced4b5bee4df3..5ce8f82ddb534b 100644
---- a/drivers/iommu/arm/arm-smmu/arm-smmu.c
-+++ b/drivers/iommu/arm/arm-smmu/arm-smmu.c
-@@ -1644,6 +1644,7 @@ static const struct iommu_ops arm_smmu_ops = {
- 	.def_domain_type	= arm_smmu_def_domain_type,
- 	.owner			= THIS_MODULE,
- 	.default_domain_ops = &(const struct iommu_domain_ops) {
-+		.report_iommu_fault_supported = true,
- 		.attach_dev		= arm_smmu_attach_dev,
- 		.map_pages		= arm_smmu_map_pages,
- 		.unmap_pages		= arm_smmu_unmap_pages,
-diff --git a/drivers/iommu/arm/arm-smmu/qcom_iommu.c b/drivers/iommu/arm/arm-smmu/qcom_iommu.c
-index c5be95e560317e..3163a23fcbaa4f 100644
---- a/drivers/iommu/arm/arm-smmu/qcom_iommu.c
-+++ b/drivers/iommu/arm/arm-smmu/qcom_iommu.c
-@@ -598,6 +598,7 @@ static const struct iommu_ops qcom_iommu_ops = {
- 	.device_group	= generic_device_group,
- 	.of_xlate	= qcom_iommu_of_xlate,
- 	.default_domain_ops = &(const struct iommu_domain_ops) {
-+		.report_iommu_fault_supported = true,
- 		.attach_dev	= qcom_iommu_attach_dev,
- 		.map_pages	= qcom_iommu_map,
- 		.unmap_pages	= qcom_iommu_unmap,
-diff --git a/drivers/iommu/iommu.c b/drivers/iommu/iommu.c
-index 59244c744eabd2..34546a70fb5279 100644
---- a/drivers/iommu/iommu.c
-+++ b/drivers/iommu/iommu.c
-@@ -2005,6 +2005,9 @@ EXPORT_SYMBOL_GPL(iommu_group_has_isolated_msi);
-  * This function should be used by IOMMU users which want to be notified
-  * whenever an IOMMU fault happens.
-  *
-+ * This is a legacy API not supported by all drivers. New users should look
-+ * to using domain->iopf_handler for the modern API.
-+ *
-  * The fault handler itself should return 0 on success, and an appropriate
-  * error code otherwise.
-  */
-@@ -2012,7 +2015,8 @@ void iommu_set_fault_handler(struct iommu_domain *domain,
- 					iommu_fault_handler_t handler,
- 					void *token)
- {
--	if (WARN_ON(!domain || domain->cookie_type != IOMMU_COOKIE_NONE))
-+	if (WARN_ON(!domain || domain->cookie_type != IOMMU_COOKIE_NONE ||
-+		    !domain->ops->report_iommu_fault_supported))
- 		return;
- 
- 	domain->cookie_type = IOMMU_COOKIE_FAULT_HANDLER;
-diff --git a/drivers/iommu/ipmmu-vmsa.c b/drivers/iommu/ipmmu-vmsa.c
-index ffa892f6571406..770fa248e30477 100644
---- a/drivers/iommu/ipmmu-vmsa.c
-+++ b/drivers/iommu/ipmmu-vmsa.c
-@@ -885,6 +885,7 @@ static const struct iommu_ops ipmmu_ops = {
- 			? generic_device_group : generic_single_device_group,
- 	.of_xlate = ipmmu_of_xlate,
- 	.default_domain_ops = &(const struct iommu_domain_ops) {
-+		.report_iommu_fault_supported = true,
- 		.attach_dev	= ipmmu_attach_device,
- 		.map_pages	= ipmmu_map,
- 		.unmap_pages	= ipmmu_unmap,
-diff --git a/drivers/iommu/mtk_iommu.c b/drivers/iommu/mtk_iommu.c
-index 0e0285348d2b8e..0f44993eaadce3 100644
---- a/drivers/iommu/mtk_iommu.c
-+++ b/drivers/iommu/mtk_iommu.c
-@@ -1019,6 +1019,7 @@ static const struct iommu_ops mtk_iommu_ops = {
- 	.get_resv_regions = mtk_iommu_get_resv_regions,
- 	.owner		= THIS_MODULE,
- 	.default_domain_ops = &(const struct iommu_domain_ops) {
-+		.report_iommu_fault_supported = true,
- 		.attach_dev	= mtk_iommu_attach_device,
- 		.map_pages	= mtk_iommu_map,
- 		.unmap_pages	= mtk_iommu_unmap,
-diff --git a/drivers/iommu/mtk_iommu_v1.c b/drivers/iommu/mtk_iommu_v1.c
-index 10cc0b1197e801..279e7acfd5c6d3 100644
---- a/drivers/iommu/mtk_iommu_v1.c
-+++ b/drivers/iommu/mtk_iommu_v1.c
-@@ -582,6 +582,7 @@ static const struct iommu_ops mtk_iommu_v1_ops = {
- 	.device_group	= generic_device_group,
- 	.owner          = THIS_MODULE,
- 	.default_domain_ops = &(const struct iommu_domain_ops) {
-+		.report_iommu_fault_supported = true,
- 		.attach_dev	= mtk_iommu_v1_attach_device,
- 		.map_pages	= mtk_iommu_v1_map,
- 		.unmap_pages	= mtk_iommu_v1_unmap,
-diff --git a/drivers/iommu/omap-iommu.c b/drivers/iommu/omap-iommu.c
-index 5c6f5943f44b1f..3f3193de3ecd86 100644
---- a/drivers/iommu/omap-iommu.c
-+++ b/drivers/iommu/omap-iommu.c
-@@ -1724,6 +1724,7 @@ static const struct iommu_ops omap_iommu_ops = {
- 	.device_group	= generic_single_device_group,
- 	.of_xlate	= omap_iommu_of_xlate,
- 	.default_domain_ops = &(const struct iommu_domain_ops) {
-+		.report_iommu_fault_supported = true,
- 		.attach_dev	= omap_iommu_attach_dev,
- 		.map_pages	= omap_iommu_map,
- 		.unmap_pages	= omap_iommu_unmap,
-diff --git a/drivers/iommu/rockchip-iommu.c b/drivers/iommu/rockchip-iommu.c
-index 0861dd469bd866..0053f5aa2cb781 100644
---- a/drivers/iommu/rockchip-iommu.c
-+++ b/drivers/iommu/rockchip-iommu.c
-@@ -1174,6 +1174,7 @@ static const struct iommu_ops rk_iommu_ops = {
- 	.device_group = generic_single_device_group,
- 	.of_xlate = rk_iommu_of_xlate,
- 	.default_domain_ops = &(const struct iommu_domain_ops) {
-+		.report_iommu_fault_supported = true,
- 		.attach_dev	= rk_iommu_attach_device,
- 		.map_pages	= rk_iommu_map,
- 		.unmap_pages	= rk_iommu_unmap,
-diff --git a/drivers/iommu/sun50i-iommu.c b/drivers/iommu/sun50i-iommu.c
-index de10b569d9a940..29b230050906a2 100644
---- a/drivers/iommu/sun50i-iommu.c
-+++ b/drivers/iommu/sun50i-iommu.c
-@@ -849,6 +849,7 @@ static const struct iommu_ops sun50i_iommu_ops = {
- 	.of_xlate	= sun50i_iommu_of_xlate,
- 	.probe_device	= sun50i_iommu_probe_device,
- 	.default_domain_ops = &(const struct iommu_domain_ops) {
-+		.report_iommu_fault_supported = true,
- 		.attach_dev	= sun50i_iommu_attach_device,
- 		.flush_iotlb_all = sun50i_iommu_flush_iotlb_all,
- 		.iotlb_sync_map = sun50i_iommu_iotlb_sync_map,
-diff --git a/include/linux/iommu.h b/include/linux/iommu.h
-index c30d12e16473df..e2bf7885287fac 100644
---- a/include/linux/iommu.h
-+++ b/include/linux/iommu.h
-@@ -714,6 +714,8 @@ struct iommu_ops {
- 
- /**
-  * struct iommu_domain_ops - domain specific operations
-+ * @report_iommu_fault_supported: True if the domain supports
-+ *                                iommu_set_fault_handler()
-  * @attach_dev: attach an iommu domain to a device
-  *  Return:
-  * * 0		- success
-@@ -751,6 +753,7 @@ struct iommu_ops {
-  * @free: Release the domain after use.
-  */
- struct iommu_domain_ops {
-+	bool report_iommu_fault_supported : 1;
- 	int (*attach_dev)(struct iommu_domain *domain, struct device *dev);
- 	int (*set_dev_pasid)(struct iommu_domain *domain, struct device *dev,
- 			     ioasid_t pasid, struct iommu_domain *old);
--- 
-2.43.0
-
+Konrad
 
