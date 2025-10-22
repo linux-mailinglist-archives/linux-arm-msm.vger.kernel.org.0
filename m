@@ -1,98 +1,99 @@
-Return-Path: <linux-arm-msm+bounces-78417-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-78418-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 15E9FBFE659
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Oct 2025 00:20:50 +0200 (CEST)
+Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [IPv6:2605:f480:58:1:0:1994:3:14])
+	by mail.lfdr.de (Postfix) with ESMTPS id 69F9ABFE665
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Oct 2025 00:21:03 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id A44501A036FE
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Oct 2025 22:21:13 +0000 (UTC)
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 2BC1B4E573B
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Oct 2025 22:21:02 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 015652F6184;
-	Wed, 22 Oct 2025 22:20:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D5D522F6184;
+	Wed, 22 Oct 2025 22:21:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="XEkMV+VT"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="oJWQ2Lh5"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2138826ED37
-	for <linux-arm-msm@vger.kernel.org>; Wed, 22 Oct 2025 22:20:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C5DA218AB9
+	for <linux-arm-msm@vger.kernel.org>; Wed, 22 Oct 2025 22:20:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761171646; cv=none; b=A96NFnWHt0TwlYLvISFX+C++JlvI3jTrIKsrTUl0Ql3m5IMRs5MzQJs8M0cFgBmJpuqujXh6pg8FyFqUqLVnGbgNcjSdNHpcqm8Az8HTzY+Lwpq+QnWE///j6tXYJ8GGtSFAWroopRrSjm3XMtqxM6itQjyazCFgIwxaRKvzpSM=
+	t=1761171660; cv=none; b=EnD/OUzEiOs/97myjIlyoDrp2JWbp98K1pd1nrhiQWZk1rTGLl8ZjHqXnpyGa796fWall6xlNYxpX2ifxf7P04+Nqyi7uM9XTAqcfSJ5//x4JFIFqJmCXW+gMgDNfvzeGOWSjSj4A4Q01rNhoWpFnKMqV0oqMa7BsA9AfTRYEGc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761171646; c=relaxed/simple;
-	bh=s1tNuMqAcm2bXMiMD6V6FQCydvFf5uZlJ3OrFtH/Ovo=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=d9o2c10jcIVS4XSA1LzAh6XKHB9vR3DTPTnflSK8/DXnAWvHSjXSwrT98Sl1Igqd2ieWXRWvJ31hboEw+GtzzhX5ooIB5wMlYF2HxY/bnzyYNsRo8b+UfRyY02Xc5M2GomjikYRHIX5AlEGszc4bL1SPYcrFALlJvcOJQVj08Xk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=XEkMV+VT; arc=none smtp.client-ip=205.220.180.131
+	s=arc-20240116; t=1761171660; c=relaxed/simple;
+	bh=WqqdxK3KDsMpE/e1giw4h0keHjdtqH8gBSJ9aZrVbOA=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=p0v6X2g60sqigr/A+sbBbqG9RDK/kJdvT1YPqzP8yi67F9/ePvBWeChjkIaHEAsYSzjMEexDoz8Bs69O9+M628oS81XXiBE6PS1oq6OG6R8adh5JvQuQ7JgY6u/tGQA8Kfn0DbYZAMVXyB6taeeR3gvSm31uVZTQrc4FA/IbwkY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=oJWQ2Lh5; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 59MK1DWT027078
-	for <linux-arm-msm@vger.kernel.org>; Wed, 22 Oct 2025 22:20:44 GMT
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 59MIeo4h022471
+	for <linux-arm-msm@vger.kernel.org>; Wed, 22 Oct 2025 22:20:58 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
 	cc:content-transfer-encoding:date:from:message-id:mime-version
-	:subject:to; s=qcppdkim1; bh=ojPDymiYZTBLdr/wyRVgSgbdNLO5BGbhwnh
-	T/pYk/5k=; b=XEkMV+VT0Vncnb4O8C33110XM73b8qxAXFOmWykCvCJVcT1/Qg9
-	XAHAez+tRla3HOj7g7zHbK6LyZV1P76src9J0CqU3pa5hUg9yf/uQzARdqNi2qjU
-	sgnPKIucpFNLncrNNnR0Un2Wyj794wd52GTHb15SI9T0DdFj3eMtrAhCp5vEq94l
-	UQAbQBuY6td+QZscz4cRMufFjBuDIVPAIC65vErFx0EVnLAmsxyAjka9ro/1Gunb
-	LVdiEVcIQkWSjP3p164VQA7n0srzvHy6FhOwFe2bqv2emGj26oqZ9Y7M2mwHGHfq
-	/Ze6q8qtTYrHuYhE27eg/7g7OBIjoPsPKLA==
-Received: from mail-pf1-f200.google.com (mail-pf1-f200.google.com [209.85.210.200])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 49y5x8g9gv-1
+	:subject:to; s=qcppdkim1; bh=i0mvZxV1MDsJnYmRbT9+6JtzjrypiHsWcbX
+	y/fmUaPY=; b=oJWQ2Lh5VafWunD4Unv+UfZakS3vkrcf0DavngbD/HJYJlHDM66
+	WLO7Who+AlUzOjhwImK5ZWis7KpLlukheN2BrBsbXVGHuhJcF0lpIsO9qZVirh4S
+	9Ql6n8rCZ37mDKMZyx8pDTElM56Nb6+amyzZ67A65RFiZcmH+3d3+kA6Yqt22MxI
+	En7hoHryEMqWqK+sL2POcJD5BNth1EBxDua0p5qPVwD+trQWJIODV5PgF6c0+8gf
+	9w8bhm51xQUImYfMMGk1GFofOwmL0sHnrtZIZmQxzLEpJXGjmQNzv9eADhDtPiZ3
+	JkQkdh6zcc9KbQaGYt55cYQXa8wsCb3+suw==
+Received: from mail-pg1-f197.google.com (mail-pg1-f197.google.com [209.85.215.197])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 49v1w8695y-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Wed, 22 Oct 2025 22:20:43 +0000 (GMT)
-Received: by mail-pf1-f200.google.com with SMTP id d2e1a72fcca58-78117fbda6eso95801b3a.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Oct 2025 15:20:43 -0700 (PDT)
+	for <linux-arm-msm@vger.kernel.org>; Wed, 22 Oct 2025 22:20:58 +0000 (GMT)
+Received: by mail-pg1-f197.google.com with SMTP id 41be03b00d2f7-b5a013bc46dso40395a12.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Oct 2025 15:20:57 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1761171643; x=1761776443;
+        d=1e100.net; s=20230601; t=1761171657; x=1761776457;
         h=content-transfer-encoding:mime-version:message-id:date:subject:cc
          :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=ojPDymiYZTBLdr/wyRVgSgbdNLO5BGbhwnhT/pYk/5k=;
-        b=MgSStvnVDlry1jxqbiETIUUYqKRl7NLGBLL4On1D29wgCa8nEFnWsyJ7tiBTeTpIi1
-         KB8bhcYAow6ZjseydL9Qtlq2RUeKsvV5cwW/fTwXYgdj9CleukgaxBw5nY+Y0hvpbgpK
-         h/gkKImqsKbSTNADO/WGvvfuqlmoQ8RcCEUZvhykSmXLC1RKcFGq8QwR6EaPl6FUrI4f
-         kGUthxoCnZTZMhuNHFpNFGXWc0RzaoomP48/MEVLsxihkAIjNCvoDmGSicWH5/oVVGbK
-         v12YZ7D2P+UxAMe8rjLBBNGMOIK/KGugY0lsOeiYT6uAD1o4rESUp9LP+Y7GBJrEhQZd
-         s7GQ==
-X-Forwarded-Encrypted: i=1; AJvYcCUA/jtXY+Y8/gPggvXIH9zZorYrseYVj5guuHFPCnb2uF3l9tToyVpw0CasZXQZX91+mu5wz4gr/22vedIK@vger.kernel.org
-X-Gm-Message-State: AOJu0Yw6lQR7XGdk7ttJYr9cNd8xbd3/obDfzLS0ndtBD4pKP7Oc6sPb
-	t3WNHiLn0w8G8zLLCLJuopZHjE82/lhRUuL3rHnmtlocH5sUUpA8sbMRQrgCrHnKimSA5hnX69c
-	alSTssY2z8YMxb4mozxV8Qa6qD1jEcGIDwfyuLJMZXgmUsqBl7BS+XcRh0JM4DyCGCfrX
-X-Gm-Gg: ASbGncuBQAP+dfAyGRhsgOvwiZwERFV7GjT2X5zdq/zO87yzuxK6yag41mnR1gbBxvR
-	ZDBt/ZGO9TFHbtKtkxrerTZjRv5qfd1DIEgbEOOdq0gHdUiU6vQhnUuWI2XThN3oui6uvG2j02j
-	e3HmZ8sJ5PDVv/up5W987FTE0eFBip5VvE5Vh9KvPlSjT51p2zAouTvsVG9GoO9HrG7GAvAFmJk
-	ebOSeSnRVFLsGQ/yGmx8s0vtSpEDXmi5406Rcdzy30DvWIQmUOm1JM774vFqKEkWTkZKFgFksXL
-	mszz64Yjp016MhoX6cp2vwJTEs9DJm4fPluk60vaFr81pfGmp7n7SrBWD7UURL+mXgnc934BLk+
-	U7cvZuEH2vw==
-X-Received: by 2002:a05:6a00:94ce:b0:771:fa65:ae6e with SMTP id d2e1a72fcca58-7a220a99177mr31804776b3a.17.1761171642682;
-        Wed, 22 Oct 2025 15:20:42 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHP3Xt+fiS6/lvXldmXrI/Xmz9rKgUz8Br5D+seLdPQbhnS8ioRXSjubRta++0jtoklDejZTA==
-X-Received: by 2002:a05:6a00:94ce:b0:771:fa65:ae6e with SMTP id d2e1a72fcca58-7a220a99177mr31804731b3a.17.1761171642157;
-        Wed, 22 Oct 2025 15:20:42 -0700 (PDT)
+        bh=i0mvZxV1MDsJnYmRbT9+6JtzjrypiHsWcbXy/fmUaPY=;
+        b=FZor+kha3HyF3V7jIpFFfGOc/PSM2tfN3gexC7Hdr4O2ISkSDSaL0ccy1F62dvmBD8
+         bIdsfBWTiaS8n6cVRcv9qWyWs752ekLrbvXKER5kOtelcfxJcwQxxMI8JpT4g8d/FRxh
+         u7xX2VkaL+bHgWREVbMnW/oHt23vyqlu1xT4R0tIVLaq+Dic05axZI9mq1pRAd6xcgKM
+         jJhrZSVdJ/hesOWGXtyxz41L1L9MtStGAJAr6UWpeNYQJH7B0AxJ6oHoVDoJ83v17Bcq
+         zghcBt+ggMUWSp6wVgUwNswWODWxxXvRckzrCHa68KaVhEXSLW0EsLr+gIe92CWRPntB
+         98kw==
+X-Forwarded-Encrypted: i=1; AJvYcCUvqAGAGBHAvO0OU/s/GevzWtZ3MGQfWEeIgrCTEv25MIcyOdNvnDldklUu9u0qEaIsvAJnrPf0qN8oHIpk@vger.kernel.org
+X-Gm-Message-State: AOJu0Ywc6ChueES/KbKd3+H8lypoDfDlAnruXqpJQ18so+bmuIsn5SoK
+	WFkJ7XnvXay8b5Tf9C8oYWHe9xelx/wFHZusFurPCWvzIZq73NJuc0WJEaxBASkJIcpGyia8YKQ
+	vEoRMYbzGdcquWthJ/CXggLhpBcYb0Me0BhbZowAkjFpUWzyL5LUGaon5rZ5g2U1yzR36
+X-Gm-Gg: ASbGncub7JQ+mwn72iGVm01Qei7cyZtkL5G6LWS0xIxduhfEUjiUA/LzZsDu7dyxS53
+	s0HErqEpmJ8iQwgp83ND00dR+zVpmNgyhdujsrFU18wYYV2OnpFUP7FJ/IWcXNU7ETc7eFECazn
+	HA0EVeDX62AT/9elct5eiYRPHRZhxC9OCJcq2CnFhQY3K8D2AXKmk7lvnhSUjbUfVivtJ3CEiQa
+	0RXKpyrfa+A+jfWmeS/gZhem0bZF7SKp5hGg5cIZUmbNfAjOcTfJJPUoZyCzJ8t2epxevvzXoZh
+	1/X1+FC8fAr1IfeTcNqwXdA1zhfg6RouCWtAHnt4J25GaxwjXRMwVchjD64IoVjXgv5PiDjc4Wc
+	r1h63+4woFw==
+X-Received: by 2002:a05:6a20:3945:b0:252:2bfe:b65a with SMTP id adf61e73a8af0-334a8523c3dmr29215683637.7.1761171656705;
+        Wed, 22 Oct 2025 15:20:56 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFHcTg7biN0R67q7mojPROACusX0lr4TEu2AEKXPQxVnJV9gXrUyzRzXnKDQhdID1RaUTlQhg==
+X-Received: by 2002:a05:6a20:3945:b0:252:2bfe:b65a with SMTP id adf61e73a8af0-334a8523c3dmr29215654637.7.1761171656232;
+        Wed, 22 Oct 2025 15:20:56 -0700 (PDT)
 Received: from localhost ([2601:1c0:5000:d5c:5b3e:de60:4fda:e7b1])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-7a274bb0c93sm284889b3a.59.2025.10.22.15.20.41
+        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-b6cf4e0a43asm115793a12.27.2025.10.22.15.20.55
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 22 Oct 2025 15:20:41 -0700 (PDT)
+        Wed, 22 Oct 2025 15:20:55 -0700 (PDT)
 From: Rob Clark <robin.clark@oss.qualcomm.com>
 To: dri-devel@lists.freedesktop.org
 Cc: freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
         Rob Clark <robin.clark@oss.qualcomm.com>,
+        Valentine Burley <valentine.burley@collabora.com>,
+        Sean Paul <sean@poorly.run>, Konrad Dybcio <konradybcio@kernel.org>,
         Dmitry Baryshkov <lumag@kernel.org>,
         Abhinav Kumar <abhinav.kumar@linux.dev>,
         Jessica Zhang <jessica.zhang@oss.qualcomm.com>,
-        Sean Paul <sean@poorly.run>,
         Marijn Suijten <marijn.suijten@somainline.org>,
         David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
         linux-kernel@vger.kernel.org (open list)
-Subject: [PATCH] drm/msm: Ensure vm is created in VM_BIND ioctl
-Date: Wed, 22 Oct 2025 15:20:38 -0700
-Message-ID: <20251022222039.9937-1-robin.clark@oss.qualcomm.com>
+Subject: [PATCH] drm/msm: Reject MAP_NULL op if no PRR
+Date: Wed, 22 Oct 2025 15:20:51 -0700
+Message-ID: <20251022222051.10030-1-robin.clark@oss.qualcomm.com>
 X-Mailer: git-send-email 2.51.0
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
@@ -101,50 +102,105 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-ORIG-GUID: dD9LnSr8OlNLZ2uc4-Uef4oT59a28tQg
-X-Proofpoint-GUID: dD9LnSr8OlNLZ2uc4-Uef4oT59a28tQg
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDIyMDE2NCBTYWx0ZWRfXxAku2o+kGuMR
- F+7ydESd9sLD5i1rAnL1qZJiFRHY14R88JnnxIeJ8spjHFsn7JWxNNjftER5gUUlxOSqStIpjaV
- aj8IbwkBYZfg3xGFrk8ohg18fjx7n4zG7ZCoAVsVsll9Q3iukS8HGVjC9D9NsYcRLfy4//P++qn
- tsykvqrzx6m8xdHDSNzxhxDukTGZbsUjpdiTv2dmEVSSUzLfMOSlfO2ViCXMLnV12eT582YxJ5/
- pWu98nrKbl3vZOnsBipVODDKFIkmJSGulJJmnrq1oyEMjkgG0OckhUHuDvb0FzZ6v4dft7IHj0b
- Nb1DQ2hbNgM6untD6M8xd0znDu0NytAYhGse8CgZmwNOkX/ghCXbQFOG8JEOhPAFOW6HaTCozLE
- KxWIti1iZPnEQLHsCGSOSQxO1+wepg==
-X-Authority-Analysis: v=2.4 cv=UOTQ3Sfy c=1 sm=1 tr=0 ts=68f958bb cx=c_pps
- a=mDZGXZTwRPZaeRUbqKGCBw==:117 a=xqWC_Br6kY4A:10 a=x6icFKpwvdMA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=EUspDBNiAAAA:8 a=3QSsbYrYwaFkjnnp2pkA:9
- a=zc0IvFSfCIW2DFIPzwfm:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDE4MDAxNSBTYWx0ZWRfX0K6ZsTZ+KYW8
+ yv9eZ0LLohtMfHOtEyne17CuyMhmFzBmNGswRAenHbagK2RQfDcFL+82eBMLuFE/US/R8I9fkcJ
+ L3trzeGuhtyC1CiC25BGQU6MYUQj7zvGDEpZNfg+N42LMLnF4HQWgxRc4/QXStSp7jueemijkvB
+ svRjiDL0d6mq+BTBJDibquoyuoB8Tz+LRQOg0E2pl59SXIbitxMRcB8dpTxovFNzAU1nLqcUHq5
+ 5TlpTiHAUfvuSVxz3Dv8oo8DoOMQRM0Rti2bEVOOWibGXn4z/qVfdxgR38MuijXgaNol9/+yXnU
+ OevaAbBwPAsqSUk4uqMpvCxErhGskh52jllCiwjMVOin/fkzsF2M8Xqj1XGxvmNVv/unDXw27P0
+ c6qpByHeMu9B9rTgobDCA+bYulcleA==
+X-Authority-Analysis: v=2.4 cv=bNUb4f+Z c=1 sm=1 tr=0 ts=68f958ca cx=c_pps
+ a=rz3CxIlbcmazkYymdCej/Q==:117 a=xqWC_Br6kY4A:10 a=x6icFKpwvdMA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=e5mUnYsNAAAA:8 a=QX4gbG5DAAAA:8 a=EUspDBNiAAAA:8
+ a=AzObSZ8MGmcM1bWaoswA:9 a=bFCP_H2QrGi7Okbo017w:22 a=Vxmtnl_E_bksehYqCbjh:22
+ a=AbAUZ8qAyYyZVLSsDulk:22
+X-Proofpoint-GUID: 9Mai1Umgt-38L9-CgpjdtgfXXMRJEcvu
+X-Proofpoint-ORIG-GUID: 9Mai1Umgt-38L9-CgpjdtgfXXMRJEcvu
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.80.40
  definitions=2025-10-22_08,2025-10-22_01,2025-03-28_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- lowpriorityscore=0 suspectscore=0 adultscore=0 clxscore=1015 phishscore=0
- bulkscore=0 malwarescore=0 impostorscore=0 priorityscore=1501 spamscore=0
+ bulkscore=0 phishscore=0 malwarescore=0 lowpriorityscore=0 clxscore=1015
+ priorityscore=1501 suspectscore=0 adultscore=0 spamscore=0 impostorscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2510020000 definitions=main-2510220164
+ reason=mlx scancount=1 engine=8.19.0-2510020000 definitions=main-2510180015
 
-Since the vm is lazily created, to allow userspace to opt-in to a
-VM_BIND context, we can't assume it is already created.
+We need PRR support in order to implement MAP_NULL.  Userspace shouldn't
+be trying to use this if it is unsupported.
 
-Fixes: 2e6a8a1fe2b2 ("drm/msm: Add VM_BIND ioctl")
+Reported-by: Valentine Burley <valentine.burley@collabora.com>
+Link: https://gitlab.freedesktop.org/mesa/mesa/-/merge_requests/37935#note_3153730
 Signed-off-by: Rob Clark <robin.clark@oss.qualcomm.com>
 ---
- drivers/gpu/drm/msm/msm_gem_vma.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/msm/adreno/adreno_gpu.c |  7 -------
+ drivers/gpu/drm/msm/msm_gem_vma.c       |  6 ++++++
+ drivers/gpu/drm/msm/msm_gpu.h           | 11 +++++++++++
+ 3 files changed, 17 insertions(+), 7 deletions(-)
 
+diff --git a/drivers/gpu/drm/msm/adreno/adreno_gpu.c b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
+index 19181b6fddfd..f93eee67240d 100644
+--- a/drivers/gpu/drm/msm/adreno/adreno_gpu.c
++++ b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
+@@ -365,13 +365,6 @@ int adreno_fault_handler(struct msm_gpu *gpu, unsigned long iova, int flags,
+ 	return 0;
+ }
+ 
+-static bool
+-adreno_smmu_has_prr(struct msm_gpu *gpu)
+-{
+-	struct adreno_smmu_priv *adreno_smmu = dev_get_drvdata(&gpu->pdev->dev);
+-	return adreno_smmu && adreno_smmu->set_prr_addr;
+-}
+-
+ int adreno_get_param(struct msm_gpu *gpu, struct msm_context *ctx,
+ 		     uint32_t param, uint64_t *value, uint32_t *len)
+ {
 diff --git a/drivers/gpu/drm/msm/msm_gem_vma.c b/drivers/gpu/drm/msm/msm_gem_vma.c
-index 00d0f3b7ba32..90712586faac 100644
+index 90712586faac..96925a0f3965 100644
 --- a/drivers/gpu/drm/msm/msm_gem_vma.c
 +++ b/drivers/gpu/drm/msm/msm_gem_vma.c
-@@ -1382,7 +1382,7 @@ msm_ioctl_vm_bind(struct drm_device *dev, void *data, struct drm_file *file)
- 	 * Maybe we could allow just UNMAP ops?  OTOH userspace should just
- 	 * immediately close the device file and all will be torn down.
- 	 */
--	if (to_msm_vm(ctx->vm)->unusable)
-+	if (to_msm_vm(msm_context_vm(dev, ctx))->unusable)
- 		return UERR(EPIPE, dev, "context is unusable");
+@@ -964,6 +964,7 @@ static int
+ lookup_op(struct msm_vm_bind_job *job, const struct drm_msm_vm_bind_op *op)
+ {
+ 	struct drm_device *dev = job->vm->drm;
++	struct msm_drm_private *priv = dev->dev_private;
+ 	int i = job->nr_ops++;
+ 	int ret = 0;
  
- 	/*
+@@ -1010,6 +1011,11 @@ lookup_op(struct msm_vm_bind_job *job, const struct drm_msm_vm_bind_op *op)
+ 		break;
+ 	}
+ 
++	if ((op->op == MSM_VM_BIND_OP_MAP_NULL) &&
++	    !adreno_smmu_has_prr(priv->gpu)) {
++		ret = UERR(EINVAL, dev, "PRR not supported\n");
++	}
++
+ 	return ret;
+ }
+ 
+diff --git a/drivers/gpu/drm/msm/msm_gpu.h b/drivers/gpu/drm/msm/msm_gpu.h
+index a597f2bee30b..2894fc118485 100644
+--- a/drivers/gpu/drm/msm/msm_gpu.h
++++ b/drivers/gpu/drm/msm/msm_gpu.h
+@@ -299,6 +299,17 @@ static inline struct msm_gpu *dev_to_gpu(struct device *dev)
+ 	return container_of(adreno_smmu, struct msm_gpu, adreno_smmu);
+ }
+ 
++static inline bool
++adreno_smmu_has_prr(struct msm_gpu *gpu)
++{
++	struct adreno_smmu_priv *adreno_smmu = dev_get_drvdata(&gpu->pdev->dev);
++
++	if (!adreno_smmu)
++		return false;
++
++	return adreno_smmu && adreno_smmu->set_prr_addr;
++}
++
+ /* It turns out that all targets use the same ringbuffer size */
+ #define MSM_GPU_RINGBUFFER_SZ SZ_32K
+ #define MSM_GPU_RINGBUFFER_BLKSIZE 32
 -- 
 2.51.0
 
