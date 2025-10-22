@@ -1,189 +1,207 @@
-Return-Path: <linux-arm-msm+bounces-78402-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-78403-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id B8122BFDC3D
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Oct 2025 20:05:00 +0200 (CEST)
+Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [142.0.200.124])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7C6CCBFE207
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Oct 2025 22:10:25 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 23DCF19C6DB2
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Oct 2025 18:05:13 +0000 (UTC)
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id E6BF84ED3E1
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Oct 2025 20:10:22 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 86FE12E8B76;
-	Wed, 22 Oct 2025 18:04:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1250F2F9C3E;
+	Wed, 22 Oct 2025 20:10:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="hQUmVje4"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="x0/W+Sw7"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.9])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f47.google.com (mail-wm1-f47.google.com [209.85.128.47])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2873F8460;
-	Wed, 22 Oct 2025 18:04:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.9
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0000E2F83A0
+	for <linux-arm-msm@vger.kernel.org>; Wed, 22 Oct 2025 20:10:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761156273; cv=none; b=GRZNKMw7XYxjWUzwYYSxefnmGH2CXHwq1M7WScrTEdzGS8f/C70RC7K3/3ZaQfUX0IZ2Yiod9afWh6D5qtnia1uchmgfROSThq3bo2um/lXpBlM0MbZVyZEdgv0vDq2BoO2SxKf7ar/G4jdLEEI52IrFanAQA5eSA/WjkEF6iX8=
+	t=1761163819; cv=none; b=f59hIGP7QD3mRTQqvXMrKdnmSVclECldrKLcbrUccSQDy9nCT4yaBzeQ+OQqgRl0L/KPAqBIOgfqrruoI8DvlkYrNh/Lye93FH4c/91JoCLK5bTDIty8Xkmw96prf0Q6DyGBMYWBj8/GR3wKe6A+rHejQVyPneGJw/xJbZOg/QQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761156273; c=relaxed/simple;
-	bh=LX84Ld6O6Uc5VIZ8xp7cMpdz1V/yl1HsOQOPlaYWJeQ=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=D0/2PP3RqNr+KKRjzt/RuE0S4V8nSDnppUbma02L9VsUFFaSv2Qe2KEXR9j3f3HDRL9ElWFym3QqsTA1W7VPIQkwOBqY03U7XfE26sfddlzMgDB2ZwgoUiX/sNOenBzCjt8mZOfq2NA2kR6YmHqYwcVS0CYMBUTIKap7avP88bY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=hQUmVje4; arc=none smtp.client-ip=192.198.163.9
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1761156271; x=1792692271;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=LX84Ld6O6Uc5VIZ8xp7cMpdz1V/yl1HsOQOPlaYWJeQ=;
-  b=hQUmVje4FutHhmEWgwtJ4ZkH+30Ln4HptJSgMYVwOeJKlvutcKBiRzL7
-   zN6cf5tFcCAuFxzQJG8lveaa7hCHTr+8DUnP+nPNeK3M4MsSypWmoi/AI
-   9ISdT+oU9i3db5VTiHSEEca/oMH0nf4VmpJSgEJJW5XegVCPWFYbKSTHw
-   7p607vaWjLPuW4VpgUSj1cUyy1oEuVwHiq9GPUM2ZYo9Nj419TijPMQ2s
-   5sLqC6PNAKnlI89EXP20Yvb+XBpqFEnHR5VRAIfPWWTD71o6CTbPzlKPA
-   lBpOry1WZaJ9tQ7n7AfkpQD0zQf7BZTEfhF/7vgZQSu351xAmmD5Zcrv+
-   Q==;
-X-CSE-ConnectionGUID: g2b0eVLmRUus/PTbHexNPA==
-X-CSE-MsgGUID: cujWg+EjRKSzm3GeORaJoQ==
-X-IronPort-AV: E=McAfee;i="6800,10657,11586"; a="73984419"
-X-IronPort-AV: E=Sophos;i="6.19,247,1754982000"; 
-   d="scan'208";a="73984419"
-Received: from fmviesa008.fm.intel.com ([10.60.135.148])
-  by fmvoesa103.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 22 Oct 2025 11:04:30 -0700
-X-CSE-ConnectionGUID: hQfoa2/xR6+4lGjcBV8xAQ==
-X-CSE-MsgGUID: ZsI4OgiDTWux522dWpJ23g==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.19,247,1754982000"; 
-   d="scan'208";a="184332231"
-Received: from cpetruta-mobl1.ger.corp.intel.com (HELO ashevche-desk.local) ([10.245.244.83])
-  by fmviesa008-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 22 Oct 2025 11:04:25 -0700
-Received: from andy by ashevche-desk.local with local (Exim 4.98.2)
-	(envelope-from <andriy.shevchenko@intel.com>)
-	id 1vBdC9-00000001lJ5-3WrO;
-	Wed, 22 Oct 2025 21:04:21 +0300
-Date: Wed, 22 Oct 2025 21:04:21 +0300
-From: Andy Shevchenko <andriy.shevchenko@intel.com>
-To: Bartosz Golaszewski <brgl@bgdev.pl>
-Cc: Kees Cook <kees@kernel.org>, Mika Westerberg <westeri@kernel.org>,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Linus Walleij <linus.walleij@linaro.org>,
-	Manivannan Sadhasivam <mani@kernel.org>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Saravana Kannan <saravanak@google.com>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	Andy Shevchenko <andy@kernel.org>,
-	Catalin Marinas <catalin.marinas@arm.com>,
-	Will Deacon <will@kernel.org>,
-	Srinivas Kandagatla <srini@kernel.org>,
-	Liam Girdwood <lgirdwood@gmail.com>,
-	Mark Brown <broonie@kernel.org>, Jaroslav Kysela <perex@perex.cz>,
-	Takashi Iwai <tiwai@suse.com>, linux-hardening@vger.kernel.org,
-	linux-kernel@vger.kernel.org, linux-gpio@vger.kernel.org,
-	linux-arm-kernel@lists.infradead.org, linux-sound@vger.kernel.org,
+	s=arc-20240116; t=1761163819; c=relaxed/simple;
+	bh=jL1xyKeY+DSl7FnGn5fIu9UTUzTUBfMaCWMbOzVyaiw=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=R9s2sCYJhz9hqLIVx8ibTbCT3jmArtRzuEECM9X3UF9t6SS59y/XO0cBBc5E833EpBgb5/ZIwlbu46Brz8Ta4DOGea5AgtsqX6R1nHUM95Mr34N/1AOjyN6nq129lRqBIdK1IS4FA35lEcDc9uV5oH6uOO+2SUCj4xT/VVmBS6Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=x0/W+Sw7; arc=none smtp.client-ip=209.85.128.47
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wm1-f47.google.com with SMTP id 5b1f17b1804b1-47103b6058fso41625e9.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Oct 2025 13:10:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1761163814; x=1761768614; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=CMO+68yA0NJP1unpK3WFsi9ClsA9S0hkHZBERZCyzFs=;
+        b=x0/W+Sw7IeyhYqPazvetiAgzrtGlYSD1Q/885UKNowuBEW3JnNqnQA1pMbCqSYX0OQ
+         r0EfPfq8wLF4I0fPWcZkaScuuLow6/X1zaBqbGaDR+GS36F2PjvxTNqDXIMdCw+Nl+ip
+         tXaYKBepDZNrlJs8I0W6RpZBIryVpuvLR7mYGJZM3WZufoGmWQ1AKOFgM4avQP51joZf
+         iqsZpceizRnsnKiCNwLeDsU13SRlc7DOZV1vFEzRVS0wzVQtRer0+TS6TfMh0MFPs0re
+         y8u7FIBBO06FUJbkF4HdRWa9Xc9y7X0ric0/Hx5vdg8THOddammCyALxQ3q5WtRMb0OQ
+         stpA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1761163814; x=1761768614;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=CMO+68yA0NJP1unpK3WFsi9ClsA9S0hkHZBERZCyzFs=;
+        b=EvMCWEHLTNOcVvqreYn9Dg3rgLDZmC+MaHqK9h09bl5VpiI2UuK2uuVYIFh6L0tV0B
+         T4j2+lhEs/uHQ58q/VEBkr4WYANdBqy8VZU1j9jZL2LIcBH+ooVQoadk9hsjrgZ3xXuv
+         J36PC8d/f8c+vRx3rV8X6/7jdK5G8ApEcZI/DSyPtJzpPkYWzSp/XLgSSxWT3hciH3gC
+         R0CEtzK6RiqmHUrFy7Sbp6KeYFUqzYJFA/6/aLwNEuANDAwRKNe5mwWMI0MMqBPXTIky
+         QboZfnqXooKtZZ3kwJodqQlKm8yGomqQtn2LZo4XpNv+G1cy/nzeOPW/FjiDL6nHTORv
+         CO2Q==
+X-Forwarded-Encrypted: i=1; AJvYcCX0R89nWuqN8/456GhdF+8/kYvgHqEurvq5g2U7X4rrSt+ywgMqWUMr3Ockr4YSsGo9IdD+JjRmgmvdT3N1@vger.kernel.org
+X-Gm-Message-State: AOJu0YyJnRfVszjwiT+4Iy7ZC9UoFGnDVduC6XiLKHBelDkIplR33X4X
+	WT0pRNz25YLovFgFVqKIjyHhZlHn6PEcTgcs1G2YGwSPyOOzYgXW+TgXPwN7XCsdYos=
+X-Gm-Gg: ASbGncvral5ow2extpUfCbVrnaEZp9x0WQTHgj3hh17ZCq91udQKSIMyiecZZUekEMH
+	mJ8UJ1wIApOU7+vCPlJr6E4199Hd2ZXjWDXlk/xUXX8uA+Z54nBGmA+FfVop00HOCoZM0K19cFi
+	5lk5XkzJN/ojeY0aR0dtE6y4yjwQVj+zS9hTi8oX0uj88xzbDJ3V9VKpBik6pQdLLd5sViJ4HxC
+	901bT6uBpXxjgpYodxlwyVMIwdCm+8z05NFohbLJY+JT91x/659ZYvnKKi+Al/5gaDmaWMRG2Q6
+	Hzm04hk4oa66xjNP3XIkxaQR/5VR5woCRFJCkdyirYoIFZVyxy2MOKn4SJUBB62ZvHk8Lby6fqg
+	5RN9Btc0tCYs3qwn2rlGNldxsuUaCNj8zTcJsW4mRWXwYrrtAMrpFqAmq4RBy6MbYJegOwjZPjN
+	h6K6sohI/fTFdSmVLx
+X-Google-Smtp-Source: AGHT+IEE7nbdHtxCgzExX95o6DoJe0s0AWHwSyXzENCSmPhw5KThK31EPdJRY52brcU+d9kt2XaOCg==
+X-Received: by 2002:a05:600c:c3:b0:46f:cdfe:cd39 with SMTP id 5b1f17b1804b1-475c6f69890mr15544315e9.16.1761163814335;
+        Wed, 22 Oct 2025 13:10:14 -0700 (PDT)
+Received: from orion.home ([2a02:c7c:7259:a00:11f4:2b3f:7c5a:5c10])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-475caa8c785sm415275e9.14.2025.10.22.13.10.13
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 22 Oct 2025 13:10:13 -0700 (PDT)
+From: Alexey Klimov <alexey.klimov@linaro.org>
+To: broonie@kernel.org,
+	gregkh@linuxfoundation.org,
+	srini@kernel.org
+Cc: rafael@kernel.org,
+	dakr@kernel.org,
+	make24@iscas.ac.cn,
+	steev@kali.org,
+	dmitry.baryshkov@oss.qualcomm.com,
+	linux-kernel@vger.kernel.org,
+	linux-sound@vger.kernel.org,
 	linux-arm-msm@vger.kernel.org,
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Subject: Re: [PATCH v2 04/10] gpio: shared-proxy: implement the shared GPIO
- proxy driver
-Message-ID: <aPkcpTWfTb0HOF51@smile.fi.intel.com>
-References: <20251022-gpio-shared-v2-0-d34aa1fbdf06@linaro.org>
- <20251022-gpio-shared-v2-4-d34aa1fbdf06@linaro.org>
+	abel.vesa@linaro.org,
+	stable@vger.kernel.org
+Subject: [PATCH v2] regmap: slimbus: fix bus_context pointer in regmap init calls
+Date: Wed, 22 Oct 2025 21:10:12 +0100
+Message-ID: <20251022201013.1740211-1-alexey.klimov@linaro.org>
+X-Mailer: git-send-email 2.47.3
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20251022-gpio-shared-v2-4-d34aa1fbdf06@linaro.org>
-Organization: Intel Finland Oy - BIC 0357606-4 - c/o Alberga Business Park, 6
- krs, Bertel Jungin Aukio 5, 02600 Espoo
+Content-Transfer-Encoding: 8bit
 
-On Wed, Oct 22, 2025 at 03:10:43PM +0200, Bartosz Golaszewski wrote:
-> 
-> Add a virtual GPIO proxy driver which arbitrates access to a single
-> shared GPIO by multiple users. It works together with the core shared
-> GPIO support from GPIOLIB and functions by acquiring a reference to a
-> shared GPIO descriptor exposed by gpiolib-shared and making sure that
-> the state of the GPIO stays consistent.
-> 
-> In general: if there's only one user at the moment: allow it to do
-> anything as if this was a normal GPIO (in essence: just propagate calls
-> to the underlying real hardware driver). If there are more users: don't
-> allow to change the direction set by the initial user, allow to change
-> configuration options but warn about possible conflicts and finally:
-> treat the output-high value as a reference counted, logical "GPIO
-> enabled" setting, meaning: the GPIO value is set to high when the first
-> user requests it to be high and back to low once the last user stops
-> "voting" for high.
+Commit 4e65bda8273c ("ASoC: wcd934x: fix error handling in
+wcd934x_codec_parse_data()") revealed the problem in the slimbus regmap.
+That commit breaks audio playback, for instance, on sdm845 Thundercomm
+Dragonboard 845c board:
 
-I have two Q:s about the design:
-1) why can't the value be counted on the struct gpio_desc level?
-2) can gpio-aggregator facilities be reused (to some extent)?
+ Unable to handle kernel paging request at virtual address ffff8000847cbad4
+ ...
+ CPU: 5 UID: 0 PID: 776 Comm: aplay Not tainted 6.18.0-rc1-00028-g7ea30958b305 #11 PREEMPT
+ Hardware name: Thundercomm Dragonboard 845c (DT)
+ ...
+ Call trace:
+  slim_xfer_msg+0x24/0x1ac [slimbus] (P)
+  slim_read+0x48/0x74 [slimbus]
+  regmap_slimbus_read+0x18/0x24 [regmap_slimbus]
+  _regmap_raw_read+0xe8/0x174
+  _regmap_bus_read+0x44/0x80
+  _regmap_read+0x60/0xd8
+  _regmap_update_bits+0xf4/0x140
+  _regmap_select_page+0xa8/0x124
+  _regmap_raw_write_impl+0x3b8/0x65c
+  _regmap_bus_raw_write+0x60/0x80
+  _regmap_write+0x58/0xc0
+  regmap_write+0x4c/0x80
+  wcd934x_hw_params+0x494/0x8b8 [snd_soc_wcd934x]
+  snd_soc_dai_hw_params+0x3c/0x7c [snd_soc_core]
+  __soc_pcm_hw_params+0x22c/0x634 [snd_soc_core]
+  dpcm_be_dai_hw_params+0x1d4/0x38c [snd_soc_core]
+  dpcm_fe_dai_hw_params+0x9c/0x17c [snd_soc_core]
+  snd_pcm_hw_params+0x124/0x464 [snd_pcm]
+  snd_pcm_common_ioctl+0x110c/0x1820 [snd_pcm]
+  snd_pcm_ioctl+0x34/0x4c [snd_pcm]
+  __arm64_sys_ioctl+0xac/0x104
+  invoke_syscall+0x48/0x104
+  el0_svc_common.constprop.0+0x40/0xe0
+  do_el0_svc+0x1c/0x28
+  el0_svc+0x34/0xec
+  el0t_64_sync_handler+0xa0/0xf0
+  el0t_64_sync+0x198/0x19c
 
-...
+The __devm_regmap_init_slimbus() started to be used instead of
+__regmap_init_slimbus() after the commit mentioned above and turns out
+the incorrect bus_context pointer (3rd argument) was used in
+__devm_regmap_init_slimbus(). It should be just "slimbus" (which is equal
+to &slimbus->dev). Correct it. The wcd934x codec seems to be the only or
+the first user of devm_regmap_init_slimbus() but we should fix it till
+the point where __devm_regmap_init_slimbus() was introduced therefore
+two "Fixes" tags.
 
-> +#include <linux/auxiliary_bus.h>
-> +#include <linux/cleanup.h>
-> +#include <linux/device.h>
-> +#include <linux/gpio/consumer.h>
-> +#include <linux/gpio/driver.h>
-> +#include <linux/module.h>
+While at this, also correct the same argument in __regmap_init_slimbus().
 
-+ types.h
+Fixes: 4e65bda8273c ("ASoC: wcd934x: fix error handling in wcd934x_codec_parse_data()")
+Fixes: 7d6f7fb053ad ("regmap: add SLIMbus support")
+Cc: stable@vger.kernel.org
+Cc: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Cc: Ma Ke <make24@iscas.ac.cn>
+Cc: Steev Klimaszewski <steev@kali.org>
+Cc: Srinivas Kandagatla <srini@kernel.org>
+Reviewed-by: Abel Vesa <abel.vesa@linaro.org>
+Signed-off-by: Alexey Klimov <alexey.klimov@linaro.org>
+---
 
-> +#include "gpiolib-shared.h"
+The patch/fix is for the current 6.18 development cycle
+since it fixes the regression introduced in 6.18.0-rc1.
 
-...
+Changes in v2:
+ - &slimbus->dev replaced with just "slimbus", no functional change
+ (as suggested by Dmitry);
+ - the same argument in __regmap_init_slimbus() was replaced with
+ "slimbus" (as suggested by Dmitry);
+ - reduced the backtrace log in the commit message (as suggested by Mark);
+ - corrected subject/title, few typos, added mention of non-managed init
+ func change, rephrased smth;
+ - added Reviewed-by tag from Abel.
 
-> +out:
-> +	if (shared_desc->highcnt)
-> +		dev_dbg(proxy->dev,
-> +			"Voted for value '%s', effective value is 'high', number of votes for 'high': %u\n",
-> +			value ? "high" : "low", shared_desc->highcnt);
-> +	else
-> +		dev_dbg(proxy->dev, "Voted for value 'low', effective value is 'low'\n");
+Prev version: https://lore.kernel.org/linux-sound/20251020015557.1127542-1-alexey.klimov@linaro.org/
 
-You can unify and maybe save a few bytes here and there by doing something like
-this:
+ drivers/base/regmap/regmap-slimbus.c | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
-	const char *tmp; // name is a placeholder
-
-	tmp = str_high_low(shared_desc->highcnt);
-	dev_dbg(proxy->dev,
-		"Voted for value '%s', effective value is '%s', number of votes for '%s': %u\n",
-		str_high_low(value), tmp, tmp, shared_desc->highcnt);
-
-...
-
-> +		dev_dbg(proxy->dev,
-> +			"Only one user of this shared GPIO, allowing to set direction to output with value '%s'\n",
-> +			value ? "high" : "low");
-
-str_high_low() ?
-
-> +		ret = gpiod_direction_output(desc, value);
-> +		if (ret)
-> +			return ret;
-> +
-> +		if (value) {
-> +			proxy->voted_high = true;
-> +			shared_desc->highcnt = 1;
-> +		} else {
-> +			proxy->voted_high = false;
-> +			shared_desc->highcnt = 0;
-> +		}
-> +
-> +		return 0;
-> +	}
-
+diff --git a/drivers/base/regmap/regmap-slimbus.c b/drivers/base/regmap/regmap-slimbus.c
+index 54eb7d227cf4..e523fae73004 100644
+--- a/drivers/base/regmap/regmap-slimbus.c
++++ b/drivers/base/regmap/regmap-slimbus.c
+@@ -48,8 +48,7 @@ struct regmap *__regmap_init_slimbus(struct slim_device *slimbus,
+ 	if (IS_ERR(bus))
+ 		return ERR_CAST(bus);
+ 
+-	return __regmap_init(&slimbus->dev, bus, &slimbus->dev, config,
+-			     lock_key, lock_name);
++	return __regmap_init(&slimbus->dev, bus, slimbus, config, lock_key, lock_name);
+ }
+ EXPORT_SYMBOL_GPL(__regmap_init_slimbus);
+ 
+@@ -63,8 +62,7 @@ struct regmap *__devm_regmap_init_slimbus(struct slim_device *slimbus,
+ 	if (IS_ERR(bus))
+ 		return ERR_CAST(bus);
+ 
+-	return __devm_regmap_init(&slimbus->dev, bus, &slimbus, config,
+-				  lock_key, lock_name);
++	return __devm_regmap_init(&slimbus->dev, bus, slimbus, config, lock_key, lock_name);
+ }
+ EXPORT_SYMBOL_GPL(__devm_regmap_init_slimbus);
+ 
 -- 
-With Best Regards,
-Andy Shevchenko
-
+2.47.3
 
 
