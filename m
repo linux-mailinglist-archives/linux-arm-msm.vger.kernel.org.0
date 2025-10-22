@@ -1,95 +1,93 @@
-Return-Path: <linux-arm-msm+bounces-78403-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-78404-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [142.0.200.124])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7C6CCBFE207
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Oct 2025 22:10:25 +0200 (CEST)
+Received: from ams.mirrors.kernel.org (ams.mirrors.kernel.org [IPv6:2a01:60a::1994:3:14])
+	by mail.lfdr.de (Postfix) with ESMTPS id 25775BFE27D
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Oct 2025 22:25:37 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id E6BF84ED3E1
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Oct 2025 20:10:22 +0000 (UTC)
+	by ams.mirrors.kernel.org (Postfix) with ESMTPS id 39834354FEB
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Oct 2025 20:25:36 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1250F2F9C3E;
-	Wed, 22 Oct 2025 20:10:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2936427A10D;
+	Wed, 22 Oct 2025 20:25:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="x0/W+Sw7"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="RO6O/tXy"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f47.google.com (mail-wm1-f47.google.com [209.85.128.47])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0000E2F83A0
-	for <linux-arm-msm@vger.kernel.org>; Wed, 22 Oct 2025 20:10:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7EE9A2EAD16
+	for <linux-arm-msm@vger.kernel.org>; Wed, 22 Oct 2025 20:25:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761163819; cv=none; b=f59hIGP7QD3mRTQqvXMrKdnmSVclECldrKLcbrUccSQDy9nCT4yaBzeQ+OQqgRl0L/KPAqBIOgfqrruoI8DvlkYrNh/Lye93FH4c/91JoCLK5bTDIty8Xkmw96prf0Q6DyGBMYWBj8/GR3wKe6A+rHejQVyPneGJw/xJbZOg/QQ=
+	t=1761164733; cv=none; b=gIScfhzCQ07UaxBIMCA2ATEdT++t7kOZFI6eQKrqg+pqFU18zlEa57tYnJSxAD0TJiV5aEwWqzNoUizDF8z7TCoEPAkDuYV/PckXpRpcJV8McJ4tyqK8tGlTl6+2vPclRcjLwozAJQ9fdkA/2nXT8DJJKpurDO2+aC6e3+hCJ3E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761163819; c=relaxed/simple;
-	bh=jL1xyKeY+DSl7FnGn5fIu9UTUzTUBfMaCWMbOzVyaiw=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=R9s2sCYJhz9hqLIVx8ibTbCT3jmArtRzuEECM9X3UF9t6SS59y/XO0cBBc5E833EpBgb5/ZIwlbu46Brz8Ta4DOGea5AgtsqX6R1nHUM95Mr34N/1AOjyN6nq129lRqBIdK1IS4FA35lEcDc9uV5oH6uOO+2SUCj4xT/VVmBS6Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=x0/W+Sw7; arc=none smtp.client-ip=209.85.128.47
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f47.google.com with SMTP id 5b1f17b1804b1-47103b6058fso41625e9.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Oct 2025 13:10:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1761163814; x=1761768614; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=CMO+68yA0NJP1unpK3WFsi9ClsA9S0hkHZBERZCyzFs=;
-        b=x0/W+Sw7IeyhYqPazvetiAgzrtGlYSD1Q/885UKNowuBEW3JnNqnQA1pMbCqSYX0OQ
-         r0EfPfq8wLF4I0fPWcZkaScuuLow6/X1zaBqbGaDR+GS36F2PjvxTNqDXIMdCw+Nl+ip
-         tXaYKBepDZNrlJs8I0W6RpZBIryVpuvLR7mYGJZM3WZufoGmWQ1AKOFgM4avQP51joZf
-         iqsZpceizRnsnKiCNwLeDsU13SRlc7DOZV1vFEzRVS0wzVQtRer0+TS6TfMh0MFPs0re
-         y8u7FIBBO06FUJbkF4HdRWa9Xc9y7X0ric0/Hx5vdg8THOddammCyALxQ3q5WtRMb0OQ
-         stpA==
+	s=arc-20240116; t=1761164733; c=relaxed/simple;
+	bh=79Tyqq3NXA3ru1MM6+LaoRhOPUaxg714MMmIt6Ieiaw=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=gNzcZf7NCWDfdUGo/DQCv/8x6AO4URDjv7Ma22pAQJx8d67ND7gxUtMExzRN78W3IKwSsTPrNrXr47UUk2C7+LmaWIUNEvMy5Lb02IIwoqMulu1jMis0TkqzJhSva0M5uSuwObZdkiApZfIDzP0Z1RKvG4n/WFUQDhWQfVwXszs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=RO6O/tXy; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 59MIemxS018576
+	for <linux-arm-msm@vger.kernel.org>; Wed, 22 Oct 2025 20:25:30 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:date:from:message-id:mime-version
+	:subject:to; s=qcppdkim1; bh=8WTncnGza2Kn9sGuWGXDCvdR1E4ZhnjnCPB
+	ZWVK2zTw=; b=RO6O/tXy6IjQ9bSKkDn0tGkt7+7Enp4sAIiHIMZZKfo0LeyVy3Q
+	4SZR4AtSy3f6KWUqqOBQ3ZstAvxdNktQmy/dMFg1ikgG2Jgl4W9JlI6HDWoCPeBV
+	/sa/rXdKkiDteaDUMzaZ9NStt8HwMaGqzucXFf8rIemn/BhVYWZ499jnWw+yc2Rv
+	mEEXqnjz7jo+dept1BSBsVOwqO33uLa6hWHLXhFJRwl3lgIjk4v5yzl0n8T+sClh
+	laWIANVbqlOM6PzZdlgbMPswcze+6gSoNc0NjiO5z4SqkSl4z0O8Bn7CuBiysSs5
+	AtBoXHkIOfqG8OYpOUc7TOcGiRyOvYHKfeA==
+Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com [209.85.160.200])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 49v08pp7vj-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Wed, 22 Oct 2025 20:25:30 +0000 (GMT)
+Received: by mail-qt1-f200.google.com with SMTP id d75a77b69052e-4e892f776d0so2671961cf.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Oct 2025 13:25:30 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1761163814; x=1761768614;
+        d=1e100.net; s=20230601; t=1761164729; x=1761769529;
         h=content-transfer-encoding:mime-version:message-id:date:subject:cc
          :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=CMO+68yA0NJP1unpK3WFsi9ClsA9S0hkHZBERZCyzFs=;
-        b=EvMCWEHLTNOcVvqreYn9Dg3rgLDZmC+MaHqK9h09bl5VpiI2UuK2uuVYIFh6L0tV0B
-         T4j2+lhEs/uHQ58q/VEBkr4WYANdBqy8VZU1j9jZL2LIcBH+ooVQoadk9hsjrgZ3xXuv
-         J36PC8d/f8c+vRx3rV8X6/7jdK5G8ApEcZI/DSyPtJzpPkYWzSp/XLgSSxWT3hciH3gC
-         R0CEtzK6RiqmHUrFy7Sbp6KeYFUqzYJFA/6/aLwNEuANDAwRKNe5mwWMI0MMqBPXTIky
-         QboZfnqXooKtZZ3kwJodqQlKm8yGomqQtn2LZo4XpNv+G1cy/nzeOPW/FjiDL6nHTORv
-         CO2Q==
-X-Forwarded-Encrypted: i=1; AJvYcCX0R89nWuqN8/456GhdF+8/kYvgHqEurvq5g2U7X4rrSt+ywgMqWUMr3Ockr4YSsGo9IdD+JjRmgmvdT3N1@vger.kernel.org
-X-Gm-Message-State: AOJu0YyJnRfVszjwiT+4Iy7ZC9UoFGnDVduC6XiLKHBelDkIplR33X4X
-	WT0pRNz25YLovFgFVqKIjyHhZlHn6PEcTgcs1G2YGwSPyOOzYgXW+TgXPwN7XCsdYos=
-X-Gm-Gg: ASbGncvral5ow2extpUfCbVrnaEZp9x0WQTHgj3hh17ZCq91udQKSIMyiecZZUekEMH
-	mJ8UJ1wIApOU7+vCPlJr6E4199Hd2ZXjWDXlk/xUXX8uA+Z54nBGmA+FfVop00HOCoZM0K19cFi
-	5lk5XkzJN/ojeY0aR0dtE6y4yjwQVj+zS9hTi8oX0uj88xzbDJ3V9VKpBik6pQdLLd5sViJ4HxC
-	901bT6uBpXxjgpYodxlwyVMIwdCm+8z05NFohbLJY+JT91x/659ZYvnKKi+Al/5gaDmaWMRG2Q6
-	Hzm04hk4oa66xjNP3XIkxaQR/5VR5woCRFJCkdyirYoIFZVyxy2MOKn4SJUBB62ZvHk8Lby6fqg
-	5RN9Btc0tCYs3qwn2rlGNldxsuUaCNj8zTcJsW4mRWXwYrrtAMrpFqAmq4RBy6MbYJegOwjZPjN
-	h6K6sohI/fTFdSmVLx
-X-Google-Smtp-Source: AGHT+IEE7nbdHtxCgzExX95o6DoJe0s0AWHwSyXzENCSmPhw5KThK31EPdJRY52brcU+d9kt2XaOCg==
-X-Received: by 2002:a05:600c:c3:b0:46f:cdfe:cd39 with SMTP id 5b1f17b1804b1-475c6f69890mr15544315e9.16.1761163814335;
-        Wed, 22 Oct 2025 13:10:14 -0700 (PDT)
-Received: from orion.home ([2a02:c7c:7259:a00:11f4:2b3f:7c5a:5c10])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-475caa8c785sm415275e9.14.2025.10.22.13.10.13
+        bh=8WTncnGza2Kn9sGuWGXDCvdR1E4ZhnjnCPBZWVK2zTw=;
+        b=xKuSFWg2WNaLGpnC5l08Ic/J2RJn10FdEnTP/P2Jbnl3vMJFFZgq2pG/4auGSdHZeX
+         piLWG78YBh8aM4LMdNkGP/44kKJkm184qUhTFQZdqBIAplLIcuDvnf8q/QAVp0SX8vVG
+         iviPDZCaltfoGcJL5oD18sAO8BnT/8gyH+mwG2wOiBqDwlyQvNWLAoYe1pfeiIvA6s/q
+         FCG3TpYCr4IHVVD5T0YfJtR/smgLPspJjod1MeDHrH3QicpflgJRh8MaaUHymUGzELYO
+         qdnw01Oi05PlvO/kVKmn6zQaCaw5eE/Hps4+XBstCEPVoSdob7eeVAa8K30qJa+IdqBQ
+         WHVw==
+X-Forwarded-Encrypted: i=1; AJvYcCUn/M485jSfnvX6cV/ysbNdDJqCIpLEJyq1+1kjlf13YeH/7a8jbfux2oThJJqM7EInuLbfeIIgQSqA8MBt@vger.kernel.org
+X-Gm-Message-State: AOJu0YzIrQeDnvXOs2V1izaC/HD0sUtPN65LWiuQeR4xb81xZOG1uQvN
+	rlbb7+geSGYt2uerWXeqW1SZiGlsCfcrcpyqKYXyeFtXEAQvsyRIT5hqenuLVjOSTDmEu7U89a+
+	WxgqQYpf78N5NPJs2Mrd0y93Aa2LwX7RHekHtczC5WI4zDQWWiZgfKpGy66Arn6fp/U91
+X-Gm-Gg: ASbGncuYgrSdk8milvz1W69Jmyta68OGoqh4Du7vQHTxAaX9tqysLrbA6MK9k1YD92m
+	GFUHwI0JxruiEAqknnhivNLwBHNPPaefCl/+kOkIGCdqJcKdWEryD3+zdst7Ewvc6t/kumuUFml
+	mwURXc4RWVhed4s67zNTdb25wPMMFZcQrzqwWOkAgKnelRUrU+QiYOEYFLwmKgNd6LyBq5YeRSq
+	RHStIPQ8Z91h3AchAvHculN2vTYJvAwOZdVnkpAcC1Y7f27mCsrYk8JiHtIzpTGRlNKDpxXeaOx
+	JG14ED0HvlvlIt0ia6Tqh5e22U+CJTJ1U/eKCbqVcAsslaE545oEjLLyhobA9iw1ixYsas+7Bwx
+	QntB+OiVoXxw0YYDMDbz5TNfOP+nAChlzLC66bFY=
+X-Received: by 2002:ac8:5fd0:0:b0:4e8:86ea:9ef5 with SMTP id d75a77b69052e-4e89d1dd2f1mr289828501cf.12.1761164729282;
+        Wed, 22 Oct 2025 13:25:29 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IF9MXmiprMdwUKIxdLcE2lxIjNarD784+69rh18fxO6NZuqDYy+756Rfa7vCNVdOJRHSD8i3A==
+X-Received: by 2002:ac8:5fd0:0:b0:4e8:86ea:9ef5 with SMTP id d75a77b69052e-4e89d1dd2f1mr289828161cf.12.1761164728853;
+        Wed, 22 Oct 2025 13:25:28 -0700 (PDT)
+Received: from hu-yabdulra-ams.qualcomm.com ([212.136.9.4])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-b6d5141a207sm4998566b.52.2025.10.22.13.25.28
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 22 Oct 2025 13:10:13 -0700 (PDT)
-From: Alexey Klimov <alexey.klimov@linaro.org>
-To: broonie@kernel.org,
-	gregkh@linuxfoundation.org,
-	srini@kernel.org
-Cc: rafael@kernel.org,
-	dakr@kernel.org,
-	make24@iscas.ac.cn,
-	steev@kali.org,
-	dmitry.baryshkov@oss.qualcomm.com,
-	linux-kernel@vger.kernel.org,
-	linux-sound@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org,
-	abel.vesa@linaro.org,
-	stable@vger.kernel.org
-Subject: [PATCH v2] regmap: slimbus: fix bus_context pointer in regmap init calls
-Date: Wed, 22 Oct 2025 21:10:12 +0100
-Message-ID: <20251022201013.1740211-1-alexey.klimov@linaro.org>
-X-Mailer: git-send-email 2.47.3
+        Wed, 22 Oct 2025 13:25:28 -0700 (PDT)
+From: Youssef Samir <youssef.abdulrahman@oss.qualcomm.com>
+To: jeff.hugo@oss.qualcomm.com, carl.vanderlip@oss.qualcomm.com,
+        troy.hanson@oss.qualcomm.com, zachary.mckevitt@oss.qualcomm.com
+Cc: ogabbay@kernel.org, lizhi.hou@amd.com, karol.wachowski@linux.intel.com,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org
+Subject: [PATCH 0/3] accel/qaic: Add Sub-system restart (SSR)
+Date: Wed, 22 Oct 2025 22:25:24 +0200
+Message-ID: <20251022202527.3873558-1-youssef.abdulrahman@oss.qualcomm.com>
+X-Mailer: git-send-email 2.43.0
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -97,111 +95,70 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDE4MDAwMCBTYWx0ZWRfX2tGupnONaFbA
+ yhojf/HOj36rHCUc/1UTRO/8vx6Y1Quvcg4vwiDqIFEp4G+nYwj6uB/Avz+ngzvIZ2ijbFk+I1a
+ 9O6Xk6vfgbFMnkkHWN9+kgXgvHPBxQEpwXuyrdZnI3CUW0xl7zm5EJIwTjLnkubds1AIzSpzMrW
+ dtp+CRx76GVVURurZiQ+XzlLBFq9Ew2FZ10pBiHlwaiZ5+gpSO+OmCjgVUp6uzy3WlahOXRMfDj
+ zp5GsJRi6rwXjUMKXr885FCz3ZASQu8wWWRn69zGnI769TsV/Woc/vgFgV9E6dHbVEBuzzTueue
+ I5tpikiMkx/obbDzHoH4tT0E4+6rb4U/JOeeTVD9eTN+Lg15yxNjwJjaVkqvhu+dpPHlN212WiB
+ U8zYJKa2ag471OcrNUpkWo5bYTi70w==
+X-Proofpoint-GUID: ggUEHQo-_XFft8jWeC1HjzbU3RVhKkoh
+X-Authority-Analysis: v=2.4 cv=Up1u9uwB c=1 sm=1 tr=0 ts=68f93dba cx=c_pps
+ a=JbAStetqSzwMeJznSMzCyw==:117 a=dNlqnMcrdpbb+gQrTujlOQ==:17
+ a=x6icFKpwvdMA:10 a=VkNPw1HP01LnGYTKEx00:22 a=bJ9p3azHXPqUh9OXqB0A:9
+ a=uxP6HrT_eTzRwkO_Te1X:22
+X-Proofpoint-ORIG-GUID: ggUEHQo-_XFft8jWeC1HjzbU3RVhKkoh
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-10-22_08,2025-10-22_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ lowpriorityscore=0 adultscore=0 suspectscore=0 malwarescore=0 clxscore=1015
+ impostorscore=0 bulkscore=0 priorityscore=1501 spamscore=0 phishscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.19.0-2510020000 definitions=main-2510180000
 
-Commit 4e65bda8273c ("ASoC: wcd934x: fix error handling in
-wcd934x_codec_parse_data()") revealed the problem in the slimbus regmap.
-That commit breaks audio playback, for instance, on sdm845 Thundercomm
-Dragonboard 845c board:
+SSR is a feature that mitigates a crash in device sub-system. Usually,
+after a workload (using a sub-system) has crashed on the device, the
+entire device crashes affecting all the workloads on device.
+SSR is used to limit the damage only to that particular workload and
+releases the resources used by it, leaving the decision to the user.
+Applications are informed when SSR starts and ends via udev notifications.
+All ongoing requests for that particular workload will be lost.
 
- Unable to handle kernel paging request at virtual address ffff8000847cbad4
- ...
- CPU: 5 UID: 0 PID: 776 Comm: aplay Not tainted 6.18.0-rc1-00028-g7ea30958b305 #11 PREEMPT
- Hardware name: Thundercomm Dragonboard 845c (DT)
- ...
- Call trace:
-  slim_xfer_msg+0x24/0x1ac [slimbus] (P)
-  slim_read+0x48/0x74 [slimbus]
-  regmap_slimbus_read+0x18/0x24 [regmap_slimbus]
-  _regmap_raw_read+0xe8/0x174
-  _regmap_bus_read+0x44/0x80
-  _regmap_read+0x60/0xd8
-  _regmap_update_bits+0xf4/0x140
-  _regmap_select_page+0xa8/0x124
-  _regmap_raw_write_impl+0x3b8/0x65c
-  _regmap_bus_raw_write+0x60/0x80
-  _regmap_write+0x58/0xc0
-  regmap_write+0x4c/0x80
-  wcd934x_hw_params+0x494/0x8b8 [snd_soc_wcd934x]
-  snd_soc_dai_hw_params+0x3c/0x7c [snd_soc_core]
-  __soc_pcm_hw_params+0x22c/0x634 [snd_soc_core]
-  dpcm_be_dai_hw_params+0x1d4/0x38c [snd_soc_core]
-  dpcm_fe_dai_hw_params+0x9c/0x17c [snd_soc_core]
-  snd_pcm_hw_params+0x124/0x464 [snd_pcm]
-  snd_pcm_common_ioctl+0x110c/0x1820 [snd_pcm]
-  snd_pcm_ioctl+0x34/0x4c [snd_pcm]
-  __arm64_sys_ioctl+0xac/0x104
-  invoke_syscall+0x48/0x104
-  el0_svc_common.constprop.0+0x40/0xe0
-  do_el0_svc+0x1c/0x28
-  el0_svc+0x34/0xec
-  el0t_64_sync_handler+0xa0/0xf0
-  el0t_64_sync+0x198/0x19c
+During SSR the affected DBC changes state as follows:
+DBC_STATE_BEFORE_SHUTDOWN
+DBC_STATE_AFTER_SHUTDOWN
+DBC_STATE_BEFORE_POWER_UP
+DBC_STATE_AFTER_POWER_UP
 
-The __devm_regmap_init_slimbus() started to be used instead of
-__regmap_init_slimbus() after the commit mentioned above and turns out
-the incorrect bus_context pointer (3rd argument) was used in
-__devm_regmap_init_slimbus(). It should be just "slimbus" (which is equal
-to &slimbus->dev). Correct it. The wcd934x codec seems to be the only or
-the first user of devm_regmap_init_slimbus() but we should fix it till
-the point where __devm_regmap_init_slimbus() was introduced therefore
-two "Fixes" tags.
+In addition to supporting the sub-system to recover from a crash, the
+device can optionally use SSR to send a crashdump.
 
-While at this, also correct the same argument in __regmap_init_slimbus().
+Jeff Hugo (1):
+  accel/qaic: Implement basic SSR handling
 
-Fixes: 4e65bda8273c ("ASoC: wcd934x: fix error handling in wcd934x_codec_parse_data()")
-Fixes: 7d6f7fb053ad ("regmap: add SLIMbus support")
-Cc: stable@vger.kernel.org
-Cc: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Cc: Ma Ke <make24@iscas.ac.cn>
-Cc: Steev Klimaszewski <steev@kali.org>
-Cc: Srinivas Kandagatla <srini@kernel.org>
-Reviewed-by: Abel Vesa <abel.vesa@linaro.org>
-Signed-off-by: Alexey Klimov <alexey.klimov@linaro.org>
----
+Pranjal Ramajor Asha Kanojiya (2):
+  accel/qaic: Add DMA Bridge Channel(DBC) sysfs and uevents
+  accel/qaic: Collect crashdump from SSR channel
 
-The patch/fix is for the current 6.18 development cycle
-since it fixes the regression introduced in 6.18.0-rc1.
+ Documentation/ABI/stable/sysfs-driver-qaic |  16 +
+ Documentation/accel/qaic/aic100.rst        |  24 +-
+ drivers/accel/qaic/Kconfig                 |   1 +
+ drivers/accel/qaic/Makefile                |   2 +
+ drivers/accel/qaic/qaic.h                  |  36 +
+ drivers/accel/qaic/qaic_control.c          |   2 +
+ drivers/accel/qaic/qaic_data.c             |  61 +-
+ drivers/accel/qaic/qaic_drv.c              |  25 +
+ drivers/accel/qaic/qaic_ssr.c              | 819 +++++++++++++++++++++
+ drivers/accel/qaic/qaic_ssr.h              |  16 +
+ drivers/accel/qaic/qaic_sysfs.c            | 109 +++
+ 11 files changed, 1102 insertions(+), 9 deletions(-)
+ create mode 100644 Documentation/ABI/stable/sysfs-driver-qaic
+ create mode 100644 drivers/accel/qaic/qaic_ssr.c
+ create mode 100644 drivers/accel/qaic/qaic_ssr.h
+ create mode 100644 drivers/accel/qaic/qaic_sysfs.c
 
-Changes in v2:
- - &slimbus->dev replaced with just "slimbus", no functional change
- (as suggested by Dmitry);
- - the same argument in __regmap_init_slimbus() was replaced with
- "slimbus" (as suggested by Dmitry);
- - reduced the backtrace log in the commit message (as suggested by Mark);
- - corrected subject/title, few typos, added mention of non-managed init
- func change, rephrased smth;
- - added Reviewed-by tag from Abel.
-
-Prev version: https://lore.kernel.org/linux-sound/20251020015557.1127542-1-alexey.klimov@linaro.org/
-
- drivers/base/regmap/regmap-slimbus.c | 6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
-
-diff --git a/drivers/base/regmap/regmap-slimbus.c b/drivers/base/regmap/regmap-slimbus.c
-index 54eb7d227cf4..e523fae73004 100644
---- a/drivers/base/regmap/regmap-slimbus.c
-+++ b/drivers/base/regmap/regmap-slimbus.c
-@@ -48,8 +48,7 @@ struct regmap *__regmap_init_slimbus(struct slim_device *slimbus,
- 	if (IS_ERR(bus))
- 		return ERR_CAST(bus);
- 
--	return __regmap_init(&slimbus->dev, bus, &slimbus->dev, config,
--			     lock_key, lock_name);
-+	return __regmap_init(&slimbus->dev, bus, slimbus, config, lock_key, lock_name);
- }
- EXPORT_SYMBOL_GPL(__regmap_init_slimbus);
- 
-@@ -63,8 +62,7 @@ struct regmap *__devm_regmap_init_slimbus(struct slim_device *slimbus,
- 	if (IS_ERR(bus))
- 		return ERR_CAST(bus);
- 
--	return __devm_regmap_init(&slimbus->dev, bus, &slimbus, config,
--				  lock_key, lock_name);
-+	return __devm_regmap_init(&slimbus->dev, bus, slimbus, config, lock_key, lock_name);
- }
- EXPORT_SYMBOL_GPL(__devm_regmap_init_slimbus);
- 
 -- 
-2.47.3
+2.43.0
 
 
