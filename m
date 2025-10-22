@@ -1,1112 +1,457 @@
-Return-Path: <linux-arm-msm+bounces-78248-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-78249-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 18944BFA172
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Oct 2025 07:42:16 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1B182BFA194
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Oct 2025 07:45:22 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 7E65C19A1D98
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Oct 2025 05:42:26 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 83CE2565767
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Oct 2025 05:45:19 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CC2C32EDD64;
-	Wed, 22 Oct 2025 05:41:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 271D62EFD8A;
+	Wed, 22 Oct 2025 05:44:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=mainlining.org header.i=@mainlining.org header.b="WHR57tZ9";
-	dkim=permerror (0-bit key) header.d=mainlining.org header.i=@mainlining.org header.b="Z9nI3Omf"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="RUdX5aP2"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail.mainlining.org (mail.mainlining.org [5.75.144.95])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 320602ECD11;
-	Wed, 22 Oct 2025 05:41:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=5.75.144.95
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBB232ECE9C
+	for <linux-arm-msm@vger.kernel.org>; Wed, 22 Oct 2025 05:44:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761111672; cv=none; b=drbgHuDhWabK+ex0y04ML3yDD9/8/I0RPrTz0jyoV6aeLr8zEEau7nfRCLh+lkg/l0ADCCqEnjzIbz6etjf6xyPlsEU6pKCziNC+4aZY6aIjIA70VVBUh9IBzvUopr14Ezwo6iaNGUVy0mFEPIxoIkqsIXe6s2OHvv5dy97etkM=
+	t=1761111874; cv=none; b=HeJSk3Dy1WNK6fiNr5AFP+2ntjazi/X0hKI1k+X7rmm8j3IJMmXyzsNQ6vlIFEzNa0TFmjXcsvORrj2NGGWZhhASyxLNQUljLx6XR2XooJ0DekOHld+51j+bkUdgEbGTydQwl7+xfNQZcgyJbgZfEh9SAD9PSTlznHaoNLJJR6c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761111672; c=relaxed/simple;
-	bh=+X4TPBH0WyY4hRud1auR4fdOvPuQFnF33f5Yo/ePtbI=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=O2YMUW4d+LIEsYDDjoKXBocRXvLFbarW6XBqW/UAV/ddqabP/FQopJd3OjJAh1uKrpeHcPRK7FkIVHgCaVVtUSu1ADYvK30JR8j356B9/Se5hyaGLPV7KfjFcLeKAbha1vL6D3G9JCydlItwE3Efvb3ds2hcOb5tmj2ZDSO3XQA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=mainlining.org; spf=pass smtp.mailfrom=mainlining.org; dkim=pass (2048-bit key) header.d=mainlining.org header.i=@mainlining.org header.b=WHR57tZ9; dkim=permerror (0-bit key) header.d=mainlining.org header.i=@mainlining.org header.b=Z9nI3Omf; arc=none smtp.client-ip=5.75.144.95
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=mainlining.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=mainlining.org
-DKIM-Signature: v=1; a=rsa-sha256; s=202507r; d=mainlining.org; c=relaxed/relaxed;
-	h=Message-ID:Date:Subject:To:From; t=1761111652; bh=VzcTSEXcoPEUdVfkEfXH82M
-	yzhdOXCpjYXwU3FNqgWc=; b=WHR57tZ95dTpRfIBQpRhKZ5SauJxqGYeoQfYxGyc+EULRZbyw6
-	8STCSmJH6b0eA1nKtc3mSqNSTd1u5yHld1YPw0WDSzQdkbletrhcDbgC+cM749mtejoq/mcIWKs
-	MBRAUDqSfWMyJiG5i1hJO6ReVpf5yuoGZxC02mYeMsz+fZRZZUP0KKx3cZPS1QHIITwGiWUXE/L
-	0I14qZ1h8CgBqcf7EJZkA2ZMaaTKx3WSy6rWxIlWyZGCJJ5StjXjXSQ5ERK3N7aEMEbn0LCT8Q4
-	nee7EQHW0T11QFbxbiOBKHHJcpsXi+IyZWTuizrxKvrHlob7w7Pxe8pgr9qepF+dUmg==;
-DKIM-Signature: v=1; a=ed25519-sha256; s=202507e; d=mainlining.org; c=relaxed/relaxed;
-	h=Message-ID:Date:Subject:To:From; t=1761111652; bh=VzcTSEXcoPEUdVfkEfXH82M
-	yzhdOXCpjYXwU3FNqgWc=; b=Z9nI3Omf7w25UaswPRdXhkNksbPwKiJg5bkWlfJcIVAMrk6E82
-	maFVKVN3Ov+IqbSwKe98KWyY4EBCtt9dfLCg==;
-From: Piyush Raj Chouhan <pc1598@mainlining.org>
-To: linux-arm-msm@vger.kernel.org
-Cc: devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	linux-hardening@vger.kernel.org,
-	andersson@kernel.org,
-	konradybcio@kernel.org,
-	robh@kernel.org,
-	krzk+dt@kernel.org,
-	conor+dt@kernel.org,
-	tony.luck@intel.com,
-	gpiccoli@igalia.com,
-	Piyush Raj Chouhan <pc1598@mainlining.org>
-Subject: [PATCH 2/2] arm64: dts: qcom: sm8150: Add support for Xiaomi Redmi K20 Pro
-Date: Wed, 22 Oct 2025 11:10:24 +0530
-Message-ID: <20251022054026.22816-2-pc1598@mainlining.org>
-X-Mailer: git-send-email 2.51.1
-In-Reply-To: <20251022054026.22816-1-pc1598@mainlining.org>
-References: <20251022054026.22816-1-pc1598@mainlining.org>
+	s=arc-20240116; t=1761111874; c=relaxed/simple;
+	bh=tcUD4EQbeOiixehNpu7v0H7oPtKBd/AJWusjJ5KewBo=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=WJrjUS+q3YJnK7hBoIdg34wHOefu148KNLXh92/1niocJK82BTtgIoPmhN3ODMevZ+MEdPUSEVEj9rJ6Yb8LmbDhWb35y7G1xkGwmEU0F/Sv01qZ0WIGZVFOdN32+rrGQUwHXa9+yVGodLawqt6QJqjNXXJHW6sQWLgk29uu1cE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=RUdX5aP2; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 59M1hV9U020418
+	for <linux-arm-msm@vger.kernel.org>; Wed, 22 Oct 2025 05:44:31 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	XezIXwm2kvsHwv+azWqD5hEZ5XYPnRLDHsouMeElX18=; b=RUdX5aP2h91hc5KQ
+	pAhdRM3pNmVrzv0EKAyr59cBqWjN27YY3ctHl1+acUDC+ll10bBm+rU2VnURgC5f
+	ff+8EAQRQ4aCEs6vtpr6E/T4wUrdR/qYd7JyM29SHq0Z4xbXEgNtb4AIV4zdxpAx
+	vte7CW6fXIjhosvfS4/IqlMl6lOgTyg1YcWPYeew6oRH+EgylQKE7AoFs455rcrd
+	D4YIQ4gLMn4Ej/ILHvHRLDlE4E3Kr7kaUAvGXkQUPT0qHtgA7PQVkZx9ptJMUT07
+	gcPmABscEDJd9qBfGJ0xDhFz2a3AsyoL1LKl+pXsHbNW3X4TUaoh3hmgdd3f3Ht7
+	0RBtRw==
+Received: from mail-pl1-f198.google.com (mail-pl1-f198.google.com [209.85.214.198])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 49v3443ck7-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Wed, 22 Oct 2025 05:44:30 +0000 (GMT)
+Received: by mail-pl1-f198.google.com with SMTP id d9443c01a7336-28973df6a90so63573755ad.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 21 Oct 2025 22:44:30 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1761111870; x=1761716670;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=XezIXwm2kvsHwv+azWqD5hEZ5XYPnRLDHsouMeElX18=;
+        b=vMBAkXav1LsgFfT2zdxUndeaynmvHir67EOPCIHWfz0BuB4c+Py2s2uDVJnMN0UxqH
+         +MRpGesX22RIhhGpeITZY0vzJyT+880AAldgdq7E4FjrTmn7BvAP/ddvCrqiwAYxvSs+
+         NMsJPKtI7oJaNUjGivxgPdNzIvGj544dyW1xKL9hbpkHIo+2cXdYbJ764Yxgt5LSr0H0
+         809X7wyYlUZqiqPTrWCnaxnVkdQN3yBnwjtUHCCG7GjmysHqm70vExoOYpBw99bkTMOA
+         wNtR7ogkIGULHQR+4goD8tNitSl4Vfqn4/HflVdPL68jQxPfpFSwDjzVP8C+ScAY8K1O
+         7WcQ==
+X-Gm-Message-State: AOJu0Yw254xq6wVna4F03ALOurU4DjFjlHsQiInzaNGga/3zX22awbNr
+	vBf2ESR53DDVCsBzlKor70dJGvzcw5aYlhSgOTulJhCfYa4uXbsspuZo1TmpudbYvrNdfT1+wmL
+	1tdIUDNgZOnrQLkRyajF1SE+f7y1SRcz6YnjSEwoF66x+MHOsaW7UdfY7W4WtJM9SWG7nicuoB4
+	cN
+X-Gm-Gg: ASbGncvH/WS2JzE6Jym1IGw/3sb67/rdhSrECZYJ5SSi5oSen7tAgZnEU5KhGL2vtjX
+	ly64ic9frP5CllCFKobM5lsX+ynLG8nLROQ3XpeXW8BKYMHWNy/MZzGW+L4HBcBvnaKLoa//vzr
+	4s6WQp161lL6ZOn+ebVBUkbnRADenOZ7d778VGMYOkXTEIVuCkM3Njgtju+Aq0HWhNihBHqWSBL
+	70kDG2thvt+xux84/3V0KXECB51hU5haRaBUmkeq+gEZ+hXk/VC6wpQ0Ovx3zRE+zBe6KO38dvE
+	RkvUmjZfDemuVbVah6wbxrwYYtA/zbXErPzZ/SyEcSQtsDQ3Jxar2gY99Fp3SvlXe/cGePnRFrs
+	vLUvyJehmGWiiwoHcqlnVWAgx0dQpc9/sCg==
+X-Received: by 2002:a17:903:2381:b0:240:3b9e:dd65 with SMTP id d9443c01a7336-290cba4ec0fmr239924425ad.38.1761111869591;
+        Tue, 21 Oct 2025 22:44:29 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEDeFeUhNgJlMZ6PwfKKhhegiNwtt0fceM9zAQnEkRyWJLeZgcOtimZJB7SIgd1LwiVmKXeoQ==
+X-Received: by 2002:a17:903:2381:b0:240:3b9e:dd65 with SMTP id d9443c01a7336-290cba4ec0fmr239924195ad.38.1761111869101;
+        Tue, 21 Oct 2025 22:44:29 -0700 (PDT)
+Received: from [192.168.0.166] ([49.205.252.226])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-29246ffeec3sm127923005ad.52.2025.10.21.22.44.24
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 21 Oct 2025 22:44:28 -0700 (PDT)
+Message-ID: <ae4c7968-f593-6c8d-2c10-f7a2b31318e2@oss.qualcomm.com>
+Date: Wed, 22 Oct 2025 11:14:22 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.15.1
+Subject: Re: [PATCH v2 4/8] media: iris: Introduce buffer size calculations
+ for vpu4
+Content-Language: en-US
+To: Bryan O'Donoghue <bod@kernel.org>,
+        Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>,
+        Abhinav Kumar <abhinav.kumar@linux.dev>,
+        Mauro Carvalho Chehab <mchehab@kernel.org>,
+        Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley
+ <conor+dt@kernel.org>,
+        Philipp Zabel <p.zabel@pengutronix.de>,
+        Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+        Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Cc: linux-arm-msm@vger.kernel.org, linux-media@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Vishnu Reddy <quic_bvisredd@quicinc.com>
+References: <20251017-knp_video-v2-0-f568ce1a4be3@oss.qualcomm.com>
+ <GTpef7Aus-RX4JTIPiuyzDI3BJc-uy2KS2_iCt9iA5vLn1uSC4euaEJSsHiAkdYfbyDe1qV7d4unrSJ5gXQPgw==@protonmail.internalid>
+ <20251017-knp_video-v2-4-f568ce1a4be3@oss.qualcomm.com>
+ <eb8bca50-5e11-48c0-8c1c-0e639928e089@kernel.org>
+From: Vikash Garodia <vikash.garodia@oss.qualcomm.com>
+In-Reply-To: <eb8bca50-5e11-48c0-8c1c-0e639928e089@kernel.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
+X-Proofpoint-GUID: 8DQqffim4IcxmSIBrA2AGBfrHUxNOOWt
+X-Proofpoint-ORIG-GUID: 8DQqffim4IcxmSIBrA2AGBfrHUxNOOWt
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDE4MDAyMyBTYWx0ZWRfXwHXcfFSNE9/l
+ EAQfWYRFeGpVw0/8FHory79jErhGD88Ic53VRGBK3y/u7Op5br+5OESTkidVQV8OptTy6Can2js
+ JtWw+S/a7vzqFBCobDPldp17jojiuEcDK4p7kcSQk4w49Uk0weB8RMh7kEhoyVzQPs9lLpEdGVQ
+ UlG+QuFqvQbMpXH8ZVQOcpY++A1ndf81OeNTqno5Yh60HcuCCLOWAVHQutoWV9lNtCLc4KPYHt2
+ kxDHBPh+TabnpWdSTytfFiHdC0PtmfjvjaSnKHVIAfSgYUkdmo4Hcxen2Ayq/Th1sPyv1WpoO8b
+ keZwjpfFQzUY0Rb+U1VxTRssRfVBaFt/Sjg4EzXpr3gJsvLSTdwYEwQSAgGwnFEdHwauWgHDUkb
+ GxVvP1plQ9CYOyjgaWr1J5Uw4wdP5Q==
+X-Authority-Analysis: v=2.4 cv=E/vAZKdl c=1 sm=1 tr=0 ts=68f86f3e cx=c_pps
+ a=MTSHoo12Qbhz2p7MsH1ifg==:117 a=FoPg1IWog9mqHsjG+aRTFA==:17
+ a=IkcTkHD0fZMA:10 a=x6icFKpwvdMA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=COk6AnOGAAAA:8 a=EUspDBNiAAAA:8 a=EynWgtm1Wqj_ObTU-tcA:9 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10 a=GvdueXVYPmCkWapjIL-Q:22 a=TjNXssC_j7lpFel5tvFf:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-10-22_02,2025-10-13_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ impostorscore=0 spamscore=0 priorityscore=1501 bulkscore=0 suspectscore=0
+ lowpriorityscore=0 clxscore=1015 adultscore=0 phishscore=0 malwarescore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.19.0-2510020000 definitions=main-2510180023
 
-Add initial device tree support for the Xiaomi Redmi K20 Pro/ Xiaomi Mi 9T Pro
-(codename raphael), based on the Qualcomm SM8150 (Snapdragon 855)
-platform.
 
-The supported features include:
-- Display (Samsung AMS639RQ08 AMOLED panel)
-- UFS storage
-- USB Type-C (with role switching, High-Speed only)
-- PMIC regulators (PM8150, PM8150L, PM8150B)
-- GPIO keys (volume up, volume down, power)
-- Remoteprocs (ADSP, CDSP, MPSS)
-- Adreno 640 GPU with GMU
-- WCN3990 WiFi
-- Camera flash LEDs
+On 10/22/2025 4:55 AM, Bryan O'Donoghue wrote:
+> On 17/10/2025 15:16, Vikash Garodia wrote:
+>> Introduces vp4 buffer size calculation for both encoder and decoder.
+>> Reuse the buffer size calculation which are common, while adding the
+>> vpu4 ones separately.
+>>
+>> Co-developed-by: Vishnu Reddy <quic_bvisredd@quicinc.com>
+>> Signed-off-by: Vishnu Reddy <quic_bvisredd@quicinc.com>
+>> Signed-off-by: Vikash Garodia <vikash.garodia@oss.qualcomm.com>
+>> ---
+>>   drivers/media/platform/qcom/iris/iris_vpu_buffer.c | 345 +++++++++++++++++++++
+>>   drivers/media/platform/qcom/iris/iris_vpu_buffer.h |  15 +
+>>   2 files changed, 360 insertions(+)
+>>
+>> diff --git a/drivers/media/platform/qcom/iris/iris_vpu_buffer.c
+>> b/drivers/media/platform/qcom/iris/iris_vpu_buffer.c
+>> index
+>> 4463be05ce165adef6b152eb0c155d2e6a7b3c36..8cc52d7aba3ffb968191519c1a1a10e326403205 100644
+>> --- a/drivers/media/platform/qcom/iris/iris_vpu_buffer.c
+>> +++ b/drivers/media/platform/qcom/iris/iris_vpu_buffer.c
+>> @@ -1408,6 +1408,307 @@ static u32 iris_vpu_enc_vpss_size(struct iris_inst *inst)
+>>       return hfi_buffer_vpss_enc(width, height, ds_enable, 0, 0);
+>>   }
+>>
+>> +static inline u32 size_dpb_opb(u32 height, u32 lcu_size)
+>> +{
+>> +    u32 max_tile_height = ((height + lcu_size - 1) / lcu_size) * lcu_size + 8;
+>> +    u32 dpb_opb = 3 * ((max_tile_height >> 3) * DMA_ALIGNMENT);
+>> +    u32 num_luma_chrome_plane = 2;
+>> +
+>> +    return dpb_opb = num_luma_chrome_plane * ALIGN(dpb_opb, DMA_ALIGNMENT);
+> 
+> return thing = someother-thing.
+> 
+> You must mean
+> 
+> return (num_luma_chrome_plane * ALIGN(dpb_opb, DMA_ALIGNMENT));
 
-Signed-off-by: Piyush Raj Chouhan <pc1598@mainlining.org>
----
- arch/arm64/boot/dts/qcom/Makefile             |   1 +
- .../boot/dts/qcom/sm8150-xiaomi-raphael.dts   | 995 ++++++++++++++++++
- 2 files changed, 996 insertions(+)
- create mode 100644 arch/arm64/boot/dts/qcom/sm8150-xiaomi-raphael.dts
+Ack
 
-diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
-index 296688f7cb26..d2b673d2625c 100644
---- a/arch/arm64/boot/dts/qcom/Makefile
-+++ b/arch/arm64/boot/dts/qcom/Makefile
-@@ -279,6 +279,7 @@ dtb-$(CONFIG_ARCH_QCOM)	+= sm8150-microsoft-surface-duo.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sm8150-mtp.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sm8150-sony-xperia-kumano-bahamut.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sm8150-sony-xperia-kumano-griffin.dtb
-+dtb-$(CONFIG_ARCH_QCOM)	+= sm8150-xiaomi-raphael.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sm8250-hdk.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sm8250-mtp.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sm8250-samsung-r8q.dtb
-diff --git a/arch/arm64/boot/dts/qcom/sm8150-xiaomi-raphael.dts b/arch/arm64/boot/dts/qcom/sm8150-xiaomi-raphael.dts
-new file mode 100644
-index 000000000000..9ff938b61a31
---- /dev/null
-+++ b/arch/arm64/boot/dts/qcom/sm8150-xiaomi-raphael.dts
-@@ -0,0 +1,995 @@
-+// SPDX-License-Identifier: BSD-3-Clause
-+
-+/*
-+ * Copyright (c) 2025, Piyush Raj Chouhan <pc1598@mainlining.org>.
-+ */
-+
-+/dts-v1/;
-+
-+#include <dt-bindings/arm/qcom,ids.h>
-+#include <dt-bindings/gpio/gpio.h>
-+#include <dt-bindings/leds/common.h>
-+#include <dt-bindings/pinctrl/qcom,pmic-gpio.h>
-+#include <dt-bindings/regulator/qcom,rpmh-regulator.h>
-+#include <dt-bindings/usb/pd.h>
-+#include "sm8150.dtsi"
-+#include "pm8150.dtsi"
-+#include "pm8150b.dtsi"
-+#include "pm8150l.dtsi"
-+
-+/* 
-+ * Rewrite reserved memory maps inherited from sm8150.dtsi to match the ones
-+ * used on xiaomi-raphael.
-+ * Note: this list is ordered by its memory address in sm8150.dtsi.
-+ */
-+/delete-node/ &tz_mem;      /* same address but larger, no place for rmtfs_mem! */
-+/delete-node/ &rmtfs_mem;   /* moved to completely different address */
-+/delete-node/ &adsp_mem;    /* same start address, but larger size */
-+/delete-node/ &mpss_mem;    /* same size, shifted higher, due to larger adsp_mem */
-+/delete-node/ &venus_mem;   /* same size, shifted higher */
-+/delete-node/ &slpi_mem;    /* same size, shifted higher */
-+/delete-node/ &ipa_fw_mem;  /* same size, shifted higher */
-+/delete-node/ &ipa_gsi_mem; /* same size, shifted higher */
-+/delete-node/ &gpu_mem;     /* same size, shifted higher */
-+/delete-node/ &spss_mem;    /* same size, shifted higher */
-+/delete-node/ &cdsp_mem;    /* same size, shifted higher */
-+
-+/ {
-+	model = "Xiaomi Redmi K20 Pro";
-+	compatible = "xiaomi,raphael", "qcom,sm8150";
-+	qcom,msm-id = <QCOM_ID_SM8150 0x20000>; /* SM8150 v2 */
-+	qcom,board-id = <0x28008 0>;
-+	chassis-type = "handset";
-+
-+	aliases {
-+		serial0 = &uart2;
-+		wifi0 = &wifi;
-+	};
-+
-+	chosen {
-+		#address-cells = <2>;
-+		#size-cells = <2>;
-+		ranges;
-+
-+		stdout-path = "serial0:115200n8";
-+
-+		framebuffer: framebuffer@9c000000 {
-+			compatible = "simple-framebuffer";
-+			reg = <0 0x9c000000 0 (1080 * 2340 * 4)>;
-+			width = <1080>;
-+			height = <2340>;
-+			stride = <(1080 * 4)>;
-+			format = "a8r8g8b8";
-+			display = <&panel>;
-+			clocks = <&gcc GCC_DISP_HF_AXI_CLK>;
-+		};
-+	};
-+
-+	disp_vci_vreg: disp-vci-vreg {
-+		compatible = "regulator-fixed";
-+		regulator-name = "disp_vci_vreg";
-+		regulator-boot-on;
-+		enable-active-high;
-+		gpio = <&tlmm 99 GPIO_ACTIVE_HIGH>;
-+	};
-+
-+	vreg_ibb: regulator-ibb {
-+		compatible = "regulator-fixed";
-+		regulator-name = "ibb";
-+		regulator-min-microvolt = <6000000>;
-+		regulator-max-microvolt = <6000000>;
-+	};
-+
-+	vreg_lab: regulator-lab {
-+		compatible = "regulator-fixed";
-+		regulator-name = "lab";
-+		regulator-min-microvolt = <6000000>;
-+		regulator-max-microvolt = <6000000>;
-+	};
-+
-+	reserved-memory {
-+		tz_mem: memory@86200000 {
-+			reg = <0x0 0x86200000 0x0 0x5500000>;
-+			no-map;
-+		};
-+
-+		adsp_mem: memory@8be00000 {
-+			reg = <0x0 0x8be00000 0x0 0x2200000>;
-+			no-map;
-+		};
-+
-+		mpss_mem: memory@8e000000 {
-+			reg = <0x0 0x8e000000 0x0 0x9600000>;
-+			no-map;
-+		};
-+
-+		venus_mem: memory@97600000 {
-+			reg = <0x0 0x97600000 0x0 0x500000>;
-+			no-map;
-+		};
-+
-+		slpi_mem: memory@97b00000 {
-+			reg = <0x0 0x97b00000 0x0 0x1400000>;
-+			no-map;
-+		};
-+
-+		ipa_fw_mem: memory@98f00000 {
-+			reg = <0x0 0x98f00000 0x0 0x10000>;
-+			no-map;
-+		};
-+
-+		ipa_gsi_mem: memory@98f10000 {
-+			reg = <0x0 0x98f10000 0x0 0x5000>;
-+			no-map;
-+		};
-+
-+		gpu_mem: memory@98f15000 {
-+			reg = <0x0 0x98f15000 0x0 0x2000>;
-+			no-map;
-+		};
-+
-+		spss_mem: memory@99000000 {
-+			reg = <0x0 0x99000000 0x0 0x100000>;
-+			no-map;
-+		};
-+
-+		cdsp_mem: memory@99100000 {
-+			reg = <0x0 0x99100000 0x0 0x1400000>;
-+			no-map;
-+		};
-+
-+		cont_splash_mem: memory@9c000000 {
-+			reg = <0x0 0x9c000000 0x0 0x2400000>;
-+			no-map;
-+		};
-+
-+		cdsp_sec_mem: memory@a4c00000 {
-+			reg = <0x0 0xa4c00000 0x0 0x3c00000>;
-+			no-map;
-+		};
-+
-+		ramoops@a1600000 {
-+			compatible = "ramoops";
-+			reg = <0x0 0xa1600000 0x0 0x800000>;
-+			console-size = <0x400000>;
-+			pmsg-size = <0x200000>;
-+			record-size = <0>;
-+			ftrace-size = <0>;
-+			ecc-size = <0>;
-+			no-map;
-+		};
-+
-+		rmtfs_mem: memory@fe101000 {
-+			compatible = "qcom,rmtfs-mem";
-+			reg = <0 0xfe101000 0 0x300000>;
-+			qcom,client-id = <1>;
-+			qcom,vmid = <15>;
-+			no-map;
-+		};
-+	};
-+
-+	gpio-keys {
-+		compatible = "gpio-keys";
-+		pinctrl-names = "default";
-+		pinctrl-0 = <&vol_up_n>;
-+
-+		key-vol-up {
-+			label = "Volume Up";
-+			linux,code = <KEY_VOLUMEUP>;
-+			gpios = <&pm8150_gpios 6 GPIO_ACTIVE_LOW>;
-+		};
-+	};
-+
-+	vph_pwr: vph-pwr-regulator {
-+		compatible = "regulator-fixed";
-+		regulator-name = "vph_pwr";
-+		regulator-min-microvolt = <3700000>;
-+		regulator-max-microvolt = <3700000>;
-+	};
-+
-+	/*
-+	 * Apparently RPMh does not provide support for PM8150 S4 because it
-+	 * is always-on; model it as a fixed regulator.
-+	 */
-+	vreg_s4a_1p8: pm8150-s4 {
-+		compatible = "regulator-fixed";
-+		regulator-name = "vreg_s4a_1p8";
-+		regulator-min-microvolt = <1800000>;
-+		regulator-max-microvolt = <1800000>;
-+		regulator-always-on;
-+		regulator-boot-on;
-+		vin-supply = <&vph_pwr>;
-+	};
-+};
-+
-+&apps_rsc {
-+	regulators-0 {
-+		compatible = "qcom,pm8150-rpmh-regulators";
-+		qcom,pmic-id = "a";
-+
-+		vdd-s1-supply = <&vph_pwr>;
-+		vdd-s2-supply = <&vph_pwr>;
-+		vdd-s3-supply = <&vph_pwr>;
-+		vdd-s4-supply = <&vph_pwr>;
-+		vdd-s5-supply = <&vph_pwr>;
-+		vdd-s6-supply = <&vph_pwr>;
-+		vdd-s7-supply = <&vph_pwr>;
-+		vdd-s8-supply = <&vph_pwr>;
-+		vdd-s9-supply = <&vph_pwr>;
-+		vdd-s10-supply = <&vph_pwr>;
-+
-+		vdd-l1-l8-l11-supply = <&vreg_s6a_0p9>;
-+		vdd-l2-l10-supply = <&vreg_bob>;
-+		vdd-l3-l4-l5-l18-supply = <&vreg_s6a_0p9>;
-+		vdd-l6-l9-supply = <&vreg_s8c_1p3>;
-+		vdd-l7-l12-l14-l15-supply = <&vreg_s5a_2p0>;
-+		vdd-l13-l16-l17-supply = <&vreg_bob>;
-+
-+		vreg_s5a_2p0: smps5 {
-+			regulator-min-microvolt = <1904000>;
-+			regulator-max-microvolt = <2000000>;
-+		};
-+
-+		vreg_s6a_0p9: smps6 {
-+			regulator-min-microvolt = <920000>;
-+			regulator-max-microvolt = <1128000>;
-+		};
-+
-+		vdda_wcss_pll:
-+		vreg_l1a_0p75: ldo1 {
-+			regulator-min-microvolt = <752000>;
-+			regulator-max-microvolt = <752000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vdd_pdphy:
-+		vdda_usb_hs_3p1:
-+		vreg_l2a_3p1: ldo2 {
-+			regulator-min-microvolt = <3072000>;
-+			regulator-max-microvolt = <3072000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_l3a_0p8: ldo3 {
-+			regulator-min-microvolt = <480000>;
-+			regulator-max-microvolt = <932000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		/*
-+		 * L4A supplies VDD_LPI_MX_* (VDD_LPI_MX_A_1). Board label: vreg_l4a_0p75.
-+		 * PM8150 device spec: L4A nominal = 0.816 V, active min = 0.752 V, active max = 0.904 V,
-+		 * IRATED = 300 mA. If the board programs L4A to ~0.752 V, keep min=752000 and max=816000.
-+		 */
-+		vreg_l4a_0p75: ldo4 {
-+			regulator-min-microvolt = <752000>;
-+			regulator-max-microvolt = <816000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vdd_usb_hs_core:
-+		vdda_mipi_csi_0_0p9:
-+		vdda_mipi_csi_1_0p9:
-+		vdda_mipi_csi_2_0p9:
-+		vdda_mipi_csi_3_0p9:
-+		vdda_mipi_dsi_0_0p9:
-+		vdda_mipi_dsi_1_0p9:
-+		vdda_mipi_dsi_0_pll_0p9:
-+		vdda_mipi_dsi_1_pll_0p9:
-+		vdda_pcie_1ln_core:
-+		vdda_pcie_2ln_core:
-+		vdda_pll_hv_cc_ebi01:
-+		vdda_pll_hv_cc_ebi23:
-+		vdda_qrefs_0p875_5:
-+		vdda_sp_sensor:
-+		vdda_ufs_2ln_core_1:
-+		vdda_ufs_2ln_core_2:
-+		vdda_qlink_lv:
-+		vdda_qlink_lv_ck:
-+		vreg_l5a_0p875: ldo5 {
-+			regulator-min-microvolt = <880000>;
-+			regulator-max-microvolt = <880000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_l6a_1p2: ldo6 {
-+			regulator-min-microvolt = <1200000>;
-+			regulator-max-microvolt = <1200000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_l7a_1p8: ldo7 {
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <1800000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		/*
-+		 * PM8150 LDO8 (L8A) — supplies vreg_l8a_0p75
-+		 * Device spec: nominal 0.752 V, active min 0.752 V, active max 0.904 V, IRATED = 300 mA
-+		 */
-+		vreg_l8a_0p75: ldo8 {
-+			regulator-min-microvolt = <752000>;
-+			regulator-max-microvolt = <816000>;
-+		};
-+
-+		vddpx_10:
-+		vreg_l9a_1p2: ldo9 {
-+			regulator-min-microvolt = <1200000>;
-+			regulator-max-microvolt = <1200000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_l10a_2p95: ldo10 {
-+			regulator-min-microvolt = <2950000>;
-+			regulator-max-microvolt = <2960000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_l11a_0p8: ldo11 {
-+			regulator-min-microvolt = <800000>;
-+			regulator-max-microvolt = <800000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vdd_qfprom:
-+		vdd_qfprom_sp:
-+		vdda_apc_cs_1p8:
-+		vdda_gfx_cs_1p8:
-+		vdda_usb_hs_1p8:
-+		vdda_qrefs_vref_1p8:
-+		vddpx_10_a:
-+		vreg_l12a_1p8: ldo12 {
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <1800000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_l13a_2p7: ldo13 {
-+			regulator-min-microvolt = <2704000>;
-+			regulator-max-microvolt = <2704000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_l14a_1p8: ldo14 {
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <1880000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_l15a_1p7: ldo15 {
-+			regulator-min-microvolt = <1704000>;
-+			regulator-max-microvolt = <1704000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_l16a_2p7: ldo16 {
-+			regulator-min-microvolt = <2704000>;
-+			regulator-max-microvolt = <2960000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_l17a_3p0: ldo17 {
-+			regulator-min-microvolt = <2856000>;
-+			regulator-max-microvolt = <3008000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_l18a_1p05: ldo18 {
-+			regulator-min-microvolt = <800000>;
-+			regulator-max-microvolt = <800000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+	};
-+
-+	regulators-1 {
-+		compatible = "qcom,pm8150l-rpmh-regulators";
-+		qcom,pmic-id = "c";
-+
-+		vdd-s1-supply = <&vph_pwr>;
-+		vdd-s2-supply = <&vph_pwr>;
-+		vdd-s3-supply = <&vph_pwr>;
-+		vdd-s4-supply = <&vph_pwr>;
-+		vdd-s5-supply = <&vph_pwr>;
-+		vdd-s6-supply = <&vph_pwr>;
-+		vdd-s7-supply = <&vph_pwr>;
-+		vdd-s8-supply = <&vph_pwr>;
-+
-+		vdd-l1-l8-supply = <&vreg_s4a_1p8>;
-+		vdd-l2-l3-supply = <&vreg_s8c_1p3>;
-+		vdd-l4-l5-l6-supply = <&vreg_bob>;
-+		vdd-l7-l11-supply = <&vreg_bob>;
-+		vdd-l9-l10-supply = <&vreg_bob>;
-+
-+		vdd-bob-supply = <&vph_pwr>;
-+		vdd-flash-supply = <&vreg_bob>;
-+		vdd-rgb-supply = <&vreg_bob>;
-+
-+		vreg_bob: bob {
-+			regulator-min-microvolt = <3008000>;
-+			regulator-max-microvolt = <4000000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_AUTO>;
-+			regulator-allow-bypass;
-+		};
-+
-+		vreg_s8c_1p3: smps8 {
-+			regulator-min-microvolt = <1352000>;
-+			regulator-max-microvolt = <1352000>;
-+		};
-+
-+		vreg_l1c_1p8: ldo1 {
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <1800000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vdda_wcss_adcdac_1:
-+		vdda_wcss_adcdac_22:
-+		vreg_l2c_1p3: ldo2 {
-+			regulator-min-microvolt = <1304000>;
-+			regulator-max-microvolt = <1304000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vdda_hv_ebi0:
-+		vdda_hv_ebi1:
-+		vdda_hv_ebi2:
-+		vdda_hv_ebi3:
-+		vdda_hv_refgen0:
-+		vdda_mipi_dsi0_1p2:
-+		vdda_qlink_hv_ck:
-+		vreg_l3c_1p2: ldo3 {
-+			regulator-min-microvolt = <1200000>;
-+			regulator-max-microvolt = <1200000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vddpx_5:
-+		vreg_l4c_1p8: ldo4 {
-+			regulator-min-microvolt = <1704000>;
-+			regulator-max-microvolt = <2928000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vddpx_6:
-+		vreg_l5c_1p8: ldo5 {
-+			regulator-min-microvolt = <1704000>;
-+			regulator-max-microvolt = <2928000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vddpx_2:
-+		vreg_l6c_2p9: ldo6 {
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <2960000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_l7c_3p0: ldo7 {
-+			regulator-min-microvolt = <2856000>;
-+			regulator-max-microvolt = <3104000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_l8c_1p8: ldo8 {
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <1800000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_l9c_2p9: ldo9 {
-+			regulator-min-microvolt = <2704000>;
-+			regulator-max-microvolt = <2960000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_l10c_3p3: ldo10 {
-+			regulator-min-microvolt = <3000000>;
-+			regulator-max-microvolt = <3312000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_l11c_3p3: ldo11 {
-+			regulator-min-microvolt = <3000000>;
-+			regulator-max-microvolt = <3312000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+	};
-+};
-+
-+&gmu {
-+	status = "okay";
-+};
-+
-+&gpi_dma2 {
-+	status = "okay";
-+};
-+
-+&gpu {
-+	zap-shader {
-+		memory-region = <&gpu_mem>;
-+		firmware-name = "qcom/sm8150/xiaomi/raphael/a640_zap.mbn";
-+	};
-+
-+	status = "okay";
-+};
-+
-+&i2c19 {
-+	/* goodix,gt9886 @5d  */
-+};
-+
-+&mdss {
-+	status = "okay";
-+};
-+
-+&mdss_dsi0 {
-+	vdda-supply = <&vdda_mipi_dsi0_1p2>;
-+
-+	status = "okay";
-+	panel: panel@0 {
-+		compatible = "samsung,ams639rq08";
-+		reg = <0>;
-+
-+		vddio-supply = <&vreg_l14a_1p8>;
-+		vdd3p3-supply = <&disp_vci_vreg>;
-+		vsn-supply = <&vreg_ibb>;
-+		vsp-supply = <&vreg_lab>;
-+
-+		reset-gpios = <&tlmm 6 GPIO_ACTIVE_LOW>;
-+
-+		pinctrl-names = "default", "sleep";
-+		pinctrl-0 = <&panel_reset_pin &panel_te_pin>;
-+
-+		status = "okay";
-+		port {
-+			panel_in: endpoint {
-+				remote-endpoint = <&mdss_dsi0_out>;
-+			};
-+		};
-+	};
-+};
-+
-+&mdss_dsi0_out {
-+	data-lanes = <0 1 2 3>;
-+	remote-endpoint = <&panel_in>;
-+};
-+
-+&mdss_dsi0_phy {
-+	vdds-supply = <&vreg_l5a_0p875>;
-+
-+	status = "okay";
-+};
-+
-+&pm8150_gpios {
-+	vol_up_n: vol-up-n-state {
-+		pins = "gpio6";
-+		function = PMIC_GPIO_FUNC_NORMAL;
-+		input-enable;
-+		bias-pull-up;
-+	};
-+};
-+
-+&pm8150b_typec {
-+	vdd-vbus-supply = <&pm8150b_vbus>;
-+	vdd-pdphy-supply = <&vdda_usb_hs_3p1>;
-+
-+	status = "okay";
-+	connector {
-+		compatible = "usb-c-connector";
-+		power-role = "source";
-+		data-role = "dual";
-+		self-powered;
-+
-+		source-pdos = <PDO_FIXED(5000, 3000, PDO_FIXED_DUAL_ROLE |
-+					 PDO_FIXED_USB_COMM | PDO_FIXED_DATA_SWAP)>;
-+
-+		ports {
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+
-+			port@0 {
-+				reg = <0>;
-+
-+				pm8150b_hs_in: endpoint {
-+					remote-endpoint = <&usb_1_dwc3_hs>;
-+				};
-+			};
-+		};
-+	};
-+};
-+
-+&pm8150b_vbus {
-+	regulator-min-microamp = <500000>;
-+	regulator-max-microamp = <3000000>;
-+
-+	status = "okay";
-+};
-+
-+&pm8150l_flash {
-+
-+	status = "okay";
-+	led-1 {
-+		function = LED_FUNCTION_FLASH;
-+		color = <LED_COLOR_ID_WHITE>;
-+		led-sources = <1>;
-+		led-max-microamp = <150000>;
-+		flash-max-microamp = <1000000>;
-+		flash-max-timeout-us = <1280000>;
-+	};
-+
-+	led-2 {
-+		function = LED_FUNCTION_FLASH;
-+		color = <LED_COLOR_ID_YELLOW>;
-+		led-sources = <2>;
-+		led-max-microamp = <150000>;
-+		flash-max-microamp = <1000000>;
-+		flash-max-timeout-us = <1280000>;
-+	};
-+};
-+
-+&pm8150l_lpg {
-+
-+	status = "okay";
-+	led@1 {
-+		reg = <1>;
-+		color = <LED_COLOR_ID_WHITE>;
-+		function = LED_FUNCTION_STATUS;
-+
-+		status = "disabled";
-+	};
-+
-+	led@2 {
-+		reg = <2>;
-+		color = <LED_COLOR_ID_RED>;
-+		function = LED_FUNCTION_STATUS;
-+		function-enumerator = <0>;
-+	};
-+
-+	led@3 {
-+		reg = <3>;
-+		color = <LED_COLOR_ID_RED>;
-+		function = LED_FUNCTION_STATUS;
-+		function-enumerator = <1>;
-+	};
-+};
-+
-+&pm8150l_wled {
-+	qcom,num-strings = <3>;
-+	qcom,cabc;
-+	qcom,cabc-sel = <1>;
-+};
-+
-+&pon {
-+	mode-bootloader = <0x2>;
-+	mode-recovery = <0x1>;
-+};
-+
-+&pon_pwrkey {
-+	status = "okay";
-+};
-+
-+&pon_resin {
-+	linux,code = <KEY_VOLUMEDOWN>;
-+
-+	status = "okay";
-+};
-+
-+&qupv3_id_1 {
-+	status = "okay";
-+};
-+
-+&qupv3_id_2 {
-+	status = "okay";
-+};
-+
-+&remoteproc_adsp {
-+	firmware-name = "qcom/sm8150/xiaomi/raphael/adsp.mbn";
-+
-+	status = "okay";
-+};
-+
-+&remoteproc_cdsp {
-+	firmware-name = "qcom/sm8150/xiaomi/raphael/cdsp.mbn";
-+
-+	status = "okay";
-+};
-+
-+&remoteproc_mpss {
-+	firmware-name = "qcom/sm8150/xiaomi/raphael/modem.mbn";
-+
-+	status = "okay";
-+};
-+
-+&remoteproc_slpi {
-+	firmware-name = "qcom/sm8150/xiaomi/raphael/slpi.mbn";
-+
-+	status = "disabled";
-+};
-+
-+&tlmm {
-+	gpio-line-names =
-+		"NFC_ESE_SPI_MISO",     /* GPIO_0 */
-+		"NFC_ESE_SPI_MOSI",     /* GPIO_1 */
-+		"NFC_ESE_SPI_CLK",      /* GPIO_2 */
-+		"NFC_ESE_SPI_CS_N",     /* GPIO_3 */
-+		"LCD_ID_DET1",          /* GPIO_4 */
-+		"ERR_INT",              /* GPIO_5 */
-+		"LCD_RESET_N",          /* GPIO_6 */
-+		"",                     /* GPIO_7 */
-+		"MDP_VSYNC_P",          /* GPIO_8 */
-+		"MOTOR_DIR",            /* GPIO_9 */
-+		"LASER_CE",             /* GPIO_10 */
-+		"DIGITAL_HALL1_RSTN",   /* GPIO_11 */
-+		"CAMF_RSTN",            /* GPIO_12 */
-+		"CAMW_MCLK0",           /* GPIO_13 */
-+		"CAMT_MCLK1",           /* GPIO_14 */
-+		"CAMF_MCLK2",           /* GPIO_15 */
-+		"CAMU_MCLK3",           /* GPIO_16 */
-+		"CCI_I2C_SDA0",         /* GPIO_17 */
-+		"CCI_I2C_SCL0",         /* GPIO_18 */
-+		"CCI_I2C_SDA1",         /* GPIO_19 */
-+		"CCI_I2C_SCL1",         /* GPIO_20 */
-+		"MOTOR_M0",             /* GPIO_21 */
-+		"FL_STROBE_TRIG",       /* GPIO_22 */
-+		"CAMU_RSTN",            /* GPIO_23 */
-+		"",                     /* GPIO_24 */
-+		"",                     /* GPIO_25 */
-+		"LASER_IRQ",            /* GPIO_26 */
-+		"DIGITAL_HALL1_INT",    /* GPIO_27 */
-+		"CAMW_RSTN",            /* GPIO_28 */
-+		"",                     /* GPIO_29 */
-+		"CAMT_RSTN",            /* GPIO_30 */
-+		"CCI_I2C_SDA2",         /* GPIO_31 */
-+		"CCI_I2C_SCL2",         /* GPIO_32 */
-+		"MOTOR_M1",             /* GPIO_33 */
-+		"CAMU_LDO_EN",          /* GPIO_34 */
-+		"MOTOR_SLEEP",          /* GPIO_35 */
-+		"MOTOR_FAULT",          /* GPIO_36 */
-+		"FOD_SPI_RST",          /* GPIO_37 */
-+		"USB_CC_DIR",           /* GPIO_38 */
-+		"NFC_I2C_SDA",          /* GPIO_39 */
-+		"NFC_I2C_SCL",          /* GPIO_40 */
-+		"",                     /* GPIO_41 */
-+		"",                     /* GPIO_42 */
-+		"BT_HCI_UART_CTS_N",    /* GPIO_43 */
-+		"BT_HCI_UART_RFR_N",    /* GPIO_44 */
-+		"BT_HCI_UART_TXD",      /* GPIO_45 */
-+		"BT_HCI_UART_RXD",      /* GPIO_46 */
-+		"NFC_IRQ",              /* GPIO_47 */
-+		"NFC_DWL_REQ",          /* GPIO_48 */
-+		"AUDIO_SWITCH_EN",      /* GPIO_49 */
-+		"WLAN_SW_CTRL",         /* GPIO_50 */
-+		"APPS_I2C_SDA",         /* GPIO_51 */
-+		"APPS_I2C_SCL",         /* GPIO_52 */
-+		"",                     /* GPIO_53 */
-+		"TP_RESET_N",           /* GPIO_54 */
-+		"",                     /* GPIO_55 */
-+		"",                     /* GPIO_56 */
-+		"TP_I2C_SDA",           /* GPIO_57 */
-+		"TP_I2C_SCL",           /* GPIO_58 */
-+		"SPKR_PA_RST",          /* GPIO_59 */
-+		"",                     /* GPIO_60 */
-+		"QLINK_REQUEST",        /* GPIO_61 */
-+		"QLINK_ENABLE",         /* GPIO_62 */
-+		"WMSS_RESET_N",         /* GPIO_63 */
-+		"SDM_GRFC_8",           /* GPIO_64 */
-+		"SDM_GRFC_9",           /* GPIO_65 */
-+		"SDM_GRFC_10",          /* GPIO_66 */
-+		"SDM_GRFC_11",          /* GPIO_67 */
-+		"",                     /* GPIO_68 */
-+		"WLAN_COEX_UART_TXD",   /* GPIO_69 */
-+		"WLAN_COEX_UART_RXD",   /* GPIO_70 */
-+		"SDM_GRFC_0",           /* GPIO_71 */
-+		"SDM_GRFC_1",           /* GPIO_72 */
-+		"SDM_RFFE1_DATA",       /* GPIO_73 */
-+		"SDM_RFFE1_CLK",        /* GPIO_74 */
-+		"SDM_RFFE2_DATA",       /* GPIO_75 */
-+		"SDM_RFFE2_CLK",        /* GPIO_76 */
-+		"SDM_RFFE3_DATA",       /* GPIO_77 */
-+		"SDM_RFFE3_CLK",        /* GPIO_78 */
-+		"",                     /* GPIO_79 */
-+		"",                     /* GPIO_80 */
-+		"",                     /* GPIO_81 */
-+		"",                     /* GPIO_82 */
-+		"CAMW_VCM_2P8_EN",      /* GPIO_83 */
-+		"CAMT_VCM_2P8_EN",      /* GPIO_84 */
-+		"DBG_UART_TX",          /* GPIO_85 */
-+		"DBG_UART_RX",          /* GPIO_86 */
-+		"",                     /* GPIO_87 */
-+		"TP_TA_INT_N",          /* GPIO_88 */
-+		"",                     /* GPIO_89 */
-+		"CAMW_LDO_EN",          /* GPIO_90 */
-+		"",                     /* GPIO_91 */
-+		"",                     /* GPIO_92 */
-+		"CAMT_LDO_EN",          /* GPIO_93 */
-+		"",                     /* GPIO_94 */
-+		"CAMF_LDO_EN",          /* GPIO_95 */
-+		"",                     /* GPIO_96 */
-+		"CAM_DOVDD_EN",         /* GPIO_97 */
-+		"TP_3P3_EN",            /* GPIO_98 */
-+		"VCI_3P0_EN",           /* GPIO_99 */
-+		"TP_1P8_EN",            /* GPIO_100 */
-+		"",                     /* GPIO_101 */
-+		"",                     /* GPIO_102 */
-+		"NFC_ENABLE",           /* GPIO_103 */
-+		"",                     /* GPIO_104 */
-+		"UIM2_DATA",            /* GPIO_105 */
-+		"UIM2_CLK",             /* GPIO_106 */
-+		"UIM2_RESET",           /* GPIO_107 */
-+		"UIM2_PRESENT",         /* GPIO_108 */
-+		"UIM1_DATA",            /* GPIO_109 */
-+		"UIM1_CLK",             /* GPIO_110 */
-+		"UIM1_RESET",           /* GPIO_111 */
-+		"UIM1_PRESENT",         /* GPIO_112 */
-+		"NFC_LABBCLK3_EN",      /* GPIO_113 */
-+		"AUDIO_I2C_SDA",        /* GPIO_114 */
-+		"AUDIO_I2C_SCL",        /* GPIO_115 */
-+		"",                     /* GPIO_116 */
-+		"ALSPG_INT_N",          /* GPIO_117 */
-+		"FOD_INT_N",            /* GPIO_118 */
-+		"",                     /* GPIO_119 */
-+		"",                     /* GPIO_120 */
-+		"",                     /* GPIO_121 */
-+		"TP_INT_N",             /* GPIO_122 */
-+		"CODEC_INT1_N",         /* GPIO_123 */
-+		"CODEC_INT2_N",         /* GPIO_124 */
-+		"FOD_LDO_EN",           /* GPIO_125 */
-+		"FOD_SPI_MISO",         /* GPIO_126 */
-+		"FOD_SPI_MOSI",         /* GPIO_127 */
-+		"FOD_SPI_CLK",          /* GPIO_128 */
-+		"FOD_SPI_CS_N",         /* GPIO_129 */
-+		"MOTOR_EN",             /* GPIO_130 */
-+		"",                     /* GPIO_131 */
-+		"ACCEL_INT",            /* GPIO_132 */
-+		"GYRO_INT",             /* GPIO_133 */
-+		"",                     /* GPIO_134 */
-+		"",                     /* GPIO_135 */
-+		"FORCED_USB_BOOT",      /* GPIO_136 */
-+		"SPKR_I2S_BCK",         /* GPIO_137 */
-+		"SPKR_I2S_WS",          /* GPIO_138 */
-+		"SPKR_I2S_DOUT",        /* GPIO_139 */
-+		"SPKR_I2S_DIN",         /* GPIO_140 */
-+		"SPKR_INT",             /* GPIO_141 */
-+		"",                     /* GPIO_142 */
-+		"CODEC_RST_N",          /* GPIO_143 */
-+		"CDC_SPI_MISO",         /* GPIO_144 */
-+		"CDC_SPI_MOSI",         /* GPIO_145 */
-+		"CDC_SPI_SCLK",         /* GPIO_146 */
-+		"CDC_SPI_CS_N",         /* GPIO_147 */
-+		"",                     /* GPIO_148 */
-+		"CODEC_SLIMBUS_CLK",    /* GPIO_149 */
-+		"CODEC_SLIMBUS_DATA0",  /* GPIO_150 */
-+		"CODEC_SLIMBUS_DATA1",  /* GPIO_151 */
-+		"",                     /* GPIO_152 */
-+		"BT_FM_SLIMBUS_DATA",   /* GPIO_153 */
-+		"BT_FM_SLIMBUS_CLK",    /* GPIO_154 */
-+		"SSC_MAG_I2C_SDA",      /* GPIO_155 */
-+		"SSC_MAG_I2C_SCL",      /* GPIO_156 */
-+		"SSC_SPI1_MISO",        /* GPIO_157 */
-+		"SSC_SPI1_MOSI",        /* GPIO_158 */
-+		"SSC_SPI1_CLK",         /* GPIO_159 */
-+		"SSC_SPI1_CS_N",        /* GPIO_160 */
-+		"SSC_SENSOR_I2C_SDA",   /* GPIO_161 */
-+		"SSC_SENSOR_I2C_SCL",   /* GPIO_162 */
-+		"",                     /* GPIO_163 */
-+		"",                     /* GPIO_164 */
-+		"CCI_SYNC6",            /* GPIO_165 */
-+		"",                     /* GPIO_166 */
-+		"SSC_UART_1_TX",        /* GPIO_167 */
-+		"SSC_UART_1_RX",        /* GPIO_168 */
-+		"WL_CMD_CLK_CHAIN0",    /* GPIO_169 */
-+		"WL_CMD_DATA_CHAIN0",   /* GPIO_170 */
-+		"WL_CMD_CLK_CHAIN1",    /* GPIO_171 */
-+		"WL_CMD_DATA_CHAIN1",   /* GPIO_172 */
-+		"WL_BT_COEX_CLK",       /* GPIO_173 */
-+		"WL_BT_COEX_DATA";      /* GPIO_174 */
-+
-+	/* GPIO 0..3 are NFC spi, gpios 126..129 are FP spi */
-+	gpio-reserved-ranges = <0 4>, <126 4>;
-+
-+	/* Display panel pins */
-+	panel_reset_pin: panel-reset-state {
-+		pins = "gpio6";
-+		function = "gpio";
-+		drive-strength = <2>;
-+		bias-disable;
-+		output-low;
-+		power-source = <1>;
-+	};
-+
-+	panel_te_pin: panel-te-state {
-+		pins = "gpio8";
-+		function = "mdp_vsync";
-+		drive-strength = <2>;
-+		bias-pull-down;
-+	};
-+
-+	/* Touch panel pins */
-+	tp_active: tp-active-state {
-+		pins = "gpio122", "gpio54";
-+		function = "gpio";
-+		drive-strength = <16>;
-+		bias-pull-up;
-+	};
-+
-+	tp_int_suspend: tp-int-suspend-state {
-+		pins = "gpio122";
-+		function = "gpio";
-+		drive-strength = <16>;
-+		slew-rate = <0>;
-+		bias-pull-up;
-+		input-enable;
-+	};
-+
-+	tp_reset_suspend: tp-reset-suspend-state {
-+		pins = "gpio54";
-+		function = "gpio";
-+		drive-strength = <16>;
-+		slew-rate = <1>;
-+		bias-disable;
-+		output-high;
-+	};
-+};
-+
-+&uart2 {
-+	status = "okay";
-+};
-+
-+&ufs_mem_hc {
-+	reset-gpios = <&tlmm 175 GPIO_ACTIVE_LOW>;
-+
-+	vcc-supply = <&vreg_l10a_2p95>;
-+	vcc-max-microamp = <750000>;
-+	vccq-supply = <&vreg_l9a_1p2>;
-+	vccq-max-microamp = <700000>;
-+	vccq2-supply = <&vreg_s4a_1p8>;
-+	vccq2-max-microamp = <750000>;
-+
-+	status = "okay";
-+};
-+
-+&ufs_mem_phy {
-+	vdda-phy-supply = <&vdda_ufs_2ln_core_1>;
-+	vdda-pll-supply = <&vreg_l3c_1p2>;
-+
-+	status = "okay";
-+};
-+
-+&usb_1 {
-+	qcom,select-utmi-as-pipe-clk;
-+
-+	status = "okay";
-+};
-+
-+&usb_1_dwc3 {
-+	dr_mode = "otg";
-+	maximum-speed = "high-speed";
-+
-+	/* Remove USB3 phy */
-+	phys = <&usb_1_hsphy>;
-+	phy-names = "usb2-phy";
-+
-+	usb-role-switch;
-+};
-+
-+&usb_1_dwc3_hs {
-+	remote-endpoint = <&pm8150b_hs_in>;
-+};
-+
-+&usb_1_hsphy {
-+	vdda-pll-supply = <&vdd_usb_hs_core>;
-+	vdda33-supply = <&vdda_usb_hs_3p1>;
-+	vdda18-supply = <&vdda_usb_hs_1p8>;
-+
-+	status = "okay";
-+};
-+
-+&wifi {
-+	vdd-0.8-cx-mx-supply = <&vdda_wcss_pll>;
-+	vdd-1.8-xo-supply = <&vreg_l7a_1p8>;
-+	vdd-1.3-rfa-supply = <&vdda_wcss_adcdac_1>;
-+	vdd-3.3-ch0-supply = <&vreg_l11c_3p3>;
-+	vdd-3.3-ch1-supply = <&vreg_l10c_3p3>;
-+
-+	status = "okay";
-+};
--- 
-2.51.1
+> 
+>> +}
+>> +
+>> +static u32 hfi_vpu4x_vp9d_lb_size(u32 frame_width, u32 frame_height, u32
+>> num_vpp_pipes)
+>> +{
+>> +    u32 vp9_top_lb, vp9_fe_left_lb, vp9_se_left_lb, dpb_opb, vp9d_qp,
+>> num_lcu_per_pipe;
+>> +    u32 lcu_size = 64, fe_top_ctrl_line_numbers = 3,
+>> fe_top_data_luma_line_numbers = 2,
+>> +        fe_top_data_chroma_line_numbers = 3, fe_lft_ctrl_line_numbers = 4,
+>> +        fe_lft_db_data_line_numbers = 2, fe_lft_lr_data_line_numbers = 4;
+> 
+> You can reduce this very long variable list to macro constants.
+> 
+> For example fe_lft_db_data_line_numbers doesn't vary so it shouldn't be a variable.
+> 
 
+Ack
+
+>> +
+>> +    vp9_top_lb = ALIGN(size_vp9d_lb_vsp_top(frame_width, frame_height),
+>> DMA_ALIGNMENT);
+>> +    vp9_top_lb += ALIGN(size_vpxd_lb_se_top_ctrl(frame_width, frame_height),
+>> DMA_ALIGNMENT);
+>> +    vp9_top_lb += max3(DIV_ROUND_UP(frame_width, BUFFER_ALIGNMENT_16_BYTES) *
+>> +               MAX_PE_NBR_DATA_LCU16_LINE_BUFFER_SIZE,
+>> +               DIV_ROUND_UP(frame_width, BUFFER_ALIGNMENT_32_BYTES) *
+>> +               MAX_PE_NBR_DATA_LCU32_LINE_BUFFER_SIZE,
+>> +               DIV_ROUND_UP(frame_width, BUFFER_ALIGNMENT_64_BYTES) *
+>> +               MAX_PE_NBR_DATA_LCU64_LINE_BUFFER_SIZE);
+>> +    vp9_top_lb = ALIGN(vp9_top_lb, DMA_ALIGNMENT);
+>> +    vp9_top_lb += ALIGN((DMA_ALIGNMENT * DIV_ROUND_UP(frame_width, lcu_size)),
+>> +                DMA_ALIGNMENT) * fe_top_ctrl_line_numbers;
+>> +    vp9_top_lb += ALIGN(DMA_ALIGNMENT * 8 * DIV_ROUND_UP(frame_width, lcu_size),
+>> +                DMA_ALIGNMENT) * (fe_top_data_luma_line_numbers +
+>> +                fe_top_data_chroma_line_numbers);
+>> +
+>> +    num_lcu_per_pipe = (DIV_ROUND_UP(frame_height, lcu_size) / num_vpp_pipes) +
+>> +                  (DIV_ROUND_UP(frame_height, lcu_size) % num_vpp_pipes);
+>> +    vp9_fe_left_lb = ALIGN((DMA_ALIGNMENT * num_lcu_per_pipe), DMA_ALIGNMENT) *
+>> +                fe_lft_ctrl_line_numbers;
+>> +    vp9_fe_left_lb += ((ALIGN((DMA_ALIGNMENT * 8 * num_lcu_per_pipe),
+>> DMA_ALIGNMENT) *
+>> +                fe_lft_db_data_line_numbers) +
+>> +                ALIGN((DMA_ALIGNMENT * 3 * num_lcu_per_pipe), DMA_ALIGNMENT) +
+>> +                ALIGN((DMA_ALIGNMENT * 4 * num_lcu_per_pipe), DMA_ALIGNMENT) +
+>> +                (ALIGN((DMA_ALIGNMENT * 24 * num_lcu_per_pipe), DMA_ALIGNMENT) *
+>> +                fe_lft_lr_data_line_numbers));
+>> +    vp9_fe_left_lb = vp9_fe_left_lb * num_vpp_pipes;
+>> +
+>> +    vp9_se_left_lb = ALIGN(size_vpxd_lb_se_left_ctrl(frame_width, frame_height),
+>> +                   DMA_ALIGNMENT);
+>> +    dpb_opb = size_dpb_opb(frame_height, lcu_size);
+>> +    vp9d_qp = ALIGN(size_vp9d_qp(frame_width, frame_height), DMA_ALIGNMENT);
+>> +
+>> +    return vp9_top_lb + vp9_fe_left_lb + (vp9_se_left_lb * num_vpp_pipes) +
+>> +            (dpb_opb * num_vpp_pipes) + vp9d_qp;
+>> +}
+>> +
+>> +static u32 hfi_vpu4x_buffer_line_vp9d(u32 frame_width, u32 frame_height, u32
+>> _yuv_bufcount_min,
+>> +                      bool is_opb, u32 num_vpp_pipes)
+>> +{
+>> +    u32 lb_size = hfi_vpu4x_vp9d_lb_size(frame_width, frame_height,
+>> num_vpp_pipes);
+>> +    u32 dpb_obp_size = 0, lcu_size = 64;
+>> +
+>> +    if (is_opb)
+>> +        dpb_obp_size = size_dpb_opb(frame_height, lcu_size) * num_vpp_pipes;
+>> +
+>> +    return lb_size + dpb_obp_size;
+>> +}
+>> +
+>> +static u32 iris_vpu4x_dec_line_size(struct iris_inst *inst)
+>> +{
+>> +    u32 num_vpp_pipes = inst->core->iris_platform_data->num_vpp_pipe;
+>> +    u32 out_min_count = inst->buffers[BUF_OUTPUT].min_count;
+>> +    struct v4l2_format *f = inst->fmt_src;
+>> +    u32 height = f->fmt.pix_mp.height;
+>> +    u32 width = f->fmt.pix_mp.width;
+>> +    bool is_opb = false;
+>> +
+>> +    if (iris_split_mode_enabled(inst))
+>> +        is_opb = true;
+>> +
+>> +    if (inst->codec == V4L2_PIX_FMT_H264)
+>> +        return hfi_buffer_line_h264d(width, height, is_opb, num_vpp_pipes);
+>> +    else if (inst->codec == V4L2_PIX_FMT_HEVC)
+>> +        return hfi_buffer_line_h265d(width, height, is_opb, num_vpp_pipes);
+>> +    else if (inst->codec == V4L2_PIX_FMT_VP9)
+>> +        return hfi_vpu4x_buffer_line_vp9d(width, height, out_min_count, is_opb,
+>> +                          num_vpp_pipes);
+>> +
+>> +    return 0;
+>> +}
+>> +
+>> +static u32 hfi_vpu4x_buffer_persist_h265d(u32 rpu_enabled)
+>> +{
+>> +    return ALIGN((SIZE_SLIST_BUF_H265 * NUM_SLIST_BUF_H265 + H265_NUM_FRM_INFO *
+>> +        H265_DISPLAY_BUF_SIZE + (H265_NUM_TILE * sizeof(u32)) +
+>> (NUM_HW_PIC_BUF *
+>> +        (SIZE_SEI_USERDATA + SIZE_H265D_ARP + SIZE_THREE_DIMENSION_USERDATA)) +
+>> +        rpu_enabled * NUM_HW_PIC_BUF * SIZE_DOLBY_RPU_METADATA), DMA_ALIGNMENT);
+>> +}
+>> +
+>> +static u32 hfi_vpu4x_buffer_persist_vp9d(void)
+>> +{
+>> +    return ALIGN(VP9_NUM_PROBABILITY_TABLE_BUF * VP9_PROB_TABLE_SIZE,
+>> DMA_ALIGNMENT) +
+>> +        (ALIGN(hfi_iris3_vp9d_comv_size(), DMA_ALIGNMENT) * 2) +
+>> +        ALIGN(MAX_SUPERFRAME_HEADER_LEN, DMA_ALIGNMENT) +
+>> +        ALIGN(VP9_UDC_HEADER_BUF_SIZE, DMA_ALIGNMENT) +
+>> +        ALIGN(VP9_NUM_FRAME_INFO_BUF * CCE_TILE_OFFSET_SIZE, DMA_ALIGNMENT) +
+>> +        ALIGN(VP9_NUM_FRAME_INFO_BUF * VP9_FRAME_INFO_BUF_SIZE_VPU4X,
+>> DMA_ALIGNMENT) +
+>> +        HDR10_HIST_EXTRADATA_SIZE;
+>> +}
+>> +
+>> +static u32 iris_vpu4x_dec_persist_size(struct iris_inst *inst)
+>> +{
+>> +    if (inst->codec == V4L2_PIX_FMT_H264)
+>> +        return hfi_buffer_persist_h264d();
+>> +    else if (inst->codec == V4L2_PIX_FMT_HEVC)
+>> +        return hfi_vpu4x_buffer_persist_h265d(0);
+>> +    else if (inst->codec == V4L2_PIX_FMT_VP9)
+>> +        return hfi_vpu4x_buffer_persist_vp9d();
+>> +
+>> +    return 0;
+>> +}
+>> +
+>> +static u32 size_se_lb(u32 standard, u32 num_vpp_pipes_enc,
+>> +              u32 frame_width_coded, u32 frame_height_coded)
+>> +{
+>> +    u32 se_tlb_size = ALIGN(frame_width_coded, DMA_ALIGNMENT);
+>> +    u32 se_llb_size = (standard == HFI_CODEC_ENCODE_HEVC) ?
+>> +               ((frame_height_coded + BUFFER_ALIGNMENT_32_BYTES - 1) /
+>> +                BUFFER_ALIGNMENT_32_BYTES) * LOG2_16 * LLB_UNIT_SIZE :
+>> +               ((frame_height_coded + BUFFER_ALIGNMENT_16_BYTES - 1) /
+>> +                BUFFER_ALIGNMENT_16_BYTES) * LOG2_32 * LLB_UNIT_SIZE;
+>> +
+>> +    se_llb_size = ALIGN(se_llb_size, BUFFER_ALIGNMENT_32_BYTES);
+>> +
+>> +    if (num_vpp_pipes_enc > 1)
+>> +        se_llb_size = ALIGN(se_llb_size + BUFFER_ALIGNMENT_512_BYTES,
+>> +                    DMA_ALIGNMENT) * num_vpp_pipes_enc;
+>> +
+>> +    return ALIGN(se_tlb_size + se_llb_size, DMA_ALIGNMENT);
+>> +}
+>> +
+>> +static u32 size_te_lb(bool is_ten_bit, u32 num_vpp_pipes_enc, u32 width_in_lcus,
+>> +              u32 frame_height_coded, u32 frame_width_coded)
+>> +{
+>> +    u32 num_pixel_10_bit = 3, num_pixel_8_bit = 2, num_pixel_te_llb = 3;
+>> +    u32 te_llb_col_rc_size = ALIGN(32 * width_in_lcus / num_vpp_pipes_enc,
+>> +                       DMA_ALIGNMENT) * num_vpp_pipes_enc;
+>> +    u32 te_tlb_recon_data_size = ALIGN((is_ten_bit ? num_pixel_10_bit :
+>> num_pixel_8_bit) *
+>> +                    frame_width_coded, DMA_ALIGNMENT);
+>> +    u32 te_llb_recon_data_size = ((1 + is_ten_bit) * num_pixel_te_llb *
+>> frame_height_coded +
+>> +                      num_vpp_pipes_enc - 1) / num_vpp_pipes_enc;
+>> +    te_llb_recon_data_size = ALIGN(te_llb_recon_data_size, DMA_ALIGNMENT) *
+>> num_vpp_pipes_enc;
+>> +
+>> +    return ALIGN(te_llb_recon_data_size + te_llb_col_rc_size +
+>> te_tlb_recon_data_size,
+>> +             DMA_ALIGNMENT);
+>> +}
+>> +
+>> +static inline u32 calc_fe_tlb_size(u32 size_per_lcu, bool is_ten_bit)
+>> +{
+>> +    u32 num_pixels_fe_tlb_10_bit = 128, num_pixels_fe_tlb_8_bit = 64;
+>> +
+>> +    return is_ten_bit ? (num_pixels_fe_tlb_10_bit * (size_per_lcu + 1)) :
+>> +            (size_per_lcu * num_pixels_fe_tlb_8_bit);
+>> +}
+>> +
+>> +static u32 size_fe_lb(bool is_ten_bit, u32 standard, u32 num_vpp_pipes_enc,
+>> +              u32 frame_height_coded, u32 frame_width_coded)
+>> +{
+>> +    u32 log2_lcu_size, num_cu_in_height_pipe, num_cu_in_width,
+>> +        fb_llb_db_ctrl_size, fb_llb_db_luma_size, fb_llb_db_chroma_size,
+>> +        fb_tlb_db_ctrl_size, fb_tlb_db_luma_size, fb_tlb_db_chroma_size,
+>> +        fb_llb_sao_ctrl_size, fb_llb_sao_luma_size, fb_llb_sao_chroma_size,
+>> +        fb_tlb_sao_ctrl_size, fb_tlb_sao_luma_size, fb_tlb_sao_chroma_size,
+>> +        fb_lb_top_sdc_size, fb_lb_se_ctrl_size, fe_tlb_size, size_per_lcu;
+>> +    u32 fe_sdc_data_per_block = 16, se_ctrl_data_per_block = 2020;
+> 
+> Again you can reduce this - at least a little bit
+> 
+> fe_sdc_data_per_block
+> se_ctrl_data_per_block
+> 
+> are const
+
+Ack
+
+> 
+>> +
+>> +    log2_lcu_size = (standard == HFI_CODEC_ENCODE_HEVC) ? 5 : 4;
+>> +    num_cu_in_height_pipe = ((frame_height_coded >> log2_lcu_size) +
+>> num_vpp_pipes_enc - 1) /
+>> +                 num_vpp_pipes_enc;
+>> +    num_cu_in_width = frame_width_coded >> log2_lcu_size;
+>> +
+>> +    size_per_lcu = 2;
+>> +    fe_tlb_size = calc_fe_tlb_size(size_per_lcu, 1);
+>> +    fb_llb_db_ctrl_size = ALIGN(fe_tlb_size, DMA_ALIGNMENT) *
+>> num_cu_in_height_pipe;
+>> +    fb_llb_db_ctrl_size = ALIGN(fb_llb_db_ctrl_size, DMA_ALIGNMENT) *
+>> num_vpp_pipes_enc;
+>> +
+>> +    size_per_lcu = (1 << (log2_lcu_size - 3));
+>> +    fe_tlb_size = calc_fe_tlb_size(size_per_lcu, is_ten_bit);
+>> +    fb_llb_db_luma_size = ALIGN(fe_tlb_size, DMA_ALIGNMENT) *
+>> num_cu_in_height_pipe;
+>> +    fb_llb_db_luma_size = ALIGN(fb_llb_db_luma_size, DMA_ALIGNMENT) *
+>> num_vpp_pipes_enc;
+>> +
+>> +    size_per_lcu = ((1 << (log2_lcu_size - 4)) * 2);
+>> +    fe_tlb_size = calc_fe_tlb_size(size_per_lcu, is_ten_bit);
+>> +    fb_llb_db_chroma_size = ALIGN(fe_tlb_size, DMA_ALIGNMENT) *
+>> num_cu_in_height_pipe;
+>> +    fb_llb_db_chroma_size = ALIGN(fb_llb_db_chroma_size, DMA_ALIGNMENT) *
+>> num_vpp_pipes_enc;
+>> +
+>> +    size_per_lcu = 1;
+>> +    fe_tlb_size = calc_fe_tlb_size(size_per_lcu, 1);
+>> +    fb_tlb_db_ctrl_size = ALIGN(fe_tlb_size, DMA_ALIGNMENT) * num_cu_in_width;
+>> +    fb_llb_sao_ctrl_size = ALIGN(fe_tlb_size, DMA_ALIGNMENT) *
+>> num_cu_in_height_pipe;
+>> +    fb_llb_sao_ctrl_size = fb_llb_sao_ctrl_size * num_vpp_pipes_enc;
+>> +    fb_tlb_sao_ctrl_size = ALIGN(fe_tlb_size, DMA_ALIGNMENT) * num_cu_in_width;
+>> +
+>> +    size_per_lcu = ((1 << (log2_lcu_size - 3)) + 1);
+>> +    fe_tlb_size = calc_fe_tlb_size(size_per_lcu, is_ten_bit);
+>> +    fb_tlb_db_luma_size = ALIGN(fe_tlb_size, DMA_ALIGNMENT) * num_cu_in_width;
+>> +
+>> +    size_per_lcu = (2 * ((1 << (log2_lcu_size - 4)) + 1));
+>> +    fe_tlb_size = calc_fe_tlb_size(size_per_lcu, is_ten_bit);
+>> +    fb_tlb_db_chroma_size = ALIGN(fe_tlb_size, DMA_ALIGNMENT) * num_cu_in_width;
+>> +
+>> +    fb_llb_sao_luma_size = BUFFER_ALIGNMENT_256_BYTES * num_vpp_pipes_enc;
+>> +    fb_llb_sao_chroma_size = BUFFER_ALIGNMENT_256_BYTES * num_vpp_pipes_enc;
+>> +    fb_tlb_sao_luma_size = BUFFER_ALIGNMENT_256_BYTES;
+>> +    fb_tlb_sao_chroma_size = BUFFER_ALIGNMENT_256_BYTES;
+>> +    fb_lb_top_sdc_size = ALIGN((fe_sdc_data_per_block * (frame_width_coded >>
+>> 5)),
+>> +                   DMA_ALIGNMENT);
+>> +    fb_lb_se_ctrl_size = ALIGN((se_ctrl_data_per_block * (frame_width_coded
+>> >> 5)),
+>> +                   DMA_ALIGNMENT);
+> 
+> On the one hand lots of variables.
+> 
+> On the other hand I think the code is more readable with assigned names instead
+> of a big morass of return ALIGN(stuff) + ALIGN(other stuff).
+
+Good to know its better now interms of readability.
+
+> 
+> Anyway I think you can reduce this enormomous variable list by at lest two.
+> 
+> u32 fe_sdc_data_per_block = 16, se_ctrl_data_per_block = 2020;
+> ->
+> #define FE_SDC_DATA_PER_BLOCK    16
+> #define SE_CTRL_DATA_PER_BLOCK    2020
+> 
+
+Ack
+
+Regards,
+Vikash
 
