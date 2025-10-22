@@ -1,153 +1,179 @@
-Return-Path: <linux-arm-msm+bounces-78380-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-78381-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [IPv6:2605:f480:58:1:0:1994:3:14])
-	by mail.lfdr.de (Postfix) with ESMTPS id 20E6CBFD737
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Oct 2025 19:05:43 +0200 (CEST)
+Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [142.0.200.124])
+	by mail.lfdr.de (Postfix) with ESMTPS id 534DEBFD734
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Oct 2025 19:05:42 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 39AD7565EE1
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Oct 2025 16:47:18 +0000 (UTC)
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 54AAF584C9A
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Oct 2025 16:49:34 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B2A8A21FF38;
-	Wed, 22 Oct 2025 16:41:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8CE3A29BDBF;
+	Wed, 22 Oct 2025 16:46:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="CmDIOatO"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="PTZgqxQh"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f52.google.com (mail-wr1-f52.google.com [209.85.221.52])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2B5334B183
-	for <linux-arm-msm@vger.kernel.org>; Wed, 22 Oct 2025 16:41:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 793D229BDB5
+	for <linux-arm-msm@vger.kernel.org>; Wed, 22 Oct 2025 16:46:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761151304; cv=none; b=DXHN4QGCsVg6SgzMzaH1siwbjB/vawW42ZDIv1O2IxSNXqiQF3rNL1rs39H4HGloK7mryI6tf1C2JTeylqG/LUWQ5VKQ+LidbtsswkFo3hhDXihez+8k4+n9doPe8GWyFyi10cRRbw/QZjAndicLxsEBtzyf76G1hy+nnwq1A6g=
+	t=1761151609; cv=none; b=tOPHwoauURf9Uc7bPIR8k7ceQZ7sQG8VEKbFAOqxUlSTRwAVQNAXF4ejvssQ6O+v2R+mjoYzCUOvQhbX17awzV1rHynh8aFGyc4c6/qcqPMy0SMxqg1/2USp5/hG2fs7N8QIF4L3BGJFtpFIi9V71nF3VlawEPLq+wLDzzcWo3w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761151304; c=relaxed/simple;
-	bh=dyBHWW2GuAfwvJ2oHoKOOFUrERxAVPMXWvg5OMsJz5k=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=TvrbU3trxUROxjfJlfMS4nlSQJiInJNVlBwKfgHnzmmKtAv6yl4LGrYD3POOYONuqZRlyiyfSDKzoztjGc93Su1IP27V4tUS+7hAp96gmQbIc4q4DiYvugT2SE9cpNe1kCrZ3Yicfv4xPNzOxJSEZ2bS0sCsQSpdq1LdVdX6anw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=CmDIOatO; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 59MAgPa9027006
-	for <linux-arm-msm@vger.kernel.org>; Wed, 22 Oct 2025 16:41:41 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	wP06UGSoKxrw415mfswkrKuCr9sYpruJ9sx77F40TyM=; b=CmDIOatOmKcwXZuh
-	WrSaev0C1+B3KYa/kmaT+FKkNAAzbkD3a4BWbIO6dOlJRfF1eQCOvfCPZf4hoQMm
-	7FVcimSL6b7ZVdk8rwvh8NfWD0w/bLYEltxaXNSGDxqFJ00ZYI8oEq9UxC4xPjF7
-	yzuO6e2E/PPMXCraDBWv6KAgkUXNfJhLgsRJwh7tfE6rMsyDNRG3RyfhWnO9ppSR
-	8+zkieSwzgK0SPKQTYshEUqq2PnHrsIfuRx6QHXN26eqXz8wuT4ALODrmHfCiRX4
-	tF29jLmB8zckz/YAblYVXncWUYrZhithAIM4bKR0Gtm4B+ekyedu+i/TuTxj5JWB
-	UXWieA==
-Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com [209.85.160.198])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 49v08pnmfh-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Wed, 22 Oct 2025 16:41:41 +0000 (GMT)
-Received: by mail-qt1-f198.google.com with SMTP id d75a77b69052e-4e8934ae68aso5688951cf.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Oct 2025 09:41:41 -0700 (PDT)
+	s=arc-20240116; t=1761151609; c=relaxed/simple;
+	bh=kzK0X3PESTcd0Pn7d03B0oVRUrs6ifjmGrqa6trxFU4=;
+	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
+	 References:In-Reply-To; b=XOG8RyDgR+uSLYtxdaSC+5LKokoiOMQZi0Los2RX6GR/qrZbKiJjWKPEXaEPe35YcaNajBfDuy0N7kNxofoJjKnQsJN2xRhEyXd/svkoSuQvmaG2WszGEVsGWq0sd7V1ZBfjJIeB+yFDbDmr1+omTioq4KWTZ5SnbgT0S3vr2KQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=PTZgqxQh; arc=none smtp.client-ip=209.85.221.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wr1-f52.google.com with SMTP id ffacd0b85a97d-3ecdf2b1751so4317022f8f.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Oct 2025 09:46:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1761151606; x=1761756406; darn=vger.kernel.org;
+        h=in-reply-to:references:to:from:subject:cc:message-id:date
+         :content-transfer-encoding:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=hB/kxv3520VBWvRt90QZf897nQckO35BdxVzd7xmja0=;
+        b=PTZgqxQh0FAFLKNMK5gF/Sl/decW5TjYrWfZ+dOhQ3RDXp1tX7oQPY/9YAlUR4wBMO
+         emIb+1KUgcwNPxJQUvJewVkSts5oD+hjJA2SnXfREkVbzxosYgctYK/COSKK9mKOU3+i
+         PZlCkCtei1u6ylPJfv3z0e55lkKkWrjbxdj44D4Ec7vKHycEIXgF9qCtiGdhjDIRSvqE
+         /oijCbkj95mBAJOinAzS+QHMmpDcsJxHhgSQHxZv3jC8WMNdp8ITQikZFfffZbDQhvrI
+         eo9N6IkMNa6hCZbC2Lv49K0XJClTRfTe3V627rHQF4hlRwBhoHtgQdVXBufEOYBBCa2O
+         ZcWQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1761151300; x=1761756100;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=wP06UGSoKxrw415mfswkrKuCr9sYpruJ9sx77F40TyM=;
-        b=jLstE12d0RlQwhLPUK86rMe+raNk8/xahjxmQSNXrpGBy/cgNLY0PxJWFaouxF7Tyw
-         KwOOS/bdzXonB8QqPljB6/UNoWMZOFXHu1nx670UB54WZWb6pTWWyzhhTxQs5YwlA/9q
-         LcgYYHlad4NpwkdaR/D/O04rewjRHqmNuTBW8He3XLDvE0CIPB+1o/yVJ5LLLeuQ3ZOe
-         UjlmImEnwKTuFXYZTdJCo8oHJXTPwlT1jh6YKE3bhz8YnMiB7mTtngq36RFruS7oFknw
-         xITjgxgGHzR9yUeiF5ck+uSIUKpazsifiKsabmDAp2YkjrRuG694dHN4XssPhmYCKhb0
-         ooEw==
-X-Forwarded-Encrypted: i=1; AJvYcCWWsAu4GLCV9kL3iNT3qFHSLhbOHl7XTqUNX5KHBnnh11CUaMcEJwqJ50FtaMrhKwIRk60l5ZihVupD+P0y@vger.kernel.org
-X-Gm-Message-State: AOJu0YzdLGeHz654GxT7cOzMEpeBUjRsuAYL5+zSFmzm0sh9T70jK97+
-	zQi8CHl/VwtwRRphz47AzPnLqd1xGhjybmEJy+RgiqlUAD6qK+n2vfjZ2H+s4X2eR7H5CpWRJQN
-	F7NIFabcV7WVD2O1Z28OlJ6nZgS+yXEo/b9Sr0eGos5dqQh8gJ6J670RnrC5Mslh3/P5p
-X-Gm-Gg: ASbGncsmISs4m5Qqh5vqO+PNcC6VuJ3JT5e4bJGx7suhQRS30GCP+9gr6Yg/z6nIO3I
-	LtuMQ3rADrlBF/60HvydoD9hUdSi1R4xR0a8GuKm3UV00Rp8OM7CURw7XP2sDhEgq+9nHNynQR8
-	1T77WxH++rWrjTQH2fUCcG8me0JEUvQuJsPsh/dgZccJ73xdTBcnWH/zwicV5Q+kkYIrxcBjMiY
-	XqK6ssFL7o4aOsnAYxpfuH7TWBQxe8uOgqnVNJv7qPQhjvI+JGomAGiazhLkbyJkNkM8w3jkCzM
-	hPiWRkX4rIzOV+rjcLZgWKcGzSKnzfYNPn/IDgI9Py+noY/4zJGzRk+1fF9UjX11Cu32ABnJcBB
-	TjHuNVWdNIKH8cO/6okhvA6YYxJ1TT+c6OP/qccn1EUUtmaAG3rcu1BEj
-X-Received: by 2002:ac8:5e51:0:b0:4ab:6e68:1186 with SMTP id d75a77b69052e-4e89d1f94eamr180584891cf.2.1761151300446;
-        Wed, 22 Oct 2025 09:41:40 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFTPhl/gCybkXFKJAiRPLwUPk3R3ErdJqsxNwT2SQ3vNYaOe1tbdKrzeN0wa+yAMUA0I+7AGA==
-X-Received: by 2002:ac8:5e51:0:b0:4ab:6e68:1186 with SMTP id d75a77b69052e-4e89d1f94eamr180584611cf.2.1761151299934;
-        Wed, 22 Oct 2025 09:41:39 -0700 (PDT)
-Received: from [192.168.119.202] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-b6aaf93a32asm934824166b.51.2025.10.22.09.41.37
+        d=1e100.net; s=20230601; t=1761151606; x=1761756406;
+        h=in-reply-to:references:to:from:subject:cc:message-id:date
+         :content-transfer-encoding:mime-version:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=hB/kxv3520VBWvRt90QZf897nQckO35BdxVzd7xmja0=;
+        b=Lwe4KH/9FHw1Z9GwEkztrg3ItYiOYxWZ9VoKWyTJO67ZVamPtphphcS04P56U+CkwT
+         RbLa6G9DYyLUtawJYgZuvlGEmnRWSONqFRoX5ql7OscfWayxr5aovdJ7w57e+P+zsUe9
+         OgYy6yv1GAwLCjaAjUQ9D4ofy/J9w8svjF02ZrOkjf8XAlDj6SEcMCni1pGU3W2K1+4S
+         AzHimXDFj0lBsO+lVWrDX4UQxCq422puf0z9wJIKB8rN1wa/x6zuPpOPrfrNTiFCD6YF
+         s4QDJk/VM25nPAIm7Q7Nb5KlAivsr13in86toCbOKdR82ddofCTqa94OtF3DCApoTid0
+         5O6A==
+X-Forwarded-Encrypted: i=1; AJvYcCV1agWZC5l21pDzU1H7BnCYdHsjw8tee0dlN6ZD+NGM3N94FcayGv6xTyejYrrhV8Sj74pgRWeFNRaSEsCV@vger.kernel.org
+X-Gm-Message-State: AOJu0Ywox11pD/HovY5ltHa/q4ZS2hUfGjmTJCCxr7TJd+pniuW2DGW9
+	jrOrXqLbjFzQHSU++vzAbtrkw4RB1ynq46kX4AaGPTO+dotb1qBwj/+QgBI23X6KwQQ=
+X-Gm-Gg: ASbGnctu0cIadeLR0rtUx2743oFiF3OH+QNQANvsDN9H02Uw2BjZfsTMnc+HcKlJmLQ
+	K5hegXMTsVQzyDQQ7+a8ErcvEFPycvh/lmsgOKztM1en+BRdW5hDSHEbfRG3t3MzQogCK054VIm
+	I8jW8bQm3zrOFEypPaOj/2xZmyyGCwWcouYAR2S5WdhWtJrojP0HPFHbA+QSb/VQ8Dxnlg3Bc0v
+	6GXG4nKcrVe4zmsI7Uq5wDaE/LYhrNEhPW2dcmPuZL0jbUrqvgJz6qrukp4x9/Hvz+6KiAyVQwY
+	ozEbzpvo2PvLBcXn7+A01knkjWr+Ro32Q7I27r1BmQaNBylX+p9kTkeSfAa/IVke9Yz/Wai36TA
+	4qCL3xFzzpsWAcgRI0lVy7YZCbtZxpdjoHDTNegyucdemBBPCF4wb4ZH3+NTwHzihuNradjLb6I
+	YijChEIe2Ktiynl2Y=
+X-Google-Smtp-Source: AGHT+IHC0nEVJ9kS8jNlN1CcS2Es7FqGZUD1CeVHVY8B/z53AT+D2UQg55S0hwzJKEC6PDUH79Dojg==
+X-Received: by 2002:a05:6000:26d1:b0:425:7cf6:5b9e with SMTP id ffacd0b85a97d-42704d146a5mr15287672f8f.3.1761151605615;
+        Wed, 22 Oct 2025 09:46:45 -0700 (PDT)
+Received: from localhost ([2a02:c7c:7259:a00:11f4:2b3f:7c5a:5c10])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-427f009a797sm26064120f8f.27.2025.10.22.09.46.44
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 22 Oct 2025 09:41:39 -0700 (PDT)
-Message-ID: <e4cf1f77-af38-4f36-a590-dc662fcdb602@oss.qualcomm.com>
-Date: Wed, 22 Oct 2025 18:41:37 +0200
+        Wed, 22 Oct 2025 09:46:45 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 2/3] arch: arm64: dts: qcom: sdm845-starqltechn: fix
- max77705 interrupts
-To: Dzmitry Sankouski <dsankouski@gmail.com>,
-        Chanwoo Choi <cw00.choi@samsung.com>,
-        Krzysztof Kozlowski <krzk@kernel.org>, Lee Jones <lee@kernel.org>,
-        Rob Herring <robh@kernel.org>, Conor Dooley <conor+dt@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>
-Cc: linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org,
-        Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-References: <20250926-starqltechn-correct_max77705_nodes-v5-0-c6ab35165534@gmail.com>
- <20250926-starqltechn-correct_max77705_nodes-v5-2-c6ab35165534@gmail.com>
-Content-Language: en-US
-From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-In-Reply-To: <20250926-starqltechn-correct_max77705_nodes-v5-2-c6ab35165534@gmail.com>
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDE4MDAwMCBTYWx0ZWRfX+g8gFxHQeTQE
- bh/S49Qumm3mA1PzsbqlsePW6JzgW975U9ReDPPUPsxPGFcSqX39eppzOPMNlHLritqu+WAZtnc
- 2ApC4EgKM+pXPzfyfA16KyY1uT0noLVWcX6sGxJDyybwHvmhsNjCePT3Ob/jw38yct0m3ThcPla
- 13sJZti5lu7UwCjK6d6btGQlbT/WIR45YWuNSMBbmefO06AA7GfJWgGPBlpz9FC0ljaG6/itXJB
- OF8kZh/p8z2A2iryqkBv7fn6xzkKzSRt1WPidi4zEHgDpBwkMXzyRl9+4aqTguUsmcY8nBqE6sv
- dywSHZTFGoWYCwpK0/ckdEk20QaU7BKXEsnHTyXaRWmeMJLrkOhErztv7npeivmpaN5FsDFbrjZ
- pNPkFH25wCCMkS8Ju3cWhmZoow54wA==
-X-Proofpoint-GUID: niArdPjSpmqmNuYfRcUuXvLEZxjiAbuq
-X-Authority-Analysis: v=2.4 cv=Up1u9uwB c=1 sm=1 tr=0 ts=68f90945 cx=c_pps
- a=mPf7EqFMSY9/WdsSgAYMbA==:117 a=FpWmc02/iXfjRdCD7H54yg==:17
- a=IkcTkHD0fZMA:10 a=x6icFKpwvdMA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=EUspDBNiAAAA:8 a=pGLkceISAAAA:8 a=5u1LwdSNXLj5JZSvkjkA:9 a=QEXdDO2ut3YA:10
- a=dawVfQjAaf238kedN5IG:22
-X-Proofpoint-ORIG-GUID: niArdPjSpmqmNuYfRcUuXvLEZxjiAbuq
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-10-22_07,2025-10-22_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- lowpriorityscore=0 adultscore=0 suspectscore=0 malwarescore=0 clxscore=1015
- impostorscore=0 bulkscore=0 priorityscore=1501 spamscore=0 phishscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2510020000 definitions=main-2510180000
+Date: Wed, 22 Oct 2025 17:46:44 +0100
+Message-Id: <DDP051W3LY8F.3FK5FJT1ABLTG@linaro.org>
+Cc: "Srinivas Kandagatla" <srini@kernel.org>, "Liam Girdwood"
+ <lgirdwood@gmail.com>, "Mark Brown" <broonie@kernel.org>, "Rob Herring"
+ <robh@kernel.org>, "Conor Dooley" <conor+dt@kernel.org>, "Jaroslav Kysela"
+ <perex@perex.cz>, "Takashi Iwai" <tiwai@suse.com>,
+ <linux-sound@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+ <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>
+Subject: Re: [PATCH 1/2] dt-bindings: sound: qcom,sm8250: add QRB2210 and
+ RB1 soundcards
+From: "Alexey Klimov" <alexey.klimov@linaro.org>
+To: "Srinivas Kandagatla" <srinivas.kandagatla@oss.qualcomm.com>, "Dmitry
+ Baryshkov" <dmitry.baryshkov@oss.qualcomm.com>, "Krzysztof Kozlowski"
+ <krzk+dt@kernel.org>
+X-Mailer: aerc 0.20.0
+References: <20251007-qrb2210-qcm2290-sndcard-v1-0-8222141bca79@linaro.org>
+ <20251007-qrb2210-qcm2290-sndcard-v1-1-8222141bca79@linaro.org>
+ <b0d9cec5-1162-476b-8438-8239e1458927@oss.qualcomm.com>
+ <CAO9ioeVcqT_Yhvz-RMCucLtcpa4xCLrA+srM8Vy_ZZ-650ZQnw@mail.gmail.com>
+ <DDKF9YV37ETZ.3DXIDZA4ZU6I3@linaro.org>
+ <695ff482-ad53-45fc-9ab0-ad69d8bc89d5@oss.qualcomm.com>
+In-Reply-To: <695ff482-ad53-45fc-9ab0-ad69d8bc89d5@oss.qualcomm.com>
 
-On 9/26/25 7:13 PM, Dzmitry Sankouski wrote:
-> Since max77705 has a register, which indicates interrupt source, it acts
-> as an interrupt controller.
-> 
-> Direct MAX77705's subdevices to use the IC's internal interrupt
-> controller, instead of listening to every interrupt fired by the
-> chip towards the host device.
-> 
-> Fixes: 7a88a931d095 ("arm64: dts: qcom: sdm845-starqltechn: add max77705 PMIC")
-> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-> Signed-off-by: Dzmitry Sankouski <dsankouski@gmail.com>
-> ---
+On Fri Oct 17, 2025 at 12:27 PM BST, Srinivas Kandagatla wrote:
+> On 10/17/25 8:35 AM, Alexey Klimov wrote:
+>> On Thu Oct 16, 2025 at 8:46 PM BST, Dmitry Baryshkov wrote:
+>>> On Thu, 16 Oct 2025 at 18:08, Srinivas Kandagatla
+>>> <srinivas.kandagatla@oss.qualcomm.com> wrote:
+>>>>
+>>>>
+>>>>
+>>>> On 10/7/25 2:26 AM, Alexey Klimov wrote:
+>>>>> Add soundcard compatible for QRB2210 (QCM2290) platforms.
+>>>>> While at this, also add QRB2210 RB1 entry which is set to be
+>>>>> compatible with QRB2210 soundcard.
+>>>>>
+>>>>> Cc: Srinivas Kandagatla <srini@kernel.org>
+>>>>> Signed-off-by: Alexey Klimov <alexey.klimov@linaro.org>
+>>>>> ---
+>>>>>  Documentation/devicetree/bindings/sound/qcom,sm8250.yaml | 5 +++++
+>>>>>  1 file changed, 5 insertions(+)
+>>>>>
+>>>>> diff --git a/Documentation/devicetree/bindings/sound/qcom,sm8250.yaml=
+ b/Documentation/devicetree/bindings/sound/qcom,sm8250.yaml
+>>>>> index 8ac91625dce5ccba5c5f31748c36296b12fac1a6..c29e59d0e8043fe2617b9=
+69be216525b493458c4 100644
+>>>>> --- a/Documentation/devicetree/bindings/sound/qcom,sm8250.yaml
+>>>>> +++ b/Documentation/devicetree/bindings/sound/qcom,sm8250.yaml
+>>>>> @@ -21,6 +21,10 @@ properties:
+>>>>>                - lenovo,yoga-c630-sndcard
+>>>>>                - qcom,db845c-sndcard
+>>>>>            - const: qcom,sdm845-sndcard
+>>>>> +      - items:
+>>>>> +          - enum:
+>>>>> +              - qcom,qrb2210-rb1-sndcard
+>>>> I don't think you need rb1 specific compatible here, unless there this
+>>>> is totally different to what the base compatible can provide.
+>>>
+>>> Why do we need to deviate from other platforms which declare
+>>> board-specific compat too?
+>>=20
+>> There seems to be now a few incompatible suggestions for rb1 sndcard:
+>> - make it compatible/fallback to qcom,sm8250-sndcard (1);
+>> - make it compatible/fallback to qcom,qrb4210-rb2-sndcard (2);
+>> - add separate compatible/enum for rb1 sndcard as qcom,qrb2210-rb1-sndca=
+rd (3);
+>> - add base compatible as qcom,qrb2210-sndcard and fallback
+>> rb1 sndcard compatible to it.
+>>=20
+>> The latter one is ruled out because base compatible should be used and
+>> it is not going to.
+>>=20
+>> As far as I can see the last addition went simply with (3).
+>> Which one finally you all want?
+>
+> Am fine with either "qcom,sm8250-sndcard" or "qcom,qrb4210-rb1-sndcard"
+> as long as we reflect that correct driver name in machine driver.
+>
+> traditionally we have SoC level compatible which works fine for 99% of
+> the boards for that SoC, expectation was that if there is any deviation
+> or board specific changes required, this can be accommodate using model
+> information. am fine with board specific compatible too, however am not
+> okay with both "qcom,sm8250-sndcard" and "qcom,qrb4210-rb1-sndcard"  or
+> falling back to another board compatible for various reason one being ucm=
+.
+>
+> So 1 and 2 re *NOK*
+>
+> I hope this provides some clarity here.
 
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Yes. Thanks. I went with SoC-level compatible in the latest version.
 
-Konrad
-
-
+Thanks,
+Alexey
 
