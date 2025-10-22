@@ -1,58 +1,101 @@
-Return-Path: <linux-arm-msm+bounces-78251-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-78250-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [IPv6:2605:f480:58:1:0:1994:3:14])
-	by mail.lfdr.de (Postfix) with ESMTPS id E1A0DBFA1B1
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Oct 2025 07:46:46 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 56F80BFA1BA
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Oct 2025 07:47:07 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id C305550450E
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Oct 2025 05:46:45 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id F36111A02C63
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Oct 2025 05:46:38 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B7C362EFD9E;
-	Wed, 22 Oct 2025 05:45:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CD567EAC7;
+	Wed, 22 Oct 2025 05:45:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ujacSTim"
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="OY4d43Ge"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 836172EFD98;
-	Wed, 22 Oct 2025 05:45:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02F221E32A2
+	for <linux-arm-msm@vger.kernel.org>; Wed, 22 Oct 2025 05:45:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.129.124
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761111957; cv=none; b=cKyvsRoHd5R1OTbO8taXSbD3/tj9DSxE+nUEequA9c8xDFHXe6b3GCobp1rs8xR3in6/QYw/qOoIbkqXHDT3FArWb+bJVEhO772VvgWut8mkVxrfonA86c4p8UfXsvx16mJESKq2Hcb2ehVObrs4TNO2IWIyPB1Sz69OXHOBTRE=
+	t=1761111944; cv=none; b=WavzboBMOoCa2G7WUopSPQcir75fBXFG+X1h66JxKgsurEoKPTP/3UMP/6eqgWRw/5nLqa15HKlhD0gghzueNqHMQr09+pOA/bW3Fzd7h+gFMsLDSxrM6jJZgiKRhmV2nWz3FXLGuEpp7CCCL/6R4fXEzCrCywG6NGk4TPuRzsc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761111957; c=relaxed/simple;
-	bh=nzVEduC9/Kkg41xlskrupc7IxgWOKnClJj35t5wA9hI=;
+	s=arc-20240116; t=1761111944; c=relaxed/simple;
+	bh=OOEDwYf/WoldymVHE1bARmPBao5IcHvki7sxdMEqYj8=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=NtjK1pR7Oq0Iu1yaU5Gd2wIxKl//uxLYSVdEkQxu2pzhHcXYF+YY6fPXdvtiY+20uvsKHg2QvSR5LewL6kvrNhLfKZ0weTBOvGi0t5CIKjGT5qRirckiPE3w7JDPpfVKxc2l+zjCe4a7+sGEyFSxWwJcQ0D9OsXzMtg3J9GhciU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ujacSTim; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD9C7C4CEE7;
-	Wed, 22 Oct 2025 05:45:56 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1761111956;
-	bh=nzVEduC9/Kkg41xlskrupc7IxgWOKnClJj35t5wA9hI=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=ujacSTimhXFiNzI+QS5vS1VcWvJ/ObCZ2k4ylXsBiZLkvrx9r0arFl8ow926/IUXY
-	 UntKck/iTa3LhOteVg6ZnohKChf8vT6HCWZ2oxGoQZJrIksxkaodVfBTBbTc0Zf8WY
-	 58MZnTLs0eLm6beZwikPRN1pX0giRqiG0gGpAGT/qFN6JM+JIxiZcYQklzQ8s3VL+Z
-	 pBCOa1X5vTsoWn46LD3kD/meaFXbhpTnDgFaKm3vUVJvW8RLfNQH871XoMKeVclU5A
-	 VWIAFVflSkdaVSDmODaC8k20Qva65nnLWTIImUvkgJmfz1PNe3/KvRfBVYKz7u98BD
-	 ZYBoER9Hm7+9Q==
-Date: Tue, 21 Oct 2025 22:44:23 -0700
-From: Eric Biggers <ebiggers@kernel.org>
-To: Md Sadre Alam <quic_mdalam@quicinc.com>
-Cc: adrian.hunter@intel.com, ulf.hansson@linaro.org,
-	linux-arm-msm@vger.kernel.org, linux-mmc@vger.kernel.org,
-	linux-kernel@vger.kernel.org, quic_varada@quicinc.com
-Subject: Re: [PATCH v2] mmc: sdhci-msm: Enable ICE support for non-cmdq eMMC
- devices
-Message-ID: <20251022054423.GB35717@sol>
-References: <20251014093503.347678-1-quic_mdalam@quicinc.com>
- <20251017173835.GA161400@sol>
- <abe89411-e590-29df-e9e9-b50402e08aac@quicinc.com>
+	 Content-Type:Content-Disposition:In-Reply-To; b=snaCcgepi7p4RayMqqxMxhjKcSj8gjjnBO4QK9g8x4xC+0t9k9z+DSLk/s6QKBv+yqtYveXXdyZ3AwOjlBeI+Xzpeiq90zfyC3zE11mK0tBfw6nGSNqtoxPGsclO45YBfkTNbgtXTU3g/CSsgOtyj9eibM2I4WdknvtusGYcbSE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=OY4d43Ge; arc=none smtp.client-ip=170.10.129.124
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1761111941;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=+gdOCtyqfpPDKTOSjwLO+fIICNulbuVoEvWA7TNWh1Q=;
+	b=OY4d43GeZy8RoHxJ98+KEGoz+NMxMwsdR92GCbAJVByzmDCfeiLyviRx/XZCGk6hQDaIKY
+	vPyTcSEA3u1T6cgkHoKKNZfCMEsVQyfimzXVtfk15B+mwMLN3pMuqZYFHTEHGTl5GJRUJM
+	2oGnjSqL6K2vZFOrpAz6j5Mt6+eGM88=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-617-y4kZNps-O5KHrJlpY7Lbsw-1; Wed, 22 Oct 2025 01:45:40 -0400
+X-MC-Unique: y4kZNps-O5KHrJlpY7Lbsw-1
+X-Mimecast-MFC-AGG-ID: y4kZNps-O5KHrJlpY7Lbsw_1761111939
+Received: by mail-wm1-f70.google.com with SMTP id 5b1f17b1804b1-47111dc7c5dso2806625e9.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 21 Oct 2025 22:45:40 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1761111939; x=1761716739;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=+gdOCtyqfpPDKTOSjwLO+fIICNulbuVoEvWA7TNWh1Q=;
+        b=HXZRtOds0K/oB/fgh/7qktpL8zO+UmUBcLNFrJy3dGsopa47spqUQlehLM6dveUWZB
+         8rb/xir8w/JDMiplrVmdiQqTAzJyGp0yil2VwZZwblqxC1jGIErNglXPCLTFG8necbtP
+         801SFATqBiTOUe5ImnKSfZOYrFYlyaNeihibESf1U1CZkoQcQ7qyv1V6MhJ7J6hYVTlh
+         wmZMIiWEV2muD6cfGQc1iRaD8k24ZChlfADMOKAsaMVKOqOfAAtTfQpcMFcMwqpaFU72
+         b0/eyNAGNG0yWP0ohe6rb4hmh1kupGdH2bklvLbOuUEmyhk3jofiHrP7oTaSBxOWOakA
+         3yFg==
+X-Forwarded-Encrypted: i=1; AJvYcCXOphamYv8II1RgQdXuJK4Bh5CL1mwnKm86kQvN+XMMy1/om4EiuoPeP9zX6IDv/SEzumLZ6jLSwOQGq4nj@vger.kernel.org
+X-Gm-Message-State: AOJu0YyqKohnNU1iFzyUJnD/C/NGQuSc5DsnED9q0F6T4BIRCMYXZLNt
+	T++xrswMniELaUGCm/7AR//8+0Ehl1TRLsde6kvRQiAT/tC2l2rODi+CVEcy10/a4Gh85IX/90X
+	czp1OwRrXjPtZ7Q2O1hyr4H9zr4Owrwhp0KLnXqHmFAA9BbBx1bW/+0LJWhzpwQCae0Q=
+X-Gm-Gg: ASbGncv0FwEZkDA7YT4ct5cTt/HR2CGCgHA/EINN3qqrhkNFSUYWb3XWTs7EhId8RxF
+	M4ucP5vTovgfpzG0iwl/qrKDaFQog2rK9aSbuVYF8m+RjktnPL5DwHmcIbnZDTmQSNOeJL7x6K5
+	Ky4A1DHgkZMt3m/pThppFibR83seiLfuS90PxArtvcpUGl8rKxvj4yVTC+coYFJ9FV/3ZhdvHG3
+	GmLpoZG/S4azJvEmPtZMtdiKPf6tp0dJ5SPFNDhdYvQ4k28GFIXcWqgCiflsKYpZx+XWTk6+K8C
+	vNTJXu2XDRsgqn381hPFIcvgzAHIdoS+uDXpZxu1gpKKsCjrlORmIfUiSA0VfrHbCsH9
+X-Received: by 2002:a05:600c:6992:b0:471:5c0:94fc with SMTP id 5b1f17b1804b1-475c3fa355cmr13586825e9.6.1761111939132;
+        Tue, 21 Oct 2025 22:45:39 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IElHGkXoX3hCkc0GRrDbDcYpbH4YLBEG6cIW8mw2RcnC42OK12DSE/fMXDY2iXzD02ahYxuXQ==
+X-Received: by 2002:a05:600c:6992:b0:471:5c0:94fc with SMTP id 5b1f17b1804b1-475c3fa355cmr13586695e9.6.1761111938746;
+        Tue, 21 Oct 2025 22:45:38 -0700 (PDT)
+Received: from redhat.com ([2a0d:6fc0:152d:b200:2a90:8f13:7c1e:f479])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-47494ab11bbsm30712795e9.1.2025.10.21.22.45.37
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 21 Oct 2025 22:45:38 -0700 (PDT)
+Date: Wed, 22 Oct 2025 01:45:35 -0400
+From: "Michael S. Tsirkin" <mst@redhat.com>
+To: Jason Wang <jasowang@redhat.com>
+Cc: Cong Zhang <cong.zhang@oss.qualcomm.com>,
+	Xuan Zhuo <xuanzhuo@linux.alibaba.com>,
+	Eugenio =?iso-8859-1?Q?P=E9rez?= <eperezma@redhat.com>,
+	Paolo Bonzini <pbonzini@redhat.com>,
+	Stefan Hajnoczi <stefanha@redhat.com>, Jens Axboe <axboe@kernel.dk>,
+	linux-arm-msm@vger.kernel.org, virtualization@lists.linux.dev,
+	linux-block@vger.kernel.org, linux-kernel@vger.kernel.org,
+	pavan.kondeti@oss.qualcomm.com
+Subject: Re: [PATCH] virtio_blk: NULL out vqs to avoid double free on failed
+ resume
+Message-ID: <20251022014453-mutt-send-email-mst@kernel.org>
+References: <20251021-virtio_double_free-v1-1-4dd0cfd258f1@oss.qualcomm.com>
+ <20251021085030-mutt-send-email-mst@kernel.org>
+ <CACGkMEsU3+OWv=6mvQgP2iGL3Pe09=8PkTVA=2d9DPQ_SbTNSA@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -62,91 +105,83 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <abe89411-e590-29df-e9e9-b50402e08aac@quicinc.com>
+In-Reply-To: <CACGkMEsU3+OWv=6mvQgP2iGL3Pe09=8PkTVA=2d9DPQ_SbTNSA@mail.gmail.com>
 
-On Wed, Oct 22, 2025 at 10:49:23AM +0530, Md Sadre Alam wrote:
-> Hi,
+On Wed, Oct 22, 2025 at 12:19:19PM +0800, Jason Wang wrote:
+> On Tue, Oct 21, 2025 at 8:58 PM Michael S. Tsirkin <mst@redhat.com> wrote:
+> >
+> > On Tue, Oct 21, 2025 at 07:07:56PM +0800, Cong Zhang wrote:
+> > > The vblk->vqs releases during freeze. If resume fails before vblk->vqs
+> > > is allocated, later freeze/remove may attempt to free vqs again.
+> > > Set vblk->vqs to NULL after freeing to avoid double free.
+> > >
+> > > Signed-off-by: Cong Zhang <cong.zhang@oss.qualcomm.com>
+> > > ---
+> > > The patch fixes a double free issue that occurs in virtio_blk during
+> > > freeze/resume.
+> > > The issue is caused by:
+> > > 1. During the first freeze, vblk->vqs is freed but pointer is not set to
+> > >    NULL.
+> > > 2. Virtio block device fails before vblk->vqs is allocated during resume.
+> > > 3. During the next freeze, vblk->vqs gets freed again, causing the
+> > >    double free crash.
+> >
+> > this part I don't get. if restore fails, how can freeze be called
+> > again?
 > 
-> On 10/17/2025 11:08 PM, Eric Biggers wrote:
-> > On Tue, Oct 14, 2025 at 03:05:03PM +0530, Md Sadre Alam wrote:
-> > > Enable Inline Crypto Engine (ICE) support for eMMC devices that operate
-> > > without Command Queue Engine (CQE).This allows hardware-accelerated
-> > > encryption and decryption for standard (non-CMDQ) requests.
-> > > 
-> > > This patch:
-> > > - Adds ICE register definitions for non-CMDQ crypto configuration
-> > > - Implements a per-request crypto setup via sdhci_msm_ice_cfg()
-> > > - Hooks into the request path via mmc_host_ops.request
-> > > - Initializes ICE hardware during CQE setup for compatible platforms
-> > > 
-> > > With this, non-CMDQ eMMC devices can benefit from inline encryption,
-> > > improving performance for encrypted I/O while maintaining compatibility
-> > > with existing CQE crypto support.
-> > > 
-> > > Signed-off-by: Md Sadre Alam <quic_mdalam@quicinc.com>
-> > 
-> > How was this tested?
-> I tested this using fscrypt on a Phison eMMC device. However, since that
-> particular eMMC does not support CMDQ, inline encryption (ICE) was bypassed
-> during testing.
-
-What do you mean by "inline encryption (ICE) was bypassed during
-testing"?
-
-> +static int sdhci_msm_ice_cfg(struct sdhci_host *host, struct mmc_request *mrq,
-> +			     u32 slot)
-
-Could you also remove the unused 'slot' parameter from this function?
-
-> > > @@ -2185,6 +2241,18 @@ static int sdhci_msm_cqe_add_host(struct sdhci_host *host,
-> > >   	if (ret)
-> > >   		goto cleanup;
-> > > +	/* Initialize ICE for non-CMDQ eMMC devices */
-> > > +	config = sdhci_readl(host, HC_VENDOR_SPECIFIC_FUNC4);
-> > > +	config &= ~DISABLE_CRYPTO;
-> > > +	sdhci_writel(host, config, HC_VENDOR_SPECIFIC_FUNC4);
-> > > +	ice_cap = cqhci_readl(cq_host, CQHCI_CAP);
-> > > +	if (ice_cap & ICE_HCI_SUPPORT) {
-> > > +		config = cqhci_readl(cq_host, CQHCI_CFG);
-> > > +		config |= CRYPTO_GENERAL_ENABLE;
-> > > +		cqhci_writel(cq_host, config, CQHCI_CFG);
-> > > +	}
-> > > +	sdhci_msm_ice_enable(msm_host);
-> > 
-> > This is after __sdhci_add_host() was called, which is probably too late.
-> ok,I’ll move the ICE initialization earlier in the probe flow, ideally
-> before __sdhci_add_host() is called.
-> > 
-> > > +#ifdef CONFIG_MMC_CRYPTO
-> > > +	host->mmc_host_ops.request = sdhci_msm_request;
-> > > +#endif
-> > >   	/* Set the timeout value to max possible */
-> > >   	host->max_timeout_count = 0xF;
-> > 
-> > A lot of the code in this patch also seems to actually run on
-> > CQE-capable hosts.  Can you explain?  Why is it needed?  Is there any
-> > change in behavior on them?
-> Thanks for raising this. You're right that some parts of the patch interact
-> with CQE-related structures, such as cqhci_host, even on CQE-capable hosts.
-> However, the intent is to reuse existing CQE infrastructure (like register
-> access helpers and memory-mapped regions) to configure ICE for non-CMDQ
-> requests.
+> For example, could it be triggered by the user?
 > 
-> Importantly, actual CQE functionality is only enabled if the eMMC device
-> advertises CMDQ support. For devices without CMDQ, the CQE engine remains
-> disabled, and the request path falls back to standard non-CMDQ flow. In this
-> case, we're simply leveraging the CQE register space to program ICE
-> parameters.
-> 
-> So while the code runs on CQE-capable hosts, there's no change in behavior
-> for CMDQ-enabled devices — the patch does not interfere with CQE operation.
-> It only enables ICE for non-CMDQ requests when supported by the platform.
+> Thanks
 
-So, we're dealing only with hosts that do support a command queue, but
-support eMMC devices either with or without using it?
+I don't know - were you able to trigger it? how?
 
-Could you explain why sdhci_msm_ice_enable() is called twice: once from
-sdhci_msm_cqe_add_host() and once from sdhci_msm_cqe_enable()?
 
-- Eric
+> >
+> > > ---
+> > >  drivers/block/virtio_blk.c | 13 ++++++++++++-
+> > >  1 file changed, 12 insertions(+), 1 deletion(-)
+> > >
+> > > diff --git a/drivers/block/virtio_blk.c b/drivers/block/virtio_blk.c
+> > > index f061420dfb10c40b21765b173fab7046aa447506..746795066d7f56a01c9a9c0344d24f9fa06841eb 100644
+> > > --- a/drivers/block/virtio_blk.c
+> > > +++ b/drivers/block/virtio_blk.c
+> > > @@ -1026,8 +1026,13 @@ static int init_vq(struct virtio_blk *vblk)
+> > >  out:
+> > >       kfree(vqs);
+> > >       kfree(vqs_info);
+> > > -     if (err)
+> > > +     if (err) {
+> > >               kfree(vblk->vqs);
+> > > +             /*
+> > > +              * Set to NULL to prevent freeing vqs again during freezing.
+> > > +              */
+> > > +             vblk->vqs = NULL;
+> > > +     }
+> > >       return err;
+> > >  }
+> > >
+> >
+> > > @@ -1598,6 +1603,12 @@ static int virtblk_freeze_priv(struct virtio_device *vdev)
+> > >
+> > >       vdev->config->del_vqs(vdev);
+> > >       kfree(vblk->vqs);
+> > > +     /*
+> > > +      * Set to NULL to prevent freeing vqs again after a failed vqs
+> > > +      * allocation during resume. Note that kfree() already handles NULL
+> > > +      * pointers safely.
+> > > +      */
+> > > +     vblk->vqs = NULL;
+> > >
+> > >       return 0;
+> > >  }
+> > >
+> > > ---
+> > > base-commit: 8e2755d7779a95dd61d8997ebce33ff8b1efd3fb
+> > > change-id: 20250926-virtio_double_free-7ab880d82a17
+> > >
+> > > Best regards,
+> > > --
+> > > Cong Zhang <cong.zhang@oss.qualcomm.com>
+> >
+
 
