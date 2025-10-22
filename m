@@ -1,196 +1,151 @@
-Return-Path: <linux-arm-msm+bounces-78416-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-78417-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8E056BFE637
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Oct 2025 00:16:59 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 15E9FBFE659
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Oct 2025 00:20:50 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id EACE33A374E
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Oct 2025 22:16:55 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id A44501A036FE
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Oct 2025 22:21:13 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D7FFE29B8C7;
-	Wed, 22 Oct 2025 22:16:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 015652F6184;
+	Wed, 22 Oct 2025 22:20:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="teAV8WQu"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="XEkMV+VT"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF1181C84CB;
-	Wed, 22 Oct 2025 22:16:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2138826ED37
+	for <linux-arm-msm@vger.kernel.org>; Wed, 22 Oct 2025 22:20:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761171413; cv=none; b=aa6LKECwbglN4gH3aOztTMGtFZ7aG8MvV99UEJbZ1ELJXVhhkHthhjjH/2Q/iPFBOWwAoj3hHI63+kYSzjRadpcAZ474oTOYkwF08IapngfMiLy60jGQwKuMtTvoGOLczphr6Og1NHzO4jpsuK8N0BdQC6f68l/5O3xpYQDQowo=
+	t=1761171646; cv=none; b=A96NFnWHt0TwlYLvISFX+C++JlvI3jTrIKsrTUl0Ql3m5IMRs5MzQJs8M0cFgBmJpuqujXh6pg8FyFqUqLVnGbgNcjSdNHpcqm8Az8HTzY+Lwpq+QnWE///j6tXYJ8GGtSFAWroopRrSjm3XMtqxM6itQjyazCFgIwxaRKvzpSM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761171413; c=relaxed/simple;
-	bh=KSensTcJ8snAZyRB7NSkeX45VKRDVxD2iZ4SiwHqe6Y=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=oVzUCfbiVMhmTBCUx/Tcs4/GelUcyOUP9HbZje/yKRqWyv7IvZwFfZ/pOHNA4OHdeLomJ7NRRGXA5vVMhiBcj8nbrMJ4SxdSlklFP97fxF76aEekn7LNjF533NaQ1+bUMb82E4zdA+po2P4JDst7V7kCsPr7GgBZeOhWn1PsV4g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=teAV8WQu; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D14BFC4CEE7;
-	Wed, 22 Oct 2025 22:16:52 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1761171413;
-	bh=KSensTcJ8snAZyRB7NSkeX45VKRDVxD2iZ4SiwHqe6Y=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=teAV8WQuXY7chklzBvXPodEb99pSN1bEi+XW7T/RyfXxiynLj/U/FRvZ8zSpCRZ7H
-	 WN8OzgjSEex0GBo79nouNpr6qvBp2Rh1wGPOSBYYN2WHEAWTZJDKfdBe5VtGimIxZQ
-	 oPP59djsnvx7KRPOEOewNBtFrbKRzvg91jtH3mZw0FvWkNSdalkZGp40oCAeX8pDUY
-	 OUx1q+RISD7Jibm8/VWtRXWjP2P4OJsgcLgEzrePqYlzx1/T+VUwlMQEzGVqAx4X82
-	 6DZLN7nU1uVwifa42/q6tT9J/CTSJycvBNA4Dm+2Y9ohI81e8CtL8O2zB/VNxeiLVo
-	 3brD84z0L/TzQ==
-Date: Wed, 22 Oct 2025 17:19:15 -0500
-From: Bjorn Andersson <andersson@kernel.org>
-To: Jingyi Wang <jingyi.wang@oss.qualcomm.com>
-Cc: Konrad Dybcio <konradybcio@kernel.org>, linux-arm-msm@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, Chris Lew <chris.lew@oss.qualcomm.com>
-Subject: Re: [PATCH 2/2] soc: qcom: smp2p: Add support for smp2p v2
-Message-ID: <76gekllxr5meizr7wbvxjibdncdw7kp2q4zjjxtmdtfnwt4owc@dum7e77j4bie>
-References: <20250923-smp2p-v1-0-2c045af73dac@oss.qualcomm.com>
- <20250923-smp2p-v1-2-2c045af73dac@oss.qualcomm.com>
+	s=arc-20240116; t=1761171646; c=relaxed/simple;
+	bh=s1tNuMqAcm2bXMiMD6V6FQCydvFf5uZlJ3OrFtH/Ovo=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=d9o2c10jcIVS4XSA1LzAh6XKHB9vR3DTPTnflSK8/DXnAWvHSjXSwrT98Sl1Igqd2ieWXRWvJ31hboEw+GtzzhX5ooIB5wMlYF2HxY/bnzyYNsRo8b+UfRyY02Xc5M2GomjikYRHIX5AlEGszc4bL1SPYcrFALlJvcOJQVj08Xk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=XEkMV+VT; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 59MK1DWT027078
+	for <linux-arm-msm@vger.kernel.org>; Wed, 22 Oct 2025 22:20:44 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:date:from:message-id:mime-version
+	:subject:to; s=qcppdkim1; bh=ojPDymiYZTBLdr/wyRVgSgbdNLO5BGbhwnh
+	T/pYk/5k=; b=XEkMV+VT0Vncnb4O8C33110XM73b8qxAXFOmWykCvCJVcT1/Qg9
+	XAHAez+tRla3HOj7g7zHbK6LyZV1P76src9J0CqU3pa5hUg9yf/uQzARdqNi2qjU
+	sgnPKIucpFNLncrNNnR0Un2Wyj794wd52GTHb15SI9T0DdFj3eMtrAhCp5vEq94l
+	UQAbQBuY6td+QZscz4cRMufFjBuDIVPAIC65vErFx0EVnLAmsxyAjka9ro/1Gunb
+	LVdiEVcIQkWSjP3p164VQA7n0srzvHy6FhOwFe2bqv2emGj26oqZ9Y7M2mwHGHfq
+	/Ze6q8qtTYrHuYhE27eg/7g7OBIjoPsPKLA==
+Received: from mail-pf1-f200.google.com (mail-pf1-f200.google.com [209.85.210.200])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 49y5x8g9gv-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Wed, 22 Oct 2025 22:20:43 +0000 (GMT)
+Received: by mail-pf1-f200.google.com with SMTP id d2e1a72fcca58-78117fbda6eso95801b3a.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Oct 2025 15:20:43 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1761171643; x=1761776443;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=ojPDymiYZTBLdr/wyRVgSgbdNLO5BGbhwnhT/pYk/5k=;
+        b=MgSStvnVDlry1jxqbiETIUUYqKRl7NLGBLL4On1D29wgCa8nEFnWsyJ7tiBTeTpIi1
+         KB8bhcYAow6ZjseydL9Qtlq2RUeKsvV5cwW/fTwXYgdj9CleukgaxBw5nY+Y0hvpbgpK
+         h/gkKImqsKbSTNADO/WGvvfuqlmoQ8RcCEUZvhykSmXLC1RKcFGq8QwR6EaPl6FUrI4f
+         kGUthxoCnZTZMhuNHFpNFGXWc0RzaoomP48/MEVLsxihkAIjNCvoDmGSicWH5/oVVGbK
+         v12YZ7D2P+UxAMe8rjLBBNGMOIK/KGugY0lsOeiYT6uAD1o4rESUp9LP+Y7GBJrEhQZd
+         s7GQ==
+X-Forwarded-Encrypted: i=1; AJvYcCUA/jtXY+Y8/gPggvXIH9zZorYrseYVj5guuHFPCnb2uF3l9tToyVpw0CasZXQZX91+mu5wz4gr/22vedIK@vger.kernel.org
+X-Gm-Message-State: AOJu0Yw6lQR7XGdk7ttJYr9cNd8xbd3/obDfzLS0ndtBD4pKP7Oc6sPb
+	t3WNHiLn0w8G8zLLCLJuopZHjE82/lhRUuL3rHnmtlocH5sUUpA8sbMRQrgCrHnKimSA5hnX69c
+	alSTssY2z8YMxb4mozxV8Qa6qD1jEcGIDwfyuLJMZXgmUsqBl7BS+XcRh0JM4DyCGCfrX
+X-Gm-Gg: ASbGncuBQAP+dfAyGRhsgOvwiZwERFV7GjT2X5zdq/zO87yzuxK6yag41mnR1gbBxvR
+	ZDBt/ZGO9TFHbtKtkxrerTZjRv5qfd1DIEgbEOOdq0gHdUiU6vQhnUuWI2XThN3oui6uvG2j02j
+	e3HmZ8sJ5PDVv/up5W987FTE0eFBip5VvE5Vh9KvPlSjT51p2zAouTvsVG9GoO9HrG7GAvAFmJk
+	ebOSeSnRVFLsGQ/yGmx8s0vtSpEDXmi5406Rcdzy30DvWIQmUOm1JM774vFqKEkWTkZKFgFksXL
+	mszz64Yjp016MhoX6cp2vwJTEs9DJm4fPluk60vaFr81pfGmp7n7SrBWD7UURL+mXgnc934BLk+
+	U7cvZuEH2vw==
+X-Received: by 2002:a05:6a00:94ce:b0:771:fa65:ae6e with SMTP id d2e1a72fcca58-7a220a99177mr31804776b3a.17.1761171642682;
+        Wed, 22 Oct 2025 15:20:42 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHP3Xt+fiS6/lvXldmXrI/Xmz9rKgUz8Br5D+seLdPQbhnS8ioRXSjubRta++0jtoklDejZTA==
+X-Received: by 2002:a05:6a00:94ce:b0:771:fa65:ae6e with SMTP id d2e1a72fcca58-7a220a99177mr31804731b3a.17.1761171642157;
+        Wed, 22 Oct 2025 15:20:42 -0700 (PDT)
+Received: from localhost ([2601:1c0:5000:d5c:5b3e:de60:4fda:e7b1])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-7a274bb0c93sm284889b3a.59.2025.10.22.15.20.41
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 22 Oct 2025 15:20:41 -0700 (PDT)
+From: Rob Clark <robin.clark@oss.qualcomm.com>
+To: dri-devel@lists.freedesktop.org
+Cc: freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        Rob Clark <robin.clark@oss.qualcomm.com>,
+        Dmitry Baryshkov <lumag@kernel.org>,
+        Abhinav Kumar <abhinav.kumar@linux.dev>,
+        Jessica Zhang <jessica.zhang@oss.qualcomm.com>,
+        Sean Paul <sean@poorly.run>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+        linux-kernel@vger.kernel.org (open list)
+Subject: [PATCH] drm/msm: Ensure vm is created in VM_BIND ioctl
+Date: Wed, 22 Oct 2025 15:20:38 -0700
+Message-ID: <20251022222039.9937-1-robin.clark@oss.qualcomm.com>
+X-Mailer: git-send-email 2.51.0
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250923-smp2p-v1-2-2c045af73dac@oss.qualcomm.com>
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-ORIG-GUID: dD9LnSr8OlNLZ2uc4-Uef4oT59a28tQg
+X-Proofpoint-GUID: dD9LnSr8OlNLZ2uc4-Uef4oT59a28tQg
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDIyMDE2NCBTYWx0ZWRfXxAku2o+kGuMR
+ F+7ydESd9sLD5i1rAnL1qZJiFRHY14R88JnnxIeJ8spjHFsn7JWxNNjftER5gUUlxOSqStIpjaV
+ aj8IbwkBYZfg3xGFrk8ohg18fjx7n4zG7ZCoAVsVsll9Q3iukS8HGVjC9D9NsYcRLfy4//P++qn
+ tsykvqrzx6m8xdHDSNzxhxDukTGZbsUjpdiTv2dmEVSSUzLfMOSlfO2ViCXMLnV12eT582YxJ5/
+ pWu98nrKbl3vZOnsBipVODDKFIkmJSGulJJmnrq1oyEMjkgG0OckhUHuDvb0FzZ6v4dft7IHj0b
+ Nb1DQ2hbNgM6untD6M8xd0znDu0NytAYhGse8CgZmwNOkX/ghCXbQFOG8JEOhPAFOW6HaTCozLE
+ KxWIti1iZPnEQLHsCGSOSQxO1+wepg==
+X-Authority-Analysis: v=2.4 cv=UOTQ3Sfy c=1 sm=1 tr=0 ts=68f958bb cx=c_pps
+ a=mDZGXZTwRPZaeRUbqKGCBw==:117 a=xqWC_Br6kY4A:10 a=x6icFKpwvdMA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=EUspDBNiAAAA:8 a=3QSsbYrYwaFkjnnp2pkA:9
+ a=zc0IvFSfCIW2DFIPzwfm:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-10-22_08,2025-10-22_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ lowpriorityscore=0 suspectscore=0 adultscore=0 clxscore=1015 phishscore=0
+ bulkscore=0 malwarescore=0 impostorscore=0 priorityscore=1501 spamscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.19.0-2510020000 definitions=main-2510220164
 
-On Tue, Sep 23, 2025 at 09:18:43PM -0700, Jingyi Wang wrote:
-> From: Chris Lew <chris.lew@oss.qualcomm.com>
-> 
-> Some remoteproc need smp2p v2 support, mirror the version written by the
-> remote if the remote supports v2. This is needed if the remote does not
-> have backwards compatibility with v1. And reset entry last value on SSR for
-> smp2p v2.
-> 
-> Signed-off-by: Chris Lew <chris.lew@oss.qualcomm.com>
-> Co-developed-by: Jingyi Wang <jingyi.wang@oss.qualcomm.com>
-> Signed-off-by: Jingyi Wang <jingyi.wang@oss.qualcomm.com>
+Since the vm is lazily created, to allow userspace to opt-in to a
+VM_BIND context, we can't assume it is already created.
 
-Please confirm that you really co-developed (pair programming) this
-patch with Chris.
+Fixes: 2e6a8a1fe2b2 ("drm/msm: Add VM_BIND ioctl")
+Signed-off-by: Rob Clark <robin.clark@oss.qualcomm.com>
+---
+ drivers/gpu/drm/msm/msm_gem_vma.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-Isn't this a patch from Chris, that you're "forwarding", i.e. both
-Signed-off-by should be there, but the Co-developed-by shouldn't.
+diff --git a/drivers/gpu/drm/msm/msm_gem_vma.c b/drivers/gpu/drm/msm/msm_gem_vma.c
+index 00d0f3b7ba32..90712586faac 100644
+--- a/drivers/gpu/drm/msm/msm_gem_vma.c
++++ b/drivers/gpu/drm/msm/msm_gem_vma.c
+@@ -1382,7 +1382,7 @@ msm_ioctl_vm_bind(struct drm_device *dev, void *data, struct drm_file *file)
+ 	 * Maybe we could allow just UNMAP ops?  OTOH userspace should just
+ 	 * immediately close the device file and all will be torn down.
+ 	 */
+-	if (to_msm_vm(ctx->vm)->unusable)
++	if (to_msm_vm(msm_context_vm(dev, ctx))->unusable)
+ 		return UERR(EPIPE, dev, "context is unusable");
+ 
+ 	/*
+-- 
+2.51.0
 
-> ---
->  drivers/soc/qcom/smp2p.c | 35 ++++++++++++++++++++++++++++++++---
->  1 file changed, 32 insertions(+), 3 deletions(-)
-> 
-> diff --git a/drivers/soc/qcom/smp2p.c b/drivers/soc/qcom/smp2p.c
-> index e2cfd9ec8875..5ea64a83c678 100644
-> --- a/drivers/soc/qcom/smp2p.c
-> +++ b/drivers/soc/qcom/smp2p.c
-> @@ -48,10 +48,13 @@
->  #define SMP2P_MAGIC 0x504d5324
->  #define SMP2P_ALL_FEATURES	SMP2P_FEATURE_SSR_ACK
->  
-> +#define SMP2P_VERSION_1 1
-> +#define SMP2P_VERSION_2 2
-
-#define ONE 1
-#define TWO 2
-
-#define PLEASE_DONT true
-
-> +
->  /**
->   * struct smp2p_smem_item - in memory communication structure
->   * @magic:		magic number
-> - * @version:		version - must be 1
-> + * @version:		version
->   * @features:		features flag - currently unused
->   * @local_pid:		processor id of sending end
->   * @remote_pid:		processor id of receiving end
-> @@ -180,14 +183,23 @@ static void qcom_smp2p_kick(struct qcom_smp2p *smp2p)
->  static bool qcom_smp2p_check_ssr(struct qcom_smp2p *smp2p)
->  {
->  	struct smp2p_smem_item *in = smp2p->in;
-> +	struct smp2p_entry *entry;
->  	bool restart;
->  
->  	if (!smp2p->ssr_ack_enabled)
->  		return false;
->  
->  	restart = in->flags & BIT(SMP2P_FLAGS_RESTART_DONE_BIT);
-> +	restart = restart != smp2p->ssr_ack;
-> +	if (restart && in->version > SMP2P_VERSION_1) {
-> +		list_for_each_entry(entry, &smp2p->inbound, node) {
-> +			if (!entry->value)
-> +				continue;
-> +			entry->last_value = 0;
-> +		}
-> +	}
->  
-> -	return restart != smp2p->ssr_ack;
-> +	return restart;
->  }
->  
->  static void qcom_smp2p_do_ssr_ack(struct qcom_smp2p *smp2p)
-> @@ -222,6 +234,20 @@ static void qcom_smp2p_negotiate(struct qcom_smp2p *smp2p)
->  	}
->  }
->  
-> +static int qcom_smp2p_in_version(struct qcom_smp2p *smp2p)
-> +{
-> +	unsigned int smem_id = smp2p->smem_items[SMP2P_INBOUND];
-> +	unsigned int pid = smp2p->remote_pid;
-> +	struct smp2p_smem_item *in;
-> +	size_t size;
-> +
-> +	in = qcom_smem_get(pid, smem_id, &size);
-> +	if (IS_ERR(in))
-> +		return 0;
-> +
-> +	return in->version;
-> +}
-> +
->  static void qcom_smp2p_start_in(struct qcom_smp2p *smp2p)
->  {
->  	unsigned int smem_id = smp2p->smem_items[SMP2P_INBOUND];
-> @@ -516,6 +542,7 @@ static int qcom_smp2p_alloc_outbound_item(struct qcom_smp2p *smp2p)
->  	struct smp2p_smem_item *out;
->  	unsigned smem_id = smp2p->smem_items[SMP2P_OUTBOUND];
->  	unsigned pid = smp2p->remote_pid;
-> +	u8 in_version;
->  	int ret;
->  
->  	ret = qcom_smem_alloc(pid, smem_id, sizeof(*out));
-> @@ -537,12 +564,14 @@ static int qcom_smp2p_alloc_outbound_item(struct qcom_smp2p *smp2p)
->  	out->valid_entries = 0;
->  	out->features = SMP2P_ALL_FEATURES;
->  
-> +	in_version = qcom_smp2p_in_version(smp2p);
-> +
->  	/*
->  	 * Make sure the rest of the header is written before we validate the
->  	 * item by writing a valid version number.
->  	 */
->  	wmb();
-> -	out->version = 1;
-> +	out->version = (in_version) ? in_version : 1;
-
-Doesn't this imply that if the remoteproc advertises support for version
-3, then we suddenly also support version 3?
-
-
-I don't remember if we've talked about how version handling should work
-in this driver, but we should certainly define and document that in the
-comment at the top of this driver.
-
-Regards,
-Bjorn
-
->  
->  	qcom_smp2p_kick(smp2p);
->  
-> 
-> -- 
-> 2.25.1
-> 
 
