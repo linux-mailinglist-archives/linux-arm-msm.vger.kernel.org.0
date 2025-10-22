@@ -1,129 +1,202 @@
-Return-Path: <linux-arm-msm+bounces-78337-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-78338-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [142.0.200.124])
-	by mail.lfdr.de (Postfix) with ESMTPS id 21BCCBFC4C5
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Oct 2025 15:53:32 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id D6B8FBFC6C5
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Oct 2025 16:16:15 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 947A856569C
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Oct 2025 13:42:53 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 549F91A06899
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Oct 2025 14:16:39 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6D9EB34845B;
-	Wed, 22 Oct 2025 13:40:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C65B584A35;
+	Wed, 22 Oct 2025 14:16:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b="vrD7MCFR"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="d6NuJbze"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f41.google.com (mail-lf1-f41.google.com [209.85.167.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B26234C15E
-	for <linux-arm-msm@vger.kernel.org>; Wed, 22 Oct 2025 13:40:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EFB4D26ED28
+	for <linux-arm-msm@vger.kernel.org>; Wed, 22 Oct 2025 14:16:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761140416; cv=none; b=BcJImGPCcU9iFX0Ioj7Jal7VMGomlAZ5M+kN7LzOEKXJLUFzY2mkzzJsWeNLsuuAo+XtBBlN2vhYzIYP1UghKhb8Z5RzGXAS2kuBd0gCXP47YPPAcLOJE+kyXCiUeHRyGLTHbfIZG6QMhXa7u1ghCAlAqlVImkkERcmyynBYaRs=
+	t=1761142572; cv=none; b=flV8jbtPQgF3STqDZwS0ewodnybVMXy6/iyBs/E6n8wEJsrg/uRcW3lVa0/DJLC1MByOnmgwd4Qk/KsWPa6jss13A5e4QNLE32dyb97vAsGmxnHsnuCAeux0d0y+8k9wdeo7O52r/XHuJSfCoTE0+uS6F8NZc3XmfweRjMZ614o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761140416; c=relaxed/simple;
-	bh=orIYgaMNJClTUKA2Pj42SRVGg9kx4atmkKO79VfJkGQ=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=Ov0QQmaY1Iqi/aM20HLG9bLrWtadqaIwDq/Zy6U0kWX0VdZMShc3c+oLKar/4TvzVpbXn2GUKdiLWEbwI802gGBfXd+tYwqdImNI+dS3x5G4zpsSdKU2An3zcZTGNrJwlCmsAaY+tM0jeNEZr7CxD7UKU41SwGTH2Lf7qu9E4ac=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl; spf=none smtp.mailfrom=bgdev.pl; dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b=vrD7MCFR; arc=none smtp.client-ip=209.85.167.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=bgdev.pl
-Received: by mail-lf1-f41.google.com with SMTP id 2adb3069b0e04-591c9934e0cso7694328e87.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Oct 2025 06:40:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=bgdev-pl.20230601.gappssmtp.com; s=20230601; t=1761140412; x=1761745212; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=E9Gx1TCR16ehe+RsUpMtumgWDjpXuT38xi+HNgTYzlg=;
-        b=vrD7MCFR5TiQfiyQ4b02oUQqocgr2+soVZ1doqOvsLFk21dlz6ansHvxpg/DOmiPM0
-         Ts1epqVzsKPTxIZEgTAPG9E2iwlz02J7DaqDODW1db/2njFkQJbarS6Levwn4DB2q6gi
-         ohXRYq70x90qVfc11r+1GmB1lxZfg+Ml8RL/1e+MdroVDnsqQDagTA7w4x/luiWwUnb6
-         Kb7fsbnaZGMqIEhPMYWYXn3oxcCxsfcUswJGBDLQkWp63WfpuWv1mjLkguanLZJD6xVq
-         x7Q3AK/upmP1LgDrkGUPeyKJLmxAtJs6N38B9cckdbfVEdtCoqnHqdg6YYIUcJ+3qH+O
-         t6tA==
+	s=arc-20240116; t=1761142572; c=relaxed/simple;
+	bh=qxtafgdM8klMYYn2NHfFsUf4KpMGxlR4zblqOzUKm1c=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=iTdjZujuUUHj76YVzF2lUx7civfGzU0PD9mdoRje4Xyo5pOppV+ldQup8oddys8tt+1dvirPQ1UHJmrWRxPoC5gWCjY0igyvCAZ4VSXHqNQPvE1gRmzBT90dh0PlOFMwwoVEq9RJ97APRUG5VHRDVzaRNV5Le8CCEvcCY6OcTVM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=d6NuJbze; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 59MBwV9T030208
+	for <linux-arm-msm@vger.kernel.org>; Wed, 22 Oct 2025 14:16:09 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:date:from:message-id:mime-version
+	:subject:to; s=qcppdkim1; bh=zSVmBGXhp89LLakLqt63pmwsBW5eaBUwdfU
+	ubrpC18w=; b=d6NuJbzeGuRwEx5D+DQ0dSfBwqu7MitpxAnOaIig2TtG1eaoXN6
+	YhZW2P1WQymi9rPl/ajhMhAk6FSWpermj+WTT5GybauA/91sx6fyW/yDW9e1f1I8
+	oEmEQNaKOaWCdcO+ZIn5zYLKHlA/RROsmgfqDt05n8jlo4AQNrSAN8cs5THG8L3j
+	XnGcDQLjHSUI01dtVYcJg5GzchLWaXtMO6k62akzKWpHt0PoKNVntNmWLDMh39Py
+	446xVKp+yd/9mG00efBNaoD0kHW3TJKvhACaT/jPnbNg7oQm9HMHzLU5r+OxZ7eS
+	9+bi1U2hRclVX/zeDbZOIQlYf9DQ42hECSQ==
+Received: from mail-vk1-f199.google.com (mail-vk1-f199.google.com [209.85.221.199])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 49v2ge4vce-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Wed, 22 Oct 2025 14:16:09 +0000 (GMT)
+Received: by mail-vk1-f199.google.com with SMTP id 71dfb90a1353d-556fd0bcc47so322973e0c.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Oct 2025 07:16:09 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1761140412; x=1761745212;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=E9Gx1TCR16ehe+RsUpMtumgWDjpXuT38xi+HNgTYzlg=;
-        b=azKmWte+4b9nsnkgMMmryOH/waQ985ncIrACOY6rH1PQe1trIlxPKkkrUZQayQd5BP
-         IXEYKJFmEZJuzgoBIj6uvIn2nrlMe5bOAFQegjuSyah9vq/yORFUq1/GXwqhWSdWheO6
-         18eWLa3+V8xwW7zG2ow6/bigNJtdaO3QhtoaBh+Ch0TrwIsvHYkz41Uf1eD4aAMrbVUn
-         T8q6uOjCo4GGnRnoq0jNWYR0b+FJ5qy3ipJq39oEj7l9np8rbpXgXn28XtFeFE6C7tvX
-         w7TI/qrXSIpVWdzIKUl7Cy25Xz8PWBlXpuj+7rWBKFYB6eJemKmigIQgXtlx6Imw+2Sj
-         SCpw==
-X-Forwarded-Encrypted: i=1; AJvYcCVvR8qapVuyX2kv0v7VmsRLiTYGL/QOdcSeadLd5W9B/9WLG9wRy1QCsUpByRCmr6tyqxes9z6594NKfHu5@vger.kernel.org
-X-Gm-Message-State: AOJu0YxUk2UXOmTjX8mPlQbaDT/5vxymO+kjXIKeWgYmve7ACev4we7G
-	l2pxoJHtIKNDDqRoIz/UDYj5BLeKIBu0XpPcz4W32/x4eWjUEmzMpvmqs/gKWoaYRPRXQd7cQpi
-	qcrGUNqbZiPMsu/xd+uizhIo4ussrySVo1TZo5odK+Q==
-X-Gm-Gg: ASbGncuiv/dHwKJ3SWoCLMiHglAjIHg9b4aieTpkvXGGClZKbUsk7anTqyno3yIXXBE
-	aj/fHRcwLD5/W9LGY9SsM+ZgNwktbGOd1N+cedwBFL9BiRg+js777okt3Ml6R/dhnAh8YAeR1cP
-	xyNwRo26MU+ZESAy0FAT1BbiG9BJKbua57Ivr7kbqBE5jl9UruDnE4awwkuKPBgu9wWr6oNpuE4
-	XXf8x/Zw0xuV3k5kLxXsDJhJd0L3dPl6v6lGDNDg+4ACSbxk82GfSbF9WFh28h5/5YQCJ1nDfqr
-	DSf3OV90FRDB4OlECaBzwVKrR9Y=
-X-Google-Smtp-Source: AGHT+IEKqm8lYyfETbDHoX6GlVAlvBKAEAKibR9/ZUGF9ZkgmvVU7aDY+sPQ7pncE4VQkSkH1+uh5CHDb76NK4aZXko=
-X-Received: by 2002:a05:6512:694:b0:57a:1846:df77 with SMTP id
- 2adb3069b0e04-591d8550fa0mr6598936e87.40.1761140412394; Wed, 22 Oct 2025
- 06:40:12 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1761142569; x=1761747369;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=zSVmBGXhp89LLakLqt63pmwsBW5eaBUwdfUubrpC18w=;
+        b=vstQjt+S0lJt0ky5oElk5EqHNVtvyCGntbqvW002vxZPWNn/Roj4adgeZOB34V6lR9
+         KIo1ipSXRKcbBUq+v8Ztkxqllcrut0ucYwIQIHvVkLg2Aul2dn7cl8uUekFmGeQ3GQ0j
+         Yg6KKAw7xhBMR+3fMdjg9/aKpyGqZim+X3i4FYNewaqXilK5WSi0OQCq+QcuMrrb9lFx
+         wtvBj5IsDxn/L77b5Kfr0532jn97Z4fgVA4QEFegvgsYV+vPught5BzX6q28yhL9Yk/C
+         iFkljw9IYSPVbkmMbYT/xibkfzgiLrim0PKCY2+Z3vUQHeuO/ZF/RFXW41tofzpwCNM2
+         rKOQ==
+X-Forwarded-Encrypted: i=1; AJvYcCUahaWN2BP2SuC+YUvYa1NTZTu7+RCoyxi1HDFQ7sMGF43hOi/2f9oVtyoBW66n9sGsOR+V18dKRhafspR0@vger.kernel.org
+X-Gm-Message-State: AOJu0YxS5L2YpF5MJ4bZmhI4rgOx5zzpAFN77j4s+5IkNlBMVOfYFOFj
+	R2PC8lkK3LoRZ7Q8qJiapsI0HuLmrheE60uwKWIG5UqDfhVnyfWoMfE+jYEYGrqjvZ5AM7QoJz5
+	FEgW2IsuXvmkAYbGhUFKnN0aV3jEoTmhwXCjAnbC7loF2SpjbaFgsPNKMDaWPyyX84cL2F8KQR1
+	9rwy2+3w==
+X-Gm-Gg: ASbGnctUJjltE9xZzFCxyW6mW7Kev0ViSkSj90zzOOdpvzbaMa2dt6MtaFxLkRzQBKx
+	/s6i2FqmeJV6IkhcOLdid/1s1G20w5Jbc5727jVcAeTqs/iDab4t+98g0W6khWmk/mh12yY25Gp
+	Vipd3rbisFnyNgdAMueQ30hGRuAvjqd0FNoI+yntNqKr3U+cytKrpUUvKBeh/ZVNxC7UMCuKZpl
+	GmYpRgr6gs1DR9m9m6Zlllro7JAoE8V/sg708hR3NUWAwj1Q+R/JTdx2+zsSdDf+Kv0BJ6L1n8U
+	6ACCjqYMMLEkL+igzf23eq2pqamqymX4JOA4SfiBuuA8pXQlMKjZVbQ34htkByGElG7URhCYdmw
+	IZe2+LlKfzkyquOfUCpMjWIGFwEYblKT3pgEI00c=
+X-Received: by 2002:a05:6123:e:b0:554:e726:7818 with SMTP id 71dfb90a1353d-556a1e67ce5mr587396e0c.2.1761142568489;
+        Wed, 22 Oct 2025 07:16:08 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEDNbG74qQ/1QqT42r3mAqC8kCcPXgjlYDbBT6zot0YQc5vXp2D139VS2lNTvrDU3pbAJuVRQ==
+X-Received: by 2002:a05:6123:e:b0:554:e726:7818 with SMTP id 71dfb90a1353d-556a1e67ce5mr587323e0c.2.1761142568008;
+        Wed, 22 Oct 2025 07:16:08 -0700 (PDT)
+Received: from hu-yabdulra-ams.qualcomm.com ([212.136.9.4])
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-63c48ab5553sm12143412a12.16.2025.10.22.07.16.07
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 22 Oct 2025 07:16:07 -0700 (PDT)
+From: Youssef Samir <youssef.abdulrahman@oss.qualcomm.com>
+To: jeff.hugo@oss.qualcomm.com, carl.vanderlip@oss.qualcomm.com,
+        troy.hanson@oss.qualcomm.com, zachary.mckevitt@oss.qualcomm.com
+Cc: ogabbay@kernel.org, lizhi.hou@amd.com, karol.wachowski@linux.intel.com,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org
+Subject: [PATCH] accel/qaic: rename constant for clarity
+Date: Wed, 22 Oct 2025 16:16:06 +0200
+Message-ID: <20251022141606.3740470-1-youssef.abdulrahman@oss.qualcomm.com>
+X-Mailer: git-send-email 2.43.0
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20251022-gpio-shared-v2-0-d34aa1fbdf06@linaro.org>
- <20251022-gpio-shared-v2-1-d34aa1fbdf06@linaro.org> <CAHp75Vewc2OoD7=eoFtrkPrGRuB9ZGT2vu4Z_wdHZUDZ8igUtw@mail.gmail.com>
-In-Reply-To: <CAHp75Vewc2OoD7=eoFtrkPrGRuB9ZGT2vu4Z_wdHZUDZ8igUtw@mail.gmail.com>
-From: Bartosz Golaszewski <brgl@bgdev.pl>
-Date: Wed, 22 Oct 2025 15:40:00 +0200
-X-Gm-Features: AS18NWC2AFr1HYLKJbD6SJ_gfPPZz3lolA3TRfFJfK8fopnOG8MhqaQPJHZTguM
-Message-ID: <CAMRc=Mf_qfFzWqy6ND+YDuXcv5NOYiRTo9QY76V719PqJBMxPA@mail.gmail.com>
-Subject: Re: [PATCH v2 01/10] string: provide strends()
-To: Andy Shevchenko <andy.shevchenko@gmail.com>
-Cc: Kees Cook <kees@kernel.org>, Mika Westerberg <westeri@kernel.org>, 
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>, Andrew Morton <akpm@linux-foundation.org>, 
-	Linus Walleij <linus.walleij@linaro.org>, Manivannan Sadhasivam <mani@kernel.org>, 
-	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Saravana Kannan <saravanak@google.com>, Greg Kroah-Hartman <gregkh@linuxfoundation.org>, 
-	Andy Shevchenko <andy@kernel.org>, Catalin Marinas <catalin.marinas@arm.com>, Will Deacon <will@kernel.org>, 
-	Srinivas Kandagatla <srini@kernel.org>, Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>, 
-	Jaroslav Kysela <perex@perex.cz>, Takashi Iwai <tiwai@suse.com>, linux-hardening@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, linux-gpio@vger.kernel.org, 
-	linux-arm-kernel@lists.infradead.org, linux-sound@vger.kernel.org, 
-	linux-arm-msm@vger.kernel.org, 
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDE4MDAyMCBTYWx0ZWRfX6iu7WzGA0LZ8
+ WvZmLmvY6YyS5R5R3hcdVA1f3qw+FXbf5JsjC3s7PK40Zv0IZydPMLBQe4viMwZDavX7xj8gkg2
+ X/UXtHb+aA2txCVzCFESE1QLnKeiHA3nrcozx7JzSnfkFypIYh4bIBaedSkWnKk8UlZgIRhdifT
+ 6oSiQgTFpSNFZETOgbP1aOOBaOm4cY+u+X2Ih0mIjloYspf91BYf4JX3m4V64UoOcSLj+oq5Oo3
+ krfZLqtByou+0Wm7E0XM6wx3uPiSCl8QFCSSS2uvjX/8e9YWOnHWqnpyLPwC3Z+Fiw9H1vZnonZ
+ b+gSPYurDHG8NQ33WN/opbFi26uARmHS1cOg5k/4bW/wWy+/nqJxpLWJnv3GhSr+GFUCTc2zkFk
+ yjS4RyUCep7CgTyPCFpIe0VGOGvhXg==
+X-Authority-Analysis: v=2.4 cv=KqFAGGWN c=1 sm=1 tr=0 ts=68f8e729 cx=c_pps
+ a=+D9SDfe9YZWTjADjLiQY5g==:117 a=dNlqnMcrdpbb+gQrTujlOQ==:17
+ a=x6icFKpwvdMA:10 a=VkNPw1HP01LnGYTKEx00:22 a=EUspDBNiAAAA:8
+ a=jxz3m821_weTZxENAOYA:9 a=vmgOmaN-Xu0dpDh8OwbV:22
+X-Proofpoint-GUID: xdLUC1x1UR0XdBBqM5VvNUp2UdvIDWqu
+X-Proofpoint-ORIG-GUID: xdLUC1x1UR0XdBBqM5VvNUp2UdvIDWqu
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-10-22_05,2025-10-13_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ bulkscore=0 clxscore=1015 phishscore=0 malwarescore=0 impostorscore=0
+ lowpriorityscore=0 adultscore=0 priorityscore=1501 spamscore=0 suspectscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.19.0-2510020000 definitions=main-2510180020
 
-On Wed, Oct 22, 2025 at 3:34=E2=80=AFPM Andy Shevchenko
-<andy.shevchenko@gmail.com> wrote:
->
-> On Wed, Oct 22, 2025 at 4:11=E2=80=AFPM Bartosz Golaszewski <brgl@bgdev.p=
-l> wrote:
-> >
-> > Implement a function for checking if a string ends with a different
-> > string and add its kunit test cases.
->
-> ...
->
-> > --- a/include/linux/string.h
-> > +++ b/include/linux/string.h
-> > @@ -562,4 +562,6 @@ static inline bool strstarts(const char *str, const=
- char *prefix)
-> >         return strncmp(str, prefix, strlen(prefix)) =3D=3D 0;
-> >  }
-> >
-> > +bool strends(const char *str, const char *suffix);
->
-> Why not static inline as strstarts()?
->
+From: Troy Hanson <thanson@qti.qualcomm.com>
 
-Because it's not a oneliner.
+QAIC_MANAGE_EXT_MSG_LENGTH is ambiguous and has been confused with
+QAIC_MANAGE_MAX_MSG_LENGTH. Rename it to clarify it's a wire length.
 
-Bartosz
+Signed-off-by: Troy Hanson <thanson@qti.qualcomm.com>
+Signed-off-by: Youssef Samir <youssef.abdulrahman@oss.qualcomm.com>
+---
+ drivers/accel/qaic/qaic_control.c | 14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
+
+diff --git a/drivers/accel/qaic/qaic_control.c b/drivers/accel/qaic/qaic_control.c
+index b86a8e48e731..079176013da5 100644
+--- a/drivers/accel/qaic/qaic_control.c
++++ b/drivers/accel/qaic/qaic_control.c
+@@ -30,7 +30,7 @@
+ #define MANAGE_MAGIC_NUMBER		((__force __le32)0x43494151) /* "QAIC" in little endian */
+ #define QAIC_DBC_Q_GAP			SZ_256
+ #define QAIC_DBC_Q_BUF_ALIGN		SZ_4K
+-#define QAIC_MANAGE_EXT_MSG_LENGTH	SZ_64K /* Max DMA message length */
++#define QAIC_MANAGE_WIRE_MSG_LENGTH	SZ_64K /* Max DMA message length */
+ #define QAIC_WRAPPER_MAX_SIZE		SZ_4K
+ #define QAIC_MHI_RETRY_WAIT_MS		100
+ #define QAIC_MHI_RETRY_MAX		20
+@@ -367,7 +367,7 @@ static int encode_passthrough(struct qaic_device *qdev, void *trans, struct wrap
+ 	if (in_trans->hdr.len % 8 != 0)
+ 		return -EINVAL;
+ 
+-	if (size_add(msg_hdr_len, in_trans->hdr.len) > QAIC_MANAGE_EXT_MSG_LENGTH)
++	if (size_add(msg_hdr_len, in_trans->hdr.len) > QAIC_MANAGE_WIRE_MSG_LENGTH)
+ 		return -ENOSPC;
+ 
+ 	trans_wrapper = add_wrapper(wrappers,
+@@ -495,7 +495,7 @@ static int encode_addr_size_pairs(struct dma_xfer *xfer, struct wrapper_list *wr
+ 
+ 	nents = sgt->nents;
+ 	nents_dma = nents;
+-	*size = QAIC_MANAGE_EXT_MSG_LENGTH - msg_hdr_len - sizeof(**out_trans);
++	*size = QAIC_MANAGE_WIRE_MSG_LENGTH - msg_hdr_len - sizeof(**out_trans);
+ 	for_each_sgtable_dma_sg(sgt, sg, i) {
+ 		*size -= sizeof(*asp);
+ 		/* Save 1K for possible follow-up transactions. */
+@@ -576,7 +576,7 @@ static int encode_dma(struct qaic_device *qdev, void *trans, struct wrapper_list
+ 
+ 	/* There should be enough space to hold at least one ASP entry. */
+ 	if (size_add(msg_hdr_len, sizeof(*out_trans) + sizeof(struct wire_addr_size_pair)) >
+-	    QAIC_MANAGE_EXT_MSG_LENGTH)
++	    QAIC_MANAGE_WIRE_MSG_LENGTH)
+ 		return -ENOMEM;
+ 
+ 	xfer = kmalloc(sizeof(*xfer), GFP_KERNEL);
+@@ -645,7 +645,7 @@ static int encode_activate(struct qaic_device *qdev, void *trans, struct wrapper
+ 	msg = &wrapper->msg;
+ 	msg_hdr_len = le32_to_cpu(msg->hdr.len);
+ 
+-	if (size_add(msg_hdr_len, sizeof(*out_trans)) > QAIC_MANAGE_MAX_MSG_LENGTH)
++	if (size_add(msg_hdr_len, sizeof(*out_trans)) > QAIC_MANAGE_WIRE_MSG_LENGTH)
+ 		return -ENOSPC;
+ 
+ 	if (!in_trans->queue_size)
+@@ -729,7 +729,7 @@ static int encode_status(struct qaic_device *qdev, void *trans, struct wrapper_l
+ 	msg = &wrapper->msg;
+ 	msg_hdr_len = le32_to_cpu(msg->hdr.len);
+ 
+-	if (size_add(msg_hdr_len, in_trans->hdr.len) > QAIC_MANAGE_MAX_MSG_LENGTH)
++	if (size_add(msg_hdr_len, in_trans->hdr.len) > QAIC_MANAGE_WIRE_MSG_LENGTH)
+ 		return -ENOSPC;
+ 
+ 	trans_wrapper = add_wrapper(wrappers, sizeof(*trans_wrapper));
+@@ -1052,7 +1052,7 @@ static void *msg_xfer(struct qaic_device *qdev, struct wrapper_list *wrappers, u
+ 	init_completion(&elem.xfer_done);
+ 	if (likely(!qdev->cntl_lost_buf)) {
+ 		/*
+-		 * The max size of request to device is QAIC_MANAGE_EXT_MSG_LENGTH.
++		 * The max size of request to device is QAIC_MANAGE_WIRE_MSG_LENGTH.
+ 		 * The max size of response from device is QAIC_MANAGE_MAX_MSG_LENGTH.
+ 		 */
+ 		out_buf = kmalloc(QAIC_MANAGE_MAX_MSG_LENGTH, GFP_KERNEL);
+-- 
+2.43.0
+
 
