@@ -1,130 +1,174 @@
-Return-Path: <linux-arm-msm+bounces-78275-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-78276-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [IPv6:2605:f480:58:1:0:1994:3:14])
-	by mail.lfdr.de (Postfix) with ESMTPS id 797D7BFA680
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Oct 2025 09:00:36 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 17D17BFA68F
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Oct 2025 09:00:57 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id D7077505B7D
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Oct 2025 06:59:38 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 1C2AF406221
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Oct 2025 07:00:20 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B70A92F2909;
-	Wed, 22 Oct 2025 06:59:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 88EE32F3C12;
+	Wed, 22 Oct 2025 07:00:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="MlHKaN0z"
+	dkim=pass (2048-bit key) header.d=me-ssier-org.20230601.gappssmtp.com header.i=@me-ssier-org.20230601.gappssmtp.com header.b="lOKW89gt"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qk1-f181.google.com (mail-qk1-f181.google.com [209.85.222.181])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26AA52F3609;
-	Wed, 22 Oct 2025 06:59:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37CE32F39B7
+	for <linux-arm-msm@vger.kernel.org>; Wed, 22 Oct 2025 07:00:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.181
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761116354; cv=none; b=W1k6p+eiCtzyO6xrKa4BiNpzMOepoEYFSMAUgpao5w9QWxh5Zet8Dso1eg/puIE0BsaYYzScAIN60cKby0iwkS7lM0+AQUzwVv8KgG68blTcSSbwu46HKEhzCJG2cDyjwgIWm2XTRqPMD89q1ORCwKss+ELJ1aWGtFvhoy9XHqw=
+	t=1761116416; cv=none; b=Jg66PMW9O1DKWeANnjl/udcdrSO1RG7T9ARdnV1jx5FDFgEgxtxMBTS3Sb4PXs9SrEYqzmT0lU7hpW8NMb+LYHRVCrxFCRcXeOtW21v9dN5lkkNW3EKh2rDZIX2ReJI0dB8D2mS56KFfjhBKfPV7Trh/wgwVbnT5am9UmOkFTTs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761116354; c=relaxed/simple;
-	bh=fLm80y5DeCd7BjYiy8AWXL4fxOKpiG5SPopQ/f7y0Is=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=HiuT1W9mF1fILpp0rd9gE+i0MEQLsYQVMqXVZSS02LCeGn2/68mliwvVPGDvY8+Wf2uRvpLuAhRbzPgqYo47IoFOnajtyv1PHrUY5sT4SqMVcEJlk5NtLvoTkk1+Gu63FNItx+ZL/sPomVISem54zrXLd44RaH2kg4d1fzCWEt4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=MlHKaN0z; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 59M3wIwc024209;
-	Wed, 22 Oct 2025 06:59:09 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	3i07+l+uWJPPHEU6fHn5Iyu6aez5sgkNVeYntCduk94=; b=MlHKaN0zeNzzmCbR
-	7x+V5qbFHvxVJAAIFu998asumKyIwVSB7oKZlsVU/OiGOZsO39anUkewRXsRLLIE
-	Dnx6wiRu8sS3ylIwO42G7VxtEGE9ZfnR46I/jqXsIA3lhANAwF4PyuepNm43cOrr
-	WVQhiUv7tb5LEjxzM4XQ4KMZ89axC8YbbXMIMjhzqL+B2cy89vAY/963SuzwtrLL
-	t26IdZx+a68U/v3tJjbBiEEwg30VEWsHVZVLwxrzdp7+jXs+cJNkIZHOe5Xsw0M6
-	Za9ZvJoFEhXIIy4EgqbMJRi0Az/SbEm19ICAFMV0Shsnuo706sOhGHMSeTKRcvEd
-	GB+lcw==
-Received: from nasanppmta04.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 49v1w83n68-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 22 Oct 2025 06:59:09 +0000 (GMT)
-Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
-	by NASANPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 59M6x8um032737
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 22 Oct 2025 06:59:08 GMT
-Received: from [10.151.36.184] (10.80.80.8) by nasanex01a.na.qualcomm.com
- (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1748.24; Tue, 21 Oct
- 2025 23:59:04 -0700
-Message-ID: <96ae7d38-4ce0-fa34-e6f0-6bb6e4ceaa28@quicinc.com>
-Date: Wed, 22 Oct 2025 12:29:01 +0530
+	s=arc-20240116; t=1761116416; c=relaxed/simple;
+	bh=2ovcfzW0TZxfflXJ1CWAc3hKGj0ELxUHga64V8M6ot4=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=VIuWvvuC+a28EMPj4QJ7Mp28Q8M2UVSG3nrKHwSjypb5JPFvwMnwx9/Y6wbzntfJpx8fnDcNUoUKlHR1Gz12RURp/EoY/DN1FRgVuBB/+N8xNwFq8w94DLs78P4mjFWuMB3E++6CZWqdEj7EgzxkFcc+k0sJvK5Potv+2YvcZF0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=me.ssier.org; spf=pass smtp.mailfrom=me.ssier.org; dkim=pass (2048-bit key) header.d=me-ssier-org.20230601.gappssmtp.com header.i=@me-ssier-org.20230601.gappssmtp.com header.b=lOKW89gt; arc=none smtp.client-ip=209.85.222.181
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=me.ssier.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=me.ssier.org
+Received: by mail-qk1-f181.google.com with SMTP id af79cd13be357-88f2aebce7fso936498585a.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Oct 2025 00:00:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=me-ssier-org.20230601.gappssmtp.com; s=20230601; t=1761116413; x=1761721213; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=UZ0zLiQMjHfWfIrETWEpgf86vfPQWqa3rEBNo24tR5I=;
+        b=lOKW89gtGbwipcluEaEJlQSRPk4HOVPDoeTtBsPgzX4VBK4WR0IppUMuRypIaDitkE
+         zYz+C3PQ0ZOjl4CeieIT7XgNO90JKwkkn44aUQAlXM/ugqZ0qflvyOYA+LEJPaIYfsSC
+         orcFnv0bhf7u6vAlHN6ySJjTQvffohW85jgxpvVcq6zvEiGZRyEguUA3hZfa2GISSJVK
+         pmn51Aiu0yGX6Ysj64T7ntOim463s8mqk48IwzDjoEqb5KiRgNRKph7RT6Bm/+LBD2/M
+         RFjFlfVMkTNon2LMLAoCc5pSrzXLUZMNff/J9Q+YCciS8hDfv6WCvV1zhvL7EuKNUIoj
+         /eaA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1761116413; x=1761721213;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=UZ0zLiQMjHfWfIrETWEpgf86vfPQWqa3rEBNo24tR5I=;
+        b=XyeBapv1vL/none2D1imXvYDsaQgqfsCrkKaVNJqPAl3GyAhO2LX51lbOG2Y8XwALL
+         FTAo0e6k5jkJOOid527HbyxsiDMwAEywIQTFIRA36jyUDdOtJ9qmWSY96qGRLcvMujpc
+         /F0YfIs3+R+oSUMjZOBZrZ9XteOSpEIhDG/EP4e7wJQNcRIE72zpJWOcA5JaNIQMpv2E
+         r+DiIShj3xMX2KspFcuFgI1r3We3PzlakZH4HShMMlzwcd2XPHNr5PpgAMWPcEkxSPdf
+         13JcAkcotiJpcPiJwovvIzZRTLA6Hg01KRDeV4HAelloTUQz70CnRNTMIa+gPgz6kFGn
+         oE0w==
+X-Forwarded-Encrypted: i=1; AJvYcCWUXc2RdCCY6lTOsUuQSbUctjY3n5eR75tN2UjHk09ds8UWQXOk0bTgqiXxLLHjE5QFeGukXKT0E0u6Nalz@vger.kernel.org
+X-Gm-Message-State: AOJu0YyDwoPCE935a5yHZXZb9twbDeJAwRNC7E6E3NcH1AlDxh7z95EZ
+	Sf6ySjUNEWJ2Phf2027Yd7y2rcxqt3k2/0pyl/8t9CHI/FfUnkis2ZBaCwShWo7tMFs=
+X-Gm-Gg: ASbGnctpxVBFrg7TJjUmT/0sd7RGD64EOySHXGvAg/itW5afOHAu12GNuFBHhUGvjPj
+	K7RODugpVFUMc7ZNcOKUo8nM3O/e8078f59exD5p+kixa/P9I5yvp3gcr2AZJS3QKeXBOVroWSJ
+	X5bEJB8klb+vGnttllWzaY7zagjymHIHIrL9hdhxwjVqLxcYeE65Cl/Ja00YgOjKvX6sAluDWgu
+	F5zuJ+kWRRNZD8kKroYASozRbwiwpP3rsO09+Fqp+UTFtlnqnwanYVxe18GEueJm4Etya3m3zBh
+	b3hJJVgiXsQCMJoQqH73lsbcH5XQcWFCkTH37BO3hIcUStazv7TIwd5hfgNCWXqYPyCWGDDc4ds
+	IgKoCvCDhnsmpbNfyHGudt19MzfL0zTEnA/dQA2l5uz+lpRCMinJoBuYCb0o0JoF1ZWXjq9cJ3n
+	O3XV6dFPBGsw==
+X-Google-Smtp-Source: AGHT+IFP1Egld4e4M3O9ldes+hPt4it1nCGP1bODqWck6WjBakPWZGeujTTjHQoGUKEqPL4vEcQSIw==
+X-Received: by 2002:a05:620a:4621:b0:88f:228c:c6a0 with SMTP id af79cd13be357-8906e8af048mr2096261085a.24.1761116412834;
+        Wed, 22 Oct 2025 00:00:12 -0700 (PDT)
+Received: from [192.168.2.8] ([74.14.126.215])
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-891cd6717desm915892985a.26.2025.10.22.00.00.11
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 22 Oct 2025 00:00:12 -0700 (PDT)
+Message-ID: <77efe2a2-ee81-4096-9145-a76e35954e84@me.ssier.org>
+Date: Wed, 22 Oct 2025 03:00:01 -0400
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.15.1
-Subject: Re: [PATCH v3 1/9] spi: dt-bindings: spi-qpic-snand: Add IPQ5424
- compatible
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/4] ARM: dts: qcom: msm8974pro-htc-m8: add status LEDs
+To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Pavel Machek <pavel@kernel.org>
+Cc: Luca Weiss <luca@lucaweiss.eu>, linux-arm-kernel@lists.infradead.org,
+ linux-arm-msm@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht,
+ phone-devel@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org
+References: <20251007-m8-dts-additions-v1-0-53d7ab3594e7@me.ssier.org>
+ <20251007-m8-dts-additions-v1-1-53d7ab3594e7@me.ssier.org>
+ <6c791f05-70e7-49c9-a3ce-50fb82b0c894@oss.qualcomm.com>
+ <fef52764-3092-4375-b9c7-793d85adc102@me.ssier.org>
+ <41c63020-9226-45d9-979d-429b7299da41@oss.qualcomm.com>
 Content-Language: en-US
-To: Mark Brown <broonie@kernel.org>
-CC: <robh@kernel.org>, <krzk+dt@kernel.org>, <conor+dt@kernel.org>,
-        <andersson@kernel.org>, <konradybcio@kernel.org>, <vkoul@kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-spi@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <dmaengine@vger.kernel.org>, <quic_varada@quicinc.com>
-References: <20251014110534.480518-1-quic_mdalam@quicinc.com>
- <20251014110534.480518-2-quic_mdalam@quicinc.com>
- <dd1e4289-5e36-4b24-9afd-f09569459a96@sirena.org.uk>
-From: Md Sadre Alam <quic_mdalam@quicinc.com>
-In-Reply-To: <dd1e4289-5e36-4b24-9afd-f09569459a96@sirena.org.uk>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01a.na.qualcomm.com (10.52.223.231)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDE4MDAxNSBTYWx0ZWRfX0IPdfp5J8ZQN
- 4vea2Rd6y7a9Li+/jf5ZnuTKe2LCBc/BFHLL2hwQ+w45Ux4hfDMQusX48Q+/OIJFgIqLALzo++x
- +EbWMNQRvDTNwgMs7MMkuGjREUodxA6Fc/VkyUaeqndML5Nr5MYClf7tO7+WjE/Uilh1JTvBGDE
- lnDyxffENpj8kR7nFZUCXROymEFNn9FtNhvFyv3fDGvnvLVX7iWdHM/7bdPyzlb38k7TSfAxPWQ
- 3PKK7NeTdhnNyaZCqa4stfMp0NOnZO2tQ8p5Sykf7kYKEWM+DFkOmlgjLsGNzT1XIlU/nhMf+oq
- zbb6R7AuNsWnPxO262owqtaDhoZfVKAQKGfCVffFitYl/X9Akm8Z7O5bbpA953fVr+NoD0XBgEm
- EEtcTBEP6Hja5iFCIsdz8Flpipunkg==
-X-Authority-Analysis: v=2.4 cv=bNUb4f+Z c=1 sm=1 tr=0 ts=68f880bd cx=c_pps
- a=JYp8KDb2vCoCEuGobkYCKw==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17
- a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=x6icFKpwvdMA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=_0GQtCzl9aOVDYM4pBEA:9 a=3ZKOabzyN94A:10
- a=QEXdDO2ut3YA:10 a=zgiPjhLxNE0A:10 a=HhbK4dLum7pmb74im6QT:22
- a=cPQSjfK2_nFv0Q5t_7PE:22 a=pHzHmUro8NiASowvMSCR:22 a=Ew2E2A-JSTLzCXPT_086:22
-X-Proofpoint-GUID: t-5wmJQ0Ch1TLo2XtHsg-DecuLU4MTvU
-X-Proofpoint-ORIG-GUID: t-5wmJQ0Ch1TLo2XtHsg-DecuLU4MTvU
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-10-22_02,2025-10-13_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- bulkscore=0 phishscore=0 malwarescore=0 lowpriorityscore=0 clxscore=1015
- priorityscore=1501 suspectscore=0 adultscore=0 spamscore=0 impostorscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2510020000 definitions=main-2510180015
+From: Alexandre Messier <alex@me.ssier.org>
+In-Reply-To: <41c63020-9226-45d9-979d-429b7299da41@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-Hi,
-
-On 10/22/2025 12:39 AM, Mark Brown wrote:
-> On Tue, Oct 14, 2025 at 04:35:26PM +0530, Md Sadre Alam wrote:
->> IPQ5424 contains the QPIC-SPI-NAND flash controller which is the same as
->> the one found in IPQ9574. So let's document the IPQ5424 compatible and
->> use IPQ9574 as the fallback.
+On 2025-10-20 08:02, Konrad Dybcio wrote:
+> On 10/12/25 8:03 AM, Alexandre Messier wrote:
+>> On 2025-10-07 06:03, Konrad Dybcio wrote:
+>>> On 10/7/25 7:55 AM, Alexandre Messier via B4 Relay wrote:
+>>>> From: Alexandre Messier <alex@me.ssier.org>
+>>>>
+>>>> Add support for the notification LEDs on the HTC One M8.
+>>>>
+>>>> Two LEDs are available, one amber and one green.
+>>>
+>>> Do they form a single notification led, or are they supposed
+>>> to act separately?
+>>
+>> Good point, I had to check the phone user manual to confirm. Indeed, it is
+>> referred to as a one logical notification LED. It also mentions the color can
+>> be either green or orange, it does not mention using the combined color of
+>> the two LEDs.
+>>
+>> So I would say they are supposed to act separately.
+>>
+>> Hope this answers your question, and let me know if more details are needed.
+>>
+>> BTW: I will be sending a V2 to update the color name, since the user
+>> manual says the color is orange, not amber.
 > 
-> This doesn't apply against current code, please check and resend.
-Thank you for the feedback. I’d appreciate a bit more clarity on what 
-“doesn't apply against current code” refers to in this context. I’ve 
-manually applied the patch against the latest mainline (torvalds/linux) 
-and it applied cleanly without any conflicts. Please let me know if 
-there’s a specific tree or integration point I should be checking against.
+> Let's describe it as a single LED then:
+> 
+> multi-led {
+>         color = <LED_COLOR_ID_MULTI>; // notice it's not RGB
+>         function = LED_FUNCTION_STATUS;
+> 
+>         #address-cells = <1>;
+>         #size-cells = <0>;
+> 
+>         led@6 {
+>                 reg = <6>;
+>                 color = <LED_COLOR_ID_GREEN>;
+>         };
+> 
+>         led@7 {
+>                 reg = <7>;
+>                 color = <LED_COLOR_ID_ORANGE>;
+>         };
+> };
 
-Thanks,
-Alam.
+Using multi-led is fine for me.
+
+But currently, the "qcom-lpg" driver doesn't support LED_COLOR_ID_MULTI, only
+LED_COLOR_ID_RGB. Adding support for LED_COLOR_ID_MULTI is trivial, I tested it
+and it works.
+
+Or I can also use the "leds-group-multicolor" driver, using the two individual
+LEDs. I also tested this method and it works.
+
+> 
+> + Pavel the LED maintainer, please take a look if you think it makes sense
+
+If Pavel agrees using multi-led makes sense, I think the first option is the
+best. I will separate the LED patch into a new series, along with the change to
+the qcom-lpg driver to support LED_COLOR_ID_MULTI.
+
+Thanks
+Alex
+
+> 
+> Konrad
+
 
