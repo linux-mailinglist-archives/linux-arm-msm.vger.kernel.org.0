@@ -1,291 +1,156 @@
-Return-Path: <linux-arm-msm+bounces-78344-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-78345-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 658C7BFCA83
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Oct 2025 16:49:59 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 94D08BFCAF1
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Oct 2025 16:52:52 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 302016E44B8
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Oct 2025 14:37:44 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id E08B118992B3
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Oct 2025 14:52:37 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 34A4234D4EF;
-	Wed, 22 Oct 2025 14:34:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 143871F582E;
+	Wed, 22 Oct 2025 14:50:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="govKmZyy"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="huYSaP9C"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 127453502B4
-	for <linux-arm-msm@vger.kernel.org>; Wed, 22 Oct 2025 14:34:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51F4034C98F
+	for <linux-arm-msm@vger.kernel.org>; Wed, 22 Oct 2025 14:50:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761143651; cv=none; b=hb1YxgVWyQyGbsGk/MT3XAvA5f5KcV9j3G5gJ+i3BZ+mzKCcxgy4N+FS0My/UumZZmF02QsBbyNJ9o+FiTqM2x1U6kthLIql2YJVm4a4tbBqAo5WNgf1QQ3unoZufZ2eofEGpNEFrWOLQsuvAHhw3/dw+66Z0B+33rtGGeo2Wos=
+	t=1761144632; cv=none; b=buLRPTDrq2Wf1IAzFu0UgPOpo+YQtkqI8s+wGBX6CevVaz9rOwc+cE7xVlHk4SD1Np/VKOMZosWjYV42i5qAAYFG4epaOZHPQ2k24cibQIpul5UegOZLNuny+KtsiiwqwzKkLQt8P7mYeBnC29emYYlbksNYXioqIVv3BPfy7F8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761143651; c=relaxed/simple;
-	bh=Bz5dNjnWGJ72zU9lpe8lIcLxT6Mivkx50DoKVMYTicc=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dmjBfX072fU5YEBrn80ncTMHjeTLgGgLhudb0ilVe3TlMSkaglqbbfpoZkR456KvMjiAoaMH1lu5YNRIfnuHboAW3+OgVdFWORxTRh959HOziYuTfl6euOJgFHXZf1+g5PVjZnQl4aTm3f5YmLnBVg2gCx1l3deoqC18JqdyBCc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=govKmZyy; arc=none smtp.client-ip=205.220.180.131
+	s=arc-20240116; t=1761144632; c=relaxed/simple;
+	bh=1/KjRrMsZ/XCDGwFexf3EAhWXCX98/VuB2qIhSrUi7w=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=jqyJVD1IpnDsShwVAbiYSIRcgiEl6eo7zErqLeKSJDH/1M8BY53ABS3lsrg8pkHPBS2weS6NvwIs++AFw36wskVi5cDHUruHo+w7OcF0L83wot4EYw9mJgmw6wWIHrtqAL6F+Pe0ofes9M0FtFF971E/ULj5Pu7vyG/Ao7UbMPU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=huYSaP9C; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 59MBam67027488
-	for <linux-arm-msm@vger.kernel.org>; Wed, 22 Oct 2025 14:34:06 GMT
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 59M7MoYi012327
+	for <linux-arm-msm@vger.kernel.org>; Wed, 22 Oct 2025 14:50:29 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:date:from:in-reply-to:message-id
-	:mime-version:references:subject:to; s=qcppdkim1; bh=faQIz8fSwdO
-	oA7CWAkNGtjSmqzRzKQ9HbO9f6ZOpKX8=; b=govKmZyybdeQGQigfBY6KIPoEXT
-	pvMs2zdjtmwwitWHXIWAlpJpgJ2zcn2u2lmB0cFVBE2B0a8m7l9GzB7eZmDgNQ/m
-	NYr/2ZixueYVufsrA9V65Sgow5Nas/VZwky7SI6IFMQYlTReh1TXJ14eoziEeDrU
-	ooG6FtSufXQC3rWcxguvhiyAcd0kp13InCN6N/Me+H5SDMpTDbAnhJSFhj2OhG71
-	1Q4tSApkDvjavwti/vRaPsXQp40sLgdPjTcU6dA3r+UMt1wXByJEJHfx7qdkZz8D
-	lqKXsu3pk6By/m/l5X54gQIY7zzR++Q5nlkTR7KZOe7R3Fybbtp7pUjXViQ==
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	INq9WPyFfBY9ghUyC/moYyME3bMMJgDJZ6a2dYdOhJE=; b=huYSaP9CnOQ1bi0l
+	rgZhra3KiW+/C/yFDmnWt30f5/a+iW8a5OJNOk9Too93qN1VgXzlJAADJ/+44WzD
+	9j5UX4NjYpQ36yRC9GTtKKc7Y6Df9ghIj8oaj5wWeR+9aBK1E0hchzlRnr6CI33Z
+	zYzFDRKUsJ5Ktx/VninPR1qTaP8WazK1hv5yYj2Dah2Vpo6x6AUpcg3ulB+Kpdb3
+	SIdkwQzr5e2pLvZgQ1fPvUgutuHIKvelZ/h8Zq73cfmgQdQiZTUT+aX2VTCA5e/L
+	j9WwZsa3x8ym2ljn2LdgV4NYTovjjmxEw5gezOI2Lu/Wh+X9eDbQfqEq+Myn+LK/
+	Cg0i5A==
 Received: from mail-qt1-f197.google.com (mail-qt1-f197.google.com [209.85.160.197])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 49v27j4vyv-1
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 49xhe0jv2h-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Wed, 22 Oct 2025 14:34:06 +0000 (GMT)
-Received: by mail-qt1-f197.google.com with SMTP id d75a77b69052e-4e899262975so41202751cf.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Oct 2025 07:34:06 -0700 (PDT)
+	for <linux-arm-msm@vger.kernel.org>; Wed, 22 Oct 2025 14:50:29 +0000 (GMT)
+Received: by mail-qt1-f197.google.com with SMTP id d75a77b69052e-4e89d7946a1so3759881cf.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Oct 2025 07:50:29 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1761143646; x=1761748446;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=faQIz8fSwdOoA7CWAkNGtjSmqzRzKQ9HbO9f6ZOpKX8=;
-        b=hbVuKUwEq09rZP0Abtgj+5KDlBBWidZVDjWTJHkUXF810naT6wH5WCvyif82HiTipk
-         k2Gz2TjtEcQk+1C3ImL67wqF+uzNv7AMujLbPgvKS1qihkClYJGal0NP/YyVzkyly3mC
-         cDKodbm6cB38ljOADklPIxIKlfUX2RCjz+TQ3VaorKu9XzoCH0dCMOEZeaG7ycNIZpWW
-         iPx0a4yQdiOIVJcmxCE5nJubkD0MeSCq4xxQ8Sr/0q+9QA3YuyocmC0ks1SzM4f2ajQJ
-         ryJSa5g83hAaKxlcixLHdlaA9wTquPkVTKzJfUaLNRX0aKtdc/kT7PXz+dyCRRLh9bZt
-         shTw==
-X-Forwarded-Encrypted: i=1; AJvYcCUG3JJMh0H6bCVE5WDfjy2ZAcr9cGkCs8/rCmu6K2F5oEI9StPgL+K2rykbOVNvWMVNBr3sUNRrVTk4R1DV@vger.kernel.org
-X-Gm-Message-State: AOJu0YxBGcLnXZsyMtL6jChT1+53TlscmjvM/7b87Fk5wi0+D86E2iWM
-	WaOnMMph2Cqu5jMItWN68MHUu5KNdrqqzeirP1TSCFOmzMRilzrcsQUP1uq3a5/ljqiOBWFRbep
-	a5tUhLPIfB1SgEKcqUzNP7coLUyq6ObKNJQVpYxeOwvR26Vkfv28FH9QnZU7r7L87Kf5CechcNM
-	il
-X-Gm-Gg: ASbGnctYKSk5+c8lghryEaW1weC9Ck60z6Fvpa53gi31OpjsfTtoui9sROxNst6dS6n
-	fl/XBhrsMXmfeczV1ZXzchcRN4IEdO66MVS4xsL0uDE6u0P4y4IJZ+gMvZopnYs0yoPh9IdZWCT
-	Q7n9sa2KoM1SBiPtVIdIoyph/tr0hSz6DuYPyf/4BqXSEsyD5739KENjTlc08FWa07FjS4zkyCh
-	MfxTgMj8VcF9UK6ZDYAIIHNNe86CeEsr05b6pee50+f4eF6rb2BjP424LxDWPNEz7cUW8mRkMSb
-	FAt6K9duYNAYQJ97CONfyxfroMUXy/03wHKtPxli0WaSuifA0HeiLv76Wabgw5JsEFPlZWHx4GK
-	8/RpqVojf+qEK
-X-Received: by 2002:ac8:7e88:0:b0:4eb:7669:6b91 with SMTP id d75a77b69052e-4eb76697856mr32465951cf.16.1761143645326;
-        Wed, 22 Oct 2025 07:34:05 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGDK7D29Zp1dC9C3t8n2L6JThatH0XLulfavnkHZNj4oocbfOoVQymObbxt5nwrjNWlrqFgpA==
-X-Received: by 2002:ac8:7e88:0:b0:4eb:7669:6b91 with SMTP id d75a77b69052e-4eb76697856mr32465241cf.16.1761143644735;
-        Wed, 22 Oct 2025 07:34:04 -0700 (PDT)
-Received: from debian ([5.133.47.210])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-427f009a993sm25544910f8f.24.2025.10.22.07.34.03
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 22 Oct 2025 07:34:04 -0700 (PDT)
-From: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
-To: broonie@kernel.org
-Cc: perex@perex.cz, tiwai@suse.com, srini@kernel.org, alexey.klimov@linaro.org,
-        linux-sound@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org,
-        Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>,
-        Steev Klimaszewski <threeway@gmail.com>
-Subject: [PATCH v3 4/4] ASoC: qcom: sc7280: make use of common helpers
-Date: Wed, 22 Oct 2025 15:33:49 +0100
-Message-ID: <20251022143349.1081513-5-srinivas.kandagatla@oss.qualcomm.com>
-X-Mailer: git-send-email 2.51.0
-In-Reply-To: <20251022143349.1081513-1-srinivas.kandagatla@oss.qualcomm.com>
-References: <20251022143349.1081513-1-srinivas.kandagatla@oss.qualcomm.com>
+        d=1e100.net; s=20230601; t=1761144628; x=1761749428;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=INq9WPyFfBY9ghUyC/moYyME3bMMJgDJZ6a2dYdOhJE=;
+        b=c/aYiDwG92GOHQida43khDai3npwVZpNmmzR4+7SwWDDohNvePdScZ7yLt6mBUDZzf
+         9gFCdbIwDwK1Saf997LHdg+mBtsyWZiPm7k1yOoJVUSX4VLxnlISX5GExPlkfADR654s
+         CYUAMBM7a50PTzvcBszkVJZvtyWCM/cEAK89MGIDZ3opszt/+6l4Go+58S1gdjoS5EG6
+         z0N4q3ivEmBViiAbBOl5M7fkAHnNvBH1Pb1NhEsV2ZQv6D5TSpNFOE9EFpbw67YNLjAN
+         BnFvdKxoiawyKusDo324GBvNRKRdRDg/m+gVBX+EOzX+vnqcHVoEt6o3x+R68hhpl+p8
+         bPuA==
+X-Gm-Message-State: AOJu0YwSFfuCAHhLhk24UdI8UqZ7ZmU94f43lx7vuBCT+N5/zutaVzbH
+	Rh93zvLd/cHGVjPOn239Vy2RyNltTfOJSRz23O9utqRUs8+M0zyq9Ed61sGfH+LJtNljfXi4BHI
+	nU9tg9OPCYGvZkDt1fO6UzOM2YZPWx8O9XLSKoTji8HP2oUOYbw4Zytv0yOhXwqrYkjtO
+X-Gm-Gg: ASbGncvWF6uB90rRCjsmo4hLxl06VNqWV+lR44s0uv6ufpjocqvYkIRLfMvwxeoKqIC
+	TrAHAMkL82oUa0qK0UaiDODc0TV7oxzUFLMNoBNtwy6Nub2nRmRJ9BhAY2vi3UKw3e/2jyrSDbD
+	fkKUNVUuDxo7rSH+l9I5TjCRWEi37sJ1btegYfQ5ACu8uKAER29IrcIpMGLHSKXExeKT+7ma7Vh
+	X2d+JusTiKtFlWzakg1/IkQH1GTCS5B7dDmWKpqAMI15w2QvoZCZcSFfKhbjcgVrUPIsCtf0KHH
+	uupVpvaD0bMgRe1+xXnKwAS0xh8Pi+4r4hCNfo+Rgc3yEEA2Vn/1m9KSGgBu8vD7n2W8cT9ABEs
+	LAfDa+XRf6UVMKjoLVg2aquN0bSFQdAJJduUlhD2dpajwS9OVHAY5CQBh
+X-Received: by 2002:ac8:5a88:0:b0:4b7:7dbf:9a81 with SMTP id d75a77b69052e-4e89d1f794cmr163149981cf.1.1761144628249;
+        Wed, 22 Oct 2025 07:50:28 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFyMZ9k+YL5Wi+O8wwfKKdoq08qbg6uZyT+lVQy1vWpqtzoyM414DZneAUJEWMiRHKY4+8HcA==
+X-Received: by 2002:ac8:5a88:0:b0:4b7:7dbf:9a81 with SMTP id d75a77b69052e-4e89d1f794cmr163149711cf.1.1761144627733;
+        Wed, 22 Oct 2025 07:50:27 -0700 (PDT)
+Received: from [192.168.119.202] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-63c48a8e4easm11883700a12.5.2025.10.22.07.50.26
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 22 Oct 2025 07:50:27 -0700 (PDT)
+Message-ID: <acf7b931-eb67-49fc-b9ec-abd56e636263@oss.qualcomm.com>
+Date: Wed, 22 Oct 2025 16:50:25 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDE4MDAxOCBTYWx0ZWRfX8OQ9ixyxqEcM
- po69MA7lq7dtLeRQZrkHZ3Tsx3Xniq774P6iL5SopFXEB3yom1+Z0DWSS2Ezo0OczsxPyWHStf1
- 8dzc6wycwIK+Jsl9V+tp4puNlng5xq8FGfkvQsxJXA/J5zrPuTtr057bLmkkYsArt84IUb3aJ9n
- KZ1W+1uwMCJis5nyIx/oBfiTc7hkneMLPMpTrYPdoxfajE7CHzTbfnMqnYD6i/AQL5tD7HefM3X
- bgq2SEj6zxF+Ol9XYMx2xw3z/jBxoJs/Hv6vUjFU8vNWnTuOZQ1QeljGcFN2Arh0lBcfM+XmshJ
- g5+KLoph83FkPr3VPP5s9Pfxhmns+H5asRlDMIqUdUE/uxRI+SGXcL5AnJuYq5NzYl6ox/TSYzo
- AAZk2ymYuHF9wjWl1dGwHo0tkFtsDg==
-X-Authority-Analysis: v=2.4 cv=G4UR0tk5 c=1 sm=1 tr=0 ts=68f8eb5e cx=c_pps
- a=EVbN6Ke/fEF3bsl7X48z0g==:117 a=ZsC4DHZuhs/kKio7QBcDoQ==:17
- a=x6icFKpwvdMA:10 a=VkNPw1HP01LnGYTKEx00:22 a=EUspDBNiAAAA:8 a=pGLkceISAAAA:8
- a=xzVSZQTBi2W_vW4HIIQA:9 a=a_PwQJl-kcHnX1M80qC6:22
-X-Proofpoint-GUID: 6mKRCkuHucRsB6WL8xS_SvH2Z_ZQQr4k
-X-Proofpoint-ORIG-GUID: 6mKRCkuHucRsB6WL8xS_SvH2Z_ZQQr4k
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2] arm64: dts: qcom: sdm845-shift-axolotl: fix
+ touchscreen properties
+To: foss@joelselvaraj.com, Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20251021-shift-axolotl-fix-touchscreen-dts-v2-1-e94727f0aa7e@joelselvaraj.com>
+Content-Language: en-US
+From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+In-Reply-To: <20251021-shift-axolotl-fix-touchscreen-dts-v2-1-e94727f0aa7e@joelselvaraj.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDIxMDE2NyBTYWx0ZWRfXx/RrGEGMFfld
+ vo+61YiFZ48t3/8PrKYzv61FoNwlaQCYxW3WJWXH5wNnxbBxVh3tOeMi5FIIIRNh+iUqd9pb3LO
+ Ipy4zLk3uOPG1Y44cW8ukoTenNfRoj3UDLBFhEA5NlH7Znc/IgSJ05fZngVvMMGaSQe8mEzJXzu
+ X/X0KkaP2IPNSdj82b9ESD2Ymo+wUZB6lc0SCboywi8huVXTHJIcX0Halemmo3o8A0b6NcZKoGL
+ 8FUFazj+Z3adatfN+lO5O74Tgpu+k8AwnRn7LNTjnZSOIY8Z3P4poVie35q/bY7jqUBOkQw5loQ
+ cSqLbb/PBjj65TivYVjhEjkxkop3K9GOurKtQ8hKeX7Fjtc/EEeCuH84+eklTNAF+MFWvQUs61X
+ bzHncc0AFDtifw2I211wsPd/pRypSg==
+X-Proofpoint-ORIG-GUID: jLDOne9rnRUe3pVQWESE1eZoY2aFjjI_
+X-Authority-Analysis: v=2.4 cv=WYUBqkhX c=1 sm=1 tr=0 ts=68f8ef35 cx=c_pps
+ a=EVbN6Ke/fEF3bsl7X48z0g==:117 a=FpWmc02/iXfjRdCD7H54yg==:17
+ a=IkcTkHD0fZMA:10 a=x6icFKpwvdMA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=WFa1dZBpAAAA:8 a=EUspDBNiAAAA:8 a=HvsTOjCDc2fgz3nxQJ4A:9 a=QEXdDO2ut3YA:10
+ a=ZXulRonScM0A:10 a=a_PwQJl-kcHnX1M80qC6:22 a=MZguhEFr_PtxzKXayD1K:22
+X-Proofpoint-GUID: jLDOne9rnRUe3pVQWESE1eZoY2aFjjI_
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-10-22_05,2025-10-13_01,2025-03-28_01
+ definitions=2025-10-22_06,2025-10-13_01,2025-03-28_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 lowpriorityscore=0 malwarescore=0 bulkscore=0
- priorityscore=1501 spamscore=0 suspectscore=0 adultscore=0 clxscore=1015
+ suspectscore=0 adultscore=0 bulkscore=0 impostorscore=0 spamscore=0
+ priorityscore=1501 clxscore=1015 malwarescore=0 lowpriorityscore=0
  phishscore=0 classifier=typeunknown authscore=0 authtc= authcc=
  route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2510020000
- definitions=main-2510180018
+ definitions=main-2510210167
 
-sc7280 machine driver can make use of common sdw functions to do most of
-the soundwire related operations. Remove such redundant code from sc7280
-driver.
+On 10/21/25 8:20 AM, Joel Selvaraj via B4 Relay wrote:
+> From: Joel Selvaraj <foss@joelselvaraj.com>
+> 
+> The touchscreen properties previously upstreamed was based on downstream
+> touchscreen driver. We ended up adapting upstream edt_ft5x06 driver to
+> support the touchscreen controller used in this device. Update the
+> touchscreen properties to match with the upstream edt_ft5x06
+> driver.
+> 
+> Also, the touchscreen controller used in this device is ft5452 and not
+> fts8719. Fix the compatible string accordingly.
+> 
+> The wakeup-source property was removed as it prevents the touchscreen's
+> regulators and irq from being disabled when the device is suspended and
+> could lead to unexpected battery drain. Once low power mode and
+> tap-to-wake functionality is properly implemented and tested to be
+> working, we can add it back, if needed.
+> 
+> Signed-off-by: Joel Selvaraj <foss@joelselvaraj.com>
+> ---
 
-Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
-Tested-by: Steev Klimaszewski <threeway@gmail.com> # Thinkpad X13s
----
- sound/soc/qcom/sc7280.c | 67 ++---------------------------------------
- sound/soc/qcom/sdw.c    | 11 +++++++
- 2 files changed, 14 insertions(+), 64 deletions(-)
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 
-diff --git a/sound/soc/qcom/sc7280.c b/sound/soc/qcom/sc7280.c
-index c444dae563c7..abdd58c1d0a4 100644
---- a/sound/soc/qcom/sc7280.c
-+++ b/sound/soc/qcom/sc7280.c
-@@ -31,7 +31,6 @@
- 
- struct sc7280_snd_data {
- 	struct snd_soc_card card;
--	struct sdw_stream_runtime *sruntime[LPASS_MAX_PORTS];
- 	u32 pri_mi2s_clk_count;
- 	struct snd_soc_jack hs_jack;
- 	struct snd_soc_jack hdmi_jack;
-@@ -207,32 +206,12 @@ static int sc7280_snd_hw_params(struct snd_pcm_substream *substream,
- {
- 	struct snd_pcm_runtime *runtime = substream->runtime;
- 	struct snd_soc_pcm_runtime *rtd = snd_soc_substream_to_rtd(substream);
--	struct snd_soc_dai *codec_dai;
--	const struct snd_soc_dai *cpu_dai = snd_soc_rtd_to_cpu(rtd, 0);
--	struct sc7280_snd_data *pdata = snd_soc_card_get_drvdata(rtd->card);
--	struct sdw_stream_runtime *sruntime;
--	int i;
- 
- 	if (!rtd->dai_link->no_pcm) {
- 		snd_pcm_hw_constraint_minmax(runtime, SNDRV_PCM_HW_PARAM_CHANNELS, 2, 2);
- 		snd_pcm_hw_constraint_minmax(runtime, SNDRV_PCM_HW_PARAM_RATE, 48000, 48000);
- 	}
- 
--	switch (cpu_dai->id) {
--	case LPASS_CDC_DMA_TX3:
--	case LPASS_CDC_DMA_RX0:
--	case RX_CODEC_DMA_RX_0:
--	case SECONDARY_MI2S_RX:
--	case TX_CODEC_DMA_TX_3:
--	case VA_CODEC_DMA_TX_0:
--		for_each_rtd_codec_dais(rtd, i, codec_dai) {
--			sruntime = snd_soc_dai_get_stream(codec_dai, substream->stream);
--			if (sruntime != ERR_PTR(-ENOTSUPP))
--				pdata->sruntime[cpu_dai->id] = sruntime;
--		}
--		break;
--	}
--
- 	return 0;
- }
- 
-@@ -241,30 +220,8 @@ static int sc7280_snd_swr_prepare(struct snd_pcm_substream *substream)
- 	struct snd_soc_pcm_runtime *rtd = snd_soc_substream_to_rtd(substream);
- 	const struct snd_soc_dai *cpu_dai = snd_soc_rtd_to_cpu(rtd, 0);
- 	struct sc7280_snd_data *data = snd_soc_card_get_drvdata(rtd->card);
--	struct sdw_stream_runtime *sruntime = data->sruntime[cpu_dai->id];
--	int ret;
- 
--	if (!sruntime)
--		return 0;
--
--	if (data->stream_prepared[cpu_dai->id]) {
--		sdw_disable_stream(sruntime);
--		sdw_deprepare_stream(sruntime);
--		data->stream_prepared[cpu_dai->id] = false;
--	}
--
--	ret = sdw_prepare_stream(sruntime);
--	if (ret)
--		return ret;
--
--	ret = sdw_enable_stream(sruntime);
--	if (ret) {
--		sdw_deprepare_stream(sruntime);
--		return ret;
--	}
--	data->stream_prepared[cpu_dai->id] = true;
--
--	return ret;
-+	return qcom_snd_sdw_prepare(substream, &data->stream_prepared[cpu_dai->id]);
- }
- 
- static int sc7280_snd_prepare(struct snd_pcm_substream *substream)
-@@ -291,24 +248,8 @@ static int sc7280_snd_hw_free(struct snd_pcm_substream *substream)
- 	struct snd_soc_pcm_runtime *rtd = snd_soc_substream_to_rtd(substream);
- 	struct sc7280_snd_data *data = snd_soc_card_get_drvdata(rtd->card);
- 	const struct snd_soc_dai *cpu_dai = snd_soc_rtd_to_cpu(rtd, 0);
--	struct sdw_stream_runtime *sruntime = data->sruntime[cpu_dai->id];
- 
--	switch (cpu_dai->id) {
--	case LPASS_CDC_DMA_RX0:
--	case LPASS_CDC_DMA_TX3:
--	case RX_CODEC_DMA_RX_0:
--	case TX_CODEC_DMA_TX_3:
--	case VA_CODEC_DMA_TX_0:
--		if (sruntime && data->stream_prepared[cpu_dai->id]) {
--			sdw_disable_stream(sruntime);
--			sdw_deprepare_stream(sruntime);
--			data->stream_prepared[cpu_dai->id] = false;
--		}
--		break;
--	default:
--		break;
--	}
--	return 0;
-+	return qcom_snd_sdw_hw_free(substream, &data->stream_prepared[cpu_dai->id]);
- }
- 
- static void sc7280_snd_shutdown(struct snd_pcm_substream *substream)
-@@ -317,7 +258,6 @@ static void sc7280_snd_shutdown(struct snd_pcm_substream *substream)
- 	struct snd_soc_card *card = rtd->card;
- 	struct sc7280_snd_data *data = snd_soc_card_get_drvdata(card);
- 	struct snd_soc_dai *cpu_dai = snd_soc_rtd_to_cpu(rtd, 0);
--	struct sdw_stream_runtime *sruntime = qcom_snd_sdw_get_stream(substream);
- 
- 	switch (cpu_dai->id) {
- 	case MI2S_PRIMARY:
-@@ -336,8 +276,7 @@ static void sc7280_snd_shutdown(struct snd_pcm_substream *substream)
- 		break;
- 	}
- 
--	data->sruntime[cpu_dai->id] = NULL;
--	sdw_release_stream(sruntime);
-+	qcom_snd_sdw_shutdown(substream);
- }
- 
- static int sc7280_snd_startup(struct snd_pcm_substream *substream)
-diff --git a/sound/soc/qcom/sdw.c b/sound/soc/qcom/sdw.c
-index c44659deea01..6576b47a4c8c 100644
---- a/sound/soc/qcom/sdw.c
-+++ b/sound/soc/qcom/sdw.c
-@@ -2,6 +2,7 @@
- // Copyright (c) 2018-2023, Linaro Limited.
- // Copyright (c) 2018, The Linux Foundation. All rights reserved.
- 
-+#include <dt-bindings/sound/qcom,lpass.h>
- #include <dt-bindings/sound/qcom,q6afe.h>
- #include <linux/module.h>
- #include <sound/soc.h>
-@@ -35,6 +36,16 @@ static bool qcom_snd_is_sdw_dai(int id)
- 		break;
- 	}
- 
-+	/* DSP Bypass usecase, cpu dai index overlaps with DSP dai ids,
-+	 * DO NOT MERGE into top switch case */
-+	switch (id) {
-+	case LPASS_CDC_DMA_TX3:
-+	case LPASS_CDC_DMA_RX0:
-+		return true;
-+	default:
-+		break;
-+	}
-+
- 	return false;
- }
- 
--- 
-2.51.0
+Konrad
+
 
 
