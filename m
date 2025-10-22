@@ -1,188 +1,136 @@
-Return-Path: <linux-arm-msm+bounces-78319-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-78320-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1980BBFB9FE
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Oct 2025 13:23:55 +0200 (CEST)
+Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [142.0.200.124])
+	by mail.lfdr.de (Postfix) with ESMTPS id C3819BFBBFB
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Oct 2025 14:00:45 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id B61413B8E91
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Oct 2025 11:23:53 +0000 (UTC)
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id B1F154E3992
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Oct 2025 12:00:44 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A8530336ECE;
-	Wed, 22 Oct 2025 11:23:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E966C33FE1F;
+	Wed, 22 Oct 2025 12:00:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=ucw.cz header.i=@ucw.cz header.b="pqCbupnN"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ZU0fnZtG"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from jabberwock.ucw.cz (jabberwock.ucw.cz [46.255.230.98])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yx1-f49.google.com (mail-yx1-f49.google.com [74.125.224.49])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3651C32F751;
-	Wed, 22 Oct 2025 11:23:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=46.255.230.98
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4476E2C1589
+	for <linux-arm-msm@vger.kernel.org>; Wed, 22 Oct 2025 12:00:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.224.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761132229; cv=none; b=m7L7FwEsmcw77qmXhqG1nIxovfwy1ajtui/nIEwICIQkrT+xdM3McOsYnpav9ozAPzgojf/rJGgq9wQ7dp/mwuqFVl92gJKHYYJz0U/rt0WG3of1oxDDpZ7JW9D0TSH7V1i4nLBUN7W5fXzICHj1X2j2L39D6AMQO1ahJI9XNhc=
+	t=1761134442; cv=none; b=FV/zcjZTe9g2uhSD2ICO8kx5niHR7zApXlUIcI90u1URiLoJ5HxcHsrXqeRMrgnAl22UO/yf9ZUBI0+BktxgjHSjPSgjFEKCscQ88Fiqvi+J0H9dNJr41JbYl23PXH6lOJ28a3NWESghUXqS3Tm6vdbbNbgUW2wy7o96TKwqdhY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761132229; c=relaxed/simple;
-	bh=Sto90th+ZCJpEnfp/VcT4pT9JuOxd6d1o8AqSToBMrg=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=loPT4Qxor/o7F9GLujvoz/2drxL1Oys2W/gLgImbKIT7Z463OWTdk14mKRwRlyN2nDsKX92ijMRoovHUZSxPTR7WAIW9QrIldE+aZEoqBgbkB8SHE0aZZKtdB7SVxaCL8IFwQgusMsE5RHEX1QgO7gvZokNvjWHDnYsZM/jrxhc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ucw.cz; spf=pass smtp.mailfrom=ucw.cz; dkim=pass (1024-bit key) header.d=ucw.cz header.i=@ucw.cz header.b=pqCbupnN; arc=none smtp.client-ip=46.255.230.98
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ucw.cz
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ucw.cz
-Received: by jabberwock.ucw.cz (Postfix, from userid 1017)
-	id 15D481C0088; Wed, 22 Oct 2025 13:23:45 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ucw.cz; s=gen1;
-	t=1761132225;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=lJy21XbWgHp7MjGSXfr0/SiKeaKudWY5JLr70CDGgKg=;
-	b=pqCbupnNygoqjhYdJh+SCZh/oNfOBS94VpWGG/hzyei2HcK3MabOx5SFCwkpVC61xwOs7u
-	kBUNEPVa2OaVIxl0U8f+ElyReralUEauxeyeryR+9Oj0aktXucB7Nk4gKyZZy19G+bIB/Z
-	IPRgNPTEJp/FXhjKBa218zWpoFhtef4=
-Date: Wed, 22 Oct 2025 13:23:44 +0200
-From: Pavel Machek <pavel@ucw.cz>
-To: Luca Weiss <luca.weiss@fairphone.com>
-Cc: barnabas.czeman@mainlining.org, Bjorn Andersson <andersson@kernel.org>,
-	Michael Turquette <mturquette@baylibre.com>,
-	Stephen Boyd <sboyd@kernel.org>, Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Stephan Gerhold <stephan@gerhold.net>,
-	Otto =?iso-8859-1?Q?Pfl=FCger?= <otto.pflueger@abscue.de>,
-	Linus Walleij <linus.walleij@linaro.org>,
-	Lee Jones <lee@kernel.org>, Joerg Roedel <joro@8bytes.org>,
-	Will Deacon <will@kernel.org>, Robin Murphy <robin.murphy@arm.com>,
-	Konrad Dybcio <konradybcio@kernel.org>, Sean Paul <sean@poorly.run>,
-	Abhinav Kumar <quic_abhinavk@quicinc.com>,
-	Marijn Suijten <marijn.suijten@somainline.org>,
-	David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
-	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-	Maxime Ripard <mripard@kernel.org>,
-	Thomas Zimmermann <tzimmermann@suse.de>,
-	Dmitry Baryshkov <lumag@kernel.org>,
-	Adam Skladowski <a_skl39@protonmail.com>,
-	Sireesh Kodali <sireeshkodali@protonmail.com>,
-	Rob Clark <robin.clark@oss.qualcomm.com>,
-	Abhinav Kumar <abhinav.kumar@linux.dev>,
-	Jessica Zhang <jessica.zhang@oss.qualcomm.com>,
-	Srinivas Kandagatla <srini@kernel.org>,
-	linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-	linux-gpio@vger.kernel.org, iommu@lists.linux.dev,
-	dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
-	phone-devel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht,
-	linux@mainlining.org,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Subject: Re: [PATCH v7 6/6] arm64: dts: qcom: Add Xiaomi Redmi 3S
-Message-ID: <aPi+wIY/bUuZl9hv@duo.ucw.cz>
-References: <20250831-msm8937-v7-0-232a9fb19ab7@mainlining.org>
- <20250831-msm8937-v7-6-232a9fb19ab7@mainlining.org>
- <aNGLPdmOyh/pfroq@duo.ucw.cz>
- <97ee369f6ffbe42c72c57ebd72887b23@mainlining.org>
- <aNJKniJ46YuUsbQ+@duo.ucw.cz>
- <DD038IVOWESM.24X3EZZXH3UE@fairphone.com>
+	s=arc-20240116; t=1761134442; c=relaxed/simple;
+	bh=97a8tZjKqwRtHNr6BZl+meSJb3s8o64hqDASwzxbu5E=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=pR20Q8mJP9Y3ZRyR30XLGE+44uUvn+QEFkhPTdKrXRbOAswWFZ7g3+JATy32eKmWIOChIiDS2hBoLsE6s/Px0iQ1Tci4u/sTqUUTPy3WOof08u+7AOg1iNfsI08MXuhVtHpisXuVxhlv6oNq6FvizfOe50PB/rPUA0zOpWLLEIY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ZU0fnZtG; arc=none smtp.client-ip=74.125.224.49
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-yx1-f49.google.com with SMTP id 956f58d0204a3-63e336b1ac4so1543626d50.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Oct 2025 05:00:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1761134440; x=1761739240; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=/6uhgqipKW89TbAKSJ0VsiSw+i7Bc0BvME8dlqiNOkU=;
+        b=ZU0fnZtGUkFNuLa8Ca6e43Ct9sxzfOOMFNaD/PsOrrOIveuOY7JsxWvOuqyz8EarfA
+         TooN8WmQWzEWlnMScJOSM9H4gtWDzlxtj2bqLSlXnMxv0gtZQWk19KaRQ6tm6BgZcxaw
+         Qb3DRFQZDjD4/xKWBl9AaBFWNUCPir1scC3exaxZbF8lDVV5NpArwYWzo11fwi5ii4F1
+         Pfr1ZMmDhOrTvcm2Z57Zj4GIAHL1RIexvGC6RgHQaUCD25y23vjfBen9k2VukcKern18
+         AvQL9FnGDL790sKs1WsCuE7JW3o3X4bA5UfnYJLtpa36JrSFOmKfMUKlPZxJAj+Hn42y
+         AQiQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1761134440; x=1761739240;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=/6uhgqipKW89TbAKSJ0VsiSw+i7Bc0BvME8dlqiNOkU=;
+        b=Ehwu93sSrh9yo8+zygSG3/d2V4zv4RTz81Izw9BMIewLiU30d9H3uh16/nJcoLRMy2
+         dG6XHlcjxgQWqdtDLGnKtq+WVdKC7500eX6OlZ9t0ZofJ1OA4gJnmoR4q60h8pdCrCl4
+         6wCCVRRnXCiO/YY9a9RX/XPL46OwVaI/tY1LxigvOcpquFlsRNc7MF6yoANYa1SVOoeP
+         5RQQZDCXCrb6mIyHzeQMiEY7G8ut2zy1YrxkmmtCVESuSJZlBtIdH6R96RbaGzmJOcvT
+         SUptgLVFdQBraWXkDGNA+cd7jOF2uz9O6/gsOTE2cKVOacPNl88zKLYPq9VPhcuU/3ZA
+         B70A==
+X-Forwarded-Encrypted: i=1; AJvYcCWd0q7Et+ET1425rW+ZhhvK15X4lnzjET0lMlC0e+NiEt3PJXpXOppHP3C1P6F4yTqKHp8MD9GgjwQirn+r@vger.kernel.org
+X-Gm-Message-State: AOJu0YzDruwhBU6wy553oYDboFSya1NaaQLZE2esFgC6VCftotP9kVWe
+	e8QYIUHVk3SaXSkjM0YgWSPYZU2DTzDpbvD2v5h5UYsJqk0eFmWhIssy0/AuXJBp4gUOdbnlHpy
+	8nLRfiXpmm3AgrBMC+D0gxPQWDkDNZXs=
+X-Gm-Gg: ASbGnct0GYgApuGIq1Rm9T3D96atuMmqvcJLsB/myCIE2qADoEzN+6QnTFdsrq15rUI
+	iuAgJhCVplsllTTHSqV4D+t93ZKTrEO+pq+VsluuRWRaWkH3RycNABnMIhohdmrqa5LSp8NY4z0
+	ygzl7GjLO60QAWkb6totC8DXpdbkm4X90lQAfSAZZ6+JUU6F3VJ0HSOLp8KhyQWS8mFIzB/UAFv
+	UsSMifZqZkq7i1uJWdH8aqivkqOjIVasRm5qJT9ytnh1QeodxhC119oyyM1jg==
+X-Google-Smtp-Source: AGHT+IHe7HPf6WFvrCRkjbNGAn3hqNruzzhDGzkeQpPjDeNqpVAuLbWf1eiEYp5Q7LepTL72CtjhjX2Ia5Crn9kuh08=
+X-Received: by 2002:a05:690e:1a8d:b0:63b:a941:90c1 with SMTP id
+ 956f58d0204a3-63f2f5b4e47mr755807d50.12.1761134440040; Wed, 22 Oct 2025
+ 05:00:40 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="afFovrNgGG7Vhs2p"
-Content-Disposition: inline
-In-Reply-To: <DD038IVOWESM.24X3EZZXH3UE@fairphone.com>
-
-
---afFovrNgGG7Vhs2p
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+References: <20251021104002.249745-2-srinivas.kandagatla@oss.qualcomm.com>
+ <20251022003429.4445-1-threeway@gmail.com> <76567559-4cac-467f-9740-e8a539a445f7@oss.qualcomm.com>
+In-Reply-To: <76567559-4cac-467f-9740-e8a539a445f7@oss.qualcomm.com>
+From: Steev Klimaszewski <threeway@gmail.com>
+Date: Wed, 22 Oct 2025 07:00:29 -0500
+X-Gm-Features: AS18NWAgMZIyWSBaRtc28HmRupfvFkfndCADg6zxwcxhZ5F7Sr-vfM6vIit3CAM
+Message-ID: <CAOvMTZjjCn5gDgOrf_2++QjfdCxz2PXTey5Nh_-=caB4wX1g5Q@mail.gmail.com>
+Subject: Re: [PATCH v2 0/4] ASoC: qcom: sdw: fix memory leak
+To: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
+Cc: Stable@vger.kernel.org, alexey.klimov@linaro.org, broonie@kernel.org, 
+	krzysztof.kozlowski@linaro.org, linux-arm-msm@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, linux-sound@vger.kernel.org, perex@perex.cz, 
+	srini@kernel.org, tiwai@suse.com
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-Hi!
+Hi Srini,
 
-> On Tue Sep 23, 2025 at 9:22 AM CEST, Pavel Machek wrote:
-> > Hi!
-> >> > Hi!
-> >> >=20
-> >> > > +	led-controller@45 {
-> >> > > +		compatible =3D "awinic,aw2013";
-> >> > > +		reg =3D <0x45>;
-> >> > > +		#address-cells =3D <1>;
-> >> > > +		#size-cells =3D <0>;
-> >> > > +
-> >> > > +		vcc-supply =3D <&pm8937_l10>;
-> >> > > +		vio-supply =3D <&pm8937_l5>;
-> >> > > +
-> >> > > +		led@0 {
-> >> > > +			reg =3D <0>;
-> >> > > +			function =3D LED_FUNCTION_STATUS;
-> >> > > +			led-max-microamp =3D <5000>;
-> >> > > +			color =3D <LED_COLOR_ID_RED>;
-> >> > > +		};
-> >> > > +
-> >> > > +		led@1 {
-> >> > > +			reg =3D <1>;
-> >> > > +			function =3D LED_FUNCTION_STATUS;
-> >> > > +			led-max-microamp =3D <5000>;
-> >> > > +			color =3D <LED_COLOR_ID_GREEN>;
-> >> > > +		};
-> >> > > +
-> >> > > +		led@2 {
-> >> > > +			reg =3D <2>;
-> >> > > +			function =3D LED_FUNCTION_STATUS;
-> >> > > +			led-max-microamp =3D <5000>;
-> >> > > +			color =3D <LED_COLOR_ID_BLUE>;
-> >> > > +		};
-> >> > > +	};
-> >> > > +};
-> >> >=20
-> >> > That's single, 3-color LED, right? Please see LED multicolor support.
-> >> As far as i know aw2013 driver does not have multicolor support.
-> >> https://git.kernel.org/pub/scm/linux/kernel/git/next/linux-next.git/tr=
-ee/Documentation/devicetree/bindings/leds/leds-aw2013.yaml
+On Wed, Oct 22, 2025 at 4:52=E2=80=AFAM Srinivas Kandagatla
+<srinivas.kandagatla@oss.qualcomm.com> wrote:
+>
+> On 10/22/25 1:34 AM, Steev Klimaszewski wrote:
+> > Hi Srini,
 > >
-> > I believe that needs to be fixed before more bugs are added on top to
-> > work around that problem...
+> > On the Thinkpad X13s, with this patchset applied, we end up seeing a NU=
+LL
+> > pointer dereference:
 > >
-> > ...and before that bug is cemented in the ABI.
->=20
-> Honestly I don't think it's reasonable to expect people contributing dts
-> to then first start patching existing LED drivers and adding support for
-> x y or z to it, and block dts addition on that.
+>
+> Thanks Steev,
+> I think I know the issue, There was a silly typo in 3/4 patch.
+> Could you please try this change, I will send this in v3 anyway;
+>
+>
+> -------------------------->cut<------------------------
+> diff --git a/sound/soc/qcom/sdw.c b/sound/soc/qcom/sdw.c
+> index 16bf09db29f5..6576b47a4c8c 100644
+> --- a/sound/soc/qcom/sdw.c
+> +++ b/sound/soc/qcom/sdw.c
+> @@ -31,6 +31,7 @@ static bool qcom_snd_is_sdw_dai(int id)
+>         case RX_CODEC_DMA_RX_6:
+>         case RX_CODEC_DMA_RX_7:
+>         case SLIMBUS_0_RX...SLIMBUS_6_TX:
+> +               return true;
+>         default:
+>                 break;
+>         }
+>
+> -------------------------->cut<------------------------
+>
+> thanks,
+> Srini>
 
-Well, the dts is wrong, it describes three leds when you only have
-one.
+Yep, that does it :)  Thanks for the quick fix.
 
-> At least in postmarketOS the user space components we have (e.g.
-> feedbackd) detect the LED things (and most others) automatically since
-> various devices have various different setups. So once/if aw2013 gets
-> multicolor support, the dts can be updated without problems.
+Tested-by: Steev Klimaszewski <threeway@gmail.com> # Thinkpad X13s
 
-> Sure, maybe today changing something on the N900 which would change
-> sysfs paths is not the best idea because people will probably have 10+
-> years of random shell scripts lying around, but nowadays we usually have
-> better ways of abstraction that can handle that.
-
-I'm pretty sure someone, somewhere will have shell scripts.
-
-BR,
-							Pavel
---=20
-I don't work for Nazis and criminals, and neither should you.
-Boycott Putin, Trump, Netanyahu and Musk!
-
---afFovrNgGG7Vhs2p
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iF0EABECAB0WIQRPfPO7r0eAhk010v0w5/Bqldv68gUCaPi+wAAKCRAw5/Bqldv6
-8k0GAJkB+A1MYLsaFrYi7NQtR20dd9gtSwCfTNIAA7o2+c88KcU2rXh0E4whh1s=
-=m2+z
------END PGP SIGNATURE-----
-
---afFovrNgGG7Vhs2p--
+-- steev
 
