@@ -1,88 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-78374-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-78375-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [142.0.200.124])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4224ABFD57E
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Oct 2025 18:48:39 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id AB626BFD662
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Oct 2025 18:55:24 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 9D0ED58077B
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Oct 2025 16:41:42 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 606343B1553
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Oct 2025 16:41:50 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 70C0827A10D;
-	Wed, 22 Oct 2025 16:28:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 987EB359717;
+	Wed, 22 Oct 2025 16:28:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="N8X+xgSg"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="h9KLTRuS"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4D772D5928
-	for <linux-arm-msm@vger.kernel.org>; Wed, 22 Oct 2025 16:28:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FB812FD695;
+	Wed, 22 Oct 2025 16:28:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761150491; cv=none; b=pypTBjLHaOMqN/IlVL6kPC+YO7hC7TEzQeRhECBAq6KnrZsmrTQ+SyorSaNQSSFs++X+kI6rrhgQQLBJqdW3sSmSPYIxfpe91n0IZZqEMXF7mMtrJT2HMySR+cd5tyVzd6+ymqOvu5uu+rqSzORM9VGaFDY0NzrvyreBVWRPIdk=
+	t=1761150515; cv=none; b=WG4cKIEYHNIQtkLGYcgyfJ5nb+J35BrVtP/3uuQQOGNdC6PzxJq6LwEUWX45IbAwYYcy3kBnyvDQIppmFWbnM3B7Mo+USBgWkyZ0Pab8Usdsdq+bOxksuO+Dr+iPNN2+gnHg5jXLmbaJTTlpELTAyIZmJ0CqWtDFPRghWfPIS4U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761150491; c=relaxed/simple;
-	bh=WWU63ihYCfAl9MtLHYpFyzwsaRfUEpjSEkWeZqiCjOY=;
+	s=arc-20240116; t=1761150515; c=relaxed/simple;
+	bh=p1sLKMZ0jGL9ZLMO912t8vRHTjFShqnftiduvMFAS/A=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=f0qX7toqruOaMz9DzCwfM02uwnIwCQvWEcCKU9oORv3Pa7FXSSC1KHVNoLvWIt0LTnPJdDkFkO5GGDldmBZ6CVjDKG3ozkRm1Qnit65fZaBBefUD7UI/WVYdewOlswm+/dQ7NvDTKNT/SyiYJW5cSPiRVhXG851uxnsm9Z9ECHc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=N8X+xgSg; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 59M8qWjs004127
-	for <linux-arm-msm@vger.kernel.org>; Wed, 22 Oct 2025 16:28:09 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	hPWRZgsQCGIi/ZyFzVsRxR5WGv5cAzvzCcNnPr9T3GU=; b=N8X+xgSgRykoWsU/
-	uq8Z+9wmOUBuwlSxyd94FUWgMmKb/YGCedJvHFjDWpSaXkYa1e611dynipQB5YUd
-	GY/KV5EhmMHjdtJrBvXUPDrUvVY+a8k7XN41sRujN+XBFgx+ycl8lRQW4Mvqxt7U
-	yahlD8XouBL40tc0E1ubgPC8Va+gnJA6BB2SEN4hW4M7OmNjxjwbDr/bR82krGgM
-	wHFm2UnNsFoxnjB0ypkJeE7mvEvWTXuHJLCOEbrW2aEm4CJu1CIHm9LqRfh+D/WT
-	z1cQZOxYD1jMiwActPkpRL8TyhhCW3KkCl58gkz270mLFGqf7+u6wJk3nkbTVTPH
-	rDJwFA==
-Received: from mail-pg1-f197.google.com (mail-pg1-f197.google.com [209.85.215.197])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 49xkpsaxnk-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Wed, 22 Oct 2025 16:28:09 +0000 (GMT)
-Received: by mail-pg1-f197.google.com with SMTP id 41be03b00d2f7-b6ce7f76617so993545a12.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Oct 2025 09:28:09 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1761150488; x=1761755288;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=hPWRZgsQCGIi/ZyFzVsRxR5WGv5cAzvzCcNnPr9T3GU=;
-        b=ZCr49/3ASxSmw9ijkwlE/+OOaIxW/rA0jlGchvYOY9UjgeLwwhvFhvdp0db8DcPNPv
-         Zl+pwcyGL0GfwRf+IR3aDlglOh3rAnd24qyQhPkUNdPSQKw7i/3Rnl19dmf0gTxPQ5aV
-         +HRFYCybuD/NN+N9bzEpBqeeQ/ZRKTFSjWG3tjpLBPLdXRwJJVn82A0qEdL9yU4tmFN9
-         PYDHwkzo9wzCfB3E70Uu3c0vohqiKVjVQDXFe/Y+n3oINn/4b3len6xy6nVN9+X333pq
-         uALeP2mX3AMOdsjObmd8Ae9t1J4YZoOeUUa3f+210vmGJPO/hDdlBUbChWeDdG7+cloF
-         b/ZQ==
-X-Forwarded-Encrypted: i=1; AJvYcCU5/TV1nN77BVvprwfnAI6WiA6hs/YP7/6wYTBkehpqjw5L+l0qPhdWv3twQMoVuXV9jIyjuyLphf9z5OWQ@vger.kernel.org
-X-Gm-Message-State: AOJu0YzEl3k4U9S6jDH257Vx/L9bQh2MwoF639eqS3LatPv4j4G7BT4Y
-	AppeSCeX5cOOI25rTZEUF71ka2L4Rspyux7PJUcFN3oGGNMeI8WPH8jLcvQ9pgXD6sTwP/eBCeT
-	d7LWZRrI9rvJ3ps8doDakB2tSnhlC9EXCddZ/KYXVE2PMe7UVTusSTsvayJ02X45Bp9QI
-X-Gm-Gg: ASbGncuX1w9nuY/Ae+c15ezw11CVINcHONDzVnr9w5wFNlCSHfdIUdJrXHbfDZi46GR
-	Zv9u9DTUWaP9vGZ6g3bQijZcY/oA8547RN6Q3pkA2kR5vHppir6d9opLOHJPkvddH95itzbzUF3
-	/5YWumN85O+HwV1CMNYlbxdmITd7tI/E8Sng+n3+ROW4+0VFmKB3q6w9GiRO9KyRWHXvuQQTKkT
-	5mqHVceY94RDYDIvqUHX10ziQwcEo1N3U94EwAHD3USCZIIwBUMrh0WBFezFuzd9Kb1B+3jsgQf
-	m6/PXC51SsqyZTA9BWO2J8d4klCiZ5/YipdcTyw45Sc8LoxJTS1J2iHmkMNlOvRg8wKHfFzkAbA
-	nObAdcXv+HAn3MV2bKL+lEzSYlaaUI9GSJxeVMW/7LxAdo5wvUuYM
-X-Received: by 2002:a17:90b:3848:b0:32e:e18a:368c with SMTP id 98e67ed59e1d1-33bcf84e18emr28608308a91.7.1761150488033;
-        Wed, 22 Oct 2025 09:28:08 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEQ9pZV+drnSPSOTW4FSOUHLGTx6mQsPIYki/6EQ52FOOurt3jDk95FYht3zLzrueSRAuQ/mA==
-X-Received: by 2002:a17:90b:3848:b0:32e:e18a:368c with SMTP id 98e67ed59e1d1-33bcf84e18emr28608283a91.7.1761150487643;
-        Wed, 22 Oct 2025 09:28:07 -0700 (PDT)
-Received: from [10.226.59.182] (i-global254.qualcomm.com. [199.106.103.254])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-33e222d8652sm2999932a91.0.2025.10.22.09.28.06
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 22 Oct 2025 09:28:07 -0700 (PDT)
-Message-ID: <0514142e-b3a7-4d44-8ef3-31b3ce1ebc4a@oss.qualcomm.com>
-Date: Wed, 22 Oct 2025 10:28:05 -0600
+	 In-Reply-To:Content-Type; b=kkYKgxhQlrDW33EXrJqjWpArBke/IuXZ4vVXMf4uZ2Ao9EFjzyB22qQjtyYPqQVlPkUFtcnQvJzmTWHoF4rlWR7ao4/HP+ulHJ+gnrMKndE7VDJtYXAk9hzSnaIui2LXFOK/tkHgkBMGALmB8q4oyY1go3p/OkEa+0ngNmS6ECc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=h9KLTRuS; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6EEF2C4CEE7;
+	Wed, 22 Oct 2025 16:28:31 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1761150515;
+	bh=p1sLKMZ0jGL9ZLMO912t8vRHTjFShqnftiduvMFAS/A=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=h9KLTRuSovJw3Gn1Frm0Q8fzc0ADTLQ8pdzeAj+xU9ABJsxN/u0YIpYeQxcVsSKya
+	 bxmD/sU8uTmQsghshT9/HQApsykyPRogC/bqQPi/FIrZDB+JS1z81E0Xuf4etofqFl
+	 Ap7mDg1itOZaBmjmtdXsSGjAxJgNinPE8GNf+ohcF8ARsqsgb+1aUgMgMQoqRm7eIo
+	 c3Cl8FIo8yPf/lQK5jG0wEm+ORXswYexJSqpKzKhKuR5pfTmTYoqXeiKlS98D0yVP8
+	 zBUuxL5GhxjX35qlF26qHti5lVW/G9Oc2FS5hMPTYi7TjbujuXnHl6L8POp7ZIBOha
+	 1Ydop88qqm1hw==
+Message-ID: <24719933-d81f-41cb-aabc-e28f018b156c@kernel.org>
+Date: Wed, 22 Oct 2025 18:28:29 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -90,86 +50,123 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] accel/qaic: Support the new READ_DATA implementation
+Subject: Re: [PATCH v2 1/8] media: dt-bindings: qcom-kaanapali-iris: Add
+ kaanapali video codec binding
 To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-        Youssef Samir <youssef.abdulrahman@oss.qualcomm.com>,
-        carl.vanderlip@oss.qualcomm.com, troy.hanson@oss.qualcomm.com,
-        zachary.mckevitt@oss.qualcomm.com
-Cc: ogabbay@kernel.org, lizhi.hou@amd.com, karol.wachowski@linux.intel.com,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        Carl Vanderlip <quic_carlv@quicinc.com>
-References: <20251007224045.605374-1-youssef.abdulrahman@oss.qualcomm.com>
- <77abcd1d-ce69-42c8-9608-4a9557613d21@oss.qualcomm.com>
+ Vikash Garodia <vikash.garodia@oss.qualcomm.com>,
+ Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>,
+ Abhinav Kumar <abhinav.kumar@linux.dev>, Bryan O'Donoghue <bod@kernel.org>,
+ Mauro Carvalho Chehab <mchehab@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Philipp Zabel <p.zabel@pengutronix.de>,
+ Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Cc: linux-arm-msm@vger.kernel.org, linux-media@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+ Vishnu Reddy <quic_bvisredd@quicinc.com>
+References: <20251017-knp_video-v2-0-f568ce1a4be3@oss.qualcomm.com>
+ <20251017-knp_video-v2-1-f568ce1a4be3@oss.qualcomm.com>
+ <c9d8f76a-513f-4a09-bba4-cb8f0df1d2fe@kernel.org>
+ <034bf6f4-0a49-4973-8536-28526b3409d1@oss.qualcomm.com>
+ <9c920cdf-1985-4656-bee2-8bfacc15bfa9@oss.qualcomm.com>
+From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
-From: Jeff Hugo <jeff.hugo@oss.qualcomm.com>
-In-Reply-To: <77abcd1d-ce69-42c8-9608-4a9557613d21@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Autocrypt: addr=krzk@kernel.org; keydata=
+ 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 a/A=
+In-Reply-To: <9c920cdf-1985-4656-bee2-8bfacc15bfa9@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDIxMDE5MCBTYWx0ZWRfX+bUd7paxmNiu
- 1Tn+7gk1oL9kTg7KZpSXZgjEo0LlhLHdHz9/KqNbcTDTUdtMVEtmuDcrMdH5aoycP1lhratyjqA
- 9j5HYTuPmJkUo+f2IttXTR8+JSLg9V0IManY7FQbH8Lp/mYFpWvyKpySWAJVfzDRrhPXwk3xf/S
- f7YxeCCluK4bJ0NnVH3Nv6PNxx26l+1IlPZJPtDrK2GevzuaG4IYi8QXar2OhEm2Q0OHY5rG8GD
- D2ZiMccATk8G3cr3FtPseyGOHSoaNT/kLbuW8YHgx3FwdEQ734e7Cwk1vKC6XUiHyE52Udi9SC4
- mtE4Q+qSPljT4y4sTv5XixKTDAPJTGsB6DwRVX3nYNmzrKXglCsQ0t9b5P9oJ+F7WnMHGZ89ZPk
- eptn6h99zxeoJJ8jk8gT8LJOxhJqbg==
-X-Authority-Analysis: v=2.4 cv=FbM6BZ+6 c=1 sm=1 tr=0 ts=68f90619 cx=c_pps
- a=rz3CxIlbcmazkYymdCej/Q==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17
- a=IkcTkHD0fZMA:10 a=x6icFKpwvdMA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=EUspDBNiAAAA:8 a=hYh2W50GH4enn7eNEKEA:9 a=QEXdDO2ut3YA:10
- a=bFCP_H2QrGi7Okbo017w:22
-X-Proofpoint-GUID: YT0zrNs-d0QJBSHNe_vLb-bfFOGCMdr_
-X-Proofpoint-ORIG-GUID: YT0zrNs-d0QJBSHNe_vLb-bfFOGCMdr_
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-10-22_07,2025-10-13_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 phishscore=0 bulkscore=0 lowpriorityscore=0 priorityscore=1501
- suspectscore=0 spamscore=0 impostorscore=0 clxscore=1015 adultscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2510020000 definitions=main-2510210190
 
-On 10/22/2025 10:03 AM, Konrad Dybcio wrote:
-> On 10/8/25 12:40 AM, Youssef Samir wrote:
->> From: Jeff Hugo <jeff.hugo@oss.qualcomm.com>
+On 22/10/2025 17:36, Konrad Dybcio wrote:
 >>
->> AIC200 uses the newer "XBL" firmware implementation which changes the
->> expectations of how READ_DATA is performed. Larger data requests are
->> supported via streaming the data over the transport instead of requiring
->> a single transport transfer for everything.
+>> [    1.361157] pc : qcom_smmu_write_s2cr+0x64/0xa4
+>> [    1.361165] lr : arm_smmu_write_s2cr+0x2c/0xbc
+>> [    1.361168] sp : ffff80008005b8f0
+>> [    1.361169] x29: ffff80008005b8f0 x28: 0000000000000000 x27: ffffc7f252f45320
+>> ....
+>> [    1.361195] x2 : ffff800081200c48 x1 : 0000000000000048 x0 : ffff800081200000
+>> [    1.361198] Call trace:
+>> [    1.361199]  qcom_smmu_write_s2cr+0x64/0xa4 (P)
+>> [    1.361203]  arm_smmu_master_install_s2crs+0x7c/0xac
+>> [    1.361207]  arm_smmu_attach_dev+0xb0/0x1d4
+>>
+>> Could you please suggest on listing the iommu items ? I did not find the
+>> relevant references in other bindings where flexible iommus is being listed.
 > 
-> tldr just like reading/writing images in 'raw_mode' up until now?
+> Krzysztof would probably like to see what I believe someone else somewhere
+> sometime suggested in the iommus discussions (sorry it's not possible to
+> keep track of it all), where the DT can list every possible required iommu
+> sid, but the driver ensures only the ones that are necessary are utilized.
+> 
+> This will require big changes to the iommu framework though, I'm afraid
+> 
+>>> I already asked this.
+>>>
+>>>> +
+>>>> +  memory-region:
+>>>> +    minItems: 1
+>>>> +    maxItems: 2
+>>>
+>>> Same comment. I already asked this about iommus.
+>>
+>> Same here, there aren't any bindings which lists for flexible memory-region.
+>> Please suggest if there are any such references.
+> 
+> Similarly, we can define the additional memory region that's necessary
+> for $reasons and leave it unused in the driver (actually I don't know
+> why there may be two, but let's assume it's a QTEE/noQTEE detail), because
+> for the hw to operate, it must be set up by some entity in the system
+> either way (i.e. the memory is reserved even if it's not done by Linux)
 
-I'm not sure I understand what you are asking here.
 
-AIC100 is the "old" SBL architecture. When the "current" XBL 
-architecture came about, quite a bit of the components were rewritten. 
-It seems like a different interpretation of the Sahara spec was taken 
-for the XBL implementation.
+Another point is pretty obvious: if one claims that
+iommus/memory-regions list is flexible - some elements are optional -
+then clearly there is a distinction which elements are mandatory and
+which are optional. So there is difference between elements of the
+array. If there is a difference, they all must be explicitly listed,
+like every other list (clocks, resets etc) property. Writing bindings
+doc also defines this rule.
 
-In both cases, the boot component that is driving the Sahara component 
-in FW will want segment X of the elf for the next step of processing.
-
-In SBL, the Sahara component would have a specific MTU and break up the 
-request (segment X of the elf) into MTU sized read requests for the 
-host. The MTU is negotiated with the transport (MHI). The Sahara 
-component expects the entire read request to be satisfied in a single 
-return from the transport - anything less is an error.
-
-In XBL, the Sahara component would make a single read request to the 
-host for the entire request from the boot component (segment X of the 
-elf), and expects the underlying transport to shove up data until the 
-entire read request is satisfied (Sahara will sit in a loop until it 
-gets all of the data).
-
-There is a bit of oddity because the Sahara spec says that the host can 
-indicate an error by sending a packet that is anything other than the 
-requested read size, but "packet" is not defined. The SBL interpretation 
-is that a "packet" is the transport packet - aka the MHI transfer.  The 
-XBL interpretation is that the packet is a "Sahara packet" which is 
-decoupled from the transport.
-
-In the end, we have two different Sahara implementations in FW with 
-different expectations, and both need to be supported.
-
--Jeff
+Best regards,
+Krzysztof
 
