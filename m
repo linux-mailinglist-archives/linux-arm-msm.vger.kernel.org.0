@@ -1,230 +1,178 @@
-Return-Path: <linux-arm-msm+bounces-78264-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-78265-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 16033BFA3D9
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Oct 2025 08:33:34 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 92F00BFA41B
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Oct 2025 08:37:18 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 244025841B3
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Oct 2025 06:32:55 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 3F30519A08FA
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Oct 2025 06:37:42 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C8A87258CD7;
-	Wed, 22 Oct 2025 06:32:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 55C472EDD6F;
+	Wed, 22 Oct 2025 06:37:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="fj7u6riz"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="CB0sWIT4"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79E18257824;
-	Wed, 22 Oct 2025 06:32:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A92D72ECEAC
+	for <linux-arm-msm@vger.kernel.org>; Wed, 22 Oct 2025 06:37:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761114771; cv=none; b=XKecX4GH/LUNwJhe+PrnUAqhnhBVNXWUPM37v4YT7bOVaaypmUa0ulzkArnirq7mONaANfBt3UIjnKzT9xWw58BsQ4FYySY4LstNT1RiW5/9bmCz2KqL0PALJsDoDH7yPzwKP0a+eHEOT1Dn8EKRKEKExCcjkKuxcqt6e0idxMU=
+	t=1761115033; cv=none; b=qWsEaQGOSmFKwah4X8VSksXrsi62wDVuTxe8c/0uqQvSGmoROheUe4xi7aPfeBbPr1Jwmi6bUU7yDnTu2pTXtWi+0AIaF0UWq+JlU1N80MsTCFrPf1eBLc7YfL+uNF0twuHLjVsb0APK1KX2Fn3+3bPAn1ToGM15OUMZC+nCgmk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761114771; c=relaxed/simple;
-	bh=1JnHfOV4IvevfzpMfmgMYqooT7fC1cCkYt1qDcXQgOE=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=a/KybNbZ92LzAWNF5VpiF9APbVHnWXcgGAIVf4bOMAujcStrRvXRatASxPTg6tlIArY0U34QG/fWINJ3yYw8z7nr2IWKFcTQVoQtQ0YJNn4n8k9j7RlHl98BI/Xo5tU8uF7px3nE+92P8KhUb4iZ5pP2wlUZbn+E6XgpZ851p04=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=fj7u6riz; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 59LKgDM9013721;
-	Wed, 22 Oct 2025 06:32:42 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	s=arc-20240116; t=1761115033; c=relaxed/simple;
+	bh=iJ1uktF/2GWrsG1i/Ztq1ODfIsEIJ8TPn2k68folgJo=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=QVwnOX1GfPfMEB8utCs/UYZ+V4aY0/LVvqbdX0AjfqyRgLfwP3/wpWbeczsN/AqkFjCecqZeN7tp0GcUHknKKSDH+UVz9bjxzqKcUAlu6DN9PZwvhwe9ZnTX9uaAxwAHStWGzdhusu03VYWsK8xEdu7cypw6n8WbZE2gKNlhA6k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=CB0sWIT4; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 59M2ncSu032755
+	for <linux-arm-msm@vger.kernel.org>; Wed, 22 Oct 2025 06:37:11 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	dct3COhVkJFr6yTQnEDNUn/FsivVgtFabRy7y3fVd0Y=; b=fj7u6rizNZQeaAFF
-	Cv2FMOfVQbUXznnYcZlDFQ2mZ9dPCZpnL33xFFHiav+ggfRYZN1w7asAIf5D0T6u
-	3CCkWwf/nwIOGmm4PBmwS7k5sScVEJ1vPuNyB1vWZXzPicJOTutkHATKcXy7bbv4
-	1eeK4bFgE3KMAKh2YsvgYS45VVI+DW+LYFjyFSJg1cfCBqQCB4wkclNdH0NDuSiO
-	KkS00H0eWf6kNKjEMZwGolDPfgyKPqF0qyMmZOh7FZrkfU7mxU2X4niYfkVa255b
-	b+B9AfmxKMH6YCtFRH1VgDcAycPzDeTDIKMLaAsdphTYrzmT3TrO7NMp/80Orrv2
-	Np/DmA==
-Received: from nasanppmta02.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 49xhe0hbww-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 22 Oct 2025 06:32:41 +0000 (GMT)
-Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
-	by NASANPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 59M6WfGg022742
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 22 Oct 2025 06:32:41 GMT
-Received: from [10.151.36.184] (10.80.80.8) by nasanex01a.na.qualcomm.com
- (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1748.24; Tue, 21 Oct
- 2025 23:32:38 -0700
-Message-ID: <2efdad85-ba50-1246-e60b-eadbb82c88e6@quicinc.com>
-Date: Wed, 22 Oct 2025 12:02:35 +0530
+	phYYPHpmFAc5t3rQjDklKkr3KZqV3jpdRFmpgMO7EiE=; b=CB0sWIT4dGesmZr3
+	VblF5Nyh4oTrrS85MkDKXBLlVOZT8m8BGZex3n2lQH3w+gJXz458mxwFRbzOY/53
+	WzwqV+5w+dzTdQLKDzJiq1mOJ74gzKfmFfbkK3Ttk4AswoUFcQ4cOkNifAuyL0Sr
+	eXkp7IFg40NRMMryJDYBWKxd839bW4UPkBdRVez2X6iMDF52X6RU8ccO1K/d1sgb
+	Y+yFIRi8+dia5KJdpBG7yyT0bkriEabFzVWLuggTRIJQhe+cLsUGYVQmplePgpNs
+	eghiIiARZ1kr++uLXOPUd4fzZgKS//IntqCYJtWhDkTiZ+BnzF2TW8woDddJIhDF
+	oLbPQA==
+Received: from mail-pf1-f198.google.com (mail-pf1-f198.google.com [209.85.210.198])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 49w08w94gp-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Wed, 22 Oct 2025 06:37:10 +0000 (GMT)
+Received: by mail-pf1-f198.google.com with SMTP id d2e1a72fcca58-783c3400b5dso4267400b3a.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 21 Oct 2025 23:37:10 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1761115030; x=1761719830;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=phYYPHpmFAc5t3rQjDklKkr3KZqV3jpdRFmpgMO7EiE=;
+        b=KvCn2OfPcBhDSh+ZnLmth1VOspFfQvYPvZ5MYnSPg1SUu8iR5OyOjMEPOZdBosVjPb
+         kaBnTikIuTCIl8buIpUVgI42E/D0N5KdgCCxg/LoWeTX23ZDnK5LnEhJVYSsp7JjnpH8
+         JvwldrsKbzQlewDJdmNmpBwNjE0OQsARdkZm/6POdkQcV46o92MtPq0rNPgA2E1RxoeF
+         pJO0CO1AjRY+yx68aWsVsOUtaRM28z4Olaa4TnlKsb3hVFeQUIYE5EC7QWNFfkaGOX4q
+         i0lY8v3SQw+ejx9j1Xo/birO3ScFtQnY60pk1Pg/0pNOiSNfkcrStd36Hn9YrwEM1eos
+         yXhw==
+X-Forwarded-Encrypted: i=1; AJvYcCVWIKHYCx/L6tsC+uuHqLEkyhhtgZYfFxYphZPvhEbo7iY11JnLiP6Q6Y38W2x90fr55zPZtKTiorjRMZR5@vger.kernel.org
+X-Gm-Message-State: AOJu0Yw2tgeZZnjOUyt3u8bvALXDjdpBh3egMiEEsLnEQLnEzRHDS5RB
+	i0z7f/XnUYjvBe6DyzJzdIEPVEmOxHhGmpX41pk6YL6oSJuUOh/s3EmaXBzQsgxjHeU7uOJICTt
+	OUr9Pxq/BIG1X5E/Z5i3mynb09rpFvODZhYAqdyB4YX+SYsxywgoWGXHypMN1rjjFsajF
+X-Gm-Gg: ASbGncsVecSMX3Ppg+WhwiN4o1Byv6Ua7EY6jdO7JLIfqbcgrtF69CyHLrspa9tQz06
+	Ub8g/FDst68VtV3B0LY6+mv1qy10HPl67mavYoZBIXgQykmX+T7LF7s751cCPMy5JYdrOzX0Fuf
+	tQJFFwa/7/+ngEIbPu4kFzB3+xtl631j82agWVUqVv+CON2sSnqB8ad4iUpiPKHfdHez1kubN1Q
+	cBs+VIs3fFfjCAI2bm8u3E+FjH0Vt6me1BikXdiNqMpxoW88JhCndm2NuUIhCES9zBtnjvh3mGQ
+	mUFZ4jQHSHFAeFtq0+h547Cjcd3jI39ywdXOiY4FoMrQvNclbIcc3CMiPBM3lL3TQHuzF5ibxb6
+	pSIJOR65cT3wJhLa8E2OuadS+mx8=
+X-Received: by 2002:a05:6a00:1493:b0:77f:3149:3723 with SMTP id d2e1a72fcca58-7a220d3464dmr24153359b3a.29.1761115029930;
+        Tue, 21 Oct 2025 23:37:09 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IG7vtPwGZMKsrymbcxu9zzkrZlyJC25po4kInazwlIOlZKWVgmxbQJbd5FeFHB1tY35PDWVlA==
+X-Received: by 2002:a05:6a00:1493:b0:77f:3149:3723 with SMTP id d2e1a72fcca58-7a220d3464dmr24153330b3a.29.1761115029486;
+        Tue, 21 Oct 2025 23:37:09 -0700 (PDT)
+Received: from [10.217.217.147] ([202.46.22.19])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-7a26c3026aesm74721b3a.24.2025.10.21.23.37.06
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 21 Oct 2025 23:37:09 -0700 (PDT)
+Message-ID: <d453ddaf-aa44-4125-b86a-4a51f2c23ac5@oss.qualcomm.com>
+Date: Wed, 22 Oct 2025 12:07:04 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.15.1
-Subject: Re: [PATCH v2] mmc: sdhci-msm: Enable ICE support for non-cmdq eMMC
- devices
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 2/2] clk: qcom: camcc-sm7150: Fix PLL config of PLL2
+To: Luca Weiss <luca.weiss@fairphone.com>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd
+ <sboyd@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>,
+        Danila Tikhonov <danila@jiaxyga.com>
+Cc: ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20251021-agera-pll-fixups-v1-0-8c1d8aff4afc@fairphone.com>
+ <20251021-agera-pll-fixups-v1-2-8c1d8aff4afc@fairphone.com>
 Content-Language: en-US
-To: Eric Biggers <ebiggers@kernel.org>
-CC: <adrian.hunter@intel.com>, <ulf.hansson@linaro.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-mmc@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <quic_varada@quicinc.com>
-References: <20251014093503.347678-1-quic_mdalam@quicinc.com>
- <20251017173835.GA161400@sol>
- <abe89411-e590-29df-e9e9-b50402e08aac@quicinc.com>
- <20251022054423.GB35717@sol>
-From: Md Sadre Alam <quic_mdalam@quicinc.com>
-In-Reply-To: <20251022054423.GB35717@sol>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01a.na.qualcomm.com (10.52.223.231)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDIxMDE2NyBTYWx0ZWRfX35U7UAj9ocVk
- bnJB/Dh+xICWVk6HViNXov4bjuV8l0jIVWZ182CGU0Ec4mRe/nYFk0Ik26WZRgje81wdAuWx/oI
- n+Pv7oo+gJgFl1z9woBMvQQA6LrVrDpYPkb04dSTGwXg2b+fjdpPAXLtbtXM57ooCMSEgMZLIzT
- D7GtbPbvE4+CbLxBJqKbUD+jO4+WWn0Ck4OMHTQctre+5/ol1LeO4dDpXrNR/7SBwPUwBTqN/p7
- hXoK5KnG6FivcSwQzLmhK7ROmXhLp1fGhCz1jNqhGDRrQhbAsEtAy2cXoZTM+H1YvTfuMTTFNJ/
- OM/cMnOrhNXbkAdYEwQGhXBrTPjB1SZB88CMRYnnCRXHDJftQKpBeRMcUax0NICVmo6AMzuBDxh
- gl3sCWIb/IzJ9UsrmWJbdHovqIc42w==
-X-Proofpoint-ORIG-GUID: BBrXJ7h-aOUJO-chHG_3Izb3MvrWu8lp
-X-Authority-Analysis: v=2.4 cv=WYUBqkhX c=1 sm=1 tr=0 ts=68f87a8a cx=c_pps
- a=JYp8KDb2vCoCEuGobkYCKw==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17
- a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=x6icFKpwvdMA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=COk6AnOGAAAA:8 a=EJYGbfWKLoEB_OVLp_sA:9
- a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=TjNXssC_j7lpFel5tvFf:22
- a=HhbK4dLum7pmb74im6QT:22 a=cPQSjfK2_nFv0Q5t_7PE:22 a=pHzHmUro8NiASowvMSCR:22
- a=Ew2E2A-JSTLzCXPT_086:22
-X-Proofpoint-GUID: BBrXJ7h-aOUJO-chHG_3Izb3MvrWu8lp
+From: Taniya Das <taniya.das@oss.qualcomm.com>
+In-Reply-To: <20251021-agera-pll-fixups-v1-2-8c1d8aff4afc@fairphone.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-ORIG-GUID: JNVLGenW2si45AMVGDOysERuZZ-sVNkK
+X-Proofpoint-GUID: JNVLGenW2si45AMVGDOysERuZZ-sVNkK
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDE5MDA5MCBTYWx0ZWRfX6E+3aO5oUP+s
+ cDSS4yxpNd6ojlMs3JmB6tijUnJmAyedquAxmVVmw1+mK+2qxzo2wAa5nOGfxB8Yuw7LyvmN6l5
+ Yq+wrUxONDRSBADajW/h5rXXGXQnE3s0oFeNblIbvmfaUd4OvZA9L7h5teYLt0POSqXZuv/KGgM
+ uZnbpLekjjs8d6FNuJQxwLWl1MjzsHmZvWO2zNmiQe36yN/cux09b9ryk93+INeNGoDlDlZ9Q5K
+ zZO3KmOdEm8bl2dtamNw+ozhp6KIb/WAKVweDAd38f59j8oUtA776ySjIJuzFOU2MfN3yZc/wS0
+ pu90oolX9r6FFRudJ6Pc2g6nNY3A3V81RgtX9X1SkeHwPKaFeiSsWBF3tnCWh7bPRA7+xWP8HPN
+ gOVCl9mf2dq+QiuIjGtO+RfcMXVbkw==
+X-Authority-Analysis: v=2.4 cv=V5NwEOni c=1 sm=1 tr=0 ts=68f87b96 cx=c_pps
+ a=m5Vt/hrsBiPMCU0y4gIsQw==:117 a=fChuTYTh2wq5r3m49p7fHw==:17
+ a=IkcTkHD0fZMA:10 a=x6icFKpwvdMA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=EUspDBNiAAAA:8 a=6H0WHjuAAAAA:8 a=rHO35cIvbrFS-cT-sPwA:9 a=QEXdDO2ut3YA:10
+ a=IoOABgeZipijB_acs4fv:22 a=Soq9LBFxuPC4vsCAQt-j:22
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.80.40
  definitions=2025-10-22_02,2025-10-13_01,2025-03-28_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 adultscore=0 bulkscore=0 impostorscore=0 spamscore=0
- priorityscore=1501 clxscore=1015 malwarescore=0 lowpriorityscore=0
- phishscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2510020000
- definitions=main-2510210167
+ bulkscore=0 malwarescore=0 adultscore=0 priorityscore=1501 lowpriorityscore=0
+ spamscore=0 suspectscore=0 clxscore=1015 phishscore=0 impostorscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.19.0-2510020000 definitions=main-2510190090
 
-Hi,
 
-On 10/22/2025 11:14 AM, Eric Biggers wrote:
-> On Wed, Oct 22, 2025 at 10:49:23AM +0530, Md Sadre Alam wrote:
->> Hi,
->>
->> On 10/17/2025 11:08 PM, Eric Biggers wrote:
->>> On Tue, Oct 14, 2025 at 03:05:03PM +0530, Md Sadre Alam wrote:
->>>> Enable Inline Crypto Engine (ICE) support for eMMC devices that operate
->>>> without Command Queue Engine (CQE).This allows hardware-accelerated
->>>> encryption and decryption for standard (non-CMDQ) requests.
->>>>
->>>> This patch:
->>>> - Adds ICE register definitions for non-CMDQ crypto configuration
->>>> - Implements a per-request crypto setup via sdhci_msm_ice_cfg()
->>>> - Hooks into the request path via mmc_host_ops.request
->>>> - Initializes ICE hardware during CQE setup for compatible platforms
->>>>
->>>> With this, non-CMDQ eMMC devices can benefit from inline encryption,
->>>> improving performance for encrypted I/O while maintaining compatibility
->>>> with existing CQE crypto support.
->>>>
->>>> Signed-off-by: Md Sadre Alam <quic_mdalam@quicinc.com>
->>>
->>> How was this tested?
->> I tested this using fscrypt on a Phison eMMC device. However, since that
->> particular eMMC does not support CMDQ, inline encryption (ICE) was bypassed
->> during testing.
+
+On 10/21/2025 11:38 PM, Luca Weiss wrote:
+> The 'Agera' PLLs (with clk_agera_pll_configure) do not take some of the
+> parameters that are provided in the vendor driver. Instead the upstream
+> configuration should provide the final user_ctl value that is written to
+> the USER_CTL register.
 > 
-> What do you mean by "inline encryption (ICE) was bypassed during
-> testing"?
-By "inline encryption (ICE) was bypassed during testing," I meant that 
-encryption was not working because ICE was only being enabled in the CQE 
-request path (cqhci_request). For eMMC devices that do not support CMDQ, 
-the mmc core sends requests via the legacy path (sdhci_request), where 
-ICE was not being configured.
+> Fix the config so that the PLL is configured correctly.
 > 
->> +static int sdhci_msm_ice_cfg(struct sdhci_host *host, struct mmc_request *mrq,
->> +			     u32 slot)
+> Fixes: 9f0532da4226 ("clk: qcom: Add Camera Clock Controller driver for SM7150")
+> Suggested-by: Taniya Das <taniya.das@oss.qualcomm.com>
+> Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
+> ---
+>  drivers/clk/qcom/camcc-sm7150.c | 6 +-----
+>  1 file changed, 1 insertion(+), 5 deletions(-)
 > 
-> Could you also remove the unused 'slot' parameter from this function?
-Ok
+> diff --git a/drivers/clk/qcom/camcc-sm7150.c b/drivers/clk/qcom/camcc-sm7150.c
+> index 4a3baf5d8e85..590548cac45b 100644
+> --- a/drivers/clk/qcom/camcc-sm7150.c
+> +++ b/drivers/clk/qcom/camcc-sm7150.c
+> @@ -139,13 +139,9 @@ static struct clk_fixed_factor camcc_pll1_out_even = {
+>  /* 1920MHz configuration */
+>  static const struct alpha_pll_config camcc_pll2_config = {
+>  	.l = 0x64,
+> -	.post_div_val = 0x3 << 8,
+> -	.post_div_mask = 0x3 << 8,
+> -	.early_output_mask = BIT(3),
+> -	.aux_output_mask = BIT(1),
+> -	.main_output_mask = BIT(0),
+>  	.config_ctl_hi_val = 0x400003d6,
+>  	.config_ctl_val = 0x20000954,
+> +	.user_ctl_val = 0x0000030b,
+>  };
+>  
+>  static struct clk_alpha_pll camcc_pll2 = {
 > 
->>>> @@ -2185,6 +2241,18 @@ static int sdhci_msm_cqe_add_host(struct sdhci_host *host,
->>>>    	if (ret)
->>>>    		goto cleanup;
->>>> +	/* Initialize ICE for non-CMDQ eMMC devices */
->>>> +	config = sdhci_readl(host, HC_VENDOR_SPECIFIC_FUNC4);
->>>> +	config &= ~DISABLE_CRYPTO;
->>>> +	sdhci_writel(host, config, HC_VENDOR_SPECIFIC_FUNC4);
->>>> +	ice_cap = cqhci_readl(cq_host, CQHCI_CAP);
->>>> +	if (ice_cap & ICE_HCI_SUPPORT) {
->>>> +		config = cqhci_readl(cq_host, CQHCI_CFG);
->>>> +		config |= CRYPTO_GENERAL_ENABLE;
->>>> +		cqhci_writel(cq_host, config, CQHCI_CFG);
->>>> +	}
->>>> +	sdhci_msm_ice_enable(msm_host);
->>>
->>> This is after __sdhci_add_host() was called, which is probably too late.
->> ok,I’ll move the ICE initialization earlier in the probe flow, ideally
->> before __sdhci_add_host() is called.
->>>
->>>> +#ifdef CONFIG_MMC_CRYPTO
->>>> +	host->mmc_host_ops.request = sdhci_msm_request;
->>>> +#endif
->>>>    	/* Set the timeout value to max possible */
->>>>    	host->max_timeout_count = 0xF;
->>>
->>> A lot of the code in this patch also seems to actually run on
->>> CQE-capable hosts.  Can you explain?  Why is it needed?  Is there any
->>> change in behavior on them?
->> Thanks for raising this. You're right that some parts of the patch interact
->> with CQE-related structures, such as cqhci_host, even on CQE-capable hosts.
->> However, the intent is to reuse existing CQE infrastructure (like register
->> access helpers and memory-mapped regions) to configure ICE for non-CMDQ
->> requests.
->>
->> Importantly, actual CQE functionality is only enabled if the eMMC device
->> advertises CMDQ support. For devices without CMDQ, the CQE engine remains
->> disabled, and the request path falls back to standard non-CMDQ flow. In this
->> case, we're simply leveraging the CQE register space to program ICE
->> parameters.
->>
->> So while the code runs on CQE-capable hosts, there's no change in behavior
->> for CMDQ-enabled devices — the patch does not interfere with CQE operation.
->> It only enables ICE for non-CMDQ requests when supported by the platform.
-> 
-> So, we're dealing only with hosts that do support a command queue, but
-> support eMMC devices either with or without using it?
-There are two cases where ICE support is needed without CMDQ:
 
-1) The eMMC device does not support CMDQ, but we still want to use ICE 
-    for encryption/decryption.
+Reviewed-by: Taniya Das <taniya.das@oss.qualcomm.com>
 
-2) The host intentionally disables CMDQ, even if the eMMC device 
-supports it, and wants to use ICE in the legacy (non-CMDQ) path.
-
-This patch addresses the first case — enabling ICE for devices that lack 
-CMDQ support. I'm currently working on the host-side logic to support 
-the second case, and will submit that separately.
-
-> 
-> Could you explain why sdhci_msm_ice_enable() is called twice: once from
-> sdhci_msm_cqe_add_host() and once from sdhci_msm_cqe_enable()?
-Thanks for pointing this out. sdhci_msm_ice_enable() is called twice 
-only when the eMMC device supports CMDQ — once during 
-sdhci_msm_cqe_add_host() and again in sdhci_msm_cqe_enable(). For 
-non-CMDQ devices, it is called only once.
-
-Since the function primarily performs register configuration, the second 
-call effectively reprograms the same values and has no functional side 
-effects. That said, I’ll look into adding a condition to avoid redundant 
-configuration when ICE is already enabled, to make the flow cleaner.
-
+-- 
 Thanks,
-Alam.
+Taniya Das
+
 
