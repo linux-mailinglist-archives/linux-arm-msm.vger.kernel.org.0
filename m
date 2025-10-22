@@ -1,274 +1,137 @@
-Return-Path: <linux-arm-msm+bounces-78241-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-78242-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 67978BF9826
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Oct 2025 02:46:25 +0200 (CEST)
+Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [IPv6:2605:f480:58:1:0:1994:3:14])
+	by mail.lfdr.de (Postfix) with ESMTPS id 47B5CBF9E41
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Oct 2025 05:59:04 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 11FD51888941
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Oct 2025 00:46:47 +0000 (UTC)
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 371BC4E2E79
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Oct 2025 03:59:03 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9A36D1E9B0D;
-	Wed, 22 Oct 2025 00:46:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 097272D6E43;
+	Wed, 22 Oct 2025 03:58:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="VaCWdTIk"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="ci/T0A5V"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f43.google.com (mail-wr1-f43.google.com [209.85.221.43])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0BB91A2C0B
-	for <linux-arm-msm@vger.kernel.org>; Wed, 22 Oct 2025 00:46:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1AD82D594A
+	for <linux-arm-msm@vger.kernel.org>; Wed, 22 Oct 2025 03:58:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761093963; cv=none; b=EcJdqw4qANK8ootwigD5ee8AGglsRiClQ5BgBp0btcmpz30pdq+F5kVmqYihgNLqvoWN/w0mzyIrAq+D0V8XdHxSmKo3yUAA9NatkZb02rCw2PossXQiwfVTNpcjab0HRjKgtIrUTaa65LKE/dWKGn0cDEZW8igN85La+xEhcYw=
+	t=1761105535; cv=none; b=W0S8Gzj1xYYU22/+hVj6Ud/EJEBnONxDEfyL3A3YARkeaG12NbVLhqDUGRY7NM9SiDHU2MyuhQ5QJbP6rUZcDyrqRs4kC8Qp6yFDZUim4eQBt6ppV2hYLTwcLjR+Cnj6P6OgK17klqSK7TCJoEPVcpN7Vf100gp4Ks2cByjAUgk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761093963; c=relaxed/simple;
-	bh=pWxHW44EZoYVSkOewAQZ0Iz+uCPAjge1yg8BskkCR7U=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=tKu8M6d4UJlm8xPs574SPR65BgVjuXkdM0vMlX9RS9r4ux8xbwsI5YpCcpHtOzprrjN+bUCM2auYVs+NuJgNR+rYpJT8XkWkGZG/3/FAOORMwMIdqvP1shoUaa3VdxLsTslEipPnhCEySvNea69Y0nKzb1keTQL837rNE9p1RT0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=VaCWdTIk; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 59LEitn7031255
-	for <linux-arm-msm@vger.kernel.org>; Wed, 22 Oct 2025 00:46:01 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:date:from:in-reply-to:message-id
-	:mime-version:references:subject:to; s=qcppdkim1; bh=Ofz4SPaaGCE
-	jihV6QVq9ZPH2b088K+t4UidQCmtgRC4=; b=VaCWdTIkFArEhHkxLlC9B88rryZ
-	h9tRtVeoxL5XUDfBk1uvVtYyssCYKpk5CzmsXYEqvuuFPblWvceOPavXzG82Qx45
-	HcwjSBBBrdSh287cfV9Ovd6iWiOxfZ5+fBs2Re06LsP0SVa6je+OXDMyOYf91pIY
-	jOstS5lw2wAECHFuWRXaZMgEPTjV8SCAbqPcUU3S6Tj/ffsI/t9RKr50ZAGRYuG0
-	h3ZXr7FWQQXi+UdLnX8AjIO9epEmeHJYBiQUjlQd9Z5Khba7/kwT0uNp/QAkMNrW
-	hHki3TeCljKWxiIeUR/AnSjJjdq4FkNe0IH3Vwpa6I4UFmR+lpxiFjyFZEQ==
-Received: from mail-pl1-f198.google.com (mail-pl1-f198.google.com [209.85.214.198])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 49v42kagrn-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Wed, 22 Oct 2025 00:46:00 +0000 (GMT)
-Received: by mail-pl1-f198.google.com with SMTP id d9443c01a7336-28eb14e3cafso123184025ad.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 21 Oct 2025 17:46:00 -0700 (PDT)
+	s=arc-20240116; t=1761105535; c=relaxed/simple;
+	bh=VkwRwoyvKaQ5QVA7JKJ0O3zkd+6+dznsjpyKtm6MHtE=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=UaUtMpd5tANGooyNu39PuR7yoXZZk1FhEy5blqZfqGYoEikZHWJN1bb7bFjUKxbYwi+6X6FwLx0tiCplqYVHxNVl67QI5LHzWDm7U/cMsAR9p4Kc+44E/tnEq9dV9P91fb4raKxJAuc7LobMC7UdgFsxx4qeBWKiF9HGoxrtCxM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=ci/T0A5V; arc=none smtp.client-ip=209.85.221.43
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wr1-f43.google.com with SMTP id ffacd0b85a97d-3ee130237a8so4076129f8f.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 21 Oct 2025 20:58:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1761105532; x=1761710332; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=O2ZSDEAy1hrlTsCtb6+Des1vPZi3/b+xnBthz/KUkPk=;
+        b=ci/T0A5Vje/VYkRvOVaHE/DxhSklRucuUpkXLEgbY+grV8AYie+j/4bh+yiZ/yZ7t8
+         G/eHYFEml6NAEW+jnMXb9R13mXKKTnI4a5WfW+ZORpvuWgL/gJJctqAcG3hHOjVEOxdr
+         PEWPt66pHhMlLhWVgHEuoBdc1XG1YVYBIj4vxSdlsaYPhpKzWK0WRbUE7O84Lcix/EK7
+         fa6+vT1TJNNIM/fbDH6h5sU+Y0ANBQ2E2WfnQXs//HYMe+n3K7SvampE+ht32fgal8Xy
+         o5tj3sQ+CxeF847pqzDm83686GLwoLeVCLbQGzAkXXFhPQBWsHk9gnwAdamDQJ6Af/q1
+         kpmw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1761093960; x=1761698760;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=Ofz4SPaaGCEjihV6QVq9ZPH2b088K+t4UidQCmtgRC4=;
-        b=MC1xV1dbFxGqWHjJCdJQa1XSeM5zzchC8wzXgXcTNpe8oFe0dmrRUOjamnRAsWtw7T
-         gyyXMVvs1dsNWdPbXPe4FTF9uQht0Cyr1AywGXS1UNdQo07yNHrYvBLyDPgutymXBZnC
-         x78LPsPHMpjSg75fU7Qae+7lSw5g8CLH/SAJmwBrlQHwNckZ8SbFFFi+1u7gjU/Q5YvP
-         zfG7FgoKyH5kibkNC65lyNoh/wUNhQ0ku8Exjs5VODj6Y8mXkdVEyuBlW/4kUHZ1kEnv
-         0OIg5MHKJOGj4YOoSiltda4giioYfMx+cYIZJ9DUAlozKXJA4tA0+1jcksiMtNYFX2yo
-         kH7A==
-X-Forwarded-Encrypted: i=1; AJvYcCUD6AdmC6hVL5FUWqRn3OELVLuRFclnItX7YepxZT+iVDE2IOB7zPE1xinJRZ/jJQuQkN8e0ykE/9OjxnBf@vger.kernel.org
-X-Gm-Message-State: AOJu0YzWCgvDO7gu8nNtei/pPdz60G3AjIsb4WN5wzJ1uetfVdx9HrcT
-	64atDGeRLeCE+h5AuT8KRa7un31FKYSZAnwg85B1Xw7MxSPQWyMULRiMnGmGecQE90G//MZRP2a
-	T04hVTXyjRzF/oUKDDqRV9ivD7y9w+EoNpBOEzvKau+g2TcWPfhkLbI7MylqYGH4t6op/
-X-Gm-Gg: ASbGncuepbGbp4JMXUuJNZwzDQH1ypodXHF0dhnazBbQYRKN1acK8kV2YFduvgw0WIg
-	JNtYTs9XI2mhK6K+5rmQZ5nssIlR3eDAT+iRo5BkjNP6k8TCM/PrXKKh/z+ggmMgwedcW2e3h+T
-	LPGXjFrzAvstkKLgJH3ITz1ruDFWEhU+FqhPYPnFz66aQTiut9DwiuUKVZpcvR2d00n+KpZBolF
-	Olwg0a5zigmI2xbO0APC3ZzQ8vaBVMu1qVPIDopI8rfAYCk/gB9nWJgpkD5S5R1VeUYeEb6bx+Y
-	pk1Sk4K2FT2JnysGAUc+eWvcskTrLgkI14bur23EXTMk3YFNEmSunQEPX1h0YL+YnPtjh96U29/
-	ye6c9lMAiDzbkv9BXcsQGXjYn6823kjdCWJJoLc/PoYO1Yghz9gXcTPaDIZbv3A==
-X-Received: by 2002:a17:903:1250:b0:290:dfab:ca91 with SMTP id d9443c01a7336-290dfabccd9mr198000195ad.54.1761093959885;
-        Tue, 21 Oct 2025 17:45:59 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGP2bGgL//K1+9S3/naE7QJvU094EI8LGpgUEBEN4PEQmvyRXKJYh7a9Zju5xNxs8aORy14XQ==
-X-Received: by 2002:a17:903:1250:b0:290:dfab:ca91 with SMTP id d9443c01a7336-290dfabccd9mr197999975ad.54.1761093959412;
-        Tue, 21 Oct 2025 17:45:59 -0700 (PDT)
-Received: from hu-amelende-lv.qualcomm.com (Global_NAT1.qualcomm.com. [129.46.96.20])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-29246ebcf67sm121913045ad.15.2025.10.21.17.45.58
+        d=1e100.net; s=20230601; t=1761105532; x=1761710332;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=O2ZSDEAy1hrlTsCtb6+Des1vPZi3/b+xnBthz/KUkPk=;
+        b=HwdPlkagMhsT3vBf/A4Oo1c30+pxe7FKenVnSE2wC6QtNVL/Yp3mCv10OEYvJ5S7Hn
+         /SJiboL4IP/MqfPUNmbWArokeIGixfjI3ce9YIDw9tWGdgyNHJirdchtBEkRxSW2qbO9
+         rtqgV1UMcviIx89fB9RIOyILXgG0cU6PXhN+PLD9CKYCtT8JWBYzQF78ezzzOqkP7D8K
+         0uXTVcyyYKhdff//vV/qrqykndGX92Nk/LOeQv656xKHPDl58yHQ4iyN+i3W03FxxVVa
+         v66Wi9u058yI7Qnzh3mn1njHpk4MNYNqXqnfSqMPsx8xpZZNtyoWDFPA4PsssBzwZmeP
+         NV1w==
+X-Forwarded-Encrypted: i=1; AJvYcCUlrqGLV+BEq74ZksFBz/3PWj+4En9vnSkOdgG1WHVUC6feoMf/hf22bWXhuJOSCswR+BOcQ9SlTrxu9umq@vger.kernel.org
+X-Gm-Message-State: AOJu0YxocK6y4K2Jg9qF4077QDFrpHGSyitVEDMaFlxXkBcllGDk1JyZ
+	fni/WZuOrRtlKem+8rBy46XA/JvyNyLpL63CFof10tzwZclnn6ZzejKt7GavrYHHEQw=
+X-Gm-Gg: ASbGnctTk82g+YxQSjcvdnTqZFLX//7cP6goFwDvIvwdUdZMdSFbYa0NGOMznxrcPqj
+	Cj4iRTsOGyyYqZVBhJNBGHD8PkWiwgOJs2mwLR2t2OpuIGPWZs3FEuIieOlhp/iucRvWcSGBFv6
+	/G9z3gCX2YdfQ9Wfqz/pCEye9H/8oSTLBEzUcy7hkRyqD62TTPvN+RQmI2B4Qe+ODeQ2y5p9hju
+	CRtI/cVV5+oLCHiYQOeOXWzyPkmu1gMWloGwI4v3XIXgjBSlx45IYP3WrOS8T9RaWP6aLw0Tg8i
+	YqSBU9N/75KgrIFQ+90wUigCEg0iqJXZJUs0VzhN8Wlsd0J6QG6bjP+0+I9g56ylSJMOKBs5fAt
+	Qqs6FNmLeACNhoQLSZ5AVRknjMruvaSxwQLNiWuhokKaoNgW05Pd1ymPFiFNJrSjB9QzVElduFb
+	9K1bwmHg==
+X-Google-Smtp-Source: AGHT+IGUG+W0wf+mP42MvzRZOU9r8TQGApLm+D0SYiWzeMUaEK7m1AadbWpswXMeOq5qzD8NLou4HA==
+X-Received: by 2002:a05:6000:612:b0:411:f07a:67fb with SMTP id ffacd0b85a97d-42704e0ed95mr12103418f8f.55.1761105532102;
+        Tue, 21 Oct 2025 20:58:52 -0700 (PDT)
+Received: from orion.home ([2a02:c7c:7259:a00:11f4:2b3f:7c5a:5c10])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-427f009a6c5sm23637639f8f.28.2025.10.21.20.58.50
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 21 Oct 2025 17:45:58 -0700 (PDT)
-From: Anjelique Melendez <anjelique.melendez@oss.qualcomm.com>
-To: heikki.krogerus@linux.intel.com, gregkh@linuxfoundation.org
-Cc: lumag@kernel.org, neil.armstrong@linaro.org, johan+linaro@kernel.org,
-        quic_bjorande@quicinc.com, linux-usb@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
-Subject: [PATCH v6 2/2] usb: typec: ucsi_glink: Increase buffer size to support UCSI v2
-Date: Tue, 21 Oct 2025 17:45:54 -0700
-Message-Id: <20251022004554.1956729-3-anjelique.melendez@oss.qualcomm.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20251022004554.1956729-1-anjelique.melendez@oss.qualcomm.com>
-References: <20251022004554.1956729-1-anjelique.melendez@oss.qualcomm.com>
+        Tue, 21 Oct 2025 20:58:51 -0700 (PDT)
+From: Alexey Klimov <alexey.klimov@linaro.org>
+Subject: [PATCH v2 0/2] Sndcard compatible for qrb2210/qcm2290
+Date: Wed, 22 Oct 2025 04:58:48 +0100
+Message-Id: <20251022-qrb2210-qcm2290-sndcard-v2-0-32e9e269a825@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-GUID: J7nsVpcPKnnEVNXiyrEkWqgeG8ytz9gl
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDE4MDAzMSBTYWx0ZWRfXzsszLyeyN/jM
- 0+N8LavaZ0+JDbp7KXq3cLPJCOuqX+Pe1Q1JVcil16aUBL+jsbPJGSYu+NGQLdKSFh2CPJrJQ8Q
- UPhRP17EaO9vDPGhZsWDIpb25cwTL78tAB8b5R1cbn9zrWij801NBhu0LjUK4FeCYRFyZCf77nn
- eD55XjH6Gl0a+TaPrfJpxOXcmc98UpJmkRgUHdZZ1k+X1YD2znzeXNubEYjSVfRDxHzAxFWDyJO
- RsEuhKjXsM9CLDxFbNWc/FkFQj3fHZ64tKRzUfcQ8Ctqo37B4U4Ndf9vRo1ajgQ5GCC6kSGkPGC
- FGLvfnCNfQkdhe1myELOohMwXpHUcgeLqaglw5p/CZ7yCRyYNroIESItdwss59tPUh6NKoGVCmz
- YPNFHDAz04ow9N+JX/eb8S+zPvTt3A==
-X-Authority-Analysis: v=2.4 cv=QYNrf8bv c=1 sm=1 tr=0 ts=68f82948 cx=c_pps
- a=MTSHoo12Qbhz2p7MsH1ifg==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
- a=x6icFKpwvdMA:10 a=VkNPw1HP01LnGYTKEx00:22 a=EUspDBNiAAAA:8
- a=bL7WY3GH-9A0ZCLeatoA:9 a=GvdueXVYPmCkWapjIL-Q:22
-X-Proofpoint-ORIG-GUID: J7nsVpcPKnnEVNXiyrEkWqgeG8ytz9gl
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-10-21_03,2025-10-13_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 phishscore=0 malwarescore=0 clxscore=1015 impostorscore=0
- spamscore=0 bulkscore=0 suspectscore=0 adultscore=0 lowpriorityscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2510020000 definitions=main-2510180031
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAHhW+GgC/4WNQQ6CMBBFr0Jm7Zh2LEFceQ/DYmgLNNFWpoZoC
+ He3cgGX7//891fIXoLPcKlWEL+EHFIsQIcK7MRx9BhcYSBFtVaqwVl6Iq1wtg+iVmGOzrI4dFw
+ bMjWzPw1Q1k/xQ3jv5ltXeAr5leSzHy36l/53LhoVnql0RveWm/Z6D5ElHZOM0G3b9gUW/Strv
+ wAAAA==
+X-Change-ID: 20251007-qrb2210-qcm2290-sndcard-da54245aae3f
+To: Srinivas Kandagatla <srini@kernel.org>, 
+ Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>, 
+ Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>
+Cc: Jaroslav Kysela <perex@perex.cz>, Takashi Iwai <tiwai@suse.com>, 
+ Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>, 
+ linux-sound@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+ Alexey Klimov <alexey.klimov@linaro.org>, 
+ Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
+X-Mailer: b4 0.14.2
 
-UCSI v2 specification has increased the MSG_IN and MSG_OUT size from
-16 bytes to 256 bytes each for the message exchange between OPM and PPM
-This makes the total buffer size increase from 48 bytes to 528 bytes.
-Update the buffer size to support this increase.
+This is a small patch series that serves as a preparation for
+adding HDMI audio playback support on QRB2210 RB1 board.
+The patches here are for sound subsystem. The other series
+will focus on qcom DT files.
 
-Signed-off-by: Anjelique Melendez <anjelique.melendez@oss.qualcomm.com>
+The original series where one of the patches here were taken from is
+https://lore.kernel.org/linux-sound/20250302-rb1_hdmi_sound_first-v1-0-81a87ae1503c@linaro.org/
+and sndcard compable patch was added as new one.
+
+Signed-off-by: Alexey Klimov <alexey.klimov@linaro.org>
 ---
- drivers/usb/typec/ucsi/ucsi_glink.c | 80 +++++++++++++++++++++++++----
- 1 file changed, 70 insertions(+), 10 deletions(-)
+Changes in v2:
+- rewrote commit description and subjects/titles where applicable;
+- switched to SoC-level compatible for qrb2210 sndcard, therefore adjusted
+  DT schema changes;
+- Link to v1: https://lore.kernel.org/r/20251007-qrb2210-qcm2290-sndcard-v1-0-8222141bca79@linaro.org
 
-diff --git a/drivers/usb/typec/ucsi/ucsi_glink.c b/drivers/usb/typec/ucsi/ucsi_glink.c
-index 1f9f0d942c1a..11b3e24e34e2 100644
---- a/drivers/usb/typec/ucsi/ucsi_glink.c
-+++ b/drivers/usb/typec/ucsi/ucsi_glink.c
-@@ -16,10 +16,10 @@
- 
- #define PMIC_GLINK_MAX_PORTS		3
- 
--#define UCSI_BUF_SIZE                   48
-+#define UCSI_BUF_V1_SIZE		(UCSI_MESSAGE_OUT + (UCSI_MESSAGE_OUT - UCSI_MESSAGE_IN))
-+#define UCSI_BUF_V2_SIZE		(UCSIv2_MESSAGE_OUT + (UCSIv2_MESSAGE_OUT - UCSI_MESSAGE_IN))
- 
- #define MSG_TYPE_REQ_RESP               1
--#define UCSI_BUF_SIZE                   48
- 
- #define UC_NOTIFY_RECEIVER_UCSI         0x0
- #define UC_UCSI_READ_BUF_REQ            0x11
-@@ -32,13 +32,19 @@ struct ucsi_read_buf_req_msg {
- 
- struct __packed ucsi_read_buf_resp_msg {
- 	struct pmic_glink_hdr   hdr;
--	u8                      buf[UCSI_BUF_SIZE];
-+	union {
-+		u8 v2_buf[UCSI_BUF_V2_SIZE];
-+		u8 v1_buf[UCSI_BUF_V1_SIZE];
-+	} buf;
- 	u32                     ret_code;
- };
- 
- struct __packed ucsi_write_buf_req_msg {
- 	struct pmic_glink_hdr   hdr;
--	u8                      buf[UCSI_BUF_SIZE];
-+	union {
-+		u8 v2_buf[UCSI_BUF_V2_SIZE];
-+		u8 v1_buf[UCSI_BUF_V1_SIZE];
-+	} buf;
- 	u32                     reserved;
- };
- 
-@@ -72,7 +78,7 @@ struct pmic_glink_ucsi {
- 	bool ucsi_registered;
- 	bool pd_running;
- 
--	u8 read_buf[UCSI_BUF_SIZE];
-+	u8 read_buf[UCSI_BUF_V2_SIZE];
- };
- 
- static int pmic_glink_ucsi_read(struct ucsi *__ucsi, unsigned int offset,
-@@ -132,17 +138,35 @@ static int pmic_glink_ucsi_locked_write(struct pmic_glink_ucsi *ucsi, unsigned i
- 					const void *val, size_t val_len)
- {
- 	struct ucsi_write_buf_req_msg req = {};
-+	size_t req_len, buf_len;
- 	unsigned long left;
- 	int ret;
-+	u8 *buf;
- 
- 	req.hdr.owner = PMIC_GLINK_OWNER_USBC;
- 	req.hdr.type = MSG_TYPE_REQ_RESP;
- 	req.hdr.opcode = UC_UCSI_WRITE_BUF_REQ;
--	memcpy(&req.buf[offset], val, val_len);
-+
-+	if (ucsi->ucsi->version >= UCSI_VERSION_2_0) {
-+		buf_len = UCSI_BUF_V2_SIZE;
-+		buf = req.buf.v2_buf;
-+	} else if (ucsi->ucsi->version) {
-+		buf_len = UCSI_BUF_V1_SIZE;
-+		buf = req.buf.v1_buf;
-+	} else {
-+		dev_err(ucsi->dev, "UCSI version unknown\n");
-+		return -EINVAL;
-+	}
-+	req_len = sizeof(struct pmic_glink_hdr) + buf_len + sizeof(u32);
-+
-+	if (offset + val_len > buf_len)
-+		return -EINVAL;
-+
-+	memcpy(&buf[offset], val, val_len);
- 
- 	reinit_completion(&ucsi->write_ack);
- 
--	ret = pmic_glink_send(ucsi->client, &req, sizeof(req));
-+	ret = pmic_glink_send(ucsi->client, &req, req_len);
- 	if (ret < 0) {
- 		dev_err(ucsi->dev, "failed to send UCSI write request: %d\n", ret);
- 		return ret;
-@@ -216,12 +240,48 @@ static const struct ucsi_operations pmic_glink_ucsi_ops = {
- 
- static void pmic_glink_ucsi_read_ack(struct pmic_glink_ucsi *ucsi, const void *data, int len)
- {
--	const struct ucsi_read_buf_resp_msg *resp = data;
-+	u32 ret_code, resp_len, buf_len = 0;
-+	u8 *buf;
-+
-+	if (ucsi->ucsi->version) {
-+		if (ucsi->ucsi->version >= UCSI_VERSION_2_0) {
-+			buf = ((struct ucsi_read_buf_resp_msg *)data)->buf.v2_buf;
-+			buf_len = UCSI_BUF_V2_SIZE;
-+		} else {
-+			buf = ((struct ucsi_read_buf_resp_msg *)data)->buf.v1_buf;
-+			buf_len = UCSI_BUF_V1_SIZE;
-+		}
-+	} else if (!ucsi->ucsi_registered) {
-+		/*
-+		 * If UCSI version is not known yet because device is not registered, choose buffer
-+		 * size which best fits incoming data
-+		 */
-+		if (len > sizeof(struct pmic_glink_hdr) + UCSI_BUF_V2_SIZE) {
-+			buf = ((struct ucsi_read_buf_resp_msg *)data)->buf.v2_buf;
-+			buf_len = UCSI_BUF_V2_SIZE;
-+		} else {
-+			buf = ((struct ucsi_read_buf_resp_msg *)data)->buf.v1_buf;
-+			buf_len = UCSI_BUF_V1_SIZE;
-+		}
-+	} else {
-+		dev_err(ucsi->dev, "Device has been registered but UCSI version is still unknown\n");
-+		return;
-+	}
- 
--	if (resp->ret_code)
-+	resp_len = sizeof(struct pmic_glink_hdr) + buf_len + sizeof(u32);
-+
-+	if (len > resp_len)
-+		return;
-+
-+	/* Ensure that buffer_len leaves space for ret_code to be read back from memory */
-+	if (buf_len > len - sizeof(struct pmic_glink_hdr) - sizeof(u32))
-+		buf_len = len - sizeof(struct pmic_glink_hdr) - sizeof(u32);
-+
-+	memcpy(&ret_code, buf + buf_len, sizeof(u32));
-+	if (ret_code)
- 		return;
- 
--	memcpy(ucsi->read_buf, resp->buf, UCSI_BUF_SIZE);
-+	memcpy(ucsi->read_buf, buf, buf_len);
- 	complete(&ucsi->read_ack);
- }
- 
+---
+Alexey Klimov (2):
+      ASoC: dt-bindings: qcom,sm8250: add QRB2210 soundcard
+      ASoC: qcom: sm8250: add qrb2210-sndcard compatible string
+
+ Documentation/devicetree/bindings/sound/qcom,sm8250.yaml | 1 +
+ sound/soc/qcom/sm8250.c                                  | 1 +
+ 2 files changed, 2 insertions(+)
+---
+base-commit: fe45352cd106ae41b5ad3f0066c2e54dbb2dfd70
+change-id: 20251007-qrb2210-qcm2290-sndcard-da54245aae3f
+
+Best regards,
 -- 
-2.34.1
+Alexey Klimov <alexey.klimov@linaro.org>
 
 
