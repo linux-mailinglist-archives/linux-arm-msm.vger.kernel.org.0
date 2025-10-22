@@ -1,303 +1,167 @@
-Return-Path: <linux-arm-msm+bounces-78400-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-78401-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [IPv6:2605:f480:58:1:0:1994:3:14])
-	by mail.lfdr.de (Postfix) with ESMTPS id C7C5DBFD9A5
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Oct 2025 19:34:31 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 6E464BFDA1F
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Oct 2025 19:39:44 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id A98A14F096E
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Oct 2025 17:34:30 +0000 (UTC)
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id E46794EF91F
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Oct 2025 17:39:37 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4CCF72D2398;
-	Wed, 22 Oct 2025 17:34:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 286C82D592C;
+	Wed, 22 Oct 2025 17:39:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="iEpl5Qva"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="ovU/kvt+"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.12])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 699682D0C60;
-	Wed, 22 Oct 2025 17:34:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.12
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5519923C51D
+	for <linux-arm-msm@vger.kernel.org>; Wed, 22 Oct 2025 17:39:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761154458; cv=none; b=Mx0KvpaHNBLJkkfFoKF3KEDCAKeomD/IxtAwsl9z0dUWFNAZwLI8gJRbNG6582FYlTkKsRPt0om413lUsyuJ92d6crpa2lzT7Z9shWDobPsVEs6AWRKO9Ai1+2jSolAvuDTKuvamgp7fpcNjhIKxM8VEU9RSmJmSclVvbf5fAp0=
+	t=1761154774; cv=none; b=rP6b8+r8jeTO656OJQtU127A2dJp/JEEYZHoRr2hBtcHMNdRd0KmrJIIy/lfjcH68FZctLpZxmwhOcFnrJk5WYO8pVXs5Vle0ODOaoLiQvZDZUaNDl9ohkuaAJA/c7bvuWkHqLHAOEags+BSMTgjBQ/XP+Ohd0eP2etp792U304=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761154458; c=relaxed/simple;
-	bh=dV+5NKwJdbhUSGEqeN+AL+dVtPcIoMxzkpXqx3wMka4=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=fT93nrcVuTl7xHjYqjt0qxRT87QAKokUAS8WCbp1ZtiCJ/zE2fcHhkW1jXGQQPmWIKV3VTMJDfGS68GLSr22B3hTtzbQZFMaGsFMI/qfUG+KbW+cdWjuUI7q9YXtYCMUMTLYJ7EfZGeUDNsYeWOkEMYEFTbwGeHI+C25Uixuvl4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=iEpl5Qva; arc=none smtp.client-ip=198.175.65.12
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1761154456; x=1792690456;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=dV+5NKwJdbhUSGEqeN+AL+dVtPcIoMxzkpXqx3wMka4=;
-  b=iEpl5QvagBe8QTi77Kos2/H0Rmqmq68hu6eaxCDXkCXdWgt9X5NQ9CrS
-   dbOYWAVNOPVg2N1y2AuKu15evlR6B5meW7fK/XVYpgQYkUlP1SK/cWe8F
-   BXveU2kmw/0ujkx9IadkeRA/CG+euedewavEBz8t1cJHm+60JnN0xS0Jj
-   gN5C5VFl0QVYZyfB/rD2svEYZBOFdNph9LQqgKjaDyMJX9a3JaHgcwFaY
-   If8RVdsCGOYn49Wp459fDvBJxOlu2rOwOuy9BThBJmM2rcil3zaO/Y2y6
-   j7doRg4iuHoQol18QN96b7PNq39awVlM/GAnV/I3cROciWyt3N7EIwWfO
-   A==;
-X-CSE-ConnectionGUID: 6vZEv/DNTliRjRehUvLAcA==
-X-CSE-MsgGUID: CeD4EQwPSM2kUaXP+if3rA==
-X-IronPort-AV: E=McAfee;i="6800,10657,11586"; a="74751315"
-X-IronPort-AV: E=Sophos;i="6.19,247,1754982000"; 
-   d="scan'208";a="74751315"
-Received: from fmviesa008.fm.intel.com ([10.60.135.148])
-  by orvoesa104.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 22 Oct 2025 10:34:15 -0700
-X-CSE-ConnectionGUID: X7hpJLYNShiXzOXB9nCdEA==
-X-CSE-MsgGUID: jAZp2GJASS2/Swqf9D3Xmg==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.19,247,1754982000"; 
-   d="scan'208";a="184326068"
-Received: from cpetruta-mobl1.ger.corp.intel.com (HELO ashevche-desk.local) ([10.245.244.83])
-  by fmviesa008-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 22 Oct 2025 10:34:10 -0700
-Received: from andy by ashevche-desk.local with local (Exim 4.98.2)
-	(envelope-from <andriy.shevchenko@intel.com>)
-	id 1vBcit-00000001l1m-0V63;
-	Wed, 22 Oct 2025 20:34:07 +0300
-Date: Wed, 22 Oct 2025 20:34:06 +0300
-From: Andy Shevchenko <andriy.shevchenko@intel.com>
-To: Bartosz Golaszewski <brgl@bgdev.pl>
-Cc: Kees Cook <kees@kernel.org>, Mika Westerberg <westeri@kernel.org>,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Linus Walleij <linus.walleij@linaro.org>,
-	Manivannan Sadhasivam <mani@kernel.org>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Saravana Kannan <saravanak@google.com>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	Andy Shevchenko <andy@kernel.org>,
-	Catalin Marinas <catalin.marinas@arm.com>,
-	Will Deacon <will@kernel.org>,
-	Srinivas Kandagatla <srini@kernel.org>,
-	Liam Girdwood <lgirdwood@gmail.com>,
-	Mark Brown <broonie@kernel.org>, Jaroslav Kysela <perex@perex.cz>,
-	Takashi Iwai <tiwai@suse.com>, linux-hardening@vger.kernel.org,
-	linux-kernel@vger.kernel.org, linux-gpio@vger.kernel.org,
-	linux-arm-kernel@lists.infradead.org, linux-sound@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org,
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Subject: Re: [PATCH v2 03/10] gpiolib: implement low-level, shared GPIO
- support
-Message-ID: <aPkVjoWkP04Q-2xP@smile.fi.intel.com>
-References: <20251022-gpio-shared-v2-0-d34aa1fbdf06@linaro.org>
- <20251022-gpio-shared-v2-3-d34aa1fbdf06@linaro.org>
+	s=arc-20240116; t=1761154774; c=relaxed/simple;
+	bh=fLelTF8/0IqQy3P2oy26e3VdYKHcJQv0D7rNT0G0sf8=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=EBkSH7l8FWigqdN2OHy8uJSUvNdmHUmEPenmgjTPGqZT/dc5TN2cqNm9SubX9Gu9musGOpXF+h74hDpe8CPdew7Vu6QS3rdCI5EDsnTthkaSXrJuWyxuIqQf9RiFSfF7wfUm+6mKR4tyS3S1+HylHScwXicTYl5oL4J4etfdsDI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=ovU/kvt+; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 59MA5ZOu005410
+	for <linux-arm-msm@vger.kernel.org>; Wed, 22 Oct 2025 17:39:32 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	fLelTF8/0IqQy3P2oy26e3VdYKHcJQv0D7rNT0G0sf8=; b=ovU/kvt+Fe8mZ9v8
+	wxfn21NP7PS5PYIcvFEMP6qaEOzjvhnt2Ub7h1coPJ2U8o2htWenlKudNmzQPscC
+	PDisyCc0KYada3aJxGQQCtzmVUoUnz6rGFLRM8zcrGUGLUITkIuzfnBmDBg8Qttk
+	LiP6F+LpEy1YSJurL01oM7T9u72wAX19C7EueYvIwNvxCKIp9Lcyc86f6d6tPEay
+	AI9wn+78QRP6LNjkjuYY0vlKC46mPH3LVLh4erZdVtKuKH5Kt+gXUFYM7QfNZqEM
+	pW9PEP1h3savFphn6QPBNiMW9qKXP1DPqcffITKspcicy3CHa/2w7Y2wfyIIQGd+
+	pJBbMA==
+Received: from mail-pj1-f72.google.com (mail-pj1-f72.google.com [209.85.216.72])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 49v3nfnhtm-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Wed, 22 Oct 2025 17:39:32 +0000 (GMT)
+Received: by mail-pj1-f72.google.com with SMTP id 98e67ed59e1d1-33428befc08so3921878a91.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Oct 2025 10:39:32 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1761154771; x=1761759571;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=fLelTF8/0IqQy3P2oy26e3VdYKHcJQv0D7rNT0G0sf8=;
+        b=t8yC8eJDVelc6+DQ9s/Jfxv3QRR341s/df/gdI3uR62RV9thSNlcE6dR2ze7aQSbgP
+         ICyCpjIz799mZxmjOi5d2rzEfLrWWCzyPXQzmPkb633lmMw+MZyap1TA+55pPwrXo6fc
+         QUP1zNdYbZiOsIQB0oruEIFfZBVbyUuUkhltpbFy76hlBhHeTdo3Vwn3/hOSlXFS/XhV
+         wgtgm3YBoGh6rXWA15autxBFykNqt1UTBMIIUu2OJOxhzTqt7Z0NHgZIlKgoGiVGgcs1
+         CNTtUrIErusX3s89s59DXCwRNVaZXifM06D1aYdCkCyRn7plZJfW5ASY60mZ7Y9z34KB
+         W+TA==
+X-Forwarded-Encrypted: i=1; AJvYcCWWOD00vzvM1W7nwMoDw4P/j3lRk1JQ03Im8ROnoyi9cuIMg1QWvmCTcCiyv4jnXzqxqRTgLZOOxyR489CC@vger.kernel.org
+X-Gm-Message-State: AOJu0YxeJt4dpaYW0vMi+gT6VXgjnICP6OiwiKddnhDyGzMQGgUHvQFZ
+	m8KYQDtnqOKh2piQ/XBInTwb76FPd02xm10RjXF57oV6qTKycNtdDwN1DBntDnJEBF93NbmBuoO
+	6gMgvb1QT09AeRMldkBJlXqgTAZ0xBjg2neZKjBay1nASxN20FvwaZg8qMojXNKyO2W9d
+X-Gm-Gg: ASbGncvI8aQ2bp42K1PQ85oRb3WyY1ozLy0be+ZDbjqQ2gYQ/4/dL70s3jLftQaqeRM
+	aYRoaJEOfHRBVHpHlQjd7iG4KcKEfnqcmcyGmfkjOdWaGhPzEuclj6lIZbGmI4q92ALnEPLXIK2
+	/H8SjSqKcNjHxa6KFnIqtVxYm+a3PROgJjnMjmek3+yFKIdBVEExjU3G+NyBNQP7ZxARZICVQyt
+	deGvScWTW7vpbVxk709vKzdIc9Nf5JNhuJqkU/Mdy7/b+mak11OGf5KypXtyCouFmY6EnENlr8w
+	Ckcn/2KnfGEi18Ise48sdylMQ7S+wr1anype+1Ky0LGi+50Egw/IcwnVNS+nIWCBmZfWEjAC3Ph
+	ueTlTeqVQQeq8f1IK0mJsk41qVtr5DzodkocWoB+nW9pPOMoqjn2ZVw==
+X-Received: by 2002:a17:90a:e70d:b0:32b:6eed:d203 with SMTP id 98e67ed59e1d1-33bcf8f14demr27496760a91.24.1761154771537;
+        Wed, 22 Oct 2025 10:39:31 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFzmMG9fdaAA2inrKULTHZS4DJ1sZoPnRULNrfeFDnHK+yfYZ15yMpfN1cpGbPHSU0rFRLuNQ==
+X-Received: by 2002:a17:90a:e70d:b0:32b:6eed:d203 with SMTP id 98e67ed59e1d1-33bcf8f14demr27496726a91.24.1761154771059;
+        Wed, 22 Oct 2025 10:39:31 -0700 (PDT)
+Received: from [10.62.37.19] (i-global254.qualcomm.com. [199.106.103.254])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-33dfb7f8310sm2728378a91.5.2025.10.22.10.39.29
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 22 Oct 2025 10:39:30 -0700 (PDT)
+Message-ID: <95538ded-d2d3-44bb-8aba-cc55ab0d4ea1@oss.qualcomm.com>
+Date: Wed, 22 Oct 2025 10:39:29 -0700
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20251022-gpio-shared-v2-3-d34aa1fbdf06@linaro.org>
-Organization: Intel Finland Oy - BIC 0357606-4 - c/o Alberga Business Park, 6
- krs, Bertel Jungin Aukio 5, 02600 Espoo
-
-On Wed, Oct 22, 2025 at 03:10:42PM +0200, Bartosz Golaszewski wrote:
-> From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-> 
-> This module scans the device tree (for now only OF nodes are supported
-> but care is taken to make other fwnode implementations easy to
-> integrate) and determines which GPIO lines are shared by multiple users.
-> It stores that information in memory. When the GPIO chip exposing shared
-> lines is registered, the shared GPIO descriptors it exposes are marked
-> as shared and virtual "proxy" devices that mediate access to the shared
-> lines are created. When a consumer of a shared GPIO looks it up, its
-> fwnode lookup is redirected to a just-in-time machine lookup that points
-> to this proxy device.
-> 
-> This code can be compiled out on platforms which don't use shared GPIOs.
-
-...
-
-> +		if (!strends(prop->name, "-gpios") &&
-> +		    !strends(prop->name, "-gpio") &&
-
-> +		    strcmp(prop->name, "gpios") != 0 &&
-> +		    strcmp(prop->name, "gpio") != 0)
-
-We have gpio_suffixes for a reason (also refer to for_each_gpio_property_name()
-implementation, and yes I understand the difference, this is just a reference
-for an example of use of the existing list of suffixes).
-
-> +			continue;
-
-...
-
-> +			if (strends(prop->name, "gpios"))
-> +				suffix = "-gpios";
-> +			else if (strends(prop->name, "gpio"))
-> +				suffix = "-gpio";
-> +			else
-> +				suffix = NULL;
-> +			if (!suffix)
-> +				continue;
-
-In a similar way.
-
-> +			/* We only set con_id if there's actually one. */
-> +			if (strcmp(prop->name, "gpios") && strcmp(prop->name, "gpio")) {
-
-And again...
-
-> +				ref->con_id = kstrdup(prop->name, GFP_KERNEL);
-> +				if (!ref->con_id)
-> +					return -ENOMEM;
-> +
-> +				con_id_len = strlen(ref->con_id);
-> +				suffix_len = strlen(suffix);
-> +
-> +				ref->con_id[con_id_len - suffix_len] = '\0';
-> +			}
-
-...
-
-> +	adev->dev.parent = gdev->dev.parent;
-> +	/* No need to dev->release() anything. */
-
-And is it okay?
-
-See drivers/base/core.c:2567
-
-WARN(1, KERN_ERR "Device '%s' does not have a release() function, it is broken and must be fixed. See Documentation/core-api/kobject.rst.\n",
-
-...
-
-> +	pr_debug("Created an auxiliary GPIO proxy %s for GPIO device %s\n",
-> +		 dev_name(&adev->dev), gpio_device_get_label(gdev));
-
-Are you expecting dev_name() to be NULL in some cases? Otherwise why is this
-not a dev_dbg() call?
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] media: qcom: camss: Enable setting the rate to
+ camnoc_rt_axi clock
+To: Bryan O'Donoghue <bod@kernel.org>,
+        Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
+        Hangxiang Ma <hangxiang.ma@oss.qualcomm.com>,
+        Loic Poulain <loic.poulain@oss.qualcomm.com>
+Cc: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+        Krzysztof Kozlowski <krzk@kernel.org>, Robert Foss <rfoss@kernel.org>,
+        Andi Shyti <andi.shyti@kernel.org>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley
+ <conor+dt@kernel.org>, Todor Tomov <todor.too@gmail.com>,
+        Mauro Carvalho Chehab <mchehab@kernel.org>, linux-i2c@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-media@vger.kernel.org
+References: <20251014-add-new-clock-in-vfe-matching-list-v1-1-0d965ccc8a3a@oss.qualcomm.com>
+ <9984bc23-05ef-4d46-aeb8-feb0a18e5762@kernel.org>
+ <bc0caeb8-c99b-4bef-a69e-5ce433e6b890@oss.qualcomm.com>
+ <c4fd6bfc-cc9a-4f37-99b3-f36466691a1e@linaro.org>
+ <CAFEp6-2=GJL-gc+PSyAL4=prp_sXdZJS=Ewg5nP2kcp_Gu85Fw@mail.gmail.com>
+ <33513b43-f6d1-4c76-887b-39611a75e1f4@kernel.org>
+ <WnfCknsSyJK68PQZkE2q7COZHRpsLOFlr3dcbwiVR6SBWtF9iRQ4MGzp_9q31O0kyhZwoncQWfHjJQvpz7nyfw==@protonmail.internalid>
+ <ab43c5c9-edc5-459e-8ef7-2aa8bec559c0@oss.qualcomm.com>
+ <0e6e1b8a-d9ae-42d1-b1ad-4314e0d76ab7@kernel.org>
+ <2c0011d3-a692-457c-9ac0-a445fc82df37@oss.qualcomm.com>
+ <48bede40-584a-409a-9bca-7ae3cc420667@linaro.org>
+ <124be1cd-1cc8-4c04-8aca-eede808e736c@oss.qualcomm.com>
+ <wQXRQmbUmfMvej8K6_8vXS41CKntPY998YjO9D3oixzxaMuV4isW-ebPocmhNjppbBpEvXx1524Q-BT-UHfh7Q==@protonmail.internalid>
+ <6efe686a-fdd5-4f17-a0dd-d44a16a67a36@oss.qualcomm.com>
+ <3d2b0de7-4c39-42d3-a6fd-d41386559e1a@kernel.org>
+Content-Language: en-US
+From: Vijay Kumar Tumati <vijay.tumati@oss.qualcomm.com>
+In-Reply-To: <3d2b0de7-4c39-42d3-a6fd-d41386559e1a@kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-ORIG-GUID: LEwF5ziTbXnw9m8okJKhd7XrrbGsds4H
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDE4MDAyNyBTYWx0ZWRfX40aX4C3rpuGJ
+ NJ10J+M9U6iPGnari5+z9MeWCIxwRN3lrHFH9tsAnChwElbi500aQroEyFq1Ru8ORXg0njreSmM
+ AonCjBUDVZMwEr3JFmk1Mhn1+X8b2goKuTt7C5uhrW7cZQO6jv0+8Sf81lflNmhonCeARJ/y/Fp
+ Psbeog+h6HnEWg+7VgS2nTpuTmOfvU60CBo6QPX0ofRxLgqmQsiB0r7y0SivtvfTtg28x/J8lGD
+ LxzJt4iuvEirA4xT625cqrWOIWFcGCHuCTrbi9/+yOlcMLXBJC/+cVQVFO8OgjbhR7FCYCbsAMf
+ 5DkJMeATKn9+KJTcZoxD7aI2IQl/ELZ7dbhPAf6LUjtuuk6OEOw+zHA0TLC0KvewLlcDScRa7+T
+ dQXw1ba6pOQUE72zY1WC4aRe5d0f7g==
+X-Proofpoint-GUID: LEwF5ziTbXnw9m8okJKhd7XrrbGsds4H
+X-Authority-Analysis: v=2.4 cv=EYjFgfmC c=1 sm=1 tr=0 ts=68f916d4 cx=c_pps
+ a=RP+M6JBNLl+fLTcSJhASfg==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17
+ a=IkcTkHD0fZMA:10 a=x6icFKpwvdMA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=EUspDBNiAAAA:8 a=apREhrRnQ4vd8KJXgwIA:9 a=QEXdDO2ut3YA:10 a=QYH75iMubAgA:10
+ a=iS9zxrgQBfv6-_F4QbHw:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-10-22_07,2025-10-22_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ bulkscore=0 clxscore=1015 spamscore=0 malwarescore=0 lowpriorityscore=0
+ priorityscore=1501 impostorscore=0 phishscore=0 adultscore=0 suspectscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.19.0-2510020000 definitions=main-2510180027
 
 
-> +	return 0;
-> +}
-
-...
-
-> +			char *key __free(kfree) =
-> +				kasprintf(GFP_KERNEL,
-> +					  KBUILD_MODNAME ".proxy.%u",
-> +					  ref->adev.id);
-
-This looks awful. Just allow a bit longer line
-
-> +			if (!key)
-> +				return -ENOMEM;
-
-...
-
-> +static void gpio_shared_remove_adev(struct auxiliary_device *adev)
-> +{
-> +	lockdep_assert_held(&gpio_shared_lock);
-> +
-> +	auxiliary_device_uninit(adev);
-> +	auxiliary_device_delete(adev);
-
-_destroy() ? Esp. taking into account the (wrong?) ordering.
-
-> +}
-
-...
-
-> +		set_bit(GPIOD_FLAG_SHARED, flags);
-
-Do you need this to be atomic?
-
-> +		/*
-> +		 * Shared GPIOs are not requested via the normal path. Make
-> +		 * them inaccessible to anyone even before we register the
-> +		 * chip.
-> +		 */
-> +		set_bit(GPIOD_FLAG_REQUESTED, flags);
-
-Ditto.
-
-...
-
-> +struct gpio_shared_desc *devm_gpiod_shared_get(struct device *dev)
-> +{
-> +	struct auxiliary_device *adev = to_auxiliary_dev(dev);
-> +	struct gpio_shared_desc *shared_desc;
-> +	struct gpio_shared_entry *entry;
-> +	struct gpio_shared_ref *ref;
-> +	struct gpio_device *gdev;
-> +	int ret;
-
-> + +	scoped_guard(mutex, &gpio_shared_lock) {
-
-Much better to split the below to a helper and make it run under a
-scoped_guard() here or call a guard()() there.
-
-> +		list_for_each_entry(entry, &gpio_shared_list, list) {
-> +			list_for_each_entry(ref, &entry->refs, list) {
-> +				if (adev != &ref->adev)
-> +					continue;
-> +
-> +				if (entry->shared_desc) {
-> +					kref_get(&entry->ref);
-> +					shared_desc = entry->shared_desc;
-> +					break;
-> +				}
-> +
-> +				shared_desc = kzalloc(sizeof(*shared_desc), GFP_KERNEL);
-> +				if (!shared_desc)
-> +					return ERR_PTR(-ENOMEM);
-> +
-> +				gdev = gpio_device_find_by_fwnode(entry->fwnode);
-> +				if (!gdev) {
-> +					kfree(shared_desc);
-> +					return ERR_PTR(-EPROBE_DEFER);
-> +				}
-> +
-> +				shared_desc->desc = &gdev->descs[entry->offset];
-> +				shared_desc->can_sleep = gpiod_cansleep(shared_desc->desc);
-> +				if (shared_desc->can_sleep)
-> +					mutex_init(&shared_desc->mutex);
-> +				else
-> +					spin_lock_init(&shared_desc->spinlock);
-> +
-> +				kref_init(&entry->ref);
-> +				entry->shared_desc = shared_desc;
-> +
-> +				pr_debug("Device %s acquired a reference to the shared GPIO %u owned by %s\n",
-> +					 dev_name(dev), desc_to_gpio(shared_desc->desc),
-> +					 gpio_device_get_label(gdev));
-> +				break;
-> +			}
-> +		}
-> +	}
-> +
-> +	ret = devm_add_action_or_reset(dev, gpiod_shared_put, entry);
-> +	if (ret)
-> +		return ERR_PTR(ret);
-> +
-> +	return shared_desc;
-> +}
-
-...
-
-> +/*
-> + * This is only called if gpio_shared_init() fails so it's in fact __init and
-> + * not __exit.
-> + */
-
-Fine. Have you checked if there are any section mismatch warnings during kernel
-(post)build?
-
--- 
-With Best Regards,
-Andy Shevchenko
-
-
+On 10/22/2025 9:00 AM, Bryan O'Donoghue wrote:
+> On 21/10/2025 20:19, Vijay Kumar Tumati wrote:
+>> Hope this clarifies. Please let us know if you have any further
+>> questions. Thank you very much.
+>
+> Eh.
+>
+> So can I take this statement as Review-by: from you ?
+>
+> That's basically all I really need here, RB or NAK.
+>
+> ---
+> bod
+Sorry, yes.
+Reviewed-by: Vijay Kumar Tumati <vijay.tumati@oss.qualcomm.com>
 
