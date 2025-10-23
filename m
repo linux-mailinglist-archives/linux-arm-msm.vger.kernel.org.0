@@ -1,272 +1,225 @@
-Return-Path: <linux-arm-msm+bounces-78423-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-78424-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id DBF4DBFEE50
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Oct 2025 04:14:36 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 85483BFEE6B
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Oct 2025 04:22:38 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 695D619A6DE5
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Oct 2025 02:15:00 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id AD09F18C6910
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Oct 2025 02:22:53 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 455271F91D6;
-	Thu, 23 Oct 2025 02:14:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id DE3B0202F93;
+	Thu, 23 Oct 2025 02:22:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="G5rYdFIO"
+	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="Enkkhrtm"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from CO1PR03CU002.outbound.protection.outlook.com (mail-westus2azon11010032.outbound.protection.outlook.com [52.101.46.32])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E6141A9FB3
-	for <linux-arm-msm@vger.kernel.org>; Thu, 23 Oct 2025 02:14:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761185673; cv=none; b=q/bjOTKZ6KZjwk9jTvLc1A4cML7CyHd/rn05Xc/A7ogzwMa2s8bUFV8lpVNVWSomOSHG79d1PXqzJ0k6aBQgDoqDZxMIZRKXwuj6yycCRdp8ucs0/KMnDuzNVl/fnfqgaChVHGQ7ftbiA17lsWH4V5kL2K3sBzOrOzvcDSy8ohc=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761185673; c=relaxed/simple;
-	bh=Crvu/VnJZCIRTR9Xt76dOjc21V0vgegrmIOOALewBSg=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=T1p/U/MXULDWeleRP9L3OqKZ5oMtnM3krgp716lnamtXKe26vOHnerWRSm88uDi2FdgkqKem22w9o6x/bOddYBcDXztzQpgpdM9yeBqnnVzaRzD0ueqUmCs5KOQT6WHE47S5YSKylOoJf+QdT26+AGaGRsroNtWd0B2c6suZD9s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=G5rYdFIO; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 59MIeluU014615
-	for <linux-arm-msm@vger.kernel.org>; Thu, 23 Oct 2025 02:14:30 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	ju/EYHotMPeYkqqdMnrAWkTzONxAZN8mNt5RuG+Xxew=; b=G5rYdFIOY+LqeBPz
-	XaEBaugn1UjYX2utwJyOP2GaGV/bBPbELMl5LID5QdbsFrzhZWEjiXVq6dv9O5Yx
-	D8C7zIz5jf4SJ9P+odnj3nsPNBSk0Q46Qw3foqeY9eCz8rVgCS3qoi45mxRleiN+
-	S4jBUyQPXfzqwfCoy2Olwhd1FF1sdZChChTintQ2liOW0Kqfsl38VeAOt+WIyHmB
-	ioa25gZYMM1uL8d35Rd183zyWpjIVwsrDZYPImGszPHI2HQGkleJ0seQEb75VqWH
-	A8Fx6/EQeFHTBTBZmapH1nIYT+sBVNBkQD8R+JfGHwagkZ/ZanYG8xpl4fa7P8vG
-	yPB+4A==
-Received: from mail-pj1-f71.google.com (mail-pj1-f71.google.com [209.85.216.71])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 49xhe0mjdf-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Thu, 23 Oct 2025 02:14:30 +0000 (GMT)
-Received: by mail-pj1-f71.google.com with SMTP id 98e67ed59e1d1-33428befbbaso336217a91.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Oct 2025 19:14:30 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1761185669; x=1761790469;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=ju/EYHotMPeYkqqdMnrAWkTzONxAZN8mNt5RuG+Xxew=;
-        b=Y0+GkfVTYyihAxHAL7Bdw01VgzyQKbi+idx729ouzfN41ePBUQI7X1gq7lKIQjGZD0
-         eqoxetFnKEhqqpIy651SZOjrG6JUQUBRoAv3JZMgxBmy9BNC/M5tVcrsOlc7Cj52+K5V
-         lpQ/5ML1xGs7GhWDRQSkkp+PH01cVXKNYRoN4zv0igsgr/LJgrt1HXa6yLkLfrlcJASA
-         NB4DEV8Oxv5W47ceeCtTEENrTX0mflchPHDoszaYjYHF8jFndy+TaUxlvFksl1NYSKwA
-         PNvX0BgYEmUpuG0EBxurTZKo3OpaPmgnuqHChsVE2S7N0qSlbMgn4MtVqQsS9WxUE8jL
-         ZzAw==
-X-Forwarded-Encrypted: i=1; AJvYcCXslSBpXlnjaczm3VAY1MPQyYGgqKE7I3Ertkrz7fyl9zbqkBsjQmTQwD4m5Hk+/wMNzMr7TVTvR5YDNIv8@vger.kernel.org
-X-Gm-Message-State: AOJu0YyKS/ObnZCFKcIVHU5Wg9ldTIJP5GdigFazcgNtNdGTC/MjWGhA
-	/tnIm0kGvMf/ELm+D8Cjl64dGPt7OzM/F8ag/+g77iU7UIaABsHR5YIvQ8seVTaug0Pt7d6jdvX
-	Y1JeXX6ic4oeq1hLIBv/huJcCW13N7eirFbyNT0VLWFB8LovkpzjvhSFYa+gE4vCXQDTT
-X-Gm-Gg: ASbGncuGs11wfZN/eHfob/9Qik6YUTFiy7lThV07o6uj2gTXRYlz2WSMV84xtLeOf0V
-	JKvq8xVB+beRxn7bisuM2mj2prBppDHR2kiXTyJd3ZPbGLDDdoX7rGqbUsd/uqPF85uI2Ih3CMX
-	O8bKTqnrhNgX8wmKl4O4fsOt1Km2azYJChGpDJRAi2PwjUwULE0Ljqfgn+tRv8Jfwh5AYJ/EEsD
-	HHEVuXv1LPAYa7too21QxRknSxGhwfoFLoQqbLlyGW0AcM/3uadCZqzJYALTdYoHXVNc2i2xajr
-	v7HOgpANZuDFEby3NH1FsVM2kcBqFqpEmUh0u/UptFn0riG64UrpQPP74IkbfxkpJmJDlWo4hFI
-	sDHr4X4UQxH8wCizoE2jc1DC3u4/ysbDlg5m2xuH6aw/TQ5rRQ82JY//DH0wc1K5M9IVbhA==
-X-Received: by 2002:a17:90a:ec8b:b0:335:2934:e217 with SMTP id 98e67ed59e1d1-33bcf86c0a9mr29898663a91.10.1761185668837;
-        Wed, 22 Oct 2025 19:14:28 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEZMHBmfhd1lGJWsQDMeedq9yoSpiYR/IqvWq9XnG7U9WPCzMjAvdOHLzKmgoGRxTVBhDNVWw==
-X-Received: by 2002:a17:90a:ec8b:b0:335:2934:e217 with SMTP id 98e67ed59e1d1-33bcf86c0a9mr29898640a91.10.1761185668358;
-        Wed, 22 Oct 2025 19:14:28 -0700 (PDT)
-Received: from [10.133.33.160] (tpe-colo-wan-fw-bordernet.qualcomm.com. [103.229.16.4])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-33fb01724a5sm618529a91.15.2025.10.22.19.14.26
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 22 Oct 2025 19:14:28 -0700 (PDT)
-Message-ID: <ca17c522-134c-4481-a92a-dee0b90f8f97@oss.qualcomm.com>
-Date: Thu, 23 Oct 2025 10:14:22 +0800
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 287931459FA;
+	Thu, 23 Oct 2025 02:22:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.46.32
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1761186146; cv=fail; b=coUHP2fYPlRhXtffJpgPPTBfQpd67obdaI92nELgAu3JQg0QCNJwomYY3qf1h8qIs8z0Y6ioREqa2vRwsGqOTQq5/lwtGCNKrwNTugTlWKc8eb38VpTIRWl3Qdk6K6dXn8NAneN0FfWq6X89yhpTMT0rFnHUvglc5IN9RHniqHo=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1761186146; c=relaxed/simple;
+	bh=7rATca/5ftm7MiMlcmqYN4QhZwtdmQpiiPHnuKQWu20=;
+	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=YK3RpuYHOhe0JZPkXGq4fahbSssflqfW95tJQguUmr7lnyb9JhCazm+aj47NVwU9+nJD7Gr9vt6jzcAYaiTU7JGqOH1bI7iAlUBDaC5npv3KcWOpDvDX5ucz+Fh1q6thVWy6R0VH9OfZR2tuhgNNRypbbtF8etc+vVyfhqs76Hk=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=Enkkhrtm; arc=fail smtp.client-ip=52.101.46.32
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=AATngSbQnH2/2xRAx4r6eNaadMxLp4RfJ6oprX9O+UKu2aH6V5yjEcCrwt2fgTSL4Ijv8KiEsEA0hZ9Yq8V5e/TYcQqN10PyaRnbjFdtXbC/pZ8ZbsmYe/dVLoat+dWz+oqnuEXOx9k9KRAcy0lwDdZMcpLHJsDegs/8M5Ea+GTbtSZKikOyAc5uUkKPFZC30v2i94x26sJgMqmWNtjDWH7/XvXM7h+tOiplPndr56uOX0sqs/At+SB3LdWhJMn4KKB3pTnEUfhUvun3lWXrZuCYTU03OpdkYazKRLanx+IY0mioD9+Z8Ps2awIhIIcirxBPJscqTf0xE2qpCEo02g==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=sAVwymAGTAdQk5Ef+A4GanmI5VpeyPBDf20KGUBcGpI=;
+ b=RFUXzEaEOLIaR5NJbbfSM2l9U1oMlimiOMRUmSGgHX9laCsIiFHhSXVU/+lrur1s5zMwcF9qzxHFlBtOzQD1oUox0jiLcP79IrO3RZjOLLdnc9Y7Gl4wIqQ/Dr6t9kgUd3cGF8ygGWQFE6GvFMH1QN2Yu3lwzw8DogaLP8SSSfrmLiJM3vGLdT6F+1n0/LfPL0C1zE9a/ojF29Wfy5rX1budawpj8+IrZ3hReroqDwAINcLpmW7cPHE7Tk3tzyg4lDegThW3MtsMcAs7FJY8Tt/qP3Sp3LzOgfHgIXhTEfFDxlNsVQtl0NgqHfExDm9loGGMUcz7cZy7HHxywRcLaQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 216.228.117.161) smtp.rcpttodomain=8bytes.org smtp.mailfrom=nvidia.com;
+ dmarc=pass (p=reject sp=reject pct=100) action=none header.from=nvidia.com;
+ dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=sAVwymAGTAdQk5Ef+A4GanmI5VpeyPBDf20KGUBcGpI=;
+ b=EnkkhrtmeI+klOY4DLDMYApJPOilTOeibkmo9Po49EuKQGygx8n9IyibGxg5volowqqeBD1k/LPFqzvygA/B8D0fP6l9MQ8/U+NvmjFLka6a1hmvaVH1TyWWpBZrGP1ZW/Eg2WatKnFYWYiI9nKRGh3fNlVQpsbN9fuOLWrKGgdejgbskH2uXVWvBz6TSG1PfrXKX/B0ybxqS1nNZ+stoCeuv+JetQOnM2mmuHfT6w8m4HDm1AOJxXBM+RoXKbk7GleHwY9l4vCVbjK4tlYsqIF+Y6fyoboIWy8v2Smdjg85yS7mcoxOe9r0gaj4igLUbTrK/vwmyvTcMdsLY0fqNw==
+Received: from PH8P220CA0033.NAMP220.PROD.OUTLOOK.COM (2603:10b6:510:348::11)
+ by SN7PR12MB6929.namprd12.prod.outlook.com (2603:10b6:806:263::11) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9253.12; Thu, 23 Oct
+ 2025 02:22:20 +0000
+Received: from SA2PEPF000015CB.namprd03.prod.outlook.com
+ (2603:10b6:510:348:cafe::c4) by PH8P220CA0033.outlook.office365.com
+ (2603:10b6:510:348::11) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.20.9253.13 via Frontend Transport; Thu,
+ 23 Oct 2025 02:22:23 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.117.161)
+ smtp.mailfrom=nvidia.com; dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=nvidia.com;
+Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
+ 216.228.117.161 as permitted sender) receiver=protection.outlook.com;
+ client-ip=216.228.117.161; helo=mail.nvidia.com; pr=C
+Received: from mail.nvidia.com (216.228.117.161) by
+ SA2PEPF000015CB.mail.protection.outlook.com (10.167.241.201) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.9253.7 via Frontend Transport; Thu, 23 Oct 2025 02:22:19 +0000
+Received: from rnnvmail203.nvidia.com (10.129.68.9) by mail.nvidia.com
+ (10.129.200.67) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.14; Wed, 22 Oct
+ 2025 19:22:08 -0700
+Received: from rnnvmail203.nvidia.com (10.129.68.9) by rnnvmail203.nvidia.com
+ (10.129.68.9) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.20; Wed, 22 Oct
+ 2025 19:22:07 -0700
+Received: from Asurada-Nvidia.nvidia.com (10.127.8.9) by mail.nvidia.com
+ (10.129.68.9) with Microsoft SMTP Server id 15.2.2562.20 via Frontend
+ Transport; Wed, 22 Oct 2025 19:22:05 -0700
+From: Nicolin Chen <nicolinc@nvidia.com>
+To: <joro@8bytes.org>, <jgg@nvidia.com>, <kevin.tian@intel.com>
+CC: <suravee.suthikulpanit@amd.com>, <will@kernel.org>,
+	<robin.murphy@arm.com>, <sven@kernel.org>, <j@jannau.net>,
+	<robin.clark@oss.qualcomm.com>, <m.szyprowski@samsung.com>,
+	<krzk@kernel.org>, <dwmw2@infradead.org>, <baolu.lu@linux.intel.com>,
+	<yong.wu@mediatek.com>, <matthias.bgg@gmail.com>,
+	<angelogioacchino.delregno@collabora.com>, <tjeznach@rivosinc.com>,
+	<pjw@kernel.org>, <palmer@dabbelt.com>, <aou@eecs.berkeley.edu>,
+	<heiko@sntech.de>, <schnelle@linux.ibm.com>, <mjrosato@linux.ibm.com>,
+	<orsonzhai@gmail.com>, <baolin.wang@linux.alibaba.com>, <wens@csie.org>,
+	<jernej.skrabec@gmail.com>, <samuel@sholland.org>,
+	<thierry.reding@gmail.com>, <jonathanh@nvidia.com>,
+	<jean-philippe@linaro.org>, <iommu@lists.linux.dev>,
+	<linux-kernel@vger.kernel.org>, <asahi@lists.linux.dev>,
+	<linux-arm-kernel@lists.infradead.org>, <linux-arm-msm@vger.kernel.org>,
+	<linux-samsung-soc@vger.kernel.org>, <linux-mediatek@lists.infradead.org>,
+	<linux-riscv@lists.infradead.org>, <linux-rockchip@lists.infradead.org>,
+	<linux-s390@vger.kernel.org>, <linux-sunxi@lists.linux.dev>,
+	<linux-tegra@vger.kernel.org>, <virtualization@lists.linux.dev>,
+	<patches@lists.linux.dev>
+Subject: [PATCH v2 0/6] iommu: Pass in old_domain pointer to attach_dev
+Date: Wed, 22 Oct 2025 19:21:03 -0700
+Message-ID: <cover.1761017765.git.nicolinc@nvidia.com>
+X-Mailer: git-send-email 2.43.0
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/2] soc: qcom: smp2p: Add support for smp2p v2
-To: Bjorn Andersson <andersson@kernel.org>
-Cc: Konrad Dybcio <konradybcio@kernel.org>, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, Chris Lew <chris.lew@oss.qualcomm.com>
-References: <20250923-smp2p-v1-0-2c045af73dac@oss.qualcomm.com>
- <20250923-smp2p-v1-2-2c045af73dac@oss.qualcomm.com>
- <76gekllxr5meizr7wbvxjibdncdw7kp2q4zjjxtmdtfnwt4owc@dum7e77j4bie>
-Content-Language: en-US
-From: Jingyi Wang <jingyi.wang@oss.qualcomm.com>
-In-Reply-To: <76gekllxr5meizr7wbvxjibdncdw7kp2q4zjjxtmdtfnwt4owc@dum7e77j4bie>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDIxMDE2NyBTYWx0ZWRfX1iy7hRHZWWLG
- 7lOFoOBMjZlf8XSWtm6dZx29+iG5RUpGH7LIHHGC0bNPbRsCBMo5IwyoediILLwvFaOMmtCTTVx
- 5kGIJca5Cyh16oJ76d/3o8wfhvVCppOv9DNB87QTGop/ybn6vkSJcn3CXmYlM6QsX22IxDha0yw
- HkSdoZTbCFrlO3OuXBheyZOfSFu/ofO6xn0uOl7cSo3tWeulkj3A8dUEkf82dtMd9yxdzhL4+wI
- Fx8CRk97BV1qE1bJYFdepIjPfDJn/zYsJjliJjnoV/aPxQtsq+w2/h6TP/ZMvL4rLu1udOAgSgv
- f7SGXMov/8oYap/ZovMBUE9zqL5N0siI6/0yrobCUw49BheYSLnYLyeYBA5uzMFJJsPXGHW9NCW
- 8Aw0pRlyJYBw5/sxDB9P08veqCNFCA==
-X-Proofpoint-ORIG-GUID: ZH3Gc3Vcsx_2C0ITL8_LZJd0ImzoujTY
-X-Authority-Analysis: v=2.4 cv=WYUBqkhX c=1 sm=1 tr=0 ts=68f98f86 cx=c_pps
- a=UNFcQwm+pnOIJct1K4W+Mw==:117 a=nuhDOHQX5FNHPW3J6Bj6AA==:17
- a=IkcTkHD0fZMA:10 a=x6icFKpwvdMA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=EUspDBNiAAAA:8 a=psBAKaDzHMd9wCF3-JcA:9 a=0bXxn9q0MV6snEgNplNhOjQmxlI=:19
- a=QEXdDO2ut3YA:10 a=uKXjsCUrEbL0IQVhDsJ9:22
-X-Proofpoint-GUID: ZH3Gc3Vcsx_2C0ITL8_LZJd0ImzoujTY
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-10-22_08,2025-10-22_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 adultscore=0 bulkscore=0 impostorscore=0 spamscore=0
- priorityscore=1501 clxscore=1015 malwarescore=0 lowpriorityscore=0
- phishscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2510020000
- definitions=main-2510210167
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-NV-OnPremToCloud: ExternallySecured
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: SA2PEPF000015CB:EE_|SN7PR12MB6929:EE_
+X-MS-Office365-Filtering-Correlation-Id: bfadc637-fa12-463f-997b-08de11dafe51
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|82310400026|36860700013|7416014|376014|1800799024|13003099007;
+X-Microsoft-Antispam-Message-Info:
+	=?us-ascii?Q?m7CS3jco3MuGnv9X+NjxvXS9UcmmsktQfmtxRjz/0G8znD4q//qbpZDCPxKu?=
+ =?us-ascii?Q?6dEirr5lYzcRNfmIgSL8gj8XmBhgCWVRv7p7HEvX3mBQORrXZfrvMGG5sred?=
+ =?us-ascii?Q?q/p9BFP988CG9hCDj7/ivfyCg+ipnDGpEjQ9GRQWWuUIQhrZHKjseaXG3Byh?=
+ =?us-ascii?Q?bM/61Hx/umgf/GaEUi9rhnZX7apTCz9/XLZgmjTRrIpWk6zKvpuzXYBN1oMX?=
+ =?us-ascii?Q?UlBDXU0Y5rNQRMvh2VGiREH8NnA5hR3VTnah9R9Rfk3blmS70xnP4bIBcQww?=
+ =?us-ascii?Q?ekELOu/KVwhIc9N/8q/8YbVMR4WxZp1SYfg1k03H9NoB4o0m30WiKzSdteOs?=
+ =?us-ascii?Q?UZz7JoTUOpEsMGKvj7vu53bc+5mNiYH0HA1bVYoB2O3EUyBG4dsxodJhQaI2?=
+ =?us-ascii?Q?G7CNbDme0peh/7a8DkPjwRKq+xrFtexDi4flJm7+erFmde+A0f9F/tQlF0sH?=
+ =?us-ascii?Q?e4Byc/zTTnMR2DmWFaTXJlVKLRwa+BMmHfivZmB1Z3FNMUgDHtH4N8vj+ASq?=
+ =?us-ascii?Q?T74oIOQdLKA8eYlJxhNl7FDPrSKp1S+8UXVUtIEUPDZGMDjkVC3/rIh9U0oi?=
+ =?us-ascii?Q?9mLYi2JlMy4qM7i1zdd/+zBXmZNldEbtyIuOkraUDENkcqU2v0bSETbCK0OL?=
+ =?us-ascii?Q?CtK/1+1oYeMe+Y2O2qkCmNL2wSnYQsNb33R7KQ+Wk9njkKjxdE8GwK3im/td?=
+ =?us-ascii?Q?jJz+VeGmLyJ7K/u9Azrs5WV3/uai+c0p+r8qWof80VAXNoDkxtO9PurR+6r8?=
+ =?us-ascii?Q?zfnI08iAzFDNqyaIyvF4vloEiIwu1gd8mgkoI2n5AMl+Y7iBBPnyVjcgmNxv?=
+ =?us-ascii?Q?/30JMwxOSYxqUl16vH3AkGQwgPTpnodTxHEZTMh5tyvaR0t3sKhI4fhpaNqj?=
+ =?us-ascii?Q?wA+WjCP+yhMXlu52Y0qsuWGuaiXr8ef8Jn5ndte+ImU6jxf0sRKapzShhVjy?=
+ =?us-ascii?Q?9Jkp1jWgflciOFvjN9eMdk2YNUi1ZlCNlLu4QdFRchDVNX+g4rYByhyC4ZLd?=
+ =?us-ascii?Q?cYhdZFiIp9agdRjhtKRfZBUfFuKl9V215Lm1t96oWabdlhzajU4wXCmICuca?=
+ =?us-ascii?Q?I/jvYWOnurtxq1Ku+yoDz9oipdQXD3DmepScARn4HB8QL8RZNwbC6H7SjqYb?=
+ =?us-ascii?Q?g5YQukkZso0Y0qC5Q81tkspqz4iiMWfCWJPQ6sI0/FnZ11VlSNTQS0sLBD66?=
+ =?us-ascii?Q?bTvCfVUUySmQ3BRRAqTD9wtXVfHjMq5W8RoI5iDNb4ykSbxELlOERk3Ipero?=
+ =?us-ascii?Q?jgYJqyrfVPFDHHgy0Zh9pC6SoblsEnytIaIZ8La279ldBaegTIuhwlNJSpDZ?=
+ =?us-ascii?Q?h4WipAh9cbWPDvXkv7UrIaxAIJerScx0nf3Bx1gLkFKXHw8lBMb5Hdf2ozxX?=
+ =?us-ascii?Q?orJDG3bl4SgyS9CYDMg5dCFFKi95g7+75auOlrrk/8K5YKNPb6v8LoNPm4AR?=
+ =?us-ascii?Q?rdOlbW1Bu6JG5RFXBMX8/JDYZXUPCZZt7mauKB/baH5IOezqRAI6xvjk3yBv?=
+ =?us-ascii?Q?1d4/IL4Z0MKfaLxyAJfHMNh8gOZfgqKj6zhrRFAzphox8/csAf3GYsH67Am1?=
+ =?us-ascii?Q?YcNohyLPTx7Oc6+qPwtLdZhvGs/rvd2/UkeSidmt?=
+X-Forefront-Antispam-Report:
+	CIP:216.228.117.161;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:mail.nvidia.com;PTR:dc6edge2.nvidia.com;CAT:NONE;SFS:(13230040)(82310400026)(36860700013)(7416014)(376014)(1800799024)(13003099007);DIR:OUT;SFP:1101;
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 23 Oct 2025 02:22:19.9354
+ (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: bfadc637-fa12-463f-997b-08de11dafe51
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a;Ip=[216.228.117.161];Helo=[mail.nvidia.com]
+X-MS-Exchange-CrossTenant-AuthSource:
+	SA2PEPF000015CB.namprd03.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SN7PR12MB6929
 
+Tidy the release_device callbacks in the drivers and switch to the core
+managed release_domain.
 
+This allows the core further to pass in the old domain pointer into the
+attach_dev callbacks to reduce the use of iommu_get_domain_for_dev().
 
-On 10/23/2025 6:19 AM, Bjorn Andersson wrote:
-> On Tue, Sep 23, 2025 at 09:18:43PM -0700, Jingyi Wang wrote:
->> From: Chris Lew <chris.lew@oss.qualcomm.com>
->>
->> Some remoteproc need smp2p v2 support, mirror the version written by the
->> remote if the remote supports v2. This is needed if the remote does not
->> have backwards compatibility with v1. And reset entry last value on SSR for
->> smp2p v2.
->>
->> Signed-off-by: Chris Lew <chris.lew@oss.qualcomm.com>
->> Co-developed-by: Jingyi Wang <jingyi.wang@oss.qualcomm.com>
->> Signed-off-by: Jingyi Wang <jingyi.wang@oss.qualcomm.com>
-> 
-> Please confirm that you really co-developed (pair programming) this
-> patch with Chris.
-> 
-> Isn't this a patch from Chris, that you're "forwarding", i.e. both
-> Signed-off-by should be there, but the Co-developed-by shouldn't.
-> 
+This is a preparatory series for new iommu_dev_reset APIs:
+https://lore.kernel.org/all/cover.1756682135.git.nicolinc@nvidia.com/
 
-I remembered I did some minor updated, will delete that in next version.
+This is on github:
+https://github.com/nicolinc/iommufd/tree/iommu_attach_old_dom-v2
 
-Thanks,
-Jingyi
+Changelog
+v2
+ * Add "Acked-by" from Marek
+ * Add "Reviewed-by" from Jason
+ * Fix build break in s390-iommu
+v1
+ https://lore.kernel.org/all/cover.1760312540.git.nicolinc@nvidia.com/
 
->> ---
->>  drivers/soc/qcom/smp2p.c | 35 ++++++++++++++++++++++++++++++++---
->>  1 file changed, 32 insertions(+), 3 deletions(-)
->>
->> diff --git a/drivers/soc/qcom/smp2p.c b/drivers/soc/qcom/smp2p.c
->> index e2cfd9ec8875..5ea64a83c678 100644
->> --- a/drivers/soc/qcom/smp2p.c
->> +++ b/drivers/soc/qcom/smp2p.c
->> @@ -48,10 +48,13 @@
->>  #define SMP2P_MAGIC 0x504d5324
->>  #define SMP2P_ALL_FEATURES	SMP2P_FEATURE_SSR_ACK
->>  
->> +#define SMP2P_VERSION_1 1
->> +#define SMP2P_VERSION_2 2
-> 
-> #define ONE 1
-> #define TWO 2
-> 
-> #define PLEASE_DONT true
-> 
->> +
->>  /**
->>   * struct smp2p_smem_item - in memory communication structure
->>   * @magic:		magic number
->> - * @version:		version - must be 1
->> + * @version:		version
->>   * @features:		features flag - currently unused
->>   * @local_pid:		processor id of sending end
->>   * @remote_pid:		processor id of receiving end
->> @@ -180,14 +183,23 @@ static void qcom_smp2p_kick(struct qcom_smp2p *smp2p)
->>  static bool qcom_smp2p_check_ssr(struct qcom_smp2p *smp2p)
->>  {
->>  	struct smp2p_smem_item *in = smp2p->in;
->> +	struct smp2p_entry *entry;
->>  	bool restart;
->>  
->>  	if (!smp2p->ssr_ack_enabled)
->>  		return false;
->>  
->>  	restart = in->flags & BIT(SMP2P_FLAGS_RESTART_DONE_BIT);
->> +	restart = restart != smp2p->ssr_ack;
->> +	if (restart && in->version > SMP2P_VERSION_1) {
->> +		list_for_each_entry(entry, &smp2p->inbound, node) {
->> +			if (!entry->value)
->> +				continue;
->> +			entry->last_value = 0;
->> +		}
->> +	}
->>  
->> -	return restart != smp2p->ssr_ack;
->> +	return restart;
->>  }
->>  
->>  static void qcom_smp2p_do_ssr_ack(struct qcom_smp2p *smp2p)
->> @@ -222,6 +234,20 @@ static void qcom_smp2p_negotiate(struct qcom_smp2p *smp2p)
->>  	}
->>  }
->>  
->> +static int qcom_smp2p_in_version(struct qcom_smp2p *smp2p)
->> +{
->> +	unsigned int smem_id = smp2p->smem_items[SMP2P_INBOUND];
->> +	unsigned int pid = smp2p->remote_pid;
->> +	struct smp2p_smem_item *in;
->> +	size_t size;
->> +
->> +	in = qcom_smem_get(pid, smem_id, &size);
->> +	if (IS_ERR(in))
->> +		return 0;
->> +
->> +	return in->version;
->> +}
->> +
->>  static void qcom_smp2p_start_in(struct qcom_smp2p *smp2p)
->>  {
->>  	unsigned int smem_id = smp2p->smem_items[SMP2P_INBOUND];
->> @@ -516,6 +542,7 @@ static int qcom_smp2p_alloc_outbound_item(struct qcom_smp2p *smp2p)
->>  	struct smp2p_smem_item *out;
->>  	unsigned smem_id = smp2p->smem_items[SMP2P_OUTBOUND];
->>  	unsigned pid = smp2p->remote_pid;
->> +	u8 in_version;
->>  	int ret;
->>  
->>  	ret = qcom_smem_alloc(pid, smem_id, sizeof(*out));
->> @@ -537,12 +564,14 @@ static int qcom_smp2p_alloc_outbound_item(struct qcom_smp2p *smp2p)
->>  	out->valid_entries = 0;
->>  	out->features = SMP2P_ALL_FEATURES;
->>  
->> +	in_version = qcom_smp2p_in_version(smp2p);
->> +
->>  	/*
->>  	 * Make sure the rest of the header is written before we validate the
->>  	 * item by writing a valid version number.
->>  	 */
->>  	wmb();
->> -	out->version = 1;
->> +	out->version = (in_version) ? in_version : 1;
-> 
-> Doesn't this imply that if the remoteproc advertises support for version
-> 3, then we suddenly also support version 3?
-> 
-> 
-> I don't remember if we've talked about how version handling should work
-> in this driver, but we should certainly define and document that in the
-> comment at the top of this driver.
-> 
-> Regards,
-> Bjorn
-> 
->>  
->>  	qcom_smp2p_kick(smp2p);
->>  
->>
->> -- 
->> 2.25.1
->>
+Jason Gunthorpe (1):
+  iommu: Generic support for RMRs during device release
+
+Nicolin Chen (5):
+  iommu/arm-smmu-v3: Set release_domain to arm_smmu_blocked_domain
+  iommu/exynos-iommu: Set release_domain to exynos_identity_domain
+  iommu/amd: Set release_domain to blocked_domain
+  iommu: Do not revert set_domain for the last gdev
+  iommu: Pass in old domain to attach_dev callback functions
+
+ include/linux/iommu.h                         |  3 +-
+ arch/powerpc/kernel/iommu.c                   |  5 ++-
+ drivers/iommu/amd/iommu.c                     | 21 +++------
+ drivers/iommu/apple-dart.c                    |  9 ++--
+ .../arm/arm-smmu-v3/arm-smmu-v3-iommufd.c     |  5 ++-
+ drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c   | 31 ++++++-------
+ drivers/iommu/arm/arm-smmu/arm-smmu.c         |  9 ++--
+ drivers/iommu/arm/arm-smmu/qcom_iommu.c       | 11 ++---
+ drivers/iommu/exynos-iommu.c                  | 11 ++---
+ drivers/iommu/fsl_pamu_domain.c               | 12 ++---
+ drivers/iommu/intel/iommu.c                   | 10 +++--
+ drivers/iommu/intel/nested.c                  |  2 +-
+ drivers/iommu/iommu.c                         | 44 +++++++++++++------
+ drivers/iommu/iommufd/selftest.c              |  2 +-
+ drivers/iommu/ipmmu-vmsa.c                    | 10 ++---
+ drivers/iommu/msm_iommu.c                     | 11 ++---
+ drivers/iommu/mtk_iommu.c                     |  8 ++--
+ drivers/iommu/mtk_iommu_v1.c                  |  7 ++-
+ drivers/iommu/omap-iommu.c                    | 12 ++---
+ drivers/iommu/riscv/iommu.c                   |  9 ++--
+ drivers/iommu/rockchip-iommu.c                | 20 ++++++---
+ drivers/iommu/s390-iommu.c                    | 13 +++---
+ drivers/iommu/sprd-iommu.c                    |  3 +-
+ drivers/iommu/sun50i-iommu.c                  |  8 ++--
+ drivers/iommu/tegra-smmu.c                    | 10 ++---
+ drivers/iommu/virtio-iommu.c                  |  6 ++-
+ 26 files changed, 172 insertions(+), 120 deletions(-)
+
+-- 
+2.43.0
 
 
