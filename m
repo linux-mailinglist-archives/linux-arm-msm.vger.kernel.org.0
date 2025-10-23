@@ -1,83 +1,88 @@
-Return-Path: <linux-arm-msm+bounces-78506-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-78507-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [142.0.200.124])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0B7DCC00132
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Oct 2025 11:04:08 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5DA76C001A7
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Oct 2025 11:08:10 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 1A92A4F72A3
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Oct 2025 09:04:02 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 470913A4FAC
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Oct 2025 09:08:08 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 716C02FCBE9;
-	Thu, 23 Oct 2025 09:03:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 842042FD687;
+	Thu, 23 Oct 2025 09:06:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="TbbCE/yT"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="B1EL2lBW"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f49.google.com (mail-wm1-f49.google.com [209.85.128.49])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97DE92FC861
-	for <linux-arm-msm@vger.kernel.org>; Thu, 23 Oct 2025 09:03:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 988D42FD68F
+	for <linux-arm-msm@vger.kernel.org>; Thu, 23 Oct 2025 09:06:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761210189; cv=none; b=p+HeOc40kAh10PykmB/4zLecpOP12OTudk/vtW5DUlJkB/O7Qqiw92M8yepG7M5MVZeZkGefK3iUwQQEYQD66de8WFgI4rPACosZvjMYYIv81f4NESam9TJFGgnrKokZlo7cqwEJDuvr3FjeA1R2i46DzjZEVL0IphXOeo4i0jc=
+	t=1761210394; cv=none; b=MMT7+l50QbXslClP91eFgvt4G5ScG/RlCPFcBuuL+/DfLmsjenV6l52mUpVdQCpJ4+BQqWL09MNGniQxQPar0l8QkewcZxSTAuJ5GNM4XZognnRCvC+ahILxyTm8yDe3KQAPln2/2HrmOZHdp/7uW+8ilytDujbrQtHg3QhfwHc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761210189; c=relaxed/simple;
-	bh=RvB0QfII4NieHlSWxal5DHWC4pQUcZHC+PzTz/++OqI=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=fF5fNxOxX5USYaX/KAv3BKZwZ8ZYrXw2WdCqwPi9iChJ3O+QTLMJ4tAKovlBcJecjJErUfqh7vw0bklx0P/iQUVgkgCnDMADRA4dVBaJ79eaLcAwkeUFF0Y9Znt84082TTD/U5U0isNdI6Cd8L9KdnV/0oIxlcxMjt3LoItDnyY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=TbbCE/yT; arc=none smtp.client-ip=209.85.128.49
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f49.google.com with SMTP id 5b1f17b1804b1-47103531eeeso149985e9.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Oct 2025 02:03:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1761210182; x=1761814982; darn=vger.kernel.org;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=B0lmo2gSK6dC5/iKwrS24Z1fB1vhkVWE57DPvqhuyE4=;
-        b=TbbCE/yTNL1Fyu0hWMxzS+f5RoV8ls2DrB4pC0p2xW75nNF4HUfRVDJWSOYePU9Ysm
-         6C5YqRso6lG6ZTJDZN51R6VnbJzPEe5Enthe9ZYK1v5fyD7dBLGPKDeUaZpVV0WTeB7Q
-         dgzqzdhCCTCseNMaETuVxidt6pcCIM3uu+j6XxpG3hZep9yryhPjzAPFjfYHbODoXQQl
-         S7gtIV1DQKDH3/e3iBjnifwFHI3A8t+2HXyuh+CXjPGScDuuWfRke1NU+x02OPtUN3Hg
-         2lANTJizQmy2YEHOg2Nu/C2NxnDqtZSI+BEMJWq/W4pmKSml4uBdGUeLGBtcmOraeP3U
-         P88w==
+	s=arc-20240116; t=1761210394; c=relaxed/simple;
+	bh=xwACydKQvgDKuB0v3VRVNVKaf/7fL95Co83H8L4/8V8=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=WjkLpnkx24vKb7pfBJzXejVwdYKfTew8D/qgWtEVQ0M4qu1bcoOApPrPqlbejb7tVHh9iqLw6s1C3zean1LnddwQN2KFjP3/h9jI2diQf09COOJioKG50kQ7+2tP8pMYttWDOkJXjMMzq5oq7hAiGy5pbr2jwdsekYK8TdgkByg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=B1EL2lBW; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 59N6xoMB007442
+	for <linux-arm-msm@vger.kernel.org>; Thu, 23 Oct 2025 09:06:32 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=qcppdkim1; bh=Tbyvd4eRGssa6Ha0ecVbsY
+	tSBYVsX1t2xVyxXt94ET0=; b=B1EL2lBWBnN34927WafsHwonB2UGuLi6pZlOPk
+	OmgCYq64xuesQ06vVKEV8RP0vsd4sSzRxd0gTT0R4Eyudf45C5sy4YP3gkPSY9UT
+	fJaLnL7Fs1C3+YIISCWROoisShsWMo2XmUJJUkX5ygH2TxPpi+nWhgLteODJW8bA
+	K2O+tvRHwr4ZT7BTjsSISqqhRpo61PrimoiemBqMBq7IOfjlYfiM8JsOqeFwyAug
+	+jgfJgEAut9gOLibsCJoPHo5a3VSq2dnDQH5Wv9boiBgPfTg6RUURWkWfmthRRrW
+	CpTCeRSotwd8MUIMId8ojRylX4dMNYWYhFA8tPbMy1+3PClQ==
+Received: from mail-pl1-f198.google.com (mail-pl1-f198.google.com [209.85.214.198])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 49v3447tw3-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Thu, 23 Oct 2025 09:06:31 +0000 (GMT)
+Received: by mail-pl1-f198.google.com with SMTP id d9443c01a7336-2697410e7f9so15579785ad.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Oct 2025 02:06:31 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1761210182; x=1761814982;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=B0lmo2gSK6dC5/iKwrS24Z1fB1vhkVWE57DPvqhuyE4=;
-        b=kyCSZm9TeSuZHFRgVc3LPtu1MOwdbsxRWPkM1of7cXtxBqT0372ldrfJAw/KbBK/Jg
-         cUpHQr9f1/NLudBaok8rZvvwhT6ny6NVe9HGyHw3IvK1cqihUYVcFX50uMYC96G+rv6G
-         3kSlLOmu/RS3plMnvPL96QmGpXyq0gdzFKTXsudAZ7kfYBPHTigbAUylir9oseSxR8YZ
-         D+UNtkTmq2Su6FdkBkNsuAn82TlrCePjxR1whKJXQMW4H+NAWATnMkEKyp+QHYQTX2TW
-         qCh+vTmM/l4TGFL0dpNh25HIMs+ukSnMYJiJPylJVYZh75MQT/rXA0xpPmvYCOYU//Mt
-         0img==
-X-Forwarded-Encrypted: i=1; AJvYcCVtnkSCFyGakItdinrJrWyPHejutvTO+mYDMCNHuYi4lg3OiM6lPK/qUEPW+rz7mLKvh/bbMMhCn3r1Ce7F@vger.kernel.org
-X-Gm-Message-State: AOJu0YxTDsZj67hR2qK2jqcaWBS80spkawfhaSsMeQRObiJCht2AGxUV
-	ypnUhS4+Z2BEvR/b2ihrQywzAeHGqXb2YCYr9kcUsdYA++6JGkhbrKuDZ7lxz79lYAI=
-X-Gm-Gg: ASbGnctDYBaR2PFF3e1f9XLSGTw6dV0uf/msnQI4bsz0f8bry9IRi8n2R+FMIYThmHB
-	17AWYz4sV5T+liNy8PR/B9cIzKPoHj+BIT+z4pLDjvDqiKOrAN8mmeBe+adRxCBHBiEuAjRGzRY
-	eKFA8Uvfg4s0hMDtTG1j/QzkshEkDxrnPeqTEiPfxDHSdMsb/2+eWOEBFGmqCL7HEthVf22DGa/
-	sT79qRuNKoR9qjEftJKRA+SeOIVYSOqbkneasSRAIZGbzaOGRgtOuhmx/S/mcZYcKKW1V9TQU65
-	KR8fh/YHcBA0DtNO9VzYGdN6SB5GdTSb0JdvqrnJ85/wGczwtSk4sgk7mUkgnXbkJbTGasIiMPc
-	LceeTQOR5cgGP0cEv3DpndKmK5NBa2JJY5Psx9yGwaeQ/xH8zW+bkBCTPbYJevNQjf37OVp+ZIO
-	3O2NwSdoeJlOy+xLmdHH/x8+zNKCY=
-X-Google-Smtp-Source: AGHT+IED6vyXHphp1/qY9Tno4NQeRDekE0RdTtSCtP7Dt4LSJrXcGljAhWwqEXuSADOQSeczj7tsKg==
-X-Received: by 2002:a05:600c:3b02:b0:471:161b:4244 with SMTP id 5b1f17b1804b1-4749439ec9cmr42438295e9.5.1761210181644;
-        Thu, 23 Oct 2025 02:03:01 -0700 (PDT)
-Received: from [127.0.1.1] ([178.197.219.123])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-474949e0a3csm57557415e9.0.2025.10.23.02.02.59
+        d=1e100.net; s=20230601; t=1761210391; x=1761815191;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=Tbyvd4eRGssa6Ha0ecVbsYtSBYVsX1t2xVyxXt94ET0=;
+        b=R9AnBW9d04pXPzlh0rMefRC5zKZ+GjY1Irhvq4qccQGzKx4Vy+d4wIUqOOdblcAR+r
+         x4alElZp/H3DnAY5+hZ0PMpxFyH+T2GsBBGIhFvEdps/XcMGzJ8FsB7Qg6cAsH69eOI7
+         NMZl4v94+iy7/4RS1W0GtRZU2SWQar/CB4bJROpMlfLl9Pfu/Wj2QuxaBoZQh9n5a3ZG
+         +kOmaXILnUkJcpTN3VjH6Zz2miwcGQApVhVsuNAUd6GSQL/3i5N9XbuWDrB2WEF37PjH
+         fjixdfKbhovevAvchLMOMHoeccSgQw7xwJU/OUji+/gpsBwK/WHtFIxFUn0HSa5jrtDI
+         wKAg==
+X-Forwarded-Encrypted: i=1; AJvYcCVFMcB2qNpmM+Ejfpu6BijQ7zEPqc6PJaRMnZZ/YO1l4pRhvC4sGoYVMNwzi6OoGaAGjURiWDiK03CmZr7+@vger.kernel.org
+X-Gm-Message-State: AOJu0YzTFOYgeL0WxphqkHWZbhq93sAXhYsoG3KkW56cydTLH+DNhZsZ
+	usASJkFnPLnQG64Xuu3i0wJ0dTRYIDVmsSU+km6RSAIuMbejq8aESCO6qAuyS7A/HWb0j6wGR1b
+	1VuvbemgG3oZSFTyoGvycH/w0Fr2sYc8/XUrAVUD9ruUZNdlPifMzm1OLp9vs/6LdB6t4
+X-Gm-Gg: ASbGncuxGwiDBU60rmphsH5F0xv1D864euYR+Axu1KrKDT8dD2C5et60NtDPmONNxRl
+	heb0d1VR03pHoO1Ru9ekq08jbQ16/Hfj4hE+JCa0Bc4+sRptRn5HMiY0/3DG1kAd/iGiKfqz4fJ
+	bByJmXA6uqA/wUK3iJ43vVZCRKOBWFjCCJPuemSUI8hDro1ulZOlFgV48678xgmxyTI4BVVg3fp
+	E8VUwFoYB6zg6rAoG12JOyAKwktQ4U3c+036SCOt/CjoPzdDixgstloZZ9yYC8y2WI1Ron+5eyw
+	IbCDCGIAVXkPxyuUpChsEU38s6Rd5YBRV5Tzrx65qo0+CSu9tcfcdEy1WwFl/LrIpcEMOZC5hU+
+	kSBLzSSDKH3/fDN6NGP7SNDgUrgIUzE1vTbG3+6SsGG1Hqj+IK0fdCA==
+X-Received: by 2002:a17:902:ec87:b0:269:82a5:fa19 with SMTP id d9443c01a7336-290cb07cbbbmr274605455ad.45.1761210390989;
+        Thu, 23 Oct 2025 02:06:30 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGXtnMJKSahTr3YrUSbYlgQcd+PhongCRbCPX3M+/vpJqbpLoH+wusz0Lz81kTeDHbmGQz8pA==
+X-Received: by 2002:a17:902:ec87:b0:269:82a5:fa19 with SMTP id d9443c01a7336-290cb07cbbbmr274605095ad.45.1761210390516;
+        Thu, 23 Oct 2025 02:06:30 -0700 (PDT)
+Received: from hu-hangxian-lv.qualcomm.com (Global_NAT1.qualcomm.com. [129.46.96.20])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2946dfc1c8asm16698685ad.71.2025.10.23.02.06.29
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 23 Oct 2025 02:03:01 -0700 (PDT)
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Date: Thu, 23 Oct 2025 11:02:51 +0200
-Subject: [PATCH RFC 2/2] ASoC: codecs: pm4125: Remove irq_chip on component
- unbind
+        Thu, 23 Oct 2025 02:06:30 -0700 (PDT)
+From: Hangxiang Ma <hangxiang.ma@oss.qualcomm.com>
+Date: Thu, 23 Oct 2025 02:06:26 -0700
+Subject: [PATCH] media: camss: csiphy: Make CSIPHY status macro
+ cross-platform
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -86,64 +91,135 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20251023-asoc-regmap-irq-chip-v1-2-17ad32680913@linaro.org>
-References: <20251023-asoc-regmap-irq-chip-v1-0-17ad32680913@linaro.org>
-In-Reply-To: <20251023-asoc-regmap-irq-chip-v1-0-17ad32680913@linaro.org>
-To: Srinivas Kandagatla <srini@kernel.org>, 
- Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>, 
- Jaroslav Kysela <perex@perex.cz>, Takashi Iwai <tiwai@suse.com>, 
- Alexey Klimov <alexey.klimov@linaro.org>
-Cc: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>, 
- linux-sound@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
- linux-kernel@vger.kernel.org, stable@vger.kernel.org, 
- Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Message-Id: <20251023-make-csiphy-status-macro-cross-platform-v1-1-5746446dfdc6@oss.qualcomm.com>
+X-B4-Tracking: v=1; b=H4sIABHw+WgC/x2NQQrCQAxFr1KyNjAzpaBeRVyEaWqDtjMkoyild
+ 29w8RbvLf7fwFiFDa7dBsofMSmrSzx1kGdaH4wyukMKaYghRVzoyZhN6vxDa9Te5ilrQccM64v
+ aVHTBob+EMcd0Jmbwtao8yff/dLvv+wHpHkPYeQAAAA==
+X-Change-ID: 20251021-make-csiphy-status-macro-cross-platform-5390dc128aee
+To: Loic Poulain <loic.poulain@oss.qualcomm.com>,
+        Robert Foss <rfoss@kernel.org>, Andi Shyti <andi.shyti@kernel.org>,
+        Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>, Todor Tomov <todor.too@gmail.com>,
+        Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
+        Mauro Carvalho Chehab <mchehab@kernel.org>,
+        Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Cc: linux-i2c@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-media@vger.kernel.org,
+        Hangxiang Ma <hangxiang.ma@oss.qualcomm.com>
 X-Mailer: b4 0.14.3
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1144;
- i=krzysztof.kozlowski@linaro.org; h=from:subject:message-id;
- bh=RvB0QfII4NieHlSWxal5DHWC4pQUcZHC+PzTz/++OqI=;
- b=owEBbQKS/ZANAwAKAcE3ZuaGi4PXAcsmYgBo+e8/GYFUijdJAKhixCgluMcrMSqaCUzWEFwMT
- hCKiKSlid6JAjMEAAEKAB0WIQTd0mIoPREbIztuuKjBN2bmhouD1wUCaPnvPwAKCRDBN2bmhouD
- 1zXxD/9SorjfLptnntRhhKS9ae8uP8iYdmgGaYBh++xUoDagGf60z/a0/ECNV7RHSNIp/ievlC8
- UH7q7SGN0HS9OkjQiD0atioUjpLpDfMIg2MoY4Q8BxDzG7MKFB2pC/vXDJW/tgL24rZmKjWevR2
- asW1KbgrTl2iuR56NbyDcfoT1cQ3HQUHk+gcgHtyi4MKElbcS2uyCbhe/4cevCpyeGPxOh8pKvz
- IkX3RwocFPza8PSe7egItdTLKsnKy5XBBFJaSox9kc0ErH0+ee13/vQHr7zLuAZnnymRJN/P3Dl
- WieCTZebuLgIHT6Plh6inXm7mk1j7WGhzdpSYoo5Etl9Tb+SWxBi5wYlGqTIY28TTm+tMCj1Vut
- n9M6aBnaodiyw5NHhY28HYmvBLonxHQMyu9aq1G7dIE3IotfR608K8hWGCsQa6ao0STrqzpOWUE
- ANsBjjBeSdNcShYtHxNl76GFqINCCDlfG9qjH5G7Kax4a4B7I2Q9bzmC5AuWurL9MwRbL/457OT
- 4aP+fZp2oZbi9xpQt5tb2BJHxtqJLhdhQ+Sw0DzsKgEkcq0Kr/MfnCSyGMB3L268D4T1QZ4LYzP
- uA7mrxWuk+iPgtz/5Cb7pru2gYoCJ2QxhsMYAT4HvxhrjL13/LosFZ5eTFQcZWmN7LG1HvelzpP
- Z7zVyu6HaBmXmLw==
-X-Developer-Key: i=krzysztof.kozlowski@linaro.org; a=openpgp;
- fpr=9BD07E0E0C51F8D59677B7541B93437D3B41629B
+X-Proofpoint-GUID: uw0ppXav5nHztYKxsv8kVqtVQZ72z-wz
+X-Proofpoint-ORIG-GUID: uw0ppXav5nHztYKxsv8kVqtVQZ72z-wz
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDE4MDAyMyBTYWx0ZWRfX+Wu2LlpTMzEu
+ v9KXA+heIKFOkDYi8DPHz9FNj1mA82YCzuongt1IusF2M1zu4XXm3Z2xffOkwPOXRdNFn6V8c+L
+ 7vIC151xgu5eRFMEkLULfqOrEBwDGQAA/YnDjjUUhA9T3IgiJHtwbLRSSN7K8MvBDRSZc1Yprg9
+ 3NvA01gqfu3nAKoFOpxvOfjlF3VzNDEmeXgkaUue1ZnAljLeNCzDBZwg/6ifBA7xQPNbWUYmfiW
+ TcxUn91Ztefz1lIIBW5eNrbHS2jBnmVuV/l8swVVCa0AyHZDStPa5SQgRST76fUeYi7WTjOQv2V
+ 7TUQcVCgCB+7neNqUdqrDhrw4CxMc7FXZMSbLWb44RXbUIVLJT2GW2+ys+W/3Hqsgao9LriUQW4
+ 3rn1lLNBQzJip6LZ3ukpkqs06eV/rw==
+X-Authority-Analysis: v=2.4 cv=E/vAZKdl c=1 sm=1 tr=0 ts=68f9f017 cx=c_pps
+ a=MTSHoo12Qbhz2p7MsH1ifg==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
+ a=IkcTkHD0fZMA:10 a=x6icFKpwvdMA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=EUspDBNiAAAA:8 a=edmtyYkapI0WV9tsjtgA:9 a=QEXdDO2ut3YA:10
+ a=GvdueXVYPmCkWapjIL-Q:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-10-22_08,2025-10-22_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ impostorscore=0 spamscore=0 priorityscore=1501 bulkscore=0 suspectscore=0
+ lowpriorityscore=0 clxscore=1015 adultscore=0 phishscore=0 malwarescore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.19.0-2510020000 definitions=main-2510180023
 
-Component bind uses devm_regmap_add_irq_chip() to add IRQ chip, so it
-will be removed only during driver unbind, not component unbind.
-A component unbind-bind cycle for the same Linux device lifetime would
-result in two chips added.  Fix this by manually removing the IRQ chip
-during component unbind.
+The current value of '0xb0' that represents the offset to the status
+registers within the common registers of the CSIPHY has been changed on
+the newer SOCs and it requires generalizing the macro using a new
+variable 'common_status_offset'. This variable is initialized in the
+csiphy_init() function.
 
-Fixes: 8ad529484937 ("ASoC: codecs: add new pm4125 audio codec driver")
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Signed-off-by: Hangxiang Ma <hangxiang.ma@oss.qualcomm.com>
 ---
- sound/soc/codecs/pm4125.c | 2 ++
- 1 file changed, 2 insertions(+)
+This change introduces common_status_offset to replace the hardcoded
+offset in CSIPHY_3PH_CMN_CSI_COMMON_STATUSn.
+---
+ .../media/platform/qcom/camss/camss-csiphy-3ph-1-0.c  | 19 +++++++++++++------
+ drivers/media/platform/qcom/camss/camss-csiphy.h      |  1 +
+ 2 files changed, 14 insertions(+), 6 deletions(-)
 
-diff --git a/sound/soc/codecs/pm4125.c b/sound/soc/codecs/pm4125.c
-index 410b2fa5246e..c5ac2e6bb44d 100644
---- a/sound/soc/codecs/pm4125.c
-+++ b/sound/soc/codecs/pm4125.c
-@@ -1658,6 +1658,8 @@ static void pm4125_unbind(struct device *dev)
- 	struct pm4125_priv *pm4125 = dev_get_drvdata(dev);
+diff --git a/drivers/media/platform/qcom/camss/camss-csiphy-3ph-1-0.c b/drivers/media/platform/qcom/camss/camss-csiphy-3ph-1-0.c
+index a229ba04b158..9b6a0535cdf8 100644
+--- a/drivers/media/platform/qcom/camss/camss-csiphy-3ph-1-0.c
++++ b/drivers/media/platform/qcom/camss/camss-csiphy-3ph-1-0.c
+@@ -46,7 +46,8 @@
+ #define CSIPHY_3PH_CMN_CSI_COMMON_CTRL5_CLK_ENABLE	BIT(7)
+ #define CSIPHY_3PH_CMN_CSI_COMMON_CTRL6_COMMON_PWRDN_B	BIT(0)
+ #define CSIPHY_3PH_CMN_CSI_COMMON_CTRL6_SHOW_REV_ID	BIT(1)
+-#define CSIPHY_3PH_CMN_CSI_COMMON_STATUSn(offset, n)	((offset) + 0xb0 + 0x4 * (n))
++#define CSIPHY_3PH_CMN_CSI_COMMON_STATUSn(offset, common_status_offset, n) \
++	((offset) + (common_status_offset) + 0x4 * (n))
  
- 	snd_soc_unregister_component(dev);
-+	devm_regmap_del_irq_chip(dev, irq_find_mapping(pm4125->virq, 0),
-+				 pm4125->irq_chip);
- 	device_link_remove(dev, pm4125->txdev);
- 	device_link_remove(dev, pm4125->rxdev);
- 	device_link_remove(pm4125->rxdev, pm4125->txdev);
+ #define CSIPHY_DEFAULT_PARAMS		0
+ #define CSIPHY_LANE_ENABLE		1
+@@ -714,13 +715,17 @@ static void csiphy_hw_version_read(struct csiphy_device *csiphy,
+ 	       CSIPHY_3PH_CMN_CSI_COMMON_CTRLn(regs->offset, 6));
+ 
+ 	hw_version = readl_relaxed(csiphy->base +
+-				   CSIPHY_3PH_CMN_CSI_COMMON_STATUSn(regs->offset, 12));
++		CSIPHY_3PH_CMN_CSI_COMMON_STATUSn(regs->offset,
++						  regs->common_status_offset, 12));
+ 	hw_version |= readl_relaxed(csiphy->base +
+-				   CSIPHY_3PH_CMN_CSI_COMMON_STATUSn(regs->offset, 13)) << 8;
++		CSIPHY_3PH_CMN_CSI_COMMON_STATUSn(regs->offset,
++						  regs->common_status_offset, 13)) << 8;
+ 	hw_version |= readl_relaxed(csiphy->base +
+-				   CSIPHY_3PH_CMN_CSI_COMMON_STATUSn(regs->offset, 14)) << 16;
++		CSIPHY_3PH_CMN_CSI_COMMON_STATUSn(regs->offset,
++						  regs->common_status_offset, 14)) << 16;
+ 	hw_version |= readl_relaxed(csiphy->base +
+-				   CSIPHY_3PH_CMN_CSI_COMMON_STATUSn(regs->offset, 15)) << 24;
++		CSIPHY_3PH_CMN_CSI_COMMON_STATUSn(regs->offset,
++						  regs->common_status_offset, 15)) << 24;
+ 
+ 	dev_dbg(dev, "CSIPHY 3PH HW Version = 0x%08x\n", hw_version);
+ }
+@@ -749,7 +754,8 @@ static irqreturn_t csiphy_isr(int irq, void *dev)
+ 	for (i = 0; i < 11; i++) {
+ 		int c = i + 22;
+ 		u8 val = readl_relaxed(csiphy->base +
+-				       CSIPHY_3PH_CMN_CSI_COMMON_STATUSn(regs->offset, i));
++			CSIPHY_3PH_CMN_CSI_COMMON_STATUSn(regs->offset,
++							  regs->common_status_offset, i));
+ 
+ 		writel_relaxed(val, csiphy->base +
+ 			       CSIPHY_3PH_CMN_CSI_COMMON_CTRLn(regs->offset, c));
+@@ -989,6 +995,7 @@ static int csiphy_init(struct csiphy_device *csiphy)
+ 
+ 	csiphy->regs = regs;
+ 	regs->offset = 0x800;
++	regs->common_status_offset = 0xb0;
+ 
+ 	switch (csiphy->camss->res->version) {
+ 	case CAMSS_845:
+diff --git a/drivers/media/platform/qcom/camss/camss-csiphy.h b/drivers/media/platform/qcom/camss/camss-csiphy.h
+index 895f80003c44..2d5054819df7 100644
+--- a/drivers/media/platform/qcom/camss/camss-csiphy.h
++++ b/drivers/media/platform/qcom/camss/camss-csiphy.h
+@@ -90,6 +90,7 @@ struct csiphy_device_regs {
+ 	const struct csiphy_lane_regs *lane_regs;
+ 	int lane_array_size;
+ 	u32 offset;
++	u32 common_status_offset;
+ };
+ 
+ struct csiphy_device {
 
+---
+base-commit: 076fb8624c282c10aa8add9a4ae2d9354d2594cb
+change-id: 20251021-make-csiphy-status-macro-cross-platform-5390dc128aee
+
+Best regards,
 -- 
-2.48.1
+Hangxiang Ma <hangxiang.ma@oss.qualcomm.com>
 
 
