@@ -1,181 +1,212 @@
-Return-Path: <linux-arm-msm+bounces-78629-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-78630-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6CF9CC027EE
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Oct 2025 18:50:04 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 4EE45C02A2B
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Oct 2025 19:03:59 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 8B1CA3AF608
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Oct 2025 16:50:01 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 6408A3AE37A
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Oct 2025 17:03:33 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6095133CEB1;
-	Thu, 23 Oct 2025 16:49:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 22F7D33DEDF;
+	Thu, 23 Oct 2025 16:59:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="fkdpnOlV"
+	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="P3trElot"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from BYAPR05CU005.outbound.protection.outlook.com (mail-westusazon11010050.outbound.protection.outlook.com [52.101.85.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 183B241760;
-	Thu, 23 Oct 2025 16:49:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761238199; cv=none; b=RRzFCx3TTmSZ5pg6K9zAxw/V4akC17vF5SQZhGYjFQsCj+HuAZVtnuQdSL4/mFfvEXkGaLSdaRB4jA5K1Qlbxeqmc7SpfjIku9Vt5J7qu4OAQ4HrDh9DU9g1HsXDu+V8jaPKe0vzlaS2IqRngq92FsNso2YuRavZvJGUgpXMqHg=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761238199; c=relaxed/simple;
-	bh=Sv5ZTJIc8mdOyFyYEUpoBFZA3FTMtAHYeE6VxCWxjyU=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=gRSpelV4nx1HbEgcoNV5nPFV9XNsfDWrTD2JHeco4WDF3ycRuxEg3hfSuO8+QKixyMuHj4g7Oj64s97wg0UOiFFeXDauMubR4Y2GhcuEWep1FppiSX/FijikqnZPWjwAiDVATehuaK6sNhjWSjTUTwgDe+c6koGE1UxTRZoXYNg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=fkdpnOlV; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51AADC4CEE7;
-	Thu, 23 Oct 2025 16:49:53 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1761238198;
-	bh=Sv5ZTJIc8mdOyFyYEUpoBFZA3FTMtAHYeE6VxCWxjyU=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=fkdpnOlVfwsj074MXISpqiMtq9R0FJEHXd3jn71OpJZiFKooy+7N42nSSiTQ5A/KB
-	 Y5xN9b8RSoz77cWgSxhCgybD0vvhydql69Sljnoo9VBik/lRghY7IZm3Qf7xWJbo7p
-	 7AiVN8EqgPF7jv/kvkuxmB2ADWb6Qj+PlKbp4IN0M2hgRvvdmhREq7WWBlRX3bEt0y
-	 qN+kPQTWe+lRnt/SRlWyKIzqIcDYoiTAsphhUPVMrJYYNwrM9Xs8XK2QCRAjA9v9bI
-	 HWFA/hkweKvq8HQ++vqb+ehkOQc4UkbKCQ3kSv0XHRo4mkLtTNpnIff9qmDSzaJwQ9
-	 4hp4zIIOTwIkg==
-Message-ID: <affa81cd-6f44-4408-9b07-f635b00cfaa6@kernel.org>
-Date: Thu, 23 Oct 2025 17:49:51 +0100
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E974322C9D;
+	Thu, 23 Oct 2025 16:59:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.85.50
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1761238742; cv=fail; b=Qww+l3HCMtlfYD0nOirm8kxWRHcjcGEior6Jvo/e+kesjr5+p+jwo9mq0ZL9t8C3d+ewlLJiIofv1rCxTVl/FM7tn3Wci+1jhUqACZHvWqRzufBuRBBUlrdtJpqqXLCxtWAbs9B2mzXeFniJOLSIfk6Q1lmvVPPeWJ6LL17V/TU=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1761238742; c=relaxed/simple;
+	bh=R99v5Ua+uEZHopaE6irteFr/G6AgWEn4ZzBOMDhuH8A=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
+	 Content-Disposition:In-Reply-To:MIME-Version; b=GWU+xuAPchyenFAOihdowu+F7/Ju+SIhxKEAoU9KJD4bWO8gkHOFXh6cdYrTYpL9Bk1jWllHYr5QVOA0V+oTWi+rOzNvzgFv/IYVYaTDNrX+ziwxFADjN6YbCak1PS3nAXfCHNLxBoqmdQJt9/lSKc1KSNUpxusPvdn/kePTCnA=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=P3trElot; arc=fail smtp.client-ip=52.101.85.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=IC4pQT5/oZQp0nADfnuHiRl27aFb3jLZLYAcr3p9+N6EVRmmXwgfEDopPUy+G7QDXOLfE7+RuQIhYt3XZTdwFdFoYkCzFmM4K8iJbHcwtqDdy133W0lB8u/xdROmPFONH6IEswOFtp/QBCLMbx4PAjwbYY07iKmyfxbH/AisS3wEOmpbEApVnqEThodB1hGIoDyfgMN8FKUVWSm+S/botRqoI9gQ+98CjpaSrohUp9KRiab6YL3vBD6i5nu8r6uDfbks3I5hVSzZxmsTq73ctk04MMnFYnjGz0mQHgaw0cRnZdr9eGWmNWQPvr0YxsgVM+GiGS9hDnWVLyZO52S37g==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=9ZE3FlVbVNkRlgwHcDRLTLRrjkegvQIvyene/gJeqMY=;
+ b=ggWPSbCA/lfoaNbAQ455DLb5ecOGhE7GRJxwJptKRnrD/1t2X2TY6UVZwwoUi9tH7aZUsSInFs8tWSkYepS45MGv0h2Fa+haURa2CWwfwXP/VnanHW+46bnyXaNG+jU7p5MPszGfBBbDadvh1ingQ89u40OTHRgpqfQAeCBFGcuLjIHo9Ff0q1zf4KLG61BsxZBIzAyHun0S0XY/WjqaQ2OQSnDxUHCNTVK9vq0P261ZfUeSLRUCp+WY9fl4KAy5p+umoUROM+W01CXsOEG6lGkigdwRPC2YIZJ4yA3+e7JsaYijpxshnGR3qsGMwAM/JAe9ul0FPuvTyHC60d6vhw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
+ dkim=pass header.d=nvidia.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=9ZE3FlVbVNkRlgwHcDRLTLRrjkegvQIvyene/gJeqMY=;
+ b=P3trElotsDUj+iDerQBTc1JZd2W0vj/ViMZS61EP5xRQ570DLPIm++xkg8D32t4kj8Cb/oCbjfx78NXH3DGf5+Mxgf89PPF+yrsg924HG2DodhKhcrrjPJdvHTmxe2zo+2gF/0Gt/hjeUmRpSKFIEHmTmlm/Ulr5bzfEav3N8/6yZrVU1KDluGsEE/s7dQM40qm2gagC1jnMVCh0E3u09WLZ/sMChvqpX1L2xJn4AFFRU/3oXUFLasX1Ri8rm/wocydY/2enekqqYPVNoXy+ekyg+OH/luQlI2Vj67r9bYvuijLoKcH7b6Hve2z9+nIYN8YcE6m42PiTOczZQ4EKXw==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nvidia.com;
+Received: from MN2PR12MB3613.namprd12.prod.outlook.com (2603:10b6:208:c1::17)
+ by PH8PR12MB7027.namprd12.prod.outlook.com (2603:10b6:510:1be::19) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9253.13; Thu, 23 Oct
+ 2025 16:58:57 +0000
+Received: from MN2PR12MB3613.namprd12.prod.outlook.com
+ ([fe80::1b3b:64f5:9211:608b]) by MN2PR12MB3613.namprd12.prod.outlook.com
+ ([fe80::1b3b:64f5:9211:608b%4]) with mapi id 15.20.9253.011; Thu, 23 Oct 2025
+ 16:58:57 +0000
+Date: Thu, 23 Oct 2025 13:58:54 -0300
+From: Jason Gunthorpe <jgg@nvidia.com>
+To: Robin Murphy <robin.murphy@arm.com>
+Cc: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Christian Benvenuti <benve@cisco.com>,
+	Heiko Stuebner <heiko@sntech.de>, iommu@lists.linux.dev,
+	Jernej Skrabec <jernej.skrabec@gmail.com>,
+	Joerg Roedel <joro@8bytes.org>, Leon Romanovsky <leon@kernel.org>,
+	linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org,
+	linux-mediatek@lists.infradead.org, linux-rdma@vger.kernel.org,
+	linux-rockchip@lists.infradead.org, linux-sunxi@lists.linux.dev,
+	Matthias Brugger <matthias.bgg@gmail.com>,
+	Nelson Escobar <neescoba@cisco.com>,
+	Rob Clark <robin.clark@oss.qualcomm.com>,
+	Samuel Holland <samuel@sholland.org>,
+	Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>,
+	Chen-Yu Tsai <wens@csie.org>, Will Deacon <will@kernel.org>,
+	Yong Wu <yong.wu@mediatek.com>, patches@lists.linux.dev
+Subject: Re: [PATCH 3/3] iommu: Allow drivers to say if they use
+ report_iommu_fault()
+Message-ID: <20251023165854.GA742380@nvidia.com>
+References: <3-v1-391058a85f30+14b-iommu_set_fault_jgg@nvidia.com>
+ <d594cdf2-5aab-4539-8d44-f7e57770df72@arm.com>
+ <20251023145434.GJ262900@nvidia.com>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20251023145434.GJ262900@nvidia.com>
+X-ClientProxiedBy: BY1P220CA0001.NAMP220.PROD.OUTLOOK.COM
+ (2603:10b6:a03:59d::14) To MN2PR12MB3613.namprd12.prod.outlook.com
+ (2603:10b6:208:c1::17)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] regmap: slimbus: fix bus_context pointer in regmap
- init calls
-To: Alexey Klimov <alexey.klimov@linaro.org>, broonie@kernel.org,
- gregkh@linuxfoundation.org, srini@kernel.org
-Cc: rafael@kernel.org, dakr@kernel.org, make24@iscas.ac.cn, steev@kali.org,
- dmitry.baryshkov@oss.qualcomm.com, linux-kernel@vger.kernel.org,
- linux-sound@vger.kernel.org, linux-arm-msm@vger.kernel.org,
- abel.vesa@linaro.org, stable@vger.kernel.org
-References: <20251022201013.1740211-1-alexey.klimov@linaro.org>
-Content-Language: en-US
-From: Srinivas Kandagatla <srini@kernel.org>
-In-Reply-To: <20251022201013.1740211-1-alexey.klimov@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: MN2PR12MB3613:EE_|PH8PR12MB7027:EE_
+X-MS-Office365-Filtering-Correlation-Id: a4e6977e-d3cc-428b-d8f3-08de12557470
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;ARA:13230040|7416014|376014|366016|1800799024;
+X-Microsoft-Antispam-Message-Info:
+	=?us-ascii?Q?2yEwHtqPySWvqcJrey9EEidWQiXtn/UmWmWhs3rSTPCd5bQ6/dSRiDVmkdC9?=
+ =?us-ascii?Q?2Qi6L2EMgyr95tToOlkugHECpKlXmNIhWUKzwGqqf95WX9bjm0vKYGUqyHWf?=
+ =?us-ascii?Q?qIypQf9BX26fr0QDrmlraOG6j78QmUZbAarhD6UySS1iiUBosCUJWFMZv4Wz?=
+ =?us-ascii?Q?PkvyAqMBVErJPGd2zpmt1uchr/iOQoo8oImHBL27eAvTy8Up+E2R93GwSXO1?=
+ =?us-ascii?Q?hMQXfAI8Ij9iX1p+lvVzPKTQtEepoau2QUTBt+w+csjOBMgomziiT2H31MpE?=
+ =?us-ascii?Q?7HuM0PI4Oktz0QqAuayni4sWWGt7wICi8pFckN1HTb3DLhCbswwIDri4zobG?=
+ =?us-ascii?Q?IDgF845G/wROm60U2PqVeJcXj38wfv1C6IWkY3SZ2y6XHpcSe5F0Wg0A6Mr2?=
+ =?us-ascii?Q?Tw3eg+jfnpZDUmEdVXr0WKpxgrW2n48qrUGiVTJERj1p3a2shEx0Rqf8X5bX?=
+ =?us-ascii?Q?8uvJVMFUg0amw+FCrtowrpJU8IVUoyhn8deUfkpyy7Ins7TwY8vsCvVDFM0S?=
+ =?us-ascii?Q?o+fne7F/nXTZnq7UrsgC8Vp3H9WxKMdoDhPI35/1cwwn4dhwPfaCEPv4abxI?=
+ =?us-ascii?Q?SPX8p1LCKon8kjga+Pd+/m0ws7HQCpGgO4EYilgUdfqfqtZ+eYVYWEyxYsTh?=
+ =?us-ascii?Q?Lqwqd6mXbFt+h/jw8qBoc1DoN316B298OMLLsdfzdjpZ9v5SwWlNz3yOs6Uj?=
+ =?us-ascii?Q?r+ASsGirCT/91nTB4IQ8KOjtANffFVd8ME/kNKnMgj2kfB45NRaZ78KjJpaX?=
+ =?us-ascii?Q?IYgrongNgam7Ci+ERlsLgMmQVRHLqk9xfyVLwz8wRF0zz+TGOcVwd07RxICz?=
+ =?us-ascii?Q?I35P1hc5RrMh9GWa2taHohfpVfeOE5L0qQM8ziC6SdqEFNJ/lTWjVOCwdgC+?=
+ =?us-ascii?Q?Fh87k4PYouj1v5yrHxf9G4VkjQzD8LZPiBtPFNJp50AtJGt2RC/eIFTqM8Wb?=
+ =?us-ascii?Q?PEi3UwxEqrVYTj41D0AS1EKCccq+NXYNN2ph2t0gztWZCYBj2rYk3vjUbC90?=
+ =?us-ascii?Q?koFuU0din8O7u1oAB8RxCKiPWKkeTu8cyZcr7/IIIhUXc9Vh850krGVzdfKC?=
+ =?us-ascii?Q?YhFqAopbkDOGrD+mGDw7xXPV9TUizn1digLV+kqAGRD2ohQxSLQuYuI9KsAg?=
+ =?us-ascii?Q?Dp9kSxYh5Ozt/ESiuRrOUNf0rata9NFMpDsBbmYpzMFYp7qNrpI7JqpbIWwv?=
+ =?us-ascii?Q?UorlCQwR3/zKNw2EILFtevDyGLhjKANaUnj6ELkH2rVJIAHc9FahzhA3brgO?=
+ =?us-ascii?Q?6G8G208HSnpIZMTXwkMZt3D2xamcZQcW/ZLsTAS/qRcd/1Sn3zrDGW4EaoIe?=
+ =?us-ascii?Q?3mbINN0aSqlTN6ohrH4H121OMeKuO53l0+mHXuQMBvdWNAVfVbGJtkdi/DWf?=
+ =?us-ascii?Q?Bc3MZhtrJfjvPQXZp91d8LjFM/quUM1bFxULOMCEOgDkAN84Bz/D1ilI4U6W?=
+ =?us-ascii?Q?bjn9TbqpUO12vU9NgWPAy3eZgSDZuz1H?=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:MN2PR12MB3613.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(7416014)(376014)(366016)(1800799024);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?us-ascii?Q?azKN5s2ZQgKO1dtbB+rO20FAZmVop5ewEQUza4jYJ57cG5NJhyp6EN3FQ+iB?=
+ =?us-ascii?Q?VwuLTOpEOX3qa4W8TheQVuZD6T//Q13exPJW7dY8VQkeFzwDFDM9EfA9k56y?=
+ =?us-ascii?Q?9yUjJskkXwEJdCDnqgdfd7En9Xirt/u/HCceGtE3eZb1ck4eOaszSpl+NCH5?=
+ =?us-ascii?Q?XreotVpSR1s80ipNIkcfPlNBRu5OCNBedT223Jl/L5m30lXgFMbHN1NxvoRO?=
+ =?us-ascii?Q?eQ6XUOaqskOH+1d9MEhXjx2E4sF1GkAsEOgsUuvn7aNUP/3Z4whJQfhBvjwi?=
+ =?us-ascii?Q?TxGYKwKVbiZQGbWW0DmFHefz3eACrBfX86pgaJvetBEydQoDxsnespmH0y5u?=
+ =?us-ascii?Q?fYld67NnXJKIacKlccrrnWI7w2dErX9uEV3nhB6l+/Ad0NiDuK5h6UBVjb7h?=
+ =?us-ascii?Q?dwOR2fTqFmxQu2Tp3x9Ns38xo/cAdYQfCtMCgFDLTTImE6ykh9wroMQPjP48?=
+ =?us-ascii?Q?WnWmBdiE1pfVW0PptwQp+1LTNLKsyVi+8YG4bnR2Xj9Px6SJKnhy0WJC2Ntf?=
+ =?us-ascii?Q?zFD+105w/z8Q+8WK0Py61q9owp0IkFaez8NzG32UKsoYyyjJLsTCVknhq+v4?=
+ =?us-ascii?Q?ICQJTzKQT7dnuvS6nySXHs0ZwhVw8IitTGns1etxGajrtJZXgZIiHW0Cw++f?=
+ =?us-ascii?Q?ODmrwq5FRUVfc2YMOyUipIDr/rtWJhQEEekqLpcgqj/AEaTIVXQrU/F/Sobw?=
+ =?us-ascii?Q?np+WSVVTwreuj5K80ePTJW1YPtARzmSHZvCMw6vFoB1XAptfflsKqgpUWVBV?=
+ =?us-ascii?Q?tbLuY2SVOaMXho/dpUn0rgT+2WhKiyhnBrgFk1staKbE2TXAsCfWY3D071oT?=
+ =?us-ascii?Q?wldy88/472++/eA0P59UcXXl7Tn2ksklfxerAcs//4aUv6C+poU8A4iAmbZP?=
+ =?us-ascii?Q?V0MA9Xd4uWb8czun4+YNn9L9QVCZ/0QrMZjnr5oylLg3/8TzGIOcAtYn1SrF?=
+ =?us-ascii?Q?NS8tcmOjkAJ/qputICJrd2Ife6uAbehmk5M0e8bRn+q6D6stzSsRZyiZ8X32?=
+ =?us-ascii?Q?Xx7AaHHw6+NnouF8kBNVypoc8lQ3GlTM7StFhdG2w3VZgVCvN6Xru/qMRyz7?=
+ =?us-ascii?Q?Cb/TruNQfR60Sf775fL2zBCQ/zPUclbG85Of2M+lRd40YxW9x0SF7tGPwcFT?=
+ =?us-ascii?Q?4pvrioTQP19AQekEPixoB6uWwTka4W6whG98VM4PlraQTZ7FfK9lbHl5IDO8?=
+ =?us-ascii?Q?89sTyjzdwxTYqe0ORoIuQth6MNAswNVFGJfFV29NbtD9Ka1Pmj5s6H+Zr5qZ?=
+ =?us-ascii?Q?CHvhx8tD7KoLXkP++zAjTVUcFev7AjPH5pzpA6C0ZpA+y6jaVHqU7CZnoDGO?=
+ =?us-ascii?Q?ErcYArAwMxXNj+0Lg+7lsmq4p5mo916AtV3jFsnhoT9VLSnBaFXArW42mo6K?=
+ =?us-ascii?Q?wDu4p1IoDRzxqgMiKLhpCXqm109JFikHQFZtfLIRHqaRJ4uqHkXQRbgEDzPX?=
+ =?us-ascii?Q?AZXVNcQhLWkKlFbAn0RLFJUJ41ROOM7DHf+50UpMmd1p6P+WcggEv9RkLKVM?=
+ =?us-ascii?Q?fsEhZZlQgZxdRsFreTdNpQ5NXvCMDexQS2vMEpy7hggINAJJPHQJfYprSjSO?=
+ =?us-ascii?Q?pON8xUwkvs+KUjM3TL9F7rk7zWVhqvWvmmEfTiRj?=
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: a4e6977e-d3cc-428b-d8f3-08de12557470
+X-MS-Exchange-CrossTenant-AuthSource: MN2PR12MB3613.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 23 Oct 2025 16:58:56.9808
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: CWZn2SwiTaWoQNOpqTur4nWLipkVemN3asW2PuFvx7VHHouB7tAxNwKp8EhaTXfN
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH8PR12MB7027
 
+On Thu, Oct 23, 2025 at 11:54:34AM -0300, Jason Gunthorpe wrote:
+> On Thu, Oct 23, 2025 at 12:24:01PM +0100, Robin Murphy wrote:
+> > On 2025-10-22 6:12 pm, Jason Gunthorpe wrote:
+> > > report_iommu_fault() is an older API that has been superseded by
+> > > iommu_report_device_fault() which is capable to support PRI.
+> > > 
+> > > Only two external drivers consume this, drivers/remoteproc and
+> > > drivers/gpu/drm/msm. Ideally they would move over to the new APIs, but for
+> > > now protect against accidentally mix and matching the wrong components.
+> > > 
+> > > The iommu drivers support either the old iommu_set_fault_handler() via the
+> > > driver calling report_iommu_fault(), or they are newer server focused
+> > > drivers that call iommu_report_device_fault().
+> > > 
+> > > Include a flag in the domain_ops if it calls report_iommu_fault() and
+> > > block iommu_set_fault_handler() on iommu's that can't support it.
+> > 
+> > This isn't a domain operation though; depending on how you look at it,
+> > supporting a legacy fault_handler is either a capability of the IOMMU driver
+> > (that would be reachable via domain->owner->capable) or a property of the
+> > iommu_domain itself that the drivers can set at allocation time (basically
+> > this same patch just with the lines in slightly different places).
+> 
+> That's right, the issue is:
+> 
+> void iommu_set_fault_handler(struct iommu_domain *domain,
+> 					iommu_fault_handler_t handler,
+> 					void *token)
+> 
+> We can't get to the iommu instance starting from a domain pointer
+> 
+> Do you think we should change the above signature to include a
+> struct device *?
 
+Reading this again, it is easy to move it to the domain->owner, which
+is an *ops* pointer. It would still be driver global and not
+per-instance. Lets try that then
 
-On 10/22/25 9:10 PM, Alexey Klimov wrote:
-> Commit 4e65bda8273c ("ASoC: wcd934x: fix error handling in
-> wcd934x_codec_parse_data()") revealed the problem in the slimbus regmap.
-> That commit breaks audio playback, for instance, on sdm845 Thundercomm
-> Dragonboard 845c board:
-> 
->  Unable to handle kernel paging request at virtual address ffff8000847cbad4
->  ...
->  CPU: 5 UID: 0 PID: 776 Comm: aplay Not tainted 6.18.0-rc1-00028-g7ea30958b305 #11 PREEMPT
->  Hardware name: Thundercomm Dragonboard 845c (DT)
->  ...
->  Call trace:
->   slim_xfer_msg+0x24/0x1ac [slimbus] (P)
->   slim_read+0x48/0x74 [slimbus]
->   regmap_slimbus_read+0x18/0x24 [regmap_slimbus]
->   _regmap_raw_read+0xe8/0x174
->   _regmap_bus_read+0x44/0x80
->   _regmap_read+0x60/0xd8
->   _regmap_update_bits+0xf4/0x140
->   _regmap_select_page+0xa8/0x124
->   _regmap_raw_write_impl+0x3b8/0x65c
->   _regmap_bus_raw_write+0x60/0x80
->   _regmap_write+0x58/0xc0
->   regmap_write+0x4c/0x80
->   wcd934x_hw_params+0x494/0x8b8 [snd_soc_wcd934x]
->   snd_soc_dai_hw_params+0x3c/0x7c [snd_soc_core]
->   __soc_pcm_hw_params+0x22c/0x634 [snd_soc_core]
->   dpcm_be_dai_hw_params+0x1d4/0x38c [snd_soc_core]
->   dpcm_fe_dai_hw_params+0x9c/0x17c [snd_soc_core]
->   snd_pcm_hw_params+0x124/0x464 [snd_pcm]
->   snd_pcm_common_ioctl+0x110c/0x1820 [snd_pcm]
->   snd_pcm_ioctl+0x34/0x4c [snd_pcm]
->   __arm64_sys_ioctl+0xac/0x104
->   invoke_syscall+0x48/0x104
->   el0_svc_common.constprop.0+0x40/0xe0
->   do_el0_svc+0x1c/0x28
->   el0_svc+0x34/0xec
->   el0t_64_sync_handler+0xa0/0xf0
->   el0t_64_sync+0x198/0x19c
-> 
-> The __devm_regmap_init_slimbus() started to be used instead of
-> __regmap_init_slimbus() after the commit mentioned above and turns out
-> the incorrect bus_context pointer (3rd argument) was used in
-> __devm_regmap_init_slimbus(). It should be just "slimbus" (which is equal
-> to &slimbus->dev). Correct it. The wcd934x codec seems to be the only or
-> the first user of devm_regmap_init_slimbus() but we should fix it till
-> the point where __devm_regmap_init_slimbus() was introduced therefore
-> two "Fixes" tags.
-> 
-> While at this, also correct the same argument in __regmap_init_slimbus().
-> 
-> Fixes: 4e65bda8273c ("ASoC: wcd934x: fix error handling in wcd934x_codec_parse_data()")
-> Fixes: 7d6f7fb053ad ("regmap: add SLIMbus support")
-> Cc: stable@vger.kernel.org
-> Cc: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-> Cc: Ma Ke <make24@iscas.ac.cn>
-> Cc: Steev Klimaszewski <steev@kali.org>
-> Cc: Srinivas Kandagatla <srini@kernel.org>
-> Reviewed-by: Abel Vesa <abel.vesa@linaro.org>
-> Signed-off-by: Alexey Klimov <alexey.klimov@linaro.org>
-> ---
-> 
-> The patch/fix is for the current 6.18 development cycle
-> since it fixes the regression introduced in 6.18.0-rc1.
-> 
-> Changes in v2:
->  - &slimbus->dev replaced with just "slimbus", no functional change
->  (as suggested by Dmitry);
->  - the same argument in __regmap_init_slimbus() was replaced with
->  "slimbus" (as suggested by Dmitry);
->  - reduced the backtrace log in the commit message (as suggested by Mark);
->  - corrected subject/title, few typos, added mention of non-managed init
->  func change, rephrased smth;
->  - added Reviewed-by tag from Abel.
-> 
-> Prev version: https://lore.kernel.org/linux-sound/20251020015557.1127542-1-alexey.klimov@linaro.org/
-> 
->  drivers/base/regmap/regmap-slimbus.c | 6 ++----
->  1 file changed, 2 insertions(+), 4 deletions(-)
-> 
+I like adding a iommu_paging_domain_alloc_flags() option too..
 
-In case Mark if you want to pick this up,
-
-Acked-by: Srinivas Kandagatla <srini@kernel.org>
-
-
-> diff --git a/drivers/base/regmap/regmap-slimbus.c b/drivers/base/regmap/regmap-slimbus.c
-> index 54eb7d227cf4..e523fae73004 100644
-> --- a/drivers/base/regmap/regmap-slimbus.c
-> +++ b/drivers/base/regmap/regmap-slimbus.c
-> @@ -48,8 +48,7 @@ struct regmap *__regmap_init_slimbus(struct slim_device *slimbus,
->  	if (IS_ERR(bus))
->  		return ERR_CAST(bus);
->  
-> -	return __regmap_init(&slimbus->dev, bus, &slimbus->dev, config,
-> -			     lock_key, lock_name);
-> +	return __regmap_init(&slimbus->dev, bus, slimbus, config, lock_key, lock_name);
->  }
->  EXPORT_SYMBOL_GPL(__regmap_init_slimbus);
->  
-> @@ -63,8 +62,7 @@ struct regmap *__devm_regmap_init_slimbus(struct slim_device *slimbus,
->  	if (IS_ERR(bus))
->  		return ERR_CAST(bus);
->  
-> -	return __devm_regmap_init(&slimbus->dev, bus, &slimbus, config,
-> -				  lock_key, lock_name);
-> +	return __devm_regmap_init(&slimbus->dev, bus, slimbus, config, lock_key, lock_name);
->  }
->  EXPORT_SYMBOL_GPL(__devm_regmap_init_slimbus);
->  
-
+Jason
 
