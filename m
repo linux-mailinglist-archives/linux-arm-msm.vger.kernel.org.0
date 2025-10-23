@@ -1,89 +1,88 @@
-Return-Path: <linux-arm-msm+bounces-78443-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-78445-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ams.mirrors.kernel.org (ams.mirrors.kernel.org [IPv6:2a01:60a::1994:3:14])
-	by mail.lfdr.de (Postfix) with ESMTPS id ADA05BFF295
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Oct 2025 06:47:02 +0200 (CEST)
+Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [142.0.200.124])
+	by mail.lfdr.de (Postfix) with ESMTPS id 320DDBFF2B9
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Oct 2025 06:50:31 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ams.mirrors.kernel.org (Postfix) with ESMTPS id 39067356ACC
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Oct 2025 04:47:02 +0000 (UTC)
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 1811A4F2FAD
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Oct 2025 04:50:30 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C76E2235063;
-	Thu, 23 Oct 2025 04:46:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 461D8248F51;
+	Thu, 23 Oct 2025 04:50:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="iuESghfv"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="nIcSRWEF"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B576221F39
-	for <linux-arm-msm@vger.kernel.org>; Thu, 23 Oct 2025 04:46:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B01D254864
+	for <linux-arm-msm@vger.kernel.org>; Thu, 23 Oct 2025 04:50:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761194816; cv=none; b=pZbVS1lCvNgw2JUJMw5opI25R1UcAw3lf6N8QN1zM/sZRy/ymHRIMd2P+xhWvyxd52fDig55/S6qVWgvZUAHPu8SwR0uYwIJwdhFNVNEri0s0eKOyRpSvErWGievqS/7hPPSZ/9b4j3vIeUPoymo+wA9RbnUfJPGDbP+m+XQDK0=
+	t=1761195018; cv=none; b=YD/pzs2vaUM1f0CVjyGBMQcE1MwUwuxgC4WSspUzEFVhrWlQUECUOEpTcLUEkQ5iX6xLcXDbMQ6wv3QLqctGFjaOUY5QbpIUadVnoPm+cp+iOfA1tsK6yjhe6HkKLEt2B1N5Pga8tI7vHJ4XpTHRyOtRuARBJwfsOHws+nEjwoQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761194816; c=relaxed/simple;
-	bh=RQKtk6VRABQ+vBOTGNpTUlGbKB9xzSwEgDGBB7enF5M=;
+	s=arc-20240116; t=1761195018; c=relaxed/simple;
+	bh=pUxLY0dYOpUEVJeLtaYHGI3zA5xCDpr07EK9bK62Xg8=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=GPTLTlmyFGdyNTyxMeOMu2mSe/fq92Rbds9wfoQzpNe0pwI7B6EDCbVTjANMfEX/RByT9rM0ur6kxIIaHuTANHaeZLIQRH7BOoz2K0k4KGwIxWESitQaoRPVjLu0ERsnC2hTwW+s5GBcIRBqdEIGEXrDkNDmFzc7/uhR86BxUHY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=iuESghfv; arc=none smtp.client-ip=205.220.168.131
+	 In-Reply-To:Content-Type; b=EmVC2uwyevdZ2HbqZXcLIseu2NFvreEh3XepbM+xAeXpOA1tij/+dM4M2aPHN8FaqGV5cnSzXLnXEDG183wSgx+GipnIq4KhuAQjUKyd8lRrkogPSlUHIIlzhyNOQ8QZixpDt9PVYH0yZjb+Z1uBpTvLKDfTiq3ZzcRKZYFnXvQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=nIcSRWEF; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 59MJ1OcS011696
-	for <linux-arm-msm@vger.kernel.org>; Thu, 23 Oct 2025 04:46:54 GMT
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 59MK1KSb027193
+	for <linux-arm-msm@vger.kernel.org>; Thu, 23 Oct 2025 04:50:15 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	gk8IGEC2YqxXgoqIuJ14jd80rHVy4Sx5PMH+RdrI/zw=; b=iuESghfvwcO2UjYB
-	T+Vz8dJDuP/AdctHTIXWLfq2jmTl7/ARLFKyrTwRPQAVnIteBHxh7V0lUN2EpxVl
-	aRpFJW3fWh+jEw1VPPz6jHiLG8B6VTSyHbAVCyIx8JV8sZmvjt00984uJGiLyny6
-	DcAEDQNM6kZ1r2gSvpSEHpaoYSKDzvbgx5E2nPgBz3BB7dCHEuyRq0/c+Npaj8lA
-	ytNdYcx0/nElPsxjuYrlh6EaxXrEhprtkQIgceuYUVrzUbi8qVs6uYxkx1pCA64F
-	5iZ+0FFkR27vp8rKbLJ6rfM5ENoMRlki0ZjXnSkin2QU8cCBaIbOb+XRVEj6bK7/
-	9otZKQ==
-Received: from mail-pl1-f197.google.com (mail-pl1-f197.google.com [209.85.214.197])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 49y52497cs-1
+	ILH2Noyb/0pcF89WfVFMs9McJHKzcr01cOg5psDy5yo=; b=nIcSRWEFb7aEhO+D
+	q6Z+7bd6h3rxMt5LxnPxQbTmDBCYHOqF0a2m5IO2Vml819e6lWWsUDbj769GE+t7
+	CF08aLfjQ7L7kOMh1odWpJKIfP9yMfnGanczhZ12rJ94HMu+5XiAS14Qgg3Oy52L
+	d6BwRafCPlqhx8CM/S2fl7yUpxcENWIX8JGV0qhyKzdsdPq0ySH9aL3qau+/RKbI
+	6fzTJGkcyjKkqlH39vRh/MMKnzcuIVNTkdgfhf683FlPFdyWYxDoTBZIgBZWOI9U
+	CNcY4Gg57FZgQX2DK973udaTKSnCHW5h/C+hyxt+3FEjskbSCQ7/WUKZX7cARB+2
+	JaPl1w==
+Received: from mail-pl1-f198.google.com (mail-pl1-f198.google.com [209.85.214.198])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 49y5x8h3j8-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Thu, 23 Oct 2025 04:46:54 +0000 (GMT)
-Received: by mail-pl1-f197.google.com with SMTP id d9443c01a7336-2698b5fbe5bso5853365ad.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Oct 2025 21:46:54 -0700 (PDT)
+	for <linux-arm-msm@vger.kernel.org>; Thu, 23 Oct 2025 04:50:15 +0000 (GMT)
+Received: by mail-pl1-f198.google.com with SMTP id d9443c01a7336-26b3e727467so2028545ad.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Oct 2025 21:50:15 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1761194813; x=1761799613;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=gk8IGEC2YqxXgoqIuJ14jd80rHVy4Sx5PMH+RdrI/zw=;
-        b=lvSCSv+sSg+A9sjVwrrtwfFkRRsdVU4o/JVRabtmKXYKKwhyKOEVYRK9ke9PruMRks
-         7cr+oQZa692eUe+G1ThXHvsHovB83kfjrNA081uWryejVUB1w6tfMdF1acKG1gdVBzLH
-         y4i+APzDxqEucLVzoi7bb+JnG8VoaC/IL+v/kzgoEcQgA/1h5vaD1gOYcCsQfPbm6AZX
-         2Gf34kh+RD0j4YLcBOPcycgbh/LwpMFDcnwASxzFFuK90RfswzNeSscoNFrxTJMZFGeH
-         xDPL6rmTrOqdi5+eHEhyTSQhAp8agKOKCnxTFb/SE3/IdrqqunY3swOYPpKontD8NvdZ
-         aAng==
-X-Forwarded-Encrypted: i=1; AJvYcCVgTXYpBRHd6tGBnUbzOVhvVi9p53Y9HuWmVfIdUxXNAtUcmq9Z2Vj31wEjxtajsVoTtRwXmtFZ1RqeJrJ8@vger.kernel.org
-X-Gm-Message-State: AOJu0Yzrv47MhejTiLkSvyF82zX/6OaNgXUu5e7R/GCS1bkiijoind56
-	XRHTo6+As3/wfYNyVAXbZTWgYbTYSSfs4JqtUhkkhkpA01BfgmSX4GlN0yJv0aI0xqGz4+gx5OQ
-	u60r1gbclhwo5LFfE1zepcjPoshm7eyLA/SjrSNvgePjkubyV14kWieC9duzLO3g8M9e8lJ7ItP
-	IW
-X-Gm-Gg: ASbGnctrzUsKLWd7nm7f7VB1ZffDWpoc9c7uY6T4rkoYeloLvOd6NroPmw3kwdOdGMK
-	JZWk0f4eTXpjxwiyaBwY6nxscMp1E4KompiEu8zareyoJc7l053aBr0nWPUZt35ziVYawh+6uXF
-	Z2i+Lhis8Na0HxvBRFSWX/ILsH8PU90ZnHZZiWCf5wn4EOvYkx4NzKAq49/Dj8xHNWHH6xljVnO
-	Su7UbFGRWxiHZvURd0XPlpAdb0jlypuY6VUlFwJsg0/cdEXBA/Ae4BbUNBZA8zVk73YFjVTA/rx
-	Hd1AOtM4kvtWBHDClSHi4x+VkGKhmuzzURYkMwkuaqupwR+ikSfxeN+Tk6iDYHJaBCXhhpQOWTu
-	nbOIO2Si0Veve6epTYLLHgUw=
-X-Received: by 2002:a17:902:ecc1:b0:293:623:3265 with SMTP id d9443c01a7336-29306233761mr57706395ad.34.1761194813371;
-        Wed, 22 Oct 2025 21:46:53 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEtUb1Wy6VbMGMaIZJ2YrmZqxzkjXSfCmpKXsJsxh6/rcBZgAjsqgwz2PjE+JV6X78IUnifdw==
-X-Received: by 2002:a17:902:ecc1:b0:293:623:3265 with SMTP id d9443c01a7336-29306233761mr57706115ad.34.1761194812942;
-        Wed, 22 Oct 2025 21:46:52 -0700 (PDT)
-Received: from [10.217.199.21] ([202.46.22.19])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-33dff383693sm3389881a91.3.2025.10.22.21.46.50
+        d=1e100.net; s=20230601; t=1761195009; x=1761799809;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to:subject
+         :user-agent:mime-version:date:message-id:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=ILH2Noyb/0pcF89WfVFMs9McJHKzcr01cOg5psDy5yo=;
+        b=qbq3qP30s3i4844Kdf4dSpI0a6cdBC0BaB3vZX5Ys85v3T0BWzUeS7d2XK0iUZd7D8
+         5vkr6ukNh1xI6PFBTMSaIG1ZpSQLKkrnXKzjKMr8R90J4EGEXRz64sCuGeTPYY53Bj91
+         FTNh7JlWBS/e9UTEkEEDqxmflA64u2aCSLOwZ2AhE+CdKiU3V0gcLbOr8suYi40oFoOv
+         Q3EU+6WyAiXTRRH0/oXoN4fVutUYM9uvxZ2D4rA2giXwCdl1fx/sCU6YwCX8RicBkYCh
+         2PlWh0pR9RgHIWjy43Ym/D0itXOl5xDsAHn3s5RuLLzRaWMjwMjh/M7zUDx1a+99zLHy
+         1tDQ==
+X-Forwarded-Encrypted: i=1; AJvYcCW08UHq2WVBpsGHXGHr4jUClo2x3NI9phTgg+t/dKbFYJ3BSeRBkEqOu4kvXG82bEXJcq30/9U4q7cbZx+A@vger.kernel.org
+X-Gm-Message-State: AOJu0YwrNYKfpkwm6afP4uRXBaw/vxF3B7dcfBVPqYGv1C50d2ffR9kA
+	kmIxmuY5U5/n/9IIK1pua1+dY2nWpkucNzzXWIwDDFqQ1v5Icd3WI/oBPCXlFPa4w0o2musCn+I
+	i9zTlybwPDc5IOp95Escrly3CQV90p2KV8O1hjk76nU+yhu9vK/kE8CPFIKfE8O/XSTiR
+X-Gm-Gg: ASbGnct3wPICAk5Fp3dw0qGsrLmqX27hnXlqiZoZP1Iiogmwfww5eZd0OXacDlm8mxF
+	kzC+0fJiDBtRS3bam6qWu7s6DPATbNwox5ZUMSpWvjN/tJDkmXLPp+5U+L/UJud9j3XWMR0KrP5
+	dJk67S3Lf195+/T+9EizoPGMwf1zC6QI+orqEc2MoYVFjuwhsNBsk+1CDovEIccgROj1wNrVJAE
+	7lc00H24Rng8cL7OiZOS63p++7cb14+WX0c9jZ+U2JOKA57f2w3Vm0PQocr68Z3weShtFozp+m4
+	cazxYTxKcjtffC7v3VybArjaFrJoqgHBcahxQiqLmYbB8IFJ24DWqfx7+mVyATexWzhg2FBkGPI
+	/bJM2KNXyQ2BsuFajgBwbOWyXcEPi2l/P4bD++Lkwo5X7pPN0Q7TNXkTP5Y2wr22Z1T2rtw==
+X-Received: by 2002:a17:902:cec2:b0:261:500a:5742 with SMTP id d9443c01a7336-292d3fd9a38mr72508975ad.10.1761195008589;
+        Wed, 22 Oct 2025 21:50:08 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEJqjQ5VJXt3VI85Iu5u10F0hg2Fj8UlcAw7hs/Onz/30KSLJIC0RZtQJ73mpgOW8HVaN7wLA==
+X-Received: by 2002:a17:902:cec2:b0:261:500a:5742 with SMTP id d9443c01a7336-292d3fd9a38mr72508645ad.10.1761195008139;
+        Wed, 22 Oct 2025 21:50:08 -0700 (PDT)
+Received: from [10.133.33.163] (tpe-colo-wan-fw-bordernet.qualcomm.com. [103.229.16.4])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2946f681eabsm7873065ad.15.2025.10.22.21.50.02
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 22 Oct 2025 21:46:52 -0700 (PDT)
-Message-ID: <4831d12b-a42a-464a-a70f-e0e40cf4ae4b@oss.qualcomm.com>
-Date: Thu, 23 Oct 2025 10:16:48 +0530
+        Wed, 22 Oct 2025 21:50:07 -0700 (PDT)
+Message-ID: <8d4184a8-4e32-43ce-a487-a195e97fa874@oss.qualcomm.com>
+Date: Thu, 23 Oct 2025 12:50:00 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -91,113 +90,127 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 2/4] soc: qcom: rpmh: Add support to read back resource
- settings
-To: Bjorn Andersson <andersson@kernel.org>,
-        Kamal Wadhwa <kamal.wadhwa@oss.qualcomm.com>
-Cc: Konrad Dybcio <konradybcio@kernel.org>,
-        Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20251022-add-rpmh-read-support-v2-0-5c7a8e4df601@oss.qualcomm.com>
- <20251022-add-rpmh-read-support-v2-2-5c7a8e4df601@oss.qualcomm.com>
- <litd6qcxuios7uwwcrz55ea24kj26onrjo2aekouynsce6wslj@vatjbulg64mb>
-Content-Language: en-US
-From: "Maulik Shah (mkshah)" <maulik.shah@oss.qualcomm.com>
-In-Reply-To: <litd6qcxuios7uwwcrz55ea24kj26onrjo2aekouynsce6wslj@vatjbulg64mb>
+Subject: Re: [PATCH v5 1/3] dt-bindings: display/msm: Add SM6150 DisplayPort
+ controller
+To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Cc: Rob Clark <robin.clark@oss.qualcomm.com>,
+        Dmitry Baryshkov <lumag@kernel.org>,
+        Abhinav Kumar
+ <abhinav.kumar@linux.dev>,
+        Jessica Zhang <jesszhan0024@gmail.com>, Sean Paul <sean@poorly.run>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+        Maxime Ripard <mripard@kernel.org>,
+        Thomas Zimmermann <tzimmermann@suse.de>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>, linux-arm-msm@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        fange.zhang@oss.qualcomm.com, yongxing.mou@oss.qualcomm.com,
+        li.liu@oss.qualcomm.com
+References: <20251021-add-displayport-support-to-qcs615-devicetree-v5-0-92f0f3bf469f@oss.qualcomm.com>
+ <20251021-add-displayport-support-to-qcs615-devicetree-v5-1-92f0f3bf469f@oss.qualcomm.com>
+ <fh7daiy5p5taaz7ifymbivfktjqngs5oashhd3osrtzspsac2z@nswaeyh3kkhi>
+From: Xiangxu Yin <xiangxu.yin@oss.qualcomm.com>
+In-Reply-To: <fh7daiy5p5taaz7ifymbivfktjqngs5oashhd3osrtzspsac2z@nswaeyh3kkhi>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDIyMDE1NSBTYWx0ZWRfX2i/HX9CxfR5P
- gOUe7gDWOZC2HaCofsMFgNMSVJ7RlsBrI2VRN2eEb8clYM0eKlViOsUAR9gfIcLWBRTq19vIORe
- J/h207Sv2z6sO+uXHiVtxKn92OxHn71dufrKtWfIFJIDJqnTmuBXru65pLQ/FUdI4+bHJund+4z
- E7LSkmtjA718/5bk3awwXddgtsDdmgezdODL7IC5NooN8ybijXwv4PFfxEDcTWoPawt+m0iNhp3
- pJ7ka0jwmSfvYD6zNvHp/AAkd8YOnNRWrreitvCXeNCcFTnLrqeri0MQasscH4o0HQeSabViGzY
- ViGbpMW9dNrrpBRVnW3FeA9Ods5kY1sriuC6Vmm4gnRLHaU769xIW8f//4BZK53gZ5/FN8GHX0v
- NHAqXTk1wnL0V2BYeChRrtHDaHS8hQ==
-X-Authority-Analysis: v=2.4 cv=Uotu9uwB c=1 sm=1 tr=0 ts=68f9b33e cx=c_pps
- a=cmESyDAEBpBGqyK7t0alAg==:117 a=fChuTYTh2wq5r3m49p7fHw==:17
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-ORIG-GUID: t_exCWRoPUYwGnhojhm0BVPrKlyQFLlj
+X-Proofpoint-GUID: t_exCWRoPUYwGnhojhm0BVPrKlyQFLlj
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDIyMDE2NCBTYWx0ZWRfX8CdSvY77qhnd
+ OpFUiOZkwPV8go9D4P3EHbAzNjitAi5Y32DyAN3wNQNsFa5My5eWnqE8AJfLDvGlsuLbjMEW3em
+ 86RPmNOkiuUbk1IMCXBrJ3BPWGtfMWan3Nz74LSO1dSFgyiiyi4QMO9p47+YT4428tKMjSlZxN2
+ Xw+X20c/J6cFa5Os+3cO+cNcoQai7Jfclfzo1Jx0q0RsEVpuFn1djDriFb5kNfTpzU7vXUHaKfL
+ ROPxPTc3x1zhuwBiV8+LaPoPcHDFOBsdjpuA7Mk3K8VwDAEJ+wKEwQXS4boUY4ySBJhA3DVZiM4
+ GVH/8qQ+Si+xU2wXWIvOxQQ1BfZwZi3Y1nBWUuT9H5qItVVdpHxJKfGe7hP7TBWt18tVay3klKV
+ koLdzZQDXXoixVXu+4bvry/G0+XNYA==
+X-Authority-Analysis: v=2.4 cv=UOTQ3Sfy c=1 sm=1 tr=0 ts=68f9b407 cx=c_pps
+ a=MTSHoo12Qbhz2p7MsH1ifg==:117 a=nuhDOHQX5FNHPW3J6Bj6AA==:17
  a=IkcTkHD0fZMA:10 a=x6icFKpwvdMA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8 a=eVGerQaZic2NLa4W9s0A:9 a=QEXdDO2ut3YA:10
- a=1OuFwYUASf3TG4hYMiVC:22
-X-Proofpoint-GUID: j9vBraLjRqioCEpPVR2a4gM40bzvEza9
-X-Proofpoint-ORIG-GUID: j9vBraLjRqioCEpPVR2a4gM40bzvEza9
+ a=EUspDBNiAAAA:8 a=WzllQ2DKJnOsbc1lEq8A:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=GvdueXVYPmCkWapjIL-Q:22
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.80.40
  definitions=2025-10-22_08,2025-10-22_01,2025-03-28_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- bulkscore=0 impostorscore=0 priorityscore=1501 clxscore=1015 spamscore=0
- adultscore=0 suspectscore=0 phishscore=0 lowpriorityscore=0 malwarescore=0
+ lowpriorityscore=0 suspectscore=0 adultscore=0 clxscore=1015 phishscore=0
+ bulkscore=0 malwarescore=0 impostorscore=0 priorityscore=1501 spamscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2510020000 definitions=main-2510220155
+ reason=mlx scancount=1 engine=8.19.0-2510020000 definitions=main-2510220164
 
 
-
-On 10/23/2025 2:51 AM, Bjorn Andersson wrote:
-> On Wed, Oct 22, 2025 at 02:38:54AM +0530, Kamal Wadhwa wrote:
->> From: Maulik Shah <maulik.shah@oss.qualcomm.com>
+On 10/22/2025 11:07 PM, Dmitry Baryshkov wrote:
+> On Tue, Oct 21, 2025 at 11:18:07AM +0800, Xiangxu Yin via B4 Relay wrote:
+>> From: Xiangxu Yin <xiangxu.yin@oss.qualcomm.com>
 >>
->> All rpmh_*() APIs so far have supported placing votes for various
->> resource settings but the H/W also have option to read resource
->> settings.
+>> SM6150 uses the same DisplayPort controller as SM8150, which is already
+>> compatible with SM8350. Add the SM6150-specific compatible string and
+>> update the binding example accordingly.
 >>
->> This change adds a new rpmh_read() API to allow clients
->> to read back resource setting from H/W. This will be useful for
->> clients like regulators, which currently don't have a way to know
->> the settings applied during bootloader stage.
->>
-> 
-> Allow me to express my disappointment over the fact that you sat on this
-> for 7 years!
-
-This was a dead API (even in downstream) with no user since SDM845/ 7 years.
-Read support was eventually removed from downstream driver too for the same reason.
-There were early discussions to remove read support from RSC H/W, due to lack of users.
-Its not realized yet and all SoCs still supports read.
-
-Now we have a regulator client requirement to read resource votes and reason to bring back this API.
-
-> 
->> Link: https://lore.kernel.org/r/20250623-add-rpmh-read-support-v1-1-ae583d260195@oss.qualcomm.com
-> 
-> Why is there a Link here?
-
-I will address this in next revision.
-
-> 
->> Signed-off-by: Maulik Shah <maulik.shah@oss.qualcomm.com>
->> Signed-off-by: Kamal Wadhwa <kamal.wadhwa@oss.qualcomm.com>
+>> Signed-off-by: Xiangxu Yin <xiangxu.yin@oss.qualcomm.com>
 >> ---
->>  drivers/soc/qcom/rpmh-rsc.c | 13 +++++++++++--
->>  drivers/soc/qcom/rpmh.c     | 47 +++++++++++++++++++++++++++++++++++++++++----
->>  include/soc/qcom/rpmh.h     |  5 +++++
->>  include/soc/qcom/tcs.h      |  2 ++
->>  4 files changed, 61 insertions(+), 6 deletions(-)
+>>  .../devicetree/bindings/display/msm/qcom,sm6150-mdss.yaml   | 13 ++++++++++++-
+>>  1 file changed, 12 insertions(+), 1 deletion(-)
 >>
-> [..]
->> diff --git a/drivers/soc/qcom/rpmh.c b/drivers/soc/qcom/rpmh.c
-> [..]
->> +/**
->> + * rpmh_read: Read a resource value
->> + *
->> + * @dev: The device making the request
->> + * @cmd: The payload having address of resource to read
->> + *
->> + * Reads the value for the resource address given in tcs_cmd->addr
->> + * and returns the tcs_cmd->data filled with same.
->> + *
->> + * May sleep. Do not call from atomic contexts.
-> 
-> * Context: May sleep...
+>> diff --git a/Documentation/devicetree/bindings/display/msm/qcom,sm6150-mdss.yaml b/Documentation/devicetree/bindings/display/msm/qcom,sm6150-mdss.yaml
+>> index 9ac24f99d3ada1c197c9654dc9babebccae972ed..89852af70de97a9025079107b838de578778c049 100644
+>> --- a/Documentation/devicetree/bindings/display/msm/qcom,sm6150-mdss.yaml
+>> +++ b/Documentation/devicetree/bindings/display/msm/qcom,sm6150-mdss.yaml
+>> @@ -51,6 +51,16 @@ patternProperties:
+>>        compatible:
+>>          const: qcom,sm6150-dpu
+>>  
+>> +  "^displayport-controller@[0-9a-f]+$":
+>> +    type: object
+>> +    additionalProperties: true
+>> +    properties:
+>> +      compatible:
+>> +        items:
+>> +          - const: qcom,sm6150-dp
+>> +          - const: qcom,sm8150-dp
+>> +          - const: qcom,sm8350-dp
+>> +
+>>    "^dsi@[0-9a-f]+$":
+>>      type: object
+>>      additionalProperties: true
+>> @@ -132,13 +142,14 @@ examples:
+>>                  port@0 {
+>>                    reg = <0>;
+>>                    dpu_intf0_out: endpoint {
+>> +                    remote-endpoint = <&mdss_dp0_in>;
+> Why?
 
-I will address this in next revision.
 
-Thanks,
-Maulik> 
-> Regards,
-> Bjorn
-> 
->> + *
->> + * Return: 0 on success, negative errno on failure
->> + */
->> +int rpmh_read(const struct device *dev, struct tcs_cmd *cmd)
+Oh, I think I misunderstood the “messed up indentation” comment from Krzysztof.
+It seems the two-space indentation under port@X and opp-x is the actual issue.
 
+However, that part was not introduced in this patch.
+I will split a separate patch to fix the indentation there.
+
+
+>>                    };
+>>                  };
+>>  
+>>                  port@1 {
+>>                    reg = <1>;
+>>                    dpu_intf1_out: endpoint {
+>> -                      remote-endpoint = <&mdss_dsi0_in>;
+>> +                    remote-endpoint = <&mdss_dsi0_in>;
+> Why?
+
+
+Ack.
+
+
+>>                    };
+>>                  };
+>>              };
+>>
+>> -- 
+>> 2.34.1
+>>
+>>
 
