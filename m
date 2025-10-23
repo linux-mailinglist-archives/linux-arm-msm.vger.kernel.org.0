@@ -1,223 +1,114 @@
-Return-Path: <linux-arm-msm+bounces-78638-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-78639-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 58542C031A5
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Oct 2025 20:58:06 +0200 (CEST)
+Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [142.0.200.124])
+	by mail.lfdr.de (Postfix) with ESMTPS id D1B9AC03396
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Oct 2025 21:52:27 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id D84FC19C492A
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Oct 2025 18:58:29 +0000 (UTC)
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 886734E2466
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Oct 2025 19:52:22 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 75BCC34D4F5;
-	Thu, 23 Oct 2025 18:57:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C833434DB47;
+	Thu, 23 Oct 2025 19:52:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b="s/BqqRVh"
+	dkim=pass (2048-bit key) header.d=mainlining.org header.i=@mainlining.org header.b="OLiCZ3pB";
+	dkim=permerror (0-bit key) header.d=mainlining.org header.i=@mainlining.org header.b="uYAARAUu"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail1.manjaro.org (mail1.manjaro.org [142.132.176.110])
+Received: from mail.mainlining.org (mail.mainlining.org [5.75.144.95])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 368F334D4E8;
-	Thu, 23 Oct 2025 18:57:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=142.132.176.110
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D51A52EFDA5;
+	Thu, 23 Oct 2025 19:52:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=5.75.144.95
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761245843; cv=none; b=AphKSE/E8uiacKybucoDYr757qJYEllosBHZeeOeUqgvYb+pBh3BDxXVdWslxceuSMhn7efeZfOW1zMJL1F0gb8zmv61uSd5VzyhjAY/fQ2an+mGx7ykR914Czrd8JZaxZvMHGbYnNMvfM6Es06y6G1HiFl24ml4VvoovjmCIP8=
+	t=1761249139; cv=none; b=ttr+qC2HXWYyxSHbK7uCxPhQWQcYK+C5K5Hs1J/nGwlnuzk3QiWlnC6tznXYq0AolKVZYKYUL66DbS27INr9Mv3Oeg1FQgO5WHac069c41FylIoav1B4w25rYPVAnlLTmQoyr5TPCNncEk4NfL6Yjg+a/FCfiqc3Txr0Dpk7EHE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761245843; c=relaxed/simple;
-	bh=6wX8LHFlafAw8mfqmlMLn51I+U9gs1h4LFipTaYP3fw=;
-	h=From:In-Reply-To:Content-Type:References:Date:Cc:To:MIME-Version:
-	 Message-ID:Subject; b=j/3gLH7d+bgp82lFiH0mC7VrMjtGk8vG/xZPS0KoTb1yiSPg30Uji2/Y3O7XBRqPacF2/5F/YoJ9bxcAOAIklO8y1vGsbIGJ/DWzn84Xa9M/N9lGleeLIKPXOEAhLBi2FJu2bACPJr6bV3vvsEqmptDgLzGfqNqPm3YDDZZQvfI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=manjaro.org; spf=pass smtp.mailfrom=manjaro.org; dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b=s/BqqRVh; arc=none smtp.client-ip=142.132.176.110
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=manjaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=manjaro.org
-Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon) with ESMTPA id 704B840D1C;
-	Thu, 23 Oct 2025 20:57:13 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=manjaro.org; s=dkim;
-	t=1761245838; h=from:subject:date:message-id:to:cc:mime-version:content-type:
-	 content-transfer-encoding:in-reply-to:references;
-	bh=jFoaeG/1d3oJARkrn8yECO2RwXWx0Noto3/Vpddq4gE=;
-	b=s/BqqRVhShF5evNuCamVwBbWlzR1H4GanU9Rz3oGQ2MNqRTY/lk0SrY+zf/g2KUGFl6EBy
-	hUqIaUJ45JG/vdg6Zv/XWm4i5sU88I5GXa7E0G2V9cPTtslidtZrwooba+6z2PGX6TAcu/
-	IfQX50fnCi6r8BHx6myoT+EnVzqn3515v527cJNX7CHyodhC4Y4XFSJZ2Gd4wlnf4SoAOX
-	DB8zDXT6Fbi2JWfmLmLKKnieKOQT8i5q1bIjoQ5qBZd3Gl/cOWc0wIyIuTvnOFaglSrMHQ
-	9lUDjZfl0qp6dF8fW8ne7cyHDI1YwEMfeneul+gN26u/3kaU2WDYfYwa9TZQwA==
-From: "Dragan Simic" <dsimic@manjaro.org>
-In-Reply-To: <fxakjhx7lrikgs4x3nbwgnhhcwmlum3esxp2dj5d26xc5iyg22@wkbbwysh3due>
-Content-Type: text/plain; charset="utf-8"
-References: <20251014184905.GA896847@bhelgaas>
- <0899e629-eaaf-1000-72b5-52ad977677a8@manjaro.org> <fxakjhx7lrikgs4x3nbwgnhhcwmlum3esxp2dj5d26xc5iyg22@wkbbwysh3due>
-Date: Thu, 23 Oct 2025 20:57:13 +0200
-Cc: "Bjorn Helgaas" <helgaas@kernel.org>, "FUKAUMI Naoki" <naoki@radxa.com>, manivannan.sadhasivam@oss.qualcomm.com, "Bjorn Helgaas" <bhelgaas@google.com>, "Lorenzo Pieralisi" <lpieralisi@kernel.org>, =?utf-8?q?Krzysztof_Wilczy=C5=84ski?= <kwilczynski@kernel.org>, "Rob Herring" <robh@kernel.org>, linux-pci@vger.kernel.org, linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, =?utf-8?q?David_E=2E_Box?= <david.e.box@linux.intel.com>, "Kai-Heng Feng" <kai.heng.feng@canonical.com>, =?utf-8?q?Rafael_J=2E_Wysocki?= <rafael@kernel.org>, "Heiner Kallweit" <hkallweit1@gmail.com>, "Chia-Lin Kao" <acelan.kao@canonical.com>, linux-rockchip@lists.infradead.org, regressions@lists.linux.dev, "Shawn Lin" <shawn.lin@rock-chips.com>, "Diederik de Haas" <diederik@cknow-tech.com>, "Heiko Stuebner" <heiko@sntech.de>
-To: "Manivannan Sadhasivam" <mani@kernel.org>
+	s=arc-20240116; t=1761249139; c=relaxed/simple;
+	bh=sHUw8TXefNVNqJ9dbeVVq2lmdHHc7gjWiH9kRpBn3sw=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=jF5L/wFsPv4LbMM8xzO9b6EyNhK8Umo4/P+iG0cKg7RkNOduu4TKkuR9mWzL+XQ8VdpQxuUyOcua8qk9xY6NNapeq835UHnssVhzyWOKOzy7pFJbNj7AAd0tLO7q8JRPHFdA44XrOUqulZfsFQNsODi8kXL3PfUd1XWYLvUAsbg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=mainlining.org; spf=pass smtp.mailfrom=mainlining.org; dkim=pass (2048-bit key) header.d=mainlining.org header.i=@mainlining.org header.b=OLiCZ3pB; dkim=permerror (0-bit key) header.d=mainlining.org header.i=@mainlining.org header.b=uYAARAUu; arc=none smtp.client-ip=5.75.144.95
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=mainlining.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=mainlining.org
+DKIM-Signature: v=1; a=rsa-sha256; s=202507r; d=mainlining.org; c=relaxed/relaxed;
+	h=To:Message-Id:Date:Subject:From; t=1761249129; bh=C46nEt0t3S5/oSHcF9wwDUt
+	5uysDMu3pgMCcP8+j3eE=; b=OLiCZ3pBa3EWbk+Jf7rJh2hWHVKF6oVINY4sOutL+zoXZWJz+X
+	WVi+vFWdYsDnOmfQCjB+GWUI3wPtJH7Z10nvPXBm7nOHZUR/gxoHeO9eDMNaVb1TxnjM/Pvqxeh
+	P0cky1JJLOxXKUeKr5g3sx/lB+IBQqCYRIaoijZ3Y2BW1Ku0OAgJaFVqnMmAjaXVc6ySPBbk8FZ
+	l5WxIzYBBv1/rnIA2QIOYqzBJ5mCrwTwuawfAZ22TiBC8u5r0g9EsmHzn4244pB2w3hUcyEUWJk
+	hr8VNUE/gTaVuK9n4DP9QNPiZcW/Dg/RZOKey3eei2zZiDBCeai62OhbmUL/eX6PQvw==;
+DKIM-Signature: v=1; a=ed25519-sha256; s=202507e; d=mainlining.org; c=relaxed/relaxed;
+	h=To:Message-Id:Date:Subject:From; t=1761249129; bh=C46nEt0t3S5/oSHcF9wwDUt
+	5uysDMu3pgMCcP8+j3eE=; b=uYAARAUuwSOU/7sDF65JmFQsPuDjULdenhSyxrpoXQtfTTgVDH
+	HMy/aU574LlnaThHwkIFkJiSXSm+jjKGWNAw==;
+From: Nickolay Goppen <setotau@mainlining.org>
+Subject: [PATCH v2 0/3] arm64: dts: qcom: Add support for SDM660 CDSP and
+ ADSP FastRPC
+Date: Thu, 23 Oct 2025 22:51:58 +0300
+Message-Id: <20251023-qcom-sdm660-cdsp-adsp-dts-v2-0-895ffe50ab5f@mainlining.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Message-ID: <b3e60f4e-6351-8303-6ad2-9e72849ccd18@manjaro.org>
-Subject: =?utf-8?q?Re=3A?= [PATCH v2 1/2] =?utf-8?q?PCI/ASPM=3A?= Override the ASPM 
- and Clock PM states set by BIOS for devicetree platforms
-User-Agent: SOGoMail 5.12.3
-Content-Transfer-Encoding: quoted-printable
-X-Last-TLS-Session-Version: None
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAF6H+mgC/42PuW7DMBBEf0VgHQa8D1X5j8DF8pIJRJJNKkIMQ
+ /9uSipSpEmzwCx238w8UY0lx4r67olKXHPN89QEe+uQv8I0RJxD04gRJimhFt/9POIaRqUI9qH
+ eMOwjLBWbBM4pTTg3EbX/W4kp/xzsz8upS7x/N4vlXP46NMOTb/7ypYUglVEaqOlXtpMd1Ijb3
+ ZiXvrM8cQdOcEqCSElzwrT3IhlNtWBGBGG1Bp/QnuGa6zKXx1F3pUeIfzRbKSbYgpOJGSVBxY8
+ R8vSVpzwN73MZ0GXbthcT9yRVSwEAAA==
+X-Change-ID: 20251019-qcom-sdm660-cdsp-adsp-dts-8fabb670338e
+To: Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht, 
+ linux@mainlining.org, Nickolay Goppen <setotau@mainlining.org>
+X-Mailer: b4 0.14.3
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1761249128; l=1423;
+ i=setotau@mainlining.org; s=20250815; h=from:subject:message-id;
+ bh=sHUw8TXefNVNqJ9dbeVVq2lmdHHc7gjWiH9kRpBn3sw=;
+ b=maJMpObJ1oFsvLNYf+84GTMwCCAs8U+EqaqViATQ1M3cJd7o/bXQOGhQFE/tIjXhM2s1G7eov
+ Hn8W1wQWopgBGQqVu9rdAsLZLhecZrBMW9wmt6DJ5F9A00wyw9EBLwq
+X-Developer-Key: i=setotau@mainlining.org; a=ed25519;
+ pk=Og7YO6LfW+M2QfcJfjaUaXc8oOr5zoK8+4AtX5ICr4o=
 
-Hello Manivannan,
+This series adds support for SDM660 CDSP remoteproc and also adds
+FastRPC support for ADSP.
 
-On Wednesday, October 15, 2025 08:22 CEST, Manivannan Sadhasivam <mani@=
-kernel.org> wrote:
-> On Wed, Oct 15, 2025 at 01:33:35AM +0200, Dragan Simic wrote:
-> > On Tuesday, October 14, 2025 20:49 CEST, Bjorn Helgaas <helgaas@ker=
-nel.org> wrote:
-> > > On Wed, Oct 15, 2025 at 01:30:16AM +0900, FUKAUMI Naoki wrote:
-> > > > I've noticed an issue on Radxa ROCK 5A/5B boards, which are bas=
-ed on the
-> > > > Rockchip RK3588(S) SoC.
-> > > >=20
-> > > > When running Linux v6.18-rc1 or linux-next since 20250924, the =
-kernel either
-> > > > freezes or fails to probe M.2 Wi-Fi modules. This happens with =
-several
-> > > > different modules I've tested, including the Realtek RTL8852BE,=
- MediaTek
-> > > > MT7921E, and Intel AX210.
-> > > >=20
-> > > > I've found that reverting the following commit (i.e., the patch=
- I'm replying
-> > > > to) resolves the problem:
-> > > > commit f3ac2ff14834a0aa056ee3ae0e4b8c641c579961
-> > >=20
-> > > Thanks for the report, and sorry for the regression.
-> > >=20
-> > > Since this affects several devices from different manufacturers a=
-nd (I
-> > > assume) different drivers, it seems likely that there's some issu=
-e
-> > > with the Rockchip end, since ASPM probably works on these devices=
- in
-> > > other systems.  So we should figure out if there's something wron=
-g
-> > > with the way we configure ASPM, which we could potentially fix, o=
-r if
-> > > there's a hardware issue and we need some king of quirk to preven=
-t
-> > > usage of ASPM on the affected platforms.
-> > >=20
-> > > Can you collect a complete dmesg log when booting with
-> > >=20
-> > >   ignore=5Floglevel pci=3Dearlydump dyndbg=3D"file drivers/pci/* =
-+p"
-> > >=20
-> > > and the output of "sudo lspci -vv"?
-> > >=20
-> > > When the kernel freezes, can you give us any information about wh=
-ere,
-> > > e.g., a log or screenshot?
-> > >=20
-> > > Do you know if any platforms other than Radxa ROCK 5A/5B have thi=
-s
-> > > problem?
-> >=20
-> > After thinking quite a bit about it, I think we should revert this
-> > patch and replace it with another patch that allows per-SoC, or
-> > maybe even per-board, opting into the forced enablement of PCIe
-> > ASPM.  Let me explain, please.
->=20
-> ASPM is a PCIe device specific feature, nothing related to SoC/board.=
- Even if
-> you limit it to certain platforms, there is no guarantee that it will=
- be safe as
-> the users can connect a buggy device to the slot and it could lead to=
- the same
-> issue.
+Signed-off-by: Nickolay Goppen <setotau@mainlining.org>
+---
+Changes in v2:
+- As suggested by Konrad reordered properties in the cdsp_smmu node.
+- Fixed indentations for interrupts property for the cdsp_smmu.
+- Fixed formatting for the CDSP node.
+- Splitted ADSP-related commit to separate ones.
+- Link to v1: https://lore.kernel.org/r/20251019-qcom-sdm660-cdsp-adsp-dts-v1-0-9ab5f2865a6e@mainlining.org
 
-I'm hoping that it's clear by now that the theory and practice
-actually diverge in this case, requiring certain level of support
-for different SoCs and boards, which makes ASPM more than just
-a device feature that's simply expected to work by default.
+---
+Nickolay Goppen (3):
+      arm64: dts: qcom: sdm630/660: Add CDSP-related nodes
+      arm64: dts: qcom: sdm630: Add missing vote clock and GDSC to lpass_smmu
+      arm64: dts: qcom: sdm630: Add FastRPC nodes to ADSP
 
-Dealing with buggy PCIe devices is, of course, another part of
-the entire endeavor.
+ arch/arm64/boot/dts/qcom/sdm630.dtsi |  40 ++++++++-
+ arch/arm64/boot/dts/qcom/sdm636.dtsi |  23 +++--
+ arch/arm64/boot/dts/qcom/sdm660.dtsi | 162 +++++++++++++++++++++++++++++++++++
+ 3 files changed, 215 insertions(+), 10 deletions(-)
+---
+base-commit: 93f3bab4310d4ff73027cc4f87174284d4977acf
+change-id: 20251019-qcom-sdm660-cdsp-adsp-dts-8fabb670338e
+prerequisite-change-id: 20251018-qcom-sdm660-cdsp-59ad56867a18:v2
+prerequisite-patch-id: a8c9703aec1663b8226556ba1770bd6c5b4ef060
+prerequisite-patch-id: 5a49b179c69e045e8003f28e8ef0e6e003c0064a
+prerequisite-patch-id: dd158e1214a7e73ac0a8f1da9d3face61ad7d5bd
 
-> > When a new feature is introduced, it's expected that it may fail
-> > on some hardware or with some specific setups, so quirking off such
-> > instances, as time passes, is perfectly fine.  Such a new feature
-> > didn't work before it was implemented, so it's acceptable that it
-> > fails in some instances after the introduction, and that it gets
-> > quirked off as time passes and more testing is performed.
->=20
-> ASPM is not a new feature. It was introduced more than a decade befor=
-e. But we
-> somehow procastinated the enablement for so long until we realized th=
-at if we
-> don't do it now, we wouldn't be able to do it anytime in the future.
-
-To clarify, I referred to PCIe as the already established feature,
-which evidently became broken on some SoCs and boards with the
-initial blanket enabling of ASPM.
-
-> > However, when some widespread feature, such as PCIe, has already
-> > been in production for quite a while, introducing high-risk changes
-> > to it in a blanket fashion, while intending to have the incompatibl=
-e
-> > or not-yet-ready platforms quirked off over time, simply isn't the
-> > way to go.  Breaking stuff intentionally to find out what actually
-> > doesn't work is rarely a good option.
->=20
-> The issue is due to devices exposing ASPM capability, but behaving er=
-ratically
-> when enabled. Until, we enable ASPM on these devices, we cannot know =
-whether
-> they are working or not. To avoid mass chaos, we decided to enable it=
- only for
-> devicetree platforms as a start.
-
-As mentioned above, dealing with buggy PCIe devices is something
-to be covered separately, and wasn't the subject of my complaint.
-I referred to the SoC and board specifics.
-
-> > Thus, I'd suggest that this patch is replaced with nother patches,
-> > which would introduce an additional ASPM opt-in switch to the PCI
-> > binding, allowing SoCs or boards to have it enabled =5Fafter=5F pro=
-per
-> > testing is performed.  The PCIe driver may emit a warning that ASPM
-> > is to be enabled at some point in the future, to "bug" people about
-> > the need to perform the testing, etc.
->=20
-> Even if we emit a "YOUR DEVICE MAY BREAK" warning, nobody would care =
-as long as
-> the device works for them. We didn't decide to enable this feature ov=
-ernight to
-> trouble users. The fact that ASPM saves runtime power, which will ben=
-efit users
-> and ofc the environment as a whole, should not be kept disabled.
->=20
-> But does that mean, we wanted to have breakages, NO. We expected brea=
-kages as
-> not all devices will play nicely with ASPM, but there is only one way=
- to find
-> out. And we do want to disable ASPM only for those devices.
-
-I see, and it has turned out rather well in the end.  I totally
-understand the frustration that may come out of people not caring
-for something until it actually breaks, but as you can see, the
-Rockchip community, including people from Rockchip itself, actually
-cares quite a lot and is willing to help in different ways.
-
-> >  With all that in place, we
-> > could expect that in a year or two PCIe ASPM could eventually be
-> > enabled everywhere.  Getting everything tested is a massive endeavo=
-r,
-> > but that's the only way not to break stuff.
-> >=20
-> > Biting the bullet and hoping that it all goes well, I'd say, isn't
-> > the right approach here.
->=20
-> Your two year phased approach would never work as that's what
-> we have hoped for more than a decade.
-
-Totally understood, but again, perhaps you haven't knocked at the
-right doors.  The Rockchip community cares, for example. :)
+Best regards,
+-- 
+Nickolay Goppen <setotau@mainlining.org>
 
 
