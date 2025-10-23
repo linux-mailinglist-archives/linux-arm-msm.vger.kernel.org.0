@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-78459-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-78460-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 816CABFF511
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Oct 2025 08:18:36 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id C1EF5BFF528
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Oct 2025 08:22:21 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 280023A4093
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Oct 2025 06:18:35 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 77C6A3A48DE
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Oct 2025 06:22:20 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C5225284B4F;
-	Thu, 23 Oct 2025 06:18:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0004A28489B;
+	Thu, 23 Oct 2025 06:22:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="tgpCZF+o"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="tPuS0LKG"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82E042836B1;
-	Thu, 23 Oct 2025 06:18:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BEAB0272E41;
+	Thu, 23 Oct 2025 06:22:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761200312; cv=none; b=d/SgfPwcKmgIxa2xMKF/R5nsUllQUH+mQgwcH3P8Xtw4QaDqJAv5gLC3aYXyIX5SagaNj17KO84VbaeZ0nk9noOZUJtLTvccVW4sOEqYBQm9PNokDNOVmR2qk7OFHiyC70ZedqPFGQSD7qOQw4LYjubTmqN3fU7x+KxVSJ1hzmM=
+	t=1761200537; cv=none; b=HKyeH4iNrZDKh4aU0vBEtUFkMfMzJ++6vAdZF3xoUfmrUKCCVYnR6K8MFimjX51gu0m6KPLOuClkqQtVeVuje508HcD9yuWxnV5apjqGEAD6kLc2hfXzqINyesfyI8sUy6Cteb0iq49CCccFnQN7DLzqbvUILXhku0edrnK3Y3c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761200312; c=relaxed/simple;
-	bh=135r+iOzMXYzRrHnuZxO4TrjkLwdwBeSziTQ9L0ObvI=;
+	s=arc-20240116; t=1761200537; c=relaxed/simple;
+	bh=OQy5ZEimz3NUoYmeKw+uSJ7emCUk471RH/9yGildT4k=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=BmMBAHo2MLtddOOb7rIFpZZS6hMI2D6BnABBuLx2t0Dru32iDNNKjmnyqHaR+D5P+oPVI4YugIrmySYKU7rh9yVQzZaKqktaMT0mFQfkgz82ecKJV5D4Wv7WXjGU2ClES6PkWNcx0HCd2j+DD+Pf+ZD7+X3HyMnNC1F0AUtP2OE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=tgpCZF+o; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2FC11C4CEE7;
-	Thu, 23 Oct 2025 06:18:28 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=kJGxiHJidgDKfNo1CaUpVKaUvosRwnysradx9BzHLGg5mYxVGpTslZVR+mqZwbLgnLzlDJhuL5Q7xhSGOCG0iIFUAx1ieX22G22DPWlJwqEO6SimTfr2OQC7m9GcfiYfY1U1XLzvy319PB3j2yHarFp1DYn+lBI2ZlbWxQNa87o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=tPuS0LKG; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8927C4CEE7;
+	Thu, 23 Oct 2025 06:22:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1761200312;
-	bh=135r+iOzMXYzRrHnuZxO4TrjkLwdwBeSziTQ9L0ObvI=;
+	s=k20201202; t=1761200537;
+	bh=OQy5ZEimz3NUoYmeKw+uSJ7emCUk471RH/9yGildT4k=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=tgpCZF+odlSN98VUfYJilY7igicPl14AP+1ArBB+TxE71IPFhDzTCc7xVXHMvxaiV
-	 vP2z5d6GPHKqXkURvW+mhQBHa38gNizQ734svkGZjzBB2iR10Rz6EAXGaoGfJnYVn4
-	 fLiYg1m4sxqt+iONsQ0FBsSgqdqFy8krdEEii81vmzjPEXVvmVcn31nJv/c+UV8HIY
-	 1rJe2DZy++u16oa+ytehc/VfEE9h0aBFUOFYWajMSHa1cpiumjh4ef1umAJJWLX6gn
-	 hpgmwk6n+7FkR25p0jdHuCeGssJWKw2ApJSXVgxPDa5ub2qWm9WiulrF8Q0TO+dRHN
-	 0nvghvHb6S6og==
-Message-ID: <118dfd79-f65f-4845-9436-b6be99a5223c@kernel.org>
-Date: Thu, 23 Oct 2025 08:18:27 +0200
+	b=tPuS0LKGo73h2Y4LmgCCG2HfFBfDbHWuEyr1Vt5BCNPMNiHEZYLbklVddCrNr4TNC
+	 amn+LrQYd2w1iIOsmnXazFUc7mAo/1IkIyOCWUshssXBxIpwmFwEMXlOakOZgKz+hU
+	 DQOxpLYoROiqVBMNs6gIqpSzmL+lN8C1bu2eNrAOy4HeXM9DUVJef0B3Co0g8e9T8B
+	 /Zl/6RnjG4I+S52jHMvtd8vv/TJnY634/GNFgSo4VJs8dQuCMosngVa8rIWplzIg5x
+	 Ka+msct7L5/9Npxhh2FOsjYXfzQi+Lym9AX/cyV12f3aPR3nyvCLR+OcwiGgj9l578
+	 3f7tj4u2VFPiQ==
+Message-ID: <63fc8add-356a-44fe-b5d5-9ef7bda04d76@kernel.org>
+Date: Thu, 23 Oct 2025 08:22:13 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,17 +50,15 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/2] dt-bindings: arm: qcom,ids: Add SoC ID for SM8850
-To: Jingyi Wang <jingyi.wang@oss.qualcomm.com>,
- Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
-Cc: aiqun.yu@oss.qualcomm.com, tingwei.zhang@oss.qualcomm.com,
- trilok.soni@oss.qualcomm.com, yijie.yang@oss.qualcomm.com,
- linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org
-References: <20251022-knp-socid-v2-0-d147eadd09ee@oss.qualcomm.com>
- <20251022-knp-socid-v2-1-d147eadd09ee@oss.qualcomm.com>
+Subject: Re: [PATCH 0/2] Add interconnect support for Kaanapali SoC
+To: Raviteja Laggyshetty <raviteja.laggyshetty@oss.qualcomm.com>,
+ Georgi Djakov <djakov@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Odelu Kukatla <odelu.kukatla@oss.qualcomm.com>,
+ Mike Tipton <mike.tipton@oss.qualcomm.com>
+Cc: linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20251023-knp-interconnect-v1-0-df13182aceac@oss.qualcomm.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -106,32 +104,17 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  jWt87ecuHlpL3uuQ0ZZNWqHgZoQLXoqC2ZV5KrtKWb/jyiFX/sxSrodALf0zf+tfHv0FZWT2
  zHjUqd0t4njD/UOsuIMOQn4Ig0SdivYPfZukb5cdasKJukG1NOpbW7yRNivaCnfZz6dTawXw
  XRIV/KDsHQiyVxKvN73bThKhONkcX2LWuD928tAR6XMM2G5ovxLe09vuOzzfTWQDsm++9UKF a/A=
-In-Reply-To: <20251022-knp-socid-v2-1-d147eadd09ee@oss.qualcomm.com>
+In-Reply-To: <20251023-knp-interconnect-v1-0-df13182aceac@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 23/10/2025 06:57, Jingyi Wang wrote:
-> Add the ID for the Qualcomm SM8850 SoC which represents the Kaanapali
-> platform.
+On 23/10/2025 06:39, Raviteja Laggyshetty wrote:
+> Add interconnect dt-bindings and driver support for Qualcomm Kaanapali SoC.
 > 
-> Signed-off-by: Jingyi Wang <jingyi.wang@oss.qualcomm.com>
-> ---
->  include/dt-bindings/arm/qcom,ids.h | 1 +
->  1 file changed, 1 insertion(+)
-> 
-> diff --git a/include/dt-bindings/arm/qcom,ids.h b/include/dt-bindings/arm/qcom,ids.h
-> index cb8ce53146f0..19598ed4679e 100644
-> --- a/include/dt-bindings/arm/qcom,ids.h
-> +++ b/include/dt-bindings/arm/qcom,ids.h
-> @@ -286,6 +286,7 @@
->  #define QCOM_ID_IPQ5424			651
->  #define QCOM_ID_QCM6690			657
->  #define QCOM_ID_QCS6690			658
-> +#define QCOM_ID_SM8850			660
+> bindings file depends on Kaanapali gcc patch header file:
+> https://lore.kernel.org/all/20250924-knp-clk-v1-0-29b02b818782@oss.qualcomm.com/
 
-
-Why no QCOM_ID_KAANAPALI?
-
+They cannot. We told about this multiple times.
 
 Best regards,
 Krzysztof
