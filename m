@@ -1,217 +1,165 @@
-Return-Path: <linux-arm-msm+bounces-78525-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-78526-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [IPv6:2605:f480:58:1:0:1994:3:14])
-	by mail.lfdr.de (Postfix) with ESMTPS id 06C38C006D8
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Oct 2025 12:18:35 +0200 (CEST)
+Received: from ams.mirrors.kernel.org (ams.mirrors.kernel.org [IPv6:2a01:60a::1994:3:14])
+	by mail.lfdr.de (Postfix) with ESMTPS id 02527C00702
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Oct 2025 12:20:56 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id A54324EAFF0
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Oct 2025 10:18:33 +0000 (UTC)
+	by ams.mirrors.kernel.org (Postfix) with ESMTPS id 3E5F83536D1
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Oct 2025 10:20:55 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 31088302773;
-	Thu, 23 Oct 2025 10:18:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 529092F6919;
+	Thu, 23 Oct 2025 10:20:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="blfamD2V"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="Bv5MAQ9P"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.16])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA0C32F616A
-	for <linux-arm-msm@vger.kernel.org>; Thu, 23 Oct 2025 10:18:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5ED9A30102A
+	for <linux-arm-msm@vger.kernel.org>; Thu, 23 Oct 2025 10:20:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.16
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761214709; cv=none; b=dCL7JcmAbC5Z/PUvGvjeHP+loXAyLVxrazbZiS6/+t5D0rfSp3WdmKtQ2i3MjoWgZnKS/DrB+9A+LbNYGeI7dtEOzdjEg/mcskwBmOvPWQjMcBnOAprTVIibbRYD1I01T009J+XwPgeaG0PIZ0WfLuI3UHou12Q8/UoLnTXrP/8=
+	t=1761214853; cv=none; b=ZRXuPKsmbJM+TKJHvQyzspEM50b1Lq/aDo22cuNmHcmodcw/CoRt6QOSjXdCejjZz6Oj/9Vq391Td1sGk4PHgB+JGrwaRBXgw3utHCgt61iG5o+i3ey1VMXLaiKXbUaLYPGS8ERqEfdYQx7YJTvivvnsvh4VqQKTI5n3oSS719k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761214709; c=relaxed/simple;
-	bh=1RnLQ3v5S/1nsTAmNc4jlYHFj6K1Jk58trMvxEAtJEY=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=jqnq+Hn0oyoG0x7oRmcQtDPQ577OkyDDMXEx1yVf4F694os2mFC4LnkkzQwCsv92jy93VZC7O0lLcdUz4iBYyMEeRKWLWDfkrFBmZJZhypB2Q/h6UGCEMfmy/5c7n3sDSOn1JQu8U4d4/wRTlDT1gV7NvG9bWAxKDqTY+wkxY6Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=blfamD2V; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 59N75w3G028844
-	for <linux-arm-msm@vger.kernel.org>; Thu, 23 Oct 2025 10:18:27 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	JXQvqOCIifU70x6E5l/eBJ77oOljySsiWz1sAln6OEo=; b=blfamD2V0K6KFvxb
-	KtyyNqCrw1doC2aSK8SH3SNG9hRhDkw5nyy47f9wMKb9WOIVSGuOX6vw6ykhAdlP
-	J0wmSOXouYECU6ax/zN2h1wGVNzrC05nt89moMyGJh4IpoTVesnP1jqfoMmhniL9
-	3V/IQf17jSYCd6CKvTuXx9IB2Qj6RNmvlYM1vDxYsd9XXWQg1d9Qh35+gPxSaSwY
-	wc8B+FjDPtlVX/8ULr8OIPjHHffYkGQWxwtxlBowSYDG38ufYFe9pnWX6Snn6CXH
-	4+5m3a8cXw7ngeLRfhvwPEkzoConjWu1GgQr11/x6kvJWgIR2qbte0DODJDxr7zN
-	2Botkg==
-Received: from mail-pl1-f197.google.com (mail-pl1-f197.google.com [209.85.214.197])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 49w08wdne6-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Thu, 23 Oct 2025 10:18:26 +0000 (GMT)
-Received: by mail-pl1-f197.google.com with SMTP id d9443c01a7336-26b3e727467so3276525ad.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Oct 2025 03:18:26 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1761214706; x=1761819506;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=JXQvqOCIifU70x6E5l/eBJ77oOljySsiWz1sAln6OEo=;
-        b=NjATq8ZMdpsQuEFAs4UBzfLeaLuiTWek5kl5B6uUjGx1TEY3JbYO9hu4A17BTW1sNh
-         PLYIYw7OqYay9Z5MXPWH+mcSd81vN6pAb9Zs4JTihX8imbN1x1kqAkK8ZPxJYUhKAahQ
-         DYwyrVF7ttqUJP7ljtGxwZd55GRW3rThAk5v367WPnrO6Krg+wEskhZ35h/t2tkhYLTi
-         p0wAuWblvkSNegNlpL0gsNcj+APPH8cZ4W3uYwqBLU9wBPTH9RzJ2s9Gpvny4DSt48EH
-         tUX9MXlR8HDOHW+iSyAiUep/8WF6pVYzNCQEbEQK54t2pAUA/gDsPDKunzyDzAGJUuxB
-         DKew==
-X-Forwarded-Encrypted: i=1; AJvYcCXFXpr0piC3ic29B0r9CXkNAhnT4/sWKWb7O+11W96hXWupZ0Cg8JWkitehFgMn4IcpyJvtb4zN1gQE223O@vger.kernel.org
-X-Gm-Message-State: AOJu0YzOrVgIwsc4kzC7NxyFoeKEi9IWxpQvq9Cizt02seg6ZRP1UW5L
-	8+DiW/v2m9aTO3uuMvx/TiVXVscKZi3cw6j47nnoh1J2huaUqYpf51sfPHeUOjixathWN+v6tbY
-	4WwpwD6ID0RlVkNOSte7sBIRnVX0hTWnVmgT9uAyoOL/Bs9EUknYWP1wmScaRNM2gq0E=
-X-Gm-Gg: ASbGnctweDchIEEzhWhM9TTdzpL6LFZZR88u7rXvLWxPPiCNFlfyC+QODCKAOT4mcv4
-	XAMs5MdksEYlvfGXXu+me2cFu3gWnsVVMaGScHaRD4kNOdvSjWeOoVsp2oX/lxPY0QjZdXz1arT
-	+VEdhJ+saGP15GkRNFcGiYBklaFpv5TmsOZJMoucpLaAlec4FKRG3ynI8T4GqhrzTyOpGJqCFkX
-	hPaUZh6x6p+hIZPAkGjxU8IoupYwepWY6QXsoGxZboQ7Li4BTgzXrUSG9AP+OqiBxZcEl1eXute
-	Y70GrUb/NWQiR+Krq1CnQxpyX2DtOc4rWVgKBfBKisWzbZmLVglPTZnd/b2mSkHMLKb8y7eThaH
-	URb5wOnSDh36doHqGhmby3vh8ptvD
-X-Received: by 2002:a17:903:8c8:b0:277:c230:bfca with SMTP id d9443c01a7336-292d3e57324mr66629695ad.4.1761214704432;
-        Thu, 23 Oct 2025 03:18:24 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHTvHNcr2Q4NEwC8d4MLm5CmnKWQFx1aJoWBr0IhgqiAMI6t5IKZWuVUChlyP0voh0nbGgtMg==
-X-Received: by 2002:a17:903:8c8:b0:277:c230:bfca with SMTP id d9443c01a7336-292d3e57324mr66629485ad.4.1761214703961;
-        Thu, 23 Oct 2025 03:18:23 -0700 (PDT)
-Received: from [10.217.216.168] ([202.46.22.19])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2946de10b53sm18460375ad.23.2025.10.23.03.18.18
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 23 Oct 2025 03:18:23 -0700 (PDT)
-Message-ID: <c83d3438-2baa-4c93-b8cb-5109d2ad84a3@oss.qualcomm.com>
-Date: Thu, 23 Oct 2025 15:48:17 +0530
+	s=arc-20240116; t=1761214853; c=relaxed/simple;
+	bh=scCpTlzLx7rJ8mnOnrRPfnAEvOTBIkLhLrus4KijGvY=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=MdNlx6QgiNRmGPKyzjBnEZl29kkPyoCuzMTmEO8/sU530QsNZQ+KFxWQSX1eGxhMIbCI8H4YoXwHr2yDXxPt77UI/3kZDtDIViM6x2SmY40bMEAZGo459vs7kdjZ4KH/Tj2Yll7v+EV5K1FshVyq7LY1OKlrMsmx+iscJW5Q9Zc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=Bv5MAQ9P; arc=none smtp.client-ip=192.198.163.16
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1761214850; x=1792750850;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=scCpTlzLx7rJ8mnOnrRPfnAEvOTBIkLhLrus4KijGvY=;
+  b=Bv5MAQ9P5Lzj/mX+lnW1mWZZUL/rYdq8znJhoqPb8UDXLsVgZoKYIbLK
+   Vj0dtKmoF4+5oyUMjM1yMDkVqKs/ZS4deitWt3oeWUliCdSt9G8bpsUOg
+   80HTP21CU9Zbe7RCXL0GBHDVP/DCZy35SrBbpyTNQzCHaw0SQrNVk6IxU
+   0jy3ALkCQO/II4y5ce7sSDI7Q84fX+aFgy6/Yn7s1bj9FvLJ5zVOviT9M
+   xhhOARAzYnSYF93m7ZVzO/tAslDj4FDvofvyTnWbHoK5mAhjDSSd/vjZI
+   5oWYlZHAQumw4F5L+PPOagIPbV7Akmkf0xxymPUEBPYI3z8BR9Accw8Rq
+   w==;
+X-CSE-ConnectionGUID: y7JZ9AXDRCqrE9ywo0XfiQ==
+X-CSE-MsgGUID: uncUgLgjQjO9jGlIdide0Q==
+X-IronPort-AV: E=McAfee;i="6800,10657,11586"; a="50959990"
+X-IronPort-AV: E=Sophos;i="6.19,249,1754982000"; 
+   d="scan'208";a="50959990"
+Received: from orviesa003.jf.intel.com ([10.64.159.143])
+  by fmvoesa110.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 23 Oct 2025 03:20:50 -0700
+X-CSE-ConnectionGUID: AW8BzHGdT/SxkTvNGqye/Q==
+X-CSE-MsgGUID: kLN0X7pFRYqb7BCzQ9YXiw==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.19,249,1754982000"; 
+   d="scan'208";a="188175344"
+Received: from lkp-server02.sh.intel.com (HELO 66d7546c76b2) ([10.239.97.151])
+  by orviesa003.jf.intel.com with ESMTP; 23 Oct 2025 03:20:47 -0700
+Received: from kbuild by 66d7546c76b2 with local (Exim 4.96)
+	(envelope-from <lkp@intel.com>)
+	id 1vBsR0-000DLV-2m;
+	Thu, 23 Oct 2025 10:20:43 +0000
+Date: Thu, 23 Oct 2025 18:20:02 +0800
+From: kernel test robot <lkp@intel.com>
+To: Youssef Samir <youssef.abdulrahman@oss.qualcomm.com>,
+	jeff.hugo@oss.qualcomm.com, carl.vanderlip@oss.qualcomm.com,
+	troy.hanson@oss.qualcomm.com, zachary.mckevitt@oss.qualcomm.com
+Cc: oe-kbuild-all@lists.linux.dev, ogabbay@kernel.org, lizhi.hou@amd.com,
+	karol.wachowski@linux.intel.com, linux-arm-msm@vger.kernel.org,
+	dri-devel@lists.freedesktop.org
+Subject: Re: [PATCH] accel/qaic: Add support for PM callbacks
+Message-ID: <202510231820.AMln6kY3-lkp@intel.com>
+References: <20251022204005.3888195-1-youssef.abdulrahman@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH V1 2/3] arm64: dts: qcom: sm8750: Add SDC2 nodes for
- sm8750 soc
-To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-        Ulf Hansson <ulf.hansson@linaro.org>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley
- <conor+dt@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>
-Cc: linux-mmc@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        quic_nguyenb@quicinc.com, quic_rampraka@quicinc.com,
-        quic_pragalla@quicinc.com, quic_sayalil@quicinc.com,
-        quic_nitirawa@quicinc.com, quic_bhaskarv@quicinc.com,
-        kernel@oss.qualcomm.com
-References: <20251007054445.4096630-1-sarthak.garg@oss.qualcomm.com>
- <20251007054445.4096630-3-sarthak.garg@oss.qualcomm.com>
- <d0e2b0e3-4e32-4cff-81c8-fe943084c570@oss.qualcomm.com>
-Content-Language: en-US
-From: Sarthak Garg <sarthak.garg@oss.qualcomm.com>
-In-Reply-To: <d0e2b0e3-4e32-4cff-81c8-fe943084c570@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-ORIG-GUID: oCcelAR_EqiTH9LPDSHfdH2uAuejDhh-
-X-Proofpoint-GUID: oCcelAR_EqiTH9LPDSHfdH2uAuejDhh-
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDE5MDA5MCBTYWx0ZWRfX3To27EzGho7n
- HG8S6KmP3gBMacUEu31vwJUG8Oq2X8ILwkjKxRVxAq9jF0VC3r4HxOy4VV+YuaESUIVICCfCxjE
- a5XOr/KIb9A6qE0qJeQroxnjOgC6X8l3u51a6WD0nyu/9PF5kwxgLbv876hctvgyAJAAJgyoJ7x
- mqR76gn+TBE902NKLeBw44AnwdVm/nF+qPUps0QWEvSDWlE3Q2/ffJFzJ08oslYSvXRzjc5npUu
- QFj2WOVqLX5wfZfyC17CJ8b/QhzQ/eZE1ZoO/bMe/qannD8Gs4PiCRHm1M5Iv4jLA3ssuj6K5eF
- 9IcxCT+pb4z5WhE3gAgT6nvAZ7lhB2W/1zqEKEkAhsKCSvRR5m3473Sh2gllxtkA+nmf8cDDiiV
- RnhoPF/kjP6B/4MYfQAZuNNzuR6E/Q==
-X-Authority-Analysis: v=2.4 cv=V5NwEOni c=1 sm=1 tr=0 ts=68fa00f2 cx=c_pps
- a=cmESyDAEBpBGqyK7t0alAg==:117 a=fChuTYTh2wq5r3m49p7fHw==:17
- a=IkcTkHD0fZMA:10 a=x6icFKpwvdMA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=EUspDBNiAAAA:8 a=DMDGrHW2khae0FuLqQAA:9 a=hK1Zo0tywebNB7qn:21
- a=QEXdDO2ut3YA:10 a=1OuFwYUASf3TG4hYMiVC:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-10-22_08,2025-10-22_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- bulkscore=0 malwarescore=0 adultscore=0 priorityscore=1501 lowpriorityscore=0
- spamscore=0 suspectscore=0 clxscore=1015 phishscore=0 impostorscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2510020000 definitions=main-2510190090
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20251022204005.3888195-1-youssef.abdulrahman@oss.qualcomm.com>
+
+Hi Youssef,
+
+kernel test robot noticed the following build warnings:
+
+[auto build test WARNING on drm-misc/drm-misc-next]
+[also build test WARNING on drm-tip/drm-tip linus/master v6.18-rc2 next-20251023]
+[If your patch is applied to the wrong git tree, kindly drop us a note.
+And when submitting patch, we suggest to use '--base' as documented in
+https://git-scm.com/docs/git-format-patch#_base_tree_information]
+
+url:    https://github.com/intel-lab-lkp/linux/commits/Youssef-Samir/accel-qaic-Add-support-for-PM-callbacks/20251023-044052
+base:   git://anongit.freedesktop.org/drm/drm-misc drm-misc-next
+patch link:    https://lore.kernel.org/r/20251022204005.3888195-1-youssef.abdulrahman%40oss.qualcomm.com
+patch subject: [PATCH] accel/qaic: Add support for PM callbacks
+config: openrisc-allyesconfig (https://download.01.org/0day-ci/archive/20251023/202510231820.AMln6kY3-lkp@intel.com/config)
+compiler: or1k-linux-gcc (GCC) 15.1.0
+reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20251023/202510231820.AMln6kY3-lkp@intel.com/reproduce)
+
+If you fix the issue in a separate patch/commit (i.e. not just a new version of
+the same patch/commit), kindly add following tags
+| Reported-by: kernel test robot <lkp@intel.com>
+| Closes: https://lore.kernel.org/oe-kbuild-all/202510231820.AMln6kY3-lkp@intel.com/
+
+All warnings (new ones prefixed by >>):
+
+>> drivers/accel/qaic/qaic_drv.c:724:12: warning: 'qaic_pm_resume' defined but not used [-Wunused-function]
+     724 | static int qaic_pm_resume(struct device *dev)
+         |            ^~~~~~~~~~~~~~
+>> drivers/accel/qaic/qaic_drv.c:703:12: warning: 'qaic_pm_suspend' defined but not used [-Wunused-function]
+     703 | static int qaic_pm_suspend(struct device *dev)
+         |            ^~~~~~~~~~~~~~~
 
 
-On 10/8/2025 5:47 PM, Konrad Dybcio wrote:
-> On 10/7/25 7:44 AM, Sarthak Garg wrote:
->> Add SD Card host controller for sm8750 soc.
->>
->> Signed-off-by: Sarthak Garg <sarthak.garg@oss.qualcomm.com>
->> ---
-> [...]
->
->> +		sdhc_2: mmc@8804000 {
->> +			compatible = "qcom,sm8750-sdhci", "qcom,sdhci-msm-v5";
->> +			reg = <0 0x08804000 0 0x1000>;
->> +
->> +			interrupts = <GIC_SPI 207 IRQ_TYPE_LEVEL_HIGH>,
->> +					<GIC_SPI 223 IRQ_TYPE_LEVEL_HIGH>;
->> +			interrupt-names = "hc_irq", "pwr_irq";
-> One a line, please
-Sure will update it in V2.
->> +
->> +			clocks = <&gcc GCC_SDCC2_AHB_CLK>,
->> +				<&gcc GCC_SDCC2_APPS_CLK>,
->> +				<&rpmhcc RPMH_CXO_CLK>;
-> Please align the '<'s
-Sure will update it in V2.
->> +			clock-names = "iface", "core", "xo";
-> One a line, please
+vim +/qaic_pm_resume +724 drivers/accel/qaic/qaic_drv.c
 
-Sure will update it in V2.
+   702	
+ > 703	static int qaic_pm_suspend(struct device *dev)
+   704	{
+   705		struct qaic_device *qdev = pci_get_drvdata(to_pci_dev(dev));
+   706	
+   707		dev_dbg(dev, "Suspending..\n");
+   708		if (qaic_data_path_busy(qdev)) {
+   709			dev_dbg(dev, "Device's datapath is busy. Aborting suspend..\n");
+   710			return -EBUSY;
+   711		}
+   712		if (qaic_is_under_reset(qdev)) {
+   713			dev_dbg(dev, "Device is under reset. Aborting suspend..\n");
+   714			return -EBUSY;
+   715		}
+   716		qaic_mqts_ch_stop_timer(qdev->mqts_ch);
+   717		qaic_pci_reset_prepare(qdev->pdev);
+   718		pci_save_state(qdev->pdev);
+   719		pci_disable_device(qdev->pdev);
+   720		pci_set_power_state(qdev->pdev, PCI_D3hot);
+   721		return 0;
+   722	}
+   723	
+ > 724	static int qaic_pm_resume(struct device *dev)
+   725	{
+   726		struct qaic_device *qdev = pci_get_drvdata(to_pci_dev(dev));
+   727		int ret;
+   728	
+   729		dev_dbg(dev, "Resuming..\n");
+   730		pci_set_power_state(qdev->pdev, PCI_D0);
+   731		pci_restore_state(qdev->pdev);
+   732		ret = pci_enable_device(qdev->pdev);
+   733		if (ret) {
+   734			dev_err(dev, "pci_enable_device failed on resume %d\n", ret);
+   735			return ret;
+   736		}
+   737		pci_set_master(qdev->pdev);
+   738		qaic_pci_reset_done(qdev->pdev);
+   739		return 0;
+   740	}
+   741	
 
->> +
->> +			interconnects = <&aggre2_noc MASTER_SDCC_2 QCOM_ICC_TAG_ALWAYS
->> +					&mc_virt SLAVE_EBI1 QCOM_ICC_TAG_ALWAYS>,
->> +					<&gem_noc MASTER_APPSS_PROC QCOM_ICC_TAG_ACTIVE_ONLY
->> +					&config_noc SLAVE_SDCC_2 QCOM_ICC_TAG_ACTIVE_ONLY>;
->> +			interconnect-names = "sdhc-ddr", "cpu-sdhc";
-> and here
-Sure will update it in V2.
->
->> +
->> +			power-domains = <&rpmhpd RPMHPD_CX>;
->> +			operating-points-v2 = <&sdhc2_opp_table>;
->> +
->> +			qcom,dll-config = <0x0007442c>;
->> +			qcom,ddr-config = <0x80040868>;
->> +
->> +			iommus = <&apps_smmu 0x540 0x0>;
->> +			dma-coherent;
->> +
->> +			bus-width = <4>;
->> +			max-sd-hs-hz = <37500000>;
->> +
->> +			resets = <&gcc GCC_SDCC2_BCR>;
->> +			status = "disabled";
-> A \n before 'status' is customary
-Sure will update it in V2.
->
->> +
->> +			sdhc2_opp_table: opp-table {
->> +				compatible = "operating-points-v2";
->> +
->> +				opp-100000000 {
->> +					opp-hz = /bits/ 64 <100000000>;
->> +					required-opps = <&rpmhpd_opp_low_svs>;
->> +				};
->> +
->> +				opp-202000000 {
->> +					opp-hz = /bits/ 64 <202000000>;
->> +					required-opps = <&rpmhpd_opp_nom>;
-> This can work at SVS_L1
->
-> Konrad
-
-Sure will update to rpmhpd_opp_svs_l1 in V2.
-
-
-Regards,
-Sarthak
-
+-- 
+0-DAY CI Kernel Test Service
+https://github.com/intel/lkp-tests/wiki
 
