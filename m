@@ -1,52 +1,51 @@
-Return-Path: <linux-arm-msm+bounces-78641-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-78642-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 66F81C033A3
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Oct 2025 21:52:41 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id F1CE4C033C0
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Oct 2025 21:53:21 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 22A701A68028
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Oct 2025 19:53:05 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id CEE421A68106
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Oct 2025 19:53:45 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7D2A234DB4C;
-	Thu, 23 Oct 2025 19:52:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C8EC434EF11;
+	Thu, 23 Oct 2025 19:52:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=mainlining.org header.i=@mainlining.org header.b="fJyvpxHW";
-	dkim=permerror (0-bit key) header.d=mainlining.org header.i=@mainlining.org header.b="yEbgmDmy"
+	dkim=pass (2048-bit key) header.d=mainlining.org header.i=@mainlining.org header.b="NBlHOUX4";
+	dkim=permerror (0-bit key) header.d=mainlining.org header.i=@mainlining.org header.b="XB+Hhwer"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mail.mainlining.org (mail.mainlining.org [5.75.144.95])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 167B434E765;
-	Thu, 23 Oct 2025 19:52:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F91D34EF08;
+	Thu, 23 Oct 2025 19:52:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=5.75.144.95
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761249146; cv=none; b=LSisaIl51oTaHpHYM2FVuNsNPCIN1EvB3Jbq7ZjJC7Y1+quBufB3+F61ssAoAe2NeNOyFxr38WfgGdcPTHElx/Ho+XW/zZJ9sE9kvhfwBJEHKwjwMxptXsnfS53zmGMuiSYw3gTwxP6nrSKDy27iLYFTIKMK7w5qR3jIqEUCZcY=
+	t=1761249177; cv=none; b=N1UgK+e9Gck+44OgUOeMrxVneb9BkbMHnxSFX1xwnVChsGBY7qu5Hcxw1wItyF1IfPBfICXXunYyUVUBNkLZw8XhwNBUZTu4KPJt/bxoZJPm9/FCdUewMc4gDgIBx+fP3huIGEOf7/uk0RST4FjzQrgVtUz/UKAqnb14OtuocB0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761249146; c=relaxed/simple;
-	bh=DiXEeBLmW54fhAAmxJ5HhLS0zDYlt5h2rZJxm7LGak8=;
+	s=arc-20240116; t=1761249177; c=relaxed/simple;
+	bh=XkCFV7kQMF+UdCqXzcpZ5l0Jrqpw//50JO2YNYemhXs=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=A4vRWTmH5rxHz47FfrhkQ5m2xHkrfr1qLcdV7m5tjG1i4QcSGs33UBp1NQIgJzkHDgM0zEqsvgSF2J2zCyvgVzPdJYJGn8RqZn88KU5t56LAIcX2KmTjxJTR/SffElevYiqn34Ypma8kx/LJvOU9gsSwdtWKbpJFANmTovjlJms=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=mainlining.org; spf=pass smtp.mailfrom=mainlining.org; dkim=pass (2048-bit key) header.d=mainlining.org header.i=@mainlining.org header.b=fJyvpxHW; dkim=permerror (0-bit key) header.d=mainlining.org header.i=@mainlining.org header.b=yEbgmDmy; arc=none smtp.client-ip=5.75.144.95
+	 In-Reply-To:To:Cc; b=Pb3Td24DE9+jR2SbPrSqDAgShhQnPDScAXLHvRrI+S9ET+xwBsAv1ygLxCc7SFlHg/mDfQbOJnf5fLjhgoDSktvv4v9yFv0dS0vSm8LGhUvskRRBiBXy3VMGcjT9BRW8uJzTXWaaw40IUHgu82r+s65U0byJXUb5/V5EyPaXJzY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=mainlining.org; spf=pass smtp.mailfrom=mainlining.org; dkim=pass (2048-bit key) header.d=mainlining.org header.i=@mainlining.org header.b=NBlHOUX4; dkim=permerror (0-bit key) header.d=mainlining.org header.i=@mainlining.org header.b=XB+Hhwer; arc=none smtp.client-ip=5.75.144.95
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=mainlining.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=mainlining.org
 DKIM-Signature: v=1; a=rsa-sha256; s=202507r; d=mainlining.org; c=relaxed/relaxed;
-	h=To:Message-Id:Subject:Date:From; t=1761249130; bh=2eVH9tExxFIiMKzVTFLkdqw
-	kS4noX3l5pWBg585Afig=; b=fJyvpxHWiDv5zviW820sbjEyHAaWdbH4IDk2l8DBfRUiHiNSK1
-	llmJOCQEud+NenLWERvGDbg9MSZ591ICWGVG0fSvY7xECjcWmKfF8sk05J3TiAuvgzI8gN5Ex1d
-	D54pDQ00TqhGhiMcGFi3H+UR+9KUr57qdirxfrT3GA6UrUjEeUqPtSQR8Mr/omN6iGOLhIiuwbr
-	EZ/U25g36EUYamX4yLUvuwXfEhBlOfNUaOgaOs9X/3SiIO6YA7DD+TLuGBVsqyVsN5kpR1+Cy4V
-	VHtdIbwsoSXef6vNh8MRf8iAQcj5v5qiPwM+a/I2mIN6pDKI3pTJcYrd1agSgxq5G3A==;
+	h=To:Message-Id:Subject:Date:From; t=1761249131; bh=xm4LduRCq2//QsRDs7TP7kW
+	oXcuXVNBbPQWdSjZ5g5A=; b=NBlHOUX4ezeij37WNIP9nBDEGZMQaPLQoqdS0y/KUdCBFeczfF
+	T6abq7s373xnTr3tBnoqMjHyHv0dHa003AJsZGseUIvbVj8TiRWfoZQYRIjw8m9dVoG8Osk3A1o
+	wn8XE/m7yU5usAsljItMVMWZbh/kpy3OsFHCs8/FvlCaSfATtDzZKew3hdFpxDeRPeg7lScixAL
+	zQr0xI0zO3MFWU9RI++MrmOZUHU15sRdjbCQZlTsYaug0oXLvRMdYrUPKJerndIcJbRTb8GmqSN
+	uFYpMUCBnhkj+ovasolWuJMu9zZOfwjEemIj0ClPYtKbyl8Gv+7Ea5Fujg2uA4OSFsQ==;
 DKIM-Signature: v=1; a=ed25519-sha256; s=202507e; d=mainlining.org; c=relaxed/relaxed;
-	h=To:Message-Id:Subject:Date:From; t=1761249130; bh=2eVH9tExxFIiMKzVTFLkdqw
-	kS4noX3l5pWBg585Afig=; b=yEbgmDmy43Oob73QxpMIh62bvDGBrWxYXyzC5Umm0RjmWhaguC
-	Ct1afIphuWHFaI4aQRNZdeCaZgggssWLUzCA==;
+	h=To:Message-Id:Subject:Date:From; t=1761249131; bh=xm4LduRCq2//QsRDs7TP7kW
+	oXcuXVNBbPQWdSjZ5g5A=; b=XB+HhwersYVj16y+dSP20jPpkea9sMX/2VpHFcIHqvYCv26JFx
+	STkDOr0UKQ0vxLPY3A+DxnJU18wXMgjyWADw==;
 From: Nickolay Goppen <setotau@mainlining.org>
-Date: Thu, 23 Oct 2025 22:52:00 +0300
-Subject: [PATCH v2 2/3] arm64: dts: qcom: sdm630: Add missing vote clock
- and GDSC to lpass_smmu
+Date: Thu, 23 Oct 2025 22:52:01 +0300
+Subject: [PATCH v2 3/3] arm64: dts: qcom: sdm630: Add FastRPC nodes to ADSP
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -55,7 +54,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20251023-qcom-sdm660-cdsp-adsp-dts-v2-2-895ffe50ab5f@mainlining.org>
+Message-Id: <20251023-qcom-sdm660-cdsp-adsp-dts-v2-3-895ffe50ab5f@mainlining.org>
 References: <20251023-qcom-sdm660-cdsp-adsp-dts-v2-0-895ffe50ab5f@mainlining.org>
 In-Reply-To: <20251023-qcom-sdm660-cdsp-adsp-dts-v2-0-895ffe50ab5f@mainlining.org>
 To: Bjorn Andersson <andersson@kernel.org>, 
@@ -66,38 +65,65 @@ Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
  linux-kernel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht, 
  linux@mainlining.org, Nickolay Goppen <setotau@mainlining.org>
 X-Mailer: b4 0.14.3
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1761249128; l=829;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1761249128; l=1337;
  i=setotau@mainlining.org; s=20250815; h=from:subject:message-id;
- bh=DiXEeBLmW54fhAAmxJ5HhLS0zDYlt5h2rZJxm7LGak8=;
- b=7F6OhrPtnsQ7FfINW7OKIEeOEWD7t/ZL5glldF/PW8Fn/6UtDKS2DDywqRpU7qKQcFbS2SZiP
- 3z/IrauymvYAJW1Yuoa2GS3pERGMvfZvJudrWGF5MscUtrgZuEtp74K
+ bh=XkCFV7kQMF+UdCqXzcpZ5l0Jrqpw//50JO2YNYemhXs=;
+ b=Oasg1XB+DxnDwtcJulAZtdnz1oq7hbLVOXG8E8XfT954JNjSvPlz+IZdUcd08zn6pp2f7ey2N
+ 0oik3QE8gn5AcFn5wLBm20VWWikR2p+fcnnWCQVUsV0TuWL/e7dMCVZ
 X-Developer-Key: i=setotau@mainlining.org; a=ed25519;
  pk=Og7YO6LfW+M2QfcJfjaUaXc8oOr5zoK8+4AtX5ICr4o=
 
-Add missing vote clock and GDSC to lpass_smmu node to allow FastRPC
-services to probe properly.
+Add FastRPC subnode with compute-cb subnodes to ADSP node.
 
 Signed-off-by: Nickolay Goppen <setotau@mainlining.org>
 ---
- arch/arm64/boot/dts/qcom/sdm630.dtsi | 5 +++++
- 1 file changed, 5 insertions(+)
+ arch/arm64/boot/dts/qcom/sdm630.dtsi | 33 +++++++++++++++++++++++++++++++++
+ 1 file changed, 33 insertions(+)
 
 diff --git a/arch/arm64/boot/dts/qcom/sdm630.dtsi b/arch/arm64/boot/dts/qcom/sdm630.dtsi
-index a6a1933229b9..f4906ee3f0c3 100644
+index f4906ee3f0c3..2764666714e6 100644
 --- a/arch/arm64/boot/dts/qcom/sdm630.dtsi
 +++ b/arch/arm64/boot/dts/qcom/sdm630.dtsi
-@@ -1217,6 +1217,11 @@ lpass_smmu: iommu@5100000 {
- 			reg = <0x05100000 0x40000>;
- 			#iommu-cells = <1>;
+@@ -2342,6 +2342,39 @@ q6routing: routing {
+ 						};
+ 					};
+ 				};
++
++				fastrpc {
++					compatible = "qcom,fastrpc";
++					qcom,glink-channels = "fastrpcglink-apps-dsp";
++					label = "adsp";
++					qcom,non-secure-domain;
++					#address-cells = <1>;
++					#size-cells = <0>;
++
++					compute-cb@1 {
++						compatible = "qcom,fastrpc-compute-cb";
++						reg = <1>;
++						iommus = <&lpass_smmu 3>;
++					};
++
++					compute-cb@2 {
++						compatible = "qcom,fastrpc-compute-cb";
++						reg = <2>;
++						iommus = <&lpass_smmu 7>;
++					};
++
++					compute-cb@3 {
++						compatible = "qcom,fastrpc-compute-cb";
++						reg = <3>;
++						iommus = <&lpass_smmu 8>;
++					};
++
++					compute-cb@4 {
++						compatible = "qcom,fastrpc-compute-cb";
++						reg = <4>;
++						iommus = <&lpass_smmu 9>;
++					};
++				};
+ 			};
+ 		};
  
-+			clocks = <&gcc GCC_HLOS1_VOTE_LPASS_ADSP_SMMU_CLK>;
-+			clock-names = "bus";
-+
-+			power-domains = <&gcc HLOS1_VOTE_LPASS_ADSP_GDSC>;
-+
- 			#global-interrupts = <2>;
- 			interrupts =
- 				<GIC_SPI 229 IRQ_TYPE_LEVEL_HIGH>,
 
 -- 
 2.51.1
