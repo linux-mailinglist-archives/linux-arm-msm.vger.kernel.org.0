@@ -1,65 +1,87 @@
-Return-Path: <linux-arm-msm+bounces-78452-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-78451-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [142.0.200.124])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7ED4BBFF35B
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Oct 2025 07:02:35 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id C4F25BFF334
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Oct 2025 06:59:26 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 25ECB4EDEEC
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Oct 2025 05:02:27 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 7AEA619C6E77
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Oct 2025 04:59:50 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1A24A26158C;
-	Thu, 23 Oct 2025 05:02:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4FEA8261B64;
+	Thu, 23 Oct 2025 04:59:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="WIxWK84X"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="iQ+U1uLq"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.16])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFEE317D2;
-	Thu, 23 Oct 2025 05:02:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.16
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85FA12580CA
+	for <linux-arm-msm@vger.kernel.org>; Thu, 23 Oct 2025 04:59:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761195744; cv=none; b=T8BXO5/+VGtpL3q0QRN0psPPXNzMztwTpBn4az4jkZSIwNHQZk3XIh1FjksBox+jRzbOvNJm3z7UGt4GvB22ZAxs8jtq/wTsiSPocscNAMNKG9xlMHt5WFNJdm9rqccKZ+oDx8Slh4YT7DW2PdcH733TmJApvrd9yu4AoHX16+E=
+	t=1761195561; cv=none; b=hRKYytoZOorMLBYT+vHmAMfYnI6farvR+rm/45RCJAZOIpG+MPbVj9TG/nebpbFjGo/jMQdNoHtTMGedlJoyyoEiVqELNaxoOJejP4nlt+m2EXGNlPMFx1jWWA2SKfBOqL7bgZo/D8oC/PaxJKVxVISG+nIXRk258WIN95oIv+E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761195744; c=relaxed/simple;
-	bh=xnBFwakM2k1JPYwO3/Qy+Tx8eLKNZ7gwkUwwpTfHUOQ=;
+	s=arc-20240116; t=1761195561; c=relaxed/simple;
+	bh=SM9h3kuaENDN0+ivfV00f10xi80DzahDlkVNF7DAdBw=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=q7mzHyb1qK5lp6NHKT4CESwZVmIJZjV5ov9vw+mmfBMhSzuVJpf4b/975GTEoX9cGsumeUBCuJolVGmEfaLTfPs9ZWv0tWk2OiBlZopv7A7v1kx6TcSfoF0FyMTkw7kgfJJtddTCzVHRMu9JTaR7vUIkf/hXDflOiqDvGs+Logo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=pass smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=WIxWK84X; arc=none smtp.client-ip=192.198.163.16
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.intel.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1761195742; x=1792731742;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=xnBFwakM2k1JPYwO3/Qy+Tx8eLKNZ7gwkUwwpTfHUOQ=;
-  b=WIxWK84XMJJx8AcVC72JPDNPt7vkb3i8YAGfP0PIDaanLn3mF5TIrTeM
-   V367lSNM5aQhpmCTy82ZVP3RHZ0/jN4T97F8Sz9CJnhuC258PDh1mysIS
-   CD0Wc3XV/VjL/nyoGcv5OzCiISGm2eGBfrSesGBVEVQyu9cUMz4FHcUZd
-   tFhGD5wNmluz9SpHLqeIF1r/Z6aQCbmB1KbI2F0CyIx44SnJ+7ClGz2YS
-   PP3m5aNg3FAQUbNtSJYFT+WBENxJ/cGbEkY2NPWWmMqwevfYHD+zMZp/q
-   A7eS2rpTTcTVyeOzWIKZWdhTcSfabPmZmfkIE8nepzgIATBPecW3D0ccA
-   Q==;
-X-CSE-ConnectionGUID: 8o2ArTLJSCGhO23WYBSuww==
-X-CSE-MsgGUID: bJSgA2j+TtCjY9REVtLA+g==
-X-IronPort-AV: E=McAfee;i="6800,10657,11586"; a="50933427"
-X-IronPort-AV: E=Sophos;i="6.19,248,1754982000"; 
-   d="scan'208";a="50933427"
-Received: from fmviesa001.fm.intel.com ([10.60.135.141])
-  by fmvoesa110.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 22 Oct 2025 22:02:20 -0700
-X-CSE-ConnectionGUID: kWA0S5r3S1ua2kzqQUzTDA==
-X-CSE-MsgGUID: MuIS53hmREe4ygA3mF8heg==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.19,248,1754982000"; 
-   d="scan'208";a="214986870"
-Received: from allen-sbox.sh.intel.com (HELO [10.239.159.30]) ([10.239.159.30])
-  by smtpauth.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 22 Oct 2025 22:02:11 -0700
-Message-ID: <3a9698ac-ac50-499f-871c-ee44d7371815@linux.intel.com>
-Date: Thu, 23 Oct 2025 12:58:18 +0800
+	 In-Reply-To:Content-Type; b=u/WDO5cYLbuGAdy0fOQJ/1tWStVn5a5TLYMrdsD4Uq5+H8CWXr2v1mGT7ghu6WpwyWp502kKBMuhQlst7qyC+fJuqR/HG0qDUDssT8AHobiLkNorYr5TizWj0jM0/9uHobGCvDOaMa8Dd9ujgOyu6g5kTPo86iQm1BMES1X94Jo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=iQ+U1uLq; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 59MIem0S007459
+	for <linux-arm-msm@vger.kernel.org>; Thu, 23 Oct 2025 04:59:17 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	XQsBupsL/ZgYfSlapLK2m++RVhSfbnhRHhab9RRBi8E=; b=iQ+U1uLqYOp4Bu3s
+	lJccRpzeSSbEFGG6YjQMr+6EpMj1ndegmHpI0LwFtUrfekBMj67QnC2Cxrx6Sf5P
+	Zwcdh3t9u0VSQOtJ4m2X3uaRSJNTnUdITfFio2yrsFmgwpuIIxHzpaAED/sb33+V
+	ehSlkH/g5RYfprMSNWkz9ay2vH4j5TjY52+2AISQgpZMeYrl1hP8HBgXcwNVKTuc
+	yycoCkoYUJrYy78SBFaif0NsAfEJlcDE4XiqXugLxcigqX9iuD74uGbZauoW6GfY
+	zVzQ3hDCWx7Pm1RFQxS+PfycskCOtZViHPHI/b915dJVrWtY9mJ9FyR/sIFtIZ/a
+	Ry5Qbg==
+Received: from mail-pl1-f197.google.com (mail-pl1-f197.google.com [209.85.214.197])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 49v34474bn-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Thu, 23 Oct 2025 04:59:17 +0000 (GMT)
+Received: by mail-pl1-f197.google.com with SMTP id d9443c01a7336-2813879844cso1067955ad.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Oct 2025 21:59:17 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1761195557; x=1761800357;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to:subject
+         :user-agent:mime-version:date:message-id:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=XQsBupsL/ZgYfSlapLK2m++RVhSfbnhRHhab9RRBi8E=;
+        b=WOEFc8KXm0NuhRb8wxmUhgr3TQvxe//cROfcmZxQEaIcVZ6Sxo0lxC71mabZyMJ6H1
+         AoOyDG5Tzft5aMvi+fOgn9Al9WyOOzz1GvmX5gKx3yfL3X4unstN5AVBy88Juok316cs
+         Wd68va3FWX3Ygahvk24A9aGpXNgB2KDWyAATKVz3ZlgIUKGAyIXxx+z+xoMf9OsFa8hW
+         HrS0FWfQfQJ2EIj5B23mBfgaWkEe6cc4LZxXrk5s0XBltLjEMZEacwkLQvdN4qcGNnxm
+         z1yhajV45a7XRX+JP1Ou2oXdgQakiEZaHtHXHkCe4laUymq5fx3l7n4n1hd97wzfhhcr
+         io2Q==
+X-Gm-Message-State: AOJu0YweorrfY1+KGwcAUdaiyDl8c/5zS2lbjnfKM9VYMkdkKbbYxJmX
+	RmaVyc2yhT+2rhv0XQUhYdlHR7bWKcgQ75JOzZTm+nZfYcCrXLgY23AP7uD/BMUbe8sGbmJLmKl
+	zUYMj+W3Fjspeb9NshKlAT43fAw6gHUK8fzpf3QSiS9ypuqbYT7Cm7USLhCFZFj9khlMk
+X-Gm-Gg: ASbGnct8XFK4R6P+1wJoTNHlH04STiNpFS0/4jQtHEFw5rdZRt2xE9hg6FFtmsYDYi4
+	Zib/zWCU0KYO7TSFlq7fXQFGR7W3Y2aYx/j9srPIksSYA2a0i1RsCE25CiXCrNddjTXFwA27r4N
+	iMDrxK67Nt40WdxrRekjllUKjxipcJnTaX25Sbw9vlZqNpG6z432z3sYYHzSweUKaYCFfZbjoen
+	mH4e3X/IsQqkGLgY8Jib5yF+GFfR58dmZ+mnJ4n1vQfjUw91ui5/0Iw6gGCw7vH27iMW0FE42Rr
+	0u5XyTjpoQDKcC3W86eaUFUcUUm95Ov1vhd7fS/ukunxi6XGv2mk2fhXEkGObycgBewpr8MSzhd
+	eEULhG0HtONI+a4HICGWKflixiNotFgkbq+kQ5v5PdyCqwDgXZY2mqfz0CxpePQd4YfF9eQ==
+X-Received: by 2002:a17:903:907:b0:26c:3c15:f780 with SMTP id d9443c01a7336-292d3fcc93amr66496665ad.8.1761195556921;
+        Wed, 22 Oct 2025 21:59:16 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFUEUehRXXgzmp6ooEZeaoA5HTI7QxvGAGO0q2zfheB5V5ozk+j8iZVJGdKIenvQrC3QbtL8w==
+X-Received: by 2002:a17:903:907:b0:26c:3c15:f780 with SMTP id d9443c01a7336-292d3fcc93amr66496355ad.8.1761195556486;
+        Wed, 22 Oct 2025 21:59:16 -0700 (PDT)
+Received: from [10.133.33.163] (tpe-colo-wan-fw-bordernet.qualcomm.com. [103.229.16.4])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2946e0f4283sm9389085ad.85.2025.10.22.21.59.10
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 22 Oct 2025 21:59:16 -0700 (PDT)
+Message-ID: <3050390c-3407-457f-b62c-7adee759a61f@oss.qualcomm.com>
+Date: Thu, 23 Oct 2025 12:59:07 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -67,83 +89,96 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 6/6] iommu: Pass in old domain to attach_dev callback
- functions
-To: Nicolin Chen <nicolinc@nvidia.com>, joro@8bytes.org, jgg@nvidia.com,
- kevin.tian@intel.com
-Cc: suravee.suthikulpanit@amd.com, will@kernel.org, robin.murphy@arm.com,
- sven@kernel.org, j@jannau.net, robin.clark@oss.qualcomm.com,
- m.szyprowski@samsung.com, krzk@kernel.org, dwmw2@infradead.org,
- yong.wu@mediatek.com, matthias.bgg@gmail.com,
- angelogioacchino.delregno@collabora.com, tjeznach@rivosinc.com,
- pjw@kernel.org, palmer@dabbelt.com, aou@eecs.berkeley.edu, heiko@sntech.de,
- schnelle@linux.ibm.com, mjrosato@linux.ibm.com, orsonzhai@gmail.com,
- baolin.wang@linux.alibaba.com, wens@csie.org, jernej.skrabec@gmail.com,
- samuel@sholland.org, thierry.reding@gmail.com, jonathanh@nvidia.com,
- jean-philippe@linaro.org, iommu@lists.linux.dev,
- linux-kernel@vger.kernel.org, asahi@lists.linux.dev,
- linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org,
- linux-samsung-soc@vger.kernel.org, linux-mediatek@lists.infradead.org,
- linux-riscv@lists.infradead.org, linux-rockchip@lists.infradead.org,
- linux-s390@vger.kernel.org, linux-sunxi@lists.linux.dev,
- linux-tegra@vger.kernel.org, virtualization@lists.linux.dev,
- patches@lists.linux.dev
-References: <cover.1761017765.git.nicolinc@nvidia.com>
- <7f760e795097e3052da82abf410c6ee963e4c62b.1761017765.git.nicolinc@nvidia.com>
-Content-Language: en-US
-From: Baolu Lu <baolu.lu@linux.intel.com>
-In-Reply-To: <7f760e795097e3052da82abf410c6ee963e4c62b.1761017765.git.nicolinc@nvidia.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Subject: Re: [PATCH v5 2/3] arm64: dts: qcom: Add DisplayPort and QMP USB3DP
+ PHY for SM6150
+To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+        Rob Clark <robin.clark@oss.qualcomm.com>,
+        Dmitry Baryshkov
+ <lumag@kernel.org>,
+        Abhinav Kumar <abhinav.kumar@linux.dev>,
+        Jessica Zhang <jesszhan0024@gmail.com>, Sean Paul <sean@poorly.run>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+        Maxime Ripard <mripard@kernel.org>,
+        Thomas Zimmermann <tzimmermann@suse.de>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, fange.zhang@oss.qualcomm.com,
+        yongxing.mou@oss.qualcomm.com, li.liu@oss.qualcomm.com,
+        Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+References: <20251021-add-displayport-support-to-qcs615-devicetree-v5-0-92f0f3bf469f@oss.qualcomm.com>
+ <20251021-add-displayport-support-to-qcs615-devicetree-v5-2-92f0f3bf469f@oss.qualcomm.com>
+ <59592a3d-447a-4c99-8654-d3cb9b9f9a58@oss.qualcomm.com>
+From: Xiangxu Yin <xiangxu.yin@oss.qualcomm.com>
+In-Reply-To: <59592a3d-447a-4c99-8654-d3cb9b9f9a58@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
+X-Proofpoint-GUID: EW_6RHajG27oTYE8hsD8LtWT2hGQc-2g
+X-Proofpoint-ORIG-GUID: EW_6RHajG27oTYE8hsD8LtWT2hGQc-2g
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDE4MDAyMyBTYWx0ZWRfX3N/E58pmNVOq
+ cBPo/XQp8Qxxq9PRYlnZCRv8b5G76T+cpxt8clcvmIwoJvV37JbBlDwE7YKqS1DtmWzTLuR4Fdz
+ 3GwwyBqjr0DxesCmgPsSMPIIylgSqoG7FuikLJ1CuE2ookh8lvjaBq0sXh5AYJHDco/FXXImJdO
+ s9XXU4oOKqAdMKVUVOrM8kkHO8pBWD6bFE9HZ9Drj9emaNrq68WC5+bl9I9uRUj+cFVM6cXi+lY
+ /0zjQWoqELvc91CSnDPmEhJ+Z2mVqPYdM9xIjKCfc/3E5on6iQjHXpB0BmI7UFjT5fk6J34LLbM
+ h/GE7aZ2ScmXWbbhex/jsPzxAK3l21jqxJTYdchVwpET0YTbVWJKS6Ox7E1STfA0aTJkChi8Y4I
+ Jpb7wZ9dl21EFwkMeV77mhpuhmvT2w==
+X-Authority-Analysis: v=2.4 cv=E/vAZKdl c=1 sm=1 tr=0 ts=68f9b625 cx=c_pps
+ a=cmESyDAEBpBGqyK7t0alAg==:117 a=nuhDOHQX5FNHPW3J6Bj6AA==:17
+ a=IkcTkHD0fZMA:10 a=x6icFKpwvdMA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=EUspDBNiAAAA:8 a=Y0hPKdM277UiO7HlCU4A:9 a=QEXdDO2ut3YA:10
+ a=1OuFwYUASf3TG4hYMiVC:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-10-22_08,2025-10-22_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ impostorscore=0 spamscore=0 priorityscore=1501 bulkscore=0 suspectscore=0
+ lowpriorityscore=0 clxscore=1015 adultscore=0 phishscore=0 malwarescore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.19.0-2510020000 definitions=main-2510180023
 
-On 10/23/25 10:21, Nicolin Chen wrote:
-> The IOMMU core attaches each device to a default domain on probe(). Then,
-> every new "attach" operation has a fundamental meaning of two-fold:
->   - detach from its currently attached (old) domain
->   - attach to a given new domain
-> 
-> Modern IOMMU drivers following this pattern usually want to clean up the
-> things related to the old domain, so they call iommu_get_domain_for_dev()
-> to fetch the old domain.
-> 
-> Pass in the old domain pointer from the core to drivers, aligning with the
-> set_dev_pasid op that does so already.
-> 
-> Ensure all low-level attach fcuntions in the core can forward the correct
-> old domain pointer. Thus, rework those functions as well.
-> 
-> Suggested-by: Jason Gunthorpe<jgg@nvidia.com>
-> Reviewed-by: Kevin Tian<kevin.tian@intel.com>
-> Reviewed-by: Jason Gunthorpe<jgg@nvidia.com>
-> Signed-off-by: Nicolin Chen<nicolinc@nvidia.com>
-> ---
->   include/linux/iommu.h                         |  3 ++-
->   arch/powerpc/kernel/iommu.c                   |  5 ++--
->   drivers/iommu/amd/iommu.c                     | 11 ++++----
->   drivers/iommu/apple-dart.c                    |  9 ++++---
->   .../arm/arm-smmu-v3/arm-smmu-v3-iommufd.c     |  5 ++--
->   drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c   | 24 +++++++++++-------
->   drivers/iommu/arm/arm-smmu/arm-smmu.c         |  9 ++++---
->   drivers/iommu/arm/arm-smmu/qcom_iommu.c       | 11 ++++----
->   drivers/iommu/exynos-iommu.c                  |  8 +++---
->   drivers/iommu/fsl_pamu_domain.c               | 12 ++++-----
->   drivers/iommu/intel/iommu.c                   | 10 +++++---
->   drivers/iommu/intel/nested.c                  |  2 +-
->   drivers/iommu/iommu.c                         | 25 +++++++++++--------
->   drivers/iommu/iommufd/selftest.c              |  2 +-
->   drivers/iommu/ipmmu-vmsa.c                    | 10 ++++----
->   drivers/iommu/msm_iommu.c                     | 11 ++++----
->   drivers/iommu/mtk_iommu.c                     |  8 +++---
->   drivers/iommu/mtk_iommu_v1.c                  |  7 ++++--
->   drivers/iommu/omap-iommu.c                    | 12 ++++-----
->   drivers/iommu/riscv/iommu.c                   |  9 ++++---
->   drivers/iommu/rockchip-iommu.c                | 20 +++++++++++----
->   drivers/iommu/s390-iommu.c                    | 13 ++++++----
->   drivers/iommu/sprd-iommu.c                    |  3 ++-
->   drivers/iommu/sun50i-iommu.c                  |  8 +++---
->   drivers/iommu/tegra-smmu.c                    | 10 ++++----
->   drivers/iommu/virtio-iommu.c                  |  6 +++--
->   26 files changed, 153 insertions(+), 100 deletions(-)
 
-Reviewed-by: Lu Baolu <baolu.lu@linux.intel.com>
+On 10/22/2025 10:53 PM, Konrad Dybcio wrote:
+> On 10/21/25 5:18 AM, Xiangxu Yin via B4 Relay wrote:
+>> From: Xiangxu Yin <xiangxu.yin@oss.qualcomm.com>
+>>
+>> Introduce DisplayPort controller node and associated QMP USB3-DP PHY
+>> for SM6150 SoC. Add data-lanes property to the DP endpoint and update
+>> clock assignments for proper DP integration.
+>>
+>> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+>> Signed-off-by: Xiangxu Yin <xiangxu.yin@oss.qualcomm.com>
+>> ---
+> [...]
+>
+>> +				ports {
+>> +					#address-cells = <1>;
+>> +					#size-cells = <0>;
+>> +
+>> +					port@0 {
+>> +						reg = <0>;
+>> +						mdss_dp0_in: endpoint {
+>> +							remote-endpoint = <&dpu_intf0_out>;
+>> +						};
+>> +					};
+>> +
+>> +					port@1 {
+>> +						reg = <1>;
+>> +						mdss_dp0_out: endpoint {
+> Ideally there should be a \n between the last property and
+> the following subnode
+
+
+Ok, will update.
+
+
+> other than that
+>
+> Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+>
+> Konrad
 
