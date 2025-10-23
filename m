@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-78619-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-78620-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [142.0.200.124])
-	by mail.lfdr.de (Postfix) with ESMTPS id 54775C0217F
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Oct 2025 17:25:13 +0200 (CEST)
+Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [IPv6:2605:f480:58:1:0:1994:3:14])
+	by mail.lfdr.de (Postfix) with ESMTPS id 40DE6C022E4
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Oct 2025 17:40:16 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 01EF14E6036
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Oct 2025 15:25:07 +0000 (UTC)
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id EEABB5003A2
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Oct 2025 15:39:09 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7170C338588;
-	Thu, 23 Oct 2025 15:25:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C48EB33C504;
+	Thu, 23 Oct 2025 15:39:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="s86T8EFh"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="B+9SCqj2"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C3ED33711B;
-	Thu, 23 Oct 2025 15:25:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 945FD3148D9;
+	Thu, 23 Oct 2025 15:39:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761233103; cv=none; b=jfUyBVGH2n4NOqMdgyX2cBPybLrW5BQYsqqNr3vWzYZaF437+n5COuyOzOT3zwCs1ugpeKZJOg0Tc4SS/7cFXxLs77oTuQd29MMHqDjHN86eXO6NbOa5FsyW1Xagydig4LGRu4zTfMX+YR48S1djKkSALQg/Zggly9YqB+j1uGo=
+	t=1761233945; cv=none; b=cwGU0Yx9eWHPlpJvqdyrAm0UL/6xZicYbDeKTnCL4KyLQvw2RA4WDYkyRkKR5g5BLer0uXvKUrUg7+V/e5BAI2wzvTBSL6X+EZA5ztnO6aME2wfhv1cn4cqNxcO5jnezJGcuNF89//Hwco24FJ5dRe+3t12fIVVOyS/VrtIgieQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761233103; c=relaxed/simple;
-	bh=c0Ecb9W5wfVFnq1RzoxHPXPGZkX8equV3asyENLGYx4=;
+	s=arc-20240116; t=1761233945; c=relaxed/simple;
+	bh=0PfGVFLSwAdtpJraASf2Vn9Px0DJm3s79Tpdl3v9jAI=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=o2olSqUfmnw9pMw3KzThJJzn1U3ycQ5iT5ofb6HGTIF2MVNB1Ic8aXkIUF2sKTOfsRFPnT1CtRqqCdWyRcRJbF2nXsfmq6rWZ/OqJU/DrwCSy6obd/r28xV//y7+KhxdeSQ/5VbebLOdNKOluH5HaLVw/xFJUmWi8e++g0iod5w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=s86T8EFh; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02E9CC4CEF7;
-	Thu, 23 Oct 2025 15:24:57 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=L5kbEwsf6T6mpDQRC9AjRsj0WD5uwFXBOECOObFNRexdP7ebxWHaFbRMZCEtkvqmFhAQc7vRCPbw4UFK8V2cwkvTdmynJUFNxE48P+iRTibmLIqA5MA52qpkoBdEwqN+ZKkyRC1Omth1hkJeXmeA2Hi/9olhoNNEUcRsoNRmPj0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=B+9SCqj2; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0EE3BC4CEE7;
+	Thu, 23 Oct 2025 15:39:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1761233102;
-	bh=c0Ecb9W5wfVFnq1RzoxHPXPGZkX8equV3asyENLGYx4=;
+	s=k20201202; t=1761233945;
+	bh=0PfGVFLSwAdtpJraASf2Vn9Px0DJm3s79Tpdl3v9jAI=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=s86T8EFh+TjANy91aoBOSuJfPEcWwGiqZwZWa+/ErcSOxShkIAdK6wEUqAVS1lclJ
-	 aYpM2Fr9L4nj1FeDEFnIk5dVmWASBGPnjFrtVvoLsGIRvISho7xeHcaDAFkf0Hm5oR
-	 +8RsdU9BuZKrisjOfGBVXRfDUiVv2yBqUDyIbCF8oeC/JxqvtqQ27QoWwTZVMwylgK
-	 YLHmRkk4IchflHDmi9v89MKgHDT3pxevKdNCvkiy34avOZUS54VxxLfZk3TPlnKZFS
-	 nij1mxZc3KjkjPqY2+n/xxZIJt2xWcPpJ+UrZdQqhEYgQzeAdX7+dxdMYwMcOGAZeN
-	 CTVZ+X/mQUM/A==
-Message-ID: <aad7ce22-9c82-44b2-809c-7d8711ff4e26@kernel.org>
-Date: Thu, 23 Oct 2025 17:24:56 +0200
+	b=B+9SCqj2SSqdHloiLkw+HF2Sx5pnRwPA3/FtB+nCYKHHzPI/3wjPkELJx7olhiaeE
+	 g3MPCMgEqjG24cZt0upltSjwu4z+44N3+H3wCsgbbpj+9SoY7R+g8P7213lG4yFb6d
+	 stoe+C80EpXukDWcRtOjA5NXFZjgBUKPOdeALpuavO2kjKZ+flOi55QULmqLf9ty1X
+	 Wg8PSy7vHf9MV5Eqsr5iQHS6uzrT7NL3SLGLZ49IfUpuk/aKBqT48y4fUs08sbLJZC
+	 IXfU4Bm36rJIf71F382hY4R1QJnS9GHr7YjWwpLGLdznzrrgjay4qZ+M/SHmq5/GHw
+	 45vgqh6Ud4i0w==
+Message-ID: <9931c958-d353-4e37-ad2e-f6854c968af1@kernel.org>
+Date: Thu, 23 Oct 2025 17:38:59 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,24 +50,20 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 1/6] dt-bindings: i2c: qcom-cci: Document Kaanapali
- compatible
-To: Hangxiang Ma <hangxiang.ma@oss.qualcomm.com>,
- Loic Poulain <loic.poulain@oss.qualcomm.com>, Robert Foss
- <rfoss@kernel.org>, Andi Shyti <andi.shyti@kernel.org>,
+Subject: Re: [PATCH v2 1/4] dt-bindings: phy: qcom,sc8280xp-qmp-usb43dp-phy:
+ Add Kaanapali QMP PHY
+To: Jingyi Wang <jingyi.wang@oss.qualcomm.com>, Vinod Koul
+ <vkoul@kernel.org>, Kishon Vijay Abraham I <kishon@kernel.org>,
  Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
- Conor Dooley <conor+dt@kernel.org>, Todor Tomov <todor.too@gmail.com>,
- Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
- Mauro Carvalho Chehab <mchehab@kernel.org>,
- Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Cc: linux-i2c@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+ Conor Dooley <conor+dt@kernel.org>, Wesley Cheng <quic_wcheng@quicinc.com>,
+ Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: aiqun.yu@oss.qualcomm.com, tingwei.zhang@oss.qualcomm.com,
+ trilok.soni@oss.qualcomm.com, yijie.yang@oss.qualcomm.com,
+ linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
  devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- linux-media@vger.kernel.org, aiqun.yu@oss.qualcomm.com,
- tingwei.zhang@oss.qualcomm.com, trilok.soni@oss.qualcomm.com,
- yijie.yang@oss.qualcomm.com, Jingyi Wang <jingyi.wang@oss.qualcomm.com>,
- Atiya Kailany <atiya.kailany@oss.qualcomm.com>
-References: <20251023-add-support-for-camss-on-kaanapali-v3-0-02abc9a107bf@oss.qualcomm.com>
- <20251023-add-support-for-camss-on-kaanapali-v3-1-02abc9a107bf@oss.qualcomm.com>
+ linux-usb@vger.kernel.org, Ronak Raheja <ronak.raheja@oss.qualcomm.com>
+References: <20251021-knp-usb-v2-0-a2809fffcfab@oss.qualcomm.com>
+ <20251021-knp-usb-v2-1-a2809fffcfab@oss.qualcomm.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -113,14 +109,19 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  jWt87ecuHlpL3uuQ0ZZNWqHgZoQLXoqC2ZV5KrtKWb/jyiFX/sxSrodALf0zf+tfHv0FZWT2
  zHjUqd0t4njD/UOsuIMOQn4Ig0SdivYPfZukb5cdasKJukG1NOpbW7yRNivaCnfZz6dTawXw
  XRIV/KDsHQiyVxKvN73bThKhONkcX2LWuD928tAR6XMM2G5ovxLe09vuOzzfTWQDsm++9UKF a/A=
-In-Reply-To: <20251023-add-support-for-camss-on-kaanapali-v3-1-02abc9a107bf@oss.qualcomm.com>
+In-Reply-To: <20251021-knp-usb-v2-1-a2809fffcfab@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 23/10/2025 11:14, Hangxiang Ma wrote:
-> Add Kaanapali compatible consistent with CAMSS CCI interfaces.
+On 22/10/2025 08:50, Jingyi Wang wrote:
+> From: Ronak Raheja <ronak.raheja@oss.qualcomm.com>
 > 
-> Signed-off-by: Hangxiang Ma <hangxiang.ma@oss.qualcomm.com>
+> Document QMP combo PHY for Kaanapali. Use fallback to indicate the
+> compatibility of the QMP PHY on the Kaanapali with that on the SM8750.
+> 
+> Signed-off-by: Ronak Raheja <ronak.raheja@oss.qualcomm.com>
+> Co-developed-by: Jingyi Wang <jingyi.wang@oss.qualcomm.com>
+> Signed-off-by: Jingyi Wang <jingyi.wang@oss.qualcomm.com>
 > ---
 
 Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
