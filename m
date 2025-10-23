@@ -1,241 +1,248 @@
-Return-Path: <linux-arm-msm+bounces-78552-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-78553-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id AE1A0C00B23
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Oct 2025 13:23:15 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0966DC00B44
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Oct 2025 13:24:21 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 145043AB259
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Oct 2025 11:22:31 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id AA3F73A2E0E
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Oct 2025 11:24:19 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CD3F530DD19;
-	Thu, 23 Oct 2025 11:22:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="LH3cLck/"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7879B30DD18;
+	Thu, 23 Oct 2025 11:24:17 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.10])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81BA02D948F;
-	Thu, 23 Oct 2025 11:22:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.10
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 74AED2FDC3A;
+	Thu, 23 Oct 2025 11:24:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761218523; cv=none; b=XRQS1E8Aeh9l4vVBgaM7CRBnuehbgSUb4zOmMQkBmj5gPwZpHWSY+EJA3BCsjvABnuFYIcFj2sL0g1MJfAE2G8eGEdHl4R8xM/Xe5/v+ruQCezt5ls69631gMLgbrVTMyx6Jr8p3rFvzimDJ1QN7I64m47j9IlX5zSs3uBVfEUQ=
+	t=1761218657; cv=none; b=k+sfGHcjXJiZA6g3fycQytWNOuTfCj3032YDeEr9ynd5KkfhFUHJWXukE5jfaJw43qX45Q+SMS3cRKII1uCnOmH2AcIeNIb8IGNLAOxAD8zMap2KGaqTbrg+7mnXcWhEJdNVldDT9NuZBdzsA3RYej8xSLh9XBr0aCJhcdDu3VY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761218523; c=relaxed/simple;
-	bh=OUy4E28XCgPHiY7sYnSVPuAqVISc/0/PFyS3hREWRSQ=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=L77bSFcCxoIM5ir/1frgAB/ley4mCFYEqalVZ60r/B91GCBgVvDA2uPr0gSZjPXhQvhvR6kw3slqiEklJEY6xGwnpzk8u2ZlV4AYO0GSIJdgUqE469eZJknfA1lHWf3h0jg+ZRZWEOEXDwr3AYHYi2+QSy7HvSdTC4HpAW8uU4c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=pass smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=LH3cLck/; arc=none smtp.client-ip=198.175.65.10
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.intel.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1761218521; x=1792754521;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=OUy4E28XCgPHiY7sYnSVPuAqVISc/0/PFyS3hREWRSQ=;
-  b=LH3cLck/fuVEI40gVW6hni5h7v8CLDcN6ZlwPQPWLF9+mglZd4KpCja0
-   ugSIdIZY7QFxbWvYHKwCPk5Ev09wC/OAScT5IgvkYQqvqPDQDJLfEERYE
-   63F487ij4t4t1I1RJonU+XKHcq9AukH/0TDM+VyV5vwtbYPRzhZia08qw
-   mN1HFrHUJ7+q48DpO1bNukiFFdTv6Zl1nvE2Kb/2UE8PDU6izO+e4lmpB
-   tmWy7GnKaEZMEK2ANMFMLTbIATmlABWIAeT42lPcg2mPrhMSAn6ZXxJc1
-   uBElllWQGWTezoOG4sDM6OLijYDeMhha0Oe7PkEaRBh67Qhdkxcp1ASqp
-   Q==;
-X-CSE-ConnectionGUID: IYPIS9z5SPOWBr+H3azAoQ==
-X-CSE-MsgGUID: wlgsGVqHTxa0l/59UITfow==
-X-IronPort-AV: E=McAfee;i="6800,10657,11586"; a="80820963"
-X-IronPort-AV: E=Sophos;i="6.19,249,1754982000"; 
-   d="scan'208";a="80820963"
-Received: from orviesa006.jf.intel.com ([10.64.159.146])
-  by orvoesa102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 23 Oct 2025 04:22:00 -0700
-X-CSE-ConnectionGUID: 91ur0G2oTPauN3FANFRShg==
-X-CSE-MsgGUID: Urm2SPsSR/2BhTbktE4OLQ==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.19,249,1754982000"; 
-   d="scan'208";a="183306763"
-Received: from bkammerd-mobl.amr.corp.intel.com (HELO kuha.fi.intel.com) ([10.124.221.165])
-  by orviesa006.jf.intel.com with SMTP; 23 Oct 2025 04:21:56 -0700
-Received: by kuha.fi.intel.com (sSMTP sendmail emulation); Thu, 23 Oct 2025 14:21:55 +0300
-Date: Thu, 23 Oct 2025 14:21:55 +0300
-From: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-To: Anjelique Melendez <anjelique.melendez@oss.qualcomm.com>
-Cc: gregkh@linuxfoundation.org, lumag@kernel.org, neil.armstrong@linaro.org,
-	johan+linaro@kernel.org, quic_bjorande@quicinc.com,
-	linux-usb@vger.kernel.org, linux-kernel@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH v6 2/2] usb: typec: ucsi_glink: Increase buffer size to
- support UCSI v2
-Message-ID: <aPoP00G_xekNF-XP@kuha.fi.intel.com>
-References: <20251022004554.1956729-1-anjelique.melendez@oss.qualcomm.com>
- <20251022004554.1956729-3-anjelique.melendez@oss.qualcomm.com>
+	s=arc-20240116; t=1761218657; c=relaxed/simple;
+	bh=a3aNs6vrR4psypDkWMqYmRy2IIe82SusVNMrEZ3tF3g=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=TB2MNpPHCctM/RzB5I+vA/oX6L6FS1StQQItmKSnvtzHszQrI1qPaIWhd7ITDRO5Np8PqkaEJ/FdhH2Xtvnh73iUjp00WTNSZz6U6CZjrr8mVI0xMT7iNHbgQPdBlPn4XaX7qnr97MRStB3KgX+3ycokPmwdntnal5lEI3bBXbY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; arc=none smtp.client-ip=217.140.110.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id BDFE31516;
+	Thu, 23 Oct 2025 04:23:59 -0700 (PDT)
+Received: from [10.57.36.157] (unknown [10.57.36.157])
+	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 30F673F63F;
+	Thu, 23 Oct 2025 04:24:04 -0700 (PDT)
+Message-ID: <d594cdf2-5aab-4539-8d44-f7e57770df72@arm.com>
+Date: Thu, 23 Oct 2025 12:24:01 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20251022004554.1956729-3-anjelique.melendez@oss.qualcomm.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 3/3] iommu: Allow drivers to say if they use
+ report_iommu_fault()
+To: Jason Gunthorpe <jgg@nvidia.com>,
+ AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+ Christian Benvenuti <benve@cisco.com>, Heiko Stuebner <heiko@sntech.de>,
+ iommu@lists.linux.dev, Jernej Skrabec <jernej.skrabec@gmail.com>,
+ Joerg Roedel <joro@8bytes.org>, Leon Romanovsky <leon@kernel.org>,
+ linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org,
+ linux-mediatek@lists.infradead.org, linux-rdma@vger.kernel.org,
+ linux-rockchip@lists.infradead.org, linux-sunxi@lists.linux.dev,
+ Matthias Brugger <matthias.bgg@gmail.com>,
+ Nelson Escobar <neescoba@cisco.com>, Rob Clark
+ <robin.clark@oss.qualcomm.com>, Samuel Holland <samuel@sholland.org>,
+ Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>,
+ Chen-Yu Tsai <wens@csie.org>, Will Deacon <will@kernel.org>,
+ Yong Wu <yong.wu@mediatek.com>
+Cc: patches@lists.linux.dev
+References: <3-v1-391058a85f30+14b-iommu_set_fault_jgg@nvidia.com>
+From: Robin Murphy <robin.murphy@arm.com>
+Content-Language: en-GB
+In-Reply-To: <3-v1-391058a85f30+14b-iommu_set_fault_jgg@nvidia.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Tue, Oct 21, 2025 at 05:45:54PM -0700, Anjelique Melendez wrote:
-> UCSI v2 specification has increased the MSG_IN and MSG_OUT size from
-> 16 bytes to 256 bytes each for the message exchange between OPM and PPM
-> This makes the total buffer size increase from 48 bytes to 528 bytes.
-> Update the buffer size to support this increase.
+On 2025-10-22 6:12 pm, Jason Gunthorpe wrote:
+> report_iommu_fault() is an older API that has been superseded by
+> iommu_report_device_fault() which is capable to support PRI.
 > 
-> Signed-off-by: Anjelique Melendez <anjelique.melendez@oss.qualcomm.com>
+> Only two external drivers consume this, drivers/remoteproc and
+> drivers/gpu/drm/msm. Ideally they would move over to the new APIs, but for
+> now protect against accidentally mix and matching the wrong components.
+> 
+> The iommu drivers support either the old iommu_set_fault_handler() via the
+> driver calling report_iommu_fault(), or they are newer server focused
+> drivers that call iommu_report_device_fault().
+> 
+> Include a flag in the domain_ops if it calls report_iommu_fault() and
+> block iommu_set_fault_handler() on iommu's that can't support it.
 
-Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+This isn't a domain operation though; depending on how you look at it, 
+supporting a legacy fault_handler is either a capability of the IOMMU 
+driver (that would be reachable via domain->owner->capable) or a 
+property of the iommu_domain itself that the drivers can set at 
+allocation time (basically this same patch just with the lines in 
+slightly different places).
 
+Thanks,
+Robin.
+> Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 > ---
->  drivers/usb/typec/ucsi/ucsi_glink.c | 80 +++++++++++++++++++++++++----
->  1 file changed, 70 insertions(+), 10 deletions(-)
+>   drivers/iommu/arm/arm-smmu/arm-smmu.c   | 1 +
+>   drivers/iommu/arm/arm-smmu/qcom_iommu.c | 1 +
+>   drivers/iommu/iommu.c                   | 6 +++++-
+>   drivers/iommu/ipmmu-vmsa.c              | 1 +
+>   drivers/iommu/mtk_iommu.c               | 1 +
+>   drivers/iommu/mtk_iommu_v1.c            | 1 +
+>   drivers/iommu/omap-iommu.c              | 1 +
+>   drivers/iommu/rockchip-iommu.c          | 1 +
+>   drivers/iommu/sun50i-iommu.c            | 1 +
+>   include/linux/iommu.h                   | 3 +++
+>   10 files changed, 16 insertions(+), 1 deletion(-)
 > 
-> diff --git a/drivers/usb/typec/ucsi/ucsi_glink.c b/drivers/usb/typec/ucsi/ucsi_glink.c
-> index 1f9f0d942c1a..11b3e24e34e2 100644
-> --- a/drivers/usb/typec/ucsi/ucsi_glink.c
-> +++ b/drivers/usb/typec/ucsi/ucsi_glink.c
-> @@ -16,10 +16,10 @@
->  
->  #define PMIC_GLINK_MAX_PORTS		3
->  
-> -#define UCSI_BUF_SIZE                   48
-> +#define UCSI_BUF_V1_SIZE		(UCSI_MESSAGE_OUT + (UCSI_MESSAGE_OUT - UCSI_MESSAGE_IN))
-> +#define UCSI_BUF_V2_SIZE		(UCSIv2_MESSAGE_OUT + (UCSIv2_MESSAGE_OUT - UCSI_MESSAGE_IN))
->  
->  #define MSG_TYPE_REQ_RESP               1
-> -#define UCSI_BUF_SIZE                   48
->  
->  #define UC_NOTIFY_RECEIVER_UCSI         0x0
->  #define UC_UCSI_READ_BUF_REQ            0x11
-> @@ -32,13 +32,19 @@ struct ucsi_read_buf_req_msg {
->  
->  struct __packed ucsi_read_buf_resp_msg {
->  	struct pmic_glink_hdr   hdr;
-> -	u8                      buf[UCSI_BUF_SIZE];
-> +	union {
-> +		u8 v2_buf[UCSI_BUF_V2_SIZE];
-> +		u8 v1_buf[UCSI_BUF_V1_SIZE];
-> +	} buf;
->  	u32                     ret_code;
->  };
->  
->  struct __packed ucsi_write_buf_req_msg {
->  	struct pmic_glink_hdr   hdr;
-> -	u8                      buf[UCSI_BUF_SIZE];
-> +	union {
-> +		u8 v2_buf[UCSI_BUF_V2_SIZE];
-> +		u8 v1_buf[UCSI_BUF_V1_SIZE];
-> +	} buf;
->  	u32                     reserved;
->  };
->  
-> @@ -72,7 +78,7 @@ struct pmic_glink_ucsi {
->  	bool ucsi_registered;
->  	bool pd_running;
->  
-> -	u8 read_buf[UCSI_BUF_SIZE];
-> +	u8 read_buf[UCSI_BUF_V2_SIZE];
->  };
->  
->  static int pmic_glink_ucsi_read(struct ucsi *__ucsi, unsigned int offset,
-> @@ -132,17 +138,35 @@ static int pmic_glink_ucsi_locked_write(struct pmic_glink_ucsi *ucsi, unsigned i
->  					const void *val, size_t val_len)
->  {
->  	struct ucsi_write_buf_req_msg req = {};
-> +	size_t req_len, buf_len;
->  	unsigned long left;
->  	int ret;
-> +	u8 *buf;
->  
->  	req.hdr.owner = PMIC_GLINK_OWNER_USBC;
->  	req.hdr.type = MSG_TYPE_REQ_RESP;
->  	req.hdr.opcode = UC_UCSI_WRITE_BUF_REQ;
-> -	memcpy(&req.buf[offset], val, val_len);
-> +
-> +	if (ucsi->ucsi->version >= UCSI_VERSION_2_0) {
-> +		buf_len = UCSI_BUF_V2_SIZE;
-> +		buf = req.buf.v2_buf;
-> +	} else if (ucsi->ucsi->version) {
-> +		buf_len = UCSI_BUF_V1_SIZE;
-> +		buf = req.buf.v1_buf;
-> +	} else {
-> +		dev_err(ucsi->dev, "UCSI version unknown\n");
-> +		return -EINVAL;
-> +	}
-> +	req_len = sizeof(struct pmic_glink_hdr) + buf_len + sizeof(u32);
-> +
-> +	if (offset + val_len > buf_len)
-> +		return -EINVAL;
-> +
-> +	memcpy(&buf[offset], val, val_len);
->  
->  	reinit_completion(&ucsi->write_ack);
->  
-> -	ret = pmic_glink_send(ucsi->client, &req, sizeof(req));
-> +	ret = pmic_glink_send(ucsi->client, &req, req_len);
->  	if (ret < 0) {
->  		dev_err(ucsi->dev, "failed to send UCSI write request: %d\n", ret);
->  		return ret;
-> @@ -216,12 +240,48 @@ static const struct ucsi_operations pmic_glink_ucsi_ops = {
->  
->  static void pmic_glink_ucsi_read_ack(struct pmic_glink_ucsi *ucsi, const void *data, int len)
->  {
-> -	const struct ucsi_read_buf_resp_msg *resp = data;
-> +	u32 ret_code, resp_len, buf_len = 0;
-> +	u8 *buf;
-> +
-> +	if (ucsi->ucsi->version) {
-> +		if (ucsi->ucsi->version >= UCSI_VERSION_2_0) {
-> +			buf = ((struct ucsi_read_buf_resp_msg *)data)->buf.v2_buf;
-> +			buf_len = UCSI_BUF_V2_SIZE;
-> +		} else {
-> +			buf = ((struct ucsi_read_buf_resp_msg *)data)->buf.v1_buf;
-> +			buf_len = UCSI_BUF_V1_SIZE;
-> +		}
-> +	} else if (!ucsi->ucsi_registered) {
-> +		/*
-> +		 * If UCSI version is not known yet because device is not registered, choose buffer
-> +		 * size which best fits incoming data
-> +		 */
-> +		if (len > sizeof(struct pmic_glink_hdr) + UCSI_BUF_V2_SIZE) {
-> +			buf = ((struct ucsi_read_buf_resp_msg *)data)->buf.v2_buf;
-> +			buf_len = UCSI_BUF_V2_SIZE;
-> +		} else {
-> +			buf = ((struct ucsi_read_buf_resp_msg *)data)->buf.v1_buf;
-> +			buf_len = UCSI_BUF_V1_SIZE;
-> +		}
-> +	} else {
-> +		dev_err(ucsi->dev, "Device has been registered but UCSI version is still unknown\n");
-> +		return;
-> +	}
->  
-> -	if (resp->ret_code)
-> +	resp_len = sizeof(struct pmic_glink_hdr) + buf_len + sizeof(u32);
-> +
-> +	if (len > resp_len)
-> +		return;
-> +
-> +	/* Ensure that buffer_len leaves space for ret_code to be read back from memory */
-> +	if (buf_len > len - sizeof(struct pmic_glink_hdr) - sizeof(u32))
-> +		buf_len = len - sizeof(struct pmic_glink_hdr) - sizeof(u32);
-> +
-> +	memcpy(&ret_code, buf + buf_len, sizeof(u32));
-> +	if (ret_code)
->  		return;
->  
-> -	memcpy(ucsi->read_buf, resp->buf, UCSI_BUF_SIZE);
-> +	memcpy(ucsi->read_buf, buf, buf_len);
->  	complete(&ucsi->read_ack);
->  }
->  
-> -- 
-> 2.34.1
-
--- 
-heikki
+> diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu.c b/drivers/iommu/arm/arm-smmu/arm-smmu.c
+> index 4ced4b5bee4df3..5ce8f82ddb534b 100644
+> --- a/drivers/iommu/arm/arm-smmu/arm-smmu.c
+> +++ b/drivers/iommu/arm/arm-smmu/arm-smmu.c
+> @@ -1644,6 +1644,7 @@ static const struct iommu_ops arm_smmu_ops = {
+>   	.def_domain_type	= arm_smmu_def_domain_type,
+>   	.owner			= THIS_MODULE,
+>   	.default_domain_ops = &(const struct iommu_domain_ops) {
+> +		.report_iommu_fault_supported = true,
+>   		.attach_dev		= arm_smmu_attach_dev,
+>   		.map_pages		= arm_smmu_map_pages,
+>   		.unmap_pages		= arm_smmu_unmap_pages,
+> diff --git a/drivers/iommu/arm/arm-smmu/qcom_iommu.c b/drivers/iommu/arm/arm-smmu/qcom_iommu.c
+> index c5be95e560317e..3163a23fcbaa4f 100644
+> --- a/drivers/iommu/arm/arm-smmu/qcom_iommu.c
+> +++ b/drivers/iommu/arm/arm-smmu/qcom_iommu.c
+> @@ -598,6 +598,7 @@ static const struct iommu_ops qcom_iommu_ops = {
+>   	.device_group	= generic_device_group,
+>   	.of_xlate	= qcom_iommu_of_xlate,
+>   	.default_domain_ops = &(const struct iommu_domain_ops) {
+> +		.report_iommu_fault_supported = true,
+>   		.attach_dev	= qcom_iommu_attach_dev,
+>   		.map_pages	= qcom_iommu_map,
+>   		.unmap_pages	= qcom_iommu_unmap,
+> diff --git a/drivers/iommu/iommu.c b/drivers/iommu/iommu.c
+> index 59244c744eabd2..34546a70fb5279 100644
+> --- a/drivers/iommu/iommu.c
+> +++ b/drivers/iommu/iommu.c
+> @@ -2005,6 +2005,9 @@ EXPORT_SYMBOL_GPL(iommu_group_has_isolated_msi);
+>    * This function should be used by IOMMU users which want to be notified
+>    * whenever an IOMMU fault happens.
+>    *
+> + * This is a legacy API not supported by all drivers. New users should look
+> + * to using domain->iopf_handler for the modern API.
+> + *
+>    * The fault handler itself should return 0 on success, and an appropriate
+>    * error code otherwise.
+>    */
+> @@ -2012,7 +2015,8 @@ void iommu_set_fault_handler(struct iommu_domain *domain,
+>   					iommu_fault_handler_t handler,
+>   					void *token)
+>   {
+> -	if (WARN_ON(!domain || domain->cookie_type != IOMMU_COOKIE_NONE))
+> +	if (WARN_ON(!domain || domain->cookie_type != IOMMU_COOKIE_NONE ||
+> +		    !domain->ops->report_iommu_fault_supported))
+>   		return;
+>   
+>   	domain->cookie_type = IOMMU_COOKIE_FAULT_HANDLER;
+> diff --git a/drivers/iommu/ipmmu-vmsa.c b/drivers/iommu/ipmmu-vmsa.c
+> index ffa892f6571406..770fa248e30477 100644
+> --- a/drivers/iommu/ipmmu-vmsa.c
+> +++ b/drivers/iommu/ipmmu-vmsa.c
+> @@ -885,6 +885,7 @@ static const struct iommu_ops ipmmu_ops = {
+>   			? generic_device_group : generic_single_device_group,
+>   	.of_xlate = ipmmu_of_xlate,
+>   	.default_domain_ops = &(const struct iommu_domain_ops) {
+> +		.report_iommu_fault_supported = true,
+>   		.attach_dev	= ipmmu_attach_device,
+>   		.map_pages	= ipmmu_map,
+>   		.unmap_pages	= ipmmu_unmap,
+> diff --git a/drivers/iommu/mtk_iommu.c b/drivers/iommu/mtk_iommu.c
+> index 0e0285348d2b8e..0f44993eaadce3 100644
+> --- a/drivers/iommu/mtk_iommu.c
+> +++ b/drivers/iommu/mtk_iommu.c
+> @@ -1019,6 +1019,7 @@ static const struct iommu_ops mtk_iommu_ops = {
+>   	.get_resv_regions = mtk_iommu_get_resv_regions,
+>   	.owner		= THIS_MODULE,
+>   	.default_domain_ops = &(const struct iommu_domain_ops) {
+> +		.report_iommu_fault_supported = true,
+>   		.attach_dev	= mtk_iommu_attach_device,
+>   		.map_pages	= mtk_iommu_map,
+>   		.unmap_pages	= mtk_iommu_unmap,
+> diff --git a/drivers/iommu/mtk_iommu_v1.c b/drivers/iommu/mtk_iommu_v1.c
+> index 10cc0b1197e801..279e7acfd5c6d3 100644
+> --- a/drivers/iommu/mtk_iommu_v1.c
+> +++ b/drivers/iommu/mtk_iommu_v1.c
+> @@ -582,6 +582,7 @@ static const struct iommu_ops mtk_iommu_v1_ops = {
+>   	.device_group	= generic_device_group,
+>   	.owner          = THIS_MODULE,
+>   	.default_domain_ops = &(const struct iommu_domain_ops) {
+> +		.report_iommu_fault_supported = true,
+>   		.attach_dev	= mtk_iommu_v1_attach_device,
+>   		.map_pages	= mtk_iommu_v1_map,
+>   		.unmap_pages	= mtk_iommu_v1_unmap,
+> diff --git a/drivers/iommu/omap-iommu.c b/drivers/iommu/omap-iommu.c
+> index 5c6f5943f44b1f..3f3193de3ecd86 100644
+> --- a/drivers/iommu/omap-iommu.c
+> +++ b/drivers/iommu/omap-iommu.c
+> @@ -1724,6 +1724,7 @@ static const struct iommu_ops omap_iommu_ops = {
+>   	.device_group	= generic_single_device_group,
+>   	.of_xlate	= omap_iommu_of_xlate,
+>   	.default_domain_ops = &(const struct iommu_domain_ops) {
+> +		.report_iommu_fault_supported = true,
+>   		.attach_dev	= omap_iommu_attach_dev,
+>   		.map_pages	= omap_iommu_map,
+>   		.unmap_pages	= omap_iommu_unmap,
+> diff --git a/drivers/iommu/rockchip-iommu.c b/drivers/iommu/rockchip-iommu.c
+> index 0861dd469bd866..0053f5aa2cb781 100644
+> --- a/drivers/iommu/rockchip-iommu.c
+> +++ b/drivers/iommu/rockchip-iommu.c
+> @@ -1174,6 +1174,7 @@ static const struct iommu_ops rk_iommu_ops = {
+>   	.device_group = generic_single_device_group,
+>   	.of_xlate = rk_iommu_of_xlate,
+>   	.default_domain_ops = &(const struct iommu_domain_ops) {
+> +		.report_iommu_fault_supported = true,
+>   		.attach_dev	= rk_iommu_attach_device,
+>   		.map_pages	= rk_iommu_map,
+>   		.unmap_pages	= rk_iommu_unmap,
+> diff --git a/drivers/iommu/sun50i-iommu.c b/drivers/iommu/sun50i-iommu.c
+> index de10b569d9a940..29b230050906a2 100644
+> --- a/drivers/iommu/sun50i-iommu.c
+> +++ b/drivers/iommu/sun50i-iommu.c
+> @@ -849,6 +849,7 @@ static const struct iommu_ops sun50i_iommu_ops = {
+>   	.of_xlate	= sun50i_iommu_of_xlate,
+>   	.probe_device	= sun50i_iommu_probe_device,
+>   	.default_domain_ops = &(const struct iommu_domain_ops) {
+> +		.report_iommu_fault_supported = true,
+>   		.attach_dev	= sun50i_iommu_attach_device,
+>   		.flush_iotlb_all = sun50i_iommu_flush_iotlb_all,
+>   		.iotlb_sync_map = sun50i_iommu_iotlb_sync_map,
+> diff --git a/include/linux/iommu.h b/include/linux/iommu.h
+> index c30d12e16473df..e2bf7885287fac 100644
+> --- a/include/linux/iommu.h
+> +++ b/include/linux/iommu.h
+> @@ -714,6 +714,8 @@ struct iommu_ops {
+>   
+>   /**
+>    * struct iommu_domain_ops - domain specific operations
+> + * @report_iommu_fault_supported: True if the domain supports
+> + *                                iommu_set_fault_handler()
+>    * @attach_dev: attach an iommu domain to a device
+>    *  Return:
+>    * * 0		- success
+> @@ -751,6 +753,7 @@ struct iommu_ops {
+>    * @free: Release the domain after use.
+>    */
+>   struct iommu_domain_ops {
+> +	bool report_iommu_fault_supported : 1;
+>   	int (*attach_dev)(struct iommu_domain *domain, struct device *dev);
+>   	int (*set_dev_pasid)(struct iommu_domain *domain, struct device *dev,
+>   			     ioasid_t pasid, struct iommu_domain *old);
 
