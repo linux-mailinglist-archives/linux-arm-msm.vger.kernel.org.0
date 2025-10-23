@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-78635-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-78636-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id E458BC03148
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Oct 2025 20:51:57 +0200 (CEST)
+Received: from ams.mirrors.kernel.org (ams.mirrors.kernel.org [IPv6:2a01:60a::1994:3:14])
+	by mail.lfdr.de (Postfix) with ESMTPS id 55B97C03154
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Oct 2025 20:52:12 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 15BFF3B176D
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Oct 2025 18:51:48 +0000 (UTC)
+	by ams.mirrors.kernel.org (Postfix) with ESMTPS id CFCE5358E9B
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Oct 2025 18:52:11 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2268A34AAF2;
-	Thu, 23 Oct 2025 18:51:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 22F2A34AAE5;
+	Thu, 23 Oct 2025 18:52:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="E2vH2Bgt"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="DHAgocqv"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3B1827FB35;
-	Thu, 23 Oct 2025 18:51:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA792299AB5;
+	Thu, 23 Oct 2025 18:52:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761245501; cv=none; b=TIPDv3S1CayEQagqwevbB6L+ULHnpusGilA3CqmaAPa/mlzMoj7miPWdKgPwx1VNfw+porBonSD529s5w0NlAFxTlhJyKWrjXlF8zgsMB2aE/CGG4NQIrmKF/3HHpBDFyjGaD0hU3+1MsylhxNwJ9IkegLo6uPMgNg7zYzl7HFg=
+	t=1761245522; cv=none; b=kBZXJFd7iTEtXtNGSP8Lpgkxzwwki/tKa3ljRLzwEUnlhmb8hHSg9laFDwIx+Pg26LXUsVPY0k5ut+GUbFPs0GrtF03FUZF1UtLgM4WMgJvgFkWyA0Ge5tJQg7xiekXSPL3JoIDovTmHAyDtCrHGfWvql9iWqF1fX2hleHlhhbY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761245501; c=relaxed/simple;
-	bh=fUW5hqoyXRr1qipV1nRFLz7P3NbiQcTW+NuLP3KbaCU=;
+	s=arc-20240116; t=1761245522; c=relaxed/simple;
+	bh=TzuSpoSx+aRz2N22AvJ60oOVpKuOmgU6VTbYs84YpwA=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=DM3sapNKNQ/9yflSS1emduvZEtQpatZ4trF9dKWZKkNHtw5+20+FG94+LlAZxcHq1NCn3qIImI+Ba31mc4oOD8hTXNkqM0Jpua4JDR9RYIJH6BsLH4JO7+z2amZOyR7h1FTlGFxBpElGDyguIGK2DkeygwZtIvzDDP6d/xa0uRc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=E2vH2Bgt; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C858C4CEFF;
-	Thu, 23 Oct 2025 18:51:36 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=EzIEotKm0+gmSgPC5nfjb9WervNKNjMxlSL2GMFE4CZK7URfb5hf91JhPu7cvqFroxjtDvH9X6PQM61GibgNW91krnfjqfMBow8Oc4B6fRPcYk7kyqYgfS6cBYbOUAC0OYxvU4WirDriZ/fB1Jz5Vv8R3dY9uBsMi7C+RWTGvyQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=DHAgocqv; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA85AC4CEFD;
+	Thu, 23 Oct 2025 18:51:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1761245500;
-	bh=fUW5hqoyXRr1qipV1nRFLz7P3NbiQcTW+NuLP3KbaCU=;
+	s=k20201202; t=1761245521;
+	bh=TzuSpoSx+aRz2N22AvJ60oOVpKuOmgU6VTbYs84YpwA=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=E2vH2BgtgwdjwRX60PEt8E5SOCgUO6/3z1Tvj3P7OuXPXM+KkfUeZWdgnuG39tiXt
-	 LOJWBevwQf4tx8g7NLNbuvNRyT51zaQ3/g0yGRr1XMHTeQnfIko5HVt8B5mIH7GrfA
-	 xzUIXwJqdEx9wEkNKmCrP7SG7t6peWsImFFJ0VVRdtfEt5PJqfiN5xHvyxTRMDZ2mZ
-	 NFJS6Jb+69hUCBNn9hmWLCngH+jrgtX/ax8ESzgXC4UHS7NzR+R62mwneGGux+sPI5
-	 5gK+CQFi2Vi4VAq7SlLSyOaNBf37ToPr2tBHvDB0ikIJG6Anp3ItOFJJI8bvJ/h6TE
-	 Xf5tjjjYPLnIA==
-Message-ID: <e3525c7a-2d4e-4cea-ae9d-6fb9d04bc3fe@kernel.org>
-Date: Thu, 23 Oct 2025 20:51:34 +0200
+	b=DHAgocqvom9faaoZnBqXY9bpIXCHSMm6EZRtvYa4GmcXBaNFZFfF2iku9bU5bq4a5
+	 8NmhdJJwnYB6Fr4deS5y8sbVfErRNvEehuLJ+l3MZlGmsR7mRdIZ6aWue617Gn90w6
+	 NNCj3qE4eliaHP/mbumm1aaez6lzTu1iUZdkziD65tQgz8uSi3wrO7GEUQTsZMFxv7
+	 skBa7LygbdLgqmbq/L0AG3+9vk/uB7smdAVnMofzbt+mOGMNgGY1ClCPT9u988OtsO
+	 j6oz4XyZI35kihLU4ZqxC551vYdv4IxDf+RKwrQ25KlXrP7sFkRhzuLF66+PjUXopV
+	 Z1jLgzkkvK+6A==
+Message-ID: <171e631f-c463-4dfc-aa04-b8a82a82f00b@kernel.org>
+Date: Thu, 23 Oct 2025 20:51:57 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,20 +50,17 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] dt-bindings: thermal: qcom-tsens: document the
- Kaanapali Temperature Sensor
+Subject: Re: [PATCH v2] dt-bindings: qcom,pdc: document Kaanapali Power Domain
+ Controller
 To: Jingyi Wang <jingyi.wang@oss.qualcomm.com>,
- Amit Kucheria <amitk@kernel.org>, Thara Gopinath <thara.gopinath@gmail.com>,
- "Rafael J. Wysocki" <rafael@kernel.org>,
- Daniel Lezcano <daniel.lezcano@linaro.org>, Zhang Rui <rui.zhang@intel.com>,
- Lukasz Luba <lukasz.luba@arm.com>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
+ Thomas Gleixner <tglx@linutronix.de>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>
 Cc: aiqun.yu@oss.qualcomm.com, tingwei.zhang@oss.qualcomm.com,
  trilok.soni@oss.qualcomm.com, yijie.yang@oss.qualcomm.com,
- linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- Manaf Meethalavalappu Pallikunhi <manaf.pallikunhi@oss.qualcomm.com>
-References: <20251021-b4-knp-tsens-v2-1-7b662e2e71b4@oss.qualcomm.com>
+ linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+ devicetree@vger.kernel.org
+References: <20251021-knp-pdc-v2-1-a38767f5bb8e@oss.qualcomm.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -109,19 +106,15 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  jWt87ecuHlpL3uuQ0ZZNWqHgZoQLXoqC2ZV5KrtKWb/jyiFX/sxSrodALf0zf+tfHv0FZWT2
  zHjUqd0t4njD/UOsuIMOQn4Ig0SdivYPfZukb5cdasKJukG1NOpbW7yRNivaCnfZz6dTawXw
  XRIV/KDsHQiyVxKvN73bThKhONkcX2LWuD928tAR6XMM2G5ovxLe09vuOzzfTWQDsm++9UKF a/A=
-In-Reply-To: <20251021-b4-knp-tsens-v2-1-7b662e2e71b4@oss.qualcomm.com>
+In-Reply-To: <20251021-knp-pdc-v2-1-a38767f5bb8e@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 22/10/2025 08:23, Jingyi Wang wrote:
-> From: Manaf Meethalavalappu Pallikunhi <manaf.pallikunhi@oss.qualcomm.com>
+On 22/10/2025 08:00, Jingyi Wang wrote:
+> Add a compatible for the Power Domain Controller on Kaanapali platforms.
 > 
-> Document the Temperature Sensor (TSENS) on the Kaanapali Platform.
-> 
-> Signed-off-by: Manaf Meethalavalappu Pallikunhi <manaf.pallikunhi@oss.qualcomm.com>
 > Signed-off-by: Jingyi Wang <jingyi.wang@oss.qualcomm.com>
 > ---
-> Changes in v2:
 
 Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
