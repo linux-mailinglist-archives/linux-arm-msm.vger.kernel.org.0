@@ -1,196 +1,146 @@
-Return-Path: <linux-arm-msm+bounces-78565-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-78566-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [142.0.200.124])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3F4EBC00C45
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Oct 2025 13:34:53 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 12B81C00CD2
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Oct 2025 13:39:29 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id C9D6E5065F0
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Oct 2025 11:33:24 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 366AA3A813D
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Oct 2025 11:35:02 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 982F630DEBE;
-	Thu, 23 Oct 2025 11:32:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 086391FA272;
+	Thu, 23 Oct 2025 11:35:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b="VKvLSr2E"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="nJsZoqip"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f43.google.com (mail-ej1-f43.google.com [209.85.218.43])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3F3430E83C
-	for <linux-arm-msm@vger.kernel.org>; Thu, 23 Oct 2025 11:32:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F4362C325C
+	for <linux-arm-msm@vger.kernel.org>; Thu, 23 Oct 2025 11:34:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761219171; cv=none; b=DfoIdAU6gcTwB49mzTl/ufb3nDlV/fnaKZrXYohvPsZu/XiuaInyuXXitgPyBCgYqL5MB7YUosLOukY/SLdDGKzST1QXM75mBOkp84HB95fnMjn5gpPqROnEnEt3gaVk2BPBZbbmlvtvDprFK/tt+sNs/fz2ZUb3rv1RECfEsAU=
+	t=1761219300; cv=none; b=IXqsy3mCkSDk9aWG9lh8/9k9o00nA4Iug1bKy+wvQrrf90uhFjqF99S7d442qNeWgScgU+5GSTz2cCitUmt/e7FFR988PrM2c1dOkCnUsTJz74pVs29CjCu9QI7zUK/AjZrYeq7FcX0WWNO1MDSNTl34GfezdXgZQh7MAvq3DqY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761219171; c=relaxed/simple;
-	bh=VrNwvQvfKelfjsNL39NDV/Pr5hRkFpgryYK23xxuGu0=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=LHAm8EeuTTNo6tMV1rAqACpKBbNiQVuz2mH7OtdRUpHwftKgHCLUwIJvINXwL4m4WVhY2Xui/VuOZixZymBgzTuVy/kQplT3ymMKQ8oxjIB8/q/yA3IwZfkomsbQmhB4dXGW2bR/PNjgDu69qthM8FzBB04O7tc9jZ7WXzL5XCs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=fairphone.com; spf=pass smtp.mailfrom=fairphone.com; dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b=VKvLSr2E; arc=none smtp.client-ip=209.85.218.43
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=fairphone.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fairphone.com
-Received: by mail-ej1-f43.google.com with SMTP id a640c23a62f3a-b5e19810703so116124566b.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Oct 2025 04:32:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=fairphone.com; s=fair; t=1761219167; x=1761823967; darn=vger.kernel.org;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=/FvWczutByRQszn2cLDwkyaS9cC21yJeCI2ighUyDzM=;
-        b=VKvLSr2ENU05eh3nOi4c7i1f5BhnT0JUwH0rJZGXChuflAHPGG7f1RZ4jcNUCvfyWn
-         xd+Yid58NRkG3RttV5RjHKlIq9nw472mjw9GskxzqPaCTVFmJ+xFAVIVTDRNENVV2Wi5
-         4itWNOIaU5uEkNE70WBKJ9fALdz9MTXlHGznWMIYNEVaY4PbrsPY2Mb8T3FrXd2hqwWJ
-         Sq7ovF34yEPndI6HLK6b18eK8tCvB+B8xHpYYWICw10SV0/2VHtwidXhfkJaRTUrhvqv
-         4yyeOQF/1RoH4iJMY54na5RwjjAvPgy/jscw8WRlU/2nMRjbj2++Ir0YAITUHlJpC93S
-         vE/Q==
+	s=arc-20240116; t=1761219300; c=relaxed/simple;
+	bh=f+/NnNjzHQpwza0Q5UTb3bp/OkbrnhnjOKHiz2Go468=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=qAII5G8xL2y72N8QFO0+5oaj0supLfNaC8lafmCFyBDaoVInCKGOqMlZ0lwJmju6Fa+BbvNCq0WFbHg17c6h99qj7ZrIPUskzvkdfe8hGtrMD2b1mTRpumDWySiiDZMs4V1Ede22/nBvR80Osz7Zst3YE2zGtiYn4PYE65mVILY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=nJsZoqip; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 59N6xYFh005790
+	for <linux-arm-msm@vger.kernel.org>; Thu, 23 Oct 2025 11:34:58 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-type:date:from:in-reply-to:message-id:mime-version
+	:references:subject:to; s=qcppdkim1; bh=0GsmbhgdWrGJ+GimrTjkaExR
+	9bUmFkGScu7WoG+LKrE=; b=nJsZoqipaUVAIV7XnpOVhcGP1Rn/u0Zql4bOCl7A
+	gtfa1c/6ECJEerPws1u3O3TPsWDk/8c4ynB1qABQlFlcupys0doyDROXbIKAfdaG
+	Nx6UDeCTGhP46nzH3J7fPlXXLC7IyrIi4oiZ2BT64rJHK2W7eBDbz8I5RTQUGgGZ
+	PU+ANNbTtYwZCUK9WrRvOrIX+UXMc3+9SA6fUCb6GeM8NJ+UX7H/4hGHj1D0i71I
+	1guf3/78ZWMCUgOQsv3VNVzPCJWAX+fxZrG5QRov9LN3tYXLInmxymcCm4RLY/Du
+	S8v38lDolmoSqbsLMNM9OdrcDvbUSNW4jdvmhVa2LJHukg==
+Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com [209.85.160.198])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 49v27j8524-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Thu, 23 Oct 2025 11:34:58 +0000 (GMT)
+Received: by mail-qt1-f198.google.com with SMTP id d75a77b69052e-4e8a3d0fb09so9617741cf.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Oct 2025 04:34:58 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1761219167; x=1761823967;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=/FvWczutByRQszn2cLDwkyaS9cC21yJeCI2ighUyDzM=;
-        b=oEXXbq/nsLKiZqIUL7X5dN2Rd3ZeQPHBtsleCSGNLy+F0tuUJCdHr82FoUX9DeJ4bJ
-         4PkKgn4taN6qp5p5iOfSV9/GpN3ooltjMpYzYJB3DR1e8UgoMJ2jez9QsqYxsTtYT7gh
-         MF0HmwdtGZcFrYviYCkOQVKDbj+axIbMTqKZOAgO7Wf24839AUx+ZaqbgwWn4njZfE9H
-         gruKZnXmXJ5QrS1og+AReuOo/9ve5Tof6SlEZ4aOZW3NDQHrb0hjfMPWjHJdSy9TIQkG
-         vs/b3P1UOg4LqXK4zbLL7y/o+z9iGjOADzI49fC8FIeTROby/TPSr24Vohv7R0MIGvXM
-         OjZw==
-X-Forwarded-Encrypted: i=1; AJvYcCUr/j7fycq1P2NZowfABD5B/rsU/8IjLFOPE3oSpp13GWO2v7nEz1/Gx502x3P5CCaFK0DgN/ByuAcTtIfi@vger.kernel.org
-X-Gm-Message-State: AOJu0YyaR2fZ4JZ2WI4WIgjzoX+XkdeQNmsNlPFNe2NPeHXJn0yZMRiP
-	Hm94rG5hCYorRwKUtEeIHdKjMnCTDoo1yAVq97MnThWhkNw31UV6BKEADuA+ZI7ImPw=
-X-Gm-Gg: ASbGncu1T1/T0ZYgSsQ9WnVIcGCLvTYLAl6xIBAmXO2w8t5rGja40PJY21cdxtLbpga
-	HfWeFRKOh3JpEIch8Ad9dA84np1CXMPk1svmJdpSrBZSAq42KS+pbIIJBeoTIv7zdDmLrzwgwxa
-	xDs1x8Op/n65GHnAZ2ozHHR9M6jCV2of2DA/V1safXxArfxVCwlssDNrEZBuaqIn/8jI7vf1Ngr
-	t7csp0CqkZ4c2GPYEisyKeA7d4Ex5GC8xiFLC2bFcxu05cAJx1hXuJo51dXsWN5dRMV1cFQwxe2
-	2yoFbv2tKuUhOUyHfirr0JeQbzPUIZx+mfJwaDabxrulE6QtvLQqdmMQOlz2qzi5uuGkgPA/aNO
-	vQV81yn6pUMUe7ceTTWDNyksIaHGR5l9gwcg/KhyIBF7gokC5F8edQGwJw4K8zJzLsCs/v2jCyd
-	Uby2kX3rqxuPpkgzpr96RiHX1D54lnNW30DlY+9Ks3NlLPmw==
-X-Google-Smtp-Source: AGHT+IH9Dd5psNqWeEfzs5C5WDQnf+kwc7VZusjUHqTftWu4ybm3zPVgqZTXAL85Q+86yhvlI2NMXA==
-X-Received: by 2002:a17:907:3e21:b0:b45:66f6:6a0a with SMTP id a640c23a62f3a-b6474940f13mr2873736566b.44.1761219167068;
-        Thu, 23 Oct 2025 04:32:47 -0700 (PDT)
-Received: from [192.168.178.36] (046124199085.public.t-mobile.at. [46.124.199.85])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-b6d51471ef6sm183087866b.72.2025.10.23.04.32.45
+        d=1e100.net; s=20230601; t=1761219298; x=1761824098;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=0GsmbhgdWrGJ+GimrTjkaExR9bUmFkGScu7WoG+LKrE=;
+        b=ltobb3kIJgEz4X1nKqfggiIRr+QimdO7rNIzwDMpQNpALbtOmwzF0Yw4+5R1ArRr7m
+         AtRBDjxkzsUYt2czufR3NdPJUyGYpnD0h/FdElOn+Lc+wYbS6yx9p5BKNe8N6SNIhnbN
+         JXHmqlTK4NID0cXiOOeyWvrk4PftEOo2OmlwOATEteYW4Gn6+TzpGkVu7YWwh4CH0FKN
+         keavQovv1yk8tGBqhUOx2EMMNmBwnuhd4RiPQ7jNgrjrU43uiRDrKBaalPaww4D4F+ba
+         Nz2MuDIw+tE6bda+hgCiKQKozY6xymqziSBGdAEK9x5dR45RXSejHqQ94OmUwBlQ93zA
+         KJOQ==
+X-Forwarded-Encrypted: i=1; AJvYcCWgwUgh3+6IN6TVIfCeZ4drVSlSY+wHmhH9TAmTMvrWp4ky+qAM+CBiPcwmuaDTgp0TjK9uZ922DvDkBQtY@vger.kernel.org
+X-Gm-Message-State: AOJu0YxIRdu+ejQtd7NOhU2jxVvN63wSRDcYZuvIJVMdB8EHQZbbxKoW
+	oWahF339/kXsTKHQF1WBzB2pXY9+CMsGW8VTDrn5eRcdiQmbzWAFOdG+qmEGXE/+LvBbn8gk/ac
+	nmr2Ly3Vl0oHvO1thkcObOfEb0gYNMEs+b8pPqYgpoPCbhEQ0E15mh2SZR5ahDddJ8YVO
+X-Gm-Gg: ASbGncunaOd4GiVgtGTan6CjX3TJyiZHvSlXFSfTCvnt851bS0fqN2WVvX6DFqfTx5f
+	L92DLWucQj8IXC1bwEzpZa8yw2tIPUDertFongG7lpgRjYB9QwQmmH1XkYlv8OijZ2sYO3jMwII
+	Y9LIKBrHmIc/T9m2AnWGAFoPIj0S7RHgje8/bDy0zPiMEY2h5ih9E0CbfdjJfVrrJEFVnyKVfzw
+	5EFo7yOagMwXNgYIM+aKAr08bqX0kRjlvo4yFMZ/waXemNnj9OMS7x37jb/4k4QV2Er15R2QbHq
+	zvOHP2IuVZlg/NsrjJ0Pn3QPrSMZSHKeR+5OdQ5qYnprGu8lrsZZqgWoH2gaw2k4S7EKpSSaEcL
+	JkECSFlKVd+6Bi1BXjI1iO5C+9sE1bIfYnhe5X7+6h0WWcPJ7Apj4A3u4Fd2Hg1au+dYganBjOi
+	t7OGtTBNaZIqmg
+X-Received: by 2002:a05:622a:1488:b0:4e8:ac66:ee4b with SMTP id d75a77b69052e-4e8ac66f3famr247774691cf.50.1761219297558;
+        Thu, 23 Oct 2025 04:34:57 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEI3toh2FWWacCWixWtLj+UhejuUOALAkx4auCsoA9mdYJd6RmpJFsj+n/JRxq7WMt0HM3+Yg==
+X-Received: by 2002:a05:622a:1488:b0:4e8:ac66:ee4b with SMTP id d75a77b69052e-4e8ac66f3famr247774281cf.50.1761219297099;
+        Thu, 23 Oct 2025 04:34:57 -0700 (PDT)
+Received: from umbar.lan (2001-14ba-a0c3-3a00-264b-feff-fe8b-be8a.rev.dnainternet.fi. [2001:14ba:a0c3:3a00:264b:feff:fe8b:be8a])
+        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-378d67dc592sm3822231fa.45.2025.10.23.04.34.55
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 23 Oct 2025 04:32:46 -0700 (PDT)
-From: Luca Weiss <luca.weiss@fairphone.com>
-Date: Thu, 23 Oct 2025 13:32:27 +0200
-Subject: [PATCH v3 3/3] arm64: dts: qcom: Add PM7550 PMIC
+        Thu, 23 Oct 2025 04:34:56 -0700 (PDT)
+Date: Thu, 23 Oct 2025 14:34:54 +0300
+From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+To: Anjelique Melendez <anjelique.melendez@oss.qualcomm.com>
+Cc: heikki.krogerus@linux.intel.com, gregkh@linuxfoundation.org,
+        lumag@kernel.org, neil.armstrong@linaro.org, johan+linaro@kernel.org,
+        quic_bjorande@quicinc.com, linux-usb@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH v6 2/2] usb: typec: ucsi_glink: Increase buffer size to
+ support UCSI v2
+Message-ID: <f2y4aposu5ddpwgue5gskumo5mjwkrod32ecbvveodgxrysg6u@zsq6ftoy4yqg>
+References: <20251022004554.1956729-1-anjelique.melendez@oss.qualcomm.com>
+ <20251022004554.1956729-3-anjelique.melendez@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-Message-Id: <20251023-sm7635-pmxr2230-v3-3-f70466c030fe@fairphone.com>
-References: <20251023-sm7635-pmxr2230-v3-0-f70466c030fe@fairphone.com>
-In-Reply-To: <20251023-sm7635-pmxr2230-v3-0-f70466c030fe@fairphone.com>
-To: Lee Jones <lee@kernel.org>, Pavel Machek <pavel@kernel.org>, 
- Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>, Fenglin Wu <quic_fenglinw@quicinc.com>, 
- Stephen Boyd <sboyd@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konradybcio@kernel.org>, 
- Linus Walleij <linus.walleij@linaro.org>
-Cc: ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org, 
- linux-arm-msm@vger.kernel.org, linux-leds@vger.kernel.org, 
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
- linux-gpio@vger.kernel.org, Luca Weiss <luca.weiss@fairphone.com>, 
- Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-X-Mailer: b4 0.14.3
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1761219151; l=2094;
- i=luca.weiss@fairphone.com; s=20250611; h=from:subject:message-id;
- bh=VrNwvQvfKelfjsNL39NDV/Pr5hRkFpgryYK23xxuGu0=;
- b=LITtwk2B2ra/A63gTBSxvj5T+8xvMhjvBIUq6RekYdT03g4nS4NJvFGWBL4db9lxly5R4rCM1
- IXGzn4EqsZpASHqeKavP7cdKOUaQUtybwgd1YFp4m4Awa7sL86odCK6
-X-Developer-Key: i=luca.weiss@fairphone.com; a=ed25519;
- pk=O1aw+AAust5lEmgrNJ1Bs7PTY0fEsJm+mdkjExA69q8=
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20251022004554.1956729-3-anjelique.melendez@oss.qualcomm.com>
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDE4MDAxOCBTYWx0ZWRfXzXqxvNz/itbj
+ dHPpaQfo96OA0ZqhFQbD/PbWteehGnmQEL974ldhedc8HR1yTXvGtm9EY2xP2zw6i8JC39BSaWJ
+ m2TJ/gdeeoCOB0eJv58t0hseKdB+RDh0uO2A/7ErKdSnwv3Vy0vljGoFhAcCGvaS1p3kdsgOCNo
+ jFkm6+miG78ENvjwD8gQB0uSVt+8mtKLu8uVvmyQHxXGQidokvxqYaQqApTIUPR/1yKBQM9pcGF
+ sa213E9t0YE0Ek8S2JWWPrqtJLt5/FXbJPRBlDEz4iTYO3122F4NHbXqYmQFlS2SSjFoluRe0nE
+ iEdVm3P8ctLAASuzI7V88Kn18njhRwZ7NT/GdbJMl+HUJmG9Dxrpsd15pWUYSsvH6PnLeJ1P7Xa
+ +ztkB8NR6iR54lsUxpNh3ajm+JTsQg==
+X-Authority-Analysis: v=2.4 cv=G4UR0tk5 c=1 sm=1 tr=0 ts=68fa12e2 cx=c_pps
+ a=mPf7EqFMSY9/WdsSgAYMbA==:117 a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10
+ a=x6icFKpwvdMA:10 a=VkNPw1HP01LnGYTKEx00:22 a=EUspDBNiAAAA:8
+ a=WG3W4BPXNB2T8y8KjtgA:9 a=CjuIK1q_8ugA:10 a=dawVfQjAaf238kedN5IG:22
+X-Proofpoint-GUID: fKIcGaTfzEp4SsQ3CHtC5MgmDgNj1uwj
+X-Proofpoint-ORIG-GUID: fKIcGaTfzEp4SsQ3CHtC5MgmDgNj1uwj
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-10-22_08,2025-10-22_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ impostorscore=0 lowpriorityscore=0 malwarescore=0 bulkscore=0
+ priorityscore=1501 spamscore=0 suspectscore=0 adultscore=0 clxscore=1015
+ phishscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2510020000
+ definitions=main-2510180018
 
-Add a dts for the PMIC used e.g. with Milos SoC-based devices.
+On Tue, Oct 21, 2025 at 05:45:54PM -0700, Anjelique Melendez wrote:
+> UCSI v2 specification has increased the MSG_IN and MSG_OUT size from
+> 16 bytes to 256 bytes each for the message exchange between OPM and PPM
+> This makes the total buffer size increase from 48 bytes to 528 bytes.
+> Update the buffer size to support this increase.
+> 
+> Signed-off-by: Anjelique Melendez <anjelique.melendez@oss.qualcomm.com>
+> ---
+>  drivers/usb/typec/ucsi/ucsi_glink.c | 80 +++++++++++++++++++++++++----
+>  1 file changed, 70 insertions(+), 10 deletions(-)
+> 
 
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
----
- arch/arm64/boot/dts/qcom/pm7550.dtsi | 67 ++++++++++++++++++++++++++++++++++++
- 1 file changed, 67 insertions(+)
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 
-diff --git a/arch/arm64/boot/dts/qcom/pm7550.dtsi b/arch/arm64/boot/dts/qcom/pm7550.dtsi
-new file mode 100644
-index 000000000000..b886c2397fe7
---- /dev/null
-+++ b/arch/arm64/boot/dts/qcom/pm7550.dtsi
-@@ -0,0 +1,67 @@
-+// SPDX-License-Identifier: BSD-3-Clause
-+/*
-+ * Copyright (c) 2025, Luca Weiss <luca.weiss@fairphone.com>
-+ */
-+
-+#include <dt-bindings/interrupt-controller/irq.h>
-+#include <dt-bindings/spmi/spmi.h>
-+
-+/ {
-+	thermal-zones {
-+		pm7550_thermal: pm7550-thermal {
-+			polling-delay-passive = <100>;
-+
-+			thermal-sensors = <&pm7550_temp_alarm>;
-+
-+			trips {
-+				trip0 {
-+					temperature = <95000>;
-+					hysteresis = <0>;
-+					type = "passive";
-+				};
-+
-+				trip1 {
-+					/*
-+					 * Current Linux driver currently only supports up to
-+					 * 125°C, should be updated to 145°C once available.
-+					 */
-+					temperature = <125000>;
-+					hysteresis = <0>;
-+					type = "critical";
-+				};
-+			};
-+		};
-+	};
-+};
-+
-+&spmi_bus {
-+	pm7550: pmic@1 {
-+		compatible = "qcom,pm7550", "qcom,spmi-pmic";
-+		reg = <0x1 SPMI_USID>;
-+		#address-cells = <1>;
-+		#size-cells = <0>;
-+
-+		pm7550_temp_alarm: temp-alarm@a00 {
-+			compatible = "qcom,spmi-temp-alarm";
-+			reg = <0xa00>;
-+			interrupts = <0x1 0xa 0x0 IRQ_TYPE_EDGE_BOTH>;
-+			#thermal-sensor-cells = <0>;
-+		};
-+
-+		pm7550_gpios: gpio@8800 {
-+			compatible = "qcom,pm7550-gpio", "qcom,spmi-gpio";
-+			reg = <0x8800>;
-+			gpio-controller;
-+			gpio-ranges = <&pm7550_gpios 0 0 12>;
-+			#gpio-cells = <2>;
-+			interrupt-controller;
-+			#interrupt-cells = <2>;
-+		};
-+
-+		pm7550_flash: led-controller@ee00 {
-+			compatible = "qcom,pm7550-flash-led", "qcom,spmi-flash-led";
-+			reg = <0xee00>;
-+			status = "disabled";
-+		};
-+	};
-+};
 
 -- 
-2.51.1
-
+With best wishes
+Dmitry
 
