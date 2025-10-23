@@ -1,248 +1,144 @@
-Return-Path: <linux-arm-msm+bounces-78553-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-78554-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0966DC00B44
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Oct 2025 13:24:21 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5463BC00B85
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Oct 2025 13:29:22 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id AA3F73A2E0E
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Oct 2025 11:24:19 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 6187B3A6255
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Oct 2025 11:29:19 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7879B30DD18;
-	Thu, 23 Oct 2025 11:24:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 143252FB99A;
+	Thu, 23 Oct 2025 11:29:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b="pvQeROGz"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 74AED2FDC3A;
-	Thu, 23 Oct 2025 11:24:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
+Received: from mail-ej1-f45.google.com (mail-ej1-f45.google.com [209.85.218.45])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC4D5301487
+	for <linux-arm-msm@vger.kernel.org>; Thu, 23 Oct 2025 11:29:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761218657; cv=none; b=k+sfGHcjXJiZA6g3fycQytWNOuTfCj3032YDeEr9ynd5KkfhFUHJWXukE5jfaJw43qX45Q+SMS3cRKII1uCnOmH2AcIeNIb8IGNLAOxAD8zMap2KGaqTbrg+7mnXcWhEJdNVldDT9NuZBdzsA3RYej8xSLh9XBr0aCJhcdDu3VY=
+	t=1761218956; cv=none; b=SATW0H97KI4y7LhIfqgcADOIALps86brBOw+SoKAs90vp9gnTn2ZEpM1/DaS2SIy+T3ge7OhuCubwPTPt0q3MWtTrqn/8wQWBY6bqkOCn/gTKkzZTm8GyN4sMtcgkC32cddBHIJf81HZGg1LXNU9rVdpG8CvMrph34uMsndofQU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761218657; c=relaxed/simple;
-	bh=a3aNs6vrR4psypDkWMqYmRy2IIe82SusVNMrEZ3tF3g=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=TB2MNpPHCctM/RzB5I+vA/oX6L6FS1StQQItmKSnvtzHszQrI1qPaIWhd7ITDRO5Np8PqkaEJ/FdhH2Xtvnh73iUjp00WTNSZz6U6CZjrr8mVI0xMT7iNHbgQPdBlPn4XaX7qnr97MRStB3KgX+3ycokPmwdntnal5lEI3bBXbY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; arc=none smtp.client-ip=217.140.110.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id BDFE31516;
-	Thu, 23 Oct 2025 04:23:59 -0700 (PDT)
-Received: from [10.57.36.157] (unknown [10.57.36.157])
-	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 30F673F63F;
-	Thu, 23 Oct 2025 04:24:04 -0700 (PDT)
-Message-ID: <d594cdf2-5aab-4539-8d44-f7e57770df72@arm.com>
-Date: Thu, 23 Oct 2025 12:24:01 +0100
+	s=arc-20240116; t=1761218956; c=relaxed/simple;
+	bh=4tNYoJDwF0/wx0jPRfQTkKqeS3tnPo3AhUeXGnL0Ej8=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=HKBwYIn2Pl8qwmmci+2IJAqFNQii7qBhrGTbJXqglxxJ/gT2h+voM59+Zoz+sxOTN6PPxIBUUaUhyA1jMqDqS/Wml/tJ5JZPPMOSeWewfjdE65egkbg51SSt14ZOvE+HoniOQuq9NtjZ0LWLwIyQKALaBk6hdetrtMHeHZTtxQM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=fairphone.com; spf=pass smtp.mailfrom=fairphone.com; dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b=pvQeROGz; arc=none smtp.client-ip=209.85.218.45
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=fairphone.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fairphone.com
+Received: by mail-ej1-f45.google.com with SMTP id a640c23a62f3a-b64cdbb949cso157935266b.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Oct 2025 04:29:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=fairphone.com; s=fair; t=1761218953; x=1761823753; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=4voNGJwy4uPurf5C4fKMLyqLWdAHXhDGEDNTRqvDsgM=;
+        b=pvQeROGzJwv+RBH0ctmaoOKxt7HDF0UQ09ABiJtiSeMRE9YOfIbFaQynKN9keN4TWK
+         xu8I1Z8QSAcE+OoL+iLiXVNiMLhzEPUnXIoJ12W9tkX6OfBUtrkNvJtn9NvZaNfe5wG0
+         v+Qmh6U2bRZuHdIjEiCmM+pwaKQpdJyoEY6xuRNZFYi4ZiySMPoEtX5p86nvAEFADySh
+         /soGr7iLi6BNGEV641kt7smGCRVmz7lQ0egAl+c3PioEWkTjPmBkXK/KYz7I6iivPn+e
+         NpFjjUlLzsahLKXHLbyjShg3CT4bHdCTMePRg8Jb/r4lsrQr7mxdV5xEKDeMhXE4YD/2
+         OzvA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1761218953; x=1761823753;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=4voNGJwy4uPurf5C4fKMLyqLWdAHXhDGEDNTRqvDsgM=;
+        b=cIjnfB7P6u6kZKpRiyafpSdQUvBdf5rOFVaRwO+qgCj5CXDGasBuyKTS++oO4dD8H5
+         eViMY+U2qSDx1jRGnoCtzh1jmWmrQp8WVPZaA3LoRaDbPuOAuMgAWJFYiJ+/fsK5qTQy
+         4Vp1/tUgeSTQJ5E6FHpFYWcAkt7zNPwQ48nxDMu5b3U36Lxb5CJj6lVfYBSjkJ2cPVaA
+         Z+QG8/yqu42ue9uenPEMr7Ywwf7ClbW8MxN9M7YK4NS0Z9d5DVFHcdjUrC6BL4HOVGIQ
+         RfriBqCU9CTRp9jiz3+lS4pke0pu9SGr1D7B/o6EbC59EXyrSwobzQvCJ9EGfi+b1aS2
+         P6qQ==
+X-Forwarded-Encrypted: i=1; AJvYcCX0sc3sO620OCAe+GytxKKr+NLGw0v8I3KXeQkqZIWsoEqrkYq5IU98D4bbPLfW+NuVMTogDBpOePIDFiOf@vger.kernel.org
+X-Gm-Message-State: AOJu0Yz36KyUXcn9SSleD/2gCoLG2b3BolDCCNLwhI9TgK13ibDUTX28
+	mveiGTu4tDj3dY0FpMArxyEQpgZzzcXKcWLU/rLZ4208JY8j8Lb1W8+QXZ4djGaO0gw=
+X-Gm-Gg: ASbGncucux30O0cMt38hrn+9MlrBBm/mWugtRI2OAfYKJOhLdcGaH+e95GS+5K7/sjJ
+	H+GL+60syl0zCqMqXxm0S2EFj+rXOlXMaQf5gjJwQGbiWxMnL0yHXWuZ5Lg2t7vntBiBylRBzaH
+	Z9XHHIWtSJCKaEBt0KWlZDpYh4WsYZhbc/caKzGV4qH5zr39qxGht+ZrFzVAbjdSrOxHC7kfG9i
+	loLMLlfWXU1SlxBdGuc50zVhqcv4XQkM2Qwm2R5C9o3w18KIJbZN9ByWT7Jg/Pu5SzZ4x/wDHFR
+	k0GuKOq8rlIGtlYz0EugpwceA/mW4UkI/sCVNZiPV/8asyu6Mnr9PmNg1fWqRdI7myGbn+SzKM0
+	RTmwFD+xMOGBthIWRr3nJLhl3/wDRX5rYo3Z0xpE/vtmr98yj+SjNOLYYV4cPpdhkcbvkxpPidc
+	tR6YNh1r6rTLQIODUX4l7Pyl510K33FCklXF1HPZSwAZv3x6rjcAWYTNuIa8hIStbyPGU=
+X-Google-Smtp-Source: AGHT+IECuZRfvC6DsxsoSIoN/FRzObiQXkQqEr8AieICgpNtydyGGfERAFJq1G/Ji9HjhKlMsrkuow==
+X-Received: by 2002:a17:907:25cc:b0:b40:c49b:710 with SMTP id a640c23a62f3a-b6475129316mr2600919966b.47.1761218953159;
+        Thu, 23 Oct 2025 04:29:13 -0700 (PDT)
+Received: from [192.168.178.36] (046124199085.public.t-mobile.at. [46.124.199.85])
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-63e3ebb328esm1439098a12.5.2025.10.23.04.29.11
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 23 Oct 2025 04:29:12 -0700 (PDT)
+From: Luca Weiss <luca.weiss@fairphone.com>
+Subject: [PATCH v3 0/2] Add support for PMIV0104 PMIC
+Date: Thu, 23 Oct 2025 13:29:00 +0200
+Message-Id: <20251023-sm7635-pmiv0104-v3-0-27f1c417376d@fairphone.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 3/3] iommu: Allow drivers to say if they use
- report_iommu_fault()
-To: Jason Gunthorpe <jgg@nvidia.com>,
- AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
- Christian Benvenuti <benve@cisco.com>, Heiko Stuebner <heiko@sntech.de>,
- iommu@lists.linux.dev, Jernej Skrabec <jernej.skrabec@gmail.com>,
- Joerg Roedel <joro@8bytes.org>, Leon Romanovsky <leon@kernel.org>,
- linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org,
- linux-mediatek@lists.infradead.org, linux-rdma@vger.kernel.org,
- linux-rockchip@lists.infradead.org, linux-sunxi@lists.linux.dev,
- Matthias Brugger <matthias.bgg@gmail.com>,
- Nelson Escobar <neescoba@cisco.com>, Rob Clark
- <robin.clark@oss.qualcomm.com>, Samuel Holland <samuel@sholland.org>,
- Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>,
- Chen-Yu Tsai <wens@csie.org>, Will Deacon <will@kernel.org>,
- Yong Wu <yong.wu@mediatek.com>
-Cc: patches@lists.linux.dev
-References: <3-v1-391058a85f30+14b-iommu_set_fault_jgg@nvidia.com>
-From: Robin Murphy <robin.murphy@arm.com>
-Content-Language: en-GB
-In-Reply-To: <3-v1-391058a85f30+14b-iommu_set_fault_jgg@nvidia.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAHwR+mgC/2XOTQ6CMBAF4KuQrq2ZttBSVt7DuAA6yCz4scVGY
+ 7i7FU1MdPkmed+bBwvoCQOrsgfzGCnQNKagdhlr+3o8IyeXMpMgC9ASeBiMVgWfB4ogIOcqr7W
+ xVhlnHUut2WNHt008nt7Z4+Wa4OV9ZE0dkLfTMNBSZSPeFv7CBUjFXoWewjL5+/ZRFFvjM178j
+ UfBgevSydK0eaMVHLqa/NxPI+7TwuZF+TUM2H9DJgObTpSlLdA5/Wus6/oE1o0O+ScBAAA=
+X-Change-ID: 20250620-sm7635-pmiv0104-34a679937d9d
+To: Lee Jones <lee@kernel.org>, Rob Herring <robh@kernel.org>, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>, Stephen Boyd <sboyd@kernel.org>, 
+ Bjorn Andersson <andersson@kernel.org>, 
+ Linus Walleij <linus.walleij@linaro.org>, 
+ Konrad Dybcio <konradybcio@kernel.org>
+Cc: ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org, 
+ linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, linux-gpio@vger.kernel.org, 
+ Luca Weiss <luca.weiss@fairphone.com>, 
+ Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, 
+ Krzysztof Kozlowski <krzk@kernel.org>
+X-Mailer: b4 0.14.3
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1761218951; l=1037;
+ i=luca.weiss@fairphone.com; s=20250611; h=from:subject:message-id;
+ bh=4tNYoJDwF0/wx0jPRfQTkKqeS3tnPo3AhUeXGnL0Ej8=;
+ b=8Wu8WfcRnpZQY/U1SXdjMJiHfvT8LiSoB16gF8CF9qniIK1EBl1krQqg/zzCYc+nmMRyv6gES
+ 5ErVok5bWjBBoxA/8zCh4f+x4zVRxJAj7O71kZ5mU1W2VQdTUjGMb1x
+X-Developer-Key: i=luca.weiss@fairphone.com; a=ed25519;
+ pk=O1aw+AAust5lEmgrNJ1Bs7PTY0fEsJm+mdkjExA69q8=
 
-On 2025-10-22 6:12 pm, Jason Gunthorpe wrote:
-> report_iommu_fault() is an older API that has been superseded by
-> iommu_report_device_fault() which is capable to support PRI.
-> 
-> Only two external drivers consume this, drivers/remoteproc and
-> drivers/gpu/drm/msm. Ideally they would move over to the new APIs, but for
-> now protect against accidentally mix and matching the wrong components.
-> 
-> The iommu drivers support either the old iommu_set_fault_handler() via the
-> driver calling report_iommu_fault(), or they are newer server focused
-> drivers that call iommu_report_device_fault().
-> 
-> Include a flag in the domain_ops if it calls report_iommu_fault() and
-> block iommu_set_fault_handler() on iommu's that can't support it.
+The PMIV0104 PMIC is used in conjuction with the Milos SoC. Add binding
+docs, GPIO support and the devicetree description for it.
 
-This isn't a domain operation though; depending on how you look at it, 
-supporting a legacy fault_handler is either a capability of the IOMMU 
-driver (that would be reachable via domain->owner->capable) or a 
-property of the iommu_domain itself that the drivers can set at 
-allocation time (basically this same patch just with the lines in 
-slightly different places).
+Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
+---
+Changes in v3:
+- Resend, drop applied patches
+- Link to v2: https://lore.kernel.org/r/20250709-sm7635-pmiv0104-v2-0-ebf18895edd6@fairphone.com
 
-Thanks,
-Robin.
-> Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
-> ---
->   drivers/iommu/arm/arm-smmu/arm-smmu.c   | 1 +
->   drivers/iommu/arm/arm-smmu/qcom_iommu.c | 1 +
->   drivers/iommu/iommu.c                   | 6 +++++-
->   drivers/iommu/ipmmu-vmsa.c              | 1 +
->   drivers/iommu/mtk_iommu.c               | 1 +
->   drivers/iommu/mtk_iommu_v1.c            | 1 +
->   drivers/iommu/omap-iommu.c              | 1 +
->   drivers/iommu/rockchip-iommu.c          | 1 +
->   drivers/iommu/sun50i-iommu.c            | 1 +
->   include/linux/iommu.h                   | 3 +++
->   10 files changed, 16 insertions(+), 1 deletion(-)
-> 
-> diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu.c b/drivers/iommu/arm/arm-smmu/arm-smmu.c
-> index 4ced4b5bee4df3..5ce8f82ddb534b 100644
-> --- a/drivers/iommu/arm/arm-smmu/arm-smmu.c
-> +++ b/drivers/iommu/arm/arm-smmu/arm-smmu.c
-> @@ -1644,6 +1644,7 @@ static const struct iommu_ops arm_smmu_ops = {
->   	.def_domain_type	= arm_smmu_def_domain_type,
->   	.owner			= THIS_MODULE,
->   	.default_domain_ops = &(const struct iommu_domain_ops) {
-> +		.report_iommu_fault_supported = true,
->   		.attach_dev		= arm_smmu_attach_dev,
->   		.map_pages		= arm_smmu_map_pages,
->   		.unmap_pages		= arm_smmu_unmap_pages,
-> diff --git a/drivers/iommu/arm/arm-smmu/qcom_iommu.c b/drivers/iommu/arm/arm-smmu/qcom_iommu.c
-> index c5be95e560317e..3163a23fcbaa4f 100644
-> --- a/drivers/iommu/arm/arm-smmu/qcom_iommu.c
-> +++ b/drivers/iommu/arm/arm-smmu/qcom_iommu.c
-> @@ -598,6 +598,7 @@ static const struct iommu_ops qcom_iommu_ops = {
->   	.device_group	= generic_device_group,
->   	.of_xlate	= qcom_iommu_of_xlate,
->   	.default_domain_ops = &(const struct iommu_domain_ops) {
-> +		.report_iommu_fault_supported = true,
->   		.attach_dev	= qcom_iommu_attach_dev,
->   		.map_pages	= qcom_iommu_map,
->   		.unmap_pages	= qcom_iommu_unmap,
-> diff --git a/drivers/iommu/iommu.c b/drivers/iommu/iommu.c
-> index 59244c744eabd2..34546a70fb5279 100644
-> --- a/drivers/iommu/iommu.c
-> +++ b/drivers/iommu/iommu.c
-> @@ -2005,6 +2005,9 @@ EXPORT_SYMBOL_GPL(iommu_group_has_isolated_msi);
->    * This function should be used by IOMMU users which want to be notified
->    * whenever an IOMMU fault happens.
->    *
-> + * This is a legacy API not supported by all drivers. New users should look
-> + * to using domain->iopf_handler for the modern API.
-> + *
->    * The fault handler itself should return 0 on success, and an appropriate
->    * error code otherwise.
->    */
-> @@ -2012,7 +2015,8 @@ void iommu_set_fault_handler(struct iommu_domain *domain,
->   					iommu_fault_handler_t handler,
->   					void *token)
->   {
-> -	if (WARN_ON(!domain || domain->cookie_type != IOMMU_COOKIE_NONE))
-> +	if (WARN_ON(!domain || domain->cookie_type != IOMMU_COOKIE_NONE ||
-> +		    !domain->ops->report_iommu_fault_supported))
->   		return;
->   
->   	domain->cookie_type = IOMMU_COOKIE_FAULT_HANDLER;
-> diff --git a/drivers/iommu/ipmmu-vmsa.c b/drivers/iommu/ipmmu-vmsa.c
-> index ffa892f6571406..770fa248e30477 100644
-> --- a/drivers/iommu/ipmmu-vmsa.c
-> +++ b/drivers/iommu/ipmmu-vmsa.c
-> @@ -885,6 +885,7 @@ static const struct iommu_ops ipmmu_ops = {
->   			? generic_device_group : generic_single_device_group,
->   	.of_xlate = ipmmu_of_xlate,
->   	.default_domain_ops = &(const struct iommu_domain_ops) {
-> +		.report_iommu_fault_supported = true,
->   		.attach_dev	= ipmmu_attach_device,
->   		.map_pages	= ipmmu_map,
->   		.unmap_pages	= ipmmu_unmap,
-> diff --git a/drivers/iommu/mtk_iommu.c b/drivers/iommu/mtk_iommu.c
-> index 0e0285348d2b8e..0f44993eaadce3 100644
-> --- a/drivers/iommu/mtk_iommu.c
-> +++ b/drivers/iommu/mtk_iommu.c
-> @@ -1019,6 +1019,7 @@ static const struct iommu_ops mtk_iommu_ops = {
->   	.get_resv_regions = mtk_iommu_get_resv_regions,
->   	.owner		= THIS_MODULE,
->   	.default_domain_ops = &(const struct iommu_domain_ops) {
-> +		.report_iommu_fault_supported = true,
->   		.attach_dev	= mtk_iommu_attach_device,
->   		.map_pages	= mtk_iommu_map,
->   		.unmap_pages	= mtk_iommu_unmap,
-> diff --git a/drivers/iommu/mtk_iommu_v1.c b/drivers/iommu/mtk_iommu_v1.c
-> index 10cc0b1197e801..279e7acfd5c6d3 100644
-> --- a/drivers/iommu/mtk_iommu_v1.c
-> +++ b/drivers/iommu/mtk_iommu_v1.c
-> @@ -582,6 +582,7 @@ static const struct iommu_ops mtk_iommu_v1_ops = {
->   	.device_group	= generic_device_group,
->   	.owner          = THIS_MODULE,
->   	.default_domain_ops = &(const struct iommu_domain_ops) {
-> +		.report_iommu_fault_supported = true,
->   		.attach_dev	= mtk_iommu_v1_attach_device,
->   		.map_pages	= mtk_iommu_v1_map,
->   		.unmap_pages	= mtk_iommu_v1_unmap,
-> diff --git a/drivers/iommu/omap-iommu.c b/drivers/iommu/omap-iommu.c
-> index 5c6f5943f44b1f..3f3193de3ecd86 100644
-> --- a/drivers/iommu/omap-iommu.c
-> +++ b/drivers/iommu/omap-iommu.c
-> @@ -1724,6 +1724,7 @@ static const struct iommu_ops omap_iommu_ops = {
->   	.device_group	= generic_single_device_group,
->   	.of_xlate	= omap_iommu_of_xlate,
->   	.default_domain_ops = &(const struct iommu_domain_ops) {
-> +		.report_iommu_fault_supported = true,
->   		.attach_dev	= omap_iommu_attach_dev,
->   		.map_pages	= omap_iommu_map,
->   		.unmap_pages	= omap_iommu_unmap,
-> diff --git a/drivers/iommu/rockchip-iommu.c b/drivers/iommu/rockchip-iommu.c
-> index 0861dd469bd866..0053f5aa2cb781 100644
-> --- a/drivers/iommu/rockchip-iommu.c
-> +++ b/drivers/iommu/rockchip-iommu.c
-> @@ -1174,6 +1174,7 @@ static const struct iommu_ops rk_iommu_ops = {
->   	.device_group = generic_single_device_group,
->   	.of_xlate = rk_iommu_of_xlate,
->   	.default_domain_ops = &(const struct iommu_domain_ops) {
-> +		.report_iommu_fault_supported = true,
->   		.attach_dev	= rk_iommu_attach_device,
->   		.map_pages	= rk_iommu_map,
->   		.unmap_pages	= rk_iommu_unmap,
-> diff --git a/drivers/iommu/sun50i-iommu.c b/drivers/iommu/sun50i-iommu.c
-> index de10b569d9a940..29b230050906a2 100644
-> --- a/drivers/iommu/sun50i-iommu.c
-> +++ b/drivers/iommu/sun50i-iommu.c
-> @@ -849,6 +849,7 @@ static const struct iommu_ops sun50i_iommu_ops = {
->   	.of_xlate	= sun50i_iommu_of_xlate,
->   	.probe_device	= sun50i_iommu_probe_device,
->   	.default_domain_ops = &(const struct iommu_domain_ops) {
-> +		.report_iommu_fault_supported = true,
->   		.attach_dev	= sun50i_iommu_attach_device,
->   		.flush_iotlb_all = sun50i_iommu_flush_iotlb_all,
->   		.iotlb_sync_map = sun50i_iommu_iotlb_sync_map,
-> diff --git a/include/linux/iommu.h b/include/linux/iommu.h
-> index c30d12e16473df..e2bf7885287fac 100644
-> --- a/include/linux/iommu.h
-> +++ b/include/linux/iommu.h
-> @@ -714,6 +714,8 @@ struct iommu_ops {
->   
->   /**
->    * struct iommu_domain_ops - domain specific operations
-> + * @report_iommu_fault_supported: True if the domain supports
-> + *                                iommu_set_fault_handler()
->    * @attach_dev: attach an iommu domain to a device
->    *  Return:
->    * * 0		- success
-> @@ -751,6 +753,7 @@ struct iommu_ops {
->    * @free: Release the domain after use.
->    */
->   struct iommu_domain_ops {
-> +	bool report_iommu_fault_supported : 1;
->   	int (*attach_dev)(struct iommu_domain *domain, struct device *dev);
->   	int (*set_dev_pasid)(struct iommu_domain *domain, struct device *dev,
->   			     ioasid_t pasid, struct iommu_domain *old);
+Changes in v2:
+- Update commit messages to mention Milos instead of SM7635
+- Add critical thermal trip
+- Pick up tags
+- Link to v1: https://lore.kernel.org/r/20250625-sm7635-pmiv0104-v1-0-68d287c4b630@fairphone.com
+
+---
+Luca Weiss (2):
+      dt-bindings: mfd: qcom,spmi-pmic: Document PMIV0104
+      arm64: dts: qcom: Add PMIV0104 PMIC
+
+ .../devicetree/bindings/mfd/qcom,spmi-pmic.yaml    |  1 +
+ arch/arm64/boot/dts/qcom/pmiv0104.dtsi             | 73 ++++++++++++++++++++++
+ 2 files changed, 74 insertions(+)
+---
+base-commit: a92c761bcac3d5042559107fa7679470727a4bcb
+change-id: 20250620-sm7635-pmiv0104-34a679937d9d
+
+Best regards,
+-- 
+Luca Weiss <luca.weiss@fairphone.com>
+
 
