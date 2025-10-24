@@ -1,96 +1,70 @@
-Return-Path: <linux-arm-msm+bounces-78758-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-78759-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id C7199C07BF5
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Oct 2025 20:27:57 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id C9411C08242
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Oct 2025 23:05:33 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id DD750427CF2
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Oct 2025 18:22:25 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 711413B5FB7
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Oct 2025 21:05:32 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 354272638B2;
-	Fri, 24 Oct 2025 18:21:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 01D5E2FE07F;
+	Fri, 24 Oct 2025 21:05:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="IiIxXjrI"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="aamgM5GC"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6B312AE90
-	for <linux-arm-msm@vger.kernel.org>; Fri, 24 Oct 2025 18:21:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C31B32F5A27;
+	Fri, 24 Oct 2025 21:05:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761330112; cv=none; b=PdeKDGFDevOLnZF8vzCxOUCclTnLdikESCImNk1oUkFiSbZtxL69uE3U45FxQDTT/TALXEI+VIbY4IO6OkdAY2o4stxU1So+tg8DwxJ/7pGbyXscAR59UuFJH371j0UXYtlYKU7Vmy4krR5i15Lxn1I16SK3g/ymaQXxaDwUQH4=
+	t=1761339930; cv=none; b=XBc3bmzQUJzVRywh63ne8QyFWBpOjLAdyzpLFoXDlkARuFhGk9ZcZ6jId4pKrMdqJh7s9fHyQP64M0lxQ0GnMGuPvP54c1n/ztiVlM9/j4x3xNzxEzamoKA+8uuE7uQR9DyjEndu92HOyMw6UOQSoSqFJa3DMBxLqXI/7bGH4nk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761330112; c=relaxed/simple;
-	bh=7yw31bKvWUXdvacjCgGUN3ci8Wb+0zbHalVNF1rBPcA=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=dhPJ0BJQuiLwean7oU2TeXSRZcMeC9XIj5JJzmOi1kzgMjw2E2QqRyruShu+/SISrtXFrrOPaJtBHK9Uj+TBWBfQmJzdY7YKrwTeFeH3fsN2EsViDaYHr4TJkhibyzPACtR8oIcwsB3JWeAyrazAf51/hJVgoJV36ncIe998RKQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=IiIxXjrI; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 59OI9YK0019216
-	for <linux-arm-msm@vger.kernel.org>; Fri, 24 Oct 2025 18:21:48 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:date:from:message-id:mime-version
-	:subject:to; s=qcppdkim1; bh=NYTo5MWdhu8itDq1/g3Rc83Xox23JPr1moP
-	RAN/6mts=; b=IiIxXjrIgUrUI8rZ3VlKwK8BsUnMoIPJx8Xp+sF/GNeCTWbmk09
-	Y45EzylHKaoZ7cIqGM2RsdTlnCDSxmcpPopZNa6wGgaHVclUP0Rid07x7aPbs7Xx
-	v+F65OFqSYBLxonE+Xgqu+8X+WmGHM310Pt3er0V4gJIDl6wdbjQUvP7Ix91O2CT
-	Fo/i/LgiNBwRwjqJiGdTVMxuouDUAJfiGK/a8cEY2YHCV2Br1/m1Y8kmh4pL4DOV
-	GFpKMB4+ujkJvp7B2/F0TT1XKOoECnXu/N+/fs8P10U5S/Vzx/sVEKa/SoR8pXXX
-	a50PQmoAT3DrS54/6SGgP3xPnMxKI098KhA==
-Received: from mail-pg1-f197.google.com (mail-pg1-f197.google.com [209.85.215.197])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 49xkpsjgjq-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Fri, 24 Oct 2025 18:21:48 +0000 (GMT)
-Received: by mail-pg1-f197.google.com with SMTP id 41be03b00d2f7-b60992e3b27so1728512a12.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 24 Oct 2025 11:21:47 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1761330107; x=1761934907;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=NYTo5MWdhu8itDq1/g3Rc83Xox23JPr1moPRAN/6mts=;
-        b=L0chuOgnFnyYl/Ce+U0QtuXqBI6zutKdnmaxTd4kHpviGC9Aq4wZmSZhQNyG9Q2q83
-         2JcHbJu/JttPUOsxICMvnjKKmDIhy0zn9Uprr/Iywtme0+EMnNGbnEzJHclhW0kLrjmW
-         2MhDgte2GamjowNLWEhTrgYkUZFZop1cfmVWXLWvA4o5iJnqYHiEodk1N5qvR7l8/LN1
-         423I+R1RyMXJNMIjDGNhe0V63o166iBlfg88g1zyed8UeoYAnFZcT90TXWr6bvofykCU
-         SuW9w7LRIXvb32o+brRnTA8WEDj6Qooe20gpMCTw0dfAjxyH0Foft4al5VXyuKubXMmr
-         hZ2Q==
-X-Gm-Message-State: AOJu0Yw2CSvxoXzaHt2p+Krzf79YgdYOQSd6DkW3a2fJrjbRVaMidfqW
-	uNwcgwOJ9Zeq40mMdKIZI0PkVSnyDYPjGg3u/OKZVny7/CjKUiu19Ue5Rz3GQWw9ddGuMafqJAT
-	BuNsCpLzZ2TanThs88tCBpj2gJikQRKB6NFqNgzgJ4UmNOaKK1MVPpxnB0LUXSTOD2wvl
-X-Gm-Gg: ASbGncuJoRUWYmxikVUU51Rnh57EhGUC2mSdheSW/OG/Dfg6dQ4JEkq3f3y4aL4E30l
-	AnVjVLc49078tjIk8xVAlOibh8R73SVeLZfSWFHqPQnsHMFOsehVqFFyiiQtQeYyyKK1t3P45Yp
-	FJHhkV5kPNWttliiIg+BALm2AU4j+ZmzzVhsjkXWsOUNK64qPmHOuVswYSfGh+TD/wP7SBWjqgn
-	DSoR9pC+Wg7R6YZ6U1HHF7Psx69Mvr8VRZkVASg2omQXyb7kBKgc9xt4ZODm837pjr/jxmzt+Us
-	4JkpPWERks7/HWGbT9lcBj2HT3qiKJ1wqJckP0eYnbahggt0NA8VlP1prHPudPrqdhSQRuaRPC4
-	VDkKpq+008Xf6prJ8RaKAk2asIZ2vpVmjw3Xp
-X-Received: by 2002:a05:6a20:258a:b0:340:cc06:94ef with SMTP id adf61e73a8af0-340cc069898mr876514637.56.1761330107030;
-        Fri, 24 Oct 2025 11:21:47 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEByz0nyj2zcoNef7NunU6xkWZY16Ha1VVUMQcY0WT/uHuWevE8eC1lu5R2c6w/pwEuqUNT+A==
-X-Received: by 2002:a05:6a20:258a:b0:340:cc06:94ef with SMTP id adf61e73a8af0-340cc069898mr876490637.56.1761330106550;
-        Fri, 24 Oct 2025 11:21:46 -0700 (PDT)
-Received: from hu-kriskura-hyd.qualcomm.com ([202.46.22.19])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-33fb01724a5sm6501423a91.15.2025.10.24.11.21.43
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 24 Oct 2025 11:21:46 -0700 (PDT)
-From: Krishna Kurapati <krishna.kurapati@oss.qualcomm.com>
-To: Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Krishna Kurapati <krishna.kurapati@oss.qualcomm.com>
-Subject: [PATCH v3] arm64: dts: qcom: lemans-evk: Add OTG support for primary USB controller
-Date: Fri, 24 Oct 2025 23:51:38 +0530
-Message-Id: <20251024182138.2744861-1-krishna.kurapati@oss.qualcomm.com>
-X-Mailer: git-send-email 2.34.1
+	s=arc-20240116; t=1761339930; c=relaxed/simple;
+	bh=yqjOmeyOStyzHa6rkxxBBSdormUDzt2x9tFpGUGYYG0=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=XdkQVt22oqINEtGuRB1ZeJBaFFz7dO/I9frhGxj+ytG/ViFTMvLz1cjkUCcBzb8vVpTGYKqke3P1VzycGYhVmk8AaVTaUE6qUIJq6sz/aTu826LeZVS7mlGyJyUvcOpffFPQzi8wM7wW7BPCLN2ai6Wxxnsfp6xMkxpbCCD3JnU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=aamgM5GC; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3DE6BC4CEFF;
+	Fri, 24 Oct 2025 21:05:30 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1761339930;
+	bh=yqjOmeyOStyzHa6rkxxBBSdormUDzt2x9tFpGUGYYG0=;
+	h=From:To:Cc:Subject:Date:From;
+	b=aamgM5GCMRvc3usJuK5T4s3bgYGGVsH/4wka7drAzIorTyFDjaMyO7HtBEoxBMFbm
+	 DFyN1QUzIugHMJWLJKV6nVknuGEcCh3f/QW5RzLIg+liyRvvxmqKw0e+B9Jy28PXpH
+	 LhJZmFmW3QZcB52n/aXDPDlWyMgLTT35I5tDaHjEl+sayW20Mm0klyoQTHw13AYpeX
+	 fNlEin8NvaI0EX1CJdxmQsych7nNRzOTQhN9Qq5uK6dQ7MLl/LAT0wSfx1OIyukqhx
+	 8BYhw5xDtQ8CwSp3bH4+KSYgxJ4JfUZsORc+mP7hz4t8eF4miBx95Uuik5TQP2ffZM
+	 NVZxC5zw66cqQ==
+From: Bjorn Helgaas <helgaas@kernel.org>
+To: linux-pci@vger.kernel.org
+Cc: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>,
+	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
+	Johan Hovold <johan@kernel.org>,
+	Frank Li <Frank.li@nxp.com>,
+	Shawn Lin <shawn.lin@rock-chips.com>,
+	Rob Herring <robh@kernel.org>,
+	"David E . Box" <david.e.box@linux.intel.com>,
+	Kai-Heng Feng <kai.heng.feng@canonical.com>,
+	"Rafael J . Wysocki" <rafael@kernel.org>,
+	Heiner Kallweit <hkallweit1@gmail.com>,
+	Chia-Lin Kao <acelan.kao@canonical.com>,
+	Gustavo Pimentel <Gustavo.Pimentel@synopsys.com>,
+	Han Jingoo <jingoohan1@gmail.com>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Bartosz Golaszewski <brgl@bgdev.pl>,
+	linux-arm-msm@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	Bjorn Helgaas <bhelgaas@google.com>
+Subject: [PATCH] Revert "PCI: qcom: Remove custom ASPM enablement code"
+Date: Fri, 24 Oct 2025 16:04:57 -0500
+Message-ID: <20251024210514.1365996-1-helgaas@kernel.org>
+X-Mailer: git-send-email 2.43.0
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -98,228 +72,116 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDIxMDE5MCBTYWx0ZWRfX3cByY7M7tXFF
- IlT3aE9zfEkcaS2EwowYYaucv2QXB9cAebx9zf+5DLoVGF8rnRnrZ8l3uLV5Vu5M9Av4bcjN5WS
- xfVUhoEBpb/Mdu2uzDVKMO/xJlVct7Vuc42UnVgDPk6olEKKy44gb1R/JEyVzxiKUxzuEOuJU8i
- waMdeNuiqUbzFrT+e7AMhOLQqPXPR5mZ3T49IEDFJvZOGg6RGoiImHkmWNXRuxbN7tZy6v/6PxP
- jRa49BhEqOsmYhNMCwnRvH42HawGYUyVzwmww3I1ySdhMbXcOKx5IxOfhgtqilkd0bQKFXVlgsP
- bmROhY7B1qaAh5jChZ7hYhoY+BB4KUgExiFfAFPDcxhi5MCHZ0XSxORU76ptKPur5IIwwwqEIJc
- X2De3H7ChHkd1wKpFOieCdo093p4Zg==
-X-Authority-Analysis: v=2.4 cv=FbM6BZ+6 c=1 sm=1 tr=0 ts=68fbc3bc cx=c_pps
- a=rz3CxIlbcmazkYymdCej/Q==:117 a=fChuTYTh2wq5r3m49p7fHw==:17
- a=x6icFKpwvdMA:10 a=VkNPw1HP01LnGYTKEx00:22 a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8
- a=ZnWjciNKi5aIwXxU4VsA:9 a=bFCP_H2QrGi7Okbo017w:22
-X-Proofpoint-GUID: G2lSiDyANcytOnL6sroJm5QKPthRXj7d
-X-Proofpoint-ORIG-GUID: G2lSiDyANcytOnL6sroJm5QKPthRXj7d
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-10-24_03,2025-10-22_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 phishscore=0 bulkscore=0 lowpriorityscore=0 priorityscore=1501
- suspectscore=0 spamscore=0 impostorscore=0 clxscore=1015 adultscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2510020000 definitions=main-2510210190
 
-Enable OTG support for primary USB controller on EVK Platform. Add
-HD3SS3220 Type-C port controller present between Type-C port and SoC
-that provides role switch notifications to controller.
+From: Bjorn Helgaas <bhelgaas@google.com>
 
-Signed-off-by: Krishna Kurapati <krishna.kurapati@oss.qualcomm.com>
+This reverts commit a729c16646198872e345bf6c48dbe540ad8a9753.
+
+Prior to a729c1664619 ("PCI: qcom: Remove custom ASPM enablement code"),
+the qcom controller driver enabled ASPM, including L0s, L1, and L1 PM
+Substates, for all devices powered on at the time the controller driver
+enumerates them.
+
+ASPM was *not* enabled for devices powered on later by pwrctrl (unless the
+kernel was built with PCIEASPM_POWERSAVE or PCIEASPM_POWER_SUPERSAVE, or
+the user enabled ASPM via module parameter or sysfs).
+
+After f3ac2ff14834 ("PCI/ASPM: Enable all ClockPM and ASPM states for
+devicetree platforms"), the PCI core enabled all ASPM states for all
+devices whether powered on initially or by pwrctrl, so a729c1664619 was
+unnecessary and reverted.
+
+But f3ac2ff14834 was too aggressive and broke platforms that didn't support
+CLKREQ# or required device-specific configuration for L1 Substates, so
+df5192d9bb0e ("PCI/ASPM: Enable only L0s and L1 for devicetree platforms")
+enabled only L0s and L1.
+
+On Qualcomm platforms, this left L1 Substates disabled, which was a
+regression.  Revert a729c1664619 so L1 Substates will be enabled on devices
+that are initially powered on.  Devices powered on by pwrctrl will be
+addressed later.
+
+Fixes: df5192d9bb0e ("PCI/ASPM: Enable only L0s and L1 for devicetree platforms")
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
 ---
-Changes in v3:
-- Moved "usb-role-switch" to lemans dtsi file
-- Moved vbus supply to connector node
+ drivers/pci/controller/dwc/pcie-qcom.c | 32 ++++++++++++++++++++++++++
+ 1 file changed, 32 insertions(+)
 
-Link to v3 bindings and driver support:
-https://lore.kernel.org/all/20251024181832.2744502-1-krishna.kurapati@oss.qualcomm.com/
-
-Link to v2:
-https://lore.kernel.org/all/20251008180036.1770735-1-krishna.kurapati@oss.qualcomm.com/
-
- arch/arm64/boot/dts/qcom/lemans-evk.dts | 122 +++++++++++++++++++++++-
- arch/arm64/boot/dts/qcom/lemans.dtsi    |   1 +
- 2 files changed, 121 insertions(+), 2 deletions(-)
-
-diff --git a/arch/arm64/boot/dts/qcom/lemans-evk.dts b/arch/arm64/boot/dts/qcom/lemans-evk.dts
-index c7dc9b8f4457..2baad2612b16 100644
---- a/arch/arm64/boot/dts/qcom/lemans-evk.dts
-+++ b/arch/arm64/boot/dts/qcom/lemans-evk.dts
-@@ -37,6 +37,35 @@ chosen {
- 		stdout-path = "serial0:115200n8";
- 	};
+diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
+index 6948824642dc..c48a20602d7f 100644
+--- a/drivers/pci/controller/dwc/pcie-qcom.c
++++ b/drivers/pci/controller/dwc/pcie-qcom.c
+@@ -247,6 +247,7 @@ struct qcom_pcie_ops {
+ 	int (*get_resources)(struct qcom_pcie *pcie);
+ 	int (*init)(struct qcom_pcie *pcie);
+ 	int (*post_init)(struct qcom_pcie *pcie);
++	void (*host_post_init)(struct qcom_pcie *pcie);
+ 	void (*deinit)(struct qcom_pcie *pcie);
+ 	void (*ltssm_enable)(struct qcom_pcie *pcie);
+ 	int (*config_sid)(struct qcom_pcie *pcie);
+@@ -1038,6 +1039,25 @@ static int qcom_pcie_post_init_2_7_0(struct qcom_pcie *pcie)
+ 	return 0;
+ }
  
-+	connector0 {
-+		compatible = "usb-c-connector";
-+		label = "USB0-Type-C";
-+		data-role = "dual";
-+		power-role = "dual";
++static int qcom_pcie_enable_aspm(struct pci_dev *pdev, void *userdata)
++{
++	/*
++	 * Downstream devices need to be in D0 state before enabling PCI PM
++	 * substates.
++	 */
++	pci_set_power_state_locked(pdev, PCI_D0);
++	pci_enable_link_state_locked(pdev, PCIE_LINK_STATE_ALL);
 +
-+		vbus-supply = <&vbus_supply_regulator_0>;
++	return 0;
++}
 +
-+		ports {
-+			#address-cells = <1>;
-+			#size-cells = <0>;
++static void qcom_pcie_host_post_init_2_7_0(struct qcom_pcie *pcie)
++{
++	struct dw_pcie_rp *pp = &pcie->pci->pp;
 +
-+			port@0 {
-+				reg = <0>;
++	pci_walk_bus(pp->bridge->bus, qcom_pcie_enable_aspm, NULL);
++}
 +
-+				usb0_con_hs_ep: endpoint {
-+					remote-endpoint = <&usb3_hs_ep>;
-+				};
-+			};
-+			port@1 {
-+				reg = <1>;
-+
-+				usb0_con_ss_ep: endpoint {
-+					remote-endpoint = <&hd3ss3220_in_ep>;
-+				};
-+			};
-+		};
-+	};
-+
- 	edp0-connector {
- 		compatible = "dp-connector";
- 		label = "EDP0";
-@@ -101,6 +130,15 @@ platform {
- 		};
- 	};
+ static void qcom_pcie_deinit_2_7_0(struct qcom_pcie *pcie)
+ {
+ 	struct qcom_pcie_resources_2_7_0 *res = &pcie->res.v2_7_0;
+@@ -1312,9 +1332,19 @@ static void qcom_pcie_host_deinit(struct dw_pcie_rp *pp)
+ 	pcie->cfg->ops->deinit(pcie);
+ }
  
-+	vbus_supply_regulator_0: vbus-supply-regulator-0 {
-+		compatible = "regulator-fixed";
-+		regulator-name = "vbus_supply_0";
-+		gpio = <&expander1 2 GPIO_ACTIVE_HIGH>;
-+		regulator-min-microvolt = <5000000>;
-+		regulator-max-microvolt = <5000000>;
-+		enable-active-high;
-+	};
++static void qcom_pcie_host_post_init(struct dw_pcie_rp *pp)
++{
++	struct dw_pcie *pci = to_dw_pcie_from_pp(pp);
++	struct qcom_pcie *pcie = to_qcom_pcie(pci);
 +
- 	vmmc_sdc: regulator-vmmc-sdc {
- 		compatible = "regulator-fixed";
- 
-@@ -453,6 +491,53 @@ &gpi_dma2 {
- 	status = "okay";
++	if (pcie->cfg->ops->host_post_init)
++		pcie->cfg->ops->host_post_init(pcie);
++}
++
+ static const struct dw_pcie_host_ops qcom_pcie_dw_ops = {
+ 	.init		= qcom_pcie_host_init,
+ 	.deinit		= qcom_pcie_host_deinit,
++	.post_init	= qcom_pcie_host_post_init,
  };
  
-+&pmm8654au_2_gpios {
-+	usb0_intr_state: usb0-intr-state {
-+		pins = "gpio5";
-+		function = "normal";
-+		input-enable;
-+		bias-pull-up;
-+		power-source = <0>;
-+	};
-+};
-+
-+&i2c11 {
-+	status = "okay";
-+
-+	hd3ss3220@67 {
-+		compatible = "ti,hd3ss3220";
-+		reg = <0x67>;
-+
-+		interrupts-extended = <&pmm8654au_2_gpios 5 IRQ_TYPE_EDGE_FALLING>;
-+
-+		id-gpios = <&tlmm 50 GPIO_ACTIVE_HIGH>;
-+
-+		pinctrl-0 = <&usb_id>, <&usb0_intr_state>;
-+		pinctrl-names = "default";
-+
-+		ports {
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+
-+			port@0 {
-+				reg = <0>;
-+
-+				hd3ss3220_in_ep: endpoint {
-+					remote-endpoint = <&usb0_con_ss_ep>;
-+				};
-+			};
-+
-+			port@1 {
-+				reg = <1>;
-+
-+				hd3ss3220_out_ep: endpoint {
-+					remote-endpoint = <&usb3_ss_ep>;
-+				};
-+			};
-+		};
-+	};
-+};
-+
- &i2c18 {
- 	status = "okay";
- 
-@@ -718,11 +803,24 @@ wake-pins {
- 		};
- 	};
- 
-+	qup_i2c11_default: qup-i2c11-state {
-+		pins = "gpio48", "gpio49";
-+		function = "qup1_se4";
-+		drive-strength = <2>;
-+		bias-pull-up;
-+	};
-+
- 	sd_cd: sd-cd-state {
- 		pins = "gpio36";
- 		function = "gpio";
- 		bias-pull-up;
- 	};
-+
-+	usb_id: usb-id-state {
-+		pins = "gpio50";
-+		function = "gpio";
-+		bias-pull-up;
-+	};
+ /* Qcom IP rev.: 2.1.0	Synopsys IP rev.: 4.01a */
+@@ -1376,6 +1406,7 @@ static const struct qcom_pcie_ops ops_1_9_0 = {
+ 	.get_resources = qcom_pcie_get_resources_2_7_0,
+ 	.init = qcom_pcie_init_2_7_0,
+ 	.post_init = qcom_pcie_post_init_2_7_0,
++	.host_post_init = qcom_pcie_host_post_init_2_7_0,
+ 	.deinit = qcom_pcie_deinit_2_7_0,
+ 	.ltssm_enable = qcom_pcie_2_3_2_ltssm_enable,
+ 	.config_sid = qcom_pcie_config_sid_1_9_0,
+@@ -1386,6 +1417,7 @@ static const struct qcom_pcie_ops ops_1_21_0 = {
+ 	.get_resources = qcom_pcie_get_resources_2_7_0,
+ 	.init = qcom_pcie_init_2_7_0,
+ 	.post_init = qcom_pcie_post_init_2_7_0,
++	.host_post_init = qcom_pcie_host_post_init_2_7_0,
+ 	.deinit = qcom_pcie_deinit_2_7_0,
+ 	.ltssm_enable = qcom_pcie_2_3_2_ltssm_enable,
  };
- 
- &uart10 {
-@@ -751,9 +849,29 @@ &ufs_mem_phy {
- };
- 
- &usb_0 {
--	dr_mode = "peripheral";
--
- 	status = "okay";
-+
-+	ports {
-+		#address-cells = <1>;
-+		#size-cells = <0>;
-+
-+		port@0 {
-+			reg = <0>;
-+
-+			usb3_hs_ep: endpoint {
-+				remote-endpoint = <&usb0_con_hs_ep>;
-+			};
-+		};
-+
-+		port@1 {
-+			reg = <1>;
-+
-+			usb3_ss_ep: endpoint {
-+				remote-endpoint = <&hd3ss3220_out_ep>;
-+			};
-+		};
-+
-+	};
- };
- 
- &usb_0_hsphy {
-diff --git a/arch/arm64/boot/dts/qcom/lemans.dtsi b/arch/arm64/boot/dts/qcom/lemans.dtsi
-index cf685cb186ed..f624d8d4aa9d 100644
---- a/arch/arm64/boot/dts/qcom/lemans.dtsi
-+++ b/arch/arm64/boot/dts/qcom/lemans.dtsi
-@@ -3970,6 +3970,7 @@ usb_0: usb@a600000 {
- 			snps,dis-u1-entry-quirk;
- 			snps,dis-u2-entry-quirk;
- 
-+			usb-role-switch;
- 			status = "disabled";
- 		};
- 
 -- 
-2.34.1
+2.43.0
 
 
