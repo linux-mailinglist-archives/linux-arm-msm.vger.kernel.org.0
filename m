@@ -1,114 +1,176 @@
-Return-Path: <linux-arm-msm+bounces-78735-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-78736-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [142.0.200.124])
-	by mail.lfdr.de (Postfix) with ESMTPS id D7E3DC0699D
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Oct 2025 16:00:00 +0200 (CEST)
+Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [IPv6:2605:f480:58:1:0:1994:3:14])
+	by mail.lfdr.de (Postfix) with ESMTPS id 92562C06A0D
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Oct 2025 16:11:16 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id CAE17502C8B
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Oct 2025 13:59:59 +0000 (UTC)
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 26AA94E6077
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Oct 2025 14:09:55 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2335031D742;
-	Fri, 24 Oct 2025 13:59:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 082782DEA6A;
+	Fri, 24 Oct 2025 14:09:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=mainlining.org header.i=@mainlining.org header.b="IMtV/DMW";
-	dkim=permerror (0-bit key) header.d=mainlining.org header.i=@mainlining.org header.b="wkYzs5wg"
+	dkim=pass (1024-bit key) header.d=collabora.com header.i=valentine.burley@collabora.com header.b="G4QLpWXC"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail.mainlining.org (mail.mainlining.org [5.75.144.95])
+Received: from sender4-pp-f112.zoho.com (sender4-pp-f112.zoho.com [136.143.188.112])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 600A12DE70C;
-	Fri, 24 Oct 2025 13:59:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=5.75.144.95
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761314396; cv=none; b=V1HGXpHBpEFfkpylgTKCM86sz6XxqzBARHRSAQXlfj/KLdVqSa1IpKDd9ZK6PoXdI8DEZ0nsBy5pcc+F6F1/ECtlARVkxAoxTpJNTODeQLizE3NO9M5pM1Da5d+uYm+TnZGQD7qPXtgICfSo0QETsSFPYSJKyn2GKRflE0Hv0eg=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761314396; c=relaxed/simple;
-	bh=balVstkGgw4FuJr7gYYdlTm3djRzXOPdaF7mDaQAZ7o=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=rdRW60MB79pZNFfBub2/yVV677XD8QuiZ4wqs7Qgg6x5Y7bWlnjNpIzZ6SbwCiXap0qs/Bt0Gi9aU7hfEVgWckZTHMIZeeMTm74wQoqzcIOGO0MHyy7lff2TvPoXNzj1dNbYxJYNGMhMgEbifjCVrETZwTKmooAAdxDol32/a04=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=mainlining.org; spf=pass smtp.mailfrom=mainlining.org; dkim=pass (2048-bit key) header.d=mainlining.org header.i=@mainlining.org header.b=IMtV/DMW; dkim=permerror (0-bit key) header.d=mainlining.org header.i=@mainlining.org header.b=wkYzs5wg; arc=none smtp.client-ip=5.75.144.95
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=mainlining.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=mainlining.org
-DKIM-Signature: v=1; a=rsa-sha256; s=202507r; d=mainlining.org; c=relaxed/relaxed;
-	h=From:To:Subject:Date:Message-ID; t=1761314338; bh=/Pr6PpVMVyEbWjqU/OrlJDx
-	z/c2pylURHEnGiiqtuhs=; b=IMtV/DMWImM3ytbIBMvKd9IeHWkakGpdd93OgrtrQDgiUX25j4
-	M0vMUcDWCH4gYQJjQmS+a9pbE8sM8Rw4j8MgMgkHtGe9ERTIvZYpi4YH+NA4DvUDtDJbP/JQoob
-	+yC9CvHMOBIa9OydfHP4r9eGa2B4rCG8k73IFfwavPkj7Hd86wBdWMb6efpHbaICmS+5F0RMVXK
-	kzneUFWRUG3aZZ+9XZmUCkJHzjRAZwSchemnVXFsn+jXpMoVBB8JxKlRHqPUZRNGrLpUNJHDEfb
-	Z8pGPyn8g57eFDQ3+pDTDamcof2/Yg1N8IRqf0yzGYGBhm7VEbBPJSbDlbwJZhlL0JA==;
-DKIM-Signature: v=1; a=ed25519-sha256; s=202507e; d=mainlining.org; c=relaxed/relaxed;
-	h=From:To:Subject:Date:Message-ID; t=1761314338; bh=/Pr6PpVMVyEbWjqU/OrlJDx
-	z/c2pylURHEnGiiqtuhs=; b=wkYzs5wgRe1geWGgouhOuPQI/t0AEKH+EgSF3Xb4rYtUhnqYp7
-	AUSgSaVcLBChKBr7qf7LbZqXzlyw/WEQ2GAw==;
-Message-ID: <47b40a91-8365-4431-9fd9-1e48fad2a4e1@mainlining.org>
-Date: Fri, 24 Oct 2025 16:58:57 +0300
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 388BC28489B;
+	Fri, 24 Oct 2025 14:09:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.112
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1761314992; cv=pass; b=afRSSQ8CJXhub32aVfh4wsV18jVctvEakuDz4OcHyUg0ND21Bfz52zApiFw0VuldVCXE07gYPAbOZZvwamekVgEGX3CgRJdeqZaYIRNGDRgf7vw3mRWg/cpqB3tfC1zGahAlq5kSUm7AQrTxnJkbdPrKKwfn0HAgwsKgIF96QTc=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1761314992; c=relaxed/simple;
+	bh=bEuktrexp5zkKPiFQiuuQTBbrzpCDKYDKNs/EpBRXlg=;
+	h=Date:From:To:Cc:Message-ID:In-Reply-To:References:Subject:
+	 MIME-Version:Content-Type; b=NpYzZ3SWLC+EoTVLa0etCdXEqiOFdt0/jWu3SNNAE9NNAAHw4BNO8/scX0G3SF0yjuy3ep+sUrFpMmW3I9r9DntSdGhWuhpVo1IeMYtkntK2stz3T5oaJZEPTAOXQ8mXx0Ro/oQDuIPsaaOy9Mc695+OU2CgM+HzFBslqkpuiQI=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (1024-bit key) header.d=collabora.com header.i=valentine.burley@collabora.com header.b=G4QLpWXC; arc=pass smtp.client-ip=136.143.188.112
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
+ARC-Seal: i=1; a=rsa-sha256; t=1761314970; cv=none; 
+	d=zohomail.com; s=zohoarc; 
+	b=GSl5/dtjmw74PanlT8ifzXTlvcbVz/l4llLwJH2v4eSkpgMIzwFcXuH2UFiYQTKdTFWnxZ88v+tV1WaEXg76+gozlsLCNKKc7SXy2UvJv4xoByfRn5CJNG5W5luzFHShHTRC8fNoPJifpq16P3MANWEzNxH6YzSbrUQ5pH5g6KM=
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
+	t=1761314970; h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
+	bh=VQHIgDhZhrUUNwFFz2m4paNGoP7NOa3EjygSQo1CRMs=; 
+	b=ONyBj7gvYKh3SSCoKYO8XLIoPpSOePXvILcpCUteORCScvcxvqktAC3Yl6Z7CcfskdXTjJYpd15ApXrd8HMc8nxdlmBtn65VQTBdTdCOuffAFpjF41K4iLuyrLDoUnJ+oYWQWz/33jOZRwtk6ts/13gJMxpz+6aWjmt2iVRqOz8=
+ARC-Authentication-Results: i=1; mx.zohomail.com;
+	dkim=pass  header.i=collabora.com;
+	spf=pass  smtp.mailfrom=valentine.burley@collabora.com;
+	dmarc=pass header.from=<valentine.burley@collabora.com>
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1761314970;
+	s=zohomail; d=collabora.com; i=valentine.burley@collabora.com;
+	h=Date:Date:From:From:To:To:Cc:Cc:Message-ID:In-Reply-To:References:Subject:Subject:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id:Reply-To;
+	bh=VQHIgDhZhrUUNwFFz2m4paNGoP7NOa3EjygSQo1CRMs=;
+	b=G4QLpWXCga0i+oVqp8hInaNs3P45NFTDTg8tZEQA8QIUuBxtZp/2yxWaZPPwV/Ua
+	FI42JKa1TddFB1ZJd+qbqz208hd43QQnkyEAwEX5QcSB0hWuLROv4R0X6ckbsAOMTCg
+	jzVd81ArMorT/RD+v3uwg8NqlzhHWoJEnZRUbzPs=
+Received: from mail.zoho.com by mx.zohomail.com
+	with SMTP id 1761314969231532.1756914526859; Fri, 24 Oct 2025 07:09:29 -0700 (PDT)
+Date: Fri, 24 Oct 2025 16:09:29 +0200
+From: Valentine Burley <valentine.burley@collabora.com>
+To: "Rob Clark" <robin.clark@oss.qualcomm.com>
+Cc: "dri-devel" <dri-devel@lists.freedesktop.org>,
+	"freedreno" <freedreno@lists.freedesktop.org>,
+	"linux-arm-msm" <linux-arm-msm@vger.kernel.org>,
+	"Sean Paul" <sean@poorly.run>,
+	"Konrad Dybcio" <konradybcio@kernel.org>,
+	"Dmitry Baryshkov" <lumag@kernel.org>,
+	"Abhinav Kumar" <abhinav.kumar@linux.dev>,
+	"Jessica Zhang" <jessica.zhang@oss.qualcomm.com>,
+	"Marijn Suijten" <marijn.suijten@somainline.org>,
+	"David Airlie" <airlied@gmail.com>,
+	"Simona Vetter" <simona@ffwll.ch>,
+	"open list" <linux-kernel@vger.kernel.org>
+Message-ID: <19a168d95e8.7a90f7d35482131.1689650792018355758@collabora.com>
+In-Reply-To: <20251022222051.10030-1-robin.clark@oss.qualcomm.com>
+References: <20251022222051.10030-1-robin.clark@oss.qualcomm.com>
+Subject: Re: [PATCH] drm/msm: Reject MAP_NULL op if no PRR
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/3] arm64: dts: qcom: sdm630/660: Add CDSP-related
- nodes
-To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
- Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht,
- linux@mainlining.org
-References: <20251023-qcom-sdm660-cdsp-adsp-dts-v2-0-895ffe50ab5f@mainlining.org>
- <20251023-qcom-sdm660-cdsp-adsp-dts-v2-1-895ffe50ab5f@mainlining.org>
- <07066c46-4121-48da-846a-3a180d245589@oss.qualcomm.com>
-Content-Language: ru-RU, en-US
-From: Nickolay Goppen <setotau@mainlining.org>
-In-Reply-To: <07066c46-4121-48da-846a-3a180d245589@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+Importance: Medium
+User-Agent: Zoho Mail
+X-Mailer: Zoho Mail
 
+Hi,
 
-24.10.2025 11:28, Konrad Dybcio пишет:
-> On 10/23/25 9:51 PM, Nickolay Goppen wrote:
->> In order to enable CDSP support for SDM660 SoC:
->>   * add shared memory p2p nodes for CDSP
->>   * add CDSP-specific smmu node
->>   * add CDSP peripheral image loader node
->>
->> Memory region for CDSP in SDM660 occupies the same spot as
->> TZ buffer mem defined in sdm630.dtsi (which does not have CDSP).
->> In sdm660.dtsi replace buffer_mem inherited from SDM630 with
->> cdsp_region, which is also larger in size.
->>
->> SDM636 also doesn't have CDSP, so remove inherited from sdm660.dtsi
->> related nodes and add buffer_mem back.
->>
->> Signed-off-by: Nickolay Goppen <setotau@mainlining.org>
->> ---
-> [...]
->
->> +			label = "turing";
-> "cdsp"
-Ok, I'll change this in the next revision.
->> +			mboxes = <&apcs_glb 29>;
->> +			qcom,remote-pid = <5>;
->> +
->> +			fastrpc {
->> +				compatible = "qcom,fastrpc";
->> +				qcom,glink-channels = "fastrpcglink-apps-dsp";
->> +				label = "cdsp";
->> +				qcom,non-secure-domain;
-> This shouldn't matter, both a secure and a non-secure device is
-> created for CDSP
-I've added this property, because it is used in other SoC's, such as 
-SDM845 and SM6115 for both ADSP and CDSP
-> Konrad
+This fixes the GPU faults and hangs I was seeing on sc7180.
 
--- 
-Best regards,
-Nickolay
+Tested-by: Valentine Burley <valentine.burley@collabora.com>
+
+Thanks!
+Valentine
+
+ ---- On Thu, 23 Oct 2025 00:20:51 +0200  Rob Clark <robin.clark@oss.qualcomm.com> wrote --- 
+ > We need PRR support in order to implement MAP_NULL.  Userspace shouldn't
+ > be trying to use this if it is unsupported.
+ > 
+ > Reported-by: Valentine Burley <valentine.burley@collabora.com>
+ > Link: https://gitlab.freedesktop.org/mesa/mesa/-/merge_requests/37935#note_3153730
+ > Signed-off-by: Rob Clark <robin.clark@oss.qualcomm.com>
+ > ---
+ >  drivers/gpu/drm/msm/adreno/adreno_gpu.c |  7 -------
+ >  drivers/gpu/drm/msm/msm_gem_vma.c       |  6 ++++++
+ >  drivers/gpu/drm/msm/msm_gpu.h           | 11 +++++++++++
+ >  3 files changed, 17 insertions(+), 7 deletions(-)
+ > 
+ > diff --git a/drivers/gpu/drm/msm/adreno/adreno_gpu.c b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
+ > index 19181b6fddfd..f93eee67240d 100644
+ > --- a/drivers/gpu/drm/msm/adreno/adreno_gpu.c
+ > +++ b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
+ > @@ -365,13 +365,6 @@ int adreno_fault_handler(struct msm_gpu *gpu, unsigned long iova, int flags,
+ >      return 0;
+ >  }
+ >  
+ > -static bool
+ > -adreno_smmu_has_prr(struct msm_gpu *gpu)
+ > -{
+ > -    struct adreno_smmu_priv *adreno_smmu = dev_get_drvdata(&gpu->pdev->dev);
+ > -    return adreno_smmu && adreno_smmu->set_prr_addr;
+ > -}
+ > -
+ >  int adreno_get_param(struct msm_gpu *gpu, struct msm_context *ctx,
+ >               uint32_t param, uint64_t *value, uint32_t *len)
+ >  {
+ > diff --git a/drivers/gpu/drm/msm/msm_gem_vma.c b/drivers/gpu/drm/msm/msm_gem_vma.c
+ > index 90712586faac..96925a0f3965 100644
+ > --- a/drivers/gpu/drm/msm/msm_gem_vma.c
+ > +++ b/drivers/gpu/drm/msm/msm_gem_vma.c
+ > @@ -964,6 +964,7 @@ static int
+ >  lookup_op(struct msm_vm_bind_job *job, const struct drm_msm_vm_bind_op *op)
+ >  {
+ >      struct drm_device *dev = job->vm->drm;
+ > +    struct msm_drm_private *priv = dev->dev_private;
+ >      int i = job->nr_ops++;
+ >      int ret = 0;
+ >  
+ > @@ -1010,6 +1011,11 @@ lookup_op(struct msm_vm_bind_job *job, const struct drm_msm_vm_bind_op *op)
+ >          break;
+ >      }
+ >  
+ > +    if ((op->op == MSM_VM_BIND_OP_MAP_NULL) &&
+ > +        !adreno_smmu_has_prr(priv->gpu)) {
+ > +        ret = UERR(EINVAL, dev, "PRR not supported\n");
+ > +    }
+ > +
+ >      return ret;
+ >  }
+ >  
+ > diff --git a/drivers/gpu/drm/msm/msm_gpu.h b/drivers/gpu/drm/msm/msm_gpu.h
+ > index a597f2bee30b..2894fc118485 100644
+ > --- a/drivers/gpu/drm/msm/msm_gpu.h
+ > +++ b/drivers/gpu/drm/msm/msm_gpu.h
+ > @@ -299,6 +299,17 @@ static inline struct msm_gpu *dev_to_gpu(struct device *dev)
+ >      return container_of(adreno_smmu, struct msm_gpu, adreno_smmu);
+ >  }
+ >  
+ > +static inline bool
+ > +adreno_smmu_has_prr(struct msm_gpu *gpu)
+ > +{
+ > +    struct adreno_smmu_priv *adreno_smmu = dev_get_drvdata(&gpu->pdev->dev);
+ > +
+ > +    if (!adreno_smmu)
+ > +        return false;
+ > +
+ > +    return adreno_smmu && adreno_smmu->set_prr_addr;
+ > +}
+ > +
+ >  /* It turns out that all targets use the same ringbuffer size */
+ >  #define MSM_GPU_RINGBUFFER_SZ SZ_32K
+ >  #define MSM_GPU_RINGBUFFER_BLKSIZE 32
+ > -- 
+ > 2.51.0
+ > 
+ > 
 
 
