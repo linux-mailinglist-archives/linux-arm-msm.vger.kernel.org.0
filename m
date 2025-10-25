@@ -1,61 +1,59 @@
-Return-Path: <linux-arm-msm+bounces-78791-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-78792-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1739EC099A1
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 25 Oct 2025 18:40:16 +0200 (CEST)
+Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [IPv6:2605:f480:58:1:0:1994:3:14])
+	by mail.lfdr.de (Postfix) with ESMTPS id C0159C09A13
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 25 Oct 2025 18:42:09 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id F019B1884048
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 25 Oct 2025 16:32:48 +0000 (UTC)
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 2D72956082F
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 25 Oct 2025 16:33:06 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 50BB330F520;
-	Sat, 25 Oct 2025 16:24:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A5D2C3081A9;
+	Sat, 25 Oct 2025 16:25:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ndwyeTnJ"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="QQluQAB0"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CF7830EF94;
-	Sat, 25 Oct 2025 16:24:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A6412264D4;
+	Sat, 25 Oct 2025 16:25:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761409492; cv=none; b=cXVNf9BQnyvaZZGBm2y1lWQrx1SFDKEVOoZgWvRTumbIp02UxcC2uj9Aauj4xtOetgl2S1gI42+mnZU93B8Z2bfuDW08FqATeZn4+RIKsjWc8G+4FZMVuqqtBk37rq6M4nyznlny/UGUZMhHRds9L6C1mFGp7/vXFjtoMZAPjgE=
+	t=1761409550; cv=none; b=DN8CGWLpGJeuuoJN2UJPHYCmz5adZGRVRpeNzvBA9Rte0rADH2Txa6k751y0NQo3/x3ixFiLrA1YfkOHliMRn45XJw8UhgQTaV67OTowBeQ6wyrI5Um9Bhap/cK8S2r5wDVI3cCZCHjex6pcWmZWV5oflGL4nB/rBdj/RE/22fY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761409492; c=relaxed/simple;
-	bh=bwtiFccQsOoGsrSvgCkYaSrdPPeWEvE9ONY3v48TobM=;
+	s=arc-20240116; t=1761409550; c=relaxed/simple;
+	bh=/gMUlsevWP/kkCEbCOP7wyQ5geAlAwNaZlR4K/9Ax48=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=qO/uBx7v40jWEpDXHQ2sFajqSH4L/Rqf/7w/7+yshoXlzSO2+IHHxOl10yiEVdhmOXUt48uNtPZRgPA5qzVFRyRBc+Iw19EQC1WCIEW9TDhJ0RJOYmEZYfPmoPYMxjoTJrfLGK6KDH0HTHyMoY5mRP3iBBOT2xyZNslmWj7Csd8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ndwyeTnJ; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CAB44C4CEFB;
-	Sat, 25 Oct 2025 16:24:50 +0000 (UTC)
+	 MIME-Version:Content-Type; b=X0vfkH4B6SOIg0wDM6J/PJ6BCVhRcIlz8TLyEaC4BbFD5U0Z2425NITg5DA5DWN1kiUeHzc1TK9dpqsOi/Uwa+QxJqOb+gskutS3rbPcLkkBbvcfOuLpKRrVbo7pXsSaHvcc2XN5e7izzI4tVuP3Wj4/2kFdgXLLJawLtMIQR1A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=QQluQAB0; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 224D1C4CEF5;
+	Sat, 25 Oct 2025 16:25:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1761409492;
-	bh=bwtiFccQsOoGsrSvgCkYaSrdPPeWEvE9ONY3v48TobM=;
+	s=k20201202; t=1761409549;
+	bh=/gMUlsevWP/kkCEbCOP7wyQ5geAlAwNaZlR4K/9Ax48=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ndwyeTnJ+pK6cdGLOWutBQnHfcHi1vlkVysMHl1TjwsPUwHrRpsiqK4SET0ncxMIU
-	 Qho80/iPHxQ3mSK/pmig4VYIvY2Xbh1xHpTq+Bze5NK3q4J0jZcpZO27w65fCnnhQm
-	 Guoyuzf/HW5426HtOu9yA3kSz8Oax0AFisYiCqWv+kidF7lTL/oEnGOV0IemPGwQb4
-	 GYFBOWZOzcsXXUXS3p2cu4aj4yCrlzI4YvMGnDqvcod9VN1zyUZIReL3nNEJjYxs62
-	 zywUAwKtiMklAgd1apw/RGQPs0k/x33T/kzvfiPwwt1Ah/53lA09qRZg5KB+7pEdyV
-	 Gu2e8EPPSghDg==
+	b=QQluQAB0A9aUiAbnBLmwr7WN2TvXO3cJR+UyNzwGFvVw2tnmaqil8a8eBjZxOWaU/
+	 SZXd+pWEWAycxIzZQCJYu6OAkHhEZqDLlKNOAlEL1ZuzxAPbr5kfp4Fc27Yhah2OyR
+	 rU+ey43mzS5xz8FBumIJuvW2YJqpaHS82HD4f8PSIdHLJgucFpH8vtyL2l0d4lpa8A
+	 +huNDNhbIt1B8v8HXDknbzIPlxDAmyVz9seei6EUDuWVkn8jm4fz6+SouTEa3lt6G5
+	 7QTeRumkpCafHGq10NrS85OLcpLD6blJFxVSgkJe/f+EMKzHPa5hYF5O4rQj2j2gSd
+	 fLB3IfNl9vCkQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Jie Zhang <quic_jiezh@quicinc.com>,
-	Akhil P Oommen <quic_akhilpo@quicinc.com>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Rob Clark <robin.clark@oss.qualcomm.com>,
+Cc: "Rob Herring (Arm)" <robh@kernel.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>,
-	lumag@kernel.org,
+	robin.clark@oss.qualcomm.com,
 	linux-arm-msm@vger.kernel.org,
 	dri-devel@lists.freedesktop.org,
 	freedreno@lists.freedesktop.org
-Subject: [PATCH AUTOSEL 6.17] dt-bindings: display/msm/gmu: Update Adreno 623 bindings
-Date: Sat, 25 Oct 2025 11:59:40 -0400
-Message-ID: <20251025160905.3857885-349-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.17] drm/msm: Use of_reserved_mem_region_to_resource() for "memory-region"
+Date: Sat, 25 Oct 2025 11:59:51 -0400
+Message-ID: <20251025160905.3857885-360-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251025160905.3857885-1-sashal@kernel.org>
 References: <20251025160905.3857885-1-sashal@kernel.org>
@@ -71,18 +69,22 @@ X-stable-base: Linux 6.17.5
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jie Zhang <quic_jiezh@quicinc.com>
+From: "Rob Herring (Arm)" <robh@kernel.org>
 
-[ Upstream commit c2cc1e60c1afff4f23c22561b57a5d5157dde20d ]
+[ Upstream commit fb53e8f09fc1e1a343fd08ea4f353f81613975d7 ]
 
-Update Adreno 623's dt-binding to remove smmu_clk which is not required
-for this GMU.
+Use the newly added of_reserved_mem_region_to_resource() function to
+handle "memory-region" properties.
 
-Signed-off-by: Jie Zhang <quic_jiezh@quicinc.com>
-Signed-off-by: Akhil P Oommen <quic_akhilpo@quicinc.com>
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Patchwork: https://patchwork.freedesktop.org/patch/672455/
-Signed-off-by: Rob Clark <robin.clark@oss.qualcomm.com>
+The original code did not set 'zap_available' to false if
+of_address_to_resource() failed which seems like an oversight.
+
+Signed-off-by: Rob Herring (Arm) <robh@kernel.org>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Patchwork: https://patchwork.freedesktop.org/patch/662275/
+Link: https://lore.kernel.org/r/20250703183442.2073717-1-robh@kernel.org
+[DB: dropped part related to VRAM, no longer applicable]
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
@@ -91,101 +93,129 @@ LLM Generated explanations, may be completely bogus:
 YES
 
 - What it fixes
-  - Corrects the GMU binding for Adreno 623 by removing an erroneous
-    “SMMU vote clock” requirement. Adreno 623 does not need (and DTS
-    does not provide) an `smmu_vote` clock, so the prior schema forced a
-    mismatch and dtbs_check failures/warnings.
-  - Aligns the binding with in-tree DTS for Adreno 623 (e.g., QCS8300),
-    which defines only GMU, CX, AXI, MEMNOC, AHB, and HUB clocks.
+  - Correctly handles DT “memory-region” for the zap shader by using the
+    reserved-memory helper rather than treating the phandle target like
+    a normal addressable node. This avoids misinterpreting reserved-
+    memory nodes and ensures the region is actually available.
+  - Fixes an oversight where failure to obtain the region did not mark
+    zap firmware as unavailable, causing the driver to propagate a hard
+    error instead of falling back.
 
-- Specific code changes
-  - Adds a dedicated schema branch for `qcom,adreno-gmu-623.0` with
-    explicit registers and six clocks, notably without an SMMU vote
-    clock:
-    - Introduces the 623-specific conditional:
-      Documentation/devicetree/bindings/display/msm/gmu.yaml:121
-    - 623 clocks list (no smmu_vote):
-      Documentation/devicetree/bindings/display/msm/gmu.yaml:139
-    - 623 clock-names: `gmu`, `cxo`, `axi`, `memnoc`, `ahb`, `hub`:
-      Documentation/devicetree/bindings/display/msm/gmu.yaml:147
-  - Keeps SMMU vote clock only for other variants (635/660/663):
-    - Block for 635/660/663 explicitly lists “GPU SMMU vote clock” and
-      `smmu_vote`:
-      Documentation/devicetree/bindings/display/msm/gmu.yaml:176 and
-      Documentation/devicetree/bindings/display/msm/gmu.yaml:185
-  - This separation removes the incorrect inheritance of `smmu_vote` by
-    623 which previously happened when 623 was grouped with 635/660/663.
+- Key code changes
+  - Switch to the correct API for reserved memory:
+    - drivers/gpu/drm/msm/adreno/adreno_gpu.c:13 switched include from
+      `linux/of_address.h` to `linux/of_reserved_mem.h`.
+    - drivers/gpu/drm/msm/adreno/adreno_gpu.c:54 calls
+      `of_reserved_mem_region_to_resource(np, 0, &r)` and on any failure
+      now sets `zap_available = false` and returns the error (lines
+      54–58).
+  - Cleanup/removal of the old path:
+    - Replaces the `of_parse_phandle(..., "memory-region", ...)` +
+      `of_address_to_resource(...)` sequence with the reserved-mem
+      helper, removing the intermediate `mem_np` handling and
+      simplifying error paths.
 
-- Evidence DTS already matches this (demonstrating the prior schema was
-  wrong)
-  - QCS8300 GMU node uses six clocks (no `smmu_vote`): `gmu`, `cxo`,
-    `axi`, `memnoc`, `ahb`, `hub`:
-    arch/arm64/boot/dts/qcom/qcs8300.dtsi:4366
+- Why this matters for runtime behavior
+  - The zap shader loader’s public entry point treats “zap not
+    available” as a non-fatal condition to fall back on an alternate
+    secure-mode exit path:
+    - drivers/gpu/drm/msm/adreno/adreno_gpu.c:169–176 returns `-ENODEV`
+      when `zap_available` is false, triggering fallback.
+    - Callers explicitly handle `-ENODEV` as the “no zap shader” path:
+      - drivers/gpu/drm/msm/adreno/a5xx_gpu.c:987–1007 uses the fallback
+        when `a5xx_zap_shader_init()` returns `-ENODEV`.
+  - Previously, if `of_address_to_resource()` failed, the code returned
+    an error without setting `zap_available = false`. That meant callers
+    saw a generic error (not `-ENODEV`) and aborted bring-up instead of
+    taking the designed fallback. This is precisely the oversight the
+    commit fixes.
 
-- Stable backport assessment
-  - Bug relevance: Yes — fixes dt-binding schema forcing an invalid
-    clock requirement, leading to dtbs_check issues for users building
-    DTs for Adreno 623 platforms.
-  - Size/scope: Small, contained to a single YAML schema file; no
-    driver/runtime changes.
-  - Risk/regression: Minimal. It only relaxes a wrong requirement for
-    623. Out-of-tree DTS that mistakenly provided `smmu_vote` for 623
-    would fail schema validation after this (those DTS are incorrect),
-    but kernel functionality is unaffected.
-  - No architectural churn, no features, and no cross-subsystem impact.
+- Impact and risk assessment
+  - Scope is small and contained to one function in a single driver
+    file. No architectural changes.
+  - Behavior change is specifically in error handling: failures to
+    resolve “memory-region” now reliably signal “zap not available,”
+    aligning with the existing, intentional `-ENODEV` fallback path in
+    the Adreno bring-up sequence.
+  - Using `of_reserved_mem_region_to_resource()` ensures the driver only
+    uses regions actually initialized by the reserved-memory core
+    (drivers/of/of_reserved_mem.c) and returns `-ENODEV` if the memory-
+    region is missing or unavailable. This is safer than reading “reg”
+    directly from the node and avoids mapping memory that wasn’t
+    properly reserved.
+  - Note: the function no longer calls `of_node_put(np)` after
+    `of_get_child_by_name()`. There was already at least one leak path
+    for `np` (the early `!of_device_is_available(np)` return). This
+    commit removes the `of_node_put(np)` that existed on the success
+    path. The leak is a single DT node ref during probe/init and
+    practically negligible. It does not outweigh the bugfix in error
+    handling. If desired, a follow-up to put `np` after use is trivial
+    and independent of this fix.
 
-Given it corrects a real schema bug affecting validation of in-tree DTS
-for Adreno 623, is small and low risk, and doesn’t alter runtime
-behavior, this is a good candidate for stable backport.
+- Stable backport considerations
+  - This is a clear bugfix with a targeted change in error handling and
+    a move to the correct reserved-memory API.
+  - If a given stable series already has
+    `of_reserved_mem_region_to_resource()`, this applies cleanly and is
+    low risk.
+  - If not, the minimal backport can keep the existing
+    `of_address_to_resource()` path but still add the key fix (set
+    `zap_available = false` when it fails), preserving the functional
+    improvement with minimal churn.
 
- .../devicetree/bindings/display/msm/gmu.yaml  | 34 +++++++++++++++++++
- 1 file changed, 34 insertions(+)
+- Conclusion
+  - The change fixes a real user-visible issue (unnecessary bring-up
+    failure instead of the intended fallback), is small and localized,
+    and reduces misuse of DT reserved-memory. It satisfies stable
+    criteria as a low-risk bugfix suitable for backport.
 
-diff --git a/Documentation/devicetree/bindings/display/msm/gmu.yaml b/Documentation/devicetree/bindings/display/msm/gmu.yaml
-index 4392aa7a4ffe2..afc1879357440 100644
---- a/Documentation/devicetree/bindings/display/msm/gmu.yaml
-+++ b/Documentation/devicetree/bindings/display/msm/gmu.yaml
-@@ -124,6 +124,40 @@ allOf:
-           contains:
-             enum:
-               - qcom,adreno-gmu-623.0
-+    then:
-+      properties:
-+        reg:
-+          items:
-+            - description: Core GMU registers
-+            - description: Resource controller registers
-+            - description: GMU PDC registers
-+        reg-names:
-+          items:
-+            - const: gmu
-+            - const: rscc
-+            - const: gmu_pdc
-+        clocks:
-+          items:
-+            - description: GMU clock
-+            - description: GPU CX clock
-+            - description: GPU AXI clock
-+            - description: GPU MEMNOC clock
-+            - description: GPU AHB clock
-+            - description: GPU HUB CX clock
-+        clock-names:
-+          items:
-+            - const: gmu
-+            - const: cxo
-+            - const: axi
-+            - const: memnoc
-+            - const: ahb
-+            - const: hub
-+
-+  - if:
-+      properties:
-+        compatible:
-+          contains:
-+            enum:
-               - qcom,adreno-gmu-635.0
-               - qcom,adreno-gmu-660.1
-               - qcom,adreno-gmu-663.0
+ drivers/gpu/drm/msm/adreno/adreno_gpu.c | 17 +++++------------
+ 1 file changed, 5 insertions(+), 12 deletions(-)
+
+diff --git a/drivers/gpu/drm/msm/adreno/adreno_gpu.c b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
+index f1230465bf0d0..8c6336b007dc0 100644
+--- a/drivers/gpu/drm/msm/adreno/adreno_gpu.c
++++ b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
+@@ -10,7 +10,7 @@
+ #include <linux/interconnect.h>
+ #include <linux/firmware/qcom/qcom_scm.h>
+ #include <linux/kernel.h>
+-#include <linux/of_address.h>
++#include <linux/of_reserved_mem.h>
+ #include <linux/pm_opp.h>
+ #include <linux/slab.h>
+ #include <linux/soc/qcom/mdt_loader.h>
+@@ -33,7 +33,7 @@ static int zap_shader_load_mdt(struct msm_gpu *gpu, const char *fwname,
+ 	struct device *dev = &gpu->pdev->dev;
+ 	const struct firmware *fw;
+ 	const char *signed_fwname = NULL;
+-	struct device_node *np, *mem_np;
++	struct device_node *np;
+ 	struct resource r;
+ 	phys_addr_t mem_phys;
+ 	ssize_t mem_size;
+@@ -51,18 +51,11 @@ static int zap_shader_load_mdt(struct msm_gpu *gpu, const char *fwname,
+ 		return -ENODEV;
+ 	}
+ 
+-	mem_np = of_parse_phandle(np, "memory-region", 0);
+-	of_node_put(np);
+-	if (!mem_np) {
++	ret = of_reserved_mem_region_to_resource(np, 0, &r);
++	if (ret) {
+ 		zap_available = false;
+-		return -EINVAL;
+-	}
+-
+-	ret = of_address_to_resource(mem_np, 0, &r);
+-	of_node_put(mem_np);
+-	if (ret)
+ 		return ret;
+-
++	}
+ 	mem_phys = r.start;
+ 
+ 	/*
 -- 
 2.51.0
 
