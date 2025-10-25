@@ -1,58 +1,64 @@
-Return-Path: <linux-arm-msm+bounces-78786-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-78787-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ams.mirrors.kernel.org (ams.mirrors.kernel.org [213.196.21.55])
-	by mail.lfdr.de (Postfix) with ESMTPS id 97B8CC09545
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 25 Oct 2025 18:20:39 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id AEBEDC09719
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 25 Oct 2025 18:27:20 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ams.mirrors.kernel.org (Postfix) with ESMTPS id 1B29134DE95
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 25 Oct 2025 16:20:39 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 48E383ABEDC
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 25 Oct 2025 16:22:09 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4B66C306490;
-	Sat, 25 Oct 2025 16:17:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CB7313054DF;
+	Sat, 25 Oct 2025 16:18:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="umJTa37a"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Eiv/itaA"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22B6D307494;
-	Sat, 25 Oct 2025 16:17:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E383304BB8;
+	Sat, 25 Oct 2025 16:18:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761409034; cv=none; b=e3lhuCpAI1d891HcA3YY/Su5V42GllyCL0wAWunIGK1IJdX3kdp3G8/f2HXDaS0MN2zb6s3jmmBsEou/1zRe8FseSEtVGZagtfEMPoirhHqjxF47CsV7XQ1kvg4/Wz93m+qiwnkdt0mvjB7PpRSvqV9XWanXgonWUhtA3PR4eRA=
+	t=1761409117; cv=none; b=smSkMJ/dGzJnqe+1uS7ATBaC/QBXhYF8I2rs90jrXnnQpzbWSjwpP7LYkBEmjNG42XYX2jrh0Rh6Q7yuoU32CyRNCVe2XRGNwtNhAITk+C+e4NvlgJsVJK/XHQBPaFYjTl8RpHB8o8HUuCousjCHeDgfBZFGrXQSXZJ+L45YXGU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761409034; c=relaxed/simple;
-	bh=TFH3h/wjgSi7eeODKqH12cQ96m/R0SGF5dcNKHzNo38=;
+	s=arc-20240116; t=1761409117; c=relaxed/simple;
+	bh=MqWjGTemgYbJk4aKJXikLaSuGnhNkeFWTQuYp2fq9qA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=q4KobgMHrG28l4Dhq5uY5YX4enTT1CX3HdEuB7zz/PUc37nKwgryWc6baqd75f3+w5i8MGKJiUKejgi5IjLj7Vb7dlUwNh5cGXhatWtdTRf3r3KeVsyrVnNeDO518pidpRltmqUx0zF+haI4Jj92knKViy7W4V4RjK9ZSw/UdKo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=umJTa37a; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A384FC113D0;
-	Sat, 25 Oct 2025 16:17:11 +0000 (UTC)
+	 MIME-Version:Content-Type; b=n90mTiVhZm6kkG+ETbT0vPKJwflIz7yxewyo+EvsPYvcQWpsb9h8cqvL6mJV5P8WVhFSkwE7ylNAog6SlmhZr1YfwYj+WrEDOLVXKkQx3CtABjtZ6uoE9zhvaM5D3Xp5h9q8fUSBHhGiIiXdm/RslGEoV84gyptKIoWorbHrkCs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Eiv/itaA; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1AB5C4CEF5;
+	Sat, 25 Oct 2025 16:18:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1761409032;
-	bh=TFH3h/wjgSi7eeODKqH12cQ96m/R0SGF5dcNKHzNo38=;
+	s=k20201202; t=1761409117;
+	bh=MqWjGTemgYbJk4aKJXikLaSuGnhNkeFWTQuYp2fq9qA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=umJTa37aDTlbuXV9flIm3i+gOkN8MLtDiDsQ7vqAv67vy/yto15WBiBGkyX6JiV3R
-	 0SWbtz3xjg+cXM3xTd/vuDdMkGMEYtMm+9H0+1wabKzLy1el4In5DxcMWXNuJUH0o3
-	 J+zzk/u5PWcgP31EahmOUqDBT3B8Bweogq1SKCQmFbokJCky6w2wWuOOT67ujIoMxW
-	 xvh29zcAkesE8A1xz56myR2Q6ttf7juRwoeY4j035XHlg5d3Np6+o70fp9htizgm5w
-	 ZC7t/YWPSh/2D9Hka1/Xg0sjIjTdjOIRhf2gVbh8LVPuj/Qa825wQRTPwAtM1bycpo
-	 N+cPJD/N57SNQ==
+	b=Eiv/itaAJz4Z24KXEuDNoVqMeDLruzhZEDGOz90JGYBoDVW5ULH5W23kcwcK+SK4A
+	 nreaZsjdwvz/5o0mgVYeDC956spgFGMqFL4QsxzCWbPyUmHCXnlGTWUNA34KRdxmRQ
+	 n/VWA1+i98TO3F0/1Fqn1loXyiouIfli+yfgSLDQhYvCD34YTlKhb8qgZlXNfAZlof
+	 qiJ6xIA6VwSM1sIPSO4ijfrkI3+UrBAU8A2QMod3zkrhZIWJtnFkkoZWp1GTI/PCok
+	 rpdEUoGb9tlqJONxiTPyQGSnLWNghvu0NHSSk0o1t+UVIw1c9LtnoFPS+Dsdu4CsSJ
+	 FG7OwXmRhUTDg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Akhil P Oommen <akhilpo@oss.qualcomm.com>,
-	Rob Clark <robin.clark@oss.qualcomm.com>,
+Cc: Mohammad Rafi Shaik <quic_mohs@quicinc.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
+	srini@kernel.org,
+	p.zabel@pengutronix.de,
+	linus.walleij@linaro.org,
+	brgl@bgdev.pl,
+	linux-sound@vger.kernel.org,
 	linux-arm-msm@vger.kernel.org,
-	dri-devel@lists.freedesktop.org,
-	freedreno@lists.freedesktop.org
-Subject: [PATCH AUTOSEL 6.17] drm/msm/adreno: Add fenced regwrite support
-Date: Sat, 25 Oct 2025 11:56:49 -0400
-Message-ID: <20251025160905.3857885-178-sashal@kernel.org>
+	linux-gpio@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.17] ASoC: codecs: wsa883x: Handle shared reset GPIO for WSA883x speakers
+Date: Sat, 25 Oct 2025 11:57:16 -0400
+Message-ID: <20251025160905.3857885-205-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251025160905.3857885-1-sashal@kernel.org>
 References: <20251025160905.3857885-1-sashal@kernel.org>
@@ -68,19 +74,22 @@ X-stable-base: Linux 6.17.5
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Akhil P Oommen <akhilpo@oss.qualcomm.com>
+From: Mohammad Rafi Shaik <quic_mohs@quicinc.com>
 
-[ Upstream commit a27d774045566b587bfc1ae9fb122642b06677b8 ]
+[ Upstream commit cf65182247761f7993737b710afe8c781699356b ]
 
-There are some special registers which are accessible even when GX power
-domain is collapsed during an IFPC sleep. Accessing these registers
-wakes up GPU from power collapse and allow programming these registers
-without additional handshake with GMU. This patch adds support for this
-special register write sequence.
+On some Qualcomm platforms such as QCS6490-RB3Gen2, the multiple
+WSA8830/WSA8835 speaker amplifiers share a common reset (shutdown) GPIO.
 
-Signed-off-by: Akhil P Oommen <akhilpo@oss.qualcomm.com>
-Patchwork: https://patchwork.freedesktop.org/patch/673368/
-Signed-off-by: Rob Clark <robin.clark@oss.qualcomm.com>
+To handle such scenario, use the reset controller framework and its
+"reset-gpio" driver to handle such case. This allows proper handling
+of all WSA883x speaker amplifiers on QCS6490-RB3Gen2 board.
+
+Signed-off-by: Mohammad Rafi Shaik <quic_mohs@quicinc.com>
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Reviewed-by: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
+Link: https://patch.msgid.link/20250815172353.2430981-3-mohammad.rafi.shaik@oss.qualcomm.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
@@ -89,290 +98,193 @@ LLM Generated explanations, may be completely bogus:
 YES
 
 - What it fixes
-  - Prevents register writes from being “dropped” while the GPU’s GX
-    power domain is collapsed during IFPC. The new fenced write path
-    forces a retry and waits for the GMU AHB fence to move to allow-mode
-    so the write actually sticks. Without this, key writes (preemption
-    trigger, ring wptr restore) can be lost, leading to missed
-    preemption, scheduling stalls, or timeouts under IFPC.
+  - Addresses real functional issues on platforms where multiple WSA883x
+    amplifiers share a single shutdown/reset line (e.g.,
+    QCS6490-RB3Gen2). Using a plain GPIO per-device does not coordinate
+    shared users; one instance toggling the line can inadvertently reset
+    others. The patch switches to the reset controller framework with
+    the reset‑gpio backend to handle shared lines correctly.
 
-- Scope and changes
-  - Introduces a contained helper that performs a write, issues a heavy
-    barrier, and polls GMU AHB fence status, retrying briefly if the
-    write was dropped:
-    - `drivers/gpu/drm/msm/adreno/a6xx_gpu.c:32` adds
-      `fence_status_check()` which retries after writedropped and
-      enforces `mb()` barriers.
-    - `drivers/gpu/drm/msm/adreno/a6xx_gpu.c:50` adds `fenced_write()`
-      that polls `REG_A6XX_GMU_AHB_FENCE_STATUS` via
-      `gmu_poll_timeout()` for up to 2ms and logs rate-limited errors on
-      delay/fail.
-    - `drivers/gpu/drm/msm/adreno/a6xx_gpu.c:94` adds
-      `a6xx_fenced_write()` handling 32b/64b register pairs.
-  - Converts critical writes to this fenced path:
-    - Ring flush path: `drivers/gpu/drm/msm/adreno/a6xx_gpu.c:180`
-      switches `REG_A6XX_CP_RB_WPTR` to fenced write (mask `BIT(0)`).
-    - Preemption wptr restore:
-      `drivers/gpu/drm/msm/adreno/a6xx_preempt.c:51` uses fenced write
-      for `REG_A6XX_CP_RB_WPTR`.
-    - Preemption trigger and context setup:
-      - `drivers/gpu/drm/msm/adreno/a6xx_preempt.c:319` uses fenced 64b
-        write for `REG_A6XX_CP_CONTEXT_SWITCH_SMMU_INFO` (mask
-        `BIT(1)`).
-      - `drivers/gpu/drm/msm/adreno/a6xx_preempt.c:319` uses fenced 64b
-        write for
-        `REG_A6XX_CP_CONTEXT_SWITCH_PRIV_NON_SECURE_RESTORE_ADDR` (mask
-        `BIT(1)`).
-      - `drivers/gpu/drm/msm/adreno/a6xx_preempt.c:350` uses fenced
-        write for `REG_A6XX_CP_CONTEXT_SWITCH_CNTL` (mask `BIT(1)`).
+- Scope and minimality
+  - Single-file, localized change in `sound/soc/codecs/wsa883x.c`.
+  - No ABI or architectural changes; strictly startup/shutdown control
+    path in probe.
+  - Optional feature: falls back to existing `powerdown-gpios` behavior
+    if no reset controller is provided, keeping backward compatibility.
 
-- Why this is safe and appropriate for stable
-  - Small and surgical: Changes are isolated to the msm/adreno a6xx
-    driver and only replace a few direct writes with a robust, bounded
-    poll-and-retry sequence.
-  - Minimal risk path selection:
-    - On platforms without a “real” GMU (GMU wrapper), the new helper
-      fast-paths out and behaves like the previous code
-      (`drivers/gpu/drm/msm/adreno/adreno_gpu.h:274` and
-      `drivers/gpu/drm/msm/adreno/a6xx_gpu.c:60`).
-    - When not in IFPC (or when fence is already in allow mode), the
-      condition evaluates immediately and returns without delay
-      (`drivers/gpu/drm/msm/adreno/a6xx_gmu.h:169` for
-      `gmu_poll_timeout`).
-    - Time-bounded: two 1ms polls with short udelays; errors are rate-
-      limited and the call sites do not introduce new failure paths
-      relative to pre-existing behavior.
-  - Aligned with existing GMU AHB fence machinery already in-tree:
-    - Fence ranges configured during GMU bring-up
-      (`drivers/gpu/drm/msm/adreno/a6xx_gmu.c:897` writes
-      `REG_A6XX_GMU_AHB_FENCE_RANGE_0` to cover the CP context switch
-      region; register locations:
-      `drivers/gpu/drm/msm/registers/adreno/a6xx.xml:167`
-      `CP_CONTEXT_SWITCH_CNTL`,
-      `drivers/gpu/drm/msm/registers/adreno/a6xx.xml:173`
-      `CP_CONTEXT_SWITCH_SMMU_INFO`,
-      `drivers/gpu/drm/msm/registers/adreno/a6xx.xml:174`
-      `CP_CONTEXT_SWITCH_PRIV_NON_SECURE_RESTORE_ADDR`,
-      `drivers/gpu/drm/msm/registers/adreno/adreno_common.xml:129`
-      `CP_RB_WPTR`).
-    - WRITEDROPPED status fields are cleared elsewhere as part of
-      power/control management
-      (`drivers/gpu/drm/msm/adreno/a6xx_gmu.c:1044`), and the helper
-      polls the same `REG_A6XX_GMU_AHB_FENCE_STATUS`.
-  - Fixes real-world IFPC races and intermittent failures:
-    - IFPC has the GMU put the AHB fence into drop mode during
-      collapses; writes to certain CP registers are “special” and
-      intended to wake/allow programming without extra handshakes, but
-      need the fence status polling to be reliable. This patch makes
-      those writes robust against brief GMU/IFPC races.
+- Specific code changes and rationale
+  - Adds reset framework usage
+    - Include added: `#include <linux/reset.h>` in
+      `sound/soc/codecs/wsa883x.c`.
+    - Private data gains an optional reset handle: `struct reset_control
+      *sd_reset;` alongside the existing `sd_n` GPIO
+      (sound/soc/codecs/wsa883x.c:462).
+  - Centralized assert/deassert helpers
+    - New helpers `wsa883x_reset_assert()` and
+      `wsa883x_reset_deassert()` switch between
+      `reset_control_assert/deassert()` and
+      `gpiod_direction_output(sd_n, 1/0)` depending on whether a reset
+      control is present.
+  - Robust resource acquisition with graceful fallback
+    - New `wsa883x_get_reset()` first tries
+      `devm_reset_control_get_optional_shared(dev, NULL)` and, if none,
+      falls back to the existing `devm_gpiod_get_optional(dev,
+      "powerdown", ...)` path. This keeps old DTs working while enabling
+      shared-reset handling when “resets”/“reset-gpios” is used.
+  - Safer cleanup on errors/unbind
+    - In `wsa883x_probe()`, instead of manually asserting the GPIO only
+      on regmap-init failure (previous code:
+      `gpiod_direction_output(wsa883x->sd_n, 1)` in the error path at
+      sound/soc/codecs/wsa883x.c:1579–1585), the patch calls
+      `wsa883x_reset_deassert(wsa883x)` to bring the device out of
+      reset, then registers `devm_add_action_or_reset(dev,
+      wsa883x_reset_assert, wsa883x)`. This guarantees the reset is
+      asserted on any probe failure or device removal, mirroring the
+      established pattern used in other codecs.
+  - Probe flow changes (localized, low risk)
+    - Replaces the hardwired GPIO bring-up:
+      - Old: acquire `powerdown-gpios` then
+        `gpiod_direction_output(sd_n, 0)` to deassert
+        (sound/soc/codecs/wsa883x.c:1572–1575, 1561–1568).
+      - New: `wsa883x_get_reset()` and `wsa883x_reset_deassert()` with
+        `devm_add_action_or_reset` to ensure deterministic cleanup.
+        Functionally equivalent for non-shared setups, but robust for
+        shared lines.
 
-- Stable policy considerations
-  - Bugfix vs. feature: This is a correctness/reliability fix under
-    IFPC, not a new feature. It eliminates spurious failures where
-    preemption and ring write-pointer updates are dropped due to IFPC-
-    related fencing. No ABI/API changes.
-  - Limited blast radius: Touches only a6xx GPU driver paths; does not
-    alter core DRM or other subsystems.
-  - No architectural overhaul: It adds a helper and swaps a few reg
-    writes; the GMU fence infra it depends on is already present in the
-    driver.
+- Precedent and consistency
+  - The WSA884x codec already uses the same reset-controller-with-
+    fallback pattern (e.g., `sound/soc/codecs/wsa884x.c:1999–2060`),
+    demonstrating the approach is accepted upstream and low risk. This
+    change brings WSA883x in line with WSA884x.
 
-- Potential backport prerequisites
-  - Ensure the target stable tree includes the GMU AHB fence
-    control/range support used by the helper (e.g.,
-    `REG_A6XX_GMU_AHB_FENCE_STATUS`, `REG_A6XX_GMU_AHB_FENCE_RANGE_0`,
-    `REG_A6XX_GMU_AO_AHB_FENCE_CTRL`) and `gmu_poll_timeout()`
-    (`drivers/gpu/drm/msm/adreno/a6xx_gmu.h:169`).
-  - If IFPC is not enabled for specific GPUs in a given stable, this
-    change is effectively a no-op on those platforms and remains safe.
+- Backport risk assessment
+  - Small, contained, and backwards compatible: if no reset controller,
+    code behaves as before with the `powerdown-gpios` line.
+  - No behavioral change to runtime PM/audio paths; only reset/powerdown
+    handling in probe/cleanup is touched.
+  - No dependencies beyond standard reset framework and `reset-gpio`,
+    both present in stable series; the driver already builds with reset
+    APIs (used elsewhere in tree).
+  - Documentation note: current 6.17 binding for WSA883x
+    (`Documentation/devicetree/bindings/sound/qcom,wsa883x.yaml`) lists
+    `powerdown-gpios`, not `reset-gpios`/`resets`. Functionally this is
+    fine (fallback keeps working), but if boards want to use shared
+    reset via reset-gpio, a binding backport (to allow `reset-gpios` or
+    `resets`) may be desirable to avoid dtbs_check warnings. This is
+    documentation-only and does not affect runtime.
 
-Conclusion: This is a contained, low-risk reliability fix for IFPC-
-capable Adreno a6xx/a7xx paths, preventing dropped writes to critical CP
-registers during power-collapsed states. It meets stable backport
-criteria and should be backported.
+- Stable criteria
+  - Fixes a real platform issue (shared reset handling) affecting users.
+  - No new features to the audio path; no architectural refactor.
+  - Very low regression risk, self-contained, and aligns with existing
+    patterns in sibling drivers.
+  - While there is no explicit “Fixes:” or “Cc: stable”, the change
+    clearly improves correctness on affected hardware with minimal
+    impact elsewhere, making it a good stable candidate.
 
- drivers/gpu/drm/msm/adreno/a6xx_gpu.c     | 80 ++++++++++++++++++++++-
- drivers/gpu/drm/msm/adreno/a6xx_gpu.h     |  1 +
- drivers/gpu/drm/msm/adreno/a6xx_preempt.c | 20 +++---
- 3 files changed, 90 insertions(+), 11 deletions(-)
+ sound/soc/codecs/wsa883x.c | 57 ++++++++++++++++++++++++++++++++------
+ 1 file changed, 49 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-index f8992a68df7fb..536da1acf615e 100644
---- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-+++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-@@ -16,6 +16,84 @@
+diff --git a/sound/soc/codecs/wsa883x.c b/sound/soc/codecs/wsa883x.c
+index 188363b03b937..ca4520ade79aa 100644
+--- a/sound/soc/codecs/wsa883x.c
++++ b/sound/soc/codecs/wsa883x.c
+@@ -14,6 +14,7 @@
+ #include <linux/printk.h>
+ #include <linux/regmap.h>
+ #include <linux/regulator/consumer.h>
++#include <linux/reset.h>
+ #include <linux/slab.h>
+ #include <linux/soundwire/sdw.h>
+ #include <linux/soundwire/sdw_registers.h>
+@@ -468,6 +469,7 @@ struct wsa883x_priv {
+ 	struct sdw_stream_runtime *sruntime;
+ 	struct sdw_port_config port_config[WSA883X_MAX_SWR_PORTS];
+ 	struct gpio_desc *sd_n;
++	struct reset_control *sd_reset;
+ 	bool port_prepared[WSA883X_MAX_SWR_PORTS];
+ 	bool port_enable[WSA883X_MAX_SWR_PORTS];
+ 	int active_ports;
+@@ -1546,6 +1548,46 @@ static const struct hwmon_chip_info wsa883x_hwmon_chip_info = {
+ 	.info	= wsa883x_hwmon_info,
+ };
  
- #define GPU_PAS_ID 13
- 
-+static bool fence_status_check(struct msm_gpu *gpu, u32 offset, u32 value, u32 status, u32 mask)
++static void wsa883x_reset_assert(void *data)
 +{
-+	/* Success if !writedropped0/1 */
-+	if (!(status & mask))
-+		return true;
++	struct wsa883x_priv *wsa883x = data;
 +
-+	udelay(10);
-+
-+	/* Try to update fenced register again */
-+	gpu_write(gpu, offset, value);
-+
-+	/* We can't do a posted write here because the power domain could be
-+	 * in collapse state. So use the heaviest barrier instead
-+	 */
-+	mb();
-+	return false;
++	if (wsa883x->sd_reset)
++		reset_control_assert(wsa883x->sd_reset);
++	else
++		gpiod_direction_output(wsa883x->sd_n, 1);
 +}
 +
-+static int fenced_write(struct a6xx_gpu *a6xx_gpu, u32 offset, u32 value, u32 mask)
++static void wsa883x_reset_deassert(struct wsa883x_priv *wsa883x)
 +{
-+	struct adreno_gpu *adreno_gpu = &a6xx_gpu->base;
-+	struct msm_gpu *gpu = &adreno_gpu->base;
-+	struct a6xx_gmu *gmu = &a6xx_gpu->gmu;
-+	u32 status;
++	if (wsa883x->sd_reset)
++		reset_control_deassert(wsa883x->sd_reset);
++	else
++		gpiod_direction_output(wsa883x->sd_n, 0);
++}
 +
-+	gpu_write(gpu, offset, value);
-+
-+	/* Nothing else to be done in the case of no-GMU */
-+	if (adreno_has_gmu_wrapper(adreno_gpu))
-+		return 0;
-+
-+	/* We can't do a posted write here because the power domain could be
-+	 * in collapse state. So use the heaviest barrier instead
++static int wsa883x_get_reset(struct device *dev, struct wsa883x_priv *wsa883x)
++{
++	wsa883x->sd_reset = devm_reset_control_get_optional_shared(dev, NULL);
++	if (IS_ERR(wsa883x->sd_reset))
++		return dev_err_probe(dev, PTR_ERR(wsa883x->sd_reset),
++				     "Failed to get reset\n");
++	/*
++	 * if sd_reset: NULL, so use the backwards compatible way for powerdown-gpios,
++	 * which does not handle sharing GPIO properly.
 +	 */
-+	mb();
-+
-+	if (!gmu_poll_timeout(gmu, REG_A6XX_GMU_AHB_FENCE_STATUS, status,
-+			fence_status_check(gpu, offset, value, status, mask), 0, 1000))
-+		return 0;
-+
-+	/* Try again for another 1ms before failing */
-+	gpu_write(gpu, offset, value);
-+	mb();
-+
-+	if (!gmu_poll_timeout(gmu, REG_A6XX_GMU_AHB_FENCE_STATUS, status,
-+			fence_status_check(gpu, offset, value, status, mask), 0, 1000)) {
-+		/*
-+		 * The 'delay' warning is here because the pause to print this
-+		 * warning will allow gpu to move to power collapse which
-+		 * defeats the purpose of continuous polling for 2 ms
-+		 */
-+		dev_err_ratelimited(gmu->dev, "delay in fenced register write (0x%x)\n",
-+				offset);
-+		return 0;
++	if (!wsa883x->sd_reset) {
++		wsa883x->sd_n = devm_gpiod_get_optional(dev, "powerdown",
++							GPIOD_FLAGS_BIT_NONEXCLUSIVE |
++							GPIOD_OUT_HIGH);
++		if (IS_ERR(wsa883x->sd_n))
++			return dev_err_probe(dev, PTR_ERR(wsa883x->sd_n),
++					     "Shutdown Control GPIO not found\n");
 +	}
 +
-+	dev_err_ratelimited(gmu->dev, "fenced register write (0x%x) fail\n",
-+			offset);
-+
-+	return -ETIMEDOUT;
++	return 0;
 +}
 +
-+int a6xx_fenced_write(struct a6xx_gpu *a6xx_gpu, u32 offset, u64 value, u32 mask, bool is_64b)
-+{
-+	int ret;
+ static int wsa883x_probe(struct sdw_slave *pdev,
+ 			 const struct sdw_device_id *id)
+ {
+@@ -1566,13 +1608,9 @@ static int wsa883x_probe(struct sdw_slave *pdev,
+ 	if (ret)
+ 		return dev_err_probe(dev, ret, "Failed to enable vdd regulator\n");
+ 
+-	wsa883x->sd_n = devm_gpiod_get_optional(dev, "powerdown",
+-						GPIOD_FLAGS_BIT_NONEXCLUSIVE | GPIOD_OUT_HIGH);
+-	if (IS_ERR(wsa883x->sd_n)) {
+-		ret = dev_err_probe(dev, PTR_ERR(wsa883x->sd_n),
+-				    "Shutdown Control GPIO not found\n");
++	ret = wsa883x_get_reset(dev, wsa883x);
++	if (ret)
+ 		goto err;
+-	}
+ 
+ 	dev_set_drvdata(dev, wsa883x);
+ 	wsa883x->slave = pdev;
+@@ -1595,11 +1633,14 @@ static int wsa883x_probe(struct sdw_slave *pdev,
+ 	pdev->prop.simple_clk_stop_capable = true;
+ 	pdev->prop.sink_dpn_prop = wsa_sink_dpn_prop;
+ 	pdev->prop.scp_int1_mask = SDW_SCP_INT1_BUS_CLASH | SDW_SCP_INT1_PARITY;
+-	gpiod_direction_output(wsa883x->sd_n, 0);
 +
-+	ret = fenced_write(a6xx_gpu, offset, lower_32_bits(value), mask);
++	wsa883x_reset_deassert(wsa883x);
++	ret = devm_add_action_or_reset(dev, wsa883x_reset_assert, wsa883x);
 +	if (ret)
 +		return ret;
-+
-+	if (!is_64b)
-+		return 0;
-+
-+	ret = fenced_write(a6xx_gpu, offset + 1, upper_32_bits(value), mask);
-+
-+	return ret;
-+}
-+
- static inline bool _a6xx_check_idle(struct msm_gpu *gpu)
- {
- 	struct adreno_gpu *adreno_gpu = to_adreno_gpu(gpu);
-@@ -86,7 +164,7 @@ static void a6xx_flush(struct msm_gpu *gpu, struct msm_ringbuffer *ring)
- 	/* Update HW if this is the current ring and we are not in preempt*/
- 	if (!a6xx_in_preempt(a6xx_gpu)) {
- 		if (a6xx_gpu->cur_ring == ring)
--			gpu_write(gpu, REG_A6XX_CP_RB_WPTR, wptr);
-+			a6xx_fenced_write(a6xx_gpu, REG_A6XX_CP_RB_WPTR, wptr, BIT(0), false);
- 		else
- 			ring->restore_wptr = true;
- 	} else {
-diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.h b/drivers/gpu/drm/msm/adreno/a6xx_gpu.h
-index 6e71f617fc3d0..e736c59d566b3 100644
---- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.h
-+++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.h
-@@ -295,5 +295,6 @@ int a6xx_gpu_state_put(struct msm_gpu_state *state);
  
- void a6xx_bus_clear_pending_transactions(struct adreno_gpu *adreno_gpu, bool gx_off);
- void a6xx_gpu_sw_reset(struct msm_gpu *gpu, bool assert);
-+int a6xx_fenced_write(struct a6xx_gpu *gpu, u32 offset, u64 value, u32 mask, bool is_64b);
- 
- #endif /* __A6XX_GPU_H__ */
-diff --git a/drivers/gpu/drm/msm/adreno/a6xx_preempt.c b/drivers/gpu/drm/msm/adreno/a6xx_preempt.c
-index 6a12a35dabff1..10625ffbc4cfc 100644
---- a/drivers/gpu/drm/msm/adreno/a6xx_preempt.c
-+++ b/drivers/gpu/drm/msm/adreno/a6xx_preempt.c
-@@ -41,7 +41,7 @@ static inline void set_preempt_state(struct a6xx_gpu *gpu,
- }
- 
- /* Write the most recent wptr for the given ring into the hardware */
--static inline void update_wptr(struct msm_gpu *gpu, struct msm_ringbuffer *ring)
-+static inline void update_wptr(struct a6xx_gpu *a6xx_gpu, struct msm_ringbuffer *ring)
- {
- 	unsigned long flags;
- 	uint32_t wptr;
-@@ -51,7 +51,7 @@ static inline void update_wptr(struct msm_gpu *gpu, struct msm_ringbuffer *ring)
- 	if (ring->restore_wptr) {
- 		wptr = get_wptr(ring);
- 
--		gpu_write(gpu, REG_A6XX_CP_RB_WPTR, wptr);
-+		a6xx_fenced_write(a6xx_gpu, REG_A6XX_CP_RB_WPTR, wptr, BIT(0), false);
- 
- 		ring->restore_wptr = false;
- 	}
-@@ -172,7 +172,7 @@ void a6xx_preempt_irq(struct msm_gpu *gpu)
- 
- 	set_preempt_state(a6xx_gpu, PREEMPT_FINISH);
- 
--	update_wptr(gpu, a6xx_gpu->cur_ring);
-+	update_wptr(a6xx_gpu, a6xx_gpu->cur_ring);
- 
- 	set_preempt_state(a6xx_gpu, PREEMPT_NONE);
- 
-@@ -268,7 +268,7 @@ void a6xx_preempt_trigger(struct msm_gpu *gpu)
- 	 */
- 	if (!ring || (a6xx_gpu->cur_ring == ring)) {
- 		set_preempt_state(a6xx_gpu, PREEMPT_FINISH);
--		update_wptr(gpu, a6xx_gpu->cur_ring);
-+		update_wptr(a6xx_gpu, a6xx_gpu->cur_ring);
- 		set_preempt_state(a6xx_gpu, PREEMPT_NONE);
- 		spin_unlock_irqrestore(&a6xx_gpu->eval_lock, flags);
- 		return;
-@@ -302,13 +302,13 @@ void a6xx_preempt_trigger(struct msm_gpu *gpu)
- 
- 	spin_unlock_irqrestore(&ring->preempt_lock, flags);
- 
--	gpu_write64(gpu,
--		REG_A6XX_CP_CONTEXT_SWITCH_SMMU_INFO,
--		a6xx_gpu->preempt_smmu_iova[ring->id]);
-+	a6xx_fenced_write(a6xx_gpu,
-+		REG_A6XX_CP_CONTEXT_SWITCH_SMMU_INFO, a6xx_gpu->preempt_smmu_iova[ring->id],
-+		BIT(1), true);
- 
--	gpu_write64(gpu,
-+	a6xx_fenced_write(a6xx_gpu,
- 		REG_A6XX_CP_CONTEXT_SWITCH_PRIV_NON_SECURE_RESTORE_ADDR,
--		a6xx_gpu->preempt_iova[ring->id]);
-+		a6xx_gpu->preempt_iova[ring->id], BIT(1), true);
- 
- 	a6xx_gpu->next_ring = ring;
- 
-@@ -328,7 +328,7 @@ void a6xx_preempt_trigger(struct msm_gpu *gpu)
- 	set_preempt_state(a6xx_gpu, PREEMPT_TRIGGERED);
- 
- 	/* Trigger the preemption */
--	gpu_write(gpu, REG_A6XX_CP_CONTEXT_SWITCH_CNTL, cntl);
-+	a6xx_fenced_write(a6xx_gpu, REG_A6XX_CP_CONTEXT_SWITCH_CNTL, cntl, BIT(1), false);
- }
- 
- static int preempt_init_ring(struct a6xx_gpu *a6xx_gpu,
+ 	wsa883x->regmap = devm_regmap_init_sdw(pdev, &wsa883x_regmap_config);
+ 	if (IS_ERR(wsa883x->regmap)) {
+-		gpiod_direction_output(wsa883x->sd_n, 1);
+ 		ret = dev_err_probe(dev, PTR_ERR(wsa883x->regmap),
+ 				    "regmap_init failed\n");
+ 		goto err;
 -- 
 2.51.0
 
