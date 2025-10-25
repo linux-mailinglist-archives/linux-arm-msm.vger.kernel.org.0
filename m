@@ -1,58 +1,59 @@
-Return-Path: <linux-arm-msm+bounces-78789-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-78790-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [IPv6:2605:f480:58:1:0:1994:3:14])
-	by mail.lfdr.de (Postfix) with ESMTPS id 611F2C098FC
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 25 Oct 2025 18:36:20 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 145F2C0993E
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 25 Oct 2025 18:37:55 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id EC48C4F0CAC
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 25 Oct 2025 16:26:26 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id E9A32424066
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 25 Oct 2025 16:30:30 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2F1192641C6;
-	Sat, 25 Oct 2025 16:21:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B478230DD00;
+	Sat, 25 Oct 2025 16:23:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="t0F76UVW"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="WQgzPrfE"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0271313AD3F;
-	Sat, 25 Oct 2025 16:21:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B3262D9784;
+	Sat, 25 Oct 2025 16:23:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761409283; cv=none; b=iWYuw7hGDvfzNF/IJ1X6KvXCcMAZGTqdbWXVz258HJsuLDNMI3Yk5AJSbZXLljlpBtyl7IiWDrJ8rEsJPjqettEbZB4aC0nGn+6LTNx7zvDsL1YGyDQEyvsFlsj2kJCVqpmtsfBsPAGiOH9v2Cis07HLkZyxxABhXDLz77jfULY=
+	t=1761409419; cv=none; b=JtpApIw/WmCyktOGGe7HiUubdkvnCk+qz+H100XcCBssLKC3QSWD0Nf/IqJ3+2IDpUkNdqwWLCnnO5ZB4LqiErfweu7VY+A55SQR+pPODktG2xHFh0Fl3r0gmNR7HSq1WvlZD6/TGEW1nfOkfaWPz19G3AJ7bP4GRRvcjZHBenY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761409283; c=relaxed/simple;
-	bh=EVEwCBOHwD3E+CFJT3PvAv4ES+hDr4wbikh8kpOQngo=;
+	s=arc-20240116; t=1761409419; c=relaxed/simple;
+	bh=w+Yb1zq/T6QaZ+E3dZcl4J0WUk+rco4X4LfmrcEqh/k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=YomJ7t+jvzoHIxATF2nDN+HpxKikX/dLjEmxTSGHO+ktUmAibVwUqz2IVg2O0HRoxf4UJxsdIhTtnFlKok96JoOkjFkDVr9XWKmrAFwpV/4y29M01UVffmjZ0yJwjGVOHeGzHZ36c5DW5L/mnG2vg9slg5EdPLtdLYy2P4n0agw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=t0F76UVW; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E368AC19423;
-	Sat, 25 Oct 2025 16:21:21 +0000 (UTC)
+	 MIME-Version:Content-Type; b=rV1iIzolBhBYBo5j4zHxBU780qCR8rloUSeqtk5TMh5aG53qRy9IZTejVRRbr8yigxD2V6uxhosO6IsdeyYwNTGnO2xBMoFgmaUOv8DqycOGuqYM9K8IOh8m/yHNl0tyn1P9KY0/2d9pdSqzyOAJNGye2TthQCGZ+4vDpDP3YbQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=WQgzPrfE; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17DC4C4CEFB;
+	Sat, 25 Oct 2025 16:23:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1761409282;
-	bh=EVEwCBOHwD3E+CFJT3PvAv4ES+hDr4wbikh8kpOQngo=;
+	s=k20201202; t=1761409419;
+	bh=w+Yb1zq/T6QaZ+E3dZcl4J0WUk+rco4X4LfmrcEqh/k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=t0F76UVWv+rhbtiYRr+ZTQREfpms4CYWPTLMRToUotizaUW93I1oedY+A1/BrJtSl
-	 4GOd3FaxEajogMhzyylHHEWxH+CeViDMUvCbADFZQ2XE8Vrmrt8si4FGRY5NsREbGb
-	 v6lxfCXVyylhAYP3XkWN9dhggEKrx6haNUCiYFOc6ZBl59dQY/qypCZFH8BvmZqwcy
-	 7b6j4cvNK1uGAF/9EDbDMQRsWt9llL2ElH4/VjJjMiNWOd1GHHlV0TU5udISLQedcm
-	 sHvcAfzHDis7lYJP3QbEgFj+iAJd9cgx+ZpSrLGkTut9F8IVSHQtFUCE9z8H3txW2A
-	 iOG9k5h3bi5qw==
+	b=WQgzPrfE9sWXOh4yAcOqcpQHgDoUJqA0m6grExIqwl9+VXCPK4P4zEvE5oT7dcUWo
+	 QkJwuYhbuWlEGVfZWg1pMKNFt0/vtVodJQqddsCY/5yUW6mdnR3tIMrPmSfAPzvGEh
+	 eNNWVN4c+SbBIIAhelwawJ2MuXQs8NXS9UvZOP/sKi0CW4N9paJMrbzZr4MH5Sg6IK
+	 qij5TxRz8cfpWrpzj80FHskJZs504KqLMA5FSF5dU8JU06a6epLDQVraHDUXlNv9ml
+	 Q9TzPROjAaheMY6xq/blmcKBWT4aQCv1lIoOBNjoBYtErVUhFZeR+NXiEPFCNr4dE9
+	 etamquf8MDXeg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Alexey Klimov <alexey.klimov@linaro.org>,
-	Mark Brown <broonie@kernel.org>,
+Cc: Akhil P Oommen <akhilpo@oss.qualcomm.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Rob Clark <robin.clark@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>,
-	srini@kernel.org,
-	linux-sound@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.17-6.1] ASoC: qcom: sc8280xp: explicitly set S16LE format in sc8280xp_be_hw_params_fixup()
-Date: Sat, 25 Oct 2025 11:58:12 -0400
-Message-ID: <20251025160905.3857885-261-sashal@kernel.org>
+	linux-arm-msm@vger.kernel.org,
+	dri-devel@lists.freedesktop.org,
+	freedreno@lists.freedesktop.org
+Subject: [PATCH AUTOSEL 6.17] drm/msm/adreno: Add speedbins for A663 GPU
+Date: Sat, 25 Oct 2025 11:59:07 -0400
+Message-ID: <20251025160905.3857885-316-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251025160905.3857885-1-sashal@kernel.org>
 References: <20251025160905.3857885-1-sashal@kernel.org>
@@ -68,76 +69,87 @@ X-stable-base: Linux 6.17.5
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Alexey Klimov <alexey.klimov@linaro.org>
+From: Akhil P Oommen <akhilpo@oss.qualcomm.com>
 
-[ Upstream commit 9565c9d53c5b440f0dde6fa731a99c1b14d879d2 ]
+[ Upstream commit 0c5300343d0c622f7852145a763c570fbaf68a48 ]
 
-Setting format to s16le is required for compressed playback on compatible
-soundcards.
+Add speedbin mappings for A663 GPU.
 
-Signed-off-by: Alexey Klimov <alexey.klimov@linaro.org>
-Link: https://patch.msgid.link/20250911154340.2798304-1-alexey.klimov@linaro.org
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Akhil P Oommen <akhilpo@oss.qualcomm.com>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Patchwork: https://patchwork.freedesktop.org/patch/670096/
+Signed-off-by: Rob Clark <robin.clark@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-YES – forcing S16LE in the backend fixup is a necessary bug fix and safe
-to carry into stable.
+YES
 
-- `sc8280xp_be_hw_params_fixup()` now applies `snd_mask_set_format(fmt,
-  SNDRV_PCM_FORMAT_S16_LE)` (sound/soc/qcom/sc8280xp.c:92-101) and
-  includes the proper header to access that helper
-  (sound/soc/qcom/sc8280xp.c:10). Without this restriction the BE
-  inherits whatever format the FE negotiated (often S32_LE), so the CDC
-  DMA path tries to run at the wrong width.
-- The hardware side really needs the negotiated width to be 16-bit: the
-  Q6 backend programs `cfg->bit_width = params_width(params);` before
-  starting the CDC DMA port (sound/soc/qcom/qdsp6/q6afe-dai.c:364-366).
-  When the format stays at 32‑bit the DSP refuses to start compressed-
-  playback streams, which is the user-visible failure cited in the
-  commit message.
-- Other Qualcomm soundwire machine drivers already lock their BE formats
-  to S16LE (e.g. sound/soc/qcom/sm8250.c:62-71), so this change simply
-  brings sc8280xp into line with established practice and with the
-  firmware expectations of the WCD/WSA codecs on this platform.
-- The patch is tiny, contained to the machine driver, and has no
-  architectural fallout. It fixes a real regression (compressed playback
-  breaking on supported boards) and does not alter the channel/rate
-  handling beyond what was already enforced, so the regression risk is
-  minimal.
+Why this should be backported
+- Fixes incorrect OPP selection for A663: The change adds `.speedbins`
+  for the A663 entry so the driver can translate hardware fuse values to
+  the correct speed-bin bit used for OPP filtering. Without this
+  mapping, the driver logs “missing support for speed-bin” and falls
+  back to bin 0, which can lead to selecting the wrong OPPs or even no
+  OPPs for some boards. New mapping added at
+  drivers/gpu/drm/msm/adreno/a6xx_catalog.c:1032:
+  - drivers/gpu/drm/msm/adreno/a6xx_catalog.c:1032
+  - drivers/gpu/drm/msm/adreno/a6xx_catalog.c:1033
+  - drivers/gpu/drm/msm/adreno/a6xx_catalog.c:1034
+  - drivers/gpu/drm/msm/adreno/a6xx_catalog.c:1035
+- Directly addresses the code path that depends on speedbins:
+  `a6xx_set_supported_hw()` reads the fuse via `adreno_read_speedbin()`,
+  maps it with `fuse_to_supp_hw()`, and programs the mask via
+  `devm_pm_opp_set_supported_hw()`. If the mapping is missing, it warns
+  and defaults to `BIT(0)`, potentially mismatching the board’s OPP
+  table:
+  - Mapping lookup: drivers/gpu/drm/msm/adreno/a6xx_gpu.c:2483
+  - Missing mapping fallback and OPP mask set:
+    drivers/gpu/drm/msm/adreno/a6xx_gpu.c:2516,
+    drivers/gpu/drm/msm/adreno/a6xx_gpu.c:2523
+- Minimal, data-only change: No architectural changes; it only adds a
+  speedbin table for one GPU ID. The macro and field already exist and
+  are used elsewhere:
+  - Speedbin field docs: drivers/gpu/drm/msm/adreno/adreno_gpu.h:111
+  - Speedbin helper macro: drivers/gpu/drm/msm/adreno/adreno_gpu.h:148
+- User impact: On A663 devices where the fuse reads 113 (now mapped to
+  speedbin 1), the previous default to bin 0 could underclock the GPU or
+  make the OPP table unusable if the DT only defines bin-1 OPPs. This
+  change ensures correct and safe OPP filtering for real hardware
+  configurations.
+- Stable criteria fit: Important functional fix for existing hardware;
+  small, isolated change; no new features; low regression risk; limited
+  to the msm/adreno driver.
 
-Given the clear user impact, alignment with existing platforms, and the
-low risk of the change, it should be backported to stable kernels that
-carry the sc8280xp machine driver.
+Risk and scope
+- Scope: Only the A663 GPU entry is touched, mapping fuses `{0,0}`,
+  `{169,0}`, `{113,1}`. Devices with fuse 169 see no behavioral change
+  versus fallback; devices with fuse 113 now correctly use bin 1 instead
+  of incorrectly defaulting to bin 0.
+- Regression risk: Very low. The OPP filter machinery and speedbin
+  infrastructure are already in place. This commit simply supplies the
+  missing mapping data for one GPU variant.
 
- sound/soc/qcom/sc8280xp.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/gpu/drm/msm/adreno/a6xx_catalog.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/sound/soc/qcom/sc8280xp.c b/sound/soc/qcom/sc8280xp.c
-index 6847ae4acbd18..78e327bc2f077 100644
---- a/sound/soc/qcom/sc8280xp.c
-+++ b/sound/soc/qcom/sc8280xp.c
-@@ -7,6 +7,7 @@
- #include <sound/soc.h>
- #include <sound/soc-dapm.h>
- #include <sound/pcm.h>
-+#include <sound/pcm_params.h>
- #include <linux/soundwire/sdw.h>
- #include <sound/jack.h>
- #include <linux/input-event-codes.h>
-@@ -86,8 +87,10 @@ static int sc8280xp_be_hw_params_fixup(struct snd_soc_pcm_runtime *rtd,
- 					SNDRV_PCM_HW_PARAM_RATE);
- 	struct snd_interval *channels = hw_param_interval(params,
- 					SNDRV_PCM_HW_PARAM_CHANNELS);
-+	struct snd_mask *fmt = hw_param_mask(params, SNDRV_PCM_HW_PARAM_FORMAT);
- 
- 	rate->min = rate->max = 48000;
-+	snd_mask_set_format(fmt, SNDRV_PCM_FORMAT_S16_LE);
- 	channels->min = 2;
- 	channels->max = 2;
- 	switch (cpu_dai->id) {
+diff --git a/drivers/gpu/drm/msm/adreno/a6xx_catalog.c b/drivers/gpu/drm/msm/adreno/a6xx_catalog.c
+index 00e1afd46b815..2b1c41f6cfeee 100644
+--- a/drivers/gpu/drm/msm/adreno/a6xx_catalog.c
++++ b/drivers/gpu/drm/msm/adreno/a6xx_catalog.c
+@@ -1024,6 +1024,11 @@ static const struct adreno_info a6xx_gpus[] = {
+ 			.gmu_cgc_mode = 0x00020200,
+ 			.prim_fifo_threshold = 0x00300200,
+ 		},
++		.speedbins = ADRENO_SPEEDBINS(
++			{ 0,   0 },
++			{ 169, 0 },
++			{ 113, 1 },
++		),
+ 	}, {
+ 		.chip_ids = ADRENO_CHIP_IDS(0x06030500),
+ 		.family = ADRENO_6XX_GEN4,
 -- 
 2.51.0
 
