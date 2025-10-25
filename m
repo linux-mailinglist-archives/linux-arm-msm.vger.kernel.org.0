@@ -1,62 +1,61 @@
-Return-Path: <linux-arm-msm+bounces-78780-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-78781-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id E8E6AC092D0
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 25 Oct 2025 18:09:24 +0200 (CEST)
+Received: from ams.mirrors.kernel.org (ams.mirrors.kernel.org [IPv6:2a01:60a::1994:3:14])
+	by mail.lfdr.de (Postfix) with ESMTPS id 00D6EC092FA
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 25 Oct 2025 18:09:56 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 1FF8F3B6010
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 25 Oct 2025 16:09:12 +0000 (UTC)
+	by ams.mirrors.kernel.org (Postfix) with ESMTPS id 758C734D2E7
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 25 Oct 2025 16:09:56 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3CA57301703;
-	Sat, 25 Oct 2025 16:09:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 30928304BDC;
+	Sat, 25 Oct 2025 16:09:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="bGJQys4J"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="qi3c8lNP"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D8313009C3;
-	Sat, 25 Oct 2025 16:09:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7759304BD5;
+	Sat, 25 Oct 2025 16:09:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761408550; cv=none; b=l1Icu4b5txEph6EC5ExVZYrZcKKtXdBuyg8d9pyWU92VsIW3xS8zhmMs8y/+lU6MQFD6lzw5pSmUaDCxuJn4gidXnV1U0Tmgauhbm9dIGcIsPT1BCJRmt3mLls/L6kz9oOEjDtX5wNjMuZBpsOubDo6wJ9A/zOwl1g12iMdx3Hs=
+	t=1761408558; cv=none; b=ILeUZO8ZjnzfUR/ByxFmhE+PFugttjHqL/KVS5ymk2lT1Sanz6psmzNIHsdUJvIlsNhJdHhx0xMzzxX4FNVLH6+p5DDUXBP/njrRU5P6N/9+yCXizLuq87yXjKCvMUNIac+97RXTJrhbasOqVKstitJBNyh2RvnuUz5bE1fiIWU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761408550; c=relaxed/simple;
-	bh=xiZnHE4a0Tuy8f8zhG4xwga0jp+aRPCvNabDrksZmp8=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=o4J+/AvZnSj45c0m4O2z+C2eQq3tBwdRZs30/u8Rb7HMVeEVOpbjNVwODJYTUA18dgqOeZxFvEu74pVhl2vCyIodhpZ+g9J95INa0coK4pdvr62qrQqz37xbcq+At8SLEPL+fpB7OLiXmAsbDst3dJSEOkLICydhrR9Ak5puayw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=bGJQys4J; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 04E29C4CEF5;
-	Sat, 25 Oct 2025 16:09:06 +0000 (UTC)
+	s=arc-20240116; t=1761408558; c=relaxed/simple;
+	bh=Kj9CyqIl6bx7QyHTIuFylRaD3S93OlCZnDP02NYM0XM=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=ih+pTxqjeiBXbDHbtKA+jd4B0Oh9zj0dyu+NnP+f6WCQEIKrny6njifxrTy/8x7ZdVixdxgqD1J7cy5wljmMPgBkHho3/UwOsdLyhIhDTmrnbCCc+CkmvBijbsK+cOMw2YrX5ygk9skwogdxxKIQTsbOq5YtZa5H4QZ12C3mLek=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=qi3c8lNP; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E02E0C113D0;
+	Sat, 25 Oct 2025 16:09:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1761408548;
-	bh=xiZnHE4a0Tuy8f8zhG4xwga0jp+aRPCvNabDrksZmp8=;
-	h=From:To:Cc:Subject:Date:From;
-	b=bGJQys4JyGxqEjKjYdgfAUrC8+WVGVxrDQqBKEXkpC0sgVlMw1kk6Orb5mZZmgaDO
-	 vbkFCEWA0e7QjlL1vFgVg1CrTFa7WMH73SKDKQbV/3yemc7mF2hjooYoZpU1H/jUuV
-	 JtEi62ucvqAt+VEMKm+CBqtuy3sFXNoc6GHT6YTX7qgai4jrW7zVMyQIXQ4mbviCq5
-	 p8KKLEneGAnTZyvEUMvkdFFJevu7c4h40Bd6aJr8RD2k00UsqqNtFK3QI/BPmsIiky
-	 P5yqcSSD08ssUQHyAw0SXWUaoKbV8jD1OmRmGYL4E3NzswBLCyanHiiYfujQZ7Cwgv
-	 jlBYGhZx55l3A==
+	s=k20201202; t=1761408557;
+	bh=Kj9CyqIl6bx7QyHTIuFylRaD3S93OlCZnDP02NYM0XM=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=qi3c8lNP7iXgsOybxTlplDHu1buo6IO8CNvbGUnAl3Fxd2EUZy69QsIsmNZ+vRAEI
+	 OKyXNizTLnpq/2GEpn1srpJx2GlpI47rNsrDBaj3VgZl2XUOmJ3cTaM5SCKKD5X5Ee
+	 kVIv3k6D2yBR8mo7SEWOviWkZMGTXrRiYnwRy9ZiohCfnG6ulWH6CaSM1wyf9gmrBK
+	 xd31o8+UZP8yw0FJZ/ID0aokjPSApI2CiCHDOrRidfGjajyUfuL1t7zLB7XvXU9hPO
+	 2TrbdT+6H9QJtTnRUiaIJU074rkyiO4dg31EHKe5s+rJ+8ZzFxRNFYEVe/ds1aBC1F
+	 Y1gtuEgygpWoQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Viken Dadhaniya <viken.dadhaniya@oss.qualcomm.com>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+Cc: Akhil P Oommen <akhilpo@oss.qualcomm.com>,
+	Rob Clark <robin.clark@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>,
-	quic_ptalari@quicinc.com,
-	bryan.odonoghue@linaro.org,
-	quic_zongjian@quicinc.com,
-	krzysztof.kozlowski@linaro.org,
-	quic_jseerapu@quicinc.com,
-	alexandre.f.demers@gmail.com,
-	linux-arm-msm@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.17] serial: qcom-geni: Add DFS clock mode support to GENI UART driver
-Date: Sat, 25 Oct 2025 11:53:52 -0400
-Message-ID: <20251025160905.3857885-1-sashal@kernel.org>
+	linux-arm-msm@vger.kernel.org,
+	dri-devel@lists.freedesktop.org,
+	freedreno@lists.freedesktop.org
+Subject: [PATCH AUTOSEL 6.17] drm/msm/a6xx: Switch to GMU AO counter
+Date: Sat, 25 Oct 2025 11:53:58 -0400
+Message-ID: <20251025160905.3857885-7-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
+In-Reply-To: <20251025160905.3857885-1-sashal@kernel.org>
+References: <20251025160905.3857885-1-sashal@kernel.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -69,27 +68,17 @@ X-stable-base: Linux 6.17.5
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Viken Dadhaniya <viken.dadhaniya@oss.qualcomm.com>
+From: Akhil P Oommen <akhilpo@oss.qualcomm.com>
 
-[ Upstream commit fc6a5b540c02d1ec624e4599f45a17f2941a5c00 ]
+[ Upstream commit f195421318bd00151b3a111af6f315a25c3438a8 ]
 
-GENI UART driver currently supports only non-DFS (Dynamic Frequency
-Scaling) mode for source frequency selection. However, to operate correctly
-in DFS mode, the GENI SCLK register must be programmed with the appropriate
-DFS index. Failing to do so can result in incorrect frequency selection
+CP_ALWAYS_ON counter falls under GX domain which is collapsed during
+IFPC. So switch to GMU_ALWAYS_ON counter for any CPU reads since it is
+not impacted by IFPC. Both counters are clocked by same xo clock source.
 
-Add support for Dynamic Frequency Scaling (DFS) mode in the GENI UART
-driver by configuring the GENI_CLK_SEL register with the appropriate DFS
-index. This ensures correct frequency selection when operating in DFS mode.
-
-Replace the UART driver-specific logic for clock selection with the GENI
-common driver function to obtain the desired frequency and corresponding
-clock index. This improves maintainability and consistency across
-GENI-based drivers.
-
-Signed-off-by: Viken Dadhaniya <viken.dadhaniya@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20250903063136.3015237-1-viken.dadhaniya@oss.qualcomm.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Akhil P Oommen <akhilpo@oss.qualcomm.com>
+Patchwork: https://patchwork.freedesktop.org/patch/673373/
+Signed-off-by: Rob Clark <robin.clark@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
@@ -97,205 +86,145 @@ LLM Generated explanations, may be completely bogus:
 
 YES
 
-- Fixes a real bug in DFS mode: The UART driver previously never
-  programmed the GENI DFS clock selection register, so on platforms
-  where the GENI core clock runs in Dynamic Frequency Scaling (DFS)
-  mode, UART could pick the wrong source clock and thus the wrong baud.
-  This change explicitly programs the DFS index so the selected source
-  frequency matches the computed divider.
-  - New write of the DFS index to the hardware register:
-    drivers/tty/serial/qcom_geni_serial.c:1306
-  - DFS clock select register and mask exist in the common header:
-    include/linux/soc/qcom/geni-se.h:85, include/linux/soc/qcom/geni-
-    se.h:145
+- Problem fixed
+  - The CP_ALWAYS_ON counter lives in the GPU GX power domain and
+    stops/gets reset during IFPC (inter‑frame power collapse). This
+    makes CPU-side reads unreliable or forces the driver to wake the GX
+    domain just to read a timestamp, which is fragile and power-
+    inefficient.
+  - The commit switches CPU reads to the GMU AO (always-on) counter,
+    which is not impacted by IFPC and is clocked from the same XO clock,
+    preserving timing semantics.
 
-- Uses the common GENI clock-matching helper instead of ad‑hoc logic:
-  The patch replaces driver-local clock rounding/tolerance code with the
-  GENI core’s frequency matching routine, ensuring consistent clock
-  selection across GENI-based drivers and improving maintainability.
-  - New source frequency selection via common helper:
-    drivers/tty/serial/qcom_geni_serial.c:1270
-  - Common helper is present and exported in the GENI core:
-    drivers/soc/qcom/qcom-geni-se.c:720
+- What changed
+  - Added a safe 64-bit read helper for the GMU AO counter with a hi-lo-
+    hi read to avoid torn reads:
+    drivers/gpu/drm/msm/adreno/a6xx_gpu.c:19
+    - Reads `REG_A6XX_GMU_ALWAYS_ON_COUNTER_{H,L}` via `gmu_read()` and
+      rechecks the high word to ensure atomicity.
+  - Replaced CP counter reads in CPU-side tracepoints:
+    - a6xx_submit now traces with GMU AO:
+      drivers/gpu/drm/msm/adreno/a6xx_gpu.c:392
+    - a7xx_submit now traces with GMU AO:
+      drivers/gpu/drm/msm/adreno/a6xx_gpu.c:592
+  - Simplified timestamp retrieval to avoid waking GX or using OOB
+    votes:
+    - a6xx_gmu_get_timestamp now returns the GMU AO counter directly:
+      drivers/gpu/drm/msm/adreno/a6xx_gpu.c:2314
+    - This removes previous lock/OOB sequences to temporarily block IFPC
+      just to read `REG_A6XX_CP_ALWAYS_ON_COUNTER`.
+  - Importantly, GPU-side emissions that snapshot the CP always-on
+    counter via CP_REG_TO_MEM remain unchanged (they run when the GPU is
+    active and safe): for example the stats reads in submit paths still
+    use `REG_A6XX_CP_ALWAYS_ON_COUNTER` (e.g.,
+    drivers/gpu/drm/msm/adreno/a6xx_gpu.c:372-375).
 
-- Maintains existing divisor programming and adds a safety check: The
-  driver still computes and programs the serial clock divider, now with
-  a guard to avoid overflow of the divider field.
-  - Divider computation and range check:
-    drivers/tty/serial/qcom_geni_serial.c:1277,
-    drivers/tty/serial/qcom_geni_serial.c:1279
-  - Divider write to both M/S clock cfg registers remains as before:
-    drivers/tty/serial/qcom_geni_serial.c:1303,
-    drivers/tty/serial/qcom_geni_serial.c:1304
+- Why this is a good stable candidate
+  - Real bug impact: CPU reads of CP_ALWAYS_ON during IFPC can be stale,
+    zero, or require disruptive OOB votes that wake the domain; this can
+    cause incorrect timestamps (MSM_PARAM_TIMESTAMP), spurious power-
+    ups, and trace anomalies. Moving to GMU AO fixes this by design.
+  - Small, contained, and low risk:
+    - All changes are local to the MSM Adreno a6xx/a7xx driver and a
+      single source file.
+    - No ABI or feature changes; only the source of the timestamp for
+      CPU reads changes.
+    - The helper uses a standard hi-lo-hi pattern to ensure a correct
+      64-bit read.
+    - The GMU AO counter is already described in the hardware XML and
+      used elsewhere (e.g., other GMU counters), and the driver already
+      depends on GMU MMIO.
+  - Maintains timing consistency:
+    - Both CP_ALWAYS_ON and GMU_ALWAYS_ON are clocked from XO (19.2
+      MHz); userspace semantics are preserved. See the driver also
+      treating GMU counters as 19.2 MHz (e.g.,
+      drivers/gpu/drm/msm/adreno/a6xx_gpu.c:2361-2369).
 
-- Consistency with other GENI drivers already using DFS index
-  programming: Other GENI protocol drivers (e.g., SPI) already program
-  `SE_GENI_CLK_SEL` with the index returned by the common helper, so
-  this change aligns UART with established practice and reduces risk.
-  - SPI uses the same pattern: drivers/spi/spi-geni-qcom.c:383,
-    drivers/spi/spi-geni-qcom.c:385–386
+- Side effects and regressions
+  - Positive: avoids GMU OOB perfcounter votes and GMU lock/handshake
+    just to read a timestamp, reducing the chance of deadlocks or long-
+    latency paths during IFPC.
+  - No architectural changes; no changes to command submission ordering
+    or power sequencing.
+  - Tracepoints now log the GMU AO value; this improves reliability
+    during IFPC without affecting functionality.
 
-- Small, contained, and low-risk:
-  - Touches a single driver file with a localized change in clock setup.
-  - No ABI or architectural changes; relies on existing GENI core
-    helpers and headers.
-  - Additional register write is standard and used by other GENI
-    drivers; masks index with `CLK_SEL_MSK`
-    (include/linux/soc/qcom/geni-se.h:145) for safety.
-  - Includes defensive error handling if no matching clock level is
-    found and a divider overflow guard
-    (drivers/tty/serial/qcom_geni_serial.c:1271–1275,
-    drivers/tty/serial/qcom_geni_serial.c:1279–1281).
+- Dependencies present
+  - `gmu_read()` and the `REG_A6XX_GMU_ALWAYS_ON_COUNTER_{H,L}` macros
+    are already in-tree (drivers/gpu/drm/msm/adreno/a6xx_gmu.h:122 and
+    drivers/gpu/drm/msm/registers/adreno/a6xx_gmu.xml:131-132).
+  - The patch updates only `drivers/gpu/drm/msm/adreno/a6xx_gpu.c`, and
+    aligns with existing GMU usage patterns.
 
-- User impact: Without this, UART on DFS-enabled platforms can run at an
-  incorrect baud, causing broken serial communication (including
-  console). The fix directly addresses that functional issue.
+Conclusion: This is a targeted, safe bug fix that improves timestamp
+reliability and avoids unnecessary power domain manipulations during
+IFPC. It meets stable backport criteria.
 
-- Stable backport criteria:
-  - Fixes an important, user-visible bug (incorrect baud under DFS).
-  - Minimal and self-contained change, no new features or interfaces.
-  - Leverages existing, widely used GENI core APIs already present in
-    stable series.
+ drivers/gpu/drm/msm/adreno/a6xx_gpu.c | 30 ++++++++++++++-------------
+ 1 file changed, 16 insertions(+), 14 deletions(-)
 
-Note: One minor nit in the debug print includes an extra newline before
-`clk_idx`, but it’s harmless and does not affect functionality
-(drivers/tty/serial/qcom_geni_serial.c:1284).
-
- drivers/tty/serial/qcom_geni_serial.c | 92 ++++++---------------------
- 1 file changed, 21 insertions(+), 71 deletions(-)
-
-diff --git a/drivers/tty/serial/qcom_geni_serial.c b/drivers/tty/serial/qcom_geni_serial.c
-index 81f385d900d06..ff401e331f1bb 100644
---- a/drivers/tty/serial/qcom_geni_serial.c
-+++ b/drivers/tty/serial/qcom_geni_serial.c
-@@ -1,5 +1,8 @@
- // SPDX-License-Identifier: GPL-2.0
--// Copyright (c) 2017-2018, The Linux foundation. All rights reserved.
-+/*
-+ * Copyright (c) 2017-2018, The Linux foundation. All rights reserved.
-+ * Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
-+ */
+diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+index 536da1acf615e..1e363af319488 100644
+--- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
++++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+@@ -16,6 +16,19 @@
  
- /* Disable MMIO tracing to prevent excessive logging of unwanted MMIO traces */
- #define __DISABLE_TRACE_MMIO__
-@@ -1253,75 +1256,15 @@ static int qcom_geni_serial_startup(struct uart_port *uport)
- 	return 0;
- }
+ #define GPU_PAS_ID 13
  
--static unsigned long find_clk_rate_in_tol(struct clk *clk, unsigned int desired_clk,
--			unsigned int *clk_div, unsigned int percent_tol)
--{
--	unsigned long freq;
--	unsigned long div, maxdiv;
--	u64 mult;
--	unsigned long offset, abs_tol, achieved;
--
--	abs_tol = div_u64((u64)desired_clk * percent_tol, 100);
--	maxdiv = CLK_DIV_MSK >> CLK_DIV_SHFT;
--	div = 1;
--	while (div <= maxdiv) {
--		mult = (u64)div * desired_clk;
--		if (mult != (unsigned long)mult)
--			break;
--
--		offset = div * abs_tol;
--		freq = clk_round_rate(clk, mult - offset);
--
--		/* Can only get lower if we're done */
--		if (freq < mult - offset)
--			break;
--
--		/*
--		 * Re-calculate div in case rounding skipped rates but we
--		 * ended up at a good one, then check for a match.
--		 */
--		div = DIV_ROUND_CLOSEST(freq, desired_clk);
--		achieved = DIV_ROUND_CLOSEST(freq, div);
--		if (achieved <= desired_clk + abs_tol &&
--		    achieved >= desired_clk - abs_tol) {
--			*clk_div = div;
--			return freq;
--		}
--
--		div = DIV_ROUND_UP(freq, desired_clk);
--	}
--
--	return 0;
--}
--
--static unsigned long get_clk_div_rate(struct clk *clk, unsigned int baud,
--			unsigned int sampling_rate, unsigned int *clk_div)
--{
--	unsigned long ser_clk;
--	unsigned long desired_clk;
--
--	desired_clk = baud * sampling_rate;
--	if (!desired_clk)
--		return 0;
--
--	/*
--	 * try to find a clock rate within 2% tolerance, then within 5%
--	 */
--	ser_clk = find_clk_rate_in_tol(clk, desired_clk, clk_div, 2);
--	if (!ser_clk)
--		ser_clk = find_clk_rate_in_tol(clk, desired_clk, clk_div, 5);
--
--	return ser_clk;
--}
--
- static int geni_serial_set_rate(struct uart_port *uport, unsigned int baud)
- {
- 	struct qcom_geni_serial_port *port = to_dev_port(uport);
- 	unsigned long clk_rate;
--	unsigned int avg_bw_core;
-+	unsigned int avg_bw_core, clk_idx;
- 	unsigned int clk_div;
- 	u32 ver, sampling_rate;
- 	u32 ser_clk_cfg;
-+	int ret;
- 
- 	sampling_rate = UART_OVERSAMPLING;
- 	/* Sampling rate is halved for IP versions >= 2.5 */
-@@ -1329,17 +1272,22 @@ static int geni_serial_set_rate(struct uart_port *uport, unsigned int baud)
- 	if (ver >= QUP_SE_VERSION_2_5)
- 		sampling_rate /= 2;
- 
--	clk_rate = get_clk_div_rate(port->se.clk, baud,
--		sampling_rate, &clk_div);
--	if (!clk_rate) {
--		dev_err(port->se.dev,
--			"Couldn't find suitable clock rate for %u\n",
--			baud * sampling_rate);
-+	ret = geni_se_clk_freq_match(&port->se, baud * sampling_rate, &clk_idx, &clk_rate, false);
-+	if (ret) {
-+		dev_err(port->se.dev, "Failed to find src clk for baud rate: %d ret: %d\n",
-+			baud, ret);
-+		return ret;
-+	}
++static u64 read_gmu_ao_counter(struct a6xx_gpu *a6xx_gpu)
++{
++	u64 count_hi, count_lo, temp;
 +
-+	clk_div = DIV_ROUND_UP(clk_rate, baud * sampling_rate);
-+	/* Check if calculated divider exceeds maximum allowed value */
-+	if (clk_div > (CLK_DIV_MSK >> CLK_DIV_SHFT)) {
-+		dev_err(port->se.dev, "Calculated clock divider %u exceeds maximum\n", clk_div);
- 		return -EINVAL;
++	do {
++		count_hi = gmu_read(&a6xx_gpu->gmu, REG_A6XX_GMU_ALWAYS_ON_COUNTER_H);
++		count_lo = gmu_read(&a6xx_gpu->gmu, REG_A6XX_GMU_ALWAYS_ON_COUNTER_L);
++		temp = gmu_read(&a6xx_gpu->gmu, REG_A6XX_GMU_ALWAYS_ON_COUNTER_H);
++	} while (unlikely(count_hi != temp));
++
++	return (count_hi << 32) | count_lo;
++}
++
+ static bool fence_status_check(struct msm_gpu *gpu, u32 offset, u32 value, u32 status, u32 mask)
+ {
+ 	/* Success if !writedropped0/1 */
+@@ -376,8 +389,7 @@ static void a6xx_submit(struct msm_gpu *gpu, struct msm_gem_submit *submit)
+ 	OUT_RING(ring, upper_32_bits(rbmemptr(ring, fence)));
+ 	OUT_RING(ring, submit->seqno);
+ 
+-	trace_msm_gpu_submit_flush(submit,
+-		gpu_read64(gpu, REG_A6XX_CP_ALWAYS_ON_COUNTER));
++	trace_msm_gpu_submit_flush(submit, read_gmu_ao_counter(a6xx_gpu));
+ 
+ 	a6xx_flush(gpu, ring);
+ }
+@@ -577,8 +589,7 @@ static void a7xx_submit(struct msm_gpu *gpu, struct msm_gem_submit *submit)
  	}
  
--	dev_dbg(port->se.dev, "desired_rate = %u, clk_rate = %lu, clk_div = %u\n",
--			baud * sampling_rate, clk_rate, clk_div);
-+	dev_dbg(port->se.dev, "desired_rate = %u, clk_rate = %lu, clk_div = %u\n, clk_idx = %u\n",
-+		baud * sampling_rate, clk_rate, clk_div, clk_idx);
  
- 	uport->uartclk = clk_rate;
- 	port->clk_rate = clk_rate;
-@@ -1359,6 +1307,8 @@ static int geni_serial_set_rate(struct uart_port *uport, unsigned int baud)
+-	trace_msm_gpu_submit_flush(submit,
+-		gpu_read64(gpu, REG_A6XX_CP_ALWAYS_ON_COUNTER));
++	trace_msm_gpu_submit_flush(submit, read_gmu_ao_counter(a6xx_gpu));
  
- 	writel(ser_clk_cfg, uport->membase + GENI_SER_M_CLK_CFG);
- 	writel(ser_clk_cfg, uport->membase + GENI_SER_S_CLK_CFG);
-+	/* Configure clock selection register with the selected clock index */
-+	writel(clk_idx & CLK_SEL_MSK, uport->membase + SE_GENI_CLK_SEL);
+ 	a6xx_flush(gpu, ring);
+ 
+@@ -2260,16 +2271,7 @@ static int a6xx_gmu_get_timestamp(struct msm_gpu *gpu, uint64_t *value)
+ 	struct adreno_gpu *adreno_gpu = to_adreno_gpu(gpu);
+ 	struct a6xx_gpu *a6xx_gpu = to_a6xx_gpu(adreno_gpu);
+ 
+-	mutex_lock(&a6xx_gpu->gmu.lock);
+-
+-	/* Force the GPU power on so we can read this register */
+-	a6xx_gmu_set_oob(&a6xx_gpu->gmu, GMU_OOB_PERFCOUNTER_SET);
+-
+-	*value = gpu_read64(gpu, REG_A6XX_CP_ALWAYS_ON_COUNTER);
+-
+-	a6xx_gmu_clear_oob(&a6xx_gpu->gmu, GMU_OOB_PERFCOUNTER_SET);
+-
+-	mutex_unlock(&a6xx_gpu->gmu.lock);
++	*value = read_gmu_ao_counter(a6xx_gpu);
+ 
  	return 0;
  }
- 
 -- 
 2.51.0
 
