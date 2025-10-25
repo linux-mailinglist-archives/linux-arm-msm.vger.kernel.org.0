@@ -1,59 +1,59 @@
-Return-Path: <linux-arm-msm+bounces-78792-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-78793-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [IPv6:2605:f480:58:1:0:1994:3:14])
-	by mail.lfdr.de (Postfix) with ESMTPS id C0159C09A13
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 25 Oct 2025 18:42:09 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 98EE9C09AC2
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 25 Oct 2025 18:44:46 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 2D72956082F
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 25 Oct 2025 16:33:06 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id B0AF4580E29
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 25 Oct 2025 16:35:13 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A5D2C3081A9;
-	Sat, 25 Oct 2025 16:25:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0248531A546;
+	Sat, 25 Oct 2025 16:26:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="QQluQAB0"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ILoUSIvy"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A6412264D4;
-	Sat, 25 Oct 2025 16:25:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC1B331A07F;
+	Sat, 25 Oct 2025 16:26:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761409550; cv=none; b=DN8CGWLpGJeuuoJN2UJPHYCmz5adZGRVRpeNzvBA9Rte0rADH2Txa6k751y0NQo3/x3ixFiLrA1YfkOHliMRn45XJw8UhgQTaV67OTowBeQ6wyrI5Um9Bhap/cK8S2r5wDVI3cCZCHjex6pcWmZWV5oflGL4nB/rBdj/RE/22fY=
+	t=1761409606; cv=none; b=ZAY3CoxZ2zbfvt+00vtVep08GraInDQWKPZwIe0Ne9buGYuIM7U83dqQZ69378jkP5897vPtIxjvRfXh1hHxw0+WtvTyps5hWDmaARLb34jrsMpf0mWnNdAQ/traQqyFfsHeTw8OluEPY76EE2H8jLfCXDP2ffFbmd7xTaF+psE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761409550; c=relaxed/simple;
-	bh=/gMUlsevWP/kkCEbCOP7wyQ5geAlAwNaZlR4K/9Ax48=;
+	s=arc-20240116; t=1761409606; c=relaxed/simple;
+	bh=0OZHReyP13vsx4ci+6B/OmcZCKP/5tUOKvKDRHGfo+s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=X0vfkH4B6SOIg0wDM6J/PJ6BCVhRcIlz8TLyEaC4BbFD5U0Z2425NITg5DA5DWN1kiUeHzc1TK9dpqsOi/Uwa+QxJqOb+gskutS3rbPcLkkBbvcfOuLpKRrVbo7pXsSaHvcc2XN5e7izzI4tVuP3Wj4/2kFdgXLLJawLtMIQR1A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=QQluQAB0; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 224D1C4CEF5;
-	Sat, 25 Oct 2025 16:25:48 +0000 (UTC)
+	 MIME-Version:Content-Type; b=Le4gBo2C2Vy8JB2cGYZtx3OBB79FTg7IO9fzOqujVxHcHePURNGNYbRPs2sqxpq6uGpyp4Q+uDPmK7AmrrIBDlHNVMPvx5f6F0/UHgS/EbCsQe9pXvVACveogtB6JzygS18WWWUPH7vfpSLAUHan/OVNwWOczzGQk/+t4r3kHJc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ILoUSIvy; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1971C4CEFB;
+	Sat, 25 Oct 2025 16:26:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1761409549;
-	bh=/gMUlsevWP/kkCEbCOP7wyQ5geAlAwNaZlR4K/9Ax48=;
+	s=k20201202; t=1761409606;
+	bh=0OZHReyP13vsx4ci+6B/OmcZCKP/5tUOKvKDRHGfo+s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QQluQAB0A9aUiAbnBLmwr7WN2TvXO3cJR+UyNzwGFvVw2tnmaqil8a8eBjZxOWaU/
-	 SZXd+pWEWAycxIzZQCJYu6OAkHhEZqDLlKNOAlEL1ZuzxAPbr5kfp4Fc27Yhah2OyR
-	 rU+ey43mzS5xz8FBumIJuvW2YJqpaHS82HD4f8PSIdHLJgucFpH8vtyL2l0d4lpa8A
-	 +huNDNhbIt1B8v8HXDknbzIPlxDAmyVz9seei6EUDuWVkn8jm4fz6+SouTEa3lt6G5
-	 7QTeRumkpCafHGq10NrS85OLcpLD6blJFxVSgkJe/f+EMKzHPa5hYF5O4rQj2j2gSd
-	 fLB3IfNl9vCkQ==
+	b=ILoUSIvyc2xBZnNhDRWvrmK78iTJVrol3s8XafbbSVUADbBW5N1s/WZkl+eZU/1CB
+	 6EW5SvCl0vp6M8dgS35oAZhN7cE5BKeCWwEJ5xXqD1LrZDCr7UMDr7xpRbyD/4zLQ1
+	 Zq2ld8J/nu590IUNhiYZWgNiBpq3xMsCt4lWiwZy0/3VC1nW7FUa2+SFe0uPHS89Yd
+	 L2sQ9OPKnRBTGg9y+AM9ksfL8zfTMhxHDCanytKLKjIHrJxZZyUdGv0fnSMzVxca78
+	 GxzZWcZZQRjCgPLpKUnEAoBU3bygEx6qMMW7r9Ljp0xnak5opU0MRZLxTQBa5cphyX
+	 GOISd/HcJDLSg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: "Rob Herring (Arm)" <robh@kernel.org>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+Cc: Rob Clark <robin.clark@oss.qualcomm.com>,
+	Connor Abbott <cwabbott0@gmail.com>,
 	Sasha Levin <sashal@kernel.org>,
-	robin.clark@oss.qualcomm.com,
+	lumag@kernel.org,
 	linux-arm-msm@vger.kernel.org,
 	dri-devel@lists.freedesktop.org,
 	freedreno@lists.freedesktop.org
-Subject: [PATCH AUTOSEL 6.17] drm/msm: Use of_reserved_mem_region_to_resource() for "memory-region"
-Date: Sat, 25 Oct 2025 11:59:51 -0400
-Message-ID: <20251025160905.3857885-360-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.17] drm/msm: Fix 32b size truncation
+Date: Sat, 25 Oct 2025 12:00:20 -0400
+Message-ID: <20251025160905.3857885-389-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251025160905.3857885-1-sashal@kernel.org>
 References: <20251025160905.3857885-1-sashal@kernel.org>
@@ -69,22 +69,17 @@ X-stable-base: Linux 6.17.5
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: "Rob Herring (Arm)" <robh@kernel.org>
+From: Rob Clark <robin.clark@oss.qualcomm.com>
 
-[ Upstream commit fb53e8f09fc1e1a343fd08ea4f353f81613975d7 ]
+[ Upstream commit 6d6a29a19b232e29b61a14d58b71fefc2e003fa4 ]
 
-Use the newly added of_reserved_mem_region_to_resource() function to
-handle "memory-region" properties.
+Somehow we never noticed this when arm64 became a thing, many years ago.
 
-The original code did not set 'zap_available' to false if
-of_address_to_resource() failed which seems like an oversight.
+v2: also fix npages
 
-Signed-off-by: Rob Herring (Arm) <robh@kernel.org>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Patchwork: https://patchwork.freedesktop.org/patch/662275/
-Link: https://lore.kernel.org/r/20250703183442.2073717-1-robh@kernel.org
-[DB: dropped part related to VRAM, no longer applicable]
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Signed-off-by: Rob Clark <robin.clark@oss.qualcomm.com>
+Tested-by: Connor Abbott <cwabbott0@gmail.com>
+Patchwork: https://patchwork.freedesktop.org/patch/669785/
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
@@ -93,129 +88,198 @@ LLM Generated explanations, may be completely bogus:
 YES
 
 - What it fixes
-  - Correctly handles DT “memory-region” for the zap shader by using the
-    reserved-memory helper rather than treating the phandle target like
-    a normal addressable node. This avoids misinterpreting reserved-
-    memory nodes and ensures the region is actually available.
-  - Fixes an oversight where failure to obtain the region did not mark
-    zap firmware as unavailable, causing the driver to propagate a hard
-    error instead of falling back.
+  - Prevents 32-bit truncation of buffer sizes passed from userspace and
+    via dma-buf import on 64-bit systems. The MSM UAPI uses a 64-bit
+    size field (`__u64 size`) for GEM allocation requests
+    (include/uapi/drm/msm_drm.h:168), but prior code funneled this
+    through `uint32_t`, silently truncating >4GiB sizes.
+  - This can lead to incorrect object sizing, wrong page counts and
+    scatterlist handling, and partial mappings/imports on arm64.
+    Symptoms range from allocation failures to subtle correctness bugs
+    when buffers exceed 4GiB.
 
-- Key code changes
-  - Switch to the correct API for reserved memory:
-    - drivers/gpu/drm/msm/adreno/adreno_gpu.c:13 switched include from
-      `linux/of_address.h` to `linux/of_reserved_mem.h`.
-    - drivers/gpu/drm/msm/adreno/adreno_gpu.c:54 calls
-      `of_reserved_mem_region_to_resource(np, 0, &r)` and on any failure
-      now sets `zap_available = false` and returns the error (lines
-      54–58).
-  - Cleanup/removal of the old path:
-    - Replaces the `of_parse_phandle(..., "memory-region", ...)` +
-      `of_address_to_resource(...)` sequence with the reserved-mem
-      helper, removing the intermediate `mem_np` handling and
-      simplifying error paths.
+- Key changes (type-widening to eliminate truncation)
+  - Function parameters and locals changed from 32-bit to native
+    `size_t`:
+    - `msm_gem_new_handle()` size argument widened to `size_t`
+      (drivers/gpu/drm/msm/msm_gem.h:286,
+      drivers/gpu/drm/msm/msm_gem.c:1150). This directly fixes the UAPI
+      path where `__u64 size` from `DRM_IOCTL_MSM_GEM_NEW`
+      (drivers/gpu/drm/msm/msm_drv.c:344,
+      include/uapi/drm/msm_drm.h:168) was previously implicitly
+      truncated to 32-bit.
+    - `msm_gem_new()` size argument widened to `size_t`
+      (drivers/gpu/drm/msm/msm_gem.h:288,
+      drivers/gpu/drm/msm/msm_gem.c:1220). Ensures internal object init
+      uses full 64-bit size.
+    - `msm_gem_kernel_new()` size argument widened to `size_t`
+      (drivers/gpu/drm/msm/msm_gem.h:289,
+      drivers/gpu/drm/msm/msm_gem.c:1356). Fixes internal kernel
+      allocations exceeding 4GiB.
+    - `npages` variables derived from object sizes converted to
+      `size_t`:
+      - `get_pages()` uses `size_t npages = obj->size >> PAGE_SHIFT;`
+        (drivers/gpu/drm/msm/msm_gem.c:188) instead of `int npages`.
+      - `msm_gem_import()` uses `size_t size, npages;`
+        (drivers/gpu/drm/msm/msm_gem.c:1300), preventing truncation when
+        importing large dma-bufs.
+      - `msm_gem_prime_get_sg_table()` uses `size_t npages = obj->size
+        >> PAGE_SHIFT;` (drivers/gpu/drm/msm/msm_gem_prime.c:15).
+  - Removes an unused `size` parameter from the internal
+    `msm_gem_new_impl()` to avoid perpetuating 32-bit type usage
+    (drivers/gpu/drm/msm/msm_gem.c:1217, 1267, 1312). This is an
+    internal/static helper; the change is mechanical and risk-free.
 
-- Why this matters for runtime behavior
-  - The zap shader loader’s public entry point treats “zap not
-    available” as a non-fatal condition to fall back on an alternate
-    secure-mode exit path:
-    - drivers/gpu/drm/msm/adreno/adreno_gpu.c:169–176 returns `-ENODEV`
-      when `zap_available` is false, triggering fallback.
-    - Callers explicitly handle `-ENODEV` as the “no zap shader” path:
-      - drivers/gpu/drm/msm/adreno/a5xx_gpu.c:987–1007 uses the fallback
-        when `a5xx_zap_shader_init()` returns `-ENODEV`.
-  - Previously, if `of_address_to_resource()` failed, the code returned
-    an error without setting `zap_available = false`. That meant callers
-    saw a generic error (not `-ENODEV`) and aborted bring-up instead of
-    taking the designed fallback. This is precisely the oversight the
-    commit fixes.
+- Why this meets stable rules
+  - Important bugfix: Correctly honors 64-bit sizes throughout the MSM
+    GEM allocation and import paths. Without it, large buffers on 64-bit
+    systems are mishandled.
+  - Minimal and contained: All changes are confined to the MSM DRM
+    driver and its internal header. No UAPI changes, no architectural
+    refactors.
+  - Low regression risk:
+    - On 32-bit kernels, `size_t` remains 32-bit, so behavior is
+      unchanged.
+    - The widened types align driver internals with existing DRM core
+      and UAPI expectations. Callers within the MSM driver already pass
+      native-sized values (e.g., a6xx GMU alloc uses `size_t size`;
+      drivers/gpu/drm/msm/adreno/a6xx_gmu.c:1338).
+    - Passing `size_t npages` into helpers like
+      `drm_prime_pages_to_sg()` (which take an `unsigned int`) is
+      harmless in practice; page counts at which truncation would occur
+      are not realistic.
+  - No new features or behavioral changes beyond fixing size handling.
+    No locking, lifetime, or resource management changes.
 
-- Impact and risk assessment
-  - Scope is small and contained to one function in a single driver
-    file. No architectural changes.
-  - Behavior change is specifically in error handling: failures to
-    resolve “memory-region” now reliably signal “zap not available,”
-    aligning with the existing, intentional `-ENODEV` fallback path in
-    the Adreno bring-up sequence.
-  - Using `of_reserved_mem_region_to_resource()` ensures the driver only
-    uses regions actually initialized by the reserved-memory core
-    (drivers/of/of_reserved_mem.c) and returns `-ENODEV` if the memory-
-    region is missing or unavailable. This is safer than reading “reg”
-    directly from the node and avoids mapping memory that wasn’t
-    properly reserved.
-  - Note: the function no longer calls `of_node_put(np)` after
-    `of_get_child_by_name()`. There was already at least one leak path
-    for `np` (the early `!of_device_is_available(np)` return). This
-    commit removes the `of_node_put(np)` that existed on the success
-    path. The leak is a single DT node ref during probe/init and
-    practically negligible. It does not outweigh the bugfix in error
-    handling. If desired, a follow-up to put `np` after use is trivial
-    and independent of this fix.
+- Concrete impact examples
+  - Userspace `DRM_IOCTL_MSM_GEM_NEW` submits `__u64 size`; now
+    `msm_ioctl_gem_new()` forwards the size without truncation to
+    `msm_gem_new_handle()` and `msm_gem_new()`
+    (drivers/gpu/drm/msm/msm_drv.c:344,
+    drivers/gpu/drm/msm/msm_gem.c:1150, 1220).
+  - Import path: `msm_gem_import()` correctly derives `size` from
+    `dmabuf->size` as `size_t` and computes `npages` as `size_t` before
+    allocating the page array and initializing the object
+    (drivers/gpu/drm/msm/msm_gem.c:1300–1320). Previously, `uint32_t
+    size` and `int npages` could undercount for large imports.
 
-- Stable backport considerations
-  - This is a clear bugfix with a targeted change in error handling and
-    a move to the correct reserved-memory API.
-  - If a given stable series already has
-    `of_reserved_mem_region_to_resource()`, this applies cleanly and is
-    low risk.
-  - If not, the minimal backport can keep the existing
-    `of_address_to_resource()` path but still add the key fix (set
-    `zap_available = false` when it fails), preserving the functional
-    improvement with minimal churn.
+Given this is a clear, localized bugfix preventing real truncation on
+64-bit systems with negligible regression risk, this commit is a good
+candidate for stable backport.
 
-- Conclusion
-  - The change fixes a real user-visible issue (unnecessary bring-up
-    failure instead of the intended fallback), is small and localized,
-    and reduces misuse of DT reserved-memory. It satisfies stable
-    criteria as a low-risk bugfix suitable for backport.
+ drivers/gpu/drm/msm/msm_gem.c       | 21 ++++++++++-----------
+ drivers/gpu/drm/msm/msm_gem.h       |  6 +++---
+ drivers/gpu/drm/msm/msm_gem_prime.c |  2 +-
+ 3 files changed, 14 insertions(+), 15 deletions(-)
 
- drivers/gpu/drm/msm/adreno/adreno_gpu.c | 17 +++++------------
- 1 file changed, 5 insertions(+), 12 deletions(-)
-
-diff --git a/drivers/gpu/drm/msm/adreno/adreno_gpu.c b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
-index f1230465bf0d0..8c6336b007dc0 100644
---- a/drivers/gpu/drm/msm/adreno/adreno_gpu.c
-+++ b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
-@@ -10,7 +10,7 @@
- #include <linux/interconnect.h>
- #include <linux/firmware/qcom/qcom_scm.h>
- #include <linux/kernel.h>
--#include <linux/of_address.h>
-+#include <linux/of_reserved_mem.h>
- #include <linux/pm_opp.h>
- #include <linux/slab.h>
- #include <linux/soc/qcom/mdt_loader.h>
-@@ -33,7 +33,7 @@ static int zap_shader_load_mdt(struct msm_gpu *gpu, const char *fwname,
- 	struct device *dev = &gpu->pdev->dev;
- 	const struct firmware *fw;
- 	const char *signed_fwname = NULL;
--	struct device_node *np, *mem_np;
-+	struct device_node *np;
- 	struct resource r;
- 	phys_addr_t mem_phys;
- 	ssize_t mem_size;
-@@ -51,18 +51,11 @@ static int zap_shader_load_mdt(struct msm_gpu *gpu, const char *fwname,
- 		return -ENODEV;
- 	}
+diff --git a/drivers/gpu/drm/msm/msm_gem.c b/drivers/gpu/drm/msm/msm_gem.c
+index e7631f4ef5309..07d8cdd6bb2ee 100644
+--- a/drivers/gpu/drm/msm/msm_gem.c
++++ b/drivers/gpu/drm/msm/msm_gem.c
+@@ -191,7 +191,7 @@ static struct page **get_pages(struct drm_gem_object *obj)
+ 	if (!msm_obj->pages) {
+ 		struct drm_device *dev = obj->dev;
+ 		struct page **p;
+-		int npages = obj->size >> PAGE_SHIFT;
++		size_t npages = obj->size >> PAGE_SHIFT;
  
--	mem_np = of_parse_phandle(np, "memory-region", 0);
--	of_node_put(np);
--	if (!mem_np) {
-+	ret = of_reserved_mem_region_to_resource(np, 0, &r);
-+	if (ret) {
- 		zap_available = false;
--		return -EINVAL;
--	}
--
--	ret = of_address_to_resource(mem_np, 0, &r);
--	of_node_put(mem_np);
--	if (ret)
- 		return ret;
--
-+	}
- 	mem_phys = r.start;
+ 		p = drm_gem_get_pages(obj);
  
- 	/*
+@@ -1148,7 +1148,7 @@ static int msm_gem_object_mmap(struct drm_gem_object *obj, struct vm_area_struct
+ 
+ /* convenience method to construct a GEM buffer object, and userspace handle */
+ int msm_gem_new_handle(struct drm_device *dev, struct drm_file *file,
+-		uint32_t size, uint32_t flags, uint32_t *handle,
++		size_t size, uint32_t flags, uint32_t *handle,
+ 		char *name)
+ {
+ 	struct drm_gem_object *obj;
+@@ -1214,9 +1214,8 @@ static const struct drm_gem_object_funcs msm_gem_object_funcs = {
+ 	.vm_ops = &vm_ops,
+ };
+ 
+-static int msm_gem_new_impl(struct drm_device *dev,
+-		uint32_t size, uint32_t flags,
+-		struct drm_gem_object **obj)
++static int msm_gem_new_impl(struct drm_device *dev, uint32_t flags,
++			    struct drm_gem_object **obj)
+ {
+ 	struct msm_drm_private *priv = dev->dev_private;
+ 	struct msm_gem_object *msm_obj;
+@@ -1250,7 +1249,7 @@ static int msm_gem_new_impl(struct drm_device *dev,
+ 	return 0;
+ }
+ 
+-struct drm_gem_object *msm_gem_new(struct drm_device *dev, uint32_t size, uint32_t flags)
++struct drm_gem_object *msm_gem_new(struct drm_device *dev, size_t size, uint32_t flags)
+ {
+ 	struct msm_drm_private *priv = dev->dev_private;
+ 	struct msm_gem_object *msm_obj;
+@@ -1265,7 +1264,7 @@ struct drm_gem_object *msm_gem_new(struct drm_device *dev, uint32_t size, uint32
+ 	if (size == 0)
+ 		return ERR_PTR(-EINVAL);
+ 
+-	ret = msm_gem_new_impl(dev, size, flags, &obj);
++	ret = msm_gem_new_impl(dev, flags, &obj);
+ 	if (ret)
+ 		return ERR_PTR(ret);
+ 
+@@ -1305,12 +1304,12 @@ struct drm_gem_object *msm_gem_import(struct drm_device *dev,
+ 	struct msm_drm_private *priv = dev->dev_private;
+ 	struct msm_gem_object *msm_obj;
+ 	struct drm_gem_object *obj;
+-	uint32_t size;
+-	int ret, npages;
++	size_t size, npages;
++	int ret;
+ 
+ 	size = PAGE_ALIGN(dmabuf->size);
+ 
+-	ret = msm_gem_new_impl(dev, size, MSM_BO_WC, &obj);
++	ret = msm_gem_new_impl(dev, MSM_BO_WC, &obj);
+ 	if (ret)
+ 		return ERR_PTR(ret);
+ 
+@@ -1353,7 +1352,7 @@ struct drm_gem_object *msm_gem_import(struct drm_device *dev,
+ 	return ERR_PTR(ret);
+ }
+ 
+-void *msm_gem_kernel_new(struct drm_device *dev, uint32_t size, uint32_t flags,
++void *msm_gem_kernel_new(struct drm_device *dev, size_t size, uint32_t flags,
+ 			 struct drm_gpuvm *vm, struct drm_gem_object **bo,
+ 			 uint64_t *iova)
+ {
+diff --git a/drivers/gpu/drm/msm/msm_gem.h b/drivers/gpu/drm/msm/msm_gem.h
+index 751c3b4965bcd..a4cf31853c500 100644
+--- a/drivers/gpu/drm/msm/msm_gem.h
++++ b/drivers/gpu/drm/msm/msm_gem.h
+@@ -297,10 +297,10 @@ bool msm_gem_active(struct drm_gem_object *obj);
+ int msm_gem_cpu_prep(struct drm_gem_object *obj, uint32_t op, ktime_t *timeout);
+ int msm_gem_cpu_fini(struct drm_gem_object *obj);
+ int msm_gem_new_handle(struct drm_device *dev, struct drm_file *file,
+-		uint32_t size, uint32_t flags, uint32_t *handle, char *name);
++		size_t size, uint32_t flags, uint32_t *handle, char *name);
+ struct drm_gem_object *msm_gem_new(struct drm_device *dev,
+-		uint32_t size, uint32_t flags);
+-void *msm_gem_kernel_new(struct drm_device *dev, uint32_t size, uint32_t flags,
++		size_t size, uint32_t flags);
++void *msm_gem_kernel_new(struct drm_device *dev, size_t size, uint32_t flags,
+ 			 struct drm_gpuvm *vm, struct drm_gem_object **bo,
+ 			 uint64_t *iova);
+ void msm_gem_kernel_put(struct drm_gem_object *bo, struct drm_gpuvm *vm);
+diff --git a/drivers/gpu/drm/msm/msm_gem_prime.c b/drivers/gpu/drm/msm/msm_gem_prime.c
+index c0a33ac839cb6..036d34c674d9a 100644
+--- a/drivers/gpu/drm/msm/msm_gem_prime.c
++++ b/drivers/gpu/drm/msm/msm_gem_prime.c
+@@ -15,7 +15,7 @@
+ struct sg_table *msm_gem_prime_get_sg_table(struct drm_gem_object *obj)
+ {
+ 	struct msm_gem_object *msm_obj = to_msm_bo(obj);
+-	int npages = obj->size >> PAGE_SHIFT;
++	size_t npages = obj->size >> PAGE_SHIFT;
+ 
+ 	if (msm_obj->flags & MSM_BO_NO_SHARE)
+ 		return ERR_PTR(-EINVAL);
 -- 
 2.51.0
 
