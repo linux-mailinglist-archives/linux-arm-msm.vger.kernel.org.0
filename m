@@ -1,88 +1,67 @@
-Return-Path: <linux-arm-msm+bounces-78821-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-78822-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id B8C84C0B0D6
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 26 Oct 2025 20:12:14 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 52A72C0B148
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 26 Oct 2025 20:38:01 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 477B4189E383
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 26 Oct 2025 19:12:20 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 02E4C3B4A5A
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 26 Oct 2025 19:38:00 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 280B12FDC5D;
-	Sun, 26 Oct 2025 19:11:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2094321C9EA;
+	Sun, 26 Oct 2025 19:37:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="TsV2NkG2"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="KncyBaB7"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f43.google.com (mail-wr1-f43.google.com [209.85.221.43])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B932252292
-	for <linux-arm-msm@vger.kernel.org>; Sun, 26 Oct 2025 19:11:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF1B676026;
+	Sun, 26 Oct 2025 19:37:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761505911; cv=none; b=sGD3JqaDj239QISLeClR0IY14uDsrbcXI0rMAn9+/3nLemYdsMtB6m3SgYEfwp6Rdjp6M6dKJwGIvecLtQ3VFxMJbEjY7wr+pHfcgZ4vZduGLPVDJ+biDka062B4LsO7+TC1bJaGWorGMv9DEZkzNwQ1hekto6N2pwVc2Pyxilw=
+	t=1761507477; cv=none; b=uPNuxZCS90sD7awaSW+VfujEpM0bRJ3/Vl05RUO+StQgOwBhO9ufHrp85txlbMQGanr0ESL5dqwmqRK82AccREEBmwbzKHZABXqgPnBxaJA8oZmu3CwSMFJH+kcZNO3ld1RQGYni1SxnME7Wch4pZuendaQXPYQ3KaVm9MSeH5s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761505911; c=relaxed/simple;
-	bh=+AUJLFop/NP1PqN2N9QlTcoa51Nm9Pq8GtfyWKv+TXE=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=QLlLho4kgd3sH+SAdDo7zPPXJLqZ5v5pL5jZV20d1/1r0461Ejc0bqH0uYd1dYGLD8vx48h2G+HwLeQ5Aah2BeZNKM+7VgHIvnem3q49SYvgbJKwj3XDq4O7mwmLUktNluxEJpgHkBKK4JuN1IHr5JdBRjPAXVaLLVzQ8EQupbc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=TsV2NkG2; arc=none smtp.client-ip=209.85.221.43
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wr1-f43.google.com with SMTP id ffacd0b85a97d-3ee130237a8so2519424f8f.0
-        for <linux-arm-msm@vger.kernel.org>; Sun, 26 Oct 2025 12:11:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1761505907; x=1762110707; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=kxkTyzPeNmi6+toC10bTmxd1f4OEXI+mwvGXkJgCrDw=;
-        b=TsV2NkG2JgebcKkWKLiKv8x2sIDNLjeEH7lumT9TjYJ/M8RARTIqMtXjEM4YLaw2rE
-         89c6zzWOMCi4AMiNVQRNSuDCPXE22V9yuyXohtAq52jadFxS4Y0NleA/NCfrbLHe7eeX
-         7w587XZGVC2HaCPkzgn7KC9gfoQajPnx2A4olJ3VHzqTbHRKo9L550TRULkemDNhVhJr
-         yPwEOcIn3MMBeBKTFzN4Ck5dzd/aSVqhHQ9HDNpfPjIWcT5XvQrH4a5XrVOqPopqUINi
-         mhemGe6rXdqNEuldbmogKrdv3+yi56aGPCg9jCu2iaLHL1HfZ+wTqXqo1UdVI8H++VWi
-         CXfw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1761505907; x=1762110707;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=kxkTyzPeNmi6+toC10bTmxd1f4OEXI+mwvGXkJgCrDw=;
-        b=MDdys2raPivNemnu8rp3+B52pnsRpnt6anE/R4zD3yznedD+AamS08Gko1+qMPCIHs
-         d18Q3ODecceFPcNzDYUlb4Y7PueLSZXNApk5YC6hDpK2Sztm0lE6arihEIDU/KTX7bV6
-         48mvnibXwzrWCJGBn1zjpay7qnYOaj34MEFOhlQIKBpF8qTX1cRy2s+hU4ZK4NZU1OX6
-         QHR9vCg3Hf7CJG2+UeP7gM43ZAl4HNJwFh8/oqlShGsjM4riLIk1etB9LSR5J293cH/A
-         cYxMfle02zlBi3bASO66UMfCm0LnAJqnnpifI0r2p0WXcAhok2ZoxtYNPWtTYeULEY54
-         o4zg==
-X-Forwarded-Encrypted: i=1; AJvYcCUr3PO51CgHVjR1nqng6X35uDs8siZb6DSFHv9OjDIWcrluOe3/3of2ekRDYt9jSZKqosEugbWBFDsXHUaN@vger.kernel.org
-X-Gm-Message-State: AOJu0YxGbVFmIY/rJ9kQcCn1djw6tE5QpcnFxVGIejjMHtrHdfpdeeHt
-	ss00/EZg7QDdc+HVtM5el6eqS7+EacuTVLLM3eX4BM3AOZMirVDHo6jT+VdK7iP9kuk=
-X-Gm-Gg: ASbGncsivpvdCNlU5ch/eaa8wh9D/B+IPPd5I0sjNTK7waZeOvUskH2pl6Zdc7Z0gYI
-	GPGZXL9kSIc/obViQ2dDC0nmIWgylY/kmudL956HpjMsgXBNT6wKtXt1znU2edDqDq1KB2us2sG
-	RXBxcvl4dQ+iJsz2d+flDYwhm+FU7bCrRHxJ7yvR3mxY+zEtFJbsSLBQbscoKZGmR3TqwJHS51v
-	/tHGDVRa591r+el2HHKVV4vUZTXWiLFu0+r4fgfrjsZnXQl3LiZwJuN2ae8dZcZDDAOaSL5FMsK
-	61gJP30yPIxQ7VLc1FjRpOrmyFSUPNhBr11ajiLcqDE7mpdrYVY7rMqoyXYlxrn0yA2yA6ioOJe
-	1B6KcIkou0Cxukmb33oejj75yw0kSV/95NTsmWI2gZ5KmMGEfHWG8A2mec/EgzCvd88rQf74HtO
-	R5dsaujak=
-X-Google-Smtp-Source: AGHT+IHzexoxvDrDvl24BhwQnRe4QdBdByW9rd0vZNY8yvB8WV7YYfd9RJbflJWTepT5nb//VF+/0Q==
-X-Received: by 2002:a5d:5f82:0:b0:3ea:6680:8fb5 with SMTP id ffacd0b85a97d-42990701979mr5977601f8f.2.1761505907325;
-        Sun, 26 Oct 2025 12:11:47 -0700 (PDT)
-Received: from linaro.org ([86.121.7.169])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-475ddd41a5esm44681245e9.5.2025.10.26.12.11.44
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 26 Oct 2025 12:11:45 -0700 (PDT)
-Date: Sun, 26 Oct 2025 21:11:43 +0200
-From: Abel Vesa <abel.vesa@linaro.org>
-To: Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>
-Cc: Thara Gopinath <thara.gopinath@gmail.com>, 
-	Herbert Xu <herbert@gondor.apana.org.au>, "David S. Miller" <davem@davemloft.net>, 
-	linux-crypto@vger.kernel.org, linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] crypto: qce: Provide dev_err_probe() status on DMA
- failure
-Message-ID: <qolhxtuathf4go2wyiheptmd2u4nsg7gvlpj3jlzprkybv2hds@wp2clrvcurjo>
-References: <20251024-qce-dma-err-probe-v1-1-03de2477bb5c@oss.qualcomm.com>
+	s=arc-20240116; t=1761507477; c=relaxed/simple;
+	bh=+ciTEVmI0wG+8ArlT4ieOrUCVVyPlrehDfttcyUWrag=;
+	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition:In-Reply-To; b=F1NpUKAjr1WjlATv9J9BKmpux2T/9cLAqzfSLaJ2c7N953sQZnL/vBq5YvBMe/xRlVNPk15nXorhMoEoNQ3i0HNXVuOrZFDfNYfBUpN16nZlHbMtCVGcnU0lveY0OIQ8IO656Fwi+Zq+7G1wbry5D6/dzcOeB1hYmV/pdXqcMZQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=KncyBaB7; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4407DC4CEE7;
+	Sun, 26 Oct 2025 19:37:56 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1761507476;
+	bh=+ciTEVmI0wG+8ArlT4ieOrUCVVyPlrehDfttcyUWrag=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:From;
+	b=KncyBaB7f5JeHlN3t4HKyPKcq7dAVdNXsA5J4x7l75KKnNht9QnxvjED0cU10jLzo
+	 sA3WdH1o7ptStyKpjRX0yaN8yW4zeKVVqB9kV2foOHixvyyiWkRRDp1vrz498ylUXx
+	 VCJEcVLb8M77qgvmIandj8Qt7GjvYNgLqMNfQsiSvXR09qx2PcaA3vKWmszEiDBsE2
+	 hQiFjhjJ3aqcOofRVmA5Ll61v5CUl++iYWAvSgzH4yTU8xmBpESYYESfe5i+snzIyP
+	 CMti162/9y2fRXUx40P2fEKSK7AkXwv+zGHf7M4lx+gAhrZt5T49XcENB5EVPVXnPY
+	 pv4qM3SgrquZQ==
+Date: Sun, 26 Oct 2025 14:37:54 -0500
+From: Bjorn Helgaas <helgaas@kernel.org>
+To: Manivannan Sadhasivam <mani@kernel.org>
+Cc: linux-pci@vger.kernel.org,
+	Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>,
+	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
+	Johan Hovold <johan@kernel.org>, Frank Li <Frank.li@nxp.com>,
+	Shawn Lin <shawn.lin@rock-chips.com>, Rob Herring <robh@kernel.org>,
+	"David E . Box" <david.e.box@linux.intel.com>,
+	Kai-Heng Feng <kai.heng.feng@canonical.com>,
+	"Rafael J . Wysocki" <rafael@kernel.org>,
+	Heiner Kallweit <hkallweit1@gmail.com>,
+	Chia-Lin Kao <acelan.kao@canonical.com>,
+	Gustavo Pimentel <Gustavo.Pimentel@synopsys.com>,
+	Han Jingoo <jingoohan1@gmail.com>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Bartosz Golaszewski <brgl@bgdev.pl>, linux-arm-msm@vger.kernel.org,
+	linux-kernel@vger.kernel.org, Bjorn Helgaas <bhelgaas@google.com>
+Subject: Re: [PATCH] Revert "PCI: qcom: Remove custom ASPM enablement code"
+Message-ID: <20251026193754.GA1432729@bhelgaas>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -91,17 +70,66 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20251024-qce-dma-err-probe-v1-1-03de2477bb5c@oss.qualcomm.com>
+In-Reply-To: <rc4ydm2c3c4gqipaorr2ndrlwufay3ocfc2rq7llskkg7npe6x@53eztxy5v3gt>
 
-On 25-10-24 14:35:07, Bjorn Andersson wrote:
-> On multiple occasions the qce device have shown up in devices_deferred,
-> without the explanation that this came from the failure to acquire the
-> DMA channels from the associated BAM.
+On Sun, Oct 26, 2025 at 08:58:29PM +0530, Manivannan Sadhasivam wrote:
+> On Fri, Oct 24, 2025 at 04:04:57PM -0500, Bjorn Helgaas wrote:
+> > From: Bjorn Helgaas <bhelgaas@google.com>
+> > 
+> > This reverts commit a729c16646198872e345bf6c48dbe540ad8a9753.
+> > 
+> > Prior to a729c1664619 ("PCI: qcom: Remove custom ASPM enablement code"),
+> > the qcom controller driver enabled ASPM, including L0s, L1, and L1 PM
+> > Substates, for all devices powered on at the time the controller driver
+> > enumerates them.
+> > 
+> > ASPM was *not* enabled for devices powered on later by pwrctrl (unless the
+> > kernel was built with PCIEASPM_POWERSAVE or PCIEASPM_POWER_SUPERSAVE, or
+> > the user enabled ASPM via module parameter or sysfs).
+> > 
+> > After f3ac2ff14834 ("PCI/ASPM: Enable all ClockPM and ASPM states for
+> > devicetree platforms"), the PCI core enabled all ASPM states for all
+> > devices whether powered on initially or by pwrctrl, so a729c1664619 was
+> > unnecessary and reverted.
+> > 
+> > But f3ac2ff14834 was too aggressive and broke platforms that didn't support
+> > CLKREQ# or required device-specific configuration for L1 Substates, so
+> > df5192d9bb0e ("PCI/ASPM: Enable only L0s and L1 for devicetree platforms")
+> > enabled only L0s and L1.
+> > 
+> > On Qualcomm platforms, this left L1 Substates disabled, which was a
+> > regression.  Revert a729c1664619 so L1 Substates will be enabled on devices
+> > that are initially powered on.  Devices powered on by pwrctrl will be
+> > addressed later.
 > 
-> Use dev_err_probe() to associate this context with the failure to faster
-> pinpoint the culprit when this happens in the future.
-> 
-> Signed-off-by: Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>
+> Can we rather have platform specific APIs [1] to enable ASPM states
+> instead of just re-introducing this half-baked solution? (yes, I
+> introduced it, but it is still imperfect).
 
-Reviewed-by: Abel Vesa <abel.vesa@linaro.org>
+I intend this (reverting "PCI: qcom: Remove custom ASPM enablement
+code") for v6.18 to avoid regressing Qualcomm: v6.17 enabled L1 PM
+Substates, and v6.18-rc3 does not.
+
+Adding pci_host_set_default_pcie_link_state() with [1] (along with a
+follow-up qcom patch using it) is another possible way to enable L1 PM
+Substates, but I think the revert is the safest post-merge window
+regression fix.
+
+I have some heartburn about both the revert and the
+pci_host_set_default_pcie_link_state() approach because they apply to
+the entire hierarchy under a qcom or VMD root port, potentially
+including add-in cards with switches.  CLKREQ# (and possibly more) is
+required to enable L1SS, and I don't know if we can assume it's
+supported on add-in links.
+
+> I think we have learned by hard way that enabling ASPM by default
+> can have catastrophic effects for reasons we do not certainly know.
+> So how about having this platform specific API that enables
+> individual platforms to enable the ASPM states?
+
+As far as I know, it's L1SS that has catastrophic effects.  I haven't
+seen anything for L0s or L1.
+
+> [1]
+> https://lore.kernel.org/linux-pci/20250825203542.3502368-1-david.e.box@linux.intel.com/
 
