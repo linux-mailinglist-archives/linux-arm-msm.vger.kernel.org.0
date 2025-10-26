@@ -1,135 +1,128 @@
-Return-Path: <linux-arm-msm+bounces-78822-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-78823-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 52A72C0B148
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 26 Oct 2025 20:38:01 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 06F80C0B1C3
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 26 Oct 2025 21:16:20 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 02E4C3B4A5A
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 26 Oct 2025 19:38:00 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 098F8189BFA9
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 26 Oct 2025 20:16:44 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2094321C9EA;
-	Sun, 26 Oct 2025 19:37:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9CFE51E1E00;
+	Sun, 26 Oct 2025 20:16:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="KncyBaB7"
+	dkim=pass (1024-bit key) header.d=ixit.cz header.i=@ixit.cz header.b="MGIBTogX"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from ixit.cz (ip-94-112-25-9.bb.vodafone.cz [94.112.25.9])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF1B676026;
-	Sun, 26 Oct 2025 19:37:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB7D11DF252;
+	Sun, 26 Oct 2025 20:16:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=94.112.25.9
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761507477; cv=none; b=uPNuxZCS90sD7awaSW+VfujEpM0bRJ3/Vl05RUO+StQgOwBhO9ufHrp85txlbMQGanr0ESL5dqwmqRK82AccREEBmwbzKHZABXqgPnBxaJA8oZmu3CwSMFJH+kcZNO3ld1RQGYni1SxnME7Wch4pZuendaQXPYQ3KaVm9MSeH5s=
+	t=1761509775; cv=none; b=hYwURrIj2/rvHwywXUiC470PzwHH+OGqKcZMmLDegHjwJNnztlb2KbujC8h5p1ofwQeV8le/FOf6Q9B28NmMAJ+7hhYeK76w0GFwUmHJCjFFwSWsY2EcSR4Dx2S7uw05SyQ2N2lEzdl5B2iLZxhpBdiYBiYGDURNhcD0GK9kFUc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761507477; c=relaxed/simple;
-	bh=+ciTEVmI0wG+8ArlT4ieOrUCVVyPlrehDfttcyUWrag=;
-	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
-	 Content-Disposition:In-Reply-To; b=F1NpUKAjr1WjlATv9J9BKmpux2T/9cLAqzfSLaJ2c7N953sQZnL/vBq5YvBMe/xRlVNPk15nXorhMoEoNQ3i0HNXVuOrZFDfNYfBUpN16nZlHbMtCVGcnU0lveY0OIQ8IO656Fwi+Zq+7G1wbry5D6/dzcOeB1hYmV/pdXqcMZQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=KncyBaB7; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4407DC4CEE7;
-	Sun, 26 Oct 2025 19:37:56 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1761507476;
-	bh=+ciTEVmI0wG+8ArlT4ieOrUCVVyPlrehDfttcyUWrag=;
-	h=Date:From:To:Cc:Subject:In-Reply-To:From;
-	b=KncyBaB7f5JeHlN3t4HKyPKcq7dAVdNXsA5J4x7l75KKnNht9QnxvjED0cU10jLzo
-	 sA3WdH1o7ptStyKpjRX0yaN8yW4zeKVVqB9kV2foOHixvyyiWkRRDp1vrz498ylUXx
-	 VCJEcVLb8M77qgvmIandj8Qt7GjvYNgLqMNfQsiSvXR09qx2PcaA3vKWmszEiDBsE2
-	 hQiFjhjJ3aqcOofRVmA5Ll61v5CUl++iYWAvSgzH4yTU8xmBpESYYESfe5i+snzIyP
-	 CMti162/9y2fRXUx40P2fEKSK7AkXwv+zGHf7M4lx+gAhrZt5T49XcENB5EVPVXnPY
-	 pv4qM3SgrquZQ==
-Date: Sun, 26 Oct 2025 14:37:54 -0500
-From: Bjorn Helgaas <helgaas@kernel.org>
-To: Manivannan Sadhasivam <mani@kernel.org>
-Cc: linux-pci@vger.kernel.org,
-	Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>,
-	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
-	Johan Hovold <johan@kernel.org>, Frank Li <Frank.li@nxp.com>,
-	Shawn Lin <shawn.lin@rock-chips.com>, Rob Herring <robh@kernel.org>,
-	"David E . Box" <david.e.box@linux.intel.com>,
-	Kai-Heng Feng <kai.heng.feng@canonical.com>,
-	"Rafael J . Wysocki" <rafael@kernel.org>,
-	Heiner Kallweit <hkallweit1@gmail.com>,
-	Chia-Lin Kao <acelan.kao@canonical.com>,
-	Gustavo Pimentel <Gustavo.Pimentel@synopsys.com>,
-	Han Jingoo <jingoohan1@gmail.com>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Bartosz Golaszewski <brgl@bgdev.pl>, linux-arm-msm@vger.kernel.org,
-	linux-kernel@vger.kernel.org, Bjorn Helgaas <bhelgaas@google.com>
-Subject: Re: [PATCH] Revert "PCI: qcom: Remove custom ASPM enablement code"
-Message-ID: <20251026193754.GA1432729@bhelgaas>
+	s=arc-20240116; t=1761509775; c=relaxed/simple;
+	bh=AvS+C9V1jDixAnFnsGU1vyxB6uHJMX9a3e8wGV187Fg=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=CHwulgrOcFHQ7VMZPImiSWrKazJ20SP1WGEa3mC9TJtD3s6SVYw/M6oZobY2IWSGqDMUVs5NpXGFLP7y91xSTS7R/QCJl6Di8wu5j6dq+CmwvjFBhHmlbuW0t2rJZDr5uS27yLoVh5CGunB2UKsG1hLpwilJOHnm8Ky2dAj+eBY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ixit.cz; spf=pass smtp.mailfrom=ixit.cz; dkim=pass (1024-bit key) header.d=ixit.cz header.i=@ixit.cz header.b=MGIBTogX; arc=none smtp.client-ip=94.112.25.9
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ixit.cz
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ixit.cz
+Received: from [10.0.0.240] (unknown [10.0.0.1])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange x25519)
+	(No client certificate requested)
+	by ixit.cz (Postfix) with ESMTPSA id 57F4053404AA;
+	Sun, 26 Oct 2025 21:16:02 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ixit.cz; s=dkim;
+	t=1761509762;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+	bh=AvS+C9V1jDixAnFnsGU1vyxB6uHJMX9a3e8wGV187Fg=;
+	b=MGIBTogXeuA83cnMxRuk3Nkf+qWmU5w+UzXxjid9JWV+vBlYeFpOsED6Ix/5AW5pNCuD4O
+	5UvcOYSHwvwAb6gCl+gmRziC8+hxAwvtx8Hub9jfwwz7MhQE4UBIin/qoL16s10RTIzvU0
+	RVSsALUdtj16tAdaU3U9YyOvSePoOSg=
+Message-ID: <97222454-7f9b-4959-85ff-293c34a3a980@ixit.cz>
+Date: Sun, 26 Oct 2025 21:16:01 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <rc4ydm2c3c4gqipaorr2ndrlwufay3ocfc2rq7llskkg7npe6x@53eztxy5v3gt>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] crypto: qce: Provide dev_err_probe() status on DMA
+ failure
+To: Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>,
+ Thara Gopinath <thara.gopinath@gmail.com>,
+ Herbert Xu <herbert@gondor.apana.org.au>,
+ "David S. Miller" <davem@davemloft.net>
+Cc: linux-crypto@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+ linux-kernel@vger.kernel.org
+References: <20251024-qce-dma-err-probe-v1-1-03de2477bb5c@oss.qualcomm.com>
+Content-Language: en-US
+From: David Heidelberg <david@ixit.cz>
+Autocrypt: addr=david@ixit.cz; keydata=
+ xsFNBF5v1x4BEADS3EddwsNsvVAI1XF8uQKbdYPY/GhjaSLziwVnbwv5BGwqB1tfXoHnccoA
+ 9kTgKAbiXG/CiZFhD6l4WCIskQDKzyQN3JhCUIxh16Xyw0lECI7iqoW9LmMoN1dNKcUmCO9g
+ lZxQaOl+1bY/7ttd7DapLh9rmBXJ2lKiMEaIpUwb/Nw0d7Enp4Jy2TpkhPywIpUn8CoJCv3/
+ 61qbvI9y5utB/UhfMAUXsaAgwEJyGPAqHlC0YZjaTwOu+YQUE3AFzhCbksq95CwDz4U4gdls
+ dmv9tkATfu2OmzERZQ6vJTehK0Pu4l5KmCAzYg42I9Dy4E6b17x6NncKbcByQFOXMtG0qVUk
+ F1yeeOQUHwu+8t3ZDMBUhCkRL/juuoqLmyDWKMc0hKNNeZ9BNXgB8fXkRLWEUfgDXsFyEkKp
+ NxUy5bDRlivf6XfExnikk5kj9l2gGlNQwqROti/46bfbmlmc/a2GM4k8ZyalHNEAdwtXYSpP
+ 8JJmlbQ7hNTLkc3HQLRsIocN5th/ur7pPMz1Beyp0gbE9GcOceqmdZQB80vJ01XDyCAihf6l
+ AMnzwpXZsjqIqH9r7T7tM6tVEVbPSwPt4eZYXSoJijEBC/43TBbmxDX+5+3txRaSCRQrG9dY
+ k3mMGM3xJLCps2KnaqMcgUnvb1KdTgEFUZQaItw7HyRd6RppewARAQABzSBEYXZpZCBIZWlk
+ ZWxiZXJnIDxkYXZpZEBpeGl0LmN6PsLBlAQTAQgAPgIbAwULCQgHAgYVCgkICwIEFgIDAQIe
+ AQIXgBYhBNd6Cc/u3Cu9U6cEdGACP8TTSSByBQJl+KksBQkPDaAOAAoJEGACP8TTSSBy6IAQ
+ AMqFqVi9LLxCEcUWBn82ssQGiVSDniKpFE/tp7lMXflwhjD5xoftoWOmMYkiWE86t5x5Fsp7
+ afALx7SEDz599F1K1bLnaga+budu55JEAYGudD2WwpLJ0kPzRhqBwGFIx8k6F+goZJzxPDsf
+ loAtXQE62UvEKa4KRRcZmF0GGoRsgA7vE7OnV8LMeocdD3eb2CuXLzauHAfdvqF50IfPH/sE
+ jbzROiAZU+WgrwU946aOzrN8jVU+Cy8XAccGAZxsmPBfhTY5f2VN1IqvfaRdkKKlmWVJWGw+
+ ycFpAEJKFRdfcc5PSjUJcALn5C+hxzL2hBpIZJdfdfStn+DWHXNgBeRDiZj1x6vvyaC43RAb
+ VXvRzOQfG4EaMVMIOvBjBA/FtIpb1gtXA42ewhvPnd5RVCqD9YYUxsVpJ9d+XsAy7uib3BsV
+ W2idAEsPtoqhVhq8bCUs/G4sC2DdyGZK8MRFDJqciJSUbqA+5z1ZCuE8UOPDpZKiW6H/OuOM
+ zDcjh0lOzr4p+/1TSg1PbUh7fQ+nbMuiT044sC1lLtJK0+Zyn0GwhR82oNM4fldNsaHRW42w
+ QGD35+eNo5Pvb3We5XRMlBdhFnj7Siggp4J8/PJ6MJvRyC+RIJPGtbdMB2/RxWunFLn87e5w
+ UgwR9jPMHAstuTR1yR23c4SIYoQ2fzkrRzuazsFNBF5v1x4BEADnlrbta2WL87BlEOotZUh0
+ zXANMrNV15WxexsirLetfqbs0AGCaTRNj+uWlTUDJRXOVIwzmF76Us3I2796+Od2ocNpLheZ
+ 7EIkq8budtLVd1c06qJ+GMraz51zfgSIazVInNMPk9T6fz0lembji5yEcNPNNBA4sHiFmXfo
+ IhepHFOBApjS0CiOPqowYxSTPe/DLcJ/LDwWpTi37doKPhBwlHev1BwVCbrLEIFjY0MLM0aT
+ jiBBlyLJaTqvE48gblonu2SGaNmGtkC3VoQUQFcVYDXtlL9CVbNo7BAt5gwPcNqEqkUL60Jh
+ FtvVSKyQh6gn7HHsyMtgltjZ3NKjv8S3yQd7zxvCn79tCKwoeNevsvoMq/bzlKxc9QiKaRPO
+ aDj3FtW7R/3XoKJBY8Hckyug6uc2qYWRpnuXc0as6S0wfek6gauExUttBKrtSbPPHiuTeNHt
+ NsT4+dyvaJtQKPBTbPHkXpTO8e1+YAg7kPj3aKFToE/dakIh8iqUHLNxywDAamRVn8Ha67WO
+ AEAA3iklJ49QQk2ZyS1RJ2Ul28ePFDZ3QSr9LoJiOBZv9XkbhXS164iRB7rBZk6ZRVgCz3V6
+ hhhjkipYvpJ/fpjXNsVL8jvel1mYNf0a46T4QQDQx4KQj0zXJbC2fFikAtu1AULktF4iEXEI
+ rSjFoqhd4euZ+QARAQABwsF8BBgBCAAmAhsMFiEE13oJz+7cK71TpwR0YAI/xNNJIHIFAmX4
+ qVAFCQ8NoDIACgkQYAI/xNNJIHKN4A/+Ine2Ii7JiuGITjJkcV6pgKlfwYdEs4eFD1pTRb/K
+ 5dprUz3QSLP41u9OJQ23HnESMvn31UENk9ffebNoW7WxZ/8cTQY0JY/cgTTrlNXtyAlGbR3/
+ 3Q/VBJptf04Er7I6TaKAmqWzdVeKTw33LljpkHp02vrbOdylb4JQG/SginLV9purGAFptYRO
+ 8JNa2J4FAQtQTrfOUjulOWMxy7XRkqK3QqLcPW79/CFn7q1yxamPkpoXUJq9/fVjlhk7P+da
+ NYQpe4WQQnktBY29SkFnvfIAwqIVU8ix5Oz8rghuCcAdR7lEJ7hCX9bR0EE05FOXdZy5FWL9
+ GHvFa/Opkq3DPmFl/0nt4HJqq1Nwrr+WR6d0414oo1n2hPEllge/6iD3ZYwptTvOFKEw/v0A
+ yqOoYSiKX9F7Ko7QO+VnYeVDsDDevKic2T/4GDpcSVd9ipiKxCQvUAzKUH7RUpqDTa+rYurm
+ zRKcgRumz2Tc1ouHj6qINlzEe3a5ldctIn/dvR1l2Ko7GBTG+VGp9U5NOAEkGpxHG9yg6eeY
+ fFYnMme51H/HKiyUlFiE3yd5LSmv8Dhbf+vsI4x6BOOOq4Iyop/Exavj1owGxW0hpdUGcCl1
+ ovlwVPO/6l/XLAmSGwdnGqok5eGZQzSst0tj9RC9O0dXO1TZocOsf0tJ8dR2egX4kxM=
+In-Reply-To: <20251024-qce-dma-err-probe-v1-1-03de2477bb5c@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Sun, Oct 26, 2025 at 08:58:29PM +0530, Manivannan Sadhasivam wrote:
-> On Fri, Oct 24, 2025 at 04:04:57PM -0500, Bjorn Helgaas wrote:
-> > From: Bjorn Helgaas <bhelgaas@google.com>
-> > 
-> > This reverts commit a729c16646198872e345bf6c48dbe540ad8a9753.
-> > 
-> > Prior to a729c1664619 ("PCI: qcom: Remove custom ASPM enablement code"),
-> > the qcom controller driver enabled ASPM, including L0s, L1, and L1 PM
-> > Substates, for all devices powered on at the time the controller driver
-> > enumerates them.
-> > 
-> > ASPM was *not* enabled for devices powered on later by pwrctrl (unless the
-> > kernel was built with PCIEASPM_POWERSAVE or PCIEASPM_POWER_SUPERSAVE, or
-> > the user enabled ASPM via module parameter or sysfs).
-> > 
-> > After f3ac2ff14834 ("PCI/ASPM: Enable all ClockPM and ASPM states for
-> > devicetree platforms"), the PCI core enabled all ASPM states for all
-> > devices whether powered on initially or by pwrctrl, so a729c1664619 was
-> > unnecessary and reverted.
-> > 
-> > But f3ac2ff14834 was too aggressive and broke platforms that didn't support
-> > CLKREQ# or required device-specific configuration for L1 Substates, so
-> > df5192d9bb0e ("PCI/ASPM: Enable only L0s and L1 for devicetree platforms")
-> > enabled only L0s and L1.
-> > 
-> > On Qualcomm platforms, this left L1 Substates disabled, which was a
-> > regression.  Revert a729c1664619 so L1 Substates will be enabled on devices
-> > that are initially powered on.  Devices powered on by pwrctrl will be
-> > addressed later.
-> 
-> Can we rather have platform specific APIs [1] to enable ASPM states
-> instead of just re-introducing this half-baked solution? (yes, I
-> introduced it, but it is still imperfect).
+On 24/10/2025 23:35, Bjorn Andersson wrote:
+ > On multiple occasions the qce device have shown up in devices_deferred,
+ > without the explanation that this came from the failure to acquire the
+ > DMA channels from the associated BAM.
+ >
+ > Use dev_err_probe() to associate this context with the failure to faster
+ > pinpoint the culprit when this happens in the future.
+ >
+ > Signed-off-by: Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>
 
-I intend this (reverting "PCI: qcom: Remove custom ASPM enablement
-code") for v6.18 to avoid regressing Qualcomm: v6.17 enabled L1 PM
-Substates, and v6.18-rc3 does not.
-
-Adding pci_host_set_default_pcie_link_state() with [1] (along with a
-follow-up qcom patch using it) is another possible way to enable L1 PM
-Substates, but I think the revert is the safest post-merge window
-regression fix.
-
-I have some heartburn about both the revert and the
-pci_host_set_default_pcie_link_state() approach because they apply to
-the entire hierarchy under a qcom or VMD root port, potentially
-including add-in cards with switches.  CLKREQ# (and possibly more) is
-required to enable L1SS, and I don't know if we can assume it's
-supported on add-in links.
-
-> I think we have learned by hard way that enabling ASPM by default
-> can have catastrophic effects for reasons we do not certainly know.
-> So how about having this platform specific API that enables
-> individual platforms to enable the ASPM states?
-
-As far as I know, it's L1SS that has catastrophic effects.  I haven't
-seen anything for L0s or L1.
-
-> [1]
-> https://lore.kernel.org/linux-pci/20250825203542.3502368-1-david.e.box@linux.intel.com/
+Reviewed-by: David Heidelberg <david@ixit.cz>
 
