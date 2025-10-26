@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-78800-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-78801-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [142.0.200.124])
-	by mail.lfdr.de (Postfix) with ESMTPS id DA425C0A515
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 26 Oct 2025 10:01:04 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id DCC53C0A52D
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 26 Oct 2025 10:05:28 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 1F3EE4E32A2
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 26 Oct 2025 09:01:02 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id EFBAB18A1790
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 26 Oct 2025 09:05:52 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7845424DCF9;
-	Sun, 26 Oct 2025 09:00:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3773C212572;
+	Sun, 26 Oct 2025 09:05:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="q3JOHsO2"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="XA7IbfV/"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B77C7081E;
-	Sun, 26 Oct 2025 09:00:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11B522B9BA
+	for <linux-arm-msm@vger.kernel.org>; Sun, 26 Oct 2025 09:05:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761469258; cv=none; b=hLEalW4L/WFtuDbSzBb0yM9XWFCBlTbfcvJcxsycEM/dc8J+zUXPawp/NFDSpghxGWLC61UUtMenygWXKEezBTyDGtE8ritVVwen6oLJJAuzb34/0fU+ZnN2Et1KozXyBAHwYq1OX8Leo1DD1Cfiah/b6n1FoPzzrmsKi6Y+EwA=
+	t=1761469526; cv=none; b=j79gr0+NnVwvK3UTL01kAmR8++koP0UQ5R5KsWZvfmZ5vHFVRoTarWWig3c6DFQr1j1HnQyYCfEqIPEpuXjsSJeHClRVXAKSTBHV4SGnNmVlvvRh8ykk+EKuZVOzwhtbdSus01UEwzBQq2iXHEEyfM74PQHaOSgM3Dwt91kFYZo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761469258; c=relaxed/simple;
-	bh=Z71V+IflA+1QIYvB78gXEjtvWZVDY+fxoMPkw5MVsEU=;
+	s=arc-20240116; t=1761469526; c=relaxed/simple;
+	bh=621H1AMez2gc/fQ6H3VcnsSpb6SBceBuVkAbhol/+Ho=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=LDlvw2CKLeWh8RpBmciOMhu55iQTgPuSmrTiqbvozBO90g2i0aAJkSWmx7t8Mt1su7AhHifjI+VgFewmCM4ht01geZrI1iT01pb/FEU4rghSo7tJliuFYQDPy7ubfZXP3MdO1r6AfhVBvX2hptnIsVmAWgiXrpNdMS7mbM3ThcQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=q3JOHsO2; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C05FC4CEE7;
-	Sun, 26 Oct 2025 09:00:55 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=LLd+2MQ29+AlGtCXF+1Z4F0V7HvSpRZqqcZO3818bmCHYw9kQWglYqwefdBodU7EbSWzvTk+6ulBDmwPpO4dDM2WDGeoNE905tGmvzdY1ypr8mCEDoB94xuHv6zDJmvjF8pBGDKazJHF2atOn50HNqxUzQXb+MuXv1aVJsRLilY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=XA7IbfV/; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3752FC4CEE7;
+	Sun, 26 Oct 2025 09:05:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1761469258;
-	bh=Z71V+IflA+1QIYvB78gXEjtvWZVDY+fxoMPkw5MVsEU=;
+	s=k20201202; t=1761469525;
+	bh=621H1AMez2gc/fQ6H3VcnsSpb6SBceBuVkAbhol/+Ho=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=q3JOHsO2ROcTX0FUPMsd3zQNjY4q3f92TSDuUzFnOCs4xDyb3H+hR+tjAwCmSXQG7
-	 nNhcwiI5bkiDAqhS/Iz4gfiKAa3HYQ4OrHZ1WoPeIAupxq7Ri04nERoScjPiBRJBP5
-	 frRf2C4OmHfQh87CZOL5kTUsZkojQIfoP0Gc5uXCkOSf2GwjXWGgIfscj9a1NaSFor
-	 oXwQkVNkssatw0bH40z1Fbk0BM9IfSkRdqx2W7htTPI+fMuI93XEyOjOlXy0P6Ehi5
-	 Qf5FgByu48MmBd3RDudvtv0NgseDbGV/rUw0bVxHSiA60l3y9uB+Yf7kodLzc1931b
-	 7q2NRoGQdVhGw==
-Message-ID: <e1c5ef06-f1a0-47e7-8fbb-8cc51ce25491@kernel.org>
-Date: Sun, 26 Oct 2025 10:00:53 +0100
+	b=XA7IbfV/i7JxutCCUGb4iUqRMaT00CfjEq6oN6BfWNvyk9/P0N98XuXPuIA5XBSMV
+	 QAk1GypYHJXUNk1p66brHOLNE20hyOttZpCrTZetr1i5zf/zhMYuhP4JL7Le67cBQ7
+	 V6dzLXzgSCaSahtvP1qGfeNjSVntSunm7cpBnxKjcRyDDrSzGk03TPGTQQUeOUR2qd
+	 XgSh0YoQCpF+VXG/4vyUX7eldYkd1K5ZVQIrywpAm7drS+bez5ADpHOfYUFD6tX2d8
+	 sImheyghVEVPUfbHeda1g1UZzPY9Qo+VT86Rm8pHt+ll2JyFcqmCQtRoF54CDsgAD2
+	 69U9pWoT0hysw==
+Message-ID: <90175296-7a38-45e4-b53d-1b79317975ca@kernel.org>
+Date: Sun, 26 Oct 2025 10:05:22 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,17 +50,15 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 3/8] dt-bindings: phy: qcom-m31-eusb2: Add Glymur
- compatible
-To: Wesley Cheng <wesley.cheng@oss.qualcomm.com>,
- Vinod Koul <vkoul@kernel.org>, Kishon Vijay Abraham I <kishon@kernel.org>,
- Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
- Conor Dooley <conor+dt@kernel.org>, Wesley Cheng <quic_wcheng@quicinc.com>,
- Abel Vesa <abel.vesa@linaro.org>
-Cc: linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20251024-glymur_usb-v6-0-471fa39ff857@oss.qualcomm.com>
- <20251024-glymur_usb-v6-3-471fa39ff857@oss.qualcomm.com>
+Subject: Re: [PATCH v5 2/2] dt-bindings: arm: qcom: rubikpi3: document
+ rubikpi3 board binding
+To: Hongyang Zhao <hongyang.zhao@thundersoft.com>,
+ linux-arm-msm@vger.kernel.org
+Cc: casey.connolly@linaro.org, christopher.obbard@linaro.org,
+ loic.minier@oss.qualcomm.com, andersson@kernel.org,
+ Roger Shimizu <rosh@debian.org>
+References: <20251025122724.633766-1-hongyang.zhao@thundersoft.com>
+ <20251025122724.633766-3-hongyang.zhao@thundersoft.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -106,18 +104,22 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  jWt87ecuHlpL3uuQ0ZZNWqHgZoQLXoqC2ZV5KrtKWb/jyiFX/sxSrodALf0zf+tfHv0FZWT2
  zHjUqd0t4njD/UOsuIMOQn4Ig0SdivYPfZukb5cdasKJukG1NOpbW7yRNivaCnfZz6dTawXw
  XRIV/KDsHQiyVxKvN73bThKhONkcX2LWuD928tAR6XMM2G5ovxLe09vuOzzfTWQDsm++9UKF a/A=
-In-Reply-To: <20251024-glymur_usb-v6-3-471fa39ff857@oss.qualcomm.com>
+In-Reply-To: <20251025122724.633766-3-hongyang.zhao@thundersoft.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 25/10/2025 02:47, Wesley Cheng wrote:
-> Add the Glymur compatible to the M31 eUSB2 PHY, and use the SM8750 as
-> the fallback.
+On 25/10/2025 14:27, Hongyang Zhao wrote:
+> Add binding for the Thundercomm RUBIK Pi 3 board,
+> which is based on the Qualcomm Dragonwing QCS6490 SoC.
 > 
-> Signed-off-by: Wesley Cheng <wesley.cheng@oss.qualcomm.com>
-> ---
+> Signed-off-by: Hongyang Zhao <hongyang.zhao@thundersoft.com>
+> Reviewed-by: Roger Shimizu <rosh@debian.org>
+> Cc: Casey Connolly <casey.connolly@linaro.org>
+> Cc: Christopher Obbard <christopher.obbard@linaro.org>
+> Cc: Loic Minier <loic.minier@oss.qualcomm.com>
 
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+
+You ignored comments. Respond to them and then implement them.
 
 Best regards,
 Krzysztof
