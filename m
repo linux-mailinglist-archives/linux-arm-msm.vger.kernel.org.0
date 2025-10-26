@@ -1,91 +1,120 @@
-Return-Path: <linux-arm-msm+bounces-78814-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-78815-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 97731C0AE30
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 26 Oct 2025 17:47:34 +0100 (CET)
+Received: from ams.mirrors.kernel.org (ams.mirrors.kernel.org [213.196.21.55])
+	by mail.lfdr.de (Postfix) with ESMTPS id A0585C0AF3E
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 26 Oct 2025 18:40:02 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 5960E189D9DE
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 26 Oct 2025 16:47:45 +0000 (UTC)
+	by ams.mirrors.kernel.org (Postfix) with ESMTPS id 0FD57343D56
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 26 Oct 2025 17:39:58 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 019EA22D781;
-	Sun, 26 Oct 2025 16:47:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 134DB242D63;
+	Sun, 26 Oct 2025 17:39:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="eW68gJKi"
+	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="bbXkz1DY";
+	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="Qq9XwTOf";
+	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="bbXkz1DY";
+	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="Qq9XwTOf"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from smtp-out2.suse.de (smtp-out2.suse.de [195.135.223.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F27B313AC1
-	for <linux-arm-msm@vger.kernel.org>; Sun, 26 Oct 2025 16:47:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8870220371E
+	for <linux-arm-msm@vger.kernel.org>; Sun, 26 Oct 2025 17:39:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.135.223.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761497236; cv=none; b=QLScFmxybC3Fs06OgL1pA/Vz79jBJzAb/PNcCvweE64rKNuxUo4uUmjY4MQy74nTQZpaeWrGqHjWtmjJgU1r6fxmnIEvKWUZx7h/wWVRy2kfJ8T1sb1DZgey4PmwRcOyxSpRx0SKmBDc+QxhElbhWPKDmw+Z9nFa3n74i3qgg6M=
+	t=1761500394; cv=none; b=mqE9jrrVlsaEA8n03x12x9DHJj54DrdE8lQUu1p1MVw6U+R5ImKKCSwEreCQnLXs7OBiqsQ0cThWeRcfr9vW0a9H4rBIS7dDA85cSVpdU+bY4KP7X++8qBq/pmplt2qMXURhQKugMJa+O1O7tC7C411xrM7JNSb3U4r/Vk5Sr1o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761497236; c=relaxed/simple;
-	bh=MSxjxmhdoFP31asdp8BwwQo3EKrKgcGelDfHqcJ8/cM=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=DzjR2s2kUZj1N7FkuRTpIUFEEOjmoH/MN/p3a78Z/CmbWp9Es5vTujIxaX5zgb0uzYFccRWurESVb5+wITLSk235CDCGqlnSPn3njrXBKeUGDn12vhnZ12ZCDGJqGA/tb7yTbLhsJyQD65qoQbfxAJXj0rJHj57zUYYThF41TkM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=eW68gJKi; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 59QAluhh3758310
-	for <linux-arm-msm@vger.kernel.org>; Sun, 26 Oct 2025 16:47:13 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:date:from:message-id:mime-version
-	:subject:to; s=qcppdkim1; bh=gtOIQDRkE4jUoGiuibLTec4EJCw31m7i1qU
-	bgSeUb7E=; b=eW68gJKi3/d09QhGumwxEknjMSqaUn5bnfiy94Mk4nC5q8uUZY8
-	pMJfBRzblQTc3S68i+4FNNBjc5uxCsP7KdFgtjVUS65IGx+IVke8/nrrHCKVDiK8
-	mQoF2WpLKIUgCB2ijrnEcrH3vaRI7W6NfkFhk/ggzQqsoEGgbgGTmfoDod1otKKd
-	MApQA+GxuPqlzDAhVZ+mIyn1AA7qAPxhILn6aekPzLNQm+Xf6K3G+tPxemv5Pop4
-	wdw0+mMVksTOxiUXJF8tFkRExpY8zxM9tjGoJDIM3wmBdW9PRKBnqSfnWVe2L1yY
-	+Xh/sd19CPGpqIxeir9wIjHpoF0Q9G+OUkw==
-Received: from mail-pl1-f199.google.com (mail-pl1-f199.google.com [209.85.214.199])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4a0pmqj9jy-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Sun, 26 Oct 2025 16:47:13 +0000 (GMT)
-Received: by mail-pl1-f199.google.com with SMTP id d9443c01a7336-2924b3b9d47so35712975ad.0
-        for <linux-arm-msm@vger.kernel.org>; Sun, 26 Oct 2025 09:47:13 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1761497233; x=1762102033;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=gtOIQDRkE4jUoGiuibLTec4EJCw31m7i1qUbgSeUb7E=;
-        b=Jtcr0XryJLPG1xod6pw2Tn05d+S7ZupoVADizy8qF5FRg8Hf+VRyJCpAm+xihoh3RL
-         N3QEYub7mN+p0Ey/rCE04rnGUFbL0PxFmr00CDjHRNi1JLneYKS6bCQ8paWIbo2zSB0F
-         QP1rsBY51zmuxjnW24huTCZKgtg5HIvphDlMwvSpbu6JIiT/WZwmvAc2nrPSL5rWzvhS
-         lZR6IBHFc+keHp0taz1vlSLN1f24DJR0aRBq5BvY7mnDborevHbaDGh7rfRGxXIMYirv
-         dRiusMtbO5qVa1O2W9S6Hy/PUPocVglKSxZ4p5bu7/uVxlJPVCCpdSnxeRQcX8BEoay7
-         b8sA==
-X-Gm-Message-State: AOJu0YwxqcteQMre8ytc3XuVYCSXH24r7qvwxpotVXdZ5lKl0/JxVieO
-	y1zMLBR8IxAR/hoqK9JcnlgmFjguru6vE2M0pD9n1xg30zvE0VqBIe8b3IDqUwJD9IZgLFGATWO
-	zWc84Jx9BN3GKnaKiE07J5W9CEhS4V5j+yReTJV14BROQ27wRTKK28FWhBG6Sb1/XLjFh
-X-Gm-Gg: ASbGncvLpYOq1CI7o1HT1nGvRptrFCqESDO7jrTRLR2FFoeNxjAAjZXJXzMFjBgFXKS
-	CadPiGvFelSukjMwEGeOArAG9DYZEeMnw78XnwMc4ta4dOOTg3qYARkvWLMblOeYS1Lcm3WFXeP
-	yzZ1MC9YSkYA88VfX7mZiZHtt1nkxpIZcEc+dezVpWKPiocoDBW6doGSa2caPLmc1VVWtB4g6Id
-	3nxXJvusUv4GgFv+bVmNe/eKbhBJxUA0iRJtqPoPTlrLoYtxFPG2RcV3x3KMlAWQqCj91Yq1jOm
-	ZlHzjK+jImLpMzdRQ511mHxZQrnxGgaldHAOIds+BXFj2a7JpeNDttjvTvgCS+DXHMiGd1BHDE+
-	Jzt14ZNe2YVPkz80nr0gkAY7zR9QDqQ==
-X-Received: by 2002:a17:902:e5cc:b0:267:95ad:8cb8 with SMTP id d9443c01a7336-290cb079f2dmr473791625ad.44.1761497232686;
-        Sun, 26 Oct 2025 09:47:12 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IElUY1pOphpgAKzA1U30wGs7B7BcP61UTizcuLEFI7VOcVE/KvEUt3scnuKVgrJMAxHJ5Wdhw==
-X-Received: by 2002:a17:902:e5cc:b0:267:95ad:8cb8 with SMTP id d9443c01a7336-290cb079f2dmr473791395ad.44.1761497232165;
-        Sun, 26 Oct 2025 09:47:12 -0700 (PDT)
-Received: from hu-neersoni-hyd.qualcomm.com ([202.46.22.19])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-29498e41125sm53997555ad.94.2025.10.26.09.47.09
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 26 Oct 2025 09:47:11 -0700 (PDT)
-From: Neeraj Soni <neeraj.soni@oss.qualcomm.com>
-To: andersson@kernel.org, konradybcio@kernel.org
-Cc: linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        neeraj.soni@oss.qualcomm.com
-Subject: [PATCH] soc: qcom: Add HWKM v1 support for wrapped keys
-Date: Sun, 26 Oct 2025 22:17:08 +0530
-Message-Id: <20251026164708.2771213-1-neeraj.soni@oss.qualcomm.com>
-X-Mailer: git-send-email 2.34.1
+	s=arc-20240116; t=1761500394; c=relaxed/simple;
+	bh=39xQwGXU1P7TDK5E7STplYLJc9bb7z82m0ABO0+FU4Q=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=W6VHB4tsIyCprb16mAvYAj9+XgaMSALj2nWKmKLQHlalnor2qTPP5g3XBUSIGBbgz9f29UYG2N5elp2DmhkgXmK8zE5SUxUGpTaCrf8C1Pa239UmGnxikSpNqHqYemuwezme/4M75kQJK5PDBpxIPDOxDQod+RW8tFx4zX2EtR8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de; spf=pass smtp.mailfrom=suse.de; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=bbXkz1DY; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=Qq9XwTOf; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=bbXkz1DY; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=Qq9XwTOf; arc=none smtp.client-ip=195.135.223.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.de
+Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by smtp-out2.suse.de (Postfix) with ESMTPS id 67E8E1F385;
+	Sun, 26 Oct 2025 17:39:49 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+	t=1761500389; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:  content-transfer-encoding:content-transfer-encoding;
+	bh=OZ22lVGEAexwGsjTiSwzDDhbg/xwdQkHelPXrad0fWc=;
+	b=bbXkz1DYDWqxicoHA3xxclMBv5RAxfp8S8gdHKr95Bmpc82WjDs2ct+ZWVn3/m1YQ8F7vk
+	a9Qfysm24dDDSVsP75MH3MtQ6ikDBRfVw5lN4iLrNJFkt5FN4khowPAb0q1bF2Yp0SKJJa
+	NlQn6OgjJ+cQ0yGrR8dzxdgWan2LnPM=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+	s=susede2_ed25519; t=1761500389;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:  content-transfer-encoding:content-transfer-encoding;
+	bh=OZ22lVGEAexwGsjTiSwzDDhbg/xwdQkHelPXrad0fWc=;
+	b=Qq9XwTOfWmK0H646Okuy9BO+c0SAXapCbyK2XcMFQJH87nRCFG5kiCXAPjlb043yxJEn+q
+	gh1TMniW67pZHsAQ==
+Authentication-Results: smtp-out2.suse.de;
+	none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+	t=1761500389; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:  content-transfer-encoding:content-transfer-encoding;
+	bh=OZ22lVGEAexwGsjTiSwzDDhbg/xwdQkHelPXrad0fWc=;
+	b=bbXkz1DYDWqxicoHA3xxclMBv5RAxfp8S8gdHKr95Bmpc82WjDs2ct+ZWVn3/m1YQ8F7vk
+	a9Qfysm24dDDSVsP75MH3MtQ6ikDBRfVw5lN4iLrNJFkt5FN4khowPAb0q1bF2Yp0SKJJa
+	NlQn6OgjJ+cQ0yGrR8dzxdgWan2LnPM=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+	s=susede2_ed25519; t=1761500389;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:  content-transfer-encoding:content-transfer-encoding;
+	bh=OZ22lVGEAexwGsjTiSwzDDhbg/xwdQkHelPXrad0fWc=;
+	b=Qq9XwTOfWmK0H646Okuy9BO+c0SAXapCbyK2XcMFQJH87nRCFG5kiCXAPjlb043yxJEn+q
+	gh1TMniW67pZHsAQ==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 9D41813675;
+	Sun, 26 Oct 2025 17:39:48 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+	by imap1.dmz-prg2.suse.org with ESMTPSA
+	id AIL3JORc/mghawAAD6G6ig
+	(envelope-from <tzimmermann@suse.de>); Sun, 26 Oct 2025 17:39:48 +0000
+From: Thomas Zimmermann <tzimmermann@suse.de>
+To: javierm@redhat.com,
+	airlied@gmail.com,
+	simona@ffwll.ch,
+	linux@armlinux.org.uk,
+	maarten.lankhorst@linux.intel.com,
+	mripard@kernel.org,
+	inki.dae@samsung.com,
+	sw0312.kim@samsung.com,
+	kyungmin.park@samsung.com,
+	patrik.r.jakobsson@gmail.com,
+	jani.nikula@linux.intel.com,
+	rodrigo.vivi@intel.com,
+	robin.clark@oss.qualcomm.com,
+	lumag@kernel.org,
+	abhinav.kumar@linux.dev,
+	sean@poorly.run,
+	marijn.suijten@somainline.org,
+	tomi.valkeinen@ideasonboard.com,
+	alexander.deucher@amd.com,
+	christian.koenig@amd.com,
+	thierry.reding@gmail.com,
+	mperttunen@nvidia.com,
+	jonathanh@nvidia.com
+Cc: dri-devel@lists.freedesktop.org,
+	intel-gfx@lists.freedesktop.org,
+	intel-xe@lists.freedesktop.org,
+	linux-arm-msm@vger.kernel.org,
+	freedreno@lists.freedesktop.org,
+	amd-gfx@lists.freedesktop.org,
+	linux-tegra@vger.kernel.org,
+	Thomas Zimmermann <tzimmermann@suse.de>
+Subject: [PATCH] drm/fb-helper: Allocate and release fb_info in single place
+Date: Sun, 26 Oct 2025 18:18:47 +0100
+Message-ID: <20251026173944.219373-1-tzimmermann@suse.de>
+X-Mailer: git-send-email 2.51.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -93,245 +122,524 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-ORIG-GUID: hy6JmOYCkn5S3vwJwZo4SAjS0vUTPv1G
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDI2MDE2MSBTYWx0ZWRfX+RDaS/4t/Lkp
- 9yNOjqwp1vlK/HP+67xIihQqWl/3iTsWcXeGiN6kdajwD83VZij2riX8QpBtbwNETyPufuApap5
- YjvczfSoJ70K4aQ7j2pans+3AlQXGBwLoqidR2ySPlZNjD14TMlXbLrHAnL7R7qvyZdxwoZkxtH
- yco2MKjhPf4ho6E1QRmrb6TJ5xMsomowD3MmsNCitymmoUm8+VbEacbxD9q5mp640GvJjHu8IEt
- RHETEixWAWtIf6g5zTqxX/yXXXzKA0d/GqSvSh4t7HLx3mlTB2opF0wbNAuG9sQkYtLik2crJMV
- tG+n9iZoS3zNAAbhtwPRqRXuM0+5QQJT7VL+BQezkgS9bS1QgiEfuF825GsB9J+8qEf+UVnvFg/
- QMEiEa1y/UZu2/oLl+u9EC6/9/7n7A==
-X-Authority-Analysis: v=2.4 cv=Vf76/Vp9 c=1 sm=1 tr=0 ts=68fe5091 cx=c_pps
- a=JL+w9abYAAE89/QcEU+0QA==:117 a=fChuTYTh2wq5r3m49p7fHw==:17
- a=x6icFKpwvdMA:10 a=VkNPw1HP01LnGYTKEx00:22 a=EUspDBNiAAAA:8
- a=oDhber50rIFwixT5uKoA:9 a=324X-CrmTo6CU4MGRt3R:22
-X-Proofpoint-GUID: hy6JmOYCkn5S3vwJwZo4SAjS0vUTPv1G
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-10-26_07,2025-10-22_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0 priorityscore=1501 impostorscore=0 lowpriorityscore=0
- suspectscore=0 malwarescore=0 spamscore=0 bulkscore=0 adultscore=0
- clxscore=1011 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2510020000
- definitions=main-2510260161
+X-Spam-Level: 
+X-Spamd-Result: default: False [-1.29 / 50.00];
+	BAYES_HAM(-3.00)[100.00%];
+	SUSPICIOUS_RECIPS(1.50)[];
+	NEURAL_HAM_LONG(-1.00)[-1.000];
+	MID_CONTAINS_FROM(1.00)[];
+	R_MISSING_CHARSET(0.50)[];
+	NEURAL_HAM_SHORT(-0.19)[-0.974];
+	MIME_GOOD(-0.10)[text/plain];
+	ARC_NA(0.00)[];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	FUZZY_RATELIMITED(0.00)[rspamd.com];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo,suse.de:email,suse.de:mid];
+	RCPT_COUNT_TWELVE(0.00)[31];
+	MIME_TRACE(0.00)[0:+];
+	TO_DN_SOME(0.00)[];
+	RCVD_TLS_ALL(0.00)[];
+	TAGGED_RCPT(0.00)[];
+	FREEMAIL_TO(0.00)[redhat.com,gmail.com,ffwll.ch,armlinux.org.uk,linux.intel.com,kernel.org,samsung.com,intel.com,oss.qualcomm.com,linux.dev,poorly.run,somainline.org,ideasonboard.com,amd.com,nvidia.com];
+	RCVD_COUNT_TWO(0.00)[2];
+	TO_MATCH_ENVRCPT_ALL(0.00)[];
+	FROM_HAS_DN(0.00)[];
+	FROM_EQ_ENVFROM(0.00)[];
+	R_RATELIMIT(0.00)[to_ip_from(RLq3cifbxyhc6qbbynzfc6amns)];
+	DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+	FREEMAIL_ENVRCPT(0.00)[gmail.com]
+X-Spam-Flag: NO
+X-Spam-Score: -1.29
 
-HWKM v1 and v2 differ slightly in wrapped key size and the bit fields for
-certain status registers and operating mode (legacy or standard).
+Move the calls to drm_fb_helper_alloc_info() from drivers into a
+single place in fbdev helpers. Allocates struct fb_info for a new
+framebuffer device. Then call drm_fb_helper_single_fb_probe() to
+create an fbdev screen buffer. Also release the instance on errors
+by calling drm_fb_helper_release_info().
 
-Add support to select HWKM version based on the major and minor revisions.
-Use this HWKM version to select wrapped key size and to configure the bit
-fields in registers for operating modes and hardware status.
+Simplifies the code and fixes the error cleanup for some of the
+drivers.
 
-Support for SCM calls for wrapped keys is being added in the TrustZone for
-few SoCs with HWKM v1. Existing check of qcom_scm_has_wrapped_key_support()
-API ensures that HWKM is used only if these SCM calls are supported in
-TrustZone for that SoC.
+Regular release of the struct fb_info instance still happens in
+drm_fb_helper_fini() as before.
 
-Signed-off-by: Neeraj Soni <neeraj.soni@oss.qualcomm.com>
+Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
 ---
- drivers/soc/qcom/ice.c | 85 ++++++++++++++++++++++++++++++------------
- 1 file changed, 62 insertions(+), 23 deletions(-)
+ drivers/gpu/drm/armada/armada_fbdev.c      |  8 +----
+ drivers/gpu/drm/drm_fb_helper.c            | 39 +++++++---------------
+ drivers/gpu/drm/drm_fbdev_dma.c            | 12 ++-----
+ drivers/gpu/drm/drm_fbdev_shmem.c          | 12 ++-----
+ drivers/gpu/drm/drm_fbdev_ttm.c            | 10 +-----
+ drivers/gpu/drm/exynos/exynos_drm_fbdev.c  |  9 +----
+ drivers/gpu/drm/gma500/fbdev.c             |  8 +----
+ drivers/gpu/drm/i915/display/intel_fbdev.c |  9 +----
+ drivers/gpu/drm/msm/msm_fbdev.c            |  9 +----
+ drivers/gpu/drm/omapdrm/omap_fbdev.c       |  9 +----
+ drivers/gpu/drm/radeon/radeon_fbdev.c      |  9 +----
+ drivers/gpu/drm/tegra/fbdev.c              |  9 +----
+ include/drm/drm_fb_helper.h                | 12 -------
+ 13 files changed, 25 insertions(+), 130 deletions(-)
 
-diff --git a/drivers/soc/qcom/ice.c b/drivers/soc/qcom/ice.c
-index c467b55b4174..5f213e74c668 100644
---- a/drivers/soc/qcom/ice.c
-+++ b/drivers/soc/qcom/ice.c
-@@ -22,7 +22,16 @@
- #include <soc/qcom/ice.h>
+diff --git a/drivers/gpu/drm/armada/armada_fbdev.c b/drivers/gpu/drm/armada/armada_fbdev.c
+index 22e2081bfa04..c8778a6d8a8d 100644
+--- a/drivers/gpu/drm/armada/armada_fbdev.c
++++ b/drivers/gpu/drm/armada/armada_fbdev.c
+@@ -43,10 +43,10 @@ int armada_fbdev_driver_fbdev_probe(struct drm_fb_helper *fbh,
+ 				    struct drm_fb_helper_surface_size *sizes)
+ {
+ 	struct drm_device *dev = fbh->dev;
++	struct fb_info *info = fbh->info;
+ 	struct drm_mode_fb_cmd2 mode;
+ 	struct armada_framebuffer *dfb;
+ 	struct armada_gem_object *obj;
+-	struct fb_info *info;
+ 	int size, ret;
+ 	void *ptr;
  
- #define AES_256_XTS_KEY_SIZE			64   /* for raw keys only */
--#define QCOM_ICE_HWKM_WRAPPED_KEY_SIZE		100  /* assuming HWKM v2 */
+@@ -90,12 +90,6 @@ int armada_fbdev_driver_fbdev_probe(struct drm_fb_helper *fbh,
+ 	if (IS_ERR(dfb))
+ 		return PTR_ERR(dfb);
+ 
+-	info = drm_fb_helper_alloc_info(fbh);
+-	if (IS_ERR(info)) {
+-		ret = PTR_ERR(info);
+-		goto err_fballoc;
+-	}
+-
+ 	info->fbops = &armada_fb_ops;
+ 	info->fix.smem_start = obj->phys_addr;
+ 	info->fix.smem_len = obj->obj.size;
+diff --git a/drivers/gpu/drm/drm_fb_helper.c b/drivers/gpu/drm/drm_fb_helper.c
+index 53e9dc0543de..dd80f5c5feec 100644
+--- a/drivers/gpu/drm/drm_fb_helper.c
++++ b/drivers/gpu/drm/drm_fb_helper.c
+@@ -495,20 +495,7 @@ int drm_fb_helper_init(struct drm_device *dev,
+ }
+ EXPORT_SYMBOL(drm_fb_helper_init);
+ 
+-/**
+- * drm_fb_helper_alloc_info - allocate fb_info and some of its members
+- * @fb_helper: driver-allocated fbdev helper
+- *
+- * A helper to alloc fb_info and the member cmap. Called by the driver
+- * within the struct &drm_driver.fbdev_probe callback function. Drivers do
+- * not need to release the allocated fb_info structure themselves, this is
+- * automatically done when calling drm_fb_helper_fini().
+- *
+- * RETURNS:
+- * fb_info pointer if things went okay, pointer containing error code
+- * otherwise
+- */
+-struct fb_info *drm_fb_helper_alloc_info(struct drm_fb_helper *fb_helper)
++static struct fb_info *drm_fb_helper_alloc_info(struct drm_fb_helper *fb_helper)
+ {
+ 	struct device *dev = fb_helper->dev->dev;
+ 	struct fb_info *info;
+@@ -535,17 +522,8 @@ struct fb_info *drm_fb_helper_alloc_info(struct drm_fb_helper *fb_helper)
+ 	framebuffer_release(info);
+ 	return ERR_PTR(ret);
+ }
+-EXPORT_SYMBOL(drm_fb_helper_alloc_info);
+ 
+-/**
+- * drm_fb_helper_release_info - release fb_info and its members
+- * @fb_helper: driver-allocated fbdev helper
+- *
+- * A helper to release fb_info and the member cmap.  Drivers do not
+- * need to release the allocated fb_info structure themselves, this is
+- * automatically done when calling drm_fb_helper_fini().
+- */
+-void drm_fb_helper_release_info(struct drm_fb_helper *fb_helper)
++static void drm_fb_helper_release_info(struct drm_fb_helper *fb_helper)
+ {
+ 	struct fb_info *info = fb_helper->info;
+ 
+@@ -558,7 +536,6 @@ void drm_fb_helper_release_info(struct drm_fb_helper *fb_helper)
+ 		fb_dealloc_cmap(&info->cmap);
+ 	framebuffer_release(info);
+ }
+-EXPORT_SYMBOL(drm_fb_helper_release_info);
+ 
+ /**
+  * drm_fb_helper_unregister_info - unregister fb_info framebuffer device
+@@ -1809,6 +1786,11 @@ __drm_fb_helper_initial_config_and_unlock(struct drm_fb_helper *fb_helper)
+ 	height = dev->mode_config.max_height;
+ 
+ 	drm_client_modeset_probe(&fb_helper->client, width, height);
 +
-+#define QCOM_ICE_HWKM_V1			1    /* HWKM version 1 */
-+#define QCOM_ICE_HWKM_V2			2    /* HWKM version 2 */
++	info = drm_fb_helper_alloc_info(fb_helper);
++	if (IS_ERR(info))
++		return PTR_ERR(info);
 +
-+/*
-+ * Wrapped key size depends upon HWKM version:
-+ * HWKM version 1 supports 68 bytes
-+ * HWKM version 2 supports 100 bytes
-+ */
-+#define QCOM_ICE_HWKM_WRAPPED_KEY_SIZE(v)	((v) == QCOM_ICE_HWKM_V1 ? 68 : 100)
+ 	ret = drm_fb_helper_single_fb_probe(fb_helper);
+ 	if (ret < 0) {
+ 		if (ret == -EAGAIN) {
+@@ -1817,13 +1799,12 @@ __drm_fb_helper_initial_config_and_unlock(struct drm_fb_helper *fb_helper)
+ 		}
+ 		mutex_unlock(&fb_helper->lock);
  
- /* QCOM ICE registers */
+-		return ret;
++		goto err_drm_fb_helper_release_info;
+ 	}
+ 	drm_setup_crtcs_fb(fb_helper);
  
-@@ -62,13 +71,15 @@ union crypto_cfg {
+ 	fb_helper->deferred_setup = false;
  
- #define QCOM_ICE_REG_HWKM_TZ_KM_CTL		(HWKM_OFFSET + 0x1000)
- #define QCOM_ICE_HWKM_DISABLE_CRC_CHECKS_VAL	(BIT(1) | BIT(2))
-+/* In HWKM v1 the ICE legacy mode is controlled from HWKM register space */
-+#define QCOM_ICE_HWKM_ICE_LEGACY_MODE_ENABLED	BIT(5)
+-	info = fb_helper->info;
+ 	info->var.pixclock = 0;
  
- #define QCOM_ICE_REG_HWKM_TZ_KM_STATUS		(HWKM_OFFSET + 0x1004)
- #define QCOM_ICE_HWKM_KT_CLEAR_DONE		BIT(0)
- #define QCOM_ICE_HWKM_BOOT_CMD_LIST0_DONE	BIT(1)
- #define QCOM_ICE_HWKM_BOOT_CMD_LIST1_DONE	BIT(2)
--#define QCOM_ICE_HWKM_CRYPTO_BIST_DONE_V2	BIT(7)
--#define QCOM_ICE_HWKM_BIST_DONE_V2		BIT(9)
-+#define QCOM_ICE_HWKM_CRYPTO_BIST_DONE(v)	(((v) == QCOM_ICE_HWKM_V1) ? BIT(14) : BIT(7))
-+#define QCOM_ICE_HWKM_BIST_DONE(v)		(((v) == QCOM_ICE_HWKM_V1) ? BIT(16) : BIT(9))
+ 	/* Need to drop locks to avoid recursive deadlock in
+@@ -1846,6 +1827,10 @@ __drm_fb_helper_initial_config_and_unlock(struct drm_fb_helper *fb_helper)
+ 	mutex_unlock(&kernel_fb_helper_lock);
  
- #define QCOM_ICE_REG_HWKM_BANK0_BANKN_IRQ_STATUS (HWKM_OFFSET + 0x2008)
- #define QCOM_ICE_HWKM_RSP_FIFO_CLEAR_VAL	BIT(3)
-@@ -97,6 +108,7 @@ struct qcom_ice {
- 	struct clk *core_clk;
- 	bool use_hwkm;
- 	bool hwkm_init_complete;
-+	u8 hwkm_version;
- };
+ 	return 0;
++
++err_drm_fb_helper_release_info:
++	drm_fb_helper_release_info(fb_helper);
++	return ret;
+ }
  
- static bool qcom_ice_check_supported(struct qcom_ice *ice)
-@@ -114,9 +126,26 @@ static bool qcom_ice_check_supported(struct qcom_ice *ice)
- 		return false;
+ /**
+diff --git a/drivers/gpu/drm/drm_fbdev_dma.c b/drivers/gpu/drm/drm_fbdev_dma.c
+index c6196293e424..442d964039b7 100644
+--- a/drivers/gpu/drm/drm_fbdev_dma.c
++++ b/drivers/gpu/drm/drm_fbdev_dma.c
+@@ -268,9 +268,9 @@ int drm_fbdev_dma_driver_fbdev_probe(struct drm_fb_helper *fb_helper,
+ {
+ 	struct drm_client_dev *client = &fb_helper->client;
+ 	struct drm_device *dev = fb_helper->dev;
++	struct fb_info *info = fb_helper->info;
+ 	struct drm_client_buffer *buffer;
+ 	struct drm_framebuffer *fb;
+-	struct fb_info *info;
+ 	u32 format;
+ 	struct iosys_map map;
+ 	int ret;
+@@ -300,12 +300,6 @@ int drm_fbdev_dma_driver_fbdev_probe(struct drm_fb_helper *fb_helper,
+ 	fb_helper->buffer = buffer;
+ 	fb_helper->fb = fb;
+ 
+-	info = drm_fb_helper_alloc_info(fb_helper);
+-	if (IS_ERR(info)) {
+-		ret = PTR_ERR(info);
+-		goto err_drm_client_buffer_vunmap;
+-	}
+-
+ 	drm_fb_helper_fill_info(info, fb_helper, sizes);
+ 
+ 	if (fb->funcs->dirty)
+@@ -313,12 +307,10 @@ int drm_fbdev_dma_driver_fbdev_probe(struct drm_fb_helper *fb_helper,
+ 	else
+ 		ret = drm_fbdev_dma_driver_fbdev_probe_tail(fb_helper, sizes);
+ 	if (ret)
+-		goto err_drm_fb_helper_release_info;
++		goto err_drm_client_buffer_vunmap;
+ 
+ 	return 0;
+ 
+-err_drm_fb_helper_release_info:
+-	drm_fb_helper_release_info(fb_helper);
+ err_drm_client_buffer_vunmap:
+ 	fb_helper->fb = NULL;
+ 	fb_helper->buffer = NULL;
+diff --git a/drivers/gpu/drm/drm_fbdev_shmem.c b/drivers/gpu/drm/drm_fbdev_shmem.c
+index 51573058df6f..2190e2230b83 100644
+--- a/drivers/gpu/drm/drm_fbdev_shmem.c
++++ b/drivers/gpu/drm/drm_fbdev_shmem.c
+@@ -134,10 +134,10 @@ int drm_fbdev_shmem_driver_fbdev_probe(struct drm_fb_helper *fb_helper,
+ {
+ 	struct drm_client_dev *client = &fb_helper->client;
+ 	struct drm_device *dev = fb_helper->dev;
++	struct fb_info *info = fb_helper->info;
+ 	struct drm_client_buffer *buffer;
+ 	struct drm_gem_shmem_object *shmem;
+ 	struct drm_framebuffer *fb;
+-	struct fb_info *info;
+ 	u32 format;
+ 	struct iosys_map map;
+ 	int ret;
+@@ -167,12 +167,6 @@ int drm_fbdev_shmem_driver_fbdev_probe(struct drm_fb_helper *fb_helper,
+ 	fb_helper->buffer = buffer;
+ 	fb_helper->fb = fb;
+ 
+-	info = drm_fb_helper_alloc_info(fb_helper);
+-	if (IS_ERR(info)) {
+-		ret = PTR_ERR(info);
+-		goto err_drm_client_buffer_vunmap;
+-	}
+-
+ 	drm_fb_helper_fill_info(info, fb_helper, sizes);
+ 
+ 	info->fbops = &drm_fbdev_shmem_fb_ops;
+@@ -193,12 +187,10 @@ int drm_fbdev_shmem_driver_fbdev_probe(struct drm_fb_helper *fb_helper,
+ 	info->fbdefio = &fb_helper->fbdefio;
+ 	ret = fb_deferred_io_init(info);
+ 	if (ret)
+-		goto err_drm_fb_helper_release_info;
++		goto err_drm_client_buffer_vunmap;
+ 
+ 	return 0;
+ 
+-err_drm_fb_helper_release_info:
+-	drm_fb_helper_release_info(fb_helper);
+ err_drm_client_buffer_vunmap:
+ 	fb_helper->fb = NULL;
+ 	fb_helper->buffer = NULL;
+diff --git a/drivers/gpu/drm/drm_fbdev_ttm.c b/drivers/gpu/drm/drm_fbdev_ttm.c
+index ccf460fbc1f0..9a7fa59e2bc7 100644
+--- a/drivers/gpu/drm/drm_fbdev_ttm.c
++++ b/drivers/gpu/drm/drm_fbdev_ttm.c
+@@ -203,12 +203,6 @@ int drm_fbdev_ttm_driver_fbdev_probe(struct drm_fb_helper *fb_helper,
+ 		goto err_drm_client_framebuffer_delete;
  	}
  
-+	/* HWKM version v2 is present from ICE 3.2.1 onwards while version v1
-+	 * is present only in ICE 3.2.0.
-+	 */
-+	if (major == 4 ||
-+	   (major == 3 && (minor >= 3 || (minor == 2 && step >= 1))))
-+		ice->hwkm_version = QCOM_ICE_HWKM_V2;
-+	else if ((major == 3) && (minor == 2))
-+		ice->hwkm_version = QCOM_ICE_HWKM_V1;
-+	else
-+		ice->hwkm_version = 0;
-+
- 	dev_info(dev, "Found QC Inline Crypto Engine (ICE) v%d.%d.%d\n",
- 		 major, minor, step);
+-	info = drm_fb_helper_alloc_info(fb_helper);
+-	if (IS_ERR(info)) {
+-		ret = PTR_ERR(info);
+-		goto err_vfree;
+-	}
+-
+ 	drm_fb_helper_fill_info(info, fb_helper, sizes);
  
-+	if (!ice->hwkm_version)
-+		dev_info(dev, "QC Hard Ware Key Manager (HWKM) not supported\n");
-+	else
-+		dev_info(dev, "QC Hard Ware Key Manager (HWKM) version v%d\n",
-+			 ice->hwkm_version);
-+
- 	/* If fuses are blown, ICE might not work in the standard way. */
- 	regval = qcom_ice_readl(ice, QCOM_ICE_REG_FUSE_SETTING);
- 	if (regval & (QCOM_ICE_FUSE_SETTING_MASK |
-@@ -131,19 +160,18 @@ static bool qcom_ice_check_supported(struct qcom_ice *ice)
- 	 * v3.2.1 and later have HWKM v2.  ICE v3.2.0 has HWKM v1.  Earlier ICE
- 	 * versions don't have HWKM at all.  However, for HWKM to be fully
- 	 * usable by Linux, the TrustZone software also needs to support certain
--	 * SCM calls including the ones to generate and prepare keys.  That
--	 * effectively makes the earliest supported SoC be SM8650, which has
--	 * HWKM v2.  Therefore, this driver doesn't include support for HWKM v1,
--	 * and it checks for the SCM call support before it decides to use HWKM.
-+	 * SCM calls including the ones to generate and prepare keys. Support
-+	 * for these SCM calls is present for SoCs with HWKM v2 and is being
-+	 * added for SoCs with HWKM v1 as well but not every SoC with HWKM v1
-+	 * currently supports this. So, this driver checks for the SCM call
-+	 * support before it decides to use HWKM.
- 	 *
- 	 * Also, since HWKM and legacy mode are mutually exclusive, and
- 	 * ICE-capable storage driver(s) need to know early on whether to
- 	 * advertise support for raw keys or wrapped keys, HWKM cannot be used
- 	 * unconditionally.  A module parameter is used to opt into using it.
- 	 */
--	if ((major >= 4 ||
--	     (major == 3 && (minor >= 3 || (minor == 2 && step >= 1)))) &&
--	    qcom_scm_has_wrapped_key_support()) {
-+	if (ice->hwkm_version && qcom_scm_has_wrapped_key_support()) {
- 		if (qcom_ice_use_wrapped_keys) {
- 			dev_info(dev, "Using HWKM. Supporting wrapped keys only.\n");
- 			ice->use_hwkm = true;
-@@ -212,8 +240,8 @@ static int qcom_ice_wait_bist_status(struct qcom_ice *ice)
- 	    (QCOM_ICE_HWKM_KT_CLEAR_DONE |
- 	     QCOM_ICE_HWKM_BOOT_CMD_LIST0_DONE |
- 	     QCOM_ICE_HWKM_BOOT_CMD_LIST1_DONE |
--	     QCOM_ICE_HWKM_CRYPTO_BIST_DONE_V2 |
--	     QCOM_ICE_HWKM_BIST_DONE_V2)) {
-+	     QCOM_ICE_HWKM_CRYPTO_BIST_DONE(ice->hwkm_version) |
-+	     QCOM_ICE_HWKM_BIST_DONE(ice->hwkm_version))) {
- 		dev_err(ice->dev, "HWKM self-test error!\n");
- 		/*
- 		 * Too late to revoke use_hwkm here, as it was already
-@@ -230,7 +258,7 @@ static void qcom_ice_hwkm_init(struct qcom_ice *ice)
- 	if (!ice->use_hwkm)
- 		return;
+ 	info->fbops = &drm_fbdev_ttm_fb_ops;
+@@ -225,12 +219,10 @@ int drm_fbdev_ttm_driver_fbdev_probe(struct drm_fb_helper *fb_helper,
+ 	info->fbdefio = &fb_helper->fbdefio;
+ 	ret = fb_deferred_io_init(info);
+ 	if (ret)
+-		goto err_drm_fb_helper_release_info;
++		goto err_vfree;
  
--	BUILD_BUG_ON(QCOM_ICE_HWKM_WRAPPED_KEY_SIZE >
-+	BUILD_BUG_ON(QCOM_ICE_HWKM_WRAPPED_KEY_SIZE(ice->hwkm_version) >
- 		     BLK_CRYPTO_MAX_HW_WRAPPED_KEY_SIZE);
- 	/*
- 	 * When ICE is in HWKM mode, it only supports wrapped keys.
-@@ -238,9 +266,18 @@ static void qcom_ice_hwkm_init(struct qcom_ice *ice)
- 	 *
- 	 * Put ICE in HWKM mode.  ICE defaults to legacy mode.
- 	 */
--	regval = qcom_ice_readl(ice, QCOM_ICE_REG_CONTROL);
--	regval &= ~QCOM_ICE_LEGACY_MODE_ENABLED;
--	qcom_ice_writel(ice, regval, QCOM_ICE_REG_CONTROL);
-+	if (ice->hwkm_version == QCOM_ICE_HWKM_V2) {
-+		regval = qcom_ice_readl(ice, QCOM_ICE_REG_CONTROL);
-+		regval &= ~QCOM_ICE_LEGACY_MODE_ENABLED;
-+		qcom_ice_writel(ice, regval, QCOM_ICE_REG_CONTROL);
-+	} else if (ice->hwkm_version == QCOM_ICE_HWKM_V1) {
-+		regval = qcom_ice_readl(ice, QCOM_ICE_REG_HWKM_TZ_KM_CTL);
-+		regval &= ~QCOM_ICE_HWKM_ICE_LEGACY_MODE_ENABLED;
-+		qcom_ice_writel(ice, regval, QCOM_ICE_REG_HWKM_TZ_KM_CTL);
-+	} else {
-+		dev_err(ice->dev, "Invalid HWKM version\n");
-+		return;
-+	}
+ 	return 0;
  
- 	/* Disable CRC checks.  This HWKM feature is not used. */
- 	qcom_ice_writel(ice, QCOM_ICE_HWKM_DISABLE_CRC_CHECKS_VAL,
-@@ -298,7 +335,8 @@ EXPORT_SYMBOL_GPL(qcom_ice_suspend);
- 
- static unsigned int translate_hwkm_slot(struct qcom_ice *ice, unsigned int slot)
+-err_drm_fb_helper_release_info:
+-	drm_fb_helper_release_info(fb_helper);
+ err_vfree:
+ 	vfree(screen_buffer);
+ err_drm_client_framebuffer_delete:
+diff --git a/drivers/gpu/drm/exynos/exynos_drm_fbdev.c b/drivers/gpu/drm/exynos/exynos_drm_fbdev.c
+index a3bd21a827ad..539ce0a87886 100644
+--- a/drivers/gpu/drm/exynos/exynos_drm_fbdev.c
++++ b/drivers/gpu/drm/exynos/exynos_drm_fbdev.c
+@@ -57,18 +57,11 @@ static int exynos_drm_fbdev_update(struct drm_fb_helper *helper,
+ 				   struct drm_fb_helper_surface_size *sizes,
+ 				   struct exynos_drm_gem *exynos_gem)
  {
--	return slot * 2;
-+	/* The slot offset depends upon HWKM version */
-+	return (ice->hwkm_version == QCOM_ICE_HWKM_V1) ? (slot) : (slot * 2);
- }
+-	struct fb_info *fbi;
++	struct fb_info *fbi = helper->info;
+ 	struct drm_framebuffer *fb = helper->fb;
+ 	unsigned int size = fb->width * fb->height * fb->format->cpp[0];
+ 	unsigned long offset;
  
- static int qcom_ice_program_wrapped_key(struct qcom_ice *ice, unsigned int slot,
-@@ -451,11 +489,12 @@ int qcom_ice_generate_key(struct qcom_ice *ice,
+-	fbi = drm_fb_helper_alloc_info(helper);
+-	if (IS_ERR(fbi)) {
+-		DRM_DEV_ERROR(to_dma_dev(helper->dev),
+-			      "failed to allocate fb info.\n");
+-		return PTR_ERR(fbi);
+-	}
+-
+ 	fbi->fbops = &exynos_drm_fb_ops;
+ 
+ 	drm_fb_helper_fill_info(fbi, helper, sizes);
+diff --git a/drivers/gpu/drm/gma500/fbdev.c b/drivers/gpu/drm/gma500/fbdev.c
+index bc92fa24a1e2..c92e2068c2c2 100644
+--- a/drivers/gpu/drm/gma500/fbdev.c
++++ b/drivers/gpu/drm/gma500/fbdev.c
+@@ -108,7 +108,7 @@ int psb_fbdev_driver_fbdev_probe(struct drm_fb_helper *fb_helper,
+ 	struct drm_device *dev = fb_helper->dev;
+ 	struct drm_psb_private *dev_priv = to_drm_psb_private(dev);
+ 	struct pci_dev *pdev = to_pci_dev(dev->dev);
+-	struct fb_info *info;
++	struct fb_info *info = fb_helper->info;
+ 	struct drm_framebuffer *fb;
+ 	struct drm_mode_fb_cmd2 mode_cmd = { };
+ 	int size;
+@@ -167,12 +167,6 @@ int psb_fbdev_driver_fbdev_probe(struct drm_fb_helper *fb_helper,
+ 	fb_helper->funcs = &psb_fbdev_fb_helper_funcs;
+ 	fb_helper->fb = fb;
+ 
+-	info = drm_fb_helper_alloc_info(fb_helper);
+-	if (IS_ERR(info)) {
+-		ret = PTR_ERR(info);
+-		goto err_drm_framebuffer_unregister_private;
+-	}
+-
+ 	info->fbops = &psb_fbdev_fb_ops;
+ 
+ 	/* Accessed stolen memory directly */
+diff --git a/drivers/gpu/drm/i915/display/intel_fbdev.c b/drivers/gpu/drm/i915/display/intel_fbdev.c
+index e5449c41cfa1..9cd03e2adeb2 100644
+--- a/drivers/gpu/drm/i915/display/intel_fbdev.c
++++ b/drivers/gpu/drm/i915/display/intel_fbdev.c
+@@ -267,8 +267,8 @@ int intel_fbdev_driver_fbdev_probe(struct drm_fb_helper *helper,
+ 	struct intel_display *display = to_intel_display(helper->dev);
+ 	struct intel_fbdev *ifbdev = to_intel_fbdev(helper);
+ 	struct intel_framebuffer *fb = ifbdev->fb;
++	struct fb_info *info = helper->info;
+ 	struct ref_tracker *wakeref;
+-	struct fb_info *info;
+ 	struct i915_vma *vma;
+ 	unsigned long flags = 0;
+ 	bool prealloc = false;
+@@ -318,13 +318,6 @@ int intel_fbdev_driver_fbdev_probe(struct drm_fb_helper *helper,
+ 		goto out_unlock;
+ 	}
+ 
+-	info = drm_fb_helper_alloc_info(helper);
+-	if (IS_ERR(info)) {
+-		drm_err(display->drm, "Failed to allocate fb_info (%pe)\n", info);
+-		ret = PTR_ERR(info);
+-		goto out_unpin;
+-	}
+-
+ 	helper->funcs = &intel_fb_helper_funcs;
+ 	helper->fb = &fb->base;
+ 
+diff --git a/drivers/gpu/drm/msm/msm_fbdev.c b/drivers/gpu/drm/msm/msm_fbdev.c
+index aad6fb77f0de..fd19995b12b5 100644
+--- a/drivers/gpu/drm/msm/msm_fbdev.c
++++ b/drivers/gpu/drm/msm/msm_fbdev.c
+@@ -91,9 +91,9 @@ int msm_fbdev_driver_fbdev_probe(struct drm_fb_helper *helper,
  {
+ 	struct drm_device *dev = helper->dev;
+ 	struct msm_drm_private *priv = dev->dev_private;
++	struct fb_info *fbi = helper->info;
+ 	struct drm_framebuffer *fb = NULL;
+ 	struct drm_gem_object *bo;
+-	struct fb_info *fbi = NULL;
+ 	uint64_t paddr;
+ 	uint32_t format;
+ 	int ret, pitch;
+@@ -126,13 +126,6 @@ int msm_fbdev_driver_fbdev_probe(struct drm_fb_helper *helper,
+ 		goto fail;
+ 	}
+ 
+-	fbi = drm_fb_helper_alloc_info(helper);
+-	if (IS_ERR(fbi)) {
+-		DRM_DEV_ERROR(dev->dev, "failed to allocate fb info\n");
+-		ret = PTR_ERR(fbi);
+-		goto fail;
+-	}
+-
+ 	DBG("fbi=%p, dev=%p", fbi, dev);
+ 
+ 	helper->funcs = &msm_fbdev_helper_funcs;
+diff --git a/drivers/gpu/drm/omapdrm/omap_fbdev.c b/drivers/gpu/drm/omapdrm/omap_fbdev.c
+index b5df2923d2a6..c4671ab87f9c 100644
+--- a/drivers/gpu/drm/omapdrm/omap_fbdev.c
++++ b/drivers/gpu/drm/omapdrm/omap_fbdev.c
+@@ -153,9 +153,9 @@ int omap_fbdev_driver_fbdev_probe(struct drm_fb_helper *helper,
+ 	struct drm_device *dev = helper->dev;
+ 	struct omap_drm_private *priv = dev->dev_private;
+ 	struct omap_fbdev *fbdev = priv->fbdev;
++	struct fb_info *fbi = helper->info;
+ 	struct drm_framebuffer *fb = NULL;
+ 	union omap_gem_size gsize;
+-	struct fb_info *fbi = NULL;
+ 	struct drm_mode_fb_cmd2 mode_cmd = {0};
+ 	struct drm_gem_object *bo;
+ 	dma_addr_t dma_addr;
+@@ -224,13 +224,6 @@ int omap_fbdev_driver_fbdev_probe(struct drm_fb_helper *helper,
+ 		goto fail;
+ 	}
+ 
+-	fbi = drm_fb_helper_alloc_info(helper);
+-	if (IS_ERR(fbi)) {
+-		dev_err(dev->dev, "failed to allocate fb info\n");
+-		ret = PTR_ERR(fbi);
+-		goto fail;
+-	}
+-
+ 	DBG("fbi=%p, dev=%p", fbi, dev);
+ 
+ 	helper->funcs = &omap_fbdev_helper_funcs;
+diff --git a/drivers/gpu/drm/radeon/radeon_fbdev.c b/drivers/gpu/drm/radeon/radeon_fbdev.c
+index 4df6c9167bf0..0c52efdc29d9 100644
+--- a/drivers/gpu/drm/radeon/radeon_fbdev.c
++++ b/drivers/gpu/drm/radeon/radeon_fbdev.c
+@@ -204,7 +204,7 @@ int radeon_fbdev_driver_fbdev_probe(struct drm_fb_helper *fb_helper,
+ 	struct radeon_device *rdev = fb_helper->dev->dev_private;
+ 	const struct drm_format_info *format_info;
+ 	struct drm_mode_fb_cmd2 mode_cmd = { };
+-	struct fb_info *info;
++	struct fb_info *info = fb_helper->info;
+ 	struct drm_gem_object *gobj;
+ 	struct radeon_bo *rbo;
+ 	struct drm_framebuffer *fb;
+@@ -245,13 +245,6 @@ int radeon_fbdev_driver_fbdev_probe(struct drm_fb_helper *fb_helper,
+ 	fb_helper->funcs = &radeon_fbdev_fb_helper_funcs;
+ 	fb_helper->fb = fb;
+ 
+-	/* okay we have an object now allocate the framebuffer */
+-	info = drm_fb_helper_alloc_info(fb_helper);
+-	if (IS_ERR(info)) {
+-		ret = PTR_ERR(info);
+-		goto err_drm_framebuffer_unregister_private;
+-	}
+-
+ 	info->fbops = &radeon_fbdev_fb_ops;
+ 
+ 	/* radeon resume is fragile and needs a vt switch to help it along */
+diff --git a/drivers/gpu/drm/tegra/fbdev.c b/drivers/gpu/drm/tegra/fbdev.c
+index 91aece6f34e0..8f40882aa76e 100644
+--- a/drivers/gpu/drm/tegra/fbdev.c
++++ b/drivers/gpu/drm/tegra/fbdev.c
+@@ -73,10 +73,10 @@ int tegra_fbdev_driver_fbdev_probe(struct drm_fb_helper *helper,
+ 	struct tegra_drm *tegra = helper->dev->dev_private;
+ 	struct drm_device *drm = helper->dev;
+ 	struct drm_mode_fb_cmd2 cmd = { 0 };
++	struct fb_info *info = helper->info;
+ 	unsigned int bytes_per_pixel;
+ 	struct drm_framebuffer *fb;
+ 	unsigned long offset;
+-	struct fb_info *info;
+ 	struct tegra_bo *bo;
+ 	size_t size;
  	int err;
+@@ -97,13 +97,6 @@ int tegra_fbdev_driver_fbdev_probe(struct drm_fb_helper *helper,
+ 	if (IS_ERR(bo))
+ 		return PTR_ERR(bo);
  
--	err = qcom_scm_generate_ice_key(lt_key, QCOM_ICE_HWKM_WRAPPED_KEY_SIZE);
-+	err = qcom_scm_generate_ice_key(lt_key,
-+					QCOM_ICE_HWKM_WRAPPED_KEY_SIZE(ice->hwkm_version));
- 	if (err)
- 		return err;
+-	info = drm_fb_helper_alloc_info(helper);
+-	if (IS_ERR(info)) {
+-		dev_err(drm->dev, "failed to allocate framebuffer info\n");
+-		drm_gem_object_put(&bo->gem);
+-		return PTR_ERR(info);
+-	}
+-
+ 	fb = tegra_fb_alloc(drm,
+ 			    drm_get_format_info(drm, cmd.pixel_format, cmd.modifier[0]),
+ 			    &cmd, &bo, 1);
+diff --git a/include/drm/drm_fb_helper.h b/include/drm/drm_fb_helper.h
+index c1d38d54a112..2faf8aaf98dc 100644
+--- a/include/drm/drm_fb_helper.h
++++ b/include/drm/drm_fb_helper.h
+@@ -256,8 +256,6 @@ int drm_fb_helper_check_var(struct fb_var_screeninfo *var,
  
--	return QCOM_ICE_HWKM_WRAPPED_KEY_SIZE;
-+	return QCOM_ICE_HWKM_WRAPPED_KEY_SIZE(ice->hwkm_version);
+ int drm_fb_helper_restore_fbdev_mode_unlocked(struct drm_fb_helper *fb_helper);
+ 
+-struct fb_info *drm_fb_helper_alloc_info(struct drm_fb_helper *fb_helper);
+-void drm_fb_helper_release_info(struct drm_fb_helper *fb_helper);
+ void drm_fb_helper_unregister_info(struct drm_fb_helper *fb_helper);
+ void drm_fb_helper_fill_info(struct fb_info *info,
+ 			     struct drm_fb_helper *fb_helper,
+@@ -340,16 +338,6 @@ drm_fb_helper_restore_fbdev_mode_unlocked(struct drm_fb_helper *fb_helper)
+ 	return 0;
  }
- EXPORT_SYMBOL_GPL(qcom_ice_generate_key);
  
-@@ -478,13 +517,13 @@ int qcom_ice_prepare_key(struct qcom_ice *ice,
- 	int err;
- 
- 	err = qcom_scm_prepare_ice_key(lt_key, lt_key_size,
--				       eph_key, QCOM_ICE_HWKM_WRAPPED_KEY_SIZE);
-+				       eph_key, QCOM_ICE_HWKM_WRAPPED_KEY_SIZE(ice->hwkm_version));
- 	if (err == -EIO || err == -EINVAL)
- 		err = -EBADMSG; /* probably invalid key */
- 	if (err)
- 		return err;
- 
--	return QCOM_ICE_HWKM_WRAPPED_KEY_SIZE;
-+	return QCOM_ICE_HWKM_WRAPPED_KEY_SIZE(ice->hwkm_version);
+-static inline struct fb_info *
+-drm_fb_helper_alloc_info(struct drm_fb_helper *fb_helper)
+-{
+-	return NULL;
+-}
+-
+-static inline void drm_fb_helper_release_info(struct drm_fb_helper *fb_helper)
+-{
+-}
+-
+ static inline void drm_fb_helper_unregister_info(struct drm_fb_helper *fb_helper)
+ {
  }
- EXPORT_SYMBOL_GPL(qcom_ice_prepare_key);
- 
-@@ -506,11 +545,11 @@ int qcom_ice_import_key(struct qcom_ice *ice,
- 	int err;
- 
- 	err = qcom_scm_import_ice_key(raw_key, raw_key_size,
--				      lt_key, QCOM_ICE_HWKM_WRAPPED_KEY_SIZE);
-+				      lt_key, QCOM_ICE_HWKM_WRAPPED_KEY_SIZE(ice->hwkm_version));
- 	if (err)
- 		return err;
- 
--	return QCOM_ICE_HWKM_WRAPPED_KEY_SIZE;
-+	return QCOM_ICE_HWKM_WRAPPED_KEY_SIZE(ice->hwkm_version);
- }
- EXPORT_SYMBOL_GPL(qcom_ice_import_key);
- 
 -- 
-2.34.1
+2.51.1
 
 
