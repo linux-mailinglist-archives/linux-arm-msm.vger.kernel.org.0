@@ -1,245 +1,183 @@
-Return-Path: <linux-arm-msm+bounces-78906-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-78907-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [142.0.200.124])
-	by mail.lfdr.de (Postfix) with ESMTPS id 71538C0DF94
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Oct 2025 14:20:33 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1C7B9C0DF22
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Oct 2025 14:15:28 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 237624F24C6
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Oct 2025 13:09:59 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 678A418932B7
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Oct 2025 13:15:13 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8689C19E81F;
-	Mon, 27 Oct 2025 13:09:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8319F25FA29;
+	Mon, 27 Oct 2025 13:14:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="u7LUIYPJ"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="pjh+2Rii"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f47.google.com (mail-wm1-f47.google.com [209.85.128.47])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7AD6B218ACC
-	for <linux-arm-msm@vger.kernel.org>; Mon, 27 Oct 2025 13:09:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D608C2571D7
+	for <linux-arm-msm@vger.kernel.org>; Mon, 27 Oct 2025 13:14:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761570596; cv=none; b=hth+NLPjhTqj313g86Ro7kkOeB2c3c/uZRjIntVq9fOOGytZO2y6avgYwBCe47jS/Lb8fGSveO1iUst++3RNfRUbXjDft9deqArmHI0RfBYBvAtcjWXrZzrM5doqfC51Yhr16FyEo79mMLb9wLky+7aV9LI60AsyT3kgRsvUjkI=
+	t=1761570887; cv=none; b=Cl7y5VYoUpQ8lHd+EbvOpJNYWJ7NkHrTP/LXRLlXoTxwLIPxnLpDC91Rv68TyMxqHX6Wl8Xbj4abbQV+YH9aqrV8jxdR4/E8omobUcbPNnzLkto/LKAanx7qCAyhSdSlw9wxHAWRLVVBSM30742qp9ZHRU4m+I+6wLnnX1LMmaE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761570596; c=relaxed/simple;
-	bh=0MHhWYGX/kbhklk4DTUuJkE6nUV8ISJicJLum5nXkNU=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=j4pBQPydaevCIClRIWAR0JbhEDcba/M6Lx9Jk1170+QhI2IrzYBHjbw4krrZFVqL7bslSZacXw581azZwU5VpFyd248X/n7MKqrysxxitqRJnTefH6mahRctbbvPhl2C7Vmvloev9UWj6F0vv4cUQW7CdUkxiqGGgl1CVykj+Wc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=u7LUIYPJ; arc=none smtp.client-ip=209.85.128.47
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f47.google.com with SMTP id 5b1f17b1804b1-4710665e7deso24036675e9.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 27 Oct 2025 06:09:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1761570593; x=1762175393; darn=vger.kernel.org;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=7xHqscrzYkhG2lIf/Jsl1phTlISUiUsYRQ5MheVDiOs=;
-        b=u7LUIYPJO82/I5EmqpDjDziEcBmymwusS862CivjrnGiE95VQxN7MyOmVpUTTcRV5l
-         JzQRz38mrhPVixqoK3ghrtoBf5WDz0APtPvfOIAQTCwWKpfz6Z6j4K+l0bOYxstndIrY
-         MN2Cafxm2Q/i4LEngYmBOnadSwNtg5hmMriB+NFW50rSEaZ3zYeXxGrFx8/r2UpwrpOX
-         os8mDkEYvI63LABo9W9d+fFRqkbCh7/NjRb8aj1ye3KAlttsKuoBogUmcYPPUtHsJH9x
-         vIiY8iJRvUJEKDtlRoJr/qFAioAsbkLSAgge2+4rPrpo6PLDAOrZEEXCuIekZraESB7v
-         4jmA==
+	s=arc-20240116; t=1761570887; c=relaxed/simple;
+	bh=yurVmvxSOFrWw32vD2Z36RTMlvMH+DXhPVbXI0Zm9yE=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=TWNh1cK3LL5xPwLUYsPz+JsXLTCx+77UeG6sJT0J0nvbVU2mLKCvZE6CSnD5rX404z+I8XGhWfLosAj6MWEgpWZgdc+a3TGf67DNLcxwrPLMmw17WfmLD8/70wWi6XVzWbilqqZKD2Lxf2UyyfNF3TJp0P8BIMKN6kmjnpnZcuA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=pjh+2Rii; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 59R8hu4Y890287
+	for <linux-arm-msm@vger.kernel.org>; Mon, 27 Oct 2025 13:14:45 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-type:date:from:in-reply-to:message-id:mime-version
+	:references:subject:to; s=qcppdkim1; bh=nFyzKi5bv7XzhZEu4Cpk+WRY
+	5dnAaHHoSnvN/ez9mr0=; b=pjh+2RiiyRIkOe3N+YJqN3TwoEj4CEejkjcAuiqg
+	eTNuHP0Os9Sz7E6MkyxZ7yPTKOTbVK6TAJMmFrSCsjvC860dongX6tGYnABRWVzS
+	wVYrnEqc9vFYFjjDuuYVIAXx3SVif6ZwmvJZwqvxE86/Q+LwSCYANe3T68ptbJrP
+	v9lVlF5LWEBQm6lIWoPKAyuai8LKrkTxNuw7UizS7jBGk/ZKo45otfCbUXpxU3Tx
+	gUH9KaOaJxEuNcrJ1+4zX1LQ3jHNlREa7Xz7JO3+5YVL/1GoYjbUcLmhYHDcpiBZ
+	Eb1JL06WICkHrog0IZHMk4odthMZx6HQNWiniq32TGyhow==
+Received: from mail-qt1-f197.google.com (mail-qt1-f197.google.com [209.85.160.197])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4a0p4g4mt0-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Mon, 27 Oct 2025 13:14:44 +0000 (GMT)
+Received: by mail-qt1-f197.google.com with SMTP id d75a77b69052e-4ecf77618a5so34515091cf.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 27 Oct 2025 06:14:44 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1761570593; x=1762175393;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=7xHqscrzYkhG2lIf/Jsl1phTlISUiUsYRQ5MheVDiOs=;
-        b=ayc1aKaOFE4XCkL7vi1tMlX7/AhPem8x+TbE5TKh4a7B4Cq4snvVeQwkEFtXze8B80
-         c60NyVYNk5uahZiFiqjlsKOZZ6wZ9IO1hA3Qq8pZImmiszDXi8ECWasPkb+aa8Dnry5m
-         XyE3hxjJggJoA+pbVFmXHlX/TrISJ4Pb0d0B40X4ifMfIjNc74TL37r0P8CnsrZ9z4J7
-         WLoPsS+S+vxq1OyY7YYwKseVesoZPnMW0l4bc/rQRKW1sUSXYJPzqK4h5977sZCOg8v3
-         49K8ynVW6/wH6EaqRWezh5bQmSgzatBdoXeQu7tYsduq9MY1C9E0Npy+RGFLDhocKTi3
-         ue0Q==
-X-Forwarded-Encrypted: i=1; AJvYcCUIWOhGR9mXanunfwwEi8J+bLMnbScmyMF82SgYd3a6UnoLUzuyq9pOh/OiidRv5rYrlVAXTTFnAGh/yGzG@vger.kernel.org
-X-Gm-Message-State: AOJu0Yx8pmyV0ajpF8hUw9GqBoLtxDnQT+oHjb61GegnKsNoYJWrxxeE
-	DVzGD3eiYX0tAPGG6PK50543tX0lPj8FJP+NjUs1ctt3ha+CXgkFKt/r34Egexm94kA=
-X-Gm-Gg: ASbGncvT76aEG8B7IgG2q9iNJtlaqcgHF06xsRdJC3RSompLLatC8kWh0tL/SJ0Q7cf
-	kY1Ga6ubmzFV702E22uaL9tDcfRS1FyWIlBRE/ltg8L3JWmx1HERpSQy8H/fLfHHth+KinK5D9i
-	joSY2Jg2CFlgL0cU9T+Ngve9xOMUcJh4wAXba36PjG93sTR5qFZjJHGHjUddrNVPTDzfMjjlmjF
-	6hseOq5v6KvML6pogvpkqlajh8imlNPVExMu9CKidVqyObnv41b6505aGDbtHwT8wH3GA9fjjhL
-	PWiuesldDiR0qTv246Kvrq9nXStXVYfQQjlrz2BhyHE6snF4CoyScnKpIeSjW6pSdG2r2mfArs8
-	PgQkTUJYt4nzBtFWk5OiUQKZav3I55WwrF+2DYOvhMojJoG5o3K4o7qM4Z7EWHQ/9BSg30W6p6m
-	Gr070P+dTBwRUTq2479za1
-X-Google-Smtp-Source: AGHT+IES8xCzwpBsCQMT7GZryto4tnTz3LOicS2l1sLDuWYyCwc2CWGgf/Z8oXRtYtgEbL2ufaMPZg==
-X-Received: by 2002:a05:600c:1f96:b0:46e:37af:f90e with SMTP id 5b1f17b1804b1-475caf933dfmr109940175e9.6.1761570592580;
-        Mon, 27 Oct 2025 06:09:52 -0700 (PDT)
-Received: from arrakeen.starnux.net ([2a01:e0a:3d9:2080:8261:5fff:fe11:bdda])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-475dd02cbc6sm139149285e9.1.2025.10.27.06.09.51
+        d=1e100.net; s=20230601; t=1761570884; x=1762175684;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=nFyzKi5bv7XzhZEu4Cpk+WRY5dnAaHHoSnvN/ez9mr0=;
+        b=NiVAhC7bUpZfGLqF5FwxtsnnEP0J9cUzTu4KxLcRMHTwMgEObUbNMxBIM5+w6MjUL/
+         HtnySB62K9aWbmNsKVHX3EbLIUNTQlQCGh+IiPRQe+2c24y/hMBU6d0cGJea4dpDNxDV
+         0yjVOGY7S2s1yTNcfIeuftB2DMJ8y7+YTFE13TF4EkDKWi1NNpdpPdIlc60NdsXUgQKO
+         F3Lad6HEr626tH5lcZw7L0PmDCdiMx+gqjUl/Lt82Wrf68V/GaQfHVSf34WXRhqTyImI
+         WtbzE2P9MRpockvxMi68lkY7eyYeswInCrCPvHpZfP/9FVDizOrJLSI4SmNUdXRVO/O5
+         GvDA==
+X-Forwarded-Encrypted: i=1; AJvYcCX+F9xx7qExPsVwWpX3vU1QffbH8gGzwpOdUiI+saxF6ZGyzpa5n8CKF1a0EH7wkopXQMHma8tDaz2o/ohL@vger.kernel.org
+X-Gm-Message-State: AOJu0YyCVHXzsC4y7iD+nV8OZs2kZrMVn3DlmdAANj2+c0+xOxnP2BYh
+	cU7SmsEuzHEOSG/Q6kBMfyRLhgyjB2bTIhKiuxa4JY85xWRkSqyhPem231lsUn6IOrZcnQNWcX3
+	A/0kZ8ejmy9PrLZ4dBESTVFlo5PGmbEtQC9utrybgTp/I1wh3SJQHr5YrYtP6sf8xPqzy
+X-Gm-Gg: ASbGncsfxdoTJrC5DYIgbvLy5QNHo8b/a/THKfNJv9sV6znkQxVAJaPhkNdscz0QbdL
+	RwSteNHwLPAbaDIPIpjDSoJcEiAxpA3bDt0Ul2As/e7ikgy/et2toboegGqaSsN0BL6JNfCWEjG
+	DRvuwmyT8LuWd/+syB1KendeOHLU6xz9CuiTVSzRkx5p4/B1GDs4cY1iZX+RJrmkyWHSn1qE9cw
+	nln7Y4XY5PvO2YtK+8mu/1WGCOhBLs995d9cKvev0NWD4f5vFMuRzJLNf69w9fs0fLl4ug6/zev
+	ImqFVYh81N+9HismZMdQFV9zi12ThYHUkhEOyRj8wya+2HPusTlSNrvyV0FGSXnWOM8NjOOWiFq
+	pbJsbpID0sG9nGM0t2pjn8AVxbod6uqoZgjVunIiYiGj6iHL7LRiLBiqsrbg1lBasR1otJGi2zt
+	ia25Nf1xXH+T28
+X-Received: by 2002:a05:622a:1b28:b0:4ec:ef85:cfbd with SMTP id d75a77b69052e-4ecef85d368mr61632031cf.80.1761570884052;
+        Mon, 27 Oct 2025 06:14:44 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGvwWHynaMcFsCoJT3Ymx6akKgKGq+AVYZliRWBvt3fl/sJ+nyNZdGM11CdtSCxGsRp/Z4JPA==
+X-Received: by 2002:a05:622a:1b28:b0:4ec:ef85:cfbd with SMTP id d75a77b69052e-4ecef85d368mr61631541cf.80.1761570883540;
+        Mon, 27 Oct 2025 06:14:43 -0700 (PDT)
+Received: from umbar.lan (2001-14ba-a0c3-3a00-264b-feff-fe8b-be8a.rev.dnainternet.fi. [2001:14ba:a0c3:3a00:264b:feff:fe8b:be8a])
+        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-378ee0a5655sm19154971fa.21.2025.10.27.06.14.42
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 27 Oct 2025 06:09:52 -0700 (PDT)
-From: Neil Armstrong <neil.armstrong@linaro.org>
-Date: Mon, 27 Oct 2025 14:09:48 +0100
-Subject: [PATCH] drm/msm: dsi: fix PLL init in bonded mode
+        Mon, 27 Oct 2025 06:14:42 -0700 (PDT)
+Date: Mon, 27 Oct 2025 15:14:40 +0200
+From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+To: yuanjiey <yuanjie.yang@oss.qualcomm.com>
+Cc: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+        robin.clark@oss.qualcomm.com, lumag@kernel.org,
+        abhinav.kumar@linux.dev, sean@poorly.run,
+        marijn.suijten@somainline.org, airlied@gmail.com, simona@ffwll.ch,
+        maarten.lankhorst@linux.intel.com, mripard@kernel.org,
+        tzimmermann@suse.de, robh@kernel.org, krzk+dt@kernel.org,
+        conor+dt@kernel.org, quic_mkrishn@quicinc.com, jonathan@marek.ca,
+        quic_khsieh@quicinc.com, neil.armstrong@linaro.org,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, tingwei.zhang@oss.qualcomm.com,
+        aiqun.yu@oss.qualcomm.com, yongxing.mou@oss.qualcomm.com
+Subject: Re: [PATCH 01/12] drm/msm/dsi/phy: Add support for Kaanapali
+Message-ID: <einog245dsbqtx3by2cojyzmyctk2fffpwndwoe24puwqq4fta@cu6iiidxqgr4>
+References: <20251023075401.1148-1-yuanjie.yang@oss.qualcomm.com>
+ <20251023075401.1148-2-yuanjie.yang@oss.qualcomm.com>
+ <omlhiywjr46ik6bj2aiutgcf4aifen4vsvtlut7b44ayu4g4vl@zn4u3zkf6cqx>
+ <ad906eb5-c08f-4b66-9e37-aaba99889ad4@oss.qualcomm.com>
+ <aPryORKIuSwtXpon@yuanjiey.ap.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20251027-topic-sm8x50-fix-dsi-bonded-v1-1-a477cd3f907d@linaro.org>
-X-B4-Tracking: v=1; b=H4sIABtv/2gC/x3MwQrDIAyA4VcpOTeQCmVhrzJ2sJq2OUzFjFEQ3
- 72y4wc/fwOTqmLwnBpU+alpTgPLPEE4fToENQ6DI7cu5B74zUUD2oevlXDXC6MpbjlFiRiYd2b
- ywZOHcShVRvG/v9693wp7roxtAAAA
-X-Change-ID: 20251027-topic-sm8x50-fix-dsi-bonded-c88f880aca0a
-To: Rob Clark <robin.clark@oss.qualcomm.com>, 
- Dmitry Baryshkov <lumag@kernel.org>, 
- Abhinav Kumar <abhinav.kumar@linux.dev>, 
- Jessica Zhang <jessica.zhang@oss.qualcomm.com>, Sean Paul <sean@poorly.run>, 
- Marijn Suijten <marijn.suijten@somainline.org>, 
- David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, 
- Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>, 
- linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, 
- freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org, 
- Neil Armstrong <neil.armstrong@linaro.org>
-X-Mailer: b4 0.14.3
-X-Developer-Signature: v=1; a=openpgp-sha256; l=5010;
- i=neil.armstrong@linaro.org; h=from:subject:message-id;
- bh=0MHhWYGX/kbhklk4DTUuJkE6nUV8ISJicJLum5nXkNU=;
- b=owEBbQKS/ZANAwAKAXfc29rIyEnRAcsmYgBo/28fcTyjsx9+jqX/RPpQrS3hH4JRvm2XTgGFUHBT
- 3aFNE+6JAjMEAAEKAB0WIQQ9U8YmyFYF/h30LIt33NvayMhJ0QUCaP9vHwAKCRB33NvayMhJ0XBpD/
- 9kiq1CGfJJbbh6rIVJ9bniOAQCW8pruCTIMe1D4yZfxSqJAaYrzZvR89iEBfajyJvrFiEGNg1dfGAH
- 9LeIYJOV+gX3gJCk+SGZwVtdn+3bAcp4tStw3twUpVFhoZzbw0MQJjmW5zSb6NnhIxUx40A9WE6PpI
- AgI3pCr5vsT85jofDyet7G0ODbyCMru+wRxfgb7XtF6ZZIv9rJfhmFUkNKcTsGyGUsmg4F/vCRbrj6
- bO3sWb68alm2oyd9MeafibQzE4B6QBA0SADlZUIZ4zoW6Mecr0hNxdtbtcZZFe2E7FyZgargV5AgOv
- oDPWdTyVoZIMRUJVwOwtU/DQoe1JU1BRzIJFLyXNjI0PmsjEf4JhKpzcM1Zlkq1Ko7zqN3U+9XgyZt
- 2gBhZWEWfIce6HWEpPXDyk7Ihd23JEKLbBpR9G6rrdgmArUPErY17O8yGiyqF2wGIoOXc23IV/KQUg
- qOuGCdx65bSimelkoG054sv2igele2nlxr66kIxLe+VXw9yEOtiGfDMTPAX5s79vDIHOUCi4w/9lJ3
- qtCSgkgka15Dmo91Bn5jxYEvCtA0djtn16j7wsiijMTU0/W1fT7r3jzgInEqaKUnBS3b2wqvRV8IrA
- uVPGOnU3zRpYjKVXEIIMfAPFcF/YjLErCo1J3cgR96GfwKC82C3p/M5Atn0Q==
-X-Developer-Key: i=neil.armstrong@linaro.org; a=openpgp;
- fpr=89EC3D058446217450F22848169AB7B1A4CFF8AE
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <aPryORKIuSwtXpon@yuanjiey.ap.qualcomm.com>
+X-Proofpoint-GUID: XQEZbLWfBZgWOZHikyqRKO7eHMYP--QD
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDI3MDEyMyBTYWx0ZWRfX8+Q0RlCPucD9
+ sNTqHNBt6qemHxdFpoUHsrIJEDmNtar8q9ktaf7UXvQV6FQjvJ+6ZorCjp9xmxRMSZ+GUnkMiYu
+ LPRNblkyFBd4AooKOfkUu7Wx6X8fsVqcq/3DIG0o8wcB0V6Mz82SIB32ufYAS+lDHbUsXjOIgkt
+ hWONc0V6+gGv/LHUIa4tKc0wwcIgvNzyQi89bNLaMnW9gaxEDhq7lBp30fDoToPMju6Zf6Po6Hh
+ PwlxQ3n6AFCcMR0tGWd19T5nImtX7xd1N97b7vMI6fvZ8RFSBC6ZWuUHXPqOuWPkGoOuWeWxXMt
+ 8rRJXpkrO6ImNnWw2N77fXKyWhqOGacmL9AjNuUYvfeaI3c0QsaI0zaGje5s30PwpfAdOBEfJdH
+ VLiWMOimHp8RkPncnP5oZYUF2e5BJg==
+X-Authority-Analysis: v=2.4 cv=L9YQguT8 c=1 sm=1 tr=0 ts=68ff7044 cx=c_pps
+ a=EVbN6Ke/fEF3bsl7X48z0g==:117 a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10
+ a=x6icFKpwvdMA:10 a=VkNPw1HP01LnGYTKEx00:22 a=EUspDBNiAAAA:8
+ a=ACmnMjwJHZESoQLvWlYA:9 a=CjuIK1q_8ugA:10 a=a_PwQJl-kcHnX1M80qC6:22
+X-Proofpoint-ORIG-GUID: XQEZbLWfBZgWOZHikyqRKO7eHMYP--QD
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-10-27_05,2025-10-22_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ malwarescore=0 lowpriorityscore=0 clxscore=1015 phishscore=0 impostorscore=0
+ adultscore=0 priorityscore=1501 spamscore=0 bulkscore=0 suspectscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2510020000 definitions=main-2510270123
 
-When in bonded DSI mode, only one PLL in one DSI PHY is used for both
-DSI PHYs, meaning that parents of the secondary DSI PHY will use the
-primary DSI PHY PLL as parent.
+On Fri, Oct 24, 2025 at 11:27:53AM +0800, yuanjiey wrote:
+> On Thu, Oct 23, 2025 at 02:02:45PM +0200, Konrad Dybcio wrote:
+> > On 10/23/25 1:48 PM, Dmitry Baryshkov wrote:
+> > > On Thu, Oct 23, 2025 at 03:53:50PM +0800, yuanjie yang wrote:
+> > >> From: Yuanjie Yang <yuanjie.yang@oss.qualcomm.com>
+> > >>
+> > >> Add DSI PHY support for the Kaanapali platform.
+> > >>
+> > >> Signed-off-by: Yongxing Mou <yongxing.mou@oss.qualcomm.com>
+> > >> Signed-off-by: Yuanjie Yang <yuanjie.yang@oss.qualcomm.com>
+> > >> ---
+> > 
+> > [...]
+> > 
+> > >> +	.io_start = { 0x9ac1000, 0xae97000 },
+> > > 
+> > > These two addresses are very strange. Would you care to explain? Other
+> > > than that there is no difference from SM8750 entry.
+> > 
+> > They're correct.
+> > Although they correspond to DSI_0 and DSI_2..
+> > 
+> > Yuanjie, none of the DSI patches mention that v2.10.0 is packed with
+> > new features. Please provide some more context and how that impacts
+> > the hw description.
+> 
+> Thanks for your reminder.
+> 
+> Correct here:
+> io_start = { 0x9ac1000, 0x9ac4000 }  DSI_Phy0 DSI_phy1
+> 
+> And v2.10.0 no clearly meaningful changes compared to v2.9.0.
+> just some register address change.
 
-In this case the primary DSI PHY PLL will be set even if the primary
-DSI PHY is not yet enabled. The DSI PHY code has support for this
-particular use-case and will handle the fact the PLL was already
-set when initializing the primary DSI PHY.
+Addition of DSI2 is a meaningful change, which needs to be handled both
+in the core and in the DSI / DSI PHY drivers.
 
-By introducing a protected variable pll_enable_cnt in the commit
-cb55f39bf7b1 ("drm/msm/dsi/phy: Fix reading zero as PLL rates when unprepared"),
-this variable is only initially set to 1 when the DSI PHY is initialized
-making it impossible to set the PLL before, breaking the bonded DSI
-use case by returning 0 when setting the PLL from the secondary DSI
-PHY driver and skipping the correct clocks initialization.
+> 
+> Thanks,
+> Yuanjie
+>  
+> > Konrad
 
-But since it was already possible to set the PLL without enabling
-the DSI PHY, just drop the pll_enable_cnt setting from the PHY
-enable/disable and simply increment/decrement the pll_enable_cnt
-variable from the dsi_pll_enable/disable_pll_bias to make sure any
-PLL operation is done with the PLL BIAS enabled.
-
-Fixes: cb55f39bf7b1 ("drm/msm/dsi/phy: Fix reading zero as PLL rates when unprepared")
-Closes: https://lore.kernel.org/all/50a49d72-2b1e-471d-b0c4-d5a0b38b2a21@linaro.org/
-Tested-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
----
- drivers/gpu/drm/msm/dsi/phy/dsi_phy.h     |  1 -
- drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c | 18 ++----------------
- 2 files changed, 2 insertions(+), 17 deletions(-)
-
-diff --git a/drivers/gpu/drm/msm/dsi/phy/dsi_phy.h b/drivers/gpu/drm/msm/dsi/phy/dsi_phy.h
-index e391505fdaf0..3cbf08231492 100644
---- a/drivers/gpu/drm/msm/dsi/phy/dsi_phy.h
-+++ b/drivers/gpu/drm/msm/dsi/phy/dsi_phy.h
-@@ -109,7 +109,6 @@ struct msm_dsi_phy {
- 	struct msm_dsi_dphy_timing timing;
- 	const struct msm_dsi_phy_cfg *cfg;
- 	void *tuning_cfg;
--	void *pll_data;
- 
- 	enum msm_dsi_phy_usecase usecase;
- 	bool regulator_ldo_mode;
-diff --git a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c
-index 32f06edd21a9..c5e1d2016bcc 100644
---- a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c
-+++ b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c
-@@ -426,11 +426,8 @@ static void dsi_pll_enable_pll_bias(struct dsi_pll_7nm *pll)
- 	u32 data;
- 
- 	spin_lock_irqsave(&pll->pll_enable_lock, flags);
--	if (pll->pll_enable_cnt++) {
--		spin_unlock_irqrestore(&pll->pll_enable_lock, flags);
--		WARN_ON(pll->pll_enable_cnt == INT_MAX);
--		return;
--	}
-+	pll->pll_enable_cnt++;
-+	WARN_ON(pll->pll_enable_cnt == INT_MAX);
- 
- 	data = readl(pll->phy->base + REG_DSI_7nm_PHY_CMN_CTRL_0);
- 	data |= DSI_7nm_PHY_CMN_CTRL_0_PLL_SHUTDOWNB;
-@@ -876,7 +873,6 @@ static int dsi_pll_7nm_init(struct msm_dsi_phy *phy)
- 	spin_lock_init(&pll_7nm->pll_enable_lock);
- 
- 	pll_7nm->phy = phy;
--	phy->pll_data = pll_7nm;
- 
- 	ret = pll_7nm_register(pll_7nm, phy->provided_clocks->hws);
- 	if (ret) {
-@@ -965,10 +961,8 @@ static int dsi_7nm_phy_enable(struct msm_dsi_phy *phy,
- 	u32 const delay_us = 5;
- 	u32 const timeout_us = 1000;
- 	struct msm_dsi_dphy_timing *timing = &phy->timing;
--	struct dsi_pll_7nm *pll = phy->pll_data;
- 	void __iomem *base = phy->base;
- 	bool less_than_1500_mhz;
--	unsigned long flags;
- 	u32 vreg_ctrl_0, vreg_ctrl_1, lane_ctrl0;
- 	u32 glbl_pemph_ctrl_0;
- 	u32 glbl_str_swi_cal_sel_ctrl, glbl_hstx_str_ctrl_0;
-@@ -1090,13 +1084,10 @@ static int dsi_7nm_phy_enable(struct msm_dsi_phy *phy,
- 		glbl_rescode_bot_ctrl = 0x3c;
- 	}
- 
--	spin_lock_irqsave(&pll->pll_enable_lock, flags);
--	pll->pll_enable_cnt = 1;
- 	/* de-assert digital and pll power down */
- 	data = DSI_7nm_PHY_CMN_CTRL_0_DIGTOP_PWRDN_B |
- 	       DSI_7nm_PHY_CMN_CTRL_0_PLL_SHUTDOWNB;
- 	writel(data, base + REG_DSI_7nm_PHY_CMN_CTRL_0);
--	spin_unlock_irqrestore(&pll->pll_enable_lock, flags);
- 
- 	/* Assert PLL core reset */
- 	writel(0x00, base + REG_DSI_7nm_PHY_CMN_PLL_CNTRL);
-@@ -1209,9 +1200,7 @@ static bool dsi_7nm_set_continuous_clock(struct msm_dsi_phy *phy, bool enable)
- 
- static void dsi_7nm_phy_disable(struct msm_dsi_phy *phy)
- {
--	struct dsi_pll_7nm *pll = phy->pll_data;
- 	void __iomem *base = phy->base;
--	unsigned long flags;
- 	u32 data;
- 
- 	DBG("");
-@@ -1238,11 +1227,8 @@ static void dsi_7nm_phy_disable(struct msm_dsi_phy *phy)
- 	writel(data, base + REG_DSI_7nm_PHY_CMN_CTRL_0);
- 	writel(0, base + REG_DSI_7nm_PHY_CMN_LANE_CTRL0);
- 
--	spin_lock_irqsave(&pll->pll_enable_lock, flags);
--	pll->pll_enable_cnt = 0;
- 	/* Turn off all PHY blocks */
- 	writel(0x00, base + REG_DSI_7nm_PHY_CMN_CTRL_0);
--	spin_unlock_irqrestore(&pll->pll_enable_lock, flags);
- 
- 	/* make sure phy is turned off */
- 	wmb();
-
----
-base-commit: dcb6fa37fd7bc9c3d2b066329b0d27dedf8becaa
-change-id: 20251027-topic-sm8x50-fix-dsi-bonded-c88f880aca0a
-
-Best regards,
 -- 
-Neil Armstrong <neil.armstrong@linaro.org>
-
+With best wishes
+Dmitry
 
