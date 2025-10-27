@@ -1,232 +1,177 @@
-Return-Path: <linux-arm-msm+bounces-78873-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-78877-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 890EAC0D311
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Oct 2025 12:40:25 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 06629C0D494
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Oct 2025 12:52:32 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 357F3406079
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Oct 2025 11:39:02 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id C2AEC3A5298
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Oct 2025 11:47:07 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A001E2FB62C;
-	Mon, 27 Oct 2025 11:38:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 762F72F616B;
+	Mon, 27 Oct 2025 11:46:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="jpz2Ovb+"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="pDTsJKTw"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.10])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7F6D2FC026;
-	Mon, 27 Oct 2025 11:38:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.10
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 724802FE07B
+	for <linux-arm-msm@vger.kernel.org>; Mon, 27 Oct 2025 11:46:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761565136; cv=none; b=h58Dl+li1NrWt6u9ZHbu39ry4WqJLbU+b5BCy+daW3lj4X8Gsga7E3Nbw8nUTY1lgBho5674GH5wvZuaPRhCAHtR+bJyLiAdF3F/l/4pV5YyqAtNMo0wBAxxwphp1wUxhel4FxKiWe5Pu3e+qgFrHTaq2Kqi7lxebxUEVZv1rCE=
+	t=1761565614; cv=none; b=uNCJpNI64yhl90mll7tzqWWQhkEmQpzBeO6ehW7g43+KS3j5eue5NxcyZCO72Wbcy7dIJs13rpv81x684MVmpOsbKWefdd7IIXzr9RnY+prL04m+LFdeYe5ycH6o2EMpOEUyoqyuqv4RxjzE13U2R45sGBSrdCidedIY9xA10zw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761565136; c=relaxed/simple;
-	bh=j468xXoR9cr3OXREFcfRw79OYR6IigAtpibsNTQMHX8=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=j5dB+5MB/rK9ghNlTUCT4mjxbPrLRq60dpoNfec6HQbHlHapY2NJFrzc5acOfYf2bHtcLkKMoPDQF+7Nw2tMYzQjRjZ9z5UsYabEFVJn++AAiQuAUmM/5ocC8xlN5LTyZ0zX6yQ5GZPqyh+Yieta+YQLK6Mplq+ZHeYbGwasTy8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=pass smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=jpz2Ovb+; arc=none smtp.client-ip=198.175.65.10
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.intel.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1761565134; x=1793101134;
-  h=from:to:cc:subject:date:message-id:in-reply-to:
-   references:mime-version:content-transfer-encoding;
-  bh=j468xXoR9cr3OXREFcfRw79OYR6IigAtpibsNTQMHX8=;
-  b=jpz2Ovb+r9FT4gIByDQdqxvNBAiEUi60KcfiBE4BdGFEOz7AdAILusxn
-   XwEbSXy4+uWe3kOpFkSxdKgFBGSitsZSbzGdl94QZmHcW6G3VGT7kspN7
-   +Ord9RZfvMr3i6B+HRHH4+4wBMmpl/V48ueVYnYikMwcLejuMNxpOZN2Z
-   BukBRTODRd5uAdKenY4QUOUbZoXSvDOOploZ4mesI6H9i0xFRN9RuPB7E
-   uz66e1bZ04zyRfUmvsRtKi2Q2kYShSBY/0tHiYNoNo4le6lQcVovWwVt+
-   og/mMnCtr+lsS4PhAoFfHTOJJR5RE5YL/x+Piob1IOF7x92oa0qYMqNXo
-   w==;
-X-CSE-ConnectionGUID: OpTBoCYPRcuaB9+kAF9PEw==
-X-CSE-MsgGUID: ZSDYFZMLSQm+HXcdXPHFjw==
-X-IronPort-AV: E=McAfee;i="6800,10657,11586"; a="81065537"
-X-IronPort-AV: E=Sophos;i="6.19,258,1754982000"; 
-   d="scan'208";a="81065537"
-Received: from fmviesa004.fm.intel.com ([10.60.135.144])
-  by orvoesa102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 27 Oct 2025 04:38:53 -0700
-X-CSE-ConnectionGUID: et9/0J7fTyaBSFj4o0jrAw==
-X-CSE-MsgGUID: 5HD9QNMGQS6xqkxUaE5dVA==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.19,258,1754982000"; 
-   d="scan'208";a="190235487"
-Received: from klitkey1-mobl1.ger.corp.intel.com (HELO kekkonen.fi.intel.com) ([10.245.244.31])
-  by fmviesa004-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 27 Oct 2025 04:38:48 -0700
-Received: from punajuuri.localdomain (unknown [192.168.240.130])
-	by kekkonen.fi.intel.com (Postfix) with ESMTP id 98413121EFA;
-	Mon, 27 Oct 2025 13:38:45 +0200 (EET)
-Received: from sailus by punajuuri.localdomain with local (Exim 4.98.2)
-	(envelope-from <sakari.ailus@linux.intel.com>)
-	id 1vDLYY-00000001ddm-2H6P;
-	Mon, 27 Oct 2025 13:38:34 +0200
-Organization: Intel Finland Oy - BIC 0357606-4 - c/o Alberga Business Park, 6 krs, Bertel Jungin Aukio 5, 02600 Espoo
-From: Sakari Ailus <sakari.ailus@linux.intel.com>
-To: netdev@vger.kernel.org
-Cc: Nicolas Ferre <nicolas.ferre@microchip.com>,
-	Claudiu Beznea <claudiu.beznea@tuxon.dev>,
-	Andrew Lunn <andrew+netdev@lunn.ch>,
-	"David S. Miller" <davem@davemloft.net>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Wei Fang <wei.fang@nxp.com>,
-	Shenwei Wang <shenwei.wang@nxp.com>,
-	Clark Wang <xiaoning.wang@nxp.com>,
-	=?UTF-8?q?Niklas=20S=C3=B6derlund?= <niklas.soderlund@ragnatech.se>,
-	Paul Barker <paul@pbarker.dev>,
-	Siddharth Vadapalli <s-vadapalli@ti.com>,
-	Roger Quadros <rogerq@kernel.org>,
-	Alex Elder <elder@kernel.org>,
-	Maxime Coquelin <mcoquelin.stm32@gmail.com>,
-	Alexandre Torgue <alexandre.torgue@foss.st.com>,
-	Stephan Gerhold <stephan@gerhold.net>,
-	Loic Poulain <loic.poulain@oss.qualcomm.com>,
-	Sergey Ryazanov <ryazanov.s.a@gmail.com>,
-	Johannes Berg <johannes@sipsolutions.net>,
-	Chandrashekar Devegowda <chandrashekar.devegowda@intel.com>,
-	Chiranjeevi Rapolu <chiranjeevi.rapolu@linux.intel.com>,
-	Liu Haijun <haijun.liu@mediatek.com>,
-	Ricardo Martinez <ricardo.martinez@linux.intel.com>,
-	"Dr. David Alan Gilbert" <linux@treblig.org>,
-	Ingo Molnar <mingo@kernel.org>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Michael Nemanov <michael.nemanov@ti.com>,
-	Kalle Valo <kvalo@kernel.org>,
-	Andreas Kemnade <andreas@kemnade.info>,
-	Roopni Devanathan <quic_rdevanat@quicinc.com>,
-	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <linux@weissschuh.net>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
-	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
-	imx@lists.linux.dev,
-	linux-renesas-soc@vger.kernel.org,
-	linux-omap@vger.kernel.org,
-	linux-wireless@vger.kernel.org,
-	linux-stm32@st-md-mailman.stormreply.com,
-	linux-arm-kernel@lists.infradead.org,
-	linux-arm-msm@vger.kernel.org
-Subject: [PATCH 4/4] net: wwan: Remove redundant pm_runtime_mark_last_busy() calls
-Date: Mon, 27 Oct 2025 13:38:34 +0200
-Message-ID: <20251027113834.390681-4-sakari.ailus@linux.intel.com>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20251027113834.390681-1-sakari.ailus@linux.intel.com>
-References: <20251027113834.390681-1-sakari.ailus@linux.intel.com>
+	s=arc-20240116; t=1761565614; c=relaxed/simple;
+	bh=sLSDLFIycjwi5DUJiwWXROI9mVj8Cx9y+PjBFCqILz0=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=Q3h+Bu0lrSPcfrG8tq5LgcqcY5lxrsZywCVTSOJwsQeOgWUz29/uOeC86Hu+D45d4/8Z9m0kqO+cx5JgT2TfhzLJi7dgb5jghilHXd59E6gjDnQblqMughaLBWS1QXYqsSoBGWsz+GqBWR/CAYUCGtz/23IgKYG+DHq3/u3IeFU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=pDTsJKTw; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 59R84eUn2232087
+	for <linux-arm-msm@vger.kernel.org>; Mon, 27 Oct 2025 11:46:51 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	Y7FbXOdWgkLEaT/XePs73VoA0pwHdHNIszOesKkyl1U=; b=pDTsJKTw80qZEM4p
+	msAQKifurwKK/WOXlgyv38815ZJUFoANG8Cc8zqw/J+YarWrJfnTp3vA/wlE+A0p
+	vxFIIzrevW1+Q3N8+INrtIbl3oGmhjApl7fnxMqiLXtignZxraQMijGnn1xBmgRd
+	K+5HiITBbY/e91hsmmExAvMDyRJ0GoFjf9oi95UO4YthG2NkFYr5DK44uAe9QiEo
+	bjjXeAdbSqWXc6KFaeY0eCPSGTa9JfgX++5gWB7GDZWKbAgpbPAQ3Bb45YiqPhMC
+	kIw2mhqLE5ilRvWgLO15oscsRYYkcYCFyRForsqBfTwpGtws0tUVM0TA4J5nESaj
+	DaP4Dw==
+Received: from mail-qv1-f71.google.com (mail-qv1-f71.google.com [209.85.219.71])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4a24wn8mgj-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Mon, 27 Oct 2025 11:46:51 +0000 (GMT)
+Received: by mail-qv1-f71.google.com with SMTP id 6a1803df08f44-87ff7511178so407156d6.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 27 Oct 2025 04:46:50 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1761565609; x=1762170409;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=Y7FbXOdWgkLEaT/XePs73VoA0pwHdHNIszOesKkyl1U=;
+        b=NSZMEjMEaUcdX33AVDndoEmBRPTYTF/43rexMkx6xhzSlnBFSTRATctb25g8qwXiru
+         tXDeilg7ki/Sp3UZM3LHKUqBZSpV396NjQoi38keiJorbCIv3kK/4TKElls/oV2SlDjP
+         cR6YnuQblgDpHAxNH809PyHbn6ma8IABB9vKnlE7+/IRIW7D7MHcCZqtVYzMbqrcGKYe
+         MIYE9w3ZgyMPyERTrM3jPlO9eWdHplh1dhwCtvc3lm96vv70e7lA+YQntANwOiaINnQv
+         OdYfHVgUYap4SGx6DlSjyu2odEb5dP/qwutrxVmhU4f700yaLFaOHhZGvNkxsgDlkaP8
+         yuSA==
+X-Gm-Message-State: AOJu0YwK4rjFlS1vJ0i5lQp6kQUl2vDQGQyDzQpMOT5k2NDlpcskjObE
+	l74E3Z5YOP4vysME60M+KKcjtMp7vcViAMk/YBSFxjg908tZF+zurGyPYJewW1tHniiRCDSwbMX
+	ARratbWQk6n+bbrrNnw+dpIv5XIpD0MONBWrI7no5lJfYt99O7u3ox+ulIlDOExQENi3t
+X-Gm-Gg: ASbGncv+yGyrJtIC17dbiWMWlypN/OciDLMi1cOSP7eNsEoz8M5aZZu1gUp1wy3sIXl
+	seGVsHR7GSSQrNViMvkfsngrNiZH6sGqYgXzQ4Vl3x6tpSyKoXCVW/1An3fUhohfqaRUg67XOEd
+	HSRUsiuhNGThjRYW5CuvndTLegPMbVQyLnpnzR4n7ArDRk+uJzRoERGcnXWLH5amXvtGekhLuVd
+	BQ18Jdm5HsTOskDsvBzgOakONJAe4HLnY8us0QHI5qFFWhL1BIIb9sz7r6XfrvZ9eIYqbhaj0wy
+	KgOnu8u0jTC5rYb3G4GIe3h/MHGs+PB4IWBaWORFlG2oJOaA/2+ci/FACqNSZo/Pf1sdSGdI8yu
+	55FFRWEo/F9bes5Bd8MmCQxpTmj3v2mphP5pgiJC7T/F5OuYQC6gqM08c
+X-Received: by 2002:ad4:5b87:0:b0:801:2595:d05d with SMTP id 6a1803df08f44-87de7138a5dmr193035536d6.3.1761565608838;
+        Mon, 27 Oct 2025 04:46:48 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFcow6r/0jMtGxR59KvnFS4Y/c0woofpjI9qJZXXjOHBNMXUDWc9LAIdY1pVDEfhj9Vve0PMw==
+X-Received: by 2002:ad4:5b87:0:b0:801:2595:d05d with SMTP id 6a1803df08f44-87de7138a5dmr193035246d6.3.1761565608298;
+        Mon, 27 Oct 2025 04:46:48 -0700 (PDT)
+Received: from [192.168.119.202] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-b6d8ceeaffasm671391966b.45.2025.10.27.04.46.46
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 27 Oct 2025 04:46:47 -0700 (PDT)
+Message-ID: <22ad48ac-e054-4f2f-a5a5-8047266ff4cc@oss.qualcomm.com>
+Date: Mon, 27 Oct 2025 12:46:46 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 0/2] Modify USB controller nodes for USB on X1E80100
+To: Krishna Kurapati PSSNV <krishna.kurapati@oss.qualcomm.com>,
+        Val Packett <val@packett.cool>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley
+ <conor+dt@kernel.org>, Abel Vesa <abel.vesa@linaro.org>,
+        Rajendra Nayak <quic_rjendra@quicinc.com>,
+        Sibi Sankar <sibi.sankar@oss.qualcomm.com>
+References: <20251014022121.1850871-1-krishna.kurapati@oss.qualcomm.com>
+ <d0c18094-7234-450d-bd9c-e9f545de31e2@packett.cool>
+ <81367b57-f60c-48a6-8a59-7e160c312686@oss.qualcomm.com>
+Content-Language: en-US
+From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+In-Reply-To: <81367b57-f60c-48a6-8a59-7e160c312686@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
+X-Authority-Analysis: v=2.4 cv=XIY9iAhE c=1 sm=1 tr=0 ts=68ff5bab cx=c_pps
+ a=UgVkIMxJMSkC9lv97toC5g==:117 a=FpWmc02/iXfjRdCD7H54yg==:17
+ a=IkcTkHD0fZMA:10 a=x6icFKpwvdMA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=pqnWh8UqMPAkMZ0kC3QA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=1HOtulTD9v-eNWfpl4qZ:22 a=HhbK4dLum7pmb74im6QT:22
+X-Proofpoint-GUID: KOdX3lgn5wt7Ni86v05WRLRMSN7EhkvJ
+X-Proofpoint-ORIG-GUID: KOdX3lgn5wt7Ni86v05WRLRMSN7EhkvJ
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDI3MDExMCBTYWx0ZWRfXxRjuDbN9bwIC
+ Ph++bT9odS1uHlvzUNhfrEaBr+vv7hK/MLgsDCZdA0hKEgYXHYXkc0D4lLHMBZFD4TS/hgtgPi+
+ WNZy2znu/ARx5WSwvG2kb6TIxZoid56ohCGuJyofqdWIx4/2qkJJDP9edbBgDWNSxGozXNLRuDv
+ A30kmJVPxRYbYY2q/0dkzMYwaGf8VuEVxnimUYDTPnxm/7UCd2YmyeJh/CuORA1Xwd4K2nFug+1
+ lIa0zp/+cy76It3Tjq6bQZ+66mYJqUjHYimUIAXMRsvSh8T+a0VziW9GKIO07EOwLrrFyP3Zt/D
+ MhEYzfKFtCjbkZdZwaEzOUZRriBUTo1qY/fJ0AEHBObMAFaqhxS10j/FMhkrTFIe1OFQ9V+3Lrh
+ 1LzsMyGjfDTm7B4uZSvPDqkYEnElsw==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-10-27_05,2025-10-22_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ lowpriorityscore=0 suspectscore=0 priorityscore=1501 bulkscore=0
+ clxscore=1015 impostorscore=0 adultscore=0 spamscore=0 malwarescore=0
+ phishscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2510020000
+ definitions=main-2510270110
 
-pm_runtime_put_autosuspend(), pm_runtime_put_sync_autosuspend(),
-pm_runtime_autosuspend() and pm_request_autosuspend() now include a call
-to pm_runtime_mark_last_busy(). Remove the now-reduntant explicit call to
-pm_runtime_mark_last_busy().
+On 10/19/25 1:35 PM, Krishna Kurapati PSSNV wrote:
+> 
+> 
+> On 10/14/2025 2:30 PM, Val Packett wrote:
+>> Hi,
+>>
+>> On 10/13/25 11:21 PM, Krishna Kurapati wrote:
+>>> This series aims to flatten usb dt nodes and use latest bindings.
+>>> While at it, fix a compile time warning on the HS only controller node.
+>>>
+>>> Tests done:
+>>> 1. On CRD, verified host mode operation of the 3 exposed Type-C ports
+>>> and enumeration of the Goodix fingerprint sensor on the multiport
+>>> usb controller.
+>>>
+>>> 2. Modified the dr_mode to otg for the first 3 controllers and
+>>> verified role switching and device mode operation on the 3 exposed
+>>> Type-C ports.
+>>>
+>>> HS only controller was not tested on any platform.
+>>
+>> have you tested suspend-resume?
+>>
+>> The flattened dwc driver seems to break it for me on Latitude 7455, upon trying to resume the screen never comes back up and the system just reboots from zero in a couple seconds instead.
+>>
+>> I've looked at the code and I couldn't find the cause so far, but it is fine with the legacy driver and not fine with this one :(
+>>
+> 
+> Hi Val,
+> 
+>  Thanks for reporting this. I did test runtime suspend resume on all 3 typec ports as mentioned. But I didn't check system suspend case.
+> 
+>  I will try to reproduce the issue, fix it and then resend the patches.
 
-Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
----
- drivers/net/wwan/qcom_bam_dmux.c           | 2 --
- drivers/net/wwan/t7xx/t7xx_hif_cldma.c     | 3 ---
- drivers/net/wwan/t7xx/t7xx_hif_dpmaif_rx.c | 2 --
- drivers/net/wwan/t7xx/t7xx_hif_dpmaif_tx.c | 2 --
- 4 files changed, 9 deletions(-)
+I can repro on the CRD..
 
-diff --git a/drivers/net/wwan/qcom_bam_dmux.c b/drivers/net/wwan/qcom_bam_dmux.c
-index 64dab8b57611..6a5b22589af4 100644
---- a/drivers/net/wwan/qcom_bam_dmux.c
-+++ b/drivers/net/wwan/qcom_bam_dmux.c
-@@ -162,7 +162,6 @@ static void bam_dmux_tx_done(struct bam_dmux_skb_dma *skb_dma)
- 	struct bam_dmux *dmux = skb_dma->dmux;
- 	unsigned long flags;
- 
--	pm_runtime_mark_last_busy(dmux->dev);
- 	pm_runtime_put_autosuspend(dmux->dev);
- 
- 	if (skb_dma->addr)
-@@ -397,7 +396,6 @@ static void bam_dmux_tx_wakeup_work(struct work_struct *work)
- 	dma_async_issue_pending(dmux->tx);
- 
- out:
--	pm_runtime_mark_last_busy(dmux->dev);
- 	pm_runtime_put_autosuspend(dmux->dev);
- }
- 
-diff --git a/drivers/net/wwan/t7xx/t7xx_hif_cldma.c b/drivers/net/wwan/t7xx/t7xx_hif_cldma.c
-index 97163e1e5783..689c920ca898 100644
---- a/drivers/net/wwan/t7xx/t7xx_hif_cldma.c
-+++ b/drivers/net/wwan/t7xx/t7xx_hif_cldma.c
-@@ -250,7 +250,6 @@ static void t7xx_cldma_rx_done(struct work_struct *work)
- 	t7xx_cldma_clear_ip_busy(&md_ctrl->hw_info);
- 	t7xx_cldma_hw_irq_en_txrx(&md_ctrl->hw_info, queue->index, MTK_RX);
- 	t7xx_cldma_hw_irq_en_eq(&md_ctrl->hw_info, queue->index, MTK_RX);
--	pm_runtime_mark_last_busy(md_ctrl->dev);
- 	pm_runtime_put_autosuspend(md_ctrl->dev);
- }
- 
-@@ -362,7 +361,6 @@ static void t7xx_cldma_tx_done(struct work_struct *work)
- 	}
- 	spin_unlock_irqrestore(&md_ctrl->cldma_lock, flags);
- 
--	pm_runtime_mark_last_busy(md_ctrl->dev);
- 	pm_runtime_put_autosuspend(md_ctrl->dev);
- }
- 
-@@ -987,7 +985,6 @@ int t7xx_cldma_send_skb(struct cldma_ctrl *md_ctrl, int qno, struct sk_buff *skb
- 
- allow_sleep:
- 	t7xx_pci_enable_sleep(md_ctrl->t7xx_dev);
--	pm_runtime_mark_last_busy(md_ctrl->dev);
- 	pm_runtime_put_autosuspend(md_ctrl->dev);
- 	return ret;
- }
-diff --git a/drivers/net/wwan/t7xx/t7xx_hif_dpmaif_rx.c b/drivers/net/wwan/t7xx/t7xx_hif_dpmaif_rx.c
-index 2310493203d3..b76bea6ab2d7 100644
---- a/drivers/net/wwan/t7xx/t7xx_hif_dpmaif_rx.c
-+++ b/drivers/net/wwan/t7xx/t7xx_hif_dpmaif_rx.c
-@@ -877,7 +877,6 @@ int t7xx_dpmaif_napi_rx_poll(struct napi_struct *napi, const int budget)
- 		t7xx_dpmaif_clr_ip_busy_sts(&rxq->dpmaif_ctrl->hw_info);
- 		t7xx_dpmaif_dlq_unmask_rx_done(&rxq->dpmaif_ctrl->hw_info, rxq->index);
- 		t7xx_pci_enable_sleep(rxq->dpmaif_ctrl->t7xx_dev);
--		pm_runtime_mark_last_busy(rxq->dpmaif_ctrl->dev);
- 		pm_runtime_put_autosuspend(rxq->dpmaif_ctrl->dev);
- 		atomic_set(&rxq->rx_processing, 0);
- 	} else {
-@@ -1078,7 +1077,6 @@ static void t7xx_dpmaif_bat_release_work(struct work_struct *work)
- 	}
- 
- 	t7xx_pci_enable_sleep(dpmaif_ctrl->t7xx_dev);
--	pm_runtime_mark_last_busy(dpmaif_ctrl->dev);
- 	pm_runtime_put_autosuspend(dpmaif_ctrl->dev);
- }
- 
-diff --git a/drivers/net/wwan/t7xx/t7xx_hif_dpmaif_tx.c b/drivers/net/wwan/t7xx/t7xx_hif_dpmaif_tx.c
-index 8dab025a088a..236d632cf591 100644
---- a/drivers/net/wwan/t7xx/t7xx_hif_dpmaif_tx.c
-+++ b/drivers/net/wwan/t7xx/t7xx_hif_dpmaif_tx.c
-@@ -185,7 +185,6 @@ static void t7xx_dpmaif_tx_done(struct work_struct *work)
- 	}
- 
- 	t7xx_pci_enable_sleep(dpmaif_ctrl->t7xx_dev);
--	pm_runtime_mark_last_busy(dpmaif_ctrl->dev);
- 	pm_runtime_put_autosuspend(dpmaif_ctrl->dev);
- }
- 
-@@ -468,7 +467,6 @@ static int t7xx_dpmaif_tx_hw_push_thread(void *arg)
- 		t7xx_pci_disable_sleep(dpmaif_ctrl->t7xx_dev);
- 		t7xx_do_tx_hw_push(dpmaif_ctrl);
- 		t7xx_pci_enable_sleep(dpmaif_ctrl->t7xx_dev);
--		pm_runtime_mark_last_busy(dpmaif_ctrl->dev);
- 		pm_runtime_put_autosuspend(dpmaif_ctrl->dev);
- 	}
- 
--- 
-2.47.3
+It's the USB3_0 host that causes the issue
 
+Removing the clk_bulk_disable_unprepare() call in dwc3_qcom_suspend()
+helps..
+
+Konrad
 
