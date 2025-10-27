@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-78951-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-78953-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0DB8AC0E7C5
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Oct 2025 15:41:23 +0100 (CET)
+Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [142.0.200.124])
+	by mail.lfdr.de (Postfix) with ESMTPS id ACFB2C0E786
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Oct 2025 15:39:36 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 50092461C95
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Oct 2025 14:34:22 +0000 (UTC)
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 170284FA42E
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Oct 2025 14:35:08 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BCAD430AD0A;
-	Mon, 27 Oct 2025 14:31:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 248083081C6;
+	Mon, 27 Oct 2025 14:32:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="RSrdWOxe"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="D+ZkdOq5"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8739730ACF4;
-	Mon, 27 Oct 2025 14:31:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8FA8305E24;
+	Mon, 27 Oct 2025 14:32:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761575503; cv=none; b=XciWG3esMS46bmpEF/SLWXPdfktdUoKddvYw6vwkg7RzqFPr53O4IayAwGz4g6ItHKGQRk0BbYvaXaxROsdqizR2TGnX2SAwytBkYScgVcCQjgszBl5Yp50JqAl172gHE4dZimvTyOnqYYWnexcLYaF0EeTjPt4Ewquyg6iQYD4=
+	t=1761575550; cv=none; b=X9aeC6/3OCaA/MJUVusvxkzCsAcQmfPNodU8pZ0BmVBvnQ0N2ImwbDbN14Bs3p8qjgMjGcgo3QCy0Bc0pPCnaIr8FCXXWRzDKoc1mlws/+wtLfx4mad57kcRViVLTIC/5387UID4tWdFrESWd0mh5PlWjHGLLVS6NVtTY+YQAMI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761575503; c=relaxed/simple;
-	bh=XQalhDZ/zJowghLOOuFFpjfQp54zAIdrsBAChcBtnbA=;
+	s=arc-20240116; t=1761575550; c=relaxed/simple;
+	bh=BXLst4mIWWfhwC7mtc8wHJcToWiF/s1wd5FhR8s2XiE=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=JjheqPhdL0k0R+C8ueAg6MQgX2MNLL+w2vw56iKn2qYHHIT4x20nkUwDajyYVBvsES/artTglac3QmpbBJTXUnmxH7WVFnZklel39cZ1POKDEdAqVS/evqTdtbzT3us94uoCtIOrZ8BLHETe+3+wxHI/+tWhMee3wi7BuqtBItQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=RSrdWOxe; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF557C4CEF1;
-	Mon, 27 Oct 2025 14:31:38 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=nq570kSpD9MAlOw6c6LTTUmuDCCdydt4qghhcfsm/imSEJWThAWO3uGM8gSdvR3j/8Z7nO35DesL63MD/8w/bb9vuLT8L1R1S5e15iNDJaFoBx+OHawhyChgeiDKQmq0aQ1LH4giwFt52M4Ze3XMGSOjaty/aGlIbb0wEiYB+vw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=D+ZkdOq5; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 899E8C4CEF1;
+	Mon, 27 Oct 2025 14:32:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1761575503;
-	bh=XQalhDZ/zJowghLOOuFFpjfQp54zAIdrsBAChcBtnbA=;
+	s=k20201202; t=1761575549;
+	bh=BXLst4mIWWfhwC7mtc8wHJcToWiF/s1wd5FhR8s2XiE=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=RSrdWOxeEXCUi+ztc0FnkDn3pAlhc6NEvksGqo69nwAxXw4iiQIaHO7Kty8I/VtJ6
-	 PbYajbTIwY9etaZffbB+yPx6cZ7GcWCBU5LD1JrO+8n44VbWvsE80UicN9EBkK3w8n
-	 EP/es6SgRfUFoQdaQxgdbGFxujv7btcOGiiRdSWTfFcGEOylr8CiZ0vE5DaAko28wY
-	 +RW7iMfAma8e6huynRo7NzgbPHaL945xOiz1w46iZIbuAINvdJzD1MZFsPMZ6mhiJS
-	 Wcw9JcFDNIt4oWsgDb9+H5PuaoOy/28BB8GpxcfgTvnMPo2qeMioP2k+jIQv2aU/p3
-	 OLEA9WgU1NS6w==
-Message-ID: <4394142b-c96c-464e-9e12-80904755026e@kernel.org>
-Date: Mon, 27 Oct 2025 15:31:37 +0100
+	b=D+ZkdOq5gxxjinQTbLpeiD9G9IqaQjcXt3Kup3jyRezFb270+rAZEmfcLwm0Z3Zh8
+	 PEJj7/l6r4IugfryDpJESp3eQPFoPkU9nkudLO9cDBP3n82H76JIGPn87zPaMieaty
+	 k4QSl23Rj+YkwZnbzdfSfwEkSlf8q37UMsJ77PMEEGCPIk3ja5e3976UQJJaQ4bYoQ
+	 HZH1ujlpN13jmD1ngRBaMpZAWJBQV6fX8u2vD5VsudvcfG63bFCIqJ/FlAvTGgDSC+
+	 vwUnExYrObosWKWy0nnI6H7krLzP+IEduKPNNi5eMhVredq1NEfh/8YenaYN6iSaQj
+	 VDcR0G9joAQeg==
+Message-ID: <3170ad12-0d79-4cb1-aedc-d2c9f1da366f@kernel.org>
+Date: Mon, 27 Oct 2025 15:32:23 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,8 +50,8 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH V3 3/4] arm64: dts: qcom: sm8750-mtp: Add SDC2 node for
- sm8750 mtp board
+Subject: Re: [PATCH V3 2/4] arm64: dts: qcom: sm8750: Add SDC2 nodes for
+ sm8750 soc
 To: Sarthak Garg <sarthak.garg@oss.qualcomm.com>,
  Ulf Hansson <ulf.hansson@linaro.org>, Rob Herring <robh@kernel.org>,
  Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
@@ -61,10 +61,9 @@ Cc: linux-mmc@vger.kernel.org, devicetree@vger.kernel.org,
  linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
  quic_nguyenb@quicinc.com, quic_rampraka@quicinc.com,
  quic_pragalla@quicinc.com, quic_sayalil@quicinc.com,
- quic_nitirawa@quicinc.com, quic_bhaskarv@quicinc.com,
- kernel@oss.qualcomm.com, Abel Vesa <abel.vesa@linaro.org>
+ quic_nitirawa@quicinc.com, quic_bhaskarv@quicinc.com, kernel@oss.qualcomm.com
 References: <20251026111746.3195861-1-sarthak.garg@oss.qualcomm.com>
- <20251026111746.3195861-4-sarthak.garg@oss.qualcomm.com>
+ <20251026111746.3195861-3-sarthak.garg@oss.qualcomm.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -110,21 +109,34 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  jWt87ecuHlpL3uuQ0ZZNWqHgZoQLXoqC2ZV5KrtKWb/jyiFX/sxSrodALf0zf+tfHv0FZWT2
  zHjUqd0t4njD/UOsuIMOQn4Ig0SdivYPfZukb5cdasKJukG1NOpbW7yRNivaCnfZz6dTawXw
  XRIV/KDsHQiyVxKvN73bThKhONkcX2LWuD928tAR6XMM2G5ovxLe09vuOzzfTWQDsm++9UKF a/A=
-In-Reply-To: <20251026111746.3195861-4-sarthak.garg@oss.qualcomm.com>
+In-Reply-To: <20251026111746.3195861-3-sarthak.garg@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
 On 26/10/2025 12:17, Sarthak Garg wrote:
-> Enable SD Card host controller for sm8750 mtp board.
+> Add SD Card host controller for sm8750 soc.
 > 
 > Signed-off-by: Sarthak Garg <sarthak.garg@oss.qualcomm.com>
-> Reviewed-by: Abel Vesa <abel.vesa@linaro.org>
 > ---
->  arch/arm64/boot/dts/qcom/sm8750-mtp.dts | 23 +++++++++++++++++++++++
->  1 file changed, 23 insertions(+)
+>  arch/arm64/boot/dts/qcom/sm8750.dtsi | 54 ++++++++++++++++++++++++++++
+>  1 file changed, 54 insertions(+)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/sm8750.dtsi b/arch/arm64/boot/dts/qcom/sm8750.dtsi
+> index a82d9867c7cb..50e1fa67c093 100644
+> --- a/arch/arm64/boot/dts/qcom/sm8750.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sm8750.dtsi
+> @@ -2060,6 +2060,60 @@ ice: crypto@1d88000 {
+>  			clocks = <&gcc GCC_UFS_PHY_ICE_CORE_CLK>;
+>  		};
+>  
+> +		sdhc_2: mmc@8804000 {
 
+Completely messed ordering.
 
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> +			compatible = "qcom,sm8750-sdhci", "qcom,sdhci-msm-v5";
+> +			reg = <0 0x08804000 0 0x1000>;
+
+Use hex everywhere in reg.
 
 Best regards,
 Krzysztof
