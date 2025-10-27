@@ -1,473 +1,201 @@
-Return-Path: <linux-arm-msm+bounces-78985-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-78986-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 721DEC0F195
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Oct 2025 16:57:38 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 334E1C0F1C2
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Oct 2025 16:59:05 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 7412E462D3C
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Oct 2025 15:50:09 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 5B13C1A219E1
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Oct 2025 15:55:44 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D1DC03195E4;
-	Mon, 27 Oct 2025 15:45:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9F9D9322DBB;
+	Mon, 27 Oct 2025 15:47:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b="2lvLNtc4"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="mgORrcLr"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f44.google.com (mail-wm1-f44.google.com [209.85.128.44])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7EDD730BF60
-	for <linux-arm-msm@vger.kernel.org>; Mon, 27 Oct 2025 15:45:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 653A1322A3F
+	for <linux-arm-msm@vger.kernel.org>; Mon, 27 Oct 2025 15:47:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761579921; cv=none; b=j3idR/oBMAL/y9Vc2b9mD5YGZ5kYKxH+u6p1l/QYfzfZE6AE8MsZUWM0CH45PULBasx/mqErLYydlNEe0wKH7ujdRfYh7s04EvAgNdRzC0mcB9GGml7Q3yL7sQjJsAVWvcM5u3GUVn8DQbob3FenT4qkTG3JxLEVAxXte/U2FJc=
+	t=1761580053; cv=none; b=QtcDgljhM6bkjI/5zHUzCyj5ksaXgx9AU/aAeUjWpGLBJ8hJgs8aOCtdTBrPA5ufNbyzYCyRQnJiHIpT9gu8oAsyz2IX9ycZiQVsYLt4PpJDS9YkXBQu9mVALSr0Ohw7Bgr8/Nq+nlFIoIJXu9cr4w9IWH4qMBZQa/7tdt2Ve7E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761579921; c=relaxed/simple;
-	bh=em6tk+3P9TpgJ8hPtXgwSlRTG7LIzg61tAiNLS81KlM=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=ohqldoizvcze1zX4L8RjTFmapHIitMRBkGw3BWPmW5lPws6AxoAVSULlag4GDTLHuM9A+DM3eJGgsy2EjTffo8urfVCV+/RPWvoBZLr877iFa5adFLImOWEFh1brB3NhXidZhdKW0Z+8zaRw8B5TsYoZN/gJPs90moSzw1swGAU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl; spf=none smtp.mailfrom=bgdev.pl; dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b=2lvLNtc4; arc=none smtp.client-ip=209.85.128.44
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=bgdev.pl
-Received: by mail-wm1-f44.google.com with SMTP id 5b1f17b1804b1-471b80b994bso68090885e9.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 27 Oct 2025 08:45:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=bgdev-pl.20230601.gappssmtp.com; s=20230601; t=1761579916; x=1762184716; darn=vger.kernel.org;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=nj4YfFzT8L9rvoRDSjiGKfJ4d8m7Uwj19oEU9ZUoPQk=;
-        b=2lvLNtc4Wv9hrYe+WH1yW4uAUlk2Yu8ti1xPCHaU7cmBA2QrCs+ohrKnyaduJApaqQ
-         DxQ/MLcpkOoMfRtjjdhHmmNqvQGRRG34RKxDAsDV8H1642VG6Bp0rLJa2NP7BvCR5FL0
-         fdN9CaxtzOytTiITGHSgOJ53C8Nz95Je62oqDCTVeusIm4XB0NXUtOlCfvZWhO2VKSpw
-         cJSo3rdq2WsC7Y8ua30Ojs8igE4lawYUZ06/1U+4qH9teLcxDKSeXp3HNpJlSLOMgprf
-         YZamePaW+DY4pNGHefkxKEhK3LiyXyQq2E9GtllF8KYBdMxjOjBlZB/Mft5rdQzzkt0G
-         FDbg==
+	s=arc-20240116; t=1761580053; c=relaxed/simple;
+	bh=tQL6TIWCl8aDOrH0GaFalhGYJg12eSESkwTpBcEYy4o=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=VU9uUFQJWwiq0xUOGERbc6QcP6lliF+/wJWUSv7G8qdYb9hL8elunuhwI8u+r3QHtXGWaecpZC3rgkHFimKsf/+PwZ4E1gHfFyGJgI1551FO6OOTpFNquITU6MqOlVAe9KAypHETIwmpuuHkEzAK3SzyH/zd+Zu6D4JzQHEKN+E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=mgORrcLr; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 59RCTqKt2752122
+	for <linux-arm-msm@vger.kernel.org>; Mon, 27 Oct 2025 15:47:30 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	zaCZneb5YWhjC19k4/2yPgAXlS8d0rH/p95cOFgMm+o=; b=mgORrcLra9bOxg7T
+	BMlgLI0vpCS8JfbfdZmTNX0ukmVnYaCpmYmWzEf9SWuwytvlRiEBXxsUP1r73M+k
+	i3KI+Eu/H0GFZOTcH+H/5CeDEas0/dg7o3H4THI/rBwGZ7r5jOsQ4V+NwlZg2MJM
+	IIyhvpaN633LsfXiXUC1MCdII7Ta3e5eBfYYfC9unGEVgNuCQ3mSpcp1Rzagoclo
+	PkfAPKz8DXlp7lVLNVocXSQlSwcKAE86x+cDI5YzTuc2hVU+yKcMnHe7/ytKyoIo
+	R4O1TVc8gtDAN8msWB7dFgrhVUEbmIAqpsDfz3YlSCHK9gIDS2w0urzi6wlAHZwD
+	veOKWw==
+Received: from mail-qv1-f69.google.com (mail-qv1-f69.google.com [209.85.219.69])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4a28swgqqj-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Mon, 27 Oct 2025 15:47:30 +0000 (GMT)
+Received: by mail-qv1-f69.google.com with SMTP id 6a1803df08f44-87dfd456d01so14802516d6.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 27 Oct 2025 08:47:30 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1761579916; x=1762184716;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=nj4YfFzT8L9rvoRDSjiGKfJ4d8m7Uwj19oEU9ZUoPQk=;
-        b=DHpwcYD2tKa9R6+RIfhyYuWlPNCsviyJYi90ASU5M2ExWUTAP8na6Qq29FmiETNbOb
-         IttcZOrD4lqLAqCMq0JjPt4l0aLM78GTQPT28232M3e39nnWQ4uxwhgODH0MOga+IYiw
-         il0p/QYruEqQa4aYqkzDfXNEsdTDpI6s6RGV+pXI6ZpiSqQyGewfpDhu+KRcOrBzz7nF
-         lavd0ZD0qv1tnMt4WofKbmih0orXHknSoGztCbFFnfmmiK5Wdt2A6Pd84WfUbS/Vse/U
-         W3bgW0+ENmJdU+7Wn3/eQPJRYccydfhVpH8K+RCInk4ZYb9qiDwiGp5HZaMp5oc9RIAL
-         gXFQ==
-X-Gm-Message-State: AOJu0YyBogq6+i04L0id5rhLJUSw+k6xiiLrbCxrkHwIiwawJaViQRms
-	H/6LV5elq4894aLPeuXS17IhWc8dVhdG+9/lGf9Ws9Umg7tAX8fVUmhIsekYOP8049M=
-X-Gm-Gg: ASbGncvjs+QSA0+G3AHM84TBXezoFVbWVOdNJgb21/w7X6Yn7VDvN7cOcbvS/sx3Fax
-	U3zY/dsnBUjdPvfobj8HZxSJyOMeccH+il0kDQB++TIriPCTGU6E5R3F3CehXcQTikZt4VOc62z
-	O8kvmAbfbbIcbr4ztmn986JtRHM3aL/anAoJ87UZmUtVSnqs5v7nzSXypbDt3nSgEWEguAeK2F6
-	vYXrj4f1XottTemaBd4DEXuMcf7yVWTTz74DkFuh9reLzlkAjKv5PXQZGNnG+7jbNVYEOFpVTNJ
-	oxFSADHLbBehNs7Kk7n3cJ74UUXeVFKjBqypo8nqXbsk4ZK8t5f1KNLofiOAIjjTnDhi5tGXLWV
-	LRBR3CIaoZmWsq2BdvBPD0clKDaxrz87ZPOu23EMUBWf+qItCcvXVtMwynfBsc6nbPeZfvKo=
-X-Google-Smtp-Source: AGHT+IEvxnMh4ifJ66vdKDXCM9wH6Mq7LAphJvwou4QF6wkWuLadBPW8xF+aUT2FdCl6ibpuW9RHwg==
-X-Received: by 2002:a05:600c:4e56:b0:475:dd7f:f6cd with SMTP id 5b1f17b1804b1-47717e7a4e8mr655015e9.35.1761579915818;
-        Mon, 27 Oct 2025 08:45:15 -0700 (PDT)
-Received: from [127.0.1.1] ([2a01:cb1d:dc:7e00:c1c6:7dde:fe94:6881])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-475dd477d0esm138708045e9.0.2025.10.27.08.45.14
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 27 Oct 2025 08:45:14 -0700 (PDT)
-From: Bartosz Golaszewski <brgl@bgdev.pl>
-Date: Mon, 27 Oct 2025 16:44:56 +0100
-Subject: [PATCH v3 8/8] net: stmmac: qcom-ethqos: add support for sa8255p
+        d=1e100.net; s=20230601; t=1761580049; x=1762184849;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=zaCZneb5YWhjC19k4/2yPgAXlS8d0rH/p95cOFgMm+o=;
+        b=rHm2Z8nHAAdXpNkBYCl4f4+0iFBPRyHtqL1+NqvFxYhS6evfbl+/zof5QGI8GVdkhN
+         FWsgXNRtIsMRYpWfgE0i0+4mMV9a0kBMc8he+pB73TNYWNa52cQc+TC3swwF3atE61NO
+         5WmknGJ0MmJ2t9Ml75uD9VHDzFLH3x/1qGH/SIKY4pEEcgudboFd0B0D43osYVILXb9F
+         JZwLD3qOyhikeBkDl4aJNlXFgQeCXUmFmdYBhe6RWUNWtmaESwdg9BQypH+bGQfZ+/ev
+         ilOPTjI6zDPQKiJaMkZKdad75J42FeQrdLDpVgtGntB67rf2aA0RO66Rh5D2DpuUUqjJ
+         mwrQ==
+X-Forwarded-Encrypted: i=1; AJvYcCVDjlr2ZoMAGUBLRQOrR+MaK3PI1sdau2rd45haUF/PJIEttHOLVVOkNmOnfU6amw4wdrLy0GxsuFw5HBpB@vger.kernel.org
+X-Gm-Message-State: AOJu0YzwgFa+DJnWAWE+8rMoUkwaB1F1TyTLLZCW+Y4oLmF+o3U3U/SX
+	qOa/A8iVBapsUCdUYhcaaOarVhEDAsvlUiKgnQxNoU5C9mGyqdhVPMDXBkzTEvbA93UJGOMPTxV
+	IjNwsx3QOH0KzmL619MHPQuafvSYgRgRsvHbe7MGObylAPD4AX6EClwKTcyy+uXqPvcGR
+X-Gm-Gg: ASbGncvUlB2LRsUvHCZl8xPOKUNfi7aaV0ZOT8n3x6Jfm7QZwK8dXIKGxxJvKAOFWpc
+	SxFDFQGVE+n9buMNkvnDbfqANs6+459BYN9CKnVbl9hD8xGe5wJ8rh0fyabMYmNOPGCCUjczByz
+	KoWKlBtw18PrwEykwpLmi0MOKYXQGlQDh707+VjjFZ4vK6TnouMFg2ImvybsZYLeZrbZZwW0bx2
+	WkpeBJpeOxvjZU6+JhpYzh/HKQwoDZWU4wuC+LXQOfjcahsprNKc1+s34Kl4aC29MUqcXDAfchg
+	SbDYFAinykiu0LNVtM9ttpaylTTyBbKezIQ0DhcGYx5qt66AXHN6bRIS+BEoFXh9gr4fxcHytlz
+	ti7lrbMwsyczfktE5k1zIIDnAvlAV5hyl9y9bQYxV3gLWkxFaEwic60pt
+X-Received: by 2002:a05:622a:15c2:b0:4ec:f075:50cb with SMTP id d75a77b69052e-4ed07425e39mr4975251cf.2.1761580049435;
+        Mon, 27 Oct 2025 08:47:29 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGIgcSp0xCZswOedEYchtLWxCtcXToz2VeG+CLk8VsDBcRyNSlY/6wzGEsHr6w4SRPPrVI0GQ==
+X-Received: by 2002:a05:622a:15c2:b0:4ec:f075:50cb with SMTP id d75a77b69052e-4ed07425e39mr4974841cf.2.1761580048893;
+        Mon, 27 Oct 2025 08:47:28 -0700 (PDT)
+Received: from [192.168.119.202] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-b6d85413b88sm778566566b.55.2025.10.27.08.47.27
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 27 Oct 2025 08:47:28 -0700 (PDT)
+Message-ID: <7b68381a-0f7f-43ff-b934-9db5d9b2e69f@oss.qualcomm.com>
+Date: Mon, 27 Oct 2025 16:47:26 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 2/4] soc: qcom: rpmh: Add support to read back resource
+ settings
+To: Neil Armstrong <neil.armstrong@linaro.org>,
+        "Maulik Shah (mkshah)" <maulik.shah@oss.qualcomm.com>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Kamal Wadhwa <kamal.wadhwa@oss.qualcomm.com>
+Cc: Konrad Dybcio <konradybcio@kernel.org>,
+        Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20251022-add-rpmh-read-support-v2-0-5c7a8e4df601@oss.qualcomm.com>
+ <20251022-add-rpmh-read-support-v2-2-5c7a8e4df601@oss.qualcomm.com>
+ <litd6qcxuios7uwwcrz55ea24kj26onrjo2aekouynsce6wslj@vatjbulg64mb>
+ <4831d12b-a42a-464a-a70f-e0e40cf4ae4b@oss.qualcomm.com>
+ <5c0b4712-4a54-4a1a-ad73-dc3bdb21a0ff@oss.qualcomm.com>
+ <cb361d77-6845-45c9-b418-67649880495e@oss.qualcomm.com>
+ <ef247fe6-6d9c-4a74-b3f8-a56857332758@oss.qualcomm.com>
+ <9a227c15-dc60-4086-8d81-f80e3398a083@oss.qualcomm.com>
+ <18e8d5db-e32a-4893-9d1f-5003670cedeb@oss.qualcomm.com>
+ <7656e8f6-e281-4f7b-9ff4-1b2722234091@linaro.org>
+Content-Language: en-US
+From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+In-Reply-To: <7656e8f6-e281-4f7b-9ff4-1b2722234091@linaro.org>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Message-Id: <20251027-qcom-sa8255p-emac-v3-8-75767b9230ab@linaro.org>
-References: <20251027-qcom-sa8255p-emac-v3-0-75767b9230ab@linaro.org>
-In-Reply-To: <20251027-qcom-sa8255p-emac-v3-0-75767b9230ab@linaro.org>
-To: Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>, 
- Richard Cochran <richardcochran@gmail.com>, 
- Andrew Lunn <andrew+netdev@lunn.ch>, 
- "David S. Miller" <davem@davemloft.net>, Eric Dumazet <edumazet@google.com>, 
- Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>, 
- Maxime Coquelin <mcoquelin.stm32@gmail.com>, 
- Alexandre Torgue <alexandre.torgue@foss.st.com>, 
- Vinod Koul <vkoul@kernel.org>, Giuseppe Cavallaro <peppe.cavallaro@st.com>, 
- Jose Abreu <joabreu@synopsys.com>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
- linux-kernel@vger.kernel.org, netdev@vger.kernel.org, 
- linux-stm32@st-md-mailman.stormreply.com, 
- linux-arm-kernel@lists.infradead.org, 
- Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=10772;
- i=bartosz.golaszewski@linaro.org; h=from:subject:message-id;
- bh=1b3sySaTfsXuK4c/F0Opr6AUet9LgnCZjxhUFKkU4z0=;
- b=owEBbQKS/ZANAwAKARGnLqAUcddyAcsmYgBo/5N8hjhU5H0+0VU0DoorFqs8FTYQfOw41vwIZ
- GkA+1B/QEiJAjMEAAEKAB0WIQQWnetsC8PEYBPSx58Rpy6gFHHXcgUCaP+TfAAKCRARpy6gFHHX
- cqiZD/9c1z7V6BcYinZHb4qY/lEX5BFjcUvG3JVZmuhbAgAgsBctdrWRxN9KQBWHRe9buG43ZuF
- eYn/ViHUdL4y0j4/+cTB19zJqy4J1MnwxCb6aUAWmKRYN9yDxB7NApbEfklNnoUshR5OIUP/R32
- MoIW9lXliDZ5PMrVXfzUIYqLlqmjQ3Yim8CfpAXFObwrIujAcBuHrQ3yhBgHs/KHpPA/P8Jbg45
- 2BrEuQKzjXcyGidpaEGwMyocDr99czlWPZAXsG3Y12WGStjtc8dUE2XWirHkBg72abmDMS2//aI
- jWUiRPmUuyD1F9r7LNBVNTheHUtDBmuD8+IlzdBxnBnYhlHRJFXbH92WOMPqs5HsQd3pimmZ+s+
- 7ytrU5i6qxlZLGjTFzDntGLQOuKDJKX0TCQUIQ2W3O+czmj/BAR94auWdHvACLlMDtnGkEm7VSF
- H2TtqWAyAFxrBj/8W4vAeNAnJ+gb5307c5yLFpSMVhqyNbij2Sptezqmh8RXv6ZDjXA50kK8P5f
- aDYziPdGVrlOpqDDNEUR/cB7XkxsRZo/vhHqNb23bFqsX3UV3yOhm/RlPLnaMUFKWApYY9f+0bh
- ZrKT1od0cahASgO63FXtsA8Mp6IEAMl9uKPbmbIhj0fbWAUWDlvz0pGkOLB5IPxCdEiKH1Adw/e
- X5vzGJETbRwWaZQ==
-X-Developer-Key: i=bartosz.golaszewski@linaro.org; a=openpgp;
- fpr=169DEB6C0BC3C46013D2C79F11A72EA01471D772
+X-Proofpoint-ORIG-GUID: 3559DWPGKG_ysYZGbZecQHAJZ_dvzzJO
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDI3MDE0NyBTYWx0ZWRfX/aQHY0BGy5c+
+ clbc+23JJW8klqC5yWZaPdZfF8fpq93qSsNoYsN7wsYQSUDFltiLm6EXIiXUtu/6/EPQ2VukW7k
+ 26mNFngkGWdKoNflt7jeWsDVRnMs5Q6rqNkHd7cG8pum1GMl01ylsC0zKF8EsJtNDtXssJIijjV
+ PfEr4dUvq3h9uCzJN1f9CJmMQVyY4m3kc85Q89zCBRZKiguXbyMS0k3zmZRmgsyal13vK4VSRbp
+ uX5J5gAYNPyn+6D6hVgbntKsEwWQIv4Siu+IYwmECIz7WHqZcl9+gjeDeYvSH+t9wm9Hs1qj06G
+ VC0iCf6WTzKTmLYK2SW2oYnGgb21nxYJUsTvPxWriVK8OKqHq+a8EfZ21e7McMVuL1AI2Sr235O
+ yOb0WCrZKw9qTEfuYyxGh2yCo+WdYQ==
+X-Proofpoint-GUID: 3559DWPGKG_ysYZGbZecQHAJZ_dvzzJO
+X-Authority-Analysis: v=2.4 cv=fL40HJae c=1 sm=1 tr=0 ts=68ff9412 cx=c_pps
+ a=wEM5vcRIz55oU/E2lInRtA==:117 a=FpWmc02/iXfjRdCD7H54yg==:17
+ a=IkcTkHD0fZMA:10 a=x6icFKpwvdMA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=EUspDBNiAAAA:8 a=gzx7cS8GTzoW4zH438oA:9 a=QEXdDO2ut3YA:10
+ a=OIgjcC2v60KrkQgK7BGD:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-10-27_06,2025-10-22_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ spamscore=0 impostorscore=0 phishscore=0 suspectscore=0 priorityscore=1501
+ clxscore=1015 adultscore=0 malwarescore=0 lowpriorityscore=0 bulkscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2510020000 definitions=main-2510270147
 
-From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+On 10/27/25 3:38 PM, Neil Armstrong wrote:
+> On 10/27/25 14:29, Konrad Dybcio wrote:
+>> On 10/23/25 11:46 AM, Maulik Shah (mkshah) wrote:
+>>>
+>>>
+>>> On 10/23/2025 2:39 PM, Konrad Dybcio wrote:
+>>>> On 10/23/25 10:57 AM, Maulik Shah (mkshah) wrote:
+>>>>>
+>>>>>
+>>>>> On 10/23/2025 1:47 PM, Konrad Dybcio wrote:
+>>>>>> On 10/23/25 6:46 AM, Maulik Shah (mkshah) wrote:
+>>>>>>>
+>>>>>>>
+>>>>>>> On 10/23/2025 2:51 AM, Bjorn Andersson wrote:
+>>>>>>>> On Wed, Oct 22, 2025 at 02:38:54AM +0530, Kamal Wadhwa wrote:
+>>>>>>>>> From: Maulik Shah <maulik.shah@oss.qualcomm.com>
+>>>>>>>>>
+>>>>>>>>> All rpmh_*() APIs so far have supported placing votes for various
+>>>>>>>>> resource settings but the H/W also have option to read resource
+>>>>>>>>> settings.
+>>>>>>>>>
+>>>>>>>>> This change adds a new rpmh_read() API to allow clients
+>>>>>>>>> to read back resource setting from H/W. This will be useful for
+>>>>>>>>> clients like regulators, which currently don't have a way to know
+>>>>>>>>> the settings applied during bootloader stage.
+>>>>>>>>>
+>>>>>>>>
+>>>>>>>> Allow me to express my disappointment over the fact that you sat on this
+>>>>>>>> for 7 years!
+>>>>>>>
+>>>>>>> This was a dead API (even in downstream) with no user since SDM845/ 7 years.
+>>>>>>> Read support was eventually removed from downstream driver too for the same reason.
+>>>>>>> There were early discussions to remove read support from RSC H/W, due to lack of users.
+>>>>>>> Its not realized yet and all SoCs still supports read.
+>>>>>>
+>>>>>> Can we read BCM states from HLOS this way too?
+>>>>>
+>>>>> Yes, Any of ARC/BCM/VRM can be read to get HLOS/DRV2 votes.
+>>>>
+>>>> Wow this is amazing..
+>>>>
+>>>> Do you have code for this already, or should I hack on it?
+>>>
+>>> No, it won't be of much help, as i said above it gets HLOS/DRV2 votes only for a given resource.
+>>> More specifically, the read does not give the aggregated vote result across all the DRVs.
+>>
+>> Hm, perhaps it could still be of *some* use
+>>
+>> But maybe reading back rpmhpd and rpmhcc states would be of more
+>> use!
+> 
+> The interconnect core definitely supports reading back the state at boot.
 
-Extend the driver to support a new model - sa8255p. Unlike the
-previously supported variants, this one's power management is done in
-the firmware using SCMI. This is modeled in linux using power domains so
-add support for them.
+Maulik probably isn't impressed with us only being able to provide
+information about HLOS votes, as e.g. ADSP could be voting on the same
+bus in parallel.
 
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
----
- .../ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c    | 230 ++++++++++++++++++---
- 1 file changed, 201 insertions(+), 29 deletions(-)
+I suppose the very same applies to what I suggested with clk and rpmhpd
+although probably it's less of a problem there
 
-diff --git a/drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c b/drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c
-index 840d44f052786a79b85d25d2181467aa96102ec8..0917168b1dfa05fdc28d6113261f368fcf06d893 100644
---- a/drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c
-@@ -7,6 +7,8 @@
- #include <linux/platform_device.h>
- #include <linux/phy.h>
- #include <linux/phy/phy.h>
-+#include <linux/pm_opp.h>
-+#include <linux/pm_domain.h>
- 
- #include "stmmac.h"
- #include "stmmac_platform.h"
-@@ -85,6 +87,13 @@
- 
- #define SGMII_10M_RX_CLK_DVDR			0x31
- 
-+enum ethqos_pd_selector {
-+	ETHQOS_PD_CORE = 0,
-+	ETHQOS_PD_MDIO,
-+	ETHQOS_PD_SERDES,
-+	ETHQOS_NUM_PDS,
-+};
-+
- struct ethqos_emac_por {
- 	unsigned int offset;
- 	unsigned int value;
-@@ -102,6 +111,9 @@ struct ethqos_emac_driver_data {
- 
- struct ethqos_emac_pm_data {
- 	const char *link_clk_name;
-+	bool use_domains;
-+	struct dev_pm_domain_attach_data pd;
-+	unsigned int clk_ptp_rate;
- };
- 
- struct ethqos_emac_match_data {
-@@ -115,13 +127,20 @@ struct ethqos_emac_pm_ctx {
- 	struct phy *serdes_phy;
- };
- 
-+struct ethqos_emac_pd_ctx {
-+	struct dev_pm_domain_list *pd_list;
-+};
-+
- struct qcom_ethqos {
- 	struct platform_device *pdev;
- 	void __iomem *rgmii_base;
- 	void __iomem *mac_base;
- 	int (*configure_func)(struct qcom_ethqos *ethqos, int speed);
- 
--	struct ethqos_emac_pm_ctx pm;
-+	union {
-+		struct ethqos_emac_pm_ctx pm;
-+		struct ethqos_emac_pd_ctx pd;
-+	};
- 	phy_interface_t phy_mode;
- 	int serdes_speed;
- 	int (*set_serdes_speed)(struct qcom_ethqos *ethqos);
-@@ -334,6 +353,25 @@ static const struct ethqos_emac_match_data emac_sa8775p_data = {
- 	.pm_data = &emac_sa8775p_pm_data,
- };
- 
-+static const char * const emac_sa8255p_pd_names[] = {
-+	"power_core", "power_mdio", "perf_serdes"
-+};
-+
-+static const struct ethqos_emac_pm_data emac_sa8255p_pm_data = {
-+	.pd = {
-+		.pd_flags = PD_FLAG_NO_DEV_LINK,
-+		.pd_names = emac_sa8255p_pd_names,
-+		.num_pd_names = ETHQOS_NUM_PDS,
-+	},
-+	.use_domains = true,
-+	.clk_ptp_rate = 230400000,
-+};
-+
-+static const struct ethqos_emac_match_data emac_sa8255p_data = {
-+	.drv_data = &emac_v4_0_0_data,
-+	.pm_data = &emac_sa8255p_pm_data,
-+};
-+
- static int ethqos_dll_configure(struct qcom_ethqos *ethqos)
- {
- 	struct device *dev = &ethqos->pdev->dev;
-@@ -415,6 +453,28 @@ static int ethqos_dll_configure(struct qcom_ethqos *ethqos)
- 	return 0;
- }
- 
-+static int qcom_ethqos_domain_on(struct qcom_ethqos *ethqos,
-+				 enum ethqos_pd_selector sel)
-+{
-+	struct device *dev = ethqos->pd.pd_list->pd_devs[sel];
-+	int ret;
-+
-+	ret = pm_runtime_resume_and_get(dev);
-+	if (ret < 0)
-+		dev_err(&ethqos->pdev->dev,
-+			"Failed to enable the power domain for %s\n",
-+			dev_name(dev));
-+	return ret;
-+}
-+
-+static void qcom_ethqos_domain_off(struct qcom_ethqos *ethqos,
-+				   enum ethqos_pd_selector sel)
-+{
-+	struct device *dev = ethqos->pd.pd_list->pd_devs[sel];
-+
-+	pm_runtime_put_sync(dev);
-+}
-+
- static int ethqos_rgmii_macro_init(struct qcom_ethqos *ethqos, int speed)
- {
- 	struct device *dev = &ethqos->pdev->dev;
-@@ -650,6 +710,13 @@ static int ethqos_set_serdes_speed_phy(struct qcom_ethqos *ethqos)
- 	return phy_set_speed(ethqos->pm.serdes_phy, ethqos->serdes_speed);
- }
- 
-+static int ethqos_set_serdes_speed_pd(struct qcom_ethqos *ethqos)
-+{
-+	struct device *dev = ethqos->pd.pd_list->pd_devs[ETHQOS_PD_SERDES];
-+
-+	return dev_pm_opp_set_level(dev, ethqos->serdes_speed);
-+}
-+
- static void ethqos_set_serdes_speed(struct qcom_ethqos *ethqos, int speed)
- {
- 	if (ethqos->serdes_speed != speed) {
-@@ -751,6 +818,27 @@ static void qcom_ethqos_serdes_powerdown(struct net_device *ndev, void *priv)
- 	phy_exit(ethqos->pm.serdes_phy);
- }
- 
-+static int qcom_ethqos_pd_serdes_powerup(struct net_device *ndev, void *priv)
-+{
-+	struct qcom_ethqos *ethqos = priv;
-+	struct device *dev = ethqos->pd.pd_list->pd_devs[ETHQOS_PD_SERDES];
-+	int ret;
-+
-+	ret = qcom_ethqos_domain_on(ethqos, ETHQOS_PD_SERDES);
-+	if (ret < 0)
-+		return ret;
-+
-+	return dev_pm_opp_set_level(dev, ethqos->serdes_speed);
-+}
-+
-+static void qcom_ethqos_pd_serdes_powerdown(struct net_device *ndev, void *priv)
-+{
-+	struct qcom_ethqos *ethqos = priv;
-+
-+	/* TODO set level */
-+	qcom_ethqos_domain_off(ethqos, ETHQOS_PD_SERDES);
-+}
-+
- static int ethqos_clks_config(void *priv, bool enabled)
- {
- 	struct qcom_ethqos *ethqos = priv;
-@@ -783,6 +871,61 @@ static void ethqos_clks_disable(void *data)
- 	ethqos_clks_config(ethqos, false);
- }
- 
-+static int ethqos_pd_clks_config(void *priv, bool enabled)
-+{
-+	struct qcom_ethqos *ethqos = priv;
-+	int ret = 0;
-+
-+	if (enabled) {
-+		ret = qcom_ethqos_domain_on(ethqos, ETHQOS_PD_MDIO);
-+		if (ret < 0) {
-+			dev_err(&ethqos->pdev->dev,
-+				"Failed to enable the MDIO power domain\n");
-+			return ret;
-+		}
-+
-+		ethqos_set_func_clk_en(ethqos);
-+	} else {
-+		qcom_ethqos_domain_off(ethqos, ETHQOS_PD_MDIO);
-+	}
-+
-+	return ret;
-+}
-+
-+static int qcom_ethqos_pd_init(struct platform_device *pdev, void *priv)
-+{
-+	struct qcom_ethqos *ethqos = priv;
-+	int ret;
-+
-+	/*
-+	 * Enable functional clock to prevent DMA reset after timeout due
-+	 * to no PHY clock being enabled after the hardware block has been
-+	 * power cycled. The actual configuration will be adjusted once
-+	 * ethqos_fix_mac_speed() is called.
-+	 */
-+	ethqos_set_func_clk_en(ethqos);
-+
-+	ret = qcom_ethqos_domain_on(ethqos, ETHQOS_PD_CORE);
-+	if (ret)
-+		return ret;
-+
-+	ret = qcom_ethqos_domain_on(ethqos, ETHQOS_PD_MDIO);
-+	if (ret) {
-+		qcom_ethqos_domain_off(ethqos, ETHQOS_PD_CORE);
-+		return ret;
-+	}
-+
-+	return 0;
-+}
-+
-+static void qcom_ethqos_pd_exit(struct platform_device *pdev, void *data)
-+{
-+	struct qcom_ethqos *ethqos = data;
-+
-+	qcom_ethqos_domain_off(ethqos, ETHQOS_PD_MDIO);
-+	qcom_ethqos_domain_off(ethqos, ETHQOS_PD_CORE);
-+}
-+
- static void ethqos_ptp_clk_freq_config(struct stmmac_priv *priv)
- {
- 	struct plat_stmmacenet_data *plat_dat = priv->plat;
-@@ -823,8 +966,6 @@ static int qcom_ethqos_probe(struct platform_device *pdev)
- 				     "dt configuration failed\n");
- 	}
- 
--	plat_dat->clks_config = ethqos_clks_config;
--
- 	ethqos = devm_kzalloc(dev, sizeof(*ethqos), GFP_KERNEL);
- 	if (!ethqos)
- 		return -ENOMEM;
-@@ -866,28 +1007,63 @@ static int qcom_ethqos_probe(struct platform_device *pdev)
- 	ethqos->rgmii_config_loopback_en = drv_data->rgmii_config_loopback_en;
- 	ethqos->has_emac_ge_3 = drv_data->has_emac_ge_3;
- 	ethqos->needs_sgmii_loopback = drv_data->needs_sgmii_loopback;
--
--	ethqos->pm.link_clk = devm_clk_get(dev, clk_name);
--	if (IS_ERR(ethqos->pm.link_clk))
--		return dev_err_probe(dev, PTR_ERR(ethqos->pm.link_clk),
--				     "Failed to get link_clk\n");
--
--	ret = ethqos_clks_config(ethqos, true);
--	if (ret)
--		return ret;
--
--	ret = devm_add_action_or_reset(dev, ethqos_clks_disable, ethqos);
--	if (ret)
--		return ret;
--
--	ethqos->pm.serdes_phy = devm_phy_optional_get(dev, "serdes");
--	if (IS_ERR(ethqos->pm.serdes_phy))
--		return dev_err_probe(dev, PTR_ERR(ethqos->pm.serdes_phy),
--				     "Failed to get serdes phy\n");
--
--	ethqos->set_serdes_speed = ethqos_set_serdes_speed_phy;
- 	ethqos->serdes_speed = SPEED_1000;
--	ethqos_update_link_clk(ethqos, SPEED_1000);
-+
-+	if (pm_data && pm_data->use_domains) {
-+		ethqos->set_serdes_speed = ethqos_set_serdes_speed_pd;
-+
-+		ret = devm_pm_domain_attach_list(dev, &pm_data->pd,
-+						 &ethqos->pd.pd_list);
-+		if (ret < 0)
-+			return dev_err_probe(dev, ret, "Failed to attach power domains\n");
-+
-+		plat_dat->clks_config = ethqos_pd_clks_config;
-+		plat_dat->serdes_powerup = qcom_ethqos_pd_serdes_powerup;
-+		plat_dat->serdes_powerdown = qcom_ethqos_pd_serdes_powerdown;
-+		plat_dat->exit = qcom_ethqos_pd_exit;
-+		plat_dat->init = qcom_ethqos_pd_init;
-+		plat_dat->clk_ptp_rate = pm_data->clk_ptp_rate;
-+
-+		ret = qcom_ethqos_pd_init(pdev, ethqos);
-+		if (ret)
-+			return ret;
-+
-+		ret = qcom_ethqos_domain_on(ethqos, ETHQOS_PD_SERDES);
-+		if (ret)
-+			return dev_err_probe(dev, ret,
-+					     "Failed to enable the serdes power domain\n");
-+	} else {
-+		ethqos->set_serdes_speed = ethqos_set_serdes_speed_phy;
-+
-+		ethqos->pm.link_clk = devm_clk_get(dev, clk_name);
-+		if (IS_ERR(ethqos->pm.link_clk))
-+			return dev_err_probe(dev, PTR_ERR(ethqos->pm.link_clk),
-+					     "Failed to get link_clk\n");
-+
-+		ret = ethqos_clks_config(ethqos, true);
-+		if (ret)
-+			return ret;
-+
-+		ret = devm_add_action_or_reset(dev, ethqos_clks_disable, ethqos);
-+		if (ret)
-+			return ret;
-+
-+		ethqos->pm.serdes_phy = devm_phy_optional_get(dev, "serdes");
-+		if (IS_ERR(ethqos->pm.serdes_phy))
-+			return dev_err_probe(dev, PTR_ERR(ethqos->pm.serdes_phy),
-+					     "Failed to get serdes phy\n");
-+
-+		ethqos_update_link_clk(ethqos, SPEED_1000);
-+
-+		plat_dat->clks_config = ethqos_clks_config;
-+		plat_dat->ptp_clk_freq_config = ethqos_ptp_clk_freq_config;
-+
-+		if (ethqos->pm.serdes_phy) {
-+			plat_dat->serdes_powerup = qcom_ethqos_serdes_powerup;
-+			plat_dat->serdes_powerdown  = qcom_ethqos_serdes_powerdown;
-+		}
-+	}
-+
- 	ethqos_set_func_clk_en(ethqos);
- 
- 	plat_dat->bsp_priv = ethqos;
-@@ -905,11 +1081,6 @@ static int qcom_ethqos_probe(struct platform_device *pdev)
- 	if (drv_data->dma_addr_width)
- 		plat_dat->host_dma_width = drv_data->dma_addr_width;
- 
--	if (ethqos->pm.serdes_phy) {
--		plat_dat->serdes_powerup = qcom_ethqos_serdes_powerup;
--		plat_dat->serdes_powerdown  = qcom_ethqos_serdes_powerdown;
--	}
--
- 	/* Enable TSO on queue0 and enable TBS on rest of the queues */
- 	for (i = 1; i < plat_dat->tx_queues_to_use; i++)
- 		plat_dat->tx_queues_cfg[i].tbs_en = 1;
-@@ -919,6 +1090,7 @@ static int qcom_ethqos_probe(struct platform_device *pdev)
- 
- static const struct of_device_id qcom_ethqos_match[] = {
- 	{ .compatible = "qcom,qcs404-ethqos", .data = &emac_qcs404_data},
-+	{ .compatible = "qcom,sa8255p-ethqos", .data = &emac_sa8255p_data},
- 	{ .compatible = "qcom,sa8775p-ethqos", .data = &emac_sa8775p_data},
- 	{ .compatible = "qcom,sc8280xp-ethqos", .data = &emac_sc8280xp_data},
- 	{ .compatible = "qcom,sm8150-ethqos", .data = &emac_sm8150_data},
-
--- 
-2.48.1
-
+Konrad
 
