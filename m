@@ -1,380 +1,310 @@
-Return-Path: <linux-arm-msm+bounces-78888-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-78889-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 92DFCC0D6C8
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Oct 2025 13:12:29 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id BA083C0D783
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Oct 2025 13:19:53 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 420D93A6247
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Oct 2025 12:06:15 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 02C85189EB1B
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Oct 2025 12:18:07 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3C0132E54A3;
-	Mon, 27 Oct 2025 12:06:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6341F285CAD;
+	Mon, 27 Oct 2025 12:17:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ragnatech.se header.i=@ragnatech.se header.b="cjNBp01g";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="iRwdVSof"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="U4x+Ee6H"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from flow-a7-smtp.messagingengine.com (flow-a7-smtp.messagingengine.com [103.168.172.142])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE900136E37;
-	Mon, 27 Oct 2025 12:06:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.142
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A62DE2F7AC2
+	for <linux-arm-msm@vger.kernel.org>; Mon, 27 Oct 2025 12:17:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761566773; cv=none; b=oj2/VgaJZgOMVg1GPGWIM7WSCjzTZ5RiHIl71UwyuPeBwIJsgS51MpRGsS1nzTpcK/Uk83CGHf6Xz+45qmytjl3A1+qhiGcWraBsPNOfZPGxWVOGa+GuTaldJ6jbQYGWvZq18TwgH4bByydbNHSHMM5/vBBfkXimYq6p0tR73aQ=
+	t=1761567448; cv=none; b=uX4PMVTpJJCLOkLACWOkk7H339HP6Tbhpy/AZnj769LEMHgxQro6NdFldevsz+zKLE8faEQtVuvfgsFw+JDmjcvN/iqzdj0K2Q0EBV8Qzu3XMJKqQoSNCS7D0vSXlDsewnES0Ya9YZ9pIDi3z54HIFpR34OBNwEIcvuWDuzUpVA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761566773; c=relaxed/simple;
-	bh=xlvgYppU6vrWbDkOre9VGjPhmY41zEzjFJehkuY0Ya4=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=FBcci9J0EM9n48hUi3ypI5wTR2YAb3tK90O7cP4Zf2MP0G4GCmySgww+hh/C51AlO23Ik5zRTT5a+8AS1c22COUZ8Af+tbRzIJQqGG0EwhfDwfalz9WmVTr8TI3KCWVNFUv4CmXPiUZdDRZg91OEizoDKzlpSqgA8UjTuEb9Y2E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ragnatech.se; spf=pass smtp.mailfrom=ragnatech.se; dkim=pass (2048-bit key) header.d=ragnatech.se header.i=@ragnatech.se header.b=cjNBp01g; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=iRwdVSof; arc=none smtp.client-ip=103.168.172.142
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ragnatech.se
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ragnatech.se
-Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
-	by mailflow.phl.internal (Postfix) with ESMTP id DA2B81380433;
-	Mon, 27 Oct 2025 08:06:08 -0400 (EDT)
-Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-03.internal (MEProxy); Mon, 27 Oct 2025 08:06:08 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ragnatech.se; h=
-	cc:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1761566768;
-	 x=1761573968; bh=obydwKRf78xq6p+vbhUIwD78jMX6wxjnOG1pdFgCN10=; b=
-	cjNBp01gixuCQodlMTPqWVqxTwnPRoNY/DB2R25etvVgxgR1/APK38Lw+AZ1Zndp
-	DqCV9nYsiaeR8MbQTwIHK6I14UFNKI6k2xBzvEVRRn8L50eV7AhnE4HhJsfonXBz
-	+o2t58cF7O7vnZWsSF787D8zmKjo6e1z0Q4c9luGeJtC++7mXlkQEnrQqQ6i+cXT
-	eFiyEfT6UE6nMXmLMTkPzAwp6/kCzRD0bgUkfdGkOkc+tOtc00zpNajUSYC5YqNA
-	VdrVgelODIV6QsQDj70kL2x/sG5lfH3fXz2cIuRZWzbTF2POiv+G0jFFlZx6LmLj
-	BmSwk+2bEog8Ac9SBH9B+Q==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1761566768; x=
-	1761573968; bh=obydwKRf78xq6p+vbhUIwD78jMX6wxjnOG1pdFgCN10=; b=i
-	RwdVSofLwUMzMTqcIVwD/mF0uXOT/AO834mxca5Ti2J7H6DBwzQCSca06TRreXTo
-	4xlZF+xK8Q4JtncDawNYybAlT7PndY5WVchPdwvezEK2WrfNmzC/s38XcvatRrwQ
-	qHgTfYUrQVaNwYGoEKsrO9etxerxbYJQxLiZixxSmQSoxItP2BfNS5pnkYPFJWP5
-	lXUzwWEFmYf7o5PZRXc1Iwv2S0bBwQQi488u/XqnWFZYPCp/5i+SD2PJFYAwfdt8
-	Okgh7IbR1lJMFEE+JU5igtcCHBBx5sCY1yzyXADZUqNDk9HIDdREi+oFN7Mp0KF8
-	4C8DJeBziatinymCdTOsQ==
-X-ME-Sender: <xms:LmD_aGysJ_U_9H29oPZYjT1NybZPSL2ElDxgLRbCUM7W_DwciI6Sow>
-    <xme:LmD_aP78Er8xJPMjiJttIsTm4eo-oGnRrRkT2Kfg-Wkreu73Yy3lTeT0Wats7uXub
-    u9GG6tpnCSMobNqpXBn8UXXYJJMFkDQuXLujDF9a5nU77tYgMIFWT0>
-X-ME-Received: <xmr:LmD_aN6xAEBpHuwSyVm7JJ2whkZwq_oO6tkOFkj-0haRaam9BI0SLHKocIXfa0tFSP7me4bj-w-jF8fat09mqfW2Hlo7ZWM>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdduheejleefucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhepfffhvfevuffkfhggtggugfgjsehtkeertddttdejnecuhfhrohhmpefpihhklhgr
-    shcuufpnuggvrhhluhhnugcuoehnihhklhgrshdrshhouggvrhhluhhnugesrhgrghhnrg
-    htvggthhdrshgvqeenucggtffrrghtthgvrhhnpeevteegtddvvdfhtdekgefhfeefheet
-    heekkeegfeejudeiudeuleegtdehkeekteenucevlhhushhtvghrufhiiigvpedtnecurf
-    grrhgrmhepmhgrihhlfhhrohhmpehnihhklhgrshdrshhouggvrhhluhhnugesrhgrghhn
-    rghtvggthhdrshgvpdhnsggprhgtphhtthhopeeggedpmhhouggvpehsmhhtphhouhhtpd
-    hrtghpthhtohepshgrkhgrrhhirdgrihhluhhssehlihhnuhigrdhinhhtvghlrdgtohhm
-    pdhrtghpthhtohepnhgvthguvghvsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpth
-    htohepnhhitgholhgrshdrfhgvrhhrvgesmhhitghrohgthhhiphdrtghomhdprhgtphht
-    thhopegtlhgruhguihhurdgsvgiinhgvrgesthhugihonhdruggvvhdprhgtphhtthhope
-    grnhgurhgvfidonhgvthguvghvsehluhhnnhdrtghhpdhrtghpthhtohepuggrvhgvmhes
-    uggrvhgvmhhlohhfthdrnhgvthdprhgtphhtthhopegvughumhgriigvthesghhoohhglh
-    gvrdgtohhmpdhrtghpthhtohepkhhusggrsehkvghrnhgvlhdrohhrghdprhgtphhtthho
-    pehprggsvghnihesrhgvughhrghtrdgtohhm
-X-ME-Proxy: <xmx:LmD_aAJDnhPSOc7gPdVVw2jhRYyu-VX8gktGoXUSJAorWl7cqhcP3Q>
-    <xmx:LmD_aHGjujAE5x9F7a6WKdoBc1THfcZwbU-4VfC_kubY6XtsvtD40g>
-    <xmx:LmD_aF05Qto5ySZM3PAfaz_PjA9iCBoPDERvkxnW7aWEtMJ9PWGvjw>
-    <xmx:LmD_aByJkKrdTdqyhoxWN8s3inA-YszNn9W7eQ4MMYgVvaW20EAa5A>
-    <xmx:MGD_aDs_4bhiPgTqn0gze5FcQ9Os22-HmZQOY-qBzZHFiXeYQBKf_Fb_>
-Feedback-ID: i80c9496c:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 27 Oct 2025 08:06:06 -0400 (EDT)
-Date: Mon, 27 Oct 2025 13:05:59 +0100
-From: Niklas =?utf-8?Q?S=C3=B6derlund?= <niklas.soderlund@ragnatech.se>
-To: Sakari Ailus <sakari.ailus@linux.intel.com>
-Cc: netdev@vger.kernel.org, Nicolas Ferre <nicolas.ferre@microchip.com>,
-	Claudiu Beznea <claudiu.beznea@tuxon.dev>,
-	Andrew Lunn <andrew+netdev@lunn.ch>,
-	"David S. Miller" <davem@davemloft.net>,
-	Eric Dumazet <edumazet@google.com>,	Jakub Kicinski <kuba@kernel.org>,
- Paolo Abeni <pabeni@redhat.com>,	Wei Fang <wei.fang@nxp.com>,
- Shenwei Wang <shenwei.wang@nxp.com>,	Clark Wang <xiaoning.wang@nxp.com>,
- Paul Barker <paul@pbarker.dev>,	Siddharth Vadapalli <s-vadapalli@ti.com>,
-	Roger Quadros <rogerq@kernel.org>, Alex Elder <elder@kernel.org>,
-	Maxime Coquelin <mcoquelin.stm32@gmail.com>,
-	Alexandre Torgue <alexandre.torgue@foss.st.com>,
-	Stephan Gerhold <stephan@gerhold.net>,
-	Loic Poulain <loic.poulain@oss.qualcomm.com>,
-	Sergey Ryazanov <ryazanov.s.a@gmail.com>,
-	Johannes Berg <johannes@sipsolutions.net>,
-	Chandrashekar Devegowda <chandrashekar.devegowda@intel.com>,
-	Chiranjeevi Rapolu <chiranjeevi.rapolu@linux.intel.com>,
-	Liu Haijun <haijun.liu@mediatek.com>,
-	Ricardo Martinez <ricardo.martinez@linux.intel.com>,
-	"Dr. David Alan Gilbert" <linux@treblig.org>,
-	Ingo Molnar <mingo@kernel.org>,	Thomas Gleixner <tglx@linutronix.de>,
-	Michael Nemanov <michael.nemanov@ti.com>,	Kalle Valo <kvalo@kernel.org>,
-	Andreas Kemnade <andreas@kemnade.info>,
-	Roopni Devanathan <quic_rdevanat@quicinc.com>,
-	Thomas =?utf-8?Q?Wei=C3=9Fschuh?= <linux@weissschuh.net>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
-	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,	imx@lists.linux.dev,
- linux-renesas-soc@vger.kernel.org,	linux-omap@vger.kernel.org,
- linux-wireless@vger.kernel.org,	linux-stm32@st-md-mailman.stormreply.com,
-	linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH RESEND 1/4] net: ethernet: Remove redundant
- pm_runtime_mark_last_busy() calls
-Message-ID: <20251027120559.GA365372@ragnatech.se>
-References: <20251027115022.390997-1-sakari.ailus@linux.intel.com>
+	s=arc-20240116; t=1761567448; c=relaxed/simple;
+	bh=7vlnI0TZ5Bag1tUeBU15VJaSZYQAFkM9+UW4jGEHfj4=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=JmxTXRO3ong9cKeHR442Q1GxnoIsZ9TbCw/+0IDG0fO7w/2dOJLLTf9MP1eeB8wUElSwcwl7u/tcvlAKsKTWKd+/APGKZouotD8fUdAPtthwL0TamyctFQcTwpHr62w9GW1ELSrPlglnE5DH4PD+ZQxzLkY6jz6gMH4pdZhwVJM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=U4x+Ee6H; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 59R8imdO932267
+	for <linux-arm-msm@vger.kernel.org>; Mon, 27 Oct 2025 12:17:26 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	PJvMEwqlichb9fnTMHjp29i2LRX7Vih/4tQCp22heU8=; b=U4x+Ee6HZZ/Mcfe9
+	wyeE1KG7IGu+HYQSWlt2rfioW9Ubzn0/30tmVjKllCNTMGR4YfsZnktSLxT+lF0e
+	RUtLVCkoNhvxA/J7Aai7k/2StMGw9ZI586ve8XFp3hzRKjwH6Q0r1am8dVAZEEay
+	XcoSrDjuCikB8S2/zHLn7gMw1VVCM8l+v8gz+NksmD0RaBq7QI0LogtKRvATYEWV
+	5uVVtgMzmuS5THvQAJGgbOqjqAvVUQcfuOKQUPjOEgXgyJNuKl3Tj2NMuLpvc9in
+	hYW3I3LwdWw8dpPgIn0iSGmnVLfE6vH9kitN03D7idoHV4OCUQPruSBCFdF3wh+3
+	aKM87Q==
+Received: from mail-qt1-f197.google.com (mail-qt1-f197.google.com [209.85.160.197])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4a1ud1swbb-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Mon, 27 Oct 2025 12:17:25 +0000 (GMT)
+Received: by mail-qt1-f197.google.com with SMTP id d75a77b69052e-4ecf8fad13dso2698191cf.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 27 Oct 2025 05:17:25 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1761567445; x=1762172245;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=PJvMEwqlichb9fnTMHjp29i2LRX7Vih/4tQCp22heU8=;
+        b=gvsdnRPrA/YKNAEuF87AqM/UZB2FVlFbv2KTCI99QREbKbGutsGHrZiIkoy90KWQVl
+         0GQxwC31GKczRkwHUSRLUOFl3WZ/Auy+sjDFxXTRw+Ko0t4O4DEEx654EEsjh30myGB1
+         qtkgEEJhuGDWkA1rBNTc1y70gBCjxl4leOVlGGTdsKiTrHYIQJ7Lg7vJZpWQJWfeQcxL
+         kVsc8RC6/DaGevmK/PCpynKlQR5NEpf/bCH6eyZVYNm57ik8m2YH+cTigqn/OndhprSs
+         Ywn8QFWaGHoY/uXp19YkWk/mldOBzpg9C1NdF3KNd9HY4+eYTrLbMt/drexQW3pLVB8C
+         SsYw==
+X-Gm-Message-State: AOJu0YyzlOYQAPaKSyjoiY7Cx95IN4ysmEmUshCKaoEvbgFSh2smLgQx
+	VE1sRuX68hsPWenH4YQAlHaHo/DkCESCvSQZLUaFk3W7wNSDlVgaViLu36lJ/yqTPHEJVQwgrMA
+	Xr9DZdjzSKnR0im+Us3PW4l8jzjHpOAO3wXJkKUYJVlb2wY6H3DtTrnt4RtbWrWGXhgXY
+X-Gm-Gg: ASbGncuT6/WVbRCzf4TVuHzsGAcER07ddrr44HRAkY5L9ZkTh+MhdPxmfnsc4ZZdncq
+	oMisw2yNHO04dO3TvxpwrBSams7Dx+W7eBqaBwlkJ3RQW1DK1qv07uuiWAWZOpx10kHuSxHOf/J
+	bGi6uyLnVnmVFjd6E+nYcAt4Jw8D0HHy2KboeMU1XrPmkOm1aoV6CNHs2Zi+0yGqW11Hoxv5PGf
+	n1+ZwCFAFfoIL6OCj6WfeoMAq+ueYbK1FEejOjQTcK9sDiH2V2L7NieEY3n1dwUJLROm6itlOdN
+	UTY1ODfqplwnl0BWth9zLWfJqUaOXduoE4r2DitjlRcCSF/a5n2WuC2Rup/jVZwUqBLRbkxBnPO
+	NRmTUrCCgc28SnO9MLDe1h2Iz5CJt0UbSqTdZ3gvhhQ6Y6me2tG/BfLe9
+X-Received: by 2002:a05:622a:148b:b0:4b3:4590:ab6d with SMTP id d75a77b69052e-4ea11710be3mr199776211cf.7.1761567444543;
+        Mon, 27 Oct 2025 05:17:24 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IE/9nzepqcV3rOG2J5du1tIjffmHU4HFXiE9u0kz+PomNxTiOJlIcR4pib/NCaufzkxJVJVOg==
+X-Received: by 2002:a05:622a:148b:b0:4b3:4590:ab6d with SMTP id d75a77b69052e-4ea11710be3mr199775901cf.7.1761567444041;
+        Mon, 27 Oct 2025 05:17:24 -0700 (PDT)
+Received: from [192.168.119.202] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-b6d8536968csm756291566b.29.2025.10.27.05.17.22
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 27 Oct 2025 05:17:23 -0700 (PDT)
+Message-ID: <35ae8415-9308-4cbc-b14e-c3cdc0a2318a@oss.qualcomm.com>
+Date: Mon, 27 Oct 2025 13:17:21 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20251027115022.390997-1-sakari.ailus@linux.intel.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 3/3] spmi: spmi-pmic-arb: add support for PMIC arbiter
+ v8
+To: Jishnu Prakash <jishnu.prakash@oss.qualcomm.com>,
+        Stephen Boyd <sboyd@kernel.org>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley
+ <conor+dt@kernel.org>,
+        David Collins <david.collins@oss.qualcomm.com>
+Cc: linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        devicetree@vger.kernel.org, aiqun.yu@oss.qualcomm.com,
+        kamal.wadhwa@oss.qualcomm.com, jingyi.wang@oss.qualcomm.com
+References: <20251024-pmic_arb_v8-v3-0-cad8d6a2cbc0@oss.qualcomm.com>
+ <20251024-pmic_arb_v8-v3-3-cad8d6a2cbc0@oss.qualcomm.com>
+Content-Language: en-US
+From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+In-Reply-To: <20251024-pmic_arb_v8-v3-3-cad8d6a2cbc0@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDI3MDExNCBTYWx0ZWRfX7Hfp7+c/7DZT
+ Aux8DW3yCpBvHzMMtb+yWhsdlWmkkLvjE/ZdJ8xOsjB+bpDFtit/TJMOE4Gt8YS1PN+3t+3+dHX
+ /Ufhz4rJdB022Qx6sBnsW/v98Wfs5OeEAzDAhQOfsc2R+YEgfpMRsp5TdCTNt6VC40ssPni2vP8
+ jMViK/8JbFSuUU2nvy/MP+9xr7pR0j1ANgaHiZUeF4WjrqXDsG8f49QzTsRCG+mxXkaFbov+Mc1
+ MryvEmbsIBOZhCbtnN3PuugwXNxnHyix9qXcNGZJjVBbe1h4UO3HlFVG0feyXpBjYYHI0MX8nbt
+ Lvh1TYDGswfQfhm4rC8yfoSGVHlwdlAtpBiUol56S+y6e71SJON10oa6cqQoL2CQTYiekj8Ckm0
+ P2Db4k5uJ8XFI3TCTXk5YxYqTUCdIA==
+X-Proofpoint-GUID: CcllfQ8R07SnSjVo5-8I5ZV5PxBHTGWS
+X-Proofpoint-ORIG-GUID: CcllfQ8R07SnSjVo5-8I5ZV5PxBHTGWS
+X-Authority-Analysis: v=2.4 cv=UqNu9uwB c=1 sm=1 tr=0 ts=68ff62d5 cx=c_pps
+ a=EVbN6Ke/fEF3bsl7X48z0g==:117 a=FpWmc02/iXfjRdCD7H54yg==:17
+ a=IkcTkHD0fZMA:10 a=x6icFKpwvdMA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=EUspDBNiAAAA:8 a=09qoSp1JXfaB3g97fQAA:9 a=QEXdDO2ut3YA:10
+ a=a_PwQJl-kcHnX1M80qC6:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-10-27_05,2025-10-22_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ phishscore=0 clxscore=1015 spamscore=0 bulkscore=0 adultscore=0
+ priorityscore=1501 lowpriorityscore=0 malwarescore=0 impostorscore=0
+ suspectscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2510020000
+ definitions=main-2510270114
 
-Hi Sakari,
-
-Thanks for your work cleaning this up!
-
-On 2025-10-27 13:50:19 +0200, Sakari Ailus wrote:
-> pm_runtime_put_autosuspend(), pm_runtime_put_sync_autosuspend(),
-> pm_runtime_autosuspend() and pm_request_autosuspend() now include a call
-> to pm_runtime_mark_last_busy(). Remove the now-reduntant explicit call to
-> pm_runtime_mark_last_busy().
+On 10/24/25 11:33 AM, Jishnu Prakash wrote:
+> From: David Collins <david.collins@oss.qualcomm.com>
 > 
-> Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+> PMIC arbiter v8 supports up to 4 SPMI buses and up to 8192 PMIC
+> peripherals.  Its register map differs from v7 as several fields
+> increased in size. Add support for PMIC arbiter version 8.
+> 
+> Signed-off-by: David Collins <david.collins@oss.qualcomm.com>
+> Signed-off-by: Kamal Wadhwa <kamal.wadhwa@oss.qualcomm.com>
+> Signed-off-by: Jishnu Prakash <jishnu.prakash@oss.qualcomm.com>
 > ---
->  drivers/net/ethernet/cadence/macb_main.c  | 5 -----
->  drivers/net/ethernet/freescale/fec_main.c | 8 --------
->  drivers/net/ethernet/renesas/ravb_main.c  | 4 ----
->  drivers/net/ethernet/ti/davinci_mdio.c    | 7 -------
->  4 files changed, 24 deletions(-)
+>  drivers/spmi/spmi-pmic-arb.c | 324 +++++++++++++++++++++++++++++++++++++++----
+>  1 file changed, 294 insertions(+), 30 deletions(-)
 > 
-> diff --git a/drivers/net/ethernet/cadence/macb_main.c b/drivers/net/ethernet/cadence/macb_main.c
-> index 39673f5c3337..847c4ab9df23 100644
-> --- a/drivers/net/ethernet/cadence/macb_main.c
-> +++ b/drivers/net/ethernet/cadence/macb_main.c
-> @@ -327,7 +327,6 @@ static int macb_mdio_read_c22(struct mii_bus *bus, int mii_id, int regnum)
->  	status = MACB_BFEXT(DATA, macb_readl(bp, MAN));
->  
->  mdio_read_exit:
-> -	pm_runtime_mark_last_busy(&bp->pdev->dev);
->  	pm_runtime_put_autosuspend(&bp->pdev->dev);
->  mdio_pm_exit:
->  	return status;
-> @@ -373,7 +372,6 @@ static int macb_mdio_read_c45(struct mii_bus *bus, int mii_id, int devad,
->  	status = MACB_BFEXT(DATA, macb_readl(bp, MAN));
->  
->  mdio_read_exit:
-> -	pm_runtime_mark_last_busy(&bp->pdev->dev);
->  	pm_runtime_put_autosuspend(&bp->pdev->dev);
->  mdio_pm_exit:
->  	return status;
-> @@ -405,7 +403,6 @@ static int macb_mdio_write_c22(struct mii_bus *bus, int mii_id, int regnum,
->  		goto mdio_write_exit;
->  
->  mdio_write_exit:
-> -	pm_runtime_mark_last_busy(&bp->pdev->dev);
->  	pm_runtime_put_autosuspend(&bp->pdev->dev);
->  mdio_pm_exit:
->  	return status;
-> @@ -451,7 +448,6 @@ static int macb_mdio_write_c45(struct mii_bus *bus, int mii_id,
->  		goto mdio_write_exit;
->  
->  mdio_write_exit:
-> -	pm_runtime_mark_last_busy(&bp->pdev->dev);
->  	pm_runtime_put_autosuspend(&bp->pdev->dev);
->  mdio_pm_exit:
->  	return status;
-> @@ -5564,7 +5560,6 @@ static int macb_probe(struct platform_device *pdev)
->  		    macb_is_gem(bp) ? "GEM" : "MACB", macb_readl(bp, MID),
->  		    dev->base_addr, dev->irq, dev->dev_addr);
->  
-> -	pm_runtime_mark_last_busy(&bp->pdev->dev);
->  	pm_runtime_put_autosuspend(&bp->pdev->dev);
->  
->  	return 0;
-> diff --git a/drivers/net/ethernet/freescale/fec_main.c b/drivers/net/ethernet/freescale/fec_main.c
-> index 1edcfaee6819..4875101c4f3f 100644
-> --- a/drivers/net/ethernet/freescale/fec_main.c
-> +++ b/drivers/net/ethernet/freescale/fec_main.c
-> @@ -2231,7 +2231,6 @@ static int fec_enet_mdio_read_c22(struct mii_bus *bus, int mii_id, int regnum)
->  	ret = FEC_MMFR_DATA(readl(fep->hwp + FEC_MII_DATA));
->  
->  out:
-> -	pm_runtime_mark_last_busy(dev);
->  	pm_runtime_put_autosuspend(dev);
->  
->  	return ret;
-> @@ -2280,7 +2279,6 @@ static int fec_enet_mdio_read_c45(struct mii_bus *bus, int mii_id,
->  	ret = FEC_MMFR_DATA(readl(fep->hwp + FEC_MII_DATA));
->  
->  out:
-> -	pm_runtime_mark_last_busy(dev);
->  	pm_runtime_put_autosuspend(dev);
->  
->  	return ret;
-> @@ -2312,7 +2310,6 @@ static int fec_enet_mdio_write_c22(struct mii_bus *bus, int mii_id, int regnum,
->  	if (ret)
->  		netdev_err(fep->netdev, "MDIO write timeout\n");
->  
-> -	pm_runtime_mark_last_busy(dev);
->  	pm_runtime_put_autosuspend(dev);
->  
->  	return ret;
-> @@ -2356,7 +2353,6 @@ static int fec_enet_mdio_write_c45(struct mii_bus *bus, int mii_id,
->  		netdev_err(fep->netdev, "MDIO write timeout\n");
->  
->  out:
-> -	pm_runtime_mark_last_busy(dev);
->  	pm_runtime_put_autosuspend(dev);
->  
->  	return ret;
-> @@ -2839,7 +2835,6 @@ static void fec_enet_get_regs(struct net_device *ndev,
->  		buf[off] = readl(&theregs[off]);
->  	}
->  
-> -	pm_runtime_mark_last_busy(dev);
->  	pm_runtime_put_autosuspend(dev);
->  }
->  
-> @@ -3616,7 +3611,6 @@ fec_enet_open(struct net_device *ndev)
->  err_enet_alloc:
->  	fec_enet_clk_enable(ndev, false);
->  clk_enable:
-> -	pm_runtime_mark_last_busy(&fep->pdev->dev);
->  	pm_runtime_put_autosuspend(&fep->pdev->dev);
->  	pinctrl_pm_select_sleep_state(&fep->pdev->dev);
->  	return ret;
-> @@ -3647,7 +3641,6 @@ fec_enet_close(struct net_device *ndev)
->  		cpu_latency_qos_remove_request(&fep->pm_qos_req);
->  
->  	pinctrl_pm_select_sleep_state(&fep->pdev->dev);
-> -	pm_runtime_mark_last_busy(&fep->pdev->dev);
->  	pm_runtime_put_autosuspend(&fep->pdev->dev);
->  
->  	fec_enet_free_buffers(ndev);
-> @@ -4616,7 +4609,6 @@ fec_probe(struct platform_device *pdev)
->  
->  	INIT_WORK(&fep->tx_timeout_work, fec_enet_timeout_work);
->  
-> -	pm_runtime_mark_last_busy(&pdev->dev);
->  	pm_runtime_put_autosuspend(&pdev->dev);
->  
->  	return 0;
-> diff --git a/drivers/net/ethernet/renesas/ravb_main.c b/drivers/net/ethernet/renesas/ravb_main.c
-> index c3fc15f9ec85..21a45583e7e1 100644
-> --- a/drivers/net/ethernet/renesas/ravb_main.c
-> +++ b/drivers/net/ethernet/renesas/ravb_main.c
-> @@ -1975,7 +1975,6 @@ static int ravb_open(struct net_device *ndev)
->  out_set_reset:
->  	ravb_set_opmode(ndev, CCC_OPC_RESET);
->  out_rpm_put:
-> -	pm_runtime_mark_last_busy(dev);
->  	pm_runtime_put_autosuspend(dev);
->  out_napi_off:
->  	if (info->nc_queues)
-> @@ -2404,7 +2403,6 @@ static int ravb_close(struct net_device *ndev)
->  	if (error)
->  		return error;
->  
-> -	pm_runtime_mark_last_busy(dev);
->  	pm_runtime_put_autosuspend(dev);
->  
->  	return 0;
-> @@ -3116,7 +3114,6 @@ static int ravb_probe(struct platform_device *pdev)
->  	netdev_info(ndev, "Base address at %#x, %pM, IRQ %d.\n",
->  		    (u32)ndev->base_addr, ndev->dev_addr, ndev->irq);
->  
-> -	pm_runtime_mark_last_busy(&pdev->dev);
->  	pm_runtime_put_autosuspend(&pdev->dev);
->  
->  	return 0;
-> @@ -3301,7 +3298,6 @@ static int ravb_resume(struct device *dev)
->  
->  out_rpm_put:
->  	if (!priv->wol_enabled) {
-> -		pm_runtime_mark_last_busy(dev);
->  		pm_runtime_put_autosuspend(dev);
->  	}
+> diff --git a/drivers/spmi/spmi-pmic-arb.c b/drivers/spmi/spmi-pmic-arb.c
+> index 91581974ef84..612736973e4b 100644
+> --- a/drivers/spmi/spmi-pmic-arb.c
+> +++ b/drivers/spmi/spmi-pmic-arb.c
+> @@ -3,6 +3,7 @@
+>   * Copyright (c) 2012-2015, 2017, 2021, The Linux Foundation. All rights reserved.
+>   */
+>  #include <linux/bitmap.h>
+> +#include <linux/bitfield.h>
 
-You could drop the { } here. With this fixed for RAVB,
+bit'f'ield < bit'm'ap
 
-Reviewed-by: Niklas Söderlund <niklas.soderlund+renesas@ragnatech.se>
+[...]
 
->  
-> diff --git a/drivers/net/ethernet/ti/davinci_mdio.c b/drivers/net/ethernet/ti/davinci_mdio.c
-> index 68507126be8e..9f049ebbf107 100644
-> --- a/drivers/net/ethernet/ti/davinci_mdio.c
-> +++ b/drivers/net/ethernet/ti/davinci_mdio.c
-> @@ -234,7 +234,6 @@ static int davinci_mdiobb_read_c22(struct mii_bus *bus, int phy, int reg)
->  
->  	ret = mdiobb_read_c22(bus, phy, reg);
->  
-> -	pm_runtime_mark_last_busy(bus->parent);
->  	pm_runtime_put_autosuspend(bus->parent);
->  
->  	return ret;
-> @@ -251,7 +250,6 @@ static int davinci_mdiobb_write_c22(struct mii_bus *bus, int phy, int reg,
->  
->  	ret = mdiobb_write_c22(bus, phy, reg, val);
->  
-> -	pm_runtime_mark_last_busy(bus->parent);
->  	pm_runtime_put_autosuspend(bus->parent);
->  
->  	return ret;
-> @@ -268,7 +266,6 @@ static int davinci_mdiobb_read_c45(struct mii_bus *bus, int phy, int devad,
->  
->  	ret = mdiobb_read_c45(bus, phy, devad, reg);
->  
-> -	pm_runtime_mark_last_busy(bus->parent);
->  	pm_runtime_put_autosuspend(bus->parent);
->  
->  	return ret;
-> @@ -285,7 +282,6 @@ static int davinci_mdiobb_write_c45(struct mii_bus *bus, int phy, int devad,
->  
->  	ret = mdiobb_write_c45(bus, phy, devad, reg, val);
->  
-> -	pm_runtime_mark_last_busy(bus->parent);
->  	pm_runtime_put_autosuspend(bus->parent);
->  
->  	return ret;
-> @@ -332,7 +328,6 @@ static int davinci_mdio_common_reset(struct davinci_mdio_data *data)
->  	data->bus->phy_mask = phy_mask;
->  
->  done:
-> -	pm_runtime_mark_last_busy(data->dev);
->  	pm_runtime_put_autosuspend(data->dev);
->  
->  	return 0;
-> @@ -441,7 +436,6 @@ static int davinci_mdio_read(struct mii_bus *bus, int phy_id, int phy_reg)
->  		break;
->  	}
->  
-> -	pm_runtime_mark_last_busy(data->dev);
->  	pm_runtime_put_autosuspend(data->dev);
->  	return ret;
->  }
-> @@ -478,7 +472,6 @@ static int davinci_mdio_write(struct mii_bus *bus, int phy_id,
->  		break;
->  	}
->  
-> -	pm_runtime_mark_last_busy(data->dev);
->  	pm_runtime_put_autosuspend(data->dev);
->  
->  	return ret;
-> -- 
-> 2.47.3
-> 
+>  #define spec_to_hwirq(slave_id, periph_id, irq_id, apid) \
+> -	((((slave_id) & 0xF)   << 28) | \
+> -	(((periph_id) & 0xFF)  << 20) | \
+> -	(((irq_id)    & 0x7)   << 16) | \
+> -	(((apid)      & 0x3FF) << 0))
+> +	(FIELD_PREP(GENMASK(28, 24), (slave_id))  | \
+> +	FIELD_PREP(GENMASK(23, 16), (periph_id)) | \
+> +	FIELD_PREP(GENMASK(15, 13), (irq_id))    | \
+> +	FIELD_PREP(GENMASK(12, 0),  (apid)))
 
--- 
-Kind Regards,
-Niklas Söderlund
+I think this could be further improved by:
+
+#define SOMETHING_SLAVE_ID_SOMETHING	GENMASK(28, 24)
+
+and then below:
+
+[...]
+
+> -	if (intspec[0] > 0xF || intspec[1] > 0xFF || intspec[2] > 0x7)
+> +	if (intspec[0] > 0x1F || intspec[1] > 0xFF || intspec[2] > 0x7)
+>  		return -EINVAL;
+
+we can use FIELD_MAX(SOMETHING...)
+
+[...]
+
+> +static int pmic_arb_get_core_resources_v8(struct platform_device *pdev,
+> +					  void __iomem *core)
+> +{
+> +	struct spmi_pmic_arb *pmic_arb = platform_get_drvdata(pdev);
+> +
+> +	pmic_arb->apid_map = devm_platform_ioremap_resource_byname(pdev,
+> +								   "chnl_map");
+
+Feel free to unwrap this line
+
+> +	if (IS_ERR(pmic_arb->apid_map))
+> +		return PTR_ERR(pmic_arb->apid_map);
+> +
+> +	pmic_arb->core = core;
+> +
+> +	pmic_arb->max_periphs = PMIC_ARB_MAX_PERIPHS_V8;
+> +
+> +	return pmic_arb_get_obsrvr_chnls_v2(pdev);
+> +}
+> +
+> +static int pmic_arb_get_bus_resources_v8(struct platform_device *pdev,
+> +					 struct device_node *node,
+> +					 struct spmi_pmic_arb_bus *bus)
+> +{
+> +	int index;
+> +
+> +	index = of_property_match_string(node, "reg-names", "chnl_owner");
+> +	if (index < 0) {
+> +		dev_err(&pdev->dev, "chnl_owner reg region missing\n");
+> +		return -EINVAL;
+> +	}
+> +
+> +	bus->apid_owner = devm_of_iomap(&pdev->dev, node, index, NULL);
+> +
+> +	return PTR_ERR_OR_ZERO(bus->apid_owner);
+
+Is this any different chan using devm_platform_ioremap_resource_byname()
+like you did above?
+
+
+> +}
+> +
+> +static int pmic_arb_read_apid_map_v8(struct spmi_pmic_arb_bus *bus)
+> +{
+> +	struct spmi_pmic_arb *pmic_arb = bus->pmic_arb;
+> +	struct apid_data *apidd;
+> +	struct apid_data *prev_apidd;
+> +	u16 i, apid, ppid, apid_max;
+> +	bool valid, is_irq_ee;
+> +	u32 regval, offset;
+> +
+> +	/*
+> +	 * In order to allow multiple EEs to write to a single PPID in arbiter
+> +	 * version 8, there can be more than one APID mapped to each PPID.  The
+> +	 * owner field for each of these mappings specifies the EE which is
+> +	 * allowed to write to the APID.  The owner of the last (highest) APID
+> +	 * which has the IRQ owner bit set for a given PPID will receive
+> +	 * interrupts from the PPID.
+> +	 *
+> +	 * In arbiter version 8, the APID numbering space is divided between
+> +	 * the SPMI buses according to this mapping:
+> +	 * APID = 0     to N-1       --> bus 0
+> +	 * APID = N     to N+M-1     --> bus 1
+> +	 * APID = N+M   to N+M+P-1   --> bus 2
+> +	 * APID = N+M+P to N+M+P+Q-1 --> bus 3
+> +	 * where N = number of APIDs supported by bus 0
+> +	 *       M = number of APIDs supported by bus 1
+> +	 *       P = number of APIDs supported by bus 2
+> +	 *       Q = number of APIDs supported by bus 3
+> +	 */
+> +	apidd = &bus->apid_data[bus->base_apid];
+> +	apid_max = bus->base_apid + bus->apid_count;
+> +	for (i = bus->base_apid; i < apid_max; i++, apidd++) {
+> +		offset = pmic_arb->ver_ops->apid_map_offset(i);
+> +		regval = readl_relaxed(pmic_arb->apid_map + offset);
+> +		if (!regval)
+> +			continue;
+> +		ppid = regval & PMIC_ARB_V8_PPID_MASK;
+> +		is_irq_ee = PMIC_ARB_V8_CHAN_IS_IRQ_OWNER(regval);
+
+[...]
+
+
+If you parametrize the masks, the diff against pmic_arb_read_apid_map_v5
+is 3 lines of code instead
+
+
+> +
+> +	return 0;
+> +}
+> +
+> +static int pmic_arb_init_apid_v8(struct spmi_pmic_arb_bus *bus, int index)
+> +{
+> +	struct spmi_pmic_arb *pmic_arb = bus->pmic_arb;
+> +	int ret, i;
+> +
+> +	if (index < 0 || index >= PMIC_ARB_MAX_BUSES_V8) {
+> +		dev_err(&bus->spmic->dev, "Unsupported bus index %d detected\n",
+> +			index);
+> +		return -EINVAL;
+> +	}
+> +
+> +	bus->base_apid = 0;
+> +	bus->apid_count = 0;
+> +	for (i = 0; i <= index; i++) {
+> +		bus->base_apid += bus->apid_count;
+> +		bus->apid_count = readl_relaxed(pmic_arb->core + PMIC_ARB_FEATURES + i * 4) &
+> +						PMIC_ARB_FEATURES_V8_PERIPH_MASK;
+
+You can almost replace pmic_arb_init_apid_v7 with this impl
+
+[...]
+
+> +static void __iomem *
+> +pmic_arb_apid_owner_v8(struct spmi_pmic_arb_bus *bus, u16 n)
+> +{
+> +	return bus->apid_owner + 0x4 * (n - bus->base_apid);
+> +}
+
+This is identical to pmic_arb_apid_owner_v7
+
+Konrad
 
