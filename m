@@ -1,196 +1,188 @@
-Return-Path: <linux-arm-msm+bounces-79010-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-79011-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [142.0.200.124])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4E9C0C0FEF6
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Oct 2025 19:35:56 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id CC91AC0FF9C
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Oct 2025 19:41:23 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 7A2DB4EDB62
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Oct 2025 18:35:52 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 138B719C53B5
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Oct 2025 18:41:46 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1760131A7F9;
-	Mon, 27 Oct 2025 18:35:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CDB9931B110;
+	Mon, 27 Oct 2025 18:41:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=baylibre-com.20230601.gappssmtp.com header.i=@baylibre-com.20230601.gappssmtp.com header.b="OaXrUnXo"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="dkmMJuKP"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ot1-f43.google.com (mail-ot1-f43.google.com [209.85.210.43])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63CE86FBF
-	for <linux-arm-msm@vger.kernel.org>; Mon, 27 Oct 2025 18:35:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0D04319611;
+	Mon, 27 Oct 2025 18:41:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761590148; cv=none; b=NizU1hLqblwBbt7M/cwf1NIoLM4FZjZxz3bnbLaQBsEbpYHA1ctqVeWvHPSMuFT1tcoW6fkGMMoI+5toSfKPpKa+axqQ+uBqK1NV+ARYaVBiO2IqfZHt8ocVJ2hx/K3ziKl0ouicQv675rgNqw9OxQCQ7/8kisht9ndTmZHSXYY=
+	t=1761590477; cv=none; b=GepTFZqkvhdNsM6K7HzrZLOMOvBX0MgWL59eDq1Q9nMaaahciwW6CxWOYrMK5S0DSb3oOlR+mQcsSYgDl9yfxQfNxRTGrPaZgF7q9fTPmacX6u6IfMjsEHObUR5iMb8wkmGEirXX88xfyPBMnTYTvI500ZkrP12FvRlfzc/vMHI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761590148; c=relaxed/simple;
-	bh=PqKvPU0noBkdOcVjQUoD06IiGN+IODWXYRlWBSnglh4=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=kIF5uJPgLKcN85KJx6IJILdbOV8rzEy3oAS3bgJsYRunRt7Pde1dCCkAMBCYypKmAs7u1dmCklW0Q9pdpgyxrLVEUWileQLJZwvWjjpMQhaEliWalCdYYdP6GlTLnKd/nc0LjrJwDoDRhCuhGFTDSBAqlTEpGuy7fDcjLKrtwOY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=baylibre.com; spf=pass smtp.mailfrom=baylibre.com; dkim=pass (2048-bit key) header.d=baylibre-com.20230601.gappssmtp.com header.i=@baylibre-com.20230601.gappssmtp.com header.b=OaXrUnXo; arc=none smtp.client-ip=209.85.210.43
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=baylibre.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=baylibre.com
-Received: by mail-ot1-f43.google.com with SMTP id 46e09a7af769-7c531b9a45bso660554a34.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 27 Oct 2025 11:35:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=baylibre-com.20230601.gappssmtp.com; s=20230601; t=1761590143; x=1762194943; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=lvdP54SX5DIvg5ddC4TkLzn7pRZGLq9mZQ1eodiVzk4=;
-        b=OaXrUnXoKv6Nsxa1PoJ+HHhXW6ISObM5qw0IKdLLmBYldolKEOpBf5X2KVC0If6gYn
-         JkrH9FkdiiG7mv73n2j1hNGwS5spHo6VlL2jD9w8Ym5ArgsHLkUkERYanH891DNnZQ/2
-         JV/ZNaDpGfQs0d+PonA466jBXsswabk4T7gT4vF2CNYMCa1xH+ajTy7zA/koUFpiKRNy
-         Mqtf3edryksJ9lhC1cpnN6okGzGW6Dgh2CcXDnjNzxs/90gweAmoXaL/N1fDHSb6+pBt
-         gntjEI22QFLyeB1kmy6MU/GzojNZlTMSnKfy2ZJ1zoHY34v+B7KjB8eoY8sj49KYjf6B
-         9bjA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1761590143; x=1762194943;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=lvdP54SX5DIvg5ddC4TkLzn7pRZGLq9mZQ1eodiVzk4=;
-        b=cChfhf3coBtcn0l3qpJ2UWGG8GLW/Nr8O8qJjmH3mE6xp6S9OzvSZFSKi15xUUH+dI
-         jHYpANzh4zNweKq1b9BZOu7wXLGN//9rOwlo97c9EmFY502tX6FkmGdytGc8wvKH5mMl
-         M60zQhjm8oq9GASO12zvHwcDIhulwYKlUYKYrlW8TETn+9ByLv8hhYu8DZp02c+ox/pa
-         ocXIyknrK3Gjz351TkXNA6h3mY4FTmBZvZuWz6vye1JFiRWaT9OqZ+h9jy43/1Yst58e
-         MaUhS0JmWCwfo4wHBB0VHWsa7s3LVdUuFo1mIWcOGOZgTTa2ue8uh8WgLBOTP4k5o9RX
-         7ZPQ==
-X-Gm-Message-State: AOJu0YyyeIbiCxxH/eLyW9YhUk070yLBiGXpYEtWffXwGg0XymZrWRKk
-	ryLeQ9sBdZrq5LkAAVhfYgJOJLw7ifErA3PQWYg+hb8wtrTIR5Q84NngYmT2yzDUH/k=
-X-Gm-Gg: ASbGncsrNDxQK+HZUTmqufXyCQ6pj39Z1yIfL3A07WYfPApTagU9B4R4nQzogwz3o2f
-	9605NVYNeWxPnCwggO+qFzsJdf84gHbC4E7jQ9lg1R5TCeT7+AQxdnHZO91ghe3cIXEGTcRG4zA
-	cx04hJoqz7LqVIQdCIPJlbhfK0zCoOPvXlDEUtoQVzdr8OGPEO22NJnmkYyI6Om4JGhkCWYzffn
-	LlvI2slX5CBKKNzuUMEF+1LQGI++B8hLraVlrlEvIo3JNZixYv3/w6B6TJF958T6cpL87LdpVF1
-	7JF02S5FrKxMRrOjWa90fgraWW1mBbMSLddVTa6+SZX/kmhIC+KFAzk4g/0rId3mqbSveOF7M5r
-	vWTco+jxGWptbIQ+W7E6iEdwS42U4Pqxgf/hkYJPIgthyGvNa5IBWIaZbDoxeKi5XKvVItEDbyS
-	8jCvzbaZZkB5q1aqaltSUgJFY7cuuBhsZpOOxNMWl2LwKHioeDEw==
-X-Google-Smtp-Source: AGHT+IEsmQUfxd0dOcE/jYcTPBywE5Kc9BNx03k/QXwOh0ziGd8tdi38iwIv7izg1KS44yKfbURGxQ==
-X-Received: by 2002:a05:6808:188f:b0:44d:a271:fce4 with SMTP id 5614622812f47-44f6bb494e0mr343776b6e.47.1761590143393;
-        Mon, 27 Oct 2025 11:35:43 -0700 (PDT)
-Received: from ?IPV6:2600:8803:e7e4:500:46d5:c880:64c8:f854? ([2600:8803:e7e4:500:46d5:c880:64c8:f854])
-        by smtp.gmail.com with ESMTPSA id 006d021491bc7-654ef2eff7fsm1997150eaf.17.2025.10.27.11.35.41
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 27 Oct 2025 11:35:42 -0700 (PDT)
-Message-ID: <0eea7e4c-ec3b-421c-8522-aa3f52b5cb13@baylibre.com>
-Date: Mon, 27 Oct 2025 13:35:41 -0500
+	s=arc-20240116; t=1761590477; c=relaxed/simple;
+	bh=1lLY6d0MKyfiGfV93rULKwdDF9mSEE/eTixRy0YpQoA=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=mQ8iRm9UAarNV3GSVv602o8yL2QvuFs9PCMi3YeNnA/JkJRdoDNL4WZ6cssGAMU6hsERYuh3nTxX0HAvMh27g19IciZJ3n6qZ28vUWKcD7CBSeZid/NWw/Oh9r1qeCkXyUfvx7yJJRHcLnO9yu3iCvq5EBrtKMpHKSRnheXpacQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=dkmMJuKP; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B1B6C4CEF1;
+	Mon, 27 Oct 2025 18:41:16 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1761590477;
+	bh=1lLY6d0MKyfiGfV93rULKwdDF9mSEE/eTixRy0YpQoA=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=dkmMJuKPCMl5JjhaOrVEVK8FOQzmB9B0rf6/QB6MRxxLglrVyannxhcJDgKm+DhFm
+	 0JPMiKviTckp7wdL8vB+2X+Rh4iIbypOZFjSfwRezuL5wNzow5zae+2ZQXOB/5Fc0j
+	 lIPF5AgS5zOigi/Yfgnh1+LHgGZfUpYrBsxS/0RF0gQ0LWxEKu6P7mr4Adtuku1VZm
+	 5HiOy9XudA2PY/fll8mkBNqePwDNJxxdETW3Rod/YAGwrccvpzZ08EFGCWbxlM0EfK
+	 QcDYHEBr7dH4CeAb7k1ZztOM3GP4Z02iL6Mm25HzOfFTZmd8UUycYaKJKT36/AhunN
+	 G/3pDXKL8lY5g==
+Date: Mon, 27 Oct 2025 13:44:10 -0500
+From: Bjorn Andersson <andersson@kernel.org>
+To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Cc: Jingyi Wang <jingyi.wang@oss.qualcomm.com>, 
+	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+	Conor Dooley <conor+dt@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, 
+	Robert Marko <robimarko@gmail.com>, Das Srinagesh <quic_gurus@quicinc.com>, 
+	aiqun.yu@oss.qualcomm.com, tingwei.zhang@oss.qualcomm.com, trilok.soni@oss.qualcomm.com, 
+	yijie.yang@oss.qualcomm.com, linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, Eugen Hristev <eugen.hristev@linaro.org>
+Subject: Re: [PATCH v2 1/4] dt-bindings: soc: qcom: Add qcom,kaanapali-imem
+ compatible
+Message-ID: <ygqgzflpavwgd43e5zedgcijm3lz27nqlzprttalgcroedz45u@ztqkppajpyry>
+References: <20251022-knp-soc-binding-v2-0-3cd3f390f3e2@oss.qualcomm.com>
+ <20251022-knp-soc-binding-v2-1-3cd3f390f3e2@oss.qualcomm.com>
+ <g2iviaqetgxf5ycz2otzkpmmc4goo7xuyjmttuu254bfzqqvkf@4vybjh4eghpm>
+ <4eebcb7d-1eca-4914-915a-d42232233f9f@oss.qualcomm.com>
+ <dwfvko3hszsoh4ihnz3qdpsugmocbkrbhosijdw5q3bxh64kuo@o74as2li74px>
+ <lz4sbvzfiij3qsa4d7jeblmi2vfubc4ltf435sh6tcs53l6fbq@7f3tfm7yiyjc>
+ <mwin3lfvpcwxxhsub2whcpibuayk36f4ljrodvithfygqad5w4@cg4h6peh4v4a>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/2] iio: adc: qcom-pm8xxx-xoadc: fix incorrect
- calibration values
-To: Antony Kurniawan Soemardi <linux@smankusors.com>,
- Jonathan Cameron <jic23@kernel.org>, =?UTF-8?Q?Nuno_S=C3=A1?=
- <nuno.sa@analog.com>, Andy Shevchenko <andy@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, linux-iio@vger.kernel.org,
- linux-kernel@vger.kernel.org
-References: <20251028-pm8xxx-xoadc-fix-v1-0-b000e1036e41@smankusors.com>
- <20251028-pm8xxx-xoadc-fix-v1-2-b000e1036e41@smankusors.com>
-Content-Language: en-US
-From: David Lechner <dlechner@baylibre.com>
-In-Reply-To: <20251028-pm8xxx-xoadc-fix-v1-2-b000e1036e41@smankusors.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <mwin3lfvpcwxxhsub2whcpibuayk36f4ljrodvithfygqad5w4@cg4h6peh4v4a>
 
-On 10/27/25 12:29 PM, Antony Kurniawan Soemardi wrote:
-> On msm8960 phones, the XOADC driver was using incorrect calibration
-> values:
-> absolute calibration dx = 625000 uV, dy = 4 units
-> ratiometric calibration dx = 1800, dy = -29041 units
+On Thu, Oct 23, 2025 at 03:06:00AM +0300, Dmitry Baryshkov wrote:
+> On Wed, Oct 22, 2025 at 05:42:58PM -0500, Bjorn Andersson wrote:
+> > On Wed, Oct 22, 2025 at 12:34:58PM +0300, Dmitry Baryshkov wrote:
+> > > On Wed, Oct 22, 2025 at 05:05:30PM +0800, Jingyi Wang wrote:
+> > > > 
+> > > > 
+> > > > On 10/22/2025 4:49 PM, Dmitry Baryshkov wrote:
+> > > > > On Wed, Oct 22, 2025 at 12:28:41AM -0700, Jingyi Wang wrote:
+> > > > >> Document qcom,kaanapali-imem compatible.
+> > > > >>
+> > > > >> Reviewed-by: Eugen Hristev <eugen.hristev@linaro.org>
+> > > > >> Signed-off-by: Jingyi Wang <jingyi.wang@oss.qualcomm.com>
+> > > > >> ---
+> > > > >>  Documentation/devicetree/bindings/sram/qcom,imem.yaml | 1 +
+> > > > >>  1 file changed, 1 insertion(+)
+> > > > >>
+> > > > >> diff --git a/Documentation/devicetree/bindings/sram/qcom,imem.yaml b/Documentation/devicetree/bindings/sram/qcom,imem.yaml
+> > > > >> index 6a627c57ae2f..1e29a8ff287f 100644
+> > > > >> --- a/Documentation/devicetree/bindings/sram/qcom,imem.yaml
+> > > > >> +++ b/Documentation/devicetree/bindings/sram/qcom,imem.yaml
+> > > > >> @@ -19,6 +19,7 @@ properties:
+> > > > >>        - enum:
+> > > > >>            - qcom,apq8064-imem
+> > > > >>            - qcom,ipq5424-imem
+> > > > >> +          - qcom,kaanapali-imem
+> > > > > 
+> > > > > Can you use mmio-sram instead?
+> > > > > 
+> > > > 
+> > > > Here is the node: 
+> > > > 
+> > > > 		sram@14680000 {
+> > > > 			compatible = "qcom,kaanapali-imem", "syscon", "simple-mfd";
+> > > > 			reg = <0x0 0x14680000 0x0 0x1000>;
+> > > > 			ranges = <0 0 0x14680000 0x1000>;
+> > > > 
+> > > > 			#address-cells = <1>;
+> > > > 			#size-cells = <1>;
+> > > > 
+> > > > 			pil-reloc@94c {
+> > > > 				compatible = "qcom,pil-reloc-info";
+> > > > 				reg = <0x94c 0xc8>;
+> > > > 			};
+> > > > 		};
+> > > > 
+> > > > other qualcomm are also using imem, could you please give more details on why
+> > > > we should use mmio-sram here?
+> > > 
+> > > https://lore.kernel.org/linux-arm-msm/e4c5ecc3-fd97-4b13-a057-bb1a3b7f9207@kernel.org/
+> > > 
+> > 
+> > I considered exactly this when I wrote the binding back then...
+> > 
+> > But the binding defines mmio-sram as "Simple IO memory regions to be
+> > managed by the genalloc API." and the Linux sram driver follows that and
+> > registers a gen_pool across the sram memory region.
+> > 
+> > I believe IMEM is SRAM (it's at least not registers), but its memory
+> > layout is fixed, so it's not a pool in any form.
+> > 
+> > 
+> > What Krzysztof says makes sense, but rather than just throwing a yak at
+> > Jingyi, it would be nice if you provided some guidance on how you would
+> > like to see this turn out.
 > 
-> As a result, reading from the IIO bus returned unexpected results:
-> in_voltage_7 (USB_VBUS): 0
-> in_voltage_10 (125V): 0
-> 
-> The issue was caused by not setting the ratiometric scale (amux_ip_rsv)
-> from the predefined channels. Additionally, the downstream code always
-
-Mentioning downstream kernels is usually a red flag. :-) 
-
-We can justify it here though by saying that there is no documentation
-available other than downstream source code, so we are just using it
-as a reference.
-
-> set the ADC_ARB_USRP_DIG_PARAM register to PM8XXX_ADC_ARB_ANA_DIG [1].
-> That value does not include the SEL_SHIFT0 and SEL_SHIFT1 bits. Enabling
-> those bits caused calibration errors too, so they were removed.
-> 
-> With these fixes, calibration now uses the correct values:
-> absolute calibration dx = 625000 uV, dy = 6307 units
-> ratiometric calibration dx = 1800, dy = 18249 units
-> 
-> Reading from the IIO bus now returns expected results:
-> in_voltage_7 (USB_VBUS): 4973836
-> in_voltage_10 (125V): 1249405
-
-Would be useful to mention which hardware you tested with in case
-it turns out that there is some other hardware that does require the
-SHIFT0/1 bits to be set.
-
-> 
-> [1] https://github.com/LineageOS/android_kernel_sony_msm8960t/blob/93319b1e5aa343ec1c1aabcb028c5e88c7df7c01/drivers/hwmon/pm8xxx-adc.c#L407-L408
-> 
-
-Since this is a fix, it should have a Fixes: tag. And it sounds like
-possibly two separate fixes. In that case, it should be two separate
-patches.
-
-> Signed-off-by: Antony Kurniawan Soemardi <linux@smankusors.com>
-> ---
->  drivers/iio/adc/qcom-pm8xxx-xoadc.c | 10 ++++++----
->  1 file changed, 6 insertions(+), 4 deletions(-)
-> 
-> diff --git a/drivers/iio/adc/qcom-pm8xxx-xoadc.c b/drivers/iio/adc/qcom-pm8xxx-xoadc.c
-> index 8555f34036fb13c41ac720dc02c1dc39876e9198..a53d361456ec36b66d258041877bd96ab37838c4 100644
-> --- a/drivers/iio/adc/qcom-pm8xxx-xoadc.c
-> +++ b/drivers/iio/adc/qcom-pm8xxx-xoadc.c
-> @@ -503,10 +503,11 @@ static int pm8xxx_read_channel_rsv(struct pm8xxx_xoadc *adc,
->  		goto unlock;
->  
->  	/* Decimation factor */
-> -	ret = regmap_write(adc->map, ADC_ARB_USRP_DIG_PARAM,
-> -			   ADC_ARB_USRP_DIG_PARAM_SEL_SHIFT0 |
-> -			   ADC_ARB_USRP_DIG_PARAM_SEL_SHIFT1 |
-> -			   ch->decimation << ADC_DIG_PARAM_DEC_SHIFT);
-> +	ret = regmap_update_bits(adc->map,
-> +				 ADC_ARB_USRP_DIG_PARAM,
-> +				 ADC_ARB_USRP_DIG_PARAM_DEC_RATE0 |
-> +				 ADC_ARB_USRP_DIG_PARAM_DEC_RATE1,
-> +				 ch->decimation << ADC_DIG_PARAM_DEC_SHIFT);
-
-As a follow-up patch, it would be nice to update the driver to use FIELD_PREP().
-
-I.e. remove ADC_ARB_USRP_DIG_PARAM_DEC_RATE0, ADC_ARB_USRP_DIG_PARAM_DEC_RATE1
-and ADC_DIG_PARAM_DEC_SHIFT macros and replace them with one macro:
-
-#define ADC_ARB_USRP_DIG_PARAM_DEC_RATE		GENMASK(6, 5)
-
-Then use it like:
-
-	ret = regmap_update_bits(adc->map,
-				 ADC_ARB_USRP_DIG_PARAM,
-				 ADC_ARB_USRP_DIG_PARAM_DEC_RATE,
-				 FIELD_PREP(ADC_ARB_USRP_DIG_PARAM_DEC_RATE,
-					    ch->decimation));
-
-This should be done for all of the similar multi-bit fields.
-
->  	if (ret)
->  		goto unlock;
->  
-> @@ -783,6 +784,7 @@ static int pm8xxx_xoadc_parse_channel(struct device *dev,
->  	ch->calibration = VADC_CALIB_ABSOLUTE;
->  	/* Everyone seems to use default ("type 2") decimation */
->  	ch->decimation = VADC_DEF_DECIMATION;
-> +	ch->amux_ip_rsv = hwchan->amux_ip_rsv;
->  
->  	if (!fwnode_property_read_u32(fwnode, "qcom,ratiometric", &rsv)) {
->  		ch->calibration = VADC_CALIB_RATIOMETRIC;
+> I tested, pretty same approach seems to work:
 > 
 
+Now you're shaving at random ;)
+
+> 	sram@14680000 {
+> 		compatible = "mmio-sram";
+
+You can put "pil-reloc-sram" wherever, because it will perform a
+of_find_compatible_node() to dig up some node with the compatible
+"qcom,pil-reloc-info" .
+
+In other words, this line created a genpool for something that really
+isn't a genpool, but luckily that didn't have any side effects.
+
+
+There are however other users of IMEM, such as the "reboot-mode", which
+relies on the "sram" device probing child devices, and is implemented by
+"syscon-reboot-mode".
+
+Perhaps the solution is to not support any new users of that?
+
+
+But no matter what, the definition "Simple IO memory regions to be
+managed by the genalloc API" will never be true for IMEM.
+
+And as this isn't a syscon, simple-mfd, or mmio-sram...how about making
+the fallback "qcom,imem" (in this same binding) and omitting any
+implementation until we need one)?
+
+Regards,
+Bjorn
+
+> 		reg = <0x0 0x14680000 0x0 0x1000>;
+> 		ranges = <0 0 0x14680000 0x1000>;
+> 
+> 		#address-cells = <1>;
+> 		#size-cells = <1>;
+> 
+> 		pil-reloc-sram@94c {
+> 			compatible = "qcom,pil-reloc-info";
+> 			reg = <0x94c 0xc8>;
+> 		};
+> 	};
+> 
+> 
+> -- 
+> With best wishes
+> Dmitry
 
