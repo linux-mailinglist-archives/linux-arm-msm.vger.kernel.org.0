@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-78954-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-78955-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 48574C0E881
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Oct 2025 15:46:14 +0100 (CET)
+Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [IPv6:2605:f480:58:1:0:1994:3:14])
+	by mail.lfdr.de (Postfix) with ESMTPS id 89484C0E7C8
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Oct 2025 15:41:31 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 79598464489
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Oct 2025 14:35:21 +0000 (UTC)
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 624DE4FD4B3
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Oct 2025 14:36:33 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6BAD53093D8;
-	Mon, 27 Oct 2025 14:33:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9CF0D30B500;
+	Mon, 27 Oct 2025 14:34:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="b9+IoBmh"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="iADCZR98"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B2F52701C4;
-	Mon, 27 Oct 2025 14:33:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6EDCA1E32D6;
+	Mon, 27 Oct 2025 14:34:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761575608; cv=none; b=d00GS9m2zb2HroMbEAzPyjDoP1wTQHPpBRxXpaac6wuwBfvOe4XF2NnbFkIJ/D+33ZslDogZa3yG5pqbN6x49nhxNwvYFHsSS4wPrl4pYaPNWDjSkYL0ij5iMDJBUAovjUjUUB0h37ONso0X4QNToVggGhG4dN8JyfhigdkU40g=
+	t=1761575694; cv=none; b=erzCNeqBZsHFE00E3N4A8/SqjFlLib0n2JZ93rNWWlAWQePulTXWycwNLce1ntSDIlwsYaL9cPIcv38TrnUd2OAu0iFOu4ILIbcTovvdkemmIbzA/jNnbG0LL8slgIeDRTIe8dO0//5zt9eAbWhGaT7G88oGczmVG4DFJiIG1w4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761575608; c=relaxed/simple;
-	bh=M5a3mfTPKpcXe9MXfgprqe5Dswywiul5pE/9jnygRvg=;
-	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
-	 In-Reply-To:Content-Type; b=t32QVlJWDZ2s/UAHupXoe9Ze3qUuzqWwFkAqpBZDKMRO09M44wn4Bppu7eQceD8IkZXo2Y7HNEI2o3OPy7PPJhquIwj7zeIiWikvai5KSE7qLGRZ3yb/b+ciPgHsubYS+2BovX19gpcGY2lOitCIdh3xEmRK/nsLgOxhs8RxTJk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=b9+IoBmh; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A276DC4CEF1;
-	Mon, 27 Oct 2025 14:33:23 +0000 (UTC)
+	s=arc-20240116; t=1761575694; c=relaxed/simple;
+	bh=ZecOkIDgb+qoC078RADSUfy8mZ9qunOTA1ccSE7c9J4=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=VKna8AaDJATYc2wXtqKinARn4IhyIt37NUt4vc47guxgJB0fwHiX32QBL6D1oiMHPsirhcEn6P0zkix3RM5uDqMyxbwtvlcRCE3C3u+ULgMfe3TyuaVUPhvUhTT8kMx4JuTyID2WdVIzU/p9EgCOrKzHuSaNSkqzouc9RgblltY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=iADCZR98; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF58DC4CEF1;
+	Mon, 27 Oct 2025 14:34:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1761575607;
-	bh=M5a3mfTPKpcXe9MXfgprqe5Dswywiul5pE/9jnygRvg=;
-	h=Date:Subject:From:To:Cc:References:In-Reply-To:From;
-	b=b9+IoBmhgHeerX6a9wqacgq36VWfgfKlDVdNF9T07jXPoVUx3AlpGzztFgv9zzMKT
-	 lKoqDKxM89eLbDvr4Atx18d1o36mRWkarT09xAnPiFZrxX/7b6ENzhU+KI3zzV5FZI
-	 9OwicX3AYKQ/NDvmwqsbPAMFrTaWjj8QooCp14hr7vCpqPrWMYGg+SmGK67aBN4zmz
-	 uTtwHP85VQ+3CqMyMSffn/MegjCTYqyHzM1exMrtiZcRuXy6d9kjdWEfMNWUcRN9OI
-	 2seMe5faYyVPi0puY7zKi656i6KX2V3dE9vhLp+uW368IbHL6eLlCS/uMeBjXHVEOj
-	 HXoa5nF7iWA3g==
-Message-ID: <ccce6ac2-c744-4b94-abca-f5710c712bc3@kernel.org>
-Date: Mon, 27 Oct 2025 15:33:22 +0100
+	s=k20201202; t=1761575694;
+	bh=ZecOkIDgb+qoC078RADSUfy8mZ9qunOTA1ccSE7c9J4=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=iADCZR98/r5tsMHzRy2glVNtt7DRJ/yaQ3NlW1DF6lwW/xvB7NQbJp2BSrhQhuaIb
+	 tJt4LIoIOJ7qX9xuxRmjH4MAFgCnZ80nP3S+pMbNPPIk+F0VAQrYk0Bld7/0xugIqt
+	 P02KpZBLN9bETuyJkGsgTGp7s4tErLieqKFpAUVxnbsiygbSD4QwoIbPDgBOoRP/6I
+	 NJyp1O2olqIlQZfBVWXsHvL6eTHL1E0iyW90Gm+YnqR+7KYwvUbFpgPf+qA944bTxP
+	 fXTIk7Jce/POoM4YpAyhlYKjJgFdHstERj2M6hMAWV5SVuw7mmNvUxr2WnnWnpxVXD
+	 01q6ynx4jINxA==
+Message-ID: <99f951e8-b6e8-4b92-b55b-341a2f3f070a@kernel.org>
+Date: Mon, 27 Oct 2025 15:34:47 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,9 +50,8 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH V3 3/4] arm64: dts: qcom: sm8750-mtp: Add SDC2 node for
- sm8750 mtp board
-From: Krzysztof Kozlowski <krzk@kernel.org>
+Subject: Re: [PATCH V3 4/4] arm64: dts: qcom: sm8750-qrd: Add SDC2 node for
+ sm8750 qrd board
 To: Sarthak Garg <sarthak.garg@oss.qualcomm.com>,
  Ulf Hansson <ulf.hansson@linaro.org>, Rob Herring <robh@kernel.org>,
  Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
@@ -65,8 +64,8 @@ Cc: linux-mmc@vger.kernel.org, devicetree@vger.kernel.org,
  quic_nitirawa@quicinc.com, quic_bhaskarv@quicinc.com,
  kernel@oss.qualcomm.com, Abel Vesa <abel.vesa@linaro.org>
 References: <20251026111746.3195861-1-sarthak.garg@oss.qualcomm.com>
- <20251026111746.3195861-4-sarthak.garg@oss.qualcomm.com>
- <4394142b-c96c-464e-9e12-80904755026e@kernel.org>
+ <20251026111746.3195861-5-sarthak.garg@oss.qualcomm.com>
+From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
  xsFNBFVDQq4BEAC6KeLOfFsAvFMBsrCrJ2bCalhPv5+KQF2PS2+iwZI8BpRZoV+Bd5kWvN79
@@ -111,26 +110,42 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  jWt87ecuHlpL3uuQ0ZZNWqHgZoQLXoqC2ZV5KrtKWb/jyiFX/sxSrodALf0zf+tfHv0FZWT2
  zHjUqd0t4njD/UOsuIMOQn4Ig0SdivYPfZukb5cdasKJukG1NOpbW7yRNivaCnfZz6dTawXw
  XRIV/KDsHQiyVxKvN73bThKhONkcX2LWuD928tAR6XMM2G5ovxLe09vuOzzfTWQDsm++9UKF a/A=
-In-Reply-To: <4394142b-c96c-464e-9e12-80904755026e@kernel.org>
+In-Reply-To: <20251026111746.3195861-5-sarthak.garg@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 27/10/2025 15:31, Krzysztof Kozlowski wrote:
-> On 26/10/2025 12:17, Sarthak Garg wrote:
->> Enable SD Card host controller for sm8750 mtp board.
->>
->> Signed-off-by: Sarthak Garg <sarthak.garg@oss.qualcomm.com>
->> Reviewed-by: Abel Vesa <abel.vesa@linaro.org>
->> ---
->>  arch/arm64/boot/dts/qcom/sm8750-mtp.dts | 23 +++++++++++++++++++++++
->>  1 file changed, 23 insertions(+)
+On 26/10/2025 12:17, Sarthak Garg wrote:
+> Enable SD Card host controller for sm8750 qrd board.
 > 
+> Signed-off-by: Sarthak Garg <sarthak.garg@oss.qualcomm.com>
+> Reviewed-by: Abel Vesa <abel.vesa@linaro.org>
+> ---
+>  arch/arm64/boot/dts/qcom/sm8750-qrd.dts | 23 +++++++++++++++++++++++
+>  1 file changed, 23 insertions(+)
 > 
-> Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> diff --git a/arch/arm64/boot/dts/qcom/sm8750-qrd.dts b/arch/arm64/boot/dts/qcom/sm8750-qrd.dts
+> index 13c7b9664c89..c2ab39744a0c 100644
+> --- a/arch/arm64/boot/dts/qcom/sm8750-qrd.dts
+> +++ b/arch/arm64/boot/dts/qcom/sm8750-qrd.dts
+> @@ -1031,6 +1031,29 @@ wcd_default: wcd-reset-n-active-state {
+>  		bias-disable;
+>  		output-low;
+>  	};
+> +
+> +	sdc2_card_det_n: sd-card-det-n-state {
+> +		pins = "gpio55";
+> +		function = "gpio";
+> +		drive-strength = <2>;
+> +		bias-pull-up;
+> +	};
+> +};
+> +
+> +&sdhc_2 {
 
 
-Actually un-reviewed. Here also ordering is broken. Please follow
-Qualcomm style for ordering properties.
+That's random order. Please follow the order as expressed in DTS coding
+style. This file already has broken Qualcomm style, but you do not have
+to bring additional mistakes.
 
 Best regards,
 Krzysztof
