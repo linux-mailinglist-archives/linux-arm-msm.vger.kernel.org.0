@@ -1,81 +1,81 @@
-Return-Path: <linux-arm-msm+bounces-78967-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-78968-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id DFBD8C0ECFB
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Oct 2025 16:09:23 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 86950C0ECAF
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Oct 2025 16:06:37 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id C04D44225C2
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Oct 2025 15:01:25 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 86A7418866A3
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Oct 2025 15:01:58 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D008330C628;
-	Mon, 27 Oct 2025 14:59:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A6CE530EF77;
+	Mon, 27 Oct 2025 14:59:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="he9y2x3s"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="CyFhS6Cj"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f52.google.com (mail-wr1-f52.google.com [209.85.221.52])
+Received: from mail-wm1-f46.google.com (mail-wm1-f46.google.com [209.85.128.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 272A230E0C0
-	for <linux-arm-msm@vger.kernel.org>; Mon, 27 Oct 2025 14:59:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C9BB30E823
+	for <linux-arm-msm@vger.kernel.org>; Mon, 27 Oct 2025 14:59:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761577192; cv=none; b=rvrHZTheHww4fwHUIYEjXQ4sW3C854jhzw5UCQklmxPPUMwqA3fgP0z7T8zEcUBn5opa8Bxr7sygA20r6tyY76CYvLcns63AcLdiZYRuvmvBYGoErQzodz7cJLlSsqWAJK2Q24j5L6/LIVkbdUczd4ImMavViKc9vQA5m69Aejc=
+	t=1761577194; cv=none; b=AHG6MvVRbMOrStQTQXqLosOgc+rFE4Tzt6M/O8an9L36mHyYK7IzHE6KsJWRaGcUAhA+kwzu+00ETB4Se0A5N8QaDR+y+x5YoT+pm5kB6QO3SyfZWUMDxNyqTqOF5UvpVcUeM5Akq+WX1oVs6EOWdlVA53oyFBVhfxjsGaqVCgU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761577192; c=relaxed/simple;
-	bh=8ujTO8kESXkKER5rihSjybuS5+BATF2FawKO2HqELJU=;
+	s=arc-20240116; t=1761577194; c=relaxed/simple;
+	bh=BDhxfQSATkvz5PZ4qM3SXapXE8VjPOJ1bFOc4+xtjJc=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=GZLjxdG3l4EZUA3FzmhvGLDtQoBAsZIOUhjLlvaMBg3gogMvfkVjbj9EPUjX/whwzjlevPxxKJEm43IElFMrIQzZZODF1mC2iwi2YPgyDMpVBnsfylOuk64F+syq5xsKZw49SIohPix76yAa9ZVSTAJYu+wFVolN6J30+OczhzQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=he9y2x3s; arc=none smtp.client-ip=209.85.221.52
+	 In-Reply-To:To:Cc; b=bKsvL1BrMmq5YX0Mw54uMxn4e1mddCKXRW2WMoZCiH8LbvyqDTTDl3LEJ7/c544wa2hiyUV1pTivz/trxM3LSa5DV63kou+l0WJof/7Q9DoWmszg++qD/Oe1gG6xReF9Z6ngNhY6lDiwmiK35nGX+Vj/nTvIEoq1VZiohi5TlWU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=CyFhS6Cj; arc=none smtp.client-ip=209.85.128.46
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wr1-f52.google.com with SMTP id ffacd0b85a97d-3ee130237a8so3098629f8f.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 27 Oct 2025 07:59:48 -0700 (PDT)
+Received: by mail-wm1-f46.google.com with SMTP id 5b1f17b1804b1-47109187c32so25579745e9.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 27 Oct 2025 07:59:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1761577187; x=1762181987; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1761577190; x=1762181990; darn=vger.kernel.org;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=IXLN42Vf30P7vl88JjPiEjmOW38pV3UPxM/mBliZwEQ=;
-        b=he9y2x3s5SnLEUmJ4RJpHjoDZMZ3ArWsa7Fm8VIsQiaToUrB+V2X/daxQ7Wm2D6a4M
-         WNYS3xsnzmUikYT2lwnUo77PBbhBo9f3JdvpdUTIG//CtMIjJE1QSGR0hr0tEisA7fTV
-         cBUIcQJaY2t3/CMy+qGMTzhdm6lbmOJGDGROrKKsVjA+6KBwVTW/VotcKfjQzgQR3vlQ
-         6mHPk3JOKK1MJKK+yoqaCQQe/RtmvhR9toJ1gBJXVtA5J8Hu7pT5A9K1hM/4rR9DTX2g
-         h0ED/6NLDCStH11zagQvhX/XzbZfst9l53XZxxEgeDhCQGEu1HSJ96Pkkzt4QedgDHWI
-         WObw==
+        bh=sxgfIdENtrsIjMM2UdQCTeBKGZOKjcZiEo3cUFxAXcY=;
+        b=CyFhS6CjTJxQ15iNbOHgJoeqMj9cvI6N/aw6GA3fTKlIxRbtpPmULLDpi1/e6XnDvh
+         Wrbc6Wcua5vdqc8b4LM81tiV1KCxJULb1fxMNUGiAZNYC2A/IlXgQkBIZwgQYxMnHjIA
+         Iq0IGOlPNuKPG9ARZvuNxEzLW6LDPcX8I1MPhqsmnkXoyYCwBKMcFJMA1CJeYsHg+0vK
+         PyEv6ak2DfAeH2NP99Wp0V4CRPAbpEcr03WT9fXaxSLbeeRVWYDevsFiN9v5Jifg5brK
+         ZrJw8VZeQwuCzjBNpWljHAopvW9dYIfEoXzIKX1Y/AmCuDdiAcP21RTS90KBCGJl3YD4
+         mQWw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1761577187; x=1762181987;
+        d=1e100.net; s=20230601; t=1761577190; x=1762181990;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=IXLN42Vf30P7vl88JjPiEjmOW38pV3UPxM/mBliZwEQ=;
-        b=YmHa3DAl4FEkgdU+TERmU4GwNPud3WE542y7/OSojsmSjqdQqqoc1wlcl8+hNOxL0s
-         Z+AV0V56Y1Y09r5vjK6kT7ZJZRJ8pMqiOFQ5P1IuZxlEO5zB/cS1WCNE5OOWNrNY3NWM
-         SSF7Uk1NK9RLJ298DHgQzYg7cO7Mh/m6X0Dogr+C8BW6Z9YIGWcVA94sFZb8WPLnh3tH
-         8pQfrNE3O5EZvKR6FOhY4P0y5dskMItU9IkzZerUmWKIjvY1fYQFk7m+jKfnu1aqGv/8
-         lRCUBxnvsl0hJ9PiKz3GiYf7mArdgokIqQbJXSPPRkL269+CI0E8W3LfLLGqKKKnrFp4
-         FexA==
-X-Gm-Message-State: AOJu0YyFdy+bcat8Bfb3Ouhi5XIvtVs+lR3SMTevY0mfDch8A6YgVQ9q
-	Tcv7HjGfNgvpTcc6PsstIX3SK/HEoCsj9QLKlRLri0Fkb72VvITF/wEq5TTG4EFVxd8=
-X-Gm-Gg: ASbGncv5IKPtrWhKq3hZBFZQTc7oRuV55mqfcmR9X6fMTtYKIz63Z2n+9i/tmcKdEII
-	gwZCuymCAjK297LmFlZQhnwKqlPxjZb8nLaun4wEUaefkaPwswbt0++fiXNB0ou3KyJOdOGC3Sj
-	VgDJFuUyi2DoHlR/JhHxM9nk/Dhbi8WCrSUdTlpqrtGn6oE0ihJ/e513eW392RcK6bElTFlwbfn
-	xVq2+ECz49n/C4aiLPtWMLC+7nGtp3EV/BCGINRkNGlLw7WVCxTCeY+4Jkmd6q/hjIZTt2D0f7c
-	xFTxWeDV515mPeDefdsQ/hOdXrHj5QmHe1L3EZOqoIZpQrjPlqQ8sPI9fzZizhXF5fgH66u3r20
-	WcuEVcaX11d/H1duABZKAiso1bXRtV1vKKDL3g7xmUnSFSkZCq1YHl5MvpK4sNpX/1TqMcgFvOQ
+        bh=sxgfIdENtrsIjMM2UdQCTeBKGZOKjcZiEo3cUFxAXcY=;
+        b=LgXpQZPcxpWYMK9CxpP0ZvEZgU1YNf7oyUWN41Kp7zkiqmHsqWhC4QFZ/HPwlbKxiV
+         d0KcKDoYMreGtgo4CmNG2tYTg1cKMQAsQLj0TqzQvyl607QiKtegB8+lmpbP3AJQ17yn
+         5F+VCqWxaQVEDxYOrj78u7f/JuNDavyVgqZIDNKD87gZiPR2w/LtsjaSCxEL4ZSOpSrS
+         iDM5FAmbYDN+NvHqu8LBALRLIAO96vV58f4YUA9IsEfHK2F3NulDLjGeDd/zCtZB1jvk
+         xddmZe1oCHUX2KBvJo0zUcPMyjMdiUsUBClAGfhFqfL4JulhGGEDs6DadWMZ2N7GzAkA
+         S9tw==
+X-Gm-Message-State: AOJu0YyCzDV3vvVObSq2kRgph0pZPP9hOHIRqKmbMLJnTJDBwolT6+5k
+	E+800D9vS/kp2lWPVhiUL86rxxDo5Pr2SXogjNwqczamBNthiRuIWlIpG0yel+QpAt4=
+X-Gm-Gg: ASbGncvsw5lEfJEwf9ETmrW8kDhG4HFqmt2kuH15M0HJkwd76v6DJgwDzDuJ8inCnlJ
+	D8nBynsittSuVJGH7TvJmXbTstz6VJF+2rrHpfWxNaleLLXXXZrnjtMrK0AqLXI7K4EU9BPblc4
+	mv8S+yd7dSmphxTXcDOoM4swMqjItHGAMPZtWID2b8v7fhrIR6TgMQGxa1zK9Sm/ZfgfRn91AtW
+	WIXUTArjZPf3clXE0CuVuiaTVTWJa+8uEKmfl4+XRo5k8dxW6RnRHQBifcTSVWFqG8PRn6ze3sF
+	Gi3hK6vfSKDZXm2J1N8y8HvUJWKNCpouHpzVAZqeXQn58JRzu+xL18dHLeirKFjn6WnQOxwd2Qk
+	069E2i+hE9MRjW+fz9gFDR6HxWfK+MzFaTk42wFPy9PR6IopyXV525E5K3bqZ2NBpSLAMSewSoQ
 	==
-X-Google-Smtp-Source: AGHT+IHvbiqiaE9BGfDBUSTRvydN/vzRuP3ZcnZz2lw7HK6fcvufKRDfKe0pywBnSHjmBlHiLUyAuw==
-X-Received: by 2002:a05:6000:2dc6:b0:428:bb7:174f with SMTP id ffacd0b85a97d-429a7e519efmr21497f8f.26.1761577187143;
-        Mon, 27 Oct 2025 07:59:47 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFI4cGNdhTLrO5Qc68eGANNKGWaZMi+SP3ROTN0APpf5MvdfI+OdXOP5hYM78+QFJFoWJtOIA==
+X-Received: by 2002:a05:600c:621b:b0:46e:48fd:a1a9 with SMTP id 5b1f17b1804b1-4711791fbbbmr291640995e9.33.1761577189636;
+        Mon, 27 Oct 2025 07:59:49 -0700 (PDT)
 Received: from hackbox.lan ([86.121.7.169])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-429952df682sm14624801f8f.43.2025.10.27.07.59.44
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-429952df682sm14624801f8f.43.2025.10.27.07.59.47
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 27 Oct 2025 07:59:46 -0700 (PDT)
+        Mon, 27 Oct 2025 07:59:48 -0700 (PDT)
 From: Abel Vesa <abel.vesa@linaro.org>
-Date: Mon, 27 Oct 2025 16:59:22 +0200
-Subject: [PATCH v3 5/7] drm/msm/dpu: Add support for Glymur
+Date: Mon, 27 Oct 2025 16:59:23 +0200
+Subject: [PATCH v3 6/7] drm/msm/dp: Add support for Glymur
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -84,7 +84,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20251027-glymur-display-v3-5-aa13055818ac@linaro.org>
+Message-Id: <20251027-glymur-display-v3-6-aa13055818ac@linaro.org>
 References: <20251027-glymur-display-v3-0-aa13055818ac@linaro.org>
 In-Reply-To: <20251027-glymur-display-v3-0-aa13055818ac@linaro.org>
 To: Rob Clark <robin.clark@oss.qualcomm.com>, 
@@ -106,639 +106,61 @@ Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
  linux-kernel@vger.kernel.org, Abel Vesa <abel.vesa@linaro.org>, 
  Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 X-Mailer: b4 0.15-dev-dedf8
-X-Developer-Signature: v=1; a=openpgp-sha256; l=19086; i=abel.vesa@linaro.org;
- h=from:subject:message-id; bh=8ujTO8kESXkKER5rihSjybuS5+BATF2FawKO2HqELJU=;
- b=owEBbQKS/ZANAwAKARtfRMkAlRVWAcsmYgBo/4jRp2U49WdlfSdRoiZr7xkhdYAzBJJvxwyT3
- nHqCLhEOXiJAjMEAAEKAB0WIQRO8+4RTnqPKsqn0bgbX0TJAJUVVgUCaP+I0QAKCRAbX0TJAJUV
- VulaEACBSL1pDDyR+d7BS2tceFNXW4LivuNGLhNT1RCm5BgwC43KnwWYZKhadULarHGa/HcTSFr
- +6qDcU4TeY6YHUBc8nOHD70v12E0UQPCYEJHMuRCyWtlkCcBHxEE7hm712iurXgS7w7Rg7fJgxU
- tKOrWbUQErNJvubuY8ifNhWB0OHeuQODR0wsBJxUHCTWBLl/9YEnkCwRxmvOvUDE8UFVRlQKXjd
- sPJjt2049waISolbAVX4eXrtu6bokfYqONdpk67tAmndQ+gS2sWM4KJF3kMGZCZilT3qKMThuhs
- nL8dOS61CcvQLLmGWY2x8M/C0FynmVPnuxd8xRNWIsOSiaeMjaoZkhnOUu+sRvEpM2eSsCu+qPR
- NT73wnXcnpJHF0rvXpQCrtOgE8hXisiIQ6gwJOBNxb7f/mS2R+3ErsVBMNOZMjSvPIADiSaGwVF
- QZh/GNuVYhhoa8SIBDwX5jG78zG3wkVff0QUqAL6hCgZIfz6cJC1nEUeI4LHNzMVYy4Q9zmerz+
- 0MKNHsFHgtT7rHysuyH05R1Mo4kHLmT77H8rV9o7ro8Hkp06t3cR8TJUOAWBSgWPAI70tBpMgoL
- DJO9t6Vt7XWTqdVikBw6wx/wjSRWerTDTjXEjriWmip29tEOeSRCWtn1Vay1cyV7jIX+92xYQUv
- 0iUq4GlOPHl59+Q==
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1827; i=abel.vesa@linaro.org;
+ h=from:subject:message-id; bh=BDhxfQSATkvz5PZ4qM3SXapXE8VjPOJ1bFOc4+xtjJc=;
+ b=owEBbQKS/ZANAwAKARtfRMkAlRVWAcsmYgBo/4jSsNQdfZaJPuhDANBhKWGrGuBai9h3fb5GV
+ MTF71NO5USJAjMEAAEKAB0WIQRO8+4RTnqPKsqn0bgbX0TJAJUVVgUCaP+I0gAKCRAbX0TJAJUV
+ Vm8qD/wNEZMmVJpLmnjuh7sjJSc9hUiNL+mYlGlFqUULl7omP5nSihGm4XLWF0qNFdOx3P84WT6
+ UqlANYEjYW2GXOMhs6dbn8jGHwQKpN7rQwWZJEDIWktZfhZ8zwj9FEB+vjz1Ve99neltqNF8pTl
+ 90iwDmK84agODV99T+u0TmV4vrdaCx+n4H08dwDoimXabcjRAs8REBSw9S2H/NVwOE7syyYD+cY
+ ARAiN6jIkkPKB58gFiWg8pa5CsGKFM2Bj3LxROf5nX88iT5LiwBXwP6PgIHd7OuYXhr6BnYONhA
+ siLyu645x1ibQ9sHQCT0IjyJQGYHdU27xejBgVirPi2bDhXfK+aRD6yyAHVxaXVma7wRYtN/Vf9
+ 9iTbegXtr7Bin4b7mD1vin+ve7bDSWJ7AWOoyyfvOXrhwTmj5IAzaPbKiIHNFq5jUSna7ecSie9
+ pNXh5FPrEBGBQhEWo7KXEWzYWl9roN2Qa2+ce/u00uzfDbIpiVS2/CsiH4XAWCxpcd5PO78U3Ul
+ PqQRVzYex+DAvPqhJkvMu2q8LfMgvq/I7Ii3zQH79uhhA8ayH1IO57Imaiio39bG2C30WAf9iXh
+ eNLA8mRxyX9POZyWbX0yEEgxhR845VvyJJADb968LzciDmRR/YMoFjgjoYB3bqQOoCFXjC2tf8o
+ snHhBwsIOVs7Ckw==
 X-Developer-Key: i=abel.vesa@linaro.org; a=openpgp;
  fpr=6AFF162D57F4223A8770EF5AF7BF214136F41FAE
 
-Add DPU version v12.2 support for the Glymur platform.
+The Qualcomm Glymur platform comes with 4 DisplayPort controllers, which
+have a different core revision compared to all previous platforms.
+
+Describe them and add the compatible.
 
 Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
 ---
- .../drm/msm/disp/dpu1/catalog/dpu_12_2_glymur.h    | 541 +++++++++++++++++++++
- drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c     |   1 +
- drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h     |   1 +
- drivers/gpu/drm/msm/disp/dpu1/dpu_hw_mdss.h        |   6 +
- drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c            |   1 +
- 5 files changed, 550 insertions(+)
+ drivers/gpu/drm/msm/dp/dp_display.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_12_2_glymur.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_12_2_glymur.h
-new file mode 100644
-index 0000000000000000000000000000000000000000..13bb43ba67d3f4f63ac492e0e1c5757b55e7b61b
---- /dev/null
-+++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_12_2_glymur.h
-@@ -0,0 +1,541 @@
-+/* SPDX-License-Identifier: GPL-2.0-only */
-+/*
-+ * Copyright (c) 2025 Linaro Limited
-+ */
-+
-+#ifndef _DPU_12_2_GLYMUR_H
-+#define _DPU_12_2_GLYMUR_H
-+
-+static const struct dpu_caps glymur_dpu_caps = {
-+	.max_mixer_width = DEFAULT_DPU_OUTPUT_LINE_WIDTH,
-+	.max_mixer_blendstages = 0xb,
-+	.has_src_split = true,
-+	.has_dim_layer = true,
-+	.has_idle_pc = true,
-+	.has_3d_merge = true,
-+	.max_linewidth = 8192,
-+	.pixel_ram_size = DEFAULT_PIXEL_RAM_SIZE,
-+};
-+
-+static const struct dpu_mdp_cfg glymur_mdp = {
-+	.name = "top_0",
-+	.base = 0, .len = 0x494,
-+	.clk_ctrls = {
-+		[DPU_CLK_CTRL_REG_DMA] = { .reg_off = 0x2bc, .bit_off = 20 },
-+	},
-+};
-+
-+static const struct dpu_ctl_cfg glymur_ctl[] = {
-+	{
-+		.name = "ctl_0", .id = CTL_0,
-+		.base = 0x15000, .len = 0x1000,
-+		.intr_start = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR2, 9),
-+	}, {
-+		.name = "ctl_1", .id = CTL_1,
-+		.base = 0x16000, .len = 0x1000,
-+		.intr_start = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR2, 10),
-+	}, {
-+		.name = "ctl_2", .id = CTL_2,
-+		.base = 0x17000, .len = 0x1000,
-+		.intr_start = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR2, 11),
-+	}, {
-+		.name = "ctl_3", .id = CTL_3,
-+		.base = 0x18000, .len = 0x1000,
-+		.intr_start = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR2, 12),
-+	}, {
-+		.name = "ctl_4", .id = CTL_4,
-+		.base = 0x19000, .len = 0x1000,
-+		.intr_start = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR2, 13),
-+	}, {
-+		.name = "ctl_5", .id = CTL_5,
-+		.base = 0x1a000, .len = 0x1000,
-+		.intr_start = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR2, 23),
-+	}, {
-+		.name = "ctl_6", .id = CTL_6,
-+		.base = 0x1b000, .len = 0x1000,
-+		.intr_start = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR2, 14),
-+	}, {
-+		.name = "ctl_7", .id = CTL_7,
-+		.base = 0x1c000, .len = 0x1000,
-+		.intr_start = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR2, 15),
-+	},
-+};
-+
-+static const struct dpu_sspp_cfg glymur_sspp[] = {
-+	{
-+		.name = "sspp_0", .id = SSPP_VIG0,
-+		.base = 0x4000, .len = 0x344,
-+		.features = VIG_SDM845_MASK_SDMA,
-+		.sblk = &dpu_vig_sblk_qseed3_3_4,
-+		.xin_id = 0,
-+		.type = SSPP_TYPE_VIG,
-+	}, {
-+		.name = "sspp_1", .id = SSPP_VIG1,
-+		.base = 0x6000, .len = 0x344,
-+		.features = VIG_SDM845_MASK_SDMA,
-+		.sblk = &dpu_vig_sblk_qseed3_3_4,
-+		.xin_id = 4,
-+		.type = SSPP_TYPE_VIG,
-+	}, {
-+		.name = "sspp_2", .id = SSPP_VIG2,
-+		.base = 0x8000, .len = 0x344,
-+		.features = VIG_SDM845_MASK_SDMA,
-+		.sblk = &dpu_vig_sblk_qseed3_3_4,
-+		.xin_id = 8,
-+		.type = SSPP_TYPE_VIG,
-+	}, {
-+		.name = "sspp_3", .id = SSPP_VIG3,
-+		.base = 0xa000, .len = 0x344,
-+		.features = VIG_SDM845_MASK_SDMA,
-+		.sblk = &dpu_vig_sblk_qseed3_3_4,
-+		.xin_id = 12,
-+		.type = SSPP_TYPE_VIG,
-+	}, {
-+		.name = "sspp_8", .id = SSPP_DMA0,
-+		.base = 0x24000, .len = 0x344,
-+		.features = DMA_SDM845_MASK_SDMA,
-+		.sblk = &dpu_dma_sblk,
-+		.xin_id = 1,
-+		.type = SSPP_TYPE_DMA,
-+	}, {
-+		.name = "sspp_9", .id = SSPP_DMA1,
-+		.base = 0x26000, .len = 0x344,
-+		.features = DMA_SDM845_MASK_SDMA,
-+		.sblk = &dpu_dma_sblk,
-+		.xin_id = 5,
-+		.type = SSPP_TYPE_DMA,
-+	}, {
-+		.name = "sspp_10", .id = SSPP_DMA2,
-+		.base = 0x28000, .len = 0x344,
-+		.features = DMA_SDM845_MASK_SDMA,
-+		.sblk = &dpu_dma_sblk,
-+		.xin_id = 9,
-+		.type = SSPP_TYPE_DMA,
-+	}, {
-+		.name = "sspp_11", .id = SSPP_DMA3,
-+		.base = 0x2a000, .len = 0x344,
-+		.features = DMA_SDM845_MASK_SDMA,
-+		.sblk = &dpu_dma_sblk,
-+		.xin_id = 13,
-+		.type = SSPP_TYPE_DMA,
-+	}, {
-+		.name = "sspp_12", .id = SSPP_DMA4,
-+		.base = 0x2c000, .len = 0x344,
-+		.features = DMA_CURSOR_SDM845_MASK_SDMA,
-+		.sblk = &dpu_dma_sblk,
-+		.xin_id = 14,
-+		.type = SSPP_TYPE_DMA,
-+	}, {
-+		.name = "sspp_13", .id = SSPP_DMA5,
-+		.base = 0x2e000, .len = 0x344,
-+		.features = DMA_CURSOR_SDM845_MASK_SDMA,
-+		.sblk = &dpu_dma_sblk,
-+		.xin_id = 15,
-+		.type = SSPP_TYPE_DMA,
-+	},
-+};
-+
-+static const struct dpu_lm_cfg glymur_lm[] = {
-+	{
-+		.name = "lm_0", .id = LM_0,
-+		.base = 0x44000, .len = 0x400,
-+		.features = MIXER_MSM8998_MASK,
-+		.sblk = &sm8750_lm_sblk,
-+		.lm_pair = LM_1,
-+		.pingpong = PINGPONG_0,
-+		.dspp = DSPP_0,
-+	}, {
-+		.name = "lm_1", .id = LM_1,
-+		.base = 0x45000, .len = 0x400,
-+		.features = MIXER_MSM8998_MASK,
-+		.sblk = &sm8750_lm_sblk,
-+		.lm_pair = LM_0,
-+		.pingpong = PINGPONG_1,
-+		.dspp = DSPP_1,
-+	}, {
-+		.name = "lm_2", .id = LM_2,
-+		.base = 0x46000, .len = 0x400,
-+		.features = MIXER_MSM8998_MASK,
-+		.sblk = &sm8750_lm_sblk,
-+		.lm_pair = LM_3,
-+		.pingpong = PINGPONG_2,
-+		.dspp = DSPP_2,
-+	}, {
-+		.name = "lm_3", .id = LM_3,
-+		.base = 0x47000, .len = 0x400,
-+		.features = MIXER_MSM8998_MASK,
-+		.sblk = &sm8750_lm_sblk,
-+		.lm_pair = LM_2,
-+		.pingpong = PINGPONG_3,
-+		.dspp = DSPP_3,
-+	}, {
-+		.name = "lm_4", .id = LM_4,
-+		.base = 0x48000, .len = 0x400,
-+		.features = MIXER_MSM8998_MASK,
-+		.sblk = &sm8750_lm_sblk,
-+		.lm_pair = LM_5,
-+		.pingpong = PINGPONG_4,
-+	}, {
-+		.name = "lm_5", .id = LM_5,
-+		.base = 0x49000, .len = 0x400,
-+		.features = MIXER_MSM8998_MASK,
-+		.sblk = &sm8750_lm_sblk,
-+		.lm_pair = LM_4,
-+		.pingpong = PINGPONG_5,
-+	}, {
-+		.name = "lm_6", .id = LM_6,
-+		.base = 0x4a000, .len = 0x400,
-+		.features = MIXER_MSM8998_MASK,
-+		.sblk = &sm8750_lm_sblk,
-+		.lm_pair = LM_7,
-+		.pingpong = PINGPONG_6,
-+	}, {
-+		.name = "lm_7", .id = LM_7,
-+		.base = 0x4b000, .len = 0x400,
-+		.features = MIXER_MSM8998_MASK,
-+		.sblk = &sm8750_lm_sblk,
-+		.lm_pair = LM_6,
-+		.pingpong = PINGPONG_7,
-+	},
-+};
-+
-+static const struct dpu_dspp_cfg glymur_dspp[] = {
-+	{
-+		.name = "dspp_0", .id = DSPP_0,
-+		.base = 0x54000, .len = 0x1800,
-+		.sblk = &sm8750_dspp_sblk,
-+	}, {
-+		.name = "dspp_1", .id = DSPP_1,
-+		.base = 0x56000, .len = 0x1800,
-+		.sblk = &sm8750_dspp_sblk,
-+	}, {
-+		.name = "dspp_2", .id = DSPP_2,
-+		.base = 0x58000, .len = 0x1800,
-+		.sblk = &sm8750_dspp_sblk,
-+	}, {
-+		.name = "dspp_3", .id = DSPP_3,
-+		.base = 0x5a000, .len = 0x1800,
-+		.sblk = &sm8750_dspp_sblk,
-+	}, {
-+		.name = "dspp_4", .id = DSPP_4,
-+		.base = 0x5c000, .len = 0x1800,
-+		.sblk = &sm8750_dspp_sblk,
-+	}, {
-+		.name = "dspp_5", .id = DSPP_5,
-+		.base = 0x5e000, .len = 0x1800,
-+		.sblk = &sm8750_dspp_sblk,
-+	}, {
-+		.name = "dspp_6", .id = DSPP_6,
-+		.base = 0x60000, .len = 0x1800,
-+		.sblk = &sm8750_dspp_sblk,
-+	}, {
-+		.name = "dspp_7", .id = DSPP_7,
-+		.base = 0x62000, .len = 0x1800,
-+		.sblk = &sm8750_dspp_sblk,
-+	},
-+};
-+
-+static const struct dpu_pingpong_cfg glymur_pp[] = {
-+	{
-+		.name = "pingpong_0", .id = PINGPONG_0,
-+		.base = 0x69000, .len = 0,
-+		.sblk = &sc7280_pp_sblk,
-+		.merge_3d = MERGE_3D_0,
-+		.intr_done = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 8),
-+	}, {
-+		.name = "pingpong_1", .id = PINGPONG_1,
-+		.base = 0x6a000, .len = 0,
-+		.sblk = &sc7280_pp_sblk,
-+		.merge_3d = MERGE_3D_0,
-+		.intr_done = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 9),
-+	}, {
-+		.name = "pingpong_2", .id = PINGPONG_2,
-+		.base = 0x6b000, .len = 0,
-+		.sblk = &sc7280_pp_sblk,
-+		.merge_3d = MERGE_3D_1,
-+		.intr_done = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 10),
-+	}, {
-+		.name = "pingpong_3", .id = PINGPONG_3,
-+		.base = 0x6c000, .len = 0,
-+		.sblk = &sc7280_pp_sblk,
-+		.merge_3d = MERGE_3D_1,
-+		.intr_done = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 11),
-+	}, {
-+		.name = "pingpong_4", .id = PINGPONG_4,
-+		.base = 0x6d000, .len = 0,
-+		.sblk = &sc7280_pp_sblk,
-+		.merge_3d = MERGE_3D_2,
-+		.intr_done = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR2, 30),
-+	}, {
-+		.name = "pingpong_5", .id = PINGPONG_5,
-+		.base = 0x6e000, .len = 0,
-+		.sblk = &sc7280_pp_sblk,
-+		.merge_3d = MERGE_3D_2,
-+		.intr_done = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR2, 31),
-+	}, {
-+		.name = "pingpong_6", .id = PINGPONG_6,
-+		.base = 0x6f000, .len = 0,
-+		.sblk = &sc7280_pp_sblk,
-+		.merge_3d = MERGE_3D_3,
-+		.intr_done = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR2, 20),
-+	}, {
-+		.name = "pingpong_7", .id = PINGPONG_7,
-+		.base = 0x70000, .len = 0,
-+		.sblk = &sc7280_pp_sblk,
-+		.merge_3d = MERGE_3D_3,
-+		.intr_done = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR2, 21),
-+	}, {
-+		.name = "pingpong_cwb_0", .id = PINGPONG_CWB_0,
-+		.base = 0x66000, .len = 0,
-+		.sblk = &sc7280_pp_sblk,
-+		.merge_3d = MERGE_3D_4,
-+	}, {
-+		.name = "pingpong_cwb_1", .id = PINGPONG_CWB_1,
-+		.base = 0x66400, .len = 0,
-+		.sblk = &sc7280_pp_sblk,
-+		.merge_3d = MERGE_3D_4,
-+	},
-+};
-+
-+static const struct dpu_merge_3d_cfg glymur_merge_3d[] = {
-+	{
-+		.name = "merge_3d_0", .id = MERGE_3D_0,
-+		.base = 0x4e000, .len = 0x1c,
-+	}, {
-+		.name = "merge_3d_1", .id = MERGE_3D_1,
-+		.base = 0x4f000, .len = 0x1c,
-+	}, {
-+		.name = "merge_3d_2", .id = MERGE_3D_2,
-+		.base = 0x50000, .len = 0x1c,
-+	}, {
-+		.name = "merge_3d_3", .id = MERGE_3D_3,
-+		.base = 0x51000, .len = 0x1c,
-+	},
-+};
-+
-+/*
-+ * NOTE: Each display compression engine (DCE) contains dual hard
-+ * slice DSC encoders so both share same base address but with
-+ * its own different sub block address.
-+ */
-+static const struct dpu_dsc_cfg glymur_dsc[] = {
-+	{
-+		.name = "dce_0_0", .id = DSC_0,
-+		.base = 0x80000, .len = 0x8,
-+		.features = BIT(DPU_DSC_NATIVE_42x_EN),
-+		.sblk = &sm8750_dsc_sblk_0,
-+	}, {
-+		.name = "dce_0_1", .id = DSC_1,
-+		.base = 0x80000, .len = 0x8,
-+		.features = BIT(DPU_DSC_NATIVE_42x_EN),
-+		.sblk = &sm8750_dsc_sblk_1,
-+	}, {
-+		.name = "dce_1_0", .id = DSC_2,
-+		.base = 0x81000, .len = 0x8,
-+		.features = BIT(DPU_DSC_NATIVE_42x_EN),
-+		.sblk = &sm8750_dsc_sblk_0,
-+	}, {
-+		.name = "dce_1_1", .id = DSC_3,
-+		.base = 0x81000, .len = 0x8,
-+		.features = BIT(DPU_DSC_NATIVE_42x_EN),
-+		.sblk = &sm8750_dsc_sblk_1,
-+	}, {
-+		.name = "dce_2_0", .id = DSC_4,
-+		.base = 0x82000, .len = 0x8,
-+		.features = BIT(DPU_DSC_NATIVE_42x_EN),
-+		.sblk = &sm8750_dsc_sblk_0,
-+	}, {
-+		.name = "dce_2_1", .id = DSC_5,
-+		.base = 0x82000, .len = 0x8,
-+		.features = BIT(DPU_DSC_NATIVE_42x_EN),
-+		.sblk = &sm8750_dsc_sblk_1,
-+	}, {
-+		.name = "dce_3_0", .id = DSC_6,
-+		.base = 0x83000, .len = 0x8,
-+		.features = BIT(DPU_DSC_NATIVE_42x_EN),
-+		.sblk = &sm8750_dsc_sblk_0,
-+	}, {
-+		.name = "dce_3_1", .id = DSC_7,
-+		.base = 0x83000, .len = 0x8,
-+		.features = BIT(DPU_DSC_NATIVE_42x_EN),
-+		.sblk = &sm8750_dsc_sblk_1,
-+	},
-+
-+};
-+
-+static const struct dpu_wb_cfg glymur_wb[] = {
-+	{
-+		.name = "wb_2", .id = WB_2,
-+		.base = 0x65000, .len = 0x2c8,
-+		.features = WB_SDM845_MASK,
-+		.format_list = wb2_formats_rgb_yuv,
-+		.num_formats = ARRAY_SIZE(wb2_formats_rgb_yuv),
-+		.xin_id = 6,
-+		.vbif_idx = VBIF_RT,
-+		.maxlinewidth = 4096,
-+		.intr_wb_done = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 4),
-+	},
-+};
-+
-+static const struct dpu_cwb_cfg glymur_cwb[] = {
-+	{
-+		.name = "cwb_0", .id = CWB_0,
-+		.base = 0x66200, .len = 0x20,
-+	},
-+	{
-+		.name = "cwb_1", .id = CWB_1,
-+		.base = 0x66600, .len = 0x20,
-+	},
-+	{
-+		.name = "cwb_2", .id = CWB_2,
-+		.base = 0x7e200, .len = 0x20,
-+	},
-+	{
-+		.name = "cwb_3", .id = CWB_3,
-+		.base = 0x7e600, .len = 0x20,
-+	},
-+};
-+
-+static const struct dpu_intf_cfg glymur_intf[] = {
-+	{
-+		.name = "intf_0", .id = INTF_0,
-+		.base = 0x34000, .len = 0x400,
-+		.type = INTF_DP,
-+		.controller_id = MSM_DP_CONTROLLER_0,
-+		.prog_fetch_lines_worst_case = 24,
-+		.intr_underrun = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 24),
-+		.intr_vsync = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 25),
-+	}, {
-+		.name = "intf_1", .id = INTF_1,
-+		.base = 0x35000, .len = 0x400,
-+		.type = INTF_DSI,
-+		.controller_id = MSM_DSI_CONTROLLER_0,
-+		.prog_fetch_lines_worst_case = 24,
-+		.intr_underrun = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 26),
-+		.intr_vsync = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 27),
-+		.intr_tear_rd_ptr = DPU_IRQ_IDX(MDP_INTF1_TEAR_INTR, 2),
-+	}, {
-+		.name = "intf_2", .id = INTF_2,
-+		.base = 0x36000, .len = 0x400,
-+		.type = INTF_DSI,
-+		.controller_id = MSM_DSI_CONTROLLER_1,
-+		.prog_fetch_lines_worst_case = 24,
-+		.intr_underrun = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 28),
-+		.intr_vsync = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 29),
-+		.intr_tear_rd_ptr = DPU_IRQ_IDX(MDP_INTF2_TEAR_INTR, 2),
-+	}, {
-+		.name = "intf_3", .id = INTF_3,
-+		.base = 0x37000, .len = 0x400,
-+		.type = INTF_NONE,
-+		.controller_id = MSM_DP_CONTROLLER_0,	/* pair with intf_0 for DP MST */
-+		.prog_fetch_lines_worst_case = 24,
-+		.intr_underrun = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 30),
-+		.intr_vsync = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 31),
-+	}, {
-+		.name = "intf_4", .id = INTF_4,
-+		.base = 0x38000, .len = 0x400,
-+		.type = INTF_DP,
-+		.controller_id = MSM_DP_CONTROLLER_1,
-+		.prog_fetch_lines_worst_case = 24,
-+		.intr_underrun = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 20),
-+		.intr_vsync = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 21),
-+	}, {
-+		.name = "intf_5", .id = INTF_5,
-+		.base = 0x39000, .len = 0x400,
-+		.type = INTF_DP,
-+		.controller_id = MSM_DP_CONTROLLER_3,
-+		.prog_fetch_lines_worst_case = 24,
-+		.intr_underrun = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 22),
-+		.intr_vsync = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 23),
-+	}, {
-+		.name = "intf_6", .id = INTF_6,
-+		.base = 0x3A000, .len = 0x400,
-+		.type = INTF_DP,
-+		.controller_id = MSM_DP_CONTROLLER_2,
-+		.prog_fetch_lines_worst_case = 24,
-+		.intr_underrun = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 16),
-+		.intr_vsync = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 17),
-+	}, {
-+		.name = "intf_7", .id = INTF_7,
-+		.base = 0x3b000, .len = 0x400,
-+		.type = INTF_NONE,
-+		.controller_id = MSM_DP_CONTROLLER_2,	/* pair with intf_6 for DP MST */
-+		.prog_fetch_lines_worst_case = 24,
-+		.intr_underrun = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 18),
-+		.intr_vsync = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 19),
-+	}, {
-+		.name = "intf_8", .id = INTF_8,
-+		.base = 0x3c000, .len = 0x400,
-+		.type = INTF_NONE,
-+		.controller_id = MSM_DP_CONTROLLER_1,	/* pair with intf_4 for DP MST */
-+		.prog_fetch_lines_worst_case = 24,
-+		.intr_underrun = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 12),
-+		.intr_vsync = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 13),
-+	},
-+};
-+
-+static const struct dpu_perf_cfg glymur_perf_data = {
-+	.max_bw_low = 18900000,
-+	.max_bw_high = 28500000,
-+	.min_core_ib = 2500000,
-+	.min_llcc_ib = 0,
-+	.min_dram_ib = 800000,
-+	.min_prefill_lines = 35,
-+	.danger_lut_tbl = {0x3ffff, 0x3ffff, 0x0},
-+	.safe_lut_tbl = {0xfe00, 0xfe00, 0xffff},
-+	.qos_lut_tbl = {
-+		{.nentry = ARRAY_SIZE(sc7180_qos_linear),
-+		.entries = sc7180_qos_linear
-+		},
-+		{.nentry = ARRAY_SIZE(sc7180_qos_macrotile),
-+		.entries = sc7180_qos_macrotile
-+		},
-+		{.nentry = ARRAY_SIZE(sc7180_qos_nrt),
-+		.entries = sc7180_qos_nrt
-+		},
-+		/* TODO: macrotile-qseed is different from macrotile */
-+	},
-+	.cdp_cfg = {
-+		{.rd_enable = 1, .wr_enable = 1},
-+		{.rd_enable = 1, .wr_enable = 0}
-+	},
-+	.clk_inefficiency_factor = 105,
-+	.bw_inefficiency_factor = 120,
-+};
-+
-+static const struct dpu_mdss_version glymur_mdss_ver = {
-+	.core_major_ver = 12,
-+	.core_minor_ver = 2,
-+};
-+
-+const struct dpu_mdss_cfg dpu_glymur_cfg = {
-+	.mdss_ver = &glymur_mdss_ver,
-+	.caps = &glymur_dpu_caps,
-+	.mdp = &glymur_mdp,
-+	.cdm = &dpu_cdm_5_x,
-+	.ctl_count = ARRAY_SIZE(glymur_ctl),
-+	.ctl = glymur_ctl,
-+	.sspp_count = ARRAY_SIZE(glymur_sspp),
-+	.sspp = glymur_sspp,
-+	.mixer_count = ARRAY_SIZE(glymur_lm),
-+	.mixer = glymur_lm,
-+	.dspp_count = ARRAY_SIZE(glymur_dspp),
-+	.dspp = glymur_dspp,
-+	.pingpong_count = ARRAY_SIZE(glymur_pp),
-+	.pingpong = glymur_pp,
-+	.dsc_count = ARRAY_SIZE(glymur_dsc),
-+	.dsc = glymur_dsc,
-+	.merge_3d_count = ARRAY_SIZE(glymur_merge_3d),
-+	.merge_3d = glymur_merge_3d,
-+	.wb_count = ARRAY_SIZE(glymur_wb),
-+	.wb = glymur_wb,
-+	.cwb_count = ARRAY_SIZE(glymur_cwb),
-+	.cwb = sm8650_cwb,
-+	.intf_count = ARRAY_SIZE(glymur_intf),
-+	.intf = glymur_intf,
-+	.vbif_count = ARRAY_SIZE(sm8650_vbif),
-+	.vbif = sm8650_vbif,
-+	.perf = &glymur_perf_data,
-+};
-+
-+#endif
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
-index 6641455c4ec6a2d082644f1488ea5f5605ccc208..64e2f8a765530c7181292b3b3a7d54c4e9431963 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
-@@ -726,3 +726,4 @@ static const struct dpu_qos_lut_entry sc7180_qos_nrt[] = {
- 
- #include "catalog/dpu_10_0_sm8650.h"
- #include "catalog/dpu_12_0_sm8750.h"
-+#include "catalog/dpu_12_2_glymur.h"
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
-index f0768f54e9b3d5a3f5a7bec4b66127f2e2284cfd..4964e70610d1b6a2bf6456e767cc30a8ea653349 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
-@@ -749,6 +749,7 @@ struct dpu_mdss_cfg {
- 	const struct dpu_format_extended *vig_formats;
+diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
+index d87d47cc7ec3eb757ac192c411000bc50b824c59..9bd9cd5c1e03cc17598b222177b6682bbcd89f0c 100644
+--- a/drivers/gpu/drm/msm/dp/dp_display.c
++++ b/drivers/gpu/drm/msm/dp/dp_display.c
+@@ -130,6 +130,14 @@ struct msm_dp_desc {
+ 	bool wide_bus_supported;
  };
  
-+extern const struct dpu_mdss_cfg dpu_glymur_cfg;
- extern const struct dpu_mdss_cfg dpu_msm8917_cfg;
- extern const struct dpu_mdss_cfg dpu_msm8937_cfg;
- extern const struct dpu_mdss_cfg dpu_msm8953_cfg;
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_mdss.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_mdss.h
-index 175639c8bfbb9bbd02ed35f1780bcbd869f08c36..1ca22971aa9cb684648e492b4c538fdfbfa6b5e3 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_mdss.h
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_mdss.h
-@@ -149,6 +149,10 @@ enum dpu_dspp {
- 	DSPP_1,
- 	DSPP_2,
- 	DSPP_3,
-+	DSPP_4,
-+	DSPP_5,
-+	DSPP_6,
-+	DSPP_7,
- 	DSPP_MAX
++static const struct msm_dp_desc msm_dp_desc_glymur[] = {
++	{ .io_start = 0x0af54000, .id = MSM_DP_CONTROLLER_0, .wide_bus_supported = true },
++	{ .io_start = 0x0af5c000, .id = MSM_DP_CONTROLLER_1, .wide_bus_supported = true },
++	{ .io_start = 0x0af64000, .id = MSM_DP_CONTROLLER_2, .wide_bus_supported = true },
++	{ .io_start = 0x0af6c000, .id = MSM_DP_CONTROLLER_3, .wide_bus_supported = true },
++	{}
++};
++
+ static const struct msm_dp_desc msm_dp_desc_sa8775p[] = {
+ 	{ .io_start = 0x0af54000, .id = MSM_DP_CONTROLLER_0, .wide_bus_supported = true },
+ 	{ .io_start = 0x0af5c000, .id = MSM_DP_CONTROLLER_1, .wide_bus_supported = true },
+@@ -187,6 +195,7 @@ static const struct msm_dp_desc msm_dp_desc_x1e80100[] = {
  };
  
-@@ -159,6 +163,8 @@ enum dpu_ctl {
- 	CTL_3,
- 	CTL_4,
- 	CTL_5,
-+	CTL_6,
-+	CTL_7,
- 	CTL_MAX
- };
- 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-index 4e5a8ecd31f7570beb45fd1629a131e70aaefea8..f4c9767c418d38eb487934da03b352ce7063df16 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-@@ -1505,6 +1505,7 @@ static const struct dev_pm_ops dpu_pm_ops = {
- };
- 
- static const struct of_device_id dpu_dt_match[] = {
-+	{ .compatible = "qcom,glymur-dpu", .data = &dpu_glymur_cfg, },
- 	{ .compatible = "qcom,msm8917-mdp5", .data = &dpu_msm8917_cfg, },
- 	{ .compatible = "qcom,msm8937-mdp5", .data = &dpu_msm8937_cfg, },
- 	{ .compatible = "qcom,msm8953-mdp5", .data = &dpu_msm8953_cfg, },
+ static const struct of_device_id msm_dp_dt_match[] = {
++	{ .compatible = "qcom,glymur-dp", .data = &msm_dp_desc_glymur },
+ 	{ .compatible = "qcom,sa8775p-dp", .data = &msm_dp_desc_sa8775p },
+ 	{ .compatible = "qcom,sc7180-dp", .data = &msm_dp_desc_sc7180 },
+ 	{ .compatible = "qcom,sc7280-dp", .data = &msm_dp_desc_sc7280 },
 
 -- 
 2.48.1
