@@ -1,81 +1,87 @@
-Return-Path: <linux-arm-msm+bounces-78867-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-78868-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [142.0.200.124])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3B616C0CFAD
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Oct 2025 11:35:56 +0100 (CET)
+Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [IPv6:2605:f480:58:1:0:1994:3:14])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4F456C0D128
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Oct 2025 12:10:41 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 6267E4E0704
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Oct 2025 10:35:54 +0000 (UTC)
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 7EC504E7704
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Oct 2025 11:09:44 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A28E02F4A14;
-	Mon, 27 Oct 2025 10:35:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id DAEBF2F7AC7;
+	Mon, 27 Oct 2025 11:09:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="xCLu2o22"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="SpVB3hnW"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f44.google.com (mail-wm1-f44.google.com [209.85.128.44])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E3E58462
-	for <linux-arm-msm@vger.kernel.org>; Mon, 27 Oct 2025 10:35:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 446EC2E92D6
+	for <linux-arm-msm@vger.kernel.org>; Mon, 27 Oct 2025 11:09:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761561349; cv=none; b=Qlleut/0AlilIyJS5FQUml9/aGf8fmA9pL5ZXt4yPwz+9c6h0ZNAJxQqgiFpulPKxUUn1u6OJeZaE6A86unCVYwR2ETe8/3VbUX/zB2F3oFCTZG5bDVJQ5mYJz/yTCfKZ86om2ELzu1V2njpIQlF9zj8jaYkBMCfVL3LR+GxLeg=
+	t=1761563382; cv=none; b=huVIah95o3pHheLW4zLong3iJQWboRZsYC7OHBB1GziFwr0uBRmOUIfsSnNmOaVlOA63tcMPAOb2MuwHJuYNZthuPdTJEj0oKdvaakMv2Hj6QilLY14QOVA8QqymoGB6c3raFoMXbel02U7ELkQqhs5Ry339g2Vodrot2wXTOFc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761561349; c=relaxed/simple;
-	bh=V0xT/F6pKcz8ylzVL894eSbp5yjD9vZ0v47uUsLy0cU=;
-	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
-	 In-Reply-To:Content-Type; b=GkpnA6ijhwlqwFAuyl9OJKFCqRNTb2tlCzHw/9GuSFd3yc3Dpuim4GWpyrDAh7K6oSxc+TxV3cieJibwGDaDKxbFke2+4WL6aMlIQ8CROwIphSzFCzwHJhVrMqWt4EWwmy030souKVI977a1meePl0Xhi3g2Y7e+HMm53QkKb9o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=xCLu2o22; arc=none smtp.client-ip=209.85.128.44
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f44.google.com with SMTP id 5b1f17b1804b1-4770e0b0b7dso431285e9.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 27 Oct 2025 03:35:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1761561345; x=1762166145; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:autocrypt:content-language
-         :from:references:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=1eC2sjSfHiIWN4j8w+yh7atvloipy18ZE5R0r29G0js=;
-        b=xCLu2o224zktFlNgPogYuGEV07pkR3T3D7Y/DZRsEQZAM6fVqAM0JAelsPN2FBIpaR
-         EMtZXkVf92ebM4U5a6LUM1esRAbW0Mi0Rpa0eFh1gVOy/3kbNmMduL8DCUl3KWXv4xFQ
-         o6BM9gZfNB3XNkLg9WO7Txjj8TNaO4qtpvbYdX5+hnXJWsak37A/+uvTl+x0X19wy+WJ
-         q+IBBT+/KVj5Q0OReXRsGl4ykbAKShv4rtX1fOU0mK9PIybwuC0si+vzKGKgBfHoOKfm
-         3FWDNeT9nA3h6UkyKeW/YXJ0Az8v1XQbLirl7q9o0w1z4gM20TzG8H5a0MG7DoK+kAed
-         LTYQ==
+	s=arc-20240116; t=1761563382; c=relaxed/simple;
+	bh=/xUmcq1ujeoPIHjdvxt3xLv676PUcYJOdGzgL+X0leg=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=BKWhjixvucHnzScPx83ZgAHUi5bDBaH3kodw38gePJv9LfeWIbM7k4j7mi8DLklU2+WVvC8L4xzG0DGMw17Jph1L6kDmiWcVgeS+uaaYYcAq7GY801S/I0WlRzzMcTK7eloPttdOLckSCP1eWlzjbop8sBn6pjPfxY4hSO/h3fg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=SpVB3hnW; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 59RA5eOB1502729
+	for <linux-arm-msm@vger.kernel.org>; Mon, 27 Oct 2025 11:09:40 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	1OKEOWHV2jDS8HuQ9OUVVQMf5EtunRWIyG+g+gcxrpY=; b=SpVB3hnWbAeoJ9wZ
+	tFc7is5UpBTRfm16Nn1oq21eEX04VqEEkDkbTT3Iyf/r80XbsiykH2sAcPctUP27
+	VgrmhKqOTxq8rACgwt29XMf3a4W73v/7RYSNzUrS4lThnQDUm0pS6kHXe77Ge7Yq
+	OpidUmIXwu/mlLWrbMWHLy0yXiOqEuG20gD7t5K4Z0dvAlE5Aohb7GoyY7UucXPW
+	L3y1f3OF49Qn20vfa7tBw4fofqlCgcCf+OMPggbVnQmCDIcyAkDkmlOerjXetucz
+	YNjc1waY60MCzdPjLb/480MCIYB4v5hP2hwqARkeB6yg1d22dehJq8G0gxYhYFrV
+	EobTmA==
+Received: from mail-pj1-f69.google.com (mail-pj1-f69.google.com [209.85.216.69])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4a20pns8xc-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Mon, 27 Oct 2025 11:09:40 +0000 (GMT)
+Received: by mail-pj1-f69.google.com with SMTP id 98e67ed59e1d1-33baf262850so4166442a91.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 27 Oct 2025 04:09:39 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1761561345; x=1762166145;
-        h=content-transfer-encoding:in-reply-to:autocrypt:content-language
-         :from:references:to:subject:user-agent:mime-version:date:message-id
+        d=1e100.net; s=20230601; t=1761563379; x=1762168179;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=1eC2sjSfHiIWN4j8w+yh7atvloipy18ZE5R0r29G0js=;
-        b=s0mHvxFtsfy0GlsQo0m8Gdw+6ZvpoCvRgXzANgbttykH+brQ8Bwq64zXIJzZCH5DLc
-         /iYrNLAQC11VSAEPFKJw2VmSda53LSwz7/oNdDbdUPnTvE/UhgesUg9HWWL4+t5au0LB
-         j4VJM+sKDrYnhR8GaqKSFiFXi0AjuihAZtSajFjIc+G8R6F49pWO6hiY+hQMZCxHEi4C
-         iIkKLeGopy/aEqlOUXU+ZNut3i7aMgCDb1cdw1MXPVJgC6Lt+RgC1nqevi8dcnawWWEc
-         T21gh4Tgtz9T84oU/KyjFGp4AN22Ufucc8SNQq97abBZJVZZMb2pX9w217nC3Q5Iovbd
-         hybQ==
-X-Forwarded-Encrypted: i=1; AJvYcCX6ajHRCApkyQ8zqCQylU0EX3sxMhN6KFsLfrnzkJEASt/cfuIuMJJYci4XuxWF1i470VV1tIrTh7yJ4tMf@vger.kernel.org
-X-Gm-Message-State: AOJu0YwyYoLIxm6t2UipLM0olF4vyHuckaLKinqXCEoQf2Z3lcu94XEf
-	KMopSAdUlxPf76u3uBeW9yUv2B2Mu7G4+cvIF4/jHTBLbe5GBdjS4ZNCeiFAx8F5Wzk=
-X-Gm-Gg: ASbGncv4nMMd4nd0NGiX6CYWfpR4L+VlFLZyO8do6ihdqgik+tffwGfIfvBR2eadBPx
-	41xVaZw2K18n2xNwsTDnJj9oA5Oi+U7zSisbBSuf+pV5zGpMLaJB8QEAR3HNbrtE0JxQx2o/b7q
-	EnnaGDMoLpXsV+lADYFhD59O3q9BIqf7C8jCLPRMHuQtbUKG6glhzEN1J78VmKPW1HQ52Hxyn6Y
-	wnlRSmGYQ6cyaBAx3lkEMuTbmgcJqqfZEEl4xAfQDZPPnhujkEN80+MOQTgFS6bFZJ1CikHnjud
-	WID+Y6tYkKdY8sJftX56BlRVNNwGieNlT2pRoNbi+50Qn+u6DX3mAyWFTrkr2p1IV5f1JMmy2Y7
-	2yIngRtIbnm/RFzk7f9NSgwDKpW3qCYTcvAcaktYgw4EbGPHaf37wTXQNAw9mFCtzJ4rrDPEQ46
-	47YsBAPBayGscUNR22KO9d
-X-Google-Smtp-Source: AGHT+IHoKMtB0k7tD+QS9RPEtlM0Hd0nVYHf0+EztHHBmQYdUIcuy9l+kJwZ92M2NezWHb90uo3n5g==
-X-Received: by 2002:a05:600c:4449:b0:475:dca0:d457 with SMTP id 5b1f17b1804b1-475dca0d543mr29474985e9.8.1761561344933;
-        Mon, 27 Oct 2025 03:35:44 -0700 (PDT)
-Received: from [192.168.1.29] ([178.197.219.123])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-475dd035e05sm128895305e9.7.2025.10.27.03.35.43
+        bh=1OKEOWHV2jDS8HuQ9OUVVQMf5EtunRWIyG+g+gcxrpY=;
+        b=IQgOnZ1rcuJsCI9qsssJFerEszbtwVNp8H73z2agEHlCIrme6ctC9c+pPFaJfUMKlI
+         Hg01L88+CdkI7MaNTrXUhLSAQ93DD/RwZ+1mzIKCU8uc1R6AnqELjnOA2kvFaKL7BY35
+         aTHuf3lQ8TtpPVvXBSaLVz/HysDjyvIM/1YsTACyciOWFj4jyy043LjAL3LtDh/nzaGA
+         VwQ8oOjGm4OYq9gnOZZ8o42eGZR4XtPkvDkKWZ5B9AMJQFjzmTOAGkke9j1jHTxfBi7E
+         SZf7ci5jq5bkYoVGOP11LF5oOd9IRfaQGdY+XlIS4GDS5jNI64Sx+K5MGNUH375TTg9g
+         QhLA==
+X-Gm-Message-State: AOJu0YzTKb6SxbxLyQ8P1O5SaLDqG39Gs8/g+lFFPjD+X7RSZN+12D7y
+	HSDIDHTgDGHGuhUlnSlm42zkNAIMmoY2i6sIOoDQ22QsPGxPjwF3SEQnrjzSw276e4vxANLFH06
+	8f2WN1rsJ2vFGk9XMyL3eDiW+ldmwMuVMEd06VoNi41ADygdMy42A3HoFVLg3ulyPO9tP
+X-Gm-Gg: ASbGncvdPaDusqSskVw4Sc4y/23r9QZPoGgppS1uYY7pWGsJVCCoX5Mgyq9ANBFm4zf
+	fEU59pU/OBP986evlExHoQM7Bi+vXiM4elx8BzsTf4wiYSvH321ExiK1Y0jDO2v4o+uh/dLPlVx
+	bp4DppO81qrtlS1qI2hWt4OTExAqH5G+/TXKr3aL3fWrVCgRUdocs99oHXAKFW1vXL+tuD6wxpa
+	D798pSFYKWmxwvaNtZrvnGZ4Q4B1DOorX4klK1ClFYdnxSJHOM8fIPlLr+U53ikU1GrcIEw3gsZ
+	4ze5srtoushJZ79E/novroIQZwJcfB3M3Iae1dk19/DbXku2eKI3fgtNE3drSqkms5SfOQOnDxQ
+	9nzMwo+VRm0Rt4ncoFgC0cwl/4GM=
+X-Received: by 2002:a17:90b:2686:b0:32e:e18a:3691 with SMTP id 98e67ed59e1d1-33bcf919f1fmr50010246a91.35.1761563379207;
+        Mon, 27 Oct 2025 04:09:39 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHkUlEj8/wHcKODqSO/BOEax5NmnIZ4PQBlUjqIzNj2WYmI0MzR8y/WOp5byH5DLvoMAjzatw==
+X-Received: by 2002:a17:90b:2686:b0:32e:e18a:3691 with SMTP id 98e67ed59e1d1-33bcf919f1fmr50010210a91.35.1761563378756;
+        Mon, 27 Oct 2025 04:09:38 -0700 (PDT)
+Received: from [10.218.10.142] ([202.46.22.19])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-33fed7f3aeesm8092563a91.14.2025.10.27.04.09.36
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 27 Oct 2025 03:35:44 -0700 (PDT)
-Message-ID: <f2c9d3f8-f63b-4645-9899-49f2abb1ff3f@linaro.org>
-Date: Mon, 27 Oct 2025 11:35:42 +0100
+        Mon, 27 Oct 2025 04:09:38 -0700 (PDT)
+Message-ID: <1c52e759-15fd-462b-a9fd-ad620da099f5@oss.qualcomm.com>
+Date: Mon, 27 Oct 2025 16:39:34 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -83,180 +89,81 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v7] drm/msm/dsi/phy: Fix reading zero as PLL rates when
- unprepared
-To: Neil Armstrong <neil.armstrong@linaro.org>,
- Rob Clark <robin.clark@oss.qualcomm.com>, Dmitry Baryshkov
- <lumag@kernel.org>, Abhinav Kumar <abhinav.kumar@linux.dev>,
- Jessica Zhang <jessica.zhang@oss.qualcomm.com>, Sean Paul <sean@poorly.run>,
- Marijn Suijten <marijn.suijten@somainline.org>,
- David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
- linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
- freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
-References: <20250908094950.72877-2-krzysztof.kozlowski@linaro.org>
- <50a49d72-2b1e-471d-b0c4-d5a0b38b2a21@linaro.org>
- <05d6ea2a-c1ae-422d-b178-5d2a306f3669@linaro.org>
- <7d8e9395-d2e4-413c-9058-fe22e3d2d68f@linaro.org>
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Subject: Re: [PATCH] phy: qualcomm: m31-eusb2: Add runtime pm ops
+To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+        Vinod Koul <vkoul@kernel.org>,
+        Kishon Vijay Abraham I <kishon@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
+        linux-kernel@vger.kernel.org
+References: <20251027062458.1411096-1-prashanth.k@oss.qualcomm.com>
+ <daf0055b-7caf-4ace-8a06-071468273a37@oss.qualcomm.com>
 Content-Language: en-US
-Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
- 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
- 2+47PN9NZAOyb771QoVr8A==
-In-Reply-To: <7d8e9395-d2e4-413c-9058-fe22e3d2d68f@linaro.org>
+From: Prashanth K <prashanth.k@oss.qualcomm.com>
+In-Reply-To: <daf0055b-7caf-4ace-8a06-071468273a37@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
+X-Proofpoint-GUID: BkZOrREiu_wYgDtgkUFVxDB7NJYuj5He
+X-Proofpoint-ORIG-GUID: BkZOrREiu_wYgDtgkUFVxDB7NJYuj5He
+X-Authority-Analysis: v=2.4 cv=A+xh/qWG c=1 sm=1 tr=0 ts=68ff52f4 cx=c_pps
+ a=vVfyC5vLCtgYJKYeQD43oA==:117 a=fChuTYTh2wq5r3m49p7fHw==:17
+ a=IkcTkHD0fZMA:10 a=x6icFKpwvdMA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=EUspDBNiAAAA:8 a=1dOfxVL-wUTtPdxvxmkA:9 a=QEXdDO2ut3YA:10
+ a=rl5im9kqc5Lf4LNbBjHf:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDI3MDEwNCBTYWx0ZWRfXxzC2El0FN0vB
+ vf81dlzeeJFIoTTyKiATgHTDKER9v0E7KjICCTizdFrpFQsA4Vc3247Wz8FrZ5AwYC8pWSZi0Ju
+ mGX29H5bvUuSlJnM15s0ZCF2hsipNxhVK/eFlSJlFWtCTbofZcu9QwwH+UNUh3jl3Daxga/xCmy
+ DHzhO54+y7vn9GRmdIOJ6JF/ICZIe2bh6Ggu2WEgbNiQKsHydsOWYKHx0rRLr8MnGONDW+CTMgf
+ 06NQX6V+nmi/uO8lCu5i6vRiNXRQYqUVJmUCTRO+qAICGU7ouDiRPNzEXd5yelVJ373KxpPxdZP
+ tX1sTk8a/kyF3Ti9Vkhd6IxT/xBDly3fjuUIlutZsPptKEcuYaxtn1LRPq/UMDHwdHdWyZyITGC
+ awLTot0CzCy494ViChmsLD3+nHDOUA==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-10-27_05,2025-10-22_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501 lowpriorityscore=0 clxscore=1011 suspectscore=0
+ spamscore=0 bulkscore=0 adultscore=0 impostorscore=0 phishscore=0
+ malwarescore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2510020000
+ definitions=main-2510270104
 
-On 24/10/2025 16:48, Neil Armstrong wrote:
-> On 10/24/25 16:34, Krzysztof Kozlowski wrote:
->> On 24/10/2025 14:43, Neil Armstrong wrote:
->>> Hi,
->>>
->>> On 9/8/25 11:49, Krzysztof Kozlowski wrote:
->>>> Hardware Programming Guide for DSI PHY says that PLL_SHUTDOWNB and
->>>> DIGTOP_PWRDN_B have to be asserted for any PLL register access.
->>>> Whenever dsi_pll_7nm_vco_recalc_rate() or dsi_pll_7nm_vco_set_rate()
->>>> were called on unprepared PLL, driver read values of zero leading to all
->>>> sort of further troubles, like failing to set pixel and byte clock
->>>> rates.
->>>>
->>>> Asserting the PLL shutdown bit is done by dsi_pll_enable_pll_bias() (and
->>>> corresponding dsi_pll_disable_pll_bias()) which are called through the
->>>> code, including from PLL .prepare() and .unprepare() callbacks.
->>>>
->>>> The .set_rate() and .recalc_rate() can be called almost anytime from
->>>> external users including times when PLL is or is not prepared, thus
->>>> driver should not interfere with the prepare status.
->>>>
->>>> Implement simple reference counting for the PLL bias, so
->>>> set_rate/recalc_rate will not change the status of prepared PLL.
->>>>
->>>> Issue of reading 0 in .recalc_rate() did not show up on existing
->>>> devices, but only after re-ordering the code for SM8750.
->>>
->>> It happens this breaks the bonded DSI use-case, mainly because both PHYs
->>> uses the same PLL, and trying to enable the DSI0 PHY PLL from the DSI1
->>> PHY fails because the DSI0 PHY enable_count == 0.
+
+
+On 10/27/2025 1:55 PM, Konrad Dybcio wrote:
+> On 10/27/25 7:24 AM, Prashanth K wrote:
+>> Add runtime power management operation callbacks for M31 EUSB2 PHY.
+>> Enable/disable the clocks based on the runtime suspend/resume calls.
 >>
->>
->> If it is ==0, the check you removed would not be hit and enable would
->> work. I don't quite get the analysis.
->>
->>>
->>> Reverting part the the patch makes the bonded work again:
->>> ===================><===============================
->>> diff --git a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c
->>> index 32f06edd21a9..24811c52d34c 100644
->>> --- a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c
->>> +++ b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c
->>> @@ -426,11 +426,8 @@ static void dsi_pll_enable_pll_bias(struct dsi_pll_7nm *pll)
->>>    	u32 data;
->>>
->>>    	spin_lock_irqsave(&pll->pll_enable_lock, flags);
->>> -	if (pll->pll_enable_cnt++) {
->>> -		spin_unlock_irqrestore(&pll->pll_enable_lock, flags);
->>> -		WARN_ON(pll->pll_enable_cnt == INT_MAX);
->>> -		return;
->>> -	}
->>> +	pll->pll_enable_cnt++;
->>> +	WARN_ON(pll->pll_enable_cnt == INT_MAX);
->>>
->>>    	data = readl(pll->phy->base + REG_DSI_7nm_PHY_CMN_CTRL_0);
->>>    	data |= DSI_7nm_PHY_CMN_CTRL_0_PLL_SHUTDOWNB;
->>> @@ -965,10 +962,8 @@ static int dsi_7nm_phy_enable(struct msm_dsi_phy *phy,
->>>    	u32 const delay_us = 5;
->>>    	u32 const timeout_us = 1000;
->>>    	struct msm_dsi_dphy_timing *timing = &phy->timing;
->>> -	struct dsi_pll_7nm *pll = phy->pll_data;
->>>    	void __iomem *base = phy->base;
->>>    	bool less_than_1500_mhz;
->>> -	unsigned long flags;
->>>    	u32 vreg_ctrl_0, vreg_ctrl_1, lane_ctrl0;
->>>    	u32 glbl_pemph_ctrl_0;
->>>    	u32 glbl_str_swi_cal_sel_ctrl, glbl_hstx_str_ctrl_0;
->>> @@ -1090,13 +1085,10 @@ static int dsi_7nm_phy_enable(struct msm_dsi_phy *phy,
->>>    		glbl_rescode_bot_ctrl = 0x3c;
->>>    	}
->>>
->>> -	spin_lock_irqsave(&pll->pll_enable_lock, flags);
->>
->> This should not be removed.
->>
->>> -	pll->pll_enable_cnt = 1;
->>
->> So you basically remoevd pll_enable_cnt everywhere and reverted entirely
->> my commit. How is this patch different than revert?
+>> Signed-off-by: Prashanth K <prashanth.k@oss.qualcomm.com>
+>> ---
 > 
-> No I did not, I kept the dsi_pll_disable_pll_bias() refcounting and call from
-
-Indeed, I see now.
-
-> all the clock ops, which is basically needed here to never access PLL without
-> PLL_SHUTDOWNB and DIGTOP_PWRDN_B being asserted.
+> [...]
 > 
-> I only removed the pll_enable_cnt from dsi_7nm_phy_enable/disable because the
-> PHY code is designed to allow setting the PLL rate while the PHY is disabled.
-> And the bonded DSI hits this use case by setting the DSI0 PHY PLL rate while
-> configuring the PLL1 PHY.
-
-OK, I understand now.
-
+>>  static int m31eusb2_phy_probe(struct platform_device *pdev)
+>>  {
+>>  	struct phy_provider *phy_provider;
+>> @@ -270,6 +298,17 @@ static int m31eusb2_phy_probe(struct platform_device *pdev)
+>>  		return dev_err_probe(dev, PTR_ERR(phy->clk),
+>>  				     "failed to get clk\n");
+>>  
+>> +	dev_set_drvdata(dev, phy);
+>> +	pm_runtime_set_active(dev);
+>> +	pm_runtime_enable(dev);
+>> +
+>> +	/*
+>> +	 * Prevent runtime pm from being ON by default. Users can enable
+>> +	 * it using power/control in sysfs.
+>> +	 */
+>> +	pm_runtime_forbid(dev);
 > 
-> So I wonder why it was added in the beginning because since you call dsi_pll_disable_pll_bias()
-> in each clk op, the Hardware Programming Guide for DSI PHY is satisfied ?
-
-Don't remember anymore.
-
+> This screams "this patch is broken" or "there are bad issues" which
+> you did not describe at all.
 > 
-> The commit message doesn't say anything related to dsi_7nm_phy_enable/disable.
-> 
-With your patch it works fine and does not produce clock warnings, so
-seems fine. If you send proper fix, then:
+> Konrad
 
+Hi Konrad, I was followed the same sequence from other phy drivers
+containing pm_ops. I assume the runtime_forbid is added to control
+runtime pm from userspace.
 
-Tested-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-
-
-Best regards,
-Krzysztof
+Regards,
+Prashanth K
 
