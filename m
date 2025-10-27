@@ -1,64 +1,61 @@
-Return-Path: <linux-arm-msm+bounces-79041-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-79042-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6C19CC11C92
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Oct 2025 23:40:46 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7F7EFC11C68
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Oct 2025 23:39:51 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 80FCF5672C9
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Oct 2025 22:39:07 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 959D11A65E33
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Oct 2025 22:39:32 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5E7A133CE81;
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5E6DE33CE80;
 	Mon, 27 Oct 2025 22:35:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="TdiQBZ3Z"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="m5M+wqdk"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35BF933C52F;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35CDF33C530;
 	Mon, 27 Oct 2025 22:35:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761604510; cv=none; b=V7a4h/MkST7CZwo7y3XNgUkfw1Qrjfk3WY7Zvttf3clSATSD7gEW6mK1rsnS7nfE8ZVoKLG8luJiI1GOkU2Ku+0kMbolXIoCDWWpJx3d/qRnRvtpOraqa770i7tAZPNIQXaZ7JF6fUgBIPlZRflXTFO3APpRSpGtcfp+Sa66IBg=
+	t=1761604510; cv=none; b=Dhx5sN/X4zcO3o4u+RqXEknln6xhSSZ0NSfbTaexC4xzqDBvnPjuQm8Q8xta44YGAfF452s4r1511Z67j+n1EVDF7SwG6OEwuf9+XdghPKzL4Rn0lcDGOZfm5pA9c1alGZDaOYvqmGHxBbw+bpZGjEVROdb+f23wu5xgS+8gWYs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1761604510; c=relaxed/simple;
-	bh=OLnBAU9ZShSMgLQYlNhSziv6+8MVbd4t59C0mC4ZQG8=;
+	bh=uR3OGciO5V7Xn3qr3431LnNRO83IvpsubX6FnV7RXhM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=TdidHJi5iQ0NlZMo3w8xB11it1ZOqk3GASsD+4OWk7bCm0zYIKKHVQGHGjJtUAjzlIV6EK6gIcfFzfXuCGMOKvb03ZS3QeUp9XXqH92mvKwtjovuPQwOpWXde08lcmigjwrEgonqRcbQM4+fsYOYlikhRBdutluxf/zJi7sNyls=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=TdiQBZ3Z; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15E15C113D0;
-	Mon, 27 Oct 2025 22:35:08 +0000 (UTC)
+	 MIME-Version:Content-Type; b=BM5glXpdCc2tb4M5o1g0CBq3y51+kcBPmr8sRfMwNfIjGBoyR14Fn5UuSK2gHbJosme4E0iHs3N7mIx46HAkbsGd1nwHrl31dsbCkMIg3QwICxKjLKpx0g0z4m1QArKxy9Sc6LBbmb6X2EX/UDpB05dxKZQu+4XnEoKBFJOPt3g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=m5M+wqdk; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1BFA8C4CEFB;
+	Mon, 27 Oct 2025 22:35:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1761604508;
-	bh=OLnBAU9ZShSMgLQYlNhSziv6+8MVbd4t59C0mC4ZQG8=;
+	s=k20201202; t=1761604509;
+	bh=uR3OGciO5V7Xn3qr3431LnNRO83IvpsubX6FnV7RXhM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TdiQBZ3Z/x2QhdyXgS/1jkCWx6TlwLQ1l8bx8jDqgM5cuLQL1jxq3ZRrXuBvVGNyU
-	 hUzcf2l8RexlSWyoxuK90MtVgRDGJE7QSSBeLURUktQYgJiXEbQZVDLqJlYrSY8UuK
-	 kX5Dc6TrLoEUkFeAKp1lhIUT7dpSMyryx+eIwTsiyYw/ZWlGsb0Q9Ub6zOIiYi8910
-	 /djvklGqYCUMHOEEiwPWVzQFJpnOmwDHjyS+WjUheR3DMmpls1m7Eu1ywoJk9aztsU
-	 ts1bp1kJxIAe6ac/935q8YaeCmXvg01abbdgoEtLlZ8penjZKUZt5UBPtfucndOtsU
-	 a9vq6Ivkyq1xA==
+	b=m5M+wqdklDJ0/8p2luFcn6+BLtnQCG36b06z8DstPWFlkbnE8I0p4gxLTF8MtWxn7
+	 ZCbCNHrzxsAl2IxHyBT0i04lVwGn+h0Uh4Sy7rDmHObQeV+Z0zvAhZ2x5cuE4N1RHw
+	 ENc+QmzjgdBeQOmoJVOXzFY5pXub4HPy806Ge6PZEFkVfJo4qvWsdCaAbQ/9WP/Jud
+	 sQo0TDISIi+t6Grkn3eB1GCnnVnthBQNE7dc+q8pnprXPWGoA9Ha122EtzLdESb2Gp
+	 fYtfqe0WPr84tqFObNM+YCjP+6yLwK0SUJFXBrLFz9yeOU9f+RcaCw/mXfx7+j6QCE
+	 41FRpQ2qJ13qg==
 From: Bjorn Andersson <andersson@kernel.org>
 To: Rob Herring <robh@kernel.org>,
 	Krzysztof Kozlowski <krzk+dt@kernel.org>,
 	Conor Dooley <conor+dt@kernel.org>,
-	Sibi Sankar <sibi.sankar@oss.qualcomm.com>,
-	Rajendra Nayak <quic_rjendra@quicinc.com>,
-	Abel Vesa <abel.vesa@linaro.org>,
 	Konrad Dybcio <konradybcio@kernel.org>
 Cc: linux-arm-msm@vger.kernel.org,
 	devicetree@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
 	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Subject: Re: [PATCH] arm64: dts: qcom: x1e80100: Describe the full 'link' region of DP hosts
-Date: Mon, 27 Oct 2025 17:37:02 -0500
-Message-ID: <176160465213.73268.6824815295833171554.b4-ty@kernel.org>
+Subject: Re: [PATCH] arm64: dts: qcom: x1e80100: Move CPU idle states to their respective PSCI PDs
+Date: Mon, 27 Oct 2025 17:37:03 -0500
+Message-ID: <176160465215.73268.4069594853327616509.b4-ty@kernel.org>
 X-Mailer: git-send-email 2.51.0
-In-Reply-To: <20251009-topic-hamoa_dp_reg-v1-1-4c70afa5f029@oss.qualcomm.com>
-References: <20251009-topic-hamoa_dp_reg-v1-1-4c70afa5f029@oss.qualcomm.com>
+In-Reply-To: <20251010-topic-x1e_dt_idle-v1-1-b1c8d558e635@oss.qualcomm.com>
+References: <20251010-topic-x1e_dt_idle-v1-1-b1c8d558e635@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -69,20 +66,16 @@ Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 
 
-On Thu, 09 Oct 2025 14:59:18 +0200, Konrad Dybcio wrote:
-> The regions are larger than currently described. Rather inconveniently,
-> some control registers, including some related to USB4, are in that
-> left-out chunk.
-> 
-> Extend it to cover the entire region, as per the hw specification.
+On Fri, 10 Oct 2025 22:02:18 +0200, Konrad Dybcio wrote:
+> To make things uniform with other Qualcomm platforms, move the CPU idle
+> states under their PSCI power domains. No functional change.
 > 
 > 
-> [...]
 
 Applied, thanks!
 
-[1/1] arm64: dts: qcom: x1e80100: Describe the full 'link' region of DP hosts
-      commit: 752c3765a952bab9b20d4fbe75ef855dff546c46
+[1/1] arm64: dts: qcom: x1e80100: Move CPU idle states to their respective PSCI PDs
+      commit: 5b5014f667ddbc590fe2cd3ab5a5d042e01c0e2f
 
 Best regards,
 -- 
