@@ -1,65 +1,55 @@
-Return-Path: <linux-arm-msm+bounces-78996-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-78997-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [IPv6:2605:f480:58:1:0:1994:3:14])
-	by mail.lfdr.de (Postfix) with ESMTPS id 88421C0F90F
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Oct 2025 18:14:25 +0100 (CET)
+Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [142.0.200.124])
+	by mail.lfdr.de (Postfix) with ESMTPS id A423AC0FA00
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Oct 2025 18:26:41 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 715884E2936
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Oct 2025 17:14:24 +0000 (UTC)
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id D17524EA754
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Oct 2025 17:26:04 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2F020311C09;
-	Mon, 27 Oct 2025 17:14:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D1F7831578B;
+	Mon, 27 Oct 2025 17:26:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="nCiqRJDA"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="e0aIeD7H"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF0BF1E1C22;
-	Mon, 27 Oct 2025 17:14:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3BFC2D23B9;
+	Mon, 27 Oct 2025 17:26:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761585261; cv=none; b=L38z9UC+ia734L4AryMcpoCgWwpWCHEooAwzNA8hpar9mWSwoft+Y1JPhjxElmMcbEHz8sogOt4JoudGo5OUleJ2F45eTLC+03l7/fDYI1bfSL/urhNFEum9WRnRrDz21e2YrTW+Wo10/+mByH5QnSd4gcsVN3pEPSzNTfWkt4s=
+	t=1761585961; cv=none; b=nnH5sh0WpqSO1+6ccli+TudvCUWWrMWMVkRA2Me/mlEfcruuSe7yqiPiTyTHIvZ6QQa/nEWvxJAcLK2qApmebfa6W0x7ypwr+Q6bgr6SSqUTgf3Qf9Fl3Bk/0GFAF1f1rJbc96Auz87gqo+yhS01U5+V1egsDBNqR9hc2CXVwms=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761585261; c=relaxed/simple;
-	bh=riL/1ZLw+rZSAzmG3LWiquvYVubXh4lPo2gMuGTnZhY=;
+	s=arc-20240116; t=1761585961; c=relaxed/simple;
+	bh=wD7HUE/w+36qJT00srkAtWlKdKG6Y3KVTganlRqWHwc=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=UcX0jRa8YE+xFfAr0E1vYMBzAw4pPbiE8wpiqHlyr+x1nup771qHRf+WF5mWx+vxxVmFf5qS1zZY5unyKrwzrsejiWuFZ3M7cM6yM/2RoYDY/HnaQxCNGCbAyUgAlKzwHZe0Czr+FePAEPjyi0zeJtDMDt9bq+4ByeN8TxcmOCE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=nCiqRJDA; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DFB6DC4CEF1;
-	Mon, 27 Oct 2025 17:14:18 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=PYzPza1Zj5cym0NhVc6qkasy6fbGJpQglHwR7AaM7UgWNZgUBs+SkHYcAQNM8966gg1OCa56Hgxp1Zt86oB+rcwyYof/vc6uuR/7NTd1zBQSO4dr4iNoGvG/7uCmfpVFmrYpqDkWxdn7tQAlKA3lhm8UbtoZfVFedqTvrN63a3Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=e0aIeD7H; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98522C4CEF1;
+	Mon, 27 Oct 2025 17:26:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1761585260;
-	bh=riL/1ZLw+rZSAzmG3LWiquvYVubXh4lPo2gMuGTnZhY=;
+	s=k20201202; t=1761585961;
+	bh=wD7HUE/w+36qJT00srkAtWlKdKG6Y3KVTganlRqWHwc=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=nCiqRJDA+4na9AVF0xFYjv6wnEWRHoQPE+dft2faZhJ63T6bpbH3T7/P7P2CP1ptH
-	 ibAvGV3SZKL2+jereFKam6Uhk+MeqCT54fH5vgyTDRnHVPH8sOAhMI8VrotdngPsQ8
-	 MmasD/CkXAAIEh0BPlq8efTYyN398eGNq/1gxjQ6koLjidYgy5GwE8PkVyFXdPLvC6
-	 UnJjQUOnVJurn1sRi3mWnnyI+4x42aiWa5+no/2eStIhgZNbgVaO2t3xPFh5iVPkkc
-	 aFpMszJ1c+sf/S0kFumGn4PI3EFNRKgx2+QtplTloxwFflMZF6LPCIfzSSMwCwvsil
-	 d6hOlrNPl3CHQ==
-Date: Mon, 27 Oct 2025 12:17:13 -0500
+	b=e0aIeD7HZV6GlKrdjGzuciKufd2xox77a9PQWeCniGvRRwQtqPq7DE1jOBBxngqfc
+	 YpCvqjVEmWpqMj/qB81tdD4Ex09qipQSmB5OQy411on9DRbOfezF7SpZ9zSopsBIbj
+	 Fg0+S72d/AzvDU3JzmF9lygn+72iAkOjhqqCgWRXz1+4KTdj7aJ08KwtNPe0cAYq7M
+	 fMTDGEnWLBGanFvp4IS15JIjkz+LjZPt9RTSPE/eGcGWvYbcNMXTHe6RgMAbM1wQTB
+	 AR6/Bgx8RBl0ACoRlgqTiTW0Tl1aqLtYu/pO14iyeQ7KKF1modUF24brxsItTxa1k7
+	 OaI+UtPmTEq+g==
+Date: Mon, 27 Oct 2025 12:28:54 -0500
 From: Bjorn Andersson <andersson@kernel.org>
-To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Cc: Abel Vesa <abel.vesa@linaro.org>, 
-	Rob Clark <robin.clark@oss.qualcomm.com>, Dmitry Baryshkov <lumag@kernel.org>, 
-	Abhinav Kumar <abhinav.kumar@linux.dev>, Jessica Zhang <jessica.zhang@oss.qualcomm.com>, 
-	Sean Paul <sean@poorly.run>, Marijn Suijten <marijn.suijten@somainline.org>, 
-	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, Maxime Ripard <mripard@kernel.org>, 
-	Thomas Zimmermann <tzimmermann@suse.de>, David Airlie <airlied@gmail.com>, 
-	Simona Vetter <simona@ffwll.ch>, Rob Herring <robh@kernel.org>, 
+To: Rakesh Kota <rakesh.kota@oss.qualcomm.com>
+Cc: Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
 	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Neil Armstrong <neil.armstrong@linaro.org>, Kuogee Hsieh <quic_khsieh@quicinc.com>, 
-	Konrad Dybcio <konradybcio@kernel.org>, linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, 
-	freedreno@lists.freedesktop.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2 7/7] soc: qcom: ubwc: Add configuration Glymur platform
-Message-ID: <ump2gq7hta5dzul7bwjmb45dtrxezkbticdwis7opl2drmnuyz@wwlanncd6xlb>
-References: <20251014-glymur-display-v2-0-ff935e2f88c5@linaro.org>
- <20251014-glymur-display-v2-7-ff935e2f88c5@linaro.org>
- <7dxq62ltoeerb4g2fgchb2hd7eomvlexfgyvamxsuuirblavtn@4bg3dy2bukdq>
+	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] arm64: dts: qcom: lemans-evk: Add RTC node for PMM8654AU
+Message-ID: <kdufgqkfpe6sw2bpcxe3yjihj5hpsyilk7sid6ndyyukq5ozwc@sj7zphcrgjc4>
+References: <20251015-add_rtc_node-v1-1-601c9663422b@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -68,30 +58,60 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <7dxq62ltoeerb4g2fgchb2hd7eomvlexfgyvamxsuuirblavtn@4bg3dy2bukdq>
+In-Reply-To: <20251015-add_rtc_node-v1-1-601c9663422b@oss.qualcomm.com>
 
-On Mon, Oct 27, 2025 at 02:29:01PM +0200, Dmitry Baryshkov wrote:
-> On Tue, Oct 14, 2025 at 03:38:32PM +0300, Abel Vesa wrote:
-> > Describe the Universal Bandwidth Compression (UBWC) configuration
-> > for the new Glymur platform.
-> > 
-> > Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
-> > ---
-> >  drivers/soc/qcom/ubwc_config.c | 12 ++++++++++++
-> >  1 file changed, 12 insertions(+)
-> > 
+On Wed, Oct 15, 2025 at 07:12:34PM +0530, Rakesh Kota wrote:
+> Add the RTC peripheral node for the PMM8654AU PMIC,
+> which is controlled via the SPMI bus.
 > 
-> Bjorn, do you indent to pick up this patch on your own or would you ack
-> merging it through the drm/msm tree?
+> Signed-off-by: Rakesh Kota <rakesh.kota@oss.qualcomm.com>
+
+Subject says this is for the EVK, but patch changes the generic Lemans
+PMIC definitions.
+
+> ---
+>  arch/arm64/boot/dts/qcom/lemans-pmics.dtsi | 7 +++++++
+>  1 file changed, 7 insertions(+)
 > 
+> diff --git a/arch/arm64/boot/dts/qcom/lemans-pmics.dtsi b/arch/arm64/boot/dts/qcom/lemans-pmics.dtsi
+> index 1369c3d43f866de9d8cd5cd4985241b99c0a0454..4eda7043b851f363d0bf053587fb1f5edae0c4cd 100644
+> --- a/arch/arm64/boot/dts/qcom/lemans-pmics.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/lemans-pmics.dtsi
+> @@ -142,6 +142,13 @@ pmm8654au_0_gpios: gpio@8800 {
+>  			#interrupt-cells = <2>;
+>  		};
+>  
+> +		pmm8654au_0_rtc: rtc@6100 {
 
-As there's no dependencies between the trees, I can pick these through
-the qcom tree now.
+6100 < 8800 so this should be one step up.
 
-Regards,
+
+But, then it won't merge, because
+https://lore.kernel.org/all/20251017-add-rtc-for-lemans-v2-1-0aaf174b25b9@oss.qualcomm.com/
+already added the RTC node there.
+
+In other words, please search lore.kernel.org before posting patches, to
+avoid sending the same patch multiple times.
+
+Thank you,
 Bjorn
 
+> +			compatible = "qcom,pmk8350-rtc";
+> +			reg = <0x6100>, <0x6200>;
+> +			reg-names = "rtc", "alarm";
+> +			interrupts = <0x0 0x62 0x1 IRQ_TYPE_EDGE_RISING>;
+> +		};
+> +
+>  		pmm8654au_0_sdam_0: nvram@7100 {
+>  			compatible = "qcom,spmi-sdam";
+>  			reg = <0x7100>;
+> 
+> ---
+> base-commit: 13863a59e410cab46d26751941980dc8f088b9b3
+> change-id: 20251015-add_rtc_node-13490b702486
+> 
+> Best regards,
 > -- 
-> With best wishes
-> Dmitry
+> Rakesh Kota <rakesh.kota@oss.qualcomm.com>
+> 
 
