@@ -1,169 +1,152 @@
-Return-Path: <linux-arm-msm+bounces-78975-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-78976-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id CE776C0EF61
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Oct 2025 16:29:51 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 410A7C0F00F
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Oct 2025 16:39:39 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 841C019A5DB7
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Oct 2025 15:29:16 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 1FE6C1886A65
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Oct 2025 15:40:03 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7422530B500;
-	Mon, 27 Oct 2025 15:28:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C5DFA3081CD;
+	Mon, 27 Oct 2025 15:39:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="fXl9Ky+8"
+	dkim=pass (1024-bit key) header.d=ixit.cz header.i=@ixit.cz header.b="TQNoZsK6"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from ixit.cz (ip-94-112-25-9.bb.vodafone.cz [94.112.25.9])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4BC13019B2
-	for <linux-arm-msm@vger.kernel.org>; Mon, 27 Oct 2025 15:28:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 031DD261B67;
+	Mon, 27 Oct 2025 15:39:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=94.112.25.9
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761578929; cv=none; b=oEqdYHtqDGsAL3o+PDx4zsw+PwB2sJEcUvJQH/onGj8zE4JZMBi4gOn92OlJkoCU1ZKTz8GFwviBTJb2hC0SATNTSPmSljUnzplCOfCbzm03tF5vKrYI3OY7eHFoDC9Oy51W5LifghtAWfOVCqPHCKxB+WqBzsdkjxpEVsqoAR0=
+	t=1761579573; cv=none; b=mkMMTob1d6zufGq/eD440vmDKYhsZhMj1+cnrEnEbusFMLQhlPKIEeD1ObJi8VtzVmifRD96/4O2qFR9LPj0aok8VNoJS0GhsJxVSYi9+COYJfpL6CLrhTfKtVA0QY5T1n71CiwPDn15FKlwODIFnLAcKWyqmhbilrV0utcz8o0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761578929; c=relaxed/simple;
-	bh=No0vFhtPKdnYI043Gk+ECuIMyLsdn51FVS0+isuiu3E=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=nx/DkhDNlVOEvPcpfl8jhVHSPTBbzg9yvSTyXnEIVRqfVyzoUjITIv5CL9zbOd9WgcUgsB+x8TQtAnTk2Cy75xVWTLAPPRPSALduuhoXInMYuzSoUFYbiQjX7PSwe729K2wSpJeZcAlFPmz19SYy93tn+StgJL9vBuIorc/waDw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=fXl9Ky+8; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 59RFNm2v2232090
-	for <linux-arm-msm@vger.kernel.org>; Mon, 27 Oct 2025 15:28:46 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to; s=qcppdkim1; bh=YrpC/Eij51oIcLt5fwITYt7x
-	pzA6N/JSreOhEW3wMcU=; b=fXl9Ky+89oD+F37ykbRqhqQ3dkXcpSACYzcYskik
-	WZpI/aMEkH22yOmFh3SshHaNj9KDqs3bYZMDF0FpbTiUvgplvZ5feNcCBjya0//2
-	O5sidI6HDx6bqtPtAPvyJuTkzXVvXxQiTGul73MyoFNxawgFtKM4S9SAcuah67eo
-	8D7yfw6QNSzjonTu2dLuVJSb5g9WKOpkfn50GypsFIy0E1tYhFsztJFosY4kXZM1
-	LWsnrHSUdtvQXV4lY5iGbr28GMrUbUOWqUFENIXUyh40M/lLLfDzZ32VqR1DLWjm
-	4fULpVLiCOuhYh0xxIcY8sNWyoR9zVkXmDi4C6B3f12xsg==
-Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com [209.85.160.198])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4a24wn9ds6-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Mon, 27 Oct 2025 15:28:46 +0000 (GMT)
-Received: by mail-qt1-f198.google.com with SMTP id d75a77b69052e-4ecf0501ec2so36538861cf.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 27 Oct 2025 08:28:46 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1761578926; x=1762183726;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=YrpC/Eij51oIcLt5fwITYt7xpzA6N/JSreOhEW3wMcU=;
-        b=fRKltnN+sfeRYYckgST/ZsD7Cf6khdVVr5LgZIxOB5rWwxoiWkbMIT9s1Ci1W3Zem2
-         zKvsj4Gfa4Ro8ffCVnpOcbZZfGELY84S2rrt9tjUlOk8H13JQ5LuH8GlZliRPu7AxmRc
-         HWjODm1qkNFmCTQVw9/5UjOd6wqgm3TatP3+lyv8HJ3hS1WRZOpRAjhb+3afy48/FxEG
-         fD0nYGNPiWCgu4CmQ6/luE/6uqHqt8ZCGzAo5Gf3e+/6SRqqC8QB5uXt6UOaYvvCni31
-         RcmUPt15kmwjaX0XRBFWY6X0DyOIGQlKHjdhNDJHk45a9q0Vy5FajG3urtiwFn10YHLa
-         +LlQ==
-X-Forwarded-Encrypted: i=1; AJvYcCXzDHdVG3mV3Y/74m8EPEZKXB0f0i3YahvTRjoBgLhZfyVS8pxaEEf1geQm0L4cpyKxRgrxormvEFIKM6YP@vger.kernel.org
-X-Gm-Message-State: AOJu0YzbwLyukv80Ub2JVnpBOS7hX6qxdQCBz4Gqab7vRCnYCMZtfw9R
-	xqHrnDKUCQZB4MgvtWEoW+E/J86wibDprDYcxfftE/USF9zTUESQL4NwhPdOUGFK5Al3lSf7iim
-	2d7NCav/y2dmM3xeKhYvPMg5mLnR/CbSyevWfDE2tqhi5b5iSKF3SP/Dz/74jfrWZEE2/
-X-Gm-Gg: ASbGncsJC5BjQ9UxB6g7UlcsJUP4SPrdfvOt9VEX9dv+HinZYvlbvOOU6+Ds/fzw2Od
-	B4aVeytUf7GGCArmB52jlAvEGKw2yNR+jJYIMc1EzV7FcGkc7CbGlaBzdV+3upcQ27tb6nE2y+F
-	u+7pHATYZGdworarttNveVozAAcwVroynkg3LDOzR8xgwN/OBfftgDJmoHzkSAmcHLcXh2Mh+DO
-	6n+hTnbjQVk0SEYBS+bzAKxhkXCWQ7V9eWkREuhRzFvmv41yEGpmkJo+fClgQeD75lpfBnIsdRS
-	Zd8MLQ6VE6PRTGMxs7O/joSIPaXVMN00IUuSbgjy0OytAJNhAR3dH2vnzU/yCUtGGaH1UyJPaVv
-	DbhTOlg4PSNYIE12Z8MfF2N9tRvaRPGJ4RY9V7P9YI0nVFopJnOV2X2KFc+3kBSQwxVpPYPSqHA
-	v71aYGznutk/v6
-X-Received: by 2002:a05:622a:210:b0:4d8:afdb:1264 with SMTP id d75a77b69052e-4ed075ae66amr5031751cf.51.1761578926162;
-        Mon, 27 Oct 2025 08:28:46 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHjv+f9Wm8zIpfZr0CI4TlRCnBPRjNZSJNUnKZu9weamrR66/3k2l4bfVFcQ9Uy6J4XGbePmw==
-X-Received: by 2002:a05:622a:210:b0:4d8:afdb:1264 with SMTP id d75a77b69052e-4ed075ae66amr5030901cf.51.1761578925321;
-        Mon, 27 Oct 2025 08:28:45 -0700 (PDT)
-Received: from umbar.lan (2001-14ba-a0c3-3a00-264b-feff-fe8b-be8a.rev.dnainternet.fi. [2001:14ba:a0c3:3a00:264b:feff:fe8b:be8a])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-59301f700fbsm2410946e87.81.2025.10.27.08.28.44
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 27 Oct 2025 08:28:44 -0700 (PDT)
-Date: Mon, 27 Oct 2025 17:28:42 +0200
-From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-To: Abel Vesa <abel.vesa@linaro.org>
-Cc: Rob Clark <robin.clark@oss.qualcomm.com>,
-        Dmitry Baryshkov <lumag@kernel.org>,
-        Abhinav Kumar <abhinav.kumar@linux.dev>,
-        Jessica Zhang <jessica.zhang@oss.qualcomm.com>,
-        Sean Paul <sean@poorly.run>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-        Maxime Ripard <mripard@kernel.org>,
-        Thomas Zimmermann <tzimmermann@suse.de>,
-        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
-        Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Neil Armstrong <neil.armstrong@linaro.org>,
-        Kuogee Hsieh <quic_khsieh@quicinc.com>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>, linux-arm-msm@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2 7/7] soc: qcom: ubwc: Add configuration Glymur platform
-Message-ID: <2ppfdoqa3fyjysfv4kiincmpbdstkgfwxso7tlfcfyfmwsndok@7krfjzdvsozv>
-References: <20251014-glymur-display-v2-0-ff935e2f88c5@linaro.org>
- <20251014-glymur-display-v2-7-ff935e2f88c5@linaro.org>
- <7dxq62ltoeerb4g2fgchb2hd7eomvlexfgyvamxsuuirblavtn@4bg3dy2bukdq>
- <vngf7cnsj36ddg4pdm72airm2nketxk3m34qw6f65ompimpcfl@r3lbv73tmutj>
+	s=arc-20240116; t=1761579573; c=relaxed/simple;
+	bh=Xn8b3bCIzYzuWQ8cWcCYwddcDVqJymBApr+78ba2bgg=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=BEBWUybcEpAmckmGx3gChdGK67h4fW2PqunQ7MApOHigNBjzqhozwKG72sNGY7lIu2qPd2ZJoidX8iLYxxjTKloRustlG7utYFajv6CjZ407o3ACm0C8I5m5Y/j8ItktAjZOYAxFeH94z69Y4129bYEvXvOpPXekEWUnlgBF+3Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ixit.cz; spf=pass smtp.mailfrom=ixit.cz; dkim=pass (1024-bit key) header.d=ixit.cz header.i=@ixit.cz header.b=TQNoZsK6; arc=none smtp.client-ip=94.112.25.9
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ixit.cz
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ixit.cz
+Received: from [10.0.0.240] (unknown [10.0.0.1])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange x25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	(No client certificate requested)
+	by ixit.cz (Postfix) with ESMTPSA id C4C0E53400B6;
+	Mon, 27 Oct 2025 16:39:26 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ixit.cz; s=dkim;
+	t=1761579566;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+	bh=cL315XW4pfdU0pTGrE/+2ByvMyxYlQl+i2+yeNFA/vY=;
+	b=TQNoZsK6AvuPXU256G/VnGE4pOFpESLQGSkr8PS67C/BmonjHuot+r8degA4oGNzjW7C8x
+	S0OAKJ9lqspCDaZUSd0CwDxja80AdpNdBYSi7FaQ8SjpTbN9ixvrLDNHdxzEzwkVJ4eeBz
+	NkhR6/b2MMuuDXXbjQjI/4A/Qa/FkrA=
+Message-ID: <c53477c2-7002-41b4-a4ba-46730bb465d3@ixit.cz>
+Date: Mon, 27 Oct 2025 16:39:26 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <vngf7cnsj36ddg4pdm72airm2nketxk3m34qw6f65ompimpcfl@r3lbv73tmutj>
-X-Authority-Analysis: v=2.4 cv=XIY9iAhE c=1 sm=1 tr=0 ts=68ff8fae cx=c_pps
- a=mPf7EqFMSY9/WdsSgAYMbA==:117 a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10
- a=x6icFKpwvdMA:10 a=VkNPw1HP01LnGYTKEx00:22 a=VwQbUJbxAAAA:8 a=KKAkSRfTAAAA:8
- a=L6mQZqrAOGHZejgJyMIA:9 a=CjuIK1q_8ugA:10 a=dawVfQjAaf238kedN5IG:22
- a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-GUID: X1Rc6KEKmPjoPlJX0ZNp4vox5VnLkRK8
-X-Proofpoint-ORIG-GUID: X1Rc6KEKmPjoPlJX0ZNp4vox5VnLkRK8
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDI3MDE0NCBTYWx0ZWRfX8H4c59J01xCr
- O/7OYitLxk9rbSXy9nsXLn/PeosaZOchNik7E/uqjP34GPPlwlHfd0osB0tceCLW3dll/jKW4OG
- JVWSRkaTXc0scVCN5oEEE15FJ+rKHReizNm89TtJkoNVBFE3+Mkh5fG5fR5Fsb8e9/KO51k1Z6T
- Odv1a8hd/gEAO309aFLTiHPXs99v2C6pJgbDVm+/c3gL/jtcmraY442qAxLP5MqIs8oHupZGx+W
- PnE6IPemrDPa63BLIi18+sUTgLnJNgyzjohUacW6DbCbZBXduOTTztsfVDOdx+m+I8UrX+RDP/N
- Y36al8UweuYRYenKqxnKGW1tmybq83iGFTAYHZUVywSWiC81DSBvA4REaOzvdP8gME+zNN90Tve
- Rm0g4Rfw0GBRNKdh320RL0uFeDmOOA==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-10-27_06,2025-10-22_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- lowpriorityscore=0 suspectscore=0 priorityscore=1501 bulkscore=0
- clxscore=1015 impostorscore=0 adultscore=0 spamscore=0 malwarescore=0
- phishscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2510020000
- definitions=main-2510270144
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v6 1/2] Input: add ABS_SND_PROFILE
+To: Bjorn Andersson <andersson@kernel.org>
+Cc: Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+ Jonathan Corbet <corbet@lwn.net>, Jiri Kosina <jikos@kernel.org>,
+ Benjamin Tissoires <bentiss@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, linux-input@vger.kernel.org,
+ linux-doc@vger.kernel.org, linux-kernel@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ Gergo Koteles <soyer@irl.hu>
+References: <20250731-op6-tri-state-v6-0-569c25cbc8c2@ixit.cz>
+ <20250731-op6-tri-state-v6-1-569c25cbc8c2@ixit.cz>
+ <rdryhql5vrjckh2yvcgbdcnlu2f4aiq6hbokgfzvrtdu33lp5u@fctqxdftabsy>
+Content-Language: en-US
+From: David Heidelberg <david@ixit.cz>
+Autocrypt: addr=david@ixit.cz; keydata=
+ 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
+In-Reply-To: <rdryhql5vrjckh2yvcgbdcnlu2f4aiq6hbokgfzvrtdu33lp5u@fctqxdftabsy>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Mon, Oct 27, 2025 at 05:03:43PM +0200, Abel Vesa wrote:
-> On 25-10-27 14:29:01, Dmitry Baryshkov wrote:
-> > On Tue, Oct 14, 2025 at 03:38:32PM +0300, Abel Vesa wrote:
-> > > Describe the Universal Bandwidth Compression (UBWC) configuration
-> > > for the new Glymur platform.
-> > > 
-> > > Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
-> > > ---
-> > >  drivers/soc/qcom/ubwc_config.c | 12 ++++++++++++
-> > >  1 file changed, 12 insertions(+)
-> > > 
-> > 
-> > Bjorn, do you indent to pick up this patch on your own or would you ack
-> > merging it through the drm/msm tree?
-> > 
+On 27/10/2025 15:52, Bjorn Andersson wrote:
+> On Thu, Jul 31, 2025 at 11:17:01PM +0200, David Heidelberg via B4 Relay wrote:
+>> From: Gergo Koteles <soyer@irl.hu>
+>>
+>> ABS_SND_PROFILE used to describe the state of a multi-value sound profile
+>> switch. This will be used for the alert-slider on OnePlus phones or other
+>> phones.
+>>
+>> Profile values added as SND_PROFLE_(SILENT|VIBRATE|RING) identifiers
+>> to input-event-codes.h so they can be used from DTS.
+>>
 > 
-> Please note that v3 is out:
-> https://lore.kernel.org/r/20251027-glymur-display-v3-0-aa13055818ac@linaro.org
+> Reviewed-by: Bjorn Andersson <andersson@kernel.org>
 
-Thanks. The question is still valid though.
+There is already v7 [1], this patch is without a change in the series,
+so I assume your R-b applies there too! :)
 
--- 
-With best wishes
-Dmitry
+Thank you Bjorn.
+
+David
+
+[1] 
+https://patchwork.kernel.org/project/linux-input/patch/20251014-op6-tri-state-v7-1-938a6367197b@ixit.cz/> 
+
+> Regards,
+> Bjorn
+> 
+>> Signed-off-by: Gergo Koteles <soyer@irl.hu>
+>> Signed-off-by: David Heidelberg <david@ixit.cz>
+>> ---
 
