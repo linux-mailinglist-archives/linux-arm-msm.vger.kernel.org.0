@@ -1,65 +1,57 @@
-Return-Path: <linux-arm-msm+bounces-78931-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-78932-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [IPv6:2605:f480:58:1:0:1994:3:14])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3BE36C0E4FD
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Oct 2025 15:14:54 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id F325BC0E4A4
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Oct 2025 15:13:53 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id EDDB14FC0FF
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Oct 2025 14:06:46 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 5E35C4237A5
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Oct 2025 14:06:55 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D721E307AF2;
-	Mon, 27 Oct 2025 14:06:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4FEC23081D9;
+	Mon, 27 Oct 2025 14:06:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="nr6/h5rZ"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="GMxvyLtY"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD3C2307AC4;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 288E92FDC3F;
 	Mon, 27 Oct 2025 14:06:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761573990; cv=none; b=FzPQWDGrAd2txMpV7fJ343VwL00r+KAinNaFx9pk/LEoK8YbYkT67jmnkE+vwSQUnPTv3xaZAjrj3wpmq8kdZWFIFTN7lh6/9UhkYmAzTfw0t6PsJTCIQONZHUcXjx2tu5xDX2LAy9XlUdH307zXmP5mZLWZ3CXDTxR5oXazEMA=
+	t=1761573991; cv=none; b=o0PSJgp0a8MaG5J1rYb3i5ZYoikTsSmHMnubDkpWE53P8RqnOCsbhTN15Cp2AJ1G8UN5HNUyCcwR6fl0zu8bPhpftqaxvo9DFUPJMNIUW98NIXeNT/1jlbpjGYJR/KLHpMppKqF2nPWOKEDolLa5fhhLW66TLo4EB1BWc54UI0o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761573990; c=relaxed/simple;
-	bh=mydn0gj6QS5mxTfOU4C8MwsgU0NOzyhR/5mNbySSuqM=;
+	s=arc-20240116; t=1761573991; c=relaxed/simple;
+	bh=ZJPOcZto9IVp+Sc14UzPqMCjcasyNdEsUuTxrA84pb4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Q0fNywLfHdQkCE7ppsprbHUQyqHODTHoh7y2+0JpeB5dv3L7QOVwBbSsDh16TUdSai46FclfAAgzeXtefOw317wCRoH4iHiyTRpygWqoXiap3cja7xp7WLTdrBBA/f9IwHhnJRozYgUXuFSfbzVq+zD+dZXqLgY4875ais8y/WU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=nr6/h5rZ; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5426BC116D0;
-	Mon, 27 Oct 2025 14:06:29 +0000 (UTC)
+	 MIME-Version:Content-Type; b=AsHY0DxIpNMmigfml8r7h/QOtBbCqs4L1XGQUgJ1NOPdsFFAq2r201YVrXYiDISuwenWTlIawYwAHxagWM+gg5CdlIko8XorrCWqMTv3L0561O0xzivXUC1raSnJTK/LyIT5uv7nKy51jmaXlCEJ1zSqV8DfVFZpQhjNXEqXKTA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=GMxvyLtY; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65AB1C116B1;
+	Mon, 27 Oct 2025 14:06:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
 	s=k20201202; t=1761573990;
-	bh=mydn0gj6QS5mxTfOU4C8MwsgU0NOzyhR/5mNbySSuqM=;
+	bh=ZJPOcZto9IVp+Sc14UzPqMCjcasyNdEsUuTxrA84pb4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nr6/h5rZcA5o0R30J1/CxxPSctvY9NKrhth5cpprr31rXRRw83ynwADH5v5RSM6J1
-	 oILGFy3NMoC1l+baew30zqpp0XIhSJJYv2NDNkBEHm6suehPhDk4ylXRrt14L4PyMi
-	 0LsTpBi3kfBTCyKLH6mm6yJrBLPgb119iu+1jvrpSdwvhMd9Weo+lUc9Q3BQOODFvy
-	 rjGE2sdFpHiTB3BPglbSY0O9rBroOsgSFussHoQvjISyXhChJqJ6kVllI70/xLMIjJ
-	 u3mb3xF6BJMUvRxzmOvk7kzaBVKuUpg/S9+9DYt+Mm/jwbdi1v1+m9Pm+vwiMd3nG7
-	 MvzW9V39hwuRQ==
+	b=GMxvyLtY6Y/LbKDsRV8CIiRN6DD5dPxipEjFLAD6TDM2ix0dSfm2oI+oOn8E8FI0L
+	 Jof/8uXj2EAKqZsFGW+e2ul+1s6LFr21UwPMAl0wYi0wpYINGtb1jhnM7van7tx3ke
+	 MOW+nM9ITE7mIEaBEosGe5cw/eT8l9ieT+kF5wUJbV2hBYDafy//lsTSDWozqzy7XX
+	 1bsvmPAxCKpOQ0Qz3ZtdJcd58/VOtBTNFcoHCoi8XI6dI/6zeC1tKI5w6SEs1t1K90
+	 ZKtt/IQ9rDWvoerFi66w9OXV5YZ96Xhx49m0NWRSTSIxzjmex+6mICXrmPaMpKUK+r
+	 RvC7zpqtIlfew==
 From: Bjorn Andersson <andersson@kernel.org>
 To: Konrad Dybcio <konradybcio@kernel.org>,
-	Conor Dooley <conor@kernel.org>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Jingyi Wang <jingyi.wang@oss.qualcomm.com>
+	Johan Hovold <johan@kernel.org>
 Cc: linux-arm-msm@vger.kernel.org,
-	devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	aiqun.yu@oss.qualcomm.com,
-	tingwei.zhang@oss.qualcomm.com,
-	trilok.soni@oss.qualcomm.com,
-	yijie.yang@oss.qualcomm.com
-Subject: Re: [PATCH 0/2] soc: qcom: llcc: Add LLCC support for the Kaanapali platform
-Date: Mon, 27 Oct 2025 09:09:04 -0500
-Message-ID: <176157405467.8818.9613829432844744989.b4-ty@kernel.org>
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 0/2] soc: qcom: ocmem/pbs: fix device leaks on lookup
+Date: Mon, 27 Oct 2025 09:09:05 -0500
+Message-ID: <176157405467.8818.3435922572772732972.b4-ty@kernel.org>
 X-Mailer: git-send-email 2.51.0
-In-Reply-To: <20250924-knp-llcc-v1-0-ae6a016e5138@oss.qualcomm.com>
-References: <20250924-knp-llcc-v1-0-ae6a016e5138@oss.qualcomm.com>
+In-Reply-To: <20250926143511.6715-1-johan@kernel.org>
+References: <20250926143511.6715-1-johan@kernel.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -70,18 +62,25 @@ Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 
 
-On Wed, 24 Sep 2025 16:24:53 -0700, Jingyi Wang wrote:
-> The Kaanapali platform has LLCC(Last Level Cache Controller) as the system
-> cache controller. Add binding and configuration to support this.
+On Fri, 26 Sep 2025 16:35:09 +0200, Johan Hovold wrote:
+> This series fixes device leaks in the Qualcomm SoC drivers when looking
+> up platform devices using of_find_device_by_node().
+> 
+> Johan
 > 
 > 
+> Johan Hovold (2):
+>   soc: qcom: ocmem: fix device leak on lookup
+>   soc: qcom: pbs: fix device leak on lookup
+> 
+> [...]
 
 Applied, thanks!
 
-[1/2] dt-bindings: cache: qcom,llcc: Document the Kaanapali LLCC
-      commit: f5f1e5abb649d0a532ebc72f4196b4818585d20b
-[2/2] soc: qcom: llcc-qcom: Add support for Kaanapali
-      commit: c88b6ee3ba3c7bf6386ea0e6de8111acc3d832bc
+[1/2] soc: qcom: ocmem: fix device leak on lookup
+      commit: b5c16ea57b030b8e9428ec726e26219dfe05c3d9
+[2/2] soc: qcom: pbs: fix device leak on lookup
+      commit: 94124bf253d24b13e89c45618a168d5a1d8a61e7
 
 Best regards,
 -- 
