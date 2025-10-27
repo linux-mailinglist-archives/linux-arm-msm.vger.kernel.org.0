@@ -1,174 +1,692 @@
-Return-Path: <linux-arm-msm+bounces-78848-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-78849-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [IPv6:2605:f480:58:1:0:1994:3:14])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7ABD9C0C2A1
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Oct 2025 08:40:50 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id AEB61C0C438
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Oct 2025 09:15:40 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id D101E4E4425
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Oct 2025 07:40:48 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 9C4833BE89C
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Oct 2025 08:12:56 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D9B162DFA5A;
-	Mon, 27 Oct 2025 07:40:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4E09524E4BD;
+	Mon, 27 Oct 2025 08:12:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="TvIKCqW1"
+	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="SSxlLkNf";
+	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="kTZaCj6p";
+	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="Y891gA6B";
+	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="o3F2/LXl"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from smtp-out1.suse.de (smtp-out1.suse.de [195.135.223.130])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65B052DF700
-	for <linux-arm-msm@vger.kernel.org>; Mon, 27 Oct 2025 07:40:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C891B1DF252
+	for <linux-arm-msm@vger.kernel.org>; Mon, 27 Oct 2025 08:12:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.135.223.130
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761550843; cv=none; b=k3nDwS/p0MUfAvkyumIjb7aVlJgQYKrgPwcp7hNrzRJv+Q1Z+UcPQdbA9q8Mj1o5Vcho+URw8wC0aUNYK/zvrcVypEcayS2dXPwjQhWIkjFBUxYrlTm6fHKIHdoQ6bIVMyb0sNmzTvCg9mJf620Tr+dfQKSfZQkvlwzQKWA/tr8=
+	t=1761552775; cv=none; b=hBlJAr/OloWlAIzUuh7KygvLQMSmu9uurpXDkuOB3jVkfV4fweUpXU4Q5a3FVkxFlpRdIAwc+hrP3Obc0CkWGUUvZfWsN2t7a1ruEuLfxctB+6FMCveCznKyQkfrU8pmYohbD+ugLVrfBvFtJXdhXAmLQqNHdGmgMi6a8slGmJs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761550843; c=relaxed/simple;
-	bh=R0xc1fkhECePL+EIuZZfAKmsmYcMGujOt/70u9Vw3xM=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=R1ExMm1JAuSdOonE+2v+Qu3dCrdY/1snPaSS8BAKKyCovFEffTTOPNOAXHRcpXfVKlW8D8kJrIo6zjkBIlkNwpqT7VXxYT1wgRCugYW1lHDoA7ChHD4R4At9I+L5sESRNZyE8p0e+QXYS/zYTdMmWg0zdwLaU34PaDBWx73TKbg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=TvIKCqW1; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 59QL0B3i858653
-	for <linux-arm-msm@vger.kernel.org>; Mon, 27 Oct 2025 07:40:41 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	SqrygtWmbxodwMNERV43ZieFOArDZxKbypJ6sksUSpY=; b=TvIKCqW1ceVM7uId
-	xubtAichxl8OM0aBK5VR5YpS9H01qJMb/typK79zTCKkibljoNs0e0f+WFO8YS10
-	toW5czoS2Mq8NhsLvJ2GqdG9d6mK4MljUSQNFNxQA33UxquMXzzO11Mz+IHsb9E1
-	xQuFFYVjimLWrjzuGTPvssRaHqhgZF5pyT4E/ynuVZdNTQqkdw8SpNQcCWzAIX3C
-	/KuKiCx515XoTOm0fvPVaXAE8sNdI27jB7PNyDTK/q+cCSq+PU6jG2B78Zo7C0n9
-	AudbssbWCTjFPZiaTRU9MZ1fb3UcpgP/4w//j060IWWym6OxPKHNMPg5bBDzMnfM
-	/tpgBg==
-Received: from mail-pf1-f197.google.com (mail-pf1-f197.google.com [209.85.210.197])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4a0nnb3srm-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Mon, 27 Oct 2025 07:40:41 +0000 (GMT)
-Received: by mail-pf1-f197.google.com with SMTP id d2e1a72fcca58-78117fbda6eso3078393b3a.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 27 Oct 2025 00:40:41 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1761550840; x=1762155640;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to:subject
-         :user-agent:mime-version:date:message-id:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=SqrygtWmbxodwMNERV43ZieFOArDZxKbypJ6sksUSpY=;
-        b=Uh1tBR3j9mBTy3v9K67kPE/weqWm4c6DgA3+Qew/efFRX0s3SXPvfOey89EEMEU9tU
-         o9C2YA37xJx+/t5WGoWrzOUAaYpA9OuUmC9+S6sJiG/tUl24e1CTKltj9uaIqcsqwwuK
-         yiNkan2CjiQpbLrjovQS5DLi9fa8pLvo0OxfKnf+i32WJXP3UEQ2hdZyL/KKNvILbcBe
-         Ay8+aVHCa3dTRUdxVDI8brCYSPetri0VU6Y+rccWJNVPxP2RILqzUo8VI3uzSK4chqV6
-         NJMrD4cZBxvf6LkrrKlm+1J7jIF1XbDaAko+KXVhRXuKx35ZHzh9veJomFhdiSkL++V6
-         isEw==
-X-Forwarded-Encrypted: i=1; AJvYcCWRrCpiqCYiixUshseWMqKtxvroXW6X5T7hwu8vSSQiKxHn9fsVNyROIqldmovg47JOZoUvWsk0LkYjrt2I@vger.kernel.org
-X-Gm-Message-State: AOJu0YzM9QgEbZS8FY1Wboy6W9NvYOcG7o7YS9wYyuvWy05Lc598OWj3
-	QUdH/75LMMAbi/689xKxtGfsLPysLOucdzQQSGyJuuUr8bjOBm2rhST8K2urFwH3p0qT3ko87b5
-	K1rckw3xykHqRe/wLIvafWLYS9+b+8k+zKssr1GbEWiyqprWenDKd7Sm95MbDN0K/nouKe7mKeE
-	sG
-X-Gm-Gg: ASbGncviB+lUhsNCLAOyq8bo/lIyVkK0w0JhwnfAeN+jKxT8LhuSTpDRMQVEyKoCwGM
-	3XpFY6J/i+p2gEMm8W9kg7MsGDqHcnw85uUt3fc0VZzRCguxXkAA/p7NM1iFn67js9zfp3QAG7y
-	P47u6DzSr24CCEHDEZlxTbiclWOp/w6xhdcspQPlvQHPP5dnIIrqFPuhrdeOVtaJMzDlothOPIM
-	Xqrz079pYP6SIfLd1pwLpuZ0JjvSEKvTYnyHhN/JTKBxM8wMczk3TR6/HNGAjYCarfyR8kBnqFF
-	v9CpZBcoZgZX6PDLhcNoWVwR8P/nTKF2hgZjZT/IQAtAC8Hx1UWEFDTL9T6hsHWtT4SD8A4h+Wh
-	vBU8xAcvGAvtQclCDl64h89QazSAt1xroBD2QqX9i6q8WBqq169mhCyCGpw==
-X-Received: by 2002:a05:6a20:3ca2:b0:33b:f408:7b98 with SMTP id adf61e73a8af0-33bf4087ce2mr23084050637.45.1761550840417;
-        Mon, 27 Oct 2025 00:40:40 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEZOuyY4cpAg1wT2GSLAnHjVQYLln4q6dXnReVlre3uLFeYDZTV7RdNNNvWtHVoClqtPBqftA==
-X-Received: by 2002:a05:6a20:3ca2:b0:33b:f408:7b98 with SMTP id adf61e73a8af0-33bf4087ce2mr23084018637.45.1761550839923;
-        Mon, 27 Oct 2025 00:40:39 -0700 (PDT)
-Received: from [10.249.10.235] (tpe-colo-wan-fw-bordernet.qualcomm.com. [103.229.16.4])
-        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-b712f880ef2sm6307659a12.38.2025.10.27.00.40.36
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 27 Oct 2025 00:40:39 -0700 (PDT)
-Message-ID: <a57e82c6-9492-4db9-a0d9-a30252d25487@oss.qualcomm.com>
-Date: Mon, 27 Oct 2025 15:40:35 +0800
+	s=arc-20240116; t=1761552775; c=relaxed/simple;
+	bh=iiBF3NJQxUToqUddm1LMaRabX6g99sY6xY2y0b0q1qs=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=OX9Hj/d3Nv0M3LwlazFF45lm+0Uztkbw8rfYFSWufcxHgeLqZ7fhVlZjm4XkhihJDNPqTPkTdKbdPT4VUEuq9Iza8nTHTs+aPjfEH1M5RCmPXI4H0sFAKzSc+Up3LWzHgzP3UEq7ypcD2xyhMrZyxmIIqOKZSztk/ykeYxqw6/M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de; spf=pass smtp.mailfrom=suse.de; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=SSxlLkNf; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=kTZaCj6p; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=Y891gA6B; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=o3F2/LXl; arc=none smtp.client-ip=195.135.223.130
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.de
+Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by smtp-out1.suse.de (Postfix) with ESMTPS id EAE0E21903;
+	Mon, 27 Oct 2025 08:12:50 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+	t=1761552771; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:  content-transfer-encoding:content-transfer-encoding;
+	bh=oaIYY61zIJJU/OezQlKKqsHdBy/GoI1TUvv82e5rkwo=;
+	b=SSxlLkNf9cq/o2lgDnUPZmZjZCz9MoW5d1rXdJOtsX++aOKXP6Pjkoj6uTueNEBIhloxQz
+	aE+E107+hu1rR7tEPz29aqUqFuvMtJFPwTDZ4behx1xkJWhy13lUEJJbGFDrAdKg3CADZU
+	vDGEDE8PxSkpskt/4+WNWgP4eebVOfQ=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+	s=susede2_ed25519; t=1761552771;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:  content-transfer-encoding:content-transfer-encoding;
+	bh=oaIYY61zIJJU/OezQlKKqsHdBy/GoI1TUvv82e5rkwo=;
+	b=kTZaCj6p5iO43pSUMr2nu4NikmXn2gjFoP804coQDbRLhrmf+fEo978xctIGp5asZ7u6sG
+	sGht42RwWkC0mLAA==
+Authentication-Results: smtp-out1.suse.de;
+	none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+	t=1761552770; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:  content-transfer-encoding:content-transfer-encoding;
+	bh=oaIYY61zIJJU/OezQlKKqsHdBy/GoI1TUvv82e5rkwo=;
+	b=Y891gA6BnHseB5hBqEfETO41zyIJft6Xlxh1mJsLA6AUx+CKeUbL9U42yXR2zMqYyMhcYN
+	jvHWioP2Z6+VuYHE0Lgy1irhU9wcRa4+S2/yd86humZ6I3nHxJcq8tWCqe2aUNfUtQsBCO
+	mMQ18EIbAWMSiVY1QGS5sTiqDCBqo+o=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+	s=susede2_ed25519; t=1761552770;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:  content-transfer-encoding:content-transfer-encoding;
+	bh=oaIYY61zIJJU/OezQlKKqsHdBy/GoI1TUvv82e5rkwo=;
+	b=o3F2/LXliEbhhcsygTDRbIEOjOFOcIx2tQYGqvbN2299Qr57kaE33L0OoSL+SP/nSO+Nah
+	pFzJuJffUVzxKRCA==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 3437613693;
+	Mon, 27 Oct 2025 08:12:50 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+	by imap1.dmz-prg2.suse.org with ESMTPSA
+	id 7TCMC4Ip/2jKDwAAD6G6ig
+	(envelope-from <tzimmermann@suse.de>); Mon, 27 Oct 2025 08:12:50 +0000
+From: Thomas Zimmermann <tzimmermann@suse.de>
+To: javierm@redhat.com,
+	airlied@gmail.com,
+	simona@ffwll.ch,
+	linux@armlinux.org.uk,
+	maarten.lankhorst@linux.intel.com,
+	mripard@kernel.org,
+	inki.dae@samsung.com,
+	sw0312.kim@samsung.com,
+	kyungmin.park@samsung.com,
+	patrik.r.jakobsson@gmail.com,
+	jani.nikula@linux.intel.com,
+	rodrigo.vivi@intel.com,
+	robin.clark@oss.qualcomm.com,
+	lumag@kernel.org,
+	abhinav.kumar@linux.dev,
+	sean@poorly.run,
+	marijn.suijten@somainline.org,
+	tomi.valkeinen@ideasonboard.com,
+	alexander.deucher@amd.com,
+	christian.koenig@amd.com,
+	thierry.reding@gmail.com,
+	mperttunen@nvidia.com,
+	jonathanh@nvidia.com
+Cc: dri-devel@lists.freedesktop.org,
+	intel-gfx@lists.freedesktop.org,
+	intel-xe@lists.freedesktop.org,
+	linux-arm-msm@vger.kernel.org,
+	freedreno@lists.freedesktop.org,
+	amd-gfx@lists.freedesktop.org,
+	linux-tegra@vger.kernel.org,
+	Thomas Zimmermann <tzimmermann@suse.de>
+Subject: [PATCH v2] drm/fb-helper: Allocate and release fb_info in single place
+Date: Mon, 27 Oct 2025 09:12:17 +0100
+Message-ID: <20251027081245.80262-1-tzimmermann@suse.de>
+X-Mailer: git-send-email 2.51.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1 0/4] media: qcom: iris: encoder feature enhancements
-To: Neil Armstrong <neil.armstrong@linaro.org>,
-        vikash.garodia@oss.qualcomm.com, dikshita.agarwal@oss.qualcomm.com,
-        abhinav.kumar@linux.dev, bod@kernel.org, mchehab@kernel.org
-Cc: linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, quic_qiweil@quicinc.com,
-        quic_renjiang@quicinc.com
-References: <20251015092708.3703-1-wangao.wang@oss.qualcomm.com>
- <23f08812-7890-446e-95b7-4ff5b8f547f2@linaro.org>
-From: Wangao Wang <wangao.wang@oss.qualcomm.com>
-In-Reply-To: <23f08812-7890-446e-95b7-4ff5b8f547f2@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-GUID: UdaOypEk_riW5nkqFMmMufVvMU0CRc3w
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDI3MDA2OSBTYWx0ZWRfX9fcVHcaydHTK
- O5TYjsKjjPOm7RS9sdfiVoBZi2J20dLBVsLQ6ktegPtqT/Ob76CqHol30RPn2qdKreBFbduU+Mz
- 4+tlDSzTIe79DGeyF5jEE3oArXAIyCZEKbO0jz6HyCieFgkYFv2Xcqgyge5BgmAiCciPEIRy25J
- TXQnOISr0dnBMJAoHu1SXk25z8lHfG82tWAuQ9XMsgNhVQaCkDiR18j6815RdBdbz/wQoA4g1bs
- ONUsx7mx4OpuCuD4mqMwN6oY+tJphuGXblJeceKi4TmAlXUYkRhgdaSGOpIZVGEOiDeC8WFRdtB
- 8R+vIaL5yWlXiiGvTNY4qRkx9J4rbmz5opy63ItfcNIjQht3c+nVd52/ytcKFmwNpAXv4F2N1Hg
- xk/NxWSlLUJ1Ye62Oxk9Lv9FQWOnYw==
-X-Authority-Analysis: v=2.4 cv=AJoZt3K7 c=1 sm=1 tr=0 ts=68ff21f9 cx=c_pps
- a=rEQLjTOiSrHUhVqRoksmgQ==:117 a=nuhDOHQX5FNHPW3J6Bj6AA==:17
- a=IkcTkHD0fZMA:10 a=x6icFKpwvdMA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=NEAV23lmAAAA:8 a=i98tAzczrWBB9TwQN78A:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=2VI0MkxyNR6bbpdq8BZq:22
-X-Proofpoint-ORIG-GUID: UdaOypEk_riW5nkqFMmMufVvMU0CRc3w
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-10-27_03,2025-10-22_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- adultscore=0 impostorscore=0 lowpriorityscore=0 bulkscore=0 spamscore=0
- phishscore=0 suspectscore=0 clxscore=1015 priorityscore=1501 malwarescore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2510020000 definitions=main-2510270069
+X-Spamd-Result: default: False [-1.30 / 50.00];
+	BAYES_HAM(-3.00)[100.00%];
+	SUSPICIOUS_RECIPS(1.50)[];
+	NEURAL_HAM_LONG(-1.00)[-1.000];
+	MID_CONTAINS_FROM(1.00)[];
+	R_MISSING_CHARSET(0.50)[];
+	NEURAL_HAM_SHORT(-0.20)[-1.000];
+	MIME_GOOD(-0.10)[text/plain];
+	ARC_NA(0.00)[];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	FUZZY_RATELIMITED(0.00)[rspamd.com];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo,suse.de:mid,suse.de:email];
+	RCPT_COUNT_TWELVE(0.00)[31];
+	MIME_TRACE(0.00)[0:+];
+	TO_DN_SOME(0.00)[];
+	RCVD_TLS_ALL(0.00)[];
+	TAGGED_RCPT(0.00)[];
+	FREEMAIL_TO(0.00)[redhat.com,gmail.com,ffwll.ch,armlinux.org.uk,linux.intel.com,kernel.org,samsung.com,intel.com,oss.qualcomm.com,linux.dev,poorly.run,somainline.org,ideasonboard.com,amd.com,nvidia.com];
+	RCVD_COUNT_TWO(0.00)[2];
+	TO_MATCH_ENVRCPT_ALL(0.00)[];
+	FROM_HAS_DN(0.00)[];
+	FROM_EQ_ENVFROM(0.00)[];
+	R_RATELIMIT(0.00)[to_ip_from(RLq3cifbxyhc6qbbynzfc6amns)];
+	DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+	FREEMAIL_ENVRCPT(0.00)[gmail.com]
+X-Spam-Flag: NO
+X-Spam-Score: -1.30
+X-Spam-Level: 
 
+Move the calls to drm_fb_helper_alloc_info() from drivers into a
+single place in fbdev helpers. Allocates struct fb_info for a new
+framebuffer device. Then call drm_fb_helper_single_fb_probe() to
+create an fbdev screen buffer. Also release the instance on errors
+by calling drm_fb_helper_release_info().
 
+Simplifies the code and fixes the error cleanup for some of the
+drivers.
 
-On 10/17/2025 5:55 PM, Neil Armstrong wrote:
->> All patches have been tested with v4l2-compliance, v4l2-ctl and
->> on QCS8300 for encoder.
-> 
-> Nice, but did you test those on any other device ? This patchset
-> affects all supported HW, so please test on all of them.
-> 
+Regular release of the struct fb_info instance still happens in
+drm_fb_helper_fini() as before.
 
-Thanks for helping with the review. So far, we have conducted tests on 
-QCS8300, SA8775P, X1E80100, and QCS8550. However, I don’t have access to 
-an SM8650 device—could you help test it?
+v2:
+- remove error rollback in driver implementations (kernel test robot)
+- initialize info in TTM implementation (kernel test robot)
 
-> 
->>
->> Commands used for V4l2-ctl validation:
->>
->> Scale:
->> v4l2-ctl --verbose -d /dev/video1 \
->> --set-fmt-video-out=width=1920,height=1080,pixelformat=NV12 \
->> --set-selection-output target=crop,width=1920,height=1080 \
->> --set-fmt-video=width=1280,height=720,pixelformat=H264 \
->> --stream-mmap --stream-out-mmap \
->> --stream-from=input_nv12_1080p.yuv \
->> --stream-to=output/scale_720p_output.h264
-> 
-> Please provide a way to generate/retrieve this `input_nv12_1080p.yuv` 
-> file aswell.
+Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
+---
+ drivers/gpu/drm/armada/armada_fbdev.c      | 12 +------
+ drivers/gpu/drm/drm_fb_helper.c            | 39 +++++++---------------
+ drivers/gpu/drm/drm_fbdev_dma.c            | 12 ++-----
+ drivers/gpu/drm/drm_fbdev_shmem.c          | 12 ++-----
+ drivers/gpu/drm/drm_fbdev_ttm.c            | 12 ++-----
+ drivers/gpu/drm/exynos/exynos_drm_fbdev.c  |  9 +----
+ drivers/gpu/drm/gma500/fbdev.c             | 12 +------
+ drivers/gpu/drm/i915/display/intel_fbdev.c |  9 +----
+ drivers/gpu/drm/msm/msm_fbdev.c            |  9 +----
+ drivers/gpu/drm/omapdrm/omap_fbdev.c       |  9 +----
+ drivers/gpu/drm/radeon/radeon_fbdev.c      | 13 +-------
+ drivers/gpu/drm/tegra/fbdev.c              |  9 +----
+ include/drm/drm_fb_helper.h                | 12 -------
+ 13 files changed, 26 insertions(+), 143 deletions(-)
 
-A 720p NV12 file is available here, which can be converted to 1080p 
-using ffmpeg.
+diff --git a/drivers/gpu/drm/armada/armada_fbdev.c b/drivers/gpu/drm/armada/armada_fbdev.c
+index 22e2081bfa04..601b2aad243b 100644
+--- a/drivers/gpu/drm/armada/armada_fbdev.c
++++ b/drivers/gpu/drm/armada/armada_fbdev.c
+@@ -43,10 +43,10 @@ int armada_fbdev_driver_fbdev_probe(struct drm_fb_helper *fbh,
+ 				    struct drm_fb_helper_surface_size *sizes)
+ {
+ 	struct drm_device *dev = fbh->dev;
++	struct fb_info *info = fbh->info;
+ 	struct drm_mode_fb_cmd2 mode;
+ 	struct armada_framebuffer *dfb;
+ 	struct armada_gem_object *obj;
+-	struct fb_info *info;
+ 	int size, ret;
+ 	void *ptr;
+ 
+@@ -90,12 +90,6 @@ int armada_fbdev_driver_fbdev_probe(struct drm_fb_helper *fbh,
+ 	if (IS_ERR(dfb))
+ 		return PTR_ERR(dfb);
+ 
+-	info = drm_fb_helper_alloc_info(fbh);
+-	if (IS_ERR(info)) {
+-		ret = PTR_ERR(info);
+-		goto err_fballoc;
+-	}
+-
+ 	info->fbops = &armada_fb_ops;
+ 	info->fix.smem_start = obj->phys_addr;
+ 	info->fix.smem_len = obj->obj.size;
+@@ -111,8 +105,4 @@ int armada_fbdev_driver_fbdev_probe(struct drm_fb_helper *fbh,
+ 		(unsigned long long)obj->phys_addr);
+ 
+ 	return 0;
+-
+- err_fballoc:
+-	dfb->fb.funcs->destroy(&dfb->fb);
+-	return ret;
+ }
+diff --git a/drivers/gpu/drm/drm_fb_helper.c b/drivers/gpu/drm/drm_fb_helper.c
+index 53e9dc0543de..dd80f5c5feec 100644
+--- a/drivers/gpu/drm/drm_fb_helper.c
++++ b/drivers/gpu/drm/drm_fb_helper.c
+@@ -495,20 +495,7 @@ int drm_fb_helper_init(struct drm_device *dev,
+ }
+ EXPORT_SYMBOL(drm_fb_helper_init);
+ 
+-/**
+- * drm_fb_helper_alloc_info - allocate fb_info and some of its members
+- * @fb_helper: driver-allocated fbdev helper
+- *
+- * A helper to alloc fb_info and the member cmap. Called by the driver
+- * within the struct &drm_driver.fbdev_probe callback function. Drivers do
+- * not need to release the allocated fb_info structure themselves, this is
+- * automatically done when calling drm_fb_helper_fini().
+- *
+- * RETURNS:
+- * fb_info pointer if things went okay, pointer containing error code
+- * otherwise
+- */
+-struct fb_info *drm_fb_helper_alloc_info(struct drm_fb_helper *fb_helper)
++static struct fb_info *drm_fb_helper_alloc_info(struct drm_fb_helper *fb_helper)
+ {
+ 	struct device *dev = fb_helper->dev->dev;
+ 	struct fb_info *info;
+@@ -535,17 +522,8 @@ struct fb_info *drm_fb_helper_alloc_info(struct drm_fb_helper *fb_helper)
+ 	framebuffer_release(info);
+ 	return ERR_PTR(ret);
+ }
+-EXPORT_SYMBOL(drm_fb_helper_alloc_info);
+ 
+-/**
+- * drm_fb_helper_release_info - release fb_info and its members
+- * @fb_helper: driver-allocated fbdev helper
+- *
+- * A helper to release fb_info and the member cmap.  Drivers do not
+- * need to release the allocated fb_info structure themselves, this is
+- * automatically done when calling drm_fb_helper_fini().
+- */
+-void drm_fb_helper_release_info(struct drm_fb_helper *fb_helper)
++static void drm_fb_helper_release_info(struct drm_fb_helper *fb_helper)
+ {
+ 	struct fb_info *info = fb_helper->info;
+ 
+@@ -558,7 +536,6 @@ void drm_fb_helper_release_info(struct drm_fb_helper *fb_helper)
+ 		fb_dealloc_cmap(&info->cmap);
+ 	framebuffer_release(info);
+ }
+-EXPORT_SYMBOL(drm_fb_helper_release_info);
+ 
+ /**
+  * drm_fb_helper_unregister_info - unregister fb_info framebuffer device
+@@ -1809,6 +1786,11 @@ __drm_fb_helper_initial_config_and_unlock(struct drm_fb_helper *fb_helper)
+ 	height = dev->mode_config.max_height;
+ 
+ 	drm_client_modeset_probe(&fb_helper->client, width, height);
++
++	info = drm_fb_helper_alloc_info(fb_helper);
++	if (IS_ERR(info))
++		return PTR_ERR(info);
++
+ 	ret = drm_fb_helper_single_fb_probe(fb_helper);
+ 	if (ret < 0) {
+ 		if (ret == -EAGAIN) {
+@@ -1817,13 +1799,12 @@ __drm_fb_helper_initial_config_and_unlock(struct drm_fb_helper *fb_helper)
+ 		}
+ 		mutex_unlock(&fb_helper->lock);
+ 
+-		return ret;
++		goto err_drm_fb_helper_release_info;
+ 	}
+ 	drm_setup_crtcs_fb(fb_helper);
+ 
+ 	fb_helper->deferred_setup = false;
+ 
+-	info = fb_helper->info;
+ 	info->var.pixclock = 0;
+ 
+ 	/* Need to drop locks to avoid recursive deadlock in
+@@ -1846,6 +1827,10 @@ __drm_fb_helper_initial_config_and_unlock(struct drm_fb_helper *fb_helper)
+ 	mutex_unlock(&kernel_fb_helper_lock);
+ 
+ 	return 0;
++
++err_drm_fb_helper_release_info:
++	drm_fb_helper_release_info(fb_helper);
++	return ret;
+ }
+ 
+ /**
+diff --git a/drivers/gpu/drm/drm_fbdev_dma.c b/drivers/gpu/drm/drm_fbdev_dma.c
+index c6196293e424..442d964039b7 100644
+--- a/drivers/gpu/drm/drm_fbdev_dma.c
++++ b/drivers/gpu/drm/drm_fbdev_dma.c
+@@ -268,9 +268,9 @@ int drm_fbdev_dma_driver_fbdev_probe(struct drm_fb_helper *fb_helper,
+ {
+ 	struct drm_client_dev *client = &fb_helper->client;
+ 	struct drm_device *dev = fb_helper->dev;
++	struct fb_info *info = fb_helper->info;
+ 	struct drm_client_buffer *buffer;
+ 	struct drm_framebuffer *fb;
+-	struct fb_info *info;
+ 	u32 format;
+ 	struct iosys_map map;
+ 	int ret;
+@@ -300,12 +300,6 @@ int drm_fbdev_dma_driver_fbdev_probe(struct drm_fb_helper *fb_helper,
+ 	fb_helper->buffer = buffer;
+ 	fb_helper->fb = fb;
+ 
+-	info = drm_fb_helper_alloc_info(fb_helper);
+-	if (IS_ERR(info)) {
+-		ret = PTR_ERR(info);
+-		goto err_drm_client_buffer_vunmap;
+-	}
+-
+ 	drm_fb_helper_fill_info(info, fb_helper, sizes);
+ 
+ 	if (fb->funcs->dirty)
+@@ -313,12 +307,10 @@ int drm_fbdev_dma_driver_fbdev_probe(struct drm_fb_helper *fb_helper,
+ 	else
+ 		ret = drm_fbdev_dma_driver_fbdev_probe_tail(fb_helper, sizes);
+ 	if (ret)
+-		goto err_drm_fb_helper_release_info;
++		goto err_drm_client_buffer_vunmap;
+ 
+ 	return 0;
+ 
+-err_drm_fb_helper_release_info:
+-	drm_fb_helper_release_info(fb_helper);
+ err_drm_client_buffer_vunmap:
+ 	fb_helper->fb = NULL;
+ 	fb_helper->buffer = NULL;
+diff --git a/drivers/gpu/drm/drm_fbdev_shmem.c b/drivers/gpu/drm/drm_fbdev_shmem.c
+index 51573058df6f..2190e2230b83 100644
+--- a/drivers/gpu/drm/drm_fbdev_shmem.c
++++ b/drivers/gpu/drm/drm_fbdev_shmem.c
+@@ -134,10 +134,10 @@ int drm_fbdev_shmem_driver_fbdev_probe(struct drm_fb_helper *fb_helper,
+ {
+ 	struct drm_client_dev *client = &fb_helper->client;
+ 	struct drm_device *dev = fb_helper->dev;
++	struct fb_info *info = fb_helper->info;
+ 	struct drm_client_buffer *buffer;
+ 	struct drm_gem_shmem_object *shmem;
+ 	struct drm_framebuffer *fb;
+-	struct fb_info *info;
+ 	u32 format;
+ 	struct iosys_map map;
+ 	int ret;
+@@ -167,12 +167,6 @@ int drm_fbdev_shmem_driver_fbdev_probe(struct drm_fb_helper *fb_helper,
+ 	fb_helper->buffer = buffer;
+ 	fb_helper->fb = fb;
+ 
+-	info = drm_fb_helper_alloc_info(fb_helper);
+-	if (IS_ERR(info)) {
+-		ret = PTR_ERR(info);
+-		goto err_drm_client_buffer_vunmap;
+-	}
+-
+ 	drm_fb_helper_fill_info(info, fb_helper, sizes);
+ 
+ 	info->fbops = &drm_fbdev_shmem_fb_ops;
+@@ -193,12 +187,10 @@ int drm_fbdev_shmem_driver_fbdev_probe(struct drm_fb_helper *fb_helper,
+ 	info->fbdefio = &fb_helper->fbdefio;
+ 	ret = fb_deferred_io_init(info);
+ 	if (ret)
+-		goto err_drm_fb_helper_release_info;
++		goto err_drm_client_buffer_vunmap;
+ 
+ 	return 0;
+ 
+-err_drm_fb_helper_release_info:
+-	drm_fb_helper_release_info(fb_helper);
+ err_drm_client_buffer_vunmap:
+ 	fb_helper->fb = NULL;
+ 	fb_helper->buffer = NULL;
+diff --git a/drivers/gpu/drm/drm_fbdev_ttm.c b/drivers/gpu/drm/drm_fbdev_ttm.c
+index ccf460fbc1f0..3a06c2b59a8d 100644
+--- a/drivers/gpu/drm/drm_fbdev_ttm.c
++++ b/drivers/gpu/drm/drm_fbdev_ttm.c
+@@ -174,8 +174,8 @@ int drm_fbdev_ttm_driver_fbdev_probe(struct drm_fb_helper *fb_helper,
+ {
+ 	struct drm_client_dev *client = &fb_helper->client;
+ 	struct drm_device *dev = fb_helper->dev;
++	struct fb_info *info = fb_helper->info;
+ 	struct drm_client_buffer *buffer;
+-	struct fb_info *info;
+ 	size_t screen_size;
+ 	void *screen_buffer;
+ 	u32 format;
+@@ -203,12 +203,6 @@ int drm_fbdev_ttm_driver_fbdev_probe(struct drm_fb_helper *fb_helper,
+ 		goto err_drm_client_framebuffer_delete;
+ 	}
+ 
+-	info = drm_fb_helper_alloc_info(fb_helper);
+-	if (IS_ERR(info)) {
+-		ret = PTR_ERR(info);
+-		goto err_vfree;
+-	}
+-
+ 	drm_fb_helper_fill_info(info, fb_helper, sizes);
+ 
+ 	info->fbops = &drm_fbdev_ttm_fb_ops;
+@@ -225,12 +219,10 @@ int drm_fbdev_ttm_driver_fbdev_probe(struct drm_fb_helper *fb_helper,
+ 	info->fbdefio = &fb_helper->fbdefio;
+ 	ret = fb_deferred_io_init(info);
+ 	if (ret)
+-		goto err_drm_fb_helper_release_info;
++		goto err_vfree;
+ 
+ 	return 0;
+ 
+-err_drm_fb_helper_release_info:
+-	drm_fb_helper_release_info(fb_helper);
+ err_vfree:
+ 	vfree(screen_buffer);
+ err_drm_client_framebuffer_delete:
+diff --git a/drivers/gpu/drm/exynos/exynos_drm_fbdev.c b/drivers/gpu/drm/exynos/exynos_drm_fbdev.c
+index a3bd21a827ad..539ce0a87886 100644
+--- a/drivers/gpu/drm/exynos/exynos_drm_fbdev.c
++++ b/drivers/gpu/drm/exynos/exynos_drm_fbdev.c
+@@ -57,18 +57,11 @@ static int exynos_drm_fbdev_update(struct drm_fb_helper *helper,
+ 				   struct drm_fb_helper_surface_size *sizes,
+ 				   struct exynos_drm_gem *exynos_gem)
+ {
+-	struct fb_info *fbi;
++	struct fb_info *fbi = helper->info;
+ 	struct drm_framebuffer *fb = helper->fb;
+ 	unsigned int size = fb->width * fb->height * fb->format->cpp[0];
+ 	unsigned long offset;
+ 
+-	fbi = drm_fb_helper_alloc_info(helper);
+-	if (IS_ERR(fbi)) {
+-		DRM_DEV_ERROR(to_dma_dev(helper->dev),
+-			      "failed to allocate fb info.\n");
+-		return PTR_ERR(fbi);
+-	}
+-
+ 	fbi->fbops = &exynos_drm_fb_ops;
+ 
+ 	drm_fb_helper_fill_info(fbi, helper, sizes);
+diff --git a/drivers/gpu/drm/gma500/fbdev.c b/drivers/gpu/drm/gma500/fbdev.c
+index bc92fa24a1e2..c26926babc2a 100644
+--- a/drivers/gpu/drm/gma500/fbdev.c
++++ b/drivers/gpu/drm/gma500/fbdev.c
+@@ -108,7 +108,7 @@ int psb_fbdev_driver_fbdev_probe(struct drm_fb_helper *fb_helper,
+ 	struct drm_device *dev = fb_helper->dev;
+ 	struct drm_psb_private *dev_priv = to_drm_psb_private(dev);
+ 	struct pci_dev *pdev = to_pci_dev(dev->dev);
+-	struct fb_info *info;
++	struct fb_info *info = fb_helper->info;
+ 	struct drm_framebuffer *fb;
+ 	struct drm_mode_fb_cmd2 mode_cmd = { };
+ 	int size;
+@@ -167,12 +167,6 @@ int psb_fbdev_driver_fbdev_probe(struct drm_fb_helper *fb_helper,
+ 	fb_helper->funcs = &psb_fbdev_fb_helper_funcs;
+ 	fb_helper->fb = fb;
+ 
+-	info = drm_fb_helper_alloc_info(fb_helper);
+-	if (IS_ERR(info)) {
+-		ret = PTR_ERR(info);
+-		goto err_drm_framebuffer_unregister_private;
+-	}
+-
+ 	info->fbops = &psb_fbdev_fb_ops;
+ 
+ 	/* Accessed stolen memory directly */
+@@ -196,10 +190,6 @@ int psb_fbdev_driver_fbdev_probe(struct drm_fb_helper *fb_helper,
+ 
+ 	return 0;
+ 
+-err_drm_framebuffer_unregister_private:
+-	drm_framebuffer_unregister_private(fb);
+-	drm_framebuffer_cleanup(fb);
+-	kfree(fb);
+ err_drm_gem_object_put:
+ 	drm_gem_object_put(obj);
+ 	return ret;
+diff --git a/drivers/gpu/drm/i915/display/intel_fbdev.c b/drivers/gpu/drm/i915/display/intel_fbdev.c
+index e5449c41cfa1..9cd03e2adeb2 100644
+--- a/drivers/gpu/drm/i915/display/intel_fbdev.c
++++ b/drivers/gpu/drm/i915/display/intel_fbdev.c
+@@ -267,8 +267,8 @@ int intel_fbdev_driver_fbdev_probe(struct drm_fb_helper *helper,
+ 	struct intel_display *display = to_intel_display(helper->dev);
+ 	struct intel_fbdev *ifbdev = to_intel_fbdev(helper);
+ 	struct intel_framebuffer *fb = ifbdev->fb;
++	struct fb_info *info = helper->info;
+ 	struct ref_tracker *wakeref;
+-	struct fb_info *info;
+ 	struct i915_vma *vma;
+ 	unsigned long flags = 0;
+ 	bool prealloc = false;
+@@ -318,13 +318,6 @@ int intel_fbdev_driver_fbdev_probe(struct drm_fb_helper *helper,
+ 		goto out_unlock;
+ 	}
+ 
+-	info = drm_fb_helper_alloc_info(helper);
+-	if (IS_ERR(info)) {
+-		drm_err(display->drm, "Failed to allocate fb_info (%pe)\n", info);
+-		ret = PTR_ERR(info);
+-		goto out_unpin;
+-	}
+-
+ 	helper->funcs = &intel_fb_helper_funcs;
+ 	helper->fb = &fb->base;
+ 
+diff --git a/drivers/gpu/drm/msm/msm_fbdev.c b/drivers/gpu/drm/msm/msm_fbdev.c
+index aad6fb77f0de..fd19995b12b5 100644
+--- a/drivers/gpu/drm/msm/msm_fbdev.c
++++ b/drivers/gpu/drm/msm/msm_fbdev.c
+@@ -91,9 +91,9 @@ int msm_fbdev_driver_fbdev_probe(struct drm_fb_helper *helper,
+ {
+ 	struct drm_device *dev = helper->dev;
+ 	struct msm_drm_private *priv = dev->dev_private;
++	struct fb_info *fbi = helper->info;
+ 	struct drm_framebuffer *fb = NULL;
+ 	struct drm_gem_object *bo;
+-	struct fb_info *fbi = NULL;
+ 	uint64_t paddr;
+ 	uint32_t format;
+ 	int ret, pitch;
+@@ -126,13 +126,6 @@ int msm_fbdev_driver_fbdev_probe(struct drm_fb_helper *helper,
+ 		goto fail;
+ 	}
+ 
+-	fbi = drm_fb_helper_alloc_info(helper);
+-	if (IS_ERR(fbi)) {
+-		DRM_DEV_ERROR(dev->dev, "failed to allocate fb info\n");
+-		ret = PTR_ERR(fbi);
+-		goto fail;
+-	}
+-
+ 	DBG("fbi=%p, dev=%p", fbi, dev);
+ 
+ 	helper->funcs = &msm_fbdev_helper_funcs;
+diff --git a/drivers/gpu/drm/omapdrm/omap_fbdev.c b/drivers/gpu/drm/omapdrm/omap_fbdev.c
+index b5df2923d2a6..c4671ab87f9c 100644
+--- a/drivers/gpu/drm/omapdrm/omap_fbdev.c
++++ b/drivers/gpu/drm/omapdrm/omap_fbdev.c
+@@ -153,9 +153,9 @@ int omap_fbdev_driver_fbdev_probe(struct drm_fb_helper *helper,
+ 	struct drm_device *dev = helper->dev;
+ 	struct omap_drm_private *priv = dev->dev_private;
+ 	struct omap_fbdev *fbdev = priv->fbdev;
++	struct fb_info *fbi = helper->info;
+ 	struct drm_framebuffer *fb = NULL;
+ 	union omap_gem_size gsize;
+-	struct fb_info *fbi = NULL;
+ 	struct drm_mode_fb_cmd2 mode_cmd = {0};
+ 	struct drm_gem_object *bo;
+ 	dma_addr_t dma_addr;
+@@ -224,13 +224,6 @@ int omap_fbdev_driver_fbdev_probe(struct drm_fb_helper *helper,
+ 		goto fail;
+ 	}
+ 
+-	fbi = drm_fb_helper_alloc_info(helper);
+-	if (IS_ERR(fbi)) {
+-		dev_err(dev->dev, "failed to allocate fb info\n");
+-		ret = PTR_ERR(fbi);
+-		goto fail;
+-	}
+-
+ 	DBG("fbi=%p, dev=%p", fbi, dev);
+ 
+ 	helper->funcs = &omap_fbdev_helper_funcs;
+diff --git a/drivers/gpu/drm/radeon/radeon_fbdev.c b/drivers/gpu/drm/radeon/radeon_fbdev.c
+index 4df6c9167bf0..1b469b2b4b04 100644
+--- a/drivers/gpu/drm/radeon/radeon_fbdev.c
++++ b/drivers/gpu/drm/radeon/radeon_fbdev.c
+@@ -204,7 +204,7 @@ int radeon_fbdev_driver_fbdev_probe(struct drm_fb_helper *fb_helper,
+ 	struct radeon_device *rdev = fb_helper->dev->dev_private;
+ 	const struct drm_format_info *format_info;
+ 	struct drm_mode_fb_cmd2 mode_cmd = { };
+-	struct fb_info *info;
++	struct fb_info *info = fb_helper->info;
+ 	struct drm_gem_object *gobj;
+ 	struct radeon_bo *rbo;
+ 	struct drm_framebuffer *fb;
+@@ -245,13 +245,6 @@ int radeon_fbdev_driver_fbdev_probe(struct drm_fb_helper *fb_helper,
+ 	fb_helper->funcs = &radeon_fbdev_fb_helper_funcs;
+ 	fb_helper->fb = fb;
+ 
+-	/* okay we have an object now allocate the framebuffer */
+-	info = drm_fb_helper_alloc_info(fb_helper);
+-	if (IS_ERR(info)) {
+-		ret = PTR_ERR(info);
+-		goto err_drm_framebuffer_unregister_private;
+-	}
+-
+ 	info->fbops = &radeon_fbdev_fb_ops;
+ 
+ 	/* radeon resume is fragile and needs a vt switch to help it along */
+@@ -277,10 +270,6 @@ int radeon_fbdev_driver_fbdev_probe(struct drm_fb_helper *fb_helper,
+ 
+ 	return 0;
+ 
+-err_drm_framebuffer_unregister_private:
+-	fb_helper->fb = NULL;
+-	drm_framebuffer_unregister_private(fb);
+-	drm_framebuffer_cleanup(fb);
+ err_kfree:
+ 	kfree(fb);
+ err_radeon_fbdev_destroy_pinned_object:
+diff --git a/drivers/gpu/drm/tegra/fbdev.c b/drivers/gpu/drm/tegra/fbdev.c
+index 91aece6f34e0..8f40882aa76e 100644
+--- a/drivers/gpu/drm/tegra/fbdev.c
++++ b/drivers/gpu/drm/tegra/fbdev.c
+@@ -73,10 +73,10 @@ int tegra_fbdev_driver_fbdev_probe(struct drm_fb_helper *helper,
+ 	struct tegra_drm *tegra = helper->dev->dev_private;
+ 	struct drm_device *drm = helper->dev;
+ 	struct drm_mode_fb_cmd2 cmd = { 0 };
++	struct fb_info *info = helper->info;
+ 	unsigned int bytes_per_pixel;
+ 	struct drm_framebuffer *fb;
+ 	unsigned long offset;
+-	struct fb_info *info;
+ 	struct tegra_bo *bo;
+ 	size_t size;
+ 	int err;
+@@ -97,13 +97,6 @@ int tegra_fbdev_driver_fbdev_probe(struct drm_fb_helper *helper,
+ 	if (IS_ERR(bo))
+ 		return PTR_ERR(bo);
+ 
+-	info = drm_fb_helper_alloc_info(helper);
+-	if (IS_ERR(info)) {
+-		dev_err(drm->dev, "failed to allocate framebuffer info\n");
+-		drm_gem_object_put(&bo->gem);
+-		return PTR_ERR(info);
+-	}
+-
+ 	fb = tegra_fb_alloc(drm,
+ 			    drm_get_format_info(drm, cmd.pixel_format, cmd.modifier[0]),
+ 			    &cmd, &bo, 1);
+diff --git a/include/drm/drm_fb_helper.h b/include/drm/drm_fb_helper.h
+index c1d38d54a112..2faf8aaf98dc 100644
+--- a/include/drm/drm_fb_helper.h
++++ b/include/drm/drm_fb_helper.h
+@@ -256,8 +256,6 @@ int drm_fb_helper_check_var(struct fb_var_screeninfo *var,
+ 
+ int drm_fb_helper_restore_fbdev_mode_unlocked(struct drm_fb_helper *fb_helper);
+ 
+-struct fb_info *drm_fb_helper_alloc_info(struct drm_fb_helper *fb_helper);
+-void drm_fb_helper_release_info(struct drm_fb_helper *fb_helper);
+ void drm_fb_helper_unregister_info(struct drm_fb_helper *fb_helper);
+ void drm_fb_helper_fill_info(struct fb_info *info,
+ 			     struct drm_fb_helper *fb_helper,
+@@ -340,16 +338,6 @@ drm_fb_helper_restore_fbdev_mode_unlocked(struct drm_fb_helper *fb_helper)
+ 	return 0;
+ }
+ 
+-static inline struct fb_info *
+-drm_fb_helper_alloc_info(struct drm_fb_helper *fb_helper)
+-{
+-	return NULL;
+-}
+-
+-static inline void drm_fb_helper_release_info(struct drm_fb_helper *fb_helper)
+-{
+-}
+-
+ static inline void drm_fb_helper_unregister_info(struct drm_fb_helper *fb_helper)
+ {
+ }
 
-file: 
-https://github.com/quic/v4l-video-test-app/blob/master/data/resource/simple_nv12_720p_90frms.yuv
-
-cmd: ffmpeg -f rawvideo -pix_fmt nv12 -s 1280x720 \
--i simple_nv12_720p_90frms.yuv \
--vf "scale=1920:1080" -pix_fmt nv12 input_nv12_1080p.yuv
-
+base-commit: c03916cb446b6eefe91538599775bb54bf98238c
 -- 
-Best Regards,
-Wangao
+2.51.1
 
 
