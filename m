@@ -1,57 +1,57 @@
-Return-Path: <linux-arm-msm+bounces-78932-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-78933-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id F325BC0E4A4
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Oct 2025 15:13:53 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 724C7C0E4B0
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Oct 2025 15:13:57 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 5E35C4237A5
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Oct 2025 14:06:55 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 223B0406475
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Oct 2025 14:07:06 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4FEC23081D9;
-	Mon, 27 Oct 2025 14:06:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 049EA3090DD;
+	Mon, 27 Oct 2025 14:06:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="GMxvyLtY"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="a81lVIo2"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 288E92FDC3F;
-	Mon, 27 Oct 2025 14:06:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D24303090C9;
+	Mon, 27 Oct 2025 14:06:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761573991; cv=none; b=o0PSJgp0a8MaG5J1rYb3i5ZYoikTsSmHMnubDkpWE53P8RqnOCsbhTN15Cp2AJ1G8UN5HNUyCcwR6fl0zu8bPhpftqaxvo9DFUPJMNIUW98NIXeNT/1jlbpjGYJR/KLHpMppKqF2nPWOKEDolLa5fhhLW66TLo4EB1BWc54UI0o=
+	t=1761573991; cv=none; b=Bo2H3Egg3DTZWcaEiiqZhTXAKTtU03k5pBJJCbviRDQ8fHjbJKaS4wg6rS7A7s/YoKNq9HgJevaAG2ObK/9gVdj2hSVirrS3VO/YU5PZe3X54jKpijTU4r97TCNCUP+OZ+S+FAIjl4+oOEyXPl+e6AGT9hzhrrwRwntIkOoIEG4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1761573991; c=relaxed/simple;
-	bh=ZJPOcZto9IVp+Sc14UzPqMCjcasyNdEsUuTxrA84pb4=;
+	bh=B3kCA78ErKI5LnmPp9AS/X+XkfKcerKRS2hoEU0e9sM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=AsHY0DxIpNMmigfml8r7h/QOtBbCqs4L1XGQUgJ1NOPdsFFAq2r201YVrXYiDISuwenWTlIawYwAHxagWM+gg5CdlIko8XorrCWqMTv3L0561O0xzivXUC1raSnJTK/LyIT5uv7nKy51jmaXlCEJ1zSqV8DfVFZpQhjNXEqXKTA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=GMxvyLtY; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65AB1C116B1;
+	 MIME-Version:Content-Type; b=ezpGCbruKKer+6LOsn3AVi/jSvDBDK2i3bLz65p7ZkxaajUw8+LtK9QWYZNgitndvPFe0kmlHdqpfWQt4HB7QE/8pFvc+xdhY4PfFsXOjnPhI4yVUnKft9zhhZAUQ3jz6JmI2Qhu7Jv0d83hnANmxxPAF6K8TceME5RlcR+pCcc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=a81lVIo2; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3EB5C19421;
 	Mon, 27 Oct 2025 14:06:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1761573990;
-	bh=ZJPOcZto9IVp+Sc14UzPqMCjcasyNdEsUuTxrA84pb4=;
+	s=k20201202; t=1761573991;
+	bh=B3kCA78ErKI5LnmPp9AS/X+XkfKcerKRS2hoEU0e9sM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GMxvyLtY6Y/LbKDsRV8CIiRN6DD5dPxipEjFLAD6TDM2ix0dSfm2oI+oOn8E8FI0L
-	 Jof/8uXj2EAKqZsFGW+e2ul+1s6LFr21UwPMAl0wYi0wpYINGtb1jhnM7van7tx3ke
-	 MOW+nM9ITE7mIEaBEosGe5cw/eT8l9ieT+kF5wUJbV2hBYDafy//lsTSDWozqzy7XX
-	 1bsvmPAxCKpOQ0Qz3ZtdJcd58/VOtBTNFcoHCoi8XI6dI/6zeC1tKI5w6SEs1t1K90
-	 ZKtt/IQ9rDWvoerFi66w9OXV5YZ96Xhx49m0NWRSTSIxzjmex+6mICXrmPaMpKUK+r
-	 RvC7zpqtIlfew==
+	b=a81lVIo2U8vYpVgrz0G+VbBwp/fYeVnsCdHiUvm8BiHnLRiDbiTlL5gbC8x08tS/z
+	 sSgMD0Bd9bB550urR4wT2Nyi6bk3NgwQ9AJyraWOKw14dNhXQLEoANPgjGC4EFi5hv
+	 x9n97nDg5JXHGLHRyLEeJPEdkMX0VHqOrYIms/5ZpllMTLQvGRhl7EOWnLXQuxbWVs
+	 zp2j8c8KXL8IoWa0qKvat3bICILH9s3gDweZcHB7MxpXPnNu6zILtsl81Vu15mb7+W
+	 ImzMfYXzoGTJgpbTgZ0N06UBiEdBGsu3H/9oGMWDsEwVLr9zFigXnsBi9/3LLlnphf
+	 /jNQg993Q7pHw==
 From: Bjorn Andersson <andersson@kernel.org>
 To: Konrad Dybcio <konradybcio@kernel.org>,
-	Johan Hovold <johan@kernel.org>
+	Kathiravan Thirumoorthy <kathiravan.thirumoorthy@oss.qualcomm.com>
 Cc: linux-arm-msm@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 0/2] soc: qcom: ocmem/pbs: fix device leaks on lookup
-Date: Mon, 27 Oct 2025 09:09:05 -0500
-Message-ID: <176157405467.8818.3435922572772732972.b4-ty@kernel.org>
+Subject: Re: [PATCH 0/2] Add the missing entries in the SMEM image table
+Date: Mon, 27 Oct 2025 09:09:06 -0500
+Message-ID: <176157405468.8818.2988793421685000869.b4-ty@kernel.org>
 X-Mailer: git-send-email 2.51.0
-In-Reply-To: <20250926143511.6715-1-johan@kernel.org>
-References: <20250926143511.6715-1-johan@kernel.org>
+In-Reply-To: <20250929-image_crm-v1-0-e06530c42357@oss.qualcomm.com>
+References: <20250929-image_crm-v1-0-e06530c42357@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -62,25 +62,19 @@ Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 
 
-On Fri, 26 Sep 2025 16:35:09 +0200, Johan Hovold wrote:
-> This series fixes device leaks in the Qualcomm SoC drivers when looking
-> up platform devices using of_find_device_by_node().
+On Mon, 29 Sep 2025 19:47:06 +0530, Kathiravan Thirumoorthy wrote:
+> Rather than adding support for one each image at a time, populate all
+> the image details at once for the completeness. Additionally sort the
+> socinfo_image_names array in alphabetical order.
 > 
-> Johan
 > 
-> 
-> Johan Hovold (2):
->   soc: qcom: ocmem: fix device leak on lookup
->   soc: qcom: pbs: fix device leak on lookup
-> 
-> [...]
 
 Applied, thanks!
 
-[1/2] soc: qcom: ocmem: fix device leak on lookup
-      commit: b5c16ea57b030b8e9428ec726e26219dfe05c3d9
-[2/2] soc: qcom: pbs: fix device leak on lookup
-      commit: 94124bf253d24b13e89c45618a168d5a1d8a61e7
+[1/2] soc: qcom: socinfo: arrange the socinfo_image_names array in alphabetical order
+      commit: abac241e1d5da20332160b29b23f357016abe3e1
+[2/2] soc: qcom: socinfo: add the missing entries to the smem image table
+      commit: dcbce2c23e5edcba2ac538e7a53d0e3d1a21f975
 
 Best regards,
 -- 
