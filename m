@@ -1,92 +1,179 @@
-Return-Path: <linux-arm-msm+bounces-78961-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-78962-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 28817C0EBC6
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Oct 2025 16:00:09 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id A8687C0ECCD
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Oct 2025 16:07:44 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 8352919C3484
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Oct 2025 14:58:46 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 5F8894267DA
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Oct 2025 15:00:08 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DBB4521C9E1;
-	Mon, 27 Oct 2025 14:58:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id EF4D22F692C;
+	Mon, 27 Oct 2025 14:59:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="GIdlkKki"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="rIPGffuA"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f44.google.com (mail-wm1-f44.google.com [209.85.128.44])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0EF51A3167;
-	Mon, 27 Oct 2025 14:58:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12ADF2C236D
+	for <linux-arm-msm@vger.kernel.org>; Mon, 27 Oct 2025 14:59:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761577094; cv=none; b=uYzAxwJ+tAnIi91yymFjdvpX8nu21MMv6moIgwDKxwyQ/zk6AN6khXaj+x8OxpnfdB2GPe1Tgc0lvQju8qWCNmQCvxc4hMGd77MyDhRYeXpCl+VAPpos55VqbbfRd1fIE49iIvwlev/dOipeFmcnd9PG7SlM4A7PImJXgpuEI94=
+	t=1761577178; cv=none; b=Pq4x7X9jdjoKaxSD011C//xYTfweUntcwgbcpCwA7lEnd7QfafsuqHItuBSF0aYJQRvB9YnbulPq+7JX/E45ZwckN2ofJqfMaGZ4yQLZW7Ss4spB6tqAge2efFbFj1MmiXdL0ke/CvdX3Q5YZH8BFfWZ0fM0RJqcrX2/eLK+SbQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761577094; c=relaxed/simple;
-	bh=A0Krk2Y3CRBa8n6OsFmdRhm68y75VXCkCgp6HeaDlkE=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=N/LqQD7ZuNW8/X7scNij69Y5PwuiYCLMBEAeVcn1+zOhBv3xzR2Y/zsDN3VpV1ZjfXhzQZIYsJne9dVcEs7xMoN5APGkf8UVFVORatO4naqJ2j1TG9yOshqNCgsQMOv1e+YyxJ2gDWCwfEQY8ZhbGdPuTGox9k77ULBee1LVr5o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=GIdlkKki; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D138C4CEF1;
-	Mon, 27 Oct 2025 14:58:13 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1761577094;
-	bh=A0Krk2Y3CRBa8n6OsFmdRhm68y75VXCkCgp6HeaDlkE=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=GIdlkKki3Uk6YG99jMF+rB+DnVcelHBzf9tBsnBo+qmNckcTjkMH8gQD8x1oZBv1a
-	 oG3Ti/fZCBVWW9L1QWcrePTafCb00tuGsBwRZl6ksfbrtCxQberkLl6jD/SoePoMI7
-	 EYQf/IHrajfUcwfKgPjIInbFxWp8JZ7jFjYQUG4BBi8CRBUgspYC3kW2ixe0+y9Kvi
-	 kUiTn2xpgdSWvtOhvmxwhJIH+efnNUP8orFDoa4K28ar4FQgHRe71KiH0c0YrdAjh6
-	 1a1+tRdYYRCxVnNOCrbUxyJOmAxrPa//cDWIeziBFnAHveDR34qD9aRPcKwUGfn6GG
-	 dsj7TnTD9hMag==
-Date: Mon, 27 Oct 2025 10:01:06 -0500
-From: Bjorn Andersson <andersson@kernel.org>
-To: Gaurav Kohli <quic_gkohli@quicinc.com>
-Cc: amitk@kernel.org, daniel.lezcano@linaro.org, rui.zhang@intel.com, 
-	lukasz.luba@arm.com, robh@kernel.org, krzk+dt@kernel.org, konradybcio@kernel.org, 
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
-	quic_manafm@quicinc.com
-Subject: Re: [PATCH v1 1/2] dt-bindings: thermal: tsens: Add QCS8300
- compatible
-Message-ID: <6273bs3yvfx5b2ah3k3kvua3ebfex7ufje52m64dzjsjwiqhfi@thcbsov4xf4g>
-References: <20250822042316.1762153-1-quic_gkohli@quicinc.com>
- <20250822042316.1762153-2-quic_gkohli@quicinc.com>
+	s=arc-20240116; t=1761577178; c=relaxed/simple;
+	bh=eDQhQASOEmRkcfF1cnh05g0ZSLG33Cazfq+HFLkLeDs=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=rIbS12JtSV0cRulwHcAntAYePq2mhNYd2UntkARimiBEL+/CERFFhAXNE4Mxec90XlmI7uldT2qvTxIodF0Fr80r60JjuaOJWj3dZ7ckx2L35ilBC4c7jRSY/cRVlZEco/51oWXSbMeGVpyjSS4FrNjtoit4rteVMxAPxfYhg98=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=rIPGffuA; arc=none smtp.client-ip=209.85.128.44
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wm1-f44.google.com with SMTP id 5b1f17b1804b1-471b80b994bso67380915e9.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 27 Oct 2025 07:59:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1761577175; x=1762181975; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=NW0g4MULUKaMYiJnLBpd0Ri5YM5rWj5Eltx5XndG2Gs=;
+        b=rIPGffuAY6AQHZZNFiCD1Y8w0uiUMlIPpcjrxDSVqcX9UeJxz8yELoAeKtlJcju5uO
+         IMP4QXOEeFDiXopA2pec0PcVpgj9Am12WQnaLNPBtaUMdfZx7L/c1O0xFElT+Rb/4Pdu
+         IPLRojf4gJqiKvBpuGNrK+cxx5i/c6q4nsbxr6nbZsDcj6EZFwT2ut2jT5lVtcrqqlmR
+         r2jNRAihzBTad1LXEIOU7WgedAeFebdDXcbzpa3s33vFIPPf3p3eH4MxnT9fbKnA5/Fk
+         HeqDVcDVWeyk9KS2Vvx+0nqpqNaf1qYFexpwlvQyA6vKhbWOx5SSV5EPihu+tC4R/pk1
+         mneQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1761577175; x=1762181975;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=NW0g4MULUKaMYiJnLBpd0Ri5YM5rWj5Eltx5XndG2Gs=;
+        b=d6m+mPesMdG5fzOhfn6khIrBbmupHy9ekJ5nf6z6EYGeE93R8Eo6IqRP0LOUoxwmF9
+         8jwb1d9MyZ6hKKPeDCKTnXfA0UuoFNx2MFtmgKx2sJ8IQPrZTcQJqCKEVlVD7YTcJ+5i
+         LexhLyDWHchPHbWqbY35WsydPYOFmbnIwtc7PHnHQat74/34yMLQacgKbl1gHDuVxLhG
+         VAAzvzKwO7xlFYBOpQmjfOIszSqlGuW3o+IunPMr3/cU8Ykb9hRQp8dFzLj3oN8dyAE9
+         ucVAWuzLqyHjxhmdFKN9afIuCcCCW1a+IcTeN/yKesLOyVyVRbNddATyByAheyhgsdVH
+         /4IA==
+X-Gm-Message-State: AOJu0YxRKhzYqb3SS+7B0x/teQoZ5ljFk7XXhlJfuCvLZ5wSr1QwTqcE
+	yLB+VSOFqHrp3tt4sTPCxWm/QXLiFm/KgAJv6RGf6mD1QI956C107G5iFPD+qLfuPOE=
+X-Gm-Gg: ASbGncuhrj+QgIfvbiplOJ8khBlkhy5SPkvd8GJpcFosldyyARLBkTA9MXclxFlJ90l
+	9upfs/v6fI1nCEXOlkXWLdDGMFtJnozXSvbzgNOW3KpNe4kwVotZ2mOEMSZfpMW8jcZeYFVQxuG
+	TBwlc5K3FnnSOotrizjcobJMceHL9nRyEynCFfl6uhgdK9eX6+PgMSbYxOa0OH6D9iPihnNafZx
+	6tv2YXABbJReonZ0Z+0n7pAPkOGQM3qjyaTvsakAL4nBtX9y47ECy59nn3qDdb082fquuvwB8tC
+	+3p33Pp1fvctm7UJg1ciF8zfzr8iKjNIA8t3Ooy1DZBIasmHHAHoUkyTMsbk516pPYQVEWiwsvv
+	RYH3GuDGikMEi2KpZR+X+CEAGs8/KUOnUzxmrzQfduSRGItsbTQdzRsAcUbVv0HmvUjmSRXUOIr
+	lXDtegxJPu
+X-Google-Smtp-Source: AGHT+IEaQneBk0C8dLzRUnxt31IA4a5BDhI6aZOrP71p5Fx9l+6YUOmnTLZBOBxL2PTxl1832j9iLQ==
+X-Received: by 2002:a05:600c:34c4:b0:477:171f:65f with SMTP id 5b1f17b1804b1-477171f0938mr4731325e9.38.1761577175395;
+        Mon, 27 Oct 2025 07:59:35 -0700 (PDT)
+Received: from hackbox.lan ([86.121.7.169])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-429952df682sm14624801f8f.43.2025.10.27.07.59.33
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 27 Oct 2025 07:59:34 -0700 (PDT)
+From: Abel Vesa <abel.vesa@linaro.org>
+Subject: [PATCH v3 0/7] drm/msm: Add display support for Glymur platform
+Date: Mon, 27 Oct 2025 16:59:17 +0200
+Message-Id: <20251027-glymur-display-v3-0-aa13055818ac@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250822042316.1762153-2-quic_gkohli@quicinc.com>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAMWI/2gC/2XM0QqCMBTG8VeRXbfYOVNyXfUe0cVymx4wJ1uNR
+ Hz3plBQXX4f/H8zizaQjexYzCzYRJH8kIfcFazp9NBaTiZvhgIroUDwtp9uj8ANxbHXEwc0UGu
+ 8mkMJLEdjsI6eG3i+5N1RvPswbX6C9X1T8Esl4IIbqUDLUqJCe+pp0MHvfWjZaiX89CCg/Osx9
+ 84pWVl0dd1UX/2yLC+vRk6p7QAAAA==
+X-Change-ID: 20250910-glymur-display-12d18a2bd741
+To: Rob Clark <robin.clark@oss.qualcomm.com>, 
+ Dmitry Baryshkov <lumag@kernel.org>, 
+ Abhinav Kumar <abhinav.kumar@linux.dev>, 
+ Jessica Zhang <jessica.zhang@oss.qualcomm.com>, Sean Paul <sean@poorly.run>, 
+ Marijn Suijten <marijn.suijten@somainline.org>, 
+ Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, 
+ Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>, 
+ David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, 
+ Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>, 
+ Neil Armstrong <neil.armstrong@linaro.org>, 
+ Kuogee Hsieh <quic_khsieh@quicinc.com>, 
+ Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konradybcio@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, 
+ freedreno@lists.freedesktop.org, devicetree@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, Abel Vesa <abel.vesa@linaro.org>, 
+ Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>, 
+ Krzysztof Kozlowski <krzk@kernel.org>
+X-Mailer: b4 0.15-dev-dedf8
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2209; i=abel.vesa@linaro.org;
+ h=from:subject:message-id; bh=eDQhQASOEmRkcfF1cnh05g0ZSLG33Cazfq+HFLkLeDs=;
+ b=owEBbQKS/ZANAwAKARtfRMkAlRVWAcsmYgBo/4jL4e2P0M+fEJRpcgfUYt16mHELFJZJztSOL
+ H5lBOKx5SOJAjMEAAEKAB0WIQRO8+4RTnqPKsqn0bgbX0TJAJUVVgUCaP+IywAKCRAbX0TJAJUV
+ VsFfEAC7FmOy5w629PPMnlYGOFdHi2vJe6IBqwe/XMzgVyHN6nqMBH4VKVuJWuqEIlCZXYin6i1
+ qFByl4U3Bu3WpLYhlyWU2Oyb1Q0kIhVPpnYiSfjUtVPKKKrGrPxcLQXaj54P6ulqwh4dE6FQL4j
+ FPmwZw1xotu9jIYmdKEgQpzDkZBgPu/hfMptiKHN7s8nTF5BxTvdqvkcMKjLJTMPqqjqLNWOfTx
+ MzwCTH8bohm+AjllsfN0rtejPO3I0/I5vXQ0UxgnYm1RhWsji4FpZA+gNS4EimDdotp2ds3Pmu9
+ 2sIuL/QG2kO7x+tsj9GugfUbUaeynxaVLm+MR9j0F1GVT9tdvlVR5a5o1KCviKcuZ519grI3iTJ
+ T9ZmDXNt+MSv3blgzpkP7mgQFZ/rWqwJvwsNjzdvKLARgWuCpUmOWVV/zJzK2KCQOCK6LW3XPjo
+ kECMxjfouAxQAIzc5TJ0waCWuPnLK+LUVOnFW0eS6vEDXuhCPuXdKhI/c18+pVNN9IVnM4g8592
+ 7CNNu1KDOxu3ILGiUPOek81NTRII9//VhsqTt8jHhR27Z/D5ysUPVMmnlQgpabVtd6EJC7+wYZK
+ 57U4rCzSbhvKZHBkzIUNkfWaP5asFUIz2+Gq4cIHWLr0m2wndOk6KoUBZzHUZQW/UvVa6xAcl+U
+ LLklForAsQbzbTA==
+X-Developer-Key: i=abel.vesa@linaro.org; a=openpgp;
+ fpr=6AFF162D57F4223A8770EF5AF7BF214136F41FAE
 
-On Fri, Aug 22, 2025 at 09:53:15AM +0530, Gaurav Kohli wrote:
-> Add compatibility string for the thermal sensors on QCS8300 platform.
-> 
-> Signed-off-by: Gaurav Kohli <quic_gkohli@quicinc.com>
+The Glymur MDSS is based on the one found in SM8750, with 2 minor number
+version bump.
 
-Reviewed-by: Bjorn Andersson <andersson@kernel.org>
+Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+---
+Changes in v3:
+ - Re-worded first commit in order to better suggest the incompatiblity
+   with previous platforms.
+ - Picked up Krzysztof R-b tag for 1st patch.
+ - Picked up Dmitry's R-b tag for 7th patch.
+ - Link to v2: https://lore.kernel.org/r/20251014-glymur-display-v2-0-ff935e2f88c5@linaro.org
 
-> ---
->  Documentation/devicetree/bindings/thermal/qcom-tsens.yaml | 1 +
->  1 file changed, 1 insertion(+)
-> 
-> diff --git a/Documentation/devicetree/bindings/thermal/qcom-tsens.yaml b/Documentation/devicetree/bindings/thermal/qcom-tsens.yaml
-> index 94311ebd7652..7c1f121fb417 100644
-> --- a/Documentation/devicetree/bindings/thermal/qcom-tsens.yaml
-> +++ b/Documentation/devicetree/bindings/thermal/qcom-tsens.yaml
-> @@ -54,6 +54,7 @@ properties:
->                - qcom,msm8996-tsens
->                - qcom,msm8998-tsens
->                - qcom,qcm2290-tsens
-> +              - qcom,qcs8300-tsens
->                - qcom,sa8255p-tsens
->                - qcom,sa8775p-tsens
->                - qcom,sar2130p-tsens
-> -- 
-> 2.34.1
-> 
+Changes in v2:
+ - Picked-up Krzysztof's and Dmitry's R-b tags.
+ - Fixed the bindings check reported by Rob.
+ - Fixed indentation reported by Krzysztof.
+ - Re-worded the commits to better explain the incompatibility
+   with previous platforms.
+ - Add the UBWC config patch, as suggested by Dmitry.
+ - Link to v1: https://lore.kernel.org/r/20250911-glymur-display-v1-0-d391a343292e@linaro.org
+
+---
+Abel Vesa (7):
+      dt-bindings: display: msm: Document the Glymur Mobile Display SubSystem
+      dt-bindings: display: msm: Document the Glymur Display Processing Unit
+      dt-bindings: display: msm: Document the Glymur DiplayPort controller
+      drm/msm/mdss: Add Glymur device configuration
+      drm/msm/dpu: Add support for Glymur
+      drm/msm/dp: Add support for Glymur
+      soc: qcom: ubwc: Add configuration Glymur platform
+
+ .../bindings/display/msm/dp-controller.yaml        |   3 +
+ .../bindings/display/msm/qcom,glymur-mdss.yaml     | 264 ++++++++++
+ .../bindings/display/msm/qcom,sm8650-dpu.yaml      |   1 +
+ .../drm/msm/disp/dpu1/catalog/dpu_12_2_glymur.h    | 541 +++++++++++++++++++++
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c     |   1 +
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h     |   1 +
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_mdss.h        |   6 +
+ drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c            |   1 +
+ drivers/gpu/drm/msm/dp/dp_display.c                |   9 +
+ drivers/gpu/drm/msm/msm_mdss.c                     |   1 +
+ drivers/soc/qcom/ubwc_config.c                     |  12 +
+ 11 files changed, 840 insertions(+)
+---
+base-commit: 8fec172c82c2b5f6f8e47ab837c1dc91ee3d1b87
+change-id: 20250910-glymur-display-12d18a2bd741
+
+Best regards,
+-- 
+Abel Vesa <abel.vesa@linaro.org>
+
 
