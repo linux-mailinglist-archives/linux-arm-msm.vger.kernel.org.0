@@ -1,51 +1,50 @@
-Return-Path: <linux-arm-msm+bounces-79076-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-79077-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id D6BF2C11EF2
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Oct 2025 00:07:20 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5A4A1C11F04
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Oct 2025 00:12:53 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id CCBF43BADB6
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Oct 2025 23:07:09 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 138DE3AD286
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Oct 2025 23:12:52 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A6A8E311959;
-	Mon, 27 Oct 2025 23:07:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 030EA320CA9;
+	Mon, 27 Oct 2025 23:12:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="dSEvrJ1w"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="qJn6tTZB"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77ACF30AAA9;
-	Mon, 27 Oct 2025 23:07:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C664C2F692C;
+	Mon, 27 Oct 2025 23:12:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761606425; cv=none; b=t3Oys4gIF6oH77rIOV3MJYSKyLdjBUsoFpHQgHunTtArMzkwp2+v333ojSSpp1+AUhKU/0+GplxWU/y+stiy6Vo9M1ICAU8NMck2RP4um2TURIJSpeaW54LzQN8DHRCq2N09RNOLRglKY27vG2IrOGMz94Yag54Zj0b59Y2h2pQ=
+	t=1761606770; cv=none; b=IzE+C8O/ql/Ij7ma2ctxE8Bteqs7LVjrgSRwbECnr6lmbwBVpPifNkOcRze0wvsrQ1qvKTRGchypZ/23+NuravnUH0HYw+Za9XVDURBB6/pwjzYnUsTjQp/m1qMLjROeqLea2k2TDV+lJhih0XgTR2A8o/rX9bLsF3qqYS25W5g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761606425; c=relaxed/simple;
-	bh=5gOHO/e0ndSafRIOzlPO0K8k5ePcPqe4KtN2yzyOw8U=;
+	s=arc-20240116; t=1761606770; c=relaxed/simple;
+	bh=Mx3p5zNalpC9MUWdOnA7g5eVCMu0dog1BvFeTo03sQA=;
 	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
-	 Content-Disposition:In-Reply-To; b=kveSen+jY9/YLT4uCn5ktAZ5/JaaZjIfmBZmG8/tod/owbyFjWhTYgWftJWUOeSWGEeo1K3nqT1VYDiiUuyyVtIF1hi9eiCNCT2Fv40bgE/3o2VpIx2QaV5gqJlg65WfTJ4w4uoiAcTKtmxEJTdSMIN10wyKhSfLg2MnBOkQNQU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=dSEvrJ1w; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7164C4CEF1;
-	Mon, 27 Oct 2025 23:07:04 +0000 (UTC)
+	 Content-Disposition:In-Reply-To; b=J1GWicIPRWWY4dpWTjUbvli+c3HWDgqs2ZFjfnFCHnQUcT8kvBh2hqXmxWVmdgscWRGpBExAVow9eRi0b8wZrGWjHUhnHdsWkn4iiD2hlssb3V6lxMUFlbYy35zUZDGzQ/uMTEMKVG5PvdwlRVty2fTnfwKbICFVjVf+aLE/X00=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=qJn6tTZB; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37729C4CEF1;
+	Mon, 27 Oct 2025 23:12:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1761606424;
-	bh=5gOHO/e0ndSafRIOzlPO0K8k5ePcPqe4KtN2yzyOw8U=;
+	s=k20201202; t=1761606770;
+	bh=Mx3p5zNalpC9MUWdOnA7g5eVCMu0dog1BvFeTo03sQA=;
 	h=Date:From:To:Cc:Subject:In-Reply-To:From;
-	b=dSEvrJ1wkFFGe5bnUGkbIYfE86etfhigNy/f6BF1PB43bMI8qg7ocqY6Ho1AFr40A
-	 T4OGkX5mH6Myq4NWS/xnoPtU+5LqqdAijz736A/dBxNVLVQ/HlCYR2kNKDmJYI+LHT
-	 uAF/yviv/Il00GdxGkCaUuPxxlWhb27pQrjdb2wkJp1W4m+R4d0W8luHlEk6iBz3Z8
-	 wyKlPqpAtWYWrSmVUkNaPmeIAY93tXfCRT5AlPgAzjk8Xif54uYoTaKUxzQXFhQWXe
-	 6iczFEIcx9hfOTutKEM4ZOJr0QWZBaCVXr48z3uw5i6lgOXa8Dq6eBNG+9M3ZJiJM9
-	 rrdaXGerla/IQ==
-Date: Mon, 27 Oct 2025 18:07:03 -0500
+	b=qJn6tTZBrzolhoGPvFDtIMzFB4iWvXJA/2UHzeT3Ip4aLUEHQa1JMyhfKp9wdOOmr
+	 /DYMeI7gNoJfP8lJGQjJmcFL2AT908Jk4TaFewYx8n0XPmdJVVopb3QUIbItrD8ooc
+	 3pCW/P/DIRXyiYpxHMhCi9bZSzPWmlL2z72nbl+AScIwJI2sBNs4l9ev7Wmnt+t4vr
+	 1u2nPeYe2UpMdy49ymoycuiSiLJ+8k2HIQRMI2BzbQrPLTPrOBSQX2IUqTnVkst7ip
+	 15vOByQbFaFX/gPMEwh5QrPJaxKd63AlGZGQ4y6oqzix50oec6x1Tv7I4/+QiaCYZ5
+	 xiYB1Ur0hkprQ==
+Date: Mon, 27 Oct 2025 18:12:49 -0500
 From: Bjorn Helgaas <helgaas@kernel.org>
-To: Manivannan Sadhasivam <mani@kernel.org>
-Cc: linux-pci@vger.kernel.org,
-	Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>,
+To: linux-pci@vger.kernel.org
+Cc: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>,
 	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
 	Johan Hovold <johan@kernel.org>, Frank Li <Frank.li@nxp.com>,
 	Shawn Lin <shawn.lin@rock-chips.com>, Rob Herring <robh@kernel.org>,
@@ -61,7 +60,7 @@ Cc: linux-pci@vger.kernel.org,
 	Bartosz Golaszewski <brgl@bgdev.pl>, linux-arm-msm@vger.kernel.org,
 	linux-kernel@vger.kernel.org, Bjorn Helgaas <bhelgaas@google.com>
 Subject: Re: [PATCH] Revert "PCI: qcom: Remove custom ASPM enablement code"
-Message-ID: <20251027230703.GA1485546@bhelgaas>
+Message-ID: <20251027231249.GA1487641@bhelgaas>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -70,70 +69,121 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <5y3mxvvkwc2svsm5lt6okytkkw6u7yzfy4i5dgn3fs5v7s4i6i@qv2tvlxotom6>
+In-Reply-To: <20251024210514.1365996-1-helgaas@kernel.org>
 
-On Mon, Oct 27, 2025 at 05:21:30PM +0530, Manivannan Sadhasivam wrote:
-> On Sun, Oct 26, 2025 at 02:37:54PM -0500, Bjorn Helgaas wrote:
-> > On Sun, Oct 26, 2025 at 08:58:29PM +0530, Manivannan Sadhasivam wrote:
-> > > On Fri, Oct 24, 2025 at 04:04:57PM -0500, Bjorn Helgaas wrote:
-> > > > From: Bjorn Helgaas <bhelgaas@google.com>
-> > > > 
-> > > > This reverts commit a729c16646198872e345bf6c48dbe540ad8a9753.
-> > > > 
-> > > > Prior to a729c1664619 ("PCI: qcom: Remove custom ASPM enablement code"),
-> > > > the qcom controller driver enabled ASPM, including L0s, L1, and L1 PM
-> > > > Substates, for all devices powered on at the time the controller driver
-> > > > enumerates them.
-> > > > 
-> > > > ASPM was *not* enabled for devices powered on later by pwrctrl (unless the
-> > > > kernel was built with PCIEASPM_POWERSAVE or PCIEASPM_POWER_SUPERSAVE, or
-> > > > the user enabled ASPM via module parameter or sysfs).
-> > > > 
-> > > > After f3ac2ff14834 ("PCI/ASPM: Enable all ClockPM and ASPM states for
-> > > > devicetree platforms"), the PCI core enabled all ASPM states for all
-> > > > devices whether powered on initially or by pwrctrl, so a729c1664619 was
-> > > > unnecessary and reverted.
-> > > > 
-> > > > But f3ac2ff14834 was too aggressive and broke platforms that didn't support
-> > > > CLKREQ# or required device-specific configuration for L1 Substates, so
-> > > > df5192d9bb0e ("PCI/ASPM: Enable only L0s and L1 for devicetree platforms")
-> > > > enabled only L0s and L1.
-> > > > 
-> > > > On Qualcomm platforms, this left L1 Substates disabled, which was a
-> > > > regression.  Revert a729c1664619 so L1 Substates will be enabled on devices
-> > > > that are initially powered on.  Devices powered on by pwrctrl will be
-> > > > addressed later.
-> ...
-
-> > I have some heartburn about both the revert and the
-> > pci_host_set_default_pcie_link_state() approach because they apply to
-> > the entire hierarchy under a qcom or VMD root port, potentially
-> > including add-in cards with switches.  CLKREQ# (and possibly more) is
-> > required to enable L1SS, and I don't know if we can assume it's
-> > supported on add-in links.
+On Fri, Oct 24, 2025 at 04:04:57PM -0500, Bjorn Helgaas wrote:
+> From: Bjorn Helgaas <bhelgaas@google.com>
 > 
-> I don't think we can assume, but at the same time, I don't think we
-> will ever be able to come up with a logical way to enable L1ss on
-> all devices. But if we leave the decision to the host controller
-> drivers, they can at least guarantee that the CLKREQ# and other
-> requirements are satisfied from the host perspective for L1ss. Then,
-> if any device exhibit erratic behavior, we will for sure know that
-> the device is at fault and we can quirk them.
+> This reverts commit a729c16646198872e345bf6c48dbe540ad8a9753.
+> 
+> Prior to a729c1664619 ("PCI: qcom: Remove custom ASPM enablement code"),
+> the qcom controller driver enabled ASPM, including L0s, L1, and L1 PM
+> Substates, for all devices powered on at the time the controller driver
+> enumerates them.
+> 
+> ASPM was *not* enabled for devices powered on later by pwrctrl (unless the
+> kernel was built with PCIEASPM_POWERSAVE or PCIEASPM_POWER_SUPERSAVE, or
+> the user enabled ASPM via module parameter or sysfs).
+> 
+> After f3ac2ff14834 ("PCI/ASPM: Enable all ClockPM and ASPM states for
+> devicetree platforms"), the PCI core enabled all ASPM states for all
+> devices whether powered on initially or by pwrctrl, so a729c1664619 was
+> unnecessary and reverted.
+> 
+> But f3ac2ff14834 was too aggressive and broke platforms that didn't support
+> CLKREQ# or required device-specific configuration for L1 Substates, so
+> df5192d9bb0e ("PCI/ASPM: Enable only L0s and L1 for devicetree platforms")
+> enabled only L0s and L1.
+> 
+> On Qualcomm platforms, this left L1 Substates disabled, which was a
+> regression.  Revert a729c1664619 so L1 Substates will be enabled on devices
+> that are initially powered on.  Devices powered on by pwrctrl will be
+> addressed later.
+> 
+> Fixes: df5192d9bb0e ("PCI/ASPM: Enable only L0s and L1 for devicetree platforms")
+> Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
 
-If we can figure out that an endpoint is defective, a quirk is great.
-But the issue might be something in the path, e.g., some connector in
-the path leading to the endpoint doesn't include CLKREQ#, and we can't
-quirk the endpoint then.
+Applied to pci/for-linus for v6.18.
 
-To me it sounds like the mainline kernel should be safe and only
-enable L1SS when it has a clear signal that it is safe, either via
-devicetree, ACPI, or L1SS configuration inherited from firmware.  I
-don't want a future of telling users to boot with "pcie_aspm=off" if
-a device doesn't work.
-
-Enabling L1SS *without* such a clear signal feels like something
-downstream kernels might have to do when they know more about the
-topology.
-
-Bjorn
+> ---
+>  drivers/pci/controller/dwc/pcie-qcom.c | 32 ++++++++++++++++++++++++++
+>  1 file changed, 32 insertions(+)
+> 
+> diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
+> index 6948824642dc..c48a20602d7f 100644
+> --- a/drivers/pci/controller/dwc/pcie-qcom.c
+> +++ b/drivers/pci/controller/dwc/pcie-qcom.c
+> @@ -247,6 +247,7 @@ struct qcom_pcie_ops {
+>  	int (*get_resources)(struct qcom_pcie *pcie);
+>  	int (*init)(struct qcom_pcie *pcie);
+>  	int (*post_init)(struct qcom_pcie *pcie);
+> +	void (*host_post_init)(struct qcom_pcie *pcie);
+>  	void (*deinit)(struct qcom_pcie *pcie);
+>  	void (*ltssm_enable)(struct qcom_pcie *pcie);
+>  	int (*config_sid)(struct qcom_pcie *pcie);
+> @@ -1038,6 +1039,25 @@ static int qcom_pcie_post_init_2_7_0(struct qcom_pcie *pcie)
+>  	return 0;
+>  }
+>  
+> +static int qcom_pcie_enable_aspm(struct pci_dev *pdev, void *userdata)
+> +{
+> +	/*
+> +	 * Downstream devices need to be in D0 state before enabling PCI PM
+> +	 * substates.
+> +	 */
+> +	pci_set_power_state_locked(pdev, PCI_D0);
+> +	pci_enable_link_state_locked(pdev, PCIE_LINK_STATE_ALL);
+> +
+> +	return 0;
+> +}
+> +
+> +static void qcom_pcie_host_post_init_2_7_0(struct qcom_pcie *pcie)
+> +{
+> +	struct dw_pcie_rp *pp = &pcie->pci->pp;
+> +
+> +	pci_walk_bus(pp->bridge->bus, qcom_pcie_enable_aspm, NULL);
+> +}
+> +
+>  static void qcom_pcie_deinit_2_7_0(struct qcom_pcie *pcie)
+>  {
+>  	struct qcom_pcie_resources_2_7_0 *res = &pcie->res.v2_7_0;
+> @@ -1312,9 +1332,19 @@ static void qcom_pcie_host_deinit(struct dw_pcie_rp *pp)
+>  	pcie->cfg->ops->deinit(pcie);
+>  }
+>  
+> +static void qcom_pcie_host_post_init(struct dw_pcie_rp *pp)
+> +{
+> +	struct dw_pcie *pci = to_dw_pcie_from_pp(pp);
+> +	struct qcom_pcie *pcie = to_qcom_pcie(pci);
+> +
+> +	if (pcie->cfg->ops->host_post_init)
+> +		pcie->cfg->ops->host_post_init(pcie);
+> +}
+> +
+>  static const struct dw_pcie_host_ops qcom_pcie_dw_ops = {
+>  	.init		= qcom_pcie_host_init,
+>  	.deinit		= qcom_pcie_host_deinit,
+> +	.post_init	= qcom_pcie_host_post_init,
+>  };
+>  
+>  /* Qcom IP rev.: 2.1.0	Synopsys IP rev.: 4.01a */
+> @@ -1376,6 +1406,7 @@ static const struct qcom_pcie_ops ops_1_9_0 = {
+>  	.get_resources = qcom_pcie_get_resources_2_7_0,
+>  	.init = qcom_pcie_init_2_7_0,
+>  	.post_init = qcom_pcie_post_init_2_7_0,
+> +	.host_post_init = qcom_pcie_host_post_init_2_7_0,
+>  	.deinit = qcom_pcie_deinit_2_7_0,
+>  	.ltssm_enable = qcom_pcie_2_3_2_ltssm_enable,
+>  	.config_sid = qcom_pcie_config_sid_1_9_0,
+> @@ -1386,6 +1417,7 @@ static const struct qcom_pcie_ops ops_1_21_0 = {
+>  	.get_resources = qcom_pcie_get_resources_2_7_0,
+>  	.init = qcom_pcie_init_2_7_0,
+>  	.post_init = qcom_pcie_post_init_2_7_0,
+> +	.host_post_init = qcom_pcie_host_post_init_2_7_0,
+>  	.deinit = qcom_pcie_deinit_2_7_0,
+>  	.ltssm_enable = qcom_pcie_2_3_2_ltssm_enable,
+>  };
+> -- 
+> 2.43.0
+> 
 
