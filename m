@@ -1,90 +1,92 @@
-Return-Path: <linux-arm-msm+bounces-78846-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-78847-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [IPv6:2605:f480:58:1:0:1994:3:14])
-	by mail.lfdr.de (Postfix) with ESMTPS id 24D6FC0BE64
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Oct 2025 07:06:29 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 0C23FC0BF25
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Oct 2025 07:25:16 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id DEF6F4E752E
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Oct 2025 06:06:27 +0000 (UTC)
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id DB3B64ECAB2
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Oct 2025 06:25:14 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 501472D9EED;
-	Mon, 27 Oct 2025 06:06:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D0C7E2DBF75;
+	Mon, 27 Oct 2025 06:25:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="UhN0Udah"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="ZuNcoIrw"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pl1-f175.google.com (mail-pl1-f175.google.com [209.85.214.175])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E28C82D94BB
-	for <linux-arm-msm@vger.kernel.org>; Mon, 27 Oct 2025 06:06:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.175
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08CE32DC337
+	for <linux-arm-msm@vger.kernel.org>; Mon, 27 Oct 2025 06:25:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761545180; cv=none; b=KpkJXs6a8G988Hw1MaCio4K/fUCc26zZ76CtowIJK59D1KX2z+uJIehuoAkz7JGd1zFf1buXjM52ITvtE4Nwpxz/KieXaZT0DN7NveasRW+KAY7GuSlSmsnWhmBhC6bR23teT741AVqLba/KTV9KQZvLXEbf9WGBDneOyLDrxGY=
+	t=1761546310; cv=none; b=P6fT4z054rIZ3Qmf090eplpl+hbVeE7VI/FVgTWis1BpKgGJuHD0zvd5XBoVgm4N12kPSbneSKPSk5/cJbH4xtiS6sGKql3yd0qeXbp8j+SfjQhE+Jb8/gkoQ8iL0PpoziqlSDGJp30NYzi8B7pN0Vn3qC74uTzK6kYHCqD/ukw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761545180; c=relaxed/simple;
-	bh=NkM5OOy0ytkuYdLV31rIkddcp0KAU5XfIo38O7mQLp0=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=WSk20AJJzs/SDch+1jzKvkyNlx65pCRIT/CtctAUdtdLWnGo/wZeOODTpK/DM96WY2Mlh5j7byGaBOlcv5pslBmZOxEmrYMEJQQ4Ce0pV0aSlljf7IBsInH6E6700rUk9x8ulNMQsK7zeLatmT6PfRn8DDhBupuZMYx/CEX9U80=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=UhN0Udah; arc=none smtp.client-ip=209.85.214.175
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-pl1-f175.google.com with SMTP id d9443c01a7336-29470bc80ceso45878405ad.1
-        for <linux-arm-msm@vger.kernel.org>; Sun, 26 Oct 2025 23:06:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1761545177; x=1762149977; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=awSfWJCX4NOY9wrF+e8kbd/fw7N/jjAHRA0gUFKf03w=;
-        b=UhN0UdahpzrrAPhmvLivbhqb5qh3PL+X//OdV8ST4M+LYgORcTORh3+5sbxuafLuR5
-         hLx4HuMWwkC5AltIB1R4B/tIkBCeiqoIA6oNmPpmi1BO2z4BlXwLwH/iwMN6JysbSdcf
-         RdopUzLcfdKRBh0YuZNxzTInMFK+eVq+vWwszZ9EmbsPK/lq6NlVe7EG1HS8CcQ9bj5y
-         zSR6XfHRSX80+eq81WVhrHJCLiYIOLdsmlsPij69C0MLg7lPS1t+hF8ajmujC936JB1A
-         hJfc9pU7ldtLzrFlX/poKU8JLTJTfzFP8eyAGkFSNsYltLOhHbML8alI3sJhxAbhTBrQ
-         Ydew==
+	s=arc-20240116; t=1761546310; c=relaxed/simple;
+	bh=lCazBQWnIiQL6MPzUDH/BgTEHt7ubvKTmINYfZvjR50=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=Hgk7ClIQcG0Y8tbANf8L0iCN5T/M0ubgeVKNyHulI2+rZnG/4dE+vESE65S5Kncem0MbrS7XwiHZ8a3lfFBGnBQeW3LLRFTZwhVQweNc+KHzUoif6KVg3yU3yC2kbjBJZuBVaCNHy/hEP8pIcCqYIeS0UPU6PzhSYnqdF4SSsik=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=ZuNcoIrw; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 59QLh60b897286
+	for <linux-arm-msm@vger.kernel.org>; Mon, 27 Oct 2025 06:25:06 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:date:from:message-id:mime-version
+	:subject:to; s=qcppdkim1; bh=teLtNRm505PX8MdgaxTQ1fxSCIYlKPWmx/D
+	tUXEpo74=; b=ZuNcoIrwuEC64OO/+W72lW39Zktlb6lwaLtSurDy+OsFs9jK3aL
+	Yt9i8WV6K8/unlpcgUdktKbNSfgX0o9HcaOr50IEg2Ft0Wrf4QXqjZQCn6VSyCt6
+	mS5wpuxjMqN3My548/NrnRPRkSIlj0uLLBYNWoulHm+/JBfJhtV4LCbjtjkpVCdh
+	0BusGdsxLJHQQhdm2dzPbPgTwXq3EBL7xsETiCQq74PqQuqzHfEEw0s0l3svamSD
+	VslLlO4mU+AmiPHgr6cMF+gfczjlqHhQl7gxAY16f7vdBdpGFYf4Vtcny6vEeHQ5
+	Epm0dgYGvW1ilURMAVM+tKdN3kRyZ2x9d0Q==
+Received: from mail-pl1-f200.google.com (mail-pl1-f200.google.com [209.85.214.200])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4a1uc58v3p-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Mon, 27 Oct 2025 06:25:06 +0000 (GMT)
+Received: by mail-pl1-f200.google.com with SMTP id d9443c01a7336-2930e6e2c03so44932785ad.3
+        for <linux-arm-msm@vger.kernel.org>; Sun, 26 Oct 2025 23:25:05 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1761545177; x=1762149977;
+        d=1e100.net; s=20230601; t=1761546305; x=1762151105;
         h=content-transfer-encoding:mime-version:message-id:date:subject:cc
          :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=awSfWJCX4NOY9wrF+e8kbd/fw7N/jjAHRA0gUFKf03w=;
-        b=uQCGF3eh3jooBGJBU4JD/3lUHIUDbTlK2orWJZxZ3VXrdIv407InILJBfA07Krjkma
-         zEzYR9dy2a479xkpX2vdsAQ6P4mLzw2byWyWtRjV5YMf7BygYAqxrzwA/OgaLi5UIpTn
-         QULT11FTJdH6lnRAECItuqsuIe3cf3hNflDDHXsYjoM6bsDfNvWI0ngDJ7ZuyhG3Lxtz
-         8AIFwYLJTL3NtgvhwypfEnS5RkiKTEU/56sKLGe7y/LiB9eIpb82jI7RPxfR6fxLNErl
-         4oVIjBOe94Rc+vFfBXNzL5xYrZd/cRMZs9jsEWjNM3p3V76VZMr4LTy+VWtloasr7Tbz
-         isfw==
-X-Forwarded-Encrypted: i=1; AJvYcCUY06hN96Sw6RXKMfoQL6zB7noieXPuJV2Yjjm/bnV/fma/jxNEskFzAZvpmmz+BqvZPJqOGU8yISjc1D58@vger.kernel.org
-X-Gm-Message-State: AOJu0YxLdE19leO8FTQP/xK2nRtXZp49FLRjTfCzuCwd9ywuPHN6/z6c
-	OvSA7eZeq/YWP/bmdHrllgPSdKunBR6Kzz2bDJgt9K0IGYRD82uujZPE
-X-Gm-Gg: ASbGncsrXHaJb8zb3ZK4ZcXD0SLqmfO33RpS3UHcJs4sJVIXpP4bMS0x4/9/KIxVVEK
-	sIU45brdy+c7OioRmmR8bs8pn2Hf3HcjeEopGZBp1hsKao2yfCdk/VOKLDeemcB0h9/zkHp7t6u
-	j0kKLvTmkbDElf2mFLZv+sYoENrpSHBcICm3rBhekqaxHeymgfQXKcdyJhEupx8s5+HwnZHuiBg
-	SsAr/88ykDmpuTz414ccC+Z2M+jDTembHQH8KUtfsE42UE4y0Nh0PPQKSxznsjeocTa/ssFp79F
-	Uqd4PhFh7ltLItnar49ODtjqiC740EqMlLQIX2CjPDxmlOvjBsXvSENs6r3McBiEYsUoyY/mhin
-	QTv3yiYVU9q2JjA1HKq/sbuSV8+Wt/jTXpoUWHG3DyqiaK6rtzsLsNrMvwhuYsza23bJTutUwQd
-	mWqIfzETGUn9igTNigr+eZfw==
-X-Google-Smtp-Source: AGHT+IGGfNR3pDzrLXsRHQ0DtnR/zCDD6PytEF/eEQoukh39nKst0A1lb0nK6x8BAecxfbckIr0K+g==
-X-Received: by 2002:a17:902:ce81:b0:294:8c99:f318 with SMTP id d9443c01a7336-2948c99f5d2mr159955775ad.3.1761545176998;
-        Sun, 26 Oct 2025 23:06:16 -0700 (PDT)
-Received: from localhost.localdomain ([124.77.218.104])
-        by smtp.googlemail.com with ESMTPSA id d9443c01a7336-29498e495e8sm67837735ad.110.2025.10.26.23.06.14
-        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
-        Sun, 26 Oct 2025 23:06:16 -0700 (PDT)
-From: Miaoqian Lin <linmq006@gmail.com>
-To: Srinivas Kandagatla <srini@kernel.org>,
-	Vinod Koul <vkoul@kernel.org>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	linux-arm-msm@vger.kernel.org,
-	linux-sound@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Cc: linmq006@gmail.com,
-	stable@vger.kernel.org
-Subject: [PATCH] slimbus: ngd: Fix reference count leak in qcom_slim_ngd_notify_slaves
-Date: Mon, 27 Oct 2025 14:06:01 +0800
-Message-Id: <20251027060601.33228-1-linmq006@gmail.com>
-X-Mailer: git-send-email 2.39.5 (Apple Git-154)
+        bh=teLtNRm505PX8MdgaxTQ1fxSCIYlKPWmx/DtUXEpo74=;
+        b=JB/tu5t+cRKGWvHyXqFbCm8Ej0Gx5pBsAsdsnXb7fg2nHRqsgp1HEsp4tGs/f8i32z
+         Ps6eNFU+RsDDXs27m9G3+xAcKPk4FPLkTTiuTnq/3qUORxjWSH9QS5L6WQuusV1p2r9c
+         mTJjMiGnwvSqCS8kGc42Fp0TiA1MvECi3Vr1uelw63+vjvP1u9zrLB/xjtXM0voNOy2p
+         vMpiDNNr0BFgMd4q6AsVJzHCNyMdBOeHRnRq0+iIeSgBICVV5BXSjre3B+/EoVAB2a6J
+         fZrxPFGgzO7wIT1Kwxc8dhDH3O2IJFkn7bLM2eVkRVb9uq7JWXMhQNmXpl2fV+26rpuI
+         mIZg==
+X-Gm-Message-State: AOJu0YwszeYbecLYUmxQFEyQD2/cWeHfPm2xnUhN8JuKR0EtxZDqoTyB
+	eknc+5lYRDIEQ/C4dQf5f6n//3P6Bc7xduqL1fMgtVRsy/9E846CV5+IZvpAw2oRYnGYvLvLuZl
+	US+rV0pbX7QjcfKTeZngs9H/gI6HAOjPdYnKGv9SOMjuxQoIBc1iznsggASWVIN5we69J
+X-Gm-Gg: ASbGncvdPIxvzzSe3pSKWzkmi0GjUa6UbVXd5ah+BUEJnwwfTlkAQYs+H7fgzATVdO7
+	gHj3BkY/eVsHMlK0UTR3XjcDw/OB8woXL1ovDlrsn8GZtvkziolMpuq27c7fom7J408Wx0/ytGZ
+	B+4VHkSFo3mLJs1CjSNctDF7vWRLpUqk8Z5dxTxwY/BKtq13vmVQt66JP4tQdP/tO4efdVJqRtB
+	67ivsCryK43LR1WUhjsNak0S7Ju+DJdambGFaNljPdBhEFtXFHSu2vUcz9RHy9m4EiR8SdUasa8
+	oLrKXVVF1zh6jzhQdjSe8q52NAsQarm0QsV25pm1fu4OenpFA/gHjKm9vjuRtWdZKJTUMIYRH3Z
+	A+Skao5IozC0VTH9rvzGQqmfCGu0=
+X-Received: by 2002:a17:902:f70b:b0:267:af07:6528 with SMTP id d9443c01a7336-290caf83079mr448673445ad.35.1761546305432;
+        Sun, 26 Oct 2025 23:25:05 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGYsbnoxIoDwX1NoZs2UO3l7p3LATS1TmaBH5XzP3HuuA+Rw6QnyKU7CjxwqONWCAnQw26BZg==
+X-Received: by 2002:a17:902:f70b:b0:267:af07:6528 with SMTP id d9443c01a7336-290caf83079mr448673185ad.35.1761546304946;
+        Sun, 26 Oct 2025 23:25:04 -0700 (PDT)
+Received: from hu-prashk-hyd.qualcomm.com ([202.46.22.19])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-29498d23218sm68346975ad.51.2025.10.26.23.25.02
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 26 Oct 2025 23:25:04 -0700 (PDT)
+From: Prashanth K <prashanth.k@oss.qualcomm.com>
+To: Vinod Koul <vkoul@kernel.org>, Kishon Vijay Abraham I <kishon@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
+        linux-kernel@vger.kernel.org,
+        Prashanth K <prashanth.k@oss.qualcomm.com>
+Subject: [PATCH] phy: qualcomm: m31-eusb2: Add runtime pm ops
+Date: Mon, 27 Oct 2025 11:54:58 +0530
+Message-Id: <20251027062458.1411096-1-prashanth.k@oss.qualcomm.com>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -92,35 +94,102 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
+X-Proofpoint-GUID: mlUszDI9EILRW1pNxl5OzV3aKDg1ujzR
+X-Proofpoint-ORIG-GUID: mlUszDI9EILRW1pNxl5OzV3aKDg1ujzR
+X-Authority-Analysis: v=2.4 cv=Z4Dh3XRA c=1 sm=1 tr=0 ts=68ff1042 cx=c_pps
+ a=IZJwPbhc+fLeJZngyXXI0A==:117 a=fChuTYTh2wq5r3m49p7fHw==:17
+ a=x6icFKpwvdMA:10 a=VkNPw1HP01LnGYTKEx00:22 a=EUspDBNiAAAA:8
+ a=-Y0lm5QSNLYpoQ5O1QAA:9 a=uG9DUKGECoFWVXl0Dc02:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDI3MDA1NiBTYWx0ZWRfX5KbFijHH8Bht
+ jughyYGbPMSLex5Kr1UV2qhRYCjPzo7dxvcYErFjvwpDZfd5aLRXHQPfx/1+0hFxb0oL3jeOC0G
+ 21ijPWlG1NyBV2oWBqb5Cl+L9wbgZ9wGpJYqq75TMJe6K9K/45UA7G0hB0iQFHHnXwt1O3MDluw
+ MNH0hSTFwSc3u3UDQI1cTB2LoblucH35I/Nv4iSJaIy6aBPOQN8i9+6l6D8qj5LoePRHvS7Tdib
+ nCErzbbkudomgH7LF2JbSoX0XqcSudcP8BiSBbJVt+gYu3Wb23iT30TCCvfz56m4GIHXI7hnMOM
+ huONy3I1qVdN4nGAKeRHBc/SgTrf1z8FWIjJx9j1bhniAur2r1taA1fIIHhr1NZZLT07dzU2k0G
+ 2i+SjO+WaqPaJ3TBMS4VsVGZqqyAhA==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-10-27_03,2025-10-22_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ impostorscore=0 phishscore=0 spamscore=0 priorityscore=1501 malwarescore=0
+ bulkscore=0 adultscore=0 suspectscore=0 lowpriorityscore=0 clxscore=1015
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2510020000 definitions=main-2510270056
 
-The function qcom_slim_ngd_notify_slaves() calls of_slim_get_device() which
-internally uses device_find_child() to obtain a device reference.
-According to the device_find_child() documentation,
-the caller must drop the reference with put_device() after use.
+Add runtime power management operation callbacks for M31 EUSB2 PHY.
+Enable/disable the clocks based on the runtime suspend/resume calls.
 
-Found via static analysis and this is similar to commit 4e65bda8273c
-("ASoC: wcd934x: fix error handling in wcd934x_codec_parse_data()")
-
-Fixes: 917809e2280b ("slimbus: ngd: Add qcom SLIMBus NGD driver")
-Cc: stable@vger.kernel.org
-Signed-off-by: Miaoqian Lin <linmq006@gmail.com>
+Signed-off-by: Prashanth K <prashanth.k@oss.qualcomm.com>
 ---
- drivers/slimbus/qcom-ngd-ctrl.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/phy/qualcomm/phy-qcom-m31-eusb2.c | 40 +++++++++++++++++++++++
+ 1 file changed, 40 insertions(+)
 
-diff --git a/drivers/slimbus/qcom-ngd-ctrl.c b/drivers/slimbus/qcom-ngd-ctrl.c
-index 4fb66986cc22..cd40ab839c54 100644
---- a/drivers/slimbus/qcom-ngd-ctrl.c
-+++ b/drivers/slimbus/qcom-ngd-ctrl.c
-@@ -1241,6 +1241,7 @@ static void qcom_slim_ngd_notify_slaves(struct qcom_slim_ngd_ctrl *ctrl)
+diff --git a/drivers/phy/qualcomm/phy-qcom-m31-eusb2.c b/drivers/phy/qualcomm/phy-qcom-m31-eusb2.c
+index 0a0d2d9fc846..1aeb5e3de07c 100644
+--- a/drivers/phy/qualcomm/phy-qcom-m31-eusb2.c
++++ b/drivers/phy/qualcomm/phy-qcom-m31-eusb2.c
+@@ -240,6 +240,34 @@ static const struct phy_ops m31eusb2_phy_gen_ops = {
+ 	.owner		= THIS_MODULE,
+ };
  
- 		if (slim_get_logical_addr(sbdev))
- 			dev_err(ctrl->dev, "Failed to get logical address\n");
-+		put_device(&sbdev->dev);
- 	}
- }
++static int m31eusb2_phy_runtime_suspend(struct device *dev)
++{
++	struct m31eusb2_phy *phy = dev_get_drvdata(dev);
++
++	dev_dbg(dev, "Suspending M31 eUSB2 Phy\n");
++	clk_disable_unprepare(phy->clk);
++
++	return 0;
++}
++
++static int m31eusb2_phy_runtime_resume(struct device *dev)
++{
++	struct m31eusb2_phy *phy = dev_get_drvdata(dev);
++	int ret = 0;
++
++	dev_dbg(dev, "Resuming M31 eUSB2 Phy\n");
++	ret = clk_prepare_enable(phy->clk);
++	if (ret)
++		dev_err(dev, "failed to enable ref clock, %d\n", ret);
++
++	return ret;
++}
++
++static const struct dev_pm_ops m31eusb2_phy_pm_ops = {
++	SET_RUNTIME_PM_OPS(m31eusb2_phy_runtime_suspend,
++			   m31eusb2_phy_runtime_resume, NULL)
++};
++
+ static int m31eusb2_phy_probe(struct platform_device *pdev)
+ {
+ 	struct phy_provider *phy_provider;
+@@ -270,6 +298,17 @@ static int m31eusb2_phy_probe(struct platform_device *pdev)
+ 		return dev_err_probe(dev, PTR_ERR(phy->clk),
+ 				     "failed to get clk\n");
  
++	dev_set_drvdata(dev, phy);
++	pm_runtime_set_active(dev);
++	pm_runtime_enable(dev);
++
++	/*
++	 * Prevent runtime pm from being ON by default. Users can enable
++	 * it using power/control in sysfs.
++	 */
++	pm_runtime_forbid(dev);
++
++
+ 	phy->phy = devm_phy_create(dev, NULL, &m31eusb2_phy_gen_ops);
+ 	if (IS_ERR(phy->phy))
+ 		return dev_err_probe(dev, PTR_ERR(phy->phy),
+@@ -313,6 +352,7 @@ static struct platform_driver m31eusb2_phy_driver = {
+ 	.probe = m31eusb2_phy_probe,
+ 	.driver = {
+ 		.name = "qcom-m31eusb2-phy",
++		.pm = &m31eusb2_phy_pm_ops,
+ 		.of_match_table = m31eusb2_phy_id_table,
+ 	},
+ };
 -- 
-2.39.5 (Apple Git-154)
+2.34.1
 
 
