@@ -1,66 +1,57 @@
-Return-Path: <linux-arm-msm+bounces-79011-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-79012-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id CC91AC0FF9C
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Oct 2025 19:41:23 +0100 (CET)
+Received: from ams.mirrors.kernel.org (ams.mirrors.kernel.org [IPv6:2a01:60a::1994:3:14])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9C995C10210
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Oct 2025 19:48:09 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 138B719C53B5
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Oct 2025 18:41:46 +0000 (UTC)
+	by ams.mirrors.kernel.org (Postfix) with ESMTPS id E4C2A34D8A7
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Oct 2025 18:48:08 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CDB9931B110;
-	Mon, 27 Oct 2025 18:41:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id DF23732C934;
+	Mon, 27 Oct 2025 18:44:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="dkmMJuKP"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="adrHCve0"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0D04319611;
-	Mon, 27 Oct 2025 18:41:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B59CC32C33A;
+	Mon, 27 Oct 2025 18:44:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761590477; cv=none; b=GepTFZqkvhdNsM6K7HzrZLOMOvBX0MgWL59eDq1Q9nMaaahciwW6CxWOYrMK5S0DSb3oOlR+mQcsSYgDl9yfxQfNxRTGrPaZgF7q9fTPmacX6u6IfMjsEHObUR5iMb8wkmGEirXX88xfyPBMnTYTvI500ZkrP12FvRlfzc/vMHI=
+	t=1761590672; cv=none; b=ZGSUjOu6nZ4wAGrs5pf/IpH2CduZdrYfB6FskaKuDyI8zyw+4URFRl0ymJE4OVzomPw+/Tfw5GFWc1OJy1Ly8VWQfO2n84/HePa6NiYCkmqn1AoqfMKsKG6/m8BxtamYYhoMVAzOQOpNVq0LDdD39sO/KXs8sk29SRZci9G/NZo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761590477; c=relaxed/simple;
-	bh=1lLY6d0MKyfiGfV93rULKwdDF9mSEE/eTixRy0YpQoA=;
+	s=arc-20240116; t=1761590672; c=relaxed/simple;
+	bh=RvUxiEGFeW3NMtfz/dRup2oPdxZ5E6k0VP0dKpiXn0c=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=mQ8iRm9UAarNV3GSVv602o8yL2QvuFs9PCMi3YeNnA/JkJRdoDNL4WZ6cssGAMU6hsERYuh3nTxX0HAvMh27g19IciZJ3n6qZ28vUWKcD7CBSeZid/NWw/Oh9r1qeCkXyUfvx7yJJRHcLnO9yu3iCvq5EBrtKMpHKSRnheXpacQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=dkmMJuKP; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B1B6C4CEF1;
-	Mon, 27 Oct 2025 18:41:16 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=m9Cj+rrwL+t8ryR/D/P5M6eY5U+PX3DT8GBRDN4XqwKN7lXpz1m/VKP+yeug06p1Rn47tFtBbIr7NeuxcaufwaTOGO1tBBGecAp2nL9/qqmINIDd7FBSRhXYsLhCO9BIuWvysaR1+1PLjDmbUWChqFlITH0lh2mKPFJC1LYTtGw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=adrHCve0; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB83FC116C6;
+	Mon, 27 Oct 2025 18:44:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1761590477;
-	bh=1lLY6d0MKyfiGfV93rULKwdDF9mSEE/eTixRy0YpQoA=;
+	s=k20201202; t=1761590672;
+	bh=RvUxiEGFeW3NMtfz/dRup2oPdxZ5E6k0VP0dKpiXn0c=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=dkmMJuKPCMl5JjhaOrVEVK8FOQzmB9B0rf6/QB6MRxxLglrVyannxhcJDgKm+DhFm
-	 0JPMiKviTckp7wdL8vB+2X+Rh4iIbypOZFjSfwRezuL5wNzow5zae+2ZQXOB/5Fc0j
-	 lIPF5AgS5zOigi/Yfgnh1+LHgGZfUpYrBsxS/0RF0gQ0LWxEKu6P7mr4Adtuku1VZm
-	 5HiOy9XudA2PY/fll8mkBNqePwDNJxxdETW3Rod/YAGwrccvpzZ08EFGCWbxlM0EfK
-	 QcDYHEBr7dH4CeAb7k1ZztOM3GP4Z02iL6Mm25HzOfFTZmd8UUycYaKJKT36/AhunN
-	 G/3pDXKL8lY5g==
-Date: Mon, 27 Oct 2025 13:44:10 -0500
+	b=adrHCve0oH8U/FiBIAqdGZn/1mq1SHOWzy/ikWGq0Q3uRrBQbArugdE8T5xknY0KD
+	 QSpFpaXnCy11T4f164BZNc2vWRhZ5aak9TIOQr6tojS+ofdciBa9cFHZY7rIfCO+T6
+	 pVMobUrfx1qsAVTcT5zTO8K+1RNquDT1y7gSgEc5H9wPbVI9pef6mJcWg4pYG5MvES
+	 XKCo9y4B95EiJdoVJjamk28P4sF4JjgPHBofsfMT8JRcITrS0wJCYpGGd+poaxIiNm
+	 0SdHoXcCFpN/Ez5WScIz5AKMdmSv7SLz3RUmEwoMFpk1nMgGY3lT7jEOYKsRdtIkkh
+	 TxMLN1+bI6WIg==
+Date: Mon, 27 Oct 2025 13:47:26 -0500
 From: Bjorn Andersson <andersson@kernel.org>
-To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Cc: Jingyi Wang <jingyi.wang@oss.qualcomm.com>, 
-	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
-	Conor Dooley <conor+dt@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, 
-	Robert Marko <robimarko@gmail.com>, Das Srinagesh <quic_gurus@quicinc.com>, 
-	aiqun.yu@oss.qualcomm.com, tingwei.zhang@oss.qualcomm.com, trilok.soni@oss.qualcomm.com, 
-	yijie.yang@oss.qualcomm.com, linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, Eugen Hristev <eugen.hristev@linaro.org>
-Subject: Re: [PATCH v2 1/4] dt-bindings: soc: qcom: Add qcom,kaanapali-imem
- compatible
-Message-ID: <ygqgzflpavwgd43e5zedgcijm3lz27nqlzprttalgcroedz45u@ztqkppajpyry>
-References: <20251022-knp-soc-binding-v2-0-3cd3f390f3e2@oss.qualcomm.com>
- <20251022-knp-soc-binding-v2-1-3cd3f390f3e2@oss.qualcomm.com>
- <g2iviaqetgxf5ycz2otzkpmmc4goo7xuyjmttuu254bfzqqvkf@4vybjh4eghpm>
- <4eebcb7d-1eca-4914-915a-d42232233f9f@oss.qualcomm.com>
- <dwfvko3hszsoh4ihnz3qdpsugmocbkrbhosijdw5q3bxh64kuo@o74as2li74px>
- <lz4sbvzfiij3qsa4d7jeblmi2vfubc4ltf435sh6tcs53l6fbq@7f3tfm7yiyjc>
- <mwin3lfvpcwxxhsub2whcpibuayk36f4ljrodvithfygqad5w4@cg4h6peh4v4a>
+To: Manikanta Mylavarapu <quic_mmanikan@quicinc.com>
+Cc: konradybcio@kernel.org, robh@kernel.org, krzk+dt@kernel.org, 
+	conor+dt@kernel.org, linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, quic_srichara@quicinc.com, quic_varada@quicinc.com, 
+	kathiravan.thirumoorthy@oss.qualcomm.com
+Subject: Re: [PATCH v1] arm64: dts: qcom: ipq5424: add cooling maps for CPU
+ thermal zones
+Message-ID: <lnabvjseahtfgc32zuvnd47vwv7fefpvmubgqo3rfpl7mr4k53@fprkvzsimgim>
+References: <20251023043838.1603673-1-quic_mmanikan@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -69,120 +60,197 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <mwin3lfvpcwxxhsub2whcpibuayk36f4ljrodvithfygqad5w4@cg4h6peh4v4a>
+In-Reply-To: <20251023043838.1603673-1-quic_mmanikan@quicinc.com>
 
-On Thu, Oct 23, 2025 at 03:06:00AM +0300, Dmitry Baryshkov wrote:
-> On Wed, Oct 22, 2025 at 05:42:58PM -0500, Bjorn Andersson wrote:
-> > On Wed, Oct 22, 2025 at 12:34:58PM +0300, Dmitry Baryshkov wrote:
-> > > On Wed, Oct 22, 2025 at 05:05:30PM +0800, Jingyi Wang wrote:
-> > > > 
-> > > > 
-> > > > On 10/22/2025 4:49 PM, Dmitry Baryshkov wrote:
-> > > > > On Wed, Oct 22, 2025 at 12:28:41AM -0700, Jingyi Wang wrote:
-> > > > >> Document qcom,kaanapali-imem compatible.
-> > > > >>
-> > > > >> Reviewed-by: Eugen Hristev <eugen.hristev@linaro.org>
-> > > > >> Signed-off-by: Jingyi Wang <jingyi.wang@oss.qualcomm.com>
-> > > > >> ---
-> > > > >>  Documentation/devicetree/bindings/sram/qcom,imem.yaml | 1 +
-> > > > >>  1 file changed, 1 insertion(+)
-> > > > >>
-> > > > >> diff --git a/Documentation/devicetree/bindings/sram/qcom,imem.yaml b/Documentation/devicetree/bindings/sram/qcom,imem.yaml
-> > > > >> index 6a627c57ae2f..1e29a8ff287f 100644
-> > > > >> --- a/Documentation/devicetree/bindings/sram/qcom,imem.yaml
-> > > > >> +++ b/Documentation/devicetree/bindings/sram/qcom,imem.yaml
-> > > > >> @@ -19,6 +19,7 @@ properties:
-> > > > >>        - enum:
-> > > > >>            - qcom,apq8064-imem
-> > > > >>            - qcom,ipq5424-imem
-> > > > >> +          - qcom,kaanapali-imem
-> > > > > 
-> > > > > Can you use mmio-sram instead?
-> > > > > 
-> > > > 
-> > > > Here is the node: 
-> > > > 
-> > > > 		sram@14680000 {
-> > > > 			compatible = "qcom,kaanapali-imem", "syscon", "simple-mfd";
-> > > > 			reg = <0x0 0x14680000 0x0 0x1000>;
-> > > > 			ranges = <0 0 0x14680000 0x1000>;
-> > > > 
-> > > > 			#address-cells = <1>;
-> > > > 			#size-cells = <1>;
-> > > > 
-> > > > 			pil-reloc@94c {
-> > > > 				compatible = "qcom,pil-reloc-info";
-> > > > 				reg = <0x94c 0xc8>;
-> > > > 			};
-> > > > 		};
-> > > > 
-> > > > other qualcomm are also using imem, could you please give more details on why
-> > > > we should use mmio-sram here?
-> > > 
-> > > https://lore.kernel.org/linux-arm-msm/e4c5ecc3-fd97-4b13-a057-bb1a3b7f9207@kernel.org/
-> > > 
-> > 
-> > I considered exactly this when I wrote the binding back then...
-> > 
-> > But the binding defines mmio-sram as "Simple IO memory regions to be
-> > managed by the genalloc API." and the Linux sram driver follows that and
-> > registers a gen_pool across the sram memory region.
-> > 
-> > I believe IMEM is SRAM (it's at least not registers), but its memory
-> > layout is fixed, so it's not a pool in any form.
-> > 
-> > 
-> > What Krzysztof says makes sense, but rather than just throwing a yak at
-> > Jingyi, it would be nice if you provided some guidance on how you would
-> > like to see this turn out.
+On Thu, Oct 23, 2025 at 10:08:38AM +0530, Manikanta Mylavarapu wrote:
+> Add cooling-maps to the cpu1, cpu2, and cpu3 thermal zones to associate
+> passive trip points with CPU cooling devices. This enables proper
+> thermal mitigation by allowing the thermal framework to throttle CPUs
+> based on temperature thresholds. Also, label the trip points to allow
+> referencing them in the cooling maps.
 > 
-> I tested, pretty same approach seems to work:
-> 
+> Signed-off-by: Manikanta Mylavarapu <quic_mmanikan@quicinc.com>
 
-Now you're shaving at random ;)
-
-> 	sram@14680000 {
-> 		compatible = "mmio-sram";
-
-You can put "pil-reloc-sram" wherever, because it will perform a
-of_find_compatible_node() to dig up some node with the compatible
-"qcom,pil-reloc-info" .
-
-In other words, this line created a genpool for something that really
-isn't a genpool, but luckily that didn't have any side effects.
-
-
-There are however other users of IMEM, such as the "reboot-mode", which
-relies on the "sram" device probing child devices, and is implemented by
-"syscon-reboot-mode".
-
-Perhaps the solution is to not support any new users of that?
-
-
-But no matter what, the definition "Simple IO memory regions to be
-managed by the genalloc API" will never be true for IMEM.
-
-And as this isn't a syscon, simple-mfd, or mmio-sram...how about making
-the fallback "qcom,imem" (in this same binding) and omitting any
-implementation until we need one)?
+Please use oss.qualcomm.com going forward.
 
 Regards,
 Bjorn
 
-> 		reg = <0x0 0x14680000 0x0 0x1000>;
-> 		ranges = <0 0 0x14680000 0x1000>;
+> ---
+>  arch/arm64/boot/dts/qcom/ipq5424.dtsi | 61 +++++++++++++++++++++++----
+>  1 file changed, 53 insertions(+), 8 deletions(-)
 > 
-> 		#address-cells = <1>;
-> 		#size-cells = <1>;
+> diff --git a/arch/arm64/boot/dts/qcom/ipq5424.dtsi b/arch/arm64/boot/dts/qcom/ipq5424.dtsi
+> index ef2b52f3597d..e4a51eeefeac 100644
+> --- a/arch/arm64/boot/dts/qcom/ipq5424.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/ipq5424.dtsi
+> @@ -13,6 +13,7 @@
+>  #include <dt-bindings/reset/qcom,ipq5424-gcc.h>
+>  #include <dt-bindings/interconnect/qcom,ipq5424.h>
+>  #include <dt-bindings/gpio/gpio.h>
+> +#include <dt-bindings/thermal/thermal.h>
+>  
+>  / {
+>  	#address-cells = <2>;
+> @@ -57,6 +58,7 @@ cpu0: cpu@0 {
+>  			clock-names = "cpu";
+>  			operating-points-v2 = <&cpu_opp_table>;
+>  			interconnects = <&apss_clk MASTER_CPU &apss_clk SLAVE_L3>;
+> +			#cooling-cells = <2>;
+>  
+>  			l2_0: l2-cache {
+>  				compatible = "cache";
+> @@ -82,6 +84,7 @@ cpu1: cpu@100 {
+>  			clock-names = "cpu";
+>  			operating-points-v2 = <&cpu_opp_table>;
+>  			interconnects = <&apss_clk MASTER_CPU &apss_clk SLAVE_L3>;
+> +			#cooling-cells = <2>;
+>  
+>  			l2_100: l2-cache {
+>  				compatible = "cache";
+> @@ -101,6 +104,7 @@ cpu2: cpu@200 {
+>  			clock-names = "cpu";
+>  			operating-points-v2 = <&cpu_opp_table>;
+>  			interconnects = <&apss_clk MASTER_CPU &apss_clk SLAVE_L3>;
+> +			#cooling-cells = <2>;
+>  
+>  			l2_200: l2-cache {
+>  				compatible = "cache";
+> @@ -120,6 +124,7 @@ cpu3: cpu@300 {
+>  			clock-names = "cpu";
+>  			operating-points-v2 = <&cpu_opp_table>;
+>  			interconnects = <&apss_clk MASTER_CPU &apss_clk SLAVE_L3>;
+> +			#cooling-cells = <2>;
+>  
+>  			l2_300: l2-cache {
+>  				compatible = "cache";
+> @@ -1235,18 +1240,28 @@ cpu0-thermal {
+>  			thermal-sensors = <&tsens 14>;
+>  
+>  			trips {
+> -				cpu-critical {
+> +				cpu0_crit: cpu-critical {
+>  					temperature = <120000>;
+>  					hysteresis = <9000>;
+>  					type = "critical";
+>  				};
+>  
+> -				cpu-passive {
+> +				cpu0_alert: cpu-passive {
+>  					temperature = <110000>;
+>  					hysteresis = <9000>;
+>  					type = "passive";
+>  				};
+>  			};
+> +
+> +			cooling-maps {
+> +				map0 {
+> +					trip = <&cpu0_alert>;
+> +					cooling-device = <&cpu0 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
+> +							 <&cpu1 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
+> +							 <&cpu2 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
+> +							 <&cpu3 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>;
+> +				};
+> +			};
+>  		};
+>  
+>  		cpu1-thermal {
+> @@ -1254,18 +1269,28 @@ cpu1-thermal {
+>  			thermal-sensors = <&tsens 12>;
+>  
+>  			trips {
+> -				cpu-critical {
+> +				cpu1_crit: cpu-critical {
+>  					temperature = <120000>;
+>  					hysteresis = <9000>;
+>  					type = "critical";
+>  				};
+>  
+> -				cpu-passive {
+> +				cpu1_alert: cpu-passive {
+>  					temperature = <110000>;
+>  					hysteresis = <9000>;
+>  					type = "passive";
+>  				};
+>  			};
+> +
+> +			cooling-maps {
+> +				map0 {
+> +					trip = <&cpu1_alert>;
+> +					cooling-device = <&cpu0 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
+> +							 <&cpu1 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
+> +							 <&cpu2 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
+> +							 <&cpu3 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>;
+> +				};
+> +			};
+>  		};
+>  
+>  		cpu2-thermal {
+> @@ -1273,18 +1298,28 @@ cpu2-thermal {
+>  			thermal-sensors = <&tsens 11>;
+>  
+>  			trips {
+> -				cpu-critical {
+> +				cpu2_crit: cpu-critical {
+>  					temperature = <120000>;
+>  					hysteresis = <9000>;
+>  					type = "critical";
+>  				};
+>  
+> -				cpu-passive {
+> +				cpu2_alert: cpu-passive {
+>  					temperature = <110000>;
+>  					hysteresis = <9000>;
+>  					type = "passive";
+>  				};
+>  			};
+> +
+> +			cooling-maps {
+> +				map0 {
+> +					trip = <&cpu2_alert>;
+> +					cooling-device = <&cpu0 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
+> +							 <&cpu1 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
+> +							 <&cpu2 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
+> +							 <&cpu3 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>;
+> +				};
+> +			};
+>  		};
+>  
+>  		cpu3-thermal {
+> @@ -1292,18 +1327,28 @@ cpu3-thermal {
+>  			thermal-sensors = <&tsens 13>;
+>  
+>  			trips {
+> -				cpu-critical {
+> +				cpu3_crit: cpu-critical {
+>  					temperature = <120000>;
+>  					hysteresis = <9000>;
+>  					type = "critical";
+>  				};
+>  
+> -				cpu-passive {
+> +				cpu3_alert: cpu-passive {
+>  					temperature = <110000>;
+>  					hysteresis = <9000>;
+>  					type = "passive";
+>  				};
+>  			};
+> +
+> +			cooling-maps {
+> +				map0 {
+> +					trip = <&cpu3_alert>;
+> +					cooling-device = <&cpu0 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
+> +							 <&cpu1 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
+> +							 <&cpu2 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
+> +							 <&cpu3 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>;
+> +				};
+> +			};
+>  		};
+>  
+>  		wcss-tile2-thermal {
 > 
-> 		pil-reloc-sram@94c {
-> 			compatible = "qcom,pil-reloc-info";
-> 			reg = <0x94c 0xc8>;
-> 		};
-> 	};
-> 
-> 
+> base-commit: fe45352cd106ae41b5ad3f0066c2e54dbb2dfd70
 > -- 
-> With best wishes
-> Dmitry
+> 2.34.1
+> 
 
