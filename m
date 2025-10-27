@@ -1,67 +1,64 @@
-Return-Path: <linux-arm-msm+bounces-79062-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-79063-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ams.mirrors.kernel.org (ams.mirrors.kernel.org [213.196.21.55])
-	by mail.lfdr.de (Postfix) with ESMTPS id C2E70C11D16
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Oct 2025 23:43:35 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 507F5C11D40
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Oct 2025 23:45:11 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ams.mirrors.kernel.org (Postfix) with ESMTPS id 702433490B0
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Oct 2025 22:43:35 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id D494D1A22092
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Oct 2025 22:44:13 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0E53D34AB06;
-	Mon, 27 Oct 2025 22:35:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3C48D34B408;
+	Mon, 27 Oct 2025 22:35:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="uoBqhw+T"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="KNmH8h93"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3E1B34AAF5;
-	Mon, 27 Oct 2025 22:35:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 124C134B1BB;
+	Mon, 27 Oct 2025 22:35:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761604529; cv=none; b=Xq6hwBa34PwJDJxzctAYNdGqQyJBqNk+x87Trw20dNXoQ3D4HNpTvAWhPJpAqVh/ZssUSfwJiHC6WoMjIf+GVaxwgxZPMoE68udWXaaJ1Fu+JmmUmHRWb0Kd1B7LGBju9W+4QSzUKWqQDUrzvmAmMW/hcOXG+VWFkNx6NIvBQwE=
+	t=1761604531; cv=none; b=lZkMdZ8Dt2DSJP6OcNvIvgfujq22MBYtJQxwZLvhjZEDgurVEDkWntX+u0bAdDLKOfuL8Ju55QkFiwOKReudGbUvuKTzEg4GZJeR8v+aP7JrvhHmKoYVtar0l6yB4R6ECilGPLa2en9R68N6KafuwNO8HgKb4sQN7qW9loYMZXo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761604529; c=relaxed/simple;
-	bh=7Ii7lyDAUOoZcAzalxKR7YzpfZvEDQkxSBDrjbAdQOs=;
+	s=arc-20240116; t=1761604531; c=relaxed/simple;
+	bh=gf9iB7rjuKFnti/sQeX6uoMja3ILBa/o6HB/Y58ZfW0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=E+B4dZoMcdgDPkq8TIfwYSbSQffqqhVkKgSVn9vFxlM3Kaz7Xc/wNE1gpqvp61WHAGJhOvhlfS/v53rvuBK7O7oWhYd0LGXsTQJXCYRBz9d5BoR0JIg7345LUlizfwM7wLl+PzL1Ba0AV7QYjW92MoLAHOqhkNCUIetNQkyX4u0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=uoBqhw+T; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5E74C116B1;
-	Mon, 27 Oct 2025 22:35:28 +0000 (UTC)
+	 MIME-Version:Content-Type; b=Vzybwzytiusbt0yfEhpzyqwfY3mJ1OqrK/VlL6/bE4lVuziHRMqaOi982YazQiRF0vYIbn9CTA3VC1JLw+aYy/uyW9DsSAYy721yU7v2Jos1K+j8dF+MWwD+WGiIQihTxM509S0kiY/Mhnl1BISd9MhmjaqkHCmekoZhbna31sw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=KNmH8h93; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0207C4CEFB;
+	Mon, 27 Oct 2025 22:35:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1761604529;
-	bh=7Ii7lyDAUOoZcAzalxKR7YzpfZvEDQkxSBDrjbAdQOs=;
+	s=k20201202; t=1761604530;
+	bh=gf9iB7rjuKFnti/sQeX6uoMja3ILBa/o6HB/Y58ZfW0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uoBqhw+TuH7YnNWXXWiXOcOjweN8yPBl6lLGK3Je9zBTRtyI2NsgsILyQPyYeBvaU
-	 U/J3oU9/leRrAgvT8lWw2jpd0atyiyTgm8Ro1w1dIn7nKrhJa2/id/r+Xnz7ntUJkv
-	 dgDEQ21i3CVh/67HQNOY8zeFbvB7mtUXb+nYdZoltv8dMVX0+HNFscaEv5z+XUYNN2
-	 R2heQ17hCvpfkBdr+aB53dV0zVurEWR8MA8GzMem9ry58UOtCbdoB1irSAe367BS7i
-	 GkMFkb+JqStQDEGTt7qh+gU4D9izsTYTrIkGzhkpN398M38bShYDPBwPdi/4yROrmD
-	 4EdP0xuckpNbA==
+	b=KNmH8h93UtOSQzArR0uQmVfIy5M/cs+nX3NjGM1ewsOxZ87BUCwKk6IExX/wHIoQC
+	 YKV7H2QQtz9r0EFsfKucvAJz76I6T44vvRNxIoif39y4cKZJ4Q0CwhilAJopbW+yDY
+	 kAMtd/V3WpnYqGqmq5ZVnfb5biGcZXq1DVikVrOwy0WPN6f0HWSjPXXSc98QOGZjd9
+	 fMiuGkhz/hkxU5SxmICxdb/oDAmJ3UE+nJKyRj49FaXNG9JMO6p4ByG+DoLPLgVo12
+	 qKcO/iQIVwRSS5y4L7mi6APLTJgbPcyeB/v87H+q7KLdCQo/bdY1xAILYss8yxoAIv
+	 0H0rfuWxhpx0w==
 From: Bjorn Andersson <andersson@kernel.org>
-To: Georgi Djakov <djakov@kernel.org>,
+To: Konrad Dybcio <konradybcio@kernel.org>,
 	Rob Herring <robh@kernel.org>,
 	Krzysztof Kozlowski <krzk+dt@kernel.org>,
 	Conor Dooley <conor+dt@kernel.org>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	Sibi Sankar <sibi.sankar@oss.qualcomm.com>,
-	Raviteja Laggyshetty <raviteja.laggyshetty@oss.qualcomm.com>
+	Xilin Wu <sophon@radxa.com>
 Cc: linux-arm-msm@vger.kernel.org,
-	linux-pm@vger.kernel.org,
 	devicetree@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
-	Mike Tipton <mike.tipton@oss.qualcomm.com>,
-	Odelu Kukatla <odelu.kukatla@oss.qualcomm.com>,
-	Imran Shaik <imran.shaik@oss.qualcomm.com>
-Subject: Re: (subset) [PATCH v3 0/2] Add OSM L3 provider support on QCS615 SoC
-Date: Mon, 27 Oct 2025 17:37:22 -0500
-Message-ID: <176160465171.73268.4640144203295643935.b4-ty@kernel.org>
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Subject: Re: [PATCH v5 0/2] arm64: dts: qcom: qcs6490: Introduce Radxa Dragon Q6A
+Date: Mon, 27 Oct 2025 17:37:23 -0500
+Message-ID: <176160465203.73268.1417721719455303293.b4-ty@kernel.org>
 X-Mailer: git-send-email 2.51.0
-In-Reply-To: <20250819-talos-l3-icc-v3-0-04529e85dac7@oss.qualcomm.com>
-References: <20250819-talos-l3-icc-v3-0-04529e85dac7@oss.qualcomm.com>
+In-Reply-To: <20250929-radxa-dragon-q6a-v5-0-aa96ffc352f8@radxa.com>
+References: <20250929-radxa-dragon-q6a-v5-0-aa96ffc352f8@radxa.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -72,25 +69,23 @@ Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 
 
-On Tue, 19 Aug 2025 11:24:45 +0000, Raviteja Laggyshetty wrote:
-> Add Operation State Manager (OSM) L3 scaling support on QCS615 SoC.
-> This series has dependency on [1].
+On Mon, 29 Sep 2025 14:46:40 +0800, Xilin Wu wrote:
+> Radxa Dragon Q6A (https://docs.radxa.com/en/dragon/q6a) is a single board
+> computer, based on the Qualcomm QCS6490 platform.
 > 
-> [1] https://lore.kernel.org/all/20250814-qcs615-mm-cpu-dt-v6-v6-0-a06f69928ab5@oss.qualcomm.com/
-> 
-> Changes since v2:
->   - Updated SoB sequence [Dmitry].
->   - Addressed review comments related to reg field in device node
->     [Dmitry].
->   - Updated the commit text as per review comment [Krzysztof]
->   - Link to v2: https://lore.kernel.org/all/20250804061536.110-1-raviteja.laggyshetty@oss.qualcomm.com/
+> The board ships with a modified version of the Qualcomm Linux boot
+> firmware, which is stored on the onboard SPI NOR flash. This allows
+> booting standard EFI-based bootloaders from SD/eMMC/USB/UFS/NVMe. It
+> supports replaceable UFS 3.1/eMMC modules for easy user upgrades.
 > 
 > [...]
 
 Applied, thanks!
 
-[2/2] arm64: dts: qcom: qcs615: Add OSM l3 interconnect provider node and CPU OPP tables to scale DDR/L3
-      commit: 44562f5918907b2e0d7e265540afebe7a42c48d2
+[1/2] dt-bindings: arm: qcom: Add Radxa Dragon Q6A
+      commit: 8388ebac980201382941600d4d9a2dc0bc1c9db4
+[2/2] arm64: dts: qcom: qcs6490: Introduce Radxa Dragon Q6A
+      commit: ef254b12ec60c2672c18dbf423bd16476a7fb62e
 
 Best regards,
 -- 
