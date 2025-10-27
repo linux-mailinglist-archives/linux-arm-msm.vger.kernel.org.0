@@ -1,63 +1,61 @@
-Return-Path: <linux-arm-msm+bounces-78987-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-78988-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ams.mirrors.kernel.org (ams.mirrors.kernel.org [IPv6:2a01:60a::1994:3:14])
-	by mail.lfdr.de (Postfix) with ESMTPS id 58758C0F1B6
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Oct 2025 16:58:49 +0100 (CET)
+Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [IPv6:2605:f480:58:1:0:1994:3:14])
+	by mail.lfdr.de (Postfix) with ESMTPS id BAB74C0F47C
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Oct 2025 17:29:31 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ams.mirrors.kernel.org (Postfix) with ESMTPS id 03CF334AF6B
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Oct 2025 15:58:49 +0000 (UTC)
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id A85094E06D6
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Oct 2025 16:29:30 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 359163126C0;
-	Mon, 27 Oct 2025 15:54:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A15EF312837;
+	Mon, 27 Oct 2025 16:29:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="LS0umjTD"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="tDQrWuXh"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02A4F3126B2;
-	Mon, 27 Oct 2025 15:54:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76184307AFC;
+	Mon, 27 Oct 2025 16:29:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761580462; cv=none; b=tg4shDDQ2H1uWZCjW8WLoYfp2pbp0XUseusYr5CCjiOFiHIcDBn4ZdC6K9mDZIBZHVE27vf5eJfnxtQFtdYDUkPaQ7JwcCwVXOOaOmMHphdPdZzOHPokCgnDTkYnuoOAaY1dAC3dfyd7UYatCwFWzgj25OvT2KZ/TimnjziriSw=
+	t=1761582569; cv=none; b=GrczWMN0e8WbgRGoNLA95mUhaoFIdOGc8t2++BetTko3WcPSnvfu7bsqMr7XMdnu+pVLLNTartvClrSOGZzovZy+NFwviHAgMrtnOmr//5R9K3JMNYw9j+UdbbYocWRJeVIkwv3+ATkbvvri9ujyKVrX3xLcj0VpnweC1XsqtAs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761580462; c=relaxed/simple;
-	bh=aNG/Xv8gCUMk2mL6QGjKgipDfk2wjjPqo6zhLwcFPAY=;
+	s=arc-20240116; t=1761582569; c=relaxed/simple;
+	bh=+HEMJU04coowWSBBpHsy//YjtgafjGHYeOQzFMvBlwY=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=d4idgPV0pULXQR+GE2PoY+ViE93S4+uvOk8CqNlc6yTldcMAAGDw721OKIc6LakdzSLK0gHwFSkxcyjt4lhcFxXjRHC1eBQEnJixbct20RhRvRSdy7C1eK3oWWrsymW5+sjJuVXraJDgJMznTl42Dff3z1GfHxzIvlPQMTw8hYQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=LS0umjTD; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7E2FC4CEF1;
-	Mon, 27 Oct 2025 15:54:19 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=owrXJM20+EEqQjAtel0VGihShzW+5BCvFj9YmzG1/5MVK17H1pVKrM3sy2bcZo0rPhclzw3TXBJ72ahYRwP/NFx/WAe7AQOepCkRBpniKjiv9yVSUJdNAeWaGMUkRN3JVLpyafG4jwENVxKbKDxcPvsQuDNdq1iRSKnwzWnq3dE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=tDQrWuXh; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0329C4CEF1;
+	Mon, 27 Oct 2025 16:29:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1761580461;
-	bh=aNG/Xv8gCUMk2mL6QGjKgipDfk2wjjPqo6zhLwcFPAY=;
+	s=k20201202; t=1761582569;
+	bh=+HEMJU04coowWSBBpHsy//YjtgafjGHYeOQzFMvBlwY=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=LS0umjTDiZiKI/a+r3HCL+b/I6dSagSLfTI7yGyW/mNTuOcGSyHWGUM9oZOXh0TPv
-	 rVj8iAfbSTMVP0ilGO1iitAK9t2Od2I7ylviMS6HDrkKVAI6ilJW9p7eyFWhmbGp4B
-	 0/6X7OXTFS/bK4OnsguilhCtWR07792HBzxwc/owQX1mHE8uACC++8zMXnfDUN8HKb
-	 EqBkiqoC1doCx6N2PIIHQmtYLa73BZEyx8SQj7aVfZVr4h33OeDZA4uSKKqFmbq5em
-	 xE+FDWdlPymZ1pCFPe1z/969Tl0lw5uWkWDMnw6C/O1+7cowOfHR1YkByk2TOxQjRn
-	 Mycfu7+Hd9zPQ==
-Date: Mon, 27 Oct 2025 10:57:13 -0500
-From: Bjorn Andersson <andersson@kernel.org>
-To: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
-Cc: Ziyue Zhang <ziyue.zhang@oss.qualcomm.com>, konradybcio@kernel.org, 
-	robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org, jingoohan1@gmail.com, 
-	mani@kernel.org, lpieralisi@kernel.org, kwilczynski@kernel.org, 
-	bhelgaas@google.com, johan+linaro@kernel.org, vkoul@kernel.org, kishon@kernel.org, 
-	neil.armstrong@linaro.org, abel.vesa@linaro.org, kw@linux.com, 
-	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	linux-pci@vger.kernel.org, linux-phy@lists.infradead.org, qiang.yu@oss.qualcomm.com, 
-	quic_krichai@quicinc.com, quic_vbadigan@quicinc.com
-Subject: Re: [PATCH v1 3/4] arm64: dts: qcom: Add PCIe 3 support for
- HAMOA-IOT-SOM platform
-Message-ID: <cncyo6y47anbyi434inelfl5czvgscjezejtzii4kihffkj2hj@e5jvvk4o5l7x>
-References: <20250922075509.3288419-1-ziyue.zhang@oss.qualcomm.com>
- <20250922075509.3288419-4-ziyue.zhang@oss.qualcomm.com>
- <cd84f10e-c264-43fb-9e3d-20338d85de19@oss.qualcomm.com>
+	b=tDQrWuXh9Aj335gu+t4ZhJjDyHzvZYI4+WkBaLG3wz70kPaoMmZTkxFSh2J02bwxk
+	 /m9Nkgp8pf9E7xvBa9cfdr/7UcZ5rbFVVL/kyrAoHNztXGffM4zBAgRekjzu8nyAIs
+	 9dUYv625GNG2Sx7MJDaayaFI8U2RSZftNHIkXuQTRB7S4xgSxzr514iXkf5XKLDR/U
+	 OHJ85Vn5U8vjtwxJmLcZTT5zA+R6F76A6cUxmGKm7s+rGqbVJIhrzZveeShB8oYJ71
+	 OpmHtgM0mOprMuWJiSeVjbA2eDZh2RNkLfGWbQ80viMXP3R2yjgn+SMUgQzTk0O4WO
+	 zQ56jWKe4eNJQ==
+Date: Mon, 27 Oct 2025 11:29:27 -0500
+From: "Rob Herring (Arm)" <robh@kernel.org>
+To: Jishnu Prakash <jishnu.prakash@oss.qualcomm.com>
+Cc: devicetree@vger.kernel.org,
+	David Collins <david.collins@oss.qualcomm.com>,
+	linux-arm-msm@vger.kernel.org, kamal.wadhwa@oss.qualcomm.com,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	jingyi.wang@oss.qualcomm.com, Stephen Boyd <sboyd@kernel.org>,
+	aiqun.yu@oss.qualcomm.com, linux-kernel@vger.kernel.org,
+	Conor Dooley <conor+dt@kernel.org>
+Subject: Re: [PATCH v3 1/3] dt-bindings: spmi: split out common QCOM SPMI
+ PMIC arbiter properties
+Message-ID: <176158256441.1074210.9426995798199315066.robh@kernel.org>
+References: <20251024-pmic_arb_v8-v3-0-cad8d6a2cbc0@oss.qualcomm.com>
+ <20251024-pmic_arb_v8-v3-1-cad8d6a2cbc0@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -66,131 +64,23 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <cd84f10e-c264-43fb-9e3d-20338d85de19@oss.qualcomm.com>
+In-Reply-To: <20251024-pmic_arb_v8-v3-1-cad8d6a2cbc0@oss.qualcomm.com>
 
-On Tue, Oct 14, 2025 at 11:13:42AM +0530, Krishna Chaitanya Chundru wrote:
+
+On Fri, 24 Oct 2025 15:03:21 +0530, Jishnu Prakash wrote:
+> Split out the common SPMI PMIC arbiter properties for QCOM devices into a
+> separate file so that it can be included as a reference for devices
+> using them. This will be needed for the upcoming PMIC v8 arbiter
+> support patch, as the v8 arbiter also uses these common properties.
 > 
-> 
-> On 9/22/2025 1:25 PM, Ziyue Zhang wrote:
-> > Update the HAMOA-IOT-SOM device tree to enable PCIe 3 support. Add perst
-> > wake and clkreq sideband signals and required regulators in PCIe3
-> > controller and PHY device tree node.
-
-The commit message should answer the questions I pose below. This
-message explains what you change, but it doesn't explain why.
-
-Start your commit message by describing the hardware, then follow that
-with the description of your change.
-
-> > 
-> > Signed-off-by: Ziyue Zhang <ziyue.zhang@oss.qualcomm.com
-> > ---
-> >   arch/arm64/boot/dts/qcom/hamoa-iot-som.dtsi | 70 +++++++++++++++++++++
-> >   1 file changed, 70 insertions(+)
-> > 
-> > diff --git a/arch/arm64/boot/dts/qcom/hamoa-iot-som.dtsi b/arch/arm64/boot/dts/qcom/hamoa-iot-som.dtsi
-> > index 0c8ae34c1f37..7486204a4a46 100644
-> > --- a/arch/arm64/boot/dts/qcom/hamoa-iot-som.dtsi
-> > +++ b/arch/arm64/boot/dts/qcom/hamoa-iot-som.dtsi
-> > @@ -390,6 +390,53 @@ &gpu_zap_shader {
-> >   	firmware-name = "qcom/x1e80100/gen70500_zap.mbn";
-> >   };
-> > +&pm8550ve_8_gpios {
-> > +	pcie_x8_12v: pcie-12v-default-state {
-> > +		pins = "gpio8";
-> > +		function = "normal";
-> > +		output-enable;
-> > +		output-high;
-> > +		bias-pull-down;
-> > +		power-source = <0>;
-> > +	};
-> > +};
-> > +
-> > +&pmc8380_3_gpios {
-> > +	pm_sde7_aux_3p3_en: pcie-aux-3p3-default-state {
-> > +		pins = "gpio8";
-> > +		function = "normal";
-> > +		output-enable;
-> > +		output-high;
-> > +		bias-pull-down;
-> > +		power-source = <0>;
-> > +	};
-> > +
-> > +	pm_sde7_main_3p3_en: pcie-main-3p3-default-state {
-> > +		pins = "gpio6";
-> > +		function = "normal";
-> > +		output-enable;
-> > +		output-high;
-> > +		bias-pull-down;
-> > +		power-source = <0>;
-> > +	};
-> > +};
-> Either squash patch 3/4 with 4/4 or move these pin configuration to
-> patch 4/4.
+> Signed-off-by: Jishnu Prakash <jishnu.prakash@oss.qualcomm.com>
+> ---
+>  .../bindings/spmi/qcom,spmi-pmic-arb-common.yaml   | 35 ++++++++++++++++++++++
+>  .../bindings/spmi/qcom,spmi-pmic-arb.yaml          | 17 +----------
+>  .../bindings/spmi/qcom,x1e80100-spmi-pmic-arb.yaml | 21 +++----------
+>  3 files changed, 40 insertions(+), 33 deletions(-)
 > 
 
-Patch 3 defines properties for the SOM and patch 4 defines properties
-for the EVK board, so the split sounds reasonable.
+Reviewed-by: Rob Herring (Arm) <robh@kernel.org>
 
-But looking at the details, why would the SOM define these states? Isn't
-it the carrier board that contains the related regulators? If I use this
-SOM in my design, does my board have to have a 12V supply to my x8 PCIe
-that's being controlled by gpio8?
-
-
-In other words, I think you're right.
-
-Regards,
-Bjorn
-
-> - Krishna Chaitanya.
-> > +
-> > +&pcie3 {
-> > +	pinctrl-names = "default";
-> > +	pinctrl-0 = <&pcie3_default>;
-> > +	perst-gpios = <&tlmm 143 GPIO_ACTIVE_LOW>;
-> > +	wake-gpios = <&tlmm 145 GPIO_ACTIVE_LOW>;
-> > +
-> > +	status = "okay";
-> > +};
-> > +
-> > +&pcie3_phy {
-> > +	vdda-phy-supply = <&vreg_l3c_0p8>;
-> > +	vdda-pll-supply = <&vreg_l3e_1p2>;
-> > +
-> > +	status = "okay";
-> > +};
-> > +
-> >   &pcie4 {
-> >   	perst-gpios = <&tlmm 146 GPIO_ACTIVE_LOW>;
-> >   	wake-gpios = <&tlmm 148 GPIO_ACTIVE_LOW>;
-> > @@ -471,6 +518,29 @@ &tlmm {
-> >   	gpio-reserved-ranges = <34 2>, /* TPM LP & INT */
-> >   			       <44 4>; /* SPI (TPM) */
-> > +	pcie3_default: pcie3-default-state {
-> > +		clkreq-n-pins {
-> > +			pins = "gpio144";
-> > +			function = "pcie3_clk";
-> > +			drive-strength = <2>;
-> > +			bias-pull-up;
-> > +		};
-> > +
-> > +		perst-n-pins {
-> > +			pins = "gpio143";
-> > +			function = "gpio";
-> > +			drive-strength = <2>;
-> > +			bias-pull-down;
-> > +		};
-> > +
-> > +		wake-n-pins {
-> > +			pins = "gpio145";
-> > +			function = "gpio";
-> > +			drive-strength = <2>;
-> > +			bias-pull-up;
-> > +		};
-> > +	};
-> > +
-> >   	pcie4_default: pcie4-default-state {
-> >   		clkreq-n-pins {
-> >   			pins = "gpio147";
 
