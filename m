@@ -1,151 +1,151 @@
-Return-Path: <linux-arm-msm+bounces-78958-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-78966-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id EC9D6C0EAA9
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Oct 2025 15:57:28 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3E0FFC0EC77
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Oct 2025 16:03:28 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id CB1FF46159D
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Oct 2025 14:50:00 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id E92681888BB4
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Oct 2025 15:01:29 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9D0712D2397;
-	Mon, 27 Oct 2025 14:49:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4D0C630CDA9;
+	Mon, 27 Oct 2025 14:59:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="PbBxtZHl"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="qmymfqiB"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f50.google.com (mail-wm1-f50.google.com [209.85.128.50])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 657CF296BB6;
-	Mon, 27 Oct 2025 14:49:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F88030C626
+	for <linux-arm-msm@vger.kernel.org>; Mon, 27 Oct 2025 14:59:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761576554; cv=none; b=C/ns/iT4f9/YtTMWKflcnihNondq9D4WxBtVQ7HSevJL/0Glo7bqQ0ECANDRQFi8dAm5rhqBu7Q4yYKE2asXTWX2I5sUGlNeo6XCw//ImakflGLtbwwQgTN5zzgx+U+w47Y0LqZZFQx2LFY0Q51Y+eggN0O3GoGV8zZHJyw0j4s=
+	t=1761577188; cv=none; b=AxyfOgUHci4e3BO3I6VfFgu+SsRyUsRq/yrg9siiB1+XfElMh6YaLrcC2RipcQF5jQeQEd1/WaOi9SLVmym3LrHdm1GbQ5qngIMEWaU81k2CH9yggCYzSDxt7VIzW5z1A6NiTc9UtplFNsuX9L+028dApptlzJc8AVpTFYF/rLg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761576554; c=relaxed/simple;
-	bh=LKPXVhbMLyJFUAhnFO5LZpjuc3Rzz6MeJrFVEJFp7mA=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=XbXmIkaG/6vWqgCg4rrgjeTPRZoQZv3/3Zdtew7yB8gEU92MXQVDTALKCbAJEs+A38km2cJhrl1kIOPzZR0oxOVAAorc0q5K+f1G15GIs6p9G304F1Wb0oMpUNZdW7XuLuY7tgEccgv0khb7wNcsswbwLxHQFtKYUhLCJE6PUJA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=PbBxtZHl; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3858C4CEFF;
-	Mon, 27 Oct 2025 14:49:12 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1761576553;
-	bh=LKPXVhbMLyJFUAhnFO5LZpjuc3Rzz6MeJrFVEJFp7mA=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=PbBxtZHlvX/bylN0gO7RmgmI1dJ6TVW/yV6mzrZWNpynfqPhTZR7w1rQHJeKICXh/
-	 UGBdvZI6obJHTrEqqiFRO3IgxxPU9bt2jPQBVWLxaQGxMgJY1OFkigiE94tqhx2sqp
-	 rmDp8Y1v3g6y2x6ajwN2A76WojDYI/ck1l3t12c+yJrKa65Jg4SARDjvtviAVCy5tA
-	 9MJp4a3/SXseyXzwUS860jqERdID2eSU2zt6OjEuCuhXZqYlqMfA5cUez7k+3SX5GF
-	 opGzvvC4/hkZMWW0PEeCwVTzrXX3aMiZomZlqivHX54FGqm5HIUbAuFay5h4+vfcYp
-	 90cLX1ygDjgrA==
-Date: Mon, 27 Oct 2025 09:52:06 -0500
-From: Bjorn Andersson <andersson@kernel.org>
-To: david@ixit.cz
-Cc: Dmitry Torokhov <dmitry.torokhov@gmail.com>, 
-	Jonathan Corbet <corbet@lwn.net>, Jiri Kosina <jikos@kernel.org>, 
-	Benjamin Tissoires <bentiss@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, 
-	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
-	Conor Dooley <conor+dt@kernel.org>, linux-input@vger.kernel.org, linux-doc@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
-	Gergo Koteles <soyer@irl.hu>
-Subject: Re: [PATCH v6 1/2] Input: add ABS_SND_PROFILE
-Message-ID: <rdryhql5vrjckh2yvcgbdcnlu2f4aiq6hbokgfzvrtdu33lp5u@fctqxdftabsy>
-References: <20250731-op6-tri-state-v6-0-569c25cbc8c2@ixit.cz>
- <20250731-op6-tri-state-v6-1-569c25cbc8c2@ixit.cz>
+	s=arc-20240116; t=1761577188; c=relaxed/simple;
+	bh=m/Ryf+3/Ba7bj8cfGk0q+ZCXj08lxgpxWe3j8JBvzwU=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
+	 In-Reply-To:To:Cc; b=fBAmEWw7pLjL682oz88X5YwFojRd6LHHPbV+G0oIH9Rlixum+n3Eh9VRohK/7AVY5UOqbCGRO9BLNiLr8NZ4vkxQVdLNUWP8vwbTLvGADrNRxM/lsg349T9Me/0W69atPln5i+11S4OltQePJU9Dm80/dsaGDxzWOP0DQJ/kQQE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=qmymfqiB; arc=none smtp.client-ip=209.85.128.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wm1-f50.google.com with SMTP id 5b1f17b1804b1-471b80b994bso67383845e9.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 27 Oct 2025 07:59:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1761577185; x=1762181985; darn=vger.kernel.org;
+        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=AqsKQ8///0zondjUQyLirrRSCHthDErDWugJZ18wpKg=;
+        b=qmymfqiBsR60du8RWiWwIg3biF015IVMQmnM2lvPpt9lwgBJqvA3BFddX7k5hV+9TZ
+         IXYNSxwr2MRRxidnkN9ESrgigg23xD+VC6AwH2bamrF+oUTaMEr+Ou+wQaGIPcruxEqa
+         /17WUVu+0oRrSu0VDe3PzZqOLgWERu/RJz8idjGP0F/cfFF3nSyPWvkAYa/mRvcWlfzu
+         +lUSI64Gyp9y7SsT1OkRySzzbNp2QtYt0K2zK2SUmm5ZRSN/ZCvxY/m5BucdV3jYxDSQ
+         y2YnBlXLfz/avIAahwkTRm6Yro4q6Ho8VKJZegtTC0U0lCpitU5JzpqqxLeEh9z3rGB1
+         QoLA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1761577185; x=1762181985;
+        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=AqsKQ8///0zondjUQyLirrRSCHthDErDWugJZ18wpKg=;
+        b=h8T/TSUtoGRtDvM9ZU4/rFH7Y88Ertc2TV6AFb0jS3Bc7c5VwNDVmtFO1hV9ypQmt7
+         iOYygF1JWdgRIwnFBjL+BmyfR+5SP8NnYvf/R0uq6Wa2W5Dgt0UBHcrCtoiXXrsmAKEA
+         WPBfhAf7MISlH7LQAb65KsCCDcqPdXghHu/yNxuVjYYA8CgrH/eb5rFsW7WKTkiiVggH
+         8fFhpIBbL3eBEWhOmw+VhvMmgTW78Of09shHQEb4DSw6I8RZVGXUiZywFStCkYSTXxch
+         Ohmt6Apriy0qYRSJTHWGM32ycpi30+3E5JI1prxWMzp3IYLQZI/9e0V84Vxa2J2AYFmB
+         6Jxw==
+X-Gm-Message-State: AOJu0YyILYUVgF1fXbm0SJOT2GswufSvzugSZfIk6E1ADnwfGYL36k0m
+	Nim2DZAC0KAgABuwidPkll+C32qDUQSJ49Oo+ExAEzuuT/RA18c5RmGdmOeGZwuI7ZOM4dhOznA
+	ZkYbg
+X-Gm-Gg: ASbGncv/0uTg/NsPFa1TyE+uw4yfHszDBwcTe+CsxLgN2UXowJT019leSWCaouveTVy
+	EpxSzZEJQ+9GsdrVyuPnwsUdY43XRbQJSDEyq50fD8Zf4SIL0rDTiLPbCDp5Fetin9h1NF6TJ1X
+	WkyYotzbKPizMNTZ6GzX4RqAFw1u4CNqHPqbeVjvaBEuoyCrRt+qGaq8LpglLGxkjHJ2EZRSsV8
+	zMTWTb1d2SXgNrtWgtRh54SzQpam0r6/R1DO4ppAny+L2LVkSC2onykTJVzlZJFy274CtH3OSlq
+	dlXGN0TyiGpKtKTADyREh4/an/YPSgd036Y9gnQapZVVSRKBIJkumApz7NVnk/WfhC9YWYxt+kC
+	4VsiQJne7C+URgrZ2dcbcbU3rQ0xsP1Cb8wQ75QK1Jl6ASe/QdfhpD0yMs3uYo3aQwxpvCXAuzL
+	EFUvQ2Au2l
+X-Google-Smtp-Source: AGHT+IFO7Got2ubevHRfgj5QqQ+su96RPdM4Gxx2kUrMjZfw7k7B7E+Ut+HnbXiTZsiZtBSeBGG6RA==
+X-Received: by 2002:a05:600c:83c3:b0:475:de68:3c2e with SMTP id 5b1f17b1804b1-475de683d45mr63857665e9.40.1761577184642;
+        Mon, 27 Oct 2025 07:59:44 -0700 (PDT)
+Received: from hackbox.lan ([86.121.7.169])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-429952df682sm14624801f8f.43.2025.10.27.07.59.42
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 27 Oct 2025 07:59:43 -0700 (PDT)
+From: Abel Vesa <abel.vesa@linaro.org>
+Date: Mon, 27 Oct 2025 16:59:21 +0200
+Subject: [PATCH v3 4/7] drm/msm/mdss: Add Glymur device configuration
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250731-op6-tri-state-v6-1-569c25cbc8c2@ixit.cz>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20251027-glymur-display-v3-4-aa13055818ac@linaro.org>
+References: <20251027-glymur-display-v3-0-aa13055818ac@linaro.org>
+In-Reply-To: <20251027-glymur-display-v3-0-aa13055818ac@linaro.org>
+To: Rob Clark <robin.clark@oss.qualcomm.com>, 
+ Dmitry Baryshkov <lumag@kernel.org>, 
+ Abhinav Kumar <abhinav.kumar@linux.dev>, 
+ Jessica Zhang <jessica.zhang@oss.qualcomm.com>, Sean Paul <sean@poorly.run>, 
+ Marijn Suijten <marijn.suijten@somainline.org>, 
+ Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, 
+ Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>, 
+ David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, 
+ Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>, 
+ Neil Armstrong <neil.armstrong@linaro.org>, 
+ Kuogee Hsieh <quic_khsieh@quicinc.com>, 
+ Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konradybcio@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, 
+ freedreno@lists.freedesktop.org, devicetree@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, Abel Vesa <abel.vesa@linaro.org>, 
+ Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+X-Mailer: b4 0.15-dev-dedf8
+X-Developer-Signature: v=1; a=openpgp-sha256; l=961; i=abel.vesa@linaro.org;
+ h=from:subject:message-id; bh=m/Ryf+3/Ba7bj8cfGk0q+ZCXj08lxgpxWe3j8JBvzwU=;
+ b=owEBbQKS/ZANAwAKARtfRMkAlRVWAcsmYgBo/4jQBp5H4dDRTqI5TaS3RfQjAj9H1dixDkmAz
+ ixmM0LiGYeJAjMEAAEKAB0WIQRO8+4RTnqPKsqn0bgbX0TJAJUVVgUCaP+I0AAKCRAbX0TJAJUV
+ VsLgD/9+wwEnPPeWGdL3dWWtgOTfnTcC8jpTFqVVENytsh45QdKu9O+0P/fh1WSXFMjpsRrAbs6
+ WKbRfNOvZ03Kmw/sVbytPerJ64AkkPGZlGirnte7kXlFkveP0Ecghp2yBfQG2QC09wehxpJz2v/
+ PlHSdIQ/2SFYE6cqk5A+Pcf24WkliOJ2qsLI7DORwwZzSD3ThX7woyimkMSVzC1ircRJTIMpeDw
+ QlGQUFaTPTuXH+NK1Nr9k86yqaTUACN0Taao4LLRtu9IbruWMZn30BCWHAgdm1+TTpLKVZtSUpL
+ y9DPFsoqv08g04uof6sf+iKJ2s6ipoYUHFZESnu8PbB5fV1Zyjuf3mNbC+wbNuZG3XTZN+T8G6g
+ rGIQ118FHxRuUOjcr6FlAacjRo+Ja0vq6LSAemYm++pPa3pAR+ArtAvSpq1IFj17O3J90rSZH/K
+ zCNy2Hc32837x3/jwgJm2T59ASUNXnJMMyhUiFCkWWsjIsPFMY6Yih++ai84+ft64EQZUa1w7AL
+ 2mjbDUYfKDEL1CsNDfoKPsUVkPc4D/ILE6LTsQBfr3DLIsbME7fgIh6UPnemG/pSpud0TKg5k38
+ yDSl2yyq9Tubt7bwohbnH6rADGfrdlFjIVjkbMmmhTXD0HBdncIrt3bCJeHJm2diXhvfrVdQYeF
+ iYhgQ0RhQ/2E6sg==
+X-Developer-Key: i=abel.vesa@linaro.org; a=openpgp;
+ fpr=6AFF162D57F4223A8770EF5AF7BF214136F41FAE
 
-On Thu, Jul 31, 2025 at 11:17:01PM +0200, David Heidelberg via B4 Relay wrote:
-> From: Gergo Koteles <soyer@irl.hu>
-> 
-> ABS_SND_PROFILE used to describe the state of a multi-value sound profile
-> switch. This will be used for the alert-slider on OnePlus phones or other
-> phones.
-> 
-> Profile values added as SND_PROFLE_(SILENT|VIBRATE|RING) identifiers
-> to input-event-codes.h so they can be used from DTS.
-> 
+Add Mobile Display Subsystem (MDSS) support for the Glymur platform.
 
-Reviewed-by: Bjorn Andersson <andersson@kernel.org>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+---
+ drivers/gpu/drm/msm/msm_mdss.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-Regards,
-Bjorn
+diff --git a/drivers/gpu/drm/msm/msm_mdss.c b/drivers/gpu/drm/msm/msm_mdss.c
+index 2d0e3e784c044db8ac0c478446d211a982cf0350..60bd6af83a8846f2ad751ea625a20e419c80638b 100644
+--- a/drivers/gpu/drm/msm/msm_mdss.c
++++ b/drivers/gpu/drm/msm/msm_mdss.c
+@@ -553,6 +553,7 @@ static const struct msm_mdss_data data_153k6 = {
+ 
+ static const struct of_device_id mdss_dt_match[] = {
+ 	{ .compatible = "qcom,mdss", .data = &data_153k6 },
++	{ .compatible = "qcom,glymur-mdss", .data = &data_57k },
+ 	{ .compatible = "qcom,msm8998-mdss", .data = &data_76k8 },
+ 	{ .compatible = "qcom,qcm2290-mdss", .data = &data_76k8 },
+ 	{ .compatible = "qcom,sa8775p-mdss", .data = &data_74k },
 
-> Signed-off-by: Gergo Koteles <soyer@irl.hu>
-> Signed-off-by: David Heidelberg <david@ixit.cz>
-> ---
->  Documentation/input/event-codes.rst    | 6 ++++++
->  drivers/hid/hid-debug.c                | 1 +
->  include/uapi/linux/input-event-codes.h | 9 +++++++++
->  3 files changed, 16 insertions(+)
-> 
-> diff --git a/Documentation/input/event-codes.rst b/Documentation/input/event-codes.rst
-> index b4557462edd7b3fef9e9cd6c2c3cb2d05bb531ab..d43336e64d6aa4fe8a41b7e9947f4f214df6e1ab 100644
-> --- a/Documentation/input/event-codes.rst
-> +++ b/Documentation/input/event-codes.rst
-> @@ -241,6 +241,12 @@ A few EV_ABS codes have special meanings:
->      emitted only when the selected profile changes, indicating the newly
->      selected profile value.
->  
-> +* ABS_SND_PROFILE:
-> +
-> +  - Used to describe the state of a multi-value sound profile switch.
-> +    An event is emitted only when the selected profile changes,
-> +    indicating the newly selected profile value.
-> +
->  * ABS_MT_<name>:
->  
->    - Used to describe multitouch input events. Please see
-> diff --git a/drivers/hid/hid-debug.c b/drivers/hid/hid-debug.c
-> index 7107071c7c516af48c0c5fc1206c1e01bae3889f..c58500d8b94b581e41ae098d6ce99db7783986b7 100644
-> --- a/drivers/hid/hid-debug.c
-> +++ b/drivers/hid/hid-debug.c
-> @@ -3513,6 +3513,7 @@ static const char *absolutes[ABS_CNT] = {
->  	[ABS_DISTANCE] = "Distance",	[ABS_TILT_X] = "XTilt",
->  	[ABS_TILT_Y] = "YTilt",		[ABS_TOOL_WIDTH] = "ToolWidth",
->  	[ABS_VOLUME] = "Volume",	[ABS_PROFILE] = "Profile",
-> +	[ABS_SND_PROFILE] = "SoundProfile",
->  	[ABS_MISC] = "Misc",
->  	[ABS_MT_SLOT] = "MTSlot",
->  	[ABS_MT_TOUCH_MAJOR] = "MTMajor",
-> diff --git a/include/uapi/linux/input-event-codes.h b/include/uapi/linux/input-event-codes.h
-> index 08cb157ab59364a41ac425fc9a4ea8eb2fae0e86..f443f61f9bb8e3c212da522d9b99a386a13c4475 100644
-> --- a/include/uapi/linux/input-event-codes.h
-> +++ b/include/uapi/linux/input-event-codes.h
-> @@ -875,6 +875,7 @@
->  
->  #define ABS_VOLUME		0x20
->  #define ABS_PROFILE		0x21
-> +#define ABS_SND_PROFILE		0x22
->  
->  #define ABS_MISC		0x28
->  
-> @@ -984,4 +985,12 @@
->  #define SND_MAX			0x07
->  #define SND_CNT			(SND_MAX+1)
->  
-> +/*
-> + * ABS_SND_PROFILE values
-> + */
-> +
-> +#define SND_PROFILE_SILENT	0x00
-> +#define SND_PROFILE_VIBRATE	0x01
-> +#define SND_PROFILE_RING	0x02
-> +
->  #endif
-> 
-> -- 
-> 2.50.1
-> 
-> 
+-- 
+2.48.1
+
 
