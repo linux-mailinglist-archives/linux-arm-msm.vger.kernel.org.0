@@ -1,61 +1,60 @@
-Return-Path: <linux-arm-msm+bounces-79031-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-79032-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ams.mirrors.kernel.org (ams.mirrors.kernel.org [213.196.21.55])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9F6ABC11C11
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Oct 2025 23:37:02 +0100 (CET)
+Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [142.0.200.124])
+	by mail.lfdr.de (Postfix) with ESMTPS id C2DEDC11C62
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Oct 2025 23:39:42 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ams.mirrors.kernel.org (Postfix) with ESMTPS id 4BF96352FE8
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Oct 2025 22:37:02 +0000 (UTC)
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 30B034FBBB1
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Oct 2025 22:37:10 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 62AC5332EA6;
-	Mon, 27 Oct 2025 22:34:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 086D2332ED7;
+	Mon, 27 Oct 2025 22:35:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="eGzTlPCt"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="oh6yGwD+"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 335243081D9;
-	Mon, 27 Oct 2025 22:34:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D222932BF21;
+	Mon, 27 Oct 2025 22:34:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761604499; cv=none; b=Lj3Zg7iJQNMH/68TyI7hQ2QS9h5fzd3zwUia/xngLHtO3qQOzg4EGoTsv4d9stW4Mcp+0DE8WAF/Fu37/qeHLI+CrheMYhLHhxe4ra67ksZrRz0HZtmXhwCV3OdQES2aSiUrhPDTqA1lgRg13Z7WyfX0kYS8al52SYt6rrkRjQs=
+	t=1761604499; cv=none; b=V/5LS3A5F1z5LDI6zXaKvD+xvzYHVZOtBD+7WVHRqAtsnG6oWAoKGOGXufyN+YRW8+Gw9hglW1ul1OmMnhnFW7yPMCuP0L5i2KEu4MKjVxXIas0PFkls/45eqamxhhh27tNV2kzwHQJZ/ObGi38+rZkAjkMX/wlmCfEcjkbVA7Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1761604499; c=relaxed/simple;
-	bh=HsfrcAUt0n8Jj0u/QP43HOhpqysYExflKx7pZd6EYeY=;
+	bh=Y/RxOndNvIAogBRBC/3TRzDywzPHwzgvE+5fOzumoDk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=mD/S5VWOeMt9ylwS8Tuo/Hu0vliQ3DZt/zrDSS67+vRNHO24a3IRmwM5BzmCtnTuvNtSwD2OftB17MinPtHOnDkEGQW9jkqADTnQL/b1QfFVjC84i+omIOIBAXg4q3RdumIfIONbfJDFBhye/2hR3NXm9CKfe5BfE8kLSSgc6KM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=eGzTlPCt; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17697C113D0;
+	 MIME-Version:Content-Type; b=tlLSwc6SqpK7vHyMLuI7c+DWNXOl9bpfN+mhD5A6CAzqmIKL6UgAI0L75Y1n7sC5yg9RxdCg+xVKgd+RYj+ZyCOQhFbBS/cpjIo8gfX2BBZwib7QrpY6EEMZ1CmNs7DNGvXEgzj2+VzewUEIghSp3jUKmZXsA/VKOl2Yi7XsFPo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=oh6yGwD+; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2B74C116B1;
 	Mon, 27 Oct 2025 22:34:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1761604498;
-	bh=HsfrcAUt0n8Jj0u/QP43HOhpqysYExflKx7pZd6EYeY=;
+	s=k20201202; t=1761604499;
+	bh=Y/RxOndNvIAogBRBC/3TRzDywzPHwzgvE+5fOzumoDk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eGzTlPCteexlfrnhnfGJ8F73LDVTlZLmdBDW+xPO0bq3PLXgkxP6yN2OHD2PtteBA
-	 H6MqCTdyI9wLebmEJctOZJrAYueO1alT5Hk+U/DzWQ2pmtRnSXZ5/31D4dbEScm6S4
-	 JgV3SCozQXC8OfEcKSR68UH4sOx1ehFO268ehmJyEyFEWQ3AHXSRzUIY91vCmtdr5B
-	 fyq5Z4EbkOHzOeqN6p1HSiB4Pgaxp4m0f1GNYgYXW+MDurXXYRqq4kFf1s2u5wZvVH
-	 bKREr1i94LGiE9ql+85fpTN9VFR6LP0YPJoaQJjhhLEBp+s8dzppnuSpDYa06Az3gZ
-	 9pbnNVd0b+CYw==
+	b=oh6yGwD+X9sGa+02dbXSmmO/kf1xi4sKPm39JStRQADgHLymJpAlxAcNVp0dgafbD
+	 Kp4f2V878aP6Vdg9n8Jn0Hs0b+FITEIXay7j1r0Ilw+fVUSs440UEVxLqK9iD2eT1F
+	 29xEKriNfiIkHcRfeUJ8wk7h6DztqHF7TdxPFjwBY218UBbI83V4mLI8CYu37qOJe2
+	 Q0GjAVG6RktJPnCdqDHSK2yAOp/yWNUIr0RZcrLiW2aropwbvaN6vIl2ydiSi+cs6o
+	 ieZfqD8IzSYqEukThWZ6VC1w7EqIlvftmEm5p1Wk/8ENSGoDZHnhf5udlbiFf3v7sd
+	 d5SjCKtinVMZw==
 From: Bjorn Andersson <andersson@kernel.org>
-To: Konrad Dybcio <konradybcio@kernel.org>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Joel Selvaraj <foss@joelselvaraj.com>
+To: konradybcio@kernel.org,
+	robh@kernel.org,
+	krzk+dt@kernel.org,
+	Gaurav Kohli <gaurav.kohli@oss.qualcomm.com>
 Cc: linux-arm-msm@vger.kernel.org,
 	devicetree@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2] arm64: dts: qcom: sdm845-shift-axolotl: fix touchscreen properties
-Date: Mon, 27 Oct 2025 17:36:52 -0500
-Message-ID: <176160465243.73268.7861590970194722567.b4-ty@kernel.org>
+Subject: Re: [PATCH] arm64: dts: qcom: lemans-evk: Enable AMC6821 fan controller
+Date: Mon, 27 Oct 2025 17:36:53 -0500
+Message-ID: <176160465239.73268.5678722394669488498.b4-ty@kernel.org>
 X-Mailer: git-send-email 2.51.0
-In-Reply-To: <20251021-shift-axolotl-fix-touchscreen-dts-v2-1-e94727f0aa7e@joelselvaraj.com>
-References: <20251021-shift-axolotl-fix-touchscreen-dts-v2-1-e94727f0aa7e@joelselvaraj.com>
+In-Reply-To: <20251017050256.987660-1-gaurav.kohli@oss.qualcomm.com>
+References: <20251017050256.987660-1-gaurav.kohli@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -66,22 +65,16 @@ Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 
 
-On Tue, 21 Oct 2025 01:20:49 -0500, Joel Selvaraj wrote:
-> The touchscreen properties previously upstreamed was based on downstream
-> touchscreen driver. We ended up adapting upstream edt_ft5x06 driver to
-> support the touchscreen controller used in this device. Update the
-> touchscreen properties to match with the upstream edt_ft5x06
-> driver.
+On Fri, 17 Oct 2025 10:32:56 +0530, Gaurav Kohli wrote:
+> Enable AMC6821 fan controller for lemans-evk platform and
+> configure pwm polarity as inverted.
 > 
-> Also, the touchscreen controller used in this device is ft5452 and not
-> fts8719. Fix the compatible string accordingly.
 > 
-> [...]
 
 Applied, thanks!
 
-[1/1] arm64: dts: qcom: sdm845-shift-axolotl: fix touchscreen properties
-      commit: e19dc81263853d7fb41944db9fe7a54400c0b1b0
+[1/1] arm64: dts: qcom: lemans-evk: Enable AMC6821 fan controller
+      commit: 8053174aac836f192e5738b2886fd4da35a25cd5
 
 Best regards,
 -- 
