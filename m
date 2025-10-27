@@ -1,71 +1,65 @@
-Return-Path: <linux-arm-msm+bounces-78935-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-78936-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 90082C0E531
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Oct 2025 15:15:38 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 19C53C0E542
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Oct 2025 15:15:56 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 983C3427E1E
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Oct 2025 14:07:40 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id E1FD5428265
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Oct 2025 14:07:52 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3E47330B512;
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id EE7D630BBA2;
 	Mon, 27 Oct 2025 14:06:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="MTIL6WRS"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Ju3dZ9fF"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DF4230AD10;
-	Mon, 27 Oct 2025 14:06:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C38C330BB90;
+	Mon, 27 Oct 2025 14:06:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761573994; cv=none; b=GUCUpBuaKLxLR7EFiD0PuQZ3lvWClvd7c0TDs9AUozSVbeLRTTgXuMzzkclqH7+TFfqwNSG98qeDFqPrUP/+CPFz1rJ/G1aAoFobZapzKKJixb2SoE9ahQLc1CZlzCAjt/+OdeoligZbc/sLwWZkjFM21p0fJaNDakJBmR2buKM=
+	t=1761573994; cv=none; b=M9ZZao0REdr/T9IjxJHB0moPi/FkcYTaT8JHXdeMGO9wAaYjd8WgV+2UX5IH4AZc/jbKDTC96k0Ud6TEP8FML6Zqdyb64CfCDcYWgpWgqT9URHmU0GoPWVW60mUL0uToIS94HKwFdidRMVOObPb2+WsvE0xCCeMddTDlL0QJgts=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1761573994; c=relaxed/simple;
-	bh=QYT+Go/B5vKb+uKtNJ6OHFJJ9fIKx9dRJXaI27N7JHM=;
+	bh=KE65LerYKr2JeCRL/5Ih7GAP4le9csM54gDXViHiLOY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=XzfJekoiadZSEqVFobFcbHWRQMiOZoFEYoTkdZog34tzRidQLj1OKWOBssgBn6bF3Nu0/Uf5i2GfWTsAtqXxy24JmeZAFTqO3J3GndbGKt0YyQeX9y8Cscl32bYd/2nvIlXf+H576M/1A2Qjm2+LeovpbSVDYmYia3OBv22v5kA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=MTIL6WRS; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E547C113D0;
-	Mon, 27 Oct 2025 14:06:32 +0000 (UTC)
+	 MIME-Version:Content-Type; b=amZiWqu+vq8Pj1lgz0vWJS9pUdZvFyj01smlmH+xDbZuD66GfP4rEQJDRdW8+7hIfgJlrWAD/XfTRLO4tOWq4lY6nsPNVYpJRlPy6+c3eYTNzb/s1wIvRpSpgTDNvFlPQXyBCx1HWnj6X6G6bHmhDKgBIXUwwWBLGtmP/p4hB2s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Ju3dZ9fF; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1421C4CEF1;
+	Mon, 27 Oct 2025 14:06:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1761573993;
-	bh=QYT+Go/B5vKb+uKtNJ6OHFJJ9fIKx9dRJXaI27N7JHM=;
+	s=k20201202; t=1761573994;
+	bh=KE65LerYKr2JeCRL/5Ih7GAP4le9csM54gDXViHiLOY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MTIL6WRS9til3BqgOyvmMD4W+wJcKaDdgtOBAfEIXQJ3NdX/egkY3dlEpk15fOpxV
-	 j1Apzm309bKfFRrp9fZ7H72IPN6ZC+HiOoMyoLRc6VCngaAHia3PG+Br5H5cXq8e0u
-	 MjriOK5zBN1QghSDtDbbMxrHtAia9kYa7N8vxiqoHe0rUwG+dM94l0aP/Yczf7ULTR
-	 EDAYyvk1rU9oEXots+oIon3kz/MobgskNQdWi740505kyYv8/GX+HxtSpmqKNQvCoR
-	 WeHdFznASTXQGih4fQl9mDCNbwjCpOw5zn6Y5XZg6E0WiybezmRq4uPNICXCA8+mZy
-	 kHE2ytskvs5Ug==
+	b=Ju3dZ9fFJQHGHc3wMMvklS+mneGBits0XgpdpGk13+iO9QQJumbi9WDm7UFhnL0Bn
+	 Bu2TeeVBfzHCquUUInV/iMMVX6/FpHGul9zPSpwSmFQx/sDWfttBnlaGX9mclRjMeA
+	 fK7M5oRcbhFi7TF60naFpuOR34YTzu1dhLFmlxuyFxe02Z9p127G85nYyznvh2CRiD
+	 /WgJUyFdqSvEL9Li5Vj8h88XaFp+sE7K7egZi2t9gK5ZhWR2XMS+mnNH744q/SDPtS
+	 xJTX/bMXgZZlOcQt5aS9ck5dcnzcBiWkXUzoFGcWKtGeqPnmXxBLk76BbtoSQWOjfx
+	 KW0E8158UN55Q==
 From: Bjorn Andersson <andersson@kernel.org>
-To: Rob Herring <robh@kernel.org>,
+To: Konrad Dybcio <konradybcio@kernel.org>,
+	Rob Herring <robh@kernel.org>,
 	Krzysztof Kozlowski <krzk+dt@kernel.org>,
 	Conor Dooley <conor+dt@kernel.org>,
-	Georgi Djakov <djakov@kernel.org>,
-	Raviteja Laggyshetty <quic_rlaggysh@quicinc.com>,
-	Michael Turquette <mturquette@baylibre.com>,
-	Stephen Boyd <sboyd@kernel.org>,
-	Dmitry Baryshkov <lumag@kernel.org>,
-	Taniya Das <quic_tdas@quicinc.com>,
-	Konrad Dybcio <konradybcio@kernel.org>
-Cc: Marijn Suijten <marijn.suijten@somainline.org>,
-	linux-arm-msm@vger.kernel.org,
+	Abel Vesa <abel.vesa@linaro.org>,
+	Rajendra Nayak <quic_rjendra@quicinc.com>,
+	Sibi Sankar <sibi.sankar@oss.qualcomm.com>,
+	Shazad Hussain <quic_shazhuss@quicinc.com>,
+	Krishna Kurapati <krishna.kurapati@oss.qualcomm.com>
+Cc: linux-arm-msm@vger.kernel.org,
 	devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	linux-pm@vger.kernel.org,
-	Krzysztof Kozlowski <krzk@kernel.org>,
-	linux-clk@vger.kernel.org,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Subject: Re: (subset) [PATCH 0/4] Bring the IP0 resource from ICC to clk-rpmh on QCS615
-Date: Mon, 27 Oct 2025 09:09:08 -0500
-Message-ID: <176157405442.8818.7885007140359472063.b4-ty@kernel.org>
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 0/2] Add missing quirk for HS only USB controller
+Date: Mon, 27 Oct 2025 09:09:09 -0500
+Message-ID: <176157405473.8818.7905612918394382433.b4-ty@kernel.org>
 X-Mailer: git-send-email 2.51.0
-In-Reply-To: <20250627-topic-qcs615_icc_ipa-v1-0-dc47596cde69@oss.qualcomm.com>
-References: <20250627-topic-qcs615_icc_ipa-v1-0-dc47596cde69@oss.qualcomm.com>
+In-Reply-To: <20251024105019.2220832-1-krishna.kurapati@oss.qualcomm.com>
+References: <20251024105019.2220832-1-krishna.kurapati@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -76,20 +70,26 @@ Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 
 
-On Fri, 27 Jun 2025 21:37:54 +0200, Konrad Dybcio wrote:
-> This is how it should have been right from the beginning, but it seems
-> like nobody took a good look at the initial submission.
+On Fri, 24 Oct 2025 16:20:17 +0530, Krishna Kurapati wrote:
+> The PIPE clock is provided by the USB3 PHY, which is predictably not
+> connected to the HS-only controller. Add "qcom,select-utmi-as-pipe-clk"
+> quirk to  HS only USB controller to disable pipe clock requirement.
 > 
-> This series is essentially the same as the previous [1] again.
+> This series has only been compile tested.
 > 
-> Compile-tested only.
+> Krishna Kurapati (2):
+>   arm64: dts: qcom: x1e80100: Add missing quirk for HS only USB
+>     controller
+>   arm64: dts: qcom: lemans: Add missing quirk for HS only USB controller
 > 
 > [...]
 
 Applied, thanks!
 
-[4/4] clk: qcom: rpmh: Define RPMH_IPA_CLK on QCS615
-      commit: 17e4db05930e455770b15b77708a07681ed24efc
+[1/2] arm64: dts: qcom: x1e80100: Add missing quirk for HS only USB controller
+      commit: 6b3e8a5d6c88609d9ce93789524f818cca0aa485
+[2/2] arm64: dts: qcom: lemans: Add missing quirk for HS only USB controller
+      commit: 0903296efd0b4e17c8d556ce8c33347147301870
 
 Best regards,
 -- 
