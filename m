@@ -1,172 +1,196 @@
-Return-Path: <linux-arm-msm+bounces-79009-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-79010-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [IPv6:2605:f480:58:1:0:1994:3:14])
-	by mail.lfdr.de (Postfix) with ESMTPS id C8492C0FEDB
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Oct 2025 19:33:30 +0100 (CET)
+Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [142.0.200.124])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4E9C0C0FEF6
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Oct 2025 19:35:56 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 8C2114E4ACF
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Oct 2025 18:33:08 +0000 (UTC)
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 7A2DB4EDB62
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Oct 2025 18:35:52 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 15D3A316918;
-	Mon, 27 Oct 2025 18:33:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1760131A7F9;
+	Mon, 27 Oct 2025 18:35:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="FV2IWENh"
+	dkim=pass (2048-bit key) header.d=baylibre-com.20230601.gappssmtp.com header.i=@baylibre-com.20230601.gappssmtp.com header.b="OaXrUnXo"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pf1-f172.google.com (mail-pf1-f172.google.com [209.85.210.172])
+Received: from mail-ot1-f43.google.com (mail-ot1-f43.google.com [209.85.210.43])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 516C26FBF
-	for <linux-arm-msm@vger.kernel.org>; Mon, 27 Oct 2025 18:33:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63CE86FBF
+	for <linux-arm-msm@vger.kernel.org>; Mon, 27 Oct 2025 18:35:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761589987; cv=none; b=RIKSdfnC8grPjs84axGNUErrZAzBuML5Qp/c6bNjzpbjMKdfGGo+XSsdj5VCmrC1vmI3IRDCbWPb6jnH4HhFR9A9mShXuI7yrOjps4hwhYFGAYIgBZpGyev16ykrjjWQNozRtuhL8Cm6EqjCRvvSJCO7+DH64epeG5tA3f4K8Rc=
+	t=1761590148; cv=none; b=NizU1hLqblwBbt7M/cwf1NIoLM4FZjZxz3bnbLaQBsEbpYHA1ctqVeWvHPSMuFT1tcoW6fkGMMoI+5toSfKPpKa+axqQ+uBqK1NV+ARYaVBiO2IqfZHt8ocVJ2hx/K3ziKl0ouicQv675rgNqw9OxQCQ7/8kisht9ndTmZHSXYY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761589987; c=relaxed/simple;
-	bh=5yC8PpIcUio4Ku4s4/CtCeIXIZihYpSkqy+RgQT0emA=;
-	h=Date:From:To:CC:Subject:In-Reply-To:References:Message-ID:
-	 MIME-Version:Content-Type; b=GEiJMzyljo+mz1cvawHiIdbMJW1gw2k5A38FPox5ey4bWMYJlS8lsvA0aO0J0IflkD+vxNLjJ2yxnKu14CZ76NgTZ7ZQ6phfG+unrIVjKSHGPjpd+MvZXSvUZRlsfyAGVs4wSt8VrN9kzLp1NS5ZvPCyJwf3+Jqwpkr9Wim5S0w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=FV2IWENh; arc=none smtp.client-ip=209.85.210.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-pf1-f172.google.com with SMTP id d2e1a72fcca58-78af743c232so4564557b3a.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 27 Oct 2025 11:33:04 -0700 (PDT)
+	s=arc-20240116; t=1761590148; c=relaxed/simple;
+	bh=PqKvPU0noBkdOcVjQUoD06IiGN+IODWXYRlWBSnglh4=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=kIF5uJPgLKcN85KJx6IJILdbOV8rzEy3oAS3bgJsYRunRt7Pde1dCCkAMBCYypKmAs7u1dmCklW0Q9pdpgyxrLVEUWileQLJZwvWjjpMQhaEliWalCdYYdP6GlTLnKd/nc0LjrJwDoDRhCuhGFTDSBAqlTEpGuy7fDcjLKrtwOY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=baylibre.com; spf=pass smtp.mailfrom=baylibre.com; dkim=pass (2048-bit key) header.d=baylibre-com.20230601.gappssmtp.com header.i=@baylibre-com.20230601.gappssmtp.com header.b=OaXrUnXo; arc=none smtp.client-ip=209.85.210.43
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=baylibre.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=baylibre.com
+Received: by mail-ot1-f43.google.com with SMTP id 46e09a7af769-7c531b9a45bso660554a34.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 27 Oct 2025 11:35:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1761589984; x=1762194784; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:references
-         :in-reply-to:user-agent:subject:cc:to:from:date:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=5yC8PpIcUio4Ku4s4/CtCeIXIZihYpSkqy+RgQT0emA=;
-        b=FV2IWENhh2JKYwqRHGajj7AYTBkfqP9U5SiC+g8cc08ULcrFbpwxGEZKE64pQxHfP+
-         4+mVvI8QaXssyHl//t5pdCkmmd/z6WAvjniAvCCkwvfgL6V8PYOqQ3Sf01od15o4szKa
-         8ke0Pw86686RR5p9aOARjyLySD1ka9/e97PgjZyksmVbx88trbMu4ckMVy+G/bhPjhmw
-         NHdcfU0qN4DyNxJT1Btw6SNRnWRX3EMa7P/v8m1WK9rO9TlCgMRgvXE2cH/rmmD9As5Q
-         +ppoDi3wKroHUG9omR7j4Nu6c8cwUjamf/P9MsqcR/lj9f4yAS30ooIyEjgPMp5UGXAv
-         ErSw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1761589984; x=1762194784;
-        h=content-transfer-encoding:mime-version:message-id:references
-         :in-reply-to:user-agent:subject:cc:to:from:date:x-gm-message-state
+        d=baylibre-com.20230601.gappssmtp.com; s=20230601; t=1761590143; x=1762194943; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=5yC8PpIcUio4Ku4s4/CtCeIXIZihYpSkqy+RgQT0emA=;
-        b=ULtKJ20IS1o8WCYJUSv+45u7gXHY4WyX4+C/FnOeIhYFugghissufSXPV19GabJ/q1
-         /B5GtxJLPkK3J7MSreQItLAqSW1MtVJmPYjI6F91i13fcDw6iVkUZmu+NpIa/PIq228L
-         VuxJ3DmQWlVFuUA4MXq440g3xT88tlRa/sDuBqErPQq7mESKfqCvYRsdAwOby+dxX3sg
-         oxAKvQY5yKPJqPQ7tvi1ky8PO8JzTZHo/yU6NrQIerqL5D4aMviiQjqGg6qFtQ80JLlR
-         ecNUHVOp6BqZxaRUQHoJRDYDFb/92y1v3y060TPtY4NUF2FnOSv6W7bC6HoSrMBxYu1H
-         ICFg==
-X-Forwarded-Encrypted: i=1; AJvYcCWVDiODRUjUFMuTjTzPmi/xnR7Z17fVcXrMzmi4E3VI72HfQKIt/oLf3WUmGrRcGHBZhWtgKZP7L+CfMq2+@vger.kernel.org
-X-Gm-Message-State: AOJu0YwMeXx3U2KvFFPqjKHR0ZnpF8ing6eirkBHqQrw467b3qR3Ma8Q
-	1ZBN2Xc9/3pU9j6FLOioRBFtctDGvFixQCBGVnziz8QM0CHtJj7jftvckcQOs9CL
-X-Gm-Gg: ASbGncu8FDzODUsuWU9bv47w0ckkfpmb4McgDYEX5BV9Q49aOAWFwwVaMoxhUA17XDz
-	prGjNRb6bJVTW1T8mJkXtoOjS4Zjsl4Z1/hNYukWbvFbCgmAW9cQbhVakHmzIxMBtxxHFJuByGw
-	sB92pd+Qomg2GrFH8PJljkTfh01y2uFEwG1QYfZIh9JOn5RVmm++ebxGGiIZdqtZ3bfS0zqXWrV
-	uZzV1jszPZEboy3/GS9w09CHHsNug11M+/wrIF475Hwrajrw/4lWbQoJouQ3TN22uuIItDQvNtC
-	NupBfmsFmIHwHOfWNZ+ywKzrLIxQl+9W1UOF7mQFh9ckbla2OlglhQ+ruwt5Ds3O7NnGhXaLzCx
-	a3ZfRdhzNpG/dmiKbMkL4M6CA1d25Zfe80x3GsxuM2niNjrVwlMvFsSL9fsgYtaaBvExLBenh36
-	hn0yeLmGX1gErn2ClzkBQWnQ==
-X-Google-Smtp-Source: AGHT+IHt4DJWNAM9MZTCzUyEfgg2vReTKwp653liwyZeiZgWrRZxP3BqzH/B64W+Bg8rAo6d5fksJw==
-X-Received: by 2002:a05:6a00:995:b0:7a2:7237:79ff with SMTP id d2e1a72fcca58-7a441ba53a6mr1041339b3a.7.1761589983518;
-        Mon, 27 Oct 2025 11:33:03 -0700 (PDT)
-Received: from ehlo.thunderbird.net ([2804:18:939:e8ae:c91b:7909:492a:aaa7])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-7a414069164sm9038019b3a.45.2025.10.27.11.33.02
+        bh=lvdP54SX5DIvg5ddC4TkLzn7pRZGLq9mZQ1eodiVzk4=;
+        b=OaXrUnXoKv6Nsxa1PoJ+HHhXW6ISObM5qw0IKdLLmBYldolKEOpBf5X2KVC0If6gYn
+         JkrH9FkdiiG7mv73n2j1hNGwS5spHo6VlL2jD9w8Ym5ArgsHLkUkERYanH891DNnZQ/2
+         JV/ZNaDpGfQs0d+PonA466jBXsswabk4T7gT4vF2CNYMCa1xH+ajTy7zA/koUFpiKRNy
+         Mqtf3edryksJ9lhC1cpnN6okGzGW6Dgh2CcXDnjNzxs/90gweAmoXaL/N1fDHSb6+pBt
+         gntjEI22QFLyeB1kmy6MU/GzojNZlTMSnKfy2ZJ1zoHY34v+B7KjB8eoY8sj49KYjf6B
+         9bjA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1761590143; x=1762194943;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=lvdP54SX5DIvg5ddC4TkLzn7pRZGLq9mZQ1eodiVzk4=;
+        b=cChfhf3coBtcn0l3qpJ2UWGG8GLW/Nr8O8qJjmH3mE6xp6S9OzvSZFSKi15xUUH+dI
+         jHYpANzh4zNweKq1b9BZOu7wXLGN//9rOwlo97c9EmFY502tX6FkmGdytGc8wvKH5mMl
+         M60zQhjm8oq9GASO12zvHwcDIhulwYKlUYKYrlW8TETn+9ByLv8hhYu8DZp02c+ox/pa
+         ocXIyknrK3Gjz351TkXNA6h3mY4FTmBZvZuWz6vye1JFiRWaT9OqZ+h9jy43/1Yst58e
+         MaUhS0JmWCwfo4wHBB0VHWsa7s3LVdUuFo1mIWcOGOZgTTa2ue8uh8WgLBOTP4k5o9RX
+         7ZPQ==
+X-Gm-Message-State: AOJu0YyyeIbiCxxH/eLyW9YhUk070yLBiGXpYEtWffXwGg0XymZrWRKk
+	ryLeQ9sBdZrq5LkAAVhfYgJOJLw7ifErA3PQWYg+hb8wtrTIR5Q84NngYmT2yzDUH/k=
+X-Gm-Gg: ASbGncsrNDxQK+HZUTmqufXyCQ6pj39Z1yIfL3A07WYfPApTagU9B4R4nQzogwz3o2f
+	9605NVYNeWxPnCwggO+qFzsJdf84gHbC4E7jQ9lg1R5TCeT7+AQxdnHZO91ghe3cIXEGTcRG4zA
+	cx04hJoqz7LqVIQdCIPJlbhfK0zCoOPvXlDEUtoQVzdr8OGPEO22NJnmkYyI6Om4JGhkCWYzffn
+	LlvI2slX5CBKKNzuUMEF+1LQGI++B8hLraVlrlEvIo3JNZixYv3/w6B6TJF958T6cpL87LdpVF1
+	7JF02S5FrKxMRrOjWa90fgraWW1mBbMSLddVTa6+SZX/kmhIC+KFAzk4g/0rId3mqbSveOF7M5r
+	vWTco+jxGWptbIQ+W7E6iEdwS42U4Pqxgf/hkYJPIgthyGvNa5IBWIaZbDoxeKi5XKvVItEDbyS
+	8jCvzbaZZkB5q1aqaltSUgJFY7cuuBhsZpOOxNMWl2LwKHioeDEw==
+X-Google-Smtp-Source: AGHT+IEsmQUfxd0dOcE/jYcTPBywE5Kc9BNx03k/QXwOh0ziGd8tdi38iwIv7izg1KS44yKfbURGxQ==
+X-Received: by 2002:a05:6808:188f:b0:44d:a271:fce4 with SMTP id 5614622812f47-44f6bb494e0mr343776b6e.47.1761590143393;
+        Mon, 27 Oct 2025 11:35:43 -0700 (PDT)
+Received: from ?IPV6:2600:8803:e7e4:500:46d5:c880:64c8:f854? ([2600:8803:e7e4:500:46d5:c880:64c8:f854])
+        by smtp.gmail.com with ESMTPSA id 006d021491bc7-654ef2eff7fsm1997150eaf.17.2025.10.27.11.35.41
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 27 Oct 2025 11:33:03 -0700 (PDT)
-Date: Mon, 27 Oct 2025 15:32:58 -0300
-From: =?ISO-8859-1?Q?Eric_Gon=E7alves?= <ghatto404@gmail.com>
-To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-CC: Krzysztof Kozlowski <krzk@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
- Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2 3/6] arm64: dts: qcom: r0q: add touchscreen support
-User-Agent: Thunderbird for Android
-In-Reply-To: <7e5f753d-a26d-40fb-9cde-ec17eff85c27@oss.qualcomm.com>
-References: <20251014044135.177210-1-ghatto404@gmail.com> <20251014044135.177210-4-ghatto404@gmail.com> <e114504e-4bdd-46b9-b708-8eebc3075163@oss.qualcomm.com> <CAMQHOhfjsi1L+3j3TrcjEjPp3xkn94KOdsrVZvJCyUDFBBSeqg@mail.gmail.com> <d06a254f-bf54-4bdf-bd09-3ee5e5b31bad@oss.qualcomm.com> <CAMQHOhe=WYhtsjHMcRnJOi8UhnNNBfveTWRGSZ_bg24gFysAEw@mail.gmail.com> <8bd5486f-38a9-4104-8d09-234f642b45fe@oss.qualcomm.com> <CAMQHOheTkKC8NcRrPxKZdB_h0SJGNJVMd4NUD7TE4becPouWyQ@mail.gmail.com> <73d30994-3ec3-41bc-9b07-638d4173dfe6@oss.qualcomm.com> <7C2DF8E1-D84C-428C-B064-3D8CA16FEA29@gmail.com> <7e5f753d-a26d-40fb-9cde-ec17eff85c27@oss.qualcomm.com>
-Message-ID: <E9C95D16-18DB-4AE9-8C50-BE3481A25FB3@gmail.com>
+        Mon, 27 Oct 2025 11:35:42 -0700 (PDT)
+Message-ID: <0eea7e4c-ec3b-421c-8522-aa3f52b5cb13@baylibre.com>
+Date: Mon, 27 Oct 2025 13:35:41 -0500
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 2/2] iio: adc: qcom-pm8xxx-xoadc: fix incorrect
+ calibration values
+To: Antony Kurniawan Soemardi <linux@smankusors.com>,
+ Jonathan Cameron <jic23@kernel.org>, =?UTF-8?Q?Nuno_S=C3=A1?=
+ <nuno.sa@analog.com>, Andy Shevchenko <andy@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, linux-iio@vger.kernel.org,
+ linux-kernel@vger.kernel.org
+References: <20251028-pm8xxx-xoadc-fix-v1-0-b000e1036e41@smankusors.com>
+ <20251028-pm8xxx-xoadc-fix-v1-2-b000e1036e41@smankusors.com>
+Content-Language: en-US
+From: David Lechner <dlechner@baylibre.com>
+In-Reply-To: <20251028-pm8xxx-xoadc-fix-v1-2-b000e1036e41@smankusors.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
+On 10/27/25 12:29 PM, Antony Kurniawan Soemardi wrote:
+> On msm8960 phones, the XOADC driver was using incorrect calibration
+> values:
+> absolute calibration dx = 625000 uV, dy = 4 units
+> ratiometric calibration dx = 1800, dy = -29041 units
+> 
+> As a result, reading from the IIO bus returned unexpected results:
+> in_voltage_7 (USB_VBUS): 0
+> in_voltage_10 (125V): 0
+> 
+> The issue was caused by not setting the ratiometric scale (amux_ip_rsv)
+> from the predefined channels. Additionally, the downstream code always
 
+Mentioning downstream kernels is usually a red flag. :-) 
 
-On October 20, 2025 9:18:18 AM GMT-03:00, Konrad Dybcio <konrad=2Edybcio@o=
-ss=2Equalcomm=2Ecom> wrote:
->On 10/17/25 8:22 PM, Eric Gon=C3=A7alves wrote:
->>=20
->>=20
->> On October 17, 2025 5:20:43 AM GMT-03:00, Konrad Dybcio <konrad=2Edybci=
-o@oss=2Equalcomm=2Ecom> wrote:
->>> On 10/16/25 10:08 PM, Ghatto wrote:
->>>> On Thu, Oct 16, 2025 at 6:06=E2=80=AFAM Konrad Dybcio
->>>> <konrad=2Edybcio@oss=2Equalcomm=2Ecom> wrote:
->>>>>
->>>>>
->>>>>
->>>>> On 10/14/25 9:04 PM, Ghatto wrote:
->>>>>> On Tue, Oct 14, 2025 at 11:18=E2=80=AFAM Konrad Dybcio
->>>>>> <konrad=2Edybcio@oss=2Equalcomm=2Ecom> wrote:
->>>>>>>
->>>>>>> On 10/14/25 5:10 PM, Ghatto wrote:
->>>>>>>> On Tue, Oct 14, 2025 at 7:01=E2=80=AFAM Konrad Dybcio
->>>>>>>> <konrad=2Edybcio@oss=2Equalcomm=2Ecom> wrote:
->>>>>>>>>
->>>>>>>>> On 10/14/25 6:41 AM, Eric Gon=C3=A7alves wrote:
->>>>>>>>>> Enable the ST-Microelectronics FTS2BA61Y touchscreen=2E This pa=
-tch
->>>>>>>>>> depends on "Input: add support for the STM FTS2BA61Y touchscree=
-n"=2E
->>>>>>>>>
->>>>>>>>> The second sentence doesn't really make sense to be included in
->>>>>>>>> the git log
->>>>>>>> I'll keep it to the cover letter then
->>>>>>>>>
->>>>>>>>>> The device has an issue where SPI 8 (the bus which the touchscr=
-een is
->>>>>>>>>> connected to) is not working properly right now, so
->>>>>>>>>> spi-gpio is used instead=2E
->>>>>>>>>
->>>>>>>>> Some Samsung devices used to use spi/i2c-gpio intentionally, als=
-o
->>>>>>>>> on downstream=2E I'm assuming this isn't the case for r0q=2E
->>>>>>>> It isn't, the device uses fts2ba61y on the spi8 bus - I hosted th=
-e
->>>>>>>> DT at https://github=2Ecom/ghatt-o/ss_experiments/blob/main/r0q=
-=2Edts if you
->>>>>>>> want to take a look=2E
->>>>>>>>>
->>>>>>>>> Did you enable gpi_dma1, qupv3_id_1 before spi8, when testing
->>>>>>>> The driver probes, but it fails to recognize the touchscreen devi=
-ce
->>>>>>>
->>>>>>> Could you post a complete dmesg and the precise DT diff you used?
->>>>>> https://pastebin=2Ecom/QkYa8nMp (android dmesg) mainline dmesg does=
-n't have
->>>>>
->>>>> The link has expired =F0=9F=99=81
->>>> https://pastebin=2Ecom/s4abJS9M shouldn't expire now!
->>>
->>> And yet it did!
->>>
->>> Feel free to just attach it to your message=2E=2E the list may bounce
->>> it, but it will still reach the To/Cc recipients
->> Attached the dmesg=2Etxt file=2E
->
->I'm interested in what happens early when the SPI hosts are programmed,
->whether there's any additional debug messages=2E
->
->If your log buffer is overrunning, you can add log_buf_len=3D8M to your
->cmdline (which will make the buffer 8MiB long)
-Is it that big of a deal though? spi-gpio
-works just fine for touchscreen=2E
->
->Konrad
+We can justify it here though by saying that there is no documentation
+available other than downstream source code, so we are just using it
+as a reference.
+
+> set the ADC_ARB_USRP_DIG_PARAM register to PM8XXX_ADC_ARB_ANA_DIG [1].
+> That value does not include the SEL_SHIFT0 and SEL_SHIFT1 bits. Enabling
+> those bits caused calibration errors too, so they were removed.
+> 
+> With these fixes, calibration now uses the correct values:
+> absolute calibration dx = 625000 uV, dy = 6307 units
+> ratiometric calibration dx = 1800, dy = 18249 units
+> 
+> Reading from the IIO bus now returns expected results:
+> in_voltage_7 (USB_VBUS): 4973836
+> in_voltage_10 (125V): 1249405
+
+Would be useful to mention which hardware you tested with in case
+it turns out that there is some other hardware that does require the
+SHIFT0/1 bits to be set.
+
+> 
+> [1] https://github.com/LineageOS/android_kernel_sony_msm8960t/blob/93319b1e5aa343ec1c1aabcb028c5e88c7df7c01/drivers/hwmon/pm8xxx-adc.c#L407-L408
+> 
+
+Since this is a fix, it should have a Fixes: tag. And it sounds like
+possibly two separate fixes. In that case, it should be two separate
+patches.
+
+> Signed-off-by: Antony Kurniawan Soemardi <linux@smankusors.com>
+> ---
+>  drivers/iio/adc/qcom-pm8xxx-xoadc.c | 10 ++++++----
+>  1 file changed, 6 insertions(+), 4 deletions(-)
+> 
+> diff --git a/drivers/iio/adc/qcom-pm8xxx-xoadc.c b/drivers/iio/adc/qcom-pm8xxx-xoadc.c
+> index 8555f34036fb13c41ac720dc02c1dc39876e9198..a53d361456ec36b66d258041877bd96ab37838c4 100644
+> --- a/drivers/iio/adc/qcom-pm8xxx-xoadc.c
+> +++ b/drivers/iio/adc/qcom-pm8xxx-xoadc.c
+> @@ -503,10 +503,11 @@ static int pm8xxx_read_channel_rsv(struct pm8xxx_xoadc *adc,
+>  		goto unlock;
+>  
+>  	/* Decimation factor */
+> -	ret = regmap_write(adc->map, ADC_ARB_USRP_DIG_PARAM,
+> -			   ADC_ARB_USRP_DIG_PARAM_SEL_SHIFT0 |
+> -			   ADC_ARB_USRP_DIG_PARAM_SEL_SHIFT1 |
+> -			   ch->decimation << ADC_DIG_PARAM_DEC_SHIFT);
+> +	ret = regmap_update_bits(adc->map,
+> +				 ADC_ARB_USRP_DIG_PARAM,
+> +				 ADC_ARB_USRP_DIG_PARAM_DEC_RATE0 |
+> +				 ADC_ARB_USRP_DIG_PARAM_DEC_RATE1,
+> +				 ch->decimation << ADC_DIG_PARAM_DEC_SHIFT);
+
+As a follow-up patch, it would be nice to update the driver to use FIELD_PREP().
+
+I.e. remove ADC_ARB_USRP_DIG_PARAM_DEC_RATE0, ADC_ARB_USRP_DIG_PARAM_DEC_RATE1
+and ADC_DIG_PARAM_DEC_SHIFT macros and replace them with one macro:
+
+#define ADC_ARB_USRP_DIG_PARAM_DEC_RATE		GENMASK(6, 5)
+
+Then use it like:
+
+	ret = regmap_update_bits(adc->map,
+				 ADC_ARB_USRP_DIG_PARAM,
+				 ADC_ARB_USRP_DIG_PARAM_DEC_RATE,
+				 FIELD_PREP(ADC_ARB_USRP_DIG_PARAM_DEC_RATE,
+					    ch->decimation));
+
+This should be done for all of the similar multi-bit fields.
+
+>  	if (ret)
+>  		goto unlock;
+>  
+> @@ -783,6 +784,7 @@ static int pm8xxx_xoadc_parse_channel(struct device *dev,
+>  	ch->calibration = VADC_CALIB_ABSOLUTE;
+>  	/* Everyone seems to use default ("type 2") decimation */
+>  	ch->decimation = VADC_DEF_DECIMATION;
+> +	ch->amux_ip_rsv = hwchan->amux_ip_rsv;
+>  
+>  	if (!fwnode_property_read_u32(fwnode, "qcom,ratiometric", &rsv)) {
+>  		ch->calibration = VADC_CALIB_RATIOMETRIC;
+> 
+
 
