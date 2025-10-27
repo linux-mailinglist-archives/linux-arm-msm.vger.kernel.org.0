@@ -1,57 +1,65 @@
-Return-Path: <linux-arm-msm+bounces-78930-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-78931-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id A6E85C0E47A
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Oct 2025 15:13:04 +0100 (CET)
+Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [IPv6:2605:f480:58:1:0:1994:3:14])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3BE36C0E4FD
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Oct 2025 15:14:54 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id A04A94081A6
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Oct 2025 14:06:36 +0000 (UTC)
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id EDDB14FC0FF
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Oct 2025 14:06:46 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BD724306B3B;
-	Mon, 27 Oct 2025 14:06:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D721E307AF2;
+	Mon, 27 Oct 2025 14:06:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="RFNOTO4z"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="nr6/h5rZ"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9614E306B0C;
-	Mon, 27 Oct 2025 14:06:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD3C2307AC4;
+	Mon, 27 Oct 2025 14:06:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761573989; cv=none; b=l3cneCwI71eiItaRskGgbqo5AYVPxQEbXPDgZrAoehOGUDjXMR5N3ixDPCScSTMPhJta4Zj66IyKBsfH6qja1R6ahZfH5QuOka9zn2buuHXyMVxObeIDVx1FT+bUY5iRZdAlNVZc/0DBfy2UkxKOqOzfqcf3EnxHpKR2HvNCxvQ=
+	t=1761573990; cv=none; b=FzPQWDGrAd2txMpV7fJ343VwL00r+KAinNaFx9pk/LEoK8YbYkT67jmnkE+vwSQUnPTv3xaZAjrj3wpmq8kdZWFIFTN7lh6/9UhkYmAzTfw0t6PsJTCIQONZHUcXjx2tu5xDX2LAy9XlUdH307zXmP5mZLWZ3CXDTxR5oXazEMA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761573989; c=relaxed/simple;
-	bh=7GaZfmQNzHSeLbyvusv+384+vik9dzxAXunoBf510BU=;
+	s=arc-20240116; t=1761573990; c=relaxed/simple;
+	bh=mydn0gj6QS5mxTfOU4C8MwsgU0NOzyhR/5mNbySSuqM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=UXIxIc/ldZgXNwmwR630FATSXMaJZzwuTcOQpj0tQsFqzTa/2XuHlgMcANGOIWe3SyeXvBitPSLpwhAgqOQbqkkvjfCHhVefx/a6Rqg1QIHhemJtSH6+iQ2XpNb2Z8BAqm4lQZ2wsrDORF0JznjGt22FgCBpn+tj0zYcadJRVz4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=RFNOTO4z; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6DA5C116C6;
-	Mon, 27 Oct 2025 14:06:28 +0000 (UTC)
+	 MIME-Version:Content-Type; b=Q0fNywLfHdQkCE7ppsprbHUQyqHODTHoh7y2+0JpeB5dv3L7QOVwBbSsDh16TUdSai46FclfAAgzeXtefOw317wCRoH4iHiyTRpygWqoXiap3cja7xp7WLTdrBBA/f9IwHhnJRozYgUXuFSfbzVq+zD+dZXqLgY4875ais8y/WU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=nr6/h5rZ; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5426BC116D0;
+	Mon, 27 Oct 2025 14:06:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1761573989;
-	bh=7GaZfmQNzHSeLbyvusv+384+vik9dzxAXunoBf510BU=;
+	s=k20201202; t=1761573990;
+	bh=mydn0gj6QS5mxTfOU4C8MwsgU0NOzyhR/5mNbySSuqM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RFNOTO4zEi7y8XOzN/NszC2rT7MBEHJPOni2eN3ap/1IW00jQRq9093dHBkNBJsiX
-	 B1Eag7EW7BfLnXyspRssMbaBDxFxhTU0Bmv86iuctmg7i2AUzC/q5bB/Ay9v+Odi3G
-	 glRXsfY91bvSPVMIjSBB1lCWBICpqmNLyFJwaVi5w28QcIt40ig2l5pXqppNdT5MmZ
-	 1IP2Rp7lOvR3mcMRX5Dm2EFpjwBHC2RnUsGos+XZTJkqK5wEHoVXOIx+u39bYMA5Wz
-	 jtm20YtourGIqW0XgG10P9la4O6dLGJgmF7mKDnFsggyQHccvg6BhqoA0VWoqk6CPb
-	 CW6MeTjuJ5tnQ==
+	b=nr6/h5rZcA5o0R30J1/CxxPSctvY9NKrhth5cpprr31rXRRw83ynwADH5v5RSM6J1
+	 oILGFy3NMoC1l+baew30zqpp0XIhSJJYv2NDNkBEHm6suehPhDk4ylXRrt14L4PyMi
+	 0LsTpBi3kfBTCyKLH6mm6yJrBLPgb119iu+1jvrpSdwvhMd9Weo+lUc9Q3BQOODFvy
+	 rjGE2sdFpHiTB3BPglbSY0O9rBroOsgSFussHoQvjISyXhChJqJ6kVllI70/xLMIjJ
+	 u3mb3xF6BJMUvRxzmOvk7kzaBVKuUpg/S9+9DYt+Mm/jwbdi1v1+m9Pm+vwiMd3nG7
+	 MvzW9V39hwuRQ==
 From: Bjorn Andersson <andersson@kernel.org>
-To: konradybcio@kernel.org,
-	Anjelique Melendez <anjelique.melendez@oss.qualcomm.com>
+To: Konrad Dybcio <konradybcio@kernel.org>,
+	Conor Dooley <conor@kernel.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Jingyi Wang <jingyi.wang@oss.qualcomm.com>
 Cc: linux-arm-msm@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2] soc: qcom: pmic_glink: Add support for SOCCP remoteproc channels
-Date: Mon, 27 Oct 2025 09:09:03 -0500
-Message-ID: <176157405464.8818.5887965202916918883.b4-ty@kernel.org>
+	devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	aiqun.yu@oss.qualcomm.com,
+	tingwei.zhang@oss.qualcomm.com,
+	trilok.soni@oss.qualcomm.com,
+	yijie.yang@oss.qualcomm.com
+Subject: Re: [PATCH 0/2] soc: qcom: llcc: Add LLCC support for the Kaanapali platform
+Date: Mon, 27 Oct 2025 09:09:04 -0500
+Message-ID: <176157405467.8818.9613829432844744989.b4-ty@kernel.org>
 X-Mailer: git-send-email 2.51.0
-In-Reply-To: <20250919175025.2988948-1-anjelique.melendez@oss.qualcomm.com>
-References: <20250919175025.2988948-1-anjelique.melendez@oss.qualcomm.com>
+In-Reply-To: <20250924-knp-llcc-v1-0-ae6a016e5138@oss.qualcomm.com>
+References: <20250924-knp-llcc-v1-0-ae6a016e5138@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -62,20 +70,18 @@ Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 
 
-On Fri, 19 Sep 2025 10:50:25 -0700, Anjelique Melendez wrote:
-> System On Chip Control Processor (SOCCP) is a subsystem that can have
-> battery management firmware running on it to support Type-C/PD and
-> battery charging. SOCCP does not have multiple PDs and hence PDR is not
-> supported. So, if the subsystem comes up/down, rpmsg driver would be
-> probed or removed. Use that for notifying clients of pmic_glink for
-> PDR events.
+On Wed, 24 Sep 2025 16:24:53 -0700, Jingyi Wang wrote:
+> The Kaanapali platform has LLCC(Last Level Cache Controller) as the system
+> cache controller. Add binding and configuration to support this.
 > 
-> [...]
+> 
 
 Applied, thanks!
 
-[1/1] soc: qcom: pmic_glink: Add support for SOCCP remoteproc channels
-      commit: 6773cb33e7a7191ae7ae490af279596c91a828cc
+[1/2] dt-bindings: cache: qcom,llcc: Document the Kaanapali LLCC
+      commit: f5f1e5abb649d0a532ebc72f4196b4818585d20b
+[2/2] soc: qcom: llcc-qcom: Add support for Kaanapali
+      commit: c88b6ee3ba3c7bf6386ea0e6de8111acc3d832bc
 
 Best regards,
 -- 
