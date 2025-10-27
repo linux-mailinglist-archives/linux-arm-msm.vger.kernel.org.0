@@ -1,162 +1,193 @@
-Return-Path: <linux-arm-msm+bounces-78886-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-78887-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 599E1C0D5BA
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Oct 2025 13:01:09 +0100 (CET)
+Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [IPv6:2605:f480:58:1:0:1994:3:14])
+	by mail.lfdr.de (Postfix) with ESMTPS id 36596C0D5C0
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Oct 2025 13:01:25 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id AD112407367
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Oct 2025 11:54:20 +0000 (UTC)
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 358B64F2CE7
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Oct 2025 11:58:42 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E459E3009C1;
-	Mon, 27 Oct 2025 11:53:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id BD2002FFDCB;
+	Mon, 27 Oct 2025 11:58:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="QlKYGKsE"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="OmdGv+iW"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1AD692FF654;
-	Mon, 27 Oct 2025 11:53:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DD1E2FFFB6;
+	Mon, 27 Oct 2025 11:58:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761566039; cv=none; b=ZcdLeGAh2Dg3x4syXbxkhLOuBpsy7OCz/UhbtxOwINEOUmAirCUpwUxh/XJtoiHx1RmY4YX6mUHuv3OkuIsOUdpiT1EpmJz9PjY2jkt7sGdyhRP5/orx5ySk4CzKT4Sow8EuPfthSyF6FRoX0kpXAdkMKThoPbEZj4mKnWLG4+s=
+	t=1761566310; cv=none; b=SN8/a3hbrrgEG0PNTVset9oH/FS0bpjaEwKM30sqU1TTF1Gky4HNrhqFu+dejjzuAMvcLmjAzHNXwEAD0XosLubRCjAhLsMp4mi9ZhhEPrGwVYYRVd26IQXZDJcd8LKdt1lsvwoKHtmGmsx+x1RRanln6GzpGv7m6ktFhjgPZ/4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761566039; c=relaxed/simple;
-	bh=uKQ3KXnvoFnQVXBenAS5vSsKDUxIPcvN+uC0/uRTINU=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=uU3xNPXl/xWf5WKBcpgefSZAZGJrceSbKpuz/v8OPxVLpkp94uT+BbE3N+19znl1yXiS5r55oimWlLbME+ud8c8smvSJKskS9HELFNyzeSH63+luVOU2V1ES/+kMz2fGQGoXTlhL6e/XnQufygcegJ2Bh4TATXStApL4MxgfHzk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=QlKYGKsE; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 59R8KUpv853418;
-	Mon, 27 Oct 2025 11:53:56 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	T8AlCSPbxa0/4b/Qnm6NCQnzb0HpZIMUHXWQRunT52M=; b=QlKYGKsEnsUtNs+Y
-	Q1g9Yx4JCEFxQyNS7EkPIp5+dtgvsk4qfqszAUWlMVelV10h4i8bTprOOdmYTiL1
-	m5akfdxW1mo3nYa/nHCETWpumKyPp5ZlP+VTHDwTdoLiR4Kiv/MgL+nMws+Sbnrn
-	CM4xBOgOq1CESqB1PHf2MRRtDtuYKJ+WIuB/PELydxNzwOfszWftdl1lgyT/Ea1/
-	doP2JXuchH8TX4RqwxViRnFggkgEMZ3rSROK/F9JAl4HeX/7egC+Wo0yzy8QCkzE
-	ClOpo02fSERt6PYaDHvCdqNiIM6MbqWNIIr9L8ZVtN1hIGd+CoP9wbiDe+qTxzPV
-	c+1GCA==
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4a1ud1su4e-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 27 Oct 2025 11:53:55 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 59RBrtXe028582
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 27 Oct 2025 11:53:55 GMT
-Received: from [10.151.36.85] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1748.24; Mon, 27 Oct
- 2025 04:53:51 -0700
-Message-ID: <35a3434c-9408-472d-8575-6efa2ea28e12@quicinc.com>
-Date: Mon, 27 Oct 2025 17:23:51 +0530
+	s=arc-20240116; t=1761566310; c=relaxed/simple;
+	bh=UUwYyJrAG3l/4bwYSl4hCmy1CBY+TsGQILEbXLVni7Q=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=gy1sDJJ/lNRD4IMmQLv/KQ0F120zDV3FR9d8dwhxS7pAD+h79Gu++iG613BPrdgs455Xi5Z2DWK64U4k3YJYPLNiZH3SIW2+08KDA9HytMKRbS8krge/JvUiz9/5OZj9GLodL/h2tf+rK4/Ukw/uDa6OB+WHJbi90mEWaHT7BNg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=OmdGv+iW; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC18EC4CEFF;
+	Mon, 27 Oct 2025 11:58:22 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1761566309;
+	bh=UUwYyJrAG3l/4bwYSl4hCmy1CBY+TsGQILEbXLVni7Q=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=OmdGv+iWS9B4ECThXIJ4LARg3TUDxeHhlnkhUDNYXAXD9mXY16fLpqVKu/fqz5sHg
+	 JI5p6+EyUZdOGjekL7QeWTDFp4RNQgPJcIp5blRAaZ3WFQSRVCjZ0IqXtizTVylh6D
+	 Du7m4csQ5lQCuEDOpDphH+hstwlHzc9KyKAPxM/X4tfiy15Tn3EAp74oKcw3XosvaF
+	 LO1ZxJQCI35YWBaWmYtW/1pmLLiaoQpq+UfobA+iKFdiPdbO2f2HfnrtBmaWGVyAfc
+	 QbOYfTYlNO3nF1QMPPyT0Th0j4DpwSZnEpqxDHkrnJ6faaDyooE33uJUR5KCe9BCbF
+	 3vMuiLR9n0OUw==
+Date: Mon, 27 Oct 2025 17:28:13 +0530
+From: Manivannan Sadhasivam <mani@kernel.org>
+To: Bjorn Helgaas <helgaas@kernel.org>
+Cc: linux-pci@vger.kernel.org, 
+	Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>, Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kwilczynski@kernel.org>, 
+	Johan Hovold <johan@kernel.org>, Frank Li <Frank.li@nxp.com>, 
+	Shawn Lin <shawn.lin@rock-chips.com>, Rob Herring <robh@kernel.org>, 
+	"David E . Box" <david.e.box@linux.intel.com>, Kai-Heng Feng <kai.heng.feng@canonical.com>, 
+	"Rafael J . Wysocki" <rafael@kernel.org>, Heiner Kallweit <hkallweit1@gmail.com>, 
+	Chia-Lin Kao <acelan.kao@canonical.com>, Gustavo Pimentel <Gustavo.Pimentel@synopsys.com>, 
+	Han Jingoo <jingoohan1@gmail.com>, Bjorn Andersson <andersson@kernel.org>, 
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, Bartosz Golaszewski <brgl@bgdev.pl>, 
+	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	Bjorn Helgaas <bhelgaas@google.com>
+Subject: Re: [PATCH] Revert "PCI: qcom: Remove custom ASPM enablement code"
+Message-ID: <zjlinz3xpkyfbvqxjvx3bq3c3z2vp52ytimsbfmz7zgzlgagyb@iibcp7xlnlr7>
+References: <20251024210514.1365996-1-helgaas@kernel.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1] arm64: dts: qcom: ipq5424: add gpio regulator for cpu
- power supply
-To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-CC: <andersson@kernel.org>, <konradybcio@kernel.org>, <robh@kernel.org>,
-        <krzk+dt@kernel.org>, <conor+dt@kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <quic_srichara@quicinc.com>,
-        <quic_varada@quicinc.com>, <kathiravan.thirumoorthy@oss.qualcomm.com>
-References: <20251023040224.1485946-1-quic_mmanikan@quicinc.com>
- <3xxdcekqzn6hxc2zoavsge3s53czavpfs2evc3ot37aivw4rib@uee2g2mem3hx>
-Content-Language: en-US
-From: Manikanta Mylavarapu <quic_mmanikan@quicinc.com>
-In-Reply-To: <3xxdcekqzn6hxc2zoavsge3s53czavpfs2evc3ot37aivw4rib@uee2g2mem3hx>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDI3MDExMSBTYWx0ZWRfX2G+F1vz7FAph
- /crtNSTpOnwidBENMyUXM5qG+j9FvzZFN/uw1IHiCxVbGBA/bMrniLoZDECZktkvmzubzNwPqNM
- zzcfWMdUETSAOwy5FGxvHZ6A0aVtzskLywXXUNQs7GY/djm6o5md7v+Ymg8QjUQEbOzRjmXaAUT
- mZ9RWpFf2Fs9AoDrmtouxK143r6XfLtrM04vmTEROYYPdNGeOkIMPDNJ7U4pyr4kysdJ3kyf4+A
- To6IEsd2caPRBaTLqwpNt9hqk6tqOcYrwjrpirdq22w6V1KuNko29IQbcpvoh+vyw/keFPFBhmR
- 639I/0OicjmNRiBStIOAPG7uqfncYDWGfG2OHs00JNC3toF9Pho4QICex1zJnVUEYINZ2ugbc20
- VSI7sEiuTBbm2KaFmcronHrk5PT8dw==
-X-Proofpoint-GUID: ivnvOsvaH_SZ4N8A-wThQ-grBmd2EwOK
-X-Proofpoint-ORIG-GUID: ivnvOsvaH_SZ4N8A-wThQ-grBmd2EwOK
-X-Authority-Analysis: v=2.4 cv=UqNu9uwB c=1 sm=1 tr=0 ts=68ff5d53 cx=c_pps
- a=ouPCqIW2jiPt+lZRy3xVPw==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
- a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=x6icFKpwvdMA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=COk6AnOGAAAA:8 a=uQvMgEUVd491ROOkyBoA:9
- a=QEXdDO2ut3YA:10 a=TjNXssC_j7lpFel5tvFf:22 a=cPQSjfK2_nFv0Q5t_7PE:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-10-27_05,2025-10-22_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0 clxscore=1011 spamscore=0 bulkscore=0 adultscore=0
- priorityscore=1501 lowpriorityscore=0 malwarescore=0 impostorscore=0
- suspectscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2510020000
- definitions=main-2510270111
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20251024210514.1365996-1-helgaas@kernel.org>
 
-
-
-On 10/23/2025 7:42 PM, Dmitry Baryshkov wrote:
-> On Thu, Oct 23, 2025 at 09:32:24AM +0530, Manikanta Mylavarapu wrote:
->> Add a GPIO-controlled regulator node for the CPU rail on the
->> IPQ5424 RDP466 platform. This regulator supports two voltage
->> levels 850mV and 1000mV.
->>
->> Update CPU nodes to reference the regulator via the `cpu-supply`
->> property, and add the required pinctrl configuration for GPIO17.
->>
->> Signed-off-by: Manikanta Mylavarapu <quic_mmanikan@quicinc.com>
->> ---
->>  arch/arm64/boot/dts/qcom/ipq5424-rdp466.dts | 24 +++++++++++++++++++++
->>  arch/arm64/boot/dts/qcom/ipq5424.dtsi       |  4 ++++
->>  2 files changed, 28 insertions(+)
->>
->> diff --git a/arch/arm64/boot/dts/qcom/ipq5424-rdp466.dts b/arch/arm64/boot/dts/qcom/ipq5424-rdp466.dts
->> index 738618551203..6d14eb2fe821 100644
->> --- a/arch/arm64/boot/dts/qcom/ipq5424-rdp466.dts
->> +++ b/arch/arm64/boot/dts/qcom/ipq5424-rdp466.dts
->> @@ -46,6 +46,23 @@ led-0 {
->>  		};
->>  	};
->>  
->> +	vreg_apc: regulator-vreg-apc {
->> +		compatible = "regulator-gpio";
->> +		regulator-name = "vreg_apc";
->> +		regulator-min-microvolt = <850000>;
->> +		regulator-max-microvolt = <1000000>;
->> +		regulator-boot-on;
->> +		regulator-always-on;
->> +		regulator-ramp-delay = <250>;
->> +
->> +		gpios = <&tlmm 17 GPIO_ACTIVE_HIGH>;
->> +		gpios-states = <1>;
->> +		states = <850000 0>, <1000000 1>;
->> +
->> +		pinctrl-0 = <&regulator_gpio_default>;
->> +		pinctrl-names = "default";
+On Fri, Oct 24, 2025 at 04:04:57PM -0500, Bjorn Helgaas wrote:
+> From: Bjorn Helgaas <bhelgaas@google.com>
 > 
-> 'vreg' > 'usb'
+> This reverts commit a729c16646198872e345bf6c48dbe540ad8a9753.
+> 
+> Prior to a729c1664619 ("PCI: qcom: Remove custom ASPM enablement code"),
+> the qcom controller driver enabled ASPM, including L0s, L1, and L1 PM
+> Substates, for all devices powered on at the time the controller driver
+> enumerates them.
+> 
+> ASPM was *not* enabled for devices powered on later by pwrctrl (unless the
+> kernel was built with PCIEASPM_POWERSAVE or PCIEASPM_POWER_SUPERSAVE, or
+> the user enabled ASPM via module parameter or sysfs).
+> 
+> After f3ac2ff14834 ("PCI/ASPM: Enable all ClockPM and ASPM states for
+> devicetree platforms"), the PCI core enabled all ASPM states for all
+> devices whether powered on initially or by pwrctrl, so a729c1664619 was
+> unnecessary and reverted.
+> 
+> But f3ac2ff14834 was too aggressive and broke platforms that didn't support
+> CLKREQ# or required device-specific configuration for L1 Substates, so
+> df5192d9bb0e ("PCI/ASPM: Enable only L0s and L1 for devicetree platforms")
+> enabled only L0s and L1.
+> 
+> On Qualcomm platforms, this left L1 Substates disabled, which was a
+> regression.  Revert a729c1664619 so L1 Substates will be enabled on devices
+> that are initially powered on.  Devices powered on by pwrctrl will be
+> addressed later.
+> 
+> Fixes: df5192d9bb0e ("PCI/ASPM: Enable only L0s and L1 for devicetree platforms")
+> Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+
+Reviewed-by: Manivannan Sadhasivam <mani@kernel.org>
+
+- Mani
+
+> ---
+>  drivers/pci/controller/dwc/pcie-qcom.c | 32 ++++++++++++++++++++++++++
+>  1 file changed, 32 insertions(+)
+> 
+> diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
+> index 6948824642dc..c48a20602d7f 100644
+> --- a/drivers/pci/controller/dwc/pcie-qcom.c
+> +++ b/drivers/pci/controller/dwc/pcie-qcom.c
+> @@ -247,6 +247,7 @@ struct qcom_pcie_ops {
+>  	int (*get_resources)(struct qcom_pcie *pcie);
+>  	int (*init)(struct qcom_pcie *pcie);
+>  	int (*post_init)(struct qcom_pcie *pcie);
+> +	void (*host_post_init)(struct qcom_pcie *pcie);
+>  	void (*deinit)(struct qcom_pcie *pcie);
+>  	void (*ltssm_enable)(struct qcom_pcie *pcie);
+>  	int (*config_sid)(struct qcom_pcie *pcie);
+> @@ -1038,6 +1039,25 @@ static int qcom_pcie_post_init_2_7_0(struct qcom_pcie *pcie)
+>  	return 0;
+>  }
+>  
+> +static int qcom_pcie_enable_aspm(struct pci_dev *pdev, void *userdata)
+> +{
+> +	/*
+> +	 * Downstream devices need to be in D0 state before enabling PCI PM
+> +	 * substates.
+> +	 */
+> +	pci_set_power_state_locked(pdev, PCI_D0);
+> +	pci_enable_link_state_locked(pdev, PCIE_LINK_STATE_ALL);
+> +
+> +	return 0;
+> +}
+> +
+> +static void qcom_pcie_host_post_init_2_7_0(struct qcom_pcie *pcie)
+> +{
+> +	struct dw_pcie_rp *pp = &pcie->pci->pp;
+> +
+> +	pci_walk_bus(pp->bridge->bus, qcom_pcie_enable_aspm, NULL);
+> +}
+> +
+>  static void qcom_pcie_deinit_2_7_0(struct qcom_pcie *pcie)
+>  {
+>  	struct qcom_pcie_resources_2_7_0 *res = &pcie->res.v2_7_0;
+> @@ -1312,9 +1332,19 @@ static void qcom_pcie_host_deinit(struct dw_pcie_rp *pp)
+>  	pcie->cfg->ops->deinit(pcie);
+>  }
+>  
+> +static void qcom_pcie_host_post_init(struct dw_pcie_rp *pp)
+> +{
+> +	struct dw_pcie *pci = to_dw_pcie_from_pp(pp);
+> +	struct qcom_pcie *pcie = to_qcom_pcie(pci);
+> +
+> +	if (pcie->cfg->ops->host_post_init)
+> +		pcie->cfg->ops->host_post_init(pcie);
+> +}
+> +
+>  static const struct dw_pcie_host_ops qcom_pcie_dw_ops = {
+>  	.init		= qcom_pcie_host_init,
+>  	.deinit		= qcom_pcie_host_deinit,
+> +	.post_init	= qcom_pcie_host_post_init,
+>  };
+>  
+>  /* Qcom IP rev.: 2.1.0	Synopsys IP rev.: 4.01a */
+> @@ -1376,6 +1406,7 @@ static const struct qcom_pcie_ops ops_1_9_0 = {
+>  	.get_resources = qcom_pcie_get_resources_2_7_0,
+>  	.init = qcom_pcie_init_2_7_0,
+>  	.post_init = qcom_pcie_post_init_2_7_0,
+> +	.host_post_init = qcom_pcie_host_post_init_2_7_0,
+>  	.deinit = qcom_pcie_deinit_2_7_0,
+>  	.ltssm_enable = qcom_pcie_2_3_2_ltssm_enable,
+>  	.config_sid = qcom_pcie_config_sid_1_9_0,
+> @@ -1386,6 +1417,7 @@ static const struct qcom_pcie_ops ops_1_21_0 = {
+>  	.get_resources = qcom_pcie_get_resources_2_7_0,
+>  	.init = qcom_pcie_init_2_7_0,
+>  	.post_init = qcom_pcie_post_init_2_7_0,
+> +	.host_post_init = qcom_pcie_host_post_init_2_7_0,
+>  	.deinit = qcom_pcie_deinit_2_7_0,
+>  	.ltssm_enable = qcom_pcie_2_3_2_ltssm_enable,
+>  };
+> -- 
+> 2.43.0
+> 
 > 
 
-Hi Dmitry,
-
-Thank you for reviewing the patch.
-I will incorporate the suggested change in the next version.
-
-Thanks & Regards,
-Manikanta.
+-- 
+மணிவண்ணன் சதாசிவம்
 
