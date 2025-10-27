@@ -1,140 +1,183 @@
-Return-Path: <linux-arm-msm+bounces-79007-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-79008-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 399B9C0FDE4
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Oct 2025 19:14:06 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 034D2C0FEAE
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Oct 2025 19:25:57 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 7AD5219A6C70
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Oct 2025 18:14:06 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 07E54406B0F
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Oct 2025 18:23:50 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 820D2310627;
-	Mon, 27 Oct 2025 18:13:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id ECFD12D877D;
+	Mon, 27 Oct 2025 18:23:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="Lg+/QOYY"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="G0qcJcvJ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB01A2D6E64
-	for <linux-arm-msm@vger.kernel.org>; Mon, 27 Oct 2025 18:13:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C39C92D839A;
+	Mon, 27 Oct 2025 18:23:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761588816; cv=none; b=NbIrzvJW5COOHMiPvFusqyuMBoMbfF2E1pCd9seiEn0tFizjBASLWLzhHx3vk44lC/0C1Zstv1EROYeYtShC5iJzcC0ciY8iwQUV8dwb4QIJ6EMIjg93MzI89Xa6abn4YG/zS4b4cy43a6AFEFmSEmk6v98BGXQ+Vmp8di2vI9M=
+	t=1761589428; cv=none; b=kGOPDrUG+hw843mPDNzN7yCKVACuUS1WoJ3/SyW3lTx82fs5RfdV08WWUlM8ilg/AH7gMcqhCYkTKFDnbzXoeW2Uk/wlkwy8O434YOULj4CwI4m12vSZlnPURspbyj15KTOijwxa6w/K6LIkmMxCn3BJh8plCVXAPZ2CFSu7c48=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761588816; c=relaxed/simple;
-	bh=zxGk1h01huWxa6FzZ1pcP/kLDzUsHGnoR1GDMxYJs9c=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Z8EDiuNc1iuPcSakga3Ji7g5AprqYYVzULijTl5TG1+7Pel63bkX5W5w14ZYPPG3lWLRwOfx6esBPze5j3blmElbfjjcve3qyCFlZbrfmwyysysK1Ljr8H43vzFUHtQ+IaZCGHURftnlr72iyxQaeOC+sLHNyy75/Skh5eEbidQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=Lg+/QOYY; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 59RCTlDM2752101
-	for <linux-arm-msm@vger.kernel.org>; Mon, 27 Oct 2025 18:13:33 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	Ko7xtFW+5pu3NdSbzBTPvaaqBJRyQJS4Sth4kjrm0Bc=; b=Lg+/QOYYW0/kbwjh
-	ZIBxTQEdQgKw4Y8dQgAuEJC2xS2KHOCSq+fIgy/23g97tiS2Q0Epr7uYqq2Awrk2
-	duqYHYkEy1pz33wqd4/gQmNZC/TBbiARZ/ymLmynrVKm8HByVYJC8kxTvyhQUQda
-	aHKFTOBWgERdowZd+8HRHnwnXD9vyRtbKAeU5AfVmu/QMzGOy/PgShBqsRMicCJG
-	KKmEYCv9t0o4qXawgb8YYLBJWzmF89+8Dksgf5shHR4LwIQFx8ILYSNQ+RKy7ivo
-	+5Z22l8Oh31wqp9tXkmwFSKjfcap0KrnxbWN7ghyvih8cjbGoRF7uWAak7pppxY3
-	LL6msw==
-Received: from mail-pl1-f197.google.com (mail-pl1-f197.google.com [209.85.214.197])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4a28swh65p-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Mon, 27 Oct 2025 18:13:33 +0000 (GMT)
-Received: by mail-pl1-f197.google.com with SMTP id d9443c01a7336-290c9724deeso43461305ad.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 27 Oct 2025 11:13:33 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1761588813; x=1762193613;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Ko7xtFW+5pu3NdSbzBTPvaaqBJRyQJS4Sth4kjrm0Bc=;
-        b=ptAPQ4Z5dv96Ck/I+RShyFHJdpAsvuKnijBhrfjrtxqIMirhFvgN0V37MJ/SfC4T7B
-         0BahLDegJ+03ghlyN3au/pAE0udrK9Jzq9Bw9HPWWMh9xiapQpx+cVRbitLUFWRcUVKO
-         HO2BU608h86i47I2XtUUDzKiRAicTCvP6upKspIKawULrgFD9bRwMlB95NP/otLxv50U
-         MA6clLR5xcZONcCHxA/c2oIc2ohYmM6Tf533DpjREvah0wLhWaeykYmsKCu9Ru0RLNei
-         bphoahaVwdGzEWmFVIPPvcapBlJz25nmgCJ6xs3yRtEosNZwEfDP/4h67z+EnjQAsRvj
-         oU6A==
-X-Forwarded-Encrypted: i=1; AJvYcCVItDumwpwm4vAMUlAkwyF8QLPi+/ynrWd6X3XQwkn8rgFc9eEMSgcHraRIMyjHpg3RlY8OU0QbhBuMWIES@vger.kernel.org
-X-Gm-Message-State: AOJu0YwH8ZNJuyP7KzvlWyWn59hTFBr5fHGXfxK9+hozAsSV3VWMTOLl
-	aFTnO8B46eHtGDWRx69uTdHJwJk8+XZ3LcVuNjfPH19NMrfVSmAf/pEgj5AH/OoAjf3gKBrRcMk
-	Lbw9FlBXNSuyqNt2E4X7nwQ3rMKeBmpvMGET0tLD0Kda63pYeWgQX4DKPJ7ALJbbqKY5F
-X-Gm-Gg: ASbGncsX8dIANrM38eRcQS19tev5NHqTBfOpXYgMFWJ3wCsa+XKCjO0ZDoLx3tdm6iB
-	p3tU3rfzskETyY4eHwQFLqKop3VkTwTHKtc3cIzsY4oQhEFJH9ZU/KETRXiklFtCI4lbPmlxsJ+
-	R/BEoY3Okm8FwnqGb8EbHNKSTz21U0ctqEKGhSlSgfbzbLPxeEAZjoU+YLKj+Y6OdNoU33q4lgo
-	fOc+XSt6e6gptPueg94QdOfPSnJ35rhaoxJFTqgz9JQYi+5Xv3ajqKzCzOwGsJI+rqYFdIjL+YZ
-	JY1b7FUyxDxQ0d4WUzp9tpI2KfPUQyoVzm9u1JFttH03du0gezXbYocy33dCZ7wUXNZTc22itC0
-	ZWdDcmPc/QnVK/sB0HcjuzQQerO0dKvWLom8yUxhE1iW1YrwZ4RHL
-X-Received: by 2002:a17:903:32c9:b0:267:44e6:11b3 with SMTP id d9443c01a7336-294cb500981mr8751535ad.45.1761588812682;
-        Mon, 27 Oct 2025 11:13:32 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEBQV0mYg4+c3tpqKP9z33om+xk/9GUbHFLZ9sN5sNWQFbeJeCJmv0IvSmn4u6LKqxZJyDtZA==
-X-Received: by 2002:a17:903:32c9:b0:267:44e6:11b3 with SMTP id d9443c01a7336-294cb500981mr8751075ad.45.1761588812192;
-        Mon, 27 Oct 2025 11:13:32 -0700 (PDT)
-Received: from [10.226.59.182] (i-global254.qualcomm.com. [199.106.103.254])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-29498d4288asm91070335ad.84.2025.10.27.11.13.30
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 27 Oct 2025 11:13:31 -0700 (PDT)
-Message-ID: <84d952ce-560e-414c-a497-b8331e944539@oss.qualcomm.com>
-Date: Mon, 27 Oct 2025 12:13:30 -0600
+	s=arc-20240116; t=1761589428; c=relaxed/simple;
+	bh=PL3w+WGmuVS2bXhutlLJ33oASDlezmteONTXwG2x2Tw=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=boPCrZqRBU2QfjcQ0h95B87XDLeWji9d7mssW8u/3Sbq8bIQcHcDibxvh4BGdylOmGt8nYS5r8zGbA7onRenPzEAbuLwAPYH+bVbZ2gBYzUXcqR8JZwLKpuUHrtUCIokTFYuXNjzTZQ6MY+nwcNNu1LvgWDkd9KmsxZ4WIAF0Fo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=G0qcJcvJ; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C7C7C4CEF1;
+	Mon, 27 Oct 2025 18:23:48 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1761589428;
+	bh=PL3w+WGmuVS2bXhutlLJ33oASDlezmteONTXwG2x2Tw=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=G0qcJcvJ1IsQLFmsSxpFzH6aIEgetR5i3lABrlyTYan5jDRH2pvRiTFWf5o0IMR8e
+	 X7RHoYsiIpryeW6t2JHICGzGmJxH7y6ILth4ArJuLum2O7ThqlNbJbTiid/wa9+Q1l
+	 0OYtgwDxCcO1ZwHLyCH+V5nG/qpox9wGXqUpEOIg6Y6hLVPeq20TAWTUYooZWiCdkF
+	 Th1LhVndJkhdLHY5PD3FyjkVnJZcU77Qdhogf8PjBFEdDqwJfmcKLtHlCw3b5g3oIU
+	 vYhwrFVXozOsav4L7NC6kCW6riBRvJeslokRJv3me3FyMV2SDhHCvqPAy5OAX46vIX
+	 RvTnLJWOFSMUA==
+Date: Mon, 27 Oct 2025 13:26:42 -0500
+From: Bjorn Andersson <andersson@kernel.org>
+To: Debraj Mukhopadhyay <quic_dmukhopa@quicinc.com>
+Cc: quic_neersoni@quicinc.com, konradybcio@kernel.org, 
+	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] qcom: ice: Prevent client probe failures on unsupported
+ ICE
+Message-ID: <s26gqvmc6wsifibgepaesaveyztnqp2s4ra4cbfmpv5s4sx674@nxxko33urctv>
+References: <20251021040337.787980-1-quic_dmukhopa@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] accel/qaic: rename constant for clarity
-To: Youssef Samir <youssef.abdulrahman@oss.qualcomm.com>,
-        carl.vanderlip@oss.qualcomm.com, troy.hanson@oss.qualcomm.com,
-        zachary.mckevitt@oss.qualcomm.com
-Cc: ogabbay@kernel.org, lizhi.hou@amd.com, karol.wachowski@linux.intel.com,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org
-References: <20251022141606.3740470-1-youssef.abdulrahman@oss.qualcomm.com>
-Content-Language: en-US
-From: Jeff Hugo <jeff.hugo@oss.qualcomm.com>
-In-Reply-To: <20251022141606.3740470-1-youssef.abdulrahman@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-ORIG-GUID: S5oPIRkpX6zIl-B74eGb1WXYgLWuw9JA
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDI3MDE2OSBTYWx0ZWRfX7SzGkXzCeT/l
- YrI+7sUhgVHJ+l8emUgIZxSqm8tK5skVCIEd4R7ln0dAE5C3whtWuAelPV5f02paln3H2u412v8
- pItkvSw7s0ruy7QItvg2UO1QgHz0bmIPc68a9OHNehKXfrONSGL2VgdoLzFe6hQ8gQXeyh6nmPR
- 1GDuF74N7JLpDSCsiPRULNbtPwyai7ni+h3F5DKAHZa4lDSq7eDdhIjzAyh7qgjA+tGpz3Mh2Ss
- WmF1VWhH+KUlAS1SyBNcvaJxQeXuZ5UTduNWdAGXnze7zWs1nfPsPFX79Gt+2DxfU6+pa/CcKB9
- wmEUfUA911CwfR1ktJuKeck0G93rI2ivDFY3EIky+zxGyqUTckkuyfbma9K8Y/OibKIPI/S6UDh
- L2/nc4QnXe9zAzz/+WKSZKCC/DLDdA==
-X-Proofpoint-GUID: S5oPIRkpX6zIl-B74eGb1WXYgLWuw9JA
-X-Authority-Analysis: v=2.4 cv=fL40HJae c=1 sm=1 tr=0 ts=68ffb64d cx=c_pps
- a=cmESyDAEBpBGqyK7t0alAg==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17
- a=IkcTkHD0fZMA:10 a=x6icFKpwvdMA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=EUspDBNiAAAA:8 a=f2z2pkWm2ht2ZSlzglkA:9 a=QEXdDO2ut3YA:10
- a=1OuFwYUASf3TG4hYMiVC:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-10-27_07,2025-10-22_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 impostorscore=0 phishscore=0 suspectscore=0 priorityscore=1501
- clxscore=1015 adultscore=0 malwarescore=0 lowpriorityscore=0 bulkscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2510020000 definitions=main-2510270169
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20251021040337.787980-1-quic_dmukhopa@quicinc.com>
 
-On 10/22/2025 8:16 AM, Youssef Samir wrote:
-> From: Troy Hanson <thanson@qti.qualcomm.com>
+On Tue, Oct 21, 2025 at 09:33:37AM +0530, Debraj Mukhopadhyay wrote:
+> Storage clients (ex. UFS and MMC) invoke of_qcom_ice_get() to obtain the
+> handle from ICE (Inline Crypto Engine) driver. Currently if ICE is
+> unsupported, the return code from probe could prevent the client
+
+In light of Konrad's questions about this, I think you should rework
+this sentence to make it clear that you're referring to a platform where
+TZ doesn't implement ICE. I don't think "which is a bug" accurately
+reflect the outcome, it's not a bug, it just sounds like you changed the
+rules - and need to update the logic as such.
+
+> initialization which is a bug. To fix this a new flag
+> qcom_ice_create_error is introduced which caches the error encountered
+> during ICE probe.
 > 
-> QAIC_MANAGE_EXT_MSG_LENGTH is ambiguous and has been confused with
-> QAIC_MANAGE_MAX_MSG_LENGTH. Rename it to clarify it's a wire length.
+> The qcom_ice_create() and of_qcom_ice_get() functions are updated to
+> return -EOPNOTSUPP when ICE is unsupported, allowing clients to proceed
+> without ICE.
 > 
-> Signed-off-by: Troy Hanson <thanson@qti.qualcomm.com>
-> Signed-off-by: Youssef Samir <youssef.abdulrahman@oss.qualcomm.com>
+> For other failures, such as ICE not yet initialized, the existing
+> behavior (e.g., -EPROBE_DEFER) is retained to ensure proper error
+> handling.
+> 
+> This improves error signaling and ensures that client initialization is
+> not blocked unnecessarily.
+> 
+> Signed-off-by: Debraj Mukhopadhyay <quic_dmukhopa@quicinc.com>
 
-Pushed to drm-misc-next.
+Please use oss.qualcomm.com
 
--Jeff
+> ---
+>  drivers/soc/qcom/ice.c | 15 +++++++++++----
+>  1 file changed, 11 insertions(+), 4 deletions(-)
+> 
+> diff --git a/drivers/soc/qcom/ice.c b/drivers/soc/qcom/ice.c
+> index c467b55b4174..5460436d9158 100644
+> --- a/drivers/soc/qcom/ice.c
+> +++ b/drivers/soc/qcom/ice.c
+> @@ -85,6 +85,8 @@ union crypto_cfg {
+>  #define qcom_ice_readl(engine, reg)	\
+>  	readl((engine)->base + (reg))
+>  
+> +static bool qcom_ice_create_error;
+
+What happens the day the HW guys put two of these in a chip?
+
+> +
+>  static bool qcom_ice_use_wrapped_keys;
+>  module_param_named(use_wrapped_keys, qcom_ice_use_wrapped_keys, bool, 0660);
+>  MODULE_PARM_DESC(use_wrapped_keys,
+> @@ -524,7 +526,7 @@ static struct qcom_ice *qcom_ice_create(struct device *dev,
+>  
+>  	if (!qcom_scm_ice_available()) {
+>  		dev_warn(dev, "ICE SCM interface not found\n");
+> -		return NULL;
+> +		return ERR_PTR(-EOPNOTSUPP);
+
+I think this is supported by your commit message - i.e. tz doesn't
+provide ICE, but it's documented in the DT, so we should return
+EOPNOTSUPP and get that warning from the UFS code.
+
+>  	}
+>  
+>  	engine = devm_kzalloc(dev, sizeof(*engine), GFP_KERNEL);
+> @@ -604,7 +606,7 @@ static struct qcom_ice *of_qcom_ice_get(struct device *dev)
+>  	struct device_node *node __free(device_node) = of_parse_phandle(dev->of_node,
+>  									"qcom,ice", 0);
+>  	if (!node)
+> -		return NULL;
+> +		return ERR_PTR(-EOPNOTSUPP);
+
+But this falls in the category "the DeviceTree doesn't claim we have ICE
+support", so here I think the NULL makes sense. At least, there
+shouldn't be a warning during boot, because the hardware description
+says there's no ICE, so how can we disable it...
+
+>  
+>  	pdev = of_find_device_by_node(node);
+>  	if (!pdev) {
+> @@ -617,7 +619,10 @@ static struct qcom_ice *of_qcom_ice_get(struct device *dev)
+>  		dev_err(dev, "Cannot get ice instance from %s\n",
+>  			dev_name(&pdev->dev));
+>  		platform_device_put(pdev);
+> -		return ERR_PTR(-EPROBE_DEFER);
+> +		if (qcom_ice_create_error)
+> +			return ERR_PTR(-EOPNOTSUPP);
+> +		else
+> +			return ERR_PTR(-EPROBE_DEFER);
+
+There's the theoretical chance that qcom_ice_create() will return
+ERR_PTR(EPROBE_DEFER) in which case you will set qcom_ice_create_error
+and then return EOPNOTSUPP here.
+
+
+
+PS. The definition of "Return:" doesn't adequately capture what the
+client should expect from this function; but that would probably be
+better served by a patch of its own.
+
+Regards,
+Bjorn
+
+>  	}
+>  
+>  	link = device_link_add(dev, &pdev->dev, DL_FLAG_AUTOREMOVE_SUPPLIER);
+> @@ -691,8 +696,10 @@ static int qcom_ice_probe(struct platform_device *pdev)
+>  	}
+>  
+>  	engine = qcom_ice_create(&pdev->dev, base);
+> -	if (IS_ERR(engine))
+> +	if (IS_ERR(engine)) {
+> +		qcom_ice_create_error = true;
+>  		return PTR_ERR(engine);
+> +	}
+>  
+>  	platform_set_drvdata(pdev, engine);
+>  
+> -- 
+> 2.34.1
+> 
 
