@@ -1,64 +1,64 @@
-Return-Path: <linux-arm-msm+bounces-78943-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-78944-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5B068C0E591
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Oct 2025 15:18:04 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 769D0C0E428
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Oct 2025 15:09:45 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id A2494461B5C
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Oct 2025 14:09:29 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 835D819A2CD7
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Oct 2025 14:10:09 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9C3E030F929;
-	Mon, 27 Oct 2025 14:06:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 92E0130FC1C;
+	Mon, 27 Oct 2025 14:06:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="kPkphYtw"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="taT0NdEV"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7123430F804;
-	Mon, 27 Oct 2025 14:06:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D09730FC10;
+	Mon, 27 Oct 2025 14:06:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761574003; cv=none; b=aaPjV8gYx+yRNDLRRNEG4ZC+c8cC9SQQRAvnlPlHnG9ljwf03tT9fNGjsZ7ySFp/wv68SKLGkyIEjVqsHiZ4MFUhcX0A+X6ZCafyJn8EqYjFBFilYALCrbEQfZuwu3aqSKu+TuVoxlqlh2xw9z/Lv4Aok9pxX5iTilJpaLiAZkw=
+	t=1761574004; cv=none; b=VIzfRGn6OxdQdbiOwet2TeiwJ6tLtnnGKwTeWFb2nTSG017tQ9gsb2NHP/SQVoTjVHfgZ/xn9mNuTk1U0gxtUBXmnwEwS+AHLeuxvvnyXuy2Ez+LZrgVNc8P5MyQqBB3paxbTGRJQ+HYD3AhoETGcWWfilcTJzl8Nsuq/5ySZJ4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761574003; c=relaxed/simple;
-	bh=bU7F16V6leO5Nl+gH+Y4bZunGQ9wiVde4z6wqPcFhh0=;
+	s=arc-20240116; t=1761574004; c=relaxed/simple;
+	bh=q3mF9oWR3jhAbDXElJ4Pet5ssupqe0ig9HDSBwHmRxs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=X7tHPizbhNuCoo821DVQjwGyCzPnszDyysWKTmFJINQ+lV5+aWR0NwlbGMoM40RvK0Q9aknCdXyd88r+JX+Y3pxrE8ceNWZWf6Tqnyn+DTqYnDxjzMLT2q18TPWeh75dV0Al7XqiHoZUr772XZvWpRFYZO7PEY+Ycj2Li+aangs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=kPkphYtw; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82FADC113D0;
-	Mon, 27 Oct 2025 14:06:42 +0000 (UTC)
+	 MIME-Version:Content-Type; b=pKsVRUVal84G1CecQGPqUYyO1E9tP5Vg8hvHnJrqeOlibtI6IICIaonk+3AH6X664iWPYzcH33LlTs3hnwHRa4j1qj0kiFeH0h+iEzr+wm048txP00tgcIuTp9wj6cNRh8sMLbBDMhmh9oem+Gjg2dZAJAwWGkD7271Gmb6gDjY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=taT0NdEV; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8728BC4CEFF;
+	Mon, 27 Oct 2025 14:06:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1761574003;
-	bh=bU7F16V6leO5Nl+gH+Y4bZunGQ9wiVde4z6wqPcFhh0=;
+	s=k20201202; t=1761574004;
+	bh=q3mF9oWR3jhAbDXElJ4Pet5ssupqe0ig9HDSBwHmRxs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kPkphYtwAd+IkcDx1sUw9x6p7QKWN461B1Gqc5UKiLe3a3ZnH34zMR8C0XeuWQ+e/
-	 Gm0SxJHsqSqhlGwmSCvqm0oizhQta+pSu41iP2JExlS1gCMs6CxpL8raxFNJVSFP11
-	 bGSbE5Fhcv4Fsl6QW6VP1xGAMurSWJcuzkw4ZOZEGH49blawTJVSWwkCrVduRNdbiO
-	 RS3OpnstPCKn4exvjv9DzerFLQEAAwRbyxFg4IYl189dECIulTlql+ljusKkPGckCq
-	 w5OvuznxfExntYbfJ2HGcVya6UVR9x9qvhwhjVea5HqU9ZPxtK34WtC9QCS1VZzlAr
-	 pCUV++Nc9sYZQ==
+	b=taT0NdEVcNoZWap1WHEvpFKBeOf93WDzd6EszLavY6txGX4us1GMBZeArp+rn2iWD
+	 IoBs6sP1XVuA4UaNSw9h9fLmqgIdZnRoAawazJvQFhSCVW8YupDdxOCPnI40uiw5cq
+	 DPUe1VVJn0hpBCycaqNmT7aLgwPLWbWgh5NxKdtTLj7L6fEOa0frPKdPDD2yv7jWhK
+	 tEr3s/hKOqyk/wZggybvPq8AVqw+4RYKtpocn+t/YOJG0+o8mXcFB7/kGsRVGn+psI
+	 swTKhN+oxTmzP6nXCPBLrAB+DVLJEyIa5teptMmZb0AAHMetOIVrbX8oNJLO3wa2LY
+	 jFvZ37uF+GEbA==
 From: Bjorn Andersson <andersson@kernel.org>
 To: Michael Turquette <mturquette@baylibre.com>,
 	Stephen Boyd <sboyd@kernel.org>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Taniya Das <taniya.das@oss.qualcomm.com>
-Cc: Ajit Pandey <quic_ajipan@quicinc.com>,
-	Imran Shaik <quic_imrashai@quicinc.com>,
+	Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+Cc: Dmitry Baryshkov <lumag@kernel.org>,
 	Jagadeesh Kona <quic_jkona@quicinc.com>,
+	Taniya Das <quic_tdas@quicinc.com>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	Imran Shaik <imran.shaik@oss.qualcomm.com>,
+	Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
 	linux-arm-msm@vger.kernel.org,
-	linux-clk@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2] clk: qcom: gcc-glymur: Update the halt check flags for pipe clocks
-Date: Mon, 27 Oct 2025 09:09:16 -0500
-Message-ID: <176157405451.8818.9660246400192455172.b4-ty@kernel.org>
+	linux-clk@vger.kernel.org
+Subject: Re: [PATCH v2 0/6] clk: qcom: camcc: Specify Titan GDSC power domain as a parent to other ones
+Date: Mon, 27 Oct 2025 09:09:17 -0500
+Message-ID: <176157405436.8818.13044441922895744631.b4-ty@kernel.org>
 X-Mailer: git-send-email 2.51.0
-In-Reply-To: <20250925-glymur_gcc_usb_fixes-v2-1-ee4619571efe@oss.qualcomm.com>
-References: <20250925-glymur_gcc_usb_fixes-v2-1-ee4619571efe@oss.qualcomm.com>
+In-Reply-To: <20251021234450.2271279-1-vladimir.zapolskiy@linaro.org>
+References: <20251021234450.2271279-1-vladimir.zapolskiy@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -69,21 +69,31 @@ Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 
 
-On Thu, 25 Sep 2025 15:49:00 +0530, Taniya Das wrote:
-> The pipe clocks for PCIE and USB are externally sourced and they should
-> not be polled by the clock driver. Update the halt_check flags to 'SKIP'
-> to disable polling for these clocks.
+On Wed, 22 Oct 2025 02:44:44 +0300, Vladimir Zapolskiy wrote:
+> When a consumer turns on/off a power domain dependent on another power
+> domain in hardware, the parent power domain shall be turned on/off by
+> the power domain provider as well, and to get it the power domain hardware
+> hierarchy shall be described in the CAMCC driver.
 > 
-> This helps avoid the clock status stuck at 'off' warnings, which are
-> benign, since all consumers of the PHYs must initialize a given instance
-> before performing any operations.
+> Establish the power domain hierarchy with a Titan GDSC set as a parent of
+> other GDSC power domains provided by the SDM845 camera clock controller.
 > 
 > [...]
 
 Applied, thanks!
 
-[1/1] clk: qcom: gcc-glymur: Update the halt check flags for pipe clocks
-      commit: 18da820eb632fbd99167f3fc6650a30db714ddfd
+[1/6] clk: qcom: camcc-sm8550: Specify Titan GDSC power domain as a parent to other
+      commit: d8f1121ebf4036884fc9ab1968f606523dd1c1fe
+[2/6] clk: qcom: camcc-sm6350: Specify Titan GDSC power domain as a parent to other
+      commit: a76ce61d7225934b0a52c8172a8cd944002a8c6f
+[3/6] clk: qcom: camcc-sdm845: Specify Titan GDSC power domain as a parent to other
+      commit: ee2867ca99e2b5b6788ff421f7e784d9a0da426f
+[4/6] clk: qcom: camcc-sm7150: Specify Titan GDSC power domain as a parent to IPEx and BPS
+      commit: 37cf953a120a69114b810eee74530a8836d9a781
+[5/6] clk: qcom: camcc-sm8250: Specify Titan GDSC power domain as a parent to IPE/BPS/SBI
+      commit: fc3985b21f86db33e4ec8a820d211e4e505c9048
+[6/6] clk: qcom: camcc-sm8450: Specify Titan GDSC power domain as a parent to IPE/BPS/SBI
+      commit: 70dc5425fe1af90901d8109941e09005de38b7ea
 
 Best regards,
 -- 
