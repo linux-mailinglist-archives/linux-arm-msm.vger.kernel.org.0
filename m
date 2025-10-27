@@ -1,157 +1,92 @@
-Return-Path: <linux-arm-msm+bounces-78865-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-78866-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5A970C0CD41
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Oct 2025 11:00:59 +0100 (CET)
+Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [IPv6:2605:f480:58:1:0:1994:3:14])
+	by mail.lfdr.de (Postfix) with ESMTPS id AAB38C0CE0A
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Oct 2025 11:07:56 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 64FE0400612
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Oct 2025 09:58:58 +0000 (UTC)
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id F3EEB4E45DC
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Oct 2025 10:07:52 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E80F92FD685;
-	Mon, 27 Oct 2025 09:57:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7483325F984;
+	Mon, 27 Oct 2025 10:07:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=sigxcpu.org header.i=@sigxcpu.org header.b="LSSge2FT";
-	dkim=pass (2048-bit key) header.d=sigxcpu.org header.i=@sigxcpu.org header.b="RdN1USwS"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="cX+PXi9/"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from honk.sigxcpu.org (honk.sigxcpu.org [24.134.29.49])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43E9E2FCBF3;
-	Mon, 27 Oct 2025 09:57:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=24.134.29.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 478D023EAB9;
+	Mon, 27 Oct 2025 10:07:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761559042; cv=none; b=DpI7ZVsMDpeOLDPld9i4CtEVuWQtQ5BvNTAbN7OcKr+d4ySG87pWl1G2dR/YGck8S7MX8HPR0YiIikRohPB6BoHfhUzV4wRV1Cp82b8zp9XW0WQZuPYcunpyvH1O+inPM1k5KDOktvxqlY+el14aYyaWFfz+q7fIcejohCtfKDI=
+	t=1761559669; cv=none; b=hKsexPFCGMfPSGBaUOrpA5312g1dyxf0D7mLTXRF8Nd67Yhaas9PkzPs7WwXkFCWyHqN5UFTAPzeY00uJIndXqpRjMbNNs2KQGvxx8Hn0wvM8WyfLZi/16QN6vTwdva0DvwLHZ3oXflvSswHe0AXIBMW34bIVbcMze4gB9J65dI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761559042; c=relaxed/simple;
-	bh=thirantOH4kH3f0r2QU+U/UTNUm7Zfvr0Y+urH7YorI=;
+	s=arc-20240116; t=1761559669; c=relaxed/simple;
+	bh=gYH15C0Zx3xImMUg00MAivmQVJErsxHFY89b2ystD7w=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Bf2qw02qAin8FpbS6hFFbqbPTrvva6ohaEl9PBB0QtQzGKSceZxwq13Lon9i27IN2VJgiaXb3CGelP7vE+vrk1+kVBAEpDskGAPyTnehVqKj0voCimOnyb10GqfT7uvwMgAqVQJN8M8aiR/T1SBMLUDOT3QxhU5kbn9WhQUJ6og=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=sigxcpu.org; spf=pass smtp.mailfrom=sigxcpu.org; dkim=pass (2048-bit key) header.d=sigxcpu.org header.i=@sigxcpu.org header.b=LSSge2FT; dkim=pass (2048-bit key) header.d=sigxcpu.org header.i=@sigxcpu.org header.b=RdN1USwS; arc=none smtp.client-ip=24.134.29.49
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=sigxcpu.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=sigxcpu.org
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=sigxcpu.org; s=2024;
-	t=1761559028; bh=thirantOH4kH3f0r2QU+U/UTNUm7Zfvr0Y+urH7YorI=;
+	 Content-Type:Content-Disposition:In-Reply-To; b=TE3FriCOKoYxuHQOYXOkbxu9nC9mlsErX1UwHqCSNTr/WhUh8RVPKhVWnIFVXIWi8ZABDF9hpYkPYHct7UHCqgcyqlwZ03+uYkZVPIZXYUQNkRfzTJIUZu9mFMtR7d32nRJGAm7iCrVmOMYNt/DhMj5wplbiaCvA1qfgMrzvVpY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=cX+PXi9/; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5675C4CEF1;
+	Mon, 27 Oct 2025 10:07:48 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1761559668;
+	bh=gYH15C0Zx3xImMUg00MAivmQVJErsxHFY89b2ystD7w=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=LSSge2FTR6D3qKRjJ42E13VxBPQKSOpHvoA6MooKqxpc9rN2bpRis+EqbJsuKkkIv
-	 9zFH+yK4V3WFUphrnp/VTs9J9sdyGd3LKWAH6dhwVR3WB/yyG05vsCupYVUNK+ryrR
-	 vJsq25+RrpYP1YB2YjffZscbOox7bmmhkjHpa5/hfXYp4VkkQn1e1NnGaEnlGJoeDQ
-	 4CpCX4YhV0k4LnUWtGHZCOWXtiy9hVvhALxvlaLa9AhKSkhXJExQvXUjfGpAY7xMJk
-	 UGA67PKFTzk/LmRowxyivmVpO2xjcRFQWY+n/ngdOq5VjOZosnbqv+B1Gu8we4o8eo
-	 7wCz1Q9juQkDQ==
-Received: from localhost (localhost [127.0.0.1])
-	by honk.sigxcpu.org (Postfix) with ESMTP id 9D9D9FB03;
-	Mon, 27 Oct 2025 10:57:08 +0100 (CET)
-Received: from honk.sigxcpu.org ([127.0.0.1])
-	by localhost (honk.sigxcpu.org [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id xOcFvBNfwfNH; Mon, 27 Oct 2025 10:57:07 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=sigxcpu.org; s=2024;
-	t=1761559027; bh=thirantOH4kH3f0r2QU+U/UTNUm7Zfvr0Y+urH7YorI=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=RdN1USwSr30UpaEyXrknx1J/RlMsNcJW1D+1SgQDqvblndSztBpFLTKWwqGDVYfP+
-	 6gGRNsWD0+asBilsu/M4X7I4BAAcWHPDKebpmcn00ZniJ5AQQq5MfSeikbMe5wSfTP
-	 bxulgTShhIRWA/7A50RBUnXU68pmRzaJbwHsKhw6ZUfkburhzwd2M5zzOBPfYOdg0f
-	 e2fQMnpqgzaKyYO7VABXRkKEbGc3H8W0fs5rPdLeLsNH13oatacn6bh/UIfOrOJjHy
-	 DlAofM7w6pCwgcFaKCONz4UHRxVKqbiRRN+R1Xum1hR6MwNtY2YeipAMUQMPG2dwAk
-	 UY2IbbSFcXSkQ==
-Date: Mon, 27 Oct 2025 10:57:05 +0100
-From: Guido =?iso-8859-1?Q?G=FCnther?= <agx@sigxcpu.org>
-To: david@ixit.cz
-Cc: Dmitry Torokhov <dmitry.torokhov@gmail.com>,
-	Jonathan Corbet <corbet@lwn.net>, Jiri Kosina <jikos@kernel.org>,
-	Benjamin Tissoires <bentiss@kernel.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konradybcio@kernel.org>,
+	b=cX+PXi9/8m1/+zRXnI4SGanJoiQTLozQT7QNvV+sOaNOo1/NXBrK9++7PqqprT2nQ
+	 qaoSJYkdZdf1v9WM9+SstKga4E2/LyJ+UO4dNNqpBONKc0E8aBfneM58niYtzE+0mj
+	 NwTxaj22tH/bx5Km47rCI0mJC1Bvo9mswORntpZPWBQZKfdW/H7EH318rFuWvRVtkB
+	 UbFMqGVrOftWv/gof1OpHIo8cGptU56/dTySfYwMX6NE/CTXqJYugNqwGrFsNJqofr
+	 W/9A3QNg/KqkH4qP3glxaME1FrAeabbT1kRdEIj2hkVt0yJ9GwD0ADyKYQ011T+byP
+	 dwVPpm82nFVwA==
+Received: from johan by xi.lan with local (Exim 4.98.2)
+	(envelope-from <johan@kernel.org>)
+	id 1vDK8l-000000006fl-2vmW;
+	Mon, 27 Oct 2025 11:07:51 +0100
+Date: Mon, 27 Oct 2025 11:07:51 +0100
+From: Johan Hovold <johan@kernel.org>
+To: Bjorn Helgaas <helgaas@kernel.org>
+Cc: Manivannan Sadhasivam <mani@kernel.org>, linux-pci@vger.kernel.org,
+	Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>,
+	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
+	Frank Li <Frank.li@nxp.com>, Shawn Lin <shawn.lin@rock-chips.com>,
 	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Casey Connolly <casey.connolly@linaro.org>,
-	linux-input@vger.kernel.org, linux-doc@vger.kernel.org,
-	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-	devicetree@vger.kernel.org, phone-devel@vger.kernel.org,
-	Gergo Koteles <soyer@irl.hu>, Casey Connolly <casey@connolly.tech>
-Subject: Re: [PATCH v7 0/3] Add support for sound profile switching and
- leverage for OnePlus slider
-Message-ID: <aP9B8fPs7y2-dGJi@quark2.heme.sigxcpu.org>
-References: <20251014-op6-tri-state-v7-0-938a6367197b@ixit.cz>
+	"David E . Box" <david.e.box@linux.intel.com>,
+	Kai-Heng Feng <kai.heng.feng@canonical.com>,
+	"Rafael J . Wysocki" <rafael@kernel.org>,
+	Heiner Kallweit <hkallweit1@gmail.com>,
+	Chia-Lin Kao <acelan.kao@canonical.com>,
+	Gustavo Pimentel <Gustavo.Pimentel@synopsys.com>,
+	Han Jingoo <jingoohan1@gmail.com>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Bartosz Golaszewski <brgl@bgdev.pl>, linux-arm-msm@vger.kernel.org,
+	linux-kernel@vger.kernel.org, Bjorn Helgaas <bhelgaas@google.com>
+Subject: Re: [PATCH] Revert "PCI: qcom: Remove custom ASPM enablement code"
+Message-ID: <aP9Ed1Y1lcayFn7Q@hovoldconsulting.com>
+References: <rc4ydm2c3c4gqipaorr2ndrlwufay3ocfc2rq7llskkg7npe6x@53eztxy5v3gt>
+ <20251026193754.GA1432729@bhelgaas>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20251014-op6-tri-state-v7-0-938a6367197b@ixit.cz>
+In-Reply-To: <20251026193754.GA1432729@bhelgaas>
 
-Hi,
-On Tue, Oct 14, 2025 at 11:20:32AM +0200, David Heidelberg via B4 Relay wrote:
-> This series add initial support for OnePlus 6 and 6T, but other OnePlus
-> phones contains same mechanism to switch sound profiles.
-> 
-> This code was tested for two years within the downstream Snapdragon 845 tree.
-> It is now perfectly integrated with feedbackd in the Phosh environment.
-> 
-> The series is also available (until merged) at
->   git@gitlab.com:dhxx/linux.git b4/op6-tri-state
-> 
-> Changes in v7:
-> - Separated GPIO number fix from the original commit
->   "arm64: dts: qcom: sdm845-oneplus: Add alert-slider"
-> - Rebased again next-20251008
-> - Link to v6: https://lore.kernel.org/r/20250731-op6-tri-state-v6-0-569c25cbc8c2@ixit.cz
-> 
-> Changes in v6:
-> - Rebased again next-20250731, otherwise just a resent.
-> - Link to v5: https://lore.kernel.org/r/20250419-op6-tri-state-v5-0-443127078517@ixit.cz
-> 
-> Changes in v5:
-> - Dropped merged
->   "Input: gpio-keys - add support for linux,input-value DTS property"
-> - Link to v4: https://lore.kernel.org/all/cover.1677022414.git.soyer@irl.hu/
-> 
-> Changes in v4:
-> - DTS: use default debounce-interval, order alphabetically
-> - Link to v3: https://lore.kernel.org/lkml/cover.1676850819.git.soyer@irl.hu/
-> 
-> Changes in v3:
-> - rename tri-state-key to alert-slider, fix DTS warnings,
-> 
-> Changes in v2:
-> - rebase to qcom/for-next
-> add SND_PROFILE_* identifiers to input-event-codes.h
-> 
-> ---
-> Gergo Koteles (3):
->       Input: add ABS_SND_PROFILE
->       arm64: dts: qcom: sdm845-oneplus: Correct gpio used for slider
->       arm64: dts: qcom: sdm845-oneplus: Add alert-slider
+On Sun, Oct 26, 2025 at 02:37:54PM -0500, Bjorn Helgaas wrote:
+> On Sun, Oct 26, 2025 at 08:58:29PM +0530, Manivannan Sadhasivam wrote:
 
-feedbackd has support for this since 0.5.0 so it would be nice to see
-that mainlined.
+> As far as I know, it's L1SS that has catastrophic effects.  I haven't
+> seen anything for L0s or L1.
 
-Tested-by: Guido Günther <agx@sigxcpu.org> # oneplus,fajita & oneplus,enchilada
-Reviewed-by: Guido Günther <agx@sigxcpu.org> 
+Enabling L0s unconditionally certainly blew up on some Qualcomm
+machines. See commit d1997c987814 ("PCI: qcom: Disable ASPM L0s for
+sc8280xp, sa8540p and sa8295p").
 
-Cheers,
- -- Guido
-
-> 
->  Documentation/input/event-codes.rst                |  6 ++++
->  .../arm64/boot/dts/qcom/sdm845-oneplus-common.dtsi | 39 ++++++++++++++++++++--
->  drivers/hid/hid-debug.c                            |  1 +
->  include/uapi/linux/input-event-codes.h             |  9 +++++
->  4 files changed, 53 insertions(+), 2 deletions(-)
-> ---
-> base-commit: 52ba76324a9d7c39830c850999210a36ef023cde
-> change-id: 20250419-op6-tri-state-ed1a05a11125
-> 
-> Best regards,
-> -- 
-> David Heidelberg <david@ixit.cz>
-> 
-> 
+Johan
 
