@@ -1,49 +1,80 @@
-Return-Path: <linux-arm-msm+bounces-78905-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-78906-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [142.0.200.124])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8D0E8C0DF7B
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Oct 2025 14:19:31 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 71538C0DF94
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Oct 2025 14:20:33 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 4E8CD4F60A3
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Oct 2025 13:03:41 +0000 (UTC)
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 237624F24C6
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Oct 2025 13:09:59 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 25ED325784E;
-	Mon, 27 Oct 2025 13:02:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8689C19E81F;
+	Mon, 27 Oct 2025 13:09:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="PyrB0YhT"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="u7LUIYPJ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f47.google.com (mail-wm1-f47.google.com [209.85.128.47])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF62225782A;
-	Mon, 27 Oct 2025 13:02:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7AD6B218ACC
+	for <linux-arm-msm@vger.kernel.org>; Mon, 27 Oct 2025 13:09:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761570152; cv=none; b=AJeruXG6vfJwqNDIA6mgVxW/qa06Rpp0/U0h98FPcRmQ1AF8kS8niFiOY/SbgUFloyutGF2Zzo61zA53r7u432jlOK0njtZRzrpxNsEAHEl0uufjCnRP5PBeXuxY2wDnlO9NJKX+AXhx5BScpJU2pcsYepC0XqSWP4zvK1ByBXM=
+	t=1761570596; cv=none; b=hth+NLPjhTqj313g86Ro7kkOeB2c3c/uZRjIntVq9fOOGytZO2y6avgYwBCe47jS/Lb8fGSveO1iUst++3RNfRUbXjDft9deqArmHI0RfBYBvAtcjWXrZzrM5doqfC51Yhr16FyEo79mMLb9wLky+7aV9LI60AsyT3kgRsvUjkI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761570152; c=relaxed/simple;
-	bh=B5/2fJuj0llEydCKzz1l5nP8dp2nKovmE+gnGvEMlNk=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=STCBJjYjXm1fzu9QoXi0Zt+RfL1ZcLlsXbz4c9ER7joidox9XrG25cloE0YYi/WvihqkQQ/JfH+xdHsly+xbKbCUIQyLqhvT42WwxL2hUBDQoQWHJVQ03fWW/7pG8kpi7Juh+eLeH3xm5BPMr5OFKPfCxdnPfovqNutXzdF1flY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=PyrB0YhT; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52A01C4CEF1;
-	Mon, 27 Oct 2025 13:02:27 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1761570149;
-	bh=B5/2fJuj0llEydCKzz1l5nP8dp2nKovmE+gnGvEMlNk=;
-	h=From:Date:Subject:To:Cc:From;
-	b=PyrB0YhT8GeeebNw8jB6EQ8x29mKYzlhoyltkd8yD6X7fcpiFYthcG3YGxuqFf+UL
-	 Cd7mHsHqV8CY38nnjmrjyNBWPVBomqIQdwrsiOjALL12C9fnG5rRMyT/87z4+xOxzn
-	 pOS8bQR1lncBBraoOg1U44Q6GIAeSMOQIV++OsFj2BX4rXHuqIAEyKdyBSqmOGpyqC
-	 tzqQ2ZzryG2pNk7rdeCkacBwqRB2rmaWVFnerJ2U4QzpHF//obx/IMK/5nKn7yA5IB
-	 wE6rWb2WFf4i13tqe+m+hchESes4zweIzlGZz6uOwS7QJkTiM+Lmu5bF3NCsobvWat
-	 3mkIy9Cm+PTLg==
-From: Konrad Dybcio <konradybcio@kernel.org>
-Date: Mon, 27 Oct 2025 14:02:14 +0100
-Subject: [PATCH] soc: qcom: pmic_glink_altmode: Consume TBT3/USB4 mode
- notifications
+	s=arc-20240116; t=1761570596; c=relaxed/simple;
+	bh=0MHhWYGX/kbhklk4DTUuJkE6nUV8ISJicJLum5nXkNU=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=j4pBQPydaevCIClRIWAR0JbhEDcba/M6Lx9Jk1170+QhI2IrzYBHjbw4krrZFVqL7bslSZacXw581azZwU5VpFyd248X/n7MKqrysxxitqRJnTefH6mahRctbbvPhl2C7Vmvloev9UWj6F0vv4cUQW7CdUkxiqGGgl1CVykj+Wc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=u7LUIYPJ; arc=none smtp.client-ip=209.85.128.47
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wm1-f47.google.com with SMTP id 5b1f17b1804b1-4710665e7deso24036675e9.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 27 Oct 2025 06:09:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1761570593; x=1762175393; darn=vger.kernel.org;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=7xHqscrzYkhG2lIf/Jsl1phTlISUiUsYRQ5MheVDiOs=;
+        b=u7LUIYPJO82/I5EmqpDjDziEcBmymwusS862CivjrnGiE95VQxN7MyOmVpUTTcRV5l
+         JzQRz38mrhPVixqoK3ghrtoBf5WDz0APtPvfOIAQTCwWKpfz6Z6j4K+l0bOYxstndIrY
+         MN2Cafxm2Q/i4LEngYmBOnadSwNtg5hmMriB+NFW50rSEaZ3zYeXxGrFx8/r2UpwrpOX
+         os8mDkEYvI63LABo9W9d+fFRqkbCh7/NjRb8aj1ye3KAlttsKuoBogUmcYPPUtHsJH9x
+         vIiY8iJRvUJEKDtlRoJr/qFAioAsbkLSAgge2+4rPrpo6PLDAOrZEEXCuIekZraESB7v
+         4jmA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1761570593; x=1762175393;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=7xHqscrzYkhG2lIf/Jsl1phTlISUiUsYRQ5MheVDiOs=;
+        b=ayc1aKaOFE4XCkL7vi1tMlX7/AhPem8x+TbE5TKh4a7B4Cq4snvVeQwkEFtXze8B80
+         c60NyVYNk5uahZiFiqjlsKOZZ6wZ9IO1hA3Qq8pZImmiszDXi8ECWasPkb+aa8Dnry5m
+         XyE3hxjJggJoA+pbVFmXHlX/TrISJ4Pb0d0B40X4ifMfIjNc74TL37r0P8CnsrZ9z4J7
+         WLoPsS+S+vxq1OyY7YYwKseVesoZPnMW0l4bc/rQRKW1sUSXYJPzqK4h5977sZCOg8v3
+         49K8ynVW6/wH6EaqRWezh5bQmSgzatBdoXeQu7tYsduq9MY1C9E0Npy+RGFLDhocKTi3
+         ue0Q==
+X-Forwarded-Encrypted: i=1; AJvYcCUIWOhGR9mXanunfwwEi8J+bLMnbScmyMF82SgYd3a6UnoLUzuyq9pOh/OiidRv5rYrlVAXTTFnAGh/yGzG@vger.kernel.org
+X-Gm-Message-State: AOJu0Yx8pmyV0ajpF8hUw9GqBoLtxDnQT+oHjb61GegnKsNoYJWrxxeE
+	DVzGD3eiYX0tAPGG6PK50543tX0lPj8FJP+NjUs1ctt3ha+CXgkFKt/r34Egexm94kA=
+X-Gm-Gg: ASbGncvT76aEG8B7IgG2q9iNJtlaqcgHF06xsRdJC3RSompLLatC8kWh0tL/SJ0Q7cf
+	kY1Ga6ubmzFV702E22uaL9tDcfRS1FyWIlBRE/ltg8L3JWmx1HERpSQy8H/fLfHHth+KinK5D9i
+	joSY2Jg2CFlgL0cU9T+Ngve9xOMUcJh4wAXba36PjG93sTR5qFZjJHGHjUddrNVPTDzfMjjlmjF
+	6hseOq5v6KvML6pogvpkqlajh8imlNPVExMu9CKidVqyObnv41b6505aGDbtHwT8wH3GA9fjjhL
+	PWiuesldDiR0qTv246Kvrq9nXStXVYfQQjlrz2BhyHE6snF4CoyScnKpIeSjW6pSdG2r2mfArs8
+	PgQkTUJYt4nzBtFWk5OiUQKZav3I55WwrF+2DYOvhMojJoG5o3K4o7qM4Z7EWHQ/9BSg30W6p6m
+	Gr070P+dTBwRUTq2479za1
+X-Google-Smtp-Source: AGHT+IES8xCzwpBsCQMT7GZryto4tnTz3LOicS2l1sLDuWYyCwc2CWGgf/Z8oXRtYtgEbL2ufaMPZg==
+X-Received: by 2002:a05:600c:1f96:b0:46e:37af:f90e with SMTP id 5b1f17b1804b1-475caf933dfmr109940175e9.6.1761570592580;
+        Mon, 27 Oct 2025 06:09:52 -0700 (PDT)
+Received: from arrakeen.starnux.net ([2a01:e0a:3d9:2080:8261:5fff:fe11:bdda])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-475dd02cbc6sm139149285e9.1.2025.10.27.06.09.51
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 27 Oct 2025 06:09:52 -0700 (PDT)
+From: Neil Armstrong <neil.armstrong@linaro.org>
+Date: Mon, 27 Oct 2025 14:09:48 +0100
+Subject: [PATCH] drm/msm: dsi: fix PLL init in bonded mode
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -52,342 +83,163 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20251027-topic-pg_altmode_usb4-v1-1-2931a3ecc146@oss.qualcomm.com>
-X-B4-Tracking: v=1; b=H4sIAFZt/2gC/x3MWwqAIBBA0a3EfCf46EFtJSJMpxqoFK0Ior0nf
- Z6Pex+IGAgjtNkDAS+K5PYEkWdgFr3PyMgmg+SyFFzW7HCeDPPzoNdjcxaHM44F06ZorFbKcFF
- Ban3Aie7/2/Xv+wHVM0HTZwAAAA==
-X-Change-ID: 20251027-topic-pg_altmode_usb4-ac49da33c016
-To: Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konradybcio@kernel.org>
-Cc: usb4-upstream@oss.qualcomm.com, 
- Raghavendra Thoorpu <rthoorpu@qti.qualcomm.com>, 
- linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, 
- Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, 
- Jack Pham <jack.pham@oss.qualcomm.com>
+Message-Id: <20251027-topic-sm8x50-fix-dsi-bonded-v1-1-a477cd3f907d@linaro.org>
+X-B4-Tracking: v=1; b=H4sIABtv/2gC/x3MwQrDIAyA4VcpOTeQCmVhrzJ2sJq2OUzFjFEQ3
+ 72y4wc/fwOTqmLwnBpU+alpTgPLPEE4fToENQ6DI7cu5B74zUUD2oevlXDXC6MpbjlFiRiYd2b
+ ywZOHcShVRvG/v9693wp7roxtAAAA
+X-Change-ID: 20251027-topic-sm8x50-fix-dsi-bonded-c88f880aca0a
+To: Rob Clark <robin.clark@oss.qualcomm.com>, 
+ Dmitry Baryshkov <lumag@kernel.org>, 
+ Abhinav Kumar <abhinav.kumar@linux.dev>, 
+ Jessica Zhang <jessica.zhang@oss.qualcomm.com>, Sean Paul <sean@poorly.run>, 
+ Marijn Suijten <marijn.suijten@somainline.org>, 
+ David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, 
+ Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>, 
+ linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, 
+ freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org, 
+ Neil Armstrong <neil.armstrong@linaro.org>
 X-Mailer: b4 0.14.3
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1761570146; l=10513;
- i=konrad.dybcio@oss.qualcomm.com; s=20230215; h=from:subject:message-id;
- bh=NwKHVA9VTFHEowes5xL+aTOPpTXiWQTkEyzUXnkrDdE=;
- b=3k29Fv2M68O4PpPIySOf66WvJiUwpiYlvMpcPT6No+3AXp+bF6CSOqbbSKrZcNdlGvzibL+DW
- C3j/asnJsIJC1V7fK9TkoMKd60GeEvQVFbzQijKpuWiNjuU6i4fxVHv
-X-Developer-Key: i=konrad.dybcio@oss.qualcomm.com; a=ed25519;
- pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
+X-Developer-Signature: v=1; a=openpgp-sha256; l=5010;
+ i=neil.armstrong@linaro.org; h=from:subject:message-id;
+ bh=0MHhWYGX/kbhklk4DTUuJkE6nUV8ISJicJLum5nXkNU=;
+ b=owEBbQKS/ZANAwAKAXfc29rIyEnRAcsmYgBo/28fcTyjsx9+jqX/RPpQrS3hH4JRvm2XTgGFUHBT
+ 3aFNE+6JAjMEAAEKAB0WIQQ9U8YmyFYF/h30LIt33NvayMhJ0QUCaP9vHwAKCRB33NvayMhJ0XBpD/
+ 9kiq1CGfJJbbh6rIVJ9bniOAQCW8pruCTIMe1D4yZfxSqJAaYrzZvR89iEBfajyJvrFiEGNg1dfGAH
+ 9LeIYJOV+gX3gJCk+SGZwVtdn+3bAcp4tStw3twUpVFhoZzbw0MQJjmW5zSb6NnhIxUx40A9WE6PpI
+ AgI3pCr5vsT85jofDyet7G0ODbyCMru+wRxfgb7XtF6ZZIv9rJfhmFUkNKcTsGyGUsmg4F/vCRbrj6
+ bO3sWb68alm2oyd9MeafibQzE4B6QBA0SADlZUIZ4zoW6Mecr0hNxdtbtcZZFe2E7FyZgargV5AgOv
+ oDPWdTyVoZIMRUJVwOwtU/DQoe1JU1BRzIJFLyXNjI0PmsjEf4JhKpzcM1Zlkq1Ko7zqN3U+9XgyZt
+ 2gBhZWEWfIce6HWEpPXDyk7Ihd23JEKLbBpR9G6rrdgmArUPErY17O8yGiyqF2wGIoOXc23IV/KQUg
+ qOuGCdx65bSimelkoG054sv2igele2nlxr66kIxLe+VXw9yEOtiGfDMTPAX5s79vDIHOUCi4w/9lJ3
+ qtCSgkgka15Dmo91Bn5jxYEvCtA0djtn16j7wsiijMTU0/W1fT7r3jzgInEqaKUnBS3b2wqvRV8IrA
+ uVPGOnU3zRpYjKVXEIIMfAPFcF/YjLErCo1J3cgR96GfwKC82C3p/M5Atn0Q==
+X-Developer-Key: i=neil.armstrong@linaro.org; a=openpgp;
+ fpr=89EC3D058446217450F22848169AB7B1A4CFF8AE
 
-From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+When in bonded DSI mode, only one PLL in one DSI PHY is used for both
+DSI PHYs, meaning that parents of the secondary DSI PHY will use the
+primary DSI PHY PLL as parent.
 
-Some compute SoCs support additional operation modes, extending the
-existing set of USB3/safe/DP-alt-mode.
+In this case the primary DSI PHY PLL will be set even if the primary
+DSI PHY is not yet enabled. The DSI PHY code has support for this
+particular use-case and will handle the fact the PLL was already
+set when initializing the primary DSI PHY.
 
-The firmware performs all the necessary handshakes for
-us and there is no room for error on that level (i.e. the sequences
-will match what happens on Windows).
+By introducing a protected variable pll_enable_cnt in the commit
+cb55f39bf7b1 ("drm/msm/dsi/phy: Fix reading zero as PLL rates when unprepared"),
+this variable is only initially set to 1 when the DSI PHY is initialized
+making it impossible to set the PLL before, breaking the bonded DSI
+use case by returning 0 when setting the PLL from the secondary DSI
+PHY driver and skipping the correct clocks initialization.
 
-The trade-off with that approach is that the received notifications
-trim some of the PDO/EUDO data (particularly the cable/plug parts),
-offering a set of similar-in-nature-but-not-the-same indicators.
+But since it was already possible to set the PLL without enabling
+the DSI PHY, just drop the pll_enable_cnt setting from the PHY
+enable/disable and simply increment/decrement the pll_enable_cnt
+variable from the dsi_pll_enable/disable_pll_bias to make sure any
+PLL operation is done with the PLL BIAS enabled.
 
-In an attempt to remedy this, I reconstructed some of it, so that the
-connected mux/retimer drivers can continue to behave as expected.
-
-Add support for parsing the aforementioned data coming from PMIC_GLINK
-and passing it on to the various Type-C components.
-
-Reviewed-by: Jack Pham <jack.pham@oss.qualcomm.com>
-Signed-off-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Fixes: cb55f39bf7b1 ("drm/msm/dsi/phy: Fix reading zero as PLL rates when unprepared")
+Closes: https://lore.kernel.org/all/50a49d72-2b1e-471d-b0c4-d5a0b38b2a21@linaro.org/
+Tested-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
 ---
-note: I carried Jack's r-b from an internal pre-review
----
- drivers/soc/qcom/pmic_glink_altmode.c | 188 +++++++++++++++++++++++++++++-----
- 1 file changed, 165 insertions(+), 23 deletions(-)
+ drivers/gpu/drm/msm/dsi/phy/dsi_phy.h     |  1 -
+ drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c | 18 ++----------------
+ 2 files changed, 2 insertions(+), 17 deletions(-)
 
-diff --git a/drivers/soc/qcom/pmic_glink_altmode.c b/drivers/soc/qcom/pmic_glink_altmode.c
-index 7f11acd33323..d0afdcb96ee1 100644
---- a/drivers/soc/qcom/pmic_glink_altmode.c
-+++ b/drivers/soc/qcom/pmic_glink_altmode.c
-@@ -14,10 +14,12 @@
- #include <linux/soc/qcom/pdr.h>
- #include <drm/bridge/aux-bridge.h>
+diff --git a/drivers/gpu/drm/msm/dsi/phy/dsi_phy.h b/drivers/gpu/drm/msm/dsi/phy/dsi_phy.h
+index e391505fdaf0..3cbf08231492 100644
+--- a/drivers/gpu/drm/msm/dsi/phy/dsi_phy.h
++++ b/drivers/gpu/drm/msm/dsi/phy/dsi_phy.h
+@@ -109,7 +109,6 @@ struct msm_dsi_phy {
+ 	struct msm_dsi_dphy_timing timing;
+ 	const struct msm_dsi_phy_cfg *cfg;
+ 	void *tuning_cfg;
+-	void *pll_data;
  
-+#include <linux/usb/pd.h>
- #include <linux/usb/typec_altmode.h>
- #include <linux/usb/typec_dp.h>
- #include <linux/usb/typec_mux.h>
- #include <linux/usb/typec_retimer.h>
-+#include <linux/usb/typec_tbt.h>
+ 	enum msm_dsi_phy_usecase usecase;
+ 	bool regulator_ldo_mode;
+diff --git a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c
+index 32f06edd21a9..c5e1d2016bcc 100644
+--- a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c
++++ b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c
+@@ -426,11 +426,8 @@ static void dsi_pll_enable_pll_bias(struct dsi_pll_7nm *pll)
+ 	u32 data;
  
- #include <linux/soc/qcom/pmic_glink.h>
+ 	spin_lock_irqsave(&pll->pll_enable_lock, flags);
+-	if (pll->pll_enable_cnt++) {
+-		spin_unlock_irqrestore(&pll->pll_enable_lock, flags);
+-		WARN_ON(pll->pll_enable_cnt == INT_MAX);
+-		return;
+-	}
++	pll->pll_enable_cnt++;
++	WARN_ON(pll->pll_enable_cnt == INT_MAX);
  
-@@ -37,11 +39,38 @@ struct usbc_write_req {
- 	__le32 reserved;
- };
+ 	data = readl(pll->phy->base + REG_DSI_7nm_PHY_CMN_CTRL_0);
+ 	data |= DSI_7nm_PHY_CMN_CTRL_0_PLL_SHUTDOWNB;
+@@ -876,7 +873,6 @@ static int dsi_pll_7nm_init(struct msm_dsi_phy *phy)
+ 	spin_lock_init(&pll_7nm->pll_enable_lock);
  
--#define NOTIFY_PAYLOAD_SIZE 16
-+struct usbc_sc8280x_dp_data {
-+	u8 pin_assignment : 6;
-+	u8 hpd_state : 1;
-+	u8 hpd_irq : 1;
-+	u8 res[7];
-+};
-+
-+/* Used for both TBT and USB4 notifications */
-+struct usbc_sc8280x_tbt_data {
-+	u8 usb_speed : 3;
-+	u8 cable_type : 3;
-+	/* This field is NOP on USB4, all cables support rounded rates by spec */
-+	u8 rounded_cable : 1;
-+	u8 power_limited : 1;
-+	u8 res[11];
-+};
-+
- struct usbc_notify {
- 	struct pmic_glink_hdr hdr;
--	char payload[NOTIFY_PAYLOAD_SIZE];
--	u32 reserved;
-+	u8 port_idx;
-+	u8 orientation;
-+	u8 mux_ctrl;
-+#define MUX_CTRL_STATE_NO_CONN			0
-+#define MUX_CTRL_STATE_TUNNELING		4
-+
-+	u8 res;
-+	__le16 vid;
-+	__le16 svid;
-+	union usbc_sc8280x_extended_data {
-+		struct usbc_sc8280x_dp_data dp;
-+		struct usbc_sc8280x_tbt_data tbt;
-+	} extended_data;
- };
+ 	pll_7nm->phy = phy;
+-	phy->pll_data = pll_7nm;
  
- struct usbc_sc8180x_notify {
-@@ -74,6 +103,7 @@ struct pmic_glink_altmode_port {
- 	struct typec_retimer *typec_retimer;
- 	struct typec_retimer_state retimer_state;
- 	struct typec_altmode dp_alt;
-+	struct typec_altmode tbt_alt;
- 
- 	struct work_struct work;
- 
-@@ -81,10 +111,12 @@ struct pmic_glink_altmode_port {
- 
- 	enum typec_orientation orientation;
- 	u16 svid;
-+	struct usbc_sc8280x_tbt_data tbt_data;
- 	u8 dp_data;
- 	u8 mode;
- 	u8 hpd_state;
- 	u8 hpd_irq;
-+	u8 mux_ctrl;
- };
- 
- #define work_to_altmode(w) container_of((w), struct pmic_glink_altmode, enable_work)
-@@ -170,6 +202,102 @@ static void pmic_glink_altmode_enable_dp(struct pmic_glink_altmode *altmode,
- 		dev_err(altmode->dev, "failed to setup retimer to DP: %d\n", ret);
- }
- 
-+static void pmic_glink_altmode_enable_tbt(struct pmic_glink_altmode *altmode,
-+					  struct pmic_glink_altmode_port *port)
-+{
-+	struct usbc_sc8280x_tbt_data *tbt = &port->tbt_data;
-+	struct typec_thunderbolt_data tbt_data = {};
-+	u32 cable_speed;
-+	int ret;
-+
-+	/* Device Discover Mode VDO */
-+	tbt_data.device_mode = TBT_MODE;
-+	tbt_data.device_mode |= TBT_SET_ADAPTER(TBT_ADAPTER_TBT3);
-+
-+	/* Cable Discover Mode VDO */
-+	tbt_data.cable_mode = TBT_MODE;
-+
-+	if (tbt->usb_speed == 0) {
-+		cable_speed = TBT_CABLE_USB3_PASSIVE;
-+	} else if (tbt->usb_speed == 1) {
-+		cable_speed = TBT_CABLE_10_AND_20GBPS;
-+	} else {
-+		dev_err(altmode->dev,
-+			"Got illegal TBT3 cable speed value (%u), falling back to passive\n",
-+			tbt->usb_speed);
-+		cable_speed = TBT_CABLE_USB3_PASSIVE;
-+	}
-+	tbt_data.cable_mode |= TBT_SET_CABLE_SPEED(cable_speed);
-+
-+	if (tbt->cable_type) {
-+		tbt_data.cable_mode |= TBT_CABLE_ACTIVE_PASSIVE;
-+		tbt_data.cable_mode |= TBT_SET_CABLE_ROUNDED(tbt->rounded_cable);
-+	}
-+
-+	/* Enter Mode VDO */
-+	tbt_data.enter_vdo |= TBT_MODE;
-+	tbt_data.enter_vdo |= TBT_ENTER_MODE_CABLE_SPEED(cable_speed);
-+
-+	if (tbt->cable_type) {
-+		tbt_data.enter_vdo |= TBT_CABLE_ACTIVE_PASSIVE;
-+		tbt_data.enter_vdo |= TBT_SET_CABLE_ROUNDED(tbt->rounded_cable);
-+	}
-+
-+	port->state.alt = &port->tbt_alt;
-+	port->state.data = &tbt_data;
-+	port->state.mode = TYPEC_MODAL_STATE(port->mode);
-+
-+	ret = typec_mux_set(port->typec_mux, &port->state);
-+	if (ret)
-+		dev_err(altmode->dev, "failed to switch mux to USB: %d\n", ret);
-+
-+	port->retimer_state.alt = &port->tbt_alt;
-+	port->retimer_state.data = &tbt_data;
-+	port->retimer_state.mode = TYPEC_MODAL_STATE(port->mode);
-+
-+	ret = typec_retimer_set(port->typec_retimer, &port->retimer_state);
-+	if (ret)
-+		dev_err(altmode->dev, "failed to setup retimer to USB: %d\n", ret);
-+}
-+
-+static void pmic_glink_altmode_enable_usb4(struct pmic_glink_altmode *altmode,
-+					   struct pmic_glink_altmode_port *port)
-+{
-+	struct usbc_sc8280x_tbt_data *tbt = &port->tbt_data;
-+	struct enter_usb_data data = {};
-+	int ret;
-+
-+	data.eudo = FIELD_PREP(EUDO_USB_MODE_MASK, EUDO_USB_MODE_USB4);
-+
-+	if (tbt->usb_speed == 0) {
-+		data.eudo |= FIELD_PREP(EUDO_CABLE_SPEED_MASK, EUDO_CABLE_SPEED_USB4_GEN2);
-+	} else if (tbt->usb_speed == 1) {
-+		data.eudo |= FIELD_PREP(EUDO_CABLE_SPEED_MASK, EUDO_CABLE_SPEED_USB4_GEN3);
-+	} else {
-+		pr_err("Got illegal USB4 cable speed value (%u), falling back to G2\n",
-+		       tbt->usb_speed);
-+		data.eudo |= FIELD_PREP(EUDO_CABLE_SPEED_MASK, EUDO_CABLE_SPEED_USB4_GEN2);
-+	}
-+
-+	data.eudo |= FIELD_PREP(EUDO_CABLE_TYPE_MASK, tbt->cable_type);
-+
-+	port->state.alt = NULL;
-+	port->state.data = &data;
-+	port->state.mode = TYPEC_MODE_USB4;
-+
-+	ret = typec_mux_set(port->typec_mux, &port->state);
-+	if (ret)
-+		dev_err(altmode->dev, "failed to switch mux to USB: %d\n", ret);
-+
-+	port->retimer_state.alt = NULL;
-+	port->retimer_state.data = &data;
-+	port->retimer_state.mode = TYPEC_MODE_USB4;
-+
-+	ret = typec_retimer_set(port->typec_retimer, &port->retimer_state);
-+	if (ret)
-+		dev_err(altmode->dev, "failed to setup retimer to USB: %d\n", ret);
-+}
-+
- static void pmic_glink_altmode_enable_usb(struct pmic_glink_altmode *altmode,
- 					  struct pmic_glink_altmode_port *port)
- {
-@@ -222,15 +350,15 @@ static void pmic_glink_altmode_worker(struct work_struct *work)
- 
- 	typec_switch_set(alt_port->typec_switch, alt_port->orientation);
- 
--	if (alt_port->svid == USB_TYPEC_DP_SID) {
--		if (alt_port->mode == 0xff) {
--			pmic_glink_altmode_safe(altmode, alt_port);
--		} else {
--			pmic_glink_altmode_enable_dp(altmode, alt_port,
--						     alt_port->mode,
--						     alt_port->hpd_state,
--						     alt_port->hpd_irq);
--		}
-+	if (alt_port->mux_ctrl == MUX_CTRL_STATE_NO_CONN) {
-+		pmic_glink_altmode_safe(altmode, alt_port);
-+	} else if (alt_port->svid == USB_TYPEC_TBT_SID) {
-+		pmic_glink_altmode_enable_tbt(altmode, alt_port);
-+	} else if (alt_port->svid == USB_TYPEC_DP_SID) {
-+		pmic_glink_altmode_enable_dp(altmode, alt_port,
-+					     alt_port->mode,
-+					     alt_port->hpd_state,
-+					     alt_port->hpd_irq);
- 
- 		if (alt_port->hpd_state)
- 			conn_status = connector_status_connected;
-@@ -238,6 +366,8 @@ static void pmic_glink_altmode_worker(struct work_struct *work)
- 			conn_status = connector_status_disconnected;
- 
- 		drm_aux_hpd_bridge_notify(&alt_port->bridge->dev, conn_status);
-+	} else if (alt_port->mux_ctrl == MUX_CTRL_STATE_TUNNELING) {
-+		pmic_glink_altmode_enable_usb4(altmode, alt_port);
- 	} else {
- 		pmic_glink_altmode_enable_usb(altmode, alt_port);
+ 	ret = pll_7nm_register(pll_7nm, phy->provided_clocks->hws);
+ 	if (ret) {
+@@ -965,10 +961,8 @@ static int dsi_7nm_phy_enable(struct msm_dsi_phy *phy,
+ 	u32 const delay_us = 5;
+ 	u32 const timeout_us = 1000;
+ 	struct msm_dsi_dphy_timing *timing = &phy->timing;
+-	struct dsi_pll_7nm *pll = phy->pll_data;
+ 	void __iomem *base = phy->base;
+ 	bool less_than_1500_mhz;
+-	unsigned long flags;
+ 	u32 vreg_ctrl_0, vreg_ctrl_1, lane_ctrl0;
+ 	u32 glbl_pemph_ctrl_0;
+ 	u32 glbl_str_swi_cal_sel_ctrl, glbl_hstx_str_ctrl_0;
+@@ -1090,13 +1084,10 @@ static int dsi_7nm_phy_enable(struct msm_dsi_phy *phy,
+ 		glbl_rescode_bot_ctrl = 0x3c;
  	}
-@@ -314,11 +444,10 @@ static void pmic_glink_altmode_sc8280xp_notify(struct pmic_glink_altmode *altmod
- 					       u16 svid, const void *data, size_t len)
+ 
+-	spin_lock_irqsave(&pll->pll_enable_lock, flags);
+-	pll->pll_enable_cnt = 1;
+ 	/* de-assert digital and pll power down */
+ 	data = DSI_7nm_PHY_CMN_CTRL_0_DIGTOP_PWRDN_B |
+ 	       DSI_7nm_PHY_CMN_CTRL_0_PLL_SHUTDOWNB;
+ 	writel(data, base + REG_DSI_7nm_PHY_CMN_CTRL_0);
+-	spin_unlock_irqrestore(&pll->pll_enable_lock, flags);
+ 
+ 	/* Assert PLL core reset */
+ 	writel(0x00, base + REG_DSI_7nm_PHY_CMN_PLL_CNTRL);
+@@ -1209,9 +1200,7 @@ static bool dsi_7nm_set_continuous_clock(struct msm_dsi_phy *phy, bool enable)
+ 
+ static void dsi_7nm_phy_disable(struct msm_dsi_phy *phy)
  {
- 	struct pmic_glink_altmode_port *alt_port;
-+	const struct usbc_sc8280x_tbt_data *tbt;
-+	const struct usbc_sc8280x_dp_data *dp;
- 	const struct usbc_notify *notify;
- 	u8 orientation;
--	u8 hpd_state;
--	u8 hpd_irq;
--	u8 mode;
- 	u8 port;
+-	struct dsi_pll_7nm *pll = phy->pll_data;
+ 	void __iomem *base = phy->base;
+-	unsigned long flags;
+ 	u32 data;
  
- 	if (len != sizeof(*notify)) {
-@@ -329,11 +458,8 @@ static void pmic_glink_altmode_sc8280xp_notify(struct pmic_glink_altmode *altmod
+ 	DBG("");
+@@ -1238,11 +1227,8 @@ static void dsi_7nm_phy_disable(struct msm_dsi_phy *phy)
+ 	writel(data, base + REG_DSI_7nm_PHY_CMN_CTRL_0);
+ 	writel(0, base + REG_DSI_7nm_PHY_CMN_LANE_CTRL0);
  
- 	notify = data;
+-	spin_lock_irqsave(&pll->pll_enable_lock, flags);
+-	pll->pll_enable_cnt = 0;
+ 	/* Turn off all PHY blocks */
+ 	writel(0x00, base + REG_DSI_7nm_PHY_CMN_CTRL_0);
+-	spin_unlock_irqrestore(&pll->pll_enable_lock, flags);
  
--	port = notify->payload[0];
--	orientation = notify->payload[1];
--	mode = FIELD_GET(SC8280XP_DPAM_MASK, notify->payload[8]) - DPAM_HPD_A;
--	hpd_state = FIELD_GET(SC8280XP_HPD_STATE_MASK, notify->payload[8]);
--	hpd_irq = FIELD_GET(SC8280XP_HPD_IRQ_MASK, notify->payload[8]);
-+	port = notify->port_idx;
-+	orientation = notify->orientation;
- 
- 	if (port >= ARRAY_SIZE(altmode->ports) || !altmode->ports[port].altmode) {
- 		dev_dbg(altmode->dev, "notification on undefined port %d\n", port);
-@@ -343,9 +469,21 @@ static void pmic_glink_altmode_sc8280xp_notify(struct pmic_glink_altmode *altmod
- 	alt_port = &altmode->ports[port];
- 	alt_port->orientation = pmic_glink_altmode_orientation(orientation);
- 	alt_port->svid = svid;
--	alt_port->mode = mode;
--	alt_port->hpd_state = hpd_state;
--	alt_port->hpd_irq = hpd_irq;
-+	alt_port->mux_ctrl = notify->mux_ctrl;
-+
-+	if (svid == USB_TYPEC_DP_SID) {
-+		dp = &notify->extended_data.dp;
-+
-+		alt_port->mode = dp->pin_assignment - DPAM_HPD_A;
-+		alt_port->hpd_state = dp->hpd_state;
-+		alt_port->hpd_irq = dp->hpd_irq;
-+	} else if (alt_port->mux_ctrl == MUX_CTRL_STATE_TUNNELING) {
-+		/* Valid for both USB4 and TBT3 */
-+		tbt = &notify->extended_data.tbt;
-+
-+		alt_port->tbt_data = *tbt;
-+	}
-+
- 	schedule_work(&alt_port->work);
- }
- 
-@@ -471,6 +609,10 @@ static int pmic_glink_altmode_probe(struct auxiliary_device *adev,
- 		alt_port->dp_alt.mode = USB_TYPEC_DP_MODE;
- 		alt_port->dp_alt.active = 1;
- 
-+		alt_port->tbt_alt.svid = USB_TYPEC_TBT_SID;
-+		alt_port->tbt_alt.mode = TYPEC_TBT_MODE;
-+		alt_port->tbt_alt.active = 1;
-+
- 		alt_port->typec_mux = fwnode_typec_mux_get(fwnode);
- 		if (IS_ERR(alt_port->typec_mux)) {
- 			fwnode_handle_put(fwnode);
+ 	/* make sure phy is turned off */
+ 	wmb();
 
 ---
-base-commit: 8fec172c82c2b5f6f8e47ab837c1dc91ee3d1b87
-change-id: 20251027-topic-pg_altmode_usb4-ac49da33c016
+base-commit: dcb6fa37fd7bc9c3d2b066329b0d27dedf8becaa
+change-id: 20251027-topic-sm8x50-fix-dsi-bonded-c88f880aca0a
 
 Best regards,
 -- 
-Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Neil Armstrong <neil.armstrong@linaro.org>
 
 
