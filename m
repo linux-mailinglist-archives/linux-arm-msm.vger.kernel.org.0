@@ -1,78 +1,62 @@
-Return-Path: <linux-arm-msm+bounces-79021-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-79022-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id AB144C11BBD
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Oct 2025 23:35:01 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id F1EBFC11BC6
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Oct 2025 23:35:10 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 4105F1A28713
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Oct 2025 22:35:21 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 84A2356365A
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Oct 2025 22:34:57 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 35F732F12A3;
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3F1D63081D9;
 	Mon, 27 Oct 2025 22:34:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="dz4qRStE"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Q4h/TiqF"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C38A239E7E;
-	Mon, 27 Oct 2025 22:34:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C3FF2E092D;
+	Mon, 27 Oct 2025 22:34:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761604488; cv=none; b=BuVNTGP+kCtRji9rG9KVn9pO+fC2xPUReJSuRqMSe/1AaAeKc4Yf+/w2c1TjxbIdiT5vWd3jX000QgTGAJUFRkjNQkkOckqu6iBR/v0CKvh4c9veVKNluH2ooLdOJamVH0riXIKv6nfU4F0N4ji8cpIr0f8Pv5lGfIOH0WphUPU=
+	t=1761604488; cv=none; b=pq2f1VCyJUnc88YqYphcjDjgyrl2C1QDWvqZfIHqoFX7BXuGMN95Sfr43g3yPHtDL4WmwaneczcgRMZsWTthdJPNHSag4aM8wjv9F4ALbMkEadLGiNxFWTOKTJpuwa9aisKaMFQV/ORR6HSslyLbzZvaCR4Rh/nRzB8w15x2p7w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1761604488; c=relaxed/simple;
-	bh=vzBr+yxDuWYssqy8HhgZk1oBeKR5UFQrHdnJ7mJAUFA=;
+	bh=WVzoQ4T5tjNO2wwWWJJz9uek8sy6pYVxznCab4CF78s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=IDHMMCCDo0FzUAFghyKt4L9U5S3d6oU4APL+5unqegWIf+6NrRiXjS1IBIEg8k9D6QwMcgY45aELkX/npj3DErs990dQfIhU76WzLj9vajB96hatIW3CnjcXVu3m/CMRx/lyt9CbQTgMrRKfhc+R4km4MdkydIWHA0QfuVCu1Yw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=dz4qRStE; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F929C4CEF1;
-	Mon, 27 Oct 2025 22:34:45 +0000 (UTC)
+	 MIME-Version:Content-Type; b=Vwq/qGbHrDkew+pWiMc/+rJTNSmW+q8/RhX+s9c63fSYh9emsbGtaj7v2vZzpPo4mqat5et0h9rfFBZ7nYuutLKuNa160vYgGysAajR5SztCna7+wlhWlqwd2hnzz15a/xPocOG8wkmkZj5JTQpLSSQ9ubKQlZp8N+fnq4qjNPw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Q4h/TiqF; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01AACC4CEFB;
+	Mon, 27 Oct 2025 22:34:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1761604486;
-	bh=vzBr+yxDuWYssqy8HhgZk1oBeKR5UFQrHdnJ7mJAUFA=;
+	s=k20201202; t=1761604487;
+	bh=WVzoQ4T5tjNO2wwWWJJz9uek8sy6pYVxznCab4CF78s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dz4qRStEXx2NFtUH12/+N/Vs1bM7fWpdAIU9keu76nte39i7cBX559wW38xvW4wTy
-	 ANH5zm1C4NuH6A1f5OrKkyOZCWyWixCKf7raO5HXvQ9hMu8E6PBfceTy3une2AJnCx
-	 58j4D8f7Its92U1e7myipmcfZticYtpEPm9I4g3ajCnPGuY6Kcg5vEVvHiNLDAmELz
-	 i7M1lvl6HJZxRP2JeWL0WqAlTd1bdkkJU5P4ybYbpWaDxJDy9IrJ8IXUmqNWoSkNgt
-	 q8ofNzUZJt9iXLVrWLdmun26QpXwBrCtXniao8qvKGPpCQgBX0rB2ii54avZBnOAtB
-	 AOhpJ9cWo89ZA==
+	b=Q4h/TiqFD6LhMFp/+duK4Beh6Ympyrg3QLhOK0OReJQXZXf74li7ZJi/I0/Bo8p0b
+	 bh6YvESerzmxlu01wNO4KP16m02DsdDR78AxKotyKK3Wpob4UFhKNnvRplqNY9kqLX
+	 aMZ8K8OmcBhg/PEu5FvJQRJdWhKSH5sytc0bIKASU5YKEUKa+o7ecPyRENqbW9MDg2
+	 CYaAiQDYPS7d+3rTsUnKedfUJzk3WenC/A2VDqNgtHQI3LI9XklcrmWa5u8vb9y7g1
+	 qYWXimwAAqu071vw7pyEHrDI16p+vzE74I54Cy+C7WPNjmWWQ19otdDnAzV0dHvCM4
+	 C4Od7L96ZH18w==
 From: Bjorn Andersson <andersson@kernel.org>
-To: Rob Clark <robin.clark@oss.qualcomm.com>,
-	Dmitry Baryshkov <lumag@kernel.org>,
-	Abhinav Kumar <abhinav.kumar@linux.dev>,
-	Jessica Zhang <jessica.zhang@oss.qualcomm.com>,
-	Sean Paul <sean@poorly.run>,
-	Marijn Suijten <marijn.suijten@somainline.org>,
-	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-	Maxime Ripard <mripard@kernel.org>,
-	Thomas Zimmermann <tzimmermann@suse.de>,
-	David Airlie <airlied@gmail.com>,
-	Simona Vetter <simona@ffwll.ch>,
+To: Konrad Dybcio <konradybcio@kernel.org>,
 	Rob Herring <robh@kernel.org>,
 	Krzysztof Kozlowski <krzk+dt@kernel.org>,
 	Conor Dooley <conor+dt@kernel.org>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	Kuogee Hsieh <quic_khsieh@quicinc.com>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	Abel Vesa <abel.vesa@linaro.org>
+	=?UTF-8?q?Guido=20G=C3=BCnther?= <agx@sigxcpu.org>
 Cc: linux-arm-msm@vger.kernel.org,
-	dri-devel@lists.freedesktop.org,
-	freedreno@lists.freedesktop.org,
 	devicetree@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Subject: Re: (subset) [PATCH v2 0/7] drm/msm: Add display support for Glymur platform
-Date: Mon, 27 Oct 2025 17:36:42 -0500
-Message-ID: <176160465226.73268.4378641662848766051.b4-ty@kernel.org>
+	phone-devel@vger.kernel.org
+Subject: Re: [PATCH v2] arm64: dts: qcom: sdm845-shift-axolotl: Drop address and size cells from panel
+Date: Mon, 27 Oct 2025 17:36:43 -0500
+Message-ID: <176160465241.73268.10255088091286075326.b4-ty@kernel.org>
 X-Mailer: git-send-email 2.51.0
-In-Reply-To: <20251014-glymur-display-v2-0-ff935e2f88c5@linaro.org>
-References: <20251014-glymur-display-v2-0-ff935e2f88c5@linaro.org>
+In-Reply-To: <20251020-shift6mq-dt-v2-1-d8fc3ec71281@sigxcpu.org>
+References: <20251020-shift6mq-dt-v2-1-d8fc3ec71281@sigxcpu.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -83,16 +67,21 @@ Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 
 
-On Tue, 14 Oct 2025 15:38:25 +0300, Abel Vesa wrote:
-> The Glymur MDSS is based on the one found in SM8750, with 2 minor number
-> version bump. Differences are mostly in the DPU IP blocks numbers.
+On Mon, 20 Oct 2025 13:58:24 +0200, Guido Günther wrote:
+> They're set in the parent to describe the panel's reg property already.
 > 
+> Fixes the
 > 
+> linux/arch/arm64/boot/dts/qcom/sdm845-shift-axolotl.dtb: panel@0 (visionox,rm69299-shift): '#address-cells', '#size-cells' do not match any of the regexes: '^pinctrl-[0-9]+$'
+> 
+> warning.
+> 
+> [...]
 
 Applied, thanks!
 
-[7/7] soc: qcom: ubwc: Add configuration Glymur platform
-      commit: 9b21c3bd24803e4ebab9f91bd812aa10576d8220
+[1/1] arm64: dts: qcom: sdm845-shift-axolotl: Drop address and size cells from panel
+      commit: 720ebcc3e6b46fe4e01f4ecf1a8a899af213e433
 
 Best regards,
 -- 
