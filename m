@@ -1,232 +1,151 @@
-Return-Path: <linux-arm-msm+bounces-78880-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-78882-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 26A09C0D50C
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Oct 2025 12:54:39 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id A407BC0D545
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Oct 2025 12:55:56 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 61CE619A74D5
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Oct 2025 11:51:45 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 2C8A718911C8
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Oct 2025 11:52:30 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B3664303A2B;
-	Mon, 27 Oct 2025 11:50:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D02002FE590;
+	Mon, 27 Oct 2025 11:51:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="fiiEdKmW"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="KtcmtNAw"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.18])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7EE542FFDD3;
-	Mon, 27 Oct 2025 11:50:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A088B2EF64C;
+	Mon, 27 Oct 2025 11:51:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761565837; cv=none; b=lahclgdLdFapXNXUSufs5Ir7Xwf8sf6LjY0UDndHcTeWTKlo/NNS16O2TdoF0Cf/0ZtpaNOx0ZA2t+SYJcaFQEQix19PoD/zFnMIDBdXEjkbC6+EnqCifPxg3KMvMwsYisrcpyetRPf2jM6kKRcL+HTkqr9jp1KVxzJ3cmHxB04=
+	t=1761565907; cv=none; b=l7LnC5UEzIYiFz9e4Lj7b5F+HllN6Wvq7d7YwLlQa+yMOEcVZ5GJZqgMyPbY/Is6Jui877bDK63sK7JwStKM3m9/YNVyLe0nChO7QLS61q/l7qOUeCx+YYED9m3wzPbJgrHSkkwVTke7npv8LMBy7yEoN3EqqEJ2wrPeZEJHo1A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761565837; c=relaxed/simple;
-	bh=j468xXoR9cr3OXREFcfRw79OYR6IigAtpibsNTQMHX8=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CfP/tmDg5SnsHURSM+MvmJ95cg8xfHYwhYaAI/3d01AL8oityGdWPywPXFLe+GPsFt2gXFm4fCZEAZ3vrOjsSZmHKM74dQR61eAdhvdY2Y9a+ZstngUEUzMh7gu9Z5YujSYiabRctFJb+TqFHtb9exTEK2xzRu8Klbj9KPoWDB4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=pass smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=fiiEdKmW; arc=none smtp.client-ip=192.198.163.18
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.intel.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1761565836; x=1793101836;
-  h=from:to:cc:subject:date:message-id:in-reply-to:
-   references:mime-version:content-transfer-encoding;
-  bh=j468xXoR9cr3OXREFcfRw79OYR6IigAtpibsNTQMHX8=;
-  b=fiiEdKmWoL5LlIVz3LUl6+6Wvh+lkamxrmzv+zHHmLwpcxiDEbAswzSH
-   kXYJi/LDY/vNiYKTtJ0MdgiT/f8yLIpJYNyabZGS6jJY0bW2XtnnS/lSS
-   GnLkw1GBAXU6X0bvl8p6OKNsgkGXYu3jJtfMZcsR/vQac0Cu4DTuEiLw8
-   guz4/UOjbYFjs1OIQBOOHCP5I9XPg+NZO5BaXMPYdcwBIblly8kmMyZjS
-   siHbFIzTl1pvh0IKB6ks/lEmjq++XDZ4H2FdU+6RXvX6YiQZIuQqjmjKw
-   C+F9dHqOtUh6BpKG7n94KDLeHrU2YFIu9y+QxRAfmYlu2g2U9njyvLojj
-   g==;
-X-CSE-ConnectionGUID: 9i2V2uEVRme6lxDxITtmfw==
-X-CSE-MsgGUID: Y6HaBqNFSYu8Fu9Eud8V8Q==
-X-IronPort-AV: E=McAfee;i="6800,10657,11586"; a="62848054"
-X-IronPort-AV: E=Sophos;i="6.19,258,1754982000"; 
-   d="scan'208";a="62848054"
-Received: from orviesa007.jf.intel.com ([10.64.159.147])
-  by fmvoesa112.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 27 Oct 2025 04:50:35 -0700
-X-CSE-ConnectionGUID: ewcYyfhlT66sdCovZySfjA==
-X-CSE-MsgGUID: UsAuCo6QT/a82eNu+1Oo3Q==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.19,258,1754982000"; 
-   d="scan'208";a="184922007"
-Received: from klitkey1-mobl1.ger.corp.intel.com (HELO kekkonen.fi.intel.com) ([10.245.244.31])
-  by orviesa007-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 27 Oct 2025 04:50:25 -0700
-Received: from punajuuri.localdomain (unknown [192.168.240.130])
-	by kekkonen.fi.intel.com (Postfix) with ESMTP id E87C7121EFA;
-	Mon, 27 Oct 2025 13:50:22 +0200 (EET)
-Received: from sailus by punajuuri.localdomain with local (Exim 4.98.2)
-	(envelope-from <sakari.ailus@linux.intel.com>)
-	id 1vDLjy-00000001dis-3lbe;
-	Mon, 27 Oct 2025 13:50:22 +0200
-Organization: Intel Finland Oy - BIC 0357606-4 - c/o Alberga Business Park, 6 krs, Bertel Jungin Aukio 5, 02600 Espoo
-From: Sakari Ailus <sakari.ailus@linux.intel.com>
-To: netdev@vger.kernel.org
-Cc: Nicolas Ferre <nicolas.ferre@microchip.com>,
-	Claudiu Beznea <claudiu.beznea@tuxon.dev>,
-	Andrew Lunn <andrew+netdev@lunn.ch>,
-	"David S. Miller" <davem@davemloft.net>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Wei Fang <wei.fang@nxp.com>,
-	Shenwei Wang <shenwei.wang@nxp.com>,
-	Clark Wang <xiaoning.wang@nxp.com>,
-	=?UTF-8?q?Niklas=20S=C3=B6derlund?= <niklas.soderlund@ragnatech.se>,
-	Paul Barker <paul@pbarker.dev>,
-	Siddharth Vadapalli <s-vadapalli@ti.com>,
-	Roger Quadros <rogerq@kernel.org>,
-	Alex Elder <elder@kernel.org>,
-	Maxime Coquelin <mcoquelin.stm32@gmail.com>,
-	Alexandre Torgue <alexandre.torgue@foss.st.com>,
-	Stephan Gerhold <stephan@gerhold.net>,
-	Loic Poulain <loic.poulain@oss.qualcomm.com>,
-	Sergey Ryazanov <ryazanov.s.a@gmail.com>,
-	Johannes Berg <johannes@sipsolutions.net>,
-	Chandrashekar Devegowda <chandrashekar.devegowda@intel.com>,
-	Chiranjeevi Rapolu <chiranjeevi.rapolu@linux.intel.com>,
-	Liu Haijun <haijun.liu@mediatek.com>,
-	Ricardo Martinez <ricardo.martinez@linux.intel.com>,
-	"Dr. David Alan Gilbert" <linux@treblig.org>,
-	Ingo Molnar <mingo@kernel.org>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Michael Nemanov <michael.nemanov@ti.com>,
-	Kalle Valo <kvalo@kernel.org>,
-	Andreas Kemnade <andreas@kemnade.info>,
-	Roopni Devanathan <quic_rdevanat@quicinc.com>,
-	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <linux@weissschuh.net>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
-	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
-	imx@lists.linux.dev,
-	linux-renesas-soc@vger.kernel.org,
-	linux-omap@vger.kernel.org,
-	linux-wireless@vger.kernel.org,
-	linux-stm32@st-md-mailman.stormreply.com,
-	linux-arm-kernel@lists.infradead.org,
-	linux-arm-msm@vger.kernel.org
-Subject: [PATCH RESEND 4/4] net: wwan: Remove redundant pm_runtime_mark_last_busy() calls
-Date: Mon, 27 Oct 2025 13:50:22 +0200
-Message-ID: <20251027115022.390997-4-sakari.ailus@linux.intel.com>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20251027115022.390997-1-sakari.ailus@linux.intel.com>
-References: <20251027115022.390997-1-sakari.ailus@linux.intel.com>
+	s=arc-20240116; t=1761565907; c=relaxed/simple;
+	bh=fVlqESagcacb+xwYcCepLg1dl8NdeGd/ef9wAhmszuw=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=YlRf2WmW/MUEnioJcPlWg97WKwM5CitnTHbP3Z12z1Srk7NSlCS0F/3HF1N5klkmFZTh8spEN2H0lgQ0O39PVuyURk/Xl84wL1On/7urgkazT0JF9NiwWkI6bklX0fe6fQn0cMuReVNZqGtC3u50gqgj+sZFce25mZhKu9o2NNA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=KtcmtNAw; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1673BC4CEF1;
+	Mon, 27 Oct 2025 11:51:39 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1761565907;
+	bh=fVlqESagcacb+xwYcCepLg1dl8NdeGd/ef9wAhmszuw=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=KtcmtNAwRor5AzebaF1lyQq4Y2hLUEDr1PtoNt7FZ5rIR9fhu6qLdL0Yr5FlYXKz3
+	 NxEFJinKGC4skZedHv2TK85bO7bbPlFOPR+OyK2LI9S+8CeQ4EYXfaE62zWm9G1yP5
+	 FxjztNVmutARaidTzSeKWOB+eM+BPKoPJBn7GmF4CsQ5sA1ZNlUVqxsjJgSMUibEp4
+	 +Y9nns+Do/3Mrlcm/faYtGN/GB0LMO5M15NoZ4oG5TJasBrP45huOosHTgFWXOqAxb
+	 f0YiIrAaIhnL/0qqrQGooWIzOAXqvX4f5RELfEvjkFEiWNAChmecGIZhSrE7CJRUES
+	 XKlnb1JmgFsLQ==
+Date: Mon, 27 Oct 2025 17:21:30 +0530
+From: Manivannan Sadhasivam <mani@kernel.org>
+To: Bjorn Helgaas <helgaas@kernel.org>
+Cc: linux-pci@vger.kernel.org, 
+	Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>, Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kwilczynski@kernel.org>, 
+	Johan Hovold <johan@kernel.org>, Frank Li <Frank.li@nxp.com>, 
+	Shawn Lin <shawn.lin@rock-chips.com>, Rob Herring <robh@kernel.org>, 
+	"David E . Box" <david.e.box@linux.intel.com>, Kai-Heng Feng <kai.heng.feng@canonical.com>, 
+	"Rafael J . Wysocki" <rafael@kernel.org>, Heiner Kallweit <hkallweit1@gmail.com>, 
+	Chia-Lin Kao <acelan.kao@canonical.com>, Gustavo Pimentel <Gustavo.Pimentel@synopsys.com>, 
+	Han Jingoo <jingoohan1@gmail.com>, Bjorn Andersson <andersson@kernel.org>, 
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, Bartosz Golaszewski <brgl@bgdev.pl>, 
+	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	Bjorn Helgaas <bhelgaas@google.com>
+Subject: Re: [PATCH] Revert "PCI: qcom: Remove custom ASPM enablement code"
+Message-ID: <5y3mxvvkwc2svsm5lt6okytkkw6u7yzfy4i5dgn3fs5v7s4i6i@qv2tvlxotom6>
+References: <rc4ydm2c3c4gqipaorr2ndrlwufay3ocfc2rq7llskkg7npe6x@53eztxy5v3gt>
+ <20251026193754.GA1432729@bhelgaas>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
+In-Reply-To: <20251026193754.GA1432729@bhelgaas>
 
-pm_runtime_put_autosuspend(), pm_runtime_put_sync_autosuspend(),
-pm_runtime_autosuspend() and pm_request_autosuspend() now include a call
-to pm_runtime_mark_last_busy(). Remove the now-reduntant explicit call to
-pm_runtime_mark_last_busy().
+On Sun, Oct 26, 2025 at 02:37:54PM -0500, Bjorn Helgaas wrote:
+> On Sun, Oct 26, 2025 at 08:58:29PM +0530, Manivannan Sadhasivam wrote:
+> > On Fri, Oct 24, 2025 at 04:04:57PM -0500, Bjorn Helgaas wrote:
+> > > From: Bjorn Helgaas <bhelgaas@google.com>
+> > > 
+> > > This reverts commit a729c16646198872e345bf6c48dbe540ad8a9753.
+> > > 
+> > > Prior to a729c1664619 ("PCI: qcom: Remove custom ASPM enablement code"),
+> > > the qcom controller driver enabled ASPM, including L0s, L1, and L1 PM
+> > > Substates, for all devices powered on at the time the controller driver
+> > > enumerates them.
+> > > 
+> > > ASPM was *not* enabled for devices powered on later by pwrctrl (unless the
+> > > kernel was built with PCIEASPM_POWERSAVE or PCIEASPM_POWER_SUPERSAVE, or
+> > > the user enabled ASPM via module parameter or sysfs).
+> > > 
+> > > After f3ac2ff14834 ("PCI/ASPM: Enable all ClockPM and ASPM states for
+> > > devicetree platforms"), the PCI core enabled all ASPM states for all
+> > > devices whether powered on initially or by pwrctrl, so a729c1664619 was
+> > > unnecessary and reverted.
+> > > 
+> > > But f3ac2ff14834 was too aggressive and broke platforms that didn't support
+> > > CLKREQ# or required device-specific configuration for L1 Substates, so
+> > > df5192d9bb0e ("PCI/ASPM: Enable only L0s and L1 for devicetree platforms")
+> > > enabled only L0s and L1.
+> > > 
+> > > On Qualcomm platforms, this left L1 Substates disabled, which was a
+> > > regression.  Revert a729c1664619 so L1 Substates will be enabled on devices
+> > > that are initially powered on.  Devices powered on by pwrctrl will be
+> > > addressed later.
+> > 
+> > Can we rather have platform specific APIs [1] to enable ASPM states
+> > instead of just re-introducing this half-baked solution? (yes, I
+> > introduced it, but it is still imperfect).
+> 
+> I intend this (reverting "PCI: qcom: Remove custom ASPM enablement
+> code") for v6.18 to avoid regressing Qualcomm: v6.17 enabled L1 PM
+> Substates, and v6.18-rc3 does not.
+> 
+> Adding pci_host_set_default_pcie_link_state() with [1] (along with a
+> follow-up qcom patch using it) is another possible way to enable L1 PM
+> Substates, but I think the revert is the safest post-merge window
+> regression fix.
+> 
 
-Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
----
- drivers/net/wwan/qcom_bam_dmux.c           | 2 --
- drivers/net/wwan/t7xx/t7xx_hif_cldma.c     | 3 ---
- drivers/net/wwan/t7xx/t7xx_hif_dpmaif_rx.c | 2 --
- drivers/net/wwan/t7xx/t7xx_hif_dpmaif_tx.c | 2 --
- 4 files changed, 9 deletions(-)
+I'm fine with the revert as a stopgap solution.
 
-diff --git a/drivers/net/wwan/qcom_bam_dmux.c b/drivers/net/wwan/qcom_bam_dmux.c
-index 64dab8b57611..6a5b22589af4 100644
---- a/drivers/net/wwan/qcom_bam_dmux.c
-+++ b/drivers/net/wwan/qcom_bam_dmux.c
-@@ -162,7 +162,6 @@ static void bam_dmux_tx_done(struct bam_dmux_skb_dma *skb_dma)
- 	struct bam_dmux *dmux = skb_dma->dmux;
- 	unsigned long flags;
- 
--	pm_runtime_mark_last_busy(dmux->dev);
- 	pm_runtime_put_autosuspend(dmux->dev);
- 
- 	if (skb_dma->addr)
-@@ -397,7 +396,6 @@ static void bam_dmux_tx_wakeup_work(struct work_struct *work)
- 	dma_async_issue_pending(dmux->tx);
- 
- out:
--	pm_runtime_mark_last_busy(dmux->dev);
- 	pm_runtime_put_autosuspend(dmux->dev);
- }
- 
-diff --git a/drivers/net/wwan/t7xx/t7xx_hif_cldma.c b/drivers/net/wwan/t7xx/t7xx_hif_cldma.c
-index 97163e1e5783..689c920ca898 100644
---- a/drivers/net/wwan/t7xx/t7xx_hif_cldma.c
-+++ b/drivers/net/wwan/t7xx/t7xx_hif_cldma.c
-@@ -250,7 +250,6 @@ static void t7xx_cldma_rx_done(struct work_struct *work)
- 	t7xx_cldma_clear_ip_busy(&md_ctrl->hw_info);
- 	t7xx_cldma_hw_irq_en_txrx(&md_ctrl->hw_info, queue->index, MTK_RX);
- 	t7xx_cldma_hw_irq_en_eq(&md_ctrl->hw_info, queue->index, MTK_RX);
--	pm_runtime_mark_last_busy(md_ctrl->dev);
- 	pm_runtime_put_autosuspend(md_ctrl->dev);
- }
- 
-@@ -362,7 +361,6 @@ static void t7xx_cldma_tx_done(struct work_struct *work)
- 	}
- 	spin_unlock_irqrestore(&md_ctrl->cldma_lock, flags);
- 
--	pm_runtime_mark_last_busy(md_ctrl->dev);
- 	pm_runtime_put_autosuspend(md_ctrl->dev);
- }
- 
-@@ -987,7 +985,6 @@ int t7xx_cldma_send_skb(struct cldma_ctrl *md_ctrl, int qno, struct sk_buff *skb
- 
- allow_sleep:
- 	t7xx_pci_enable_sleep(md_ctrl->t7xx_dev);
--	pm_runtime_mark_last_busy(md_ctrl->dev);
- 	pm_runtime_put_autosuspend(md_ctrl->dev);
- 	return ret;
- }
-diff --git a/drivers/net/wwan/t7xx/t7xx_hif_dpmaif_rx.c b/drivers/net/wwan/t7xx/t7xx_hif_dpmaif_rx.c
-index 2310493203d3..b76bea6ab2d7 100644
---- a/drivers/net/wwan/t7xx/t7xx_hif_dpmaif_rx.c
-+++ b/drivers/net/wwan/t7xx/t7xx_hif_dpmaif_rx.c
-@@ -877,7 +877,6 @@ int t7xx_dpmaif_napi_rx_poll(struct napi_struct *napi, const int budget)
- 		t7xx_dpmaif_clr_ip_busy_sts(&rxq->dpmaif_ctrl->hw_info);
- 		t7xx_dpmaif_dlq_unmask_rx_done(&rxq->dpmaif_ctrl->hw_info, rxq->index);
- 		t7xx_pci_enable_sleep(rxq->dpmaif_ctrl->t7xx_dev);
--		pm_runtime_mark_last_busy(rxq->dpmaif_ctrl->dev);
- 		pm_runtime_put_autosuspend(rxq->dpmaif_ctrl->dev);
- 		atomic_set(&rxq->rx_processing, 0);
- 	} else {
-@@ -1078,7 +1077,6 @@ static void t7xx_dpmaif_bat_release_work(struct work_struct *work)
- 	}
- 
- 	t7xx_pci_enable_sleep(dpmaif_ctrl->t7xx_dev);
--	pm_runtime_mark_last_busy(dpmaif_ctrl->dev);
- 	pm_runtime_put_autosuspend(dpmaif_ctrl->dev);
- }
- 
-diff --git a/drivers/net/wwan/t7xx/t7xx_hif_dpmaif_tx.c b/drivers/net/wwan/t7xx/t7xx_hif_dpmaif_tx.c
-index 8dab025a088a..236d632cf591 100644
---- a/drivers/net/wwan/t7xx/t7xx_hif_dpmaif_tx.c
-+++ b/drivers/net/wwan/t7xx/t7xx_hif_dpmaif_tx.c
-@@ -185,7 +185,6 @@ static void t7xx_dpmaif_tx_done(struct work_struct *work)
- 	}
- 
- 	t7xx_pci_enable_sleep(dpmaif_ctrl->t7xx_dev);
--	pm_runtime_mark_last_busy(dpmaif_ctrl->dev);
- 	pm_runtime_put_autosuspend(dpmaif_ctrl->dev);
- }
- 
-@@ -468,7 +467,6 @@ static int t7xx_dpmaif_tx_hw_push_thread(void *arg)
- 		t7xx_pci_disable_sleep(dpmaif_ctrl->t7xx_dev);
- 		t7xx_do_tx_hw_push(dpmaif_ctrl);
- 		t7xx_pci_enable_sleep(dpmaif_ctrl->t7xx_dev);
--		pm_runtime_mark_last_busy(dpmaif_ctrl->dev);
- 		pm_runtime_put_autosuspend(dpmaif_ctrl->dev);
- 	}
- 
+> I have some heartburn about both the revert and the
+> pci_host_set_default_pcie_link_state() approach because they apply to
+> the entire hierarchy under a qcom or VMD root port, potentially
+> including add-in cards with switches.  CLKREQ# (and possibly more) is
+> required to enable L1SS, and I don't know if we can assume it's
+> supported on add-in links.
+> 
+
+I don't think we can assume, but at the same time, I don't think we will ever be
+able to come up with a logical way to enable L1ss on all devices. But if we
+leave the decision to the host controller drivers, they can at least guarantee
+that the CLKREQ# and other requirements are satisfied from the host perspective
+for L1ss. Then, if any device exhibit erratic behavior, we will for sure know
+that the device is at fault and we can quirk them.
+
+> > I think we have learned by hard way that enabling ASPM by default
+> > can have catastrophic effects for reasons we do not certainly know.
+> > So how about having this platform specific API that enables
+> > individual platforms to enable the ASPM states?
+> 
+> As far as I know, it's L1SS that has catastrophic effects.  I haven't
+> seen anything for L0s or L1.
+> 
+
+As Johan mentioned, we did see a near-catastrophic effect with enabling L0s on
+some Qcom SoCs and we disabled the L0s CAP for them.
+
+- Mani
+
 -- 
-2.47.3
-
+மணிவண்ணன் சதாசிவம்
 
