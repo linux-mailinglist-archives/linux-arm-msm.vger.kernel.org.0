@@ -1,206 +1,144 @@
-Return-Path: <linux-arm-msm+bounces-79016-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-79017-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5789BC11685
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Oct 2025 21:36:47 +0100 (CET)
+Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [IPv6:2605:f480:58:1:0:1994:3:14])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0604CC118B9
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Oct 2025 22:24:45 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id DBCCA467599
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Oct 2025 20:36:44 +0000 (UTC)
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 1756C4FBBFA
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Oct 2025 21:23:00 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0DA3631BCBD;
-	Mon, 27 Oct 2025 20:36:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0422A32ABF3;
+	Mon, 27 Oct 2025 21:22:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=baylibre-com.20230601.gappssmtp.com header.i=@baylibre-com.20230601.gappssmtp.com header.b="imLC85TG"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="UaHUcm/3"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-oi1-f177.google.com (mail-oi1-f177.google.com [209.85.167.177])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8DF92E5B2D
-	for <linux-arm-msm@vger.kernel.org>; Mon, 27 Oct 2025 20:36:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.177
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E320232A3F2
+	for <linux-arm-msm@vger.kernel.org>; Mon, 27 Oct 2025 21:22:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761597398; cv=none; b=a+1YNXq7A5eGfIA8lB6KV2aG2ngTfmwzcRoY+o5fDoyeVKrvSNurF37imzUihKpQWv65ag8dpX0/fckhtPpIWmjA3mLnKLzsP5GeulQoHE2bIuVrdazdVjhlOcUmSrPfgeK5S2ge/y3ToBzN5Xq+GcguqXnh87V171TbJ8NHiW0=
+	t=1761600176; cv=none; b=Jm5KOkA3+P/k4ffZbUcgl5yXlXkrCAei0ptqgWmVW3gFkrdPi+ZRbtURn9hgMdjTxI+7891qAB+x2K16ClHxj/rN4WVMVrS9Njv9+Po5vBPU9/vKM85iZRAtyxhVYTH7Y4o3QvGBJ6G7/TpXxcV3P9PWK8AEr7iGhc5OZrPPwQY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761597398; c=relaxed/simple;
-	bh=/r2MfbgwYvoichm3JC/D/FFVTkLEq2beh9dnGy2yNG0=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Mvjw/oKkQx+YgsHQWvnadpDcAvf9tGAJ3e9COYVUGx6lOOp3ofDTyudNPJYVmFBMifdStAMy4uYVR9jhB4vdk1qBtWxD4nhZE7elvJZydJFDtdEPxG/T8FFBrFtCDYnbJBcwEb0Wbb36OeO3TD2XkuVp5M5A5SX28ItlGDhfuPM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=baylibre.com; spf=pass smtp.mailfrom=baylibre.com; dkim=pass (2048-bit key) header.d=baylibre-com.20230601.gappssmtp.com header.i=@baylibre-com.20230601.gappssmtp.com header.b=imLC85TG; arc=none smtp.client-ip=209.85.167.177
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=baylibre.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=baylibre.com
-Received: by mail-oi1-f177.google.com with SMTP id 5614622812f47-44d9eca1d57so671530b6e.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 27 Oct 2025 13:36:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=baylibre-com.20230601.gappssmtp.com; s=20230601; t=1761597396; x=1762202196; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=miYvjijH+yAVme5tPHTAIByBBOWcjgVoClU7HRgNuqk=;
-        b=imLC85TG9Lf+kvx4n1uUtp6jTuFWoxZJx/oaIU1zbOs/Lvcra2Cam/pWIEj5Cn/QFM
-         BnNxseLtp4ysettSwXYwhogXbmQvxz/f9m38A58g2CRE831ZZfuatoUTsfnYDr/hbW8L
-         Gd+MF046NdmPvxiJargU+PGOGOrGzw6s3xIYzlYKdqbNwW4ienXEYJndgv7Vt9R+rk/z
-         J5cF3jjR20eHcTHPIhcQ5S0j0N2/7CJgvcP9YUQMYjM2yW+VogjcvRJrRspUQzBkUT9k
-         ISEpqSA8ComJL+Vx+AKPs1SMoqgn/pVAp+d1aZLr8UX+q6hdc/AiFALxacurdXUDgYxK
-         CL/w==
+	s=arc-20240116; t=1761600176; c=relaxed/simple;
+	bh=RDsD42oo5DJKHd422ZHzHYbF0EKZmLoAokYu3cCm21o=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=slv0u70/QRK7gPjUBfL2hM3GNgkB3MAEvZzi9i6A1vEZbaXzoVO32552nSZV+LGK2+7c2Z9ufXsb8p4jE2dLqzbieL4k8AzOZmnMjUcrwajtaG9nxHeeDh7k+FBffmkPwpT1gb0EXkIg/VRuJ6HXNs2gNvBUTZZgT0JhpH/Q/BM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=UaHUcm/3; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 59RG396E3207011
+	for <linux-arm-msm@vger.kernel.org>; Mon, 27 Oct 2025 21:22:54 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:date:from:message-id:mime-version
+	:subject:to; s=qcppdkim1; bh=+O6l/ytORujA0aTPgLT44s9iI67++3hpcID
+	aF4LLtAw=; b=UaHUcm/3x/wW/WnSgg8sod9kchXZhNEZx98dPlkgg2w/QAYlbAi
+	6JmcuJnZfUm6U+KmOPWLrSotMQBkDWMNsW4lNYCKf4LgvVRbw7b4aZUntoShNsMV
+	vAfAr0i//FaHf/B0YrrKzcaT+uw329IP68bA3q4Bbsw5dMiiw00k+RZ/E2LQ0KGG
+	T5QYryRCWIPp+u8TBsF9zZlsckE3B7+yAxt8qTHPltJRRr1BB0SZNqpYea5qtTAQ
+	RJRkvD49c3vHOJatwQcLPBX2boebNZgz49+y+tfdEVCWgsvanBuqXARJQPqmluYN
+	zwPJuuqYQXNgU+Gz4nKARWgUiIpzDvzWf+g==
+Received: from mail-pl1-f198.google.com (mail-pl1-f198.google.com [209.85.214.198])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4a2bwtguse-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Mon, 27 Oct 2025 21:22:53 +0000 (GMT)
+Received: by mail-pl1-f198.google.com with SMTP id d9443c01a7336-290ab8f5af6so32302605ad.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 27 Oct 2025 14:22:53 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1761597396; x=1762202196;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=miYvjijH+yAVme5tPHTAIByBBOWcjgVoClU7HRgNuqk=;
-        b=CwkH2vu5YVAntSKBD2f5Hio+qqIQRwCx+Nko0KNyciweMFOh1uOeCpi0n6NjPXQE4d
-         Cfex13xeHFRf6RPVW5fSEp7xxS9lmmPb0UT42Usgy0ASJgpVkzFFO3rNsBO9EW0+MwuN
-         lAaCQa+yCjcuGZkb86CfjsDgqGxOJaUrGJtrhvR3pC/2bCOp/js+U//EV4dCYe4f1WkC
-         V+EFep4+jU8KLIAPFw3CuaTNV1H0okPj70Nd5Ejzkpxh6xgx4fyqaj4ujNxCg6r3ZTNU
-         Ugsvi6bsCTx5MY/kQyTvU2t5zjJ9DtdcIQTPBUXlLg8L/snV2oZFUFyHQ32/vx6f0YBE
-         /8fg==
-X-Gm-Message-State: AOJu0Yw96TW+gOBSE/p/c5RYQ9s90v4JIGYk+GCf+cp2+hVFqxvLI4T2
-	H29oGGi2egN8V0ugTute2F8wLCdJKlMHBJvmJWDYAhnrmqurmRBsnj1TrqeRf44l+VU=
-X-Gm-Gg: ASbGncvFYUWLqoyAIDBkzpKGGmRYW/4MP4yhK3ZOpSvREyIUWZFJ5oD4u9jvk7+SM2e
-	ofLTV6pgNFeIMKt6TA8NQk48+fR/TcNfUcxQ93jZ6WTUWj2llhDpgCOEqlHrp9XKS0ovlSsDLrC
-	eRuV/ycvi3TmvEsyfJNF/R0JgNMe3h3Unv/s8V5yGpkqUQLAZfYttXeRq+lVsaksYg+kGU2uOZY
-	MgNn4r7SxWxSIC4EqCnBh5B8hAhpeWElQZ163TIRpSjDtsco8IlLAAQwZswRk5+l3tAAL9YI+14
-	LavPgs/Rcqb7i2/fQsHnzP/AD5FKfd2UbZAL+PPDR/ijUW02VYfOJyqMvPJnN9/iOzG6F9tM/Nq
-	oXMPx3lsggFB+IgdBzIY6F8gN/6NUnLOxZsHKmHfHg7uePGw7sLGSRe4ooqL1J5o5Ro0ySeEGFB
-	wc6xsAuHVw7G+ndBLhOaaBPgwohdBZw3Ywx2/ydt57IavRG097Kg==
-X-Google-Smtp-Source: AGHT+IG9JEEg1mNWi+tFl2h+MpCVt+cH7Rf89qYUiLcNyweFqHAapC6agRl2IVJ0aTJuqK1Md9c7Ew==
-X-Received: by 2002:a05:6808:1a09:b0:442:e596:1189 with SMTP id 5614622812f47-44f6bb3e516mr563791b6e.45.1761597395041;
-        Mon, 27 Oct 2025 13:36:35 -0700 (PDT)
-Received: from ?IPV6:2600:8803:e7e4:500:46d5:c880:64c8:f854? ([2600:8803:e7e4:500:46d5:c880:64c8:f854])
-        by smtp.gmail.com with ESMTPSA id 5614622812f47-44da3e48249sm2013281b6e.5.2025.10.27.13.36.34
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 27 Oct 2025 13:36:34 -0700 (PDT)
-Message-ID: <506feaa8-5808-48d4-8cc7-baadd8f43976@baylibre.com>
-Date: Mon, 27 Oct 2025 15:36:33 -0500
+        d=1e100.net; s=20230601; t=1761600173; x=1762204973;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=+O6l/ytORujA0aTPgLT44s9iI67++3hpcIDaF4LLtAw=;
+        b=uhY2sqtRlZbKHWCYbI0XSot4rfEbUiSX0MaDC6r4qn09PQsiLMHRrm7j6a6+Uo7BQh
+         Y141WuYxyT7cSx2KwjHnyINGoTWxIUgAg3PG8cM1hRXt3v69BRKkF1AVXhfFyCSzLMw/
+         psvUaIsWXXjJD1eVPVLchmCGMEjdfPKnC1eDh0jrVECC7UyG2OWVRuIZ7RxIimaL2CYM
+         Y3GIjBIEqcn7mg5ed+Waq8UTAuOgAAZrEB9/bzw9+napf9hjxKaJlugwJq/INaqsK4LC
+         bbkCZIhcT1RB6y6ZREggGl4qLIBIQC0kCbucr6VeJuj6+J5VzH+u6uVuc9ph5a1LLgcX
+         dO7g==
+X-Gm-Message-State: AOJu0YygkpUM3jF/KiS2EhH4oorxxjLfnYX6ia/LuUo28hdI87+P9ap4
+	8+IwJZtegAuV0U0hg9CHP/gkBYVJakM/Hq3wvg8VvAFs0ur7wqEbsm8rf35LMmJ1LmQU5cuMIHf
+	Njpnle2Fug06X8RZ97MJKJRiNcfx+5XE3Kkb+WNmYUqpRjihPvpV+6I73IT9TJSIW32SL
+X-Gm-Gg: ASbGncuqXLJz+6MrmnESLmvEm4e+BoLQwDoy0dHiThdh48miz+pTgh9R+NBaoYoQDi0
+	VFfdkj2a7vEG1V8wDlJlo45qn9njI3+G1+B34vc+ErOhERYjcDeWaw9HY2kKgWeWIO1ESwDtyAN
+	36X/KuiOgh5lr+j8eUX74TnvaoBqB4rTnJ6kWCddvCMr3tobG0qpu92NMYmazL5Eu7nQZ+3SH7K
+	VcLe2wzR21n4p53B9xxcP+XRYZRsKfHmISVEd+TLB+UDcs6mhLRdhNgUwCoEsaIeX5fkDYXtbnx
+	gO81aEJfNgivuE9HOpiKmaqhYH3jLeXncRxOfDARo8mWTp18Y34+CXPapKXC+NT+wGeNwZl/w0m
+	A4txER3R9JzhNMiBQKgzi6FPCO7Hjer7P1y8uAay0p6/iGJkf+bxn/Q5M0dNMYQ==
+X-Received: by 2002:a17:902:ea03:b0:270:4964:ad82 with SMTP id d9443c01a7336-294cb522a71mr14434895ad.38.1761600172879;
+        Mon, 27 Oct 2025 14:22:52 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHvCQDV37IQteLNOCsBWF5wZ6TKuLII+PWlxpIKAJcNJ/kKTw5cH84AL6IFMDWMIEOjzjjcQw==
+X-Received: by 2002:a17:902:ea03:b0:270:4964:ad82 with SMTP id d9443c01a7336-294cb522a71mr14434655ad.38.1761600172332;
+        Mon, 27 Oct 2025 14:22:52 -0700 (PDT)
+Received: from hu-amelende-lv.qualcomm.com (Global_NAT1.qualcomm.com. [129.46.96.20])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-29498e42afdsm91073055ad.99.2025.10.27.14.22.51
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 27 Oct 2025 14:22:51 -0700 (PDT)
+From: Anjelique Melendez <anjelique.melendez@oss.qualcomm.com>
+To: andersson@kernel.org, konradybcio@kernel.org, robh@kernel.org,
+        krzk+dt@kernel.org, conor+dt@kernel.org
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: [PATCH v2 0/2] soc: qcom: pmic_glink: Add support for battery management running on SOCCP
+Date: Mon, 27 Oct 2025 14:22:48 -0700
+Message-Id: <20251027212250.3847537-1-anjelique.melendez@oss.qualcomm.com>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/2] iio: adc: qcom-pm8xxx-xoadc: fix incorrect
- calibration values
-To: Antony Kurniawan Soemardi <linux@smankusors.com>,
- Jonathan Cameron <jic23@kernel.org>, =?UTF-8?Q?Nuno_S=C3=A1?=
- <nuno.sa@analog.com>, Andy Shevchenko <andy@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, linux-iio@vger.kernel.org,
- linux-kernel@vger.kernel.org
-References: <20251028-pm8xxx-xoadc-fix-v1-0-b000e1036e41@smankusors.com>
- <20251028-pm8xxx-xoadc-fix-v1-2-b000e1036e41@smankusors.com>
- <0eea7e4c-ec3b-421c-8522-aa3f52b5cb13@baylibre.com>
- <003c5cf7-2498-4ff3-a8b4-2911941b1464@smankusors.com>
-Content-Language: en-US
-From: David Lechner <dlechner@baylibre.com>
-In-Reply-To: <003c5cf7-2498-4ff3-a8b4-2911941b1464@smankusors.com>
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
+X-Authority-Analysis: v=2.4 cv=L40QguT8 c=1 sm=1 tr=0 ts=68ffe2ad cx=c_pps
+ a=MTSHoo12Qbhz2p7MsH1ifg==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
+ a=x6icFKpwvdMA:10 a=VkNPw1HP01LnGYTKEx00:22 a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8
+ a=qMsUIMY-mLJ0Ph_xJfoA:9 a=GvdueXVYPmCkWapjIL-Q:22
+X-Proofpoint-GUID: jYRg8HikEuXbDKEdkV4lGvOYqNweyntP
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDI3MDE5NyBTYWx0ZWRfX1poB42Nn4ZdA
+ nQPcl3pJfIYFfTStcYT8mrfuqAJ8p424z2nFuQ1qYJqWG4qTCTm/YjjcsgrP/zEbe+oYrekMeve
+ OY6Z+wb/Ixop5ycTl90BCmuBJscylwEa/pmrT4QWnqXkUJSmY4l/c0VuTFHtES/8e5aTxVfHF9f
+ M91DT/9K4pZDl0ZZPM6EMB6yaYOjokCH/KfRcs9Sg4/4P28KMKp2zFDEKI4UQdduNUxCbdub7W3
+ 1UTTmfOF7OxmQ6AMH/5op7I+DZGXC+ltjgwJx1YLEJ0YGcqWgs12fUARbxgBdtMLLM5FqOghCku
+ QBAojjmJP4knF9nPnUcqYWYMiJ2cvA1NvaWY06kiI6/BhugTeMSqFwqzY66evJ9SMED4TdiReqn
+ GI7+x9CFS/Oc0XkUHJzYy4ZUwrfVgw==
+X-Proofpoint-ORIG-GUID: jYRg8HikEuXbDKEdkV4lGvOYqNweyntP
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-10-27_08,2025-10-22_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501 spamscore=0 adultscore=0 clxscore=1015 suspectscore=0
+ malwarescore=0 phishscore=0 lowpriorityscore=0 bulkscore=0 impostorscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2510020000 definitions=main-2510270197
 
-On 10/27/25 2:53 PM, Antony Kurniawan Soemardi wrote:
-> On 10/28/2025 1:35 AM, David Lechner wrote:
->> On 10/27/25 12:29 PM, Antony Kurniawan Soemardi wrote:
->>> On msm8960 phones, the XOADC driver was using incorrect calibration
->>> values:
->>> absolute calibration dx = 625000 uV, dy = 4 units
->>> ratiometric calibration dx = 1800, dy = -29041 units
->>>
->>> As a result, reading from the IIO bus returned unexpected results:
->>> in_voltage_7 (USB_VBUS): 0
->>> in_voltage_10 (125V): 0
->>>
->>> The issue was caused by not setting the ratiometric scale (amux_ip_rsv)
->>> from the predefined channels. Additionally, the downstream code always
->> Mentioning downstream kernels is usually a red flag. :-)
->>
->> We can justify it here though by saying that there is no documentation
->> available other than downstream source code, so we are just using it
->> as a reference.
-> ah ok, rewording needed then
->>> set the ADC_ARB_USRP_DIG_PARAM register to PM8XXX_ADC_ARB_ANA_DIG [1].
->>> That value does not include the SEL_SHIFT0 and SEL_SHIFT1 bits. Enabling
->>> those bits caused calibration errors too, so they were removed.
->>>
->>> With these fixes, calibration now uses the correct values:
->>> absolute calibration dx = 625000 uV, dy = 6307 units
->>> ratiometric calibration dx = 1800, dy = 18249 units
->>>
->>> Reading from the IIO bus now returns expected results:
->>> in_voltage_7 (USB_VBUS): 4973836
->>> in_voltage_10 (125V): 1249405
->> Would be useful to mention which hardware you tested with in case
->> it turns out that there is some other hardware that does require the
->> SHIFT0/1 bits to be set.
-> I did mention Sony Xperia SP from cover letter, but I haven't
-> referenced it in this commit yet. Also I tried to search on Github for
-> SHIFT0/1 bits, but couldn't find any usage of them...
->>> [1] https://github.com/LineageOS/android_kernel_sony_msm8960t/blob/93319b1e5aa343ec1c1aabcb028c5e88c7df7c01/drivers/hwmon/pm8xxx-adc.c#L407-L408
->>>
->> Since this is a fix, it should have a Fixes: tag. And it sounds like
->> possibly two separate fixes. In that case, it should be two separate
->> patches.
-> Fixes into 63c3ecd946d4ae2879ec0d8c6dcb90132a74d831?
+System On Chip Control Processor (SOCCP) is a subsystem that can have
+battery management firmware running on it to support Type-C/PD and
+battery charging. Add support for devices, such as Kaanpali and Glymur, 
+which are running battery management on SOCCP.
 
-The correct format is:
+Changes since V1:
+  - Corrected bindings dependencies 
+  - Renamed pmic_glink_data variables
+  - Dropped "soc: qcom: pmic_glink: Add support for SOCCP remoteproc channels"
+    since it was applied from its original series: https://lore.kernel.org/all/176157405464.8818.5887965202916918883.b4-ty@kernel.org/
+  - Link: https://lore.kernel.org/all/20251017003033.268567-1-anjelique.melendez@oss.qualcomm.com/
 
-Fixes: 63c3ecd946d4 ("iio: adc: add a driver for Qualcomm PM8xxx HK/XOADC")
+Anjelique Melendez (2):
+  dt-bindings: soc: qcom: qcom,pmic-glink: Add Kaanapali and Glymur
+    compatibles
+  soc: qcom: pmic_glink: Add charger PDR service path and service name
+    to client data
 
-See: https://www.kernel.org/doc/html/latest/process/submitting-patches.html#describe-changes
+ .../bindings/soc/qcom/qcom,pmic-glink.yaml    |  7 ++
+ drivers/soc/qcom/pmic_glink.c                 | 66 ++++++++++++-------
+ 2 files changed, 49 insertions(+), 24 deletions(-)
 
->>> Signed-off-by: Antony Kurniawan Soemardi <linux@smankusors.com>
->>> ---
->>>   drivers/iio/adc/qcom-pm8xxx-xoadc.c | 10 ++++++----
->>>   1 file changed, 6 insertions(+), 4 deletions(-)
->>>
->>> diff --git a/drivers/iio/adc/qcom-pm8xxx-xoadc.c b/drivers/iio/adc/qcom-pm8xxx-xoadc.c
->>> index 8555f34036fb13c41ac720dc02c1dc39876e9198..a53d361456ec36b66d258041877bd96ab37838c4 100644
->>> --- a/drivers/iio/adc/qcom-pm8xxx-xoadc.c
->>> +++ b/drivers/iio/adc/qcom-pm8xxx-xoadc.c
->>> @@ -503,10 +503,11 @@ static int pm8xxx_read_channel_rsv(struct pm8xxx_xoadc *adc,
->>>           goto unlock;
->>>         /* Decimation factor */
->>> -    ret = regmap_write(adc->map, ADC_ARB_USRP_DIG_PARAM,
->>> -               ADC_ARB_USRP_DIG_PARAM_SEL_SHIFT0 |
->>> -               ADC_ARB_USRP_DIG_PARAM_SEL_SHIFT1 |
->>> -               ch->decimation << ADC_DIG_PARAM_DEC_SHIFT);
->>> +    ret = regmap_update_bits(adc->map,
->>> +                 ADC_ARB_USRP_DIG_PARAM,
->>> +                 ADC_ARB_USRP_DIG_PARAM_DEC_RATE0 |
->>> +                 ADC_ARB_USRP_DIG_PARAM_DEC_RATE1,
->>> +                 ch->decimation << ADC_DIG_PARAM_DEC_SHIFT);
->> As a follow-up patch, it would be nice to update the driver to use FIELD_PREP().
->>
->> I.e. remove ADC_ARB_USRP_DIG_PARAM_DEC_RATE0, ADC_ARB_USRP_DIG_PARAM_DEC_RATE1
->> and ADC_DIG_PARAM_DEC_SHIFT macros and replace them with one macro:
->>
->> #define ADC_ARB_USRP_DIG_PARAM_DEC_RATE        GENMASK(6, 5)
->>
->> Then use it like:
->>
->>     ret = regmap_update_bits(adc->map,
->>                  ADC_ARB_USRP_DIG_PARAM,
->>                  ADC_ARB_USRP_DIG_PARAM_DEC_RATE,
->>                  FIELD_PREP(ADC_ARB_USRP_DIG_PARAM_DEC_RATE,
->>                         ch->decimation));
->>
->> This should be done for all of the similar multi-bit fields.
-> as a follow up patch, you mean next version of this patch series, or
-> separate patch series?
-
-Either way is fine. It's just a "nice to have" change.
-
->>>       if (ret)
->>>           goto unlock;
->>>   @@ -783,6 +784,7 @@ static int pm8xxx_xoadc_parse_channel(struct device *dev,
->>>       ch->calibration = VADC_CALIB_ABSOLUTE;
->>>       /* Everyone seems to use default ("type 2") decimation */
->>>       ch->decimation = VADC_DEF_DECIMATION;
->>> +    ch->amux_ip_rsv = hwchan->amux_ip_rsv;
->>>         if (!fwnode_property_read_u32(fwnode, "qcom,ratiometric", &rsv)) {
->>>           ch->calibration = VADC_CALIB_RATIOMETRIC;
->>>
-> 
+-- 
+2.34.1
 
 
