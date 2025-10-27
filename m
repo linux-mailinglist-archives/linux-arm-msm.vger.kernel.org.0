@@ -1,64 +1,62 @@
-Return-Path: <linux-arm-msm+bounces-79063-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-79064-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 507F5C11D40
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Oct 2025 23:45:11 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 30BD9C11D55
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Oct 2025 23:45:19 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id D494D1A22092
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Oct 2025 22:44:13 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id ADE1A1A65617
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Oct 2025 22:44:24 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3C48D34B408;
-	Mon, 27 Oct 2025 22:35:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1BCBC34BA2D;
+	Mon, 27 Oct 2025 22:35:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="KNmH8h93"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="K1GNez6b"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 124C134B1BB;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3D9D34BA20;
 	Mon, 27 Oct 2025 22:35:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761604531; cv=none; b=lZkMdZ8Dt2DSJP6OcNvIvgfujq22MBYtJQxwZLvhjZEDgurVEDkWntX+u0bAdDLKOfuL8Ju55QkFiwOKReudGbUvuKTzEg4GZJeR8v+aP7JrvhHmKoYVtar0l6yB4R6ECilGPLa2en9R68N6KafuwNO8HgKb4sQN7qW9loYMZXo=
+	t=1761604532; cv=none; b=rqleVUwLm3Rw0op8xyFddUblhHpNW5MVIWEDI17W6w1p8KY46d0sZAJUWvhw2y3mgTDXmXN9JqgeyGrJgxp6DqkOx7fNU9LDXi4K7ELXCfyDfu5h0nhgbVK5Yql3zrNiIIW9x6kXCH2vfdbqhlUS4p86kknyzkZ+i/m/iklPZDM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761604531; c=relaxed/simple;
-	bh=gf9iB7rjuKFnti/sQeX6uoMja3ILBa/o6HB/Y58ZfW0=;
+	s=arc-20240116; t=1761604532; c=relaxed/simple;
+	bh=n5yFcw5o1kzF1GRsvPD3g5vdgb/VGStkxFBF+N/tD0A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Vzybwzytiusbt0yfEhpzyqwfY3mJ1OqrK/VlL6/bE4lVuziHRMqaOi982YazQiRF0vYIbn9CTA3VC1JLw+aYy/uyW9DsSAYy721yU7v2Jos1K+j8dF+MWwD+WGiIQihTxM509S0kiY/Mhnl1BISd9MhmjaqkHCmekoZhbna31sw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=KNmH8h93; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0207C4CEFB;
-	Mon, 27 Oct 2025 22:35:29 +0000 (UTC)
+	 MIME-Version:Content-Type; b=BtKsrwk2o+TJdzFGt1J7k/D/n47x79P4Us63mKQWTXxrMW10G6uUldGhSj66Jxh4rA6AhrLLrmBDcH1aHCnDb87r8FLCXk1Z3LB1ppOAh2Cd6UyX+kAk2olT81xhgITtA3Aw8XrE5TesQAO6fPsDFT85qf9d6q7w+tYvHFqJpWk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=K1GNez6b; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 200B4C116C6;
+	Mon, 27 Oct 2025 22:35:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1761604530;
-	bh=gf9iB7rjuKFnti/sQeX6uoMja3ILBa/o6HB/Y58ZfW0=;
+	s=k20201202; t=1761604531;
+	bh=n5yFcw5o1kzF1GRsvPD3g5vdgb/VGStkxFBF+N/tD0A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KNmH8h93UtOSQzArR0uQmVfIy5M/cs+nX3NjGM1ewsOxZ87BUCwKk6IExX/wHIoQC
-	 YKV7H2QQtz9r0EFsfKucvAJz76I6T44vvRNxIoif39y4cKZJ4Q0CwhilAJopbW+yDY
-	 kAMtd/V3WpnYqGqmq5ZVnfb5biGcZXq1DVikVrOwy0WPN6f0HWSjPXXSc98QOGZjd9
-	 fMiuGkhz/hkxU5SxmICxdb/oDAmJ3UE+nJKyRj49FaXNG9JMO6p4ByG+DoLPLgVo12
-	 qKcO/iQIVwRSS5y4L7mi6APLTJgbPcyeB/v87H+q7KLdCQo/bdY1xAILYss8yxoAIv
-	 0H0rfuWxhpx0w==
+	b=K1GNez6bRt/4mFVP9Kr+zuyw1cZQU2sRYOprDUwbJXH6/fHoIA1XfrvfcbFe5mZWg
+	 rD3adsaHAQ0MZcZmDc/7ZoiBJo0LYTiU/fxN+Ut9qR4y+XZaThqEONZsmNzBffoTBH
+	 UKGSvw427vuzmq6PcnugBSkXzSVKjkwtRHMH4SyMMBRXNsDDJo0GroIymUqkmroOt9
+	 iDxJ4Bm2SDJ3AmF/7lodCH4zRilOVSkefEwn5PPBsC6OJa5c0NmvlkzsflwKXwPP1C
+	 P6I5ZispKDvt69fhAj0Q0IQQNJ00/VVd/YnvVAXuVGQ9ubXQSPLZsiGqbTMmvEzgr2
+	 DYKw8SWMGnflg==
 From: Bjorn Andersson <andersson@kernel.org>
 To: Konrad Dybcio <konradybcio@kernel.org>,
-	Rob Herring <robh@kernel.org>,
+	Stephan Gerhold <stephan@gerhold.net>
+Cc: Rob Herring <robh@kernel.org>,
 	Krzysztof Kozlowski <krzk+dt@kernel.org>,
 	Conor Dooley <conor+dt@kernel.org>,
-	Xilin Wu <sophon@radxa.com>
-Cc: linux-arm-msm@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org,
 	devicetree@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Subject: Re: [PATCH v5 0/2] arm64: dts: qcom: qcs6490: Introduce Radxa Dragon Q6A
-Date: Mon, 27 Oct 2025 17:37:23 -0500
-Message-ID: <176160465203.73268.1417721719455303293.b4-ty@kernel.org>
+	Jonathan Albrieux <jonathan.albrieux@gmail.com>
+Subject: Re: [PATCH] arm64: dts: qcom: msm8916-longcheer-l8910: Add touchscreen
+Date: Mon, 27 Oct 2025 17:37:24 -0500
+Message-ID: <176160465189.73268.9104821271911890245.b4-ty@kernel.org>
 X-Mailer: git-send-email 2.51.0
-In-Reply-To: <20250929-radxa-dragon-q6a-v5-0-aa96ffc352f8@radxa.com>
-References: <20250929-radxa-dragon-q6a-v5-0-aa96ffc352f8@radxa.com>
+In-Reply-To: <20250919-msm8916-l8910-touchscreen-v1-1-c46e56ec0a3b@gerhold.net>
+References: <20250919-msm8916-l8910-touchscreen-v1-1-c46e56ec0a3b@gerhold.net>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -69,23 +67,17 @@ Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 
 
-On Mon, 29 Sep 2025 14:46:40 +0800, Xilin Wu wrote:
-> Radxa Dragon Q6A (https://docs.radxa.com/en/dragon/q6a) is a single board
-> computer, based on the Qualcomm QCS6490 platform.
+On Fri, 19 Sep 2025 16:49:32 +0200, Stephan Gerhold wrote:
+> The BQ Aquaris X5 (Longcheer L8910) has a Himax HX852x-ES touchscreen,
+> which can now be described with the bindings recently added to linux-next.
+> Add it to the device tree to allow using the touchscreen.
 > 
-> The board ships with a modified version of the Qualcomm Linux boot
-> firmware, which is stored on the onboard SPI NOR flash. This allows
-> booting standard EFI-based bootloaders from SD/eMMC/USB/UFS/NVMe. It
-> supports replaceable UFS 3.1/eMMC modules for easy user upgrades.
 > 
-> [...]
 
 Applied, thanks!
 
-[1/2] dt-bindings: arm: qcom: Add Radxa Dragon Q6A
-      commit: 8388ebac980201382941600d4d9a2dc0bc1c9db4
-[2/2] arm64: dts: qcom: qcs6490: Introduce Radxa Dragon Q6A
-      commit: ef254b12ec60c2672c18dbf423bd16476a7fb62e
+[1/1] arm64: dts: qcom: msm8916-longcheer-l8910: Add touchscreen
+      commit: b91f5d73b67b1f49c250cd443e853ca72b81eaaa
 
 Best regards,
 -- 
