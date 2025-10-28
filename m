@@ -1,174 +1,126 @@
-Return-Path: <linux-arm-msm+bounces-79218-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-79219-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id E7F73C157E7
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Oct 2025 16:36:11 +0100 (CET)
+Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [142.0.200.124])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6F94EC158FB
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Oct 2025 16:45:07 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id AFD321B26D3A
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Oct 2025 15:35:51 +0000 (UTC)
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 3131A501C44
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Oct 2025 15:38:16 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 047DF3491EF;
-	Tue, 28 Oct 2025 15:32:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 21ED5342CB0;
+	Tue, 28 Oct 2025 15:37:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="nAOQ6GX0"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="DBb9rYMJ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f54.google.com (mail-wm1-f54.google.com [209.85.128.54])
+Received: from mail-wm1-f48.google.com (mail-wm1-f48.google.com [209.85.128.48])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CC193491EB
-	for <linux-arm-msm@vger.kernel.org>; Tue, 28 Oct 2025 15:32:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E12B25A633
+	for <linux-arm-msm@vger.kernel.org>; Tue, 28 Oct 2025 15:37:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761665555; cv=none; b=QQP3RXpHUxPkdgqjN1+qR0sufjXm1OexjwhChSpYIV5XkKy4qTPm3Rzdco8zpx9Zb+kH5wyYF6gmEeANCz4DyKm4glMRdlMYFxyoQD9VQSqcmKyi858M2hhSPEz/iKd8ShxmL95uRCxF+cnjc3hVkYm4zjkRIvFxz3aEiHlGPwg=
+	t=1761665871; cv=none; b=SF2UFxcH5tGcwXSAt56yIwLXxdkNUcqWF6ONEt/ZZ5dsWIwOiL4CvmMLWBPMkhgJNjyeNcjqM4D09HaJ3gX8Jvpo/gJZcoUQDIGkMo/VS5c5sB4+moA6W80Y/bMMeSOM0JRPy3lHoMpk99sHV5krHjV2kiLnONWf71vpHewiemg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761665555; c=relaxed/simple;
-	bh=zSukNZlJ7MIqdyaMWhjsK/r7+F8I2VhKVYJCKLETVDw=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=XA8dZ64Dx+Lp83xHLkd/wj8lsyqm5HFL2LxXtClKDQxoTm8o/x8hC3xJYtm4lZ5fgcY8MZ0pobQJWu8amHGd/paMAICT5340/PexPMTtSq+8w09u65i+j7/MAfUB/cQQsGaH9i9MptaA4iA7mCSY577qCejNWh031sJD3EGI9d0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=nAOQ6GX0; arc=none smtp.client-ip=209.85.128.54
+	s=arc-20240116; t=1761665871; c=relaxed/simple;
+	bh=hkxftgZogT+NrML8v/Ks/KEOR/YUZS/UiQYNzdbP+u0=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=KiyQVJfxbaSagh173gocxsNOm7yAkzs8lMQC7PwxbloT4nSLbce5Y8SFgLGQHb3UzbLFSwMs/7cvS3F6Dm6k3/rTd8uRqcL4Ipqb77rFISpiiJkVhn5y04NqnUoB6bWehjGFjU+qO/detlW85P9cJsNYhH9jEQrs0SR27yVdz38=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=DBb9rYMJ; arc=none smtp.client-ip=209.85.128.48
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f54.google.com with SMTP id 5b1f17b1804b1-470ff9b5820so8122285e9.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 28 Oct 2025 08:32:32 -0700 (PDT)
+Received: by mail-wm1-f48.google.com with SMTP id 5b1f17b1804b1-474975af41dso41878735e9.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 28 Oct 2025 08:37:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1761665551; x=1762270351; darn=vger.kernel.org;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=2LZwNoJWwYkaKmAAehgehdzMFy99KMCq/sPgFndgvoQ=;
-        b=nAOQ6GX0sobwU81e4+wMBIccAfq9QxROtuHTTa/40R3kqljfXzowxKHZ5y56O3oBU5
-         6CP/PnQl3fbeEBaF7YL1f2O87EJWDfYIcCmqNiCrnIsb60jYiqZjhyRCYuYBNqHs5vpH
-         9RvZBk7HZOxxRD+x0m0e8Qv8UZpJ4JM72lVkbnErQ2uFRbSMLaUwcXTxJI6ODmuhQNoO
-         XoVfSkgiAj8iu42pmP1Ub4ydVfAUZKkr8QIksfP9u18ZzOqNuglJoAMavmGKU20XRx5N
-         gg+pdT/M0BfRNM514+2zmoMuR5o62S/6CgTjXR//EunljM8NACZeop0KWJQgxlySXZJH
-         1sXQ==
+        d=linaro.org; s=google; t=1761665867; x=1762270667; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=ary74Q16PuhBPSjsrWRBA9VPLl5HYwYWAzTzc3x3IqM=;
+        b=DBb9rYMJOXxlJyM+m6BXNSpELSoEt/nChqopUq4uC9Qadq1AyVYSyD4fQzarAxmENl
+         0BTDuCvadpxWY/wlwJswFHecSRbrAjnyy6b1WcxPi1QZxWNaTmfIOfc36mG3l/FvMIfC
+         aKcue7BmGO5Lhq/IBOeqU4miqQ7kQPUCYU63jMzH5wHYb9AGhSTIr+EPqwHLaWZQTz+D
+         9oqXgtmnbbI7OhS/TDebd4m5oExs+4i6ZLzxLEZOXy7b5LI396sx/XWOi55epWEL71ff
+         d7N0qzLayvzWatOPMQPfI0Sow4PN4aMRKZ3SJp9G732hpBb/PR1TsJE0+yAFu6JOUf9c
+         1BLg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1761665551; x=1762270351;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=2LZwNoJWwYkaKmAAehgehdzMFy99KMCq/sPgFndgvoQ=;
-        b=PEG5888UlRZU3JPBzTk2/mMiz2VJ6/ed7regg/+y26BRehuJI4QkITcARW6CvDMmas
-         19o1lq3jKvqeZ3xXMTUn3r16g5yRGCzv10gV6+AQvJk3r0GFlN2OyRDg8CbmWdFndNjs
-         Pb/6ssTGuh8WeeycjPE/VctZzd4vGzlBiHnCGqSF0sMBL1tz/LZmc/Abvs6VNhGij87M
-         inrKine1YuwR0BOx0FEwvfWH19i6IPnoPML5H27d5kpn8WEYsoZKUNlDGt8dK7Hby5iI
-         z8C+hSIJCwH9s1LNwNHtKrAP7F2rnVWWKNxMCkUFhjgWOxGtPqzUE0JcFilQ08avQfHQ
-         TaUw==
-X-Forwarded-Encrypted: i=1; AJvYcCWaAJuCdogbN5UVtKByigyiHZGh0TCuZwjQFLurrhVD2CK1Jclvk0Rs3VLRR4qJK+rl5POLNoj0qd59G9pF@vger.kernel.org
-X-Gm-Message-State: AOJu0YxT8HN8e0WnbwsjVCLxrb5T8Z/rFAzO9BxjYAO84xHxT1tlrwof
-	S25jgIOmMizKA1iX3Ys/OHyXwbE3tZqha7XqFxNx9bCsQsvEUj9dtQ0pXmjgePKj9sI=
-X-Gm-Gg: ASbGnctitOknbqzqJaYjJ6MOnZNihNj6CtKJPJY1/qjjCGkhbdN6o0mVYY0kV8EJUNq
-	Jh4+i5QJXvhlEA70NqlA6CqwNwhSeT66pw0WA73cuSBeIXeQz5zkBPbgtq2DLsSjoSlol+FCMtT
-	C3lc/iiQx414B7IvvFgTGSbg9QCySqGJnXtOEV9XjT3ALk8A/UzO5yyjEkow7BDnAbwmlsgB8Cm
-	ooYfDh9ZRTjdwbaYAlvBNFSQhhYN4Ndl/e6we23SyGCznpReqFgUhpCVvLhHNW6w00AvxlMhIrk
-	se+D98gSosK3Hp1R3zhs1av1szi6wA/DluECIZT1iYTIIYhXIIAIoBRBpB7bYF6BwyYd71uZEGE
-	7ZVJpj0PZqy2Xh3whJS8xAY+chGyCD00JWqRly2APe8zlLpoNB/wpvs8N8s4sCCaelRTHLnfYpP
-	fWkc9Z1x8pE05teY3sIl9wXrVSVjU=
-X-Google-Smtp-Source: AGHT+IGVE3B2QRjpTEh5wr1vPtOo1EljFcIgnH5xAZBrUlCMOJ0sPgHl+FMB8DiEmz2qJn5TRoBcsg==
-X-Received: by 2002:a05:600c:314c:b0:476:84e9:b552 with SMTP id 5b1f17b1804b1-47717e42d94mr18438835e9.4.1761665551119;
-        Tue, 28 Oct 2025 08:32:31 -0700 (PDT)
-Received: from [127.0.1.1] ([178.197.219.123])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-429952d9e80sm20844417f8f.28.2025.10.28.08.32.29
+        d=1e100.net; s=20230601; t=1761665867; x=1762270667;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=ary74Q16PuhBPSjsrWRBA9VPLl5HYwYWAzTzc3x3IqM=;
+        b=DUmZdb8ucWEz+1AY6FJ9qSMO+9t6Zs8rvMT0Jiuz1/99/VV3K6p0pwgD/GmroOw01L
+         LU8JclTfG6Dld7Nc/F4I7XwfaSb/+riDlJkxcTSg9wQCfefd/4Yw3xEtNjlvjKDLsIdm
+         ZtjsJhKEjF+DB/rvomg/cH2+9WKfvAQ2ZFlNxvj5l4AcLlGe1swoareTlr3kL2ahDGXJ
+         yJ3V83UOwe9S9C9Ym82pag14Z3/W2GReACWkJHLuZswoQmo1ns9rgnZ40FQtEvQDBvL/
+         Zn+hIP1a4q6cxUmxumgqBVeoIwp3kgxIDtrvN7sFzqt0gRlZiyUpvyavR3RV3qWN58Zf
+         ynAQ==
+X-Forwarded-Encrypted: i=1; AJvYcCWGLjTnF6vT8A0+AiOF7EP5TijGJF5dAMDV7FiOvT85rnucf2X8F++wqZ2P9V3QkIawpkQo7el5G5K44zkv@vger.kernel.org
+X-Gm-Message-State: AOJu0YxUmnjB753l0cYuTRSf/juL0OzklUgJ48PQbwXU3kEe8ekrAVXr
+	+hZfr+P9G0gL4QlmLCjPXM2TAYbURjdy3fkboZus7ANw961klGMRpZB49srCdnt3cvM=
+X-Gm-Gg: ASbGncvY1UJpiwb7ylaOYDcSXYyLWjuHUprR+aG56xFChvjMju5OmUt31KVv2ScDSue
+	t/J6VRwUCY8Os8VrT5kSotzNx+ShQTBCBtSmTIhuuFksR2FK1D6g/WuPFlbzgss4QZUIF7b9Pnc
+	v6cliTPubHVRSJ82bb9BZ1n+aQ9w8TFd3z5IkYaB+5IVqmmVpCFhZwHiSoM+AkrscQCeTTE9Qe9
+	jTioAqvBHCN9/GaUqD7VnkgKlHZrGoeVQrY9VEGAvI0rdnk/8F8bW1FF0oxTapFQTWMTUQsfxcK
+	j6nTh0Kv7NfbGPbRNckIvnQne5TvXdXaa6u7+N+dPNtguGs3eDR89TNUHJVWnkEdoDhtOnR3ak+
+	5UGz4CXU9quROYBh0hbAXA5I3yXwjq76URilHF8cOTmvKt6GVWl1WSYN2ZYi1zqcGOavYzfAWnz
+	gYzfu7brA=
+X-Google-Smtp-Source: AGHT+IGa5T0vOPwrqxsDiAUoacPyZz4CzqIzpe6EkXzz80SQCdnOeksixDrdaFnDHHVah/KpxoMYOw==
+X-Received: by 2002:a05:600c:6304:b0:45b:7d77:b592 with SMTP id 5b1f17b1804b1-47717dff4cfmr30922465e9.12.1761665867365;
+        Tue, 28 Oct 2025 08:37:47 -0700 (PDT)
+Received: from linaro.org ([86.121.7.169])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-429952df3c7sm20595813f8f.40.2025.10.28.08.37.45
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 28 Oct 2025 08:32:30 -0700 (PDT)
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Date: Tue, 28 Oct 2025 16:32:01 +0100
-Subject: [PATCH 12/12] dt-bindings: bluetooth: qcom,wcn7850-bt: Deprecate
- old supplies
+        Tue, 28 Oct 2025 08:37:46 -0700 (PDT)
+Date: Tue, 28 Oct 2025 17:37:45 +0200
+From: Abel Vesa <abel.vesa@linaro.org>
+To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Cc: Heikki Krogerus <heikki.krogerus@linux.intel.com>, 
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Bjorn Andersson <andersson@kernel.org>, 
+	Konrad Dybcio <konradybcio@kernel.org>, Dmitry Baryshkov <lumag@kernel.org>, 
+	linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] usb: typec: ucsi: Skip setting orientation for UCSI
+ version 2.0 and above
+Message-ID: <jworx6dkoykwimfn7b3wlatgvk6engrbzyuhzsqbgjivlpicjw@xg2aenqcwkmz>
+References: <20251028-ucsi-glink-skip-orientation-for-ucsi-v2-v1-1-93e936ac59b4@linaro.org>
+ <a4f3yhhz5sntno6gnfbjnjjsbtyo2e4y3da2aywsg36gvxkaxg@vw2vryukrepl>
+ <xboq73zw752odclybviqnl75pp2nl2eamdvcdv2idqljck7qvu@zdh6ny7nja3w>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20251028-dt-bindings-qcom-bluetooth-v1-12-524a978e3cda@linaro.org>
-References: <20251028-dt-bindings-qcom-bluetooth-v1-0-524a978e3cda@linaro.org>
-In-Reply-To: <20251028-dt-bindings-qcom-bluetooth-v1-0-524a978e3cda@linaro.org>
-To: Marcel Holtmann <marcel@holtmann.org>, 
- Luiz Augusto von Dentz <luiz.dentz@gmail.com>, 
- Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>, 
- Balakrishna Godavarthi <quic_bgodavar@quicinc.com>, 
- Rocky Liao <quic_rjliao@quicinc.com>
-Cc: linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
- linux-bluetooth@vger.kernel.org, devicetree@vger.kernel.org, 
- Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-X-Mailer: b4 0.14.3
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1727;
- i=krzysztof.kozlowski@linaro.org; h=from:subject:message-id;
- bh=zSukNZlJ7MIqdyaMWhjsK/r7+F8I2VhKVYJCKLETVDw=;
- b=owEBbQKS/ZANAwAKAcE3ZuaGi4PXAcsmYgBpAOH7qJ7gAnazlmEVmSQT2tl9Ov0fW8LBbuH92
- j+nTnI5/1yJAjMEAAEKAB0WIQTd0mIoPREbIztuuKjBN2bmhouD1wUCaQDh+wAKCRDBN2bmhouD
- 1+RrD/4lCI9nI3gLTpbmLlCCHv8SmzZIwl9uEqBvUPhzDRA8WaZJh/ZEp2TgoALquJUW/C5CS0G
- SaKnKiFSqrO3SCWCiLEus1feRx/7VQdes6ITSWyfgbkZassgogbBFzLCUAlhaFKvrw9FytIgx+P
- Lc9xiiVK8wKORsFckj99TmPGm2M6GWhVMChKwkJ4EkNFBEZIm/g5fxsppVngkr9tDvut1uRezt+
- 7DKogdmfYCNSnSnbovMt09FsU2VyxOoAQxFAEt7btdo1L2srZA1aI5XxLKdvTH84j8Yh3L10Gxu
- F1Aj/dKG82PBM1uhew9QrBwjf0zhPZhsuVk4eis/WqRb75e9qa1z4VSWgYmGd2Gt/Ep09aOWDaJ
- 3a06SoGgrxePjYcwyvon09LIZv+2Oj42QQiZN5Ub0C74TFp62062edF2GgxpEJbxTPDuRQXleYW
- W9zFdPR6HfBzgC6hriu2hKUS9An1JBNnUS0BWxp+6UNoyc64ko6i9wfos5qqFa/p4XEyuofNGNX
- aVMzg+iFOWgaf6dCnetMW1S2+agDvSSyaMalD0GVuX9Sf0SNgD2iV1/BIPVW75dskYIrVhtV4bU
- w7gg0tg/b/wXTFp4IEXXJH452bxAbovmd5OsZ7WZC4HAGjLRxsxr+vY24j+WsTJ4AlbFlaYpvu4
- hFA+1fgm6I8+uaQ==
-X-Developer-Key: i=krzysztof.kozlowski@linaro.org; a=openpgp;
- fpr=9BD07E0E0C51F8D59677B7541B93437D3B41629B
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xboq73zw752odclybviqnl75pp2nl2eamdvcdv2idqljck7qvu@zdh6ny7nja3w>
 
-Commit bd3f305886ad ("dt-bindings: bluetooth: qualcomm: describe the
-inputs from PMU for wcn7850") changed the binding to new description
-with a Power Management Unit (PMU), thus certain power-controller
-properties are considered deprecated and are part of that PMUs binding.
+On 25-10-28 17:30:37, Dmitry Baryshkov wrote:
+> On Tue, Oct 28, 2025 at 05:19:58PM +0200, Abel Vesa wrote:
+> > On 25-10-28 16:39:19, Abel Vesa wrote:
+> > > In case of UCSI version 2.0 and above, if the orientation is set from
+> > > glink as well, it will trigger the consumers along the graph (PHYs,
+> > > repeaters and so on) to reconfigure a second time. This might break
+> > > the consumer drivers which aren't currently implemented to drop the
+> > > second request of setting the same orientation.
+> > > 
+> > > So lets leave the orientation setting to the UCSI generic implementation
+> > > for all platform that implement UCSI spec 2.0 and above.
+> > > 
+> > > Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+> > 
+> > Ignore this one please, as it is incomplete.
+> > 
+> > We need to also set the orientation_aware in pmic_glink_ucsi_update_connector()
+> > if the ucsi version is at least 2.0.
+> 
+> Note, I think it should be set in the core rather than setting it in the
+> driver.
 
-Deprecate them to mark clearly that new PMU-based approach is preferred.
+Yep. I agree.
 
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
----
- .../devicetree/bindings/net/bluetooth/qcom,wcn7850-bt.yaml         | 7 +++++++
- 1 file changed, 7 insertions(+)
+That's what I'm doing next.
 
-diff --git a/Documentation/devicetree/bindings/net/bluetooth/qcom,wcn7850-bt.yaml b/Documentation/devicetree/bindings/net/bluetooth/qcom,wcn7850-bt.yaml
-index d2a1477380eb..418a06ff0353 100644
---- a/Documentation/devicetree/bindings/net/bluetooth/qcom,wcn7850-bt.yaml
-+++ b/Documentation/devicetree/bindings/net/bluetooth/qcom,wcn7850-bt.yaml
-@@ -17,19 +17,25 @@ properties:
- 
-   enable-gpios:
-     maxItems: 1
-+    deprecated: true
- 
-   swctrl-gpios:
-     maxItems: 1
-     description: gpio specifier is used to find status
-                  of clock supply to SoC
-+    deprecated: true
-+
-   vddaon-supply:
-     description: VDD_AON supply regulator handle
- 
-   vddio-supply:
-     description: VDD_IO supply regulator handle
-+    deprecated: true
- 
-   vdddig-supply:
-     description: VDD_DIG supply regulator handle
-+    deprecated: true
-+
-   vddrfa0p8-supply:
-     description: VDD_RFA_0P8 supply regulator handle
- 
-@@ -41,6 +47,7 @@ properties:
- 
-   vddrfa1p9-supply:
-     description: VDD_RFA_1P9 supply regulator handle
-+    deprecated: true
- 
-   vddrfacmn-supply:
-     description: VDD_RFA_CMN supply regulator handle
-
--- 
-2.48.1
-
+So ignore my earlier comment. :-)
 
