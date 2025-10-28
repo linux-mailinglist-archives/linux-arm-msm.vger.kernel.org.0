@@ -1,225 +1,122 @@
-Return-Path: <linux-arm-msm+bounces-79235-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-79244-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 41415C15ED0
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Oct 2025 17:48:11 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 44790C15F1B
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Oct 2025 17:51:25 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 2C1BD3A58A4
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Oct 2025 16:40:42 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id C0E9F189D81A
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Oct 2025 16:48:25 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8182F33F8AA;
-	Tue, 28 Oct 2025 16:40:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 224873451CE;
+	Tue, 28 Oct 2025 16:47:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="a2JdsJ8S"
+	dkim=pass (1024-bit key) header.d=lucaweiss.eu header.i=@lucaweiss.eu header.b="nbjXTzSU"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from ahti.lucaweiss.eu (ahti.lucaweiss.eu [128.199.32.197])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FF6A1E0DD9;
-	Tue, 28 Oct 2025 16:40:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62165316188;
+	Tue, 28 Oct 2025 16:47:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=128.199.32.197
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761669639; cv=none; b=TqTv5NX8JYQgK1VUF9BWYfIyBegOLYN+Xf+JvMKfUckCZo3xIsqJc7QS1aMyLkP4ymmPNn1hMSj9VjEPmiTqCxqX/a6yZs3/+IlhO299gI/uNP5gZxBvphMgKoEMmiezpdYykL100qEWBg4f5fpaobouYi2AqJnIe4c0uJyiy08=
+	t=1761670075; cv=none; b=haJbhK61uFN/Ci0xz3OCh6oNlAgIFssMlKW0bCvu4Oo5YxAvgqMLkCFUfwKBZTzSkhSJd2VDrurzLxHI3PFRkR/Hpeep9Fpjuvn15sGAkZ8y/jVaWqjKYsiaGbTWiL325OGgxXZe/X7dp/xY06DfE8ck0B8pVvjyjoLfHYSEuaw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761669639; c=relaxed/simple;
-	bh=/JfS7eiiSAq3FKBXLYqqDzVgEh7qbDZ2ncxN1xuql3M=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=EhGVMu8ddmPB+bI8JG81JRNhdUI26RYWQlZpZ7JBHyi09ptWjRNCTLgY7hqz1B5piOwk41lZddJEkmkNPaZO45iNiTPZg0uNgRVMmTvofJErzTq5KDYicl5q+gIOCedmb/zYIlwuKba5e+X1W9SYnqPE9No4SOFud+XKrWkjgBI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=a2JdsJ8S; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE882C4CEE7;
-	Tue, 28 Oct 2025 16:40:35 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1761669638;
-	bh=/JfS7eiiSAq3FKBXLYqqDzVgEh7qbDZ2ncxN1xuql3M=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=a2JdsJ8SyutaDbKgxjbg3ZsYUjtFeDhtbN1TnUTIjFZqjNTatBwv5Y7AKc0HiKKoC
-	 7WO0Fpu+QNUf29xTVd+gkfH1IurBwfp36YYhqa++1euiGMmrlPsbbUNm53pQFK9i6K
-	 Z5xlku0+qj8PrMQiTvnwgbGYcWMEDW0QRJnPszzoIEE/NsciyMzdPn9jvVFYIR/33w
-	 JubTSYKzTaMoUvr0vnLVQljk0zNLazZ9rr0han0rBZ3Heu0guV92OlgiW5AXCb8+qC
-	 4D+wAEI04uD3YEKp6rm3UTeIbOT0ynFeb2xFyz7wZmp7SBGDT2KVc1gRcamqrRi8R4
-	 y8ftVK+8hmQYA==
-Message-ID: <aa4faa81-6e9d-41c2-85f0-32045a8f9f51@kernel.org>
-Date: Tue, 28 Oct 2025 17:40:33 +0100
+	s=arc-20240116; t=1761670075; c=relaxed/simple;
+	bh=fROb0VuDz//V7JMJcv2t/en6SL2W7KgGB/5yC8uMATc=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=Pi3/zTml3gWyqK6YT55EoOVvib4FqvTMi5A3zYgj781CBg0cBOiTG7PCGdtxlpxXUDUERyKUP90lqzN0LRWU6OZwPR5H7uedX75dE0YuZ1B94UVyw9RDhRD61agUQGQ9wrZC4E1jyjnJjib4jn6rxv78LDLCkVdHC+T3TNc3ZXc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=lucaweiss.eu; spf=pass smtp.mailfrom=lucaweiss.eu; dkim=pass (1024-bit key) header.d=lucaweiss.eu header.i=@lucaweiss.eu header.b=nbjXTzSU; arc=none smtp.client-ip=128.199.32.197
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=lucaweiss.eu
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=lucaweiss.eu
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=lucaweiss.eu; s=s1;
+	t=1761669686; bh=fROb0VuDz//V7JMJcv2t/en6SL2W7KgGB/5yC8uMATc=;
+	h=From:Subject:Date:To:Cc;
+	b=nbjXTzSU0vivhlTdzCjXHoD5jJfOVcDV2SWPkt+Z/PBENIi/ofGVX7ymFzml1RynV
+	 Q/pRVzUy0Tv40gV2rQNgLZSKxIGehaahqPumQG/qbqXFWQ3sTuNdwbGB0jtdt0cXhq
+	 lpaaBtqPX3f1/Mrz+HO0t6GO0X80J8oGesKEBhEo=
+From: Luca Weiss <luca@lucaweiss.eu>
+Subject: [PATCH v2 0/7] Camera I2C (CCI) enablement on MSM8953 and
+ Fairphone 3
+Date: Tue, 28 Oct 2025 17:40:45 +0100
+Message-Id: <20251028-msm8953-cci-v2-0-b5f9f7135326@lucaweiss.eu>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3] watchdog: Add driver for Gunyah Watchdog
-To: Pavan Kondeti <pavan.kondeti@oss.qualcomm.com>
-Cc: Hrishabh Rajput <hrishabh.rajput@oss.qualcomm.com>,
- Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>,
- Wim Van Sebroeck <wim@linux-watchdog.org>, Guenter Roeck
- <linux@roeck-us.net>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
- linux-watchdog@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, Neil Armstrong <neil.armstrong@linaro.org>
-References: <20251028-gunyah_watchdog-v3-1-e6d1ea438b1d@oss.qualcomm.com>
- <25f7ff09-08ea-4969-9184-9fd01b097558@kernel.org>
- <76479593-c47b-41a7-8349-5d7c1403f7c0@oss.qualcomm.com>
- <73955d58-544c-4299-a099-bfd9e5912a40@kernel.org>
- <636a1f99-acd4-4904-8fae-f159646cc1a0@kernel.org>
- <f4d80be9-986f-4d37-9c25-725eff7bb653@quicinc.com>
- <e03373d9-e2dd-48b6-93a6-554fcd623718@kernel.org>
- <59a00934-cb42-43de-ac5b-a9292b08301d@quicinc.com>
-From: Krzysztof Kozlowski <krzk@kernel.org>
-Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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 a/A=
-In-Reply-To: <59a00934-cb42-43de-ac5b-a9292b08301d@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAA3yAGkC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyjHQUlJIzE
+ vPSU3UzU4B8JSMDI1MDCwML3dziXAtLU2Pd5ORMXVMLc1NLs5Q0C+OURCWgjoKi1LTMCrBp0bG
+ 1tQCgWqpTXQAAAA==
+X-Change-ID: 20250808-msm8953-cci-587596df83da
+To: ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org, 
+ Loic Poulain <loic.poulain@oss.qualcomm.com>, 
+ Robert Foss <rfoss@kernel.org>, Andi Shyti <andi.shyti@kernel.org>, 
+ Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>, Bartosz Golaszewski <brgl@bgdev.pl>, 
+ Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konradybcio@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, linux-i2c@vger.kernel.org, 
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+ Luca Weiss <luca@lucaweiss.eu>, 
+ Wolfram Sang <wsa+renesas@sang-engineering.com>, 
+ Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+X-Mailer: b4 0.14.3
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1426; i=luca@lucaweiss.eu;
+ h=from:subject:message-id; bh=fROb0VuDz//V7JMJcv2t/en6SL2W7KgGB/5yC8uMATc=;
+ b=owEBbQKS/ZANAwAKAXLYQ7idTddWAcsmYgBpAPIQffuhxUCcqDpXujZitSVFPY6SABxhkLtHH
+ wf1DOSnr1iJAjMEAAEKAB0WIQQ5utIvCCzakboVj/py2EO4nU3XVgUCaQDyEAAKCRBy2EO4nU3X
+ VkrzD/9hCA4yQ+ezTX+k61c1VHWSuoHi5vh1tN79xXznVP160iVB4CVoIB1AY4UTvRmEH3GBtQv
+ 3YltR6fAiH4bkR+CCR9foOEkaIT6En7Dzf/sJ1masaZNS9SroKnzdH8W1EcJ78qLQiYrS7rr21T
+ h+a8Q1FV5jyOnJ4vzX8IrwS6/X/7mOIwjVBMSRwkmQVUAtXe2b0GTaOXspd9kT7jbmz6oO8Abud
+ /B3gl6P7hBpOk9SVfZoqwOEwVfkc/5elhweZeCgChQWHBZSF6YqvHsWeXld5S5/HifsHbXEi8mQ
+ zk9F+ZP3fwV+l9oHtNrjHjqZfVqqXVZ83yhxil7qkdbUdSOg/4a1+LPdKfSVxqsNq05QmXtKu6y
+ SzE7gzwGS/nQVPeEaLOy7vRiDr1mSTXYKGZMtatJCJNluLOHxn5v9Sw8uJyx/aN9Nzx3NPY1rIQ
+ XMxG9g9ptHPJrNuDBqPRvP8HgqT666cSJoEcOKS4+MoLQZsxsq89uaB6ujrCcOVPOiyTxdLdN9g
+ Sbv150cSHfCwCZCXH6XcAw6PXq+7q304qrHB79x/JSEoRhkWn4YsvzGlRtoNid70Maw9Bs2vNWW
+ iiyzd6cQig4/Em5Lim2CsM8popRONOIr9sIBk4sKYqMb36WW+GveWNdE6abfC0aiSJ7Y5hmKbqJ
+ CUliumWtQ4klB+A==
+X-Developer-Key: i=luca@lucaweiss.eu; a=openpgp;
+ fpr=BD04DA24C971B8D587B2B8D7FAF69CF6CD2D02CD
 
-On 28/10/2025 17:33, Pavan Kondeti wrote:
-> On Tue, Oct 28, 2025 at 05:17:44PM +0100, Krzysztof Kozlowski wrote:
->> On 28/10/2025 13:27, Pavan Kondeti wrote:
->>> On Tue, Oct 28, 2025 at 12:07:40PM +0100, Krzysztof Kozlowski wrote:
->>>> On 28/10/2025 12:04, Krzysztof Kozlowski wrote:
->>>>> On 28/10/2025 11:58, Hrishabh Rajput wrote:
->>>>>>
->>>>>> On 10/28/2025 3:10 PM, Krzysztof Kozlowski wrote:
->>>>>>> On 28/10/2025 10:35, Hrishabh Rajput via B4 Relay wrote:
->>>>>>>> +
->>>>>>>> +static int __init gunyah_wdt_init(void)
->>>>>>>> +{
->>>>>>>> +	struct arm_smccc_res res;
->>>>>>>> +	struct device_node *np;
->>>>>>>> +	int ret;
->>>>>>>> +
->>>>>>>> +	/* Check if we're running on a Qualcomm device */
->>>>>>>> +	np = of_find_compatible_node(NULL, NULL, "qcom,smem");
->>>>>>> I don't think you implemented my feedback. This again is executed on
->>>>>>> every platform, e.g. on Samsung, pointlessly.
->>>>>>>
->>>>>>> Implement previous feedback.
->>>>>>
->>>>>> Do you want us to add platform device from another driver which is 
->>>>>> probed only on Qualcomm devices (like socinfo from previous discussion) 
->>>>>> and get rid of the module init function entirely? As keeping anything in 
->>>>>> the module init will get it executed on all platforms.
->>>>>
->>>>> Instead of asking the same can you read previous discussion? What is
->>>>> unclear here:
->>>>> https://lore.kernel.org/all/3b901f9d-dbfa-4f93-a8d2-3e89bd9783c9@kernel.org/
->>>>> ?
->>>>>
->>>>>>
->>>>>>
->>>>>> With this patch version, we have tried to reduce the code execution on 
->>>>>> non-Qualcomm devices (also tried the alternative as mentioned in the 
->>>>>> cover letter). Adding platform device from another driver as described 
->>>>>> above would eliminate it entirely, please let us know if you want us to 
->>>>>> do that.
->>>>>
->>>>> Why do I need to repeat the same as last time?
->>>>
->>>>
->>>> Now I see that you completely ignored previous discussion and sent THE
->>>> SAME approach.
->>>
->>> Our intention is not to waste reviewers time at all. It is just a
->>> misunderstanding on what your comment is about. Let me elaborate further
->>> not to defend our approach here but to get a clarity so that we don't
->>> end up in the same situation when v4 is posted.
->>>
->>> https://lore.kernel.org/all/b94d8ca3-af58-4a78-9a5a-12e3db0bf75f@kernel.org/ 
->>>
->>> You mentioned here
->>>
->>> ```
->>> To me socinfo feels even better. That way only, really only qcom devices
->>> will execute this SMC.
->>> ```
->>>
->>> We interpreted this comment as `avoid executing this SMC on non qcom
->>> devices`. That is exactly what we have done in the current patch. since
->>
->>
->> So where did you use socinfo? Point me to the code.
->>
-> 
-> Okay, lets go a bit deep into the socinfo part. we have used
-> `soc_device_match()` API to detect if the device is qcom (`family =
-> Snapdragon`). It works. However, when we built both `socinfo` and
+Add the compatibles and config for CCI on MSM8953, then enable these I2C
+busses on Fairphone 3 and configure the EEPROM found with one of the
+camera modules.
 
-socinfo driver. Read my first feedback:
+Signed-off-by: Luca Weiss <luca@lucaweiss.eu>
+---
+Changes in v2:
+- Fix wrong placement of msm8953-cci in if in cci binding
+- Rebase on linux-next
+- Pick up tags
+- Link to v1: https://lore.kernel.org/r/20250810-msm8953-cci-v1-0-e83f104cabfc@lucaweiss.eu
 
+---
+Luca Weiss (7):
+      dt-bindings: i2c: qcom-cci: Document msm8953 compatible
+      i2c: qcom-cci: Add msm8953 compatible
+      dt-bindings: eeprom: at24: Add compatible for Belling BL24S64
+      arm64: dts: qcom: msm8953: Re-sort tlmm pinctrl states
+      arm64: dts: qcom: msm8953: Add CCI nodes
+      arm64: dts: qcom: sdm632-fairphone-fp3: Add camera fixed regulators
+      arm64: dts: qcom: sdm632-fairphone-fp3: Enable CCI and add EEPROM
 
-"No, your hypervisor driver (which you have) should start the module via
-adding platform/aux/something devices."
-
-And then I agreed if you start it from the socinfo driver.
-
-
-> `gunyah-wdt` as modules, we do see that `gunyah-wdt` gets probed before
-> `socinfo` because the driver that registers socinfo as platform device
-> which is `smem` probe is getting delayed. As you may know `smem` device
-> gets registered by `OF` core directly before the whole platform devices
-> are populated. To make sure that any configuration works, we went with
-> `qcom,smem` based detection. This is mentioned in the cover letter, sure
-> it is a detail that can easily be lost. Now one might just say go and
-> fix probe deferral problems. The problem here is that `smem` platform
-> device creation happens differently to other devices which is leading to
-> probe deferral. I can enumerate the problem in much detail, if that
-> interests you.
-> 
-> Please help us understand what is the real concern here? we don't want
-> to call `of_find_compatible_node()` API on non qcom devices but it is
-
-It was told to you already multiple times and it is basic kernel
-knowledge - you do not execute your init code on other platforms. At
-all. You are developing like it was 2005. That was the style that time.
-
-Write concise replies, I really have not much time to read LLM output.
+ Documentation/devicetree/bindings/eeprom/at24.yaml |   1 +
+ .../devicetree/bindings/i2c/qcom,i2c-cci.yaml      |   2 +
+ arch/arm64/boot/dts/qcom/msm8953.dtsi              | 668 +++++++++++----------
+ arch/arm64/boot/dts/qcom/sdm632-fairphone-fp3.dts  |  57 ++
+ drivers/i2c/busses/i2c-qcom-cci.c                  |  46 ++
+ 5 files changed, 468 insertions(+), 306 deletions(-)
+---
+base-commit: 7c0022eca56891cbc3d94cee91733c28568342bb
+change-id: 20250808-msm8953-cci-587596df83da
 
 Best regards,
-Krzysztof
+-- 
+Luca Weiss <luca@lucaweiss.eu>
+
 
