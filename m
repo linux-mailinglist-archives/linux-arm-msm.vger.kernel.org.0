@@ -1,112 +1,162 @@
-Return-Path: <linux-arm-msm+bounces-79226-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-79227-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1B757C15B6B
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Oct 2025 17:15:16 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id A38F2C15C2C
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Oct 2025 17:22:27 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 5FB1F1A22EDA
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Oct 2025 16:10:20 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 8E1CE188D428
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Oct 2025 16:16:17 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 595AC342C9D;
-	Tue, 28 Oct 2025 16:09:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5DD98347FF7;
+	Tue, 28 Oct 2025 16:14:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="jbGSqMDl"
+	dkim=pass (2048-bit key) header.d=mainlining.org header.i=@mainlining.org header.b="NeHsIFwW";
+	dkim=permerror (0-bit key) header.d=mainlining.org header.i=@mainlining.org header.b="2vHSlY3r"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mail.mainlining.org (mail.mainlining.org [5.75.144.95])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2639E342173;
-	Tue, 28 Oct 2025 16:09:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E82A33A024;
+	Tue, 28 Oct 2025 16:14:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=5.75.144.95
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761667792; cv=none; b=pZBt6JeuvMdC4h0nH88CJAqE3tl5NybPPq8r9V8s0dYRELoCJVKikb8uwLdX2Nt3vULFnhiLCL3w6NEN+CRJDDAgiek8+2NLIo+g2C2eyfIxQagDIA0ov0EVYkHL2Ed/5l9L/rjXFkiSeMDk/xA3giM3jiGE33L8ykeBARNB0mY=
+	t=1761668062; cv=none; b=gPYWDXEzF1MjszI9ANPgBigmB1zeAkVRqg6VxTJ3ANENPvwBIzexHMgf42EeEAEazgyULicjvUyAmRQ/KYvGWwbeBro8viTu+tM9uG9Zcx+DL0qQU5sAu1SIJQsAbXFJHyph0iKFALJvGKipYzydw3dQYNY9fg7i/5IzKBAdl4c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761667792; c=relaxed/simple;
-	bh=Ae8P5LuWUoMUbKBLMiZfN6RbP+pxgug2Q49TavZJAnc=;
-	h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date:
-	 MIME-Version:Content-Type; b=hYHkp37oGBdZX65wS/I1XuhVuQYxkuO1vocuo7hduVc5r9taQQhzTCpzqJA/KCy8HK/QDeYKKRIVXQT+uqPESwHrWiZVwo9Tae3HboeuwinhcKk01Mj01cOxigrjkWFjLdWe9K0Nd6CswAZ7a26JFIGR6Cn+PLkKG2EtNAm/OVk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=jbGSqMDl; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0AA5C4CEE7;
-	Tue, 28 Oct 2025 16:09:48 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1761667791;
-	bh=Ae8P5LuWUoMUbKBLMiZfN6RbP+pxgug2Q49TavZJAnc=;
-	h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
-	b=jbGSqMDlHfKPAkVC8Ay7Vbav08zYNs8U48L4fPVJfkt6WYEbpliLUqwHtg+dwl8ky
-	 ODP5P1i6A1Dp4xRP7owrJtoMJjHs5mbo4KWbMKo4uDFg9PpQjgXPImSzVdFHUZutUu
-	 CC04BoOSW4St7+O7eujOJMIPtJzfZsrIa8pP6zLZ/UHuAoKGtcvak3PlTrKA7SlNTi
-	 TQAUqLBkbYe8wO5l9l38ASag0HAJTDStLNoF2D8aHx1FuK2c9yBDMbYGE18oUP2PkD
-	 ywllDgLk4qgW7tBp9BwwP9wUEHHIyZnJbxcYD5jn9nQcctDhvOqF+5kuVfU/lF7B2q
-	 BjvO8f3H/ar1A==
-From: Mark Brown <broonie@kernel.org>
-To: Srinivas Kandagatla <srini@kernel.org>, 
- Liam Girdwood <lgirdwood@gmail.com>, Rob Herring <robh@kernel.org>, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>, 
- Alexey Klimov <alexey.klimov@linaro.org>
-Cc: Jaroslav Kysela <perex@perex.cz>, Takashi Iwai <tiwai@suse.com>, 
- Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>, 
- linux-sound@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
- Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
-In-Reply-To: <20251022-qrb2210-qcm2290-sndcard-v2-0-32e9e269a825@linaro.org>
-References: <20251022-qrb2210-qcm2290-sndcard-v2-0-32e9e269a825@linaro.org>
-Subject: Re: [PATCH v2 0/2] Sndcard compatible for qrb2210/qcm2290
-Message-Id: <176166778871.143847.17063915806888837575.b4-ty@kernel.org>
-Date: Tue, 28 Oct 2025 16:09:48 +0000
+	s=arc-20240116; t=1761668062; c=relaxed/simple;
+	bh=MUfAw+CEWCmi/k34obocl0dnwHMT1lqx/Pq21CoUC58=;
+	h=Date:From:To:CC:Subject:In-Reply-To:References:Message-ID:
+	 MIME-Version:Content-Type; b=d59fS1lDWQg6AiDouJLQgnnWvq3KBet4/mmd7nqbk2PT3IbZ+/Zif0666sQ2V3emKwm9VoIHjuU8gw2ClXbU0iQNjgob+aO7qHOslV0In5JLDYrLLn/QvS7iffDo6F8i+5GL215fQWFQxHX046hI8TWyERIXyTIg5s4Z68U3iRA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=mainlining.org; spf=pass smtp.mailfrom=mainlining.org; dkim=pass (2048-bit key) header.d=mainlining.org header.i=@mainlining.org header.b=NeHsIFwW; dkim=permerror (0-bit key) header.d=mainlining.org header.i=@mainlining.org header.b=2vHSlY3r; arc=none smtp.client-ip=5.75.144.95
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=mainlining.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=mainlining.org
+DKIM-Signature: v=1; a=rsa-sha256; s=202507r; d=mainlining.org; c=relaxed/relaxed;
+	h=Message-ID:Subject:To:From:Date; t=1761668024; bh=UzHugUE4P/e8xKLy23qcD4u
+	xe9eMeMh43cCYTpyYyXk=; b=NeHsIFwW9HcKT0PR4KovvtWCrYAFj63P1CQq+KM0wBuwKHJ5YW
+	nWJktFL5JBL7S/76aXRnRV+3+KHAhknUa0QsFGp41XdcxXd+PlIi2JOKLcQvkLtNt4TDK2W+61X
+	xFL4gXZZesOUbuzj869KNplBcwIREFtXdtm2BLGIdxzn7F4u0GjzA1al33s8oAwleP/6yCRI0+Z
+	xkIVNNlnMgn2VBepKK1iS1Si1hg8OZJja2qJSjTLvTOZBv4ZVsv8Tdm/4qN3CZV306wvS0u7/YU
+	C6PTL18jNUjP7pe70oOtLDgrSsnACgfu7Bgy/liZQZ1b8zOXnWuD0L+Tx3JNRX4lSWw==;
+DKIM-Signature: v=1; a=ed25519-sha256; s=202507e; d=mainlining.org; c=relaxed/relaxed;
+	h=Message-ID:Subject:To:From:Date; t=1761668024; bh=UzHugUE4P/e8xKLy23qcD4u
+	xe9eMeMh43cCYTpyYyXk=; b=2vHSlY3rAlhU8iqQUTFYwhYRHXGUycY6tXgFrOeMabXEq5stL0
+	eYM9qmvrDFltdpzU85Os568J2jbmN2K01QAA==;
+Date: Tue, 28 Oct 2025 21:43:43 +0530
+From: Piyush Raj Chouhan <pc1598@mainlining.org>
+To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, linux-arm-msm@vger.kernel.org
+CC: devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+ linux-hardening@vger.kernel.org, andersson@kernel.org,
+ konradybcio@kernel.org, robh@kernel.org, krzk+dt@kernel.org,
+ conor+dt@kernel.org, tony.luck@intel.com, gpiccoli@igalia.com
+Subject: =?US-ASCII?Q?Re=3A_=5BPATCH_2/2=5D_arm64=3A_dts=3A_qcom=3A_sm815?=
+ =?US-ASCII?Q?0=3A_Add_support_for_Xiaomi_Redmi_K20_Pro?=
+User-Agent: K-9 Mail for Android
+In-Reply-To: <ccdd5d44-2382-44e9-a56d-cbc5da23b13f@oss.qualcomm.com>
+References: <20251022054026.22816-1-pc1598@mainlining.org> <20251022054026.22816-2-pc1598@mainlining.org> <ccdd5d44-2382-44e9-a56d-cbc5da23b13f@oss.qualcomm.com>
+Message-ID: <5C7DC3D9-8DBB-409C-8672-6388EE01C320@mainlining.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-X-Mailer: b4 0.15-dev-88d78
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-On Wed, 22 Oct 2025 04:58:48 +0100, Alexey Klimov wrote:
-> This is a small patch series that serves as a preparation for
-> adding HDMI audio playback support on QRB2210 RB1 board.
-> The patches here are for sound subsystem. The other series
-> will focus on qcom DT files.
-> 
-> The original series where one of the patches here were taken from is
-> https://lore.kernel.org/linux-sound/20250302-rb1_hdmi_sound_first-v1-0-81a87ae1503c@linaro.org/
-> and sndcard compable patch was added as new one.
-> 
-> [...]
+Hi, konrad=20
 
-Applied to
 
-   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/sound.git for-next
+>> +
+>> +&i2c19 {
+>> +	/* goodix,gt9886 @5d  */
+>
+>I see there's driver support for the GT98*97* - is there a chance you can
+>reuse some of it?
+>
 
-Thanks!
+I am currently testing touch on gtx8 driver which currently is in lkml, on=
+ce its merged we could add support for it=2E
 
-[1/2] ASoC: dt-bindings: qcom,sm8250: add QRB2210 soundcard
-      commit: ee4407e1288ab85be16bacc45195b8bb23d44760
-[2/2] ASoC: qcom: sm8250: add qrb2210-sndcard compatible string
-      commit: e973dfe9259095fb509ab12658c68d46f0e439d7
+https://lore=2Ekernel=2Eorg/linux-input/20250918-gtx8-v1-0-cba879c84775@ma=
+inlining=2Eorg
 
-All being well this means that it will be integrated into the linux-next
-tree (usually sometime in the next 24 hours) and sent to Linus during
-the next merge window (or sooner if it is a bug fix), however if
-problems are discovered then the patch may be dropped or reverted.
+[=2E=2E=2E]
+>> +	connector {
+>> +		compatible =3D "usb-c-connector";
+>> +		power-role =3D "source";
+>> +		data-role =3D "dual";
+>> +		self-powered;
+>> +
+>> +		source-pdos =3D <PDO_FIXED(5000, 3000, PDO_FIXED_DUAL_ROLE |
+>> +					 PDO_FIXED_USB_COMM | PDO_FIXED_DATA_SWAP)>;
+>
+>Have you verified this is in line with your specific device's
+>downstream kernel?
 
-You may get further e-mails resulting from automated or manual testing
-and review of the tree, please engage with people reporting problems and
-send followup patches addressing any issues that are reported if needed.
+Yes i have verified it=2E
 
-If any updates are required or you are submitting further changes they
-should be sent as incremental updates against current git, existing
-patches will not be replaced.
+[=2E=2E=2E]
+>> +&pm8150l_lpg {
+>> +
+>> +	status =3D "okay";
+>
+>ditto> +	led@1 {
+>> +		reg =3D <1>;
+>> +		color =3D <LED_COLOR_ID_WHITE>;
+>> +		function =3D LED_FUNCTION_STATUS;
+>> +
+>> +		status =3D "disabled";
+>
+>?
 
-Please add any relevant lists and maintainers to the CCs when replying
-to this mail.
+Raphael doesn=E2=80=99t have a white LED=2E I missed cleaning that=2E I=E2=
+=80=99ll remove it in the next revision=2E
 
-Thanks,
-Mark
+>
+>> +	};
+>> +
+>> +
+>> +	led@2 {
+>> +		reg =3D <2>;
+>> +		color =3D <LED_COLOR_ID_RED>;
+>> +		function =3D LED_FUNCTION_STATUS;
+>> +		function-enumerator =3D <0>;
+>> +	};
+>> +
+>> +	led@3 {
+>> +		reg =3D <3>;
+>> +		color =3D <LED_COLOR_ID_RED>;
+>> +		function =3D LED_FUNCTION_STATUS;
+>> +		function-enumerator =3D <1>;
+>> +	};
+>
+>Are there really two separate red LEDs?
 
+Yes, it has popup camera with an LED on both side, i have verified functio=
+nality of both LEDs=2E=20
+
+
+[=2E=2E=2E]
+>
+>> +&usb_1_dwc3 {
+>> +	dr_mode =3D "otg";
+>> +	maximum-speed =3D "high-speed";
+>> +
+>> +	/* Remove USB3 phy */
+>> +	phys =3D <&usb_1_hsphy>;
+>> +	phy-names =3D "usb2-phy";
+>
+>Is this a physical limitation, i=2Ee=2E missing wires?
+
+Yes it is a physical limitation and downstream configured it similarly,
+
+[=2E=2E=2E]
+
+Thanks for all the rest of improvement suggestions=2E
+
+Best regards
+Piyush Raj Chouhan
 
