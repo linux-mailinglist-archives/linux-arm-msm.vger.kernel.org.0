@@ -1,57 +1,64 @@
-Return-Path: <linux-arm-msm+bounces-79121-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-79122-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [IPv6:2605:f480:58:1:0:1994:3:14])
-	by mail.lfdr.de (Postfix) with ESMTPS id 26494C136A8
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Oct 2025 09:00:55 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 776A5C13759
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Oct 2025 09:10:15 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 76B984F0FCF
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Oct 2025 07:59:51 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id AE2C31890324
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Oct 2025 08:10:38 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 09D542D5C6E;
-	Tue, 28 Oct 2025 07:59:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D7B072D6401;
+	Tue, 28 Oct 2025 08:10:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="JtvVYmhE"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="TdPk3YGs"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFC8E2D46CE;
-	Tue, 28 Oct 2025 07:59:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2B222D595F;
+	Tue, 28 Oct 2025 08:10:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761638385; cv=none; b=FNoNHzsTRHcNkBZChBuzRKABQ4KbSPQA1YP4YhfQwU/Y5Z2wzNJQRuD0TH/Yh3kmwva30QaJ8UJDN+fks+AyTYhzke+L92VDL2AIgpciEo4Y1n/C27tb7deHgRGR8Nv7ulN5ljnORHGgzF91QZQruLJqvYqTTA4swJG+VOaAygA=
+	t=1761639002; cv=none; b=XFpVKy5Mv7X1t3mwVzwIIbzESGSjDDQ8W54EdIqWpJiXwa75KkxaVqFuFClfVSLpBGfG0t7Z9kVlILevgSwCUVgS7HccKX2BkwZ6EA7I/ZJwwKkeAK2BLTJkz10dxTi8I45KqM5eROEisMnYtk8kWQHbEFF6ZTdpWMLyaXvsmzU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761638385; c=relaxed/simple;
-	bh=HfhMDobu1SUJQyYm0YX92oqWhBmLIXxHwW9QTp0RVDI=;
+	s=arc-20240116; t=1761639002; c=relaxed/simple;
+	bh=NGu5Zpot/BG4U7gSUgi6aoPy0LHfrm2D+G3A/4Yp3cI=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=kKGphsjSFYFn8NIWTJIx9NpBBjrUK6dDiCuIw2aG+iWuy2PARAgeCO19TphhBPL5I8Oja+2T4pKn99aypP4eJDM8hSGEh/IqJeLaYluTq1AuzsGy+OXUIVBwCOLI1UH4KE7+YnZThEp1Gck+SwsZkEta0aGTaghVj12vFaAlecU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=JtvVYmhE; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF859C113D0;
-	Tue, 28 Oct 2025 07:59:44 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=mQutGiXUQSJ568rxyxmPtrhOBovIASbu43942RujP1f1BnJfi9mFZbXwPom5MLbbey6zKR7ll8v/4cGuSFk3C+GEWa4VmVmHLnjHDhftFgn7wWVc32aY1J/OlJ6uBD8Q2LJq4/fiyJoxBZPnUOESTBt9Pf3H6MqeGshC6PWV9hA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=TdPk3YGs; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A911FC4CEE7;
+	Tue, 28 Oct 2025 08:10:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1761638385;
-	bh=HfhMDobu1SUJQyYm0YX92oqWhBmLIXxHwW9QTp0RVDI=;
+	s=k20201202; t=1761639002;
+	bh=NGu5Zpot/BG4U7gSUgi6aoPy0LHfrm2D+G3A/4Yp3cI=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=JtvVYmhEA4zlBpixwOQbzKeOOcqy/fJn6a/Bz4ie9T8WY7sF/wFRGACulRgv+IdpU
-	 Oz3v0SSL1haWVDAXEZ/jaxgoc86TaMjmMRCk7H0Y/rr/BB4qnt/9I6i0KYIpsyr0xx
-	 yaaOxA14HikP4WQr9MB2N99NzfZrXs1D1Nk7w/TxKXSIOmpB53dQV/obmN9QO2pakQ
-	 MuqdjU2lBHhM0cRTE52LdeQhUqtTV6PzbOmmkk1yTVhwNnXUOLVL2cSNF3HGmGMEkE
-	 OZJvQII9P/pVEPYHcoyBK+inEdFLs0raFw5xIWuNc5vxmx7xkggmbLskDcM9XRgKER
-	 9Fx6yOYSTnifA==
-Date: Tue, 28 Oct 2025 08:59:42 +0100
+	b=TdPk3YGszQ3DVFbaQjgzT4DIcdcXClDuEL4vcFLMwyQtVwveAN6KXSaMthYrmqXlq
+	 UlFqBDCFqP9u6Scp/KzogioFz9TAvfYgJYltgF6Yb0UJ86k3MEQJLHp8H43forHxg/
+	 VN6wmCOrPKLhz0sgCp8+eWa5VcqkRdQE7qmHK4fOAnHb7ayBI8otnO6F2TycQ2zE4H
+	 /9HcyPBNDMoPbrDer+ZeaJ169LJo1yT1SbuWEKGi5xSa7Me2NhsT1rxt0tZ08heKrm
+	 0CBLPMq984o79wcuxspap23UUwpNcOBhqSUX5vnyYd//nlKRFMYgikNYc1cfYSQKDM
+	 kBje0ylONmXaA==
+Date: Tue, 28 Oct 2025 09:09:59 +0100
 From: Krzysztof Kozlowski <krzk@kernel.org>
-To: Sudarshan Shetty <tessolveupstream@gmail.com>
-Cc: andersson@kernel.org, konradybcio@kernel.org, robh@kernel.org, 
-	krzk+dt@kernel.org, conor+dt@kernel.org, linux-arm-msm@vger.kernel.org, 
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v4 2/2] arm64: dts: qcom: talos-evk: Add support for
- QCS615 talos evk board
-Message-ID: <20251028-proud-bullfrog-of-aurora-e2cdba@kuoka>
-References: <20251028053248.723560-1-tessolveupstream@gmail.com>
- <20251028053248.723560-3-tessolveupstream@gmail.com>
+To: Hangxiang Ma <hangxiang.ma@oss.qualcomm.com>
+Cc: Loic Poulain <loic.poulain@oss.qualcomm.com>, 
+	Robert Foss <rfoss@kernel.org>, Andi Shyti <andi.shyti@kernel.org>, 
+	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+	Conor Dooley <conor+dt@kernel.org>, Todor Tomov <todor.too@gmail.com>, 
+	Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>, Mauro Carvalho Chehab <mchehab@kernel.org>, 
+	Bryan O'Donoghue <bryan.odonoghue@linaro.org>, linux-i2c@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, linux-media@vger.kernel.org, 
+	aiqun.yu@oss.qualcomm.com, tingwei.zhang@oss.qualcomm.com, trilok.soni@oss.qualcomm.com, 
+	yijie.yang@oss.qualcomm.com, Jingyi Wang <jingyi.wang@oss.qualcomm.com>, 
+	Atiya Kailany <atiya.kailany@oss.qualcomm.com>
+Subject: Re: [PATCH v3 2/6] dt-bindings: media: camss: Add
+ qcom,kaanapali-camss binding
+Message-ID: <20251028-wonderful-olive-muskox-77f98d@kuoka>
+References: <20251023-add-support-for-camss-on-kaanapali-v3-0-02abc9a107bf@oss.qualcomm.com>
+ <20251023-add-support-for-camss-on-kaanapali-v3-2-02abc9a107bf@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -60,190 +67,243 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20251028053248.723560-3-tessolveupstream@gmail.com>
+In-Reply-To: <20251023-add-support-for-camss-on-kaanapali-v3-2-02abc9a107bf@oss.qualcomm.com>
 
-On Tue, Oct 28, 2025 at 11:02:48AM +0530, Sudarshan Shetty wrote:
-> Introduce the device tree support for the QCS615-based talos-evk
-> platform, which follows the SMARC (Smart Mobility ARChitecture)
-> standard. The platform is composed of two main hardware
-> components: the talos-evk-som and the talos-evk carrier board.
+On Thu, Oct 23, 2025 at 02:14:34AM -0700, Hangxiang Ma wrote:
+> Add bindings for qcom,kaanapali-camss in order to support the camera
+
+What is qcom,kaanapali-camss? Sounds like a compatible and you cannot
+add bindings for a compatible. Instead add bindings for hardware, so
+explain here hardware.
+
+You could easily use `git log` to see how such commits are written
+instead of pasting here your downstream practice.
+
+> subsystem for Kaanapali.
 > 
-> The talos-evk-som is a compact System on Module that integrates the
-> QCS615 SoC, PMIC, and essential GPIO connectivity. It follows the
-> SMARC standard, which defines a modular form factor allowing the SoM
-> to be paired with different carrier boards for varied applications.
-
-Drop paragraph, completely redundant. Please write concise, informative
-messages, not something redundant and obvious. Or worse - marketing
-junk.
-
+> Signed-off-by: Hangxiang Ma <hangxiang.ma@oss.qualcomm.com>
+> ---
+>  .../bindings/media/qcom,kaanapali-camss.yaml       | 369 +++++++++++++++++++++
+>  1 file changed, 369 insertions(+)
 > 
-> The talos-evk is one such carrier board, designed for evaluation
-> and development purposes. It provides additional peripherals
-> such as UART, USB, and other interfaces to enable rapid
-> prototyping and hardware bring-up.
-> 
-> This initial device tree provides the basic configuration needed
-> to boot the platform to a UART shell. Further patches will extend
-> support for additional peripherals and subsystems.
-
-Drop paragraph, it is contradictory to the next one.
-
-> 
-> The initial device tree includes basic support for:
-> 
-> - CPU and memory
-> 
-
-Drop blank lines
-
-between
-
-each
-
-of
-
-points. No need to inflate already huge commit msg.
-
-
-> - UART
-> 
-> - GPIOs
-> 
-> - Regulators
-> 
-> - PMIC
-> 
-> - Early console
-> 
-> - AT24MAC602 EEPROM
-> 
-> - MCP2515 SPI to CAN
-> 
-> - Hook up the ADV7535 DSI-to-HDMI bridge
-> 
-> - Add DP connector node and MDSS DisplayPort controller.
-> 
-> QCS615 talos-evk uses a Quectel AF68E WiFi/BT module (PCIe for
-> WiFi and UART for Bluetooth), which is different from the RIDE
-> platform. Plan to enable these in a follow-up patch series.
-
-Drop plans, not related. I also do not understand why you mention here
-RIDE. Does it mean you are duplicating the board?
-
-> 
-
-..
-
-
-> +&sdhc_1 {
-> +	pinctrl-0 = <&sdc1_state_on>;
-> +	pinctrl-1 = <&sdc1_state_off>;
-> +	pinctrl-names = "default", "sleep";
-> +
-> +	bus-width = <8>;
-> +	mmc-ddr-1_8v;
-> +	mmc-hs200-1_8v;
-> +	mmc-hs400-1_8v;
-> +	mmc-hs400-enhanced-strobe;
-> +	vmmc-supply = <&vreg_l17a>;
-> +	vqmmc-supply = <&vreg_s4a>;
-> +
-> +	non-removable;
-> +	no-sd;
-> +	no-sdio;
-> +
-> +	status = "okay";
-> +};
-> +
-> +&spi6 {
-> +	status = "okay";
-> +
-> +	mcp2515@0 {
-
-Still no improvements.
-
-Node names should be generic. See also an explanation and list of
-examples (not exhaustive) in DT specification:
-https://devicetree-specification.readthedocs.io/en/latest/chapter2-devicetree-basics.html#generic-names-recommendation
-If you cannot find a name matching your device, please check in kernel
-sources for similar cases or you can grow the spec (via pull request to
-DT spec repo).
-
-> +		compatible = "microchip,mcp2515";
-> +		reg = <0>;
-> +		clock-frequency = <20000000>;
-> +		interrupts-extended = <&tlmm 87 IRQ_TYPE_LEVEL_LOW>;
-> +		spi-max-frequency = <10000000>;
-> +		vdd-supply = <&vreg_v3p3_can>;
-> +		xceiver-supply = <&vreg_v5p0_can>;
-> +	};
-> +};
-
-..
-
-> diff --git a/arch/arm64/boot/dts/qcom/talos-evk.dts b/arch/arm64/boot/dts/qcom/talos-evk.dts
+> diff --git a/Documentation/devicetree/bindings/media/qcom,kaanapali-camss.yaml b/Documentation/devicetree/bindings/media/qcom,kaanapali-camss.yaml
 > new file mode 100644
-> index 000000000000..5c2ac67383e7
+> index 000000000000..82f427bd036b
 > --- /dev/null
-> +++ b/arch/arm64/boot/dts/qcom/talos-evk.dts
-> @@ -0,0 +1,133 @@
-> +// SPDX-License-Identifier: BSD-3-Clause
-> +/*
-> + * Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
-> + */
-> +/dts-v1/;
+> +++ b/Documentation/devicetree/bindings/media/qcom,kaanapali-camss.yaml
+> @@ -0,0 +1,369 @@
+> +# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
+> +%YAML 1.2
+> +---
+> +$id: http://devicetree.org/schemas/media/qcom,kaanapali-camss.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
 > +
-> +#include "talos-evk-som.dtsi"
+> +title: Qualcomm Kaanapali Camera Subsystem (CAMSS)
 > +
-> +/ {
-> +	model = "Qualcomm QCS615 IQ 615 EVK";
-> +	compatible = "qcom,talos-evk", "qcom,qcs615", "qcom,sm6150";
-> +	chassis-type = "embedded";
+> +maintainers:
+> +  - Hangxiang Ma <hangxiang.ma@oss.qualcomm.com>
 > +
-> +	aliases {
-> +		mmc1 = &sdhc_2;
-> +	};
+> +description:
+> +  The CAMSS IP is a CSI decoder and ISP present on Qualcomm platforms.
 > +
-> +	dp0-connector {
+> +properties:
+> +  compatible:
+> +    const: qcom,kaanapali-camss
+> +
+> +  reg:
+> +    maxItems: 16
+> +
+> +  reg-names:
+> +    items:
+> +      - const: csid0
+> +      - const: csid1
+> +      - const: csid2
+> +      - const: csid_lite0
+> +      - const: csid_lite1
+> +      - const: csiphy0
+> +      - const: csiphy1
+> +      - const: csiphy2
+> +      - const: csiphy3
+> +      - const: csiphy4
+> +      - const: csiphy5
+> +      - const: vfe0
+> +      - const: vfe1
+> +      - const: vfe2
+> +      - const: vfe_lite0
+> +      - const: vfe_lite1
+> +
+> +  clocks:
+> +    maxItems: 34
+> +
+> +  clock-names:
+> +    items:
+> +      - const: camnoc_nrt_axi
+> +      - const: camnoc_rt_axi
+> +      - const: camnoc_rt_vfe0
+> +      - const: camnoc_rt_vfe1
+> +      - const: camnoc_rt_vfe2
+> +      - const: camnoc_rt_vfe_lite
+> +      - const: cam_top_ahb
+> +      - const: cam_top_fast_ahb
+> +      - const: csid
+> +      - const: csid_csiphy_rx
+> +      - const: csiphy0
+> +      - const: csiphy0_timer
+> +      - const: csiphy1
+> +      - const: csiphy1_timer
+> +      - const: csiphy2
+> +      - const: csiphy2_timer
+> +      - const: csiphy3
+> +      - const: csiphy3_timer
+> +      - const: csiphy4
+> +      - const: csiphy4_timer
+> +      - const: csiphy5
+> +      - const: csiphy5_timer
+> +      - const: gcc_hf_axi
+> +      - const: qdss_debug_xo
 
-dp-connector, unless there is here dp1. But then follow standard
-practice of adding suffixes, so connector-0, connector-1, etc. I could
-understand dp-connector-1 if you find dp-connector here:
+No, I told many times you are supposed to use same order as last
+generation. Stop doing this alphabetical ordering or ordering by value.
+The previous generation has here vfe0.
 
-https://devicetree-specification.readthedocs.io/en/latest/chapter2-devicetree-basics.html#generic-names-recommendation
-
-> +		compatible = "dp-connector";
-> +		label = "DP0";
-> +		type = "full-size";
+> +      - const: vfe0
+> +      - const: vfe0_fast_ahb
+> +      - const: vfe1
+> +      - const: vfe1_fast_ahb
+> +      - const: vfe2
+> +      - const: vfe2_fast_ahb
+> +      - const: vfe_lite
+> +      - const: vfe_lite_ahb
+> +      - const: vfe_lite_cphy_rx
+> +      - const: vfe_lite_csid
 > +
-> +		hpd-gpios = <&tlmm 104 GPIO_ACTIVE_HIGH>;
+> +  interrupts:
+> +    maxItems: 16
 > +
-> +		port {
-> +			dp0_connector_in: endpoint {
-> +				remote-endpoint = <&mdss_dp0_out>;
-> +			};
-> +		};
-> +	};
+> +  interrupt-names:
+> +    items:
+> +      - const: csid0
+> +      - const: csid1
+> +      - const: csid2
+> +      - const: csid_lite0
+> +      - const: csid_lite1
+> +      - const: csiphy0
+> +      - const: csiphy1
+> +      - const: csiphy2
+> +      - const: csiphy3
+> +      - const: csiphy4
+> +      - const: csiphy5
+> +      - const: vfe0
+> +      - const: vfe1
+> +      - const: vfe2
+> +      - const: vfe_lite0
+> +      - const: vfe_lite1
+> +
+> +  interconnects:
+> +    maxItems: 2
+> +
+> +  interconnect-names:
+> +    items:
+> +      - const: ahb
+> +      - const: hf_mnoc
 
-...
+Why previously this was called hf_0 but now hf?
 
 > +
-> +&i2c1 {
-> +	clock-frequency = <400000>;
+> +  iommus:
+> +    maxItems: 1
 > +
-> +	status = "okay";
+> +  power-domains:
+> +    items:
+> +      - description:
+> +          TFE0 GDSC - Thin Front End, Global Distributed Switch Controller.
+> +      - description:
+> +          TFE1 GDSC - Thin Front End, Global Distributed Switch Controller.
+> +      - description:
+> +          TFE2 GDSC - Thin Front End, Global Distributed Switch Controller.
+> +      - description:
+> +          Titan GDSC - Titan ISP Block Global Distributed Switch Controller.
 > +
-> +	adv7535: adv7535@3d {
+> +  power-domain-names:
+> +    items:
+> +      - const: tfe0
+> +      - const: tfe1
+> +      - const: tfe2
 
-Still no improvements.
+Why not using the same names as before? It really does not matter that
+it is thin or image, all of them are the same because only the
+difference against top matters.
 
-Node names should be generic. See also an explanation and list of
-examples (not exhaustive) in DT specification:
-https://devicetree-specification.readthedocs.io/en/latest/chapter2-devicetree-basics.html#generic-names-recommendation
-If you cannot find a name matching your device, please check in kernel
-sources for similar cases or you can grow the spec (via pull request to
-DT spec repo).
+> +      - const: top
+> +
+> +  vdd-csiphy-0p8-supply:
+> +    description:
+> +      Phandle to a 0.8V regulator supply to CSI PHYs core block.
+> +
+> +  vdd-csiphy-1p2-supply:
+> +    description:
+> +      Phandle to 1.2V regulator supply to CSI PHYs pll block.
+> +
+> +  ports:
+> +    $ref: /schemas/graph.yaml#/properties/ports
+> +
+> +    description:
+> +      CSI input ports.
+> +
+> +    patternProperties:
+> +      "^port@[0-3]$":
+> +        $ref: /schemas/graph.yaml#/$defs/port-base
+> +        unevaluatedProperties: false
+> +        description:
+> +          Input port for receiving CSI data on CSI0.
+> +
+> +        properties:
+> +          endpoint:
+> +            $ref: video-interfaces.yaml#
+> +            unevaluatedProperties: false
+> +
+> +            properties:
+> +              data-lanes:
+> +                minItems: 1
+> +                maxItems: 4
+> +
+> +            required:
+> +              - data-lanes
+> +
+> +required:
+> +  - compatible
+> +  - reg
+> +  - reg-names
+> +  - clocks
+> +  - clock-names
+> +  - interrupts
+> +  - interrupt-names
+> +  - interconnects
+> +  - interconnect-names
+> +  - iommus
+> +  - power-domains
+> +  - power-domain-names
+> +  - vdd-csiphy-0p8-supply
+> +  - vdd-csiphy-1p2-supply
+> +  - ports
+> +
+> +additionalProperties: false
+> +
+> +examples:
+> +  - |
+> +    #include <dt-bindings/interconnect/qcom,icc.h>
+> +    #include <dt-bindings/interrupt-controller/arm-gic.h>
+> +    #include <dt-bindings/power/qcom,rpmhpd.h>
+> +
+> +    soc {
+> +        #address-cells = <2>;
+> +        #size-cells = <2>;
+> +
+> +        camss: isp@9253000 {
+
+Drop unused label
+
+> +            compatible = "qcom,kaanapali-camss";
 
 Best regards,
 Krzysztof
