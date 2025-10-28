@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-79249-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-79250-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ams.mirrors.kernel.org (ams.mirrors.kernel.org [213.196.21.55])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8E07AC15F87
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Oct 2025 17:54:32 +0100 (CET)
+Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [142.0.200.124])
+	by mail.lfdr.de (Postfix) with ESMTPS id D410BC15FD2
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Oct 2025 17:57:07 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ams.mirrors.kernel.org (Postfix) with ESMTPS id 0B757355D0D
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Oct 2025 16:54:32 +0000 (UTC)
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 37DEF4E1061
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Oct 2025 16:57:05 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A6BF728A3EF;
-	Tue, 28 Oct 2025 16:53:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5A327334379;
+	Tue, 28 Oct 2025 16:57:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="a/OARpYo"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="SfPj5uxZ"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 732EC28642B;
-	Tue, 28 Oct 2025 16:53:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2956D2882B4;
+	Tue, 28 Oct 2025 16:57:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761670409; cv=none; b=WTgmubAjb6QpwX8CRexyCQnfVP8rivGYulAt1Rk9HsG7BjPixITLEEhsjNqjpMW1wTS0n8nhBTrooZ7/Q4I45+6/OL71eC0KT9BVi3SvUar9lurL4wDlCQ3EXKN20jJLAom+caiAQuPdABf02lCjuLZOA2Escag1IT+ftRa6vUI=
+	t=1761670623; cv=none; b=Q1nnLWi7ukmD9X9po/Yn8OB8ImfYpyaSmCb8bpDalkdqG4nYz/oG+PTqSbB1QKTOZRJisZtZaBeysaVTO1+mTxTBbcPXduIAyKiLtkWq0SmQKWoGW3j5LPfziExIzeKqMdGTSf2MxpfPByVkm/2IRRQcHGeVYQlxI6eF6QAM8Gc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761670409; c=relaxed/simple;
-	bh=+PGWYJAw6ct9ucTSkBC0Dl851xqPWnKTOyQay0JBcgo=;
+	s=arc-20240116; t=1761670623; c=relaxed/simple;
+	bh=jL+q+hX5pgclGqLhztaAcUV7Iu4y5c7/CXWShf0neD8=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=P537qsDlf8dTgzznCx7BN4KlvNx6rZO80Q4XKmyrbIpz8x85+09xRJvgTjhygbq5hXZiNiY/tGQ9KJ+yy7DVsNILQhkAVh7+nj1LbyYvjNADjddSvqSOOtRev0+Js1TGQoCoQKoHJOQj8ufZi1ThDzxHX0r/3MbHUEApiEy+yyE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=a/OARpYo; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7DA4FC4CEE7;
-	Tue, 28 Oct 2025 16:53:25 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=IxPsOXZ+uAB9v7Y+gltNUfnbhqEsOBgjVVlTvxcVuUljl+Ql3noBwYtXC8CW7sztAsZbtuqihUrqxH4xt/m6Oa/vLrqRsXMoIVOwZyXDx93ydNf/6aJ23gOAqVVOv8Clp5lgoPS/fyHaSM/v9vZZTYKKoWnM1pLs2VnILBD/V4k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=SfPj5uxZ; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CDCB3C4CEE7;
+	Tue, 28 Oct 2025 16:56:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1761670408;
-	bh=+PGWYJAw6ct9ucTSkBC0Dl851xqPWnKTOyQay0JBcgo=;
+	s=k20201202; t=1761670622;
+	bh=jL+q+hX5pgclGqLhztaAcUV7Iu4y5c7/CXWShf0neD8=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=a/OARpYocA7gyOwKzMi7EBVpdtzxeaW1CnRvFJFC5n7APvJX/mGBgz6FIONb6j7nV
-	 Oa4X1q4FPRdTD/NB0uYTxJViKnAb5LRDfED4FlGtIm2YTHx53Hwm5liTIEOJOuWN8x
-	 Xev3rdk9d74vTgjZvJJibnwoZOC4+KxlR2mhYfgXroXrQ836TtPeCAblOueOboBs8k
-	 z+19UkKQ1Nj/0hf7GohY+qqbba/jwp05xgNZineZdxP2qBJNDnoCOHWYsaBazoADdM
-	 lvCuOgmrCLOhjdws8JdNlXr1Rgzckq1as+EX4nkS1yOZpnADa5KjG1WspyDtMvMbQf
-	 6Sh8tSztra+gQ==
-Message-ID: <aba2bf95-836e-444d-961d-0b2ac1fb415a@kernel.org>
-Date: Tue, 28 Oct 2025 17:53:23 +0100
+	b=SfPj5uxZTYeiNSCgD2N5QwJpnla587u0XK1spznO96mYoPO7vEMlH2urQbBREBVeJ
+	 M3Z9ub0LaIw3KyVGKmgT758C9UXOo1GfXSYKI7VYTUn2vJgQhOEGVUBGfK0vh7v2kv
+	 JxsmmGa4scR4Iprl0rTeEhKuf4/i/eovCZINXJvU4uAGqmq1gD0c93feU/TfA3sAsP
+	 iFMWQcdUgbMKc/DQjvdUI9GzTtMDY045kkHu1RUDTCnJTCT17ZYxZiOqvg9PV/l0ek
+	 KmT9XgwLfMOXYAgc1+jcsXzXhG3kmLwYlFuuDMDYAJgWrIXSOcDEyeIGfcoMwuw2Qv
+	 qdtiyFwX0jYdw==
+Message-ID: <7efc63ed-9c84-43c0-b524-f7e9e60b2846@kernel.org>
+Date: Tue, 28 Oct 2025 17:56:55 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,28 +50,27 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3] watchdog: Add driver for Gunyah Watchdog
-To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Cc: Pavan Kondeti <pavan.kondeti@oss.qualcomm.com>,
- Hrishabh Rajput <hrishabh.rajput@oss.qualcomm.com>,
- Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>,
- Wim Van Sebroeck <wim@linux-watchdog.org>, Guenter Roeck
- <linux@roeck-us.net>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
- linux-watchdog@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, Neil Armstrong <neil.armstrong@linaro.org>
-References: <20251028-gunyah_watchdog-v3-1-e6d1ea438b1d@oss.qualcomm.com>
- <25f7ff09-08ea-4969-9184-9fd01b097558@kernel.org>
- <76479593-c47b-41a7-8349-5d7c1403f7c0@oss.qualcomm.com>
- <73955d58-544c-4299-a099-bfd9e5912a40@kernel.org>
- <636a1f99-acd4-4904-8fae-f159646cc1a0@kernel.org>
- <f4d80be9-986f-4d37-9c25-725eff7bb653@quicinc.com>
- <e03373d9-e2dd-48b6-93a6-554fcd623718@kernel.org>
- <59a00934-cb42-43de-ac5b-a9292b08301d@quicinc.com>
- <aa4faa81-6e9d-41c2-85f0-32045a8f9f51@kernel.org>
- <jaj5oxqcgckndtp7wwe6ukqbh4z5phe3pw3hnhp2hatgqffjzr@y7qevil4o3yr>
+Subject: Re: [PATCH v3 2/6] dt-bindings: media: camss: Add
+ qcom,kaanapali-camss binding
+To: Vijay Kumar Tumati <vijay.tumati@oss.qualcomm.com>,
+ Hangxiang Ma <hangxiang.ma@oss.qualcomm.com>
+Cc: Loic Poulain <loic.poulain@oss.qualcomm.com>,
+ Robert Foss <rfoss@kernel.org>, Andi Shyti <andi.shyti@kernel.org>,
+ Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
+ Conor Dooley <conor+dt@kernel.org>, Todor Tomov <todor.too@gmail.com>,
+ Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
+ Mauro Carvalho Chehab <mchehab@kernel.org>,
+ Bryan O'Donoghue <bryan.odonoghue@linaro.org>, linux-i2c@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org, linux-media@vger.kernel.org,
+ aiqun.yu@oss.qualcomm.com, tingwei.zhang@oss.qualcomm.com,
+ trilok.soni@oss.qualcomm.com, yijie.yang@oss.qualcomm.com,
+ Jingyi Wang <jingyi.wang@oss.qualcomm.com>,
+ Atiya Kailany <atiya.kailany@oss.qualcomm.com>
+References: <20251023-add-support-for-camss-on-kaanapali-v3-0-02abc9a107bf@oss.qualcomm.com>
+ <20251023-add-support-for-camss-on-kaanapali-v3-2-02abc9a107bf@oss.qualcomm.com>
+ <20251028-wonderful-olive-muskox-77f98d@kuoka>
+ <ac126c63-f40c-4159-87c9-1b3d7a8dec63@oss.qualcomm.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -117,100 +116,63 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  jWt87ecuHlpL3uuQ0ZZNWqHgZoQLXoqC2ZV5KrtKWb/jyiFX/sxSrodALf0zf+tfHv0FZWT2
  zHjUqd0t4njD/UOsuIMOQn4Ig0SdivYPfZukb5cdasKJukG1NOpbW7yRNivaCnfZz6dTawXw
  XRIV/KDsHQiyVxKvN73bThKhONkcX2LWuD928tAR6XMM2G5ovxLe09vuOzzfTWQDsm++9UKF a/A=
-In-Reply-To: <jaj5oxqcgckndtp7wwe6ukqbh4z5phe3pw3hnhp2hatgqffjzr@y7qevil4o3yr>
+In-Reply-To: <ac126c63-f40c-4159-87c9-1b3d7a8dec63@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 
-On 28/10/2025 17:51, Dmitry Baryshkov wrote:
-> On Tue, Oct 28, 2025 at 05:40:33PM +0100, Krzysztof Kozlowski wrote:
->> On 28/10/2025 17:33, Pavan Kondeti wrote:
->>> On Tue, Oct 28, 2025 at 05:17:44PM +0100, Krzysztof Kozlowski wrote:
->>>> On 28/10/2025 13:27, Pavan Kondeti wrote:
->>>>> On Tue, Oct 28, 2025 at 12:07:40PM +0100, Krzysztof Kozlowski wrote:
->>>>>> On 28/10/2025 12:04, Krzysztof Kozlowski wrote:
->>>>>>> On 28/10/2025 11:58, Hrishabh Rajput wrote:
->>>>>>>>
->>>>>>>> On 10/28/2025 3:10 PM, Krzysztof Kozlowski wrote:
->>>>>>>>> On 28/10/2025 10:35, Hrishabh Rajput via B4 Relay wrote:
->>>>>>>>>> +
->>>>>>>>>> +static int __init gunyah_wdt_init(void)
->>>>>>>>>> +{
->>>>>>>>>> +	struct arm_smccc_res res;
->>>>>>>>>> +	struct device_node *np;
->>>>>>>>>> +	int ret;
->>>>>>>>>> +
->>>>>>>>>> +	/* Check if we're running on a Qualcomm device */
->>>>>>>>>> +	np = of_find_compatible_node(NULL, NULL, "qcom,smem");
->>>>>>>>> I don't think you implemented my feedback. This again is executed on
->>>>>>>>> every platform, e.g. on Samsung, pointlessly.
->>>>>>>>>
->>>>>>>>> Implement previous feedback.
->>>>>>>>
->>>>>>>> Do you want us to add platform device from another driver which is 
->>>>>>>> probed only on Qualcomm devices (like socinfo from previous discussion) 
->>>>>>>> and get rid of the module init function entirely? As keeping anything in 
->>>>>>>> the module init will get it executed on all platforms.
->>>>>>>
->>>>>>> Instead of asking the same can you read previous discussion? What is
->>>>>>> unclear here:
->>>>>>> https://lore.kernel.org/all/3b901f9d-dbfa-4f93-a8d2-3e89bd9783c9@kernel.org/
->>>>>>> ?
->>>>>>>
->>>>>>>>
->>>>>>>>
->>>>>>>> With this patch version, we have tried to reduce the code execution on 
->>>>>>>> non-Qualcomm devices (also tried the alternative as mentioned in the 
->>>>>>>> cover letter). Adding platform device from another driver as described 
->>>>>>>> above would eliminate it entirely, please let us know if you want us to 
->>>>>>>> do that.
->>>>>>>
->>>>>>> Why do I need to repeat the same as last time?
->>>>>>
->>>>>>
->>>>>> Now I see that you completely ignored previous discussion and sent THE
->>>>>> SAME approach.
->>>>>
->>>>> Our intention is not to waste reviewers time at all. It is just a
->>>>> misunderstanding on what your comment is about. Let me elaborate further
->>>>> not to defend our approach here but to get a clarity so that we don't
->>>>> end up in the same situation when v4 is posted.
->>>>>
->>>>> https://lore.kernel.org/all/b94d8ca3-af58-4a78-9a5a-12e3db0bf75f@kernel.org/ 
->>>>>
->>>>> You mentioned here
->>>>>
->>>>> ```
->>>>> To me socinfo feels even better. That way only, really only qcom devices
->>>>> will execute this SMC.
->>>>> ```
->>>>>
->>>>> We interpreted this comment as `avoid executing this SMC on non qcom
->>>>> devices`. That is exactly what we have done in the current patch. since
->>>>
->>>>
->>>> So where did you use socinfo? Point me to the code.
->>>>
->>>
->>> Okay, lets go a bit deep into the socinfo part. we have used
->>> `soc_device_match()` API to detect if the device is qcom (`family =
->>> Snapdragon`). It works. However, when we built both `socinfo` and
->>
->> socinfo driver. Read my first feedback:
->>
->>
->> "No, your hypervisor driver (which you have) should start the module via
->> adding platform/aux/something devices."
->>
->> And then I agreed if you start it from the socinfo driver.
-> 
-> I'd rather not tie this to socinfo. The socinfo is an optional driver,
-> which is mainly used to provide debugfs entries. Watchdog is much more
-> important. It should not be tied to debugfs-only entry.
-> 
+On 28/10/2025 16:22, Vijay Kumar Tumati wrote:
+>>> +  interconnects:
+>>> +    maxItems: 2
+>>> +
+>>> +  interconnect-names:
+>>> +    items:
+>>> +      - const: ahb
+>>> +      - const: hf_mnoc
+>> Why previously this was called hf_0 but now hf?
+> Hi Krzysztof, the interconnect driver exposes only one node 'camnoc_hf' 
 
-No problem. Choose whatever driver it is. The problem is that they did
-not even implement that. They claimed they followed review but it is
-100% ignored. Nothing got implemented and they send the same.
+Drivers don't matter. Interconnect driver does not matter here. You
+describe this hardware, not interconnect driver.
+
+Keep it consistent with previous devices, whichever these are.
+
+> to the camera driver, with it internally managing the voting on hf_0 and 
+> hf_1 clients. The traffic from the Real Time blocks in camera go through 
+> both HF_0 and HF_1, with the former being the primary. This change 
+> correctly represents that the BW voting is for the whole of the HF 
+> client. Please let me know if you have any further questions and we 
+> would be happy to answer. Thank you.
+>>> +
+>>> +  iommus:
+>>> +    maxItems: 1
+>>> +
+>>> +  power-domains:
+>>> +    items:
+>>> +      - description:
+>>> +          TFE0 GDSC - Thin Front End, Global Distributed Switch Controller.
+>>> +      - description:
+>>> +          TFE1 GDSC - Thin Front End, Global Distributed Switch Controller.
+>>> +      - description:
+>>> +          TFE2 GDSC - Thin Front End, Global Distributed Switch Controller.
+>>> +      - description:
+>>> +          Titan GDSC - Titan ISP Block Global Distributed Switch Controller.
+>>> +
+>>> +  power-domain-names:
+>>> +    items:
+>>> +      - const: tfe0
+>>> +      - const: tfe1
+>>> +      - const: tfe2
+>> Why not using the same names as before? It really does not matter that
+>> it is thin or image, all of them are the same because only the
+>> difference against top matters.
+> Right, this is done to maintain the consistency with the clock driver on 
+
+Sorry, this makes no sense. This device has nothing to do with clock
+driver. Don't ever use clock drivers as arguments for doing something in
+completely different place.
+
+Not mentioning that drivers don't matter much for the bindings, so I
+really do not get what you try to explain here.
 
 Best regards,
 Krzysztof
