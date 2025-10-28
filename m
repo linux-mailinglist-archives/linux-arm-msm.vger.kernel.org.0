@@ -1,222 +1,144 @@
-Return-Path: <linux-arm-msm+bounces-79163-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-79164-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id B2971C1422B
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Oct 2025 11:40:05 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3BE1FC1439D
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Oct 2025 12:00:34 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 9CFA119848AE
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Oct 2025 10:40:29 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id E70D31A683C6
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Oct 2025 10:54:42 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 765BE304975;
-	Tue, 28 Oct 2025 10:39:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 631C13081CB;
+	Tue, 28 Oct 2025 10:50:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="ZcTYS5wb"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="BF563+/k"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f50.google.com (mail-wm1-f50.google.com [209.85.128.50])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C150C305E26
-	for <linux-arm-msm@vger.kernel.org>; Tue, 28 Oct 2025 10:39:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C75230E0EF
+	for <linux-arm-msm@vger.kernel.org>; Tue, 28 Oct 2025 10:50:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761647994; cv=none; b=VB889AVlSTDH+djPbUsScTSA8vKN/u9u2UjCSnAa/iYsOTsWdfm9n5eaeCQMHzJufABT6YeRLxK/wW5Xcw819o1LSV1bTuEBLbELPpe6LG2engZTy43G/4pW3GGBz9c89rnVp4Beq481aG5FBTadIiqDJEGE3i/lJvaROG4nEC8=
+	t=1761648627; cv=none; b=Cs16i500g0mluyaoN9Di+pD+in3lgvCk2a184NzJApEILxKgTfYPCZE6Df+QOp9uGc9fhLnB06JMndzPgpq5/ltf1TxurwHmbOSX6yCeROuK1zmYYUVx5y3Md9qJ0h1m5TcBZ1GHxteuMRyPSilttHHXp9oVQT24x20Tx09uh14=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761647994; c=relaxed/simple;
-	bh=3NGjtgZxPgWtmH709RDRDfk7uFifY5OiY7B1EJWWpsc=;
+	s=arc-20240116; t=1761648627; c=relaxed/simple;
+	bh=BCtbbIefRxl8ETsCXIFJF+wlsHm3vUU5KSEZnsuKlYw=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Iqu0QCLCVj5W02vSRuiIImGXIslq08j7f2ukJtmM8Fj6Gz1/lnvEGeTBKJXVzCbAH3koFyxLT3TG+h7EWIDQwl46fuZMTcbksI2sdZcAbAeA+iLoTXSRaYayCCtBCFCgwysHh6Xmxf/6DXgVSV+tTKGniLNloe40tUpWqJhGSyk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=ZcTYS5wb; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 59S8Xrr01177133
-	for <linux-arm-msm@vger.kernel.org>; Tue, 28 Oct 2025 10:39:51 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	hakPLjvlb1x1mh1I+hwpkg3sAPbblZiTbfuHFvfq7VE=; b=ZcTYS5wbGBjroiRs
-	Oe3hNC/poxLYE5cdIShOTQnO2ck3B0SA2YF76Q5N5TEQ66BR/0YxS5wOOA8w4vfD
-	7f4Z7RvuQ5Q7byey9tn/1RsDUCtxZPi+wqm37ILaQ7aCM6FxPHk7iVE3AaSqh0t4
-	j1UAM4l0JCpjf0AciJNZFCFJmEefjnl28zuX7j6LgwFexVYdp5v7iE3koq4rxH/y
-	WcOpX018WI6HEvGQ2AfmrNjSHvbkOYb6wPkvsHBhiEhGyxosvs6mrebZkIPebutL
-	m197HJxhnqakE2KcI88aHZvkOwSw8Ht2hGLWeXSBk24OrI9JNct1Up2N+1GbWLjH
-	PGkkVA==
-Received: from mail-pf1-f200.google.com (mail-pf1-f200.google.com [209.85.210.200])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4a2tebgcbj-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Tue, 28 Oct 2025 10:39:51 +0000 (GMT)
-Received: by mail-pf1-f200.google.com with SMTP id d2e1a72fcca58-781171fe1c5so4764988b3a.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 28 Oct 2025 03:39:51 -0700 (PDT)
+	 In-Reply-To:Content-Type; b=A1afXutZs05feSnXsaB4ItR/IIDQqGBXeNxBrq2Hh5AID3T20CDnemErei8oLSXqFLRvkNkxqvsXB4H8ZQENH0+TSxJ5CZ+mm4wAc9kj91clMDbJcNT8FUf33Wxgvanlc2h/k073YY58RyOLemdpkGcSTOkCzNyMVQbY10ggS7c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=BF563+/k; arc=none smtp.client-ip=209.85.128.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wm1-f50.google.com with SMTP id 5b1f17b1804b1-47114a40161so65647315e9.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 28 Oct 2025 03:50:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1761648623; x=1762253423; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=nmrMQdnFbXTRUvWSj6UdlngxWpZlUvtP+bCbfxielbc=;
+        b=BF563+/kLFb3HWB/fBQR9NxO9fHkMUD0suIKa66ZBSA4qe6gJ8x/ktXlB/qeA0Bu6N
+         1w8sxbd+cb5Elugj0ibkHMUM+oMfODpX1YXziu/AZg1+IHMtdrUFtf7u4nSvYMYG2wzT
+         /hHR7zdhUabN2YhHutwMioF58VPMknth118aiDmr+RUyyE1d63C+bfk1msPyVT7nYc8/
+         xdC0G8Z9CAERV50z4eq9frfz288a/fHvAV1P57SOk+4CvqTnzV2Hs1sw/WTUsHd++7Xv
+         ziZAo4b2JSEChQ+1liHRsROOCuQXoEM0QQwdK3wRkkaPY1rj5w9gXBV7z+tBj4kA/avc
+         kUJg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1761647991; x=1762252791;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
+        d=1e100.net; s=20230601; t=1761648623; x=1762253423;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=hakPLjvlb1x1mh1I+hwpkg3sAPbblZiTbfuHFvfq7VE=;
-        b=u1OgbOMDYk3kw1UTlDv5dTakrFzb/2XmMxXb3ujh0LTZIdyzr3Zp9Z/yLgj6RVvjjD
-         OrazrMlIaQ1F5gLTbehNmo1tAOE8gd3YBzcs3aY4ZuarDKMBJUeI6P/R9ubguDYfXa+9
-         6Od1HvYxqvgJkMRig7+Ao4/xJp9nLnqHJkzYu9BHbzpF8Lfiq6JVhXmQx/n9qvDQL2lM
-         M59m3zoWC0OvSjckL2oXEkKIGddxsCDhpisgCFI6/L+YDcP3DbTU8FiPPlSKBFMrvB1Y
-         VK6JmGeyzbr+fgNMOYCa16EbSo7OPfhFIrLvlDJ4Fct856M2WgMZJ0QJ+4u/jwY4qrLP
-         Wh8Q==
-X-Forwarded-Encrypted: i=1; AJvYcCXpgxtJHDN3ieMVupExDaVTtAwBsn6g2LGpQo2kcexD9K7xRPQu0VclGL1xQ+ksQGSIic0RLhKjQzLTHWGB@vger.kernel.org
-X-Gm-Message-State: AOJu0YyYzNFZAsulmKebsVQ5MpkNdBztdNCXTL94QymXKRrHeB3vdg7W
-	xfJ0hAIvRLGwBtI+zK/X7uSRN6CWqJH9zVkJgaitknMKg6TZJS+TDCdy/seV3WGUwsoTho51GjB
-	PI5P8xp/CLu1iT+jMeDSkS1jf391iFV+Ybcht4FIYDCksI4nKJ1rp6xtLZabWf4UWS1VA
-X-Gm-Gg: ASbGncuKqxysYXvsAqsufOGBigKXVKr5wXKKh1nTFYfL62Gyd7STtOP+Nka2zUNojTl
-	xXCW8y8MDRKhgxDMEJ1Rp19+DKEM2VscWdoEXhKwDFzHFqZxVTpVR9+B+PkTdUvuI8YOtH5onNq
-	E+dUdZ+VRWCj7Nfy9L3zMnbTjWanczUxrlubFd1QN87b0ac+5UIoAdhLRMMEq+pMKwMwm39dSpb
-	4e5X4XNGkKkAWyjm4cKvw787oBnIl/xBsx2E273K930tRdOBZzbgo8wJ9uMU+oxIvh3nAnYJBp6
-	JDmfVtYTeAXEepZfic2ielVW2gS33hG8N6YBHyOozMbV5kGE1HhClslcMAIU3Fp8S/wJ37dT7kw
-	+xNCZE5ybaX1oTjz1/WMiZixi1edjUzU=
-X-Received: by 2002:a05:6a21:3397:b0:2dc:40f5:3c6c with SMTP id adf61e73a8af0-344d403a01cmr3981139637.54.1761647990652;
-        Tue, 28 Oct 2025 03:39:50 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGYuP8hwnRXCriOHq1znAqj/6unUwBm2UU+kXa9k/iRY2/grJHUUtm0DNhi4dw2IYstv7N44A==
-X-Received: by 2002:a05:6a21:3397:b0:2dc:40f5:3c6c with SMTP id adf61e73a8af0-344d403a01cmr3981110637.54.1761647990221;
-        Tue, 28 Oct 2025 03:39:50 -0700 (PDT)
-Received: from [10.206.101.41] ([202.46.23.25])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-7a4140492f9sm11100899b3a.30.2025.10.28.03.39.46
+        bh=nmrMQdnFbXTRUvWSj6UdlngxWpZlUvtP+bCbfxielbc=;
+        b=ssUTx5chWbFfe6Mjlf5IC8G1FB+YLHuGGnIY0MYAlCqkWsquxr6Z+eXM9VzJlfJcOH
+         7117JKCGEcRoy5St8ERJgCeDX7xqxLCPYWzySQsYFBC03r0mgIb5OM1gEoca5h4KN9r3
+         B/EIg2u9OZLsnnn2Qg7ydBNrMDtz//DaF9f/Cv/5B6XTS+QkYlI+t74A/uadAHcSlx+b
+         mm4B9td6cG1ASYTkI5O/fE6nkhJG7JiEGwSrL2tu6LkcBYWiL5Bj4pzixJn3uuK5qpR6
+         RGLg/HV/6ot0FdgyJW2Kb729kWpOwnunSPHPLjOCXW3u3gQvANTJ6mfABddId3BYPPlP
+         Ou/w==
+X-Forwarded-Encrypted: i=1; AJvYcCVH/NMlw+T+2EsT81xf/BS8RnKbFoCOxaPNXDZLOUIznn8jKmL2XgK8yhH7TgrV+3NKe9QLUfLCtLkpZHr7@vger.kernel.org
+X-Gm-Message-State: AOJu0YxhMOOozIAsa0+gwdIyu7oVTeQcUZJPfgz+PSWbrDHCzP4bHKJq
+	AJSc7QJiuv5Hn0Q8vw/KfhAcLQHozlZsFKRLaffEBAiYBMisQuhfmrVYyFo4LhTaq5c=
+X-Gm-Gg: ASbGncsvwE1918QRvLkgQIub8IW7j89PixR9jiMUwAPOkNv58zOdsz4jJVepKl2TsUX
+	fV+TbE8NObOw9kKZU1tJKXqjxe6PyjsKRfM3MO4U2KX6Q7Kp0JYWGeZkk/9p2p513/xEl73Vc7m
+	INWxLTaySQ+6vSRlYliv88BAolZzrS+lTn1ix3PO7wvmZf88arTytrP5N5PZ/9qEFbuZG3HS8uv
+	SwrHZ/vtoNeCN6ZoxQqlBK/alMWADi3sWR1eCpOOwPAfs8Gni+mW/G5QtnM10CBdSITQkTK8Vvm
+	ZhAXOHuLa7vAIpcm/oVcOR71GW7RyG4z/+F8VwwG9IifAnsA+899Nlp+d9wgFJC4b4JVw7AIBan
+	YupTR7c2BEfl+CcrUR2D4QOCeo968YMjGyXbEq2pSg2jfWhJzheN+QJSdqiE/DCdvY8er5L6SMf
+	MZvHOMddRe1MOmGH6+GIDZp16I6171uNQswjXxE6bd5+o=
+X-Google-Smtp-Source: AGHT+IEW5Xn6pgsIVIQmh1ZteaU6fBGYQzaGzmRov8RIVgUKjWNp6avGgGE1oXye0/BWbWfHNJ1oGw==
+X-Received: by 2002:a05:600c:5492:b0:477:c37:2ea7 with SMTP id 5b1f17b1804b1-47717e37274mr21925335e9.21.1761648623445;
+        Tue, 28 Oct 2025 03:50:23 -0700 (PDT)
+Received: from [192.168.0.163] (188-141-3-146.dynamic.upc.ie. [188.141.3.146])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-475dd47793fsm191912885e9.3.2025.10.28.03.50.22
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 28 Oct 2025 03:39:49 -0700 (PDT)
-Message-ID: <2898f1bc-c014-b196-705a-cd797be92dce@oss.qualcomm.com>
-Date: Tue, 28 Oct 2025 16:09:44 +0530
+        Tue, 28 Oct 2025 03:50:22 -0700 (PDT)
+Message-ID: <56633bc4-5ef3-475a-9749-a6f455aad9c4@linaro.org>
+Date: Tue, 28 Oct 2025 10:50:21 +0000
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.15.1
-Subject: Re: [PATCH v1 1/4] media: qcom: iris: Add support for scale and
- improve format alignment
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/3] dt-bindings: media: camss: Add qcom,sm6350-camss
+To: Krzysztof Kozlowski <krzk@kernel.org>,
+ Luca Weiss <luca.weiss@fairphone.com>
+Cc: Bryan O'Donoghue <bod@kernel.org>, Robert Foss <rfoss@kernel.org>,
+ Todor Tomov <todor.too@gmail.com>,
+ Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
+ Mauro Carvalho Chehab <mchehab@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>,
+ ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org, linux-media@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20251024-sm6350-camss-v1-0-63d626638add@fairphone.com>
+ <20251024-sm6350-camss-v1-1-63d626638add@fairphone.com>
+ <20251028-defiant-visionary-rottweiler-f97cda@kuoka>
+ <DDTUHFIN3IEK.3FY5IS9S73ASO@fairphone.com>
+ <0bf4ab2e-9846-4f8b-ad72-e9db6fb7d08e@kernel.org>
+ <936ecaf4-8b48-4c93-a666-153a13ee9e16@linaro.org>
+ <b8550097-76c5-4843-9b05-0802f3a4e3e6@kernel.org>
+From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 Content-Language: en-US
-To: Wangao Wang <wangao.wang@oss.qualcomm.com>,
-        dikshita.agarwal@oss.qualcomm.com, abhinav.kumar@linux.dev,
-        bod@kernel.org, mchehab@kernel.org
-Cc: linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, quic_qiweil@quicinc.com,
-        quic_renjiang@quicinc.com
-References: <20251015092708.3703-1-wangao.wang@oss.qualcomm.com>
- <20251015092708.3703-2-wangao.wang@oss.qualcomm.com>
-From: Vikash Garodia <vikash.garodia@oss.qualcomm.com>
-In-Reply-To: <20251015092708.3703-2-wangao.wang@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8
+In-Reply-To: <b8550097-76c5-4843-9b05-0802f3a4e3e6@kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDI4MDA5MCBTYWx0ZWRfX6wRKKEf/mH1Q
- 2rLGPb35gnsNBh8oQmgfjbfb+Lg2DNqqBntydJRsca8Vtu2vLZ7kHtr0/nR+l/HnYkJRKM8TEWi
- yOhTrOBUWSiE7MCMRoIsq57HpltPO93029+d9qWL30/+i/QiJw+D4VI/wrnkgs3SXd47EfYBIT0
- 2e68CZ5wKVYo9ZDAVz3zZD1u5vH2BKVtWE7j+sIAcw5ItvfC3/fJpZKEbHjfbm+no/IqM2MpNAQ
- ZA/Li7f89iCP+jTKPr2IiOMpZELtpGOq8rpBoF2sDBVb1HDBqaCXbVKYS3hKXsZZctpff2ztHDw
- s7Tco3+NY1Hb/yMz2MhAR2+Ltvr6LPXN+sZVtMyheCL+41lMzeMaPVBmoT+2cZ4pvTGiRX+aD6x
- HPh8wzaDoSLnap1CfVjwqu03fF/zXw==
-X-Proofpoint-GUID: 1PWOAf5vlJJtynYbjfUo1Cv9ENR1Xlv0
-X-Proofpoint-ORIG-GUID: 1PWOAf5vlJJtynYbjfUo1Cv9ENR1Xlv0
-X-Authority-Analysis: v=2.4 cv=V/BwEOni c=1 sm=1 tr=0 ts=69009d77 cx=c_pps
- a=mDZGXZTwRPZaeRUbqKGCBw==:117 a=ZePRamnt/+rB5gQjfz0u9A==:17
- a=IkcTkHD0fZMA:10 a=x6icFKpwvdMA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=EUspDBNiAAAA:8 a=tP2Na-aPhhGfs1T55DUA:9 a=QEXdDO2ut3YA:10
- a=zc0IvFSfCIW2DFIPzwfm:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-10-28_04,2025-10-22_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 priorityscore=1501 adultscore=0 malwarescore=0 spamscore=0
- phishscore=0 impostorscore=0 suspectscore=0 bulkscore=0 lowpriorityscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2510020000 definitions=main-2510280090
 
-
-On 10/15/2025 2:57 PM, Wangao Wang wrote:
-> Add output width and height settings in iris_venc_s_fmt_output to
-> enable scaling functionality.
+On 28/10/2025 10:39, Krzysztof Kozlowski wrote:
+> On 28/10/2025 11:24, Bryan O'Donoghue wrote:
+>> On 28/10/2025 09:46, Krzysztof Kozlowski wrote:
+>>>>>> +  power-domain-names:
+>>>>>> +    items:
+>>>>>> +      - const: ife0
+>>>>>> +      - const: ife1
+>>>>>> +      - const: ife2
+>>>>>> +      - const: top
+>>>>> Uh, not your fault, but who came with this list in previous generations?
+>>>>> Instead of simple and obvious "top+ifeX" which allows growing/shrinking,
+>>>>> someone put "top" at the end which means this cannot follow same order
+>>>>> as X1E for example... Heh, it follows at least sm8550.
+>>>> Shall we put top as first power-domain? I don't think it's an issue to
+>>>> change the order.
+>>> Well, it matches sm8550, so I am just grumpy complaining. It's fine.
+>>
+>> The provenance here is "top" was required to be added last because the
+>> code depended on magic indexing in dtb to know which was the TOP GDSC.
 > 
-> Add members enc_raw_width, enc_raw_height, enc_bitstream_width and
-> enc_bitstream_height to the struct iris_inst to support codec
-> alignment requirements.
 > 
-> HFI_PROP_CROP_OFFSETS is used to inform the firmware of the region
-> of interest, rather than indicating that the codec supports crop.
-> Therefore, the crop handling has been corrected accordingly.
+> That's silly, because if it was first element would be much easier.
 > 
-> Signed-off-by: Wangao Wang <wangao.wang@oss.qualcomm.com>
-> ---
->  .../qcom/iris/iris_hfi_gen2_command.c         | 18 ++++++++----
->  .../media/platform/qcom/iris/iris_instance.h  |  8 ++++++
->  drivers/media/platform/qcom/iris/iris_venc.c  | 28 ++++++++++++++++---
->  3 files changed, 44 insertions(+), 10 deletions(-)
-> 
-> diff --git a/drivers/media/platform/qcom/iris/iris_hfi_gen2_command.c b/drivers/media/platform/qcom/iris/iris_hfi_gen2_command.c
-> index 4ce71a142508..c2258dfb2a8a 100644
-> --- a/drivers/media/platform/qcom/iris/iris_hfi_gen2_command.c
-> +++ b/drivers/media/platform/qcom/iris/iris_hfi_gen2_command.c
-> @@ -168,9 +168,12 @@ static int iris_hfi_gen2_session_set_property(struct iris_inst *inst, u32 packet
->  
->  static int iris_hfi_gen2_set_raw_resolution(struct iris_inst *inst, u32 plane)
->  {
-> -	u32 resolution = inst->fmt_src->fmt.pix_mp.width << 16 |
-> -		inst->fmt_src->fmt.pix_mp.height;
->  	u32 port = iris_hfi_gen2_get_port(inst, plane);
-> +	u32 resolution, codec_align;
-> +
-> +	codec_align = inst->codec == V4L2_PIX_FMT_HEVC ? 32 : 16;
-> +	resolution = ALIGN(inst->enc_raw_width, codec_align) << 16 |
-> +		ALIGN(inst->enc_raw_height, codec_align);
+> Best regards,
+> Krzysztof
 
-HFI_PROP_RAW_RESOLUTION interface expects actual YUV resolution. It is not
-suppose to be aligned while configuring it to firmware.
+I'm sure it was an accident. A bug, we fixed it.
 
->  
->  	return iris_hfi_gen2_session_set_property(inst,
->  						  HFI_PROP_RAW_RESOLUTION,
-> @@ -195,8 +198,8 @@ static int iris_hfi_gen2_set_bitstream_resolution(struct iris_inst *inst, u32 pl
->  		payload_type = HFI_PAYLOAD_U32;
->  	} else {
->  		codec_align = inst->codec == V4L2_PIX_FMT_HEVC ? 32 : 16;
-> -		resolution = ALIGN(inst->fmt_dst->fmt.pix_mp.width, codec_align) << 16 |
-> -			ALIGN(inst->fmt_dst->fmt.pix_mp.height, codec_align);
-> +		resolution = ALIGN(inst->enc_bitstream_width, codec_align) << 16 |
-> +			ALIGN(inst->enc_bitstream_height, codec_align);
+Anyway that's why.
 
-Do we really need *bitstream variable here ? What is the concern in using the
-instance capture fmt height and width ?
-
->  		inst_hfi_gen2->dst_subcr_params.bitstream_resolution = resolution;
->  		payload_type = HFI_PAYLOAD_32_PACKED;
->  	}
-> @@ -216,8 +219,11 @@ static int iris_hfi_gen2_set_crop_offsets(struct iris_inst *inst, u32 plane)
->  	u32 port = iris_hfi_gen2_get_port(inst, plane);
->  	u32 bottom_offset, right_offset;
->  	u32 left_offset, top_offset;
-> +	u32 codec_align;
->  	u32 payload[2];
->  
-> +	codec_align = inst->codec == V4L2_PIX_FMT_HEVC ? 32 : 16;
-> +
->  	if (inst->domain == DECODER) {
->  		if (V4L2_TYPE_IS_OUTPUT(plane)) {
->  			bottom_offset = (inst->fmt_src->fmt.pix_mp.height - inst->crop.height);
-> @@ -231,8 +237,8 @@ static int iris_hfi_gen2_set_crop_offsets(struct iris_inst *inst, u32 plane)
->  			top_offset = inst->compose.top;
->  		}
->  	} else {
-> -		bottom_offset = (inst->fmt_src->fmt.pix_mp.height - inst->crop.height);
-> -		right_offset = (inst->fmt_src->fmt.pix_mp.width - inst->crop.width);
-> +		bottom_offset = (ALIGN(inst->enc_raw_height, codec_align) - inst->enc_raw_height);
-> +		right_offset = (ALIGN(inst->enc_raw_width, codec_align) - inst->enc_raw_width);
-
-I would suggest as below:
-S_FMT (output) -> Keep the driver fmt same as what client sets in s_fmt.
-So crop setting here could be "inst->fmt_src->fmt.pix_mp.height - inst->crop.height"
-
-without the need of additional variable ?
-
-Could you fix s_fmt and other places and run through compliance/ffmpeg to see it
-works well ?
-
-Regards,
-Vikash
+---
+bod
 
