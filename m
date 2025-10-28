@@ -1,127 +1,151 @@
-Return-Path: <linux-arm-msm+bounces-79171-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-79172-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0B695C14560
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Oct 2025 12:24:52 +0100 (CET)
+Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [142.0.200.124])
+	by mail.lfdr.de (Postfix) with ESMTPS id E5DCEC1457B
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Oct 2025 12:26:15 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 5E7AB565DE7
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Oct 2025 11:24:50 +0000 (UTC)
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 143F44E046E
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Oct 2025 11:25:38 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A0D9C307AFA;
-	Tue, 28 Oct 2025 11:24:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3496A3054E1;
+	Tue, 28 Oct 2025 11:25:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b="BgGXWr1L"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="Yi0sBzHo"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f52.google.com (mail-ej1-f52.google.com [209.85.218.52])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4B6B3074A6
-	for <linux-arm-msm@vger.kernel.org>; Tue, 28 Oct 2025 11:24:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C1BD3081B8
+	for <linux-arm-msm@vger.kernel.org>; Tue, 28 Oct 2025 11:25:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761650684; cv=none; b=oGKGNmFLnOnDdM99Yjfz5vcz1GbeeaoPBJsOgVGdxK700+fKkYDzeDSKoiNT1yMow/oiKqX/5MJAbxtya5u5UjDTmhLdzAOa42rfxOyq6UKYZTx96CKRde1Q+2qheKDxLbujfrBoTnXEJDkNCsTC6XIfHt40gfDVxuuHrWtbenM=
+	t=1761650736; cv=none; b=JiDysUBvpPG9+41GzggMLfU5yiNN5Hff0oXc3jAf7Mhepc/xFNwuAEs4FNuHEKcP3FKvLFH1ffy4t987Q6fVasdKZMhL3qax/XOwYcaj0jbT3Oevu6Hnlvfs6o4YJll+gOExNFY+iGcq30Iu3ZIfBEYXBUNZ3Q4kkZRMhmXkbFE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761650684; c=relaxed/simple;
-	bh=ZS8D7YevM68kueG73PP38JtCM4/TbPTO+FFQtYA36Xk=;
-	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
-	 References:In-Reply-To; b=YPaatva8rcghyfuIVqjZwI174FSs25z7iD0gwv9lQDdf4RUCipjHAALoOgKTAEVg1gUD1lOQbKTNEzQi4sDe1fUGuHuGEOfA0AhBNs341M1sDmgskH2005gjyJLCME7YV23EOfFZoNL3V+OgnHQHvdBBtJVGcSk90iyW51JI0Gs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=fairphone.com; spf=pass smtp.mailfrom=fairphone.com; dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b=BgGXWr1L; arc=none smtp.client-ip=209.85.218.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=fairphone.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fairphone.com
-Received: by mail-ej1-f52.google.com with SMTP id a640c23a62f3a-b6d70df0851so863586466b.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 28 Oct 2025 04:24:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=fairphone.com; s=fair; t=1761650681; x=1762255481; darn=vger.kernel.org;
-        h=in-reply-to:references:to:from:subject:cc:message-id:date
-         :content-transfer-encoding:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=1X0JyiHF22wejOgofms7G80j8gK+WhQgjSa7+ha7gyo=;
-        b=BgGXWr1LwuQwdmscGN2R6zsTMYKLiPURTF+5Y4Q8H7w3aRU4OEgoqnpYEGXfYh5gZq
-         G3lC6sY0p/BcxJYZZug2Ddmu9t+WdYb+iU1/ib/oesOx9hgET9sEfUN4byOL9oglw8GU
-         KKcvmTr/JisJLD56M0RcYg7vq9zp5E2YzqhxCq2rqueuVk2O5UqYY+f4ZdWE3KPBW3QK
-         MJQm/SK3L97THbOmhMhNFO7icuodMEIM4bNt2cOH2Y81kBQZAznbmpKzlvPIABvtqb15
-         OeQptLrD5PuyllwRoHMzO1qwUO0qyFg8FCDSfnzcmhnYPq5XxCnBsFKJ/OdTGM7UvjAA
-         XR/w==
+	s=arc-20240116; t=1761650736; c=relaxed/simple;
+	bh=aj7arItzhDrBhaPol0o7I8Tdjx7mOqSnlqwdibhKbgM=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=DMY3jEaaEaKDsvm20uGOWHNraBnjd+RlS7WJ1M1D5bT4DgI/j35/YmOjmCLyYR+xdEONn35czCw6aOYnk3Gip8thvtrYCOFkh0Cvl1m8s9lPSyOfh0vtbVS7eaoQGlGHfq/Vtdoxfrgag4LVvQSDoClnKHXMwtYf6OCtZu2wrpk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=Yi0sBzHo; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 59SB9rqK573497
+	for <linux-arm-msm@vger.kernel.org>; Tue, 28 Oct 2025 11:25:33 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	cx6xnPmLOnFqOjJjOh0mLlbJfxAt7938vxQ6lj5CpG8=; b=Yi0sBzHoHw9HbDWy
+	6jAsFakvMULpOpjuLvKwPLN66Epxo0mJBaxV5+ObrReZ9zNjqhtD4moOsGOiQp+b
+	9Rx6vRaz9FCAxuAzsZ1gW439S6H5p93dCgPnSyG1vqPsS1SbNRw090J0wUEBEy9O
+	Nc6C2WNPPjbfGVsMcEmNqB+Uq6QA7XgoLAcGMA53S+mk3v58eEq1NI18vE6WG/SH
+	vcXwf5SG9tuqSLGhuvw2c80yyTAG2DsJ1JCfeTelObE7g2KaChxhPVouPoZxyUwx
+	OtJieuQ+MBN+DIdped5sqLFWLWjUpoGl3RQZs52iZ5wy6Bh3rGwL40ZRKoKuXwSw
+	KukirQ==
+Received: from mail-pl1-f198.google.com (mail-pl1-f198.google.com [209.85.214.198])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4a2pge985b-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Tue, 28 Oct 2025 11:25:33 +0000 (GMT)
+Received: by mail-pl1-f198.google.com with SMTP id d9443c01a7336-290c9724deeso52523495ad.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 28 Oct 2025 04:25:33 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1761650681; x=1762255481;
-        h=in-reply-to:references:to:from:subject:cc:message-id:date
-         :content-transfer-encoding:mime-version:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=1X0JyiHF22wejOgofms7G80j8gK+WhQgjSa7+ha7gyo=;
-        b=xFLwc/A3iEJYdyaGbghbdl5wmlFzTUpH01dYDl0do8H8uretTwPglsuKt1A4Jo+Acj
-         slAZfD9OFAgAa4tETfNvxbpjZDUua1STWC53XI9ddqEMROg9mXpsWe6TbP7ReUn1l/HD
-         xzna8wRIDfpQXA6mqPMXgS378udt5lWHTcwgd4sLqek54oFty+h8g7FEX90Q9Lxny18z
-         uZeaThOmgWLysFI/GRJGoWAUvqDvsJankJDGtBqXAUlGP6WfOUj/xPT1+xDKsXquGHb1
-         MXmCGyzzmSI7+6lBn6EHVqxndQzpmIuj9Ef22Mnj9mumm9lqGvLS5AFhENxfNAXk9kXG
-         MJHQ==
-X-Forwarded-Encrypted: i=1; AJvYcCWjfDEeYspaiweeAa2huZr3MEp65ckPwwqWyT2ddzouPMp8fmWtmgq6LEwmX3RQkyVMw4NyvsVPZ+Ek1g8r@vger.kernel.org
-X-Gm-Message-State: AOJu0YzjSJVflxD/XJtM2EOIEcbRn+YDInsxzwU/QUIzM50bI9t9aiJg
-	xuSlfjZqrPuKBYoCpSNJrLK0SldiiCIXbnhsSZPS+SoHdbyjH0t0YVPEkbRu/mjIu8s=
-X-Gm-Gg: ASbGnctf0Ju59DsL8PEq/V27o2jmjovUB+c3Tt1hxjiFcwLX0V2mRLJ88Im3kJ0QMx3
-	50iDspQ/UsM3qcghq0Eo7A9NKV4ezpga7dX9lPDphxgd1AGiQ5dwQq/H3/sd5BMUExqnHle1+gj
-	gmjHilkc/OZoJxfli4Byy4Cxw2DJeDOCqmdepe9N27qa+dVD2b6M3JnVAQOgmxvV5Dv+WCJOy5S
-	ApMOm2TURRX8e1hZIThQSt6YuxTMjBhipA60yvs5vqo6CEMIZQR0N6GGWbHC/LZNO05ldexT7Bl
-	RW/W8OfCC4WBCcSQVgIRjCKkeA6bjQ1LFGt41OZGHl36+gQOBCDiVhowhu0l2wClQaJPbLVQDKF
-	LwS7VQPAfs8kfJtKsy9jTonRnKEGMHYY1hYRbdkuCu4qN8gSFN7LliKw01RXzjQEOllXejrbXa1
-	ddDbpvo/OLwcJyBbbtKMBhunK6++I5hmRe0Z1zwY++tQpcFfSTrQU/KssPsJgtrSivP3s37kihf
-	EriifvAFkTy5UbF
-X-Google-Smtp-Source: AGHT+IFncZEIG2aB8fskoYH1N8Pf/o+3C4t3kr4xMiHMDpXB3GXPV+hTSqwVR4PFYW4I2LOJqiq/XA==
-X-Received: by 2002:a17:907:7205:b0:b45:b1f2:fac0 with SMTP id a640c23a62f3a-b6dba4a8d87mr344374766b.29.1761650680970;
-        Tue, 28 Oct 2025 04:24:40 -0700 (PDT)
-Received: from localhost (2a02-8388-6584-6400-d322-7350-96d2-429d.cable.dynamic.v6.surfer.at. [2a02:8388:6584:6400:d322:7350:96d2:429d])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-b6d853077d2sm1068327966b.3.2025.10.28.04.24.39
+        d=1e100.net; s=20230601; t=1761650732; x=1762255532;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=cx6xnPmLOnFqOjJjOh0mLlbJfxAt7938vxQ6lj5CpG8=;
+        b=gpq7huOMu1x6WSXDXRRPfitYH9PVg6Prjx3QG1Oe1JS4cyb8rLW9X5ayouybxFtFWA
+         VbSbEgc8xaI/SpQ501WOpNjny0nOURe+oZPmbTeCOCOOAZ4G5Y7VJlZlcSeGWEo4Nwt8
+         YEOp9XPUwQ0jZZf/3IH9R4MEt1Oy2UQs7jBOjH4l++4seGiI8g1mVih8XInvhXs5UbhH
+         HB0qvgYfWIC/iT0CMsmTaUibdI99p2JsPFJNQegG5VHZS/EvvzOLMU0JdS/kN2MxQV9t
+         JXlJ62UN/oPFrNzjyVDH+sZdyAqh9/zGGsnKpd3oRRZtdPPbyQJgHURC+dflPA/Sayma
+         7Jaw==
+X-Forwarded-Encrypted: i=1; AJvYcCWIPJgErNccX/f3otVGmhfJ1gbP1LTBz9oPahLzHzCWR+PS++aiN286zYHOouD1IKSRzLNC8aAU/WX3gcuR@vger.kernel.org
+X-Gm-Message-State: AOJu0Yx32p4/SmU51iVCMKf4rPeiJFAlDs8tS/lUyWOxqeHDy/78ZcRU
+	7QwYoBoVrwo+uGEma7RGAtTJCM/mexuVdNpvXfNvf9O8apWbW5zA5gdYR0yoxorx4an1qC3Lv1N
+	jsIA2s5BU0bhtR7xqoO8ZSQhPZL0xX1/GQFHVneLNlB9anFBBZ4aCg94kwm8qdySzOWiy
+X-Gm-Gg: ASbGncukde6D/7yQD7Osg/1EF8yDe17bFZwlLWowqjLlZkhZrGuyrm/i4TayE3u3M1h
+	pg/oAJMDe8tAaLAwz+PPuVmLjrsEyJiqiklby03pvDmlaCPB/QRM4BIWU63txvVBSalhH4rLgOO
+	y6yssdZKUWHsKqHiw3Q15FF33hI97tkFNiKV8yiktwVFDBTXkxzPk8hiIsNa+NrOHiuyXVX2478
+	DW+GvaxkONDpBApmtITAz+Y92Q7R3g7LxSlYn2H7d73L4oxIWzoBC9Ckbf0z/g/KVQPHBymX77w
+	Nqv2Sr1v/it4SPt4H0ldp4wNUTNsRasxPCYOSnaLm2Fjgc31lfSjaMEDY8oM7sLFZmxlbzvFG2H
+	m9NQsySf2qzNZlQ8n25wHjtvsCWKE9hY0
+X-Received: by 2002:a17:902:c94a:b0:269:b2e5:ee48 with SMTP id d9443c01a7336-294cb5101f1mr40635275ad.52.1761650732541;
+        Tue, 28 Oct 2025 04:25:32 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGY3Jz2kyVL8x1xEmP9ZzU1xtZ8Uh8T8WFyYcHsG59aOo4z3gOrkOezjUjfrIwtGh4L53AqZg==
+X-Received: by 2002:a17:902:c94a:b0:269:b2e5:ee48 with SMTP id d9443c01a7336-294cb5101f1mr40635075ad.52.1761650732059;
+        Tue, 28 Oct 2025 04:25:32 -0700 (PDT)
+Received: from [10.204.100.217] ([202.46.23.25])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-29498cf3381sm113375575ad.16.2025.10.28.04.25.28
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 28 Oct 2025 04:24:40 -0700 (PDT)
+        Tue, 28 Oct 2025 04:25:31 -0700 (PDT)
+Message-ID: <44f821dc-33e0-0a42-bf7f-e43fe9f00775@oss.qualcomm.com>
+Date: Tue, 28 Oct 2025 16:55:26 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.15.1
+Subject: Re: [PATCH v2 1/3] media: iris: Add support for HFI_PROP_OPB_ENABLE
+ to control split mode
+Content-Language: en-US
+To: Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>,
+        Abhinav Kumar <abhinav.kumar@linux.dev>,
+        Bryan O'Donoghue <bod@kernel.org>,
+        Mauro Carvalho Chehab <mchehab@kernel.org>
+Cc: linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+References: <20251008-video-iris-ubwc-enable-v2-0-478ba2d96427@oss.qualcomm.com>
+ <20251008-video-iris-ubwc-enable-v2-1-478ba2d96427@oss.qualcomm.com>
+From: Vikash Garodia <vikash.garodia@oss.qualcomm.com>
+In-Reply-To: <20251008-video-iris-ubwc-enable-v2-1-478ba2d96427@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8
-Date: Tue, 28 Oct 2025 12:24:39 +0100
-Message-Id: <DDTX1PP2BBSX.WS61ZEATB649@fairphone.com>
-Cc: <~postmarketos/upstreaming@lists.sr.ht>, <phone-devel@vger.kernel.org>,
- <linux-arm-msm@vger.kernel.org>, <linux-media@vger.kernel.org>,
- <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH 2/3] media: qcom: camss: Add SM6350 support
-From: "Luca Weiss" <luca.weiss@fairphone.com>
-To: "Bryan O'Donoghue" <bryan.odonoghue@linaro.org>, "Luca Weiss"
- <luca.weiss@fairphone.com>, "Bryan O'Donoghue" <bod@kernel.org>, "Robert
- Foss" <rfoss@kernel.org>, "Todor Tomov" <todor.too@gmail.com>, "Vladimir
- Zapolskiy" <vladimir.zapolskiy@linaro.org>, "Mauro Carvalho Chehab"
- <mchehab@kernel.org>, "Rob Herring" <robh@kernel.org>, "Krzysztof
- Kozlowski" <krzk+dt@kernel.org>, "Conor Dooley" <conor+dt@kernel.org>,
- "Bjorn Andersson" <andersson@kernel.org>, "Konrad Dybcio"
- <konradybcio@kernel.org>
-X-Mailer: aerc 0.21.0-0-g5549850facc2
-References: <20251024-sm6350-camss-v1-0-63d626638add@fairphone.com>
- <20251024-sm6350-camss-v1-2-63d626638add@fairphone.com>
- <7e7e35f3-82b6-4757-bbcd-38e0e867b184@linaro.org>
-In-Reply-To: <7e7e35f3-82b6-4757-bbcd-38e0e867b184@linaro.org>
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-ORIG-GUID: kJEAwkNwp4WxK3ewqWiOFKo1CkEo1olx
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDI4MDA5NiBTYWx0ZWRfX+f1eac7XoWdi
+ wtJ6Gw/2V5vlbCwL5TrKJDHLYcFy3tpicfL+elE0i+QGBBRZGuJH/28ad3ORcJhMngVDVzPlI+3
+ msSJfvdbO41XG6hq88roD5Tof2GPPemSqlTFm/gTt2mnBAqkd6aQKzYIC1bnNNEs6WNoZ5wpldJ
+ m0Oa+zCE4sER6WFrU8YVIo0pZTp6VQzchqSzJlnWbnKDgz4sOM6xqK3ZLJ1GEh7xbfS6+t69WDW
+ jkgkqhBVqLRitfqPHwh6tOeQQ87I7+Aw4vsBXohHzRLf7jGjopXQMV7iEayTiVZRj1qHa+1izK4
+ 6NI4dMZwPrbM7Nx2hPponGrkV/wrLQDcqQMnVfzBY1cQgyW1kDTBjFL0tRDGo+zJDNBK0Xwvw4Y
+ cNDreMDHR4StM7Z/W4wGxnVaQ4Xj9w==
+X-Proofpoint-GUID: kJEAwkNwp4WxK3ewqWiOFKo1CkEo1olx
+X-Authority-Analysis: v=2.4 cv=fLU0HJae c=1 sm=1 tr=0 ts=6900a82d cx=c_pps
+ a=MTSHoo12Qbhz2p7MsH1ifg==:117 a=ZePRamnt/+rB5gQjfz0u9A==:17
+ a=IkcTkHD0fZMA:10 a=x6icFKpwvdMA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=EUspDBNiAAAA:8 a=Iixf843HBMwuVF7wJXAA:9 a=QEXdDO2ut3YA:10
+ a=GvdueXVYPmCkWapjIL-Q:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-10-28_04,2025-10-22_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ clxscore=1015 suspectscore=0 spamscore=0 phishscore=0 malwarescore=0
+ lowpriorityscore=0 priorityscore=1501 impostorscore=0 adultscore=0
+ bulkscore=0 classifier=typeunknown authscore=0 authtc= authcc= route=outbound
+ adjust=0 reason=mlx scancount=1 engine=8.22.0-2510020000
+ definitions=main-2510280096
 
-On Tue Oct 28, 2025 at 10:26 AM CET, Bryan O'Donoghue wrote:
-> On 24/10/2025 13:24, Luca Weiss wrote:
->> +		.regulators =3D { "vdda-0.9", "vdda-1.25" },
->
-> I'd like a little bit more consistency with the regulator names.
->
-> 0p9 1p2 instead of 0.9 and 1.25
 
-Based on the dt-bindings discussion, this will be updated in v2:
 
--          .regulators =3D { "vdda-0.9", "vdda-1.25" },
-+          .regulators =3D { "vdd-csiphy-0p9", "vdd-csiphy-1p25" },
-
-Regards
-Luca
-
->
+On 10/8/2025 3:22 PM, Dikshita Agarwal wrote:
+> Add handling for the HFI_PROP_OPB_ENABLE property, which allows enabling
+> or disabling split mode in the firmware. When HFI_PROP_OPB_ENABLE is set
+> to true, the firmware activates split mode for output picture buffers
+> (OPB). The OPB format is determined by the HFI_PROP_COLOR_FORMAT
+> property, supporting NV12 or QC08C formats.
+> 
+> Signed-off-by: Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>
 > ---
-> bod
+>  drivers/media/platform/qcom/iris/iris_hfi_gen2_command.c | 15 +++++++++++++++
+>  drivers/media/platform/qcom/iris/iris_hfi_gen2_defines.h |  1 +
+>  drivers/media/platform/qcom/iris/iris_platform_gen2.c    |  1 +
+>  3 files changed, 17 insertions(+)
 
+Reviewed-by: Vikash Garodia <vikash.garodia@oss.qualcomm.com>
 
