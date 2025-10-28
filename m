@@ -1,203 +1,155 @@
-Return-Path: <linux-arm-msm+bounces-79268-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-79269-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [142.0.200.124])
-	by mail.lfdr.de (Postfix) with ESMTPS id BD409C166C9
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Oct 2025 19:17:21 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id CD7DDC1683D
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Oct 2025 19:39:33 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 9B1774E1DC4
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Oct 2025 18:17:20 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 389C83B3A64
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Oct 2025 18:39:31 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 17569EAE7;
-	Tue, 28 Oct 2025 18:17:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id EF8D534E750;
+	Tue, 28 Oct 2025 18:39:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="cz/RHy8l"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="RAAdeZK3"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-qk1-f173.google.com (mail-qk1-f173.google.com [209.85.222.173])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61FE526F463
-	for <linux-arm-msm@vger.kernel.org>; Tue, 28 Oct 2025 18:17:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2FB919F115;
+	Tue, 28 Oct 2025 18:39:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761675439; cv=none; b=Q4WvwjHWjRv230LSakIg1wuca/3YJG6Ux2tOjAiSUXJc8Sp2a7PdQ0sIUKiJQ1oAJyx92Lfk82tst/wth1aK79qo1T6UOiAlgqZMDkG5BDWDZ3UJuU7lS9qP3qQvGECsJjk9RgmeyVgeccrFxKn2JXBTvBCiZijUzvhyoRrOvF4=
+	t=1761676767; cv=none; b=cU/rWeg+TnIN7eKOi7wJnuDGop/urWraKTFv6J/j5191TnD/YOBjV+/9i3SD/A72gFwCBbmuLol2W6scEocM8ekm4H0Uu6E6TwKwjNMs4o6mr4l2ncy6NTKR+XXgsSDVUSjPNN1rj9doPIxs1DwZfMhRakWYadx7wT7zA+v4ABI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761675439; c=relaxed/simple;
-	bh=7osc+fqovmwxSl77s5LTh7VtUuvOw0maEhwcPrAUqFQ=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=H27m6Wjz/+LICk8Z0u4rzHVmMjv2wjR3HpYPix2GzUJ41NP7cTGs3OoP5gJduNa1q/5TNfCFwjKZlFJNHH6emYsaKRB8IToVJpqfS7i4HnDXzkUhK07MW/hIoFqukOk8YnTCiQeMfvJX86hD5Dp3QXSKLnKJfGbrmJ6KKMBde68=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=cz/RHy8l; arc=none smtp.client-ip=209.85.222.173
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-qk1-f173.google.com with SMTP id af79cd13be357-8a3c0086c41so53469585a.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 28 Oct 2025 11:17:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1761675435; x=1762280235; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=bu7Zm+c4AQjYkV0J+aBfl0vChbgcxRDezVwbj3H8d7A=;
-        b=cz/RHy8llVCr24A+oRoYpTeoj0h5n3ilksN8JUps+X55iMpgmVDlz4LGMJIQr+/2Gs
-         X8xJbfMNeYSIxC+If0n3milzJk7ELnny8nT4KCM7YowAZuGwuQh3eaKpnU61xYKuWWzL
-         +N/Ad29xUNuB17ciN/KYKwMXYtlLSf9iRi3VHHlgFMGEa/4CGhAH7MzClrpFvMz69jY1
-         +pM9bQF/UspGOe0all+v9EGX1zpu8C3bJHT5oMgfyVEH7CWuyyzSi1uh00svLqG21wIM
-         OujF2TiAnvspZzmpC8GDYLZW056Q0MIXAqNKOBIus7Biad3wxO4EN9g+ao1spXWU08Xn
-         M8ew==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1761675435; x=1762280235;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=bu7Zm+c4AQjYkV0J+aBfl0vChbgcxRDezVwbj3H8d7A=;
-        b=Pu+AkrpfcUZcXOkIZu8bVpDSvjvvITSfXvKaYlJzJ82fIaiiFPapRZUXYuLb1ilzef
-         qQIE4l6oJtm/u8wDEZO5QoKxbqXS39wlb8It5vNMVRfR9jErPHYzuNkkSB7dvreWkAjG
-         /dipm+d9tp9XYmGcreO2JyMjRDhe5zB7sbT2APczv6rGB5PDtW7R7XhDoX11FLnzg1/R
-         RUoyxyIq2gFyzdyoflR+yYCLKSatDxxFkMmta4RivdWY+Y0CFxn6LH+b0xoWT3dPvpH8
-         S9pqLb20sSeR09tpUa7dUJh/3JiNO5Llbhp2PSu9+dqjQohq8IJBkZmUdc1hT6hzITpN
-         JjYQ==
-X-Forwarded-Encrypted: i=1; AJvYcCVEyi6hpKiYaDP+wehuMel1zt0IGkc87ax4cuD9tvm9bmTGHsKptoqJUxpeXoKe+HShFrJP93yYwx0q44XL@vger.kernel.org
-X-Gm-Message-State: AOJu0YyBUkzCazM53EIWSl/x4PZnztziPVWYOMYjU1jo3hiU55eu5uFx
-	+dfsyFiCOX19YF9PsbAzxW9tSdgDf9zF0KASn36FCSymVPMWRXKO+Xyr
-X-Gm-Gg: ASbGncuN17YEkoKmfZrZxVr33NRQNm8IuBb/9ffQzPMMU6/HAIbFJ3eonMaa65Mi9Rw
-	2FegWy9F6U035Sng6bXtScdoDYg99t9MTX8Oa6HRQ6cKJyG6h4XCQeO7sXKVFIxPCHGZSrQObTr
-	ysrr0r3CXm3a12K5KZyu1XuzKWHhMdLXUv9bODTi0WnAZ5vJSvVytJaBJHnxRSHGqtlAznREfzk
-	SEnfCTMrRy3E9d/O9g20glbmoud0H2qUXszbL/KNoGB/GINGPp30g8rx6ypjw3G8TbsmtPnuCmb
-	X7rTRD4zI43z+btowlHwdThK5Ud6AeZehuSLzjqQbgD/TAsnG8ltgTeiKs2DSn9r3GfdyZ75UfC
-	xJDBBwinnTyiLQDo07rbSAM/FV8CvyHoKgpU9EXdSqNKW1Cd7gDUub4Pr+mJclcxGmHM=
-X-Google-Smtp-Source: AGHT+IENPmmuO9ahxXmBAZ5ej8Oe74VKpSyCg2CwVQ2KspJkv4cb3AP6ibXmqXntU3seZKRkTjBdBw==
-X-Received: by 2002:ad4:5d67:0:b0:77a:fa17:551d with SMTP id 6a1803df08f44-88009bcea29mr151616d6.4.1761675435141;
-        Tue, 28 Oct 2025 11:17:15 -0700 (PDT)
-Received: from lucy.. ([67.243.142.39])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-87fc4997e56sm81140356d6.49.2025.10.28.11.17.14
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 28 Oct 2025 11:17:14 -0700 (PDT)
-From: Connor Abbott <cwabbott0@gmail.com>
-To: Rob Clark <robin.clark@oss.qualcomm.com>,
-	Akhil P Oommen <akhilpo@oss.qualcomm.com>,
-	Sean Paul <sean@poorly.run>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	Dmitry Baryshkov <lumag@kernel.org>,
-	Abhinav Kumar <abhinav.kumar@linux.dev>,
-	Jessica Zhang <jesszhan0024@gmail.com>,
-	Marijn Suijten <marijn.suijten@somainline.org>
-Cc: Connor Abbott <cwabbott0@gmail.com>,
-	freedreno@lists.freedesktop.org,
-	linux-arm-msm@vger.kernel.org,
-	dri-devel@lists.freedesktop.org
-Subject: [PATCH RESEND] drm/msm: Don't sync BR and BV before every submit
-Date: Tue, 28 Oct 2025 14:16:21 -0400
-Message-ID: <20251028-msm-less-bv-sync-v1-1-6527fd02c52f@gmail.com>
-X-Mailer: git-send-email 2.49.0
+	s=arc-20240116; t=1761676767; c=relaxed/simple;
+	bh=vAbZ834u8r2BTOo+5gC4v15rLlnSd6ggC4qhlRuryd0=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=oz0HPxwP2Cy5KcLjS1/Jx30knumDmeHT0YxMILPwRKS8LKPcYxo84Ml8n7lqqgVeYe2YrTjU5erz9JTkDHnrH7T5uSw2xwXE5c9VMNQUVH/jm+9jC5z1YCQsNyzSHd+azXtmFLjxW5mhRMBXCxXUkSUdj56PhMGRYqsKsE4Wrm0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=RAAdeZK3; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2147EC4CEE7;
+	Tue, 28 Oct 2025 18:39:21 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1761676767;
+	bh=vAbZ834u8r2BTOo+5gC4v15rLlnSd6ggC4qhlRuryd0=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=RAAdeZK3ICynb3uBtUdD3qSGSLNHvVsW5d+TmKLmS0cwy6PmPQk0xhjxhkIK3W4u+
+	 rmWlDHdGpEmKMHrlkXhTfRMudnPt3UFtPFKxbKR7MJkS3q6LrGPL1tGxKcho58nmAd
+	 ic02jG/o3z+q7M8SKYgZ1HhN3KSPvEgQcYen0Lt4UOzSQcubUc5ioXUNkukygRy5iC
+	 EIlVdR07mUiu3L5HkSmRWdXsPwPKrly650HTerHADD4M9+nqnSgw8XJYGZ3LKqtTd1
+	 KVTRZtWLrNbnGqlYfgHvivEdDsc7yR/T/QAllPDbZUjhYyTfCc/zPc6oW8V0ONIwN3
+	 8v7ZvvkQrzhBA==
+Message-ID: <0ddf3634-d9eb-425a-b35b-c0b4ee995a4b@kernel.org>
+Date: Tue, 28 Oct 2025 19:39:19 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1761675189; l=3477;
- i=cwabbott0@gmail.com; s=20240426; h=from:subject:message-id;
- bh=5B/tyXXNbztReQJ/afPZcg+Os2/bScCFHYAx7g9KsyM=;
- b=gDev45SDt2WD6lFN2WxncUZVzICSsgh7zVUNFwfbSqkfv+Xq8GQd9/WxiThtzubpvUfQiOvRb
- 6PH9hK80ZbcChFHSfiB/iugYyqo3NL+uw/1qLezaKxzCuxkiLQkwC1j
-X-Developer-Key: i=cwabbott0@gmail.com; a=ed25519;
- pk=dkpOeRSXLzVgqhy0Idr3nsBr4ranyERLMnoAgR4cHmY=
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 2/6] dt-bindings: media: camss: Add
+ qcom,kaanapali-camss binding
+To: Vijay Kumar Tumati <vijay.tumati@oss.qualcomm.com>,
+ Hangxiang Ma <hangxiang.ma@oss.qualcomm.com>
+Cc: Loic Poulain <loic.poulain@oss.qualcomm.com>,
+ Robert Foss <rfoss@kernel.org>, Andi Shyti <andi.shyti@kernel.org>,
+ Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
+ Conor Dooley <conor+dt@kernel.org>, Todor Tomov <todor.too@gmail.com>,
+ Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
+ Mauro Carvalho Chehab <mchehab@kernel.org>,
+ Bryan O'Donoghue <bryan.odonoghue@linaro.org>, linux-i2c@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org, linux-media@vger.kernel.org,
+ aiqun.yu@oss.qualcomm.com, tingwei.zhang@oss.qualcomm.com,
+ trilok.soni@oss.qualcomm.com, yijie.yang@oss.qualcomm.com,
+ Jingyi Wang <jingyi.wang@oss.qualcomm.com>,
+ Atiya Kailany <atiya.kailany@oss.qualcomm.com>
+References: <20251023-add-support-for-camss-on-kaanapali-v3-0-02abc9a107bf@oss.qualcomm.com>
+ <20251023-add-support-for-camss-on-kaanapali-v3-2-02abc9a107bf@oss.qualcomm.com>
+ <20251028-wonderful-olive-muskox-77f98d@kuoka>
+ <ac126c63-f40c-4159-87c9-1b3d7a8dec63@oss.qualcomm.com>
+ <7efc63ed-9c84-43c0-b524-f7e9e60b2846@kernel.org>
+ <f0c05321-776c-40af-b379-b9336b618340@oss.qualcomm.com>
+From: Krzysztof Kozlowski <krzk@kernel.org>
+Content-Language: en-US
+Autocrypt: addr=krzk@kernel.org; keydata=
+ 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 a/A=
+In-Reply-To: <f0c05321-776c-40af-b379-b9336b618340@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-We should allow BV to run ahead of BR when there are multiple submits=0D
-from the same context. Per the Vulkan memory model this should be safe=0D
-because there are no implied execution dependencies between submits. In=0D
-particular this should allow BV to run at least a frame ahead of BR when=0D
-applications render direct to display (i.e. unredirected rendering).=0D
-=0D
-We also shuffle around some of the synchronization in=0D
-a6xx_set_pagetable() to better match what the downstream driver does.=0D
-Previously this was only different because of the extra synchronization=0D
-before a6xx_set_pagetable().=0D
-=0D
-Signed-off-by: Connor Abbott <cwabbott0@gmail.com>=0D
----=0D
- drivers/gpu/drm/msm/adreno/a6xx_gpu.c | 34 ++++++++++++++++++++-----------=
----=0D
- 1 file changed, 20 insertions(+), 14 deletions(-)=0D
-=0D
-diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c b/drivers/gpu/drm/msm/ad=
-reno/a6xx_gpu.c=0D
-index b8f8ae940b55f5578abdbdec6bf1e90a53e721a5..794b79a6a4a1940c84709c32e89=
-5b62b97f1ac5a 100644=0D
---- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c=0D
-+++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c=0D
-@@ -216,15 +216,9 @@ static void a6xx_set_pagetable(struct a6xx_gpu *a6xx_g=
-pu,=0D
- 		return;=0D
- =0D
- 	if (adreno_gpu->info->family >=3D ADRENO_7XX_GEN1) {=0D
--		/* Wait for previous submit to complete before continuing: */=0D
--		OUT_PKT7(ring, CP_WAIT_TIMESTAMP, 4);=0D
--		OUT_RING(ring, 0);=0D
--		OUT_RING(ring, lower_32_bits(rbmemptr(ring, fence)));=0D
--		OUT_RING(ring, upper_32_bits(rbmemptr(ring, fence)));=0D
--		OUT_RING(ring, submit->seqno - 1);=0D
--=0D
-+		/* Sync both threads. */=0D
- 		OUT_PKT7(ring, CP_THREAD_CONTROL, 1);=0D
--		OUT_RING(ring, CP_SET_THREAD_BOTH);=0D
-+		OUT_RING(ring, CP_THREAD_CONTROL_0_SYNC_THREADS | CP_SET_THREAD_BOTH);=0D
- =0D
- 		/* Reset state used to synchronize BR and BV */=0D
- 		OUT_PKT7(ring, CP_RESET_CONTEXT_STATE, 1);=0D
-@@ -234,8 +228,21 @@ static void a6xx_set_pagetable(struct a6xx_gpu *a6xx_g=
-pu,=0D
- 			 CP_RESET_CONTEXT_STATE_0_CLEAR_BV_BR_COUNTER |=0D
- 			 CP_RESET_CONTEXT_STATE_0_RESET_GLOBAL_LOCAL_TS);=0D
- =0D
-+		/*=0D
-+		 * Toggle concurrent binning for pagetable switch and set the=0D
-+		 * thread to BR since only it can execute the pagetable switch=0D
-+		 * packets.=0D
-+		 */=0D
- 		OUT_PKT7(ring, CP_THREAD_CONTROL, 1);=0D
--		OUT_RING(ring, CP_SET_THREAD_BR);=0D
-+		OUT_RING(ring, CP_THREAD_CONTROL_0_SYNC_THREADS | CP_SET_THREAD_BR);=0D
-+=0D
-+		/* Wait for previous submit to complete before continuing: */=0D
-+		OUT_PKT7(ring, CP_WAIT_TIMESTAMP, 4);=0D
-+		OUT_RING(ring, 0);=0D
-+		OUT_RING(ring, lower_32_bits(rbmemptr(ring, fence)));=0D
-+		OUT_RING(ring, upper_32_bits(rbmemptr(ring, fence)));=0D
-+		OUT_RING(ring, submit->seqno - 1);=0D
-+=0D
- 	}=0D
- =0D
- 	if (!sysprof) {=0D
-@@ -444,14 +451,13 @@ static void a7xx_submit(struct msm_gpu *gpu, struct m=
-sm_gem_submit *submit)=0D
- =0D
- 	adreno_check_and_reenable_stall(adreno_gpu);=0D
- =0D
-+	a6xx_set_pagetable(a6xx_gpu, ring, submit);=0D
-+=0D
- 	/*=0D
--	 * Toggle concurrent binning for pagetable switch and set the thread to=0D
--	 * BR since only it can execute the pagetable switch packets.=0D
-+	 * Set pseudo register and get counters on BR.=0D
- 	 */=0D
- 	OUT_PKT7(ring, CP_THREAD_CONTROL, 1);=0D
--	OUT_RING(ring, CP_THREAD_CONTROL_0_SYNC_THREADS | CP_SET_THREAD_BR);=0D
--=0D
--	a6xx_set_pagetable(a6xx_gpu, ring, submit);=0D
-+	OUT_RING(ring, CP_SET_THREAD_BR);=0D
- =0D
- 	/*=0D
- 	 * If preemption is enabled, then set the pseudo register for the save=0D
-=0D
----=0D
-base-commit: b5bad77e1e3c7249e4c0c88f98477e1ee7669b63=0D
-change-id: 20251027-msm-less-bv-sync-ab03721d0a3b=0D
-=0D
-Best regards,=0D
--- =0D
-Connor Abbott <cwabbott0@gmail.com>=0D
-=0D
+On 28/10/2025 18:45, Vijay Kumar Tumati wrote:
+>>>>> +      - const: tfe1
+>>>>> +      - const: tfe2
+>>>> Why not using the same names as before? It really does not matter that
+>>>> it is thin or image, all of them are the same because only the
+>>>> difference against top matters.
+>>> Right, this is done to maintain the consistency with the clock driver on
+>> Sorry, this makes no sense. This device has nothing to do with clock
+>> driver. Don't ever use clock drivers as arguments for doing something in
+>> completely different place.
+>>
+>> Not mentioning that drivers don't matter much for the bindings, so I
+>> really do not get what you try to explain here.
+> 
+> Understood. I meant to say that it is consistent with the naming for the 
+> TFE device that is available on Kaanapali. If our intention is to keep 
+> the names in the bindings same as previous generations despite the 
+> changing HW architectures, we could change these to IFEs, to be 
+> consistent with previous  generations. Please advise. Appreciate your 
+> inputs here.
+
+
+You name these based on the provider, the clock controller or whatever
+controller, and that's the mistake. Names are coming from this device
+point of view, from the consumer. This device does not care whether this
+is Thin or Image or Whatever GDSC.
+
+
+Best regards,
+Krzysztof
 
