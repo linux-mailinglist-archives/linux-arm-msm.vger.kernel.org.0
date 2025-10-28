@@ -1,115 +1,143 @@
-Return-Path: <linux-arm-msm+bounces-79149-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-79151-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 80297C13F98
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Oct 2025 10:59:52 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9C428C13FA7
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Oct 2025 11:01:11 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 2359440342C
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Oct 2025 09:55:35 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 280F6189C4ED
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Oct 2025 09:58:42 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5539C302168;
-	Tue, 28 Oct 2025 09:55:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1BE6E302759;
+	Tue, 28 Oct 2025 09:58:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="etcUPv/m"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="asN+qANb"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.14])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6B232EE617;
-	Tue, 28 Oct 2025 09:55:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.14
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 859CF2E88A7;
+	Tue, 28 Oct 2025 09:58:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761645324; cv=none; b=m335W9zczbgls2DPHqFZLEvsklbYdSQe6ol61pvXa4DTj+U2zEsXk4u086o8urtXiyL4ZNPLGhhzDgAIytg5mHsOqrKnYvC6S9PMX/mUeVXMqSRpK2DAa5/XNBmCJ9LS7g3CQXFJuOxlQuenBtnAy4UeQGzDj5jy31IyzVmLN6c=
+	t=1761645486; cv=none; b=j9A/DhXm0FYFSn9ABmzpbM7AG/YSuXHD0akyxCUogamafz71smFImXq6aj0vIUNY1EQ/oUX6lHhGnBHwIgPku92s16kjGUwJiIVIVU9b6kMSf+7+fW0R3RObC+T+bf2tHOqsVPYouJSI9LGTFaGVStdl84Ha2UONHMFa5mvVyDA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761645324; c=relaxed/simple;
-	bh=7rREO7SY4FHdOjsvO+HvrxL/9K58eTUD3dN7qUFKvrw=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=arlcvi0xxvmOG2+FW2L/yEpIfcp4SGWbJfA7Zbb0h89xW6W9Kmdm6UKgnDovznitXoZZ8uRAx+YCqF29QzItDrsdxAYYd3H8scZoXhxFd5F+cYAwkG6+GfMFUkTTdvyGvCj8qI9WUoKEFb316lksCG2y/+oXJa9jLZ6i7v4t/nE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=etcUPv/m; arc=none smtp.client-ip=198.175.65.14
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1761645323; x=1793181323;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=7rREO7SY4FHdOjsvO+HvrxL/9K58eTUD3dN7qUFKvrw=;
-  b=etcUPv/mQ/16VLo/jb6hEyJ3iZNJ72T20X6KhM71wMO9pMpmYfEybRT3
-   v4bnfbr4zSt94FRsNriheeMMSsOMkZt0Y1MZu6KAfMWR7XP9A5sjRQUDh
-   r4koTNtkJvTsi8xKgpVq7/duK2ku98onq04wIIlMii3W2YWPbgAGn85RP
-   Yiyz60lCwGFTna5BbX0OgigoFpp5qTu7ayyZA+P0Defr32iALuX0yr//a
-   EJKY5Pe6hQg1pmNarGAhhs9fYzQfOb2Yjcvy3UY1VbenDAifHumroUx/1
-   BOnVhC22augOktDik8UaBINw6kB6EI4WKdr/jKx9qY+IAiDasy5+wi26G
-   g==;
-X-CSE-ConnectionGUID: NDnhOsaqR9iQUHQtZveTPA==
-X-CSE-MsgGUID: 6G8xTzBpSSmKB3ZZ8ryfpA==
-X-IronPort-AV: E=McAfee;i="6800,10657,11531"; a="67578056"
-X-IronPort-AV: E=Sophos;i="6.17,312,1747724400"; 
-   d="scan'208";a="67578056"
-Received: from fmviesa006.fm.intel.com ([10.60.135.146])
-  by orvoesa106.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 28 Oct 2025 02:55:21 -0700
-X-CSE-ConnectionGUID: vvDskjjkTuqkb7gtMagaig==
-X-CSE-MsgGUID: +pylhT5iSNuCG4pcMryHQg==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.19,261,1754982000"; 
-   d="scan'208";a="185195695"
-Received: from dalessan-mobl3.ger.corp.intel.com (HELO ashevche-desk.local) ([10.245.244.136])
-  by fmviesa006-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 28 Oct 2025 02:55:19 -0700
-Received: from andy by ashevche-desk.local with local (Exim 4.98.2)
-	(envelope-from <andriy.shevchenko@intel.com>)
-	id 1vDgQ8-00000003H4T-1hZz;
-	Tue, 28 Oct 2025 11:55:16 +0200
-Date: Tue, 28 Oct 2025 11:55:16 +0200
-From: Andy Shevchenko <andriy.shevchenko@intel.com>
-To: Antony Kurniawan Soemardi <linux@smankusors.com>
-Cc: Jonathan Cameron <jic23@kernel.org>,
-	David Lechner <dlechner@baylibre.com>,
-	Nuno =?iso-8859-1?Q?S=E1?= <nuno.sa@analog.com>,
-	Andy Shevchenko <andy@kernel.org>, linux-arm-msm@vger.kernel.org,
-	linux-iio@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 1/2] iio: adc: qcom-pm8xxx-xoadc: add support for reading
- channel labels
-Message-ID: <aQCTBHZ2pQ1pTAnA@smile.fi.intel.com>
-References: <20251028-pm8xxx-xoadc-fix-v1-0-b000e1036e41@smankusors.com>
- <20251028-pm8xxx-xoadc-fix-v1-1-b000e1036e41@smankusors.com>
+	s=arc-20240116; t=1761645486; c=relaxed/simple;
+	bh=/rtrNhepHf9lMxwSk8oyaHxVN4v5zy12YxO2AaKG7zc=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=Xw+dueWsVM12dKTOIrVmduH/SxhkYuMAv+mKqpSlS0xSMHAZ9nlt6K7GatIskOA7k4D6L1f4HWPNUWOpeMncsP3WLn4PpucOv4d0XBExNlw80fZN+arkvO8gLkmGnfPRZoSc+9CEPMccvtk1D/ljKsfjdi4y+IDcjR6IDCdMh6I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=asN+qANb; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 59S31w8U353480;
+	Tue, 28 Oct 2025 09:57:45 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	8I3o1pIujZUjMX2XAjT2u/HA+H8MX1k3r61MkoE1lWQ=; b=asN+qANbZLadMXxQ
+	HegT9DkuNWw7vHbi4aIKX1i0yQb+NwyMHm02F0lFtfz2arZPUlwgv5YSd+JDc+/7
+	Z9274ue3Cla24W8DLIjgxpg73ptkVm2a3h5asuf3atdlHvufALyjZfSUdySrNAio
+	vZOLJa7Z4XaTVsAB+Na9LFOekJks/G5q9kczp+D4HDo8vjIZJPWYKC3bSbwZas7w
+	ZgXegXuciZzZwhLrYwEyq7fQskjQChlG2KZkgJ/GclFlsLY+QD6sAQsPK18uT2md
+	rS2Lj20ZACcjFsIiRAzc1xH6TMKcZjrC7KDjTU4B1M7evb/4CoVx2GWCCWj2Otsh
+	/S44DQ==
+Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4a2njrs5jy-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 28 Oct 2025 09:57:44 +0000 (GMT)
+Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
+	by NASANPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 59S9viZv030350
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 28 Oct 2025 09:57:44 GMT
+Received: from [10.206.96.75] (10.80.80.8) by nasanex01a.na.qualcomm.com
+ (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1748.24; Tue, 28 Oct
+ 2025 02:57:35 -0700
+Message-ID: <ef4effd5-bc43-4134-a4e5-a1e47b620549@quicinc.com>
+Date: Tue, 28 Oct 2025 15:27:32 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20251028-pm8xxx-xoadc-fix-v1-1-b000e1036e41@smankusors.com>
-Organization: Intel Finland Oy - BIC 0357606-4 - c/o Alberga Business Park, 6
- krs, Bertel Jungin Aukio 5, 02600 Espoo
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 1/3] dt-bindings: phy: qcom-edp: Add edp ref clk for
+ sa8775p
+Content-Language: en-US
+To: Rob Herring <robh@kernel.org>,
+        Dmitry Baryshkov
+	<dmitry.baryshkov@oss.qualcomm.com>
+CC: <robin.clark@oss.qualcomm.com>, <lumag@kernel.org>,
+        <abhinav.kumar@linux.dev>, <jessica.zhang@oss.qualcomm.com>,
+        <sean@poorly.run>, <marijn.suijten@somainline.org>,
+        <maarten.lankhorst@linux.intel.com>, <mripard@kernel.org>,
+        <tzimmermann@suse.de>, <airlied@gmail.com>, <simona@ffwll.ch>,
+        <krzk+dt@kernel.org>, <conor+dt@kernel.org>, <quic_mahap@quicinc.com>,
+        <andersson@kernel.org>, <konradybcio@kernel.org>, <mani@kernel.org>,
+        <James.Bottomley@hansenpartnership.com>, <martin.petersen@oracle.com>,
+        <vkoul@kernel.org>, <kishon@kernel.org>,
+        <cros-qcom-dts-watchers@chromium.org>, <linux-phy@lists.infradead.org>,
+        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
+        <freedreno@lists.freedesktop.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <linux-scsi@vger.kernel.org>,
+        <quic_vproddut@quicinc.com>
+References: <20251013104806.6599-1-quic_riteshk@quicinc.com>
+ <20251013104806.6599-2-quic_riteshk@quicinc.com>
+ <xofvrsdi2s37qefp2fr6av67c5nokvlw3jm6w3nznphm3x223f@yyatwo5cur6u>
+ <20251015144349.GA3302193-robh@kernel.org>
+From: Ritesh Kumar <quic_riteshk@quicinc.com>
+In-Reply-To: <20251015144349.GA3302193-robh@kernel.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01a.na.qualcomm.com (10.52.223.231)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Authority-Analysis: v=2.4 cv=dqvWylg4 c=1 sm=1 tr=0 ts=69009398 cx=c_pps
+ a=JYp8KDb2vCoCEuGobkYCKw==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17
+ a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=x6icFKpwvdMA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=i-1-ecsRnRnOvt_f1vAA:9 a=QEXdDO2ut3YA:10
+ a=nl4s5V0KI7Kw-pW0DWrs:22 a=pHzHmUro8NiASowvMSCR:22 a=xoEH_sTeL_Rfw54TyV31:22
+X-Proofpoint-GUID: 4CfEHxI0d71YWWwFAUQARagTdDCwDYdh
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDI4MDA4NCBTYWx0ZWRfX/wGoND2ICMMD
+ opcy1bZOgAksLQ8qu35B+9JOIQgSqgahxBfX8+2z1dOnXOE2/EFliZ3UWF+7zwu+YX/WxSrspg2
+ pEyNMlZ14VjFM2GFm994qqCLdcZ+6a9kmplaJjNJXSO2/FFG8PXSdf+dC86nfsf6F7tbcfpsblw
+ ZB3CDazV/+xVfnJNeh5Sdqkm9k28ggaKoyVCwMHgI3QU7f18kYoBQCbfQ/HePT9nQID+F3RAFN4
+ b/Lti2GxRdDUClxGtoJHv2Ns5OZ97PNyLWQfTzGkw0/AJpMRK9H34T/HMwZNbq//OOxVCmYYGlG
+ 0R58Dw4jgv6oWxCAoLkKx+IIlVH9FGbepmYGKeo3YwBf47W3x7U2PN9eml5D2KhtbEKo5jTQ4xn
+ D08Lo0YCu3qEJ/nS9a6J36J92XKCsg==
+X-Proofpoint-ORIG-GUID: 4CfEHxI0d71YWWwFAUQARagTdDCwDYdh
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-10-28_03,2025-10-22_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ phishscore=0 clxscore=1015 impostorscore=0 priorityscore=1501
+ lowpriorityscore=0 bulkscore=0 spamscore=0 suspectscore=0 malwarescore=0
+ adultscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2510020000
+ definitions=main-2510280084
 
-On Mon, Oct 27, 2025 at 05:29:16PM +0000, Antony Kurniawan Soemardi wrote:
-> This allows user-space tools to identify ADC channels by name through
-> the IIO sysfs interface.
 
-...
+On 10/15/2025 8:13 PM, Rob Herring wrote:
+> On Mon, Oct 13, 2025 at 03:37:47PM +0300, Dmitry Baryshkov wrote:
+> > On Mon, Oct 13, 2025 at 04:18:04PM +0530, Ritesh Kumar wrote:
+> > > Add edp reference clock for sa8775p edp phy.
+> > 
+> > eDP, PHY.
+> > 
+> > I'd probably ask to squash both DT binding patches together, but this
+> > might cause cross-subsystem merge issues. I'll leave this to DT
+> > maintainers discretion, whether to require a non-warning-adding patch or
+> > two patches with warnings in the middle of the series.
+>
+> One patch.
 
-> +static int pm8xxx_read_label(struct iio_dev *indio_dev,
-> +			     struct iio_chan_spec const *chan, char *label)
-> +{
-> +	return sysfs_emit(label, "%s\n", chan->datasheet_name);
-> +}
+Sure, will update a single patch for DT bindings.
 
-Hmm... In another thread there is a discussion on label vs. datasheet_name.
-So, why datasheet name and not something that it's more reliable as a platform
-description? As far as I understand there many mysterious ways of HW
-engineering and how to connect available pins to something interesting. Even
-datasheet names may be quite mislead on a certain platform (due to above).
-I would expect this to come from DT or another platform description and user
-space should rely on the information from _there_.
-
--- 
-With Best Regards,
-Andy Shevchenko
-
-
+> Rob
+>
 
