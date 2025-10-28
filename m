@@ -1,150 +1,298 @@
-Return-Path: <linux-arm-msm+bounces-79159-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-79160-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [142.0.200.124])
-	by mail.lfdr.de (Postfix) with ESMTPS id 51029C141AA
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Oct 2025 11:30:05 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id D785CC141A1
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Oct 2025 11:29:07 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 709924E53C0
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Oct 2025 10:27:49 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 01F2B401101
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Oct 2025 10:28:57 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8DFC72D6603;
-	Tue, 28 Oct 2025 10:27:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7D94E302158;
+	Tue, 28 Oct 2025 10:28:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="ZFcwfuy6"
+	dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b="aU3GrO2k"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f52.google.com (mail-ed1-f52.google.com [209.85.208.52])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0979029CB3C
-	for <linux-arm-msm@vger.kernel.org>; Tue, 28 Oct 2025 10:27:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8853D29B8E5
+	for <linux-arm-msm@vger.kernel.org>; Tue, 28 Oct 2025 10:28:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761647266; cv=none; b=YPDNLFTjYdaaQ5YkZnySa+0XqXXqe5KicV0H7H5b0zHu6sM09Hw4PVvqXhNfEPpPV+dhwoAfZ5NQvIGipE05ML108E/0qssWA928umZQKjsbirTj2IfhezG0nqIhcqnaMJwQ84snIcE03HwMXsCB5YRnOgJaDGx2iUOApTFRtOQ=
+	t=1761647332; cv=none; b=thZ+WZ/eiKWHCbFv1H13eXDpHLX+cRld1S1fMx/LKj4Up3wQSpXJYZQRtvKfj3WlT52PGdlkZ93FtQ5oie+GZW01fD+HeXQ6r8gPIwqpyaRowQfNqw6SAGihkVgYm4wxw4M6fdmSIVr/F1ik2+7dR4CH3/hlngGLVqJkuQLzLmA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761647266; c=relaxed/simple;
-	bh=JRIjRko0iU+3pC4lIHzKRFyzb1AsTuYmzInlVTjXafA=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=G3p8GFYgbqyVlYTgPxJH/khG90+7ua5WT+MPdGSDSvKym07+R60FPdKhefbYPCeQ2IYf46dPDrOptaVo9uCVWI+zyDykyMRq3LKn+on6fX64khKiZTNgz+zz+B58004Tcafm6lO9TFVQ7VN733F7av9KxefqTwZJUPLxQXfySm8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=ZFcwfuy6; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 59S3gri13165798
-	for <linux-arm-msm@vger.kernel.org>; Tue, 28 Oct 2025 10:27:44 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	Jchqg3ozjDw/eWeqGxyZ6hjH+Z28PRs9xP9kxhdu6HY=; b=ZFcwfuy6vIKIFkxi
-	imJGODU+en0pvk2iwTuHMBkiDpK+NbZNnIIUzv8VbZZJWQ2bh+y5M0Yr6xhcXHP1
-	Zcc5gI3wLZ2blW9v5uWTnB3tiMiKDqdRHp10mVxmhCvWnfiiGCk1TU7jlFWkZ7ox
-	Gq1c/uylZJKe8+Ipnh/P5HedI3GdVzehjj411CKRdBuOcdRsQh9CnJ/syKQ8EhZe
-	XrOrSMhIc8oY/K3Cl3iKN6yVfb0jkezzbImfrI491DFBA/TdF+t38XNb2b1rbwEo
-	8OPFO1Tkv5wsz+PoFcQ3vlN6j31GrwnbMt1EmNifhZTqJ1C83RCqr1TJ340zQrwu
-	wGwOJw==
-Received: from mail-pg1-f197.google.com (mail-pg1-f197.google.com [209.85.215.197])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4a2bwx2v4w-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Tue, 28 Oct 2025 10:27:43 +0000 (GMT)
-Received: by mail-pg1-f197.google.com with SMTP id 41be03b00d2f7-b630b4d8d52so3911276a12.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 28 Oct 2025 03:27:43 -0700 (PDT)
+	s=arc-20240116; t=1761647332; c=relaxed/simple;
+	bh=97lSLwesVjAQqGP6skiXp6OA8f6iB6kdYNT3xfDro/s=;
+	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
+	 References:In-Reply-To; b=Uf8P0q+m+glJGx9TNIa0rCnINhI5zYto9mEnpifgnsjEtX6qoT8QIFAXhMCa61nRq0q0ZwxPzYIwcaAylEQ5vhiVP/2hGIg6qpjjz92cRnG/Af3j3ooBWCsIIxux3CEsUA7p+nRaZiof1R0UgHeSxVNLC6PyuBkm+5BPWWZBG20=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=fairphone.com; spf=pass smtp.mailfrom=fairphone.com; dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b=aU3GrO2k; arc=none smtp.client-ip=209.85.208.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=fairphone.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fairphone.com
+Received: by mail-ed1-f52.google.com with SMTP id 4fb4d7f45d1cf-61feb87fe26so9877911a12.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 28 Oct 2025 03:28:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=fairphone.com; s=fair; t=1761647329; x=1762252129; darn=vger.kernel.org;
+        h=in-reply-to:references:to:from:subject:cc:message-id:date
+         :content-transfer-encoding:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=BMXRbRNlxsDfZ+3w0LxcZhJkySSjDHR6SRYAtaTDu0Q=;
+        b=aU3GrO2kS9+WybFtzDm7a2CJFn5fjQKKP2ABsbZpN6JJJQgYfc7MUrurTAo2NLFkpV
+         OyezEVOkGSQKgr/pyP1LeOfLoBDeyQYO2wOoQ/IBasYN+GaIhIL1lEp+ERYS7RKK0nyP
+         tDSyWvsO8Ok4e6prEonkSVxUtGdclOYbax7+neXpAa66Yv/ACQL0ZgfDn45Se79R3atB
+         lz6Wx8nCyFYh9e6liukI65xCZ7fr8inxIC+gHIWO62E1cUheqkmmmkqcJ601V5rct6h1
+         z5QB1Wi6TxHrLhNeUsHc8olN8BIb+w8WdaNoBD5TCoWDaoQHIYtrtlKF4Z+wRMkKvhLe
+         YPjw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1761647263; x=1762252063;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Jchqg3ozjDw/eWeqGxyZ6hjH+Z28PRs9xP9kxhdu6HY=;
-        b=klQxs6PhTGpac+LaXfbnZZBD84ArbWouIyeTj+ZySFOoAUlL8OIhc8jxd4xdbSIBwW
-         28cPAKwbJTCSuWs1Adej1SJpKhNmB8SKlCnmwXGCp2AvBMxpo4HuLPrD32fbYJ4EWK7E
-         Hsl6OaNgYLjs4lfuc3QQRoXShaeOg6VioIYCjtQdpLbh2ouiMUNHcPyD4J8WNwzO2QnA
-         6mY46cSfrerfy1OAV0qifIYbqElTCKrtufnVrJMfwvuoGOeub0k6NvlxvLEMyE0raUq2
-         sZ28kdB9Kj5AhdPMdNIq2WUrjyeYLnj5X09XnKyOK69AledJHomHmnWokngOkJwCx9ae
-         rpiw==
-X-Forwarded-Encrypted: i=1; AJvYcCXve2MXdk2BMOD2XJEEjiMj38qb1SN2hft2llCUGrRdrNWkfJoV1GgGsoT6ewMww05dVfJ1heLsuJVX0UXo@vger.kernel.org
-X-Gm-Message-State: AOJu0YwzlnOUoIMzpZHTmaYynsAaJKnKTgWyG+nWJtrWQOBvgriXgT4E
-	Z+c8zd+pV+vrRDXDt0Tfa19meGWNbYG9fn5Wy+fktRZGXSSsgRGhh6oGZZHFelcHDJvtFbtlNLH
-	eP84m3Pu2DnKu3dj7iG+28BZV5JgtAWhfAvBD/IVUAuQwyxBhWBznKqkKrrStgljcRvuy
-X-Gm-Gg: ASbGncsk47RB7F3IOz5h/+siFHqMueiBg8M95za4v5KJIeFUbsQdMotxczdSsp8gUDN
-	Y5NPQdQ9GvHT6nqk8lYjlTtCYpXeD8ozvq4R+ZoO+k1JQBwe9siftrfwaXaF+0l1GIVBfS1l5Ck
-	7/7HCwWc6rZ5APAKVip+O5qVo3u8ktrR1D2VlnEL7Zdke6I13dtY0HR1KTpyHfHa3GJ47o8lnqg
-	GeS0GijbZNWSbqp+OV6qUJI8qdaPCoSHQVBFMANGG89ap1ERG+vVgU6UI0mTbd7EvoVR8TBcdfc
-	9wYE1YYt7QfJntf3ySLsvvI2V2omdDOpXSaaQzG5drXzy/i19zJm/4qo94XNiAxaV1/FgZSBNxO
-	GOdLjJsWykUTi6H+Hb3VTD2dEnDx8lrw=
-X-Received: by 2002:a05:6a20:258c:b0:341:6c8a:5218 with SMTP id adf61e73a8af0-344d4712b60mr3554323637.56.1761647263025;
-        Tue, 28 Oct 2025 03:27:43 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHbJCIhZnhAKWXJ8GYzHMDoc2KKe52AUezo9ceNq2KYJVkwO1Il0nxGryU4eVO50BD0ZWwktw==
-X-Received: by 2002:a05:6a20:258c:b0:341:6c8a:5218 with SMTP id adf61e73a8af0-344d4712b60mr3554301637.56.1761647262559;
-        Tue, 28 Oct 2025 03:27:42 -0700 (PDT)
-Received: from [10.206.101.41] ([202.46.23.25])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-33fed74028fsm11610806a91.8.2025.10.28.03.27.39
+        d=1e100.net; s=20230601; t=1761647329; x=1762252129;
+        h=in-reply-to:references:to:from:subject:cc:message-id:date
+         :content-transfer-encoding:mime-version:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=BMXRbRNlxsDfZ+3w0LxcZhJkySSjDHR6SRYAtaTDu0Q=;
+        b=l5uwcfQDHb6XM6Fgwyp0PhFEtiYOvJ74RQWxHni6KI7S/ou3djnvZffAvef1GJIthc
+         3+wqMIn3hTBQT5WF6Grw/MIJEIaXaox1NoB0hF1QMBZ4s4FWKiTWPBrLQaFRzMZT29Qr
+         lQKgWyAvZirouDhnquvf5MMTT7Aju9QyQ4ICIzuXw41Ga6IOvuvwp5jbOClmhlDs7c0j
+         B7Cu1InpLCBECZE/Nbvrob+fe+4yP+kELYVMkZKL+Ttd+j2jeL9ja+K1hwGapFmsR6fy
+         0HxMXy3lsYXr5+rCZ7PIQILCiGBB9zBk8rnwvGU1PDQht0MWlYeNf7hjlNkLU1LeITe/
+         2Wgw==
+X-Forwarded-Encrypted: i=1; AJvYcCUiHgNl4cC1qJieXHBzJjPV86WnoiLVJHyjlv6pplY7PpDNsOYCpATHvvDIn2scGgXpQePFATHPYeu2LmMk@vger.kernel.org
+X-Gm-Message-State: AOJu0YxOlkqi0Ooo4SCYvciWTLYG+uB67ipmaiAVH4EwYWCgmS2nKF1c
+	UWzIvuxd9FFAnU4j2EYX/igaHN1s5NEbIYw2xmEU4CRGjoyCoUrUg2Uu9hD/tD09q1advDQQXe4
+	AREaGFAo=
+X-Gm-Gg: ASbGnctsZgyUPoMw2Q9A5QQhT1nnlMgQb6VJMxtziuE2FJvMV7SzLa8kkrwMIdFv69c
+	Cavac1TjMa32tOf500zi3zgTyJgQxDqYi+RjussVTfxc0K6eI9Z5AVNRZSUkNNfVTawf8ZFyizZ
+	Gbbxt1P2/wl8m9iY1b4AdF/Hf9oVNrdJ212yOkL47D2qpgD4T4uFbNERwvHaU2GIkPeVJ8VQsDd
+	Qu4TI8aDEIoX6iYvQ+X/ZnIK9Ih/4D49/J0FK6LSTeiGmmb3lfBBmi6ZJqIunSBO6zY9im/vDtT
+	KSFDHp34TBJDx2+A/j8sAEexZo4ehE596c8fLZBZIQRb1cA2ERMiRSlDTUKDcPkLl7U+FEYV8iB
+	bW138O+L6ziTkNpmsvt3ZVn14+kvPSN2MBpE3q4qGG8AwdD/jNxq+vGSs+azYlM1ZhzzjsG8rMi
+	S8VAW2VBhRB78Y4kR5zj2+cTwKoKSvkIvCtQ/FX7YD3z05EmNVf0B76QdTvRhvSol6FOxiENHyH
+	cEwM27aGZd7ZPGb
+X-Google-Smtp-Source: AGHT+IEU5BeJr58XwmNwQIw9Dt6MZPEA/KOQRVo5aRqLMfkGu4vi0uAfJ/1Dmz1KWCAKn3Lh5uA37w==
+X-Received: by 2002:a17:906:81ce:b0:b6d:801a:1e12 with SMTP id a640c23a62f3a-b6dba44f2a7mr270336066b.18.1761647328784;
+        Tue, 28 Oct 2025 03:28:48 -0700 (PDT)
+Received: from localhost (2a02-8388-6584-6400-d322-7350-96d2-429d.cable.dynamic.v6.surfer.at. [2a02:8388:6584:6400:d322:7350:96d2:429d])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-b6d85308039sm1069788066b.8.2025.10.28.03.28.47
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 28 Oct 2025 03:27:41 -0700 (PDT)
-Message-ID: <32ecd9d4-15b1-46a4-a496-7619de771f39@oss.qualcomm.com>
-Date: Tue, 28 Oct 2025 15:57:35 +0530
+        Tue, 28 Oct 2025 03:28:48 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.15.1
-Subject: Re: [PATCH v5 3/6] media: iris: stop encoding PIPE value into fw_caps
-To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-        Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>,
-        Abhinav Kumar <abhinav.kumar@linux.dev>,
-        Bryan O'Donoghue <bod@kernel.org>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Cc: linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20251027-iris-sc7280-v5-0-5eeab5670e4b@oss.qualcomm.com>
- <20251027-iris-sc7280-v5-3-5eeab5670e4b@oss.qualcomm.com>
-Content-Language: en-US
-From: Vikash Garodia <vikash.garodia@oss.qualcomm.com>
-In-Reply-To: <20251027-iris-sc7280-v5-3-5eeab5670e4b@oss.qualcomm.com>
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDI4MDA4OCBTYWx0ZWRfXyIGhoemlXh12
- tmMitP57ORnFRMD5oVZXTi7Z8DPB8/xt5e94yYRr/EfyPTsYwij9CAy7Ey56W9FwMptdPnC4Fz0
- TCnW/pcPRCmO/fDfAn9hNYnNMiJg78oOQ9nrIFIIfaaeHrdmCFL/ZyBwgo85pLxWpShRLf0Yk0H
- hXljNh6xmGBux/EMYKjA6HHe/k0U6o5X4CaoFLac3P6qfRSsaoVG960u1EXA5IXs942UU0c1SIs
- KtY2bxCgq1npaXrsCdgR1sIk3u208J5njC9BtwDbgJGc1lyWGdf5Rv/3iXymoTGr5JUnXaKReQW
- 8mELCvhsCMx/KBzSA/MEW0xt/UfmITmTUg7EQiCyJYIlMfaCH3SBuCUCFPTig7Kdm/vjMCb23aW
- KWZvSrV/AOagbVxMzmNGTyeLrz29JQ==
-X-Proofpoint-ORIG-GUID: FSDYf4eG_I1nDKaydN_cqYmhtXvbtsj-
-X-Authority-Analysis: v=2.4 cv=U9WfzOru c=1 sm=1 tr=0 ts=69009a9f cx=c_pps
- a=rz3CxIlbcmazkYymdCej/Q==:117 a=ZePRamnt/+rB5gQjfz0u9A==:17
- a=IkcTkHD0fZMA:10 a=x6icFKpwvdMA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=EUspDBNiAAAA:8 a=yKFMg8UGa7aLXV3ZWeEA:9 a=QEXdDO2ut3YA:10
- a=bFCP_H2QrGi7Okbo017w:22
-X-Proofpoint-GUID: FSDYf4eG_I1nDKaydN_cqYmhtXvbtsj-
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-10-28_04,2025-10-22_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0 impostorscore=0 bulkscore=0 clxscore=1015 malwarescore=0
- lowpriorityscore=0 priorityscore=1501 spamscore=0 suspectscore=0 adultscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2510020000 definitions=main-2510280088
+Date: Tue, 28 Oct 2025 11:28:46 +0100
+Message-Id: <DDTVUXIIQQUS.2UUJ9BS4JCZ0V@fairphone.com>
+Cc: "Bryan O'Donoghue" <bod@kernel.org>, "Robert Foss" <rfoss@kernel.org>,
+ "Todor Tomov" <todor.too@gmail.com>, "Vladimir Zapolskiy"
+ <vladimir.zapolskiy@linaro.org>, "Mauro Carvalho Chehab"
+ <mchehab@kernel.org>, "Rob Herring" <robh@kernel.org>, "Krzysztof
+ Kozlowski" <krzk+dt@kernel.org>, "Conor Dooley" <conor+dt@kernel.org>,
+ "Bryan O'Donoghue" <bryan.odonoghue@linaro.org>, "Bjorn Andersson"
+ <andersson@kernel.org>, "Konrad Dybcio" <konradybcio@kernel.org>,
+ <~postmarketos/upstreaming@lists.sr.ht>, <phone-devel@vger.kernel.org>,
+ <linux-arm-msm@vger.kernel.org>, <linux-media@vger.kernel.org>,
+ <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>
+Subject: Re: [PATCH 1/3] dt-bindings: media: camss: Add qcom,sm6350-camss
+From: "Luca Weiss" <luca.weiss@fairphone.com>
+To: "Krzysztof Kozlowski" <krzk@kernel.org>, "Luca Weiss"
+ <luca.weiss@fairphone.com>
+X-Mailer: aerc 0.21.0-0-g5549850facc2
+References: <20251024-sm6350-camss-v1-0-63d626638add@fairphone.com>
+ <20251024-sm6350-camss-v1-1-63d626638add@fairphone.com>
+ <20251028-defiant-visionary-rottweiler-f97cda@kuoka>
+ <DDTUHFIN3IEK.3FY5IS9S73ASO@fairphone.com>
+ <0bf4ab2e-9846-4f8b-ad72-e9db6fb7d08e@kernel.org>
+In-Reply-To: <0bf4ab2e-9846-4f8b-ad72-e9db6fb7d08e@kernel.org>
 
+On Tue Oct 28, 2025 at 10:46 AM CET, Krzysztof Kozlowski wrote:
+> On 28/10/2025 10:24, Luca Weiss wrote:
+>> Hi Krzysztof,
+>>=20
+>> On Tue Oct 28, 2025 at 9:54 AM CET, Krzysztof Kozlowski wrote:
+>>> On Fri, Oct 24, 2025 at 02:23:59PM +0200, Luca Weiss wrote:
+>>>  +
+>>>> +  clock-names:
+>>>> +    items:
+>>>> +      - const: cam_ahb_clk
+>>>> +      - const: cam_axi
+>>>> +      - const: soc_ahb
+>>>> +      - const: camnoc_axi
+>>>> +      - const: core_ahb
+>>>> +      - const: cpas_ahb
+>>>> +      - const: csiphy0
+>>>> +      - const: csiphy0_timer
+>>>> +      - const: csiphy1
+>>>> +      - const: csiphy1_timer
+>>>> +      - const: csiphy2
+>>>> +      - const: csiphy2_timer
+>>>> +      - const: csiphy3
+>>>> +      - const: csiphy3_timer
+>>>> +      - const: slow_ahb_src
+>>>> +      - const: vfe0_axi
+>>>> +      - const: vfe0
+>>>> +      - const: vfe0_cphy_rx
+>>>> +      - const: vfe0_csid
+>>>> +      - const: vfe1_axi
+>>>> +      - const: vfe1
+>>>> +      - const: vfe1_cphy_rx
+>>>> +      - const: vfe1_csid
+>>>> +      - const: vfe2_axi
+>>>> +      - const: vfe2
+>>>> +      - const: vfe2_cphy_rx
+>>>> +      - const: vfe2_csid
+>>>> +      - const: vfe_lite
+>>>> +      - const: vfe_lite_cphy_rx
+>>>> +      - const: vfe_lite_csid
+>>>> +
+>>>> +  interrupts:
+>>>> +    maxItems: 12
+>>>> +
+>>>> +  interrupt-names:
+>>>> +    items:
+>>>> +      - const: csid0
+>>>> +      - const: csid1
+>>>> +      - const: csid2
+>>>> +      - const: csid_lite
+>>>> +      - const: csiphy0
+>>>> +      - const: csiphy1
+>>>> +      - const: csiphy2
+>>>> +      - const: csiphy3
+>>>> +      - const: vfe0
+>>>> +      - const: vfe1
+>>>> +      - const: vfe2
+>>>> +      - const: vfe_lite
+>>>> +
+>>>> +  interconnects:
+>>>> +    maxItems: 4
+>>>> +
+>>>> +  interconnect-names:
+>>>> +    items:
+>>>> +      - const: cam_ahb
+>>>> +      - const: cam_hf_0_mnoc
+>>>> +      - const: cam_sf_0_mnoc
+>>>> +      - const: cam_sf_icp_mnoc
+>>>
+>>> Please share the list with the previous generation of this device. Whic=
+h
+>>> one was used here as "previous"? For example x1e has quite different
+>>> names - nothing with "cam". No "cam" in qcs8300, either.
+>>=20
+>> sm8250 is the big sibling for sm6350, so it's matching the names from
+>
+> Ah, ok, good to know.
+>
+>> there upstream. These exact names are also used downstream for
+>> "qcom,msm-bus,name".
+>>=20
+>> I don't think there's anything preventing removing the cam_ prefix thoug=
+h.
+>
+> Let's use the X1E names here.
+>
+>>=20
+>>>
+>>>
+>>>> +
+>>>> +  iommus:
+>>>> +    maxItems: 4
+>>>
+>>> I was told iommus might differ. Are you sure all of them represent the
+>>> same (e.g. not specific iommus for specific purposes)?
+>>=20
+>> I don't really know.
+>>=20
+>> These 4 iommus are labelled 'msm_cam_smmu_ife' downstream. There's still
+>> more iommus for more hardware blocks: jpeg, icp, cpas_cdm and lrme.
+>
+> OK, that's fine then.
+>
+>>=20
+>> Maybe someone from Qualcomm/Linaro can explain this further if
+>> necessary?
+>>=20
+>>>
+>>>> +
+>>>> +  power-domains:
+>>>> +    items:
+>>>> +      - description: IFE0 GDSC - Image Front End, Global Distributed =
+Switch Controller.
+>>>> +      - description: IFE1 GDSC - Image Front End, Global Distributed =
+Switch Controller.
+>>>> +      - description: IFE2 GDSC - Image Front End, Global Distributed =
+Switch Controller.
+>>>> +      - description: Titan Top GDSC - Titan ISP Block, Global Distrib=
+uted Switch Controller.
+>>>> +
+>>>> +  power-domain-names:
+>>>> +    items:
+>>>> +      - const: ife0
+>>>> +      - const: ife1
+>>>> +      - const: ife2
+>>>> +      - const: top
+>>>
+>>> Uh, not your fault, but who came with this list in previous generations=
+?
+>>> Instead of simple and obvious "top+ifeX" which allows growing/shrinking=
+,
+>>> someone put "top" at the end which means this cannot follow same order
+>>> as X1E for example... Heh, it follows at least sm8550.
+>>=20
+>> Shall we put top as first power-domain? I don't think it's an issue to
+>> change the order.
+>
+> Well, it matches sm8550, so I am just grumpy complaining. It's fine.
+>
+>>=20
+>>>
+>>>
+>>>> +
+>>>> +  vdda-0.9-supply:
+>>>
+>>> There are no dots in property names. Are you sure these are called
+>>> VDDA_0.9 in the device datasheet (not schematics)? Please look at other
+>>> bindings how this is being named, depending whether this is PHY or PLL
+>>> supply (or only PHY).
+>>=20
+>> The following power supplies are mentioned:
+>>=20
+>> * VDD_CAMSS_PLL_0P9 - Camera SS PLL 0.9 V circuits
+>>     (not referenced in downstream kernel, connected to vreg_s5a in
+>>     schematics)
+>
+> So that's vdda-pll-supply
 
-On 10/27/2025 5:57 PM, Dmitry Baryshkov wrote:
-> The value of the PIPE property depends on the number of pipes available
-> on the platform and is frequently the only difference between several
-> fw_caps. In order to reduce duplciation, use num_vpp_pipe from the
-> iris_platform_data rather than hardcoding the value into the fw_cap.
-> 
-> Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-> ---
->  drivers/media/platform/qcom/iris/iris_ctrls.c            | 16 +++++++++++++---
->  drivers/media/platform/qcom/iris/iris_platform_gen2.c    |  4 +---
->  drivers/media/platform/qcom/iris/iris_platform_qcs8300.h |  4 +---
->  drivers/media/platform/qcom/iris/iris_platform_sm8250.c  |  4 +---
->  4 files changed, 16 insertions(+), 12 deletions(-)
+Just noticed, this S5A regulator is the MX power-domain, so we cannot
+add it as vdda-pll-supply.
 
-Reviewed-by: Vikash Garodia <vikash.garodia@oss.qualcomm.com>
+From what I can see, so far no other camss bindings take in an rpmhpd
+power domain, and given it's not referenced in downstream kernel, it
+doesn't look like it's necessary to control it, from camss.
+
+Maybe it should be added to camcc though? Still not quite sure how
+downstream vdd_class should translate to upstream...
+
+Thanks for helping with the other points, those are clear.
+
+Regards
+Luca
+
+>
+>> * VDD_A_CSI_x_0P9 - MIPI CSIx 0.9 V circuits
+>>     With pad names VDD_A_CSI_0_0P9 to VDD_A_CSI_3_0P9
+>
+> vdd-csiphy-0p9-supply
+>
+>> * VDD_A_CSI_x_1P25 - MIPI CSIx 1.25 V circuits
+>>     With pad names VDD_A_CSI_0_1P25 to VDD_A_CSI_3_1P25
+>
+> vdd-csiphy-1p25-supply
+>
+>
+> Best regards,
+> Krzysztof
+
 
