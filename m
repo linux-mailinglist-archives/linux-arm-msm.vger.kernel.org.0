@@ -1,133 +1,99 @@
-Return-Path: <linux-arm-msm+bounces-79201-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-79202-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id DFF7BC154F1
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Oct 2025 16:03:55 +0100 (CET)
+Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [IPv6:2605:f480:58:1:0:1994:3:14])
+	by mail.lfdr.de (Postfix) with ESMTPS id 32C12C156A8
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Oct 2025 16:25:10 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 0423A1AA00B4
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Oct 2025 15:00:56 +0000 (UTC)
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id D26134E6797
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Oct 2025 15:20:08 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E2EFE33C533;
-	Tue, 28 Oct 2025 14:59:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1D8BC33509B;
+	Tue, 28 Oct 2025 15:20:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="SLF1iaPI"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="TF56fZeM"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f43.google.com (mail-wm1-f43.google.com [209.85.128.43])
+Received: from mail-wm1-f50.google.com (mail-wm1-f50.google.com [209.85.128.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1E4A2F616B
-	for <linux-arm-msm@vger.kernel.org>; Tue, 28 Oct 2025 14:59:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77F8433F8B1
+	for <linux-arm-msm@vger.kernel.org>; Tue, 28 Oct 2025 15:20:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761663567; cv=none; b=R5mROo569ov8IWqYxM/gui5Es+J/sdjJ5JDRaYhdFr7dI4bc+5VMT8rKBSGhVIOxFxNDp9tb/bXw2N0AleBWxsxugrPqas8YhUoefAYf5qiN5EaTJ3EsEpwVty5G0KbtwG7Pobphssza6+IbnXTTZZdc9EopBqAk0SexSNOimRE=
+	t=1761664806; cv=none; b=CJiOw2j7RjNUpgQKS+iC++g/qa/tHsYZLzb223UQRz+rioeHjk23DXb/Ph9Cay8y2dE9Yn5/tJOzivDYQBg4J726lhkGPdseZDkUKy1kNg+iIVk+UTdfZ/wxYwTGwYsZJKiyCSLhoxMVNMcg824qerFSO0lBc85uEWqF+lzV1jw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761663567; c=relaxed/simple;
-	bh=BiMRdmRoIl7l8nrxxTw2GsV6D3ZsuisFdGa3PGy0pkc=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=o+4wgopdoxaK1M9oYKq1VrWfIY8WGLr/AelUc1VvVRx74FzrC8v+5NMAzePgT58uW73pB50R+hKGApau7K7CaxJKl9G0ZjcmelzOGI6NUgT4CVrS2cwjEoVG8bKjZBY6pPoXG87HweUWtZQcKwBQ7fG8PP7mT/Fviwuy08YH0WU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=SLF1iaPI; arc=none smtp.client-ip=209.85.128.43
+	s=arc-20240116; t=1761664806; c=relaxed/simple;
+	bh=s4Gx6QagiTUE1mIaeDbONB9+Ep16cr+q0GGk6X8s7jg=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=JA4tLqL3d+nn3qS+meiYW8tqEXiGPQFI98nHY7kfmm5GxhNVkJ4uh09jtJL0W3SpBjQ+cj/jSD+h1HocUrgAEVVjtSCrSf6qPTP+Vc2heAUEsSE3mwRkxl90k96xfaSopvGO7aDfltjEDdLOH0LBabcruUbb13oBY1s5s1zNfeU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=TF56fZeM; arc=none smtp.client-ip=209.85.128.50
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f43.google.com with SMTP id 5b1f17b1804b1-4711b95226dso76623035e9.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 28 Oct 2025 07:59:25 -0700 (PDT)
+Received: by mail-wm1-f50.google.com with SMTP id 5b1f17b1804b1-475ca9237c2so34626395e9.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 28 Oct 2025 08:20:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1761663564; x=1762268364; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :content-language:from:references:cc:to:subject:reply-to:user-agent
-         :mime-version:date:message-id:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=/tEghCQNR+Ghq6UpTXWvvavmRHa5Qip/flVo1Z/DEyg=;
-        b=SLF1iaPIPjZxAi6ztRLlgMKYM8X9eP3e/CHT4vlsGVX78dPbNtA2a9RkLoW6/LfBYw
-         cfcclfH9fjVkbpEvgds/w7/wUYheE5o1crHXg2bE0W0LFvaz39QFv573EJkProej28m8
-         wlOZ8t8he+oqMab0/AJ/Y3aNQZphs6CBMbf5dkNM0wYJV7rIAu2+mX46SPUuuqCV7aga
-         G2fu1qaVvsC3+iMa1czDKOrTKjYCdhZS38aAUjefAroKkYxoWebo2CxnedK3vdG/cqMY
-         A5HOtfwu80d1Z03Ucz4XI/YEdJw6z6HWcUVKHEUiwHZMElIi/+jP4M8IxC5HtQ3j7NxN
-         rtfw==
+        d=linaro.org; s=google; t=1761664801; x=1762269601; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=g4xM4gK6/cv+oBkMKfsDBfGRWPzGwfaysxJmVNv0Gpw=;
+        b=TF56fZeMJfUYiZDzHgEXEBErcxhwGL2kWDZCu8XtcpruE1LQroQdNkUzsrZ7RskTLt
+         s7Le6jVDSg9s6r3sPmj9SZ9PGUk5bWnQObnBChD8dq8TDM8+ORj9Z59wWxSkMJ14Hbwp
+         SNnSzwAnIey0gfb3JeMuIHg+ImD3UcnnxMmUj2OD3OJ6NWM3TO1Pbdx5WESyEVM8OBPv
+         qDLWDw68wnNrkHFYqzUP1gw+uijuykVKFpxsRjU/j0rhCmCSIGh4RDmxRHwBAK8U33+o
+         nq7qL42W/0m3KN0exH1mYJ4E6dYYYFDXCbwKMFGRhYHEQveNPPpTJx5xS7W2OFWSDfyO
+         jYEw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1761663564; x=1762268364;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :content-language:from:references:cc:to:subject:reply-to:user-agent
-         :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=/tEghCQNR+Ghq6UpTXWvvavmRHa5Qip/flVo1Z/DEyg=;
-        b=tT1f3i7vmN/Bl6Q7feNy8op7R4wnbC7vnTtliAkuUuGk7QO3U1V6xo7im4S0RLXGwR
-         9wIjhLneLi8begCLsm5uedbbHT1Pr0dECiDmbI2sm7dn1drHHhp0hmbOjb96ZSdHZhT5
-         a69lsj4ofTor7um3vCrgH7bBi/07E513qh6sBT8XfP1b8tLTPMKX0CKcS67PGPar2w9G
-         /IK3QQw5/XUYrYeYXW7d/sOG+85b8fqj1leO8tH9nbP2GRk+M88WGldt2n29kkZzc7t5
-         3paE3qfu7GRP5X4xTpH5aVR0dQtq7o6SO6wHYxqoQdZW6V9sU0bQ9x1QZuAGh/L5VVxD
-         R4+A==
-X-Forwarded-Encrypted: i=1; AJvYcCU2g1MSHIeRxNwRLdGdgesWuez8vFMH5bkgf+2Va/4yY4RZmG/rspv8F8mK1gDJef3d6X/SQ7FOP1kizlIx@vger.kernel.org
-X-Gm-Message-State: AOJu0YznJdBFUxZC8pNUt/5vdpvgpacdRz28LYYaagh2VT8uFwRElgdO
-	3/UdhPdwMyynrV1kTdjguiPDhc4Vm3G2E6bMYAxVavjYDpqVloAFno05fM/7Zl2z+gE=
-X-Gm-Gg: ASbGnctiGEMCaWul/DQeVoiFGXq9IZxQJMQsJoS0TabyagK95oRcwkk//kpUxxQjKuE
-	hoR5C8PXi1ZYwlrumMJ/d1HdDYSKjdBcyvtCo3Cw80gQHecAPboh0XKg1xhjnrZaoONB9KiA1ce
-	m37jZGPDcN0QHKX/7HcSYddCsTW+HVCZKec1bcrFvc79rl1tno6dUSh03AaXbkakJ+ti4z3+ijN
-	J970mJRP2Sq+7Sx8cFYZ/6orcDvaKjm8kRfmwS9e3oWJqBk3ctrzdfHVzGdPsMPrjUerWDgBWyh
-	F0u+PB6oBaAwDp7HLsjUeHqz8uljsPlMHO+Vfro5sZaavQ+iVzyjha2MrZ2VdH9VMtpR0xYtoSm
-	u5F5+sTXF7Pqhsx8aKOa5qkHqlvKrThaRzfgynGclr0KIYTURlPhayxwOdZj10hj5zg1GZUG4Me
-	S1lBrz/tcKIYIThuyB0F3o11nkOuIw6rDUw346jOAVaXtm4N2Epg==
-X-Google-Smtp-Source: AGHT+IGOmwoqGCwG34+95+/SGGOROMTRrOMrQVKEuSflYTb4BVwyTWmtHHtiKHl1c6fvvdxlmco53g==
-X-Received: by 2002:a05:600d:4345:b0:477:1ae1:fa5d with SMTP id 5b1f17b1804b1-4771ae1fcd9mr10527035e9.20.1761663564212;
-        Tue, 28 Oct 2025 07:59:24 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:cad:2140:ebe6:df10:d28d:aa5? ([2a01:e0a:cad:2140:ebe6:df10:d28d:aa5])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-47718fe63e0sm21630235e9.3.2025.10.28.07.59.23
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 28 Oct 2025 07:59:23 -0700 (PDT)
-Message-ID: <da061f7b-bbe8-4810-97b2-3122563592df@linaro.org>
-Date: Tue, 28 Oct 2025 15:59:23 +0100
+        d=1e100.net; s=20230601; t=1761664801; x=1762269601;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=g4xM4gK6/cv+oBkMKfsDBfGRWPzGwfaysxJmVNv0Gpw=;
+        b=F2X/Hp7vv1SiEuK/8h1PsNP86hgjaI3VzWN/z41ojxsct9YjuhT4dWbH8H6VCTyEuC
+         8ItWXigdsQ3yDvSV7jnBNsvM0H13ve5Gb9jq6xibAb2Tb1I1gXQ955K/SCX+NjwgZUE9
+         W4g2Pcrjw7YTZ7C572z2XsYcZGQ/5i9LJGo+jxAvlOnmussIoY71CwO91/7joyvf9YF6
+         Xu7cQ2YhBuALCupBuqXW+FOC4NOfm7ehl7sSyjnka+1vU2eSC9VWycWli1svNKuVd4YR
+         MBzqItxm3pbaRgtICpITThY47RVI9V/hPSWAJxWKwha+gXByuxjGYMeH56Dw6fPSHCOs
+         p0/A==
+X-Forwarded-Encrypted: i=1; AJvYcCVo4pgG9mZbaAHG2b00CIbYFKnEzvyicBFJjyr+b4FsuHT2L/g412QC3K97z4vDJnMVM/xb7PDzwg+gGp+A@vger.kernel.org
+X-Gm-Message-State: AOJu0Yw/pvMyxNMLbaTXcfjW+f0jBJmXFXYpwAZAH2jDdfSlIXm2GU1g
+	QU8AW4U9gWvZaVh0mHSj0nG71uiWJjs5ZF8HVj6jnNBNC/Q5jONRJVULLfv+45EqTcc=
+X-Gm-Gg: ASbGncvwxzMKJZ6BjduPtj4coifWgC78Jue9qTsXa3D0LDq4uAdQeqKHhwK69yOGV9Q
+	lNsccopM8mHdH5ZI6AT1Mks+j2rHPU//SDdCMd1TGzhGF0xAJNc/jdHrxjpE+03G7XFTnYgs2BW
+	lxcE3AfzqxIThikK1LjKvg1Tmysy3kkIide21JxgY+nkKTGKdK5LrDZ1NtvnUFRaTfaDjJvQr9d
+	puVQ39XBALMu+Fh3XOxKjJK+twWlH9FayEk3Jo807MSNCl+mfKpOV26hjZT+CteuS9B+4ue2jn+
+	ehlJ2cIID0PGfIL4vIKAe8LAQRTqnEjBsJK6QO7JmCOU2IrC5IeJNqGuzm05B4Ja9GXONPNpY30
+	N40pRbE1c6T1KM63yHk5vi+hdjlnVcpNkrndlkNow5q7vqofY+t+8P2SI2EUOa+ZaUTLg1rQy
+X-Google-Smtp-Source: AGHT+IGKCeR2r/LqTWZfnp4F6FPA5DKpq/WscvEqy8cVGEsQO6uQyLdM2X62ZFpf/CF88WVJpNKzJA==
+X-Received: by 2002:a05:600c:608e:b0:471:672:3486 with SMTP id 5b1f17b1804b1-47717dff927mr33130885e9.15.1761664801353;
+        Tue, 28 Oct 2025 08:20:01 -0700 (PDT)
+Received: from linaro.org ([86.121.7.169])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-47718ffa42bsm21650985e9.4.2025.10.28.08.19.58
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 28 Oct 2025 08:19:59 -0700 (PDT)
+Date: Tue, 28 Oct 2025 17:19:58 +0200
+From: Abel Vesa <abel.vesa@linaro.org>
+To: Heikki Krogerus <heikki.krogerus@linux.intel.com>, 
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: Bjorn Andersson <andersson@kernel.org>, 
+	Konrad Dybcio <konradybcio@kernel.org>, Dmitry Baryshkov <lumag@kernel.org>, 
+	linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] usb: typec: ucsi: Skip setting orientation for UCSI
+ version 2.0 and above
+Message-ID: <a4f3yhhz5sntno6gnfbjnjjsbtyo2e4y3da2aywsg36gvxkaxg@vw2vryukrepl>
+References: <20251028-ucsi-glink-skip-orientation-for-ucsi-v2-v1-1-93e936ac59b4@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Reply-To: Neil Armstrong <neil.armstrong@linaro.org>
-Subject: Re: [PATCH] usb: typec: ucsi: Skip setting orientation for UCSI
- version 2.0 and above
-To: Abel Vesa <abel.vesa@linaro.org>,
- Heikki Krogerus <heikki.krogerus@linux.intel.com>,
- Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>, Dmitry Baryshkov <lumag@kernel.org>,
- linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
- linux-kernel@vger.kernel.org
-References: <20251028-ucsi-glink-skip-orientation-for-ucsi-v2-v1-1-93e936ac59b4@linaro.org>
-From: Neil Armstrong <neil.armstrong@linaro.org>
-Content-Language: en-US, fr
-Autocrypt: addr=neil.armstrong@linaro.org; keydata=
- xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
- GTjuhvbleoQ5Cxjr+v+1ARGCH46MxFP5DwauzPekwJUD5QKZlaw/bURTLmS2id5wWi3lqVH4
- BVF2WzvGyyeV1o4RTCYDnZ9VLLylJ9bneEaIs/7cjCEbipGGFlfIML3sfqnIvMAxIMZrvcl9
- qPV2k+KQ7q+aXavU5W+yLNn7QtXUB530Zlk/d2ETgzQ5FLYYnUDAaRl+8JUTjc0CNOTpCeik
- 80TZcE6f8M76Xa6yU8VcNko94Ck7iB4vj70q76P/J7kt98hklrr85/3NU3oti3nrIHmHABEB
- AAHNKk5laWwgQXJtc3Ryb25nIDxuZWlsLmFybXN0cm9uZ0BsaW5hcm8ub3JnPsLAkQQTAQoA
- OwIbIwULCQgHAwUVCgkICwUWAgMBAAIeAQIXgBYhBInsPQWERiF0UPIoSBaat7Gkz/iuBQJk
- Q5wSAhkBAAoJEBaat7Gkz/iuyhMIANiD94qDtUTJRfEW6GwXmtKWwl/mvqQtaTtZID2dos04
- YqBbshiJbejgVJjy+HODcNUIKBB3PSLaln4ltdsV73SBcwUNdzebfKspAQunCM22Mn6FBIxQ
- GizsMLcP/0FX4en9NaKGfK6ZdKK6kN1GR9YffMJd2P08EO8mHowmSRe/ExAODhAs9W7XXExw
- UNCY4pVJyRPpEhv373vvff60bHxc1k/FF9WaPscMt7hlkbFLUs85kHtQAmr8pV5Hy9ezsSRa
- GzJmiVclkPc2BY592IGBXRDQ38urXeM4nfhhvqA50b/nAEXc6FzqgXqDkEIwR66/Gbp0t3+r
- yQzpKRyQif3OwE0ETVkGzwEIALyKDN/OGURaHBVzwjgYq+ZtifvekdrSNl8TIDH8g1xicBYp
- QTbPn6bbSZbdvfeQPNCcD4/EhXZuhQXMcoJsQQQnO4vwVULmPGgtGf8PVc7dxKOeta+qUh6+
- SRh3vIcAUFHDT3f/Zdspz+e2E0hPV2hiSvICLk11qO6cyJE13zeNFoeY3ggrKY+IzbFomIZY
- 4yG6xI99NIPEVE9lNBXBKIlewIyVlkOaYvJWSV+p5gdJXOvScNN1epm5YHmf9aE2ZjnqZGoM
- Mtsyw18YoX9BqMFInxqYQQ3j/HpVgTSvmo5ea5qQDDUaCsaTf8UeDcwYOtgI8iL4oHcsGtUX
- oUk33HEAEQEAAcLAXwQYAQIACQUCTVkGzwIbDAAKCRAWmrexpM/4rrXiB/sGbkQ6itMrAIfn
- M7IbRuiSZS1unlySUVYu3SD6YBYnNi3G5EpbwfBNuT3H8//rVvtOFK4OD8cRYkxXRQmTvqa3
- 3eDIHu/zr1HMKErm+2SD6PO9umRef8V82o2oaCLvf4WeIssFjwB0b6a12opuRP7yo3E3gTCS
- KmbUuLv1CtxKQF+fUV1cVaTPMyT25Od+RC1K+iOR0F54oUJvJeq7fUzbn/KdlhA8XPGzwGRy
- 4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
- QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
-Organization: Linaro
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 In-Reply-To: <20251028-ucsi-glink-skip-orientation-for-ucsi-v2-v1-1-93e936ac59b4@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
 
-On 10/28/25 15:39, Abel Vesa wrote:
+On 25-10-28 16:39:19, Abel Vesa wrote:
 > In case of UCSI version 2.0 and above, if the orientation is set from
 > glink as well, it will trigger the consumers along the graph (PHYs,
 > repeaters and so on) to reconfigure a second time. This might break
@@ -138,31 +104,11 @@ On 10/28/25 15:39, Abel Vesa wrote:
 > for all platform that implement UCSI spec 2.0 and above.
 > 
 > Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
-> ---
->   drivers/usb/typec/ucsi/ucsi_glink.c | 4 ++++
->   1 file changed, 4 insertions(+)
-> 
-> diff --git a/drivers/usb/typec/ucsi/ucsi_glink.c b/drivers/usb/typec/ucsi/ucsi_glink.c
-> index 11b3e24e34e2b4c21df20b6bec69619a0292c7bb..e68fd3fd0f54bfa3c5998519b17cf187bb363ec8 100644
-> --- a/drivers/usb/typec/ucsi/ucsi_glink.c
-> +++ b/drivers/usb/typec/ucsi/ucsi_glink.c
-> @@ -209,6 +209,10 @@ static void pmic_glink_ucsi_connector_status(struct ucsi_connector *con)
->   	struct pmic_glink_ucsi *ucsi = ucsi_get_drvdata(con->ucsi);
->   	int orientation;
->   
-> +	/* For UCSI 2.0 and above, orientation is part of UCSI payload */
-> +	if (ucsi->ucsi->version >= UCSI_VERSION_2_0)
-> +		return;
-> +
->   	if (!UCSI_CONSTAT(con, CONNECTED)) {
->   		typec_set_orientation(con->port, TYPEC_ORIENTATION_NONE);
->   		return;
-> 
-> ---
-> base-commit: f7d2388eeec24966fc4d5cf32d706f0514f29ac5
-> change-id: 20251028-ucsi-glink-skip-orientation-for-ucsi-v2-6d52c6644d46
-> 
-> Best regards,
 
-Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
+Ignore this one please, as it is incomplete.
+
+We need to also set the orientation_aware in pmic_glink_ucsi_update_connector()
+if the ucsi version is at least 2.0.
+
+Will do and respin.
 
