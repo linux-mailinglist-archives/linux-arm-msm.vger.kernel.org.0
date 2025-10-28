@@ -1,147 +1,198 @@
-Return-Path: <linux-arm-msm+bounces-79132-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-79133-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ams.mirrors.kernel.org (ams.mirrors.kernel.org [213.196.21.55])
-	by mail.lfdr.de (Postfix) with ESMTPS id CE65DC13B70
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Oct 2025 10:09:49 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 871A8C13C0D
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Oct 2025 10:16:28 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ams.mirrors.kernel.org (Postfix) with ESMTPS id 6245334A589
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Oct 2025 09:09:45 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 77C0518872E5
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Oct 2025 09:16:52 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A35492D879F;
-	Tue, 28 Oct 2025 09:09:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 03FF12FE054;
+	Tue, 28 Oct 2025 09:16:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="MS8HsA3g"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="T3Tgk/HB"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67FF823507B;
-	Tue, 28 Oct 2025 09:09:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7B56155333;
+	Tue, 28 Oct 2025 09:16:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761642579; cv=none; b=oU/nqIfX/FeWW3u+vGgIMyzrqdG4HOM7Yjrsagcyp+uLdNnICF3U75TDJY8zOQkvw6ztkHCIwf6VsMhtozOgDegr7Wbe+K2ax/StHmPb51WNiFjOrC+GKDN8Ovxk1DPpovMyx4A19wy3+6cElRSUuFZJvBhfPOhv35asOWE6Dic=
+	t=1761642983; cv=none; b=MrQlnY7JUiwhVVP1F/Wi11lyO4IC0Q9gTu9u495wuHFtomoLonc9AfZYg+VD1gYHXWuMCVw6rn2vRGNFYCPjI+n3DCQ8qUARE4aAgYqcnCjg7L+ZxOOq/yHX0MH4fNpVtlrbR1/KuY23Q88ot8vR/jTeDJ8Z56AAM7RxP4tqKAI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761642579; c=relaxed/simple;
-	bh=ZeszJ3G5pFbOJEm0PLsqfPwRQuGZps8vSqiFmYtwyKY=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=EAIrBmo2N/rtSB6YqHBWUsfyr/JsvFXBVE7MQsIEC4TYmvGY/qIx4DEk2yGb53ZnVaJuu5JVpb8w38q482fJ0REqJ997VG7CpYF+C0IkNrZvQSU9hlTMivI1KrflIHk/+zUTCbnMJWvv7ubi5bOlaR2HjiqkCh1bgimHGGEJBtI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=MS8HsA3g; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74176C4CEE7;
-	Tue, 28 Oct 2025 09:09:38 +0000 (UTC)
+	s=arc-20240116; t=1761642983; c=relaxed/simple;
+	bh=ermaQYFhISuTCQTJxYy3b0GGBvXFWg+TgqJdvAMDq1w=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=HlDVaZp+4EbON/YcyLVSoU3yK9Sh3DJ6cx7tzVyxl37cTvxAdYDxx7/R8wwYAnfOZWmMDab57BVOggcIKxLb15OaB6FD7vdI9lGo87u59I+K72aEl0ld9GusZ4kQdpwjl5PlE33FqM+AIY2F9yXtnbo3JM7jUzw1o2QWs5MKVv4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=T3Tgk/HB; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01154C4CEE7;
+	Tue, 28 Oct 2025 09:16:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1761642579;
-	bh=ZeszJ3G5pFbOJEm0PLsqfPwRQuGZps8vSqiFmYtwyKY=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=MS8HsA3gHTzSFAkqVuH2/l8x1ouMjR1uDE4ZkKX7gH9k7EojJyCK4fKjjovw27RTp
-	 A1c4+6iqPHZjJW0zXOtiHS0TV+vlW37gAldPWA/ImTJljpZHvNLVI4Jpgs667xo6lH
-	 s6PVRRtHGv1l2bngpH5Qr3X8nQbgInqUMxD3jS+U9DMtXvfp9N5u06k0wpc4ZwpDqE
-	 BLC9iKNMcNuKGU5nfR/s2rAprUa7Wn4sKzQykkWjXuZcUwNPiZ4XW3I3VHby96bEtl
-	 whB5SVnoVtD8+xHnOA63yI7RY2LpBw23xPm2x+Ixy/LtxcDvzhi8dEG4SBVU7s7JcT
-	 EmlAuKIT3Mi6A==
-Date: Tue, 28 Oct 2025 10:09:36 +0100
-From: Krzysztof Kozlowski <krzk@kernel.org>
-To: Yuanfang Zhang <yuanfang.zhang@oss.qualcomm.com>
-Cc: Suzuki K Poulose <suzuki.poulose@arm.com>, 
-	Mike Leach <mike.leach@linaro.org>, James Clark <james.clark@linaro.org>, 
-	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
-	Conor Dooley <conor+dt@kernel.org>, Mathieu Poirier <mathieu.poirier@linaro.org>, 
-	Leo Yan <leo.yan@linux.dev>, Alexander Shishkin <alexander.shishkin@linux.intel.com>, 
-	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, kernel@oss.qualcomm.com, 
-	coresight@lists.linaro.org, linux-arm-kernel@lists.infradead.org, devicetree@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH 01/12] dt-bindings: arm: coresight: Add cpu cluster
- tmc/funnel/replicator support
-Message-ID: <20251028-enigmatic-astonishing-husky-f2c47a@kuoka>
-References: <20251027-cpu_cluster_component_pm-v1-0-31355ac588c2@oss.qualcomm.com>
- <20251027-cpu_cluster_component_pm-v1-1-31355ac588c2@oss.qualcomm.com>
+	s=k20201202; t=1761642983;
+	bh=ermaQYFhISuTCQTJxYy3b0GGBvXFWg+TgqJdvAMDq1w=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=T3Tgk/HBdescmQFHs3usF8C2WVr86KXVLfJnamjTg3l4wtK9tdGQ66P3OedOtJOQ9
+	 Rp9vrEynvDGQxtg2xlzIyZofGUIZMqBmm2jfREbaoJTdydu3xpRVEDTdoPtzH77Bl6
+	 sETXMpqPPeMxl+PZo/Ipuzzbj2a/wzoO8PRIn1Dewk0hrLDnZtQx/jKtCaQkBm36vo
+	 oJPZrYxot0H5Cu/D1wtCRYYF+3B+dsRFFmUOrOAjZ1Xqf3KBG+bYqSyqSAKjNwrRtU
+	 JkQmJ/KZELw8eypfR9L3RaIuPKjCB/l31MOp6hOmFSF9kI8IMEDrQXNwj84E1iIw1T
+	 /H5dmNxronwWw==
+Message-ID: <ba760468-ac41-48e0-a56e-a675c3c0d5b7@kernel.org>
+Date: Tue, 28 Oct 2025 10:16:19 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20251027-cpu_cluster_component_pm-v1-1-31355ac588c2@oss.qualcomm.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 1/2] dt-bindings: soc: qcom: qcom,pmic-glink: Add
+ Kaanapali and Glymur compatibles
+To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+ Anjelique Melendez <anjelique.melendez@oss.qualcomm.com>
+Cc: andersson@kernel.org, konradybcio@kernel.org, robh@kernel.org,
+ krzk+dt@kernel.org, conor+dt@kernel.org, linux-arm-msm@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20251027212250.3847537-1-anjelique.melendez@oss.qualcomm.com>
+ <20251027212250.3847537-2-anjelique.melendez@oss.qualcomm.com>
+ <20251028-private-chirpy-earthworm-6fccfe@kuoka>
+ <4cb41e69-fb32-4331-a989-529b5af0081c@kernel.org>
+ <918fc9d3-2cd5-4442-8bc6-b930596d95c1@oss.qualcomm.com>
+From: Krzysztof Kozlowski <krzk@kernel.org>
+Content-Language: en-US
+Autocrypt: addr=krzk@kernel.org; keydata=
+ xsFNBFVDQq4BEAC6KeLOfFsAvFMBsrCrJ2bCalhPv5+KQF2PS2+iwZI8BpRZoV+Bd5kWvN79
+ cFgcqTTuNHjAvxtUG8pQgGTHAObYs6xeYJtjUH0ZX6ndJ33FJYf5V3yXqqjcZ30FgHzJCFUu
+ JMp7PSyMPzpUXfU12yfcRYVEMQrmplNZssmYhiTeVicuOOypWugZKVLGNm0IweVCaZ/DJDIH
+ gNbpvVwjcKYrx85m9cBVEBUGaQP6AT7qlVCkrf50v8bofSIyVa2xmubbAwwFA1oxoOusjPIE
+ J3iadrwpFvsZjF5uHAKS+7wHLoW9hVzOnLbX6ajk5Hf8Pb1m+VH/E8bPBNNYKkfTtypTDUCj
+ NYcd27tjnXfG+SDs/EXNUAIRefCyvaRG7oRYF3Ec+2RgQDRnmmjCjoQNbFrJvJkFHlPeHaeS
+ BosGY+XWKydnmsfY7SSnjAzLUGAFhLd/XDVpb1Een2XucPpKvt9ORF+48gy12FA5GduRLhQU
+ vK4tU7ojoem/G23PcowM1CwPurC8sAVsQb9KmwTGh7rVz3ks3w/zfGBy3+WmLg++C2Wct6nM
+ Pd8/6CBVjEWqD06/RjI2AnjIq5fSEH/BIfXXfC68nMp9BZoy3So4ZsbOlBmtAPvMYX6U8VwD
+ TNeBxJu5Ex0Izf1NV9CzC3nNaFUYOY8KfN01X5SExAoVTr09ewARAQABzSVLcnp5c3p0b2Yg
+ S296bG93c2tpIDxrcnprQGtlcm5lbC5vcmc+wsGVBBMBCgA/AhsDBgsJCAcDAgYVCAIJCgsE
+ FgIDAQIeAQIXgBYhBJvQfg4MUfjVlne3VBuTQ307QWKbBQJoF1BKBQkWlnSaAAoJEBuTQ307
+ QWKbHukP/3t4tRp/bvDnxJfmNdNVn0gv9ep3L39IntPalBFwRKytqeQkzAju0whYWg+R/rwp
+ +r2I1Fzwt7+PTjsnMFlh1AZxGDmP5MFkzVsMnfX1lGiXhYSOMP97XL6R1QSXxaWOpGNCDaUl
+ ajorB0lJDcC0q3xAdwzRConxYVhlgmTrRiD8oLlSCD5baEAt5Zw17UTNDnDGmZQKR0fqLpWy
+ 786Lm5OScb7DjEgcA2PRm17st4UQ1kF0rQHokVaotxRM74PPDB8bCsunlghJl1DRK9s1aSuN
+ hL1Pv9VD8b4dFNvCo7b4hfAANPU67W40AaaGZ3UAfmw+1MYyo4QuAZGKzaP2ukbdCD/DYnqi
+ tJy88XqWtyb4UQWKNoQqGKzlYXdKsldYqrLHGoMvj1UN9XcRtXHST/IaLn72o7j7/h/Ac5EL
+ 8lSUVIG4TYn59NyxxAXa07Wi6zjVL1U11fTnFmE29ALYQEXKBI3KUO1A3p4sQWzU7uRmbuxn
+ naUmm8RbpMcOfa9JjlXCLmQ5IP7Rr5tYZUCkZz08LIfF8UMXwH7OOEX87Y++EkAB+pzKZNNd
+ hwoXulTAgjSy+OiaLtuCys9VdXLZ3Zy314azaCU3BoWgaMV0eAW/+gprWMXQM1lrlzvwlD/k
+ whyy9wGf0AEPpLssLVt9VVxNjo6BIkt6d1pMg6mHsUEVzsFNBFVDXDQBEADNkrQYSREUL4D3
+ Gws46JEoZ9HEQOKtkrwjrzlw/tCmqVzERRPvz2Xg8n7+HRCrgqnodIYoUh5WsU84N03KlLue
+ MNsWLJBvBaubYN4JuJIdRr4dS4oyF1/fQAQPHh8Thpiz0SAZFx6iWKB7Qrz3OrGCjTPcW6ei
+ OMheesVS5hxietSmlin+SilmIAPZHx7n242u6kdHOh+/SyLImKn/dh9RzatVpUKbv34eP1wA
+ GldWsRxbf3WP9pFNObSzI/Bo3kA89Xx2rO2roC+Gq4LeHvo7ptzcLcrqaHUAcZ3CgFG88CnA
+ 6z6lBZn0WyewEcPOPdcUB2Q7D/NiUY+HDiV99rAYPJztjeTrBSTnHeSBPb+qn5ZZGQwIdUW9
+ YegxWKvXXHTwB5eMzo/RB6vffwqcnHDoe0q7VgzRRZJwpi6aMIXLfeWZ5Wrwaw2zldFuO4Dt
+ 91pFzBSOIpeMtfgb/Pfe/a1WJ/GgaIRIBE+NUqckM+3zJHGmVPqJP/h2Iwv6nw8U+7Yyl6gU
+ BLHFTg2hYnLFJI4Xjg+AX1hHFVKmvl3VBHIsBv0oDcsQWXqY+NaFahT0lRPjYtrTa1v3tem/
+ JoFzZ4B0p27K+qQCF2R96hVvuEyjzBmdq2esyE6zIqftdo4MOJho8uctOiWbwNNq2U9pPWmu
+ 4vXVFBYIGmpyNPYzRm0QPwARAQABwsF8BBgBCgAmAhsMFiEEm9B+DgxR+NWWd7dUG5NDfTtB
+ YpsFAmgXUF8FCRaWWyoACgkQG5NDfTtBYptO0w//dlXJs5/42hAXKsk+PDg3wyEFb4NpyA1v
+ qmx7SfAzk9Hf6lWwU1O6AbqNMbh6PjEwadKUk1m04S7EjdQLsj/MBSgoQtCT3MDmWUUtHZd5
+ RYIPnPq3WVB47GtuO6/u375tsxhtf7vt95QSYJwCB+ZUgo4T+FV4hquZ4AsRkbgavtIzQisg
+ Dgv76tnEv3YHV8Jn9mi/Bu0FURF+5kpdMfgo1sq6RXNQ//TVf8yFgRtTUdXxW/qHjlYURrm2
+ H4kutobVEIxiyu6m05q3e9eZB/TaMMNVORx+1kM3j7f0rwtEYUFzY1ygQfpcMDPl7pRYoJjB
+ dSsm0ZuzDaCwaxg2t8hqQJBzJCezTOIkjHUsWAK+tEbU4Z4SnNpCyM3fBqsgYdJxjyC/tWVT
+ AQ18NRLtPw7tK1rdcwCl0GFQHwSwk5pDpz1NH40e6lU+NcXSeiqkDDRkHlftKPV/dV+lQXiu
+ jWt87ecuHlpL3uuQ0ZZNWqHgZoQLXoqC2ZV5KrtKWb/jyiFX/sxSrodALf0zf+tfHv0FZWT2
+ zHjUqd0t4njD/UOsuIMOQn4Ig0SdivYPfZukb5cdasKJukG1NOpbW7yRNivaCnfZz6dTawXw
+ XRIV/KDsHQiyVxKvN73bThKhONkcX2LWuD928tAR6XMM2G5ovxLe09vuOzzfTWQDsm++9UKF a/A=
+In-Reply-To: <918fc9d3-2cd5-4442-8bc6-b930596d95c1@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-On Mon, Oct 27, 2025 at 11:28:03PM -0700, Yuanfang Zhang wrote:
-> Add the following compatible strings to the bindings:
-> - arm,coresight-cpu-funnel
-> - arm,coresight-cpu-replicator
-> - arm,coresight-cpu-tmc
+On 28/10/2025 10:04, Konrad Dybcio wrote:
+> On 10/28/25 9:36 AM, Krzysztof Kozlowski wrote:
+>> On 28/10/2025 09:29, Krzysztof Kozlowski wrote:
+>>> On Mon, Oct 27, 2025 at 02:22:49PM -0700, Anjelique Melendez wrote:
+>>>> Document the Kaanapali and Glymur compatibles used to describe the PMIC
+>>>> glink on each platform.
+>>>> Kaanapali will have the same battery supply properties as sm8550 platforms
+>>>> so define qcom,sm8550-pmic-glink as fallback for Kaanapali.
+>>>> Glymur will have the same battery supply properties as x1e80100 platforms
+>>>> so define qcom,x1e80100-pmic-glink as fallback for Glymur.
+>>>
+>>> What does it mean "battery supply properties"? Binding does not define
+>>> them, so both paragraphs do not help me understanding the logic behind
+>>> such choice at all.
+>>>
+>>> What are you describing in this binding? Battery properties? No, battery
+>>> properties go to the monitored-battery, right? So maybe you describe SW
+>>> interface...
+>>
+>> Or maybe you describe the device that it is different? >
+> 
+> Certain versions of the pmic-glink stack expose services (such as battmgr)
+> which support different features (e.g. 8550 exposes state of health and
+> charge control, x1e exposes charge control, 8280 exposes neither)
+> 
+> There seems to be a similar situation here
 
-We see that from the diff. Explain here the hardware instead.
+Then say that. Otherwise it feels like describing current Linux
+implementation and that would be obvious no-go. Why? Because then
+argument is: change Linux driver implementation.
 
 > 
-> Each requires 'power-domains' when used.
+>>>>
+>>>> Signed-off-by: Anjelique Melendez <anjelique.melendez@oss.qualcomm.com>
+>>>> ---
+>>>>  .../devicetree/bindings/soc/qcom/qcom,pmic-glink.yaml      | 7 +++++++
+>>>>  1 file changed, 7 insertions(+)
+>>>>
+>>>> diff --git a/Documentation/devicetree/bindings/soc/qcom/qcom,pmic-glink.yaml b/Documentation/devicetree/bindings/soc/qcom/qcom,pmic-glink.yaml
+>>>> index 7085bf88afab..c57022109419 100644
+>>>> --- a/Documentation/devicetree/bindings/soc/qcom/qcom,pmic-glink.yaml
+>>>> +++ b/Documentation/devicetree/bindings/soc/qcom/qcom,pmic-glink.yaml
+>>>> @@ -37,12 +37,19 @@ properties:
+>>>>            - const: qcom,pmic-glink
+>>>>        - items:
+>>>>            - enum:
+>>>> +              - qcom,kaanapali-pmic-glink
+>>>>                - qcom,milos-pmic-glink
+>>>>                - qcom,sm8650-pmic-glink
+>>>>                - qcom,sm8750-pmic-glink
+>>>
+>>> Why qcom,kaanapali-pmic-glink is not compatible with
+>>> qcom,sm8750-pmic-glink? If Glymur is compatible with previous
+>>> generation, I would expect that here too.
+>>
+>> And again to re-iterate:
+>>
+>> If X1E is compatible with SM8550 AND:
+>> SM8750 is compatible with SM8550 THEN
+>> WHY Glymur is compatible with previous generation but Kaanapali is not
+>> compatible with previous generation?
 > 
-> Signed-off-by: Yuanfang Zhang <yuanfang.zhang@oss.qualcomm.com>
-> ---
->  .../bindings/arm/arm,coresight-dynamic-funnel.yaml | 23 +++++++++++++++++-----
->  .../arm/arm,coresight-dynamic-replicator.yaml      | 22 +++++++++++++++++----
->  .../devicetree/bindings/arm/arm,coresight-tmc.yaml | 22 +++++++++++++++++----
->  3 files changed, 54 insertions(+), 13 deletions(-)
-> 
-> diff --git a/Documentation/devicetree/bindings/arm/arm,coresight-dynamic-funnel.yaml b/Documentation/devicetree/bindings/arm/arm,coresight-dynamic-funnel.yaml
-> index b74db15e5f8af2226b817f6af5f533b1bfc74736..8f32d4e3bbb750f5a6262db0032318875739cf81 100644
-> --- a/Documentation/devicetree/bindings/arm/arm,coresight-dynamic-funnel.yaml
-> +++ b/Documentation/devicetree/bindings/arm/arm,coresight-dynamic-funnel.yaml
-> @@ -28,19 +28,32 @@ select:
->    properties:
->      compatible:
->        contains:
-> -        const: arm,coresight-dynamic-funnel
-> +        enum:
-> +          - arm,coresight-dynamic-funnel
-> +          - arm,coresight-cpu-funnel
+> The announcement date does not directly correlate to 'generation'
+I don't know exactly this IP block/component, but in general these SoCs
+follow some sort of previous design, thus term "generation" is correct
+in many cases. Anyway don't be picky about wording.
 
-Keep alphabetical sorting. We asked this multiple times already.
+You can remove the generation and statement will be the same.
 
->    required:
->      - compatible
->  
->  allOf:
->    - $ref: /schemas/arm/primecell.yaml#
->  
-> +  - if:
-> +      properties:
-> +        compatible:
-> +          contains:
-> +            const: arm,coresight-cpu-funnel
-> +    then:
-> +      required:
-> +        - power-domains
+If A is compatible with B AND
+C is compatible with B
+THEN
 
-Just move the allOf to the bottom like in example-schema.
+WHY D is compatible with (A and B) but E is not
+compatible with (C and B)?
 
-> +
->  properties:
->    compatible:
-> -    items:
-> -      - const: arm,coresight-dynamic-funnel
-> -      - const: arm,primecell
-> -
+Easier for you?
 
-Why do you remove this?
+Why nitpicking on wording "generation" instead of explaining the
+problems or issues with bindings...
 
-> +    oneOf:
-> +      - items:
-> +          - const: arm,coresight-dynamic-funnel
-> +          - const: arm,primecell
-> +      - items:
-> +          - const: arm,coresight-cpu-funnel
-
-Hm? Why do you need custom select if this is not primecell? And nothing
-in commit msg explains why this is not primecell anymore.
-
-You have entire commit msg to say something useful, WHY you are doing
-this, WHY you are doing it DIFFERENTLY. Don't say what you did - that's
-obvious, we are capable of reading diffs.
 
 Best regards,
 Krzysztof
-
 
