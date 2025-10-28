@@ -1,167 +1,187 @@
-Return-Path: <linux-arm-msm+bounces-79097-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-79098-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [IPv6:2605:f480:58:1:0:1994:3:14])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0CB71C12F9F
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Oct 2025 06:36:43 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 88A21C13089
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Oct 2025 06:55:13 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 29046506159
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Oct 2025 05:35:26 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id D40144600D0
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Oct 2025 05:55:11 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 54C952C21D6;
-	Tue, 28 Oct 2025 05:33:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3C47127B352;
+	Tue, 28 Oct 2025 05:55:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="KNXrOlJL"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="Od5+Q6EN"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26A552C17A8;
-	Tue, 28 Oct 2025 05:33:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B29D4261B67
+	for <linux-arm-msm@vger.kernel.org>; Tue, 28 Oct 2025 05:55:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761629622; cv=none; b=sNTQZBVyaRUInC/70D+lRP/mJXIyGHAelG2n9TDL6rlsHdVA/oJgGFlw3VoEIIboQJr5rxJkWVZoByA/kOW632SEPbnnEY2Yz9Rm9ikhUC/jyRQk9nOdxcALtQx34JjQXCTKfNMndUtFYUx24OKyyRa2cn8yfkDa12ZFyHEhQ6I=
+	t=1761630908; cv=none; b=noMqKMbHLolqIu1YZYHVpVtuzGT+lAZvZdaU3gyJ5JA4c2QY5v4w1V6HgW0ilv5/BfuX8UnifZB+c1PBxam1MUxChWQhUUkCo0LbX5ne28jiVwGB9a4t0VeuyQWi5M5L0zLSgp+uSsvVzHPGGfB9Knd4ev1ZWzpKZaxYLYH5L3I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761629622; c=relaxed/simple;
-	bh=J1THBNPJwyRDVbWlqTQQL8lsHDatXz1imt9XImDpFxs=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=QsVXYLBnea62KF/oYFrBModkfVlUoSvOZUkC23R6EqnLqZUb4RszcyV0JbtCinICobrz/ipL3CfT2G8flO7JLWHvP6+o84GBempnX9eroiRkF1OdoQ/w7+sbWiUA/nrZokWQtRDz6S3BKxyxKrngb0SdBZySV+eP9bA5VbgEw3Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=KNXrOlJL; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ADE09C4CEE7;
-	Tue, 28 Oct 2025 05:33:35 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1761629621;
-	bh=J1THBNPJwyRDVbWlqTQQL8lsHDatXz1imt9XImDpFxs=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=KNXrOlJL3ORZ4LyNPAbMj5RN6s46786LfV09Spav2lf6B1n+5TLy2v356wB2IdIQr
-	 IgCVhn/moawjgEPcRZOP3SpF7n1vFT0oTc7++GCiGpWOfQcalMpLjYncsJIvw2UwzM
-	 B+/fjSVn0thaIeZnN8PMCzLBj62/+70Zvue/eH2nBUCXVT0DeESb2qeQv4qHEf533r
-	 GaAsjq+nM1qqACJgsEfaedRn1OT/Kehn4hRsWVvCKwfQ1gEN2QL30vcr4OsaymLxrA
-	 QxDcnqo2hnZPpdP75xfgtnNEl9sSB4vQ5/mBBxfdGgAPIuu/wYy6V3VpCz2U5dLC0t
-	 O5GvSkZoyoQcQ==
-Date: Tue, 28 Oct 2025 11:03:28 +0530
-From: Manivannan Sadhasivam <mani@kernel.org>
-To: Bjorn Helgaas <helgaas@kernel.org>
-Cc: linux-pci@vger.kernel.org, 
-	Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>, Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kwilczynski@kernel.org>, 
-	Johan Hovold <johan@kernel.org>, Frank Li <Frank.li@nxp.com>, 
-	Shawn Lin <shawn.lin@rock-chips.com>, Rob Herring <robh@kernel.org>, 
-	"David E . Box" <david.e.box@linux.intel.com>, Kai-Heng Feng <kai.heng.feng@canonical.com>, 
-	"Rafael J . Wysocki" <rafael@kernel.org>, Heiner Kallweit <hkallweit1@gmail.com>, 
-	Chia-Lin Kao <acelan.kao@canonical.com>, Gustavo Pimentel <Gustavo.Pimentel@synopsys.com>, 
-	Han Jingoo <jingoohan1@gmail.com>, Bjorn Andersson <andersson@kernel.org>, 
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, Bartosz Golaszewski <brgl@bgdev.pl>, 
-	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	Bjorn Helgaas <bhelgaas@google.com>
-Subject: Re: [PATCH] Revert "PCI: qcom: Remove custom ASPM enablement code"
-Message-ID: <qfrffijnf37qkdgvbsbfpzm3dsud7q3fvzrm33lzj7hwttqw3g@coah4xzo7zbs>
-References: <5y3mxvvkwc2svsm5lt6okytkkw6u7yzfy4i5dgn3fs5v7s4i6i@qv2tvlxotom6>
- <20251027230703.GA1485546@bhelgaas>
+	s=arc-20240116; t=1761630908; c=relaxed/simple;
+	bh=wbrzyQzJ/ISMxfjHCPJo4dCOxW5GR5mv8F3Pvly+tfo=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=S8BPL9HQhhtC1+WZEmp8CHWeae58sT3EM/RkzCPakCpWYEaXvLWwLcIBRH11GNTdd2ZfOWenU+tONt0wU4j4FfxUFw/Ps7053HrWxN+Wff5Xl7ZZddOqSwZEYC/D9bUdnKfUzXjpJhHaNzGYwgjjquSISRGIqDExfAKdfv8KMZ0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=Od5+Q6EN; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 59RJO35f2546709
+	for <linux-arm-msm@vger.kernel.org>; Tue, 28 Oct 2025 05:55:05 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	hVbVyBqtSeMwHa5ZCMjstEwuUlHs1J5AbZsAqxmUJpM=; b=Od5+Q6EN/hVcROkv
+	68QhvL9ePE1pHjnXWh+zV9xtdoG9kqSXFOH2ATTmCVE2mHk5ToP/thq7TldSQHJZ
+	nx7RovXoZL7Qfmap5TTVF10lORG29RNRbed7jbaq0rS1RGQNNTVIBIJYHajuUB/m
+	EituOtTvHoaWS42QNop+O8QvhZJ/P4ndH4vH2J1Bb/sj6Az8YsgUYTVMy+bpTeSD
+	3OWQDjccQoBpbj9f6mWDLjk1Frh3ZBJ3LTpeavIplBzLLVXduP1GREB6lAtHfjL3
+	mxiJ6s3qPTeTZfZuVkiEZl79DNr3bvmpGMGa39W4Bp5OtG/lBJj2E/fd+At76jaV
+	bw7PcQ==
+Received: from mail-pg1-f197.google.com (mail-pg1-f197.google.com [209.85.215.197])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4a27s2jxv0-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Tue, 28 Oct 2025 05:55:05 +0000 (GMT)
+Received: by mail-pg1-f197.google.com with SMTP id 41be03b00d2f7-b6cff817142so3157118a12.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 27 Oct 2025 22:55:05 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1761630904; x=1762235704;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=hVbVyBqtSeMwHa5ZCMjstEwuUlHs1J5AbZsAqxmUJpM=;
+        b=fw9Fy+cK6wsGuF/xqnmHqPPfrVSdMrA/3eFCB3oNceAsLGjdPLk1OV601UGkZzlbp/
+         Ycw3MB21amnQxWz3R5SxXeOM+3EPNrrrTFhbVddH+NkQmszOslQaqtVIbCaU212U9p1J
+         YXIT+CoQfLRlVMLg4X8PZQME8Z+CFCoerKwLz3YqQ9JPgtZdpjE7yTcytb9/v57EZywx
+         6mkooKw1wWiikSNqSC6n/AawOv6+h6K0pH0hxseYpyH9zMVCzH7lA7Q8lIPM/PEaVdjl
+         qt3GCIIXDoImevT6Oy81e9WoxGnT0tMHE9ZbdtueWrXGLvPkBuMWapx3p0mGwHUx8jCX
+         SeFQ==
+X-Forwarded-Encrypted: i=1; AJvYcCWiyK35kM+xTCusU3d1y8oFkX97Wkzf8nzBmNSkuH+vaaV3rx6lDypZyB08/mQwFYV8bU0OQB7BPbJcls5j@vger.kernel.org
+X-Gm-Message-State: AOJu0YwK+SoSHfrZmOA6DG7sJCb4lpobRh/72tIx/9oP2pToGeKMlQBn
+	xsJ4ZciMESqrz++coDZQx0R/m3irdRy3lY5LQor776m8i+xFn2U6Fxdf3dlNqDNn4XcbfUx9Bk9
+	E23qrguarJk27is+AzJMOr5q+0gVTto5IqfGChD2rrs3xJ4CuVjcuQ9ZDV0tIHfiPpvi1
+X-Gm-Gg: ASbGncuHic9Rh3NVNQF8VyVsMuXmMvC/qhRBhuvC2iVNLf2bjfgvVkQJeUvJdTwXmT+
+	jh9loQ4ytWMQJyuaZMsDx7Plv/QJQbh3t9uqmnOAuOp3LD1Bs/4DdcUIEWLWr5uxm+XIa5I67O+
+	xMKgeVsqk6lMJ6C/QH5B6ij10BwkaaZo0u2mrmbd4DG9xMOp0dIi4T9ugC852cAeu4dmvqKSpqa
+	VIYJeS3/4rACatDLkcH0bpPMrSg4cx8d5RHBi7lbthbgq/vmppckwxyOhMfKvEhy+GkOd2nvbAi
+	B4hU1J2z15GMbReIQWxy1eDdMHxbZH3eiygHmlpqTJeKkTwa5/Thgqv0qovg624LUb0ZV7pdR5L
+	GFqglLWwvSVAb4KF5gruzuURz7acQ9tRpTZHVQBxxRFVabwNQcCYCbb7gyr/aRrXs63fxxxA=
+X-Received: by 2002:a17:902:cec7:b0:290:9576:d6ef with SMTP id d9443c01a7336-294cb67481cmr35489495ad.54.1761630903947;
+        Mon, 27 Oct 2025 22:55:03 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFlNN7tbxAtF8QwpzLzr8V1BNKo9CW6ELJvgyAYmlxy+kOCt0Ww5BoZG9W1Wv8WH/BdO4oLiA==
+X-Received: by 2002:a17:902:cec7:b0:290:9576:d6ef with SMTP id d9443c01a7336-294cb67481cmr35489155ad.54.1761630903456;
+        Mon, 27 Oct 2025 22:55:03 -0700 (PDT)
+Received: from [10.133.33.222] (tpe-colo-wan-fw-bordernet.qualcomm.com. [103.229.16.4])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-29498cf3405sm104695945ad.2.2025.10.27.22.54.56
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 27 Oct 2025 22:55:03 -0700 (PDT)
+Message-ID: <89ae527a-c4b4-4294-93ae-e9afffb11f7a@oss.qualcomm.com>
+Date: Tue, 28 Oct 2025 13:54:52 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20251027230703.GA1485546@bhelgaas>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v12 3/5] dt-bindings: display/msm: Document MDSS on
+ QCS8300
+To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+        Krzysztof Kozlowski <krzk@kernel.org>
+Cc: Rob Clark <robin.clark@oss.qualcomm.com>,
+        Dmitry Baryshkov <lumag@kernel.org>,
+        Abhinav Kumar
+ <abhinav.kumar@linux.dev>,
+        Jessica Zhang <jessica.zhang@oss.qualcomm.com>,
+        Sean Paul <sean@poorly.run>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+        Maxime Ripard <mripard@kernel.org>,
+        Thomas Zimmermann <tzimmermann@suse.de>,
+        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+        Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Neil Armstrong <neil.armstrong@linaro.org>,
+        Kuogee Hsieh <quic_khsieh@quicinc.com>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>, linux-arm-msm@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20250911-qcs8300_mdss-v12-0-5f7d076e2b81@oss.qualcomm.com>
+ <20250911-qcs8300_mdss-v12-3-5f7d076e2b81@oss.qualcomm.com>
+ <20250918-spectral-seahorse-of-witchcraft-69553c@kuoka>
+ <b745c515-2264-42aa-8d92-663efc7f6276@oss.qualcomm.com>
+ <6c195b42-d994-4d24-9c40-48d8069304e3@kernel.org>
+ <rkuihu3pmhexeahfch6j7bvwn5rn4ecccbhamluh7fas5qgaup@av2foeiwmcz3>
+ <8a6861a0-f546-475b-907c-65b691d1d340@kernel.org>
+ <cwuecyparlinhtdqckff7vdqpkio2kk7dwemzfao6qkhnuzhul@mfyqdphfvbdg>
+ <drmrkeukgua3w4p3jixdwq6dvj4xj36vvgk2kvwvhpqfk6le5g@tschh7rpsg4a>
+Content-Language: en-US
+From: Yongxing Mou <yongxing.mou@oss.qualcomm.com>
+In-Reply-To: <drmrkeukgua3w4p3jixdwq6dvj4xj36vvgk2kvwvhpqfk6le5g@tschh7rpsg4a>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-ORIG-GUID: 6ortJ-_x76q67k9-xBrGSCSzID9Quz3i
+X-Proofpoint-GUID: 6ortJ-_x76q67k9-xBrGSCSzID9Quz3i
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDI4MDA0OCBTYWx0ZWRfX7+zisoQ1MMeL
+ VFYgxLn2AUMbRnmwjetdfJ3jMq+LFRTDJns/0CJccXkpdELqkhyj87bbF/3QiSTH50t3Sm0+kV7
+ DuPpXy/C90rA6K8pnr86GpGNUDvvoh6HtStCKtx+4yv4vkiHB9Bjr/RGl08R80aTXbjiovblcnn
+ UcRTAXKNimjcFvpsutkxKue1Ehfm0fPjSg6j+Jw+ALhgBxEi2TjbnQHyHiqWDYlf5RKlCbKhWMF
+ k28W7J9ZguyQctK84LS9E6fzm7fU2sRSPgkA46BGl/flVQ3uvZoOuMAlwQhv0KdMxtmh2TAQ4pM
+ 3xJxL5jM0QK0aQIqb3uj1ILwQphPnaSLnjHeX/5Tvnb5Auos4DR+tedM/Cv19LJ+yF16WORRecU
+ F+Lpe2WXol7Hba7aAMe71H0VjxRTvA==
+X-Authority-Analysis: v=2.4 cv=R60O2NRX c=1 sm=1 tr=0 ts=69005ab9 cx=c_pps
+ a=rz3CxIlbcmazkYymdCej/Q==:117 a=nuhDOHQX5FNHPW3J6Bj6AA==:17
+ a=IkcTkHD0fZMA:10 a=x6icFKpwvdMA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=rkEqYQ_PoaDmHDwLzVwA:9 a=QEXdDO2ut3YA:10 a=bFCP_H2QrGi7Okbo017w:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-10-28_02,2025-10-22_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501 lowpriorityscore=0 phishscore=0 bulkscore=0
+ impostorscore=0 clxscore=1015 spamscore=0 adultscore=0 malwarescore=0
+ suspectscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2510020000
+ definitions=main-2510280048
 
-On Mon, Oct 27, 2025 at 06:07:03PM -0500, Bjorn Helgaas wrote:
-> On Mon, Oct 27, 2025 at 05:21:30PM +0530, Manivannan Sadhasivam wrote:
-> > On Sun, Oct 26, 2025 at 02:37:54PM -0500, Bjorn Helgaas wrote:
-> > > On Sun, Oct 26, 2025 at 08:58:29PM +0530, Manivannan Sadhasivam wrote:
-> > > > On Fri, Oct 24, 2025 at 04:04:57PM -0500, Bjorn Helgaas wrote:
-> > > > > From: Bjorn Helgaas <bhelgaas@google.com>
-> > > > > 
-> > > > > This reverts commit a729c16646198872e345bf6c48dbe540ad8a9753.
-> > > > > 
-> > > > > Prior to a729c1664619 ("PCI: qcom: Remove custom ASPM enablement code"),
-> > > > > the qcom controller driver enabled ASPM, including L0s, L1, and L1 PM
-> > > > > Substates, for all devices powered on at the time the controller driver
-> > > > > enumerates them.
-> > > > > 
-> > > > > ASPM was *not* enabled for devices powered on later by pwrctrl (unless the
-> > > > > kernel was built with PCIEASPM_POWERSAVE or PCIEASPM_POWER_SUPERSAVE, or
-> > > > > the user enabled ASPM via module parameter or sysfs).
-> > > > > 
-> > > > > After f3ac2ff14834 ("PCI/ASPM: Enable all ClockPM and ASPM states for
-> > > > > devicetree platforms"), the PCI core enabled all ASPM states for all
-> > > > > devices whether powered on initially or by pwrctrl, so a729c1664619 was
-> > > > > unnecessary and reverted.
-> > > > > 
-> > > > > But f3ac2ff14834 was too aggressive and broke platforms that didn't support
-> > > > > CLKREQ# or required device-specific configuration for L1 Substates, so
-> > > > > df5192d9bb0e ("PCI/ASPM: Enable only L0s and L1 for devicetree platforms")
-> > > > > enabled only L0s and L1.
-> > > > > 
-> > > > > On Qualcomm platforms, this left L1 Substates disabled, which was a
-> > > > > regression.  Revert a729c1664619 so L1 Substates will be enabled on devices
-> > > > > that are initially powered on.  Devices powered on by pwrctrl will be
-> > > > > addressed later.
-> > ...
+
+
+On 10/27/2025 7:52 PM, Dmitry Baryshkov wrote:
+> On Wed, Oct 08, 2025 at 10:40:39PM +0300, Dmitry Baryshkov wrote:
+>> On Tue, Oct 07, 2025 at 03:43:56PM +0900, Krzysztof Kozlowski wrote:
+>>> On 27/09/2025 08:26, Dmitry Baryshkov wrote:
+>>>> On Fri, Sep 19, 2025 at 01:34:39PM +0900, Krzysztof Kozlowski wrote:
+>>>>> On 18/09/2025 13:14, Yongxing Mou wrote:
+>>>>>>
+>>>> process in other patchsets and in my understanding on how to describe
+>>>> the particular hardware block. The changes were reflected in the
+>>>> changelog. If you plan to review this patchset once you get back from
+>>>> your vacation, that's fine. If you don't plan to, I can ask Yongxing to
+>>>> send v20 just for that number.
+>>>
+>>> Solution for me could be to ignore Qualcomm patches till they reach some
+>>> sort of maturity.
+>>>
+>>> I am not planning to review this patch, because:
+>>> 1. I already reviewed it, so not really necessary, but even if I wanted:
+>>> 2. It is gone from my inbox...
+>>
+>> So... Should it be resent to get it back to your inbox or should
+>> Yongxing just restore your tag on the grounds that the changes were not
+>> significant enough to drop it?
 > 
-> > > I have some heartburn about both the revert and the
-> > > pci_host_set_default_pcie_link_state() approach because they apply to
-> > > the entire hierarchy under a qcom or VMD root port, potentially
-> > > including add-in cards with switches.  CLKREQ# (and possibly more) is
-> > > required to enable L1SS, and I don't know if we can assume it's
-> > > supported on add-in links.
-> > 
-> > I don't think we can assume, but at the same time, I don't think we
-> > will ever be able to come up with a logical way to enable L1ss on
-> > all devices. But if we leave the decision to the host controller
-> > drivers, they can at least guarantee that the CLKREQ# and other
-> > requirements are satisfied from the host perspective for L1ss. Then,
-> > if any device exhibit erratic behavior, we will for sure know that
-> > the device is at fault and we can quirk them.
+> Granted the lack of response, Yongxing, please send the new iteration of
+> the patchset.
 > 
-> If we can figure out that an endpoint is defective, a quirk is great.
-> But the issue might be something in the path, e.g., some connector in
-> the path leading to the endpoint doesn't include CLKREQ#, and we can't
-> quirk the endpoint then.
-> 
+Sure. Thanks for the reply. Should i add back the reviewed-by tag or 
+just resend the this series?
 
-I got your concern, in this case, we can have board specific quirks for those
-with broken connectors and such. Let's say if the SoC supports CLKREQ#, but one
-of the downstream connectors of a switch connected to the Root Port doesn't,
-then we can have a quirk based on the board compatible and the switch combo.
-It is implied that the person who is designing the board is aware of this issue
-and they can add the quirk by themselves (without affecting users).
 
-> To me it sounds like the mainline kernel should be safe and only
-> enable L1SS when it has a clear signal that it is safe, either via
-> devicetree, ACPI, or L1SS configuration inherited from firmware.  I
-> don't want a future of telling users to boot with "pcie_aspm=off" if
-> a device doesn't work.
-> 
-
-It is a trade-off. I completely agree that we do not want to break users, but at
-the same time, the kernel should provide optimum power savings by default also
-(if it has the knowledge).
-
-The SoCs targetting embedded/laptop usecases want to make use of L1ss to prevent
-draining battery too fast. Currently, on Qcom platforms, we are asking our users
-to enable ASPM through Kconfig/cmdline to make sure their laptop battery last
-long. And we cannot ask distros to enable these for users as distros would only
-use a common kernel/config for all platforms they support. So the burden
-essentially lies on the user. All this could've been fixed if the BIOS enabled
-L1ss, but it doesn't unfortunately.
-
-Also, it is not possible to rely on DT/ACPI or other platform description to
-tell the OS about CLKREQ# routing for all the devices in the topology. They can
-give the information about Root Ports and other devices attached to the board in
-the enclosure, but not about the devices that will get attached to the open slot
-dynamically.
-
-Also, for a discoverable bus like PCI, DT do not necessarily describe all
-devices unless they requires some special handling like power sequencing.
-
-- Mani
-
--- 
-மணிவண்ணன் சதாசிவம்
 
