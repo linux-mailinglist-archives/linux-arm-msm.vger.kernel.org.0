@@ -1,162 +1,322 @@
-Return-Path: <linux-arm-msm+bounces-79082-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-79083-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [142.0.200.124])
-	by mail.lfdr.de (Postfix) with ESMTPS id 63045C12B50
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Oct 2025 04:02:21 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id D661FC12C4C
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Oct 2025 04:31:54 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 4A5D44E33CC
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Oct 2025 03:02:20 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id C4E2918899B7
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Oct 2025 03:32:18 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 98C8B2165EA;
-	Tue, 28 Oct 2025 03:02:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id ED5BD21767A;
+	Tue, 28 Oct 2025 03:31:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="CVIb7nRP"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="eVtL5zvE"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 097E61DDC2C
-	for <linux-arm-msm@vger.kernel.org>; Tue, 28 Oct 2025 03:02:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B980D23AD;
+	Tue, 28 Oct 2025 03:31:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761620536; cv=none; b=D60F81/JVvycog5lVh/A2nwwZTVmtUvvFtl8TjBsLqRs00YE5XAqGMJzVigj3UN5wgWTcUqp7xXVTPqaDNXZcsWDMaBwMAz1RjBR1REmwwa2i7rQQEhgNR0Ukx5MEzK7LZWMZiG6n8Z3N5+/+qDa2/UdJyd+xLD/uHOIIKaCgMw=
+	t=1761622307; cv=none; b=kSmFNvMfG/XPhjgErRdU4rWT0zBR/n9kBeC1uJMO9iBdfLK9hrf+D/HIpzuCFC9sn9CIJtyfz0uhgQPf1d1ySHRSLTnabXopAghUvPfbJOmiPLpPFyzOEIMKMmYtlNPVEX/PSGhOJ1fBwkRkVuLbqTbOFL0ZNT1ps7yxDql2sXw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761620536; c=relaxed/simple;
-	bh=J97EGj37o1LYAf64oQGIuCna3MTQqEBoZLlajyaxXGM=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=dZtfixEi7k2cuNlEvo5nQd4H4ktxh4dxBwBHr1+eniwcxwUYWk5Xsy20mwMxCno2//bObN7PBjDzRd/iySh74zQlYu+lx2FDgr8XHPIu8o9yzMRk9dy8TcLdF9xxIAsK1+daMNWBrFW8Tx5Ct23ljGFI3OZrOwBcvmhbbafbdQM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=CVIb7nRP; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 59RKjtB33813156
-	for <linux-arm-msm@vger.kernel.org>; Tue, 28 Oct 2025 03:02:14 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	mZT/6+ObGcxpNvzNL3larcNaKCkvBwUwpJYv6W7bOhk=; b=CVIb7nRPeXQ1xUQF
-	GSBi0Ve6BZlknIEfrbX2UGzMgJqeCLiOz9nrOyxmMs9+cWdHXsSK5gu5JEcuSaj0
-	qj5ZWOTEzszKdFELKzf+W3AeBs7XgIbzl+w1H60i5H1ngjN0JptREGRuG32Ygtku
-	B4ClVxo8D1h2gSBvTj0OUkbcXEcT6gBqNDESFgXowrFOGh64jX7Aij6ylxuztoxy
-	T2JeMRilZCOS7QKUsIO+9xlN6dSwiRAzyjHIgM1nP/lYlAUYOrczGBQOaCnCwe7Q
-	vtBEqd7b2wEGQlmcT8eAJhg7ZxMeHl75dZ06gS+hji7PPN3WOwttsWb2I7ZE9kls
-	7Oewzg==
-Received: from mail-pg1-f200.google.com (mail-pg1-f200.google.com [209.85.215.200])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4a2g2frsne-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Tue, 28 Oct 2025 03:02:14 +0000 (GMT)
-Received: by mail-pg1-f200.google.com with SMTP id 41be03b00d2f7-b6d00539bd9so188215a12.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 27 Oct 2025 20:02:14 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1761620533; x=1762225333;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=mZT/6+ObGcxpNvzNL3larcNaKCkvBwUwpJYv6W7bOhk=;
-        b=JzsxO6jNNt31RmIwblJAkzDWurzzpENBZZRUG82MYuuAzl5O39rB9UlIkvp0/yn6HN
-         slRsfB8b1H79TLw9VRQdFaM9VjaMBnFgiIP0C51F+lwGWDiOT8dGXqxjtROJpimka0Hh
-         gnNMv/9titptu1UCWE6MADtpFRkZjjMHP6L6lvQ8Pyz0wrbMIHsj+7Tm/+yRHol3Rwut
-         408GnneEVnCMPlIOMo1OsSr+O7zWNCbNFOA1pD3apkqPkMF60SNxdwusEV5gdxzXc6NW
-         FBqeyu08xJeWkqfJ7Re56jy2K1+TyOsBhMIyMMR5+rILYI/KOHqYkpEH+HAHl8fzC5Kz
-         C18w==
-X-Gm-Message-State: AOJu0Yw1EibCVVylD11TwL/JXcXPmO1B7GXuiBgfwc4cXPG7qUWjzzr9
-	C81JNFDLB6AOAHvONWgbmLH6WQ+QcD6eecytDvglp78xokwjy9zO7/r9IsoMKgmP6Jhp/4/c80n
-	k/PhHDL+CnWTr0KpOT4Wu49P402O/Mrg4NXUo4IXpk3M6XJaouCZoY24aEGoaM9mzrBVu
-X-Gm-Gg: ASbGnctSdaOsouGK909FyEGEIfWIldwETsUc6OLSu4576baf3rfz3ndDBSr9De2N0M7
-	uBXUoYNXlEwt6k2h5CpUKyi55zcxPlG1+CmkluNHQsrWgYTKB1t0lNf9Xh44O9u3d5Ki9nmqlVL
-	mGSX3aQi/rqO5q5kXuUqtXg+gd9RijRVET4pMrcEnBlfEAFF2UzExlx3G3h3QjChWPIHe8728zu
-	gSN0VfVRJPdVGYEnYzZ+nSnMPH0S+qsr2L9n+PvkhiNBpa+sDEXObDiiU7Uc9tMu6lj3l9sVWMO
-	lZg5tsP6j0EXjoGaa5eUWHTGO03wboZxU5xkT21Eb8Q8fguC6EaQ+fq5cu9bZ0OlMS3QUGt3S5h
-	PPKg9viT0Ni8VXEXEIhGOaXcZ0+6605Igh0Jz/BDRZBTgcrpMmgj/vQ==
-X-Received: by 2002:a17:903:2c7:b0:27e:eb9b:b80f with SMTP id d9443c01a7336-294cb37880bmr12041815ad.2.1761620533205;
-        Mon, 27 Oct 2025 20:02:13 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGjH2jcjwExR9ZejktFCScAZsb46EVXd09cixcaCyHqdEG80lz4FVfKGqiyH60DFpO/NfhY8g==
-X-Received: by 2002:a17:903:2c7:b0:27e:eb9b:b80f with SMTP id d9443c01a7336-294cb37880bmr12041495ad.2.1761620532610;
-        Mon, 27 Oct 2025 20:02:12 -0700 (PDT)
-Received: from [10.133.33.249] (tpe-colo-wan-fw-bordernet.qualcomm.com. [103.229.16.4])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-29498e42f5csm96570895ad.104.2025.10.27.20.02.08
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 27 Oct 2025 20:02:11 -0700 (PDT)
-Message-ID: <07c5c404-e2a7-418e-af5f-dc7c4df9f2f6@oss.qualcomm.com>
-Date: Tue, 28 Oct 2025 11:02:07 +0800
+	s=arc-20240116; t=1761622307; c=relaxed/simple;
+	bh=Jl/8CHVAK7+L4vEEBKRiYKyCXkLAMwmArYnWsTUg74Q=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=ryhTCNerjog3O5aGuVDm5LksoRWERdbkotXvzu+Dq0PC7te/zqbmPyRRoBWfLS5ObjB7nRBTig6usEx/37KE7GjnrlaPBdavpHIv2V1fM/3fdLrhVZx1ibp9pCgsrdRqxy7Su++dDyH/mGJ/6XVdHwe+Wdw+miEBPvjsPOsnNaQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=eVtL5zvE; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33DD9C4CEF1;
+	Tue, 28 Oct 2025 03:31:45 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1761622307;
+	bh=Jl/8CHVAK7+L4vEEBKRiYKyCXkLAMwmArYnWsTUg74Q=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=eVtL5zvE2Sw10TJD4SsYkiqzTAQtue5QkhxVXBEMu6PGR98ZO4hWUeFWZ1nd9sJhU
+	 IUMLgzg7shdljsdXSmXyEkx4UowbgfK3a55oOQz/HORjnlSw+gluAVF8uz/nWc4vCc
+	 nt/Oq9ddADgIDxNddJQI0lswU8CKJP1iiTG8bNwtqLhuMISeYZbOcvk8kTPzb7soD0
+	 I30ItpvPehfnNBrUnJLfHzGqu13Di0MCZIY6VAxF6HOsMKVtsFQxESr9FuI/Qr87Ap
+	 jvYm47igU8kBy6q4V/7kScMlRm0SsujXqm/fOr4bUg4qzsjHRjte7Yo13OXl0Vy+md
+	 +5E+MQ8sJKgQA==
+Date: Mon, 27 Oct 2025 22:34:41 -0500
+From: Bjorn Andersson <andersson@kernel.org>
+To: Shivendra Pratap <shivendra.pratap@oss.qualcomm.com>
+Cc: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>, 
+	Sebastian Reichel <sre@kernel.org>, Rob Herring <robh@kernel.org>, 
+	Sudeep Holla <sudeep.holla@arm.com>, Souvik Chakravarty <Souvik.Chakravarty@arm.com>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Andy Yan <andy.yan@rock-chips.com>, Mark Rutland <mark.rutland@arm.com>, 
+	Lorenzo Pieralisi <lpieralisi@kernel.org>, Arnd Bergmann <arnd@arndb.de>, 
+	Konrad Dybcio <konradybcio@kernel.org>, cros-qcom-dts-watchers@chromium.org, 
+	Vinod Koul <vkoul@kernel.org>, Catalin Marinas <catalin.marinas@arm.com>, 
+	Will Deacon <will@kernel.org>, Florian Fainelli <florian.fainelli@broadcom.com>, 
+	Moritz Fischer <moritz.fischer@ettus.com>, John Stultz <john.stultz@linaro.org>, 
+	Matthias Brugger <matthias.bgg@gmail.com>, Krzysztof Kozlowski <krzk@kernel.org>, 
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>, Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>, 
+	Stephen Boyd <swboyd@chromium.org>, Andre Draszik <andre.draszik@linaro.org>, 
+	Kathiravan Thirumoorthy <kathiravan.thirumoorthy@oss.qualcomm.com>, linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	devicetree@vger.kernel.org, linux-arm-kernel@lists.infradead.org, 
+	linux-arm-msm@vger.kernel.org, Elliot Berman <quic_eberman@quicinc.com>, 
+	Srinivas Kandagatla <srini@kernel.org>
+Subject: Re: [PATCH v16 01/14] power: reset: reboot-mode: Synchronize list
+ traversal
+Message-ID: <5l2tcjbdtikkhkuhuz64ymk5et6wtl4kwf2mc265su27oh57rt@3shmo3wfx7fb>
+References: <20251015-arm-psci-system_reset2-vendor-reboots-v16-0-b98aedaa23ee@oss.qualcomm.com>
+ <20251015-arm-psci-system_reset2-vendor-reboots-v16-1-b98aedaa23ee@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/2] dt-bindings: interconnect: document the RPMh
- Network-On-Chip interconnect in Kaanapali SoC
-To: Krzysztof Kozlowski <krzk@kernel.org>,
-        Raviteja Laggyshetty <raviteja.laggyshetty@oss.qualcomm.com>,
-        Georgi Djakov <djakov@kernel.org>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley
- <conor+dt@kernel.org>,
-        Odelu Kukatla <odelu.kukatla@oss.qualcomm.com>,
-        Mike Tipton <mike.tipton@oss.qualcomm.com>
-Cc: linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20251023-knp-interconnect-v1-0-df13182aceac@oss.qualcomm.com>
- <20251023-knp-interconnect-v1-1-df13182aceac@oss.qualcomm.com>
- <57bc950a-a62b-4218-99a0-86c570bba6db@kernel.org>
-Content-Language: en-US
-From: "Aiqun(Maria) Yu" <aiqun.yu@oss.qualcomm.com>
-In-Reply-To: <57bc950a-a62b-4218-99a0-86c570bba6db@kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDI4MDAyNiBTYWx0ZWRfX7VWE1eT6ef15
- WgNS3oQqhCb9hDX+6g5S7Z6NEp8mBi5bHpZ93uAOTjUSRnHEvtmV1yjh3/qjOvEHTOTNrQYzMlH
- NFtIgZ2FO68cyTimswKrFjlhRY9IhpP/iH2c1BffKTqmmA2bdhEprFu82+uYIAxlacFnPZUnDxx
- Ff/7OQ8cwDZULgzq5DXcQVR+96zEnU9gP5oEdbK2jyj2YELMNStV3jiQJeKwwSzYcLpKQM427zK
- lJKhuvX+9Lc5kYXLoQ8c+gqvJ3VQWG6nsMb+vTk28ZHx385VGZaAaGyrRi3KWLf4FVkhgdAbUhe
- 7qbpzcCmKz5oDAuk/JsbKw0ARqAUhAY4dbQcoC3DoQy8RuyUjlaZiqRHRvMcEnI7OMMJpSNf2kT
- 8A597S6mAC0lywpbZMQvomsiVb//vw==
-X-Proofpoint-ORIG-GUID: irhhz572jHhWxNmjSESra7vFg5eE9NnE
-X-Proofpoint-GUID: irhhz572jHhWxNmjSESra7vFg5eE9NnE
-X-Authority-Analysis: v=2.4 cv=FIMWBuos c=1 sm=1 tr=0 ts=69003236 cx=c_pps
- a=oF/VQ+ItUULfLr/lQ2/icg==:117 a=nuhDOHQX5FNHPW3J6Bj6AA==:17
- a=IkcTkHD0fZMA:10 a=x6icFKpwvdMA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=EUspDBNiAAAA:8 a=aNDXB-n8nvUMI_014rgA:9 a=QEXdDO2ut3YA:10
- a=3WC7DwWrALyhR5TkjVHa:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-10-28_01,2025-10-22_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0 priorityscore=1501 lowpriorityscore=0 bulkscore=0 clxscore=1015
- malwarescore=0 adultscore=0 impostorscore=0 spamscore=0 suspectscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2510020000 definitions=main-2510280026
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20251015-arm-psci-system_reset2-vendor-reboots-v16-1-b98aedaa23ee@oss.qualcomm.com>
 
-On 10/23/2025 2:23 PM, Krzysztof Kozlowski wrote:
-> On 23/10/2025 06:39, Raviteja Laggyshetty wrote:
->> Document the RPMh Network-On-Chip Interconnect of the Kaanapali platform.
->>
->> Signed-off-by: Raviteja Laggyshetty <raviteja.laggyshetty@oss.qualcomm.com>
-> 
-> 
-> This cannot be tested, so there is little point in doing real review. We
-> already provided guidance - and it is documented in your internal
-> guideline document - what to do in such case. Please follow internal
-> docs to decouple.
+On Wed, Oct 15, 2025 at 10:08:16AM +0530, Shivendra Pratap wrote:
+> List traversals must be synchronized to prevent race conditions
+> and data corruption. The reboot-mode list is not protected by a
+> lock currently, which can lead to concurrent access and race.
 
-
-To be more specific:
-Please drop header "<dt-bindings/clock/qcom,kaanapali-gcc.h>" and use
-ephemeral clocks in the devices example like
-<&gcc_aggre_ufs_phy_axi_clk> <&gcc_aggre_usb3_prim_axi_clk>
-<&rpmhcc_ipa_clk>.
-
+Is it a theoretical future race or something that we can hit in the
+current implementation?
 
 > 
-> Best regards,
-> Krzysztof
+> Introduce a mutex lock to guard all operations on the reboot-mode
+> list and ensure thread-safe access. The change prevents unsafe
+> concurrent access on reboot-mode list.
 
--- 
-Thx and BRs,
-Aiqun(Maria) Yu
+I was under the impression that these lists where created during boot
+and then used at some later point, which at best would bring a
+theoretical window for a race... Reviewing the code supports my
+understanding, but perhaps I'm missing something?
+
+> 
+> Fixes: 4fcd504edbf7 ("power: reset: add reboot mode driver")
+> Fixes: ca3d2ea52314 ("power: reset: reboot-mode: better compatibility with DT (replace ' ,/')")
+> 
+
+Skip this empty line, please.
+
+
+And given that you have fixes here, I guess this is a problem today. In
+which case, this shouldn't have been carried for 16 versions - but have
+sent and been merged on its own already.
+
+So please, if this is a real issue, start your commit message with a
+descriptive problem description, to make it clear that this needs to be
+merged yesterday - or drop the fixes.
+
+> Signed-off-by: Shivendra Pratap <shivendra.pratap@oss.qualcomm.com>
+> ---
+>  drivers/power/reset/reboot-mode.c | 96 +++++++++++++++++++++------------------
+>  include/linux/reboot-mode.h       |  4 ++
+>  2 files changed, 57 insertions(+), 43 deletions(-)
+> 
+> diff --git a/drivers/power/reset/reboot-mode.c b/drivers/power/reset/reboot-mode.c
+> index fba53f638da04655e756b5f8b7d2d666d1379535..8fc3e14638ea757c8dc3808c240ff569cbd74786 100644
+> --- a/drivers/power/reset/reboot-mode.c
+> +++ b/drivers/power/reset/reboot-mode.c
+> @@ -29,9 +29,11 @@ static unsigned int get_reboot_mode_magic(struct reboot_mode_driver *reboot,
+>  	if (!cmd)
+>  		cmd = normal;
+>  
+> -	list_for_each_entry(info, &reboot->head, list)
+> -		if (!strcmp(info->mode, cmd))
+> -			return info->magic;
+> +	scoped_guard(mutex, &reboot->rb_lock) {
+> +		list_for_each_entry(info, &reboot->head, list)
+> +			if (!strcmp(info->mode, cmd))
+> +				return info->magic;
+> +	}
+>  
+>  	/* try to match again, replacing characters impossible in DT */
+>  	if (strscpy(cmd_, cmd, sizeof(cmd_)) == -E2BIG)
+> @@ -41,9 +43,11 @@ static unsigned int get_reboot_mode_magic(struct reboot_mode_driver *reboot,
+>  	strreplace(cmd_, ',', '-');
+>  	strreplace(cmd_, '/', '-');
+>  
+> -	list_for_each_entry(info, &reboot->head, list)
+> -		if (!strcmp(info->mode, cmd_))
+> -			return info->magic;
+> +	scoped_guard(mutex, &reboot->rb_lock) {
+> +		list_for_each_entry(info, &reboot->head, list)
+> +			if (!strcmp(info->mode, cmd_))
+> +				return info->magic;
+> +	}
+>  
+>  	return 0;
+>  }
+> @@ -78,46 +82,50 @@ int reboot_mode_register(struct reboot_mode_driver *reboot)
+>  
+>  	INIT_LIST_HEAD(&reboot->head);
+>  
+> -	for_each_property_of_node(np, prop) {
+> -		if (strncmp(prop->name, PREFIX, len))
+> -			continue;
+> -
+> -		info = devm_kzalloc(reboot->dev, sizeof(*info), GFP_KERNEL);
+> -		if (!info) {
+> -			ret = -ENOMEM;
+> -			goto error;
+> -		}
+> -
+> -		if (of_property_read_u32(np, prop->name, &info->magic)) {
+> -			dev_err(reboot->dev, "reboot mode %s without magic number\n",
+> -				info->mode);
+> -			devm_kfree(reboot->dev, info);
+> -			continue;
+> -		}
+> -
+> -		info->mode = kstrdup_const(prop->name + len, GFP_KERNEL);
+> -		if (!info->mode) {
+> -			ret =  -ENOMEM;
+> -			goto error;
+> -		} else if (info->mode[0] == '\0') {
+> -			kfree_const(info->mode);
+> -			ret = -EINVAL;
+> -			dev_err(reboot->dev, "invalid mode name(%s): too short!\n",
+> -				prop->name);
+> -			goto error;
+> +	mutex_init(&reboot->rb_lock);
+> +
+> +	scoped_guard(mutex, &reboot->rb_lock) {
+
+I don't see how this can race with anything, reboot_mode_register() is
+supposed to be called from some probe function, with reboot_mode_driver
+being a "local" object.
+
+The guard here "protects" &reboot->head, but that is not a shared
+resources at this point.
+
+> +		for_each_property_of_node(np, prop) {
+> +			if (strncmp(prop->name, PREFIX, len))
+> +				continue;
+> +
+> +			info = devm_kzalloc(reboot->dev, sizeof(*info), GFP_KERNEL);
+> +			if (!info) {
+> +				ret = -ENOMEM;
+> +				goto error;
+> +			}
+> +
+> +			if (of_property_read_u32(np, prop->name, &info->magic)) {
+> +				dev_err(reboot->dev, "reboot mode %s without magic number\n",
+> +					info->mode);
+> +				devm_kfree(reboot->dev, info);
+> +				continue;
+> +			}
+> +
+> +			info->mode = kstrdup_const(prop->name + len, GFP_KERNEL);
+> +			if (!info->mode) {
+> +				ret =  -ENOMEM;
+> +				goto error;
+> +			} else if (info->mode[0] == '\0') {
+> +				kfree_const(info->mode);
+> +				ret = -EINVAL;
+> +				dev_err(reboot->dev, "invalid mode name(%s): too short!\n",
+> +					prop->name);
+> +				goto error;
+> +			}
+> +
+> +			list_add_tail(&info->list, &reboot->head);
+>  		}
+>  
+> -		list_add_tail(&info->list, &reboot->head);
+> -	}
+> -
+> -	reboot->reboot_notifier.notifier_call = reboot_mode_notify;
+> -	register_reboot_notifier(&reboot->reboot_notifier);
+> +		reboot->reboot_notifier.notifier_call = reboot_mode_notify;
+> +		register_reboot_notifier(&reboot->reboot_notifier);
+
+Once register_reboot_notifier() has been called, &reboot->head is
+visible outside the specific driver instance.
+
+So, there's no reason to lock in reboot_mode_register().
+
+>  
+> -	return 0;
+> +		return 0;
+>  
+>  error:
+> -	list_for_each_entry(info, &reboot->head, list)
+> -		kfree_const(info->mode);
+> +		list_for_each_entry(info, &reboot->head, list)
+> +			kfree_const(info->mode);
+> +	}
+>  
+>  	return ret;
+>  }
+> @@ -133,8 +141,10 @@ int reboot_mode_unregister(struct reboot_mode_driver *reboot)
+>  
+>  	unregister_reboot_notifier(&reboot->reboot_notifier);
+>  
+> -	list_for_each_entry(info, &reboot->head, list)
+> -		kfree_const(info->mode);
+> +	scoped_guard(mutex, &reboot->rb_lock) {
+
+get_reboot_mode_magic() is only called from reboot_mode_notify(), which
+is only invoked by blocking_notifier_call_chain().
+
+blocking_notifier_call_chain() takes a read semaphore.
+unregister_reboot_notifier() take a write semaphore.
+
+So, if we're racing with a shutdown or reboot, I see two possible
+things:
+
+1) blocking_notifier_call_chain() happens first and calls
+   reboot_mode_notify(), blocking unregister_reboot_notifier(). Once it
+   returns, the unregister proceeds and we enter case #2
+
+2) unregister_reboot_notifier() happens first (or after the
+   blocking_notifier_call_chain() returns). Our reboot object is removed
+   from the list and blocking_notifier_call_chain() will not invoke
+   reboot_mode_notify().
+
+In either case, the list has a single owner here.
+
+
+As far as I can see, the only race left is if multiple concurrent calls
+happens to blocking_notifier_call_chain(), the behavior of
+reboot->write() might be undefined. But I think that is reasonable.
+
+
+Please let me know if I'm missing something.
+
+Thanks,
+Bjorn
+
+> +		list_for_each_entry(info, &reboot->head, list)
+> +			kfree_const(info->mode);
+> +	}
+>  
+>  	return 0;
+>  }
+> diff --git a/include/linux/reboot-mode.h b/include/linux/reboot-mode.h
+> index 4a2abb38d1d612ec0fdf05eb18c98b210f631b7f..b73f80708197677db8dc2e43affc519782b7146e 100644
+> --- a/include/linux/reboot-mode.h
+> +++ b/include/linux/reboot-mode.h
+> @@ -2,11 +2,15 @@
+>  #ifndef __REBOOT_MODE_H__
+>  #define __REBOOT_MODE_H__
+>  
+> +#include <linux/mutex.h>
+> +
+>  struct reboot_mode_driver {
+>  	struct device *dev;
+>  	struct list_head head;
+>  	int (*write)(struct reboot_mode_driver *reboot, unsigned int magic);
+>  	struct notifier_block reboot_notifier;
+> +	/*Protects access to reboot mode list*/
+> +	struct mutex rb_lock;
+>  };
+>  
+>  int reboot_mode_register(struct reboot_mode_driver *reboot);
+> 
+> -- 
+> 2.34.1
+> 
 
