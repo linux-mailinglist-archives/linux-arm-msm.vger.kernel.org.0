@@ -1,232 +1,369 @@
-Return-Path: <linux-arm-msm+bounces-79266-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-79267-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id D032EC164C6
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Oct 2025 18:50:31 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9F09CC165C8
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Oct 2025 19:01:51 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id D51B7188C038
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Oct 2025 17:50:54 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id ED69E400FD8
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Oct 2025 17:57:19 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6296C34D4F9;
-	Tue, 28 Oct 2025 17:50:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id BBF8C34EEE6;
+	Tue, 28 Oct 2025 17:56:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="Ezj4BxaT";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="WzEbofNJ"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="ZQMZwasl";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="aV2KYEJn"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A82D34DCC7
-	for <linux-arm-msm@vger.kernel.org>; Tue, 28 Oct 2025 17:50:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4DF034DCC9
+	for <linux-arm-msm@vger.kernel.org>; Tue, 28 Oct 2025 17:56:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761673812; cv=none; b=qUwnKH7fIL0z+vMh3gkEwKIF2gtkGCjYg/2UqJxO20r/zeZfii8B50mopqjSer79Xlvbkx99fWSBF60uRXkca+ovn4RCKFv4jZUSRL2KsV9F7RSkBIjfRfgyYUP4j51d/Rh1kWZS/twlPtp+beDuZnCTqc2Imn5x8G3KdEIpYx8=
+	t=1761674191; cv=none; b=BupxK9X2jnN6gZSb//sZwrk8oncFAt1GM3iXX0aazBVNPzMWn7+aX5Lk7rlyl4tCbRmD/qppEXFt7HekRStY/OXq4Qux53w3jT+yy7Ig68mkoFoP3eVT4sUMRt6yhHAFaeCuA/JAxZcE3meUZ/KTFpljziU/ihed7tWDpP2uDJU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761673812; c=relaxed/simple;
-	bh=RQuXrerRH0GC1Ou/VhVeBwaDYub4MWKrX7UL4Px9W0Y=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=o1i5QbhssBxUmblXp9TnFCMUaDPQCH/nNYuGSbxxCksufeAgC1nkpkDE1oXF4gMJ6wl0DTJo+CjdVeu5fF7LECG67GzR4MrT0WgzSR8w7eUJAHaqzBgiVnxGxvsxlJRRGvFjNGUn7EF8jl8SNvcKvvLLtfgYDhD7+V5HSfyryDw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=Ezj4BxaT; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=WzEbofNJ; arc=none smtp.client-ip=205.220.168.131
+	s=arc-20240116; t=1761674191; c=relaxed/simple;
+	bh=BU+1uKz5/jgwSY1VQmOs7TZswDg7x58zBa+tGrlAkYw=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=RoVB8PaquwWJHM0gMpW9bf0Ufswdek0t5ay9eZiKS19GhZQ44LiKFdJK1Lr3tG3iiIY02uNXGTZlfFtzNEDbV8pXE0H7NacKa+1io2U4jD0OHrSlTkU8A/cHCui/kUXWeyg2Vt7zxjALifrH3OhslfpqTjEWIj9g/aEwqPFFLBE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=ZQMZwasl; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=aV2KYEJn; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 59SEnts31937136
-	for <linux-arm-msm@vger.kernel.org>; Tue, 28 Oct 2025 17:50:08 GMT
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 59SHXsMb2345663
+	for <linux-arm-msm@vger.kernel.org>; Tue, 28 Oct 2025 17:56:28 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to; s=qcppdkim1; bh=p2sRd95FEGpGXnW+m3gEn4ld
-	EEcfyS3da4aKxTK71sg=; b=Ezj4BxaT1tB4/XY2DvgOikYAdKHq2cIw6U7Yt4oh
-	rLiK//QABBxlSATl8iOvcxXNkBLx/9189obJNhLii95R6fKv5pzALOUBM7F6YaTZ
-	brp8py3bxVmTLPqMYIZBaDQc5TFb9wruhKKSIIqB7NSXfPx/4lNl1CEZNPJDZJcq
-	Fib2rroHKlSLJ7t8x24lU65wGt3C3iJ1WZ9lZxOVyDtEruh14aH1PtW794YOV5EI
-	J6vxAI6736yZOkutf1RgzpMlBE9e6zuWTYInR8QFUzLXPYfb870zSN8ewMvge2l0
-	0SZjFg6iPx0O/XabDIFmJrNjBGEHstRPwsAXsp2awWqe1g==
-Received: from mail-pj1-f72.google.com (mail-pj1-f72.google.com [209.85.216.72])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4a2pjfadwx-1
+	cc:content-transfer-encoding:date:from:message-id:mime-version
+	:subject:to; s=qcppdkim1; bh=CY9mwslQZrSmHpkIizgzfQQ2+GJStg23eN8
+	tQn05XQo=; b=ZQMZwasldXcYJDgrLA4j0Az+52AFAe0dR2C4SgdrGysElleU/mn
+	tkeMymAT+kVlfS8cJGNgXaMrome+6covd/PV9gw0sfqtST9TiWyoEBC96qSntzfC
+	sI05m3RZCi3AxGnbpKLmXkPSIfSZDv5g3fKWyzhz8gxjKtbAzrKMUvzYr0fUibMb
+	pCJb/CZXtmDA/aiVbU6ldHSUJMLFQnPHL9QWeSznImbh97txzZpmjvpvZPMJRFdX
+	J0Avk49y43m0MaoBcqql2PO2/Uoshz81s0tCOC9nKWz+9nLnqLa/54HYNDr+iFZN
+	J3EqnxSDaFxNNKe8A0FNSP5kIJ0thtov/IQ==
+Received: from mail-pl1-f198.google.com (mail-pl1-f198.google.com [209.85.214.198])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4a32bf02bf-1
 	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Tue, 28 Oct 2025 17:50:08 +0000 (GMT)
-Received: by mail-pj1-f72.google.com with SMTP id 98e67ed59e1d1-340299fd99dso1267579a91.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 28 Oct 2025 10:50:08 -0700 (PDT)
+	for <linux-arm-msm@vger.kernel.org>; Tue, 28 Oct 2025 17:56:28 +0000 (GMT)
+Received: by mail-pl1-f198.google.com with SMTP id d9443c01a7336-294baa12981so1393335ad.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 28 Oct 2025 10:56:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1761673808; x=1762278608; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=p2sRd95FEGpGXnW+m3gEn4ldEEcfyS3da4aKxTK71sg=;
-        b=WzEbofNJcdDb926Fp49AeUPqwCmoLJso+wIetzKi3G9n/hPuf8Rmg6rB5jUaGT0goI
-         lgE+1rD69ojq2g3sFjxJ/QVbpirfwafFBWCgcxoUDy+yFIxkSHXawN83XBaQyzGvH+2o
-         YeVB8Z9FxWxWkUl72Y+I21eE3oZzQl6jPlHfPFr6vQMRWk9s2Fg86WYD1Yd/u3p2y0cf
-         pYbJcoBfrwNIq5d+E34kVsCEfBxEaIeyk+wXp2bsy8Wv8qzqHF7JagszmI3kP8sjZlsD
-         qtSsVvdeMp7TtKnCOr1Y/f01cGiA2apWkCtXlQSns08Z/JqUS9U2N9Tf64boZdowdAx5
-         89rw==
+        d=oss.qualcomm.com; s=google; t=1761674187; x=1762278987; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=CY9mwslQZrSmHpkIizgzfQQ2+GJStg23eN8tQn05XQo=;
+        b=aV2KYEJnKYcGEAsM5ta9OhtcFmm9yACkFf2rBrVz9sKXTcgfY4xz/xyOR7/cQb9xUL
+         aFTYDqNzFoyx6zhMgj3JjC/ZyI2yuqlzwysiXfYNn8mUpl31zGPKLr2GDvyZsnm37pYW
+         Ad7bO0GN7KC/YEcO/8S4EVtalBnIzm/53DEwkAHWi7BAGLUp0hjdFfGPrFMJx0iNhMam
+         CVfXGlQJRicDsLCC6nMgx7SQogDEH10orSYXiWivTgY1ZpSDzk/EPt4LH4uXY+FPSBBN
+         I3jWxk+Qw471VdO0MS/x7x3B4B1XwFLWfx9D1DNzPkp+vd6+pxireCpWg5VNO8W4EJ/K
+         7jaA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1761673808; x=1762278608;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=p2sRd95FEGpGXnW+m3gEn4ldEEcfyS3da4aKxTK71sg=;
-        b=h9HYGenBcQw5jPiJX1IbFHUktmhEePPpqwEb+ZPl3HuVOkOzdcaqTeU4nMkWYTRZ8+
-         zKPGh2eXm33lvqTOtLjr1lT8HK3iBfzC/nM/kouMDX0CJsTxnBfS/yilUnQ/8iIoUeOs
-         dXrM9Kir8wSAx+/Qoz8CmbEBE7pWEozQYfx2LPe1/N51SW4vdLSAv9JvQ2IpLkE5i2by
-         7NCo0A2kux0uvlB8pOTOfQAb4fdY10qX0Ss7Zw4F3EVqU4eaycveOJ5RvSUcQBFqcuuW
-         TCXg0Z1Q79N5kq/HLdLPTiMKtJfzeLWvwuZ+ouIrwPk1b/phEOvfVkMn49hRh1LwilTu
-         e1SQ==
-X-Forwarded-Encrypted: i=1; AJvYcCVC6iPv3Plto5cABPZH1czjV3YJQzJhDcGDvsT17Y56KDO0cAhGht5akEwxjCOilSRR6lEz49SRLRziXnEh@vger.kernel.org
-X-Gm-Message-State: AOJu0YzRCo5Cky8xwpWyhBcA2/xqYn9oAoLj1R0ITz6V5NQEL3QwXvqa
-	fJkF8a7HGBdFUjymrTqylKMTrW++/BbgKhBotfE/uFVCZaM+7J3/dzUF73DiMWSX7CJbwOcyZ2Q
-	IVWfR9smW8F6dQoBm5anXjeH/KBnEVp8autYIlp9tb2ZmKtMkLd9IM1SqYUeaQh5/R7pgCQigwB
-	wXgPY=
-X-Gm-Gg: ASbGnctdwovy/i3gQbufU1MeTdyif2ubMk9tdtVFYHdzUunrJ1UoSJCeSTf78bUQ+Xo
-	xeZ0G/+EUXimWg3b7u1psawivspTys0AuFn+hA0xmteoI6aPOlgYHYoA69j+i0p71qo4KqTIbHs
-	PTn3kTBZrYNf4zRSKYD8M8kRMAkQTUBRUX6cxTh3siXOlyF1HerqFbV1XSiCesVLQnWO5n9Xli3
-	OPcnIUmgWf2W92ku+/ZaOBJjDoBtDsej3YizHCl4cac3m48z9hdomX1e7MT6/40tKr1ct2LUFWG
-	7GHYguVfkJFg9nv7s170IGJdiq2n36wYnKj/B/uayH663oz6G48yaPshrWrytLSXYLIwwQJkNJ5
-	bQAEm2uKUTtxfijZEqha2JcS23xT3XEzD
-X-Received: by 2002:a17:90b:4d0c:b0:335:2823:3683 with SMTP id 98e67ed59e1d1-34027a105d4mr4955060a91.9.1761673807523;
-        Tue, 28 Oct 2025 10:50:07 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFmFHckhsPGpEbVPLXbcPP671qlbe6u0dg82t5Y8NkQanWb4AgPNJ5BkpS154qJVc8fgzThsA==
-X-Received: by 2002:a17:90b:4d0c:b0:335:2823:3683 with SMTP id 98e67ed59e1d1-34027a105d4mr4955024a91.9.1761673806974;
-        Tue, 28 Oct 2025 10:50:06 -0700 (PDT)
-Received: from hu-pkondeti-hyd.qualcomm.com ([202.46.22.19])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-34028fe80c5sm1569088a91.0.2025.10.28.10.50.01
+        d=1e100.net; s=20230601; t=1761674187; x=1762278987;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=CY9mwslQZrSmHpkIizgzfQQ2+GJStg23eN8tQn05XQo=;
+        b=Cvfiuqd2iZnRO+/rT/PoRd7pgu0cATZzPXvuyGNtYEzsXwbJK8er4K9nMsxQOl63BY
+         ls11RxnQI1tIlp2HQ28jUHLl/Z/NZDKcOmVhuRw8XeIocf1e9J6Pfi3hsPnc0kRdDb5Z
+         qoDwQG6jvykLTJk/ioDCFFDaz7Vt1PSVoXwmD7aJ2c0DKq7QyY92zQyZ96B44/wnX2qz
+         FCL/IEGLOnsgPdXjrbuUkEBRPeyrGGVVLtHyT/qZO9eSngCHVLlj6FvZVXBFKE4sFgTd
+         4MojUc5/4k+2TrPCQAySVbFSikcxIJyU8sp9pPQXOad52+Qr+PBH2JjYmwVoSePgpW0H
+         abQw==
+X-Gm-Message-State: AOJu0YxDaIxhGO/+MBJhPnH06y5NPqEOSuNksBiXMWjzaPUZhZSMhMxF
+	1tt2DLQ81TXtDsOan6rWOXeUcvQBnKO4g8kCiN6tkSR0nr3iXnOfHIc1jNNW3DSOF0w3usDWfg3
+	lWane1fkeHiElWJ8D7A0w5i82Ws0o5RYRwaS9AAl1/6V0GP+5MaNRA2AEZtnGYB/DgGB9
+X-Gm-Gg: ASbGncuEloAdIe66FpE+ABrDFn3+CnoRLro3c1hXtxXcR/TlBQq1TwbjfDQIOgZ7vbV
+	N/2zgoqJzZXAs4765HiQ3QhNnBX/jkLsXpMgxkXs5z6MrDyDAJWLGr6TdCDh1O6PKC1aVh4AANB
+	1dHmUEneL/k4y9ZQSxEUCwnLbjwORNVD45LRh7TDrswRHGshESNPnMYq0BYkI9lVHLvpsgF15cf
+	/E+Stor/D6bByjSoZapnlPTCwpq/jPx/AEwAensjJRSqV1MAVvClOLhya5WWNBzyIrxXs4bUD+1
+	5Njep9d/kWSCN2Q/5GloDrAKxHcdMLwn6y0Wqgo0TeeetgVQ42GhNsXKw4Kj8cfPeFonbYBht5i
+	qz6eIdoL1ZPvfI2lF94C60jHiw+poHQ==
+X-Received: by 2002:a17:902:c402:b0:25b:e5a2:fb29 with SMTP id d9443c01a7336-294de82e2d6mr1592005ad.12.1761674187319;
+        Tue, 28 Oct 2025 10:56:27 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHPuFgeocQDH0Y+5SaMQQ4Is2hmA57zZXLDOQQK2fjGOF5JGuBzPwVO7n9W9+CQy6rRjA3x3A==
+X-Received: by 2002:a17:902:c402:b0:25b:e5a2:fb29 with SMTP id d9443c01a7336-294de82e2d6mr1591575ad.12.1761674186643;
+        Tue, 28 Oct 2025 10:56:26 -0700 (PDT)
+Received: from hu-neersoni-hyd.qualcomm.com ([202.46.22.19])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-29498d4254asm126628705ad.82.2025.10.28.10.56.24
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 28 Oct 2025 10:50:05 -0700 (PDT)
-Date: Tue, 28 Oct 2025 23:19:59 +0530
-From: Pavan Kondeti <pavan.kondeti@oss.qualcomm.com>
-To: Guenter Roeck <linux@roeck-us.net>
-Cc: Pavan Kondeti <pavan.kondeti@oss.qualcomm.com>,
-        hrishabh.rajput@oss.qualcomm.com,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>,
-        Wim Van Sebroeck <wim@linux-watchdog.org>,
-        Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
-        linux-watchdog@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Neil Armstrong <neil.armstrong@linaro.org>
-Subject: Re: [PATCH v3] watchdog: Add driver for Gunyah Watchdog
-Message-ID: <cf5c0f82-56ce-4ced-986f-aae8a23e7166@quicinc.com>
-References: <20251028-gunyah_watchdog-v3-1-e6d1ea438b1d@oss.qualcomm.com>
- <4659e69b-907a-49ba-8eb6-ac17232a5219@roeck-us.net>
- <3e4fd54c-90fb-4b15-a9cd-a2d11b0aa952@quicinc.com>
- <6ceb8331-cc4a-4754-8b9e-dea887665efc@roeck-us.net>
+        Tue, 28 Oct 2025 10:56:26 -0700 (PDT)
+From: Neeraj Soni <neeraj.soni@oss.qualcomm.com>
+To: andersson@kernel.org, konradybcio@kernel.org
+Cc: linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        neeraj.soni@oss.qualcomm.com
+Subject: [PATCH v2] soc: qcom: ice: Add HWKM v1 support for wrapped keys
+Date: Tue, 28 Oct 2025 23:26:23 +0530
+Message-Id: <20251028175623.1054084-1-neeraj.soni@oss.qualcomm.com>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <6ceb8331-cc4a-4754-8b9e-dea887665efc@roeck-us.net>
-X-Authority-Analysis: v=2.4 cv=Ut9u9uwB c=1 sm=1 tr=0 ts=69010250 cx=c_pps
- a=RP+M6JBNLl+fLTcSJhASfg==:117 a=fChuTYTh2wq5r3m49p7fHw==:17
- a=kj9zAlcOel0A:10 a=x6icFKpwvdMA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=EUspDBNiAAAA:8 a=RMpeMXYOqeSlBc37jRsA:9
- a=CjuIK1q_8ugA:10 a=iS9zxrgQBfv6-_F4QbHw:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDI4MDE1MCBTYWx0ZWRfX7eAWp9xmfj+B
- nf6f67PJFWX2D1qRtiJ7Tn0otz9TBs/y6VgiQX3Q/7gfC4a1Nfbv29OmHpt/M0bGb4pSMAdt8ZC
- 1ut/g98jJXnkJf1KqizuaNhtsdQJ+qKOj9GGPkW7HMGoIBTuRLPNzfNNvRNna2mqSV7r2LLdC7w
- W2O1PsscwHaoChZ1WZvIoyUJtWFIaiX4/zYdAxybVbbYY5Lpd4qIvf9C87SyGFX8c6nmTq7vSZw
- 8GxxeAxHTaJD8t1k1W3kKGN1TYofnvbRFb1h/5NwSMzich7cxgO+6tKXEJ7pSmKTDMz8RYJ08JO
- rsm+e0bJZ3/MHIzkKJaK6CATfX77ZkWIYkxmuJ87objOu/WONbfzsBjKnnaAVDSCtpqxNk884ec
- iZOAU/IU3dKimaoyduZmtMbhJYEEYQ==
-X-Proofpoint-GUID: CR91cEOLZkyhdHy8vCrfbOtNabx1sezb
-X-Proofpoint-ORIG-GUID: CR91cEOLZkyhdHy8vCrfbOtNabx1sezb
+Content-Transfer-Encoding: 8bit
+X-Authority-Analysis: v=2.4 cv=NurcssdJ c=1 sm=1 tr=0 ts=690103cc cx=c_pps
+ a=MTSHoo12Qbhz2p7MsH1ifg==:117 a=fChuTYTh2wq5r3m49p7fHw==:17
+ a=x6icFKpwvdMA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=EUspDBNiAAAA:8 a=vY7nf_sd2vNLmu096JAA:9 a=GvdueXVYPmCkWapjIL-Q:22
+X-Proofpoint-GUID: YF07gH3fN2vVusS1hmco9E_AP_urV1FE
+X-Proofpoint-ORIG-GUID: YF07gH3fN2vVusS1hmco9E_AP_urV1FE
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDI4MDE1MCBTYWx0ZWRfX5tJlZkRt3RRR
+ ihylb8LLzn8Ijw8jV/vJTwlSqoPj/MrrED7+uDavh9INkK6jStgQjAZScJDP0ujYpp/17UE96BP
+ cdOu8Nu4ginApcEk1DahpW1rLctnExTDXu2ua154bv7eU62cxPqJaJ6kCYY/otpsqbmW3QX9OvG
+ YlLMbZKpkrOr3NcFMc+CP4+ctL6VzAWgxcL4nyDfxZ8X1qpq0sMCZeXRfkXfWskimCuirtHC0CK
+ ANgbkHc8wahfvJfqOuJAUrzpNOfj0FJauK8hqKiAmsjeKeculDW+jaFDWDE3Ujox8jYC2qaEOKs
+ me0Z0ulYglwz6IsJnPChcEXCSbovgT02fSzuKUCN8o/MF8supmjBW/gZrjFW+pvX28KhOMM8J0E
+ t6768gXgECFsvk8qgd1FfU/tO95coQ==
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.80.40
  definitions=2025-10-28_06,2025-10-22_01,2025-03-28_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- lowpriorityscore=0 priorityscore=1501 spamscore=0 adultscore=0 bulkscore=0
- clxscore=1015 impostorscore=0 suspectscore=0 phishscore=0 malwarescore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2510020000 definitions=main-2510280150
+ suspectscore=0 bulkscore=0 clxscore=1015 phishscore=0 malwarescore=0
+ spamscore=0 impostorscore=0 priorityscore=1501 adultscore=0
+ lowpriorityscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2510020000
+ definitions=main-2510280150
 
-On Tue, Oct 28, 2025 at 10:29:32AM -0700, Guenter Roeck wrote:
-> On 10/28/25 09:40, Pavan Kondeti wrote:
-> > On Tue, Oct 28, 2025 at 09:06:12AM -0700, Guenter Roeck wrote:
-> > > On 10/28/25 02:35, Hrishabh Rajput via B4 Relay wrote:
-> > > > From: Hrishabh Rajput <hrishabh.rajput@oss.qualcomm.com>
-> > > > 
-> > > > On Qualcomm SoCs running under the Gunyah hypervisor, access to watchdog
-> > > > through MMIO is not available on all platforms. Depending on the
-> > > > hypervisor configuration, the watchdog is either fully emulated or
-> > > > exposed via ARM's SMC Calling Conventions (SMCCC) through the Vendor
-> > > > Specific Hypervisor Service Calls space.
-> > > > 
-> > > > When Gunyah is not present or Gunyah emulates MMIO-based watchdog, we
-> > > > expect Qualcomm watchdog or ARM SBSA watchdog device to be present in
-> > > > the devicetree. If we detect either of the device nodes, we don't
-> > > > proceed ahead. Otherwise, we go ahead and invoke GUNYAH_WDT_STATUS SMC
-> > > > to initiate the discovery of the SMC-based watchdog.
-> > > > 
-> > > > Add driver to support the SMC-based watchdog provided by the Gunyah
-> > > > Hypervisor. module_exit() is intentionally not implemented as this
-> > > > driver is intended to be a persistent module.
-> > > > 
-> > > > Signed-off-by: Hrishabh Rajput <hrishabh.rajput@oss.qualcomm.com>
-> > > > ---
-> 
-> ...
-> > > > +	gunyah_wdt_dev = platform_device_register_simple(GUNYAH_WDT_DRV_NAME,
-> > > > +							 -1, NULL, 0);
-> > > 
-> > > I did not follow the discussion around this, so I may be missing something.
-> > > If so, apologies.
-> > > 
-> > > This is a highly unusual approach. What is the point of not instantiating
-> > > the watchdog device through devicetree and doing it in the init function
-> > > instead ? There should be a devicetree node which instantiates the device;
-> > > it should never be instantiated from the init function unless there _is_
-> > > no devicetree, which is obviously not the case here.
-> > > 
-> > > Every other driver which supports devicetree has an .of_match_table
-> > > which triggers device instantiation. If the Gunyah watchdog can for
-> > > some reason not use that approach, its devicetree description should
-> > > be fixed. Instantiating the device from its init function because its
-> > > devicetree description is bad or missing is just wrong. It is even more
-> > > wrong to try to contact the hardware or embedded controller to figure out
-> > > if the device is there. This can have all kinds of negative impact on other
-> > > hardware.
-> > > 
-> > The Gunyah WDT node gets overlayed by bootloader. We see that this
-> > overlay is failing w/ upstream device tree since the overlay has
-> > references to downstream code. Please see [1]. Hence we are trying to
-> > register the platform device dynamically.
-> > 
-> 
-> This is just wrong. Whatever happens downstream is not an upstream concern.
-> If an overlay is broken, fix it.
+HWKM v1 and v2 differ slightly in wrapped key size and the bit fields for
+certain status registers and operating mode (legacy or standard).
 
-The problem (watchdog availability to Linux) has been fixed on latest QC
-devices where Gunyah (Hypervisor) emulate the MMIO. The watchdog device
-has been added to device tree and it works with
-drivers/watchdog/qcom-wdt.c drivers. 
+Add support to select HWKM version based on the major and minor revisions.
+Use this HWKM version to select wrapped key size and to configure the bit
+fields in registers for operating modes and hardware status.
 
-However, we have older QC platforms like SM8550, SM8650, SM8750 etc
-where watchdog is supported only through Gunyah SMC interface. we are
-told it is better to expose this as a hypervisor interface, so we are
-adding platfrom device in the code. 
+Support for SCM calls for wrapped keys is being added in the TrustZone for
+few SoCs with HWKM v1. Existing check of qcom_scm_has_wrapped_key_support()
+API ensures that HWKM is used only if these SCM calls are supported in
+TrustZone for that SoC.
 
-Our goal is to enable the watchdog functionality on older Qualcomm
-devices that are already supported in upstream. One of the main use cases
-is to enable RAM dump collection upon kernel panic. With the
-watchdog enabled, Linux fails to "pet" the watchdog during a panic and
-device enter RAM dump collection mode.
+Signed-off-by: Neeraj Soni <neeraj.soni@oss.qualcomm.com>
+---
 
-> 
-> NACK to the current approach.
-> 
+Changes in [v2]
+- Added "ice:" in subject.
+- Introduced QCOM_ICE_HWKM_MAX_WRAPPED_KEY_SIZE macro for maximum HWKM
+  wrapped key size.
+- Updated comment for HWKM availability in qcom_ice_check_supported() for
+  ICE version earlier to "3.2.0".
+- Updated the if (major == 4) check in qcom_ice_check_supported() to
+  if (major > 3) to select HWKM v2 version for all ICE revisions after
+  "3.2.0".
+- Fixed "Hard Ware" to "Hardware" in dev_info() print for HWKM version in
+  qcom_ice_check_supported().
+- Used QCOM_ICE_HWKM_MAX_WRAPPED_KEY_SIZE in BUILD_BUG_ON() in
+  qcom_ice_hwkm_init().
+- Removed redundant else condition for HWKM version in qcom_ice_hwkm_init()
+  as it was impossible to reach.
+- Removed redundant parentheses in translate_hwkm_slot().
 
-In hindsight, it would have been a lot better to add the watchdog device
-directly from the qcom specific code and add the watchdog driver as a 
-standard platform driver that probes the device using the
-SMC interface. We plan to try this approach in v4 and will wait for
-further feedback.
+Change in [v1]
+- Added initial support for HWKM v1 for wrapped keys.
+---
+ drivers/soc/qcom/ice.c | 84 ++++++++++++++++++++++++++++++------------
+ 1 file changed, 61 insertions(+), 23 deletions(-)
 
-Thanks,
-Pavan
+diff --git a/drivers/soc/qcom/ice.c b/drivers/soc/qcom/ice.c
+index c467b55b4174..20584384ed31 100644
+--- a/drivers/soc/qcom/ice.c
++++ b/drivers/soc/qcom/ice.c
+@@ -22,7 +22,18 @@
+ #include <soc/qcom/ice.h>
+ 
+ #define AES_256_XTS_KEY_SIZE			64   /* for raw keys only */
+-#define QCOM_ICE_HWKM_WRAPPED_KEY_SIZE		100  /* assuming HWKM v2 */
++
++#define QCOM_ICE_HWKM_V1			1    /* HWKM version 1 */
++#define QCOM_ICE_HWKM_V2			2    /* HWKM version 2 */
++
++#define QCOM_ICE_HWKM_MAX_WRAPPED_KEY_SIZE	100  /* Maximum HWKM wrapped key size */
++
++/*
++ * Wrapped key size depends upon HWKM version:
++ * HWKM version 1 supports 68 bytes
++ * HWKM version 2 supports 100 bytes
++ */
++#define QCOM_ICE_HWKM_WRAPPED_KEY_SIZE(v)	((v) == QCOM_ICE_HWKM_V1 ? 68 : 100)
+ 
+ /* QCOM ICE registers */
+ 
+@@ -62,13 +73,15 @@ union crypto_cfg {
+ 
+ #define QCOM_ICE_REG_HWKM_TZ_KM_CTL		(HWKM_OFFSET + 0x1000)
+ #define QCOM_ICE_HWKM_DISABLE_CRC_CHECKS_VAL	(BIT(1) | BIT(2))
++/* In HWKM v1 the ICE legacy mode is controlled from HWKM register space */
++#define QCOM_ICE_HWKM_ICE_LEGACY_MODE_ENABLED	BIT(5)
+ 
+ #define QCOM_ICE_REG_HWKM_TZ_KM_STATUS		(HWKM_OFFSET + 0x1004)
+ #define QCOM_ICE_HWKM_KT_CLEAR_DONE		BIT(0)
+ #define QCOM_ICE_HWKM_BOOT_CMD_LIST0_DONE	BIT(1)
+ #define QCOM_ICE_HWKM_BOOT_CMD_LIST1_DONE	BIT(2)
+-#define QCOM_ICE_HWKM_CRYPTO_BIST_DONE_V2	BIT(7)
+-#define QCOM_ICE_HWKM_BIST_DONE_V2		BIT(9)
++#define QCOM_ICE_HWKM_CRYPTO_BIST_DONE(v)	(((v) == QCOM_ICE_HWKM_V1) ? BIT(14) : BIT(7))
++#define QCOM_ICE_HWKM_BIST_DONE(v)		(((v) == QCOM_ICE_HWKM_V1) ? BIT(16) : BIT(9))
+ 
+ #define QCOM_ICE_REG_HWKM_BANK0_BANKN_IRQ_STATUS (HWKM_OFFSET + 0x2008)
+ #define QCOM_ICE_HWKM_RSP_FIFO_CLEAR_VAL	BIT(3)
+@@ -97,6 +110,7 @@ struct qcom_ice {
+ 	struct clk *core_clk;
+ 	bool use_hwkm;
+ 	bool hwkm_init_complete;
++	u8 hwkm_version;
+ };
+ 
+ static bool qcom_ice_check_supported(struct qcom_ice *ice)
+@@ -114,9 +128,26 @@ static bool qcom_ice_check_supported(struct qcom_ice *ice)
+ 		return false;
+ 	}
+ 
++	/* HWKM version v2 is present from ICE 3.2.1 onwards while version v1
++	 * is present only in ICE 3.2.0. Earlier ICE version don't have HWKM.
++	 */
++	if (major > 3 ||
++	   (major == 3 && (minor >= 3 || (minor == 2 && step >= 1))))
++		ice->hwkm_version = QCOM_ICE_HWKM_V2;
++	else if ((major == 3) && (minor == 2))
++		ice->hwkm_version = QCOM_ICE_HWKM_V1;
++	else
++		ice->hwkm_version = 0;
++
+ 	dev_info(dev, "Found QC Inline Crypto Engine (ICE) v%d.%d.%d\n",
+ 		 major, minor, step);
+ 
++	if (!ice->hwkm_version)
++		dev_info(dev, "QC Hardware Key Manager (HWKM) not supported\n");
++	else
++		dev_info(dev, "QC Hardware Key Manager (HWKM) version v%d\n",
++			 ice->hwkm_version);
++
+ 	/* If fuses are blown, ICE might not work in the standard way. */
+ 	regval = qcom_ice_readl(ice, QCOM_ICE_REG_FUSE_SETTING);
+ 	if (regval & (QCOM_ICE_FUSE_SETTING_MASK |
+@@ -131,19 +162,18 @@ static bool qcom_ice_check_supported(struct qcom_ice *ice)
+ 	 * v3.2.1 and later have HWKM v2.  ICE v3.2.0 has HWKM v1.  Earlier ICE
+ 	 * versions don't have HWKM at all.  However, for HWKM to be fully
+ 	 * usable by Linux, the TrustZone software also needs to support certain
+-	 * SCM calls including the ones to generate and prepare keys.  That
+-	 * effectively makes the earliest supported SoC be SM8650, which has
+-	 * HWKM v2.  Therefore, this driver doesn't include support for HWKM v1,
+-	 * and it checks for the SCM call support before it decides to use HWKM.
++	 * SCM calls including the ones to generate and prepare keys. Support
++	 * for these SCM calls is present for SoCs with HWKM v2 and is being
++	 * added for SoCs with HWKM v1 as well but not every SoC with HWKM v1
++	 * currently supports this. So, this driver checks for the SCM call
++	 * support before it decides to use HWKM.
+ 	 *
+ 	 * Also, since HWKM and legacy mode are mutually exclusive, and
+ 	 * ICE-capable storage driver(s) need to know early on whether to
+ 	 * advertise support for raw keys or wrapped keys, HWKM cannot be used
+ 	 * unconditionally.  A module parameter is used to opt into using it.
+ 	 */
+-	if ((major >= 4 ||
+-	     (major == 3 && (minor >= 3 || (minor == 2 && step >= 1)))) &&
+-	    qcom_scm_has_wrapped_key_support()) {
++	if (ice->hwkm_version && qcom_scm_has_wrapped_key_support()) {
+ 		if (qcom_ice_use_wrapped_keys) {
+ 			dev_info(dev, "Using HWKM. Supporting wrapped keys only.\n");
+ 			ice->use_hwkm = true;
+@@ -212,8 +242,8 @@ static int qcom_ice_wait_bist_status(struct qcom_ice *ice)
+ 	    (QCOM_ICE_HWKM_KT_CLEAR_DONE |
+ 	     QCOM_ICE_HWKM_BOOT_CMD_LIST0_DONE |
+ 	     QCOM_ICE_HWKM_BOOT_CMD_LIST1_DONE |
+-	     QCOM_ICE_HWKM_CRYPTO_BIST_DONE_V2 |
+-	     QCOM_ICE_HWKM_BIST_DONE_V2)) {
++	     QCOM_ICE_HWKM_CRYPTO_BIST_DONE(ice->hwkm_version) |
++	     QCOM_ICE_HWKM_BIST_DONE(ice->hwkm_version))) {
+ 		dev_err(ice->dev, "HWKM self-test error!\n");
+ 		/*
+ 		 * Too late to revoke use_hwkm here, as it was already
+@@ -230,7 +260,7 @@ static void qcom_ice_hwkm_init(struct qcom_ice *ice)
+ 	if (!ice->use_hwkm)
+ 		return;
+ 
+-	BUILD_BUG_ON(QCOM_ICE_HWKM_WRAPPED_KEY_SIZE >
++	BUILD_BUG_ON(QCOM_ICE_HWKM_MAX_WRAPPED_KEY_SIZE >
+ 		     BLK_CRYPTO_MAX_HW_WRAPPED_KEY_SIZE);
+ 	/*
+ 	 * When ICE is in HWKM mode, it only supports wrapped keys.
+@@ -238,9 +268,15 @@ static void qcom_ice_hwkm_init(struct qcom_ice *ice)
+ 	 *
+ 	 * Put ICE in HWKM mode.  ICE defaults to legacy mode.
+ 	 */
+-	regval = qcom_ice_readl(ice, QCOM_ICE_REG_CONTROL);
+-	regval &= ~QCOM_ICE_LEGACY_MODE_ENABLED;
+-	qcom_ice_writel(ice, regval, QCOM_ICE_REG_CONTROL);
++	if (ice->hwkm_version == QCOM_ICE_HWKM_V2) {
++		regval = qcom_ice_readl(ice, QCOM_ICE_REG_CONTROL);
++		regval &= ~QCOM_ICE_LEGACY_MODE_ENABLED;
++		qcom_ice_writel(ice, regval, QCOM_ICE_REG_CONTROL);
++	} else if (ice->hwkm_version == QCOM_ICE_HWKM_V1) {
++		regval = qcom_ice_readl(ice, QCOM_ICE_REG_HWKM_TZ_KM_CTL);
++		regval &= ~QCOM_ICE_HWKM_ICE_LEGACY_MODE_ENABLED;
++		qcom_ice_writel(ice, regval, QCOM_ICE_REG_HWKM_TZ_KM_CTL);
++	}
+ 
+ 	/* Disable CRC checks.  This HWKM feature is not used. */
+ 	qcom_ice_writel(ice, QCOM_ICE_HWKM_DISABLE_CRC_CHECKS_VAL,
+@@ -298,7 +334,8 @@ EXPORT_SYMBOL_GPL(qcom_ice_suspend);
+ 
+ static unsigned int translate_hwkm_slot(struct qcom_ice *ice, unsigned int slot)
+ {
+-	return slot * 2;
++	/* The slot offset depends upon HWKM version */
++	return ice->hwkm_version == QCOM_ICE_HWKM_V1 ? slot : slot * 2;
+ }
+ 
+ static int qcom_ice_program_wrapped_key(struct qcom_ice *ice, unsigned int slot,
+@@ -451,11 +488,12 @@ int qcom_ice_generate_key(struct qcom_ice *ice,
+ {
+ 	int err;
+ 
+-	err = qcom_scm_generate_ice_key(lt_key, QCOM_ICE_HWKM_WRAPPED_KEY_SIZE);
++	err = qcom_scm_generate_ice_key(lt_key,
++					QCOM_ICE_HWKM_WRAPPED_KEY_SIZE(ice->hwkm_version));
+ 	if (err)
+ 		return err;
+ 
+-	return QCOM_ICE_HWKM_WRAPPED_KEY_SIZE;
++	return QCOM_ICE_HWKM_WRAPPED_KEY_SIZE(ice->hwkm_version);
+ }
+ EXPORT_SYMBOL_GPL(qcom_ice_generate_key);
+ 
+@@ -478,13 +516,13 @@ int qcom_ice_prepare_key(struct qcom_ice *ice,
+ 	int err;
+ 
+ 	err = qcom_scm_prepare_ice_key(lt_key, lt_key_size,
+-				       eph_key, QCOM_ICE_HWKM_WRAPPED_KEY_SIZE);
++				       eph_key, QCOM_ICE_HWKM_WRAPPED_KEY_SIZE(ice->hwkm_version));
+ 	if (err == -EIO || err == -EINVAL)
+ 		err = -EBADMSG; /* probably invalid key */
+ 	if (err)
+ 		return err;
+ 
+-	return QCOM_ICE_HWKM_WRAPPED_KEY_SIZE;
++	return QCOM_ICE_HWKM_WRAPPED_KEY_SIZE(ice->hwkm_version);
+ }
+ EXPORT_SYMBOL_GPL(qcom_ice_prepare_key);
+ 
+@@ -506,11 +544,11 @@ int qcom_ice_import_key(struct qcom_ice *ice,
+ 	int err;
+ 
+ 	err = qcom_scm_import_ice_key(raw_key, raw_key_size,
+-				      lt_key, QCOM_ICE_HWKM_WRAPPED_KEY_SIZE);
++				      lt_key, QCOM_ICE_HWKM_WRAPPED_KEY_SIZE(ice->hwkm_version));
+ 	if (err)
+ 		return err;
+ 
+-	return QCOM_ICE_HWKM_WRAPPED_KEY_SIZE;
++	return QCOM_ICE_HWKM_WRAPPED_KEY_SIZE(ice->hwkm_version);
+ }
+ EXPORT_SYMBOL_GPL(qcom_ice_import_key);
+ 
+-- 
+2.34.1
+
 
