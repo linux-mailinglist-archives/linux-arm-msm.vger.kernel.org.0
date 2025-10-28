@@ -1,132 +1,129 @@
-Return-Path: <linux-arm-msm+bounces-79220-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-79221-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6629CC1595B
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Oct 2025 16:48:51 +0100 (CET)
+Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [IPv6:2605:f480:58:1:0:1994:3:14])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9547DC159A0
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Oct 2025 16:51:33 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 0E1E41B280AA
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Oct 2025 15:44:56 +0000 (UTC)
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 1420C54842C
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Oct 2025 15:46:57 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CD688342C80;
-	Tue, 28 Oct 2025 15:43:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0E675346E69;
+	Tue, 28 Oct 2025 15:44:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b="F+asoayS"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="aI7T47Jt"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f50.google.com (mail-lf1-f50.google.com [209.85.167.50])
+Received: from mail-wm1-f46.google.com (mail-wm1-f46.google.com [209.85.128.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BF8C34405E
-	for <linux-arm-msm@vger.kernel.org>; Tue, 28 Oct 2025 15:43:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18A7C342C80
+	for <linux-arm-msm@vger.kernel.org>; Tue, 28 Oct 2025 15:44:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761666198; cv=none; b=OC1irOpD7YdqFhvQDXUWA3Iebr7DURj/F3Rippar4zvaO8/pihoRIBAKx8zfkP2nhgRSS5HJ8lncUafrLLXfMpPDOEIpp5LtktBPqlHmO7QoWEvJ3LazPKkvUPUtfhcZExsQljxTcGnJwLyEqK09TmrMXQ/PkFmsb3ulQPh2CF0=
+	t=1761666276; cv=none; b=dyK62pgmvChdu9DD36XMq44EGzYG6KWkIijRZ3ME4x1XZhjrM6juBHtw7tJumllBmvn+X/OBwbvdjak43VEBzH7tC8pxT+RQZoPfiYP0B9Ytd8iA6XoRTReSOO1/0EmFeL5OYxueY5avPNAXHQzSaQar+1JCguZ5aVZC0ydgRng=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761666198; c=relaxed/simple;
-	bh=p8N0VHY2XpMh/L81W8FzKQHWHJk+NmZNjv7GuBCqyQI=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=h0XF5o7vH/PW6SdVdwfHDFE3iVQ4DLTEGWZEzUhohmkrW8KS+jkQsOMreBpPpSISRJlrdVCaHshrLiOF1OGWhvZwuQ71y0edBwTkomhHIGsQY8jI6HKdD3iX1a90X+lr7zKTAMSRR356keU/JiIXbdVDF74Y1uqmuA8QgvCWjKc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl; spf=none smtp.mailfrom=bgdev.pl; dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b=F+asoayS; arc=none smtp.client-ip=209.85.167.50
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=bgdev.pl
-Received: by mail-lf1-f50.google.com with SMTP id 2adb3069b0e04-59390875930so231347e87.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 28 Oct 2025 08:43:16 -0700 (PDT)
+	s=arc-20240116; t=1761666276; c=relaxed/simple;
+	bh=ZeWbW3cwFzTk+snUQ1YZru5uS3rdocJhJhmNIAkZTos=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=k0hryywJRA8VMRO5J8QIHGYWgNhiWT9fyshwlsQDiWDcFnHuhOhq5SXs45TQ2pCNU5v5z2kvYE/LpLrzrk6p9TJOUNbAT7qDyRsIqTJmJaJUu/AWZWGKOVjORH+VE2Wsv+DOsBf+YuiYsNCea5jjV1RiRkJLVZWgw8DWnMrDl8c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=aI7T47Jt; arc=none smtp.client-ip=209.85.128.46
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wm1-f46.google.com with SMTP id 5b1f17b1804b1-47114a40161so69284325e9.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 28 Oct 2025 08:44:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=bgdev-pl.20230601.gappssmtp.com; s=20230601; t=1761666194; x=1762270994; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=do7MuCP88nOM3eMBQKiSZ63kBzTalMH1rd1ZJUZo3vk=;
-        b=F+asoayS366GanZ5Gwtp4/aKW1G2d3JPcsnw2FFWfWbb4AWL5KcNSPx1XZ/4pah/WQ
-         KimGGQzgEriuGk9jfql0Ae7FH3H8UTDm57K5EotoyyHCE3D+PIqlk8PPwuhDwVi0jl6S
-         cu8oKVb3aXHkarELOAeTMXfCpwYs5tpurLC+i5aN6/zkJG5AZlDATun47wHkGYEmuFdY
-         XDo0gpi/DQRKjMaPD0g7Er2IJc4CYzKStv+05B5DUlPD6X+zIo2gu+F4uNXS8Zy27WJI
-         V2FdMrMR/fJQleq5P9AsmDRrd9soqpH2u0BbStY65TKNQHgXPWkMeSX7MP878chlsHOw
-         3RCQ==
+        d=linaro.org; s=google; t=1761666273; x=1762271073; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=kxDtTm5Uk2GlvziLH671chbdmWE90Ft/hZE2+B8F9lE=;
+        b=aI7T47JtgV8TEWD/on7n8AyrcVYxh7MD90BkXCGHPwbX8pP9tco9CL9WLzg1OHL7oP
+         tv2EJLkXIeyd0dOt/OPaKBdXNVMsWvHEniGMRW48UCQNhTb/uzeAU38E9IaPrO3mG4I2
+         g1O5OyohVFvNP58oNm/1HTkjNPQ+y3MINs5iDd6xP4yr0dCP4+Mwt3jSpmPoeqOQuRWR
+         JivNwjGapCJeckXJfpXrBt95VUiQ+mj5/sDlroucvAFSjvqPg+DdjcqfKFy6N17S/f6r
+         UwqJL5ZjXzjZaE+9hOFTv0vpBv117p8+WOTtEnsVdm9tLKBNmpTT77wa2Y8Go2NdWWqt
+         0DzQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1761666194; x=1762270994;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=do7MuCP88nOM3eMBQKiSZ63kBzTalMH1rd1ZJUZo3vk=;
-        b=mT7lCB8DdJzcB4WtiZq0SHAN4vuzGt1BmpyKfHq4Ux6Dty7SONxxx4gp3Sf4dLGLkr
-         7KY5IlQd5XzfW4j6XCLyq6IEwoghaex9yL66NCYF0SvB/5yrynFubLp+UF3/WdsFOOAM
-         lcA27mINLt1jl9wmwa1/gHYQvz9Ob6bAJPOCgwslboFZND3+hYELewjFWz+XiG2CQllW
-         jh75kevIJe3degE85c3+ZqoGe5BboXiApigmcHy0vPlr/fOdDZYiByzXOkVgD4xXLIel
-         Lw6s0S/7KD77/XglrXH9sA2vRUW/t+bSAU8C7ginZaTyl3BUpXagl0pLPR3tnyHgrly/
-         WGHw==
-X-Forwarded-Encrypted: i=1; AJvYcCVdAxwufj4TMya9lFpcIk3dUa2pIlAqjUI9x4Q5jRZxAYJYCRg6ntT2KbbZGus1pUej523h54E9hEjd3oiC@vger.kernel.org
-X-Gm-Message-State: AOJu0YyRvkIsc9jnVzkjBbJnwBr0kLBFj+mD9oeZiICybWk1YYdFlvN2
-	2+17IZqjWTQbJV59R+mJpdWGhhXLxLm6eEohXeDyBnKQgBVUjxB3sAE4n1kH179E8bhjTr2HVr9
-	DtGbPktSojl/TIS6eD670rM3KbT9D1UzjMxxt/yregg==
-X-Gm-Gg: ASbGnct61i3PJkGZ6XY+JoEzRyY1rrnRPYKyr/rV2aB3EcKVa5V3GzI6gLWg6Zrx2xG
-	Qg3QqJyB9gt8R2lonV/kVxO/qBBmX8jtUQOMm4Cohs3/zElY2axED6+KmAoxUS6XfjBKoqk6mWQ
-	lP3RaBQRa3U9+TIhqpY6puo5ctBzrB5t1Fmy2Lr7HOTdj1q3lf/ywpSSPl42Cs4q7zjRwHuJpLa
-	ux9xpKlWLvjIvZYSoVzSpE+1bRrvZwkWTwBEmeeglAkELq1/KV0aR368sONTA73OtsHp7ojhv9P
-	68KvWvchHdEUtEUb
-X-Google-Smtp-Source: AGHT+IFTRBGcYDkiyCueyH65DwGrBfpjtYBktHnpsdJL9xh5HvsW1ijkB+8miiiXsCQ87IK4j3035BwnwPw7l+jO6Uc=
-X-Received: by 2002:a05:6512:4027:b0:592:f766:a49c with SMTP id
- 2adb3069b0e04-5930e997932mr1316517e87.15.1761666194042; Tue, 28 Oct 2025
- 08:43:14 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1761666273; x=1762271073;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=kxDtTm5Uk2GlvziLH671chbdmWE90Ft/hZE2+B8F9lE=;
+        b=b3nt42EKSQo+/XSGJ1OSqe5ZIcf3/kGnow7W///xP3hFwRfOsqpnDMqaQXxj0u28uX
+         Cop8cleFdlRFxvqRNXZ7pQiQuBOBRoi5mqvaJrXxbmMneF85Rc9XK6i8rHBco95mCeRZ
+         Etna5DVeNRz4xSVRTC6qptefSK5/Q5retGZaJMnAvXu4Dpv/r3hRnGe9q63uCcrcO3g2
+         KaJ/CB3JHWN4GOHiom5SQvT5yf1rR/hBOnFBxYnwpoYrDHFcnLxStin5oma6LR9Xb6co
+         l9H8h845WwnXGFz4nBEczZrfFg76Z7WtVyy2bhURgmUgeVh1iDwn/ayZyfwGU+OAfpW+
+         pKZQ==
+X-Forwarded-Encrypted: i=1; AJvYcCXNRewFBoRu7GP5ihqfm4BBLzC+mejSU09KBQulY+AMsEWErwREk8Xdjg9BnkfJ1Hbw996cUsauj0/1xhUD@vger.kernel.org
+X-Gm-Message-State: AOJu0YwdVWBFhHjBObJYuyYwJSDYrOimPYV3e85Wp2/Z+u8ZagzpI+Tg
+	kFeKpd4+UEYwcQr1Ca0n1AmDzwXEIysJvpIkif18/xUdSaF9krwEGrWgX+UhPhYOiC0=
+X-Gm-Gg: ASbGncuy8+yOTTQDIw2rwnFTslCwi9ZKzfKW30h2oQ2OQOza0Hkeyi90Olc0eaGXXyl
+	HfxYM9GpkZh8QvC4LyXhLeDfjFS7JfjL/RvOtK3oKa/X04kZtjuw47Kv1wC8W2sGg52rvaNr3UO
+	nxBZsR0Ldxp4XOnQb735gnilc4o4RMpKd6C76Pd4oczWdqAr6NOAU+wtK2DbhdVd6zJ02WXT4dU
+	EeXaRj3MfgXkcL/H4h6a61QakvE4c6YEo0ld4bELv4Xwz1T1GHtjV3OGeGNPe7cXXEBdgQRj6rk
+	WRPdbx5oAzyW/vyWpilh/qgMohpANyooNnVsv8en5H3sob67Tp4Zean5ScUZMASWY46q7x+Cfjp
+	SMMMN+n9DuFR0QF4+f3xdDmB4CtWM8cIG2qn8VLqdb7vbC+49WpqmtxoIO3cALY0phDxf9U+m
+X-Google-Smtp-Source: AGHT+IFaU/N5jEahD1Hr0mgcuydBUovhHsTFqREepEo8khWPEdTWoHTHChqz2NMEQuQxs+evxhHULw==
+X-Received: by 2002:a05:600c:46c4:b0:46e:46c7:b79a with SMTP id 5b1f17b1804b1-47717df4dd5mr41181545e9.2.1761666273275;
+        Tue, 28 Oct 2025 08:44:33 -0700 (PDT)
+Received: from linaro.org ([86.121.7.169])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-475dd374e4esm195344815e9.11.2025.10.28.08.44.31
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 28 Oct 2025 08:44:32 -0700 (PDT)
+Date: Tue, 28 Oct 2025 17:44:31 +0200
+From: Abel Vesa <abel.vesa@linaro.org>
+To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Cc: Heikki Krogerus <heikki.krogerus@linux.intel.com>, 
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Bjorn Andersson <andersson@kernel.org>, 
+	Konrad Dybcio <konradybcio@kernel.org>, Dmitry Baryshkov <lumag@kernel.org>, 
+	linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] usb: typec: ucsi: Skip setting orientation for UCSI
+ version 2.0 and above
+Message-ID: <ikwmc2pigfq3pagcetssxkl3u27ozucrwku2f64qd5hvaonna7@3dj6s24dc7e3>
+References: <20251028-ucsi-glink-skip-orientation-for-ucsi-v2-v1-1-93e936ac59b4@linaro.org>
+ <a4f3yhhz5sntno6gnfbjnjjsbtyo2e4y3da2aywsg36gvxkaxg@vw2vryukrepl>
+ <xboq73zw752odclybviqnl75pp2nl2eamdvcdv2idqljck7qvu@zdh6ny7nja3w>
+ <jworx6dkoykwimfn7b3wlatgvk6engrbzyuhzsqbgjivlpicjw@xg2aenqcwkmz>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20251028-dt-bindings-qcom-bluetooth-v1-0-524a978e3cda@linaro.org> <20251028-dt-bindings-qcom-bluetooth-v1-1-524a978e3cda@linaro.org>
-In-Reply-To: <20251028-dt-bindings-qcom-bluetooth-v1-1-524a978e3cda@linaro.org>
-From: Bartosz Golaszewski <brgl@bgdev.pl>
-Date: Tue, 28 Oct 2025 16:43:01 +0100
-X-Gm-Features: AWmQ_bmGdgwF3B9dB_VDDUnDofSCXpuNVCFm0vFH9VJDj6OZrO0qPdBbjuGlM8k
-Message-ID: <CAMRc=MdqAATOcDPhd=u0vOb8nLxSRd7N8rLGLO8F5Ywq3+=JCw@mail.gmail.com>
-Subject: Re: [PATCH 01/12] Bluetooth: MAINTAINERS: Orphan Qualcomm hci_qca
-To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc: Marcel Holtmann <marcel@holtmann.org>, Luiz Augusto von Dentz <luiz.dentz@gmail.com>, 
-	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Balakrishna Godavarthi <quic_bgodavar@quicinc.com>, Rocky Liao <quic_rjliao@quicinc.com>, 
-	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
-	linux-bluetooth@vger.kernel.org, devicetree@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <jworx6dkoykwimfn7b3wlatgvk6engrbzyuhzsqbgjivlpicjw@xg2aenqcwkmz>
 
-On Tue, Oct 28, 2025 at 4:33=E2=80=AFPM Krzysztof Kozlowski
-<krzysztof.kozlowski@linaro.org> wrote:
->
-> There are no maintainers of Qualcomm hci_qca Bluetooth driver, so make
-> it explicit that driver was orphaned and no one cares to keep it
-> maintained.  That's also indication for future removal from the Linux
-> kernel.
->
-> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> ---
->  MAINTAINERS | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/MAINTAINERS b/MAINTAINERS
-> index 8abdc0e50699..be637b9dc7c0 100644
-> --- a/MAINTAINERS
-> +++ b/MAINTAINERS
-> @@ -21146,7 +21146,7 @@ F:      drivers/net/wwan/qcom_bam_dmux.c
->
->  QUALCOMM BLUETOOTH DRIVER
->  L:     linux-arm-msm@vger.kernel.org
-> -S:     Maintained
-> +S:     Orphan
->  F:     drivers/bluetooth/btqca.[ch]
->  F:     drivers/bluetooth/btqcomsmd.c
->  F:     drivers/bluetooth/hci_qca.c
->
-> --
-> 2.48.1
->
->
+On 25-10-28 17:37:45, Abel Vesa wrote:
+> On 25-10-28 17:30:37, Dmitry Baryshkov wrote:
+> > On Tue, Oct 28, 2025 at 05:19:58PM +0200, Abel Vesa wrote:
+> > > On 25-10-28 16:39:19, Abel Vesa wrote:
+> > > > In case of UCSI version 2.0 and above, if the orientation is set from
+> > > > glink as well, it will trigger the consumers along the graph (PHYs,
+> > > > repeaters and so on) to reconfigure a second time. This might break
+> > > > the consumer drivers which aren't currently implemented to drop the
+> > > > second request of setting the same orientation.
+> > > > 
+> > > > So lets leave the orientation setting to the UCSI generic implementation
+> > > > for all platform that implement UCSI spec 2.0 and above.
+> > > > 
+> > > > Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+> > > 
+> > > Ignore this one please, as it is incomplete.
+> > > 
+> > > We need to also set the orientation_aware in pmic_glink_ucsi_update_connector()
+> > > if the ucsi version is at least 2.0.
+> > 
+> > Note, I think it should be set in the core rather than setting it in the
+> > driver.
+> 
+> Yep. I agree.
+> 
+> That's what I'm doing next.
 
-Actually, I added that entry so that the arm-msm list can get Cc'ed on
-patches. The fact it didn't use to, caused some regressions. I have
-done some work on it, so I can take it over as maintainer.
+There you go:
 
-Bart
+https://lore.kernel.org/r/20251028-b4-ucsi-set-orientation-aware-on-version-2-and-above-v1-1-d3425f5679af@linaro.org
 
