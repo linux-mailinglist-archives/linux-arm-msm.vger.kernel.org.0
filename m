@@ -1,182 +1,308 @@
-Return-Path: <linux-arm-msm+bounces-79532-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-79533-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [IPv6:2605:f480:58:1:0:1994:3:14])
-	by mail.lfdr.de (Postfix) with ESMTPS id 14185C1CB27
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Oct 2025 19:10:34 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8FB04C1CC67
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Oct 2025 19:27:33 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 03F964E32EA
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Oct 2025 18:07:55 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 0FBE83ACF60
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Oct 2025 18:25:31 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 64E03304967;
-	Wed, 29 Oct 2025 18:07:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 12C9A17AE11;
+	Wed, 29 Oct 2025 18:25:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="CqAQ1zUg"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="lI/u6Sxa"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f43.google.com (mail-wm1-f43.google.com [209.85.128.43])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 846792FC892
-	for <linux-arm-msm@vger.kernel.org>; Wed, 29 Oct 2025 18:07:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 396802E6CBA
+	for <linux-arm-msm@vger.kernel.org>; Wed, 29 Oct 2025 18:25:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761761272; cv=none; b=Bz0jiEkp1Xy90o2zmn2uxn7Pf9KocWrbDa/QXxT4KNljEndWJI1nbuLjeZnCytzVohmxi3HP1ODWgM3z96r2r2YNnzkMnjIIYazQk8FttWRbSYPTcKvC2DvD+2KexR7MdMfV3TmXUACD4fyJU4HVSo4wWM5hkPjL1seQ3Z0UpXg=
+	t=1761762330; cv=none; b=TTmbc1oA5gdgfRIc7eQrh2QziCee5CzUIH7jFpe4a3vmiKsVWfQvwIa7vsJ12WPrhwG80P0HDicQ0CQxSb9wyTPWv/FCNtGbg6ArJvkTKoiMu614xkddr8OgXGcO5U9I8TjJ4sUDqbCMdqf7k0emwiUKYuIP3M9/SmIZx0gLr1g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761761272; c=relaxed/simple;
-	bh=UJ2DT1Tiu56DrBbBEh0/iWktyI9wRry2MbdlaBokZTE=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=QHb8EThReRnaauOAUBkA7vG8uGhgQZmb7ioL+w/zhhOvCSRwcsmW0bvsqAs+iFp7dzUJMhfQb4WerWoKz2t4N625biriOScWWZTg795/etUMJrftmTfQADonXgTw4rIwjKBTPfubH2Swgj+H2I625a1LQsKaDAp/imnP8DosWYM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=CqAQ1zUg; arc=none smtp.client-ip=209.85.128.43
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f43.google.com with SMTP id 5b1f17b1804b1-475db4ad7e4so547675e9.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 29 Oct 2025 11:07:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1761761269; x=1762366069; darn=vger.kernel.org;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=KNwV3kIKfmFe80QZSUe0lDX9k4qYiLpxE6LgR+ZybE0=;
-        b=CqAQ1zUg817oJVlpv8g7bs+xLpZr/PYk2oyKhaAk4ZnalmPieNUfbH6dKT909FfWuf
-         XX8A1l7w1D6Hat46MfThWR8pNXrwcym/ZwPZ3qUKAFMXkem4q/88Ld+UByPbGq2CDZRc
-         bVE7e8fLorKjRahTDdrwGuXbZXytuz05ppYQPLKc3gYUrh7w2GsUkj2z2VrDa+sS1TkS
-         qbsz7RRcxnaXuJixKqDCy8rLqmI1BF/N664ZHWEbqLz6blZ/B/Os4m7ty/GiJRyyBHRV
-         Pvu8USwttJdSrVXi216QHNyoddQ8ZtJkCMJzjlYMXr69McKB6HcClGN2RSxn2ymsA/zg
-         QK0Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1761761269; x=1762366069;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=KNwV3kIKfmFe80QZSUe0lDX9k4qYiLpxE6LgR+ZybE0=;
-        b=hx1JmYHvxkgMkX38OCqEmNReU93huV1wSe8B+Byk5ehnBUQD0Ws1gRCiddMhPLcTic
-         UPdoBhlUrC0B3ydemsc1/Jp1lP6WSBn61zzZQZE2n44F3/tlTG17I9zwdgm7WfoWVlRo
-         3S9kEsMvyoqtvWGDmZiBa0Yj4U26YF8E7cyBQGbpaAx9oTkeKx9X6kPd2cKCroRFu8Su
-         oY3g0Wh5XMWgnYXQU13WWH249MJl5tRgR4UYIkEZIqjcB5kgk1wbdFUQxwSQ5EcLMCUe
-         NmnCBBjan9eIbniQsB1l90gTXPI0My7hNL64CLvHLV9oyzqDy72uG9cpgBPiunaADidw
-         QVuw==
-X-Gm-Message-State: AOJu0YxBIZ2b3ZPOjELclib9lQuKM53r6xWRYadhpheXuW80yeCMaJyi
-	8/EML2aRhdukDIgsL5koJMCitjkYKQOemXhrKjxXesbouKn7ddk/fvWUrOFqXR31Qm4=
-X-Gm-Gg: ASbGncukzQSe4CtXevw8ZjF5f/Bv+VirKWZrZSo3Tmn3XgA0SCs787qf7nAN1O4CnGP
-	Sv3a4f7UbvOl/sWNWIF22BZ7l8GlyLMlhiJrtDmK0ciHlf7y36ZPoUVB+k7DZvZqCchSHFTDz0y
-	LKeBhTgN2ZKHmRD9XwTz6uDKmwHToWIEsqs/L0RmBlkSA4f1x3OhuAPtaMUtyGz21sNmB/1MILy
-	L/r+v2dnhSjtbUyL5Srs4hRGyh+XmNRIaMmNbUboA31G9obwxzgT3CwS3MVAHs4TbxilyR227Re
-	mu/IhDQ9Aiy1LstJdd9fjzWw06yLTX3SEyjSSkNrzEdltWTnelJH/Bb0E0oSzS7HZlQMfDGlapL
-	p0f+AC2TZuhm7n5MTsl+hsNwL0tt8dGQVCwuFpPFfTjkQGqbenrFh+OjLGlT6Vm67UtzVfuZsFI
-	LhJLeKOlK87X6M/Y6wDLcz
-X-Google-Smtp-Source: AGHT+IEtMPjVh9Zcm+7C9F/ERY97bz/iXjm8g8W+QKNDx62F94FG9cv5Huxi+liF2AyMpIvvFbv2hA==
-X-Received: by 2002:a05:600c:4707:b0:475:dd04:128a with SMTP id 5b1f17b1804b1-4771e1e10b2mr35660565e9.31.1761761268523;
-        Wed, 29 Oct 2025 11:07:48 -0700 (PDT)
-Received: from arrakeen.starnux.net ([2a01:e0a:3d9:2080:52eb:f6ff:feb3:451a])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-47718427409sm49662015e9.1.2025.10.29.11.07.47
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 29 Oct 2025 11:07:48 -0700 (PDT)
-From: Neil Armstrong <neil.armstrong@linaro.org>
-Date: Wed, 29 Oct 2025 19:07:42 +0100
-Subject: [PATCH] i2c: qcom-geni: make sure I2C hub controllers can't use SE
- DMA
+	s=arc-20240116; t=1761762330; c=relaxed/simple;
+	bh=+0Bti5p0vp0nQWTUJS41B14ziazVoy+KNfukxDV66zk=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=mcuNjU0PjVoQY4nTXnOW1pSG84EVqW0pjxkb0B4jW2hTVAvlmKCu0uibUQHe31iqnacpwBjqyksufqvazMA6RVxPVdnvkNpMFMQUxcKe+LlQw25aZwMQVQCeB1ycYl7Tu2Aqj6f7RYCFW76baaPMbuqobWUvqUx5V6CvcPeOQZw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=lI/u6Sxa; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=qualcomm.com
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 59TBvqUo3692136;
+	Wed, 29 Oct 2025 18:25:19 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:date:from:message-id:mime-version
+	:subject:to; s=qcppdkim1; bh=ZJ+GCWj0mWEzZtMx5o2Zuv9K8lczbhQgnGr
+	VYz1BI18=; b=lI/u6Sxauvu5kC5WYw2ikzld5I3rOOraBQ0hKzggWG5/xhwnmKU
+	NHok1rPXl6dnOGeT6+uQgiJz5IX3rSadUfA/b2wqOv4S+R8J45ejdmua2w3RRBu4
+	Ab+UpSmavYzcsgJ7ZIoxdFZLU/5lNU5iBBG+prJLrElhAACX9T4jVxty3bD6Exjm
+	7bZFdh6ftfYLTgWdyDBx/aD41udGWztHbDTrS6C4XWrlDDnTwKtmxwhrCRGTz+sC
+	J7rtZmsR+wNGIdfpCStvbe1jden8eqbr6KXGUpBk7FKOkbcBClBxtbnWzFo6bdcn
+	WmLwLzl0PJD6mCv22r2qVJ9Awi1LULNCIhg==
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4a34a2kppk-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 29 Oct 2025 18:25:18 +0000 (GMT)
+Received: from pps.filterd (NALASPPMTA01.qualcomm.com [127.0.0.1])
+	by NALASPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTP id 59TIPHKw010528;
+	Wed, 29 Oct 2025 18:25:17 GMT
+Received: from pps.reinject (localhost [127.0.0.1])
+	by NALASPPMTA01.qualcomm.com (PPS) with ESMTPS id 4a3m4ntac2-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 29 Oct 2025 18:25:17 +0000
+Received: from NALASPPMTA01.qualcomm.com (NALASPPMTA01.qualcomm.com [127.0.0.1])
+	by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 59TIPHo3010523;
+	Wed, 29 Oct 2025 18:25:17 GMT
+Received: from hu-devc-lv-u22-a.qualcomm.com (hu-zmckevit-lv.qualcomm.com [10.81.26.129])
+	by NALASPPMTA01.qualcomm.com (PPS) with ESMTPS id 59TIPHpc010520
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 29 Oct 2025 18:25:17 +0000
+Received: by hu-devc-lv-u22-a.qualcomm.com (Postfix, from userid 4696302)
+	id 5D7B25B6; Wed, 29 Oct 2025 11:25:17 -0700 (PDT)
+From: Zack McKevitt <zachary.mckevitt@oss.qualcomm.com>
+To: jeff.hugo@oss.qualcomm.com, carl.vanderlip@oss.qualcomm.com,
+        troy.hanson@oss.qualcomm.com, youssef.abdulrahman@oss.qualcomm.com
+Cc: ogabbay@kernel.org, lizhi.hou@amd.com, karol.wachowski@linux.intel.com,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        andersson.kernel@gmail.com,
+        Zack McKevitt <zachary.mckevitt@oss.qualcomm.com>
+Subject: [PATCH v3] accel/qaic: Add support for PM callbacks
+Date: Wed, 29 Oct 2025 11:18:12 -0700
+Message-Id: <20251029181808.1216466-1-zachary.mckevitt@oss.qualcomm.com>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20251029-topic-sm8x50-geni-i2c-hub-no-dma-v1-1-5e264258a5bd@linaro.org>
-X-B4-Tracking: v=1; b=H4sIAO1XAmkC/x3NQQqDMBBG4avIrPtDMhBNe5XSRYyjzsJEkrYI4
- t0buvw2751UpahUenQnFflq1Zwa7K2juIa0CHRqJjbsrOE73nnXiLr5wxkskhTKEetnRMqYtgD
- vLbuhD72LI7XMXmTW4794vq7rB/dzaxxyAAAA
-X-Change-ID: 20251029-topic-sm8x50-geni-i2c-hub-no-dma-8812576a65cb
-To: Mukesh Kumar Savaliya <mukesh.savaliya@oss.qualcomm.com>, 
- Viken Dadhaniya <viken.dadhaniya@oss.qualcomm.com>, 
- Andi Shyti <andi.shyti@kernel.org>, Sumit Semwal <sumit.semwal@linaro.org>, 
- =?utf-8?q?Christian_K=C3=B6nig?= <christian.koenig@amd.com>, 
- Wolfram Sang <wsa@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, linux-i2c@vger.kernel.org, 
- linux-kernel@vger.kernel.org, linux-media@vger.kernel.org, 
- dri-devel@lists.freedesktop.org, linaro-mm-sig@lists.linaro.org, 
- Neil Armstrong <neil.armstrong@linaro.org>
-X-Mailer: b4 0.14.3
-X-Developer-Signature: v=1; a=openpgp-sha256; l=2132;
- i=neil.armstrong@linaro.org; h=from:subject:message-id;
- bh=UJ2DT1Tiu56DrBbBEh0/iWktyI9wRry2MbdlaBokZTE=;
- b=owEBbQKS/ZANAwAKAXfc29rIyEnRAcsmYgBpAlfz8LKSj8+mAZ1QksgODZDbo1w7yGU4iVg2tYA9
- VBEcFOKJAjMEAAEKAB0WIQQ9U8YmyFYF/h30LIt33NvayMhJ0QUCaQJX8wAKCRB33NvayMhJ0S2wD/
- sFxj0QkeV/duZgx4BgvFB456VI+EtWZMBJ3QVO9ZgwzJOGzQJplBMPxpyNBxWiRt1hSl5e/nOBUmXE
- R/tv8d5Na4+kXHgxezaH2dDB9hBVX8+7mKi6KJtH4KQChVQ5fsEwqPVeO6/dg5DTELvu6mDm+O3OF9
- Kzn2e3FgP2wbPrGCao5up8PR/wRUCP6zAbdYCWgf+D54nNkdZqLW90pRZxk8FGSPIW4AmSOs15Cc2R
- Te996h007PCHLoEEfRf0bAt5lweueUCL/vnRMNIArrJ2noAoclVA7YJ5NyRaJtJ1+p3DDzVAVbCgPT
- QxLDlvYyzc10fmx9aGlhqpRKmmrFjrI4RSO0swEpScsFdOGdnplAWs2lOKxKRhu3V65e5gIu0jNlBW
- keYbmpfQZ+vvPBlPwzL6AK3KDHuAEaRniwekbixKVm62NNXHPwyz3sBPnoNnsfI5qIP31l3I9/3cLR
- m/ywztQaFH3AWrdoSzWJrQkJueG2NgK7JveuZjlM4W0efx0ps8OIMbRnBcCg0k436Yt8tUspx8KZzw
- qVetRqhHG/LSK4XVa5fceQfGqVhLkJ+/8INRV4Mxji7EqSg63no5xELxabQZTg2RHF4edYk1rOSQrZ
- LmS4OPAo0UyyWqA3ZZ1hx2RX6tFe5s7yybh4qXJjkw0WzLOo2OswA6dki/aQ==
-X-Developer-Key: i=neil.armstrong@linaro.org; a=openpgp;
- fpr=89EC3D058446217450F22848169AB7B1A4CFF8AE
+Content-Transfer-Encoding: 8bit
+X-QCInternal: smtphost
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: VQXRHv26FFsJlVW2sftG5-RujTYBpcQm
+X-Proofpoint-ORIG-GUID: VQXRHv26FFsJlVW2sftG5-RujTYBpcQm
+X-Authority-Analysis: v=2.4 cv=PcvyRyhd c=1 sm=1 tr=0 ts=69025c0e cx=c_pps
+ a=ouPCqIW2jiPt+lZRy3xVPw==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
+ a=x6icFKpwvdMA:10 a=VkNPw1HP01LnGYTKEx00:22 a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8
+ a=o44ZkyJObLYcM7zQEGMA:9 a=cPQSjfK2_nFv0Q5t_7PE:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDI5MDE0NyBTYWx0ZWRfX9Bu+qsSh4QXk
+ O9wSbEBwn+/Mznia7BZkVoGGEhyd+5n+axxrfkOIMOw1g/lz4nPHL8C/A8wrcpTfIrvQgu1ouQ0
+ iY0/qEJ9UgYR2PCyTcJKhTu9VCcWuQh/5W9pGDXg0JgZLTcmjgwQQlzYZOcxQ9w2c/CUIJhgPGU
+ 1UzG7jsYXBV8Q7Z/IOgaVDW1KwIA4DaapHhIHMIckdKxaY2aM5/KeSx6eTZVm2ICpJwiZS1Uqd6
+ Wo+EpySljpl7u8JwZa0kgNBBj9SkoER6BsL4tWdBTE3/+38oVRnLxU5JCzKx8lhU7tyojTsGXTq
+ pij5w2otbQrPLdcs/wbkK6N7fyTL6xNhkPgQp83caWzD3fJZmhKWC5/q4Fs558cnPrILvvcwfhT
+ 2X6IhR+SRWDO1KXku34H5qVoSmIQqg==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
+ definitions=2025-10-29_07,2025-10-29_03,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ phishscore=0 clxscore=1011 spamscore=0 adultscore=0 priorityscore=1501
+ lowpriorityscore=0 malwarescore=0 suspectscore=0 impostorscore=0 bulkscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2510240001 definitions=main-2510290147
 
-The I2C Hub controller is a simpler GENI I2C variant that doesn't
-support DMA at all, add a no_dma flag to make sure it nevers selects
-the SE DMA mode with mappable 32bytes long transfers.
+From: Youssef Samir <youssef.abdulrahman@oss.qualcomm.com>
 
-Fixes: cacd9643eca7 ("i2c: qcom-geni: add support for I2C Master Hub variant")
-Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+Add initial support for suspend and hibernation PM callbacks to QAIC.
+The device can be suspended any time in which the data path is not
+busy as queued I/O operations are lost on suspension and cannot be
+resumed after suspend.
+
+Signed-off-by: Youssef Samir <youssef.abdulrahman@oss.qualcomm.com>
+Reviewed-by: Carl Vanderlip <carl.vanderlip@oss.qualcomm.com>
+Signed-off-by: Zack McKevitt <zachary.mckevitt@oss.qualcomm.com>
 ---
- drivers/i2c/busses/i2c-qcom-geni.c | 11 +++++++----
- 1 file changed, 7 insertions(+), 4 deletions(-)
+Changes in v3:
+- Update commit message to be more descriptive.
+- Initialize return value to avoid returning uninitialized data in qaic_data_path_busy.
+- Use modern PM macros to register callbacks and avoid checking for CONFIG_PM_SLEEP directly.
+- Link to v2: https://lore.kernel.org/all/20251024162916.801196-1-youssef.abdulrahman@oss.qualcomm.com/
 
-diff --git a/drivers/i2c/busses/i2c-qcom-geni.c b/drivers/i2c/busses/i2c-qcom-geni.c
-index 43fdd89b8beb..bfb352b04902 100644
---- a/drivers/i2c/busses/i2c-qcom-geni.c
-+++ b/drivers/i2c/busses/i2c-qcom-geni.c
-@@ -97,6 +97,7 @@ struct geni_i2c_dev {
- 	dma_addr_t dma_addr;
- 	struct dma_chan *tx_c;
- 	struct dma_chan *rx_c;
-+	bool no_dma;
- 	bool gpi_mode;
- 	bool abort_done;
+Changes in v2:
+- Guard the pm callbacks with CONFIG_PM_SLEEP to fix openrisc build error
+- Add __maybe_unused to helper functions used only in PM callbacks currently
+- Link to v1: https://lore.kernel.org/all/20251022204005.3888195-1-youssef.abdulrahman@oss.qualcomm.com
+---
+ drivers/accel/qaic/qaic.h          |  2 +
+ drivers/accel/qaic/qaic_drv.c      | 89 ++++++++++++++++++++++++++++++
+ drivers/accel/qaic/qaic_timesync.c |  9 +++
+ drivers/accel/qaic/qaic_timesync.h |  3 +
+ 4 files changed, 103 insertions(+)
+
+diff --git a/drivers/accel/qaic/qaic.h b/drivers/accel/qaic/qaic.h
+index 820d133236dd..2bfc4ce203c5 100644
+--- a/drivers/accel/qaic/qaic.h
++++ b/drivers/accel/qaic/qaic.h
+@@ -161,6 +161,8 @@ struct qaic_device {
+ 	struct mhi_device	*qts_ch;
+ 	/* Work queue for tasks related to MHI "QAIC_TIMESYNC" channel */
+ 	struct workqueue_struct	*qts_wq;
++	/* MHI "QAIC_TIMESYNC_PERIODIC" channel device */
++	struct mhi_device	*mqts_ch;
+ 	/* Head of list of page allocated by MHI bootlog device */
+ 	struct list_head        bootlog;
+ 	/* MHI bootlog channel device */
+diff --git a/drivers/accel/qaic/qaic_drv.c b/drivers/accel/qaic/qaic_drv.c
+index e162f4b8a262..1b5dc717a6c7 100644
+--- a/drivers/accel/qaic/qaic_drv.c
++++ b/drivers/accel/qaic/qaic_drv.c
+@@ -660,6 +660,92 @@ static const struct pci_error_handlers qaic_pci_err_handler = {
+ 	.reset_done = qaic_pci_reset_done,
  };
-@@ -425,7 +426,7 @@ static int geni_i2c_rx_one_msg(struct geni_i2c_dev *gi2c, struct i2c_msg *msg,
- 	size_t len = msg->len;
- 	struct i2c_msg *cur;
  
--	dma_buf = i2c_get_dma_safe_msg_buf(msg, 32);
-+	dma_buf = gi2c->no_dma ? NULL : i2c_get_dma_safe_msg_buf(msg, 32);
- 	if (dma_buf)
- 		geni_se_select_mode(se, GENI_SE_DMA);
- 	else
-@@ -464,7 +465,7 @@ static int geni_i2c_tx_one_msg(struct geni_i2c_dev *gi2c, struct i2c_msg *msg,
- 	size_t len = msg->len;
- 	struct i2c_msg *cur;
- 
--	dma_buf = i2c_get_dma_safe_msg_buf(msg, 32);
-+	dma_buf = gi2c->no_dma ? NULL : i2c_get_dma_safe_msg_buf(msg, 32);
- 	if (dma_buf)
- 		geni_se_select_mode(se, GENI_SE_DMA);
- 	else
-@@ -880,10 +881,12 @@ static int geni_i2c_probe(struct platform_device *pdev)
- 		goto err_resources;
- 	}
- 
--	if (desc && desc->no_dma_support)
-+	if (desc && desc->no_dma_support) {
- 		fifo_disable = false;
--	else
-+		gi2c->no_dma = true;
-+	} else {
- 		fifo_disable = readl_relaxed(gi2c->se.base + GENI_IF_DISABLE_RO) & FIFO_IF_DISABLE;
++static bool qaic_is_under_reset(struct qaic_device *qdev)
++{
++	int rcu_id;
++	bool ret;
++
++	rcu_id = srcu_read_lock(&qdev->dev_lock);
++	ret = qdev->dev_state != QAIC_ONLINE;
++	srcu_read_unlock(&qdev->dev_lock, rcu_id);
++	return ret;
++}
++
++static bool qaic_data_path_busy(struct qaic_device *qdev)
++{
++	bool ret = false;
++	int dev_rcu_id;
++	int i;
++
++	dev_rcu_id = srcu_read_lock(&qdev->dev_lock);
++	if (qdev->dev_state != QAIC_ONLINE) {
++		srcu_read_unlock(&qdev->dev_lock, dev_rcu_id);
++		return false;
 +	}
++	for (i = 0; i < qdev->num_dbc; i++) {
++		struct dma_bridge_chan *dbc = &qdev->dbc[i];
++		unsigned long flags;
++		int ch_rcu_id;
++
++		ch_rcu_id = srcu_read_lock(&dbc->ch_lock);
++		if (!dbc->usr || !dbc->in_use) {
++			srcu_read_unlock(&dbc->ch_lock, ch_rcu_id);
++			continue;
++		}
++		spin_lock_irqsave(&dbc->xfer_lock, flags);
++		ret = !list_empty(&dbc->xfer_list);
++		spin_unlock_irqrestore(&dbc->xfer_lock, flags);
++		srcu_read_unlock(&dbc->ch_lock, ch_rcu_id);
++		if (ret)
++			break;
++	}
++	srcu_read_unlock(&qdev->dev_lock, dev_rcu_id);
++	return ret;
++}
++
++static int qaic_pm_suspend(struct device *dev)
++{
++	struct qaic_device *qdev = pci_get_drvdata(to_pci_dev(dev));
++
++	dev_dbg(dev, "Suspending..\n");
++	if (qaic_data_path_busy(qdev)) {
++		dev_dbg(dev, "Device's datapath is busy. Aborting suspend..\n");
++		return -EBUSY;
++	}
++	if (qaic_is_under_reset(qdev)) {
++		dev_dbg(dev, "Device is under reset. Aborting suspend..\n");
++		return -EBUSY;
++	}
++	qaic_mqts_ch_stop_timer(qdev->mqts_ch);
++	qaic_pci_reset_prepare(qdev->pdev);
++	pci_save_state(qdev->pdev);
++	pci_disable_device(qdev->pdev);
++	pci_set_power_state(qdev->pdev, PCI_D3hot);
++	return 0;
++}
++
++static int qaic_pm_resume(struct device *dev)
++{
++	struct qaic_device *qdev = pci_get_drvdata(to_pci_dev(dev));
++	int ret;
++
++	dev_dbg(dev, "Resuming..\n");
++	pci_set_power_state(qdev->pdev, PCI_D0);
++	pci_restore_state(qdev->pdev);
++	ret = pci_enable_device(qdev->pdev);
++	if (ret) {
++		dev_err(dev, "pci_enable_device failed on resume %d\n", ret);
++		return ret;
++	}
++	pci_set_master(qdev->pdev);
++	qaic_pci_reset_done(qdev->pdev);
++	return 0;
++}
++
++static const struct dev_pm_ops qaic_pm_ops = {
++	SYSTEM_SLEEP_PM_OPS(qaic_pm_suspend, qaic_pm_resume)
++};
++
+ static struct pci_driver qaic_pci_driver = {
+ 	.name = QAIC_NAME,
+ 	.id_table = qaic_ids,
+@@ -667,6 +753,9 @@ static struct pci_driver qaic_pci_driver = {
+ 	.remove = qaic_pci_remove,
+ 	.shutdown = qaic_pci_shutdown,
+ 	.err_handler = &qaic_pci_err_handler,
++	.driver = {
++		.pm = pm_sleep_ptr(&qaic_pm_ops),
++	},
+ };
  
- 	if (fifo_disable) {
- 		/* FIFO is disabled, so we can only use GPI DMA */
-
----
-base-commit: dcb6fa37fd7bc9c3d2b066329b0d27dedf8becaa
-change-id: 20251029-topic-sm8x50-geni-i2c-hub-no-dma-8812576a65cb
-
-Best regards,
+ static int __init qaic_init(void)
+diff --git a/drivers/accel/qaic/qaic_timesync.c b/drivers/accel/qaic/qaic_timesync.c
+index 3fac540f8e03..8af2475f4f36 100644
+--- a/drivers/accel/qaic/qaic_timesync.c
++++ b/drivers/accel/qaic/qaic_timesync.c
+@@ -171,6 +171,13 @@ static void qaic_timesync_timer(struct timer_list *t)
+ 		dev_err(mqtsdev->dev, "%s mod_timer error:%d\n", __func__, ret);
+ }
+ 
++void qaic_mqts_ch_stop_timer(struct mhi_device *mhi_dev)
++{
++	struct mqts_dev *mqtsdev = dev_get_drvdata(&mhi_dev->dev);
++
++	timer_delete_sync(&mqtsdev->timer);
++}
++
+ static int qaic_timesync_probe(struct mhi_device *mhi_dev, const struct mhi_device_id *id)
+ {
+ 	struct qaic_device *qdev = pci_get_drvdata(to_pci_dev(mhi_dev->mhi_cntrl->cntrl_dev));
+@@ -206,6 +213,7 @@ static int qaic_timesync_probe(struct mhi_device *mhi_dev, const struct mhi_devi
+ 	timer->expires = jiffies + msecs_to_jiffies(timesync_delay_ms);
+ 	add_timer(timer);
+ 	dev_set_drvdata(&mhi_dev->dev, mqtsdev);
++	qdev->mqts_ch = mhi_dev;
+ 
+ 	return 0;
+ 
+@@ -221,6 +229,7 @@ static void qaic_timesync_remove(struct mhi_device *mhi_dev)
+ {
+ 	struct mqts_dev *mqtsdev = dev_get_drvdata(&mhi_dev->dev);
+ 
++	mqtsdev->qdev->mqts_ch = NULL;
+ 	timer_delete_sync(&mqtsdev->timer);
+ 	mhi_unprepare_from_transfer(mqtsdev->mhi_dev);
+ 	kfree(mqtsdev->sync_msg);
+diff --git a/drivers/accel/qaic/qaic_timesync.h b/drivers/accel/qaic/qaic_timesync.h
+index 851b7acd43bb..77b9c2b55057 100644
+--- a/drivers/accel/qaic/qaic_timesync.h
++++ b/drivers/accel/qaic/qaic_timesync.h
+@@ -6,6 +6,9 @@
+ #ifndef __QAIC_TIMESYNC_H__
+ #define __QAIC_TIMESYNC_H__
+ 
++#include <linux/mhi.h>
++
+ int qaic_timesync_init(void);
+ void qaic_timesync_deinit(void);
++void qaic_mqts_ch_stop_timer(struct mhi_device *mhi_dev);
+ #endif /* __QAIC_TIMESYNC_H__ */
 -- 
-Neil Armstrong <neil.armstrong@linaro.org>
+2.34.1
 
 
