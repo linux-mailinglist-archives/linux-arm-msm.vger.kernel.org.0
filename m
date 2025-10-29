@@ -1,62 +1,68 @@
-Return-Path: <linux-arm-msm+bounces-79522-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-79524-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1BBA5C1C490
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Oct 2025 17:56:19 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1D79FC1C3FC
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Oct 2025 17:52:42 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 92A78644818
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Oct 2025 16:41:02 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id A580D1888D8D
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Oct 2025 16:47:10 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4B58024C076;
-	Wed, 29 Oct 2025 16:40:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 435B82F25E8;
+	Wed, 29 Oct 2025 16:46:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="uToJNhpD"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="enQR59jh"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18F962F0676;
-	Wed, 29 Oct 2025 16:40:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0ADC338F80;
+	Wed, 29 Oct 2025 16:46:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761756002; cv=none; b=FCPUNLI9N+7ogeE7W4i9PyrUd9RdCXdOV54L3YTRMvShTBtNbifXgvMSibsgE5xabGnV69XdhbAGywDpm8uQWZ1doh8tCo68oJ17RHivwK/ea/yEEDViw558lvwd4guEZCTSKeOzOfU8eV5avygBBW8FrdrQ4veK9NC2FgWjAY8=
+	t=1761756385; cv=none; b=fGOsIx9Hg0bCOvz3P0HLSdt0SZeOaQrK5eqFuR9TFdmJhM6Y2o0oedED/OB5deP45HamMCOm9TtCksv+l1ZrUrXiDqSCSO7jrpsd8U/iywjtw+J3G7+Js1+2KrcuDw2ySLtgXXzj+aNuo3JjXWVUy4k0aFxP/LZra2O+NlTULrc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761756002; c=relaxed/simple;
-	bh=NdTp1VvlzXT2iMmRb+rzAshXMwZ79HLOe8xu+us+kJM=;
+	s=arc-20240116; t=1761756385; c=relaxed/simple;
+	bh=1wHTyfHcCvA7hCo0cByI9EKq0KDnXxwt2RgKk4naDnM=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=EmI7HbmkMPYt3nfRpS4ZfMZfjT3DQ680bhtz9IAN6HNqVxKOhn0/hlOIx9kPbOGtP6Fvp/hN7CkafSdi8wI+WNVuOPygCMHJ+vey07PUF2YtgCYZaj4IIPu0Qdqmuu6HzfuryBkrrmmTyfM7PULIzhtnaSnBSTTCtot4lBB04HU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=uToJNhpD; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5AB8C4CEF7;
-	Wed, 29 Oct 2025 16:39:59 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=s36+njiYCsM4LLwubDhuwrNIMJl+h75e3M272yFK3z8eFXwAlxpJ3ju/9LMBhOA69IWSudr3Tb/jRFs1Sr4zhskMkK2N4xCtjP+drjgBOE6CH6NKXBJ71cT8jaByhZizBbmMppdWxiDMuwsY3bVXiTg7qlL+Junb29WtB4hxX9E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=enQR59jh; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A7B5C4CEF7;
+	Wed, 29 Oct 2025 16:46:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1761756001;
-	bh=NdTp1VvlzXT2iMmRb+rzAshXMwZ79HLOe8xu+us+kJM=;
+	s=k20201202; t=1761756384;
+	bh=1wHTyfHcCvA7hCo0cByI9EKq0KDnXxwt2RgKk4naDnM=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=uToJNhpDTN6RNRLAFbn29AjYO7MrPMp2zZskc9hsRSRGpM+74g36Z0GDf51W6Mrza
-	 vETg//BYRbnaU8mg+KpsVXrosVmirha6BfUhF3Ycsr3cK8u5Af+l0F0lW+LA43NTZH
-	 QqvkIB0+1jdimtMKRncxhzAjvnOX4SCI4206/EDRJRkcseKpjS0Eyf+4NQvMFwomnA
-	 MLfvZdoIQ2BIRC4CGhCHpEKrHJdtlDrWb1dlCyAXnjc4z/L1G3JAM88gfWcw6uLZTs
-	 l+DonwkjYE1NdlthoHbTVWmf+muYP3xggO/DIQ6i/TNwv4Q6I0BzKdfAhhw7hu4u+T
-	 YXQXuHuWr/GWw==
-Date: Wed, 29 Oct 2025 11:43:04 -0500
-From: Bjorn Andersson <andersson@kernel.org>
-To: Abel Vesa <abel.vesa@linaro.org>
-Cc: Vinod Koul <vkoul@kernel.org>, 
-	Kishon Vijay Abraham I <kishon@kernel.org>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Dmitry Baryshkov <lumag@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, 
-	Sibi Sankar <sibi.sankar@oss.qualcomm.com>, Rajendra Nayak <quic_rjendra@quicinc.com>, 
-	Neil Armstrong <neil.armstrong@linaro.org>, linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org, 
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	Krzysztof Kozlowski <krzk@kernel.org>, stable@vger.kernel.org
-Subject: Re: [PATCH v4 3/3] arm64: dts: qcom: x1e80100: Add missing TCSR ref
- clock to the DP PHYs
-Message-ID: <u6f4spt62rzqyqifaza7q34e7vf2jmbrbmzmgxtlhjupya3lsy@6vvssqcfhmtg>
-References: <20251029-phy-qcom-edp-add-missing-refclk-v4-0-adb7f5c54fe4@linaro.org>
- <20251029-phy-qcom-edp-add-missing-refclk-v4-3-adb7f5c54fe4@linaro.org>
+	b=enQR59jhZ3V3HgFXlpnmI5zXIRRYY7VIh/eSvu+R9Lj7qehfm6stRKDnLBb++y4/Z
+	 8MkYiFa9w+92dPjE4G0gVdusAmGfYphsi+50fErGmuM4fFcmeOe6lzoOBpib6bPneN
+	 NkM/XWDmeba3a3JRtTs3B92onvwt/KzRtdW03WD7etwBSiesJFhDhlznSQtkNlEdAz
+	 YmhVshkq58ak7w3N4dguZ9ZFU8X4daT96QPZ4w1gOcsEBFQYbBfFr7Vf/ekUzgDQeY
+	 rPoBPX3BLNzSV6/K2u/4/OluQcJ6XMsdi1H4h7hZ8ZaLfEL7LGuUFFaPby+F0uidqx
+	 x9A+yA6hXaT/w==
+Received: from johan by xi.lan with local (Exim 4.98.2)
+	(envelope-from <johan@kernel.org>)
+	id 1vE9Je-000000007Po-3IGG;
+	Wed, 29 Oct 2025 17:46:31 +0100
+Date: Wed, 29 Oct 2025 17:46:30 +0100
+From: Johan Hovold <johan@kernel.org>
+To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc: Lorenzo Pieralisi <lpieralisi@kernel.org>,
+	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
+	Manivannan Sadhasivam <mani@kernel.org>,
+	Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Abel Vesa <abel.vesa@linaro.org>, linux-arm-msm@vger.kernel.org,
+	linux-pci@vger.kernel.org, devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org, stable@vger.kernel.org
+Subject: Re: [PATCH 9/9] dt-bindings: PCI: qcom,pcie-x1e80100: Add missing
+ required power-domains
+Message-ID: <aQJE5kkOGh76dLvf@hovoldconsulting.com>
+References: <20251029-dt-bindings-pci-qcom-fixes-power-domains-v1-0-da7ac2c477f4@linaro.org>
+ <20251029-dt-bindings-pci-qcom-fixes-power-domains-v1-9-da7ac2c477f4@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -65,64 +71,24 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20251029-phy-qcom-edp-add-missing-refclk-v4-3-adb7f5c54fe4@linaro.org>
+In-Reply-To: <20251029-dt-bindings-pci-qcom-fixes-power-domains-v1-9-da7ac2c477f4@linaro.org>
 
-On Wed, Oct 29, 2025 at 03:31:32PM +0200, Abel Vesa wrote:
-> The DP PHYs on X1E80100 need the ref clock which is provided by the
-> TCSR CC.
+On Wed, Oct 29, 2025 at 04:40:46PM +0100, Krzysztof Kozlowski wrote:
+> Power domains should be required for PCI, so the proper SoC supplies are
+> turned on.
 > 
-> The current X Elite devices supported upstream work fine without this
-> clock, because the boot firmware leaves this clock enabled. But we should
-> not rely on that. Also, even though this change breaks the ABI, it is
-> needed in order to make the driver disables this clock along with the
-> other ones, for a proper bring-down of the entire PHY.
-> 
-> So lets attach it to each of the DP PHYs in order to do that.
-> 
-> Cc: stable@vger.kernel.org # v6.9
-> Fixes: 1940c25eaa63 ("arm64: dts: qcom: x1e80100: Add display nodes")
+> Cc: <stable@vger.kernel.org>
 
-Reviewed-by: Bjorn Andersson <andersson@kernel.org>
+I have a feeling I've pointed this out before, but these kind of binding
+patches really does not seem to qualify for stable backporting (e.g.
+does not "fix a real bug that bothers people").
 
-> Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
-> ---
->  arch/arm64/boot/dts/qcom/hamoa.dtsi | 12 ++++++++----
->  1 file changed, 8 insertions(+), 4 deletions(-)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/hamoa.dtsi b/arch/arm64/boot/dts/qcom/hamoa.dtsi
-> index a17900eacb20396a9792efcfcd6ce6dd877435d1..59603616a3c229c69467c41e6043c63daa62b46b 100644
-> --- a/arch/arm64/boot/dts/qcom/hamoa.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/hamoa.dtsi
-> @@ -5896,9 +5896,11 @@ mdss_dp2_phy: phy@aec2a00 {
->  			      <0 0x0aec2000 0 0x1c8>;
->  
->  			clocks = <&dispcc DISP_CC_MDSS_DPTX2_AUX_CLK>,
-> -				 <&dispcc DISP_CC_MDSS_AHB_CLK>;
-> +				 <&dispcc DISP_CC_MDSS_AHB_CLK>,
-> +				 <&tcsr TCSR_EDP_CLKREF_EN>;
->  			clock-names = "aux",
-> -				      "cfg_ahb";
-> +				      "cfg_ahb",
-> +				      "ref";
->  
->  			power-domains = <&rpmhpd RPMHPD_MX>;
->  
-> @@ -5916,9 +5918,11 @@ mdss_dp3_phy: phy@aec5a00 {
->  			      <0 0x0aec5000 0 0x1c8>;
->  
->  			clocks = <&dispcc DISP_CC_MDSS_DPTX3_AUX_CLK>,
-> -				 <&dispcc DISP_CC_MDSS_AHB_CLK>;
-> +				 <&dispcc DISP_CC_MDSS_AHB_CLK>,
-> +				 <&tcsr TCSR_EDP_CLKREF_EN>;
->  			clock-names = "aux",
-> -				      "cfg_ahb";
-> +				      "cfg_ahb",
-> +				      "ref";
->  
->  			power-domains = <&rpmhpd RPMHPD_MX>;
->  
-> 
-> -- 
-> 2.48.1
-> 
+> Fixes: 692eadd51698 ("dt-bindings: PCI: qcom: Document the X1E80100 PCIe Controller")
+> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+ 
+> +required:
+> +  - power-domains
+> +
+
+Johan
 
