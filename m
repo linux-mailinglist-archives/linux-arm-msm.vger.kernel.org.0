@@ -1,94 +1,94 @@
-Return-Path: <linux-arm-msm+bounces-79312-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-79313-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 47530C178F4
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Oct 2025 01:36:06 +0100 (CET)
+Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [IPv6:2605:f480:58:1:0:1994:3:14])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7CADEC179B1
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Oct 2025 01:44:27 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 46386188609F
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Oct 2025 00:36:30 +0000 (UTC)
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 5F0574E1B8E
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Oct 2025 00:44:26 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 96D012C21FA;
-	Wed, 29 Oct 2025 00:36:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2FE892D24B6;
+	Wed, 29 Oct 2025 00:44:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="E3+F7DuD";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="RVVB5wK7"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="kZZbu/Gv";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="Mhl6srEb"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 287A528466F
-	for <linux-arm-msm@vger.kernel.org>; Wed, 29 Oct 2025 00:35:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7EEC02C3277
+	for <linux-arm-msm@vger.kernel.org>; Wed, 29 Oct 2025 00:44:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761698160; cv=none; b=leaXaFIg58yz082Sw629kvtNkMxdJ21MMKwrgG/MrQsfL++fxNfPeHI3VoaNP1wdWp1zn2IIkd6i7y2HlG5vw5e376zJdn8CT0V802CjkPh4Etmwy6d9gKDAio5RrhB/h44gY/IrR2noMyXgY+JNeYzCgKDI4pxFCY24C+0KTwg=
+	t=1761698664; cv=none; b=LhfnuJdKMzJF2UBtQIpnA//r1XIMTxd90oZNsG4sQ5Xz/H2gD6k9J2m8WrN6rh9AT+LQfTbhhYU6uwcZJcun28k2MS2vfrd6SUDqxGHp1mjXOdN7T4i54uhpkzZ46CQ/leY6RiiEXMfq2s2bkcw+YU4YBn5v/2CQWhAXHZmj4LE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761698160; c=relaxed/simple;
-	bh=EoE8k0KBFJiVu+lUu/6ffmeuppX2gDDFdvUcYzSJ2Fk=;
+	s=arc-20240116; t=1761698664; c=relaxed/simple;
+	bh=nLeva2zSpXV3nhCKR9ACW8qXvwW1aVP8v7Am7fsyW2s=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=DYy2RyWfAI16rJKQEyrxBULRmAbEpgkl0TDXLkz3c7p96b9YslZtJT9ec03Jhb6dQZmROXoiiX7TEK6TVAYD8x9DEAur0lPOXd0XVfg5/l6+UNKHgwNmeScd2fRDv0oX5TRtLHn02TorEQOvaULdfBECIvIUuEYLD1vBeZlrR+s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=E3+F7DuD; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=RVVB5wK7; arc=none smtp.client-ip=205.220.168.131
+	 To:Cc:Content-Type; b=YjlZgsD/eMGc40NaUV6cje5vPgMnX5+scDoPJOP5NDOwuNjzNrmlct55sjiR7fp0WIKrC/PWuErXmucMf5ZwlkIpTxdavHd/mGZkvVbrfNynrsuxHvI5G6RO1FVsVI5sBCQkCXa++bof9dIwynzdpI8GzMtSzul3TazqJ/go5tU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=kZZbu/Gv; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=Mhl6srEb; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 59SJlSqO2575309
-	for <linux-arm-msm@vger.kernel.org>; Wed, 29 Oct 2025 00:35:58 GMT
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 59SJqX8c2511014
+	for <linux-arm-msm@vger.kernel.org>; Wed, 29 Oct 2025 00:44:21 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	5d++JhR83X1EkIgn5+hFamsAqFSB3yWcWtebHioBuH4=; b=E3+F7DuDzmsYWcMk
-	EvBz9HHrOuqIhWRtyx5i68YDA57L77H05A2iHS8AmLmxTsYc2h2USz3mKFW+5+1P
-	62bMGSVQH36yGH9DRz551AOwgCse2afKyGbeImDfEpmbvB2g+mCGijg1N/KxwtNa
-	BH36h3xBoG6LyCs7BeM7eU2GJ/0elX6rlWbw6kN0RXpwv750b9Qf03dCRFbtsaCb
-	EoWA/2zaQSy6Jj3EelTbthCyzj/041/nj0RZeaHVcgO6b+cwlr9tHa6yOpR44X2Y
-	RgbeXib1hoG29zNqihwjn2nc3dCPQAKN9IidxUvT0a79A5pioNETLExxdfRFY81Y
-	nh9xLg==
-Received: from mail-pl1-f197.google.com (mail-pl1-f197.google.com [209.85.214.197])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4a34a20nsd-1
+	6m1lp/maWmvkM4kpSKfjG9Mk8h53h8a5RuhM97V0USg=; b=kZZbu/Gv6UZ3uOJR
+	rj9W+hPvzyk0P83akXcP3ZjJ1y7md6Qbwq2xm3SKl072+j/GaGzxJOy9SaRVs+Lo
+	MrwJpc2X2FjuT9/EvDlsa6ROjolbFcmCdDoqsReunZLdBOEHXKTrjcPpji070ul5
+	QAp7seDd5L4Xuosdm0gmXlcBsGPdrjYfviB07GaSQ14I8CH5Hw1qQsv3gp6tXISH
+	OoZJjMBO5U5hWaS1y4L8rMehxS8kK2cpbYGIVdT8LoUBl6GcIl7x+TJS5lhQWznS
+	KJ9f4FDfqS/Fz9RYVwGgWikgLUmf4nByDq0ZvyT06rLLIMZggKtuQbjKS+sijhvQ
+	gvsIzw==
+Received: from mail-pl1-f199.google.com (mail-pl1-f199.google.com [209.85.214.199])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4a34cd8ned-1
 	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Wed, 29 Oct 2025 00:35:57 +0000 (GMT)
-Received: by mail-pl1-f197.google.com with SMTP id d9443c01a7336-2698b5fbe5bso89138545ad.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 28 Oct 2025 17:35:57 -0700 (PDT)
+	for <linux-arm-msm@vger.kernel.org>; Wed, 29 Oct 2025 00:44:21 +0000 (GMT)
+Received: by mail-pl1-f199.google.com with SMTP id d9443c01a7336-290e4fade70so55378335ad.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 28 Oct 2025 17:44:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1761698157; x=1762302957; darn=vger.kernel.org;
+        d=oss.qualcomm.com; s=google; t=1761698660; x=1762303460; darn=vger.kernel.org;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=5d++JhR83X1EkIgn5+hFamsAqFSB3yWcWtebHioBuH4=;
-        b=RVVB5wK7fTlNeHlWOXQ6APs02EN2FG6+lQkIyntzLwTRudCncrXq1g8c09HgVJPhXW
-         1Xi/MxCwC+2bL59L3Z+vf60rzyJJFzx7eezxnfXUgKTqRjgbGN6QBkQ+5wBu0x3BaxGu
-         l4GjA37DWdBOgJiSUUJjPhfHm4nGd6dW+gewKEEZL3FSoYP96azz3eN1mT+2zQs95C88
-         +M2GWOYoSedWjQ2ggrJlJbjIL3Ak7dMEaUW2yEpFZk3Wn0s3uaqVJ917cxqDccedv6uq
-         Rb/TVYQMhJt0m2/ilhfpZVY/KvgfOJFmgNIMpvB+Xp+dZvh1Kobv7PTF99ZQS0LeTnng
-         XCnA==
+        bh=6m1lp/maWmvkM4kpSKfjG9Mk8h53h8a5RuhM97V0USg=;
+        b=Mhl6srEbesh5AHUMJK8NNJhgG22HdwICQV/UEfojZuic2bTQZF0zxwJKoImb+XQfau
+         vC/FyKhoukkscwdday7QufsUBShZyVT9HxiA0rtrnH0vtzl1rizY5486yTCFuOMK6dHX
+         agPT48FdWF5g9iP9CLbgIUTLrBbRs4YdQJOYuDUlPgY9gxHSX1l/X4+deDrZzghfCabC
+         fu8zKzZZYz0vROnNZKNvDW2aSjFOsEh750U74HW2OwFqkMqNqp9A37gdoc9m5tCcFkZF
+         ZlUt40jOS89o2abqTN6TUqTOvNbvSZoC7e6cKW34xsNf9ATC6UFbVLOTYyu2F8idSkCa
+         L9kA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1761698157; x=1762302957;
+        d=1e100.net; s=20230601; t=1761698660; x=1762303460;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=5d++JhR83X1EkIgn5+hFamsAqFSB3yWcWtebHioBuH4=;
-        b=mUOv3llh2ocp4RcLszNAK4gu9cqb3tOgLqESrfkcUvTSCz6YHRI+kWIgseD0NQ1f3T
-         Ww2VF3KxywLdWi4NX6b3yWm/feDjoFfd/iZtz2wOjaJc/55zyVnAN/dQMGoWr9ZysRxr
-         dsKKAO3DUdOQ54NbBqKCt+B2KAQ2LTNKQ1S94ayzELkEAhFF7EjNANhJ3bMQlI3ibimJ
-         g9q3N/8VRKcikmY0TuD08VZFKs1RUC3m3xmuOZObBdtCZVzxx9vji/uAB4tZfU0dfbDK
-         /CWkn+5fB4G3X1kFYI4EELlGwStXTm1g4xhURwHffbYwTLcs47C+jpzqpsu7kOY51Cj2
-         UiEw==
-X-Forwarded-Encrypted: i=1; AJvYcCVg0I6u38Z7baWLvQZD6GmMX5SYuPDLw0wl6VIiLj1VRztcR5WtiFlMq1fHCJ0mqpf/1xx5udqa8C9dGh17@vger.kernel.org
-X-Gm-Message-State: AOJu0YwdUYk8glCmnfqO+RUEvd2zRrfimyi/oR1wB7yGMIK5pFBmEanA
-	zNGErI2WUrQVSVX8/sZI1LtWWVbez6PbZr7BX5YrA93W3dW/AGwLluFGZaYdCBQB9CXmsxt+Ud3
-	ZCmEfRUFpC5RZPdnfcVVVyQSQPFnlae/XFiJiRtMvZ5z/5exAiph646UEliPQrQ6kPYZCHBCuTr
-	qJE15oZT6I2JnoESt7jpoW1E5l979EoFIlGDvTvBfUANs=
-X-Gm-Gg: ASbGncvgecodMjwC15q5mpU/YwQTuRHigry7Qy9cI18nhJVP6a89plTxBQIi0eIvdtz
-	H71S3jL6sU4JMHMIQJGA+L7YNU+ih2fLAKk6+nD4Lo0xx5yXTSDfbU5mnKSfw1SqqxXv1ZTZG9R
-	WYSzAQve05Y8M4KJD8X4jIrB9kRp2+fS1MsxGaeU6GL7qozJ0ZKHgOorwc
-X-Received: by 2002:a17:902:e88a:b0:269:63ea:6d4e with SMTP id d9443c01a7336-294deec53e7mr14264725ad.37.1761698157220;
-        Tue, 28 Oct 2025 17:35:57 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IF9OPHkH91X5aZoXnjzphjr5S5o2KvwNZWa5RxYObLofGJt/ji5FPIw8MHSQiXS9oyAy6iO/yF+aesYbSbF248=
-X-Received: by 2002:a17:902:e88a:b0:269:63ea:6d4e with SMTP id
- d9443c01a7336-294deec53e7mr14264395ad.37.1761698156747; Tue, 28 Oct 2025
- 17:35:56 -0700 (PDT)
+        bh=6m1lp/maWmvkM4kpSKfjG9Mk8h53h8a5RuhM97V0USg=;
+        b=YnIrt6syXWBaLW46ppMN21DRoIRnlbdqcG98FdYdFX/Px50Z2hW2AbkozJi6gyoo7Y
+         1HnQgXItKRPmLkMUrvnqrUc28gy+BfVpt60PnHMCfEGhCkd/VpaoH6/7kdtrprI3qn3a
+         EwE5MxLSWCAeLJXm+kvWLv1A2uC4h2rw1T1uUZ1v+uFA+LawHMzrdcE1MpToXceCQZSb
+         nNh3e/oyqulvDrRAFfpW52QhERecrxzKhIUjDKytOdtOslQpWdQ+EDPvfe6Bft9CddAK
+         KZKnNnKpIbneHulSpPrzxXPB2G64e/N0nVwvPmCltHh20VR1qDhaGnFB4yuHthY/f0tr
+         d8pg==
+X-Forwarded-Encrypted: i=1; AJvYcCVvXYKRrPAcxi/ESm6ok65y60hITrETaYyeb3AeXeWmLFBDdy764enHOL80kjeNzfvFdMZIYbXFpvx48jwN@vger.kernel.org
+X-Gm-Message-State: AOJu0YyhPU0C4EvgGvcG+bPDLhWRC/CLXMgB57tbBNqrdI+5HHeeSE2z
+	d+bflp49pxmAK1lvgseXT45DsqKWgaCRhWDhqHyodRBLHI9xo3qYmWKCYA690lnWyyuNbyflWgl
+	wd+iJEsh20BT+NWA+L7UUO+KZl7F9qH9njP22CaB6ADB7uGSjdwdR5gk5eO8qgC7EkK8tgKa5rW
+	TkG/B8pSd2Xu4KCBL45ivRVpeQVfpJBxiqgkAleAlVVaw=
+X-Gm-Gg: ASbGncsmVkOyRz7ZBv50ecWhWHEzWHhubxD1uJffh4/sT+sVGLN8gT4MUP3BWNlo05j
+	ZFZ8p8NoCKw3mJITMNqa/2M2shiZW4rv93LIp3FD9Jy4GIVYqXH4R7k8eru4dHAX9vVwPkfNPjP
+	AjAZKGuEaRDq9JT04HmOISYJR4FGMXDHr0FwNFtZmAGe4Tu4QfyHP2aPIX
+X-Received: by 2002:a17:903:948:b0:28e:cc41:b0df with SMTP id d9443c01a7336-294def3d458mr10101535ad.61.1761698660154;
+        Tue, 28 Oct 2025 17:44:20 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHU7pEW3awf9geQ4pM7DBD/6siNYBhuIjxJvuWjFIacmLdv0RPpmgeVO8UUWF/8LKkGbvXCk5YqvUOQy5zX7No=
+X-Received: by 2002:a17:903:948:b0:28e:cc41:b0df with SMTP id
+ d9443c01a7336-294def3d458mr10101335ad.61.1761698659611; Tue, 28 Oct 2025
+ 17:44:19 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -96,121 +96,198 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 References: <20250923-smp2p-v1-0-2c045af73dac@oss.qualcomm.com>
- <20250923-smp2p-v1-2-2c045af73dac@oss.qualcomm.com> <bb25208e-a6a6-4a81-9dd5-5c5eb1cf16b4@oss.qualcomm.com>
- <ff382661-4d05-4f9a-8b9e-55fa9932a22a@quicinc.com> <15617371-0b20-4326-8e08-2c20b3d3c767@oss.qualcomm.com>
-In-Reply-To: <15617371-0b20-4326-8e08-2c20b3d3c767@oss.qualcomm.com>
+ <20250923-smp2p-v1-2-2c045af73dac@oss.qualcomm.com> <76gekllxr5meizr7wbvxjibdncdw7kp2q4zjjxtmdtfnwt4owc@dum7e77j4bie>
+In-Reply-To: <76gekllxr5meizr7wbvxjibdncdw7kp2q4zjjxtmdtfnwt4owc@dum7e77j4bie>
 From: Christopher Lew <christopher.lew@oss.qualcomm.com>
-Date: Tue, 28 Oct 2025 17:35:45 -0700
-X-Gm-Features: AWmQ_blJ0XZJj57smLg3viz2rnoGszVfVoBpYuAGhEffTwa9-ivzie97R69q8yA
-Message-ID: <CAOdFzchG34Eq-Px--ii3s+3yUf4ZNc=+0msr2bB86xMUExsanw@mail.gmail.com>
+Date: Tue, 28 Oct 2025 17:44:07 -0700
+X-Gm-Features: AWmQ_bnyMWGj74bgEXMSd0pMIOm5WQmpOX6PuWZ1znOeum-cgrY3NLwNuJW-iiw
+Message-ID: <CAOdFzcj0qqercZrcgabwU2opsKsEo2OnEgOQA=VGrefCdrT9bA@mail.gmail.com>
 Subject: Re: [PATCH 2/2] soc: qcom: smp2p: Add support for smp2p v2
-To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Cc: Deepak Kumar Singh <quic_deesin@quicinc.com>,
-        Jingyi Wang <jingyi.wang@oss.qualcomm.com>,
-        Bjorn Andersson <andersson@kernel.org>,
+To: Bjorn Andersson <andersson@kernel.org>
+Cc: Jingyi Wang <jingyi.wang@oss.qualcomm.com>,
         Konrad Dybcio <konradybcio@kernel.org>, linux-arm-msm@vger.kernel.org,
         linux-kernel@vger.kernel.org, Chris Lew <chris.lew@oss.qualcomm.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDI5MDAwMiBTYWx0ZWRfX94xVewkWRMV0
- JoBxC6iSXJiHroWQW+EYGpVVrb//INz9tB9WM8h6RBtfeEJH+dSUUIZyTIz/VudBzOIkw45O8nM
- OLx9cRCAW7bZyZ+N4N+ejwOnYEVyyPpt9BrDKjDccwD4w8IjCuLyCqU1+LcjklUtUtpLn3ygiKL
- UAq2bJmRX5yU2PyP5DNZjztpQipp2naMDgoeS/PczGwXitPty7GYWUZNtahA1be7Aw8myjCcIPT
- oeFBeyc44fXRcQhx/RbOy7JOOQ9gENRpW3kGbAkEb75iVjK06OvfgD9Ci/lkhNSRal1yU786/O+
- YAKJZhf28lOkwAMag/TpVF+LoYtMdPdV4NS82rBUf13BXYm5wrWah/B5LHdYP4Of9T0D/quv3OI
- L2InkreuVmx4YDiI7+nmU7ozyFY/uQ==
-X-Authority-Analysis: v=2.4 cv=V5ZwEOni c=1 sm=1 tr=0 ts=6901616e cx=c_pps
- a=cmESyDAEBpBGqyK7t0alAg==:117 a=IkcTkHD0fZMA:10 a=x6icFKpwvdMA:10
- a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22 a=EUspDBNiAAAA:8
- a=eY5W3OMkMx8GTqqscWgA:9 a=QEXdDO2ut3YA:10 a=1OuFwYUASf3TG4hYMiVC:22
-X-Proofpoint-GUID: wrZW6ioCIaoSBsp4g957NTxIWrC2QRud
-X-Proofpoint-ORIG-GUID: wrZW6ioCIaoSBsp4g957NTxIWrC2QRud
+X-Proofpoint-ORIG-GUID: snRLZLsTuqoK4FsO23V24wrgj_cxBBBV
+X-Proofpoint-GUID: snRLZLsTuqoK4FsO23V24wrgj_cxBBBV
+X-Authority-Analysis: v=2.4 cv=avi/yCZV c=1 sm=1 tr=0 ts=69016365 cx=c_pps
+ a=JL+w9abYAAE89/QcEU+0QA==:117 a=IkcTkHD0fZMA:10 a=x6icFKpwvdMA:10
+ a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22 a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8
+ a=baDIM8u29knSi3rfoG4A:9 a=QEXdDO2ut3YA:10 a=324X-CrmTo6CU4MGRt3R:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDI5MDAwMyBTYWx0ZWRfX0UHEB3Pm/bhf
+ kC9KpY+qGp8ZeYXhv3tp/sTNYjL4Q6omxr2L7AClRNyBijgyNoNnjClrU0AjuVXyuRuUpaYuTLG
+ 1DqR4zKoN0INK2JgGia9rcPce3q1D4FKWpTtvfnvkKRbfOlM4J3CGolwNxmrYOIRqxcIG7SmHE/
+ dm8k9mPjKyibD8ilgUVuPFCqO7+wbHbxu7s9QzFVClMQEmavUqD53aaCZu0kZDKzwQqwDJGmI5t
+ 7leGy1TOjXWL2R8kly6jcD2UhH+bUaY6f+ddBEy647GV5Kq3qzMwUcGGzJ8lvyHhSql/2+Jf1xa
+ 6JaqQd1ig/Jljo9ODqlVJHTguFN7mLAfRbCL/uLSPlkL7jwR2tO2QQmhu/h6/+67ZO6ZK8GMp0i
+ bdWDR7dycS17TviBytWeC2moHhgM8w==
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.80.40
  definitions=2025-10-28_09,2025-10-22_01,2025-03-28_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 clxscore=1015 adultscore=0 suspectscore=0 bulkscore=0
- phishscore=0 lowpriorityscore=0 priorityscore=1501 malwarescore=0
- impostorscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ clxscore=1015 priorityscore=1501 impostorscore=0 malwarescore=0
+ suspectscore=0 adultscore=0 spamscore=0 bulkscore=0 phishscore=0
+ lowpriorityscore=0 classifier=typeunknown authscore=0 authtc= authcc=
  route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2510240001
- definitions=main-2510290002
+ definitions=main-2510290003
 
-On Tue, Oct 21, 2025 at 2:39=E2=80=AFAM Konrad Dybcio
-<konrad.dybcio@oss.qualcomm.com> wrote:
+On Wed, Oct 22, 2025 at 3:16=E2=80=AFPM Bjorn Andersson <andersson@kernel.o=
+rg> wrote:
 >
-> On 10/21/25 10:23 AM, Deepak Kumar Singh wrote:
+> On Tue, Sep 23, 2025 at 09:18:43PM -0700, Jingyi Wang wrote:
+> > From: Chris Lew <chris.lew@oss.qualcomm.com>
+> >
+> > Some remoteproc need smp2p v2 support, mirror the version written by th=
+e
+> > remote if the remote supports v2. This is needed if the remote does not
+> > have backwards compatibility with v1. And reset entry last value on SSR=
+ for
+> > smp2p v2.
+> >
+> > Signed-off-by: Chris Lew <chris.lew@oss.qualcomm.com>
+> > Co-developed-by: Jingyi Wang <jingyi.wang@oss.qualcomm.com>
+> > Signed-off-by: Jingyi Wang <jingyi.wang@oss.qualcomm.com>
+>
+> Please confirm that you really co-developed (pair programming) this
+> patch with Chris.
+>
+> Isn't this a patch from Chris, that you're "forwarding", i.e. both
+> Signed-off-by should be there, but the Co-developed-by shouldn't.
+>
+> > ---
+> >  drivers/soc/qcom/smp2p.c | 35 ++++++++++++++++++++++++++++++++---
+> >  1 file changed, 32 insertions(+), 3 deletions(-)
+> >
+> > diff --git a/drivers/soc/qcom/smp2p.c b/drivers/soc/qcom/smp2p.c
+> > index e2cfd9ec8875..5ea64a83c678 100644
+> > --- a/drivers/soc/qcom/smp2p.c
+> > +++ b/drivers/soc/qcom/smp2p.c
+> > @@ -48,10 +48,13 @@
+> >  #define SMP2P_MAGIC 0x504d5324
+> >  #define SMP2P_ALL_FEATURES   SMP2P_FEATURE_SSR_ACK
+> >
+> > +#define SMP2P_VERSION_1 1
+> > +#define SMP2P_VERSION_2 2
+>
+> #define ONE 1
+> #define TWO 2
+>
+> #define PLEASE_DONT true
+>
+> > +
+> >  /**
+> >   * struct smp2p_smem_item - in memory communication structure
+> >   * @magic:           magic number
+> > - * @version:         version - must be 1
+> > + * @version:         version
+> >   * @features:                features flag - currently unused
+> >   * @local_pid:               processor id of sending end
+> >   * @remote_pid:              processor id of receiving end
+> > @@ -180,14 +183,23 @@ static void qcom_smp2p_kick(struct qcom_smp2p *sm=
+p2p)
+> >  static bool qcom_smp2p_check_ssr(struct qcom_smp2p *smp2p)
+> >  {
+> >       struct smp2p_smem_item *in =3D smp2p->in;
+> > +     struct smp2p_entry *entry;
+> >       bool restart;
+> >
+> >       if (!smp2p->ssr_ack_enabled)
+> >               return false;
+> >
+> >       restart =3D in->flags & BIT(SMP2P_FLAGS_RESTART_DONE_BIT);
+> > +     restart =3D restart !=3D smp2p->ssr_ack;
+> > +     if (restart && in->version > SMP2P_VERSION_1) {
+> > +             list_for_each_entry(entry, &smp2p->inbound, node) {
+> > +                     if (!entry->value)
+> > +                             continue;
+> > +                     entry->last_value =3D 0;
+> > +             }
+> > +     }
+> >
+> > -     return restart !=3D smp2p->ssr_ack;
+> > +     return restart;
+> >  }
+> >
+> >  static void qcom_smp2p_do_ssr_ack(struct qcom_smp2p *smp2p)
+> > @@ -222,6 +234,20 @@ static void qcom_smp2p_negotiate(struct qcom_smp2p=
+ *smp2p)
+> >       }
+> >  }
+> >
+> > +static int qcom_smp2p_in_version(struct qcom_smp2p *smp2p)
+> > +{
+> > +     unsigned int smem_id =3D smp2p->smem_items[SMP2P_INBOUND];
+> > +     unsigned int pid =3D smp2p->remote_pid;
+> > +     struct smp2p_smem_item *in;
+> > +     size_t size;
+> > +
+> > +     in =3D qcom_smem_get(pid, smem_id, &size);
+> > +     if (IS_ERR(in))
+> > +             return 0;
+> > +
+> > +     return in->version;
+> > +}
+> > +
+> >  static void qcom_smp2p_start_in(struct qcom_smp2p *smp2p)
+> >  {
+> >       unsigned int smem_id =3D smp2p->smem_items[SMP2P_INBOUND];
+> > @@ -516,6 +542,7 @@ static int qcom_smp2p_alloc_outbound_item(struct qc=
+om_smp2p *smp2p)
+> >       struct smp2p_smem_item *out;
+> >       unsigned smem_id =3D smp2p->smem_items[SMP2P_OUTBOUND];
+> >       unsigned pid =3D smp2p->remote_pid;
+> > +     u8 in_version;
+> >       int ret;
+> >
+> >       ret =3D qcom_smem_alloc(pid, smem_id, sizeof(*out));
+> > @@ -537,12 +564,14 @@ static int qcom_smp2p_alloc_outbound_item(struct =
+qcom_smp2p *smp2p)
+> >       out->valid_entries =3D 0;
+> >       out->features =3D SMP2P_ALL_FEATURES;
+> >
+> > +     in_version =3D qcom_smp2p_in_version(smp2p);
+> > +
+> >       /*
+> >        * Make sure the rest of the header is written before we validate=
+ the
+> >        * item by writing a valid version number.
+> >        */
+> >       wmb();
+> > -     out->version =3D 1;
+> > +     out->version =3D (in_version) ? in_version : 1;
+>
+> Doesn't this imply that if the remoteproc advertises support for version
+> 3, then we suddenly also support version 3?
+>
+
+Yea I think this is a result of a quick fix and certainty that no
+firmware was running around with version 3. We can clean this up.
+
+>
+> I don't remember if we've talked about how version handling should work
+> in this driver, but we should certainly define and document that in the
+> comment at the top of this driver.
+>
+
+We did, there's provisions for the remote to version down or place a
+0xFF value if it isn't capable of versioning down. Unfortunately I
+think this versioning down behavior comes as part of V2.
+Because we have to support older firmware, it was better to mirror V1
+for older remotes in case they couldn't understand Linux doing the
+version down sequence.
+
+We don't have any remote with V3 so I didnt implement that part of the
+V2 smp2p spec.
+
+> Regards,
+> Bjorn
+>
+> >
+> >       qcom_smp2p_kick(smp2p);
 > >
 > >
-> > On 9/24/2025 8:27 PM, Konrad Dybcio wrote:
-> >> On 9/24/25 6:18 AM, Jingyi Wang wrote:
-> >>> From: Chris Lew <chris.lew@oss.qualcomm.com>
-> >>>
-> >>> Some remoteproc need smp2p v2 support, mirror the version written by =
-the
-> >>> remote if the remote supports v2. This is needed if the remote does n=
-ot
-> >>> have backwards compatibility with v1. And reset entry last value on S=
-SR for
-> >>> smp2p v2.
-> >>>
-> >>> Signed-off-by: Chris Lew <chris.lew@oss.qualcomm.com>
-> >>> Co-developed-by: Jingyi Wang <jingyi.wang@oss.qualcomm.com>
-> >>> Signed-off-by: Jingyi Wang <jingyi.wang@oss.qualcomm.com>
-> >>> ---
-> >>
-> >> [...]
-> >>
-> >>> +static int qcom_smp2p_in_version(struct qcom_smp2p *smp2p)
-> >>> +{
-> >>> +    unsigned int smem_id =3D smp2p->smem_items[SMP2P_INBOUND];
-> >>> +    unsigned int pid =3D smp2p->remote_pid;
-> >>> +    struct smp2p_smem_item *in;
-> >>> +    size_t size;
-> >>> +
-> >>> +    in =3D qcom_smem_get(pid, smem_id, &size);
-> >>> +    if (IS_ERR(in))
-> >>> +        return 0;
-> >>> +
-> >>> +    return in->version;
-> >>
-> >> are in and out versions supposed to be out of sync in case of
-> >> error?
-> >>
-> > I think that should be ok. If we return error smp2p connection will be =
-completely broken. With default version 1 partial features can be supported=
- even if remote is using version 2. Some features like smp2p connection aft=
-er subsystem restart may be affected by this.>> +}
->
-> Perhaps a different question is in order.. do we ever expect smem_get to
-> fail under normal conditions?
->
-
-We would, this new flow gets executed for all the smp2p device probes.
-For remoteprocs booted by HLOS, I would expect this call to
-qcom_smem_get() to fail during smp2p probe time, so I have a silent
-error. The in item will be found when we get the first ipcc interrupt
-from the remote. I would only expect qcom_smem_get() to succeed here
-on smp2p devices for early boot processors.
-
-> [...]
->
-> >>>       /*
-> >>>        * Make sure the rest of the header is written before we valida=
-te the
-> >>>        * item by writing a valid version number.
-> >>>        */
-> >>>       wmb();
-> >>> -    out->version =3D 1;
-> >>> +    out->version =3D (in_version) ? in_version : 1;
-> >>
-> >> =3D in_version ?: 1
-> >>
-> >> Konrad
-> >>
-> > We want to assign in_version when value is 1/2 and 1 if value is 0 i.e.=
- error case.
->
-> That's what this syntax does, with less characters
->
-> Konrad
+> > --
+> > 2.25.1
+> >
 
