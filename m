@@ -1,175 +1,252 @@
-Return-Path: <linux-arm-msm+bounces-79529-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-79528-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id B1986C1C738
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Oct 2025 18:32:24 +0100 (CET)
+Received: from ams.mirrors.kernel.org (ams.mirrors.kernel.org [213.196.21.55])
+	by mail.lfdr.de (Postfix) with ESMTPS id B3D2BC1C70C
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Oct 2025 18:29:54 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id BBDC7188B8AB
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Oct 2025 17:32:48 +0000 (UTC)
+	by ams.mirrors.kernel.org (Postfix) with ESMTPS id 390F434B54A
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Oct 2025 17:29:54 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C244E34D936;
-	Wed, 29 Oct 2025 17:32:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2B0983358CD;
+	Wed, 29 Oct 2025 17:29:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=web.de header.i=markus.elfring@web.de header.b="c+WwoiC/"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="IV+H1s5c"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mout.web.de (mout.web.de [212.227.17.11])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C60D31283D;
-	Wed, 29 Oct 2025 17:32:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.17.11
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00E422DAFC4;
+	Wed, 29 Oct 2025 17:29:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761759139; cv=none; b=fr9hLC1j+0SktO6roc/DJRKjA6whGnT00V4OnTbG+hmxDOTKJbxY7x0Z3GVOHxEQhHjQ7fu+hgUl+rjZ8+dZz7EPqOe6xzrJD7e4BBXYIvuTTOhAoswZxk0Oz6due6quDvigmQFN4TVNjs1i5u9fnPGV4Gtc1htgfLeDfzOardk=
+	t=1761758991; cv=none; b=XLrRi9A4V3V0SROvCi53KExD9GTawBPieEO7l3s9fcBGF6ezo+Or3EjrxRCX43upR2KM0W7gYN8UAYfi8BjLIoalhoStgOefzwoSlEmkK4qKlPlepsfvIcqDMcMavh8afEohFA2tpl6Xv1faNTlU+i6mKt16lsKpm+N5yqoPSDA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761759139; c=relaxed/simple;
-	bh=Acb2I2Pbu/oogzK66zhV/cfqmGZOdhf365tnACPEP70=;
-	h=Message-ID:Date:MIME-Version:To:Cc:References:Subject:From:
-	 In-Reply-To:Content-Type; b=ppjP5bV9s2O7PU7ogmeqz/VR4YFPFsbRsiYRpr2v1CcOLTstrTYuqAn4ZmId5PSTC/d4AbzrGVvbI1ImaDibd9/JspRdg+A7fLCITfykhkpevYd38cl1NFgCDOgpbLmYhiczE02aU8/ldu7f8qFKvS5AVXddJYDVMjSTlYx7gQo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de; spf=pass smtp.mailfrom=web.de; dkim=pass (2048-bit key) header.d=web.de header.i=markus.elfring@web.de header.b=c+WwoiC/; arc=none smtp.client-ip=212.227.17.11
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=web.de
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=web.de;
-	s=s29768273; t=1761759127; x=1762363927; i=markus.elfring@web.de;
-	bh=t1w9nAB21BkiIR25+rIX4DpNqAPP3pbaX5HFUHEmtK4=;
-	h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:To:Cc:References:
-	 Subject:From:In-Reply-To:Content-Type:Content-Transfer-Encoding:
-	 cc:content-transfer-encoding:content-type:date:from:message-id:
-	 mime-version:reply-to:subject:to;
-	b=c+WwoiC/V1OuEFgY9F5mj3Wv1D3h2Z/5jqWAhfpfNLOkcF6OZcfkrIg4qNNiDjhJ
-	 +dJXp/ByiBqSp0QBBnlhDCDKe1Xy4JCrTJCKl2FHrt1fEvQfRbwXpWKwACi7TCqOY
-	 7CSMLCIMZsSgHyUOOIeELVTgEtrnf9bxCz0PITGxnYz7tr9NEPCsaV6Zj+Q1aHjNq
-	 yw8Y092uv+7gBKGfkgBRwauJDNJQUUQyjrsSIKsOsW1atwL5DXBCkmpnh/FOA6oXI
-	 C+rBdGKZ2Gb9IsHZKURWDH4k4goVGk0hh5/iX1sTOpNdG7va4jQ1XpgMBS88vaVY9
-	 TbSt53n30FQSYO0G+A==
-X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
-Received: from [192.168.178.29] ([94.31.92.249]) by smtp.web.de (mrweb105
- [213.165.67.124]) with ESMTPSA (Nemesis) id 1MbkSC-1vqEKv1mJy-00klzo; Wed, 29
- Oct 2025 18:32:07 +0100
-Message-ID: <6069f4ab-252e-4f83-8c8f-cbab4ae8cd94@web.de>
-Date: Wed, 29 Oct 2025 18:32:05 +0100
+	s=arc-20240116; t=1761758991; c=relaxed/simple;
+	bh=6c2lRH79gPUfqUGUAT2Ahh0VCQFp9aMLWeaNEpTU2VA=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=UuQJUDHlUmpQDntwG0lJlNPOuoLW4OgII9J63SFzCEygYikh/THFQM4u2DsKTdC2NuxqLTrsGOwIDEzCXFu/aidc9xd20TNocfwdsijPNDHwM70e1fcg0+rE2//n+LW+nhX4GmYBomFcOy9FvQC5GU7emqurNqGXrhWYg3E4iJU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=IV+H1s5c; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9493C4CEF7;
+	Wed, 29 Oct 2025 17:29:48 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1761758990;
+	bh=6c2lRH79gPUfqUGUAT2Ahh0VCQFp9aMLWeaNEpTU2VA=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=IV+H1s5cA6+q0eMfmwxGdQll40rtEMuen9ODGoXJ0OyV1c7HlROjIDiHl6KG9b0cM
+	 FSyPQD1mtMazchRKzcZKMw1h7JchjzQPcBc7nocjWzUmL4vSgLFvItd+Jaz0E+42LF
+	 KmMKufHWsKhpeg1WlsfRIDF1IV0kh6aYcAOtiplt/PoA72VVW5roiYDDYtAXFP1jyG
+	 +PtQEywQFP5nH85YlDKYPBQe1x5HqqGu4UVQgdYiTiGfGwEJDPXOkfYH+KNLBq5LiH
+	 72EH3Yb1CURWbl9kIaes24S5Lqils3FF9J3gk0zDo74JmDpxq2QUXMv/H9L8AWBL1U
+	 68B80NxBEviJA==
+Date: Wed, 29 Oct 2025 12:32:53 -0500
+From: Bjorn Andersson <andersson@kernel.org>
+To: xiangxu.yin@oss.qualcomm.com
+Cc: Rob Clark <robin.clark@oss.qualcomm.com>, 
+	Dmitry Baryshkov <lumag@kernel.org>, Abhinav Kumar <abhinav.kumar@linux.dev>, 
+	Jessica Zhang <jesszhan0024@gmail.com>, Sean Paul <sean@poorly.run>, 
+	Marijn Suijten <marijn.suijten@somainline.org>, Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, 
+	Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>, 
+	David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Konrad Dybcio <konradybcio@kernel.org>, linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, 
+	freedreno@lists.freedesktop.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	fange.zhang@oss.qualcomm.com, yongxing.mou@oss.qualcomm.com, li.liu@oss.qualcomm.com, 
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>, Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Subject: Re: [PATCH v6 3/4] arm64: dts: qcom: Add DisplayPort and QMP USB3DP
+ PHY for SM6150
+Message-ID: <xjes5h45y44cahs7avj4xngprwnks3alnf25tsbptyvckajz3q@lhawlg5vamls>
+References: <20251024-add-displayport-support-to-qcs615-devicetree-v6-0-c4316975dd0e@oss.qualcomm.com>
+ <20251024-add-displayport-support-to-qcs615-devicetree-v6-3-c4316975dd0e@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-To: Miaoqian Lin <linmq006@gmail.com>, dmaengine@vger.kernel.org,
- linux-arm-msm@vger.kernel.org, Dmitry Baryshkov <lumag@kernel.org>,
- Jyothi Kumar Seerapu <quic_jseerapu@quicinc.com>,
- Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
- Neil Armstrong <neil.armstrong@linaro.org>, Vinod Koul <vkoul@kernel.org>
-Cc: stable@vger.kernel.org, LKML <linux-kernel@vger.kernel.org>
-References: <20251029123421.91973-1-linmq006@gmail.com>
-Subject: Re: [PATCH] dma: qcom: gpi: Fix memory leak in
- gpi_peripheral_config()
-Content-Language: en-GB, de-DE
-From: Markus Elfring <Markus.Elfring@web.de>
-In-Reply-To: <20251029123421.91973-1-linmq006@gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:9i0KtE9HrbmwcWBSDN86jgBGkdf9Q3K4aeCLNAMVoMUwXDJhTFU
- 8EpjSB1y52TE1dDQZKcSWKYTX9aqfqSvzZCdgVoIKqr2222KUo6j41Yzb0hB0aJ1vZOVcIc
- +Pz69qWZ5BXG5FtKgbaqVJlyrQOhRj2ZnmFx7hsI6GXmb0kK0qnAuope50yMaeAJq/vZtpU
- OPBecA7LtAT/GTC2rpoRg==
-X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:w65fqY1kmcE=;lD4EDGnKVlSpuV5M0j8cSCE2bcI
- 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
- foHcjfC6gpHloCzqDIHsIeIvjkJ2ZLwkPTc=
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20251024-add-displayport-support-to-qcs615-devicetree-v6-3-c4316975dd0e@oss.qualcomm.com>
 
-=E2=80=A6
-> +++ b/drivers/dma/qcom/gpi.c
-> @@ -1605,14 +1605,16 @@ static int
->  gpi_peripheral_config(struct dma_chan *chan, struct dma_slave_config *c=
-onfig)
->  {
-=E2=80=A6
-> +	new_config =3D krealloc(gchan->config, config->peripheral_size, GFP_NO=
-WAIT);
-> +	if (!new_config)
->  		return -ENOMEM;
-> =20
-> +	gchan->config =3D new_config;
->  	memcpy(gchan->config, config->peripheral_config, config->peripheral_si=
-ze);
+On Fri, Oct 24, 2025 at 01:21:03PM +0800, Xiangxu Yin via B4 Relay wrote:
+> From: Xiangxu Yin <xiangxu.yin@oss.qualcomm.com>
+> 
 
-How do you think about to apply the following source code variant?
-
-	gchan->config =3D memcpy(new_config, config->peripheral_config, config->p=
-eripheral_size);
-
+Please fix the subject prefix and drop the "for SM6150" suffix.
 
 Regards,
-Markus
+Bjorn
+
+> Introduce DisplayPort controller node and associated QMP USB3-DP PHY
+> for SM6150 SoC. Add data-lanes property to the DP endpoint and update
+> clock assignments for proper DP integration.
+> 
+> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+> Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+> Signed-off-by: Xiangxu Yin <xiangxu.yin@oss.qualcomm.com>
+> ---
+>  arch/arm64/boot/dts/qcom/sm6150.dtsi | 115 ++++++++++++++++++++++++++++++++++-
+>  1 file changed, 113 insertions(+), 2 deletions(-)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/sm6150.dtsi b/arch/arm64/boot/dts/qcom/sm6150.dtsi
+> index 6128d8c48f9c0807ac488ddac3b2377678e8f8c3..9741f8d14c72ed7dd6a5e483c5c0d578662f1d31 100644
+> --- a/arch/arm64/boot/dts/qcom/sm6150.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sm6150.dtsi
+> @@ -14,6 +14,7 @@
+>  #include <dt-bindings/interconnect/qcom,icc.h>
+>  #include <dt-bindings/interconnect/qcom,qcs615-rpmh.h>
+>  #include <dt-bindings/interrupt-controller/arm-gic.h>
+> +#include <dt-bindings/phy/phy-qcom-qmp.h>
+>  #include <dt-bindings/power/qcom-rpmpd.h>
+>  #include <dt-bindings/power/qcom,rpmhpd.h>
+>  #include <dt-bindings/soc/qcom,rpmh-rsc.h>
+> @@ -3717,6 +3718,7 @@ port@0 {
+>  						reg = <0>;
+>  
+>  						dpu_intf0_out: endpoint {
+> +							remote-endpoint = <&mdss_dp0_in>;
+>  						};
+>  					};
+>  
+> @@ -3749,6 +3751,89 @@ opp-307200000 {
+>  				};
+>  			};
+>  
+> +			mdss_dp0: displayport-controller@ae90000 {
+> +				compatible = "qcom,sm6150-dp", "qcom,sm8150-dp", "qcom,sm8350-dp";
+> +
+> +				reg = <0x0 0x0ae90000 0x0 0x200>,
+> +				      <0x0 0x0ae90200 0x0 0x200>,
+> +				      <0x0 0x0ae90400 0x0 0x600>,
+> +				      <0x0 0x0ae90a00 0x0 0x600>,
+> +				      <0x0 0x0ae91000 0x0 0x600>;
+> +
+> +				interrupt-parent = <&mdss>;
+> +				interrupts = <12>;
+> +
+> +				clocks = <&dispcc DISP_CC_MDSS_AHB_CLK>,
+> +					 <&dispcc DISP_CC_MDSS_DP_AUX_CLK>,
+> +					 <&dispcc DISP_CC_MDSS_DP_LINK_CLK>,
+> +					 <&dispcc DISP_CC_MDSS_DP_LINK_INTF_CLK>,
+> +					 <&dispcc DISP_CC_MDSS_DP_PIXEL_CLK>,
+> +					 <&dispcc DISP_CC_MDSS_DP_PIXEL1_CLK>;
+> +				clock-names = "core_iface",
+> +					      "core_aux",
+> +					      "ctrl_link",
+> +					      "ctrl_link_iface",
+> +					      "stream_pixel",
+> +					      "stream_1_pixel";
+> +
+> +				assigned-clocks = <&dispcc DISP_CC_MDSS_DP_LINK_CLK_SRC>,
+> +						  <&dispcc DISP_CC_MDSS_DP_PIXEL_CLK_SRC>,
+> +						  <&dispcc DISP_CC_MDSS_DP_PIXEL1_CLK_SRC>;
+> +				assigned-clock-parents = <&usb_qmpphy_2 QMP_USB43DP_DP_LINK_CLK>,
+> +							 <&usb_qmpphy_2 QMP_USB43DP_DP_VCO_DIV_CLK>,
+> +							 <&usb_qmpphy_2 QMP_USB43DP_DP_VCO_DIV_CLK>;
+> +
+> +				phys = <&usb_qmpphy_2 QMP_USB43DP_DP_PHY>;
+> +				phy-names = "dp";
+> +
+> +				operating-points-v2 = <&dp_opp_table>;
+> +				power-domains = <&rpmhpd RPMHPD_CX>;
+> +
+> +				#sound-dai-cells = <0>;
+> +
+> +				status = "disabled";
+> +
+> +				ports {
+> +					#address-cells = <1>;
+> +					#size-cells = <0>;
+> +
+> +					port@0 {
+> +						reg = <0>;
+> +
+> +						mdss_dp0_in: endpoint {
+> +							remote-endpoint = <&dpu_intf0_out>;
+> +						};
+> +					};
+> +
+> +					port@1 {
+> +						reg = <1>;
+> +
+> +						mdss_dp0_out: endpoint {
+> +							data-lanes = <3 2 0 1>;
+> +						};
+> +					};
+> +				};
+> +
+> +				dp_opp_table: opp-table {
+> +					compatible = "operating-points-v2";
+> +
+> +					opp-160000000 {
+> +						opp-hz = /bits/ 64 <160000000>;
+> +						required-opps = <&rpmhpd_opp_low_svs>;
+> +					};
+> +
+> +					opp-270000000 {
+> +						opp-hz = /bits/ 64 <270000000>;
+> +						required-opps = <&rpmhpd_opp_svs>;
+> +					};
+> +
+> +					opp-540000000 {
+> +						opp-hz = /bits/ 64 <540000000>;
+> +						required-opps = <&rpmhpd_opp_svs_l1>;
+> +					};
+> +				};
+> +			};
+> +
+>  			mdss_dsi0: dsi@ae94000 {
+>  				compatible = "qcom,sm6150-dsi-ctrl", "qcom,mdss-dsi-ctrl";
+>  				reg = <0x0 0x0ae94000 0x0 0x400>;
+> @@ -3844,8 +3929,8 @@ dispcc: clock-controller@af00000 {
+>  				 <&mdss_dsi0_phy DSI_BYTE_PLL_CLK>,
+>  				 <&mdss_dsi0_phy DSI_PIXEL_PLL_CLK>,
+>  				 <0>,
+> -				 <0>,
+> -				 <0>;
+> +				 <&usb_qmpphy_2 QMP_USB43DP_DP_LINK_CLK>,
+> +				 <&usb_qmpphy_2 QMP_USB43DP_DP_VCO_DIV_CLK>;
+>  
+>  			#clock-cells = <1>;
+>  			#reset-cells = <1>;
+> @@ -4214,6 +4299,32 @@ usb_qmpphy: phy@88e6000 {
+>  			status = "disabled";
+>  		};
+>  
+> +		usb_qmpphy_2: phy@88e8000 {
+> +			compatible = "qcom,qcs615-qmp-usb3-dp-phy";
+> +			reg = <0x0 0x088e8000 0x0 0x2000>;
+> +
+> +			clocks = <&gcc GCC_USB2_SEC_PHY_AUX_CLK>,
+> +				 <&gcc GCC_USB3_SEC_CLKREF_CLK>,
+> +				 <&gcc GCC_AHB2PHY_WEST_CLK>,
+> +				 <&gcc GCC_USB2_SEC_PHY_PIPE_CLK>;
+> +			clock-names = "aux",
+> +				      "ref",
+> +				      "cfg_ahb",
+> +				      "pipe";
+> +
+> +			resets = <&gcc GCC_USB3PHY_PHY_SEC_BCR >,
+> +				 <&gcc GCC_USB3_DP_PHY_SEC_BCR>;
+> +			reset-names = "phy_phy",
+> +				      "dp_phy";
+> +
+> +			#clock-cells = <1>;
+> +			#phy-cells = <1>;
+> +
+> +			qcom,tcsr-reg = <&tcsr 0xbff0 0xb24c>;
+> +
+> +			status = "disabled";
+> +		};
+> +
+>  		usb_1: usb@a6f8800 {
+>  			compatible = "qcom,qcs615-dwc3", "qcom,dwc3";
+>  			reg = <0x0 0x0a6f8800 0x0 0x400>;
+> 
+> -- 
+> 2.34.1
+> 
+> 
 
