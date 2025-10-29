@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-79366-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-79367-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 885F2C1903A
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Oct 2025 09:26:33 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 9DC75C19085
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Oct 2025 09:29:05 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 2692E561678
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Oct 2025 08:14:46 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 651623B975A
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Oct 2025 08:18:03 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B37CE331A68;
-	Wed, 29 Oct 2025 08:07:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0AC2032144F;
+	Wed, 29 Oct 2025 08:12:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="TRWv6peF"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="E+cEwTvY"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8768A331A63;
-	Wed, 29 Oct 2025 08:07:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D149F2EAB6E;
+	Wed, 29 Oct 2025 08:12:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761725248; cv=none; b=DwdwRTBj9erer5xmLzvKfWKppAYo5wSTKcd4nZdldpkFwDG7n6vks03p7yI0JkWqanCkfEmjGWSgQOr5ZusI7CkFqiXxbLnNrNjWTltqzNannR2CesNgbcMhCSJUI99bAxhikcreq8JVFhlEzn2oS9K6vPINEP0JS6rRClexppE=
+	t=1761725557; cv=none; b=dksIxJLCvwCUtfJV6I520JZyX9opzXUznu9KBsMq9sgFthcyWxpsqG2bxxhqmNX3NeGmVjyDBN793Q+BSrZL9DsSu9J2X+BlAgeyjjUWQt3og9Ei64fcHhW/nIQhmVPPLHKkB1yZnz54sLp1AU1qSIy7uu6dhf6G74QVucZm1dM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761725248; c=relaxed/simple;
-	bh=MdMnqM3MlML9M36M/NhU6vGbPgApoRQm//hwwa1X4Jg=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=XzmUeBoeGU8kpfhvu9irxHTj+2sid2H0tyD0+yvJjoFINGSsKwNLleu35NOxiSU50KlrJD7u44P5Llcy30p1KZtU72qGGvA4EotFNJXWFXhKM0VodXxg4mtyBVP8CKStQ1uvUelFdtH6It2CGYK40uAjfsMxEKmI7asQirwr0Kc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=TRWv6peF; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 879C1C4CEFB;
-	Wed, 29 Oct 2025 08:07:25 +0000 (UTC)
+	s=arc-20240116; t=1761725557; c=relaxed/simple;
+	bh=UEX+PITVHKlo9AnT7BLJjmxSxBaXgUp2KRsbZwnJVMA=;
+	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
+	 In-Reply-To:Content-Type; b=qfTI5Fe2MPP9RME26Ey27SzHbNc+g3x7XaX5FqNV4fN40AMuLiIB1nZWWn3eMc4nWC65C8oh8GC72n/QfaPdm9bhPZfO05uKlpvB7N1mguHp9m1Z54Ca2hb3QCuuP3yMjWCzOJ16GNuqoM44mp7OUCsFLwDtRoudr1SQYjZ4EBA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=E+cEwTvY; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DCD75C4CEF7;
+	Wed, 29 Oct 2025 08:12:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1761725248;
-	bh=MdMnqM3MlML9M36M/NhU6vGbPgApoRQm//hwwa1X4Jg=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=TRWv6peFhwkNQnAJ8iX27g+A1Xd62JR8G0DsygEJVtOg9GzHRo7m0022g7RyAyhc9
-	 Pfl5Qa3YCOBlj+/4mcu+ZB5UuU8oWvXhcSiaL2xKW74D/uXY/qtUhM31mC0EoVjNz+
-	 4W6nh82PhPijD4SYGrA23jHSSkhT7ksQvvldPvIXIKuY3Vz/LIRiR496rvOIiKx7Nj
-	 pMM4RQKDVh+Khy8KIY4vcz2aAns4niD6VSi94tCkMmjP63Hlcs4+Xq3LAGBj+0ASUg
-	 0qaeUZqGJu5cWjEhnxf5o2py3LLB+UzJjk9MCZGPjSUvb2DYcktx8k/bz0LRY9korD
-	 6fHGvqyPwbRRA==
-Message-ID: <a117b105-a734-4f67-9bb2-c06728e79083@kernel.org>
-Date: Wed, 29 Oct 2025 09:07:23 +0100
+	s=k20201202; t=1761725557;
+	bh=UEX+PITVHKlo9AnT7BLJjmxSxBaXgUp2KRsbZwnJVMA=;
+	h=Date:Subject:From:To:Cc:References:In-Reply-To:From;
+	b=E+cEwTvYPYh6km2yxCBsNKO9KHYtHEd5D/XctREYLQAsPy+Tv8rpU+18HKqqhJ82J
+	 +Et+RW9xRj4GLctOvVRK9R+EQeV6dCo9ANR2M/zE67MVxhqNzWv9ffGorfHvbB3n/X
+	 U2aD9UVcdoTLU10ydhs1zTHaaivIGdWoEFxfsCS+RZKwIZK91uBGXUP93bGcX1LV14
+	 TRCrajafXFVgIdC33NZMLCHQsgoz7h8zf0cQJ18lRGp2V2OAXlKnsSEkevBMTHs4w+
+	 d45e0gdoEjmmxbpnr5nacZMVSQOoiLbKd3NNNR0srz2O2OH+88ebZNqdEuz1gxP6Xp
+	 KFF4VRQLrZocA==
+Message-ID: <121dd488-6c2c-4f5f-84da-f81466192acb@kernel.org>
+Date: Wed, 29 Oct 2025 09:12:32 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -52,6 +52,7 @@ MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH v9 3/3] arm64: dts: qcom: sm8750: Add USB support for
  SM8750 QRD platform
+From: Krzysztof Kozlowski <krzk@kernel.org>
 To: Krishna Kurapati <krishna.kurapati@oss.qualcomm.com>,
  Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
  Conor Dooley <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
@@ -60,7 +61,7 @@ Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
  linux-kernel@vger.kernel.org, Wesley Cheng <wesley.cheng@oss.qualcomm.com>
 References: <20251024151521.2365845-1-krishna.kurapati@oss.qualcomm.com>
  <20251024151521.2365845-4-krishna.kurapati@oss.qualcomm.com>
-From: Krzysztof Kozlowski <krzk@kernel.org>
+ <6b76d7d9-4f82-4eec-880c-3da2386971a3@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
  xsFNBFVDQq4BEAC6KeLOfFsAvFMBsrCrJ2bCalhPv5+KQF2PS2+iwZI8BpRZoV+Bd5kWvN79
@@ -105,52 +106,41 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  jWt87ecuHlpL3uuQ0ZZNWqHgZoQLXoqC2ZV5KrtKWb/jyiFX/sxSrodALf0zf+tfHv0FZWT2
  zHjUqd0t4njD/UOsuIMOQn4Ig0SdivYPfZukb5cdasKJukG1NOpbW7yRNivaCnfZz6dTawXw
  XRIV/KDsHQiyVxKvN73bThKhONkcX2LWuD928tAR6XMM2G5ovxLe09vuOzzfTWQDsm++9UKF a/A=
-In-Reply-To: <20251024151521.2365845-4-krishna.kurapati@oss.qualcomm.com>
+In-Reply-To: <6b76d7d9-4f82-4eec-880c-3da2386971a3@kernel.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 24/10/2025 17:15, Krishna Kurapati wrote:
-> From: Wesley Cheng <wesley.cheng@oss.qualcomm.com>
+On 29/10/2025 09:02, Krzysztof Kozlowski wrote:
+> On 24/10/2025 17:15, Krishna Kurapati wrote:
+>> From: Wesley Cheng <wesley.cheng@oss.qualcomm.com>
+>>
+>> Enable USB support on SM8750 QRD variant.  The current definition
+>> will start the USB controller in peripheral mode by default until
+>> dependencies are added, such as USB role detection.
+>>
+>> Signed-off-by: Wesley Cheng <wesley.cheng@oss.qualcomm.com>
+>> [Krishna: Flattened usb node QRD DTS]
+>> Signed-off-by: Krishna Kurapati <krishna.kurapati@oss.qualcomm.com>
+>> ---
+>>  arch/arm64/boot/dts/qcom/sm8750-qrd.dts | 22 ++++++++++++++++++++++
+>>  1 file changed, 22 insertions(+)
+>>
+>> diff --git a/arch/arm64/boot/dts/qcom/sm8750-qrd.dts b/arch/arm64/boot/dts/qcom/sm8750-qrd.dts
+>> index 13c7b9664c89..fc5d12bb41a5 100644
+>> --- a/arch/arm64/boot/dts/qcom/sm8750-qrd.dts
+>> +++ b/arch/arm64/boot/dts/qcom/sm8750-qrd.dts
+>> @@ -1054,3 +1054,25 @@ &ufs_mem_hc {
+>>  
+>>  	status = "okay";
+>>  };
+>> +
+>> +&usb_1 {
 > 
-> Enable USB support on SM8750 QRD variant.  The current definition
-> will start the USB controller in peripheral mode by default until
-> dependencies are added, such as USB role detection.
-> 
-> Signed-off-by: Wesley Cheng <wesley.cheng@oss.qualcomm.com>
-> [Krishna: Flattened usb node QRD DTS]
-> Signed-off-by: Krishna Kurapati <krishna.kurapati@oss.qualcomm.com>
+> Still wrongly ordered. Please follow DTS coding style.
 
-NAK.
 
-You ignored every previous tag - multiple reviews and tests, and then...
-
-> ---
->  arch/arm64/boot/dts/qcom/sm8750-qrd.dts | 22 ++++++++++++++++++++++
->  1 file changed, 22 insertions(+)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/sm8750-qrd.dts b/arch/arm64/boot/dts/qcom/sm8750-qrd.dts
-> index 13c7b9664c89..fc5d12bb41a5 100644
-> --- a/arch/arm64/boot/dts/qcom/sm8750-qrd.dts
-> +++ b/arch/arm64/boot/dts/qcom/sm8750-qrd.dts
-> @@ -1054,3 +1054,25 @@ &ufs_mem_hc {
->  
->  	status = "okay";
->  };
-> +
-> +&usb_1 {
-> +	dr_mode = "peripheral";
-
-You sent something different with issues.
-
-Really, this was a correct patch. Was reviewed. Why you decided to drop
-all this, drop everything which was correct?
-
-Your explanation:
-"- Removed obtained RB tags since the code has changed significantly."
-is just wrong. Almost NOTHING changed, except completely unimportant two
-node merging.
-
-NAK
+My bad, this is actually correctly ordered, your previous patches were
+incorrect. Nothing in the changelog explained that, though.
 
 Best regards,
 Krzysztof
