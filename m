@@ -1,252 +1,227 @@
-Return-Path: <linux-arm-msm+bounces-79417-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-79418-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [142.0.200.124])
-	by mail.lfdr.de (Postfix) with ESMTPS id 87542C19EAB
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Oct 2025 12:03:24 +0100 (CET)
+Received: from ams.mirrors.kernel.org (ams.mirrors.kernel.org [IPv6:2a01:60a::1994:3:14])
+	by mail.lfdr.de (Postfix) with ESMTPS id A681EC19F81
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Oct 2025 12:21:20 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id DB93B4F3445
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Oct 2025 11:01:23 +0000 (UTC)
+	by ams.mirrors.kernel.org (Postfix) with ESMTPS id 2A6EA3576AA
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Oct 2025 11:21:20 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BABD82EBBA2;
-	Wed, 29 Oct 2025 11:01:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3F78532E139;
+	Wed, 29 Oct 2025 11:21:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="d2Ab3UA0"
+	dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b="d/6wY/Zy"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-qk1-f172.google.com (mail-qk1-f172.google.com [209.85.222.172])
+Received: from mail-wr1-f48.google.com (mail-wr1-f48.google.com [209.85.221.48])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9CFD2D8395
-	for <linux-arm-msm@vger.kernel.org>; Wed, 29 Oct 2025 11:01:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2429F3128CA
+	for <linux-arm-msm@vger.kernel.org>; Wed, 29 Oct 2025 11:20:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761735678; cv=none; b=UjTIHt6dK7/ag97T4O5ZJaPb2F+qh7hS9ch4JRuThG/viybeEGMEsYHkWa1Fatc3V49gR1dcY3z4GLdCKzltY4kwHGpiAnjQfi2ZB5bHxvI7T87TVnNZr9r8QM9IRfZTWU9/SIo1FYtjUFFQhJuz9YhdEkTtgMGXTt8pp4pTU7c=
+	t=1761736861; cv=none; b=LYpFtZn4aYPro+kt4Y8ocsHDzG1Oti8OrrbKeVxbiP5c4jUF4dobKyF1M0zU3jsB4l7F/tc14rYXgRAw7kLvr4mAkezQJeSlCFLs8rmCe5nrHTmyT3dAjc8BGh3VSlrj0g0cOINXlg/HXpzOG4+neuOUbn+kXkUIhHqO3cSb+Y4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761735678; c=relaxed/simple;
-	bh=hXAUBSkUqybhhXZyTYQ9DuFdsPNmrVbpbQYulz4IDPk=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=k41508/V41s3Wh7lq72+Qhxz35eE/D3lSZZwMmiVYtN6qPRH2mEP4DVt/DPTk31K3rdZGwg58F6p8I89dGGgNL2kKFVGnj/OcVjZbOTbnEVmMy+Vji99LvHiTl4Lvk2eHuHP8IJkUqbg9kSmO1GPxP8jFkFEyQ99T6VSJmj+aVk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=d2Ab3UA0; arc=none smtp.client-ip=209.85.222.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-qk1-f172.google.com with SMTP id af79cd13be357-88f2aebce7fso730382085a.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 29 Oct 2025 04:01:15 -0700 (PDT)
+	s=arc-20240116; t=1761736861; c=relaxed/simple;
+	bh=bgbw2Ft4/u1XwJQBHfFlQ3MV2AqD0Imvh5HsmytZj4c=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=DkCRWkuXMZC+K6HwPc6CE6IzR1G+fs0p/n1QaPNLx7Ssic6UaLfdMquhx7efXjPyOuMGnj3pB8nhJ/Au/Z2XsQD0sXKOX8Q2PAGzqikCB4Ch1hpJ82UckUP/pe91o8Su3yUtcmqrJLfBfnIkIuhM+oj8iQ+BGQbaYdlFdaB3FFA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl; spf=none smtp.mailfrom=bgdev.pl; dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b=d/6wY/Zy; arc=none smtp.client-ip=209.85.221.48
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=bgdev.pl
+Received: by mail-wr1-f48.google.com with SMTP id ffacd0b85a97d-4283be7df63so3480362f8f.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 29 Oct 2025 04:20:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1761735675; x=1762340475; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=eQWDpVejCHNnm4EwaVB6drbJOWDW2V1Yh8yBgxJN8YA=;
-        b=d2Ab3UA0YObITkdK6FoBmoK0OZVlsKdKYJPms8kn3nOg2HLJfJA+G1sL/ZyOVvf8wo
-         KBylXVJ/xk5CYCcoW7Oj2veY2xoOF8Y7ksl6ogjdGO2jvdKIL6I/3WN3kXwammHa4Hex
-         niBiJrBggqs+lcEY7KMiyFCzSLWKcsxyKQpi95l2JndUav0dEOJahdoRI7a8K1m9jdph
-         XYiFWMHG8tvaT1g8qbQqg9q05UFZ1BCSUBEtvu2TJhg5ylTRCSh1iC3ysxaLA8iY1EY0
-         SQE7mh9veBTJvJl5IJXUD4yFccv5hgRI7/On1htphSMKry5IsVfP/xcir+5EU0FmdYoe
-         fdTw==
+        d=bgdev-pl.20230601.gappssmtp.com; s=20230601; t=1761736857; x=1762341657; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=drLJ70XtGpDzIlyNv3z+1we52syz/zd9JPxUjCCEh6E=;
+        b=d/6wY/Zy7IzTe6QzrRPVbRXNrwryBdOWGVJTcm03U//Qj9jLEzgBAoUABXsGtblrQ4
+         mm128tqQbBx8+sqCYmHNoxLgOvBkWJD32O//cbaHkg0KTgzVFe67iEFcjl4MquxGNERV
+         qkNlzFUPGSSqmkcxuLcgA4GKvEHghycAzlcskNS51Oyzqn5kEKVLOctMvPZn4AkG6u3A
+         gxVIvAOY6dqanOUBpOphlOvZi6tJn9RmMDVKlD0i/wFoPLoK4pQiYKonHl6YJvV2NDiE
+         cgu0NLX/8kvxGLMkTilNQvRWZNB1cCL1iAIDD7UKCkRw36INL/RoCddJY18toyulNjRm
+         EHvw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1761735675; x=1762340475;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=eQWDpVejCHNnm4EwaVB6drbJOWDW2V1Yh8yBgxJN8YA=;
-        b=gq4X6pZhzrXFMtOzNTuA5DDUSkH5uRBgP6EFkFTAXE45zdNeZ4mbP9ptoqgsBU03CK
-         9TSJIN2YOQdiYp+/VIQoANVrtAoKs2h+PkXgTbhknBVvWogppsoRYo2ggE6v2w9wNJQr
-         hncctXMbU8yEZyFQkRo7PbtO1TY9q8f6lIrSctyUvy0szNdfDj6+ExyFVlk9BC/zLe/5
-         ltmE2qT6Z9YzZLzKNlnrXgN1yNa6tplo73Vdzo/tj6QFSKQUfp7NLNBWoSogqU5cOmZn
-         qPLwUS+TB6IrXwfUSB5bbSSypHQwnfVnIDaZBK3Nw5ccsk6cpH2T98gtPPZPrltcUvlK
-         Ie9Q==
-X-Forwarded-Encrypted: i=1; AJvYcCXw6hN19m9Wi1yBonozJu3A0pb/Zm2ymri17SmPa9YKcZyhwWa08c0SUDzy/mvDiQbDQpgWrEnGdxwxmqOK@vger.kernel.org
-X-Gm-Message-State: AOJu0YyOli6E8HhlS/QaIWm15MDJlrmvn6WEu1tKlU5+IDHrNXFXZflI
-	avj/sxQ24RU9lox4i3hojGEN9SxxWiuCdp/WqlAVh8OKNlgjJYaSzfYK1ahGCldCKXeYJv0ZJN1
-	H0wuvVCIe/jGVjwVp/eIVpEkYEY0th81vxm3N65MEMQ==
-X-Gm-Gg: ASbGncvJcZBlTC3z8kAR4t53wTOMkcmRXn+jmoyCiCuSQuS4N2DOs6s/rorvtVNCkbQ
-	vh+PfIFSHmhrUkhvLZLjYwlbyJbJXFVfYE9HKbvUlmsbuxFwru7KcZFYtkyz+2iXRmX1FOvIC9R
-	uzif+zPfd6wsshRqEwOFwgJUbJGoVLlVkmdkVQhKtjDU5OqF/ej/CBLgbfPggZ12OB1DY31HwOE
-	mkOmfD5yLpnIvSxxkECvvOvn0NwZYtaus6JxebPBtYc4RCrL+iYtoPdLJBeXfOc1x+44n3SZyRQ
-	ylLmzJPqmpazaOdhZQ==
-X-Google-Smtp-Source: AGHT+IHWP5Cbc3G4W0Ik0NLLQcf3Rmww0dInCJA9bBcxiEAnG512YgHlmnNkFU3hoCfwOl86Kin1pgVlI3IyVxMDBkU=
-X-Received: by 2002:a05:620a:7019:b0:829:fa5d:6f0d with SMTP id
- af79cd13be357-8a8efb03ddfmr306069985a.82.1761735674490; Wed, 29 Oct 2025
- 04:01:14 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1761736857; x=1762341657;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=drLJ70XtGpDzIlyNv3z+1we52syz/zd9JPxUjCCEh6E=;
+        b=CYRl04qMmNZERNvqf5muhnxLvVTBsqwJ2e5UXp+YvapRjMZL3WJ8fLHwt4BZmjmyyA
+         nKJMt92gz8OfaNZffjtc3xga7UQzHHfMleeyVtFkqkTjhjsHr4xWoNKLndImiFwIS2ku
+         Pq+wKE4X5iBUcKEDjsrkwznwcQytWX3SEsFC4MhNXplV9yeH3+n7kNI8c9tpjR5ybzCt
+         g/TIErsGIhBPFmC6tQ0Y+HVH1zljggp/i1I9TWhqkD9o5ocQIPntkCo3vc0rk9PmRXOK
+         2LhVd1a45dkAGlDlDF0hw/cle4rzNkdJ6QOSGfb85mWpzLlbd6/tIibe2f9Sbowl3FnP
+         z+Bg==
+X-Forwarded-Encrypted: i=1; AJvYcCWh8aArppTDjjtFBseB2Sxjg2vP1w512AaWaO6eUzLzdyc9V6OtbZ6vhZbSfaDiBhLqiOx/z797aAnCkH9a@vger.kernel.org
+X-Gm-Message-State: AOJu0YzxkVKUissZvn6nckGaiVLIZ7/vj6d29bITEh9MhH62WnphU7V/
+	ig1jbayp1UVbu0SuG6AQqlUGJRzsL3uXJXCDF6ixVARSZeMpHDeHNDxAUd1RSbdBmJc=
+X-Gm-Gg: ASbGncs24nu1YGWt1GxBjxh3ghHKQD/J0Qm+JtUYuFwNO71whowxLlxNKYMRmmJYKMX
+	L/GrKbRiDnktET9I5lNh95inhd/s05XGRxpLg98Bfo8BPr89Oc8WKo+EHKL+35TV+o9UTdPw2I/
+	A564Ly01jlEut4XAelvQgaPPxIM12yxuhXUuUB2dXndkvtqvb+ZDPQpHCZcuMVRRC21Fht2GRY3
+	kVJaRPE2fl8Ey0DBuDJEuehEVgfbDUHh7i1fjtx3wqGJgeETVZlrk5ncziwcjc7dlCa7KFj461b
+	Yb6amgpkO4g2374T2IliNx78qHGxxGCsfumrN4DnjUSE7FGU8V3ToPQYpaMnJD/7/A81WKgg6Hg
+	JA0HLwrKRRVe+Vu9xyLoifgYsAQkaU4zm52FJRScm43XrI5khrEA99iAFp5UQb2q3AFzpQw==
+X-Google-Smtp-Source: AGHT+IHJ6rI2i+ynX6AlOMcC1L9DubGba4dH9C14YMhZnd+DNhMtpSBjmYNVey1S91mBt/C7vXaflQ==
+X-Received: by 2002:a05:6000:1ace:b0:427:9d7:86f9 with SMTP id ffacd0b85a97d-429aefca833mr1978121f8f.47.1761736857377;
+        Wed, 29 Oct 2025 04:20:57 -0700 (PDT)
+Received: from [127.0.1.1] ([2a01:cb1d:dc:7e00:69f2:5f2d:9ffc:a805])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-429952df682sm25657486f8f.43.2025.10.29.04.20.56
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 29 Oct 2025 04:20:56 -0700 (PDT)
+From: Bartosz Golaszewski <brgl@bgdev.pl>
+Subject: [PATCH v3 00/10] gpio: improve support for shared GPIOs
+Date: Wed, 29 Oct 2025 12:20:36 +0100
+Message-Id: <20251029-gpio-shared-v3-0-71c568acf47c@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20251027-cpu_cluster_component_pm-v1-0-31355ac588c2@oss.qualcomm.com>
-In-Reply-To: <20251027-cpu_cluster_component_pm-v1-0-31355ac588c2@oss.qualcomm.com>
-From: Mike Leach <mike.leach@linaro.org>
-Date: Wed, 29 Oct 2025 11:01:03 +0000
-X-Gm-Features: AWmQ_bmBZ4u6Nr5AkhU0uSKV2P-I149L6WKOoDdLwfOOqdcc5hyzFz1zWOkxIwc
-Message-ID: <CAJ9a7VipQh=y0o+6k=fLMMK408E5eGD6vhY2TKBMm+q63NUiWA@mail.gmail.com>
-Subject: Re: [PATCH 00/12] coresight: Add CPU cluster funnel/replicator/tmc support
-To: Yuanfang Zhang <yuanfang.zhang@oss.qualcomm.com>
-Cc: Suzuki K Poulose <suzuki.poulose@arm.com>, James Clark <james.clark@linaro.org>, 
-	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Mathieu Poirier <mathieu.poirier@linaro.org>, Leo Yan <leo.yan@linux.dev>, 
-	Alexander Shishkin <alexander.shishkin@linux.intel.com>, Bjorn Andersson <andersson@kernel.org>, 
-	Konrad Dybcio <konradybcio@kernel.org>, kernel@oss.qualcomm.com, 
-	coresight@lists.linaro.org, linux-arm-kernel@lists.infradead.org, 
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	linux-arm-msm@vger.kernel.org, Jie Gan <jie.gan@oss.qualcomm.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAIT4AWkC/1XM0QqDIBTG8VcJr+fQY2Xb1d5j7ELzWAdGhg7Zi
+ N59FmPQ5ffB/7ewhJEwsWu1sIiZEoWpDHWqWD+aaUBOrmwGAhpxER0fZgo8jSai463GXjXQdbV
+ tWSnmiJ7eu3Z/lD1SeoX42fEst/fnQH1wsuSCa92gRo9WGnV70mRiOIc4sA3K8I+lADjGUGKna
+ mOkt86L9hCv6/oFjFofyOQAAAA=
+X-Change-ID: 20250908-gpio-shared-67ec352884b6
+To: Kees Cook <kees@kernel.org>, Mika Westerberg <westeri@kernel.org>, 
+ Dmitry Torokhov <dmitry.torokhov@gmail.com>, 
+ Andrew Morton <akpm@linux-foundation.org>, 
+ Linus Walleij <linus.walleij@linaro.org>, 
+ Manivannan Sadhasivam <mani@kernel.org>, Rob Herring <robh@kernel.org>, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>, Saravana Kannan <saravanak@google.com>, 
+ Greg Kroah-Hartman <gregkh@linuxfoundation.org>, 
+ Andy Shevchenko <andy@kernel.org>, Bartosz Golaszewski <brgl@bgdev.pl>, 
+ Catalin Marinas <catalin.marinas@arm.com>, Will Deacon <will@kernel.org>, 
+ Srinivas Kandagatla <srini@kernel.org>, Liam Girdwood <lgirdwood@gmail.com>, 
+ Mark Brown <broonie@kernel.org>, Jaroslav Kysela <perex@perex.cz>, 
+ Takashi Iwai <tiwai@suse.com>, Alexey Klimov <alexey.klimov@linaro.org>
+Cc: linux-hardening@vger.kernel.org, linux-kernel@vger.kernel.org, 
+ linux-gpio@vger.kernel.org, linux-arm-kernel@lists.infradead.org, 
+ linux-sound@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+ Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+X-Mailer: b4 0.14.2
+X-Developer-Signature: v=1; a=openpgp-sha256; l=4883;
+ i=bartosz.golaszewski@linaro.org; h=from:subject:message-id;
+ bh=bgbw2Ft4/u1XwJQBHfFlQ3MV2AqD0Imvh5HsmytZj4c=;
+ b=owEBbQKS/ZANAwAKARGnLqAUcddyAcsmYgBpAfiO0lKX2uiEhxK9yUquvK25+YyEc4xHnn5Di
+ 6uUrJIyD/uJAjMEAAEKAB0WIQQWnetsC8PEYBPSx58Rpy6gFHHXcgUCaQH4jgAKCRARpy6gFHHX
+ cllaD/9iCWfjjy9wCBEUEy147bi9+0/W1kuNnYZ+UDEaCjVYFMrc3rnAyXaayf35gvRx0wqUxb9
+ aF2MptBGcVL2dTzCve7ldmBTQxHRYosBuTHZNDe/XakCnVLKYFDNujY4wFvDmm8dSOmPOtpa5vc
+ mdATGn9cS9Ua4WlnEXGhPiUL1V1O52C76xYn1eWlYwNVCnaeB0yeqW3NZjh9Waw9hNU2LKXkA0S
+ OqSBFUrtF1AgLzoFKeBS1F+gdItxUUqhMgNCeNsRyhc851bmLDSxr7bp7WuteA7X39az6KIFfFD
+ lpLW6X1Ey9Rg0DdG5mOdk16BiW4tWHYX/vbWoHNY4jd74uY9THR82FG5ZUIsLB7WKUK965A6MDe
+ taNJDPnzdrjFOgwxbAc6egfn0yY8fYpnkKsdo2po44r8P1N63fJHNobX0XXuasoudCGQ4Zny5Oz
+ LgWo6bQh4ukHof7dBFhLOImgSXZvqZSkl6A3yEf4eqmHFZ9rL6Kjn9x2a4GGQvqW9JjF5FtpKzU
+ biXyJi8q9yFoiL7Bv9xEhJ0fmpNjy/W2mfMtWi3BREAIAwXUXZJI77sUacAaJ4YuuiSDvd8VUIg
+ bkZRRywzwADq/pwIL3M1CgOYGhYWYMtJexXyJYaD2aBKBVKStP5HExBXO5tXSbgi20Hb7Qih8G9
+ d6Q/OI1u4kZr6/g==
+X-Developer-Key: i=bartosz.golaszewski@linaro.org; a=openpgp;
+ fpr=169DEB6C0BC3C46013D2C79F11A72EA01471D772
 
-Hi,
+Problem statement: GPIOs are implemented as a strictly exclusive
+resource in the kernel but there are lots of platforms on which single
+pin is shared by multiple devices which don't communicate so need some
+way of properly sharing access to a GPIO. What we have now is the
+GPIOD_FLAGS_BIT_NONEXCLUSIVE flag which was introduced as a hack and
+doesn't do any locking or arbitration of access - it literally just hand
+the same GPIO descriptor to all interested users.
 
-This entire set seems to initially check the generic power domain for
-a list of associated CPUs, then check CPU state for all other
-operations.
+The proposed solution is composed of three major parts: the high-level,
+shared GPIO proxy driver that arbitrates access to the shared pin and
+exposes a regular GPIO chip interface to consumers, a low-level shared
+GPIOLIB module that scans firmware nodes and creates auxiliary devices
+that attach to the proxy driver and finally a set of core GPIOLIB
+changes that plug the former into the GPIO lookup path.
 
-Why not simply use the generic power domain state itself, along with
-the power up / down notifiers to determine if the registers are safe
-to access? If the genpd is powered up then the registers must be safe
-to access?
+The changes are implemented in a way that allows to seamlessly compile
+out any code related to sharing GPIOs for systems that don't need it.
 
-Regards
+The practical use-case for this are the powerdown GPIOs shared by
+speakers on Qualcomm db845c platform, however I have also extensively
+tested it using gpio-virtuser on arm64 qemu with various DT
+configurations.
 
-Mike
+I'm Cc'ing some people that may help with reviewing/be interested in
+this: OF maintainers (because the main target are OF systems initially),
+Mark Brown because most users of GPIOD_FLAGS_BIT_NONEXCLUSIVE live
+in audio or regulator drivers and one of the goals of this series is
+dropping the hand-crafted GPIO enable counting via struct
+regulator_enable_gpio in regulator core), Andy and Mika because I'd like
+to also cover ACPI (even though I don't know about any ACPI platform that
+would need this at the moment, I think it makes sense to make the
+solution complete), Dmitry (same thing but for software nodes), Mani
+(because you have a somewhat related use-case for the PERST# signal and
+I'd like to hear your input on whether this is something you can use or
+maybe it needs a separate, implicit gpio-perst driver similar to what
+Krzysztof did for reset-gpios) and Greg (because I mentioned this to you
+last week in person and I also use the auxiliary bus for the proxy
+devices).
 
-On Tue, 28 Oct 2025 at 06:28, Yuanfang Zhang
-<yuanfang.zhang@oss.qualcomm.com> wrote:
->
-> This patch series introduces support for CPU cluster local CoreSight comp=
-onents,
-> including funnel, replicator, and TMC, which reside inside CPU cluster
-> power domains. These components require special handling due to power
-> domain constraints.
->
-> Unlike system-level CoreSight devices, CPU cluster local components share=
- the
-> power domain of the CPU cluster. When the cluster enters low-power mode (=
-LPM),
-> the registers of these components become inaccessible. Importantly, `pm_r=
-untime_get`
-> calls alone are insufficient to bring the CPU cluster out of LPM, making
-> standard register access unreliable in such cases.
->
-> To address this, the series introduces:
-> - Device tree bindings for CPU cluster local funnel, replicator, and TMC.
-> - Introduce a cpumask to record the CPUs belonging to the cluster where t=
-he
->   cpu cluster local component resides.
-> - Safe register access via smp_call_function_single() on CPUs within the
->   associated cpumask, ensuring the cluster is power-resident during acces=
-s.
-> - Delayed probe support for CPU cluster local components when all CPUs of
->   this CPU cluster are offline, re-probe the component when any CPU in th=
-e
->   cluster comes online.
-> - Introduce `cs_mode` to link enable interfaces to avoid the use
->   smp_call_function_single() under perf mode.
->
-> Patch summary:
-> Patch 1: Adds device tree bindings for CPU cluster funnel/replicator/TMC =
-devices.
-> Patches 2=E2=80=933: Add support for CPU cluster funnel.
-> Patches 4-6: Add support for CPU cluster replicator.
-> Patches 7-10: Add support for CPU cluster TMC.
-> Patch 11: Add 'cs_mode' to link enable functions.
-> Patches 12-13: Add Coresight nodes for APSS debug block for x1e80100 and
-> fix build issue.
->
-> Verification:
->
-> This series has been verified on sm8750.
->
-> Test steps for delay probe:
->
-> 1. limit the system to enable at most 6 CPU cores during boot.
-> 2. echo 1 >/sys/bus/cpu/devices/cpu6/online.
-> 3. check whether ETM6 and ETM7 have been probed.
->
-> Test steps for sysfs mode:
->
-> echo 1 >/sys/bus/coresight/devices/tmc_etf0/enable_sink
-> echo 1 >/sys/bus/coresight/devices/etm0/enable_source
-> echo 1 >/sys/bus/coresight/devices/etm6/enable_source
-> echo 0 >/sys/bus/coresight/devices/etm0/enable_source
-> echo 0 >/sys/bus/coresight/devicse/etm6/enable_source
-> echo 0 >/sys/bus/coresight/devices/tmc_etf0/enable_sink
->
-> echo 1 >/sys/bus/coresight/devices/tmc_etf1/enable_sink
-> echo 1 >/sys/bus/coresight/devcies/etm0/enable_source
-> cat /dev/tmc_etf1 >/tmp/etf1.bin
-> echo 0 >/sys/bus/coresight/devices/etm0/enable_source
-> echo 0 >/sys/bus/coresight/devices/tmc_etf1/enable_sink
->
-> echo 1 >/sys/bus/coresight/devices/tmc_etf2/enable_sink
-> echo 1 >/sys/bus/coresight/devices/etm6/enable_source
-> cat /dev/tmc_etf2 >/tmp/etf2.bin
-> echo 0 >/sys/bus/coresight/devices/etm6/enable_source
-> echo 0 >/sys/bus/coresight/devices/tmc_etf2/enable_sink
->
-> Test steps for sysfs node:
->
-> cat /sys/bus/coresight/devices/tmc_etf*/mgmt/*
->
-> cat /sys/bus/coresight/devices/funnel*/funnel_ctrl
->
-> cat /sys/bus/coresight/devices/replicator*/mgmt/*
->
-> Test steps for perf mode:
->
-> perf record -a -e cs_etm//k -- sleep 5
->
-> Signed-off-by: Yuanfang Zhang <yuanfang.zhang@oss.qualcomm.com>
-> ---
-> Yuanfang Zhang (12):
->       dt-bindings: arm: coresight: Add cpu cluster tmc/funnel/replicator =
-support
->       coresight-funnel: Add support for CPU cluster funnel
->       coresight-funnel: Handle delay probe for CPU cluster funnel
->       coresight-replicator: Add support for CPU cluster replicator
->       coresight-replicator: Handle delayed probe for CPU cluster replicat=
-or
->       coresight-replicator: Update mgmt_attrs for CPU cluster replicator =
-compatibility
->       coresight-tmc: Add support for CPU cluster ETF and refactor probe f=
-low
->       coresight-tmc-etf: Refactor enable function for CPU cluster ETF sup=
-port
->       coresight-tmc: Update tmc_mgmt_attrs for CPU cluster TMC compatibil=
-ity
->       coresight-tmc: Handle delayed probe for CPU cluster TMC
->       coresight: add 'cs_mode' to link enable functions
->       arm64: dts: qcom: x1e80100: add Coresight nodes for APSS debug bloc=
-k
->
->  .../bindings/arm/arm,coresight-dynamic-funnel.yaml |  23 +-
->  .../arm/arm,coresight-dynamic-replicator.yaml      |  22 +-
->  .../devicetree/bindings/arm/arm,coresight-tmc.yaml |  22 +-
->  arch/arm64/boot/dts/qcom/x1e80100.dtsi             | 885 +++++++++++++++=
-++++++
->  arch/arm64/boot/dts/qcom/x1p42100.dtsi             |  12 +
->  drivers/hwtracing/coresight/coresight-core.c       |   7 +-
->  drivers/hwtracing/coresight/coresight-funnel.c     | 260 +++++-
->  drivers/hwtracing/coresight/coresight-replicator.c | 343 +++++++-
->  drivers/hwtracing/coresight/coresight-tmc-core.c   | 396 +++++++--
->  drivers/hwtracing/coresight/coresight-tmc-etf.c    | 105 ++-
->  drivers/hwtracing/coresight/coresight-tmc.h        |  10 +
->  drivers/hwtracing/coresight/coresight-tnoc.c       |   3 +-
->  drivers/hwtracing/coresight/coresight-tpda.c       |   3 +-
->  include/linux/coresight.h                          |   3 +-
->  14 files changed, 1912 insertions(+), 182 deletions(-)
-> ---
-> base-commit: 01f96b812526a2c8dcd5c0e510dda37e09ec8bcd
-> change-id: 20251016-cpu_cluster_component_pm-ce518f510433
->
-> Best regards,
-> --
-> Yuanfang Zhang <yuanfang.zhang@oss.qualcomm.com>
->
+Merging strategy: patches 1-6 should go through the GPIO tree and then
+ARM-SoC, ASoC and regulator trees can pull these changes from an
+immutable branch and apply the remaining patches.
 
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+---
+Changes in v3:
+- Make strends() a static inline function
+- Use an empty release() callback for auxiliary devices
+- Refactor the code for finding the shared descriptors in the GPIOLIB
+  shared module, split it into several smaller functions
+- Use str_high_low() where applicable
+- Use non-atomic bit ops where atomicity is not required
+- Link to v2: https://lore.kernel.org/r/20251022-gpio-shared-v2-0-d34aa1fbdf06@linaro.org
 
---=20
-Mike Leach
-Principal Engineer, ARM Ltd.
-Manchester Design Centre. UK
+Changes in v2:
+- Fix a memory leak in error path in gpiolib-shared
+- Drop the gpio-wcd934x fix that already went upstream
+- Free resources used during scanning by GPIOs that turned out to be
+  unique
+- Rework the OF property scanning
+- Add patches making the regulator subsystem aware of shared GPIOs
+  managed by GPIOLIB
+- Link to v1: https://lore.kernel.org/r/20250924-gpio-shared-v1-0-775e7efeb1a3@linaro.org
+
+---
+Bartosz Golaszewski (10):
+      string: provide strends()
+      gpiolib: define GPIOD_FLAG_SHARED
+      gpiolib: implement low-level, shared GPIO support
+      gpio: shared-proxy: implement the shared GPIO proxy driver
+      gpiolib: support shared GPIOs in core subsystem code
+      gpio: provide gpiod_is_shared()
+      arm64: select HAVE_SHARED_GPIOS for ARCH_QCOM
+      ASoC: wsa881x: drop GPIOD_FLAGS_BIT_NONEXCLUSIVE flag from GPIO lookup
+      ASoC: wsa883x: drop GPIOD_FLAGS_BIT_NONEXCLUSIVE flag from GPIO lookup
+      regulator: make the subsystem aware of shared GPIOs
+
+ arch/arm64/Kconfig.platforms     |   1 +
+ drivers/gpio/Kconfig             |  17 ++
+ drivers/gpio/Makefile            |   2 +
+ drivers/gpio/gpio-shared-proxy.c | 333 +++++++++++++++++++++++
+ drivers/gpio/gpiolib-shared.c    | 558 +++++++++++++++++++++++++++++++++++++++
+ drivers/gpio/gpiolib-shared.h    |  71 +++++
+ drivers/gpio/gpiolib.c           |  70 ++++-
+ drivers/gpio/gpiolib.h           |   2 +
+ drivers/regulator/core.c         |   8 +
+ include/linux/gpio/consumer.h    |   9 +
+ include/linux/string.h           |  18 ++
+ lib/tests/string_kunit.c         |  13 +
+ sound/soc/codecs/wsa881x.c       |   3 +-
+ sound/soc/codecs/wsa883x.c       |   7 +-
+ 14 files changed, 1096 insertions(+), 16 deletions(-)
+---
+base-commit: 2a3cf7aa49244fafeedf9f334d3e88fe8ee05b50
+change-id: 20250908-gpio-shared-67ec352884b6
+
+Best regards,
+-- 
+Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+
 
