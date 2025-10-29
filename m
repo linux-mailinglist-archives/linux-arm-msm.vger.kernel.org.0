@@ -1,82 +1,82 @@
-Return-Path: <linux-arm-msm+bounces-79498-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-79499-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [IPv6:2605:f480:58:1:0:1994:3:14])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1B6A6C1BD21
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Oct 2025 16:54:07 +0100 (CET)
+Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [142.0.200.124])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6C8C4C1BDAB
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Oct 2025 16:57:44 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id AC5F75C3753
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Oct 2025 15:41:34 +0000 (UTC)
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id AC0BE5A7C94
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Oct 2025 15:41:40 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A8FFE33F8AD;
-	Wed, 29 Oct 2025 15:41:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5348633B6DB;
+	Wed, 29 Oct 2025 15:41:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="VI0p/V9v"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="pDlcXMK3"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f54.google.com (mail-wr1-f54.google.com [209.85.221.54])
+Received: from mail-wr1-f53.google.com (mail-wr1-f53.google.com [209.85.221.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8849133B6DB
-	for <linux-arm-msm@vger.kernel.org>; Wed, 29 Oct 2025 15:41:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D896A33F361
+	for <linux-arm-msm@vger.kernel.org>; Wed, 29 Oct 2025 15:41:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761752464; cv=none; b=HYVzo0ZnqN3yhEVpneDX7MclSmvCkB0vBHwE2sXaHXau9LNJBXDe4bH5ctGdJewnOTONjj4wcbhx/z5uw0rpWmDFC900yBnSF1POtPfI+4aVLSGdE0RjQPiazjccE1b4xtm17QTRsCPKa9jVqkJ2lePn19JJxNTepJVjeX0oFx8=
+	t=1761752465; cv=none; b=fk1Wbt+4nqzn05ZP9rEGZAUBMCrt7/atqjdPVJsVi6XdlcQvMX/RXlGubgzRw/E5x8XVskwnZOwbVrAvLUvyngusDjhvPTV901c45K42uZHeEBtodKI6mlrpKC7ta1pjLqIAYrvpazi9SmNqbn4uVNi0yY1bI3hT89+RnuQJoz8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761752464; c=relaxed/simple;
-	bh=C5fheZMBlXveADhbIuGHjBBUwZi8+svZZb3r9XyaFgw=;
+	s=arc-20240116; t=1761752465; c=relaxed/simple;
+	bh=gg3q0o/WXEClcVN1pmj4q5ZbEehzsr+ZhzU5VwT5XO4=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=OIECM0G/xjpO9qn+H3xK15/RRpisP1asBEqEK4OZ02lk6+DKaulyrv1Tw68a7mgw1ki8WBdVQcoA2QxkRZl1o7Fjmbt0flzGoBWLSbdbu8dfv942DqFVc4owFI8RkvwILVDiSwyUVjH6Bl6vskek2zWKRX9zPjpTCf2L+dZe+L0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=VI0p/V9v; arc=none smtp.client-ip=209.85.221.54
+	 In-Reply-To:To:Cc; b=l0/CB0neblNAyf/C28qshzq7zNl0oMRGmUXSGF9MVFK+H30D51nLDYMvFirYA+049xpHLAMquWROWgha4OQSaE/yT4JDohMXWzEaRkh95ZyNypeNVYQCzCJAxmFcYwXCBhVzbDMfnvLai4vH7hie5S6gNNUt8lDCFS66FktE6Qo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=pDlcXMK3; arc=none smtp.client-ip=209.85.221.53
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wr1-f54.google.com with SMTP id ffacd0b85a97d-4271234b49cso958076f8f.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 29 Oct 2025 08:41:01 -0700 (PDT)
+Received: by mail-wr1-f53.google.com with SMTP id ffacd0b85a97d-42992e68ea3so488467f8f.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 29 Oct 2025 08:41:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1761752460; x=1762357260; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1761752461; x=1762357261; darn=vger.kernel.org;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=iHf+cMn6Kxy6WzhI5tfMdwjUbyEZvfJl3wRfjjKCl04=;
-        b=VI0p/V9v98EGZn5H6JHrfUHp4apdEKgO8ZGVJkNihExh/sX15+MILGJ5We1GvfDypc
-         6FAb42QN6fz1TnvsWHArPl7/0WgpgkUvqiBdOQ4rW/D0KOgCcvRFqQnEnuJvtuMIhjX+
-         wa3OiQ4ZUgv9pXdCG6pcY1vgAqMC7bzPRbaM0QbqLwiTofwhZRKjnrCHQV4kA8dFbuqW
-         UrjTa8d1yzQJyzCMo2V831Ah3+s7q79foba9FOPxUmwcy11cGTvCtmeugswZn4YSC2Ay
-         X2Plc0HbfoRRqss9lxsbQGrWbHLmFAvJrCBjt+UoyTqErUaGG03H4fhSVUg0pi7w54Ei
-         Btwg==
+        bh=Unvd6ZqORwHj8xRj6KdIfyizf9nQeBi6nqOhdj47oms=;
+        b=pDlcXMK37c48JVAOfM+Tzy9bfqQqCst38M1EaLqefEfiYgTJaD/HvMLpKv9AR+tbpK
+         fpHNLiauJc5f9tOmfnRRUn8hIQGbR+lgzBqAdBUcmOgRdpF1IjHbjhXHM5RgPrUKAroK
+         QtoRPWram/VBR/X1hExuYqSAhSkwkp/YPdxsjpE9jS95vcvNwllWWF2myzLtROslsR4N
+         VLFKmUiRmMm0rpRFxjX5O9dh2TJrULISWOr6Zm9zlyWDwARhzgRyPj3xA2k6jgg6Z0PR
+         kwn9FBQBtaEohdAmiczK3+RKOHxoxYvPnz4xeJsAXrRpzYYTDZkQ1u9FP7ZiFIskff6E
+         wqoQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1761752460; x=1762357260;
+        d=1e100.net; s=20230601; t=1761752461; x=1762357261;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=iHf+cMn6Kxy6WzhI5tfMdwjUbyEZvfJl3wRfjjKCl04=;
-        b=TUbmR98ai7d18vrncMLQSLMG+NgJ+p8VDx8FjfWFi/h9RQwZ7hc0OI60vSTO/s76gT
-         bGFCRlmyQCjmmLE8quNCIrGHj0BuNSoFem0E41TBDUL4TpfSMI0q0NA9Cr7DxJ9r90W6
-         iMFyWghFY3yeDJaJ8QUaqllgcgaLG+IMHDWVPWSbAhsgBE4daXNMe/nOvZ6LuFh4F+p9
-         XpSEOGNKMmSXvHV5981nVsBPGmQXo8hUhDV1OOoSTcpspA77k9H75FRxKnYCoQMcHmZ7
-         BHLQal5gz8wDkxrjp0GUhw0Q4au78zsW8Gu91OVZFWW620MZE9OjQhApr3GoymQmQR24
-         Xk7A==
-X-Forwarded-Encrypted: i=1; AJvYcCU551WNYV5DpCoQnsacWSqMhOanjt4nDgXM2RU64ICfy5sYBaR1hAUPi39HeE0PlZ8lsnvN5G4yRcTWA3y6@vger.kernel.org
-X-Gm-Message-State: AOJu0YxlD/75KKzJ3Z28KpXWIzSxvLJxa47tjM5y7D/h/MN16XRtVpvu
-	Z0Yz8nLaXyRxHg/OsAmUodU/UqvdSf9Gy3nSuLDWNOb+LVmSpFUhnSwTDt2zBmkYLx4=
-X-Gm-Gg: ASbGncsvaGbkmp2EfZcC7lUgMZn+vlq76LIHVH59yaNNKKBjpE1TgRdOwmOgzHzWwaY
-	vWV7erotW6uVxvV+a7iyJIlX/GkGWW6+sNuO3Ki9Hf/PX9ns8k5HSuVLkL5do7juIFh0TAcCfoJ
-	dhEWlbxW2UEJjD7vlX+01vSwGdODKdxZl8yUkcn55Z1BJwwAkzpvVdzoXaniUoVtPw4600NRfA7
-	bC0K0nd6qlSvXyeFMeAdZyn+H3coc1jl33XLfrpxvd0RdN0w1SqX1zPffgJUjwKR007GwDeQT7n
-	+bpbW03dX+3d+8KvteFqwAvci1hzw9pg5WnYrqKKQ4b+KDK3NQdu/HNVJimDae5E2a43m0jCB/L
-	CVcWDBlmQcl80R/lSLmqCMYlzVlGkCs7IspW2f/EwM5oiWEYyHkPzJZwfwaVB6ndVqzDaLasdQ9
-	cLsOGvi7s/ygTCtuOh
-X-Google-Smtp-Source: AGHT+IHwTcSdwYOPG6r0415Zk++YfUcU5yMqIL3/VKwOKYxZYrAgJvqhz956H0VjSJ5yRA+kTI4Y/g==
-X-Received: by 2002:a05:6000:2891:b0:425:6794:f19b with SMTP id ffacd0b85a97d-429aef80d97mr1719532f8f.2.1761752459735;
-        Wed, 29 Oct 2025 08:40:59 -0700 (PDT)
+        bh=Unvd6ZqORwHj8xRj6KdIfyizf9nQeBi6nqOhdj47oms=;
+        b=HpL+RyiN2YXAXpqITiR4kKL2THahKEY7TnucBTYjZ9D+IoMt/tMKNxhMWvbh4Z31Bs
+         izKirCI3Cktu9o0Y6wGYCO0Jlzau475L7wXsXW3G+hqOA2r+S+k5lxVQl4qqNPnKaVkW
+         NYT43FZy9cFvLDiVNBdJ5VXGp78Y4/TklXVLCGAxexAV4YrSw2jWiTKu4cqyW1gWFNzD
+         KE+tEf4kCiu+113ySnOHGdqOtI891o+xe39p1wg/Fn8YpL6Ene+hIWw19FDUwbmV78JO
+         Rn0WE0cJd8R8Pmc6SDDfT7hBhRAI3+ku6hTqMarpjtRvys4uhvrJGhWjoHVjY+9OApql
+         av9g==
+X-Forwarded-Encrypted: i=1; AJvYcCX2sBLbmni7LzQHBeDpOJ4TT6u+1gOTTc/JOTlx78a0qX95P8s+Yf/ejlB/PPb6eQDJo6wTld4J95L5Xpjl@vger.kernel.org
+X-Gm-Message-State: AOJu0YyY1wRhzD5cKKSWQMHd81a/krkpMSeRvkTYt4y2E0jKd3H0p/94
+	rWLHxLZsPC3ccIN9RwiDNY5U97ubbJjMkvVbYxQkl6korBG04VJUFtATpOpuSx+C9pE=
+X-Gm-Gg: ASbGnctJP5YqPPm+O6RYciTglxYk3kRY0V6t0uzt1wjUjd8VV6eATvEwoGpEfU5QBTC
+	4emEMf0rILhm5CHClWT/XknIolc/HXwUZYDLEYCY8c+sVyAljiR9ccePDpiTcgpOEtEW+CpY7I5
+	Uexea/i5BtH+rfvEcvWlwzB7IXcCspxq6gmOT4mQsNdhj+pKTvTj7fGKiUbhp5nyIsWw5KCS/gl
+	DzLzoE9FMgXOZYgPLOh1CEVJ8GHLICbOaJGn9fUqhTrmYB/j1t9fUrTsu5EP4skt3cyQrXcA80j
+	GDGdQOB+8+vRG0qdG8FWIC+mdjos7rUQ2zbLFY6nrPzSY2zfVF4AANXHlyD166yJWy80MmLpvNt
+	NYH34dbrAKQ1mIixn3i3F0m4zrBb/RONaApu9zC+SmXP5Jb9JVh0+AbthU3CxLVheYvEGE58rnT
+	oL7O66Rg+ea1fR5Cv3
+X-Google-Smtp-Source: AGHT+IHPRSkNKh8UTSCquSYHU+ryiQh0IUQEPrOt3eFcqubId9xEJVdpihA/qY7Z6iymfz+tTp29oA==
+X-Received: by 2002:a05:6000:1446:b0:427:529:5e48 with SMTP id ffacd0b85a97d-429aefb1366mr1638664f8f.5.1761752461185;
+        Wed, 29 Oct 2025 08:41:01 -0700 (PDT)
 Received: from [127.0.1.1] ([178.197.219.123])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-429952df5c9sm27006875f8f.41.2025.10.29.08.40.58
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-429952df5c9sm27006875f8f.41.2025.10.29.08.40.59
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 29 Oct 2025 08:40:59 -0700 (PDT)
+        Wed, 29 Oct 2025 08:41:00 -0700 (PDT)
 From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Date: Wed, 29 Oct 2025 16:40:39 +0100
-Subject: [PATCH 2/9] dt-bindings: PCI: qcom,pcie-sc7280: Add missing
+Date: Wed, 29 Oct 2025 16:40:40 +0100
+Subject: [PATCH 3/9] dt-bindings: PCI: qcom,pcie-sc8280xp: Add missing
  required power-domains
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
@@ -86,7 +86,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20251029-dt-bindings-pci-qcom-fixes-power-domains-v1-2-da7ac2c477f4@linaro.org>
+Message-Id: <20251029-dt-bindings-pci-qcom-fixes-power-domains-v1-3-da7ac2c477f4@linaro.org>
 References: <20251029-dt-bindings-pci-qcom-fixes-power-domains-v1-0-da7ac2c477f4@linaro.org>
 In-Reply-To: <20251029-dt-bindings-pci-qcom-fixes-power-domains-v1-0-da7ac2c477f4@linaro.org>
 To: Lorenzo Pieralisi <lpieralisi@kernel.org>, 
@@ -101,50 +101,48 @@ Cc: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
  devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
  stable@vger.kernel.org
 X-Mailer: b4 0.14.3
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1043;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1063;
  i=krzysztof.kozlowski@linaro.org; h=from:subject:message-id;
- bh=C5fheZMBlXveADhbIuGHjBBUwZi8+svZZb3r9XyaFgw=;
- b=owEBbQKS/ZANAwAKAcE3ZuaGi4PXAcsmYgBpAjWAt2He8JZrv/2UagbsLKx6hiqQ2Hf2ne8uq
- b8GbzFp+LGJAjMEAAEKAB0WIQTd0mIoPREbIztuuKjBN2bmhouD1wUCaQI1gAAKCRDBN2bmhouD
- 19jkD/9Y7Yud/iWVjUfcttWhamndLFmOnwuyiuZymgw1con27IkeBHVSMvkIBdLuyikpuwWc1uW
- +Ec/O5v7B16bPf0jNppNGhvRq84rLdPVWIH66HBXdEhZ+WGrOPLWjbnR7gBu4z2ZNFJvb4sAENE
- Ceu2rWZ8Xqxusv1uPK7vgQdOyfh31QZ11tfdgb0vMnvJDX3bTNzW/yDhH1KUKMSGk+8sYtaMkiB
- p1a4+FLqpui7RYHuNhW+TShdrGEJNDoxzvTgfDKMq0jh+2VZcpgdRNY/u9f2HwvdGdz387YFUbj
- Cb9Baykvgu1ObF8OOCsX47JP/2jpbISUcqLcPXZIl+kbT+mCBo+P+SkpIjA1YFXJCmVN+JRQVGn
- ItnuHF64n2Y34BTJHGmd0BL6TkgBCftyiOvvac+k6tvcmwZljxTtZ2s0So3wqNHZlla7wgZQIHe
- NZc35CvS0VMLAfC5P/Pgd2XNo1F5V6kF7hgCmZYZhvMuBm1nY0vmJLG2R7aO43J2zXVh1AxnMOf
- HiuypfkdNcN66zEdM4SvtqATrEsym3Nr2RWO7AbQRkKmy2z0+N5lybQBPhq4iDkLl1MGtfVWNIA
- UOj7R7uIgkUvPlthOzxRVr2QqZnDynsibJjYcWKElIw/h7494pUE8qoXrN6V13ggDhqdKiL99jX
- 9nDVLsO4TpIJJmg==
+ bh=gg3q0o/WXEClcVN1pmj4q5ZbEehzsr+ZhzU5VwT5XO4=;
+ b=owEBbQKS/ZANAwAKAcE3ZuaGi4PXAcsmYgBpAjWBhNMxrFdUkWBpBDmSXSET5t7bmT9rgM7Ts
+ 10CG58cmXGJAjMEAAEKAB0WIQTd0mIoPREbIztuuKjBN2bmhouD1wUCaQI1gQAKCRDBN2bmhouD
+ 1+klEACLorNk91cdSBxZPpSrA/EF4/gQZHhVVXpMDUJLwmgru6/G7eg6x8LC7Ajc+mx/1ABkjgU
+ TarRKOx4xLz9IgQDmCHJvggAFdRVptXxSHq8/zPBxM6Me9pxH15t275G+mjC926LIcOZf8/VyaO
+ ofDVmH5cnoKQXOZRHKq+vhsdwaio5VybcWpX5VFLzwfNiCRyNgz1ED8u94+TeUB6MOPA0188Svr
+ ClFLcPDrzeE6NCSTRj+H4TS35EHu2Xlx24USqFTvue62ZyJkwr2yvyn4eFBSJF7ugIZB8tmGQOq
+ s0t+MLEhlHxVjk9qBg69/ZEVRDkSWYdL+iL+4l1jKyqKeUswC2lWHaS24aGs/VyLGbalGnWjejE
+ J4aI4pcxAuAp7pmBkeifowiW/uRiunV/bewx4pRWHTzPzjrKEgnzFRZiEqCEWkINS3dOL7oZTB3
+ 7yHq+TpXYt/3uzH1n8M7+TIgyk9ZRqWaBMEPclG0Zz/3Sm0HDVlcV6iEo9Y1PKlxqSNZl6oPTJx
+ rkKMFdvedfFurc1GLukgGcg50otNYQ25JQK+hdhcKOw6OGulYOj8sya+wLVoDlJeCRrQ2xzwDSf
+ e4hx6xfFCjwzBqwb/bVchqG+XnEE+bN2nhrd44bo/L3Pi/1GvhGXuW4ibJE1ycMoNpBRZbjv+wq
+ Gv5Ct7DlRLw8KFw==
 X-Developer-Key: i=krzysztof.kozlowski@linaro.org; a=openpgp;
  fpr=9BD07E0E0C51F8D59677B7541B93437D3B41629B
 
-Commit 756485bfbb85 ("dt-bindings: PCI: qcom,pcie-sc7280: Move SC7280 to
-dedicated schema") move the device schema to separate file, but it
-missed a "if:not:...then:" clause in the original binding which was
-requiring power-domains for this particular chip.
+Commit c007a5505504 ("dt-bindings: PCI: qcom,pcie-sc8280xp: Move
+SC8280XP to dedicated schema") move the device schema to separate file,
+but it missed a "if:not:...then:" clause in the original binding which
+was requiring power-domains for this particular chip.
 
 Cc: <stable@vger.kernel.org>
-Fixes: 756485bfbb85 ("dt-bindings: PCI: qcom,pcie-sc7280: Move SC7280 to dedicated schema")
+Fixes: c007a5505504 ("dt-bindings: PCI: qcom,pcie-sc8280xp: Move SC8280XP to dedicated schema")
 Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 ---
- Documentation/devicetree/bindings/pci/qcom,pcie-sc7280.yaml | 3 +++
- 1 file changed, 3 insertions(+)
+ Documentation/devicetree/bindings/pci/qcom,pcie-sc8280xp.yaml | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/Documentation/devicetree/bindings/pci/qcom,pcie-sc7280.yaml b/Documentation/devicetree/bindings/pci/qcom,pcie-sc7280.yaml
-index 4d0a91556603..a2e5755855aa 100644
---- a/Documentation/devicetree/bindings/pci/qcom,pcie-sc7280.yaml
-+++ b/Documentation/devicetree/bindings/pci/qcom,pcie-sc7280.yaml
-@@ -76,6 +76,9 @@ properties:
-     items:
-       - const: pci
- 
-+required:
+diff --git a/Documentation/devicetree/bindings/pci/qcom,pcie-sc8280xp.yaml b/Documentation/devicetree/bindings/pci/qcom,pcie-sc8280xp.yaml
+index 15ba2385eb73..29f9a412c5ea 100644
+--- a/Documentation/devicetree/bindings/pci/qcom,pcie-sc8280xp.yaml
++++ b/Documentation/devicetree/bindings/pci/qcom,pcie-sc8280xp.yaml
+@@ -61,6 +61,7 @@ properties:
+ required:
+   - interconnects
+   - interconnect-names
 +  - power-domains
-+
+ 
  allOf:
    - $ref: qcom,pcie-common.yaml#
- 
 
 -- 
 2.48.1
