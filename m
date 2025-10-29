@@ -1,156 +1,223 @@
-Return-Path: <linux-arm-msm+bounces-79491-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-79493-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6E873C1BB13
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Oct 2025 16:35:01 +0100 (CET)
+Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [IPv6:2605:f480:58:1:0:1994:3:14])
+	by mail.lfdr.de (Postfix) with ESMTPS id BCD9BC1BF76
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Oct 2025 17:12:05 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 2D3D61895847
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Oct 2025 15:34:14 +0000 (UTC)
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id C96625C2CF4
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Oct 2025 15:34:44 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C142E33F8D2;
-	Wed, 29 Oct 2025 15:32:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id DAADA330D51;
+	Wed, 29 Oct 2025 15:34:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="DIxRUFcp"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="hE/jr6Um"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f42.google.com (mail-wm1-f42.google.com [209.85.128.42])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7BD533F39D
-	for <linux-arm-msm@vger.kernel.org>; Wed, 29 Oct 2025 15:32:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADFED32A3C5;
+	Wed, 29 Oct 2025 15:34:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761751964; cv=none; b=beaXlmbJ/6lYxZHQ/Zym0jWEAZXzjGFxlfkWmjnQ0lpPRHG3VKceEjpm7wpPzjoYtNMu3BeCgcHDRjINVgNrs5IIRkrjtGLQCglnlizXS6xHNt5aVv7zp0WHyVXY0Sjgqg7Ty1yXqpk1H1b+4/ibitieml0QfsN+2AlM0xlKucc=
+	t=1761752074; cv=none; b=fcYhKOPkNF1e5vrj36G7sYx2axwN0hRhLNljUcgj9tUhPgHGmeM/+rtYjcwlVlfg9vKNgLHtla/B+cQmIVI4cNWU5340poZabeUnHBdeB+3a3thqsXdk9udP0arsbRX0/WyXzXhQ3Jtx19cXIxzH5lymnkBJtfd2NG3s2onogPo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761751964; c=relaxed/simple;
-	bh=O5LYngdRuGQGjiLGrPFcUjIUov9snCTAkMU/N8J8a8w=;
-	h=Message-ID:Date:From:To:Cc:Subject:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=SC4jxOrzZa2DDPpvoyHNsqdisPebTEqhqPsg1mfyujUsvaEZruAdTHudDMNayQrxs3ACsZmSUFgEqVQyW04B9g5gS1jez9Rtu4yLTBcceJy1BwUwMk7kzCd/bDL5fYrWk4pk3mvzV+gK9Crq7/HW+8vIWCqhVB7YybZg/CeYVN4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=DIxRUFcp; arc=none smtp.client-ip=209.85.128.42
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-wm1-f42.google.com with SMTP id 5b1f17b1804b1-475dbc3c9efso34978505e9.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 29 Oct 2025 08:32:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1761751961; x=1762356761; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:subject:cc
-         :to:from:date:message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=3ikPywo67ZbgIof+9yDMrcwmh77/FesmeUjBMpQ4Gfk=;
-        b=DIxRUFcpOZNB4MM/bjr7GSvUrFnZhaIXGJHW9FB9dafTlQwuFDpJEr8TKbAOlEMUez
-         i8vQaX3yg2MI4UQKBHBAcpRPfr/m5tcEjzCk2GS6K7xbJpQX+yYV7cAVkhfzIVb/vLYK
-         vbfE9fdstS23a3pLs1NHkIyb4+4eNDQNG6cymT6Nh7B/1usYxQsHdOyMHK+TfOWNvgLZ
-         AyS1KTIFpe/epsDDaGak4KA1jZ13ajAF04BGOWwp2W/aDM6EfxXLYdPsBV008TjIQABi
-         ATEZ6WJxQ67ZEv6lJR4PJva8bZ5WsvX+A9c26yhy35KqDZSnQj52KixrvmyxiAMo/iYi
-         VLOA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1761751961; x=1762356761;
-        h=in-reply-to:content-disposition:mime-version:references:subject:cc
-         :to:from:date:message-id:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=3ikPywo67ZbgIof+9yDMrcwmh77/FesmeUjBMpQ4Gfk=;
-        b=hv4QFwxCqw5VLARlGU1AJK3U08kanzFHvjnmobM8wESEXSzEAwsVoFhvHX7gzkUIHY
-         iXBQGa17xGIwxlJi8FVGbE8Myk0Ju+j/0oRoMtYSnjn81cwVQI0y2sKfYvuWsPInRbFN
-         j8IhUat/pe5gDOknjW8gUbhEwrHstgmE1p2M21QMxSq0uqN0lrNLykGpEwOV7lkXkis0
-         bkjOaWp19c0l1oRa+bCvtD1nihQWPK/W7Uk8IbTiAFRB4KCgIkWDzKSl6i/pwJ3+0AJO
-         Eq/mSdlVR8fJkUvL0cgDzGBtL0vP0/A+3kZrJeNiTHkxrVTBLhqk/gDQpztQ+uAibX3Z
-         6YXQ==
-X-Forwarded-Encrypted: i=1; AJvYcCX7YNb8gq9w3ymhIwIDtinPOWVEF+0t/eEBnZJLwRI3Sf+n/3iXVeN82ez3yqjgF4kX0GjzPcqpwEHhJ+jK@vger.kernel.org
-X-Gm-Message-State: AOJu0Yxymj9DTR6lDDERlNVACdgS37/zr8NO1euipVtKJfrYrfFytra7
-	gLP1V5A5CEkPILpezaY0AJCPmqSQh2vy6fb5pwPJieUCWSqjnN9WbYud
-X-Gm-Gg: ASbGnct5bUoF1/D1m5HSAOQkAz+tKxE1mB1d+6dpwUqDshtSu3xcoymMZ+Cshbw5Lm/
-	1FgWmk8e90k+ANnqyI+S2cFZXdaz2qmLKkRT29LzUtNA5xgFElzW9xqN6n2ynpfg+GDlk21895U
-	3XHd0+DCTL8QGQ8bkgDCVTrjoHkPR9naFOeI4UNsTylURHFs4aCWeU+IcD8GVc6rMk5TGcm3IDQ
-	t/qjNQPWeQ7PhIkENNU0FKgjeOxCnJXAm8F34MLiODeyXxtLdBr0MjqHz+KnqPmuO/8vrLxhnfK
-	y5fEhdW3py+UW33OubpUD3/q7SQHyo9X0vyhETd7gsQ6aXlkfJ6JLZ4FCrsJChPO0Mn1V0ZiIBY
-	IQHqp7uSHycRyB1PSS5Ul2qIOVpuEBxr7Ld4RrT19L5R2031vchj0KCGq7sTj+jeFjaQnhmZYkE
-	szUbQMeLFwOPSRngIJQKYR2oiDu6as
-X-Google-Smtp-Source: AGHT+IGlxJUMPBcCnrjnToorbT55gMyEn0KVla2FyyxiHdY+dzp3Fb5seo1sUo4Wkl5T8gZsMwX+yw==
-X-Received: by 2002:a05:6000:22c6:b0:427:72d1:e398 with SMTP id ffacd0b85a97d-429aefde6f1mr2944132f8f.62.1761751960915;
-        Wed, 29 Oct 2025 08:32:40 -0700 (PDT)
-Received: from Ansuel-XPS. (93-34-90-37.ip49.fastwebnet.it. [93.34.90.37])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-429952d4494sm27355108f8f.21.2025.10.29.08.32.39
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 29 Oct 2025 08:32:40 -0700 (PDT)
-Message-ID: <69023398.df0a0220.25fede.8d9c@mx.google.com>
-X-Google-Original-Message-ID: <aQIzk1wYEQJgJAdc@Ansuel-XPS.>
-Date: Wed, 29 Oct 2025 16:32:35 +0100
-From: Christian Marangi <ansuelsmth@gmail.com>
-To: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Cc: Ilia Lin <ilia.lin@kernel.org>, "Rafael J. Wysocki" <rafael@kernel.org>,
-	Viresh Kumar <viresh.kumar@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	Raag Jadav <raag.jadav@intel.com>, Arnd Bergmann <arnd@arndb.de>,
-	linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 2/3] soc: qcom: smem: better track SMEM uninitialized
- state
-References: <20251029133323.24565-1-ansuelsmth@gmail.com>
- <20251029133323.24565-2-ansuelsmth@gmail.com>
- <aQIyZfQ-Tvxmh6vL@smile.fi.intel.com>
+	s=arc-20240116; t=1761752074; c=relaxed/simple;
+	bh=oNcXp8gdfxVeszlYk66nASq1kzOb0Ssu6NZIeyKk7zo=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=ljfky/Arb7KBTfQbDs8dO6yBgaI6Y7I17Q+2sa+6+00Z8R7pHB4BqFCZTcPQA19oZ/0pHA1eT4IzdARH4nTNb+eDB2NhRz+5RoxP74QYsR2NnXn+8hoWkhRCQZG75fwBa/ffPDzYp6fWU9cxLTueIisBVcRreWNNpKFdGc/7/VA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=hE/jr6Um; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 154B1C4CEF7;
+	Wed, 29 Oct 2025 15:34:33 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1761752074;
+	bh=oNcXp8gdfxVeszlYk66nASq1kzOb0Ssu6NZIeyKk7zo=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=hE/jr6UmoeEWC6iPIljNx/9tlBFwlDtK48q/Jzn8vf7lr4GVm5v62CyUQrnE3ZQv3
+	 g3jjloFRmehvz3VXskd2AxiBpogBbLTG3wviLJ/90FA7DWIdKcSfmjcdmmaexUEv9F
+	 AWVltj9y7vM2w5HYXEi60R4juEoDl0KvjCGN8YKeZA0iJDeK6B8pN+s0dGyuaAjiB3
+	 1FpxCZmmVYezVi8j6nxnZ6ma/iKyK9vcCqoSCINgTCPMmMoNtyHAij9Zf2tmoAQaXC
+	 Aau0ViRLO/oOzlwaFv6deAg78MsFiqCFw8CFJvKE0YIvZ+HeuifyLYS8E6NPqci0+a
+	 UgNbvk1THbf2g==
+Date: Wed, 29 Oct 2025 10:37:37 -0500
+From: Bjorn Andersson <andersson@kernel.org>
+To: "Aiqun(Maria) Yu" <aiqun.yu@oss.qualcomm.com>
+Cc: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>, 
+	Jingyi Wang <jingyi.wang@oss.qualcomm.com>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Konrad Dybcio <konradybcio@kernel.org>, Robert Marko <robimarko@gmail.com>, 
+	Das Srinagesh <quic_gurus@quicinc.com>, tingwei.zhang@oss.qualcomm.com, trilok.soni@oss.qualcomm.com, 
+	yijie.yang@oss.qualcomm.com, linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, Eugen Hristev <eugen.hristev@linaro.org>
+Subject: Re: [PATCH v2 1/4] dt-bindings: soc: qcom: Add qcom,kaanapali-imem
+ compatible
+Message-ID: <x4rzktpij4ggnbvnuyoli65gugymli5acrmrlovglttpakaauw@o3vu23bjedul>
+References: <20251022-knp-soc-binding-v2-0-3cd3f390f3e2@oss.qualcomm.com>
+ <20251022-knp-soc-binding-v2-1-3cd3f390f3e2@oss.qualcomm.com>
+ <g2iviaqetgxf5ycz2otzkpmmc4goo7xuyjmttuu254bfzqqvkf@4vybjh4eghpm>
+ <4eebcb7d-1eca-4914-915a-d42232233f9f@oss.qualcomm.com>
+ <dwfvko3hszsoh4ihnz3qdpsugmocbkrbhosijdw5q3bxh64kuo@o74as2li74px>
+ <lz4sbvzfiij3qsa4d7jeblmi2vfubc4ltf435sh6tcs53l6fbq@7f3tfm7yiyjc>
+ <mwin3lfvpcwxxhsub2whcpibuayk36f4ljrodvithfygqad5w4@cg4h6peh4v4a>
+ <ygqgzflpavwgd43e5zedgcijm3lz27nqlzprttalgcroedz45u@ztqkppajpyry>
+ <a7cdd2b3-6097-4a8c-a639-af974292cc8b@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <aQIyZfQ-Tvxmh6vL@smile.fi.intel.com>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <a7cdd2b3-6097-4a8c-a639-af974292cc8b@oss.qualcomm.com>
 
-On Wed, Oct 29, 2025 at 05:27:33PM +0200, Andy Shevchenko wrote:
-> On Wed, Oct 29, 2025 at 02:33:20PM +0100, Christian Marangi wrote:
-> > There is currently a problem where, in the specific case of SMEM not
-> > initialized by SBL, any SMEM API wrongly returns PROBE_DEFER
-> > communicating wrong info to any user of this API.
+On Wed, Oct 29, 2025 at 07:47:11PM +0800, Aiqun(Maria) Yu wrote:
+> On 10/28/2025 2:44 AM, Bjorn Andersson wrote:
+> > On Thu, Oct 23, 2025 at 03:06:00AM +0300, Dmitry Baryshkov wrote:
+> >> On Wed, Oct 22, 2025 at 05:42:58PM -0500, Bjorn Andersson wrote:
+> >>> On Wed, Oct 22, 2025 at 12:34:58PM +0300, Dmitry Baryshkov wrote:
+> >>>> On Wed, Oct 22, 2025 at 05:05:30PM +0800, Jingyi Wang wrote:
+> >>>>>
+> >>>>>
+> >>>>> On 10/22/2025 4:49 PM, Dmitry Baryshkov wrote:
+> >>>>>> On Wed, Oct 22, 2025 at 12:28:41AM -0700, Jingyi Wang wrote:
+> >>>>>>> Document qcom,kaanapali-imem compatible.
+> >>>>>>>
+> >>>>>>> Reviewed-by: Eugen Hristev <eugen.hristev@linaro.org>
+> >>>>>>> Signed-off-by: Jingyi Wang <jingyi.wang@oss.qualcomm.com>
+> >>>>>>> ---
+> >>>>>>>  Documentation/devicetree/bindings/sram/qcom,imem.yaml | 1 +
+> >>>>>>>  1 file changed, 1 insertion(+)
+> >>>>>>>
+> >>>>>>> diff --git a/Documentation/devicetree/bindings/sram/qcom,imem.yaml b/Documentation/devicetree/bindings/sram/qcom,imem.yaml
+> >>>>>>> index 6a627c57ae2f..1e29a8ff287f 100644
+> >>>>>>> --- a/Documentation/devicetree/bindings/sram/qcom,imem.yaml
+> >>>>>>> +++ b/Documentation/devicetree/bindings/sram/qcom,imem.yaml
+> >>>>>>> @@ -19,6 +19,7 @@ properties:
+> >>>>>>>        - enum:
+> >>>>>>>            - qcom,apq8064-imem
+> >>>>>>>            - qcom,ipq5424-imem
+> >>>>>>> +          - qcom,kaanapali-imem
+> >>>>>>
+> >>>>>> Can you use mmio-sram instead?
+> >>>>>>
+> >>>>>
+> >>>>> Here is the node: 
+> >>>>>
+> >>>>> 		sram@14680000 {
+> >>>>> 			compatible = "qcom,kaanapali-imem", "syscon", "simple-mfd";
+> >>>>> 			reg = <0x0 0x14680000 0x0 0x1000>;
+> >>>>> 			ranges = <0 0 0x14680000 0x1000>;
+> >>>>>
+> >>>>> 			#address-cells = <1>;
+> >>>>> 			#size-cells = <1>;
+> >>>>>
+> >>>>> 			pil-reloc@94c {
+> >>>>> 				compatible = "qcom,pil-reloc-info";
+> >>>>> 				reg = <0x94c 0xc8>;
+> >>>>> 			};
+> >>>>> 		};
+> >>>>>
+> >>>>> other qualcomm are also using imem, could you please give more details on why
+> >>>>> we should use mmio-sram here?
+> >>>>
+> >>>> https://lore.kernel.org/linux-arm-msm/e4c5ecc3-fd97-4b13-a057-bb1a3b7f9207@kernel.org/
+> >>>>
+> >>>
+> >>> I considered exactly this when I wrote the binding back then...
+> >>>
+> >>> But the binding defines mmio-sram as "Simple IO memory regions to be
+> >>> managed by the genalloc API." and the Linux sram driver follows that and
+> >>> registers a gen_pool across the sram memory region.
+> >>>
+> >>> I believe IMEM is SRAM (it's at least not registers), but its memory
+> >>> layout is fixed, so it's not a pool in any form.
+> >>>
+> >>>
+> >>> What Krzysztof says makes sense, but rather than just throwing a yak at
+> >>> Jingyi, it would be nice if you provided some guidance on how you would
+> >>> like to see this turn out.
+> >>
+> >> I tested, pretty same approach seems to work:
+> >>
 > > 
-> > A better way to handle this would be to track the SMEM state and return
-> > a different kind of error than PROBE_DEFER.
+> > Now you're shaving at random ;)
 > > 
-> > Rework the __smem handle to always init it to the error pointer
-> > -EPROBE_DEFER following what is already done by the SMEM API.
-> > If we detect that the SBL didn't initialized SMEM, set the __smem handle
-> > to the error pointer -ENODEV.
-> > Also rework the SMEM API to handle the __smem handle to be an error
-> > pointer and return it appropriately.
+> >> 	sram@14680000 {
+> >> 		compatible = "mmio-sram";
+> > 
+> > You can put "pil-reloc-sram" wherever, because it will perform a
+> > of_find_compatible_node() to dig up some node with the compatible
+> > "qcom,pil-reloc-info" .
+> > 
+> > In other words, this line created a genpool for something that really
+> > isn't a genpool, but luckily that didn't have any side effects.
+> > 
+> > 
+> > There are however other users of IMEM, such as the "reboot-mode", which
+> > relies on the "sram" device probing child devices, and is implemented by
+> > "syscon-reboot-mode".
+> > 
+> > Perhaps the solution is to not support any new users of that?
+> > 
+> > 
+> > But no matter what, the definition "Simple IO memory regions to be
+> > managed by the genalloc API" will never be true for IMEM.
+> > 
+> > And as this isn't a syscon, simple-mfd, or mmio-sram...how about making
+> > the fallback "qcom,imem" (in this same binding) and omitting any
+> > implementation until we need one)?
 > 
-> ...
 > 
-> >  	if (le32_to_cpu(header->initialized) != 1 ||
-> >  	    le32_to_cpu(header->reserved)) {
-> >  		dev_err(&pdev->dev, "SMEM is not initialized by SBL\n");
-> > +		__smem = ERR_PTR(-ENODEV);
-> >  		return -EINVAL;
-> >  	}
-> 
-> I find this a bit confusing. Why the error code returned to the upper layer is
-> different to the stored one?
->
-
-It's INVAL for probe. But for any user of SMEM it's NODEV as there isn't
-an actual SMEM usable.
-
-Totally ok to change the error condition in probe if maybe NODEV is
-better suited. I assume there isn't a specific pattern of the correct
-error condition in probe.
-
-> ...
-> 
-> Also, the series of patches should include the cover letter to explain not only
-> series background but additionally
-> - how it should be applied
-> - if it has dependencies
-> - etc
-> 
-
-Didn't add one they are trivial patch but I can add it if needed... it's
-pretty stable code so no dependency or branch target
-
-> 
+> Totally agree. We can remove the "syscon" and "simple-mfd" compatibles
+> for Kaanapali.
+> For Kaanapali, the reboot reason does not rely on imem at all—it uses
+> nvmem cells instead.
+> Previously, the syscon-reboot-mode required "syscon" and "simple-mfd"
+> compatibles for older targets like APQ8064, which used imem as the
+> reboot mode solution.
 > 
 
--- 
-	Ansuel
+And there's
+https://lore.kernel.org/lkml/20250527-topic-ipa_imem-v2-0-6d1aad91b841@oss.qualcomm.com/
+which Konrad pointed out, which would also work with this model
+(qcom,imem fallback but no implementation).
+
+
+This also does leave the door open for a future qcom,imem
+implementation, if we need to associate some logic to the imem device
+itself.
+
+Regards,
+Bjorn
+
+> 
+> > 
+> > Regards,
+> > Bjorn
+> > 
+> >> 		reg = <0x0 0x14680000 0x0 0x1000>;
+> >> 		ranges = <0 0 0x14680000 0x1000>;
+> >>
+> >> 		#address-cells = <1>;
+> >> 		#size-cells = <1>;
+> >>
+> >> 		pil-reloc-sram@94c {
+> >> 			compatible = "qcom,pil-reloc-info";
+> >> 			reg = <0x94c 0xc8>;
+> >> 		};
+> >> 	};
+> >>
+> >>
+> >> -- 
+> >> With best wishes
+> >> Dmitry
+> 
+> 
+> -- 
+> Thx and BRs,
+> Aiqun(Maria) Yu
 
