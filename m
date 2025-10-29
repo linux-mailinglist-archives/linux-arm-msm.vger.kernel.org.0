@@ -1,148 +1,260 @@
-Return-Path: <linux-arm-msm+bounces-79455-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-79458-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [IPv6:2605:f480:58:1:0:1994:3:14])
-	by mail.lfdr.de (Postfix) with ESMTPS id A278CC1A829
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Oct 2025 14:07:10 +0100 (CET)
+Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [142.0.200.124])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1A448C1A88E
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Oct 2025 14:10:11 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 251BC5081EE
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Oct 2025 12:58:08 +0000 (UTC)
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id E2D115875E0
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Oct 2025 13:02:08 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D02403587B4;
-	Wed, 29 Oct 2025 12:37:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 72EB8271467;
+	Wed, 29 Oct 2025 12:49:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b="F87I/2HK"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="ivNmXOEX"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f45.google.com (mail-lf1-f45.google.com [209.85.167.45])
+Received: from mail-ej1-f51.google.com (mail-ej1-f51.google.com [209.85.218.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BA5F3587AA
-	for <linux-arm-msm@vger.kernel.org>; Wed, 29 Oct 2025 12:37:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3AA4E263F5E
+	for <linux-arm-msm@vger.kernel.org>; Wed, 29 Oct 2025 12:49:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761741431; cv=none; b=Q7VGFLmRbHLesvkWM3NIeswJhjWYHFp3KvHIa8F3tmdukW34/oY9S5o0rLKkS6lGJv4mqwIb/MmuGYV6kV+R9rOv1TdAXb5ezFZv136TvGoaIFhm7btEB6sQJBf0K3k22TYA7qYuyOLV732v6irZ3DofPJxC63VArirxLqlZT2c=
+	t=1761742149; cv=none; b=AESBSESGqedkYQxEZsS2RzZgTV3/YirMlv/1GiuFEssWan/K+jEa/R8C1DiiJ5OsTSDhXQ+2s9BQq64eSPL+uTnnSx+oLmHuvAcWdCQuPyJoZL6SaHGHytdNQJXjPZotvIUL5naMWFLThLWFtK05Vy2DlX2zfz/PoBeSS6/4xs0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761741431; c=relaxed/simple;
-	bh=ni2P6AAAIna0hjFuAO82zYVMn0J7WfuU6b6IJiF1kKs=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=XXRXVjb9knIiiGpwOFnaQJSi4rNtNFLJs+DEvr+eZyg99H5CX731tChip56QMT2gTUZueGlTCbyF0DCQoQfvCv87Zpe0ffOjai1Vpp0CTAwPeaLhNeIBRZzEe6Jz8Pl0clcMpaKF15fToHdaUsHFZw0vFT+HIArwd71CZy9hsvI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl; spf=none smtp.mailfrom=bgdev.pl; dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b=F87I/2HK; arc=none smtp.client-ip=209.85.167.45
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=bgdev.pl
-Received: by mail-lf1-f45.google.com with SMTP id 2adb3069b0e04-592f7e50da2so1190870e87.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 29 Oct 2025 05:37:08 -0700 (PDT)
+	s=arc-20240116; t=1761742149; c=relaxed/simple;
+	bh=2+IpASvcKiq3HDIwMGzCLefruqRJAb0EaDfxrD0ZPFQ=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
+	 In-Reply-To:Content-Type; b=srgRVJhUoi/5tpggv7hc8TEkYDmDnmyDzghfbfCdlT0Lb1M7wRSc4TO8pNutEggyOAKBewUaR2XZshwlXaIMJcijIhF9YZPTf1+YHHb91fgzECbQYScVUOHTs9jn4QCdNItDtngisavgdFSQqRunDdGnymsRSXHo0ovPrnr1suQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=ivNmXOEX; arc=none smtp.client-ip=209.85.218.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-ej1-f51.google.com with SMTP id a640c23a62f3a-b7042e50899so147148366b.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 29 Oct 2025 05:49:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=bgdev-pl.20230601.gappssmtp.com; s=20230601; t=1761741427; x=1762346227; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=e7av6/+8iNuXmmgvTwlUka4Y7XmkOmuVd9YoxH52DeM=;
-        b=F87I/2HK8EHJQ7q4NQauRZSN2gkF3Pa6uWaxKT5wFbnJ02O9XJM9CVQa76aAk0TSaF
-         76edmu0GN4qf8O7hLOGmgl2m1E/wZWlSCbCwBKWravWbrzWOVNd2Wqlt7J+Ua6qOxZxV
-         Vo25gJ6FNxMMGcNYpCsgsF/Dew11WFweBBQN5b/PSxkUJYaDWPJMhjW8sS4ajHDy6GUk
-         UcOdOSnXu53Sjp2FtHMI3QAxxu+nHioY2KQfxl0H50DDrK7277Tkwx4zmGEf+2VqRYAC
-         XTokfkhjUfDrPSSnkP3OTTs8R08HxGteHAfjxqZNthOIwQp4OQb3FHhc2UN/G9S0PpM9
-         LdQA==
+        d=linaro.org; s=google; t=1761742144; x=1762346944; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:organization:autocrypt
+         :content-language:references:cc:to:subject:reply-to:from:user-agent
+         :mime-version:date:message-id:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=epvoslRAzR95g5kEkCGn8E4piD8eZTMgDYxba/QgkMc=;
+        b=ivNmXOEXneq1OxbFwSF4WLUEyMa9cEjIj6nqxb0dnB6hM8h2AFT41Lvsuxldy8eDku
+         Z9GPSP0LhZE069bppK8i+VH0zu+rBGMxamDV7vGMfwPBP+ObjE2RZVCmjD1ALu+LX11Y
+         O3NCw7dj+l51HXmN8W6QVlPlLAxO6pre39eux49kApjRLtpFzxmu7UcYH0F0WY/0zFjh
+         X9FJC3TSyZ172i7TtNgTdhLwFUDvvg/4Qym/BRcN5YrceXk2US8+oWskefleW4em6Rcw
+         pKmaQaMj7VBJCKamh75/n3GKfu8xhBYzHQd2V0pflSrtCdROyVRXJjxjcdGomepX+Wl9
+         9m+w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1761741427; x=1762346227;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=e7av6/+8iNuXmmgvTwlUka4Y7XmkOmuVd9YoxH52DeM=;
-        b=LBQEZZoeWgzvpI8oJKsY2aOEBKfIL9QXzXgze/jrr/ZTqgmhTBND5UUQHNMqRtmccl
-         CQbFdjolHMBF+uEYXYTDm6Sek3OxlLgHsZt9qBMQ+3J8UMSWS7k/6GBKGQGY3lNAs74/
-         qbso8AKrYWHdLFR71kmsubAIAlGlOZrY7NyB8JbN+WpCMDgtHZ8G/9X54CUoG0x6KA3j
-         26TLwbV4QiF6AANlCC/O9FzFkEIIH9SSyMTk2jjs5f2P+IYz4j1G34wD1WjdFab6772C
-         ethwDR4h/isixJTIv4qis3AT2ryucl4zRfVuzk5lXvNcacqHTNSr79utv8+sgJ0+UvOc
-         A+pw==
-X-Forwarded-Encrypted: i=1; AJvYcCXa+akYBQ0ir1cQcyKgqe0EqC4i1IsErkMrDlncHgTmmzhon2/VkcEJT1Smx3ip/1epQU2jHZHVTuxzcyx/@vger.kernel.org
-X-Gm-Message-State: AOJu0Yy67YfCh85EX3NHnULheR0nnVQr+tITfTkxRZyybK8GTr0j1dSU
-	hVhusNHp/0kIDEH+vnOwayj4713Qr9zb03F+l/U37ZeVfHECQLxBpGBML9cQUMonyPxCDvRvdet
-	rN7tOjeGbDCwwpEYDw9IK+DeQ8RUM0iTXTUOHVp16XQ==
-X-Gm-Gg: ASbGncvQ+QqSxZIgi7AgaV119l32fZMliHq/WETlEqyBrl9+LRMOJz3vSSnDiRr7lbp
-	wf7/uIkMmYya+J4pP2DtuUu5Hg/ozXX0wmvXIb+oAkxx60XXqL6W6y9DEFe/mdNv98nlh29z9sP
-	RdEL3D41I87lpmPG3k5lAbxJcO/wxRrUiWWZEGcZz4lenY2IHN70Lyp2FRJMachik56MvVSyZRK
-	/5tvNnyT85TSvhUJTeba7l9BAGMLRUjuOq8p8bVtjoVa8IsvQxwpud2dcTL7RTOGljnhYOgqEBk
-	fGNzpdGLkqNiXRgg5DAC1cRgLu0=
-X-Google-Smtp-Source: AGHT+IEUmGu04036ormM4pltNB2Am321w2VXbEnKTAs3EJCIFCtIkYSiyRchfH1o5wZ/LZR6U90hsv4wZnUUYh2RdrI=
-X-Received: by 2002:a05:6512:31d5:b0:591:c763:78e5 with SMTP id
- 2adb3069b0e04-5930ee00135mr2032537e87.23.1761741427164; Wed, 29 Oct 2025
- 05:37:07 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1761742144; x=1762346944;
+        h=content-transfer-encoding:in-reply-to:organization:autocrypt
+         :content-language:references:cc:to:subject:reply-to:from:user-agent
+         :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=epvoslRAzR95g5kEkCGn8E4piD8eZTMgDYxba/QgkMc=;
+        b=aE+e+NeMnQ+JBLxklTcyd6UFilIS380TtedXhe1+oSdyMwuQf7Er5EBKuTDR11bT+3
+         NSR23ViMOmYCyosXTKlyn3+V0XxMPKVoS/2yG89aYI8hRLebloAz4DHtb9o5XyF3rE/W
+         P2hWo2ZECLHvXe1fjh4Jxdbjffq4qKPVAv1Yj6GVQfzUhnuYky3HaQ4PBt8V5GHRXu1N
+         Be+SIwsr4vaFXnjTtJ4OAQxbUHp1aCegOxTBRzcMg4JJndYUrg4BbtsALYnB6zYLtMgK
+         gekYkggsXHaJwOTo867vf217Lx7ac+xUEl638/ZiFVuR7no2ekwwcVUb15dWlfzJkgrN
+         ziKQ==
+X-Forwarded-Encrypted: i=1; AJvYcCVKF6hoLps+37VNResCz6n7KZP9Ip1ndb7rM44/6CvuglvVQ/BmfbUmynrMZdCa5D2PQcj6zItaO2/6arFd@vger.kernel.org
+X-Gm-Message-State: AOJu0YyUO/LKFQykIUtNU9Z++w+rMGr8o1l2L3QTworNtefNxcDzwhSX
+	wBLI1p1tEpnSiuiM6h2I62zCdwFD4txlvsmreCLl8O6WZFsnkwF6MeISX757YZ6xWpo=
+X-Gm-Gg: ASbGncvfL050EaLjlqsc/wcPIEcQwLELCW/XojOmPRSHZzYb+6oJjxscSQM6wjtWISB
+	QqOCSG1wI04f77teTK+Pzf09w/VX3EmOQmFK2JBTj9AR0DXmIMVKp7xNueB8mKueTUsWMIaK+MQ
+	0BO3lSU91svc/0hB6eWaRkVCEvN4+bVLih7UUVPf2bEH9Xhc2hwtD4w/0PQDu8guOcCE336wNNC
+	CwFP4YFI826gqr6HXxIsKdqIRc7mLcMPxN6i4M/zD5eEHPdiPeyVosDOvdHKdJowXW9gKB1il+j
+	nCvnZLZTCQVzEOcSSiYEtQszSsAzdTV3SqKixCaE6oD6gjy0Hbfz2cdY3z+d/Ktx3fj6mvtQTgm
+	JoH49g+ntyZwi/fg8yhSOUbJR4kH8kN/sRKv9uC8my6A6W6W1VMaXeY3ikWjjJVd/Ykj2GDR6GH
+	6ZzFWDOVDqsCk59BqhIE0cLAulA+DbpQvnnSYaAeI5oygCvznbRwAeF2IuOEu8
+X-Google-Smtp-Source: AGHT+IHcG4LKDyrbB9tFryJhEA6/JjyPOxMR26v793Hdqd5h3OB8PE2OMNSaopJx02Zhxxs+Omnbzw==
+X-Received: by 2002:a17:907:944a:b0:b65:abf2:417a with SMTP id a640c23a62f3a-b703d6034d6mr270327266b.64.1761742144231;
+        Wed, 29 Oct 2025 05:49:04 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:cad:2140:3447:eb7a:cb9f:5e0? ([2a01:e0a:cad:2140:3447:eb7a:cb9f:5e0])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-b6d85359687sm1428207766b.23.2025.10.29.05.49.03
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 29 Oct 2025 05:49:03 -0700 (PDT)
+Message-ID: <ed323916-f0e4-4669-935c-6fc8ae6a9490@linaro.org>
+Date: Wed, 29 Oct 2025 13:49:02 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20251029-gpio-shared-v3-0-71c568acf47c@linaro.org>
- <20251029-gpio-shared-v3-1-71c568acf47c@linaro.org> <aQH9gE_fB119CW3l@smile.fi.intel.com>
-In-Reply-To: <aQH9gE_fB119CW3l@smile.fi.intel.com>
-From: Bartosz Golaszewski <brgl@bgdev.pl>
-Date: Wed, 29 Oct 2025 13:36:55 +0100
-X-Gm-Features: AWmQ_blmOzETrnBiOxNQNAG3OMw6fz-E4Nx4SOD4Wgu8a41SpvuD7mJ9RHyBeG8
-Message-ID: <CAMRc=MdKfXJx-cxNr1uOCkifD6YVE2t5w4hkuYy7jcnidiid2Q@mail.gmail.com>
-Subject: Re: [PATCH v3 01/10] string: provide strends()
-To: Andy Shevchenko <andriy.shevchenko@intel.com>
-Cc: Kees Cook <kees@kernel.org>, Mika Westerberg <westeri@kernel.org>, 
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>, Andrew Morton <akpm@linux-foundation.org>, 
-	Linus Walleij <linus.walleij@linaro.org>, Manivannan Sadhasivam <mani@kernel.org>, 
-	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Saravana Kannan <saravanak@google.com>, Greg Kroah-Hartman <gregkh@linuxfoundation.org>, 
-	Andy Shevchenko <andy@kernel.org>, Catalin Marinas <catalin.marinas@arm.com>, Will Deacon <will@kernel.org>, 
-	Srinivas Kandagatla <srini@kernel.org>, Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>, 
-	Jaroslav Kysela <perex@perex.cz>, Takashi Iwai <tiwai@suse.com>, 
-	Alexey Klimov <alexey.klimov@linaro.org>, linux-hardening@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, linux-gpio@vger.kernel.org, 
-	linux-arm-kernel@lists.infradead.org, linux-sound@vger.kernel.org, 
-	linux-arm-msm@vger.kernel.org, 
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+From: Neil Armstrong <neil.armstrong@linaro.org>
+Reply-To: Neil Armstrong <neil.armstrong@linaro.org>
+Subject: Re: [PATCH v2] drm/msm/dpu: Filter modes based on adjusted mode clock
+To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Cc: Jessica Zhang <jessica.zhang@oss.qualcomm.com>,
+ Rob Clark <robdclark@gmail.com>, Dmitry Baryshkov <lumag@kernel.org>,
+ Sean Paul <sean@poorly.run>, Marijn Suijten <marijn.suijten@somainline.org>,
+ David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+ Abhinav Kumar <quic_abhinavk@quicinc.com>, linux-arm-msm@vger.kernel.org,
+ dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+ linux-kernel@vger.kernel.org
+References: <20250506-filter-modes-v2-1-c20a0b7aa241@oss.qualcomm.com>
+ <6381550a-4c1a-429d-b6c1-8c7ae77bf325@linaro.org>
+ <da56lghirjcwesz4usdlfpttwcmvoql2h6bvjommoyfskjdkgk@hrlgx4ukt4aa>
+ <09cbf40d-6536-4bda-94d6-5b45a5746962@linaro.org>
+ <w4lwl34mtd7xv7it72nvomv6te2bcybisvirfdwzdazzqisd73@fvyusj6m5cb2>
+Content-Language: en-US, fr
+Autocrypt: addr=neil.armstrong@linaro.org; keydata=
+ xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
+ GTjuhvbleoQ5Cxjr+v+1ARGCH46MxFP5DwauzPekwJUD5QKZlaw/bURTLmS2id5wWi3lqVH4
+ BVF2WzvGyyeV1o4RTCYDnZ9VLLylJ9bneEaIs/7cjCEbipGGFlfIML3sfqnIvMAxIMZrvcl9
+ qPV2k+KQ7q+aXavU5W+yLNn7QtXUB530Zlk/d2ETgzQ5FLYYnUDAaRl+8JUTjc0CNOTpCeik
+ 80TZcE6f8M76Xa6yU8VcNko94Ck7iB4vj70q76P/J7kt98hklrr85/3NU3oti3nrIHmHABEB
+ AAHNKk5laWwgQXJtc3Ryb25nIDxuZWlsLmFybXN0cm9uZ0BsaW5hcm8ub3JnPsLAkQQTAQoA
+ OwIbIwULCQgHAwUVCgkICwUWAgMBAAIeAQIXgBYhBInsPQWERiF0UPIoSBaat7Gkz/iuBQJk
+ Q5wSAhkBAAoJEBaat7Gkz/iuyhMIANiD94qDtUTJRfEW6GwXmtKWwl/mvqQtaTtZID2dos04
+ YqBbshiJbejgVJjy+HODcNUIKBB3PSLaln4ltdsV73SBcwUNdzebfKspAQunCM22Mn6FBIxQ
+ GizsMLcP/0FX4en9NaKGfK6ZdKK6kN1GR9YffMJd2P08EO8mHowmSRe/ExAODhAs9W7XXExw
+ UNCY4pVJyRPpEhv373vvff60bHxc1k/FF9WaPscMt7hlkbFLUs85kHtQAmr8pV5Hy9ezsSRa
+ GzJmiVclkPc2BY592IGBXRDQ38urXeM4nfhhvqA50b/nAEXc6FzqgXqDkEIwR66/Gbp0t3+r
+ yQzpKRyQif3OwE0ETVkGzwEIALyKDN/OGURaHBVzwjgYq+ZtifvekdrSNl8TIDH8g1xicBYp
+ QTbPn6bbSZbdvfeQPNCcD4/EhXZuhQXMcoJsQQQnO4vwVULmPGgtGf8PVc7dxKOeta+qUh6+
+ SRh3vIcAUFHDT3f/Zdspz+e2E0hPV2hiSvICLk11qO6cyJE13zeNFoeY3ggrKY+IzbFomIZY
+ 4yG6xI99NIPEVE9lNBXBKIlewIyVlkOaYvJWSV+p5gdJXOvScNN1epm5YHmf9aE2ZjnqZGoM
+ Mtsyw18YoX9BqMFInxqYQQ3j/HpVgTSvmo5ea5qQDDUaCsaTf8UeDcwYOtgI8iL4oHcsGtUX
+ oUk33HEAEQEAAcLAXwQYAQIACQUCTVkGzwIbDAAKCRAWmrexpM/4rrXiB/sGbkQ6itMrAIfn
+ M7IbRuiSZS1unlySUVYu3SD6YBYnNi3G5EpbwfBNuT3H8//rVvtOFK4OD8cRYkxXRQmTvqa3
+ 3eDIHu/zr1HMKErm+2SD6PO9umRef8V82o2oaCLvf4WeIssFjwB0b6a12opuRP7yo3E3gTCS
+ KmbUuLv1CtxKQF+fUV1cVaTPMyT25Od+RC1K+iOR0F54oUJvJeq7fUzbn/KdlhA8XPGzwGRy
+ 4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
+ QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
+Organization: Linaro
+In-Reply-To: <w4lwl34mtd7xv7it72nvomv6te2bcybisvirfdwzdazzqisd73@fvyusj6m5cb2>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Wed, Oct 29, 2025 at 12:42=E2=80=AFPM Andy Shevchenko
-<andriy.shevchenko@intel.com> wrote:
->
-> On Wed, Oct 29, 2025 at 12:20:37PM +0100, Bartosz Golaszewski wrote:
-> >
-> > Implement a function for checking if a string ends with a different
-> > string and add its kunit test cases.
->
-> ...
->
-> > +/**
-> > + * strends - Check if a string ends with another string.
-> > + * @str - NULL-terminated string to check against @suffix
-> > + * @suffix - NULL-terminated string defining the suffix to look for in=
- @str
-> > + *
-> > + * Returns:
-> > + * True if @str ends with @suffix. False in all other cases.
-> > + */
-> > +static inline bool strends(const char *str, const char *suffix)
-> > +{
-> > +     unsigned int str_len =3D strlen(str), suffix_len =3D strlen(suffi=
-x);
-> > +
-> > +     if (str_len < suffix_len)
-> > +             return false;
-> > +
-> > +     return !(strcmp(str + str_len - suffix_len, suffix));
-> > +}
->
-> Can you rather re-use strcmp_suffix() from drivers/of/property.c?
->
+On 10/29/25 13:30, Dmitry Baryshkov wrote:
+> On Wed, Oct 29, 2025 at 10:40:25AM +0100, Neil Armstrong wrote:
+>> On 10/28/25 20:52, Dmitry Baryshkov wrote:
+>>> On Tue, Oct 28, 2025 at 09:42:57AM +0100, neil.armstrong@linaro.org wrote:
+>>>> On 5/7/25 03:38, Jessica Zhang wrote:
+>>>>> Filter out modes that have a clock rate greater than the max core clock
+>>>>> rate when adjusted for the perf clock factor
+>>>>>
+>>>>> This is especially important for chipsets such as QCS615 that have lower
+>>>>> limits for the MDP max core clock.
+>>>>>
+>>>>> Since the core CRTC clock is at least the mode clock (adjusted for the
+>>>>> perf clock factor) [1], the modes supported by the driver should be less
+>>>>> than the max core clock rate.
+>>>>>
+>>>>> [1] https://elixir.bootlin.com/linux/v6.12.4/source/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c#L83
+>>>>>
+>>>>> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+>>>>> Signed-off-by: Jessica Zhang <jessica.zhang@oss.qualcomm.com>
+>>>>> ---
+>>>>> Changes in v2:
+>>>>> - *crtc_clock -> *mode_clock (Dmitry)
+>>>>> - Changed adjusted_mode_clk check to use multiplication (Dmitry)
+>>>>> - Switch from quic_* email to OSS email
+>>>>> - Link to v1: https://lore.kernel.org/lkml/20241212-filter-mode-clock-v1-1-f4441988d6aa@quicinc.com/
+>>>>> ---
+>>>>>     drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c | 35 ++++++++++++++++++---------
+>>>>>     drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.h |  3 +++
+>>>>>     drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c      | 12 +++++++++
+>>>>>     3 files changed, 39 insertions(+), 11 deletions(-)
+>>>>>
+>>>>
+>>>> This test doesn't take in account if the mode is for a bonded DSI mode, which
+>>>> is the same mode on 2 interfaces doubled, but it's valid since we could literally
+>>>> set both modes separately. In bonded DSI this mode_clk must be again divided bv 2
+>>>> in addition to the fix:
+>>>> https://lore.kernel.org/linux-arm-msm/20250923-modeclk-fix-v2-1-01fcd0b2465a@oss.qualcomm.com/
+>>>
+>>>   From the docs:
+>>>
+>>>            * Since this function is both called from the check phase of an atomic
+>>>            * commit, and the mode validation in the probe paths it is not allowed
+>>>            * to look at anything else but the passed-in mode, and validate it
+>>>            * against configuration-invariant hardware constraints. Any further
+>>>            * limits which depend upon the configuration can only be checked in
+>>>            * @mode_fixup or @atomic_check.
+>>>
+>>> Additionally, I don't think it is correct to divide mode_clk by two. In
+>>> the end, the DPU processes the mode in a single pass, so the perf
+>>> constrains applies as is, without additional dividers.
+>>
+>> Sorry but this is not correct, the current check means nothing. If you
+>> enable 2 separate DSI outputs or enable then in bonded mode, the DPU
+>> processes it the same so the bonded doubled mode should be valid.
+>>
+>> The difference between separate or bonded DSI DPU-wise is only the
+>> synchronisation of vsyncs between interfaces.
+> 
+> I think there is some sort of confusion. It might be on my side. Please
+> correct me if I'm wrong.
+> 
+> Each CRTC requires certain MDP clock rate to function: to process pixel
+> data, for scanout, etc. This is captured in dpu_core_perf.c. The patch
+> in question verifies that the mode can actually be set, that MDP can
+> function at the required clock rate. Otherwise we end up in a situation
+> when the driver lists a particular mode, but then the atomic_check
+> rejects that mode.
 
-I think that strends() and its boolean return value are a bit more
-intuitive to use than strcmp_suffix() and its integer return value,
-the meaning of which you typically have to look-up to figure out. If
-there are no objections, I'd like to keep it and - when it's upstream
-- convert property.c to using it instead. Also: the name
-strcmp_suffix() could use some improvement, seeing how I wasn't able
-to find it, even though I looked hard across the kernel source, while
-I easily stumbled upon a similar implementation of strends() already
-existing in dtc sources.
+A CRTC will be associated to 1 or multiple LMs, the LM is the actual block
+you want to check for frequency. Speaking of CRTC means nothing for the DPU.
 
-Bart
+We should basically run a lightweight version of dpu_rm_reserve() in mode_valid,
+and check against all the assigned blocks to see if we can handle the mode.
+
+But is it worth it ? What did the original patch solve exactly ?
+
+Do we have formal proof about which max clock frequency a complete HW setup is able to support ?
+
+> 
+> With that in mind, there is a difference between independent and bonded
+> DSI panels: bonded panels use single CRTC, while independent panels use
+> two different CRTCs. As such (again, please correct me if I'm wrong),
+> we need 2x MDP clock for a single CRTC.
+
+Any mode can use 1 or multiple LMs, in independent or bonded DSI. As I
+said the bonded DSI with a 2x mode will lead to __exactly__ the same setup
+as 2 independed DSI displays. And in bonded mode, you'll always have 2 LMs.
+
+> 
+>> So this check against the max frequency means nothing and should be
+>> removed, but we should solely rely on the bandwidth calculation instead.
+> 
+> We need both. If you have a particular usecase which fails, lets discuss
+> it:
+> 
+> - 2 DSI panels, resolution WxH, N Hz, the mode uses l LMs, m DSC units
+>    and foo bar baz to output.
+> 
+> - The dpu_crtc_mode_valid() calculates the clock ABC, which is more than
+>    the max value of DEF
+> 
+> - The actual modesetting results in a clock GHI, which is less than DEF
+
+I don't understand what you need, in the current form the mode_valid will
+accept the 2 DSI displays as independent, while using them as bonded will
+use the exact same HW setup (resolution WxH, N Hz, the mode uses l LMs, m DSC units)
+but the mode_valid with rejects it.
+
+Neil
+
+> 
+>>
+>> Neil
+>>
+>>>
+>>>
+>>>> I'm trying to find a correct way to handle that, I have tried that:
+>>>> ===========================><========================================
+>>>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
+>>>> index 48c3aef1cfc2..6aa5db1996e3 100644
+>>>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
+>>>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
+>>>
+>>
+> 
+
 
