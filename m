@@ -1,140 +1,158 @@
-Return-Path: <linux-arm-msm+bounces-79486-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-79484-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [IPv6:2605:f480:58:1:0:1994:3:14])
-	by mail.lfdr.de (Postfix) with ESMTPS id D9E07C1BDFC
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Oct 2025 16:59:18 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 52FDFC1B9B0
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Oct 2025 16:20:49 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 63F295A094D
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Oct 2025 15:21:41 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id A57321892DD0
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Oct 2025 15:20:14 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7A6B12F60A3;
-	Wed, 29 Oct 2025 15:21:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id AE8422FF661;
+	Wed, 29 Oct 2025 15:19:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="IW+X0DpF"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="TxSnS6CL"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.17])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB36F1C5D44;
-	Wed, 29 Oct 2025 15:21:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.17
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F7D72F12A0;
+	Wed, 29 Oct 2025 15:19:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761751298; cv=none; b=qEITy7ZzH9Bc835QDfJeuFGDGUKeNQn+AI9iUBrk9ydY2JK3OzjHD+qWf+9MAvTY5qKzJkqd5s0cNSO7IVJTYHPyyDOlYgByfEyaFnMoC8GijJQ4BTSHFKTC2XVZIv4h0Q5NpKdhvXNbpPePGaoY5W96Pq9eFRcs2uGXjPe7X6M=
+	t=1761751178; cv=none; b=WKC5LkXnfiju9jUi2axMs6aMC4bV8FwOhfZGkwyRhgbBYwSoRWfy+XiQ+xuBYxuCQKw5/Dx3GPHPK4IMTJTIVlU2IX156RnDIIMQK+Hv2nou32Qt7Nz2U8eEmJGanMzK0nG1RlTz0IFWAcC+XWpMwSRsEHuDW8i0WcWljM5P6pE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761751298; c=relaxed/simple;
-	bh=i8zZ/Az2AU7gAws4QhPWy+UIC3UsU5SjQYR63Fz7QG4=;
+	s=arc-20240116; t=1761751178; c=relaxed/simple;
+	bh=3JfNQo+M21Fj37FKvWiKjtWeQMPxwV5uRtgj06oRTOY=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ppiybPDcKDWjNlWyr1XV1S7PRy4OEdFdtRbSs+wayPslqe80hKRpnSlQT2FSqbKT728mlviXf70Dwt6e4GY5GzyO9yLUTkgErXlDlp+ZYbsyA6tz5xpUwIxyP5+lqhuQksWfFUZ/i1cooSfomf0WlhxCHyQaaSkJrFycMPlLjdg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=IW+X0DpF; arc=none smtp.client-ip=192.198.163.17
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1761751297; x=1793287297;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:content-transfer-encoding:in-reply-to;
-  bh=i8zZ/Az2AU7gAws4QhPWy+UIC3UsU5SjQYR63Fz7QG4=;
-  b=IW+X0DpFZBYVBDDuMggBGs+UQJY8+49YM7BPmzlgf3R4Du80+CnZHA1V
-   /MknELQZeXcg0A7pJjrYWsf33zg96IzmzA5tTnj6B5BQXkzIEXTI0OHLz
-   9ctjy5F74DYukZl9+Y/5B3OiaUM/D8Sw2NNKKQWPXQXb2pRFKxuxGU5/w
-   MBxL6Vq0FNCDiHX0KzUzri20e5qvy5eqSmeD6Q5ADTsuMb/q1mNifC0c/
-   9cCBNkN/QayLXabx53NiVJZleUBwpOPab5jtoTqGSax8bFy5r5nkuUA0j
-   1OilmOPameQstHHA6+dXmZvwg3kyy3VBl2tXLSKGXT5uGqXqv872PHmLL
-   g==;
-X-CSE-ConnectionGUID: Ldf6sa7ORr2OfFo5apCJMA==
-X-CSE-MsgGUID: YxtL4VCvQ96h3fnF66X2dg==
-X-IronPort-AV: E=McAfee;i="6800,10657,11597"; a="63785032"
-X-IronPort-AV: E=Sophos;i="6.19,264,1754982000"; 
-   d="scan'208";a="63785032"
-Received: from fmviesa001.fm.intel.com ([10.60.135.141])
-  by fmvoesa111.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 29 Oct 2025 08:21:36 -0700
-X-CSE-ConnectionGUID: VsQXzBaVQf6rqhBeifR3xg==
-X-CSE-MsgGUID: tGWyFCvWRma3haaaGIshVw==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.19,264,1754982000"; 
-   d="scan'208";a="216557885"
-Received: from mjarzebo-mobl1.ger.corp.intel.com (HELO ashevche-desk.local) ([10.245.244.248])
-  by smtpauth.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 29 Oct 2025 08:21:30 -0700
-Received: from andy by ashevche-desk.local with local (Exim 4.98.2)
-	(envelope-from <andriy.shevchenko@intel.com>)
-	id 1vE7zL-00000003ePq-2SlB;
-	Wed, 29 Oct 2025 17:21:27 +0200
-Date: Wed, 29 Oct 2025 17:21:27 +0200
-From: Andy Shevchenko <andriy.shevchenko@intel.com>
-To: Bartosz Golaszewski <brgl@bgdev.pl>
-Cc: Kees Cook <kees@kernel.org>, Mika Westerberg <westeri@kernel.org>,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Linus Walleij <linus.walleij@linaro.org>,
-	Manivannan Sadhasivam <mani@kernel.org>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Saravana Kannan <saravanak@google.com>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	Andy Shevchenko <andy@kernel.org>,
-	Catalin Marinas <catalin.marinas@arm.com>,
-	Will Deacon <will@kernel.org>,
-	Srinivas Kandagatla <srini@kernel.org>,
-	Liam Girdwood <lgirdwood@gmail.com>,
-	Mark Brown <broonie@kernel.org>, Jaroslav Kysela <perex@perex.cz>,
-	Takashi Iwai <tiwai@suse.com>,
-	Alexey Klimov <alexey.klimov@linaro.org>,
-	linux-hardening@vger.kernel.org, linux-kernel@vger.kernel.org,
-	linux-gpio@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-	linux-sound@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Subject: Re: [PATCH v3 10/10] regulator: make the subsystem aware of shared
- GPIOs
-Message-ID: <aQIw97qdO43NXHWi@smile.fi.intel.com>
-References: <20251029-gpio-shared-v3-0-71c568acf47c@linaro.org>
- <20251029-gpio-shared-v3-10-71c568acf47c@linaro.org>
- <aQIAXO1hUrw4Yp9V@smile.fi.intel.com>
- <CAMRc=McT+HinKvajHmBYPcQKoboapAf2E3ErJSP=2jXW9B0omA@mail.gmail.com>
+	 Content-Type:Content-Disposition:In-Reply-To; b=c/q0dYkgroUAVRKliR6t2d0cgUPk8Na1G6oTqEIt2l++hcJW2FplscfzLQY9CV/pqBEuiMyZLajXAkH3A6rw4orjBnWW5B0VKnQZwNeueINsP5eMoE8f0zFkr7uye7vhL4dRJAy+fjZ0D1RngM705+hNL9Xsv7C2yy9NNLx8qD0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=TxSnS6CL; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02710C4CEF8;
+	Wed, 29 Oct 2025 15:19:36 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1761751178;
+	bh=3JfNQo+M21Fj37FKvWiKjtWeQMPxwV5uRtgj06oRTOY=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=TxSnS6CLDVT3HGmhCi2XCkNvUYVYsXFLCfPyA5iC3ve1K2ILlAI9zXpbobFdPM70V
+	 eDa6kXgPAd8yRd6YeaLV2lQSqVtC794EwQ76A9dowTcCEyj+0UfDx9owtblAeoUGdf
+	 xqTWuE7Tqfs3tt8tcV/PGTJYIWfJeXwNXpziA6AyMspEVQm1f+FraChVQ4WK1yL7ey
+	 jqChgdvXpj/zdeYEbO+c1n9zTYtG3P4k0kmpreLqoEJTo9jUdbC9+Ckuo1ap86eN+2
+	 9Udd0z0aIoGKQ9bWHjTRvwVUsHD3vZGKtGBZeE+rQKQEJnzsQkm2vAZGWExm4+NKhb
+	 Lv8pEVDnQNJOw==
+Date: Wed, 29 Oct 2025 10:22:41 -0500
+From: Bjorn Andersson <andersson@kernel.org>
+To: george.moussalem@outlook.com
+Cc: Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= <ukleinek@kernel.org>, 
+	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+	Conor Dooley <conor+dt@kernel.org>, Baruch Siach <baruch@tkos.co.il>, 
+	Konrad Dybcio <konradybcio@kernel.org>, linux-arm-msm@vger.kernel.org, linux-pwm@vger.kernel.org, 
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	Devi Priya <quic_devipriy@quicinc.com>, Baruch Siach <baruch.siach@siklu.com>, 
+	Krzysztof Kozlowski <krzk@kernel.org>
+Subject: Re: [PATCH v18 1/6] dt-bindings: pwm: add IPQ6018 binding
+Message-ID: <gkvbziqeae53bunqd556r4swaye4s4lcnwthryouynwfwqrnsi@6o4cjgxiwxco>
+References: <20251029-ipq-pwm-v18-0-edbef8efbb8e@outlook.com>
+ <20251029-ipq-pwm-v18-1-edbef8efbb8e@outlook.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAMRc=McT+HinKvajHmBYPcQKoboapAf2E3ErJSP=2jXW9B0omA@mail.gmail.com>
-Organization: Intel Finland Oy - BIC 0357606-4 - c/o Alberga Business Park, 6
- krs, Bertel Jungin Aukio 5, 02600 Espoo
+In-Reply-To: <20251029-ipq-pwm-v18-1-edbef8efbb8e@outlook.com>
 
-On Wed, Oct 29, 2025 at 01:41:10PM +0100, Bartosz Golaszewski wrote:
-> On Wed, Oct 29, 2025 at 12:54 PM Andy Shevchenko
-> <andriy.shevchenko@intel.com> wrote:
-> > On Wed, Oct 29, 2025 at 12:20:46PM +0100, Bartosz Golaszewski wrote:
-> > >
-> > > GPIOLIB is now aware of shared GPIOs and - for platforms where access to
-> > > such pins is managed internally - we don't need to keep track of the
-> > > enable count.
-> > >
-> > > Once all users in the kernel switch to using the new mechanism, we'll be
-> > > able to drop the internal counting of users from the regulator code.
-> >
-> > I am wondering if you took into account the layering violation (or others
-> > put it as "transferring of ownership") in the regulator core for the platform
-> > based GPIO regulators? This popped up during the discussion of
-> > https://lore.kernel.org/platform-driver-x86/20251024050537.92440-1-qiuwenbo@gnome.org/
+On Wed, Oct 29, 2025 at 12:36:57PM +0400, George Moussalem via B4 Relay wrote:
+> From: Devi Priya <quic_devipriy@quicinc.com>
 > 
-> I am aware of this weird ownership transfer in regulator but these
-> changes don't affect it. The layering is still being violated though.
+> DT binding for the PWM block in Qualcomm IPQ6018 SoC.
+> [George: added compatibles for IPQ5018, IPQ5332, and IPQ9574]
 > 
-> This should be fixed and I've looked into it but it's not trivial so
-> it's another big rework for the future.
+> Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+> Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> Co-developed-by: Baruch Siach <baruch.siach@siklu.com>
+> Signed-off-by: Baruch Siach <baruch.siach@siklu.com>
+> Signed-off-by: Devi Priya <quic_devipriy@quicinc.com>
 
-OK, thanks for clarifications!
+This is where we expect the [George: ...] comment.
 
--- 
-With Best Regards,
-Andy Shevchenko
+I'll leave it up to Uwe to determine if he'd like you to resubmit this
+or not though...
 
+> Signed-off-by: George Moussalem <george.moussalem@outlook.com>
 
+I think this patch looks good now.
+
+Thank you,
+Bjorn
+
+> ---
+>  .../devicetree/bindings/pwm/qcom,ipq6018-pwm.yaml  | 51 ++++++++++++++++++++++
+>  1 file changed, 51 insertions(+)
+> 
+> diff --git a/Documentation/devicetree/bindings/pwm/qcom,ipq6018-pwm.yaml b/Documentation/devicetree/bindings/pwm/qcom,ipq6018-pwm.yaml
+> new file mode 100644
+> index 0000000000000000000000000000000000000000..ca8e916f03276e93d755d574e2567b0e4b86a8ce
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/pwm/qcom,ipq6018-pwm.yaml
+> @@ -0,0 +1,51 @@
+> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+> +%YAML 1.2
+> +---
+> +$id: http://devicetree.org/schemas/pwm/qcom,ipq6018-pwm.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> +
+> +title: Qualcomm IPQ6018 PWM controller
+> +
+> +maintainers:
+> +  - George Moussalem <george.moussalem@outlook.com>
+> +
+> +properties:
+> +  compatible:
+> +    oneOf:
+> +      - items:
+> +          - enum:
+> +              - qcom,ipq5018-pwm
+> +              - qcom,ipq5332-pwm
+> +              - qcom,ipq9574-pwm
+> +          - const: qcom,ipq6018-pwm
+> +      - const: qcom,ipq6018-pwm
+> +
+> +  reg:
+> +    maxItems: 1
+> +
+> +  clocks:
+> +    maxItems: 1
+> +
+> +  "#pwm-cells":
+> +    const: 2
+> +
+> +required:
+> +  - compatible
+> +  - reg
+> +  - clocks
+> +  - "#pwm-cells"
+> +
+> +additionalProperties: false
+> +
+> +examples:
+> +  - |
+> +    #include <dt-bindings/clock/qcom,gcc-ipq6018.h>
+> +
+> +    pwm: pwm@1941010 {
+> +        compatible = "qcom,ipq6018-pwm";
+> +        reg = <0x01941010 0x20>;
+> +        clocks = <&gcc GCC_ADSS_PWM_CLK>;
+> +        assigned-clocks = <&gcc GCC_ADSS_PWM_CLK>;
+> +        assigned-clock-rates = <100000000>;
+> +        #pwm-cells = <2>;
+> +    };
+> 
+> -- 
+> 2.51.1
+> 
+> 
 
