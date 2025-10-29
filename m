@@ -1,61 +1,62 @@
-Return-Path: <linux-arm-msm+bounces-79517-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-79518-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7B293C1C7B3
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Oct 2025 18:37:38 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 86BECC1C6B7
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Oct 2025 18:24:31 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id C0DCA964CEB
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Oct 2025 16:10:59 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 66B79406046
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Oct 2025 16:13:24 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D4EC634B42B;
-	Wed, 29 Oct 2025 16:08:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6A9682E6CBC;
+	Wed, 29 Oct 2025 16:12:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="T0Prl2kN"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="UC9ND6H1"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A855E34B41E;
-	Wed, 29 Oct 2025 16:08:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D6E22D3EF6;
+	Wed, 29 Oct 2025 16:12:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761754107; cv=none; b=KrNK09Srfu8EwWlj59xjLIzXjvSz5SkeXy2hmOtzICjRr35b0PnRfJki6N7Q6LjaTxfCaZ2m6r5SSRLNa5+xRxH1jSUSyx2kEbFxMG4eXXj9EZOnWnF33293feRhQt42x2Kz4DZXvXr+NQbfk5H4wkC9y1JeLYGN00pSVwKKFIM=
+	t=1761754341; cv=none; b=KHUeE5Afpz1hdXnkCVdrvYDNgd1HpTUuRdOHZLXYVCcPGIqxVLL45Cm8RFrXty+H/x3qhIGuypQEkjCpReuvwDj+1Hvozu/VP03rGqIbEjIqKViJytdSM/XyiPwFXEHhh4niWafCpe/edm0EXBIdTToqzQSMaLJtQldT4AM4Jsg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761754107; c=relaxed/simple;
-	bh=M9VUXQ0sGm4MCTwj4cZe2NEqjEY3c4DzycPRMT5gMPQ=;
+	s=arc-20240116; t=1761754341; c=relaxed/simple;
+	bh=OiHeyOB5BxQZi5pzwSbzaZYMVNw95ZMmtCxK/6h1kAk=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=auL2zX6Nc7eeZriWqWCW09BsgZ6Pfp+ryrqOqAnBQwQfrISZyymFggJVzSnEp/GjQMVNlWUCb9f19cUECTNQCoIKUPXlloLQq+JZjHa8BUbvjDvyyz8K1eL38SYND6pOOg8tH8N+jIge1iYQJMZChXXTsgjSd7oku9/xyCU4PRs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=T0Prl2kN; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 517DDC4CEF7;
-	Wed, 29 Oct 2025 16:08:26 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=JjYZ7ur/pREjtO7XaSILrVeAquTS4IXt8roQvZtCHTJ+JYHPWpVuDBC0+kSmEqmS5WaWu5SEWH5qBPhhio1gmgQmUhu/qgJCNlgfxjiE8dNTETsyfKyOXAccE35B0NTTM8csw1432I+BcMLQnqHKZS4wdXjZ3PCp/ApBwtQLyp0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=UC9ND6H1; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9C47C4CEF7;
+	Wed, 29 Oct 2025 16:12:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1761754107;
-	bh=M9VUXQ0sGm4MCTwj4cZe2NEqjEY3c4DzycPRMT5gMPQ=;
+	s=k20201202; t=1761754340;
+	bh=OiHeyOB5BxQZi5pzwSbzaZYMVNw95ZMmtCxK/6h1kAk=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=T0Prl2kN0ilDjqzLDqH9l8QDBctE4hNV7ar7kS5HzEOGYHeGU2+O45IJHnDaUtmtY
-	 AqQqebI1WpSj4wOqSrSawSR9osPq3eXWa/ducp9RppYpS0UFr/WuyM9/znrxwqWa4/
-	 sA0DowkBFR/+U4KhGGu6urT5Zd8aHVNCHtDipzUMzIE9gtaaD4E+lkAFkoM+ecv7e4
-	 F4vylNdD4NzYHD3+yaTO8bq4LXDLzgcXyeiWBBp4O9OXh1ZPapjLw3WC1uD+hgmH1m
-	 ggj20qtOmE9eYC1ePD7w63cp6HN0bcKCfdpM9bvrSFBfz+0jvq9Pv684GPpILPQim7
-	 1qGrvRiG/vZrA==
-Date: Wed, 29 Oct 2025 11:11:30 -0500
+	b=UC9ND6H1E6ZGEId8P98ZrE79+fb++RvGPSrWhvzSD9YTD0v1rVcitkYtvc3T+ROWL
+	 ftAEbRap9WJmDVMwecg80NXAatnN3VanEEED6mcD+BBqyR+dI6cbRPEEuTvchTxdPQ
+	 tYY1wEISxXLUmSUHAYmSu3NQMEahHXDHmNhQiiw6dKgrrfy15gNadHb+Na+sh1KFXo
+	 Q9WeCcQ2SYTOMGWIsSUwShUniTzV6O83mjNMnI4CoiaCtWg1SaN/MqRvjy9E+0OWTg
+	 LVU4zEr9lt+8brgrHd5Rzqga8t3epmBIqY0FPzhS1kfpEyAVfM9xMdOGAQtMnQMT/T
+	 QQkxLR+1f4ReA==
+Date: Wed, 29 Oct 2025 11:15:24 -0500
 From: Bjorn Andersson <andersson@kernel.org>
-To: Christian Marangi <ansuelsmth@gmail.com>
-Cc: Andy Shevchenko <andriy.shevchenko@linux.intel.com>, 
-	Ilia Lin <ilia.lin@kernel.org>, "Rafael J. Wysocki" <rafael@kernel.org>, 
-	Viresh Kumar <viresh.kumar@linaro.org>, Konrad Dybcio <konradybcio@kernel.org>, 
-	Raag Jadav <raag.jadav@intel.com>, Arnd Bergmann <arnd@arndb.de>, linux-arm-msm@vger.kernel.org, 
-	linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 2/3] soc: qcom: smem: better track SMEM uninitialized
- state
-Message-ID: <qy3d2wqqi7y2l6lyjrlsjf4dlzoigvawwze7ulapjujozi7lhq@7tluyf4j6nbu>
-References: <20251029133323.24565-1-ansuelsmth@gmail.com>
- <20251029133323.24565-2-ansuelsmth@gmail.com>
- <aQIyZfQ-Tvxmh6vL@smile.fi.intel.com>
- <69023398.df0a0220.25fede.8d9c@mx.google.com>
+To: Krzysztof Kozlowski <krzk@kernel.org>
+Cc: Jingyi Wang <jingyi.wang@oss.qualcomm.com>, 
+	Manivannan Sadhasivam <mani@kernel.org>, Jassi Brar <jassisinghbrar@gmail.com>, 
+	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+	Conor Dooley <conor+dt@kernel.org>, aiqun.yu@oss.qualcomm.com, tingwei.zhang@oss.qualcomm.com, 
+	trilok.soni@oss.qualcomm.com, yijie.yang@oss.qualcomm.com, linux-arm-msm@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, devicetree@vger.kernel.org
+Subject: Re: [PATCH v2 1/2] dt-bindings: mailbox: qcom: Add IPCC support for
+ Kaanapali Platform
+Message-ID: <l6ja2uni4grnhicis3xksmco65l5axodwg6umpomhkssuc4ja5@zy33evwbv3zy>
+References: <20251029-knp-ipcc-v2-0-8ba303ab82de@oss.qualcomm.com>
+ <20251029-knp-ipcc-v2-1-8ba303ab82de@oss.qualcomm.com>
+ <k2wgpzkfklso42nsd6w527gqiadgdb235kzmvgk4wy27vievir@vlyxti5y7yan>
+ <cdfde03c-0fa1-4142-87b6-7c023e0b5c0d@kernel.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -64,72 +65,42 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <69023398.df0a0220.25fede.8d9c@mx.google.com>
+In-Reply-To: <cdfde03c-0fa1-4142-87b6-7c023e0b5c0d@kernel.org>
 
-On Wed, Oct 29, 2025 at 04:32:35PM +0100, Christian Marangi wrote:
-> On Wed, Oct 29, 2025 at 05:27:33PM +0200, Andy Shevchenko wrote:
-> > On Wed, Oct 29, 2025 at 02:33:20PM +0100, Christian Marangi wrote:
-> > > There is currently a problem where, in the specific case of SMEM not
-> > > initialized by SBL, any SMEM API wrongly returns PROBE_DEFER
-> > > communicating wrong info to any user of this API.
-> > > 
-> > > A better way to handle this would be to track the SMEM state and return
-> > > a different kind of error than PROBE_DEFER.
-> > > 
-> > > Rework the __smem handle to always init it to the error pointer
-> > > -EPROBE_DEFER following what is already done by the SMEM API.
-> > > If we detect that the SBL didn't initialized SMEM, set the __smem handle
-> > > to the error pointer -ENODEV.
-> > > Also rework the SMEM API to handle the __smem handle to be an error
-> > > pointer and return it appropriately.
+On Wed, Oct 29, 2025 at 04:47:17PM +0100, Krzysztof Kozlowski wrote:
+> On 29/10/2025 16:16, Bjorn Andersson wrote:
+> > On Wed, Oct 29, 2025 at 01:15:09AM -0700, Jingyi Wang wrote:
+> >> Add the physical client ids and binding for Kaanapali platform. Physical
+> >> client IDs instead of virtual client IDs are used for qcom new platforms
+> >> in the Inter Process Communication Controller (IPCC) driver as virtual to
+> >> physical mapping logic is removed in HW.
 > > 
-> > ...
+> > Happy to see the description of what changed wrt physical vs virtual
+> > client IDs, but you're leaving the task of figuring out how this
+> > explanation is applicable to the imagination of the reader.
 > > 
-> > >  	if (le32_to_cpu(header->initialized) != 1 ||
-> > >  	    le32_to_cpu(header->reserved)) {
-> > >  		dev_err(&pdev->dev, "SMEM is not initialized by SBL\n");
-> > > +		__smem = ERR_PTR(-ENODEV);
-> > >  		return -EINVAL;
-> > >  	}
+> > Nobody knows that the values in dt-bindings/mailbox/qcom-ipcc.h are
+> > "virtual client IDs", so it's not clear that you're trying to provide an
+> > explanation to why a new, platform-specific, header file is needed here.
 > > 
-> > I find this a bit confusing. Why the error code returned to the upper layer is
-> > different to the stored one?
-> >
+> > 
 > 
-> It's INVAL for probe. But for any user of SMEM it's NODEV as there isn't
-> an actual SMEM usable.
 > 
-> Totally ok to change the error condition in probe if maybe NODEV is
-> better suited. I assume there isn't a specific pattern of the correct
-> error condition in probe.
+> Physical or virtual, standard expectation is that they are used by the
+> driver. This does not happen here, so what do they exactly represent?
+> Which part of SW ABI?
 > 
 
-I'd say ENODEV represents the error better than EINVAL, so I don't have
-any concerns with you changing the return value.
+I was under the impression that they would be used only in DeviceTree
+source, and the driver simply uses the values it reads at runtime.
 
-> > ...
-> > 
-> > Also, the series of patches should include the cover letter to explain not only
-> > series background but additionally
-> > - how it should be applied
-> > - if it has dependencies
-> > - etc
-> > 
-> 
-> Didn't add one they are trivial patch but I can add it if needed... it's
-> pretty stable code so no dependency or branch target
-> 
-
-Specifically, I should merge patch 1 and 2 through the qcom/soc tree,
-and patch 3 can be merged completely independently through the cpufreq
-tree.
+But perhaps my memory is failing me, it's been a while since we
+discussed this internally. Either way, the commit message should
+document this, so I don't have to remember...
 
 Regards,
 Bjorn
 
-> > 
-> > 
-> 
-> -- 
-> 	Ansuel
+> Best regards,
+> Krzysztof
 
