@@ -1,76 +1,79 @@
-Return-Path: <linux-arm-msm+bounces-79473-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-79474-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id E1C17C1AF71
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Oct 2025 14:53:00 +0100 (CET)
+Received: from ams.mirrors.kernel.org (ams.mirrors.kernel.org [213.196.21.55])
+	by mail.lfdr.de (Postfix) with ESMTPS id C5E1FC1AD8F
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Oct 2025 14:43:18 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 86E991B22AC0
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Oct 2025 13:43:27 +0000 (UTC)
+	by ams.mirrors.kernel.org (Postfix) with ESMTPS id 4B73C34B5D3
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Oct 2025 13:43:18 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8ED0C548EE;
-	Wed, 29 Oct 2025 13:33:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 537D4271454;
+	Wed, 29 Oct 2025 13:33:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="JB6FDNwu"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="THiaqa9J"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f49.google.com (mail-wm1-f49.google.com [209.85.128.49])
+Received: from mail-wm1-f42.google.com (mail-wm1-f42.google.com [209.85.128.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9B721C5D46
-	for <linux-arm-msm@vger.kernel.org>; Wed, 29 Oct 2025 13:33:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94CB91DF994
+	for <linux-arm-msm@vger.kernel.org>; Wed, 29 Oct 2025 13:33:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761744816; cv=none; b=TJ6ZEDGTtvb/FXlnvxblJhJ8++GnWZzThwsjZNLgIMkbu1jBq9bn5G7KL3G9k/o0bg5QUF/gFV7REywbaOcv8exJMDWLGu1pAcWSzUSx1Dl6ZI1qS2Mu20mU6NF0kxZPmvCFnG+cfP4jvjjA+ONqi/TNHsTlIPtn5hnRBxi4OZQ=
+	t=1761744819; cv=none; b=X6tDxaP/TWNslo8Y6Dy/17SMLv8ek+5RPRqtoQOJNnLdFmkym6EbjINxL/i9cbbYUHbK242nXelfFpzfQ4pM/73rf919Gqpac3WdAgfCEFb4mEtLRTx8ixDZTs7qPfPW+BztLHc+S9Dj+8lEYbM/7c4sYCwc358qWLC6ocsgqDQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761744816; c=relaxed/simple;
-	bh=nsjttZq8PuEoDQMx1bwWfoY1j5ZCVlCBFQu8V8UWH+M=;
-	h=From:To:Subject:Date:Message-ID:MIME-Version; b=NGrmjVVjNBFutCqHkeoxc6p7Be4lCGYp+hZUSNcILyf0Yr/LfZrycIYm+hgWoxXbczLgt8/jPeA5vEkw3Cyb16dEfHWckjcoEccZq/qOHNouJq1X5z6dcVPzc+AihnVIedMPLz8iRLH205v3abRmGQ2KtJetTGPiHrkpgAFWTBU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=JB6FDNwu; arc=none smtp.client-ip=209.85.128.49
+	s=arc-20240116; t=1761744819; c=relaxed/simple;
+	bh=Y8ZLQ/SYOzXImyS22Ym7aiIdnHdMzavchNbXR3fIpBs=;
+	h=From:To:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=k/UqPGg5A2c9sApWZ7ZUQJtEAYqm4kipcUgpF0i5WiqsZM7sRIuIwKw6xLJGoMdduNX7KB8nB2hz+1CYMPqdHu1YAJxgGFdAY2feok8+js2Rr6YscwylRliHqx2cbAZtnD8FY9oGe3YUyMfELb4w1zN3mn/eBlZiVid2AnPJhag=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=THiaqa9J; arc=none smtp.client-ip=209.85.128.42
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-wm1-f49.google.com with SMTP id 5b1f17b1804b1-475dae5d473so45182845e9.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 29 Oct 2025 06:33:34 -0700 (PDT)
+Received: by mail-wm1-f42.google.com with SMTP id 5b1f17b1804b1-4710022571cso75439205e9.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 29 Oct 2025 06:33:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1761744813; x=1762349613; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:to
-         :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=WF7nqrj2THb4vlhOESgpe7tcZwa84JrbSuJCtvoqqIc=;
-        b=JB6FDNwuXCx0TpgMywH0OPZx9zz5uJmQipNj2JloxT2sHFCDAKvfxQP2fTm8wuk2jt
-         0dlkrAHs9wEzYQ8dnjyGRAXigIfF0TBJW93o/tui4CcyouUlAokHH1Xr/1Ogs21cj+in
-         QzX+ogujvTF330RfPosjmJ8TuRisFQcTrleBUXH3Zrh/uB4VTacrlHeVT1uX2l/TvSeC
-         juuaQiP0z6c9nBFWLU6MrVnhzCY1Gk0K+J5V5Fcb49WZLbVvrSFhlNjuMFIRTpFmtzKx
-         VsUEoQPJZTfPQLbWS+AEWT+lfuRVv2SuPti3iizrCvv8yVWNYw749MEFNO1/UBB1h8PX
-         F0JA==
+        d=gmail.com; s=20230601; t=1761744815; x=1762349615; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=o4H4p7cAGznM+u0vakSfKHlmdigUWGLnzD2FSausLfI=;
+        b=THiaqa9JVIb7gHrsYfX/YS+y4WVAi3Cd8dNd985JoCbtHCldDzuPTo1UrDQNxJ6wy/
+         OSBp/e28WY9s6ucsKpnoV4ZMzCwTGWXANQ/KafXU/JErVv6L65yGmlmeTUHyisWr4soi
+         iXJq7Bz52TQ6H+jmBDpI1ZDhe22zRTKb89ImOgws6BGhimbTWlJoIo6eb8nOEiLGv80M
+         umGtbj1W9iHtZ5MPn4Lgs80wqmGizqwq+I+ZiHaOf8h+ItQyYuyX0nSLbOAPXmnPJBA0
+         TNQhsWsc5pgrUWBLB1YX6CfLD/iPY7tip/igGV2egvbR7C/ZNP9omuFdjZDErSWAc3lU
+         2m9A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1761744813; x=1762349613;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:to
-         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=WF7nqrj2THb4vlhOESgpe7tcZwa84JrbSuJCtvoqqIc=;
-        b=euRw4Nj2V3mvjOPcC3a04bQ8WWAOoV1Jgwy4cEqvSOC8Ko/28SmEDAc5IKuOJBQyQd
-         h2u/PoJGHeRqBV/ytuC7Yk5JHoxr1YdooNKRbBj4loqdB0NkYBongnwEV97F+8zTiA7a
-         aChs5QRqz9Qb/xG/Oo4Nt+E12xtDsaefY/BtTBIAFEfHrvUuEJ00+DKTJco8ih5bGaHq
-         fLJrfvErL1FfVwEi5zrzulrQZXNimMmfUeKfeG+Cy6A7plP6JrOO21aQ6O3VMUtLc5/R
-         G00nOg6/kHnHdqYENcXLiu08Ca4/scPOspBNG7yRHrhxvbEB0R8K+eLBa1yz9nsIjg/H
-         BvbQ==
-X-Forwarded-Encrypted: i=1; AJvYcCXWxRnc3GK7mC+lVPyxP68ObD7geExlA5MU2RfHOCqvLFgCNMUk1cIAkR6nfoZNDj8GBy8Q23I0ywRYvfYv@vger.kernel.org
-X-Gm-Message-State: AOJu0Yxvj5QNm5fbiRNAChd2CW+hvx8zqk+6UaYNWV7pGy/OaRQzpHFZ
-	EKuqmPk86WiNKRd3C0/M+3Ld89GtQ2hgg0YIra6jSq8njgeacHAaLjpa
-X-Gm-Gg: ASbGncvMzOIJIK8tnKg8cXXdtLzaHXWfKd+UH8UIJk2H3/lSjs13Fdo/F8AvvfzfmGh
-	+k3bTixlu1hvfgZs7vYr4dib3Fhl8GJT1wO5QW2SLEQQyznSm/KUHD6j1FuLby9uIThrrxnI7oR
-	v9eXXsrXHz7GJgr6w6nvHYeM8Y+q4Bgswtc9LFt40WaGG36DxaIZaCUN7Zgq6J1oXlo1btyd2+g
-	U6aCvy5iPo29c1Q4Z/N+yzDpReNLQX1S7Cg6uQFKlp1oHyn+HeWpDN37bOTzHeajH8Khgp4r26T
-	1D8B8jlmmQSr7Jnd+PqJK8ugngSVhKBbBHLyKq2QngyUHSIc1MlK2ORXav+C/QXphr+iaaVXz4r
-	eDKeKQTK5sP+sDeOWf0lVEZLv4oqY7YbcGC1wtHUAbEDkpf1I1SXpNBwN1jwcFlC4ZCPRGRhKmq
-	KFcU2zzP365BG0lDdbeUAWW8UPwzvxEg==
-X-Google-Smtp-Source: AGHT+IH1wnB+c+Tv3QvNjludDqom86fj/5j7GLlptXYKIF9eMEqcj/69GJzxgHdIDmKX/xBciiwWGw==
-X-Received: by 2002:a05:600c:37cd:b0:46e:1fb9:5497 with SMTP id 5b1f17b1804b1-4771e360859mr25948655e9.18.1761744813034;
-        Wed, 29 Oct 2025 06:33:33 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1761744815; x=1762349615;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=o4H4p7cAGznM+u0vakSfKHlmdigUWGLnzD2FSausLfI=;
+        b=V73HYLIaW65iJH9NRmTpZLN//ert/enO2wuVZdqyvIDtgLUClSDsCjJ5z0sMHiNEoX
+         MqAF0tOt3qx17rcHcjtQEgthAgsdk+NZqChyTqfNN8dh8fQhwRUzYZUFbKLfMcXSKSQ3
+         CItqgzjL1X5UJv1pLMcUEShB0+m3owGGw+FDCVxUkL1rUYlI2hrW6MKoj3kRKTJrxvct
+         xHZ32ti8ZGTWB/eeviRshe5ND1VZ6UJuD+ZufPOUaYaAtWubtOj4H1H7CljSL2HqOoyj
+         hzA/liE3AK0fQqApRjRXiwH6qLnRUwUEUabRcgc9efo6iX0nuyNN02N7TbRbSv9kvr9/
+         f2Qg==
+X-Forwarded-Encrypted: i=1; AJvYcCUuwI71FJ3CSxYZzKI5YOeyrnRDkFvQIA6jGnqc1M3qUvyZa7qORtudy7omJaW2tV72JP7VcoZ4Oj8S1FrP@vger.kernel.org
+X-Gm-Message-State: AOJu0YzT8pPJiAzPoRjhMq5YZRUULZqik9Jt/m9emSlfirvOfJMP4QHs
+	isPKZxwg6AQ14R/67mKbY5yaeDjAfikyhqjkvX57xHFBkQR2UiD9oD9q
+X-Gm-Gg: ASbGncs71EHR+PqZ2O0M7WEwJL1VzI86JKhWZNbSM0zNi+HEo5zdEAtI2I2WsLRcRkt
+	mDbKb860NjNnzLoypsqCijKiQdbesSAosGR1KduivCE2B/9xrU/00eg8de9OB7DVcfN1N3oD3oo
+	tJADBYiP+hQFzVn8vfrC4SA974qL/1lTPltdXP5wtYSM3mZyqTkofn4KefQrWbr3QwT1si9CWsh
+	bDsUAsPggbgo7SDrW4qOqxGJQxTLAS4NrdV4FPHEE2K5jecsl6Gez2uc/SLXtSV73A7V2UXUJQz
+	C9rC9iKUnarq3AqUlJqVPWZ0fGOkPHxMtNVHv+1OLw3s+YtBZk90W1O+9F7h/nlXMgPfevklRcA
+	JnGUmqbmMbgTjJSFdL8RDLK/LYAkMld9GNM6+t0UN8L1FlKj8Pt4bcZGx/bY2B34dLpDg0+gGER
+	LLSMmNBGmVTdcOvQoPknEaoNAC7EqcAw==
+X-Google-Smtp-Source: AGHT+IGKTaGAZFOPryBpj8t36omqPXrDXVW3wtFaTSngpELE8eCJOJgMukJnq0llCfEkdriy+fkMCQ==
+X-Received: by 2002:a05:600c:46ca:b0:475:da13:2566 with SMTP id 5b1f17b1804b1-4771e20b2famr26010825e9.35.1761744814695;
+        Wed, 29 Oct 2025 06:33:34 -0700 (PDT)
 Received: from Ansuel-XPS24 (93-34-90-37.ip49.fastwebnet.it. [93.34.90.37])
-        by smtp.googlemail.com with ESMTPSA id 5b1f17b1804b1-4771e387a14sm47955195e9.3.2025.10.29.06.33.31
+        by smtp.googlemail.com with ESMTPSA id 5b1f17b1804b1-4771e387a14sm47955195e9.3.2025.10.29.06.33.33
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 29 Oct 2025 06:33:32 -0700 (PDT)
+        Wed, 29 Oct 2025 06:33:33 -0700 (PDT)
 From: Christian Marangi <ansuelsmth@gmail.com>
 To: Ilia Lin <ilia.lin@kernel.org>,
 	"Rafael J. Wysocki" <rafael@kernel.org>,
@@ -84,10 +87,12 @@ To: Ilia Lin <ilia.lin@kernel.org>,
 	linux-arm-msm@vger.kernel.org,
 	linux-pm@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH 1/3] err.h: add ERR_PTR_CONST macro
-Date: Wed, 29 Oct 2025 14:33:19 +0100
-Message-ID: <20251029133323.24565-1-ansuelsmth@gmail.com>
+Subject: [PATCH 2/3] soc: qcom: smem: better track SMEM uninitialized state
+Date: Wed, 29 Oct 2025 14:33:20 +0100
+Message-ID: <20251029133323.24565-2-ansuelsmth@gmail.com>
 X-Mailer: git-send-email 2.51.0
+In-Reply-To: <20251029133323.24565-1-ansuelsmth@gmail.com>
+References: <20251029133323.24565-1-ansuelsmth@gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -96,34 +101,90 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Add ERR_PTR_CONST macro to initialize global variables with error
-pointers. This might be useful for specific case where there is a global
-variables initialized to an error condition and then later set to the
-real handle once probe finish/completes.
+There is currently a problem where, in the specific case of SMEM not
+initialized by SBL, any SMEM API wrongly returns PROBE_DEFER
+communicating wrong info to any user of this API.
+
+A better way to handle this would be to track the SMEM state and return
+a different kind of error than PROBE_DEFER.
+
+Rework the __smem handle to always init it to the error pointer
+-EPROBE_DEFER following what is already done by the SMEM API.
+If we detect that the SBL didn't initialized SMEM, set the __smem handle
+to the error pointer -ENODEV.
+Also rework the SMEM API to handle the __smem handle to be an error
+pointer and return it appropriately.
+
+This way user of the API can react and return a proper error or use
+fallback way for the failing API.
 
 Signed-off-by: Christian Marangi <ansuelsmth@gmail.com>
 ---
- include/linux/err.h | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ drivers/soc/qcom/smem.c | 23 ++++++++++++++---------
+ 1 file changed, 14 insertions(+), 9 deletions(-)
 
-diff --git a/include/linux/err.h b/include/linux/err.h
-index 1d60aa86db53..a38071881b20 100644
---- a/include/linux/err.h
-+++ b/include/linux/err.h
-@@ -41,6 +41,14 @@ static inline void * __must_check ERR_PTR(long error)
- 	return (void *) error;
+diff --git a/drivers/soc/qcom/smem.c b/drivers/soc/qcom/smem.c
+index 592819701809..d6136369262a 100644
+--- a/drivers/soc/qcom/smem.c
++++ b/drivers/soc/qcom/smem.c
+@@ -353,8 +353,12 @@ static void *cached_entry_to_item(struct smem_private_entry *e)
+ 	return p - le32_to_cpu(e->size);
  }
  
-+/**
-+ * ERR_PTR_CONST - define a const error pointer.
-+ * @error: A negative error code.
-+ *
-+ * Like ERR_PTR(), but usable to initialize global variables.
+-/* Pointer to the one and only smem handle */
+-static struct qcom_smem *__smem;
++/*
++ * Pointer to the one and only smem handle.
++ * Init to -EPROBE_DEFER to signal SMEM still has to be probed.
++ * Can be set to -ENODEV if SMEM is not initialized by SBL.
 + */
-+#define ERR_PTR_CONST(error) ((void *)(error))
-+
- /* Return the pointer in the percpu address space. */
- #define ERR_PTR_PCPU(error) ((void __percpu *)(unsigned long)ERR_PTR(error))
++static struct qcom_smem *__smem = ERR_PTR_CONST(-EPROBE_DEFER);
+ 
+ /* Timeout (ms) for the trylock of remote spinlocks */
+ #define HWSPINLOCK_TIMEOUT	1000
+@@ -508,8 +512,8 @@ int qcom_smem_alloc(unsigned host, unsigned item, size_t size)
+ 	unsigned long flags;
+ 	int ret;
+ 
+-	if (!__smem)
+-		return -EPROBE_DEFER;
++	if (IS_ERR(__smem))
++		return PTR_ERR(__smem);
+ 
+ 	if (item < SMEM_ITEM_LAST_FIXED) {
+ 		dev_err(__smem->dev,
+@@ -685,10 +689,10 @@ static void *qcom_smem_get_private(struct qcom_smem *smem,
+ void *qcom_smem_get(unsigned host, unsigned item, size_t *size)
+ {
+ 	struct smem_partition *part;
+-	void *ptr = ERR_PTR(-EPROBE_DEFER);
++	void *ptr;
+ 
+-	if (!__smem)
+-		return ptr;
++	if (IS_ERR(__smem))
++		return __smem;
+ 
+ 	if (WARN_ON(item >= __smem->item_count))
+ 		return ERR_PTR(-EINVAL);
+@@ -723,8 +727,8 @@ int qcom_smem_get_free_space(unsigned host)
+ 	struct smem_header *header;
+ 	unsigned ret;
+ 
+-	if (!__smem)
+-		return -EPROBE_DEFER;
++	if (IS_ERR(__smem))
++		return PTR_ERR(__smem);
+ 
+ 	if (host < SMEM_HOST_COUNT && __smem->partitions[host].virt_base) {
+ 		part = &__smem->partitions[host];
+@@ -1182,6 +1186,7 @@ static int qcom_smem_probe(struct platform_device *pdev)
+ 	if (le32_to_cpu(header->initialized) != 1 ||
+ 	    le32_to_cpu(header->reserved)) {
+ 		dev_err(&pdev->dev, "SMEM is not initialized by SBL\n");
++		__smem = ERR_PTR(-ENODEV);
+ 		return -EINVAL;
+ 	}
  
 -- 
 2.51.0
