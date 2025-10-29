@@ -1,211 +1,202 @@
-Return-Path: <linux-arm-msm+bounces-79399-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-79400-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [142.0.200.124])
-	by mail.lfdr.de (Postfix) with ESMTPS id 93853C1975A
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Oct 2025 10:47:30 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1EAE6C196EB
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Oct 2025 10:43:26 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id E93595058AC
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Oct 2025 09:40:22 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 2680646202B
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Oct 2025 09:42:06 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C19D332E131;
-	Wed, 29 Oct 2025 09:38:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8C1EC32AAB2;
+	Wed, 29 Oct 2025 09:39:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="Wk+CjrNV";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="NRT590Hv"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="wPGfSKT/"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qk1-f178.google.com (mail-qk1-f178.google.com [209.85.222.178])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BEB8328621
-	for <linux-arm-msm@vger.kernel.org>; Wed, 29 Oct 2025 09:38:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25FF032AAC1
+	for <linux-arm-msm@vger.kernel.org>; Wed, 29 Oct 2025 09:39:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761730683; cv=none; b=b6RoRifva4EcuTPCOA7sY4JhJ2QGiQ+mSx7KYkWrPYJ880TG4MgE47EoD3rkQFGIJxaqnmpmnj2bFt7jF8Yaf6VqBtkokM+ZSpFotmkvf50QgN7jxf3aXNrLdoQCHds6E+6lnMlpdlP8ROs5tfdDv8DnTAHd6UasVFxVCSbiOmQ=
+	t=1761730794; cv=none; b=KQkZJYNGiCA3mWS/E+9v7HU8nPdtnwnMaD+V5MZLVvQMqv21g+gC+lv6kVhWPE8DuLlSnRwRdIJrrugquJ3G/Jz5j7v1OausEi+4Tb47zltXpVixc9nFV4F4wWLDxetk+2KiJoUu8x2ctwrgNT3N7MeNMEKNKmGhS5faJIuOALo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761730683; c=relaxed/simple;
-	bh=JC6+w4UGAYirolruYvWIOp4qN/wza/Ui3WiUhC+0WE4=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=Kyd7A6eYlahSuVgMm8qmv4sdfhkvo0O2XYxTgq7qWFq6PCLaB8cbZMUeEFHIIVQR0EOh8VeJJFnSIfVzlNcAVtFsdLO5/h+mXlFbs5Y+uwVqFHi9Z/sq+BJQP0xWUAHZ21Rg+JTg+IiI6lfHhU/6zgSZ/Wi83OtDDt456iuRVCw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=Wk+CjrNV; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=NRT590Hv; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 59T8TiZw4135571
-	for <linux-arm-msm@vger.kernel.org>; Wed, 29 Oct 2025 09:38:01 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:message-id
-	:mime-version:subject:to; s=qcppdkim1; bh=jXxVeddQ75KBTjT8urxprG
-	/yANbxXDxuHHoHCkUPtho=; b=Wk+CjrNV1aAcP6YZ81jZKS9XHxsPWAZORVEWe6
-	YXEKQr0FlOq+ZD5zbaKmOt+15D+0kkX3rneRMODRwQBiYwvYxPLPy/7gVUsBm2nz
-	07ksIHLOU1o1Di6BcIGCwwrSNa2ZgD2nmcO3iFOeH3FvGtPXGpHPgDtYnMqR25ub
-	QnpGrttd2MdxrXVfFSBTq+ZU5y+bnHTC5Btf1BxfoUcilsdN1bNiQoWKdFTQ70gJ
-	lAPIEY5T/jKnt0GQDx+t4DncgjiD+grMunqgWGjFM+C/aPCUgdF/ViqUgr9SF1kh
-	Kprs1S1BUNZmgBaedV2nhCrUYORjRo/AjlUJFTPkhE9loQPw==
-Received: from mail-pl1-f199.google.com (mail-pl1-f199.google.com [209.85.214.199])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4a3ff9r70y-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Wed, 29 Oct 2025 09:38:01 +0000 (GMT)
-Received: by mail-pl1-f199.google.com with SMTP id d9443c01a7336-2909e6471a9so47590825ad.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 29 Oct 2025 02:38:01 -0700 (PDT)
+	s=arc-20240116; t=1761730794; c=relaxed/simple;
+	bh=urnwJ0948OZAY6zDTK8e1ZFZ719514SR28lbeFJUqg4=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=RJT+jU97mnLlTaLDBYZI/OYAhaGrThTi4A1tTU7JhqkGA+crAv+Sjt26sbRNGAIuy28lyoFpVnqFzKAg6/IFKC4E0FerFlFo7uO4Za2o7xI/Sz6zPj8EHALE+6FwG5Bwb3z7SpKzrfbGJ4ICYpWDG0Cba2fo1mFje4K8g5wIq2M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=wPGfSKT/; arc=none smtp.client-ip=209.85.222.178
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-qk1-f178.google.com with SMTP id af79cd13be357-89ed2ee36b0so492508085a.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 29 Oct 2025 02:39:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1761730680; x=1762335480; darn=vger.kernel.org;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=jXxVeddQ75KBTjT8urxprG/yANbxXDxuHHoHCkUPtho=;
-        b=NRT590HvhsN9s8P90e/cjGpYMonRLWMeaGW5RtimC0eje4NrU8bs1A7LcHLfA+C8W0
-         vxNYbYbvmS5Id3CUazohGvick7v3Ye49k63skzx3gGJ0Lr1ggmhbvo1QrUAEN3CrHmin
-         guzvjuK/xTTCGlYLHjcf57Sy6n8zIRlBBvwscNAXH8hkvg1uXbBLjoQqjxkCeR64hADs
-         cQnW9M5ZDbeB61SZ11xDamDAoxsU+cAwKtkaJIf7VHKJXwIiJfMIfkAJMOPvG2SFTeQo
-         gHV4V2Y3JVkyWBCxgZA9Su7uitSACU1+LbxqN+vsGyCieQdcVosyCW8WAYWHB7mQOF6D
-         FZkw==
+        d=linaro.org; s=google; t=1761730791; x=1762335591; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=R+Rd5gslE+ZFZnAsPLhh3hhVOGomUEHbHKD97n8UNP4=;
+        b=wPGfSKT/hLUQDLu+IM3dvya6BTa5HIRiJPDXeQcIRHMMcvN9nJ5dTwWnUtnZ1MyQBJ
+         Ua2wkI3GDO8rRgOSa7zUo9Or7bg2WOTlpnxlI87SmPbgbaRsFEm6X8Yu16nYgsruQKIH
+         i4hw0qlda5N3rRGJ6gpqFzw/kOlownOZNCZ6KAkNoMt9t0MKU5Y6azqhQ8ODiYgu6U9y
+         O98EmsmxIzQqbxN2Hgmb7Nz+/GbeMwu+K00X9F2VSQEC8Fu3ptm9qPO50lnKb98lA4fb
+         XMNQ/c1dJZV4EPcZH7TYSe8VJpuVfR/UUepm3qvFrM6f3BZgatuZ7pyDLk1MyG92oAgY
+         g5Lw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1761730680; x=1762335480;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
+        d=1e100.net; s=20230601; t=1761730791; x=1762335591;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=jXxVeddQ75KBTjT8urxprG/yANbxXDxuHHoHCkUPtho=;
-        b=cOTog81HykFvA7sb5+iOYYRen8F77C/n7bQnKwmxow0+MD8uUWh3/1l7Xl2FFsQ8oa
-         4cBRJPOuUW2Omfb1VrZfCSzCQFnK0mMIGJMU3jlTGLh28Cyi3dE/y9YDp5Wbg0s4yFxj
-         NdDtYMU0oOfr/z2ousSJbi5dNB5VX6fHSWvUjJVD6Vc0wJikop8d9DtEIMKpJCVVCaxn
-         IrL5IMBOuh+e/GlkMZmdVqxpeZqN2E+X/7pYvllVMQmyQLo9JViiD7knnOG0cGN08N0z
-         77FxLxvFKZZSvM61D45X1tmgSLrM24wglIud6RJ4IiOiI1zw5qPldngDJAN0KQFs5ULC
-         V9iA==
-X-Gm-Message-State: AOJu0Yw4GbDTyawJo41GUrQ6ANHwmZd5vpJZg45rkg0rx5fHQUwwWPNh
-	3pbs2h5WxoTzHPdMpV3+d+fcbVlzpbT9XxIuW6OOXl0F6+Y9B67y+YCQO9PmUlDXpPP0TvnO5zw
-	pMSbCOqtl/+fGOkQEb33pk7lK6RQu/9rm997H9rAOF9dccHiNtbVT4H2MLI3ddY1AQ+IL
-X-Gm-Gg: ASbGncuC/QlpvQIOgQ4HGEQwLoeIjcYHVzsgpvMW9HmG5Jm3xBPkgbliI5wxPvmILTR
-	FSwc62wSsLLEzTNZXo6RbIgC3fu9drQvhoO0TgIYQFddthqW3KxG63X2HJzCBtS8sXe8ZG7Xnkd
-	m7BIgQWh/6F+lbKZoKH80tfw3RdCkzDc4voEh0WBZOywVvopIt8OeGue2zHSpzIIxUPGo49+QKy
-	gk4QV2hYoo6YolQ+3JOjYCVFyH8yn2bP3RsqXtI0BAe0GSFSo6DN2c3WkLMNNaQgNx2qQRqcuvx
-	KuHPG/ruF8xUip6vE2napnw7LQDUMKPZ7Vw5GhRXViYFPItJXUlEad0WcL3djHPaa/OCJAQlUuG
-	dU86HtGD8uFmA8f4MmuY8YKg=
-X-Received: by 2002:a17:903:1206:b0:28e:7fd3:57f2 with SMTP id d9443c01a7336-294def4764cmr24680035ad.49.1761730680473;
-        Wed, 29 Oct 2025 02:38:00 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHxdopI7TtLXoPbY3Gmaat4ZKTHDubtgAAQT6Szf0K6jOfcW8jjiLeCTo3u9Ouz0RtJlD5xIg==
-X-Received: by 2002:a17:903:1206:b0:28e:7fd3:57f2 with SMTP id d9443c01a7336-294def4764cmr24679705ad.49.1761730679956;
-        Wed, 29 Oct 2025 02:37:59 -0700 (PDT)
-Received: from hu-tdas-hyd.qualcomm.com ([202.46.22.19])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-29498cf4a53sm147588895ad.6.2025.10.29.02.37.56
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 29 Oct 2025 02:37:59 -0700 (PDT)
-From: Taniya Das <taniya.das@oss.qualcomm.com>
-Date: Wed, 29 Oct 2025 15:07:54 +0530
-Subject: [PATCH v3] clk: qcom: gcc-qcs615: Update the SDCC clock to use
- shared_floor_ops
+        bh=R+Rd5gslE+ZFZnAsPLhh3hhVOGomUEHbHKD97n8UNP4=;
+        b=iX/pJqJSuP4JSpoNnuIy0CghNzHvVoy2mA5HkG71kC/5EXmphO0ra85DeGQrRhg5j/
+         bZmhztJBA8TB/wE6//S9SnKs+URnwQ6KRPcHDE6jD7mQxj2gEFpSZdMr2SQrA/AK7wl0
+         FoxOaB3UdoFm5v5EVFfCxsDUW/Q3sB+NPTXppAy1o8PN+Z8xDn5d1SMlS9XVkwKfDbus
+         sDtme2MQdoGvdBupTZhMNdgWfSwTyqRzAgeGPWgs4DZuQTBmIqa8WDZKaHAYnFQ1oOza
+         FqK68gqz1dMd0BRso2qpmJ0aVL1DRigC2CX0VxmHbUH40mGumx2EWY2vWaOgIPymi/6E
+         usQw==
+X-Forwarded-Encrypted: i=1; AJvYcCWsgqFszdX+GhfL/KqZX51O/mgYssGElJJe/tb2vvFGx5zjXjolL7aVTT7F2KuevdLo8oV82IBXHgEiyHJ2@vger.kernel.org
+X-Gm-Message-State: AOJu0Yx6PMUjeIKiVMdqng22F9c6QRQyRBlml2VqqOnQgP0125jlj3Ml
+	jS5xgiB2uAnEYakxhDKBi+VV9unw1cxVxQji6Nb/antvu1mBoVQIBPthxVPpL8HspFzJeFoPhrt
+	hN11jczAwPmrSyaKSwEpf5AYdcrSThwUc9iCq0xzmtQ==
+X-Gm-Gg: ASbGncu1csQzjyR9u7fDjpW+E0AER90QZv6kwU06n9c03Og7aPLB+13DgP+YX02dJ/q
+	0G3/UaNJ1ZL0qaRRF+wVPQmZPD6qUiF9G18NIHqdGlamRB8TJjilfi8UY0inVBBnlbG4RGKJL7r
+	nhNKdiiIqAWBbFldt/GS3zzF1ffeuaDlQYETZTPYBNidTpFSUME3cvSJtUyMH0BQG0tV6Z/zDIp
+	JfgL8hA3G2BA6q/AOa1GFF5GCLZw9m9NJbDfRz/Cxa5QIT9DVZLHK4R+PKWI/3rcdpWnzGZu+K7
+	LbEhJjyFYNbsckLXc0VsrzBOQgk5
+X-Google-Smtp-Source: AGHT+IHqXSf1MiiiqnfsW/ioS/jj/mhb/BAEdrr3nKBvzCE+jcWgD9EFD8HQohkXivlPjhP7YZ3CSvcZ9+eiOBWkEyk=
+X-Received: by 2002:a05:620a:3704:b0:813:31ad:bf3d with SMTP id
+ af79cd13be357-8a8e436119dmr303015885a.12.1761730790824; Wed, 29 Oct 2025
+ 02:39:50 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20251029-sdcc_rcg2_shared_ops-v3-1-ecf47d9601d1@oss.qualcomm.com>
-X-B4-Tracking: v=1; b=H4sIAHHgAWkC/4XNwQ6CMAyA4VchOzuyVSDDk+9hDBlbgSXicNVFQ
- 3h3BwdPGi9N/ib9OjPC4JDYIZtZwOjI+WuK/S5jZtDXHrmzqRkIKIUSBSdrTBNMDw0NOqBt/EQ
- cdYVQSVV2WLF0OgXs3HNjT+fUg6O7D6/tS5Tr9g8YJZe8kF2talSmbeXRE+W3h74YP455Gmx1I
- 3wsKeCXBclSnS2tNro2Fr5Yy7K8AV2l+v4LAQAA
-X-Change-ID: 20250804-sdcc_rcg2_shared_ops-ea6e26185fe6
-To: Bjorn Andersson <andersson@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>, Dmitry Baryshkov <lumag@kernel.org>,
-        Taniya Das <quic_tdas@quicinc.com>
-Cc: linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Ajit Pandey <ajit.pandey@oss.qualcomm.com>,
-        Imran Shaik <imran.shaik@oss.qualcomm.com>,
-        Jagadeesh Kona <jagadeesh.kona@oss.qualcomm.com>,
-        Abel Vesa <abel.vesa@linaro.org>,
-        Taniya Das <taniya.das@oss.qualcomm.com>
-X-Mailer: b4 0.15-dev-aa3f6
-X-Proofpoint-ORIG-GUID: vBaPYLX2bKrKbQbxLe1dizbOoQQnzB32
-X-Proofpoint-GUID: vBaPYLX2bKrKbQbxLe1dizbOoQQnzB32
-X-Authority-Analysis: v=2.4 cv=Cf4FJbrl c=1 sm=1 tr=0 ts=6901e079 cx=c_pps
- a=JL+w9abYAAE89/QcEU+0QA==:117 a=fChuTYTh2wq5r3m49p7fHw==:17
- a=IkcTkHD0fZMA:10 a=x6icFKpwvdMA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8 a=KKAkSRfTAAAA:8
- a=DT-4WzK0eFhaf3B0yf8A:9 a=QEXdDO2ut3YA:10 a=324X-CrmTo6CU4MGRt3R:22
- a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDI5MDA3MiBTYWx0ZWRfXxYgbjxU3OHtN
- KsJYdtP/GcdTMQ32yW10rrDcJDXjO/ibVBTWm8Ecp7qst9arYHDMlY0JbsbQMB1aktITmtQ4Vg1
- eCNo2jcPDsAewLQ8QvyrIwDo8ppgT7XBr8FFm3ATLjQtnsVHZXkVRq11bgB/CZPZ0bxaSao9sBM
- /36HXBzFCua6naVoU3ueAERxNX5++TFP3+6ygjgVGqSnLfS+8ucvIbKfP0YoBPGXbUWoVEoN2HY
- mlwkyx44myat9PzHzyfT1aDFS0+XQXzmf1xDuOV0uqOPGl4T/PfI+VQxWFyEFkZ3sHpgUv7qxsv
- 5HB3ww4E+M0gYmxUD6vrV+hTmUaRRiP2O99wKKeqzC9QfHolkWCAdvLTPvXgtBMptaCM+mVK+s6
- VgRBXjzV5dy9mFiTvWDUkHiv2KAezw==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-10-29_04,2025-10-22_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- adultscore=0 suspectscore=0 phishscore=0 malwarescore=0 impostorscore=0
- clxscore=1015 priorityscore=1501 lowpriorityscore=0 spamscore=0 bulkscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2510240001 definitions=main-2510290072
+References: <20251027-cpu_cluster_component_pm-v1-0-31355ac588c2@oss.qualcomm.com>
+ <20251027-cpu_cluster_component_pm-v1-1-31355ac588c2@oss.qualcomm.com> <20251028-enigmatic-astonishing-husky-f2c47a@kuoka>
+In-Reply-To: <20251028-enigmatic-astonishing-husky-f2c47a@kuoka>
+From: Mike Leach <mike.leach@linaro.org>
+Date: Wed, 29 Oct 2025 09:39:39 +0000
+X-Gm-Features: AWmQ_bkH9LQFvaEP4xZtRhiFYXppvNFKfWjaQQ7mkEY-rNttgjUoHB7gFuBi_fs
+Message-ID: <CAJ9a7Vg1jR=UBWwQanvyW_-ucXQ1HWQha47oJCUL6vkfQwgpKQ@mail.gmail.com>
+Subject: Re: [PATCH 01/12] dt-bindings: arm: coresight: Add cpu cluster
+ tmc/funnel/replicator support
+To: Krzysztof Kozlowski <krzk@kernel.org>
+Cc: Yuanfang Zhang <yuanfang.zhang@oss.qualcomm.com>, 
+	Suzuki K Poulose <suzuki.poulose@arm.com>, James Clark <james.clark@linaro.org>, 
+	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Mathieu Poirier <mathieu.poirier@linaro.org>, Leo Yan <leo.yan@linux.dev>, 
+	Alexander Shishkin <alexander.shishkin@linux.intel.com>, Bjorn Andersson <andersson@kernel.org>, 
+	Konrad Dybcio <konradybcio@kernel.org>, kernel@oss.qualcomm.com, 
+	coresight@lists.linaro.org, linux-arm-kernel@lists.infradead.org, 
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	linux-arm-msm@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-Fix "gcc_sdcc2_apps_clk_src: rcg didn't update its configuration" during
-boot. This happens due to the floor_ops tries to update the rcg
-configuration even if the clock is not enabled.
-The shared_floor_ops ensures that the RCG is safely parked and the new
-parent configuration is cached in the parked_cfg when the clock is off.
+Hi,
 
-Ensure to use the ops for the other SDCC clock instances as well.
+On Tue, 28 Oct 2025 at 09:09, Krzysztof Kozlowski <krzk@kernel.org> wrote:
+>
+> On Mon, Oct 27, 2025 at 11:28:03PM -0700, Yuanfang Zhang wrote:
+> > Add the following compatible strings to the bindings:
+> > - arm,coresight-cpu-funnel
+> > - arm,coresight-cpu-replicator
+> > - arm,coresight-cpu-tmc
+>
 
-Fixes: 39d6dcf67fe9 ("clk: qcom: gcc: Add support for QCS615 GCC clocks")
-Reviewed-by: Abel Vesa <abel.vesa@linaro.org>
-Signed-off-by: Taniya Das <taniya.das@oss.qualcomm.com>
----
-Changes in v3:
-- Update commit subject gcc->gcc-qcs615 [Konrad]
-- Add RB-by from [Abel]
-- Link to v2: https://lore.kernel.org/r/20251024-sdcc_rcg2_shared_ops-v2-1-8fd5daca9cd2@oss.qualcomm.com
+These are redundant - the actual hardware has not changed - what has
+is how the device is powered up / down on the system
 
-Changes in v2:
-- Update the commit message as per comment [Dmitry, Konrad]
-- Link to v1: https://lore.kernel.org/r/20250804-sdcc_rcg2_shared_ops-v1-1-41f989e8cbb1@oss.qualcomm.com
----
- drivers/clk/qcom/gcc-qcs615.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+> We see that from the diff. Explain here the hardware instead.
+>
+> >
+> > Each requires 'power-domains' when used.
 
-diff --git a/drivers/clk/qcom/gcc-qcs615.c b/drivers/clk/qcom/gcc-qcs615.c
-index 9695446bc2a3c81f63f6fc0c98d298270f3494cc..5b3b8dd4f114bdcb8911a9ce612c39a1c6e05b23 100644
---- a/drivers/clk/qcom/gcc-qcs615.c
-+++ b/drivers/clk/qcom/gcc-qcs615.c
-@@ -784,7 +784,7 @@ static struct clk_rcg2 gcc_sdcc1_apps_clk_src = {
- 		.name = "gcc_sdcc1_apps_clk_src",
- 		.parent_data = gcc_parent_data_1,
- 		.num_parents = ARRAY_SIZE(gcc_parent_data_1),
--		.ops = &clk_rcg2_floor_ops,
-+		.ops = &clk_rcg2_shared_floor_ops,
- 	},
- };
- 
-@@ -806,7 +806,7 @@ static struct clk_rcg2 gcc_sdcc1_ice_core_clk_src = {
- 		.name = "gcc_sdcc1_ice_core_clk_src",
- 		.parent_data = gcc_parent_data_0,
- 		.num_parents = ARRAY_SIZE(gcc_parent_data_0),
--		.ops = &clk_rcg2_floor_ops,
-+		.ops = &clk_rcg2_shared_floor_ops,
- 	},
- };
- 
-@@ -830,7 +830,7 @@ static struct clk_rcg2 gcc_sdcc2_apps_clk_src = {
- 		.name = "gcc_sdcc2_apps_clk_src",
- 		.parent_data = gcc_parent_data_8,
- 		.num_parents = ARRAY_SIZE(gcc_parent_data_8),
--		.ops = &clk_rcg2_floor_ops,
-+		.ops = &clk_rcg2_shared_floor_ops,
- 	},
- };
- 
+So why is this not used to adjust the power handling in the driver? Or
+another attribute.
+Look at the CTI bindings - these can be associated with a CPU or be a
+system CTI - we look at the cpu attribute to differentiate, not have
+two separate compatibles.
 
----
-base-commit: 5c5a10f0be967a8950a2309ea965bae54251b50e
-change-id: 20250804-sdcc_rcg2_shared_ops-ea6e26185fe6
+Regards
 
-Best regards,
+Mike
+
+
+> >
+> > Signed-off-by: Yuanfang Zhang <yuanfang.zhang@oss.qualcomm.com>
+> > ---
+> >  .../bindings/arm/arm,coresight-dynamic-funnel.yaml | 23 +++++++++++++++++-----
+> >  .../arm/arm,coresight-dynamic-replicator.yaml      | 22 +++++++++++++++++----
+> >  .../devicetree/bindings/arm/arm,coresight-tmc.yaml | 22 +++++++++++++++++----
+> >  3 files changed, 54 insertions(+), 13 deletions(-)
+> >
+> > diff --git a/Documentation/devicetree/bindings/arm/arm,coresight-dynamic-funnel.yaml b/Documentation/devicetree/bindings/arm/arm,coresight-dynamic-funnel.yaml
+> > index b74db15e5f8af2226b817f6af5f533b1bfc74736..8f32d4e3bbb750f5a6262db0032318875739cf81 100644
+> > --- a/Documentation/devicetree/bindings/arm/arm,coresight-dynamic-funnel.yaml
+> > +++ b/Documentation/devicetree/bindings/arm/arm,coresight-dynamic-funnel.yaml
+> > @@ -28,19 +28,32 @@ select:
+> >    properties:
+> >      compatible:
+> >        contains:
+> > -        const: arm,coresight-dynamic-funnel
+> > +        enum:
+> > +          - arm,coresight-dynamic-funnel
+> > +          - arm,coresight-cpu-funnel
+>
+> Keep alphabetical sorting. We asked this multiple times already.
+>
+> >    required:
+> >      - compatible
+> >
+> >  allOf:
+> >    - $ref: /schemas/arm/primecell.yaml#
+> >
+> > +  - if:
+> > +      properties:
+> > +        compatible:
+> > +          contains:
+> > +            const: arm,coresight-cpu-funnel
+> > +    then:
+> > +      required:
+> > +        - power-domains
+>
+> Just move the allOf to the bottom like in example-schema.
+>
+> > +
+> >  properties:
+> >    compatible:
+> > -    items:
+> > -      - const: arm,coresight-dynamic-funnel
+> > -      - const: arm,primecell
+> > -
+>
+> Why do you remove this?
+>
+> > +    oneOf:
+> > +      - items:
+> > +          - const: arm,coresight-dynamic-funnel
+> > +          - const: arm,primecell
+> > +      - items:
+> > +          - const: arm,coresight-cpu-funnel
+>
+> Hm? Why do you need custom select if this is not primecell? And nothing
+> in commit msg explains why this is not primecell anymore.
+>
+> You have entire commit msg to say something useful, WHY you are doing
+> this, WHY you are doing it DIFFERENTLY. Don't say what you did - that's
+> obvious, we are capable of reading diffs.
+>
+> Best regards,
+> Krzysztof
+>
+
+
 -- 
-Taniya Das <taniya.das@oss.qualcomm.com>
-
+Mike Leach
+Principal Engineer, ARM Ltd.
+Manchester Design Centre. UK
 
