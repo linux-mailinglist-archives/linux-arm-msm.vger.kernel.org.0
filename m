@@ -1,57 +1,80 @@
-Return-Path: <linux-arm-msm+bounces-79525-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-79492-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5E289C1C423
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Oct 2025 17:54:05 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4DB22C1C5BA
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Oct 2025 18:07:20 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 24ACD1888BAD
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Oct 2025 16:48:09 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 924B3624AA5
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Oct 2025 15:34:01 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8EC722D63FC;
-	Wed, 29 Oct 2025 16:47:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2EB08339B3C;
+	Wed, 29 Oct 2025 15:32:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="PMc+qd+K"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="hxUI6nFL"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.9])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 626772848A8;
-	Wed, 29 Oct 2025 16:47:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C81C33F6;
+	Wed, 29 Oct 2025 15:32:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.9
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761756459; cv=none; b=qNw53gKCm56A5HPxXyQN+CVR3PAcP7tWi+FZh0jkIfP75WtGsb6Afwv8xbhJ3lbiE6ehxSEBArmKB//3BoZD1Jij82/N77Z9c6ZPpS0azNxkidE1FQKUHWbIN2eZ50x3cTv9cTIWo6kvFmgHztpGPbcNdK1QLu+6UOFN9kKkenI=
+	t=1761751976; cv=none; b=e6alufCLuaDRPgEbRijDkx02wSnQ5OZjubLr0YjKbpCqaDhm/MoCWdDJlWIplDCRlqJb30+b2qy3dJNHQChyCz9BBfsiptuTnNBlnJCBuoeQFydJCnaFEfh6NzgXKoMySX97/Mfcf87pNi+PH/QRhr5NZ0s5EEASpIs/P0nUU4E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761756459; c=relaxed/simple;
-	bh=pBcOOWGaRXezt8GRk5PoTNjC82ZTI+t9XQA0gwKB/hE=;
+	s=arc-20240116; t=1761751976; c=relaxed/simple;
+	bh=TxENEe7NQO6UcmjfLxpYlcw7Ossg4UvvqD86QkB1Oa8=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=BFCa7bMd7BXH4IVNjVQRLyRZqjdSy0TUYKMy/cUgWqBpcFmbZEbsLqOx3p0fckxhetKxdmIzkjvPgX4B++31dK/aadCH11YARDT6omGrrH5m9r+HvZ0homAr0ppFHI4aSpn0sq9RB6BWkzbrxvm2UBvIDrySTIY+O9nc6HRX3Q8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=PMc+qd+K; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B481C4CEF7;
-	Wed, 29 Oct 2025 16:47:38 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1761756458;
-	bh=pBcOOWGaRXezt8GRk5PoTNjC82ZTI+t9XQA0gwKB/hE=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=PMc+qd+KcRgFgTuLkhbxAKePNb/E4vp7MOrWdNSem8fzt6eDplE3odYrFAcAIRw/q
-	 Uvbzy40HvYIlF3OzdZl2OO9hYIKkIldnPhndeiya7hj6DpCXpZVM/jXh1zmBJ+TV4v
-	 A3yjBdy5aZCrI2VOxhxCT6oxn7YLKorsy/BFPljqC/06kfKVPxYRjWW+Cihg9hqwrv
-	 HVoNYlKkrjUF/Pyb3z912VkmF6/+JptOQyDImWsR8cOoPP+R78rk3tVr9c3WXXGsS2
-	 OnKrkSp+bb9uqtHMU8GBUPXVXNkAk7HYORfEjifTeO5aOPHx++S7kADYJrCV5Scwpt
-	 pASy+Y7cmuEbA==
-Date: Wed, 29 Oct 2025 11:50:42 -0500
-From: Bjorn Andersson <andersson@kernel.org>
-To: Xin Liu <xin.liu@oss.qualcomm.com>
-Cc: Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	tingwei.zhang@oss.qualcomm.com, jie.gan@oss.qualcomm.com
-Subject: Re: [PATCH] arm64: dts: qcom: qcs615: Update 'model' string for
- qcs615 ride
-Message-ID: <wdneie3ioxxllqy42oucr7xh5nb3r5mzv6i5idnnstltuxrdu4@7nm33plkpush>
-References: <20251029023137.381386-1-xin.liu@oss.qualcomm.com>
+	 Content-Type:Content-Disposition:In-Reply-To; b=gysvmhvfQM59risoTkOsGzDPqI+xYAdulUswzLytpQ9gWGiR7xm3Usf7+98+sV0hKvz3FyVWoEVvLAC9T+p0wkFxnOvV7qNfvhsdb8mPBZQgrwCnGFZ60BSpzAjCVI5h0cglyUuYuRVz9IlPmsFB1bT00r8imx8ldqpnQnEo/us=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=pass smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=hxUI6nFL; arc=none smtp.client-ip=198.175.65.9
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.intel.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1761751975; x=1793287975;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=TxENEe7NQO6UcmjfLxpYlcw7Ossg4UvvqD86QkB1Oa8=;
+  b=hxUI6nFLLM45V54F03luFT3PaM3XAtseC9qP+ASgyZru9C0zpzyLmPMC
+   BteqGUbH4k0u1kcEJfv2IjyOBd1caBlS9dYzvDwRQIjctMUIJ562Wgc+K
+   lZCqDZJGBS/xk2nVV4yslYJCDYQrVGwytYBDXqAAQ4n2cliJLeCCMhFR8
+   Eo7btwKMdczevDqMFuyo85TgfMJ9TJXw3I0jhepiGw3iV1WL+clSF4pp9
+   Jy3ZpNdwIQrAlL/uTCu60OR0Y9BFIOc3B4UT9W2HgdE+KXtzR/I7Aat81
+   12MyBlhD01QU17cnR3ImhNVryl5H0ANvnXOPfQbWRq2s/n90NsD6qITM1
+   A==;
+X-CSE-ConnectionGUID: 1N/HUreiRSWKxSJEOUcjjQ==
+X-CSE-MsgGUID: gxUkZQmeT8u7BbZERVc5/Q==
+X-IronPort-AV: E=McAfee;i="6800,10657,11597"; a="86505100"
+X-IronPort-AV: E=Sophos;i="6.19,264,1754982000"; 
+   d="scan'208";a="86505100"
+Received: from orviesa010.jf.intel.com ([10.64.159.150])
+  by orvoesa101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 29 Oct 2025 08:32:54 -0700
+X-CSE-ConnectionGUID: FYKE3uOkTjORrToYrrDzFQ==
+X-CSE-MsgGUID: SxPWkYJWQgWPtT/6XByhZw==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.19,264,1754982000"; 
+   d="scan'208";a="184940801"
+Received: from mjarzebo-mobl1.ger.corp.intel.com (HELO ashevche-desk.local) ([10.245.244.248])
+  by orviesa010-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 29 Oct 2025 08:32:52 -0700
+Received: from andy by ashevche-desk.local with local (Exim 4.98.2)
+	(envelope-from <andriy.shevchenko@linux.intel.com>)
+	id 1vE8AK-00000003eYl-2uZp;
+	Wed, 29 Oct 2025 17:32:48 +0200
+Date: Wed, 29 Oct 2025 17:32:48 +0200
+From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+To: Christian Marangi <ansuelsmth@gmail.com>
+Cc: Ilia Lin <ilia.lin@kernel.org>, "Rafael J. Wysocki" <rafael@kernel.org>,
+	Viresh Kumar <viresh.kumar@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	Raag Jadav <raag.jadav@intel.com>, Arnd Bergmann <arnd@arndb.de>,
+	linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 1/3] err.h: add ERR_PTR_CONST macro
+Message-ID: <aQIzoGnvZWYuHuoQ@smile.fi.intel.com>
+References: <20251029133323.24565-1-ansuelsmth@gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -60,39 +83,33 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20251029023137.381386-1-xin.liu@oss.qualcomm.com>
+In-Reply-To: <20251029133323.24565-1-ansuelsmth@gmail.com>
+Organization: Intel Finland Oy - BIC 0357606-4 - c/o Alberga Business Park, 6
+ krs, Bertel Jungin Aukio 5, 02600 Espoo
 
-On Tue, Oct 28, 2025 at 07:31:35PM -0700, Xin Liu wrote:
+On Wed, Oct 29, 2025 at 02:33:19PM +0100, Christian Marangi wrote:
+> Add ERR_PTR_CONST macro to initialize global variables with error
 
-Please make sure that your subject prefix matches other changes to the
-affected files (qcs615 should be qcs615-ride), in the future.
+ERR_PTR_CONST()
 
-Thanks,
-Bjorn
+> pointers. This might be useful for specific case where there is a global
+> variables initialized to an error condition and then later set to the
+> real handle once probe finish/completes.
 
-> Update the 'model' property in the QCS615-ride device tree to include
-> the public board name "IQ-615 Beta EVK". This ensures consistency with
-> official documentation and release notes.
-> 
-> Signed-off-by: Xin Liu <xin.liu@oss.qualcomm.com>
-> ---
->  arch/arm64/boot/dts/qcom/qcs615-ride.dts | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/qcs615-ride.dts b/arch/arm64/boot/dts/qcom/qcs615-ride.dts
-> index e8faa25da79f..047ba656f67d 100644
-> --- a/arch/arm64/boot/dts/qcom/qcs615-ride.dts
-> +++ b/arch/arm64/boot/dts/qcom/qcs615-ride.dts
-> @@ -10,7 +10,7 @@
->  #include "talos.dtsi"
->  #include "pm8150.dtsi"
->  / {
-> -	model = "Qualcomm Technologies, Inc. QCS615 Ride";
-> +	model = "Qualcomm Technologies, Inc. QCS615 Ride (IQ-615 Beta EVK)";
->  	compatible = "qcom,qcs615-ride", "qcom,qcs615", "qcom,sm6150";
->  	chassis-type = "embedded";
->  
-> -- 
-> 2.34.1
-> 
+Okay, this has two caveats:
+
+1) naming is bad as it suggests something about const qualifier (and not, it's
+not about that at all);
+
+2) it doesn't explain what's wrong with ERR_PTR().
+
+...
+
+Note, I'm not objecting an idea as a whole.
+
+-- 
+With Best Regards,
+Andy Shevchenko
+
+
 
