@@ -1,101 +1,55 @@
-Return-Path: <linux-arm-msm+bounces-79444-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-79445-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [IPv6:2605:f480:58:1:0:1994:3:14])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8F049C1A1AA
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Oct 2025 12:47:31 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 60336C1A1BF
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Oct 2025 12:51:02 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 5BA4B4ECEF3
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Oct 2025 11:47:28 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 7469A1886939
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Oct 2025 11:51:26 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7A739334C2E;
-	Wed, 29 Oct 2025 11:47:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E03CE3375C5;
+	Wed, 29 Oct 2025 11:50:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="NxBezuy8";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="Zdm687jO"
+	dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b="nwx8NcEa"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from bali.collaboradmins.com (bali.collaboradmins.com [148.251.105.195])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1706288530
-	for <linux-arm-msm@vger.kernel.org>; Wed, 29 Oct 2025 11:47:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB8DD2DE71D;
+	Wed, 29 Oct 2025 11:50:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.251.105.195
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761738445; cv=none; b=cFF9YNHzecRAWJR4zjzuSGWuagt2NSu3Ith3Thn4hk97TxO+foWQmh1RiO9zchvErgoU9Dl2O///zNhZ/z3nCHLNn0oB2U8vF43hiaI24zHnqEy5p+FCGRfoB5VS3WFDf5rUnUQHI0cECUlFhy2YlKdETNEqrD0/N0/lho3TUpk=
+	t=1761738657; cv=none; b=lfhEEYDPIbijMe8IblwnWfVjpAEYLnmVkNF84e7VDZ7tBUS0pBBcZG4sgvSA0qi8jrr/gxXYOvyc/XjwRUBofQPz45i0QUzV0+KkhvvCd6i9TMGy62jj1k3h0Fj98NiCKGVM3H8Irz8QSpnTJwSWK5UpyXQ58c9vK/P1Wftpyz0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761738445; c=relaxed/simple;
-	bh=zQW56MY8/fmoEjo3YSWmEiuHao1YlEBqdj1faZ3VTIA=;
+	s=arc-20240116; t=1761738657; c=relaxed/simple;
+	bh=aWBg/5FAXfkDx0QZCOU/nqj2uohrdhR0Ob7qiD0W2wE=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=nsew5Nk6k1B8dn6bw9q1PsvAErFO7mQtH57hZS4z6kvB3/J5FDDmOFwBDQfCr2pEws+Opw71nUl13OFBBvW2UDglKv3TOsCY4qZvjav/CXnJBcirML6UHUFsDEFGaZBt/5RzK3BqwFhQk3xyCMi2oVV4MFwyoBy51jqZRR5oGh4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=NxBezuy8; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=Zdm687jO; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 59T4uqOE3642844
-	for <linux-arm-msm@vger.kernel.org>; Wed, 29 Oct 2025 11:47:21 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	eWIVaztRJnGDpziqVI3cUWs9sstpy2ewlY1U9XBu3GU=; b=NxBezuy8pPfWRack
-	LZdgSs8D9iEEwyDzVGDe7q/wonepwFHT1+QFjbCwDvZpngqVQUsnAMOVs/MNa2aN
-	EfWvRffKjvLCZM06AmKZTUuz9LMMMhiKp+iqvSoxC2Llm6f52sSCfTcPu154RQtJ
-	bqIqFlw+UGyC6wQGCltj9/QyObeLaBPpeQc09infOa59KkImjZiMINg+dumgiPdU
-	ZPPm0S/EA4E9wNB2Oc2qwFc5IHdp6OdKH2g0v8hU+96q+gEd/vRHOPcINhJZUag1
-	5I+clmzeY+VwBBx7boTPAp6KLvV1yjY3oDCC21hX+OpVLlMEvxpomttSGvF5zbCD
-	QwGjtg==
-Received: from mail-pl1-f197.google.com (mail-pl1-f197.google.com [209.85.214.197])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4a34a1jdyy-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Wed, 29 Oct 2025 11:47:20 +0000 (GMT)
-Received: by mail-pl1-f197.google.com with SMTP id d9443c01a7336-28e970be282so23625475ad.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 29 Oct 2025 04:47:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1761738440; x=1762343240; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=eWIVaztRJnGDpziqVI3cUWs9sstpy2ewlY1U9XBu3GU=;
-        b=Zdm687jOfjgCwDEnunnKpORGD0LfQeyoTV0IVTBa8Y5Nv2e6eZQags3AB0kaR19xvh
-         d9StlL/8KCr3GQKtOBkKLkZmYtCP7Mh4RDnmfASy3n1GWHx9RZMyySrHW7iUw44EEDMe
-         J8zrQXHXPVdM/LHe+F8CpU6td23r2KFx0LwgBEpSmqPs9YDVgk+JckSFiTuvO6l54KV9
-         3F9tC+bhrYYPv2OpvKdaQpkljDzlTz/Gs6ivEj+jbb8WQ4VF+rJg2LrLr2rcvFaK3NZQ
-         KgQAbJBivETyzxBcqYQ2P8CMYyW/75y6UVxoAgxFCvSK3Eq2vOn/RErvv4zZM5fHWUm6
-         Hm2Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1761738440; x=1762343240;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=eWIVaztRJnGDpziqVI3cUWs9sstpy2ewlY1U9XBu3GU=;
-        b=fz7dUHrooSkhdjlvWcoTMTqlmAwjuBdgoxx0sVYaHf4jxwq46zs71p80AF7vHV3q9M
-         EPvo176a19Iw2mLN/wXF4ZT11DnsXoXKTbH2HAOobJQjmp40EvZTPjjaxF/5RALu9Utp
-         99FsMLb2Cdmnf1SiSXfx68QBYg+q2z5+iXOAvHCHlAEGSZoPhGk5OCPywB1gwWahwe3v
-         fKJvteYbo1bCoUrvm6iaFG6p96soQVV6IuSnWK1t5HNDcCzV1FUEdu1+/iL3lgW48ee/
-         zm9SUqWiRwz73cKKaihd7WCvwdIBLqDDyXHtQlrAyWAN4rRAOn7g05mkoxuBVUu5n8O6
-         o66w==
-X-Forwarded-Encrypted: i=1; AJvYcCUC4kTgdXqdj6G5cSxnt9H1KGGKeISPrLNN6Nb9xGAeJTCw4Np+LCJjMI5JbfLE21YjkNyj7BjlFJAQvaAd@vger.kernel.org
-X-Gm-Message-State: AOJu0YwqdvrsVJL5RQuT3XD53cmih8bpsKd4Z8eHcdn+oKmDW/8+6+pd
-	cjt/VirifCo/0eN8f7vaEHcf+P2rqfEsBBx56wxlwgWLQ8hbFPmOBm7WT1rwfF8UHhdGq3F1cdz
-	ml0eLXepPbmxWKgYtcpwnCqE/71hxQqOKWiB1F4LBtvEam+4XMui2g3HsshZ2jDuA17O7
-X-Gm-Gg: ASbGncte4DLqF1seDGBmNRZHhtbTy0tijkjpptTmh8pnmvY8O7Ll+Dl6DOLYdPTSNIs
-	rGxYlDAu4iVnXQzAdJp9fevrBHNcpPrdFrL/avqtRLLlEVg284/oe3aVbGCbLr8zSeK+1eiDKer
-	xGic0Ly904UVJLTDiZCj7fH6lLwHAVwNxGp2mkuyWCMbBFfBZR3I4yMVmMXgMQl+fGU7YB8kpl+
-	QGcUoSMhzmVcH/HYZtvNeoESAQjq7VPlLwSve/bFe5RVADvpXPZUUqQJs5fmrfa8YMqsSwZ+Jpd
-	F9HFzgnG0SiFTXqxh8XlHW9UO4No/nVExW81sNoFM2LGbznZZp7ui/JBHg4jUZrY024g9kdm0gH
-	3dy6xzNetp9fS5cQva5nA5NvJEZe17fHHC7V7U6qAkv6I2jh8pqo1eeYF9xz9oyUX
-X-Received: by 2002:a17:902:e0c3:b0:27a:186f:53ec with SMTP id d9443c01a7336-294def4777emr10974825ad.9.1761738439912;
-        Wed, 29 Oct 2025 04:47:19 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGV2MUUUkmmFjRBk1T4Mw8HQRwufvyCSapJ8Hglp9lTk963xdOkVLK/H5Zn4FZRsX5XZBO4Cw==
-X-Received: by 2002:a17:902:e0c3:b0:27a:186f:53ec with SMTP id d9443c01a7336-294def4777emr10974595ad.9.1761738439235;
-        Wed, 29 Oct 2025 04:47:19 -0700 (PDT)
-Received: from [10.133.33.95] (tpe-colo-wan-fw-bordernet.qualcomm.com. [103.229.16.4])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-29498d2317csm149794305ad.48.2025.10.29.04.47.15
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 29 Oct 2025 04:47:18 -0700 (PDT)
-Message-ID: <a7cdd2b3-6097-4a8c-a639-af974292cc8b@oss.qualcomm.com>
-Date: Wed, 29 Oct 2025 19:47:11 +0800
+	 In-Reply-To:Content-Type; b=fmvWd2X/yibCWEkXd9lfkWpJFbjxj5Z+JTLGaNQQ8ZtOYyD+CrzglIamVCiIXRtxM6WcCxbQ38RF57whQrcq+H279NO0bJBugF/eEBb4p+zAwQf3T5vaAhlbEdaEdrkIdr1TGbpUat4jFZEdKmT8XzMqh4TNvEYPXOM0iPsXheI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b=nwx8NcEa; arc=none smtp.client-ip=148.251.105.195
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
+	s=mail; t=1761738653;
+	bh=aWBg/5FAXfkDx0QZCOU/nqj2uohrdhR0Ob7qiD0W2wE=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=nwx8NcEajHmNE7tE6vwMx7cecLGrrCBRulGwKWaSxaQYJprJ9yS6aYFgdBc71EgHD
+	 MFS6PIcS+SYMmlNWDNk0m1HvAHoyYYk4PZ5uIQUd4k159MpxarJL5/s2BWqTquJe8S
+	 kXyrhuCtJmxyZG5SwiZ+vmuw/pWqfeYM1WVeEoWenQ2VPWkdYRmQhRbE6rbeRIfee2
+	 P11j7XIBntKdBaSVNpV4KOIWSW91TF1CccQc0Vgmy8n6NYnQ2JG1Bw7xVHdxs3xf95
+	 /hJZRgwbfZOYF3qljCDP5FaTaYC7Ni9mccFe5hRCJmpwFSOK2G8uSBzJZW16nZn7sv
+	 V94AelF4TZxNA==
+Received: from [192.168.1.100] (2-237-20-237.ip236.fastwebnet.it [2.237.20.237])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits))
+	(No client certificate requested)
+	(Authenticated sender: kholk11)
+	by bali.collaboradmins.com (Postfix) with ESMTPSA id 2BA4D17E1315;
+	Wed, 29 Oct 2025 12:50:53 +0100 (CET)
+Message-ID: <2cb49197-6588-4e89-8b37-29477bfc7e98@collabora.com>
+Date: Wed, 29 Oct 2025 12:50:52 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -103,186 +57,171 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/4] dt-bindings: soc: qcom: Add qcom,kaanapali-imem
- compatible
-To: Bjorn Andersson <andersson@kernel.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Cc: Jingyi Wang <jingyi.wang@oss.qualcomm.com>, Rob Herring
- <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>,
-        Robert Marko <robimarko@gmail.com>,
-        Das Srinagesh <quic_gurus@quicinc.com>, tingwei.zhang@oss.qualcomm.com,
-        trilok.soni@oss.qualcomm.com, yijie.yang@oss.qualcomm.com,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, Eugen Hristev <eugen.hristev@linaro.org>
-References: <20251022-knp-soc-binding-v2-0-3cd3f390f3e2@oss.qualcomm.com>
- <20251022-knp-soc-binding-v2-1-3cd3f390f3e2@oss.qualcomm.com>
- <g2iviaqetgxf5ycz2otzkpmmc4goo7xuyjmttuu254bfzqqvkf@4vybjh4eghpm>
- <4eebcb7d-1eca-4914-915a-d42232233f9f@oss.qualcomm.com>
- <dwfvko3hszsoh4ihnz3qdpsugmocbkrbhosijdw5q3bxh64kuo@o74as2li74px>
- <lz4sbvzfiij3qsa4d7jeblmi2vfubc4ltf435sh6tcs53l6fbq@7f3tfm7yiyjc>
- <mwin3lfvpcwxxhsub2whcpibuayk36f4ljrodvithfygqad5w4@cg4h6peh4v4a>
- <ygqgzflpavwgd43e5zedgcijm3lz27nqlzprttalgcroedz45u@ztqkppajpyry>
-From: "Aiqun(Maria) Yu" <aiqun.yu@oss.qualcomm.com>
+Subject: Re: [PATCH v7 00/10] SPMI: Implement sub-devices and migrate drivers
+To: sboyd@kernel.org
+Cc: jic23@kernel.org, dlechner@baylibre.com, nuno.sa@analog.com,
+ andy@kernel.org, arnd@arndb.de, gregkh@linuxfoundation.org,
+ srini@kernel.org, vkoul@kernel.org, kishon@kernel.org, sre@kernel.org,
+ krzysztof.kozlowski@linaro.org, u.kleine-koenig@baylibre.com,
+ linux-arm-msm@vger.kernel.org, linux-iio@vger.kernel.org,
+ linux-kernel@vger.kernel.org, linux-phy@lists.infradead.org,
+ linux-pm@vger.kernel.org, kernel@collabora.com, wenst@chromium.org,
+ casey.connolly@linaro.org
+References: <20251021083219.17382-1-angelogioacchino.delregno@collabora.com>
+From: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
 Content-Language: en-US
-In-Reply-To: <ygqgzflpavwgd43e5zedgcijm3lz27nqlzprttalgcroedz45u@ztqkppajpyry>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Authority-Analysis: v=2.4 cv=dbiNHHXe c=1 sm=1 tr=0 ts=6901fec9 cx=c_pps
- a=cmESyDAEBpBGqyK7t0alAg==:117 a=nuhDOHQX5FNHPW3J6Bj6AA==:17
- a=IkcTkHD0fZMA:10 a=x6icFKpwvdMA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=VwQbUJbxAAAA:8 a=KKAkSRfTAAAA:8 a=EUspDBNiAAAA:8
- a=PIc2Ezaej9RGvccHy-YA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=1OuFwYUASf3TG4hYMiVC:22 a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-ORIG-GUID: dHGThPCYB6D-VVN-dzJh62Yl9jsp5KZb
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDI5MDA4OSBTYWx0ZWRfX/1nUx3h9n2TB
- hUngL7kcUC7IfncOBN85UsVVPyRuyOP1UoeMDAL68SholWVwFoxPTiB0F5h+NxJXE4R3rMiSNM1
- z+T3nDb7JkgaCXHOgNJeEumo9lxgLvUQsQw2ASLH4yqye7E03v2+nhavbBTFIAbPc5gwFs/siX1
- tNo7y8Ey5f6/q6kb5mDNp0nGaZWjQ0RCjwi/7cPs9ryUE/9HuhDCzHDysldZquYI36bnSClUen2
- 7DBj/0NPuV9aTRZAJmcMy34ZtkN2HjcPK2gsAXJ1saJ7TUp+FSmxhjvxghBPPEk6H3nJPT3haIf
- A+an3QGNXQ9i/f6dBKzx1ouz/wXhcsg3/8C+pfO3EHkikWKSNl23w+HfPalyEkAamcahycrXckS
- VNUTpl24s4WXjl2/FljsXLrksdCXWg==
-X-Proofpoint-GUID: dHGThPCYB6D-VVN-dzJh62Yl9jsp5KZb
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
- definitions=2025-10-29_05,2025-10-22_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 suspectscore=0 lowpriorityscore=0 impostorscore=0 adultscore=0
- malwarescore=0 bulkscore=0 priorityscore=1501 clxscore=1015 phishscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2510240001 definitions=main-2510290089
+In-Reply-To: <20251021083219.17382-1-angelogioacchino.delregno@collabora.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On 10/28/2025 2:44 AM, Bjorn Andersson wrote:
-> On Thu, Oct 23, 2025 at 03:06:00AM +0300, Dmitry Baryshkov wrote:
->> On Wed, Oct 22, 2025 at 05:42:58PM -0500, Bjorn Andersson wrote:
->>> On Wed, Oct 22, 2025 at 12:34:58PM +0300, Dmitry Baryshkov wrote:
->>>> On Wed, Oct 22, 2025 at 05:05:30PM +0800, Jingyi Wang wrote:
->>>>>
->>>>>
->>>>> On 10/22/2025 4:49 PM, Dmitry Baryshkov wrote:
->>>>>> On Wed, Oct 22, 2025 at 12:28:41AM -0700, Jingyi Wang wrote:
->>>>>>> Document qcom,kaanapali-imem compatible.
->>>>>>>
->>>>>>> Reviewed-by: Eugen Hristev <eugen.hristev@linaro.org>
->>>>>>> Signed-off-by: Jingyi Wang <jingyi.wang@oss.qualcomm.com>
->>>>>>> ---
->>>>>>>  Documentation/devicetree/bindings/sram/qcom,imem.yaml | 1 +
->>>>>>>  1 file changed, 1 insertion(+)
->>>>>>>
->>>>>>> diff --git a/Documentation/devicetree/bindings/sram/qcom,imem.yaml b/Documentation/devicetree/bindings/sram/qcom,imem.yaml
->>>>>>> index 6a627c57ae2f..1e29a8ff287f 100644
->>>>>>> --- a/Documentation/devicetree/bindings/sram/qcom,imem.yaml
->>>>>>> +++ b/Documentation/devicetree/bindings/sram/qcom,imem.yaml
->>>>>>> @@ -19,6 +19,7 @@ properties:
->>>>>>>        - enum:
->>>>>>>            - qcom,apq8064-imem
->>>>>>>            - qcom,ipq5424-imem
->>>>>>> +          - qcom,kaanapali-imem
->>>>>>
->>>>>> Can you use mmio-sram instead?
->>>>>>
->>>>>
->>>>> Here is the node: 
->>>>>
->>>>> 		sram@14680000 {
->>>>> 			compatible = "qcom,kaanapali-imem", "syscon", "simple-mfd";
->>>>> 			reg = <0x0 0x14680000 0x0 0x1000>;
->>>>> 			ranges = <0 0 0x14680000 0x1000>;
->>>>>
->>>>> 			#address-cells = <1>;
->>>>> 			#size-cells = <1>;
->>>>>
->>>>> 			pil-reloc@94c {
->>>>> 				compatible = "qcom,pil-reloc-info";
->>>>> 				reg = <0x94c 0xc8>;
->>>>> 			};
->>>>> 		};
->>>>>
->>>>> other qualcomm are also using imem, could you please give more details on why
->>>>> we should use mmio-sram here?
->>>>
->>>> https://lore.kernel.org/linux-arm-msm/e4c5ecc3-fd97-4b13-a057-bb1a3b7f9207@kernel.org/
->>>>
->>>
->>> I considered exactly this when I wrote the binding back then...
->>>
->>> But the binding defines mmio-sram as "Simple IO memory regions to be
->>> managed by the genalloc API." and the Linux sram driver follows that and
->>> registers a gen_pool across the sram memory region.
->>>
->>> I believe IMEM is SRAM (it's at least not registers), but its memory
->>> layout is fixed, so it's not a pool in any form.
->>>
->>>
->>> What Krzysztof says makes sense, but rather than just throwing a yak at
->>> Jingyi, it would be nice if you provided some guidance on how you would
->>> like to see this turn out.
->>
->> I tested, pretty same approach seems to work:
->>
-> 
-> Now you're shaving at random ;)
-> 
->> 	sram@14680000 {
->> 		compatible = "mmio-sram";
-> 
-> You can put "pil-reloc-sram" wherever, because it will perform a
-> of_find_compatible_node() to dig up some node with the compatible
-> "qcom,pil-reloc-info" .
-> 
-> In other words, this line created a genpool for something that really
-> isn't a genpool, but luckily that didn't have any side effects.
-> 
-> 
-> There are however other users of IMEM, such as the "reboot-mode", which
-> relies on the "sram" device probing child devices, and is implemented by
-> "syscon-reboot-mode".
-> 
-> Perhaps the solution is to not support any new users of that?
-> 
-> 
-> But no matter what, the definition "Simple IO memory regions to be
-> managed by the genalloc API" will never be true for IMEM.
-> 
-> And as this isn't a syscon, simple-mfd, or mmio-sram...how about making
-> the fallback "qcom,imem" (in this same binding) and omitting any
-> implementation until we need one)?
+Il 21/10/25 10:32, AngeloGioacchino Del Regno ha scritto:
+> Changes in v7:
+>   - Added commit to cleanup redundant dev_name() in the pre-existing
+>     spmi_device_add() function
+>   - Added commit removing unneeded goto and improving spmi_device_add()
+>     readability by returning error in error path, and explicitly zero
+>     for success at the end.
 
+Any further comments on this series?
+Any chance we can get it picked in this merge window please?
 
-Totally agree. We can remove the "syscon" and "simple-mfd" compatibles
-for Kaanapali.
-For Kaanapali, the reboot reason does not rely on imem at all—it uses
-nvmem cells instead.
-Previously, the syscon-reboot-mode required "syscon" and "simple-mfd"
-compatibles for older targets like APQ8064, which used imem as the
-reboot mode solution.
+Please note that this series either needs two cycles or an immutable branch
+because of the driver migration commits.
 
+Thanks,
+Angelo
 
 > 
-> Regards,
-> Bjorn
+> Changes in v6:
+>   - Added commit to convert spmi.c to %pe error format and used
+>     %pe error format in spmi_subdevice code as wanted by Uwe Kleine-Konig
 > 
->> 		reg = <0x0 0x14680000 0x0 0x1000>;
->> 		ranges = <0 0 0x14680000 0x1000>;
->>
->> 		#address-cells = <1>;
->> 		#size-cells = <1>;
->>
->> 		pil-reloc-sram@94c {
->> 			compatible = "qcom,pil-reloc-info";
->> 			reg = <0x94c 0xc8>;
->> 		};
->> 	};
->>
->>
->> -- 
->> With best wishes
->> Dmitry
+> Changes in v5:
+>   - Changed dev_err to dev_err_probe in qcom-spmi-sdam (and done
+>     that even though I disagree - because I wanted this series to
+>     *exclusively* introduce the minimum required changes to
+>     migrate to the new API, but okay, whatever....!);
+>   - Added missing REGMAP dependency in Kconfig for qcom-spmi-sdam,
+>     phy-qcom-eusb2-repeater and qcom-coincell to resolve build
+>     issues when the already allowed COMPILE_TEST is enabled
+>     as pointed out by the test robot's randconfig builds.
+> 
+> Changes in v4:
+>   - Added selection of REGMAP_SPMI in Kconfig for qcom-coincell and
+>     for phy-qcom-eusb2-repeater to resolve undefined references when
+>     compiled with some randconfig
+> 
+> Changes in v3:
+>   - Fixed importing "SPMI" namespace in spmi-devres.c
+>   - Removed all instances of defensive programming, as pointed out by
+>     jic23 and Sebastian
+>   - Removed explicit casting as pointed out by jic23
+>   - Moved ida_free call to spmi_subdev_release() and simplified error
+>     handling in spmi_subdevice_alloc_and_add() as pointed out by jic23
+> 
+> Changes in v2:
+>   - Fixed missing `sparent` initialization in phy-qcom-eusb2-repeater
+>   - Changed val_bits to 8 in all Qualcomm drivers to ensure
+>     compatibility as suggested by Casey
+>   - Added struct device pointer in all conversion commits as suggested
+>     by Andy
+>   - Exported newly introduced functions with a new "SPMI" namespace
+>     and imported the same in all converted drivers as suggested by Andy
+>   - Added missing error checking for dev_set_name() call in spmi.c
+>     as suggested by Andy
+>   - Added comma to last entry of regmap_config as suggested by Andy
+> 
+> While adding support for newer MediaTek platforms, featuring complex
+> SPMI PMICs, I've seen that those SPMI-connected chips are internally
+> divided in various IP blocks, reachable in specific contiguous address
+> ranges... more or less like a MMIO, but over a slow SPMI bus instead.
+> 
+> I recalled that Qualcomm had something similar... and upon checking a
+> couple of devicetrees, yeah - indeed it's the same over there.
+> 
+> What I've seen then is a common pattern of reading the "reg" property
+> from devicetree in a struct member and then either
+>   A. Wrapping regmap_{read/write/etc}() calls in a function that adds
+>      the register base with "base + ..register", like it's done with
+>      writel()/readl() calls; or
+>   B. Doing the same as A. but without wrapper functions.
+> 
+> Even though that works just fine, in my opinion it's wrong.
+> 
+> The regmap API is way more complex than MMIO-only readl()/writel()
+> functions for multiple reasons (including supporting multiple busses
+> like SPMI, of course) - but everyone seemed to forget that regmap
+> can manage register base offsets transparently and automatically in
+> its API functions by simply adding a `reg_base` to the regmap_config
+> structure, which is used for initializing a `struct regmap`.
+> 
+> So, here we go: this series implements the software concept of an SPMI
+> Sub-Device (which, well, also reflects how Qualcomm and MediaTek's
+> actual hardware is laid out anyway).
+> 
+>                 SPMI Controller
+>                       |                ______
+>                       |               /       Sub-Device 1
+>                       V              /
+>                SPMI Device (PMIC) ----------- Sub-Device 2
+>                                      \
+>                                       \______ Sub-Device 3
+> 
+> As per this implementation, an SPMI Sub-Device can be allocated/created
+> and added in any driver that implements a... well.. subdevice (!) with
+> an SPMI "main" device as its parent: this allows to create and finally
+> to correctly configure a regmap that is specific to the sub-device,
+> operating on its specific address range and reading, and writing, to
+> its registers with the regmap API taking care of adding the base address
+> of a sub-device's registers as per regmap API design.
+> 
+> All of the SPMI Sub-Devices are therefore added as children of the SPMI
+> Device (usually a PMIC), as communication depends on the PMIC's SPMI bus
+> to be available (and the PMIC to be up and running, of course).
+> 
+> Summarizing the dependency chain (which is obvious to whoever knows what
+> is going on with Qualcomm and/or MediaTek SPMI PMICs):
+>      "SPMI Sub-Device x...N" are children "SPMI Device"
+>      "SPMI Device" is a child of "SPMI Controller"
+> 
+> (that was just another way to say the same thing as the graph above anyway).
+> 
+> Along with the new SPMI Sub-Device registration functions, I have also
+> performed a conversion of some Qualcomm SPMI drivers and only where the
+> actual conversion was trivial.
+> 
+> I haven't included any conversion of more complex Qualcomm SPMI drivers
+> because I don't have the required bandwidth to do so (and besides, I think,
+> but haven't exactly verified, that some of those require SoCs that I don't
+> have for testing anyway).
+> 
+> AngeloGioacchino Del Regno (10):
+>    spmi: Print error status with %pe format
+>    spmi: Remove redundant dev_name() print in spmi_device_add()
+>    spmi: Remove unneeded goto in spmi_device_add() error path
+>    spmi: Implement spmi_subdevice_alloc_and_add() and devm variant
+>    nvmem: qcom-spmi-sdam: Migrate to devm_spmi_subdevice_alloc_and_add()
+>    power: reset: qcom-pon: Migrate to devm_spmi_subdevice_alloc_and_add()
+>    phy: qualcomm: eusb2-repeater: Migrate to
+>      devm_spmi_subdevice_alloc_and_add()
+>    misc: qcom-coincell: Migrate to devm_spmi_subdevice_alloc_and_add()
+>    iio: adc: qcom-spmi-iadc: Migrate to
+>      devm_spmi_subdevice_alloc_and_add()
+>    iio: adc: qcom-spmi-iadc: Remove regmap R/W wrapper functions
+> 
+>   drivers/iio/adc/qcom-spmi-iadc.c              | 109 ++++++++----------
+>   drivers/misc/Kconfig                          |   2 +
+>   drivers/misc/qcom-coincell.c                  |  38 ++++--
+>   drivers/nvmem/Kconfig                         |   1 +
+>   drivers/nvmem/qcom-spmi-sdam.c                |  36 ++++--
+>   drivers/phy/qualcomm/Kconfig                  |   2 +
+>   .../phy/qualcomm/phy-qcom-eusb2-repeater.c    |  53 ++++++---
+>   drivers/power/reset/qcom-pon.c                |  34 ++++--
+>   drivers/spmi/spmi-devres.c                    |  24 ++++
+>   drivers/spmi/spmi.c                           |  95 +++++++++++++--
+>   include/linux/spmi.h                          |  16 +++
+>   11 files changed, 289 insertions(+), 121 deletions(-)
+> 
 
 
--- 
-Thx and BRs,
-Aiqun(Maria) Yu
 
