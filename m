@@ -1,48 +1,81 @@
-Return-Path: <linux-arm-msm+bounces-79447-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-79448-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [142.0.200.124])
-	by mail.lfdr.de (Postfix) with ESMTPS id 012A4C1A21A
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Oct 2025 13:05:39 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7A38FC1A2A0
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Oct 2025 13:20:12 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id B94754E5E00
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Oct 2025 12:05:37 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 0A34B3A9167
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Oct 2025 12:20:11 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DB07F338593;
-	Wed, 29 Oct 2025 12:05:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0ADCF338F55;
+	Wed, 29 Oct 2025 12:20:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Y3nObm9x"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="W+zSlKYM"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pj1-f51.google.com (mail-pj1-f51.google.com [209.85.216.51])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5CC72F5498;
-	Wed, 29 Oct 2025 12:05:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88E0D2E6CDA
+	for <linux-arm-msm@vger.kernel.org>; Wed, 29 Oct 2025 12:20:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761739536; cv=none; b=UNLlZ+OaW9Sp5qgwfuGfWE5FwI/6BQYSJDoeAIuU8/AOaOofZkxd8oRopvMJUWii27gffwYIYgkLyjeG/RlnS3fWsE9QU2a3tBqRNPzb3iafBZNVsWuEwaH7ZD4sAQZ1vnMzePuFoEERJ8KUuLLc5mlm1LkxeGyNiLw56Vw/aEk=
+	t=1761740408; cv=none; b=shmwyCtR4+sI88n5Qjhk4f/fUNWWpdCcQUDiwqQPtcKJukR6j6VZ66emMFreyYiaZmQvRoYHmFs7MPDRlQ4tlQPlvHAq5R53QIhNJQcSWGYbFY9O8988ym+FJ7pUbRhlbDOjtsQhQQnY/s9Y3ZB1w1gz+JAsis9znG6Qukh19f0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761739536; c=relaxed/simple;
-	bh=BfHVh/Crto9uZ959nUqNwbPVgculG9sKCInYAplIz/s=;
+	s=arc-20240116; t=1761740408; c=relaxed/simple;
+	bh=1Ya7qkOQEDdNbi09gHmO3z9rZVCZYmN2SBoOEI6PACc=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=QpwCX6z2CwV+VG3UH2YVoHzQ2LwNVV0U/6egV6+GDOOsErQSSu/SLOXNiqxk/OUolhkKZUsVV758t7TVHTKQhwlt2ZpAAiAmED4apqXus4ZmVNsgvXut23dvcDTzIUrB0ekPU7MvSz24TOM97Q/xCqc98SqrXTjo3cVrPQIPmc8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Y3nObm9x; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DDC55C4CEF7;
-	Wed, 29 Oct 2025 12:05:33 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1761739536;
-	bh=BfHVh/Crto9uZ959nUqNwbPVgculG9sKCInYAplIz/s=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=Y3nObm9x1TPyz39AJN4Yt4cJOCyao31ihbNNcWy+wFh51Fa9I+aAwRYX2rWZbu5th
-	 X2wuJ9FPFM3eTLs69uJoSpwSjahP0k0hlkiAIU4A+iBo+NEgEYj5LLkDng291a8P4q
-	 Yr2R0qQU05CNEkl819v8CnBBqznGPpUx/We1oLOSyCLGtJN+UW0Rgvytqe9fhO+sxo
-	 i1COUCuahF5DJNY05UYryZnEAsRg2Uy6B07Bdkn7nH8J6JIixuFOr3EiYaMusMyMd/
-	 UKx6OawuEhRdsOSEirDAYZXEnXGz48UCJSKpW8ha4YO7v/dRITtajTa6Qhgwq5pen5
-	 f6Ut9mzDigo3Q==
-Message-ID: <6234e22a-c119-419c-83b7-2a53467951da@kernel.org>
-Date: Wed, 29 Oct 2025 13:05:31 +0100
+	 In-Reply-To:Content-Type; b=pMQJgSN34jzuawqydmHwiwsHK3AN7YTpSXSgr1wWlhvRb4JXYcIlEBB30Fid8Pkoyz59WgfYwfH45qNdKwwosYEuTwWUjqWdyQ5hiVZXWPq4TlgokIEenZPor0+gEEqXpzQ2jWtNWDeR5zh4FhNeT8OWQH5yPltI5++gON34uGI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=W+zSlKYM; arc=none smtp.client-ip=209.85.216.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-pj1-f51.google.com with SMTP id 98e67ed59e1d1-33f9aec69b6so9823333a91.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 29 Oct 2025 05:20:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1761740407; x=1762345207; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=vyHDL+kvmpNavTHblJ9DGWC2vfEbREpLIB5luOfUbqM=;
+        b=W+zSlKYMT0bua6TOOQUy6HJUfeQLiWUudO1oSVysP+DvpjMQtmFsjl6LUaytNyguve
+         peaHH033ZT5zATHf9PNjAXWfEafOV9npzRf1vQ43e79G2EZWC1dA8+gUot06QnV1Te1t
+         giMlYCS3C8YIm/Y9mOBkUgklqyk0c/G5vEp0ycxym0UM1l7iPSMmZKqF1ZRRWqLtUadV
+         PiEeHIMPGFRN6A6/6M9+qMKAbO98Ih4HExykrC14vKYXaMyDfua8fJimeZ0yCb9UpBpf
+         JAEl3EAQckmt1LMV5lSlpXrF6h7mUjbU/+4OMyXWWtT8GubVcK0ssYAaMT4/DwP7zRio
+         +AKg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1761740407; x=1762345207;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=vyHDL+kvmpNavTHblJ9DGWC2vfEbREpLIB5luOfUbqM=;
+        b=CFcFjBi4I6QSaonBjkPrWD7eOVG3f+/q4CsRv8qWhMOcoIAY0AHcUUBSBrHTMOj0h/
+         4Knp4yDGzf5stlxFJnMHaN6b0xmnDQCiLlkKSaRYhKE287xGkQdnjgLmCBzI/vMnP6Da
+         cH2CNl+TSGBA5aD6UKLIQslmLcgzTkXtL9DNgZxP0YoakbCnmTI5Ec9W+Yh6pRQJ2G/N
+         zjOyyclgPRanOsW78ni40yMtVLLwz89tq4h0RhNPRHNhaSbaOaAB7yey3Acc2vi/k04P
+         mzg4DFpW2zTCLZr0X5HFqhSD18K6w2qLtQzbc0+aYVoVqjvchCvqNNQXHrKrkEigtelS
+         eNIQ==
+X-Forwarded-Encrypted: i=1; AJvYcCX2dJwPZ8E05Q3zZVKbORAwdiZiKxcQ+z2MmgKvLdcNtx8aOEZMRSgqHGak5hEWTGxyYhjc4xwkJ4Jv15/G@vger.kernel.org
+X-Gm-Message-State: AOJu0YxrUHynQw21y4j2TvkLMgqD9JSIr65Ifz+VVK4pNNRzbJF9h39e
+	gTUNuFodGvQZbyTtO3nkMVA55CmVqsWmDKqSOuJwAtda3FtgCXiIrmnfm8pe/Q==
+X-Gm-Gg: ASbGncvYu4Hm3Cg6FzBT4PwyjL0VxJTzc8QH0b1K+n8xBFikKqCZzqw2YPHjTHO3jMq
+	FEcBcmE9Muv0bx0HIMx1Alzs8XRTe5MAGpHcSLcvjOZq8av0aXSd7D6WNxozaK5TXOcTWEusCRv
+	JSXHnwnVYtqchQffhafiaNPhgScqTIPtSSDjXJmVrtF2WRs1KA5CEdcAq9Jihqd4QfYSROFkdKc
+	1Yb0gDuq+GoF/GJjxqdtWp4MRdoHF0SkaApkFm5z/cYWZvDG3aGGCnDr/yMmKz6pqqLOaK2Nf3H
+	RJ0gLnzhcnsVFMd1hFPY/1uveu5Lmt8X/wjhMg6d9cRTlAK4HWNJzn/jNWJ66r/ptWs3VdHkagF
+	S9ki1bqJT9Mq9f9psrvMDBm1ZDrhYINbpPLekjZucX1jG/9VaXw/rLFDZpe3XyOLBE5PI4l8kN9
+	XZiHezaAUiZT5f
+X-Google-Smtp-Source: AGHT+IG4iUvvmVrCgSP0YCk+HtT00u5Cv73qchYGx6AbmE0/ypVfmBzPMDibB16MqRFuCBEdGpYg6g==
+X-Received: by 2002:a17:903:2348:b0:25d:37fc:32df with SMTP id d9443c01a7336-294deedb5c6mr33673225ad.47.1761740406560;
+        Wed, 29 Oct 2025 05:20:06 -0700 (PDT)
+Received: from [172.17.49.162] ([103.218.174.2])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-29498d2317csm150801635ad.48.2025.10.29.05.20.02
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 29 Oct 2025 05:20:06 -0700 (PDT)
+Message-ID: <9208d2ef-79da-4e80-ac1f-e01fa5feae0a@gmail.com>
+Date: Wed, 29 Oct 2025 17:50:01 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,131 +83,63 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v9 3/3] arm64: dts: qcom: sm8750: Add USB support for
- SM8750 QRD platform
-To: Krishna Kurapati PSSNV <krishna.kurapati@oss.qualcomm.com>,
- Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
- Conor Dooley <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, Wesley Cheng <wesley.cheng@oss.qualcomm.com>
-References: <20251024151521.2365845-1-krishna.kurapati@oss.qualcomm.com>
- <20251024151521.2365845-4-krishna.kurapati@oss.qualcomm.com>
- <a117b105-a734-4f67-9bb2-c06728e79083@kernel.org>
- <6297468b-77d0-4202-8ec1-3e731acc43de@oss.qualcomm.com>
-From: Krzysztof Kozlowski <krzk@kernel.org>
+Subject: Re: [PATCH v1 1/1] arm64: dts: qcom: talos-evk: Add support for
+ dual-channel LVDS panel
+To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, andersson@kernel.org,
+ konradybcio@kernel.org
+Cc: robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org,
+ linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org
+References: <20251028061636.724667-1-tessolveupstream@gmail.com>
+ <20251028061636.724667-2-tessolveupstream@gmail.com>
+ <d05fe82a-640f-4a09-9d83-39bb5aff179d@oss.qualcomm.com>
 Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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 a/A=
-In-Reply-To: <6297468b-77d0-4202-8ec1-3e731acc43de@oss.qualcomm.com>
+From: Tessolve Upstream <tessolveupstream@gmail.com>
+In-Reply-To: <d05fe82a-640f-4a09-9d83-39bb5aff179d@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 29/10/2025 12:42, Krishna Kurapati PSSNV wrote:
-> 
-> 
-> On 10/29/2025 1:37 PM, Krzysztof Kozlowski wrote:
->> On 24/10/2025 17:15, Krishna Kurapati wrote:
->>> From: Wesley Cheng <wesley.cheng@oss.qualcomm.com>
->>>
->>> Enable USB support on SM8750 QRD variant.  The current definition
->>> will start the USB controller in peripheral mode by default until
->>> dependencies are added, such as USB role detection.
->>>
->>> Signed-off-by: Wesley Cheng <wesley.cheng@oss.qualcomm.com>
->>> [Krishna: Flattened usb node QRD DTS]
->>> Signed-off-by: Krishna Kurapati <krishna.kurapati@oss.qualcomm.com>
->>
->> NAK.
->>
->> You ignored every previous tag - multiple reviews and tests, and then...
->>
->>> ---
->>>   arch/arm64/boot/dts/qcom/sm8750-qrd.dts | 22 ++++++++++++++++++++++
->>>   1 file changed, 22 insertions(+)
->>>
->>> diff --git a/arch/arm64/boot/dts/qcom/sm8750-qrd.dts b/arch/arm64/boot/dts/qcom/sm8750-qrd.dts
->>> index 13c7b9664c89..fc5d12bb41a5 100644
->>> --- a/arch/arm64/boot/dts/qcom/sm8750-qrd.dts
->>> +++ b/arch/arm64/boot/dts/qcom/sm8750-qrd.dts
->>> @@ -1054,3 +1054,25 @@ &ufs_mem_hc {
->>>   
->>>   	status = "okay";
->>>   };
->>> +
->>> +&usb_1 {
->>> +	dr_mode = "peripheral";
->>
->> You sent something different with issues.
->>
->> Really, this was a correct patch. Was reviewed. Why you decided to drop
->> all this, drop everything which was correct?
->>
->> Your explanation:
->> "- Removed obtained RB tags since the code has changed significantly."
->> is just wrong. Almost NOTHING changed, except completely unimportant two
->> node merging.
->>
->> NAK
->>
-> 
-> 
-> Apologies Krzysztof,
-> 
-> On first patch that adds changes to base DTSI, there were changes moving 
-> to newer bindings and merging child node and parent node. I should've 
-> removed RB tags received on that patch only. But I was over cautious and 
-> misinterpreted the rules and removed them on the other patches as well. 
-> Will be careful the next time.
-> 
-> Also is there any issue with marking dr_mode as peripheral here in usb_1 
-> node ?
 
-No, I think I looked at your other patch. Tthis was reviewed at v4 and
-v5, which then it was changed breaking sorting order. This one looks
-correct.
 
-Best regards,
-Krzysztof
+On 28/10/25 14:55, Konrad Dybcio wrote:
+> On 10/28/25 7:16 AM, Sudarshan Shetty wrote:
+>> This patch introduces a new device tree for the QCS615 Talos
+>> EVK platform with dual-channel LVDS display support.
+>>
+>> The new DTS file (`talos-evk-lvds.dts`) is based on the existing
+>> `talos-evk.dts` and extends it to enable a dual-channel LVDS display
+>> configuration using the TI SN65DSI84 DSI-to-LVDS bridge.
+>>
+>> where channel-A carries odd pixel and channel-B carries even pixel
+>> on the QCS615 talos evk platform.
+>>
+>> Signed-off-by: Sudarshan Shetty <tessolveupstream@gmail.com>
+>> ---
+> 
+> [...]
+> 
+>> +	backlight: backlight {
+>> +		compatible = "gpio-backlight";
+>> +		gpios = <&tlmm 115 GPIO_ACTIVE_HIGH>;
+>> +		default-on;
+>> +	};
+>> +
+>> +	lcd0_pwm_en {
+> 
+> Use hyphens instead of underscores in node names
+
+Okay, will update in next patch.
+> 
+>> +		compatible = "pwm-gpio";
+>> +		gpios = <&tlmm 59 GPIO_ACTIVE_HIGH>;
+>> +		pinctrl-0 = <&lcd0_bklt_pwm>;
+> 
+> I think your intention was to use pwm-backlight and wire this node
+> up to that
+
+Soc does not support the PWM interface hence we are using gpio 
+as "pwm-gpio" by setting the duty cycle to 100%(i.e. "no pwm")
+> 
+> Konrad
+
 
