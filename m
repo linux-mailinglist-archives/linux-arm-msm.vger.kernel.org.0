@@ -1,108 +1,131 @@
-Return-Path: <linux-arm-msm+bounces-79477-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-79480-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id DF3F6C1BC30
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Oct 2025 16:46:44 +0100 (CET)
+Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [IPv6:2605:f480:58:1:0:1994:3:14])
+	by mail.lfdr.de (Postfix) with ESMTPS id A0B82C1BBF7
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Oct 2025 16:44:16 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id F0A185631CB
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Oct 2025 14:29:53 +0000 (UTC)
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 131E35C27F4
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Oct 2025 15:00:50 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0F65629ACDB;
-	Wed, 29 Oct 2025 14:27:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 03A402D7386;
+	Wed, 29 Oct 2025 15:00:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="SFTsa/97"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx3.molgen.mpg.de (mx3.molgen.mpg.de [141.14.17.11])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC516279DAD;
-	Wed, 29 Oct 2025 14:27:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=141.14.17.11
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C75862D321D;
+	Wed, 29 Oct 2025 15:00:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761748025; cv=none; b=buSD8RU7NOoTosvszDJMKnOQuyHmGXdEb+dBS6qD7ptFWdgjxjPkH6MT5IIhyz1VRjwo2eksidtpu/fMFJuF5fUTgI53TJyRmNnGwlmGLEwf/Y1sLTrGnmSXL4My6ysDRtuSD1YstnZ8dt7yxd6tx9JADPte/3t5t0TW8GIGQoE=
+	t=1761750039; cv=none; b=WImWKyRO59Cpqx8YxMyCTWqZ78tYecL2so/paEVKe2IJdeYlrDksWlQfDWgn9auBwk+LTheMkA15FLKD+6IXSfURTVJzlD35xTcjJUn+3dbTNAlGZ5c9DRaVIPs4Dn63LBDUNXk1umjkwt/WdS3FuR1vEj9PVWhzkEH9rCu3VAo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761748025; c=relaxed/simple;
-	bh=dbygQzHttqjNpSjAjnD19UM0SjBDk0tlkiBX6toMasA=;
-	h=Message-ID:Date:MIME-Version:Subject:To:References:Cc:From:
-	 In-Reply-To:Content-Type; b=VuoU09bVl8ra+F9OVq11snhpUrpLahp06OPMyZZYAwgM5ED/8JRFfBsJX5+Q0g0XQJQz6CCwjeT+8+1Df/mzPRms5tcHH4LSJ1puvGIcgXSxIHFlMNY8gCu5f0Zy0aNWvFPTcYBAm7nQSrLTs9+RTUpAswTfJm8YJDWC48yHDeE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=molgen.mpg.de; spf=pass smtp.mailfrom=molgen.mpg.de; arc=none smtp.client-ip=141.14.17.11
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=molgen.mpg.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=molgen.mpg.de
-Received: from [10.101.2.66] (ip-217-65-134-37.ptr.icomera.net [217.65.134.37])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-	(No client certificate requested)
-	(Authenticated sender: pmenzel)
-	by mx.molgen.mpg.de (Postfix) with ESMTPSA id AAFAD6020D324;
-	Wed, 29 Oct 2025 15:26:44 +0100 (CET)
-Message-ID: <ff745987-6e62-40e2-b2c1-ed35c0b9ffe4@molgen.mpg.de>
-Date: Wed, 29 Oct 2025 14:26:43 +0000
+	s=arc-20240116; t=1761750039; c=relaxed/simple;
+	bh=Vqgk0q/9I+K4kV+nPb7zauXw84aV4k0RxA8xUqhhwcY=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=VXyn9pWQvaCnQVDQrkNTD5V1ODBMA59hMmKEBXB/a4tWisG2KQDLhtbOO3SzaZ2G+F/bt9Bwf3sptP3R5aXDKqWPz6CPO66yNg1FE3fdD3tsYtY0k+P4XQ6e42TnWrMDVhagd7QbCqqkv5WvarLI9aHqSINQ4TXZrCpQsdAofYU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=SFTsa/97; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A74EC4CEFF;
+	Wed, 29 Oct 2025 15:00:38 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1761750039;
+	bh=Vqgk0q/9I+K4kV+nPb7zauXw84aV4k0RxA8xUqhhwcY=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=SFTsa/97cp8o6vJDDxG/cn4xto3mSaC8nwV8ywmQbVD8+T3Ppvx2fHtUDOjBQu1vV
+	 edP/zWqvgXuVt6OChdo4le1paCPWjAXCXLrDhBIRF0dhqhBG66Jm6gh6dWzl3VulPO
+	 HqMz1o9LAccG3g6922L0DWjyF7A/K0znpDdIrvdiEejpShvfavj5xEDMPsUPgBXQTG
+	 gLBcbx5D8JVr4xu0Ht1/WxW/Pc8U2ve5AIoYIt2QN0irT/2REvbk9bNEXMG8uJhYhw
+	 kRxIm3HcIg2Q2XMTtuUOSpBdNABPTjUPAWFpvMHvCTxWt1c20vjPsd7K3X3MAs/MW+
+	 UhuogNMtu0tQw==
+Date: Wed, 29 Oct 2025 10:03:42 -0500
+From: Bjorn Andersson <andersson@kernel.org>
+To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc: Marcel Holtmann <marcel@holtmann.org>, 
+	Luiz Augusto von Dentz <luiz.dentz@gmail.com>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Balakrishna Godavarthi <quic_bgodavar@quicinc.com>, Rocky Liao <quic_rjliao@quicinc.com>, 
+	Bartosz Golaszewski <brgl@bgdev.pl>, linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+	linux-bluetooth@vger.kernel.org, devicetree@vger.kernel.org
+Subject: Re: [PATCH v2 00/11] Bluetooth: dt-bindings: qualcomm: Split binding
+Message-ID: <uanegg6ni2xwgstf4nrlejkeseztxdl7vkd6rjk3nu7h7gelbn@ga3tqjgp33bt>
+References: <20251029-dt-bindings-qcom-bluetooth-v2-0-dd8709501ea1@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] Bluetooth: MAINTAINERS: Add Bartosz Golaszewski as
- Qualcomm hci_qca maintainer
-To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-References: <20251028155320.135347-3-krzysztof.kozlowski@linaro.org>
-Content-Language: en-US
-Cc: Bartosz Golaszewski <brgl@bgdev.pl>, Marcel Holtmann
- <marcel@holtmann.org>, Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
- linux-arm-msm@vger.kernel.org, linux-bluetooth@vger.kernel.org,
- linux-kernel@vger.kernel.org
-From: Paul Menzel <pmenzel@molgen.mpg.de>
-In-Reply-To: <20251028155320.135347-3-krzysztof.kozlowski@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20251029-dt-bindings-qcom-bluetooth-v2-0-dd8709501ea1@linaro.org>
 
-Dear Krzysztof,
-
-
-Thank you for your patch.
-
-Am 28.10.25 um 16:53 schrieb Krzysztof Kozlowski:
-> There are no dedicated maintainers of Qualcomm hci_qca Bluetooth
-> drivers, but there should be, because these are actively used on many
-> old and new platforms.  Bartosz Golaszewski agreed to take care of this
-> code.
-> 
-> Cc: Bartosz Golaszewski <brgl@bgdev.pl>
-> Cc: Marcel Holtmann <marcel@holtmann.org>
-> Cc: Luiz Augusto von Dentz <luiz.dentz@gmail.com>
-> Link: https://lore.kernel.org/r/CAMRc=MdqAATOcDPhd=u0vOb8nLxSRd7N8rLGLO8F5Ywq3+=JCw@mail.gmail.com/
-> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> 
-> ---
-> 
+On Wed, Oct 29, 2025 at 08:43:50AM +0100, Krzysztof Kozlowski wrote:
 > Changes in v2:
-> Don't orphan, add Bartosz.
-> ---
->   MAINTAINERS | 1 +
->   1 file changed, 1 insertion(+)
+> - Drop in few commits the properties (supplies) from
+>   qualcomm-bluetooth.yaml which are not used by devices left there,
+>   instead of removing them in final patch (qcom,wcn7850-bt).
+> - Fix dt_binding_check error - missing gpio.h header in the example.
+> - Drop maintainers update - split into separate patch.
+> - Add also Bartosz as maintainer of two bindings because he was working
+>   with these in the past.
+> - Link to v1: https://patch.msgid.link/20251028-dt-bindings-qcom-bluetooth-v1-0-524a978e3cda@linaro.org
 > 
-> diff --git a/MAINTAINERS b/MAINTAINERS
-> index 8abdc0e50699..8a2c5fb0ba55 100644
-> --- a/MAINTAINERS
-> +++ b/MAINTAINERS
-> @@ -21145,6 +21145,7 @@ F:	Documentation/devicetree/bindings/net/qcom,bam-dmux.yaml
->   F:	drivers/net/wwan/qcom_bam_dmux.c
->   
->   QUALCOMM BLUETOOTH DRIVER
-> +M:	Bartosz Golaszewski <brgl@bgdev.pl>
->   L:	linux-arm-msm@vger.kernel.org
->   S:	Maintained
->   F:	drivers/bluetooth/btqca.[ch]
+> One big Qualcomm Bluetooth schema is hardly manageable: it lists all
+> possible properties (19 supplies).  Split qcom,qca6390-bt to separate
+> bindings, so device schema will be easier to read/maintain and list only
+> relevant properties.
+> 
+> What's more it messes up old (pre-PMU) and new (post-PMU) description in
+> one place adding to the total mess.
+> 
 
-Bartosz, thank you for stepping up!
+Very nice to see this cleaned up.
 
-Reviewed-by: Paul Menzel <pmenzel@molgen.mpg.de>
+Reviewed-by: Bjorn Andersson <andersson@kernel.org>
 
+Regards,
+Bjorn
 
-Kind regards,
-
-Paul
+> Best regards,
+> Krzysztof
+> 
+> ---
+> Krzysztof Kozlowski (11):
+>       dt-bindings: bluetooth: qcom,qca2066-bt: Split to separate schema
+>       dt-bindings: bluetooth: qcom,qca9377-bt: Split to separate schema
+>       dt-bindings: bluetooth: qcom,qca6390-bt: Split to separate schema
+>       dt-bindings: bluetooth: qcom,wcn3950-bt: Split to separate schema
+>       dt-bindings: bluetooth: qcom,wcn3990-bt: Split to separate schema
+>       dt-bindings: bluetooth: qcom,wcn6750-bt: Split to separate schema
+>       dt-bindings: bluetooth: qcom,wcn6750-bt: Deprecate old supplies
+>       dt-bindings: bluetooth: qcom,wcn6855-bt: Split to separate schema
+>       dt-bindings: bluetooth: qcom,wcn6855-bt: Deprecate old supplies
+>       dt-bindings: bluetooth: qcom,wcn7850-bt: Split to separate schema
+>       dt-bindings: bluetooth: qcom,wcn7850-bt: Deprecate old supplies
+> 
+>  .../net/bluetooth/qcom,bluetooth-common.yaml       |  25 ++
+>  .../bindings/net/bluetooth/qcom,qca2066-bt.yaml    |  49 ++++
+>  .../bindings/net/bluetooth/qcom,qca6390-bt.yaml    |  64 +++++
+>  .../bindings/net/bluetooth/qcom,qca9377-bt.yaml    |  58 +++++
+>  .../bindings/net/bluetooth/qcom,wcn3950-bt.yaml    |  67 ++++++
+>  .../bindings/net/bluetooth/qcom,wcn3990-bt.yaml    |  66 ++++++
+>  .../bindings/net/bluetooth/qcom,wcn6750-bt.yaml    |  91 ++++++++
+>  .../bindings/net/bluetooth/qcom,wcn6855-bt.yaml    |  99 ++++++++
+>  .../bindings/net/bluetooth/qcom,wcn7850-bt.yaml    |  94 ++++++++
+>  .../bindings/net/bluetooth/qualcomm-bluetooth.yaml | 259 ---------------------
+>  MAINTAINERS                                        |   1 +
+>  11 files changed, 614 insertions(+), 259 deletions(-)
+> ---
+> base-commit: c9d6ae701ace298035b6529eb10083d356cf2ae7
+> change-id: 20251028-dt-bindings-qcom-bluetooth-9af415056c1c
+> 
+> Best regards,
+> -- 
+> Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> 
+> 
 
