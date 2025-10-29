@@ -1,60 +1,61 @@
-Return-Path: <linux-arm-msm+bounces-79484-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-79487-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 52FDFC1B9B0
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Oct 2025 16:20:49 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 4DCF0C1BA13
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Oct 2025 16:25:20 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id A57321892DD0
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Oct 2025 15:20:14 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 71FA91893F6D
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Oct 2025 15:24:55 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id AE8422FF661;
-	Wed, 29 Oct 2025 15:19:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 572EC30E82B;
+	Wed, 29 Oct 2025 15:24:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="TxSnS6CL"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="sFixKe+a"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F7D72F12A0;
-	Wed, 29 Oct 2025 15:19:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2364F2E62D0;
+	Wed, 29 Oct 2025 15:24:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761751178; cv=none; b=WKC5LkXnfiju9jUi2axMs6aMC4bV8FwOhfZGkwyRhgbBYwSoRWfy+XiQ+xuBYxuCQKw5/Dx3GPHPK4IMTJTIVlU2IX156RnDIIMQK+Hv2nou32Qt7Nz2U8eEmJGanMzK0nG1RlTz0IFWAcC+XWpMwSRsEHuDW8i0WcWljM5P6pE=
+	t=1761751464; cv=none; b=rnBTzjlb4XQskKs9pc22wItzurK/YLttU9MEJ+CkQxwIHOpVGANwDBZ1Ef4iP69Tdjz1jBnwJ+InPcPLG8w02NO7GKl32ovcs32Jlrcf+x4Bl9vhZy18Uagw+5GA2OKRc77ubYjIFQtu8LIPU8VRZer3HOgdv8N3av9e9+1H2lA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761751178; c=relaxed/simple;
-	bh=3JfNQo+M21Fj37FKvWiKjtWeQMPxwV5uRtgj06oRTOY=;
+	s=arc-20240116; t=1761751464; c=relaxed/simple;
+	bh=C78jSd2R7ge8lnlFlJKPQI9tQmjpUUXAcq2TBYPRtsk=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=c/q0dYkgroUAVRKliR6t2d0cgUPk8Na1G6oTqEIt2l++hcJW2FplscfzLQY9CV/pqBEuiMyZLajXAkH3A6rw4orjBnWW5B0VKnQZwNeueINsP5eMoE8f0zFkr7uye7vhL4dRJAy+fjZ0D1RngM705+hNL9Xsv7C2yy9NNLx8qD0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=TxSnS6CL; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02710C4CEF8;
-	Wed, 29 Oct 2025 15:19:36 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=V7mXrd7uU+3Zsdtmw6bYmPiEHfin6ztX1GJtEAwN99TibG1ytv3tDvUTJjutfr4Cy9kEaj+tF1xHw8RZeE55kAPm6t5W7IA1lKKm2VNBkAo1Wmo5MytD++ENToUhSW6C60xxg86/+7BZfvQ4SfwNVSmB1+IdK1KaE5TESwen92A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=sFixKe+a; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64FFDC4CEF7;
+	Wed, 29 Oct 2025 15:24:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1761751178;
-	bh=3JfNQo+M21Fj37FKvWiKjtWeQMPxwV5uRtgj06oRTOY=;
+	s=k20201202; t=1761751463;
+	bh=C78jSd2R7ge8lnlFlJKPQI9tQmjpUUXAcq2TBYPRtsk=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=TxSnS6CLDVT3HGmhCi2XCkNvUYVYsXFLCfPyA5iC3ve1K2ILlAI9zXpbobFdPM70V
-	 eDa6kXgPAd8yRd6YeaLV2lQSqVtC794EwQ76A9dowTcCEyj+0UfDx9owtblAeoUGdf
-	 xqTWuE7Tqfs3tt8tcV/PGTJYIWfJeXwNXpziA6AyMspEVQm1f+FraChVQ4WK1yL7ey
-	 jqChgdvXpj/zdeYEbO+c1n9zTYtG3P4k0kmpreLqoEJTo9jUdbC9+Ckuo1ap86eN+2
-	 9Udd0z0aIoGKQ9bWHjTRvwVUsHD3vZGKtGBZeE+rQKQEJnzsQkm2vAZGWExm4+NKhb
-	 Lv8pEVDnQNJOw==
-Date: Wed, 29 Oct 2025 10:22:41 -0500
+	b=sFixKe+aIbeQujqaC/YV1xKNvQDajUPI3gt1V/tMkOThpr9JXeUGMO+EPU8/N76tL
+	 5nI9bwWf/7RH1BmMNdduG6y+mCwmlbl3ezcbXxMAqElyS58nJNYVyuth8gEghkA8Oh
+	 IuzipPhzUFZqmNWR0nCeB5DfhsDsGsQkcL5KJZqoexAQ4f5+pSHJA9iHo5cH+HKpoo
+	 FXnjjkCCUx8tK8iR6r6K0z7veF9UjK4VlMilddnA5YYZw1pvmS9feULnPEQWt1O0ey
+	 TSjMiPPKa6uZVfC47c9jb5SC/bPHNEnHfHczM0zctmHitWdSg/bapuWYI6kTChRm1J
+	 mSEXaHQKQECKQ==
+Date: Wed, 29 Oct 2025 10:27:26 -0500
 From: Bjorn Andersson <andersson@kernel.org>
-To: george.moussalem@outlook.com
-Cc: Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= <ukleinek@kernel.org>, 
-	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
-	Conor Dooley <conor+dt@kernel.org>, Baruch Siach <baruch@tkos.co.il>, 
-	Konrad Dybcio <konradybcio@kernel.org>, linux-arm-msm@vger.kernel.org, linux-pwm@vger.kernel.org, 
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	Devi Priya <quic_devipriy@quicinc.com>, Baruch Siach <baruch.siach@siklu.com>, 
-	Krzysztof Kozlowski <krzk@kernel.org>
-Subject: Re: [PATCH v18 1/6] dt-bindings: pwm: add IPQ6018 binding
-Message-ID: <gkvbziqeae53bunqd556r4swaye4s4lcnwthryouynwfwqrnsi@6o4cjgxiwxco>
-References: <20251029-ipq-pwm-v18-0-edbef8efbb8e@outlook.com>
- <20251029-ipq-pwm-v18-1-edbef8efbb8e@outlook.com>
+To: Jingyi Wang <jingyi.wang@oss.qualcomm.com>
+Cc: Herbert Xu <herbert@gondor.apana.org.au>, 
+	"David S. Miller" <davem@davemloft.net>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Vinod Koul <vkoul@kernel.org>, Thara Gopinath <thara.gopinath@gmail.com>, 
+	Konrad Dybcio <konradybcio@kernel.org>, aiqun.yu@oss.qualcomm.com, tingwei.zhang@oss.qualcomm.com, 
+	trilok.soni@oss.qualcomm.com, yijie.yang@oss.qualcomm.com, linux-arm-msm@vger.kernel.org, 
+	linux-crypto@vger.kernel.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	Gaurav Kashyap <gaurav.kashyap@oss.qualcomm.com>
+Subject: Re: [PATCH v2 3/3] crypto: qce: fix version check
+Message-ID: <fkqs3deirpi3sdljuo4fnod2pryoqg2ho5bbuie77k55mktrlq@heg4gvoo2rvy>
+References: <20251029-knp-crypto-v2-0-b109a22da4f7@oss.qualcomm.com>
+ <20251029-knp-crypto-v2-3-b109a22da4f7@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -63,96 +64,48 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20251029-ipq-pwm-v18-1-edbef8efbb8e@outlook.com>
+In-Reply-To: <20251029-knp-crypto-v2-3-b109a22da4f7@oss.qualcomm.com>
 
-On Wed, Oct 29, 2025 at 12:36:57PM +0400, George Moussalem via B4 Relay wrote:
-> From: Devi Priya <quic_devipriy@quicinc.com>
+On Wed, Oct 29, 2025 at 01:25:31AM -0700, Jingyi Wang wrote:
+> From: Gaurav Kashyap <gaurav.kashyap@oss.qualcomm.com>
 > 
-> DT binding for the PWM block in Qualcomm IPQ6018 SoC.
-> [George: added compatibles for IPQ5018, IPQ5332, and IPQ9574]
+> The previous version check made it difficult to support newer major
+> versions (e.g., v6.0) without adding extra checks/macros. Update the
+> logic to only reject v5.0 and allow future versions without additional
+> changes.
 > 
-> Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-> Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> Co-developed-by: Baruch Siach <baruch.siach@siklu.com>
-> Signed-off-by: Baruch Siach <baruch.siach@siklu.com>
-> Signed-off-by: Devi Priya <quic_devipriy@quicinc.com>
+> Signed-off-by: Gaurav Kashyap <gaurav.kashyap@oss.qualcomm.com>
+> Signed-off-by: Jingyi Wang <jingyi.wang@oss.qualcomm.com>
 
-This is where we expect the [George: ...] comment.
-
-I'll leave it up to Uwe to determine if he'd like you to resubmit this
-or not though...
-
-> Signed-off-by: George Moussalem <george.moussalem@outlook.com>
-
-I think this patch looks good now.
-
-Thank you,
-Bjorn
+Reviewed-by: Bjorn Andersson <andersson@kernel.org>
 
 > ---
->  .../devicetree/bindings/pwm/qcom,ipq6018-pwm.yaml  | 51 ++++++++++++++++++++++
->  1 file changed, 51 insertions(+)
+>  drivers/crypto/qce/core.c | 3 +--
+>  1 file changed, 1 insertion(+), 2 deletions(-)
 > 
-> diff --git a/Documentation/devicetree/bindings/pwm/qcom,ipq6018-pwm.yaml b/Documentation/devicetree/bindings/pwm/qcom,ipq6018-pwm.yaml
-> new file mode 100644
-> index 0000000000000000000000000000000000000000..ca8e916f03276e93d755d574e2567b0e4b86a8ce
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/pwm/qcom,ipq6018-pwm.yaml
-> @@ -0,0 +1,51 @@
-> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
-> +%YAML 1.2
-> +---
-> +$id: http://devicetree.org/schemas/pwm/qcom,ipq6018-pwm.yaml#
-> +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> +
-> +title: Qualcomm IPQ6018 PWM controller
-> +
-> +maintainers:
-> +  - George Moussalem <george.moussalem@outlook.com>
-> +
-> +properties:
-> +  compatible:
-> +    oneOf:
-> +      - items:
-> +          - enum:
-> +              - qcom,ipq5018-pwm
-> +              - qcom,ipq5332-pwm
-> +              - qcom,ipq9574-pwm
-> +          - const: qcom,ipq6018-pwm
-> +      - const: qcom,ipq6018-pwm
-> +
-> +  reg:
-> +    maxItems: 1
-> +
-> +  clocks:
-> +    maxItems: 1
-> +
-> +  "#pwm-cells":
-> +    const: 2
-> +
-> +required:
-> +  - compatible
-> +  - reg
-> +  - clocks
-> +  - "#pwm-cells"
-> +
-> +additionalProperties: false
-> +
-> +examples:
-> +  - |
-> +    #include <dt-bindings/clock/qcom,gcc-ipq6018.h>
-> +
-> +    pwm: pwm@1941010 {
-> +        compatible = "qcom,ipq6018-pwm";
-> +        reg = <0x01941010 0x20>;
-> +        clocks = <&gcc GCC_ADSS_PWM_CLK>;
-> +        assigned-clocks = <&gcc GCC_ADSS_PWM_CLK>;
-> +        assigned-clock-rates = <100000000>;
-> +        #pwm-cells = <2>;
-> +    };
+> diff --git a/drivers/crypto/qce/core.c b/drivers/crypto/qce/core.c
+> index e95e84486d9a..b966f3365b7d 100644
+> --- a/drivers/crypto/qce/core.c
+> +++ b/drivers/crypto/qce/core.c
+> @@ -21,7 +21,6 @@
+>  #include "sha.h"
+>  #include "aead.h"
+>  
+> -#define QCE_MAJOR_VERSION5	0x05
+>  #define QCE_QUEUE_LENGTH	1
+>  
+>  #define QCE_DEFAULT_MEM_BANDWIDTH	393600
+> @@ -161,7 +160,7 @@ static int qce_check_version(struct qce_device *qce)
+>  	 * the driver does not support v5 with minor 0 because it has special
+>  	 * alignment requirements.
+>  	 */
+> -	if (major != QCE_MAJOR_VERSION5 || minor == 0)
+> +	if (major == 5 && minor == 0)
+>  		return -ENODEV;
+>  
+>  	qce->burst_size = QCE_BAM_BURST_SIZE;
 > 
 > -- 
-> 2.51.1
-> 
+> 2.25.1
 > 
 
