@@ -1,62 +1,63 @@
-Return-Path: <linux-arm-msm+bounces-79521-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-79526-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id B84D4C1C82F
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Oct 2025 18:40:07 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id F01F7C1C5D2
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Oct 2025 18:09:17 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id A50966443D1
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Oct 2025 16:40:30 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 7A94818868F5
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Oct 2025 17:07:23 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A31BB2F5307;
-	Wed, 29 Oct 2025 16:39:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id DBF57347FC6;
+	Wed, 29 Oct 2025 17:06:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="oeRm2lPc"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="qHeaSkdZ"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74A04299A8F;
-	Wed, 29 Oct 2025 16:39:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA8B8347BCF;
+	Wed, 29 Oct 2025 17:06:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761755963; cv=none; b=imPY/sT1Yu+V7v+g7+IyeBiR3eULjTTI6f+FwZWuGU1znasf5LEjaE7ST2K2qVh9ainLdZNGYIt6qhxIHmdtfPR2dtsDTdtspYQvvKkSYNURo9+w2ZVkULOIxBx4qqbRW9jwOgAgxxpnpyYcaR6Aug9kPX6v+tghfq+of+gJ8L8=
+	t=1761757614; cv=none; b=LHCBq/8zfFekksvGr9DTG2TfP1rMtY9Inr8mkBV2dj9TibPcfWw3CrOcNPjFCnxDr+pNZWGvSYbsKd9gYq8RYXUH0uWARiAYHTXunxrvqD2kqQbaQloFRV8DicRbBLGvZfWKTSlOFGKhcI0qGALsbpQUjVVjwOMn2Bbmccz8tSM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761755963; c=relaxed/simple;
-	bh=k/THoufCsFgPBRIhXt6rhIAnwVeM2wUTW1HoSJUyun8=;
+	s=arc-20240116; t=1761757614; c=relaxed/simple;
+	bh=sFZTGSYKTnwBa0p3fbvzTrVI4AToQmojfH/yTJCVaA4=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=VvSKi0QBUdn+Hi4x9uYAZkImgxYIOTleNdS65b4D6nNGUOlZEMp8BhAjEtB6RFJqb5UxXLKyfocDsQNF0jSTPWUU8gMWZ9BQs4Phj1eO6kfpZsp6B4JdEtMqMDBtDkalWO7PDWl42SiHzg96M/1BlFatlVtAGOGvDz6AmuVFFUc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=oeRm2lPc; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81A65C4CEF8;
-	Wed, 29 Oct 2025 16:39:21 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=ToGgp1kmvfCzWcCDgFVseL/pmQgIo8S6Bextue641xx5Z0AGrDHtAXZSEXzxQWAu5Hgfbg4siDkIFZPVZGDQJmuDGmYacnuDgMTgITqzB57GIZalcbWVgLLhm6Zs070XvJ/njJX5ic307yHxhPv5mEBkMet2andDIexS5woCMaY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=qHeaSkdZ; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE389C4CEF7;
+	Wed, 29 Oct 2025 17:06:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1761755962;
-	bh=k/THoufCsFgPBRIhXt6rhIAnwVeM2wUTW1HoSJUyun8=;
+	s=k20201202; t=1761757614;
+	bh=sFZTGSYKTnwBa0p3fbvzTrVI4AToQmojfH/yTJCVaA4=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=oeRm2lPcNLRrYndKKmwVVpubn9BNybVM8rAZJlFfLxVuwlBgFuVKAeWfzJIbw+/6v
-	 B//Fzw8Sj3kzbDJlCI0LPNUylzDYSat5ksVPpjcZ+9lkSlBxnSxi0KPWfm1y82OROd
-	 UugFPKSPeO3pCdkSXN7ZDGoZ3VSd7Jld1gFmI6tnWn6j01DJ1x7SUtN3W3bA1fUGsO
-	 YVfOu6YbWzIV2RZN2+d71K1S9M4pM7ajQkfF1yI3jHLg0IGCgTuPOXEPmVK/JGbFs4
-	 raG/iKgxHm/BHJZCUjvKOdqX7MzRFAkV/rMhD00hQB3frIls5NlDvOdd48AiRDXlNq
-	 2wEE2IkfcxG/A==
-Date: Wed, 29 Oct 2025 11:42:26 -0500
+	b=qHeaSkdZUqEm/ASvyx7Se8Cn5vw18wArwi896aedwI6c251UjEBEQVqFuJsxIR1lu
+	 f6ak9jj5f4YdvkpiWB7oUMbADMqid3Q4/200n9gnbV0bdQXUQqSOFFfA+ju5afS1kl
+	 j8EOdCT1Y5Rdd4zmtvqbuHQyO7B1f0xv+yfpxsCWXXZTJimfDPg7Ty52SPL8KStUdA
+	 h8BHe9vhmQqdHxKeJmGztaotq9bOWyPe9NmxJl+sCQxBzO/ZBy5M9uUmTeO9VLg+G1
+	 q6d6jzIeg+9t0B2oAphB9HXtViwAIJdsyBxPze15sh3EduaSe5obvnVC/KsjFXZCmb
+	 W+DMfzo95h1nQ==
+Date: Wed, 29 Oct 2025 12:09:58 -0500
 From: Bjorn Andersson <andersson@kernel.org>
-To: Abel Vesa <abel.vesa@linaro.org>
-Cc: Vinod Koul <vkoul@kernel.org>, 
-	Kishon Vijay Abraham I <kishon@kernel.org>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Dmitry Baryshkov <lumag@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, 
-	Sibi Sankar <sibi.sankar@oss.qualcomm.com>, Rajendra Nayak <quic_rjendra@quicinc.com>, 
-	Neil Armstrong <neil.armstrong@linaro.org>, linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org, 
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	Krzysztof Kozlowski <krzk@kernel.org>, stable@vger.kernel.org, 
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Subject: Re: [PATCH v4 2/3] phy: qcom: edp: Make the number of clocks flexible
-Message-ID: <wjvec7fiqjzlyo6y5kpzsd5u7rz47anaytu25w2j4yqgtdntx6@zuapdsayoio2>
-References: <20251029-phy-qcom-edp-add-missing-refclk-v4-0-adb7f5c54fe4@linaro.org>
- <20251029-phy-qcom-edp-add-missing-refclk-v4-2-adb7f5c54fe4@linaro.org>
+To: Krishna Kurapati PSSNV <krishna.kurapati@oss.qualcomm.com>
+Cc: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>, 
+	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+	Conor Dooley <conor+dt@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, 
+	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	Wesley Cheng <wesley.cheng@oss.qualcomm.com>, Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Subject: Re: [PATCH v9 2/3] arm64: dts: qcom: sm8750: Add USB support for
+ SM8750 MTP platform
+Message-ID: <frbpbbvercsmytjmcfidd35p7frfmpuvoogi2s5wvf7rtzv6nr@eqceebjujasj>
+References: <20251024151521.2365845-1-krishna.kurapati@oss.qualcomm.com>
+ <20251024151521.2365845-3-krishna.kurapati@oss.qualcomm.com>
+ <r5zjb7v2ngsbx2y63tmdhnm4gbpla5fki4uzpjhvn7sqmzsqi2@7637rbudt3z6>
+ <469fc3aa-9b95-4b30-a704-d568a830452f@oss.qualcomm.com>
+ <vmtm6wy2ldvobgl2o7cqdtknyfg4fup2pqpddkftnhzs5tgqrq@vbo4j2gmr4px>
+ <bfc126ad-1443-4b9a-bc8d-3619606294e2@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -65,87 +66,48 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20251029-phy-qcom-edp-add-missing-refclk-v4-2-adb7f5c54fe4@linaro.org>
+In-Reply-To: <bfc126ad-1443-4b9a-bc8d-3619606294e2@oss.qualcomm.com>
 
-On Wed, Oct 29, 2025 at 03:31:31PM +0200, Abel Vesa wrote:
-> On X Elite, the DP PHY needs another clock called ref, while all other
-> platforms do not.
+On Wed, Oct 29, 2025 at 10:12:59PM +0530, Krishna Kurapati PSSNV wrote:
 > 
-> The current X Elite devices supported upstream work fine without this
-> clock, because the boot firmware leaves this clock enabled. But we should
-> not rely on that. Also, even though this change breaks the ABI, it is
-> needed in order to make the driver disables this clock along with the
-> other ones, for a proper bring-down of the entire PHY.
 > 
-> So in order to handle these clocks on different platforms, make the driver
-> get all the clocks regardless of how many there are provided.
+> On 10/29/2025 10:04 PM, Bjorn Andersson wrote:
+> > On Wed, Oct 29, 2025 at 09:20:48PM +0530, Krishna Kurapati PSSNV wrote:
+> > > 
+> > > 
+> > > On 10/29/2025 2:45 AM, Dmitry Baryshkov wrote:
+> > > > On Fri, Oct 24, 2025 at 08:45:20PM +0530, Krishna Kurapati wrote:
+> > > > > From: Wesley Cheng <wesley.cheng@oss.qualcomm.com>
+> > > > > 
+> > > > > Enable USB support on SM8750 MTP variants.  The current definition will
+> > > > > start the USB controller in peripheral mode by default until
+> > > > > dependencies are added, such as USB role detection.
+> > > > 
+> > > > Which dependencies?
+> > > > 
+> > > 
+> > > Dependencies like pmic-glink and adding remote endpoints for otg support.
+> > > Till they are added, we can enable peripheral mode.
+> > > 
+> > 
+> > But this is 8750, Jishnu got qcom,sm8750-pmic-glink landed in the
+> > binding 9 months ago, so why are we spending time discussing this?
+> > 
+> > Why not just add the whole shebang at once?
+> > 
 > 
-> Cc: stable@vger.kernel.org # v6.10
-> Fixes: db83c107dc29 ("phy: qcom: edp: Add v6 specific ops and X1E80100 platform support")
-> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-> Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
-> ---
->  drivers/phy/qualcomm/phy-qcom-edp.c | 16 ++++++++--------
->  1 file changed, 8 insertions(+), 8 deletions(-)
+> Initially I didn't add those changes because the series already had acked
+> patches and I didn't want to disturb them. I can add them in next submission
+> and send them out.
 > 
-> diff --git a/drivers/phy/qualcomm/phy-qcom-edp.c b/drivers/phy/qualcomm/phy-qcom-edp.c
-> index f1b51018683d51df064f60440864c6031638670c..ca9bb9d70e29e1a132bd499fb9f74b5837acf45b 100644
-> --- a/drivers/phy/qualcomm/phy-qcom-edp.c
-> +++ b/drivers/phy/qualcomm/phy-qcom-edp.c
-> @@ -103,7 +103,9 @@ struct qcom_edp {
->  
->  	struct phy_configure_opts_dp dp_opts;
->  
-> -	struct clk_bulk_data clks[2];
-> +	struct clk_bulk_data *clks;
-> +	int num_clks;
-> +
->  	struct regulator_bulk_data supplies[2];
->  
->  	bool is_edp;
-> @@ -218,7 +220,7 @@ static int qcom_edp_phy_init(struct phy *phy)
->  	if (ret)
->  		return ret;
->  
-> -	ret = clk_bulk_prepare_enable(ARRAY_SIZE(edp->clks), edp->clks);
-> +	ret = clk_bulk_prepare_enable(edp->num_clks, edp->clks);
->  	if (ret)
->  		goto out_disable_supplies;
->  
-> @@ -885,7 +887,7 @@ static int qcom_edp_phy_exit(struct phy *phy)
->  {
->  	struct qcom_edp *edp = phy_get_drvdata(phy);
->  
-> -	clk_bulk_disable_unprepare(ARRAY_SIZE(edp->clks), edp->clks);
-> +	clk_bulk_disable_unprepare(edp->num_clks, edp->clks);
->  	regulator_bulk_disable(ARRAY_SIZE(edp->supplies), edp->supplies);
->  
->  	return 0;
-> @@ -1092,11 +1094,9 @@ static int qcom_edp_phy_probe(struct platform_device *pdev)
->  	if (IS_ERR(edp->pll))
->  		return PTR_ERR(edp->pll);
->  
-> -	edp->clks[0].id = "aux";
-> -	edp->clks[1].id = "cfg_ahb";
-> -	ret = devm_clk_bulk_get(dev, ARRAY_SIZE(edp->clks), edp->clks);
-> -	if (ret)
-> -		return ret;
-> +	edp->num_clks = devm_clk_bulk_get_all(dev, &edp->clks);
-> +	if (edp->num_clks < 0)
-> +		return dev_err_probe(dev, edp->num_clks, "failed to parse clocks\n");
 
-Nit...We're not really failing to "parse" clocks...
-
-Reviewed-by: Bjorn Andersson <andersson@kernel.org>
+Now that you don't carry them anymore - and you have to resubmit this
+anyways - I'd prefer that you just enable the whole thing over trying to
+make up a reason suitable for encoding in the git log...
 
 Regards,
 Bjorn
 
->  
->  	edp->supplies[0].supply = "vdda-phy";
->  	edp->supplies[1].supply = "vdda-pll";
-> 
-> -- 
-> 2.48.1
-> 
+> Regards,
+> Krishna,
 
