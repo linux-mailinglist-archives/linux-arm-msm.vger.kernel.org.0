@@ -1,150 +1,188 @@
-Return-Path: <linux-arm-msm+bounces-79618-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-79620-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 593C4C1F29B
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Oct 2025 09:59:30 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 73BFCC1F2AE
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Oct 2025 10:00:38 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id B06351A20024
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Oct 2025 08:54:21 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id A814818907A3
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Oct 2025 08:55:18 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 490073451CD;
-	Thu, 30 Oct 2025 08:51:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9D1832882BB;
+	Thu, 30 Oct 2025 08:54:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="cPIkGlWi"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jXULy106"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f46.google.com (mail-ej1-f46.google.com [209.85.218.46])
+Received: from mail-pj1-f46.google.com (mail-pj1-f46.google.com [209.85.216.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 735AB33F39D
-	for <linux-arm-msm@vger.kernel.org>; Thu, 30 Oct 2025 08:51:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3EB63339B47
+	for <linux-arm-msm@vger.kernel.org>; Thu, 30 Oct 2025 08:54:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761814281; cv=none; b=IUjXSGDfjq3HipYT5TEWGdvIlbpml+YSsnxn21B0rMviKy3Uq/9Exzzrpn2uiojuMmaKMIvNfso1Hz63JfePRtOlB5/rTb4sVoMmhPAr6RwS/ckWh4LBuE+/BksaqXcKnz0p7c+OLCAchqFLQKcA2vl6TiZhid24/nHgHS5acX8=
+	t=1761814464; cv=none; b=pZ46ouFbHsxtzYiv/P9ltrchD1Sy7mpGlBEmrbUQlBFwd+CBmh4jV4cqAT4dVEO28Wo2WniGjS1ImQ3wRtGw1EBDBF7C9vxC3+MVaD97flKSXDtrkxmJtqASIgAef/j2P7q1m60OHzqC9KEZmpzl++iZ4hcRScqIaaNblo3QcRc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761814281; c=relaxed/simple;
-	bh=tOFcZ+EoVU36Gcas8ByUgbu9yWXwAq4SdMIRPuEe4Hw=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=QCuzDRbconhzyeSKx3/y/ISMcIuL89DAz4KhVZEXzh77fVxhvhuSJc3WAZwqy6cE7i+JPOT3/ULx7OzM9v6V6Psxb96Eg00/8zyRCbnAvTDnuAZaPhKzCdffK5xrlI4//SBLXJDQSLM26Wh4/mvRLQH69AZkVsm6EvmXLnSDYts=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=cPIkGlWi; arc=none smtp.client-ip=209.85.218.46
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ej1-f46.google.com with SMTP id a640c23a62f3a-b6d4e877915so11197166b.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 30 Oct 2025 01:51:18 -0700 (PDT)
+	s=arc-20240116; t=1761814464; c=relaxed/simple;
+	bh=4FbxbnCJDc/1oh2iUw/DiNtq0IJ+KihYhiAuxVGgt3k=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=ojKqpDpvfo+6j+HuYBk4IJzs0POIuuLv6wC9EY+2dpGl4XKSEqb201Ak8C00nlpoFqQQz0HqKz+J3pDQa2qo0phFhm9xjp1/KhhoVXO/aq5Dym3LCET1CUQgJjwrKyhcG9xe4P44R8HuvcQhlCZwLp+vm6AE6E0lAofNtvssteo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=jXULy106; arc=none smtp.client-ip=209.85.216.46
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-pj1-f46.google.com with SMTP id 98e67ed59e1d1-3401314d845so1122374a91.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 30 Oct 2025 01:54:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1761814276; x=1762419076; darn=vger.kernel.org;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=dyElttd76tnImw2rKaTu1EJufTIHlBuUN2ebZk19A2A=;
-        b=cPIkGlWiSTS1/VqEYMoYSjKQfquhSglZBwF7gLOA7bC1NPWjitE/G+llnML65KsspP
-         Cnzbdn6BIkJZRIt1co3jvHW74XGWoeTzYPVxn21qUyMScMcjR/J59L9RUZJOtf5umskU
-         5Fl+l7tckf8wzE2010yAlNh+DMsLgeptATmNz+Y9gN8TdKDK7f8Ji12Dema3ohiZIOlI
-         5KIMw8p+NcT2Qd+HrAeJk2xIcSLlfad7NGWgoDdkrhFJ3S6MdTPNo2CZ9vaJH6AQ0SIe
-         P5N642L6/iPRCtNG51pNcK9rjYOulop8gHJ5nlL4CzSQABJrEHyc0rrV91g7VMLlak8p
-         56BA==
+        d=gmail.com; s=20230601; t=1761814461; x=1762419261; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=z1nbpNKxGZmwf2lpk230ytxyk1UWzh/Nxzqzjf3QY9s=;
+        b=jXULy106eZuAjPjamE5lEQTRgXIck0xUm4Mc+g/UMbzE5iPATnRryx+BR3xiKhvcz4
+         UJ7UWBB0ecLREAuyIaRmdlruI61fq4pu071W9KK0S7v+RYM5Dv6Kv1FMZoVbuwky8zHl
+         T88sSpHxCGfWaGVP3td9QWlnnz2qz4+eDVxLerFueMeFeOeweZOWEgLNwkP65pThABnX
+         jCXzStZN40lwfq/gE4Y5z8WZBG24Tu+rF15vXoLeMDotA9L8bijyFisbLXIqLq9KUQ/5
+         lmty/0VDBApvHReBQFShREXxOw65dnSqE3UnKnsNLnXcv/OPFUiyxBJ8S9OcAleZ8SHR
+         b0Dw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1761814276; x=1762419076;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=dyElttd76tnImw2rKaTu1EJufTIHlBuUN2ebZk19A2A=;
-        b=HTW6u0B+r89HMFie/ZX8InHqqzOQUC88zXl6s8jBYXBEEkrEedDG+Za17lx03UncxQ
-         I/tM+CmAvpepTeTClEplLqSObK9KApANF3q5h9lD5jLOXqkbdGtdMdysRlprsPVAYrBA
-         ZtA7RbtN2wr2xGmtfseya6jwnJKQNe0iNxbnFa1gJ3pqRgcz+Sy0BPYvq2uwZvrGldTU
-         SHDlZQJ2sJSEftNss5/2X2aNN/W2cmOohhzUHAwraxXY63aIrA4FaJq8j8a2re9nPWxT
-         iGOLDzFxMaN6aOiADSmQGxb3fIGjCcBGuOLE+AeusMcCpFGWmFqDR84idURotm6UjbG6
-         K5uQ==
-X-Forwarded-Encrypted: i=1; AJvYcCW4pgI4RSsByLAIZ1x9uLnjNC4CiFj/4aY6D+KiR95Ntctum5NahEYxBFsE2OwtBUuImVSYU6tp1WJR6Lka@vger.kernel.org
-X-Gm-Message-State: AOJu0YwPup8WR+uczIFAIfiYj/R6Y9vaN9qsctQQDqhLVd1GyapZxmIt
-	S9mHIgWdgGszW4QzsSp14MSup0gta7O/vzc4cQE6A4f2EMWYzmavaGZhz5rvbVErWRk=
-X-Gm-Gg: ASbGncukq/QddIpZKFGo2t1/t8a/Pkcsp0+Fj5IkhsUU3mA4k0d2chteDHg77l3b/Ny
-	Y0tGqSd8a/fw6fTcPf7+5WQ5M6NUryns7SY2anDd+cBvCqR9sPhF+zclMoEikL7B8hSTgq6Tbic
-	9TZLqYdUvWMJ1FVGZAbEwZrGgqblCUQtxdE5bK6KQZON9ZfuCBF+BaD3qTu7jgAeXUNXeDRU20a
-	S3fu6q5+uD3tiw7FGVlKSXI4myMOYP3hun5g7Ca6DdRA916Nr8gt+A+hLgOWd66hhosrbQgAzKT
-	CVe7hJw/LMACkhO5RaR4fd8qNlMtF78qkPfx9HaAmw/t0Y5tQcqvSiBKZ4A+QD0f+ZoX47EzyBI
-	vqHzpcDmhkpC6p+UpGwiolFGJPRTIsplfUUS4UXXx+ktMt1YXR0sMwOzcPSRPbJqga2nfvjTjJQ
-	hniSVXAmyYPvMzutvC
-X-Google-Smtp-Source: AGHT+IFQVdw8/tPXlVf5rqd+6iy/3RoBW5tavJDgwS71+TwJTiu7nX0lLlocIq3NyDrw50g8MOfctQ==
-X-Received: by 2002:a17:907:d88:b0:b38:7f08:8478 with SMTP id a640c23a62f3a-b703d06512fmr354167266b.0.1761814276487;
-        Thu, 30 Oct 2025 01:51:16 -0700 (PDT)
-Received: from [127.0.1.1] ([178.197.219.123])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-b6d85ba3798sm1691789366b.39.2025.10.30.01.51.15
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 30 Oct 2025 01:51:16 -0700 (PDT)
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Date: Thu, 30 Oct 2025 09:50:52 +0100
-Subject: [PATCH v2 9/9] dt-bindings: PCI: qcom,pcie-x1e80100: Add missing
- required power-domains and resets
+        d=1e100.net; s=20230601; t=1761814461; x=1762419261;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=z1nbpNKxGZmwf2lpk230ytxyk1UWzh/Nxzqzjf3QY9s=;
+        b=Pp0UUFGQAOGfMpH5jgFeI/tx1M6KZYSeQmNbagGr79z4KOgDkk8Ub7EmUuefA+4RKs
+         JaGM+OLOplLxRqgaZqJdQgDaupiVAbXub6DQeuRmopJ1UIjb4+mmQ7kP6RufFhZawjWV
+         WaitOKtdOagAgs1/LRPGVxlWHueSTZPdfpD4uFVvkrStGLytnnZ7Kw/W9RjfpYJWm6bV
+         m/xlKvNkdd8vIvTXjTwApMbfHTZNK25aUsthDdFE8S6IhEPCXwFfLmkc1N6YFKocXjwg
+         DdjiiwNTLbhdq+shalxFu6GeuT2SRR/yH4xdSu5i0YXzud08MnPaOD6tf7pEwUILl3Il
+         4p5g==
+X-Forwarded-Encrypted: i=1; AJvYcCXX/0XLLe4EETwbtQ1ACOFl2viy4l6Wj8HQFsAvG9VVecD2lQq4zfiMEibNCnEgl0b1GdxQIDayny4enOnC@vger.kernel.org
+X-Gm-Message-State: AOJu0YyZrqBwpuLCqcqzeq9FUum24ym/0nPfEBLUDUTFZmqqjm5U9tS+
+	ZUGl5ersNHtnHN1QuBM4Yax/1k9Df75FERCvub1BtZwbAWy82J+l0r18
+X-Gm-Gg: ASbGncuImwFuJYIyFw+KTfT/hRLtfh2ght6x6ECFtamFLeeHKc5Iim6wohsN+qUPQ3k
+	vT6h0Uo7Aktcpq0pKZiVGEq+xjip8kvKeqx0nhgusXmwfBlQM7syB+oQBhVraoVhu9jBD4jMwzV
+	Q4TKCKyTBGUr0Z84bh8o1xAvuo1hqfu5xT9a5LcfLxVvIlKeiN+jQXtAbrv5JV+EVs0dweKko5i
+	WzJQZgcTxc3f4qP1EoKGyn3oWZDki+g+wVWXC5sJrt0xomRAr/K0Av0GjL6YETqximo69+PDArs
+	sH3/tY+LmS75uDn4gCsXMOkpseZFH6uTdNjIfUnm56UeGl6A/uIgm7uTpbQFU5cGJmbTORu1Ifa
+	babIrFIhVvbcPLNXnyI2a74ACoSakapD5M63jHrD9EjJc8/vkPGA3ZzR1eFUlNYejfl6imGeBpB
+	9y5GDlh+uzG1eQ
+X-Google-Smtp-Source: AGHT+IGFeqYgROmr+sPNZXEEZkn6mYlrCgf3ZvBH+yTloU98WBNL4oCUsdI3RF82oEmk9ZTtm2e7CQ==
+X-Received: by 2002:a17:90b:580d:b0:340:29be:8afe with SMTP id 98e67ed59e1d1-3404c56f639mr2713860a91.33.1761814461463;
+        Thu, 30 Oct 2025 01:54:21 -0700 (PDT)
+Received: from [172.17.49.162] ([103.218.174.2])
+        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-b712f880ef2sm15926777a12.38.2025.10.30.01.54.17
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 30 Oct 2025 01:54:21 -0700 (PDT)
+Message-ID: <ae9021dc-e0ca-4631-b45b-3cf9f526bd14@gmail.com>
+Date: Thu, 30 Oct 2025 14:24:15 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20251030-dt-bindings-pci-qcom-fixes-power-domains-v2-9-28c1f11599fe@linaro.org>
-References: <20251030-dt-bindings-pci-qcom-fixes-power-domains-v2-0-28c1f11599fe@linaro.org>
-In-Reply-To: <20251030-dt-bindings-pci-qcom-fixes-power-domains-v2-0-28c1f11599fe@linaro.org>
-To: Lorenzo Pieralisi <lpieralisi@kernel.org>, 
- =?utf-8?q?Krzysztof_Wilczy=C5=84ski?= <kwilczynski@kernel.org>, 
- Manivannan Sadhasivam <mani@kernel.org>, Rob Herring <robh@kernel.org>, 
- Bjorn Helgaas <bhelgaas@google.com>, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
- Abel Vesa <abel.vesa@linaro.org>
-Cc: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, 
- linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org, 
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v1 1/1] arm64: dts: qcom: talos-evk: Add support for
+ dual-channel LVDS panel
+To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Cc: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, andersson@kernel.org,
+ konradybcio@kernel.org, robh@kernel.org, krzk+dt@kernel.org,
+ conor+dt@kernel.org, linux-arm-msm@vger.kernel.org,
  devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-X-Mailer: b4 0.14.3
-X-Developer-Signature: v=1; a=openpgp-sha256; l=941;
- i=krzysztof.kozlowski@linaro.org; h=from:subject:message-id;
- bh=tOFcZ+EoVU36Gcas8ByUgbu9yWXwAq4SdMIRPuEe4Hw=;
- b=owEBbQKS/ZANAwAKAcE3ZuaGi4PXAcsmYgBpAyb1rCWm0in41RGHAdfE4Lvka2FoeFs/clIRk
- ZoaP88Ig9uJAjMEAAEKAB0WIQTd0mIoPREbIztuuKjBN2bmhouD1wUCaQMm9QAKCRDBN2bmhouD
- 1x4pEACVJrEw54/5DQoRujMfwdvo23l7nZ6vMLdhg1RXGPqYk+73XH+lCnIRfHgpNEJqgRZ0mbY
- I5e5+Xq9n8s7veUbg3QrpRrUU3xiK3u3s8jJsu7ftW15VfiK/P9ZMITmOd0Xlc6Be22uWadVLZf
- JFPwNNZO1AjNx5i8bEw+qIlTE0qk1hxFg6Pmd9DAIma/MuyCD4zPjI3Sy0aBT28j3SgHBJHNsrN
- +LztllD/ZpueKn221+PPIeCh/saDbqYcMvqjBBUHuoC0K5p17FT23LmsoEeBn50/krzGN72+gfM
- n0XzHYRrlhNXoYdFr6nCLzd6kRkBPXz8QEI/kX268mzmxShzvru5VbxhSAPuhv6v4lmTbWXKHdC
- DWW0eicXLN6JJXEa2CMJgc/ht0WLmWA35/LS9ntgICyTePgMuc3TUVWH0+BeRfzS8VxreXWCWSv
- FLr0hnpuLghg2O814EtOUv0pPIL0+5GNgLaDiCLsmY7nwSepKF6frj4N7I39dbQVCeEqgkt+f9a
- x+tOrJesH3stJtOYT+XV83vpW4FGHdCqsgaWFG8RWj5QfNYkS/kZdorC+DRwLOoOEq60RJo3YYG
- xLMdrPsZTToeWPl69nLxP3/vzUQ++yV2EV5MbISbVY797NVnErl6f39LCnMVI+GrVJFEp9qXI29
- P+q9qVJGbBVpkkg==
-X-Developer-Key: i=krzysztof.kozlowski@linaro.org; a=openpgp;
- fpr=9BD07E0E0C51F8D59677B7541B93437D3B41629B
+References: <20251028061636.724667-1-tessolveupstream@gmail.com>
+ <20251028061636.724667-2-tessolveupstream@gmail.com>
+ <d05fe82a-640f-4a09-9d83-39bb5aff179d@oss.qualcomm.com>
+ <9208d2ef-79da-4e80-ac1f-e01fa5feae0a@gmail.com>
+ <sfxvtfzzstdbt7in6z6ztsjfy6e555fr3sjbi5kqkv5sk77b26@kl57zs7iuuvk>
+Content-Language: en-US
+From: Tessolve Upstream <tessolveupstream@gmail.com>
+In-Reply-To: <sfxvtfzzstdbt7in6z6ztsjfy6e555fr3sjbi5kqkv5sk77b26@kl57zs7iuuvk>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-Power domains and resets should be required for PCI, so the proper SoC
-supplies are turned on.
 
-Fixes: 692eadd51698 ("dt-bindings: PCI: qcom: Document the X1E80100 PCIe Controller")
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
----
- Documentation/devicetree/bindings/pci/qcom,pcie-x1e80100.yaml | 5 +++++
- 1 file changed, 5 insertions(+)
 
-diff --git a/Documentation/devicetree/bindings/pci/qcom,pcie-x1e80100.yaml b/Documentation/devicetree/bindings/pci/qcom,pcie-x1e80100.yaml
-index 61581ffbfb24..83e35543b233 100644
---- a/Documentation/devicetree/bindings/pci/qcom,pcie-x1e80100.yaml
-+++ b/Documentation/devicetree/bindings/pci/qcom,pcie-x1e80100.yaml
-@@ -73,6 +73,11 @@ properties:
-       - const: pci # PCIe core reset
-       - const: link_down # PCIe link down reset
- 
-+required:
-+  - power-domains
-+  - resets
-+  - reset-names
-+
- allOf:
-   - $ref: qcom,pcie-common.yaml#
- 
+On 29/10/25 18:04, Dmitry Baryshkov wrote:
+> On Wed, Oct 29, 2025 at 05:50:01PM +0530, Tessolve Upstream wrote:
+>>
+>>
+>> On 28/10/25 14:55, Konrad Dybcio wrote:
+>>> On 10/28/25 7:16 AM, Sudarshan Shetty wrote:
+>>>> This patch introduces a new device tree for the QCS615 Talos
+>>>> EVK platform with dual-channel LVDS display support.
+>>>>
+>>>> The new DTS file (`talos-evk-lvds.dts`) is based on the existing
+>>>> `talos-evk.dts` and extends it to enable a dual-channel LVDS display
+>>>> configuration using the TI SN65DSI84 DSI-to-LVDS bridge.
+>>>>
+>>>> where channel-A carries odd pixel and channel-B carries even pixel
+>>>> on the QCS615 talos evk platform.
+>>>>
+>>>> Signed-off-by: Sudarshan Shetty <tessolveupstream@gmail.com>
+>>>> ---
+>>>
+>>> [...]
+>>>
+>>>> +	backlight: backlight {
+>>>> +		compatible = "gpio-backlight";
+>>>> +		gpios = <&tlmm 115 GPIO_ACTIVE_HIGH>;
+>>>> +		default-on;
+>>>> +	};
+>>>> +
+>>>> +	lcd0_pwm_en {
+>>>
+>>> Use hyphens instead of underscores in node names
+>>
+>> Okay, will update in next patch.
+>>>
+>>>> +		compatible = "pwm-gpio";
+>>>> +		gpios = <&tlmm 59 GPIO_ACTIVE_HIGH>;
+>>>> +		pinctrl-0 = <&lcd0_bklt_pwm>;
+>>>
+>>> I think your intention was to use pwm-backlight and wire this node
+>>> up to that
+>>
+>> Soc does not support the PWM interface hence we are using gpio 
+>> as "pwm-gpio" by setting the duty cycle to 100%(i.e. "no pwm")
+> 
+> Why do you mention PWM here at all? It's perfectly fine to use
+> gpio-backlight. That looks extremely suspicious since you are not
+> referecing the pwm-gpio device at all.
 
--- 
-2.48.1
+Thanks for the feedback.
+GPIO59 (LED_PWM) connected to the panel’s dimming input.
+
+Since we can only drive the LED_PWM pin high (100% duty), 
+it does not provide true PWM control.
+
+I’ll remove the non-standard "pwm-gpio" node and model both lines
+using the standard gpio-backlight binding, like this:
+
+backlight: backlight {
+    compatible = "gpio-backlight";
+    gpios = <&tlmm 115 GPIO_ACTIVE_HIGH>, <&tlmm 59 GPIO_ACTIVE_HIGH>;
+    default-on;
+    pinctrl-0 = <&lcd0_bklt_en>, <&lcd0_bklt_pwm>;
+    pinctrl-names = "default";
+};
+
+&tlmm {
+       lcd0_bklt_en: lcd0-bklt-en-state {
+               pins = "gpio115";
+               function = "gpio";
+               bias-disable;
+       };
+
+       lcd0_bklt_pwm: lcd0-bklt-pwm-state {
+               pins = "gpio59";
+               function = "gpio";
+               bias-disable;
+       };
+};
+
+Let me know your opinion here,
+Thanks in advance.
+> 
 
 
