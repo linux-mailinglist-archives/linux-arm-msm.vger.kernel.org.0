@@ -1,119 +1,198 @@
-Return-Path: <linux-arm-msm+bounces-79573-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-79572-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 01F9CC1EA6F
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Oct 2025 07:59:29 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4494FC1EA69
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Oct 2025 07:59:20 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 3E4ED19C3765
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Oct 2025 06:59:53 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id EFA923B58BF
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Oct 2025 06:59:18 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 18D54332EA4;
-	Thu, 30 Oct 2025 06:59:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 98641332EBE;
+	Thu, 30 Oct 2025 06:59:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="NhmnJkVK"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Kge+qA/p"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pg1-f196.google.com (mail-pg1-f196.google.com [209.85.215.196])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA2962F5A31;
-	Thu, 30 Oct 2025 06:59:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13CCA32E6B7
+	for <linux-arm-msm@vger.kernel.org>; Thu, 30 Oct 2025 06:59:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.196
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761807567; cv=none; b=IrwnqTORsKobLL+l6SK6r9XUItJfO7yY+GBTTfZe2eoGVnymuALHNUQXsq4ZmjoLtkkDdYr+/pdlivKEe+H7PVDJXu5/SBp3aQMS/mHP0PVWH8knFV23CisnaHgfdsrMv0nJy7W/cm1CIXPIzOvKGflbx/DsP/D6N7lebGRsA88=
+	t=1761807552; cv=none; b=Khu9pKYrwMvCzAMCFS895MS7JfYaiB7geUJH9pmMOAw9qvejiSAcFPgxyW6Sd90oPiPD+HmR1w1Jur/QF3/O6LVvonVhzOUK1ilz1kqLN6CvOCSsLU3Ouulluoj/eJGJEU243Ih4dybFJ+aQT9FpGuNoQ9ndcObBjhnViSxTCf0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761807567; c=relaxed/simple;
-	bh=pi8QZz8S06COfBDFE8/Wpju4Uxk040gn3MFwKckdEto=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=iqpyGsq+i4SluLS67Rz/4WbWQbecLwvhUTiRxjUHdcnSZNW5DLak/ALCvbtmZEH9u1V+KYVMu+Ns+T6UiMhrEbxxkWuehwn6R2BfwaKUGMyDWmn1QotFppqYP30cs0UYOsa6lNfm1uKJYwIj43zvAdXY8TsBv0zYgHhEzlHZcfM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=NhmnJkVK; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B0E0C4CEF1;
-	Thu, 30 Oct 2025 06:59:13 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1761807566;
-	bh=pi8QZz8S06COfBDFE8/Wpju4Uxk040gn3MFwKckdEto=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=NhmnJkVKTHbBxaT7RKKAvihXDYVkKZTqdRc275vGNS+rmMVNBhbtesYJfRqH2+zl/
-	 IFwOhgN66c5WX+1v4IkEt+UG/Nut2agoPKlZOuPXaAxPc2DteTkczciDDQ4Ln7SUgY
-	 ISFfSelEN0gqkD71+7GPvwvmIqEEJaHo2cIZdmVpcRyi/JbG8jjp8FgusMRyAFtu4h
-	 tJ/w1KS6EOWEbxQ6cIMFmkhw62p0wGrKF+QyzJu/9LcLlCql4dRik77uMr/PXI36n1
-	 Xw0kjvpGSJMFSPKGDhRcbLzs8k8ziJTTO/YygdpdqSbzCC17GglqJuFpCtRwGhAgrM
-	 jd5w2NUv30xDg==
-Date: Thu, 30 Oct 2025 12:29:06 +0530
-From: Manivannan Sadhasivam <mani@kernel.org>
-To: Bartosz Golaszewski <brgl@bgdev.pl>
-Cc: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>, 
-	Bjorn Helgaas <bhelgaas@google.com>, Lorenzo Pieralisi <lpieralisi@kernel.org>, 
-	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
-	Conor Dooley <conor+dt@kernel.org>, chaitanya chundru <quic_krichai@quicinc.com>, 
-	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, 
-	cros-qcom-dts-watchers@chromium.org, Jingoo Han <jingoohan1@gmail.com>, 
-	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kwilczynski@kernel.org>, Catalin Marinas <catalin.marinas@arm.com>, 
-	Will Deacon <will@kernel.org>, quic_vbadigan@quicnic.com, amitk@kernel.org, 
-	linux-pci@vger.kernel.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	linux-arm-msm@vger.kernel.org, jorge.ramirez@oss.qualcomm.com, 
-	linux-arm-kernel@lists.infradead.org, Dmitry Baryshkov <lumag@kernel.org>
-Subject: Re: [PATCH v7 7/8] arm64: defconfig: Enable TC9563 PWRCTL driver
-Message-ID: <lf3mihjdk5twfn54z4sfqf7kpp5drxkr4sk24d3zzh6pxsnvii@2micimqjfvuc>
-References: <20251029-qps615_v4_1-v7-0-68426de5844a@oss.qualcomm.com>
- <20251029-qps615_v4_1-v7-7-68426de5844a@oss.qualcomm.com>
- <CAMRc=McWw6tAjjaa6wst6y3+Dw=JT8446wwvQ0_c5LHHm=1Y-Q@mail.gmail.com>
+	s=arc-20240116; t=1761807552; c=relaxed/simple;
+	bh=+BXNpvMSYXQ5gkRV1Igb+qGK/PD3CybD10G8Lpfk3ps=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=KFUF1Jjqu+NUFPqaTpUeXME5L3lvwvs8/K8PO03TDQ5mdIsyHqRPN3fO4g1SbKhRGD+ejLuvqMaTg/ebHpdP7cxcWEcYwULE4t43byAZ7qn8gaIfvjgIlucnuPHxVLu49hwz6vk1yR9FnAlTy0zUeKR0lAAsRLhxGW2dNJamZIg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Kge+qA/p; arc=none smtp.client-ip=209.85.215.196
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-pg1-f196.google.com with SMTP id 41be03b00d2f7-b6cea7c527bso535935a12.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 29 Oct 2025 23:59:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1761807548; x=1762412348; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=O2On5/uZ00EsAWd87Xl9UGDQOXgXaq8KavS45zELduk=;
+        b=Kge+qA/pOMCaxqH7lK3oJGhfvVmRIb/otUk36KQpWVzdRX/tK1sOEZozNe+9CPOs6+
+         QgJNuuikkYWVUVX2weUTlA3+MXmFhnlwhi2TFiDLlm0p4jFOaYxiB8ubc4ImS/Lm2HtL
+         9mEu5hM/GvdRcqNAEyaGOk/gsHe9XDGVRMlrQX0xKTh0eJ1nbzJ9ylUI2sGMxmeuoF+N
+         otLrY7tu9aFT/YFc/3mjCV7oWayhgfuFHatG+kjXP4ZiHTs9Z22rF03TJteFMoNBhRPa
+         FK6hXTjxjfBX5rcK5FMar7Vwh4XgIlzVZLBgh5dxFJzrvHzjYcAmPnJSD9aEWo9kCqOw
+         4ofA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1761807548; x=1762412348;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=O2On5/uZ00EsAWd87Xl9UGDQOXgXaq8KavS45zELduk=;
+        b=duV7LZaEwprBXc/x0O2nXaxpo+dwWWzo9WOtrp3jSKquaEugrylomb76ac1mCcQRp6
+         h0gzDfygufNIIwT4qr3lGS3m6jUNYp28JJUk5wxp1A8bbXTADEAyFtnk4/b7pSM4PAfq
+         VVNlT2iS8znt03PGiXVe0ggT/dv9ezfpA2AFwXbL18S5EDLz1meh/4eddRKYD+7oJ27T
+         m8box7S3A6TjfmU8gMZr2F2a8NZLzK5G5a8mfwla9AVxKzXMipXriqE9v69UZa4TjCOO
+         aFo56MVF+crkKVQluRAEGFQ4zHW1PMAqf/mosuXQHV96mvkXEKfgvTe+PrXAZG/kbXfj
+         CJTw==
+X-Forwarded-Encrypted: i=1; AJvYcCUJXbW5b7x34uVUwOYbP+i67CIeD/tsBYUaQ8zIA+Joe2KYwsVGWJJwhZW3rtPCokvkttUAymTomUBHCquB@vger.kernel.org
+X-Gm-Message-State: AOJu0YzBTtl7Wyf/EQYqJYRrSnIOfwCqtSunWCf00FdobJbzu0MJ4KoZ
+	RA8znu9cVjAUu9DI5cIwCTLpLGUpCoARXrcV+B+GGj0hJThUsh7Ci+J3
+X-Gm-Gg: ASbGncsm45OcxxCROgqm47B9sRGUqM646hpDjYWWlm1PxHlogYjXBNKs2x1H4X6lqde
+	kPp7QKDNx4Y33WPfHDPQkdep300AWNcrW8VZrNDqsHNTSfXybO6sGuPJl+tUbmuDfETAsvLhvzH
+	GZO+/9PIlntnSTLfrbAB/VvHCVsYnA2xUUdRI368XRZ3tWflsDFbeWCDuDpfiG+32o2jzuZ+Pyj
+	lIjPjdF8RZyz8qOIbkk2R0O9Gyc+bUKmHWNsfSsFFUwquNm9WFplir29wPy/vz6XIZoPG96ba0h
+	PAG/SaT5fOFRsKcEEY8MNg+tw4w+yAT+AYvnv28Fi8eDxSy2QoE8+uzwY2EfF5sfZQXh+A3924C
+	3FllrIvkzghyLHDw21pl2yptRSH72ZppQYeFe4prMPHV1of/QvGG9DCbUdJUb+tMyf7cL4r4oIR
+	J2d2AzsRUbGGkaP6s84VxzFBASmirpUAeiVcDdkqAjroeJA+nkw2J5xw==
+X-Google-Smtp-Source: AGHT+IEZNLk5umwmBOUCw1YoD3/cw2kbTnO1hk91vhVghFo2XMH5JsrjRDL7YnUDlM53qfRU+p5zXA==
+X-Received: by 2002:a17:902:d503:b0:26f:f489:bba6 with SMTP id d9443c01a7336-294ee46ac8cmr24375645ad.50.1761807548302;
+        Wed, 29 Oct 2025 23:59:08 -0700 (PDT)
+Received: from ?IPV6:2600:8802:702:7400:90ae:1623:a8e:9839? ([2600:8802:702:7400:90ae:1623:a8e:9839])
+        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-b7128b63b05sm15663848a12.20.2025.10.29.23.59.06
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 29 Oct 2025 23:59:07 -0700 (PDT)
+Message-ID: <59cd28f3-f2a4-435d-9b13-3d56b1d1299c@gmail.com>
+Date: Wed, 29 Oct 2025 23:59:07 -0700
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH RFC/WIP 0/4] arm64: dts: qcom: sm8750: Enable display
+To: Krzysztof Kozlowski <krzk@kernel.org>,
+ Mahadevan P <mahadevan.p@oss.qualcomm.com>,
+ Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+ Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+ quic_rajeevny@quicinc.com
+Cc: Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Abhinav Kumar <abhinavk@quicinc.com>,
+ Abel Vesa <abel.vesa@linaro.org>, linux-arm-msm@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20250424-sm8750-display-dts-v1-0-6fb22ca95f38@linaro.org>
+ <w6f3s56gx7psqgweuntqvkzrot7elhc5pdrxhvenukzwyt5eys@fndmaszfbo5k>
+ <921afe20-42b1-4999-b5c4-035669dc831e@linaro.org>
+ <32eb3b4f-b2c4-4895-8b48-ade319fd83de@oss.qualcomm.com>
+ <2db06bcc-f04b-4a57-afd2-1d0c665d376a@kernel.org>
+Content-Language: en-US
+From: Jessica Zhang <jesszhan0024@gmail.com>
+In-Reply-To: <2db06bcc-f04b-4a57-afd2-1d0c665d376a@kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAMRc=McWw6tAjjaa6wst6y3+Dw=JT8446wwvQ0_c5LHHm=1Y-Q@mail.gmail.com>
 
-On Wed, Oct 29, 2025 at 02:15:37PM +0100, Bartosz Golaszewski wrote:
-> On Wed, Oct 29, 2025 at 12:30 PM Krishna Chaitanya Chundru
-> <krishna.chundru@oss.qualcomm.com> wrote:
-> >
-> > Enable TC9563 PCIe switch pwrctl driver by default. This is needed
-> > to power the PCIe switch which is present in Qualcomm RB3gen2 platform.
-> > Without this the switch will not powered up and we can't use the
-> > endpoints connected to the switch.
-> >
-> > Signed-off-by: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
-> > ---
-> >  arch/arm64/configs/defconfig | 1 +
-> >  1 file changed, 1 insertion(+)
-> >
-> > diff --git a/arch/arm64/configs/defconfig b/arch/arm64/configs/defconfig
-> > index e3a2d37bd10423b028f59dc40d6e8ee1c610d6b8..fe5c9951c437a67ac76bf939a9e436eafa3820bf 100644
-> > --- a/arch/arm64/configs/defconfig
-> > +++ b/arch/arm64/configs/defconfig
-> > @@ -249,6 +249,7 @@ CONFIG_PCIE_LAYERSCAPE_GEN4=y
-> >  CONFIG_PCI_ENDPOINT=y
-> >  CONFIG_PCI_ENDPOINT_CONFIGFS=y
-> >  CONFIG_PCI_EPF_TEST=m
-> > +CONFIG_PCI_PWRCTRL_TC9563=m
-> >  CONFIG_DEVTMPFS=y
-> >  CONFIG_DEVTMPFS_MOUNT=y
-> >  CONFIG_FW_LOADER_USER_HELPER=y
-> >
-> > --
-> > 2.34.1
-> >
+On 10/28/2025 11:27 PM, Krzysztof Kozlowski wrote:
+> On 29/10/2025 07:20, Mahadevan P wrote:
+>> Hi Krzysztof,
+>>
+>> On 4/26/2025 1:24 AM, Krzysztof Kozlowski wrote:
+>>> On 25/04/2025 21:34, Dmitry Baryshkov wrote:
+>>>> On Thu, Apr 24, 2025 at 03:04:24PM +0200, Krzysztof Kozlowski wrote:
+>>>>> DTS is ready and I consider it ready for review, but still RFC because:
+>>>>> 1. Display has unresolved issues which might result in change in
+>>>>>      bindings (clock parents),
+>>>>> 2. I did not test it since some time on my board...
+>>>>> 3. Just want to share it fast to unblock any dependent work.
+>>>>>
+>>>>> DTS build dependencies - as in b4 deps, so:
+>>>>> https://lore.kernel.org/r/20250421-sm8750_usb_master-v5-0-25c79ed01d02@oss.qualcomm.com/
+>>>>> https://lore.kernel.org/r/20250424-sm8750-audio-part-2-v1-0-50133a0ec35f@linaro.org/
+>>>>> https://lore.kernel.org/r/20250113-sm8750_gpmic_master-v1-2-ef45cf206979@quicinc.com/
+>>>>>
+>>>>> Bindings:
+>>>>> 1. Panel:https://github.com/krzk/linux/tree/b4/sm8750-display-panel
+>>>>> 2. MDSS:https://lore.kernel.org/r/20250311-b4-sm8750-display-v4-0-da6b3e959c76@linaro.org/
+>>>>>
+>>>>> Patchset based on next-20250424.
+>>>> If the DisplayPort works on this platform, I'd kindly ask to send
+>>>> separate DP+DPU only series (both driver and arm64/dts). It would make
+>>>> it much easier (at least for me) to land the series, while you and
+>>>> Qualcomm engineers are working on the DSI issues.
+>>> DP has also issues - link training failures, although it feels as
+>>> different one, because DSI issue Jessica narrowed to DSI PHY PLL VCO
+>>> rate and I have a working display (just don't know how to actually solve
+>>> this).
+>>
+>> We at Qualcomm are currently working on bringing up the DSI display on
+>> MTP. For this, I’ve picked the following patches on top of |v6.18-rc2|:
 > 
-> Can't we just do the following in the respective Kconfig entry?
+> Display on MTP8750 was fully brought already. I don't understand why you
+> are doing the same.
 > 
-> config PCI_PWRCTRL_TC9563
->     tristate ...
->     default m if ARCH_QCOM
+>>
+>>   1. All the DT changes mentioned in this series
+>>   2. [PATCH v2] drm/msm/dpu: Fix adjusted mode clock check for 3d merge
+>>      https://lore.kernel.org/all/1154f275-f934-46ae-950a-209d31463525@kernel.org/
+>>   3. [PATCH v2 0/2] drm/panel: Add Novatek NT37801 panel driver
+>>      https://lore.kernel.org/all/20250508-sm8750-display-panel-v2-0-3ca072e3d1fa@linaro.org/
+>>
+>> However, when testing with |modetest|, the panel appears blank. I wanted
+>> to check if there are any additional patches already posted that I might
+>> have missed and should be included.
+> 
+> Many patches are missing because Qualcomm did not send them for months.
+> I was pinging multiple times and I gave up - my job is not ping Qualcomm
+> to send their patches.
+> 
+> I have no clue what you have already, what is your base, what errors you
+> have and I will not be guessing this. For convenience, you can use my
+> integration WIP branch from my github. I already shared that tree with
+> Qualcomm more than once. Please reach internally first, instead of
+> poking community.
+> 
+> 
+>>
+>> Also, I’m curious to understand more about the DSI PHY PLL VCO rate
+>> issue that Jessica had narrowed down—could you please share some details?
+> 
+> Sorry, I am not going to repeat stuff done year ago. Please reach to the
+> archives.
 
-I believe the driver is supposed to support all Toshiba TC9563 switches, but
-since we have some hooks for toggling PERST# and they are only added for QCOM
-platforms atm, it is OK to select the driver in Kconfig.
+I don't have my notes on me, but IIRC this was the byte/pixel clk RCG 
+failed to update issue that was causing the clocks to default to a bad 
+rate (despite driver requesting the correct rate). It was fixed by this 
+patch [1].
 
-- Mani
+Thanks,
 
--- 
-மணிவண்ணன் சதாசிவம்
+Jessica Zhang
+
+[1] 
+https://patchwork.kernel.org/project/linux-arm-msm/patch/20250520090741.45820-2-krzysztof.kozlowski@linaro.org/
+
+> 
+>>
+>> Lastly, I’d appreciate it if you could share the plan for merging these
+>> changes upstream.
+> I don't understand what you ask me. Process of contributing to Linux
+> kernel is well documented.
+> 
+> Best regards,
+> Krzysztof
+
 
