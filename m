@@ -1,322 +1,207 @@
-Return-Path: <linux-arm-msm+bounces-79638-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-79639-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ams.mirrors.kernel.org (ams.mirrors.kernel.org [213.196.21.55])
-	by mail.lfdr.de (Postfix) with ESMTPS id B67A1C1F67A
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Oct 2025 10:58:59 +0100 (CET)
+Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [IPv6:2605:f480:58:1:0:1994:3:14])
+	by mail.lfdr.de (Postfix) with ESMTPS id 47D59C1F708
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Oct 2025 11:04:53 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ams.mirrors.kernel.org (Postfix) with ESMTPS id 22F6B34D6E3
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Oct 2025 09:58:59 +0000 (UTC)
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 9C8344EC96C
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Oct 2025 10:02:25 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6318134CFCC;
-	Thu, 30 Oct 2025 09:58:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C816E340DA0;
+	Thu, 30 Oct 2025 10:01:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="zMVBwFMB"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="RCRCoZgA";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="hy/Ad1X4"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-qk1-f175.google.com (mail-qk1-f175.google.com [209.85.222.175])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C50A34A3AB
-	for <linux-arm-msm@vger.kernel.org>; Thu, 30 Oct 2025 09:58:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.175
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1ECFD338918
+	for <linux-arm-msm@vger.kernel.org>; Thu, 30 Oct 2025 10:01:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761818336; cv=none; b=GUQZ6c3zxdC997d6SPWskhVRe0OFEq3eD3g51SBVnmRijEFHxX02W8bSNO9TdOj5wpgqChUVFR0ewfsmRDE5imiGDSVYCzXYK21Ng1cb5cVkAPLoqAVBG1VAwpjqPTMAcr2v9PPKdaSSTjrPDH9loYRkT6zKrhjGPdtVgxZ1sNY=
+	t=1761818515; cv=none; b=iFWZMWfS3oXa2Ai2fKJUPVinIJBC4S3UL7WCBPiTYU0bHdRsf8XCrLAkH3MIjtBqLnyi0UA5q/bTxVHcHEdO8V8Y1mCLH0W0sNdjs3eevMukeN7nFWAJmfqn+BzS++8DaHJ2rUxu6ODRN6fGPWB0Ron/+akz/FgKGpB2h39E4+I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761818336; c=relaxed/simple;
-	bh=6V7E5juvtmdc1T8UbWt2fAasDbg+fibDjemIvVt3gBc=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=WqhEBWFDXAKUX2SjDZTnfgDIpBvFo3ieB093K1CfHrNRUqBJUZkRSYLGOjkX+dGp4UfOBf9jni+TPOouPktyjqIvDpGm//ExeHl9egCBUzy7kJwxP38wt4p6apoxOuzG9RfD5IkmPlQZTsjXq8iqwYWNtHtBSxzf7B2zyzcy1wU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=zMVBwFMB; arc=none smtp.client-ip=209.85.222.175
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-qk1-f175.google.com with SMTP id af79cd13be357-89f07fee490so100073785a.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 30 Oct 2025 02:58:54 -0700 (PDT)
+	s=arc-20240116; t=1761818515; c=relaxed/simple;
+	bh=dXTC3SLxzp5wKcJKxLFNRweVNbKkU4TNi6Ad5nvL8nw=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=WuPcR3zi+/qmt4zCm/u1zDCov2+05ozmKqKXbZQ85cT9ptPzDZIrtYIK0MsYVFk65mLbI6yj6onqh8iWnQaJ09HSHKeIaEUvOtZSKIPIOo0GA3LWo1blKO5Y8LZNPj+15mF4P0LGGWYTujqC3/ed4W4PUOkaBwr9oFd2Xe5uqSg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=RCRCoZgA; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=hy/Ad1X4; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 59U9MUsi3115499
+	for <linux-arm-msm@vger.kernel.org>; Thu, 30 Oct 2025 10:01:53 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	32h5K3ewwycqfrD/0JMWOprkDGOg3ozbJGj35ETznY0=; b=RCRCoZgA56ns6yDd
+	+yKBRhyBmEiRgH/A3pfEKSzWFhIR04h7Iz2FBrAGKfLc8PNTcxkcTOvIzbApPQnO
+	zDTib+W4cS1qTj+QOlhY2vSJ3etZp+sTAEwLusnkHsPrzHDq4O1Z/pYMi79ythDq
+	HtT/tGGuL+gK8LCKQW8g0luvCNoG+3ZxzKX1JCixIYksRw0511e+nmCkoUINzVe0
+	fj/cqmy6hR+2cS7ZV1/an2juZI/oX1duW9iPspKJtHEbpHz18dmNN87yFf3SzUw2
+	784rl2kTyWAGr9bq6ouvOMZgCqbnb8Kt/QF1esQkIyl0JK3hzK5uh+va+rxWJjwA
+	qDOypA==
+Received: from mail-qv1-f70.google.com (mail-qv1-f70.google.com [209.85.219.70])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4a45b404w2-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Thu, 30 Oct 2025 10:01:52 +0000 (GMT)
+Received: by mail-qv1-f70.google.com with SMTP id 6a1803df08f44-8800dd3de99so2233306d6.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 30 Oct 2025 03:01:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1761818333; x=1762423133; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=absgbM/LagsR81VTr9YW+eGimVEtdVPICEXyNcDYF+E=;
-        b=zMVBwFMBfNVLLqszDZUg3VSvK6b1j8PxkjuEA3NCd1YmJkdWdqcEaqJQXwxydav0m6
-         0jY0cG9z5oXDZ0PHCk5RHfdo9AyU3zFHiNUYXO4eCNJmhXLyIP6DzQSojw1aat5tABlz
-         ecbBH1ca2UhB3x3KEGU106I3FD2YwV10RNu4IWJwCYX54Q8+s6LazNH2WwgsSf108Mgs
-         VWN9dceg1gsw/brrnLxKEKoUWwN/RvMtXr1chT55zK5eJ/ckC4P1dq4pL4dfQDnG6Vcw
-         al/pcgzSIsIIDu7ICO9lxwqoUeVAehcT2MuDX6gHuGD9JGZTCIJ/3e4wqNfALctz2ZOT
-         9baw==
+        d=oss.qualcomm.com; s=google; t=1761818512; x=1762423312; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=32h5K3ewwycqfrD/0JMWOprkDGOg3ozbJGj35ETznY0=;
+        b=hy/Ad1X4S9hsy6BorcZQAirjpATjozR2dVkjeDfnyheHjgSVKRiq3VcHjHvahYZNCi
+         VW9fz7Uilj0gGCCZeeYNIeuMcxuOCqkK0N8BSXJM8A5zFQYkXNmtqjSQALQRQb8Qs0bR
+         Dy5u2lGjXGexfHF9jOa+/mgeNui3IhaEtHW/mu5Nu8pOrPRaQ6Yr0mkeDa4Gte/7gAdW
+         ejUIvdje7Es0AZVLrfQSlbDE1u2lpRjgKiwKmwA8mlvZGgqW+e7P4+PhZ+d1ZCaJfpJe
+         aKI1d+MVvJSCnoOTkZhwOBEmR0yV6f1hGqizbm8Y+uP10mFliso6y8FfxOf/AXXm6xxa
+         cJZw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1761818333; x=1762423133;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=absgbM/LagsR81VTr9YW+eGimVEtdVPICEXyNcDYF+E=;
-        b=i8MEPyCs+R2glnwTzyHgiLsuij8basMs+04T/geRundMnfZltG4o9Y9DGTAODtHAph
-         PF2z8D7vipYKCaUtzxRexaS+oHH6xhksUQ44U1dNIa0Ef9marN+S5bq1gjz60H9Im1WR
-         P8RY4nz/y3HA7hr7RzVlSWKHEvZ28wIgE/CeV5pMuZ5+L2jQ53h1bnMJEufkywKV4urX
-         IX5fUd8tWqS/QkqeJ3t31rJCg7sAcPWAPJg/u8EuGkxJI8/IPqnZ0i6FrymYIfs9pmS2
-         wbS2r2lsVznasYq0J0AzfLQetnWhsK8S5ZhPjxUg2s8LhHYyg/a3Sg98gNsJUsvcr+sj
-         VFvA==
-X-Forwarded-Encrypted: i=1; AJvYcCUDlz5DL+VMLABP6xnZfbsDJ3ymz6FDyQFnOs3dvg7f2GOeWBEMUgLLQIA+PrDGoTWjssFkp18KCbakZHA3@vger.kernel.org
-X-Gm-Message-State: AOJu0Yz2UruuSV1y4epbEAOM1o0Hr4zzi9cPpKn38XeoPiDslnbqMSIJ
-	PC8HiGS4MYn1irDqzhQPrqTIG3Rm+Gg+AvGGcktgGtoLphLa8QvmRi3I92n9oFyTGCB+oWH2UXV
-	FLhP9GHiqrjJzLv/HWn7dcv0yihaGQRypPqU0DJsLng==
-X-Gm-Gg: ASbGnct6IsUQXWKkhs+ZjZxVa2mLBKbGAntL4N+pPhY5numqCH5xj9pVYAHB3ikb9/0
-	vxyCghftkk/gTtYQhK1ool0pPnrmkmnvMxnDG5kLf9wzYm7WhfbTCxE3DUlr1ygtf6FrFvLFNXW
-	USxIB6//8+9Tma+3ABu8BE3J4pdoa7yyQ9o92+QJviHh+MahlZGw8lumfMwTdomQQ2KvnowI1UR
-	uwycesQL0hUkNG5W6t7wCRVe8LZJDTQmi3E1UiGFjOk4dngmp8niYLXf/CXj5kdnWSIX299NCek
-	jSmDfGzEK8OPw0tqsw==
-X-Google-Smtp-Source: AGHT+IFUqnazSY7z2FvEnJeUXVSF4JyDn7tHHUK1IgsgMoaK9NxJ/ZQbLMAQh5fAN6xuof8Hnoac1Yfo6fFL9g5N6Eo=
-X-Received: by 2002:a05:620a:290b:b0:8a3:cd9e:e3f6 with SMTP id
- af79cd13be357-8a8e30e4888mr842034085a.7.1761818333214; Thu, 30 Oct 2025
- 02:58:53 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1761818512; x=1762423312;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=32h5K3ewwycqfrD/0JMWOprkDGOg3ozbJGj35ETznY0=;
+        b=iv5tQ+wvO3ZOMBzB4Ol5VV4C84llzNYjZL/RHaO4rmwVGVf6yN6S7kxQ7Nt9Lq+iWW
+         LfRw+RJ07q4lte+MYEbZk3AdP0wU5byrhvzWNskqs2bGcoJjeXawpK2bLt7sVQzwWtj9
+         ao4209E1CJINaR7PirRY7f5TLeDC61ZzieUnnfOo19/la+Wj113HlPDg4YiTDOUqFxiy
+         QEJfpXXS//6R3jPGhTsOugLk4281fbPZGcO/8rkbdEb6OGVgzaiWqjpOfakiqwzPA6bz
+         qkpvkN2cAOGZwA09GU761wc5S3IlrLQzD2f1WTt2AOqU255/GiX/HvO1yOhoKc9E6/QF
+         RZSw==
+X-Forwarded-Encrypted: i=1; AJvYcCXJgoPUd6pQKU041y87cn+THKfFf/755OgTspAjSiciXE0Sl9RKmJxSBHus4a2f65WnU7YeTL7nB0RBH8ZH@vger.kernel.org
+X-Gm-Message-State: AOJu0YxzNU9yd70+LwIsCSfpnNhSTdJVRH51cjV4lLaevz0Yh3yZAA8d
+	SCAHuma5joUfRps4BFMTk7ais6i4QRf9TmKj3SZz9IW4aK+tL1E1/xp3r1AZWVpIrHrkxfAvl5k
+	X2d5N6oPaCQONbyu4R7g3qc88vYZzfLKS7TatXY/Rn3N1t7aHkB9NocZ4X647X6+Ge2w3
+X-Gm-Gg: ASbGncsroEgwrjorl+boLiSqj5dSdeiQwu8ltbQOxuYbwk8E7O1kRAg7TTcqO4o8I0B
+	Z4N136PBlwA/jzTshJUKENBWGMaHQ+byvkiGgh83DhJLRqgebatbeukzLwF7+2irl12g8vO2tlR
+	OKwy4UAIvLMXiESgjOs4F69CRPI3TnrDuLNpDodkICLgdFWLvJTi3Rf7qeINhrTBCBcmkvooy/s
+	RbnqnLw4Ww7ZtIJQkYehVvMIhlOu+7dF1qg0pJ+X+X397gL+T+Nc0lkUMrRM1u9lZJMnhkbUvpj
+	Dq0GlpsG4iGLWbP55a9VD0+AGhLt/ta8yKFgwtFcK5WYSI694RE+VszGZdATaOH/qyzW7eHzhCp
+	/WkYPNzfvYLXM/NN8AkSGGoazyGbV5AxFQKw1CRYvEia1uBxDJcuJxXG9
+X-Received: by 2002:ac8:5f0e:0:b0:4ec:ed46:ab6d with SMTP id d75a77b69052e-4ed15c0e8f8mr55333681cf.9.1761818512166;
+        Thu, 30 Oct 2025 03:01:52 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFRkwzCLPCxSVHJgMpfb+sSifTWDoxG9G5XDKheZ5CxBk6Vcn9HesLaF6FBOsZzqqrVE4rY6g==
+X-Received: by 2002:ac8:5f0e:0:b0:4ec:ed46:ab6d with SMTP id d75a77b69052e-4ed15c0e8f8mr55333381cf.9.1761818511580;
+        Thu, 30 Oct 2025 03:01:51 -0700 (PDT)
+Received: from [192.168.119.202] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-b7058770e28sm164872366b.13.2025.10.30.03.01.49
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 30 Oct 2025 03:01:51 -0700 (PDT)
+Message-ID: <7a774a6d-3f8f-4f77-9752-571eadd599bf@oss.qualcomm.com>
+Date: Thu, 30 Oct 2025 11:01:48 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20251027-cpu_cluster_component_pm-v1-0-31355ac588c2@oss.qualcomm.com>
- <CAJ9a7VipQh=y0o+6k=fLMMK408E5eGD6vhY2TKBMm+q63NUiWA@mail.gmail.com> <7451a3ae-2b3f-4e07-b93c-0507436d0f33@oss.qualcomm.com>
-In-Reply-To: <7451a3ae-2b3f-4e07-b93c-0507436d0f33@oss.qualcomm.com>
-From: Mike Leach <mike.leach@linaro.org>
-Date: Thu, 30 Oct 2025 09:58:41 +0000
-X-Gm-Features: AWmQ_bl6dSnsH1lqrV1OCHFJI3NpjO7q1p6vQItR60dxg6XPfOvLS9hTosbgaMs
-Message-ID: <CAJ9a7VgxpQ5gTXpaW5pBb+dpZZhXAkrOtxkkiK-KUmvipPm5UQ@mail.gmail.com>
-Subject: Re: [PATCH 00/12] coresight: Add CPU cluster funnel/replicator/tmc support
-To: yuanfang zhang <yuanfang.zhang@oss.qualcomm.com>
-Cc: Suzuki K Poulose <suzuki.poulose@arm.com>, James Clark <james.clark@linaro.org>, 
-	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Mathieu Poirier <mathieu.poirier@linaro.org>, Leo Yan <leo.yan@linux.dev>, 
-	Alexander Shishkin <alexander.shishkin@linux.intel.com>, Bjorn Andersson <andersson@kernel.org>, 
-	Konrad Dybcio <konradybcio@kernel.org>, kernel@oss.qualcomm.com, 
-	coresight@lists.linaro.org, linux-arm-kernel@lists.infradead.org, 
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	linux-arm-msm@vger.kernel.org, Jie Gan <jie.gan@oss.qualcomm.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH net-next] net: stmmac: qcom-ethqos: remove MAC_CTRL_REG
+ modification
+To: "Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>,
+        Mohd Ayaan Anwar <mohd.anwar@oss.qualcomm.com>
+Cc: Alexandre Torgue <alexandre.torgue@foss.st.com>,
+        Andrew Lunn <andrew+netdev@lunn.ch>,
+        "David S. Miller"
+ <davem@davemloft.net>,
+        Eric Dumazet <edumazet@google.com>, Jakub Kicinski <kuba@kernel.org>,
+        linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org,
+        linux-stm32@st-md-mailman.stormreply.com,
+        Maxime Coquelin <mcoquelin.stm32@gmail.com>, netdev@vger.kernel.org,
+        Paolo Abeni <pabeni@redhat.com>, Vinod Koul <vkoul@kernel.org>
+References: <E1vE3GG-0000000CCuC-0ac9@rmk-PC.armlinux.org.uk>
+Content-Language: en-US
+From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+In-Reply-To: <E1vE3GG-0000000CCuC-0ac9@rmk-PC.armlinux.org.uk>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDMwMDA4MSBTYWx0ZWRfX9nyd3Kxgwn6t
+ JCNUe1OktM5KzTfpn+49CT4mkVQ2o4V6pdg0HFkhoxuexU5DVAXgV29jj5NPKQZGG/1HuPd1/1x
+ bu0IJZXZjEctE/zszjp7e8YLw+A1HjFzT4tay0+qpnDlbGwyYTovKHJJk1rRECgX+O0fkJ5YpiM
+ sOFuv/d/PbAi4vX6Oe0LSUfb9DGsbp+I3Sy31srODg8fSLfQgqP6dL+0H7PRGXGVQKVWC8vuggl
+ S9f44+JNyWZyToMqAbMkiIbCkHl0LlH1y4LRnds7wp5zSs/iGKX6BlVZQUur96O8ZIGrdjQiI9f
+ Jo+p4LlQSxr1ESe0hctNXUWH+BgpDn0vhV+WmR7hIEYwhkqU4/DKYm/xfYN4t4ZtRu8DBXvx51k
+ 6lGA9v7S09o2n+rbjy1Fvvad8ez7eQ==
+X-Authority-Analysis: v=2.4 cv=KePfcAYD c=1 sm=1 tr=0 ts=69033790 cx=c_pps
+ a=oc9J++0uMp73DTRD5QyR2A==:117 a=FpWmc02/iXfjRdCD7H54yg==:17
+ a=IkcTkHD0fZMA:10 a=x6icFKpwvdMA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=EUspDBNiAAAA:8 a=YjBZYspd3xVaAZo-ivoA:9
+ a=QEXdDO2ut3YA:10 a=iYH6xdkBrDN1Jqds4HTS:22
+X-Proofpoint-ORIG-GUID: U_WFn-BW5QL4bJnV5FNkVry-iZrBDYgd
+X-Proofpoint-GUID: U_WFn-BW5QL4bJnV5FNkVry-iZrBDYgd
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
+ definitions=2025-10-30_02,2025-10-29_03,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ suspectscore=0 impostorscore=0 priorityscore=1501 bulkscore=0 adultscore=0
+ lowpriorityscore=0 clxscore=1015 phishscore=0 spamscore=0 malwarescore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2510240001 definitions=main-2510300081
 
-Hi,
+On 10/29/25 11:18 AM, Russell King (Oracle) wrote:
+> When operating in "SGMII" mode (Cisco SGMII or 2500BASE-X), qcom-ethqos
+> modifies the MAC control register in its ethqos_configure_sgmii()
+> function, which is only called from one path:
+> 
+> stmmac_mac_link_up()
+> +- reads MAC_CTRL_REG
+> +- masks out priv->hw->link.speed_mask
+> +- sets bits according to speed (2500, 1000, 100, 10) from priv->hw.link.speed*
+> +- ethqos_fix_mac_speed()
+> |  +- qcom_ethqos_set_sgmii_loopback(false)
+> |  +- ethqos_update_link_clk(speed)
+> |  `- ethqos_configure(speed)
+> |     `- ethqos_configure_sgmii(speed)
+> |        +- reads MAC_CTRL_REG,
+> |        +- configures PS/FES bits according to speed
+> |        `- writes MAC_CTRL_REG as the last operation
+> +- sets duplex bit(s)
+> +- stmmac_mac_flow_ctrl()
+> +- writes MAC_CTRL_REG if changed from original read
+> ...
+> 
+> As can be seen, the modification of the control register that
+> stmmac_mac_link_up() overwrites the changes that ethqos_fix_mac_speed()
+> does to the register. This makes ethqos_configure_sgmii()'s
+> modification questionable at best.
+> 
+> Analysing the values written, GMAC4 sets the speed bits as:
+> speed_mask = GMAC_CONFIG_FES | GMAC_CONFIG_PS
+> speed2500 = GMAC_CONFIG_FES                     B14=1 B15=0
+> speed1000 = 0                                   B14=0 B15=0
+> speed100 = GMAC_CONFIG_FES | GMAC_CONFIG_PS     B14=1 B15=1
+> speed10 = GMAC_CONFIG_PS                        B14=0 B15=1
+> 
+> Whereas ethqos_configure_sgmii():
+> 2500: clears ETHQOS_MAC_CTRL_PORT_SEL           B14=X B15=0
+> 1000: clears ETHQOS_MAC_CTRL_PORT_SEL           B14=X B15=0
+> 100: sets ETHQOS_MAC_CTRL_PORT_SEL |            B14=1 B15=1
+>           ETHQOS_MAC_CTRL_SPEED_MODE
+> 10: sets ETHQOS_MAC_CTRL_PORT_SEL               B14=0 B15=1
+>     clears ETHQOS_MAC_CTRL_SPEED_MODE
+> 
+> Thus, they appear to be doing very similar, with the exception of the
+> FES bit (bit 14) for 1G and 2.5G speeds.
 
-On Thu, 30 Oct 2025 at 07:51, yuanfang zhang
-<yuanfang.zhang@oss.qualcomm.com> wrote:
->
->
->
-> On 10/29/2025 7:01 PM, Mike Leach wrote:
-> > Hi,
-> >
-> > This entire set seems to initially check the generic power domain for
-> > a list of associated CPUs, then check CPU state for all other
-> > operations.
-> >
-> > Why not simply use the generic power domain state itself, along with
-> > the power up / down notifiers to determine if the registers are safe
-> > to access? If the genpd is powered up then the registers must be safe
-> > to access?
-> >
-> > Regards
-> >
-> > Mike
-> >
->
-> Hi Mike,
->
-> Hi,
->
-> yes, when genpd is powered up then register can be accessed. but have blo=
-w problems:
->
+Without any additional knowledge, the register description says:
 
-The point I was making is to use genpd / notifications for determine
-if the device is powered so you know if it is safe to use registers.
-This is different from the faults you mention below in your power
-infrastructure.
-You are reading the dev->pm_domain to extract the cpu map then the
-notfiers and state must also be available. If you could use CPUHP
-notifiers then genpd notifiers would also work.
-However, one issue I do see with this is that there is no code added
-to the driver to associate the dev with the pm_domain which would
-normally be there so I am unclear how this actually works.
+2500: B14=1 B15=0
+1000: B14=0 B15=0
+ 100: B14=1 B15=1
+  10: B14=0 B15=1
 
-Associating a none CPU device with a bunch of CPUs does not seem
-correct. You are altering a generic coresight driver to solve a
-specific platform problem, when other solutions should be used.
+(so the current state of this driver)
 
-> 1. pm_runtime_sync can trigger cluster power domian power up notifier but=
- not really
-> power up the cluster, and not able to distinguish whether it is a real po=
-wer up notifier
-> or triggered by pm_runtime_sync.
-> 2. Using the power up/down notifier cannot actively wake up the cluster p=
-ower,
-> which results in the components related to this cluster failing to be ena=
-bled when the cluster
-> power off.
-> 3. Using the power up/down notifier for register access does not guarante=
-e
-> the correct path enablement sequence.
->
+and it indeed seems to match the values set in dwmac4_setup()
 
-Does all this not simply mean that you need to fix your power
-management drivers / configuration so that it works correctly, rather
-than create a poor workaround in unrelated drivers such as the
-coresight devices?
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 
-Thanks and  Regards
-
-
-
-Mike
-
-> thanks,
-> yuanfang
->
-> > On Tue, 28 Oct 2025 at 06:28, Yuanfang Zhang
-> > <yuanfang.zhang@oss.qualcomm.com> wrote:
-> >>
-> >> This patch series introduces support for CPU cluster local CoreSight c=
-omponents,
-> >> including funnel, replicator, and TMC, which reside inside CPU cluster
-> >> power domains. These components require special handling due to power
-> >> domain constraints.
-> >>
-> >> Unlike system-level CoreSight devices, CPU cluster local components sh=
-are the
-> >> power domain of the CPU cluster. When the cluster enters low-power mod=
-e (LPM),
-> >> the registers of these components become inaccessible. Importantly, `p=
-m_runtime_get`
-> >> calls alone are insufficient to bring the CPU cluster out of LPM, maki=
-ng
-> >> standard register access unreliable in such cases.
-> >>
-> >> To address this, the series introduces:
-> >> - Device tree bindings for CPU cluster local funnel, replicator, and T=
-MC.
-> >> - Introduce a cpumask to record the CPUs belonging to the cluster wher=
-e the
-> >>   cpu cluster local component resides.
-> >> - Safe register access via smp_call_function_single() on CPUs within t=
-he
-> >>   associated cpumask, ensuring the cluster is power-resident during ac=
-cess.
-> >> - Delayed probe support for CPU cluster local components when all CPUs=
- of
-> >>   this CPU cluster are offline, re-probe the component when any CPU in=
- the
-> >>   cluster comes online.
-> >> - Introduce `cs_mode` to link enable interfaces to avoid the use
-> >>   smp_call_function_single() under perf mode.
-> >>
-> >> Patch summary:
-> >> Patch 1: Adds device tree bindings for CPU cluster funnel/replicator/T=
-MC devices.
-> >> Patches 2=E2=80=933: Add support for CPU cluster funnel.
-> >> Patches 4-6: Add support for CPU cluster replicator.
-> >> Patches 7-10: Add support for CPU cluster TMC.
-> >> Patch 11: Add 'cs_mode' to link enable functions.
-> >> Patches 12-13: Add Coresight nodes for APSS debug block for x1e80100 a=
-nd
-> >> fix build issue.
-> >>
-> >> Verification:
-> >>
-> >> This series has been verified on sm8750.
-> >>
-> >> Test steps for delay probe:
-> >>
-> >> 1. limit the system to enable at most 6 CPU cores during boot.
-> >> 2. echo 1 >/sys/bus/cpu/devices/cpu6/online.
-> >> 3. check whether ETM6 and ETM7 have been probed.
-> >>
-> >> Test steps for sysfs mode:
-> >>
-> >> echo 1 >/sys/bus/coresight/devices/tmc_etf0/enable_sink
-> >> echo 1 >/sys/bus/coresight/devices/etm0/enable_source
-> >> echo 1 >/sys/bus/coresight/devices/etm6/enable_source
-> >> echo 0 >/sys/bus/coresight/devices/etm0/enable_source
-> >> echo 0 >/sys/bus/coresight/devicse/etm6/enable_source
-> >> echo 0 >/sys/bus/coresight/devices/tmc_etf0/enable_sink
-> >>
-> >> echo 1 >/sys/bus/coresight/devices/tmc_etf1/enable_sink
-> >> echo 1 >/sys/bus/coresight/devcies/etm0/enable_source
-> >> cat /dev/tmc_etf1 >/tmp/etf1.bin
-> >> echo 0 >/sys/bus/coresight/devices/etm0/enable_source
-> >> echo 0 >/sys/bus/coresight/devices/tmc_etf1/enable_sink
-> >>
-> >> echo 1 >/sys/bus/coresight/devices/tmc_etf2/enable_sink
-> >> echo 1 >/sys/bus/coresight/devices/etm6/enable_source
-> >> cat /dev/tmc_etf2 >/tmp/etf2.bin
-> >> echo 0 >/sys/bus/coresight/devices/etm6/enable_source
-> >> echo 0 >/sys/bus/coresight/devices/tmc_etf2/enable_sink
-> >>
-> >> Test steps for sysfs node:
-> >>
-> >> cat /sys/bus/coresight/devices/tmc_etf*/mgmt/*
-> >>
-> >> cat /sys/bus/coresight/devices/funnel*/funnel_ctrl
-> >>
-> >> cat /sys/bus/coresight/devices/replicator*/mgmt/*
-> >>
-> >> Test steps for perf mode:
-> >>
-> >> perf record -a -e cs_etm//k -- sleep 5
-> >>
-> >> Signed-off-by: Yuanfang Zhang <yuanfang.zhang@oss.qualcomm.com>
-> >> ---
-> >> Yuanfang Zhang (12):
-> >>       dt-bindings: arm: coresight: Add cpu cluster tmc/funnel/replicat=
-or support
-> >>       coresight-funnel: Add support for CPU cluster funnel
-> >>       coresight-funnel: Handle delay probe for CPU cluster funnel
-> >>       coresight-replicator: Add support for CPU cluster replicator
-> >>       coresight-replicator: Handle delayed probe for CPU cluster repli=
-cator
-> >>       coresight-replicator: Update mgmt_attrs for CPU cluster replicat=
-or compatibility
-> >>       coresight-tmc: Add support for CPU cluster ETF and refactor prob=
-e flow
-> >>       coresight-tmc-etf: Refactor enable function for CPU cluster ETF =
-support
-> >>       coresight-tmc: Update tmc_mgmt_attrs for CPU cluster TMC compati=
-bility
-> >>       coresight-tmc: Handle delayed probe for CPU cluster TMC
-> >>       coresight: add 'cs_mode' to link enable functions
-> >>       arm64: dts: qcom: x1e80100: add Coresight nodes for APSS debug b=
-lock
-> >>
-> >>  .../bindings/arm/arm,coresight-dynamic-funnel.yaml |  23 +-
-> >>  .../arm/arm,coresight-dynamic-replicator.yaml      |  22 +-
-> >>  .../devicetree/bindings/arm/arm,coresight-tmc.yaml |  22 +-
-> >>  arch/arm64/boot/dts/qcom/x1e80100.dtsi             | 885 ++++++++++++=
-+++++++++
-> >>  arch/arm64/boot/dts/qcom/x1p42100.dtsi             |  12 +
-> >>  drivers/hwtracing/coresight/coresight-core.c       |   7 +-
-> >>  drivers/hwtracing/coresight/coresight-funnel.c     | 260 +++++-
-> >>  drivers/hwtracing/coresight/coresight-replicator.c | 343 +++++++-
-> >>  drivers/hwtracing/coresight/coresight-tmc-core.c   | 396 +++++++--
-> >>  drivers/hwtracing/coresight/coresight-tmc-etf.c    | 105 ++-
-> >>  drivers/hwtracing/coresight/coresight-tmc.h        |  10 +
-> >>  drivers/hwtracing/coresight/coresight-tnoc.c       |   3 +-
-> >>  drivers/hwtracing/coresight/coresight-tpda.c       |   3 +-
-> >>  include/linux/coresight.h                          |   3 +-
-> >>  14 files changed, 1912 insertions(+), 182 deletions(-)
-> >> ---
-> >> base-commit: 01f96b812526a2c8dcd5c0e510dda37e09ec8bcd
-> >> change-id: 20251016-cpu_cluster_component_pm-ce518f510433
-> >>
-> >> Best regards,
-> >> --
-> >> Yuanfang Zhang <yuanfang.zhang@oss.qualcomm.com>
-> >>
-> >
-> >
->
-
-
---
-Mike Leach
-Principal Engineer, ARM Ltd.
-Manchester Design Centre. UK
+Konrad
 
