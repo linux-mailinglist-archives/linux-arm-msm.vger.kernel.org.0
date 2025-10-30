@@ -1,217 +1,106 @@
-Return-Path: <linux-arm-msm+bounces-79707-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-79708-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2D949C21250
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Oct 2025 17:23:58 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 218A4C21283
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Oct 2025 17:24:56 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id AF9EA3BF6DF
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Oct 2025 16:22:06 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id A742A403EA2
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Oct 2025 16:22:43 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7B5BB3644B0;
-	Thu, 30 Oct 2025 16:22:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 810F927472;
+	Thu, 30 Oct 2025 16:22:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="NakRxAgf"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="sM2BrH/9"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49A9C279329;
-	Thu, 30 Oct 2025 16:22:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48FFD279329;
+	Thu, 30 Oct 2025 16:22:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761841324; cv=none; b=jz6YNwWu68IwLfqOtOl66/Wt9kNHGFdEf45QaySFpx/KizpouswDGy0419yPT8s8PZvXDaDfAO4zNt/ql8JpLsP2WDUfJKuRWdiVEE1MThTzBhmxlEqYGIOAGlQ/mq5V155WMI7P+DLLSM4khIYEBnNP9yaR6ylRQ7JFoOkRe0g=
+	t=1761841360; cv=none; b=ZVVJlPZh9fu1tgJVfBtP1chR/ybbPfvIu5XLhwDSB2qzVGA1pMePN16TSDo3SfsUj7tNQHSZemkcop2Pl7ABdcsQJv8dNXrFd5d9MNXgCzukgYxyzrj4Chg/JriloillZfgFQZnkEyOhQRHwolqMTtGSkA5D/2TgzfNORiPhDH8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761841324; c=relaxed/simple;
-	bh=F+ThUuZwTPoqOt/a8AaNAZXa9DD3eH4/OEJNQKNPueM=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=IPtFH8IxtUFUQEUmMWwGicKpjOXjHQToM0qe13NjsE28LKCn3YYU+Txg169sgYYeYOl+VFzRoCFnk9Cy/EjWHPAqXnhM14nKkCl/xzVjNge2PMvDi9DUFYmM19dxrfTxmAGR2OVT+KMVVgmcUtWHurjVZO1yCpS+f6QGRWkzjEI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=NakRxAgf; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47798C4CEF1;
-	Thu, 30 Oct 2025 16:22:02 +0000 (UTC)
+	s=arc-20240116; t=1761841360; c=relaxed/simple;
+	bh=qeejJw/Ci04guqvtvub4+S+ZoFbZ8/admEO2nb7xcKk=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=M5dwTqbHn7hlSu6Eh69d9E/g085RBjCNOU12jJ0+MJj0sc6/XANkrfKSvLFwbjt4KN07xkzJ+9c1D2FuszO1AdoZSmuTMK3YvKtP3seib+iemmxc7vr2pELm4rX5dPos4+zjKAojPB/PZQkb+qaRUVuC3Va+M4ugweT3PqxA8ro=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=sM2BrH/9; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D9C5C4CEF1;
+	Thu, 30 Oct 2025 16:22:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1761841323;
-	bh=F+ThUuZwTPoqOt/a8AaNAZXa9DD3eH4/OEJNQKNPueM=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=NakRxAgf5j+AWB35aj0q8wYpPF+yCxnIwpGI2id4YibssjyXZWke4BL9F6dtizBqQ
-	 qIniLzOK/Wd7ucdaHgZyZLTD77gLzl0O8eSGDEW2dbkhlNseTkDJ6iNZYqv8iTiYJ1
-	 8OSb/667+qkK60On9KiL+um9H7xAasMWdKBvisHlSFKtFCEd5wyez4vKvYodGqolHa
-	 ovMHAzka3vDfe3jXQldAjcnqFgr5ygOKGcX0Z2LUxDWTDKhP0YMpw4g56cKwU4xLi4
-	 9ZCwlj9jwO9tYT9LKEDdKVyAWWWpQvYYBXSdimAyOjYmndLfb29ADBaty3bcCDVJ3r
-	 gzsjIXXopBw8g==
-Date: Thu, 30 Oct 2025 11:25:11 -0500
+	s=k20201202; t=1761841359;
+	bh=qeejJw/Ci04guqvtvub4+S+ZoFbZ8/admEO2nb7xcKk=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=sM2BrH/9fLau66Kv3195fiOQB6MxtyPXRXtOIYVMdU5A17KL7QC2Qai+2RmKFruY/
+	 uTxFhGlUjTeb7BdmOXNCSNp9kWr7zSRhWCbaRPS008DM8bOn8Za3RY6SbVy5EAlYXo
+	 NHFmhjj4Wnxex9UrXdb7nEma4PZD9b2kNGKvqUITnEp5ODjFDs3Pb0AQHXbeKZLZds
+	 /Y9UaXi51BAeTwg93p/Q1UJQZ3YdLY6yHAduDN2woYqCSIY6v0ABaXPu9cSDqw7Z2E
+	 VnlNC1IvIV20+NKAkAo/2CVcajJ5k02bGlPpLU8Ss/jKqZvwMywdaosN1nNbFViAk9
+	 xgX2bZxesoVqg==
 From: Bjorn Andersson <andersson@kernel.org>
-To: Ziyue Zhang <ziyue.zhang@oss.qualcomm.com>
-Cc: konradybcio@kernel.org, robh@kernel.org, krzk+dt@kernel.org, 
-	conor+dt@kernel.org, jingoohan1@gmail.com, mani@kernel.org, lpieralisi@kernel.org, 
-	kwilczynski@kernel.org, bhelgaas@google.com, johan+linaro@kernel.org, vkoul@kernel.org, 
-	kishon@kernel.org, neil.armstrong@linaro.org, abel.vesa@linaro.org, kw@linux.com, 
-	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	linux-pci@vger.kernel.org, linux-phy@lists.infradead.org, qiang.yu@oss.qualcomm.com, 
-	quic_krichai@quicinc.com, quic_vbadigan@quicinc.com
-Subject: Re: [PATCH v2 4/4] arm64: dts: qcom: Add PCIe 3 regulators for
- HAMOA-IOT-EVK board
-Message-ID: <5rpmcr23gsoiefmgxaci3fcc5yf3iwo4pbgywz6wuzljcnuxxe@pjn3g7dizim4>
-References: <20251030084804.1682744-1-ziyue.zhang@oss.qualcomm.com>
- <20251030084804.1682744-5-ziyue.zhang@oss.qualcomm.com>
+To: Hans de Goede <hansg@kernel.org>,
+	Lee Jones <lee@kernel.org>,
+	Pavel Machek <pavel@kernel.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+	Jingoo Han <jingoohan1@gmail.com>,
+	Mauro Carvalho Chehab <mchehab@kernel.org>,
+	Jean-Jacques Hiblot <jjhiblot@traphandler.com>,
+	Jacopo Mondi <jacopo@jmondi.org>,
+	Sakari Ailus <sakari.ailus@linux.intel.com>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	Daniel Thompson <danielt@kernel.org>,
+	Aleksandrs Vinarskis <alex@vinarskis.com>
+Cc: linux-leds@vger.kernel.org,
+	devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	dri-devel@lists.freedesktop.org,
+	linux-media@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org,
+	threeway@gmail.com,
+	Andy Shevchenko <andy.shevchenko@gmail.com>,
+	Linus Walleij <linus.walleij@linaro.org>
+Subject: Re: (subset) [PATCH v5 0/4] leds: privacy-led support for devicetree
+Date: Thu, 30 Oct 2025 11:25:33 -0500
+Message-ID: <176184154198.475875.6266114626536757346.b4-ty@kernel.org>
+X-Mailer: git-send-email 2.51.0
+In-Reply-To: <20250910-leds-v5-0-bb90a0f897d5@vinarskis.com>
+References: <20250910-leds-v5-0-bb90a0f897d5@vinarskis.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20251030084804.1682744-5-ziyue.zhang@oss.qualcomm.com>
 
-On Thu, Oct 30, 2025 at 04:48:04PM +0800, Ziyue Zhang wrote:
-> HAMOA-IOT-EVK board includes a PCIe3 controller and x8 slot that require
-> proper power rail and control signal configuration. This update adds
-> `vddpe-3v3-supply` and `regulator-pcie-12v` to provide 3.3V to the PHY
-> and 12V to the slot for external devices.
+
+On Wed, 10 Sep 2025 14:01:07 +0200, Aleksandrs Vinarskis wrote:
+> Re-spin of RFC patch from ~2.5 years ago [1]. v4l2 controls for privacy
+> LEDs has landed, but the DT part was left out. Introduce missing
+> dt-bindings, and commonize 'leds' parameter. Finally, add a patch to
+> enable privacy-led on Lenovo Thinkpad x13s.
 > 
-> It also introduces PM GPIOs to manage power enable and reset signals,
-> ensuring stable power sequencing and reliable PCIe3 operation.
-
-I'm afraid I don't understand this paragraph. In the first paragraph you
-establish that you have PCIe3, there is a x8 slot, and there's 3.3V and
-12V supplies.
-
-But where in the patch do you establish "reset signals" and "ensure
-stable power sequencing"?
-
+> With recent inflow of arm64-power laptops (Snapdragon X1E/X1P) which
+> mostly use MIPI cameras, this feature becomes more desired. Original
+> rebased patch is still working as expected (with respective DT changes)
+> on Dell XPS 9345.
 > 
-> Signed-off-by: Ziyue Zhang <ziyue.zhang@oss.qualcomm.com>
-> ---
->  arch/arm64/boot/dts/qcom/hamoa-iot-evk.dts | 79 ++++++++++++++++++++++
->  1 file changed, 79 insertions(+)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/hamoa-iot-evk.dts b/arch/arm64/boot/dts/qcom/hamoa-iot-evk.dts
-> index 24c2dcef0ba8..0984a6eed226 100644
-> --- a/arch/arm64/boot/dts/qcom/hamoa-iot-evk.dts
-> +++ b/arch/arm64/boot/dts/qcom/hamoa-iot-evk.dts
-> @@ -414,6 +414,48 @@ vreg_wwan: regulator-wwan {
->  		regulator-boot-on;
->  	};
->  
-> +	vreg_pcie_12v: regulator-pcie-12v {
+> [...]
 
-https://docs.kernel.org/devicetree/bindings/dts-coding-style.html#order-of-nodes
+Applied, thanks!
 
-2. Nodes without unit addresses shall be ordered alpha-numerically by
-   the node name. For a few node types, they can be ordered by the main
-   property, e.g. pin configuration states ordered by value of “pins”
-   property.
+[4/4] arm64: dts: qcom: sc8280xp-x13s: enable camera privacy indicator
+      commit: b54c412b511c8bc8e71fd09a766bd95528d94840
 
-Regards,
-Bjorn
-
-> +		compatible = "regulator-fixed";
-> +
-> +		regulator-name = "VREG_PCIE_12V";
-> +		regulator-min-microvolt = <12000000>;
-> +		regulator-max-microvolt = <12000000>;
-> +
-> +		gpio = <&pm8550ve_8_gpios 8 GPIO_ACTIVE_HIGH>;
-> +		enable-active-high;
-> +
-> +		pinctrl-0 = <&pcie_x8_12v>;
-> +		pinctrl-names = "default";
-> +	};
-> +
-> +	vreg_pcie_3v3_aux: regulator-pcie-3v3-aux {
-> +		compatible = "regulator-fixed";
-> +
-> +		regulator-name = "VREG_PCIE_3P3_AUX";
-> +		regulator-min-microvolt = <3300000>;
-> +		regulator-max-microvolt = <3300000>;
-> +
-> +		gpio = <&pmc8380_3_gpios 8 GPIO_ACTIVE_HIGH>;
-> +		enable-active-high;
-> +
-> +		pinctrl-0 = <&pm_sde7_aux_3p3_en>;
-> +		pinctrl-names = "default";
-> +	};
-> +
-> +	vreg_pcie_3v3: regulator-pcie-3v3 {
-> +		compatible = "regulator-fixed";
-> +
-> +		regulator-name = "VREG_PCIE_3P3";
-> +		regulator-min-microvolt = <3300000>;
-> +		regulator-max-microvolt = <3300000>;
-> +
-> +		gpio = <&pmc8380_3_gpios 6 GPIO_ACTIVE_HIGH>;
-> +		enable-active-high;
-> +
-> +		pinctrl-0 = <&pm_sde7_main_3p3_en>;
-> +		pinctrl-names = "default";
-> +};
-> +
->  	sound {
->  		compatible = "qcom,x1e80100-sndcard";
->  		model = "X1E80100-EVK";
-> @@ -844,6 +886,12 @@ &mdss_dp3_phy {
->  	status = "okay";
->  };
->  
-> +&pcie3_port {
-> +	vpcie12v-supply = <&vreg_pcie_12v>;
-> +	vpcie3v3-supply = <&vreg_pcie_3v3>;
-> +	vpcie3v3aux-supply = <&vreg_pcie_3v3_aux>;
-> +};
-> +
->  &pcie5 {
->  	vddpe-3v3-supply = <&vreg_wwan>;
->  };
-> @@ -872,6 +920,17 @@ usb0_3p3_reg_en: usb0-3p3-reg-en-state {
->  	};
->  };
->  
-> +&pm8550ve_8_gpios {
-> +	pcie_x8_12v: pcie-12v-default-state {
-> +		pins = "gpio8";
-> +		function = "normal";
-> +		output-enable;
-> +		output-high;
-> +		bias-pull-down;
-> +		power-source = <0>;
-> +	};
-> +};
-> +
->  &pm8550ve_9_gpios {
->  	usb0_1p8_reg_en: usb0-1p8-reg-en-state {
->  		pins = "gpio8";
-> @@ -883,6 +942,26 @@ usb0_1p8_reg_en: usb0-1p8-reg-en-state {
->  	};
->  };
->  
-> +&pmc8380_3_gpios {
-> +	pm_sde7_aux_3p3_en: pcie-aux-3p3-default-state {
-> +		pins = "gpio8";
-> +		function = "normal";
-> +		output-enable;
-> +		output-high;
-> +		bias-pull-down;
-> +		power-source = <0>;
-> +	};
-> +
-> +	pm_sde7_main_3p3_en: pcie-main-3p3-default-state {
-> +		pins = "gpio6";
-> +		function = "normal";
-> +		output-enable;
-> +		output-high;
-> +		bias-pull-down;
-> +		power-source = <0>;
-> +	};
-> +};
-> +
->  &pmc8380_5_gpios {
->  	usb0_pwr_1p15_reg_en: usb0-pwr-1p15-reg-en-state {
->  		pins = "gpio8";
-> -- 
-> 2.34.1
-> 
+Best regards,
+-- 
+Bjorn Andersson <andersson@kernel.org>
 
