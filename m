@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-79562-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-79563-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [142.0.200.124])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1EB99C1E712
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Oct 2025 06:38:15 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6B836C1E77A
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Oct 2025 06:54:28 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 7C4B54E693D
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Oct 2025 05:37:53 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 4324C3AD49E
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Oct 2025 05:54:18 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C6E60287517;
-	Thu, 30 Oct 2025 05:37:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A14143019A2;
+	Thu, 30 Oct 2025 05:54:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="mw0YlVCP"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="QcEJxRSD"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98A89286419;
-	Thu, 30 Oct 2025 05:37:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71FC02F6932;
+	Thu, 30 Oct 2025 05:54:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761802669; cv=none; b=LKrMOKZY7P3i6/Sk0RvJlNlOV5pYxyEbDvi5S/XAiudU1qVxaGwrkOxA+Yxgz8UM4qDhAd8xPn7qn8I24PByeGKBHa9Tvkhtj5Z+FhwGLIttw6eX4egHRYKS/kHOR8i43apo+lTvuMz1TTWQ4t3SyeyI1Pdom/koa+jD5xvzpXk=
+	t=1761803647; cv=none; b=KEhN6vHnBiDx0Y5fXq46l87smVSSvRyMTO/LBINNFsp9Zz8/J9/MYf/Bltt9UykSqVFB61jRDvysmDmk3Zi9yZx9AZ8bGJGAFmI1RFSBqTe+ypRyoq1dCq7xx5ggM7vhtAnNRHTy6KU7AfHVcZwwUXHCsGvdaJ07Z/VufA12kX8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761802669; c=relaxed/simple;
-	bh=2Ql6M2oEHS7vNgrk7s8vVaKzAoHkuVoLhaBtq6nZqNQ=;
+	s=arc-20240116; t=1761803647; c=relaxed/simple;
+	bh=LyxL8fo5dc8kaxORDVJe1+RbPJaq5z+vxRxbBZln3rQ=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=C7AYkgZ6u+mrdVsXGVAt7t8kHmZlEOJBnnaMMxZGTj0lBV1KcGB0wZzxgcII03zVij9CSkEhwWekUng43L+PAzV/TOHISBbq2cWRxC5rBSJZhT9kbfC4t7GdxiKdy+jm2csBznE5CA351NfgkkpZ8avHK7H397LQ5G9xyWHySSE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=mw0YlVCP; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C4C7C4CEF1;
-	Thu, 30 Oct 2025 05:37:42 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=ah+fFZuLWHfV/1eIr7eJOzVDxlzbvQGb/YF9zbyb5suMylPg+sCjsOTZRfE7SCCP5EJWiUZXczpkQnemVPCV7wGLXG+QvBi3C7b5mlwQbH5NnBJs5+VeDdnGCTrGb6TdSRA5Oztm/j4BmWutDef/e501zfQvH9w0yIkaaiFXuHw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=QcEJxRSD; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F114C4CEFB;
+	Thu, 30 Oct 2025 05:54:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1761802668;
-	bh=2Ql6M2oEHS7vNgrk7s8vVaKzAoHkuVoLhaBtq6nZqNQ=;
+	s=k20201202; t=1761803644;
+	bh=LyxL8fo5dc8kaxORDVJe1+RbPJaq5z+vxRxbBZln3rQ=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=mw0YlVCPET7ndopNNr9hB7Re4x9WJIosMTGc0wbFHbfpjO3sIEor75y1+KYOPJGEK
-	 fBBnxkL+Cf+AVzk7EzlqCcnRHWnB4XJ1fyR/zrk1xVP0hFLXJRFVcKzOF3wll/F6eB
-	 2em8BRX45O0hHq8ozDzmHfGXOzt+P9jhiCzG3/8bW7KBT+SxixONMZTFGlf0ExV6VD
-	 ydCqfmtUBSx21kbCpQ2GaCIV95p5G3wmrosXkTd9YOvsIKc4u2MEOQGaxS/im3RVLD
-	 Z/Tt5eaEczxahwnvBN4Plu/6xl2BZui3hBMQQUUsl6EETPs0OAIbafkrJgSWz1W9Tf
-	 MPa0YcySif4LQ==
-Message-ID: <7c1e0cb5-2483-4efa-be52-84cbe5d1a4b2@kernel.org>
-Date: Thu, 30 Oct 2025 06:37:40 +0100
+	b=QcEJxRSDnWTa643sfFv6o+6dXlAzFfmq8cEIeUhvw4KhjreTnE2sho0qfIZD3eI13
+	 nJBcI8Og8Hd1KsMOmJDaeDB2R74x4Sa5uqWccXxIkL0PtCk8bhwCXujG8WE8bHLAYq
+	 DOq4dXP9pyBLeFqWRFpVkW4sKfHQylKXf1TK577gL7PPBgKGRj4AL8ZLiPH/auIFOP
+	 hkkByfEuFwsYx7VC09LvSp3KGVL47rIs+zvTVOYb+1UAdg4QevLvC46w56wJ6fU+N+
+	 8u/6wRwu8CzuM7gX6PBFXuGP6YxYPi6RVTkEVSEJaExTigx7x9C2u0P5+F6gUJsW3Z
+	 MiesTI41Ugl4A==
+Message-ID: <5468378e-3ca3-45d2-98bf-9388005bba85@kernel.org>
+Date: Thu, 30 Oct 2025 06:53:59 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,26 +50,22 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 08/12] arm64: defconfig: Enable NT37801 DSI panel driver
-To: yuanjiey <yuanjie.yang@oss.qualcomm.com>
-Cc: Bjorn Andersson <andersson@kernel.org>, robin.clark@oss.qualcomm.com,
- lumag@kernel.org, abhinav.kumar@linux.dev, sean@poorly.run,
- marijn.suijten@somainline.org, airlied@gmail.com, simona@ffwll.ch,
- maarten.lankhorst@linux.intel.com, mripard@kernel.org, tzimmermann@suse.de,
- robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org,
- quic_mkrishn@quicinc.com, jonathan@marek.ca, quic_khsieh@quicinc.com,
- neil.armstrong@linaro.org, linux-arm-msm@vger.kernel.org,
- dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- tingwei.zhang@oss.qualcomm.com, aiqun.yu@oss.qualcomm.com,
- yongxing.mou@oss.qualcomm.com
-References: <20251023075401.1148-1-yuanjie.yang@oss.qualcomm.com>
- <20251023080609.1212-1-yuanjie.yang@oss.qualcomm.com>
- <20251023080609.1212-3-yuanjie.yang@oss.qualcomm.com>
- <wuh7agcgg6spghilnx4amqukaaydj25u7kbdiod7fl6pu2ulvm@pmosyuo43cyw>
- <aQF98RvLuOlJZlFi@yuanjiey.ap.qualcomm.com>
- <38c8e26c-08a4-42d9-8f6d-93969af90d50@kernel.org>
- <aQLOaI3ngjswi7kd@yuanjiey.ap.qualcomm.com>
+Subject: Re: [PATCH v2 2/2] dt-bindings: mailbox: qcom: Add IPCC support for
+ Glymur Platform
+To: Bjorn Andersson <andersson@kernel.org>
+Cc: Jingyi Wang <jingyi.wang@oss.qualcomm.com>,
+ Manivannan Sadhasivam <mani@kernel.org>,
+ Jassi Brar <jassisinghbrar@gmail.com>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, aiqun.yu@oss.qualcomm.com,
+ tingwei.zhang@oss.qualcomm.com, trilok.soni@oss.qualcomm.com,
+ yijie.yang@oss.qualcomm.com, linux-arm-msm@vger.kernel.org,
+ linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
+ Sibi Sankar <sibi.sankar@oss.qualcomm.com>
+References: <20251029-knp-ipcc-v2-0-8ba303ab82de@oss.qualcomm.com>
+ <20251029-knp-ipcc-v2-2-8ba303ab82de@oss.qualcomm.com>
+ <67038d9f-7c6c-4bb3-ba64-b06816b76be7@kernel.org>
+ <qyfxtoe7ixko7k5whtzjpkynwpeqxzb2sgwq7y4y3kstblapz5@ggny5uq7qv6s>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -115,47 +111,90 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  jWt87ecuHlpL3uuQ0ZZNWqHgZoQLXoqC2ZV5KrtKWb/jyiFX/sxSrodALf0zf+tfHv0FZWT2
  zHjUqd0t4njD/UOsuIMOQn4Ig0SdivYPfZukb5cdasKJukG1NOpbW7yRNivaCnfZz6dTawXw
  XRIV/KDsHQiyVxKvN73bThKhONkcX2LWuD928tAR6XMM2G5ovxLe09vuOzzfTWQDsm++9UKF a/A=
-In-Reply-To: <aQLOaI3ngjswi7kd@yuanjiey.ap.qualcomm.com>
+In-Reply-To: <qyfxtoe7ixko7k5whtzjpkynwpeqxzb2sgwq7y4y3kstblapz5@ggny5uq7qv6s>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 30/10/2025 03:33, yuanjiey wrote:
-> On Wed, Oct 29, 2025 at 02:05:20PM +0100, Krzysztof Kozlowski wrote:
->> On 29/10/2025 03:37, yuanjiey wrote:
->>> On Mon, Oct 27, 2025 at 10:51:23PM -0500, Bjorn Andersson wrote:
->>>> On Thu, Oct 23, 2025 at 04:06:05PM +0800, yuanjie yang wrote:
->>>>> From: Yuanjie Yang <yuanjie.yang@oss.qualcomm.com>
->>>>>
->>>>> Build the NT37801 DSI panel driver as module.
->>>>>
->>>>> Signed-off-by: Yongxing Mou <yongxing.mou@oss.qualcomm.com>
->>>>> Signed-off-by: Yuanjie Yang <yuanjie.yang@oss.qualcomm.com>
->>>>
->>>> You (Yuanjie) authored the patch, but forgot to sign-off, then Yongxing
->>>> provided certificate of origin, then you provide certificate of origin
->>>> and send it to list?
->>>>
->>>> Please correct.
->>>
->>> All the display patches were jointly developed by Yongxing and me.
->>> So every patch 
+On 29/10/2025 18:23, Bjorn Andersson wrote:
+> On Wed, Oct 29, 2025 at 04:49:30PM +0100, Krzysztof Kozlowski wrote:
+>> On 29/10/2025 09:15, Jingyi Wang wrote:
+>>> diff --git a/include/dt-bindings/mailbox/qcom,glymur-ipcc.h b/include/dt-bindings/mailbox/qcom,glymur-ipcc.h
+>>> new file mode 100644
+>>> index 000000000000..3ab8189974a5
+>>> --- /dev/null
+>>> +++ b/include/dt-bindings/mailbox/qcom,glymur-ipcc.h
+>>> @@ -0,0 +1,68 @@
+>>> +/* SPDX-License-Identifier: GPL-2.0 OR BSD-2-Clause */
+>>> +/*
+>>> + * Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
+>>> + */
+>>> +
+>>> +#ifndef __DT_BINDINGS_MAILBOX_IPCC_GLYMUR_H
+>>> +#define __DT_BINDINGS_MAILBOX_IPCC_GLYMUR_H
+>>> +
+>>> +/* Glymur physical client IDs */
+>>> +#define IPCC_MPROC_AOP			0
 >>
 >>
->> So two people were working on this absolutely trivial defconfig change?
->> I have troubles believing this.
-> I want to say these patches I am first author and yongxing give me support, so
-> I think yongxing is second author.
+>> Here the same - not used by Linux.
 > 
-> I want to express my gratitude for Yongxing's support in every patch, so I included
-> both our names in the sign-off for each one.
+> How is this different from e.g.:
 > 
-> However, if my intention causes any trouble for maintainer, I can remove Yongxing's
-> sign-off from this patch.
+> include/dt-bindings/interrupt-controller/arm-gic.h:#define GIC_SPI 0
 
+$ git grep GIC_SPI
+drivers/irqchip/irq-mchp-eic.c
 
-Please read submitting patches to understand what Signed-off-by means.
-Otherwise I have doubts we can accept your patches - you simply do not
-understand what you are certifying.
+How is this not used by Linux? What is drivers/irqchip/foo.c if not a
+Linux driver?
+
+> 
+> Perhaps I'm misunderstanding what you're saying here.
+> 
+>> Don't add these, they are really not
+>> necessary and they are not helping anyhow. For longer explanation see 2
+>> year thread for PMIC ADC v7.
+>>
+> 
+> I'm sorry, I'm not able to wrangle a lore query for this, can you please
+> provide a link?
+
+"adc v7 qcom" and then my last two or three replies in that thread:
+https://lore.kernel.org/all/d7627a5d-893a-4bc3-8b67-c151ee0bea32@kernel.org/
+
+> 
+>> Or provide explanation in terms what Linux interface you are binding
+>> here (please focus on Linux or other SW).
+>>
+> 
+> Don't we use include/dt-bindings to define hardware constants for use in
+
+No, we do not.
+
+> dt source as well? Has this changed?
+
+Yes, 5 years ago or more when we noticed people do it unnecessarily. You
+know, it is difficult to notice it, because we look at bindings and they
+seem fine. Finding that something is not used requires more effort which
+we usually do not care.
+
+I have few bookmarks but not necessarily the earliest, just something I
+managed to find because people ask the same:
+
+2014 (so more than 5 years ago!):
+https://lore.kernel.org/all/201401111415.29395.arnd@arndb.de/
+
+A bit newer:
+https://lore.kernel.org/linux-devicetree/CAK8P3a0fDJQvGLEtG0fxLkG08Fh9V7LEMPsx4AaS+2Ldo_xWxw@mail.gmail.com/
+
+https://lore.kernel.org/linux-devicetree/CAK8P3a1APzs74YTcZ=m43G3zrmwJZKcYSTvV5eDDQX-37UY7Tw@mail.gmail.com/
+
+https://lore.kernel.org/linux-devicetree/418c5f0c-5279-41f5-3705-345ec9a97ea2@linaro.org/
+
+https://lore.kernel.org/linux-devicetree/c088e01c-0714-82be-8347-6140daf56640@linaro.org/
+
+https://lore.kernel.org/linux-devicetree/579a1569-7bba-491f-ba5e-7cfcb34ccc1f@linaro.org/
+
 
 Best regards,
 Krzysztof
