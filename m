@@ -1,80 +1,174 @@
-Return-Path: <linux-arm-msm+bounces-79598-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-79599-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [142.0.200.124])
-	by mail.lfdr.de (Postfix) with ESMTPS id 56762C1EE94
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Oct 2025 09:09:25 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id AF8F5C1EF25
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Oct 2025 09:19:32 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 24CD14E4DFD
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Oct 2025 08:09:24 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 306B74236E7
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Oct 2025 08:16:34 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id EF01032BF49;
-	Thu, 30 Oct 2025 08:09:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6050E2FFDFA;
+	Thu, 30 Oct 2025 08:16:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="hk4e/BaF"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="G3HIYDqY"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f41.google.com (mail-wm1-f41.google.com [209.85.128.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC771285CB6;
-	Thu, 30 Oct 2025 08:09:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D7EC1A9F87
+	for <linux-arm-msm@vger.kernel.org>; Thu, 30 Oct 2025 08:16:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761811761; cv=none; b=EyS8r+VNQbxa1OCMDJuWzpu37YKqUE4QKA5SQNygOmT1BT2IoJdmpdnT7Dd7GUEdYdgfUkyxhoqVXYP0dC2TeX08lGbB0ImawT2NgDpXvAL/soGtMepVQQlgkfrrt8L0XQThqlh4ZVmRUgqE/XAV0wLwKXoz1JOwp4mT6v871+U=
+	t=1761812191; cv=none; b=BHCZFnrgMiJCL1C7G2/q3+RuEc69ZmJBRK+aUF9YeuKCdsdOnM1YkMcxIhGJ8YjTe6qysDjCm0HfvV0ImHNMRBciVSZxxq+Po5L2nH1/azCRd/HIaOe/6yoVeuA9m6/I5UwYMIXMx54vMh4HINThz/4KqFOj3RXgnnliSBwiVG8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761811761; c=relaxed/simple;
-	bh=x8/BowhFRHOAH0ZdTZL9raHDW0IwMOYMmnVPArRrZms=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Do3V2vzaCRlbQDfuZliq+r8JTalx8T1c2BStUj8tvZMfMfqEKHk+XuEd5kO1sXXcABOvOVsB/+nwr8rXSaD7jGvN0Snp7LaJEQ953iBEBYcWhiHyBFGs/0U3TG8ldQAPxGtqjNCrQ8W1YlYm4AQsW84CwEXvr/CtiNMJnNJC7u0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=hk4e/BaF; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF24CC4CEF1;
-	Thu, 30 Oct 2025 08:09:20 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1761811761;
-	bh=x8/BowhFRHOAH0ZdTZL9raHDW0IwMOYMmnVPArRrZms=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=hk4e/BaF9H4N2OhzNCuZW9hA/Jtx5PApicPwNt1+cwQqC/Ic7yIM3DDeBSgkvoaIw
-	 cVFpObRwHLfGju4uyjesVHeoUVL2POE/ZtBtjBrpCPpqJ5wg+DOvJcRer3py//cws+
-	 ZijnKKnwBDVhEOIXxegasBhWh51hwKCj6emNXPXnCqv90vjyi99r20j6p9KHmgMy+r
-	 kwEyaAdhp5patXgfCtE3sgX4d09Ma0u6q3upneyDejtaDSstpaif30XPyMJi7NgoyE
-	 vbMgK/c9ta/+ZJ4iF5aY8qUg/8/Uy47uH73XKCKQEWK16X+xMoXyZgFBldmnpo0NS0
-	 +f4Q+j1FY993Q==
-Date: Thu, 30 Oct 2025 09:09:18 +0100
-From: Krzysztof Kozlowski <krzk@kernel.org>
-To: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
-Cc: robh@kernel.org, broonie@kernel.org, krzk+dt@kernel.org, 
-	conor+dt@kernel.org, devicetree@vger.kernel.org, perex@perex.cz, tiwai@suse.com, 
-	srini@kernel.org, linux-sound@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH] ASoC: dt-bindings: pm4125-sdw: correct number of
- soundwire ports
-Message-ID: <20251030-premium-intrepid-gaur-fbfc1e@kuoka>
-References: <20251029144636.357203-1-srinivas.kandagatla@oss.qualcomm.com>
+	s=arc-20240116; t=1761812191; c=relaxed/simple;
+	bh=3pr3bE37JQekr4KteuJZhkqEhETeS9zVBmYKEXCpNBg=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=nwHEvVG68ZkGNaJlonm66iJtxcrluns6Hh3Qpg+qbM5BM9SpdRbW1H/hSuVgzvamDdwjgOVuEX3ZxVGnEnBqJwt7+WabUvowDvUmG4pvP8pj6XPn0EuCEH1Xrpd+0lw0/UUL95yKG8RoULNNlEbyKzFAT/LniLuqo3ym9BQgifE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=G3HIYDqY; arc=none smtp.client-ip=209.85.128.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wm1-f41.google.com with SMTP id 5b1f17b1804b1-4769bb77eb9so502205e9.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 30 Oct 2025 01:16:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1761812188; x=1762416988; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=f4G1KZQl6cfiM/1J2+KFKVe0bth/8npRuFzDKYpdfXY=;
+        b=G3HIYDqY2EKikOV/FyYL7VAxpw3M8Ha803qNMCbKHNpi4/br4ETfGkpRgVoLG7dWam
+         90SVCko25GrK4arydrJVm6zWvzELmXU8fmkN4DQ6/mQrhHKxIbsyoFThu66+84QAS2fv
+         pKl03heLbaZFeLqwFF6kJ61Jhh2ykJN6EqIa5xRts7nHybQkqMKgtB1dyqBVdZ6G2Rf1
+         WtceGL+l+LzWwLHgLtvbc8Z+W5r+oxLTz66/9VIZ1OzaM9rihHNYW9UCPJvYS+8/ddTE
+         YX1E6IyMM3uiRvL+Q/dLKtMf+oCqSrAAkq0l90EoW5tukTQMB/awbfQ3nuq5MAjD+re6
+         0h/w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1761812188; x=1762416988;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=f4G1KZQl6cfiM/1J2+KFKVe0bth/8npRuFzDKYpdfXY=;
+        b=D6OdfTRHBB+DP/4eLCOL+TPjbCJ4ZdTSPyB2xSS5wdHzz0/AY2xK40BUj3n/1wCxQj
+         Kz4MddJPxitDhdiP0xZ3WqeLQ0Rj3LFeghrmHE3Z/E7MYk71K52XRosyRS6fPCTH5RMn
+         YgknrrkUXjPCAriJCGgA90X/5MgB40/4YYHNb6eMpQb3JQftOwPupSm+aLBQTcS2kHJ3
+         Qm0RDnNi2aHb5i6xWRPPiEfXHBdmLZwb1WQkQfo8O47c36uIbLgiLb19aodurK3Gt3Vl
+         eyKZUDOf+Wc1YJuW42GJ5ACrjOMOhcr/h/z028YsIlcBUHBdrCYQHBbF5t/OFKPqPSI8
+         0X7w==
+X-Forwarded-Encrypted: i=1; AJvYcCVv5opdAROGT0KpvSigofDt7YFgIyE/5L94xCBCh7RgccvNlkFlgG6Vd1LPByHY2D0xDYpqjec0tNCNtlWL@vger.kernel.org
+X-Gm-Message-State: AOJu0YwtrvDOtnJju5wYeCxQVovvar99I8UH3Fm9zYJJXS5aaRpBlHvm
+	G8JIUBxq8o4VLkxP22+C+pMySlmMUpZGok021zL8n95JqktUqI1Sdca9iq3iBnpPp2I=
+X-Gm-Gg: ASbGncuEMnrMD39Lt1f8/Hz/sIcgL+M2jGUkz6A0HtWZLpXBNZgPlXwRPhWlX27q2bN
+	WHsF42z/zwpQBwy7JsF9uk3OlIPOZ+5x876tu7vQLJPdI9Bo+5R4h1xW15NZuSUe3OBPtCpci0C
+	sGfq7M76PHEj73nomfAiwSU0oLbZY1QFhoOO51HTLwi9aOR2XRrJ1lwVvKqNjnCZcTi4x1saTh4
+	gZYmXK1mNnUVxnMsJRlzJvb3JPM39epYHqaWkFYYyO1GndUJUtIZ/vLjBgnvqKI5IjPEgQ82D5p
+	U+qV8w0lO5BUjycLHOu7nks/0k7280kFNRuoVEqp7cdrCpCDBzEetlxFdUTS8Nvt66hPZfIeEJ7
+	JZvSlfRaO1osxAqD32dQh+DBczMcCHLhBGV8t7ckVZ5iXX3J3jkS7WOIy0e0p/UXvrohdf0eiNB
+	g9gotm0qox2HCWNd/Q6Sky
+X-Google-Smtp-Source: AGHT+IGwDYhY1y/SPYtXSVRvAki1Qhjtezt3Dx8lpKGDfc9ZEto5uWUnib3MEpqw2Tpt3iFbZQ1uAw==
+X-Received: by 2002:a05:600c:5251:b0:471:161b:4244 with SMTP id 5b1f17b1804b1-4771e1e3c66mr29643195e9.5.1761812187736;
+        Thu, 30 Oct 2025 01:16:27 -0700 (PDT)
+Received: from [192.168.1.29] ([178.197.219.123])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-477289a5625sm26670275e9.5.2025.10.30.01.16.25
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 30 Oct 2025 01:16:26 -0700 (PDT)
+Message-ID: <a0d9d5b8-8c6c-4da9-a660-4cbe0bfc444a@linaro.org>
+Date: Thu, 30 Oct 2025 09:16:25 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20251029144636.357203-1-srinivas.kandagatla@oss.qualcomm.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 9/9] dt-bindings: PCI: qcom,pcie-x1e80100: Add missing
+ required power-domains
+Content-Language: en-US
+To: Johan Hovold <johan@kernel.org>
+Cc: Lorenzo Pieralisi <lpieralisi@kernel.org>,
+ =?UTF-8?Q?Krzysztof_Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
+ Manivannan Sadhasivam <mani@kernel.org>, Rob Herring <robh@kernel.org>,
+ Bjorn Helgaas <bhelgaas@google.com>, Krzysztof Kozlowski
+ <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>,
+ Bjorn Andersson <andersson@kernel.org>, Abel Vesa <abel.vesa@linaro.org>,
+ linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+ stable@vger.kernel.org
+References: <20251029-dt-bindings-pci-qcom-fixes-power-domains-v1-0-da7ac2c477f4@linaro.org>
+ <20251029-dt-bindings-pci-qcom-fixes-power-domains-v1-9-da7ac2c477f4@linaro.org>
+ <aQJE5kkOGh76dLvf@hovoldconsulting.com>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
+ 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
+ 2+47PN9NZAOyb771QoVr8A==
+In-Reply-To: <aQJE5kkOGh76dLvf@hovoldconsulting.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-On Wed, Oct 29, 2025 at 02:46:36PM +0000, Srinivas Kandagatla wrote:
-> For some reason we ended up limiting the number of soundwire ports to 2
-> in the bindings, the actual codec supports 4 rx and 5 tx ports.
+On 29/10/2025 17:46, Johan Hovold wrote:
+> On Wed, Oct 29, 2025 at 04:40:46PM +0100, Krzysztof Kozlowski wrote:
+>> Power domains should be required for PCI, so the proper SoC supplies are
+>> turned on.
+>>
+>> Cc: <stable@vger.kernel.org>
 > 
-> Fixes: 88d0d17192c5 ("ASoC: dt-bindings: add bindings for pm4125 audio codec")
-> Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
-> ---
->  Documentation/devicetree/bindings/sound/qcom,pm4125-sdw.yaml | 4 ++--
->  1 file changed, 2 insertions(+), 2 deletions(-)
+> I have a feeling I've pointed this out before, but these kind of binding
+> patches really does not seem to qualify for stable backporting (e.g.
+> does not "fix a real bug that bothers people").
 
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+I wish stable users of DT bindings (so some 3rd party projects or
+product trees) keep testing their stable kernels, their stable DTS with
+the bindings, whenever they upgrade their LTS kernel. And if they keep
+testing then they should be told about lack of the power domain. That's
+why this is for.
+
+Of course fix impact is pretty small, so I don't mind if the stable tag
+is being dropped here, but I will not resend just for that unless PCI or
+stable maintainers ask me.
 
 Best regards,
 Krzysztof
-
 
