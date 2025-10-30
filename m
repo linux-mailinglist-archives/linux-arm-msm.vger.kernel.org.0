@@ -1,81 +1,101 @@
-Return-Path: <linux-arm-msm+bounces-79620-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-79621-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 73BFCC1F2AE
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Oct 2025 10:00:38 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6FB6AC1F27A
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Oct 2025 09:58:23 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id A814818907A3
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Oct 2025 08:55:18 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id B7447423877
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Oct 2025 08:55:55 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9D1832882BB;
-	Thu, 30 Oct 2025 08:54:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A459F338918;
+	Thu, 30 Oct 2025 08:55:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jXULy106"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="SylwrB21";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="QLCet4sf"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pj1-f46.google.com (mail-pj1-f46.google.com [209.85.216.46])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3EB63339B47
-	for <linux-arm-msm@vger.kernel.org>; Thu, 30 Oct 2025 08:54:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF7FC2EC0B6
+	for <linux-arm-msm@vger.kernel.org>; Thu, 30 Oct 2025 08:55:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761814464; cv=none; b=pZ46ouFbHsxtzYiv/P9ltrchD1Sy7mpGlBEmrbUQlBFwd+CBmh4jV4cqAT4dVEO28Wo2WniGjS1ImQ3wRtGw1EBDBF7C9vxC3+MVaD97flKSXDtrkxmJtqASIgAef/j2P7q1m60OHzqC9KEZmpzl++iZ4hcRScqIaaNblo3QcRc=
+	t=1761814552; cv=none; b=P/CJ2cwyRmxKtPpmR/qRp/XP8oH1zkSvupB90QWQj//YShvav0XneRDavwQA0EDFZPlWDNn8a6CcuPcKgP7XI0jO4pMayw12Ed8OD2TjV9C4w4A/IISAYMmwjVql1+AzQmvmxOQQxLzQ9UBrqDiCFOENoaph2rWKUCwJmdVmfGg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761814464; c=relaxed/simple;
-	bh=4FbxbnCJDc/1oh2iUw/DiNtq0IJ+KihYhiAuxVGgt3k=;
+	s=arc-20240116; t=1761814552; c=relaxed/simple;
+	bh=cxxCsSZoH2PrmVQn5BDDlsSJKnREgp2gTA9TFIGAVk0=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=ojKqpDpvfo+6j+HuYBk4IJzs0POIuuLv6wC9EY+2dpGl4XKSEqb201Ak8C00nlpoFqQQz0HqKz+J3pDQa2qo0phFhm9xjp1/KhhoVXO/aq5Dym3LCET1CUQgJjwrKyhcG9xe4P44R8HuvcQhlCZwLp+vm6AE6E0lAofNtvssteo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=jXULy106; arc=none smtp.client-ip=209.85.216.46
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-pj1-f46.google.com with SMTP id 98e67ed59e1d1-3401314d845so1122374a91.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 30 Oct 2025 01:54:22 -0700 (PDT)
+	 In-Reply-To:Content-Type; b=RQ1JUwkb8F8oO57ICHPUqXtnwgIWMJqUGElJQrdaOuw0PU48oWNJ9lDR1tR8fkF7IPx4xq5kMkE6F744R2yUoUvd86UMQuAan0xKpmt629HtVheX2K2CWY4CYMdKdlIhw2JBlH7LzFmAoNwXCd5V/AsKk62RfM0c2dLQIGyxi8c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=SylwrB21; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=QLCet4sf; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 59U4xfKK2622811
+	for <linux-arm-msm@vger.kernel.org>; Thu, 30 Oct 2025 08:55:49 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	+qrH3FYH3hbZoAKVObnmBYSXLmj/NbUr1nicFAVuY2s=; b=SylwrB212jP7Nd2A
+	6QenvBCd9Q968VVNCOafDN4ytj/ZPe2qjZXtAxBOuqPJ1Yt0NH/EeBa3rouJY/Vy
+	CNUOp49I3j6EA4t85zCPrUmVFStCFYLpf0lEru9tew6Qkqws2zC1GiQMhuCBpEFX
+	mp/by3az8uhoLLUtYHSlO/KAdgH+FJBH6I6N3MPN6YBQnC+3vRVLqriAzwGN2k6f
+	FIJKwdU/iU0g461StpkwZP6RHll3aoagpNc/s4EynkFQgfPE5hazKqu1mKcmCp0f
+	QgVHs431K/eRe1LlLrJPLBie5m6w+KZ9DYiRgrx/caZi5b5kpEnwNrcaXQE5jFkH
+	+gog8g==
+Received: from mail-qt1-f197.google.com (mail-qt1-f197.google.com [209.85.160.197])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4a41fxgm5k-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Thu, 30 Oct 2025 08:55:49 +0000 (GMT)
+Received: by mail-qt1-f197.google.com with SMTP id d75a77b69052e-4e8a89c9750so20122761cf.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 30 Oct 2025 01:55:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1761814461; x=1762419261; darn=vger.kernel.org;
+        d=oss.qualcomm.com; s=google; t=1761814549; x=1762419349; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=z1nbpNKxGZmwf2lpk230ytxyk1UWzh/Nxzqzjf3QY9s=;
-        b=jXULy106eZuAjPjamE5lEQTRgXIck0xUm4Mc+g/UMbzE5iPATnRryx+BR3xiKhvcz4
-         UJ7UWBB0ecLREAuyIaRmdlruI61fq4pu071W9KK0S7v+RYM5Dv6Kv1FMZoVbuwky8zHl
-         T88sSpHxCGfWaGVP3td9QWlnnz2qz4+eDVxLerFueMeFeOeweZOWEgLNwkP65pThABnX
-         jCXzStZN40lwfq/gE4Y5z8WZBG24Tu+rF15vXoLeMDotA9L8bijyFisbLXIqLq9KUQ/5
-         lmty/0VDBApvHReBQFShREXxOw65dnSqE3UnKnsNLnXcv/OPFUiyxBJ8S9OcAleZ8SHR
-         b0Dw==
+        bh=+qrH3FYH3hbZoAKVObnmBYSXLmj/NbUr1nicFAVuY2s=;
+        b=QLCet4sfifTxzNrd4tQrAgqjDJ5cJ2hLAIszhrf6AZLZUru/Qap7vbOe+P/nBunMj5
+         TfFU7nJDOxgkI6ZH/NgsEI5D3hU9F2mo34sQ42fVj3iQsTrMrVtnBvoZ7j+xUSt7Olk3
+         r9jjRSyAmCRZoBxy24LUgPeC8bzg3drenFXFLc1CBZOyhf1F+SMDR9n3Qo5v/UIPyQv6
+         X65nMjMeFJEbQcbQvhYX/oC92KRn99kq8AZ1F0naWHg6xI+y5EwF0lEKwNKIjfK4BiPT
+         mxYmHl/Y2GInRQ+jLRqf89MlrpWbc8E+8k/3LhQ7Ppr+DNIx3xkgERgc60gmxiZTP+cv
+         AjiQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1761814461; x=1762419261;
+        d=1e100.net; s=20230601; t=1761814549; x=1762419349;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=z1nbpNKxGZmwf2lpk230ytxyk1UWzh/Nxzqzjf3QY9s=;
-        b=Pp0UUFGQAOGfMpH5jgFeI/tx1M6KZYSeQmNbagGr79z4KOgDkk8Ub7EmUuefA+4RKs
-         JaGM+OLOplLxRqgaZqJdQgDaupiVAbXub6DQeuRmopJ1UIjb4+mmQ7kP6RufFhZawjWV
-         WaitOKtdOagAgs1/LRPGVxlWHueSTZPdfpD4uFVvkrStGLytnnZ7Kw/W9RjfpYJWm6bV
-         m/xlKvNkdd8vIvTXjTwApMbfHTZNK25aUsthDdFE8S6IhEPCXwFfLmkc1N6YFKocXjwg
-         DdjiiwNTLbhdq+shalxFu6GeuT2SRR/yH4xdSu5i0YXzud08MnPaOD6tf7pEwUILl3Il
-         4p5g==
-X-Forwarded-Encrypted: i=1; AJvYcCXX/0XLLe4EETwbtQ1ACOFl2viy4l6Wj8HQFsAvG9VVecD2lQq4zfiMEibNCnEgl0b1GdxQIDayny4enOnC@vger.kernel.org
-X-Gm-Message-State: AOJu0YyZrqBwpuLCqcqzeq9FUum24ym/0nPfEBLUDUTFZmqqjm5U9tS+
-	ZUGl5ersNHtnHN1QuBM4Yax/1k9Df75FERCvub1BtZwbAWy82J+l0r18
-X-Gm-Gg: ASbGncuImwFuJYIyFw+KTfT/hRLtfh2ght6x6ECFtamFLeeHKc5Iim6wohsN+qUPQ3k
-	vT6h0Uo7Aktcpq0pKZiVGEq+xjip8kvKeqx0nhgusXmwfBlQM7syB+oQBhVraoVhu9jBD4jMwzV
-	Q4TKCKyTBGUr0Z84bh8o1xAvuo1hqfu5xT9a5LcfLxVvIlKeiN+jQXtAbrv5JV+EVs0dweKko5i
-	WzJQZgcTxc3f4qP1EoKGyn3oWZDki+g+wVWXC5sJrt0xomRAr/K0Av0GjL6YETqximo69+PDArs
-	sH3/tY+LmS75uDn4gCsXMOkpseZFH6uTdNjIfUnm56UeGl6A/uIgm7uTpbQFU5cGJmbTORu1Ifa
-	babIrFIhVvbcPLNXnyI2a74ACoSakapD5M63jHrD9EjJc8/vkPGA3ZzR1eFUlNYejfl6imGeBpB
-	9y5GDlh+uzG1eQ
-X-Google-Smtp-Source: AGHT+IGFeqYgROmr+sPNZXEEZkn6mYlrCgf3ZvBH+yTloU98WBNL4oCUsdI3RF82oEmk9ZTtm2e7CQ==
-X-Received: by 2002:a17:90b:580d:b0:340:29be:8afe with SMTP id 98e67ed59e1d1-3404c56f639mr2713860a91.33.1761814461463;
-        Thu, 30 Oct 2025 01:54:21 -0700 (PDT)
-Received: from [172.17.49.162] ([103.218.174.2])
-        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-b712f880ef2sm15926777a12.38.2025.10.30.01.54.17
+        bh=+qrH3FYH3hbZoAKVObnmBYSXLmj/NbUr1nicFAVuY2s=;
+        b=PqAaY/COJVvp2Mw9gATEe5S3GlDXdLN7tG1uA3NIsO3YkAEyfTDgkBsYd1MyHkSMgn
+         3WPVEjyuek/qIXLdpM1fEoy2SC8lGZFCaTJripek5OcHsG44SEw1xDh75vGz68hNIIjR
+         SwZk9WkLImJeRmZAjrEVyIcDzj1DO7nXLFMoQHYEX9GOwhoC+JG8+cp7nBniSZJZSYaK
+         4MyeNUcu/3JlDYD0USra8E/br9LE3ibnEylNFosqwV714ebt7mO/057hKPUa308Zgfor
+         KTZ46Aw0OkNd+tAVxkVSC9qbUItcAQkWk5qamYkW+OFqAnGA56T+ZmgrrWY9pzB/gpqC
+         csyQ==
+X-Forwarded-Encrypted: i=1; AJvYcCXV82eLbqTFtVYoRTcWjldE1xG1V9BM/3Qnk0z+hodPtYtOwYJcZG4/o+LoF52WOp6rk+3IT8CKCV6YTIz7@vger.kernel.org
+X-Gm-Message-State: AOJu0YxDNaqo/CJ8DSHvw5Bid7AqGPnOVPpaNA5WAlTu1Wk4DFp7PBL0
+	Ot4XNa4BUTc7LXVEmY/yPgHniubGI3pQW3Nip4ikm0Xg91jXi/QD8shKvLJN0h+P6kBeYxCCzHw
+	MDNYs/Xi0uaJtsvPC6JOB0pIKvP7Cg6RlGTWl/tgl9jXS2wFq0CGAOUTwwvObObG95VDG
+X-Gm-Gg: ASbGnctN6xwi+uOHHj0MlmSEFgaLu+WbrcY149Zztmen6nKUOSTz8Hjk+eNJuaicS1s
+	rAOc9ESUzDYvtAZWXZxr3uf7xAXNbRTA3HzdNW68iIZnxIlDXVAatxCO8QN5aRX2fm0rI109M0Q
+	qgSLbYtLUuM+LJ0+QxwmmbeRYpMTvz3gnT6svTvMsrmPINEl41JSg9fP3V1YoFFtIayamuZtAUm
+	Ai25wyPyzCgopEmQ49LLt2GojWvdM+ok/5kufyE94LMsZYGFey7z4qW41yxVFA/OAnCLUbzae/h
+	cma6Oa3y+837RpJHaPDPXZydDrjL4Z85qQTYDAH/ol8sKI7lk0J1kI9YJILHQ5UKhzAG3EMwN2P
+	z8AdpfwF4fr6XnzOKo3JEKPFCPQ==
+X-Received: by 2002:a05:622a:cd:b0:4e8:a4ab:8b3f with SMTP id d75a77b69052e-4ed15b752f9mr76336421cf.21.1761814548767;
+        Thu, 30 Oct 2025 01:55:48 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFCcLTouF7EUlNHhzOV6EWBClWbNZ0AYloD0w5fbFBSgJ54AaUNWNCj23kMZeTW2JFsEVGr4Q==
+X-Received: by 2002:a05:622a:cd:b0:4e8:a4ab:8b3f with SMTP id d75a77b69052e-4ed15b752f9mr76336291cf.21.1761814548244;
+        Thu, 30 Oct 2025 01:55:48 -0700 (PDT)
+Received: from [192.168.68.121] ([5.133.47.210])
+        by smtp.googlemail.com with ESMTPSA id ffacd0b85a97d-429952ca569sm30218630f8f.12.2025.10.30.01.55.47
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 30 Oct 2025 01:54:21 -0700 (PDT)
-Message-ID: <ae9021dc-e0ca-4631-b45b-3cf9f526bd14@gmail.com>
-Date: Thu, 30 Oct 2025 14:24:15 +0530
+        Thu, 30 Oct 2025 01:55:47 -0700 (PDT)
+Message-ID: <3fefecd4-e6d5-4804-9e42-76078db620ff@oss.qualcomm.com>
+Date: Thu, 30 Oct 2025 08:55:46 +0000
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -83,106 +103,254 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1 1/1] arm64: dts: qcom: talos-evk: Add support for
- dual-channel LVDS panel
-To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Cc: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, andersson@kernel.org,
- konradybcio@kernel.org, robh@kernel.org, krzk+dt@kernel.org,
- conor+dt@kernel.org, linux-arm-msm@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20251028061636.724667-1-tessolveupstream@gmail.com>
- <20251028061636.724667-2-tessolveupstream@gmail.com>
- <d05fe82a-640f-4a09-9d83-39bb5aff179d@oss.qualcomm.com>
- <9208d2ef-79da-4e80-ac1f-e01fa5feae0a@gmail.com>
- <sfxvtfzzstdbt7in6z6ztsjfy6e555fr3sjbi5kqkv5sk77b26@kl57zs7iuuvk>
+Subject: Re: [PATCH 4/4] ASoC: dt-bindings: qcom,lpass-va-macro: Add sm6115
+ LPASS VA
+To: Krzysztof Kozlowski <krzk@kernel.org>,
+        Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
+Cc: robh@kernel.org, broonie@kernel.org, krzk+dt@kernel.org,
+        conor+dt@kernel.org, devicetree@vger.kernel.org, perex@perex.cz,
+        tiwai@suse.com, srini@kernel.org, linux-sound@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        alexey.klimov@linaro.org
+References: <20251029160101.423209-1-srinivas.kandagatla@oss.qualcomm.com>
+ <20251029160101.423209-5-srinivas.kandagatla@oss.qualcomm.com>
+ <20251030-flat-elated-pony-de74ab@kuoka>
 Content-Language: en-US
-From: Tessolve Upstream <tessolveupstream@gmail.com>
-In-Reply-To: <sfxvtfzzstdbt7in6z6ztsjfy6e555fr3sjbi5kqkv5sk77b26@kl57zs7iuuvk>
+From: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
+In-Reply-To: <20251030-flat-elated-pony-de74ab@kuoka>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-GUID: QKoxi5cnwxFXVi86pZlyhQjGBMglmbe3
+X-Authority-Analysis: v=2.4 cv=UJrQ3Sfy c=1 sm=1 tr=0 ts=69032815 cx=c_pps
+ a=EVbN6Ke/fEF3bsl7X48z0g==:117 a=ZsC4DHZuhs/kKio7QBcDoQ==:17
+ a=IkcTkHD0fZMA:10 a=x6icFKpwvdMA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=EUspDBNiAAAA:8 a=eRncXTchY04msvVhtuwA:9
+ a=QEXdDO2ut3YA:10 a=a_PwQJl-kcHnX1M80qC6:22
+X-Proofpoint-ORIG-GUID: QKoxi5cnwxFXVi86pZlyhQjGBMglmbe3
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDMwMDA3MiBTYWx0ZWRfXxYPD+/Du514g
+ OSEzeVFE0yooGAGs86VlLZcUYxD3EnAeQZIuDr1B3mOt9M7UyRL6ufxjos+FxiEqOwm4Oxx+zRe
+ dU9iGjOE4p1mz6IbObLFe4MlGWR0d2FBREH0QQ3g84xcIXSXkocYO9dNEwPmkhusnXOvvPlJ4hV
+ bjOIuFC9qQpdcAdv211hKPMZr2dTHpHrGVVtYYcYZo9ksenBnA9kV5zD2iFN6YgcEADNyUZZCE/
+ xsv96mCc0UHgs4YJxLdH0lCr5Y8xSlIcxVz6FtpuUrapSa8Db8WXtCrkNIqJFZ2J/BTPx8ccMMZ
+ DCAOS/iWiZCc3DMOKZKnv2CHz+gwmepevPmIo1XxQly5gS7nLlqXh3XV/Dy0Ts0dxpV7Gqz2j2w
+ PMvVImfSlnKki1cNZJne1TeK5wy0Jg==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
+ definitions=2025-10-30_02,2025-10-29_03,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ clxscore=1015 lowpriorityscore=0 impostorscore=0 phishscore=0
+ priorityscore=1501 malwarescore=0 bulkscore=0 spamscore=0 suspectscore=0
+ adultscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2510240001
+ definitions=main-2510300072
 
 
 
-On 29/10/25 18:04, Dmitry Baryshkov wrote:
-> On Wed, Oct 29, 2025 at 05:50:01PM +0530, Tessolve Upstream wrote:
->>
->>
->> On 28/10/25 14:55, Konrad Dybcio wrote:
->>> On 10/28/25 7:16 AM, Sudarshan Shetty wrote:
->>>> This patch introduces a new device tree for the QCS615 Talos
->>>> EVK platform with dual-channel LVDS display support.
->>>>
->>>> The new DTS file (`talos-evk-lvds.dts`) is based on the existing
->>>> `talos-evk.dts` and extends it to enable a dual-channel LVDS display
->>>> configuration using the TI SN65DSI84 DSI-to-LVDS bridge.
->>>>
->>>> where channel-A carries odd pixel and channel-B carries even pixel
->>>> on the QCS615 talos evk platform.
->>>>
->>>> Signed-off-by: Sudarshan Shetty <tessolveupstream@gmail.com>
->>>> ---
->>>
->>> [...]
->>>
->>>> +	backlight: backlight {
->>>> +		compatible = "gpio-backlight";
->>>> +		gpios = <&tlmm 115 GPIO_ACTIVE_HIGH>;
->>>> +		default-on;
->>>> +	};
->>>> +
->>>> +	lcd0_pwm_en {
->>>
->>> Use hyphens instead of underscores in node names
->>
->> Okay, will update in next patch.
->>>
->>>> +		compatible = "pwm-gpio";
->>>> +		gpios = <&tlmm 59 GPIO_ACTIVE_HIGH>;
->>>> +		pinctrl-0 = <&lcd0_bklt_pwm>;
->>>
->>> I think your intention was to use pwm-backlight and wire this node
->>> up to that
->>
->> Soc does not support the PWM interface hence we are using gpio 
->> as "pwm-gpio" by setting the duty cycle to 100%(i.e. "no pwm")
+On 10/30/25 6:30 AM, Krzysztof Kozlowski wrote:
+> On Wed, Oct 29, 2025 at 04:01:01PM +0000, Srinivas Kandagatla wrote:
+>> Add bindings for Qualcomm SM6115 SoC Low Power Audio SubSystem (LPASS)
+>> VA macro codec, which looks like compatible with SM8450, however one of
+>> the clocks macro is available in this SoC. So updated the bindings to
 > 
-> Why do you mention PWM here at all? It's perfectly fine to use
-> gpio-backlight. That looks extremely suspicious since you are not
-> referecing the pwm-gpio device at all.
+> is or is not? Which clock?
+typo.
+macro clock. is not available.
+Existing dt-bindings need some cleanup to be able to add a dedicated
+entry for sm6115. Will do that in v2.
 
-Thanks for the feedback.
-GPIO59 (LED_PWM) connected to the panel’s dimming input.
+> 
+>> allow min-clocks to be 3 to be able to use SM8450 compatible for
+>> SM6115.
+>>
+>> Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
+>> ---
+>>  .../devicetree/bindings/sound/qcom,lpass-va-macro.yaml | 10 +++++++---
+>>  1 file changed, 7 insertions(+), 3 deletions(-)
+>>
+>> diff --git a/Documentation/devicetree/bindings/sound/qcom,lpass-va-macro.yaml b/Documentation/devicetree/bindings/sound/qcom,lpass-va-macro.yaml
+>> index 5b450f227b70..1ac3392776ca 100644
+>> --- a/Documentation/devicetree/bindings/sound/qcom,lpass-va-macro.yaml
+>> +++ b/Documentation/devicetree/bindings/sound/qcom,lpass-va-macro.yaml
+>> @@ -26,6 +26,10 @@ properties:
+>>                - qcom,sm8750-lpass-va-macro
+>>                - qcom,x1e80100-lpass-va-macro
+>>            - const: qcom,sm8550-lpass-va-macro
+>> +      - items:
+>> +          - enum:
+>> +              - qcom,sm6115-lpass-va-macro
+>> +          - const: qcom,sm8450-lpass-va-macro
+>>  
+>>    reg:
+>>      maxItems: 1
+>> @@ -44,9 +48,9 @@ properties:
+>>      minItems: 1
+>>      items:
+>>        - const: mclk
+>> -      - const: macro
+> 
+> No, that's ABI break and I know existing code works fine, so there
+> cannot be justification for exception here.
 
-Since we can only drive the LED_PWM pin high (100% duty), 
-it does not provide true PWM control.
+I agree, I did not want va macro to divert from other macros which is
+why I was trying to accommodate this under sm8450.
 
-I’ll remove the non-standard "pwm-gpio" node and model both lines
-using the standard gpio-backlight binding, like this:
+We can add a dedicated compatible for sm6115 for va too, and update the
+codec driver.
 
-backlight: backlight {
-    compatible = "gpio-backlight";
-    gpios = <&tlmm 115 GPIO_ACTIVE_HIGH>, <&tlmm 59 GPIO_ACTIVE_HIGH>;
-    default-on;
-    pinctrl-0 = <&lcd0_bklt_en>, <&lcd0_bklt_pwm>;
-    pinctrl-names = "default";
-};
+the dt bindings need to be cleaned up similar to what we did for
+rx-macro to be able to accommodate the change in clocks for sm6115.
+something like this:
 
-&tlmm {
-       lcd0_bklt_en: lcd0-bklt-en-state {
-               pins = "gpio115";
-               function = "gpio";
-               bias-disable;
-       };
 
-       lcd0_bklt_pwm: lcd0-bklt-pwm-state {
-               pins = "gpio59";
-               function = "gpio";
-               bias-disable;
-       };
-};
+--- a/Documentation/devicetree/bindings/sound/qcom,lpass-va-macro.yaml
++++ b/Documentation/devicetree/bindings/sound/qcom,lpass-va-macro.yaml
+@@ -14,6 +14,7 @@ properties:
+     oneOf:
+       - enum:
+           - qcom,sc7280-lpass-va-macro
++          - qcom,sm6115-lpass-va-macro
+           - qcom,sm8250-lpass-va-macro
+           - qcom,sm8450-lpass-va-macro
+           - qcom,sm8550-lpass-va-macro
+@@ -42,11 +43,7 @@ properties:
 
-Let me know your opinion here,
-Thanks in advance.
+   clock-names:
+     minItems: 1
+-    items:
+-      - const: mclk
+-      - const: macro
+-      - const: dcodec
+-      - const: npl
++    maxItems: 4
+
+   clock-output-names:
+     maxItems: 1
+@@ -70,50 +67,55 @@ required:
+   - compatible
+   - reg
+   - "#sound-dai-cells"
+-  - clock-names
+-  - clocks
+
+ allOf:
+   - $ref: dai-common.yaml#
+-
+   - if:
+       properties:
+         compatible:
+           contains:
+@@ -70,50 +67,55 @@ required:
+   - compatible
+   - reg
+   - "#sound-dai-cells"
+-  - clock-names
+-  - clocks
+
+ allOf:
+   - $ref: dai-common.yaml#
+-
+   - if:
+       properties:
+         compatible:
+           contains:
+             const: qcom,sc7280-lpass-va-macro
+-
+     then:
+-      if:
+-        required:
+-          - power-domains
+-      then:
+-        properties:
+-          clocks:
+-            maxItems: 1
+-          clock-names:
+-            maxItems: 1
+-      else:
+-        properties:
+-          clocks:
+-            minItems: 3
+-            maxItems: 3
+-          clock-names:
+-            minItems: 3
+-            maxItems: 3
+-
++      properties:
++        clock-names:
++          oneOf:
++            - items:   # for ADSP based platforms
++                - const: mclk
++                - const: macro
++                - const: dcodec
++            - items:   # for ADSP bypass based platforms
++                - const: mclk
+   - if:
+       properties:
+         compatible:
+           contains:
+-            const: qcom,sm8250-lpass-va-macro
++            enum:
++              - qcom,sm6115-lpass-va-macro
+     then:
+       properties:
+         clocks:
+           minItems: 3
+           maxItems: 3
+         clock-names:
++          items:
++            - const: mclk
++            - const: dcodec
++            - const: npl
++  - if:
++      properties:
++        compatible:
++          contains:
++            const: qcom,sm8250-lpass-va-macro
++    then:
++      properties:
++        clocks:
+           minItems: 3
+           maxItems: 3
++        clock-names:
++          items:
++            - const: mclk
++            - const: macro
++            - const: dcodec
+
+   - if:
+       properties:
+@@ -128,8 +130,11 @@ allOf:
+           minItems: 4
+           maxItems: 4
+         clock-names:
+-          minItems: 4
+-          maxItems: 4
++          items:
++            - const: mclk
++            - const: macro
++            - const: dcodec
++            - const: npl
+
+   - if:
+       properties:
+@@ -143,8 +148,10 @@ allOf:
+           minItems: 3
+           maxItems: 3
+         clock-names:
+-          minItems: 3
+-          maxItems: 3
++          items:
++            - const: mclk
++            - const: macro
++            - const: dcodec
+
+ unevaluatedProperties: false
+
+
+
+> 
+> 
+> Best regards,
+> Krzysztof
 > 
 
 
