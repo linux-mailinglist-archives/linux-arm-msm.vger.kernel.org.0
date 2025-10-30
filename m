@@ -1,162 +1,134 @@
-Return-Path: <linux-arm-msm+bounces-79600-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-79601-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [IPv6:2605:f480:58:1:0:1994:3:14])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9A97FC1EF0A
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Oct 2025 09:18:51 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 231C1C1EFBE
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Oct 2025 09:28:00 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 7E0D84E4211
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Oct 2025 08:18:50 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id A4D703B2768
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Oct 2025 08:27:47 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1DFFF184;
-	Thu, 30 Oct 2025 08:18:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B057E337BAF;
+	Thu, 30 Oct 2025 08:27:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="bPkWtlYA"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="agtMmKK0"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f47.google.com (mail-wm1-f47.google.com [209.85.128.47])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.19])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 438192F549D
-	for <linux-arm-msm@vger.kernel.org>; Thu, 30 Oct 2025 08:18:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC80A33436F;
+	Thu, 30 Oct 2025 08:27:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.19
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761812329; cv=none; b=SvD8+IOUU3HGo2I2CisiTjhiDJazOEy0+R3/nAxJf14iO/tQf5x4vWkg4WYeSk2XnOyCEznJ0C7Dvrk5pqJwTV1yD9pYKlPOuAt9aVCTr8X+qasjY9l9d8ndtLIVAYzii6YjY0wttZk5F1LUEVdXBt/RJSdFh31pXtKYdRVMlLs=
+	t=1761812865; cv=none; b=T8yotKqaCQv+JQYdtxWfdzgusz2weiPP+hccCKtgCcMRtCpWM84Jk9bfUu9E8ecw1QJdeMTvIV3iUzyiDe/yQsi9SX6OtOc9OG7wqnt23/QaYWsSUcQCuLOjCJxROkOhcfyk2zt08MRMMXdAERs0ynLJG5HhVgsrbzgobafBrl0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761812329; c=relaxed/simple;
-	bh=X0R79ZjVCKro83gLlwKEEtUwluqz24nVk/lrlzVEZY8=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=I4EiiiM3ecOFoFGzowQNqDgZep1+eKRi+WFvX1Kjt15L9eW1GMAoN91ljxwNy8UEvg12WFSKyRYX7mPfX7q//U4w6dxHPt2CqHjU0HenMVQuREfhAbZIsut+D6Jko9Isy8gzdr3+lG47G/mhpgW0DLqZ6hW8LSteXn6otNI3jbY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=bPkWtlYA; arc=none smtp.client-ip=209.85.128.47
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f47.google.com with SMTP id 5b1f17b1804b1-475dab5a5acso3795035e9.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 30 Oct 2025 01:18:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1761812326; x=1762417126; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :content-language:references:cc:to:subject:reply-to:from:user-agent
-         :mime-version:date:message-id:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=n22jjnKTjPV+2WeoUAlwQeRGh9RPW9Sz0+Vh4tXt1qE=;
-        b=bPkWtlYA9saSuaMtgIO85AqxFa5i3++CwX76NJiy1bkBWHJT0XjvKAaTW0RhwQgM2x
-         VPU2WZ5odZUOkGa7bopTOk9EOIKttY2ZAdPOsCutYAr0QwJXqGxGDvQXVPJe3tyNUP3u
-         OB7+q4I+/P7aC6lltWdGGViFPakXOul2lPuPfLnJvvCVZ7t/xBB3lNsfSPQ/iv1x+gK3
-         MgcNxuwkJKnmOqtuW4AiW/UwrRDQbWQRHNBvrF0pbjdo8ydq0IuARNH2wip9gxHjQZq6
-         kCetb7/FsLHuY39RUk8Ar52Do3WXQhpDuWvJ1wglL1umZ8fqrxV1zR3oI5vwwjv8D49M
-         pk4g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1761812326; x=1762417126;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :content-language:references:cc:to:subject:reply-to:from:user-agent
-         :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=n22jjnKTjPV+2WeoUAlwQeRGh9RPW9Sz0+Vh4tXt1qE=;
-        b=B8dXBtCUXtlU+TGkArfrBITHb+Tov+9Xinl193MSac3GrNSxRe9s2aNuaq1VeGTr5U
-         tz1FvBuyvDPudAxcL4jgmWWbuQ88AZs2L8LwzAIbrUtCgyqgrLxXOJxYihFFH/KrN++N
-         TgMhMS4IVIoufK4cKxnUFgsdWet1F6eCQl00DZ61uRaUp+bqhljaJ3z6TSklblqE0obW
-         +99XPUWZlzgLuYv8dZQ6BjUrtC1R2QSq1QtiAtBOB1InmNcvWdYXf0q9Hg+u4lrVCUQp
-         9f76UZvYLJQjtcL/aGrDd8ejGokLdl3CrT/J49vuCmvpZtz/tONeAyG2jHBWmVnInaQd
-         IjcA==
-X-Forwarded-Encrypted: i=1; AJvYcCX4XTwQlziYG+PbVe72IU1VwKkwUXn7L0w9EJVwg3oExs75pa0JwKeTN07bDAkI8g0mnvz9+if3qsocUffg@vger.kernel.org
-X-Gm-Message-State: AOJu0Yx9rcNWSoudCpTuTU1CkzyNAu6Lwji2DWUf0sKTMs1TK2MsvvKc
-	qDJTvcB+KSub3ppi1Qc2crUXoombBlJIO5+BI9PyWA8uAvBgJ80cB57/6d1q4Q20iUKH6/a+kUT
-	l7Chz
-X-Gm-Gg: ASbGncsuUJ9mo4xPn3Tgg7ly22Dq3kE9BX2kW+EUqhnirkyTEVPDFcKhHMu7bUbacnv
-	zdB0l5pSGgsDM0hCFKgd7Yw3tHkVB/PwQPKF4XDSIc1sBNCbMMoL7whmAnrkEEAqoS82Aoj9Ur8
-	FZPz7DsievaOkmUIzusRyU6Jn6HQ/XR0GcMrhD+2V14eJPHUgQ8WBvnEXRG3tMz3YsaMNChXWrb
-	EzHx1DGtK9IpbSdHqWc2drMmyYJsu0qOjHPwE2eq2Ik+G11NMkD3fcHKTLU2duEAiH45Vx3Um1L
-	jl21adAoAc/ixJJ/o8hlXilTbj3bYNdVMYZTRkU6Hdhma/tR5KEJnalnnXIDeLpzvIlRRz+Utku
-	MvSFtU8SwV8vhM6OgGrtyl6jUAlZ2esbrQZo2ppbvk6pPQ29v+UOlPSndzZKNikgEKF3bUkNy/6
-	BjuxDZIedRr+N5HssZPyYKTzLL2sB/3+kjkPwDtHFw5DV2mDhG6L8I
-X-Google-Smtp-Source: AGHT+IEPEKlS1MXFKcHH4eUEEpj3CY6CH7IIM3l1El1nu+O9i5LhtMn2UPjpukubmdgPWNokkI299Q==
-X-Received: by 2002:a05:600c:45c5:b0:46e:376c:b1f0 with SMTP id 5b1f17b1804b1-4771e316cf4mr54045975e9.7.1761812325510;
-        Thu, 30 Oct 2025 01:18:45 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:cad:2140:3e45:b3e1:4bfc:5477? ([2a01:e0a:cad:2140:3e45:b3e1:4bfc:5477])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-429952db964sm30787325f8f.33.2025.10.30.01.18.44
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 30 Oct 2025 01:18:45 -0700 (PDT)
-Message-ID: <dc589c50-aa4c-4bbb-b481-b3a66fcba095@linaro.org>
-Date: Thu, 30 Oct 2025 09:18:44 +0100
+	s=arc-20240116; t=1761812865; c=relaxed/simple;
+	bh=lNchQvwtehvAgZ+kMCQMiDnyB1qKJPXg3ZxQ7YrlK+Q=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=kGEyxNtvaSHAlZrHdF7doYMG10ANohAThkCrr/6L0X+KpvrbbVaHI/BEhhD3QulAq6ntwW0QpZ4tubOlY04tzdEsDzEUwZNokT4C2GIVZLhxXH8vM1afE9lR4cBiiGFXOwHiWd9u+YzUveg5lKzEGoku4ILbIbAxpjwLh2wnU80=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=pass smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=agtMmKK0; arc=none smtp.client-ip=198.175.65.19
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.intel.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1761812864; x=1793348864;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=lNchQvwtehvAgZ+kMCQMiDnyB1qKJPXg3ZxQ7YrlK+Q=;
+  b=agtMmKK0Uww3+Kap6TRuZwDmM9ouSPXxfkFHwN8hG8Es5oN4wZeTRTVu
+   9dCEEEJPw+ws6xjLFX/hrI7SnJSX0nOkIupkfna9DSrvVVJeoqb40Qk3C
+   OrHI5TFHAhRLAbPVkapkU1fF9tVN55KWQYGR8/oAbM7+GVDlzpQ4ISFKI
+   aMHFll0Fr+Ii0Gl7KR5//NkNAVNBzwVVH7OCwyRyEvodw/v0mEP9O1l9j
+   2vj589tl62+y9NhKKSiCs6M1iNoSUwUFZQhR0KjjgaqWfKPn67q0/LsRo
+   +Hw8o7S+y6oLRLCxsSzWLVE988ZgOVOv4lawkDSsprrQkJ7+7eqEa4IKU
+   A==;
+X-CSE-ConnectionGUID: DgsmMYMSRG+BYpNLMlyrAw==
+X-CSE-MsgGUID: kGZCQg+VTv25hDec0D0pDA==
+X-IronPort-AV: E=McAfee;i="6800,10657,11597"; a="63832214"
+X-IronPort-AV: E=Sophos;i="6.19,266,1754982000"; 
+   d="scan'208";a="63832214"
+Received: from fmviesa007.fm.intel.com ([10.60.135.147])
+  by orvoesa111.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 30 Oct 2025 01:27:44 -0700
+X-CSE-ConnectionGUID: DTsPJpKaQPmFuBgE9CE4jg==
+X-CSE-MsgGUID: T2cdlYDHRo2YREBNMYZsdw==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.19,266,1754982000"; 
+   d="scan'208";a="185591119"
+Received: from fpallare-mobl4.ger.corp.intel.com (HELO ashevche-desk.local) ([10.245.245.174])
+  by fmviesa007-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 30 Oct 2025 01:27:41 -0700
+Received: from andy by ashevche-desk.local with local (Exim 4.98.2)
+	(envelope-from <andriy.shevchenko@linux.intel.com>)
+	id 1vEO0Q-00000003qTO-1Odv;
+	Thu, 30 Oct 2025 10:27:38 +0200
+Date: Thu, 30 Oct 2025 10:27:38 +0200
+From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+To: Christian Marangi <ansuelsmth@gmail.com>
+Cc: Ilia Lin <ilia.lin@kernel.org>, "Rafael J. Wysocki" <rafael@kernel.org>,
+	Viresh Kumar <viresh.kumar@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	Raag Jadav <raag.jadav@intel.com>, Arnd Bergmann <arnd@arndb.de>,
+	linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 1/3] err.h: add ERR_PTR_CONST macro
+Message-ID: <aQMheocySykpTFDN@smile.fi.intel.com>
+References: <20251029133323.24565-1-ansuelsmth@gmail.com>
+ <aQIzoGnvZWYuHuoQ@smile.fi.intel.com>
+ <69023512.5d0a0220.3cccb7.8e65@mx.google.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: neil.armstrong@linaro.org
-Reply-To: Neil Armstrong <neil.armstrong@linaro.org>
-Subject: Re: [PATCH] mailmap: Update Jessica Zhang's email address
-To: Jessica Zhang <jesszhan0024@gmail.com>, lumag@kernel.org,
- robin.clark@oss.qualcomm.com
-Cc: linux-kernel@vger.kernel.org, dri-devel@lists.freedesktop.org,
- linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org
-References: <20251029-mailmap-fix-v1-1-8534ffa12ed3@gmail.com>
-Content-Language: en-US, fr
-Autocrypt: addr=neil.armstrong@linaro.org; keydata=
- xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
- GTjuhvbleoQ5Cxjr+v+1ARGCH46MxFP5DwauzPekwJUD5QKZlaw/bURTLmS2id5wWi3lqVH4
- BVF2WzvGyyeV1o4RTCYDnZ9VLLylJ9bneEaIs/7cjCEbipGGFlfIML3sfqnIvMAxIMZrvcl9
- qPV2k+KQ7q+aXavU5W+yLNn7QtXUB530Zlk/d2ETgzQ5FLYYnUDAaRl+8JUTjc0CNOTpCeik
- 80TZcE6f8M76Xa6yU8VcNko94Ck7iB4vj70q76P/J7kt98hklrr85/3NU3oti3nrIHmHABEB
- AAHNKk5laWwgQXJtc3Ryb25nIDxuZWlsLmFybXN0cm9uZ0BsaW5hcm8ub3JnPsLAkQQTAQoA
- OwIbIwULCQgHAwUVCgkICwUWAgMBAAIeAQIXgBYhBInsPQWERiF0UPIoSBaat7Gkz/iuBQJk
- Q5wSAhkBAAoJEBaat7Gkz/iuyhMIANiD94qDtUTJRfEW6GwXmtKWwl/mvqQtaTtZID2dos04
- YqBbshiJbejgVJjy+HODcNUIKBB3PSLaln4ltdsV73SBcwUNdzebfKspAQunCM22Mn6FBIxQ
- GizsMLcP/0FX4en9NaKGfK6ZdKK6kN1GR9YffMJd2P08EO8mHowmSRe/ExAODhAs9W7XXExw
- UNCY4pVJyRPpEhv373vvff60bHxc1k/FF9WaPscMt7hlkbFLUs85kHtQAmr8pV5Hy9ezsSRa
- GzJmiVclkPc2BY592IGBXRDQ38urXeM4nfhhvqA50b/nAEXc6FzqgXqDkEIwR66/Gbp0t3+r
- yQzpKRyQif3OwE0ETVkGzwEIALyKDN/OGURaHBVzwjgYq+ZtifvekdrSNl8TIDH8g1xicBYp
- QTbPn6bbSZbdvfeQPNCcD4/EhXZuhQXMcoJsQQQnO4vwVULmPGgtGf8PVc7dxKOeta+qUh6+
- SRh3vIcAUFHDT3f/Zdspz+e2E0hPV2hiSvICLk11qO6cyJE13zeNFoeY3ggrKY+IzbFomIZY
- 4yG6xI99NIPEVE9lNBXBKIlewIyVlkOaYvJWSV+p5gdJXOvScNN1epm5YHmf9aE2ZjnqZGoM
- Mtsyw18YoX9BqMFInxqYQQ3j/HpVgTSvmo5ea5qQDDUaCsaTf8UeDcwYOtgI8iL4oHcsGtUX
- oUk33HEAEQEAAcLAXwQYAQIACQUCTVkGzwIbDAAKCRAWmrexpM/4rrXiB/sGbkQ6itMrAIfn
- M7IbRuiSZS1unlySUVYu3SD6YBYnNi3G5EpbwfBNuT3H8//rVvtOFK4OD8cRYkxXRQmTvqa3
- 3eDIHu/zr1HMKErm+2SD6PO9umRef8V82o2oaCLvf4WeIssFjwB0b6a12opuRP7yo3E3gTCS
- KmbUuLv1CtxKQF+fUV1cVaTPMyT25Od+RC1K+iOR0F54oUJvJeq7fUzbn/KdlhA8XPGzwGRy
- 4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
- QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
-Organization: Linaro
-In-Reply-To: <20251029-mailmap-fix-v1-1-8534ffa12ed3@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <69023512.5d0a0220.3cccb7.8e65@mx.google.com>
+Organization: Intel Finland Oy - BIC 0357606-4 - c/o Alberga Business Park, 6
+ krs, Bertel Jungin Aukio 5, 02600 Espoo
 
-On 10/30/25 07:31, Jessica Zhang wrote:
-> Update mailmap to point to my current address
+On Wed, Oct 29, 2025 at 04:38:53PM +0100, Christian Marangi wrote:
+> On Wed, Oct 29, 2025 at 05:32:48PM +0200, Andy Shevchenko wrote:
+> > On Wed, Oct 29, 2025 at 02:33:19PM +0100, Christian Marangi wrote:
+> > > Add ERR_PTR_CONST macro to initialize global variables with error
+> > 
+> > ERR_PTR_CONST()
+> > 
+> > > pointers. This might be useful for specific case where there is a global
+> > > variables initialized to an error condition and then later set to the
+> > > real handle once probe finish/completes.
+> > 
+> > Okay, this has two caveats:
+> > 
+> > 1) naming is bad as it suggests something about const qualifier (and not, it's
+> > not about that at all);
+> > 
+> > 2) it doesn't explain what's wrong with ERR_PTR().
+> >
 > 
-> Reported-by: Neil Armstrong <neil.armstrong@linaro.org>
-> Signed-off-by: Jessica Zhang <jesszhan0024@gmail.com>
-> ---
->   .mailmap | 4 +++-
->   1 file changed, 3 insertions(+), 1 deletion(-)
-> 
-> diff --git a/.mailmap b/.mailmap
-> index b77cd34cf852..1c57bd649f04 100644
-> --- a/.mailmap
-> +++ b/.mailmap
-> @@ -352,7 +352,9 @@ Jesper Dangaard Brouer <hawk@kernel.org> <hawk@comx.dk>
->   Jesper Dangaard Brouer <hawk@kernel.org> <jbrouer@redhat.com>
->   Jesper Dangaard Brouer <hawk@kernel.org> <jdb@comx.dk>
->   Jesper Dangaard Brouer <hawk@kernel.org> <netoptimizer@brouer.com>
-> -Jessica Zhang <quic_jesszhan@quicinc.com> <jesszhan@codeaurora.org>
-> +Jessica Zhang <jesszhan0024@gmail.com> <jesszhan@codeaurora.org>
-> +Jessica Zhang <jesszhan0024@gmail.com> <quic_jesszhan@quicinc.com>
-> +Jessica Zhang <jesszhan0024@gmail.com> <jessica.zhang@oss.qualcomm.com>
->   Jilai Wang <quic_jilaiw@quicinc.com> <jilaiw@codeaurora.org>
->   Jiri Kosina <jikos@kernel.org> <jikos@jikos.cz>
->   Jiri Kosina <jikos@kernel.org> <jkosina@suse.cz>
-> 
-> ---
-> base-commit: b5bad77e1e3c7249e4c0c88f98477e1ee7669b63
-> change-id: 20251028-mailmap-fix-50434c548816
-> 
-> Best regards,
-> --
-> Jessica Zhang <jesszhan0024@gmail.com>
-> 
+> It can't be used for global variables as it does cause compilation
+> error.
 
-Acked-by: Neil Armstrong <neil.armstrong@linaro.org>
+Can you show an example, please?
+
+> I wanted to use ERR_PTR to set the __smem handle instead of freecode
+> (void *) -EPROBE_DEFER and notice the compiler doesn't like using
+> ERR_PTR().
+> 
+> Then the problem is clear as static declaration require constant value
+> for initialization and ERR_PTR is a inline function.
+> 
+> This is why ERR_PTR_CONST following the pattern that was used for
+> FIELD_PREP -> FIELD_PREP_CONST that was also introduced for similar
+> case.
+> 
+> So yes this is specific for case of static global variables.
+
+-- 
+With Best Regards,
+Andy Shevchenko
+
+
 
