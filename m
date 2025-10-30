@@ -1,112 +1,98 @@
-Return-Path: <linux-arm-msm+bounces-79754-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-79755-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2FF2BC21CF1
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Oct 2025 19:43:57 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1EAC6C21CFD
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Oct 2025 19:44:24 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 3B9E01A240D4
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Oct 2025 18:43:14 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id C99D61A62861
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Oct 2025 18:44:08 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7504D36CA89;
-	Thu, 30 Oct 2025 18:42:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 71A6036CA95;
+	Thu, 30 Oct 2025 18:43:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="GnnaRgLM"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="bTsLzGoZ"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4871A1F37DA;
-	Thu, 30 Oct 2025 18:42:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 431453644B1;
+	Thu, 30 Oct 2025 18:43:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761849764; cv=none; b=cbJ/i+Y1CxVu01YTsicgIm3l2Tz/cs5NAG99t7qR83sfF5UpEhcO2ouhienRCeQ9kSYfNfPW9PUdl4o2P36G1Tw0GP+eaLTnzeEmUQUISuHLq+9e4AQAVZ1lzy0/DTxj+5EoOGaRumkVB9T+axa3j8wNt2Sabpw7kQ0nsnuWW94=
+	t=1761849819; cv=none; b=gv0iYwjJjwNKwDNHziMPDXHezJ6DLDT/J44u6KiPOmsd35pTEslelTmDxhoZ3u4cc4SrAP+SMcbs/KgbNbUjqinGX57PzTyuSfGD4kcBIMOTMRRo/GGLocHd8GSdbhr2IvTL15f38MjnNU5dlQhqHixGbCCzTEwR5fewKXB1Hiw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761849764; c=relaxed/simple;
-	bh=g8c9ksy/OAeO6urz6065KVI1tuzfZbmQ1YkPXetQw7w=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=RV3MwVqZl+l63les1SKs5sTDD380/GdkrX+HerT0ebE6IAYD1xXSDpIYmJ3f7ctURf3Rc3hX/rdJAdl7WBQ781PZa3DoU+UbdP61xucm2Nkje3N3Q+PlVo/AUIFsGdyMA03kzxFdR9l3kML6wjec0b9fNKycqYCpgKcA15h8ofA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=GnnaRgLM; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EDECBC4CEF8;
-	Thu, 30 Oct 2025 18:42:42 +0000 (UTC)
+	s=arc-20240116; t=1761849819; c=relaxed/simple;
+	bh=4IKj5E9abqrJecDQCcjIqlBIeXr8vDnE3i2n4ayL0Q4=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=CZosfYoOSvZyb+YfOIV6k6wO2d7XU+qy1OGm0+myuo99UzwzY53jQye1pxIorOQf3Kfze+HQ7MUkgegzEUW037RYhY7Fmn4nJG8P/20BSDWfhHp/01wUzsvhJNPjj7BuU1qkCdvdfR712g63YafUQy+gX05hJQMr9pl3GYhJTis=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=bTsLzGoZ; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3FA81C4CEF1;
+	Thu, 30 Oct 2025 18:43:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1761849763;
-	bh=g8c9ksy/OAeO6urz6065KVI1tuzfZbmQ1YkPXetQw7w=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=GnnaRgLM0XBnXnd18GqV1BfHkH11uAYX/cBUbs8FC0a6mIEw4Dj4WV6L6Sg1DVHN2
-	 C7VYVl+yOARGHQTQPIG9CVvSPKPNGVPOyth5X16s368FKWE3oTmCANyql1kjEcVHOL
-	 ObvFZK20B8kIOyv8i05fFVZcAazeT4p4FdlHA3pKjJjkw0d9Aih+fyhg2nPBfKeO59
-	 byT8VE+hZ3k6a37bXmRM4kTRycaQxjzLLYlSro9XchPRTtdVotPEQnSt9JjxXfKziN
-	 bH4Dx8SOYB/tiXAehHYn6NOXDRRwRRBV0F8LuB/q5h2+2N0koAhHK9jGSJ5QLALVtS
-	 zFS76UvBhZmLg==
-Date: Thu, 30 Oct 2025 13:45:53 -0500
+	s=k20201202; t=1761849818;
+	bh=4IKj5E9abqrJecDQCcjIqlBIeXr8vDnE3i2n4ayL0Q4=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=bTsLzGoZ+g8TACjbSXRFBkm6SsVUDEV5MKNdiiG0le+7cv2+3Exey3M5wfdCkDQrw
+	 dJLncoaqEmCzhEsk0VKIQxo9/brRfW0bQKEhiWk4kkvLbjLsc/FwSz11dB7oGlbM8L
+	 LrnGhJv83IVHv5wkyd3NGjhCdRYmnZXmz0wf9Rkd6o82HiGGZvhhV0Fuo9/U1cqa6s
+	 9Xn8v8Qgun96sIVsSsDSnw0ayuBm0PYMFwubChbQ3BhM+l287mVfdmo4hYW6v3934j
+	 +i3t2CaPVMzhD8dAkb9Y2Hs0orz5Kf3oyQk4CdMoYCxjWChRqXvK1gJBJHB0lJDIMZ
+	 2yCx1ldgQ3U9Q==
 From: Bjorn Andersson <andersson@kernel.org>
-To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Cc: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, 
-	Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	cros-qcom-dts-watchers@chromium.org, linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+To: Konrad Dybcio <konradybcio@kernel.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	cros-qcom-dts-watchers@chromium.org,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Cc: linux-arm-msm@vger.kernel.org,
+	devicetree@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 3/7] arm64: dts: qcom: sc8180x: create common zap-shader
- node
-Message-ID: <fuach44wl236rfm57itxmcvj376vr3m7idi4byge6mbbxcrr3h@4uzjnuefh2y5>
+Subject: Re: [PATCH 0/7] arm64: dts: qcom: cleanup GPU's zap-shader node
+Date: Thu, 30 Oct 2025 13:46:46 -0500
+Message-ID: <176185000295.492730.10106519443122331720.b4-ty@kernel.org>
+X-Mailer: git-send-email 2.51.0
+In-Reply-To: <20251028-dt-zap-shader-v1-0-7eccb823b986@oss.qualcomm.com>
 References: <20251028-dt-zap-shader-v1-0-7eccb823b986@oss.qualcomm.com>
- <20251028-dt-zap-shader-v1-3-7eccb823b986@oss.qualcomm.com>
- <c90b917e-b3bc-42fb-a127-ab47d5154d0d@oss.qualcomm.com>
- <c62a7f9d-6984-41c0-88c5-1d6c40d411dd@oss.qualcomm.com>
- <weyze7a2pqmt2klt763lbwyvpezqndm5rjnitexalru7hy3xhh@tdqx6xeqp3qu>
- <p5apfg5cbwcdmilfr3omoncvuj7z7zbj6dkex2eicjdubkyxwj@h42bzzhx4amt>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <p5apfg5cbwcdmilfr3omoncvuj7z7zbj6dkex2eicjdubkyxwj@h42bzzhx4amt>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
 
-On Thu, Oct 30, 2025 at 07:58:46PM +0200, Dmitry Baryshkov wrote:
-> On Thu, Oct 30, 2025 at 12:28:31PM -0500, Bjorn Andersson wrote:
-> > On Thu, Oct 30, 2025 at 11:59:00AM +0100, Konrad Dybcio wrote:
-> > > On 10/30/25 11:58 AM, Konrad Dybcio wrote:
-> > > > On 10/28/25 10:00 PM, Dmitry Baryshkov wrote:
-> > > >> In order to reduce duplication, move common GPU memory configuration
-> > > >> from individual board files to sc8180x.dtsi.
-> > > >>
-> > > >> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-> > > >> ---
-> > > > 
-> > > > [...]
-> > > > 
-> > > >> diff --git a/arch/arm64/boot/dts/qcom/sc8180x-primus.dts b/arch/arm64/boot/dts/qcom/sc8180x-primus.dts
-> > > >> index 93de9fe918ebdadf239832db647b84ac9d5a33f6..069953dcad378448800d45e14931efe1fe1a69fc 100644
-> > > >> --- a/arch/arm64/boot/dts/qcom/sc8180x-primus.dts
-> > > >> +++ b/arch/arm64/boot/dts/qcom/sc8180x-primus.dts
-> > > >> @@ -14,6 +14,8 @@
-> > > >>  #include "sc8180x.dtsi"
-> > > >>  #include "sc8180x-pmics.dtsi"
-> > > >>  
-> > > >> +/delete-node/ &gpu_mem;
-> > 
-> > I agree with your hmm, seems this line should be dropped(?)
-> > 
-> > Dmitry, please confirm and I can fix it up as I'm applying the series.
+
+On Tue, 28 Oct 2025 22:59:59 +0200, Dmitry Baryshkov wrote:
+> Historically all devices manually defined GPU zap-shader node in their
+> board DT files. This practice is frowned upon. Add the zap-shader node
+> on all platforms, define a label for it and use the label in order to
+> patch the node with the firmware name.
 > 
-> Oh, and this line is necessary, because sc8180x-primus has its own
-> location for the gpu_mem.
 > 
 
-Hmm, you're right, not sure why the memory map differs... But this looks
-good then.
+Applied, thanks!
 
-Regards,
-Bjorn
+[1/7] arm64: dts: qcom: sdm670: create common zap-shader node
+      commit: f85592223d5bf983b6c495f33cfa0344a9930d5b
+[2/7] arm64: dts: qcom: sdm845: create common zap-shader node
+      commit: 8464b804bd35cf4068e3a7cd19163c0f8a063852
+[3/7] arm64: dts: qcom: sc8180x: create common zap-shader node
+      commit: e3f81bdd46dc4120e9ee373aa8794b84c7dfd2f1
+[4/7] arm64: dts: qcom: sc8280xp: create common zap-shader node
+      commit: 6e9612ced0c90fc19d9b27508f84ebcf5718b8a2
+[5/7] arm64: dts: qcom: sm8250: drop duplicate memory-region defs
+      commit: 00d3f7b0536dec3b5660e25d0767f61ee38941a7
+[6/7] arm64: dts: qcom: sc7180: add gpu_zap_shader label
+      commit: d994ae0427a83087bedcfbb8afabe620529ef594
+[7/7] arm64: dts: qcom: add gpu_zap_shader label
+      commit: 2377626fd216ebdf17294ac0cabc27614fff07d1
 
-> 
-> -- 
-> With best wishes
-> Dmitry
+Best regards,
+-- 
+Bjorn Andersson <andersson@kernel.org>
 
