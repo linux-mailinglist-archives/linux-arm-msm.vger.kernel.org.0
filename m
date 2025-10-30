@@ -1,110 +1,112 @@
-Return-Path: <linux-arm-msm+bounces-79753-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-79754-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 088A8C21C9A
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Oct 2025 19:33:37 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2FF2BC21CF1
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Oct 2025 19:43:57 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 4045F4042B6
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Oct 2025 18:33:01 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 3B9E01A240D4
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Oct 2025 18:43:14 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7BDB433A02B;
-	Thu, 30 Oct 2025 18:32:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7504D36CA89;
+	Thu, 30 Oct 2025 18:42:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="q0RGGMyf"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="GnnaRgLM"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B81130103F;
-	Thu, 30 Oct 2025 18:32:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4871A1F37DA;
+	Thu, 30 Oct 2025 18:42:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761849178; cv=none; b=D9LDchvwY1KRfxQGfkUTeCsm9FHUXRsSuftHhpISMzwoTlbsEcRJBwtF0ftLDsjlJrNmpsNFLEA9QsgRxHxHhGuAMg6583e4fhQPLjxtc1qipWflbojQTD2E4rL2tGMm/aQP7WGrd3f4aoRttex+cRQMobLLj2eveuMlqtbELZM=
+	t=1761849764; cv=none; b=cbJ/i+Y1CxVu01YTsicgIm3l2Tz/cs5NAG99t7qR83sfF5UpEhcO2ouhienRCeQ9kSYfNfPW9PUdl4o2P36G1Tw0GP+eaLTnzeEmUQUISuHLq+9e4AQAVZ1lzy0/DTxj+5EoOGaRumkVB9T+axa3j8wNt2Sabpw7kQ0nsnuWW94=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761849178; c=relaxed/simple;
-	bh=a4JXIrKMSTUa1Rent56WCFZrGKYeMoJ3jHvTugvCZXw=;
-	h=Date:Content-Type:MIME-Version:From:Cc:To:In-Reply-To:References:
-	 Message-Id:Subject; b=VeHJy1TPjv7UKJ0T1/8X2hhKJN8qmnjeFqAhJZhY3e9w2ue/NFBvJab45s9pTTjmz3Z/Mh9j97gA+9IMprNvaD+5GkRiE+yCWQ8CNfxlIBhq6VpefVPATFTrVqk6XqEOCP5jMALxm6G7/6Ut2487QrKiCTs2frCbhMDkpEbgj6Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=q0RGGMyf; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75436C4CEF1;
-	Thu, 30 Oct 2025 18:32:57 +0000 (UTC)
+	s=arc-20240116; t=1761849764; c=relaxed/simple;
+	bh=g8c9ksy/OAeO6urz6065KVI1tuzfZbmQ1YkPXetQw7w=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=RV3MwVqZl+l63les1SKs5sTDD380/GdkrX+HerT0ebE6IAYD1xXSDpIYmJ3f7ctURf3Rc3hX/rdJAdl7WBQ781PZa3DoU+UbdP61xucm2Nkje3N3Q+PlVo/AUIFsGdyMA03kzxFdR9l3kML6wjec0b9fNKycqYCpgKcA15h8ofA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=GnnaRgLM; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EDECBC4CEF8;
+	Thu, 30 Oct 2025 18:42:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1761849177;
-	bh=a4JXIrKMSTUa1Rent56WCFZrGKYeMoJ3jHvTugvCZXw=;
-	h=Date:From:Cc:To:In-Reply-To:References:Subject:From;
-	b=q0RGGMyfkIVOLXM0ILmKLsODTidtN5vo0qLOML6iTQgKSyJ9atAbJWzr/JGmrU2u0
-	 Dn5uTKWa+fS/5LVOEFiH8m/u2tYYY+WPjMEfMBfXqMJY6ig1Q5mm65kZ5g0pgJsT/0
-	 TzPhZTjZzZ6tP1oPvwppY5FIkLMr+VrCvm4ZxGF4vummn7pMBYpHBSEpibUd+401gJ
-	 LL5hasGm3s6BwUSYttnMwoQwBmkf22AS2clizewr4Nql1UeJCoX6RkvLzfooMILYu4
-	 CURPxDf3YdzSSSJUIEl+9f1HVVSBzR1RGdLMkZSbZ0+togFal9trcwZCRRZQhQje3q
-	 3OB/oNXbvAXiQ==
-Date: Thu, 30 Oct 2025 13:32:56 -0500
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
+	s=k20201202; t=1761849763;
+	bh=g8c9ksy/OAeO6urz6065KVI1tuzfZbmQ1YkPXetQw7w=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=GnnaRgLM0XBnXnd18GqV1BfHkH11uAYX/cBUbs8FC0a6mIEw4Dj4WV6L6Sg1DVHN2
+	 C7VYVl+yOARGHQTQPIG9CVvSPKPNGVPOyth5X16s368FKWE3oTmCANyql1kjEcVHOL
+	 ObvFZK20B8kIOyv8i05fFVZcAazeT4p4FdlHA3pKjJjkw0d9Aih+fyhg2nPBfKeO59
+	 byT8VE+hZ3k6a37bXmRM4kTRycaQxjzLLYlSro9XchPRTtdVotPEQnSt9JjxXfKziN
+	 bH4Dx8SOYB/tiXAehHYn6NOXDRRwRRBV0F8LuB/q5h2+2N0koAhHK9jGSJ5QLALVtS
+	 zFS76UvBhZmLg==
+Date: Thu, 30 Oct 2025 13:45:53 -0500
+From: Bjorn Andersson <andersson@kernel.org>
+To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Cc: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, 
+	Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	cros-qcom-dts-watchers@chromium.org, linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 3/7] arm64: dts: qcom: sc8180x: create common zap-shader
+ node
+Message-ID: <fuach44wl236rfm57itxmcvj376vr3m7idi4byge6mbbxcrr3h@4uzjnuefh2y5>
+References: <20251028-dt-zap-shader-v1-0-7eccb823b986@oss.qualcomm.com>
+ <20251028-dt-zap-shader-v1-3-7eccb823b986@oss.qualcomm.com>
+ <c90b917e-b3bc-42fb-a127-ab47d5154d0d@oss.qualcomm.com>
+ <c62a7f9d-6984-41c0-88c5-1d6c40d411dd@oss.qualcomm.com>
+ <weyze7a2pqmt2klt763lbwyvpezqndm5rjnitexalru7hy3xhh@tdqx6xeqp3qu>
+ <p5apfg5cbwcdmilfr3omoncvuj7z7zbj6dkex2eicjdubkyxwj@h42bzzhx4amt>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: "Rob Herring (Arm)" <robh@kernel.org>
-Cc: linux-pm@vger.kernel.org, Mike Tipton <mike.tipton@oss.qualcomm.com>, 
- Conor Dooley <conor+dt@kernel.org>, 
- Odelu Kukatla <odelu.kukatla@oss.qualcomm.com>, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>, linux-kernel@vger.kernel.org, 
- devicetree@vger.kernel.org, Georgi Djakov <djakov@kernel.org>, 
- linux-arm-msm@vger.kernel.org
-To: Raviteja Laggyshetty <raviteja.laggyshetty@oss.qualcomm.com>
-In-Reply-To: <20251030-knp-interconnect-v3-1-a084a4282715@oss.qualcomm.com>
-References: <20251030-knp-interconnect-v3-0-a084a4282715@oss.qualcomm.com>
- <20251030-knp-interconnect-v3-1-a084a4282715@oss.qualcomm.com>
-Message-Id: <176184917597.249475.6554623309176412725.robh@kernel.org>
-Subject: Re: [PATCH v3 1/2] dt-bindings: interconnect: document the RPMh
- Network-On-Chip interconnect in Kaanapali SoC
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <p5apfg5cbwcdmilfr3omoncvuj7z7zbj6dkex2eicjdubkyxwj@h42bzzhx4amt>
 
-
-On Thu, 30 Oct 2025 17:09:02 +0000, Raviteja Laggyshetty wrote:
-> Document the RPMh Network-On-Chip Interconnect of the Kaanapali platform.
+On Thu, Oct 30, 2025 at 07:58:46PM +0200, Dmitry Baryshkov wrote:
+> On Thu, Oct 30, 2025 at 12:28:31PM -0500, Bjorn Andersson wrote:
+> > On Thu, Oct 30, 2025 at 11:59:00AM +0100, Konrad Dybcio wrote:
+> > > On 10/30/25 11:58 AM, Konrad Dybcio wrote:
+> > > > On 10/28/25 10:00 PM, Dmitry Baryshkov wrote:
+> > > >> In order to reduce duplication, move common GPU memory configuration
+> > > >> from individual board files to sc8180x.dtsi.
+> > > >>
+> > > >> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+> > > >> ---
+> > > > 
+> > > > [...]
+> > > > 
+> > > >> diff --git a/arch/arm64/boot/dts/qcom/sc8180x-primus.dts b/arch/arm64/boot/dts/qcom/sc8180x-primus.dts
+> > > >> index 93de9fe918ebdadf239832db647b84ac9d5a33f6..069953dcad378448800d45e14931efe1fe1a69fc 100644
+> > > >> --- a/arch/arm64/boot/dts/qcom/sc8180x-primus.dts
+> > > >> +++ b/arch/arm64/boot/dts/qcom/sc8180x-primus.dts
+> > > >> @@ -14,6 +14,8 @@
+> > > >>  #include "sc8180x.dtsi"
+> > > >>  #include "sc8180x-pmics.dtsi"
+> > > >>  
+> > > >> +/delete-node/ &gpu_mem;
+> > 
+> > I agree with your hmm, seems this line should be dropped(?)
+> > 
+> > Dmitry, please confirm and I can fix it up as I'm applying the series.
 > 
-> Co-developed-by: Odelu Kukatla <odelu.kukatla@oss.qualcomm.com>
-> Signed-off-by: Odelu Kukatla <odelu.kukatla@oss.qualcomm.com>
-> Signed-off-by: Raviteja Laggyshetty <raviteja.laggyshetty@oss.qualcomm.com>
-> ---
->  .../bindings/interconnect/qcom,kaanapali-rpmh.yaml | 125 +++++++++++++++++
->  .../dt-bindings/interconnect/qcom,kaanapali-rpmh.h | 149 +++++++++++++++++++++
->  2 files changed, 274 insertions(+)
+> Oh, and this line is necessary, because sc8180x-primus has its own
+> location for the gpu_mem.
 > 
 
-My bot found errors running 'make dt_binding_check' on your patch:
+Hmm, you're right, not sure why the memory map differs... But this looks
+good then.
 
-yamllint warnings/errors:
+Regards,
+Bjorn
 
-dtschema/dtc warnings/errors:
-Error: Documentation/devicetree/bindings/interconnect/qcom,kaanapali-rpmh.example.dts:31.20-21 syntax error
-FATAL ERROR: Unable to parse input tree
-make[2]: *** [scripts/Makefile.dtbs:132: Documentation/devicetree/bindings/interconnect/qcom,kaanapali-rpmh.example.dtb] Error 1
-make[2]: *** Waiting for unfinished jobs....
-make[1]: *** [/builds/robherring/dt-review-ci/linux/Makefile:1547: dt_binding_check] Error 2
-make: *** [Makefile:248: __sub-make] Error 2
-
-doc reference errors (make refcheckdocs):
-
-See https://patchwork.ozlabs.org/project/devicetree-bindings/patch/20251030-knp-interconnect-v3-1-a084a4282715@oss.qualcomm.com
-
-The base for the series is generally the latest rc1. A different dependency
-should be noted in *this* patch.
-
-If you already ran 'make dt_binding_check' and didn't see the above
-error(s), then make sure 'yamllint' is installed and dt-schema is up to
-date:
-
-pip3 install dtschema --upgrade
-
-Please check and re-submit after running the above command yourself. Note
-that DT_SCHEMA_FILES can be set to your schema file to speed up checking
-your schema. However, it must be unset to test all examples with your schema.
-
+> 
+> -- 
+> With best wishes
+> Dmitry
 
