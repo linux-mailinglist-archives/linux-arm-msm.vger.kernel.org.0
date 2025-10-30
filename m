@@ -1,190 +1,158 @@
-Return-Path: <linux-arm-msm+bounces-79644-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-79645-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [IPv6:2605:f480:58:1:0:1994:3:14])
-	by mail.lfdr.de (Postfix) with ESMTPS id 23DF1C1F7E7
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Oct 2025 11:21:17 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id B2B6FC1F7F0
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Oct 2025 11:22:25 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 062B64E13D7
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Oct 2025 10:21:16 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id BFF103B4CD7
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Oct 2025 10:22:20 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D217934216D;
-	Thu, 30 Oct 2025 10:21:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7E6AB350A12;
+	Thu, 30 Oct 2025 10:22:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="k5RxKbtE";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="Wy+VKuwd"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="O4nziRlZ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f43.google.com (mail-wr1-f43.google.com [209.85.221.43])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A49C182D0
-	for <linux-arm-msm@vger.kernel.org>; Thu, 30 Oct 2025 10:21:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9679C33B955
+	for <linux-arm-msm@vger.kernel.org>; Thu, 30 Oct 2025 10:22:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761819673; cv=none; b=nQk7tdLQ1ogLVv2vlsiClzrmSdaN/FRgxHjAeotxRyEUnaeXexdWEsY/kGPitF37g7ECu/ZdXPMdom69IO9skTgYMQBVUJiyiwJVxhW2UwYlhgQO1SF6rqr/8+3Y+VnFiKrCDC8DDT68rPtBTvUFQdSziKejdcY2lRAMNfmOdbU=
+	t=1761819737; cv=none; b=KKkw2s4gPFhaPfnWUimJPBjo6Ym104P4yqgvWYHG60oGecCclAwaR5gCQxTHd85R4rCctBl3kBkQUJfOgduSipQJExyqgSMV5l5js/mvF2Aqu6nl1uyD+HGbU8MD5SRkscDaQlLGsCjFSi93bSrsVptOvXjZ6wzJLhOrXy6B7Jo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761819673; c=relaxed/simple;
-	bh=w+4FTReQ0hFrGAqHVv9q6s6dE8DzBAdMwd92ii9vHiM=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=nez6Sgya1r3wDZEesiJoHsEviNgGJ4TLcckZUwgjNvVEUAhcwO+6CIQ7jye4fzH8/l/lbIkjOFZD1f5jzsxuctKrEEtp759yalK+gTSQ+Mx672FgBGCmh7lrhLLI9RIxJ87gEVfKi0JSz5bDsjDF7IzHllh2ToZOzbWR7JAzVWU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=k5RxKbtE; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=Wy+VKuwd; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 59U9PDBK3508813
-	for <linux-arm-msm@vger.kernel.org>; Thu, 30 Oct 2025 10:21:11 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	Lp+NROiKp+LAvu4ICWXwWl+U0GpK5lxYJnqIx4V+lz8=; b=k5RxKbtEmbMPcfIN
-	A1Pd7uUNddnAA9NRY/rOGasPvL7JROFWzkkBAeBkoi86ManSo552F3vEb3D6ugI/
-	VAVgzMjGkqPvROzcVfa/4oJtDwTq8L3FfMZ9lsIvP+5WhASIrXsyAASGqVpiQz0r
-	lzgA9EzVUmkcKHMaFBJotLDYtu9VBxYQccpznJjQ3mjFQ1mzi6dKEvcgfHhBwe9A
-	0zw03i2/bvfR+hUbhRrAGRj4639FhbiAbR838IurJgFpbdegxekA6mkj8PmEqvKw
-	M1wETnT8Yog48KshKYx/KBNaZwq85AlEWpzjHGBGlqYVwTPVmTbh2U+/QIIxdF7t
-	Bl7Vhw==
-Received: from mail-qv1-f69.google.com (mail-qv1-f69.google.com [209.85.219.69])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4a45cdg5q6-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Thu, 30 Oct 2025 10:21:11 +0000 (GMT)
-Received: by mail-qv1-f69.google.com with SMTP id 6a1803df08f44-87ff7511178so2654566d6.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 30 Oct 2025 03:21:11 -0700 (PDT)
+	s=arc-20240116; t=1761819737; c=relaxed/simple;
+	bh=G1w0BDUSacW0XOVA8splxjQGwNpkVsIpdBFy2H1rlrk=;
+	h=Message-ID:Date:From:To:Cc:Subject:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=ZZeKvQoY27l/VbuPi0mZ/5SSLRQc7U2yGUOmW7Jyf39zPQID5CqIID76mIYKgDk6ilPa1JXj05+YOrL/dCDw5O8N58ch6nXqNv284RVz+sabtLUZ3eKdPw7YEwi5UfZQFO6J66K9LRfPSJ8QlnQEqkp/t+9C1zTruEUQLv5Z9PA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=O4nziRlZ; arc=none smtp.client-ip=209.85.221.43
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-wr1-f43.google.com with SMTP id ffacd0b85a97d-3f99ac9acc4so884681f8f.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 30 Oct 2025 03:22:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1761819670; x=1762424470; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=Lp+NROiKp+LAvu4ICWXwWl+U0GpK5lxYJnqIx4V+lz8=;
-        b=Wy+VKuwdFl+HcfHw9ykMMR3ojLAIKsxwyQCtK3iup9F8ykWJlAlG0aRE39zTIO3Q/1
-         48MdjSznQLKcLaVrPW98Evy6sps/SvCdPv8/sreWDXJmsxIAzA7+lD/6Nvd70SukhpdK
-         OQ3LmzY4f9b7+61ttckI/gca0D/CoA+D6fomD5vZUnpxxxc5P1tDl5XpMWVrBc+XRzdE
-         FbhAt13aSZ36doDUpiAli1uaYB64nB4yfgcvYu2udpEyU2vrwNIVYusYrLCgkRlmWqEr
-         y5RBSviVWVPudOWPIF3DxA4DFl/8etVjl0O2wOW5ode8dJLldh3IXecpdLZaOBRWPfvX
-         6NtA==
+        d=gmail.com; s=20230601; t=1761819734; x=1762424534; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:subject:cc
+         :to:from:date:message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=T2kUtsOiX/qEGmwwQ7Isl75d5/MBlGm1S9q3l+zR8t4=;
+        b=O4nziRlZhgxJfb1KvMVN2gNQbV2P+Xo4+fuBmNEr9fW8RTQz+B0i7jpMxzFaal93HW
+         k61fraA1ZvcPT12sNxmEgNUZgCz48e3IaclXacyTktXDJ3iypfXBqVTRg3QDalNeTetY
+         Syc5iJsTppy0NmrUPDed117+Dc5ebhdsFbJOjx1Dkdye9vKp0adQA7l1vhQZ9UcAzw4a
+         HQP6CFKG1F1p8u0IwNRWsny0YSGWj9p5GKjNlKx+V4KbJKplu5d1f0lUcV3GQ1es8sMJ
+         Cq60OSKCI0Y74Das+fyAmBL05LtvXZE5ncyaMf2YAdvQhN62ILqJzntogMij8FnV84uO
+         ebMw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1761819670; x=1762424470;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Lp+NROiKp+LAvu4ICWXwWl+U0GpK5lxYJnqIx4V+lz8=;
-        b=OT2zkzgK1yz0yqgk2117iyCOmjAQk0EuvzvOI4sG9zJCze6ibAoLGGZ/sSccPZ995o
-         0VgvsW+cwUyH+d1AyzrW9qm1oHFyIJeyiLbkmn+A5RBX8JwRreY9cKcrKznJN+Tscuiw
-         jZvVovQNAeY1mesgf40QN2b/EdY6+kKGjlTcVHQhp2gfQpznmppHRBxGncLd15N7sY/k
-         wBTmN/SMNTrJGKLmUVa9+5XWpw8tAqpPHLjkxOXbHsbYKjNsiJkF8ngfZ99YR7zqDc2N
-         Y3Kzuzpthx9D+Yo4ggFiZ/NVum1HG3irfmg3jB9cVw0+GiYLoSVdkfMp/a0pGQaHAVjR
-         cWng==
-X-Gm-Message-State: AOJu0YzSQiolKb/S1XcTJlFlTWISTL9zUUG21sFwj/lIgE+rQICxwh0a
-	5cxgktyXhRN4cZ5rF8cQACnBuajeKw5g53UWGZiUfUCjoiXG4WxZuPbv6qU36joIAHGbmz5PYNR
-	LlCkNcoX3jSRcRc98NOjJduoo1CVxvfAylWzVYyReUT3vPwA15O+27JYWy7G482ELiUlh
-X-Gm-Gg: ASbGncsk0AFKRWnLNEPvVDY7/h5+NcKMsItWUD6gL2+WseT2q3KSg/Htfgo9fwhmUrM
-	4XtOh8NwNFkSrV3uvs/V6Am9wpcX9qBCuJmRTntsThYfMCUBVE55nriXSWc96xeTuDM0ur+HO4s
-	DBnDrbjH6rrlgbz8Ssogg4/zbdaB8I4gAFOSs6RSBLtJLK1zW/XbUgJxGCeBvIv+Pg/itAjb3x6
-	h3MEVpnpL4ZVuNo+JTGH2cJlMe+5013XZARw3JRrvazP/yQu15VynN7rbodpkmNHFjawdJiDoWn
-	juFXPCO2fXBNTM2iutjxbsK8pr2Eit9kNJAbPZiNnkZzvE+RDB2innOsqwjcpVyI22yV7gSa1tx
-	EZXeDJU243hWFe6AV6DfA7Bcu13U8Dee0YdmxhtttdWPF3DECmSE6xXuC
-X-Received: by 2002:a05:6214:2423:b0:801:2595:d05d with SMTP id 6a1803df08f44-88009bcf401mr54099396d6.3.1761819670434;
-        Thu, 30 Oct 2025 03:21:10 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFBhQrT02nFMxk8WprMGgrJkRF51GRhYLDtdXSNrEcQnQ3+IQ2WzvDy91rwlXTW3OGm2upe8g==
-X-Received: by 2002:a05:6214:2423:b0:801:2595:d05d with SMTP id 6a1803df08f44-88009bcf401mr54099216d6.3.1761819669892;
-        Thu, 30 Oct 2025 03:21:09 -0700 (PDT)
-Received: from [192.168.119.202] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-b6d8541fc31sm1695026166b.60.2025.10.30.03.21.08
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 30 Oct 2025 03:21:09 -0700 (PDT)
-Message-ID: <75fd82c8-3e19-467f-bb8a-eed197b63068@oss.qualcomm.com>
-Date: Thu, 30 Oct 2025 11:21:08 +0100
+        d=1e100.net; s=20230601; t=1761819734; x=1762424534;
+        h=in-reply-to:content-disposition:mime-version:references:subject:cc
+         :to:from:date:message-id:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=T2kUtsOiX/qEGmwwQ7Isl75d5/MBlGm1S9q3l+zR8t4=;
+        b=KHPn2oSX4y0sAzTWLq5ydZAN09mbW/HZ0/GqP2E5bfgS5zfeYSa+5jnPasFScLlGnm
+         a9DhRvSO8xvakAuQKm6J0igYo0kYtQ4tZsVZk+2YHjaVSpWxLSILDOXCFVU3SPdl5lrq
+         SPHa1IllfDbxTG4NdtYLltuXuSOSCC9Wh7hxFjPNRhRQ+QDgc3ENlKeq/gCi8Fk66aiD
+         KJbGGePyzacQ3eWbzhS/mz4CP5lYMziZB2AuTetO3ybkcDmKzQvzYpZrNyOU4BX8RMUC
+         PEehi1GzcomVNl16EvWn+oC5cXhyWshnbIzOnljuIo6g9v7gM3X0x0H27GmvLp57drPI
+         uJ4g==
+X-Forwarded-Encrypted: i=1; AJvYcCWKN1R+t8aLoXKIm57GZlZMIlDcobsOkNXuyGBQK3VoZ4siUR/W8IAT+ko9ELyWSlwcll6/K8StHMhnc7vu@vger.kernel.org
+X-Gm-Message-State: AOJu0Yzf9Cdn/lctQM+bMpSYKHywTU+laOT2Ul2bbM+fl/5ByGWjPi3q
+	GkqoiF923GQiST1keouzk2yufGxTOl7PsJNdeH/FBTzsVqGeDZgq+dsr
+X-Gm-Gg: ASbGncsFKaJT0jmA2D1V4xKC2jAPjAmHSkHAqOwBUglqhBevuJFobcYAMiiQa7wuGYE
+	Ado8SMIava/QlxaJbU6AIWUlSH/fp+z1MeRF2tuG02zBsJKwQEDprJZMcedSrpsVb+r15XwvfmG
+	5dPZ1ASuSPjkFiRxc8ZbdbJbhvn3LRZA/DGEeHE4SX9oegGzMiFGM55MBkUEi5eb9PAgS1vFeph
+	/O3f+jHXrPXdw+0IDVqz+vd5biZvVIz5XhH/plnFg+3QxIVh04VK2MigTmBmcpDltzB4sUAHYVt
+	YMb7uUY2+nfH1tcR8/9QIvSBc5euoG4lTu6yiqY1Dq6C3V62ZZxP3B64c6EFcAFKWImvPtGY5Ux
+	v0XxIU8Bqp7hWCjaP16OkT2GA+O9l6HnETHphLO8odO26g1tPPbMb/MbMzqz/1zk92GC5Yt+AbR
+	A8xoLeZxtK9+fsEoR3xSSu6YjAFnco
+X-Google-Smtp-Source: AGHT+IG2GvMxb9LZfEwn29dXFAw3jlFUGhKBMnjmh2/V3MU6jJoVJ3uGtYSEM3H6aIAKv8Kvh0ETuA==
+X-Received: by 2002:a05:6000:4012:b0:429:b7cd:47ff with SMTP id ffacd0b85a97d-429b7cd4e85mr1197378f8f.40.1761819733529;
+        Thu, 30 Oct 2025 03:22:13 -0700 (PDT)
+Received: from Ansuel-XPS. (93-34-90-37.ip49.fastwebnet.it. [93.34.90.37])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-429952da12dsm31773234f8f.29.2025.10.30.03.22.12
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 30 Oct 2025 03:22:13 -0700 (PDT)
+Message-ID: <69033c55.df0a0220.1a33d7.49ff@mx.google.com>
+X-Google-Original-Message-ID: <aQM8U143LTOytPrj@Ansuel-XPS.>
+Date: Thu, 30 Oct 2025 11:22:11 +0100
+From: Christian Marangi <ansuelsmth@gmail.com>
+To: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Cc: Ilia Lin <ilia.lin@kernel.org>, "Rafael J. Wysocki" <rafael@kernel.org>,
+	Viresh Kumar <viresh.kumar@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	Raag Jadav <raag.jadav@intel.com>, Arnd Bergmann <arnd@arndb.de>,
+	linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 1/3] err.h: add ERR_PTR_CONST macro
+References: <20251029133323.24565-1-ansuelsmth@gmail.com>
+ <aQIzoGnvZWYuHuoQ@smile.fi.intel.com>
+ <69023512.5d0a0220.3cccb7.8e65@mx.google.com>
+ <aQMheocySykpTFDN@smile.fi.intel.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] soc: qcom: ice: Add HWKM v1 support for wrapped keys
-To: Neeraj Soni <neeraj.soni@oss.qualcomm.com>, andersson@kernel.org,
-        konradybcio@kernel.org
-Cc: linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20251028175623.1054084-1-neeraj.soni@oss.qualcomm.com>
-Content-Language: en-US
-From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-In-Reply-To: <20251028175623.1054084-1-neeraj.soni@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-GUID: 6KgzgxKQ6jlvMJJCS8hh72uP_9yYkImG
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDMwMDA4NCBTYWx0ZWRfXzG3HcLNsqlb8
- X1UrZ1IWAJwsjQhet2def3zJcjgidF6nKX9/0M8pM/jXzgtYNyj+X+Ha5gHxlgIuGQteTYKwUHF
- WnFqSaxZa1BeRDAy/NimcYIw9Kj78PSn35d0OQJQtXV90crVKsmlw4aHto3RV/cMGJMTxEOxPP8
- +CTkknn41bfmWEb7JFR7inEuywbtln3z/EZMCsmNedcjiOcbZ+UwlRSQ1S+grafZLj3GuSP1Y3i
- sWptwVCYvbWJQeXcY3HOMTGzOZsUsakaRllCw6O5/gwQyYeVBq11ZNo4Eq6gbz/EULSUX6cuCnw
- LAv2MHIPvlh17c/X0vo+iWvNAOx0lyqhJCgbklyM06ArjUyPV9XButSRYWZJVyDqiV5rmVI0asN
- I/Qnwgum0S/Y49S5v3W5NucZM1Phtg==
-X-Proofpoint-ORIG-GUID: 6KgzgxKQ6jlvMJJCS8hh72uP_9yYkImG
-X-Authority-Analysis: v=2.4 cv=ItUTsb/g c=1 sm=1 tr=0 ts=69033c17 cx=c_pps
- a=wEM5vcRIz55oU/E2lInRtA==:117 a=FpWmc02/iXfjRdCD7H54yg==:17
- a=IkcTkHD0fZMA:10 a=x6icFKpwvdMA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=EUspDBNiAAAA:8 a=D5PoHb-6lmFbxNsJ16QA:9
- a=QEXdDO2ut3YA:10 a=OIgjcC2v60KrkQgK7BGD:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
- definitions=2025-10-30_03,2025-10-29_03,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- adultscore=0 malwarescore=0 suspectscore=0 spamscore=0 lowpriorityscore=0
- bulkscore=0 phishscore=0 clxscore=1015 priorityscore=1501 impostorscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2510240001 definitions=main-2510300084
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <aQMheocySykpTFDN@smile.fi.intel.com>
 
-On 10/28/25 6:56 PM, Neeraj Soni wrote:
-> HWKM v1 and v2 differ slightly in wrapped key size and the bit fields for
-> certain status registers and operating mode (legacy or standard).
+On Thu, Oct 30, 2025 at 10:27:38AM +0200, Andy Shevchenko wrote:
+> On Wed, Oct 29, 2025 at 04:38:53PM +0100, Christian Marangi wrote:
+> > On Wed, Oct 29, 2025 at 05:32:48PM +0200, Andy Shevchenko wrote:
+> > > On Wed, Oct 29, 2025 at 02:33:19PM +0100, Christian Marangi wrote:
+> > > > Add ERR_PTR_CONST macro to initialize global variables with error
+> > > 
+> > > ERR_PTR_CONST()
+> > > 
+> > > > pointers. This might be useful for specific case where there is a global
+> > > > variables initialized to an error condition and then later set to the
+> > > > real handle once probe finish/completes.
+> > > 
+> > > Okay, this has two caveats:
+> > > 
+> > > 1) naming is bad as it suggests something about const qualifier (and not, it's
+> > > not about that at all);
+> > > 
+> > > 2) it doesn't explain what's wrong with ERR_PTR().
+> > >
+> > 
+> > It can't be used for global variables as it does cause compilation
+> > error.
 > 
-> Add support to select HWKM version based on the major and minor revisions.
-> Use this HWKM version to select wrapped key size and to configure the bit
-> fields in registers for operating modes and hardware status.
+> Can you show an example, please?
+>
+
+drivers/soc/qcom/smem.c:361:35: error: initializer element is not constant
+  361 | static struct qcom_smem *__smem = ERR_PTR(-EPROBE_DEFER);
+      |                                   ^~~~~~~
+make[9]: *** [scripts/Makefile.build:229: drivers/soc/qcom/smem.o] Error 1
+
+You want me to add this to the commit? Or any hint to better reword this
+so it's more understandable?
+
+> > I wanted to use ERR_PTR to set the __smem handle instead of freecode
+> > (void *) -EPROBE_DEFER and notice the compiler doesn't like using
+> > ERR_PTR().
+> > 
+> > Then the problem is clear as static declaration require constant value
+> > for initialization and ERR_PTR is a inline function.
+> > 
+> > This is why ERR_PTR_CONST following the pattern that was used for
+> > FIELD_PREP -> FIELD_PREP_CONST that was also introduced for similar
+> > case.
+> > 
+> > So yes this is specific for case of static global variables.
 > 
-> Support for SCM calls for wrapped keys is being added in the TrustZone for
-> few SoCs with HWKM v1. Existing check of qcom_scm_has_wrapped_key_support()
-> API ensures that HWKM is used only if these SCM calls are supported in
-> TrustZone for that SoC.
+> -- 
+> With Best Regards,
+> Andy Shevchenko
 > 
-> Signed-off-by: Neeraj Soni <neeraj.soni@oss.qualcomm.com>
-> ---
+> 
 
-[...]
-
-> +	/* HWKM version v2 is present from ICE 3.2.1 onwards while version v1
-> +	 * is present only in ICE 3.2.0. Earlier ICE version don't have HWKM.
-> +	 */
-> +	if (major > 3 ||
-> +	   (major == 3 && (minor >= 3 || (minor == 2 && step >= 1))))
-> +		ice->hwkm_version = QCOM_ICE_HWKM_V2;
-> +	else if ((major == 3) && (minor == 2))
-> +		ice->hwkm_version = QCOM_ICE_HWKM_V1;
-> +	else
-> +		ice->hwkm_version = 0;
-> +
->  	dev_info(dev, "Found QC Inline Crypto Engine (ICE) v%d.%d.%d\n",
->  		 major, minor, step);
->  
-> +	if (!ice->hwkm_version)
-> +		dev_info(dev, "QC Hardware Key Manager (HWKM) not supported\n");
-
-This isn't an error condition (ICE vers 3.0.0..<3.2.0 simply don't have it),
-so I think it's fair not to print this possibly somewhat concerning message
-
-[...]
-
->  static unsigned int translate_hwkm_slot(struct qcom_ice *ice, unsigned int slot)
->  {
-> -	return slot * 2;
-> +	/* The slot offset depends upon HWKM version */
-
-This comment doesn't provide any additional context (e.g. what is the
-underlying reason for V2 requiring a wider stride) - please provide
-some or remove it, as otherwise it reiterates the single LoC below
-
-Looks good otherwise
-
-Konrad
+-- 
+	Ansuel
 
