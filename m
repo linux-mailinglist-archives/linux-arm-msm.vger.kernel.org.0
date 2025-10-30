@@ -1,77 +1,66 @@
-Return-Path: <linux-arm-msm+bounces-79708-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-79709-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 218A4C21283
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Oct 2025 17:24:56 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id D4C48C21255
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Oct 2025 17:24:11 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id A742A403EA2
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Oct 2025 16:22:43 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 58C081A25DF7
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Oct 2025 16:23:19 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 810F927472;
-	Thu, 30 Oct 2025 16:22:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C78213678A8;
+	Thu, 30 Oct 2025 16:22:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="sM2BrH/9"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="VkwzKzv5"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48FFD279329;
-	Thu, 30 Oct 2025 16:22:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9CE143678A3;
+	Thu, 30 Oct 2025 16:22:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761841360; cv=none; b=ZVVJlPZh9fu1tgJVfBtP1chR/ybbPfvIu5XLhwDSB2qzVGA1pMePN16TSDo3SfsUj7tNQHSZemkcop2Pl7ABdcsQJv8dNXrFd5d9MNXgCzukgYxyzrj4Chg/JriloillZfgFQZnkEyOhQRHwolqMTtGSkA5D/2TgzfNORiPhDH8=
+	t=1761841361; cv=none; b=axizeBpSnHiBvogA1mWfyZeQ+DSP21hzPuS7qVrNiMybKCXFuqz0P9Sc8kyOP5XRoApYUbxaRni9TBD9xknbz904kHSTHwp3Ye7rOsrX6Dc6thcm5K5GNW68nab+/L3v9NxnWQIo9OZgIXP4azZnOjVzN53Kbdzk4UPn0ASwPLA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761841360; c=relaxed/simple;
-	bh=qeejJw/Ci04guqvtvub4+S+ZoFbZ8/admEO2nb7xcKk=;
+	s=arc-20240116; t=1761841361; c=relaxed/simple;
+	bh=L5z6jlHkcpP9cvdw41Qbbk+N1H8oSP3YINCm0jFWMgI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=M5dwTqbHn7hlSu6Eh69d9E/g085RBjCNOU12jJ0+MJj0sc6/XANkrfKSvLFwbjt4KN07xkzJ+9c1D2FuszO1AdoZSmuTMK3YvKtP3seib+iemmxc7vr2pELm4rX5dPos4+zjKAojPB/PZQkb+qaRUVuC3Va+M4ugweT3PqxA8ro=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=sM2BrH/9; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D9C5C4CEF1;
-	Thu, 30 Oct 2025 16:22:38 +0000 (UTC)
+	 MIME-Version:Content-Type; b=mLtIHgwBQeBZvXekSdAUou62l7mNTKcoBJ1D9082LKpsddkkXUpMDiOKPUVZtaYjgWMVEroofARthuX+UdS7IqXDvCHnvFuiiW/W4ujOSEDGHkuzmPyRjKhl9bQ61ds6Ad8bmJ9v0f/iEbM/JOxRcnCX6V6lSHgniqswqKJ6f2s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=VkwzKzv5; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A691C4CEFF;
+	Thu, 30 Oct 2025 16:22:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1761841359;
-	bh=qeejJw/Ci04guqvtvub4+S+ZoFbZ8/admEO2nb7xcKk=;
+	s=k20201202; t=1761841361;
+	bh=L5z6jlHkcpP9cvdw41Qbbk+N1H8oSP3YINCm0jFWMgI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sM2BrH/9fLau66Kv3195fiOQB6MxtyPXRXtOIYVMdU5A17KL7QC2Qai+2RmKFruY/
-	 uTxFhGlUjTeb7BdmOXNCSNp9kWr7zSRhWCbaRPS008DM8bOn8Za3RY6SbVy5EAlYXo
-	 NHFmhjj4Wnxex9UrXdb7nEma4PZD9b2kNGKvqUITnEp5ODjFDs3Pb0AQHXbeKZLZds
-	 /Y9UaXi51BAeTwg93p/Q1UJQZ3YdLY6yHAduDN2woYqCSIY6v0ABaXPu9cSDqw7Z2E
-	 VnlNC1IvIV20+NKAkAo/2CVcajJ5k02bGlPpLU8Ss/jKqZvwMywdaosN1nNbFViAk9
-	 xgX2bZxesoVqg==
+	b=VkwzKzv57TSDcgncR8ecZIapJ5iltIEHsrbMefxtSqiqxQjGBKOrT32RJoel1gHbP
+	 5B1Vd5UOk9vh8XyHpTfxoF7RaPLd+/jGoUfjEAiZttncYz2PeAJWwEd2/aiPShC3c7
+	 ppvtwH+Fb4nd9Kn/bjuKy8tKhXSygvtnhu17zpS+EvLOFQb5ZNYhOtcCzXsi+sW9jE
+	 saS6GHcbaYopGslGXUBqDqOkWupUL14oNuyTFxNLPsz0ValJpQSR/AG4BO4+bptjMI
+	 KPO4efNh2e18t0Ao25cL/te2HPZH+seH+73+x2x0/7MiYu+QCzMQ27Owb/c/r3xlEe
+	 icLmFOvAGmdug==
 From: Bjorn Andersson <andersson@kernel.org>
-To: Hans de Goede <hansg@kernel.org>,
-	Lee Jones <lee@kernel.org>,
-	Pavel Machek <pavel@kernel.org>,
+To: Konrad Dybcio <konradybcio@kernel.org>,
 	Rob Herring <robh@kernel.org>,
 	Krzysztof Kozlowski <krzk+dt@kernel.org>,
 	Conor Dooley <conor+dt@kernel.org>,
-	Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-	Jingoo Han <jingoohan1@gmail.com>,
-	Mauro Carvalho Chehab <mchehab@kernel.org>,
-	Jean-Jacques Hiblot <jjhiblot@traphandler.com>,
-	Jacopo Mondi <jacopo@jmondi.org>,
-	Sakari Ailus <sakari.ailus@linux.intel.com>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	Daniel Thompson <danielt@kernel.org>,
-	Aleksandrs Vinarskis <alex@vinarskis.com>
-Cc: linux-leds@vger.kernel.org,
+	Fange Zhang <fange.zhang@oss.qualcomm.com>
+Cc: linux-arm-msm@vger.kernel.org,
 	devicetree@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
-	dri-devel@lists.freedesktop.org,
-	linux-media@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org,
-	threeway@gmail.com,
-	Andy Shevchenko <andy.shevchenko@gmail.com>,
-	Linus Walleij <linus.walleij@linaro.org>
-Subject: Re: (subset) [PATCH v5 0/4] leds: privacy-led support for devicetree
-Date: Thu, 30 Oct 2025 11:25:33 -0500
-Message-ID: <176184154198.475875.6266114626536757346.b4-ty@kernel.org>
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	xiangxu.yin@oss.qualcomm.com,
+	tingwei.zhang@oss.qualcomm.com,
+	Li Liu <li.liu@oss.qualcomm.com>,
+	Dmitry Baryshkov <lumag@kernel.org>
+Subject: Re: [PATCH v8 0/2] Add display support for QCS615 platform
+Date: Thu, 30 Oct 2025 11:25:34 -0500
+Message-ID: <176184154244.475875.14579349859707097278.b4-ty@kernel.org>
 X-Mailer: git-send-email 2.51.0
-In-Reply-To: <20250910-leds-v5-0-bb90a0f897d5@vinarskis.com>
-References: <20250910-leds-v5-0-bb90a0f897d5@vinarskis.com>
+In-Reply-To: <20250903-add-display-support-for-qcs615-platform-v8-0-7971c05d1262@oss.qualcomm.com>
+References: <20250903-add-display-support-for-qcs615-platform-v8-0-7971c05d1262@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -82,23 +71,20 @@ Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 
 
-On Wed, 10 Sep 2025 14:01:07 +0200, Aleksandrs Vinarskis wrote:
-> Re-spin of RFC patch from ~2.5 years ago [1]. v4l2 controls for privacy
-> LEDs has landed, but the DT part was left out. Introduce missing
-> dt-bindings, and commonize 'leds' parameter. Finally, add a patch to
-> enable privacy-led on Lenovo Thinkpad x13s.
+On Wed, 03 Sep 2025 18:49:27 +0800, Fange Zhang wrote:
+> 1.Add MDSS & DPU support for QCS615
+> 2.Add DSI support for QCS615
 > 
-> With recent inflow of arm64-power laptops (Snapdragon X1E/X1P) which
-> mostly use MIPI cameras, this feature becomes more desired. Original
-> rebased patch is still working as expected (with respective DT changes)
-> on Dell XPS 9345.
+> QCS615 platform supports DisplayPort, and this feature will be added in a future patch
 > 
-> [...]
+> 
 
 Applied, thanks!
 
-[4/4] arm64: dts: qcom: sc8280xp-x13s: enable camera privacy indicator
-      commit: b54c412b511c8bc8e71fd09a766bd95528d94840
+[1/2] arm64: dts: qcom: Add display support for QCS615
+      commit: bf9f0bb2ec478926c50769ad0df363719d5d2302
+[2/2] arm64: dts: qcom: Add display support for QCS615 RIDE board
+      commit: 0b4bbf0514fce4acf34676dd107c01dba7f96c33
 
 Best regards,
 -- 
