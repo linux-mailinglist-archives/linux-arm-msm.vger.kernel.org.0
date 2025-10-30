@@ -1,81 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-79647-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-79648-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [142.0.200.124])
-	by mail.lfdr.de (Postfix) with ESMTPS id F0140C1F9F5
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Oct 2025 11:44:47 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5C353C1F9DA
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Oct 2025 11:44:17 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 77C684EAC78
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Oct 2025 10:43:24 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 11ED33ADACF
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Oct 2025 10:43:59 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C46E3351FD6;
-	Thu, 30 Oct 2025 10:43:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A8B643546F0;
+	Thu, 30 Oct 2025 10:43:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="UTKlwLDW"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="SBCkkvZq"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f48.google.com (mail-wm1-f48.google.com [209.85.128.48])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C9FF33DEFD
-	for <linux-arm-msm@vger.kernel.org>; Thu, 30 Oct 2025 10:43:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46A4834F491;
+	Thu, 30 Oct 2025 10:43:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761820999; cv=none; b=cC0M/qWkVsAKcQgivcCZ28LL+pLYEZ48JcAAGGZedxp34oXwtoNpFhkUE5JtcRmQubrSFZ6JsmnWt2Vx5lBgRvdzMZ/sHA3RjmBaC4a8CGE+07A1xrvfs5ZgrwvG48/ooqf9RrE91GucD8nKMd5tYNkuCkIMiUJ2BN81eR9/8wQ=
+	t=1761821037; cv=none; b=s5VTjYwm59YZsZtlUELNOZt2rnjMA5439HlWd8yaJ4koP00fRu4YyC4cOF1azKjpDfo93/hL51YdB2p2NfU93NMjbOYRUbq+Q/2ycyPjKXM55PFpUHc9qpHwmr/U+3Xxow71mvH13qYgv+m4jz6h8dbKNrBYoeKhMz0of+QGBBU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761820999; c=relaxed/simple;
-	bh=M5LN/CfuYlAsOGMOcCsGJW78k1Ii/25HikD9T71XSMY=;
+	s=arc-20240116; t=1761821037; c=relaxed/simple;
+	bh=q0LYfQDEfgAcsgyx1A10iYOVVNVWlHZdVq8tYzcNjdw=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=cxILlbVN5aGsWEZbWclkmGP9+YEEQeaTgMv8yz3VC0SDuRVTh+MyBsjj9OGvmhQDARCKt887LiauqkWH6ZxCd8L19m9JirkEIavB5ET8PAr/ehH5FdCZacqux7TVz33KILKz3VaNHDgQP37J4frpMbwi9b8bhVDUT+ueuio+t0A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=UTKlwLDW; arc=none smtp.client-ip=209.85.128.48
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f48.google.com with SMTP id 5b1f17b1804b1-4770c2cd96fso6580865e9.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 30 Oct 2025 03:43:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1761820995; x=1762425795; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=PZ75iMivqNNhr/B3CKSu8v6BPgomwit/xVK0FAim4i8=;
-        b=UTKlwLDWXrF1jGfA441q7zoGt1F4sk8SJe7xZXFQtDkXtDnnRBSe84swpMvsJNwpX9
-         tQ1Mqr+HPcLwImDMLRkhA0K+V/jSRKY/YQ2rmOovmrAxZCNr+8RSJFCKS1zBJmDw4EQY
-         4oegkPBi9GMYfLowcgYD5XaU8vnB/OxgG9N1hl5eKaQSrF3pCVBCBSRCzqmSHE1Fje3A
-         K0BY8zGlpGNTIvWkQHSXETfnhenDn/eYn9y2K1PE+yPz7bB4EIx3Hzv/9dYRV76ckT0G
-         t2BbU06YQnXDYnByirt/WftYucu5pNRnxELMKS+zgs7KdXYRe7Fo+SjJbSpCQBH424YE
-         HCFw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1761820995; x=1762425795;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=PZ75iMivqNNhr/B3CKSu8v6BPgomwit/xVK0FAim4i8=;
-        b=oBXMYVtepD+7Yx+X4N/M3gsUIRM3z2UTiN5MxSprPXyqfRbft5+pvxzkyrMCpxpYRZ
-         vE/wSIZ881CySh8jc9dySM7X0oNCc0iXHuNEdIdx80zUo3oBKSejapXxMbMEgv6P+uwv
-         Sd8HBCyLN6u3FAW1PmHetmFp7cJQJ3HRGRctJDOWrSgt1UJ7LHmvGelVlsYpMxGAs3Vx
-         zMWCwWT60DEKVK2lxJtakNfq3QAW74xEc/vP31wj2OitobDDNKHn0Tl9dl7RDu7TTCqc
-         JuS3w6XMuK8agGCOsoyS63WFG6ybhdXE96hLzBErIXb1UqAqegB1zppbFbVB0l5c2vMn
-         7xDw==
-X-Forwarded-Encrypted: i=1; AJvYcCWKKeN82eBqEMuuL5VJbtuD+bjRTWj0peBFTXCP7mqzA+V7+eqziL030u0ERtZkIZMByCPAPkXI3SujY2q1@vger.kernel.org
-X-Gm-Message-State: AOJu0YzJMhNMd1T2t/EA18O9nhhMbbHOy/uB+Zp7bFrgXmqEdD3Bp862
-	DBXxZr4aHnlQ58M0x6+7vFupGtVEMM0+K5i16GMyAHGqMW2ZPByhSg1Hs+ke1w6hgiI=
-X-Gm-Gg: ASbGncseLpcI3Gb5BfvNmlzHP0pcN7tjQjM8V1S7PrxifpSegP5zSWol9j6r0YFaUN3
-	0eZ1McR9lGoj+UQangD9mEsEvgbPh6jhzqlDD2vdqrebEw0PN40h5WfGpt0gYsF4LY5mfbjWAYj
-	nCW2RpIs8R1lzD9F73nf6BaB16TowGfnKuNP3S1b939WmY0AIpHJhcQtJrIrfUxGOh/ITfqB/Uj
-	CfhHsbyZ38xqit46GGfSVsHm9jHliv/qVNxapbPw2W43JiPULePni4r39rgVMknOwIDHSezkVUV
-	mLv9c/oPcN/zGFAjS9sCpXHBpR9fR5+2XejjGIsboL+XrChKvipDMvF0tVW3Xx4gRnAH1npLD4v
-	SjGg2Gwe7b+XJ/VJunjf980848aNvyW+dSuXqgM4VozfAscPflZJlGfKoTnn104SxaJSTltTUBa
-	6QQbRqRib+CVwa/8qGcQ9poP0u1U5Wx+heLfTQZ3VDWg==
-X-Google-Smtp-Source: AGHT+IEJDT+VEOtWM3AxIaDKwce/lsT2ux+ORGMFhB1JqWFm8K6YO+34rU/7eFruiB0UUjJVBwoLyg==
-X-Received: by 2002:a5d:584b:0:b0:429:ba8a:a860 with SMTP id ffacd0b85a97d-429ba8aa933mr651765f8f.12.1761820994810;
-        Thu, 30 Oct 2025 03:43:14 -0700 (PDT)
-Received: from [192.168.0.21] (188-141-3-146.dynamic.upc.ie. [188.141.3.146])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-429952db9d1sm30898105f8f.35.2025.10.30.03.43.13
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 30 Oct 2025 03:43:14 -0700 (PDT)
-Message-ID: <eeba18d3-089b-4874-b473-6238a9cd23ea@linaro.org>
-Date: Thu, 30 Oct 2025 10:43:12 +0000
+	 In-Reply-To:Content-Type; b=pbyBqK4pdkuzZ0uTWe5pUwdi5Ykw88Zzddqn2vPe8JKrwGvtEGlu6Dq+m6N01CRlu/8Pg/ddSWekRFZVACG+8P1dop7jwJZwayhb+lFYAwEbFFpNIFw1OzesTWMyenS0WSjo7uofKZq2g2RSsSbSDSvvAsMZGJzJitQR3rxWZ0Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=SBCkkvZq; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F8C8C4CEF1;
+	Thu, 30 Oct 2025 10:43:50 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1761821036;
+	bh=q0LYfQDEfgAcsgyx1A10iYOVVNVWlHZdVq8tYzcNjdw=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=SBCkkvZq/c2Y8TMZvhMZErNsnfBNinricatoRIhqHJjLeeLz2EYURnpFyVkRZ3FgX
+	 F2HoKx0libbcHKbmT3dC8+L/hb81cg9tTGPdajuOfxD8wYx8ScA8Ut13pNwCqZoXlU
+	 RpRbv8qzosiTeZYzSLhyV3Tu0BeHqed5CTx9CE053dhan1Uk0lPXhs/Hw2o/q0WmNr
+	 +4vGwjm5bJnKVyxIzqfGJPK9s/Pe/hXeLtXVdIGHPSjtht13O/Omxoxi43znQZ/uhm
+	 Sn0WseIAIPZlnjvfOzPbL0LCj50QJgX89a7pCTUKHilg197+oOf1XXDaCvI0DUu2aW
+	 1eeGH2PbK3huQ==
+Message-ID: <4e444fd3-b079-4e0c-9449-1c119e1d710a@kernel.org>
+Date: Thu, 30 Oct 2025 11:43:49 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -83,364 +50,130 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 2/3] arm64: dts: qcom: qcs8300: Add CCI definitions
-To: Vikram Sharma <quic_vikramsa@quicinc.com>, mchehab@kernel.org,
+Subject: Re: [PATCH 08/12] arm64: defconfig: Enable NT37801 DSI panel driver
+To: yuanjiey <yuanjie.yang@oss.qualcomm.com>
+Cc: Bjorn Andersson <andersson@kernel.org>, robin.clark@oss.qualcomm.com,
+ lumag@kernel.org, abhinav.kumar@linux.dev, sean@poorly.run,
+ marijn.suijten@somainline.org, airlied@gmail.com, simona@ffwll.ch,
+ maarten.lankhorst@linux.intel.com, mripard@kernel.org, tzimmermann@suse.de,
  robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org,
- andersson@kernel.org, konradybcio@kernel.org, hverkuil-cisco@xs4all.nl,
- cros-qcom-dts-watchers@chromium.org, catalin.marinas@arm.com, will@kernel.org
-Cc: linux-arm-kernel@lists.infradead.org, quic_svankada@quicinc.com,
- quic_nihalkum@quicinc.com, linux-media@vger.kernel.org,
- linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, Ravi Shankar <quic_rshankar@quicinc.com>,
- Vishal Verma <quic_vishverm@quicinc.com>
-References: <20251015131303.2797800-1-quic_vikramsa@quicinc.com>
- <20251015131303.2797800-3-quic_vikramsa@quicinc.com>
-From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+ quic_mkrishn@quicinc.com, jonathan@marek.ca, quic_khsieh@quicinc.com,
+ neil.armstrong@linaro.org, linux-arm-msm@vger.kernel.org,
+ dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+ tingwei.zhang@oss.qualcomm.com, aiqun.yu@oss.qualcomm.com,
+ yongxing.mou@oss.qualcomm.com
+References: <20251023075401.1148-1-yuanjie.yang@oss.qualcomm.com>
+ <20251023080609.1212-1-yuanjie.yang@oss.qualcomm.com>
+ <20251023080609.1212-3-yuanjie.yang@oss.qualcomm.com>
+ <wuh7agcgg6spghilnx4amqukaaydj25u7kbdiod7fl6pu2ulvm@pmosyuo43cyw>
+ <aQF98RvLuOlJZlFi@yuanjiey.ap.qualcomm.com>
+ <38c8e26c-08a4-42d9-8f6d-93969af90d50@kernel.org>
+ <aQLOaI3ngjswi7kd@yuanjiey.ap.qualcomm.com>
+ <7c1e0cb5-2483-4efa-be52-84cbe5d1a4b2@kernel.org>
+ <aQMOz4P2/WyjXy1b@yuanjiey.ap.qualcomm.com>
+From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
-In-Reply-To: <20251015131303.2797800-3-quic_vikramsa@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Autocrypt: addr=krzk@kernel.org; keydata=
+ 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 a/A=
+In-Reply-To: <aQMOz4P2/WyjXy1b@yuanjiey.ap.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 15/10/2025 14:13, Vikram Sharma wrote:
-> From: Nihal Kumar Gupta <quic_nihalkum@quicinc.com>
+On 30/10/2025 08:07, yuanjiey wrote:
+> On Thu, Oct 30, 2025 at 06:37:40AM +0100, Krzysztof Kozlowski wrote:
+>> On 30/10/2025 03:33, yuanjiey wrote:
+>>> On Wed, Oct 29, 2025 at 02:05:20PM +0100, Krzysztof Kozlowski wrote:
+>>>> On 29/10/2025 03:37, yuanjiey wrote:
+>>>>> On Mon, Oct 27, 2025 at 10:51:23PM -0500, Bjorn Andersson wrote:
+>>>>>> On Thu, Oct 23, 2025 at 04:06:05PM +0800, yuanjie yang wrote:
+>>>>>>> From: Yuanjie Yang <yuanjie.yang@oss.qualcomm.com>
+>>>>>>>
+>>>>>>> Build the NT37801 DSI panel driver as module.
+>>>>>>>
+>>>>>>> Signed-off-by: Yongxing Mou <yongxing.mou@oss.qualcomm.com>
+>>>>>>> Signed-off-by: Yuanjie Yang <yuanjie.yang@oss.qualcomm.com>
+>>>>>>
+>>>>>> You (Yuanjie) authored the patch, but forgot to sign-off, then Yongxing
+>>>>>> provided certificate of origin, then you provide certificate of origin
+>>>>>> and send it to list?
+>>>>>>
+>>>>>> Please correct.
+>>>>>
+>>>>> All the display patches were jointly developed by Yongxing and me.
+>>>>> So every patch 
+>>>>
+>>>>
+>>>> So two people were working on this absolutely trivial defconfig change?
+>>>> I have troubles believing this.
+>>> I want to say these patches I am first author and yongxing give me support, so
+>>> I think yongxing is second author.
+>>>
+>>> I want to express my gratitude for Yongxing's support in every patch, so I included
+>>> both our names in the sign-off for each one.
+>>>
+>>> However, if my intention causes any trouble for maintainer, I can remove Yongxing's
+>>> sign-off from this patch.
+>>
+>>
+>> Please read submitting patches to understand what Signed-off-by means.
+>> Otherwise I have doubts we can accept your patches - you simply do not
+>> understand what you are certifying.
+> Thanks for your tips, and I learn some tips from submitting patches: 
+> https://elixir.bootlin.com/linux/v6.18-rc3/source/Documentation/process/submitting-patches.rst#L524
 > 
-> Qualcomm QCS8300 SoC contains 3 Camera Control Interface (CCI). Compared
-> to lemans, the key difference is in SDA/SCL GPIO assignments and number
-> of CCIs.
+> I thinks below sign should be true, if you also think it true, I will use it in next patches.
 > 
-> Co-developed-by: Ravi Shankar <quic_rshankar@quicinc.com>
-> Signed-off-by: Ravi Shankar <quic_rshankar@quicinc.com>
-> Co-developed-by: Vishal Verma <quic_vishverm@quicinc.com>
-> Signed-off-by: Vishal Verma <quic_vishverm@quicinc.com>
-> Co-developed-by: Suresh Vankadara <quic_svankada@quicinc.com>
-> Signed-off-by: Suresh Vankadara <quic_svankada@quicinc.com>
-> Signed-off-by: Nihal Kumar Gupta <quic_nihalkum@quicinc.com>
-> Signed-off-by: Vikram Sharma <quic_vikramsa@quicinc.com>
-> ---
->   arch/arm64/boot/dts/qcom/qcs8300.dtsi | 303 ++++++++++++++++++++++++++
->   1 file changed, 303 insertions(+)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/qcs8300.dtsi b/arch/arm64/boot/dts/qcom/qcs8300.dtsi
-> index 75fafbcea845..8f2b5f40ce14 100644
-> --- a/arch/arm64/boot/dts/qcom/qcs8300.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/qcs8300.dtsi
-> @@ -4769,6 +4769,117 @@ videocc: clock-controller@abf0000 {
->   			#power-domain-cells = <1>;
->   		};
->   
-> +		cci0: cci@ac13000 {
-> +			compatible = "qcom,qcs8300-cci", "qcom,msm8996-cci";
-> +			reg = <0x0 0x0ac13000 0x0 0x1000>;
-> +
-> +			interrupts = <GIC_SPI 460 IRQ_TYPE_EDGE_RISING>;
-> +
-> +			clocks = <&camcc CAM_CC_CPAS_AHB_CLK>,
-> +				 <&camcc CAM_CC_CCI_0_CLK>;
-> +			clock-names = "cpas_ahb",
-> +				      "cci";
-> +
-> +			power-domains = <&camcc CAM_CC_TITAN_TOP_GDSC>;
-> +
-> +			pinctrl-0 = <&cci0_i2c0_default &cci0_i2c1_default>;
-> +			pinctrl-1 = <&cci0_i2c0_sleep &cci0_i2c1_sleep>;
-> +			pinctrl-names = "default", "sleep";
-> +
-> +			#address-cells = <1>;
-> +			#size-cells = <0>;
-> +
-> +			status = "disabled";
-> +
-> +			cci0_i2c0: i2c-bus@0 {
-> +				reg = <0>;
-> +				clock-frequency = <1000000>;
-> +				#address-cells = <1>;
-> +				#size-cells = <0>;
-> +			};
-> +
-> +			cci0_i2c1: i2c-bus@1 {
-> +				reg = <1>;
-> +				clock-frequency = <1000000>;
-> +				#address-cells = <1>;
-> +				#size-cells = <0>;
-> +			};
-> +		};
-> +
-> +		cci1: cci@ac14000 {
-> +			compatible = "qcom,qcs8300-cci", "qcom,msm8996-cci";
-> +			reg = <0x0 0x0ac14000 0x0 0x1000>;
-> +
-> +			interrupts = <GIC_SPI 271 IRQ_TYPE_EDGE_RISING>;
-> +
-> +			clocks = <&camcc CAM_CC_CPAS_AHB_CLK>,
-> +				 <&camcc CAM_CC_CCI_1_CLK>;
-> +			clock-names = "cpas_ahb",
-> +				      "cci";
-> +
-> +			power-domains = <&camcc CAM_CC_TITAN_TOP_GDSC>;
-> +
-> +			pinctrl-0 = <&cci1_i2c0_default &cci1_i2c1_default>;
-> +			pinctrl-1 = <&cci1_i2c0_sleep &cci1_i2c1_sleep>;
-> +			pinctrl-names = "default", "sleep";
-> +
-> +			#address-cells = <1>;
-> +			#size-cells = <0>;
-> +
-> +			status = "disabled";
-> +
-> +			cci1_i2c0: i2c-bus@0 {
-> +				reg = <0>;
-> +				clock-frequency = <1000000>;
-> +				#address-cells = <1>;
-> +				#size-cells = <0>;
-> +			};
-> +
-> +			cci1_i2c1: i2c-bus@1 {
-> +				reg = <1>;
-> +				clock-frequency = <1000000>;
-> +				#address-cells = <1>;
-> +				#size-cells = <0>;
-> +			};
-> +		};
-> +
-> +		cci2: cci@ac15000 {
-> +			compatible = "qcom,qcs8300-cci", "qcom,msm8996-cci";
-> +			reg = <0x0 0x0ac15000 0x0 0x1000>;
-> +
-> +			interrupts = <GIC_SPI 651 IRQ_TYPE_EDGE_RISING>;
-> +
-> +			clocks = <&camcc CAM_CC_CPAS_AHB_CLK>,
-> +				 <&camcc CAM_CC_CCI_2_CLK>;
-> +			clock-names = "cpas_ahb",
-> +				      "cci";
-> +
-> +			power-domains = <&camcc CAM_CC_TITAN_TOP_GDSC>;
-> +
-> +			pinctrl-0 = <&cci2_i2c0_default &cci2_i2c1_default>;
-> +			pinctrl-1 = <&cci2_i2c0_sleep &cci2_i2c1_sleep>;
-> +			pinctrl-names = "default", "sleep";
-> +
-> +			#address-cells = <1>;
-> +			#size-cells = <0>;
-> +
-> +			status = "disabled";
-> +
-> +			cci2_i2c0: i2c-bus@0 {
-> +				reg = <0>;
-> +				clock-frequency = <1000000>;
-> +				#address-cells = <1>;
-> +				#size-cells = <0>;
-> +			};
-> +
-> +			cci2_i2c1: i2c-bus@1 {
-> +				reg = <1>;
-> +				clock-frequency = <1000000>;
-> +				#address-cells = <1>;
-> +				#size-cells = <0>;
-> +			};
-> +		};
-> +
->   		camss: isp@ac78000 {
->   			compatible = "qcom,qcs8300-camss";
->   
-> @@ -5063,6 +5174,198 @@ tlmm: pinctrl@f100000 {
->   			#interrupt-cells = <2>;
->   			wakeup-parent = <&pdc>;
->   
-> +			cci0_i2c0_default: cci0-0-default-state {
-> +				sda-pins {
-> +					pins = "gpio57";
-> +					function = "cci_i2c_sda";
-> +					drive-strength = <2>;
-> +					bias-pull-up = <2200>;
-> +				};
-> +
-> +				scl-pins {
-> +					pins = "gpio58";
-> +					function = "cci_i2c_scl";
-> +					drive-strength = <2>;
-> +					bias-pull-up = <2200>;
-> +				};
-> +			};
-> +
-> +			cci0_i2c0_sleep: cci0-0-sleep-state {
-> +				sda-pins {
-> +					pins = "gpio57";
-> +					function = "cci_i2c_sda";
-> +					drive-strength = <2>;
-> +					bias-pull-down;
-> +				};
-> +
-> +				scl-pins {
-> +					pins = "gpio58";
-> +					function = "cci_i2c_scl";
-> +					drive-strength = <2>;
-> +					bias-pull-down;
-> +				};
-> +			};
-> +
-> +			cci0_i2c1_default: cci0-1-default-state {
-> +				sda-pins {
-> +					pins = "gpio29";
-> +					function = "cci_i2c_sda";
-> +					drive-strength = <2>;
-> +					bias-pull-up = <2200>;
-> +				};
-> +
-> +				scl-pins {
-> +					pins = "gpio30";
-> +					function = "cci_i2c_scl";
-> +					drive-strength = <2>;
-> +					bias-pull-up = <2200>;
-> +				};
-> +			};
-> +
-> +			cci0_i2c1_sleep: cci0-1-sleep-state {
-> +				sda-pins {
-> +					pins = "gpio29";
-> +					function = "cci_i2c_sda";
-> +					drive-strength = <2>;
-> +					bias-pull-down;
-> +				};
-> +
-> +				scl-pins {
-> +					pins = "gpio30";
-> +					function = "cci_i2c_scl";
-> +					drive-strength = <2>;
-> +					bias-pull-down;
-> +				};
-> +			};
-> +
-> +			cci1_i2c0_default: cci1-0-default-state {
-> +				sda-pins {
-> +					pins = "gpio59";
-> +					function = "cci_i2c_sda";
-> +					drive-strength = <2>;
-> +					bias-pull-up = <2200>;
-> +				};
-> +
-> +				scl-pins {
-> +					pins = "gpio60";
-> +					function = "cci_i2c_scl";
-> +					drive-strength = <2>;
-> +					bias-pull-up = <2200>;
-> +				};
-> +			};
-> +
-> +			cci1_i2c0_sleep: cci1-0-sleep-state {
-> +				sda-pins {
-> +					pins = "gpio59";
-> +					function = "cci_i2c_sda";
-> +					drive-strength = <2>;
-> +					bias-pull-down;
-> +				};
-> +
-> +				scl-pins {
-> +					pins = "gpio60";
-> +					function = "cci_i2c_scl";
-> +					drive-strength = <2>;
-> +					bias-pull-down;
-> +				};
-> +			};
-> +
-> +			cci1_i2c1_default: cci1-1-default-state {
-> +				sda-pins {
-> +					pins = "gpio31";
-> +					function = "cci_i2c_sda";
-> +					drive-strength = <2>;
-> +					bias-pull-up = <2200>;
-> +				};
-> +
-> +				scl-pins {
-> +					pins = "gpio32";
-> +					function = "cci_i2c_scl";
-> +					drive-strength = <2>;
-> +					bias-pull-up = <2200>;
-> +				};
-> +			};
-> +
-> +			cci1_i2c1_sleep: cci1-1-sleep-state {
-> +				sda-pins {
-> +					pins = "gpio31";
-> +					function = "cci_i2c_sda";
-> +					drive-strength = <2>;
-> +					bias-pull-down;
-> +				};
-> +
-> +				scl-pins {
-> +					pins = "gpio32";
-> +					function = "cci_i2c_scl";
-> +					drive-strength = <2>;
-> +					bias-pull-down;
-> +				};
-> +			};
-> +
-> +			cci2_i2c0_default: cci2-0-default-state {
-> +				sda-pins {
-> +					pins = "gpio61";
-> +					function = "cci_i2c_sda";
-> +					drive-strength = <2>;
-> +					bias-pull-up = <2200>;
-> +				};
-> +
-> +				scl-pins {
-> +					pins = "gpio62";
-> +					function = "cci_i2c_scl";
-> +					drive-strength = <2>;
-> +					bias-pull-up = <2200>;
-> +				};
-> +			};
-> +
-> +			cci2_i2c0_sleep: cci2-0-sleep-state {
-> +				sda-pins {
-> +					pins = "gpio61";
-> +					function = "cci_i2c_sda";
-> +					drive-strength = <2>;
-> +					bias-pull-down;
-> +				};
-> +
-> +				scl-pins {
-> +					pins = "gpio62";
-> +					function = "cci_i2c_scl";
-> +					drive-strength = <2>;
-> +					bias-pull-down;
-> +				};
-> +			};
-> +
-> +			cci2_i2c1_default: cci2-1-default-state {
-> +				sda-pins {
-> +					pins = "gpio54";
-> +					function = "cci_i2c_sda";
-> +					drive-strength = <2>;
-> +					bias-pull-up = <2200>;
-> +				};
-> +
-> +				scl-pins {
-> +					pins = "gpio55";
-> +					function = "cci_i2c_scl";
-> +					drive-strength = <2>;
-> +					bias-pull-up = <2200>;
-> +				};
-> +			};
-> +
-> +			cci2_i2c1_sleep: cci2-1-sleep-state {
-> +				sda-pins {
-> +					pins = "gpio54";
-> +					function = "cci_i2c_sda";
-> +					drive-strength = <2>;
-> +					bias-pull-down;
-> +				};
-> +
-> +				scl-pins {
-> +					pins = "gpio55";
-> +					function = "cci_i2c_scl";
-> +					drive-strength = <2>;
-> +					bias-pull-down;
-> +				};
-> +			};
-> +
->   			hs0_mi2s_active: hs0-mi2s-active-state {
->   				pins = "gpio106", "gpio107", "gpio108", "gpio109";
->   				function = "hs0_mi2s";
+>  Co-developed-by: Yongxing Mou <yongxing.mou@oss.qualcomm.com>
 
-Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+How does co-developing match what you wrote "give me support"?
+
+>  Signed-off-by: Yongxing Mou <yongxing.mou@oss.qualcomm.com>
+>  Signed-off-by: Yuanjie Yang <yuanjie.yang@oss.qualcomm.com>
+
+
+
+Best regards,
+Krzysztof
 
