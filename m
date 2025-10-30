@@ -1,165 +1,148 @@
-Return-Path: <linux-arm-msm+bounces-79692-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-79693-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [IPv6:2605:f480:58:1:0:1994:3:14])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5995FC20844
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Oct 2025 15:13:22 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id F3313C20895
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Oct 2025 15:17:00 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 133C54F166D
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Oct 2025 14:05:50 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 8453E3B8351
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Oct 2025 14:15:52 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 025BB20DD75;
-	Thu, 30 Oct 2025 14:05:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id BF3791FDA92;
+	Thu, 30 Oct 2025 14:15:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=armlinux.org.uk header.i=@armlinux.org.uk header.b="Ptv1sTB1"
+	dkim=pass (2048-bit key) header.d=arndb.de header.i=@arndb.de header.b="kcl2qSSA";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="FTuiSQWf"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from pandora.armlinux.org.uk (pandora.armlinux.org.uk [78.32.30.218])
+Received: from fhigh-b2-smtp.messagingengine.com (fhigh-b2-smtp.messagingengine.com [202.12.124.153])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A47E126BF1;
-	Thu, 30 Oct 2025 14:05:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=78.32.30.218
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4A1418871F;
+	Thu, 30 Oct 2025 14:15:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.153
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761833138; cv=none; b=Z/RWrUnXqXMD8mGCcqor0/GP8qixiycHf6r929P7UNuPDi+VDK5AFbSQFOZ85ofpH8ViU3JUxznT6qwCcRLbetNISiQ+siF5sqPOX1slPOCp4/H5+O3of7VGEtvcEJVynAZsg+wJ+OH8cMVqqQnIq13KCvLQLdsIBG71UKs1j74=
+	t=1761833749; cv=none; b=FrgbY2iMHXO0yNq9Xw4Mpp62f0jlFWWU/TnvunU612aYd3ComuWqc8K6Oo+svoy3nECY2ilxuv5iiMDbMMCFrBF2WrJgEmQqloXCRufsUHJQHheIrSyk3Vch72ymQZGO/sKBxZPmOiujgXc7xrUkcxwQAAbPP7SkVPCBB403yxQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761833138; c=relaxed/simple;
-	bh=gjIXAc75/RP5nZGnQMsx/No/z2gzGCR2Q47450c8ODc=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=n2YOgxFOCW1+gHij7bqjmq3w1ONpfbncOzLAzH3ci52LquGokMLJTzvcaGDE4K8d5oBU90gVtj7MAO9aYzaDvjPTjDqMxfD8pO6cYpc60illsYLeB/aWWLOVYZ+SAEtOVAjNSXAdjs8Zf0SZO9cK8nyG7gbMbZnQZO93TEHoCAU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=armlinux.org.uk; spf=none smtp.mailfrom=armlinux.org.uk; dkim=pass (2048-bit key) header.d=armlinux.org.uk header.i=@armlinux.org.uk header.b=Ptv1sTB1; arc=none smtp.client-ip=78.32.30.218
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=armlinux.org.uk
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=armlinux.org.uk
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=armlinux.org.uk; s=pandora-2019; h=Sender:In-Reply-To:Content-Type:
-	MIME-Version:References:Message-ID:Subject:Cc:To:From:Date:Reply-To:
-	Content-Transfer-Encoding:Content-ID:Content-Description:Resent-Date:
-	Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:
-	List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
-	bh=2OmzrOMSFDIHt90ET3ZkdRLGAdOyNAqOFwhfGMiqaV0=; b=Ptv1sTB1FvN4w3/AmTE+DHKcdJ
-	9qbzUW9AZpfAEjAhGR4B7Mxo9VbsMsZZeU/g+Xopioag7LPZJW6zswEvZT7LL5b0M3HyeRwWOd2Kx
-	VeT1LS1G6e9VtdAPVcxMn7UkX2ieaKKDvpyLYpEaB12LbmzqzX3fbD2Xo8BON616ymRPlZOnEwbux
-	11G8K7GphKFonIV/DkS3TTKurtbfQtheo02WpqSVL5PIuAMDk7DyWsG0icfUk7qh/a8LxNzuo4FNs
-	XIF//3ZZp5K5koXa+KtQTmd3nwuylHZ8Gn0K2yDwC/iSgQz8s8rtpHKaX33627Br6a50akKi03bsE
-	nqwjJVcg==;
-Received: from shell.armlinux.org.uk ([fd8f:7570:feb6:1:5054:ff:fe00:4ec]:55264)
-	by pandora.armlinux.org.uk with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-	(Exim 4.98.2)
-	(envelope-from <linux@armlinux.org.uk>)
-	id 1vETHH-000000005mZ-3F8U;
-	Thu, 30 Oct 2025 14:05:23 +0000
-Received: from linux by shell.armlinux.org.uk with local (Exim 4.98.2)
-	(envelope-from <linux@shell.armlinux.org.uk>)
-	id 1vETHE-000000008Vm-0rdp;
-	Thu, 30 Oct 2025 14:05:20 +0000
-Date: Thu, 30 Oct 2025 14:05:20 +0000
-From: "Russell King (Oracle)" <linux@armlinux.org.uk>
-To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Cc: Mohd Ayaan Anwar <mohd.anwar@oss.qualcomm.com>,
-	Alexandre Torgue <alexandre.torgue@foss.st.com>,
-	Andrew Lunn <andrew+netdev@lunn.ch>,
-	"David S. Miller" <davem@davemloft.net>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org,
-	linux-stm32@st-md-mailman.stormreply.com,
-	Maxime Coquelin <mcoquelin.stm32@gmail.com>, netdev@vger.kernel.org,
-	Paolo Abeni <pabeni@redhat.com>, Vinod Koul <vkoul@kernel.org>
-Subject: Re: [PATCH net-next] net: stmmac: qcom-ethqos: remove MAC_CTRL_REG
- modification
-Message-ID: <aQNwoC6aMPMMk4M1@shell.armlinux.org.uk>
-References: <E1vE3GG-0000000CCuC-0ac9@rmk-PC.armlinux.org.uk>
- <7a774a6d-3f8f-4f77-9752-571eadd599bf@oss.qualcomm.com>
- <aQNXTscqFcucETEW@shell.armlinux.org.uk>
- <bb2865b6-6c17-49e4-b18f-b9baad771830@oss.qualcomm.com>
+	s=arc-20240116; t=1761833749; c=relaxed/simple;
+	bh=F1wgaTOkD9whISVF5RbNhnoqw8bQcf8E1idtCKjXn0c=;
+	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
+	 Subject:Content-Type; b=JCvDRXYOzqTm6gB4X5gP9cceGGk0M0j6tkN5lkdNwvJ0I/XYs9sHPZIjxWciv0+OyBLe0bPJ5zl0KA1tb1FGmxy5K+GHTz83joFf89UmnAbLKTJszBndgSRClT5/C6K3VerE9bYc12qNu0rPuoOlEFyg8PPTGZ6DSKnN16CoV6c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arndb.de; spf=pass smtp.mailfrom=arndb.de; dkim=pass (2048-bit key) header.d=arndb.de header.i=@arndb.de header.b=kcl2qSSA; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=FTuiSQWf; arc=none smtp.client-ip=202.12.124.153
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arndb.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arndb.de
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id DD36E7A01F3;
+	Thu, 30 Oct 2025 10:15:46 -0400 (EDT)
+Received: from phl-imap-02 ([10.202.2.81])
+  by phl-compute-04.internal (MEProxy); Thu, 30 Oct 2025 10:15:47 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=arndb.de; h=cc
+	:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1761833746;
+	 x=1761920146; bh=Bcdffpiq94hB8xQFLbaa75mK7VRUJwUPjoKxC4ED+bI=; b=
+	kcl2qSSAtF3mZhbe97M6Dj6HgbewNoFG7oN2uarAFQTo8kldZSrCpjYniL6b/H2L
+	NhR/VJopzoMIQE3pVYn7qgYXPe4y6Ec663AS7DlxxYbHcjI/USIL09sMyCIUlm1w
+	tch9WPw1lm1jaVRzUpLokjU9T1HuMLxeDdNcr2Zv3r0ZMdPK1GYx+8jcLmvfWKxb
+	8R+qulj48mXobLodXMFobo0xnTYEGF3gqPaw+nb7IPpkfbl5clQ6D4i7F2w6C2yW
+	JI7Js+DI7jPn31/HYb1fd2/cGSckTl1wFqt5wHPXl68PEov14cK5t5RVZOprzRXE
+	5JhRrhZckueqBEQ+a0mhHg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1761833746; x=
+	1761920146; bh=Bcdffpiq94hB8xQFLbaa75mK7VRUJwUPjoKxC4ED+bI=; b=F
+	TuiSQWfsSlJ2Qc6wFBNF+VLftUhwqWMgKCDSpQ4tL9dt/M07mBUKnpeXvR7P3Gzl
+	UeNAIBmQmN8ows+9MKIbQ/eW9KxKj8xCLH4MDsWePBbLkh1v9R2ttP8A5xMm1Clv
+	Hx03RaFkzjxengpuFgEpVErD9XuXYViTyCxcTHXJZtBKzzVqaTHo8IT8jDjoW2HY
+	zy9g1pYOlpu3ZL2WlEyvQOY6Aw6CYELvk5gVOoXyt3PvXZNrCg1mC2GhxF3tIJVn
+	Wwo4v2oCNu6EUq6c16uNcT6J75pnHDQf0PFZ0o8aB16hx4iEkLBVkj+9OgeEds+y
+	3nWMEqPriCzh6HXjrYUqA==
+X-ME-Sender: <xms:EnMDacAUHjQ7s8n4OT8LC2fLtkaELROheJwYiohd1xq_tCbo6CvADw>
+    <xme:EnMDaZUpArReTaVDo1hyFC_b-KvmUsTyd9v1R4pcHLVYo6o2hew9P57dODSAoVTif
+    A6vjjpsbMbFDT602GN8fnGTjgoeRLpBg6gVzR_ALh9bLP3SsIZOjw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdduieeikedvucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhepofggfffhvfevkfgjfhfutgfgsehtjeertdertddtnecuhfhrohhmpedftehrnhgu
+    uceuvghrghhmrghnnhdfuceorghrnhgusegrrhhnuggsrdguvgeqnecuggftrfgrthhtvg
+    hrnhephfdthfdvtdefhedukeetgefggffhjeeggeetfefggfevudegudevledvkefhvdei
+    necuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomheprghrnh
+    gusegrrhhnuggsrdguvgdpnhgspghrtghpthhtohepuddupdhmohguvgepshhmthhpohhu
+    thdprhgtphhtthhopegrnhhsuhgvlhhsmhhthhesghhmrghilhdrtghomhdprhgtphhtth
+    hopehrrggrghdrjhgruggrvhesihhnthgvlhdrtghomhdprhgtphhtthhopegrnhguvghr
+    shhsohhnsehkvghrnhgvlhdrohhrghdprhgtphhtthhopehilhhirgdrlhhinheskhgvrh
+    hnvghlrdhorhhgpdhrtghpthhtohepkhhonhhrrgguhigstghioheskhgvrhhnvghlrdho
+    rhhgpdhrtghpthhtoheprhgrfhgrvghlsehkvghrnhgvlhdrohhrghdprhgtphhtthhope
+    hvihhrvghshhdrkhhumhgrrheslhhinhgrrhhordhorhhgpdhrtghpthhtoheprghnughr
+    ihihrdhshhgvvhgthhgvnhhkoheslhhinhhugidrihhnthgvlhdrtghomhdprhgtphhtth
+    hopehlihhnuhigqdgrrhhmqdhmshhmsehvghgvrhdrkhgvrhhnvghlrdhorhhg
+X-ME-Proxy: <xmx:EnMDacmlMpuu-l0sMG6dsWHIA9M9MuhWv19inlmsTKU7fKeVmTlcbw>
+    <xmx:EnMDadZpfespG7-djx1OOlfUQQwP2vIE0cCFFIHzoyst6fqNDqSuYw>
+    <xmx:EnMDaZ7qTl2BO3owF7pdQwXT5AZzG6UCw3mj1hvU5nZ5prreciPqMw>
+    <xmx:EnMDafCqChq34ZTQ-aKKxmaCuWZ53_5c1oSxvC_CTrkNpr-r1ADDaQ>
+    <xmx:EnMDacNcGCDgKGxuEWMDkx_uAURo653_e9L2XXIVrYarUCQaY5XI1Q0G>
+Feedback-ID: i56a14606:Fastmail
+Received: by mailuser.phl.internal (Postfix, from userid 501)
+	id 64074700063; Thu, 30 Oct 2025 10:15:46 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <bb2865b6-6c17-49e4-b18f-b9baad771830@oss.qualcomm.com>
-Sender: Russell King (Oracle) <linux@armlinux.org.uk>
+X-ThreadId: A8oaPjpzjt_R
+Date: Thu, 30 Oct 2025 15:15:25 +0100
+From: "Arnd Bergmann" <arnd@arndb.de>
+To: "Andy Shevchenko" <andriy.shevchenko@linux.intel.com>,
+ "Christian Marangi" <ansuelsmth@gmail.com>
+Cc: "Ilia Lin" <ilia.lin@kernel.org>,
+ "Rafael J . Wysocki" <rafael@kernel.org>,
+ "Viresh Kumar" <viresh.kumar@linaro.org>,
+ "Bjorn Andersson" <andersson@kernel.org>,
+ "Konrad Dybcio" <konradybcio@kernel.org>,
+ "Raag Jadav" <raag.jadav@intel.com>, linux-arm-msm@vger.kernel.org,
+ linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org
+Message-Id: <9f41aee8-49a1-4029-8b21-e4eafaa2e224@app.fastmail.com>
+In-Reply-To: <aQNvjqJGqFO30JTx@smile.fi.intel.com>
+References: <20251029133323.24565-1-ansuelsmth@gmail.com>
+ <aQIzoGnvZWYuHuoQ@smile.fi.intel.com>
+ <69023512.5d0a0220.3cccb7.8e65@mx.google.com>
+ <aQMheocySykpTFDN@smile.fi.intel.com>
+ <69033c55.df0a0220.1a33d7.49ff@mx.google.com>
+ <aQNvjqJGqFO30JTx@smile.fi.intel.com>
+Subject: Re: [PATCH 1/3] err.h: add ERR_PTR_CONST macro
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
 
-On Thu, Oct 30, 2025 at 02:08:41PM +0100, Konrad Dybcio wrote:
-> On 10/30/25 1:17 PM, Russell King (Oracle) wrote:
-> > Konrad, Ayaan,
-> > 
-> > Can you shed any light on the manipulation of the RGMII_IO_MACRO_CONFIG
-> > and RGMII_IO_MACRO_CONFIG2 registers in ethqos_configure_sgmii()?
-> > 
-> > Specifically:
-> > - why would RGMII_CONFIG2_RGMII_CLK_SEL_CFG be set for 2.5G and 1G
-> >   speeds, but never be cleared for any other speed?
-> 
-> BIT(16) - "enable to transmit delayed clock in RGMII 100/10 ID Mode"
+On Thu, Oct 30, 2025, at 15:00, Andy Shevchenko wrote:
+> On Thu, Oct 30, 2025 at 11:22:11AM +0100, Christian Marangi wrote:
+>> On Thu, Oct 30, 2025 at 10:27:38AM +0200, Andy Shevchenko wrote:
+>> > On Wed, Oct 29, 2025 at 04:38:53PM +0100, Christian Marangi wrote:
 
-I guess that means that changing this bit is not relevant for the SGMII
-path, and thus can be removed:
+>> drivers/soc/qcom/smem.c:361:35: error: initializer element is not constant
+>>   361 | static struct qcom_smem *__smem = ERR_PTR(-EPROBE_DEFER);
+>>       |                                   ^~~~~~~
+>> make[9]: *** [scripts/Makefile.build:229: drivers/soc/qcom/smem.o] Error 1
+>> 
+>> You want me to add this to the commit? Or any hint to better reword this
+>> so it's more understandable?
+>
+> Just the first line would be enough.
+> And perhaps better naming for the macro, but I have no ideas from top of my
+> head right now. Ah, actually I do. We call those either INIT_*() or DEFINE_*()
+> with the difference that INIT_*() works like your proposed idea. i.e. returns
+> a suitable value, but DEFINE_*() incorporates a variable and a type.
+>
+> I think the INIT_ERR_PTR() is what we want as a name.
 
-        switch (speed) {
-        case SPEED_2500:
--               rgmii_updatel(ethqos, RGMII_CONFIG2_RGMII_CLK_SEL_CFG,
--                             RGMII_CONFIG2_RGMII_CLK_SEL_CFG,
--                             RGMII_IO_MACRO_CONFIG2);
-                ethqos_set_serdes_speed(ethqos, SPEED_2500);
-                ethqos_pcs_set_inband(priv, false);
-                break;
-        case SPEED_1000:
--               rgmii_updatel(ethqos, RGMII_CONFIG2_RGMII_CLK_SEL_CFG,
--                             RGMII_CONFIG2_RGMII_CLK_SEL_CFG,
--                             RGMII_IO_MACRO_CONFIG2);
-                ethqos_set_serdes_speed(ethqos, SPEED_1000);
-                ethqos_pcs_set_inband(priv, true);
+Agreed, that seems better than ERR_PTR_CONST(). I'm still not sure
+there is much benefit in using this in static initializers, but
+I don't mind it either.
 
-> > - why is RGMII_CONFIG_SGMII_CLK_DVDR set to SGMII_10M_RX_CLK_DVDR
-> >   for 10M, but never set to any other value for other speeds?
-> 
-> [18:10] - In short, it configures a divider. The expected value is 0x13
-> for 10 Mbps / RMII mode
-
-This gets confusing. Is the "/" meaning "10Mbps in RMII mode" or "10Mbps
-or RMII mode".
-
-> which seems to have been problematic given:
-> 
-> https://lore.kernel.org/all/20231212092208.22393-1-quic_snehshah@quicinc.com/
-> 
-> But it didn't say what hardware had this issue.. whether it concerns a
-> specific SoC or all of them..
-> 
-> A programming guide mentions the new 0x31 value for 10 Mbps in a
-> SoC-common paragraph so I suppose it's indeed better-er.. Perhaps issues
-> could arise if you switch back to a faster mode?
-
-Could the 0x13 be a typo? Its suspicious that the two values are 0x13
-vs 0x31. 0x13 = 19 vs 0x31 = 49. 0x31 makes more sense than 19.
-
-The platform glue is required to supply clk_rx_i to the dwmac's MAC
-receive path, deriving it from the 125MHz SGMII rx link clock divided
-by 1, 5 or 50. Normally, this would be done by hardware signals output
-from the dwmac.
-
-This suggests that the value programmed is one less than the actual
-divisor.
-
-There's two possibilities why this value needs to be programmed:
-
-1. the hardware doesn't divide the SGMII rx link clock according to
-the hardware signals output from the dwmac, and needs the divisor to
-be manually programmed. This would require the divisor to also be
-programmed to 4 for 100M (but the driver doesn't do this.)
-
-2. the hardware selects the clk_rx_i depending on the hardware
-signals, and while 1G and 100M use a fixed divisor of 1 and 5, the
-10M divisor needs to be manually programmed.
-
-Any ideas what's really going on here?
-
--- 
-RMK's Patch system: https://www.armlinux.org.uk/developer/patches/
-FTTP is here! 80Mbps down 10Mbps up. Decent connectivity at last!
+    Arnd
 
