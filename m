@@ -1,137 +1,162 @@
-Return-Path: <linux-arm-msm+bounces-79569-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-79570-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [142.0.200.124])
-	by mail.lfdr.de (Postfix) with ESMTPS id 75BE8C1E90D
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Oct 2025 07:31:57 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id A3503C1E9C7
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Oct 2025 07:42:36 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 3C03A4E06D8
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Oct 2025 06:31:56 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id DCEEE3A6504
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Oct 2025 06:42:22 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1123926B2C8;
-	Thu, 30 Oct 2025 06:31:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 249233161AA;
+	Thu, 30 Oct 2025 06:42:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="lYXNZEWP"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Tabvp9PK"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pf1-f171.google.com (mail-pf1-f171.google.com [209.85.210.171])
+Received: from mail-pf1-f182.google.com (mail-pf1-f182.google.com [209.85.210.182])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B55C1C5F10
-	for <linux-arm-msm@vger.kernel.org>; Thu, 30 Oct 2025 06:31:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96F302D6621
+	for <linux-arm-msm@vger.kernel.org>; Thu, 30 Oct 2025 06:42:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761805914; cv=none; b=Uoj7R8LvKQSGAp5rmrpWbQ3y/alSwaXmW8ky7jCZuf4a0voUCKFnb0sbBxtqefGv/Orha064d5ytcU23O3Vy9rRAM9PpsrD6wKMTPTzIEEHnrW2IdS161d2gBVaKDS94u1eQHZUcc/cFQK54oQf/1lPlZjviTwBWFlVDN51CFAM=
+	t=1761806538; cv=none; b=prujJKEPerhqasFzMba2uv9LDf3U4cyn/zYh/m/oMPdxSLM7hDUTrWdzWvFqiyBDYUKchWysN6ZveOYzaczUInb1jvyc4y9LhIsELSt2H+TlePa833tlO7K4xXPHdmEFr/IyBEf7pONGiwspj/UauV/qQ/FSzOoENDmIhFrF6+g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761805914; c=relaxed/simple;
-	bh=EvEXTz0KOxz6r+4dee3gAhObDEZ9RzGv4u6rNYbYStE=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=hCHdXqoDbtFal5WX/qj+PFmwlQ1NrgvdHwJ91wPzagTnuTskYmGmnEzMwQOIJgKcTpy7d6GWErTmJ7MK8jfA7SS9WrWkMmQd0oy4qei5L0beGB1FSnfyl8ssBD38TfY12iwpk1Fs2zWH+dRRzQP+cGenyRzm1+NWWq8P4ayLKjo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=lYXNZEWP; arc=none smtp.client-ip=209.85.210.171
+	s=arc-20240116; t=1761806538; c=relaxed/simple;
+	bh=KFL6e2ujHzlwRceia8Vws/XVx5/XFIOpDBRlOGYMYe4=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=NUzf1mc/NDDtuClmvK+asTYbSBrBcUMkllGYkwkZbYYpfNq8OzAR9DeJ9JovZxGIvBzJGtGULdKFCb1mAqxQke096DjBHL1oZSPi4mVgmCHcGIct8m9S/tECPD2LesXfbtdTFXm5iFwVkNm78JcG5tJmtfNdTYQNJK/XFlgLeoA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Tabvp9PK; arc=none smtp.client-ip=209.85.210.182
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-pf1-f171.google.com with SMTP id d2e1a72fcca58-79af647cef2so717458b3a.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 29 Oct 2025 23:31:52 -0700 (PDT)
+Received: by mail-pf1-f182.google.com with SMTP id d2e1a72fcca58-7a1603a098eso472011b3a.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 29 Oct 2025 23:42:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1761805912; x=1762410712; darn=vger.kernel.org;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=IteJbnpQxtDfi0VoQZa3f0/zEOSuD+t4NwFKFFHXmzw=;
-        b=lYXNZEWPQraeOzIeTVwCFgh6o5YTNq80RGG4/gq7uj8JddmmstXd8U+mguhWFGk8co
-         rCv59mC+2iIJNI6LRsFbHVKXOZNNkFUcaKsbiipN6yaQhqquD3WVtrc4SFpW+W3ggGx9
-         41lAXBRok5aK7YElkCPQSf+FKYEeCPQpDKBfG8iBtkUFdhCXMRko04k2xVrudPs8IZn5
-         2OUtVGJ5Ay04EEqplI31FiJtA7J0pVp0XP2vfUr8HoKHZDQ2tfbRn9E/RgwcKUIUjvgt
-         FSiREuPyfdNnDp2DPhPXF8/e0mdMSUZTPrdOiJKmauPHn4/pkq1DkKMQnEP/Thgwb7gu
-         XJ4Q==
+        d=gmail.com; s=20230601; t=1761806535; x=1762411335; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=XRjmjhwgFo6DAjuANvJLlsLw1oA4anFVQb7lf99MW8g=;
+        b=Tabvp9PKtWQvryaOGEEYvBaI90/gC6E87uEb5y2HZWeqdnDrsFIgpTv5LoyB+i9/qb
+         0JIJDtkO+VIP7pEnSA6jRdfrXkt5dHPZxXgDH1MVn6YivNdc/c2yK2kFmf3YmNANIW54
+         0AI7N2JLBgOiqGDnY4JTdtzvoW25TG7nUAHSdRN2eb8HnQpxcBwddycMxcBYUeViy0rY
+         Jknf6mlXgbkOlyMgOT/MuiG6oYvg/IxIk0nqeII3t40BRk5XC2HqqZHxrwZBbwJBysd9
+         GUxmz5cPpLY8FHOhgy/z4mlhav0uolUW6N2CX+aeaTwatmSROCUqwmwgmthpxEJYhA+9
+         wJ7Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1761805912; x=1762410712;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=IteJbnpQxtDfi0VoQZa3f0/zEOSuD+t4NwFKFFHXmzw=;
-        b=sGx1wagOHlORyACL3Mc2G+j1wGkT5WnxwTCdfHKv9juhGGC8DDvF5mdEZczsY6rz1X
-         N62Wnmym4Maj4ZuYqIF23pb7D/66B5uyVuFTfuo8ioY4RkesGyO8PiN/kznc697PZK/G
-         l7NrxTvqdylUjk+PtZP8plKJix++2WiHqV6yEYhCdIdy0UR7MXVu5qV1DCyl5unF65hg
-         wU3WhiYK5QPIIO7qdBB6AGYwqDeiKuw+VQcNgUJvDNaINaRmDGABSVWifk57A6eGZOAQ
-         3t4vZYA42zcw96IGTqZE4VBQvYa4hK3jgaG0WFsefmkLA7mBekTPpi/0jJiuv3m2TlIb
-         YeiQ==
-X-Forwarded-Encrypted: i=1; AJvYcCUvjXShSBaDOBQTQmBob9rMsCxOGspyfM9X+kzI/kKyX2GNddW61rRhYhBJDflP2nqpVYSMbIVNr8MbVHLv@vger.kernel.org
-X-Gm-Message-State: AOJu0YzQC78iTJozTdwVRGvO8YdpxhR0mi6Cp3o4G79ZAXZDghO7mMI8
-	+mPvpmALu8DNgh05QSsqubjJF3ag8v1uT5mJUURTvDeKZl2EN2HotpvS
-X-Gm-Gg: ASbGncuKmtAYUKGS3Wkry5ird8y4Mif2nFjKaNq/2z2f1I9cXyNcLVL4tmEtznt/Hqu
-	inj5lu2OBj4Nv187SXPRTDI3Dx1uG8AKRYPNh0rVLVvtnD280XOzBlfoD8IuLKIELBDa+7cKZPv
-	rxGuRHehHiMMmy4qeEDDjkokH5l5XdIO0PHSpmWA9rd2FdqximlMGMhD/bZ82OUZhil6qn9j/l0
-	vwR7wkFX9UzdC9PXCZZv5FKXaEk2+c8H/IXnJ6xnHJiIrmUKHTxhuVwSYt2YimNXqBt1o1UxYRv
-	iudEKc4tBEAxNFO5bBEdPYyDh9AqfJKA6UpaR5bOFUiyJTsGDxoq7d2buJiPzvPl1TUiF/9ZNTN
-	nQr29dDfjZiUrbXD5H4fAaGipAERN1Lg+qHUUAvAReDLNZ3lcZn5xqs8q8XIfQQkVvlY4drOrpE
-	6EcoBCcpdCMN+oh26NkIEe9oeJkZVC8Jv8DkmeE4DdIVhQXtBKob3Jzco=
-X-Google-Smtp-Source: AGHT+IHNvKCn04TUtBKiitaic4J2q30Yzc+qOqNpAkIf4/fyYDmwz0RWuqOmy8D+jYX31HnPUWKBbQ==
-X-Received: by 2002:a05:6a00:2e23:b0:780:f6db:b1bd with SMTP id d2e1a72fcca58-7a62a361761mr2569135b3a.4.1761805911695;
-        Wed, 29 Oct 2025 23:31:51 -0700 (PDT)
-Received: from stravinsky.localdomain (ip72-203-100-4.oc.oc.cox.net. [72.203.100.4])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-7a414049a44sm17200296b3a.35.2025.10.29.23.31.50
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 29 Oct 2025 23:31:51 -0700 (PDT)
-From: Jessica Zhang <jesszhan0024@gmail.com>
-Date: Wed, 29 Oct 2025 23:31:45 -0700
-Subject: [PATCH] mailmap: Update Jessica Zhang's email address
+        d=1e100.net; s=20230601; t=1761806535; x=1762411335;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=XRjmjhwgFo6DAjuANvJLlsLw1oA4anFVQb7lf99MW8g=;
+        b=WBZqZgFw7ryUJOTJWPZvwpBOl1rvyO0kxFpsnnJp/WI9aqMLHinYTwlmvaPAVU9i3Y
+         RRZauv+4r9png1n2Xw9QQi6m8LbP4SgN1JPf0zT69j1YKyXmgpAtt3G9hb81kdsHRbtx
+         c/E/HzIu1h5YKE/HwzsoycNnlTBA2D526JhQEgD5pUwsTTL8ygtOBXt/CitLUQQgbH9a
+         fQJDuhu6w5OLcj2b9kLoQzgKElyao0wuNDCBbW9zyOayyPYJ87hu541SU7qnRwJ7yBnH
+         uaWyaScsEse21MgeQ6A3CzNtaTOIu4Ne7XHlQ0IRCV0cuaNIiF+Q8lEcO+1f7OILp4NX
+         CqpA==
+X-Forwarded-Encrypted: i=1; AJvYcCVe12LxbALHV8GdtL0NS7OrKat+fkJCsf3lPHjJXYXWxj5wVa9fAtjgfVvpYz3jpzhhFShjzkYy4vO76WTi@vger.kernel.org
+X-Gm-Message-State: AOJu0YxoTBCwWg5eZK6QXE6XPKd4q05nJpGqVvi5xSlg57llMVxIJITD
+	C/u4m4hgFHSPdH2xedKBg1NOJkBiI24i1ef/IIAJZBsicUT93TOF8xmX
+X-Gm-Gg: ASbGncttrcVnfflLZWrHvWhPg7Kph6iYALDPkOEyFrqsKE/xWKfLd98aBTjYjXBGb9z
+	4pUBYVpsT21XE6QmoGhVgfs5A32CTdjyORMl0u48S5PhcwcKGS2WhHR021zc+eOWxi2YWiKAYrd
+	FRs+UiLgBNGxwYUG4URT39sd3KVuvl04T31miXagc2h8EgJN8/eV1QE8+xedlQOxxEJbBAh4fBL
+	5s6DvXLuMOeH4K1vLEJ1yp/OK735Qaq/uqaLIJHyXiRs7Y+8terih0VZtlz+RBxSEFI/IyP9kCz
+	f2t/TSv3HjSQDWN0UnpwnfuHSo9FbqSE5MT6c0zF9rZlkm0sBGWzPmyVV5TZhgfTrN5Ugr+/ALD
+	NXIKjTNDN3bYa5/6SUAVpVtyRUZlyZRw9n9enp9ZGXhuD9/U4XTUrUxnjqGbALUoVZAwD6CXbPp
+	ALhOnknUr6TJIENtLCkDnvj6dPUQcxaBjB4o60NdeCiUBh7c872tHPmw==
+X-Google-Smtp-Source: AGHT+IHhNxsrwPO8GFNjwbeDLO66xSVyMs6+J042HgogOYR3N9tX6avqO0/30+zi499pUFsIKhHa2g==
+X-Received: by 2002:a05:6a21:3287:b0:334:9649:4754 with SMTP id adf61e73a8af0-3465293bf63mr7104225637.13.1761806534844;
+        Wed, 29 Oct 2025 23:42:14 -0700 (PDT)
+Received: from ?IPV6:2600:8802:702:7400:90ae:1623:a8e:9839? ([2600:8802:702:7400:90ae:1623:a8e:9839])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-7a4140168f7sm17329517b3a.11.2025.10.29.23.42.13
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 29 Oct 2025 23:42:14 -0700 (PDT)
+Message-ID: <89dbc85f-631e-4402-aca6-128e2cce399b@gmail.com>
+Date: Wed, 29 Oct 2025 23:42:13 -0700
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20251029-mailmap-fix-v1-1-8534ffa12ed3@gmail.com>
-X-B4-Tracking: v=1; b=H4sIAFAGA2kC/x2MQQqAIBAAvyJ7TlDTkL4SHcS2WkgThQjEvycdZ
- 2CmQsFMWGBmFTI+VOiOHeTAwJ8uHshp6wxKKCOFsjw4uoJLfKeXG6FH7Y22Vk7Qi5Sx6/+2rK1
- 9ezZC/V0AAAA=
-X-Change-ID: 20251028-mailmap-fix-50434c548816
-To: neil.armstrong@linaro.org, lumag@kernel.org, 
- robin.clark@oss.qualcomm.com
-Cc: linux-kernel@vger.kernel.org, dri-devel@lists.freedesktop.org, 
- linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org, 
- Jessica Zhang <jesszhan0024@gmail.com>
-X-Mailer: b4 0.15-dev-509f5
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1761805910; l=1226;
- i=jesszhan0024@gmail.com; s=20251028; h=from:subject:message-id;
- bh=EvEXTz0KOxz6r+4dee3gAhObDEZ9RzGv4u6rNYbYStE=;
- b=4AiNnU52GcTLFxFVrVFNRtBIYgDMcsTe1X5gNVFGem6rW0dpFbRAMuLF/g8ZuCZZ4pAV7ZETd
- /Cm12ZhzY7PD6ExKeMtG+CG5/e/RDBmWXFODJU9FyALDeZ1gLr62emS
-X-Developer-Key: i=jesszhan0024@gmail.com; a=ed25519;
- pk=Qjsztzh+H8Xz0uqVst7N2PHX5Vnd3JXONpkaTHqk/Pk=
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] MAINTAINERS: Update Jessica Zhang's email address
+To: Neil Armstrong <neil.armstrong@linaro.org>,
+ Jessica Zhang <jessica.zhang@oss.qualcomm.com>,
+ Dmitry Baryshkov <lumag@kernel.org>, Rob Clark <robin.clark@oss.qualcomm.com>
+Cc: linux-kernel@vger.kernel.org, dri-devel@lists.freedesktop.org,
+ linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org
+References: <20251002-quit-qcom-v1-1-0898a63ffddd@oss.qualcomm.com>
+ <6eedef19-5473-4c09-bae5-04490f711d9e@linaro.org>
+Content-Language: en-US
+From: Jessica Zhang <jesszhan0024@gmail.com>
+In-Reply-To: <6eedef19-5473-4c09-bae5-04490f711d9e@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-Update mailmap to point to my current address
+On 10/15/2025 12:26 AM, Neil Armstrong wrote:
+> Hi,
+> 
+> On 10/3/25 01:57, Jessica Zhang wrote:
+>> My current email will stop working soon. Update my email address to
+>> jesszhan0024@gmail.com
+>>
+>> Signed-off-by: Jessica Zhang <jessica.zhang@oss.qualcomm.com>
+>> ---
+>>   MAINTAINERS | 4 ++--
+>>   1 file changed, 2 insertions(+), 2 deletions(-)
+>>
+>> diff --git a/MAINTAINERS b/MAINTAINERS
+>> index 7e7515a412e9..7a712ded8f9f 100644
+>> --- a/MAINTAINERS
+>> +++ b/MAINTAINERS
+>> @@ -7652,7 +7652,7 @@ DRM DRIVER for Qualcomm display hardware
+>>   M:    Rob Clark <robin.clark@oss.qualcomm.com>
+>>   M:    Dmitry Baryshkov <lumag@kernel.org>
+>>   R:    Abhinav Kumar <abhinav.kumar@linux.dev>
+>> -R:    Jessica Zhang <jessica.zhang@oss.qualcomm.com>
+>> +R:    Jessica Zhang <jesszhan0024@gmail.com>
+>>   R:    Sean Paul <sean@poorly.run>
+>>   R:    Marijn Suijten <marijn.suijten@somainline.org>
+>>   L:    linux-arm-msm@vger.kernel.org
+>> @@ -8325,7 +8325,7 @@ F:    drivers/gpu/drm/clients/drm_log.c
+>>   DRM PANEL DRIVERS
+>>   M:    Neil Armstrong <neil.armstrong@linaro.org>
+>> -R:    Jessica Zhang <jessica.zhang@oss.qualcomm.com>
+>> +R:    Jessica Zhang <jesszhan0024@gmail.com>
+>>   L:    dri-devel@lists.freedesktop.org
+>>   S:    Maintained
+>>   T:    git https://gitlab.freedesktop.org/drm/misc/kernel.git
+> 
+> Could you also update .mailmap in a follow-up patch ?
 
-Reported-by: Neil Armstrong <neil.armstrong@linaro.org>
-Signed-off-by: Jessica Zhang <jesszhan0024@gmail.com>
----
- .mailmap | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+Hey Neil,
 
-diff --git a/.mailmap b/.mailmap
-index b77cd34cf852..1c57bd649f04 100644
---- a/.mailmap
-+++ b/.mailmap
-@@ -352,7 +352,9 @@ Jesper Dangaard Brouer <hawk@kernel.org> <hawk@comx.dk>
- Jesper Dangaard Brouer <hawk@kernel.org> <jbrouer@redhat.com>
- Jesper Dangaard Brouer <hawk@kernel.org> <jdb@comx.dk>
- Jesper Dangaard Brouer <hawk@kernel.org> <netoptimizer@brouer.com>
--Jessica Zhang <quic_jesszhan@quicinc.com> <jesszhan@codeaurora.org>
-+Jessica Zhang <jesszhan0024@gmail.com> <jesszhan@codeaurora.org>
-+Jessica Zhang <jesszhan0024@gmail.com> <quic_jesszhan@quicinc.com>
-+Jessica Zhang <jesszhan0024@gmail.com> <jessica.zhang@oss.qualcomm.com>
- Jilai Wang <quic_jilaiw@quicinc.com> <jilaiw@codeaurora.org>
- Jiri Kosina <jikos@kernel.org> <jikos@jikos.cz>
- Jiri Kosina <jikos@kernel.org> <jkosina@suse.cz>
+Sorry for missing this earlier -- I've posted the follow-up here [1].
 
----
-base-commit: b5bad77e1e3c7249e4c0c88f98477e1ee7669b63
-change-id: 20251028-mailmap-fix-50434c548816
+Thanks,
 
-Best regards,
---  
-Jessica Zhang <jesszhan0024@gmail.com>
+Jessica Zhang
+
+[1] 
+https://lists.freedesktop.org/archives/freedreno/2025-October/041998.html
+
+> 
+> Thanks,
+> Neil
+> 
+>>
+>> ---
+>> base-commit: b5bad77e1e3c7249e4c0c88f98477e1ee7669b63
+>> change-id: 20251002-quit-qcom-5125b64a86aa
+>>
+>> Best regards,
+>> -- 
+>> Jessica Zhang <jessica.zhang@oss.qualcomm.com>
+>>
+> 
 
 
