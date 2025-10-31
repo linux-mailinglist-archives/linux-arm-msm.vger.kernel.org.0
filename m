@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-79817-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-79818-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 02794C23B65
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 31 Oct 2025 09:13:21 +0100 (CET)
+Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [IPv6:2605:f480:58:1:0:1994:3:14])
+	by mail.lfdr.de (Postfix) with ESMTPS id 14F5FC23C0E
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 31 Oct 2025 09:21:08 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id DD5B81887D46
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 31 Oct 2025 08:12:23 +0000 (UTC)
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id AAED04FB298
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 31 Oct 2025 08:12:14 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9073F32C935;
-	Fri, 31 Oct 2025 08:08:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3377132D428;
+	Fri, 31 Oct 2025 08:08:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Q7/oHaJ/"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="HJVdP4RK"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 632B21F5434;
-	Fri, 31 Oct 2025 08:08:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 081BD32D0CF;
+	Fri, 31 Oct 2025 08:08:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761898103; cv=none; b=JpMR8FuvEKE/7R7n1y0Sz6R44FPToyPaIjFEMZ/A3Vf8uhHY3Mx1maq2Y4nSGNoU8CWrCyNz0wQE8g32I3BMDW1Tt3i4h9EpDBddu5euQdUG4B3ulxP3bxmR6iaObhXrxFFtLx3o7dkWkrgBPz4vdjd5owTMzTRMBHC0OrqblxA=
+	t=1761898137; cv=none; b=EmcF5dvKbdxwyPKyUS5YqQa9Wx7nJ6TgMktvy+WOwwWnn4RX7MaXGq60SXG+HVTrQtYaPz8vRByl6kZ8d4xRCdCg1Vci1/EF1ZsJhi71AAeVHQZ6sRN5K+wl5JHuj3LqwiJ6q1C3tTUE6WD/9mAMT7mrheBFrX/gGrRrfqydxaA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761898103; c=relaxed/simple;
-	bh=++c7LihlAFHlX/OqBlYmmrd9NIDZgxsqZULOGae0Cas=;
+	s=arc-20240116; t=1761898137; c=relaxed/simple;
+	bh=FhQQXKDVOjBqZ4fc/gTEqlVb+NdLl39P8rDDO+gqBkI=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=JzOa686x/bfTcBuz5bwdU8wiDj3V5acNnmUZGPC4RU+p56Uv6M/3QmtTIOA5V2zKT/eM5G5MPessXNTayS/Epgw9S9Jgw/6Z3AV4xPHmzyGvBciziFnq96D/QPX9E3BQzQagjB23Hk6zWoqu2XgkclbR5ODQOdolRh1XWeIofXc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Q7/oHaJ/; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF1D6C4CEE7;
-	Fri, 31 Oct 2025 08:08:19 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=asRwjbVRgMmnwX9yXbbR8vOrQj9qb6611bpBzVbt9Tlxq69h/X1z54WHC3HHbaRK2H7wYnciAMTh2jquWDDotcAE0CRPasFY1ro13/mYZhnfwWnfgZpNG1k4X0TQmzZqiOfoRSVIPUPqmTSs8r2xv8pLl9dCKnIDhv3L09HLoUk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=HJVdP4RK; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BEE2FC4CEF8;
+	Fri, 31 Oct 2025 08:08:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1761898102;
-	bh=++c7LihlAFHlX/OqBlYmmrd9NIDZgxsqZULOGae0Cas=;
+	s=k20201202; t=1761898136;
+	bh=FhQQXKDVOjBqZ4fc/gTEqlVb+NdLl39P8rDDO+gqBkI=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=Q7/oHaJ/O6BI6DRc0MnjRwxj6N0cWi+lfwOWPgv4gqurGLGtFHdIIiWLNMC20liFx
-	 t5dr1G4CR6BNAf34A9pF5A5u6aZhr+5zB6qxtpINGr+sgqKbslLgxQijYyYmmjwwqJ
-	 05LJfGRN8HhOy1V0rkYR7ULgv7o0UztOvrhpGscGLa4yHL9BYFmMVWBTcCB1ZUQD7x
-	 n+DTTrqVb+pLMnjiUyJrVEmjwcIiRQp8zNm1t++7Hb7SDhPnDJbT076Dq7WMR7GTcm
-	 Yffs7lRGokKnLdbvAXeYf32MCctsbCdQb6+heHtit9x09Z4hvwXBawIV42DsLfM6Jm
-	 IXUZxDdH46QTg==
-Message-ID: <73d1b845-2c2e-4139-a19e-e57c2de759f8@kernel.org>
-Date: Fri, 31 Oct 2025 09:08:17 +0100
+	b=HJVdP4RKtr3xtBUkV+2aEx4ouM2wMrISa0MCaDCFYRtwin4jxx0PmB/uUSk9NKZ51
+	 BeB7A0tcvQw7wQamrrPdI8x4iWp1Sihn0MmtOPdXShFzaeelOwLLVTYTfxTZQacP8Z
+	 V4mWc4Q8PPNTnAmDwpI/37AglNYptVh2azoTzt70IpZJRLKtn2xL+RC1XTP5V1yNLz
+	 d5+1P2xrCTXmoQTg7rVr2mdIlNCanpqMwYCCNrul528udV3isvJ/mGVx44bgXONByG
+	 GTVDRo1Jp9/hyPGA6yOREuDKcj1YimTZnoNtB0zgrA1rqCZrjG7IPYncpQvzCeZ9eh
+	 MpNiFpn8fDx5A==
+Message-ID: <5dd00a7b-56b1-486f-bfca-dc77838c66c7@kernel.org>
+Date: Fri, 31 Oct 2025 09:08:50 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,8 +50,8 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 1/3] dt-bindings: mailbox: qcom: Add IPCC support for
- Kaanapali and Glymur Platforms
+Subject: Re: [PATCH v3 3/3] arm64: dts: qcom: Add header file for IPCC
+ physical client IDs on Glymur platform
 To: Jingyi Wang <jingyi.wang@oss.qualcomm.com>,
  Manivannan Sadhasivam <mani@kernel.org>,
  Jassi Brar <jassisinghbrar@gmail.com>, Rob Herring <robh@kernel.org>,
@@ -61,7 +61,7 @@ Cc: aiqun.yu@oss.qualcomm.com, tingwei.zhang@oss.qualcomm.com,
  linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
  devicetree@vger.kernel.org, Sibi Sankar <sibi.sankar@oss.qualcomm.com>
 References: <20251031-knp-ipcc-v3-0-62ffb4168dff@oss.qualcomm.com>
- <20251031-knp-ipcc-v3-1-62ffb4168dff@oss.qualcomm.com>
+ <20251031-knp-ipcc-v3-3-62ffb4168dff@oss.qualcomm.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -107,19 +107,23 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  jWt87ecuHlpL3uuQ0ZZNWqHgZoQLXoqC2ZV5KrtKWb/jyiFX/sxSrodALf0zf+tfHv0FZWT2
  zHjUqd0t4njD/UOsuIMOQn4Ig0SdivYPfZukb5cdasKJukG1NOpbW7yRNivaCnfZz6dTawXw
  XRIV/KDsHQiyVxKvN73bThKhONkcX2LWuD928tAR6XMM2G5ovxLe09vuOzzfTWQDsm++9UKF a/A=
-In-Reply-To: <20251031-knp-ipcc-v3-1-62ffb4168dff@oss.qualcomm.com>
+In-Reply-To: <20251031-knp-ipcc-v3-3-62ffb4168dff@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
 On 31/10/2025 08:41, Jingyi Wang wrote:
-> Document the Inter-Processor Communication Controller on the Qualcomm
-> Kaanapali and Glymur Platforms, which will be used to route interrupts
-> across various subsystems found on the SoC.
+> From: Sibi Sankar <sibi.sankar@oss.qualcomm.com>
 > 
-> Co-developed-by: Sibi Sankar <sibi.sankar@oss.qualcomm.com>
+> Physical client IDs are used on Glymur Inter Process Communication
+> Controller (IPCC), add a corresponding header file.
+> 
 > Signed-off-by: Sibi Sankar <sibi.sankar@oss.qualcomm.com>
 > Signed-off-by: Jingyi Wang <jingyi.wang@oss.qualcomm.com>
 > ---
+>  arch/arm64/boot/dts/qcom/glymur-ipcc.h | 68 ++++++++++++++++++++++++++++++++++
+>  1 file changed, 68 insertions(+)
+> 
+
 
 
 Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
