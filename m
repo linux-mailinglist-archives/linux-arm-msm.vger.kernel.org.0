@@ -1,279 +1,180 @@
-Return-Path: <linux-arm-msm+bounces-79797-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-79798-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id BF1BDC23414
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 31 Oct 2025 05:38:12 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8E8DFC234DD
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 31 Oct 2025 06:51:21 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 623413BDC24
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 31 Oct 2025 04:38:01 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 2B2353BBFF7
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 31 Oct 2025 05:51:20 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8E4B0264628;
-	Fri, 31 Oct 2025 04:37:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0900E2D8780;
+	Fri, 31 Oct 2025 05:51:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="ciC/AbC6";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="IneYiMYC"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="YhdjMjkR";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="NY3SG1K6"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D302228E0F
-	for <linux-arm-msm@vger.kernel.org>; Fri, 31 Oct 2025 04:37:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CE0428C854
+	for <linux-arm-msm@vger.kernel.org>; Fri, 31 Oct 2025 05:51:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761885479; cv=none; b=Zz/4BkD+rpt+tRBTcBDPOnsJXT3OkJoLY2LSQrpaQRtC1uFCT0T75uPBEEEqEjcduP2cztf2QY/CUyZIKhBLpR43Wmx6NGetivYLaU/VE9HwyX00IjGbuLyRX9elqZN9jWS/YxSU3vfeoeUJAq1R4rYmgoMpFD8WqNfqbm6y6Yo=
+	t=1761889875; cv=none; b=LRpwAAg475i9Lnk4S2jdZRS7+pQw8iEMzPszQ++BCi0AxoeBLMb+dnc7epM5883gABUnTJdYRlGi5toe5RwGzg0Z1UzjLlbr+hBlLekEsqyDPAdn/Mw4OsoCwD6g6hGioO1JKBXqd6/Coi+vaO/l5uF4DTOSSXzQBqAN8hGEKyc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761885479; c=relaxed/simple;
-	bh=lz8UJArWZf8I78gBwEgNke/Fv1gGmVwpNOHFfRqtBU0=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=pDYOI1DC36nmmB5FqpT3LeZ349oHrVHbeo5vr5nguMYPchYXc4MBTebZBUalGy5J9zie3nJ3hhwgrhfLpue0k88rRo9ilQms8s0O/JgyHvgPyW+q4/Hf/TjSTgZp04TgR9q93TskmjGi6GPPjNkWCDbShoVRzUvm4GtmGyqMizs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=ciC/AbC6; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=IneYiMYC; arc=none smtp.client-ip=205.220.180.131
+	s=arc-20240116; t=1761889875; c=relaxed/simple;
+	bh=KZQc1ncWK/NT2o7uMwShWY8VsLBHjt4vtFQesS4qSnc=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=cl4Ial9rJaSWA87TjNeiq8C329kAJK7/jX3Mw8jtYP8URqeOX6B1mutJvvn33CZTzuFxM7+kXqKYP3zjAQVc7KurnnnTOlJH2ima9bZGv6oFMjdjb/cxs7NhLxe0gM1MMQvVBB1bhhTPw47nWo/zNrrm3qhcd5T32zNIc4zfATc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=YhdjMjkR; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=NY3SG1K6; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 59V4Ldr11826784
-	for <linux-arm-msm@vger.kernel.org>; Fri, 31 Oct 2025 04:37:56 GMT
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 59ULCZet873191
+	for <linux-arm-msm@vger.kernel.org>; Fri, 31 Oct 2025 05:51:11 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	geQUANiKRrxXij24pr7zkM3LfP5MoWomVGycUWLTn0g=; b=ciC/AbC6Jpe2HBOi
-	u4WGGlWQ8ls/hbmimghClU6mGG67tqkwr+eHIlaNCWHRhFVyVoWSfz1hy41n0m2K
-	cwfL5Wt0Iy1K/jUuER+aZucRWg/7eVDyFM0jMeitEl55/t3M0gz5/Rf4/UmSpiYA
-	href+FtpjLnCkWnNqF4qUYOZrCpWncOVdjqGwiV3E01h0XslyG+LGVc6fQCR74zr
-	+XVn9skPOwtRkmWppY4dSi681XNVWP2mfcKn3sCJxP17tXDnUXolw0k5Oh6keGrF
-	3/1R4go6BnH3X3jbxaGHt5jgVovRfgkjtK4Oyd87CBBCyJ/rCBbLnF7Hwi6wlEiX
-	Mpytig==
-Received: from mail-pl1-f197.google.com (mail-pl1-f197.google.com [209.85.214.197])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4a4p11r10f-1
+	cc:content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=qcppdkim1; bh=SBgEdDykoflUBh7hLEHm4Z
+	XfYOUKbHHXMD2Uykw33H8=; b=YhdjMjkRJzdGmDoP4NnXi8Lar0Oiqy/6yhuzsw
+	pwn6mD3d31NdYTjliTfZSzx5AXQ8EXIsf6IYs6EO7lQ0vhroJEZoLLo7v1ylNhyd
+	+nTqsls65Wx52fKI7pfGD6eOMZ6CG9t2f/mFmng95Z+0XOKPDrvAb1CUIEqtjEPJ
+	PZHFEt+1eqyMwSYwvrUaQ0YQOdzU++uDstQwrbyVyMeByrS9MW50EHYZlKMrcWuL
+	/Ax3WAg4Qnv8RuubK2AhRqMJy9MJNRyAY44Nt40QKibtSr/f9Nh6ajEeLkm5LkGi
+	roPkg3rgcdOZJ5hN7ffBjyCv6XX5h3pCWFZMMu/hBtCUL/zQ==
+Received: from mail-pj1-f69.google.com (mail-pj1-f69.google.com [209.85.216.69])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4a4fqn11uf-1
 	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Fri, 31 Oct 2025 04:37:56 +0000 (GMT)
-Received: by mail-pl1-f197.google.com with SMTP id d9443c01a7336-28c58e009d1so39353625ad.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 30 Oct 2025 21:37:56 -0700 (PDT)
+	for <linux-arm-msm@vger.kernel.org>; Fri, 31 Oct 2025 05:51:11 +0000 (GMT)
+Received: by mail-pj1-f69.google.com with SMTP id 98e67ed59e1d1-3403e994649so3976243a91.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 30 Oct 2025 22:51:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1761885476; x=1762490276; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=geQUANiKRrxXij24pr7zkM3LfP5MoWomVGycUWLTn0g=;
-        b=IneYiMYC2K4XNG0UIWP/HM84q5HFDQPwVCby9In60touP7sWm5EmMVg3OzrxGv/dvs
-         dY+eNUMxBe6OrxI2IMdA0Mq3yI+B3XgmwmL9CmZCRgPLjypa8aCN+EI8vEO7wEYoOt2m
-         eAItENowCCoYStrjgObknjhei0/x65WXv72tCqyH0E9/OJT/Eud9ktuXtK6k6rorr5ft
-         W9EJ/sArErA62W/93+B2NLOTa5Jkoh4USZb5cgpQe83vPJUEb+7JtkIS5aAS0mfBE/Um
-         MCUO24h4ZKhFpMBjfspEm9GgHudFdhIzusKTDq9Kpkz5yffjWVk1X8cVJ+v1rWI362Rl
-         4zDA==
+        d=oss.qualcomm.com; s=google; t=1761889870; x=1762494670; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=SBgEdDykoflUBh7hLEHm4ZXfYOUKbHHXMD2Uykw33H8=;
+        b=NY3SG1K6G3pZ3JdlvqY7cOD3NsTlbHVOGHCSPte4/ID4A9zh1vtphzIxFj4ECIRBIR
+         zEBR6yDQBVLpBoy1sAHSYQVm2iW+ZwNw1Zd0vXi0ZLYyE5wdm2lxNoIXG9Z2WpMj+fR1
+         QjPma1MrGkXaXlg0H0llM4uUBAL67uxCeslE/zp2hK/ZVRuWBYbzVGKm2y4JQ8Xdrarl
+         1DakrIFGC9ar16DGJ2G/7NSwYjG0bgzKhxjPkV+TCCZVngGTUu21bUGe/NuxgIGZ5lXX
+         CkHfNMx01/Lr6N0P3wlxumQxZ0+BSroMgkJ/jl7LSS0nL41gyM37tqBL+aJtIrC9njKH
+         +BoA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1761885476; x=1762490276;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=geQUANiKRrxXij24pr7zkM3LfP5MoWomVGycUWLTn0g=;
-        b=wsT7QKAn+Jckq4s1xUp1aKw8Catz0zfRO1KnozcFuBd7k5WORBq4vrNGendOksj66n
-         +ukPjGwnZCJrVk0VHuMDIeQCI0K4uwOA9SKp1iXDYbd8UzYsFjzdLhebflNk8bj5s6DK
-         DLXgoBvQZMjtdFm694ex63fUBgJgdOsM/3fnmNfV+vUYFXOZ5v80RBilJy7w8JPEbVbv
-         4EQ6sjl1GwqDJYOhuCcE6/lQKJAvRqO1NO5Ooo+Sbc0z97dRIZjDuzexI9GhHppEids/
-         FNcUNeKY5Vu8POH74XETWUr9DDRLo4EubQw25+izHdcbpntKV1qv2Oxlr52Zkl7e2qAD
-         uZ1g==
-X-Forwarded-Encrypted: i=1; AJvYcCUrMV4Xe+KrAyY2OHn1GHLk2FCV09r2JnLFQNmkQE5C60nczilh37Ee6DKFy/pigb6nmCK1d1ERflA80280@vger.kernel.org
-X-Gm-Message-State: AOJu0YxT94e5MvEOJoXvVRu2ZzSyNW4VHfwH6fgrxKaiwIYBP8a1RZWI
-	rYMkKvdcIgBc52Q5aqk3JRWIFkH0ANurop20U8euESsm8fRaz4l3YSUcdv47EjB0w1h3my/RllW
-	3djD7gNKS8N2PMNcCIt1ZM7vp4N+SsLKEH8UQw8h/bF7emTkvnRKPSrfkwANIEvcfjzOd
-X-Gm-Gg: ASbGncshpbIGqf4+h1uC49rXbkH05TWkZWoi+tmw71aMbsZVpqbUGn8QzYoMGOnsagY
-	Dv7cTugwBxFCFhLynPPWk0gNR4NaIw0BBGpSVuNEeBZxS7m8ldglNg11UR0m1I41MZ7+y+Rvqjo
-	S39fZ4oDyO6177OQnfiJYaS5xeP3IWDXj3NeW6D/cT1/Fkd6cXB29vywN+sraQwLqeCCb+nin/0
-	aEtS1Ff3vsisLxJzWPArJdGN8V4hh5nMC0j362sKGtlm6iu7VyMavKfiq5sOv9MfplgELNzCxZ1
-	Oe6UjvKNmty/clGJMhrIjosN0H9mgJEE/wgRDBCnMsvyvsKUTDSp3RjO9u8wo5KRAkQgxS6IfeJ
-	xIXx7pMMOBE+/DgSB/1cXWCCuWrSqc3GOGzjKfTnt1XE=
-X-Received: by 2002:a17:903:2f83:b0:275:1833:96e5 with SMTP id d9443c01a7336-2951a3dd7ddmr29944285ad.24.1761885475569;
-        Thu, 30 Oct 2025 21:37:55 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGftKe8KCyKs4T7LjRtICkkAGiQAEcZ0CTV2xdzIP+1yJKykipFyBATMMEwA6X/LKEw7fuWSA==
-X-Received: by 2002:a17:903:2f83:b0:275:1833:96e5 with SMTP id d9443c01a7336-2951a3dd7ddmr29944095ad.24.1761885475086;
-        Thu, 30 Oct 2025 21:37:55 -0700 (PDT)
-Received: from [10.151.37.217] ([202.46.23.19])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2952699c866sm7136225ad.86.2025.10.30.21.37.52
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 30 Oct 2025 21:37:54 -0700 (PDT)
-Message-ID: <4858c946-d77e-47d7-a757-275a72bbb37e@oss.qualcomm.com>
-Date: Fri, 31 Oct 2025 10:07:50 +0530
+        d=1e100.net; s=20230601; t=1761889870; x=1762494670;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=SBgEdDykoflUBh7hLEHm4ZXfYOUKbHHXMD2Uykw33H8=;
+        b=ctAkr9ZaCisGY5PApfGioognWgMQwITQ2hNfaj9IsnrXcYWH5Z/tJNs7X8yX27K4Qm
+         Vo0zrYejebEDfkXJcSEwBFu0GQEtvNXp+PrbIZf1pc2xZ3ZUWdWFShGAUhkgQWX832a6
+         lXbOXsePF1cBvVnBlKnnLVfvgCKskFsDWwnFSbwqL+oJpFaySRSBSQ17m3My8JZ77tE0
+         Hlf4HPVDov4+a5oU/K9eRFVwqTwKVNT292zaAwyQP2QLc8kzXWbXzalxvWKiypY61Iot
+         87RH6L2+ltH0TMGM9HmlqVnBahjtP+2ssftfBpNd8uS4lSpxLXKkHvpafS+pEtuGpBi3
+         1jSw==
+X-Gm-Message-State: AOJu0YyBdv3nmmTpFqE61a2wh4WJ5ynYuJ567/zMhevZe4LxyOg7y2/U
+	q82OJ0txyC6M20c1lFNBC7zIHXkrruQy8hD3Z5ThLLBaK5NXR2GKlGsWLFkmTIqGjWCSxo1NXEK
+	IalkrRk8z0UvgqfZgnnQZNGZ7JfOvDyNMA64eiNSPYQpwYf1pHOjCGqsF2qoEc1tKuHD77lTOCT
+	XL
+X-Gm-Gg: ASbGncttPWVWGt+Px3NjpoEj7CEhONoBKLYr3lLNI/kCxdgtA7+bzDwyhkiwKMMgSUl
+	CHj/LIInYsMZ6FNWOFvgZipt49TBh8EZKcObCFdi1/JJeYPXVcFBC1Cw2PVgJ01KAmDsphcwzbE
+	KthTVKM60LBhZH6cnZ18S9mU/06ywEFaL4pMlQdm6PvXo79bscY12aHEsktGUEOFrwKdf6p8DkO
+	Hg0A1q1FKEAPdxiL32DxpOSx6T7N95cpEmVFCoSdQwXfUhBhhAtE0fzGg87Q5ngAW2aizH+aRi+
+	FqLNPkBp5sl7VbNSgNUjXIe7afd2ArXc0ZInLR2FrSZgLR/C6XTVAA4Ux7ckaZsrislnTIum9my
+	4Slb1HdYVpNH13IvPQLzTMjCXltO6xa49/LPB02Tj5aGp8rdP5Df0mcQFeEFMFkdRNGEXfEcj0q
+	YrNHMJFiGem1G1l9RK9MvwvAKsVru5TvT9vg==
+X-Received: by 2002:a17:90b:3a90:b0:340:2942:dbfe with SMTP id 98e67ed59e1d1-34083055450mr3203830a91.17.1761889870395;
+        Thu, 30 Oct 2025 22:51:10 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFtCzzxMEQAufhaT6NfEAKkYvG41A872O3Im1gBGsYE5KIjt5uXIMsYI3vX6051fvdwKVfk6g==
+X-Received: by 2002:a17:90b:3a90:b0:340:2942:dbfe with SMTP id 98e67ed59e1d1-34083055450mr3203803a91.17.1761889869855;
+        Thu, 30 Oct 2025 22:51:09 -0700 (PDT)
+Received: from hu-kathirav-blr.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com. [103.229.18.19])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-34050992f92sm4646049a91.6.2025.10.30.22.51.06
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 30 Oct 2025 22:51:08 -0700 (PDT)
+From: Kathiravan Thirumoorthy <kathiravan.thirumoorthy@oss.qualcomm.com>
+Subject: [PATCH v2 0/2] Add support to extract the image versions beyond
+ the first 32 images
+Date: Fri, 31 Oct 2025 11:21:00 +0530
+Message-Id: <20251031-image-crm-part2-v2-0-c224c45c381a@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/2] soc: qcom: socinfo: add support to extract more than
- 32 image versions
-To: Bjorn Andersson <andersson@kernel.org>
-Cc: Konrad Dybcio <konradybcio@kernel.org>, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20251030-image-crm-part2-v1-0-676305a652c6@oss.qualcomm.com>
- <20251030-image-crm-part2-v1-2-676305a652c6@oss.qualcomm.com>
- <wyfv5abzo2ow37gbnktormshgasd64cjyf4rjyl3onvq2tgr7y@6hh4nxmk3rpg>
-Content-Language: en-US
-From: Kathiravan Thirumoorthy <kathiravan.thirumoorthy@oss.qualcomm.com>
-In-Reply-To: <wyfv5abzo2ow37gbnktormshgasd64cjyf4rjyl3onvq2tgr7y@6hh4nxmk3rpg>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-Proofpoint-ORIG-GUID: hitsJZCFMucpmn42nqyj7QtkJYh2Pht3
-X-Authority-Analysis: v=2.4 cv=RbCdyltv c=1 sm=1 tr=0 ts=69043d24 cx=c_pps
- a=cmESyDAEBpBGqyK7t0alAg==:117 a=j4ogTh8yFefVWWEFDRgCtg==:17
+X-B4-Tracking: v=1; b=H4sIAEROBGkC/2WNwQqDMBBEf0X23EiyYio99T+KhxjXutAYTWxoE
+ f+9qfTWy8AbmDcbRApMES7FBoESR/ZTBjwVYEcz3UlwnxlQYq0kNoKdyaUNTswmrCjUoLuOBjL
+ YN5BXc6CBX4fx1mYeOa4+vI+DpL7tz1XJP1dSQgp91pWsja7R6quPsVye5mG9c2UOaPd9/wCc8
+ F74tQAAAA==
+X-Change-ID: 20251028-image-crm-part2-1f6bbefea2d8
+To: Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Kathiravan Thirumoorthy <kathiravan.thirumoorthy@oss.qualcomm.com>,
+        chris.lew@oss.qualcomm.com
+X-Mailer: b4 0.14.2
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1761889866; l=1231;
+ i=kathiravan.thirumoorthy@oss.qualcomm.com; s=20230906;
+ h=from:subject:message-id; bh=KZQc1ncWK/NT2o7uMwShWY8VsLBHjt4vtFQesS4qSnc=;
+ b=kfubHuaW4YJh5zPt69T0oIBwZuixPdiHCZQQNtfaWC2EgNfLmdYEfKUBrHw5pyloGzbLBy/Yj
+ gzw69puPKRdD9cYINCtkvqaaufNiOcbiHiRV9XPQmX2WTYXj0BIH9Yl
+X-Developer-Key: i=kathiravan.thirumoorthy@oss.qualcomm.com; a=ed25519;
+ pk=xWsR7pL6ch+vdZ9MoFGEaP61JUaRf0XaZYWztbQsIiM=
+X-Authority-Analysis: v=2.4 cv=RL2+3oi+ c=1 sm=1 tr=0 ts=69044e4f cx=c_pps
+ a=vVfyC5vLCtgYJKYeQD43oA==:117 a=Ou0eQOY4+eZoSc0qltEV5Q==:17
  a=IkcTkHD0fZMA:10 a=x6icFKpwvdMA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=EUspDBNiAAAA:8 a=pfTqpNOsBDqalM9Tbi0A:9
- a=QEXdDO2ut3YA:10 a=1OuFwYUASf3TG4hYMiVC:22
-X-Proofpoint-GUID: hitsJZCFMucpmn42nqyj7QtkJYh2Pht3
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDMxMDA0MCBTYWx0ZWRfX/AMT7T7yPBu0
- ytArNJrSYFs/mqZGhXrLAdgLqJtL2CBjFgOG+YxTCTIvirQtcdA+pNu2LGmAsG5ScKUvSEjR8EU
- DG1Yxoq1HAKgKKfGTSAReo6vTtLe9QdalC/zWF6JjLQAF5KSaKiE8gnVKEwXFpxols/MLWh8Wx4
- 1jHSoSyew0/n6bVqX4cVyuWELFtCMQKiUo5FjmpK/+C+6K7KsWcVS3iBucn2DLakjTl7n1iwglm
- eIeoONOjNcqooEDnIy5LW+daonySV05cRJku54gAQ3xvHMGT7sBHQ46IfTNExZYiKbfpEVOa3fJ
- YVwV41+m1nViVhukWrxOmFwT2P863rCZFGzhrP8g44WFfKeYM5upbt3XZUqFDl4P6H1bbFl1cSX
- jMU0LkgQkGm6K3pheuXcZd8sIODxmA==
+ a=VkNPw1HP01LnGYTKEx00:22 a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8
+ a=0RBcOS8U-E0fvNCSUu4A:9 a=QEXdDO2ut3YA:10 a=rl5im9kqc5Lf4LNbBjHf:22
+X-Proofpoint-ORIG-GUID: jfdeWmhJ1QVNukUuaEnkPuKg5OIu9GsX
+X-Proofpoint-GUID: jfdeWmhJ1QVNukUuaEnkPuKg5OIu9GsX
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDMxMDA1MSBTYWx0ZWRfX1r/IUdXUgROK
+ Whmm6bbdHNiH9oxgK1zh1aY98At4rvHXoK/dVyXL9evxYl/jCTmhcTfOVTZ3PqxZKUKj51/j9Ne
+ PGI6fJtIfWpRu3QjLA2MRKa1VqDQsoTXecDEQnY9UDx8MdGrdGvuuFqmF3po7PvT6OYscdqpDN/
+ Foq9V4H3FR/HXcS6FM1bWy+DVx9T+sNjYvve3cl0v2MeaOVUkftjbis5O75ywyXZD3K3Vnn//gO
+ lnJpcjlLfHhi4tQradYO29y0HBX747YgJVh8RfEW0fFWuClw752B/NDf8MmkKNGr3ypCvDlIqco
+ MfCBRdVkAqjiD1DV6uba7tmcgS6Ah02K5y0IlGnMkjvZjmOAUf8/XTDQfjs7YwEcXyH5nbnX6Ur
+ 1BvPvNmVeNW+HG3szTD3xwwZdYMK/g==
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
- definitions=2025-10-30_08,2025-10-29_03,2025-10-01_01
+ definitions=2025-10-31_01,2025-10-29_03,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 impostorscore=0 suspectscore=0 phishscore=0 lowpriorityscore=0
- adultscore=0 bulkscore=0 clxscore=1015 priorityscore=1501 malwarescore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2510240001 definitions=main-2510310040
+ priorityscore=1501 lowpriorityscore=0 malwarescore=0 impostorscore=0
+ phishscore=0 bulkscore=0 adultscore=0 spamscore=0 clxscore=1015
+ suspectscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2510240001
+ definitions=main-2510310051
 
+SMEM item 667 contains the image version details beyond the first 32 images.
+Add support for the same. While at it, drop the WARN_ON() from
+qcom_smem_get() and qcom_smem_alloc() as it doesn't add any values.
 
-On 10/30/2025 10:41 PM, Bjorn Andersson wrote:
-> On Thu, Oct 30, 2025 at 03:07:49PM +0530, Kathiravan Thirumoorthy wrote:
->> SMEM_IMAGE_VERSION_TABLE contains the version of the first 32 images.
->> Add images beyond that and read these from SMEM_IMAGE_VERSION_TABLE_2.
->>
->> Not all platforms define the SMEM item number 667, in that case
->> qcom_smem_get() will throw the invalid item warning. To avoid that,
->> validate the SMEM item before fetching the version details.
->>
->> Signed-off-by: Kathiravan Thirumoorthy <kathiravan.thirumoorthy@oss.qualcomm.com>
->> ---
->>   drivers/soc/qcom/socinfo.c | 46 ++++++++++++++++++++++++++++++++++++++--------
->>   1 file changed, 38 insertions(+), 8 deletions(-)
->>
->> diff --git a/drivers/soc/qcom/socinfo.c b/drivers/soc/qcom/socinfo.c
->> index 4fd09e2bfd021424b9489cd29eec29dc7c7a16d3..f832ae36942b10f68f0c3304f98d946796e8d1bd 100644
->> --- a/drivers/soc/qcom/socinfo.c
->> +++ b/drivers/soc/qcom/socinfo.c
->> @@ -67,7 +67,17 @@
->>   #define SMEM_IMAGE_TABLE_GEARVM_INDEX	29
->>   #define SMEM_IMAGE_TABLE_UEFI_INDEX	30
->>   #define SMEM_IMAGE_TABLE_CDSP3_INDEX	31
->> +#define SMEM_IMAGE_TABLE_AUDIOPD_ADSP1_INDEX	32
->> +#define SMEM_IMAGE_TABLE_AUDIOPD_ADSP2_INDEX	33
->> +#define SMEM_IMAGE_TABLE_DCP_INDEX	34
->> +#define SMEM_IMAGE_TABLE_OOBS_INDEX	35
->> +#define SMEM_IMAGE_TABLE_OOBNS_INDEX	36
->> +#define SMEM_IMAGE_TABLE_DEVCFG_INDEX	37
->> +#define SMEM_IMAGE_TABLE_BTPD_INDEX	38
->> +#define SMEM_IMAGE_TABLE_QECP_INDEX	39
->> +
->>   #define SMEM_IMAGE_VERSION_TABLE       469
->> +#define SMEM_IMAGE_VERSION_TABLE_2	667
->>   
->>   /*
->>    * SMEM Image table names
->> @@ -79,13 +89,18 @@ static const char *const socinfo_image_names[] = {
->>   	[SMEM_IMAGE_TABLE_APPSBL_INDEX] = "appsbl",
->>   	[SMEM_IMAGE_TABLE_APPS_INDEX] = "apps",
->>   	[SMEM_IMAGE_TABLE_AUDIOPD_INDEX] = "audiopd",
->> +	[SMEM_IMAGE_TABLE_AUDIOPD_ADSP1_INDEX] = "audiopd_adsp1",
->> +	[SMEM_IMAGE_TABLE_AUDIOPD_ADSP2_INDEX] = "audiopd_adsp2",
->>   	[SMEM_IMAGE_TABLE_BOOT_INDEX] = "boot",
->> +	[SMEM_IMAGE_TABLE_BTPD_INDEX] = "btpd",
->>   	[SMEM_IMAGE_TABLE_CDSP1_INDEX] = "cdsp1",
->>   	[SMEM_IMAGE_TABLE_CDSP2_INDEX] = "cdsp2",
->>   	[SMEM_IMAGE_TABLE_CDSP3_INDEX] = "cdsp3",
->>   	[SMEM_IMAGE_TABLE_CDSP_INDEX] = "cdsp",
->>   	[SMEM_IMAGE_TABLE_CHARGERPD_INDEX] = "chargerpd",
->>   	[SMEM_IMAGE_TABLE_CNSS_INDEX] = "cnss",
->> +	[SMEM_IMAGE_TABLE_DCP_INDEX] = "dcp",
->> +	[SMEM_IMAGE_TABLE_DEVCFG_INDEX] = "devcfg",
->>   	[SMEM_IMAGE_TABLE_DSPS_INDEX] = "dsps",
->>   	[SMEM_IMAGE_TABLE_GEARVM_INDEX] = "gearvm",
->>   	[SMEM_IMAGE_TABLE_GPDSP1_INDEX] = "gpdsp1",
->> @@ -95,6 +110,9 @@ static const char *const socinfo_image_names[] = {
->>   	[SMEM_IMAGE_TABLE_NPU_INDEX] = "npu",
->>   	[SMEM_IMAGE_TABLE_OEMPD_INDEX] = "oempd",
->>   	[SMEM_IMAGE_TABLE_OISPD_INDEX] = "oispd",
->> +	[SMEM_IMAGE_TABLE_OOBNS_INDEX] = "oobns",
->> +	[SMEM_IMAGE_TABLE_OOBS_INDEX] = "oobs",
->> +	[SMEM_IMAGE_TABLE_QECP_INDEX] = "qecp",
->>   	[SMEM_IMAGE_TABLE_RPM_INDEX] = "rpm",
->>   	[SMEM_IMAGE_TABLE_SDI_INDEX] = "sdi",
->>   	[SMEM_IMAGE_TABLE_SENSORPD_INDEX] = "sensorpd",
->> @@ -644,7 +662,7 @@ static void socinfo_debugfs_init(struct qcom_socinfo *qcom_socinfo,
->>   	struct smem_image_version *versions;
->>   	struct dentry *dentry;
->>   	size_t size;
->> -	int i;
->> +	int i, j;
->>   	unsigned int num_pmics;
->>   	unsigned int pmic_array_offset;
->>   
->> @@ -788,20 +806,32 @@ static void socinfo_debugfs_init(struct qcom_socinfo *qcom_socinfo,
->>   		break;
->>   	}
->>   
->> -	versions = qcom_smem_get(QCOM_SMEM_HOST_ANY, SMEM_IMAGE_VERSION_TABLE,
->> -				 &size);
->> -
->> -	for (i = 0; i < ARRAY_SIZE(socinfo_image_names); i++) {
->> +	for (i = 0, j = 0; i < ARRAY_SIZE(socinfo_image_names); i++, j++) {
->>   		if (!socinfo_image_names[i])
->>   			continue;
->>   
->> +		if (i == 0) {
->> +			versions = qcom_smem_get(QCOM_SMEM_HOST_ANY,
->> +						 SMEM_IMAGE_VERSION_TABLE,
->> +						 &size);
->> +		}
->> +		if (i == 32) {
-> Probably nicer to do } else if (...) { here...
+IPQ platforms doesn't have the SMEM item 667. So I couldn't validate the
+image version details from SMEM item 667.
 
+Signed-off-by: Kathiravan Thirumoorthy <kathiravan.thirumoorthy@oss.qualcomm.com>
+---
+Changes in v2:
+- Dropped the qcom_smem_validate_item() and removed the WARN_ON()
+- Check for the return value and exit when fetching the SMEM item 667
+- Link to v1: https://lore.kernel.org/r/20251030-image-crm-part2-v1-0-676305a652c6@oss.qualcomm.com
 
-Ack.
+---
+Kathiravan Thirumoorthy (2):
+      soc: qcom: smem: drop the WARN_ON() on SMEM item validation
+      soc: qcom: socinfo: add support to extract more than 32 image versions
 
+ drivers/soc/qcom/smem.c    |  4 ++--
+ drivers/soc/qcom/socinfo.c | 45 +++++++++++++++++++++++++++++++++++++--------
+ 2 files changed, 39 insertions(+), 10 deletions(-)
+---
+base-commit: 131f3d9446a6075192cdd91f197989d98302faa6
+change-id: 20251028-image-crm-part2-1f6bbefea2d8
 
->
->> +			if (!qcom_smem_validate_item(SMEM_IMAGE_VERSION_TABLE_2))
-> Let's see if we can clean up patch 1 and get rid of this.
-> Other than that, this patch looks good.
+Best regards,
+-- 
+Kathiravan Thirumoorthy <kathiravan.thirumoorthy@oss.qualcomm.com>
 
-
-Yeah, will drop this one and add the check for "versions".
-
-
->
-> Regards,
-> Bjorn
->
->> +				break;
->> +
->> +			j = 0;
->> +			versions = qcom_smem_get(QCOM_SMEM_HOST_ANY,
->> +						 SMEM_IMAGE_VERSION_TABLE_2,
->> +						 &size);
->> +		}
->> +
->>   		dentry = debugfs_create_dir(socinfo_image_names[i],
->>   					    qcom_socinfo->dbg_root);
->> -		debugfs_create_file("name", 0444, dentry, &versions[i],
->> +		debugfs_create_file("name", 0444, dentry, &versions[j],
->>   				    &qcom_image_name_ops);
->> -		debugfs_create_file("variant", 0444, dentry, &versions[i],
->> +		debugfs_create_file("variant", 0444, dentry, &versions[j],
->>   				    &qcom_image_variant_ops);
->> -		debugfs_create_file("oem", 0444, dentry, &versions[i],
->> +		debugfs_create_file("oem", 0444, dentry, &versions[j],
->>   				    &qcom_image_oem_ops);
->>   	}
->>   }
->>
->> -- 
->> 2.34.1
->>
 
