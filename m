@@ -1,63 +1,57 @@
-Return-Path: <linux-arm-msm+bounces-79801-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-79802-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 11766C23605
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 31 Oct 2025 07:21:56 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 23531C23623
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 31 Oct 2025 07:24:42 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id BB6C93A16F5
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 31 Oct 2025 06:21:54 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 9F36B3B3E91
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 31 Oct 2025 06:24:34 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 26CBA2F1FD2;
-	Fri, 31 Oct 2025 06:21:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E33522F1FFA;
+	Fri, 31 Oct 2025 06:24:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="tGP4zMww"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="pxsNeoXS"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE4522E6CDC;
-	Fri, 31 Oct 2025 06:21:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCBBA2E6CDC;
+	Fri, 31 Oct 2025 06:24:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761891711; cv=none; b=kfYWmdBMzj98nqaP1Onxj5b+P6/YOdFhXVZi3u/3lhssrc3IL9crFlANVD5kvDPe1Gl/qJ1IaMnpD8tpArgubrWj+3p8B6E/yVezmNLMFVgQRo1A3bhhVwnayfV+CUaC6Q8YCbXbEDkg1r9+/733ZJUeodbHASwrtgUgbV2SUPo=
+	t=1761891871; cv=none; b=fHb84BfMxg+u3S+w2US6OYdA3Xd+eE129YnRRRgC7MRa9u7m6qSR0nhqaM27Cj900Gpq+WbgxT6rf8CoTcT31pES6vtIuisVb5uYHtBAXY58/lbu1xQJbpM+KTRj3E+Vbluy2WP9u3+M/SyTA8iTmu07CFk7GCbGrOinRIQSZYo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761891711; c=relaxed/simple;
-	bh=qV6uFxqSSQYthCHvksnPhXB8B47dV+DjfShOnQoDrtU=;
+	s=arc-20240116; t=1761891871; c=relaxed/simple;
+	bh=Gx36hnGWAQ2oEjgtU0RiIzRSUUtzVKWwySw5lRgt18Q=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=R4AbromIJE6Y6SY5HmXBpJvaqqXj1uLx3ky0R2MBGm2983Hq0AF4NAkKvER8FRK9UdroFYTuT5BXuLu7Ms4v7/RBQPuXjWtXQux4rqOpsTjGUxLAmbc8goEr6VLRg8BsD1q+5roR0birkhv1MoM0U7TGjodU5Ix/MTwNqA0l/Rc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=tGP4zMww; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D004C4CEF1;
-	Fri, 31 Oct 2025 06:21:44 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=leQVfzRIRROkx8fRjYycsa4hklgUm6SA39Fg7MqoZFMVKdLivumRHVriOcicjFcgyf1WHY+H4Ktq37lkQ9YarRl92NxIIvLw61FpwEQgFEApzyVR/9tffvUAX7HE6a3EFWXmlkOmulizxXZEhwRyTZuV7UjQAOSbTaHIZtkggeE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=pxsNeoXS; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A8C2C4CEE7;
+	Fri, 31 Oct 2025 06:24:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1761891710;
-	bh=qV6uFxqSSQYthCHvksnPhXB8B47dV+DjfShOnQoDrtU=;
+	s=k20201202; t=1761891871;
+	bh=Gx36hnGWAQ2oEjgtU0RiIzRSUUtzVKWwySw5lRgt18Q=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=tGP4zMww9hNL4QxtqCMsdf1R8Ftkkpg7q/cByv/0FvS8d7I0eidWHaMI70IimwG99
-	 aY6WnMrRpCUqD18sYZEFSgogpia1W1t22OQbEZZSxp8w6zjbF1rTsd4eHIPqZC9XT0
-	 pC3LgxQ45CoXg5yt1a4eUw9IeRGTxaH2dJL5PNC7hSfCTsNqZtip/2/BpgpWSww1v/
-	 A1Gc60K2qNLfnSW1veDmIfrdapFZppXytWL9eSAhqA2kP1+URNcTN8DRpM2NBzawxI
-	 dM0vTVa3O3FtuaJxhdEyqYkxcEJlChQmb0W/yITx24CSSyYTiw5Vzn2EiyX3T+whuB
-	 eTn4/imgBHv4g==
-Date: Fri, 31 Oct 2025 11:51:31 +0530
+	b=pxsNeoXSm0Nbf5uzE70mETukL2gaymy5t40jq4q+s84SqQJRhB4Z6kEjRb2T3Ngly
+	 uuT2K1tjfMBfK8+yajAyhQpkJ4mGkTlteXja85LCzMSyVBij5rezk1j6ZUiDhEvTuM
+	 PDZ2k5RRdOFUxlz/Mx+wEuyEpt/A+yx14InUdfUCBVDIxhnONPZ1wfnQYWN5PBoBPi
+	 NEnbHteI4p1pu2dF7msKHSYl7+28ZQkny+7UO3RO6e0AqaCc5YSrirTxmNTvR/2tz/
+	 LjGywqQRphj1JRuv0xoBkKYh/SIxFgegMe8yDpV7lfOw2Dg9h5Bul2oD5WYzfW9cHG
+	 aTUDSIWqDRhrw==
+Date: Fri, 31 Oct 2025 11:54:26 +0530
 From: Manivannan Sadhasivam <mani@kernel.org>
-To: Bjorn Helgaas <helgaas@kernel.org>
-Cc: Shawn Lin <shawn.lin@rock-chips.com>, 
-	Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>, Niklas Cassel <cassel@kernel.org>, 
-	Bjorn Helgaas <bhelgaas@google.com>, Lorenzo Pieralisi <lpieralisi@kernel.org>, 
-	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kwilczynski@kernel.org>, Rob Herring <robh@kernel.org>, linux-pci@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
-	"David E. Box" <david.e.box@linux.intel.com>, Kai-Heng Feng <kai.heng.feng@canonical.com>, 
-	"Rafael J. Wysocki" <rafael@kernel.org>, Heiner Kallweit <hkallweit1@gmail.com>, 
-	Chia-Lin Kao <acelan.kao@canonical.com>, Dragan Simic <dsimic@manjaro.org>, 
-	linux-rockchip@lists.infradead.org, regressions@lists.linux.dev, FUKAUMI Naoki <naoki@radxa.com>
-Subject: Re: [PATCH v2 1/2] PCI/ASPM: Override the ASPM and Clock PM states
- set by BIOS for devicetree platforms
-Message-ID: <sttsqedadw4cdozfrjkl7jlqk2jtwkaniukczfwm5e7ymdtsh3@jkq3unz2ez2k>
-References: <4pm5tizc2c4c75h23izalhysuljnlfzpxuawhzezmnnqic2tdf@l2rcj24rmru3>
- <20251017134554.GA1027663@bhelgaas>
+To: Krzysztof Kozlowski <krzk@kernel.org>
+Cc: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>, 
+	bjorn.andersson@oss.qualcomm.com, arnd@arndb.de, linux-kernel@vger.kernel.org, 
+	linux-arm-msm@vger.kernel.org
+Subject: Re: [RESEND PATCH] arm64: defconfig: Enable SCSI UFS Crypto and
+ Block Inline encryption drivers
+Message-ID: <2oynmuekw5lnzl244uqz2aehpg5rhttddu43lqplnxemyjd3g5@6yzchzihe57h>
+References: <20251030095509.5877-1-manivannan.sadhasivam@oss.qualcomm.com>
+ <27841a96-b8a5-44aa-b0ef-d8bab9ba3477@kernel.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -67,57 +61,30 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20251017134554.GA1027663@bhelgaas>
+In-Reply-To: <27841a96-b8a5-44aa-b0ef-d8bab9ba3477@kernel.org>
 
-On Fri, Oct 17, 2025 at 08:45:54AM -0500, Bjorn Helgaas wrote:
-> On Fri, Oct 17, 2025 at 06:24:26PM +0530, Manivannan Sadhasivam wrote:
-> > On Fri, Oct 17, 2025 at 08:19:11PM +0800, Shawn Lin wrote:
-> > > 在 2025/10/17 星期五 18:04, Manivannan Sadhasivam 写道:
-> > > > On Fri, Oct 17, 2025 at 05:47:44PM +0800, Shawn Lin wrote:
-> > ...
+On Thu, Oct 30, 2025 at 08:48:48PM +0100, Krzysztof Kozlowski wrote:
+> On 30/10/2025 10:55, Manivannan Sadhasivam wrote:
+> > These drivers will allow using the crypto functionalities of the UFS
+> > device, like Inline Crypto Encryption. Both of these drivers are of type
+> > 'bool', so they cannot be built as modules.
 > 
-> > > > > While we're on the topic of ASPM, may I ask a silly question?
-> > > > > I saw the ASPM would only be configured once the function
-> > > > > driver calling pci_enable_device. So if the modular driver
-> > > > > hasn't been insmoded, the link will be in L0 even though there
-> > > > > is no transcation on-going. What is the intention behind it?
-> > > > 
-> > > > I don't see where ASPM is configured during pci_enable_device().
-> > > > It is currently configured for all devices during
-> > > > pci_scan_slot().
-> > > 
-> > > This is the dump_stack() where I observed. If I compile NVMe
-> > > driver as a module and never insmod it, the link is always in L0,
-> > > namely ASPM Disabled.
+> Is there any device benefiting from these? Which board?
+> 
+
+All ICE capable Qcom UFS based boards.
+
 > > 
-> > I guess this comment answers your question:
-> > https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/drivers/pci/pcie/aspm.c?h=v6.18-rc1#n1179
+> > Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
+> > Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
 > 
-> The comment is:
-> 
->    * At this stage drivers haven't had an opportunity to change the
->    * link policy setting. Enabling ASPM on broken hardware can cripple
->    * it even before the driver has had a chance to disable ASPM, so
->    * default to a safe level right now. If we're enabling ASPM beyond
->    * the BIOS's expectation, we'll do so once pci_enable_device() is
->    * called.
-> 
-> I don't think relying on a driver to disable ASPM to avoid broken
-> hardware is the right answer.  If the driver is never loaded, we waste
-> power.  And if the user enables ASPM via sysfs, apparently the device
-> may be crippled.
-> 
-> I think it would be better to have an enumeration-time quirk to keep
-> us from enabling ASPM.  We might trip over some of this broken
-> hardware, but I don't think there are very many drivers that fiddle
-> with ASPM, so we should be able to be proactive about it.
+> You do not need the second tag. You send it via oss.qualcomm.com which
+> is still valid.
 > 
 
-There are quite a bit of drivers fiddling with ASPM states:
-
-git grep -l PCI_EXP_LNKCTL_ASPMC drivers/ | wc -l
-
-16
+Yes, I know. But I was having some issue in sending email through
+oss.qualcomm.com. Now it got fixed in the RESEND patch, but forgot to remove my
+korg s-o-b.
 
 - Mani
 
