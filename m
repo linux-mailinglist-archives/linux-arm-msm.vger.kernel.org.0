@@ -1,102 +1,251 @@
-Return-Path: <linux-arm-msm+bounces-79823-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-79824-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id E3C87C23CA5
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 31 Oct 2025 09:27:28 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 87FC5C23D8C
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 31 Oct 2025 09:38:27 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 0D5EB1A22B16
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 31 Oct 2025 08:27:53 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id C0E153BBE09
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 31 Oct 2025 08:38:22 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 51C4130DD33;
-	Fri, 31 Oct 2025 08:27:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A2E6A2EA72A;
+	Fri, 31 Oct 2025 08:38:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ea7EP1eQ"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="jgCtW3qK"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f41.google.com (mail-wr1-f41.google.com [209.85.221.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2151F2E2661;
-	Fri, 31 Oct 2025 08:27:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99E5E2E62CE
+	for <linux-arm-msm@vger.kernel.org>; Fri, 31 Oct 2025 08:38:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761899225; cv=none; b=GV0OQjS8FeGaowhga/kqKVrifV734+SyiidsMIrYgnrS6uk/8i9/fEXSzoMmiZ4hit5LCMqbngnHrtGV4M34O0gK2Z+wfu1d+IWfmRvffTZHjS0DsdJg7ob/DiU1P9wWXiDPkZbZmAH1jtN0UBzJ20Rq0jTstoVoTdXB4PWfi6I=
+	t=1761899901; cv=none; b=PvTppCB/bmFJ4brRRWvtljLlv9Kqyaa2fvf4I8rC3h6xIuu4V2+jORwsr6m9dVM6l0XlXKHZLt+QzbJGKTP8JoAO/T1SevzJpoFrfSayOhfOHMm2dQpIEGz7OUeNRD7cPKC3AGyF5QiV6PMQTrxDqWb+somvZTSJ6yo/4uetPzA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761899225; c=relaxed/simple;
-	bh=T7J9+XFKVg8HuPmkvReyqzEKUvKCj6+pGkV3l2AMnJs=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=bSBjIvQXwkBNHlCFxrb2Y3w/tG0vbOHhCPUuU12G59s4gvZtoQ06wvBU0/T7UfnI2QFJve9Ty3Z2mlYJ847Sxc9f44fsNsOsX5mQ/Jk9oiIMyjKZiQgmYryTQmxQ7g0L7bXH2HdRKTegT2BqVoFYDMfmj9j+eY7hnrd7iVjbiKo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ea7EP1eQ; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C282C4CEF1;
-	Fri, 31 Oct 2025 08:27:03 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1761899224;
-	bh=T7J9+XFKVg8HuPmkvReyqzEKUvKCj6+pGkV3l2AMnJs=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=ea7EP1eQuY3M6A+U7svOwmqMrp7L9PJ8wkKsD1BhIrL8E/LIjlsJBDVK+Be6gsz6r
-	 3+dEnu9lsLh0YCW3ZOcHQbBe2r9aaudaUWDP5J5Qg8m3HFwinTIAuqMNzgIVBjz/OY
-	 gVWSQ3/MbeqxmClFCkw+UqCikQmInzSNkLs9v/atcC4MUjSu3nsHEW4TFTN7DAb8e+
-	 A5S0v4i654H/yjLFX7IKk/8ArQPxLxDLIdZqXOpgIKNWoSIep61iYm6LnZ8AFvbfPo
-	 QGra4+tQPCBWgZ064IEcy+/zWDCaOK7HoUglMA27Y4FdIgwF4o6oG5P1efPRojWGbW
-	 +wX5upBYMa8xw==
-Date: Fri, 31 Oct 2025 09:27:02 +0100
-From: Krzysztof Kozlowski <krzk@kernel.org>
-To: Raviteja Laggyshetty <raviteja.laggyshetty@oss.qualcomm.com>
-Cc: Georgi Djakov <djakov@kernel.org>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org, devicetree@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, Odelu Kukatla <odelu.kukatla@oss.qualcomm.com>
-Subject: Re: [PATCH v4 1/2] dt-bindings: interconnect: document the RPMh
- Network-On-Chip interconnect in Kaanapali SoC
-Message-ID: <20251031-careful-fast-tapir-6ccece@kuoka>
-References: <20251031-knp-interconnect-v4-0-568bba2cb3e5@oss.qualcomm.com>
- <20251031-knp-interconnect-v4-1-568bba2cb3e5@oss.qualcomm.com>
+	s=arc-20240116; t=1761899901; c=relaxed/simple;
+	bh=mvdRL0eRXqSA+526MRb8wrH/hIEEZzYdIMjUsLSo1m8=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
+	 In-Reply-To:Content-Type; b=bWpjoFse4CHkLvZVNPepOsU173Tq/wP/8cRC9WL4CZE3dXszLuAod1q+EvW0a+dXiyrk0bOlxRKvGHXyP3Dhb4ukbCaSgfq2ZmQHSOZryTojXG+L8tR2NAWWucjCcacMu5xGJiuPjA7zwZOiwDEQ4294D3ukbzOky8Y8YMcBmQk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=jgCtW3qK; arc=none smtp.client-ip=209.85.221.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wr1-f41.google.com with SMTP id ffacd0b85a97d-429b85c3880so1801449f8f.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 31 Oct 2025 01:38:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1761899898; x=1762504698; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:organization:autocrypt
+         :content-language:references:cc:to:subject:reply-to:from:user-agent
+         :mime-version:date:message-id:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=f6lvlxZOeNShZGHSRhU6n7ci4eXoYPRCi1nv1xhCxuA=;
+        b=jgCtW3qK5geev2iqj26PVjKsaoO+eSCRdhHPpqOSCIQPv67Amebmtu175bz1379NXd
+         FHFq3mbSf4KbW12RIXTsxU29irz55Ub69zOeuViqpbPLlM8MUVqdUH1ndNblA+g6lJ4Q
+         GiZAOd89k5m1Tj/T/lYJJDZ3W3AX8I9XUIl4dNR9jxzw86UTybY7uNNggnjBQXaAb6GJ
+         6gY+iCYrfw/cng/mFAwSjBqqzASmP6xTocdC1OEA962u3/gPLnh0FZhIt+BTJFuyT4hX
+         9GFgN36UpnwpumHKpT5tYeF50KDQvRMZpOA+AqDYyD9nu6bOxarFayvRzPfTnT4eZcEV
+         6ihg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1761899898; x=1762504698;
+        h=content-transfer-encoding:in-reply-to:organization:autocrypt
+         :content-language:references:cc:to:subject:reply-to:from:user-agent
+         :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=f6lvlxZOeNShZGHSRhU6n7ci4eXoYPRCi1nv1xhCxuA=;
+        b=EOTClpEEHgSZ7gCoWZuQ0ano2TRlHlwGmnNsxASL6J9wolONKuriadBJ6mjl3/nZ4m
+         DtudBhCuzBW4MKclV3BKTFEYnft5SCiIH3ChOI5L8Y+tb46tmhhJceUFw1MX7UarJHSJ
+         G4hILCP6HFfRVBVd2hBQvko4t1r20Mcl55eFpDOLPtQAf/BwGadqdlYD6nr7eMrQ9zg1
+         5beK0RlPLlZ813pUcLq+uooPuGZWXsiMynTXBVXh/u+sRpoeRWB655N9IoqAFejziRJv
+         x40ehjR/P2lPUJ4zb9rz/vL1GZrRMDGL3WvRVt27DZmLxQcu4hCxVxgyBkW36kS4kRta
+         FjMA==
+X-Gm-Message-State: AOJu0YyATvNR5V+CpkkS/uzH3q3TrG4Cy3ILEAg6bsELc8M/63sLzkRv
+	5ef6gprIvfg+sc6Ob1A9MaN1GyBEZ6CgJkM/oW2SD7qjYcOz/6ofJxdur8dUk3wKNZA=
+X-Gm-Gg: ASbGnctXva7FRvcI/E5aPc92g4P9vWtvBjepGYYzqcU3K0cstO/UBs+Q/cKq2aCeFPY
+	n32aK5Ecd/tR3YLCDlvZmLfgE7WY4/QVv4hVBsLSQ/FG08b8ICSgasH6dIPpQJwjyvVNyaNLEwe
+	Po4GrZt4ga5Qo5t6d++rbGww4vbBbLX0+VOsrV7Fc5UI/ZO1YWVBfH9bEjgaOMcnhVKEUZQmquf
+	2Odm09hD5ummnB9ZpgL7YU6QLXvIrYqF22L31bZbkm+tuVZeBZsKCklkLUlwpH87dSJaHBSs+ha
+	0TWkvUiGQS9HP02husvBjRUo2jQZibdWWk0wMhdwkB7eGOo/nm+yPcAuN4C0NYpL0kt95unX0FX
+	nf78+xQsUWlflMtTvS7YHAgeqe7N9zcQBqHeEV81HrY0iUg649E5wDHr3X0iQ+8ztUHv8lujtWP
+	JqnqXs/whSM6BkdsESPg7V34rgfjnTgk/UksMjTfv593naefpQLZ5ZFZ1FtOeLUKw=
+X-Google-Smtp-Source: AGHT+IErXLg/QmSgzOAE18wcz9HH6P7fSPY03Id1jjTfataBPrbX11spvWK9xxIDtFbQtBn/mPn0cA==
+X-Received: by 2002:a05:6000:2489:b0:429:b751:7929 with SMTP id ffacd0b85a97d-429bd6ae1f4mr2336595f8f.45.1761899897805;
+        Fri, 31 Oct 2025 01:38:17 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:cad:2140:d967:2bcf:d2d0:b324? ([2a01:e0a:cad:2140:d967:2bcf:d2d0:b324])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-429c13edc36sm2278703f8f.37.2025.10.31.01.38.16
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 31 Oct 2025 01:38:17 -0700 (PDT)
+Message-ID: <f5041496-ee83-479a-995f-79b6952bcafe@linaro.org>
+Date: Fri, 31 Oct 2025 09:38:15 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20251031-knp-interconnect-v4-1-568bba2cb3e5@oss.qualcomm.com>
+User-Agent: Mozilla Thunderbird
+From: Neil Armstrong <neil.armstrong@linaro.org>
+Reply-To: Neil Armstrong <neil.armstrong@linaro.org>
+Subject: Re: [PATCH RFC RFT] drm/msm: adreno: attach the GMU device to a
+ driver
+To: Akhil P Oommen <akhilpo@oss.qualcomm.com>
+Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+ freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org,
+ Rob Clark <robin.clark@oss.qualcomm.com>, Sean Paul <sean@poorly.run>,
+ Konrad Dybcio <konradybcio@kernel.org>, Dmitry Baryshkov <lumag@kernel.org>,
+ Abhinav Kumar <abhinav.kumar@linux.dev>,
+ Jessica Zhang <jessica.zhang@oss.qualcomm.com>,
+ Marijn Suijten <marijn.suijten@somainline.org>,
+ David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>
+References: <20251022-topic-adreno-attach-gmu-to-driver-v1-1-999037f7c83e@linaro.org>
+ <c8058713-b126-461b-8ae6-19c4574a8105@oss.qualcomm.com>
+Content-Language: en-US, fr
+Autocrypt: addr=neil.armstrong@linaro.org; keydata=
+ xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
+ GTjuhvbleoQ5Cxjr+v+1ARGCH46MxFP5DwauzPekwJUD5QKZlaw/bURTLmS2id5wWi3lqVH4
+ BVF2WzvGyyeV1o4RTCYDnZ9VLLylJ9bneEaIs/7cjCEbipGGFlfIML3sfqnIvMAxIMZrvcl9
+ qPV2k+KQ7q+aXavU5W+yLNn7QtXUB530Zlk/d2ETgzQ5FLYYnUDAaRl+8JUTjc0CNOTpCeik
+ 80TZcE6f8M76Xa6yU8VcNko94Ck7iB4vj70q76P/J7kt98hklrr85/3NU3oti3nrIHmHABEB
+ AAHNKk5laWwgQXJtc3Ryb25nIDxuZWlsLmFybXN0cm9uZ0BsaW5hcm8ub3JnPsLAkQQTAQoA
+ OwIbIwULCQgHAwUVCgkICwUWAgMBAAIeAQIXgBYhBInsPQWERiF0UPIoSBaat7Gkz/iuBQJk
+ Q5wSAhkBAAoJEBaat7Gkz/iuyhMIANiD94qDtUTJRfEW6GwXmtKWwl/mvqQtaTtZID2dos04
+ YqBbshiJbejgVJjy+HODcNUIKBB3PSLaln4ltdsV73SBcwUNdzebfKspAQunCM22Mn6FBIxQ
+ GizsMLcP/0FX4en9NaKGfK6ZdKK6kN1GR9YffMJd2P08EO8mHowmSRe/ExAODhAs9W7XXExw
+ UNCY4pVJyRPpEhv373vvff60bHxc1k/FF9WaPscMt7hlkbFLUs85kHtQAmr8pV5Hy9ezsSRa
+ GzJmiVclkPc2BY592IGBXRDQ38urXeM4nfhhvqA50b/nAEXc6FzqgXqDkEIwR66/Gbp0t3+r
+ yQzpKRyQif3OwE0ETVkGzwEIALyKDN/OGURaHBVzwjgYq+ZtifvekdrSNl8TIDH8g1xicBYp
+ QTbPn6bbSZbdvfeQPNCcD4/EhXZuhQXMcoJsQQQnO4vwVULmPGgtGf8PVc7dxKOeta+qUh6+
+ SRh3vIcAUFHDT3f/Zdspz+e2E0hPV2hiSvICLk11qO6cyJE13zeNFoeY3ggrKY+IzbFomIZY
+ 4yG6xI99NIPEVE9lNBXBKIlewIyVlkOaYvJWSV+p5gdJXOvScNN1epm5YHmf9aE2ZjnqZGoM
+ Mtsyw18YoX9BqMFInxqYQQ3j/HpVgTSvmo5ea5qQDDUaCsaTf8UeDcwYOtgI8iL4oHcsGtUX
+ oUk33HEAEQEAAcLAXwQYAQIACQUCTVkGzwIbDAAKCRAWmrexpM/4rrXiB/sGbkQ6itMrAIfn
+ M7IbRuiSZS1unlySUVYu3SD6YBYnNi3G5EpbwfBNuT3H8//rVvtOFK4OD8cRYkxXRQmTvqa3
+ 3eDIHu/zr1HMKErm+2SD6PO9umRef8V82o2oaCLvf4WeIssFjwB0b6a12opuRP7yo3E3gTCS
+ KmbUuLv1CtxKQF+fUV1cVaTPMyT25Od+RC1K+iOR0F54oUJvJeq7fUzbn/KdlhA8XPGzwGRy
+ 4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
+ QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
+Organization: Linaro
+In-Reply-To: <c8058713-b126-461b-8ae6-19c4574a8105@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Fri, Oct 31, 2025 at 03:38:47AM +0000, Raviteja Laggyshetty wrote:
-> Document the RPMh Network-On-Chip Interconnect of the Kaanapali platform.
+Hi,
+
+On 10/30/25 22:29, Akhil P Oommen wrote:
+> On 10/22/2025 6:14 PM, Neil Armstrong wrote:
+>> Due to the sync_state is enabled by default in pmdomain & CCF since v6.17,
+>> the GCC and GPUCC sync_state would stay pending, leaving the resources in
+>> full performance:
+>> gcc-x1e80100 100000.clock-controller: sync_state() pending due to 3d6a000.gmu
+>> gpucc-x1e80100 3d90000.clock-controller: sync_state() pending due to 3d6a000.gmu
+>>
+>> In order to fix this state and allow the GMU to be properly
+>> probed, let's add a proper driver for the GMU and add it to
+>> the MSM driver components.
+>>
+>> Only the proper GMU has been tested since I don't have
+>> access to hardware with a GMU wrapper.
+>>
+>> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+>> ---
+>>   drivers/gpu/drm/msm/adreno/a6xx_gmu.c      | 354 ++++++++++++++---------------
+>>   drivers/gpu/drm/msm/adreno/a6xx_gpu.c      |   6 -
+>>   drivers/gpu/drm/msm/adreno/a6xx_gpu.h      |   3 -
+>>   drivers/gpu/drm/msm/adreno/adreno_device.c |   4 +
+>>   drivers/gpu/drm/msm/adreno/adreno_gpu.h    |   4 +
+>>   drivers/gpu/drm/msm/msm_drv.c              |  16 +-
+>>   6 files changed, 192 insertions(+), 195 deletions(-)
+>>
+>> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
+>> index fc62fef2fed8..6e7c3e627509 100644
+>> --- a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
+>> +++ b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
+>> @@ -1859,11 +1859,14 @@ void a6xx_gmu_sysprof_setup(struct msm_gpu *gpu)
+>>   	pm_runtime_put(&gpu->pdev->dev);
+>>   }
+>>   
+>> -void a6xx_gmu_remove(struct a6xx_gpu *a6xx_gpu)
+>> +static void a6xx_gmu_unbind(struct device *dev, struct device *master, void *data)
+>>   {
 > 
-> Co-developed-by: Odelu Kukatla <odelu.kukatla@oss.qualcomm.com>
-> Signed-off-by: Odelu Kukatla <odelu.kukatla@oss.qualcomm.com>
-> Signed-off-by: Raviteja Laggyshetty <raviteja.laggyshetty@oss.qualcomm.com>
-> ---
->  .../bindings/interconnect/qcom,kaanapali-rpmh.yaml | 124 +++++++++++++++++
->  .../dt-bindings/interconnect/qcom,kaanapali-rpmh.h | 149 +++++++++++++++++++++
->  2 files changed, 273 insertions(+)
+> I feel we should keep gmu and gmu_wrapper implementations separate. It
+> is already overloaded. How about adding a separate gmu_wrapper_bind_ops
+> and keep it in the match data?
+
+Good idea, will try something like that.
+
 > 
-> diff --git a/Documentation/devicetree/bindings/interconnect/qcom,kaanapali-rpmh.yaml b/Documentation/devicetree/bindings/interconnect/qcom,kaanapali-rpmh.yaml
-> new file mode 100644
-> index 0000000000000000000000000000000000000000..9731e7df7eb3d8e1e291a57cbc5941bb8dce1fac
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/interconnect/qcom,kaanapali-rpmh.yaml
-> @@ -0,0 +1,124 @@
-> +# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
-> +%YAML 1.2
-> +---
-> +$id: http://devicetree.org/schemas/interconnect/qcom,kaanapali-rpmh.yaml#
-> +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> +
-> +title: Qualcomm RPMh Network-On-Chip Interconnect on KAANAPALI
+>> -	struct adreno_gpu *adreno_gpu = &a6xx_gpu->base;
+>> +	struct platform_device *pdev = to_platform_device(dev);
+>> +	struct msm_drm_private *priv = dev_get_drvdata(master);
+>> +	struct msm_gpu *gpu = priv->gpu;
+> 
+> << snip >>
+> 
+>>   static inline uint32_t get_wptr(struct msm_ringbuffer *ring)
+>>   {
+>> diff --git a/drivers/gpu/drm/msm/msm_drv.c b/drivers/gpu/drm/msm/msm_drv.c
+>> index 7e977fec4100..0618da7e8b40 100644
+>> --- a/drivers/gpu/drm/msm/msm_drv.c
+>> +++ b/drivers/gpu/drm/msm/msm_drv.c
+>> @@ -998,18 +998,30 @@ static const struct of_device_id msm_gpu_match[] = {
+>>   	{ },
+>>   };
+>>   
+>> +static const struct of_device_id msm_gmu_match[] = {
+>> +	{ .compatible = "qcom,adreno-gmu" },
+>> +	{ .compatible = "qcom,adreno-gmu-wrapper" },
+>> +	{ },
+>> +};
+>> +
+>>   static int add_gpu_components(struct device *dev,
+>>   			      struct component_match **matchptr)
+>>   {
+>> -	struct device_node *np;
+>> +	struct device_node *np, *gmu;
+>>   
+>>   	np = of_find_matching_node(NULL, msm_gpu_match);
+>>   	if (!np)
+>>   		return 0;
+>>   
+>> -	if (of_device_is_available(np) && adreno_has_gpu(np))
+>> +	if (of_device_is_available(np) && adreno_has_gpu(np)) {
+>>   		drm_of_component_match_add(dev, matchptr, component_compare_of, np);
+>>   
+>> +		gmu = of_find_matching_node(NULL, msm_gmu_match);
+> 
+> Instead of this, we can probably use the gmu phandle from "qcom,gmu"
+> property? That is quicker and also doesn't assume that there is only a
+> single GPU.
 
-Kaanapali
+Ack you're right, let's do this since we have the GPU node already.
 
-Nowwhere in other patchsets this name is considered an acronym.
+> 
+>> +		if (of_device_is_available(gmu))
+>> +			drm_of_component_match_add(dev, matchptr, component_compare_of, gmu);
+>> +		of_node_put(gmu);
+> I think you missed the recently added headless support. Please check
+> separate_gpu_kms modparam and msm_gpu_probe().
 
-With above fixed:
+I saw it but seems I probably forgot the check if it's still functional,
+will double check.
 
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Thanks,
+Neil
 
-Best regards,
-Krzysztof
+> 
+> -Akhil
+> 
+>> +	}
+>> +
+>>   	of_node_put(np);
+>>   
+>>   	return 0;
+>>
+>> ---
+>> base-commit: 211ddde0823f1442e4ad052a2f30f050145ccada
+>> change-id: 20251022-topic-adreno-attach-gmu-to-driver-e47025fd7ebb
+>>
+>> Best regards,
 
 
