@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-79818-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-79819-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [IPv6:2605:f480:58:1:0:1994:3:14])
-	by mail.lfdr.de (Postfix) with ESMTPS id 14F5FC23C0E
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 31 Oct 2025 09:21:08 +0100 (CET)
+Received: from ams.mirrors.kernel.org (ams.mirrors.kernel.org [IPv6:2a01:60a::1994:3:14])
+	by mail.lfdr.de (Postfix) with ESMTPS id A0902C23B32
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 31 Oct 2025 09:12:30 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id AAED04FB298
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 31 Oct 2025 08:12:14 +0000 (UTC)
+	by ams.mirrors.kernel.org (Postfix) with ESMTPS id 29E2534E819
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 31 Oct 2025 08:12:30 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3377132D428;
-	Fri, 31 Oct 2025 08:08:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D54E1333432;
+	Fri, 31 Oct 2025 08:09:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="HJVdP4RK"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="uDom02rz"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 081BD32D0CF;
-	Fri, 31 Oct 2025 08:08:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A737A3328FF;
+	Fri, 31 Oct 2025 08:09:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761898137; cv=none; b=EmcF5dvKbdxwyPKyUS5YqQa9Wx7nJ6TgMktvy+WOwwWnn4RX7MaXGq60SXG+HVTrQtYaPz8vRByl6kZ8d4xRCdCg1Vci1/EF1ZsJhi71AAeVHQZ6sRN5K+wl5JHuj3LqwiJ6q1C3tTUE6WD/9mAMT7mrheBFrX/gGrRrfqydxaA=
+	t=1761898142; cv=none; b=TWuf4OJyOaq2fHlwjg1rx0u8hZdphRmEfszFgMTBNqdqbCS4zF8U1Pks+k3IKn5dgMvlgdREftfOR1FvS2o4roO2ZZO9WL/XLCiLykcGT6c4G/lSFFV9H7mk/mT56BfLRmxIDDHwOP7L6p8G4tyeMmJLhXRu/bZ0+Mng4JzpfT0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761898137; c=relaxed/simple;
-	bh=FhQQXKDVOjBqZ4fc/gTEqlVb+NdLl39P8rDDO+gqBkI=;
+	s=arc-20240116; t=1761898142; c=relaxed/simple;
+	bh=PKh4HWPqqK01Jo7tFQ7D3f1NO5ZBgEmpPitFqMxhlYc=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=asRwjbVRgMmnwX9yXbbR8vOrQj9qb6611bpBzVbt9Tlxq69h/X1z54WHC3HHbaRK2H7wYnciAMTh2jquWDDotcAE0CRPasFY1ro13/mYZhnfwWnfgZpNG1k4X0TQmzZqiOfoRSVIPUPqmTSs8r2xv8pLl9dCKnIDhv3L09HLoUk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=HJVdP4RK; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BEE2FC4CEF8;
-	Fri, 31 Oct 2025 08:08:51 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=t/Bvs5/onBeWoYQAjILY/tkIQfNWOaqoedCxaBQpDcgqVurlT8RXJZlsLm+z94k32qvWduDgubdH5cQRNIdtxUEBSWCV2CwdEakjqSxTAxkOfjEuiHpjpn5yTxfFfMaMjvC4zinHA3O/pNvdwfvU9AWj3JAd+4hL4aGl5pp16NE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=uDom02rz; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52967C4CEF1;
+	Fri, 31 Oct 2025 08:08:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1761898136;
-	bh=FhQQXKDVOjBqZ4fc/gTEqlVb+NdLl39P8rDDO+gqBkI=;
+	s=k20201202; t=1761898142;
+	bh=PKh4HWPqqK01Jo7tFQ7D3f1NO5ZBgEmpPitFqMxhlYc=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=HJVdP4RKtr3xtBUkV+2aEx4ouM2wMrISa0MCaDCFYRtwin4jxx0PmB/uUSk9NKZ51
-	 BeB7A0tcvQw7wQamrrPdI8x4iWp1Sihn0MmtOPdXShFzaeelOwLLVTYTfxTZQacP8Z
-	 V4mWc4Q8PPNTnAmDwpI/37AglNYptVh2azoTzt70IpZJRLKtn2xL+RC1XTP5V1yNLz
-	 d5+1P2xrCTXmoQTg7rVr2mdIlNCanpqMwYCCNrul528udV3isvJ/mGVx44bgXONByG
-	 GTVDRo1Jp9/hyPGA6yOREuDKcj1YimTZnoNtB0zgrA1rqCZrjG7IPYncpQvzCeZ9eh
-	 MpNiFpn8fDx5A==
-Message-ID: <5dd00a7b-56b1-486f-bfca-dc77838c66c7@kernel.org>
-Date: Fri, 31 Oct 2025 09:08:50 +0100
+	b=uDom02rzwHAXwr23EVoNOrTkvtRJ3HzggfC0/XbDAM/u+CvNkiRep/D+jFQmrGTHe
+	 ppHrGA63iLrxBGKz2+llQuyKbB3OPvDi5lYv28d0HxwFgbuTdbmwaKAl8bSnnjgJYU
+	 lsd2eh7fVoEyoOYVyFYx8ZogY5oDNoTYcn3Ns5P4J9TH1xnLXa3dVCJQPj9a8S4z6D
+	 JAoG/I/eQXfLMYC+qPhqHYrFPa89xbh7iI63cHtQaDB0QDJMU3HtOWS77KGhia975K
+	 IRQJdZ1FD+np6NMWu09kTSZ9hUbhsqecqtaoZfeQUllsN1dUCWUvnz5jS4geaT+gqE
+	 TqH2ItYUUd3fQ==
+Message-ID: <0ca2b19c-666e-460d-84ac-0b03f1f2dce1@kernel.org>
+Date: Fri, 31 Oct 2025 09:08:54 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,8 +50,8 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 3/3] arm64: dts: qcom: Add header file for IPCC
- physical client IDs on Glymur platform
+Subject: Re: [PATCH v3 2/3] arm64: dts: qcom: Add header file for IPCC
+ physical client IDs on Kaanapali platform
 To: Jingyi Wang <jingyi.wang@oss.qualcomm.com>,
  Manivannan Sadhasivam <mani@kernel.org>,
  Jassi Brar <jassisinghbrar@gmail.com>, Rob Herring <robh@kernel.org>,
@@ -59,9 +59,9 @@ To: Jingyi Wang <jingyi.wang@oss.qualcomm.com>,
 Cc: aiqun.yu@oss.qualcomm.com, tingwei.zhang@oss.qualcomm.com,
  trilok.soni@oss.qualcomm.com, yijie.yang@oss.qualcomm.com,
  linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
- devicetree@vger.kernel.org, Sibi Sankar <sibi.sankar@oss.qualcomm.com>
+ devicetree@vger.kernel.org
 References: <20251031-knp-ipcc-v3-0-62ffb4168dff@oss.qualcomm.com>
- <20251031-knp-ipcc-v3-3-62ffb4168dff@oss.qualcomm.com>
+ <20251031-knp-ipcc-v3-2-62ffb4168dff@oss.qualcomm.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -107,23 +107,22 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  jWt87ecuHlpL3uuQ0ZZNWqHgZoQLXoqC2ZV5KrtKWb/jyiFX/sxSrodALf0zf+tfHv0FZWT2
  zHjUqd0t4njD/UOsuIMOQn4Ig0SdivYPfZukb5cdasKJukG1NOpbW7yRNivaCnfZz6dTawXw
  XRIV/KDsHQiyVxKvN73bThKhONkcX2LWuD928tAR6XMM2G5ovxLe09vuOzzfTWQDsm++9UKF a/A=
-In-Reply-To: <20251031-knp-ipcc-v3-3-62ffb4168dff@oss.qualcomm.com>
+In-Reply-To: <20251031-knp-ipcc-v3-2-62ffb4168dff@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
 On 31/10/2025 08:41, Jingyi Wang wrote:
-> From: Sibi Sankar <sibi.sankar@oss.qualcomm.com>
+> On earlier platforms, Inter Process Communication Controller (IPCC) used
+> virtual client IDs and performed virtual-to-physical mapping in hardware,
+> so the IDs defined in dt-bindings/mailbox/qcom-ipcc.h are common across
+> platforms. Physical client IDs instead of virtual client IDs are used for
+> qcom new platforms like Kaanapali, which will be parsed by the devicetree
+> and passed to hardware to use Physical client IDs directly. Since physical
+> client IDs could vary across platforms, add a corresponding header file
+> for the Kaanapali platform.
 > 
-> Physical client IDs are used on Glymur Inter Process Communication
-> Controller (IPCC), add a corresponding header file.
-> 
-> Signed-off-by: Sibi Sankar <sibi.sankar@oss.qualcomm.com>
 > Signed-off-by: Jingyi Wang <jingyi.wang@oss.qualcomm.com>
 > ---
->  arch/arm64/boot/dts/qcom/glymur-ipcc.h | 68 ++++++++++++++++++++++++++++++++++
->  1 file changed, 68 insertions(+)
-> 
-
 
 
 Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
