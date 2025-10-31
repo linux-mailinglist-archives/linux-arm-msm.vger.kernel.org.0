@@ -1,126 +1,207 @@
-Return-Path: <linux-arm-msm+bounces-79963-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-79964-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8A6B6C26FB5
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 31 Oct 2025 22:12:35 +0100 (CET)
+Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [IPv6:2605:f480:58:1:0:1994:3:14])
+	by mail.lfdr.de (Postfix) with ESMTPS id AD720C27174
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 31 Oct 2025 23:00:17 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id C97A4188A081
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 31 Oct 2025 21:12:59 +0000 (UTC)
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 6BBC14E46C1
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 31 Oct 2025 22:00:16 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id AA0742ED87C;
-	Fri, 31 Oct 2025 21:12:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 708D8329E64;
+	Fri, 31 Oct 2025 22:00:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="XVOC31sb"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="quF/zU/Y"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yw1-f180.google.com (mail-yw1-f180.google.com [209.85.128.180])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F62222301
-	for <linux-arm-msm@vger.kernel.org>; Fri, 31 Oct 2025 21:12:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F51A2E092D;
+	Fri, 31 Oct 2025 22:00:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761945152; cv=none; b=GHxz350s6R2IsbigtsYHgRoudvnJ1X9tOnKyDNEdClgfIc8yEhgRtr21uYgRSbZgSuo7hUxoXwNAoLZh/v9/TnPg8suRL947GH/Onf50Rxvlipq60FBLJjuAh6Cky+gFOmEB/cMIsjvF38RehIwfcW2/o8Gs1xF3M9+DBOh0vcg=
+	t=1761948014; cv=none; b=NjOQPFR3lEtUxDX3HVtk7IEMS0nnLxccrOOJ+Uji83hv2XqPS6R+px2oxXXPd0di6nWsjIOmqmp50fW61CiGSwiDY10zzfKTapKi3vVevT0ifBFads+4Jr325IhCL9iSCuTm8I5Ty8P6mM9myHkzX3RSN71xY5/6vyJkKDAXFBg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761945152; c=relaxed/simple;
-	bh=RxRZVbgBXbZ11l9CJuzna3nb+s+vri3PRzzPf/vY52E=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=QvjpcgWMPl+xvLNQ6ATGEoBmQUZojOKTLEyG8LfB/NKh43t56lVFpocEk9SUzgdY4x3Ilzr9HjpcnDoD6+yMnBGMXE0J9Q53RPa+OJxCoC54u2hhZsPsK0Vj2lNoocY3uYjwGZo5plUCQZRsJ3k5htucUZwjOxYLiIdyRfjEqlw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=XVOC31sb; arc=none smtp.client-ip=209.85.128.180
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-yw1-f180.google.com with SMTP id 00721157ae682-78617e96ae1so27832747b3.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 31 Oct 2025 14:12:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1761945150; x=1762549950; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=RxRZVbgBXbZ11l9CJuzna3nb+s+vri3PRzzPf/vY52E=;
-        b=XVOC31sbo9r5F7BVAWX5E/04JfG3p7nH5F3qCrZ2DQ1cQz15Uw15+2oZcQU4FIHodW
-         vkyPNxj4b0FhXxT38Q8lXTNbYaKNZGMO8RtTrWnOSUmShjcK4zx3FlKPvUQZ74AXPrYb
-         rMYtQbcV+i/scrt536UfZjv10zhBBdyxZpHtyjPSgQzuetr2dA/YvqB7iWHxCHDKRK1A
-         01c/Hh0zE05wcc43EmF6Fe1KiLR5ntFUHf+uV4FDc/XuvoL4raii/92gP2yFlIre4Z75
-         nclkMgk9upNA50VoOKXV3/gXP9aBu4Lno7NGfbJWRClal6YE+abvDic3D7FfGXC6sJFg
-         Q14Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1761945150; x=1762549950;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=RxRZVbgBXbZ11l9CJuzna3nb+s+vri3PRzzPf/vY52E=;
-        b=xRfgprkpnPeAe0HaR3tkx3lytrun+HyiGDx6ZC9DdMW8lzU7M+546ywF6FsgB/A50g
-         GQF7xeC2ZGSBiE9fRn36LR0G3LoTX2njogjJlh+pVrAJJayKkbbUlBfpY7jPKYOa+I1Y
-         bUsn7Tt7QfFQCuC8IPi2JocmhzF1un81zbAex1k3tjFPXdS08vohw/uVzajVy1qpSLJJ
-         2Jjef1GY3WmkZNexZHXDE8snq/GVTC2+bfLohHbvyghBwLJPPWv365i7G/SNmCWuo4a8
-         BN7pSPsNM9RitoxxKsZjI75x2JH/kVUdn9xUoJa4kgtzMkgrHj5AqoBryWg6UvmGTNTw
-         5M6w==
-X-Forwarded-Encrypted: i=1; AJvYcCXxetP7vtq5650v0JvGEOcRUccS71cUlzUbF5EV8ufELgyATTcJYqKtGeYX34qeyFNAztXXq4zBKFfHgbNi@vger.kernel.org
-X-Gm-Message-State: AOJu0YyQtqjjj2v2gQt+FpGAn0bfbmH1MmdFPV+tCjrDitPi1F5cvZil
-	exk4CbUNWpSa0ICe2W2IBw5FvnlH40O38j0PYfPDtX2CBM3CsTw42wqi3PDYDrD26mTGLvVmuBi
-	9GWFATAlkhB9T+S6kXke5LLwOhPSMQ/c=
-X-Gm-Gg: ASbGnctUYp/KAgRq2vtKIdjazapxXrZNhjS72/dEou/epQEsmJuemoVQ/UqQjb4rqpl
-	P09EP3hgkpCoOV8U3QxCGOGOVrgu1nCnMxbCr+ab3/6GRj7IqOfDwyaMeVvfezA64h3QY6zuCzL
-	8W43ZyvVYnCqptEAXoULB5F81KnAN8orK1AfgeumKkU80TSSmz87j76n8K+Db5PgXM2ZT+facjT
-	7kBchqkfgvScDm8kvdatMp3PaYVTy+XYdT5wYt2ln6jV8IxAglQx32KuWEtnQ==
-X-Google-Smtp-Source: AGHT+IGf+2hqwNIvkxF2qVcHXGJA9AdN87r2O00FhqVjx+0PJJ4RnIdOz3Y2v4WN+nf2PaxkjO4OJTI6SiNS6tCn6BE=
-X-Received: by 2002:a05:690c:6111:b0:786:56ec:e3c6 with SMTP id
- 00721157ae682-78656ecee71mr19761427b3.55.1761945150168; Fri, 31 Oct 2025
- 14:12:30 -0700 (PDT)
+	s=arc-20240116; t=1761948014; c=relaxed/simple;
+	bh=O0fhSqjLTinpVRH+cK6fr7ALKjje1XRwe9Px2Bt83Tc=;
+	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition:In-Reply-To; b=ig+OfkFIEsHr00Aa7//uErOOXCUKM3IUe7GB5FOrb749l0np27R1Kfx7doJa2CUwIFRUxWOFTptb8E1tSH/7JZ8CPSbOXTw9r0dkZD6yPCrVP7ut6IcPN04zxYKcMbBfbKd80fuYzj4uqqUanA+MLtXH93aZxg9aRspbAD/S8u8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=quF/zU/Y; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95548C4CEE7;
+	Fri, 31 Oct 2025 22:00:13 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1761948013;
+	bh=O0fhSqjLTinpVRH+cK6fr7ALKjje1XRwe9Px2Bt83Tc=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:From;
+	b=quF/zU/YfBROOIbiQp5K1GKS/F5/XE7EaFei9v05twKPYSXRdSLZSzygogRRigvgz
+	 mX2H4q2mlyw8xrPEbUGRj5lTk4Lw/kPfgA5oAOt9/njm3wckJFsDKjK73CbZdEK4C6
+	 mE5q2Sd3dW8iBHU7O5YaPVuHhnzP0aQQ1fKmfftNEUKyVo7J9ZHPuJorVjI1Rx10Pa
+	 sE56HW4fI8K1D06g+B5nTIU9pj+CW2dghqzwT1vuFrTZyiskm+z85luhki4G4rR/Nv
+	 R1Vk1r+rBzLdCPIK73uy03Yv21epedexkYwogeNfNLgalsMDHKmS8Zo5w7oAOj5mUE
+	 Xryox64cfj0Lg==
+Date: Fri, 31 Oct 2025 17:00:12 -0500
+From: Bjorn Helgaas <helgaas@kernel.org>
+To: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
+Cc: Bjorn Helgaas <bhelgaas@google.com>,
+	Lorenzo Pieralisi <lpieralisi@kernel.org>,
+	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
+	Manivannan Sadhasivam <mani@kernel.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Jingoo Han <jingoohan1@gmail.com>,
+	Bartosz Golaszewski <brgl@bgdev.pl>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	cros-qcom-dts-watchers@chromium.org, linux-pci@vger.kernel.org,
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH v8 1/7] dt-bindings: PCI: Add binding for Toshiba TC9563
+ PCIe switch
+Message-ID: <20251031220012.GA1711108@bhelgaas>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20251014044135.177210-1-ghatto404@gmail.com> <91113d48-a8ef-4a24-a73f-6d32ac271a00@oss.qualcomm.com>
-In-Reply-To: <91113d48-a8ef-4a24-a73f-6d32ac271a00@oss.qualcomm.com>
-From: Ghatto <ghatto404@gmail.com>
-Date: Fri, 31 Oct 2025 18:12:18 -0300
-X-Gm-Features: AWmQ_bkJM_BsqbzwVWRLOCiui_KfbOc2l1X_oA_9DhB9pGWlZLXqfCHgZ0VRaqY
-Message-ID: <CAMQHOhcMUk99wdS03yjQiwzTg0D0mt8H-QU5QQFn44m7sDZ25Q@mail.gmail.com>
-Subject: Re: [PATCH v2 0/6] arm64: dts: qcom: r0q: enable more peripherals
-To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Cc: Krzysztof Kozlowski <krzk@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
-	Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
-	Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org, 
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20251031-tc9563-v8-1-3eba55300061@oss.qualcomm.com>
 
-On Tue, Oct 14, 2025 at 6:58=E2=80=AFAM Konrad Dybcio
-<konrad.dybcio@oss.qualcomm.com> wrote:
->
-> On 10/14/25 6:41 AM, Eric Gon=C3=A7alves wrote:
-> > This patchset adds support for multiple devices found on the Galaxy S22=
-,
-> > side buttons, touchscreen, max77705 charger/fuelgauge, RTC and UFS. It
-> > depends on "Input: add support for the STM FTS2BA61Y touchscreen" for
-> > TS to be enabled - and for the fuelgauge/charger to work,
-> > "mfd: max77705: support revision 0x2" is needed too.
-> >
-> > Thanks!
-> >
-> > Changes in v2:
-> > - split the gpio keys patch into 2 for small refactor
-> > - rename spi-gpio: spi-gpio@0 to spi8
-> > - use tabs instead of spaces on max77705 nodes
-> > - added new patch that fixes adsp_mem and video_mem memory regions
-> > I couldn't find the clock-frequency for i2c5 bus :(
->
-> You can boot downstram and run debugcc to dump the current state
-> (incl. rates) of all clocks
->
-> https://github.com/linux-msm/debugcc
-I can't get a custom build of the downstream kernel running on recent
-Android versions...
->
-> Or /sys/kernel/debug/clk/gcc_name_of_the_clock/clk_rate
-Nothing exists past /sys/kernel/debug
->
-> may also give you a good result, although YMMV
->
-> Konrad
+On Fri, Oct 31, 2025 at 04:41:58PM +0530, Krishna Chaitanya Chundru wrote:
+> Add a device tree binding for the Toshiba TC9563 PCIe switch, which
+> provides an Ethernet MAC integrated to the 3rd downstream port and
+> two downstream PCIe ports.
+
+> +++ b/Documentation/devicetree/bindings/pci/toshiba,tc9563.yaml
+> @@ -0,0 +1,178 @@
+> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+> +%YAML 1.2
+> +---
+> +$id: http://devicetree.org/schemas/pci/toshiba,tc9563.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> +
+> +title: Toshiba TC9563 PCIe switch
+> +
+> +maintainers:
+> +  - rishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
+
+s/rishna/Krishna/ ?
+
+> +  i2c-parent:
+> +    $ref: /schemas/types.yaml#/definitions/phandle-array
+> +    description:
+> +      A phandle to the parent I2C node and the slave address of the device
+> +      used to do configure tc9563 to change FTS, tx amplitude etc.
+
+s/used to do/used to/
+
+> +patternProperties:
+> +  "^pcie@[1-3],0$":
+> +    description:
+> +      child nodes describing the internal downstream ports
+> +      the tc9563 switch.
+
+s/ports/ports of/ ?
+
+> +      toshiba,no-dfe-support:
+> +        type: boolean
+> +        description:
+> +          Disable DFE (Decision Feedback Equalizer), which mitigates
+> +          intersymbol interference and some reflections caused by impedance mismatches.
+
+Wrap to fit in 78 columns
+
+> +    pcie {
+> +        #address-cells = <3>;
+> +        #size-cells = <2>;
+> +
+> +        pcie@0 {
+> +            device_type = "pci";
+> +            reg = <0x0 0x0 0x0 0x0 0x0>;
+> +
+> +            #address-cells = <3>;
+> +            #size-cells = <2>;
+> +            ranges;
+> +            bus-range = <0x01 0xff>;
+> +
+> +            pcie@0,0 {
+> +                compatible = "pci1179,0623";
+> +
+> +                reg = <0x10000 0x0 0x0 0x0 0x0>;
+> +                device_type = "pci";
+> +                #address-cells = <3>;
+> +                #size-cells = <2>;
+> +                ranges;
+> +                bus-range = <0x02 0xff>;
+> ...
+
+> +                pcie@1,0 {
+> +                    compatible = "pciclass,0604";
+> +                    reg = <0x20800 0x0 0x0 0x0 0x0>;
+> +                    #address-cells = <3>;
+> +                    #size-cells = <2>;
+> +                    device_type = "pci";
+> +                    ranges;
+> +                    bus-range = <0x03 0xff>;
+> +
+> +                    toshiba,no-dfe-support;
+
+IIUC, there are two downstream ports available for external devices,
+and pcie@1,0 is one of them.
+
+  1) Putting "toshiba,no-dfe-support" in the pcie@1,0 stanza suggests
+  that it only applies to that port.
+
+  But from tc9563_pwrctrl_disable_dfe() in "[PATCH v8 6/7] PCI:
+  pwrctrl: Add power control driver for tc9563", it looks like it's
+  applied to the upstream port and both downstream ports.  So I guess
+  my question is putting "toshiba,no-dfe-support" in just one
+  downstream port is the right place for it.
+
+  2) I see a lookup of "qcom,no-dfe-support" in [PATCH v8 6/7] PCI:
+  pwrctrl: Add power control driver for tc9563; is that supposed to
+  match this "toshiba,no-dfe-support"?
+
+> +                };
+> +
+> +                pcie@2,0 {
+> +                    compatible = "pciclass,0604";
+> +                    reg = <0x21000 0x0 0x0 0x0 0x0>;
+> +                    #address-cells = <3>;
+> +                    #size-cells = <2>;
+> +                    device_type = "pci";
+> +                    ranges;
+> +                    bus-range = <0x04 0xff>;
+> +                };
+> +
+> +                pcie@3,0 {
+> +                    compatible = "pciclass,0604";
+> +                    reg = <0x21800 0x0 0x0 0x0 0x0>;
+> +                    #address-cells = <3>;
+> +                    #size-cells = <2>;
+> +                    device_type = "pci";
+> +                    ranges;
+> +                    bus-range = <0x05 0xff>;
+> +
+> +                    toshiba,tx-amplitude-microvolt = <10>;
+> +
+> +                    ethernet@0,0 {
+> +                        reg = <0x50000 0x0 0x0 0x0 0x0>;
+> +                    };
+> +
+> +                    ethernet@0,1 {
+> +                        reg = <0x50100 0x0 0x0 0x0 0x0>;
+> +                    };
+> +                };
+> +            };
+> +        };
+> +    };
+> 
+> -- 
+> 2.34.1
+> 
 
