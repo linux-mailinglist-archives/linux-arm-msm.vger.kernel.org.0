@@ -1,80 +1,139 @@
-Return-Path: <linux-arm-msm+bounces-79906-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-79907-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [142.0.200.124])
-	by mail.lfdr.de (Postfix) with ESMTPS id D52BFC258D5
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 31 Oct 2025 15:24:15 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 178DAC2597A
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 31 Oct 2025 15:35:09 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 56A114F2793
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 31 Oct 2025 14:21:55 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 11E3C1A61539
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 31 Oct 2025 14:35:12 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E7B82320380;
-	Fri, 31 Oct 2025 14:21:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C96F934C984;
+	Fri, 31 Oct 2025 14:34:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HMsl3vf7"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="cvZlJupw"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.16])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AAA6C18626;
-	Fri, 31 Oct 2025 14:21:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D666D34C811;
+	Fri, 31 Oct 2025 14:34:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.16
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761920513; cv=none; b=l3DTbE09s9zvJix3mjlFHR72h/cgD/Xq3FlyQSah7SVs5jOabyrO6dGoSL1Jm30XOwWwAmHa8Qi0P+LmfjNN1FEMVeXJirIlCR9AorsljU/JmYge7iy9g57AnNAwOhTPb6IMicPJ5ANh69v26wYzB1H+DbBMTmhbz6ImNYRZPY8=
+	t=1761921272; cv=none; b=dciDHKUEZ3PUwTej1ZIq0ni9ZTjxPI31Q2bZ9GPNJnif2rnfJrzV3Is+xvYcMaXyAZ3sy0BfSATXD+T4WvHLImCPXbCzrWjc+b44i96n55MhQJJcez8iZgZ+AQ5regRtG6CsD0XT4bV3ZbVLYcV2b2uu1wALjsSxzzrEzxoprB0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761920513; c=relaxed/simple;
-	bh=HC0DE5hT5733A14iCFz7Atbo4IQ4lqqAvSwnLflL308=;
+	s=arc-20240116; t=1761921272; c=relaxed/simple;
+	bh=/g1AxzJQOcya88xAhA0tStQsU9mezZXtDTiynle222Y=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=oHehJHvpFiu1NeiAXAW2r6fp8t9w8MgN0jn32vU1rmhDMjmnl73rn47kxmwKVUlLPb2OacNGl4ZQLK0y6wMPqpDqvuaAYm9r1D84C67+lKYCh1BCdMlMXsUfPexZln790TxKqLrxGrZu254qnI9fO9dVEPPw4tIvyrorUUEYl5k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HMsl3vf7; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34F1BC4CEE7;
-	Fri, 31 Oct 2025 14:21:53 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761920513;
-	bh=HC0DE5hT5733A14iCFz7Atbo4IQ4lqqAvSwnLflL308=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=HMsl3vf79NC7JSp6P07U/L1dmuyf3CO6ADs8mOnZDgVbjs/WkI4IbkvBZLj5n6ig/
-	 U1kr+gMlpbAUnfudiMTgGVxMrJlObdS0HtRm++WW8SbqToqxvvIHZO4JQ++PzW/d0A
-	 xlJKtYeLL72GKECECnhuKTpJCE0IBT1f2GNFbyyo=
-Date: Fri, 31 Oct 2025 10:21:49 -0400
-From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-To: Alexey Minnekhanov <alexeymin@postmarketos.org>
-Cc: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, 
-	Bjorn Andersson <andersson@kernel.org>, Stephen Boyd <sboyd@kernel.org>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Konrad Dybcio <konradybcio@kernel.org>, linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org, 
-	devicetree@vger.kernel.org, stable@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht
-Subject: Re: [PATCH 0/3] SDM630/660: Add missing MDSS reset
-Message-ID: <20251031-pastel-precise-capuchin-6d8c8f@lemur>
-References: <20251031-sdm660-mdss-reset-v1-0-14cb4e6836f2@postmarketos.org>
- <25579815-5727-41e8-a858-5cddcc2897b7@oss.qualcomm.com>
- <722a6cf2-7109-47e9-9957-cde5171d7053@postmarketos.org>
+	 Content-Type:Content-Disposition:In-Reply-To; b=R7QscrN+x9qpRSmiKCtDpIsXPXTdIMAOKyCtbA5+FsvR1oGJc4jyTahUapxsIth7Xm1aPvVvntnBuZcjGaLKFpk5m8RyayO87TecL5osp/FObC806ennasEl+t7Hrm2zs/q9pZPgmJDh+myoUJL0T88+3dBGyWbFdYVPrWKkpN8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=pass smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=cvZlJupw; arc=none smtp.client-ip=192.198.163.16
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.intel.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1761921271; x=1793457271;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=/g1AxzJQOcya88xAhA0tStQsU9mezZXtDTiynle222Y=;
+  b=cvZlJupwnd4jtEq6U0PT2GcuxICUJZ0aklBDtrQWyzkWd+EJ7/QCZOSY
+   pXi19iz/GDs9bO3dxHJu62JSPh/xOHEiiBU7vxJZonkQKzpvDeTFluPNR
+   RUmN+zmlbo/gqDkNo9+jPoS96MOlv5vDCQKhk1gMc0G0PfFtt/DFpXPzY
+   g6phIM8UkzoVcxYxkgHesBhpdyqIlx0sAwaF2xVWpwWFKM01O/iyrqkfV
+   NMRqa2lslYOFkP8yOhWw55Bp4GsG35AB+BE2lYO54EyyfMOsHgbHPMhSw
+   P00Mm5Xje1YH57uzw9P0F3SehtA/hua0VhzI4RGDR8+/heHAMXKSLlipm
+   A==;
+X-CSE-ConnectionGUID: r40qX6xxQkC+XhtIRK/zwg==
+X-CSE-MsgGUID: Qxs2tb4bSEiKZXEcG7Mzzg==
+X-IronPort-AV: E=McAfee;i="6800,10657,11599"; a="51654686"
+X-IronPort-AV: E=Sophos;i="6.19,269,1754982000"; 
+   d="scan'208";a="51654686"
+Received: from fmviesa010.fm.intel.com ([10.60.135.150])
+  by fmvoesa110.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 31 Oct 2025 07:34:30 -0700
+X-CSE-ConnectionGUID: /EQF3V/oQ/+hpsvXAymnpg==
+X-CSE-MsgGUID: DJ4WcSkuTQmrSZQtuuieLg==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.19,269,1754982000"; 
+   d="scan'208";a="186990352"
+Received: from mgoodin-mobl3.amr.corp.intel.com (HELO ashevche-desk.local) ([10.124.220.66])
+  by fmviesa010-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 31 Oct 2025 07:34:28 -0700
+Received: from andy by ashevche-desk.local with local (Exim 4.98.2)
+	(envelope-from <andriy.shevchenko@linux.intel.com>)
+	id 1vEqCt-00000004IPL-0Zcq;
+	Fri, 31 Oct 2025 16:34:23 +0200
+Date: Fri, 31 Oct 2025 16:34:22 +0200
+From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+To: Christian Marangi <ansuelsmth@gmail.com>
+Cc: Ilia Lin <ilia.lin@kernel.org>, "Rafael J. Wysocki" <rafael@kernel.org>,
+	Viresh Kumar <viresh.kumar@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	Arnd Bergmann <arnd@arndb.de>, Raag Jadav <raag.jadav@intel.com>,
+	linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v2 3/3] cpufreq: qcom-nvmem: add compatible fallback for
+ ipq806x for no SMEM
+Message-ID: <aQTI7o1HQYbQ_Pl2@smile.fi.intel.com>
+References: <20251031130835.7953-1-ansuelsmth@gmail.com>
+ <20251031130835.7953-4-ansuelsmth@gmail.com>
+ <aQS5FpuOWk1bWnQd@smile.fi.intel.com>
+ <6904c563.050a0220.a13ee.0212@mx.google.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <722a6cf2-7109-47e9-9957-cde5171d7053@postmarketos.org>
+In-Reply-To: <6904c563.050a0220.a13ee.0212@mx.google.com>
+Organization: Intel Finland Oy - BIC 0357606-4 - c/o Alberga Business Park, 6
+ krs, Bertel Jungin Aukio 5, 02600 Espoo
 
-On Fri, Oct 31, 2025 at 03:42:47PM +0300, Alexey Minnekhanov wrote:
-> This is a result of me first time trying to use b4 and misconfiguration
-> of git: user.email contained my email inside '<' and '>' which somehow
-> caused the prep/send process to generate emails with broken half-empty
-> "From:" field, containing only name and surname without email.
+On Fri, Oct 31, 2025 at 03:19:12PM +0100, Christian Marangi wrote:
+> On Fri, Oct 31, 2025 at 03:26:46PM +0200, Andy Shevchenko wrote:
+> > On Fri, Oct 31, 2025 at 02:08:34PM +0100, Christian Marangi wrote:
 
-There is now a patch in master to handle this situation. Sorry about that.
+...
 
-> And then
-> perhaps email server closer to your side decided to "fill the gaps" and
-> append some non-existent web.codeaurora.org part? At least I don't have
-> any better guess.
+> > > +		if (of_machine_is_compatible("qcom,ipq8062"))
+> > > +			msm_id = QCOM_ID_IPQ8062;
+> > > +		else if (of_machine_is_compatible("qcom,ipq8065") ||
+> > > +			 of_machine_is_compatible("qcom,ipq8069"))
+> > > +			msm_id = QCOM_ID_IPQ8065;
+> > > +		else if (of_machine_is_compatible("qcom,ipq8064") ||
+> > > +			 of_machine_is_compatible("qcom,ipq8066") ||
+> > > +			 of_machine_is_compatible("qcom,ipq8068"))
+> > > +			msm_id = QCOM_ID_IPQ8064;
+> > 
+> > A nit-pick (in case you need a new version of the series): I would expect
+> > the conditionals be sorted by assigned value.
+> > 
+> > 		if (of_machine_is_compatible("qcom,ipq8062"))
+> > 			msm_id = QCOM_ID_IPQ8062;
+> > 		else if (of_machine_is_compatible("qcom,ipq8064") ||
+> > 			 of_machine_is_compatible("qcom,ipq8066") ||
+> > 			 of_machine_is_compatible("qcom,ipq8068"))
+> > 			msm_id = QCOM_ID_IPQ8064;
+> > 		else if (of_machine_is_compatible("qcom,ipq8065") ||
+> > 			 of_machine_is_compatible("qcom,ipq8069"))
+> > 			msm_id = QCOM_ID_IPQ8065;
+> >
+> 
+> Hi as said in the commit, parsing 65/69 before 64 is needed as we might
+> have compatible like
+> 
+> "qcom,ipq8065","qcom,ipq8064" so we might incorrectly parse msm_id
+> ipq8064.
 
-That's correct, that's the internal DNS name of one of our relays.
+Oh, this is unfortunate. Wouldn't it be possible to use some API that returns
+an index (or an error if not found) of the compatible? I believe we have a such
+for the regular 'compatible' properties.
 
--K
+-- 
+With Best Regards,
+Andy Shevchenko
+
+
 
