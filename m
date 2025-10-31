@@ -1,284 +1,145 @@
-Return-Path: <linux-arm-msm+bounces-79901-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-79902-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3A06CC25592
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 31 Oct 2025 14:50:23 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 88AA1C255E0
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 31 Oct 2025 14:56:18 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id D50223A9D14
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 31 Oct 2025 13:50:21 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 706C23BE8C1
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 31 Oct 2025 13:56:13 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D70D8347BB1;
-	Fri, 31 Oct 2025 13:50:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B444F34B661;
+	Fri, 31 Oct 2025 13:56:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="J+ce4UTe"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Ngo7cMjc"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f43.google.com (mail-wm1-f43.google.com [209.85.128.43])
+Received: from mail-pf1-f182.google.com (mail-pf1-f182.google.com [209.85.210.182])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5B37331A4F
-	for <linux-arm-msm@vger.kernel.org>; Fri, 31 Oct 2025 13:50:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34643347FC2
+	for <linux-arm-msm@vger.kernel.org>; Fri, 31 Oct 2025 13:56:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761918617; cv=none; b=akgUstgL4UWP2eqOWZ+Y0dSF6TUEW1C7gBtUD8c+8Uz6z2ALfQfW6VcYtAubmdCtlaDDjplNSxmfB9LIq0wfeehAfq6Qsjt7wMCLMMTiQBRzOEi94h719IXXUXJTFg8SanLOiK00mPZJ91uY/I/CQcfy18QIBO7yfQlZjzf2pi4=
+	t=1761918962; cv=none; b=p2bmjC4GvxkOdrLS9UCqdPgSarKYSnL4ZaA+wwJb8MNLE5P5OQdsYpW/lOSB8VjI97hHLmkWfjKPBotjcL0dI172Y9cYo8J/fHNbLSsX8aN1829OX5cBqnFOMmiEoiupEyUmKJVeqbAzk4TLrKXG1BKqO29Vrb5yKEEIYLs4KTQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761918617; c=relaxed/simple;
-	bh=sJK9ZeT3NeI+yYKJ/cWiElYXfQmjsmNW67JpnnKD89I=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=XBOuFsSKjraPjYirEtA/vRqH9ogstGrM5uxDb/8BnM/ec9SrDt013PxQVyt50UbcvZmoBuoXQ/eOqVY0q65utqcWF0TMrSv1rWpVEApZTb997IJPi2qr3H1a7rvawWlChpHw1yCePPfToUlp+sYdf8ww/J9VawVDp8zmT5RRdqU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=J+ce4UTe; arc=none smtp.client-ip=209.85.128.43
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f43.google.com with SMTP id 5b1f17b1804b1-46e6a689bd0so22358035e9.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 31 Oct 2025 06:50:15 -0700 (PDT)
+	s=arc-20240116; t=1761918962; c=relaxed/simple;
+	bh=rv1lakdnapd6shhm6W5A6hAx9wRV9T1vgsYATRaDRWM=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=VMMVD+ZuwR6HbfaTnDfDLo/k5d0vYD545dLN6jqbj0Y7T9YnBs4Nvaad09CrFQX7mVyrSXeOYoUzpUR8yfGOioHvh+lRXBpJMAq9PdPHytbbWgikRhExPDMRafE5/rjBdJtVr5gGgQm+sm4jJTWAjm910c22M+dvMDkRNgYCPQk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Ngo7cMjc; arc=none smtp.client-ip=209.85.210.182
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-pf1-f182.google.com with SMTP id d2e1a72fcca58-781206cce18so2675773b3a.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 31 Oct 2025 06:56:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1761918614; x=1762523414; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=OH6TtzH8OEdYvOB3XWCwPOSyqERGuFlVmCf8h/N53mY=;
-        b=J+ce4UTeid7p4DBdewWfsPVn++ZnPGNLtm6Dh2/F74hbJEDctDNtrj3cu0GDjmNBVc
-         9B7APs8IB0KJjM9keqb1htXl+ALZ8O8Eu4MhQyto9vr/EU3Nbuc+Qd9uF4Q+kc4bgCMI
-         6By5kwCc8Azy/IRx3eQoTvNL32WZ6/lVBW1Rc8qyjkQj+YodVL76c0N4VNHYlxBNwxV4
-         vvRKfiOX3kwINO5QqwzMPGPfTlxFXsqL5gaVVKHhjchvNODaQMziXDDR9rQTkHgG+Uwr
-         JWt2+etM5oE2mHfDftxriJvF3+c12HhDoGWnDEij6cA/ukEINd1op4L803ZPOVYF/nPZ
-         l3tA==
+        d=gmail.com; s=20230601; t=1761918960; x=1762523760; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=rXy44YBpbFQ7ccTa0IVPqx57mQ389VTun+ngC3PqvuM=;
+        b=Ngo7cMjcJTEvXJfB6Y+GPqQvaCcm4ZJwuykkefHlNxqrTBIDjA26jR4JlXE16EhoPm
+         6mTCMQkvtK/1N5hmxSIMbrStNI3DF0VpLmg7S+97H822TuxIpvwJplJqjIKamaT7Oak0
+         EAoAcG4e0JyCxdBHJHfSa9phYGy5ALd6KUhG54mkBkASxwrEURmzfSkmixapwiN1/inN
+         yEiGPlkYyyr+keJqv0cu2DTPhdDzK0Ets0GgpLe9NbHu/7PQbNWNL/fXzO4oMdExi+R/
+         p09tTz7bf+vdtszbE7I6387fWNys4K2YOZ32QAlJ8foTe4zVgkzephO6WhyrkPVYJoC3
+         EWcQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1761918614; x=1762523414;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=OH6TtzH8OEdYvOB3XWCwPOSyqERGuFlVmCf8h/N53mY=;
-        b=Mm++bplGdpc+HsBzIX/XgexcbHWk/coBVneQI4QdNqgMB7u2Mbh+0+aoX+VhyDi2AM
-         MyQ31wyMr+uUl60c5zURIpJe1hXrJCILLlFaTa2IdUJRA3bvrqyWRW6gYHtO76wpJCbu
-         V1lhWvJSYlvGeCTjNgWkmqN2rvOE3VBjB0IhpJVp/2c+390v4Fhe/SqStTV4h3/zrSRC
-         +rNxpfdb5ivGHala8UU+eqb3VvxO2HwRT2PIorppjpz3TyAolPJc4ja+u8DLRr/dIqel
-         eNjLn3sMKzmUnIaFRmHSZscK72S3P9YjC92UvykiB7393gjNGLnVu47gQJ5H+CN6psHk
-         oQwQ==
-X-Forwarded-Encrypted: i=1; AJvYcCXSj8QE5TO2bcvBI+c2vA3S6kdC8REmRCkZBHa5UXVl+PjUb1Y8qjMm6K2CEr1meZWUY0SDfDhl3Ur5XoJT@vger.kernel.org
-X-Gm-Message-State: AOJu0YziqlxsCjgl1t7tveIPI0oOcMwhKFxE9h/4W4OthUyqT7hTs8qm
-	q2K+vYuuy9WSekqbiQz2HOtRdRSIPwlT2WFUk9uqMMERzRppdkBKsvBybtuVPJwaCkU=
-X-Gm-Gg: ASbGncuSmamLMknNPAkImVaJ/ueW/3iZUrHciIDAvWHvJf53Wwmtv1/aLF0EvxHacnj
-	SJnBb+ArNs8icrQh9T6uyNsl/KgsrmTaHh/E/YHK1C7dOrOr5i65CRy8V0u3gB83r0OSlzPLTTv
-	SDFk9d3dPku3k4kweaUPE908ou96NtO6CJjAOjS7DJZiZpymgqRHCiKW2/ghfEnGf2BaLUlksxD
-	p/LNKfa25VV7ZQEoNn5FQI4CwvV30vs/qj9Oyjm8Sy/m5fOSV9iLe0RBmh9V4ftbntsHsvmJrxc
-	aTjIceW4gnwpHr//wmBaz9ziggxjOz3l1rV7ScohnHcci1MH/Q+rIhMBsbksGP00FvoPEBZlcIu
-	XxX5oLVkDG+Dcc70tfKqzRjeu2Bvk+XNwB8wnYaqtCtOHvSQZeRyZdBPCiYUcu7XSMA2ieTK9Et
-	kuDafnED9bNyhCaZFkd1CQCwQlUaVLBQVtMf0Sukl/dw==
-X-Google-Smtp-Source: AGHT+IHswv1jbMa6PmgS62PAO0+xDI1T2gX2fd6DNwet+e3yBeSvkacWO3qek5if48rbanP/YLfkhw==
-X-Received: by 2002:a05:600c:314d:b0:476:84e9:b571 with SMTP id 5b1f17b1804b1-477307c2afbmr37052435e9.14.1761918613142;
-        Fri, 31 Oct 2025 06:50:13 -0700 (PDT)
-Received: from [192.168.0.21] (188-141-3-146.dynamic.upc.ie. [188.141.3.146])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-429c114ca0csm4373033f8f.21.2025.10.31.06.50.11
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 31 Oct 2025 06:50:12 -0700 (PDT)
-Message-ID: <631e4da1-92a0-4d44-b92e-bdcc56196c26@linaro.org>
-Date: Fri, 31 Oct 2025 13:50:10 +0000
+        d=1e100.net; s=20230601; t=1761918960; x=1762523760;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=rXy44YBpbFQ7ccTa0IVPqx57mQ389VTun+ngC3PqvuM=;
+        b=nbR6KiSuCOleKklmbbm967SdKPJ5jVnNZ14CARXQtPveg7I6Xf6aBPlHA3XW3O23W8
+         UsTBYlt9HPmgICvHbLa2cX4i4/bos6Tqka1gjdwectDkNadRcJzjnuPUKju8iSaNE47S
+         r4mLbzVzdT5y6VsTzkg6iL/fpxq+X3jfATCA7dkw5nr2WSb4/r/SUnBF6Q/m+R20BMoN
+         pMJ0JpEJ63c17r70dfCXoq1bEL5lqg+vLO5ji3OSRpoacnsUXWpNmSLQfN4a7cp8HEbm
+         VZgn5kVqWGd2LY00UWRvVibUAb6YYk3sL76kH2R3/43wNLd87+qP6n2dx1qENIHAcn3p
+         g+Ng==
+X-Forwarded-Encrypted: i=1; AJvYcCXgqw56+cEPOmbX64GfdYYT4RKYqP0vFuWwZMhwaWigV8+IOi/4BgMnVtHZLSG1nFfg9TJqGWC2jIacnAEI@vger.kernel.org
+X-Gm-Message-State: AOJu0YzAExJIVjionEMF3O64mW2BZEIipprUXvjYMNQ1nrA0aZtOteVE
+	O5exJjdsYKmt4Re65O0zQoozgCyPoKOfTq6Djvkd/LnSMVWWBCgjpisJRzhD5ngW1Bg=
+X-Gm-Gg: ASbGncu74yZOjzKxb6eg4KAJ346pHTsUVcmuHUF2EmlzY6T9sxUuB46gIaGSGJaapZb
+	l1MysvFKdNjhDN8fRDeznsx6l5A4wZV3tyLdPNx89mMDxsk3b6avoV3hho5KAKYtRwhqi0u/H8Z
+	S5qaSqhuT+k21uS4A0HDF4dm9EHMtqyu3dT2Bk+TgNQr3xilnR5HUI3WJDbFtxFD5nsAkXJdyJT
+	d8k3JJna7cufLX7g9etxeWZgCwMDKA9tnA43iAdDdAUfCiV26Wy6p23d4gIQ4HeBzecq0n8cKj0
+	oxfM6c6Ik2/sOVqSwK16YmLATmBMTPjILHXfJoaBnyXpWLOEzy44R+YzuuTlZ1WO1ML+rVfGIHQ
+	YAxeW7PAG/4+utGOvJOWcMhRw2z1hqsQiEfVoSn54T3vTN7FI2vUGoDmw6Qma1AlwGTVNWa5ms8
+	UlEn3/2eM=
+X-Google-Smtp-Source: AGHT+IFa+KtYs1Qd2wH4XD0ttk5HSiq6KyawmAxwbjG3Kjo7lM6fGlhfsK3Z/0aCWFdV/RCWUZ3TRg==
+X-Received: by 2002:a05:6a00:14ca:b0:7a6:9f96:966 with SMTP id d2e1a72fcca58-7a756473a05mr5078674b3a.4.1761918960283;
+        Fri, 31 Oct 2025 06:56:00 -0700 (PDT)
+Received: from archlinux ([103.189.130.36])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-7a7d8d72c5fsm2302271b3a.18.2025.10.31.06.55.55
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 31 Oct 2025 06:55:59 -0700 (PDT)
+From: Raihan Ahamed <raihan1999ahamed@gmail.com>
+To: Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Kees Cook <kees@kernel.org>,
+	Tony Luck <tony.luck@intel.com>,
+	"Guilherme G . Piccoli" <gpiccoli@igalia.com>,
+	linux-arm-msm@vger.kernel.org,
+	devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	linux-hardening@vger.kernel.org
+Cc: Raihan Ahamed <raihan1999ahamed@gmail.com>
+Subject: [PATCH v4 1/2] dt-bindings: arm: qcom: Add Lenovo P2
+Date: Fri, 31 Oct 2025 19:21:20 +0530
+Message-ID: <20251031135506.214025-1-raihan1999ahamed@gmail.com>
+X-Mailer: git-send-email 2.51.2
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 2/6] media: dt-bindings: Add CAMSS device for Kaanapali
-To: Hangxiang Ma <hangxiang.ma@oss.qualcomm.com>,
- Loic Poulain <loic.poulain@oss.qualcomm.com>, Robert Foss
- <rfoss@kernel.org>, Andi Shyti <andi.shyti@kernel.org>,
- Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
- Conor Dooley <conor+dt@kernel.org>, Todor Tomov <todor.too@gmail.com>,
- Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
- Mauro Carvalho Chehab <mchehab@kernel.org>
-Cc: linux-i2c@vger.kernel.org, linux-arm-msm@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- linux-media@vger.kernel.org, aiqun.yu@oss.qualcomm.com,
- tingwei.zhang@oss.qualcomm.com, trilok.soni@oss.qualcomm.com,
- yijie.yang@oss.qualcomm.com, Jingyi Wang <jingyi.wang@oss.qualcomm.com>,
- Atiya Kailany <atiya.kailany@oss.qualcomm.com>
-References: <20251030-add-support-for-camss-on-kaanapali-v5-0-f8e12bea3d02@oss.qualcomm.com>
- <20251030-add-support-for-camss-on-kaanapali-v5-2-f8e12bea3d02@oss.qualcomm.com>
-From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Content-Language: en-US
-In-Reply-To: <20251030-add-support-for-camss-on-kaanapali-v5-2-f8e12bea3d02@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 
-On 31/10/2025 02:59, Hangxiang Ma wrote:
-> Add the compatible string "qcom,kaanapali-camss" to support the Camera
-> Subsystem (CAMSS) on the Qualcomm Kaanapali platform.
-> 
-> The Kaanapali platform provides:
-> - 3 x VFE, 5 RDI per VFE
-> - 2 x VFE Lite, 4 RDI per VFE Lite
-> - 3 x CSID
-> - 2 x CSID Lite
-> - 6 x CSIPHY
-> 
-> Signed-off-by: Hangxiang Ma <hangxiang.ma@oss.qualcomm.com>
-> ---
->   .../bindings/media/qcom,kaanapali-camss.yaml       | 406 +++++++++++++++++++++
->   1 file changed, 406 insertions(+)
-> 
-> diff --git a/Documentation/devicetree/bindings/media/qcom,kaanapali-camss.yaml b/Documentation/devicetree/bindings/media/qcom,kaanapali-camss.yaml
-> new file mode 100644
-> index 000000000000..c34867022fd1
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/media/qcom,kaanapali-camss.yaml
-> @@ -0,0 +1,406 @@
-> +# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
-> +%YAML 1.2
-> +---
-> +$id: http://devicetree.org/schemas/media/qcom,kaanapali-camss.yaml#
-> +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> +
-> +title: Qualcomm Kaanapali Camera Subsystem (CAMSS)
-> +
-> +maintainers:
-> +  - Hangxiang Ma <hangxiang.ma@oss.qualcomm.com>
-> +
-> +description:
-> +  The CAMSS IP is a CSI decoder and ISP present on Qualcomm platforms.
-> +
-> +properties:
-> +  compatible:
-> +    const: qcom,kaanapali-camss
-> +
-> +  reg:
-> +    maxItems: 16
-> +
-> +  reg-names:
-> +    items:
-> +      - const: csid0
-> +      - const: csid1
-> +      - const: csid2
-> +      - const: csid_lite0
-> +      - const: csid_lite1
-> +      - const: csiphy0
-> +      - const: csiphy1
-> +      - const: csiphy2
-> +      - const: csiphy3
-> +      - const: csiphy4
-> +      - const: csiphy5
-> +      - const: vfe0
-> +      - const: vfe1
-> +      - const: vfe2
-> +      - const: vfe_lite0
-> +      - const: vfe_lite1
+Document the compatible for the MSM8953-based Lenovo P2
 
-No test pattern generator on this part ?
+smartphone released in 2016
 
-We have patches in-flight to add TPG so it makes no sense to omit these 
-registers from current or new submissions.
-
-https://lore.kernel.org/linux-media/20251017-camss_tpg-v5-1-cafe3ad42163@oss.qualcomm.com/
-
-While we're at it we should consider adding in the other key functional 
-blocks.
-
-OFE, IPE etc, there's no harm in including the registers even if the 
-intention and outcome is never switching that functionality on.
-
-> +
-> +  clocks:
-> +    maxItems: 34
-> +
-> +  clock-names:
-> +    items:
-> +      - const: camnoc_nrt_axi
-> +      - const: camnoc_rt_axi
-> +      - const: camnoc_rt_vfe0
-> +      - const: camnoc_rt_vfe1
-> +      - const: camnoc_rt_vfe2
-> +      - const: camnoc_rt_vfe_lite
-> +      - const: cam_top_ahb
-> +      - const: cam_top_fast_ahb
-> +      - const: csid
-> +      - const: csid_csiphy_rx
-> +      - const: csiphy0
-> +      - const: csiphy0_timer
-> +      - const: csiphy1
-> +      - const: csiphy1_timer
-> +      - const: csiphy2
-> +      - const: csiphy2_timer
-> +      - const: csiphy3
-> +      - const: csiphy3_timer
-> +      - const: csiphy4
-> +      - const: csiphy4_timer
-> +      - const: csiphy5
-> +      - const: csiphy5_timer
-> +      - const: gcc_hf_axi
-> +      - const: vfe0
-> +      - const: vfe0_fast_ahb
-> +      - const: vfe1
-> +      - const: vfe1_fast_ahb
-> +      - const: vfe2
-> +      - const: vfe2_fast_ahb
-> +      - const: vfe_lite
-> +      - const: vfe_lite_ahb
-> +      - const: vfe_lite_cphy_rx
-> +      - const: vfe_lite_csid
-> +      - const: qdss_debug_xo
-> +
-> +  interrupts:
-> +    maxItems: 16
-> +
-> +  interrupt-names:
-> +    items:
-> +      - const: csid0
-> +      - const: csid1
-> +      - const: csid2
-> +      - const: csid_lite0
-> +      - const: csid_lite1
-> +      - const: csiphy0
-> +      - const: csiphy1
-> +      - const: csiphy2
-> +      - const: csiphy3
-> +      - const: csiphy4
-> +      - const: csiphy5
-> +      - const: vfe0
-> +      - const: vfe1
-> +      - const: vfe2
-> +      - const: vfe_lite0
-> +      - const: vfe_lite1
-> +
-> +  interconnects:
-> +    maxItems: 2
-> +
-> +  interconnect-names:
-> +    items:
-> +      - const: ahb
-> +      - const: hf_mnoc
-> +
-> +  iommus:
-> +    maxItems: 1
-
-
-This can't be right.
-
-The experience we are having with Iris for example shows that 
-restricting the iommus is wrong.
-
-For this and future bindings I'm expecting to see the full list of 
-AC_VM_HLOS S2 VMID targets.
-
-The second we try to switch on say something like the JPEG encoder this 
-list and its upstream binding becomes a problem.
-
-- S1_IFE_HLOS		@ 0x1c00
-- S1_CDM_BPS_IPS_HLOS	@ 0x1820
-- S1_CDM_BPS_IPS_HLOS	@ 0x18c0
-- S1_CDM_BPS_IPS_HLOS	@ 0x1980
-- S1_CDM_BPS_IPS_HLOS	@ 0x1800
-- S1_JPEG_HLOS		@ 0x18a0
-- S1_RT_CDM_HLOS	@ 0x1860
-- S1_CDM_BPS_IPE_HLOS	@ 0x1840
-- S1_CDM_BPS_IPE_HLOS	@ 0x1880
-- S1_CRE_HLOS		@ 0x18e0
-
-The ICP mappings can come later if ever via iommu-maps..
-
+Signed-off-by: Raihan Ahamed <raihan1999ahamed@gmail.com>
 ---
-bod
+version 4
+- rebased on linux-next
+- enabled accelerometer sensor
+- enabled gpu and add gpu_zap_shader
+- add homescreen and one-key-low-power gpio-keys
+- enabled pinctrl for gpio-keys
+- removed explicily added tag
+
+version 3
+- sorry for explicitly adding tags
+linked-to v3: https://yhbt.net/lore/linux-devicetree/20240226195516.174737-1-raihan1999ahamed@gmail.com/
+
+version 2
+- document device compatible
+linked-to v2: https://yhbt.net/lore/linux-devicetree/20240226094256.5736-1-raihan1999ahamed@gmail.com/
+
+version 1
+- add initial device tree support
+linked-to v1: https://yhbt.net/lore/linux-devicetree/20240226055615.79195-1-raihan1999ahamed@gmail.com/
+
+ Documentation/devicetree/bindings/arm/qcom.yaml | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/Documentation/devicetree/bindings/arm/qcom.yaml b/Documentation/devicetree/bindings/arm/qcom.yaml
+index d84bd3bca2010..cea9698fa4d8b 100644
+--- a/Documentation/devicetree/bindings/arm/qcom.yaml
++++ b/Documentation/devicetree/bindings/arm/qcom.yaml
+@@ -200,6 +200,7 @@ properties:
+       - items:
+           - enum:
+               - flipkart,rimob
++              - lenovo,kuntao
+               - motorola,potter
+               - xiaomi,daisy
+               - xiaomi,mido
+-- 
+2.51.2
+
 
