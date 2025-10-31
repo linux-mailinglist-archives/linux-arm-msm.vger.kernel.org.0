@@ -1,97 +1,102 @@
-Return-Path: <linux-arm-msm+bounces-79822-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-79823-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id D8A15C23CC0
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 31 Oct 2025 09:28:06 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id E3C87C23CA5
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 31 Oct 2025 09:27:28 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 58D234254F4
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 31 Oct 2025 08:20:53 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 0D5EB1A22B16
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 31 Oct 2025 08:27:53 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DDFDC2BEC2B;
-	Fri, 31 Oct 2025 08:20:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 51C4130DD33;
+	Fri, 31 Oct 2025 08:27:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="PjAfxm6t"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ea7EP1eQ"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF95222AE45;
-	Fri, 31 Oct 2025 08:20:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2151F2E2661;
+	Fri, 31 Oct 2025 08:27:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761898849; cv=none; b=ABOWwj9+sCxlvnNicYcv9CB9MHpIn3WcG8aW2Dj1qUG5il+02Ksu78oo7IWxYM+3pDfBITO8SIxWAmCJhQlyGFJXOTEyWaXhdJHsmRAkig8NBL52GiL7OPioLwpKoIAfDstDXz4ZWIqtTpBAli3z1NI7CyetWdrTkXDUw5pKDyY=
+	t=1761899225; cv=none; b=GV0OQjS8FeGaowhga/kqKVrifV734+SyiidsMIrYgnrS6uk/8i9/fEXSzoMmiZ4hit5LCMqbngnHrtGV4M34O0gK2Z+wfu1d+IWfmRvffTZHjS0DsdJg7ob/DiU1P9wWXiDPkZbZmAH1jtN0UBzJ20Rq0jTstoVoTdXB4PWfi6I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761898849; c=relaxed/simple;
-	bh=JxffaojoaNLBd6ekBMI0wGMUU29k4ICcZxn3vQPCuKo=;
-	h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date:
-	 MIME-Version:Content-Type; b=hLjmFDm2qFEXlwdFA+ut2aitY99VbwFB+x1knQlpikZz8XLapHtOjwC+pJ75RwaVqkBsqMLc0esn59u03CZVtf1JXbmCFfemlCcM+AcNhnfkI+pLF9D24/ESzd5x12REv0p/gBUwH8C8L5tK2Cl44r2r7MG1j0d3viVrf8ofl/8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=PjAfxm6t; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00A21C4CEE7;
-	Fri, 31 Oct 2025 08:20:41 +0000 (UTC)
+	s=arc-20240116; t=1761899225; c=relaxed/simple;
+	bh=T7J9+XFKVg8HuPmkvReyqzEKUvKCj6+pGkV3l2AMnJs=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=bSBjIvQXwkBNHlCFxrb2Y3w/tG0vbOHhCPUuU12G59s4gvZtoQ06wvBU0/T7UfnI2QFJve9Ty3Z2mlYJ847Sxc9f44fsNsOsX5mQ/Jk9oiIMyjKZiQgmYryTQmxQ7g0L7bXH2HdRKTegT2BqVoFYDMfmj9j+eY7hnrd7iVjbiKo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ea7EP1eQ; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C282C4CEF1;
+	Fri, 31 Oct 2025 08:27:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1761898848;
-	bh=JxffaojoaNLBd6ekBMI0wGMUU29k4ICcZxn3vQPCuKo=;
-	h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
-	b=PjAfxm6teG9V4VjvlmxAHvsIsuw2dbgm9scYX0IerS8+rEKmlmAi1Qwt3b1LeI/DQ
-	 ol+GkuvfmSLLZVbKwqONXxDy2b39rDww0dCiCA6lGFzhJXKPepSdCrxy0bpnPCvU7r
-	 QVMwG9jT6jPdx+AGx9UlMaFEARI2gMEifjObDpi4Gcj5Blc4XD7aADbLU0aYXH8H6c
-	 8RzgfRKJ9mPWwLYOvQY/u696zjA6Rhv3croHEP/BN6J9/zp6TNOxjN4Motye6UVAzq
-	 IhLWlQ6Hc+UOv+N7P7OCm3FZZNuj6XejG9ELZ6QkS78eTc86Ar+iXAvKIIhhZYYt7U
-	 Jqu7aQKVAjrjA==
-From: Manivannan Sadhasivam <mani@kernel.org>
-To: Vinod Koul <vkoul@kernel.org>, 
- Kishon Vijay Abraham I <kishon@kernel.org>, Rob Herring <robh@kernel.org>, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>, 
- Lorenzo Pieralisi <lpieralisi@kernel.org>, 
- =?utf-8?q?Krzysztof_Wilczy=C5=84ski?= <kwilczynski@kernel.org>, 
- Bjorn Helgaas <bhelgaas@google.com>, Bjorn Andersson <andersson@kernel.org>, 
- Qiang Yu <qiang.yu@oss.qualcomm.com>
-Cc: linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org, 
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
- linux-pci@vger.kernel.org, Prudhvi Yarlagadda <quic_pyarlaga@quicinc.com>, 
- Wenbin Yao <wenbin.yao@oss.qualcomm.com>, 
- Qiang Yu <quic_qianyu@quicinc.com>, 
- Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-In-Reply-To: <20251017-glymur_pcie-v5-0-82d0c4bd402b@oss.qualcomm.com>
-References: <20251017-glymur_pcie-v5-0-82d0c4bd402b@oss.qualcomm.com>
-Subject: Re: (subset) [PATCH v5 0/6] PCI: qcom: Add support for Glymur PCIe
- Gen5 x4 and Gen4 x2
-Message-Id: <176189884156.5303.14323602106505981794.b4-ty@kernel.org>
-Date: Fri, 31 Oct 2025 13:50:41 +0530
+	s=k20201202; t=1761899224;
+	bh=T7J9+XFKVg8HuPmkvReyqzEKUvKCj6+pGkV3l2AMnJs=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=ea7EP1eQuY3M6A+U7svOwmqMrp7L9PJ8wkKsD1BhIrL8E/LIjlsJBDVK+Be6gsz6r
+	 3+dEnu9lsLh0YCW3ZOcHQbBe2r9aaudaUWDP5J5Qg8m3HFwinTIAuqMNzgIVBjz/OY
+	 gVWSQ3/MbeqxmClFCkw+UqCikQmInzSNkLs9v/atcC4MUjSu3nsHEW4TFTN7DAb8e+
+	 A5S0v4i654H/yjLFX7IKk/8ArQPxLxDLIdZqXOpgIKNWoSIep61iYm6LnZ8AFvbfPo
+	 QGra4+tQPCBWgZ064IEcy+/zWDCaOK7HoUglMA27Y4FdIgwF4o6oG5P1efPRojWGbW
+	 +wX5upBYMa8xw==
+Date: Fri, 31 Oct 2025 09:27:02 +0100
+From: Krzysztof Kozlowski <krzk@kernel.org>
+To: Raviteja Laggyshetty <raviteja.laggyshetty@oss.qualcomm.com>
+Cc: Georgi Djakov <djakov@kernel.org>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org, devicetree@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, Odelu Kukatla <odelu.kukatla@oss.qualcomm.com>
+Subject: Re: [PATCH v4 1/2] dt-bindings: interconnect: document the RPMh
+ Network-On-Chip interconnect in Kaanapali SoC
+Message-ID: <20251031-careful-fast-tapir-6ccece@kuoka>
+References: <20251031-knp-interconnect-v4-0-568bba2cb3e5@oss.qualcomm.com>
+ <20251031-knp-interconnect-v4-1-568bba2cb3e5@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-X-Mailer: b4 0.14.2
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20251031-knp-interconnect-v4-1-568bba2cb3e5@oss.qualcomm.com>
 
-
-On Fri, 17 Oct 2025 18:33:37 -0700, Qiang Yu wrote:
-> Glymur is the next generation compute SoC of Qualcomm. This patch series
-> aims to add support for the fourth, fifth and sixth PCIe instance on it.
-> The fifth PCIe instance on Glymur has a Gen5 4-lane PHY and fourth, fifth
-> and sixth PCIe instance have a Gen5 2-lane PHY.
+On Fri, Oct 31, 2025 at 03:38:47AM +0000, Raviteja Laggyshetty wrote:
+> Document the RPMh Network-On-Chip Interconnect of the Kaanapali platform.
 > 
-> The device tree changes and whatever driver patches that are not part of
-> this patch series will be posted separately after official announcement of
-> the SOC.
+> Co-developed-by: Odelu Kukatla <odelu.kukatla@oss.qualcomm.com>
+> Signed-off-by: Odelu Kukatla <odelu.kukatla@oss.qualcomm.com>
+> Signed-off-by: Raviteja Laggyshetty <raviteja.laggyshetty@oss.qualcomm.com>
+> ---
+>  .../bindings/interconnect/qcom,kaanapali-rpmh.yaml | 124 +++++++++++++++++
+>  .../dt-bindings/interconnect/qcom,kaanapali-rpmh.h | 149 +++++++++++++++++++++
+>  2 files changed, 273 insertions(+)
 > 
-> [...]
+> diff --git a/Documentation/devicetree/bindings/interconnect/qcom,kaanapali-rpmh.yaml b/Documentation/devicetree/bindings/interconnect/qcom,kaanapali-rpmh.yaml
+> new file mode 100644
+> index 0000000000000000000000000000000000000000..9731e7df7eb3d8e1e291a57cbc5941bb8dce1fac
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/interconnect/qcom,kaanapali-rpmh.yaml
+> @@ -0,0 +1,124 @@
+> +# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
+> +%YAML 1.2
+> +---
+> +$id: http://devicetree.org/schemas/interconnect/qcom,kaanapali-rpmh.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> +
+> +title: Qualcomm RPMh Network-On-Chip Interconnect on KAANAPALI
 
-Applied, thanks!
+Kaanapali
 
-[3/6] dt-bindings: PCI: qcom: Document the Glymur PCIe Controller
-      commit: f0b5af98e1b5761095d5186d3a7af5a0991a5cd9
+Nowwhere in other patchsets this name is considered an acronym.
+
+With above fixed:
+
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
 Best regards,
--- 
-Manivannan Sadhasivam <mani@kernel.org>
+Krzysztof
 
 
