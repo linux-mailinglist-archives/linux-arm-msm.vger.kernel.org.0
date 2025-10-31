@@ -1,76 +1,79 @@
-Return-Path: <linux-arm-msm+bounces-79893-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-79894-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [142.0.200.124])
-	by mail.lfdr.de (Postfix) with ESMTPS id 44840C25363
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 31 Oct 2025 14:13:45 +0100 (CET)
+Received: from ams.mirrors.kernel.org (ams.mirrors.kernel.org [213.196.21.55])
+	by mail.lfdr.de (Postfix) with ESMTPS id DF71BC252F7
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 31 Oct 2025 14:08:59 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 1D63A4F2E02
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 31 Oct 2025 13:08:50 +0000 (UTC)
+	by ams.mirrors.kernel.org (Postfix) with ESMTPS id EC323350C85
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 31 Oct 2025 13:08:57 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D4E7034A77F;
-	Fri, 31 Oct 2025 13:08:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 04D1F34B1AD;
+	Fri, 31 Oct 2025 13:08:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="BMahgjMA"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="QUUtjtw5"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f45.google.com (mail-wr1-f45.google.com [209.85.221.45])
+Received: from mail-wm1-f50.google.com (mail-wm1-f50.google.com [209.85.128.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1AFB833FE0B
-	for <linux-arm-msm@vger.kernel.org>; Fri, 31 Oct 2025 13:08:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 215B732AACC
+	for <linux-arm-msm@vger.kernel.org>; Fri, 31 Oct 2025 13:08:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761916127; cv=none; b=g1u+a71YIeU1qLIkLZyDMrvPEe7L/QVSkl2197/XG1JdnNemh2epJld5AUoT1t3TCAvBW/V3je0o6N+aZkApfHmhaFJglHW4Lt6L47fSCOrx4QF7xWCSlr3lbF/A/eKoaS2V/BTf37I5NaROQp/rcrC3MMeQUCjGaW1JHakXi4U=
+	t=1761916128; cv=none; b=n9m4/0rA9m/kFZX38mvHs3yRVpSMf/SgrKE0VX6rqpde0L3efCPAo9IOYGBjIF6A8jh6d7vsADU7U8UKSQBHGG7NAA36cl+0Vuka3gwTWiB52x5OkaFtrCmOtuiaSZHU3HUaTDsr8tqzyHM5YnH6j8bGkG6eN5YK2tjkt7o++TA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761916127; c=relaxed/simple;
-	bh=VKF4CjxT3D21EN3VSlqJfkySRW64w1cVy7ISImqnQBU=;
-	h=From:To:Subject:Date:Message-ID:MIME-Version; b=OzG62bNsjC6/7OsgWOR/jHSVgmpcG9nedRs4AjYs7VRrhu0QYh4TIIEfN/YRhe+OSTpgj9st4Dcu9/kipv1LZR2T/UgNgSRa1m+w87DHdwZixI3czZ9Ru7CLNPGzC+pZKUoHn+z0TQwvpSxKv2EO1kDrAvwWzgSFFDUQdv3z8Ek=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=BMahgjMA; arc=none smtp.client-ip=209.85.221.45
+	s=arc-20240116; t=1761916128; c=relaxed/simple;
+	bh=EosaKghg3U4iEB4VNfXlrr7R7XRj9cKNCldq2SnVuGE=;
+	h=From:To:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=JFNFiPIFkHWZ0147/bglUGllyv9veGsii2CAnnkulRebo0MZXkR3cpcdF2b4gNb75wwDJWd5AYpleoc+9//uKAZGHE4Vp3ZVA3GJL4ronaLqdWfOHUu0Qjr02Eb/oAC1urGMJE94LR/6M2B7rxWuKYl9uEUjKdatRjuR6nXxhWM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=QUUtjtw5; arc=none smtp.client-ip=209.85.128.50
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-wr1-f45.google.com with SMTP id ffacd0b85a97d-3ecdf2b1751so1480707f8f.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 31 Oct 2025 06:08:45 -0700 (PDT)
+Received: by mail-wm1-f50.google.com with SMTP id 5b1f17b1804b1-4710665e7deso10617385e9.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 31 Oct 2025 06:08:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1761916124; x=1762520924; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:to
-         :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=OPUu5NpdCJ07IrysgoLFXtCrzD3ygpbZMzDguuvidnA=;
-        b=BMahgjMAuroEMeLCcHA5eXhCB26spjmGosG9khKhQiOElaSD4eNT8qeC8Wb0XzHSfs
-         E/14p3NKM4F2vL64dPh2QLFCFVztqrPGV+uXKIlP1IugBl4Dkoj0DyKXRcaL/1NXOdBa
-         4h+YJNj85BnzrrZ+mb0uw7PaqSRb0qusqWuvYgtaZvmjqkawjPTDlZex417sSXww5gxf
-         CKKfJFHPP3UyekqqOH1fMz2XdHIqCPFIeFLUdQAvolYwvlu4tPebmnl9KcwvDj6cv96E
-         DVEl2m6z7qYiRBq0ZAXVUb8+rJ3Omu+ik17lIDU4LQvJQpgiTt/b5cIe4JZG6/DpND+d
-         Kpng==
+        d=gmail.com; s=20230601; t=1761916125; x=1762520925; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=hqRNM8UJyFRHPSXkcGPHCYH6LJDeMorOhD5X06t/AfM=;
+        b=QUUtjtw5Bec6TU6z6eMOw6xB/T/fzPCeGN83/L2GqjzbyYPbbc81gytTCP0UeHUCFc
+         q1YTUM4MlAQSnRDq5HRH3GO/suyhruk7cAuGS7ZnbrhSlGBUk780+PrBO4H59GW/GnH3
+         P9FtsLuOBeWm6BFagci/EaunN6LkzbXdZSXtVkUbTuxG3xUfjX1K/ORlMZTm7Bqlb9ue
+         lvtJeP5LACp8/pHJELgey4lkd9LtR2wFDQ/JC1G9GCCsr0e6iiy3hgtIZi4orPKuYHtW
+         JPSKj0zOV4NkE4ANQU36pP1aPlESoHuHKGzErU/nSv1YhWpDVJGFEzZwSocCzuNsHi0p
+         bQlQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1761916124; x=1762520924;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:to
-         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=OPUu5NpdCJ07IrysgoLFXtCrzD3ygpbZMzDguuvidnA=;
-        b=Ru+u8YlxUVFryVlVCSZe8Jch/rOg9CnBJ1MZJbFIcRK9GgsFvDPNzfrqO6hIBSO8ds
-         k7Pa7QV7SqIMAQkZHJ5psMVYSPcdM8cA8LNdgVHNohaxsgOloAL/jJKoakzei0vpiQas
-         j1ciJYN2zxDJd5nSOl7HKJzdHXbPz7+mI6PULbi4NOYDZefaq1NAqB1v8V0RJ7wD/dbK
-         fafoLMWnqHGFaQrhA0EfxRDwe7IoqKLmdJ5xJ0Ec/xmgCKPcGMfW/ChtBBNQwoqx5I4k
-         aMUOhfhUWkF01oFBWRMEpxqwPBiVGnK4b/Q3M+zXNvTRH8Rmx2q9nBLMFwChe1Qq5FPv
-         5pqw==
-X-Forwarded-Encrypted: i=1; AJvYcCWPdLo01Njv0/Zcakqddt6kbuFAivrjPfKuGwOcgtRhBjsopLtsixHSST+C9D3YkwDKsNiui8rcqoA2Jx+z@vger.kernel.org
-X-Gm-Message-State: AOJu0Yy9YKWvcSapKFb3E6nZnmsaoJBegsj/po8zDoBsiAUG1GTPbEIM
-	gKKmco8625EMGPxD8zJ47pq13MMBL/y3N8YBs0KgT+UtuaOTI1pJt6/W
-X-Gm-Gg: ASbGncsFhSpolRPEeMWOgxmlSLEOslaMXot4yogSWuHv1+1Z+2Dh1w3l+7DYJMlFtWj
-	0u8hlrrtLZ4OB6ApI9s2S3hZmdf3WtSDul7JqZ8H6Xn2U907EhtBHZbP/gD4c6sR/i31cDpPh6p
-	H0+8IvWRn2dQT7LlvH3Vo2zXlpH+Rc05PCQjSPCKS1qdgc4p2UzhbMx7Pev6ZfSBSYgTcXhLD2r
-	E/6ymT+JBfr3s00PI52WJzIb0GvTTJUFqEg062piJ2UmBwfkg2rTURIhVwQlPf52FxatNsVUEGi
-	Fa+n/5nKj5Wlxvv9dctxIhyXfcQ0xWdA7bTrptNeyWGsMpFyFjh7oERFccQxEwyWVpX6E/0mBgx
-	oQil8pL6AxRfwETaQwGgcAq90BGkwLvHHrB8xQMr8FhD/ujRszvoLfpVXPwAFXwGGfoDYx2w6Ht
-	NH0eLaCq/vla5Fc48IekNFqb/CM9eXlQ==
-X-Google-Smtp-Source: AGHT+IGkGev1IicHjK1ZUoYz2sTIloWKiWF3+MyirZCbZtLOurgaln1xWR/FBmE2aNtFKjbB1J9+jA==
-X-Received: by 2002:a5d:5d0d:0:b0:3f2:1cd:3d00 with SMTP id ffacd0b85a97d-429bd5f50f4mr2736107f8f.0.1761916124018;
-        Fri, 31 Oct 2025 06:08:44 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1761916125; x=1762520925;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=hqRNM8UJyFRHPSXkcGPHCYH6LJDeMorOhD5X06t/AfM=;
+        b=XYMsvFSajOPSlXCwjFpil3/Yvcj1LsfQEJ3bNlVDZvZv0IqzXgkdYwXAFXFXhhzAKk
+         K6bhrKtbIOmf2mlAcSiFhuzbuLkDOch2JTOtlkD/yS8zM+cNqz8XjvAMDoDqdIeTQszK
+         R6l/AG5TDPD0+q+d5J95dSinwWkYDKAI70k8u3fjuLLB3Wv9GfonDRiDVKGTrMsEB0y3
+         E82nMgya60eJHzjKVIebabaKHsc20k+5Ot+PH5C0JZhHw9mPm5Wzf9Nd1xjvaLUqIhJ0
+         vbia1/g5NrhzW3Qxv7ntAQhhjQ7R4/36HkmKDZdqGylTxZ5GEfiqhf0PnjiCLYdDAmsR
+         YjLw==
+X-Forwarded-Encrypted: i=1; AJvYcCV7ExIAOqhpjcmoovJpFDITYpfIdIPxMwszI4j5Ix657RX3VDGeFXOZd1YtNZS7KHCEGRQVUztDVFZhcKnO@vger.kernel.org
+X-Gm-Message-State: AOJu0YzZv0smosfXyXjqnSLJqIepNnXKVetNLI2Hbd4rLfIpESyJDT2y
+	fhoPicDxArQzhfqGIocOVsbP/9NkloGWnmGMv9lRMB6b+aF6PlKReMQJ
+X-Gm-Gg: ASbGncvkLT50c2Mj52vj7my2Kq5k/HQd1VGD/3IYkJhTBeFagV1U+CPcM/ezhUEhGW2
+	7ojkXJWCKHGv5h6VdBCqIekM43F/psohPUiRtxxVzPOvsR4DPI1AubOOULqM8AhPbohSZ0RHJ+U
+	mp02a/mOaKdKRI2at+/R2Xg8cggQhYHG0ytJq2OKl/PZU1xHO52IjcnGhx09KsVE9yhufW8nayw
+	MFgZpL+qbpvr0C5UmFY36HhWlDcXXfbnSzOvU7c9JJea3WRMNcMt6Ip+U+Nu+u5gnS/BVzvUEJ0
+	+hCxYf7zhXj6f3opEjl9HNnnpl3Q9+VqaNMn9M5tKTpIwS6TTwjXLU7iKVQ6pAALKqzg3MRnTRq
+	nwP/tHMir0Qc5aUBDNXmsaocH+iu7o8Yz24w9pwXuu1zJcs0XbZ/fBswllZupvqblPg9EOgWs1W
+	uTAMpkYyE1Qzzi6cX57w4mjzvzmFC2NHpITK4DKMZw
+X-Google-Smtp-Source: AGHT+IEoNfiwO1WHuUv2jGPlp9HRKqmIwSQeCnw3J3BsUZNvSFpBuq37GRGL35QSzOpJZZmZcOGadg==
+X-Received: by 2002:a05:600c:6304:b0:477:be4:7a52 with SMTP id 5b1f17b1804b1-477308e11bfmr29796555e9.39.1761916125271;
+        Fri, 31 Oct 2025 06:08:45 -0700 (PDT)
 Received: from Ansuel-XPS24 (93-34-90-37.ip49.fastwebnet.it. [93.34.90.37])
-        by smtp.googlemail.com with ESMTPSA id 5b1f17b1804b1-477289adc18sm98339815e9.6.2025.10.31.06.08.43
+        by smtp.googlemail.com with ESMTPSA id 5b1f17b1804b1-477289adc18sm98339815e9.6.2025.10.31.06.08.44
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 31 Oct 2025 06:08:43 -0700 (PDT)
+        Fri, 31 Oct 2025 06:08:44 -0700 (PDT)
 From: Christian Marangi <ansuelsmth@gmail.com>
 To: Ilia Lin <ilia.lin@kernel.org>,
 	"Rafael J. Wysocki" <rafael@kernel.org>,
@@ -84,10 +87,12 @@ To: Ilia Lin <ilia.lin@kernel.org>,
 	linux-arm-msm@vger.kernel.org,
 	linux-pm@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH v2 0/3] cpufreq: qcom: handle ipq806x with no SMEM
-Date: Fri, 31 Oct 2025 14:08:31 +0100
-Message-ID: <20251031130835.7953-1-ansuelsmth@gmail.com>
+Subject: [PATCH v2 1/3] err.h: add INIT_ERR_PTR macro
+Date: Fri, 31 Oct 2025 14:08:32 +0100
+Message-ID: <20251031130835.7953-2-ansuelsmth@gmail.com>
 X-Mailer: git-send-email 2.51.0
+In-Reply-To: <20251031130835.7953-1-ansuelsmth@gmail.com>
+References: <20251031130835.7953-1-ansuelsmth@gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -96,27 +101,41 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-This small series handle a small device family of ipq806x
-devices (Google OnHub) that doesn't have SMEM init.
+Add INIT_ERR_PTR macro to initialize static variables with error
+pointers. This might be useful for specific case where there is a static
+variable initialized to an error condition and then later set to the
+real handle once probe finish/completes.
 
-We improve the SMEM driver and apply a workaround in
-the cpufreq driver.
+This is to handle compilation problems like:
 
-Changes v2:
-- Rename error macro to INIT_ERR_PTR
-- Return -ENODEV from smem probe
-- Restructure if condition in cpufreq driver
+error: initializer element is not constant
 
-Christian Marangi (3):
-  err.h: add INIT_ERR_PTR macro
-  soc: qcom: smem: better track SMEM uninitialized state
-  cpufreq: qcom-nvmem: add compatible fallback for ipq806x for no SMEM
+where ERR_PTR can't be used.
 
- drivers/cpufreq/qcom-cpufreq-nvmem.c | 17 +++++++++++++++--
- drivers/soc/qcom/smem.c              | 26 +++++++++++++++-----------
- include/linux/err.h                  |  8 ++++++++
- 3 files changed, 38 insertions(+), 13 deletions(-)
+Signed-off-by: Christian Marangi <ansuelsmth@gmail.com>
+---
+ include/linux/err.h | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
+diff --git a/include/linux/err.h b/include/linux/err.h
+index 1d60aa86db53..8c37be0620ab 100644
+--- a/include/linux/err.h
++++ b/include/linux/err.h
+@@ -41,6 +41,14 @@ static inline void * __must_check ERR_PTR(long error)
+ 	return (void *) error;
+ }
+ 
++/**
++ * INIT_ERR_PTR - Init a const error pointer.
++ * @error: A negative error code.
++ *
++ * Like ERR_PTR(), but usable to initialize static variables.
++ */
++#define INIT_ERR_PTR(error) ((void *)(error))
++
+ /* Return the pointer in the percpu address space. */
+ #define ERR_PTR_PCPU(error) ((void __percpu *)(unsigned long)ERR_PTR(error))
+ 
 -- 
 2.51.0
 
