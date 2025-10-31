@@ -1,82 +1,100 @@
-Return-Path: <linux-arm-msm+bounces-79824-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-79825-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 87FC5C23D8C
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 31 Oct 2025 09:38:27 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id AEDA1C23F83
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 31 Oct 2025 10:00:09 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id C0E153BBE09
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 31 Oct 2025 08:38:22 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 43377561249
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 31 Oct 2025 08:56:39 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A2E6A2EA72A;
-	Fri, 31 Oct 2025 08:38:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4886131A049;
+	Fri, 31 Oct 2025 08:56:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="jgCtW3qK"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="hucpX1VY";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="TWaQcEqm"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f41.google.com (mail-wr1-f41.google.com [209.85.221.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99E5E2E62CE
-	for <linux-arm-msm@vger.kernel.org>; Fri, 31 Oct 2025 08:38:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB6103191B0
+	for <linux-arm-msm@vger.kernel.org>; Fri, 31 Oct 2025 08:56:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761899901; cv=none; b=PvTppCB/bmFJ4brRRWvtljLlv9Kqyaa2fvf4I8rC3h6xIuu4V2+jORwsr6m9dVM6l0XlXKHZLt+QzbJGKTP8JoAO/T1SevzJpoFrfSayOhfOHMm2dQpIEGz7OUeNRD7cPKC3AGyF5QiV6PMQTrxDqWb+somvZTSJ6yo/4uetPzA=
+	t=1761900998; cv=none; b=CsDydv6gvKjpgLFWtyg4ClpyyBycjy0gIqUq84Sc6kLQ6LgjteThPPQ5mtsyAdkDyGP6MHIlUA2Bl1FfCs0sA7qpofIzsFBdyraiu1vcFOd78B9nptKgNupUY6baOOt4MIP64WvN+E+2QlYCvneZsfTTPAt2b8g1aizC41IF1h8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761899901; c=relaxed/simple;
-	bh=mvdRL0eRXqSA+526MRb8wrH/hIEEZzYdIMjUsLSo1m8=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=bWpjoFse4CHkLvZVNPepOsU173Tq/wP/8cRC9WL4CZE3dXszLuAod1q+EvW0a+dXiyrk0bOlxRKvGHXyP3Dhb4ukbCaSgfq2ZmQHSOZryTojXG+L8tR2NAWWucjCcacMu5xGJiuPjA7zwZOiwDEQ4294D3ukbzOky8Y8YMcBmQk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=jgCtW3qK; arc=none smtp.client-ip=209.85.221.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wr1-f41.google.com with SMTP id ffacd0b85a97d-429b85c3880so1801449f8f.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 31 Oct 2025 01:38:19 -0700 (PDT)
+	s=arc-20240116; t=1761900998; c=relaxed/simple;
+	bh=W5ZlQCgP/A1LoGvxjaWkUen1ep3flGUv0d7VkxnHAcQ=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=dyO3mJykZnHjCDWqfCTe0jGLdK/vuOcHTzJ5Br219H28msvkrOzok0w8GWGQSSKz+5RkdgpWd1hUqhakbr6u4MEuoq+uNBNzLFaB1cUwqWYYfshcQykM3hu6NYjLuyPEHFqjrHb6AG48p8OU6ARvINYn1Sqm25X1l3SEbqvS6PY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=hucpX1VY; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=TWaQcEqm; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 59V17xtr1512386
+	for <linux-arm-msm@vger.kernel.org>; Fri, 31 Oct 2025 08:56:35 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	FYxNHYs7jVuC4tl2A2YyBIs3QrYPUoziuqOeF47ahUY=; b=hucpX1VYkhXRNr0Q
+	uM/APKUjCdhf6aO+nBED0gGz13YcgEUmuKgRo5Ga/Hc1zXcCIwLm2RpfgnQ0Lh6G
+	7Xqj/iUgc4+tDiMzUHq0/01DW9mr3KqP/8TdEiExTEkMlRyXBu8k7TdKdankdqLB
+	RTWM6zRBTxTvakwkMyBsKZV86A1qXI0eeIyg3ostVmXrEUe+xBtNCKX7zYynko9s
+	39+K1Z3xwAz4khf7YmVsmTfS/o0a2754QTfv6tRyZz0p0Rs1zCUuYqSFCNKGne4k
+	0eZxodT7/N7xWB+l7iZjM4TnTYYF+q2RBrSRyOekvtLx+B9/IQjsJe/Dn/udiX4h
+	v6wBWA==
+Received: from mail-qt1-f199.google.com (mail-qt1-f199.google.com [209.85.160.199])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4a4k69h2gh-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Fri, 31 Oct 2025 08:56:35 +0000 (GMT)
+Received: by mail-qt1-f199.google.com with SMTP id d75a77b69052e-4eced2a52ceso6541571cf.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 31 Oct 2025 01:56:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1761899898; x=1762504698; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :content-language:references:cc:to:subject:reply-to:from:user-agent
-         :mime-version:date:message-id:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=f6lvlxZOeNShZGHSRhU6n7ci4eXoYPRCi1nv1xhCxuA=;
-        b=jgCtW3qK5geev2iqj26PVjKsaoO+eSCRdhHPpqOSCIQPv67Amebmtu175bz1379NXd
-         FHFq3mbSf4KbW12RIXTsxU29irz55Ub69zOeuViqpbPLlM8MUVqdUH1ndNblA+g6lJ4Q
-         GiZAOd89k5m1Tj/T/lYJJDZ3W3AX8I9XUIl4dNR9jxzw86UTybY7uNNggnjBQXaAb6GJ
-         6gY+iCYrfw/cng/mFAwSjBqqzASmP6xTocdC1OEA962u3/gPLnh0FZhIt+BTJFuyT4hX
-         9GFgN36UpnwpumHKpT5tYeF50KDQvRMZpOA+AqDYyD9nu6bOxarFayvRzPfTnT4eZcEV
-         6ihg==
+        d=oss.qualcomm.com; s=google; t=1761900995; x=1762505795; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=FYxNHYs7jVuC4tl2A2YyBIs3QrYPUoziuqOeF47ahUY=;
+        b=TWaQcEqmpt8uu7HtI1bqaW/4+XIYSfzFwYL52V63hUZqgHFtmQLnfWLvQhnp60vMHM
+         YtC9fyRPAXerepTfZeyrThZ+HUWxjF26fUgIE3TLBh2kmZ06E/s53EkIGyOHjQCQpIkp
+         imOiunaqtk1hbz8oe/FXpv9I3Mn2xZVnn6w/MusG2f9M+jsY53lSIgyfdaEsKys7vcQn
+         0pd/Ye4e1SJczgIvjbjFmyuLzsqdcwHGZb0qybT7MiGhL2r5A/cohBf07ND3vzknt8ED
+         KKlN0dXznQM1AlZXRgJCKbP/t3jRkMyPztfU6tWn8FjF635uHnheowqmQEdPHrzLgH+8
+         rnNg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1761899898; x=1762504698;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :content-language:references:cc:to:subject:reply-to:from:user-agent
-         :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=f6lvlxZOeNShZGHSRhU6n7ci4eXoYPRCi1nv1xhCxuA=;
-        b=EOTClpEEHgSZ7gCoWZuQ0ano2TRlHlwGmnNsxASL6J9wolONKuriadBJ6mjl3/nZ4m
-         DtudBhCuzBW4MKclV3BKTFEYnft5SCiIH3ChOI5L8Y+tb46tmhhJceUFw1MX7UarJHSJ
-         G4hILCP6HFfRVBVd2hBQvko4t1r20Mcl55eFpDOLPtQAf/BwGadqdlYD6nr7eMrQ9zg1
-         5beK0RlPLlZ813pUcLq+uooPuGZWXsiMynTXBVXh/u+sRpoeRWB655N9IoqAFejziRJv
-         x40ehjR/P2lPUJ4zb9rz/vL1GZrRMDGL3WvRVt27DZmLxQcu4hCxVxgyBkW36kS4kRta
-         FjMA==
-X-Gm-Message-State: AOJu0YyATvNR5V+CpkkS/uzH3q3TrG4Cy3ILEAg6bsELc8M/63sLzkRv
-	5ef6gprIvfg+sc6Ob1A9MaN1GyBEZ6CgJkM/oW2SD7qjYcOz/6ofJxdur8dUk3wKNZA=
-X-Gm-Gg: ASbGnctXva7FRvcI/E5aPc92g4P9vWtvBjepGYYzqcU3K0cstO/UBs+Q/cKq2aCeFPY
-	n32aK5Ecd/tR3YLCDlvZmLfgE7WY4/QVv4hVBsLSQ/FG08b8ICSgasH6dIPpQJwjyvVNyaNLEwe
-	Po4GrZt4ga5Qo5t6d++rbGww4vbBbLX0+VOsrV7Fc5UI/ZO1YWVBfH9bEjgaOMcnhVKEUZQmquf
-	2Odm09hD5ummnB9ZpgL7YU6QLXvIrYqF22L31bZbkm+tuVZeBZsKCklkLUlwpH87dSJaHBSs+ha
-	0TWkvUiGQS9HP02husvBjRUo2jQZibdWWk0wMhdwkB7eGOo/nm+yPcAuN4C0NYpL0kt95unX0FX
-	nf78+xQsUWlflMtTvS7YHAgeqe7N9zcQBqHeEV81HrY0iUg649E5wDHr3X0iQ+8ztUHv8lujtWP
-	JqnqXs/whSM6BkdsESPg7V34rgfjnTgk/UksMjTfv593naefpQLZ5ZFZ1FtOeLUKw=
-X-Google-Smtp-Source: AGHT+IErXLg/QmSgzOAE18wcz9HH6P7fSPY03Id1jjTfataBPrbX11spvWK9xxIDtFbQtBn/mPn0cA==
-X-Received: by 2002:a05:6000:2489:b0:429:b751:7929 with SMTP id ffacd0b85a97d-429bd6ae1f4mr2336595f8f.45.1761899897805;
-        Fri, 31 Oct 2025 01:38:17 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:cad:2140:d967:2bcf:d2d0:b324? ([2a01:e0a:cad:2140:d967:2bcf:d2d0:b324])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-429c13edc36sm2278703f8f.37.2025.10.31.01.38.16
+        d=1e100.net; s=20230601; t=1761900995; x=1762505795;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=FYxNHYs7jVuC4tl2A2YyBIs3QrYPUoziuqOeF47ahUY=;
+        b=ObMkUcyH13SJ/aT3VH/GEGD1t3A5CEVYd5Fncu+eoRyyRsK51/NX5XrnT0JG2qGQWL
+         N33mZQeOcc0DYsRjr+iOkNkaRqQ3Enp9St9958vtXYhF7mO5yJvCVa3Cg+cHDkvgPQy3
+         p0jDaR9TTeih015QX/i2lukgT9vXUyvbpNJOQDHHBZJR3Zr7BY91YpyVJsUQiB61KBEv
+         ZbIm6w+emYJ8KWDaJQwuFlOpTq+v6d7gOuBK3Ryft6HF8dX+aTkdyTw3ZhOGEKUhQmol
+         0SnkDBPtVNrpJCMyYhtQujjnGKVlsydGLrXUDE+pWS8SRCgSS7c7vvU6niZgecDTrsxr
+         yC5A==
+X-Gm-Message-State: AOJu0YzxyW/c042wA0egjrrJGLqJPjITujB1IGRuVymcmrcVHJjm6Ukq
+	AgHnqt0O44tj+Ggxbvx7aT2YOB0c+Q0Wt9N52FcL8AEl8LvuDqphkHHr7VAouBAnAEHEx/eupLB
+	uIlFhkofwMv4ly81CwiP/G2JzV55R22TKR7thkMgW2bnrJDnu5hU1ZTDep4n3IpNaekHN
+X-Gm-Gg: ASbGncvjpwFmCDDDZEIOHtIdXTxcKLdYt23QDdj9QiwGU37vJ2QJjaXcvHGdtcsH2ME
+	Txw6BtqYQ+/6lzK5g6XwjJfbVLlUIlLFuHnRTUfF5VLxGoAwtpMIXaYLHIsUE7qCeNoqpD/1UVZ
+	r3rZaX/urdOiw8ADnfEjTJptDR+ZpZhgVbn8VY2Pg9M580KQNKTZsrysPU+Ixh/bAjckYgrsltf
+	jhm0w1R9PlMYLEgRR7Dk5O7xunem1KfSlg3pdDNMMfKYS2n5TcbnLnnADjuZTEtRajOXWrBcc+f
+	duLKtfxFXV8olQ/d9HV8J0PlbXGXavFRYERGyoKY4en+DN8uTvIjED+xbylS4alZKMGEDmReQh6
+	HZMq7HBGVgzR9NN3ARieOehFOWLfcq4ZYM174u/GC+Ec+ZsMkseRDhuPh
+X-Received: by 2002:a05:622a:828b:b0:4ed:3165:6084 with SMTP id d75a77b69052e-4ed3165647fmr13633601cf.0.1761900994976;
+        Fri, 31 Oct 2025 01:56:34 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGM03ZK9N+Lh6AHHcg0kqRx98VHD9IXz+FL1+/SsNyh2NmAO6CDleI5rli8SMy3mi4Ri39SAg==
+X-Received: by 2002:a05:622a:828b:b0:4ed:3165:6084 with SMTP id d75a77b69052e-4ed3165647fmr13633481cf.0.1761900994552;
+        Fri, 31 Oct 2025 01:56:34 -0700 (PDT)
+Received: from [192.168.119.202] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-b7077975d24sm123498966b.1.2025.10.31.01.56.32
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 31 Oct 2025 01:38:17 -0700 (PDT)
-Message-ID: <f5041496-ee83-479a-995f-79b6952bcafe@linaro.org>
-Date: Fri, 31 Oct 2025 09:38:15 +0100
+        Fri, 31 Oct 2025 01:56:34 -0700 (PDT)
+Message-ID: <e0941e4c-849b-4089-9aee-d36a628d09c9@oss.qualcomm.com>
+Date: Fri, 31 Oct 2025 09:56:31 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -84,168 +102,55 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-From: Neil Armstrong <neil.armstrong@linaro.org>
-Reply-To: Neil Armstrong <neil.armstrong@linaro.org>
-Subject: Re: [PATCH RFC RFT] drm/msm: adreno: attach the GMU device to a
- driver
-To: Akhil P Oommen <akhilpo@oss.qualcomm.com>
-Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
- freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org,
- Rob Clark <robin.clark@oss.qualcomm.com>, Sean Paul <sean@poorly.run>,
- Konrad Dybcio <konradybcio@kernel.org>, Dmitry Baryshkov <lumag@kernel.org>,
- Abhinav Kumar <abhinav.kumar@linux.dev>,
- Jessica Zhang <jessica.zhang@oss.qualcomm.com>,
- Marijn Suijten <marijn.suijten@somainline.org>,
- David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>
-References: <20251022-topic-adreno-attach-gmu-to-driver-v1-1-999037f7c83e@linaro.org>
- <c8058713-b126-461b-8ae6-19c4574a8105@oss.qualcomm.com>
-Content-Language: en-US, fr
-Autocrypt: addr=neil.armstrong@linaro.org; keydata=
- xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
- GTjuhvbleoQ5Cxjr+v+1ARGCH46MxFP5DwauzPekwJUD5QKZlaw/bURTLmS2id5wWi3lqVH4
- BVF2WzvGyyeV1o4RTCYDnZ9VLLylJ9bneEaIs/7cjCEbipGGFlfIML3sfqnIvMAxIMZrvcl9
- qPV2k+KQ7q+aXavU5W+yLNn7QtXUB530Zlk/d2ETgzQ5FLYYnUDAaRl+8JUTjc0CNOTpCeik
- 80TZcE6f8M76Xa6yU8VcNko94Ck7iB4vj70q76P/J7kt98hklrr85/3NU3oti3nrIHmHABEB
- AAHNKk5laWwgQXJtc3Ryb25nIDxuZWlsLmFybXN0cm9uZ0BsaW5hcm8ub3JnPsLAkQQTAQoA
- OwIbIwULCQgHAwUVCgkICwUWAgMBAAIeAQIXgBYhBInsPQWERiF0UPIoSBaat7Gkz/iuBQJk
- Q5wSAhkBAAoJEBaat7Gkz/iuyhMIANiD94qDtUTJRfEW6GwXmtKWwl/mvqQtaTtZID2dos04
- YqBbshiJbejgVJjy+HODcNUIKBB3PSLaln4ltdsV73SBcwUNdzebfKspAQunCM22Mn6FBIxQ
- GizsMLcP/0FX4en9NaKGfK6ZdKK6kN1GR9YffMJd2P08EO8mHowmSRe/ExAODhAs9W7XXExw
- UNCY4pVJyRPpEhv373vvff60bHxc1k/FF9WaPscMt7hlkbFLUs85kHtQAmr8pV5Hy9ezsSRa
- GzJmiVclkPc2BY592IGBXRDQ38urXeM4nfhhvqA50b/nAEXc6FzqgXqDkEIwR66/Gbp0t3+r
- yQzpKRyQif3OwE0ETVkGzwEIALyKDN/OGURaHBVzwjgYq+ZtifvekdrSNl8TIDH8g1xicBYp
- QTbPn6bbSZbdvfeQPNCcD4/EhXZuhQXMcoJsQQQnO4vwVULmPGgtGf8PVc7dxKOeta+qUh6+
- SRh3vIcAUFHDT3f/Zdspz+e2E0hPV2hiSvICLk11qO6cyJE13zeNFoeY3ggrKY+IzbFomIZY
- 4yG6xI99NIPEVE9lNBXBKIlewIyVlkOaYvJWSV+p5gdJXOvScNN1epm5YHmf9aE2ZjnqZGoM
- Mtsyw18YoX9BqMFInxqYQQ3j/HpVgTSvmo5ea5qQDDUaCsaTf8UeDcwYOtgI8iL4oHcsGtUX
- oUk33HEAEQEAAcLAXwQYAQIACQUCTVkGzwIbDAAKCRAWmrexpM/4rrXiB/sGbkQ6itMrAIfn
- M7IbRuiSZS1unlySUVYu3SD6YBYnNi3G5EpbwfBNuT3H8//rVvtOFK4OD8cRYkxXRQmTvqa3
- 3eDIHu/zr1HMKErm+2SD6PO9umRef8V82o2oaCLvf4WeIssFjwB0b6a12opuRP7yo3E3gTCS
- KmbUuLv1CtxKQF+fUV1cVaTPMyT25Od+RC1K+iOR0F54oUJvJeq7fUzbn/KdlhA8XPGzwGRy
- 4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
- QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
-Organization: Linaro
-In-Reply-To: <c8058713-b126-461b-8ae6-19c4574a8105@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Subject: Re: [PATCH 1/3] arm64: dts: qcom: rename qcm2290 to agatti
+To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley
+ <conor+dt@kernel.org>,
+        cros-qcom-dts-watchers@chromium.org
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20251030-rename-dts-2-v1-0-80c0b81c4d77@oss.qualcomm.com>
+ <20251030-rename-dts-2-v1-1-80c0b81c4d77@oss.qualcomm.com>
+Content-Language: en-US
+From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+In-Reply-To: <20251030-rename-dts-2-v1-1-80c0b81c4d77@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
+X-Proofpoint-ORIG-GUID: V_gRBYG1NTr64txr3lizu8ShpxiccCAa
+X-Proofpoint-GUID: V_gRBYG1NTr64txr3lizu8ShpxiccCAa
+X-Authority-Analysis: v=2.4 cv=OYaVzxTY c=1 sm=1 tr=0 ts=690479c3 cx=c_pps
+ a=WeENfcodrlLV9YRTxbY/uA==:117 a=FpWmc02/iXfjRdCD7H54yg==:17
+ a=IkcTkHD0fZMA:10 a=x6icFKpwvdMA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=EUspDBNiAAAA:8 a=LoIfXdEys6ihF5rPnm4A:9
+ a=QEXdDO2ut3YA:10 a=kacYvNCVWA4VmyqE58fU:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDMxMDA4MCBTYWx0ZWRfXzX2ovMKWY9BR
+ WgaKoLX+XkqqE6VRlGqK2PmNdnl2voX8yP1rAGGAosMSMjgmdhOLQXl0HNl41jiJXC9cYsPLzej
+ al1T4oAFKiyT1Emr3waMTz49CGDrE4KhvALaxEHtFtsZPgerC9yosCKbZielJ5gUHc3vUQsW6P7
+ HyCJznmPZscTLO0Rw6uMEiZYc1sVUX3hfEKWjXKRLQuGFM0wyiiAEjOhnh/lYcKREG7Rzly2h4g
+ q21ZQOV7jS2nWuUdl/hWfToqQQB7znymAAKbL6X159TVcrNpgJvcGRUjDVUFkWDL7izZkWnIAiR
+ hcWaqSKYeEKFN6swA24EtPrP1pzHqNfIM05RUjniqhRY0jDOmjlhqRbwsfn8uNUgGFg6jbTbrQZ
+ xesDGeEDWw4t3enyPTKFmVTKlBRK0A==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
+ definitions=2025-10-31_02,2025-10-29_03,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ phishscore=0 adultscore=0 clxscore=1015 bulkscore=0 priorityscore=1501
+ lowpriorityscore=0 suspectscore=0 malwarescore=0 impostorscore=0 spamscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2510240001 definitions=main-2510310080
 
-Hi,
-
-On 10/30/25 22:29, Akhil P Oommen wrote:
-> On 10/22/2025 6:14 PM, Neil Armstrong wrote:
->> Due to the sync_state is enabled by default in pmdomain & CCF since v6.17,
->> the GCC and GPUCC sync_state would stay pending, leaving the resources in
->> full performance:
->> gcc-x1e80100 100000.clock-controller: sync_state() pending due to 3d6a000.gmu
->> gpucc-x1e80100 3d90000.clock-controller: sync_state() pending due to 3d6a000.gmu
->>
->> In order to fix this state and allow the GMU to be properly
->> probed, let's add a proper driver for the GMU and add it to
->> the MSM driver components.
->>
->> Only the proper GMU has been tested since I don't have
->> access to hardware with a GMU wrapper.
->>
->> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
->> ---
->>   drivers/gpu/drm/msm/adreno/a6xx_gmu.c      | 354 ++++++++++++++---------------
->>   drivers/gpu/drm/msm/adreno/a6xx_gpu.c      |   6 -
->>   drivers/gpu/drm/msm/adreno/a6xx_gpu.h      |   3 -
->>   drivers/gpu/drm/msm/adreno/adreno_device.c |   4 +
->>   drivers/gpu/drm/msm/adreno/adreno_gpu.h    |   4 +
->>   drivers/gpu/drm/msm/msm_drv.c              |  16 +-
->>   6 files changed, 192 insertions(+), 195 deletions(-)
->>
->> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
->> index fc62fef2fed8..6e7c3e627509 100644
->> --- a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
->> +++ b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
->> @@ -1859,11 +1859,14 @@ void a6xx_gmu_sysprof_setup(struct msm_gpu *gpu)
->>   	pm_runtime_put(&gpu->pdev->dev);
->>   }
->>   
->> -void a6xx_gmu_remove(struct a6xx_gpu *a6xx_gpu)
->> +static void a6xx_gmu_unbind(struct device *dev, struct device *master, void *data)
->>   {
+On 10/30/25 7:20 PM, Dmitry Baryshkov wrote:
+> QCM2290 and QRB2210 are two names for the same die, collectively known
+> as 'agatti'. Follow the example of other platforms and rename QCM2290 to
+> agatti.dtsi.
 > 
-> I feel we should keep gmu and gmu_wrapper implementations separate. It
-> is already overloaded. How about adding a separate gmu_wrapper_bind_ops
-> and keep it in the match data?
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+> ---
 
-Good idea, will try something like that.
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 
-> 
->> -	struct adreno_gpu *adreno_gpu = &a6xx_gpu->base;
->> +	struct platform_device *pdev = to_platform_device(dev);
->> +	struct msm_drm_private *priv = dev_get_drvdata(master);
->> +	struct msm_gpu *gpu = priv->gpu;
-> 
-> << snip >>
-> 
->>   static inline uint32_t get_wptr(struct msm_ringbuffer *ring)
->>   {
->> diff --git a/drivers/gpu/drm/msm/msm_drv.c b/drivers/gpu/drm/msm/msm_drv.c
->> index 7e977fec4100..0618da7e8b40 100644
->> --- a/drivers/gpu/drm/msm/msm_drv.c
->> +++ b/drivers/gpu/drm/msm/msm_drv.c
->> @@ -998,18 +998,30 @@ static const struct of_device_id msm_gpu_match[] = {
->>   	{ },
->>   };
->>   
->> +static const struct of_device_id msm_gmu_match[] = {
->> +	{ .compatible = "qcom,adreno-gmu" },
->> +	{ .compatible = "qcom,adreno-gmu-wrapper" },
->> +	{ },
->> +};
->> +
->>   static int add_gpu_components(struct device *dev,
->>   			      struct component_match **matchptr)
->>   {
->> -	struct device_node *np;
->> +	struct device_node *np, *gmu;
->>   
->>   	np = of_find_matching_node(NULL, msm_gpu_match);
->>   	if (!np)
->>   		return 0;
->>   
->> -	if (of_device_is_available(np) && adreno_has_gpu(np))
->> +	if (of_device_is_available(np) && adreno_has_gpu(np)) {
->>   		drm_of_component_match_add(dev, matchptr, component_compare_of, np);
->>   
->> +		gmu = of_find_matching_node(NULL, msm_gmu_match);
-> 
-> Instead of this, we can probably use the gmu phandle from "qcom,gmu"
-> property? That is quicker and also doesn't assume that there is only a
-> single GPU.
-
-Ack you're right, let's do this since we have the GPU node already.
-
-> 
->> +		if (of_device_is_available(gmu))
->> +			drm_of_component_match_add(dev, matchptr, component_compare_of, gmu);
->> +		of_node_put(gmu);
-> I think you missed the recently added headless support. Please check
-> separate_gpu_kms modparam and msm_gpu_probe().
-
-I saw it but seems I probably forgot the check if it's still functional,
-will double check.
-
-Thanks,
-Neil
-
-> 
-> -Akhil
-> 
->> +	}
->> +
->>   	of_node_put(np);
->>   
->>   	return 0;
->>
->> ---
->> base-commit: 211ddde0823f1442e4ad052a2f30f050145ccada
->> change-id: 20251022-topic-adreno-attach-gmu-to-driver-e47025fd7ebb
->>
->> Best regards,
-
+Konrad
 
