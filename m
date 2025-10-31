@@ -1,101 +1,101 @@
-Return-Path: <linux-arm-msm+bounces-79807-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-79808-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [IPv6:2605:f480:58:1:0:1994:3:14])
-	by mail.lfdr.de (Postfix) with ESMTPS id CAC39C2380A
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 31 Oct 2025 08:09:37 +0100 (CET)
+Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [142.0.200.124])
+	by mail.lfdr.de (Postfix) with ESMTPS id EE062C2381C
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 31 Oct 2025 08:12:59 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 9B0A64EBBAC
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 31 Oct 2025 07:09:36 +0000 (UTC)
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 5E4C94E18EC
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 31 Oct 2025 07:12:58 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id F33FB31E0EB;
-	Fri, 31 Oct 2025 07:09:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B2E263271FE;
+	Fri, 31 Oct 2025 07:12:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="ot406g0E";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="Z+QZl0oI"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="ig3J1HMh";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="I83SuFAv"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 114D419F12D
-	for <linux-arm-msm@vger.kernel.org>; Fri, 31 Oct 2025 07:09:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D534E26ED58
+	for <linux-arm-msm@vger.kernel.org>; Fri, 31 Oct 2025 07:12:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761894568; cv=none; b=rGTjMuNB/caZywn0MsQ6qrYqSyqCc0G/0WHbyVW6QwBy2zrs7t7MAXeVWCg85ZcOKet2Y/3ppCmEchsGee/Lus/gZoi/mDwpq5k5NiQOs5uFZ7cyslSvVcn+ozAXLmj8F0SgSe4h+uJZHdXomnuGCSEzb1AiX4xjAY6zkfFvAa4=
+	t=1761894776; cv=none; b=fVNyY/Zpx7QNxFMhVtZZs6GpjKnx2tnXIfcd7mDbqFplzXuU+wZuWq+ab53WV8pyqoe5mBXrAmyHWrdpxwxASAeb8jMGV5EScnd1umHwzeOQ3d8diLVss/mA3jmrWh/iAy36AU3qat/+yyfWxBKtmcF8C+JPRzOmcHXPUhsOALE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761894568; c=relaxed/simple;
-	bh=zqZ5l41rdH4e4FJuZlomuQesM7SfMMfV770ZbgixzKc=;
+	s=arc-20240116; t=1761894776; c=relaxed/simple;
+	bh=dDKWrhsiiyt4gngOhWkZfsh8pT1NRHZxaH5TkY9fIAo=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Xi7ebdYzcDwbFyoo2P9C8tqSQAPQh2vB4HaF/7uAqh5Y0lAd62OG356qCmEI8lK5t2py79Z9tMv5km1+/jmOqz/Q6bcDzLmN5kWdmxErd/kfHAp1dx/dXfudZ5BoKLn9QQRlXHsJb9rEGK+sd4h+nd4+NaIV7RpBwrqJbh92328=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=ot406g0E; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=Z+QZl0oI; arc=none smtp.client-ip=205.220.180.131
+	 In-Reply-To:Content-Type; b=UCKk5ez2UWRgqz4lnqMeUwJTNUwNvLKQ5UvGo5QxINLmNqFEjNLtqq/87IqQoTlpnWk+MKaCf/+wGq3WUzin/cwkBc6ZUHScV7p9hy1bQVRSD6H0SfySzq22JPJUCokxJjm/stgopp8SHqbU4dRgIytPoFs7nPZn5Lht4N0QPCg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=ig3J1HMh; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=I83SuFAv; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 59V5mjOE3117016
-	for <linux-arm-msm@vger.kernel.org>; Fri, 31 Oct 2025 07:09:25 GMT
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 59V1mfdH1571314
+	for <linux-arm-msm@vger.kernel.org>; Fri, 31 Oct 2025 07:12:53 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	NlYcl5rA1BcOn1mXvkVJXxas4nIONz0406KZgOy+BG0=; b=ot406g0EQHiczmBr
-	kLnm+OHqRZDixpLnkWKcYSmzZdi1Ws0pxjf7xIiS/S5ztiA1eBO4QUBNt7hooMvA
-	7cW9T/ggfMJP4lM9fPvZhdR33pFd4UsETQzRSDc5worqOMNk8ZtKRLUKrHXUISUk
-	U9GcfCH7nvcQQhXJCD4IXWISt3N+qWX6AGMSvdu/fG+kPwy1IgaAyaaWzquQAlO6
-	K1hQDDi8Si9lgvg9by8p4KLuxqznSRiUDBwfO/qMrsnKX0T5mpDAx5dFL3VWQPho
-	x8rVG6qElbgUHqs5WVw7CNzsP6Zw2GKidNJ+JcNGZMAHgLAKSkLaIiyFkK+exugY
-	mOzpNg==
-Received: from mail-pl1-f197.google.com (mail-pl1-f197.google.com [209.85.214.197])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4a45frk77b-1
+	5ooCWPS7joz5A65vto5/5X624ZOR87hrJBWp2Ets3u4=; b=ig3J1HMhj4kwxE36
+	A4Oj8IjynE1Yow0R+qMtJkq20vhfPb2C87RGr8O/VUfq0Er/mSqejtM3JUOl5jMA
+	avsyg7MRCfu7ARXxWERu9LxBwg/7J2XQT1W/87jKM9HGtdmDI8bDwlLfHuWcaC/Z
+	dvmc7DRwmeijhJet2DhAyBYgUwSUGehFlSNb1PJNn1dS2rxnT+a0rO1w6JaeCpad
+	IclhrSLOPMscy6MNEnanrX0PNIDb6Jl+iHM7TETfGdjyoVn/cZ8gE80dqtUGuPX+
+	nGOp2ENHj9Mq8ypAW3QUFRZLS/qSsmCa4ZTLaxrZht0rQhNTpX0nLTr1zeUaaj1f
+	6muEBg==
+Received: from mail-pj1-f69.google.com (mail-pj1-f69.google.com [209.85.216.69])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4a4ksc0pkq-1
 	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Fri, 31 Oct 2025 07:09:24 +0000 (GMT)
-Received: by mail-pl1-f197.google.com with SMTP id d9443c01a7336-2930e2e8e7fso17787775ad.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 31 Oct 2025 00:09:24 -0700 (PDT)
+	for <linux-arm-msm@vger.kernel.org>; Fri, 31 Oct 2025 07:12:53 +0000 (GMT)
+Received: by mail-pj1-f69.google.com with SMTP id 98e67ed59e1d1-32ee62ed6beso3128966a91.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 31 Oct 2025 00:12:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1761894564; x=1762499364; darn=vger.kernel.org;
+        d=oss.qualcomm.com; s=google; t=1761894773; x=1762499573; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=NlYcl5rA1BcOn1mXvkVJXxas4nIONz0406KZgOy+BG0=;
-        b=Z+QZl0oIcblc/e43rxnbzZ2JbvYulpGHzix5Sylzpoq4A6I/4CJ8ggh1S28rc5uAJ7
-         zTuY6F2qaIEyv+rahy841CGqn0PGsHe10Gxfys6rduQ650fWQAXg5VQJKkmmjgw5i2AN
-         ugbI8nlVPZgTwWBAOlT2zgRfvM7oFBLFiDytfrtG0dhKariKU7ehdwQ2YJBZLtR6EIDy
-         rO566br+xL3r6NIJGvfNaUTOnoqR/y0rLNineVyKqLhcAGFre0wZAKhBtL/MSWzn48NM
-         uaiN1NgLAEso6ljWtM+Tjm782OZhIiv/LG09k6a4TM8YYtDF8LP0DTdvE8W9REVp8pJI
-         vTOw==
+        bh=5ooCWPS7joz5A65vto5/5X624ZOR87hrJBWp2Ets3u4=;
+        b=I83SuFAvEo1hgXkwVvK2MxAbFjnSqeoFfONQJdfl0BPw6iDutPNRaU3BS0EUsb4H5H
+         xjCVQO9ILKUcGyQVSjXwLQcAe1NZnWHZiKcbGHsvLYapWexqAL5pIadd+M0jPTaDCDIv
+         IpLL2n0vG4J0FTZsDum6WIS7y9Cw5XJZT+4w/UEMX/u74BpRnWZky47tA3dIE0anv/p5
+         Kk3FtZNs/AmWrO5SfFmhRlzE7u3gEZYH/PSnSYjiqRfwZ8h+KfX7AsaVujHwDuLYT5vX
+         CQDWDZ7J1812sBez7N2Drjp/w8kHY8EmFMDJZ/L3UWOdso/lJIZ/JS+rjy3Lhyqo8GjP
+         M8ww==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1761894564; x=1762499364;
+        d=1e100.net; s=20230601; t=1761894773; x=1762499573;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=NlYcl5rA1BcOn1mXvkVJXxas4nIONz0406KZgOy+BG0=;
-        b=vxL0Hq/i7yjr/xjCaUBEmJUbYHmsvezXEVxgSQCsDssZgDgQ1JimYQ1iag9dKPpksF
-         DsMaZWz4+0DYK5tP6ZqkeN6tpONVyzXTx7MtEgQ0RGwoPO1vC4B2LABXmlXqX3ieAD22
-         ytd79nHJCf0qx8v2jy3Meyer9TCRuVpPaYAHQ2F55lJ36I1jHk9jXnXw3jMaZHS6Xw3h
-         ojhLbW0AokZHvDwB7hTU4kdvmkueteRGknozbzwgWmblEDIuK5oNEjarx8v1q1iQO9yc
-         cp7kBPELuusVNzZx/cTIuGAFC3gpQlePXBftCm7QaX+BKO49Cz6Nl9hSLSahqOGjPs1C
-         5zjQ==
-X-Forwarded-Encrypted: i=1; AJvYcCUH7qGgV1dPgKw1Bo83oi2+8VlSqYJuC3ZJ+LyITgnoj7dbIFMzRpa3Z8tFCrVMuJCNVBGhrkZCNaeMaqHQ@vger.kernel.org
-X-Gm-Message-State: AOJu0YzV9qaVJt//4kz383mS+49VX1sW1a9YINDou15ewZN9W9r2xygl
-	UPdUCseMbfJqaLY8J0mp+OamGbSrg35mS0gzWKCiy5t0h3u5GOdsefMmKe1ATwcBiwd/eVfNZEQ
-	TIbUfRq+mEmy0eVFXWFPC2Sir52LCF9VNpYaEs9olZem1wyzJfHBjRy+HEuQRifn/MDZS
-X-Gm-Gg: ASbGncs2q3/HInyxLY4E2xNpeey5Hs8fkm/3ZJGU1wckopF7/PkqD4H+yM3iB8VBzMV
-	uhlXgIF2AUvYTbligPVfziC/V1zxbOti7MSmUzOEDActTwAWfaiqm/vA4dfbka6prtD9Sr5rURW
-	cCXmWHpA9ROEhdsJ2gSsJZe8MIcNqJYkGp3RzbGnJLH0BhG93oPTzI8rRlwvIwlBeARm29lW0Bh
-	YSyW3jV/u5yqNPP6cuntckeFDWPi6Wh9gbC5tnBQfBYShSHbDhmlZHEhyg8iFCE2GBjYnDzUj/a
-	ZLhCKfNsQo5UEC7W3luDCmUYcQNNwhiTvey7fnEzGYhuPXPDF0H7ABLyBUXTEv7Q+gqL3xq0ruK
-	k3eLhdYGXc0AO623SAZdjDTPHsopxvXQ=
-X-Received: by 2002:a17:902:d2cd:b0:290:b92d:907 with SMTP id d9443c01a7336-2951a511475mr33219895ad.53.1761894563610;
-        Fri, 31 Oct 2025 00:09:23 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFPdXJw3ka+t6VdOOWnqYg84t35QMFZ05AK8xE6K2MOHFtnYTV+xvv78a3OAH0DxT1D8FOebg==
-X-Received: by 2002:a17:902:d2cd:b0:290:b92d:907 with SMTP id d9443c01a7336-2951a511475mr33219595ad.53.1761894563006;
-        Fri, 31 Oct 2025 00:09:23 -0700 (PDT)
+        bh=5ooCWPS7joz5A65vto5/5X624ZOR87hrJBWp2Ets3u4=;
+        b=EHTjUOWBG+q7WKg+qjtIrEGgSFJzVW65Vw5GMdNfa4mWcPvnbBRxYQu6omPw9uBIE4
+         zKv6SdBwnzRo1N5udcku67LNzGJFRSCr45xu0oWdNgoC6Rj8FTpQEFMlSErOtuv6MXTt
+         41OMpRCTN1nCQ23YrtIETGmUTL9dISJ37fmPcdbYJJ/XCIvA4R5CY6hrPZDwCxOFxB5w
+         iiHb/V9yss5yRUGWYCrXUONyWQtP31nCkJNTqp/fYbRjYrO9VvEvs/xKH/7KlxFuHAvk
+         G9SdcZF/NdWdUbpbskYGsgedq/vfEhAbGu6LNKZwCz8lNiFz8ghX4bT6EIQwtiADuLDL
+         58eQ==
+X-Forwarded-Encrypted: i=1; AJvYcCWh6EnHqzwM0L0h9hzmrd0okYvwF3HW+8faa+6bFFLyFSsNdJZMFO1po+3/SACk4fukGF+k8Ewpl3af/s74@vger.kernel.org
+X-Gm-Message-State: AOJu0Yxjfni5weaiaqZSKXhxUS6LOaPC4aRY7EgpH60gUY2P4MnAvIC5
+	nhjbZqJHvxZWrKHxw892B10Fy36lBg58Rhy+yO/mrH65NUpXJey0gfy3R62k668tDiT26LMyeKL
+	j7NjVC+5BDazM4t8IxYVl5CoKpE3fFRFRjQ0TyvKMLf8c/9IxDaz0ysknHXTbXuFzBxBX
+X-Gm-Gg: ASbGncup5rNB+lUVVUfWQPhhn73H5tGHmriO1liWDjq8DVsydjNrZ2XQEv5ogc8EKZX
+	RccaZsqL8qBAmhkz+Kl9dIwRPenYNzDvX0r9Iwfoutl+YJpM4ePU7hHpLTv3kbjM0RWQACRBoAa
+	mtgN79nSMss1O3o0sNuL6zKGZVuQqmrlWQJk7xJU4zcqGiwWBe93iQRUQEE+A/kEzODa+kGpmNl
+	slBaJ8AStA4CnWSfu0H5oagMCOsUj9jXbPkRek6NGy3aHzGTGS1GTuz6y6BJbYTWdi+4s5FTTls
+	gJEHTBykgJzHOTscFZ+GUcVqjUcUUKA4sriVjfwZX3/6ZCC0S/y/z2f4QHO/jhym7nFl2qH21U0
+	uyuJRrE87hgsv0NCLxODEurU0V2hij3Y=
+X-Received: by 2002:a17:90b:2792:b0:33e:2d0f:478e with SMTP id 98e67ed59e1d1-34082fc651bmr3480204a91.3.1761894772653;
+        Fri, 31 Oct 2025 00:12:52 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IF0PmjMJsVD/nICGvMD3F6gbXOJ+0TRUprUO3h6jktUSJpPvn69R5Hojj06flgoshnoVGj52w==
+X-Received: by 2002:a17:90b:2792:b0:33e:2d0f:478e with SMTP id 98e67ed59e1d1-34082fc651bmr3480164a91.3.1761894772127;
+        Fri, 31 Oct 2025 00:12:52 -0700 (PDT)
 Received: from [10.0.0.3] ([106.222.229.252])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-29537cccdecsm276465ad.19.2025.10.31.00.09.19
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-34092d4b041sm1101266a91.16.2025.10.31.00.12.48
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 31 Oct 2025 00:09:22 -0700 (PDT)
-Message-ID: <c4553caf-b7e1-c21b-d6d3-1890cc957d35@oss.qualcomm.com>
-Date: Fri, 31 Oct 2025 12:39:18 +0530
+        Fri, 31 Oct 2025 00:12:51 -0700 (PDT)
+Message-ID: <206d943a-0171-5f75-78fb-25cd1cd1c087@oss.qualcomm.com>
+Date: Fri, 31 Oct 2025 12:42:47 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -104,654 +104,218 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
  Thunderbird/102.13.0
-Subject: Re: [PATCH v3 5/5] media: iris: Add internal buffer calculation for
- AV1 decoder
+Subject: Re: [PATCH v1 1/4] media: qcom: iris: Add support for scale and
+ improve format alignment
 Content-Language: en-US
-To: Deepa Guthyappa Madivalara <deepa.madivalara@oss.qualcomm.com>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
-        Vikash Garodia <vikash.garodia@oss.qualcomm.com>,
-        Abhinav Kumar <abhinav.kumar@linux.dev>,
-        Bryan O'Donoghue <bod@kernel.org>
-Cc: linux-media@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, kernel test robot <lkp@intel.com>
-References: <20251030-av1d_stateful_v3-v3-0-a1184de52fc4@oss.qualcomm.com>
- <20251030-av1d_stateful_v3-v3-5-a1184de52fc4@oss.qualcomm.com>
+To: Wangao Wang <wangao.wang@oss.qualcomm.com>,
+        vikash.garodia@oss.qualcomm.com, abhinav.kumar@linux.dev,
+        bod@kernel.org, mchehab@kernel.org
+Cc: linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, quic_qiweil@quicinc.com,
+        quic_renjiang@quicinc.com
+References: <20251015092708.3703-1-wangao.wang@oss.qualcomm.com>
+ <20251015092708.3703-2-wangao.wang@oss.qualcomm.com>
 From: Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>
-In-Reply-To: <20251030-av1d_stateful_v3-v3-5-a1184de52fc4@oss.qualcomm.com>
+In-Reply-To: <20251015092708.3703-2-wangao.wang@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-Authority-Analysis: v=2.4 cv=KupAGGWN c=1 sm=1 tr=0 ts=690460a4 cx=c_pps
- a=cmESyDAEBpBGqyK7t0alAg==:117 a=L4UNg9I9cQSOxNpRiiGXlA==:17
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDMxMDA2NSBTYWx0ZWRfX8JfdaV4azval
+ HYDHoe1/JWH7IRvpMoUM8iCBaU1GJrB9R8vaOi9ZY3flQVKOaXOWmp1CTaSovmqq0wq/zP5TEJh
+ +t19Dv5G4pJFNYATKzmSbmfEnu+fV9xHuN4Vf4xQHZLwG68ETzPbU1O8u78zvj9phi8PC94sVZO
+ EldVunrUn1SVFp11i/Pkzg0/J3oNaoOBlqjDqtOc0pTq/jjOP6Y4ekPX08A4nPovLk6+2Gu1oBe
+ z9P8D9tVz4tJwuHOKvtL8dnzF63uJ9+dNMbaHntcPfGx5/ErH4iF0hVF7HXUzEepYj79jIUk3j4
+ 8BusUd/u1XSU9eGzXKhzgMG+eEuKonpHNcEGUPS4GBAOJPpxIbvJWNMDdMNYQDCGU4DuxixJt4o
+ Gxu/c7v9gcI6oq9R00NwAOu+Vxh7ow==
+X-Authority-Analysis: v=2.4 cv=Q8PfIo2a c=1 sm=1 tr=0 ts=69046175 cx=c_pps
+ a=vVfyC5vLCtgYJKYeQD43oA==:117 a=L4UNg9I9cQSOxNpRiiGXlA==:17
  a=IkcTkHD0fZMA:10 a=x6icFKpwvdMA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=EUspDBNiAAAA:8 a=QWsKh75IUkTvxXF8iEkA:9
- a=QEXdDO2ut3YA:10 a=1OuFwYUASf3TG4hYMiVC:22
-X-Proofpoint-ORIG-GUID: EtBswGxJReXzaDawK2SajfGhAt9GLeLV
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDMxMDA2NCBTYWx0ZWRfX/QkqjFQWBiOp
- AF2mbC5cceJzbEaYXpASVkmMjYg2U/PdZ8CLDHxeDmUTWiszmvf91r252ySXBuVUdrC8eKrH7uL
- NELCeTpoeafQmJpODeFvK26h3e3o5Obrv7z1keVjFdLcDPYRsRtHrKGqb5IlTN/W0S12OsVQ3Tu
- 5RRkmTfiKYvO10E+YPGIUZOyiyFZCRrgazwolpI+LPi2B68iK4IldTG7oLxP+9pIig4p/JoN0hP
- 8criN5W8VrGiANG5EFtAkyD3Fi4pME7eZCThBAHJbGQyP2NJdD31Zd2XrnFL4oIfewnPgaSiQ57
- PCVrPdS95m5yzBEnkjrL84Blx87sLUtkri3DBJMSNsWQHOlNQ7M5uTnv2QrSJspMsCZXnr+XAql
- c2kJXrXw3Q2Os27tISvIUSR7zeJyIA==
-X-Proofpoint-GUID: EtBswGxJReXzaDawK2SajfGhAt9GLeLV
+ a=VkNPw1HP01LnGYTKEx00:22 a=EUspDBNiAAAA:8 a=cuqx5Vh6MJc6xawovOEA:9
+ a=QEXdDO2ut3YA:10 a=rl5im9kqc5Lf4LNbBjHf:22
+X-Proofpoint-ORIG-GUID: 7gUIP6C_6qUGmuU1xyzP_JHqlh5IcWr8
+X-Proofpoint-GUID: 7gUIP6C_6qUGmuU1xyzP_JHqlh5IcWr8
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
  definitions=2025-10-31_01,2025-10-29_03,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- lowpriorityscore=0 suspectscore=0 bulkscore=0 priorityscore=1501
- clxscore=1015 spamscore=0 impostorscore=0 adultscore=0 phishscore=0
- malwarescore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2510240001
- definitions=main-2510310064
+ bulkscore=0 priorityscore=1501 adultscore=0 malwarescore=0 suspectscore=0
+ spamscore=0 lowpriorityscore=0 impostorscore=0 phishscore=0 clxscore=1015
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2510240001 definitions=main-2510310065
 
 
 
-On 10/30/2025 12:30 PM, Deepa Guthyappa Madivalara wrote:
-> Implement internal buffer count and size calculations for AV1 decoder
-> for all the buffer types required by the AV1 decoder, including BIN,
-> COMV, PERSIST, LINE, and PARTIAL.
+On 10/15/2025 2:57 PM, Wangao Wang wrote:
+> Add output width and height settings in iris_venc_s_fmt_output to
+> enable scaling functionality.
 > 
-> This ensures the hardware decoder has properly allocated memory for AV1
-> decoding operations, enabling correct AV1 video playback.
+> Add members enc_raw_width, enc_raw_height, enc_bitstream_width and
+> enc_bitstream_height to the struct iris_inst to support codec
+> alignment requirements.
 > 
-> Signed-off-by: Deepa Guthyappa Madivalara <deepa.madivalara@oss.qualcomm.com>
+> HFI_PROP_CROP_OFFSETS is used to inform the firmware of the region
+> of interest, rather than indicating that the codec supports crop.
+> Therefore, the crop handling has been corrected accordingly.
+> 
+> Signed-off-by: Wangao Wang <wangao.wang@oss.qualcomm.com>
 > ---
->  drivers/media/platform/qcom/iris/iris_buffer.h     |   1 +
->  drivers/media/platform/qcom/iris/iris_vpu_buffer.c | 297 ++++++++++++++++++++-
->  drivers/media/platform/qcom/iris/iris_vpu_buffer.h | 116 ++++++++
->  3 files changed, 411 insertions(+), 3 deletions(-)
-
-Reviewed-by: Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>
-
-Thanks,
-Dikshita
+>  .../qcom/iris/iris_hfi_gen2_command.c         | 18 ++++++++----
+>  .../media/platform/qcom/iris/iris_instance.h  |  8 ++++++
+>  drivers/media/platform/qcom/iris/iris_venc.c  | 28 ++++++++++++++++---
+>  3 files changed, 44 insertions(+), 10 deletions(-)
 > 
-> diff --git a/drivers/media/platform/qcom/iris/iris_buffer.h b/drivers/media/platform/qcom/iris/iris_buffer.h
-> index 5ef365d9236c7cbdee24a4614789b3191881968b..75bb767761824c4c02e0df9b765896cc093be333 100644
-> --- a/drivers/media/platform/qcom/iris/iris_buffer.h
-> +++ b/drivers/media/platform/qcom/iris/iris_buffer.h
-> @@ -27,6 +27,7 @@ struct iris_inst;
->   * @BUF_SCRATCH_1: buffer to store decoding/encoding context data for HW
->   * @BUF_SCRATCH_2: buffer to store encoding context data for HW
->   * @BUF_VPSS: buffer to store VPSS context data for HW
-> + * @BUF_PARTIAL: buffer for AV1 IBC data
->   * @BUF_TYPE_MAX: max buffer types
->   */
->  enum iris_buffer_type {
-> diff --git a/drivers/media/platform/qcom/iris/iris_vpu_buffer.c b/drivers/media/platform/qcom/iris/iris_vpu_buffer.c
-> index 4463be05ce165adef6b152eb0c155d2e6a7b3c36..694f431cca98af945ac8afee41a0c2de6edac3ef 100644
-> --- a/drivers/media/platform/qcom/iris/iris_vpu_buffer.c
-> +++ b/drivers/media/platform/qcom/iris/iris_vpu_buffer.c
-> @@ -9,6 +9,17 @@
->  #include "iris_hfi_gen2_defines.h"
+> diff --git a/drivers/media/platform/qcom/iris/iris_hfi_gen2_command.c b/drivers/media/platform/qcom/iris/iris_hfi_gen2_command.c
+> index 4ce71a142508..c2258dfb2a8a 100644
+> --- a/drivers/media/platform/qcom/iris/iris_hfi_gen2_command.c
+> +++ b/drivers/media/platform/qcom/iris/iris_hfi_gen2_command.c
+> @@ -168,9 +168,12 @@ static int iris_hfi_gen2_session_set_property(struct iris_inst *inst, u32 packet
 >  
->  #define HFI_MAX_COL_FRAME 6
-> +#define HFI_COLOR_FORMAT_YUV420_NV12_UBWC_Y_TILE_HEIGHT (8)
-> +#define HFI_COLOR_FORMAT_YUV420_NV12_UBWC_Y_TILE_WIDTH (32)
-> +#define HFI_COLOR_FORMAT_YUV420_NV12_UBWC_UV_TILE_HEIGHT (8)
-> +#define HFI_COLOR_FORMAT_YUV420_NV12_UBWC_UV_TILE_WIDTH (16)
-> +#define HFI_COLOR_FORMAT_YUV420_TP10_UBWC_Y_TILE_HEIGHT (4)
-> +#define HFI_COLOR_FORMAT_YUV420_TP10_UBWC_Y_TILE_WIDTH (48)
-> +#define HFI_COLOR_FORMAT_YUV420_TP10_UBWC_UV_TILE_HEIGHT (4)
-> +#define HFI_COLOR_FORMAT_YUV420_TP10_UBWC_UV_TILE_WIDTH (24)
-> +#define AV1D_SIZE_BSE_COL_MV_64x64 512
-> +#define AV1D_SIZE_BSE_COL_MV_128x128 2816
-> +
->  
->  #ifndef SYSTEM_LAL_TILE10
->  #define SYSTEM_LAL_TILE10 192
-> @@ -39,6 +50,31 @@ static u32 hfi_buffer_bin_h264d(u32 frame_width, u32 frame_height, u32 num_vpp_p
->  	return size_h264d_hw_bin_buffer(n_aligned_w, n_aligned_h, num_vpp_pipes);
->  }
->  
-> +static u32 size_av1d_hw_bin_buffer(u32 frame_width, u32 frame_height, u32 num_vpp_pipes)
-> +{
-> +	u32 size_yuv, size_bin_hdr, size_bin_res;
-> +
-> +	size_yuv = ((frame_width * frame_height) <= BIN_BUFFER_THRESHOLD) ?
-> +		((BIN_BUFFER_THRESHOLD * 3) >> 1) :
-> +		((frame_width * frame_height * 3) >> 1);
-> +	size_bin_hdr = size_yuv * AV1_CABAC_HDR_RATIO_HD_TOT;
-> +	size_bin_res = size_yuv * AV1_CABAC_RES_RATIO_HD_TOT;
-> +	size_bin_hdr = ALIGN(size_bin_hdr / num_vpp_pipes,
-> +			     DMA_ALIGNMENT) * num_vpp_pipes;
-> +	size_bin_res = ALIGN(size_bin_res / num_vpp_pipes,
-> +			     DMA_ALIGNMENT) * num_vpp_pipes;
-> +
-> +	return size_bin_hdr + size_bin_res;
-> +}
-> +
-> +static u32 hfi_buffer_bin_av1d(u32 frame_width, u32 frame_height, u32 num_vpp_pipes)
-> +{
-> +	u32 n_aligned_h = ALIGN(frame_height, 16);
-> +	u32 n_aligned_w = ALIGN(frame_width, 16);
-> +
-> +	return size_av1d_hw_bin_buffer(n_aligned_w, n_aligned_h, num_vpp_pipes);
-> +}
-> +
->  static u32 size_h265d_hw_bin_buffer(u32 frame_width, u32 frame_height, u32 num_vpp_pipes)
+>  static int iris_hfi_gen2_set_raw_resolution(struct iris_inst *inst, u32 plane)
 >  {
->  	u32 product = frame_width * frame_height;
-> @@ -110,6 +146,26 @@ static u32 hfi_buffer_comv_h265d(u32 frame_width, u32 frame_height, u32 _comv_bu
->  	return (_size * (_comv_bufcount)) + 512;
->  }
+> -	u32 resolution = inst->fmt_src->fmt.pix_mp.width << 16 |
+> -		inst->fmt_src->fmt.pix_mp.height;
+>  	u32 port = iris_hfi_gen2_get_port(inst, plane);
+> +	u32 resolution, codec_align;
+> +
+> +	codec_align = inst->codec == V4L2_PIX_FMT_HEVC ? 32 : 16;
+> +	resolution = ALIGN(inst->enc_raw_width, codec_align) << 16 |
+> +		ALIGN(inst->enc_raw_height, codec_align);
+
+This shouldn't need to be aligned, pls check.
+
 >  
-> +static u32 num_lcu(u32 frame_width, u32 frame_height, u32 lcu_size)
-> +{
-> +	return ((frame_width + lcu_size - 1) / lcu_size) *
-> +			((frame_height + lcu_size - 1) / lcu_size);
-> +}
-> +
-> +static u32 hfi_buffer_comv_av1d(u32 frame_width, u32 frame_height, u32 comv_bufcount)
-> +{
-> +	u32 size;
-> +
-> +	size =  2 * ALIGN(max(num_lcu(frame_width, frame_height, 64) *
-> +						  AV1D_SIZE_BSE_COL_MV_64x64,
-> +						  num_lcu(frame_width, frame_height, 128) *
-> +						AV1D_SIZE_BSE_COL_MV_128x128),
-> +					  DMA_ALIGNMENT);
-> +	size *= comv_bufcount;
-> +
-> +	return size;
-> +}
-> +
->  static u32 size_h264d_bse_cmd_buf(u32 frame_height)
->  {
->  	u32 height = ALIGN(frame_height, 32);
-> @@ -174,6 +230,20 @@ static u32 hfi_buffer_persist_h264d(void)
->  		    DMA_ALIGNMENT);
->  }
->  
-> +static u32 hfi_buffer_persist_av1d(u32 max_width, u32 max_height, u32 total_ref_count)
-> +{
-> +	u32 comv_size, size;
-> +
-> +	comv_size =  hfi_buffer_comv_av1d(max_width, max_height, total_ref_count);
-> +	size = ALIGN((SIZE_AV1D_SEQUENCE_HEADER * 2 + SIZE_AV1D_METADATA +
-> +	AV1D_NUM_HW_PIC_BUF * (SIZE_AV1D_TILE_OFFSET + SIZE_AV1D_QM) +
-> +	AV1D_NUM_FRAME_HEADERS * (SIZE_AV1D_FRAME_HEADER +
-> +	2 * SIZE_AV1D_PROB_TABLE) + comv_size + HDR10_HIST_EXTRADATA_SIZE +
-> +	SIZE_AV1D_METADATA * AV1D_NUM_HW_PIC_BUF), DMA_ALIGNMENT);
-> +
-> +	return ALIGN(size, DMA_ALIGNMENT);
-> +}
-> +
->  static u32 hfi_buffer_non_comv_h264d(u32 frame_width, u32 frame_height, u32 num_vpp_pipes)
->  {
->  	u32 size_bse = size_h264d_bse_cmd_buf(frame_height);
-> @@ -459,6 +529,182 @@ static u32 hfi_buffer_line_h264d(u32 frame_width, u32 frame_height,
->  	return ALIGN((size + vpss_lb_size), DMA_ALIGNMENT);
->  }
->  
-> +static u32 size_av1d_lb_opb_wr1_nv12_ubwc(u32 frame_width, u32 frame_height)
-> +{
-> +	u32 size, y_width, y_width_a = 128;
-> +
-> +	y_width = ALIGN(frame_width, y_width_a);
-> +
-> +	size = ((y_width + HFI_COLOR_FORMAT_YUV420_NV12_UBWC_Y_TILE_WIDTH - 1) /
-> +					HFI_COLOR_FORMAT_YUV420_NV12_UBWC_Y_TILE_WIDTH  +
-> +					(AV1D_MAX_TILE_COLS - 1));
-> +	return size * 256;
-> +}
-> +
-> +static u32 size_av1d_lb_opb_wr1_tp10_ubwc(u32 frame_width, u32 frame_height)
-> +{
-> +	u32 size, y_width, y_width_a = 256;
-> +
-> +	y_width = ALIGN(frame_width, y_width_a);
-> +
-> +	size = ((y_width + HFI_COLOR_FORMAT_YUV420_TP10_UBWC_Y_TILE_WIDTH - 1) /
-> +			 HFI_COLOR_FORMAT_YUV420_TP10_UBWC_Y_TILE_WIDTH +
-> +			 (AV1D_MAX_TILE_COLS - 1));
-> +
-> +	return size * 256;
-> +}
-> +
-> +static u32 hfi_buffer_line_av1d(u32 frame_width, u32 frame_height,
-> +				bool is_opb, u32 num_vpp_pipes)
-> +{
-> +	u32 size, vpss_lb_size, opbwrbufsize, opbwr8, opbwr10;
-> +
-> +	size = ALIGN(size_av1d_lb_fe_top_data(frame_width, frame_height),
-> +		     DMA_ALIGNMENT) +
-> +		ALIGN(size_av1d_lb_fe_top_ctrl(frame_width, frame_height),
-> +		      DMA_ALIGNMENT) +
-> +		ALIGN(size_av1d_lb_fe_left_data(frame_width, frame_height),
-> +		      DMA_ALIGNMENT) * num_vpp_pipes +
-> +		ALIGN(size_av1d_lb_fe_left_ctrl(frame_width, frame_height),
-> +		      DMA_ALIGNMENT) * num_vpp_pipes +
-> +		ALIGN(size_av1d_lb_se_left_ctrl(frame_width, frame_height),
-> +		      DMA_ALIGNMENT) * num_vpp_pipes +
-> +		ALIGN(size_av1d_lb_se_top_ctrl(frame_width, frame_height),
-> +		      DMA_ALIGNMENT) +
-> +		ALIGN(size_av1d_lb_pe_top_data(frame_width, frame_height),
-> +		      DMA_ALIGNMENT) +
-> +		ALIGN(size_av1d_lb_vsp_top(frame_width, frame_height),
-> +		      DMA_ALIGNMENT) +
-> +		ALIGN(size_av1d_lb_recon_dma_metadata_wr
-> +		      (frame_width, frame_height), DMA_ALIGNMENT) * 2 +
-> +		ALIGN(size_av1d_qp(frame_width, frame_height), DMA_ALIGNMENT);
-> +	opbwr8 = size_av1d_lb_opb_wr1_nv12_ubwc(frame_width, frame_height);
-> +	opbwr10 = size_av1d_lb_opb_wr1_tp10_ubwc(frame_width, frame_height);
-> +	opbwrbufsize = opbwr8 >= opbwr10 ? opbwr8 : opbwr10;
-> +	size = ALIGN((size + opbwrbufsize), DMA_ALIGNMENT);
-> +	if (is_opb) {
-> +		vpss_lb_size = size_vpss_lb(frame_width, frame_height);
-> +		size = ALIGN((size + vpss_lb_size) * 2, DMA_ALIGNMENT);
-> +	}
-> +
-> +	return size;
-> +}
-> +
-> +static u32 size_av1d_ibc_nv12_ubwc(u32 frame_width, u32 frame_height)
-> +{
-> +	u32 size;
-> +	u32 y_width_a = 128, y_height_a = 32;
-> +	u32 uv_width_a = 128, uv_height_a = 32;
-> +	u32 ybufsize, uvbufsize, y_width, y_height, uv_width, uv_height;
-> +	u32 y_meta_width_a = 64, y_meta_height_a = 16;
-> +	u32 uv_meta_width_a = 64, uv_meta_height_a = 16;
-> +	u32 meta_height, meta_stride, meta_size;
-> +	u32 tile_width_y = HFI_COLOR_FORMAT_YUV420_NV12_UBWC_Y_TILE_WIDTH;
-> +	u32 tile_height_y = HFI_COLOR_FORMAT_YUV420_NV12_UBWC_Y_TILE_HEIGHT;
-> +	u32 tile_width_uv = HFI_COLOR_FORMAT_YUV420_NV12_UBWC_UV_TILE_WIDTH;
-> +	u32 tile_height_uv = HFI_COLOR_FORMAT_YUV420_NV12_UBWC_UV_TILE_HEIGHT;
-> +
-> +	y_width = ALIGN(frame_width, y_width_a);
-> +	y_height = ALIGN(frame_height, y_height_a);
-> +	uv_width = ALIGN(frame_width, uv_width_a);
-> +	uv_height = ALIGN(((frame_height + 1) >> 1), uv_height_a);
-> +	ybufsize = ALIGN((y_width * y_height), HFI_ALIGNMENT_4096);
-> +	uvbufsize = ALIGN(uv_width * uv_height, HFI_ALIGNMENT_4096);
-> +	size = ybufsize + uvbufsize;
-> +	meta_stride = ALIGN(((frame_width + (tile_width_y - 1)) / tile_width_y),
-> +			    y_meta_width_a);
-> +	meta_height = ALIGN(((frame_height + (tile_height_y - 1)) / tile_height_y),
-> +			    y_meta_height_a);
-> +	meta_size = ALIGN(meta_stride * meta_height, HFI_ALIGNMENT_4096);
-> +	size += meta_size;
-> +	meta_stride = ALIGN(((((frame_width + 1) >> 1) + (tile_width_uv - 1)) /
-> +				tile_width_uv),	uv_meta_width_a);
-> +	meta_height = ALIGN(((((frame_height + 1) >> 1) + (tile_height_uv - 1)) /
-> +				tile_height_uv), uv_meta_height_a);
-> +	meta_size = ALIGN(meta_stride * meta_height, HFI_ALIGNMENT_4096);
-> +	size += meta_size;
-> +
-> +	return size;
-> +}
-> +
-> +static u32 hfi_yuv420_tp10_calc_y_stride(u32 frame_width, u32 stride_multiple)
-> +{
-> +	u32 stride;
-> +
-> +	stride = ALIGN(frame_width, 192);
-> +	stride = ALIGN(stride * 4 / 3, stride_multiple);
-> +
-> +	return stride;
-> +}
-> +
-> +static u32 hfi_yuv420_tp10_calc_y_bufheight(u32 frame_height, u32 min_buf_height_multiple)
-> +{
-> +	return ALIGN(frame_height, min_buf_height_multiple);
-> +}
-> +
-> +static u32 hfi_yuv420_tp10_calc_uv_stride(u32 frame_width, u32 stride_multiple)
-> +{
-> +	u32 stride;
-> +
-> +	stride = ALIGN(frame_width, 192);
-> +	stride = ALIGN(stride * 4 / 3, stride_multiple);
-> +
-> +	return stride;
-> +}
-> +
-> +static u32 hfi_yuv420_tp10_calc_uv_bufheight(u32 frame_height, u32 min_buf_height_multiple)
-> +{
-> +	return ALIGN(((frame_height + 1) >> 1),	min_buf_height_multiple);
-> +}
-> +
-> +static u32 size_av1d_ibc_tp10_ubwc(u32 frame_width, u32 frame_height)
-> +{
-> +	u32 size;
-> +	u32 y_width_a = 256, y_height_a = 16,
-> +		uv_width_a = 256, uv_height_a = 16;
-> +	u32 ybufsize, uvbufsize, y_width, y_height, uv_width, uv_height;
-> +	u32 y_meta_width_a = 64, y_meta_height_a = 16,
-> +		uv_meta_width_a = 64, uv_meta_height_a = 16;
-> +	u32 meta_height, meta_stride, meta_size;
-> +	u32 tile_width_y = HFI_COLOR_FORMAT_YUV420_TP10_UBWC_Y_TILE_WIDTH;
-> +	u32 tile_height_y = HFI_COLOR_FORMAT_YUV420_TP10_UBWC_Y_TILE_HEIGHT;
-> +	u32 tile_width_uv = HFI_COLOR_FORMAT_YUV420_TP10_UBWC_UV_TILE_WIDTH;
-> +	u32 tile_height_uv = HFI_COLOR_FORMAT_YUV420_TP10_UBWC_UV_TILE_HEIGHT;
-> +
-> +	y_width = hfi_yuv420_tp10_calc_y_stride(frame_width, y_width_a);
-> +	y_height = hfi_yuv420_tp10_calc_y_bufheight(frame_height, y_height_a);
-> +	uv_width = hfi_yuv420_tp10_calc_uv_stride(frame_width, uv_width_a);
-> +	uv_height = hfi_yuv420_tp10_calc_uv_bufheight(frame_height, uv_height_a);
-> +	ybufsize = ALIGN(y_width * y_height, HFI_ALIGNMENT_4096);
-> +	uvbufsize = ALIGN(uv_width * uv_height, HFI_ALIGNMENT_4096);
-> +	size = ybufsize + uvbufsize;
-> +	meta_stride = ALIGN(((frame_width + (tile_width_y - 1)) / tile_width_y),
-> +			    y_meta_width_a);
-> +	meta_height = ALIGN(((frame_height + (tile_height_y - 1)) / tile_height_y),
-> +			    y_meta_height_a);
-> +	meta_size = ALIGN(meta_stride * meta_height, HFI_ALIGNMENT_4096);
-> +	size += meta_size;
-> +	meta_stride = ALIGN(((((frame_width + 1) >> 1) + (tile_width_uv - 1)) /
-> +				tile_width_uv), uv_meta_width_a);
-> +	meta_height = ALIGN(((((frame_height + 1) >> 1) + (tile_height_uv - 1)) /
-> +				tile_height_uv), uv_meta_height_a);
-> +	meta_size = ALIGN(meta_stride * meta_height, HFI_ALIGNMENT_4096);
-> +	size += meta_size;
-> +
-> +	return size;
-> +}
-> +
-> +static u32 hfi_buffer_ibc_av1d(u32 frame_width, u32 frame_height)
-> +{
-> +	u32 size, ibc8, ibc10;
-> +
-> +	ibc8 = size_av1d_ibc_nv12_ubwc(frame_width, frame_height);
-> +	ibc10 = size_av1d_ibc_tp10_ubwc(frame_width, frame_height);
-> +	size = ibc8 >= ibc10 ? ibc8 : ibc10;
-> +
-> +	return ALIGN(size, DMA_ALIGNMENT);
-> +}
-> +
->  static u32 iris_vpu_dec_bin_size(struct iris_inst *inst)
->  {
->  	u32 num_vpp_pipes = inst->core->iris_platform_data->num_vpp_pipe;
-> @@ -472,6 +718,8 @@ static u32 iris_vpu_dec_bin_size(struct iris_inst *inst)
->  		return hfi_buffer_bin_h265d(width, height, num_vpp_pipes);
->  	else if (inst->codec == V4L2_PIX_FMT_VP9)
->  		return hfi_buffer_bin_vp9d(width, height, num_vpp_pipes);
-> +	else if (inst->codec == V4L2_PIX_FMT_AV1)
-> +		return hfi_buffer_bin_av1d(width, height, num_vpp_pipes);
->  
->  	return 0;
->  }
-> @@ -487,18 +735,34 @@ static u32 iris_vpu_dec_comv_size(struct iris_inst *inst)
->  		return hfi_buffer_comv_h264d(width, height, num_comv);
->  	else if (inst->codec == V4L2_PIX_FMT_HEVC)
->  		return hfi_buffer_comv_h265d(width, height, num_comv);
-> +	else if (inst->codec == V4L2_PIX_FMT_AV1) {
-> +		if (inst->fw_caps[DRAP].value)
-> +			return 0;
-> +		else
-> +			return hfi_buffer_comv_av1d(width, height, num_comv);
-> +	}
->  
->  	return 0;
->  }
->  
->  static u32 iris_vpu_dec_persist_size(struct iris_inst *inst)
->  {
-> +	struct platform_inst_caps *caps;
-> +
->  	if (inst->codec == V4L2_PIX_FMT_H264)
->  		return hfi_buffer_persist_h264d();
->  	else if (inst->codec == V4L2_PIX_FMT_HEVC)
->  		return hfi_buffer_persist_h265d(0);
->  	else if (inst->codec == V4L2_PIX_FMT_VP9)
->  		return hfi_buffer_persist_vp9d();
-> +	else if (inst->codec == V4L2_PIX_FMT_AV1) {
-> +		caps = inst->core->iris_platform_data->inst_caps;
-> +		if (inst->fw_caps[DRAP].value)
-> +			return hfi_buffer_persist_av1d(caps->max_frame_width,
-> +			caps->max_frame_height, 16);
-> +		else
-> +			return hfi_buffer_persist_av1d(0, 0, 0);
-> +	}
->  
->  	return 0;
->  }
-> @@ -545,6 +809,8 @@ static u32 iris_vpu_dec_line_size(struct iris_inst *inst)
->  	else if (inst->codec == V4L2_PIX_FMT_VP9)
->  		return hfi_buffer_line_vp9d(width, height, out_min_count, is_opb,
->  			num_vpp_pipes);
-> +	else if (inst->codec == V4L2_PIX_FMT_AV1)
-> +		return hfi_buffer_line_av1d(width, height, is_opb, num_vpp_pipes);
->  
->  	return 0;
->  }
-> @@ -653,6 +919,15 @@ static u32 iris_vpu_enc_bin_size(struct iris_inst *inst)
->  				  num_vpp_pipes, inst->hfi_rc_type);
->  }
->  
-> +static u32 iris_vpu_dec_partial_size(struct iris_inst *inst)
-> +{
-> +	struct v4l2_format *f = inst->fmt_src;
-> +	u32 height = f->fmt.pix_mp.height;
-> +	u32 width = f->fmt.pix_mp.width;
-> +
-> +	return hfi_buffer_ibc_av1d(width, height);
-> +}
-> +
->  static inline
->  u32 hfi_buffer_comv_enc(u32 frame_width, u32 frame_height, u32 lcu_size,
->  			u32 num_recon, u32 standard)
-> @@ -1414,7 +1689,9 @@ static int output_min_count(struct iris_inst *inst)
->  
->  	/* fw_min_count > 0 indicates reconfig event has already arrived */
->  	if (inst->fw_min_count) {
-> -		if (iris_split_mode_enabled(inst) && inst->codec == V4L2_PIX_FMT_VP9)
-> +		if (iris_split_mode_enabled(inst) &&
-> +		    (inst->codec == V4L2_PIX_FMT_VP9 ||
-> +		     inst->codec == V4L2_PIX_FMT_AV1))
->  			return min_t(u32, 4, inst->fw_min_count);
->  		else
->  			return inst->fw_min_count;
-> @@ -1422,6 +1699,8 @@ static int output_min_count(struct iris_inst *inst)
->  
->  	if (inst->codec == V4L2_PIX_FMT_VP9)
->  		output_min_count = 9;
-> +	else if (inst->codec == V4L2_PIX_FMT_AV1)
-> +		output_min_count = 11;
->  
->  	return output_min_count;
->  }
-> @@ -1444,6 +1723,7 @@ u32 iris_vpu_buf_size(struct iris_inst *inst, enum iris_buffer_type buffer_type)
->  		{BUF_PERSIST,     iris_vpu_dec_persist_size         },
->  		{BUF_DPB,         iris_vpu_dec_dpb_size             },
->  		{BUF_SCRATCH_1,   iris_vpu_dec_scratch1_size        },
-> +		{BUF_PARTIAL,     iris_vpu_dec_partial_size         },
->  	};
->  
->  	static const struct iris_vpu_buf_type_handle enc_internal_buf_type_handle[] = {
-> @@ -1510,14 +1790,20 @@ static u32 internal_buffer_count(struct iris_inst *inst,
->  	    buffer_type == BUF_PERSIST) {
->  		return 1;
->  	} else if (buffer_type == BUF_COMV || buffer_type == BUF_NON_COMV) {
-> -		if (inst->codec == V4L2_PIX_FMT_H264 || inst->codec == V4L2_PIX_FMT_HEVC)
-> +		if (inst->codec == V4L2_PIX_FMT_H264 ||
-> +		    inst->codec == V4L2_PIX_FMT_HEVC ||
-> +		    inst->codec == V4L2_PIX_FMT_AV1)
->  			return 1;
+>  	return iris_hfi_gen2_session_set_property(inst,
+>  						  HFI_PROP_RAW_RESOLUTION,
+> @@ -195,8 +198,8 @@ static int iris_hfi_gen2_set_bitstream_resolution(struct iris_inst *inst, u32 pl
+>  		payload_type = HFI_PAYLOAD_U32;
+>  	} else {
+>  		codec_align = inst->codec == V4L2_PIX_FMT_HEVC ? 32 : 16;
+> -		resolution = ALIGN(inst->fmt_dst->fmt.pix_mp.width, codec_align) << 16 |
+> -			ALIGN(inst->fmt_dst->fmt.pix_mp.height, codec_align);
+> +		resolution = ALIGN(inst->enc_bitstream_width, codec_align) << 16 |
+> +			ALIGN(inst->enc_bitstream_height, codec_align);
+>  		inst_hfi_gen2->dst_subcr_params.bitstream_resolution = resolution;
+>  		payload_type = HFI_PAYLOAD_32_PACKED;
 >  	}
-> +
->  	return 0;
->  }
+> @@ -216,8 +219,11 @@ static int iris_hfi_gen2_set_crop_offsets(struct iris_inst *inst, u32 plane)
+>  	u32 port = iris_hfi_gen2_get_port(inst, plane);
+>  	u32 bottom_offset, right_offset;
+>  	u32 left_offset, top_offset;
+> +	u32 codec_align;
+>  	u32 payload[2];
 >  
->  static inline int iris_vpu_dpb_count(struct iris_inst *inst)
+> +	codec_align = inst->codec == V4L2_PIX_FMT_HEVC ? 32 : 16;
+> +
+>  	if (inst->domain == DECODER) {
+>  		if (V4L2_TYPE_IS_OUTPUT(plane)) {
+>  			bottom_offset = (inst->fmt_src->fmt.pix_mp.height - inst->crop.height);
+> @@ -231,8 +237,8 @@ static int iris_hfi_gen2_set_crop_offsets(struct iris_inst *inst, u32 plane)
+>  			top_offset = inst->compose.top;
+>  		}
+>  	} else {
+> -		bottom_offset = (inst->fmt_src->fmt.pix_mp.height - inst->crop.height);
+> -		right_offset = (inst->fmt_src->fmt.pix_mp.width - inst->crop.width);
+> +		bottom_offset = (ALIGN(inst->enc_raw_height, codec_align) - inst->enc_raw_height);
+> +		right_offset = (ALIGN(inst->enc_raw_width, codec_align) - inst->enc_raw_width);
+>  		left_offset = inst->crop.left;
+>  		top_offset = inst->crop.top;
+>  	}
+> diff --git a/drivers/media/platform/qcom/iris/iris_instance.h b/drivers/media/platform/qcom/iris/iris_instance.h
+> index 5982d7adefea..f371b1cbef47 100644
+> --- a/drivers/media/platform/qcom/iris/iris_instance.h
+> +++ b/drivers/media/platform/qcom/iris/iris_instance.h
+> @@ -64,6 +64,10 @@ struct iris_fmt {
+>   * @frame_rate: frame rate of current instance
+>   * @operating_rate: operating rate of current instance
+>   * @hfi_rc_type: rate control type
+> + * @enc_raw_width: raw image width for encoder instance
+> + * @enc_raw_height: raw image height for encoder instance
+> + * @enc_bitstream_width: bitstream width for encoder instance
+> + * @enc_bitstream_height: bitstream height for encoder instance
+>   */
+>  
+>  struct iris_inst {
+> @@ -102,6 +106,10 @@ struct iris_inst {
+>  	u32				frame_rate;
+>  	u32				operating_rate;
+>  	u32				hfi_rc_type;
+> +	u32				enc_raw_width;
+> +	u32				enc_raw_height;
+> +	u32				enc_bitstream_width;
+> +	u32				enc_bitstream_height;
+
+As enc_bitstream_with/height is used for scaling, rename them accordingly.
+
+>  };
+>  
+>  #endif
+> diff --git a/drivers/media/platform/qcom/iris/iris_venc.c b/drivers/media/platform/qcom/iris/iris_venc.c
+> index 099bd5ed4ae0..25c05123dee4 100644
+> --- a/drivers/media/platform/qcom/iris/iris_venc.c
+> +++ b/drivers/media/platform/qcom/iris/iris_venc.c
+> @@ -68,6 +68,11 @@ int iris_venc_inst_init(struct iris_inst *inst)
+>  	inst->operating_rate = DEFAULT_FPS;
+>  	inst->frame_rate = DEFAULT_FPS;
+>  
+> +	inst->enc_raw_width = DEFAULT_WIDTH;
+> +	inst->enc_raw_height = DEFAULT_HEIGHT;
+> +	inst->enc_bitstream_width = DEFAULT_WIDTH;
+> +	inst->enc_bitstream_height = DEFAULT_HEIGHT;
+> +
+>  	memcpy(&inst->fw_caps[0], &core->inst_fw_caps_enc[0],
+>  	       INST_FW_CAP_MAX * sizeof(struct platform_inst_fw_cap));
+>  
+> @@ -185,15 +190,27 @@ int iris_venc_try_fmt(struct iris_inst *inst, struct v4l2_format *f)
+>  
+>  static int iris_venc_s_fmt_output(struct iris_inst *inst, struct v4l2_format *f)
 >  {
-> +	if (inst->codec == V4L2_PIX_FMT_AV1)
-> +		return 11;
-> +
->  	if (iris_split_mode_enabled(inst)) {
->  		return inst->fw_min_count ?
->  			inst->fw_min_count : inst->buffers[BUF_OUTPUT].min_count;
-> @@ -1536,9 +1822,13 @@ int iris_vpu_buf_count(struct iris_inst *inst, enum iris_buffer_type buffer_type
->  			return MIN_BUFFERS;
->  		else
->  			return output_min_count(inst);
-> +	case BUF_NON_COMV:
-> +		if (inst->codec == V4L2_PIX_FMT_AV1)
-> +			return 0;
-> +		else
-> +			return 1;
->  	case BUF_BIN:
->  	case BUF_COMV:
-> -	case BUF_NON_COMV:
->  	case BUF_LINE:
->  	case BUF_PERSIST:
->  		return internal_buffer_count(inst, buffer_type);
-> @@ -1546,6 +1836,7 @@ int iris_vpu_buf_count(struct iris_inst *inst, enum iris_buffer_type buffer_type
->  	case BUF_SCRATCH_2:
->  	case BUF_VPSS:
->  	case BUF_ARP:
-> +	case BUF_PARTIAL:
->  		return 1; /* internal buffer count needed by firmware is 1 */
->  	case BUF_DPB:
->  		return iris_vpu_dpb_count(inst);
-> diff --git a/drivers/media/platform/qcom/iris/iris_vpu_buffer.h b/drivers/media/platform/qcom/iris/iris_vpu_buffer.h
-> index 04f0b7400a1e4e1d274d690a2761b9e57778e8b7..a8ffc1286260bddbf49df18fba0a23f78056a484 100644
-> --- a/drivers/media/platform/qcom/iris/iris_vpu_buffer.h
-> +++ b/drivers/media/platform/qcom/iris/iris_vpu_buffer.h
-> @@ -11,6 +11,7 @@ struct iris_inst;
->  #define MIN_BUFFERS			4
+> +	const struct iris_fmt *venc_fmt;
+>  	struct v4l2_format *fmt;
+> +	u32 codec_align;
 >  
->  #define DMA_ALIGNMENT			256
-> +#define HFI_ALIGNMENT_4096      4096
+>  	iris_venc_try_fmt(inst, f);
 >  
->  #define NUM_HW_PIC_BUF			32
->  #define LCU_MAX_SIZE_PELS 64
-> @@ -81,6 +82,22 @@ struct iris_inst;
->  #define MAX_PE_NBR_DATA_LCU64_LINE_BUFFER_SIZE	384
->  #define MAX_FE_NBR_DATA_LUMA_LINE_BUFFER_SIZE	640
+> -	if (!(find_format(inst, f->fmt.pix_mp.pixelformat, f->type)))
+> +	venc_fmt = find_format(inst, f->fmt.pix_mp.pixelformat, f->type);
+> +	if (!venc_fmt)
+>  		return -EINVAL;
 >  
-> +#define AV1_CABAC_HDR_RATIO_HD_TOT 2
-> +#define AV1_CABAC_RES_RATIO_HD_TOT 2
-> +#define AV1D_LCU_MAX_SIZE_PELS 128
-> +#define AV1D_LCU_MIN_SIZE_PELS 64
-> +#define AV1D_MAX_TILE_COLS     64
-> +#define MAX_PE_NBR_DATA_LCU32_LINE_BUFFER_SIZE 192
-> +#define MAX_PE_NBR_DATA_LCU16_LINE_BUFFER_SIZE 96
-> +#define AV1D_NUM_HW_PIC_BUF    16
-> +#define AV1D_NUM_FRAME_HEADERS 16
-> +#define SIZE_AV1D_SEQUENCE_HEADER 768
-> +#define SIZE_AV1D_METADATA        512
-> +#define SIZE_AV1D_FRAME_HEADER    1280
-> +#define SIZE_AV1D_TILE_OFFSET     65536
-> +#define SIZE_AV1D_QM              3328
-> +#define SIZE_AV1D_PROB_TABLE      22784
+> +	codec_align = venc_fmt->pixfmt == V4L2_PIX_FMT_HEVC ? 32 : 16;
 > +
->  #define SIZE_SLICE_CMD_BUFFER (ALIGN(20480, 256))
->  #define SIZE_SPS_PPS_SLICE_HDR (2048 + 4096)
->  #define SIZE_BSE_SLICE_CMD_BUF ((((8192 << 2) + 7) & (~7)) * 3)
-> @@ -101,6 +118,15 @@ struct iris_inst;
->  #define NUM_MBS_4K (DIV_ROUND_UP(MAX_WIDTH, 16) * DIV_ROUND_UP(MAX_HEIGHT, 16))
->  #define NUM_MBS_720P	(((ALIGN(1280, 16)) >> 4) * ((ALIGN(736, 16)) >> 4))
+>  	fmt = inst->fmt_dst;
+>  	fmt->type = V4L2_BUF_TYPE_VIDEO_CAPTURE_MPLANE;> +	if (f->fmt.pix_mp.width != fmt->fmt.pix_mp.width ||
+> +	    f->fmt.pix_mp.height != fmt->fmt.pix_mp.height) {
+
+pls add a comment here, as this is for scaling specific usecase
+
+> +		fmt->fmt.pix_mp.width = ALIGN(f->fmt.pix_mp.width, codec_align);
+> +		fmt->fmt.pix_mp.height = ALIGN(f->fmt.pix_mp.height, codec_align);
+> +		inst->enc_bitstream_width = f->fmt.pix_mp.width;
+> +		inst->enc_bitstream_height = f->fmt.pix_mp.height;
+> +	}
+>  	fmt->fmt.pix_mp.num_planes = 1;
+>  	fmt->fmt.pix_mp.plane_fmt[0].bytesperline = 0;
+>  	fmt->fmt.pix_mp.plane_fmt[0].sizeimage = iris_get_buffer_size(inst, BUF_OUTPUT);
+> @@ -249,6 +266,11 @@ static int iris_venc_s_fmt_input(struct iris_inst *inst, struct v4l2_format *f)
+>  	inst->buffers[BUF_INPUT].min_count = iris_vpu_buf_count(inst, BUF_INPUT);
+>  	inst->buffers[BUF_INPUT].size = fmt->fmt.pix_mp.plane_fmt[0].sizeimage;
 >  
-> +#define BITS_PER_PIX                   16
-> +#define NUM_LINES_LUMA                 10
-> +#define NUM_LINES_CHROMA               6
-> +#define AV1D_LCU_MAX_SIZE_PELS         128
-> +#define AV1D_LCU_MIN_SIZE_PELS         64
-> +#define AV1D_MAX_TILE_COLS             64
-> +#define BITS_PER_CTRL_PACK             128
-> +#define NUM_CTRL_PACK_LCU              10
+> +	inst->enc_raw_width = f->fmt.pix_mp.width;
+> +	inst->enc_raw_height = f->fmt.pix_mp.height;
+> +	inst->enc_bitstream_width = f->fmt.pix_mp.width;
+> +	inst->enc_bitstream_height = f->fmt.pix_mp.height;
 > +
->  static inline u32 size_h264d_lb_fe_top_data(u32 frame_width)
->  {
->  	return MAX_FE_NBR_DATA_LUMA_LINE_BUFFER_SIZE * ALIGN(frame_width, 16) * 3;
-> @@ -146,6 +172,96 @@ static inline u32 size_h264d_qp(u32 frame_width, u32 frame_height)
->  	return DIV_ROUND_UP(frame_width, 64) * DIV_ROUND_UP(frame_height, 64) * 128;
->  }
->  
-> +static inline u32 size_av1d_lb_fe_top_data(u32 frame_width, u32 frame_height)
-> +{
-> +	return (ALIGN(frame_width, AV1D_LCU_MAX_SIZE_PELS) *
-> +			((BITS_PER_PIX * NUM_LINES_LUMA) >> 3) +
-> +			ALIGN(frame_width, AV1D_LCU_MAX_SIZE_PELS) / 2 *
-> +			((BITS_PER_PIX * NUM_LINES_CHROMA) >> 3) * 2);
-> +}
-> +
-> +static inline u32 size_av1d_lb_fe_left_data(u32 frame_width, u32 frame_height)
-> +{
-> +	return (32 * (ALIGN(frame_height, AV1D_LCU_MAX_SIZE_PELS) +
-> +		ALIGN(frame_height, AV1D_LCU_MAX_SIZE_PELS) /
-> +		AV1D_LCU_MIN_SIZE_PELS * 16) +
-> +	16 * (ALIGN(frame_height, AV1D_LCU_MAX_SIZE_PELS) / 2 +
-> +		ALIGN(frame_height, AV1D_LCU_MAX_SIZE_PELS) /
-> +		AV1D_LCU_MIN_SIZE_PELS * 8) * 2 +
-> +	24 * (ALIGN(frame_height, AV1D_LCU_MAX_SIZE_PELS) +
-> +		ALIGN(frame_height, AV1D_LCU_MAX_SIZE_PELS) /
-> +		AV1D_LCU_MIN_SIZE_PELS * 16) +
-> +	24 * (ALIGN(frame_height, AV1D_LCU_MAX_SIZE_PELS) / 2 +
-> +		ALIGN(frame_height, AV1D_LCU_MAX_SIZE_PELS) /
-> +		AV1D_LCU_MIN_SIZE_PELS * 12) * 2 +
-> +	24 * (ALIGN(frame_height, AV1D_LCU_MAX_SIZE_PELS) +
-> +		ALIGN(frame_height, AV1D_LCU_MAX_SIZE_PELS) /
-> +		AV1D_LCU_MIN_SIZE_PELS * 16) +
-> +	16 * (ALIGN(frame_height, AV1D_LCU_MAX_SIZE_PELS) +
-> +		ALIGN(frame_height, AV1D_LCU_MAX_SIZE_PELS) /
-> +		AV1D_LCU_MIN_SIZE_PELS * 16) +
-> +	16 * (ALIGN(frame_height, AV1D_LCU_MAX_SIZE_PELS) / 2 +
-> +		ALIGN(frame_height, AV1D_LCU_MAX_SIZE_PELS) /
-> +		AV1D_LCU_MIN_SIZE_PELS * 12) * 2);
-> +}
-> +
-> +static inline u32 size_av1d_lb_fe_top_ctrl(u32 frame_width, u32 frame_height)
-> +{
-> +	return (NUM_CTRL_PACK_LCU * ((frame_width + AV1D_LCU_MIN_SIZE_PELS - 1) /
-> +			AV1D_LCU_MIN_SIZE_PELS) * BITS_PER_CTRL_PACK / 8);
-> +}
-> +
-> +static inline u32 size_av1d_lb_fe_left_ctrl(u32 frame_width, u32 frame_height)
-> +{
-> +	return (16 * ((ALIGN(frame_height, AV1D_LCU_MAX_SIZE_PELS) / 16) +
-> +	(ALIGN(frame_height, AV1D_LCU_MAX_SIZE_PELS) /
-> +	AV1D_LCU_MIN_SIZE_PELS)) +
-> +	3 * 16 * (ALIGN(frame_height, AV1D_LCU_MAX_SIZE_PELS) /
-> +	AV1D_LCU_MIN_SIZE_PELS));
-> +}
-> +
-> +static inline u32 size_av1d_lb_se_top_ctrl(u32 frame_width, u32 frame_height)
-> +{
-> +	return (((frame_width + 7) / 8) * MAX_SE_NBR_CTRL_LCU16_LINE_BUFFER_SIZE);
-> +}
-> +
-> +static inline u32 size_av1d_lb_se_left_ctrl(u32 frame_width, u32 frame_height)
-> +{
-> +	return (max(((frame_height + 15) / 16) *
-> +		MAX_SE_NBR_CTRL_LCU16_LINE_BUFFER_SIZE,
-> +		max(((frame_height + 31) / 32) *
-> +		MAX_SE_NBR_CTRL_LCU32_LINE_BUFFER_SIZE,
-> +		((frame_height + 63) / 64) *
-> +		MAX_SE_NBR_CTRL_LCU64_LINE_BUFFER_SIZE)));
-> +}
-> +
-> +static inline u32 size_av1d_lb_pe_top_data(u32 frame_width, u32 frame_height)
-> +{
-> +	return (max(((frame_width + 15) / 16) *
-> +	MAX_PE_NBR_DATA_LCU16_LINE_BUFFER_SIZE,
-> +	max(((frame_width + 31) / 32) *
-> +	MAX_PE_NBR_DATA_LCU32_LINE_BUFFER_SIZE,
-> +	((frame_width + 63) / 64) *
-> +	MAX_PE_NBR_DATA_LCU64_LINE_BUFFER_SIZE)));
-> +}
-> +
-> +static inline u32 size_av1d_lb_vsp_top(u32 frame_width, u32 frame_height)
-> +{
-> +	return (max(((frame_width + 63) / 64) * 1280,
-> +		    ((frame_width + 127) / 128) * 2304));
-> +}
-> +
-> +static inline u32 size_av1d_lb_recon_dma_metadata_wr(u32 frame_width,
-> +						     u32 frame_height)
-> +{
-> +	return ((ALIGN(frame_height, 8) / (4 / 2)) * 64);
-> +}
-> +
-> +static inline u32 size_av1d_qp(u32 frame_width, u32 frame_height)
-> +{
-> +	return size_h264d_qp(frame_width, frame_height);
-> +}
-> +
->  u32 iris_vpu_buf_size(struct iris_inst *inst, enum iris_buffer_type buffer_type);
->  u32 iris_vpu33_buf_size(struct iris_inst *inst, enum iris_buffer_type buffer_type);
->  int iris_vpu_buf_count(struct iris_inst *inst, enum iris_buffer_type buffer_type);
-> 
+>  	if (f->fmt.pix_mp.width != inst->crop.width ||
+>  	    f->fmt.pix_mp.height != inst->crop.height) {
+>  		inst->crop.top = 0;
+> @@ -329,9 +351,7 @@ int iris_venc_s_selection(struct iris_inst *inst, struct v4l2_selection *s)
+>  		inst->crop.top = s->r.top;
+>  		inst->crop.width = s->r.width;
+>  		inst->crop.height = s->r.height;
+> -		inst->fmt_dst->fmt.pix_mp.width = inst->crop.width;
+> -		inst->fmt_dst->fmt.pix_mp.height = inst->crop.height;
+> -		return iris_venc_s_fmt_output(inst, inst->fmt_dst);
+> +		return 0;
+>  	default:
+>  		return -EINVAL;
+>  	}
 
