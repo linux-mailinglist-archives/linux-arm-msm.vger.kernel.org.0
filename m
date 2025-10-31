@@ -1,173 +1,160 @@
-Return-Path: <linux-arm-msm+bounces-79959-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-79960-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id ED8EBC26869
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 31 Oct 2025 19:10:01 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 6BCA6C26BDE
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 31 Oct 2025 20:30:02 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 5FC0B3B727A
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 31 Oct 2025 18:08:32 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id D94523BA8F9
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 31 Oct 2025 19:26:21 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 87DE5299923;
-	Fri, 31 Oct 2025 18:08:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B52742EBBB3;
+	Fri, 31 Oct 2025 19:26:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=ffwll.ch header.i=@ffwll.ch header.b="ZFJtiRUr"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="lAkL5RMy"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f52.google.com (mail-ej1-f52.google.com [209.85.218.52])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4EFD20C463
-	for <linux-arm-msm@vger.kernel.org>; Fri, 31 Oct 2025 18:08:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D728B2877ED
+	for <linux-arm-msm@vger.kernel.org>; Fri, 31 Oct 2025 19:26:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761934110; cv=none; b=uKUS0KDZ25R4M/WhFZ/HlxnbQ87JR6BcfcW9IEslsjHvs/2nQhQnhsa+MWjITX30ojKBtLbdJwGXt2XLkZkABhcvUKLhhPA0kVoW5lmN9VrL1x11tkZg8V2gNWByxIC2Rzr8+4tTVEGMHayLHIhGNOFzMCDt2SWZWSxtvdQsSCk=
+	t=1761938770; cv=none; b=o9pFHEQguxgs8HiihQkk+lCLxn24EKM9MLoah0VP27EgxmdXN041BN1Ufx1AXMOe2rzfuJ8WEOwg/P9ClRNYRzzVITT60LtckCawWB6B/ZHi6hWSo/fNRwyfiort++qhFFIK18RQ8urKoPvRtJHeR0l7LY9e3b6sDr2BmeMy+Rw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761934110; c=relaxed/simple;
-	bh=uRHRvhmVNdE2i1lOFkZVyULnEQvxP0ZCohisi9KyGP8=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=bCWB491MzIknSyq1EVTiasFVRxm9UG+y18HxpKuhjMKJ/VlA0X0C36/Ql3u3PYcI7i5qKVPBw1pIhXYPtzawDhv8bubdxCEmc0FHY5ftpgNXtphM34U4WoC+61lUO6UNtFVxr5U2YV1P3YngDzBV+ydvady02Bdmy/K4FVeLb24=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ffwll.ch; spf=none smtp.mailfrom=ffwll.ch; dkim=pass (1024-bit key) header.d=ffwll.ch header.i=@ffwll.ch header.b=ZFJtiRUr; arc=none smtp.client-ip=209.85.218.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ffwll.ch
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=ffwll.ch
-Received: by mail-ej1-f52.google.com with SMTP id a640c23a62f3a-b6dbb4a209aso474428566b.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 31 Oct 2025 11:08:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ffwll.ch; s=google; t=1761934107; x=1762538907; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=k8d3ECFMhnrvwiqROxc/5OIhq95iyP7zpdKInqKWJBA=;
-        b=ZFJtiRUrMJjbR5J5unM7bN2uf98HFVirMgqfUw3iRtv26zFZaoU/dMJc5uHGigcLxP
-         kvUGRt7wiH9SIdqOMPlorlEH3iGOAy2voU58Sf1H79ko595neSdoLZ2IEQp7/1tORBRm
-         /wI1sQd+JvgpFkCrrfTejffmSN3SJnJ1VI+zA=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1761934107; x=1762538907;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=k8d3ECFMhnrvwiqROxc/5OIhq95iyP7zpdKInqKWJBA=;
-        b=hUoaZjCknScCntT1SKJy07VnHbLAmF4PwA9nnbvxaegWbWpjVD/4ChUAxYegGrVzzp
-         ynaZWmMBiHiZKqLPdKWbjBTuMr9DGuKpufR5AzxyauzdoW3nRWz2/uGwNuVMh52mIkb2
-         Mp9n89jWipseYBmkO4zweAy9NQ9AHDobVIReHXM4zAxS2ylE0rcw8DbEGe4a0oP5yBIY
-         CeJE4gRgoTxFBsdBQXBXGhxoO7UR25Ko1SOAlhjQi0dD8YMgB4265JWhxJ/ARhPihRiw
-         UoyyDSLVTf76Btdjps1ZR4cUn71OK0esrly7xNwV0KaVjWqfg6Nkzn/H9n+MQ2qxS9YA
-         9KIQ==
-X-Forwarded-Encrypted: i=1; AJvYcCWFFBeK7vF0+2VZWYpcTeJEkuG2BJ9EKkm+Fl7WlrC0ncikitm44ExcRk+H0qi9dhJTFmlIcwFbtcP9B45b@vger.kernel.org
-X-Gm-Message-State: AOJu0YyaWL7OL4v6k8Q5IatQkD9CIJxM2QaL0lzQA9QuigQsgaUTMAMq
-	2rFThqeSBfr2I3Qho1GnoKVp4qyGKEq9WV0kPF8dMBjqq1NwmUN9bSs+IEmBx1ozAh4=
-X-Gm-Gg: ASbGncvSnKcTMyG3hjE0zbIzKUFQShaACcg4GMKWUHLPadKU/GXubiy2M/ZpvGTJasw
-	BjC9iEn8oR0f6SOc8xHxzRnLqGi3tRApvmxdFPEZPXcpxrFEfROSbs6CBR0YCvZGAoRne+DWwgD
-	HssVc/vtAH5U0LnDtGP4zm+e/0xSrrz93pu16bLQOpfnMi5DokDxTzto2yzmGhruG6dRJ6AyXG5
-	pmDYcv/aSIDUCnYMguJMeYgI/44U+f03R2NIuVwSH9lHdqzy1TsIYSAJiEFuDaEorss+5CzqUt3
-	4RsLeNGoDsa14I/jUnyUa6hfgmB06N+R5bzvS7gEcL0ihQ331eo79cWzazD4pBMamhg7I7gbsrm
-	7lEmCSfrZTcoJNS74qUhiVk9DcCXSfZiOQyUA1UQiKKE0KC7Vg5zBhJ9X27OQDJuAIHDGJkQqSZ
-	ofSY6u8ZAs934=
-X-Google-Smtp-Source: AGHT+IGqIcTutuaI6gZsnpUKDuo7K+T8kt8BjV1yz4nEoXEK2pIhTNz970Lt/A0xE/Jshiw649tVtA==
-X-Received: by 2002:a17:907:d7cb:b0:b3b:9832:f9b with SMTP id a640c23a62f3a-b7070191794mr462444466b.25.1761934106546;
-        Fri, 31 Oct 2025 11:08:26 -0700 (PDT)
-Received: from phenom.ffwll.local ([2a02:168:57f4:0:5485:d4b2:c087:b497])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-b7077ce927csm235947166b.63.2025.10.31.11.08.25
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 31 Oct 2025 11:08:25 -0700 (PDT)
-Date: Fri, 31 Oct 2025 19:08:24 +0100
-From: Simona Vetter <simona.vetter@ffwll.ch>
-To: Rob Clark <rob.clark@oss.qualcomm.com>
-Cc: David Airlie <airlied@gmail.com>,
-	"open list:DRM DRIVER for Qualcomm Adreno GPUs" <dri-devel@lists.freedesktop.org>,
-	"open list:DRM DRIVER for Qualcomm Adreno GPUs" <linux-arm-msm@vger.kernel.org>,
-	"open list:DRM DRIVER for Qualcomm Adreno GPUs" <freedreno@lists.freedesktop.org>,
-	Dmitry Baryshkov <lumag@kernel.org>,
-	Vignesh Raman <vignesh.raman@collabora.com>
-Subject: Re: [pull] drm/msm: drm-msm-fixes-2025-10-29 for v6.18-rc4
-Message-ID: <aQT7GMYPkgALgJ5q@phenom.ffwll.local>
-References: <CACSVV03kUm1ms7FBg0m9U4ZcyickSWbnayAWqYqs0XH4UjWf+A@mail.gmail.com>
+	s=arc-20240116; t=1761938770; c=relaxed/simple;
+	bh=+nR7jCPq1GqXljp1YXE+dCR+AG8uZiOFzjzNAdBvnnI=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=mppTQ1cECjeKtIKLjKJ60zaHR6/QnELgfotcI9wehv44sJ4ARBILvgyo4DQ1T9ZY9A7RzwAW62Cb6r0UzlyxnoRJEcqKmkOYs9sstHiZbvxCeAGTOlcAF9ks0HwpWmgPl2CXxiEAhaMML8c9MFAWfISklB1bt6alzjIIdl2KIiQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=lAkL5RMy; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=qualcomm.com
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 59VF7Dji3210518;
+	Fri, 31 Oct 2025 19:25:57 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:date:from:message-id:mime-version
+	:subject:to; s=qcppdkim1; bh=vm9YST1ru4TYMKmjdDri2q/ayDMdiVpiKua
+	QAplEIl8=; b=lAkL5RMyi5ujl6xXEJFfa5WCz6/V96AIo8u6qLrWkyClth5mrh5
+	Z1fiRYZ2hW7D4ZoouhQcmw1IZaebHzexoIIXkEeI5qccwV26nDMeuE08epdQBp6f
+	L/LsdHvQG83WvUVMtYwN5Gt3nfpvoKXQ4wpJoQvAaWTXvRGmkSavUWA+TfUGoLyR
+	1cIlHrD0pmrKk+vaEzRaCsGrMU8bIuiOxQxBS+QoEQhLLJk0kLAqlrll6GYkch4i
+	9ULvLeqtTC3hUZLwwlWP4NJ/aCWtMdgORES358NSG54YB9dzxMXb8PKEdFp1thLH
+	kiwNBB5404nJ0pj7fzHfpMVC/sBfcVgG7lg==
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4a4yfpgnxq-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 31 Oct 2025 19:25:57 +0000 (GMT)
+Received: from pps.filterd (NALASPPMTA05.qualcomm.com [127.0.0.1])
+	by NALASPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTP id 59VJPuDM007885;
+	Fri, 31 Oct 2025 19:25:56 GMT
+Received: from pps.reinject (localhost [127.0.0.1])
+	by NALASPPMTA05.qualcomm.com (PPS) with ESMTPS id 4a4er43ntq-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 31 Oct 2025 19:25:56 +0000
+Received: from NALASPPMTA05.qualcomm.com (NALASPPMTA05.qualcomm.com [127.0.0.1])
+	by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 59VJPu1S007880;
+	Fri, 31 Oct 2025 19:25:56 GMT
+Received: from hu-devc-lv-u22-a.qualcomm.com (hu-zmckevit-lv.qualcomm.com [10.81.26.129])
+	by NALASPPMTA05.qualcomm.com (PPS) with ESMTPS id 59VJPuk4007879
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 31 Oct 2025 19:25:56 +0000
+Received: by hu-devc-lv-u22-a.qualcomm.com (Postfix, from userid 4696302)
+	id 5988D5B6; Fri, 31 Oct 2025 12:25:56 -0700 (PDT)
+From: Zack McKevitt <zachary.mckevitt@oss.qualcomm.com>
+To: jeff.hugo@oss.qualcomm.com, carl.vanderlip@oss.qualcomm.com,
+        troy.hanson@oss.qualcomm.com, youssef.abdulrahman@oss.qualcomm.com
+Cc: ogabbay@kernel.org, lizhi.hou@amd.com, karol.wachowski@linux.intel.com,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        andersson@kernel.org,
+        Zack McKevitt <zachary.mckevitt@oss.qualcomm.com>
+Subject: [PATCH] accel/qaic: Add qaic_ prefix to irq_polling_work
+Date: Fri, 31 Oct 2025 12:25:12 -0700
+Message-Id: <20251031192511.3179130-1-zachary.mckevitt@oss.qualcomm.com>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CACSVV03kUm1ms7FBg0m9U4ZcyickSWbnayAWqYqs0XH4UjWf+A@mail.gmail.com>
-X-Operating-System: Linux phenom 6.12.38+deb13-amd64
+Content-Transfer-Encoding: 8bit
+X-QCInternal: smtphost
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDMxMDE3MyBTYWx0ZWRfX51mrDTPl65//
+ zHbxNO0nCXPLR/E+XGkHyDeXKlQza4zC9N48ngEruXtdiLXEkfEUtZjPn0hb6RcusdJObgCs+sG
+ eC7gSkrAgi7W7fuWhHqSmK37ig7qE0OJuBXuv49jN+5qZrDP8Pqsifw5Iw3Rk4nYSjhwdkO6gFo
+ BG5MFTlhbAAn9cMijd2QNvxGzq94nuXTWjJXb8Qo6wSaFrRpzgWqMGW1bN2+fSGO0UKs6owE2vW
+ vDi0NwQfOXUC75GSG/Dp1QrDSJncNBc1181qebTB5WbzS/ZgbN4TzZfQI7ts0IFJiB/UsZNOAE0
+ xiA3obvE2T1d+ce5ahra2Z2BkgJabKnKsNomTxMbBnhrr/WtZMQSpBaw7z6NUOEfgRTyOmL+2cy
+ 4I5FWSGoGHigotLP9TrPo0DW5KhMWA==
+X-Authority-Analysis: v=2.4 cv=V5NwEOni c=1 sm=1 tr=0 ts=69050d45 cx=c_pps
+ a=ouPCqIW2jiPt+lZRy3xVPw==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
+ a=x6icFKpwvdMA:10 a=VkNPw1HP01LnGYTKEx00:22 a=EUspDBNiAAAA:8
+ a=D7IMJj08by8z0Juzub4A:9 a=cPQSjfK2_nFv0Q5t_7PE:22
+X-Proofpoint-GUID: pT9AYa4h78UlQaVsbEajeO5bMA7RjnuG
+X-Proofpoint-ORIG-GUID: pT9AYa4h78UlQaVsbEajeO5bMA7RjnuG
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
+ definitions=2025-10-31_06,2025-10-29_03,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501 phishscore=0 clxscore=1015 adultscore=0 bulkscore=0
+ malwarescore=0 lowpriorityscore=0 impostorscore=0 suspectscore=0 spamscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2510240001 definitions=main-2510310173
 
-On Wed, Oct 29, 2025 at 03:39:06PM -0700, Rob Clark wrote:
-> Hi Dave,
-> 
-> Fixes for v6.18-rc4
-> 
-> The following changes since commit b5bad77e1e3c7249e4c0c88f98477e1ee7669b63:
-> 
->   drm/msm/registers: Sync GPU registers from mesa (2025-09-10 14:48:12 -0700)
-> 
-> are available in the Git repository at:
-> 
->   drm-msm-fixes-2025-10-29
+Rename irq_polling_work to qaic_irq_polling_work to reduce ambiguity
+and avoid potential naming conflicts in the future.
 
-This is not really a git repo, there is something busted with your
-scripting. I just used the url from the last pr, which seems to have
-worked, but please fix this.
+Signed-off-by: Zack McKevitt <zachary.mckevitt@oss.qualcomm.com>
+---
+ drivers/accel/qaic/qaic.h      | 2 +-
+ drivers/accel/qaic/qaic_data.c | 2 +-
+ drivers/accel/qaic/qaic_drv.c  | 2 +-
+ 3 files changed, 3 insertions(+), 3 deletions(-)
 
-Anyway, pulled into drm-fixes, thanks!
--Sima
-
-> 
-> for you to fetch changes up to f5d079564c44baaeedf5e25f4b943aa042ea0eb1:
-> 
->   drm/msm/dpu: Fix adjusted mode clock check for 3d merge (2025-10-29
-> 00:20:47 +0200)
-> 
-> ----------------------------------------------------------------
-> Akhil P Oommen (1):
->       drm/msm/a6xx: Fix GMU firmware parser
-> 
-> Anna Maniscalco (1):
->       drm/msm: make sure last_fence is always updated
-> 
-> Jessica Zhang (1):
->       drm/msm/dpu: Fix adjusted mode clock check for 3d merge
-> 
-> Neil Armstrong (1):
->       drm/msm: dsi: fix PLL init in bonded mode
-> 
-> Rob Clark (4):
->       drm/msm: Fix GEM free for imported dma-bufs
->       drm/msm: Fix pgtable prealloc error path
->       drm/msm: Reject MAP_NULL op if no PRR
->       drm/msm: Ensure vm is created in VM_BIND ioctl
-> 
-> Vignesh Raman (1):
->       drm/ci: disable broken MR check in sanity job
-> 
-> Vladimir Lypak (6):
->       drm/msm/dpu: Fix allocation of RGB SSPPs without scaling
->       drm/msm/dpu: Propagate error from dpu_assign_plane_resources
->       drm/msm/dpu: Disable scaling for unsupported scaler types
->       drm/msm/dpu: Fix pixel extension sub-sampling
->       drm/msm/dpu: Require linear modifier for writeback framebuffers
->       drm/msm/dpu: Disable broken YUV on QSEED2 hardware
-> 
->  drivers/gpu/drm/ci/gitlab-ci.yml               |  2 +-
->  drivers/gpu/drm/msm/adreno/a6xx_gmu.c          |  5 ++++-
->  drivers/gpu/drm/msm/adreno/adreno_gpu.c        |  7 -------
->  drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c       |  3 +++
->  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c |  4 ++--
->  drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c      | 14 ++++++++------
->  drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c         |  2 +-
->  drivers/gpu/drm/msm/disp/dpu1/dpu_writeback.c  |  3 +++
->  drivers/gpu/drm/msm/dsi/phy/dsi_phy.h          |  1 -
->  drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c      | 18 ++----------------
->  drivers/gpu/drm/msm/msm_gem.c                  | 10 +++++++---
->  drivers/gpu/drm/msm/msm_gem_submit.c           |  9 +++++----
->  drivers/gpu/drm/msm/msm_gem_vma.c              |  8 +++++++-
->  drivers/gpu/drm/msm/msm_gpu.h                  | 11 +++++++++++
->  drivers/gpu/drm/msm/msm_iommu.c                |  5 +++++
->  15 files changed, 59 insertions(+), 43 deletions(-)
-
+diff --git a/drivers/accel/qaic/qaic.h b/drivers/accel/qaic/qaic.h
+index 820d133236dd..7a18a617bd1d 100644
+--- a/drivers/accel/qaic/qaic.h
++++ b/drivers/accel/qaic/qaic.h
+@@ -317,6 +317,6 @@ int qaic_partial_execute_bo_ioctl(struct drm_device *dev, void *data, struct drm
+ int qaic_wait_bo_ioctl(struct drm_device *dev, void *data, struct drm_file *file_priv);
+ int qaic_perf_stats_bo_ioctl(struct drm_device *dev, void *data, struct drm_file *file_priv);
+ int qaic_detach_slice_bo_ioctl(struct drm_device *dev, void *data, struct drm_file *file_priv);
+-void irq_polling_work(struct work_struct *work);
++void qaic_irq_polling_work(struct work_struct *work);
+ 
+ #endif /* _QAIC_H_ */
+diff --git a/drivers/accel/qaic/qaic_data.c b/drivers/accel/qaic/qaic_data.c
+index 703ef0ce9da1..4e12a1d1742d 100644
+--- a/drivers/accel/qaic/qaic_data.c
++++ b/drivers/accel/qaic/qaic_data.c
+@@ -1504,7 +1504,7 @@ irqreturn_t dbc_irq_handler(int irq, void *data)
+ 	return IRQ_WAKE_THREAD;
+ }
+ 
+-void irq_polling_work(struct work_struct *work)
++void qaic_irq_polling_work(struct work_struct *work)
+ {
+ 	struct dma_bridge_chan *dbc = container_of(work, struct dma_bridge_chan,  poll_work);
+ 	unsigned long flags;
+diff --git a/drivers/accel/qaic/qaic_drv.c b/drivers/accel/qaic/qaic_drv.c
+index e162f4b8a262..4978f5864892 100644
+--- a/drivers/accel/qaic/qaic_drv.c
++++ b/drivers/accel/qaic/qaic_drv.c
+@@ -545,7 +545,7 @@ static int init_msi(struct qaic_device *qdev, struct pci_dev *pdev)
+ 			qdev->dbc[i].irq = pci_irq_vector(pdev, qdev->single_msi ? 0 : i + 1);
+ 			if (!qdev->single_msi)
+ 				disable_irq_nosync(qdev->dbc[i].irq);
+-			INIT_WORK(&qdev->dbc[i].poll_work, irq_polling_work);
++			INIT_WORK(&qdev->dbc[i].poll_work, qaic_irq_polling_work);
+ 		}
+ 	}
+ 
 -- 
-Simona Vetter
-Software Engineer
-http://blog.ffwll.ch
+2.34.1
+
 
