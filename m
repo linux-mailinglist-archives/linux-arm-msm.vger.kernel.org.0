@@ -1,53 +1,52 @@
-Return-Path: <linux-arm-msm+bounces-79995-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-79996-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [IPv6:2605:f480:58:1:0:1994:3:14])
-	by mail.lfdr.de (Postfix) with ESMTPS id B42FAC27E95
+Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [142.0.200.124])
+	by mail.lfdr.de (Postfix) with ESMTPS id D09D3C27E96
 	for <lists+linux-arm-msm@lfdr.de>; Sat, 01 Nov 2025 13:55:02 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 5E4CE4E4562
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id B999A4E3C52
 	for <lists+linux-arm-msm@lfdr.de>; Sat,  1 Nov 2025 12:55:01 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8C1EE2F83C2;
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8E97F2F83C3;
 	Sat,  1 Nov 2025 12:54:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="eeFyNTAN"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="FO4I+hf/"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42B472F656A;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42AD72F6567;
 	Sat,  1 Nov 2025 12:54:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762001683; cv=none; b=F+VChg8E3+D8Zyp0+y8hKE+0Yq0zjhavp65DXsBo5Oy0kyan3rukUGDI7OhCFw0TsJrUkqCZQ+jvcZJkkFoXxYjw8/SkltTyUUJcgB9Q8P3SwzPJnU48SHCOOtNmodKAgV/yDAXXx3ZIWksVyq8o4jEZ5XScoT/pFZ4hlcpcq5o=
+	t=1762001683; cv=none; b=BgFazjRDVK8BN/HLBkIRl4HEiKV71yRgUwRN2VbS4mH88dG/PryLZu4j2k9EblJqeC/42IPlaE4TH4VoGABRlNd6p+UfAbW4TcbmTFozL2927yxC4Mg2KGfMatSqh1pewDTR6Yopn6gOmcPC1eDFJLJRJD2KjGZWoNW3dIzVUhs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1762001683; c=relaxed/simple;
-	bh=oB6cyoyTr76E1goBC1o90RfhAuwSL0lm4MT5aaQp5h4=;
+	bh=9WWaEJY/FJQRR+57wM1DZlmy6MqN333eIEY5yiUWzAQ=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=AsPzYZSWLfCCiQ/Va/psNCGiG8fUkHuQlheTKBTzNvNsHflBqWy0Cxpa0N8/1Gz+Fza1jHQJ5tT0hJuHHhoF3+HXSpIXjkbKPZFZ8Db3f+FAu3HLa9t2ueI0jREmj4DxDa39lswUa79YUfj8gbW4QS7JPm/RtUJBJTWoZv/qeyY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=eeFyNTAN; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPS id A3CC8C4AF0F;
+	 In-Reply-To:To:Cc; b=NMicdPrkjhplMt46nLn//aWSuXXtc21OtKiayxHae6lgK7RTXKh9GXwmO09uOJvfG6JWssRY/dbcK3uNVgjTNnjGlylwhKPwJCL4FnuVaF7RiJZDNFWkzrwHY3uYjh5aMAd4C3EsTm5KxJ0dSoID20P+gXnQZg9bs8PCVgxrTLo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=FO4I+hf/; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPS id B2673C2BCB5;
 	Sat,  1 Nov 2025 12:54:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
 	s=k20201202; t=1762001682;
-	bh=oB6cyoyTr76E1goBC1o90RfhAuwSL0lm4MT5aaQp5h4=;
+	bh=9WWaEJY/FJQRR+57wM1DZlmy6MqN333eIEY5yiUWzAQ=;
 	h=From:Date:Subject:References:In-Reply-To:To:Cc:Reply-To:From;
-	b=eeFyNTANMY5ckzXfCkUd1J3Gt/o2DwH56KiYSzxgYA9bhWb0Rj/a6faMFyMBUzq9v
-	 BhLwAPk74FRbG/s3V8xbYmuC95s3vW07GefUeRIOLtHnIaRHptYBsxfIlSsxyKiiWJ
-	 3ja18wE3a/W0G0RBn08E+k+/eQ/UEyufCM//eTjQUXWQVFUWvaNhS93W8cujhN03X1
-	 f+Pkh+1eFvJnAplv4o7e1AlvFtBohLLECAIUpI80Mzz+Pk4GGuMDoOWfRe1jdtBljz
-	 7x0rd4UatLhdsZ+xkC/SenEhKfijsM3VVCd2imz8qU4W3I47fa8v7cokqH4B0k8qBL
-	 uEZma1nkgiTZw==
+	b=FO4I+hf/LMuwoqO7MptReIxMDE/kiXu98wUryWFf0qUKFXx6vWM4xRSM/LOBQ5SEl
+	 UJ6o+SEfPQPVy4D2w5Be4EBqYRslNPr7EVFHMJgNjiBPZqRqDa8p1AfSHvUv38ZvJr
+	 546pccarMxaGLnnO6+uuXr0zvi9QzTd3XTw2i3afXhtKdfaL4NEQTcYrTylld/7q2Z
+	 yclJLlCysZMAgBjK9OgD55TZWbk+aLOYUMzfcIMYyZEjpWtG641A+XNUwVBKt9/FAd
+	 FpsZFvsxUKpIz8j26wL1UEUOGW/cwdrktG9nXf0MtMr/hL32XiO87UgGCoEqR0GFJ/
+	 Wyazt2zcrPyFw==
 Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 99525CCFA00;
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A99AECCFA05;
 	Sat,  1 Nov 2025 12:54:42 +0000 (UTC)
 From: Maud Spierings via B4 Relay <devnull+maud_spierings.hotmail.com@kernel.org>
-Date: Sat, 01 Nov 2025 13:54:16 +0100
-Subject: [PATCH 5/6] arm64: dts: qcom: x1e80100-vivobook-s15: add charge
- limit nvmem
+Date: Sat, 01 Nov 2025 13:54:17 +0100
+Subject: [PATCH 6/6] arm64: dts: qcom: x1e80100-vivobook-s15: enable IRIS
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -56,7 +55,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20251101-asus_usbc_dp-v1-5-9fd4eb9935e8@hotmail.com>
+Message-Id: <20251101-asus_usbc_dp-v1-6-9fd4eb9935e8@hotmail.com>
 References: <20251101-asus_usbc_dp-v1-0-9fd4eb9935e8@hotmail.com>
 In-Reply-To: <20251101-asus_usbc_dp-v1-0-9fd4eb9935e8@hotmail.com>
 To: Andrzej Hajda <andrzej.hajda@intel.com>, 
@@ -73,11 +72,11 @@ Cc: dri-devel@lists.freedesktop.org, devicetree@vger.kernel.org,
  linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
  Maud Spierings <maud_spierings@hotmail.com>
 X-Mailer: b4 0.14.3
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1762001681; l=986;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1762001681; l=945;
  i=maud_spierings@hotmail.com; s=20241110; h=from:subject:message-id;
- bh=aBmU+MBpzJDOfvhbJRvLf5MrSRONaR0yduU16nAFvRY=;
- b=fNTrArf6yUIrnwZEDY1VbngDIfndS5BkP8O+OFYSIg4GuDntgl3xwROZuWW00awAUwOEY8HAu
- e0qY+2A/MF6DoKaD6aIslS6bhjQme8d/DkFxgXlD7opk0UOL9Ks+bys
+ bh=Ma+VW+zOVD4YEG8QCXRYgRPYDOrXI0NLtiHYjm6xOrk=;
+ b=xO+Oa6PMId8jDgzFrfUiJlQAwYKQ27GM6E5hHPHHrF4SbgFZhlOfm/41SDoFh9AcSEZHPUS9p
+ OXwj7byAHwSBZ+nBKliCJBI2AG+UumfJZBMxvvuh1y69WG1BFZM3Qc6
 X-Developer-Key: i=maud_spierings@hotmail.com; a=ed25519;
  pk=CeFKVnZvRfX2QjB1DpdiAe2N+MEjwLEB9Yhx/OAcxRc=
 X-Endpoint-Received: by B4 Relay for maud_spierings@hotmail.com/20241110
@@ -87,31 +86,32 @@ Reply-To: maud_spierings@hotmail.com
 
 From: Maud Spierings <maud_spierings@hotmail.com>
 
-Add nvmem cells for getting charge control thresholds if they have
-been set previously.
+Enable IRIS to allow using the hardware-accelerated video codecs. The
+firmware is not upstream in linux-firmware yet, so users need to copy it
+from Windows to qcom/x1e80100/ASUSTeK/vivobook-s15/qcvss8380.mbn (just like
+GPU/ADSP/CDSP firmware).
 
 Signed-off-by: Maud Spierings <maud_spierings@hotmail.com>
 ---
- arch/arm64/boot/dts/qcom/x1e80100-asus-vivobook-s15.dts | 6 ++++++
- 1 file changed, 6 insertions(+)
+ arch/arm64/boot/dts/qcom/x1e80100-asus-vivobook-s15.dts | 5 +++++
+ 1 file changed, 5 insertions(+)
 
 diff --git a/arch/arm64/boot/dts/qcom/x1e80100-asus-vivobook-s15.dts b/arch/arm64/boot/dts/qcom/x1e80100-asus-vivobook-s15.dts
-index ad648fcd414a..7dd0d7999fe5 100644
+index 7dd0d7999fe5..219c0b05fe27 100644
 --- a/arch/arm64/boot/dts/qcom/x1e80100-asus-vivobook-s15.dts
 +++ b/arch/arm64/boot/dts/qcom/x1e80100-asus-vivobook-s15.dts
-@@ -82,6 +82,12 @@ pmic-glink {
- 			     "qcom,pmic-glink";
- 		orientation-gpios = <&tlmm 121 GPIO_ACTIVE_HIGH>,
- 				    <&tlmm 123 GPIO_ACTIVE_HIGH>;
-+		nvmem-cells = <&charge_limit_en>,
-+			      <&charge_limit_end>,
-+			      <&charge_limit_delta>;
-+		nvmem-cell-names = "charge_limit_en",
-+				   "charge_limit_end",
-+				   "charge_limit_delta";
- 		#address-cells = <1>;
- 		#size-cells = <0>;
+@@ -839,6 +839,11 @@ retimer_ss1_con_sbu_out: endpoint {
+ 	};
+ };
  
++&iris {
++	firmware-name = "qcom/x1e80100/ASUSTeK/vivobook-s15/qcvss8380.mbn";
++	status = "okay";
++};
++
+ &mdss {
+ 	status = "okay";
+ };
 
 -- 
 2.51.1
