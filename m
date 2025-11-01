@@ -1,87 +1,97 @@
-Return-Path: <linux-arm-msm+bounces-79988-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-79989-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ams.mirrors.kernel.org (ams.mirrors.kernel.org [IPv6:2a01:60a::1994:3:14])
-	by mail.lfdr.de (Postfix) with ESMTPS id 83E8EC27B6F
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 01 Nov 2025 10:56:24 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1C232C27D07
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 01 Nov 2025 12:50:23 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ams.mirrors.kernel.org (Postfix) with ESMTPS id 0DF4434AD6D
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  1 Nov 2025 09:56:24 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 45D4A189B755
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  1 Nov 2025 11:50:47 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id ECB372C3256;
-	Sat,  1 Nov 2025 09:56:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B4D122F39C3;
+	Sat,  1 Nov 2025 11:50:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="mnBvA1FW"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jwLj3MaS"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.13])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f48.google.com (mail-wr1-f48.google.com [209.85.221.48])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 329C92C11C6;
-	Sat,  1 Nov 2025 09:56:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.13
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF8892868AD
+	for <linux-arm-msm@vger.kernel.org>; Sat,  1 Nov 2025 11:50:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761990977; cv=none; b=adjV4Hr6PXIqlbByMvsmADQ9Ran4/vfs+4/UqfX0jJFlwdoZYwVRXFKEWK2pHF4LjnG4eHWj+iuTKwYZdeeeAzLOiz2Z8PjtQW1lB7kNH9k19LwHbNiWNiVKMvBevV92qQmeymODVowHqQxPzDTp2Z1uEshzbgY08bDk5IaekzY=
+	t=1761997817; cv=none; b=YE5Nw14V+uWNoPtKND6LEoXs1cOunIHHGl0KOEO09MPKEl42D53avdJ64UoyH3MEImIqMNqmkDDdxRJXu1/YHbIosHRLxFXt2hGFFLuXvddTHmSFoHb7XUJIoi6S8O8dyF2gVT4SgrZjMIz0xI7Se6qnnTHDzNcWPRaE09wW74Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761990977; c=relaxed/simple;
-	bh=92Kmi3hGY3gJbK+jA3mmu9XQ60R/d5Owd7Ceo+/Oqcw=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=PKbHNKhDdbIQx8YcZw+9dMkWBJFkvs2jPrc1s0gLyRLfS0OqtI/sTYRWVzIhvqsvURv6YffKA3WFGBoqRQ63VC8lbm4/HpmcBX3O9G7Boba8v6wqb8Jq3azHOT4B3dA5A47dkXvySDSCLESxzIamrO3x43c6Vf0mvmpDiAX97ZM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=mnBvA1FW; arc=none smtp.client-ip=192.198.163.13
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1761990976; x=1793526976;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=92Kmi3hGY3gJbK+jA3mmu9XQ60R/d5Owd7Ceo+/Oqcw=;
-  b=mnBvA1FWqSQcgt4tiEgyVIpZiSCRrrL/B/g/zblzwAftYoCX8aabLydR
-   A2gqm7OfHRU2yDOdtJiidFwn6uqap0DtOUONhi1a+AyKhtyCJowrRwnQg
-   ndFBacaZgFLxouB/sUB6UbpGiYvBXMR7JkLwR8QnTL/KA9DnKFGKOf5Ju
-   Ax0NDiga+AilkszKZgd9n73G10kgK9VQPEmsIodVtm0vIEWtps1t7yLAI
-   C5OgdZlX2+tqe9Uyi/tSgbsnLQQ2sfQyH+1lyUVUUf5KWEgf3iRj0EIok
-   rnxrXuk7/gvqsyycw5eK8L8cCGBFrbp4Qcgkjh0C6WYdsud+e1+GknWck
-   g==;
-X-CSE-ConnectionGUID: 1/VuiilvTSSNzVSTqfTm/A==
-X-CSE-MsgGUID: hUt5YuA8TMeoW6yGi2OQVg==
-X-IronPort-AV: E=McAfee;i="6800,10657,11599"; a="66756163"
-X-IronPort-AV: E=Sophos;i="6.19,271,1754982000"; 
-   d="scan'208";a="66756163"
-Received: from fmviesa008.fm.intel.com ([10.60.135.148])
-  by fmvoesa107.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 01 Nov 2025 02:56:15 -0700
-X-CSE-ConnectionGUID: O2fTRgmIQjmEKfVEkXCqiA==
-X-CSE-MsgGUID: YLJowlZ/RgaoT/WcyKg7Rg==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.19,271,1754982000"; 
-   d="scan'208";a="186766072"
-Received: from lkp-server02.sh.intel.com (HELO 66d7546c76b2) ([10.239.97.151])
-  by fmviesa008.fm.intel.com with ESMTP; 01 Nov 2025 02:56:12 -0700
-Received: from kbuild by 66d7546c76b2 with local (Exim 4.96)
-	(envelope-from <lkp@intel.com>)
-	id 1vF8KZ-000O5w-2M;
-	Sat, 01 Nov 2025 09:56:05 +0000
-Date: Sat, 1 Nov 2025 17:53:22 +0800
-From: kernel test robot <lkp@intel.com>
-To: Jingyi Wang <jingyi.wang@oss.qualcomm.com>,
+	s=arc-20240116; t=1761997817; c=relaxed/simple;
+	bh=HaqqRDPrZWoyjq8JRavr3wToxJeyCzQAvF+S4eMFlcE=;
+	h=Message-ID:Date:From:To:Cc:Subject:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=P+VJ3AFChAJ4ZRGUcjGHdD5VcS5Y2OvmFl48wfxYrSyyu6AW8IMm5d6pnNIOnGU1b/s4RP5fwUgNQyhMnq6QHD42IwQ6zfesDEHvFpj40M1mmzabLy4Z81ZW29PfkonBG/0dXU/myTxbndemnuJ352DwERAezUPsyIkbLTzuHfA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=jwLj3MaS; arc=none smtp.client-ip=209.85.221.48
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-wr1-f48.google.com with SMTP id ffacd0b85a97d-429b72691b4so2814370f8f.3
+        for <linux-arm-msm@vger.kernel.org>; Sat, 01 Nov 2025 04:50:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1761997814; x=1762602614; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:subject:cc
+         :to:from:date:message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=sZ1LVmNuWNRShkFgZkqHZfQpdnjfb66+76NdCRKKg0Y=;
+        b=jwLj3MaSe/N73KvxVxRodKnwYBgcC4UwTUhEZTtatCwzGKIbt9GzBn/wuUsKoU2dpG
+         NhUfFyMUIRTEdX9SKWE5qeGIzfmQzmeqrb5mjlkc3uBoAidT1+nCsJ/mIOwSbKGYYMZU
+         OHb5TU6lUrp7ljRx5lJBu9c+oaxYbFIzdyI1OAGFKOe6crzCL89HKMBlnSnly6zO02Wa
+         Qa7fDI4s6JXqmfwLhTcq5RPLHPwNW2iq9YyBpAYF7v9sT/YjSymxrS16rT2X6HdQ25zh
+         FmQ5OR3cSlMGPGLJkdYooNAu8a5xFRPTxModYyL6++tGA3EAjrWZa4lQTww5dABOQ8yX
+         B8+g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1761997814; x=1762602614;
+        h=in-reply-to:content-disposition:mime-version:references:subject:cc
+         :to:from:date:message-id:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=sZ1LVmNuWNRShkFgZkqHZfQpdnjfb66+76NdCRKKg0Y=;
+        b=l85c3hKnojD6tFgKlXl7bfXjpauDSpkJBa1FWO/jcs82hEl7y96kj+FEE2Gdi9mGTL
+         wqRjY2m2LHfKY5ikKwjMHrC9MyxVW8XgmMgsTIiShmUWIB9RCAbyhFbYnSUTVD8ybB5c
+         kvgCYCQ+1D6N1diCa9zQjQ2fm4I8LNTMctGd9G5YNmwOJWfdHq/ZDI2zWoiCTJApRVPu
+         bV2/cHXDCrFkWOyBUR42SZqpg8cwfNZXF2ZRdDJkCQmipbd8Jjp50vXY0HL9Io+cPL2U
+         VqgqUh5cCBKJ4cH8rnZHxrk95Dc3hjNLLpzSpIhU2z5lkIkkl8OdRquw/J4rrB5ZyGQB
+         v2mA==
+X-Forwarded-Encrypted: i=1; AJvYcCWJIBApKrTiAsXRaF4IQjFUxMNUpL8ARvgEkXwwDipLQXW/IMxPsjszo/CiV5CY72pn0GuPept6RMEbAKQh@vger.kernel.org
+X-Gm-Message-State: AOJu0Yx+ZK2agYtVUx69Na2oW9+Cscvq3fqhqEu7lco7aocYQ5/aHp0q
+	iW7AiFn6VNkQByOGnjkxpWRpWL+3Zq3gFTMMX5wfCqic7Hltd+jdkacs
+X-Gm-Gg: ASbGncukRtr0yFYnmuw3/lUywVf2BR7Eqf3dcfUnM0OXM00jbhRzZB5TE5XNzKklkgu
+	Er+2vaxnw1seWt6Nr3iW/KZOtTZO3AK3oDtwzfCKuokw6a5K0ATBPi5wLO7HPDToayWgZdDkyQ7
+	kfc5WWCxAXwN5O/SLnog5VomUxe//qd/u7cTp7nJ0sNbRAa3emSp7gevAQw239UxYODN2cHUsms
+	smiqUKHLL/KDFEVY/69AZU60sbpOyfO/ZC8Eg5G9jdYNroX4cOkNDMAqu0CI5408QAgvaT8/+85
+	s51V4ZajHBE1aHLWMY0hyUGXJZ3TSc1CqMBaaX90rqFF2UOlaMmWu6EAhSvCcW/wO1fsSmt/rm6
+	PslNhfo5PinmejeE1QkZ/42b8hmJ/MwUw1RVWQ+qTiTTn82Ke4O/dMeUXrpFu77bLpwq/jFD9p/
+	9jgua3cTVbI1A=
+X-Google-Smtp-Source: AGHT+IF5Vi/R2DP1IElourozRko5CrLa0/NoKSzqRc9YHLEWiuOxxp/36gk0/Flt/0Dln2p1OLfZhQ==
+X-Received: by 2002:a05:6000:400d:b0:3f7:b7ac:f3d2 with SMTP id ffacd0b85a97d-429bd6be4e8mr5734048f8f.43.1761997813915;
+        Sat, 01 Nov 2025 04:50:13 -0700 (PDT)
+Received: from Ansuel-XPS. ([109.52.237.105])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-429c13e1c9esm8842790f8f.22.2025.11.01.04.50.12
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 01 Nov 2025 04:50:13 -0700 (PDT)
+Message-ID: <6905f3f5.5d0a0220.27a792.7a13@mx.google.com>
+X-Google-Original-Message-ID: <aQXz8Wz10HnVaiMm@Ansuel-XPS.>
+Date: Sat, 1 Nov 2025 12:50:09 +0100
+From: Christian Marangi <ansuelsmth@gmail.com>
+To: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Cc: Ilia Lin <ilia.lin@kernel.org>, "Rafael J. Wysocki" <rafael@kernel.org>,
+	Viresh Kumar <viresh.kumar@linaro.org>,
 	Bjorn Andersson <andersson@kernel.org>,
-	Mathieu Poirier <mathieu.poirier@linaro.org>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Manivannan Sadhasivam <mani@kernel.org>
-Cc: llvm@lists.linux.dev, oe-kbuild-all@lists.linux.dev,
-	aiqun.yu@oss.qualcomm.com, tingwei.zhang@oss.qualcomm.com,
-	trilok.soni@oss.qualcomm.com, yijie.yang@oss.qualcomm.com,
-	linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-	Jingyi Wang <jingyi.wang@oss.qualcomm.com>,
-	Gokul krishna Krishnakumar <Gokul.krishnakumar@oss.qualcomm>
-Subject: Re: [PATCH v2 4/7] remoteproc: qcom: pas: Add late attach support
- for subsystems
-Message-ID: <202511011702.IgpENW3z-lkp@intel.com>
-References: <20251029-knp-remoteproc-v2-4-6c81993b52ea@oss.qualcomm.com>
+	Konrad Dybcio <konradybcio@kernel.org>,
+	Arnd Bergmann <arnd@arndb.de>, Raag Jadav <raag.jadav@intel.com>,
+	linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v2 3/3] cpufreq: qcom-nvmem: add compatible fallback for
+ ipq806x for no SMEM
+References: <20251031130835.7953-1-ansuelsmth@gmail.com>
+ <20251031130835.7953-4-ansuelsmth@gmail.com>
+ <aQS5FpuOWk1bWnQd@smile.fi.intel.com>
+ <6904c563.050a0220.a13ee.0212@mx.google.com>
+ <aQTI7o1HQYbQ_Pl2@smile.fi.intel.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -90,32 +100,57 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20251029-knp-remoteproc-v2-4-6c81993b52ea@oss.qualcomm.com>
+In-Reply-To: <aQTI7o1HQYbQ_Pl2@smile.fi.intel.com>
 
-Hi Jingyi,
+On Fri, Oct 31, 2025 at 04:34:22PM +0200, Andy Shevchenko wrote:
+> On Fri, Oct 31, 2025 at 03:19:12PM +0100, Christian Marangi wrote:
+> > On Fri, Oct 31, 2025 at 03:26:46PM +0200, Andy Shevchenko wrote:
+> > > On Fri, Oct 31, 2025 at 02:08:34PM +0100, Christian Marangi wrote:
+> 
+> ...
+> 
+> > > > +		if (of_machine_is_compatible("qcom,ipq8062"))
+> > > > +			msm_id = QCOM_ID_IPQ8062;
+> > > > +		else if (of_machine_is_compatible("qcom,ipq8065") ||
+> > > > +			 of_machine_is_compatible("qcom,ipq8069"))
+> > > > +			msm_id = QCOM_ID_IPQ8065;
+> > > > +		else if (of_machine_is_compatible("qcom,ipq8064") ||
+> > > > +			 of_machine_is_compatible("qcom,ipq8066") ||
+> > > > +			 of_machine_is_compatible("qcom,ipq8068"))
+> > > > +			msm_id = QCOM_ID_IPQ8064;
+> > > 
+> > > A nit-pick (in case you need a new version of the series): I would expect
+> > > the conditionals be sorted by assigned value.
+> > > 
+> > > 		if (of_machine_is_compatible("qcom,ipq8062"))
+> > > 			msm_id = QCOM_ID_IPQ8062;
+> > > 		else if (of_machine_is_compatible("qcom,ipq8064") ||
+> > > 			 of_machine_is_compatible("qcom,ipq8066") ||
+> > > 			 of_machine_is_compatible("qcom,ipq8068"))
+> > > 			msm_id = QCOM_ID_IPQ8064;
+> > > 		else if (of_machine_is_compatible("qcom,ipq8065") ||
+> > > 			 of_machine_is_compatible("qcom,ipq8069"))
+> > > 			msm_id = QCOM_ID_IPQ8065;
+> > >
+> > 
+> > Hi as said in the commit, parsing 65/69 before 64 is needed as we might
+> > have compatible like
+> > 
+> > "qcom,ipq8065","qcom,ipq8064" so we might incorrectly parse msm_id
+> > ipq8064.
+> 
+> Oh, this is unfortunate. Wouldn't it be possible to use some API that returns
+> an index (or an error if not found) of the compatible? I believe we have a such
+> for the regular 'compatible' properties.
+> 
 
-kernel test robot noticed the following build warnings:
+Well also using something like checking for the virst compatible might
+be problematic as real device have something like "netgear,r7800",
+"qcom,ipq8065","qcom,ipq8064".
 
-[auto build test WARNING on aaa9c3550b60d6259d6ea8b1175ade8d1242444e]
-
-url:    https://github.com/intel-lab-lkp/linux/commits/Jingyi-Wang/dt-bindings-remoteproc-qcom-sm8550-pas-Add-Kaanapali-ADSP/20251029-163330
-base:   aaa9c3550b60d6259d6ea8b1175ade8d1242444e
-patch link:    https://lore.kernel.org/r/20251029-knp-remoteproc-v2-4-6c81993b52ea%40oss.qualcomm.com
-patch subject: [PATCH v2 4/7] remoteproc: qcom: pas: Add late attach support for subsystems
-config: arm64-allyesconfig (https://download.01.org/0day-ci/archive/20251101/202511011702.IgpENW3z-lkp@intel.com/config)
-compiler: clang version 22.0.0git (https://github.com/llvm/llvm-project cc271437553452ede002d871d32abc02084341a8)
-reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20251101/202511011702.IgpENW3z-lkp@intel.com/reproduce)
-
-If you fix the issue in a separate patch/commit (i.e. not just a new version of
-the same patch/commit), kindly add following tags
-| Reported-by: kernel test robot <lkp@intel.com>
-| Closes: https://lore.kernel.org/oe-kbuild-all/202511011702.IgpENW3z-lkp@intel.com/
-
-All warnings (new ones prefixed by >>):
-
->> Warning: drivers/remoteproc/qcom_q6v5.c:333 function parameter 'early_boot' not described in 'qcom_q6v5_init'
+I will check if I can implement some alternative logic to have
+consistent order.
 
 -- 
-0-DAY CI Kernel Test Service
-https://github.com/intel/lkp-tests/wiki
+	Ansuel
 
