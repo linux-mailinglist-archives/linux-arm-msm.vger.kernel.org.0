@@ -1,62 +1,65 @@
-Return-Path: <linux-arm-msm+bounces-80039-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-80040-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 82514C29481
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 02 Nov 2025 19:07:02 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4A61EC2948A
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 02 Nov 2025 19:07:41 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 5BACA188DBCF
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  2 Nov 2025 18:07:20 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id C752F3A856B
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  2 Nov 2025 18:07:03 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B108A24DCE6;
-	Sun,  2 Nov 2025 18:06:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 980782D9ED9;
+	Sun,  2 Nov 2025 18:06:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="eUJzCgNK"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="slf4/HWv"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85C962494D8;
-	Sun,  2 Nov 2025 18:06:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DEFF23D7D4;
+	Sun,  2 Nov 2025 18:06:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762106790; cv=none; b=GbRLTTw/YmB/iuZ4EX3iEFpz8fh4cV7/umNJiNgDzn6ymfW9fGCceBrDSCvII786HXhK4Z4WYZX8haMaFDZK65Nftn8JVt7x8HtyV99Jf59+CpWIlYbS/6oFT/v7P4+gwAtri2rTDaY7ZNUvYBotVbpZOY3pCk7dEflRlcK0TZ4=
+	t=1762106791; cv=none; b=kk+dt0vjyPbeGr5ZwJptQ4eZKUGsGM3nLNQmR+uxW0EuDJxucwgmkoEjMvBvkSPJkps+EtE29F+zLD1YcwsENbRUB/z0XthhuTOwU8xTw2hsKzbEQEOTqyxERioxjufuYYo+70lqE8EWja9DGcY5smVAED8reGmPY5sffgMc/fk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762106790; c=relaxed/simple;
-	bh=zE55+vFgdpk3goPlSGtfCbLdny394f5YeMvgwdvPdt8=;
+	s=arc-20240116; t=1762106791; c=relaxed/simple;
+	bh=sO+Jh9HQjKCryYD49NLsHv6pJ7RHd6oIeEOqxBspB8g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=XumtGvTsxUrt12jRpYCWG5HeoFKHdjm4Yw6+oUk6ovfPiOKSoUjE+bxB1jE/ws0EOt5h9Ctz3oU34JiNQW2paanmcWlsjoSlIo7funn19JLLCsyW/Fr0x5Sm4OxjCx9DIQuU4GBssMn0/6m3aXrosOS4CDzuelciLx6rBwpr2y4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=eUJzCgNK; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B910C116B1;
-	Sun,  2 Nov 2025 18:06:29 +0000 (UTC)
+	 MIME-Version:Content-Type; b=OGnbKaePFE6j3QO0taJpSopGkkxJj2vGo1S7mYahOavjgascnah4YBdu9rWhSv0WjXmuXSNYAixrDHkpbmHa8OeBiPdUkVCzDaKRV9W0IbmRue3Xfcsnc3RSZ3D5OB2Inz4/3Yw82wsP8DbTqOxOODD8DGGQfgGTaYiXjW7u4jE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=slf4/HWv; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 422A9C113D0;
+	Sun,  2 Nov 2025 18:06:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1762106790;
-	bh=zE55+vFgdpk3goPlSGtfCbLdny394f5YeMvgwdvPdt8=;
+	s=k20201202; t=1762106791;
+	bh=sO+Jh9HQjKCryYD49NLsHv6pJ7RHd6oIeEOqxBspB8g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eUJzCgNKLOO2GdheqoOWZMVSVkAlEgzooVEDvGCOCoUeoWbCbSvybD6nHItc2N7m3
-	 ZqipvSME7xuF6IeoS9/IeafJbktzTQyG3UQhdQLVOfnpl1zwY9bUmPazlw0/nGYRdD
-	 L22JgYM9fb+7BgGcE09wmx32XpiqBLgwzlFVPWBfD/YxAxcbo4Uq8O1wULnb+Y9RRL
-	 B1+FFcP1cMdyXmQNtVEauZpN9EvIzXXiRh6XlK2S6T1l5vqlXu3LcQLAK+hLXTpp/N
-	 1YleTkQjKYAzpHzpVgyiapSMPga8pG3H3A1uB7KOtJ3lwvF7RQAYuwM4a/ssZyE0vZ
-	 IJ0Wbwfn1RppQ==
+	b=slf4/HWv3e6Cnb2/B/6ssBPAc1peI+xvQ4RazINq0HQp77h9HKAR7uMfMGvWFAVlq
+	 cyF1TOhPvjDjaCQpj4iJxh7nLqsvVBi6jnCJ79soA81rKND7hbyRy4klXqsTDXDpX0
+	 ECr44DUXyDUF1ny1iRVdwKWp+uvLMsW67I3dyVZPvOAnpUiCI7mdHiQW30rmeyFhtz
+	 pX7JyNmN3GQ11hZpD6G+X66AVgtjAvBd01QesCl3Txcp26uy3kB0ouUgRU7txQT8Ya
+	 xh+6/YlXaV/r+REVdeHi7WeZ0BpuWoh1xVwbhuypsVaZt7RxViuq8NkeiWBzoGxycA
+	 OjiI68Tld3r1g==
 From: Bjorn Andersson <andersson@kernel.org>
 To: Konrad Dybcio <konradybcio@kernel.org>,
 	Rob Herring <robh@kernel.org>,
 	Krzysztof Kozlowski <krzk+dt@kernel.org>,
 	Conor Dooley <conor+dt@kernel.org>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	Krishna Kurapati <krishna.kurapati@oss.qualcomm.com>
+	Antony Kurniawan Soemardi <linux@smankusors.com>
 Cc: linux-arm-msm@vger.kernel.org,
 	devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v11 0/3] Introduce USB DT support for SM8750
-Date: Sun,  2 Nov 2025 12:09:47 -0600
-Message-ID: <176210698636.937813.8961503052287724125.b4-ty@kernel.org>
+	linux-kernel@vger.kernel.org,
+	David Heidelberg <david@ixit.cz>,
+	Max Shevchenko <wctrl@proton.me>,
+	Rudraksha Gupta <guptarud@gmail.com>,
+	Shinjo Park <peremen@gmail.com>
+Subject: Re: [PATCH v2 0/5] ARM: dts: qcom: msm8960: cleanup and add missing I2C nodes
+Date: Sun,  2 Nov 2025 12:09:48 -0600
+Message-ID: <176210698639.937813.643585209118839199.b4-ty@kernel.org>
 X-Mailer: git-send-email 2.51.0
-In-Reply-To: <20251101174437.1267998-1-krishna.kurapati@oss.qualcomm.com>
-References: <20251101174437.1267998-1-krishna.kurapati@oss.qualcomm.com>
+In-Reply-To: <20250921-msm8960-reorder-v2-0-26c478366d21@smankusors.com>
+References: <20250921-msm8960-reorder-v2-0-26c478366d21@smankusors.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -67,26 +70,29 @@ Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 
 
-On Sat, 01 Nov 2025 23:14:34 +0530, Krishna Kurapati wrote:
-> Add support for the PHYs and controllers used for USB on SM8750 SoCs.
+On Sun, 21 Sep 2025 03:07:57 +0000, Antony Kurniawan Soemardi wrote:
+> While working on adding support for the Sony Xperia SP (msm8960t), it
+> was pointed out [1] that the msm8960 dtsi could use some general
+> cleanup and reordering. This series applies those suggestions and also
+> fills in missing I2C nodes that are required by several phones based on
+> msm8960.
 > 
-> Version-6 of this series has all the binding/driver/dt patches acked.
-> But only the phy changes have been merged. Version 7 was a rebase to get
-> acked patches merged. But comments came in to use flattened bindings.
-> The v8 for usb bindings patch has been split and sent out separately [1]
-> and it is ACKed. On v10, the pmic glink changes and usb role switch
-> support are added while addressing some comments obtained.
+> Changes included:
 > 
 > [...]
 
 Applied, thanks!
 
-[1/3] arm64: dts: qcom: sm8750: Add USB support to SM8750 SoCs
-      commit: 7a5bb9f60527fdc469e8fc53c537664fe0d481b0
-[2/3] arm64: dts: qcom: sm8750: Add USB support for SM8750 MTP platform
-      commit: 2340f29e2b06e24b44f5e8a4220d61605b3ea533
-[3/3] arm64: dts: qcom: sm8750: Add USB support for SM8750 QRD platform
-      commit: 530f824a4e1878c3d80dee070b831daa80a48634
+[1/5] ARM: dts: qcom: msm8960: reorder nodes and properties
+      commit: df41d58048a51e0f9c9b7a3710349f23efbfe64b
+[2/5] ARM: dts: qcom: msm8960: inline qcom-msm8960-pins.dtsi
+      commit: 34fc20c4844454765c8ba32fdc006a2246a3f246
+[3/5] ARM: dts: qcom: msm8960: add I2C nodes for gsbi10 and gsbi12
+      commit: f239a394f91086bef632e145346e05fe65eb6914
+[4/5] ARM: dts: qcom: msm8960: add I2C nodes for gsbi1 and gsbi8
+      commit: 47f46fa7328b8429d4c41dd98e0268ed906ab50f
+[5/5] ARM: dts: qcom: msm8960: rename msmgpio node to tlmm
+      commit: d35984295d5ea5035c6255570716e68bdf826554
 
 Best regards,
 -- 
