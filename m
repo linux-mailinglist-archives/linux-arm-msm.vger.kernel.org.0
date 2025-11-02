@@ -1,65 +1,58 @@
-Return-Path: <linux-arm-msm+bounces-80020-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-80021-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id A1032C2917A
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 02 Nov 2025 17:06:29 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id E1518C291B4
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 02 Nov 2025 17:14:57 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 11BF8188D24C
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  2 Nov 2025 16:06:54 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 9CB683AEE8F
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  2 Nov 2025 16:14:56 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CDA051F2BAD;
-	Sun,  2 Nov 2025 16:06:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C842322ACF3;
+	Sun,  2 Nov 2025 16:14:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="msxrFTEp"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="FkOrx1lk"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E1B7381C4;
-	Sun,  2 Nov 2025 16:06:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9191134D3BD;
+	Sun,  2 Nov 2025 16:14:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762099584; cv=none; b=SmmDHQyyzwq/y6YC318RH4OoqlGWFl5GS24GpUDq0T4Ly260jO7O1ptb0ZTZSwou7zwaKyS5A0XGVI04qD5vDniSqqySLdMIaTeGb5u2JNH26cKBW98EYWdmfe3TNZsxl1Bj92eKOQ8vY3abtPIaTM2nf8dQ0wpglECCN4DpaUQ=
+	t=1762100092; cv=none; b=ZYVvIhN2wsIKQfh2mIReQ0tWSL4nX6ADnZGv+1zrBBfo8gkOOZLmM49UnY4p9bzjWdeNLz6gYTSekfHen4gs7M0CHMREw5UC39dJ8M7kSv3eShHORenuPxuQTh30O4ympwI1DvPdXPGrfYqhfKLdI9axQJNePMEczCZ0k7ELrsE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762099584; c=relaxed/simple;
-	bh=jsCerW2XcCxZo9RghFiignYIfWNOvlatNHDxwnod7hs=;
+	s=arc-20240116; t=1762100092; c=relaxed/simple;
+	bh=YUqRHQELM0tbK0mIPrtE/xPKcwmnubLy1UEc9uaO1NQ=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=IclgZzmWTMiqlJtaFOgRDL8aeHZNJA4r2SRJan/mBapW9baQp/tneDCzix19wUctwo+al8T13Nm4z/fBsWmlTHRxYMC4Ng3io/i5QhXO8gQmoR1fXQjRgeahAn/ZqplDvaB/gOUIeCLHWm1vQ5WrGWujtByV75gg10/r727LzIc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=msxrFTEp; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D768C4CEF7;
-	Sun,  2 Nov 2025 16:06:23 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=YJoPJ8FBgFW1Y1y8a38ahBiTcwj8JV2xVfJFETodigLWBjRi0ML1kS/wX+De+i9YPQGM0WU6VDY3ux7o5Kr+TGPtZ9aM9+4upN0rKDvjWe8blzpMftAJAgv0/9jF5Qsd7vXAZscgI0Ls1q9aOqyDVDlKlKycUEAHVddIr14+ARU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=FkOrx1lk; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7CE04C4CEF7;
+	Sun,  2 Nov 2025 16:14:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1762099584;
-	bh=jsCerW2XcCxZo9RghFiignYIfWNOvlatNHDxwnod7hs=;
+	s=k20201202; t=1762100092;
+	bh=YUqRHQELM0tbK0mIPrtE/xPKcwmnubLy1UEc9uaO1NQ=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=msxrFTEp+/fHanX6EF1b+8qnccrGv2WA5AJQsk0ThO0ym8B6ZnqL55NVZ0sWSpnQ4
-	 JzJ6hdt/eXjoP0jfG8vqqyrqteZrtSDntQ/aOD8RXhPu+7cSkKtsC+ZmVpa6L/I7Oo
-	 IxiANoOmyQPQVDlYz4oZdYwkuB13QYCQ80LuPO48ggfMLIH+oHd2/3+ybP9pNjUTPB
-	 I0/ypc5jLPwEjzi3QiDurfhGiaU6XnJ+NOzo9BEFAK+GVRRmYLsDBeizXv8ydb1bSw
-	 1sFDFswrFZWq1qBg4iVyVYMCOTXXXcrI+Ue/F3lR6uGdPphc2pP4BhyfF8I6CgkCRu
-	 SGyhdLgon3rDg==
-Date: Sun, 2 Nov 2025 17:06:21 +0100
+	b=FkOrx1lkOnFfPzfJl6jBe9WM4OcobBNX/Q+HNie12rzKeYwO42uCWYDdGv7J6vMAF
+	 ZD2dQkAWPeXrCx0rMtY8g65Wsinfey3e9SHc8nySDxaE96YggX7CIueNjoSI9tFATl
+	 hpkp+2dqN2Z2rhtMWzFlhownypYMKM92ccGcfLE58rBCrLRMkwOHfcD6dx+eStCbbQ
+	 ah6r7rMq6DlxbxCd8E03Ak9xuGnaJLTqhWD99tlfOe+lCWjgSdoGC2IHGakTiToFHl
+	 yddfTDBNsI0fdyCiysHDEKWuRdmJjAGg/bSTYYEQ1LWzgdNZQaC/o+dwnWbZXLaEVc
+	 vPCFSPeLunt0Q==
+Date: Sun, 2 Nov 2025 17:14:49 +0100
 From: Krzysztof Kozlowski <krzk@kernel.org>
-To: Vijay Kumar Tumati <vijay.tumati@oss.qualcomm.com>
-Cc: Bryan O'Donoghue <bryan.odonoghue@linaro.org>, 
-	Hangxiang Ma <hangxiang.ma@oss.qualcomm.com>, Loic Poulain <loic.poulain@oss.qualcomm.com>, 
-	Robert Foss <rfoss@kernel.org>, Andi Shyti <andi.shyti@kernel.org>, 
-	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
-	Conor Dooley <conor+dt@kernel.org>, Todor Tomov <todor.too@gmail.com>, 
-	Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>, Mauro Carvalho Chehab <mchehab@kernel.org>, 
-	linux-i2c@vger.kernel.org, linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, linux-media@vger.kernel.org, aiqun.yu@oss.qualcomm.com, 
-	tingwei.zhang@oss.qualcomm.com, trilok.soni@oss.qualcomm.com, yijie.yang@oss.qualcomm.com, 
-	Jingyi Wang <jingyi.wang@oss.qualcomm.com>, Atiya Kailany <atiya.kailany@oss.qualcomm.com>
-Subject: Re: [PATCH v5 2/6] media: dt-bindings: Add CAMSS device for Kaanapali
-Message-ID: <20251102-charming-angelfish-of-experiment-eaa4bc@kuoka>
-References: <20251030-add-support-for-camss-on-kaanapali-v5-0-f8e12bea3d02@oss.qualcomm.com>
- <20251030-add-support-for-camss-on-kaanapali-v5-2-f8e12bea3d02@oss.qualcomm.com>
- <631e4da1-92a0-4d44-b92e-bdcc56196c26@linaro.org>
- <e9da04ab-5119-4bfd-a25c-50e7b2ef05d3@oss.qualcomm.com>
+To: Raihan Ahamed <raihan1999ahamed@gmail.com>
+Cc: Bjorn Andersson <andersson@kernel.org>, 
+	Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, Kees Cook <kees@kernel.org>, 
+	Tony Luck <tony.luck@intel.com>, "Guilherme G . Piccoli" <gpiccoli@igalia.com>, 
+	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	linux-hardening@vger.kernel.org
+Subject: Re: [PATCH v4 1/2] dt-bindings: arm: qcom: Add Lenovo P2
+Message-ID: <20251102-little-alluring-wrasse-3a7b59@kuoka>
+References: <20251031135506.214025-1-raihan1999ahamed@gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -68,101 +61,42 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <e9da04ab-5119-4bfd-a25c-50e7b2ef05d3@oss.qualcomm.com>
+In-Reply-To: <20251031135506.214025-1-raihan1999ahamed@gmail.com>
 
-On Fri, Oct 31, 2025 at 10:39:44AM -0700, Vijay Kumar Tumati wrote:
->=20
-> On 10/31/2025 6:50 AM, Bryan O'Donoghue wrote:
-> > On 31/10/2025 02:59, Hangxiang Ma wrote:
-> > > Add the compatible string "qcom,kaanapali-camss" to support the Camera
-> > > Subsystem (CAMSS) on the Qualcomm Kaanapali platform.
-> > >=20
-> > > The Kaanapali platform provides:
-> > > - 3 x VFE, 5 RDI per VFE
-> > > - 2 x VFE Lite, 4 RDI per VFE Lite
-> > > - 3 x CSID
-> > > - 2 x CSID Lite
-> > > - 6 x CSIPHY
-> > >=20
-> > > Signed-off-by: Hangxiang Ma <hangxiang.ma@oss.qualcomm.com>
-> > > ---
-> > > =C2=A0 .../bindings/media/qcom,kaanapali-camss.yaml=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0 | 406
-> > > +++++++++++++++++++++
-> > > =C2=A0 1 file changed, 406 insertions(+)
-> > >=20
-> > > diff --git
-> > > a/Documentation/devicetree/bindings/media/qcom,kaanapali-camss.yaml
-> > > b/Documentation/devicetree/bindings/media/qcom,kaanapali-camss.yaml
-> > > new file mode 100644
-> > > index 000000000000..c34867022fd1
-> > > --- /dev/null
-> > > +++ b/Documentation/devicetree/bindings/media/qcom,kaanapali-camss.ya=
-ml
-> > > @@ -0,0 +1,406 @@
-> > > +# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
-> > > +%YAML 1.2
-> > > +---
-> > > +$id: http://devicetree.org/schemas/media/qcom,kaanapali-camss.yaml#
-> > > +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> > > +
-> > > +title: Qualcomm Kaanapali Camera Subsystem (CAMSS)
-> > > +
-> > > +maintainers:
-> > > +=C2=A0 - Hangxiang Ma <hangxiang.ma@oss.qualcomm.com>
-> > > +
-> > > +description:
-> > > +=C2=A0 The CAMSS IP is a CSI decoder and ISP present on Qualcomm pla=
-tforms.
-> > > +
-> > > +properties:
-> > > +=C2=A0 compatible:
-> > > +=C2=A0=C2=A0=C2=A0 const: qcom,kaanapali-camss
-> > > +
-> > > +=C2=A0 reg:
-> > > +=C2=A0=C2=A0=C2=A0 maxItems: 16
-> > > +
-> > > +=C2=A0 reg-names:
-> > > +=C2=A0=C2=A0=C2=A0 items:
-> > > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 - const: csid0
-> > > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 - const: csid1
-> > > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 - const: csid2
-> > > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 - const: csid_lite0
-> > > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 - const: csid_lite1
-> > > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 - const: csiphy0
-> > > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 - const: csiphy1
-> > > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 - const: csiphy2
-> > > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 - const: csiphy3
-> > > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 - const: csiphy4
-> > > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 - const: csiphy5
-> > > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 - const: vfe0
-> > > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 - const: vfe1
-> > > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 - const: vfe2
-> > > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 - const: vfe_lite0
-> > > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 - const: vfe_lite1
-> >=20
-> > No test pattern generator on this part ?
-> >=20
-> > We have patches in-flight to add TPG so it makes no sense to omit these
-> > registers from current or new submissions.
-> >=20
-> > https://lore.kernel.org/linux-media/20251017-camss_tpg-v5-1-cafe3ad4216=
-3@oss.qualcomm.com/
-> >=20
-> >=20
-> > While we're at it we should consider adding in the other key functional
-> > blocks.
-> >=20
-> > OFE, IPE etc, there's no harm in including the registers even if the
-> > intention and outcome is never switching that functionality on.
-> >=20
-> Hi Bryan, we have quite a few register spaces on Kaanapali or any other
-> target that are not required for the RDI only CAMSS driver, including ICP,
+On Fri, Oct 31, 2025 at 07:21:20PM +0530, Raihan Ahamed wrote:
+> Document the compatible for the MSM8953-based Lenovo P2
+> 
+> smartphone released in 2016
 
-Please read writing bindings doc. It answers this question exactly.
+That's one sentence. Sentences also start with a capital letter and end
+with full stop. Please write correct sentences (see also submitting
+patches).
 
-I'm marking it as changes requested in DT patchwork.
+I already asked for this!
+
+NAK
+
+> 
+> Signed-off-by: Raihan Ahamed <raihan1999ahamed@gmail.com>
+> ---
+> version 4
+> - rebased on linux-next
+> - enabled accelerometer sensor
+> - enabled gpu and add gpu_zap_shader
+> - add homescreen and one-key-low-power gpio-keys
+> - enabled pinctrl for gpio-keys
+> - removed explicily added tag
+
+What? Why? You must explain WHY.
+
+What is happening here? Did you even read what we wrote to you?
+
+> 
+> version 3
+> - sorry for explicitly adding tags
+> linked-to v3: https://yhbt.net/lore/linux-devicetree/20240226195516.174737-1-raihan1999ahamed@gmail.com/
+
+What is this? Please use standard lore links.
 
 Best regards,
 Krzysztof
