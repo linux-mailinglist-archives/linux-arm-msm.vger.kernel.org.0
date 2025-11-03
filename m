@@ -1,53 +1,53 @@
-Return-Path: <linux-arm-msm+bounces-80093-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-80094-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [IPv6:2605:f480:58:1:0:1994:3:14])
-	by mail.lfdr.de (Postfix) with ESMTPS id 21114C2B88A
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 03 Nov 2025 12:54:43 +0100 (CET)
+Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [142.0.200.124])
+	by mail.lfdr.de (Postfix) with ESMTPS id BCDC7C2B869
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 03 Nov 2025 12:53:23 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 1D4D44F9AE0
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Nov 2025 11:46:02 +0000 (UTC)
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 7BF254F0E41
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Nov 2025 11:46:05 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D1D80305E01;
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id DB2AA306483;
 	Mon,  3 Nov 2025 11:45:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="LTUaJCa2"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ObJpZC9h"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A39A23043D0;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3A2530497A;
 	Mon,  3 Nov 2025 11:45:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762170352; cv=none; b=hAUXKe6HkOs2JSJp/z4y2WpXXUgk8piDeO6pezxOqyWDhkZVLVNNGu3aERO7ThH1mkfcDIPz/VFX8CWmeg2HOUXEX7UGjfzzzV2+6KP9Qle/U4Wksom8ztFhgoLez1DuJGXrD3uBUEYpsV+lzqW8P+W3Qup6xAnOTO6SDqnd9s0=
+	t=1762170352; cv=none; b=MaNrBaXx5q5xMfrpeW6V+WW0TEsY22LxEOZJ04FaDNPL1vxqZL1sJ5N2Q7NRyNRufhvkT8GFJGPnF8npkWrf1KiZ+zfZTBnu+n91YSHfwTEw5m9oWqdnXLYOM3Cz/xBZQL5ZU5eH2Y9FTTK3tP0B0F07Sb5Xce3m52ecZ2caQ2g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1762170352; c=relaxed/simple;
-	bh=usqJ+nSopZseouaGntxUyToctjdXBYfd7bNTTzfX0RE=;
+	bh=M/Uy+u5ozJkpftLy+xP0oHxYZDk4/bRqLUzu/oAXF6w=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=FTM6b1XZ1xvvSQy1+2uS1PqtjSboVKaOkXYI7XmsBoRQTYX6rsjaiz+XvdoTT+hGXQkGOzi5RYJYL1HqZ9Y/xyxX3QGpk65EZc2YfOAQKuEOTlUUj/ZvFXFQPSzeBHiii0876DXS0CEM5ll/ik2Ww17sRCMsHfX30FttGmQduy4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=LTUaJCa2; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 1E4FBC4CEE7;
+	 In-Reply-To:To:Cc; b=mguW7aL2dwso6a5I46GXALa2f19c1FgZRPzhJHr9FATf8Vl0HZecKL1NkUZ9VNR6mwYxvb+8oPrv5z+ewVpaT/BNOQl3RvKfEAqIX9sPkbJjM+HIsWNmtvgSQDDCb+wu6mAIwTOx5aX2OjcJDLApQopQQNDASjRgDTa/w224CZA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ObJpZC9h; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 493A8C4AF0B;
 	Mon,  3 Nov 2025 11:45:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
 	s=k20201202; t=1762170352;
-	bh=usqJ+nSopZseouaGntxUyToctjdXBYfd7bNTTzfX0RE=;
+	bh=M/Uy+u5ozJkpftLy+xP0oHxYZDk4/bRqLUzu/oAXF6w=;
 	h=From:Date:Subject:References:In-Reply-To:To:Cc:Reply-To:From;
-	b=LTUaJCa2X+/ucvPAiDz8smUnoJHjLHbXWNDQcG70NovjFR5a2vF8ONHM4/dxuD6w6
-	 t3AQAHiNE1MXzkCSLoh31RZLxOS7WQ/5uxIc0VPioOq/elV6cHie/ow2nkukaP//Yu
-	 aB02iGZ/+LCA426vs4BypA1fc0CNMD1WD/6GUu1Ozub0yxSxIk+0k1y3JdaqQ181gh
-	 sjYnm7HFKrR78xmxaxC4lX8is2Xjka9twC8I+gYwpHQSokOe7VWvJKobK9rwJIpcbL
-	 m5Qv/IdxifsLUelVDVX90lIPLjewTxmvkQxcwkN1OJTodLtSZ5erpY76kqZ28R8Rv2
-	 cfSDwrKnA+HyA==
+	b=ObJpZC9hggTbTC0OfmQNPx4GpaaYM7OUj1OVkBe/mSPl+c/UGmY3aHh0h3TehO5iq
+	 kj/nkjem+/5MaQ0JwM2XYFYUdSl552y4iMHvGieHCu+znGQJMbLvCmGsGcuZf/K7PQ
+	 7iOwimaLH9iFS6gfS0ac8MsEadYeyzc//wKhkbe4LBtHMlgeF9kppwE2nrHwZ9GBbp
+	 9Y8LBkoc3ONs875Y0PmQE+yDemYC/c9naryJVpUDorvReu+PiGqJunUeLN2IHwGpS4
+	 9X9FQDwSTTxeGuxH4XjlqTqwt5yQj9JrVYEiOXne6WQC1gbTb+gSkzA+8pYqLZjmfm
+	 kSQjknUn1V1NQ==
 Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 158DECCFA05;
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 423A7CCF9FE;
 	Mon,  3 Nov 2025 11:45:52 +0000 (UTC)
 From: David Heidelberg via B4 Relay <devnull+david.ixit.cz@kernel.org>
-Date: Mon, 03 Nov 2025 12:45:50 +0100
-Subject: [PATCH v6 1/4] arm64: dts: qcom: sdm845-oneplus: Update
- compatbible and add DDIC supplies
+Date: Mon, 03 Nov 2025 12:45:51 +0100
+Subject: [PATCH v6 2/4] arm64: dts: qcom: sdm845-oneplus: Group panel
+ pinctrl
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -56,7 +56,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20251103-s6e3fc2x01-v6-1-d4eb4abaefa4@ixit.cz>
+Message-Id: <20251103-s6e3fc2x01-v6-2-d4eb4abaefa4@ixit.cz>
 References: <20251103-s6e3fc2x01-v6-0-d4eb4abaefa4@ixit.cz>
 In-Reply-To: <20251103-s6e3fc2x01-v6-0-d4eb4abaefa4@ixit.cz>
 To: Neil Armstrong <neil.armstrong@linaro.org>, 
@@ -75,141 +75,106 @@ Cc: dri-devel@lists.freedesktop.org, devicetree@vger.kernel.org,
  phone-devel@vger.kernel.org, David Heidelberg <david@ixit.cz>, 
  Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 X-Mailer: b4 0.14.3
-X-Developer-Signature: v=1; a=openpgp-sha256; l=3555; i=david@ixit.cz;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2083; i=david@ixit.cz;
  h=from:subject:message-id;
- bh=Ja+qcUZPemiWGwrEdzpL2zpATb4nV3ugDrMqyZlS1to=;
- b=owEBbQKS/ZANAwAIAWACP8TTSSByAcsmYgBpCJXuHq7BedYzlYVbXLP19Bzd4GUC0NZDIIT5m
- BvUk9JIByWJAjMEAAEIAB0WIQTXegnP7twrvVOnBHRgAj/E00kgcgUCaQiV7gAKCRBgAj/E00kg
- cuqMEADArYtBsvFOcy80EjAH+D7F0BhpGm/lifFYE59baEerspM5ITJYxUxj2eLKQ3TET+PF+Rn
- w0JcCx5s5uNA/VognH3DqTtbSHiyL8lAFtF02i0wS+zpM2r7KCiy/n9vPkLBFQwNwMGfYjKtlq/
- 38scKsB+J/T+qlOwxIkDdpu5hDglRaZxjac5hv2aRDeGw+n3V5DuevLTi8X76Zgin6KyV4azpUT
- zYu2WQTwVCZ8r+3htb69/PkyFJxAFAV8jG0j8ajZ6yovkx6AjC9D6xCMH/VpuchW71OheEe142b
- ZI1ObczqNxqgrXmnGhIiLrAGX50NpqaW0NYmT+IWwKkB8iJ6R1uIwGicuUVFrBGG6T/iqkohjTA
- P5+2kWx8Pa7K17gchl0WiaV6bSXyRUFtE2KbVpFF0JrnL+Oxwj1aByNEsyiemBxvAIl+aDLjMQ4
- rDECDquo8J4wAfRsJ0ixmMFKIAtF0bz071OveK3I79AoWhXSp0/7bKAHELuEmrn59HM2R0QHx4j
- CPy9y1Svnzks8ODjNZyoB0cWhCeULdkwCRKwHDy7TmVbq5/hhZrcDc51O6+r+Pw0PSJtuZjt2bH
- lQkRzzkUl4QRWaCqbh2nlt15EN1ZUMKJApheD1eBpoGLEXZj9zGyHmGrsdGHbb9oeGv9rXDnPmx
- TVplV30lq46WqWg==
+ bh=lb+GbJGxJgK2d3fIap7gSBx+1yLKhKOT53wmKqsWzJ0=;
+ b=owEBbQKS/ZANAwAIAWACP8TTSSByAcsmYgBpCJXuX6DPV5P6vzVpZk9sr742nGjlNUVFjnSMP
+ 7CU2G3IQ3aJAjMEAAEIAB0WIQTXegnP7twrvVOnBHRgAj/E00kgcgUCaQiV7gAKCRBgAj/E00kg
+ cu3LEAC4YNe6NXKR36r9BEgn0wcY439gaL5NFBykgcsKfbkPo0ZqQk0stJEqFTctgj/oPSYcBmx
+ DNhpeWgyrfqKwpWFUOvNiNO7xIdF/iAKd75Qalloa2bUkil9OpBNq3CMSCa/kSGPpOQ9DdGSwt4
+ 3fr4QJ+Hdn3WjQMPpyNbdWkHWTubj4+io++e14+lSLdcx8x4ICzF4/cWRY0dGjinZRRJWrDgfqV
+ bcay7/QcBtp40Q+0e7YjERk14vJFPnMGnby/dAPy8F5fnX5721dDyEMolu2VsWuxdmPL7qMi4kF
+ lnzSS2tQvI5TywkWBxC8MA/OvobCpwtL2IAoGnOQVi4vkN2D+6WvijewsQBOKu5eByWXCfJ9nSN
+ MPkEyP4qCrakEzkMkSTx9IJro5Yzl/bIu2ZhcCa3R2rUPTbuXlYG4j9dXDOC32j7TYKyTMZ/e/u
+ v+dounzXqu1/nYtQXicqAC6+Gah1SpAC/o48ce7G+wQOkWuIbYH24Ahm3OGC/uFtHxxqBUMzwU7
+ qIVn2kpGIX+sEqiJOMjTYcRBV7HnVwuJdO1/c0IjuDw6712WWufuzrnKX32F6FTKGBAfF9aCdr4
+ WyrPubX7XW/o/OQ1Dk5NMcBDTb209id3RmFfddLRjlypZr78Mx5NoA0FJM8bKRrHFyAZ8dcB6LY
+ i8EaDgadXjlhNTg==
 X-Developer-Key: i=david@ixit.cz; a=openpgp;
  fpr=D77A09CFEEDC2BBD53A7047460023FC4D3492072
 X-Endpoint-Received: by B4 Relay for david@ixit.cz/default with auth_id=355
 X-Original-From: David Heidelberg <david@ixit.cz>
 Reply-To: david@ixit.cz
 
-From: Casey Connolly <casey.connolly@linaro.org>
+From: David Heidelberg <david@ixit.cz>
 
-Update the compatible to reflect combination of DDIC and panel.
+As these pins won't be used outside the group, let's group them.
 
-Original compatible describing only the DDIC used, but omit describing
-the panel used (Samsung AMS641RW), which we have no way to detect.
-
-There are two additional supplies used by the panel, both are GPIO
-controlled and are left enabled by the bootloader for continuous splash.
-
-Previously these were (incorrectly) modelled as pinctrl. Describe them
-properly so that the panel can control them.
-
-Fixes: 288ef8a42612 ("arm64: dts: sdm845: add oneplus6/6t devices")
-Signed-off-by: Casey Connolly <casey.connolly@linaro.org>
 Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Co-developed-by: David Heidelberg <david@ixit.cz>
 Signed-off-by: David Heidelberg <david@ixit.cz>
 ---
- .../arm64/boot/dts/qcom/sdm845-oneplus-common.dtsi | 46 +++++++++++++++++++++-
- arch/arm64/boot/dts/qcom/sdm845-oneplus-fajita.dts |  2 +-
- 2 files changed, 46 insertions(+), 2 deletions(-)
+ .../arm64/boot/dts/qcom/sdm845-oneplus-common.dtsi | 46 +++++++++++-----------
+ 1 file changed, 24 insertions(+), 22 deletions(-)
 
 diff --git a/arch/arm64/boot/dts/qcom/sdm845-oneplus-common.dtsi b/arch/arm64/boot/dts/qcom/sdm845-oneplus-common.dtsi
-index fd7fdc1f07493..d619b710c63fe 100644
+index d619b710c63fe..d59a5e8cdeb2c 100644
 --- a/arch/arm64/boot/dts/qcom/sdm845-oneplus-common.dtsi
 +++ b/arch/arm64/boot/dts/qcom/sdm845-oneplus-common.dtsi
-@@ -150,6 +150,34 @@ ts_1p8_supply: ts-1p8-regulator {
- 		enable-active-high;
- 		regulator-boot-on;
- 	};
-+
-+	panel_vci_3v3: panel-vci-3v3-regulator {
-+		compatible = "regulator-fixed";
-+		regulator-name = "LCD_VCI_3V";
-+
-+		regulator-min-microvolt = <3300000>;
-+		regulator-max-microvolt = <3300000>;
-+
-+		gpio = <&tlmm 26 GPIO_ACTIVE_HIGH>;
-+		enable-active-high;
-+		pinctrl-0 = <&panel_vci_default>;
-+		pinctrl-names = "default";
-+		regulator-boot-on;
-+	};
-+
-+	panel_vddi_poc_1p8: panel-vddi-poc-regulator {
-+		compatible = "regulator-fixed";
-+		regulator-name = "VDDI_POC";
-+
-+		regulator-min-microvolt = <1800000>;
-+		regulator-max-microvolt = <1800000>;
-+
-+		gpio = <&tlmm 25 GPIO_ACTIVE_HIGH>;
-+		enable-active-high;
-+		pinctrl-0 = <&panel_poc_default>;
-+		pinctrl-names = "default";
-+		regulator-boot-on;
-+	};
- };
- 
- &adsp_pas {
-@@ -416,6 +444,8 @@ display_panel: panel@0 {
- 		reg = <0>;
- 
- 		vddio-supply = <&vreg_l14a_1p88>;
-+		vci-supply = <&panel_vci_3v3>;
-+		poc-supply = <&panel_vddi_poc_1p8>;
- 
+@@ -450,7 +450,7 @@ display_panel: panel@0 {
  		reset-gpios = <&tlmm 6 GPIO_ACTIVE_LOW>;
  
-@@ -790,6 +820,20 @@ hall_sensor_default: hall-sensor-default-state {
+ 		pinctrl-names = "default";
+-		pinctrl-0 = <&panel_reset_pins &panel_te_pin &panel_esd_pin>;
++		pinctrl-0 = <&panel_default>;
+ 
+ 		port {
+ 			panel_in: endpoint {
+@@ -841,32 +841,34 @@ alert_slider_default: alert-slider-default-state {
  		bias-disable;
  	};
  
-+	panel_vci_default: vci-state {
-+		pins = "gpio26";
-+		function = "gpio";
-+		drive-strength = <8>;
-+		bias-disable;
-+	};
-+
-+	panel_poc_default: poc-state {
-+		pins = "gpio25";
-+		function = "gpio";
-+		drive-strength = <8>;
-+		bias-disable;
-+	};
-+
- 	alert_slider_default: alert-slider-default-state {
- 		pins = "gpio126", "gpio52", "gpio24";
- 		function = "gpio";
-@@ -805,7 +849,7 @@ ts_default_pins: ts-int-state {
+-	ts_default_pins: ts-int-state {
+-		pins = "gpio99", "gpio125";
+-		function = "gpio";
+-		drive-strength = <16>;
+-		bias-pull-up;
+-	};
++	panel_default: panel-default-state {
++		esd-pins {
++			pins = "gpio30";
++			function = "gpio";
++			drive-strength = <2>;
++			bias-pull-down;
++		};
+ 
+-	panel_reset_pins: panel-reset-state {
+-		pins = "gpio6";
+-		function = "gpio";
+-		drive-strength = <8>;
+-		bias-disable;
+-	};
++		reset-pins {
++			pins = "gpio6";
++			function = "gpio";
++			drive-strength = <8>;
++			bias-disable;
++		};
+ 
+-	panel_te_pin: panel-te-state {
+-		pins = "gpio10";
+-		function = "mdp_vsync";
+-		drive-strength = <2>;
+-		bias-disable;
++		te-pins {
++			pins = "gpio10";
++			function = "mdp_vsync";
++			drive-strength = <2>;
++			bias-disable;
++		};
  	};
  
- 	panel_reset_pins: panel-reset-state {
--		pins = "gpio6", "gpio25", "gpio26";
-+		pins = "gpio6";
+-	panel_esd_pin: panel-esd-state {
+-		pins = "gpio30";
++	ts_default_pins: ts-int-state {
++		pins = "gpio99", "gpio125";
  		function = "gpio";
- 		drive-strength = <8>;
- 		bias-disable;
-diff --git a/arch/arm64/boot/dts/qcom/sdm845-oneplus-fajita.dts b/arch/arm64/boot/dts/qcom/sdm845-oneplus-fajita.dts
-index 7e75decfda052..d6cd873aef0de 100644
---- a/arch/arm64/boot/dts/qcom/sdm845-oneplus-fajita.dts
-+++ b/arch/arm64/boot/dts/qcom/sdm845-oneplus-fajita.dts
-@@ -32,7 +32,7 @@ battery: battery {
- &display_panel {
- 	status = "okay";
+-		drive-strength = <2>;
+-		bias-pull-down;
++		drive-strength = <16>;
++		bias-pull-up;
+ 	};
  
--	compatible = "samsung,s6e3fc2x01";
-+	compatible = "samsung,s6e3fc2x01-ams641rw", "samsung,s6e3fc2x01";
- };
- 
- &i2c4 {
+ 	speaker_default: speaker-default-state {
 
 -- 
 2.51.0
