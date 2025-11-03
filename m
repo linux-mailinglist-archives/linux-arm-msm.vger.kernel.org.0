@@ -1,50 +1,54 @@
-Return-Path: <linux-arm-msm+bounces-80053-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-80054-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 08A9DC29FDF
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 03 Nov 2025 04:48:14 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id CBBA7C2A36A
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 03 Nov 2025 07:42:43 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id DED713A844F
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Nov 2025 03:48:11 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 1CE6C188BA3C
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Nov 2025 06:43:08 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4A23C27FB12;
-	Mon,  3 Nov 2025 03:48:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0E81F22FE0E;
+	Mon,  3 Nov 2025 06:42:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (1024-bit key) header.d=thundersoft.com header.i=@thundersoft.com header.b="FWUhIy6l"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from cstnet.cn (smtp84.cstnet.cn [159.226.251.84])
-	(using TLSv1.2 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+Received: from mail-m1973187.qiye.163.com (mail-m1973187.qiye.163.com [220.197.31.87])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6144EEA8;
-	Mon,  3 Nov 2025 03:48:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=159.226.251.84
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6878C347C3
+	for <linux-arm-msm@vger.kernel.org>; Mon,  3 Nov 2025 06:42:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=220.197.31.87
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762141688; cv=none; b=SKQcXF4WZnDqSVqIccZiBwqUa2vEe6FZ3+/3NB4ah0klZd2as9PCAkQ1vZfMUDSjrbRqdYbsBRo9jpcThG8RLHlumFBWeIfQtC+51GCM7R5yu+dQ4ize8hoJQs0EjiEj6fzibubTGInwjomISBy66QtLdDg0e938soIZ71ZeAww=
+	t=1762152160; cv=none; b=Fp6JoIPCRu7Zs9qUqBoNQ+7qE7CC1ZJksxPvUM0GrP0iAgTRvSOlQzhCnzdyDvzg2s3O+C5iU3abuFtFKaz0d4JZZSfopMN0GShu049G3lksBvxYwaU+pL/NSP8J4hUZmC2JzhT+Yc8pRtL68aJQCEIYIe56O937xtlg1fueLYw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762141688; c=relaxed/simple;
-	bh=M75ey4SC1nq26YdA3zMPnasTfomPxSxVwmgJl3E+jAw=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=XZmzccWodxueLjpTRW6DZ05KArnAwhrHy7P3Mb0jI6RzpbW/vSZq/qlztZN8wMluivP+/4BWg2FMLK9w6UBVRuh6w3AHsUzHYyjIk+mhsbJprXUwWIZYk2WOxkhpX90G0yipuNTrpdlUGFDVrZA4sYhWVJaVnX2lPFeww0odjpo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iscas.ac.cn; spf=pass smtp.mailfrom=iscas.ac.cn; arc=none smtp.client-ip=159.226.251.84
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iscas.ac.cn
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=iscas.ac.cn
-Received: from DESKTOP-L0HPE2S (unknown [124.16.141.245])
-	by APP-05 (Coremail) with SMTP id zQCowAB34vDnJQhplpMqAQ--.21872S2;
-	Mon, 03 Nov 2025 11:47:53 +0800 (CST)
-From: Haotian Zhang <vulab@iscas.ac.cn>
-To: srini@kernel.org,
-	broonie@kernel.org
-Cc: lgirdwood@gmail.com,
-	jaroslav.kysela@perex.cz,
-	tiwai@suse.com,
-	linux-sound@vger.kernel.org,
+	s=arc-20240116; t=1762152160; c=relaxed/simple;
+	bh=gDl4Wy3wPz2R7YMKyjVGY5A/pZ/DRlqoO4HPbVuXjn4=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=u3i4piV5+7zH2IoJz70PvGTQA8ubv/2OvpVXFHVxY87JGAq76AwlBxm1NU0hFiyc2pxsETBikX+V5aOJuVOWlK1rQPvnJBoy6l5MEINswFtOnQWpaRZND3dsoRERWcOzDph0kuOD/96as2c2azi65LOIUMgO30nPPhhTDhrndJs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=thundersoft.com; spf=pass smtp.mailfrom=thundersoft.com; dkim=pass (1024-bit key) header.d=thundersoft.com header.i=@thundersoft.com header.b=FWUhIy6l; arc=none smtp.client-ip=220.197.31.87
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=thundersoft.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=thundersoft.com
+Received: from ROG.lan (unknown [36.129.139.90])
+	by smtp.qiye.163.com (Hmail) with ESMTP id 2820e3c63;
+	Mon, 3 Nov 2025 12:20:11 +0800 (GMT+08:00)
+From: Hongyang Zhao <hongyang.zhao@thundersoft.com>
+To: dmitry.baryshkov@oss.qualcomm.com
+Cc: andersson@kernel.org,
+	casey.connolly@linaro.org,
+	christopher.obbard@linaro.org,
+	hongyang.zhao@thundersoft.com,
 	linux-arm-msm@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	Haotian Zhang <vulab@iscas.ac.cn>
-Subject: [PATCH] soundoc: qcom: va-macro: fix resource leak in va_macro_remove()
-Date: Mon,  3 Nov 2025 11:47:35 +0800
-Message-ID: <20251103034735.90-1-vulab@iscas.ac.cn>
-X-Mailer: git-send-email 2.50.1.windows.1
+	loic.minier@oss.qualcomm.com,
+	rosh@debian.org
+Subject: Re: [PATCH v5 1/2] arm64: dts: qcom: rubikpi3: Add qcs6490-rubikpi3 board dts
+Date: Mon,  3 Nov 2025 12:20:04 +0800
+Message-ID: <20251103042004.24260-1-hongyang.zhao@thundersoft.com>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <sokypdm557dik57ayif4kpgd3vk5xgvzpoaarf73barl7w3w3o@ed7oxnbhq2gb>
+References: <sokypdm557dik57ayif4kpgd3vk5xgvzpoaarf73barl7w3w3o@ed7oxnbhq2gb>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -52,52 +56,187 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID:zQCowAB34vDnJQhplpMqAQ--.21872S2
-X-Coremail-Antispam: 1UD129KBjvdXoWrKr47KF1rXrWrGF4fXFWDurg_yoWDuwb_C3
-	95Wr48ZFy8Wry2g3yUtr4UAanIvrnxArW5GFs7t3yxGryUtF13XrsrCrn8ur1UWwsak3W5
-	WF1DWrW8Jry3ZjkaLaAFLSUrUUUUjb8apTn2vfkv8UJUUUU8Yxn0WfASr-VFAUDa7-sFnT
-	9fnUUIcSsGvfJTRUUUbsxFF20E14v26r4j6ryUM7CY07I20VC2zVCF04k26cxKx2IYs7xG
-	6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48ve4kI8w
-	A2z4x0Y4vE2Ix0cI8IcVAFwI0_Gr0_Xr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI0_Gr0_
-	Cr1l84ACjcxK6I8E87Iv67AKxVWxJr0_GcWl84ACjcxK6I8E87Iv6xkF7I0E14v26rxl6s
-	0DM2AIxVAIcxkEcVAq07x20xvEncxIr21l5I8CrVACY4xI64kE6c02F40Ex7xfMcIj6xII
-	jxv20xvE14v26r106r15McIj6I8E87Iv67AKxVW8JVWxJwAm72CE4IkC6x0Yz7v_Jr0_Gr
-	1lF7xvr2IYc2Ij64vIr41lF7I21c0EjII2zVCS5cI20VAGYxC7MxkF7I0En4kS14v26r1q
-	6r43MxkIecxEwVAFwVW8GwCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8Jw
-	C20s026c02F40E14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E67AF67kF1VAF
-	wI0_Jw0_GFylIxkGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWUCwCI42IY6xIIjx
-	v20xvEc7CjxVAFwI0_Jr0_Gr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2
-	jsIE14v26r1j6r4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Gr0_Gr1UYxBIdaVFxhVjvjDU0x
-	ZFpf9x0JU3CzNUUUUU=
-X-CM-SenderInfo: pyxotu46lvutnvoduhdfq/1tbiBg0PA2kIGm8wxwAAsk
+X-HM-Tid: 0a9a47f1a7f609d5kunm2f6257c298a2d3
+X-HM-MType: 1
+X-HM-Spam-Status: e1kfGhgUHx5ZQUpXWQgPGg8OCBgUHx5ZQUlOS1dZFg8aDwILHllBWSg2Ly
+	tZV1koWUFITzdXWS1ZQUlXWQ8JGhUIEh9ZQVlCT0MeVh1ITEIYSE9MHk9JHlYVFAkWGhdVEwETFh
+	oSFyQUDg9ZV1kYEgtZQVlITVVKSUJVSkhCVUJLWVdZFhoPEhUdFFlBWU9LSFVKS0hKTkxKVUpLS1
+	VKQktLWQY+
+DKIM-Signature: a=rsa-sha256;
+	b=FWUhIy6ln4IZo3a03nuQXRzRk9oei1SDnzFQ8y+tfZnaUwdO28JgOO29KkgKWW2R2/F2EH9iQaO+ptrpAxF5HgaFTjaIwjPCDvk8hv9NGV1xVocm9TfoO8AMLfuxTmbKz4fU4snDYjr1herkGCTaeOdjLnBxdImeO28EqYAFrCg=; c=relaxed/relaxed; s=default; d=thundersoft.com; v=1;
+	bh=b9ZzlagggH42HcNcSjIFxGxCiYkoKNaokjX3lqiWODg=;
+	h=date:mime-version:subject:message-id:from;
 
-The va_macro_probe() function calls clk_hw_get_clk() to obtain the
-fsgen clock, which increments the clock's reference count. However,
-the corresponding va_macro_remove() function does not call clk_put()
-to release this reference, resulting in a resource leak.
+> On Sun, Nov 02, 2025 at 11:09:00AM +0800, Hongyang Zhao wrote:
+> > > On Fri, Oct 31, 2025 at 05:27:27PM +0800, Hongyang Zhao wrote:
+> > > > > On Sat, Oct 25, 2025 at 08:27:22PM +0800, Hongyang Zhao wrote:
+> > > > > > Add DTS for Thundercomm qcs6490-rubikpi3 board which uses
+> > > > > > QCS6490 SoC.
+> > > > > > 
+> > > > > > Works:
+> > > > > > - Bluetooth (AP6256)
+> > > > > > - Wi-Fi (AP6256)
+> > > > > > - Ethernet (AX88179B connected to UPD720201)
+> > > > > > - FAN
+> > > > > > - Two USB Type-A 3.0 ports (UPD720201 connected to PCIe0)
+> > > > > > - M.2 M-Key 2280 PCIe 3.0
+> > > > > > - RTC
+> > > > > > - USB Type-C
+> > > > > > - USB Type-A 2.0 port
+> > > > > > - 40PIN: I2C x1, UART x1
+> > > > > > 
+> > > > > > Signed-off-by: Hongyang Zhao <hongyang.zhao@thundersoft.com>
+> > > > > > Reviewed-by: Roger Shimizu <rosh@debian.org>
+> > > > > > Cc: Casey Connolly <casey.connolly@linaro.org>
+> > > > > > Cc: Christopher Obbard <christopher.obbard@linaro.org>
+> > > > > > Cc: Loic Minier <loic.minier@oss.qualcomm.com>
+> > > > > > ---
+> > > > > >  arch/arm64/boot/dts/qcom/Makefile             |    1 +
+> > > > > >  .../dts/qcom/qcs6490-thundercomm-rubikpi3.dts | 1390 +++++++++++++++++
+> > > > > >  2 files changed, 1391 insertions(+)
+> > > > > >  create mode 100644 arch/arm64/boot/dts/qcom/qcs6490-thundercomm-rubikpi3.dts
+> > > > > > 
+> > > > > > +	vreg_lt9611_3p3: vreg_lt9611_3p3 {
+> > > > > 
+> > > > > regulator-foo-bar-baz, please. This way VPH PWR doesn't stand out.
+> > > > 
+> > > > Understood, I will check the entire device tree and change:
+> > > > vreg_lt9611_3v3: regulator-lt9611-3v3
+> > > > vreg_m2_1v8: regulator-m2-1v8
+> > > > vreg_sdio_wifi_1v8: regulator-wifi-1v8
+> > > > ...
+> > > > 
+> > > > > > +
+> > > > > > +	vph_pwr: vph-pwr-regulator {
+> > > > > 
+> > > > > Otherwise you currently stuffed it in the middle of other regulators,
+> > > > > although it doesn't belong here.
+> > > > 
+> > > > Understood, I will move vph-pwr-regulator after usb1-sbu-mux.
+> > > 
+> > > I hope, you are talking about regulator-vph-pwr now.
+> > 
+> > Got it,
+> > I will change it to regulator-vph-pwr and put it before all regulators:
+> > 
+> > reserved-memory { ... }
+> > vph_pwr: regulator-vph-pwr { ... }
+> > vreg_lt9611_3v3: regulator-lt9611-3v3 { ... }
+> 
+> Why?? What is the sort order?
+> 
 
-Add clk_put() call in va_macro_remove() to properly release the fsgen
-clock reference.
+Sorry, the sorting was incorrect.
+I will correct it according to the alphabetical order of the node names:
 
-Fixes: 908e6b1df26e ("ASoC: codecs: lpass-va-macro: Add support to VA Macro")
-Signed-off-by: Haotian Zhang <vulab@iscas.ac.cn>
+fan0: pwm-fan { ... }
+vreg_eth_1v8: regulator-eth-1v8 { ... }
+vreg_lt9611_3v3: regulator-lt9611-3v3 { ... }
+vreg_m2_1v8: regulator-m2-1v8 { ... }
+vreg_usbhub_pwr_1v8: regulator-usbhub-pwr-1v8 { ... }
+vreg_usbhub_rest_1v8: regulator-usbhub-rest-1v8 { ... }
+vph_pwr: regulator-vph-pwr { ... }
+vreg_wifi_1v8: regulator-wifi-1v8 { ... }
+reserved-memory { ... }
+
+> > [...]
+> > 
+> > > 
+> > > > > > +
+> > > > > > +	led@1 {
+> > > > > > +		reg = <1>;
+> > > > > > +		color = <LED_COLOR_ID_GREEN>;
+> > > > > > +		function = LED_FUNCTION_INDICATOR;
+> > > > > > +		function-enumerator = <3>;
+> > > > > > +		linux,default-trigger = "none";
+> > > > > > +		default-state = "off";
+> > > > > > +		panic-indicator;
+> > > > > > +		label = "red";
+> > > > > 
+> > > > > So, is it "red" or LED_COLOR_ID_GREEN?
+> > > > 
+> > > > This should be changed to:
+> > > > color = <LED_COLOR_ID_RED>;
+> > > 
+> > > So, what is the actual LED colour? Also, is it a single multi-colour LED
+> > > or several separate LEDs?
+> > 
+> > The actual color is the same as the label attribute.
+> > 
+> > It's actually an LED package that combines three LEDs side-by-side.
+> > Our hardware colleagues thought it was three separate LEDs.
+> > I've uploaded a photo of the LEDs to Github:
+> > https://hongyang-rp.github.io
+> 
+> Then please use the the multicolour or rgb led to describe it.
+> 
+
+Understood, I will change it to:
+
+&pm8350c_pwm {
+	status = "okay";
+
+	multi-led {
+		color = <LED_COLOR_ID_RGB>;
+		function = LED_FUNCTION_INDICATOR;
+
+		#address-cells = <1>;
+		#size-cells = <0>;
+
+		led@1 {
+			reg = <1>;
+			color = <LED_COLOR_ID_RED>;
+		};
+
+		led@2 {
+			reg = <2>;
+			color = <LED_COLOR_ID_GREEN>;
+		};
+
+		led@3 {
+			reg = <3>;
+			color = <LED_COLOR_ID_BLUE>;
+		};
+	};
+};
+
+> > 
+> > > 
+> > > > 
+> > > > > 
+> > > > > > +	};
+> > > > > > +
+> > > > > > +	led@2 {
+> > > > > > +		reg = <2>;
+> > > > > > +		color = <LED_COLOR_ID_GREEN>;
+> > > > > > +		function = LED_FUNCTION_INDICATOR;
+> > > > > > +		function-enumerator = <2>;
+> > > > > > +		linux,default-trigger = "none";
+> > > > > > +		default-state = "off";
+> > > > > > +		label = "green";
+> > > > > > +	};
+> > > > > > +
+> > > > > > +	led@3 {
+> > > > > > +		reg = <3>;
+> > > > > > +		color = <LED_COLOR_ID_GREEN>;
+> > > > > > +		function = LED_FUNCTION_INDICATOR;
+> > > > > > +		function-enumerator = <1>;
+> > > > > > +		linux,default-trigger = "none";
+> > > > > > +		default-state = "off";
+> > > > > > +		label = "blue";
+> > > > > 
+> > > > > Likewise, why is this blue?
+> > > > 
+> > > > This should be changed to:
+> > > > color = <LED_COLOR_ID_BLUE>;
+> > > > 
+> > > > > 
+> > > > > > +	};
+> > > > > > +};
+> > > > > > +
+> > 
+
 ---
- sound/soc/codecs/lpass-va-macro.c | 1 +
- 1 file changed, 1 insertion(+)
-
-diff --git a/sound/soc/codecs/lpass-va-macro.c b/sound/soc/codecs/lpass-va-macro.c
-index a49551f3fb29..440d0f54aa33 100644
---- a/sound/soc/codecs/lpass-va-macro.c
-+++ b/sound/soc/codecs/lpass-va-macro.c
-@@ -1663,6 +1663,7 @@ static void va_macro_remove(struct platform_device *pdev)
- {
- 	struct va_macro *va = dev_get_drvdata(&pdev->dev);
- 
-+	clk_put(va->fsgen);
- 	if (va->has_npl_clk)
- 		clk_disable_unprepare(va->npl);
- 
--- 
-2.50.1.windows.1
-
+Thank you for the review!
+Hongyang
 
