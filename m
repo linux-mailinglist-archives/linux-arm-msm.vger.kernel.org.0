@@ -1,205 +1,171 @@
-Return-Path: <linux-arm-msm+bounces-80104-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-80105-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [IPv6:2605:f480:58:1:0:1994:3:14])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3C393C2BB22
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 03 Nov 2025 13:35:17 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 32FC1C2BAB0
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 03 Nov 2025 13:30:36 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 24BC74F9E34
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Nov 2025 12:25:53 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id A98E5189783E
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Nov 2025 12:28:17 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 47CDF30C35A;
-	Mon,  3 Nov 2025 12:24:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0AB5030C361;
+	Mon,  3 Nov 2025 12:27:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="LPf1DRAK";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="jz3hwTdL"
+	dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b="UxFSrtPC"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f50.google.com (mail-ej1-f50.google.com [209.85.218.50])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE5271EEE6
-	for <linux-arm-msm@vger.kernel.org>; Mon,  3 Nov 2025 12:24:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 982BF2D73B2
+	for <linux-arm-msm@vger.kernel.org>; Mon,  3 Nov 2025 12:27:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762172682; cv=none; b=SczpDv7QNMnzji1ho4rJNrkUy6QmoeTWrpytYKnxHOiaYwZ4cI++jfoDDl/PhV4pqq4sVRHyB1quEhtMNQhzCBwV26WJ48hjrU834sxLUKYr0bPO/tyvq+m2aKYTf7DaQs72obQ1M09WvpafS7gPm8+tJ5mSLjjfdCuU/0mDb3I=
+	t=1762172860; cv=none; b=OccJQaP45bu2ZDOTA3es0/reAmRx/gtmSQ62vFdRGg00hMpCysYFEBVeLa0V2sqF1GllCaeS2OaXawhuf5u/RMOmfVhq0uiRCQJTX7pnjUDtlGQjOUPn1UObmYcgtNF6aJI3R/DK6/3zosPybzRS/3vlwXErvPnA0yE61A1S7tc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762172682; c=relaxed/simple;
-	bh=vwzBSD6YjCzeEO2eiRf2nhfCnTbIY4rkNTdkJaTw0TE=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=p2dmO5lwKbAUzYFFwyTYt/lyIIynESF23z1tVVyOpqVpn9OoAKVq35PTdIShYbF3pfzPK0boO2+2BMp9FMSWycKiZ0Ss4ijPnYHBvuEe+q54uvD7iY1drBNp4pLTkDaWYWunyEotTudre27EYTAdS/YaBnz+yUMweR5VwtIPmac=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=LPf1DRAK; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=jz3hwTdL; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 5A36IjS32247263
-	for <linux-arm-msm@vger.kernel.org>; Mon, 3 Nov 2025 12:24:40 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	FdIQ6Czmd1hHUaY52E30LH9FRShtyPrpnnnsHJC/oT0=; b=LPf1DRAKgWnvBy7x
-	A0oDBivhqudxXd0xLWe7aYcGsA/hBnyMVvCk7p+nMaPDHkq0cPSJXTloY2dFJm2P
-	/DLZotJH7oUGS9FqNB3kDfsBRbkX8BOZPdp/wg6JMAyqToSJcYRwSGGis417txla
-	LVaDwzjBCNDpkIdiQfN200AXEAa7NW7rM62z+pSkSI8IT8Tzpb2hEeA7yy2x8RPB
-	w/jAejjEn9P5J16JxzgQ1glVZdaZT05F7rOVsVEojzXIgoEhCjiP4mf9phQUj8XK
-	2/7gp6XkdibD7TwKK0j9567izCJHG48tZTmdc8Qxsr3HAgHtxUd5b6eFnrfNB9C3
-	UtykYg==
-Received: from mail-qv1-f69.google.com (mail-qv1-f69.google.com [209.85.219.69])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4a6q0yh34j-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Mon, 03 Nov 2025 12:24:39 +0000 (GMT)
-Received: by mail-qv1-f69.google.com with SMTP id 6a1803df08f44-88046bc20faso5221876d6.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 03 Nov 2025 04:24:39 -0800 (PST)
+	s=arc-20240116; t=1762172860; c=relaxed/simple;
+	bh=yaE3waDSHbugCSGkUwyAGQoN36hcWzHi1nzoJVJHs4Q=;
+	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
+	 References:In-Reply-To; b=ujgxcgmbydTp34mRsLe8+kEN2VyiwfaULy9wkOjI7y2wXqU3bzfUl/ANxuCxnsq4Nv6lRqCIT5u4yi9Dcdnwpm+EOwrVGzz+8prwd/MJzz0rytmRzYRpeVikdK2lMgm97dE8bp2EvSvgalcsm+G/QFtufT1QabLkQ4TWK4JuMUY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=fairphone.com; spf=pass smtp.mailfrom=fairphone.com; dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b=UxFSrtPC; arc=none smtp.client-ip=209.85.218.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=fairphone.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fairphone.com
+Received: by mail-ej1-f50.google.com with SMTP id a640c23a62f3a-b70406feed3so944315866b.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 03 Nov 2025 04:27:37 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1762172679; x=1762777479; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=FdIQ6Czmd1hHUaY52E30LH9FRShtyPrpnnnsHJC/oT0=;
-        b=jz3hwTdLVTn7GYAziYs6HatgJxCc3iwqL587LIFNEwDjjbigfke8REep+qsw3YtthN
-         ULojs+Mp2VAmc5encgEVYIV49hxE8TqucDHXQIVR1obKTd8DEchorSm436XlWZgx1y7U
-         njmeBk+PkPvd4uvQdKsRLw3sLHtHSe6M0p8jGuCOdpOx+5U+1BfvNpS5Bu/wXRDGpE/5
-         0Uc0hpNUwTUXmogIJNJfTn9c+BekXBEJHXrE9l53pkEliHcTa7YP9uNdx56oD8ZRZdX/
-         wyiewqUMaSD594Ku+MIPE+No0IopOSm63lZOaytIj3aVG67otxW1Ep+nu9bf8onMBiC+
-         Q9ZA==
+        d=fairphone.com; s=fair; t=1762172856; x=1762777656; darn=vger.kernel.org;
+        h=in-reply-to:references:to:from:subject:cc:message-id:date
+         :content-transfer-encoding:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=IoGEKixiOf6+YbSpHpvXgbHu1MiS0fbcnkKp3M0gywo=;
+        b=UxFSrtPCRZaQCPRwxdSo0StEpyhByP8lFVh5QezkmgLTDerEbkDiptJ3fT6m7zxCzK
+         +SNntZ/+EUssDvJYH7p+1YbyrR3XwIPqiEW2OmiCnnrGaaDjcrCHlnvEEqEbL2GGP4Xb
+         VYmAu4unJod26yp+USib1mgLcxXa1zwJ9ymZmxNySAIIDLpN2YbZf/E/x25+J7aYaatu
+         Syb3ezcve0bZ7F0FrP6XIw1momDtIxd3UOO08lRjUidVeC6HadchyelzLtzZYNSLJG8Y
+         ZOPPqdZtNymtL3QMBPUcG/K/Pjlc+qHnii1aAUSqU/iXwUb0dHukHRYxqbnl/7a88Q2N
+         08KQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1762172679; x=1762777479;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=FdIQ6Czmd1hHUaY52E30LH9FRShtyPrpnnnsHJC/oT0=;
-        b=pq74hkBLSN9UnvvE0OSrUe0PwW0QNFj0pnguuq9PUj040/FLPMHAJPfpeIVhPy7zcx
-         8SzSKhLGiNXoBYEmSNm0rppXTfDgGsuiMHIGAInW9cpDXTvQNUjvlsh25Bkbc3fokx5E
-         mZBlr5Re9/VAyHT2BhaWR5Bf2/AvvrElN91rtm6IWLq5+PEblIlO6Nkqdew6s6rIvCAt
-         ziJtGAISKWqmQiPLk2WSiDXeibB3SEqJ1PQmnhqwcXqBm8dBYPoFsyeyWQSAmG92g5aj
-         wBEeeoDWgtlAa/SwDMl/yEPDL50002A4O753TmCXIE2K93xjnmNFsd5VcCymEauQFVVw
-         jqHA==
-X-Forwarded-Encrypted: i=1; AJvYcCVhEG5piX56IR7df0bM/4mWSLf50e0zGENmEQE5y0pWs753K0twujAEG4dUqycLz0q7m7he22AAeX7Qhfye@vger.kernel.org
-X-Gm-Message-State: AOJu0Yx8ri92njrEhYLiFKSOTkOUvObOzmJR6NK3+sMcLV0vAkX2I6CY
-	jJob7Exa8TH7kBN5ZHkBCqWkdXtXGox8v9IAMm2nHqCQJS1Lk0ZBoUho9csOduzNh9tD30A0ABc
-	yU/owVB1rSsbJMBDWVAdhIj7QZ/PkyNg4/biGAbYvu6tjOS6LEx3RSWLiOdZPLJ8ISX8q
-X-Gm-Gg: ASbGncscW8cGqbBPYPpWInkqWxqXgzAhnXS2+1KdqNHxtkptOqCwPS7rSO7mMAhpHAn
-	K7T5sryUSiNYXuA4EzFRGTXsDxKbD4Z8BqLUy/h8tk0yb5nhWbYGJZDipI6sy5l0cnHlOsdrqRE
-	pvMsZEvZyJ7d1RqaY+m2Jc0mDkyt5tzebaTvCLkSnbaNcFHA8eawHBMrZL1TCsocEyNP51ibGTv
-	Lssi060AFVF/krtGmWKg1WnXgy4aPfhj7UVRrAe00GJzpVxCqE7u59hQwfxMpwnHUbIaoArhGZ4
-	dl1rxGwrZ2FR02jfcJ8DncAzhiP+2FrF+ZsApWfjpBkCFucwr1s9x9YpGnRidjE7kc0lNuWfoHX
-	jpGmlijxXavUuvZdoyi/jPWH8mLFmxlFxFxQObslPvrpKCTxDrj0bXAzV
-X-Received: by 2002:a05:622a:835c:b0:4e8:9af1:366c with SMTP id d75a77b69052e-4ed30f7f5bbmr89420761cf.9.1762172678757;
-        Mon, 03 Nov 2025 04:24:38 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHKC7c+sG3ScBo6GxArZhv36vSpltAdRIVXXFR8SiQD5USW8CgQ/o9dQtWKno1nX8BCx1zJ/w==
-X-Received: by 2002:a05:622a:835c:b0:4e8:9af1:366c with SMTP id d75a77b69052e-4ed30f7f5bbmr89420631cf.9.1762172678275;
-        Mon, 03 Nov 2025 04:24:38 -0800 (PST)
-Received: from [192.168.119.202] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
-        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-640af968e5dsm4919370a12.19.2025.11.03.04.24.35
+        d=1e100.net; s=20230601; t=1762172856; x=1762777656;
+        h=in-reply-to:references:to:from:subject:cc:message-id:date
+         :content-transfer-encoding:mime-version:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=IoGEKixiOf6+YbSpHpvXgbHu1MiS0fbcnkKp3M0gywo=;
+        b=RAvJZ6JqnMP07VxbVm76gO5hgEcn5f0+YtKg0k6dJ6K8prdFp2hKkPOaQwHDhGEVk7
+         rmvzD/1ipyhRR+E+VzH7AKmkc9PII/x1EbWEP3eZt25Z8LsxVXyNtRr7vVaorvlK01ro
+         T906iN3OxkIk5RuxhNiSZoMCE6HPhiQYtzVo0hypIItmJ5NHxUaSadCCpN9UL0fynlLO
+         Li6nCtenSiJ9Tjn1CMI8E5rg1fGP4pyjJCLwJAQTF6c/WyJvnu6OpSB/DucdXBEj5zfj
+         n5K+U6WFBNBn+dJKdkamPYIMQ/Bs28mWrUaLbUmIoXleH/WqOkX6fe8C+TUEn0AJ4yOj
+         qxyg==
+X-Forwarded-Encrypted: i=1; AJvYcCVpU8krRjmlfsCARC7mxqzJIf4cb4xhq9Hio2+A5nvqGizXbdS7FBh+M3eWEYO+2GgP/1mzfhxDbxPBU5lP@vger.kernel.org
+X-Gm-Message-State: AOJu0YwUBuSyPKkKPkarrE1aCOH7DHJqft/AKi/kz7qHXl8kLC/6xqBA
+	ciJHVLRTqiMIUcrtWDAy0DXNPrlyBy8Zf76ev1qPpTYPemXbC7PNsBW3YcjbJx5ZdGI=
+X-Gm-Gg: ASbGncutR3iMnXDlwvQuB9ZOkkIgzPhSPx2benl8+ZqkiQw2dOceQ5VYU3KqjVEe58+
+	sRvpUijpmYAXcdDiLb7WvA7KLA6MNEg7w3MaY5mqvGcO5WGE7Y69rUYCm6afOLUPM1J2+byDT0m
+	W5HdqgmArt+eVbCgVFoTCqj6/yMlDkPJ1S9w6Pu3O5UOxAk7clfRV/GGlYDUBBraPDlEMQ0Urqz
+	iKMvKrSFe5Z6R/Tb75Mk+Uqmo66LI1CgkMwp+y+c0nmL8YJ8uWwzIhW/fjVxFXu5bDMku3buqyg
+	tdmFmbGbeyPokXHp29kejqLCk+JhanlcHyzRJ2BD+JHh59QbpsUUVndG8FwXAzRnXBK5QZMm3Tk
+	P2f/Uuc3QFcbNjVofYgofne7TvQFnr0hUDdm+7RusD2tIPSX3F7w0lqP7/9LsRt1XZWvjaFKAxb
+	28zkuBqmjoKA++0WtXWofX1OaqZOD4PcXNoyXbkSuXqwI50Q==
+X-Google-Smtp-Source: AGHT+IEDliw+6lMJHirYDXmx61WJGlCahIYt8y75zXE63Jfyn2/OoGc7w3DNRT31bKf1ipSgsYdjnQ==
+X-Received: by 2002:a17:906:c10b:b0:b6d:8e29:8f67 with SMTP id a640c23a62f3a-b70701ae016mr1324652566b.26.1762172855980;
+        Mon, 03 Nov 2025 04:27:35 -0800 (PST)
+Received: from localhost (144-178-202-139.static.ef-service.nl. [144.178.202.139])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-b70a9fb80e2sm548025366b.69.2025.11.03.04.27.35
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 03 Nov 2025 04:24:37 -0800 (PST)
-Message-ID: <89d1eaba-557c-4df6-b65c-b2105ec20788@oss.qualcomm.com>
-Date: Mon, 3 Nov 2025 13:24:35 +0100
+        Mon, 03 Nov 2025 04:27:35 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Mon, 03 Nov 2025 13:27:35 +0100
+Message-Id: <DDZ2560R89E4.2A538CLIBA9B2@fairphone.com>
+Cc: <~postmarketos/upstreaming@lists.sr.ht>, <phone-devel@vger.kernel.org>,
+ <linux-pm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+ <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+ <linux-crypto@vger.kernel.org>
 Subject: Re: [PATCH v3 0/7] Various dt-bindings for Milos and The Fairphone
  (Gen. 6) addition
-To: Luca Weiss <luca.weiss@fairphone.com>,
-        "Rafael J. Wysocki" <rafael@kernel.org>,
-        Viresh Kumar <viresh.kumar@linaro.org>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley
- <conor+dt@kernel.org>,
-        Manivannan Sadhasivam <mani@kernel.org>,
-        Herbert Xu <herbert@gondor.apana.org.au>,
-        "David S. Miller" <davem@davemloft.net>, Vinod Koul <vkoul@kernel.org>,
-        Thomas Gleixner <tglx@linutronix.de>,
-        Bjorn Andersson
- <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>
-Cc: ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
-        linux-pm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-crypto@vger.kernel.org
+From: "Luca Weiss" <luca.weiss@fairphone.com>
+To: "Konrad Dybcio" <konrad.dybcio@oss.qualcomm.com>, "Luca Weiss"
+ <luca.weiss@fairphone.com>, "Rafael J. Wysocki" <rafael@kernel.org>,
+ "Viresh Kumar" <viresh.kumar@linaro.org>, "Rob Herring" <robh@kernel.org>,
+ "Krzysztof Kozlowski" <krzk+dt@kernel.org>, "Conor Dooley"
+ <conor+dt@kernel.org>, "Manivannan Sadhasivam" <mani@kernel.org>, "Herbert
+ Xu" <herbert@gondor.apana.org.au>, "David S. Miller" <davem@davemloft.net>,
+ "Vinod Koul" <vkoul@kernel.org>, "Thomas Gleixner" <tglx@linutronix.de>,
+ "Bjorn Andersson" <andersson@kernel.org>, "Konrad Dybcio"
+ <konradybcio@kernel.org>
+X-Mailer: aerc 0.21.0-0-g5549850facc2
 References: <20250905-sm7635-fp6-initial-v3-0-0117c2eff1b7@fairphone.com>
  <c93afd94-9d94-42fb-a312-df6e26bb2bc8@oss.qualcomm.com>
  <DDZ1X799V2KV.269J9YL1AGCIF@fairphone.com>
  <0fd020e4-636a-4bb3-9c22-7a5b16e4d3c3@oss.qualcomm.com>
-Content-Language: en-US
-From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-In-Reply-To: <0fd020e4-636a-4bb3-9c22-7a5b16e4d3c3@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Authority-Analysis: v=2.4 cv=NYbrFmD4 c=1 sm=1 tr=0 ts=69089f07 cx=c_pps
- a=wEM5vcRIz55oU/E2lInRtA==:117 a=FpWmc02/iXfjRdCD7H54yg==:17
- a=IkcTkHD0fZMA:10 a=6UeiqGixMTsA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=6H0WHjuAAAAA:8 a=efwxOTLiV638Ii7ixkkA:9
- a=QEXdDO2ut3YA:10 a=OIgjcC2v60KrkQgK7BGD:22 a=Soq9LBFxuPC4vsCAQt-j:22
- a=HhbK4dLum7pmb74im6QT:22
-X-Proofpoint-GUID: WvrmlgABl6cX2T7XIZlj11JVIuVoI5OW
-X-Proofpoint-ORIG-GUID: WvrmlgABl6cX2T7XIZlj11JVIuVoI5OW
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMTAzMDExMiBTYWx0ZWRfXyuHlONySkp2C
- rOySR/Ay8tu9fWu+oxPP402Rg9HRq4h5G/ZcaDoiv5jlCK7CJylGior+hm7VNdSuB5zHmtJ4vl2
- Onqmp8Sh5HzRneZF/KUiRWfCxPVixpi5hqZ2MUiq5HStq1m0raMnnGO79gy84n9dgGBO7QOhwlT
- fGXDzLZLPNnSgsVgEO3TV6nmWZXXgm6V2KM1/ii3wZ7+7mal0t6UC98gcO0/qQptDRicDZNCzYg
- mx//LCsI8tP8z9auNja+26pTy7LLDVVPSjjrNfiSDtgnZd4lNlHKZJiKIaMLNdLp6Csu9Frqm2k
- vLw4ElqkNRrKcOvIYvbvd8pnUykXlLMKldjivwtSQjX93KkwuEPlFds630N1m3zvW7kktHcXpGs
- 0Ee9ZWiAqulGkZrm9H8Gwsb3X17/nw==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
- definitions=2025-11-03_01,2025-11-03_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 phishscore=0 impostorscore=0 spamscore=0 lowpriorityscore=0
- adultscore=0 priorityscore=1501 suspectscore=0 bulkscore=0 clxscore=1015
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2510240001 definitions=main-2511030112
+ <89d1eaba-557c-4df6-b65c-b2105ec20788@oss.qualcomm.com>
+In-Reply-To: <89d1eaba-557c-4df6-b65c-b2105ec20788@oss.qualcomm.com>
 
-On 11/3/25 1:23 PM, Konrad Dybcio wrote:
-> On 11/3/25 1:17 PM, Luca Weiss wrote:
->> On Mon Nov 3, 2025 at 1:14 PM CET, Konrad Dybcio wrote:
->>> On 9/5/25 12:40 PM, Luca Weiss wrote:
->>>> Document various bits of the Milos SoC in the dt-bindings, which don't
->>>> really need any other changes.
+On Mon Nov 3, 2025 at 1:24 PM CET, Konrad Dybcio wrote:
+> On 11/3/25 1:23 PM, Konrad Dybcio wrote:
+>> On 11/3/25 1:17 PM, Luca Weiss wrote:
+>>> On Mon Nov 3, 2025 at 1:14 PM CET, Konrad Dybcio wrote:
+>>>> On 9/5/25 12:40 PM, Luca Weiss wrote:
+>>>>> Document various bits of the Milos SoC in the dt-bindings, which don'=
+t
+>>>>> really need any other changes.
+>>>>>
+>>>>> Then we can add the dtsi for the Milos SoC and finally add a dts for
+>>>>> the newly announced The Fairphone (Gen. 6) smartphone.
+>>>>>
+>>>>> Dependencies:
+>>>>> * The dt-bindings should not have any dependencies on any other patch=
+es.
+>>>>> * The qcom dts bits depend on most other Milos patchsets I have sent =
+in
+>>>>>   conjuction with this one. The exact ones are specified in the b4 de=
+ps.
+>>>>>
+>>>>> Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
+>>>>> ---
 >>>>
->>>> Then we can add the dtsi for the Milos SoC and finally add a dts for
->>>> the newly announced The Fairphone (Gen. 6) smartphone.
+>>>> FWIW this looks good.. where are we with regards to the dependencies?
 >>>>
->>>> Dependencies:
->>>> * The dt-bindings should not have any dependencies on any other patches.
->>>> * The qcom dts bits depend on most other Milos patchsets I have sent in
->>>>   conjuction with this one. The exact ones are specified in the b4 deps.
->>>>
->>>> Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
->>>> ---
+>>>> Are we waiting for anything else than the PMIV0104 (as part of glymur/
+>>>> kaanapali)?
 >>>
->>> FWIW this looks good.. where are we with regards to the dependencies?
+>>> Hi,
 >>>
->>> Are we waiting for anything else than the PMIV0104 (as part of glymur/
->>> kaanapali)?
->>
->> Hi,
->>
->> From my side, I'm not aware of any patches that have any unresolved
->> comments, so I'm essentially just waiting for the correct maintainers to
->> pick up the variety of dt-bindings patches in this series, and the
->> PMIV0104 and PM7550 series.
->>
->> Any advice to make this actually proceed would be appreciated since most
->> have been waiting for quite a while.
-> 
-> Apparently I misremembered, kaanapali actually uses PMH0101 and PMH0110
-> and PMH0104, whereas glymur uses pmh0101, pmcx0102, pmh0110 and pmh0104
-> 
-> (it is not easy indeed)
-> 
-> so it looks like PMIV0104 only showed up with your series.. and I'm not
-> opposed to it, let me leave some review tags there, and I suppose I'll
-> just ask you to rebase this series on next & make sure the bindings
-> checker is happy
+>>> From my side, I'm not aware of any patches that have any unresolved
+>>> comments, so I'm essentially just waiting for the correct maintainers t=
+o
+>>> pick up the variety of dt-bindings patches in this series, and the
+>>> PMIV0104 and PM7550 series.
+>>>
+>>> Any advice to make this actually proceed would be appreciated since mos=
+t
+>>> have been waiting for quite a while.
+>>=20
+>> Apparently I misremembered, kaanapali actually uses PMH0101 and PMH0110
+>> and PMH0104, whereas glymur uses pmh0101, pmcx0102, pmh0110 and pmh0104
+>>=20
+>> (it is not easy indeed)
+>>=20
+>> so it looks like PMIV0104 only showed up with your series.. and I'm not
+>> opposed to it, let me leave some review tags there, and I suppose I'll
+>> just ask you to rebase this series on next & make sure the bindings
+>> checker is happy
+>
+> Well I apparently already left the review tags there.. please resend
+> all of them (2 pmics + this one) as a single v4
 
-Well I apparently already left the review tags there.. please resend
-all of them (2 pmics + this one) as a single v4
+Will this help with anything though? Most/all dt-bindings patches have
+been unmodified since v2 and haven't been picked up since 13 July...
 
-Konrad
+I can try if you really think it could help...
+
+Regards
+Luca
 
