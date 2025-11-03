@@ -1,126 +1,103 @@
-Return-Path: <linux-arm-msm+bounces-80051-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-80052-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8D27CC29F61
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 03 Nov 2025 04:29:30 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7B7D0C29FD0
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 03 Nov 2025 04:46:40 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 4C4983AF16F
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Nov 2025 03:29:29 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id E5D93188987D
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Nov 2025 03:47:04 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id EAB2B2882D3;
-	Mon,  3 Nov 2025 03:29:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id AFB811F130A;
+	Mon,  3 Nov 2025 03:46:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=oracle.com header.i=@oracle.com header.b="ofREGU/b"
+	dkim=pass (2048-bit key) header.d=packett.cool header.i=@packett.cool header.b="NmvW7J/0"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-00069f02.pphosted.com (mx0a-00069f02.pphosted.com [205.220.165.32])
+Received: from out-177.mta1.migadu.com (out-177.mta1.migadu.com [95.215.58.177])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7AC2127FB12;
-	Mon,  3 Nov 2025 03:29:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.165.32
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5AFCE1531F9
+	for <linux-arm-msm@vger.kernel.org>; Mon,  3 Nov 2025 03:46:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.177
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762140565; cv=none; b=pjGv+tRJeGdrtYIGJHMQom+ZTq6lTdiVi3NfwUlInLCu/K+tT3xhG478TxZS6iGYNhY0SgXhfx3ll5R27adb+g/zv9vfD/JY4CJQg88oUaLsCqq8rqRa+ckj7KmcYHZYQqhasfMsQrdXmsrOjVW/tMKR6Khoe0cynfqFX5ih0Q8=
+	t=1762141596; cv=none; b=V+hXPq2ee+9/yKiLAj1RIyaHDmWje6NsS9xYUhh9GCoY36HlJrKtefDP0ZKnWv8rwTq+j5xbbNZimwAJgJL691XVhcjCT5wXNZAKYALvcKd6MnVxeif8jV6C6QT32ORVkOEI1oMyGaelKWEPGICN4cAsBfPBVq0t2ETryO6D+Lc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762140565; c=relaxed/simple;
-	bh=tqmitF/29Z4qlmJwQbxhrvzFFGjOil8856TO5Q4MXJo=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=gv86jzygGBp10v6xCq0PL7x9f9gExDG0g1csBjozTObd3Btgnl9Kklna+eTBSp+OZmzcGoYHuiA3S925J6Pu+BZ1YmybaTi508mf8pMqDTUxZ40OYGNnhPHyz0yUrlHW8Pj4e+SQOu+C3kPC/A8Szg+xA/IvIrgbVA7TgHyjFXg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oracle.com; spf=pass smtp.mailfrom=oracle.com; dkim=pass (2048-bit key) header.d=oracle.com header.i=@oracle.com header.b=ofREGU/b; arc=none smtp.client-ip=205.220.165.32
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oracle.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oracle.com
-Received: from pps.filterd (m0246627.ppops.net [127.0.0.1])
-	by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5A33P1YP026448;
-	Mon, 3 Nov 2025 03:29:15 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
-	:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=
-	corp-2025-04-25; bh=X/229lv+AJ3iI3m1nNDbvqrCsH8Cak0URuZG25qwuOk=; b=
-	ofREGU/b52VhUyfDOLAORZWRW4tdZRNTSqb0677WoH2aChlx53RJLh+JOcIVJR15
-	hi8icCsi5+/uMAphFvVF9tCEKlEamqEIDP6lo0qGKKC+PXX59ZTGcxctbmw8ZVku
-	NXcfsN4Yb1gF7Y0MIEt4N6Q6e10WKpQjNm5syS+Vst/z8qIQiI0rsmpR1T2uzWIx
-	mGf+yTDUM8Qi8iRedwIt5tOenH4kRsX3OykZKMuYwBxHeGvm6NjVoENIQ0RYJBub
-	cYF8SeK/fFvo4v+XjHQOg3zJbfzExrdbGcB8cVs6MuuMCgdZSwn1ZnwcoSomsDL4
-	6uE83vEfkXUWLIaeUjjNJQ==
-Received: from phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com (phxpaimrmta01.appoci.oracle.com [138.1.114.2])
-	by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 4a6mf6g0cj-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-	Mon, 03 Nov 2025 03:29:15 +0000 (GMT)
-Received: from pps.filterd (phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
-	by phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com (8.18.1.2/8.18.1.2) with ESMTP id 5A302BYv017316;
-	Mon, 3 Nov 2025 03:29:14 GMT
-Received: from pps.reinject (localhost [127.0.0.1])
-	by phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTPS id 4a58n7av8a-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-	Mon, 03 Nov 2025 03:29:14 +0000
-Received: from phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com (phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
-	by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 5A33TCcr011931;
-	Mon, 3 Nov 2025 03:29:14 GMT
-Received: from ca-mkp2.ca.oracle.com.com (mpeterse-ol9.allregionaliads.osdevelopmeniad.oraclevcn.com [100.100.251.135])
-	by phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTP id 4a58n7av6s-2;
-	Mon, 03 Nov 2025 03:29:13 +0000
-From: "Martin K. Petersen" <martin.petersen@oracle.com>
-To: Manivannan Sadhasivam <mani@kernel.org>,
-        Alim Akhtar <alim.akhtar@samsung.com>,
-        Avri Altman <avri.altman@wdc.com>,
-        Bart Van Assche <bvanassche@acm.org>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>, Andy Gross <agross@kernel.org>,
-        linux-arm-msm@vger.kernel.org, linux-scsi@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc: "Martin K . Petersen" <martin.petersen@oracle.com>
-Subject: Re: [PATCH] dt-bindings: ufs: qcom: Drop redundant "reg" constraints
-Date: Sun,  2 Nov 2025 22:29:07 -0500
-Message-ID: <176213716994.2123602.16843780415769421339.b4-ty@oracle.com>
-X-Mailer: git-send-email 2.51.1
-In-Reply-To: <20251027113107.75835-2-krzysztof.kozlowski@linaro.org>
-References: <20251027113107.75835-2-krzysztof.kozlowski@linaro.org>
+	s=arc-20240116; t=1762141596; c=relaxed/simple;
+	bh=yUx/o+iM8bZDA46a4ngR/r4JqpMprbDWFyaV1v974xM=;
+	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
+	 In-Reply-To:Content-Type; b=J9mrWZNv0eNIdw4soX/QW4rAbS1yp3PLjNt67RsrkvTm3CFGhB/EQbRaegzgwMOMkpu47G7VlxDAw8Be/XbkqK0aWp0Jeu0BgXpJlJa67yMNyDMTFGXSjyIdJngQWOrj5M4aiOn7bPm9qsmQTBFwsJuPxiqgowyOXq7str4SUQs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=packett.cool; spf=pass smtp.mailfrom=packett.cool; dkim=pass (2048-bit key) header.d=packett.cool header.i=@packett.cool header.b=NmvW7J/0; arc=none smtp.client-ip=95.215.58.177
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=packett.cool
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=packett.cool
+Message-ID: <8f003bfb-8279-4c65-a271-c1e4a029043d@packett.cool>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=packett.cool;
+	s=key1; t=1762141591;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=dr0ikCBUo2Fu54QL3NUrxLxEo1BIiZlIC6veZgMQ1n4=;
+	b=NmvW7J/0D68DT9PC8Wgy4wcDNbi3KsOvcGChZbs5V5yuDJaPzp+cBQIOOI8ctcIIIWCKSF
+	VUh8PvSyltBt/EQ/GE2zz3N7nIp+LVCvWqI7f72RuOZzs6Mw0YEySufoVEXvj1KArUtHa+
+	/Mhm0aJ8XQ03Rpdm8plVdLqMx00QKTfp8m9grhXmc5f6v6tYqrtHTDk8GzmSZxGRf6FBw3
+	2IpZ+zXgA2MfKZScWG50uB3xk2KbsGH3sQrjmuZ+7jzYhX1A93RT2xTtWHdEjDujRHKdXN
+	C00FGIRc0/TOt3D2FXTSnhlHBtDCjLIqDIjrjv2gjgayn/ObA4YHMt7HP0Wiaw==
+Date: Mon, 3 Nov 2025 00:46:13 -0300
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
- definitions=2025-11-02_02,2025-10-29_03,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 bulkscore=0 mlxscore=0 suspectscore=0
- mlxlogscore=815 malwarescore=0 spamscore=0 adultscore=0 phishscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2510240000
- definitions=main-2511030029
-X-Proofpoint-ORIG-GUID: MyYMB18UIcZUsSklm7lIqfu-nJzz1MS2
-X-Proofpoint-GUID: MyYMB18UIcZUsSklm7lIqfu-nJzz1MS2
-X-Authority-Analysis: v=2.4 cv=Xp73+FF9 c=1 sm=1 tr=0 ts=6908218b cx=c_pps
- a=XiAAW1AwiKB2Y8Wsi+sD2Q==:117 a=XiAAW1AwiKB2Y8Wsi+sD2Q==:17
- a=IkcTkHD0fZMA:10 a=6UeiqGixMTsA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=VwQbUJbxAAAA:8 a=A0Ky7YohR1HiQrBXehkA:9 a=QEXdDO2ut3YA:10
- a=cPQSjfK2_nFv0Q5t_7PE:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMTAzMDAyOSBTYWx0ZWRfX30U56Y9Yv6fy
- D2xWjzSvB8XDvNJtg+ODC7VhAuR6251pzddB4hLkguD6XKyF1thq4VaFGfE8NujRdFsOOyz0nQF
- u91D5FOYAhDy1VMT+DqqJ1p6qL/c3ACNE9gA8QycPNzFnB+Rl9mxCoDf4Qw5ZZiFxdrCC83ZC/m
- LDwp6jv94hheMPPoAL6rSmpRyUwxAbIfnqxLASODImTMr8V51m9+FtwMrqdsVXEVy1lndIxWMrs
- uAF9LT6imOLwmAV0WOD6+eU3IBtemlM0ojJnsY4rxT3mRfbrmLcsQc5ZCrhOcILdEBS1MACK2dl
- RYEA6T3WvgmGKUOUD9+6Q8t3mzday36qqGi8OYoIKaivzO7WgbtZ8NINhz4aP6cP4elRWyWP14m
- iVqtGjIyt77+xC6W0I641Tie+/WMDg==
+Subject: Re: [PATCH 0/2] power: supply: qcom_battmgr: improve charge control
+ threshold handling
+To: Sebastian Reichel <sebastian.reichel@collabora.com>,
+ Sebastian Reichel <sre@kernel.org>, Fenglin Wu
+ <fenglin.wu@oss.qualcomm.com>, Neil Armstrong <neil.armstrong@linaro.org>,
+ linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
+ linux-kernel@vger.kernel.org
+References: <20251012233333.19144-2-val@packett.cool>
+ <176213091335.301408.9120443011267055817.b4-ty@collabora.com>
+Content-Language: en-US
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
+From: Val Packett <val@packett.cool>
+In-Reply-To: <176213091335.301408.9120443011267055817.b4-ty@collabora.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Migadu-Flow: FLOW_OUT
 
-On Mon, 27 Oct 2025 12:31:08 +0100, Krzysztof Kozlowski wrote:
+On 11/2/25 9:48 PM, Sebastian Reichel wrote:
 
-> The "reg" in top-level has maxItems:2, thus repeating this in "if:then:"
-> blocks is redundant.  Similarly number of items cannot be less than 1.
-> 
-> 
+> On Sun, 12 Oct 2025 20:32:17 -0300, Val Packett wrote:
+>> Currently, upowerd is unable to turn off the battery preservation mode[1]
+>> on Qualcomm laptops, because it does that by setting the start threshold to
+>> zero and the driver returns an error:
+>>
+>> pmic_glink.power-supply.0: charge control start threshold exceed range: [50 - 95]
+>>
+>> Kernel documentation says the end threshold must be clamped[2] but does
+>> not say anything about the start threshold.
+>>
+>> [...]
+> Applied, thanks!
+>
+> [1/2] power: supply: qcom_battmgr: clamp charge control thresholds
+>        commit: 8809980fdc8a86070667032fa4005ee83f1c62f3
+> [2/2] power: supply: qcom_battmgr: support disabling charge control
+>        commit: 446fcf494691da4e685923e5fad02b163955fc0e
 
-Applied to 6.19/scsi-queue, thanks!
 
-[1/1] dt-bindings: ufs: qcom: Drop redundant "reg" constraints
-      https://git.kernel.org/mkp/scsi/c/525a411f9a5f
+Woahh.. please revert the second one.
 
--- 
-Martin K. Petersen
+I'm sorry, I thought this was discussed here but apparently it was only 
+on IRC and I must've assumed that the patches weren't going anywhere 
+because of the lack of R-b..
+
+The disable bit was acting rather strange after all, we'd need more work 
+to figure out if that's even possible. Let's leave it at the clamp only.
+
+~val
+
 
