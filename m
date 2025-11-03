@@ -1,103 +1,103 @@
-Return-Path: <linux-arm-msm+bounces-80052-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-80053-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7B7D0C29FD0
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 03 Nov 2025 04:46:40 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 08A9DC29FDF
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 03 Nov 2025 04:48:14 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id E5D93188987D
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Nov 2025 03:47:04 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id DED713A844F
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Nov 2025 03:48:11 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id AFB811F130A;
-	Mon,  3 Nov 2025 03:46:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=packett.cool header.i=@packett.cool header.b="NmvW7J/0"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4A23C27FB12;
+	Mon,  3 Nov 2025 03:48:08 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from out-177.mta1.migadu.com (out-177.mta1.migadu.com [95.215.58.177])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from cstnet.cn (smtp84.cstnet.cn [159.226.251.84])
+	(using TLSv1.2 with cipher DHE-RSA-AES256-SHA (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5AFCE1531F9
-	for <linux-arm-msm@vger.kernel.org>; Mon,  3 Nov 2025 03:46:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.177
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6144EEA8;
+	Mon,  3 Nov 2025 03:48:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=159.226.251.84
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762141596; cv=none; b=V+hXPq2ee+9/yKiLAj1RIyaHDmWje6NsS9xYUhh9GCoY36HlJrKtefDP0ZKnWv8rwTq+j5xbbNZimwAJgJL691XVhcjCT5wXNZAKYALvcKd6MnVxeif8jV6C6QT32ORVkOEI1oMyGaelKWEPGICN4cAsBfPBVq0t2ETryO6D+Lc=
+	t=1762141688; cv=none; b=SKQcXF4WZnDqSVqIccZiBwqUa2vEe6FZ3+/3NB4ah0klZd2as9PCAkQ1vZfMUDSjrbRqdYbsBRo9jpcThG8RLHlumFBWeIfQtC+51GCM7R5yu+dQ4ize8hoJQs0EjiEj6fzibubTGInwjomISBy66QtLdDg0e938soIZ71ZeAww=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762141596; c=relaxed/simple;
-	bh=yUx/o+iM8bZDA46a4ngR/r4JqpMprbDWFyaV1v974xM=;
-	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
-	 In-Reply-To:Content-Type; b=J9mrWZNv0eNIdw4soX/QW4rAbS1yp3PLjNt67RsrkvTm3CFGhB/EQbRaegzgwMOMkpu47G7VlxDAw8Be/XbkqK0aWp0Jeu0BgXpJlJa67yMNyDMTFGXSjyIdJngQWOrj5M4aiOn7bPm9qsmQTBFwsJuPxiqgowyOXq7str4SUQs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=packett.cool; spf=pass smtp.mailfrom=packett.cool; dkim=pass (2048-bit key) header.d=packett.cool header.i=@packett.cool header.b=NmvW7J/0; arc=none smtp.client-ip=95.215.58.177
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=packett.cool
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=packett.cool
-Message-ID: <8f003bfb-8279-4c65-a271-c1e4a029043d@packett.cool>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=packett.cool;
-	s=key1; t=1762141591;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=dr0ikCBUo2Fu54QL3NUrxLxEo1BIiZlIC6veZgMQ1n4=;
-	b=NmvW7J/0D68DT9PC8Wgy4wcDNbi3KsOvcGChZbs5V5yuDJaPzp+cBQIOOI8ctcIIIWCKSF
-	VUh8PvSyltBt/EQ/GE2zz3N7nIp+LVCvWqI7f72RuOZzs6Mw0YEySufoVEXvj1KArUtHa+
-	/Mhm0aJ8XQ03Rpdm8plVdLqMx00QKTfp8m9grhXmc5f6v6tYqrtHTDk8GzmSZxGRf6FBw3
-	2IpZ+zXgA2MfKZScWG50uB3xk2KbsGH3sQrjmuZ+7jzYhX1A93RT2xTtWHdEjDujRHKdXN
-	C00FGIRc0/TOt3D2FXTSnhlHBtDCjLIqDIjrjv2gjgayn/ObA4YHMt7HP0Wiaw==
-Date: Mon, 3 Nov 2025 00:46:13 -0300
+	s=arc-20240116; t=1762141688; c=relaxed/simple;
+	bh=M75ey4SC1nq26YdA3zMPnasTfomPxSxVwmgJl3E+jAw=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=XZmzccWodxueLjpTRW6DZ05KArnAwhrHy7P3Mb0jI6RzpbW/vSZq/qlztZN8wMluivP+/4BWg2FMLK9w6UBVRuh6w3AHsUzHYyjIk+mhsbJprXUwWIZYk2WOxkhpX90G0yipuNTrpdlUGFDVrZA4sYhWVJaVnX2lPFeww0odjpo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iscas.ac.cn; spf=pass smtp.mailfrom=iscas.ac.cn; arc=none smtp.client-ip=159.226.251.84
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iscas.ac.cn
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=iscas.ac.cn
+Received: from DESKTOP-L0HPE2S (unknown [124.16.141.245])
+	by APP-05 (Coremail) with SMTP id zQCowAB34vDnJQhplpMqAQ--.21872S2;
+	Mon, 03 Nov 2025 11:47:53 +0800 (CST)
+From: Haotian Zhang <vulab@iscas.ac.cn>
+To: srini@kernel.org,
+	broonie@kernel.org
+Cc: lgirdwood@gmail.com,
+	jaroslav.kysela@perex.cz,
+	tiwai@suse.com,
+	linux-sound@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	Haotian Zhang <vulab@iscas.ac.cn>
+Subject: [PATCH] soundoc: qcom: va-macro: fix resource leak in va_macro_remove()
+Date: Mon,  3 Nov 2025 11:47:35 +0800
+Message-ID: <20251103034735.90-1-vulab@iscas.ac.cn>
+X-Mailer: git-send-email 2.50.1.windows.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Subject: Re: [PATCH 0/2] power: supply: qcom_battmgr: improve charge control
- threshold handling
-To: Sebastian Reichel <sebastian.reichel@collabora.com>,
- Sebastian Reichel <sre@kernel.org>, Fenglin Wu
- <fenglin.wu@oss.qualcomm.com>, Neil Armstrong <neil.armstrong@linaro.org>,
- linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
- linux-kernel@vger.kernel.org
-References: <20251012233333.19144-2-val@packett.cool>
- <176213091335.301408.9120443011267055817.b4-ty@collabora.com>
-Content-Language: en-US
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
-From: Val Packett <val@packett.cool>
-In-Reply-To: <176213091335.301408.9120443011267055817.b4-ty@collabora.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Migadu-Flow: FLOW_OUT
+Content-Transfer-Encoding: 8bit
+X-CM-TRANSID:zQCowAB34vDnJQhplpMqAQ--.21872S2
+X-Coremail-Antispam: 1UD129KBjvdXoWrKr47KF1rXrWrGF4fXFWDurg_yoWDuwb_C3
+	95Wr48ZFy8Wry2g3yUtr4UAanIvrnxArW5GFs7t3yxGryUtF13XrsrCrn8ur1UWwsak3W5
+	WF1DWrW8Jry3ZjkaLaAFLSUrUUUUjb8apTn2vfkv8UJUUUU8Yxn0WfASr-VFAUDa7-sFnT
+	9fnUUIcSsGvfJTRUUUbsxFF20E14v26r4j6ryUM7CY07I20VC2zVCF04k26cxKx2IYs7xG
+	6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48ve4kI8w
+	A2z4x0Y4vE2Ix0cI8IcVAFwI0_Gr0_Xr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI0_Gr0_
+	Cr1l84ACjcxK6I8E87Iv67AKxVWxJr0_GcWl84ACjcxK6I8E87Iv6xkF7I0E14v26rxl6s
+	0DM2AIxVAIcxkEcVAq07x20xvEncxIr21l5I8CrVACY4xI64kE6c02F40Ex7xfMcIj6xII
+	jxv20xvE14v26r106r15McIj6I8E87Iv67AKxVW8JVWxJwAm72CE4IkC6x0Yz7v_Jr0_Gr
+	1lF7xvr2IYc2Ij64vIr41lF7I21c0EjII2zVCS5cI20VAGYxC7MxkF7I0En4kS14v26r1q
+	6r43MxkIecxEwVAFwVW8GwCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8Jw
+	C20s026c02F40E14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E67AF67kF1VAF
+	wI0_Jw0_GFylIxkGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWUCwCI42IY6xIIjx
+	v20xvEc7CjxVAFwI0_Jr0_Gr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2
+	jsIE14v26r1j6r4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Gr0_Gr1UYxBIdaVFxhVjvjDU0x
+	ZFpf9x0JU3CzNUUUUU=
+X-CM-SenderInfo: pyxotu46lvutnvoduhdfq/1tbiBg0PA2kIGm8wxwAAsk
 
-On 11/2/25 9:48 PM, Sebastian Reichel wrote:
+The va_macro_probe() function calls clk_hw_get_clk() to obtain the
+fsgen clock, which increments the clock's reference count. However,
+the corresponding va_macro_remove() function does not call clk_put()
+to release this reference, resulting in a resource leak.
 
-> On Sun, 12 Oct 2025 20:32:17 -0300, Val Packett wrote:
->> Currently, upowerd is unable to turn off the battery preservation mode[1]
->> on Qualcomm laptops, because it does that by setting the start threshold to
->> zero and the driver returns an error:
->>
->> pmic_glink.power-supply.0: charge control start threshold exceed range: [50 - 95]
->>
->> Kernel documentation says the end threshold must be clamped[2] but does
->> not say anything about the start threshold.
->>
->> [...]
-> Applied, thanks!
->
-> [1/2] power: supply: qcom_battmgr: clamp charge control thresholds
->        commit: 8809980fdc8a86070667032fa4005ee83f1c62f3
-> [2/2] power: supply: qcom_battmgr: support disabling charge control
->        commit: 446fcf494691da4e685923e5fad02b163955fc0e
+Add clk_put() call in va_macro_remove() to properly release the fsgen
+clock reference.
 
+Fixes: 908e6b1df26e ("ASoC: codecs: lpass-va-macro: Add support to VA Macro")
+Signed-off-by: Haotian Zhang <vulab@iscas.ac.cn>
+---
+ sound/soc/codecs/lpass-va-macro.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-Woahh.. please revert the second one.
-
-I'm sorry, I thought this was discussed here but apparently it was only 
-on IRC and I must've assumed that the patches weren't going anywhere 
-because of the lack of R-b..
-
-The disable bit was acting rather strange after all, we'd need more work 
-to figure out if that's even possible. Let's leave it at the clamp only.
-
-~val
+diff --git a/sound/soc/codecs/lpass-va-macro.c b/sound/soc/codecs/lpass-va-macro.c
+index a49551f3fb29..440d0f54aa33 100644
+--- a/sound/soc/codecs/lpass-va-macro.c
++++ b/sound/soc/codecs/lpass-va-macro.c
+@@ -1663,6 +1663,7 @@ static void va_macro_remove(struct platform_device *pdev)
+ {
+ 	struct va_macro *va = dev_get_drvdata(&pdev->dev);
+ 
++	clk_put(va->fsgen);
+ 	if (va->has_npl_clk)
+ 		clk_disable_unprepare(va->npl);
+ 
+-- 
+2.50.1.windows.1
 
 
