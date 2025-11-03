@@ -1,105 +1,105 @@
-Return-Path: <linux-arm-msm+bounces-80157-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-80158-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 36981C2DA51
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 03 Nov 2025 19:20:35 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id E4A42C2DA59
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 03 Nov 2025 19:20:38 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id E5E623BDCD3
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Nov 2025 18:20:33 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 62E37189B68E
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Nov 2025 18:21:03 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 37C3D28C00C;
-	Mon,  3 Nov 2025 18:20:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id DA63327F16A;
+	Mon,  3 Nov 2025 18:20:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="Q3kmv1b/";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="dU8az5vZ"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="Vkw5OOIN";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="e5n3sMwc"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91358288510
-	for <linux-arm-msm@vger.kernel.org>; Mon,  3 Nov 2025 18:20:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E65A23D7F4
+	for <linux-arm-msm@vger.kernel.org>; Mon,  3 Nov 2025 18:20:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762194023; cv=none; b=HnQ80c8BU5LGSYxiOv4kyR1ZkxpA8IWcFp8kF1pJrK9YbYdwGLl2DJyOirv8NwbQlKSBVC6LZlT1jZQ4D66bZzmxWOE49IA1Q/D201vk3hGnO3NYKlHc/dcruKOdLSo5KAjXLYYafLtOjzODMxKE7gMfwZw12AB9nLinGEMiKHs=
+	t=1762194025; cv=none; b=uzsQoppvgteqUv+wG8dgs945nDAF7vl9z/tQxkdDWg5wAJkyJcSCBZ+w28U18oYWtqp1gNxPU16B+7pRHiXy928HZppPG/O5FtQLEbC/w75/GT59Wg6rLiq/hd3Cd53Kp98+jSflyCY1zsiElQ5yLC/i1QGeN/4bS2q9ffprlVQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762194023; c=relaxed/simple;
-	bh=oo2xnbG8WfJs7Ko5NlyD7ow8RcCc85G0ZwCs7i2rSnA=;
+	s=arc-20240116; t=1762194025; c=relaxed/simple;
+	bh=EmpIj8P++BSickU5H2wOriC+YTmA4n8f8xIEd+fKaSI=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=TL9J+omGrCzrJ+6JEicGpfMR5FtW3EXW3oaVjb1c0WSZdFVRreygiUHehDwW1WDvGK27KilQ0KnQV+D8SzLsORSv9BtuLBkdQfmNFVz5z/LVE2oxx7PZZX3f7SxiWKs1wxn0StHy5iakl3W4hnL7cuXc/NgScqOEax1WVOl2p+g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=Q3kmv1b/; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=dU8az5vZ; arc=none smtp.client-ip=205.220.180.131
+	 MIME-Version; b=K6MNNwvN8ndwiXly5yVr3X/OgeamFzfudrdfjHS1++acNx1O+LVc9MVlCcqtYIVm6OKfieXMLSdm0sA/yzOPjT0uQhnwBtW6BEh2GK4u5d/BH0/qu24tRugwS9TnRViUuOpnAKXBQhmzQZ1D5yR0zS+Z8rlUHcymGoZTq+TeBbE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=Vkw5OOIN; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=e5n3sMwc; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 5A3GfjeN3734212
-	for <linux-arm-msm@vger.kernel.org>; Mon, 3 Nov 2025 18:20:20 GMT
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 5A3GfiFB3693375
+	for <linux-arm-msm@vger.kernel.org>; Mon, 3 Nov 2025 18:20:23 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
 	cc:content-transfer-encoding:date:from:in-reply-to:message-id
-	:mime-version:references:subject:to; s=qcppdkim1; bh=9+fmEwX3ZGj
-	Jy7IkWaAmJIlp4fYLouSuD+9Zy1mJlxc=; b=Q3kmv1b/Uo4espoie30HgfH3dRn
-	5kDYBLT31qhA9LjFLAxSgipXg1OAL4gc/yfS9nkqC0oYdS5big1fx40R+hkLBYRz
-	mFkbPvMH0OqjPnCLPl5RMGzu3zt2TPn6TnyT0nUk4TU8Y47fDK9yNSQ52Z/vuDTt
-	VODTEQqV78od1NjvNss0eTzY0D+OAXCzI3IeQcKJIeveuuG0P6JiYrgJ/DunXT0Y
-	Ugv5FYUuRE/uW6YgEHgOpv5PLLmgeKnbeqKV2kRkiav0oABW6LMMlng3Wrn2Sg/o
-	vrnS/FN279dkbx3bY4lB96NFuk8drMe1LZ2SgB0auHiJe7gQJSASJM0EQ2Q==
-Received: from mail-qt1-f199.google.com (mail-qt1-f199.google.com [209.85.160.199])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4a6s86hmc7-1
+	:mime-version:references:subject:to; s=qcppdkim1; bh=LTXzGFNw6CR
+	y5ojJanbNoOxz7dlaEuzhm7CxMuaDYAA=; b=Vkw5OOIN7/wrjyLI2/7COt3s5Q1
+	YkV8VK84pHzLjzCsFWGwEr7BkhGm2MM9aDaDbo+aU3NHFxzmVlscz50euB32bvlr
+	ITcrjdbPUydcfnV4AlK82x2A4frPi1KXXRa8k+Z+sJUQU00mrVj0OAnrhl5haG7/
+	B82/2VO1UP+6fZsfr47oZhxvviM5NAfFzpPhpSkmv2ZuLBcHtn+KYlWlIVQdnM6a
+	JVieOy4P94wpYsexIT787gu41TJ92RLOnRpW9/hlUfZPyVxd0wu+6d9uHwZFyhzj
+	BCvYj3MBxljKnBrfX1ypQldqYPjoIqTMCQA5032EZ1wiStMEleVCed810gA==
+Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com [209.85.160.198])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4a6u8b174k-1
 	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Mon, 03 Nov 2025 18:20:20 +0000 (GMT)
-Received: by mail-qt1-f199.google.com with SMTP id d75a77b69052e-4ecf1b7686cso181662091cf.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 03 Nov 2025 10:20:20 -0800 (PST)
+	for <linux-arm-msm@vger.kernel.org>; Mon, 03 Nov 2025 18:20:23 +0000 (GMT)
+Received: by mail-qt1-f198.google.com with SMTP id d75a77b69052e-4ecf8faf8bdso129583811cf.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 03 Nov 2025 10:20:23 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1762194020; x=1762798820; darn=vger.kernel.org;
+        d=oss.qualcomm.com; s=google; t=1762194022; x=1762798822; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=9+fmEwX3ZGjJy7IkWaAmJIlp4fYLouSuD+9Zy1mJlxc=;
-        b=dU8az5vZRdlfp8dXUT5oZ0Eavk+AXRbt/gB/nydyCZPrDNe1RVINs3ciSOA4zShuaR
-         SPWTapyYjjAtIMcUFBndWmRs7+Z7MBFbVcOB4gQBjhSlZ+bkzFKWb60qNHqp0hlYPluK
-         K92qWaYbA/vQIdd4KXY+kLTA49TQYnDgtxpShLVT0WZvZj4bFsMMQOt3O2MEdkogOxJn
-         tNTp+m/7dfveNJnnroFP2QwPSs0SJb1bJ+K4hRnDK7peIiCYBTjrVOt6vz4wflovEPu/
-         +7buBui7zGEABgiQHc8LZpcm9dG2tGhCmKdjDaVAVar12DPaC3A8YyvN2V+Pmle7iYDJ
-         B87A==
+        bh=LTXzGFNw6CRy5ojJanbNoOxz7dlaEuzhm7CxMuaDYAA=;
+        b=e5n3sMwc5k3e8K22mPykZam3i19m9I+E7+I6Xgy7FuTR/qnAYJxDTAG2OxloMcIfC/
+         G7PVRg8y2UCMM/Acinc5v6PbVwJSh6wZMmCuVVc8AyUnCA2u89ni4KcfvrUGl0TaV7fx
+         saB65GJE0BgjI4Dxy8yo5xJ8kxnQvqDaj1T2p/4TNhd4lxtnL5NOfqqF3pfXoyjVDXhn
+         mQTire6Al3WHvpP77yDN+odzErfL7y65CTbpoX/9QqBWnNhspu8RSTiUe5zpRefLmFR2
+         Ui/QYBTUSNBsWv/S1+xDu8Dbt05uMlRRSK1xp8vXdCp0hdMAOG5mPoS0x5HJwl6z5j8+
+         PL/g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1762194020; x=1762798820;
+        d=1e100.net; s=20230601; t=1762194022; x=1762798822;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=9+fmEwX3ZGjJy7IkWaAmJIlp4fYLouSuD+9Zy1mJlxc=;
-        b=rb9piHJ32tToJldFZA80mMsnv8g24f1jhYMlvH7kQOLrP6exmIt31ajQU4EXXA8Pze
-         XHsCVHaPeLWDJgWK67kEcu1pQXtMxNZtgd/trIy4dtc48zH/lHqJXuA8O+pxCv51CSOP
-         f2zQIbW5/rD37Q/i6JubARrvUHIuVN+uZLTPpmfF8IGq4xgCIjILvHKK5gIet4N4lcdL
-         A2NuG0HQVpA6d40sRvLNirQV0ZYkHSYBGqGJ9XB2aPBIhxGM1zOOIuIOSfrtz8o2/yy9
-         eCLc73Zvy4VUPAX+m22nAkIn4ydICgmiWwfTKms7O4pbVtO4YBM3sBGi5L2mJVYHTG9Q
-         6E0A==
-X-Gm-Message-State: AOJu0YxJ3xQldJxjuIbXkUJ7Yvt+mTM+FYoVi/vD9swU5UJ3SNgr0kE7
-	QQ9yyTXDDg/IY2eND3EWR7Zcwl2DcUikNrs5zzvWQAb2xkZQPiTg5NKVn6N6Jy3u5E7gncG2PL+
-	im8BrPekz2NN6Dw1HXoXgP4VR15DWC/8YysxP8Fq2Ob9lchdXh9AJHxjm4b+MvUZVDtRp
-X-Gm-Gg: ASbGnctlEb2toIzLASsDcQ+rASN6LyIOi7ZjkpWrPgAqwgJI1hKBjINceiJB+WYPDLx
-	qKnca/6jJ3djleN5kJcc5qiX0B7zdOJz5CPD/KMMlXJ4qfr4JuSkNICt0pCofq+Pur9HSJ/ntZR
-	Bl1J6IkGBTDZvU5a9lHakq1doEv6wx+QUiu0OnvdGxL0y2RHwfGVMGWLArrWAh4JBW5CRa7bQr0
-	bB7fu4u+8p+Z3Gj4UxiD7QrhSLuJvcfB4BWq1ohf6QsikrsWBRC7sFDto6g1D6QNOJtIJXtdXOX
-	ITqlmy6QdahtDJElSw3tXBDaFkKxSz0A47G0LBPc26rbok6aDX9kZho8mJ5AzyS5TMRjBRTOLIA
-	7312gdVYh/QVieuqwBF9W2EnuUC31MkMq9YOTTupFqOPYrRfZ2OK0Tiple/WZVFGD8g==
-X-Received: by 2002:ac8:58cb:0:b0:4ed:3d24:9570 with SMTP id d75a77b69052e-4ed60dd8fecmr4619851cf.37.1762194019684;
-        Mon, 03 Nov 2025 10:20:19 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFmwwb1yLDp+Pw90OM1b2QDBTcxme5r5EnDtGwh5UXFiSszHYIcqIchMcYySW6qF60B0Ci3Sw==
-X-Received: by 2002:ac8:58cb:0:b0:4ed:3d24:9570 with SMTP id d75a77b69052e-4ed60dd8fecmr4619381cf.37.1762194019103;
-        Mon, 03 Nov 2025 10:20:19 -0800 (PST)
+        bh=LTXzGFNw6CRy5ojJanbNoOxz7dlaEuzhm7CxMuaDYAA=;
+        b=TAXmxk86c36yOEZX3reMQ9wbvV96s0FDGo5ry/yHZ1Ikty1yciwl6xGJNfo4RX83z+
+         WwpvTKx2a7/FCx3p7Vp6bGT0dT0kfGPgNGh1cqMeQ5T0wHPw9ILyEzVCg7Fc2TDANsgI
+         VGgEPDjRcych4Al3VWtNiF5FE84XqZ+Y1LBfTamdCdTHTaIt9H9y2wWlGOZh1hT//pSB
+         bCQiHSn8KMtEbhHu4DkMRCnixElsNmBnV5s+j/IhnONqpMJe6YxfD3wj7kqOCOEy7IAG
+         lF3IeFgayf48iR9GmkB8djs/SCRBDb5pPR5ogab74k0rakEo1vICIMYfM+591wNZZPmo
+         eGDw==
+X-Gm-Message-State: AOJu0YxXde67Z+w+Hp3KVuo8AoHuPeacPtOphx19oCDO/fBShW2pFJzr
+	vSJ+jP5iLP/fj4G165rYmlUuHasw3Y4OUkeb0Rr3we9Jl3NvORMJ1/pJTB0KRpUhXuJNpz3OVTM
+	CKVxeYlVfvShrXUWDv9NgfJ3G4A8Z2bX9nLyfWQ+clD/V5pfb0tN7E18PQ2q2CdUWR2i5
+X-Gm-Gg: ASbGncvoXB4VDilNFfKNtK1Bcg7so5pdO6dZLzkWtATg4D8dnP0wBjfjp9gc1CbZtdk
+	w/OMmQvzngehxGDYNw1KoZbTcK4GV4PY+i/+2gGJWcBUH1KzVEkuPrxyzhT94m+ctnXtLtf5kYV
+	kklu+nZ/MbUmHdMJCiWN+8j/fBLfifi7FbMzBLXUvb6r6V19FPT/gM0bKmcTPFCwHwHTHeOFoF+
+	3+Q2mYm4angzH//hbnYI3Nu/mVPE2KOamhvYIBAHHMN7t/MIU8KxVlSxhB92dPUIbMRXeXlW7KI
+	8qB83dP6fGASGAZXVVOjCVGwyEn7n1u5IjZkAps8kv0UnWtHCWlZl+Mp9U5nE72yYfL0ARcT+NY
+	WTwCTh2uyMg3nO91Hr+P9eKJQ/mhnymYAgJJQ+HqV/tC+CAjlLVWwYcYacTCnMGwE9w==
+X-Received: by 2002:a05:622a:2591:b0:4ec:f4be:6b12 with SMTP id d75a77b69052e-4ed31073e8cmr174089251cf.72.1762194022355;
+        Mon, 03 Nov 2025 10:20:22 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFYlXKqqeMR6kvur4jUnr3LYqBhF+z87nol24dC1RBRq93u6zrjXSMjAf39ULnz32NyR5KgVQ==
+X-Received: by 2002:a05:622a:2591:b0:4ec:f4be:6b12 with SMTP id d75a77b69052e-4ed31073e8cmr174088761cf.72.1762194021753;
+        Mon, 03 Nov 2025 10:20:21 -0800 (PST)
 Received: from QCOM-eG0v1AUPpu.qualcomm.com ([2a01:e0a:82c:5f0:8842:5746:daeb:a8f8])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4773c53ec2csm169096545e9.11.2025.11.03.10.20.17
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4773c53ec2csm169096545e9.11.2025.11.03.10.20.20
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 03 Nov 2025 10:20:18 -0800 (PST)
+        Mon, 03 Nov 2025 10:20:21 -0800 (PST)
 From: Loic Poulain <loic.poulain@oss.qualcomm.com>
 To: andersson@kernel.org, konradybcio@kernel.org, robh@kernel.org,
         krzk+dt@kernel.org, conor+dt@kernel.org, sre@kernel.org
 Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         linux-pm@vger.kernel.org, Loic Poulain <loic.poulain@oss.qualcomm.com>
-Subject: [PATCH 3/5] dt-bindings: firmware: qcom,scm: Document reboot mode
-Date: Mon,  3 Nov 2025 19:20:04 +0100
-Message-Id: <20251103182006.1158383-4-loic.poulain@oss.qualcomm.com>
+Subject: [PATCH 4/5] firmware: qcom: scm: Support for EDL reboot mode
+Date: Mon,  3 Nov 2025 19:20:05 +0100
+Message-Id: <20251103182006.1158383-5-loic.poulain@oss.qualcomm.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20251103182006.1158383-1-loic.poulain@oss.qualcomm.com>
 References: <20251103182006.1158383-1-loic.poulain@oss.qualcomm.com>
@@ -110,50 +110,99 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMTAzMDE2NCBTYWx0ZWRfX0ncsjYqYSyua
- Uxn52Updnfve2VceREOgKBdu3JsFYHEKUnaouhcdEIw03zD1yF9XbTOY1Y5H8X9CYa0Sb1wySQW
- ZVvxpr2DG17X6cyNx0TJ9JCxQw7BsmrarXzxCNfH3eUGR4Yk926cHAje8f6Bf/1SszlfW7p5I0V
- 2ZtTji0CBubSeOmjDlfmEVCdTciuHcqrIDl3MQObsLOWUsEZdE19sW72A6VYLZGZFlKxM/+sLjO
- fOWo7g1e0SJ93QNO13irzzkbN3LUNO1OHhMlrHIyJOckqvJBmh+63232VzNS60n/Q+FucQj3bLe
- O34dX61wNI57GQqaZyUR+AjBUUrE8vg4J9xiHpAveIW9uk91ci3W4Q+oouaOTGymEk6xxkVxIpF
- VJlPOTh73bEan0spdCGgH96BjjdYEg==
-X-Authority-Analysis: v=2.4 cv=Tq/rRTXh c=1 sm=1 tr=0 ts=6908f264 cx=c_pps
- a=WeENfcodrlLV9YRTxbY/uA==:117 a=xqWC_Br6kY4A:10 a=6UeiqGixMTsA:10
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMTAzMDE2NCBTYWx0ZWRfX5XXRqVh4+fOI
+ 45DbNpRKzW1n4mH1FtAKReERQO9onrfvZZ0D8zV852Kvy5sU4gsmuikmoKNAahoMPuYf3AQFmzy
+ pKpMG8Rm71hWi3/zwW0oAQr1Rwmxbo/jtUfGt7DFOnHlE8EHVfUQTWUj8MqqLPEC4h1ODK7A4Z7
+ tteXnCIPmys3fnnRB9T9iv/Fpaoq4JjF2fp4ibPP6JLJ44dARdftSC7TN+d+0tch3jlgO+39PlD
+ fpYKTkpN5uYHh+GY0Mei1GdjLNzfaqvYFAIuWqr56wtTPquvyDdKsY/aGEg9yPzQTHsdKqM5lFG
+ urpRj5ylx8yyKH3D5jBdor1LMMMi3lKnfvk2FXJ3eSADt1poMa2Qa7RwhGaCdqXBOoiCGXqw1sJ
+ AgVK23JiWKB0Zvie7MlwJwTOw1FCsA==
+X-Proofpoint-GUID: ZCgR2hTykyucKiWRijvsxxhUBuVib_4z
+X-Authority-Analysis: v=2.4 cv=Ha8ZjyE8 c=1 sm=1 tr=0 ts=6908f267 cx=c_pps
+ a=mPf7EqFMSY9/WdsSgAYMbA==:117 a=xqWC_Br6kY4A:10 a=6UeiqGixMTsA:10
  a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22 a=EUspDBNiAAAA:8
- a=QcpCrrypq3z5zaV8IXQA:9 a=kacYvNCVWA4VmyqE58fU:22
-X-Proofpoint-GUID: sWmOV6XCVVPBFSQkyur7HO2VPjZmDvzQ
-X-Proofpoint-ORIG-GUID: sWmOV6XCVVPBFSQkyur7HO2VPjZmDvzQ
+ a=N3Qph4pD8RtftmTKDywA:9 a=dawVfQjAaf238kedN5IG:22
+X-Proofpoint-ORIG-GUID: ZCgR2hTykyucKiWRijvsxxhUBuVib_4z
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
  definitions=2025-11-03_04,2025-11-03_03,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0 lowpriorityscore=0 clxscore=1015 impostorscore=0 spamscore=0
- adultscore=0 suspectscore=0 bulkscore=0 priorityscore=1501 malwarescore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2510240001 definitions=main-2511030164
+ impostorscore=0 priorityscore=1501 spamscore=0 lowpriorityscore=0
+ malwarescore=0 clxscore=1015 phishscore=0 suspectscore=0 adultscore=0
+ bulkscore=0 classifier=typeunknown authscore=0 authtc= authcc= route=outbound
+ adjust=0 reason=mlx scancount=1 engine=8.22.0-2510240001
+ definitions=main-2511030164
 
-SCM can be used to support reboot mode such as Emergency Recovery Mode.
+When the dload register is specified, it can also be used to boot the
+platform into Emergency Download Mode (EDL). This mode is implemented
+by the primary ROM bootloader and provides a recovery mechanism.
 
 Signed-off-by: Loic Poulain <loic.poulain@oss.qualcomm.com>
 ---
- Documentation/devicetree/bindings/firmware/qcom,scm.yaml | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/firmware/qcom/qcom_scm.c | 22 ++++++++++++++++++++++
+ 1 file changed, 22 insertions(+)
 
-diff --git a/Documentation/devicetree/bindings/firmware/qcom,scm.yaml b/Documentation/devicetree/bindings/firmware/qcom,scm.yaml
-index b913192219e4..c8bb7dacd900 100644
---- a/Documentation/devicetree/bindings/firmware/qcom,scm.yaml
-+++ b/Documentation/devicetree/bindings/firmware/qcom,scm.yaml
-@@ -121,6 +121,10 @@ properties:
-           - description: offset of the download mode control register
-     description: TCSR hardware block
+diff --git a/drivers/firmware/qcom/qcom_scm.c b/drivers/firmware/qcom/qcom_scm.c
+index 26cd0458aacd..e697ef14619f 100644
+--- a/drivers/firmware/qcom/qcom_scm.c
++++ b/drivers/firmware/qcom/qcom_scm.c
+@@ -26,6 +26,7 @@
+ #include <linux/of_platform.h>
+ #include <linux/of_reserved_mem.h>
+ #include <linux/platform_device.h>
++#include <linux/reboot-mode.h>
+ #include <linux/reset-controller.h>
+ #include <linux/sizes.h>
+ #include <linux/types.h>
+@@ -43,6 +44,7 @@ struct qcom_scm {
+ 	struct icc_path *path;
+ 	struct completion waitq_comp;
+ 	struct reset_controller_dev reset;
++	struct reboot_mode_driver reboot_mode;
  
-+patternProperties:
-+  "^mode-.*$":
-+    maxItems: 1
+ 	/* control access to the interconnect path */
+ 	struct mutex scm_bw_lock;
+@@ -130,6 +132,8 @@ static const u8 qcom_scm_cpu_warm_bits[QCOM_SCM_BOOT_MAX_CPUS] = {
+ #define QCOM_DLOAD_MINIDUMP	2
+ #define QCOM_DLOAD_BOTHDUMP	3
+ 
++#define QCOM_EDL_MASK		BIT(0)
 +
- allOf:
-   # Clocks
-   - if:
+ static const char * const qcom_scm_convention_names[] = {
+ 	[SMC_CONVENTION_UNKNOWN] = "unknown",
+ 	[SMC_CONVENTION_ARM_32] = "smc arm 32",
+@@ -2206,6 +2210,18 @@ static const struct kernel_param_ops download_mode_param_ops = {
+ 	.set = set_download_mode,
+ };
+ 
++static int qcom_scm_reboot_mode_write(struct reboot_mode_driver *reboot,
++				      unsigned int magic)
++{
++	struct qcom_scm *scm = container_of(reboot, struct qcom_scm, reboot_mode);
++	int ret = -EOPNOTSUPP;
++
++	if (scm->dload_mode_addr)
++		ret = qcom_scm_io_rmw(scm->dload_mode_addr, QCOM_EDL_MASK, magic);
++
++	return ret;
++}
++
+ module_param_cb(download_mode, &download_mode_param_ops, NULL, 0644);
+ MODULE_PARM_DESC(download_mode, "download mode: off/0/N for no dump mode, full/on/1/Y for full dump mode, mini for minidump mode and full,mini for both full and minidump mode together are acceptable values");
+ 
+@@ -2251,6 +2267,12 @@ static int qcom_scm_probe(struct platform_device *pdev)
+ 	if (ret)
+ 		return ret;
+ 
++	scm->reboot_mode.dev = &pdev->dev;
++	scm->reboot_mode.write = qcom_scm_reboot_mode_write;
++	ret = devm_reboot_mode_register(&pdev->dev, &scm->reboot_mode);
++	if (ret)
++		return ret;
++
+ 	/* vote for max clk rate for highest performance */
+ 	ret = clk_set_rate(scm->core_clk, INT_MAX);
+ 	if (ret)
 -- 
 2.34.1
 
