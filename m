@@ -1,359 +1,167 @@
-Return-Path: <linux-arm-msm+bounces-80124-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-80125-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 502D9C2CB2E
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 03 Nov 2025 16:25:53 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 0EC87C2CBAA
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 03 Nov 2025 16:29:54 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 08ADB189547A
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Nov 2025 15:19:12 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 2AF4C189CE3B
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Nov 2025 15:23:27 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9127F31DDB7;
-	Mon,  3 Nov 2025 15:11:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 888833161A9;
+	Mon,  3 Nov 2025 15:15:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="aHAktgvO";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="c2Bogfwi"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="BQW/6Q8B"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f54.google.com (mail-ej1-f54.google.com [209.85.218.54])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABA713176F4
-	for <linux-arm-msm@vger.kernel.org>; Mon,  3 Nov 2025 15:11:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D32183195E3
+	for <linux-arm-msm@vger.kernel.org>; Mon,  3 Nov 2025 15:14:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762182696; cv=none; b=U3ZelMMZjr9KA5ovOQIloFJv5BLKHTFyUzuoHSC5WZKzabWbCxTUMSiyXEfAC+ziqptNRoC4oKfxZPg9DOTwrK9x5EJF9W+iHnP3dP9tOhyQl2vmt0PS78t52Ls3Js6pwVhJy8ygBIYe0Gvmcx9dmf2yR6ZM8caAl+LdB2Sr39Q=
+	t=1762182901; cv=none; b=NFHhP0THvXF0+gjiT/EF8gCNVJrc8H08Dyp0NXGLgkG36JDuj7XkJ4tWQQQ6m7Lywkm6hJJst0JbFi4/WDGQqvLlGAW5QD56A5Op7sj0Qzpzlr4X1m8NY0CWdGNOP8nd0/AlBJiZblIn9xyXRbcw2Qee7kRhYmR6QmHs/4XPXlc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762182696; c=relaxed/simple;
-	bh=z6TJUqVnrPXfCNPUMZYbO5LhalHwA1Ri2eHp9Yg+Lr8=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=prlGuqRwgrjWDp/6J34ledy3Btfq7Zoygb/ii66aHGYrQpb5EWI96fjjVucLxvF33hQ/y9XYYWbg1DrCTr7E637JvfWg8690o/QI8pGqwZ9rsAseEbqGIf7JhtYd1cS71ZpjcuPbUs2Mk1/jgZnsU4QOP5Y0fB1nSJrslsqdcIE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=aHAktgvO; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=c2Bogfwi; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 5A39ILIe1402870
-	for <linux-arm-msm@vger.kernel.org>; Mon, 3 Nov 2025 15:11:33 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	UCJAK7Pd4+aj+wxIVjIVEoofMTvNUM501URNtwpY89s=; b=aHAktgvOJhWLL9Pl
-	oiRageaRcNP0GjmoVER3oMJiQp0IIjFSdxDbLJUfKWF6V63+ycXERiNQ1sDNT6Lr
-	3ClmeXGshkzuicp7+kkNlUJJ6vblUxHhBkxBRTT82ePameSLWo2Doy1e4P7n6Eki
-	wprlWG/jMCkXCRUi1ynMh53bX8n0rEB/VOXcxFudUeIo74OdJIXlcAs6rcrTLeyo
-	0uK0YnFue9obl0m7U1gkSN6O4bjdIVrWvNQJj6QsPsh5Ukqks7+n/4MSWCKCJ14b
-	cb582dysdGLr2/4lLPhSBTi79ZInl4uDpIEYbjUC92h0WlAgX8WZieB0bXWsx/9Z
-	QagOaQ==
-Received: from mail-pj1-f71.google.com (mail-pj1-f71.google.com [209.85.216.71])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4a5977d31q-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Mon, 03 Nov 2025 15:11:33 +0000 (GMT)
-Received: by mail-pj1-f71.google.com with SMTP id 98e67ed59e1d1-33da1f30fdfso11566372a91.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 03 Nov 2025 07:11:33 -0800 (PST)
+	s=arc-20240116; t=1762182901; c=relaxed/simple;
+	bh=8NBFLjzMEgjTDyxAIQC0mdB6Oa7ms21UQ+blpDKfkTA=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=dE9Ff7GCQP+O4HbpP/lp+TpjVFBstUvEJ5mLrxzeTAWOIGu1/NUmer8dk+fcWSyfRhlgS8Xgnt8rn+GXnx3B04xeG8g3PawZo9g2o0RdPN7cXv8+nH2OH8/c3sedEgCSB4efvFM3tKvYy+21iCk+IKhD7/6vob6pjJIlkS0mcuU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=BQW/6Q8B; arc=none smtp.client-ip=209.85.218.54
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-ej1-f54.google.com with SMTP id a640c23a62f3a-b404a8be3f1so62552266b.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 03 Nov 2025 07:14:58 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1762182693; x=1762787493; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=UCJAK7Pd4+aj+wxIVjIVEoofMTvNUM501URNtwpY89s=;
-        b=c2BogfwiCXm7AHXtCqOmSY2OeBMUVQPVuP+B6jpsVaA1f8+Q83UrJnZ3p1iXeuvyLT
-         XTgN8GKTkR0rSF0RRXlcHjk9gNl9cmk+iX8X2/Q5FzExk1kLx5qfJT7uLuP41kAHYpCh
-         jAzrIoOCB9u+4tXSPICnGtcKX83MWb5e9Td4sy41iuSTxQDhtju2pJ8tpjGb0Ry/Uw0o
-         ePssKW6dg6C6JALtwQaM2nH3HJeaBsohBRE9lOK/FB8UJ0xYKHlwY2o+5UEgWBvZ9gaw
-         y9f9SF1xwhVa3zXh22NkkNuIf1npVNy4g3pKyEzjwlEJT0/X3YY/CdcXPpD72E1wRlsu
-         EqOg==
+        d=linaro.org; s=google; t=1762182897; x=1762787697; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=eGi4/MumABrJMjqvBNuWbmBgVsY5VFid+04xGbYF4nU=;
+        b=BQW/6Q8BCVStHUZL1yr1fIVexirXkOb78K8WKxV3UrUy8uHfQ4LV1tpVmR7c8Pj/To
+         86C6CW7mME4Svm9J4HsE2VSQrbtiMMgoWPZUxpvWVd1DDYd2kR7cGNE0ZAUXWr8Sw3OL
+         Tw7it0JyQBIW9WNtuMTWqvyagmrMBpCpgayCyiYeSVyNxGQfgF0KQWEA27373LaKrVC1
+         6yh2es0JDRobtw61VUi/TIPIgsQCV3dg1gxE8h3B9fYedRWo0fmo2GyfZw2eQDs/gOCR
+         3HDqayLcX6PTrKDyg8nz/+ZW3i05K3FDFWmDdeP1LE+ta/lrkCIYcFDmHS0TptgMnT7m
+         JS6g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1762182693; x=1762787493;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=UCJAK7Pd4+aj+wxIVjIVEoofMTvNUM501URNtwpY89s=;
-        b=e933gcWhwYDl4u2zupIeg8Qg1r1JsCEWg5wLIdzQX+AfQeIxmEGIYGWh+R/fh+tadb
-         Btp2PLmQFFn7Pzt2sCEhO+cg4txxvvQkt0zhddIaaP2HtMFFOaNrBjBQPY0X+tI0c5aX
-         GRh3+NE+l7VptCg1ZA5PgXK5LhEEYJfg6HsCHRLUYpnkUOZFeSj+b/NCoNrGMMiF6mm6
-         Qnz8lJ6MBTf9AK4yVnhnuAQD1WHynLL/TlaoqDpQROQMSlQKvrtvHuJoI74wEiPi/hT6
-         Yq+Hl+ulz23KX/y+jqdUMk4NfvT7szA8yeUol370p3eg5Ys3nTj+E1LWlJu9n9JtJBzY
-         /rNA==
-X-Forwarded-Encrypted: i=1; AJvYcCVdOSmuOcb4kVqaABjpoDtTfInSSDyFHuhE2wfEwzNWaNrcIydj3UB3Thmdxgdyn8ZUOKE+3QHBhuT3JLFe@vger.kernel.org
-X-Gm-Message-State: AOJu0Ywlz5/a6K1Ap7QdLf/uJ3vyqlgW7jJ2YFf22jwMyItCr7L+dd9o
-	QStRuYY9BISMHkrQrNCANDOy3IPeOZOpVVfmNNaVFiI/YXymSnsVTuvWxM9kZnCIOVXnWuG+Q54
-	ZLla1RPkVGTo856AtHci4q4BR5zp1FYcaWWxL0+RMdFybGcnIA36o3inyv9Zh9+D+eqBn
-X-Gm-Gg: ASbGncvwcMLH5Zdq+CJnbgYa8w9zZhw0c7ecHmgfG+RLKkkLX75GvK3qCBav16o92xO
-	1ucHy/agHfoXkwVT+QLptjbWHG1iYsuZr+vKSyCXCHWm0WVwRjTR9ZJE+zikpMfldqxgWR1S8VD
-	W3wvAQNUCUVyVa5ukEGyiPlkCm5Kll2ALcRgdeWMJC1dBGHEEyo/4z8uUTI74aDJgL7E6nPj38E
-	WGKKBcEQsiTg7AssHbmDPtjj7vRiD0XoA4bpdTEBMWzowLwW60RaroyMOZeGSS+02fFZnCbYAo/
-	1fpzkBT88RXy50s1N+vap1FzeuOuUVIzr6LX1fQcdTObLi7tlpLBvFfh0ZD4idASkZzWFQj9EcA
-	Ghur1G+O+KnSW0piSLwSzLg==
-X-Received: by 2002:a17:90b:51d1:b0:336:9dcf:ed14 with SMTP id 98e67ed59e1d1-3408306b9f3mr15500199a91.23.1762182692523;
-        Mon, 03 Nov 2025 07:11:32 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IESf0Nr7es9ACs3xLYQHQL6znc/SOeNTdnJIBLHpv32YpmW22UrjULWnWPm19AUoFoOpZYFYw==
-X-Received: by 2002:a17:90b:51d1:b0:336:9dcf:ed14 with SMTP id 98e67ed59e1d1-3408306b9f3mr15500142a91.23.1762182691936;
-        Mon, 03 Nov 2025 07:11:31 -0800 (PST)
-Received: from [10.206.104.82] ([202.46.23.25])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-340ad517882sm4492958a91.5.2025.11.03.07.11.25
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 03 Nov 2025 07:11:30 -0800 (PST)
-Message-ID: <5272401a-612c-467e-a833-36fe72837d5b@oss.qualcomm.com>
-Date: Mon, 3 Nov 2025 20:41:23 +0530
+        d=1e100.net; s=20230601; t=1762182897; x=1762787697;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=eGi4/MumABrJMjqvBNuWbmBgVsY5VFid+04xGbYF4nU=;
+        b=t4I5Yjw/rAOo2W7dJuSiqSAZL1P5t8z1Mr18YZiTslgzscYCl4NH4vnQOeJhx4a/ex
+         e+TNV6SFskDvix/xlQUSwnDZcFTGkA/cbmqGWppSUYKODknGTtul4PoflL9MaPmXvUU4
+         WMgCFWF8/yTr/yqngcnWq/TbBcMd20xEFFAuI6YWEU/dZkJzGHCOYjvfMTJBOcq/vmtj
+         9tRZVrrMGA1cib5sdb6bOpOlyInL+yYRTnfmXWDzMr/vUjnnoUESjJBuNH4G8Dg1yk53
+         AdmjOp/m6JzxuW2hU1zZumxsI18SZNTSI/ttkBX5Bo9aXCaepCDEPwmliisuKuTt7SJL
+         XtRQ==
+X-Gm-Message-State: AOJu0YzirxgtU2mZWQZxUzsSiB/GRmR3RFcc9OpeFvv2Yhr5iNzOv3Ia
+	xinombuF3ilC+DCaGYx2l/ERccbqZIHFeQHGiqzGW+k/evgL23Iec5+hLkvqFj9U+yo=
+X-Gm-Gg: ASbGncuWuI1tEKN5iYmFZKw0CP4+IlYdrMySfHoF5w6YwI21V8plNmy25fbn4G3HK04
+	2pZ7mo8/FcRAh1FcwvHsOM0oARB4UfqRf+8MNpgqL9p5K8LUu6tbTUmtp1RHB/U45x4oLeiOrvi
+	a+lLrmBLtz0K4QoqiUkU92enaTaVIcoVk3cDtQpppdSMcDNrlbdIsMh58j6v9pL3zxFekDestiL
+	b7CdUDBQY2xtFD/kwRriE+9b2UuqrmPJCbG3iePya+bJvGm1x+6QOw2zpK97OABA+6bQxjrTRRL
+	3VspwpxmsqMQYZwDJLIgyEkOKYdQt0gUFqQ50rB1IK57uAZbAZR9efLyArL3rgggYLL/cuJqV3y
+	MdElQwr1EK/Ang09bWD7N3vQzD6IRYaD5dM9d5sr74XqBtmJ52Ev2irVrg+2ybD9HW++bBoy2Lq
+	cUk4STPav8el3OK8wV
+X-Google-Smtp-Source: AGHT+IEt8D2L4/c6q1jdTDxYKJlbkQpEhxwOFjDzoJ6qunqS5xAMVH0vozm3Ngjbg+T611/Y2L59WQ==
+X-Received: by 2002:a17:906:f9da:b0:b70:b6f5:4239 with SMTP id a640c23a62f3a-b70b6f546e4mr200213666b.3.1762182897081;
+        Mon, 03 Nov 2025 07:14:57 -0800 (PST)
+Received: from [127.0.1.1] ([178.197.219.123])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-b7077975dfdsm1045203066b.13.2025.11.03.07.14.55
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 03 Nov 2025 07:14:56 -0800 (PST)
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Subject: [PATCH 00/12] dt-bindings: PCI: qcom: Move remaining devices to
+ dedicated schema
+Date: Mon, 03 Nov 2025 16:14:40 +0100
+Message-Id: <20251103-dt-bindings-pci-qcom-v1-0-c0f6041abf9b@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 15/16] drm/msm/a6xx: Enable IFPC on Adreno X1-85
-To: Chia-I Wu <olvaffe@gmail.com>
-Cc: rob.clark@oss.qualcomm.com, Sean Paul <sean@poorly.run>,
-        Konrad Dybcio <konradybcio@kernel.org>,
-        Dmitry Baryshkov <lumag@kernel.org>,
-        Abhinav Kumar <abhinav.kumar@linux.dev>,
-        Jessica Zhang <jessica.zhang@oss.qualcomm.com>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
-        Antonino Maniscalco <antomani103@gmail.com>,
-        Neil Armstrong <neil.armstrong@linaro.org>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
-References: <20250908-ifpc-support-v2-0-631b1080bf91@oss.qualcomm.com>
- <20250908-ifpc-support-v2-15-631b1080bf91@oss.qualcomm.com>
- <CAPaKu7TQ3tkQREG8xphW_L5eQPLuQhA=oKjfmYVJDR7PsNBXQg@mail.gmail.com>
- <CACSVV02B8BzvznzOoMw0EgOXEY39syWdyfzTcqWB0qsYjf42hQ@mail.gmail.com>
- <1d6a50c3-eb1d-46a9-922c-e57e6e83779d@oss.qualcomm.com>
- <CAPaKu7QvBZmx0b8SDBY1H3u-Em+0py0BrGkmrfGUXkx1uQrg3A@mail.gmail.com>
-Content-Language: en-US
-From: Akhil P Oommen <akhilpo@oss.qualcomm.com>
-In-Reply-To: <CAPaKu7QvBZmx0b8SDBY1H3u-Em+0py0BrGkmrfGUXkx1uQrg3A@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-GUID: b0PcJqTsHDsKYoOghfhhhir4Fe4OXK5m
-X-Proofpoint-ORIG-GUID: b0PcJqTsHDsKYoOghfhhhir4Fe4OXK5m
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMTAzMDEzNiBTYWx0ZWRfX9T7Lb8lq5tGF
- TqGtSiq6EfDrenD4prJXtQBeHqCDbDy8manMmqq64NNgA6+Sq5FiOlspofeS2Ymvh4QtepC51LK
- rdhYAq7haCePDATVXQgsqJ3dP1ePVbBcdMIMpmTn3BtZY/BtYONzrGYzSTkBzafvTpUeB68J9Du
- KylnowoSCSZQ3GQKonnoYTHNUnG5aTEoCpFkIo8dKcuS/nSJngW2vnkQ0+Y9ykhN3CcYgFAWqYJ
- ohYWgEuI07EV/+hv3nMU7IIcHOfAinrUPRZVkSAnuy2sRODW9odnh/oST6KXuTUcyarmONF844M
- UgPDwwzANpki2EJ7o9NUF/p98UcDofVdyKze1hrWAuyoRQ+Bl0n1njOBSryz96ylHVWnH6nH7XL
- XMTCwuUIqHuPs0fu2xhih6nhIMCoGg==
-X-Authority-Analysis: v=2.4 cv=WcABqkhX c=1 sm=1 tr=0 ts=6908c625 cx=c_pps
- a=UNFcQwm+pnOIJct1K4W+Mw==:117 a=ZePRamnt/+rB5gQjfz0u9A==:17
- a=IkcTkHD0fZMA:10 a=6UeiqGixMTsA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=EUspDBNiAAAA:8 a=pGLkceISAAAA:8
- a=ZGesvalcjkYv3LExhKQA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=uKXjsCUrEbL0IQVhDsJ9:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
- definitions=2025-11-03_02,2025-11-03_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0 lowpriorityscore=0 adultscore=0 priorityscore=1501
- impostorscore=0 spamscore=0 malwarescore=0 clxscore=1015 suspectscore=0
- bulkscore=0 classifier=typeunknown authscore=0 authtc= authcc= route=outbound
- adjust=0 reason=mlx scancount=1 engine=8.22.0-2510240001
- definitions=main-2511030136
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAODGCGkC/x3MQQqAIBBA0avErBsoMbCuEi1ynGwWWWlEIN09a
+ fkW/2dIHIUTDFWGyLck2UNBW1dA6xw8o7hiUI3q2kb16C60EpwEn/AgwZP2DYm0NqzNbDsDJT0
+ iL/L823F63w+cKLA9ZgAAAA==
+X-Change-ID: 20251029-dt-bindings-pci-qcom-cc448e48ab58
+To: Bjorn Helgaas <bhelgaas@google.com>, 
+ Lorenzo Pieralisi <lpieralisi@kernel.org>, 
+ =?utf-8?q?Krzysztof_Wilczy=C5=84ski?= <kwilczynski@kernel.org>, 
+ Manivannan Sadhasivam <mani@kernel.org>, Rob Herring <robh@kernel.org>, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org, 
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+ Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+X-Mailer: b4 0.14.3
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2392;
+ i=krzysztof.kozlowski@linaro.org; h=from:subject:message-id;
+ bh=8NBFLjzMEgjTDyxAIQC0mdB6Oa7ms21UQ+blpDKfkTA=;
+ b=owEBbQKS/ZANAwAKAcE3ZuaGi4PXAcsmYgBpCMbjt3er7ucG129PkdA5E8TLG29nLG+vnZR7D
+ FnhP5yHZIqJAjMEAAEKAB0WIQTd0mIoPREbIztuuKjBN2bmhouD1wUCaQjG4wAKCRDBN2bmhouD
+ 1y63D/9Avm0LvO4w9yYE/ebFsc+SFal8QNN9EOvj9Onab7bqIUuXswJh4jSHnZIL9O+WP3XqGAH
+ CypktuH1H+6phnXh/FEWgzjHg+xlLWB8hcQNSSVDnDhlZ/fLyN4e8dRWbaMgYJSOf2Wg66jhsPC
+ jDIy6gjxc8D5O9aHnrXH1bZxRAT4U87MGWkDiaUQG4hGmJad80rb1KJdqDkbipf1qH+VjfpQLcM
+ 1DGT40+XbLt0w2hxR2bRxP6lhfORQUe4BRpmmGeabenn6/KDPBTLT52nA0XccYOvHIKl16Nd3nv
+ zRfOspsR8OtjRr2vJ+mxaZrZwhvgFNOJ8ftagWprDSuBv9rzGCxakqV4BuxbN4JyDu8HrGygCc0
+ 6sp06nz/MS+MtHQBMCegd4niQTKrlHezUoa7N457fU6zM9LPWB5RnO4P17k2CRcjgAAIbXqaqWN
+ qA9uXE0UYOetER3cjGZi77ntvxGeJYwMIJa7oiKW35fP26SR2jJEZTCToGgMhx2/E30h/dxGdRx
+ zff2ZK4RcEpEPuD8d67ZlG5K3NzvCxqTBwbqVOMstonmyhlbUYgMBMSe3uk+weVAcqWL0yAI33n
+ 1JneDZXFrF4kzL/DiIsljKxLvN8QtNZzrGpnZL/XuPfJbYAtAEQ/KgB8PpM1uWHzg9upc/tB7pq
+ R7ImR3USL2MNCgA==
+X-Developer-Key: i=krzysztof.kozlowski@linaro.org; a=openpgp;
+ fpr=9BD07E0E0C51F8D59677B7541B93437D3B41629B
 
-On 11/2/2025 11:25 PM, Chia-I Wu wrote:
-> On Sat, Nov 1, 2025 at 12:52 PM Akhil P Oommen <akhilpo@oss.qualcomm.com> wrote:
->>
->> On 11/1/2025 6:27 PM, Rob Clark wrote:
->>> On Fri, Oct 31, 2025 at 4:43 PM Chia-I Wu <olvaffe@gmail.com> wrote:
->>>>
->>>> On Mon, Sep 8, 2025 at 1:28 AM Akhil P Oommen <akhilpo@oss.qualcomm.com> wrote:
->>>>>
->>>>> Add the IFPC restore register list and enable IFPC support on Adreno
->>>>> X1-85 gpu.
->>>>>
->>>>> Signed-off-by: Akhil P Oommen <akhilpo@oss.qualcomm.com>
->>>>> ---
->>>>>  drivers/gpu/drm/msm/adreno/a6xx_catalog.c | 68 ++++++++++++++++++++++++++++++-
->>>>>  drivers/gpu/drm/msm/adreno/a6xx_gpu.c     | 15 +++++--
->>>>>  drivers/gpu/drm/msm/adreno/a6xx_gpu.h     |  1 +
->>>>>  3 files changed, 79 insertions(+), 5 deletions(-)
->>>>>
->>>>> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_catalog.c b/drivers/gpu/drm/msm/adreno/a6xx_catalog.c
->>>>> index 00e1afd46b81546eec03e22cda9e9a604f6f3b60..547c046730a9b50a82cc9b27f08a5b1eeb08dced 100644
->>>>> --- a/drivers/gpu/drm/msm/adreno/a6xx_catalog.c
->>>>> +++ b/drivers/gpu/drm/msm/adreno/a6xx_catalog.c
->>>>> @@ -1343,6 +1343,69 @@ static const uint32_t a7xx_pwrup_reglist_regs[] = {
->>>>>
->>>>>  DECLARE_ADRENO_REGLIST_LIST(a7xx_pwrup_reglist);
->>>>>
->>>>> +/* Applicable for X185, A750 */
->>>>> +static const u32 a750_ifpc_reglist_regs[] = {
->>>>> +       REG_A6XX_TPL1_BICUBIC_WEIGHTS_TABLE_0,
->>>>> +       REG_A6XX_TPL1_BICUBIC_WEIGHTS_TABLE_1,
->>>>> +       REG_A6XX_TPL1_BICUBIC_WEIGHTS_TABLE_2,
->>>>> +       REG_A6XX_TPL1_BICUBIC_WEIGHTS_TABLE_3,
->>>>> +       REG_A6XX_TPL1_BICUBIC_WEIGHTS_TABLE_4,
->>>>> +       REG_A6XX_TPL1_NC_MODE_CNTL,
->>>>> +       REG_A6XX_SP_NC_MODE_CNTL,
->>>>> +       REG_A6XX_CP_DBG_ECO_CNTL,
->>>>> +       REG_A6XX_CP_PROTECT_CNTL,
->>>>> +       REG_A6XX_CP_PROTECT(0),
->>>>> +       REG_A6XX_CP_PROTECT(1),
->>>>> +       REG_A6XX_CP_PROTECT(2),
->>>>> +       REG_A6XX_CP_PROTECT(3),
->>>>> +       REG_A6XX_CP_PROTECT(4),
->>>>> +       REG_A6XX_CP_PROTECT(5),
->>>>> +       REG_A6XX_CP_PROTECT(6),
->>>>> +       REG_A6XX_CP_PROTECT(7),
->>>>> +       REG_A6XX_CP_PROTECT(8),
->>>>> +       REG_A6XX_CP_PROTECT(9),
->>>>> +       REG_A6XX_CP_PROTECT(10),
->>>>> +       REG_A6XX_CP_PROTECT(11),
->>>>> +       REG_A6XX_CP_PROTECT(12),
->>>>> +       REG_A6XX_CP_PROTECT(13),
->>>>> +       REG_A6XX_CP_PROTECT(14),
->>>>> +       REG_A6XX_CP_PROTECT(15),
->>>>> +       REG_A6XX_CP_PROTECT(16),
->>>>> +       REG_A6XX_CP_PROTECT(17),
->>>>> +       REG_A6XX_CP_PROTECT(18),
->>>>> +       REG_A6XX_CP_PROTECT(19),
->>>>> +       REG_A6XX_CP_PROTECT(20),
->>>>> +       REG_A6XX_CP_PROTECT(21),
->>>>> +       REG_A6XX_CP_PROTECT(22),
->>>>> +       REG_A6XX_CP_PROTECT(23),
->>>>> +       REG_A6XX_CP_PROTECT(24),
->>>>> +       REG_A6XX_CP_PROTECT(25),
->>>>> +       REG_A6XX_CP_PROTECT(26),
->>>>> +       REG_A6XX_CP_PROTECT(27),
->>>>> +       REG_A6XX_CP_PROTECT(28),
->>>>> +       REG_A6XX_CP_PROTECT(29),
->>>>> +       REG_A6XX_CP_PROTECT(30),
->>>>> +       REG_A6XX_CP_PROTECT(31),
->>>>> +       REG_A6XX_CP_PROTECT(32),
->>>>> +       REG_A6XX_CP_PROTECT(33),
->>>>> +       REG_A6XX_CP_PROTECT(34),
->>>>> +       REG_A6XX_CP_PROTECT(35),
->>>>> +       REG_A6XX_CP_PROTECT(36),
->>>>> +       REG_A6XX_CP_PROTECT(37),
->>>>> +       REG_A6XX_CP_PROTECT(38),
->>>>> +       REG_A6XX_CP_PROTECT(39),
->>>>> +       REG_A6XX_CP_PROTECT(40),
->>>>> +       REG_A6XX_CP_PROTECT(41),
->>>>> +       REG_A6XX_CP_PROTECT(42),
->>>>> +       REG_A6XX_CP_PROTECT(43),
->>>>> +       REG_A6XX_CP_PROTECT(44),
->>>>> +       REG_A6XX_CP_PROTECT(45),
->>>>> +       REG_A6XX_CP_PROTECT(46),
->>>>> +       REG_A6XX_CP_PROTECT(47),
->>>>> +};
->>>>> +
->>>>> +DECLARE_ADRENO_REGLIST_LIST(a750_ifpc_reglist);
->>>>> +
->>>>>  static const struct adreno_info a7xx_gpus[] = {
->>>>>         {
->>>>>                 .chip_ids = ADRENO_CHIP_IDS(0x07000200),
->>>>> @@ -1432,12 +1495,14 @@ static const struct adreno_info a7xx_gpus[] = {
->>>>>                 .inactive_period = DRM_MSM_INACTIVE_PERIOD,
->>>>>                 .quirks = ADRENO_QUIRK_HAS_CACHED_COHERENT |
->>>>>                           ADRENO_QUIRK_HAS_HW_APRIV |
->>>>> -                         ADRENO_QUIRK_PREEMPTION,
->>>>> +                         ADRENO_QUIRK_PREEMPTION |
->>>>> +                         ADRENO_QUIRK_IFPC,
->>>>>                 .init = a6xx_gpu_init,
->>>>>                 .a6xx = &(const struct a6xx_info) {
->>>>>                         .hwcg = a740_hwcg,
->>>>>                         .protect = &a730_protect,
->>>>>                         .pwrup_reglist = &a7xx_pwrup_reglist,
->>>>> +                       .ifpc_reglist = &a750_ifpc_reglist,
->>>>>                         .gmu_chipid = 0x7050001,
->>>>>                         .gmu_cgc_mode = 0x00020202,
->>>>>                 },
->>>>> @@ -1466,6 +1531,7 @@ static const struct adreno_info a7xx_gpus[] = {
->>>>>                 .a6xx = &(const struct a6xx_info) {
->>>>>                         .protect = &a730_protect,
->>>>>                         .pwrup_reglist = &a7xx_pwrup_reglist,
->>>>> +                       .ifpc_reglist = &a750_ifpc_reglist,
->>>>>                         .gmu_chipid = 0x7090100,
->>>>>                         .gmu_cgc_mode = 0x00020202,
->>>>>                         .bcms = (const struct a6xx_bcm[]) {
->>>>> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
->>>>> index 76dd78f5c48ea818a2aa209e0c0c88bc5e8f4e06..91a2a82c4f388ca6b052172efdd7255165f3c04a 100644
->>>>> --- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
->>>>> +++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
->>>>> @@ -828,11 +828,10 @@ static void a7xx_patch_pwrup_reglist(struct msm_gpu *gpu)
->>>>>         u32 *dest = (u32 *)&lock->regs[0];
->>>>>         int i;
->>>>>
->>>>> -       reglist = adreno_gpu->info->a6xx->pwrup_reglist;
->>>>> -
->>>>>         lock->gpu_req = lock->cpu_req = lock->turn = 0;
->>>>> -       lock->ifpc_list_len = 0;
->>>>> -       lock->preemption_list_len = reglist->count;
->>>>> +
->>>>> +       reglist = adreno_gpu->info->a6xx->ifpc_reglist;
->>>> This is NULL on X1-45 and causes
->>>>
->>>>   [    8.795603] Unable to handle kernel NULL pointer dereference at
->>>> virtual address 0000000000000008
->>>
->>> Hmm, this is probably going to happen on all a7xx which don't have
->>> IFPC from the looks of it.
->>>
->>> We should either check for the IFPC quirk.. or maybe just drop the
->>> quirk and decide whether IFPC is supported based on ifpc_reglist !=
->>> NULL?
->>>
->>> (That said, we probably do want to have IFPC enabled for x1-45)
->>
->> We should add a check for IFPC quirk here. Chia, do you plan to send a fix?
->>
->> To enable IFPC, we can just add a750_ifpc_reglist_regs[] to
->> adreno_gpu->info->a6xx->ifpc_reglist and enable the IFPC quirk.
-> Maybe it is easier for you to do the fix? Because I would have several
-> little questions (what happens when the reglist and the quirk flag are
-> inconsistent? how about preemption reglist?)
-> 
-> I am happy to do the testing.
+Some time ago I already moved several devices from qcom,pcie.yaml
+binding to a dedicated binding files for easier reviewing and
+maintenance.
 
-No problem. I will send a fix.
+Move the remaining one which makes the qcom,pcie.yaml empty thus can be
+entirely removed.
 
--Akhil
+Best regards,
+Krzysztof
 
-> 
->>
->> -Akhil.
->>
->>>
->>> BR,
->>> -R
->>>
->>>>> +       lock->ifpc_list_len = reglist->count;
->>>>>
->>>>>         /*
->>>>>          * For each entry in each of the lists, write the offset and the current
->>>>> @@ -843,6 +842,14 @@ static void a7xx_patch_pwrup_reglist(struct msm_gpu *gpu)
->>>>>                 *dest++ = gpu_read(gpu, reglist->regs[i]);
->>>>>         }
->>>>>
->>>>> +       reglist = adreno_gpu->info->a6xx->pwrup_reglist;
->>>>> +       lock->preemption_list_len = reglist->count;
->>>>> +
->>>>> +       for (i = 0; i < reglist->count; i++) {
->>>>> +               *dest++ = reglist->regs[i];
->>>>> +               *dest++ = gpu_read(gpu, reglist->regs[i]);
->>>>> +       }
->>>>> +
->>>>>         /*
->>>>>          * The overall register list is composed of
->>>>>          * 1. Static IFPC-only registers
->>>>> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.h b/drivers/gpu/drm/msm/adreno/a6xx_gpu.h
->>>>> index 124c63c4615930b00c64e488a498163ae35afccd..0b17d36c36a9567e6afa4269ae7783ed3578e40e 100644
->>>>> --- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.h
->>>>> +++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.h
->>>>> @@ -45,6 +45,7 @@ struct a6xx_info {
->>>>>         const struct adreno_reglist *hwcg;
->>>>>         const struct adreno_protect *protect;
->>>>>         const struct adreno_reglist_list *pwrup_reglist;
->>>>> +       const struct adreno_reglist_list *ifpc_reglist;
->>>>>         u32 gmu_chipid;
->>>>>         u32 gmu_cgc_mode;
->>>>>         u32 prim_fifo_threshold;
->>>>>
->>>>> --
->>>>> 2.50.1
->>>>>
->>
+---
+Krzysztof Kozlowski (12):
+      dt-bindings: PCI: qcom,pcie-sm8150: Merge SC8180x into SM8150
+      dt-bindings: PCI: qcom,pcie-sdx55: Move SDX55 to dedicated schema
+      dt-bindings: PCI: qcom,pcie-sdm845: Move SDM845 to dedicated schema
+      dt-bindings: PCI: qcom,pcie-qcs404: Move QCS404 to dedicated schema
+      dt-bindings: PCI: qcom,pcie-ipq5018: Move IPQ5018 to dedicated schema
+      dt-bindings: PCI: qcom,pcie-ipq6018: Move IPQ6018 and IPQ8074 Gen3 to dedicated schema
+      dt-bindings: PCI: qcom,pcie-ipq8074: Move IPQ8074 to dedicated schema
+      dt-bindings: PCI: qcom,pcie-ipq4019: Move IPQ4019 to dedicated schema
+      dt-bindings: PCI: qcom,pcie-ipq9574: Move IPQ9574 to dedicated schema
+      dt-bindings: PCI: qcom,pcie-apq8064: Move APQ8064 to dedicated schema
+      dt-bindings: PCI: qcom,pcie-msm8996: Move MSM8996 to dedicated schema
+      dt-bindings: PCI: qcom,pcie-apq8084: Move APQ8084 to dedicated schema
+
+ .../devicetree/bindings/pci/qcom,pcie-apq8064.yaml | 170 +++++
+ .../devicetree/bindings/pci/qcom,pcie-apq8084.yaml | 109 +++
+ .../devicetree/bindings/pci/qcom,pcie-ipq4019.yaml | 146 ++++
+ .../devicetree/bindings/pci/qcom,pcie-ipq5018.yaml | 189 +++++
+ .../devicetree/bindings/pci/qcom,pcie-ipq6018.yaml | 179 +++++
+ .../devicetree/bindings/pci/qcom,pcie-ipq8074.yaml | 165 +++++
+ .../devicetree/bindings/pci/qcom,pcie-ipq9574.yaml | 183 +++++
+ .../devicetree/bindings/pci/qcom,pcie-msm8996.yaml | 156 ++++
+ .../devicetree/bindings/pci/qcom,pcie-qcs404.yaml  | 131 ++++
+ .../devicetree/bindings/pci/qcom,pcie-sc8180x.yaml | 168 -----
+ .../devicetree/bindings/pci/qcom,pcie-sdm845.yaml  | 190 +++++
+ .../devicetree/bindings/pci/qcom,pcie-sdx55.yaml   | 172 +++++
+ .../devicetree/bindings/pci/qcom,pcie-sm8150.yaml  |   1 +
+ .../devicetree/bindings/pci/qcom,pcie.yaml         | 782 ---------------------
+ 14 files changed, 1791 insertions(+), 950 deletions(-)
+---
+base-commit: 503fcb70f99075032f5bbf528cec4650cb7dd7d0
+change-id: 20251029-dt-bindings-pci-qcom-cc448e48ab58
+
+Best regards,
+-- 
+Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
 
