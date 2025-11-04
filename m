@@ -1,458 +1,291 @@
-Return-Path: <linux-arm-msm+bounces-80236-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-80237-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id E5446C2F9A8
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 04 Nov 2025 08:26:43 +0100 (CET)
+Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [142.0.200.124])
+	by mail.lfdr.de (Postfix) with ESMTPS id 53A8CC2FA71
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 04 Nov 2025 08:38:46 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 9AAE53B29A2
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Nov 2025 07:26:42 +0000 (UTC)
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 5767E4F182C
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Nov 2025 07:36:22 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3FEDD305E1F;
-	Tue,  4 Nov 2025 07:26:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B20D430ACE7;
+	Tue,  4 Nov 2025 07:36:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ocUtsvgi"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="aH54LJ66";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="VZGZewj0"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FFE0250BEC;
-	Tue,  4 Nov 2025 07:26:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04015309F0D
+	for <linux-arm-msm@vger.kernel.org>; Tue,  4 Nov 2025 07:36:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762241199; cv=none; b=H8MjiWG1+ZJTdrEEs5JyjFZgC5eAu4WrO1rwJShyb2zPy9kDXr57hNN73uEUCYuhmXUYP/G/CFTouJIakt9ftSSsifgc651RUJHP93LqdhL06XRzK5TKK5H6DNYvbhSt/7RLxOMxdqC4Gl23Xha2xex9+eLy0V3677Zx8JBRNe0=
+	t=1762241773; cv=none; b=UlIFs/M7g5cxs+adqTXm6bbTp6F7VscKLOS2e/rhhd7A/anmJXTvY8HIPv+mUqgHQ5LLLfc0rbQivShmsVNNpZ5lV8Pvanip7v7ecthfm9/Q87XbLgVtynK3kP0SaceRCZvhUB33FaIzFiQci26fEyydAYbTbVDYWvch52hmPSA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762241199; c=relaxed/simple;
-	bh=MvZdqULSUCGLP8ovilMo+2Y9CF6GT0CNbj4qpZBqCBg=;
-	h=Date:Content-Type:MIME-Version:From:Cc:To:In-Reply-To:References:
-	 Message-Id:Subject; b=KI+DjNWMfe9JiqKJaVA4b8b9TWbgztR4PvyslZyMh0QqCL2uxysBynb+4Ei9L9Peqd3Xt8see3jBzGzw3V2MPDeijwUSzBtCNzKTNFSrPloVWelpsgu7guEKJwMVN75d/GjrabC1Knh63T72bBjgBxGAtgObSNBSX6vjQX0srpY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ocUtsvgi; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D116C4CEF8;
-	Tue,  4 Nov 2025 07:26:38 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1762241198;
-	bh=MvZdqULSUCGLP8ovilMo+2Y9CF6GT0CNbj4qpZBqCBg=;
-	h=Date:From:Cc:To:In-Reply-To:References:Subject:From;
-	b=ocUtsvgigHh1WTV64zCJgoyY9AV1f5sjHE1zfO4Pr1kUYDvcz1Oy3Oh7MWqHsVs/8
-	 SwnSOeKKS+4Ehfl2n2Xu92Q9C+LXFoh+KfcyRBd7juCuvNb0M2WidqnECsH8ZvdyFr
-	 X2uagGve0J3a6dgmBiB+O1XHk4KLQk6wEY+P9AG9CnsZokUSOLhfN6jXZ6l0FWFfdS
-	 Rs8mGZD2YRJL7TpF2ozw4YhnAeQe/YG/ATVyYZR/M7jj/KKHMKEpICiayBJNuLI/Hm
-	 F9f4cZzvTm/U16Bc0/7aSvWLHfD51sjpw/nLZhOM/HuyPTp736ZwegNHP+yS47bclb
-	 zKD74v4nhtFwQ==
-Date: Tue, 04 Nov 2025 01:26:36 -0600
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
+	s=arc-20240116; t=1762241773; c=relaxed/simple;
+	bh=PYgdWODPF2hrUiUKna10HhsqrP4JEaici/eVWAFFLdE=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=FuxJmvf3w1VxKO0JfC3MrfvZHhrGmHuHfBTFyrAkkReWtYCL3BioVKS533hIy4a55FrzDBo0VGiEgcCEi1jD1cQGjnpUflFRPF34CFSM198Fm5tq7XdqM2MXxR8VZ3sgqSHQhfYQaQBQd/edDKBLSa4HScsIGUTqDv5TV1L5Gnw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=aH54LJ66; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=VZGZewj0; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 5A43Eom43616706
+	for <linux-arm-msm@vger.kernel.org>; Tue, 4 Nov 2025 07:36:11 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=qcppdkim1; bh=MF1p0fUeTLZIYkJ4TzotMj
+	Yje6H0etAGaKEftDYwoiw=; b=aH54LJ66OXqURk9KVyAIzjV7QHILaLN6L/hwYj
+	LVYkJTPQv8E8D2R3LTAMUlp4OQSwXkmaSwk+WWFl1bsBAUY1VSHzXph6bTXCToYy
+	45i60rlQgZWiXV01/Wqeweifs+v702FxHT/FTona8bWQ2X85KeOKm1HVsLRt2ywh
+	1RkGd3KjXn7uOKOvsqq7mEAyt2o68wFTcNPSYXO2q46pjIRPNNGg8tlj/t5z8gOk
+	jzEwECYmb7mcZ5tcRpkJORGJQP6fxA+ysgyE7HF7PSJ2diChp9at6SQYkp/YxAch
+	098HRdOl2ZR+KEnk/eNIZr0BCnV9YEO9R4+lesEtkGXN3zrw==
+Received: from mail-pl1-f197.google.com (mail-pl1-f197.google.com [209.85.214.197])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4a70fht2vj-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Tue, 04 Nov 2025 07:36:11 +0000 (GMT)
+Received: by mail-pl1-f197.google.com with SMTP id d9443c01a7336-295592eb5dbso31764325ad.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 03 Nov 2025 23:36:10 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=oss.qualcomm.com; s=google; t=1762241770; x=1762846570; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=MF1p0fUeTLZIYkJ4TzotMjYje6H0etAGaKEftDYwoiw=;
+        b=VZGZewj0lhO2Kry73MwCIx1vzD1Ejr6E0FiUQzI3x20BvBAMJtBjX/9GCzseDo4ISG
+         AXOhKFEBGcvuxNOvjORFBvxMXSJqv3DG0AiiAw0DBunMBF3xnQ53/I9sOBZXjV1eMu2B
+         dn8DAinlfpj23q7ATLxVJYH7NUWg3WhEFbGiLFMeBFk60vjqxibRsDEWUGi8calrtZg7
+         CcNeEldtYQYHn8CoUVLRg7IthQj16sPVPHD7KWSHyVbtD1Z+mrfuvkyNSzll1dW2l4fm
+         efEp3EWnPwCens/tKeMHVKV492z6eBNh7POh2KpC7XuehKTEwvXH/AMySo5afL6b73ZF
+         TSaA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1762241770; x=1762846570;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=MF1p0fUeTLZIYkJ4TzotMjYje6H0etAGaKEftDYwoiw=;
+        b=h5vpAzW/9zjoNJiOPjj8D4PzNxLqD/w+owlJyLHctmYsr4l3plgEy/fuZzGWvBhVeN
+         23TATGc83Vx9r0cahQrM1P7KKTSdLSskmtnkJ5NEvZqdUdB0SUbOOTCfNoOHuSlUYEe9
+         8EjBh8d+ejoFqPF0c5pFAx1ObI7uF5jd2uqtY73kyzhVL+sqvw+dKg1f0hwSSrtlx5KT
+         nxXMVfXRDd0yxGrgceZAzraikpxn2VrW7EaLVhlfKlOgnupLBk5Qd5Cd55lRUt6kxt+i
+         fPYCzjZDO+Ub7tblJ2xsWtBoVZaebgfcpOT4qQLmGKVIxIa3+SwpnsU8nBVD1Gj1F3RH
+         BarQ==
+X-Gm-Message-State: AOJu0YwDuJAj/wWPVrx0FKCQu/ASmBs5KHyPk6JE/BlYpKJsHn4ra25V
+	xbv5vGNoqV5bQ5fHDPO0wsvK+9HIFHF6FCelawr4w0tJkZKRBx2BI1yqQGx+S3SaiP/CIvuXsBC
+	EGAkc75zS9woJxKKsTCJzsczoEBXOxusbJqXaoS3Eocqu+FVPF58PO33IgCJupYbPJOrY
+X-Gm-Gg: ASbGnctSyttQYyJyfUBph+f8LPqnqZ+vphThCRH0v5MjQYafFQ6MDwmElzaq9DoJv4p
+	O3wMJZFqRYHnNAb4SL2v5zOY/QtOXj+OEwoIvqyFFMU2VumBQcawvXhicTZ+P8wPpQl1iiuAuZb
+	iu9IqJygH6yYhxiqaiOSwU+0HjN4wYwWrZQ+oo02ulmPQvHptlEj7N86Fn1Edxx091/vLCizbrN
+	FvOKj2sLyUgI9UL4DB9uWyjLr3DD0SHru2iOfDlZM7thGgXJ8RnVcno7FVaHaXPPiaglRIjT5nr
+	CiemxqkcPg6TDlqgzBljCCWk7tXDKbl0UcS7vpQkz7FNC9i1AlJAu1HWfbpQ0MOhxnlN7EWwgjM
+	3jH/LEFtTYMWjW37sCOQQsniEwA==
+X-Received: by 2002:a17:903:11cd:b0:265:57dc:977b with SMTP id d9443c01a7336-2951a504b0bmr222404405ad.61.1762241769748;
+        Mon, 03 Nov 2025 23:36:09 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IEfXs5qVYibRyKAWTxMNpN/TUTjfYiRTWrx0SS2V/3p1/dmo/jNrJLY3DVOgshc5WeV+y+eew==
+X-Received: by 2002:a17:903:11cd:b0:265:57dc:977b with SMTP id d9443c01a7336-2951a504b0bmr222403825ad.61.1762241769081;
+        Mon, 03 Nov 2025 23:36:09 -0800 (PST)
+Received: from hu-mojha-hyd.qualcomm.com ([202.46.23.25])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-3415c8b5cfcsm3484367a91.19.2025.11.03.23.36.05
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 03 Nov 2025 23:36:08 -0800 (PST)
+From: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>
+Subject: [PATCH v6 00/14] Peripheral Image Loader support for Qualcomm SoCs
+ running Linux host at EL2
+Date: Tue, 04 Nov 2025 13:05:40 +0530
+Message-Id: <20251104-kvm_rproc_v6-v6-0-7017b0adc24e@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: "Rob Herring (Arm)" <robh@kernel.org>
-Cc: suzuki.poulose@arm.com, coresight@lists.linaro.org, 
- devicetree@vger.kernel.org, andersson@kernel.org, kernel@oss.qualcomm.com, 
- linux-arm-kernel@lists.infradead.org, alexander.shishkin@linux.intel.com, 
- mike.leach@linaro.org, linux-arm-msm@vger.kernel.org, 
- linux-kernel@vger.kernel.org
-To: Songwei Chai <songwei.chai@oss.qualcomm.com>
-In-Reply-To: <20251104064043.88972-2-songwei.chai@oss.qualcomm.com>
-References: <20251104064043.88972-1-songwei.chai@oss.qualcomm.com>
- <20251104064043.88972-2-songwei.chai@oss.qualcomm.com>
-Message-Id: <176224119672.1155158.6728004468428794735.robh@kernel.org>
-Subject: Re: [PATCH v7 1/7] dt-bindings: arm: Add support for Qualcomm TGU
- trace
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+X-B4-Tracking: v=1; b=H4sIAMysCWkC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyzHQUlJIzE
+ vPSU3UzU4B8JSMDI1NDQwMT3eyy3PiigqL85PgyM10zYyPLVJMUU0uTtFQloJaCotS0zAqwcdG
+ xtbUAFmPGv14AAAA=
+To: Bjorn Andersson <andersson@kernel.org>,
+        Mathieu Poirier <mathieu.poirier@linaro.org>,
+        Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Manivannan Sadhasivam <mani@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+        Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>
+X-Mailer: b4 0.14-dev-f7c49
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1762241765; l=7461;
+ i=mukesh.ojha@oss.qualcomm.com; s=20250708; h=from:subject:message-id;
+ bh=PYgdWODPF2hrUiUKna10HhsqrP4JEaici/eVWAFFLdE=;
+ b=hTMZDf/RtHgvUAXU19ylMMItcHW2B7FWUMgRB/gRQdm7HyWwS5tczW03Gj95LVJkOS++Ekcl+
+ OjTmUzf3xi7BMbHP9gOIRuvIUXTrckZk9W5ft8KsuqHZPHVNlZkTyM+
+X-Developer-Key: i=mukesh.ojha@oss.qualcomm.com; a=ed25519;
+ pk=eX8dr/7d4HJz/HEXZIpe3c+Ukopa/wZmxH+5YV3gdNc=
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMTA0MDA2MSBTYWx0ZWRfX2ut9J0pmAx+T
+ +nNo5XxMEym0pIYm5n4I3nf5yR/z6QwJA0D+w8SRCGMB2EHQDAcTOFw+vNvMROMMgc2Cqzha8eT
+ rYXe41jPH/N5/vErLX8V1ERqGtMP8ICD9yGrlxJW6tImfHMh3A9L3JyIRS0Aj23PLb2LdfJ4O/z
+ fgBZ9b6x49IuZann7vu7G2kP+IhLgu0SulUU9kkmKKSlFStwHqJVG3DwjpfEiZAnxD7UsxPhuJX
+ RmHxWpPwE3eZt97PXsPeggRvPceXDpZ6AiD7Ub0ayDP8h2eGxzeqSILIWRVMJtBMm1HFElkALdr
+ j3xtJ2SD5QyOeaELLvc1yMjqnGsH86F96iW/8NCduHtZ0hwtJKIEGHfs9YKoTQpUtutBsqv+SU3
+ 3OGkJ522nMmrUV73ECeS0QeJQIiavw==
+X-Proofpoint-ORIG-GUID: HUmDodouh0Gf-7g9V3HiwMrl-NxIFlW1
+X-Authority-Analysis: v=2.4 cv=CbsFJbrl c=1 sm=1 tr=0 ts=6909aceb cx=c_pps
+ a=cmESyDAEBpBGqyK7t0alAg==:117 a=ZePRamnt/+rB5gQjfz0u9A==:17
+ a=IkcTkHD0fZMA:10 a=6UeiqGixMTsA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=KKAkSRfTAAAA:8 a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8
+ a=COk6AnOGAAAA:8 a=tWuNWFy3vQo5nIj7aw4A:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=1OuFwYUASf3TG4hYMiVC:22 a=cvBusfyB2V15izCimMoJ:22 a=TjNXssC_j7lpFel5tvFf:22
+X-Proofpoint-GUID: HUmDodouh0Gf-7g9V3HiwMrl-NxIFlW1
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
+ definitions=2025-11-03_06,2025-11-03_03,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501 spamscore=0 bulkscore=0 impostorscore=0 suspectscore=0
+ lowpriorityscore=0 clxscore=1015 malwarescore=0 adultscore=0 phishscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2510240001 definitions=main-2511040061
 
+In May 2025, we discussed the challenges at Linaro Connect 2025 [1] 
+related to Secure PAS remoteproc enablement when Linux is running at EL2
+for Qualcomm SoCs.
 
-On Mon, 03 Nov 2025 22:40:37 -0800, Songwei Chai wrote:
-> The Trigger Generation Unit (TGU) is designed to detect patterns or
-> sequences within a specific region of the System on Chip (SoC). Once
-> configured and activated, it monitors sense inputs and can detect a
-> pre-programmed state or sequence across clock cycles, subsequently
-> producing a trigger.
-> 
->    TGU configuration space
->         offset table
->  x-------------------------x
->  |                         |
->  |                         |
->  |                         |                           Step configuration
->  |                         |                             space layout
->  |   coresight management  |                           x-------------x
->  |        registers        |                     |---> |             |
->  |                         |                     |     |  reserve    |
->  |                         |                     |     |             |
->  |-------------------------|                     |     |-------------|
->  |                         |                     |     | priority[3] |
->  |         step[7]         |<--                  |     |-------------|
->  |-------------------------|   |                 |     | priority[2] |
->  |                         |   |                 |     |-------------|
->  |           ...           |   |Steps region     |     | priority[1] |
->  |                         |   |                 |     |-------------|
->  |-------------------------|   |                 |     | priority[0] |
->  |                         |<--                  |     |-------------|
->  |         step[0]         |-------------------->      |             |
->  |-------------------------|                           |  condition  |
->  |                         |                           |             |
->  |     control and status  |                           x-------------x
->  |           space         |                           |             |
->  x-------------------------x                           |Timer/Counter|
->                                                        |             |
-> 						       x-------------x
-> TGU Configuration in Hardware
-> 
-> The TGU provides a step region for user configuration, similar
-> to a flow chart. Each step region consists of three register clusters:
-> 
-> 1.Priority Region: Sets the required signals with priority.
-> 2.Condition Region: Defines specific requirements (e.g., signal A
-> reaches three times) and the subsequent action once the requirement is
-> met.
-> 3.Timer/Counter (Optional): Provides timing or counting functionality.
-> 
-> Add a new tgu.yaml file to describe the bindings required to
-> define the TGU in the device trees.
-> 
-> Signed-off-by: Songwei Chai <songwei.chai@oss.qualcomm.com>
-> ---
->  .../devicetree/bindings/arm/qcom,tgu.yaml     | 82 +++++++++++++++++++
->  1 file changed, 82 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/arm/qcom,tgu.yaml
-> 
+[1] https://resources.linaro.org/en/resource/sF8jXifdb9V1mUefdbfafa
 
-My bot found errors running 'make dt_binding_check' on your patch:
+Below, is the summary of the discussion.
 
-yamllint warnings/errors:
+Qualcomm is working to enable remote processors on the SA8775p SoC with
+a Linux host running at EL2. In doing so, it has encountered several
+challenges related to how the remoteproc framework is handled when Linux
+runs at EL1.
 
-dtschema/dtc warnings/errors:
-Warning: Duplicate compatible "arm,primecell" found in schemas matching "$id":
-	http://devicetree.org/schemas/arm/primecell.yaml
-	http://devicetree.org/schemas/arm/qcom,tgu.yaml#
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/arm/arm,coresight-tmc.example.dtb: etr@20070000 (arm,coresight-tmc): 'memory-region', 'memory-region-names', 'out-ports' do not match any of the regexes: '^pinctrl-[0-9]+$'
-	from schema $id: http://devicetree.org/schemas/arm/qcom,tgu.yaml
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/arm/arm,coresight-tmc.example.dtb: etr@20070000 (arm,coresight-tmc): compatible:0: 'qcom,tgu' was expected
-	from schema $id: http://devicetree.org/schemas/arm/qcom,tgu.yaml
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/arm/qcom,coresight-tpda.example.dtb: tpda@6004000 (qcom,coresight-tpda): 'out-ports' does not match any of the regexes: '^pinctrl-[0-9]+$'
-	from schema $id: http://devicetree.org/schemas/arm/qcom,tgu.yaml
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/arm/qcom,coresight-tpda.example.dtb: tpda@6004000 (qcom,coresight-tpda): compatible:0: 'qcom,tgu' was expected
-	from schema $id: http://devicetree.org/schemas/arm/qcom,tgu.yaml
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/arm/qcom,coresight-tpda.example.dtb: tpda@6004000 (qcom,coresight-tpda): in-ports: '#address-cells', '#size-cells', 'port@0' do not match any of the regexes: '^pinctrl-[0-9]+$'
-	from schema $id: http://devicetree.org/schemas/arm/qcom,tgu.yaml
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/arm/sp810.example.dtb: sysctl@20000 (arm,sp810): '#clock-cells', 'clock-output-names' do not match any of the regexes: '^pinctrl-[0-9]+$'
-	from schema $id: http://devicetree.org/schemas/arm/qcom,tgu.yaml
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/arm/sp810.example.dtb: sysctl@20000 (arm,sp810): clock-names:0: 'apb_pclk' was expected
-	from schema $id: http://devicetree.org/schemas/arm/qcom,tgu.yaml
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/arm/sp810.example.dtb: sysctl@20000 (arm,sp810): clock-names: ['refclk', 'timclk', 'apb_pclk'] is too long
-	from schema $id: http://devicetree.org/schemas/arm/qcom,tgu.yaml
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/arm/sp810.example.dtb: sysctl@20000 (arm,sp810): clocks: [[4294967295], [4294967295], [4294967295]] is too long
-	from schema $id: http://devicetree.org/schemas/arm/qcom,tgu.yaml
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/arm/sp810.example.dtb: sysctl@20000 (arm,sp810): compatible:0: 'qcom,tgu' was expected
-	from schema $id: http://devicetree.org/schemas/arm/qcom,tgu.yaml
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/arm/arm,coresight-dynamic-funnel.example.dtb: funnel@20040000 (arm,coresight-dynamic-funnel): 'out-ports' does not match any of the regexes: '^pinctrl-[0-9]+$'
-	from schema $id: http://devicetree.org/schemas/arm/qcom,tgu.yaml
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/arm/arm,coresight-dynamic-funnel.example.dtb: funnel@20040000 (arm,coresight-dynamic-funnel): compatible:0: 'qcom,tgu' was expected
-	from schema $id: http://devicetree.org/schemas/arm/qcom,tgu.yaml
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/arm/arm,coresight-dynamic-funnel.example.dtb: funnel@20040000 (arm,coresight-dynamic-funnel): in-ports: '#address-cells', '#size-cells', 'port@0', 'port@1', 'port@2' do not match any of the regexes: '^pinctrl-[0-9]+$'
-	from schema $id: http://devicetree.org/schemas/arm/qcom,tgu.yaml
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/arm/arm,coresight-tpiu.example.dtb: tpiu@e3c05000 (arm,coresight-tpiu): compatible:0: 'qcom,tgu' was expected
-	from schema $id: http://devicetree.org/schemas/arm/qcom,tgu.yaml
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/arm/arm,coresight-etm.example.dtb: ptm@2201c000 (arm,coresight-etm3x): 'cpu', 'out-ports' do not match any of the regexes: '^pinctrl-[0-9]+$'
-	from schema $id: http://devicetree.org/schemas/arm/qcom,tgu.yaml
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/arm/arm,coresight-etm.example.dtb: ptm@2201c000 (arm,coresight-etm3x): compatible:0: 'qcom,tgu' was expected
-	from schema $id: http://devicetree.org/schemas/arm/qcom,tgu.yaml
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/arm/arm,coresight-etm.example.dtb: ptm@2201d000 (arm,coresight-etm3x): 'cpu', 'out-ports' do not match any of the regexes: '^pinctrl-[0-9]+$'
-	from schema $id: http://devicetree.org/schemas/arm/qcom,tgu.yaml
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/arm/arm,coresight-etm.example.dtb: ptm@2201d000 (arm,coresight-etm3x): compatible:0: 'qcom,tgu' was expected
-	from schema $id: http://devicetree.org/schemas/arm/qcom,tgu.yaml
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/arm/arm,coresight-etb10.example.dtb: etb@20010000 (arm,coresight-etb10): compatible:0: 'qcom,tgu' was expected
-	from schema $id: http://devicetree.org/schemas/arm/qcom,tgu.yaml
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/arm/arm,coresight-cti.example.dtb: cti@20020000 (arm,coresight-cti): compatible:0: 'qcom,tgu' was expected
-	from schema $id: http://devicetree.org/schemas/arm/qcom,tgu.yaml
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/arm/arm,coresight-cti.example.dtb: cti@859000 (arm,coresight-cti-v8-arch): 'arm,cs-dev-assoc', 'cpu' do not match any of the regexes: '^pinctrl-[0-9]+$'
-	from schema $id: http://devicetree.org/schemas/arm/qcom,tgu.yaml
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/arm/arm,coresight-cti.example.dtb: cti@859000 (arm,coresight-cti-v8-arch): compatible:0: 'qcom,tgu' was expected
-	from schema $id: http://devicetree.org/schemas/arm/qcom,tgu.yaml
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/arm/arm,coresight-cti.example.dtb: cti@859000 (arm,coresight-cti-v8-arch): compatible:1: 'arm,primecell' was expected
-	from schema $id: http://devicetree.org/schemas/arm/qcom,tgu.yaml
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/arm/arm,coresight-cti.example.dtb: cti@859000 (arm,coresight-cti-v8-arch): compatible: ['arm,coresight-cti-v8-arch', 'arm,coresight-cti', 'arm,primecell'] is too long
-	from schema $id: http://devicetree.org/schemas/arm/qcom,tgu.yaml
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/arm/arm,coresight-cti.example.dtb: cti@858000 (arm,coresight-cti): '#address-cells', '#size-cells', 'arm,cti-ctm-id', 'trig-conns@0', 'trig-conns@1' do not match any of the regexes: '^pinctrl-[0-9]+$'
-	from schema $id: http://devicetree.org/schemas/arm/qcom,tgu.yaml
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/arm/arm,coresight-cti.example.dtb: cti@858000 (arm,coresight-cti): compatible:0: 'qcom,tgu' was expected
-	from schema $id: http://devicetree.org/schemas/arm/qcom,tgu.yaml
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/arm/arm,coresight-cti.example.dtb: cti@20110000 (arm,coresight-cti): '#address-cells', '#size-cells', 'trig-conns@0', 'trig-conns@1', 'trig-conns@2' do not match any of the regexes: '^pinctrl-[0-9]+$'
-	from schema $id: http://devicetree.org/schemas/arm/qcom,tgu.yaml
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/arm/arm,coresight-cti.example.dtb: cti@20110000 (arm,coresight-cti): compatible:0: 'qcom,tgu' was expected
-	from schema $id: http://devicetree.org/schemas/arm/qcom,tgu.yaml
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/arm/qcom,coresight-tpdm.example.dtb: tpdm@684c000 (qcom,coresight-tpdm): 'out-ports', 'qcom,dsb-element-bits', 'qcom,dsb-msrs-num' do not match any of the regexes: '^pinctrl-[0-9]+$'
-	from schema $id: http://devicetree.org/schemas/arm/qcom,tgu.yaml
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/arm/qcom,coresight-tpdm.example.dtb: tpdm@684c000 (qcom,coresight-tpdm): compatible:0: 'qcom,tgu' was expected
-	from schema $id: http://devicetree.org/schemas/arm/qcom,tgu.yaml
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/arm/qcom,coresight-tpdm.example.dtb: tpdm@6c29000 (qcom,coresight-tpdm): 'out-ports', 'qcom,cmb-element-bits', 'qcom,cmb-msrs-num' do not match any of the regexes: '^pinctrl-[0-9]+$'
-	from schema $id: http://devicetree.org/schemas/arm/qcom,tgu.yaml
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/arm/qcom,coresight-tpdm.example.dtb: tpdm@6c29000 (qcom,coresight-tpdm): compatible:0: 'qcom,tgu' was expected
-	from schema $id: http://devicetree.org/schemas/arm/qcom,tgu.yaml
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/arm/arm,coresight-cpu-debug.example.dtb: debug@f6590000 (arm,coresight-cpu-debug): 'cpu' does not match any of the regexes: '^pinctrl-[0-9]+$'
-	from schema $id: http://devicetree.org/schemas/arm/qcom,tgu.yaml
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/arm/arm,coresight-cpu-debug.example.dtb: debug@f6590000 (arm,coresight-cpu-debug): compatible:0: 'qcom,tgu' was expected
-	from schema $id: http://devicetree.org/schemas/arm/qcom,tgu.yaml
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/arm/arm,coresight-stm.example.dtb: stm@20100000 (arm,coresight-stm): 'out-ports', 'reg-names' do not match any of the regexes: '^pinctrl-[0-9]+$'
-	from schema $id: http://devicetree.org/schemas/arm/qcom,tgu.yaml
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/arm/arm,coresight-stm.example.dtb: stm@20100000 (arm,coresight-stm): compatible:0: 'qcom,tgu' was expected
-	from schema $id: http://devicetree.org/schemas/arm/qcom,tgu.yaml
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/arm/arm,coresight-stm.example.dtb: stm@20100000 (arm,coresight-stm): reg: [[537919488, 4096], [671088640, 1572864]] is too long
-	from schema $id: http://devicetree.org/schemas/arm/qcom,tgu.yaml
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/arm/qcom,coresight-tnoc.example.dtb: tn@109ab000 (qcom,coresight-tnoc): 'out-ports' does not match any of the regexes: '^pinctrl-[0-9]+$'
-	from schema $id: http://devicetree.org/schemas/arm/qcom,tgu.yaml
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/arm/qcom,coresight-tnoc.example.dtb: tn@109ab000 (qcom,coresight-tnoc): compatible:0: 'qcom,tgu' was expected
-	from schema $id: http://devicetree.org/schemas/arm/qcom,tgu.yaml
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/arm/qcom,coresight-tnoc.example.dtb: tn@109ab000 (qcom,coresight-tnoc): in-ports: '#address-cells', '#size-cells', 'port@0' do not match any of the regexes: '^pinctrl-[0-9]+$'
-	from schema $id: http://devicetree.org/schemas/arm/qcom,tgu.yaml
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/arm/arm,coresight-catu.example.dtb: catu@207e0000 (arm,coresight-catu): 'interrupts' does not match any of the regexes: '^pinctrl-[0-9]+$'
-	from schema $id: http://devicetree.org/schemas/arm/qcom,tgu.yaml
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/arm/arm,coresight-catu.example.dtb: catu@207e0000 (arm,coresight-catu): compatible:0: 'qcom,tgu' was expected
-	from schema $id: http://devicetree.org/schemas/arm/qcom,tgu.yaml
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/arm/arm,coresight-dynamic-replicator.example.dtb: replicator@20120000 (arm,coresight-dynamic-replicator): 'out-ports' does not match any of the regexes: '^pinctrl-[0-9]+$'
-	from schema $id: http://devicetree.org/schemas/arm/qcom,tgu.yaml
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/arm/arm,coresight-dynamic-replicator.example.dtb: replicator@20120000 (arm,coresight-dynamic-replicator): compatible:0: 'qcom,tgu' was expected
-	from schema $id: http://devicetree.org/schemas/arm/qcom,tgu.yaml
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/watchdog/arm,sp805.example.dtb: watchdog@66090000 (arm,sp805): 'interrupts', 'resets' do not match any of the regexes: '^pinctrl-[0-9]+$'
-	from schema $id: http://devicetree.org/schemas/arm/qcom,tgu.yaml
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/watchdog/arm,sp805.example.dtb: watchdog@66090000 (arm,sp805): clock-names:0: 'apb_pclk' was expected
-	from schema $id: http://devicetree.org/schemas/arm/qcom,tgu.yaml
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/watchdog/arm,sp805.example.dtb: watchdog@66090000 (arm,sp805): clock-names: ['wdog_clk', 'apb_pclk'] is too long
-	from schema $id: http://devicetree.org/schemas/arm/qcom,tgu.yaml
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/watchdog/arm,sp805.example.dtb: watchdog@66090000 (arm,sp805): clocks: [[4294967295], [4294967295]] is too long
-	from schema $id: http://devicetree.org/schemas/arm/qcom,tgu.yaml
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/watchdog/arm,sp805.example.dtb: watchdog@66090000 (arm,sp805): compatible:0: 'qcom,tgu' was expected
-	from schema $id: http://devicetree.org/schemas/arm/qcom,tgu.yaml
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/memory-controllers/arm,pl172.example.dtb: memory-controller@40005000 (arm,pl172): '#address-cells', '#size-cells', 'cs0', 'ranges' do not match any of the regexes: '^pinctrl-[0-9]+$'
-	from schema $id: http://devicetree.org/schemas/arm/qcom,tgu.yaml
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/memory-controllers/arm,pl172.example.dtb: memory-controller@40005000 (arm,pl172): clock-names:0: 'apb_pclk' was expected
-	from schema $id: http://devicetree.org/schemas/arm/qcom,tgu.yaml
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/memory-controllers/arm,pl172.example.dtb: memory-controller@40005000 (arm,pl172): clock-names: ['mpmcclk', 'apb_pclk'] is too long
-	from schema $id: http://devicetree.org/schemas/arm/qcom,tgu.yaml
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/memory-controllers/arm,pl172.example.dtb: memory-controller@40005000 (arm,pl172): clocks: [[4294967295, 1144], [4294967295, 1072]] is too long
-	from schema $id: http://devicetree.org/schemas/arm/qcom,tgu.yaml
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/memory-controllers/arm,pl172.example.dtb: memory-controller@40005000 (arm,pl172): compatible:0: 'qcom,tgu' was expected
-	from schema $id: http://devicetree.org/schemas/arm/qcom,tgu.yaml
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/memory-controllers/arm,pl35x-smc.example.dtb: memory-controller@e000e000 (arm,pl353-smc-r2p1): '#address-cells', '#size-cells', 'nand-controller@0,0', 'ranges' do not match any of the regexes: '^pinctrl-[0-9]+$'
-	from schema $id: http://devicetree.org/schemas/arm/qcom,tgu.yaml
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/memory-controllers/arm,pl35x-smc.example.dtb: memory-controller@e000e000 (arm,pl353-smc-r2p1): clock-names:0: 'apb_pclk' was expected
-	from schema $id: http://devicetree.org/schemas/arm/qcom,tgu.yaml
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/memory-controllers/arm,pl35x-smc.example.dtb: memory-controller@e000e000 (arm,pl353-smc-r2p1): clock-names: ['memclk', 'apb_pclk'] is too long
-	from schema $id: http://devicetree.org/schemas/arm/qcom,tgu.yaml
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/memory-controllers/arm,pl35x-smc.example.dtb: memory-controller@e000e000 (arm,pl353-smc-r2p1): clocks: [[4294967295, 11], [4294967295, 44]] is too long
-	from schema $id: http://devicetree.org/schemas/arm/qcom,tgu.yaml
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/memory-controllers/arm,pl35x-smc.example.dtb: memory-controller@e000e000 (arm,pl353-smc-r2p1): compatible:0: 'qcom,tgu' was expected
-	from schema $id: http://devicetree.org/schemas/arm/qcom,tgu.yaml
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/serio/arm,pl050.example.dtb: serio@70000 (arm,pl050): 'interrupts' does not match any of the regexes: '^pinctrl-[0-9]+$'
-	from schema $id: http://devicetree.org/schemas/arm/qcom,tgu.yaml
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/serio/arm,pl050.example.dtb: serio@70000 (arm,pl050): clock-names:0: 'apb_pclk' was expected
-	from schema $id: http://devicetree.org/schemas/arm/qcom,tgu.yaml
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/serio/arm,pl050.example.dtb: serio@70000 (arm,pl050): clock-names: ['KMIREFCLK', 'apb_pclk'] is too long
-	from schema $id: http://devicetree.org/schemas/arm/qcom,tgu.yaml
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/serio/arm,pl050.example.dtb: serio@70000 (arm,pl050): clocks: [[4294967295], [4294967295]] is too long
-	from schema $id: http://devicetree.org/schemas/arm/qcom,tgu.yaml
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/serio/arm,pl050.example.dtb: serio@70000 (arm,pl050): compatible:0: 'qcom,tgu' was expected
-	from schema $id: http://devicetree.org/schemas/arm/qcom,tgu.yaml
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/mailbox/arm,mhu.example.dtb: mailbox@2b1f0000 (arm,mhu): '#mbox-cells', 'interrupts' do not match any of the regexes: '^pinctrl-[0-9]+$'
-	from schema $id: http://devicetree.org/schemas/arm/qcom,tgu.yaml
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/mailbox/arm,mhu.example.dtb: mailbox@2b1f0000 (arm,mhu): compatible:0: 'qcom,tgu' was expected
-	from schema $id: http://devicetree.org/schemas/arm/qcom,tgu.yaml
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/mailbox/arm,mhu.example.dtb: mailbox@2b2f0000 (arm,mhu-doorbell): '#mbox-cells', 'interrupts' do not match any of the regexes: '^pinctrl-[0-9]+$'
-	from schema $id: http://devicetree.org/schemas/arm/qcom,tgu.yaml
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/mailbox/arm,mhu.example.dtb: mailbox@2b2f0000 (arm,mhu-doorbell): compatible:0: 'qcom,tgu' was expected
-	from schema $id: http://devicetree.org/schemas/arm/qcom,tgu.yaml
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/mailbox/arm,mhuv2.example.dtb: mailbox@2b1f0000 (arm,mhuv2-tx): '#mbox-cells', 'arm,mhuv2-protocols', 'interrupts' do not match any of the regexes: '^pinctrl-[0-9]+$'
-	from schema $id: http://devicetree.org/schemas/arm/qcom,tgu.yaml
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/mailbox/arm,mhuv2.example.dtb: mailbox@2b1f0000 (arm,mhuv2-tx): compatible:0: 'qcom,tgu' was expected
-	from schema $id: http://devicetree.org/schemas/arm/qcom,tgu.yaml
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/mailbox/arm,mhuv2.example.dtb: mailbox@2b1f1000 (arm,mhuv2-rx): '#mbox-cells', 'arm,mhuv2-protocols', 'interrupts' do not match any of the regexes: '^pinctrl-[0-9]+$'
-	from schema $id: http://devicetree.org/schemas/arm/qcom,tgu.yaml
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/mailbox/arm,mhuv2.example.dtb: mailbox@2b1f1000 (arm,mhuv2-rx): compatible:0: 'qcom,tgu' was expected
-	from schema $id: http://devicetree.org/schemas/arm/qcom,tgu.yaml
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/mfd/samsung,exynos5433-lpass.example.dtb: dma-controller@11420000 (arm,pl330): '#dma-cells', 'dma-channels', 'dma-requests', 'interrupts', 'power-domains' do not match any of the regexes: '^pinctrl-[0-9]+$'
-	from schema $id: http://devicetree.org/schemas/arm/qcom,tgu.yaml
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/mfd/samsung,exynos5433-lpass.example.dtb: dma-controller@11420000 (arm,pl330): compatible:0: 'qcom,tgu' was expected
-	from schema $id: http://devicetree.org/schemas/arm/qcom,tgu.yaml
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/timer/arm,sp804.example.dtb: timer@fc800000 (arm,sp804): 'interrupts' does not match any of the regexes: '^pinctrl-[0-9]+$'
-	from schema $id: http://devicetree.org/schemas/arm/qcom,tgu.yaml
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/timer/arm,sp804.example.dtb: timer@fc800000 (arm,sp804): clock-names:0: 'apb_pclk' was expected
-	from schema $id: http://devicetree.org/schemas/arm/qcom,tgu.yaml
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/timer/arm,sp804.example.dtb: timer@fc800000 (arm,sp804): clock-names: ['timer1', 'timer2', 'apb_pclk'] is too long
-	from schema $id: http://devicetree.org/schemas/arm/qcom,tgu.yaml
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/timer/arm,sp804.example.dtb: timer@fc800000 (arm,sp804): clocks: [[4294967295], [4294967295], [4294967295]] is too long
-	from schema $id: http://devicetree.org/schemas/arm/qcom,tgu.yaml
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/timer/arm,sp804.example.dtb: timer@fc800000 (arm,sp804): compatible:0: 'qcom,tgu' was expected
-	from schema $id: http://devicetree.org/schemas/arm/qcom,tgu.yaml
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/dma/arm,pl330.example.dtb: dma-controller@12680000 (arm,pl330): '#dma-cells', 'interrupts' do not match any of the regexes: '^pinctrl-[0-9]+$'
-	from schema $id: http://devicetree.org/schemas/arm/qcom,tgu.yaml
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/dma/arm,pl330.example.dtb: dma-controller@12680000 (arm,pl330): compatible:0: 'qcom,tgu' was expected
-	from schema $id: http://devicetree.org/schemas/arm/qcom,tgu.yaml
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/dma/arm,pl330.example.dtb: dma-controller@12680000 (arm,pl330): 'clocks' is a required property
-	from schema $id: http://devicetree.org/schemas/arm/qcom,tgu.yaml
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/dma/arm,pl330.example.dtb: dma-controller@12680000 (arm,pl330): 'clock-names' is a required property
-	from schema $id: http://devicetree.org/schemas/arm/qcom,tgu.yaml
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/dma/arm-pl08x.example.dtb: dma-controller@10130000 (arm,pl080): '#dma-cells', 'interrupts', 'lli-bus-interface-ahb1', 'lli-bus-interface-ahb2', 'mem-bus-interface-ahb2', 'memcpy-burst-size', 'memcpy-bus-width' do not match any of the regexes: '^pinctrl-[0-9]+$'
-	from schema $id: http://devicetree.org/schemas/arm/qcom,tgu.yaml
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/dma/arm-pl08x.example.dtb: dma-controller@10130000 (arm,pl080): compatible:0: 'qcom,tgu' was expected
-	from schema $id: http://devicetree.org/schemas/arm/qcom,tgu.yaml
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/dma/arm-pl08x.example.dtb: dma-controller@67000000 (faraday,ftdma020): '#dma-cells', 'arm,primecell-periphid', 'interrupts', 'lli-bus-interface-ahb2', 'mem-bus-interface-ahb2', 'memcpy-burst-size', 'memcpy-bus-width', 'resets' do not match any of the regexes: '^pinctrl-[0-9]+$'
-	from schema $id: http://devicetree.org/schemas/arm/qcom,tgu.yaml
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/dma/arm-pl08x.example.dtb: dma-controller@67000000 (faraday,ftdma020): compatible:0: 'qcom,tgu' was expected
-	from schema $id: http://devicetree.org/schemas/arm/qcom,tgu.yaml
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/dma/arm-pl08x.example.dtb: dma-controller@67000000 (faraday,ftdma020): compatible:1: 'arm,primecell' was expected
-	from schema $id: http://devicetree.org/schemas/arm/qcom,tgu.yaml
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/dma/arm-pl08x.example.dtb: dma-controller@67000000 (faraday,ftdma020): compatible: ['faraday,ftdma020', 'arm,pl080', 'arm,primecell'] is too long
-	from schema $id: http://devicetree.org/schemas/arm/qcom,tgu.yaml
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/mmc/arm,pl18x.example.dtb: mmc@5000 (arm,pl180): 'interrupts-extended' does not match any of the regexes: '^pinctrl-[0-9]+$'
-	from schema $id: http://devicetree.org/schemas/arm/qcom,tgu.yaml
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/mmc/arm,pl18x.example.dtb: mmc@5000 (arm,pl180): clock-names:0: 'apb_pclk' was expected
-	from schema $id: http://devicetree.org/schemas/arm/qcom,tgu.yaml
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/mmc/arm,pl18x.example.dtb: mmc@5000 (arm,pl180): clock-names: ['mclk', 'apb_pclk'] is too long
-	from schema $id: http://devicetree.org/schemas/arm/qcom,tgu.yaml
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/mmc/arm,pl18x.example.dtb: mmc@5000 (arm,pl180): clocks: [[4294967295], [4294967295]] is too long
-	from schema $id: http://devicetree.org/schemas/arm/qcom,tgu.yaml
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/mmc/arm,pl18x.example.dtb: mmc@5000 (arm,pl180): compatible:0: 'qcom,tgu' was expected
-	from schema $id: http://devicetree.org/schemas/arm/qcom,tgu.yaml
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/mmc/arm,pl18x.example.dtb: mmc@80126000 (arm,pl18x): 'bus-width', 'cap-mmc-highspeed', 'cap-sd-highspeed', 'cd-gpios', 'dma-names', 'dmas', 'interrupts', 'max-frequency', 'st,sig-dir-cmd', 'st,sig-dir-dat0', 'st,sig-dir-dat2', 'st,sig-pin-fbclk', 'vmmc-supply', 'vqmmc-supply' do not match any of the regexes: '^pinctrl-[0-9]+$'
-	from schema $id: http://devicetree.org/schemas/arm/qcom,tgu.yaml
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/mmc/arm,pl18x.example.dtb: mmc@80126000 (arm,pl18x): clock-names:0: 'apb_pclk' was expected
-	from schema $id: http://devicetree.org/schemas/arm/qcom,tgu.yaml
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/mmc/arm,pl18x.example.dtb: mmc@80126000 (arm,pl18x): clock-names: ['sdi', 'apb_pclk'] is too long
-	from schema $id: http://devicetree.org/schemas/arm/qcom,tgu.yaml
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/mmc/arm,pl18x.example.dtb: mmc@80126000 (arm,pl18x): clocks: [[4294967295, 1, 5], [4294967295, 1, 5]] is too long
-	from schema $id: http://devicetree.org/schemas/arm/qcom,tgu.yaml
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/mmc/arm,pl18x.example.dtb: mmc@80126000 (arm,pl18x): compatible:0: 'qcom,tgu' was expected
-	from schema $id: http://devicetree.org/schemas/arm/qcom,tgu.yaml
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/mmc/arm,pl18x.example.dtb: mmc@101f6000 (arm,pl18x): 'bus-width', 'cap-mmc-highspeed', 'cap-sd-highspeed', 'full-pwr-cycle', 'interrupts', 'max-frequency', 'st,sig-dir-cmd', 'st,sig-dir-dat0', 'st,sig-dir-dat2', 'st,sig-dir-dat31', 'st,sig-pin-fbclk', 'vmmc-supply' do not match any of the regexes: '^pinctrl-[0-9]+$'
-	from schema $id: http://devicetree.org/schemas/arm/qcom,tgu.yaml
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/mmc/arm,pl18x.example.dtb: mmc@101f6000 (arm,pl18x): clock-names:0: 'apb_pclk' was expected
-	from schema $id: http://devicetree.org/schemas/arm/qcom,tgu.yaml
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/mmc/arm,pl18x.example.dtb: mmc@101f6000 (arm,pl18x): clock-names: ['mclk', 'apb_pclk'] is too long
-	from schema $id: http://devicetree.org/schemas/arm/qcom,tgu.yaml
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/mmc/arm,pl18x.example.dtb: mmc@101f6000 (arm,pl18x): clocks: [[4294967295], [4294967295]] is too long
-	from schema $id: http://devicetree.org/schemas/arm/qcom,tgu.yaml
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/mmc/arm,pl18x.example.dtb: mmc@101f6000 (arm,pl18x): compatible:0: 'qcom,tgu' was expected
-	from schema $id: http://devicetree.org/schemas/arm/qcom,tgu.yaml
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/mmc/arm,pl18x.example.dtb: mmc@52007000 (arm,pl18x): 'arm,primecell-periphid', 'cap-mmc-highspeed', 'cap-sd-highspeed', 'interrupts', 'max-frequency', 'resets' do not match any of the regexes: '^pinctrl-[0-9]+$'
-	from schema $id: http://devicetree.org/schemas/arm/qcom,tgu.yaml
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/mmc/arm,pl18x.example.dtb: mmc@52007000 (arm,pl18x): compatible:0: 'qcom,tgu' was expected
-	from schema $id: http://devicetree.org/schemas/arm/qcom,tgu.yaml
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/serial/pl011.example.dtb: serial@80120000 (arm,pl011): 'dma-names', 'dmas', 'interrupts' do not match any of the regexes: '^pinctrl-[0-9]+$'
-	from schema $id: http://devicetree.org/schemas/arm/qcom,tgu.yaml
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/serial/pl011.example.dtb: serial@80120000 (arm,pl011): clock-names:0: 'apb_pclk' was expected
-	from schema $id: http://devicetree.org/schemas/arm/qcom,tgu.yaml
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/serial/pl011.example.dtb: serial@80120000 (arm,pl011): clock-names: ['uartclk', 'apb_pclk'] is too long
-	from schema $id: http://devicetree.org/schemas/arm/qcom,tgu.yaml
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/serial/pl011.example.dtb: serial@80120000 (arm,pl011): clocks: [[4294967295], [4294967295]] is too long
-	from schema $id: http://devicetree.org/schemas/arm/qcom,tgu.yaml
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/serial/pl011.example.dtb: serial@80120000 (arm,pl011): compatible:0: 'qcom,tgu' was expected
-	from schema $id: http://devicetree.org/schemas/arm/qcom,tgu.yaml
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/spi/spi-pl022.example.dtb: spi@e0100000 (arm,pl022): '#address-cells', '#size-cells', 'dma-names', 'dmas', 'flash@1', 'interrupts' do not match any of the regexes: '^pinctrl-[0-9]+$'
-	from schema $id: http://devicetree.org/schemas/arm/qcom,tgu.yaml
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/spi/spi-pl022.example.dtb: spi@e0100000 (arm,pl022): compatible:0: 'qcom,tgu' was expected
-	from schema $id: http://devicetree.org/schemas/arm/qcom,tgu.yaml
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/spi/spi-pl022.example.dtb: spi@e0100000 (arm,pl022): 'clocks' is a required property
-	from schema $id: http://devicetree.org/schemas/arm/qcom,tgu.yaml
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/spi/spi-pl022.example.dtb: spi@e0100000 (arm,pl022): 'clock-names' is a required property
-	from schema $id: http://devicetree.org/schemas/arm/qcom,tgu.yaml
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/sound/arm,pl041.example.dtb: audio-controller@40000 (arm,pl041): 'interrupts' does not match any of the regexes: '^pinctrl-[0-9]+$'
-	from schema $id: http://devicetree.org/schemas/arm/qcom,tgu.yaml
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/sound/arm,pl041.example.dtb: audio-controller@40000 (arm,pl041): compatible:0: 'qcom,tgu' was expected
-	from schema $id: http://devicetree.org/schemas/arm/qcom,tgu.yaml
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/i2c/st,nomadik-i2c.example.dtb: i2c@80004000 (stericsson,db8500-i2c): '#address-cells', '#size-cells', 'clock-frequency', 'interrupts', 'power-domains', 'resets' do not match any of the regexes: '^pinctrl-[0-9]+$'
-	from schema $id: http://devicetree.org/schemas/arm/qcom,tgu.yaml
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/i2c/st,nomadik-i2c.example.dtb: i2c@80004000 (stericsson,db8500-i2c): clock-names:0: 'apb_pclk' was expected
-	from schema $id: http://devicetree.org/schemas/arm/qcom,tgu.yaml
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/i2c/st,nomadik-i2c.example.dtb: i2c@80004000 (stericsson,db8500-i2c): clock-names: ['i2cclk', 'apb_pclk'] is too long
-	from schema $id: http://devicetree.org/schemas/arm/qcom,tgu.yaml
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/i2c/st,nomadik-i2c.example.dtb: i2c@80004000 (stericsson,db8500-i2c): clocks: [[4294967295, 3, 3], [4294967295, 3, 3]] is too long
-	from schema $id: http://devicetree.org/schemas/arm/qcom,tgu.yaml
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/i2c/st,nomadik-i2c.example.dtb: i2c@80004000 (stericsson,db8500-i2c): compatible:0: 'qcom,tgu' was expected
-	from schema $id: http://devicetree.org/schemas/arm/qcom,tgu.yaml
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/i2c/st,nomadik-i2c.example.dtb: i2c@80004000 (stericsson,db8500-i2c): compatible:1: 'arm,primecell' was expected
-	from schema $id: http://devicetree.org/schemas/arm/qcom,tgu.yaml
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/i2c/st,nomadik-i2c.example.dtb: i2c@80004000 (stericsson,db8500-i2c): compatible: ['stericsson,db8500-i2c', 'st,nomadik-i2c', 'arm,primecell'] is too long
-	from schema $id: http://devicetree.org/schemas/arm/qcom,tgu.yaml
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/i2c/st,nomadik-i2c.example.dtb: i2c@101f8000 (st,nomadik-i2c): '#address-cells', '#size-cells', 'clock-frequency', 'interrupts' do not match any of the regexes: '^pinctrl-[0-9]+$'
-	from schema $id: http://devicetree.org/schemas/arm/qcom,tgu.yaml
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/i2c/st,nomadik-i2c.example.dtb: i2c@101f8000 (st,nomadik-i2c): clock-names:0: 'apb_pclk' was expected
-	from schema $id: http://devicetree.org/schemas/arm/qcom,tgu.yaml
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/i2c/st,nomadik-i2c.example.dtb: i2c@101f8000 (st,nomadik-i2c): clock-names: ['mclk', 'apb_pclk'] is too long
-	from schema $id: http://devicetree.org/schemas/arm/qcom,tgu.yaml
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/i2c/st,nomadik-i2c.example.dtb: i2c@101f8000 (st,nomadik-i2c): clocks: [[4294967295], [4294967295]] is too long
-	from schema $id: http://devicetree.org/schemas/arm/qcom,tgu.yaml
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/i2c/st,nomadik-i2c.example.dtb: i2c@101f8000 (st,nomadik-i2c): compatible:0: 'qcom,tgu' was expected
-	from schema $id: http://devicetree.org/schemas/arm/qcom,tgu.yaml
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/i2c/st,nomadik-i2c.example.dtb: i2c@300000 (mobileye,eyeq5-i2c): '#address-cells', '#size-cells', 'clock-frequency', 'interrupts', 'mobileye,olb' do not match any of the regexes: '^pinctrl-[0-9]+$'
-	from schema $id: http://devicetree.org/schemas/arm/qcom,tgu.yaml
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/i2c/st,nomadik-i2c.example.dtb: i2c@300000 (mobileye,eyeq5-i2c): clock-names:0: 'apb_pclk' was expected
-	from schema $id: http://devicetree.org/schemas/arm/qcom,tgu.yaml
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/i2c/st,nomadik-i2c.example.dtb: i2c@300000 (mobileye,eyeq5-i2c): clock-names: ['i2cclk', 'apb_pclk'] is too long
-	from schema $id: http://devicetree.org/schemas/arm/qcom,tgu.yaml
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/i2c/st,nomadik-i2c.example.dtb: i2c@300000 (mobileye,eyeq5-i2c): clocks: [[4294967295], [4294967295]] is too long
-	from schema $id: http://devicetree.org/schemas/arm/qcom,tgu.yaml
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/i2c/st,nomadik-i2c.example.dtb: i2c@300000 (mobileye,eyeq5-i2c): compatible:0: 'qcom,tgu' was expected
-	from schema $id: http://devicetree.org/schemas/arm/qcom,tgu.yaml
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/net/wireless/brcm,bcm4329-fmac.example.dtb: mmc@80118000 (arm,pl18x): '#address-cells', '#size-cells', 'bus-width', 'interrupts', 'non-removable', 'vmmc-supply', 'wifi@1' do not match any of the regexes: '^pinctrl-[0-9]+$'
-	from schema $id: http://devicetree.org/schemas/arm/qcom,tgu.yaml
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/net/wireless/brcm,bcm4329-fmac.example.dtb: mmc@80118000 (arm,pl18x): clock-names:0: 'apb_pclk' was expected
-	from schema $id: http://devicetree.org/schemas/arm/qcom,tgu.yaml
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/net/wireless/brcm,bcm4329-fmac.example.dtb: mmc@80118000 (arm,pl18x): clock-names: ['mclk', 'apb_pclk'] is too long
-	from schema $id: http://devicetree.org/schemas/arm/qcom,tgu.yaml
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/net/wireless/brcm,bcm4329-fmac.example.dtb: mmc@80118000 (arm,pl18x): clocks: [[4294967295, 0], [4294967295, 1]] is too long
-	from schema $id: http://devicetree.org/schemas/arm/qcom,tgu.yaml
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/net/wireless/brcm,bcm4329-fmac.example.dtb: mmc@80118000 (arm,pl18x): compatible:0: 'qcom,tgu' was expected
-	from schema $id: http://devicetree.org/schemas/arm/qcom,tgu.yaml
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/mtd/arm,pl353-nand-r2p1.example.dtb: memory-controller@e000e000 (arm,pl353-smc-r2p1): '#address-cells', '#size-cells', 'nand-controller@0,0', 'ranges' do not match any of the regexes: '^pinctrl-[0-9]+$'
-	from schema $id: http://devicetree.org/schemas/arm/qcom,tgu.yaml
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/mtd/arm,pl353-nand-r2p1.example.dtb: memory-controller@e000e000 (arm,pl353-smc-r2p1): clock-names:0: 'apb_pclk' was expected
-	from schema $id: http://devicetree.org/schemas/arm/qcom,tgu.yaml
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/mtd/arm,pl353-nand-r2p1.example.dtb: memory-controller@e000e000 (arm,pl353-smc-r2p1): clock-names: ['memclk', 'apb_pclk'] is too long
-	from schema $id: http://devicetree.org/schemas/arm/qcom,tgu.yaml
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/mtd/arm,pl353-nand-r2p1.example.dtb: memory-controller@e000e000 (arm,pl353-smc-r2p1): clocks: [[4294967295, 11], [4294967295, 44]] is too long
-	from schema $id: http://devicetree.org/schemas/arm/qcom,tgu.yaml
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/mtd/arm,pl353-nand-r2p1.example.dtb: memory-controller@e000e000 (arm,pl353-smc-r2p1): compatible:0: 'qcom,tgu' was expected
-	from schema $id: http://devicetree.org/schemas/arm/qcom,tgu.yaml
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/bus/arm,integrator-ap-lm.example.dtb: serial@100000 (arm,pl011): 'interrupts-extended' does not match any of the regexes: '^pinctrl-[0-9]+$'
-	from schema $id: http://devicetree.org/schemas/arm/qcom,tgu.yaml
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/bus/arm,integrator-ap-lm.example.dtb: serial@100000 (arm,pl011): compatible:0: 'qcom,tgu' was expected
-	from schema $id: http://devicetree.org/schemas/arm/qcom,tgu.yaml
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/bus/arm,integrator-ap-lm.example.dtb: serial@100000 (arm,pl011): 'clocks' is a required property
-	from schema $id: http://devicetree.org/schemas/arm/qcom,tgu.yaml
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/bus/arm,integrator-ap-lm.example.dtb: serial@100000 (arm,pl011): 'clock-names' is a required property
-	from schema $id: http://devicetree.org/schemas/arm/qcom,tgu.yaml
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/rtc/arm,pl031.example.dtb: rtc@10017000 (arm,pl031): compatible:0: 'qcom,tgu' was expected
-	from schema $id: http://devicetree.org/schemas/arm/qcom,tgu.yaml
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/display/arm,pl11x.example.dtb: clcd@10020000 (arm,pl111): 'interrupt-names', 'interrupts', 'max-memory-bandwidth', 'port' do not match any of the regexes: '^pinctrl-[0-9]+$'
-	from schema $id: http://devicetree.org/schemas/arm/qcom,tgu.yaml
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/display/arm,pl11x.example.dtb: clcd@10020000 (arm,pl111): clock-names:0: 'apb_pclk' was expected
-	from schema $id: http://devicetree.org/schemas/arm/qcom,tgu.yaml
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/display/arm,pl11x.example.dtb: clcd@10020000 (arm,pl111): clock-names: ['clcdclk', 'apb_pclk'] is too long
-	from schema $id: http://devicetree.org/schemas/arm/qcom,tgu.yaml
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/display/arm,pl11x.example.dtb: clcd@10020000 (arm,pl111): clocks: [[4294967295], [4294967295]] is too long
-	from schema $id: http://devicetree.org/schemas/arm/qcom,tgu.yaml
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/display/arm,pl11x.example.dtb: clcd@10020000 (arm,pl111): compatible:0: 'qcom,tgu' was expected
-	from schema $id: http://devicetree.org/schemas/arm/qcom,tgu.yaml
+One of the main challenges arises from differences in how IOMMU
+translation is currently managed on SoCs running the Qualcomm EL2
+hypervisor (QHEE), where IOMMU translation for any device is entirely
+owned by the hypervisor. Additionally, the firmware for remote
+processors does not contain a resource table, which would typically
+include the necessary IOMMU configuration settings.
 
-doc reference errors (make refcheckdocs):
+Qualcomm SoCs running with QHEE (EL2) have been utilizing the Peripheral
+Authentication Service (PAS) from TrustZone (TZ) firmware to securely
+authenticate and reset remote processors via a single SMC call,
+_auth_and_reset_. This call is first trapped by QHEE, which then invokes
+TZ for authentication. Once authentication is complete, the call returns
+to QHEE, which sets up the IOMMU translation scheme for the remote
+processors and subsequently brings them out of reset. The design of the
+Qualcomm EL2 hypervisor dictates that the Linux host OS running at EL1
+is not permitted to configure IOMMU translation for remote processors,
+and only a single-stage translation is configured.
 
-See https://patchwork.ozlabs.org/project/devicetree-bindings/patch/20251104064043.88972-2-songwei.chai@oss.qualcomm.com
+To make the remote processor bring-up (PAS) sequence
+hypervisor-independent, the auth_and_reset SMC call is now handled
+entirely by TZ. However, the issue of IOMMU configuration remains
+unresolved, for example a scenario, when KVM host at EL2 has no
+knowledge of the remote processors’ IOMMU settings.  This is being
+addressed by overlaying the IOMMU properties when the SoC runs a Linux
+host at EL2. SMC call is being provided from the TrustZone firmware to
+retrieve the resource table for a given subsystem.
 
-The base for the series is generally the latest rc1. A different dependency
-should be noted in *this* patch.
+There are also remote processors such as those for video, camera, and
+graphics that do not use the remoteproc framework to manage their
+lifecycle. Instead, they rely on the Qualcomm PAS service to
+authenticate their firmware. These processors also need to be brought
+out of reset when Linux is running at EL2. The client drivers for these
+processors use the MDT loader function to load and authenticate
+firmware. Similar to the Qualcomm remoteproc PAS driver, they also need
+to retrieve the resource table, create a shared memory bridge
+(shmbridge), and map the resources before bringing the processors out of
+reset.
 
-If you already ran 'make dt_binding_check' and didn't see the above
-error(s), then make sure 'yamllint' is installed and dt-schema is up to
-date:
+It is based on next-20251103 and tested on SA8775p which is now called
+Lemans IOT platform and does not addresses DMA problem discussed at
+[1] which is future scope of the series.
 
-pip3 install dtschema --upgrade
+Changes in v6: https://lore.kernel.org/lkml/20251013-kvm_rprocv5-v5-0-d609ed766061@oss.qualcomm.com/
+ - Added comments made by Bryan to save some cycles and added in 2/14
+   which could change patch order.
+ - Renamed qcom_scm_pas_context_init to devm_qcom_scm_pas_context_init()
+ - Replaced devm_kzalloc with kzalloc for output_rt in scm function as
+   remoteproc framework does not usage devm_ api for resource table
+   pointer which is cause mem-abort issue start/stop test.
+ - Removed union usage and redundant code from qcom_scm_pas_prep_and_init_image().
+   
+Changes in v5: https://lore.kernel.org/lkml/20251007-kvm_rprocv4_next-20251007-v4-0-de841623af3c@oss.qualcomm.com/
+ - Replaced minitems with maxitems.
+ - Addressed comments made by Bryan, Mani and Konrad.
+ - Fixed some of highlighted issues in v4.
+ - Added a new patch which removes qcom_mdt_pas_init() from exported
+   symbol list.
+ - Slight change in  v4's 5/12, so that it does use qcom_mdt_pas_load()
+   directly while it should use in the commit where it gets introduced.
+   Hence, reordered the patches a bit like v4 5/12 comes early before
+   4/12.
 
-Please check and re-submit after running the above command yourself. Note
-that DT_SCHEMA_FILES can be set to your schema file to speed up checking
-your schema. However, it must be unset to test all examples with your schema.
+Changes in v4: https://lore.kernel.org/lkml/20250921-kvm_rproc_pas-v3-0-458f09647920@oss.qualcomm.com/
+ - Fixed kernel robot warning/errors.
+ - Reworded some of the commit log, code comment as per suggestion from Bryan.
+ - Added support of gpdsp0 and gpdsp1 and disabled iris node.
+ - Add R-b tag to some of the reviewed patches.
+ - Rename struct qcom_scm_pas_cxt to qcom_scm_pas_context.
+
+Changes in v3: https://lore.kernel.org/lkml/20250819165447.4149674-1-mukesh.ojha@oss.qualcomm.com/
+ - Dropped video subsystem enablement for now, could add it in future
+   or on a separate series.
+ - Addressed most of the suggestion from Stephen and Bryan like some
+   remoteproc code checking resource table presence or right error
+   code propagation above the layer.
+ - Added leman-el2 overlay file.
+ - Added missed iommus binding which was missed last series.
+ - Separated qcom_mdt_pas_load() patch and its usage.
+ - Patch numbering got changed compared to last version
+
+Changes in v2: https://lore.kernel.org/lkml/20241004212359.2263502-1-quic_mojha@quicinc.com/
+ - A lot has changed from the V1 and a fresh look would be preferred.
+ - Removed approach where device tree contain devmem resources in
+   remoteproc node.
+ - SHMbridge need to created for both carveout and metadata memory
+   shared to TZ in a new way.
+ - Now, resource table would be given by SMC call which need to mapped
+   along with carveout before triggering _auth_and_reset_.
+ - IOMMU properties need to be added to firmware devices tree node when Linux
+   control IOMMU.
+
+---
+Mukesh Ojha (14):
+      dt-bindings: remoteproc: qcom,pas: Add iommus property
+      firmware: qcom_scm: Remove redundant piece of code
+      firmware: qcom_scm: Rename peripheral as pas_id
+      firmware: qcom_scm: Introduce PAS context initialization helper function
+      remoteproc: pas: Replace metadata context with PAS context structure
+      soc: qcom: mdtloader: Add PAS context aware qcom_mdt_pas_load() function
+      soc: qcom: mdtloader: Remove qcom_mdt_pas_init() from exported symbols
+      firmware: qcom_scm: Add a prep version of auth_and_reset function
+      firmware: qcom_scm: Simplify qcom_scm_pas_init_image()
+      firmware: qcom_scm: Add SHM bridge handling for PAS when running without QHEE
+      firmware: qcom_scm: Add qcom_scm_pas_get_rsc_table() to get resource table
+      remoteproc: pas: Extend parse_fw callback to fetch resources via SMC call
+      remoteproc: qcom: pas: Enable Secure PAS support with IOMMU managed by Linux
+      arm64: dts: qcom: Add EL2 overlay for Lemans
+
+ .../bindings/remoteproc/qcom,pas-common.yaml       |   3 +
+ arch/arm64/boot/dts/qcom/Makefile                  |  10 +
+ arch/arm64/boot/dts/qcom/lemans-el2.dtso           |  41 +++
+ drivers/firmware/qcom/qcom_scm.c                   | 387 ++++++++++++++++++---
+ drivers/firmware/qcom/qcom_scm.h                   |   1 +
+ drivers/remoteproc/qcom_q6v5_pas.c                 | 166 +++++++--
+ drivers/soc/qcom/mdt_loader.c                      |  43 ++-
+ include/linux/firmware/qcom/qcom_scm.h             |  30 +-
+ include/linux/soc/qcom/mdt_loader.h                |  22 +-
+ 9 files changed, 593 insertions(+), 110 deletions(-)
+---
+base-commit: 9823120909776bbca58a3c55ef1f27d49283c1f3
+change-id: 20251104-kvm_rproc_v6-6329e4d594fe
+
+Best regards,
+-- 
+-Mukesh Ojha
 
 
