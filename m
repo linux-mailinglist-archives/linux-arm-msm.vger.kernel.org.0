@@ -1,48 +1,101 @@
-Return-Path: <linux-arm-msm+bounces-80275-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-80276-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 97DA0C308C9
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 04 Nov 2025 11:39:57 +0100 (CET)
+Received: from ams.mirrors.kernel.org (ams.mirrors.kernel.org [IPv6:2a01:60a::1994:3:14])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1EEE3C308DE
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 04 Nov 2025 11:41:51 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 346773BB233
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Nov 2025 10:39:56 +0000 (UTC)
+	by ams.mirrors.kernel.org (Postfix) with ESMTPS id 97A5D34DBD5
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Nov 2025 10:41:50 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8CE892D5C67;
-	Tue,  4 Nov 2025 10:39:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D5B472BF3DB;
+	Tue,  4 Nov 2025 10:41:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="SlNk83dt"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="k4FHjXOW";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="a+U8oCh2"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57D6527E04C;
-	Tue,  4 Nov 2025 10:39:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 464CC2BE642
+	for <linux-arm-msm@vger.kernel.org>; Tue,  4 Nov 2025 10:41:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762252794; cv=none; b=UGZfcRROW5h4kDe6Al9rA8eUPPT64W8J28hvtRSNWNwSAqq3U8utCTRpzwS82ekJtXYI5ImCnR0pGZ2fbfBPGHpBmE0AObcHqkgsiOQqWKP2CFMs5KRKXnBFpwCWNQlmdO2NgNtabFEMskoQtfs4Gi2wbbzgA8zSU8BXNJM0qZo=
+	t=1762252904; cv=none; b=I3Rn7F3nC9H0UmlF7TASW+oFWcrapypqSQMo5MRTxduQM/kTTivQQ9fBWCEoCoHv8b+fyJBdSzPbq9N65uMEulCb06eBMsRd7JXgNrJyGZX1upoRnuf366W2kCAaoncqClMqSrEMK8jY5uufmrWBkcchzrdDcdx8oGpUvwoELy4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762252794; c=relaxed/simple;
-	bh=bVSOpVrl2E+aD2iwJShLNXwchdC6N4vvdH0xbq0Wv7Q=;
+	s=arc-20240116; t=1762252904; c=relaxed/simple;
+	bh=/AztLKbGGFxl44bpJWBFEF2PUvYcgQAohT5lnP7DCok=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=pHnstrxNg9yS17ADWxmx1s9gfBvrCfTsubepi5uSg9zSLUcpJJ8DUmAq6YxaEc3OyDHvBxN7XJe3PA7c4JRkVvF85U7UabNrcAMR6NsLrA+52/S/eWfyDdRnZV6Xw3DgEp2PkrsFCgevBXj8qf0GUGHN0ix/zN6QrtFHJJ/Lb7c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=SlNk83dt; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4DC6C116B1;
-	Tue,  4 Nov 2025 10:39:51 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1762252794;
-	bh=bVSOpVrl2E+aD2iwJShLNXwchdC6N4vvdH0xbq0Wv7Q=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=SlNk83dt1Smbc3hLuSAOFwWkfmmmmga4QZ2/iN/3hvrii36ah911xR1PZR6CrIzMW
-	 bZw4faGQ5Y7SCpkJqDpd5uAX1CHrdxz7S5+rPLO3U6mHZy06WdlubrhGRZIXF8WJrD
-	 7RHzF3sRp7Iez191RHjK0bMbNeIKDsYy0CaroJe1tyQvGL6Qc1/PNYmSE6BGlkjdfl
-	 lkycl49PkuqE5g7LvXy4gZC10Vy2odMekVQYQOk/17egZGcFZxQB9IK6WqNYNbO9sz
-	 FmLc0IesnZ3Yr3DHYFgYF9BHORkyuY/hKO6esZwjP5rJWFmz2pIhYx175Z1C9RAVf1
-	 Jl1MhdXrOJ2BQ==
-Message-ID: <0735f540-8085-440c-9c0f-7ac23b52b838@kernel.org>
-Date: Tue, 4 Nov 2025 10:39:50 +0000
+	 In-Reply-To:Content-Type; b=MrRao76yltAsBb3PYKQu+bV1VSc7HVZQGVjhJGev6TAWrH1O5RwnqJwWdMuqzCqkq+wHmkAJumzGKMSoldG710fC6215qmzf8EHOX30d9F9ZXn1q2OxsqMwYojBycZS9CEfd9gyJur0L8NT3/xZVtAKx/a22PXX2kYtUw34jQMA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=k4FHjXOW; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=a+U8oCh2; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 5A48g0601539184
+	for <linux-arm-msm@vger.kernel.org>; Tue, 4 Nov 2025 10:41:42 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	91AvSbiJCi7tatFtu9pUmptKmfl2yPXXVuRM4ZTqYyM=; b=k4FHjXOW6gtOWYQc
+	Pu5AocvjZwhoQTXYfIaAkthHIuTCHQGYQdTnnDbKlHy3vMVmMmIMFxdKS1lTht7x
+	dIvaWo5AtgbNrv6B3PA3o83Lm0JuRJfAsqdGKfxWmTiba4KfzF2fmZsukB3xJ7QM
+	0dXj3yfQV3HWmYfOQh7i9ysvcqfBgYd5zUFog9IqRvmFeLLKk/IpC40xQ1XGbxE8
+	f5y4qJZTkHBBVGcF98ewK88vzc6IyyyzGgMPEC6VB5VW9aDhz/ViYaffU1mJSSRc
+	CW9xtTdEU2dH+SkEgO7GUZ5PV2DGgs2Zdup3TeJcxfWT/CitZPU8iabri6iBm0Xr
+	5Zzpbw==
+Received: from mail-pf1-f199.google.com (mail-pf1-f199.google.com [209.85.210.199])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4a78eqsb4h-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Tue, 04 Nov 2025 10:41:41 +0000 (GMT)
+Received: by mail-pf1-f199.google.com with SMTP id d2e1a72fcca58-7aa5e7452bcso377589b3a.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 04 Nov 2025 02:41:41 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=oss.qualcomm.com; s=google; t=1762252901; x=1762857701; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=91AvSbiJCi7tatFtu9pUmptKmfl2yPXXVuRM4ZTqYyM=;
+        b=a+U8oCh2JIQ8mCrOclrgmod8oREUNKhH2ML2TnOa43kD1Z5T96V4Hv0i9Hyh9kngTl
+         9qJRZZRNupYDP94SrAuC4u3Z9E4x3qPAyLWWCbLNyUKVS+4JZK0QEOlUDDSgN+jkgcd0
+         cMpHc0ViFiBlTn55i0dRTrgj4nLzhC4IjwOF6I7KLYtLgkrvVPjGp5yjP5bH57HG435J
+         hDOlmjxKxmwk0XdhuXblsd1kFjOHZ4BBId/Rc6Yx/nA3My3gkEUvwYb8vi2z3G9DYP1n
+         0rd9hCUgvagJFPSrqN7j2mHVBl24s9iVODvxbed2JyCtcJoWg4D/Rg/obb05qAccabqe
+         3GNg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1762252901; x=1762857701;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=91AvSbiJCi7tatFtu9pUmptKmfl2yPXXVuRM4ZTqYyM=;
+        b=Na9aj/pFIcCik9OQGZi/ig6hnuJMA4CepLpZ9yT/VYOx0f3LxLrvsb781Jaj4GhbBu
+         H8hw/sSFTGDX5g8ZocyNMqsra594Pi6Q+w4DniYdtdSc3XNNip8Rdm/JrHATGnh+vFZr
+         J+V9Kwi2LgLpyHaVyHp6Hre2xmemXR1QBQDwqT9z7jJfzeiPQbqmGfxjasgxGfxjpFU8
+         Mxx38kAPEwcMYSGG8dBx6lotP7mXyLdp1xF745eeQV6OAz9PeGoC9SD67oKcwVFpFvrJ
+         XKzYDsJhbmzRi7ymsLXeBST47/d7NrLHs3qhSmZxhebgTzBs1X0cVlKtTlwvTbqLAQbe
+         S2gw==
+X-Forwarded-Encrypted: i=1; AJvYcCXrwYNQ0/zMx4oIUENB7heBGxfmnjQxlIjK0DosNcSqKBLSpmrmG8rlxQ2zDy2CnOoAG6s+i4W3eEdtVQp8@vger.kernel.org
+X-Gm-Message-State: AOJu0YzrdLooqEpLprb9UadbydGwx3OcZ9dARKcEx3+87GP3ifocEMId
+	eJkJuUP2I12plo5BbSeTd5O2lPKIxy5pXlPb0eYG1EalQaEpiwYvY5qqBypzfGlq2j0yQl//mWv
+	w84fEqi9q8UZnjM0JtqRFARk4C8rPzqYOfURjQgpa5QM/MsxVdBsUTEEZtBIL/1wH7kxV
+X-Gm-Gg: ASbGncsud954wn8xMAC+cqxQdc1QAJ0iMeuvQT3czBztgOzV7N82MdBdXaATiaEyCEH
+	X+YcKxozoR5t9vKTmoenYVP15SbepU+xKXzUd8KxgjyxLgHz7wIHYC+PAuRwuU1dWYW2A18XrFC
+	aVPvAcyFgxdJnTz9aN966DioA/TdnhceMWabvWjqPjee6nxWNmQYoJm2yVadZgVpYagg1lBI4Sv
+	hyRmDEkZCfrBG+r6pzdpqKUYBs/wAIYy2TdhUpqLfOeemd3MMIE7KyRayWuZ4ChxZBCvlXvqf3u
+	Q0BeaRFLzRJrqhb1e5ZnqCkHB2w2RwU8X1ZaV+gN9z6CmFuhaMZgrnz2a/Yzm6Z3FDCJtoQdX4m
+	e86D3rm0kWO9afWbS1QvQcazjIlAwHS01lBW9lRIfB49uYjGIF3KjJjlFCwwyBcFg3g==
+X-Received: by 2002:a05:6a00:1946:b0:781:1f5e:8bc4 with SMTP id d2e1a72fcca58-7a7796c3cf8mr10643266b3a.6.1762252900613;
+        Tue, 04 Nov 2025 02:41:40 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IECdg2X+KKdyZ7UpDXqI1KVowix3dalkZkr3HCYmMgQdCB10hcuf+eU41ymVBOCNwqvnosmxg==
+X-Received: by 2002:a05:6a00:1946:b0:781:1f5e:8bc4 with SMTP id d2e1a72fcca58-7a7796c3cf8mr10643238b3a.6.1762252899976;
+        Tue, 04 Nov 2025 02:41:39 -0800 (PST)
+Received: from [10.133.33.149] (tpe-colo-wan-fw-bordernet.qualcomm.com. [103.229.16.4])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-7acd32473b4sm2518486b3a.6.2025.11.04.02.41.36
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 04 Nov 2025 02:41:39 -0800 (PST)
+Message-ID: <bb9e76f0-7059-4405-a8a7-323f1a5f07b0@oss.qualcomm.com>
+Date: Tue, 4 Nov 2025 18:41:32 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,157 +103,88 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 1/5] media: qcom: iris: Improve format alignment for
- encoder
-To: Wangao Wang <wangao.wang@oss.qualcomm.com>,
- Vikash Garodia <vikash.garodia@oss.qualcomm.com>,
- Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>,
- Abhinav Kumar <abhinav.kumar@linux.dev>,
- Mauro Carvalho Chehab <mchehab@kernel.org>
-Cc: linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
- linux-kernel@vger.kernel.org, Neil Armstrong <neil.armstrong@linaro.org>,
- quic_qiweil@quicinc.com, quic_renjiang@quicinc.com
-References: <20251104-iris_encoder_enhancements-v3-0-63b0c431b4d0@oss.qualcomm.com>
- <k3umzf0z69-Hbh7jbT-Gjp4pyquNAYVC3VfIXQcdVZstI5FTtcGU_NEgb8l796Z3Cr6Dz0DQ0BoVQQPd4fr6sQ==@protonmail.internalid>
- <20251104-iris_encoder_enhancements-v3-1-63b0c431b4d0@oss.qualcomm.com>
-From: Bryan O'Donoghue <bod@kernel.org>
+Subject: Re: [PATCH v3 1/2] dt-bindings: soc: qcom: Add qcom,kaanapali-imem
+ compatible
+To: Krzysztof Kozlowski <krzk@kernel.org>,
+        Jingyi Wang <jingyi.wang@oss.qualcomm.com>
+Cc: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>,
+        Robert Marko <robimarko@gmail.com>,
+        Das Srinagesh <quic_gurus@quicinc.com>, tingwei.zhang@oss.qualcomm.com,
+        trilok.soni@oss.qualcomm.com, yijie.yang@oss.qualcomm.com,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20251102-knp-soc-binding-v3-0-11255ec4a535@oss.qualcomm.com>
+ <20251102-knp-soc-binding-v3-1-11255ec4a535@oss.qualcomm.com>
+ <20251104-glaring-rebel-pillbug-a467ca@kuoka>
 Content-Language: en-US
-In-Reply-To: <20251104-iris_encoder_enhancements-v3-1-63b0c431b4d0@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+From: "Aiqun(Maria) Yu" <aiqun.yu@oss.qualcomm.com>
+In-Reply-To: <20251104-glaring-rebel-pillbug-a467ca@kuoka>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMTA0MDA4OCBTYWx0ZWRfX/xHVLpsdG3oy
+ Au/Xr1d9WuhWbz5JNyEdn28f1PBmJ24k1kiTnWPG+0YSnHRrsM+byv5EH17F06Jbw/5QwKVXw5a
+ jBw37jdYp6BUrIY0x54HgtRvl8mGMTepwSLAmbxabIxnca5mwe55WoEBy5aUBFvxaL0VX9vPE2f
+ 4iDuLAhDnMxAytzO6w52tFHwY1Ao/bIMG14baybxNjcIFnEFf0CXu8eeToeauHl2mekMlJKptmg
+ MdRCheiyw5p3UR60SVqZneGFaXzVUH04YWW3cISbZ0TmQWc3NEjMUqpOekYnOy87cKKACHiStd5
+ KUWnu6ZFHW0KPJW6pF/7GRHUbexXpd7gXbzZRoQbe/+RLGd2IeQyAd+7ckqYkq42MoHk29m/8zD
+ aEHN8y8AyhB2tcfah0rvlORYnC9fMQ==
+X-Authority-Analysis: v=2.4 cv=fofRpV4f c=1 sm=1 tr=0 ts=6909d866 cx=c_pps
+ a=WW5sKcV1LcKqjgzy2JUPuA==:117 a=nuhDOHQX5FNHPW3J6Bj6AA==:17
+ a=IkcTkHD0fZMA:10 a=6UeiqGixMTsA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=df4OXsTxo-j3LUg4bp0A:9 a=QEXdDO2ut3YA:10
+ a=OpyuDcXvxspvyRM73sMx:22
+X-Proofpoint-ORIG-GUID: mNO8pwoxSmM49i96ZnzOCKYYC5deI91c
+X-Proofpoint-GUID: mNO8pwoxSmM49i96ZnzOCKYYC5deI91c
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
+ definitions=2025-11-03_06,2025-11-03_03,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ bulkscore=0 suspectscore=0 clxscore=1015 adultscore=0 priorityscore=1501
+ malwarescore=0 impostorscore=0 lowpriorityscore=0 phishscore=0 spamscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2510240001 definitions=main-2511040088
 
-On 04/11/2025 08:11, Wangao Wang wrote:
-> Add members enc_raw_width, enc_raw_height to the struct iris_inst to
-> support codec alignment requirements.
+On 11/4/2025 4:16 PM, Krzysztof Kozlowski wrote:
+> On Sun, Nov 02, 2025 at 11:25:06PM -0800, Jingyi Wang wrote:
+>> Document qcom,kaanapali-imem compatible. Kaanapali IMEM is not a syscon or
+>> simple-mfd, also "reboot reason" is not required on Kaanapali like some
 > 
-> HFI_PROP_CROP_OFFSETS is used to inform the firmware of the region
-> of interest, rather than indicating that the codec supports crop.
-> Therefore, the crop handling has been corrected accordingly.
+> I do not see correlation. Something is not a syscon, so you add a new
+> generic compatible? No.
 > 
-> Tested-by: Neil Armstrong <neil.armstrong@linaro.org> # on SM8650-HDK
-> Signed-off-by: Wangao Wang <wangao.wang@oss.qualcomm.com>
-> ---
->   .../platform/qcom/iris/iris_hfi_gen2_command.c     | 23 ++++++++++++++++------
->   drivers/media/platform/qcom/iris/iris_instance.h   |  4 ++++
->   drivers/media/platform/qcom/iris/iris_venc.c       | 10 ++++++++--
->   3 files changed, 29 insertions(+), 8 deletions(-)
+>> other platforms. So define a common "qcom,imem" binding and fallback to it.
 > 
-> diff --git a/drivers/media/platform/qcom/iris/iris_hfi_gen2_command.c b/drivers/media/platform/qcom/iris/iris_hfi_gen2_command.c
-> index 4ce71a14250832440099e4cf3835b4aedfb749e8..2469e027706fb6c9c0b95be11109c3cd0f8d70ce 100644
-> --- a/drivers/media/platform/qcom/iris/iris_hfi_gen2_command.c
-> +++ b/drivers/media/platform/qcom/iris/iris_hfi_gen2_command.c
-> @@ -168,8 +168,7 @@ static int iris_hfi_gen2_session_set_property(struct iris_inst *inst, u32 packet
+> You did not define fallback to it!
 > 
->   static int iris_hfi_gen2_set_raw_resolution(struct iris_inst *inst, u32 plane)
->   {
-> -	u32 resolution = inst->fmt_src->fmt.pix_mp.width << 16 |
-> -		inst->fmt_src->fmt.pix_mp.height;
-> +	u32 resolution = inst->enc_raw_width << 16 | inst->enc_raw_height;
->   	u32 port = iris_hfi_gen2_get_port(inst, plane);
+> ...
 > 
->   	return iris_hfi_gen2_session_set_property(inst,
-> @@ -216,8 +215,11 @@ static int iris_hfi_gen2_set_crop_offsets(struct iris_inst *inst, u32 plane)
->   	u32 port = iris_hfi_gen2_get_port(inst, plane);
->   	u32 bottom_offset, right_offset;
->   	u32 left_offset, top_offset;
-> +	u32 codec_align;
->   	u32 payload[2];
+>> +      - items:
+>> +          - enum:
+>> +              - qcom,kaanapali-imem
+>> +          - const: qcom,imem
 > 
-> +	codec_align = inst->codec == V4L2_PIX_FMT_HEVC ? 32 : 16;
-> +
->   	if (inst->domain == DECODER) {
->   		if (V4L2_TYPE_IS_OUTPUT(plane)) {
->   			bottom_offset = (inst->fmt_src->fmt.pix_mp.height - inst->crop.height);
-> @@ -231,10 +233,19 @@ static int iris_hfi_gen2_set_crop_offsets(struct iris_inst *inst, u32 plane)
->   			top_offset = inst->compose.top;
->   		}
->   	} else {
-> -		bottom_offset = (inst->fmt_src->fmt.pix_mp.height - inst->crop.height);
-> -		right_offset = (inst->fmt_src->fmt.pix_mp.width - inst->crop.width);
-> -		left_offset = inst->crop.left;
-> -		top_offset = inst->crop.top;
-> +		if (V4L2_TYPE_IS_OUTPUT(plane)) {
-> +			bottom_offset = (inst->enc_raw_height - inst->crop.height);
-> +			right_offset = (inst->enc_raw_width - inst->crop.width);
-> +			left_offset = inst->crop.left;
-> +			top_offset = inst->crop.top;
-> +		} else {
-> +			bottom_offset = (ALIGN(inst->enc_raw_height, codec_align) -
-> +					inst->enc_raw_height);
-> +			right_offset = (ALIGN(inst->enc_raw_width, codec_align) -
-> +					inst->enc_raw_width);
-> +			left_offset = 0;
-> +			top_offset = 0;
-> +		}
->   	}
+> I do not understand what this generic compatible is supposed to express,
+> not explained in commit msg. Considering this wasn't before, it is a
+> major and really undesired change. It also makes no sesne. There was no
+> generic compatible before but "if not syscon" now this must have generic
+> compatible, what?
+
+Are you suggesting to remove the generic compatible of "qcom,imem"?
+Could you pls help to confirm the suggested way from your point of view?
+
+
 > 
->   	payload[0] = FIELD_PREP(GENMASK(31, 16), left_offset) | top_offset;
-> diff --git a/drivers/media/platform/qcom/iris/iris_instance.h b/drivers/media/platform/qcom/iris/iris_instance.h
-> index 5982d7adefeab80905478b32cddba7bd4651a691..fbae1662947df73bb3d10b7892839fa1076b7e61 100644
-> --- a/drivers/media/platform/qcom/iris/iris_instance.h
-> +++ b/drivers/media/platform/qcom/iris/iris_instance.h
-> @@ -64,6 +64,8 @@ struct iris_fmt {
->    * @frame_rate: frame rate of current instance
->    * @operating_rate: operating rate of current instance
->    * @hfi_rc_type: rate control type
-> + * @enc_raw_width: raw image width for encoder instance
-> + * @enc_raw_height: raw image height for encoder instance
->    */
+> NAK
 > 
->   struct iris_inst {
-> @@ -102,6 +104,8 @@ struct iris_inst {
->   	u32				frame_rate;
->   	u32				operating_rate;
->   	u32				hfi_rc_type;
-> +	u32				enc_raw_width;
-> +	u32				enc_raw_height;
->   };
-> 
->   #endif
-> diff --git a/drivers/media/platform/qcom/iris/iris_venc.c b/drivers/media/platform/qcom/iris/iris_venc.c
-> index 099bd5ed4ae0294725860305254c4cad1ec88d7e..7ad747d2272f029e69a56572a188a032f898a3fb 100644
-> --- a/drivers/media/platform/qcom/iris/iris_venc.c
-> +++ b/drivers/media/platform/qcom/iris/iris_venc.c
-> @@ -62,12 +62,15 @@ int iris_venc_inst_init(struct iris_inst *inst)
-> 
->   	inst->crop.left = 0;
->   	inst->crop.top = 0;
-> -	inst->crop.width = f->fmt.pix_mp.width;
-> -	inst->crop.height = f->fmt.pix_mp.height;
-> +	inst->crop.width = DEFAULT_WIDTH;
-> +	inst->crop.height = DEFAULT_HEIGHT;
-> 
->   	inst->operating_rate = DEFAULT_FPS;
->   	inst->frame_rate = DEFAULT_FPS;
-> 
-> +	inst->enc_raw_width = DEFAULT_WIDTH;
-> +	inst->enc_raw_height = DEFAULT_HEIGHT;
-> +
->   	memcpy(&inst->fw_caps[0], &core->inst_fw_caps_enc[0],
->   	       INST_FW_CAP_MAX * sizeof(struct platform_inst_fw_cap));
-> 
-> @@ -249,6 +252,9 @@ static int iris_venc_s_fmt_input(struct iris_inst *inst, struct v4l2_format *f)
->   	inst->buffers[BUF_INPUT].min_count = iris_vpu_buf_count(inst, BUF_INPUT);
->   	inst->buffers[BUF_INPUT].size = fmt->fmt.pix_mp.plane_fmt[0].sizeimage;
-> 
-> +	inst->enc_raw_width = f->fmt.pix_mp.width;
-> +	inst->enc_raw_height = f->fmt.pix_mp.height;
-> +
->   	if (f->fmt.pix_mp.width != inst->crop.width ||
->   	    f->fmt.pix_mp.height != inst->crop.height) {
->   		inst->crop.top = 0;
-> 
-> --
-> 2.43.0
+> Best regards,
+> Krzysztof
 > 
 
-To me reading this patch you seem to have three or four different 
-alignment changed bunched into one.
 
-I would prefer to see more granular and specific patches for each change.
-
-Please break this up into more bite size chunks.
-
----
-bod
+-- 
+Thx and BRs,
+Aiqun(Maria) Yu
 
