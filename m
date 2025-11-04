@@ -1,126 +1,104 @@
-Return-Path: <linux-arm-msm+bounces-80370-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-80371-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [IPv6:2605:f480:58:1:0:1994:3:14])
-	by mail.lfdr.de (Postfix) with ESMTPS id 70456C332AA
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 04 Nov 2025 23:16:58 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0DD0CC332F6
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 04 Nov 2025 23:20:46 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 5E1034E7764
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Nov 2025 22:16:57 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 97D0418C56EB
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Nov 2025 22:19:30 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 36514346A04;
-	Tue,  4 Nov 2025 22:16:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2A3602C3262;
+	Tue,  4 Nov 2025 22:17:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="WgAnnyCz"
+	dkim=pass (2048-bit key) header.d=mainlining.org header.i=@mainlining.org header.b="Czh85FXx";
+	dkim=permerror (0-bit key) header.d=mainlining.org header.i=@mainlining.org header.b="xkaSlfGa"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mail.mainlining.org (mail.mainlining.org [5.75.144.95])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DC8730CD94;
-	Tue,  4 Nov 2025 22:16:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BBB41A8F84;
+	Tue,  4 Nov 2025 22:17:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=5.75.144.95
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762294575; cv=none; b=PcjBkSaqMqvdxCnXcPlTS/2j180urZycvUHxcTb/0SMsH3GmhO30RzyqYc2sR1bmHdmIkJ1tFJQsx7aJYoscZWSGRFjZa9M/7z4jdHPYPw06Yo/U0legCMNkdgNrcMt4ojbRJmJk/Mhba4jbs8iDbdTlMkggReUBM6BKHIbZVqY=
+	t=1762294642; cv=none; b=FukOHWSpQrFCnrYNHUk8rLVm+P5pKgM18TB1ywGt2wCZHNH7EEz2eMXoH858mY8g5rEBOOWt3mk+ebhCAp9LkRZ+jAONmRiTacAjzLKGdObp4e3wejS0lRLTaoMIJtIc4D5horOLD07eORIMgBL1oXY7ex+x9FXwaiosGoS1DIo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762294575; c=relaxed/simple;
-	bh=sx3FdITHyUsho2TuXz9tyb+nFy6gs9cRfJfgUm1fuoE=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=YElEgrMfsVOXGb6AdQrn+hXqdgu9f7VtOepiKsNCQdztKOubcSQYO0f+ifat/wRoLz5ftncROh98Fk2Xx0sywdO1679+Nm0oU6teTBxa0bliE6ZNng7ya7L1vCL0vr3vbtRFu+D7mp/VOZsMq+okxx/rzI1HSByMbW2Pupjfzhw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=WgAnnyCz; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 44B8BC19422;
-	Tue,  4 Nov 2025 22:16:15 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1762294575;
-	bh=sx3FdITHyUsho2TuXz9tyb+nFy6gs9cRfJfgUm1fuoE=;
-	h=From:Date:Subject:References:In-Reply-To:To:Cc:Reply-To:From;
-	b=WgAnnyCznasY3yysDSgfV8OnW+n2hqaS++bEjWzRm9c13sWp3b/KTRdXNcF3fguXb
-	 sRZMwyNRoOggYDYNfsjcCxiMxZYgEkncETOFjDAACXOXEUTa17HYKdZ8EHZmHHf6b+
-	 /yWdEth8y3mQHuq2rIy0N0Wd6ucBBZMRJrbkdOO2fZzeIvAansrH4Zed390m8gY9yD
-	 i9GxWklJph+NU/sl9Zwzbq8LQTcac2TKGrzCA28CtDtbpCvDxbx0bHNft/RINWCpi1
-	 MyQTo8NxoDwnRT+OPWTBKBvZClS+tth49WzHk0bYdOduj7MB7qtSvx1q3uDqs/MM1s
-	 JUl7XUFggCKVQ==
-Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3AB8CCCFA04;
-	Tue,  4 Nov 2025 22:16:15 +0000 (UTC)
-From: David Heidelberg via B4 Relay <devnull+david.ixit.cz@kernel.org>
-Date: Tue, 04 Nov 2025 23:16:20 +0100
-Subject: [PATCH 12/12] drm/panel: sofef00: Non-continuous mode and video
- burst are supported
+	s=arc-20240116; t=1762294642; c=relaxed/simple;
+	bh=hVegu+giAMcZRbj4Mjow0bPIll40JMYgpv3VyUkS4AQ=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=XCUWvs+bBGOv7rnrWAyFcnD9moXH6T90Dl+4Kcy8LsDuyMM+0CNAw5O0eVm180bRfTPCOpbWzafRhssp/fAKQWSNoHfBQnyTsjAyIpjbFjpf7Ght8OPgzxfCq+U5dmMjfCbWn9RmzQwkNNG3o0y9eXPJnnerWeROvski7Ku7uBU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=mainlining.org; spf=pass smtp.mailfrom=mainlining.org; dkim=pass (2048-bit key) header.d=mainlining.org header.i=@mainlining.org header.b=Czh85FXx; dkim=permerror (0-bit key) header.d=mainlining.org header.i=@mainlining.org header.b=xkaSlfGa; arc=none smtp.client-ip=5.75.144.95
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=mainlining.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=mainlining.org
+DKIM-Signature: v=1; a=rsa-sha256; s=202507r; d=mainlining.org; c=relaxed/relaxed;
+	h=Message-ID:Date:Subject:To:From; t=1762294636; bh=KxKI+V1ZKxSsAem2SDZqxjD
+	62s9DoQ484JTmoOeI844=; b=Czh85FXxOub6e5UQcbyTVtyTLVMYrGqPgJhiRiCsthTmGjDaZY
+	X2EpFkcYyBrNthNqKuBKc/muOUvgyBzA2oZ9MgeyjUEx7I72LzPrq0yIGvBCSMgU49KN0QVvRDP
+	33j0q7oB0lam9WJZw7i2eJycPJr97hNweJDDTHJrARW87N7XlvuMMXudEZH6OeoFyoR/P3/NYU7
+	yj6h2LqOQjbQTsMqNKtNTcvwtclDqLAPWPfe5/Zt/FqH68kvbOit14D2Zdd34fApdCwB0LDQe1P
+	WTu6Uuqa2YURlm28QqAG9vunMAgkfVTZDEWeR/j1jcw4tPBJCltPcRU9LaIARR/x5BA==;
+DKIM-Signature: v=1; a=ed25519-sha256; s=202507e; d=mainlining.org; c=relaxed/relaxed;
+	h=Message-ID:Date:Subject:To:From; t=1762294636; bh=KxKI+V1ZKxSsAem2SDZqxjD
+	62s9DoQ484JTmoOeI844=; b=xkaSlfGamD54QhsNCk14+lxrTW0fWe+y8fZO+Ex3O2HcQERVNn
+	DwNvwPomqzXKeyN+IzbYsi7q9m+DH8q3fMAg==;
+From: Piyush Raj Chouhan <pc1598@mainlining.org>
+To: linux-arm-msm@vger.kernel.org
+Cc: devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	linux-hardening@vger.kernel.org,
+	andersson@kernel.org,
+	konradybcio@kernel.org,
+	robh@kernel.org,
+	krzk+dt@kernel.org,
+	conor+dt@kernel.org,
+	tony.luck@intel.com,
+	gpiccoli@igalia.com,
+	david@ixit.cz,
+	Piyush Raj Chouhan <pc1598@mainlining.org>
+Subject: [PATCH v2 0/3] Add Xiaomi Redmi K20 Pro (Raphael)
+Date: Wed,  5 Nov 2025 03:46:54 +0530
+Message-ID: <20251104221657.51580-1-pc1598@mainlining.org>
+X-Mailer: git-send-email 2.51.2
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20251104-sofef00-rebuild-v1-12-dfcfa17eb176@ixit.cz>
-References: <20251104-sofef00-rebuild-v1-0-dfcfa17eb176@ixit.cz>
-In-Reply-To: <20251104-sofef00-rebuild-v1-0-dfcfa17eb176@ixit.cz>
-To: Neil Armstrong <neil.armstrong@linaro.org>, 
- Jessica Zhang <jessica.zhang@oss.qualcomm.com>, 
- Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, 
- Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>, 
- David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, 
- Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>, 
- Thierry Reding <thierry.reding@gmail.com>, Sam Ravnborg <sam@ravnborg.org>, 
- Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konradybcio@kernel.org>, 
- Casey Connolly <casey.connolly@linaro.org>
-Cc: dri-devel@lists.freedesktop.org, devicetree@vger.kernel.org, 
- linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
- phone-devel@vger.kernel.org, David Heidelberg <david@ixit.cz>
-X-Mailer: b4 0.14.3
-X-Developer-Signature: v=1; a=openpgp-sha256; l=802; i=david@ixit.cz;
- h=from:subject:message-id;
- bh=OE1UAGoiypb8yw70x3xMaGL61XZlHwmG/9vzbFRjYK8=;
- b=owEBbQKS/ZANAwAIAWACP8TTSSByAcsmYgBpCnssHwg8Lskik0Sixi0f0lMdo/NU6KJS+qhtl
- c+BcqyrhcGJAjMEAAEIAB0WIQTXegnP7twrvVOnBHRgAj/E00kgcgUCaQp7LAAKCRBgAj/E00kg
- coP3EACq2H5LzaMgEuOSQdBm5V1/Z0IrgpWiiHh00ZeFLGXhSzhNbJyT4zifpu9FOMDE2JKiHwK
- e7kvGVDLhKE+e2bKTOF4xgW2gx9HoQcqHbuZyu2uuKASiT58GD50SDuWQk6hUHVB8rQRFuOrnzC
- 8Y7xnppScEJhsgHbf4hM4qWwptHFsL9IJY32cusiD2Y4vqsLz4WAasilNxd1xYNUjzqq5WiHTOS
- 7k6JGFPmZkPHvuFWaPN2HVIak8OxcEL21w6/lFdwRjROjDl5yDn6EwISDjmVgauAaAMXxZbg0tY
- Eza2y0tCWO3K4WLQN0kL7TWF8lcFx7PWJ7n9NtivduDJgnKUCVRQ1wMMFnO22+bIwRjElM9VSkk
- Vzmjk8nNAjXg1HKnrGKNNae6pf0H7ZSb2NGQFGqXB9fN54KEBUx9SamPh7CQaT5WGih+SVMj7SG
- 0XlTY/jkpXkLmDWPIlatE+jOQxwRfwpY/m3eybnCjHYx6ONZqt82WbFrl0IdLwwyfo1yQIJh8Bt
- zn7A3VVUrnWbpvbRoxuTaFFb0j9jpsGkTkGiEDScYxR+4QSZo39WUIPkSIEtWc5jIkPYn7VhxP5
- XAsBYLWaW0bMfx+GXH4eD7TEgF4PjUdWas3prmx0BeWDzSdunxvHegoiUtrhg0DvNj5GOqmGkUq
- yb5CdZWYqCESkXw==
-X-Developer-Key: i=david@ixit.cz; a=openpgp;
- fpr=D77A09CFEEDC2BBD53A7047460023FC4D3492072
-X-Endpoint-Received: by B4 Relay for david@ixit.cz/default with auth_id=355
-X-Original-From: David Heidelberg <david@ixit.cz>
-Reply-To: david@ixit.cz
+Content-Transfer-Encoding: 8bit
 
-From: David Heidelberg <david@ixit.cz>
+Hi all,
 
-The panel supports both modes.
+This is v2 of the patch that makes several cleanups and minor fixes to
+the SM8150 Xiaomi Raphael device tree.
 
-Signed-off-by: David Heidelberg <david@ixit.cz>
----
- drivers/gpu/drm/panel/panel-samsung-sofef00.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+Changes in this version:
+ - Updated qcom,vmid to use QCOM_SCM_VMID_MSS_MSA instead of hardcoded 15
+ - Added include: <dt-bindings/firmware/qcom,scm.h>
+ - Set ECC size to 8 in ramoops region
+ - Updated firmware paths to use "Xiaomi" instead of "xiaomi"
+ - Adjusted configuration for panel pinctrl
+ - Removed redundant LDO8 regulator entry
+ - Cleaned up PM8150L LPG LED definitions with proper labels
+ - General styling and ordering fixups
 
-diff --git a/drivers/gpu/drm/panel/panel-samsung-sofef00.c b/drivers/gpu/drm/panel/panel-samsung-sofef00.c
-index 8286cad385738..b330c4a1ad19d 100644
---- a/drivers/gpu/drm/panel/panel-samsung-sofef00.c
-+++ b/drivers/gpu/drm/panel/panel-samsung-sofef00.c
-@@ -236,7 +236,8 @@ static int sofef00_panel_probe(struct mipi_dsi_device *dsi)
- 
- 	dsi->lanes = 4;
- 	dsi->format = MIPI_DSI_FMT_RGB888;
--	dsi->mode_flags = MIPI_DSI_MODE_LPM;
-+	dsi->mode_flags = MIPI_DSI_MODE_VIDEO_BURST |
-+			  MIPI_DSI_CLOCK_NON_CONTINUOUS | MIPI_DSI_MODE_LPM;
- 
- 	ctx->panel.prepare_prev_first = true;
- 
+Link to v1: https://lore.kernel.org/all/20251022054026.22816-2-pc1598@mainlining.org/
+
+Piyush Raj Chouhan (3):
+  dt-bindings: arm: qcom: Add Xiaomi Redmi K20 Pro (Raphael)
+  arm64: dts: qcom: sm8150: Move usb-role-switch property to common dtsi
+  arm64: dts: qcom: sm8150: Add support for Xiaomi Redmi K20 Pro
+
+ .../devicetree/bindings/arm/qcom.yaml         |   1 +
+ arch/arm64/boot/dts/qcom/Makefile             |   1 +
+ arch/arm64/boot/dts/qcom/sm8150-hdk.dts       |   1 -
+ .../boot/dts/qcom/sm8150-xiaomi-raphael.dts   | 962 ++++++++++++++++++
+ arch/arm64/boot/dts/qcom/sm8150.dtsi          |   2 +
+ 5 files changed, 966 insertions(+), 1 deletion(-)
+ create mode 100644 arch/arm64/boot/dts/qcom/sm8150-xiaomi-raphael.dts
 
 -- 
-2.51.0
-
+2.51.2
 
 
