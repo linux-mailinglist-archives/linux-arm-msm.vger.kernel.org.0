@@ -1,60 +1,63 @@
-Return-Path: <linux-arm-msm+bounces-80194-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-80195-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id DE984C2F0BE
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 04 Nov 2025 04:00:27 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id D236BC2F0D9
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 04 Nov 2025 04:04:51 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 784843A86B2
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Nov 2025 03:00:23 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id DE3B43B1989
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Nov 2025 03:04:40 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C8D1226B098;
-	Tue,  4 Nov 2025 03:00:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id BF3542571B8;
+	Tue,  4 Nov 2025 03:04:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="dqyjLxM7"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="WKESfiwn"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 959582405ED;
-	Tue,  4 Nov 2025 03:00:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F33C1F37D3;
+	Tue,  4 Nov 2025 03:04:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762225220; cv=none; b=pM+v3c3iMqLeriyp6/KZOWZzxBW/h1DV4xxjNXyU3IoKlf3oc0QNNbGS2Dlsj1MGGj69/XDRwUh+jHyDOr3LPnR1eq0f5OMOM+H4sBWo2SsJVWbYm/f7ifsU/mT7zSRfgJoGIASYqnFDDjMER2ufNYWm13+/UjnyoGWtJ+v4h5s=
+	t=1762225478; cv=none; b=myTjvWUSZSFGcx1k1ctiU3pc7XpoYY0MCrQQO6jna178Zx8DNWCTAihZztt6w2H1PWfbA4abLKv19Qi+Ak0c9oN6rPPUzWMKj1gCmHOfSpeXsKW0Hg29Dd1MexhMdLuR/7m9J423OUQ7arwZehIiRY9O8ROujWw88yOWk/zCKgQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762225220; c=relaxed/simple;
-	bh=P6Nb7RFYcU3sUy6HTw6nBzT/0oqmgJRzlf4c5vKrZAc=;
+	s=arc-20240116; t=1762225478; c=relaxed/simple;
+	bh=ZlrAYcT8RP/bgBcBfF8bGO2Rd1/BQTXE1H4fj1wz00s=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=P7B+UJLXtuQgUd0T9iFYy3G6SMUZmkvjJP4FcWm9Z+HHF2ZPuFXRdT5POI2W+ItI7fmGk3zrFBJU14/qmF6XGBZFDgoegUScaP1KN/ItewihPwc/I1fPimJZy/MjrZ7qN5azJ3D5SRR2ioUyqFXfOU8oqpmdPapNOFGFlmAny00=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=dqyjLxM7; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29F75C4CEE7;
-	Tue,  4 Nov 2025 03:00:19 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=li22/zFdr6tuNdWnjE3crebSPe/D7pyr0GkO6q/Tw1c4UrgJY0m+VVXsqVp+PBfQI9Lr0di+6uRb0kI4qoKLysdhWaa0z4wr4mvGDjHVKTzt02URMr/UVQ4C2s4tc3bxCl5B+DofJTQ+91/nmH+0M8LPqu7GtbMV65BOXTy+klU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=WKESfiwn; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7FD56C4CEFD;
+	Tue,  4 Nov 2025 03:04:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1762225220;
-	bh=P6Nb7RFYcU3sUy6HTw6nBzT/0oqmgJRzlf4c5vKrZAc=;
+	s=k20201202; t=1762225478;
+	bh=ZlrAYcT8RP/bgBcBfF8bGO2Rd1/BQTXE1H4fj1wz00s=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=dqyjLxM7qeV/bTpp62d2Rpk/yuCkN/+0noh2VDzvMudn6cUMu28UMvFIsSoPC3Cv6
-	 j4JO8BGkTR4JXSw7fOpXz2wgk0LJr/k510xVyAXvhGW1fDu95eZQbcFS2iXTH4jfJJ
-	 Jw7O/50wpTrXxsIgvLDRbnbEFOAf7DINPMLV93cR2K8r9/cyEQ5lEvUVX/sMMhjTbO
-	 6zMHeAXgQOz9xqNz0X42+KvTceDW2Rnw9nVyGMznv1X2JWUVuHF3JaXJHd2ylQfdbn
-	 fmXpx3hTdTdGfDYOzplAom/pJYWcSVFG+Al0M2iKX8T1rUBEzBMkG5KxyEzP8YEpXi
-	 RDrVieIevAeUg==
-Date: Mon, 3 Nov 2025 21:03:52 -0600
+	b=WKESfiwnLJ6ikA/MjCzt7Ftb/R0x3Yck+4cw3QGFh2eMdY9BstQTxqGe8CQt58W3t
+	 JxUPLLNQ2hdkRkEMui834cNUnYqFeDH5iqF7zTyTzaEwpcXodHPVtH9Pd1oU4SuzVr
+	 BkTwPpIFSTu1UgxjvqgaaLwqwfhTI+Mo0ormO6XReaqfYgI0lufezJKzhBuSmNrEiS
+	 nKrzlFa0GRwwiY9omxqrZvpgJakZ+5tOrsDB0lLojZmql9n20Aw63ublkth3z43h4u
+	 wLsD5Yl8F+9ga9XF6xJDAsdzXGJvELtiP+nFJN8cAHOC3/ZgA5l0rREgEUmEt9dFsD
+	 g7seOqFnRi3lA==
+Date: Mon, 3 Nov 2025 21:08:09 -0600
 From: Bjorn Andersson <andersson@kernel.org>
-To: Odelu Kukatla <odelu.kukatla@oss.qualcomm.com>
-Cc: Georgi Djakov <djakov@kernel.org>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Konrad Dybcio <konradybcio@kernel.org>, Raviteja Laggyshetty <raviteja.laggyshetty@oss.qualcomm.com>, 
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>, Bartosz Golaszewski <bartosz.golaszewski@linaro.org>, 
-	linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org, devicetree@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, Mike Tipton <mike.tipton@oss.qualcomm.com>
-Subject: Re: [PATCH v2 1/3] dt-bindings: interconnect: add reg and clocks
- properties to enable QoS on sa8775p
-Message-ID: <ws5skjwjnte3ftf3skr3mbq6gdnm2ereaf3d4frytabbglmff3@dd2hjxdzblod>
-References: <20251001073344.6599-1-odelu.kukatla@oss.qualcomm.com>
- <20251001073344.6599-2-odelu.kukatla@oss.qualcomm.com>
+To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc: Rob Clark <robin.clark@oss.qualcomm.com>, 
+	Dmitry Baryshkov <lumag@kernel.org>, Abhinav Kumar <abhinav.kumar@linux.dev>, 
+	Jessica Zhang <jessica.zhang@oss.qualcomm.com>, Sean Paul <sean@poorly.run>, 
+	Marijn Suijten <marijn.suijten@somainline.org>, David Airlie <airlied@gmail.com>, 
+	Simona Vetter <simona@ffwll.ch>, Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, 
+	Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>, 
+	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+	Conor Dooley <conor+dt@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, 
+	Kuogee Hsieh <quic_khsieh@quicinc.com>, linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, 
+	freedreno@lists.freedesktop.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 1/2] dt-bindings: display/msm: Reference DAI schema for
+ DAI properties
+Message-ID: <mrz254g4ujnwq2bsu63ajqxvgbtokbrwusbdydcj7nny3ctqv3@evj2xqqgiela>
+References: <20251021111050.28554-3-krzysztof.kozlowski@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -63,25 +66,14 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20251001073344.6599-2-odelu.kukatla@oss.qualcomm.com>
+In-Reply-To: <20251021111050.28554-3-krzysztof.kozlowski@linaro.org>
 
-On Wed, Oct 01, 2025 at 01:03:42PM +0530, Odelu Kukatla wrote:
-> Add 'reg' and 'clocks' properties to enable QoS configuration. These
-> properties enable access to QoS registers and necessary clocks for
-> configuration.
+On Tue, Oct 21, 2025 at 01:10:51PM +0200, Krzysztof Kozlowski wrote:
+> DisplayPort nodes are DAIs (Digital Audio Interfaces): they have already
+> 'sound-dai-cells'.  Reference the common DAI schema to bring common
+> properties for them, which allows also customizing DAI name prefix.
 > 
-> QoS configuration is essential for ensuring that latency sensitive
-> components such as CPUs and multimedia engines receive prioritized
-> access to memory and interconnect resources. This helps to manage
-> bandwidth and latency across subsystems, improving system responsiveness
-> and performance in concurrent workloads.
-> 
-> Both 'reg' and 'clocks' properties are optional. If either is missing,
-> QoS configuration will be skipped. This behavior is controlled by the
-> 'qos_requires_clocks' flag in the driver, which ensures that QoS
-> configuration is bypassed when required clocks are not defined.
-> 
-> Signed-off-by: Odelu Kukatla <odelu.kukatla@oss.qualcomm.com>
+> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
 Reviewed-by: Bjorn Andersson <andersson@kernel.org>
 
@@ -89,82 +81,31 @@ Regards,
 Bjorn
 
 > ---
->  .../interconnect/qcom,sa8775p-rpmh.yaml       | 50 ++++++++++++++++++-
->  1 file changed, 49 insertions(+), 1 deletion(-)
+>  .../devicetree/bindings/display/msm/dp-controller.yaml         | 3 ++-
+>  1 file changed, 2 insertions(+), 1 deletion(-)
 > 
-> diff --git a/Documentation/devicetree/bindings/interconnect/qcom,sa8775p-rpmh.yaml b/Documentation/devicetree/bindings/interconnect/qcom,sa8775p-rpmh.yaml
-> index db19fd5c5708..71428d2cce18 100644
-> --- a/Documentation/devicetree/bindings/interconnect/qcom,sa8775p-rpmh.yaml
-> +++ b/Documentation/devicetree/bindings/interconnect/qcom,sa8775p-rpmh.yaml
-> @@ -33,18 +33,66 @@ properties:
->        - qcom,sa8775p-pcie-anoc
->        - qcom,sa8775p-system-noc
+> diff --git a/Documentation/devicetree/bindings/display/msm/dp-controller.yaml b/Documentation/devicetree/bindings/display/msm/dp-controller.yaml
+> index aeb4e4f36044..08c273f707c1 100644
+> --- a/Documentation/devicetree/bindings/display/msm/dp-controller.yaml
+> +++ b/Documentation/devicetree/bindings/display/msm/dp-controller.yaml
+> @@ -198,6 +198,7 @@ allOf:
+>                  - qcom,sa8775p-dp
+>                  - qcom,x1e80100-dp
+>        then:
+> +        $ref: /schemas/sound/dai-common.yaml#
+>          oneOf:
+>            - required:
+>                - aux-bus
+> @@ -295,7 +296,7 @@ allOf:
+>            minItems: 6
+>            maxItems: 8
 >  
-> +  reg:
-> +    maxItems: 1
-> +
-> +  clocks:
-> +    minItems: 2
-> +    maxItems: 5
-> +
->  required:
->    - compatible
->  
->  allOf:
->    - $ref: qcom,rpmh-common.yaml#
-> +  - if:
-> +      properties:
-> +        compatible:
-> +          contains:
-> +            enum:
-> +              - qcom,sa8775p-aggre1-noc
-> +    then:
-> +      properties:
-> +        clocks:
-> +          items:
-> +            - description: aggre UFS PHY AXI clock
-> +            - description: aggre QUP PRIM AXI clock
-> +            - description: aggre USB2 PRIM AXI clock
-> +            - description: aggre USB3 PRIM AXI clock
-> +            - description: aggre USB3 SEC AXI clock
-> +
-> +  - if:
-> +      properties:
-> +        compatible:
-> +          contains:
-> +            enum:
-> +              - qcom,sa8775p-aggre2-noc
-> +    then:
-> +      properties:
-> +        clocks:
-> +          items:
-> +            - description: aggre UFS CARD AXI clock
-> +            - description: RPMH CC IPA clock
->  
->  unevaluatedProperties: false
+> -additionalProperties: false
+> +unevaluatedProperties: false
 >  
 >  examples:
 >    - |
-> -    aggre1_noc: interconnect-aggre1-noc {
-> +    #include <dt-bindings/clock/qcom,sa8775p-gcc.h>
-> +    clk_virt: interconnect-clk-virt {
-> +        compatible = "qcom,sa8775p-clk-virt";
-> +        #interconnect-cells = <2>;
-> +        qcom,bcm-voters = <&apps_bcm_voter>;
-> +    };
-> +
-> +    aggre1_noc: interconnect@16c0000 {
->          compatible = "qcom,sa8775p-aggre1-noc";
-> +        reg = <0x016c0000 0x18080>;
->          #interconnect-cells = <2>;
->          qcom,bcm-voters = <&apps_bcm_voter>;
-> +        clocks = <&gcc GCC_AGGRE_UFS_PHY_AXI_CLK>,
-> +                 <&gcc GCC_AGGRE_NOC_QUPV3_AXI_CLK>,
-> +                 <&gcc GCC_AGGRE_USB2_PRIM_AXI_CLK>,
-> +                 <&gcc GCC_AGGRE_USB3_PRIM_AXI_CLK>,
-> +                 <&gcc GCC_AGGRE_USB3_SEC_AXI_CLK>;
->      };
 > -- 
-> 2.17.1
+> 2.48.1
 > 
 
