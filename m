@@ -1,156 +1,148 @@
-Return-Path: <linux-arm-msm+bounces-80346-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-80347-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0B49CC327B4
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 04 Nov 2025 18:58:33 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 10A39C32A88
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 04 Nov 2025 19:31:11 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 05D0D3AFD5A
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Nov 2025 17:57:10 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id BF2FA3B0518
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Nov 2025 18:26:37 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DF95433DEDE;
-	Tue,  4 Nov 2025 17:56:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 765D6334363;
+	Tue,  4 Nov 2025 18:25:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="XUYOI44R"
+	dkim=pass (1024-bit key) header.d=lucaweiss.eu header.i=@lucaweiss.eu header.b="ntKSGPSE"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from ahti.lucaweiss.eu (ahti.lucaweiss.eu [128.199.32.197])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0FF733C536;
-	Tue,  4 Nov 2025 17:56:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7412F33F8A2;
+	Tue,  4 Nov 2025 18:25:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=128.199.32.197
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762279019; cv=none; b=BJs+WYzFCIag3TdXX/0D3IUeW7d8AY0eBmtNveyxkC0D5xsHeolfsIJyeuke3jDs5PeDhZL3k/NN0IemV/9YpHrzuujaekIz5f1aqdTqXONDtbKJrMJjSSi63B0pP85OCmNcSs3bZR0JnbNrGmZ1BGxtdSZf7Lr7fm5tPSvC/xU=
+	t=1762280749; cv=none; b=bebZXKffSzLGwXqgZhte15Hm4A0wdbePbBDsIn96S91jj/6VROvm5x4mN5fq2Pp4rQPWZJl93v2zAFCv7zK2Obg2A8nvnsCs6P7x3YzqPOTSHqGTudIUbLwdht7pv8Rxs4f40qBsS/K+8C782+pgrIJVkecCi0QKjuRqqnx7pXA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762279019; c=relaxed/simple;
-	bh=FPJNCK36jeHaFc1F2/my5gol5g27q/q15TOBmvBhpLI=;
-	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
-	 Content-Disposition:In-Reply-To; b=HKu8wH0b0qbmwWh/Ijpza05WCEDLmUhYO3s99lpOEdDy/+rKNeLkfPwdMbvQuvbNO0YkY3p/njtjwZs99VOckk4kFTVBRyoD+J7qYOlhg08DMWBchkHyYUW7IYRq2A9Nc6iAsgqdje7vbiDhdBRWMSacmxpGDVXnXwkpAdGTdZc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=XUYOI44R; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B01BC4CEF7;
-	Tue,  4 Nov 2025 17:56:59 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1762279019;
-	bh=FPJNCK36jeHaFc1F2/my5gol5g27q/q15TOBmvBhpLI=;
-	h=Date:From:To:Cc:Subject:In-Reply-To:From;
-	b=XUYOI44RTyjRBqzyfx5pZQyjxjb4vwf4LIUkuvw1TjImbYnmAzrxylg6fAqmwOBgX
-	 sgq6sujIcuF+vAoW30Z/m53ZlrSJ2h1F3fvfTJDDRQ98Nj5QAc6hoWg4U00qJcqtgD
-	 HbITB5nHuLYJonTOp/WwzSE0DohR7wia/xxjOAtvES9K3PkNdhPOT5kxk1+CrDVB3i
-	 hMUCRMU0d3gEDNXFuDE/davvSwrbzTEox42zUMdIeIC+lYK6h6s9LHMOHEgX9ckIHu
-	 lriqJ3z/VPA7yMqhf4BtXp+bmOpU8G+e9buCFMuhGI+1FrFpZdEg28+NBYlCw1qElV
-	 FF3DQMGaFCvaQ==
-Date: Tue, 4 Nov 2025 11:56:57 -0600
-From: Bjorn Helgaas <helgaas@kernel.org>
-To: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
-Cc: Manivannan Sadhasivam <mani@kernel.org>,
-	Lorenzo Pieralisi <lpieralisi@kernel.org>,
-	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
-	Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>,
-	linux-pci@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-	linux-kernel@vger.kernel.org, mayank.rana@oss.qualcomm.com,
-	quic_vbadigan@quicinc.com
-Subject: Re: [PATCH] PCI: qcom: Program correct T_POWER_ON value for L1.2
- exit timing
-Message-ID: <20251104175657.GA1861670@bhelgaas>
+	s=arc-20240116; t=1762280749; c=relaxed/simple;
+	bh=i2N6U8gVZYZTsAyvftu+aK4B5nHv3/lncbA3GMHPvBw=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=GWYKnsyXS8Uyj+iQj9c2r418Mn2EN+cJZLdolW25jTYDpIA1lvJk6Qlcn7u53vsvMca+T0KweHQ8WKEDsTtVfe31FtGk7iX3kdOYpw2Fj96j3HXNkmDe6NVfBMmrAtg5uSnT1Gh7AMi4Pnv7ar1s+V0+wlZ87r8kiAiiL6HIYTw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=lucaweiss.eu; spf=pass smtp.mailfrom=lucaweiss.eu; dkim=pass (1024-bit key) header.d=lucaweiss.eu header.i=@lucaweiss.eu header.b=ntKSGPSE; arc=none smtp.client-ip=128.199.32.197
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=lucaweiss.eu
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=lucaweiss.eu
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=lucaweiss.eu; s=s1;
+	t=1762280739; bh=i2N6U8gVZYZTsAyvftu+aK4B5nHv3/lncbA3GMHPvBw=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To;
+	b=ntKSGPSEgIK4zbk3c6+PEk22FabumzO29uARsKz5Dh3EKkw6IfsIs2q3FlPZ3wsvH
+	 QQ0CdHurvSPP/LntQSqf4c+cmB0k5j4UFBATGIkszvr1Fc2r7v9ZqRqBp/CRNY0gTN
+	 sVe5ohZO4VdSV2Edpqeu0lKYmis2ZGozNfiWe0U0=
+Message-ID: <670ddca1-9b0e-4755-95be-457ea855af45@lucaweiss.eu>
+Date: Tue, 4 Nov 2025 19:25:39 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20251104-t_power_on_fux-v1-1-eb5916e47fd7@oss.qualcomm.com>
+Subject: Re: [PATCH v2 2/7] i2c: qcom-cci: Add msm8953 compatible
+Content-Language: en-US
+To: ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
+ Loic Poulain <loic.poulain@oss.qualcomm.com>, Robert Foss
+ <rfoss@kernel.org>, Andi Shyti <andi.shyti@kernel.org>,
+ Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
+ Conor Dooley <conor+dt@kernel.org>, Bartosz Golaszewski <brgl@bgdev.pl>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, linux-i2c@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+ Wolfram Sang <wsa+renesas@sang-engineering.com>
+References: <20251028-msm8953-cci-v2-0-b5f9f7135326@lucaweiss.eu>
+ <20251028-msm8953-cci-v2-2-b5f9f7135326@lucaweiss.eu>
+From: Luca Weiss <luca@lucaweiss.eu>
+In-Reply-To: <20251028-msm8953-cci-v2-2-b5f9f7135326@lucaweiss.eu>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Tue, Nov 04, 2025 at 05:42:45PM +0530, Krishna Chaitanya Chundru wrote:
-> The T_POWER_ON indicates the time (in μs) that a Port requires the port
-> on the opposite side of Link to wait in L1.2.Exit after sampling CLKREQ#
-> asserted before actively driving the interface. This value is used by
-> the ASPM driver to compute the LTR_L1.2_THRESHOLD.
+On 28-10-2025 17:40, Luca Weiss wrote:
+> Add a config for the v1.2.5 CCI found on msm8953 which has different
+> values in .params compared to others already supported in the driver.
 > 
-> Currently, the root port exposes a T_POWER_ON value of zero in the L1SS
-> capability registers, leading to incorrect LTR_L1.2_THRESHOLD calculations.
-> This can result in improper L1.2 exit behavior and can trigger AER's.
-> 
-> To address this, program the T_POWER_ON value to 80us (scale = 1,
-> value = 8) in the PCI_L1SS_CAP register during host initialization. This
-> ensures that ASPM can take the root port's T_POWER_ON value into account
-> while calculating the LTR_L1.2_THRESHOLD value.
+> Reviewed-by: Loic Poulain <loic.poulain@oss.qualcomm.com>
+> Acked-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
+> Signed-off-by: Luca Weiss <luca@lucaweiss.eu>
 
-I think the question is whether the value depends on the circuit
-design of a particular platform (and should therefore come from DT),
-or whether it depends solely on the qcom device.
+Hi Andi,
 
-PCIe r7.0, sec 5.5.4, says:
+Could you please also pick up this patch? Since Wolfram has added
+Acked-by I assume he's not going to pick it up?
 
-  The T_POWER_ON and Common_Mode_Restore_Time fields must be
-  programmed to the appropriate values based on the components and AC
-  coupling capacitors used in the connection linking the two
-  components. The determination of these values is design
-  implementation specific.
+Regards
+Luca
 
-That suggests to me that maybe there should be devicetree properties
-related to these.  Obviously these would not be qcom-specific since
-this is standard PCIe stuff.
-
-Use "μs" or "us" consistently; there's a mix above.
-
-> Signed-off-by: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
 > ---
->  drivers/pci/controller/dwc/pcie-qcom.c | 23 +++++++++++++++++++++++
->  1 file changed, 23 insertions(+)
+>   drivers/i2c/busses/i2c-qcom-cci.c | 46 +++++++++++++++++++++++++++++++++++++++
+>   1 file changed, 46 insertions(+)
 > 
-> diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
-> index c48a20602d7fa4c50056ccf6502d3b5bf0a8287f..52a3412bd2584c8bf5d281fa6a0ed22141ad1989 100644
-> --- a/drivers/pci/controller/dwc/pcie-qcom.c
-> +++ b/drivers/pci/controller/dwc/pcie-qcom.c
-> @@ -1252,6 +1252,27 @@ static bool qcom_pcie_link_up(struct dw_pcie *pci)
->  	return val & PCI_EXP_LNKSTA_DLLLA;
->  }
->  
-> +static void qcom_pcie_program_t_pwr_on(struct dw_pcie *pci)
-> +{
-> +	u16 offset;
-> +	u32 val;
+> diff --git a/drivers/i2c/busses/i2c-qcom-cci.c b/drivers/i2c/busses/i2c-qcom-cci.c
+> index e631d79baf14..884055df1560 100644
+> --- a/drivers/i2c/busses/i2c-qcom-cci.c
+> +++ b/drivers/i2c/busses/i2c-qcom-cci.c
+> @@ -783,8 +783,54 @@ static const struct cci_data cci_v2_data = {
+>   	},
+>   };
+>   
+> +static const struct cci_data cci_msm8953_data = {
+> +	.num_masters = 2,
+> +	.queue_size = { 64, 16 },
+> +	.quirks = {
+> +		.max_write_len = 11,
+> +		.max_read_len = 12,
+> +	},
+> +	.params[I2C_MODE_STANDARD] = {
+> +		.thigh = 78,
+> +		.tlow = 114,
+> +		.tsu_sto = 28,
+> +		.tsu_sta = 28,
+> +		.thd_dat = 10,
+> +		.thd_sta = 77,
+> +		.tbuf = 118,
+> +		.scl_stretch_en = 0,
+> +		.trdhld = 6,
+> +		.tsp = 1
+> +	},
+> +	.params[I2C_MODE_FAST] = {
+> +		.thigh = 20,
+> +		.tlow = 28,
+> +		.tsu_sto = 21,
+> +		.tsu_sta = 21,
+> +		.thd_dat = 13,
+> +		.thd_sta = 18,
+> +		.tbuf = 32,
+> +		.scl_stretch_en = 0,
+> +		.trdhld = 6,
+> +		.tsp = 3
+> +	},
+> +	.params[I2C_MODE_FAST_PLUS] = {
+> +		.thigh = 16,
+> +		.tlow = 22,
+> +		.tsu_sto = 17,
+> +		.tsu_sta = 18,
+> +		.thd_dat = 16,
+> +		.thd_sta = 15,
+> +		.tbuf = 19,
+> +		.scl_stretch_en = 1,
+> +		.trdhld = 3,
+> +		.tsp = 3
+> +	},
+> +};
 > +
-> +	offset = dw_pcie_find_ext_capability(pci, PCI_EXT_CAP_ID_L1SS);
-> +	if (offset) {
-> +		dw_pcie_dbi_ro_wr_en(pci);
-> +
-> +		val = readl(pci->dbi_base + offset + PCI_L1SS_CAP);
-> +		/* Program T power ON value to 80us */
-> +		val &= ~(PCI_L1SS_CAP_P_PWR_ON_SCALE | PCI_L1SS_CAP_P_PWR_ON_VALUE);
-> +		val |= FIELD_PREP(PCI_L1SS_CAP_P_PWR_ON_SCALE, 1);
-> +		val |= FIELD_PREP(PCI_L1SS_CAP_P_PWR_ON_VALUE, 8);
-> +
-> +		writel(val, pci->dbi_base + offset + PCI_L1SS_CAP);
-> +
-> +		dw_pcie_dbi_ro_wr_dis(pci);
-> +	}
-> +}
-> +
->  static void qcom_pcie_phy_power_off(struct qcom_pcie *pcie)
->  {
->  	struct qcom_pcie_port *port;
-> @@ -1302,6 +1323,8 @@ static int qcom_pcie_host_init(struct dw_pcie_rp *pp)
->  			goto err_disable_phy;
->  	}
->  
-> +	qcom_pcie_program_t_pwr_on(pci);
-> +
->  	qcom_ep_reset_deassert(pcie);
->  
->  	if (pcie->cfg->ops->config_sid) {
+>   static const struct of_device_id cci_dt_match[] = {
+>   	{ .compatible = "qcom,msm8226-cci", .data = &cci_v1_data},
+> +	{ .compatible = "qcom,msm8953-cci", .data = &cci_msm8953_data},
+>   	{ .compatible = "qcom,msm8974-cci", .data = &cci_v1_5_data},
+>   	{ .compatible = "qcom,msm8996-cci", .data = &cci_v2_data},
+>   
 > 
-> ---
-> base-commit: c9cfc122f03711a5124b4aafab3211cf4d35a2ac
-> change-id: 20251104-t_power_on_fux-70dc68377941
-> 
-> Best regards,
-> -- 
-> Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
-> 
+
 
