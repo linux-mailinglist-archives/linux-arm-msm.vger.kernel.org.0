@@ -1,148 +1,124 @@
-Return-Path: <linux-arm-msm+bounces-80347-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-80348-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 10A39C32A88
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 04 Nov 2025 19:31:11 +0100 (CET)
+Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [IPv6:2605:f480:58:1:0:1994:3:14])
+	by mail.lfdr.de (Postfix) with ESMTPS id E8D56C32CB0
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 04 Nov 2025 20:33:54 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id BF2FA3B0518
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Nov 2025 18:26:37 +0000 (UTC)
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 0A3604EFB64
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Nov 2025 19:31:25 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 765D6334363;
-	Tue,  4 Nov 2025 18:25:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 243212C11CB;
+	Tue,  4 Nov 2025 19:31:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=lucaweiss.eu header.i=@lucaweiss.eu header.b="ntKSGPSE"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="c+M40Ynf"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from ahti.lucaweiss.eu (ahti.lucaweiss.eu [128.199.32.197])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7412F33F8A2;
-	Tue,  4 Nov 2025 18:25:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=128.199.32.197
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD0DD23183F;
+	Tue,  4 Nov 2025 19:31:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762280749; cv=none; b=bebZXKffSzLGwXqgZhte15Hm4A0wdbePbBDsIn96S91jj/6VROvm5x4mN5fq2Pp4rQPWZJl93v2zAFCv7zK2Obg2A8nvnsCs6P7x3YzqPOTSHqGTudIUbLwdht7pv8Rxs4f40qBsS/K+8C782+pgrIJVkecCi0QKjuRqqnx7pXA=
+	t=1762284678; cv=none; b=CnSkonHj+wGyhHRj2Xeg+6ALfGyVSLLd6gmqY7PDzgazu+gy3suPD0foYM3KY7CVDpR8Pzg1lhQGwgjGDaUUDmF4TUlnZ6GXPJmZ2QyKDVzR3PntVp+DSYVqkXnY8fRO04Eo0Uc6D65Ua3gB128HrE4xHSz/FkJ5VGoFHU4Mb08=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762280749; c=relaxed/simple;
-	bh=i2N6U8gVZYZTsAyvftu+aK4B5nHv3/lncbA3GMHPvBw=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=GWYKnsyXS8Uyj+iQj9c2r418Mn2EN+cJZLdolW25jTYDpIA1lvJk6Qlcn7u53vsvMca+T0KweHQ8WKEDsTtVfe31FtGk7iX3kdOYpw2Fj96j3HXNkmDe6NVfBMmrAtg5uSnT1Gh7AMi4Pnv7ar1s+V0+wlZ87r8kiAiiL6HIYTw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=lucaweiss.eu; spf=pass smtp.mailfrom=lucaweiss.eu; dkim=pass (1024-bit key) header.d=lucaweiss.eu header.i=@lucaweiss.eu header.b=ntKSGPSE; arc=none smtp.client-ip=128.199.32.197
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=lucaweiss.eu
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=lucaweiss.eu
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=lucaweiss.eu; s=s1;
-	t=1762280739; bh=i2N6U8gVZYZTsAyvftu+aK4B5nHv3/lncbA3GMHPvBw=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To;
-	b=ntKSGPSEgIK4zbk3c6+PEk22FabumzO29uARsKz5Dh3EKkw6IfsIs2q3FlPZ3wsvH
-	 QQ0CdHurvSPP/LntQSqf4c+cmB0k5j4UFBATGIkszvr1Fc2r7v9ZqRqBp/CRNY0gTN
-	 sVe5ohZO4VdSV2Edpqeu0lKYmis2ZGozNfiWe0U0=
-Message-ID: <670ddca1-9b0e-4755-95be-457ea855af45@lucaweiss.eu>
-Date: Tue, 4 Nov 2025 19:25:39 +0100
+	s=arc-20240116; t=1762284678; c=relaxed/simple;
+	bh=bv5RrLvyhbRRTVmzsWpNHNTYrpGvKzpe/nqRzbjAMOc=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=uTNXtKZ6sgVsmkXyCp63aqeAgU8sIkQrdzc/GEaJpuWXIKv76cwu2Yq7wKZUkPJ6AYLXvJvUNOqL+LYrHYRQN6PDDf3YNlP1ifgkQznNzjuF5yNV2Ru5W7ufm/N2ek0jZ1hC0IF2DcUwU6dVM0t69TDofCFBr+NemG8xLzPg3CQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=c+M40Ynf; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD05FC116B1;
+	Tue,  4 Nov 2025 19:31:08 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1762284677;
+	bh=bv5RrLvyhbRRTVmzsWpNHNTYrpGvKzpe/nqRzbjAMOc=;
+	h=From:Subject:Date:To:Cc:From;
+	b=c+M40YnfD7beibvpnLx5x7JTJxsI8UKfWeerqy+wnhCGnuIEEdKuAPbMRrmL14vG7
+	 OP5Z8LhbKV6qlXKCmk/umHqs2ez0wm6y99i+x+3EE8JpbkXhTr14Lc6PZYNTbaQecI
+	 7U1is6qB+I4HGST8GzSf0pZIKBGMbda5tDdOmPNHr8H+gntvMRIX9oQngYiEvGYZz/
+	 ScJEhzNnsDL/NDqU63Mt3U8z7f6wYjzLXSuybWHK81ljSvq4Zlq6OJ6TAXpb2gnSPH
+	 1uy+xh8BIcofnCeXYt3SuC3AqYaxjFkrJwyTENJo73bWBCt0SxHd2b0BE8/SwC53JT
+	 zeFXGRBL7tLew==
+From: Konrad Dybcio <konradybcio@kernel.org>
+Subject: [PATCH 0/5] Define VDD_MXC for SC8280XP
+Date: Tue, 04 Nov 2025 20:31:05 +0100
+Message-Id: <20251104-topic-8280_mxc-v1-0-df545af0ef94@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Subject: Re: [PATCH v2 2/7] i2c: qcom-cci: Add msm8953 compatible
-Content-Language: en-US
-To: ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
- Loic Poulain <loic.poulain@oss.qualcomm.com>, Robert Foss
- <rfoss@kernel.org>, Andi Shyti <andi.shyti@kernel.org>,
- Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
- Conor Dooley <conor+dt@kernel.org>, Bartosz Golaszewski <brgl@bgdev.pl>,
- Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, linux-i2c@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- Wolfram Sang <wsa+renesas@sang-engineering.com>
-References: <20251028-msm8953-cci-v2-0-b5f9f7135326@lucaweiss.eu>
- <20251028-msm8953-cci-v2-2-b5f9f7135326@lucaweiss.eu>
-From: Luca Weiss <luca@lucaweiss.eu>
-In-Reply-To: <20251028-msm8953-cci-v2-2-b5f9f7135326@lucaweiss.eu>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAHlUCmkC/x3MSwqAMAwA0atI1haSqlC9iohIGjULP7QiQvHuF
+ pdvMZMgSlCJ0BUJgtwa9dgzqCyA12lfxKjPBou2IcLaXMepbJx1OG4PG2kte+KKkBBydAaZ9fm
+ H/fC+H75OoqtgAAAA
+X-Change-ID: 20251104-topic-8280_mxc-e92cd1c31010
+To: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
+ Johan Hovold <johan+linaro@kernel.org>, 
+ Mathieu Poirier <mathieu.poirier@linaro.org>, 
+ Manivannan Sadhasivam <mani@kernel.org>, Vinod Koul <vkoul@kernel.org>, 
+ Michael Turquette <mturquette@baylibre.com>, 
+ Stephen Boyd <sboyd@kernel.org>, Taniya Das <quic_tdas@quicinc.com>, 
+ Imran Shaik <quic_imrashai@quicinc.com>, 
+ Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>, 
+ Jagadeesh Kona <quic_jkona@quicinc.com>, 
+ Ulf Hansson <ulf.hansson@linaro.org>, 
+ Konrad Dybcio <konradybcio@kernel.org>, 
+ Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Cc: Krzysztof Kozlowski <krzk@kernel.org>, linux-arm-msm@vger.kernel.org, 
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+ linux-remoteproc@vger.kernel.org, linux-clk@vger.kernel.org, 
+ linux-pm@vger.kernel.org, Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, 
+ Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+X-Mailer: b4 0.14.3
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1762284668; l=1567;
+ i=konrad.dybcio@oss.qualcomm.com; s=20230215; h=from:subject:message-id;
+ bh=bv5RrLvyhbRRTVmzsWpNHNTYrpGvKzpe/nqRzbjAMOc=;
+ b=H5Hd0okQAulEy5VeWlV8Ukx2Eq3uQdliujWHUP28jquv7CdJcQSVW5tPKUZqcsIBq/Oc0n+VX
+ g4PRdGKoPoZDtMDG/DJ8gVlJ+7R3S7koWQx/xzhvi9gc0dNm/ZJgGt2
+X-Developer-Key: i=konrad.dybcio@oss.qualcomm.com; a=ed25519;
+ pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
 
-On 28-10-2025 17:40, Luca Weiss wrote:
-> Add a config for the v1.2.5 CCI found on msm8953 which has different
-> values in .params compared to others already supported in the driver.
-> 
-> Reviewed-by: Loic Poulain <loic.poulain@oss.qualcomm.com>
-> Acked-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
-> Signed-off-by: Luca Weiss <luca@lucaweiss.eu>
+This has somehow been omitted, leading to potentially stale votes.
+On the flip side, the domain will now be powered off, which will
+uncover any omissions we've made in the DTs so far.
 
-Hi Andi,
+Reasonably tested on an x13s without pd_ignore_unused (camera still
+works).
 
-Could you please also pick up this patch? Since Wolfram has added
-Acked-by I assume he's not going to pick it up?
+Video (not upstream right now) will also need this connection.
 
-Regards
-Luca
+This series defines VDD_MXC and wires it up to consumers.
 
-> ---
->   drivers/i2c/busses/i2c-qcom-cci.c | 46 +++++++++++++++++++++++++++++++++++++++
->   1 file changed, 46 insertions(+)
-> 
-> diff --git a/drivers/i2c/busses/i2c-qcom-cci.c b/drivers/i2c/busses/i2c-qcom-cci.c
-> index e631d79baf14..884055df1560 100644
-> --- a/drivers/i2c/busses/i2c-qcom-cci.c
-> +++ b/drivers/i2c/busses/i2c-qcom-cci.c
-> @@ -783,8 +783,54 @@ static const struct cci_data cci_v2_data = {
->   	},
->   };
->   
-> +static const struct cci_data cci_msm8953_data = {
-> +	.num_masters = 2,
-> +	.queue_size = { 64, 16 },
-> +	.quirks = {
-> +		.max_write_len = 11,
-> +		.max_read_len = 12,
-> +	},
-> +	.params[I2C_MODE_STANDARD] = {
-> +		.thigh = 78,
-> +		.tlow = 114,
-> +		.tsu_sto = 28,
-> +		.tsu_sta = 28,
-> +		.thd_dat = 10,
-> +		.thd_sta = 77,
-> +		.tbuf = 118,
-> +		.scl_stretch_en = 0,
-> +		.trdhld = 6,
-> +		.tsp = 1
-> +	},
-> +	.params[I2C_MODE_FAST] = {
-> +		.thigh = 20,
-> +		.tlow = 28,
-> +		.tsu_sto = 21,
-> +		.tsu_sta = 21,
-> +		.thd_dat = 13,
-> +		.thd_sta = 18,
-> +		.tbuf = 32,
-> +		.scl_stretch_en = 0,
-> +		.trdhld = 6,
-> +		.tsp = 3
-> +	},
-> +	.params[I2C_MODE_FAST_PLUS] = {
-> +		.thigh = 16,
-> +		.tlow = 22,
-> +		.tsu_sto = 17,
-> +		.tsu_sta = 18,
-> +		.thd_dat = 16,
-> +		.thd_sta = 15,
-> +		.tbuf = 19,
-> +		.scl_stretch_en = 1,
-> +		.trdhld = 3,
-> +		.tsp = 3
-> +	},
-> +};
-> +
->   static const struct of_device_id cci_dt_match[] = {
->   	{ .compatible = "qcom,msm8226-cci", .data = &cci_v1_data},
-> +	{ .compatible = "qcom,msm8953-cci", .data = &cci_msm8953_data},
->   	{ .compatible = "qcom,msm8974-cci", .data = &cci_v1_5_data},
->   	{ .compatible = "qcom,msm8996-cci", .data = &cci_v2_data},
->   
-> 
+pmdomain patches extracted from:
+https://lore.kernel.org/linux-arm-msm/20250728-topic-gpucc_power_plumbing-v1-0-09c2480fe3e6@oss.qualcomm.com
+
+Signed-off-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+---
+Konrad Dybcio (5):
+      dt-bindings: power: qcom,rpmpd: Add SC8280XP_MXC_AO
+      dt-bindings: remoteproc: qcom,sc8280xp-pas: Fix CDSP power desc
+      dt-bindings: clock: qcom: Allow MXC on SC8280XP CAMCC
+      pmdomain: qcom: rpmhpd: Add MXC to SC8280XP
+      arm64: dts: qcom: sc8280xp: Add missing VDD_MXC links
+
+ .../bindings/clock/qcom,sa8775p-camcc.yaml         | 13 -------------
+ .../bindings/clock/qcom,sm8450-camcc.yaml          |  2 ++
+ .../bindings/remoteproc/qcom,sc8280xp-pas.yaml     |  4 ++++
+ arch/arm64/boot/dts/qcom/sc8280xp.dtsi             | 22 ++++++++++++++++------
+ drivers/pmdomain/qcom/rpmhpd.c                     |  4 ++++
+ include/dt-bindings/power/qcom,rpmhpd.h            |  1 +
+ 6 files changed, 27 insertions(+), 19 deletions(-)
+---
+base-commit: 17490bd0527f59d841168457b245581f314b5fa0
+change-id: 20251104-topic-8280_mxc-e92cd1c31010
+
+Best regards,
+-- 
+Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 
 
