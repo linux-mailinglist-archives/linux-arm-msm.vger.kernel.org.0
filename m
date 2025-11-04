@@ -1,58 +1,65 @@
-Return-Path: <linux-arm-msm+bounces-80191-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-80193-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ams.mirrors.kernel.org (ams.mirrors.kernel.org [213.196.21.55])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1BC85C2F009
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 04 Nov 2025 03:41:43 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id B645AC2F0B1
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 04 Nov 2025 03:59:26 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ams.mirrors.kernel.org (Postfix) with ESMTPS id BBEDB3491FF
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Nov 2025 02:41:42 +0000 (UTC)
+	by ams.mirrors.kernel.org (Postfix) with ESMTPS id 6180334C2D0
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Nov 2025 02:59:26 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 65E1224291B;
-	Tue,  4 Nov 2025 02:41:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 09A1926158B;
+	Tue,  4 Nov 2025 02:59:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="SyodFqsU"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="HTZrmV3L"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38A0C1DF74F;
-	Tue,  4 Nov 2025 02:41:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D06A2260583;
+	Tue,  4 Nov 2025 02:59:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762224099; cv=none; b=VsG3j8pKIijIqN+kMqKlQgz6vjsTJrdsN2Qpcmatxtl2pF0N0ibTq9C5hHiQX5fD7oy35iC6UVHVNDe1t06Rn26GCEdHokBuPwnq/+huTQj2/kRRkIHytQmexZUUbWDJOnPGNarAgBdSTo9Gv/lPHqBJGpVJG3uIvvvP5O3s8P8=
+	t=1762225161; cv=none; b=C8wDlSY7Eem9qrm1P6FXbXYwHBy+G9e/BPavFcJSEgCX8Uy4BhrkfL6wmJeVcUDzXEk+Cevkkush2QUlx8tvOxzLE9JhKZjN0XzqcSdEAlO3dthStgo4tqF8KJxHnF0hrAWV9tuu3Q0WUFgxSAbSYTfDhzH6ul3rfNyTNOJgPGs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762224099; c=relaxed/simple;
-	bh=L1Vyy0PfGISfrRK/clj7TOjY02zLhIa3JzmfpiRF/eY=;
+	s=arc-20240116; t=1762225161; c=relaxed/simple;
+	bh=pZCOHjj1efJAEnHBeLtvAawr6ePQ+W1jtHPifnCyZmQ=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=j+uD27evuY692sw6C5BBAxDUcngJIsS6tA25dwFRjGFGY01XlZg991IuyWLARrAGTPaEb5anuOflSyvSv940mbt0bSVChfgob2aS4KRTIRgG3JTqT+4nwUKtt3ZHPHdmsNaZR8pjLXB7bX636cbYNksBQuT0bIbz6gQw+bjC8W0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=SyodFqsU; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2608FC4CEE7;
-	Tue,  4 Nov 2025 02:41:38 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=dN4l/CEWIdW8kLGr7Etv5oiKnxmmmsSPSBt0gj08pm3mq/UjIgU15bJRW9WMlifcNyauZdWVhqwyWbOkTl/xCoxNuFqNYN3CNMp3Q0unhmyhzn2Oh8I759JZv1yS7YF9buCLe40I/Kr+YhsD3vhmaHkR4ePGnc/wvNT6ELLUzh4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=HTZrmV3L; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3C85C4CEE7;
+	Tue,  4 Nov 2025 02:59:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1762224098;
-	bh=L1Vyy0PfGISfrRK/clj7TOjY02zLhIa3JzmfpiRF/eY=;
+	s=k20201202; t=1762225161;
+	bh=pZCOHjj1efJAEnHBeLtvAawr6ePQ+W1jtHPifnCyZmQ=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=SyodFqsUDNkLnlBlqsquusKwwzas97COyReMM+17WQNUAiXjaGm/7hEVBBLGp15qS
-	 QdNzXQ4qJW/wUykco1gUpfLNPZ8D3FwjV+Bm8uqp/FmIVCp0wvf2zgQKUIhXYCl4yO
-	 fHHm8oPSLpZzkLKGtiE8Md0BySiiiYWsc0rE4KvN+/MHhRBZ8UJIa1pA8sHMhEAyQD
-	 DgfYmBkBsgIIc/Vy6zJrpeNxSYFJ8xeTOsNUohDIR+ehlc4uCfdMVz3zDr/7gmz+Vv
-	 L0eGmUFgYiSHJMuc1rWCPKH/pb+aHBx/4qZbK8YTMrM9foDLkjpRWpRd3v6UVi71lz
-	 EUv6/pMCpaYdg==
-Date: Mon, 3 Nov 2025 20:45:11 -0600
+	b=HTZrmV3LuoMWtn5wRl+nAZc8Ui+CYwjc0ji++mQCHmBhT/4919Je1UI8mGq6JIzdz
+	 Kfu/MnihENMkvxyS8S8axjeWQfpyxSX8OmQ7Ge2xkDy+3iYrtliY47oupmg9Dyg79O
+	 haDvWAL4WvlpftDYpllxVt3tFwrmPxPjHEgMylHAEupqOf77AyFlE/wUirG3fK+UXK
+	 ftQpBWENPWiTeU0d/knppi+MBac1X5wjBhy1thHoNQI5g4gMpUTZCww4vwvaRqfUNZ
+	 r9okq6LKygLoqIeuPMpV8kwgy77tGilHoFkktpb6AfqirblO+vZ1vQP+9JV1dKFpmK
+	 idOG0moT4scRQ==
+Date: Mon, 3 Nov 2025 21:02:53 -0600
 From: Bjorn Andersson <andersson@kernel.org>
-To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Cc: Loic Poulain <loic.poulain@oss.qualcomm.com>, konradybcio@kernel.org, 
-	robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org, sre@kernel.org, 
-	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, linux-pm@vger.kernel.org
-Subject: Re: [PATCH 3/5] dt-bindings: firmware: qcom,scm: Document reboot mode
-Message-ID: <ary7qhe4gh2yixweoey6bl5euorzdephyp22pujrr623sbnmtu@fqqwvreujiod>
-References: <20251103182006.1158383-1-loic.poulain@oss.qualcomm.com>
- <20251103182006.1158383-4-loic.poulain@oss.qualcomm.com>
- <aqoxdaq72prkeqwxmmohlmbpx7icuc32sej7did6vt6rzrgfib@bvmt7ppkvloc>
- <v5dbwbgic5cogxsf3lkmdwmlkpnqvo2niy3s7qu6ow3btpo7se@2altcz3nhbo2>
+To: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
+Cc: Akhil P Oommen <akhilpo@oss.qualcomm.com>, Sean Paul <sean@poorly.run>, 
+	Konrad Dybcio <konradybcio@kernel.org>, Marijn Suijten <marijn.suijten@somainline.org>, 
+	David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, 
+	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, Maxime Ripard <mripard@kernel.org>, 
+	Thomas Zimmermann <tzimmermann@suse.de>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Connor Abbott <cwabbott0@gmail.com>, Srinivas Kandagatla <srini@kernel.org>, 
+	Rob Clark <robin.clark@oss.qualcomm.com>, Dmitry Baryshkov <lumag@kernel.org>, 
+	Gaurav Kohli <quic_gkohli@quicinc.com>, linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, 
+	freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org, devicetree@vger.kernel.org, 
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Subject: Re: [PATCH v6 2/6] dt-bindings: nvmem: qfprom: Add sa8775p compatible
+Message-ID: <bkhjgw4mtfmkatxjl7enn4fqqjbutealhaqgxihdmcvhekyyd4@lsosso5ta74z>
+References: <20250910-a663-gpu-support-v6-0-5da15827b249@oss.qualcomm.com>
+ <20250910-a663-gpu-support-v6-2-5da15827b249@oss.qualcomm.com>
+ <8ff537c9-efa0-4aeb-987d-150bef8b7c00@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -61,61 +68,49 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <v5dbwbgic5cogxsf3lkmdwmlkpnqvo2niy3s7qu6ow3btpo7se@2altcz3nhbo2>
+In-Reply-To: <8ff537c9-efa0-4aeb-987d-150bef8b7c00@oss.qualcomm.com>
 
-On Tue, Nov 04, 2025 at 04:19:14AM +0200, Dmitry Baryshkov wrote:
-> On Mon, Nov 03, 2025 at 08:16:30PM -0600, Bjorn Andersson wrote:
-> > On Mon, Nov 03, 2025 at 07:20:04PM +0100, Loic Poulain wrote:
-> > > SCM can be used to support reboot mode such as Emergency Recovery Mode.
-> > 
-> > "such as"? Do we have any other useful bits in here?
-> > 
-> > > 
-> > > Signed-off-by: Loic Poulain <loic.poulain@oss.qualcomm.com>
-> > > ---
-> > >  Documentation/devicetree/bindings/firmware/qcom,scm.yaml | 4 ++++
-> > >  1 file changed, 4 insertions(+)
-> > > 
-> > > diff --git a/Documentation/devicetree/bindings/firmware/qcom,scm.yaml b/Documentation/devicetree/bindings/firmware/qcom,scm.yaml
-> > > index b913192219e4..c8bb7dacd900 100644
-> > > --- a/Documentation/devicetree/bindings/firmware/qcom,scm.yaml
-> > > +++ b/Documentation/devicetree/bindings/firmware/qcom,scm.yaml
-> > > @@ -121,6 +121,10 @@ properties:
-> > >            - description: offset of the download mode control register
-> > >      description: TCSR hardware block
-> > >  
-> > > +patternProperties:
-> > > +  "^mode-.*$":
-> > 
-> > I'd only ever expect mode-edl = <1>. Do we have additional modes that
-> > warrant the generic nature of this?
+On Mon, Sep 22, 2025 at 12:55:36PM +0100, Srinivas Kandagatla wrote:
+> Hi Bjorn,
 > 
-> fastboot / bootloader?
+> On 9/10/25 12:25 PM, Akhil P Oommen wrote:
+> > Document compatible string for the QFPROM on Lemans platform.
+> > 
+> > Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> > Signed-off-by: Akhil P Oommen <akhilpo@oss.qualcomm.com>
+> > ---
+> 
+> In case you plan to pick this up.
+> 
+> 
+> Acked-by: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
 > 
 
-They go in the PON_SOFT_RB_SPARE register, in the pon driver. But that
-apparently doesn't tickle the EDL bit.
+Thanks, it seems though that I missed your reply earlier.
 
-But it's a good question, I'd like for it to be answered in one of the
-commit messages.
+Please pick the binding through the driver branch if you can, then I'll
+pick the dts changes.
 
 Regards,
 Bjorn
 
-> > 
-> > Regards,
-> > Bjorn
-> > 
-> > > +    maxItems: 1
-> > > +
-> > >  allOf:
-> > >    # Clocks
-> > >    - if:
-> > > -- 
-> > > 2.34.1
-> > > 
+> --srini
 > 
-> -- 
-> With best wishes
-> Dmitry
+> >  Documentation/devicetree/bindings/nvmem/qcom,qfprom.yaml | 1 +
+> >  1 file changed, 1 insertion(+)
+> > 
+> > diff --git a/Documentation/devicetree/bindings/nvmem/qcom,qfprom.yaml b/Documentation/devicetree/bindings/nvmem/qcom,qfprom.yaml
+> > index 3f6dc6a3a9f1adc582a28cf71414b0e9d08629ed..7d1612acca48d24c3b54c4d25fa8a210176d3bb5 100644
+> > --- a/Documentation/devicetree/bindings/nvmem/qcom,qfprom.yaml
+> > +++ b/Documentation/devicetree/bindings/nvmem/qcom,qfprom.yaml
+> > @@ -39,6 +39,7 @@ properties:
+> >            - qcom,qcs404-qfprom
+> >            - qcom,qcs615-qfprom
+> >            - qcom,qcs8300-qfprom
+> > +          - qcom,sa8775p-qfprom 
+> >            - qcom,sar2130p-qfprom
+> >            - qcom,sc7180-qfprom
+> >            - qcom,sc7280-qfprom
+> > 
+> 
 
