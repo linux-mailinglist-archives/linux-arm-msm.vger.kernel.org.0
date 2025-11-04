@@ -1,119 +1,220 @@
-Return-Path: <linux-arm-msm+bounces-80287-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-80288-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [IPv6:2605:f480:58:1:0:1994:3:14])
-	by mail.lfdr.de (Postfix) with ESMTPS id 563C4C30E60
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 04 Nov 2025 13:10:16 +0100 (CET)
+Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [142.0.200.124])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5A150C30F21
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 04 Nov 2025 13:17:24 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 1E4904E05EE
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Nov 2025 12:10:15 +0000 (UTC)
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 4496F4EACED
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Nov 2025 12:14:12 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3BE752ED141;
-	Tue,  4 Nov 2025 12:10:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8F09F2EC541;
+	Tue,  4 Nov 2025 12:13:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="gBH+MlKg"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="RCbGBDtY";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="DcSDq30p"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.19])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99A712EC56F;
-	Tue,  4 Nov 2025 12:10:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.19
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08A212D661E
+	for <linux-arm-msm@vger.kernel.org>; Tue,  4 Nov 2025 12:13:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762258212; cv=none; b=OYvOHfTLh9uiwyjvsLHSgi+DtGRHpGo3YkSs86azSYKe/28pj7soE+foTMICBEU7HP7OSoe0ZA2re7YAhJdsqRvyNqBPFmTYtdgIYMo4GyG53gm0+zyTcsGECqn2D3JF40E/9A2/d2MZ2sBcs3epM5q8N2UXGHpOuQk65DxBhfU=
+	t=1762258436; cv=none; b=lnzJW332NO7jjoaaV7JNyeJa9qqF3Va/tkutdNXDZw1azTbByp/j3llO0kAbp+e7A+jk1CvQeSwhdgU3IJcnzrb3HwnMQ9zsJlo79TmOdtjZGLuNpYqgF9+eXONRM1SPV3YgHj/EhgjIF/p7NZgnAIQF+5RXPdB4LG0zoKUq0Ro=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762258212; c=relaxed/simple;
-	bh=+6EJ9lfIc5BbPa0NS7PF2URnPHdRP1lGEnDP8NUd2Ko=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=RYAoY1eaHau677bnw/YdNvPo0B3SueG4ehiAn61JkCmPqG0rTbZF4t56MdoJ4pOQ8JIiCuZbGjs8JlFPUzc92c6ELVIhbyzZuW1rNn3tYow8e1SJ3Igsk8e83vafhxMKMPABH3/QopVA3E8/NyXrjdElmrRwA8F5aiknV8FJsXw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=gBH+MlKg; arc=none smtp.client-ip=192.198.163.19
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1762258210; x=1793794210;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=+6EJ9lfIc5BbPa0NS7PF2URnPHdRP1lGEnDP8NUd2Ko=;
-  b=gBH+MlKgGvxKMZsgCombeAy+3kTg5gKi4ZSqQm6lWFv5f1EQWGoqtbzu
-   Xlp3lkFH+wthC2oSxs+hfeRdpNFxIo/n2PXOm5o+NR0Q/m1o0PajikgV+
-   lHFASR+x5GyafTriyYGhoGtPs7j7oxhKiQ1ygfUSMdhvWKxFb5OjwpdLV
-   0KfpWWJ58fcy7E/8mT0dS2qaQIad68jBNuBv/KDZ21nSCBsHXw8yP/M/q
-   zdd0f64BnNVK4sv2rU/S/gTI5Sii1crPSHy6gVc/zJ3WUrag9AEf7hSmu
-   EtRVIoArJ9nNnYUvO6VjgNwtzL4LLj85GCaO1Amz7qGUVAzzWIlUscLBg
-   Q==;
-X-CSE-ConnectionGUID: /DU3m8HLR1yZEp2lq3wimQ==
-X-CSE-MsgGUID: cXMKaw+QTPaw4yLgI4dW7A==
-X-IronPort-AV: E=McAfee;i="6800,10657,11602"; a="63361470"
-X-IronPort-AV: E=Sophos;i="6.19,279,1754982000"; 
-   d="scan'208";a="63361470"
-Received: from fmviesa004.fm.intel.com ([10.60.135.144])
-  by fmvoesa113.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 04 Nov 2025 04:10:08 -0800
-X-CSE-ConnectionGUID: If3LwOHXS9u+PNOfEGfuOw==
-X-CSE-MsgGUID: 2Zyy1jrBTjiE0OLk+3zfQw==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.19,279,1754982000"; 
-   d="scan'208";a="192232511"
-Received: from lkp-server02.sh.intel.com (HELO 66d7546c76b2) ([10.239.97.151])
-  by fmviesa004.fm.intel.com with ESMTP; 04 Nov 2025 04:10:03 -0800
-Received: from kbuild by 66d7546c76b2 with local (Exim 4.96)
-	(envelope-from <lkp@intel.com>)
-	id 1vGFqz-000RNM-2V;
-	Tue, 04 Nov 2025 12:09:43 +0000
-Date: Tue, 4 Nov 2025 20:09:31 +0800
-From: kernel test robot <lkp@intel.com>
-To: Loic Poulain <loic.poulain@oss.qualcomm.com>, andersson@kernel.org,
-	konradybcio@kernel.org, robh@kernel.org, krzk+dt@kernel.org,
-	conor+dt@kernel.org, sre@kernel.org
-Cc: oe-kbuild-all@lists.linux.dev, linux-arm-msm@vger.kernel.org,
-	devicetree@vger.kernel.org, linux-pm@vger.kernel.org,
-	Loic Poulain <loic.poulain@oss.qualcomm.com>
-Subject: Re: [PATCH 4/5] firmware: qcom: scm: Support for EDL reboot mode
-Message-ID: <202511041928.at1dqqZH-lkp@intel.com>
-References: <20251103182006.1158383-5-loic.poulain@oss.qualcomm.com>
+	s=arc-20240116; t=1762258436; c=relaxed/simple;
+	bh=+DzoErrmclrx+fyVr7vdFN6fgo2UUZGE/vT4uUlDgdQ=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=rgAbb4DKBU22/tb/F90f3Mk3YgrOyTgT7julIKHtNRkQErupI9U4Jfj82+Va4LvhApcEtVv/uwCXPCo3c+wOwputeHzhlZN8Znk48jyrdMDVOYLuTQc53QtxLm9NNvHkpLQS0cR235g/rqYaW1zt3jwQ9Rt+Ao9jTHuuURt1S5Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=RCbGBDtY; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=DcSDq30p; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 5A48gN8U1395443
+	for <linux-arm-msm@vger.kernel.org>; Tue, 4 Nov 2025 12:13:54 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=qcppdkim1; bh=9l2F5WQjsOuWEb21RSgF9g
+	1FD2s6A5B664vjj5RTNLs=; b=RCbGBDtYIP76PgacdYhWDofUHNA+esoKzS8VqH
+	ImYKekPMjMQyfJZ+EAJhYJriORNBWcqo66vQDwfqH/QO878czWhem9G7Vkv5IoTV
+	USoco2S5nrl0xhs8p5EkSfWejqc+Moc/US62WRGFmQBjbP9DZc17ddNwUPQ1pvdr
+	VPOGSuul3aULeXCdxHxqXmQtUPOdT+Jm4JHD4obFqFcy2F1NRBMXicynV8KucXnu
+	iCwUb71DkjtNrq7OocCfF5KNkr6uA/6msOcRkoPy3uvKZCCvp3cR2+q2I/TO4FQS
+	ZdegRoVvLbCUhPl39TzbFqE61zEUYKIFMzF2CTmKD/JWQsqw==
+Received: from mail-pg1-f200.google.com (mail-pg1-f200.google.com [209.85.215.200])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4a70exjuc1-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Tue, 04 Nov 2025 12:13:53 +0000 (GMT)
+Received: by mail-pg1-f200.google.com with SMTP id 41be03b00d2f7-b95d06db747so2371183a12.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 04 Nov 2025 04:13:53 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=oss.qualcomm.com; s=google; t=1762258433; x=1762863233; darn=vger.kernel.org;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=9l2F5WQjsOuWEb21RSgF9g1FD2s6A5B664vjj5RTNLs=;
+        b=DcSDq30pz/7X5oVJ5PxP84YuLLKFdr5hCFWR++sY2iECcz4QBEAuDEFY3uGDBvcXn3
+         m4gmjq4mMqtCgROwpX+j6Pnb75VBCnISiIlXDcZfl+J+fBzY5eEWReJd0l+fmGxJCrAV
+         T4qnJcuzYlG0pn3vDkUzUbN5j/8tvPY4ThsngnYQjxOwQ6oD8K9lFuIttN5jp5vDmoUG
+         nrdMaF/Nk8n6ZUwBb5Ibin0Nb0ACyX91sHZEJ2pKUBwwtaPB0ai/X21P271W3F86cuYk
+         szGOakQ2CQpzuh8lvAlYXiWXXFkOVHef/pZCgobKsn4CZbZ29XnDMTVev+YVDgkT7JaQ
+         xlEg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1762258433; x=1762863233;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=9l2F5WQjsOuWEb21RSgF9g1FD2s6A5B664vjj5RTNLs=;
+        b=XSFtQZNMssgkFre6GA0589A/GzbuafQeT8Fmahy69UrF/905UkAHlu6t6VBSQwxaOM
+         zcy7tO9bvB6cks0y4CF8d4WpAVN4wkTSwT3kyQHU+sL3hUpf6RJVH2h3M+bQ8J+PU3am
+         GLt91XiOat1oOyHW0i9gHfVXk2Uxe503clxYDpSRVGFa6MJfYtnduvM/hnzIjQYgIrRj
+         kDCWfmdwhLkFIwBZ9LAOjdDEVXUuSgtBgQcQ7bNaB6vBU5RPU6dhHd1hVu91KQSa6y5e
+         wa90eYnkGpghQi8s9YuaxADN0WE67DYI0IUOaBxcUanZTLHrRat8gppDaYmH7jPNJXIL
+         x41w==
+X-Forwarded-Encrypted: i=1; AJvYcCWo5YBlGn/g17SwmspgD+oCVyWwNFsuWfpdU13UTWEyCUUwK6wWiLbp6PCylkfG396sG9HZalgDkZScthPt@vger.kernel.org
+X-Gm-Message-State: AOJu0YyLYECXPgRVqh2IkVgpRnNfJWbAb2RuG3JiTnQ4asP+RZDhNwZZ
+	e/Dd3wZzEV08Bu4tW9QW63zXmvzi3ixPpfkGjbLlzJ2n02YhDy3RcDQREd2Y5u/3x47E3vxRD5H
+	SDc8g0NT8bhHrTkRuaGFMedLefPRyzN3zoaUvozUac6PaTfShbYHyaDJHGvPcHtzHCvfRerWn7a
+	yB
+X-Gm-Gg: ASbGncvkwE3ru6+NkKLJacpL90CamezDvnWPor2t/nEU1raMZMOdicvQks1m1cglVOo
+	uKT2zWkq0+M92APqO+Ufpec/Vm3RsQKHPlLZp9lBLm5JbdKai8iBogR3YV5u7IDEQEDcnhRjWUI
+	Alts60Ny6U3/vwh7bBvoR5ryzmZXHBTxyyf2O0hXZkjxwleMJcYh7th9s3s/KQd5A3LWxrNc/KJ
+	k4Vg0BJoiyjQM/zKR0z5dYCiUok7RilEPTo0EeltgegE+QWOBBYI/810jV/CrTPXfCw4rv3+NQ8
+	a7yqNUMn/W+86X69g3owxpntOnRVR49vFwfbA06mxZfaLGwhjePdr70/CscHn3z7elsrmEiV/i9
+	G8Uxe+V/62Njdaoh3E+5Yc4Iuy6s9+WUZLQ==
+X-Received: by 2002:a05:6a20:9188:b0:346:3d90:84dd with SMTP id adf61e73a8af0-34e272e54ccmr3397703637.1.1762258433122;
+        Tue, 04 Nov 2025 04:13:53 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IESpL5vuTatq+nBygYOabD7eaIn2oVMV0YsB98tvlM39eFI7tpfjioEbqRljOYql4yuAMDUrA==
+X-Received: by 2002:a05:6a20:9188:b0:346:3d90:84dd with SMTP id adf61e73a8af0-34e272e54ccmr3397665637.1.1762258432574;
+        Tue, 04 Nov 2025 04:13:52 -0800 (PST)
+Received: from hu-krichai-hyd.qualcomm.com ([202.46.23.25])
+        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-ba1f87a7287sm2254104a12.31.2025.11.04.04.13.49
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 04 Nov 2025 04:13:52 -0800 (PST)
+From: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
+Date: Tue, 04 Nov 2025 17:42:45 +0530
+Subject: [PATCH] PCI: qcom: Program correct T_POWER_ON value for L1.2 exit
+ timing
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20251103182006.1158383-5-loic.poulain@oss.qualcomm.com>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+Message-Id: <20251104-t_power_on_fux-v1-1-eb5916e47fd7@oss.qualcomm.com>
+X-B4-Tracking: v=1; b=H4sIALztCWkC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyDHUUlJIzE
+ vPSU3UzU4B8JSMDI1NDQwMT3ZL4gvzy1KL4/Lz4tNIKXXODlGQzC2Nzc0sTQyWgpoKi1LTMCrC
+ B0bG1tQDBSo3GYAAAAA==
+X-Change-ID: 20251104-t_power_on_fux-70dc68377941
+To: Manivannan Sadhasivam <mani@kernel.org>,
+        Lorenzo Pieralisi <lpieralisi@kernel.org>,
+        =?utf-8?q?Krzysztof_Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
+        Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>
+Cc: linux-pci@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, mayank.rana@oss.qualcomm.com,
+        quic_vbadigan@quicinc.com,
+        Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
+X-Mailer: b4 0.14.2
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1762258429; l=2473;
+ i=krishna.chundru@oss.qualcomm.com; s=20230907; h=from:subject:message-id;
+ bh=+DzoErrmclrx+fyVr7vdFN6fgo2UUZGE/vT4uUlDgdQ=;
+ b=lVDCnFqbZFnTyGYnkfi7e0ol56cwmZaLfYwWZSFMRo+XeSHOhGCNocy6q1IsLr2D0JKQjL+p2
+ Fw+sgznAj9rB4j5oylbrg9+Sac01F+R5lYLGmHdxjaQ7LU33PG2nds+
+X-Developer-Key: i=krishna.chundru@oss.qualcomm.com; a=ed25519;
+ pk=10CL2pdAKFyzyOHbfSWHCD0X0my7CXxj8gJScmn1FAg=
+X-Authority-Analysis: v=2.4 cv=APHuRV3Y c=1 sm=1 tr=0 ts=6909ee01 cx=c_pps
+ a=oF/VQ+ItUULfLr/lQ2/icg==:117 a=ZePRamnt/+rB5gQjfz0u9A==:17
+ a=IkcTkHD0fZMA:10 a=6UeiqGixMTsA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=EUspDBNiAAAA:8 a=kXhGf0cxdCgfIYue-YsA:9
+ a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=3WC7DwWrALyhR5TkjVHa:22
+X-Proofpoint-GUID: dCQTZWTYlIZ4rSr-2UHlS6k38baANNhu
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMTA0MDEwMSBTYWx0ZWRfX5nttOqZGxtj9
+ Dmgmu01XydlLXXv+0ycvugPwhnarad9ZVYqO/wsrkMoZgileSLARN5oHPvtobULw8N6jM758sv/
+ BJcv6Eya849WFwJOauSknuri9QctVgYHUUtvAQ6SernCtLVhKzyBkHsgsv3MkWl4svEq+hQ59NT
+ z7DXJIaxH+ElTJm1kvA6l4zrB1YS20NnwADwSpiIwZbtWRPEdZhsVV3e9WFyvyvPu8Q60ke6wR0
+ oYPBS6pQkav7wrtEklTbLbP6g7l7HNFjV5zGObM9AaisU+ubPXp9fFkFuCdGb5AgE5xc4Nmxw07
+ T8PM6lx6WnpsiA7qMdt14C2+FNEYrc/cC7cAIE1jufQ86Tzc6n3QiisUrsSS+u7AMDbF2ejmBkJ
+ 2Yb32oRLh84CDpk3kl6QGLaBfgCluQ==
+X-Proofpoint-ORIG-GUID: dCQTZWTYlIZ4rSr-2UHlS6k38baANNhu
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
+ definitions=2025-11-04_01,2025-11-03_03,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ malwarescore=0 clxscore=1015 impostorscore=0 priorityscore=1501 phishscore=0
+ suspectscore=0 adultscore=0 bulkscore=0 spamscore=0 lowpriorityscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2510240001 definitions=main-2511040101
 
-Hi Loic,
+The T_POWER_ON indicates the time (in μs) that a Port requires the port
+on the opposite side of Link to wait in L1.2.Exit after sampling CLKREQ#
+asserted before actively driving the interface. This value is used by
+the ASPM driver to compute the LTR_L1.2_THRESHOLD.
 
-kernel test robot noticed the following build errors:
+Currently, the root port exposes a T_POWER_ON value of zero in the L1SS
+capability registers, leading to incorrect LTR_L1.2_THRESHOLD calculations.
+This can result in improper L1.2 exit behavior and can trigger AER's.
 
-[auto build test ERROR on robh/for-next]
-[also build test ERROR on sre-power-supply/for-next linus/master v6.18-rc4 next-20251103]
-[If your patch is applied to the wrong git tree, kindly drop us a note.
-And when submitting patch, we suggest to use '--base' as documented in
-https://git-scm.com/docs/git-format-patch#_base_tree_information]
+To address this, program the T_POWER_ON value to 80us (scale = 1,
+value = 8) in the PCI_L1SS_CAP register during host initialization. This
+ensures that ASPM can take the root port's T_POWER_ON value into account
+while calculating the LTR_L1.2_THRESHOLD value.
 
-url:    https://github.com/intel-lab-lkp/linux/commits/Loic-Poulain/dt-bindings-power-reset-qcom-pon-Document-qcom-warm-reset/20251104-022140
-base:   https://git.kernel.org/pub/scm/linux/kernel/git/robh/linux.git for-next
-patch link:    https://lore.kernel.org/r/20251103182006.1158383-5-loic.poulain%40oss.qualcomm.com
-patch subject: [PATCH 4/5] firmware: qcom: scm: Support for EDL reboot mode
-config: sparc-randconfig-001-20251104 (https://download.01.org/0day-ci/archive/20251104/202511041928.at1dqqZH-lkp@intel.com/config)
-compiler: sparc64-linux-gcc (GCC) 13.4.0
-reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20251104/202511041928.at1dqqZH-lkp@intel.com/reproduce)
+Signed-off-by: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
+---
+ drivers/pci/controller/dwc/pcie-qcom.c | 23 +++++++++++++++++++++++
+ 1 file changed, 23 insertions(+)
 
-If you fix the issue in a separate patch/commit (i.e. not just a new version of
-the same patch/commit), kindly add following tags
-| Reported-by: kernel test robot <lkp@intel.com>
-| Closes: https://lore.kernel.org/oe-kbuild-all/202511041928.at1dqqZH-lkp@intel.com/
+diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
+index c48a20602d7fa4c50056ccf6502d3b5bf0a8287f..52a3412bd2584c8bf5d281fa6a0ed22141ad1989 100644
+--- a/drivers/pci/controller/dwc/pcie-qcom.c
++++ b/drivers/pci/controller/dwc/pcie-qcom.c
+@@ -1252,6 +1252,27 @@ static bool qcom_pcie_link_up(struct dw_pcie *pci)
+ 	return val & PCI_EXP_LNKSTA_DLLLA;
+ }
+ 
++static void qcom_pcie_program_t_pwr_on(struct dw_pcie *pci)
++{
++	u16 offset;
++	u32 val;
++
++	offset = dw_pcie_find_ext_capability(pci, PCI_EXT_CAP_ID_L1SS);
++	if (offset) {
++		dw_pcie_dbi_ro_wr_en(pci);
++
++		val = readl(pci->dbi_base + offset + PCI_L1SS_CAP);
++		/* Program T power ON value to 80us */
++		val &= ~(PCI_L1SS_CAP_P_PWR_ON_SCALE | PCI_L1SS_CAP_P_PWR_ON_VALUE);
++		val |= FIELD_PREP(PCI_L1SS_CAP_P_PWR_ON_SCALE, 1);
++		val |= FIELD_PREP(PCI_L1SS_CAP_P_PWR_ON_VALUE, 8);
++
++		writel(val, pci->dbi_base + offset + PCI_L1SS_CAP);
++
++		dw_pcie_dbi_ro_wr_dis(pci);
++	}
++}
++
+ static void qcom_pcie_phy_power_off(struct qcom_pcie *pcie)
+ {
+ 	struct qcom_pcie_port *port;
+@@ -1302,6 +1323,8 @@ static int qcom_pcie_host_init(struct dw_pcie_rp *pp)
+ 			goto err_disable_phy;
+ 	}
+ 
++	qcom_pcie_program_t_pwr_on(pci);
++
+ 	qcom_ep_reset_deassert(pcie);
+ 
+ 	if (pcie->cfg->ops->config_sid) {
 
-All errors (new ones prefixed by >>):
+---
+base-commit: c9cfc122f03711a5124b4aafab3211cf4d35a2ac
+change-id: 20251104-t_power_on_fux-70dc68377941
 
-   sparc64-linux-ld: drivers/spi/spi-amlogic-spifc-a4.o: in function `aml_sfc_set_bus_width':
-   spi-amlogic-spifc-a4.c:(.text+0x3e8): undefined reference to `__ffsdi2'
-   sparc64-linux-ld: drivers/firmware/qcom/qcom_scm.o: in function `qcom_scm_probe':
->> qcom_scm.c:(.text+0x2488): undefined reference to `devm_reboot_mode_register'
-
+Best regards,
 -- 
-0-DAY CI Kernel Test Service
-https://github.com/intel/lkp-tests/wiki
+Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
+
 
