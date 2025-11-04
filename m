@@ -1,62 +1,62 @@
-Return-Path: <linux-arm-msm+bounces-80166-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-80167-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 006FEC2EAC0
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 04 Nov 2025 01:59:20 +0100 (CET)
+Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [IPv6:2605:f480:58:1:0:1994:3:14])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1C28FC2EADC
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 04 Nov 2025 02:01:56 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 4293B3B936F
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Nov 2025 00:58:21 +0000 (UTC)
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id B45304E362F
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Nov 2025 01:01:53 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2DD8A1FBC8C;
-	Tue,  4 Nov 2025 00:58:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 998B11A5BB4;
+	Tue,  4 Nov 2025 01:01:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="CRqjSZsj"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="jKCFITS1"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9C451FDA61;
-	Tue,  4 Nov 2025 00:58:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6381D27713;
+	Tue,  4 Nov 2025 01:01:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762217900; cv=none; b=XbNgONn5QZ4k3xSLYDUka3BV9LphxzqzaJH/6s8QBmFrP+0kYiMcOh5GcPtuhldokgTdCJ2xF+0KyTP5lKQxw+WThEO6+kkiQN4jVS5gsMQSrL4IAzWfnelDozQwqZJ88AtuERqbHBb2CZEG+KwwSUIy5xKKVcqSMXFYvg3CK4M=
+	t=1762218110; cv=none; b=rwRFeOGWQBmWNhpJJvXcGb3WZaOVs2s3FAqd1vQVfAU3qMee2C/WQETlcfpvC2qdPuRaTJJGN4OpOXdYBI08qyUa0PGxwhIe/05/7jrfh4TxK/haDZd4hGpzY3vEXAsoBXhUowHkeXzFQ6YwJkIFVaI5XWPCARviNSLIEXH6W5Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762217900; c=relaxed/simple;
-	bh=6oTbitokTD6YyRhJTCOr5wDh0W3/+rjIfY5mtP/G2zs=;
+	s=arc-20240116; t=1762218110; c=relaxed/simple;
+	bh=Sq4HA4+kpfxlgmNufWAk6p2zbCq9w2iqWP85ZHzP+nE=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=qqUoJXq19bD1oHwcbGugZ/LlWpFnjw5K78Y8qfWgeocWvnJYTEDBkrcTQCZnqSsOJT11kywlENIfc9+rRhxVJgXbtjLBPO4ix6uu+wvedwnRyY8jZXZWmczM1z2iy67LFsh1CEz3j+/n11pVjRZxq56wksoaSYgvDMdu9yq9jqk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=CRqjSZsj; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8516CC4CEFD;
-	Tue,  4 Nov 2025 00:58:18 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=hSuvKYQ6lsef+ToaWyiQ1UVsqoOGtWYayI4wjDaOFLnVQIShXoFfAukfSm3qq/191qyu5LCUGO/xJutgudf2CZ8meloUj92CWUsiEyRgsKbwNzbGeoKWsDJ6i3Q0VzA5vRuFr1RSx5ROd7kLEAbE1zdivbBuuurlMEcAIirXLT8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=jKCFITS1; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98A72C4CEE7;
+	Tue,  4 Nov 2025 01:01:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1762217899;
-	bh=6oTbitokTD6YyRhJTCOr5wDh0W3/+rjIfY5mtP/G2zs=;
+	s=k20201202; t=1762218109;
+	bh=Sq4HA4+kpfxlgmNufWAk6p2zbCq9w2iqWP85ZHzP+nE=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=CRqjSZsjoXPqnoFMOTN7kMCA7FRFcpEDVnZ96MvaeBUngIRdc9JsYfcakAt/4++iq
-	 7KV44RGxpkiiyxKyZKRo2H0gm0wBv2WgYYzItqLRctKwP7wKqPG4U5xVrQL1L05Uky
-	 YDwJp8XO1R5eWz13zeAjJZb4rGPRa8ogqfQiTPZ4emJG4kgvz4RUeruu/Kwx6VMMdM
-	 klpeMuF21AbznuaJBMDxAO4oa1QakMkhI4NP6omNAHBB4jHFgnhLhysHlvcAeSlia5
-	 Q28HDLJqpLdFIeK7ZkwLkj/Ar406QbuTuH49Qz6RYPyS+CiV749wnwHY0AS9s7EVY3
-	 HHD1BbFJfD4sw==
-Date: Mon, 3 Nov 2025 19:01:51 -0600
+	b=jKCFITS1riRlsVcVbjUO231fUyEqEQnuOadAWuMgwbIfSwboWfgvIm39yMRcpL2AS
+	 9vV9WfBWFJlFNAWa0a84lrSez1qhS+eEX65DyXGykRp6JUetiMDdURhEyVtJOUT/tg
+	 j2W8jQNn0pF5FOISyDmBqnM1XItgWes1fPmRr3Liv3LCGMTUZB7kjX52u3PNv5r6OQ
+	 gcbIoMB4r40QdZ4M/FhcsLH0POXkeEb/m8fxvccE1vuadpvGF4vu16xz94ykNL0uXq
+	 xZKy8LqzcyG7Fi5gM1u2ZKecLmdw0VlqPjdiEAR/rpat1JYpY8jlfoiIP9LEVj9zrC
+	 aRdB48ffVws0w==
+Date: Mon, 3 Nov 2025 19:05:21 -0600
 From: Bjorn Andersson <andersson@kernel.org>
-To: Hrishabh Rajput <hrishabh.rajput@oss.qualcomm.com>
-Cc: Konrad Dybcio <konradybcio@kernel.org>, 
-	Wim Van Sebroeck <wim@linux-watchdog.org>, Guenter Roeck <linux@roeck-us.net>, 
-	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
-	Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org, linux-watchdog@vger.kernel.org, 
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	Pavan Kondeti <pavan.kondeti@oss.qualcomm.com>, Neil Armstrong <neil.armstrong@linaro.org>, 
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Subject: Re: [PATCH v4 1/2] soc: qcom: smem: Register gunyah watchdog device
-Message-ID: <abicharluq6bm7gbngkbdc2hobcfifcmazh7oukcoufsrpcpse@ml2wccwe6s7i>
-References: <20251031-gunyah_watchdog-v4-0-7abb1ee11315@oss.qualcomm.com>
- <20251031-gunyah_watchdog-v4-1-7abb1ee11315@oss.qualcomm.com>
- <nnq34bfbbi3satxiqzaouy5pgi3obyqp76avh2ipyqxx6w67td@e7eqehjq7iww>
- <40a6395e-26f6-4bad-88af-d89479b6fc28@oss.qualcomm.com>
+To: Luca Weiss <luca.weiss@fairphone.com>
+Cc: "Rafael J. Wysocki" <rafael@kernel.org>, 
+	Viresh Kumar <viresh.kumar@linaro.org>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Manivannan Sadhasivam <mani@kernel.org>, Herbert Xu <herbert@gondor.apana.org.au>, 
+	"David S. Miller" <davem@davemloft.net>, Vinod Koul <vkoul@kernel.org>, 
+	Thomas Gleixner <tglx@linutronix.de>, Konrad Dybcio <konradybcio@kernel.org>, 
+	~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org, linux-pm@vger.kernel.org, 
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+	linux-crypto@vger.kernel.org
+Subject: Re: [PATCH v3 2/7] dt-bindings: crypto: qcom,prng: document Milos
+Message-ID: <hg2smlt2fnwbwxsyasv6ptsfvo7s6twqo3eo3qpdnpbag4xpeh@ks25fqpveihc>
+References: <20250905-sm7635-fp6-initial-v3-0-0117c2eff1b7@fairphone.com>
+ <20250905-sm7635-fp6-initial-v3-2-0117c2eff1b7@fairphone.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -65,124 +65,34 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <40a6395e-26f6-4bad-88af-d89479b6fc28@oss.qualcomm.com>
+In-Reply-To: <20250905-sm7635-fp6-initial-v3-2-0117c2eff1b7@fairphone.com>
 
-On Mon, Nov 03, 2025 at 04:03:44PM +0530, Hrishabh Rajput wrote:
+On Fri, Sep 05, 2025 at 12:40:33PM +0200, Luca Weiss wrote:
+> Document Milos SoC compatible for the True Random Number Generator.
 > 
-> On 11/2/2025 12:15 AM, Bjorn Andersson wrote:
-> > On Fri, Oct 31, 2025 at 10:18:13AM +0000, Hrishabh Rajput via B4 Relay wrote:
-> > > From: Hrishabh Rajput <hrishabh.rajput@oss.qualcomm.com>
-> > > 
-> > > To restrict gunyah watchdog initialization to Qualcomm platforms,
-> > > register the watchdog device in the SMEM driver.
-> > > 
-> > > When Gunyah is not present or Gunyah emulates MMIO-based
-> > > watchdog, we expect Qualcomm watchdog or ARM SBSA watchdog device to be
-> > > present in the devicetree. If none of these device nodes are detected,
-> > > we register the SMC-based Gunyah watchdog device.
-> > > 
-> > > Signed-off-by: Hrishabh Rajput <hrishabh.rajput@oss.qualcomm.com>
-> > > ---
-> > >   drivers/soc/qcom/smem.c | 37 +++++++++++++++++++++++++++++++++++++
-> > >   1 file changed, 37 insertions(+)
-> > > 
-> > > diff --git a/drivers/soc/qcom/smem.c b/drivers/soc/qcom/smem.c
-> > > index cf425930539e..40e4749fab02 100644
-> > > --- a/drivers/soc/qcom/smem.c
-> > > +++ b/drivers/soc/qcom/smem.c
-> > > @@ -1118,6 +1118,34 @@ static int qcom_smem_resolve_mem(struct qcom_smem *smem, const char *name,
-> > >   	return 0;
-> > >   }
-> > > +static int register_gunyah_wdt_device(void)
-> > > +{
-> > > +	struct platform_device *gunyah_wdt_dev;
-> > > +	struct device_node *np;
-> > > +
-> > > +	/*
-> > > +	 * When Gunyah is not present or Gunyah is emulating a memory-mapped
-> > > +	 * watchdog, either of Qualcomm watchdog or ARM SBSA watchdog will be
-> > > +	 * present. Skip initialization of SMC-based Gunyah watchdog if that is
-> > > +	 * the case.
-> > E.g. qcom-apq8064.dtsi doesn't define either qcom,kpss-wdt, nor
-> > arm,sbsa-gwdt, does that imply that it implements the Gunyah watchdog?
-> 
-> 
-> It doesn't implement Gunyah watchdog. For platforms like these we've kept a
-> STATUS SMC call in the gunyah_wdt_probe().
-> 
+> Acked-by: Rob Herring (Arm) <robh@kernel.org>
 
-I think it would be good to make that call before registering the
-platform driver.
+Reviewed-by: Bjorn Andersson <andersson@kernel.org>
 
-> The SMC Call is expected to fail on platforms which do not have support for
-> SMC based Gunyah watchdog, which in turn will fail the probe.
+> Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
+> ---
+>  Documentation/devicetree/bindings/crypto/qcom,prng.yaml | 1 +
+>  1 file changed, 1 insertion(+)
 > 
-
-Perhaps I'm missing something, just looked quickly and it's been a while
-since I looked at this code, but you're making a HVC (or SMC) call with
-the function:
-
-  ARM_SMCCC_CALL_VAL(ARM_SMCCC_FAST_CALL, ARM_SMCCC_SMC_32, ARM_SMCCC_OWNER_VENDOR_HYP, 6)
-
-which doesn't look unique to Gunyah in my eyes.
-
-If I read correctly, the ARM_SMCCC_SMC_32 is the only bit (literally)
-that differentiates this from being a __vgic_v3_get_gic_config() call in
-KVM, just as an example.
-
-Regards,
-Bjorn
-
-> Let us know if there's a better way to handle this.
+> diff --git a/Documentation/devicetree/bindings/crypto/qcom,prng.yaml b/Documentation/devicetree/bindings/crypto/qcom,prng.yaml
+> index ed7e16bd11d33c16d0adf02c38419dbaee87ac48..0fdef054a1a30c363e0d99518351fb18124904f0 100644
+> --- a/Documentation/devicetree/bindings/crypto/qcom,prng.yaml
+> +++ b/Documentation/devicetree/bindings/crypto/qcom,prng.yaml
+> @@ -20,6 +20,7 @@ properties:
+>                - qcom,ipq5332-trng
+>                - qcom,ipq5424-trng
+>                - qcom,ipq9574-trng
+> +              - qcom,milos-trng
+>                - qcom,qcs615-trng
+>                - qcom,qcs8300-trng
+>                - qcom,sa8255p-trng
 > 
-> > > +	 */
-> > > +	np = of_find_compatible_node(NULL, NULL, "qcom,kpss-wdt");
-> > > +	if (np) {
-> > > +		of_node_put(np);
-> > > +		return 0;
-> > > +	}
-> > > +
-> > > +	np = of_find_compatible_node(NULL, NULL, "arm,sbsa-gwdt");
-> > > +	if (np) {
-> > > +		of_node_put(np);
-> > > +		return 0;
-> > > +	}
-> > > +
-> > > +	gunyah_wdt_dev = platform_device_register_simple("gunyah-wdt", -1,
-> > > +							 NULL, 0);
-> > > +	return PTR_ERR_OR_ZERO(gunyah_wdt_dev);
-> > > +}
-> > > +
-> > >   static int qcom_smem_probe(struct platform_device *pdev)
-> > >   {
-> > >   	struct smem_header *header;
-> > > @@ -1236,11 +1264,20 @@ static int qcom_smem_probe(struct platform_device *pdev)
-> > >   	if (IS_ERR(smem->socinfo))
-> > >   		dev_dbg(&pdev->dev, "failed to register socinfo device\n");
-> > > +	ret = register_gunyah_wdt_device();
-> > > +	if (ret)
-> > > +		dev_dbg(&pdev->dev, "failed to register watchdog device\n");
-> > > +
-> > >   	return 0;
-> > >   }
-> > >   static void qcom_smem_remove(struct platform_device *pdev)
-> > >   {
-> > > +	/*
-> > > +	 * Gunyah watchdog is intended to be a persistent module. Hence, the
-> > > +	 * watchdog device is not unregistered.
-> > > +	 */
-> > Why? I don't see why the code needs to encode such policy, please
-> > explain.
-> 
-> 
-> You're right, there is no such need. We're at wrong here. We had an
-> incorrect understanding of watchdog drivers being persistent. We will be
-> implementing the module_exit() for the Gunyah watchdog making it not
-> persistent.
-> 
-> 
-> Thanks,
-> 
-> Hrishabh
+> -- 
+> 2.51.0
 > 
 
