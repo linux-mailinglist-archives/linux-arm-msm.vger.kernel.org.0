@@ -1,95 +1,78 @@
-Return-Path: <linux-arm-msm+bounces-80286-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-80287-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9AA56C30D8D
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 04 Nov 2025 13:00:05 +0100 (CET)
+Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [IPv6:2605:f480:58:1:0:1994:3:14])
+	by mail.lfdr.de (Postfix) with ESMTPS id 563C4C30E60
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 04 Nov 2025 13:10:16 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 38FBE460660
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Nov 2025 12:00:04 +0000 (UTC)
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 1E4904E05EE
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Nov 2025 12:10:15 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D77632EBDCA;
-	Tue,  4 Nov 2025 12:00:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3BE752ED141;
+	Tue,  4 Nov 2025 12:10:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="FQ7pMc7E"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="gBH+MlKg"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f54.google.com (mail-wm1-f54.google.com [209.85.128.54])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.19])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FC0B2EAB8D
-	for <linux-arm-msm@vger.kernel.org>; Tue,  4 Nov 2025 11:59:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99A712EC56F;
+	Tue,  4 Nov 2025 12:10:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.19
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762257600; cv=none; b=k9aPYFysVraRkval2UkJhntaPHyGT/SAPmi2EO/P58ofHSPy2yJXbhfG1Pu7gAgG9eIeyb1immJ5mupblNdB7QG9rQVqesRosLS0pg5fRMOqCNmc3338YkJtgn234PD1aJ6ooHhdft+3uYlDm/clGEAWTE47/FCiZySpkYU4Yn8=
+	t=1762258212; cv=none; b=OYvOHfTLh9uiwyjvsLHSgi+DtGRHpGo3YkSs86azSYKe/28pj7soE+foTMICBEU7HP7OSoe0ZA2re7YAhJdsqRvyNqBPFmTYtdgIYMo4GyG53gm0+zyTcsGECqn2D3JF40E/9A2/d2MZ2sBcs3epM5q8N2UXGHpOuQk65DxBhfU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762257600; c=relaxed/simple;
-	bh=6c8g/ZYuiMRbAXxCY6J1PXEVbRw5F54c9Htwc4BoMEk=;
-	h=Message-ID:Date:From:To:Cc:Subject:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=BI0wVFgdhLRzgaMQgymYufVItjoErhPga7L7/6rjH/EPxVXf2JiVK6ts9WrZObYMAstqEajuVSXKbKVh9hYgZyLM40V0BMsrY9A4lkVjzlWEjfprYUODFrC5BATXgloJHAlPJxiYO43W5Ygy/9VwETgTFdDGGMml4wcA0XBI1Vw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=FQ7pMc7E; arc=none smtp.client-ip=209.85.128.54
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-wm1-f54.google.com with SMTP id 5b1f17b1804b1-4710022571cso50936945e9.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 04 Nov 2025 03:59:58 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1762257597; x=1762862397; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:subject:cc
-         :to:from:date:message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=CRDsESs7bHanH8A88qsmRD3YZo8DiYehUnYoS0PE/dY=;
-        b=FQ7pMc7EVU02JgHkwnntA0bsxQ4N9WhVx+4G+XKKZd0qVT9XXnJGbqc+VFLDblbUYJ
-         eDQcaUG5CiQTTEXxzCMtA4OhsbJKR9N1DSwbbvlLXIFavvhv/0gk7BtYd8okvTSiyhcf
-         fVLXJcMwpK+FeODEJknJBvA35GjaOfGaSEoVZ0qcp25E+GOjV0Gk2SVIMh94KL8S6PSs
-         LEXl4Rmkf6DjsbjI4AFb0fX8N1dDC9a11sxerLaXDnaIwHKgt5UTZDLxdi/rkKmK65OG
-         QbezhlrJSsEKBpmWTjiCjXefJAccyx9nTxAWFq7HYpjzI6EoAxkC0KyJKWi6BU4/iyH+
-         Jf0w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1762257597; x=1762862397;
-        h=in-reply-to:content-disposition:mime-version:references:subject:cc
-         :to:from:date:message-id:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=CRDsESs7bHanH8A88qsmRD3YZo8DiYehUnYoS0PE/dY=;
-        b=oQr3I88lYdLyi249B7xqk2qpFX8mGWsjrsUgvlUljufdoLw3h7Vzi/Fxw7+Z9MeRtf
-         mv2ZT9E4JeikYZDATljdj5cTB3Tsuroc+CMPEHw7viP0AhG5JqKLwFkKqFziNY/BhWQ8
-         yc+ts+DnxGkoCPs0uEG1UM+M9tgeFOYc7b+NbZQrsbZaHfu/lK41QWK4sSKIbPuN13Fh
-         Q+t61mPk6Vnu4/DVYTmOiqnkPU3LY4VbTNK0ZddGs9i54s3poYL4BH2mdydc1tJj0IVW
-         b6Nwm4FBFjtGD9Lwmbaw5WGWbzjtU5gryPMAKukCWc+tzOHd+LSQmNxPvs3Gqvn/FtT8
-         yAIA==
-X-Forwarded-Encrypted: i=1; AJvYcCVkQ4pxwHdXrryz50Z5M60iU+72MQZ6tbLn8t06IZpVmPOraAZdbjmIxoasqnvBD0N5aQFiC3uzvtBqEM/5@vger.kernel.org
-X-Gm-Message-State: AOJu0Yyo3Q+NSWXl7bw3HkYG4MHn0KZUIKyf4TNLo40ozNWojniXsUzw
-	CevUtsr0bhiSuYPyCdQEmmzIDALMHiGWkxBRvMDps6uQnEji/G5KjxF0
-X-Gm-Gg: ASbGncu8c04cvpOxQLc0PpdPME+APtlpgOKdHy1XmzoT/uAmM3JYVMg81IPCxLwV/nc
-	xB8mO+u71geIsqnaTtnzkh5RIpdLYelSmcWRa9bsdkTnhzyFyUZbAvIcAcErvUeiANnFv5luDUD
-	c18Yzp74ekSMiXtjslArS9tBFwm5tUtQXOjJ7+plY8Hpi2J2v59Br8kdkitmc4raqlxAb0LkWfe
-	xLNKulwDtqH/tYoD+UnT2c9/JKnBsp9eLUtxdM1eAc4u1piDHod919+RJEginYfO48dOcjb+KhX
-	0gUBoQY0+xkilXC4M+L5IUlxGjhEnuJV3560XkmURwi2khfJHTi3qN/T3urglAgiGblV8NjIR95
-	Q6J6MOiV12bTdXAitqk7OBObt1UjAWUZL8F8sLyEh5p3Bv0o54+df+xY7PuCO9Z05l2bx7UkiiP
-	kHmep/bbd/cleSdneHc398wVVhisCe
-X-Google-Smtp-Source: AGHT+IHO+t3FoXc2lmkwuUhyA4zyPzNY8ffbVGOeuhpveHqkdWRdaJHtFzSS0tkKwjisgxNuxB9PgA==
-X-Received: by 2002:a05:600c:8185:b0:475:da13:2566 with SMTP id 5b1f17b1804b1-477308a690dmr149519255e9.35.1762257596943;
-        Tue, 04 Nov 2025 03:59:56 -0800 (PST)
-Received: from Ansuel-XPS. (93-34-90-37.ip49.fastwebnet.it. [93.34.90.37])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-429dc18efb3sm4509841f8f.3.2025.11.04.03.59.55
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 04 Nov 2025 03:59:56 -0800 (PST)
-Message-ID: <6909eabc.050a0220.54944.cd03@mx.google.com>
-X-Google-Original-Message-ID: <aQnqugwQrqL0WHRU@Ansuel-XPS.>
-Date: Tue, 4 Nov 2025 12:59:54 +0100
-From: Christian Marangi <ansuelsmth@gmail.com>
-To: Bjorn Andersson <andersson@kernel.org>
-Cc: Ilia Lin <ilia.lin@kernel.org>, "Rafael J. Wysocki" <rafael@kernel.org>,
-	Viresh Kumar <viresh.kumar@linaro.org>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	Arnd Bergmann <arnd@arndb.de>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Raag Jadav <raag.jadav@intel.com>, linux-arm-msm@vger.kernel.org,
-	linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2 3/3] cpufreq: qcom-nvmem: add compatible fallback for
- ipq806x for no SMEM
-References: <20251031130835.7953-1-ansuelsmth@gmail.com>
- <20251031130835.7953-4-ansuelsmth@gmail.com>
- <qael7opoqary2n5iqefxxp42v3qoudfhfvcgjyxfe3t7353zge@ahgvniscxl7v>
+	s=arc-20240116; t=1762258212; c=relaxed/simple;
+	bh=+6EJ9lfIc5BbPa0NS7PF2URnPHdRP1lGEnDP8NUd2Ko=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=RYAoY1eaHau677bnw/YdNvPo0B3SueG4ehiAn61JkCmPqG0rTbZF4t56MdoJ4pOQ8JIiCuZbGjs8JlFPUzc92c6ELVIhbyzZuW1rNn3tYow8e1SJ3Igsk8e83vafhxMKMPABH3/QopVA3E8/NyXrjdElmrRwA8F5aiknV8FJsXw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=gBH+MlKg; arc=none smtp.client-ip=192.198.163.19
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1762258210; x=1793794210;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=+6EJ9lfIc5BbPa0NS7PF2URnPHdRP1lGEnDP8NUd2Ko=;
+  b=gBH+MlKgGvxKMZsgCombeAy+3kTg5gKi4ZSqQm6lWFv5f1EQWGoqtbzu
+   Xlp3lkFH+wthC2oSxs+hfeRdpNFxIo/n2PXOm5o+NR0Q/m1o0PajikgV+
+   lHFASR+x5GyafTriyYGhoGtPs7j7oxhKiQ1ygfUSMdhvWKxFb5OjwpdLV
+   0KfpWWJ58fcy7E/8mT0dS2qaQIad68jBNuBv/KDZ21nSCBsHXw8yP/M/q
+   zdd0f64BnNVK4sv2rU/S/gTI5Sii1crPSHy6gVc/zJ3WUrag9AEf7hSmu
+   EtRVIoArJ9nNnYUvO6VjgNwtzL4LLj85GCaO1Amz7qGUVAzzWIlUscLBg
+   Q==;
+X-CSE-ConnectionGUID: /DU3m8HLR1yZEp2lq3wimQ==
+X-CSE-MsgGUID: cXMKaw+QTPaw4yLgI4dW7A==
+X-IronPort-AV: E=McAfee;i="6800,10657,11602"; a="63361470"
+X-IronPort-AV: E=Sophos;i="6.19,279,1754982000"; 
+   d="scan'208";a="63361470"
+Received: from fmviesa004.fm.intel.com ([10.60.135.144])
+  by fmvoesa113.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 04 Nov 2025 04:10:08 -0800
+X-CSE-ConnectionGUID: If3LwOHXS9u+PNOfEGfuOw==
+X-CSE-MsgGUID: 2Zyy1jrBTjiE0OLk+3zfQw==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.19,279,1754982000"; 
+   d="scan'208";a="192232511"
+Received: from lkp-server02.sh.intel.com (HELO 66d7546c76b2) ([10.239.97.151])
+  by fmviesa004.fm.intel.com with ESMTP; 04 Nov 2025 04:10:03 -0800
+Received: from kbuild by 66d7546c76b2 with local (Exim 4.96)
+	(envelope-from <lkp@intel.com>)
+	id 1vGFqz-000RNM-2V;
+	Tue, 04 Nov 2025 12:09:43 +0000
+Date: Tue, 4 Nov 2025 20:09:31 +0800
+From: kernel test robot <lkp@intel.com>
+To: Loic Poulain <loic.poulain@oss.qualcomm.com>, andersson@kernel.org,
+	konradybcio@kernel.org, robh@kernel.org, krzk+dt@kernel.org,
+	conor+dt@kernel.org, sre@kernel.org
+Cc: oe-kbuild-all@lists.linux.dev, linux-arm-msm@vger.kernel.org,
+	devicetree@vger.kernel.org, linux-pm@vger.kernel.org,
+	Loic Poulain <loic.poulain@oss.qualcomm.com>
+Subject: Re: [PATCH 4/5] firmware: qcom: scm: Support for EDL reboot mode
+Message-ID: <202511041928.at1dqqZH-lkp@intel.com>
+References: <20251103182006.1158383-5-loic.poulain@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -98,81 +81,39 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <qael7opoqary2n5iqefxxp42v3qoudfhfvcgjyxfe3t7353zge@ahgvniscxl7v>
+In-Reply-To: <20251103182006.1158383-5-loic.poulain@oss.qualcomm.com>
 
-On Sat, Nov 01, 2025 at 12:42:55PM -0500, Bjorn Andersson wrote:
-> On Fri, Oct 31, 2025 at 02:08:34PM +0100, Christian Marangi wrote:
-> > On some IPQ806x SoC SMEM might be not initialized by SBL. This is the
-> > case for some Google devices (the OnHub family) that can't make use of
-> > SMEM to detect the SoC ID.
-> > 
-> > To handle these specific case, check if the SMEM is not initialized (by
-> > checking if the qcom_smem_get_soc_id returns -ENODEV) and fallback to
-> > OF machine compatible checking to identify the SoC variant.
-> > 
-> > Notice that the checking order is important as the machine compatible
-> > are normally defined with the specific one following the generic SoC
-> > (for example compatible = "qcom,ipq8065", "qcom,ipq8064").
-> > 
-> > Signed-off-by: Christian Marangi <ansuelsmth@gmail.com>
-> 
-> Reviewed-by: Bjorn Andersson <andersson@kernel.org>
-> 
-> And as mentioned in v1, this (cpufreq) patch can be merged independently
-> of the first two patches. So please merge it through the cpufreq tree.
-> 
+Hi Loic,
 
-I will send a new revision just for this patch so I can use
-of_match_node()
+kernel test robot noticed the following build errors:
 
-Should be ok since it hasn't been picked right?
+[auto build test ERROR on robh/for-next]
+[also build test ERROR on sre-power-supply/for-next linus/master v6.18-rc4 next-20251103]
+[If your patch is applied to the wrong git tree, kindly drop us a note.
+And when submitting patch, we suggest to use '--base' as documented in
+https://git-scm.com/docs/git-format-patch#_base_tree_information]
 
-> 
-> > ---
-> >  drivers/cpufreq/qcom-cpufreq-nvmem.c | 17 +++++++++++++++--
-> >  1 file changed, 15 insertions(+), 2 deletions(-)
-> > 
-> > diff --git a/drivers/cpufreq/qcom-cpufreq-nvmem.c b/drivers/cpufreq/qcom-cpufreq-nvmem.c
-> > index 3a8ed723a23e..5a9bd780a4f3 100644
-> > --- a/drivers/cpufreq/qcom-cpufreq-nvmem.c
-> > +++ b/drivers/cpufreq/qcom-cpufreq-nvmem.c
-> > @@ -257,8 +257,8 @@ static int qcom_cpufreq_ipq8064_name_version(struct device *cpu_dev,
-> >  					     char **pvs_name,
-> >  					     struct qcom_cpufreq_drv *drv)
-> >  {
-> > +	int msm_id = -1, ret = 0;
-> >  	int speed = 0, pvs = 0;
-> > -	int msm_id, ret = 0;
-> >  	u8 *speedbin;
-> >  	size_t len;
-> >  
-> > @@ -275,8 +275,21 @@ static int qcom_cpufreq_ipq8064_name_version(struct device *cpu_dev,
-> >  	get_krait_bin_format_a(cpu_dev, &speed, &pvs, speedbin);
-> >  
-> >  	ret = qcom_smem_get_soc_id(&msm_id);
-> > -	if (ret)
-> > +	if (ret == -ENODEV) {
-> > +		/* Fallback to compatible match with no SMEM initialized */
-> > +		ret = 0;
-> > +		if (of_machine_is_compatible("qcom,ipq8062"))
-> > +			msm_id = QCOM_ID_IPQ8062;
-> > +		else if (of_machine_is_compatible("qcom,ipq8065") ||
-> > +			 of_machine_is_compatible("qcom,ipq8069"))
-> > +			msm_id = QCOM_ID_IPQ8065;
-> > +		else if (of_machine_is_compatible("qcom,ipq8064") ||
-> > +			 of_machine_is_compatible("qcom,ipq8066") ||
-> > +			 of_machine_is_compatible("qcom,ipq8068"))
-> > +			msm_id = QCOM_ID_IPQ8064;
-> > +	} else if (ret) {
-> >  		goto exit;
-> > +	}
-> >  
-> >  	switch (msm_id) {
-> >  	case QCOM_ID_IPQ8062:
-> > -- 
-> > 2.51.0
-> > 
+url:    https://github.com/intel-lab-lkp/linux/commits/Loic-Poulain/dt-bindings-power-reset-qcom-pon-Document-qcom-warm-reset/20251104-022140
+base:   https://git.kernel.org/pub/scm/linux/kernel/git/robh/linux.git for-next
+patch link:    https://lore.kernel.org/r/20251103182006.1158383-5-loic.poulain%40oss.qualcomm.com
+patch subject: [PATCH 4/5] firmware: qcom: scm: Support for EDL reboot mode
+config: sparc-randconfig-001-20251104 (https://download.01.org/0day-ci/archive/20251104/202511041928.at1dqqZH-lkp@intel.com/config)
+compiler: sparc64-linux-gcc (GCC) 13.4.0
+reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20251104/202511041928.at1dqqZH-lkp@intel.com/reproduce)
+
+If you fix the issue in a separate patch/commit (i.e. not just a new version of
+the same patch/commit), kindly add following tags
+| Reported-by: kernel test robot <lkp@intel.com>
+| Closes: https://lore.kernel.org/oe-kbuild-all/202511041928.at1dqqZH-lkp@intel.com/
+
+All errors (new ones prefixed by >>):
+
+   sparc64-linux-ld: drivers/spi/spi-amlogic-spifc-a4.o: in function `aml_sfc_set_bus_width':
+   spi-amlogic-spifc-a4.c:(.text+0x3e8): undefined reference to `__ffsdi2'
+   sparc64-linux-ld: drivers/firmware/qcom/qcom_scm.o: in function `qcom_scm_probe':
+>> qcom_scm.c:(.text+0x2488): undefined reference to `devm_reboot_mode_register'
 
 -- 
-	Ansuel
+0-DAY CI Kernel Test Service
+https://github.com/intel/lkp-tests/wiki
 
