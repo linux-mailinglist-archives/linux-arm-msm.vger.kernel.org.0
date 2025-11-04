@@ -1,134 +1,190 @@
-Return-Path: <linux-arm-msm+bounces-80280-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-80282-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 549B5C30CEA
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 04 Nov 2025 12:44:55 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3EDC9C30CDC
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 04 Nov 2025 12:44:27 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id B1B053BD995
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Nov 2025 11:43:40 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 8ED55188916F
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Nov 2025 11:44:51 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6B9C82E8B97;
-	Tue,  4 Nov 2025 11:43:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 496A82E7F14;
+	Tue,  4 Nov 2025 11:44:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="dAFmWsLU"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx3.molgen.mpg.de (mx3.molgen.mpg.de [141.14.17.11])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4019A26FA60;
-	Tue,  4 Nov 2025 11:43:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=141.14.17.11
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 939EB2E8B97;
+	Tue,  4 Nov 2025 11:44:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762256617; cv=none; b=D5NE4TyHtTfoDzyzT0hb7dAu1kl74XXrmBISljgMIMfhXApOGM9YM/XIt+HlRWw7rXpx2YBFJfsfxIXZlvGH/N6YuI9FRpu1a1AFSasQMx51qplSsfDt3r4aiPWCR9brufrk/98LdRm9DGZhyqhoxUNhJCyNDjxa8DfN8BTffNU=
+	t=1762256663; cv=none; b=LFPu7hUs2vaTECfQHTG/klgEPNFcJ1aoe9dIUR7oodEDOZFdS41JFByyNMd9Rgvl8CRL85Jr4TXmUIL5lc6bjX4YrN47BH7Utt33Bsxmdx+U0iPumVvfM+rlCSaG0iHAmVT7eKQw+FeNL9w/K2oM4aU6cCtGRhi6gys8+rY5kx8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762256617; c=relaxed/simple;
-	bh=53WUuaBOWGNY7HMl/GQZC54v+7vKuWYy543nNv24VpI=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=DsQqYSvBufFoVRJlVIKfddQI8XHu+TzXoBKG+jVMXJB3/HzNj7vgOsL1C5xPRUrYPZJCopTNyUeZHv64W89Ge3w6U36E/huBBgxbVtDBlZjbjmzrQfsdfO8inhdRefJAU9cd0MSkMJSuv6544j4g/vXX+HBHZL7THWcdUMakrcs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=molgen.mpg.de; spf=pass smtp.mailfrom=molgen.mpg.de; arc=none smtp.client-ip=141.14.17.11
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=molgen.mpg.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=molgen.mpg.de
-Received: from [141.14.220.42] (g42.guest.molgen.mpg.de [141.14.220.42])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-	(No client certificate requested)
-	(Authenticated sender: pmenzel)
-	by mx.molgen.mpg.de (Postfix) with ESMTPSA id 6878D61E647AB;
-	Tue, 04 Nov 2025 12:43:22 +0100 (CET)
-Message-ID: <0c54ccc4-0526-4d7a-9ce3-42dde5539c7b@molgen.mpg.de>
-Date: Tue, 4 Nov 2025 12:43:20 +0100
+	s=arc-20240116; t=1762256663; c=relaxed/simple;
+	bh=4rZsjNC6UlUC0yg8wsAE8aFzjI+3CFMp/Ph8ugfw4aU=;
+	h=From:To:Cc:Subject:Date:Message-Id; b=GwLaWx2jQ5fF2rc317eIM6U4zh4Gzm73b+pNWTmWcxsgL+XFzzgxaw5diBwQzzGLZGqLZZVlxJLW7mXkcOTDe1V6dBq9N/L+w+vVZbpEsn+MHxsTujp3tcF5uyRonT8/waRS6CyyI+P+wBu8RfCHk4VbeW5mhLKFhn8yAB92sTc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=qti.qualcomm.com; spf=pass smtp.mailfrom=qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=dAFmWsLU; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=qti.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=qualcomm.com
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 5A48giGt1655300;
+	Tue, 4 Nov 2025 11:43:36 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:date:from:message-id:subject:to; s=qcppdkim1; bh=5/S4v6r8YL5E
+	hQw/DbiTYL7kr5Q9P8FFX0xAbok2OBM=; b=dAFmWsLUqjUQeZgXivMyWc7EY5fi
+	uuPFelNEH6uvwC2+ehBlFVC3huOazFC5BXsP9OT3xN82QF808VdfaQ7J1tnUmGrf
+	oiEXUGbCwGg6sZt7wESeaqlj+B+Xze/8xmAQ3hheh9iR/6mZVR995NGMVNULMfYx
+	vioq8t+Gm7EhbjeL7TCV7QI9hrbDxLq994mqWUDKxMTh25L9t3Q3h1FpO8d4IJM0
+	ea0kJvETOXG7YgpYvadDgOexxZB0WXfWwCQhBZuJmq86/8bsBuwLzEh5DoX71lxj
+	8KaE9whJzb55njAEOdFl9R1zTKfm9ld9m6LR8+JTtbyJ0w+x05zbFQ62Iw==
+Received: from apblrppmta02.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4a70f1jsem-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 04 Nov 2025 11:43:35 +0000 (GMT)
+Received: from pps.filterd (APBLRPPMTA02.qualcomm.com [127.0.0.1])
+	by APBLRPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTP id 5A4BhWpd013471;
+	Tue, 4 Nov 2025 11:43:32 GMT
+Received: from pps.reinject (localhost [127.0.0.1])
+	by APBLRPPMTA02.qualcomm.com (PPS) with ESMTPS id 4a5b9mg9yy-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+	Tue, 04 Nov 2025 11:43:32 +0000
+Received: from APBLRPPMTA02.qualcomm.com (APBLRPPMTA02.qualcomm.com [127.0.0.1])
+	by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 5A4BhW28013456;
+	Tue, 4 Nov 2025 11:43:32 GMT
+Received: from hu-maiyas-hyd.qualcomm.com (hu-riteshk-hyd.qualcomm.com [10.147.241.247])
+	by APBLRPPMTA02.qualcomm.com (PPS) with ESMTP id 5A4BhVXi013451;
+	Tue, 04 Nov 2025 11:43:32 +0000
+Received: by hu-maiyas-hyd.qualcomm.com (Postfix, from userid 2314801)
+	id EF65F5001D5; Tue,  4 Nov 2025 17:13:30 +0530 (+0530)
+From: Ritesh Kumar <riteshk@qti.qualcomm.com>
+To: robin.clark@oss.qualcomm.com, lumag@kernel.org, abhinav.kumar@linux.dev,
+        jessica.zhang@oss.qualcomm.com, sean@poorly.run,
+        marijn.suijten@somainline.org, maarten.lankhorst@linux.intel.com,
+        mripard@kernel.org, tzimmermann@suse.de, airlied@gmail.com,
+        simona@ffwll.ch, robh@kernel.org, krzk+dt@kernel.org,
+        conor+dt@kernel.org, quic_mahap@quicinc.com, andersson@kernel.org,
+        konradybcio@kernel.org, mani@kernel.org,
+        James.Bottomley@HansenPartnership.com, martin.petersen@oracle.com,
+        vkoul@kernel.org, kishon@kernel.org,
+        cros-qcom-dts-watchers@chromium.org
+Cc: Ritesh Kumar <riteshk@qti.qualcomm.com>, linux-phy@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-scsi@vger.kernel.org,
+        quic_vproddut@quicinc.com
+Subject: [PATCH v3 0/2] Add edp reference clock for lemans
+Date: Tue,  4 Nov 2025 17:13:25 +0530
+Message-Id: <20251104114327.27842-1-riteshk@qti.qualcomm.com>
+X-Mailer: git-send-email 2.17.1
+X-QCInternal: smtphost
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Authority-Analysis: v=2.4 cv=JLQ2csKb c=1 sm=1 tr=0 ts=6909e6e8 cx=c_pps
+ a=Ou0eQOY4+eZoSc0qltEV5Q==:117 a=Ou0eQOY4+eZoSc0qltEV5Q==:17
+ a=6UeiqGixMTsA:10 a=VkNPw1HP01LnGYTKEx00:22 a=VwQbUJbxAAAA:8 a=KKAkSRfTAAAA:8
+ a=COk6AnOGAAAA:8 a=VVwWfd7dDLNrxvkr-osA:9 a=cvBusfyB2V15izCimMoJ:22
+ a=TjNXssC_j7lpFel5tvFf:22 a=nl4s5V0KI7Kw-pW0DWrs:22 a=pHzHmUro8NiASowvMSCR:22
+ a=xoEH_sTeL_Rfw54TyV31:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMTA0MDA5NiBTYWx0ZWRfX12/8YyVIsgPX
+ uFQT35IZo9zXIs3YD8WodGSgRqhxWPaKIVUaSdobhYh8dx7pzy9v4EQALNpkz1DliMiI+4NxYKR
+ jjXWzl6Du5lEz6meI9/dGIn4o2rycAXN+MPa8IevMhtMhoKFutoNsIFTVfP0WUsphpREq88VqSL
+ qy27ZKK+hfw9f+cc9yjKF9BPrKcnRM9H24piv29QHER+wQ7mXmzjqkNMWQpCSxUXJ40ZwJwaLVl
+ YD1GcjyHWXM/nmL+UhmAb3PiN7LJbpt8Yv+axMdGDQ19+KR9Arxe0ElrTN1TFaH71rC8cC0fy7r
+ NEKmoRmdACXYDJ7pkGhbUxdQz9tvBPE2SxSqoojV//J0uvapYb5RWReWr2LCn1lV56vp0ljOZPv
+ Di6TqtH6rjqdyZDQEcH1cgBWiIXceA==
+X-Proofpoint-ORIG-GUID: XuAHXMLLp2ATSv8CImM8lPt7CqiaUJpW
+X-Proofpoint-GUID: XuAHXMLLp2ATSv8CImM8lPt7CqiaUJpW
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
+ definitions=2025-11-03_06,2025-11-03_03,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ lowpriorityscore=0 bulkscore=0 phishscore=0 adultscore=0 malwarescore=0
+ clxscore=1011 priorityscore=1501 impostorscore=0 spamscore=0 suspectscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2510240001 definitions=main-2511040096
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1] Bluetooth: hci_qca: Fix SSR unable to wake up bug
-To: Shuai Zhang <quic_shuaz@quicinc.com>
-Cc: Bartosz Golaszewski <brgl@bgdev.pl>, Marcel Holtmann
- <marcel@holtmann.org>, Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
- linux-arm-msm@vger.kernel.org, linux-bluetooth@vger.kernel.org,
- linux-kernel@vger.kernel.org, stable@vger.kernel.org,
- quic_chejiang@quicinc.com, quic_jiaymao@quicinc.com, quic_chezhou@quicinc.com
-References: <20251104112601.2670019-1-quic_shuaz@quicinc.com>
-Content-Language: en-US
-From: Paul Menzel <pmenzel@molgen.mpg.de>
-In-Reply-To: <20251104112601.2670019-1-quic_shuaz@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
 
-Dear Shuai,
+On lemans chipset, edp reference clock is being voted by ufs mem phy
+(ufs_mem_phy: phy@1d87000). But after commit 77d2fa54a945
+("scsi: ufs: qcom : Refactor phy_power_on/off calls") edp reference
+clock is getting turned off, leading to below phy poweron failure on
+lemans edp phy.
 
+[   19.830220] phy phy-aec2a00.phy.10: phy poweron failed --> -110
+[   19.842112] mdss_0_disp_cc_mdss_dptx0_link_clk status stuck at 'off'
+[   19.842131] WARNING: CPU: 2 PID: 371 at drivers/clk/qcom/clk-branch.c:87 clk_branch_toggle+0x174/0x18c
+[   19.984356] Hardware name: Qualcomm QCS9100 Ride (DT)
+[   19.989548] pstate: 604000c5 (nZCv daIF +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
+[   19.996697] pc : clk_branch_toggle+0x174/0x18c
+[   20.001267] lr : clk_branch_toggle+0x174/0x18c
+[   20.005833] sp : ffff8000863ebbc0
+[   20.009251] x29: ffff8000863ebbd0 x28: 0000000000000000 x27: 0000000000000000
+[   20.016579] x26: 0000000000000000 x25: 0000000000000000 x24: 0000000000000001
+[   20.023915] x23: ffff0000c53de980 x22: 0000000000000001 x21: ffffb4b57fd8d710
+[   20.031245] x20: ffffb4b5bb238b88 x19: 0000000000000000 x18: ffffffffffff7198
+[   20.038584] x17: 0000000000000014 x16: ffffb4b5bb1e2330 x15: 0000000000000048
+[   20.045926] x14: 0000000000000000 x13: ffffb4b5bd386a48 x12: 0000000000000dfb
+[   20.053263] x11: 00000000000004a9 x10: ffffb4b5bd3e5a20 x9 : ffffb4b5bd386a48
+[   20.060600] x8 : 00000000ffffefff x7 : ffffb4b5bd3dea48 x6 : 00000000000004a9
+[   20.067934] x5 : ffff000eb7d38408 x4 : 40000000fffff4a9 x3 : ffff4b58fb2b7000
+[   20.075269] x2 : 0000000000000000 x1 : 0000000000000000 x0 : ffff000ec4fc3480
+[   20.082601] Call trace:
+[   20.085127]  clk_branch_toggle+0x174/0x18c (P)
+[   20.089705]  clk_branch2_enable+0x1c/0x28
+[   20.093829]  clk_core_enable+0x6c/0xac
+[   20.097687]  clk_enable+0x2c/0x4c
+[   20.101104]  clk_bulk_enable+0x4c/0xd8
+[   20.104964]  msm_dp_ctrl_enable_mainlink_clocks+0x184/0x24c [msm]
+[   20.111294]  msm_dp_ctrl_on_link+0xb0/0x400 [msm]
+[   20.116178]  msm_dp_display_process_hpd_high+0x110/0x190 [msm]
+[   20.122209]  msm_dp_hpd_plug_handle.isra.0+0xac/0x1c4 [msm]
+[   20.127983]  hpd_event_thread+0x320/0x5cc [msm]
+[   20.132680]  kthread+0x12c/0x204
+[   20.136011]  ret_from_fork+0x10/0x20
+[   20.139699] ---[ end trace 0000000000000000 ]---
+[   20.144489] Failed to enable clk 'ctrl_link': -16
+[   20.149340] [drm:msm_dp_ctrl_enable_mainlink_clocks [msm]] *ERROR* Unable to start link clocks. ret=-16
 
-Thank you for your patch.
+This series adds support for voting the clock from lemans edp phy driver.
 
-Am 04.11.25 um 12:26 schrieb Shuai Zhang:
-> During SSR data collection period, the processing of hw_error events
-> must wait until SSR data Collected or the timeout before it can proceed.
+---
+This series is dependent on below series:
+https://lore.kernel.org/all/20251030-phy-qcom-edp-add-missing-refclk-v5-0-fce8c76f855a@linaro.org/
 
-Collected → collected
+Change in v3:
+- Rebase to latest linux-next and latest version 5 of dependency.
+- Squash both DT binding patches together. [Dmitry, Rob]
+- Add dt-binding change in sorted order. [Dmitry]
+- Update commit message of bindings patch to give more detail of the problem. [Bjorn]
+- Update commit message of devicetree patch and add Fixes tag. [Dmitry]
+- Link to v1: https://lore.kernel.org/all/20251013104806.6599-1-quic_riteshk@quicinc.com/
 
-> The wake_up_bit function has been added to address the issue
+Change in v2:
+- Rebase on top of dependent series. [Krzysztof]
+- Remove duplicate patches and make changes limited to lemans.
+- Link to v1: https://lore.kernel.org/all/20251009071127.26026-1-quic_riteshk@quicinc.com/
 
-has been added → is added
+---
+Ritesh Kumar (3):
+  dt-bindings: phy: qcom-edp: Add missing clock for sa8775p
+  dt-bindings: display/msm: qcom,sa8775p-mdss: update edp phy example
+  arm64: dts: qcom: lemans: Add edp reference clock for edp phy
 
-> where hw_error events could only be processed after the timeout.
+ .../bindings/display/msm/qcom,sa8775p-mdss.yaml      |  6 ++++--
+ .../devicetree/bindings/phy/qcom,edp-phy.yaml        |  1 +
+ arch/arm64/boot/dts/qcom/lemans.dtsi                 | 12 ++++++++----
+ 3 files changed, 13 insertions(+), 6 deletions(-)
 
-The problem is not totally clear to me. What is the current situation? 
-Maybe start the commit message with that?
+-- 
+2.17.1
 
-> The timeout unit has been changed from jiffies to milliseconds (ms).
-
-Please give the numbers, and also document effect of this change. Is the 
-timeout the same, or different?
-
-Also, why not make that a separate commit?
-
-Please document a test case.
-
-> Cc: stable@vger.kernel.org
-> Signed-off-by: Shuai Zhang <quic_shuaz@quicinc.com>
-> ---
->   drivers/bluetooth/hci_qca.c | 4 +++-
->   1 file changed, 3 insertions(+), 1 deletion(-)
-> 
-> diff --git a/drivers/bluetooth/hci_qca.c b/drivers/bluetooth/hci_qca.c
-> index 888176b0f..a2e3c97a8 100644
-> --- a/drivers/bluetooth/hci_qca.c
-> +++ b/drivers/bluetooth/hci_qca.c
-> @@ -1105,6 +1105,7 @@ static void qca_controller_memdump(struct work_struct *work)
->   				cancel_delayed_work(&qca->ctrl_memdump_timeout);
->   				clear_bit(QCA_MEMDUMP_COLLECTION, &qca->flags);
->   				clear_bit(QCA_IBS_DISABLED, &qca->flags);
-> +				wake_up_bit(&qca->flags, QCA_MEMDUMP_COLLECTION);
->   				mutex_unlock(&qca->hci_memdump_lock);
->   				return;
->   			}
-> @@ -1182,6 +1183,7 @@ static void qca_controller_memdump(struct work_struct *work)
->   			qca->qca_memdump = NULL;
->   			qca->memdump_state = QCA_MEMDUMP_COLLECTED;
->   			clear_bit(QCA_MEMDUMP_COLLECTION, &qca->flags);
-> +			wake_up_bit(&qca->flags, QCA_MEMDUMP_COLLECTION);
-
-`include/linux/wait_bit.h` also contains `clear_and_wake_up_bit()`.
-
->   		}
->   
->   		mutex_unlock(&qca->hci_memdump_lock);
-> @@ -1602,7 +1604,7 @@ static void qca_wait_for_dump_collection(struct hci_dev *hdev)
->   	struct qca_data *qca = hu->priv;
->   
->   	wait_on_bit_timeout(&qca->flags, QCA_MEMDUMP_COLLECTION,
-> -			    TASK_UNINTERRUPTIBLE, MEMDUMP_TIMEOUT_MS);
-> +			    TASK_UNINTERRUPTIBLE, msecs_to_jiffies(MEMDUMP_TIMEOUT_MS));
->   
->   	clear_bit(QCA_MEMDUMP_COLLECTION, &qca->flags);
->   }
-
-
-Kind regards,
-
-Paul
 
