@@ -1,168 +1,158 @@
-Return-Path: <linux-arm-msm+bounces-80357-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-80358-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2B3EEC33247
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 04 Nov 2025 23:15:19 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6DB4CC33266
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 04 Nov 2025 23:16:25 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 8313C18C24AA
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Nov 2025 22:15:43 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id D0501462556
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Nov 2025 22:16:21 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5C41D26AA93;
-	Tue,  4 Nov 2025 22:15:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2A50D2D12E2;
+	Tue,  4 Nov 2025 22:16:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="FCFKYNr/";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="K33pKP2B"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="LyZncVkn"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55BFF219313
-	for <linux-arm-msm@vger.kernel.org>; Tue,  4 Nov 2025 22:15:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB71F199931;
+	Tue,  4 Nov 2025 22:16:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762294513; cv=none; b=hAg+i7WHZw4ntOBnDOLXxMyQV9ZnQF9zWqLRrxSlzHbr+HxOs+ExDsJ/HrNIrnp76ViGohUnJIQMG17M1PD+B0+Ai55adb5ZgDlJ+X7bHj63madTqkKxIJwH961oZnZJm1jslzVUbE7bwQBnvoiGmKNeUbxFIAl2KeAUoyI31IM=
+	t=1762294575; cv=none; b=eB4aeT4Kwld5laZtvK5A0CnBuiUcOtAijE56JM5tiFEMNVRm7ty7edhHVd2PusZ4pLgHJJNCgWRf4f87EGIcHlN3xBjJ8enqeTw5wQH9liDil+81U5FFIOE8INN8++ndhYv+QKmtMX2O17Z/iKobzKtB+ZSvCIqPIYYsuX6fEaU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762294513; c=relaxed/simple;
-	bh=Dc4kqL4A0k+kCirDqu7t00i8lKGuYTBpwR/YdNPIuAM=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=mIlrq6rkFTauFohJy/pebkpBILmMUx/2uLiBcBPdF7Dr2eMx1PiPlfWdVSod99KdXhnsW+6ew3hkuIotTr0apkbAm3tNBxxOFxPckaHIhFz/3PvK3KPGKPg3APxTkhs96B7FRhyb/d8Rk59R7b8ZnL7bi8o5wNtY6ppOQvAI/IY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=FCFKYNr/; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=K33pKP2B; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 5A4KfmvX2978786
-	for <linux-arm-msm@vger.kernel.org>; Tue, 4 Nov 2025 22:15:09 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	ogbBgd/Tv25LIQg1F6++n7axOZ48HuYuD70xNJM/fEQ=; b=FCFKYNr/ialbd9JR
-	pHORa2NYr5qUtOAxtzEzhdloSYdIhKvmqVj9ntsGL0McN4s1pCOmXirkCBE31WGq
-	snFcuo17qKaA1mtkbA8rlxUoVfseOylW8Az5aOM5x1XlwdXVcpUkwT4qzu9l+CRw
-	MDCsSObf3ojBQmlgtLvhrDrFFiVRfivzXt6I8vnLyR+SuGewkxNp2qbcCNmqDUoW
-	WCiZnQq5ff0T8eW11zjyxPFl5vvKf/yfkicTo64QeyZW4bijiJrqZV8jvYu8fDF6
-	4QnqP6zgn6t3NqtvTfd/OGL6CysJLMZLacxK3IQHI8ekUcZs09lx3U0i+KzJJiAG
-	Xp4Gkg==
-Received: from mail-pf1-f198.google.com (mail-pf1-f198.google.com [209.85.210.198])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4a7hbjsq34-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Tue, 04 Nov 2025 22:15:09 +0000 (GMT)
-Received: by mail-pf1-f198.google.com with SMTP id d2e1a72fcca58-7a2885329beso302346b3a.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 04 Nov 2025 14:15:09 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1762294509; x=1762899309; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=ogbBgd/Tv25LIQg1F6++n7axOZ48HuYuD70xNJM/fEQ=;
-        b=K33pKP2BTFixdM70iOG/3Kd3gFe9sp97LTpnr73YurtTY+bK4nrozBknFiKzZgiVmD
-         qj34TWnMDImE3cV5yTIuEOO/npfFWvMK/AVkcJ67N1Hbkwcj7hJmBUV0cAN3jBPIetmU
-         x5FrnzdY2/eDv3iUv6oXZKFj3cS6ZCmuK4OTVQfKLhkHsfZ4W8tXR6seJ/vDfakUH0sf
-         NE5OUc9BObfPTVvb1G/ua9nkVa96MFPIrvz/EBAkAHN2Q66daY7Nl2amozbx32jgs3DB
-         BJtxZSRzVcoT/cawt2p7AVkae4MpAjtPbVoW4akvJf3o2zJLaSSLWghSQUc1fV2jM3aS
-         E/WA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1762294509; x=1762899309;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=ogbBgd/Tv25LIQg1F6++n7axOZ48HuYuD70xNJM/fEQ=;
-        b=PHHBn9IaVS9doDjOZ1viPUfPHXdjE+EeiOWS7vWKwjVtDMgRgmv02YOvBFQXAO3UI/
-         gEVQ00JV9MD6xGtrtsjqFlBcZ+gPx1OhZ5RS6vb+naK5zmGgmrl1tWt10ECYCVc1mihg
-         EY8TcDwuTxxBrXLxlcMF6raBiyCgnF4u/K3JwgFJI1dM7Cwp0VZBz3y+NxEPtGfm10ZY
-         RuakyOmmE9E118N4Nk+aVCY7h51KbjKiHG3qo421hp4sVbfU4PCCYCYeGtWV8785mw2X
-         Wmq/U9yZDJqKMHQbOx4DS54ZKxbp4JWjQ3547L3fEukaO5u+1nm+lLnXZrrpNnMr10sS
-         3xdg==
-X-Gm-Message-State: AOJu0YxRLVvYI6pNLTnS4YhY0bVpD9mV21/QeA0oN36llF/pSTewgPfv
-	JBpG7ew35WFSopuzM+bg3k+7ibrYqGfH6Hwu5z2OFzNc7WFMS3MDTkNVaErhMhyUVC7PJX6/gwP
-	t5oYX2uu3b00tU4m057u53GSP0GWqF1xOkJ/3tAxDORjel0chCi7V6H+Q9uw5y2dMySMw
-X-Gm-Gg: ASbGncvK/f3L5Myb+VsDtoEmFO0CbG+9EkKwoeGgtyTZQ1+1Zb4J2jBB8HrbP5Xf1By
-	e74DGz1SMHPn8s6/1LZwmmxC4s9trK4AXTXVfXq/1N8/bTZqmLUDPxi/Gucg8mA687hhe74dg0p
-	Hl8Kgt0cYe95w4wIsLLKzM0/k4rON6NNZg03KpDllvvVLWIqHAuLoBqSESS/E6bOwc4lP1N7zyG
-	m3ULqquNErTuDrv5VChhhJpHYqFNC1KJs/8KNm7cgMMrZXwqPNY4YEZ8de3hAp+TA0YlTe4ectr
-	SrEdhvlfWQkWLQMnpMaQTwQaAMtvut1CQ54OhNKqNVJMPruvyksjX+IlScyWEYTUd7ABA18ZsqI
-	H1i7CCz7aBVpgaqmTViSGMvI=
-X-Received: by 2002:a05:6a00:4188:b0:7ad:8299:6155 with SMTP id d2e1a72fcca58-7ad82997336mr2710631b3a.2.1762294508747;
-        Tue, 04 Nov 2025 14:15:08 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IEMSaGzu4ogexmgVVatd2/255fBbWIxfGY0+4QCkMTk6DFn3f8QXyGVUkFdUAVjo2NXiMQ6Dg==
-X-Received: by 2002:a05:6a00:4188:b0:7ad:8299:6155 with SMTP id d2e1a72fcca58-7ad82997336mr2710598b3a.2.1762294508107;
-        Tue, 04 Nov 2025 14:15:08 -0800 (PST)
-Received: from [192.168.1.6] ([106.222.228.179])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-7acd3b10bd1sm4013047b3a.30.2025.11.04.14.15.06
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 04 Nov 2025 14:15:07 -0800 (PST)
-Message-ID: <b94eff34-8a10-44fe-ac8b-304407922984@oss.qualcomm.com>
-Date: Wed, 5 Nov 2025 03:45:04 +0530
+	s=arc-20240116; t=1762294575; c=relaxed/simple;
+	bh=PMJI57pPFLnWADx4D5rtUwHi6yehpBQw9oto6JRqah0=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=dEqp+/UPf7OkBixCRNXOloQ3CG0Ebit9S7CZ2tQrG6kERuDluv+ODR8M8b/wcun8s1fpYtWtug9/U9szIVt35MbXd6vD+hHc54B9i/JZjoYgdhGByZ5JMg9m+6wlEt/4sEya7v34yJp4sszllZLE6JS9LHO6yjWDdCnVbkzdJ6w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=LyZncVkn; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 77641C4CEF8;
+	Tue,  4 Nov 2025 22:16:14 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1762294574;
+	bh=PMJI57pPFLnWADx4D5rtUwHi6yehpBQw9oto6JRqah0=;
+	h=From:Subject:Date:To:Cc:Reply-To:From;
+	b=LyZncVknhUCw0m4emfG5lprqrjnnWjuY6IjiAT1bJgihIgb7UYvGp9C+9l3viV2qn
+	 e+RQMt2OgBEanH93WYOjvkTXJaWiibaPRMFr07BaQZ8ZhlR94YQZTu767LYfG1QrK0
+	 Tk0CB8SpK5c4vxOnDvTbgsr+hKBa1YrFX2nqOcQw//RlzKjxQZY2eeTFl9mgfDqfCk
+	 aGUY7r2c5yVeQXgnHOUbW8ftO2z20z05fCDP0DN+mn1oB7zhk6lwe8VyH4bIu87VJV
+	 9Em1QmxDC4yYEjuIs8WZw5M2CubC9D/ysoJ4t0kaAm8apRIGKCG9mLVCq5JiI/Uymj
+	 WFR9pkrafjTeQ==
+Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5CD39CCFA07;
+	Tue,  4 Nov 2025 22:16:14 +0000 (UTC)
+From: David Heidelberg via B4 Relay <devnull+david.ixit.cz@kernel.org>
+Subject: [PATCH 00/12] Make Samsung SOFEF00 DDIC and panel work
+Date: Tue, 04 Nov 2025 23:16:08 +0100
+Message-Id: <20251104-sofef00-rebuild-v1-0-dfcfa17eb176@ixit.cz>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] MAINTAINERS: Add Akhil as a reviewer for the Adreno
- driver
-To: Rob Clark <robin.clark@oss.qualcomm.com>, dri-devel@lists.freedesktop.org
-Cc: linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
-        open list <linux-kernel@vger.kernel.org>
-References: <20251104220245.240480-1-robin.clark@oss.qualcomm.com>
-Content-Language: en-US
-From: Akhil P Oommen <akhilpo@oss.qualcomm.com>
-In-Reply-To: <20251104220245.240480-1-robin.clark@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-Authority-Analysis: v=2.4 cv=Uv5u9uwB c=1 sm=1 tr=0 ts=690a7aed cx=c_pps
- a=m5Vt/hrsBiPMCU0y4gIsQw==:117 a=oSIXvc0h2ZBec1W313aPdA==:17
- a=IkcTkHD0fZMA:10 a=6UeiqGixMTsA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=EUspDBNiAAAA:8 a=VwQbUJbxAAAA:8 a=e5mUnYsNAAAA:8
- a=V8cJkdWAq56nonIdhLQA:9 a=QEXdDO2ut3YA:10 a=IoOABgeZipijB_acs4fv:22
- a=Vxmtnl_E_bksehYqCbjh:22
-X-Proofpoint-ORIG-GUID: QkAXvzLjJyn2-JW_kcQugyLA12J3o7pF
-X-Proofpoint-GUID: QkAXvzLjJyn2-JW_kcQugyLA12J3o7pF
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMTA0MDE4NyBTYWx0ZWRfX2yvD/qMfvzGa
- RiifZsmnZNZYY9U77vL/29lReXUO6gza2rVwar4y7Xq4MoWdrdyqtxlaHw8Hk7SYPDl72lM1tc1
- ReIUOJh+HX7EDisGgimvRfcCPeSX46Pth5EAFUci8eOyG7iia4VqDysaH4nE9iRx2R5O0iH+LPF
- c90kkaxzzWdqo1BiUnY2lRiP2oSKxB3IpArJqJUYPnV6CeOx/1B6cNIYqE+icN+PXm7yV2eM2sS
- 6fevPp2AW9Zd3MgNgiyxdUNaH4C9AHLGuXVxWVRy4M0i2Nt4ZoCqIIzTe8PqsG9aszPT9/jdcOr
- 4JDgfJ+q9UUm60o3+EWPDFufHotQJfxPQ0KhFQntR39x9eME4nDm75pigoxLZHcKuYsZGz3ygq4
- y1+5CCFoUF8iI4xD4pnNbHi6SkNcgg==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
- definitions=2025-11-04_04,2025-11-03_03,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 impostorscore=0 priorityscore=1501 lowpriorityscore=0
- bulkscore=0 spamscore=0 clxscore=1015 adultscore=0 phishscore=0
- suspectscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2510240001
- definitions=main-2511040187
+X-B4-Tracking: v=1; b=H4sIACh7CmkC/22Oy4oCMRBFf6Wp9QQq76R/ZXCRTqo0oPZM0oog/
+ rtBNy5cngvncO/QqVXqME93aHStva7nAfJngnxI5z2JWgaDQmWlRCP6ysSIotFyqcci0GTOjlw
+ gL2FYf4243l7F392bG/1fRnh7j7CkTiKvp1Pd5kk5FWxAHxMXckU7n0mXRQadvSkhGZ2Qgmb4P
+ DS0cQej8qIfa6E2cq1R3kTRxkQMxpdo56v8bmnRHWnO6oZScLQWl6AU0zAc7B6PJ2+1YGAVAQA
+ A
+X-Change-ID: 20251104-sofef00-rebuild-04cfc6e68e71
+To: Neil Armstrong <neil.armstrong@linaro.org>, 
+ Jessica Zhang <jessica.zhang@oss.qualcomm.com>, 
+ Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, 
+ Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>, 
+ David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, 
+ Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>, 
+ Thierry Reding <thierry.reding@gmail.com>, Sam Ravnborg <sam@ravnborg.org>, 
+ Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konradybcio@kernel.org>, 
+ Casey Connolly <casey.connolly@linaro.org>
+Cc: dri-devel@lists.freedesktop.org, devicetree@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+ phone-devel@vger.kernel.org, David Heidelberg <david@ixit.cz>
+X-Mailer: b4 0.14.3
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2701; i=david@ixit.cz;
+ h=from:subject:message-id;
+ bh=PMJI57pPFLnWADx4D5rtUwHi6yehpBQw9oto6JRqah0=;
+ b=owEBbQKS/ZANAwAIAWACP8TTSSByAcsmYgBpCnsrxoAimsOkpxj4oSSZ6MFZZOoxCgpdgJRR4
+ M5DBQ9mDOGJAjMEAAEIAB0WIQTXegnP7twrvVOnBHRgAj/E00kgcgUCaQp7KwAKCRBgAj/E00kg
+ cqbkD/4zeuTVk0oTgR7ncgLAK4OcDWd+0qy4jEBq/xz83o4LxkkXSFp/PJX8WsA6z2//9PK87Zw
+ gLUT1inO7eXQGtvxU/Oq+1lu3GqMn1NmfKlmAOvJEanzR/jAF1mJYHshlp/oDOoYmuRvYxkkxQD
+ zOKjgMIC4OldFy0e+6PPvWTwIZbP5Q+CRxfoqmlB3GxeC07JbuMudoby3Cy5QETK8c3S4H7L0Bu
+ M86AxsfeurNoiR7MGr3Z4/U6rsiHmbwXd+L7cnuSBh4wWmEKE012WQTtlD3yKmZvlYzNu8ikeb0
+ U5S078YoGEf6JKZBtT4auYoq5wpV7OmUskB76AnEGq4RizDGieRyqd5jJyOSOnypGivlwlNoQep
+ TivgQpupnoBoDj+OD+u6V8tFAsdxFTJ05Rmb0Wnoq/zQUkiE62P8nDuMJanYGw6JpnjofQDhwEX
+ 0M21ZNRixERwbtQBReCq7jDXGxoJpGJbg+r2jWnt78MTJPUDqZiMFtO4UPfc7w7kw/njWUU9aN9
+ 8M7hXMiE/4Ul7cXm46ZQhI339P5Yn8T63TZu9+25J2V9S6Oi3qdVJuJiQIYbg1bluGAqgABHYNL
+ /pCVDEh2jTlIkpoZm7wwQqZxLCsu3L0l9MWjG0xFijqXfh6DxZQ82pq6LglmsgjtJkFfgVXxOmr
+ 6hmn0fDMGPBNGJA==
+X-Developer-Key: i=david@ixit.cz; a=openpgp;
+ fpr=D77A09CFEEDC2BBD53A7047460023FC4D3492072
+X-Endpoint-Received: by B4 Relay for david@ixit.cz/default with auth_id=355
+X-Original-From: David Heidelberg <david@ixit.cz>
+Reply-To: david@ixit.cz
 
-On 11/5/2025 3:32 AM, Rob Clark wrote:
-> Akhil should be getting tagged to review GPU patches.
-> 
-> Cc: Akhil P Oommen <akhilpo@oss.qualcomm.com>
-> Signed-off-by: Rob Clark <robin.clark@oss.qualcomm.com>
+This DDIC is essential for panels used in OnePlus 6 and Pixel 3a XL
+(SDC variant). With proper support, all downstream patches in
+sdm845-mainline and sdm670-mainline can be dropped.
 
-Acked-by: Akhil P Oommen <akhilpo@oss.qualcomm.com>
+The mainline driver was broken so far, and with my recent introduction
+of S6E3FC2X01 driver, I had to "break it even more" due to OnePlus 6
+common device-tree changes which defined all the regulators and
+corrected properties.
 
--Akhil
+At this moment the first version of the patchset will not include
+Pixel 3a XL (SDC) as no testers yet volunteered.
 
-> ---
->  MAINTAINERS | 1 +
->  1 file changed, 1 insertion(+)
-> 
-> diff --git a/MAINTAINERS b/MAINTAINERS
-> index 1083598bb2b6..033675aab0d0 100644
-> --- a/MAINTAINERS
-> +++ b/MAINTAINERS
-> @@ -7880,6 +7880,7 @@ DRM DRIVER for Qualcomm Adreno GPUs
->  M:	Rob Clark <robin.clark@oss.qualcomm.com>
->  R:	Sean Paul <sean@poorly.run>
->  R:	Konrad Dybcio <konradybcio@kernel.org>
-> +R:	Akhil P Oommen <akhilpo@oss.qualcomm.com>
->  L:	linux-arm-msm@vger.kernel.org
->  L:	dri-devel@lists.freedesktop.org
->  L:	freedreno@lists.freedesktop.org
+The code, including the Pixel 3a XL enhancement can be found at
+  https://gitlab.com/dhxx/linux/-/tree/b4/sofef00-rebuild
+
+Due to some unknown issues with -next-20251103 - 04, the code is based
+on few previous patchsets and v6.18-rc4 (or later).
+
+Signed-off-by: David Heidelberg <david@ixit.cz>
+---
+Casey Connolly (2):
+      drm/panel: sofef00: Add prepare_prev_first flag to drm_panel
+      drm/panel: sofef00: Initialise at 50% brightness
+
+David Heidelberg (10):
+      dt-bindings: panel: Add Samsung SOFEF00 DDIC with panel
+      arch: arm64: qcom: sdm845-enchilada: Specify panel name within the compatible
+      drm/panel: sofef00: Clean up panel description after s6e3fc2x01 removal
+      drm/panel: sofef00: Handle all regulators
+      drm/panel: sofef00: Split sending commands to the enable/disable functions
+      drm/panel: sofef00: Introduce page macro
+      drm/panel: sofef00: Name of compatible should correspond to the panel used
+      drm/panel: sofef00: Simplify get_modes
+      drm/panel: sofef00: Mark the LPM mode always-on
+      drm/panel: sofef00: Non-continuous mode and video burst are supported
+
+ .../bindings/display/panel/panel-simple-dsi.yaml   |  25 +----
+ .../bindings/display/panel/samsung,sofef00.yaml    |  83 ++++++++++++++++
+ .../boot/dts/qcom/sdm845-oneplus-enchilada.dts     |   4 +-
+ drivers/gpu/drm/panel/Kconfig                      |   7 +-
+ drivers/gpu/drm/panel/panel-samsung-sofef00.c      | 104 +++++++++++++--------
+ 5 files changed, 160 insertions(+), 63 deletions(-)
+---
+base-commit: 262858079afde6d367ce3db183c74d8a43a0e83f
+change-id: 20251104-sofef00-rebuild-04cfc6e68e71
+prerequisite-change-id: 20250927-slider-correct-d34490847d95:v1
+prerequisite-patch-id: 5584af5fec387ca2bf83150e39199d93b2af6f41
+prerequisite-change-id: 20250923-s6e3fc2x01-f9550b822fe5:v6
+prerequisite-patch-id: 042e90baee2aea539d39b398ff8a9c9a73a5a248
+prerequisite-patch-id: 0da92dde66527977eb82c542c2b5e0478e011f16
+prerequisite-patch-id: 8ba3d908464e146d4db16b3a562481928753c9b2
+prerequisite-patch-id: 0945cccdc88d640192cf56148e9b661657e11e45
+
+Best regards,
+-- 
+David Heidelberg <david@ixit.cz>
+
 
 
