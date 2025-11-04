@@ -1,61 +1,57 @@
-Return-Path: <linux-arm-msm+bounces-80180-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-80181-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1F70EC2EE46
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 04 Nov 2025 02:55:13 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9B5E2C2EE4C
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 04 Nov 2025 02:55:20 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id B52163B7E71
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Nov 2025 01:55:11 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 5B6233A90DB
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Nov 2025 01:55:19 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2E1F423EA89;
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A4C1423F41A;
 	Tue,  4 Nov 2025 01:54:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="C2TXhMk4"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="pd57uYT+"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0357223E23C;
-	Tue,  4 Nov 2025 01:54:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E13B23EAB4;
+	Tue,  4 Nov 2025 01:54:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762221290; cv=none; b=XNpLNUHxHpNelZBRWJBLdStk+RzWBe+ZEyrZhv8vty3h6XogN2fgrF++arVsOHn/KJyTObjG8AeZdYpozo7dh8S+bcy57a58QjXitqASBC2Y/uiqZmI4DkbV/JLkEaJknzmh/YkcbPAGcepJ1oWO91B6q4zgKdUyUwPrMpntdoQ=
+	t=1762221290; cv=none; b=NAkPsj//pYsUF2Rgn4FMXzy8Su2/2I87eRYJUnOA91tuDa/j+SesZcUeV6K8fIOFfMNqwsEqS3tZ0yCkiD4GhRVnpjqWtU4XXx/2KLz6VUYFOvS2m1y7ecs13VY/yeNB9bWAYS8w3iex0nwnPAsmP/SXRWKkILOrOOL4cRjZN14=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1762221290; c=relaxed/simple;
-	bh=8FIBRaWo2y3qLnQKSIxXDNvqE2Ltb2MI0B+CQ3lAMOY=;
+	bh=uQZpVN4QkBkHC6jV+xJlO6QfMZPtvKIWd5EJJUtgIMs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ZL+qV4PeBsrvnlIcC54tV4D+vBhdNXcyWMPawS/u71HlMMfSyz5Geff03/eErKfReK2G8MWz7O83/FzqI806SAk02eYZVILe0vhGnSpDZM3IvT2UVDsvAKIE8YspA1J/Sni5mdmGrPUbsrppxEOWOStVdSTfBuTpoPM+RFHnVNc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=C2TXhMk4; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4F8FC19421;
-	Tue,  4 Nov 2025 01:54:48 +0000 (UTC)
+	 MIME-Version:Content-Type; b=gNX/9FZDzJlrp4HgDdTnm4yHriAFeVFtQGPqRiRSr8bEXzh7jk+vrOx0eaUj/3hcLTMin4XYdTWQnnuV501B0CWn+SIUrUvHWsforjzPW9idza9+ZbDFoWq87ydB0aJpDSMIsI6L/O84pNUgob0cDX4IYrMXfgmAS39ZaC8/dUw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=pd57uYT+; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8B82C116C6;
+	Tue,  4 Nov 2025 01:54:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1762221289;
-	bh=8FIBRaWo2y3qLnQKSIxXDNvqE2Ltb2MI0B+CQ3lAMOY=;
+	s=k20201202; t=1762221290;
+	bh=uQZpVN4QkBkHC6jV+xJlO6QfMZPtvKIWd5EJJUtgIMs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=C2TXhMk46qojaU7uRGh7Telw8cTNkIYOY2z3uhPcCM2DnB9k5Cy1iLFtq80SPkEpP
-	 0MbQb23T1t6BkcYV38l9hZjHoDmCb/IIR1Vzzf4hocB4TXVMbL3xZ7mH+Hd9zuyTb9
-	 Hz8Jv5XWAtsVjpqmV0TRxmCb1c+xVbWV1v4r9QG1NOe1wYTrRMyqGFM0sxczosVZTB
-	 VpwCe4iyjJtprZXr1s+dUd1kYiEnYfik7jszg4QRrF+7OEQmnX0ZtnARKO5SV0Mtwq
-	 j113c2L0xoEuCZYuuxin3Ma7LayXjiXGHmaxcjdj+00XReB4cwP6sHsREmAV1NfPso
-	 HW8kxJuLSJatg==
+	b=pd57uYT+38CQtlq5Hi2vXoGDPbN/RGvY0HRvMHMnc1cYIPcgVuGIBKiEnVaLl4ZEl
+	 vxdSzZamqybEcCpsuMSuRT7MdjKDis1wyHmSV8FONEmykE4xOdp14nG95fIWYZdHV1
+	 Uw4YDYUT8qwJYl1WQUXu2TCVXuTcfdEdqluyTE15LTSkz3qEoS+VBNxdoZZ9a8VCz/
+	 7pBQh3d1IQb2/iwOZmefEMWj/3V7qA7Md2vC8BEOctQXqTEjCjaX8vCDTWsJ6ZHDMI
+	 U1X81Q1vfGG0Aqt6v+oALXjLfEXm9tL1m8dxhQbhO8RqJu/tvMNdQovLR26yGm3pha
+	 cDY4RSliUU28w==
 From: Bjorn Andersson <andersson@kernel.org>
-To: Konrad Dybcio <konradybcio@kernel.org>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Komal Bajaj <komal.bajaj@oss.qualcomm.com>
+To: konradybcio@kernel.org,
+	Neeraj Soni <neeraj.soni@oss.qualcomm.com>
 Cc: linux-arm-msm@vger.kernel.org,
-	devicetree@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 0/2] Add Qualcomm QCS6490 SoC to socinfo
-Date: Mon,  3 Nov 2025 19:58:15 -0600
-Message-ID: <176222149539.1132260.15372306128869633795.b4-ty@kernel.org>
+Subject: Re: [PATCH v3] soc: qcom: ice: Add HWKM v1 support for wrapped keys
+Date: Mon,  3 Nov 2025 19:58:16 -0600
+Message-ID: <176222149538.1132260.9122814994642806453.b4-ty@kernel.org>
 X-Mailer: git-send-email 2.51.0
-In-Reply-To: <20251103-qcs6490_soc_id-v1-0-c139dd1e32c8@oss.qualcomm.com>
-References: <20251103-qcs6490_soc_id-v1-0-c139dd1e32c8@oss.qualcomm.com>
+In-Reply-To: <20251030161012.3391239-1-neeraj.soni@oss.qualcomm.com>
+References: <20251030161012.3391239-1-neeraj.soni@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -66,17 +62,20 @@ Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 
 
-On Mon, 03 Nov 2025 16:53:09 +0530, Komal Bajaj wrote:
-> Add SoC ID for QCS6490 to socinfo.
+On Thu, 30 Oct 2025 21:40:12 +0530, Neeraj Soni wrote:
+> HWKM v1 and v2 differ slightly in wrapped key size and the bit fields for
+> certain status registers and operating mode (legacy or standard).
 > 
+> Add support to select HWKM version based on the major and minor revisions.
+> Use this HWKM version to select wrapped key size and to configure the bit
+> fields in registers for operating modes and hardware status.
 > 
+> [...]
 
 Applied, thanks!
 
-[1/2] dt-bindings: arm: qcom,ids: Add SoC ID for QCS6490
-      commit: 98c92de40f6ab05452f8919cc2ff800ade5dd9a3
-[2/2] soc: qcom: socinfo: Add SoC ID for QCS6490
-      commit: 40360803622c180747096aa2f165a02fef3628a5
+[1/1] soc: qcom: ice: Add HWKM v1 support for wrapped keys
+      commit: d92ebadda5e30085e5294935e7c1c35801752cbd
 
 Best regards,
 -- 
