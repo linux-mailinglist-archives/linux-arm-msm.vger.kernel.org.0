@@ -1,55 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-80274-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-80275-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id EA9ACC307CC
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 04 Nov 2025 11:24:51 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 97DA0C308C9
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 04 Nov 2025 11:39:57 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 66156188941A
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Nov 2025 10:25:07 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 346773BB233
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Nov 2025 10:39:56 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BA156316191;
-	Tue,  4 Nov 2025 10:24:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8CE892D5C67;
+	Tue,  4 Nov 2025 10:39:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b="uwu7EiHC"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="SlNk83dt"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtpout-02.galae.net (smtpout-02.galae.net [185.246.84.56])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60789314A7F;
-	Tue,  4 Nov 2025 10:24:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.246.84.56
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57D6527E04C;
+	Tue,  4 Nov 2025 10:39:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762251871; cv=none; b=oL3vJpMcSF3AL3LxXPq7gE93u12T3Zo1tvtnQiGoxtQWENmCqJwb/5496m0i7ina5G18IKBzWtyMeWBJPFYdSkIUQTi//WtXYL0mFqPmmj3yhTtQAk7o2SeCtZ3YvlQaq9et8kTrkV3Ok8FTvuqd88i6bpINMQBhr9DPXVKHhjA=
+	t=1762252794; cv=none; b=UGZfcRROW5h4kDe6Al9rA8eUPPT64W8J28hvtRSNWNwSAqq3U8utCTRpzwS82ekJtXYI5ImCnR0pGZ2fbfBPGHpBmE0AObcHqkgsiOQqWKP2CFMs5KRKXnBFpwCWNQlmdO2NgNtabFEMskoQtfs4Gi2wbbzgA8zSU8BXNJM0qZo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762251871; c=relaxed/simple;
-	bh=TFaGxltno5WwV2KBpCBbRWY3IyHfrcyUkCjGl96saNM=;
+	s=arc-20240116; t=1762252794; c=relaxed/simple;
+	bh=bVSOpVrl2E+aD2iwJShLNXwchdC6N4vvdH0xbq0Wv7Q=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Nq69lm5F+wGRNu9zqb4ejj4s9U5GkDfeVHFPWGVHsWXHh3ekXBVKablAVJA90NyfcsBqBRy3pF7ICPbtQj5W2a3EB/Us7xtwSmgKhjsS1AMz5YOAkwIRRPJ9157X9pFyeoKI5mjI9F5ZMWaCIFEikqKGhQVW9GRYMgfFEEmUmao=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com; spf=pass smtp.mailfrom=bootlin.com; dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b=uwu7EiHC; arc=none smtp.client-ip=185.246.84.56
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bootlin.com
-Received: from smtpout-01.galae.net (smtpout-01.galae.net [212.83.139.233])
-	by smtpout-02.galae.net (Postfix) with ESMTPS id 6A9991A1871;
-	Tue,  4 Nov 2025 10:24:26 +0000 (UTC)
-Received: from mail.galae.net (mail.galae.net [212.83.136.155])
-	by smtpout-01.galae.net (Postfix) with ESMTPS id 30128606EF;
-	Tue,  4 Nov 2025 10:24:26 +0000 (UTC)
-Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon) with ESMTPSA id F3E03102F1CE8;
-	Tue,  4 Nov 2025 11:24:17 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=dkim;
-	t=1762251864; h=from:subject:date:message-id:to:cc:mime-version:content-type:
-	 content-transfer-encoding:content-language:in-reply-to:references:autocrypt;
-	bh=Yh/SOsjRqtgPLuq8QRVnn/lrGryn5Z5zYSTW9+Wd1lE=;
-	b=uwu7EiHCDvkOi+ZlaNqDmWa7sDjt1+KNUXllXXwIo7BBazhl8rSoPx6BVnpH9z+jfnu3AN
-	M704y1JCBh8jUjN0L1cESmxgAsuL/HG1dpnA8pkxVWp+V+NUYpIsRVSEdL1KPdP6GhPMtM
-	NMZcL50+dzYfv1YP7uz27gLG9O83Kv4TwoM5Vz1q/0Sgwyl5sDhiNrZVhWiFwVL0miKigv
-	QCIJ805towdU/JbBzlnj80L6OK/kU++DuYG/iG4h/SXHDnQjUn8N2K6QbLxM9f6YFvJw65
-	6/5Bic3PvCFetE3+rKQiGGPaLwxTnrpCFS0pnzFfB44qrYnmLbrU8KLeS4N4vg==
-Message-ID: <d6545844-f7f6-4714-927f-cf985dc50a54@bootlin.com>
-Date: Tue, 4 Nov 2025 11:24:17 +0100
+	 In-Reply-To:Content-Type; b=pHnstrxNg9yS17ADWxmx1s9gfBvrCfTsubepi5uSg9zSLUcpJJ8DUmAq6YxaEc3OyDHvBxN7XJe3PA7c4JRkVvF85U7UabNrcAMR6NsLrA+52/S/eWfyDdRnZV6Xw3DgEp2PkrsFCgevBXj8qf0GUGHN0ix/zN6QrtFHJJ/Lb7c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=SlNk83dt; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4DC6C116B1;
+	Tue,  4 Nov 2025 10:39:51 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1762252794;
+	bh=bVSOpVrl2E+aD2iwJShLNXwchdC6N4vvdH0xbq0Wv7Q=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=SlNk83dt1Smbc3hLuSAOFwWkfmmmmga4QZ2/iN/3hvrii36ah911xR1PZR6CrIzMW
+	 bZw4faGQ5Y7SCpkJqDpd5uAX1CHrdxz7S5+rPLO3U6mHZy06WdlubrhGRZIXF8WJrD
+	 7RHzF3sRp7Iez191RHjK0bMbNeIKDsYy0CaroJe1tyQvGL6Qc1/PNYmSE6BGlkjdfl
+	 lkycl49PkuqE5g7LvXy4gZC10Vy2odMekVQYQOk/17egZGcFZxQB9IK6WqNYNbO9sz
+	 FmLc0IesnZ3Yr3DHYFgYF9BHORkyuY/hKO6esZwjP5rJWFmz2pIhYx175Z1C9RAVf1
+	 Jl1MhdXrOJ2BQ==
+Message-ID: <0735f540-8085-440c-9c0f-7ac23b52b838@kernel.org>
+Date: Tue, 4 Nov 2025 10:39:50 +0000
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -57,129 +50,157 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/7] drm: writeback: Refactor drm_writeback_connector
- structure
-To: Suraj Kandpal <suraj.kandpal@intel.com>, linux-arm-msm@vger.kernel.org,
- freedreno@lists.freedesktop.org, dri-devel@lists.freedesktop.org,
- intel-xe@lists.freedesktop.org, intel-gfx@lists.freedesktop.org,
- kernel-list@raspberrypi.com, amd-gfx@lists.freedesktop.org,
- linux-kernel@vger.kernel.org, linux-renesas-soc@vger.kernel.org
-Cc: dmitry.baryshkov@oss.qualcomm.com, ankit.k.nautiyal@intel.com,
- arun.r.murthy@intel.com, uma.shankar@intel.com, jani.nikula@intel.com,
- harry.wentland@amd.com, siqueira@igalia.com, alexander.deucher@amd.com,
- christian.koenig@amd.com, airlied@gmail.com, simona@ffwll.ch,
- liviu.dudau@arm.com, maarten.lankhorst@linux.intel.com, mripard@kernel.org,
- robin.clark@oss.qualcomm.com, abhinav.kumar@linux.dev, tzimmermann@suse.de,
- jessica.zhang@oss.qualcomm.com, sean@poorly.run,
- marijn.suijten@somainline.org, laurent.pinchart+renesas@ideasonboard.com,
- mcanal@igalia.com, dave.stevenson@raspberrypi.com,
- tomi.valkeinen+renesas@ideasonboard.com,
- kieran.bingham+renesas@ideasonboard.com
-References: <20251007054528.2900905-1-suraj.kandpal@intel.com>
- <20251007054528.2900905-2-suraj.kandpal@intel.com>
-Content-Language: en-US, fr
-From: Louis Chauvet <louis.chauvet@bootlin.com>
-Autocrypt: addr=louis.chauvet@bootlin.com; keydata=
- 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
-In-Reply-To: <20251007054528.2900905-2-suraj.kandpal@intel.com>
+Subject: Re: [PATCH v3 1/5] media: qcom: iris: Improve format alignment for
+ encoder
+To: Wangao Wang <wangao.wang@oss.qualcomm.com>,
+ Vikash Garodia <vikash.garodia@oss.qualcomm.com>,
+ Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>,
+ Abhinav Kumar <abhinav.kumar@linux.dev>,
+ Mauro Carvalho Chehab <mchehab@kernel.org>
+Cc: linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+ linux-kernel@vger.kernel.org, Neil Armstrong <neil.armstrong@linaro.org>,
+ quic_qiweil@quicinc.com, quic_renjiang@quicinc.com
+References: <20251104-iris_encoder_enhancements-v3-0-63b0c431b4d0@oss.qualcomm.com>
+ <k3umzf0z69-Hbh7jbT-Gjp4pyquNAYVC3VfIXQcdVZstI5FTtcGU_NEgb8l796Z3Cr6Dz0DQ0BoVQQPd4fr6sQ==@protonmail.internalid>
+ <20251104-iris_encoder_enhancements-v3-1-63b0c431b4d0@oss.qualcomm.com>
+From: Bryan O'Donoghue <bod@kernel.org>
+Content-Language: en-US
+In-Reply-To: <20251104-iris_encoder_enhancements-v3-1-63b0c431b4d0@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Last-TLS-Session-Version: TLSv1.3
+Content-Transfer-Encoding: 7bit
 
-
-
-Le 07/10/2025 à 07:45, Suraj Kandpal a écrit :
-> Some drivers cannot work with the current design where the connector
-> is embedded within the drm_writeback_connector such as Intel and
-> some drivers that can get it working end up adding a lot of checks
-> all around the code to check if it's a writeback conenctor or not,
-> this is due to the limitation of inheritance in C.
-> To solve this move the drm_writeback_connector within the
-> drm_connector and remove the drm_connector base which was in
-> drm_writeback_connector. Make this drm_writeback_connector
-> a union with hdmi connector to save memory and since a connector can
-> never be both writeback and hdmi it should serve us well.
-> Do all other required modifications that come with these changes
-> along with addition of new function which returns the drm_connector
-> when drm_writeback_connector is present.
-> Modify drivers using the drm_writeback_connector to
-> allow them to use this connector without breaking them.
-> The drivers modified here are amd, komeda, mali, vc4, vkms,
-> rcar_du, msm
+On 04/11/2025 08:11, Wangao Wang wrote:
+> Add members enc_raw_width, enc_raw_height to the struct iris_inst to
+> support codec alignment requirements.
 > 
-> Signed-off-by: Suraj Kandpal <suraj.kandpal@intel.com>
+> HFI_PROP_CROP_OFFSETS is used to inform the firmware of the region
+> of interest, rather than indicating that the codec supports crop.
+> Therefore, the crop handling has been corrected accordingly.
+> 
+> Tested-by: Neil Armstrong <neil.armstrong@linaro.org> # on SM8650-HDK
+> Signed-off-by: Wangao Wang <wangao.wang@oss.qualcomm.com>
 > ---
-> V1 -> V2: Use &connector->writeback, make commit message imperative (Dmitry)
-> ---
+>   .../platform/qcom/iris/iris_hfi_gen2_command.c     | 23 ++++++++++++++++------
+>   drivers/media/platform/qcom/iris/iris_instance.h   |  4 ++++
+>   drivers/media/platform/qcom/iris/iris_venc.c       | 10 ++++++++--
+>   3 files changed, 29 insertions(+), 8 deletions(-)
+> 
+> diff --git a/drivers/media/platform/qcom/iris/iris_hfi_gen2_command.c b/drivers/media/platform/qcom/iris/iris_hfi_gen2_command.c
+> index 4ce71a14250832440099e4cf3835b4aedfb749e8..2469e027706fb6c9c0b95be11109c3cd0f8d70ce 100644
+> --- a/drivers/media/platform/qcom/iris/iris_hfi_gen2_command.c
+> +++ b/drivers/media/platform/qcom/iris/iris_hfi_gen2_command.c
+> @@ -168,8 +168,7 @@ static int iris_hfi_gen2_session_set_property(struct iris_inst *inst, u32 packet
+> 
+>   static int iris_hfi_gen2_set_raw_resolution(struct iris_inst *inst, u32 plane)
+>   {
+> -	u32 resolution = inst->fmt_src->fmt.pix_mp.width << 16 |
+> -		inst->fmt_src->fmt.pix_mp.height;
+> +	u32 resolution = inst->enc_raw_width << 16 | inst->enc_raw_height;
+>   	u32 port = iris_hfi_gen2_get_port(inst, plane);
+> 
+>   	return iris_hfi_gen2_session_set_property(inst,
+> @@ -216,8 +215,11 @@ static int iris_hfi_gen2_set_crop_offsets(struct iris_inst *inst, u32 plane)
+>   	u32 port = iris_hfi_gen2_get_port(inst, plane);
+>   	u32 bottom_offset, right_offset;
+>   	u32 left_offset, top_offset;
+> +	u32 codec_align;
+>   	u32 payload[2];
+> 
+> +	codec_align = inst->codec == V4L2_PIX_FMT_HEVC ? 32 : 16;
+> +
+>   	if (inst->domain == DECODER) {
+>   		if (V4L2_TYPE_IS_OUTPUT(plane)) {
+>   			bottom_offset = (inst->fmt_src->fmt.pix_mp.height - inst->crop.height);
+> @@ -231,10 +233,19 @@ static int iris_hfi_gen2_set_crop_offsets(struct iris_inst *inst, u32 plane)
+>   			top_offset = inst->compose.top;
+>   		}
+>   	} else {
+> -		bottom_offset = (inst->fmt_src->fmt.pix_mp.height - inst->crop.height);
+> -		right_offset = (inst->fmt_src->fmt.pix_mp.width - inst->crop.width);
+> -		left_offset = inst->crop.left;
+> -		top_offset = inst->crop.top;
+> +		if (V4L2_TYPE_IS_OUTPUT(plane)) {
+> +			bottom_offset = (inst->enc_raw_height - inst->crop.height);
+> +			right_offset = (inst->enc_raw_width - inst->crop.width);
+> +			left_offset = inst->crop.left;
+> +			top_offset = inst->crop.top;
+> +		} else {
+> +			bottom_offset = (ALIGN(inst->enc_raw_height, codec_align) -
+> +					inst->enc_raw_height);
+> +			right_offset = (ALIGN(inst->enc_raw_width, codec_align) -
+> +					inst->enc_raw_width);
+> +			left_offset = 0;
+> +			top_offset = 0;
+> +		}
+>   	}
+> 
+>   	payload[0] = FIELD_PREP(GENMASK(31, 16), left_offset) | top_offset;
+> diff --git a/drivers/media/platform/qcom/iris/iris_instance.h b/drivers/media/platform/qcom/iris/iris_instance.h
+> index 5982d7adefeab80905478b32cddba7bd4651a691..fbae1662947df73bb3d10b7892839fa1076b7e61 100644
+> --- a/drivers/media/platform/qcom/iris/iris_instance.h
+> +++ b/drivers/media/platform/qcom/iris/iris_instance.h
+> @@ -64,6 +64,8 @@ struct iris_fmt {
+>    * @frame_rate: frame rate of current instance
+>    * @operating_rate: operating rate of current instance
+>    * @hfi_rc_type: rate control type
+> + * @enc_raw_width: raw image width for encoder instance
+> + * @enc_raw_height: raw image height for encoder instance
+>    */
+> 
+>   struct iris_inst {
+> @@ -102,6 +104,8 @@ struct iris_inst {
+>   	u32				frame_rate;
+>   	u32				operating_rate;
+>   	u32				hfi_rc_type;
+> +	u32				enc_raw_width;
+> +	u32				enc_raw_height;
+>   };
+> 
+>   #endif
+> diff --git a/drivers/media/platform/qcom/iris/iris_venc.c b/drivers/media/platform/qcom/iris/iris_venc.c
+> index 099bd5ed4ae0294725860305254c4cad1ec88d7e..7ad747d2272f029e69a56572a188a032f898a3fb 100644
+> --- a/drivers/media/platform/qcom/iris/iris_venc.c
+> +++ b/drivers/media/platform/qcom/iris/iris_venc.c
+> @@ -62,12 +62,15 @@ int iris_venc_inst_init(struct iris_inst *inst)
+> 
+>   	inst->crop.left = 0;
+>   	inst->crop.top = 0;
+> -	inst->crop.width = f->fmt.pix_mp.width;
+> -	inst->crop.height = f->fmt.pix_mp.height;
+> +	inst->crop.width = DEFAULT_WIDTH;
+> +	inst->crop.height = DEFAULT_HEIGHT;
+> 
+>   	inst->operating_rate = DEFAULT_FPS;
+>   	inst->frame_rate = DEFAULT_FPS;
+> 
+> +	inst->enc_raw_width = DEFAULT_WIDTH;
+> +	inst->enc_raw_height = DEFAULT_HEIGHT;
+> +
+>   	memcpy(&inst->fw_caps[0], &core->inst_fw_caps_enc[0],
+>   	       INST_FW_CAP_MAX * sizeof(struct platform_inst_fw_cap));
+> 
+> @@ -249,6 +252,9 @@ static int iris_venc_s_fmt_input(struct iris_inst *inst, struct v4l2_format *f)
+>   	inst->buffers[BUF_INPUT].min_count = iris_vpu_buf_count(inst, BUF_INPUT);
+>   	inst->buffers[BUF_INPUT].size = fmt->fmt.pix_mp.plane_fmt[0].sizeimage;
+> 
+> +	inst->enc_raw_width = f->fmt.pix_mp.width;
+> +	inst->enc_raw_height = f->fmt.pix_mp.height;
+> +
+>   	if (f->fmt.pix_mp.width != inst->crop.width ||
+>   	    f->fmt.pix_mp.height != inst->crop.height) {
+>   		inst->crop.top = 0;
+> 
+> --
+> 2.43.0
+> 
 
-[...]
+To me reading this patch you seem to have three or four different 
+alignment changed bunched into one.
 
->   drivers/gpu/drm/vkms/vkms_composer.c          |  2 +-
->   drivers/gpu/drm/vkms/vkms_drv.h               |  2 +-
->   drivers/gpu/drm/vkms/vkms_writeback.c         | 13 ++--
+I would prefer to see more granular and specific patches for each change.
 
-For the VKMS part:
+Please break this up into more bite size chunks.
 
-Reviewed-by: Louis Chauvet <louis.chauvet@bootlin.com>
-
-Thanks,
-Louis Chauvet
-
---
-Louis Chauvet, Bootlin
-Embedded Linux and Kernel engineering
-https://bootlin.com
-
+---
+bod
 
