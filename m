@@ -1,110 +1,56 @@
-Return-Path: <linux-arm-msm+bounces-80190-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-80188-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [142.0.200.124])
-	by mail.lfdr.de (Postfix) with ESMTPS id E9CD2C2EF35
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 04 Nov 2025 03:20:41 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 5CE28C2EF0E
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 04 Nov 2025 03:18:42 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id AD00A4E5973
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Nov 2025 02:20:40 +0000 (UTC)
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 55F114E5E4F
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Nov 2025 02:18:41 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2605323EA89;
-	Tue,  4 Nov 2025 02:20:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 867D823C50F;
+	Tue,  4 Nov 2025 02:18:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="o2D4Ognc";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="A1IfgGBX"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="adjU0mbr"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9EB121DE4DC
-	for <linux-arm-msm@vger.kernel.org>; Tue,  4 Nov 2025 02:20:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C5601DE4DC;
+	Tue,  4 Nov 2025 02:18:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762222840; cv=none; b=qguFDEsARnlIoaP9L7XiO/GLK8yqD4Z1ffSG/rYs7ojAVOoEtdenI2lHulICHw0nOXLu+dlwHso5WdzNhK4Sq4Tpi5H6QH/4N3hOuBEq3MOrGlRTw5+jw0oDKxitmmEsRCf76OgZwg+lqm9j+6elrJfQ5afXIfZ4aLA10FgPl30=
+	t=1762222718; cv=none; b=LB2Ro2NblBqtntsNAPejlNtu8eWUQ7D7aNCYihVbAdLunw/MyD6zru6m683XuuZVUgfV24TnqXuaosb/xV7aiHyL8nT8T4+YiQcS2bg7piUqw39Ot9Z0ngjqGHgY2zMi3t43UOCiol3fr1ieiLRkgUq5neAAHBWWvQmde1vUwDE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762222840; c=relaxed/simple;
-	bh=ZRHc12eMCiH3WZmqYEuImQ2rsYDOuFv+OK5STVVSVNE=;
+	s=arc-20240116; t=1762222718; c=relaxed/simple;
+	bh=FGOnnk3YAcN/+bFQPXCqXStUWdrCxyOR6xZUcaTRVdU=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=JNVD5lQqRGPF41cPzxslxbhXTU3tWNB6MVQZMxuTcAXnOaxWDUc7mbiIRhlCZihaP6F2B/4KQUzSnZZ08vbV1tv8UDSMqA2YqJ/kMD0eT4xRxFYIG9rBYXPg73PIpzFNbTfHX6lxoHvIm1eZP1oUHELRvRadpmwzKbt0LfOIDR0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=o2D4Ognc; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=A1IfgGBX; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 5A3H6QSs3693393
-	for <linux-arm-msm@vger.kernel.org>; Tue, 4 Nov 2025 02:20:38 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to; s=qcppdkim1; bh=Smv4w59hwrUUsoCZ4mHIORjS
-	htFGNZtEAs7OQXRjdlo=; b=o2D4OgncJ2olf0YzZLd52pbXlgbAXhMRZORbf7Ea
-	5pjzrR6Ms8M6416OTi2UQslIlyyAjJkxK+1pKNSZmYQ/nMU3RZjxmnG06vu0fzMO
-	AwTVxyL7vIPqG0BBTMmltXpaoLLf3hBu8Nv34hXpJiwv2lHstkLyWN2AibzMGZeC
-	Muc+KRMENfipE2IC5hQR//MhC2OdW/2Jn+L0AtRSNIgUczq6/bCo55YBj1l+XBEM
-	jKmbJrwmODqI42Sc+qfQlrxZ+qNs8Cv2XQbWlkJMcPlFWJovvjlhlyOTjhdBFrm8
-	B634GSiTWeLNREDoFJHItCchJyjDZiewB74P7rAyTWj0Nw==
-Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com [209.85.222.200])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4a70gm9a6m-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Tue, 04 Nov 2025 02:20:37 +0000 (GMT)
-Received: by mail-qk1-f200.google.com with SMTP id af79cd13be357-8a54cd09b97so2171977785a.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 03 Nov 2025 18:20:37 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1762222837; x=1762827637; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=Smv4w59hwrUUsoCZ4mHIORjShtFGNZtEAs7OQXRjdlo=;
-        b=A1IfgGBXYL4q9BBPchsJgoUGljGcWCdiXAWCrdXCh1oEN2rOJCE37a1L4m5bbF6lYF
-         5OZ6brIK+qf6vdsuzVg/kJEaEuOTK98a9DAytK3+9nAmIc1vBjHqT+rDzxTsle6vE4RN
-         i5wcbl7xlUIkZggodtBOICc0elV5xqmtccWcZrXDX37iPFgaQEZId9FoQ+4No6WGBYga
-         I5u0rpRp6K0Zty5zLmGnF+atqfXbGTynvzCWuhcnHqcfOZn8+GgfQN/IcMf9et2hIO01
-         7jrAi+sNiLu+cqiP0IwNZpctFO4ZBlBsZfZ9Y8SOUX3rkLHLBB8/dy0CCuNMmpzQZr73
-         TkkA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1762222837; x=1762827637;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=Smv4w59hwrUUsoCZ4mHIORjShtFGNZtEAs7OQXRjdlo=;
-        b=AgzX5J7BMVuqMGmw9FNUfbRZJx4SiyqX38nbDyD6sa7++PE3BwH20NHYKc7mAw4vkp
-         Uf21rqrJRd5sSuBszaDwR6LkUXxlBM0s64B/w+6mY4gmT0MUVu8/XTa+p1DZFd5DDpB7
-         zubM8jr1oJp4IQbFEJWvASJzYjal/vaEtLg9dgp/ILg/DOq8KDor9YkrHN4ImVFpSXPt
-         dAi6F47KpY/9Q6HcRC1yEdfYJvvPU7ZrEPmZB0oE8FHTlQh5N5/2kmg1tOFFUpHQvgta
-         q1FKQ0B9HWzu9XX99hXT9dmclptdvA0Ntkn5xErPxJ99XJpkKDz5LD8RFIng4FC4P0Jb
-         4ooQ==
-X-Forwarded-Encrypted: i=1; AJvYcCWK70Bie1eaLVc2IqBw3z9OFSo8FyFNdzUs0nyVDNgfaC2+bHowz3jQYJuoZ7uju1ExfmRjgf9B2p+TicZu@vger.kernel.org
-X-Gm-Message-State: AOJu0YzAX/MJ6bfl1rskgF1MAeISm37GDg2QtE5JJ11XNAl8xa5QRSiB
-	2IFBboaAXyzSruvgfopvy4N9JlqfBNusA3IAfK5nULNfgH3CnzF9j4umhAWzjq3LFreGkeAHMRK
-	WkRJWZq8awjxKjpIsRf3KtN35EG17hof5aqPdCbt2aMQv4oo9fw/h+10Edzxkyr7ziFS5
-X-Gm-Gg: ASbGncvFcYbBE6htuVmjQlIMyyKJtQw6weShGTqCDbdofznOVObTI599ucsXSXP7IYK
-	CW2v9yzg0vUDn7+kPvccO4bfiYcIn8TbmGQZoDNWEN7MQ6bI5qkdlwaiiwIiIugdC3RhtVtE2WJ
-	Rd4QIyWFlpBIDEF9YTXfuiUKMt3s4IiLRFllxkgN/rJueIxkVzbeSXeJM8d0ewtRPKDsJJbsCkn
-	BG6gpDLlkUx7L0EmbtQE7VwaE1nUiEsRCNu1XMXFSz6dybWt+6ihQ6Xc8iFc6wwcqddt7GgJVSO
-	mRt213hwBerkRF6MmNO9cJIULtidsFdFodiGYIk1Zoht5rDBg4hxpGb9q7vxwfoy9Cd8Tcjtm/9
-	i6iTvdlUHW/F4170us+pi8watQ9rJV+ikhdxMnbsmK+ko3G1wCE2tNMJrs6R3Y7+t7ZTiTuFmbx
-	l9L36oYsTo/gJW
-X-Received: by 2002:a05:620a:4450:b0:85e:5fef:86fa with SMTP id af79cd13be357-8ab99498ba0mr1865073385a.28.1762222836837;
-        Mon, 03 Nov 2025 18:20:36 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGSh0oJyfXp/I4QiiOo9v+UZZ5w0epuOXbMS/ogXjwqb82itu/slRbk7NRccoWK4dymtR9Efg==
-X-Received: by 2002:a05:620a:4450:b0:85e:5fef:86fa with SMTP id af79cd13be357-8ab99498ba0mr1865068585a.28.1762222835992;
-        Mon, 03 Nov 2025 18:20:35 -0800 (PST)
-Received: from umbar.lan (2001-14ba-a0c3-3a00-264b-feff-fe8b-be8a.rev.dnainternet.fi. [2001:14ba:a0c3:3a00:264b:feff:fe8b:be8a])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-594343b79bcsm356023e87.47.2025.11.03.18.20.33
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 03 Nov 2025 18:20:34 -0800 (PST)
-Date: Tue, 4 Nov 2025 04:20:32 +0200
-From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+	 Content-Type:Content-Disposition:In-Reply-To; b=SGiknEe1sGymOfXOxK8dgraYIaN3e4OmdJhFWSCA9kjwnVenx8HVKdWUKkciLgdSgx5zF8Amj+1yzraYmMQmrxelbGKRy2AFZXRSskaWGd4i4KL0jZCS3WQqNdDpxOoA/+t1Mf8QTia2/xWSHxkDkFSDTYf2s1h56ZIY2sFxi3c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=adjU0mbr; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C071C4CEE7;
+	Tue,  4 Nov 2025 02:18:37 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1762222718;
+	bh=FGOnnk3YAcN/+bFQPXCqXStUWdrCxyOR6xZUcaTRVdU=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=adjU0mbr7wBKoKUfGhBlXyq4/dxlm9fA6gJ/5DEhKXIm98Obu4VC3O5Gob3Lb/wCA
+	 BoSJbBPVrAt0/ZByTqmjobZusCYYsQnCUUSjNA9JERNIVCPZtt1f2DIAYFTyz3jn4a
+	 TQti+ZdiouG9S8HmIFHyEm8ulNhJ9TapDid+BTKuDbafs/XyijvTrUDCYSMoWvg7kG
+	 f7ZMx8DmFJVM6X/4SUMjNv+Rnizk9zgv6d/WlH4VWe5cXL4Io5FW7GW04IaGlUBh6R
+	 Vc4RPq3W0JdjPitUViIZJ/0nsVI5r3ECCmcM6UbuTfKdDR0hEQHMVhNDOMl51mj7Xf
+	 BoXsUXwc4WTYA==
+Date: Mon, 3 Nov 2025 20:22:10 -0600
+From: Bjorn Andersson <andersson@kernel.org>
 To: Loic Poulain <loic.poulain@oss.qualcomm.com>
-Cc: andersson@kernel.org, konradybcio@kernel.org, robh@kernel.org,
-        krzk+dt@kernel.org, conor+dt@kernel.org, sre@kernel.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-pm@vger.kernel.org
-Subject: Re: [PATCH 5/5] arm64: dts: qcom: qrb2210-rb1: Add support for EDL
- reboot
-Message-ID: <z3uy3kx6qx7tcca3psfocrlkrrtumlqyzivrstyxfhbp6lkxti@eeolpv64365x>
+Cc: konradybcio@kernel.org, robh@kernel.org, krzk+dt@kernel.org, 
+	conor+dt@kernel.org, sre@kernel.org, linux-arm-msm@vger.kernel.org, 
+	devicetree@vger.kernel.org, linux-pm@vger.kernel.org
+Subject: Re: [PATCH 4/5] firmware: qcom: scm: Support for EDL reboot mode
+Message-ID: <t5igalcp5zoxmqzt4p4fcipssjth7zifctj7ta4tkp3uxkvglc@gsdzioqth7zh>
 References: <20251103182006.1158383-1-loic.poulain@oss.qualcomm.com>
- <20251103182006.1158383-6-loic.poulain@oss.qualcomm.com>
+ <20251103182006.1158383-5-loic.poulain@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -113,91 +59,91 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20251103182006.1158383-6-loic.poulain@oss.qualcomm.com>
-X-Proofpoint-ORIG-GUID: Jv8Ovx9s0yaTGHnFtc3WlumVKIZxW3tv
-X-Proofpoint-GUID: Jv8Ovx9s0yaTGHnFtc3WlumVKIZxW3tv
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMTA0MDAxNyBTYWx0ZWRfXyDPMTSQMYdFx
- qaXf3Bx+v2B1eFke25192WCMq1VN/vNuzxbxCJzJoaXkyrZBGnXJP2s6D313b7WXrHrOUEUuakx
- wenSs3Z03iXaOps5DOmVdaU8KvLpriFxQymSvHwYUBb8f+ev8P3plSYCKzPUaNwCcInB/m8odqL
- NGMges0+sqdUujS/vyjx34a7pz4yomJji3HkH3GEOmPWZmfGiIVDAF7DNU7NEPzkrbr1hNMENEK
- z4E7lVdzSUeaTDiXDDYtebseCgXg0z6uU44xEwqohys+VRlR9WDddKQVndcUo7ZksL3Z5mT02v5
- UvJp/Vv1wrL9qmb5CHm+W8FTTwqvMEvUbGQ6F0VzQYfygyBkEVRnSN6mPEx6yXwJ69pK0KGtnoN
- MnjW1J8+SmJT8Zo8W3VpTQGVRIYb8A==
-X-Authority-Analysis: v=2.4 cv=CeMFJbrl c=1 sm=1 tr=0 ts=690962f5 cx=c_pps
- a=hnmNkyzTK/kJ09Xio7VxxA==:117 a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10
- a=6UeiqGixMTsA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=EUspDBNiAAAA:8 a=EJiAk-FnVJfypVwXgQoA:9 a=CjuIK1q_8ugA:10
- a=PEH46H7Ffwr30OY-TuGO:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
- definitions=2025-11-03_06,2025-11-03_03,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 spamscore=0 bulkscore=0 adultscore=0 lowpriorityscore=0
- impostorscore=0 phishscore=0 clxscore=1015 suspectscore=0 malwarescore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2510240001 definitions=main-2511040017
+In-Reply-To: <20251103182006.1158383-5-loic.poulain@oss.qualcomm.com>
 
-On Mon, Nov 03, 2025 at 07:20:06PM +0100, Loic Poulain wrote:
-> EDL reboot mode can be configured via qcom-scm, enabling the platform
-> to enter Emergency Download Mode for recovery purposes. Additionally,
-> we enable PMIC-driven warm reset as the RB1 platform's PSCI interface
-> lacks support for warm reset.
+On Mon, Nov 03, 2025 at 07:20:05PM +0100, Loic Poulain wrote:
+> When the dload register is specified, it can also be used to boot the
+> platform into Emergency Download Mode (EDL). This mode is implemented
+> by the primary ROM bootloader and provides a recovery mechanism.
 > 
 > Signed-off-by: Loic Poulain <loic.poulain@oss.qualcomm.com>
 > ---
->  arch/arm64/boot/dts/qcom/pm4125.dtsi     | 2 +-
->  arch/arm64/boot/dts/qcom/qrb2210-rb1.dts | 9 +++++++++
->  2 files changed, 10 insertions(+), 1 deletion(-)
+>  drivers/firmware/qcom/qcom_scm.c | 22 ++++++++++++++++++++++
+>  1 file changed, 22 insertions(+)
 > 
-> diff --git a/arch/arm64/boot/dts/qcom/pm4125.dtsi b/arch/arm64/boot/dts/qcom/pm4125.dtsi
-> index cf8c822e80ce..5d84a3250481 100644
-> --- a/arch/arm64/boot/dts/qcom/pm4125.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/pm4125.dtsi
-> @@ -15,7 +15,7 @@ pmic@0 {
->  		#address-cells = <1>;
->  		#size-cells = <0>;
+> diff --git a/drivers/firmware/qcom/qcom_scm.c b/drivers/firmware/qcom/qcom_scm.c
+> index 26cd0458aacd..e697ef14619f 100644
+> --- a/drivers/firmware/qcom/qcom_scm.c
+> +++ b/drivers/firmware/qcom/qcom_scm.c
+> @@ -26,6 +26,7 @@
+>  #include <linux/of_platform.h>
+>  #include <linux/of_reserved_mem.h>
+>  #include <linux/platform_device.h>
+> +#include <linux/reboot-mode.h>
+>  #include <linux/reset-controller.h>
+>  #include <linux/sizes.h>
+>  #include <linux/types.h>
+> @@ -43,6 +44,7 @@ struct qcom_scm {
+>  	struct icc_path *path;
+>  	struct completion waitq_comp;
+>  	struct reset_controller_dev reset;
+> +	struct reboot_mode_driver reboot_mode;
 >  
-> -		pon@800 {
-> +		pon: pon@800 {
->  			compatible = "qcom,pm8916-pon";
->  			reg = <0x800>;
+>  	/* control access to the interconnect path */
+>  	struct mutex scm_bw_lock;
+> @@ -130,6 +132,8 @@ static const u8 qcom_scm_cpu_warm_bits[QCOM_SCM_BOOT_MAX_CPUS] = {
+>  #define QCOM_DLOAD_MINIDUMP	2
+>  #define QCOM_DLOAD_BOTHDUMP	3
 >  
-> diff --git a/arch/arm64/boot/dts/qcom/qrb2210-rb1.dts b/arch/arm64/boot/dts/qcom/qrb2210-rb1.dts
-> index b2e0fc5501c1..70c6c929bbd3 100644
-> --- a/arch/arm64/boot/dts/qcom/qrb2210-rb1.dts
-> +++ b/arch/arm64/boot/dts/qcom/qrb2210-rb1.dts
-> @@ -322,6 +322,10 @@ &pm4125_vbus {
->  	status = "okay";
->  };
->  
-> +&pon {
-> +	qcom,warm-reset;
-> +};
+> +#define QCOM_EDL_MASK		BIT(0)
 > +
->  &qupv3_id_0 {
->  	status = "okay";
->  };
-> @@ -510,6 +514,11 @@ pm4125_l22: l22 {
->  	};
+>  static const char * const qcom_scm_convention_names[] = {
+>  	[SMC_CONVENTION_UNKNOWN] = "unknown",
+>  	[SMC_CONVENTION_ARM_32] = "smc arm 32",
+> @@ -2206,6 +2210,18 @@ static const struct kernel_param_ops download_mode_param_ops = {
+>  	.set = set_download_mode,
 >  };
 >  
-> +&scm {
-> +	qcom,dload-mode = <&tcsr_regs 0x13000>;
-> +	mode-edl = <0x1>;
-
-Why are these a part of the board DT file rather than the SoC DT? I'd
-assume that at least dload-mode is generic to all devices.
-
-> +};
+> +static int qcom_scm_reboot_mode_write(struct reboot_mode_driver *reboot,
+> +				      unsigned int magic)
+> +{
+> +	struct qcom_scm *scm = container_of(reboot, struct qcom_scm, reboot_mode);
+> +	int ret = -EOPNOTSUPP;
 > +
->  &sdhc_1 {
->  	vmmc-supply = <&pm4125_l20>;
->  	vqmmc-supply = <&pm4125_l14>;
+> +	if (scm->dload_mode_addr)
+> +		ret = qcom_scm_io_rmw(scm->dload_mode_addr, QCOM_EDL_MASK, magic);
+> +
+> +	return ret;
+> +}
+> +
+>  module_param_cb(download_mode, &download_mode_param_ops, NULL, 0644);
+>  MODULE_PARM_DESC(download_mode, "download mode: off/0/N for no dump mode, full/on/1/Y for full dump mode, mini for minidump mode and full,mini for both full and minidump mode together are acceptable values");
+>  
+> @@ -2251,6 +2267,12 @@ static int qcom_scm_probe(struct platform_device *pdev)
+>  	if (ret)
+>  		return ret;
+>  
+> +	scm->reboot_mode.dev = &pdev->dev;
+> +	scm->reboot_mode.write = qcom_scm_reboot_mode_write;
+> +	ret = devm_reboot_mode_register(&pdev->dev, &scm->reboot_mode);
+> +	if (ret)
+> +		return ret;
+
+I think it would be sufficient with a dev_err() here. You're loosing the
+ability to set the "edl" bit but you don't break the whole system - e.g.
+in the event that you're making a typo in your mode definition.
+
+
+Other than that, I think this looks good.
+
+Regards,
+Bjorn
+
+> +
+>  	/* vote for max clk rate for highest performance */
+>  	ret = clk_set_rate(scm->core_clk, INT_MAX);
+>  	if (ret)
 > -- 
 > 2.34.1
 > 
-
--- 
-With best wishes
-Dmitry
 
