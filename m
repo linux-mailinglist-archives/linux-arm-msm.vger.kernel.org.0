@@ -1,47 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-80371-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-80372-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0DD0CC332F6
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 04 Nov 2025 23:20:46 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id CC076C33302
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 04 Nov 2025 23:21:15 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 97D0418C56EB
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Nov 2025 22:19:30 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id CEBD218821F1
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Nov 2025 22:19:48 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2A3602C3262;
-	Tue,  4 Nov 2025 22:17:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E595C313275;
+	Tue,  4 Nov 2025 22:17:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=mainlining.org header.i=@mainlining.org header.b="Czh85FXx";
-	dkim=permerror (0-bit key) header.d=mainlining.org header.i=@mainlining.org header.b="xkaSlfGa"
+	dkim=pass (2048-bit key) header.d=mainlining.org header.i=@mainlining.org header.b="pq6qEDNG";
+	dkim=permerror (0-bit key) header.d=mainlining.org header.i=@mainlining.org header.b="0/77oJUF"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mail.mainlining.org (mail.mainlining.org [5.75.144.95])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BBB41A8F84;
-	Tue,  4 Nov 2025 22:17:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2EA9130CDB1;
+	Tue,  4 Nov 2025 22:17:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=5.75.144.95
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762294642; cv=none; b=FukOHWSpQrFCnrYNHUk8rLVm+P5pKgM18TB1ywGt2wCZHNH7EEz2eMXoH858mY8g5rEBOOWt3mk+ebhCAp9LkRZ+jAONmRiTacAjzLKGdObp4e3wejS0lRLTaoMIJtIc4D5horOLD07eORIMgBL1oXY7ex+x9FXwaiosGoS1DIo=
+	t=1762294654; cv=none; b=FTFunE3SPdwd02MRk5QhMjYE+uRm74JWBHwLlZnbF4WsG8TcQwEU3PC3+P6O6ZpL9xbV039Jgzx2EpXdi6HmxOM7Ce7elYvWTrtNVrc08n8cg93670+8xjFcUs/ch+G4kdvihfixebav06eu+Vbs3C4iH90uV8wm99kkFbO9vFc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762294642; c=relaxed/simple;
-	bh=hVegu+giAMcZRbj4Mjow0bPIll40JMYgpv3VyUkS4AQ=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=XCUWvs+bBGOv7rnrWAyFcnD9moXH6T90Dl+4Kcy8LsDuyMM+0CNAw5O0eVm180bRfTPCOpbWzafRhssp/fAKQWSNoHfBQnyTsjAyIpjbFjpf7Ght8OPgzxfCq+U5dmMjfCbWn9RmzQwkNNG3o0y9eXPJnnerWeROvski7Ku7uBU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=mainlining.org; spf=pass smtp.mailfrom=mainlining.org; dkim=pass (2048-bit key) header.d=mainlining.org header.i=@mainlining.org header.b=Czh85FXx; dkim=permerror (0-bit key) header.d=mainlining.org header.i=@mainlining.org header.b=xkaSlfGa; arc=none smtp.client-ip=5.75.144.95
+	s=arc-20240116; t=1762294654; c=relaxed/simple;
+	bh=+BFaXB26O/b0HmVxM6VKiQz+qurdE0BnVgxv8AgvYEk=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=NLDO02uIN+AQaUNhEFqrVrgY6rp/+e3REeqR4yBBaud8hYs0qpTbQFfSVufpo5Lrl2GFyfPQdq824t2U01iYVzsNHixVORPPILtmQlUGbUetZWAbT840c5IvtbS5GFJyD1ht94dIxL2YgmVfRYXGnKindzg3O+MfgrNbnFwrOiA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=mainlining.org; spf=pass smtp.mailfrom=mainlining.org; dkim=pass (2048-bit key) header.d=mainlining.org header.i=@mainlining.org header.b=pq6qEDNG; dkim=permerror (0-bit key) header.d=mainlining.org header.i=@mainlining.org header.b=0/77oJUF; arc=none smtp.client-ip=5.75.144.95
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=mainlining.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=mainlining.org
 DKIM-Signature: v=1; a=rsa-sha256; s=202507r; d=mainlining.org; c=relaxed/relaxed;
-	h=Message-ID:Date:Subject:To:From; t=1762294636; bh=KxKI+V1ZKxSsAem2SDZqxjD
-	62s9DoQ484JTmoOeI844=; b=Czh85FXxOub6e5UQcbyTVtyTLVMYrGqPgJhiRiCsthTmGjDaZY
-	X2EpFkcYyBrNthNqKuBKc/muOUvgyBzA2oZ9MgeyjUEx7I72LzPrq0yIGvBCSMgU49KN0QVvRDP
-	33j0q7oB0lam9WJZw7i2eJycPJr97hNweJDDTHJrARW87N7XlvuMMXudEZH6OeoFyoR/P3/NYU7
-	yj6h2LqOQjbQTsMqNKtNTcvwtclDqLAPWPfe5/Zt/FqH68kvbOit14D2Zdd34fApdCwB0LDQe1P
-	WTu6Uuqa2YURlm28QqAG9vunMAgkfVTZDEWeR/j1jcw4tPBJCltPcRU9LaIARR/x5BA==;
+	h=Message-ID:Date:Subject:To:From; t=1762294650; bh=s/yfI6inVk/K2ZS3MsLcuyi
+	vUUzxYm6tzR577zVFhSc=; b=pq6qEDNGUkiENrPVUBxsGBu7IIuNIWMREIUeFy2/+SA9Fmwah2
+	4aJjWoGwsZM8UnIDoFCyNvhRE82VFoxAEFtihKtZlb6kBRKud8DSDqH1oSEbA/qhNWb1xZcKVgY
+	CEY2JNZovncFf0BxVSeeg1KBaRYGp3n8BQfP8FgwLl542TOjUCdtMQ8m3tlLDl1Kw5YG9yMLk1i
+	dzDjHhY0w6QPMNqwzXmPhrwFgY+o4nSKylDeJsyVqK7btfKuCmCWMDxFtTGDmqhmmo+gWEp3yA1
+	8AtiNuyr80LILK96C9cqC8P9VVweCTo+XCDtXkE6tmag6N0Q4WlqRrRjsHIjIxcVjig==;
 DKIM-Signature: v=1; a=ed25519-sha256; s=202507e; d=mainlining.org; c=relaxed/relaxed;
-	h=Message-ID:Date:Subject:To:From; t=1762294636; bh=KxKI+V1ZKxSsAem2SDZqxjD
-	62s9DoQ484JTmoOeI844=; b=xkaSlfGamD54QhsNCk14+lxrTW0fWe+y8fZO+Ex3O2HcQERVNn
-	DwNvwPomqzXKeyN+IzbYsi7q9m+DH8q3fMAg==;
+	h=Message-ID:Date:Subject:To:From; t=1762294650; bh=s/yfI6inVk/K2ZS3MsLcuyi
+	vUUzxYm6tzR577zVFhSc=; b=0/77oJUFSlprHPH+WQeZ+Hs3ketIPsxP2ljoY9cp+Hf+ObPNZl
+	uSdddBnVmVc4etm9WL2YFDOlYO066ScPfkAQ==;
 From: Piyush Raj Chouhan <pc1598@mainlining.org>
 To: linux-arm-msm@vger.kernel.org
 Cc: devicetree@vger.kernel.org,
@@ -56,10 +57,12 @@ Cc: devicetree@vger.kernel.org,
 	gpiccoli@igalia.com,
 	david@ixit.cz,
 	Piyush Raj Chouhan <pc1598@mainlining.org>
-Subject: [PATCH v2 0/3] Add Xiaomi Redmi K20 Pro (Raphael)
-Date: Wed,  5 Nov 2025 03:46:54 +0530
-Message-ID: <20251104221657.51580-1-pc1598@mainlining.org>
+Subject: [PATCH v2 1/3] dt-bindings: arm: qcom: Add Xiaomi Redmi K20 Pro (Raphael)
+Date: Wed,  5 Nov 2025 03:46:55 +0530
+Message-ID: <20251104221657.51580-2-pc1598@mainlining.org>
 X-Mailer: git-send-email 2.51.2
+In-Reply-To: <20251104221657.51580-1-pc1598@mainlining.org>
+References: <20251104221657.51580-1-pc1598@mainlining.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -68,36 +71,26 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Hi all,
+Document Xiaomi Redmi K20 Pro / Xiaomi Mi 9T Pro.
 
-This is v2 of the patch that makes several cleanups and minor fixes to
-the SM8150 Xiaomi Raphael device tree.
+Signed-off-by: Piyush Raj Chouhan <pc1598@mainlining.org>
+Acked-by: Rob Herring (Arm) <robh@kernel.org>
+---
+ Documentation/devicetree/bindings/arm/qcom.yaml | 1 +
+ 1 file changed, 1 insertion(+)
 
-Changes in this version:
- - Updated qcom,vmid to use QCOM_SCM_VMID_MSS_MSA instead of hardcoded 15
- - Added include: <dt-bindings/firmware/qcom,scm.h>
- - Set ECC size to 8 in ramoops region
- - Updated firmware paths to use "Xiaomi" instead of "xiaomi"
- - Adjusted configuration for panel pinctrl
- - Removed redundant LDO8 regulator entry
- - Cleaned up PM8150L LPG LED definitions with proper labels
- - General styling and ordering fixups
-
-Link to v1: https://lore.kernel.org/all/20251022054026.22816-2-pc1598@mainlining.org/
-
-Piyush Raj Chouhan (3):
-  dt-bindings: arm: qcom: Add Xiaomi Redmi K20 Pro (Raphael)
-  arm64: dts: qcom: sm8150: Move usb-role-switch property to common dtsi
-  arm64: dts: qcom: sm8150: Add support for Xiaomi Redmi K20 Pro
-
- .../devicetree/bindings/arm/qcom.yaml         |   1 +
- arch/arm64/boot/dts/qcom/Makefile             |   1 +
- arch/arm64/boot/dts/qcom/sm8150-hdk.dts       |   1 -
- .../boot/dts/qcom/sm8150-xiaomi-raphael.dts   | 962 ++++++++++++++++++
- arch/arm64/boot/dts/qcom/sm8150.dtsi          |   2 +
- 5 files changed, 966 insertions(+), 1 deletion(-)
- create mode 100644 arch/arm64/boot/dts/qcom/sm8150-xiaomi-raphael.dts
-
+diff --git a/Documentation/devicetree/bindings/arm/qcom.yaml b/Documentation/devicetree/bindings/arm/qcom.yaml
+index 18b5ed044f9f..b81930eec39c 100644
+--- a/Documentation/devicetree/bindings/arm/qcom.yaml
++++ b/Documentation/devicetree/bindings/arm/qcom.yaml
+@@ -983,6 +983,7 @@ properties:
+               - qcom,sm8150-mtp
+               - sony,bahamut-generic
+               - sony,griffin-generic
++              - xiaomi,raphael
+           - const: qcom,sm8150
+ 
+       - items:
 -- 
 2.51.2
 
