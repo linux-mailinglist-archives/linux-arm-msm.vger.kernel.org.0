@@ -1,103 +1,98 @@
-Return-Path: <linux-arm-msm+bounces-80223-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-80224-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [IPv6:2605:f480:58:1:0:1994:3:14])
-	by mail.lfdr.de (Postfix) with ESMTPS id EB53CC2F643
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 04 Nov 2025 06:39:55 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 413E9C2F65F
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 04 Nov 2025 06:48:39 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id CC6914EA10E
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Nov 2025 05:39:54 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id ED2123BF081
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Nov 2025 05:48:37 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 495A62DA755;
-	Tue,  4 Nov 2025 05:39:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 02EEF1FDE14;
+	Tue,  4 Nov 2025 05:48:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="RaLZOUIY";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="egl8Nlzl"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="mhecz425";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="dbtxhwmd"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50D0A2D061A
-	for <linux-arm-msm@vger.kernel.org>; Tue,  4 Nov 2025 05:39:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67AF715E97
+	for <linux-arm-msm@vger.kernel.org>; Tue,  4 Nov 2025 05:48:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762234767; cv=none; b=VZYJfk3IL69H0Z1yvAGL3EvzJuMPpmv0rpkZzm8bjInVeLndT2LoZoo5CKEo3Qid7rYxuEEjoMIWSKMdDJVRGVDnFAlghkkT2Ch1icw2LgcldW3dWm4UJMbo+3PRcCRTABddfQAIGwq3GjF5pUXKuosWgHMNPCbaSsxxemIA95g=
+	t=1762235315; cv=none; b=pUhNXLyQGs+v7SFp1WmZ1zK30NjbfHt4u9dVGBAGNqHjfdaggtDWTszNsyDSr9eMJFdpSOrKbxJ/kGxvS+tFkqZccF5BmMNCo1ke7ZWp0OUWG8k2NpoKGGKyEhIv8Lqq8CUCjj6uMyWpjtchYwpFYlADO1YXq1NEQvLR4CNZ/uc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762234767; c=relaxed/simple;
-	bh=55g5w1v7atZqC7FlHEyUgZm2ivpUlSG09PoKfW0YLDs=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=MiBovLUih8pBY9XkLjSkqsIsq+uDI6XZbq06X4jJNNqOyFr1T1eOetm6Cd8Yk/y5vgbvziQu0N4+MRA2kHgebCqXFoY0+KiJOgEWReMwg6UZnC7qAsAP4/DYpDZ8fqIIjF2+IE67xRwdSwymOrwbEI88pgl/mz8ScwIZzoAEaKw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=RaLZOUIY; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=egl8Nlzl; arc=none smtp.client-ip=205.220.168.131
+	s=arc-20240116; t=1762235315; c=relaxed/simple;
+	bh=FlW1aOjTf4xl2BlrTW76ulryeTqWm0fr1UPtIBcdtYM=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=FINqSYpTm0eN9fS1DhRqV/R35vgWm8bn8XH0NPwWrMoplmEZOTgEa4TF4jGbX9WeOsbLYWHOkbtA79zZUrIEj1XBXyH44n4zU5s8Y7ScL7+MCwbTsaxI7bMcwqaNhz4qLg8/oARTkBlfEIcf+7JvVLlAItBXOFqYEHCjBPrhkSE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=mhecz425; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=dbtxhwmd; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 5A43Gxsp3693555
-	for <linux-arm-msm@vger.kernel.org>; Tue, 4 Nov 2025 05:39:24 GMT
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 5A43BTqD3667725
+	for <linux-arm-msm@vger.kernel.org>; Tue, 4 Nov 2025 05:48:33 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	HrNsyrAAQeANKLO/A4qgRpf2x7znZFLyg4LxquGbdIQ=; b=RaLZOUIYSddSVbNp
-	4IZjq9WCHxJua71F3TYJnNnOWayOkPZ5p6dG4rTbTUYfRt/nKLHQAEyUeXn9Ov2K
-	QN/wqqDZAef2s7cqtjZSYv/dLNFJiUJSB1tWIMeO8yYOVs/Et89WGMKm4+kdPyzA
-	R5t6/spZpnarsXkGMegfPSSCFJt7KhmgZA45PN4+ES76bJA0J5H2c78D6G8i0Xjj
-	6vCD4VXfMjUGJh5YgT4GIfLp9FcohpDtVe8kUssbFuVMDJJ+yjbKTMDsCYFvfsdr
-	0npAlvUWkAA21drOS84ZQmTvHC4lrCjPXjXX3BOvmiUAEtRoCfJYXinBoGsRSluI
-	fX1zOQ==
-Received: from mail-pf1-f200.google.com (mail-pf1-f200.google.com [209.85.210.200])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4a70gm9rgg-1
+	cc:content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=qcppdkim1; bh=7XUgbGxUeYfwMdWobN+mqv
+	uwwkFaVgsaNY2NkKT3Euo=; b=mhecz425nJ77mc3i8VDXO1qWsflx3O0wOAeOkq
+	3ar8YafcGYETFA24cslEEZjSW5xJlno7jYR0VZ/hwJIUcpJf1h5J2ouxgOC+n/1x
+	W0dMrJjPj4IoQwGCiBdJKOHx80yfRgOJvz5da2vP8/vt4OCm50MT4hXbjBaq6/Pw
+	3S2FkPiKeOLGB18fC6iDbDeyogKWvuBsueoBaoWB87jXHb/leXJo+MWcFJBR7oCP
+	G2FjK9tiAeATUUb4j2aHrIa8A+rZjtANTxIpJtN2v2evenZI8+Mn8SCaate70/YW
+	nUdQ81l/j23JtBizllTozLagwVnZgKtiMQGLA9xQydPhHl/g==
+Received: from mail-pl1-f198.google.com (mail-pl1-f198.google.com [209.85.214.198])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4a70ffhta6-1
 	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Tue, 04 Nov 2025 05:39:24 +0000 (GMT)
-Received: by mail-pf1-f200.google.com with SMTP id d2e1a72fcca58-7a26c0c057eso5099446b3a.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 03 Nov 2025 21:39:24 -0800 (PST)
+	for <linux-arm-msm@vger.kernel.org>; Tue, 04 Nov 2025 05:48:33 +0000 (GMT)
+Received: by mail-pl1-f198.google.com with SMTP id d9443c01a7336-2952cb6f51bso97366555ad.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 03 Nov 2025 21:48:33 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1762234764; x=1762839564; darn=vger.kernel.org;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=HrNsyrAAQeANKLO/A4qgRpf2x7znZFLyg4LxquGbdIQ=;
-        b=egl8Nlzlx3ojvrjB8vSsKwsvgW4xSJqeymqJJlTKDMC4+r47eflLlj68NabHBKx0pp
-         VwGSJg0vZWFDVxKU5VUaGX32sSNSy5SjSR1iB3IE62Darfks9SSM/rglV2Z4yAxAzGfu
-         CcfbHGreQzz4bbaVIG6wTYRPC/hDlEPT35oqWGdg6S1k5u11hdxnWs0Cy5j5m9EU1/nD
-         FUHxWYZrJHh1Meq63fMi6Lp3+yYtbMrkye6B5mB5PnzaSZQfqk+mOwrE0beD1k4hH3HD
-         CQu4IhlNNpSuIhJNvnwmQWnCXkkOJMlT1j22FY6Wll0bGukcA1eChXGkkPJqy6jjGOo3
-         EBvQ==
+        d=oss.qualcomm.com; s=google; t=1762235313; x=1762840113; darn=vger.kernel.org;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=7XUgbGxUeYfwMdWobN+mqvuwwkFaVgsaNY2NkKT3Euo=;
+        b=dbtxhwmdVTHx5IgogXc3A9o4hj/BNQqKJ1pcMWTTd6xsly76cUJ0JMvjQQpzLiUvzo
+         p6HSTgO7zrBgvPtE65LoJj0OBh0CiwOGm6yrbG8bRDn/ZsVj4so3kqptRBokoRTbDuQS
+         97BxbAVcxcuoWI/jzhiEWX8tEs5D4ssY/8GAOuWI6EefXddm0W2oh4IOYgX1lAEwfoP+
+         DIPtVS9hr6rz6tGuUSWlVDI0vcEjIYheA7mKxWS3EQSmsjLp1djW+lnI481bpYRwuHPo
+         q7HuYn/f9cIUvldbauL7Iygs3U7JoerY6m1bF4yboAU0IoKlae4K7tBGLOvS0WbNvkAF
+         Jxag==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1762234764; x=1762839564;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=HrNsyrAAQeANKLO/A4qgRpf2x7znZFLyg4LxquGbdIQ=;
-        b=roDQryr/TMr3Bd5EpXXhj96v7IccUMOYxYGi2jc55yxQXVfp8VvMHBGDustWhjC1wl
-         q4+fKJBCobOAjbBBLT69H04LP5qucjIFppqikZTWbqoJhQtLJnZUyQ3UlaqLpmFitWL9
-         lxobDoCrCPptE9B8RaG4DoLhn0YtMPZzeAVM4vFB0nouMqeFbbd2mSVGmOKxHrlv0yvX
-         Yaf9H+z4HyW9t/4MDb2bWl+cvOUSeqXi08pEWo7CkgmB0yUowl+NZ5Zj6sqb2r+MDwKl
-         WE74nqzWbeZ3CxS+th0OOIrGCTuiKJtq8hVxB0G63ehBeIvMghRn1u2oBUBXjhPfbZ4o
-         lg2g==
-X-Forwarded-Encrypted: i=1; AJvYcCV11xm2jW+6KcyrlqV3InzbmMPXTY9HwqqVeb5Q1OnXwuSQhiAB9osiUN3JOVBsIMVIu3A+MWU4yfYovIL5@vger.kernel.org
-X-Gm-Message-State: AOJu0YywX/BHfU++3Dg3LjQ5d96/yHNu4KlhzOUgj+L64OW1pd0hZDav
-	gJ5zIxWz2ZzhcUh2Q5bMNhX++EtLx4WFEwrPKHZcQeeICWu3RpIqkjGeOZg4Uu33jwZ9LaMXL3O
-	rhmIx5jKqo/78Wg4fv75KTv/09bJS9Na5mdSk0SgSdjoEnvuc/tYPw75DvqXMhSJ3ynxa
-X-Gm-Gg: ASbGncvFf0SS5iVp6sR44W5d1iCoKQN+D58haGIkIOeQgU07Gee/fvip7VBExxMKRQj
-	4uZ+anVSR0mnwsh6BHil7kjvxzNLgpKV3TgVB2/X5DXuFS9NIDL+i490PMBx3et5XMtpu07TAcS
-	+EP7sGS4m4LNf6n8M166H9xtgyDeu4O0KP31FgqgzMn+fsEoEej2CcktT+lfPy0yTBJ/o9n4vBf
-	nJqrlOKC2KQ85TNio87Wv/hU0NpIylDT/FtE/CYM2uCANSQYs/PNoShqM58zMPt7swHItGRwshy
-	4CCxUs55fQs/wczhkCaOjnmJAWmEvCk9MbGRqs5eAQRPWe2OgTxqzec3HavwWRD2y7WDl7O9Sup
-	VdQZdNbzFbWvnhq5GQp0NGQBR
-X-Received: by 2002:a05:6a00:14d0:b0:77f:2dc4:4c16 with SMTP id d2e1a72fcca58-7a7791d1095mr18877075b3a.21.1762234763677;
-        Mon, 03 Nov 2025 21:39:23 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IEijn/jz8S7gAQ+A+SBLqSusKhoWImqfxlcp7ot10qdXI/K3YzGqGQaeNZiSmxENWVhzlFBfg==
-X-Received: by 2002:a05:6a00:14d0:b0:77f:2dc4:4c16 with SMTP id d2e1a72fcca58-7a7791d1095mr18877054b3a.21.1762234763045;
-        Mon, 03 Nov 2025 21:39:23 -0800 (PST)
-Received: from hu-sumk-hyd.qualcomm.com ([202.46.23.25])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-7acd3150f0asm1462402b3a.2.2025.11.03.21.39.19
+        d=1e100.net; s=20230601; t=1762235313; x=1762840113;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=7XUgbGxUeYfwMdWobN+mqvuwwkFaVgsaNY2NkKT3Euo=;
+        b=M9RWC7fbnJLGKTVcE0QkqoxEWAucfYFGofi8cRagMsTdoQ5I4OJFTgZuNhYTMf9Tv2
+         YMUoLPE5eu4TnGK1PW9avJSObomHC1x6oM3QphsqMGwHtt5qBmJteOFiPTDUNQsQPXKk
+         TZTXeS78OFOTWOdq/iGXpPoFpngfUpbtpg6FFeJHNTe8IchsIBmIHWTIJTUJc4SvB7LQ
+         19U51yh/YnGh6tsP8cVWpe3A/PXuCkI55zU2cGLynHKHPV7j6sNR+BFSnZYiZF/hRim8
+         LHGdDcd+TnZacYfVR+X37dNusaxBu9RzLFNCk8fmIo+bXOWq7wmk0yJPj3dpa2LdWFmA
+         UsRA==
+X-Gm-Message-State: AOJu0YxyBD863Ob65hu+/qphWGYqpqogKypc2pLBmy83TUnUspn4wrf0
+	9+T0zJH7RaaHfGnLk5dWHefs6fxBuZUt5Faoq2jZjnEAfT8PwR+QOLEVikQjBA9wYK97Dg8Cgdd
+	Gqw+2fkUNjKYQj37q+dWrZQgnx+N5EsJNxd+warym1vRY/eowTov0wio2Ja3775jaxq0K
+X-Gm-Gg: ASbGncuCLIE1LPsIejnxdaww/IWRYcKc37jS/bX5FyaUbtIwQpECcSXYTMMIHdScI41
+	X/gAsyY75RoqBWqCB1SRRsMys9EQHUUQFFctAevasfkKN5iFvtc2U4xaqvcyW5k+jtLFm/tUS8G
+	7B9WJUxIw0k+aA/vtLnDWFEjTKTaKpwtoIRmdX372W1TB6z3e1oRKayaIQE+IRAlYUTIuqB+WIH
+	8OFItlYJJfyHfdfyraIVeJ+XsisSEMPW2v5OacNXvT6PfnWpGxdJHbqP08y26oX8jV/V9cYA0G0
+	qWIzsle2Wv19X0dCdXnw2QnlwPPEY4F+2mhvGUEvmUFX7xVeT6+48/35zZnt0FW+4MWvH6eYNyh
+	nEjiSezPoF3wveGta1xP5CpbMBnc+5AXOxdebub565Gdyi5k/csd7WTrRUzMChQ==
+X-Received: by 2002:a17:902:d4c4:b0:295:a212:1c26 with SMTP id d9443c01a7336-295a2121e1fmr79205265ad.51.1762235312684;
+        Mon, 03 Nov 2025 21:48:32 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHtqKC3au1pCzSB25j/AdeQ54H4U/Wlk6HavEUNOzlE0+pVxgRTNfJSmpsTmWOKiEVLsU257Q==
+X-Received: by 2002:a17:902:d4c4:b0:295:a212:1c26 with SMTP id d9443c01a7336-295a2121e1fmr79204995ad.51.1762235312096;
+        Mon, 03 Nov 2025 21:48:32 -0800 (PST)
+Received: from jiegan-gv.ap.qualcomm.com (tpe-colo-wan-fw-bordernet.qualcomm.com. [103.229.16.4])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-29601a5d174sm11895345ad.77.2025.11.03.21.48.29
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 03 Nov 2025 21:39:22 -0800 (PST)
-From: Sumit Kumar <sumit.kumar@oss.qualcomm.com>
-Date: Tue, 04 Nov 2025 11:09:07 +0530
-Subject: [PATCH v2 3/3] bus: mhi: ep: Add loopback driver for data path
- testing
+        Mon, 03 Nov 2025 21:48:31 -0800 (PST)
+From: Jie Gan <jie.gan@oss.qualcomm.com>
+Date: Tue, 04 Nov 2025 13:48:14 +0800
+Subject: [PATCH v2] arm64: dts: qcom: kodiak: add coresight nodes
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -106,229 +101,399 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20251104-loopback_mhi-v2-3-727a3fd9aa74@oss.qualcomm.com>
-References: <20251104-loopback_mhi-v2-0-727a3fd9aa74@oss.qualcomm.com>
-In-Reply-To: <20251104-loopback_mhi-v2-0-727a3fd9aa74@oss.qualcomm.com>
-To: Manivannan Sadhasivam <mani@kernel.org>
-Cc: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>,
-        Akhil Vinod <akhil.vinod@oss.qualcomm.com>,
-        Subramanian Ananthanarayanan <subramanian.ananthanarayanan@oss.qualcomm.com>,
-        linux-kernel@vger.kernel.org, mhi@lists.linux.dev,
-        linux-arm-msm@vger.kernel.org, quic_vpernami@quicinc.com,
-        Sumit Kumar <sumit.kumar@oss.qualcomm.com>
-X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1762234749; l=5851;
- i=sumit.kumar@oss.qualcomm.com; s=20250409; h=from:subject:message-id;
- bh=55g5w1v7atZqC7FlHEyUgZm2ivpUlSG09PoKfW0YLDs=;
- b=kjeVsgjb69vvWgdU7yVyZm+TBKSCTxucL+1PNaZwhP8PV4sxUhL0IANRu+uLhhqkvUiF0Kow1
- hMFrvzyAYHfDzZ1st8Di7Jb8jSOJ0s+JEQ8YVv8z/4+OQa0QEJcHoAA
-X-Developer-Key: i=sumit.kumar@oss.qualcomm.com; a=ed25519;
- pk=3cys6srXqLACgA68n7n7KjDeM9JiMK1w6VxzMxr0dnM=
-X-Proofpoint-ORIG-GUID: kSqQ5uGu5opd-sJlsuvEHJBS7yB3BtQi
-X-Proofpoint-GUID: kSqQ5uGu5opd-sJlsuvEHJBS7yB3BtQi
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMTA0MDA0NCBTYWx0ZWRfX+cA00YEpPn7L
- zjogV7Bw6Rubh1Pfet4/qVOSquO5+Q2h5am+IBdZgswd8kmCOA0yID07A4WhL1ed2KdUMyGHLIt
- 1OBbccW3zvUbupgEQFRzUAi4JnvGwRxyJ/U5qTo0mBAECHL0RkkvkAnKelQ5uRixOJIeJ7mrHJj
- gse7ZACa+jlC+5KRp9btNpXdRlqzigkdKmDpHTOp7T0MTne0J3Sr1/qkpfBN+/XxmEDZLLnghWz
- 7EIMybnXQYvBktjSo4q4Aaf8kekWTI/80ev9iVtrvFMfWmIycV3niZbrpM403ACM/1hrMi0D2el
- G3eE/yHxYW2ZXEEC/fIO7MUlmqpsy/TV74XERi8CK8nU3OEP3yVj7fkAGAs0NHCYjAvyh7FYsrM
- rhuLlfxlSiESH4tNLArAKT/h0SuXDg==
-X-Authority-Analysis: v=2.4 cv=CeMFJbrl c=1 sm=1 tr=0 ts=6909918c cx=c_pps
- a=mDZGXZTwRPZaeRUbqKGCBw==:117 a=ZePRamnt/+rB5gQjfz0u9A==:17
+Message-Id: <20251104-add-coresight-nodes-for-sc7280-v2-1-c67fa3890c2a@oss.qualcomm.com>
+X-B4-Tracking: v=1; b=H4sIAJ6TCWkC/42NSw6CQBBEr0JmbZP5gBhX3sOwGLsbmEQYnUaiI
+ dzdkROYSip5tXi1KuEUWNS5WFXiJUiIUwZ7KBQOfuoZAmVWVtvaGO3AEwHGxBL6YYYpEgt0MYF
+ gY08ajhr5VhHapiKVJY/EXXjvB9c28xBkjumz/y3mt/6tXgzkOKq1M9ahbi5RpHy+/B3jOJa5V
+ Ltt2xdqeACo0wAAAA==
+To: Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Tingwei Zhang <tingwei.zhang@oss.qualcomm.com>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, Jie Gan <jie.gan@oss.qualcomm.com>
+X-Mailer: b4 0.14.0
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1762235308; l=7628;
+ i=jie.gan@oss.qualcomm.com; s=20250909; h=from:subject:message-id;
+ bh=FlW1aOjTf4xl2BlrTW76ulryeTqWm0fr1UPtIBcdtYM=;
+ b=o4quE2QbTzMhXzeIbV7aT5KruYRVvH0kSVoca7ZArut4HzUFbMkY6Ih7h+wvNBGeg+tVi943R
+ L34tnvVVPjbDW2nS/uYTof6BhBve8nfRHc49T53q0xdrHiLre1CtMcu
+X-Developer-Key: i=jie.gan@oss.qualcomm.com; a=ed25519;
+ pk=3LxxUZRPCNkvPDlWOvXfJNqNO4SfGdy3eghMb8puHuk=
+X-Authority-Analysis: v=2.4 cv=esbSD4pX c=1 sm=1 tr=0 ts=690993b1 cx=c_pps
+ a=MTSHoo12Qbhz2p7MsH1ifg==:117 a=nuhDOHQX5FNHPW3J6Bj6AA==:17
  a=IkcTkHD0fZMA:10 a=6UeiqGixMTsA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=EUspDBNiAAAA:8 a=RyQsIt2LcgCPV6mEHuQA:9
- a=QEXdDO2ut3YA:10 a=zc0IvFSfCIW2DFIPzwfm:22
+ a=VkNPw1HP01LnGYTKEx00:22 a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8
+ a=CTXohUMGNYBRon0rOZ8A:9 a=QEXdDO2ut3YA:10 a=GvdueXVYPmCkWapjIL-Q:22
+X-Proofpoint-GUID: P9fVOJ3QQjmeeQmZr_5Hcrqd6DkmDD3I
+X-Proofpoint-ORIG-GUID: P9fVOJ3QQjmeeQmZr_5Hcrqd6DkmDD3I
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMTA0MDA0NSBTYWx0ZWRfX9lw4/Y0k8UDe
+ mDjZv+z9GXyS1v5Yz6NtsiAUU3UB8sQJkKqfXq1zoNFR9AE1sTI97Z83wTwQSaBVVKiY5hoVhGq
+ 3L/BDLejY5e32mOEKIF1FXuKWhFkmQue+LHu0CENvxlk3BrVjLM7Sk1GerxbffVKws/pH4oMUk0
+ 4QdQD9xNgvKeIazEAKKcaKtArCkSo6fhO80udGPh+HofBD305IF/1wvTpXzIpb8XYDGXf5iTigK
+ 3n9W3yptw85maeyuRyeWzlUnR7nWPJ7yvNrakeh78nqW105h+WD1++x0Amglh8L0qCHpQXenmVW
+ u3ThLmSOiBFU0y9bQsZSldVL9W/a5AsnlBynMAOs8hKsggaIYcz3qSkDxTedozIomKAd7bZB5vq
+ uPf2Sg6BQB2itrnZ5TVn8XvfM/rDwg==
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
  definitions=2025-11-03_06,2025-11-03_03,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 spamscore=0 bulkscore=0 adultscore=0 lowpriorityscore=0
- impostorscore=0 phishscore=0 clxscore=1015 suspectscore=0 malwarescore=0
+ malwarescore=0 clxscore=1015 priorityscore=1501 adultscore=0 phishscore=0
+ bulkscore=0 lowpriorityscore=0 suspectscore=0 spamscore=0 impostorscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2510240001 definitions=main-2511040044
+ reason=mlx scancount=1 engine=8.22.0-2510240001 definitions=main-2511040045
 
-Add loopback driver for MHI endpoint devices. The driver receives
-data on the uplink channel and echoes it back on the downlink
-channel using a workqueue for asynchronous processing.
+Add TPDM, TPDA, CTI and funnel coresight devices for AOSS and QDSS
+blocks.
 
-The driver is useful for testing MHI endpoint data path functionality
-and debugging communication issues.
-
-Co-developed-by: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
-Signed-off-by: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
-Signed-off-by: Sumit Kumar <sumit.kumar@oss.qualcomm.com>
+Signed-off-by: Jie Gan <jie.gan@oss.qualcomm.com>
 ---
- drivers/bus/mhi/ep/Kconfig           |   8 +++
- drivers/bus/mhi/ep/Makefile          |   1 +
- drivers/bus/mhi/ep/mhi_ep_loopback.c | 134 +++++++++++++++++++++++++++++++++++
- 3 files changed, 143 insertions(+)
+Changes in v2:
+- fix style issue for the reg value under the port.
+- Link to v1: https://lore.kernel.org/r/20251103-add-coresight-nodes-for-sc7280-v1-1-13d503123c07@oss.qualcomm.com
+---
+ arch/arm64/boot/dts/qcom/kodiak.dtsi | 292 +++++++++++++++++++++++++++++++++++
+ 1 file changed, 292 insertions(+)
 
-diff --git a/drivers/bus/mhi/ep/Kconfig b/drivers/bus/mhi/ep/Kconfig
-index 90ab3b040672e0f04181d4802e3062afcc7cf782..ce7b63c2da82a6ca49528517687f4910552c35bb 100644
---- a/drivers/bus/mhi/ep/Kconfig
-+++ b/drivers/bus/mhi/ep/Kconfig
-@@ -8,3 +8,11 @@ config MHI_BUS_EP
+diff --git a/arch/arm64/boot/dts/qcom/kodiak.dtsi b/arch/arm64/boot/dts/qcom/kodiak.dtsi
+index 3ef61af2ed8a..ccbb57f77453 100644
+--- a/arch/arm64/boot/dts/qcom/kodiak.dtsi
++++ b/arch/arm64/boot/dts/qcom/kodiak.dtsi
+@@ -3338,6 +3338,86 @@ stm_out: endpoint {
+ 			};
+ 		};
  
- 	  MHI_BUS_EP implements the MHI protocol for the endpoint devices,
- 	  such as SDX55 modem connected to the host machine over PCIe.
++		tpda@6004000 {
++			compatible = "qcom,coresight-tpda", "arm,primecell";
++			reg = <0x0 0x06004000 0x0 0x1000>;
 +
-+config MHI_BUS_EP_LOOPBACK
-+	tristate "MHI Endpoint loopback driver"
-+	depends on MHI_BUS_EP
-+	help
-+	  MHI endpoint loopback driver for data path testing.
-+	  This driver receives data on the uplink channel and echoes
-+	  it back on the downlink channel for testing purposes.
-diff --git a/drivers/bus/mhi/ep/Makefile b/drivers/bus/mhi/ep/Makefile
-index aad85f180b707fb997fcb541837eda9bbbb67437..02e4700e8dc3f860d40290476b0a852286683f8f 100644
---- a/drivers/bus/mhi/ep/Makefile
-+++ b/drivers/bus/mhi/ep/Makefile
-@@ -1,2 +1,3 @@
- obj-$(CONFIG_MHI_BUS_EP) += mhi_ep.o
- mhi_ep-y := main.o mmio.o ring.o sm.o
-+obj-$(CONFIG_MHI_BUS_EP_LOOPBACK) += mhi_ep_loopback.o
-diff --git a/drivers/bus/mhi/ep/mhi_ep_loopback.c b/drivers/bus/mhi/ep/mhi_ep_loopback.c
-new file mode 100644
-index 0000000000000000000000000000000000000000..ba6154dd9b785f051043c10a980ab340012ba986
---- /dev/null
-+++ b/drivers/bus/mhi/ep/mhi_ep_loopback.c
-@@ -0,0 +1,134 @@
-+// SPDX-License-Identifier: GPL-2.0
-+/*
-+ * Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
-+ */
++			clocks = <&aoss_qmp>;
++			clock-names = "apb_pclk";
 +
-+#include <linux/mhi_ep.h>
-+#include <linux/mod_devicetable.h>
-+#include <linux/module.h>
++			in-ports {
++				#address-cells = <1>;
++				#size-cells = <0>;
 +
-+struct mhi_ep_loopback {
-+	struct workqueue_struct *loopback_wq;
-+	struct mhi_ep_device *mdev;
-+};
++				port@1c {
++					reg = <0x1c>;
 +
-+struct mhi_ep_loopback_work {
-+	struct mhi_ep_device *mdev;
-+	struct work_struct work;
-+	void *buf;
-+	size_t len;
-+};
++					qdss_tpda_in28: endpoint {
++						remote-endpoint = <&spdm_tpdm_out>;
++					};
++				};
++			};
 +
-+static void mhi_ep_loopback_work_handler(struct work_struct *work)
-+{
-+	struct mhi_ep_loopback_work *mhi_ep_lb_work = container_of(work,
-+								struct mhi_ep_loopback_work, work);
-+	int ret;
++			out-ports {
++				port {
++					qdss_tpda_out: endpoint {
++						remote-endpoint = <&qdss_dl_funnel_in0>;
++					};
++				};
++			};
++		};
 +
-+	ret = mhi_ep_queue_buf(mhi_ep_lb_work->mdev, mhi_ep_lb_work->buf,
-+			       mhi_ep_lb_work->len);
-+	if (ret) {
-+		dev_err(&mhi_ep_lb_work->mdev->dev, "Failed to send the packet\n");
-+		kfree(mhi_ep_lb_work->buf);
-+	}
++		funnel@6005000 {
++			compatible = "arm,coresight-dynamic-funnel", "arm,primecell";
++			reg = <0x0 0x06005000 0x0 0x1000>;
 +
-+	kfree(mhi_ep_lb_work);
-+}
++			clocks = <&aoss_qmp>;
++			clock-names = "apb_pclk";
 +
-+static void mhi_ep_loopback_ul_callback(struct mhi_ep_device *mhi_dev,
-+					struct mhi_result *mhi_res)
-+{
-+	struct mhi_ep_loopback *mhi_ep_lb = dev_get_drvdata(&mhi_dev->dev);
-+	struct mhi_ep_loopback_work *mhi_ep_lb_work;
-+	void *buf;
++			in-ports {
++				port {
++					qdss_dl_funnel_in0: endpoint {
++						remote-endpoint = <&qdss_tpda_out>;
++					};
++				};
++			};
 +
-+	if (!(mhi_res->transaction_status)) {
-+		buf = kmalloc(mhi_res->bytes_xferd, GFP_KERNEL);
-+		if (!buf) {
-+			dev_err(&mhi_dev->dev, "Failed to allocate buffer\n");
-+			return;
-+		}
++			out-ports {
++				port {
++					qdss_dl_funnel_out: endpoint {
++						remote-endpoint = <&funnel0_in6>;
++					};
++				};
++			};
++		};
 +
-+		memcpy(buf, mhi_res->buf_addr, mhi_res->bytes_xferd);
++		tpdm@600f000 {
++			compatible = "qcom,coresight-tpdm", "arm,primecell";
++			reg = <0x0 0x0600f000 0x0 0x1000>;
 +
-+		mhi_ep_lb_work = kmalloc(sizeof(*mhi_ep_lb_work), GFP_KERNEL);
-+		if (!mhi_ep_lb_work) {
-+			dev_err(&mhi_dev->dev, "Unable to allocate the work structure\n");
-+			kfree(buf);
-+			return;
-+		}
++			clocks = <&aoss_qmp>;
++			clock-names = "apb_pclk";
 +
-+		INIT_WORK(&mhi_ep_lb_work->work, mhi_ep_loopback_work_handler);
-+		mhi_ep_lb_work->mdev = mhi_dev;
-+		mhi_ep_lb_work->buf = buf;
-+		mhi_ep_lb_work->len = mhi_res->bytes_xferd;
++			qcom,cmb-element-bits = <32>;
++			qcom,cmb-msrs-num = <32>;
 +
-+		queue_work(mhi_ep_lb->loopback_wq, &mhi_ep_lb_work->work);
-+	}
-+}
++			out-ports {
++				port {
++					spdm_tpdm_out: endpoint {
++						remote-endpoint = <&qdss_tpda_in28>;
++					};
++				};
++			};
++		};
 +
-+static void mhi_ep_loopback_dl_callback(struct mhi_ep_device *mhi_dev,
-+					struct mhi_result *mhi_res)
-+{
-+	void *buf;
++		cti@6010000 {
++			compatible = "arm,coresight-cti", "arm,primecell";
++			reg = <0x0 0x06010000 0x0 0x1000>;
 +
-+	if (mhi_res->transaction_status)
-+		return;
++			clocks = <&aoss_qmp>;
++			clock-names = "apb_pclk";
++		};
 +
-+	buf = mhi_res->buf_addr;
-+	if (buf)
-+		kfree(buf);
-+}
+ 		funnel@6041000 {
+ 			compatible = "arm,coresight-dynamic-funnel", "arm,primecell";
+ 			reg = <0 0x06041000 0 0x1000>;
+@@ -3357,6 +3437,14 @@ in-ports {
+ 				#address-cells = <1>;
+ 				#size-cells = <0>;
+ 
++				port@6 {
++					reg = <6>;
 +
-+static int mhi_ep_loopback_probe(struct mhi_ep_device *mhi_dev, const struct mhi_device_id *id)
-+{
-+	struct mhi_ep_loopback *mhi_ep_lb;
++					funnel0_in6: endpoint {
++						remote-endpoint = <&qdss_dl_funnel_out>;
++					};
++				};
 +
-+	mhi_ep_lb = devm_kzalloc(&mhi_dev->dev, sizeof(struct mhi_ep_loopback), GFP_KERNEL);
-+	if (!mhi_ep_lb)
-+		return -ENOMEM;
+ 				port@7 {
+ 					reg = <7>;
+ 					funnel0_in7: endpoint {
+@@ -3471,6 +3559,38 @@ etr_in: endpoint {
+ 			};
+ 		};
+ 
++		cti@6b00000 {
++			compatible = "arm,coresight-cti", "arm,primecell";
++			reg = <0x0 0x06b00000 0x0 0x1000>;
 +
-+	mhi_ep_lb->loopback_wq = alloc_ordered_workqueue("mhi_loopback", WQ_MEM_RECLAIM);
-+	if (!mhi_ep_lb->loopback_wq) {
-+		dev_err(&mhi_dev->dev, "Failed to create workqueue.\n");
-+		return -ENOMEM;
-+	}
++			clocks = <&aoss_qmp>;
++			clock-names = "apb_pclk";
++		};
 +
-+	mhi_ep_lb->mdev = mhi_dev;
-+	dev_set_drvdata(&mhi_dev->dev, mhi_ep_lb);
++		cti@6b01000 {
++			compatible = "arm,coresight-cti", "arm,primecell";
++			reg = <0x0 0x06b01000 0x0 0x1000>;
 +
-+	return 0;
-+}
++			clocks = <&aoss_qmp>;
++			clock-names = "apb_pclk";
++		};
 +
-+static void mhi_ep_loopback_remove(struct mhi_ep_device *mhi_dev)
-+{
-+	struct mhi_ep_loopback *mhi_ep_lb = dev_get_drvdata(&mhi_dev->dev);
++		cti@6b02000 {
++			compatible = "arm,coresight-cti", "arm,primecell";
++			reg = <0x0 0x06b02000 0x0 0x1000>;
 +
-+	destroy_workqueue(mhi_ep_lb->loopback_wq);
-+	dev_set_drvdata(&mhi_dev->dev, NULL);
-+}
++			clocks = <&aoss_qmp>;
++			clock-names = "apb_pclk";
++		};
 +
-+static const struct mhi_device_id mhi_ep_loopback_id_table[] = {
-+	{ .chan = "LOOPBACK"},
-+	{}
-+};
-+MODULE_DEVICE_TABLE(mhi, mhi_ep_loopback_id_table);
++		cti@6b03000 {
++			compatible = "arm,coresight-cti", "arm,primecell";
++			reg = <0x0 0x06b03000 0x0 0x1000>;
 +
-+static struct mhi_ep_driver mhi_ep_loopback_driver = {
-+	.probe = mhi_ep_loopback_probe,
-+	.remove = mhi_ep_loopback_remove,
-+	.dl_xfer_cb = mhi_ep_loopback_dl_callback,
-+	.ul_xfer_cb = mhi_ep_loopback_ul_callback,
-+	.id_table = mhi_ep_loopback_id_table,
-+	.driver = {
-+		.name = "mhi_ep_loopback",
-+		.owner = THIS_MODULE,
-+	},
-+};
++			clocks = <&aoss_qmp>;
++			clock-names = "apb_pclk";
++		};
 +
-+module_mhi_ep_driver(mhi_ep_loopback_driver);
+ 		funnel@6b04000 {
+ 			compatible = "arm,coresight-dynamic-funnel", "arm,primecell";
+ 			reg = <0 0x06b04000 0 0x1000>;
+@@ -3490,6 +3610,14 @@ in-ports {
+ 				#address-cells = <1>;
+ 				#size-cells = <0>;
+ 
++				port@6 {
++					reg = <6>;
 +
-+MODULE_AUTHOR("Krishna chaitanya chundru <krishna.chundru@oss.qualcomm.com>");
-+MODULE_AUTHOR("Sumit Kumar <sumit.kumar@oss.qualcomm.com>");
-+MODULE_DESCRIPTION("MHI Endpoint Loopback driver");
-+MODULE_LICENSE("GPL");
++					swao_funnel_in6: endpoint {
++						remote-endpoint = <&aoss_tpda_out>;
++					};
++				};
++
+ 				port@7 {
+ 					reg = <7>;
+ 					swao_funnel_in: endpoint {
+@@ -3548,6 +3676,170 @@ swao_replicator_in: endpoint {
+ 			};
+ 		};
+ 
++		tpda@6b08000 {
++			compatible = "qcom,coresight-tpda", "arm,primecell";
++			reg = <0x0 0x06b08000 0x0 0x1000>;
++
++			clocks = <&aoss_qmp>;
++			clock-names = "apb_pclk";
++
++			in-ports {
++				#address-cells = <1>;
++				#size-cells = <0>;
++
++				port@0 {
++					reg = <0>;
++
++					aoss_tpda_in0: endpoint {
++						remote-endpoint = <&swao_prio0_tpdm_out>;
++					};
++				};
++
++				port@1 {
++					reg = <1>;
++
++					aoss_tpda_in1: endpoint {
++						remote-endpoint = <&swao_prio1_tpdm_out>;
++					};
++				};
++
++				port@2 {
++					reg = <2>;
++
++					aoss_tpda_in2: endpoint {
++						remote-endpoint = <&swao_prio2_tpdm_out>;
++					};
++				};
++
++				port@3 {
++					reg = <3>;
++
++					aoss_tpda_in3: endpoint {
++						remote-endpoint = <&swao_prio3_tpdm_out>;
++					};
++				};
++
++				port@4 {
++					reg = <4>;
++
++					aoss_tpda_in4: endpoint {
++						remote-endpoint = <&swao_tpdm_out>;
++					};
++				};
++			};
++
++			out-ports {
++				port {
++					aoss_tpda_out: endpoint {
++						remote-endpoint = <&swao_funnel_in6>;
++					};
++				};
++			};
++		};
++
++		tpdm@6b09000 {
++			compatible = "qcom,coresight-tpdm", "arm,primecell";
++			reg = <0x0 0x06b09000 0x0 0x1000>;
++
++			clocks = <&aoss_qmp>;
++			clock-names = "apb_pclk";
++
++			qcom,cmb-element-bits = <64>;
++			qcom,cmb-msrs-num = <32>;
++
++			out-ports {
++				port {
++					swao_prio0_tpdm_out: endpoint {
++						remote-endpoint = <&aoss_tpda_in0>;
++					};
++				};
++			};
++		};
++
++		tpdm@6b0a000 {
++			compatible = "qcom,coresight-tpdm", "arm,primecell";
++			reg = <0x0 0x06b0a000 0x0 0x1000>;
++
++			clocks = <&aoss_qmp>;
++			clock-names = "apb_pclk";
++
++			qcom,cmb-element-bits = <64>;
++			qcom,cmb-msrs-num = <32>;
++
++			out-ports {
++				port {
++					swao_prio1_tpdm_out: endpoint {
++						remote-endpoint = <&aoss_tpda_in1>;
++					};
++				};
++			};
++		};
++
++		tpdm@6b0b000 {
++			compatible = "qcom,coresight-tpdm", "arm,primecell";
++			reg = <0x0 0x06b0b000 0x0 0x1000>;
++
++			clocks = <&aoss_qmp>;
++			clock-names = "apb_pclk";
++
++			qcom,cmb-element-bits = <64>;
++			qcom,cmb-msrs-num = <32>;
++
++			out-ports {
++				port {
++					swao_prio2_tpdm_out: endpoint {
++						remote-endpoint = <&aoss_tpda_in2>;
++					};
++				};
++			};
++		};
++
++		tpdm@6b0c000 {
++			compatible = "qcom,coresight-tpdm", "arm,primecell";
++			reg = <0x0 0x06b0c000 0x0 0x1000>;
++
++			clocks = <&aoss_qmp>;
++			clock-names = "apb_pclk";
++
++			qcom,cmb-element-bits = <64>;
++			qcom,cmb-msrs-num = <32>;
++
++			out-ports {
++				port {
++					swao_prio3_tpdm_out: endpoint {
++						remote-endpoint = <&aoss_tpda_in3>;
++					};
++				};
++			};
++		};
++
++		tpdm@6b0d000 {
++			compatible = "qcom,coresight-tpdm", "arm,primecell";
++			reg = <0x0 0x06b0d000 0x0 0x1000>;
++
++			clocks = <&aoss_qmp>;
++			clock-names = "apb_pclk";
++
++			qcom,dsb-element-bits = <32>;
++			qcom,dsb-msrs-num = <32>;
++
++			out-ports {
++				port {
++					swao_tpdm_out: endpoint {
++						remote-endpoint = <&aoss_tpda_in4>;
++					};
++				};
++			};
++		};
++
++		cti@6b11000 {
++			compatible = "arm,coresight-cti", "arm,primecell";
++			reg = <0x0 0x06b11000 0x0 0x1000>;
++
++			clocks = <&aoss_qmp>;
++			clock-names = "apb_pclk";
++		};
++
+ 		etm@7040000 {
+ 			compatible = "arm,coresight-etm4x", "arm,primecell";
+ 			reg = <0 0x07040000 0 0x1000>;
 
+---
+base-commit: 20e1dca0f0d16ca3f0937a5969a789addedc0f29
+change-id: 20251103-add-coresight-nodes-for-sc7280-60ceb4dc274d
+
+Best regards,
 -- 
-2.34.1
+Jie Gan <jie.gan@oss.qualcomm.com>
 
 
