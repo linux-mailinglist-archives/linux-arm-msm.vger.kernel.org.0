@@ -1,81 +1,81 @@
-Return-Path: <linux-arm-msm+bounces-80449-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-80450-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 14FCBC35B60
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 05 Nov 2025 13:53:54 +0100 (CET)
+Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [IPv6:2605:f480:58:1:0:1994:3:14])
+	by mail.lfdr.de (Postfix) with ESMTPS id E8145C35BCF
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 05 Nov 2025 13:59:53 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id C221A1898CB6
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Nov 2025 12:54:09 +0000 (UTC)
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 16A804F29FB
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Nov 2025 12:57:52 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 03D16316191;
-	Wed,  5 Nov 2025 12:53:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2907E30AAC2;
+	Wed,  5 Nov 2025 12:57:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="KArQGNRX"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="PAFMjIBt"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pj1-f53.google.com (mail-pj1-f53.google.com [209.85.216.53])
+Received: from mail-pj1-f44.google.com (mail-pj1-f44.google.com [209.85.216.44])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77E93313E04
-	for <linux-arm-msm@vger.kernel.org>; Wed,  5 Nov 2025 12:53:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACCA1315790
+	for <linux-arm-msm@vger.kernel.org>; Wed,  5 Nov 2025 12:57:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762347219; cv=none; b=lz/Id62vJRCkwDjJZy2FqVghinR5fC8DKkLWX/6CNzudp+jPHT71jyXzzRtJ1oJ8CxungdskM7stlUqeMax+PVbG+PrkzhzCcB8hA68zfQdX0cvuPSm5p4niqeCVZ2whtwD4ibo+ni7jZ9/lJQxS0phhu0hMHyGHzc3HkAPTTVM=
+	t=1762347469; cv=none; b=icerdOkm9rGI/Y6ddbQkwAt5ZwwPD9eBAkj2P+c24+rPsrqD0tuwX9UQA11WFpUgbtkJCc7GqL3W6WJ0S0MjRNCVnYEETj4+H3+4N/ey71bO4+icGzr/fCzz6JbTrx/3ltg3aXQLk2U5OXxl5NJKFWswUQ+ZvlePSRYteMzp6ZQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762347219; c=relaxed/simple;
-	bh=ZiOZviqEvKwWICEdXoSPzWBNXEjcvi0xyNucmUY2loE=;
+	s=arc-20240116; t=1762347469; c=relaxed/simple;
+	bh=0LJFAwG3uKB8EtkB8F3PX6TJWOV2c6OGA4oCsggctMc=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=YcKQKFiAnujOc5RBJ8fTEQJ2kilkQvwNNYHVycskZ2OI7bSATTW8BumRFa8jveTEZeH0zlYoYnv26nP0vfBWBggX1V5j5MRPJXIY3UvLAGKSgVeXC9Q8AMfLRfDNv5eBhMRhbbhu0KRlz76xO/NcdXtEtjvJHgGQB/PDnlPpxcg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=KArQGNRX; arc=none smtp.client-ip=209.85.216.53
+	 In-Reply-To:Content-Type; b=tiyKQf6pfFeqzmRWT3toBrv8tOzPfIa6Vj1/XZxAahn5Y49sCwyL1VSunolb/SH4VAkty5W9Pyuk+N8uyJHnSJD4S1xxAi/R6bMzRhZFCHKyd9YXOxd37eWpJWcejrhs6TD+SJu8pUDgtt3wMR/plvpmucGTK6R352E2SrpA7lE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=PAFMjIBt; arc=none smtp.client-ip=209.85.216.44
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-pj1-f53.google.com with SMTP id 98e67ed59e1d1-33db8fde85cso6330026a91.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 05 Nov 2025 04:53:38 -0800 (PST)
+Received: by mail-pj1-f44.google.com with SMTP id 98e67ed59e1d1-340cccf6956so2849466a91.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 05 Nov 2025 04:57:47 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1762347218; x=1762952018; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1762347467; x=1762952267; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=uXTWMvD9XNNtJ+0IuDLHxEJ/55opUg4uFPpMppU+ANg=;
-        b=KArQGNRXOG8tTdX09tWTtDS+mm7ac+fS47hwdIhp4xmx/ZWWA9yhUGx0Wr3Ct1LkLh
-         Xm93xZ0l6gJ7csUAW8USuqkXecEc+ickdD7+djOHqFqcA9U2apJQuucF6kHxheNtbxKm
-         amhNkEbAeQOUZNwiFHhn4WVjz/HNiq+mQvqalkyMqBuIqcj12jbAGChKq1ssMr+tD3RB
-         wbVdGbzso5hCcyh9aljtLdnPgV7MpiYFYkrbkGDXpvVXH+3AkFrJidan7CCtVFuhxAAJ
-         O/pwGkpsGEca+N/UMmDrJBd4SMKrmC2cKM51u3j0kHlOH7ec66TjmC/E8gcgVKkqqibN
-         +eYA==
+        bh=Vr6PsIqaDjxaH/cpBwS9aE8aleV9ylkOxYVPRloXRC0=;
+        b=PAFMjIBtG3CZOsJIak9CwLGWs4lLiDb+JQ/CRMXK1dXDmDs9mBGjroil/+yTkmwJkB
+         w5H2QOGjmB45r2lfZiDatpiXrMGNV6EDl3oivuszkEGndUqmoWfvXFxjoILlRW0zYQwA
+         uSoF6EpAAjorotuVKZU6VYVH36SybW8Af7yb4A9gYJFdzf0vVGC9k6fLx9wmUPJq87RF
+         11I/oGUTiZBceIv+cptDmwfIeq9/4LlA0rsq0Xcd9WhnTAAY5B7eqtTI66wYgjCz/ZPB
+         WDHMpKziTG9rSboiOmFEtcEjQApO5IOkLJjmebNmYPi0aKlUVPVw7dlLOwFx8Wlau2ap
+         hn5g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1762347218; x=1762952018;
+        d=1e100.net; s=20230601; t=1762347467; x=1762952267;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=uXTWMvD9XNNtJ+0IuDLHxEJ/55opUg4uFPpMppU+ANg=;
-        b=WhvdmKv20FM7+22hsJQ5bOxoMpIQra+sEao9cMdAe9UMpMU9r+ZImnw+Pxqv6Xb0kM
-         z4H2C6/fery/k+fBHrbEa6X/qArkZ6wSAr0ZkKpdjlFffX6+9zXtDm6CURot0QGxqT/6
-         /rK1CWtbSgtIuEUHG5wdd6WirbdK+V27WdvpBsYP+F+toDM7n0RmICQcCHdht3SI6Xz0
-         Z1X9S9MmKzpVYiHXBglGcrAgAkRQ4kgvT2joTYEJNZVJtgkUkc9E80YVuLMzBHspk1Cv
-         MJKmU2sSfmFYifG0nQyK/K0Bw2hPBP9QSTlQfdIxoIX83OEmjMgQfDMgayE4JDqKyYNh
-         a7rQ==
-X-Forwarded-Encrypted: i=1; AJvYcCUaPdOKLl/E53a8Cf0LNOoeVGVhBwFYElLY0Xal5GcsJCtqWjPt3xuT04yOgffPsiLzz13gHcaI1FsR5zPC@vger.kernel.org
-X-Gm-Message-State: AOJu0YzroWL3g/CP+qBp2n6uiUsAcLLYY9RuqQBVm6rxN3C+hfMmelIR
-	bXDqF8JyI8tYF70wd0uY9upmQ4YtbqvNX5mv0PQVm7bG8qotOATvYUXb
-X-Gm-Gg: ASbGncuSDr5B1q64OrSZSpsW/E3uBjx/5BoxXRL0TZFP96aY/f0hxzwvGuyavd9D3bv
-	HPruScw7A646r0PxDeM5DORr4Vn1j8DhgK9cGycme1L6kWraJwpeqzQeDlKGuK1OnayctomZKa8
-	xzFkLpDsYr2xb8y7HXm/73JuyZANE8W1RE5UdJIOJt2Xt/sM/3cev/I5RPGVOvpYPj43T0XGxkj
-	TUQqKISyIw92i5aeu7vMhGT/eGZnpLRyNbxejuB/PiTnAG5Hshv6ApWVuXFnrjVk8WvjnmQmIkl
-	68evX9LKf4zX/hSYj4oBXVEbBTp2rYOu4FK6EqxXNbjAr/sDC7e6qVeo0aE4Z2WdxD3Ke8dQwse
-	RQ65Q5aarJARRWE9MWx7Gi+kSjbUWtOPcxExPuTk14pNxE80z6zFw0NPPCUxphUUG1oQ7fLSwOE
-	GvcOi/kDI26iJt
-X-Google-Smtp-Source: AGHT+IHDL9eiMgzkVlgRWTri8WIsiKSHk1G9FSbzFFFh7VWfcOfgAFDPdxNgUrmGjQyDZbwKIMBq/Q==
-X-Received: by 2002:a17:902:da88:b0:27d:6f37:7b66 with SMTP id d9443c01a7336-2962adb9263mr50059675ad.47.1762347217742;
-        Wed, 05 Nov 2025 04:53:37 -0800 (PST)
+        bh=Vr6PsIqaDjxaH/cpBwS9aE8aleV9ylkOxYVPRloXRC0=;
+        b=uVH7q54b4Q9HG1q+HSHIP5YfRr1XbDzfWf4iBa1XGlcW99sN7s6EimECVopul0Subk
+         KONB1me5MkwiJ2PMN6D1lU62sXOG87GBrT7XrJyOufYnMl+xwoWommt3nG6ZQQv88/4d
+         /R9g2npEhsUdcAu+z2T9VKANCbZ2Ydg3KtrtYoqt8ZqzIXrlpGZWEDfdUgAq2FE4GjMD
+         mgEDAZSleXItnl7GN7UkmgBsGuIqnQC/kj4pdej5eInb/ymwdLPgZ0GTvDh7sMnGjA8i
+         ci7LHFSyI+JO50B0vZhyVkpFZY6LbBe5T7ughD/z/2EQoPX0krT27s9+BzYNxmMLs+OQ
+         B+Ug==
+X-Forwarded-Encrypted: i=1; AJvYcCVquZAxIgachtoPE1LbPoLojS1Kj3KmcrkfVq9sTURQ6ET8kFo8MT2boyA/Ccj5k+n69sdeIeDuIfhPr8AB@vger.kernel.org
+X-Gm-Message-State: AOJu0YypiYhVYObU9+EPLz8PN+OWyGt3mZsxP/lOgWY/WZG1CGH68mQp
+	hV62XjopONCQwmbw5T4O8Y6eCV4HEruZUN/WAg4cGZ8v8vWVS6162sfT
+X-Gm-Gg: ASbGncv/ZR5PM6rM7fTusOMY2OJ/jAtUL+F8fqvZ27BOi7Vbx9x6ZmOP7YmxQQf+MwV
+	VOvr6UoGMOB89EHxShYoVRXggOfH6zxciFa1CqBxcHrA7L6/8FG3zt8gvAc44afYXRzD3SIDNKg
+	lXM2RpzbnRBtCfh5VXFeRm1pBr7MG4jpeeXQKY8q5+PpweUI7mQ1bQNp2eNAXY4t+W2x12MGT0F
+	V2MbE58YocfUVc3oe28qT0LDkHKCuhLT4N7bXcL8isn9QM+M0jRX6WLbN6EJuYKMEAm5yZnfePa
+	OAYEAwzlfbAJ8H0dOeqqhq2H/ZxE0ZEhKHSuYZ1JwyLqJLTXoEIqvt3Jxw8GjLvgaZ2tbD32yR2
+	sdvCtQgMS4u4r60D/E8S1JU08rmJ+rsOuxp4/4f4IT/MtUbUyJoSi3pb+qbkNVnUoGD99DzM/yD
+	fjbIOOHYLyOZSYzXBnSvoGpDI=
+X-Google-Smtp-Source: AGHT+IF/tAWCYp/lgefsgtHlbqrg/hhGf8vpbe20agZqQuaywYqcLauuHDzVmD/ISXzLYKlDef5s+A==
+X-Received: by 2002:a17:90b:590b:b0:340:2a16:94be with SMTP id 98e67ed59e1d1-341a6c2c740mr3688090a91.4.1762347466974;
+        Wed, 05 Nov 2025 04:57:46 -0800 (PST)
 Received: from [172.17.49.162] ([103.218.174.2])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-341a689ad7fsm2938352a91.2.2025.11.05.04.53.33
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-341a689ad7fsm2950374a91.2.2025.11.05.04.57.43
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 05 Nov 2025 04:53:37 -0800 (PST)
-Message-ID: <1e13b14a-83eb-4ab3-b5e3-4721a6026b65@gmail.com>
-Date: Wed, 5 Nov 2025 18:23:32 +0530
+        Wed, 05 Nov 2025 04:57:46 -0800 (PST)
+Message-ID: <58afe57b-68e8-4de3-841a-df3dbf04ee64@gmail.com>
+Date: Wed, 5 Nov 2025 18:27:42 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -83,75 +83,91 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 2/2] arm64: dts: qcom: talos-evk: Add support for
- QCS615 talos evk board
-To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, andersson@kernel.org,
- konradybcio@kernel.org
-Cc: robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org,
- linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v5 0/2] Add Qualcomm Technologies, Inc. Talos EVK SMARC
+ support
+To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Cc: andersson@kernel.org, konradybcio@kernel.org, robh@kernel.org,
+ krzk+dt@kernel.org, conor+dt@kernel.org, linux-arm-msm@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
 References: <20251104125126.1006400-1-tessolveupstream@gmail.com>
- <20251104125126.1006400-3-tessolveupstream@gmail.com>
- <27f51013-9276-4e41-b57d-fb0baaec5bc6@oss.qualcomm.com>
- <4e3b01fa-174b-4de3-a5ef-67f51f0b2033@gmail.com>
- <c2b91dd0-1b0c-43bc-ad3e-5e4b136c75c9@oss.qualcomm.com>
+ <xq4jidiffovpg3armhlzrzxloug4irumlycyyvmfaugajbtq4t@cutuj5736ayo>
 Content-Language: en-US
 From: Tessolve Upstream <tessolveupstream@gmail.com>
-In-Reply-To: <c2b91dd0-1b0c-43bc-ad3e-5e4b136c75c9@oss.qualcomm.com>
+In-Reply-To: <xq4jidiffovpg3armhlzrzxloug4irumlycyyvmfaugajbtq4t@cutuj5736ayo>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 
 
-On 05/11/25 16:39, Konrad Dybcio wrote:
-> On 11/5/25 11:01 AM, Tessolve Upstream wrote:
+On 05/11/25 06:35, Dmitry Baryshkov wrote:
+> On Tue, Nov 04, 2025 at 06:21:24PM +0530, Sudarshan Shetty wrote:
+>> Hi all,
 >>
+>> This patch series adds device tree binding and board support for the
+>> Qualcomm Technologies, Inc. Talos EVK SMARC platform based on the
+>> QCS615 SoC.
 >>
->> On 04/11/25 19:57, Konrad Dybcio wrote:
->>> On 11/4/25 1:51 PM, Sudarshan Shetty wrote:
->>>> Introduce the device tree support for the QCS615-based talos-evk
->>>> platform, which follows the SMARC (Smart Mobility ARChitecture)
->>>> standard. The platform is composed of two main hardware
->>>> components: the talos-evk-som and the talos-evk carrier board.
->>>
->>> How is the carrier board a separate entity from the "talos-evk.dts"?
+>> The first patch introduces the DT binding entry for the Talos EVK
+>> SMARC board, and the second patch adds the corresponding DTS
+>> files for the platform.
 >>
->> The talos-evk platform follows a modular SoM + carrier design.
->> In our current implementation:
->> talos-evk-som.dtsi — describes SoM-specific components.
->> talos-evk-cb.dtsi — represents the carrier board and includes the
->> SoM file, adding carrier-specific interfaces (micro SD, power button etc.).
->> talos-evk.dts — includes both the SoM and CB DTSIs and enables HDMI 
->> display configuration.
->> talos-evk-lvds.dts — also includes both the SoM and CB DTSIs but enables 
->> LVDS instead of HDMI.
+>> Note:
+>> USB(usb_1_dwc3) supports host-only mode based on the switch SW1 on
+>> the SoM, which is purely a hardware controlled as USB-ID and USB-VBUS
+>> is not connected the switching cannot be handled from SW.
+>> Hence from SW Host-only mode is supported on Linux boot up.
 >>
->> HDMI and LVDS share the same DSI output and cannot be used simultaneously.
->> Therefore, we provide separate top-level DTS files (talos-evk.dts for HDMI
->> and talos-evk-lvds.dts for LVDS), while keeping common board
->> logic in talos-evk-cb.dtsi.
->>
->> Hence, layer looks as below:
->>
->> talos-evk-som.dtsi
->> ├── talos-evk-cb.dtsi (includes som)
->> │    ├── talos-evk.dts (HDMI)
->> │    └── talos-evk-lvds.dts (LVDS)
->>
->> This ensures modularity, and properly models mutually exclusive display
->> configurations.
+>> Changes in v5:
+>>  - Updated commit message. (suggested by Krzysztof)
+>>  - Introduced generic node name for can, dp, hdmi-bridge. (suggested by
+>>    Krzysztof)
+>>  - Introduced talos-evk-cb.dtsi, which has common carrier board
+>>    interfaces.
 > 
-> And are both the LVDS display and HDMI converter on separate add-in boards?
+> Common between what?
+
+Introduced talos-evk-cb.dtsi to define carrier board–specific interfaces
+common to both HDMI and LVDS top-level DTS variants.
 > 
-Both HDMI and LVDS interfaces are present on the same carrier board, 
-but they share the same DSI output from the SoM.
-
-The hardware requires physical reconfiguration (resistor changes)
-to select either the ADV7535 HDMI path or the LVDS bridge path.
-
-Because they cannot be used simultaneously and represent different hardware
-configurations, we provide two separate DTS files — one for HDMI and 
-one for LVDS — while keeping the common carrier definitions in talos-evk-cb.dtsi.
-> Konrad
+>>  - No functional change in bindings file.
+>>
+>> Changes in v4:
+>>  - Updated product name to full form per Krzysztof’s feedback in
+>>    dt-binding comment.
+>>  - Hook up the ADV7535 DSI-to-HDMI bridge to base DTS file.
+>>  - Add DP connector node and MDSS DisplayPort controller.
+>>  - Added USB note in the cover letter for maintainers' awareness.
+>>
+>> Changes in v3:
+>>  - Addressed comments from Dmitry regarding USB1 `dr_mode` and 
+>>    added a DTS comment.
+>>  - No functional change in bindings file.
+>>
+>> Changes in v2:
+>>  - Renamed compatible to "qcom,talos-evk" (suggested by Dmitry/Bjorn)
+>>  - Merged enum entry with existing `qcs615-ride` block (Krzysztof)
+>>  - Fixed subject and commit message to use imperative mood.
+>>
+>> Thanks,
+>> Sudarshan
+>>
+>> Sudarshan Shetty (2):
+>>   dt-bindings: arm: qcom: talos-evk: Add QCS615 Talos EVK SMARC platform
+>>   arm64: dts: qcom: talos-evk: Add support for QCS615 talos evk board
+>>
+>>  .../devicetree/bindings/arm/qcom.yaml         |   1 +
+>>  arch/arm64/boot/dts/qcom/Makefile             |   1 +
+>>  arch/arm64/boot/dts/qcom/talos-evk-cb.dtsi    |  56 +++
+>>  arch/arm64/boot/dts/qcom/talos-evk-som.dtsi   | 442 ++++++++++++++++++
+>>  arch/arm64/boot/dts/qcom/talos-evk.dts        |  87 ++++
+>>  5 files changed, 587 insertions(+)
+>>  create mode 100644 arch/arm64/boot/dts/qcom/talos-evk-cb.dtsi
+>>  create mode 100644 arch/arm64/boot/dts/qcom/talos-evk-som.dtsi
+>>  create mode 100644 arch/arm64/boot/dts/qcom/talos-evk.dts
+>>
+>> -- 
+>> 2.34.1
+>>
+> 
 
 
