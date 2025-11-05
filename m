@@ -1,141 +1,178 @@
-Return-Path: <linux-arm-msm+bounces-80400-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-80401-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [142.0.200.124])
-	by mail.lfdr.de (Postfix) with ESMTPS id F3DC2C345BD
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 05 Nov 2025 08:54:22 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1AAD7C34650
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 05 Nov 2025 09:06:57 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 3061D4F0199
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Nov 2025 07:53:30 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 1406F189C2E1
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Nov 2025 08:06:33 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 44F782C0F83;
-	Wed,  5 Nov 2025 07:53:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 791332550A4;
+	Wed,  5 Nov 2025 08:06:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="GsQVfuKa"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="sHiP+mHE"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A296322068F;
-	Wed,  5 Nov 2025 07:53:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44CBE19D093;
+	Wed,  5 Nov 2025 08:06:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762329207; cv=none; b=W4LTuxpgLSgS2dgZkkY7iVgV+6GX5RcYUp/lMKtClNUjyUn4NHKDSQMzDl7myaIe/Uxc/3cR97nt7FzGYk/dMf0oKgOyRFIPzNrYRdySk7wWuewA8p6QDJiftt64a+F9Uv2UwyZAD9ju1YWC66uki72u73CqVpbDVgmTP4vCZ7w=
+	t=1762329962; cv=none; b=OjjrFB2ynEn1sQtjvqUkPA0RwS7v8YF/rI8YjXYyTUlgBd1lkzzz5JPtX5KCEzSasig5ign4O7In4B3llx63TKKegLraDiqHtRUYVzQ9QjmR824ZDHKJFRvaDV2BookGjk+Y++9n61ueNDyAwS1yqGE7iaJGHa5uizNuGH2zRE8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762329207; c=relaxed/simple;
-	bh=JWnuy2QJ9LYP+KmfWcfCIvf7AMu8rGfQCOVCcklh5vs=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=GflbhWF7ERGYTru0a1OTV10mgsxEYVs9Qv2dZQQ1mk59HGYSJtJkqKyP7TT2IO6ggx04PEL5VJTFs1cUkSD34+ysYymosc83Q8oTA9F0HRAKZ7MZ7ZnQzOMwuw/8d1uOWxraXrw8A3p8+FfsNyT1P3KWjyKZGLrwJTjZggC2vxI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=GsQVfuKa; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=qualcomm.com
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 5A57q7Tr2904354;
-	Wed, 5 Nov 2025 07:53:15 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:date:from:message-id:mime-version
-	:subject:to; s=qcppdkim1; bh=WfHcdCY+e08e/1Qn/B+3vs4cSNT1ySicRxT
-	SQHw1zs4=; b=GsQVfuKaQ+AAR0NNWC05x78NmnmrMinprOBr2h3fRX6kzdEzEmK
-	/Q3pUN6hzSxkOGaLL6Rn/EwwChCMkhIIBqu8XqUhivKVTdWya+U7HYzfvloXOwPl
-	elJqfz4QYIyt92zOJ9/NxE5FgNd+BF/isJazKwRR3h0F2VXiUHGIIAZ2uH5exkf0
-	uT0ZEypWsBkMMGYgT3SDyrVZh/PSDEeZ/NoFYdv/Pw3c9m2BZrZL6kYO5TMKQ/++
-	eH9PTUiCeGjl/JFGt6Y5iLvznLM0EZXXitmP0M6IePslR9+Bcq6SbsdqrKWteidb
-	Jk0H+VDrnaWTBFqAWgiBGf7DRZPMOmQ/YBQ==
-Received: from apblrppmta01.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4a7mbbtgwb-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 05 Nov 2025 07:53:14 +0000 (GMT)
-Received: from pps.filterd (APBLRPPMTA01.qualcomm.com [127.0.0.1])
-	by APBLRPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTP id 5A57rB3P016283;
-	Wed, 5 Nov 2025 07:53:11 GMT
-Received: from pps.reinject (localhost [127.0.0.1])
-	by APBLRPPMTA01.qualcomm.com (PPS) with ESMTPS id 4a5b9mbfw9-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 05 Nov 2025 07:53:11 +0000
-Received: from APBLRPPMTA01.qualcomm.com (APBLRPPMTA01.qualcomm.com [127.0.0.1])
-	by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 5A57p76q014357;
-	Wed, 5 Nov 2025 07:53:11 GMT
-Received: from hu-devc-hyd-u22-c.qualcomm.com (hu-charante-hyd.qualcomm.com [10.213.97.134])
-	by APBLRPPMTA01.qualcomm.com (PPS) with ESMTPS id 5A57rBp4016277
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 05 Nov 2025 07:53:11 +0000
-Received: by hu-devc-hyd-u22-c.qualcomm.com (Postfix, from userid 389980)
-	id B2C435DA; Wed,  5 Nov 2025 13:23:09 +0530 (+0530)
-From: Charan Teja Kalla <charan.kalla@oss.qualcomm.com>
-To: robin.clark@oss.qualcomm.com, will@kernel.org, robin.murphy@arm.com,
-        joro@8bytes.org, dmitry.baryshkov@oss.qualcomm.com
-Cc: iommu@lists.linux.dev, linux-arm-msm@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
-        Charan Teja Kalla <charan.kalla@oss.qualcomm.com>
-Subject: [PATCH] iommu/arm-smmu: add actlr settings for mdss and fastrpc
-Date: Wed,  5 Nov 2025 13:23:07 +0530
-Message-Id: <20251105075307.1658329-1-charan.kalla@oss.qualcomm.com>
-X-Mailer: git-send-email 2.34.1
+	s=arc-20240116; t=1762329962; c=relaxed/simple;
+	bh=CxAJ3KccY2zae38rhawiCFbJ66QYrjoRUmz87TLzoo0=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=fSAySg2GJFxsIiJFxYqv90Wv1wwmp9P+1nTBgwgdkI3w47adV42/UxM3jAFO05nsKmd4Oe0rgDo7ZbZ5uHhVy7HUatx0/akuTZ4HnAyDNM4/LxFfoP6h56+hp1SRAGm/ykFK0xOkxYNWJEEmWqJsMvS2TsFSzcfz6orIbjLVXq8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=sHiP+mHE; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE10FC4CEFB;
+	Wed,  5 Nov 2025 08:05:58 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1762329960;
+	bh=CxAJ3KccY2zae38rhawiCFbJ66QYrjoRUmz87TLzoo0=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=sHiP+mHEW8anzc5JEStyDPbaOWOHRf4eTzHGAo9eQ3Ki9ozyyaAJtv/Dvd822zJ+K
+	 pnHZxXnz3ROfAe/cdXJIG7i8OlnVqckVikd0JbtkPDsqK1dxaUtaP6z1Wdz5SEQwgE
+	 S5D+kFFpkjhJRpVyhS7CllzteeYSPuvKw9Mc4+rNOctscU4e13NcCY1bANMQvuk23J
+	 qjv0H7mb6B119OtSCEydDD5Behe8usMvmv22tHcIDaVAalqWUHEWR3F54IOI4sEgua
+	 Z067ylMnz5CkAAGCLpu3F3GZ6ZypHFVSR3DviT8nFIuzgyGuuWphgofAnhYWUR5+yW
+	 VEK+EeAhEeJ0Q==
+Message-ID: <d3f2810f-7361-4a23-adb3-32a73ad50519@kernel.org>
+Date: Wed, 5 Nov 2025 09:05:57 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-QCInternal: smtphost
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: g_pz8dCGrU-BSQYq5IksI9jId3nMmTI4
-X-Proofpoint-GUID: g_pz8dCGrU-BSQYq5IksI9jId3nMmTI4
-X-Authority-Analysis: v=2.4 cv=MK1tWcZl c=1 sm=1 tr=0 ts=690b026a cx=c_pps
- a=Ou0eQOY4+eZoSc0qltEV5Q==:117 a=Ou0eQOY4+eZoSc0qltEV5Q==:17
- a=6UeiqGixMTsA:10 a=VkNPw1HP01LnGYTKEx00:22 a=EUspDBNiAAAA:8
- a=KZ8tkDdTZV_0uGpIK1sA:9 a=cPQSjfK2_nFv0Q5t_7PE:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMTA1MDA1NyBTYWx0ZWRfX1frM+T4RaKlk
- oKRbbTZZBfqjpfVr8oqLBvfEcO6f9ZxUYr0Bh2PnHT3fb3NhpJI5yR1WeR/JkwFKw+ZKdRPibhx
- Y2kvxViI3+i9KUv9v9fFVw9K/MXL6U7vFNCUYt/sQQbz0bIW1eUCLCLXPw4kcN0kxAjbm7TINJy
- V+CW7TSOdDgbIjBEeyHD56sE/lnVJdpLYgmrl/B+i5mohblH5Fwns1dcYT0Tz/CynP/splgJI4t
- TY3TV+82/mX918IwXM0dhb2JnZhJPFeQpoX5CWCzVaT2e6i6g4TDSddS1d7BCRgkygo2iN/hXOZ
- AS5qwa3nHu1z7T6c7x1/orCAYUMIGgNEvmXC/q+FESTu8jqEPReWUDB7+Rftv1qeellNj/Qk5P0
- 5mzaJP3nX2iLrDYma7p3Stqwxam85g==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
- definitions=2025-11-05_03,2025-11-03_03,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 impostorscore=0 phishscore=0 priorityscore=1501
- lowpriorityscore=0 adultscore=0 bulkscore=0 clxscore=1011 spamscore=0
- suspectscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2510240001
- definitions=main-2511050057
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 1/1] cpufreq: qcom-nvmem: add compatible fallback for
+ ipq806x for no SMEM
+To: Christian Marangi <ansuelsmth@gmail.com>, Ilia Lin <ilia.lin@kernel.org>,
+ "Rafael J. Wysocki" <rafael@kernel.org>,
+ Viresh Kumar <viresh.kumar@linaro.org>, linux-pm@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+Cc: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+References: <20251104140635.25965-1-ansuelsmth@gmail.com>
+ <20251104140635.25965-2-ansuelsmth@gmail.com>
+From: Krzysztof Kozlowski <krzk@kernel.org>
+Content-Language: en-US
+Autocrypt: addr=krzk@kernel.org; keydata=
+ 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 a/A=
+In-Reply-To: <20251104140635.25965-2-ansuelsmth@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-Add ACTLR settings for the device nodes with below compatibility
-and is mainly targeted for sa8775p:
-1) sa8775p-mdss
-2) qcom,fastrpc-compute-cb
+On 04/11/2025 15:06, Christian Marangi wrote:
+> On some IPQ806x SoC SMEM might be not initialized by SBL. This is the
+> case for some Google devices (the OnHub family) that can't make use of
+> SMEM to detect the SoC ID.
+> 
+> To handle these specific case, check if the SMEM is not initialized (by
+> checking if the qcom_smem_get_soc_id returns -ENODEV) and fallback to
+> OF machine compatible checking to identify the SoC variant.
+> 
+> Suggested-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+> Signed-off-by: Christian Marangi <ansuelsmth@gmail.com>
+> ---
+>  drivers/cpufreq/qcom-cpufreq-nvmem.c | 35 ++++++++++++++++++++++++++--
+>  1 file changed, 33 insertions(+), 2 deletions(-)
+> 
+> diff --git a/drivers/cpufreq/qcom-cpufreq-nvmem.c b/drivers/cpufreq/qcom-cpufreq-nvmem.c
+> index 3a8ed723a23e..17c79955ff2f 100644
+> --- a/drivers/cpufreq/qcom-cpufreq-nvmem.c
+> +++ b/drivers/cpufreq/qcom-cpufreq-nvmem.c
+> @@ -252,13 +252,22 @@ static int qcom_cpufreq_krait_name_version(struct device *cpu_dev,
+>  	return ret;
+>  }
+>  
+> +static const struct of_device_id qcom_cpufreq_ipq806x_match_list[] = {
+> +	{ .compatible = "qcom,ipq8062", .data = (const void *)QCOM_ID_IPQ8062 },
+> +	{ .compatible = "qcom,ipq8064", .data = (const void *)QCOM_ID_IPQ8064 },
+> +	{ .compatible = "qcom,ipq8065", .data = (const void *)QCOM_ID_IPQ8065 },
+> +	{ .compatible = "qcom,ipq8066", .data = (const void *)QCOM_ID_IPQ8066 },
+> +	{ .compatible = "qcom,ipq8068", .data = (const void *)QCOM_ID_IPQ8068 },
+> +	{ .compatible = "qcom,ipq8069", .data = (const void *)QCOM_ID_IPQ8069 },
+> +};
+> +
+>  static int qcom_cpufreq_ipq8064_name_version(struct device *cpu_dev,
+>  					     struct nvmem_cell *speedbin_nvmem,
+>  					     char **pvs_name,
+>  					     struct qcom_cpufreq_drv *drv)
+>  {
+> +	int msm_id = -1, ret = 0;
+>  	int speed = 0, pvs = 0;
+> -	int msm_id, ret = 0;
+>  	u8 *speedbin;
+>  	size_t len;
+>  
+> @@ -275,8 +284,30 @@ static int qcom_cpufreq_ipq8064_name_version(struct device *cpu_dev,
+>  	get_krait_bin_format_a(cpu_dev, &speed, &pvs, speedbin);
+>  
+>  	ret = qcom_smem_get_soc_id(&msm_id);
+> -	if (ret)
+> +	if (ret == -ENODEV) {
+> +		const struct of_device_id *match;
+> +		struct device_node *root;
+> +
+> +		root = of_find_node_by_path("/");
+> +		if (!root) {
+> +			ret = -ENODEV;
+> +			goto exit;
+> +		}
+> +
+> +		/* Fallback to compatible match with no SMEM initialized */
+> +		match = of_match_node(qcom_cpufreq_ipq806x_match_list, root);
 
-As a side note, "qcom,fastrpc" compatibility is already defined but that
-seems inept as the devices that will be attached to the SMMU is going to
-be with "qcom,fastrpc-compute-cb" compat string.
+Aren't you re-implementing matching machine? Or actually - the socinfo
+driver? You are doing the matching of compatible into SOC ID second
+time. Just do it once - via socinfo driver.
 
-Signed-off-by: Charan Teja Kalla <charan.kalla@oss.qualcomm.com>
----
- drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c | 4 ++++
- 1 file changed, 4 insertions(+)
-
-diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
-index c21a401c71eb..c76f6076f487 100644
---- a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
-+++ b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
-@@ -47,6 +47,10 @@ static const struct of_device_id qcom_smmu_actlr_client_of_match[] = {
- 			.data = (const void *) (PREFETCH_SHALLOW | CPRE | CMTLB) },
- 	{ .compatible = "qcom,sm8550-mdss",
- 			.data = (const void *) (PREFETCH_DEFAULT | CMTLB) },
-+	{ .compatible = "qcom,sa8775p-mdss",
-+			.data = (const void *) (PREFETCH_DEFAULT | CMTLB) },
-+	{ .compatible = "qcom,fastrpc-compute-cb",
-+			.data = (const void *) (PREFETCH_DEEP | CPRE | CMTLB) },
- 	{ }
- };
- 
--- 
-2.34.1
-
+Best regards,
+Krzysztof
 
