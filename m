@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-80412-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-80413-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id F01A9C34AB8
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 05 Nov 2025 10:05:19 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id A5A53C34B36
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 05 Nov 2025 10:10:36 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 1B4F31883E76
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Nov 2025 09:03:43 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 266781883E42
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Nov 2025 09:07:33 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BF8DC2E54AA;
-	Wed,  5 Nov 2025 09:03:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C16972FB0AA;
+	Wed,  5 Nov 2025 09:06:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="YI/2gs+0"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="twZ2xhRO"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EAB23F9FB;
-	Wed,  5 Nov 2025 09:03:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9063A21D3F2;
+	Wed,  5 Nov 2025 09:06:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762333390; cv=none; b=a6JlBH6kZ+KUrERO4NcQ57SVo0MWsxiZ2gb7k5B4z3W2VMM4W+e4JbU8qbs2NVvd4LExlNJ4H6CYM4/ijUWfjZi1l+hamYuzGyb+v6ogj2XCpvkpdUqc40AVXh0DAO9gBLGrTP34j7g1MDQrUiO4ucokTNeLO5bqTmkpb3NgWTg=
+	t=1762333567; cv=none; b=pJhT9tYdE4p0xN+eREFWTpzoJJSkZXNw5Gqymekd7AhODzwYdq6tRAYBPIgUvYHoTysqAO5U2H9lSMWKXX7QB+sqN5MS2cRB4RE7KL1iXyG4f2hJjeLe9h69HpDDBp7vR7O1x6QtCZFjCOB9I0tcrNrJkvEyDyReWD4IbNYWAiQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762333390; c=relaxed/simple;
-	bh=hQ/jGydxUaD/JpGjbYckC8YXEagYSitACWYk/eSODd8=;
+	s=arc-20240116; t=1762333567; c=relaxed/simple;
+	bh=ZD5azKHvw0PZPSJq2qS7q/xJk5AQrGcPEbBQCh7ll8Y=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=QFQ4bBBE2c0DdNGNIF3eM2cIMDsP5S0OWYTT2Xl/nKbtFty2yps+dU487VUBX3y2um/zGBiqb49VTBOzIrfa/45tqmm53UPm7VmJOdzKXxISXoH1HR3uiZNI0GWZAuHocs88wuhkTZl8s1mzXtb1wLxPmoG9qlPKO6q580f5uwo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=YI/2gs+0; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81BE1C4CEFB;
-	Wed,  5 Nov 2025 09:03:07 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=Gss5fO/vYconarVTLm+/dfcmH0PIPU7oo338dDm2G9d9khxnhSU0Sh4xSUtIahAKGA59OO7etiuqr29drc5j/XoOi7vyOUr84wDIvP6iM9UaaGLUCeUtuDoCuSn01YlCS9kQY1sQc62UJeTU+rE+F6QibKyD25rIiInOC8DKXtg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=twZ2xhRO; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9783EC4CEF8;
+	Wed,  5 Nov 2025 09:06:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1762333390;
-	bh=hQ/jGydxUaD/JpGjbYckC8YXEagYSitACWYk/eSODd8=;
+	s=k20201202; t=1762333567;
+	bh=ZD5azKHvw0PZPSJq2qS7q/xJk5AQrGcPEbBQCh7ll8Y=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=YI/2gs+0AWGiBduFomCc+RSz1PCliizkdX1DVBz+qdRtB9QHQQlvuvravV0A+hm6Y
-	 ycTn1M9KZzRuZMz7gB5uMs7MsAQvhmziwe3rlInOFvLpQUzlJQTsuY5c104zvEuoxo
-	 3PlPRyS3XQuTDMfwJylcUp/NXIjsh8qSiRhz+kLr7LGN7G9HzijAeWQShxUJNg9v7Q
-	 zzVixHEinoDnPZ3y05mHfFklPh8ujBSlB1JmIOrQyd+nnuBhz8US5fu3yBfHsd6fP2
-	 NUHT9+mZDjkEy4cA0w2m1GLt9Jboh4Abz5kU29UCjPR4wRojFiUtOMKGfCLtC8J/rK
-	 6lS6a34xQoImQ==
-Message-ID: <38452e04-255e-477d-8262-53aeb3c87a01@kernel.org>
-Date: Wed, 5 Nov 2025 10:03:04 +0100
+	b=twZ2xhROt8QLVBUdNQk5rOXFyW4cVEZxdzIgrh8DbVN1yl9LA16Qqfsix4nneZPVD
+	 5lXezOIKqiDRjqoXNeeJWwTMKL+gEEj1GIptalyQuqNQQUT6WZafpa3RZhsvR2mblx
+	 bgh8ME78gSFwy8mvWw3nPkSIcJDZi09qphe0wHWFlTRi90GpoGj8WMh6tq0Q9S8WH6
+	 TujLlJxZ7gIxPKdwKTiYLz8HADYsN0KiDPoxW3nhgevZbYqmvmaFHq5mA7CrhBXNTg
+	 z/zK58AHa1qBAY01R8+JRIHMWvmNmjs+rUjr7YHLecYQ1b7ShvUOjS9KU5FWJbPAHV
+	 dDVQTghMWI/0A==
+Message-ID: <17c3ee70-66e3-418f-8c79-926c8a139d16@kernel.org>
+Date: Wed, 5 Nov 2025 10:06:02 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -114,64 +114,34 @@ Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 On 05/11/2025 09:49, Songwei Chai wrote:
-> 
-> On 11/5/2025 4:15 PM, Krzysztof Kozlowski wrote:
->> On 05/11/2025 09:11, Songwei Chai wrote:
->>> On 11/5/2025 3:49 PM, Krzysztof Kozlowski wrote:
->>>> On Mon, Nov 03, 2025 at 10:40:37PM -0800, Songwei Chai wrote:
->>>>> The Trigger Generation Unit (TGU) is designed to detect patterns or
->>>>> sequences within a specific region of the System on Chip (SoC). Once
->>>>> configured and activated, it monitors sense inputs and can detect a
->>>>> pre-programmed state or sequence across clock cycles, subsequently
->>>>> producing a trigger.
->>>>>
->>>> I do not understand: You got review which you ignored and then you
->>>> removed pieces of this code to make it incorrect. Go back to previous
->>>> versions so you won't waste our time re-doing review.
->>> Hi Krzysztof,
->>>
->>> The previous reviewed-by is no longer applicable because in this
->>> version, we moved
->>>
->>> the driver from /drivers/hwtracing/coresight/ to
->>> /drivers/hwtracing/qcom/. This means the
->>>
->>> required compatible has changed from "/qcom,coresight-tgu/" to "/qcom,tgu/".
->>>
->>> Since this involves changes to devicetree binding, i didn't not carry
->>> over the previous review tags.
->> And which part of changelog explains the exact reasons to drop review
->> tags? Not mentioning that changelog is almost impossible to find, buried
->> under 10 pages of some repetitive introduction
->>
->> Did you read submitting patches?
-> 
-> As I mentioned above, the |compatible| string in this version has 
-> changed compared to
-> 
-> the previously reviewed binding. Therefore, I believe it's a default 
-> rule that the previous
-> 
-> |Reviewed-by|tags are no longer applicable. If the community requires a 
-> note in the changelog to explain this,
-> 
-> I will make sure to include it in the next version.
-> 
-> 
-> “
-> 
-> Did you read submitting patches?
-> 
-> ”
-> 
-> Yes, the explanations in the cover letter were written by me, so I have 
-> definitely read them. All of these explanatory documents are
-> 
 
+> Once again, I apologize for not including these modifications in the 
+> changelog.
+> 
+>> All qcom coresight bindings are called coresight and I do not see reason
+>> why this is being changed.
+> 
+> The reason for removing the |coresight| keywords is that this patch 
+> series was not
+> 
+> accepted by the maintainers of the Coresight subsystem (as explained in 
+> the cover letter).
+> 
+> Therefore, we decided to make it a Qualcomm-specific driver.
 
-Heh, why I am even reviewing this... you indicated in your address list
-that you do not wish review from me, so I will keep that in mind and not
-provide review.
+Use standard email paragraphs
+
+not
+
+broken
+
+by
+
+two lines each.
+
+Anyway, above discussion explains nothing about compatible. I might be
+missing something, so please quote here Mike the part where he asks to
+*change the compatible and hardware name*. Please quote EXACTLY that part.
 
 Best regards,
 Krzysztof
