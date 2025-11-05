@@ -1,361 +1,282 @@
-Return-Path: <linux-arm-msm+bounces-80466-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-80467-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ams.mirrors.kernel.org (ams.mirrors.kernel.org [IPv6:2a01:60a::1994:3:14])
-	by mail.lfdr.de (Postfix) with ESMTPS id 49E8AC36AAC
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 05 Nov 2025 17:23:57 +0100 (CET)
+Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [142.0.200.124])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3001DC36CFB
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 05 Nov 2025 17:52:31 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ams.mirrors.kernel.org (Postfix) with ESMTPS id C141334E6F7
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Nov 2025 16:23:56 +0000 (UTC)
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 8A0344E070F
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Nov 2025 16:46:13 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 812033358B2;
-	Wed,  5 Nov 2025 16:22:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id DDB63333431;
+	Wed,  5 Nov 2025 16:46:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b="B0MH5FsU"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="VixT6fi8";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="W06uXBIF"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f182.google.com (mail-lj1-f182.google.com [209.85.208.182])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 647023271E9
-	for <linux-arm-msm@vger.kernel.org>; Wed,  5 Nov 2025 16:22:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2400926CE3B
+	for <linux-arm-msm@vger.kernel.org>; Wed,  5 Nov 2025 16:46:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762359722; cv=none; b=dvVNXUVyQEkIPqS7iJ9aPiuHPtcGlshUU8Fn8SK1/eBRVwShGC3Io//oxqbL8ISYYf5Av3ccJ5k1M+uW1Pw0LDdBgd/hhGc3dCAb32PR/gaq7158JvNqYYtBSBHN+3G4WEne0q/FwQtNIw9qkJH/KptBk1/x0ttxuMHoRuEgh5c=
+	t=1762361170; cv=none; b=fdwsk61/IRLIxfX5dnXRIs7vHCTGFl1XLnZFpP6/9rtgFBuciWcir16Pbm4VzVnLf07BAoFtCWeSOAv66LEn+fErA+eB5oWyv+AE3OIKOCpUGNx34dl3sHH4YQ+/o8Ws5qxunxMtBplujOCNztPObG7SaBIbNFnc2uRGK9x4fhI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762359722; c=relaxed/simple;
-	bh=FmLX7J25rDa0sDpnK8PyjFiuLnrtWhbfdsiypYmH0H4=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=H5G1u0DjWdGIG3QmgDCqfvXRFzYFbv1NCmAV4VHKW59QD8MEpF/e7KRgcTcnXEWT4vJnhtndFrmjRYPVOlQn7Xs+1y2yJZwoEZTsrFm7/DDm3Z7UmQxGd+vIf5UMhEUJvpbjGRtBgXeKNS0FK0EwgbGZiPTSDX8Fzb7SwZXSIeY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl; spf=none smtp.mailfrom=bgdev.pl; dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b=B0MH5FsU; arc=none smtp.client-ip=209.85.208.182
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=bgdev.pl
-Received: by mail-lj1-f182.google.com with SMTP id 38308e7fff4ca-37a5d03b53dso1213981fa.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 05 Nov 2025 08:22:00 -0800 (PST)
+	s=arc-20240116; t=1762361170; c=relaxed/simple;
+	bh=PcDDIBcEIGtNyT7znZSa4/D1SLEv+wO02puHeHxpSrA=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=etKdp5kl6XYJKhpPzsS4fandOshc48lsoJu+ZVLrBTmwshxKCNShqSy2XwKaqumbrkAf6e4fvhtIGX7E7HAhVzGc3WVH5OUCqvUHARH8S5+cAAWXZKul4scJLfg87OLxeXcf+D7E6x+Y3q38Xnj89KiQyPPyOWfqSOYuRUQ8B/E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=VixT6fi8; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=W06uXBIF; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 5A5EnwM8994679
+	for <linux-arm-msm@vger.kernel.org>; Wed, 5 Nov 2025 16:46:08 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=qcppdkim1; bh=/39PKwKFPjq6vqHlDBh03E
+	gjb7S4PRc4fvYafgd61Yw=; b=VixT6fi8nRXeC0k+VrY2iTrZlvx1i5UG5Xncnm
+	od/PfZETODOe6PkYnJUfoMKDg91TU2P60ML6wj6Ff+4vbo/PEAIK/L965gcwYnCO
+	hmRgS87aJgRx5IGkAdQCzzqJhT+YXYn9+huiQZfhl+FlaB367K/7LJdF7mKEmy0g
+	e7ckavKOSFHX/isu7bxAVQ5nyu9ayGaMDAs07bnHn3JSAceiR7RAqeQnV57PqcsF
+	ZEQwqQ2j+pB7NaLjAKKIqDKdx7H+MtKsg1sNnq2WwkVqeh1F+szu1tt23a4LVq9N
+	/wQ1FxPkvdNcX59yfOrtWQsteCnChHP6pGIzJ4j727eD946w==
+Received: from mail-pj1-f72.google.com (mail-pj1-f72.google.com [209.85.216.72])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4a88pj8cvs-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Wed, 05 Nov 2025 16:46:08 +0000 (GMT)
+Received: by mail-pj1-f72.google.com with SMTP id 98e67ed59e1d1-3418c17d21dso67917a91.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 05 Nov 2025 08:46:08 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=bgdev-pl.20230601.gappssmtp.com; s=20230601; t=1762359718; x=1762964518; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=70ORLyPxlhnDgCvsyxrQcNXPF2cgzUwFaBuwCIGbTrg=;
-        b=B0MH5FsU/ayGL8d3a7IwScLQvaU1EkTn5iXcfLpNJAJ6WFiALgxsuF0JboP2SQ+/89
-         EQ8Dt7XbTnjrE8ODWcBwVAx/h21k+N2ZpVgFjeYq3CLy+8sARyurxU96x1fB2IzBArqS
-         Or812YljRtWBtXyfa3C/rrpgFF+r0y5FMYq4+MUuASrMOofiDr+ZMQxDlaKQGaZqAx9t
-         yjZDjbjL0fF4Gs4TSkUbRwfBC5QBUTXnNRG5GEZnOewba+7sAa+qzwUloMjM1PewlRiR
-         t5+32XHylDFK2+st0ScqzUbo/WnQR+9oSJ3fgwX/t38rddmvzi3AVVtEQsHRKv96wrBd
-         1gsw==
+        d=oss.qualcomm.com; s=google; t=1762361168; x=1762965968; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=/39PKwKFPjq6vqHlDBh03Egjb7S4PRc4fvYafgd61Yw=;
+        b=W06uXBIF8FDIU6Wfc/gXQSZtScKYADSb2hL5CWDiFBFb/OpUNbV4OFPn9IKsnGxaGW
+         lQsPKrYDmoQowOpmpMhMDoNhdOc7F68WYJRg9JJGTQqrijTCbLcw+2VN3IM5d4hSZNP1
+         zjCt8qkkDEVe+2DRtfJ333hk64O+R5FApNF4ghN1bc5UHjxq/kNp0ZCyHtjh8LKrZHBx
+         Adjmgn5/xskc56SAZqPbtt6ep42aBKeJy+prWB5eE+R74nQ1Q3Te5Zf7u1Swjo8XJxX0
+         xnZ/JnqeBulwEX3baQcUCwwo8LaxR+vsnJaktqjgLjPCCqXGx5Rz6uvu8Zx3xO3yx6nH
+         Zo2A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1762359718; x=1762964518;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=70ORLyPxlhnDgCvsyxrQcNXPF2cgzUwFaBuwCIGbTrg=;
-        b=l+sPQzeKyD2PEE0l/N1hJXh72zRcDlFU75ocXJxr9GoTJVJe+c8MHvxUjJFrafCQs6
-         eIJ/sBS/LncawOsugT82G9AxTcGoeXBYhyCCbe3CSpmIFmcmZOxNI0uUr4R1RZRCHizt
-         nVSW/sBckV1QRea9D0cZM1WhG5LQv2pxGbMmqoAplpmmioF9kdc2RgKp3by0uQbpEt2G
-         BMD7FaBFcfeqzBChJ9f2G8VlZseL7sA8mwa7F66CfmICn/DpcD4br3qdt9TFQ0v+aleh
-         gBOnqBBXptwyhSHVtj1qhlIYS4UdVbJ1wod4vl17+9KtP5HCIRJoWE8Iq1DKs0aeyum+
-         Y2qA==
-X-Forwarded-Encrypted: i=1; AJvYcCV3s4o5Zn+yW/XkTXvHyGb911PCnyfohk0iUeOF1vUrMo7fqxQeDS3JX2VaKOZQU3AwgFTMH8fFmCLZc8SS@vger.kernel.org
-X-Gm-Message-State: AOJu0Yx9e3eldGuqRSQTaVSc5KKZIFwdPmgrHrRvAoxrfTMPOnjzBmcM
-	ATHtt/Gx6yfuZuNv1BDL06wIj5YZYP1DeAc9H37l9gfWJKv5WSIF1YPbOtJLbyoF5UrHgLM49Im
-	vVQbfeP/dhR92pFbIDNWfir3zwkp5RTan41Bs6DgUIQ==
-X-Gm-Gg: ASbGncsJTKxgCORgAx1hY5OfLKM1L8a9jBWW4sOiY6Zfqe80QGQBB25ogf9DMouPbXS
-	A4XnE1PFrwu92xlM05oBzxc+C/ohimnadIwDIgcRqAans+fM8/2k2EmI0UXjofmgvfM7BjVr271
-	6lyEoH0rZU+XXYIXHOgPUSbhuwL5dVxwS4sGBTPTT+jZRryh4wyGrMhFZV3hXaepPpkO7fv5J/m
-	ShzT/L1AoYLh2QOLvl5hW6WHgNjmM4h4YhUNz00xLa3X3LNINB0Rn1B1NUnn3ABrI7A8+Tf+24x
-	XyyQFrV6c2RvRN/OGbJvq6qKGqM=
-X-Google-Smtp-Source: AGHT+IGd9nOOO8Cu1iw6z8yTqdKaQ4LRnOY+7cfjhpscr/G2FIDhws1M/PZvAH1qCj7J40uiFyV1gKfF0cHDfmGqY00=
-X-Received: by 2002:a2e:a015:0:b0:37a:3132:fe34 with SMTP id
- 38308e7fff4ca-37a514a1d6bmr10033881fa.48.1762359718227; Wed, 05 Nov 2025
- 08:21:58 -0800 (PST)
+        d=1e100.net; s=20230601; t=1762361168; x=1762965968;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=/39PKwKFPjq6vqHlDBh03Egjb7S4PRc4fvYafgd61Yw=;
+        b=Joacyiq52L1NrGXsAnVQ3hhNZbEoJ0tm8I56CkvkATp+AWCnH4Ak5w6psLVhx0GSfv
+         mrIdMCoVn6uGhZYVEddxRVgt89CbDtCwFqhrN58WbJyFw3NSvALvm6uVpj7taJ0eGELD
+         nqYH13hLjpkzhkiHl/kg4OlOf37KMlkDxsKrbdCBEA5oclvLkIaO/LGQokSU3mclcRQf
+         ExWQqkNJ+cTHth5ocvQw80oLzg0YbtHmL4QQHhqH00G7n+BvQvQ1NTsJnTCjCM+kPH6Z
+         fwVO5QcDy9TWGpt8tRE4CuNkAYPyia9Xxw0FoASyxDU6FoVWCxZQDuFofwwNIvxpsDtJ
+         GEsw==
+X-Forwarded-Encrypted: i=1; AJvYcCWiPUNLWB2x4Bjh031VL2MjMqmK+NDvhhx9/qdDT26m+d5AXQGclKFocW37FuynULGQ2Ak1xB6bHzRO3QVl@vger.kernel.org
+X-Gm-Message-State: AOJu0Yy0uWNHqalE4k0SbJJ3sExjyUsiY8ruR4Z3dylBVkJR2bv3qJkN
+	4HArHU1zRUFNhtoeC/ZUMfyllug38oCahF2WAZN9mT+hpOHPN5Qfd+9TZCZ7W08uW/uYjS+lVkM
+	kQu/47zSvOvsDH/n0KzUSyrGo9qFbksaEYulzjnHvpHKtyNEDDSmyn9z4Ky07ezpeD5JR
+X-Gm-Gg: ASbGncuETNYNQpAIo2lZ8Ff4+z62BwmjNrccKE/h36F3EV7ZcwCXJwtb3fDF7UxCEjU
+	8L2S9jwAcLp4haS/hgf+wWcWDDg+mmX7EqQchjk7xHvHaCDMU55BUx26/PQSy2psUMUaJBsvqQn
+	rwWVVDiAeUPPjMtZeBNFXCSacvFrO1x0rxLKNP2pM/dHU4X+XxxJUlv6b7ZHhqQxQVkK6uaz0iK
+	WDvexpPgMvijEMK3hb8r5I0PfnZoBhEuTjTFlukvBzx7OWTVhSY77kgTUxPX9wAvywS7k33HMhH
+	m3d4NsTcLxT0NYD6UG33Zr1+yZwUldIa59bYfaZHNj3NsKx7wGyUV5zUBawTsaOicFCWLaSYk6H
+	4UZlm8BTN/1UPBxUsNvQmDZQ=
+X-Received: by 2002:a17:90b:4a49:b0:32e:9f1e:4ee4 with SMTP id 98e67ed59e1d1-341a6dd9c48mr5286908a91.17.1762361167402;
+        Wed, 05 Nov 2025 08:46:07 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IEgcT+6/XLEEYHAFLkWWkahGQ+87zU0D5ZMUZde6qTS8n4Sil+15JEtBQZqISHAL207X+eFuA==
+X-Received: by 2002:a17:90b:4a49:b0:32e:9f1e:4ee4 with SMTP id 98e67ed59e1d1-341a6dd9c48mr5286861a91.17.1762361166876;
+        Wed, 05 Nov 2025 08:46:06 -0800 (PST)
+Received: from hu-akhilpo-hyd.qualcomm.com ([202.46.23.25])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-341a68c822dsm3426249a91.8.2025.11.05.08.45.59
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 05 Nov 2025 08:46:06 -0800 (PST)
+From: Akhil P Oommen <akhilpo@oss.qualcomm.com>
+Subject: [PATCH v7 0/5] DRM/MSM: Support for Adreno 663 GPU
+Date: Wed, 05 Nov 2025 22:15:44 +0530
+Message-Id: <20251105-a663-gpu-support-v7-0-1bcf7f151125@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20251105-pci-m2-v1-0-84b5f1f1e5e8@oss.qualcomm.com> <20251105-pci-m2-v1-4-84b5f1f1e5e8@oss.qualcomm.com>
-In-Reply-To: <20251105-pci-m2-v1-4-84b5f1f1e5e8@oss.qualcomm.com>
-From: Bartosz Golaszewski <brgl@bgdev.pl>
-Date: Wed, 5 Nov 2025 17:21:46 +0100
-X-Gm-Features: AWmQ_bniXnoc6lr9i63gxHMeq3DQpk_25xCcVxF2Y4yU4HxZNRN69fcND_aCeYc
-Message-ID: <CAMRc=McB4Zk8WuSPL=7+7kX4RJbdFBNReWZyiFnH8vfVx3DxAg@mail.gmail.com>
-Subject: Re: [PATCH 4/4] power: sequencing: Add the Power Sequencing driver
- for the PCIe M.2 connectors
-To: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
-Cc: Bjorn Helgaas <bhelgaas@google.com>, Manivannan Sadhasivam <mani@kernel.org>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, linux-kernel@vger.kernel.org, 
-	linux-pci@vger.kernel.org, devicetree@vger.kernel.org, 
-	linux-arm-msm@vger.kernel.org, Stephan Gerhold <stephan.gerhold@linaro.org>, 
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIADh/C2kC/3XRzW7CMAwH8FdBOS8odr458R7TDkmTQqTRlqatm
+ BDvvhTEQGp3/Fvxz7F8JTn2KWay21xJH6eUU9uUoD82pDq65hBpCiUTZCiYBU2dUpweupHmsev
+ afqAehJaVQaOYIqWt62OdLnfy86vkY8pD2//cJ0wwV5+YWWITUEZR1tHxmgclwv48pio11bZqT
+ 2TmJvwjgCGuEFgIboLjBrlQVi8J/kZwtkLwQvhQQ7BVVAxhSYgnIZlZ/YUohNUBlfcIQsR9m/P
+ 2PLrvQpxejnw5ltkVRxZHK6gdc0YrX//jqDcH1lZSxZHBgTSoPQq74twe1+tj2Tan4XFC4l2Od
+ H6Uht2miZeBzlMAmCwdt1+HLkdsQQIAAA==
+X-Change-ID: 20240917-a663-gpu-support-b1475c828606
+To: Sean Paul <sean@poorly.run>, Konrad Dybcio <konradybcio@kernel.org>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+        Maxime Ripard <mripard@kernel.org>,
+        Thomas Zimmermann <tzimmermann@suse.de>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Connor Abbott <cwabbott0@gmail.com>,
+        Srinivas Kandagatla <srini@kernel.org>,
+        Rob Clark <robin.clark@oss.qualcomm.com>,
+        Dmitry Baryshkov <lumag@kernel.org>
+Cc: Gaurav Kohli <quic_gkohli@quicinc.com>, linux-arm-msm@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
+        Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>,
+        Akhil P Oommen <akhilpo@oss.qualcomm.com>,
+        Puranam V G Tejaswi <quic_pvgtejas@quicinc.com>,
+        Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+        Krzysztof Kozlowski <krzk@kernel.org>
+X-Mailer: b4 0.14.2
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1762361159; l=4315;
+ i=akhilpo@oss.qualcomm.com; s=20240726; h=from:subject:message-id;
+ bh=PcDDIBcEIGtNyT7znZSa4/D1SLEv+wO02puHeHxpSrA=;
+ b=DuupHbe7N+zgImOfEL0Mmxrj/O9yI0sSVA4F4Hd7ZxpYqyp/SqnhHNYP7OhmBvWfjsvx6O2Ag
+ /PY4o4zW5ygBu1PjX/PO8U9J13aJYEbw5dXUwP9djL4KnHY+3hSS4pC
+X-Developer-Key: i=akhilpo@oss.qualcomm.com; a=ed25519;
+ pk=lmVtttSHmAUYFnJsQHX80IIRmYmXA4+CzpGcWOOsfKA=
+X-Proofpoint-GUID: E0IE1di5rAO7jmdFxCzt2qX9NPD-D86n
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMTA1MDEyOSBTYWx0ZWRfX7AUNDfK2eXgs
+ 1DXuis+e8W48jPFv23oAgPBZ3Ea6Bv6IH7ro5VV/DXltzxwPuULPNoqW2zGzc0Evdd1BiC/gqUT
+ XK3RNPQiK+dP6wR8gVr5TR0T+dlPvROGmi/s3nPnwm4vOS9bnwAT3+wQ80BDWvCNGQfsLMXHarO
+ hgKOupnh0ZeI1n2ETLOfmIStcoYMGH/QaarDGLd70Uu29qpPQJdybxjANvjGYAmqyu11hWz1iZ2
+ AfQiXsd8IzHPFDIFAh6mx0EjklpFKFJYQQ07pa0lOsYXHy63hKjiGdr2Th4pSpNitceum005Rr/
+ qHPtgHIWFbUJAiakZprZQa2tD48Ri7NClyF02Tp1Aytr47aTESNcHFwu5SAXojBeDuRKccjlApW
+ ZM60xa4iKcqelvgYGcRCPI6NHbRLSg==
+X-Proofpoint-ORIG-GUID: E0IE1di5rAO7jmdFxCzt2qX9NPD-D86n
+X-Authority-Analysis: v=2.4 cv=ZODaWH7b c=1 sm=1 tr=0 ts=690b7f50 cx=c_pps
+ a=RP+M6JBNLl+fLTcSJhASfg==:117 a=ZePRamnt/+rB5gQjfz0u9A==:17
+ a=IkcTkHD0fZMA:10 a=6UeiqGixMTsA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8 a=COk6AnOGAAAA:8
+ a=pGLkceISAAAA:8 a=KKAkSRfTAAAA:8 a=tVI0ZWmoAAAA:8 a=QyXUC8HyAAAA:8
+ a=e5mUnYsNAAAA:8 a=jTv6lf4Jh5MpNzVl0_IA:9 a=QEXdDO2ut3YA:10
+ a=iS9zxrgQBfv6-_F4QbHw:22 a=TjNXssC_j7lpFel5tvFf:22 a=cvBusfyB2V15izCimMoJ:22
+ a=-BPWgnxRz2uhmvdm1NTO:22 a=Vxmtnl_E_bksehYqCbjh:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
+ definitions=2025-11-05_06,2025-11-03_03,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ adultscore=0 suspectscore=0 phishscore=0 spamscore=0 clxscore=1015
+ impostorscore=0 malwarescore=0 lowpriorityscore=0 priorityscore=1501
+ bulkscore=0 classifier=typeunknown authscore=0 authtc= authcc= route=outbound
+ adjust=0 reason=mlx scancount=1 engine=8.22.0-2510240001
+ definitions=main-2511050129
 
-On Wed, Nov 5, 2025 at 10:17=E2=80=AFAM Manivannan Sadhasivam
-<manivannan.sadhasivam@oss.qualcomm.com> wrote:
->
-> This driver is used to control the PCIe M.2 connectors of different
-> Mechanical Keys attached to the host machines and supporting different
-> interfaces like PCIe/SATA, USB/UART etc...
->
-> Currently, this driver supports only the Mechanical Key M connectors with
-> PCIe interface. The driver also only supports driving the mandatory 3.3v
-> and optional 1.8v power supplies. The optional signals of the Key M
-> connectors are not currently supported.
->
+This series adds support for Adreno 663 gpu found in SA8775P (Lemans)
+chipsets. The closest gpu which is currently supported in drm-msm is A660.
+Following are the major differences with that:
+	1. gmu/zap firmwares
+	2. Recommended to disable Level2 swizzling
 
-I'm assuming you followed some of the examples from the existing WCN
-power sequencing driver. Not all of them are good or matching this
-one, please see below.
+Verified kmscube/weston/glmark2-es2. This series is rebased on top of
+v6.17-rc1.
 
-> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.=
-com>
-> ---
->  MAINTAINERS                               |   7 ++
->  drivers/power/sequencing/Kconfig          |   8 ++
->  drivers/power/sequencing/Makefile         |   1 +
->  drivers/power/sequencing/pwrseq-pcie-m2.c | 138 ++++++++++++++++++++++++=
-++++++
->  4 files changed, 154 insertions(+)
->
-> diff --git a/MAINTAINERS b/MAINTAINERS
-> index 46126ce2f968e4f9260263f1574ee29f5ff0de1c..9b3f689d1f50c62afa3772a0c=
-6802f99a98ac2de 100644
-> --- a/MAINTAINERS
-> +++ b/MAINTAINERS
-> @@ -20474,6 +20474,13 @@ F:     Documentation/driver-api/pwrseq.rst
->  F:     drivers/power/sequencing/
->  F:     include/linux/pwrseq/
->
-> +PCIE M.2 POWER SEQUENCING
-> +M:     Manivannan Sadhasivam <mani@kernel.org>
-> +L:     linux-pci@vger.kernel.org
-> +S:     Maintained
-> +F:     Documentation/devicetree/bindings/connector/pcie-m2-m-connector.y=
-aml
-> +F:     drivers/power/sequencing/pwrseq-pcie-m2.c
-> +
->  POWER STATE COORDINATION INTERFACE (PSCI)
->  M:     Mark Rutland <mark.rutland@arm.com>
->  M:     Lorenzo Pieralisi <lpieralisi@kernel.org>
-> diff --git a/drivers/power/sequencing/Kconfig b/drivers/power/sequencing/=
-Kconfig
-> index 280f92beb5d0ed524e67a28d1c5dd264bbd6c87e..f5fff84566ba463b55d3cd0c0=
-7db34c82f9f1e31 100644
-> --- a/drivers/power/sequencing/Kconfig
-> +++ b/drivers/power/sequencing/Kconfig
-> @@ -35,4 +35,12 @@ config POWER_SEQUENCING_TH1520_GPU
->           GPU. This driver handles the complex clock and reset sequence
->           required to power on the Imagination BXM GPU on this platform.
->
-> +config POWER_SEQUENCING_PCIE_M2
-> +       tristate "PCIe M.2 connector power sequencing driver"
-> +       depends on OF || COMPILE_TEST
+Due to the SKU detection support in this series, the device tree series
+technically has a runtime dependency on the driver change in patch#1.
+But I think that is okay since we never had GPU support in this
+platform and  the gpu support is enabled here. 
 
-The OF dependency in the WCN driver is there because we're doing some
-phandle parsing and inspecting the parent-child relationships of the
-associated nodes. It doesn't look like you need it here. On the other
-hand, if you add more logic to the match() callback, this may come
-into play.
+Apologies for the back to back rev bump. I am hoping to get this picked
+up for v6.18.
 
-> +       help
-> +         Say Y here to enable the power sequencing driver for PCIe M.2
-> +         connectors. This driver handles the power sequencing for the M.=
-2
-> +         connectors exposing multiple interfaces like PCIe, SATA, UART, =
-etc...
-> +
->  endif
-> diff --git a/drivers/power/sequencing/Makefile b/drivers/power/sequencing=
-/Makefile
-> index 96c1cf0a98ac54c9c1d65a4bb4e34289a3550fa1..0911d461829897c5018e26dbe=
-475b28f6fb6914c 100644
-> --- a/drivers/power/sequencing/Makefile
-> +++ b/drivers/power/sequencing/Makefile
-> @@ -5,3 +5,4 @@ pwrseq-core-y                           :=3D core.o
->
->  obj-$(CONFIG_POWER_SEQUENCING_QCOM_WCN)        +=3D pwrseq-qcom-wcn.o
->  obj-$(CONFIG_POWER_SEQUENCING_TH1520_GPU) +=3D pwrseq-thead-gpu.o
-> +obj-$(CONFIG_POWER_SEQUENCING_PCIE_M2) +=3D pwrseq-pcie-m2.o
-> diff --git a/drivers/power/sequencing/pwrseq-pcie-m2.c b/drivers/power/se=
-quencing/pwrseq-pcie-m2.c
-> new file mode 100644
-> index 0000000000000000000000000000000000000000..b9f68ee9c5a377ce900a88de8=
-6a3e269f9c99e51
-> --- /dev/null
-> +++ b/drivers/power/sequencing/pwrseq-pcie-m2.c
-> @@ -0,0 +1,138 @@
-> +// SPDX-License-Identifier: GPL-2.0-only
-> +/*
-> + * Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
-> + * Author: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com=
->
-> + */
-> +
-> +#include <linux/device.h>
-> +#include <linux/mod_devicetable.h>
-> +#include <linux/module.h>
-> +#include <linux/of.h>
-> +#include <linux/of_platform.h>
-> +#include <linux/platform_device.h>
-> +#include <linux/pwrseq/provider.h>
-> +#include <linux/regulator/consumer.h>
-> +#include <linux/slab.h>
-> +
-> +struct pwrseq_pcie_m2_pdata {
-> +       const struct pwrseq_target_data **targets;
-> +};
-> +
-> +struct pwrseq_pcie_m2_ctx {
-> +       struct pwrseq_device *pwrseq;
-> +       const struct pwrseq_pcie_m2_pdata *pdata;
-> +       struct regulator_bulk_data *regs;
-> +       size_t num_vregs;
-> +       struct notifier_block nb;
-> +};
-> +
-> +static int pwrseq_pcie_m2_m_vregs_enable(struct pwrseq_device *pwrseq)
-> +{
-> +       struct pwrseq_pcie_m2_ctx *ctx =3D pwrseq_device_get_drvdata(pwrs=
-eq);
-> +
-> +       return regulator_bulk_enable(ctx->num_vregs, ctx->regs);
-> +}
-> +
-> +static int pwrseq_pcie_m2_m_vregs_disable(struct pwrseq_device *pwrseq)
-> +{
-> +       struct pwrseq_pcie_m2_ctx *ctx =3D pwrseq_device_get_drvdata(pwrs=
-eq);
-> +
-> +       return regulator_bulk_disable(ctx->num_vregs, ctx->regs);
-> +}
-> +
-> +static const struct pwrseq_unit_data pwrseq_pcie_m2_vregs_unit_data =3D =
-{
-> +       .name =3D "regulators-enable",
-> +       .enable =3D pwrseq_pcie_m2_m_vregs_enable,
-> +       .disable =3D pwrseq_pcie_m2_m_vregs_disable,
-> +};
-> +
-> +static const struct pwrseq_unit_data *pwrseq_pcie_m2_m_unit_deps[] =3D {
-> +       &pwrseq_pcie_m2_vregs_unit_data,
-> +       NULL
-> +};
-> +
-> +static const struct pwrseq_unit_data pwrseq_pcie_m2_m_pcie_unit_data =3D=
- {
-> +       .name =3D "pcie-enable",
-> +       .deps =3D pwrseq_pcie_m2_m_unit_deps,
-> +};
-> +
-> +static const struct pwrseq_target_data pwrseq_pcie_m2_m_pcie_target_data=
- =3D {
-> +       .name =3D "pcie",
-> +       .unit =3D &pwrseq_pcie_m2_m_pcie_unit_data,
-> +};
-> +
-> +static const struct pwrseq_target_data *pwrseq_pcie_m2_m_targets[] =3D {
-> +       &pwrseq_pcie_m2_m_pcie_target_data,
-> +       NULL
-> +};
-> +
-> +static const struct pwrseq_pcie_m2_pdata pwrseq_pcie_m2_m_of_data =3D {
-> +       .targets =3D pwrseq_pcie_m2_m_targets,
-> +};
-> +
-> +static int pwrseq_pcie_m2_match(struct pwrseq_device *pwrseq,
-> +                                struct device *dev)
-> +{
-> +       return PWRSEQ_MATCH_OK;
+Patch#1 is for Rob Clark, Patch#2 for Srinivas and the rest are for Bjorn to pick up.
 
-Eek! That will match any device we check. I'm not sure this is what
-you want. Looking at the binding example, I assume struct device *
-here will be the endpoint? If so, you should resolve it and confirm
-it's the one referenced from the connector node.
+[1] https://lore.kernel.org/all/20250803110113.401927-1-wasim.nazir@oss.qualcomm.com/
 
-> +}
-> +
-> +static int pwrseq_pcie_m2_probe(struct platform_device *pdev)
-> +{
-> +       struct device *dev =3D &pdev->dev;
-> +       struct pwrseq_pcie_m2_ctx *ctx;
-> +       struct pwrseq_config config;
-> +       int ret;
-> +
-> +       ctx =3D devm_kzalloc(dev, sizeof(*ctx), GFP_KERNEL);
-> +       if (!ctx)
-> +               return -ENOMEM;
-> +
-> +       ctx->pdata =3D of_device_get_match_data(dev);
+To: Rob Clark <robdclark@gmail.com>
+To: Sean Paul <sean@poorly.run>
+To: Konrad Dybcio <konradybcio@kernel.org>
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To: Marijn Suijten <marijn.suijten@somainline.org>
+To: David Airlie <airlied@gmail.com>
+To: Simona Vetter <simona@ffwll.ch>
+To: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>
+To: Maxime Ripard <mripard@kernel.org>
+To: Thomas Zimmermann <tzimmermann@suse.de>
+To: Rob Herring <robh@kernel.org>
+To: Krzysztof Kozlowski <krzk+dt@kernel.org>
+To: Conor Dooley <conor+dt@kernel.org>
+To: Bjorn Andersson <andersson@kernel.org>
+To: Connor Abbott <cwabbott0@gmail.com>
+To: Srinivas Kandagatla <srini@kernel.org>
+Cc: Gaurav Kohli <quic_gkohli@quicinc.com>
+Cc: linux-arm-msm@vger.kernel.org
+Cc: dri-devel@lists.freedesktop.org
+Cc: freedreno@lists.freedesktop.org
+Cc: linux-kernel@vger.kernel.org
+Cc: devicetree@vger.kernel.org
 
-I should probably address it in the WCN driver - you don't need to use
-the OF variant, use device_get_match_data().
+-Akhil
 
-> +       if (!ctx->pdata)
-> +               return dev_err_probe(dev, -ENODEV,
-> +                                    "Failed to obtain platform data\n");
-> +
-> +       ret =3D of_regulator_bulk_get_all(dev, dev_of_node(dev), &ctx->re=
-gs);
+---
+Changes in v7:
+- Rebased on next-20251105
+- Dropped drm-msm speedbin patch which is already picked up
+- Picked up trailers
+- Link to v6: https://lore.kernel.org/r/20250910-a663-gpu-support-v6-0-5da15827b249@oss.qualcomm.com
 
-Same here, you already have the device, no need to get the regulators
-through the OF node. Just use devm_regulator_bulk_get()
+Changes in v6:
+- Keep the efuse's reg range 4K aligned (Konrad)
+- Update GMU's opp table to bump frequency to 500Mhz (Konrad)
+- Link to v5: https://lore.kernel.org/r/20250909-a663-gpu-support-v5-0-761fa0a876bf@oss.qualcomm.com
 
-> +       if (ret < 0)
-> +               return dev_err_probe(dev, ret,
-> +                                    "Failed to get all regulators\n");
-> +
-> +       ctx->num_vregs =3D ret;
-> +
-> +       memset(&config, 0, sizeof(config));
+Changes in v5:
+- Remove unnecessary labels in the gpu cooling patch (Konrad)
+- Update the RPMH corner for 530 Mhz
+- Wire up the gpu speedbin node to the gpu
+- Link to v4: https://lore.kernel.org/r/20250822-a663-gpu-support-v4-0-97d26bb2144e@oss.qualcomm.com
 
-Just do config =3D { }; above?
+Changes in v4:
+- Rebased on top of another series which renames DT files
+- Enabled GPU on IoT boards as per the latest definition
+- Picked up SKU detection support
+- Added GPU passive cooling support
+- Link to v3: https://lore.kernel.org/r/20241030-a663-gpu-support-v3-0-bdf1d9ce6021@quicinc.com
 
+Changes in v3:
+- Rebased on the latest msm-next tip
+- Added R-b tags from Dmitry
+- Dropped patch #1 and #2 from v2 revision since they are already
+picked up in msm-next
+- Link to v2: https://lore.kernel.org/r/20241022-a663-gpu-support-v2-0-38da38234697@quicinc.com
 
-> +
-> +       config.parent =3D dev;
-> +       config.owner =3D THIS_MODULE;
-> +       config.drvdata =3D ctx;
-> +       config.match =3D pwrseq_pcie_m2_match;
-> +       config.targets =3D ctx->pdata->targets;
-> +
-> +       ctx->pwrseq =3D devm_pwrseq_device_register(dev, &config);
-> +       if (IS_ERR(ctx->pwrseq))
-> +               return dev_err_probe(dev, PTR_ERR(ctx->pwrseq),
-> +                                    "Failed to register the power sequen=
-cer\n");
-> +
-> +       return 0;
-> +}
-> +
-> +static const struct of_device_id pwrseq_pcie_m2_of_match[] =3D {
-> +       {
-> +               .compatible =3D "pcie-m2-m-connector",
-> +               .data =3D &pwrseq_pcie_m2_m_of_data,
-> +       },
-> +       { }
-> +};
-> +MODULE_DEVICE_TABLE(of, pwrseq_pcie_m2_of_match);
-> +
-> +static struct platform_driver pwrseq_pcie_m2_driver =3D {
-> +       .driver =3D {
-> +               .name =3D "pwrseq-pcie-m2",
-> +               .of_match_table =3D pwrseq_pcie_m2_of_match,
-> +       },
-> +       .probe =3D pwrseq_pcie_m2_probe,
-> +};
-> +module_platform_driver(pwrseq_pcie_m2_driver);
-> +
-> +MODULE_AUTHOR("Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm=
-.com>");
-> +MODULE_DESCRIPTION("Power Sequencing driver for PCIe M.2 connector");
-> +MODULE_LICENSE("GPL");
->
-> --
-> 2.48.1
->
+Changes in v2:
+- Fixed ubwc configuration (dimtry)
+- Split out platform dt patch (dimtry)
+- Fix formatting in the dt patch (dimtry)
+- Updated Opp table to include all levels
+- Updated bw IB votes to match downstream
+- Rebased on top of msm-next tip
+- Link to v1: https://lore.kernel.org/r/20240918-a663-gpu-support-v1-0-25fea3f3d64d@quicinc.com
 
-Bartosz
+---
+Akhil P Oommen (3):
+      dt-bindings: nvmem: qfprom: Add sa8775p compatible
+      arm64: dts: qcom: lemans-evk: Enable Adreno 663 GPU
+      arm64: dts: qcom: qcs9100-ride: Enable Adreno 663 GPU
+
+Gaurav Kohli (1):
+      arm64: dts: qcom: lemans: Add GPU cooling
+
+Puranam V G Tejaswi (1):
+      arm64: dts: qcom: sa8775p: Add gpu and gmu nodes
+
+ .../devicetree/bindings/nvmem/qcom,qfprom.yaml     |   1 +
+ arch/arm64/boot/dts/qcom/lemans-evk.dts            |   8 +
+ arch/arm64/boot/dts/qcom/lemans-ride-common.dtsi   |   8 +
+ arch/arm64/boot/dts/qcom/lemans.dtsi               | 174 ++++++++++++++++++++-
+ 4 files changed, 185 insertions(+), 6 deletions(-)
+---
+base-commit: 185cd3dc1a12b97194a62eba9d217d280ef74135
+change-id: 20240917-a663-gpu-support-b1475c828606
+
+Best regards,
+-- 
+Akhil P Oommen <akhilpo@oss.qualcomm.com>
+
 
