@@ -1,159 +1,136 @@
-Return-Path: <linux-arm-msm+bounces-80378-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-80379-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ams.mirrors.kernel.org (ams.mirrors.kernel.org [IPv6:2a01:60a::1994:3:14])
-	by mail.lfdr.de (Postfix) with ESMTPS id 702BAC337CA
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 05 Nov 2025 01:39:33 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 83F30C337FA
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 05 Nov 2025 01:46:17 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ams.mirrors.kernel.org (Postfix) with ESMTPS id EAB3434BEEA
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Nov 2025 00:39:32 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id DE99D18C33DF
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Nov 2025 00:46:41 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D343E1A76D4;
-	Wed,  5 Nov 2025 00:39:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id DC8B822FE0D;
+	Wed,  5 Nov 2025 00:46:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="hP3HVb6O";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="g8MYuSrS"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="OoXws1Wc";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="C7XbrWaF"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3494136358
-	for <linux-arm-msm@vger.kernel.org>; Wed,  5 Nov 2025 00:39:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3252C128819
+	for <linux-arm-msm@vger.kernel.org>; Wed,  5 Nov 2025 00:46:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762303170; cv=none; b=qRwwsvMHFQnx+SXevn0z+/RY3t7jq4eyOb5Ymr4QisvYHTHcNmVHgRcd9/NCN+oIt/9ror6OS4IJywsrO15onfR6KChX2hTRnQCqspTL2Wers9jRuwSIEyfjx5qX8q+zSOfNk/OPZSXWEsRWyrdsCBbyHJ4e853kiOQUdWZAFw8=
+	t=1762303572; cv=none; b=Fr2hX1o+gqvzunwWzAV/qtbkkm+QJalkDVfSpRvcnkizLsh7YxZaaDG6ljYZoX2tYP7z88I6re/HmiNE6hvo55f4yxsiAxt0LgvCLRtUZ5SheEm4ouEgLMES8Ni6zlZFNIfofA520bohdPgRUgIMSxWPTd9N1hfIFYiVGMmaLyk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762303170; c=relaxed/simple;
-	bh=lDk02qC5u1ro9HbXlcRBn/dzxEt1Og8Og6FOlhRc6lk=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=sEG1JZsID0rYx+Npmp9+HjrN+Ij6kY1L27SzL6xi/addlbr4EyGfUuTDPAee85nwtwc7DnxiMR8LOrwaxvAj/lcRYbVn3R2vQ/2rm0hB8po40d7lVIEn6SMdcR7j/jmS7D6gP9CR1wG/+OmG9dvj6+HtyPN1+hyqbSGlTpCFTvQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=hP3HVb6O; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=g8MYuSrS; arc=none smtp.client-ip=205.220.168.131
+	s=arc-20240116; t=1762303572; c=relaxed/simple;
+	bh=7T7aL22RX9GpDnYaiiUc+H26sq7SXpfu7cYU+xDC4hg=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=sOmWqnd6VUurvOhncCrDIQ9xBn3OENijrs4M2kOPcCLR1JnT3XMNFEhfMBiEcSMEDI4yRJZMewlVut7klvOgLQdvszKIm81NrVsjxkUOPJv6LfXvXCrW4BaULseAQAQnGAZtjYvIKPSWjmzyFV//b40cK7twDFS4I2ZRopsjYb0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=OoXws1Wc; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=C7XbrWaF; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
 Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 5A4Kg6no2904644
-	for <linux-arm-msm@vger.kernel.org>; Wed, 5 Nov 2025 00:39:28 GMT
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 5A4Kg6oF2904644
+	for <linux-arm-msm@vger.kernel.org>; Wed, 5 Nov 2025 00:46:10 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
 	cc:content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to; s=qcppdkim1; bh=BzFWrus5ToDQoAoDgYGAeJvj
-	7pPGBO5zh4BEeX+7e1M=; b=hP3HVb6OLtaKhgMbJqnE9uY/1P3GcyuUhB9Tpu7t
-	JKMWJRQLZV4KabicOMHfnJ2J1/jYp/VwM1ITWplYb1YReCw9g78TTi5dNe1ETy0R
-	XBGR8s1w7k8BHU4Q09IwMre9VhU6k205H3AVJ1ASYRETQ7GwG7fGaHVYl1tt3dl3
-	9VnlUhzoMAaYpijecthL4JMzlb3xZQEOeNsUPYNfWIzPydDwpUAMpZpqs34LmrfE
-	3buMGCUGFJmV33iR75mc+4Cq6eKHtQ/jKQ1r6Y7mk9voAKBYhIr/DZKv7LlSG3Ye
-	ulLB5H1e5oONvebQrBxvv82X2DTMEwWEojZTcnVmGr7RVA==
-Received: from mail-pg1-f198.google.com (mail-pg1-f198.google.com [209.85.215.198])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4a7mbbshae-1
+	:references:subject:to; s=qcppdkim1; bh=aLWcO0d8F+Y82Vhk0yQ9jtdy
+	rVhv/PJ9LgP07EI36wY=; b=OoXws1WcQz6JBL2b2LlgGyszwyq4a9PQh3HirPpU
+	h7+cjnRd1YJj8mYx6GA3fZA3McP3GSw03CzdwEs7jX1eOAf/p8/hIFCF1h/Jw+aR
+	N8KQJNdYjRtpyACbHoRXfek0Y+1cySZrplO9CTAdB+hpgaQExTdwUbgLEDVFyosv
+	9nVUhCW5DSMkXJJZWlSC7xEjNn3q5JUvcjeKIITjWPuJS86OJvYCl5p/BxzqglXW
+	Dg8//C62uzUmJTRE/mCEa4F1AFD7KYIU/NSmBmKfgXHxn+OBxOSItHsU368gWwNm
+	TjMuSo5nG8eothkCwxL5Kx+KnbIWvmyW45qsPVoyzrvGTA==
+Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com [209.85.160.200])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4a7mbbshsd-1
 	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Wed, 05 Nov 2025 00:39:28 +0000 (GMT)
-Received: by mail-pg1-f198.google.com with SMTP id 41be03b00d2f7-b99dc8f439bso3023590a12.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 04 Nov 2025 16:39:28 -0800 (PST)
+	for <linux-arm-msm@vger.kernel.org>; Wed, 05 Nov 2025 00:46:10 +0000 (GMT)
+Received: by mail-qt1-f200.google.com with SMTP id d75a77b69052e-4eba120950fso149827491cf.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 04 Nov 2025 16:46:10 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1762303167; x=1762907967; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=BzFWrus5ToDQoAoDgYGAeJvj7pPGBO5zh4BEeX+7e1M=;
-        b=g8MYuSrScYq1kmeLWZOpfP9Ysn1c4CIe1DRbHKuLReqs9XKb4ngRVpUlOFfYqVfe5W
-         EGQnSN++3A0s7bO8BffJVkTiKWuutvBBJRx0fSsNZX/LhKD1nL6QsH2GfOfpIZOUDDk2
-         GhOKDfpSCYXOvS4ZOrvlmeFBQPGW0c6sUY0QInNim+y88i+N40552dHEAO4G0pKhthp+
-         GGoJ4Q6OEnybvDYMSoXIs6SzG1/N20spd3zRuAwZ0SoD7mZiz90RauvrEnGCFI6Q/nuP
-         xZwDx62FEkJ27lQ0AzfSj5Gx3lHS/k2FH9VBZrLvPPkgWYyIgQLqoRsGLvPvGy0ymSny
-         QjrA==
+        d=oss.qualcomm.com; s=google; t=1762303569; x=1762908369; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=aLWcO0d8F+Y82Vhk0yQ9jtdyrVhv/PJ9LgP07EI36wY=;
+        b=C7XbrWaF7Q9A3gPfgdphqr9Z+bqcFxldUvtp35ogcX8GmFNqEsPdDWu7Vx+EAUNBcN
+         avyCzjYxR9dWhJBOPQNPKcucj9cigkEbQMkspLdLpYIFoI9C0WmuplX1SbmF5n3YVFKb
+         D9UJRghB6z4sdXRvshZk3Gz5U37XSYhSaCyZ1hlLOR9grN9bZYyx2BFM3GJwRbWt3DRA
+         VIaOEaGmORAzCfu1FxESKTxxYfjOBntuoEliNUgJs5qN9QAOMBsd+5XNCYMjcPvBZesC
+         CZW880C0tMhWiN5rVPzAlKLB/JADrPCs4UsJTYAlWUoZXtwfATnFKrdeC8ehnGn52OmC
+         DDsw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1762303167; x=1762907967;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=BzFWrus5ToDQoAoDgYGAeJvj7pPGBO5zh4BEeX+7e1M=;
-        b=dHzjGU9amzEEXBqlMrtpA8P2ThWnriDUcs1uDTzcm/q+dSiEUI5HNXjOrlbcVSMDoL
-         UqXLWlLVW7+BGMeKG6WXQYrtBQnmhW3lVJcwJDQYORXczwFEXfUJGmxjwfz0c6SXd0Ly
-         kb9KIKZlBCZvd1yyCzvePkyleEyVE6N8h84ImS5G/u1moBfT9pqQpq2+6da1Zyc5qA3d
-         fn62KLPTVkdTk3lfPWF8okl+9fzQyzCfzLaWQBLrtXkzVy9CwhTlqjoAN3TXc+s9K/ky
-         x8VsUg4jz5BiZNIkGkF3Zz69KXQgc3Evv7bPpCq1g+Yex5guirtp3VR6wk5TalVPxitv
-         Aijg==
-X-Forwarded-Encrypted: i=1; AJvYcCWFaEw+IJntCubro6xr8fATd3+mPE/SfLnaBhEw17nkmgPlJGKQicDFukJdpjDnykHg6keupSL7yHK+az/q@vger.kernel.org
-X-Gm-Message-State: AOJu0YxiE8qb/8ZqaFXEnfzuzOmXDGMITZf+e2580R3K6S4fHBha4ENG
-	V3lA0d/K792g13VizMx5L/wiSiq2OmppI59ngp1z7k5oCqOE2gQRr/QslneW3HtBs2KQLO7lL3J
-	u34bhnkpmnhnBd0f8GvChcP8RbbTmvWNGOUeLX5fFfl2feejSiXlOsUCZjj5ERgrBYKMd8oXbq3
-	t15U320jgFCD837b9WD9jmrPm1+/Hyx/p6o4egCqfHcfQ=
-X-Gm-Gg: ASbGncsBQvoLKg5J94pbF9/JD/Lqjgo/mE/U2Og/Ix2FT+mLAvYfRRQvNVGKK3tCuu1
-	PuJKU9MrWzNmIaLR2zZ67/ICOOz5HKyZy55ngP1IFMEsaMDzxr4f1PNaTyxAUmvxU6L8YA/Gb6d
-	lEiZ/1dviouNkARbh4ZZWFNl4pefYuKI0ybZTmfZ2g4XRWHU1F7d4mq1go5+YFlbmfZgkgRcXLY
-	Wwo4RFAaVI4aI4=
-X-Received: by 2002:a05:6a20:9144:b0:34a:1da8:b8e8 with SMTP id adf61e73a8af0-34f86408f07mr1550664637.50.1762303167213;
-        Tue, 04 Nov 2025 16:39:27 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IEzaGLmiKsrRvSr4jPvA6a7wSEG94Y+iLXfyMLNCyUN32mroWfowJJT4oHvtGc87ilU+o9AHrd1pUJDCgsX280=
-X-Received: by 2002:a05:6a20:9144:b0:34a:1da8:b8e8 with SMTP id
- adf61e73a8af0-34f86408f07mr1550611637.50.1762303166627; Tue, 04 Nov 2025
- 16:39:26 -0800 (PST)
+        d=1e100.net; s=20230601; t=1762303569; x=1762908369;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=aLWcO0d8F+Y82Vhk0yQ9jtdyrVhv/PJ9LgP07EI36wY=;
+        b=Xgxl3AG30zJ5fP3feHnZi73SbmUTBPsxaRQn+GG+zom77wss0nBYLx6Q+0Vh+E0yAp
+         eh6hjBLY+PPPS3iyEGrvGMOQ0FNCqXP3nb/xGwTPL1oBDt2F/ZUNytysiwjbArG44//q
+         bhBdP1h+pV6IRiWzZVYNtHQ2QUGkVQ31w1/CkVcbeLW8WRST8q6xV+FdK43rImg577Ts
+         d5eNWpFKihrlN7rLkX9OrIYCFzVkRDr1lmwXleKArqaawlZ9SfLUqwTaSpwjAEDP5j7t
+         dj65V4N+HLmEXrX0oJKhtB6qHy9JJu0z4Bdh6hhiyQuP4L4LZXGN56VRNQNQG92BL3W0
+         yZkA==
+X-Forwarded-Encrypted: i=1; AJvYcCU+c8g3u+5mkOIfBHdpESpgM2SNG/9bzui0njX2fnFhiE8MmNbQQn64clVa77LXv7Hv+F/wuCG9rmpRv5bK@vger.kernel.org
+X-Gm-Message-State: AOJu0YyXc8skFo/zFYdTJr1/c12Vb0wA7GB7pCIWpyNKosbKmQkMJWiv
+	rD2UPqIadJ/z7JODGotGq/Rc/t6wmlNMrwmvS83qXAaxrOd9EiBq0SGdwvlqnQXf8Z59Ti5ifS5
+	Wh6rtUG/fSxXWmBehCWUsNY1pLn+SyTpuNZTEo73GYGFwE8Ga5Sh5qbUNQrMRmlzihz6j
+X-Gm-Gg: ASbGncuAXOLyHR1aZEjTHkrQWPa8/D/9FM8q13ruSE6iMlCVIqgpAeq2c+8LE7f02lj
+	YCraW6ECP8tLHt0DpBUJ0+CWE+vYCw52/qOqyRPE3tzcM8cruSOLYnQ5oRgdyGLbvrDsElC8Ktm
+	okC6Gb6QyDfUUJYvhqtD3oX+3vKvk5fWfdvDgAQ1OyXEmWFZcFdcaahqB7YOeLMzhz0mAcANUWd
+	Y0zfJUQDBnEZuHUtTUPriaNg5zfu4BwjPxSaIcl2MrztQ2No+oJ6BYDcoeK88vjpD97+AzKYbLl
+	eUk0RUI4tmAREm3uLlI+5PimCVIoe+szWzUHlbhAo/0bhADjN0JDr0V+/U6x1e6CIwMWtscaxlP
+	bQqsF40wjTWh3WbVLzcggy/z06nDJnlP4VEnH03Cs74lk7ipWv9+wddydj85o6YTdezdZzBgQ/Z
+	yo5CAYqAqmZhTM
+X-Received: by 2002:ac8:7d8c:0:b0:4e8:a7d6:bc07 with SMTP id d75a77b69052e-4ed72628c9dmr18858561cf.71.1762303569112;
+        Tue, 04 Nov 2025 16:46:09 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IEWNMNBfUTT4rg1Cfryk8ANuc5CyRy+3uj/V1/C0sa5odRgWZsOoF8OUbkVS4NNLvdrFtR6wQ==
+X-Received: by 2002:ac8:7d8c:0:b0:4e8:a7d6:bc07 with SMTP id d75a77b69052e-4ed72628c9dmr18858281cf.71.1762303568485;
+        Tue, 04 Nov 2025 16:46:08 -0800 (PST)
+Received: from umbar.lan (2001-14ba-a0c3-3a00-264b-feff-fe8b-be8a.rev.dnainternet.fi. [2001:14ba:a0c3:3a00:264b:feff:fe8b:be8a])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-5943443db22sm1174829e87.66.2025.11.04.16.46.05
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 04 Nov 2025 16:46:06 -0800 (PST)
+Date: Wed, 5 Nov 2025 02:46:03 +0200
+From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+To: Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>
+Cc: Vikash Garodia <vikash.garodia@oss.qualcomm.com>,
+        Abhinav Kumar <abhinav.kumar@linux.dev>,
+        Bryan O'Donoghue <bod@kernel.org>,
+        Mauro Carvalho Chehab <mchehab@kernel.org>,
+        Hans Verkuil <hverkuil@kernel.org>,
+        Stefan Schmidt <stefan.schmidt@linaro.org>,
+        linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, Val Packett <val@packett.cool>
+Subject: Re: [PATCH v2] media: iris: Refine internal buffer reconfiguration
+ logic for resolution change
+Message-ID: <5vjvhg7xph34e5mg5q2yrytj6ugyokz7forfvhidjqhzta55st@uvgbfrvkzrxm>
+References: <20251104-iris-seek-fix-v2-1-c9dace39b43d@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20251007054528.2900905-1-suraj.kandpal@intel.com>
- <20251007054528.2900905-2-suraj.kandpal@intel.com> <aQjDejhzGRYJT614@e110455-lin.cambridge.arm.com>
- <DM3PPF208195D8D5DDD56AA88E006E66AD9E3C4A@DM3PPF208195D8D.namprd11.prod.outlook.com>
- <aQoIBroBqQc3B-RD@e110455-lin.cambridge.arm.com>
-In-Reply-To: <aQoIBroBqQc3B-RD@e110455-lin.cambridge.arm.com>
-From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Date: Wed, 5 Nov 2025 02:39:15 +0200
-X-Gm-Features: AWmQ_bnEJwcu6XSjUjTu8rMBuA8ieKzJYCA5nkQvWatiwJBc8AoL_uq6o3M1DN8
-Message-ID: <CAO9ioeX2qEyjwi9LsnUh-cRv88iaRcdZtFr_yidf55A9_ZbLWw@mail.gmail.com>
-Subject: Re: [PATCH v2 1/7] drm: writeback: Refactor drm_writeback_connector structure
-To: Liviu Dudau <liviu.dudau@arm.com>
-Cc: "Kandpal, Suraj" <suraj.kandpal@intel.com>,
-        "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
-        "freedreno@lists.freedesktop.org" <freedreno@lists.freedesktop.org>,
-        "dri-devel@lists.freedesktop.org" <dri-devel@lists.freedesktop.org>,
-        "intel-xe@lists.freedesktop.org" <intel-xe@lists.freedesktop.org>,
-        "intel-gfx@lists.freedesktop.org" <intel-gfx@lists.freedesktop.org>,
-        "kernel-list@raspberrypi.com" <kernel-list@raspberrypi.com>,
-        "amd-gfx@lists.freedesktop.org" <amd-gfx@lists.freedesktop.org>,
-        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-        "linux-renesas-soc@vger.kernel.org" <linux-renesas-soc@vger.kernel.org>,
-        "Nautiyal, Ankit K" <ankit.k.nautiyal@intel.com>,
-        "Murthy, Arun R" <arun.r.murthy@intel.com>,
-        "Shankar, Uma" <uma.shankar@intel.com>,
-        "Nikula, Jani" <jani.nikula@intel.com>,
-        "harry.wentland@amd.com" <harry.wentland@amd.com>,
-        "siqueira@igalia.com" <siqueira@igalia.com>,
-        "alexander.deucher@amd.com" <alexander.deucher@amd.com>,
-        "christian.koenig@amd.com" <christian.koenig@amd.com>,
-        "airlied@gmail.com" <airlied@gmail.com>,
-        "simona@ffwll.ch" <simona@ffwll.ch>,
-        "maarten.lankhorst@linux.intel.com" <maarten.lankhorst@linux.intel.com>,
-        "mripard@kernel.org" <mripard@kernel.org>,
-        "robin.clark@oss.qualcomm.com" <robin.clark@oss.qualcomm.com>,
-        "abhinav.kumar@linux.dev" <abhinav.kumar@linux.dev>,
-        "tzimmermann@suse.de" <tzimmermann@suse.de>,
-        "jessica.zhang@oss.qualcomm.com" <jessica.zhang@oss.qualcomm.com>,
-        "sean@poorly.run" <sean@poorly.run>,
-        "marijn.suijten@somainline.org" <marijn.suijten@somainline.org>,
-        "laurent.pinchart+renesas@ideasonboard.com" <laurent.pinchart+renesas@ideasonboard.com>,
-        "mcanal@igalia.com" <mcanal@igalia.com>,
-        "dave.stevenson@raspberrypi.com" <dave.stevenson@raspberrypi.com>,
-        "tomi.valkeinen+renesas@ideasonboard.com" <tomi.valkeinen+renesas@ideasonboard.com>,
-        "kieran.bingham+renesas@ideasonboard.com" <kieran.bingham+renesas@ideasonboard.com>,
-        "louis.chauvet@bootlin.com" <louis.chauvet@bootlin.com>
-Content-Type: text/plain; charset="UTF-8"
-X-Proofpoint-ORIG-GUID: B_xQTSMHnxf0msLVhUiZ9YDI_FLVCNhw
-X-Proofpoint-GUID: B_xQTSMHnxf0msLVhUiZ9YDI_FLVCNhw
-X-Authority-Analysis: v=2.4 cv=MK1tWcZl c=1 sm=1 tr=0 ts=690a9cc0 cx=c_pps
- a=Qgeoaf8Lrialg5Z894R3/Q==:117 a=IkcTkHD0fZMA:10 a=6UeiqGixMTsA:10
- a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22 a=7CQSdrXTAAAA:8 a=QyXUC8HyAAAA:8
- a=cwjfTKyZ_bUBt8LYXKAA:9 a=QEXdDO2ut3YA:10 a=x9snwWr2DeNwDh03kgHS:22
- a=a-qgeE7W1pNrGK8U0ZQC:22 a=HhbK4dLum7pmb74im6QT:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMTA1MDAwMyBTYWx0ZWRfXzJH/feEgIe4c
- cVngQQqDVpDjHC3Rvt6AUCC7FJ37vB6UMyDaI3lL0tJLaV10AMaTMQ3yAFsSBTfy85Gq53EkiaO
- HpHYqZCqawCuBzhKqljqw7v2Hq2JtYKeqbi8mpJZhIxNtw2m4h/xDapG04MSzxst8G++Aj11pgA
- GECWR4FEBXBAHKc+f5tSnzffjdO7V0QYSJ0hSbA7IpIx8UL+enDacHrxKncEWkrAQaPiAYtQjG+
- owKcALGNhs1CjuIM2Wkrfi/Q7xs/KRoK467Urylivb+ewH1fmmKYXxJPJlzZYTzoTWg3KzP0/po
- BmDwdvZ3x3dCeDShKBlEHJME8LSsZEfciXssPsF2nPUKp1KnvR9tj/nixTZyNqCbxjMr4+Eg+rY
- 8Nv9gHDOX656EPpU8f6vXmh4LFT6EQ==
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20251104-iris-seek-fix-v2-1-c9dace39b43d@oss.qualcomm.com>
+X-Proofpoint-ORIG-GUID: wy0tSrjqhWniHEVV3hOVLyrpbgSJJbkf
+X-Proofpoint-GUID: wy0tSrjqhWniHEVV3hOVLyrpbgSJJbkf
+X-Authority-Analysis: v=2.4 cv=MK1tWcZl c=1 sm=1 tr=0 ts=690a9e52 cx=c_pps
+ a=JbAStetqSzwMeJznSMzCyw==:117 a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10
+ a=6UeiqGixMTsA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=e5mUnYsNAAAA:8 a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8 a=ip-fXVA9LE2ppvREXl4A:9
+ a=CjuIK1q_8ugA:10 a=uxP6HrT_eTzRwkO_Te1X:22 a=Vxmtnl_E_bksehYqCbjh:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMTA1MDAwNCBTYWx0ZWRfXx8CE6zM6hztt
+ Xbu9ynsfcpN6YiXvLUwC0oFd1X+vAnBZXtdZt/QDf4Iiy8AN6TdYPpGXQRXYl3B3LpccLBBN/08
+ Q4/9iiD4syY7xq1cJVwbXHT2CC4jFB0GuY8IyZSDhnEqfIPRwXe+/FKby88e/0pse+/Ps6WUohl
+ hev+AUNID28pZPkomcISm0XObb1oysgmnnNVi3qfx53GcWooc/Pav6rJqcMIix2paPpiwRDqdmY
+ Rb8qUNwD8SP3ujt5NLn7xSzYBqYJ+0WEQXX4gSq7K9VahwuKR4XaXGG+plqtdbZoMnKGFzNerBb
+ EsR5fpnY3sRWZa5NnKw3Vs+5jEDzcj+2K9q/qwDgptzRnL83ovQKwoxh3M0KK+8UbqtdOTvUqLg
+ 9dPk9fRFJje6hoakR1AjHK5h63hvCQ==
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
  definitions=2025-11-05_01,2025-11-03_03,2025-10-01_01
@@ -162,173 +139,78 @@ X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
  lowpriorityscore=0 adultscore=0 bulkscore=0 clxscore=1015 spamscore=0
  suspectscore=0 classifier=typeunknown authscore=0 authtc= authcc=
  route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2510240001
- definitions=main-2511050003
+ definitions=main-2511050004
 
-On Tue, 4 Nov 2025 at 16:05, Liviu Dudau <liviu.dudau@arm.com> wrote:
->
-> On Tue, Nov 04, 2025 at 05:11:25AM +0000, Kandpal, Suraj wrote:
-> > > Subject: Re: [PATCH v2 1/7] drm: writeback: Refactor
-> > > drm_writeback_connector structure
-> > >
-> > > On Tue, Oct 07, 2025 at 11:15:23AM +0530, Suraj Kandpal wrote:
-> > > > Some drivers cannot work with the current design where the connector
-> > > > is embedded within the drm_writeback_connector such as Intel and some
-> > > > drivers that can get it working end up adding a lot of checks all
-> > > > around the code to check if it's a writeback conenctor or not, this is
-> > > > due to the limitation of inheritance in C.
-> > > > To solve this move the drm_writeback_connector within the
-> > > > drm_connector and remove the drm_connector base which was in
-> > > > drm_writeback_connector. Make this drm_writeback_connector a union
-> > > > with hdmi connector to save memory and since a connector can never be
-> > > > both writeback and hdmi it should serve us well.
-> > > > Do all other required modifications that come with these changes along
-> > > > with addition of new function which returns the drm_connector when
-> > > > drm_writeback_connector is present.
-> > > > Modify drivers using the drm_writeback_connector to allow them to use
-> > > > this connector without breaking them.
-> > > > The drivers modified here are amd, komeda, mali, vc4, vkms, rcar_du,
-> > > > msm
-> > > >
-> > > > Signed-off-by: Suraj Kandpal <suraj.kandpal@intel.com>
-> > > > ---
-> > > > V1 -> V2: Use &connector->writeback, make commit message imperative
-> > > > (Dmitry)
-> > > > ---
-> > > >  .../gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c |  6 +-
-> > > > .../gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.h |  2 +-
-> > > > .../drm/amd/display/amdgpu_dm/amdgpu_dm_wb.c  |  8 +--
-> > > > .../gpu/drm/arm/display/komeda/komeda_crtc.c  |  6 +-
-> > > >  .../gpu/drm/arm/display/komeda/komeda_kms.h   |  6 +-
-> > > >  .../arm/display/komeda/komeda_wb_connector.c  |  8 +--
-> > > >  drivers/gpu/drm/arm/malidp_crtc.c             |  2 +-
-> > > >  drivers/gpu/drm/arm/malidp_drv.h              |  2 +-
-> > > >  drivers/gpu/drm/arm/malidp_hw.c               |  6 +-
-> > > >  drivers/gpu/drm/arm/malidp_mw.c               |  8 +--
-> > > >  drivers/gpu/drm/drm_atomic_uapi.c             |  2 +-
-> > > >  drivers/gpu/drm/drm_writeback.c               | 35 ++++++----
-> > >
-> > > For the komeda and malidp drivers, as well as for the drm_writeback.c
-> > > changes:
-> > >
-> > > Reviewed-by: Liviu Dudau <liviu.dudau@arm.com>
-> > >
-> > >
-> > > [snip]
-> > >
-> > >
-> > > > diff --git a/include/drm/drm_connector.h b/include/drm/drm_connector.h
-> > > > index 8f34f4b8183d..1b090e6bddc1 100644
-> > > > --- a/include/drm/drm_connector.h
-> > > > +++ b/include/drm/drm_connector.h
-> > > > @@ -1882,6 +1882,61 @@ struct drm_connector_cec {
-> > > >   void *data;
-> > > >  };
-> > > >
-> > > > +/**
-> > > > + * struct drm_writeback_connector - DRM writeback connector  */
-> > > > +struct drm_writeback_connector {
-> > > > + /**
-> > > > +  * @pixel_formats_blob_ptr:
-> > > > +  *
-> > > > +  * DRM blob property data for the pixel formats list on writeback
-> > > > +  * connectors
-> > > > +  * See also drm_writeback_connector_init()
-> > > > +  */
-> > > > + struct drm_property_blob *pixel_formats_blob_ptr;
-> > > > +
-> > > > + /** @job_lock: Protects job_queue */
-> > > > + spinlock_t job_lock;
-> > > > +
-> > > > + /**
-> > > > +  * @job_queue:
-> > > > +  *
-> > > > +  * Holds a list of a connector's writeback jobs; the last item is the
-> > > > +  * most recent. The first item may be either waiting for the hardware
-> > > > +  * to begin writing, or currently being written.
-> > > > +  *
-> > > > +  * See also: drm_writeback_queue_job() and
-> > > > +  * drm_writeback_signal_completion()
-> > > > +  */
-> > > > + struct list_head job_queue;
-> > > > +
-> > > > + /**
-> > > > +  * @fence_context:
-> > > > +  *
-> > > > +  * timeline context used for fence operations.
-> > > > +  */
-> > > > + unsigned int fence_context;
-> > > > + /**
-> > > > +  * @fence_lock:
-> > > > +  *
-> > > > +  * spinlock to protect the fences in the fence_context.
-> > > > +  */
-> > > > + spinlock_t fence_lock;
-> > > > + /**
-> > > > +  * @fence_seqno:
-> > > > +  *
-> > > > +  * Seqno variable used as monotonic counter for the fences
-> > > > +  * created on the connector's timeline.
-> > > > +  */
-> > > > + unsigned long fence_seqno;
-> > > > + /**
-> > > > +  * @timeline_name:
-> > > > +  *
-> > > > +  * The name of the connector's fence timeline.
-> > > > +  */
-> > > > + char timeline_name[32];
-> > > > +};
-> > > > +
-> > > >  /**
-> > > >   * struct drm_connector - central DRM connector control structure
-> > > >   *
-> > > > @@ -2291,10 +2346,16 @@ struct drm_connector {
-> > > >    */
-> > > >   struct llist_node free_node;
-> > > >
-> > > > - /**
-> > > > -  * @hdmi: HDMI-related variable and properties.
-> > > > -  */
-> > > > - struct drm_connector_hdmi hdmi;
-> > > > + union {
-> > >
-> > > This is a surprising choice. Before this patch one had to have a separate
-> > > writeback connector besides the HDMI connector. Going forward it looks like
-> > > you still need two connectors, one that uses the writeback member and one
-> > > that uses the hdmi one. Is that intended?
-> > >
-> > > I was expecting that you're going to declare the writeback member next to the
-> > > hdmi, without overlap. If you do that, then you also don't need to move the
-> > > struct drm_writeback declaration from the header file and it should be enough
-> > > to include the drm_writeback.h file.
-> >
-> > Hi,
-> > Thanks for the review
-> > The reason for this came from the discussion on previous patches and was suggested by Dmitry.
-> > The idea is that a connector can never be both an HDMI and writeback connector at the same time
-> > Hence we save space if we pack them together.
->
-> Hmm, but you can still have all the CEC and HDMI codecs data in that connector,
-> which feels strange.  Also, what's the issue with having a connector that has
-> both a valid HDMI state and an associated writeback at the same time (i.e.
-> don't use the union)? Writing back the memory the output that goes to HDMI is
-> valid, right?
+On Tue, Nov 04, 2025 at 10:41:05AM +0530, Dikshita Agarwal wrote:
+> Improve the condition used to determine when input internal buffers need
+> to be reconfigured during streamon on the capture port. Previously, the
+> check relied on the INPUT_PAUSE sub-state, which was also being set
+> during seek operations. This led to input buffers being queued multiple
+> times to the firmware, causing session errors due to duplicate buffer
+> submissions.
+> 
+> This change introduces a more accurate check using the FIRST_IPSC and
+> DRC sub-states to ensure that input buffer reconfiguration is triggered
+> only during resolution change scenarios, such as streamoff/on on the
+> capture port. This avoids duplicate buffer queuing during seek
+> operations.
+> 
+> Fixes: c1f8b2cc72ec ("media: iris: handle streamoff/on from client in dynamic resolution change")
+> Reported-by: Val Packett <val@packett.cool>
+> Closes: https://gitlab.freedesktop.org/gstreamer/gstreamer/-/issues/4700
+> Signed-off-by: Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>
+> ---
+> Changes in v2:
+> - Removed spurious space and addressed other comments (Nicolas)
+> - Remove the unnecessary initializations (Self) 
+> - Link to v1: https://lore.kernel.org/r/20251103-iris-seek-fix-v1-1-6db5f5e17722@oss.qualcomm.com
+> ---
+>  drivers/media/platform/qcom/iris/iris_common.c | 6 ++++--
+>  1 file changed, 4 insertions(+), 2 deletions(-)
+> 
+> diff --git a/drivers/media/platform/qcom/iris/iris_common.c b/drivers/media/platform/qcom/iris/iris_common.c
+> index 9fc663bdaf3fc989fe1273b4d4280a87f68de85d..ee377131c8419c434c85ec8e4321db39bbdecda0 100644
+> --- a/drivers/media/platform/qcom/iris/iris_common.c
+> +++ b/drivers/media/platform/qcom/iris/iris_common.c
+> @@ -91,12 +91,13 @@ int iris_process_streamon_input(struct iris_inst *inst)
+>  int iris_process_streamon_output(struct iris_inst *inst)
+>  {
+>  	const struct iris_hfi_command_ops *hfi_ops = inst->core->hfi_ops;
+> -	bool drain_active = false, drc_active = false;
+>  	enum iris_inst_sub_state clear_sub_state = 0;
+>  	int ret = 0;
+>  
+>  	iris_scale_power(inst);
+>  
+> +	first_ipsc = inst->sub_state & IRIS_INST_SUB_FIRST_IPSC;
+> +
+>  	drain_active = inst->sub_state & IRIS_INST_SUB_DRAIN &&
+>  		inst->sub_state & IRIS_INST_SUB_DRAIN_LAST;
+>  
+> @@ -108,7 +109,8 @@ int iris_process_streamon_output(struct iris_inst *inst)
+>  	else if (drain_active)
+>  		clear_sub_state = IRIS_INST_SUB_DRAIN | IRIS_INST_SUB_DRAIN_LAST;
+>  
+> -	if (inst->domain == DECODER && inst->sub_state & IRIS_INST_SUB_INPUT_PAUSE) {
+> +	/* Input internal buffer reconfiguration required in case of resolution change */
+> +	if (first_ipsc || drc_active) {
+>  		ret = iris_alloc_and_queue_input_int_bufs(inst);
+>  		if (ret)
+>  			return ret;
 
-Writing back to memory requires a separate connector (with separate
-setup). The CRTC should also support outputting data to both HDMI
-_and_ Writeback connectors at the same time (aka cloning). Not all
-configurations are possible, writeback requires additional bandwidth,
-etc., etc.
+After this line comes manual writing of STAGE and PIPE. Could you please
+point out where is the driver updating the resolution in the firmware?
+And if it does, why do we need to write STAGE and PIPE again?
 
->
-> Maybe that is not something that you considered, but with this patch (without union)
-> we can drop the need to have a separate connector just for writeback. We're breaking
-> user space compatibility, true, but it feels like a good change to be able to
-> attach a writeback to any connector and get its output. The drivers that don't support
-> that can reject the commit that attaches the writeback to the existing connector.
-
-Well... No. It's not how it is being handled in the (existing)
-hardware. Nor does it make it easier to handle resources for the
-writeback.
+> 
+> ---
+> base-commit: 163917839c0eea3bdfe3620f27f617a55fd76302
+> change-id: 20251103-iris-seek-fix-7a25af22fa52
+> 
+> Best regards,
+> -- 
+> Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>
+> 
 
 -- 
 With best wishes
