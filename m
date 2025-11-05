@@ -1,157 +1,157 @@
-Return-Path: <linux-arm-msm+bounces-80448-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-80449-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 31FEBC35957
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 05 Nov 2025 13:19:18 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 14FCBC35B60
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 05 Nov 2025 13:53:54 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id E2E5D3B2F39
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Nov 2025 12:19:16 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id C221A1898CB6
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Nov 2025 12:54:09 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A1448313558;
-	Wed,  5 Nov 2025 12:19:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 03D16316191;
+	Wed,  5 Nov 2025 12:53:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="tyt8YziP"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="KArQGNRX"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pj1-f53.google.com (mail-pj1-f53.google.com [209.85.216.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7703B312815;
-	Wed,  5 Nov 2025 12:19:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77E93313E04
+	for <linux-arm-msm@vger.kernel.org>; Wed,  5 Nov 2025 12:53:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762345153; cv=none; b=gai7qmyiWTRbKU8pzIPGdw6u5B1JDayA/nCEBUrWmp6iGa4qGb4VnX2VPYSPm/2wFiGhbyrcDr+VSYB6sc8ZXpEmpPsCQmWoh8eGY2noYq2yHSW7Ko61gaywAtcrM9giQRsRNKf6NkJYqFsXml8T3LL3o5mRjAVcs0uy7y9kVYo=
+	t=1762347219; cv=none; b=lz/Id62vJRCkwDjJZy2FqVghinR5fC8DKkLWX/6CNzudp+jPHT71jyXzzRtJ1oJ8CxungdskM7stlUqeMax+PVbG+PrkzhzCcB8hA68zfQdX0cvuPSm5p4niqeCVZ2whtwD4ibo+ni7jZ9/lJQxS0phhu0hMHyGHzc3HkAPTTVM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762345153; c=relaxed/simple;
-	bh=WpEVUOYe+o0ODCJcitnI3R656IlVO6R4iBigsvtbubg=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=GVlEYQ5EG4smnyLeE1WXayDqJm4GktFXY39cIkBodZf0JjaoqRPinVFMczIrPJK9InslqudwV4X+JMM++naG7aMZb1VtXA8UlCL0iPgqTwEK+0XdQmoo0xwoYJVbeQiss0mHATljF3UV6lRfIP4NwYKgXNqxktJ4xBBc/2nhMKs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=tyt8YziP; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPS id CB250C4CEFB;
-	Wed,  5 Nov 2025 12:19:12 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1762345152;
-	bh=WpEVUOYe+o0ODCJcitnI3R656IlVO6R4iBigsvtbubg=;
-	h=From:Date:Subject:To:Cc:Reply-To:From;
-	b=tyt8YziP88ZbFQ1oRBb7U2mkHwTICJ5gryp1Su4+QrBXgLzZsnZK+SrRdSVRI39EE
-	 bXVkn1id1UK7DphpAPVOUP9fyMT7WskopkSx0zw3fmVgLAqXmslfGhwYSo9nX76NzV
-	 +5cTNhPqN3mmomHMW2bY7ZaylGV6WmrqTzS5FU307xsIoKKGWhpcd9sk2iU4u+A4c1
-	 G3qW7R5GR0JR5y/r83AYzVSZePkvoBv+HDZpXXMhJClZt3HABlYwE01FxvIRwQIo5W
-	 CWWX7wDSa+TzJ7ENaFK3P5gN9RV8fng+BvlG/97pSseC/e4aKH2YhwpclNyyUAgj+o
-	 qPfZvvMzXPdPQ==
-Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B4019CCFA0D;
-	Wed,  5 Nov 2025 12:19:12 +0000 (UTC)
-From: Prasad Kumpatla via B4 Relay <devnull+prasad.kumpatla.oss.qualcomm.com@kernel.org>
-Date: Wed, 05 Nov 2025 17:49:10 +0530
-Subject: [PATCH v4] dt-bindings: soundwire: qcom: Add SoundWire v2.2.0
- compatible
+	s=arc-20240116; t=1762347219; c=relaxed/simple;
+	bh=ZiOZviqEvKwWICEdXoSPzWBNXEjcvi0xyNucmUY2loE=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=YcKQKFiAnujOc5RBJ8fTEQJ2kilkQvwNNYHVycskZ2OI7bSATTW8BumRFa8jveTEZeH0zlYoYnv26nP0vfBWBggX1V5j5MRPJXIY3UvLAGKSgVeXC9Q8AMfLRfDNv5eBhMRhbbhu0KRlz76xO/NcdXtEtjvJHgGQB/PDnlPpxcg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=KArQGNRX; arc=none smtp.client-ip=209.85.216.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-pj1-f53.google.com with SMTP id 98e67ed59e1d1-33db8fde85cso6330026a91.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 05 Nov 2025 04:53:38 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1762347218; x=1762952018; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=uXTWMvD9XNNtJ+0IuDLHxEJ/55opUg4uFPpMppU+ANg=;
+        b=KArQGNRXOG8tTdX09tWTtDS+mm7ac+fS47hwdIhp4xmx/ZWWA9yhUGx0Wr3Ct1LkLh
+         Xm93xZ0l6gJ7csUAW8USuqkXecEc+ickdD7+djOHqFqcA9U2apJQuucF6kHxheNtbxKm
+         amhNkEbAeQOUZNwiFHhn4WVjz/HNiq+mQvqalkyMqBuIqcj12jbAGChKq1ssMr+tD3RB
+         wbVdGbzso5hCcyh9aljtLdnPgV7MpiYFYkrbkGDXpvVXH+3AkFrJidan7CCtVFuhxAAJ
+         O/pwGkpsGEca+N/UMmDrJBd4SMKrmC2cKM51u3j0kHlOH7ec66TjmC/E8gcgVKkqqibN
+         +eYA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1762347218; x=1762952018;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=uXTWMvD9XNNtJ+0IuDLHxEJ/55opUg4uFPpMppU+ANg=;
+        b=WhvdmKv20FM7+22hsJQ5bOxoMpIQra+sEao9cMdAe9UMpMU9r+ZImnw+Pxqv6Xb0kM
+         z4H2C6/fery/k+fBHrbEa6X/qArkZ6wSAr0ZkKpdjlFffX6+9zXtDm6CURot0QGxqT/6
+         /rK1CWtbSgtIuEUHG5wdd6WirbdK+V27WdvpBsYP+F+toDM7n0RmICQcCHdht3SI6Xz0
+         Z1X9S9MmKzpVYiHXBglGcrAgAkRQ4kgvT2joTYEJNZVJtgkUkc9E80YVuLMzBHspk1Cv
+         MJKmU2sSfmFYifG0nQyK/K0Bw2hPBP9QSTlQfdIxoIX83OEmjMgQfDMgayE4JDqKyYNh
+         a7rQ==
+X-Forwarded-Encrypted: i=1; AJvYcCUaPdOKLl/E53a8Cf0LNOoeVGVhBwFYElLY0Xal5GcsJCtqWjPt3xuT04yOgffPsiLzz13gHcaI1FsR5zPC@vger.kernel.org
+X-Gm-Message-State: AOJu0YzroWL3g/CP+qBp2n6uiUsAcLLYY9RuqQBVm6rxN3C+hfMmelIR
+	bXDqF8JyI8tYF70wd0uY9upmQ4YtbqvNX5mv0PQVm7bG8qotOATvYUXb
+X-Gm-Gg: ASbGncuSDr5B1q64OrSZSpsW/E3uBjx/5BoxXRL0TZFP96aY/f0hxzwvGuyavd9D3bv
+	HPruScw7A646r0PxDeM5DORr4Vn1j8DhgK9cGycme1L6kWraJwpeqzQeDlKGuK1OnayctomZKa8
+	xzFkLpDsYr2xb8y7HXm/73JuyZANE8W1RE5UdJIOJt2Xt/sM/3cev/I5RPGVOvpYPj43T0XGxkj
+	TUQqKISyIw92i5aeu7vMhGT/eGZnpLRyNbxejuB/PiTnAG5Hshv6ApWVuXFnrjVk8WvjnmQmIkl
+	68evX9LKf4zX/hSYj4oBXVEbBTp2rYOu4FK6EqxXNbjAr/sDC7e6qVeo0aE4Z2WdxD3Ke8dQwse
+	RQ65Q5aarJARRWE9MWx7Gi+kSjbUWtOPcxExPuTk14pNxE80z6zFw0NPPCUxphUUG1oQ7fLSwOE
+	GvcOi/kDI26iJt
+X-Google-Smtp-Source: AGHT+IHDL9eiMgzkVlgRWTri8WIsiKSHk1G9FSbzFFFh7VWfcOfgAFDPdxNgUrmGjQyDZbwKIMBq/Q==
+X-Received: by 2002:a17:902:da88:b0:27d:6f37:7b66 with SMTP id d9443c01a7336-2962adb9263mr50059675ad.47.1762347217742;
+        Wed, 05 Nov 2025 04:53:37 -0800 (PST)
+Received: from [172.17.49.162] ([103.218.174.2])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-341a689ad7fsm2938352a91.2.2025.11.05.04.53.33
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 05 Nov 2025 04:53:37 -0800 (PST)
+Message-ID: <1e13b14a-83eb-4ab3-b5e3-4721a6026b65@gmail.com>
+Date: Wed, 5 Nov 2025 18:23:32 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20251105-knp-audio-v2-v4-1-ae0953f02b44@oss.qualcomm.com>
-X-B4-Tracking: v=1; b=H4sIAL1AC2kC/03MQQ6DIBCF4auYWXcIIGrtqvdoupgAVqIIBTVNj
- Hcv6aqbl3yL9x+QbXI2w606INndZReWAnWpQI+0vCw6UwySy0ZwoXBaItJmXMBdYk911zVSGy0
- aKJeY7OA+v9zjWTyk4HEdk6W/CO+FqlulWC37VvIrCoyJMhk2bT7SOtM95MzeG806eM/KwHl+A
- YQekP6qAAAA
-X-Change-ID: 20251014-knp-audio-v2-9a37752cdc15
-To: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>, Srinivas Kandagatla <srini@kernel.org>
-Cc: Prasad Kumpatla <prasad.kumpatla@oss.qualcomm.com>, 
- linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
- linux-kernel@vger.kernel.org, Jingyi Wang <jingyi.wang@oss.qualcomm.com>, 
- Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-X-Mailer: b4 0.14.3
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1762345151; l=2851;
- i=prasad.kumpatla@oss.qualcomm.com; s=20251104; h=from:subject:message-id;
- bh=c0O8eohmd+tIOQmYmE+msxYJGTgpEFCpk9Tc3tlijMA=;
- b=ocgeixzvp6gml7lZDN8J/V00Hjhfw8/FNaA5PabRQ4bj1gT3/E+VAps1m5rUg83WZLThayGL4
- jBRU6e7qN64DakcZMi5lNphdjqayfbOVmzC3JU2famuZ0IrrA5FI9z1
-X-Developer-Key: i=prasad.kumpatla@oss.qualcomm.com; a=ed25519;
- pk=XN9tL2ispFX+irMtnM7RxBH6rj+awD6oEjXmk0YJodY=
-X-Endpoint-Received: by B4 Relay for
- prasad.kumpatla@oss.qualcomm.com/20251104 with auth_id=560
-X-Original-From: Prasad Kumpatla <prasad.kumpatla@oss.qualcomm.com>
-Reply-To: prasad.kumpatla@oss.qualcomm.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v5 2/2] arm64: dts: qcom: talos-evk: Add support for
+ QCS615 talos evk board
+To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, andersson@kernel.org,
+ konradybcio@kernel.org
+Cc: robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org,
+ linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org
+References: <20251104125126.1006400-1-tessolveupstream@gmail.com>
+ <20251104125126.1006400-3-tessolveupstream@gmail.com>
+ <27f51013-9276-4e41-b57d-fb0baaec5bc6@oss.qualcomm.com>
+ <4e3b01fa-174b-4de3-a5ef-67f51f0b2033@gmail.com>
+ <c2b91dd0-1b0c-43bc-ad3e-5e4b136c75c9@oss.qualcomm.com>
+Content-Language: en-US
+From: Tessolve Upstream <tessolveupstream@gmail.com>
+In-Reply-To: <c2b91dd0-1b0c-43bc-ad3e-5e4b136c75c9@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-From: Prasad Kumpatla <prasad.kumpatla@oss.qualcomm.com>
 
-Add qcom,soundwire-v2.2.0 to the list of supported Qualcomm
-SoundWire controller versions. This version falls back to
-qcom,soundwire-v2.0.0 if not explicitly handled by the driver.
 
-Signed-off-by: Jingyi Wang <jingyi.wang@oss.qualcomm.com>
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Signed-off-by: Prasad Kumpatla <prasad.kumpatla@oss.qualcomm.com>
----
-Add audio support for Kaanapali MTP boards. Introduces supporting
-dependencies required to enable audio functionality on MTP platforms.
-These changes have been validated on Kaanapali MTP hardware.
+On 05/11/25 16:39, Konrad Dybcio wrote:
+> On 11/5/25 11:01 AM, Tessolve Upstream wrote:
+>>
+>>
+>> On 04/11/25 19:57, Konrad Dybcio wrote:
+>>> On 11/4/25 1:51 PM, Sudarshan Shetty wrote:
+>>>> Introduce the device tree support for the QCS615-based talos-evk
+>>>> platform, which follows the SMARC (Smart Mobility ARChitecture)
+>>>> standard. The platform is composed of two main hardware
+>>>> components: the talos-evk-som and the talos-evk carrier board.
+>>>
+>>> How is the carrier board a separate entity from the "talos-evk.dts"?
+>>
+>> The talos-evk platform follows a modular SoM + carrier design.
+>> In our current implementation:
+>> talos-evk-som.dtsi — describes SoM-specific components.
+>> talos-evk-cb.dtsi — represents the carrier board and includes the
+>> SoM file, adding carrier-specific interfaces (micro SD, power button etc.).
+>> talos-evk.dts — includes both the SoM and CB DTSIs and enables HDMI 
+>> display configuration.
+>> talos-evk-lvds.dts — also includes both the SoM and CB DTSIs but enables 
+>> LVDS instead of HDMI.
+>>
+>> HDMI and LVDS share the same DSI output and cannot be used simultaneously.
+>> Therefore, we provide separate top-level DTS files (talos-evk.dts for HDMI
+>> and talos-evk-lvds.dts for LVDS), while keeping common board
+>> logic in talos-evk-cb.dtsi.
+>>
+>> Hence, layer looks as below:
+>>
+>> talos-evk-som.dtsi
+>> ├── talos-evk-cb.dtsi (includes som)
+>> │    ├── talos-evk.dts (HDMI)
+>> │    └── talos-evk-lvds.dts (LVDS)
+>>
+>> This ensures modularity, and properly models mutually exclusive display
+>> configurations.
+> 
+> And are both the LVDS display and HDMI converter on separate add-in boards?
+> 
+Both HDMI and LVDS interfaces are present on the same carrier board, 
+but they share the same DSI output from the SoM.
 
-Changes in [v4]:
-	- Dropped merged patches.
-	- Link to v3: https://lore.kernel.org/linux-arm-msm/20251015-knp-audio-v2-v3-0-e0e3e4167d87@oss.qualcomm.com/
+The hardware requires physical reconfiguration (resistor changes)
+to select either the ADV7535 HDMI path or the LVDS bridge path.
 
-Changes in [v3]:
-	- Correct SoB chain, comments from Krzysztof.
-	- Link to v2: https://lore.kernel.org/linux-arm-msm/20251009143644.3296208-1-prasad.kumpatla@oss.qualcomm.com/
-
-Changes in [v2]:
-	- Addressed compilation issue for lpass version check patch.
-	- Sorted compatible string in machine driver.
-	- Link to v1: https://lore.kernel.org/linux-arm-msm/20250924-knp-audio-v1-0-5afa926b567c@oss.qualcomm.com/
-
-Konrad Dybcio (1):
-  ASoC: codecs: va-macro: Rework version checking
-
-Prasad Kumpatla (4):
-  ASoC: dt-bindings: qcom,sm8250: Add kaanapali sound card
-  ASoC: qcom: sc8280xp: Add support for Kaanapali
-  dt-bindings: soundwire: qcom: Add SoundWire v2.2.0 compatible
-  ASoC: dt-bindings: qcom: Add Kaanapali LPASS macro codecs
-
- .../bindings/sound/qcom,lpass-rx-macro.yaml   |  1 +
- .../bindings/sound/qcom,lpass-tx-macro.yaml   |  1 +
- .../bindings/sound/qcom,lpass-va-macro.yaml   |  1 +
- .../bindings/sound/qcom,lpass-wsa-macro.yaml  |  1 +
- .../bindings/sound/qcom,sm8250.yaml           |  1 +
- .../bindings/soundwire/qcom,soundwire.yaml    |  1 +
- sound/soc/codecs/lpass-va-macro.c             | 90 +++++++++++++------
- sound/soc/qcom/sc8280xp.c                     |  1 +
- 8 files changed, 70 insertions(+), 27 deletions(-)
-
---
-2.34.1
----
- Documentation/devicetree/bindings/soundwire/qcom,soundwire.yaml | 1 +
- 1 file changed, 1 insertion(+)
-
-diff --git a/Documentation/devicetree/bindings/soundwire/qcom,soundwire.yaml b/Documentation/devicetree/bindings/soundwire/qcom,soundwire.yaml
-index 95d947fda6a7..1c4b0bdbb044 100644
---- a/Documentation/devicetree/bindings/soundwire/qcom,soundwire.yaml
-+++ b/Documentation/devicetree/bindings/soundwire/qcom,soundwire.yaml
-@@ -26,6 +26,7 @@ properties:
-       - items:
-           - enum:
-               - qcom,soundwire-v2.1.0
-+              - qcom,soundwire-v2.2.0
-           - const: qcom,soundwire-v2.0.0
- 
-   reg:
-
----
-base-commit: 2b763d4652393c90eaa771a5164502ec9dd965ae
-change-id: 20251014-knp-audio-v2-9a37752cdc15
-
-Best regards,
--- 
-Prasad Kumpatla <prasad.kumpatla@oss.qualcomm.com>
-
+Because they cannot be used simultaneously and represent different hardware
+configurations, we provide two separate DTS files — one for HDMI and 
+one for LVDS — while keeping the common carrier definitions in talos-evk-cb.dtsi.
+> Konrad
 
 
