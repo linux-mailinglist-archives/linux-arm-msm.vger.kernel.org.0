@@ -1,71 +1,55 @@
-Return-Path: <linux-arm-msm+bounces-80473-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-80465-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id D92C5C36D61
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 05 Nov 2025 17:56:57 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id D87A0C36F33
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 05 Nov 2025 18:09:35 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 4B008188354B
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Nov 2025 16:54:05 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 4E5A4625DD1
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Nov 2025 16:13:49 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8929133891F;
-	Wed,  5 Nov 2025 16:53:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Q7oZHYTg"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CAF0231DD97;
+	Wed,  5 Nov 2025 16:13:44 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40EF932936B;
-	Wed,  5 Nov 2025 16:53:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 47F96322DA8;
+	Wed,  5 Nov 2025 16:13:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762361615; cv=none; b=RNu31+gpcAxiaApVKscJOuGCNcYEfcu2kiUqG1LqiyeE9I+moHk/f7SzCtFhqbRaC/yRLluBwmZYbJOhzGHsQChvrJveHMBzT4qXV3zpsTcQumRHAv8L6HbDvL0qg30AeBH0ypoVjgXJLC1D47XdXAKSxqFazLjRcLn22LvpLLQ=
+	t=1762359224; cv=none; b=S5g+hMJ5xXvvVjO13IrlY2NnC50iZQB5cow95UBT5x5wNqeQbuVydzFoK7UJCNYwpVPRXcZBjygq7v3WoMLZYCL60c+8D/9gDQSgfSPtrwb/3ibKWDhcy8qOFBOK8/CLcwcesA/KEJkrUTFRZdz8vjk8wxmFV+tQNC/6sNVI5jI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762361615; c=relaxed/simple;
-	bh=DUyB+B+LRdmSbh3dWzcC+TDqeeRozuT/fTVcVlRoLwA=;
-	h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date:
-	 MIME-Version:Content-Type; b=sPA3XnodfZSQklUDqO5R/CyrfTM/WXYU/19+k1n0cNYM4Ipc+GKUaVR8Rd2we1Y5FysnS73WXqzO2gYtHSxuYbo5m2dSu00eB2ru6XpUPRGhwHAO+xWBQyEVVxiN7z5IQOtDr1xIeiWBmHTQLQDQSWtYAQx28tk2Vgw5oiGmXCY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Q7oZHYTg; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07744C4CEF8;
-	Wed,  5 Nov 2025 16:53:20 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1762361614;
-	bh=DUyB+B+LRdmSbh3dWzcC+TDqeeRozuT/fTVcVlRoLwA=;
-	h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
-	b=Q7oZHYTg9wmwfGsdZTavf0N8zPTFvaUa2dJLRSBAL2PSUXV77MZppD+KvVagGvLc+
-	 jz5q/AsMODLhoVEoOCu2LVU6rID75sMxJYYuPKbSJ5tlGyouotEQFNYpTAPFfzNiVn
-	 AE8GnbFUfXtxO8o6/Dj8qad2mTuTV/VQQypKkxUAkV43Xj2kN+qxCbeelL3SXMhcwM
-	 Nf9oDm19ts/A79WshWE3Y/R/WkI/XDS/sVPQogSjlvL4avmDh45RC+oz3bdIyP/mdz
-	 uR5/8FTkqC/RCiYZVqzjfUzjzQ67QI8bKotYeEO6vJ+jimxh/dIrknLl/0JN4J8ZX5
-	 tUd8ZkXITO5VQ==
-From: Srinivas Kandagatla <srini@kernel.org>
-To: Sean Paul <sean@poorly.run>, Konrad Dybcio <konradybcio@kernel.org>, 
- Marijn Suijten <marijn.suijten@somainline.org>, 
- David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, 
- Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, 
- Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>, 
- Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
- Connor Abbott <cwabbott0@gmail.com>, 
- Rob Clark <robin.clark@oss.qualcomm.com>, 
- Dmitry Baryshkov <lumag@kernel.org>, 
- Akhil P Oommen <akhilpo@oss.qualcomm.com>
-Cc: Gaurav Kohli <quic_gkohli@quicinc.com>, linux-arm-msm@vger.kernel.org, 
- dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org, 
- linux-kernel@vger.kernel.org, devicetree@vger.kernel.org, 
- Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>, 
- Puranam V G Tejaswi <quic_pvgtejas@quicinc.com>, 
- Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, 
- Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>, 
- Krzysztof Kozlowski <krzk@kernel.org>
-In-Reply-To: <20251105-a663-gpu-support-v7-0-1bcf7f151125@oss.qualcomm.com>
-References: <20251105-a663-gpu-support-v7-0-1bcf7f151125@oss.qualcomm.com>
-Subject: Re: (subset) [PATCH v7 0/5] DRM/MSM: Support for Adreno 663 GPU
-Message-Id: <176236160052.37047.12923795229672394506.b4-ty@kernel.org>
-Date: Wed, 05 Nov 2025 16:53:20 +0000
+	s=arc-20240116; t=1762359224; c=relaxed/simple;
+	bh=172JSa7BUeqD+BCdvg36zRUWUfM4kvpHBnPyt20IG9w=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=HKK26QNg5v82sIzc9FYkny8eTaOxlf3OHjzXwYhWQsn7Ri6G1lW27xuYaPB8MRyUOo6tHFOH9zbOoH8ufU4aOOgO9H5/w135hv/z4kRqCL3zjBL5I2s3mCpgTuAMhCHDo4foCN5HfWiHWlYAtbD/a+tDtJi09gkZH69jH8R+yrQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; arc=none smtp.client-ip=217.140.110.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 75BE5169C;
+	Wed,  5 Nov 2025 08:13:33 -0800 (PST)
+Received: from ewhatever.cambridge.arm.com (ewhatever.cambridge.arm.com [10.1.197.1])
+	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPA id EBEB63F694;
+	Wed,  5 Nov 2025 08:13:39 -0800 (PST)
+From: Suzuki K Poulose <suzuki.poulose@arm.com>
+To: Mike Leach <mike.leach@linaro.org>,
+	James Clark <james.clark@linaro.org>,
+	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+	Linu Cherian <lcherian@marvell.com>,
+	Xiaoqi Zhuang <xiaoqi.zhuang@oss.qualcomm.com>
+Cc: Suzuki K Poulose <suzuki.poulose@arm.com>,
+	coresight@lists.linaro.org,
+	linux-arm-kernel@lists.infradead.org,
+	linux-kernel@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH v3] coresight: ETR: Fix ETR buffer use-after-free issue
+Date: Wed,  5 Nov 2025 16:13:30 +0000
+Message-ID: <176235893222.387743.2128022832743502879.b4-ty@arm.com>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20251021-fix_etr_issue-v3-1-99a2d066fee2@oss.qualcomm.com>
+References: <20251021-fix_etr_issue-v3-1-99a2d066fee2@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -73,29 +57,25 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-X-Mailer: b4 0.14.3
+Content-Transfer-Encoding: 8bit
 
 
-On Wed, 05 Nov 2025 22:15:44 +0530, Akhil P Oommen wrote:
-> This series adds support for Adreno 663 gpu found in SA8775P (Lemans)
-> chipsets. The closest gpu which is currently supported in drm-msm is A660.
-> Following are the major differences with that:
-> 	1. gmu/zap firmwares
-> 	2. Recommended to disable Level2 swizzling
-> 
-> Verified kmscube/weston/glmark2-es2. This series is rebased on top of
-> v6.17-rc1.
+On Tue, 21 Oct 2025 16:45:25 +0800, Xiaoqi Zhuang wrote:
+> When ETR is enabled as CS_MODE_SYSFS, if the buffer size is changed
+> and enabled again, currently sysfs_buf will point to the newly
+> allocated memory(buf_new) and free the old memory(buf_old). But the
+> etr_buf that is being used by the ETR remains pointed to buf_old, not
+> updated to buf_new. In this case, it will result in a memory
+> use-after-free issue.
 > 
 > [...]
 
 Applied, thanks!
 
-[1/5] dt-bindings: nvmem: qfprom: Add sa8775p compatible
-      commit: 466b5ef60fa7619f638fe08201ed9b66d0737556
+[1/1] coresight: ETR: Fix ETR buffer use-after-free issue
+      https://git.kernel.org/coresight/c/35501ac3c7d4
 
 Best regards,
 -- 
-Srinivas Kandagatla <srini@kernel.org>
-
+Suzuki K Poulose <suzuki.poulose@arm.com>
 
