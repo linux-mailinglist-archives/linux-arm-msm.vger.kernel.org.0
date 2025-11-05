@@ -1,210 +1,228 @@
-Return-Path: <linux-arm-msm+bounces-80385-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-80386-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 68D9FC33957
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 05 Nov 2025 02:05:24 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 89489C33969
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 05 Nov 2025 02:09:57 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id C490218C43F3
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Nov 2025 01:05:48 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id D90FE18C2C75
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Nov 2025 01:10:21 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 56C65139579;
-	Wed,  5 Nov 2025 01:05:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A36A4236437;
+	Wed,  5 Nov 2025 01:09:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="HAe9xfjD";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="S+QHBiu5"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="mMt7z2f9"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.9])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA09B1DF75B
-	for <linux-arm-msm@vger.kernel.org>; Wed,  5 Nov 2025 01:05:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5095A27462;
+	Wed,  5 Nov 2025 01:09:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.9
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762304720; cv=none; b=StOJG67RUD4pQkDW+pewQO1e1C/YnXvWU+BPmqCy8zw0AktHiv8vEyUcvRSO+D+VTOUS4F8rDzZhENSfmbQKYlbXzgQM1dWHEo0l3CgCG6ijaYQ/Xmexod7g3JqeecLhiHNQxNftnNcEpiU0JbGG261o88t4PKpk7aHAj00Nfsw=
+	t=1762304993; cv=none; b=fz3RDNE7O03W/2CRkZguYdGRPkL6bUgOcTjidUGvDjVvkYBZtV4DWqv4y+DqRfTO6bTcEPn6XG4hlsZgqMov5Msp/2jtAXbzCFI5Gr9lZZfZRtsD7pz9WhCcWZ4UR3GkumA47GbXqKZ4Wm9jdfqskjKeYf/NHNN2Bm0arQyyFDY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762304720; c=relaxed/simple;
-	bh=rJtYVnNy7gj+m3wBMg5oFKaq644ysYMWoHfp47xDheU=;
+	s=arc-20240116; t=1762304993; c=relaxed/simple;
+	bh=FFfDIqSM/9x7BMOCDpR60+XjPYyWl3N8kflVm4dcMck=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ZBui7SM145PZEZjPpz9uJrxLfM/AV8uRkUvRQEBO3f34czdz5nsfBqpmUAmdr2NJ82Iy39sKBIwZFG7r/klV+aELFJ2rFc+5GuICycyX2gw6U1fkNZW/V/7u+mwjxYteBVf0nDUHB88W61sd36cQRTmXxyhd0taOKLX+ZM3uD5Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=HAe9xfjD; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=S+QHBiu5; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 5A4KgWPG2997848
-	for <linux-arm-msm@vger.kernel.org>; Wed, 5 Nov 2025 01:05:18 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	UKB3wyWvpcPr7K0yIT6UZfC+SjpvEvAQpR2nzIL2AxA=; b=HAe9xfjDP1B+Igrf
-	87XNDwPyr8F8I16Gx7x9bzHay5IWPo2hYvhmVaD396GTtsPb+BUIg2Yr+DkCS8FK
-	9U+T0zOvs73Wb69XyRaPPX0wLR/Ta4t/vJxRlfaQJ0n396B6qln+bPKKcogbDzfi
-	f76C7wvFu1PZtk1qGRiOliABbQDXRCMvLoT5BuKEPBr+ESMOksLvirKbreUJ3i1D
-	pP1wfd0WSTn9pFX2wW637jlywr9iCFnUbDHTMC3I4+UhE7dl2zcV3yselKb6aDnT
-	e3OjcZou9TbstJHI+8I/wzATRS51R+ZTPf8m/izRp0cdZEaJ+S231V5qw8lHyODc
-	1m3+GQ==
-Received: from mail-qt1-f197.google.com (mail-qt1-f197.google.com [209.85.160.197])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4a7c7jk2f5-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Wed, 05 Nov 2025 01:05:17 +0000 (GMT)
-Received: by mail-qt1-f197.google.com with SMTP id d75a77b69052e-4e8916e8d4aso200291441cf.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 04 Nov 2025 17:05:17 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1762304717; x=1762909517; darn=vger.kernel.org;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=UKB3wyWvpcPr7K0yIT6UZfC+SjpvEvAQpR2nzIL2AxA=;
-        b=S+QHBiu5QPOSijwSILiNvOmtCNsua3KZ+yYEt4ZNIfzl+lv1HFUwd7iuOkY3d8c6xb
-         FzwXI+CfVI1dl0bpnNrF9LvdJesjLlnwimu5j09BzUxQKc8uj2PMB+gWD4G2vt7745LI
-         OniB7oPylTScCF/XOJ8FXkeyZunmmsyFCb1RlPiOqOEboWihaong3eDSv3sMiSO7tap6
-         rx+MnXHoWviCDNZSieU/0/inj5705QKq99hcu8FXON7mso95qQe3K/JezyC+pmVt/v9K
-         0JtSf0RhW227+DFZpz1GCnE6DXJaFzfr9InqpFwbyZhiva2KjlAK7aqANn/6nFebscKb
-         UNow==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1762304717; x=1762909517;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=UKB3wyWvpcPr7K0yIT6UZfC+SjpvEvAQpR2nzIL2AxA=;
-        b=dEuFrBKNuetya8qC5pbx59SVzy7I5Ckx/d/PKCc690L8k1gr2LpYEBov/5rjk/5PGu
-         zmeSRrjXINbbLW+lP8D5B/fIweLyWbMzvHrNF/OQ0OVLZSfnv3VXgfsgcvTsU3qQ3+Rk
-         d6PzBizJ+PVDggY20ls6UCjkRVbe5wpwU1x+Y8NgpZQTjGlF/S2I7ngItrzRAgtdeYCX
-         VDmPK3IR3tHjxCeDokmOj6NMsS6tPzsjzgc1/dBp7LdNZClMSSPS0rNVIGDerpVsb2lv
-         gz72Ulk8dw5fUhWbULps7UjPx9n3sV6T8znHUP5ndZZEXuv2OcSLDvuYKhScxO73X3n4
-         fZ+A==
-X-Forwarded-Encrypted: i=1; AJvYcCU7xskTirGD6GLh3IDCClbfUawwteQsq6LSiGok3b+PVdZZxkAPabpDFxxsH0qribu+kC+YdfyyIZTaJ47p@vger.kernel.org
-X-Gm-Message-State: AOJu0YzVkGmTiEqqm8Lj2qDWRwOxrITrnly1usDBcme9WQwiPlnI9K7/
-	+q6yIybhCJlhlrhaqSTOEXGSduXbQLXVD6l8+T67s7SPBlyjkwRa//UDrBhSMol0d3dPAJWB6of
-	eYVMx+yx5/paVZeTbN/Lez3x3cTER7s5jgpvUwy3WZNFpNemVj0t3pl/FraRSreCWaelA
-X-Gm-Gg: ASbGncvVOlWpNPdk2ir4SJtQYi+YRTAHJmAW6bEzNOV9KZk16T+UCD3NKK53opPy52G
-	qHYzL7TViJau4mlcLK9l5h38noSSFS1gaSSGr3I/XtF/7ig+fO8m++KBBFHqgMhuf6pvhxuZpeR
-	h74CkH/pJmbUdHVJY4d93TPIHcNNwJpU/8G5T8u8fBgxduTBzbHgn7rto8wBPb3Pv34FcRHYBMS
-	sOWp9y7TRpeIM9e1uQolk4Xl9pYcuWubJqCrfwo9StfugIx6i2tCG/W5L3MSW+th0Y0Cic4EnbM
-	x5suHg5GU/Xq9rYioSUFzUR3onDHgIoWmW3OJJWZwfCA9tYTAVgTOfZsOsW2GRqwxvwUpPCBReB
-	amXz//dffhkfrme9zn49sAxnDSOxsaey7nhciOt8Vxey9IY3wZGPzIWGDCTB52Or1PsbgyJOJKF
-	2grTeiniQ3aT6J
-X-Received: by 2002:a05:622a:13cd:b0:4d2:4df8:4cb5 with SMTP id d75a77b69052e-4ed723769ebmr20660371cf.4.1762304716847;
-        Tue, 04 Nov 2025 17:05:16 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IF7Pr3olhiTuSINhpQDsTtR+kYGQ/VuHjHNLQdRp69Wwe2b5u1dtEzPf+NBtNigm3oiU9boaA==
-X-Received: by 2002:a05:622a:13cd:b0:4d2:4df8:4cb5 with SMTP id d75a77b69052e-4ed723769ebmr20660041cf.4.1762304716391;
-        Tue, 04 Nov 2025 17:05:16 -0800 (PST)
-Received: from umbar.lan (2001-14ba-a0c3-3a00-264b-feff-fe8b-be8a.rev.dnainternet.fi. [2001:14ba:a0c3:3a00:264b:feff:fe8b:be8a])
-        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-37a414a0ddasm10514441fa.8.2025.11.04.17.05.15
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 04 Nov 2025 17:05:15 -0800 (PST)
-Date: Wed, 5 Nov 2025 03:05:14 +0200
-From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-To: Sudarshan Shetty <tessolveupstream@gmail.com>
-Cc: andersson@kernel.org, konradybcio@kernel.org, robh@kernel.org,
-        krzk+dt@kernel.org, conor+dt@kernel.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v5 0/2] Add Qualcomm Technologies, Inc. Talos EVK SMARC
- support
-Message-ID: <xq4jidiffovpg3armhlzrzxloug4irumlycyyvmfaugajbtq4t@cutuj5736ayo>
-References: <20251104125126.1006400-1-tessolveupstream@gmail.com>
+	 Content-Type:Content-Disposition:In-Reply-To; b=dLw3KVvrnFSixe775KWJSitWK5dl9EMu/uR8aOVPCpfttwiOHsMHX/hyDF9gnmuT9avU3AanPhkV4QRU8vZI+wvuh+Dz5mw2M9J/EZxm26yLbUuPG0kmgTUm4xO+mKXE715+4Aw/B+eWVvBVcNe8tblUEZkCKEyWpFtU2O6Si1M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=mMt7z2f9; arc=none smtp.client-ip=198.175.65.9
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1762304991; x=1793840991;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=FFfDIqSM/9x7BMOCDpR60+XjPYyWl3N8kflVm4dcMck=;
+  b=mMt7z2f9BvnGdIAQBy7E9sk8yBVZMa7W+zZlwP7p+U/hnuhEV6D/xj+C
+   aLyDDUj543wGGmlYEC6eSQiwRw1lFj0KZ1G2sInmMJ/F9gvK934itO1js
+   lL1gZ+R0rN1c7EYftuniU9qy00J//i5wB5GWO6IQjDnKF0ZYILLZBYx05
+   7JiXHU3wQL7ddh1KmpEPzn1opGv49fl/nh3EZsAgb8WoKO5jIpu905iur
+   YBZG4PpLHsnmUO3XLSupYNgZtzyQpCJsDjVWPaUbXCYohfa+AYjfTGqIu
+   PqTBmhgsT30W8jyg9sLeshh9y3o+iUo5zpkRWo0BkgpmeojRYF18vulv+
+   g==;
+X-CSE-ConnectionGUID: Rx6+9894Qy2pOLFDAdXssA==
+X-CSE-MsgGUID: cCS93jTVRYu266fx+G1TTw==
+X-IronPort-AV: E=McAfee;i="6800,10657,11603"; a="87040689"
+X-IronPort-AV: E=Sophos;i="6.19,280,1754982000"; 
+   d="scan'208";a="87040689"
+Received: from orviesa002.jf.intel.com ([10.64.159.142])
+  by orvoesa101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 04 Nov 2025 17:09:51 -0800
+X-CSE-ConnectionGUID: u4x7LBY1TjafuokxlPvc3g==
+X-CSE-MsgGUID: T1qvwjEnQmadicmAvnWwqQ==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.19,280,1754982000"; 
+   d="scan'208";a="217956010"
+Received: from lkp-server02.sh.intel.com (HELO 66d7546c76b2) ([10.239.97.151])
+  by orviesa002.jf.intel.com with ESMTP; 04 Nov 2025 17:09:48 -0800
+Received: from kbuild by 66d7546c76b2 with local (Exim 4.96)
+	(envelope-from <lkp@intel.com>)
+	id 1vGS1x-000S0O-1D;
+	Wed, 05 Nov 2025 01:09:45 +0000
+Date: Wed, 5 Nov 2025 09:08:57 +0800
+From: kernel test robot <lkp@intel.com>
+To: Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>,
+	Vikash Garodia <vikash.garodia@oss.qualcomm.com>,
+	Abhinav Kumar <abhinav.kumar@linux.dev>,
+	Bryan O'Donoghue <bod@kernel.org>,
+	Mauro Carvalho Chehab <mchehab@kernel.org>,
+	Hans Verkuil <hverkuil@xs4all.nl>,
+	Stefan Schmidt <stefan.schmidt@linaro.org>
+Cc: llvm@lists.linux.dev, oe-kbuild-all@lists.linux.dev,
+	linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+	linux-kernel@vger.kernel.org, Val Packett <val@packett.cool>,
+	Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>
+Subject: Re: [PATCH v2] media: iris: Refine internal buffer reconfiguration
+ logic for resolution change
+Message-ID: <202511050842.FTUh6ym8-lkp@intel.com>
+References: <20251104-iris-seek-fix-v2-1-c9dace39b43d@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20251104125126.1006400-1-tessolveupstream@gmail.com>
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMTA1MDAwNyBTYWx0ZWRfX4lmjL0pe0IVE
- XnICMF9zpXNTb8i2GJ2vIojxVb1DttRK0Mxs5+ueEySYZvE41ZlX/xfXDnq+DOW8Caq/wGU59f8
- Mbp/nc0DrMJjNv3in5LFviY+mbnX0/lcGNO6Nq7a+YyXtK93xtIhOeRdR11CboGWeSZn97Ga0d3
- BJrfFyd3KAnqdzwk9EO6db2P6y6zFAU4eq91w+V2/+k0/KX4pPFsXFQPMFVGEWcUkbtu1msXWNL
- hU17r6u/4QMD/Qh2AdWuj/wYeo55JBAbEJYXuC6eFKL5re2Xb+Up7XYPWzFUax9vLaZPvPwVwcz
- kbk1CbrSG0qdqDEO9Le7p7cMbZa9vW8oynBJknEnj0fJunRG+IPs48rdpWohbxIFFNT/P9RTd9n
- 0GGfDHDY6wsUsuX2iiQlgC89kuA51w==
-X-Proofpoint-ORIG-GUID: HfxBiLb3SxEl3oadNYJgArmSBS_h2OL1
-X-Proofpoint-GUID: HfxBiLb3SxEl3oadNYJgArmSBS_h2OL1
-X-Authority-Analysis: v=2.4 cv=DvNbOW/+ c=1 sm=1 tr=0 ts=690aa2ce cx=c_pps
- a=EVbN6Ke/fEF3bsl7X48z0g==:117 a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10
- a=6UeiqGixMTsA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=COHdNaOoP-U2MmXgnREA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=a_PwQJl-kcHnX1M80qC6:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
- definitions=2025-11-05_01,2025-11-03_03,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 impostorscore=0 malwarescore=0 phishscore=0 bulkscore=0
- lowpriorityscore=0 priorityscore=1501 adultscore=0 suspectscore=0 spamscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2510240001 definitions=main-2511050007
+In-Reply-To: <20251104-iris-seek-fix-v2-1-c9dace39b43d@oss.qualcomm.com>
 
-On Tue, Nov 04, 2025 at 06:21:24PM +0530, Sudarshan Shetty wrote:
-> Hi all,
-> 
-> This patch series adds device tree binding and board support for the
-> Qualcomm Technologies, Inc. Talos EVK SMARC platform based on the
-> QCS615 SoC.
-> 
-> The first patch introduces the DT binding entry for the Talos EVK
-> SMARC board, and the second patch adds the corresponding DTS
-> files for the platform.
-> 
-> Note:
-> USB(usb_1_dwc3) supports host-only mode based on the switch SW1 on
-> the SoM, which is purely a hardware controlled as USB-ID and USB-VBUS
-> is not connected the switching cannot be handled from SW.
-> Hence from SW Host-only mode is supported on Linux boot up.
-> 
-> Changes in v5:
->  - Updated commit message. (suggested by Krzysztof)
->  - Introduced generic node name for can, dp, hdmi-bridge. (suggested by
->    Krzysztof)
->  - Introduced talos-evk-cb.dtsi, which has common carrier board
->    interfaces.
+Hi Dikshita,
 
-Common between what?
+kernel test robot noticed the following build errors:
 
->  - No functional change in bindings file.
-> 
-> Changes in v4:
->  - Updated product name to full form per Krzysztof’s feedback in
->    dt-binding comment.
->  - Hook up the ADV7535 DSI-to-HDMI bridge to base DTS file.
->  - Add DP connector node and MDSS DisplayPort controller.
->  - Added USB note in the cover letter for maintainers' awareness.
-> 
-> Changes in v3:
->  - Addressed comments from Dmitry regarding USB1 `dr_mode` and 
->    added a DTS comment.
->  - No functional change in bindings file.
-> 
-> Changes in v2:
->  - Renamed compatible to "qcom,talos-evk" (suggested by Dmitry/Bjorn)
->  - Merged enum entry with existing `qcs615-ride` block (Krzysztof)
->  - Fixed subject and commit message to use imperative mood.
-> 
-> Thanks,
-> Sudarshan
-> 
-> Sudarshan Shetty (2):
->   dt-bindings: arm: qcom: talos-evk: Add QCS615 Talos EVK SMARC platform
->   arm64: dts: qcom: talos-evk: Add support for QCS615 talos evk board
-> 
->  .../devicetree/bindings/arm/qcom.yaml         |   1 +
->  arch/arm64/boot/dts/qcom/Makefile             |   1 +
->  arch/arm64/boot/dts/qcom/talos-evk-cb.dtsi    |  56 +++
->  arch/arm64/boot/dts/qcom/talos-evk-som.dtsi   | 442 ++++++++++++++++++
->  arch/arm64/boot/dts/qcom/talos-evk.dts        |  87 ++++
->  5 files changed, 587 insertions(+)
->  create mode 100644 arch/arm64/boot/dts/qcom/talos-evk-cb.dtsi
->  create mode 100644 arch/arm64/boot/dts/qcom/talos-evk-som.dtsi
->  create mode 100644 arch/arm64/boot/dts/qcom/talos-evk.dts
-> 
-> -- 
-> 2.34.1
-> 
+[auto build test ERROR on 163917839c0eea3bdfe3620f27f617a55fd76302]
+
+url:    https://github.com/intel-lab-lkp/linux/commits/Dikshita-Agarwal/media-iris-Refine-internal-buffer-reconfiguration-logic-for-resolution-change/20251104-131307
+base:   163917839c0eea3bdfe3620f27f617a55fd76302
+patch link:    https://lore.kernel.org/r/20251104-iris-seek-fix-v2-1-c9dace39b43d%40oss.qualcomm.com
+patch subject: [PATCH v2] media: iris: Refine internal buffer reconfiguration logic for resolution change
+config: loongarch-allmodconfig (https://download.01.org/0day-ci/archive/20251105/202511050842.FTUh6ym8-lkp@intel.com/config)
+compiler: clang version 19.1.7 (https://github.com/llvm/llvm-project cd708029e0b2869e80abe31ddb175f7c35361f90)
+reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20251105/202511050842.FTUh6ym8-lkp@intel.com/reproduce)
+
+If you fix the issue in a separate patch/commit (i.e. not just a new version of
+the same patch/commit), kindly add following tags
+| Reported-by: kernel test robot <lkp@intel.com>
+| Closes: https://lore.kernel.org/oe-kbuild-all/202511050842.FTUh6ym8-lkp@intel.com/
+
+All error/warnings (new ones prefixed by >>):
+
+>> drivers/media/platform/qcom/iris/iris_common.c:99:2: error: use of undeclared identifier 'first_ipsc'
+      99 |         first_ipsc = inst->sub_state & IRIS_INST_SUB_FIRST_IPSC;
+         |         ^
+>> drivers/media/platform/qcom/iris/iris_common.c:101:2: error: use of undeclared identifier 'drain_active'
+     101 |         drain_active = inst->sub_state & IRIS_INST_SUB_DRAIN &&
+         |         ^
+>> drivers/media/platform/qcom/iris/iris_common.c:104:2: error: use of undeclared identifier 'drc_active'
+     104 |         drc_active = inst->sub_state & IRIS_INST_SUB_DRC &&
+         |         ^
+   drivers/media/platform/qcom/iris/iris_common.c:107:6: error: use of undeclared identifier 'drc_active'
+     107 |         if (drc_active)
+         |             ^
+   drivers/media/platform/qcom/iris/iris_common.c:109:11: error: use of undeclared identifier 'drain_active'; did you mean 'swait_active'?
+     109 |         else if (drain_active)
+         |                  ^~~~~~~~~~~~
+         |                  swait_active
+   include/linux/swait.h:121:19: note: 'swait_active' declared here
+     121 | static inline int swait_active(struct swait_queue_head *wq)
+         |                   ^
+   drivers/media/platform/qcom/iris/iris_common.c:113:6: error: use of undeclared identifier 'first_ipsc'
+     113 |         if (first_ipsc || drc_active) {
+         |             ^
+   drivers/media/platform/qcom/iris/iris_common.c:113:20: error: use of undeclared identifier 'drc_active'
+     113 |         if (first_ipsc || drc_active) {
+         |                           ^
+   drivers/media/platform/qcom/iris/iris_common.c:127:8: error: use of undeclared identifier 'drain_active'; did you mean 'swait_active'?
+     127 |                 if (!drain_active)
+         |                      ^~~~~~~~~~~~
+         |                      swait_active
+   include/linux/swait.h:121:19: note: 'swait_active' declared here
+     121 | static inline int swait_active(struct swait_queue_head *wq)
+         |                   ^
+>> drivers/media/platform/qcom/iris/iris_common.c:127:8: warning: address of function 'swait_active' will always evaluate to 'true' [-Wpointer-bool-conversion]
+     127 |                 if (!drain_active)
+         |                     ~^~~~~~~~~~~~
+   drivers/media/platform/qcom/iris/iris_common.c:127:8: note: prefix with the address-of operator to silence this warning
+     127 |                 if (!drain_active)
+         |                      ^
+         |                      &
+   1 warning and 8 errors generated.
+
+
+vim +/first_ipsc +99 drivers/media/platform/qcom/iris/iris_common.c
+
+    90	
+    91	int iris_process_streamon_output(struct iris_inst *inst)
+    92	{
+    93		const struct iris_hfi_command_ops *hfi_ops = inst->core->hfi_ops;
+    94		enum iris_inst_sub_state clear_sub_state = 0;
+    95		int ret = 0;
+    96	
+    97		iris_scale_power(inst);
+    98	
+  > 99		first_ipsc = inst->sub_state & IRIS_INST_SUB_FIRST_IPSC;
+   100	
+ > 101		drain_active = inst->sub_state & IRIS_INST_SUB_DRAIN &&
+   102			inst->sub_state & IRIS_INST_SUB_DRAIN_LAST;
+   103	
+ > 104		drc_active = inst->sub_state & IRIS_INST_SUB_DRC &&
+   105			inst->sub_state & IRIS_INST_SUB_DRC_LAST;
+   106	
+   107		if (drc_active)
+   108			clear_sub_state = IRIS_INST_SUB_DRC | IRIS_INST_SUB_DRC_LAST;
+   109		else if (drain_active)
+   110			clear_sub_state = IRIS_INST_SUB_DRAIN | IRIS_INST_SUB_DRAIN_LAST;
+   111	
+   112		/* Input internal buffer reconfiguration required in case of resolution change */
+   113		if (first_ipsc || drc_active) {
+   114			ret = iris_alloc_and_queue_input_int_bufs(inst);
+   115			if (ret)
+   116				return ret;
+   117			ret = iris_set_stage(inst, STAGE);
+   118			if (ret)
+   119				return ret;
+   120			ret = iris_set_pipe(inst, PIPE);
+   121			if (ret)
+   122				return ret;
+   123		}
+   124	
+   125		if (inst->state == IRIS_INST_INPUT_STREAMING &&
+   126		    inst->sub_state & IRIS_INST_SUB_INPUT_PAUSE) {
+ > 127			if (!drain_active)
+   128				ret = hfi_ops->session_resume_drc(inst,
+   129								  V4L2_BUF_TYPE_VIDEO_OUTPUT_MPLANE);
+   130			else if (hfi_ops->session_resume_drain)
+   131				ret = hfi_ops->session_resume_drain(inst,
+   132								    V4L2_BUF_TYPE_VIDEO_OUTPUT_MPLANE);
+   133			if (ret)
+   134				return ret;
+   135			clear_sub_state |= IRIS_INST_SUB_INPUT_PAUSE;
+   136		}
+   137	
+   138		if (inst->sub_state & IRIS_INST_SUB_FIRST_IPSC)
+   139			clear_sub_state |= IRIS_INST_SUB_FIRST_IPSC;
+   140	
+   141		ret = hfi_ops->session_start(inst, V4L2_BUF_TYPE_VIDEO_CAPTURE_MPLANE);
+   142		if (ret)
+   143			return ret;
+   144	
+   145		if (inst->sub_state & IRIS_INST_SUB_OUTPUT_PAUSE)
+   146			clear_sub_state |= IRIS_INST_SUB_OUTPUT_PAUSE;
+   147	
+   148		ret = iris_inst_state_change_streamon(inst, V4L2_BUF_TYPE_VIDEO_CAPTURE_MPLANE);
+   149		if (ret)
+   150			return ret;
+   151	
+   152		inst->last_buffer_dequeued = false;
+   153	
+   154		return iris_inst_change_sub_state(inst, clear_sub_state, 0);
+   155	}
+   156	
 
 -- 
-With best wishes
-Dmitry
+0-DAY CI Kernel Test Service
+https://github.com/intel/lkp-tests/wiki
 
