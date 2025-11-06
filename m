@@ -1,155 +1,282 @@
-Return-Path: <linux-arm-msm+bounces-80577-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-80578-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [142.0.200.124])
-	by mail.lfdr.de (Postfix) with ESMTPS id AA626C3A69E
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 06 Nov 2025 11:58:42 +0100 (CET)
+Received: from ams.mirrors.kernel.org (ams.mirrors.kernel.org [IPv6:2a01:60a::1994:3:14])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7BA4DC3A70B
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 06 Nov 2025 12:04:25 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 6D64E50267C
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Nov 2025 10:52:42 +0000 (UTC)
+	by ams.mirrors.kernel.org (Postfix) with ESMTPS id F2D8C34C6CE
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Nov 2025 11:04:24 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DDEF32ECEAC;
-	Thu,  6 Nov 2025 10:52:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=tuxedocomputers.com header.i=@tuxedocomputers.com header.b="e33sWTkO"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 441672D47E8;
+	Thu,  6 Nov 2025 11:04:13 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail.tuxedocomputers.com (mail.tuxedocomputers.com [157.90.84.7])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5A012EC080;
-	Thu,  6 Nov 2025 10:52:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=157.90.84.7
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D459B2F12A8
+	for <linux-arm-msm@vger.kernel.org>; Thu,  6 Nov 2025 11:04:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762426354; cv=none; b=le+/SJTfd6g+V8riN5e40hhQoIjfAYc5AgCG2XCSVoO+qPXgrgvCi8UJ7oukURBv+Wc217HxmYxmZBuzqeJ89t8m+QPCcF75pfnT59WQ2XLnUkzCEUHVTX8x6t+c2bZYWLQ9QafyTLef/gd9oC95At6z+g/+bp/A+vF+H0cE8Ys=
+	t=1762427053; cv=none; b=f87HzbYAH2dHyUq1Ge0h2VEBYBnVAFbezkuqidZmC+xilCchOB/oanovgONjX+/10M2niLXnLIPnUfD6aO+uwx8EB15iu9UbhHYthFsgcvkIQvuAVG2nUj7MTyxO2Lfn3waaF4+TWY8h3ovFLB0jPekChvFPzEKuGP1Gi1GWDS8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762426354; c=relaxed/simple;
-	bh=/qTmGtQoOJsPtCLSObwcslzhgZoXyqlKnaErTDUrd6w=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=ELwYZ93WOGTiMLF5SY84dyoy3noQ4YqcY8Voj8rvO8ZhNN4SqaR+R6A5nFk+1MqTg1c7Q2nxpGsXmdF5ac7ubg/daM83oyWQZMFzQDwt9nYsC3liqvQUrI6x7cAAJE/YQ8UjY6g4JAhE/mQ7lDf9Jjiwu4Kkx0iLVVwfisvv0yk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=tuxedocomputers.com; spf=pass smtp.mailfrom=tuxedocomputers.com; dkim=pass (1024-bit key) header.d=tuxedocomputers.com header.i=@tuxedocomputers.com header.b=e33sWTkO; arc=none smtp.client-ip=157.90.84.7
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=tuxedocomputers.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=tuxedocomputers.com
-Received: from [192.168.178.76] (business-24-134-207-61.pool2.vodafone-ip.de [24.134.207.61])
-	(Authenticated sender: g.gottleuber@tuxedocomputers.com)
-	by mail.tuxedocomputers.com (Postfix) with ESMTPSA id 81D202FC0061;
-	Thu,  6 Nov 2025 11:52:28 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=tuxedocomputers.com;
-	s=default; t=1762426349;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
-	bh=cRc+3UxP4O+uvOecIY1qnyp0YvjXunBFfwJsJPac+QM=;
-	b=e33sWTkOHjD0vQxxljsJCvYPYNveZxnOZt8Fm5Eg+LIgBh2w+SlkaghQR8rnmUwUpS1bZI
-	GO760aj9YLPD/9gdz8SPwQnWLEsbA378w4p9UpdGuk0dnL1ksmnpBI9zjk1pGtEwqzQdTr
-	TfjKExpI2lf+UgzgTO8cqcE46u9p7kw=
-Authentication-Results: mail.tuxedocomputers.com;
-	auth=pass smtp.auth=g.gottleuber@tuxedocomputers.com smtp.mailfrom=g.gottleuber@tuxedocomputers.com
-Message-ID: <2c282607-79a9-4081-b8df-c92b9b1520c5@tuxedocomputers.com>
-Date: Thu, 6 Nov 2025 11:52:28 +0100
+	s=arc-20240116; t=1762427053; c=relaxed/simple;
+	bh=scWRr2YmIbfZ/4TGeFc0QFABw72NbFgpJJM+0xKL6NU=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=SBjBytjSO6u860aD5ppL2DzgqrRRSBK5MoQ+VhB9vwvBHIO7BgfqMny4ctqroop/9XeHzu5Z9DsMJxG70kMK5wZ6oblq2B0qsCzMyNFX7DqAB5oxSafyG8Z1XUHkyeo7PwIi7Oyn4VFInHvizciFn6jKuIcbDMToFkFriciVPMA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; arc=none smtp.client-ip=217.140.110.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 569AD15A1
+	for <linux-arm-msm@vger.kernel.org>; Thu,  6 Nov 2025 03:04:02 -0800 (PST)
+Received: from e110455-lin.cambridge.arm.com (usa-sjc-imap-foss1.foss.arm.com [10.121.207.14])
+	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPA id DBBF63F63F
+	for <linux-arm-msm@vger.kernel.org>; Thu,  6 Nov 2025 03:04:09 -0800 (PST)
+Date: Thu, 6 Nov 2025 11:04:06 +0000
+From: Liviu Dudau <liviu.dudau@arm.com>
+To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Cc: "Kandpal, Suraj" <suraj.kandpal@intel.com>,
+	"linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
+	"freedreno@lists.freedesktop.org" <freedreno@lists.freedesktop.org>,
+	"dri-devel@lists.freedesktop.org" <dri-devel@lists.freedesktop.org>,
+	"intel-xe@lists.freedesktop.org" <intel-xe@lists.freedesktop.org>,
+	"intel-gfx@lists.freedesktop.org" <intel-gfx@lists.freedesktop.org>,
+	"kernel-list@raspberrypi.com" <kernel-list@raspberrypi.com>,
+	"amd-gfx@lists.freedesktop.org" <amd-gfx@lists.freedesktop.org>,
+	"linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+	"linux-renesas-soc@vger.kernel.org" <linux-renesas-soc@vger.kernel.org>,
+	"Nautiyal, Ankit K" <ankit.k.nautiyal@intel.com>,
+	"Murthy, Arun R" <arun.r.murthy@intel.com>,
+	"Shankar, Uma" <uma.shankar@intel.com>,
+	"Nikula, Jani" <jani.nikula@intel.com>,
+	"harry.wentland@amd.com" <harry.wentland@amd.com>,
+	"siqueira@igalia.com" <siqueira@igalia.com>,
+	"alexander.deucher@amd.com" <alexander.deucher@amd.com>,
+	"christian.koenig@amd.com" <christian.koenig@amd.com>,
+	"airlied@gmail.com" <airlied@gmail.com>,
+	"simona@ffwll.ch" <simona@ffwll.ch>,
+	"maarten.lankhorst@linux.intel.com" <maarten.lankhorst@linux.intel.com>,
+	"mripard@kernel.org" <mripard@kernel.org>,
+	"robin.clark@oss.qualcomm.com" <robin.clark@oss.qualcomm.com>,
+	"abhinav.kumar@linux.dev" <abhinav.kumar@linux.dev>,
+	"tzimmermann@suse.de" <tzimmermann@suse.de>,
+	"jessica.zhang@oss.qualcomm.com" <jessica.zhang@oss.qualcomm.com>,
+	"sean@poorly.run" <sean@poorly.run>,
+	"marijn.suijten@somainline.org" <marijn.suijten@somainline.org>,
+	"laurent.pinchart+renesas@ideasonboard.com" <laurent.pinchart+renesas@ideasonboard.com>,
+	"mcanal@igalia.com" <mcanal@igalia.com>,
+	"dave.stevenson@raspberrypi.com" <dave.stevenson@raspberrypi.com>,
+	"tomi.valkeinen+renesas@ideasonboard.com" <tomi.valkeinen+renesas@ideasonboard.com>,
+	"kieran.bingham+renesas@ideasonboard.com" <kieran.bingham+renesas@ideasonboard.com>,
+	"louis.chauvet@bootlin.com" <louis.chauvet@bootlin.com>
+Subject: Re: [PATCH v2 1/7] drm: writeback: Refactor drm_writeback_connector
+ structure
+Message-ID: <aQyApokLttxf9spU@e110455-lin.cambridge.arm.com>
+References: <20251007054528.2900905-1-suraj.kandpal@intel.com>
+ <20251007054528.2900905-2-suraj.kandpal@intel.com>
+ <aQjDejhzGRYJT614@e110455-lin.cambridge.arm.com>
+ <DM3PPF208195D8D5DDD56AA88E006E66AD9E3C4A@DM3PPF208195D8D.namprd11.prod.outlook.com>
+ <aQoIBroBqQc3B-RD@e110455-lin.cambridge.arm.com>
+ <CAO9ioeX2qEyjwi9LsnUh-cRv88iaRcdZtFr_yidf55A9_ZbLWw@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 5/7] dt-bindings: arm: qcom: Add TUXEDO Computers
- device
-To: Krzysztof Kozlowski <krzk@kernel.org>,
- Georg Gottleuber <ggo@tuxedocomputers.com>,
- Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, Ettore Chimenti <ettore.chimenti@linaro.org>,
- Srinivas Kandagatla <srini@kernel.org>, stefan.schmidt@linaro.org,
- stephan.gerhold@linaro.org, wse@tuxedocomputers.com, cs@tuxedo.de
-References: <20251105154107.148187-1-ggo@tuxedocomputers.com>
- <20251105154107.148187-6-ggo@tuxedocomputers.com>
- <0e274f07-1eef-4f2b-9db1-480961eb7005@kernel.org>
-Content-Language: en-US
-From: Georg Gottleuber <g.gottleuber@tuxedocomputers.com>
-Autocrypt: addr=g.gottleuber@tuxedocomputers.com; keydata=
- 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
- bsxTTcOuRnk=
-In-Reply-To: <0e274f07-1eef-4f2b-9db1-480961eb7005@kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAO9ioeX2qEyjwi9LsnUh-cRv88iaRcdZtFr_yidf55A9_ZbLWw@mail.gmail.com>
 
-
-
-Am 06.11.25 um 09:32 schrieb Krzysztof Kozlowski:
-> On 05/11/2025 16:41, Georg Gottleuber wrote:
->> Document the X1E80100-based TUXEDO laptop
->>
->> Signed-off-by: Georg Gottleuber <ggo@tuxedocomputers.com>
->> ---
->>  Documentation/devicetree/bindings/arm/qcom.yaml | 1 +
->>  1 file changed, 1 insertion(+)
->>
->> diff --git a/Documentation/devicetree/bindings/arm/qcom.yaml b/Documentation/devicetree/bindings/arm/qcom.yaml
->> index 18b5ed044f9f..6e5aa9d6e1a8 100644
->> --- a/Documentation/devicetree/bindings/arm/qcom.yaml
->> +++ b/Documentation/devicetree/bindings/arm/qcom.yaml
->> @@ -1073,6 +1073,7 @@ properties:
->>                - microsoft,romulus15
->>                - qcom,x1e80100-crd
->>                - qcom,x1e80100-qcp
->> +              - tuxedo,elite14gen1
->>            - const: qcom,x1e80100
+On Wed, Nov 05, 2025 at 02:39:15AM +0200, Dmitry Baryshkov wrote:
+> On Tue, 4 Nov 2025 at 16:05, Liviu Dudau <liviu.dudau@arm.com> wrote:
+> >
+> > On Tue, Nov 04, 2025 at 05:11:25AM +0000, Kandpal, Suraj wrote:
+> > > > Subject: Re: [PATCH v2 1/7] drm: writeback: Refactor
+> > > > drm_writeback_connector structure
+> > > >
+> > > > On Tue, Oct 07, 2025 at 11:15:23AM +0530, Suraj Kandpal wrote:
+> > > > > Some drivers cannot work with the current design where the connector
+> > > > > is embedded within the drm_writeback_connector such as Intel and some
+> > > > > drivers that can get it working end up adding a lot of checks all
+> > > > > around the code to check if it's a writeback conenctor or not, this is
+> > > > > due to the limitation of inheritance in C.
+> > > > > To solve this move the drm_writeback_connector within the
+> > > > > drm_connector and remove the drm_connector base which was in
+> > > > > drm_writeback_connector. Make this drm_writeback_connector a union
+> > > > > with hdmi connector to save memory and since a connector can never be
+> > > > > both writeback and hdmi it should serve us well.
+> > > > > Do all other required modifications that come with these changes along
+> > > > > with addition of new function which returns the drm_connector when
+> > > > > drm_writeback_connector is present.
+> > > > > Modify drivers using the drm_writeback_connector to allow them to use
+> > > > > this connector without breaking them.
+> > > > > The drivers modified here are amd, komeda, mali, vc4, vkms, rcar_du,
+> > > > > msm
+> > > > >
+> > > > > Signed-off-by: Suraj Kandpal <suraj.kandpal@intel.com>
+> > > > > ---
+> > > > > V1 -> V2: Use &connector->writeback, make commit message imperative
+> > > > > (Dmitry)
+> > > > > ---
+> > > > >  .../gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c |  6 +-
+> > > > > .../gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.h |  2 +-
+> > > > > .../drm/amd/display/amdgpu_dm/amdgpu_dm_wb.c  |  8 +--
+> > > > > .../gpu/drm/arm/display/komeda/komeda_crtc.c  |  6 +-
+> > > > >  .../gpu/drm/arm/display/komeda/komeda_kms.h   |  6 +-
+> > > > >  .../arm/display/komeda/komeda_wb_connector.c  |  8 +--
+> > > > >  drivers/gpu/drm/arm/malidp_crtc.c             |  2 +-
+> > > > >  drivers/gpu/drm/arm/malidp_drv.h              |  2 +-
+> > > > >  drivers/gpu/drm/arm/malidp_hw.c               |  6 +-
+> > > > >  drivers/gpu/drm/arm/malidp_mw.c               |  8 +--
+> > > > >  drivers/gpu/drm/drm_atomic_uapi.c             |  2 +-
+> > > > >  drivers/gpu/drm/drm_writeback.c               | 35 ++++++----
+> > > >
+> > > > For the komeda and malidp drivers, as well as for the drm_writeback.c
+> > > > changes:
+> > > >
+> > > > Reviewed-by: Liviu Dudau <liviu.dudau@arm.com>
+> > > >
+> > > >
+> > > > [snip]
+> > > >
+> > > >
+> > > > > diff --git a/include/drm/drm_connector.h b/include/drm/drm_connector.h
+> > > > > index 8f34f4b8183d..1b090e6bddc1 100644
+> > > > > --- a/include/drm/drm_connector.h
+> > > > > +++ b/include/drm/drm_connector.h
+> > > > > @@ -1882,6 +1882,61 @@ struct drm_connector_cec {
+> > > > >   void *data;
+> > > > >  };
+> > > > >
+> > > > > +/**
+> > > > > + * struct drm_writeback_connector - DRM writeback connector  */
+> > > > > +struct drm_writeback_connector {
+> > > > > + /**
+> > > > > +  * @pixel_formats_blob_ptr:
+> > > > > +  *
+> > > > > +  * DRM blob property data for the pixel formats list on writeback
+> > > > > +  * connectors
+> > > > > +  * See also drm_writeback_connector_init()
+> > > > > +  */
+> > > > > + struct drm_property_blob *pixel_formats_blob_ptr;
+> > > > > +
+> > > > > + /** @job_lock: Protects job_queue */
+> > > > > + spinlock_t job_lock;
+> > > > > +
+> > > > > + /**
+> > > > > +  * @job_queue:
+> > > > > +  *
+> > > > > +  * Holds a list of a connector's writeback jobs; the last item is the
+> > > > > +  * most recent. The first item may be either waiting for the hardware
+> > > > > +  * to begin writing, or currently being written.
+> > > > > +  *
+> > > > > +  * See also: drm_writeback_queue_job() and
+> > > > > +  * drm_writeback_signal_completion()
+> > > > > +  */
+> > > > > + struct list_head job_queue;
+> > > > > +
+> > > > > + /**
+> > > > > +  * @fence_context:
+> > > > > +  *
+> > > > > +  * timeline context used for fence operations.
+> > > > > +  */
+> > > > > + unsigned int fence_context;
+> > > > > + /**
+> > > > > +  * @fence_lock:
+> > > > > +  *
+> > > > > +  * spinlock to protect the fences in the fence_context.
+> > > > > +  */
+> > > > > + spinlock_t fence_lock;
+> > > > > + /**
+> > > > > +  * @fence_seqno:
+> > > > > +  *
+> > > > > +  * Seqno variable used as monotonic counter for the fences
+> > > > > +  * created on the connector's timeline.
+> > > > > +  */
+> > > > > + unsigned long fence_seqno;
+> > > > > + /**
+> > > > > +  * @timeline_name:
+> > > > > +  *
+> > > > > +  * The name of the connector's fence timeline.
+> > > > > +  */
+> > > > > + char timeline_name[32];
+> > > > > +};
+> > > > > +
+> > > > >  /**
+> > > > >   * struct drm_connector - central DRM connector control structure
+> > > > >   *
+> > > > > @@ -2291,10 +2346,16 @@ struct drm_connector {
+> > > > >    */
+> > > > >   struct llist_node free_node;
+> > > > >
+> > > > > - /**
+> > > > > -  * @hdmi: HDMI-related variable and properties.
+> > > > > -  */
+> > > > > - struct drm_connector_hdmi hdmi;
+> > > > > + union {
+> > > >
+> > > > This is a surprising choice. Before this patch one had to have a separate
+> > > > writeback connector besides the HDMI connector. Going forward it looks like
+> > > > you still need two connectors, one that uses the writeback member and one
+> > > > that uses the hdmi one. Is that intended?
+> > > >
+> > > > I was expecting that you're going to declare the writeback member next to the
+> > > > hdmi, without overlap. If you do that, then you also don't need to move the
+> > > > struct drm_writeback declaration from the header file and it should be enough
+> > > > to include the drm_writeback.h file.
+> > >
+> > > Hi,
+> > > Thanks for the review
+> > > The reason for this came from the discussion on previous patches and was suggested by Dmitry.
+> > > The idea is that a connector can never be both an HDMI and writeback connector at the same time
+> > > Hence we save space if we pack them together.
+> >
+> > Hmm, but you can still have all the CEC and HDMI codecs data in that connector,
+> > which feels strange.  Also, what's the issue with having a connector that has
+> > both a valid HDMI state and an associated writeback at the same time (i.e.
+> > don't use the union)? Writing back the memory the output that goes to HDMI is
+> > valid, right?
 > 
-> Cover letter says X1E78100, commit msg and bindings say X1E80100.
+> Writing back to memory requires a separate connector (with separate
+> setup). The CRTC should also support outputting data to both HDMI
+> _and_ Writeback connectors at the same time (aka cloning). Not all
+> configurations are possible, writeback requires additional bandwidth,
+> etc., etc.
 > 
-> Something is for sure not saying right. Decide which one.
+> >
+> > Maybe that is not something that you considered, but with this patch (without union)
+> > we can drop the need to have a separate connector just for writeback. We're breaking
+> > user space compatibility, true, but it feels like a good change to be able to
+> > attach a writeback to any connector and get its output. The drivers that don't support
+> > that can reject the commit that attaches the writeback to the existing connector.
+> 
+> Well... No. It's not how it is being handled in the (existing)
+> hardware. Nor does it make it easier to handle resources for the
+> writeback.
 
-Oh, true. Thank you. It is a X1E78100. I got confused because the device
-tree is also called 'x1e80100-...'.
+Which (existing) hardware? Komeda can do it mainly because it doesn't have an HDMI connector,
+but an output that can be cloned to writeback while it is being sent out on a bus to an encoder.
+You have to remember that writeback is a connector because we didn't have a better concept for
+it. It doesn't have to be a separate connector from an HDMI or eDP or DP.
 
-> Best regards,
-> Krzysztof
+Best regards,
+Liviu
 
+> 
+> -- 
+> With best wishes
+> Dmitry
+
+-- 
+====================
+| I would like to |
+| fix the world,  |
+| but they're not |
+| giving me the   |
+ \ source code!  /
+  ---------------
+    ¯\_(ツ)_/¯
 
