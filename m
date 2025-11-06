@@ -1,198 +1,294 @@
-Return-Path: <linux-arm-msm+bounces-80641-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-80642-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ams.mirrors.kernel.org (ams.mirrors.kernel.org [213.196.21.55])
-	by mail.lfdr.de (Postfix) with ESMTPS id 17CB1C3C70D
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 06 Nov 2025 17:32:28 +0100 (CET)
+Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [142.0.200.124])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4A1A7C3C92E
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 06 Nov 2025 17:50:44 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ams.mirrors.kernel.org (Postfix) with ESMTPS id B826A347B5F
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Nov 2025 16:32:27 +0000 (UTC)
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id F3A724E2DA9
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Nov 2025 16:46:52 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4F35B346796;
-	Thu,  6 Nov 2025 16:29:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 25E4B2BF3DF;
+	Thu,  6 Nov 2025 16:46:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="n+pna2tc";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="B7OKnQ5b"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="UuFdifao"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f41.google.com (mail-wr1-f41.google.com [209.85.221.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F86C346A12
-	for <linux-arm-msm@vger.kernel.org>; Thu,  6 Nov 2025 16:29:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10EAC2BE051
+	for <linux-arm-msm@vger.kernel.org>; Thu,  6 Nov 2025 16:46:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762446595; cv=none; b=tu45jN4r13ffchCJa7V+g4PO5Ry4TxvncGGgrPeZQOgnF7pWXJss8gJCn+heNykiLwn9ZmwxLVBfg9neeYHJpYdRGyFsMANVVTQiStX3MCMV2rVo3MiQC2uSaR2+Z7UHc4RJL/0YMS6w/a9Grh51Jz3+Rm8iZ+ZVy3qVF1meC6Q=
+	t=1762447611; cv=none; b=qo1SDK79Aop7rw1MX2RrKiJh+mwdgkBuz9VcYqPkn1cUitO4/91YE6yTpoww/0SVIdo6TVJcRQ6N9pbPTSpV3RpG8kcMDqsNAHKlOZ+rCkd0HyRzS4JomrJfJzrchrcdrC2xTJ+AsWNmDrpgffU/PqBkEvPsydYZZkgoGd993XM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762446595; c=relaxed/simple;
-	bh=VzaCR7H9TvLPBQ9CB5Z3dGT3hJnO4fASZTntV/6fnQo=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=MKDQQWrjJE6jP9uCVDC8Aua/8OSJOwF7whNsaw+PzWN88isOj0elG/HXpOHwZpDrgxryatj6I/B8a5yjVAWAbX9A0JEmtApeyna1TRa46MwKc7hGDpwjMz0bf8Bvn1/hz0HJzflvUN1M1vu8bRifYcn25DVf9jl+1lRuqKjQK6I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=n+pna2tc; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=B7OKnQ5b; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 5A68KfHW2388980
-	for <linux-arm-msm@vger.kernel.org>; Thu, 6 Nov 2025 16:29:52 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	WgmN4NxVV9M82DvCj9Jb02Y2HdGbR+gEIO/NMxbQG2c=; b=n+pna2tcBKKGun8+
-	JzSqkJXPMRjIBF6qXOcKmQiubQBM6XujHappE5+x3+jLCALbEyBBN5LGeymXYwOx
-	OOhX2EiLEoxRqr32SzZGRR73sFJCwHpnh0/64k8lxP+ofNmuC2cpmCGUetZs43Jm
-	Z2KsmZvdAqYC2rQ0OSAoREsz70vbSDK37yh1/MI5RO/1v1xHyqfEDOCT/wKibL40
-	3ENESVruLu3ChY8rKJk4TtBo5A1wn3ub7LKiw3ebJ/a6L9lvmvFfJxkUlCkuRQcS
-	pWUVl7bSW7Suu3so/1zx4B9Q7x/i1Vgyhq1qlhoFmmGmM8FwGmjMl8ptCYGxqszh
-	LRwE1g==
-Received: from mail-qv1-f70.google.com (mail-qv1-f70.google.com [209.85.219.70])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4a8h9utkvn-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Thu, 06 Nov 2025 16:29:52 +0000 (GMT)
-Received: by mail-qv1-f70.google.com with SMTP id 6a1803df08f44-880415ba763so109396d6.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 06 Nov 2025 08:29:52 -0800 (PST)
+	s=arc-20240116; t=1762447611; c=relaxed/simple;
+	bh=VtfB1KUcFL0xMOsOi2+T3R/0Iq6++CHZOUryBlQUghc=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=nFEMQcynhtkLwhaNA79k7YoAk3oRPkQDeu8qY+gJQXy31CZrNtRsvfx0WRMgRL5ORvcNlX3W61SdLcoz3AXhMIir6GoTfbpIKslYtl/lIVmXI1QjQ2mJpalYq26dyanu6noRZRmFm493JHupFZMDbp97AEZi48IYqwOYYt/7SfE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=UuFdifao; arc=none smtp.client-ip=209.85.221.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wr1-f41.google.com with SMTP id ffacd0b85a97d-3ee130237a8so840657f8f.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 06 Nov 2025 08:46:48 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1762446592; x=1763051392; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=WgmN4NxVV9M82DvCj9Jb02Y2HdGbR+gEIO/NMxbQG2c=;
-        b=B7OKnQ5bRC/v+aNm8cYnQK3BOknlp6i/HyiOuDPYfxWJRi5/6bZo3TzPB8HTkpbMIE
-         vv3/012RR0nf9MjqbpvDCoWeab1zWIGSueXyG45yhj48OC4dmCHgk8tFVt4z9Zj2LODb
-         YFwK6MP9mugDfZFEvfZq6lCKE76jOimc9JitePtSqSY2xLrLH83XwCNZ8YjTK2FxtFQZ
-         SAmUADIhkwO9ukkWrs5FDxDFW209YoUpdrUk9uagKGLJibqWenRGtXXEEjBQS4WrMI73
-         J7UswYEsSsuyAgMZ2Ja1lOb8uxmtp0nggz3RJ4L/WDhzUHyjgY+oxYeNJa7YKboeov2B
-         w9JA==
+        d=linaro.org; s=google; t=1762447607; x=1763052407; darn=vger.kernel.org;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=F2CGjwOEf268xK6EpSqBlS6x+60lB39zWMEUAhOSh0M=;
+        b=UuFdifaoEIXTXqvE9bfQebm470pxnj/ue8rAwFfWl9zN8wvkn95xP2EcRs0OImi0Q5
+         q9fXUrCPhda1bwQD593uoNytMKJ0gyunJy7/BuFsLO7uwi7QC2588xFN0bASjWKxS6wZ
+         NBtVZrzPKhp0Fu5cG7hUdvS9izyWadJ99LhBpg/0oVFeaUMjNYVzDc4pLHq4t6xf/RCn
+         mtAVWXimGIyR9Dp0K+5uulT/Tjln84hix3DoK89Dihjj+5VqmTykMLS4l5iqaIf7fpgv
+         MLUg5cvwwfHwmX9Ix2X4GQamM66M3DIy4NtpUgsxY9SRUT/Kg5K1CBfhx+dUO3vaykBR
+         MjVg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1762446592; x=1763051392;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=WgmN4NxVV9M82DvCj9Jb02Y2HdGbR+gEIO/NMxbQG2c=;
-        b=g1DXpjuvcCOAxvP+bXrNL05n+euSAraC9OX4Wug1cv9GQKuiUILbPjEN/zrkZk0jMZ
-         Qm6xsN7grqMM4ASsJ+uWSAyALRKjwi5KnOhJ0NZkxT3EqLVctcUJN8UK6Od275cNEKwx
-         mcRm96Ry6q+11eTjnN7KvFyoCAQKaSGdSRlGPhWnb6zVY0VumZWbY2fqGoRr/bqFKvbn
-         7jZ7U1usowzEM6tNwr7AHhoAZC7sWReMimPnlQD2wYDQf+RuhEn2OBFzjvTMHny3U8Pf
-         TP939gcRu5xPdeGQGiTMX2wZlpBp4RfFoRyBclXS70jVydNf/8bZ7Ep0OU1miW99PgJw
-         DbYg==
-X-Forwarded-Encrypted: i=1; AJvYcCX6OHryfN+fNcrWCOH6SLDwWEzKgtyMmkm4IpWyuXJ8Ftfj/N7/XDgoF1+VJ/b46SOKgjiFw4kSnaB4hnKF@vger.kernel.org
-X-Gm-Message-State: AOJu0YyShHpX0TDIf65fmMz24n6r3fz7UX3fDcuF1+QxpqPNMFhP0ZVG
-	Arr2ZRFlvgmq5DXK14OKEyUD0A3X/flc4a1SiQ8WyVlrzypfJtcWMZHpAwJJ5nrGEkwGIDgYOiT
-	pkKKsjTupxGFKi6UOiYbDfy9mqja2iKKoTWp7B71kD02ujxFghZDCbCz0Dlcb38i5fnjv
-X-Gm-Gg: ASbGncsTn/f53jAAcCaf10lj17dPAgIN7BpGjoxHJrjjogf4db6YwdHaj+XMNYapoBm
-	f8Dl50aOSDXhbZcW3C+MgW4A0u0QZ2JEy8OOHw8gly21LUGKBxp31m5CHQRQcYkLKj24hnpvFep
-	/YqhhfE5aX4p8qdhTzucvvunkBdtH4kaAdh8EHPHUzBGSFiJQhN9IrED6cnAPThZScrZpvlLAjd
-	DNEgIwcqv1iFm8Myh9MOVlebQgYjKaj7KKtRY2GgRnzVZefp6TTy6S1ok60HamAqRlvAeOx7uKD
-	JSrwoMWmXWBqBhQtrQJdSOJwKrEdubTHIMWJw0AvNMlo+W5PZugiMroS19D5JC8BhIdqoQDr3Q6
-	JyK1/ICmp3wcYKYX2aRTJk4TjSqM51nAWvDFZO4QLbqCZkoHnKAWd1cDR
-X-Received: by 2002:ac8:598c:0:b0:4eb:9cb1:c290 with SMTP id d75a77b69052e-4ed7233c5acmr59986211cf.4.1762446591837;
-        Thu, 06 Nov 2025 08:29:51 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IEZxjYZc8rxsuvOHdd3txcVs2PoTli39CB2wIhCv+eMHSJx/cwSSBEXCcPzDCkWvSvQ6pH8rg==
-X-Received: by 2002:ac8:598c:0:b0:4eb:9cb1:c290 with SMTP id d75a77b69052e-4ed7233c5acmr59985991cf.4.1762446591404;
-        Thu, 06 Nov 2025 08:29:51 -0800 (PST)
-Received: from [192.168.119.202] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-b7289684873sm246890766b.58.2025.11.06.08.29.48
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 06 Nov 2025 08:29:50 -0800 (PST)
-Message-ID: <f20fd593-0173-424d-9951-e0f2ad33b4cd@oss.qualcomm.com>
-Date: Thu, 6 Nov 2025 17:29:47 +0100
+        d=1e100.net; s=20230601; t=1762447607; x=1763052407;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=F2CGjwOEf268xK6EpSqBlS6x+60lB39zWMEUAhOSh0M=;
+        b=S6tPSkKctpYvHEv1xB4vN3OPHJu/qHIZSCyjlgKClIMOx6NqxVKCRlIbVP2SkzJbC/
+         9uJo04rXr0Qk/qcAXRgrnqOWnqyyadq1/4hc4Vr9SScVgCj7/h0TmTg2tbTyXs0cArY7
+         qQ7tNy4N3TfDJ/yNlddqvDyfiGw7ibqYqweXSslaFQbFFTwvGCF3ecmR9/YXgilJgoz3
+         yvOFN7T9z0iBmRO8PYJD4wzpWgCryqsV6DfQTyY7oZ45cCCgl1F2vehExFxOb5CQiXvh
+         zOWw5d34uyCp88VdoUI1s4j3k14BDE9Y2Ltz8IF+tPYVnjHugkuDs2W6MZ0X1i1wd73a
+         M31A==
+X-Gm-Message-State: AOJu0YywLUvcMcQ7dAx3ErgHibetaYGDluAA/mY4VjHyMIll2IH7KKzP
+	ittHyzcKTfATy2RUjJG92HpieaqEojr8CDYdteqMCir0SaFTF/A9urEm81tmCOyDR3E=
+X-Gm-Gg: ASbGncsQH+Q9yWBLhp6TUTjZlfWBMfD2pbsGdp9avSGlxHTuOgqb7kBIwpNYaBAawzP
+	51v7CDgH+y173km66QCoEC3Mdk+PoMK/8dvpK60lGogC/qu4cFkwlsfAs2zp4jxIeYe1+Wv58kV
+	eYfVD11N6o3lLA9XnnKetduHWzj+8OMLdWe6QF1vqBr6xwqLUvraRSuzzn/59t8LJPbQzorbiuT
+	sjcLraTXX+Yc6DYpqflepOONFh6xQL2RSIe0ZIPxpNbekSRTSg9OJo4/BRfQqkAGnwg6EBVkNgJ
+	0DurwbxPddlYy/FiGZfPc3N+b0yE1POT+RZWqaSD/b6z4S92WhigesVnROFo/8qOwNNRiwLYtMO
+	ol27BhpEk5Hxhg7u1Rn/T6Gp/3yj5KNaKhjcYPKR2D61xMWsCmpvx4yL/zbc9+27PSp4Bro3toM
+	8q7vjBWUqZaLOqxugAZpawJJ/4enjPPzc=
+X-Google-Smtp-Source: AGHT+IEtwk06j8D/enrqc1dAKzkU0iQg4RByjCkBxEdT7ejlbyuD/EIdmlvPWrYAon2QhBk/29tStg==
+X-Received: by 2002:a5d:5f87:0:b0:429:bc93:9d8a with SMTP id ffacd0b85a97d-429e3307958mr6910042f8f.37.1762447607101;
+        Thu, 06 Nov 2025 08:46:47 -0800 (PST)
+Received: from arrakeen.starnux.net ([2a01:e0a:3d9:2080:8261:5fff:fe11:bdda])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-42abe63e131sm90856f8f.20.2025.11.06.08.46.46
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 06 Nov 2025 08:46:46 -0800 (PST)
+From: Neil Armstrong <neil.armstrong@linaro.org>
+Date: Thu, 06 Nov 2025 17:46:45 +0100
+Subject: [PATCH RFC RFT] interconnect: qcom: implement get_bw with
+ rpmh_read
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 5/5] arm64: dts: qcom: unoq: add dts for arduino unoq
-To: Riccardo Mereu <r.mereu.kernel@arduino.cc>, andersson@kernel.org,
-        konradybcio@kernel.org, robh@kernel.org, krzk+dt@kernel.org,
-        conor+dt@kernel.org, broonie@kernel.org
-Cc: linux@roeck-us.net, Jonathan.Cameron@huawei.com, wenswang@yeah.net,
-        naresh.solanki@9elements.com, michal.simek@amd.com, nuno.sa@analog.com,
-        chou.cosmo@gmail.com, grantpeltier93@gmail.com, eajames@linux.ibm.com,
-        farouk.bouabid@cherry.de, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-spi@vger.kernel.org, mm.facchin@arduino.cc,
-        Riccardo Mereu <r.mereu@arduino.cc>
-References: <20251106153119.266840-1-r.mereu@arduino.cc>
- <20251106153119.266840-6-r.mereu@arduino.cc>
-Content-Language: en-US
-From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-In-Reply-To: <20251106153119.266840-6-r.mereu@arduino.cc>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Authority-Analysis: v=2.4 cv=R5UO2NRX c=1 sm=1 tr=0 ts=690ccd00 cx=c_pps
- a=oc9J++0uMp73DTRD5QyR2A==:117 a=FpWmc02/iXfjRdCD7H54yg==:17
- a=IkcTkHD0fZMA:10 a=6UeiqGixMTsA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=EUspDBNiAAAA:8 a=1Br4yamZUyoIW7x64XAA:9
- a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=iYH6xdkBrDN1Jqds4HTS:22
-X-Proofpoint-ORIG-GUID: M0mLoJXTsYV0gJwiBF6ttcc4C9qGvbi1
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMTA2MDEzMSBTYWx0ZWRfX6+yruYe0okN0
- /8tyV/nYmuxzZzB2P7sVQK5HxMmHyZW8eHTfN9icCBc7l/pShVHnwNWFLeqH7r1lmaDUMkS3npD
- P6eLf4uaEvZxS2xwE9PI3BoxbJ6KMKVCW+rZmN9qZDIfOD3Xbj1KD7AcsSb4DZbWOGS+/2u7bVR
- hHJoEZjZS7/eOwrjA1cgNKHkXxS0/vJJxCg3Bo4+7eJzq5Kij43L7uQBEAsA4R+DxKp5loIg9wi
- wRVcomKqGfvNuG6qEO4u8KHaQmbOxr+O0oSzddSswB03cJAl1hqWABQS0YROe1AwhxxMb2LSGlk
- uHo6a8l4lzCZrJ+der2+NDPKCP3h9J/rYYV1eRtBLcoVXZVp9+bvSq+CaWRNAFsWe0b5gXkytQ5
- Uj/jFF3Bl31fnhjKzGK/sCn2139ccA==
-X-Proofpoint-GUID: M0mLoJXTsYV0gJwiBF6ttcc4C9qGvbi1
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
- definitions=2025-11-06_03,2025-11-06_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 impostorscore=0 phishscore=0 adultscore=0 spamscore=0
- priorityscore=1501 lowpriorityscore=0 bulkscore=0 suspectscore=0
- malwarescore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2510240001
- definitions=main-2511060131
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20251106-topic-sm8x50-icc-read-rpmh-v1-1-d03a2e5ca5f7@linaro.org>
+X-B4-Tracking: v=1; b=H4sIAPTQDGkC/x3MMQqEMBBA0avI1A4kwahsK3gA2U62iHFcp1DDZ
+ BFBvPtGy/eLf0IkYYrwyk4Q2jnytiboPAM/u/VLyGMyGGWs1qrE3xbYY1zqwypk71HIjShhmZE
+ GV5TaFdZQBWkQhCY+nnkPXdvcrWvf8LmuPzt5XXd4AAAA
+X-Change-ID: 20251106-topic-sm8x50-icc-read-rpmh-eba461a452e7
+To: Georgi Djakov <djakov@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, Neil Armstrong <neil.armstrong@linaro.org>
+X-Mailer: b4 0.14.3
+X-Developer-Signature: v=1; a=openpgp-sha256; l=5545;
+ i=neil.armstrong@linaro.org; h=from:subject:message-id;
+ bh=VtfB1KUcFL0xMOsOi2+T3R/0Iq6++CHZOUryBlQUghc=;
+ b=owEBbQKS/ZANAwAKAXfc29rIyEnRAcsmYgBpDND2tt6nZcw4CZUEUyupiX0UreTRwt5d96EDwFcD
+ QDV+RbCJAjMEAAEKAB0WIQQ9U8YmyFYF/h30LIt33NvayMhJ0QUCaQzQ9gAKCRB33NvayMhJ0axID/
+ 0Xgp1xS98+LLt5JkxiMa/1b0DsaA3DWKpVweXhtTmQruL3NMCPYIrW9nOVvJWbfB/KoP7E1/QHEbXJ
+ B16LxSIGg8iUChhtFCQPuj+O0DIMZRlShnbcCrEev76M+cDfbCnJ9jUEI6wqgQR7mN0ZXELF6ukx6F
+ Pn/ELrSEmHlAQTtx39p0+0BkEwJ7K0++JQOIeQuMNAE5bRXBW9gtUbtlh0NjWG07yQdiPqf+Wg6H7M
+ 6i755lXU5j8CgohGYLrPkxhk0DfyqQaOSXwKKN0bBQAaCkRp0r35TjDCzk9oc3WSzpuDHe0V6DJj9L
+ Tr9HLUBpXQSfTfHC4wHQiGhBIHOWtiitES4p4J8aWyRVGqu9WHLdf8pMjfPxAx1AR6My6JIN6CQU5T
+ t1ISB9txK4v2NH8m+t/xrWzQCQBI7hzLLPTmf94y5dflqK6fDMlmd3R8Qp1At7IEy4/VaGToRzBAki
+ xteMol9KILSalswzJ/Ot4IW+R4JXdgj/BYstuUkpqE49HoSIqQIwOBIstqPWvy/NAr3Qo2F7y/8dTv
+ 3qbld4pOgDuW58vBMBASW7tfVZlONRXhML90gNAmZ+n0yyfPzM//yAq9W6Qe/QZaQSPcBKE8qp9IRl
+ I42lFgVNbYMBso+Q7kUwbGrkM+7UZcfs7L2HNrIKgvdKq1UfW9pwO1KSotvA==
+X-Developer-Key: i=neil.armstrong@linaro.org; a=openpgp;
+ fpr=89EC3D058446217450F22848169AB7B1A4CFF8AE
 
-On 11/6/25 4:31 PM, Riccardo Mereu wrote:
-> From: Riccardo Mereu <r.mereu.kernel@arduino.cc>
-> 
-> Arduino UnoQ is a single-board computer combining Qualcomm
-> Dragonwing™ QRB2210 microprocessor with STMicroelectronics STM32U585
-> microcontroller.
-> Support to a simply boot to shell environment includes:
-> - UART, I2C, SPI
-> - onboard LEDS
-> - eMMC
-> - WLAN and BT
-> 
-> Signed-off-by: Riccardo Mereu <r.mereu@arduino.cc>
-> ---
+Since we can actually read back the APPS rpmh interconnect
+BCM votes we can actually implement the get_bw() callback
+and provide a coherent average and peak bandwidth at probe time.
 
-[...]
+The benefits of that are:
+- keep disabled BCMs disabled
+- avoid voting unused BCMs to INT_MAX
 
-> +        leds: leds {
-> +                compatible = "gpio-leds";
-> +
-> +                ledpanic: led-panic {
-> +                        label = "red:panic";
-> +                        function = LED_FUNCTION_INDICATOR;
-> +                        color = <LED_COLOR_ID_RED>;
-> +                        gpios = <&tlmm 39 GPIO_ACTIVE_HIGH>;
-> +                        linux,default-trigger = "none";
-> +                        default-state = "off";
-> +                        panic-indicator;
-> +                };
-> +
-> +                ledwlan: led-wlan {
-> +                        label = "green:wlan";
-> +                        function = LED_FUNCTION_WLAN;
-> +                        color = <LED_COLOR_ID_GREEN>;
-> +                        gpios = <&tlmm 40 GPIO_ACTIVE_HIGH>;
-> +                        linux,default-trigger = "phy0tx";
-> +                        default-state = "off";
-> +                };
-> +
-> +                ledbt: led-bt {
+If the interconnects are correctly described for a platform,
+all the required BCMs would be voted to the maximum bandwidth
+until sync_state is reached.
 
-The labels (label: node-name@unit-addr {}) for the above 3 LEDs and
-the group are not used, please drop them
+Since we only get the BCM vote, we need to redistribute
+the vote values to the associated nodes. The initial BCM
+votes are read back at probe time in order to be ready when
+the get_bw() is called when a node is added.
 
-Looks good otherwise
+Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+---
+Depends on:
+https://lore.kernel.org/all/20251022-add-rpmh-read-support-v2-2-5c7a8e4df601@oss.qualcomm.com/
+---
+ drivers/interconnect/qcom/bcm-voter.c | 36 +++++++++++++++++++++
+ drivers/interconnect/qcom/bcm-voter.h |  2 ++
+ drivers/interconnect/qcom/icc-rpmh.c  | 60 ++++++++++++++++++++++++++++++++++-
+ 3 files changed, 97 insertions(+), 1 deletion(-)
 
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+diff --git a/drivers/interconnect/qcom/bcm-voter.c b/drivers/interconnect/qcom/bcm-voter.c
+index a2d437a05a11..9014bf20adad 100644
+--- a/drivers/interconnect/qcom/bcm-voter.c
++++ b/drivers/interconnect/qcom/bcm-voter.c
+@@ -261,6 +261,42 @@ void qcom_icc_bcm_voter_add(struct bcm_voter *voter, struct qcom_icc_bcm *bcm)
+ }
+ EXPORT_SYMBOL_GPL(qcom_icc_bcm_voter_add);
+ 
++/**
++ * qcom_icc_bcm_get_bw - get current bcm vote
++ * @voter: voter used to query bcm
++ * @bcm: bcm to get current vote from
++ */
++void qcom_icc_bcm_get_bw(struct bcm_voter *voter,
++			 struct qcom_icc_bcm *bcm)
++{
++	struct tcs_cmd cmd = { .addr = bcm->addr };
++	int ret, i;
++	u64 x, y;
++
++	mutex_lock(&voter->lock);
++
++	rpmh_invalidate(voter->dev);
++
++	ret = rpmh_read(voter->dev, &cmd);
++	if (ret) {
++		pr_err("Error sending AMC RPMH requests (%d)\n", ret);
++		goto out;
++	}
++
++	x = FIELD_GET(BCM_TCS_CMD_VOTE_X_MASK, cmd.data);
++	y = FIELD_GET(BCM_TCS_CMD_VOTE_Y_MASK, cmd.data);
++
++	/* For boot-up, fill the AMC vote in all buckets */
++	for (i = 0; i < QCOM_ICC_NUM_BUCKETS; i++) {
++		bcm->vote_x[i] = x;
++		bcm->vote_y[i] = y;
++	}
++
++out:
++	mutex_unlock(&voter->lock);
++}
++EXPORT_SYMBOL_GPL(qcom_icc_bcm_get_bw);
++
+ /**
+  * qcom_icc_bcm_voter_commit - generates and commits tcs cmds based on bcms
+  * @voter: voter that needs flushing
+diff --git a/drivers/interconnect/qcom/bcm-voter.h b/drivers/interconnect/qcom/bcm-voter.h
+index b4d36e349f3c..338cdc16653d 100644
+--- a/drivers/interconnect/qcom/bcm-voter.h
++++ b/drivers/interconnect/qcom/bcm-voter.h
+@@ -13,6 +13,8 @@
+ #include "icc-rpmh.h"
+ 
+ struct bcm_voter *of_bcm_voter_get(struct device *dev, const char *name);
++void qcom_icc_bcm_get_bw(struct bcm_voter *voter,
++			 struct qcom_icc_bcm *bcm);
+ void qcom_icc_bcm_voter_add(struct bcm_voter *voter, struct qcom_icc_bcm *bcm);
+ int qcom_icc_bcm_voter_commit(struct bcm_voter *voter);
+ 
+diff --git a/drivers/interconnect/qcom/icc-rpmh.c b/drivers/interconnect/qcom/icc-rpmh.c
+index 001404e91041..202bbb565de0 100644
+--- a/drivers/interconnect/qcom/icc-rpmh.c
++++ b/drivers/interconnect/qcom/icc-rpmh.c
+@@ -136,6 +136,61 @@ int qcom_icc_set(struct icc_node *src, struct icc_node *dst)
+ }
+ EXPORT_SYMBOL_GPL(qcom_icc_set);
+ 
++static int qcom_icc_get_bw(struct icc_node *node, u32 *avg, u32 *peak)
++{
++	struct qcom_icc_node *qn = node->data;
++	u32 avg_max = 0;
++	u32 peak_max = 0;
++	u64 x, y;
++	int i;
++
++	if (!qn->num_bcms) {
++		*avg = INT_MAX;
++		*peak = INT_MAX;
++
++		return 0;
++	}
++
++	for (i = 0; i < qn->num_bcms; ++i) {
++		struct qcom_icc_bcm *bcm = qn->bcms[i];
++
++		/* Use AMC vote for boot-up */
++		x = bcm->vote_x[QCOM_ICC_BUCKET_AMC];
++		y = bcm->vote_y[QCOM_ICC_BUCKET_AMC];
++
++		/* Consider enable mask and convert to INT_MAX */
++		if (bcm->enable_mask) {
++			if (x & bcm->enable_mask)
++				avg_max = INT_MAX;
++			if (y & bcm->enable_mask)
++				peak_max = INT_MAX;
++		} else {
++			if (x) {
++				x *= bcm->aux_data.unit;
++				do_div(x, bcm->vote_scale);
++				x *= qn->buswidth * qn->channels;
++				do_div(x, bcm->aux_data.width);
++
++				avg_max = max(avg_max, x);
++			}
++
++			if (y) {
++				y *= bcm->aux_data.unit;
++				do_div(y, bcm->vote_scale);
++				y *= qn->buswidth;
++				do_div(y, bcm->aux_data.width);
++
++				peak_max = max(peak_max, y);
++			}
++		}
++	}
++
++	*avg = avg_max;
++	*peak = peak_max;
++
++	return 0;
++}
++
+ /**
+  * qcom_icc_bcm_init - populates bcm aux data and connect qnodes
+  * @bcm: bcm to be initialized
+@@ -255,6 +310,7 @@ int qcom_icc_rpmh_probe(struct platform_device *pdev)
+ 	provider = &qp->provider;
+ 	provider->dev = dev;
+ 	provider->set = qcom_icc_set;
++	provider->get_bw = qcom_icc_get_bw;
+ 	provider->pre_aggregate = qcom_icc_pre_aggregate;
+ 	provider->aggregate = qcom_icc_aggregate;
+ 	provider->xlate_extended = qcom_icc_xlate_extended;
+@@ -272,8 +328,10 @@ int qcom_icc_rpmh_probe(struct platform_device *pdev)
+ 	if (IS_ERR(qp->voter))
+ 		return PTR_ERR(qp->voter);
+ 
+-	for (i = 0; i < qp->num_bcms; i++)
++	for (i = 0; i < qp->num_bcms; i++) {
+ 		qcom_icc_bcm_init(qp->bcms[i], dev);
++		qcom_icc_bcm_get_bw(qp->voter, qp->bcms[i]);
++	}
+ 
+ 	for (i = 0; i < num_nodes; i++) {
+ 		qn = qnodes[i];
 
-Konrad
+---
+base-commit: c077667d2d33618e2053f79ec60300dae7a58e0c
+change-id: 20251106-topic-sm8x50-icc-read-rpmh-eba461a452e7
+
+Best regards,
+-- 
+Neil Armstrong <neil.armstrong@linaro.org>
 
 
