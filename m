@@ -1,53 +1,53 @@
-Return-Path: <linux-arm-msm+bounces-80548-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-80550-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0C58DC39E43
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 06 Nov 2025 10:49:20 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id B3077C39E4C
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 06 Nov 2025 10:49:47 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id EA1931A40267
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Nov 2025 09:48:59 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id DECFE1A41029
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Nov 2025 09:49:25 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CC11030CDA8;
-	Thu,  6 Nov 2025 09:48:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id DF2BD30DD39;
+	Thu,  6 Nov 2025 09:48:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b="Hp+XBFrM"
+	dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b="HGUNschk"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtpout-04.galae.net (smtpout-04.galae.net [185.171.202.116])
+Received: from smtpout-02.galae.net (smtpout-02.galae.net [185.246.84.56])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56651225A5B;
-	Thu,  6 Nov 2025 09:48:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.171.202.116
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4770130CD81
+	for <linux-arm-msm@vger.kernel.org>; Thu,  6 Nov 2025 09:48:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.246.84.56
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762422483; cv=none; b=Qg4WpjWIEAEGzCD9L2476cFcp2KMXaYxNyOJrAil11T3BCftmR1jgJHesljxREKr5V3PwYOe3C4SgQTVvrFoEQoY47e4Q/qhbwUJtfhkysyBuqHLHB+Ea4PKTYRPc9jrBkRdOIFghKMsQrVh0wKrtyCC8Ss+RILEHktNxOzW8bY=
+	t=1762422487; cv=none; b=FKsvJEI7M+WRhA42gQSlCU9qPboCXRi4Mfdq7ZcFNkWaOuYEU3FiiNYm467Zh/wCLLNp0eEF5fYPLCBz26I8zuT9+KHkiUV8y4rXvJ8Syl0/XBW977SOzqo4rk2KB1g+Gq3sCrU7k/o4r6L6obbtX7x2UrfxY7xjzt/EzuTu4q4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762422483; c=relaxed/simple;
-	bh=q1iple3INTqk/L4NjythcaPaS+Qp2jkhDve1mgYCsgo=;
+	s=arc-20240116; t=1762422487; c=relaxed/simple;
+	bh=afcrbnxMHck/N8gX1mhdciWreX1vJBgZRMOwwWyiU/g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HjmNR1mW2sLH5WHxc5pymbcoUOwt5ObLaYDDqMBVt5Tx7GCfl+AhFl3WIwDsPFdIN4idLHIDBZ18+ZkxkjzSE32B7WHvpLS16/HfX7sWofdy+611DO/N64yiiXNcGVXe4JFB7F28px5hS2RHaQAmAyVP9LwRUoWNf8rf2wX2vEY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com; spf=pass smtp.mailfrom=bootlin.com; dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b=Hp+XBFrM; arc=none smtp.client-ip=185.171.202.116
+	 MIME-Version; b=jdYNOBMa8aOS0O8s0jFWct8CXF0WxSDNCVkge+2Kvez7jWnM1CAGZ808OKUImadJwEs0I8Rskeeu2n1oRMCViJRDgi/ua2+DQCRAivgPg6FPBTa3UTNTdh+SZpNb9JKaWdBcpz0mDlWK9LS3q1XH8X7AJ89Vo+fhmb0zLirHnOc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com; spf=pass smtp.mailfrom=bootlin.com; dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b=HGUNschk; arc=none smtp.client-ip=185.246.84.56
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bootlin.com
 Received: from smtpout-01.galae.net (smtpout-01.galae.net [212.83.139.233])
-	by smtpout-04.galae.net (Postfix) with ESMTPS id B5268C0FA85;
-	Thu,  6 Nov 2025 09:47:38 +0000 (UTC)
+	by smtpout-02.galae.net (Postfix) with ESMTPS id CAA1F1A18F0;
+	Thu,  6 Nov 2025 09:48:03 +0000 (UTC)
 Received: from mail.galae.net (mail.galae.net [212.83.136.155])
-	by smtpout-01.galae.net (Postfix) with ESMTPS id BF17D6068C;
-	Thu,  6 Nov 2025 09:47:59 +0000 (UTC)
-Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon) with ESMTPSA id 61417118507F5;
-	Thu,  6 Nov 2025 10:47:54 +0100 (CET)
+	by smtpout-01.galae.net (Postfix) with ESMTPS id 9E6C36068C;
+	Thu,  6 Nov 2025 09:48:03 +0000 (UTC)
+Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon) with ESMTPSA id 5CF61118507ED;
+	Thu,  6 Nov 2025 10:47:58 +0100 (CET)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=dkim;
-	t=1762422477; h=from:subject:date:message-id:to:cc:mime-version:
+	t=1762422481; h=from:subject:date:message-id:to:cc:mime-version:
 	 content-transfer-encoding:in-reply-to:references;
-	bh=V5UKzUe6BFOCG55CtlxrT7WIPBxAj1aDNZiz4pBJyjU=;
-	b=Hp+XBFrM5HOnRA00MYAdWuOkOUj/5J/C3rIo/j6C3iFHT8Rh2dZgrdYRmmfxomYAjXVhWj
-	TOKwdR4QgdOirfJOD/GUNmBkLcxU1XYb+GESqWIO6acuUbxG713WnFZFfWNbD7GzzUsd/Y
-	UuzQs9zJXUmWdj8fERIoSCpwicWg1XAgojbtK9iG/LyooYIcUdDRfqzCsaOLq6K5SG3cLC
-	XndSveZbK43eJG8fw333BVr2EnexPwe2hMxkEDRhz/7FoQG1hf7EQzHYwRBUCJjZfvNOQ9
-	2QTsNpQlyy4/5J/gWrkms6jj6tw91e6n6s7nRNFJSkNCbjvazKEItfuOKj5L0w==
+	bh=TBsN8RHCJs2AagTr6lveUfvLYwYrAIi863DbxoRluzM=;
+	b=HGUNschkhaEXLDqj+AqbQ2YPWuEWZdIRtsEoxdggcXZXWarrVGPosQ7dBYLHbAQeRmL+GM
+	jrcmBF5yH5UYqC2v0OC55tFXGNK2zSQ1hAIqA8fCoSQH3y3rW1k8sWJUGQlA0RnTz++aMH
+	d0+R1WKUFiTGvtOsxvjnNMm/suBFiTLyXkPL79zSNSwDD8fVGYM7h7dwlDG8xjSFZZer1v
+	E+kGGaBDvHrFuQdY8NfCh4AJRJ4dMBZ9PJT0jXW4RbsUsP0Pt6nyryXJrag1za345MQqD/
+	mj24MXrWtrPkM1xH4Fx8jFCcXZc2Ks+AzYYPTHxdF71bsl7mpyoruIA/g3o1eQ==
 From: Maxime Chevallier <maxime.chevallier@bootlin.com>
 To: davem@davemloft.net
 Cc: Maxime Chevallier <maxime.chevallier@bootlin.com>,
@@ -80,9 +80,9 @@ Cc: Maxime Chevallier <maxime.chevallier@bootlin.com>,
 	Romain Gantois <romain.gantois@bootlin.com>,
 	Daniel Golle <daniel@makrotopia.org>,
 	Dimitri Fedrau <dimitri.fedrau@liebherr.com>
-Subject: [PATCH net-next v15 01/15] dt-bindings: net: Introduce the ethernet-connector description
-Date: Thu,  6 Nov 2025 10:47:26 +0100
-Message-ID: <20251106094742.2104099-2-maxime.chevallier@bootlin.com>
+Subject: [PATCH net-next v15 02/15] net: ethtool: Introduce ETHTOOL_LINK_MEDIUM_* values
+Date: Thu,  6 Nov 2025 10:47:27 +0100
+Message-ID: <20251106094742.2104099-3-maxime.chevallier@bootlin.com>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20251106094742.2104099-1-maxime.chevallier@bootlin.com>
 References: <20251106094742.2104099-1-maxime.chevallier@bootlin.com>
@@ -95,143 +95,450 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Last-TLS-Session-Version: TLSv1.3
 
-The ability to describe the physical ports of Ethernet devices is useful
-to describe multi-port devices, as well as to remove any ambiguity with
-regard to the nature of the port.
+In an effort to have a better representation of Ethernet ports,
+introduce enumeration values representing the various ethernet Mediums.
 
-Moreover, describing ports allows for a better description of features
-that are tied to connectors, such as PoE through the PSE-PD devices.
+This is part of the 802.3 naming convention, for example :
 
-Introduce a binding to allow describing the ports, for now with 2
-attributes :
+1000 Base T 4
+ |    |   | |
+ |    |   | \_ pairs (4)
+ |    |   \___ Medium (T == Twisted Copper Pairs)
+ |    \_______ Baseband transmission
+ \____________ Speed
 
- - The number of lanes, which is a quite generic property that allows
-   differentating between multiple similar technologies such as BaseT1
-   and "regular" BaseT (which usually means BaseT4).
+ Other example :
 
- - The media that can be used on that port, such as BaseT for Twisted
-   Copper, BaseC for coax copper, BaseS/L for Fiber, BaseK for backplane
-   ethernet, etc. This allows defining the nature of the port, and
-   therefore avoids the need for vendor-specific properties such as
-   "micrel,fiber-mode" or "ti,fiber-mode".
+10000 Base K X 4
+           | | \_ lanes (4)
+           | \___ encoding (BaseX is 8b/10b while BaseR is 66b/64b)
+           \_____ Medium (K is backplane ethernet)
 
-The port description lives in its own file, as it is intended in the
-future to allow describing the ports for phy-less devices.
+In the case of representing a physical port, only the medium and number
+of pairs should be relevant. One exception would be 1000BaseX, which is
+currently also used as a medium in what appears to be any of
+1000BaseSX, 1000BaseCX and 1000BaseLX. This was reflected in the mediums
+associated with the 1000BaseX linkmode.
+
+These mediums are set in the net/ethtool/common.c lookup table that
+maintains a list of all linkmodes with their number of lanes, medium,
+encoding, speed and duplex.
+
+One notable exception to this is 100M BaseT Ethernet. 100BaseTX is a
+2-lanes protocol but it will also work on 4-lanes cables, so the lookup
+table contains 2 sets of lane numbers, indicating the min number of lanes
+for a protocol to work and the "nominal" number of lanes as well.
+
+Another set of exceptions are linkmodes such 100000baseLR4_ER4, where
+the same link mode seems to represent 100GBaseLR4 and 100GBaseER4. The
+macro __DEFINE_LINK_MODE_PARAMS_MEDIUMS is here used to populate the
+.mediums bitfield with all appropriate mediums.
 
 Signed-off-by: Maxime Chevallier <maxime.chevallier@bootlin.com>
 ---
- .../bindings/net/ethernet-connector.yaml      | 53 +++++++++++++++++++
- .../devicetree/bindings/net/ethernet-phy.yaml | 18 +++++++
- MAINTAINERS                                   |  1 +
- 3 files changed, 72 insertions(+)
- create mode 100644 Documentation/devicetree/bindings/net/ethernet-connector.yaml
+ drivers/net/phy/phy_caps.c   |   8 ++
+ include/linux/ethtool.h      |  19 ++-
+ include/uapi/linux/ethtool.h |  20 +++
+ net/ethtool/common.c         | 268 +++++++++++++++++++++--------------
+ 4 files changed, 203 insertions(+), 112 deletions(-)
 
-diff --git a/Documentation/devicetree/bindings/net/ethernet-connector.yaml b/Documentation/devicetree/bindings/net/ethernet-connector.yaml
-new file mode 100644
-index 000000000000..2b67907582c7
---- /dev/null
-+++ b/Documentation/devicetree/bindings/net/ethernet-connector.yaml
-@@ -0,0 +1,53 @@
-+# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
-+%YAML 1.2
-+---
-+$id: http://devicetree.org/schemas/net/ethernet-connector.yaml#
-+$schema: http://devicetree.org/meta-schemas/core.yaml#
+diff --git a/drivers/net/phy/phy_caps.c b/drivers/net/phy/phy_caps.c
+index 23c808b59b6f..9a5e293c5104 100644
+--- a/drivers/net/phy/phy_caps.c
++++ b/drivers/net/phy/phy_caps.c
+@@ -78,6 +78,14 @@ int __init phy_caps_init(void)
+ 	/* Fill the caps array from net/ethtool/common.c */
+ 	for (i = 0; i < __ETHTOOL_LINK_MODE_MASK_NBITS; i++) {
+ 		linkmode = &link_mode_params[i];
 +
-+title: Generic Ethernet Connector
++		/* Sanity check the linkmodes array for number of pairs */
++		if (linkmode->pairs < linkmode->min_pairs) {
++			pr_err("Pairs count must not be under min_pairs for linkmode %d\n",
++			       i);
++			return -EINVAL;
++		}
 +
-+maintainers:
-+  - Maxime Chevallier <maxime.chevallier@bootlin.com>
-+
-+description:
-+  An Ethernet Connector represents the output of a network component such as
-+  a PHY, an Ethernet controller with no PHY, or an SFP module.
-+
-+properties:
-+
-+  pairs:
-+    description:
-+      Defines the number of BaseT pairs that are used on the connector.
-+    $ref: /schemas/types.yaml#/definitions/uint32
-+
-+  media:
-+    description:
-+      The mediums, as defined in 802.3, that can be used on the port.
-+    enum:
-+      - BaseT
-+      - BaseK
-+      - BaseS
-+      - BaseC
-+      - BaseL
-+      - BaseD
-+      - BaseE
-+      - BaseF
-+      - BaseV
-+      - BaseMLD
-+
-+required:
-+  - media
-+
-+allOf:
-+  - if:
-+      properties:
-+        media:
-+          contains:
-+            const: BaseT
-+    then:
-+      required:
-+        - pairs
-+
-+additionalProperties: true
-+
-+...
-diff --git a/Documentation/devicetree/bindings/net/ethernet-phy.yaml b/Documentation/devicetree/bindings/net/ethernet-phy.yaml
-index 2ec2d9fda7e3..f434768d6bae 100644
---- a/Documentation/devicetree/bindings/net/ethernet-phy.yaml
-+++ b/Documentation/devicetree/bindings/net/ethernet-phy.yaml
-@@ -277,6 +277,17 @@ properties:
+ 		capa = speed_duplex_to_capa(linkmode->speed, linkmode->duplex);
  
-     additionalProperties: false
+ 		if (capa < 0) {
+diff --git a/include/linux/ethtool.h b/include/linux/ethtool.h
+index c2d8b4ec62eb..ad2b5ed9522b 100644
+--- a/include/linux/ethtool.h
++++ b/include/linux/ethtool.h
+@@ -216,13 +216,26 @@ static inline u8 *ethtool_rxfh_context_key(struct ethtool_rxfh_context *ctx)
+ void ethtool_rxfh_context_lost(struct net_device *dev, u32 context_id);
  
-+  mdi:
-+    type: object
-+
-+    patternProperties:
-+      '^connector-[a-f0-9]+$':
-+        $ref: /schemas/net/ethernet-connector.yaml#
-+
-+        unevaluatedProperties: false
-+
-+    additionalProperties: false
-+
- required:
-   - reg
+ struct link_mode_info {
+-	int                             speed;
+-	u8                              lanes;
+-	u8                              duplex;
++	int	speed;
++	u8	lanes;
++	u8	min_pairs;
++	u8	pairs;
++	u8	duplex;
++	u16	mediums;
+ };
  
-@@ -313,5 +324,12 @@ examples:
-                     default-state = "keep";
-                 };
-             };
-+            /* Fast Ethernet port, with only 2 pairs wired */
-+            mdi {
-+                connector-0 {
-+                    pairs = <2>;
-+                    media = "BaseT";
-+                };
-+            };
-         };
-     };
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 1ab7e8746299..19ba82b98616 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -9276,6 +9276,7 @@ R:	Russell King <linux@armlinux.org.uk>
- L:	netdev@vger.kernel.org
- S:	Maintained
- F:	Documentation/ABI/testing/sysfs-class-net-phydev
-+F:	Documentation/devicetree/bindings/net/ethernet-connector.yaml
- F:	Documentation/devicetree/bindings/net/ethernet-phy.yaml
- F:	Documentation/devicetree/bindings/net/mdio*
- F:	Documentation/devicetree/bindings/net/qca,ar803x.yaml
+ extern const struct link_mode_info link_mode_params[];
+ 
++extern const char ethtool_link_medium_names[][ETH_GSTRING_LEN];
++
++static inline const char *phy_mediums(enum ethtool_link_medium medium)
++{
++	if (medium >= __ETHTOOL_LINK_MEDIUM_LAST)
++		return "unknown";
++
++	return ethtool_link_medium_names[medium];
++}
++
+ /* declare a link mode bitmap */
+ #define __ETHTOOL_DECLARE_LINK_MODE_MASK(name)		\
+ 	DECLARE_BITMAP(name, __ETHTOOL_LINK_MODE_MASK_NBITS)
+diff --git a/include/uapi/linux/ethtool.h b/include/uapi/linux/ethtool.h
+index 8bd5ea5469d9..6ed235053aed 100644
+--- a/include/uapi/linux/ethtool.h
++++ b/include/uapi/linux/ethtool.h
+@@ -2587,4 +2587,24 @@ enum phy_upstream {
+ 	PHY_UPSTREAM_PHY,
+ };
+ 
++enum ethtool_link_medium {
++	ETHTOOL_LINK_MEDIUM_BASET = 0,
++	ETHTOOL_LINK_MEDIUM_BASEK,
++	ETHTOOL_LINK_MEDIUM_BASES,
++	ETHTOOL_LINK_MEDIUM_BASEC,
++	ETHTOOL_LINK_MEDIUM_BASEL,
++	ETHTOOL_LINK_MEDIUM_BASED,
++	ETHTOOL_LINK_MEDIUM_BASEE,
++	ETHTOOL_LINK_MEDIUM_BASEF,
++	ETHTOOL_LINK_MEDIUM_BASEV,
++	ETHTOOL_LINK_MEDIUM_BASEMLD,
++	ETHTOOL_LINK_MEDIUM_NONE,
++
++	__ETHTOOL_LINK_MEDIUM_LAST,
++};
++
++#define ETHTOOL_MEDIUM_FIBER_BITS (BIT(ETHTOOL_LINK_MEDIUM_BASES) | \
++				   BIT(ETHTOOL_LINK_MEDIUM_BASEL) | \
++				   BIT(ETHTOOL_LINK_MEDIUM_BASEF))
++
+ #endif /* _UAPI_LINUX_ETHTOOL_H */
+diff --git a/net/ethtool/common.c b/net/ethtool/common.c
+index 55223ebc2a7e..bd6417dfb362 100644
+--- a/net/ethtool/common.c
++++ b/net/ethtool/common.c
+@@ -281,12 +281,35 @@ static_assert(ARRAY_SIZE(link_mode_names) == __ETHTOOL_LINK_MODE_MASK_NBITS);
+ #define __LINK_MODE_LANES_DR8_2		8
+ #define __LINK_MODE_LANES_T1BRR		1
+ 
+-#define __DEFINE_LINK_MODE_PARAMS(_speed, _type, _duplex)	\
++#define __DEFINE_LINK_MODE_PARAMS_PAIRS(_speed, _type, _min_pairs, _pairs, _duplex, _medium) \
+ 	[ETHTOOL_LINK_MODE(_speed, _type, _duplex)] = {		\
+ 		.speed  = SPEED_ ## _speed, \
+ 		.lanes  = __LINK_MODE_LANES_ ## _type, \
+-		.duplex	= __DUPLEX_ ## _duplex \
++		.min_pairs = _min_pairs, \
++		.pairs = _pairs, \
++		.duplex	= __DUPLEX_ ## _duplex, \
++		.mediums = BIT(ETHTOOL_LINK_MEDIUM_BASE ## _medium) \
+ 	}
++
++#define __DEFINE_LINK_MODE_PARAMS(_speed, _type, _duplex, _medium)	\
++	[ETHTOOL_LINK_MODE(_speed, _type, _duplex)] = {		\
++		.speed  = SPEED_ ## _speed, \
++		.lanes  = __LINK_MODE_LANES_ ## _type, \
++		.min_pairs = 0, \
++		.pairs = 0, \
++		.duplex	= __DUPLEX_ ## _duplex, \
++		.mediums = BIT(ETHTOOL_LINK_MEDIUM_BASE ## _medium) \
++	}
++#define __DEFINE_LINK_MODE_PARAMS_MEDIUMS(_speed, _type, _duplex, _mediums)	\
++	[ETHTOOL_LINK_MODE(_speed, _type, _duplex)] = {		\
++		.speed  = SPEED_ ## _speed, \
++		.lanes  = __LINK_MODE_LANES_ ## _type, \
++		.min_pairs = 0, \
++		.pairs = 0, \
++		.duplex	= __DUPLEX_ ## _duplex, \
++		.mediums = (_mediums) \
++	}
++#define __MED(_medium)	(BIT(ETHTOOL_LINK_MEDIUM_BASE ## _medium))
+ #define __DUPLEX_Half DUPLEX_HALF
+ #define __DUPLEX_Full DUPLEX_FULL
+ #define __DEFINE_SPECIAL_MODE_PARAMS(_mode) \
+@@ -294,138 +317,165 @@ static_assert(ARRAY_SIZE(link_mode_names) == __ETHTOOL_LINK_MODE_MASK_NBITS);
+ 		.speed	= SPEED_UNKNOWN, \
+ 		.lanes	= 0, \
+ 		.duplex	= DUPLEX_UNKNOWN, \
++		.mediums = BIT(ETHTOOL_LINK_MEDIUM_NONE), \
+ 	}
+ 
+ const struct link_mode_info link_mode_params[] = {
+-	__DEFINE_LINK_MODE_PARAMS(10, T, Half),
+-	__DEFINE_LINK_MODE_PARAMS(10, T, Full),
+-	__DEFINE_LINK_MODE_PARAMS(100, T, Half),
+-	__DEFINE_LINK_MODE_PARAMS(100, T, Full),
+-	__DEFINE_LINK_MODE_PARAMS(1000, T, Half),
+-	__DEFINE_LINK_MODE_PARAMS(1000, T, Full),
++	__DEFINE_LINK_MODE_PARAMS_PAIRS(10, T, 2, 4, Half, T),
++	__DEFINE_LINK_MODE_PARAMS_PAIRS(10, T, 2, 4, Full, T),
++	__DEFINE_LINK_MODE_PARAMS_PAIRS(100, T, 2, 4, Half, T),
++	__DEFINE_LINK_MODE_PARAMS_PAIRS(100, T, 2, 4, Full, T),
++	__DEFINE_LINK_MODE_PARAMS_PAIRS(1000, T, 4, 4, Half, T),
++	__DEFINE_LINK_MODE_PARAMS_PAIRS(1000, T, 4, 4, Full, T),
+ 	__DEFINE_SPECIAL_MODE_PARAMS(Autoneg),
+ 	__DEFINE_SPECIAL_MODE_PARAMS(TP),
+ 	__DEFINE_SPECIAL_MODE_PARAMS(AUI),
+ 	__DEFINE_SPECIAL_MODE_PARAMS(MII),
+ 	__DEFINE_SPECIAL_MODE_PARAMS(FIBRE),
+ 	__DEFINE_SPECIAL_MODE_PARAMS(BNC),
+-	__DEFINE_LINK_MODE_PARAMS(10000, T, Full),
++	__DEFINE_LINK_MODE_PARAMS_PAIRS(10000, T, 4, 4, Full, T),
+ 	__DEFINE_SPECIAL_MODE_PARAMS(Pause),
+ 	__DEFINE_SPECIAL_MODE_PARAMS(Asym_Pause),
+-	__DEFINE_LINK_MODE_PARAMS(2500, X, Full),
++	__DEFINE_LINK_MODE_PARAMS_MEDIUMS(2500, X, Full,
++					  __MED(C) | __MED(S) | __MED(L)),
+ 	__DEFINE_SPECIAL_MODE_PARAMS(Backplane),
+-	__DEFINE_LINK_MODE_PARAMS(1000, KX, Full),
+-	__DEFINE_LINK_MODE_PARAMS(10000, KX4, Full),
+-	__DEFINE_LINK_MODE_PARAMS(10000, KR, Full),
++	__DEFINE_LINK_MODE_PARAMS(1000, KX, Full, K),
++	__DEFINE_LINK_MODE_PARAMS(10000, KX4, Full, K),
++	__DEFINE_LINK_MODE_PARAMS(10000, KR, Full, K),
+ 	[ETHTOOL_LINK_MODE_10000baseR_FEC_BIT] = {
+ 		.speed	= SPEED_10000,
+ 		.lanes	= 1,
+ 		.duplex = DUPLEX_FULL,
+ 	},
+-	__DEFINE_LINK_MODE_PARAMS(20000, MLD2, Full),
+-	__DEFINE_LINK_MODE_PARAMS(20000, KR2, Full),
+-	__DEFINE_LINK_MODE_PARAMS(40000, KR4, Full),
+-	__DEFINE_LINK_MODE_PARAMS(40000, CR4, Full),
+-	__DEFINE_LINK_MODE_PARAMS(40000, SR4, Full),
+-	__DEFINE_LINK_MODE_PARAMS(40000, LR4, Full),
+-	__DEFINE_LINK_MODE_PARAMS(56000, KR4, Full),
+-	__DEFINE_LINK_MODE_PARAMS(56000, CR4, Full),
+-	__DEFINE_LINK_MODE_PARAMS(56000, SR4, Full),
+-	__DEFINE_LINK_MODE_PARAMS(56000, LR4, Full),
+-	__DEFINE_LINK_MODE_PARAMS(25000, CR, Full),
+-	__DEFINE_LINK_MODE_PARAMS(25000, KR, Full),
+-	__DEFINE_LINK_MODE_PARAMS(25000, SR, Full),
+-	__DEFINE_LINK_MODE_PARAMS(50000, CR2, Full),
+-	__DEFINE_LINK_MODE_PARAMS(50000, KR2, Full),
+-	__DEFINE_LINK_MODE_PARAMS(100000, KR4, Full),
+-	__DEFINE_LINK_MODE_PARAMS(100000, SR4, Full),
+-	__DEFINE_LINK_MODE_PARAMS(100000, CR4, Full),
+-	__DEFINE_LINK_MODE_PARAMS(100000, LR4_ER4, Full),
+-	__DEFINE_LINK_MODE_PARAMS(50000, SR2, Full),
+-	__DEFINE_LINK_MODE_PARAMS(1000, X, Full),
+-	__DEFINE_LINK_MODE_PARAMS(10000, CR, Full),
+-	__DEFINE_LINK_MODE_PARAMS(10000, SR, Full),
+-	__DEFINE_LINK_MODE_PARAMS(10000, LR, Full),
+-	__DEFINE_LINK_MODE_PARAMS(10000, LRM, Full),
+-	__DEFINE_LINK_MODE_PARAMS(10000, ER, Full),
+-	__DEFINE_LINK_MODE_PARAMS(2500, T, Full),
+-	__DEFINE_LINK_MODE_PARAMS(5000, T, Full),
++	__DEFINE_LINK_MODE_PARAMS(20000, MLD2, Full, MLD),
++	__DEFINE_LINK_MODE_PARAMS(20000, KR2, Full, K),
++	__DEFINE_LINK_MODE_PARAMS(40000, KR4, Full, K),
++	__DEFINE_LINK_MODE_PARAMS(40000, CR4, Full, C),
++	__DEFINE_LINK_MODE_PARAMS(40000, SR4, Full, S),
++	__DEFINE_LINK_MODE_PARAMS(40000, LR4, Full, L),
++	__DEFINE_LINK_MODE_PARAMS(56000, KR4, Full, K),
++	__DEFINE_LINK_MODE_PARAMS(56000, CR4, Full, C),
++	__DEFINE_LINK_MODE_PARAMS(56000, SR4, Full, S),
++	__DEFINE_LINK_MODE_PARAMS(56000, LR4, Full, L),
++	__DEFINE_LINK_MODE_PARAMS(25000, CR, Full, C),
++	__DEFINE_LINK_MODE_PARAMS(25000, KR, Full, K),
++	__DEFINE_LINK_MODE_PARAMS(25000, SR, Full, S),
++	__DEFINE_LINK_MODE_PARAMS(50000, CR2, Full, C),
++	__DEFINE_LINK_MODE_PARAMS(50000, KR2, Full, K),
++	__DEFINE_LINK_MODE_PARAMS(100000, KR4, Full, K),
++	__DEFINE_LINK_MODE_PARAMS(100000, SR4, Full, S),
++	__DEFINE_LINK_MODE_PARAMS(100000, CR4, Full, C),
++	__DEFINE_LINK_MODE_PARAMS_MEDIUMS(100000, LR4_ER4, Full,
++					  __MED(L) | __MED(E)),
++	__DEFINE_LINK_MODE_PARAMS(50000, SR2, Full, S),
++	__DEFINE_LINK_MODE_PARAMS_MEDIUMS(1000, X, Full,
++					  __MED(C) | __MED(S) | __MED(L)),
++	__DEFINE_LINK_MODE_PARAMS(10000, CR, Full, C),
++	__DEFINE_LINK_MODE_PARAMS(10000, SR, Full, S),
++	__DEFINE_LINK_MODE_PARAMS(10000, LR, Full, L),
++	__DEFINE_LINK_MODE_PARAMS(10000, LRM, Full, L),
++	__DEFINE_LINK_MODE_PARAMS(10000, ER, Full, E),
++	__DEFINE_LINK_MODE_PARAMS_PAIRS(2500, T, 4, 4, Full, T),
++	__DEFINE_LINK_MODE_PARAMS_PAIRS(5000, T, 4, 4, Full, T),
+ 	__DEFINE_SPECIAL_MODE_PARAMS(FEC_NONE),
+ 	__DEFINE_SPECIAL_MODE_PARAMS(FEC_RS),
+ 	__DEFINE_SPECIAL_MODE_PARAMS(FEC_BASER),
+-	__DEFINE_LINK_MODE_PARAMS(50000, KR, Full),
+-	__DEFINE_LINK_MODE_PARAMS(50000, SR, Full),
+-	__DEFINE_LINK_MODE_PARAMS(50000, CR, Full),
+-	__DEFINE_LINK_MODE_PARAMS(50000, LR_ER_FR, Full),
+-	__DEFINE_LINK_MODE_PARAMS(50000, DR, Full),
+-	__DEFINE_LINK_MODE_PARAMS(100000, KR2, Full),
+-	__DEFINE_LINK_MODE_PARAMS(100000, SR2, Full),
+-	__DEFINE_LINK_MODE_PARAMS(100000, CR2, Full),
+-	__DEFINE_LINK_MODE_PARAMS(100000, LR2_ER2_FR2, Full),
+-	__DEFINE_LINK_MODE_PARAMS(100000, DR2, Full),
+-	__DEFINE_LINK_MODE_PARAMS(200000, KR4, Full),
+-	__DEFINE_LINK_MODE_PARAMS(200000, SR4, Full),
+-	__DEFINE_LINK_MODE_PARAMS(200000, LR4_ER4_FR4, Full),
+-	__DEFINE_LINK_MODE_PARAMS(200000, DR4, Full),
+-	__DEFINE_LINK_MODE_PARAMS(200000, CR4, Full),
+-	__DEFINE_LINK_MODE_PARAMS(100, T1, Full),
+-	__DEFINE_LINK_MODE_PARAMS(1000, T1, Full),
+-	__DEFINE_LINK_MODE_PARAMS(400000, KR8, Full),
+-	__DEFINE_LINK_MODE_PARAMS(400000, SR8, Full),
+-	__DEFINE_LINK_MODE_PARAMS(400000, LR8_ER8_FR8, Full),
+-	__DEFINE_LINK_MODE_PARAMS(400000, DR8, Full),
+-	__DEFINE_LINK_MODE_PARAMS(400000, CR8, Full),
++	__DEFINE_LINK_MODE_PARAMS(50000, KR, Full, K),
++	__DEFINE_LINK_MODE_PARAMS(50000, SR, Full, S),
++	__DEFINE_LINK_MODE_PARAMS(50000, CR, Full, C),
++	__DEFINE_LINK_MODE_PARAMS_MEDIUMS(50000, LR_ER_FR, Full,
++					  __MED(L) | __MED(E) | __MED(F)),
++	__DEFINE_LINK_MODE_PARAMS(50000, DR, Full, D),
++	__DEFINE_LINK_MODE_PARAMS(100000, KR2, Full, K),
++	__DEFINE_LINK_MODE_PARAMS(100000, SR2, Full, S),
++	__DEFINE_LINK_MODE_PARAMS(100000, CR2, Full, C),
++	__DEFINE_LINK_MODE_PARAMS_MEDIUMS(100000, LR2_ER2_FR2, Full,
++					  __MED(L) | __MED(E) | __MED(F)),
++	__DEFINE_LINK_MODE_PARAMS(100000, DR2, Full, D),
++	__DEFINE_LINK_MODE_PARAMS(200000, KR4, Full, K),
++	__DEFINE_LINK_MODE_PARAMS(200000, SR4, Full, S),
++	__DEFINE_LINK_MODE_PARAMS_MEDIUMS(200000, LR4_ER4_FR4, Full,
++					  __MED(L) | __MED(E) | __MED(F)),
++	__DEFINE_LINK_MODE_PARAMS(200000, DR4, Full, D),
++	__DEFINE_LINK_MODE_PARAMS(200000, CR4, Full, C),
++	__DEFINE_LINK_MODE_PARAMS_PAIRS(100, T1, 1, 1, Full, T),
++	__DEFINE_LINK_MODE_PARAMS_PAIRS(1000, T1, 1, 1, Full, T),
++	__DEFINE_LINK_MODE_PARAMS(400000, KR8, Full, K),
++	__DEFINE_LINK_MODE_PARAMS(400000, SR8, Full, S),
++	__DEFINE_LINK_MODE_PARAMS_MEDIUMS(400000, LR8_ER8_FR8, Full,
++					  __MED(L) | __MED(E) | __MED(F)),
++	__DEFINE_LINK_MODE_PARAMS(400000, DR8, Full, D),
++	__DEFINE_LINK_MODE_PARAMS(400000, CR8, Full, C),
+ 	__DEFINE_SPECIAL_MODE_PARAMS(FEC_LLRS),
+-	__DEFINE_LINK_MODE_PARAMS(100000, KR, Full),
+-	__DEFINE_LINK_MODE_PARAMS(100000, SR, Full),
+-	__DEFINE_LINK_MODE_PARAMS(100000, LR_ER_FR, Full),
+-	__DEFINE_LINK_MODE_PARAMS(100000, DR, Full),
+-	__DEFINE_LINK_MODE_PARAMS(100000, CR, Full),
+-	__DEFINE_LINK_MODE_PARAMS(200000, KR2, Full),
+-	__DEFINE_LINK_MODE_PARAMS(200000, SR2, Full),
+-	__DEFINE_LINK_MODE_PARAMS(200000, LR2_ER2_FR2, Full),
+-	__DEFINE_LINK_MODE_PARAMS(200000, DR2, Full),
+-	__DEFINE_LINK_MODE_PARAMS(200000, CR2, Full),
+-	__DEFINE_LINK_MODE_PARAMS(400000, KR4, Full),
+-	__DEFINE_LINK_MODE_PARAMS(400000, SR4, Full),
+-	__DEFINE_LINK_MODE_PARAMS(400000, LR4_ER4_FR4, Full),
+-	__DEFINE_LINK_MODE_PARAMS(400000, DR4, Full),
+-	__DEFINE_LINK_MODE_PARAMS(400000, CR4, Full),
+-	__DEFINE_LINK_MODE_PARAMS(100, FX, Half),
+-	__DEFINE_LINK_MODE_PARAMS(100, FX, Full),
+-	__DEFINE_LINK_MODE_PARAMS(10, T1L, Full),
+-	__DEFINE_LINK_MODE_PARAMS(800000, CR8, Full),
+-	__DEFINE_LINK_MODE_PARAMS(800000, KR8, Full),
+-	__DEFINE_LINK_MODE_PARAMS(800000, DR8, Full),
+-	__DEFINE_LINK_MODE_PARAMS(800000, DR8_2, Full),
+-	__DEFINE_LINK_MODE_PARAMS(800000, SR8, Full),
+-	__DEFINE_LINK_MODE_PARAMS(800000, VR8, Full),
+-	__DEFINE_LINK_MODE_PARAMS(10, T1S, Full),
+-	__DEFINE_LINK_MODE_PARAMS(10, T1S, Half),
+-	__DEFINE_LINK_MODE_PARAMS(10, T1S_P2MP, Half),
+-	__DEFINE_LINK_MODE_PARAMS(10, T1BRR, Full),
+-	__DEFINE_LINK_MODE_PARAMS(200000, CR, Full),
+-	__DEFINE_LINK_MODE_PARAMS(200000, KR, Full),
+-	__DEFINE_LINK_MODE_PARAMS(200000, DR, Full),
+-	__DEFINE_LINK_MODE_PARAMS(200000, DR_2, Full),
+-	__DEFINE_LINK_MODE_PARAMS(200000, SR, Full),
+-	__DEFINE_LINK_MODE_PARAMS(200000, VR, Full),
+-	__DEFINE_LINK_MODE_PARAMS(400000, CR2, Full),
+-	__DEFINE_LINK_MODE_PARAMS(400000, KR2, Full),
+-	__DEFINE_LINK_MODE_PARAMS(400000, DR2, Full),
+-	__DEFINE_LINK_MODE_PARAMS(400000, DR2_2, Full),
+-	__DEFINE_LINK_MODE_PARAMS(400000, SR2, Full),
+-	__DEFINE_LINK_MODE_PARAMS(400000, VR2, Full),
+-	__DEFINE_LINK_MODE_PARAMS(800000, CR4, Full),
+-	__DEFINE_LINK_MODE_PARAMS(800000, KR4, Full),
+-	__DEFINE_LINK_MODE_PARAMS(800000, DR4, Full),
+-	__DEFINE_LINK_MODE_PARAMS(800000, DR4_2, Full),
+-	__DEFINE_LINK_MODE_PARAMS(800000, SR4, Full),
+-	__DEFINE_LINK_MODE_PARAMS(800000, VR4, Full),
++	__DEFINE_LINK_MODE_PARAMS(100000, KR, Full, K),
++	__DEFINE_LINK_MODE_PARAMS(100000, SR, Full, S),
++	__DEFINE_LINK_MODE_PARAMS_MEDIUMS(100000, LR_ER_FR, Full,
++					  __MED(L) | __MED(E) | __MED(F)),
++	__DEFINE_LINK_MODE_PARAMS(100000, DR, Full, D),
++	__DEFINE_LINK_MODE_PARAMS(100000, CR, Full, C),
++	__DEFINE_LINK_MODE_PARAMS(200000, KR2, Full, K),
++	__DEFINE_LINK_MODE_PARAMS(200000, SR2, Full, S),
++	__DEFINE_LINK_MODE_PARAMS_MEDIUMS(200000, LR2_ER2_FR2, Full,
++					  __MED(L) | __MED(E) | __MED(F)),
++	__DEFINE_LINK_MODE_PARAMS(200000, DR2, Full, D),
++	__DEFINE_LINK_MODE_PARAMS(200000, CR2, Full, C),
++	__DEFINE_LINK_MODE_PARAMS(400000, KR4, Full, K),
++	__DEFINE_LINK_MODE_PARAMS(400000, SR4, Full, S),
++	__DEFINE_LINK_MODE_PARAMS_MEDIUMS(400000, LR4_ER4_FR4, Full,
++					  __MED(L) | __MED(E) | __MED(F)),
++	__DEFINE_LINK_MODE_PARAMS(400000, DR4, Full, D),
++	__DEFINE_LINK_MODE_PARAMS(400000, CR4, Full, C),
++	__DEFINE_LINK_MODE_PARAMS(100, FX, Half, F),
++	__DEFINE_LINK_MODE_PARAMS(100, FX, Full, F),
++	__DEFINE_LINK_MODE_PARAMS_PAIRS(10, T1L, 1, 1, Full, T),
++	__DEFINE_LINK_MODE_PARAMS(800000, CR8, Full, C),
++	__DEFINE_LINK_MODE_PARAMS(800000, KR8, Full, K),
++	__DEFINE_LINK_MODE_PARAMS(800000, DR8, Full, D),
++	__DEFINE_LINK_MODE_PARAMS(800000, DR8_2, Full, D),
++	__DEFINE_LINK_MODE_PARAMS(800000, SR8, Full, S),
++	__DEFINE_LINK_MODE_PARAMS(800000, VR8, Full, V),
++	__DEFINE_LINK_MODE_PARAMS_PAIRS(10, T1S, 1, 1, Full, T),
++	__DEFINE_LINK_MODE_PARAMS_PAIRS(10, T1S, 1, 1, Half, T),
++	__DEFINE_LINK_MODE_PARAMS_PAIRS(10, T1S_P2MP, 1, 1, Half, T),
++	__DEFINE_LINK_MODE_PARAMS_PAIRS(10, T1BRR, 1, 1, Full, T),
++	__DEFINE_LINK_MODE_PARAMS(200000, CR, Full, C),
++	__DEFINE_LINK_MODE_PARAMS(200000, KR, Full, K),
++	__DEFINE_LINK_MODE_PARAMS(200000, DR, Full, D),
++	__DEFINE_LINK_MODE_PARAMS(200000, DR_2, Full, D),
++	__DEFINE_LINK_MODE_PARAMS(200000, SR, Full, S),
++	__DEFINE_LINK_MODE_PARAMS(200000, VR, Full, V),
++	__DEFINE_LINK_MODE_PARAMS(400000, CR2, Full, C),
++	__DEFINE_LINK_MODE_PARAMS(400000, KR2, Full, K),
++	__DEFINE_LINK_MODE_PARAMS(400000, DR2, Full, D),
++	__DEFINE_LINK_MODE_PARAMS(400000, DR2_2, Full, D),
++	__DEFINE_LINK_MODE_PARAMS(400000, SR2, Full, S),
++	__DEFINE_LINK_MODE_PARAMS(400000, VR2, Full, V),
++	__DEFINE_LINK_MODE_PARAMS(800000, CR4, Full, C),
++	__DEFINE_LINK_MODE_PARAMS(800000, KR4, Full, K),
++	__DEFINE_LINK_MODE_PARAMS(800000, DR4, Full, D),
++	__DEFINE_LINK_MODE_PARAMS(800000, DR4_2, Full, D),
++	__DEFINE_LINK_MODE_PARAMS(800000, SR4, Full, S),
++	__DEFINE_LINK_MODE_PARAMS(800000, VR4, Full, V),
+ };
+ static_assert(ARRAY_SIZE(link_mode_params) == __ETHTOOL_LINK_MODE_MASK_NBITS);
+ EXPORT_SYMBOL_GPL(link_mode_params);
+ 
++const char ethtool_link_medium_names[][ETH_GSTRING_LEN] = {
++	[ETHTOOL_LINK_MEDIUM_BASET] = "BaseT",
++	[ETHTOOL_LINK_MEDIUM_BASEK] = "BaseK",
++	[ETHTOOL_LINK_MEDIUM_BASES] = "BaseS",
++	[ETHTOOL_LINK_MEDIUM_BASEC] = "BaseC",
++	[ETHTOOL_LINK_MEDIUM_BASEL] = "BaseL",
++	[ETHTOOL_LINK_MEDIUM_BASED] = "BaseD",
++	[ETHTOOL_LINK_MEDIUM_BASEE] = "BaseE",
++	[ETHTOOL_LINK_MEDIUM_BASEF] = "BaseF",
++	[ETHTOOL_LINK_MEDIUM_BASEV] = "BaseV",
++	[ETHTOOL_LINK_MEDIUM_BASEMLD] = "BaseMLD",
++	[ETHTOOL_LINK_MEDIUM_NONE] = "None",
++};
++static_assert(ARRAY_SIZE(ethtool_link_medium_names) == __ETHTOOL_LINK_MEDIUM_LAST);
++EXPORT_SYMBOL_GPL(ethtool_link_medium_names);
++
+ const char netif_msg_class_names[][ETH_GSTRING_LEN] = {
+ 	[NETIF_MSG_DRV_BIT]		= "drv",
+ 	[NETIF_MSG_PROBE_BIT]		= "probe",
 -- 
 2.49.0
 
