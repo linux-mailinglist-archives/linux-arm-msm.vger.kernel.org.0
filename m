@@ -1,82 +1,83 @@
-Return-Path: <linux-arm-msm+bounces-80657-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-80658-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id A291BC3D300
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 06 Nov 2025 20:11:03 +0100 (CET)
+Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [IPv6:2605:f480:58:1:0:1994:3:14])
+	by mail.lfdr.de (Postfix) with ESMTPS id F3255C3D348
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 06 Nov 2025 20:13:33 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 2139D188D82E
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Nov 2025 19:11:28 +0000 (UTC)
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 3E7AA4E5D67
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Nov 2025 19:11:24 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 680163587D3;
-	Thu,  6 Nov 2025 19:08:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 82F62351FD4;
+	Thu,  6 Nov 2025 19:08:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="eunwizOC"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="iDLrhueV"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f43.google.com (mail-ej1-f43.google.com [209.85.218.43])
+Received: from mail-ed1-f47.google.com (mail-ed1-f47.google.com [209.85.208.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EEE03587D4
-	for <linux-arm-msm@vger.kernel.org>; Thu,  6 Nov 2025 19:08:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA483358D20
+	for <linux-arm-msm@vger.kernel.org>; Thu,  6 Nov 2025 19:08:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762456118; cv=none; b=b0Bi/Vz/k/eXTg53POU1FCFzQVDxolJBKsTeqoXKxaRapg806faKSP1tMfa1Fb1BSZKV15/k7Yagq8lAixMz/Yd+ynGTGZDgorBZtK8WtqeGYb6UcG7m00JP87Pd9he1yubpTW1PafHSUfB16qRcYhoyKsrs0zEUlwiHsuVf2tg=
+	t=1762456121; cv=none; b=GeOSL5oOSlXRvgNthb72nXXUh1+8NoorFsNO74Y3xanE2/tWOjUdVYpmy1ZdHOWU4P0xxmvPF89HHFXgGyWCJQS5O9HeL0kxkROHjtRJxVSkaUUw34TMwIa6o6tya/SfYHd3HuHPtHT6SWVVycI9HiWP/sxvr0cp97USYbZT9Gg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762456118; c=relaxed/simple;
-	bh=/yzRWwVIXgMTXi61dZTgBV9kK1Wc2gDXywBs5UcM6J8=;
+	s=arc-20240116; t=1762456121; c=relaxed/simple;
+	bh=duU5u56PDy568nC9gTgD/sRRW1Kja+NAYhWyt8rAuUM=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=OP9r3xIIL3yD2twrxyyya0ovOAMPJXKWdDVGEwwaIMtLHeb8UNquoODg/4z13ICTSFK8IdxjbX+qCHLDSc37GvpIgDxCeKg+Gg84mg/h+NJIODOdxuGVBFgzqfkJHdtpbPrbeIJ+P+LCldYECwB42Qrn4BpkFABMhYYXKM/jH24=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=eunwizOC; arc=none smtp.client-ip=209.85.218.43
+	 In-Reply-To:To:Cc; b=MQlBAKPxSsBcJE23m2ynbr60OjoZO/BDGqIj9OSJIJd7iaU+8JMvl1XW7QmOv6tqLYjRZEKkEVz+FGpw1asDFaV4wY8mDM3Zsm/V2ek6A19yHdzZ73AnfTYf+AdhhQ6RM9Ac8vqLRwD9gxVmGmk7q9/KBfwKb61fAdHJdws/9Mk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=iDLrhueV; arc=none smtp.client-ip=209.85.208.47
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ej1-f43.google.com with SMTP id a640c23a62f3a-b70acf7fa58so17406566b.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 06 Nov 2025 11:08:35 -0800 (PST)
+Received: by mail-ed1-f47.google.com with SMTP id 4fb4d7f45d1cf-640e970598cso244750a12.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 06 Nov 2025 11:08:37 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1762456114; x=1763060914; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1762456116; x=1763060916; darn=vger.kernel.org;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=muHNa/g+OI3fM/6qd0mUiU8Bz7ahY8JnmPu7Z+aL7Rc=;
-        b=eunwizOCr82iLTpye7Cac4rGggzmsxtu5HjVr6pxSn1KSol9PyHr29+nR5oNE3MVMd
-         JoUZwNeqpRf/Dru0EkdWf9LB7NBV+6nwnWMxIVgaFACPhboTjjV3kd1akAiWKFCU/8x/
-         r2V0J6nlKtlYdBjMkm+oYvu5v/zc25TBTCcMB2NOEPo9S1CPfcR/3Nc6vgBMT1VkPTQ7
-         rTXkDQEQzQpo9RVmMPoYz5yUOOp4sqc4vi5cqe29veJ9v5zoYwwlXCtwXhRvmNQQBD6n
-         yAqEIEQBrCCZVjokI+fd1YEoteZkwi0xzOkW5x0KAD8INJMJ1w+RsSGJxeHTA6ORlTvl
-         gxug==
+        bh=YCEpBcWqzOzxXS+spa/CGSDCftzF1chyjPQmDO6LlhQ=;
+        b=iDLrhueVLDgcz0P30hT8Hucm3xNNZnhXdG6A4k1joRn7iu0/I+jiHJ5VIZ/QWp2k8e
+         yPgCwF+1Qx+OnmZZce2NBtduUsOn8yNicMTGCWXAQ0JEnijIGu39UIGuGLM115kqzbKx
+         nHiNcy8QPAFZMTvFSMU7gk2HlUEVzO46BP7woaG7oH69hLYl+q6nKgMJ356485Bcrpin
+         0RMNrw7SxTeGGWPUThb3sSuDLfYL9yC2Afm9yYtz4VbBu5gBw8kQXSAEx/BpQjEIIvwg
+         lTM1ghMQWOohECkZW4A6DoCmbWlr4iD/pUC9ONPMIcHfHYzebUGD26yX7V/GaRZTLmmd
+         T9dQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1762456114; x=1763060914;
+        d=1e100.net; s=20230601; t=1762456116; x=1763060916;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
          :cc:subject:date:message-id:reply-to;
-        bh=muHNa/g+OI3fM/6qd0mUiU8Bz7ahY8JnmPu7Z+aL7Rc=;
-        b=ZDxtmtwxX2rFqtLELkX2pJYZpvTZjyEdCdQzSuTLa/wO+CzZtv0Tj57uTbk3BJd2Nj
-         lOZOMKTP1Yc0M5ClCk7xh98tE1YanDk1uCR4OrRnPme85IWLl0zex/fndDJ23IJKwA/B
-         EvZ6xMuYdy4Zb36jpl16AyC9t9UkYRHiBrb15jykCSjtl9g9xNgyuFgXiz0NFCOTKD0H
-         9eOfCDxGLuPqRWvzJAU5gMBQRcoruPD9i/bxRtqw6eLGgrnBdtqKuD5LPFrQ3g2iZH6M
-         YloK/TCbUiURs5RqlHKypH40sEin32lX3G1OkTX1PxXUH3uEzrkxkPAv3nmcrm4NT69g
-         Ckaw==
-X-Forwarded-Encrypted: i=1; AJvYcCU56KduBCJmbflpv+OM74/14ArV3UQ/ENHJbInUwwCJ/pzZi4pzyteTwF5pawBV1tckPmUzqcesBbdTpazo@vger.kernel.org
-X-Gm-Message-State: AOJu0Yw3SdznQWfMlL1tTzjWRAVL7hyMJNx0MeZcjdBZsvd01YKgjesG
-	KyKK8NTXm8vnbzG3YNiXn6bbJ3KPMrND4FsDiUET8TAloXZgiCS4govpc2D1qoRXTiE=
-X-Gm-Gg: ASbGnctOqQQr5j/Nec0iegyMGOZd+KWY6AOqW+J2fAymM9vmgHtW1IvaA8A27j82qpL
-	Die4Lp/vknh9cMNnquzfzMWF0SAAwAPvA1/wPStEGtJmkpfQlmnotT8TwUnHgE1+5bj78eqT03o
-	7NWtzbyCfHJ+6MBPyl1aH+riBLprJx240YUsecy0Pvl4F3g1g1emzHcxmFAEJQmQzFyXZdPJs1w
-	dJdFszld58Hryt52trzqq7ker8KnLwd/UJMKhwg9KLt0H5AT7ZiAYV1lw3EZhgra8WFB5QyR2nm
-	4c9/TnmQ2JJXHYq87dabFWe9DLBkuiJPJD1AeTh+4KLWOER4ld3xSUkr3tnTWvG+uCcjuv8fz+9
-	X3OHa3idgG2aVgeuH5FFmLRlZSoNwPqCc2nOIRN1yzh+YBOXmDToZ+tfS+P3hZYXWPBFVhNOJ2M
-	/VcX50yUOK5Z5Vj1TY
-X-Google-Smtp-Source: AGHT+IE8YuEiK+Zfb/KePNrKoWBUDj6LEo4NOy/SwvD7jjkTn21cZNP/+8sVmFG2eqOfE4KV5Ochsw==
-X-Received: by 2002:a17:907:9614:b0:b72:5375:12a1 with SMTP id a640c23a62f3a-b72c096b055mr19793166b.2.1762456113840;
-        Thu, 06 Nov 2025 11:08:33 -0800 (PST)
+        bh=YCEpBcWqzOzxXS+spa/CGSDCftzF1chyjPQmDO6LlhQ=;
+        b=nDMZCP8wQw83/TMVbRmyGcdjniooWiTiDBbwkHJiw3/KWHYbyPV7/5F2W7l4mrQw0k
+         2+MUkQJoRGOkAcQY5WSp8PZQDvkETb7VWR0A2k91qqhh9S1m9v7T/20m6eIWaDebB3zd
+         AxHlfEY8Ah0o+ITxSi1yHNpjDn21EmnUo2DARiZ2nnvooe+thqj0GE8146zT+XaQcaDn
+         HK0f3pOAWrWQdnXKK6x2FXjUu9Gpi6wKy1XP5dUTsOCJ7FJHSoF5WxZbTu9u+eyXXmMA
+         2fhSfuO1t6GfG+ebzjRhHkcSCrSEsTcLd0t5jK+A1ytjVjjqASJrM9wxw5/n5rdCnpH3
+         q+zg==
+X-Forwarded-Encrypted: i=1; AJvYcCXs/ETgclRw98ewxKk1wTdIzw44cOzQuJQszbfHjz6BjSt3kzRghtgl/KX1dtZjMDJGfKI/aIx+Qz0wQS7S@vger.kernel.org
+X-Gm-Message-State: AOJu0YzgvhDk6SdKHKD/8Ybi2HT2JSy4nuYvDO0seeUP43ZnWPfURb4q
+	oG+jW4YQCnp2Lo9EkTkfRMFRwiON2LQV0ePhVCNnNX/SUI5xtD1hpIg7Hhdfb7Xg0eU=
+X-Gm-Gg: ASbGnctGNCUOcUp6ExcZiPL0MjXOien/A0iILgPb4rCJaKRfVphBRfVum1LAeiAVgXj
+	6wfdbsU1bsD1lbOELfL1OLzUTTwIBRRaIM9FRUmgYe2A9hu8tWibWQ/4pMkMFjnAM53khEo37dH
+	KROahhzjkNaFetC3tyfj/i+27AXRH7kmxmbyjGfiZ8FVu80G/oOli4KvjvjYmQRWJYf8tkdJG+q
+	JaVf9z+qbZUK0E3FulKpdOULKdXMNQAehG9VFHRVh25DIkSPjsSnwJQ0VXq6eaMcHORwf3cGi2j
+	8hrzDB6GmW8O+mDNREjYeE2Y0HXxEFCVnQzEjCZxVX3cWgmq0+FTbAyv9N49iKTydjUaR2Xl9cr
+	WtXMToU+eY0Yd5FLX3VCCZTmTlx4qc8c3s158vG2SvBuzdFG5gnjaYiTUMT+8l34orda89YZ/au
+	/d4zWbuk6Q9DDmMzA/
+X-Google-Smtp-Source: AGHT+IGtACsnNdaWz105iCINoWr5n9UXht5NcROgRS6+92tcuuFFCVXa8Xeak1w/fHe1KKxJJQTUmQ==
+X-Received: by 2002:a17:907:86a1:b0:b70:ab64:434f with SMTP id a640c23a62f3a-b72c0a8cb89mr17450666b.6.1762456116128;
+        Thu, 06 Nov 2025 11:08:36 -0800 (PST)
 Received: from [127.0.1.1] ([178.197.219.123])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-b72bfa2510esm26739566b.72.2025.11.06.11.08.31
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-b72bfa2510esm26739566b.72.2025.11.06.11.08.33
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 06 Nov 2025 11:08:33 -0800 (PST)
+        Thu, 06 Nov 2025 11:08:35 -0800 (PST)
 From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Date: Thu, 06 Nov 2025 20:07:18 +0100
-Subject: [PATCH 11/13] soc: qcom: Simplify with of_machine_get_match_data()
+Date: Thu, 06 Nov 2025 20:07:19 +0100
+Subject: [PATCH 12/13] soc: qcom: ubwc: Simplify with
+ of_machine_get_match_data()
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -85,7 +86,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20251106-b4-of-match-matchine-data-v1-11-d780ea1780c2@linaro.org>
+Message-Id: <20251106-b4-of-match-matchine-data-v1-12-d780ea1780c2@linaro.org>
 References: <20251106-b4-of-match-matchine-data-v1-0-d780ea1780c2@linaro.org>
 In-Reply-To: <20251106-b4-of-match-matchine-data-v1-0-d780ea1780c2@linaro.org>
 To: Rob Herring <robh@kernel.org>, Saravana Kannan <saravanak@google.com>, 
@@ -116,21 +117,21 @@ Cc: devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
  linux-tegra@vger.kernel.org, 
  Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 X-Mailer: b4 0.14.3
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1467;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1291;
  i=krzysztof.kozlowski@linaro.org; h=from:subject:message-id;
- bh=/yzRWwVIXgMTXi61dZTgBV9kK1Wc2gDXywBs5UcM6J8=;
- b=owEBbQKS/ZANAwAKAcE3ZuaGi4PXAcsmYgBpDPISQ5D0Sf9n1OrwLQgvE3GYjGuU2ct+njIDv
- jBQi2g+WJyJAjMEAAEKAB0WIQTd0mIoPREbIztuuKjBN2bmhouD1wUCaQzyEgAKCRDBN2bmhouD
- 10suD/0Sda8mQq3Am4mP8/8RROtOsjW4BdT3uUIH6bBRs5zGPcOfOfa01RIWooqINqRTgM3kRP+
- GEfgH5VZhTAbhgaiMzxUTrbCR/3HjSKTBMCVQZzAVOqh6UN/p5eokZpmHXvtyEBU/MJqGzRlP+a
- 6l+T2RkycuvLcNCNLtLgin+NLEeps3cQaf1kM3AuCl/cu0PqGRNRiKAIIb4HwqAI6M0YkSLYCy3
- E94u97SOssK1qs0tTOA2J5zNSWBhIp5u4CuuXLsPW4M2L5f4+jvVCexNmPlyoKvLjeKAmHwkaQa
- HP1E5+Ql7DAyDSKNKTkkRYybpAECIIOII6ib1t9BLrwGY2CyPBt8XiHkunFH1fm0aJx+pZaeNXR
- fpp1P67ni3gW5pIgRQh6ofX/QSEL/XnFNj7QD+I/DT8RtEHPUjuZBEsbk7YZYPDdvFfzWQGzSgN
- OOss/zZpWF8EUDYqKpYA+Cu0INYZbZzBGgSLOIBxGy3XBAQEQIQLgAOiysuOeojC7kyGsc/8TU+
- lzEcJiiv5X59CjJhJViLN2t1jZX4wryPr5HXwc0L7ZALSkxyV2kATV/hpoySJzLe10JBt8qHjU0
- eZx6SaG+f/clYYpS6dI1TegdwRpBvqsFfFFv9cmj5EJUuCUHDSqgehR6GEPctAsJowIa0LQBOns
- gTL09ogpzJ56Omg==
+ bh=duU5u56PDy568nC9gTgD/sRRW1Kja+NAYhWyt8rAuUM=;
+ b=owEBbQKS/ZANAwAKAcE3ZuaGi4PXAcsmYgBpDPITu0xcd1Xu7SDbTfboqrqtm0O8I5f3k4GxJ
+ sb3DuVcYy6JAjMEAAEKAB0WIQTd0mIoPREbIztuuKjBN2bmhouD1wUCaQzyEwAKCRDBN2bmhouD
+ 13hVD/4nWu9gGWq6/LJwCrfVYOFlQ2hUn93EjQWiFRTwwmgC9sbS3NA9MR19W+gEIdKMVerKLcR
+ qWz4RXbJ3AR8qwBVAgGhp5mP8v68fVp06zYEjKkmsDZd1zJYY6QRtlVK4l5h0J+my+9zwRl8O+Q
+ YzKoXLBhxFNRiLPny1JxlIa1yaTC6CNYWDt04MnQmbnPJehWYg1NUbSWkF6HsEdtyFhqGcvc/+B
+ 9uZA72RelClKR8PfknzlUexnJVx/QyUbApsMuxODlLZaZAV7oL9xM4Zqgxolw1524IZe2eDPBgD
+ KS1EquOwIM6NUJIbkQ0MTBy48To3g3jW7ssf0ktGE7EI1tPR3YvdCgq4R9h6yWDw3KaquxNvqRM
+ JBcv1EnddNFIiMxi05AfKZ5xkuWv4dxzdVQqw8kgF6p9YpgE8ib3h3WM5JtHXptC3QswTi8sspr
+ HocdHYB2mNKGLOKFSZ+4N+xnPr/oO49a15Nl0B1bNbdKTUmPBLfIn5f2jGjRubu6zmW6mF9m132
+ 6WsB6B1i6jZUXmWjgSvfn4pc092phlb0LULHZfbJSgzsN/y0xTkKM3TihUIYS0w34xthKyg8Zk3
+ pRt3JEIKc/Qm4FALNBmlQN6hGotDxh4wfz1G2vFQhMROvMlxYyGvu+V0LTe0qSvGDwveKy11LUH
+ 1LudEj4LNSbfXzw==
 X-Developer-Key: i=krzysztof.kozlowski@linaro.org; a=openpgp;
  fpr=9BD07E0E0C51F8D59677B7541B93437D3B41629B
 
@@ -143,40 +144,38 @@ Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
 Depends on the first OF patch.
 ---
- drivers/soc/qcom/qcom_pd_mapper.c | 17 ++---------------
- 1 file changed, 2 insertions(+), 15 deletions(-)
+ drivers/soc/qcom/ubwc_config.c | 14 ++++----------
+ 1 file changed, 4 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/soc/qcom/qcom_pd_mapper.c b/drivers/soc/qcom/qcom_pd_mapper.c
-index 1bcbe69688d2..07198d44b559 100644
---- a/drivers/soc/qcom/qcom_pd_mapper.c
-+++ b/drivers/soc/qcom/qcom_pd_mapper.c
-@@ -613,25 +613,12 @@ static void qcom_pdm_stop(struct qcom_pdm_data *data)
- static struct qcom_pdm_data *qcom_pdm_start(void)
+diff --git a/drivers/soc/qcom/ubwc_config.c b/drivers/soc/qcom/ubwc_config.c
+index 1c09796163b0..1c25aaf55e52 100644
+--- a/drivers/soc/qcom/ubwc_config.c
++++ b/drivers/soc/qcom/ubwc_config.c
+@@ -301,21 +301,15 @@ static const struct of_device_id qcom_ubwc_configs[] __maybe_unused = {
+ 
+ const struct qcom_ubwc_cfg_data *qcom_ubwc_config_get_data(void)
  {
- 	const struct qcom_pdm_domain_data * const *domains;
 -	const struct of_device_id *match;
- 	struct qcom_pdm_data *data;
 -	struct device_node *root;
- 	int ret, i;
++	const struct qcom_ubwc_cfg_data *data;
  
 -	root = of_find_node_by_path("/");
 -	if (!root)
 -		return ERR_PTR(-ENODEV);
 -
--	match = of_match_node(qcom_pdm_domains, root);
+-	match = of_match_node(qcom_ubwc_configs, root);
 -	of_node_put(root);
 -	if (!match) {
--		pr_notice("PDM: no support for the platform, userspace daemon might be required.\n");
--		return ERR_PTR(-ENODEV);
--	}
--
--	domains = match->data;
-+	domains = of_machine_get_match_data(qcom_pdm_domains);
- 	if (!domains) {
--		pr_debug("PDM: no domains\n");
-+		pr_notice("PDM: no support for the platform or no domains, userspace daemon might be required.\n");
- 		return ERR_PTR(-ENODEV);
++	data = of_machine_get_match_data(qcom_ubwc_configs);
++	if (!data) {
+ 		pr_err("Couldn't find UBWC config data for this platform!\n");
+ 		return ERR_PTR(-EINVAL);
  	}
+ 
+-	return match->data;
++	return data;
+ }
+ EXPORT_SYMBOL_GPL(qcom_ubwc_config_get_data);
  
 
 -- 
