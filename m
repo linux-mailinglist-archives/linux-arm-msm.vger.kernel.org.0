@@ -1,54 +1,40 @@
-Return-Path: <linux-arm-msm+bounces-80607-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-80608-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 12D03C3B31E
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 06 Nov 2025 14:25:42 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 92EB1C3B321
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 06 Nov 2025 14:25:58 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id DD81846347A
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Nov 2025 13:04:51 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 1D788188DB68
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Nov 2025 13:23:06 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0FA583396F3;
-	Thu,  6 Nov 2025 12:56:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=tuxedocomputers.com header.i=@tuxedocomputers.com header.b="FkoR7f/k"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CE852315D57;
+	Thu,  6 Nov 2025 13:22:39 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail.tuxedocomputers.com (mail.tuxedocomputers.com [157.90.84.7])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A684E324B20;
-	Thu,  6 Nov 2025 12:56:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=157.90.84.7
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id F1F66311C09;
+	Thu,  6 Nov 2025 13:22:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762433817; cv=none; b=LjM5qWUDd/QjR9I7jvlo8nU+Kt9dUjbIKZMVqXjH9MthplU+W9fxo+imfQKZArE268Z5ZGYGvoHPWi7LEF3reGCAErH25EUEs1bfrROkWkXZySj+POXSwEoeik+mJPfLboDbYK9IG8vR7bOJIJbdwKMAF6bNxNGX7rUpORVJ1+Q=
+	t=1762435359; cv=none; b=exvbCZc61mJ4EGnfLIZz7zynvTWL7Y5bNH82BPWhv1KUT6SZKRHNsDmAfREmLB7nNHizaMGLrl48qazEhp6uV9fYAwLaTE4DPXqdCWFVr5VO79SblzKy/tU1eFXQ0vAXMJ6+8b/OIXG4/qbrVuaCy/YqFKH+GKiwpC2WtZAlO6U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762433817; c=relaxed/simple;
-	bh=pm4CXXxkNxyP57QCn41n0cSFLcj6+S7nOOKBKYrt7Y0=;
+	s=arc-20240116; t=1762435359; c=relaxed/simple;
+	bh=+66YpWEbKkb4Cs7SfMNir6ckgLUCgEVOoZbka25bAf0=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=THRw4AGEKdAa+pGWhWjEjSplCnt5EwlIykTi8LNuaFFRMko0R0a2m3MmuAtD0CDU/6erBQ4zFAJfVgucbcbCMf0QD+TdRpvmEH2Vi1hRQicCV6YsqySNJ9mPwTHh4DAFrzqciUSkyZXJJV4MPSFnvOzWNFc0fPkAPNrI3KuZBUc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=tuxedocomputers.com; spf=pass smtp.mailfrom=tuxedocomputers.com; dkim=pass (1024-bit key) header.d=tuxedocomputers.com header.i=@tuxedocomputers.com header.b=FkoR7f/k; arc=none smtp.client-ip=157.90.84.7
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=tuxedocomputers.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=tuxedocomputers.com
-Received: from [192.168.178.76] (business-24-134-207-61.pool2.vodafone-ip.de [24.134.207.61])
-	(Authenticated sender: g.gottleuber@tuxedocomputers.com)
-	by mail.tuxedocomputers.com (Postfix) with ESMTPSA id C7BCA2FC0061;
-	Thu,  6 Nov 2025 13:56:51 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=tuxedocomputers.com;
-	s=default; t=1762433812;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
-	bh=HxxhpFSk8AGbWyqP7e/YOXfL/JukFyEo9PWJ9mt5yxk=;
-	b=FkoR7f/k+BuMSMIGvnGPcueRpv7BPUi/P8bxJeSt+x23s8G1ZZIJpFxQTSBW5BAzSJbpgY
-	n8BlaUjkth3cfXl/JPvzr+yUBENScj5Khu2hAONJmGLIlEMJEi/HznmTYvlZpy3ll70Xcn
-	77F9NWQaQCObTo5Onr717uypzkfXpj4=
-Authentication-Results: mail.tuxedocomputers.com;
-	auth=pass smtp.auth=g.gottleuber@tuxedocomputers.com smtp.mailfrom=g.gottleuber@tuxedocomputers.com
-Message-ID: <a3b26b2f-3f23-4a1a-87ef-0f5631e96ce7@tuxedocomputers.com>
-Date: Thu, 6 Nov 2025 13:56:51 +0100
+	 In-Reply-To:Content-Type; b=cxyAivO0tSnE51RAPJQn9mvWre3eJSXeXMbBBuj+X1agEC6Q/Z4Pv3mjLJR/cvpdirpyGiYETaTsAfHJWMe1E4kApK3npOjEGuDzdb2otb+mcjljPd2b+6E7Tp+Vf8U2V+UN0fYaaOuqQLW4yOFDFr/sButEWB5q9rrkkKYeAlQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; arc=none smtp.client-ip=217.140.110.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 4A7FD1596;
+	Thu,  6 Nov 2025 05:22:28 -0800 (PST)
+Received: from [10.1.38.47] (Suzukis-MBP.cambridge.arm.com [10.1.38.47])
+	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 7398B3F694;
+	Thu,  6 Nov 2025 05:22:33 -0800 (PST)
+Message-ID: <eaee1591-2b3e-4edf-85a0-ac8f3591eae2@arm.com>
+Date: Thu, 6 Nov 2025 13:22:31 +0000
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -56,119 +42,353 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 0/7] Add TUXEDO Elite 14 Gen1 (X1E78100)
-To: Krzysztof Kozlowski <krzk@kernel.org>,
- Georg Gottleuber <ggo@tuxedocomputers.com>,
+Subject: Re: [PATCH v4 2/3] coresight: tpdm: add static tpdm support
+Content-Language: en-GB
+To: Jie Gan <jie.gan@oss.qualcomm.com>, Mike Leach <mike.leach@linaro.org>,
+ James Clark <james.clark@linaro.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Tingwei Zhang <tingwei.zhang@oss.qualcomm.com>,
+ Mao Jinlong <jinlong.mao@oss.qualcomm.com>,
+ Tao Zhang <tao.zhang@oss.qualcomm.com>,
+ Alexander Shishkin <alexander.shishkin@linux.intel.com>,
  Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, Ettore Chimenti <ettore.chimenti@linaro.org>,
- Srinivas Kandagatla <srini@kernel.org>, stefan.schmidt@linaro.org,
- stephan.gerhold@linaro.org, wse@tuxedocomputers.com, cs@tuxedo.de
-References: <20251105154107.148187-1-ggo@tuxedocomputers.com>
- <eccdb13b-e062-4106-8c79-ca57b6839a0e@kernel.org>
-Content-Language: en-US
-From: Georg Gottleuber <g.gottleuber@tuxedocomputers.com>
-Autocrypt: addr=g.gottleuber@tuxedocomputers.com; keydata=
- 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
- bsxTTcOuRnk=
-In-Reply-To: <eccdb13b-e062-4106-8c79-ca57b6839a0e@kernel.org>
-Content-Type: text/plain; charset=UTF-8
+ Konrad Dybcio <konradybcio@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, coresight@lists.linaro.org,
+ linux-arm-kernel@lists.infradead.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org
+References: <20251028-add_static_tpdm_support-v4-0-84e21b98e727@oss.qualcomm.com>
+ <20251028-add_static_tpdm_support-v4-2-84e21b98e727@oss.qualcomm.com>
+From: Suzuki K Poulose <suzuki.poulose@arm.com>
+In-Reply-To: <20251028-add_static_tpdm_support-v4-2-84e21b98e727@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-
-
-Am 06.11.25 um 09:15 schrieb Krzysztof Kozlowski:
-> On 05/11/2025 16:41, Georg Gottleuber wrote:
->> Initial support for TUXEDO Elite 14 Gen1 laptop. It is based on Qualcomm
->> Snapdragon X Elite SoC (X1E78100).
->>
->> Changes in v2:
->> - Rebase to v6.18-rc4/master
->> - Add support for accelerated video decoding
->> - Add support for audio (speakers, microphones, headset)
->> - Add support for Bluetooth
->> - Add support for camera
->> - Add support for fingerprint reader
->> - Add support for HDMI-A port
->> - Add support for QSEECOM
->> - Add support for USB Type-A
->> - Add support for USB-C DP altmode
->> - Add ASL Xiamen Technology Co. Ltd. vendor prefix
->> - Add TUXEDO vendor prefix
->> - Add cover letter
->> - Removal of pointless comments
->> - Coding style fixes
->> - Spell check
->>
->> The device tree uses the dtschema from Linaro qcom-laptops [1].
+On 28/10/2025 10:11, Jie Gan wrote:
+> The static TPDM function as a dummy source, however, it is essential
+> to enable the port connected to the TPDA and configure the element size.
+> Without this, the TPDA cannot correctly receive trace data from the
+> static TPDM. Since the static TPDM does not require MMIO mapping to
+> access its registers, a clock controller is not mandatory for its
+> operation.
 > 
-> No, it cannot. You must work on mainline.
+> Signed-off-by: Jie Gan <jie.gan@oss.qualcomm.com>
+> ---
+>   drivers/hwtracing/coresight/coresight-tpda.c |   7 --
+>   drivers/hwtracing/coresight/coresight-tpdm.c | 174 ++++++++++++++++++++++-----
+>   drivers/hwtracing/coresight/coresight-tpdm.h |  12 ++
+>   3 files changed, 154 insertions(+), 39 deletions(-)
 > 
-> Specifically, you must use mainline dtschema and I do not understand why
-> you choose it from some 3rd party repo. See writing-schema how to
-> install main dtschema package.
+> diff --git a/drivers/hwtracing/coresight/coresight-tpda.c b/drivers/hwtracing/coresight/coresight-tpda.c
+> index 333b3cb23685..3a3825d27f86 100644
+> --- a/drivers/hwtracing/coresight/coresight-tpda.c
+> +++ b/drivers/hwtracing/coresight/coresight-tpda.c
+> @@ -22,13 +22,6 @@
+>   
+>   DEFINE_CORESIGHT_DEVLIST(tpda_devs, "tpda");
+>   
+> -static bool coresight_device_is_tpdm(struct coresight_device *csdev)
+> -{
+> -	return (coresight_is_device_source(csdev)) &&
+> -	       (csdev->subtype.source_subtype ==
+> -			CORESIGHT_DEV_SUBTYPE_SOURCE_TPDM);
+> -}
+> -
+>   static void tpda_clear_element_size(struct coresight_device *csdev)
+>   {
+>   	struct tpda_drvdata *drvdata = dev_get_drvdata(csdev->dev.parent);
+> diff --git a/drivers/hwtracing/coresight/coresight-tpdm.c b/drivers/hwtracing/coresight/coresight-tpdm.c
+> index 7214e65097ec..0e3896c12f07 100644
+> --- a/drivers/hwtracing/coresight/coresight-tpdm.c
+> +++ b/drivers/hwtracing/coresight/coresight-tpdm.c
+> @@ -470,6 +470,9 @@ static void tpdm_enable_cmb(struct tpdm_drvdata *drvdata)
+>    */
+>   static void __tpdm_enable(struct tpdm_drvdata *drvdata)
+>   {
+> +	if (coresight_is_static_tpdm(drvdata->csdev))
+> +		return;
+> +
+>   	CS_UNLOCK(drvdata->base);
+>   
+>   	tpdm_enable_dsb(drvdata);
+> @@ -532,6 +535,9 @@ static void tpdm_disable_cmb(struct tpdm_drvdata *drvdata)
+>   /* TPDM disable operations */
+>   static void __tpdm_disable(struct tpdm_drvdata *drvdata)
+>   {
+> +	if (coresight_is_static_tpdm(drvdata->csdev))
+> +		return;
+> +
+>   	CS_UNLOCK(drvdata->base);
+>   
+>   	tpdm_disable_dsb(drvdata);
+> @@ -595,6 +601,30 @@ static int tpdm_datasets_setup(struct tpdm_drvdata *drvdata)
+>   	return 0;
+>   }
+>   
+> +static int static_tpdm_datasets_setup(struct tpdm_drvdata *drvdata, struct device *dev)
+> +{
+> +	/* setup datasets for static TPDM */
+> +	if (fwnode_property_present(dev->fwnode, "qcom,dsb-element-bits") &&
+> +	    (!drvdata->dsb)) {
+> +		drvdata->dsb = devm_kzalloc(drvdata->dev,
+> +						sizeof(*drvdata->dsb), GFP_KERNEL);
+> +
+> +		if (!drvdata->dsb)
+> +			return -ENOMEM;
+> +	}
+> +
+> +	if (fwnode_property_present(dev->fwnode, "qcom,cmb-element-bits") &&
+> +	    (!drvdata->cmb)) {
+> +		drvdata->cmb = devm_kzalloc(drvdata->dev,
+> +						sizeof(*drvdata->cmb), GFP_KERNEL);
+> +
+> +		if (!drvdata->cmb)
+> +			return -ENOMEM;
+> +	}
+> +
+> +	return 0;
+> +}
+> +
+>   static ssize_t reset_dataset_store(struct device *dev,
+>   				   struct device_attribute *attr,
+>   				   const char *buf,
+> @@ -1342,10 +1372,9 @@ static const struct attribute_group *tpdm_attr_grps[] = {
+>   	NULL,
+>   };
+>   
+> -static int tpdm_probe(struct amba_device *adev, const struct amba_id *id)
+> +static int tpdm_probe(struct device *dev, struct resource *res)
+>   {
+>   	void __iomem *base;
+> -	struct device *dev = &adev->dev;
+>   	struct coresight_platform_data *pdata;
+>   	struct tpdm_drvdata *drvdata;
+>   	struct coresight_desc desc = { 0 };
+> @@ -1354,32 +1383,37 @@ static int tpdm_probe(struct amba_device *adev, const struct amba_id *id)
+>   	pdata = coresight_get_platform_data(dev);
+>   	if (IS_ERR(pdata))
+>   		return PTR_ERR(pdata);
+> -	adev->dev.platform_data = pdata;
+> +	dev->platform_data = pdata;
+>   
+>   	/* driver data*/
+>   	drvdata = devm_kzalloc(dev, sizeof(*drvdata), GFP_KERNEL);
+>   	if (!drvdata)
+>   		return -ENOMEM;
+> -	drvdata->dev = &adev->dev;
+> +	drvdata->dev = dev;
+>   	dev_set_drvdata(dev, drvdata);
+>   
+> -	base = devm_ioremap_resource(dev, &adev->res);
+> -	if (IS_ERR(base))
+> -		return PTR_ERR(base);
+> +	if (res) {
+> +		base = devm_ioremap_resource(dev, res);
+> +		if (IS_ERR(base))
+> +			return PTR_ERR(base);
+>   
+> -	drvdata->base = base;
+> +		drvdata->base = base;
+> +		ret = tpdm_datasets_setup(drvdata);
+> +		if (ret)
+> +			return ret;
+>   
+> -	ret = tpdm_datasets_setup(drvdata);
+> -	if (ret)
+> -		return ret;
+> -
+> -	if (drvdata && tpdm_has_dsb_dataset(drvdata))
+> -		of_property_read_u32(drvdata->dev->of_node,
+> -			   "qcom,dsb-msrs-num", &drvdata->dsb_msr_num);
+> +		if (drvdata && tpdm_has_dsb_dataset(drvdata))
+> +			of_property_read_u32(drvdata->dev->of_node,
+> +					     "qcom,dsb-msrs-num", &drvdata->dsb_msr_num);
+>   
+> -	if (drvdata && tpdm_has_cmb_dataset(drvdata))
+> -		of_property_read_u32(drvdata->dev->of_node,
+> -			   "qcom,cmb-msrs-num", &drvdata->cmb_msr_num);
+> +		if (drvdata && tpdm_has_cmb_dataset(drvdata))
+> +			of_property_read_u32(drvdata->dev->of_node,
+> +					     "qcom,cmb-msrs-num", &drvdata->cmb_msr_num);
 
-I am building and testing with mainline dtschema, but checking this dts
-with 'make CHECK_DTBS=y qcom/x1e80100-tuxedo-elite-14-gen1.dtb' has
-revealed that one property was unevaluated (output: 'data-lanes' was
-unexpected [see line 1461]).
+minor nit: drvdata is guranteed to be !NULL, as we err out if
+it was. This can be fixed up as separate patch.
 
-This data-lane property is described in the following commit
-https://gitlab.com/Linaro/arm64-laptops/linux/-/commit/3d106a8ac261f81e48e4ee2a31b7484d863e0a4a
-
-Due to the warning from the check tool, I just wanted to point out this
-commit.
-
-Regards,
-Georg
+Suzuki
 
 
+
+> +	} else {
+> +		ret = static_tpdm_datasets_setup(drvdata, dev);
+> +		if (ret)
+> +			return ret;
+> +	}
+>   
+>   	/* Set up coresight component description */
+>   	desc.name = coresight_alloc_device_name(&tpdm_devs, dev);
+> @@ -1388,34 +1422,51 @@ static int tpdm_probe(struct amba_device *adev, const struct amba_id *id)
+>   	desc.type = CORESIGHT_DEV_TYPE_SOURCE;
+>   	desc.subtype.source_subtype = CORESIGHT_DEV_SUBTYPE_SOURCE_TPDM;
+>   	desc.ops = &tpdm_cs_ops;
+> -	desc.pdata = adev->dev.platform_data;
+> -	desc.dev = &adev->dev;
+> +	desc.pdata = dev->platform_data;
+> +	desc.dev = dev;
+>   	desc.access = CSDEV_ACCESS_IOMEM(base);
+> -	desc.groups = tpdm_attr_grps;
+> +	if (res)
+> +		desc.groups = tpdm_attr_grps;
+>   	drvdata->csdev = coresight_register(&desc);
+>   	if (IS_ERR(drvdata->csdev))
+>   		return PTR_ERR(drvdata->csdev);
+>   
+>   	spin_lock_init(&drvdata->spinlock);
+>   
+> -	/* Decrease pm refcount when probe is done.*/
+> -	pm_runtime_put(&adev->dev);
+> -
+>   	return 0;
+>   }
+>   
+> -static void tpdm_remove(struct amba_device *adev)
+> +static int tpdm_remove(struct device *dev)
+>   {
+> -	struct tpdm_drvdata *drvdata = dev_get_drvdata(&adev->dev);
+> +	struct tpdm_drvdata *drvdata = dev_get_drvdata(dev);
+>   
+>   	coresight_unregister(drvdata->csdev);
+> +
+> +	return 0;
+> +}
+> +
+> +static int dynamic_tpdm_probe(struct amba_device *adev,
+> +			      const struct amba_id *id)
+> +{
+> +	int ret;
+> +
+> +	ret = tpdm_probe(&adev->dev, &adev->res);
+> +	if (!ret)
+> +		pm_runtime_put(&adev->dev);
+> +
+> +	return ret;
+> +}
+> +
+> +static void dynamic_tpdm_remove(struct amba_device *adev)
+> +{
+> +	tpdm_remove(&adev->dev);
+>   }
+>   
+>   /*
+>    * Different TPDM has different periph id.
+>    * The difference is 0-7 bits' value. So ignore 0-7 bits.
+>    */
+> -static const struct amba_id tpdm_ids[] = {
+> +static const struct amba_id dynamic_tpdm_ids[] = {
+>   	{
+>   		.id	= 0x001f0e00,
+>   		.mask	= 0x00ffff00,
+> @@ -1423,17 +1474,76 @@ static const struct amba_id tpdm_ids[] = {
+>   	{ 0, 0, NULL },
+>   };
+>   
+> -static struct amba_driver tpdm_driver = {
+> +MODULE_DEVICE_TABLE(amba, dynamic_tpdm_ids);
+> +
+> +static struct amba_driver dynamic_tpdm_driver = {
+>   	.drv = {
+>   		.name   = "coresight-tpdm",
+>   		.suppress_bind_attrs = true,
+>   	},
+> -	.probe          = tpdm_probe,
+> -	.id_table	= tpdm_ids,
+> -	.remove		= tpdm_remove,
+> +	.probe          = dynamic_tpdm_probe,
+> +	.id_table	= dynamic_tpdm_ids,
+> +	.remove		= dynamic_tpdm_remove,
+>   };
+>   
+> -module_amba_driver(tpdm_driver);
+> +static int tpdm_platform_probe(struct platform_device *pdev)
+> +{
+> +	struct resource *res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
+> +	int ret;
+> +
+> +	pm_runtime_get_noresume(&pdev->dev);
+> +	pm_runtime_set_active(&pdev->dev);
+> +	pm_runtime_enable(&pdev->dev);
+> +
+> +	ret = tpdm_probe(&pdev->dev, res);
+> +	pm_runtime_put(&pdev->dev);
+> +	if (ret)
+> +		pm_runtime_disable(&pdev->dev);
+> +
+> +	return ret;
+> +}
+> +
+> +static void tpdm_platform_remove(struct platform_device *pdev)
+> +{
+> +	struct tpdm_drvdata *drvdata = dev_get_drvdata(&pdev->dev);
+> +
+> +	if (WARN_ON(!drvdata))
+> +		return;
+> +
+> +	tpdm_remove(&pdev->dev);
+> +	pm_runtime_disable(&pdev->dev);
+> +}
+> +
+> +static const struct of_device_id static_tpdm_match[] = {
+> +	{.compatible = "qcom,coresight-static-tpdm"},
+> +	{}
+> +};
+> +
+> +MODULE_DEVICE_TABLE(of, static_tpdm_match);
+> +
+> +static struct platform_driver static_tpdm_driver = {
+> +	.probe		= tpdm_platform_probe,
+> +	.remove		= tpdm_platform_remove,
+> +	.driver		= {
+> +		.name	= "coresight-static-tpdm",
+> +		.of_match_table = static_tpdm_match,
+> +		.suppress_bind_attrs = true,
+> +	},
+> +};
+> +
+> +static int __init tpdm_init(void)
+> +{
+> +	return coresight_init_driver("tpdm", &dynamic_tpdm_driver, &static_tpdm_driver,
+> +				     THIS_MODULE);
+> +}
+> +
+> +static void __exit tpdm_exit(void)
+> +{
+> +	coresight_remove_driver(&dynamic_tpdm_driver, &static_tpdm_driver);
+> +}
+> +
+> +module_init(tpdm_init);
+> +module_exit(tpdm_exit);
+>   
+>   MODULE_LICENSE("GPL");
+>   MODULE_DESCRIPTION("Trace, Profiling & Diagnostic Monitor driver");
+> diff --git a/drivers/hwtracing/coresight/coresight-tpdm.h b/drivers/hwtracing/coresight/coresight-tpdm.h
+> index b11754389734..2867f3ab8186 100644
+> --- a/drivers/hwtracing/coresight/coresight-tpdm.h
+> +++ b/drivers/hwtracing/coresight/coresight-tpdm.h
+> @@ -343,4 +343,16 @@ struct tpdm_dataset_attribute {
+>   	enum dataset_mem mem;
+>   	u32 idx;
+>   };
+> +
+> +static inline bool coresight_device_is_tpdm(struct coresight_device *csdev)
+> +{
+> +	return (coresight_is_device_source(csdev)) &&
+> +		(csdev->subtype.source_subtype ==
+> +			CORESIGHT_DEV_SUBTYPE_SOURCE_TPDM);
+> +}
+> +
+> +static inline bool coresight_is_static_tpdm(struct coresight_device *csdev)
+> +{
+> +	return (coresight_device_is_tpdm(csdev) && !csdev->access.base);
+> +}
+>   #endif  /* _CORESIGHT_CORESIGHT_TPDM_H */
 > 
-> 
-> Best regards,
-> Krzysztof
 
 
