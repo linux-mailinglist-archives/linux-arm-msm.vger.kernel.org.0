@@ -1,103 +1,97 @@
-Return-Path: <linux-arm-msm+bounces-80526-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-80527-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [142.0.200.124])
-	by mail.lfdr.de (Postfix) with ESMTPS id 59F84C3975C
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 06 Nov 2025 08:52:00 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 8AC18C39813
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 06 Nov 2025 09:05:44 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 5F62B4F0B0D
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Nov 2025 07:51:27 +0000 (UTC)
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 41B314EA515
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Nov 2025 08:05:43 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3D3452DFF1D;
-	Thu,  6 Nov 2025 07:51:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7B49B2FFFB3;
+	Thu,  6 Nov 2025 08:05:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="EpxDrKHA"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from cstnet.cn (smtp21.cstnet.cn [159.226.251.21])
-	(using TLSv1.2 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB8D2295516;
-	Thu,  6 Nov 2025 07:51:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=159.226.251.21
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B6E12FA0F6;
+	Thu,  6 Nov 2025 08:05:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762415484; cv=none; b=Q4oPp1pxTlxLzkbdjmAJItu2kXyDq+8INg0snVuNiV4H2i2N6tEpBu1s5VfiicA1Mi2RmEpUrfe/bYy7j+TpZ3V6tnCBoTb1Nmo48NJJdkpMj0FSoBxs+FN49ctgu9tswOwFJmh3Pk4EYe9FpNsmEgSa33TZ8joYrOi4USFfL7I=
+	t=1762416340; cv=none; b=u+UtK0QkDWH9KuMY/6tNNfxV1u2GXZGrn3Prpi3XDJfykJWPNGdWkULhfQwYGXEi1p7tNqW+bOCoMEr7avMvoE3MtIMc4brc8YFQygp2wUPaWUlhot8ebroWa/wvp+r+0A+uwMik3fKwzYzkQCfhG3iGUTnef8VD9APAtGGQi1U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762415484; c=relaxed/simple;
-	bh=KvESVpECG/hSqZs6a/6LvTTpH8QiSRhu2VyyX90vh/M=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=KAY6a43gkMzMCGEAi3KveEpO+IEgX9z7X3p/Et1JI6jNNDMxI1ncS+zaRnDgqXobwSMcwV6yr3let7li7ajAZOmVXxjQiEAyjfFdPe0+70GJbn8394/QKYv41wyRDLyDTL43w9++ADvZLiLbxeeB80H+v4Hw7fC51HN3UHMspnk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iscas.ac.cn; spf=pass smtp.mailfrom=iscas.ac.cn; arc=none smtp.client-ip=159.226.251.21
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iscas.ac.cn
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=iscas.ac.cn
-Received: from DESKTOP-L0HPE2S (unknown [124.16.141.245])
-	by APP-01 (Coremail) with SMTP id qwCowACnDmlnUwxp5jinAQ--.2074S2;
-	Thu, 06 Nov 2025 15:51:05 +0800 (CST)
-From: Haotian Zhang <vulab@iscas.ac.cn>
-To: srinivas.kandagatla@linaro.org,
-	lgirdwood@gmail.com,
-	broonie@kernel.org,
-	perex@perex.cz,
-	tiwai@suse.com
-Cc: linux-sound@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	Haotian Zhang <vulab@iscas.ac.cn>
-Subject: [PATCH] ASoC: codecs: va-macro: fix resource leak in probe error path
-Date: Thu,  6 Nov 2025 15:50:54 +0800
-Message-ID: <20251106075055.555-1-vulab@iscas.ac.cn>
-X-Mailer: git-send-email 2.50.1.windows.1
+	s=arc-20240116; t=1762416340; c=relaxed/simple;
+	bh=qpxsOFgQa/w4T51ERTogrIXKELvgZXJGgArc9ROXHMw=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=EaCNoDxdi4H2wcOLIvPIxvAxf+TfGdxWkj/n3LCxkfyqSL0I5m2EM6SjVSWKBd2znMazFrPapwy8/9c/85N52KOdbJr/yJGhiCxapJ42XSO5vzwW/1v2uO7Sg+P15Y50Ku5htV/xQgXD5bh914mJ4H5KJ6iItZK0SQuxP0KKmpo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=EpxDrKHA; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56432C4CEF7;
+	Thu,  6 Nov 2025 08:05:39 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1762416339;
+	bh=qpxsOFgQa/w4T51ERTogrIXKELvgZXJGgArc9ROXHMw=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=EpxDrKHAnz1DlGIbNm/BpmF1dkcSJwFBI24HpxSmBzIb7+KMeSX0gmcTq+2F3aV/O
+	 3QafZZ7ra4v/q8XDtfVSbofDqKoV1QP1WkvCSzym0Ny+hHqWaJBXIY3KS3AjU+wwCJ
+	 uXck37w3I0Cwk6Axur0tYuxL+sqgW8gAS8pv6YdwibM/K0ug5YlRqFDmcBUA4QRw4d
+	 Cs3Nnv3GgEGD8OxGIkdVl0iBfnccoSZ1G1zxjR+dbT2m6EmTMIgJe9Qv/cC2D6deVx
+	 d2e8uPUkSZsZd72gTswoe9yNKMP38DaIKe3WACrmUNs0HAe6xlQvDapncMq3wAY4M6
+	 i8lCzeaRb0Yxg==
+Date: Thu, 6 Nov 2025 09:05:37 +0100
+From: Krzysztof Kozlowski <krzk@kernel.org>
+To: Georg Gottleuber <ggo@tuxedocomputers.com>
+Cc: Bjorn Andersson <andersson@kernel.org>, 
+	Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	Ettore Chimenti <ettore.chimenti@linaro.org>, Srinivas Kandagatla <srini@kernel.org>, 
+	stefan.schmidt@linaro.org, stephan.gerhold@linaro.org, wse@tuxedocomputers.com, 
+	cs@tuxedo.de
+Subject: Re: [PATCH v2 1/7] dt-bindings: vendor-prefixes: Add ASL Xiamen
+ Technology
+Message-ID: <20251106-lemon-kittiwake-of-freedom-dfcfdf@kuoka>
+References: <20251105154107.148187-1-ggo@tuxedocomputers.com>
+ <20251105154107.148187-2-ggo@tuxedocomputers.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-CM-TRANSID:qwCowACnDmlnUwxp5jinAQ--.2074S2
-X-Coremail-Antispam: 1UD129KBjvdXoWruFW5Xr4ruF4fGFyDKrW7Arb_yoWDZrb_C3
-	95Wr48ZFy8WF9xK3yktr48A39avrnxCrW5GF42y393GFyUJr13ZF4UCrn8urW5Wwsaka45
-	WF1DXrW8AFyavjkaLaAFLSUrUUUUjb8apTn2vfkv8UJUUUU8Yxn0WfASr-VFAUDa7-sFnT
-	9fnUUIcSsGvfJTRUUUbsxFF20E14v26r4j6ryUM7CY07I20VC2zVCF04k26cxKx2IYs7xG
-	6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48ve4kI8w
-	A2z4x0Y4vE2Ix0cI8IcVAFwI0_Gr0_Xr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI0_Gr0_
-	Cr1l84ACjcxK6I8E87Iv67AKxVWxJr0_GcWl84ACjcxK6I8E87Iv6xkF7I0E14v26rxl6s
-	0DM2AIxVAIcxkEcVAq07x20xvEncxIr21l5I8CrVACY4xI64kE6c02F40Ex7xfMcIj6xII
-	jxv20xvE14v26r1j6r18McIj6I8E87Iv67AKxVW8JVWxJwAm72CE4IkC6x0Yz7v_Jr0_Gr
-	1lF7xvr2IYc2Ij64vIr41lF7I21c0EjII2zVCS5cI20VAGYxC7MxkF7I0En4kS14v26r1q
-	6r43MxkIecxEwVAFwVW8CwCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8Jw
-	C20s026c02F40E14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E67AF67kF1VAF
-	wI0_Jw0_GFylIxkGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWUCwCI42IY6xIIjx
-	v20xvEc7CjxVAFwI0_Jr0_Gr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2
-	jsIE14v26r1j6r4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Gr0_Gr1UYxBIdaVFxhVjvjDU0x
-	ZFpf9x0JUfrcfUUUUU=
-X-CM-SenderInfo: pyxotu46lvutnvoduhdfq/1tbiCQ4SA2kMGc3mDAAAsN
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20251105154107.148187-2-ggo@tuxedocomputers.com>
 
-In the commit referenced by the Fixes tag, clk_hw_get_clk()
-was added in va_macro_probe() to get the fsgen clock,
-but forgot to add the corresponding clk_put() in va_macro_remove().
-This leads to a clock reference leak when the driver is unloaded.
+On Wed, Nov 05, 2025 at 04:41:01PM +0100, Georg Gottleuber wrote:
+> From: Ettore Chimenti <ettore.chimenti@linaro.org>
+> 
+> ASL Xiamen Technology Co. Ltd. is a Chinese high-speed interface and
+> display system chip design company. Adding it to the vendor prefixes.
+> 
+> Link: https://www.asl-tek.com/
+> 
+> Signed-off-by: Ettore Chimenti <ettore.chimenti@linaro.org>
+> ---
+>  Documentation/devicetree/bindings/vendor-prefixes.yaml | 2 ++
+>  1 file changed, 2 insertions(+)
+> 
+> diff --git a/Documentation/devicetree/bindings/vendor-prefixes.yaml b/Documentation/devicetree/bindings/vendor-prefixes.yaml
+> index f1d1882009ba..278cb879781f 100644
+> --- a/Documentation/devicetree/bindings/vendor-prefixes.yaml
+> +++ b/Documentation/devicetree/bindings/vendor-prefixes.yaml
+> @@ -176,6 +176,8 @@ patternProperties:
+>      description: All Sensors Corporation
+>    "^asix,.*":
+>      description: ASIX Electronics Corporation
+> +  "^asl,.*":
 
-Add clk_put() call in va_macro_remove() to properly release the clock
-reference obtained in probe.
+So the prefix is asl-tek, like its domain.
 
-Fixes: 30097967e056 ("ASoC: codecs: va-macro: use fsgen as clock")
-Signed-off-by: Haotian Zhang <vulab@iscas.ac.cn>
----
- sound/soc/codecs/lpass-va-macro.c | 1 +
- 1 file changed, 1 insertion(+)
-
-diff --git a/sound/soc/codecs/lpass-va-macro.c b/sound/soc/codecs/lpass-va-macro.c
-index a49551f3fb29..440d0f54aa33 100644
---- a/sound/soc/codecs/lpass-va-macro.c
-+++ b/sound/soc/codecs/lpass-va-macro.c
-@@ -1663,6 +1663,7 @@ static void va_macro_remove(struct platform_device *pdev)
- {
- 	struct va_macro *va = dev_get_drvdata(&pdev->dev);
- 
-+	clk_put(va->fsgen);
- 	if (va->has_npl_clk)
- 		clk_disable_unprepare(va->npl);
- 
--- 
-2.50.1.windows.1
+Best regards,
+Krzysztof
 
 
