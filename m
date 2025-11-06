@@ -1,101 +1,63 @@
-Return-Path: <linux-arm-msm+bounces-80545-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-80546-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [IPv6:2605:f480:58:1:0:1994:3:14])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4D0D2C39C4F
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 06 Nov 2025 10:15:33 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id D6702C39D1A
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 06 Nov 2025 10:31:22 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 359414E4798
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Nov 2025 09:15:32 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 86DAB3BAB4B
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Nov 2025 09:31:21 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id EA13D309EE0;
-	Thu,  6 Nov 2025 09:15:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 42C192550CA;
+	Thu,  6 Nov 2025 09:31:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="cDNgVcAp";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="WNyppZ41"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="WCLHVOIL"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75D2C30BF74
-	for <linux-arm-msm@vger.kernel.org>; Thu,  6 Nov 2025 09:15:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7447935965;
+	Thu,  6 Nov 2025 09:31:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762420529; cv=none; b=tCqZXagpxAv70GvUX+eZfP3GryaSCUQ0en0AjKpv9fzjy8CA//t+01aiajjGtXqfV4reWWrYDJxmOiVYC4RbknSby/KP6j531c2sUuyw72I4TVTyIRkE0z81k0REr7d4NxE+CtvxW9oskRggyUIC8FWAPKAvMt5319hGN7G+Z+4=
+	t=1762421479; cv=none; b=h3TemJJ04vUJsjJBW9rr2jzPJFNXsnHOjIiNZNk3ZXAttDbPh0yRHe7/jjEoHBZwLO/RcsDmVY27rtDh34m355TyrdOHkxzXCDS+rtTgeUAFwP5GBkxKHGfuAPwOPEYvu0fDGz+QTs98lYT2So/vtRrdTdDUEE9XdvNNmsqrndI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762420529; c=relaxed/simple;
-	bh=IqDU06J8KRhHUMTkW8BrYVFpwrOQjixDrvjAH5rTJAk=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=HkirFak2Ucz+yq7qcywCCp44YWlHdhLSMg55YsNqJEGVqQmJAK5E+KGpT7xCfTNNHozEbGr/ASuYh7r+x04yf5D17EWauSXPkbgBhIqom3CKFDLlI40382a9cGvmJxW9PEf1gn3vaveD0DSkl6aK9XNmksLkE4GsCLt1ISm4JtY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=cDNgVcAp; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=WNyppZ41; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 5A66ANk21738544
-	for <linux-arm-msm@vger.kernel.org>; Thu, 6 Nov 2025 09:15:27 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	s=arc-20240116; t=1762421479; c=relaxed/simple;
+	bh=8tuXIJaRQj67Wuzt3GQJZZ9j955PqstWCmEb3K0qaJ8=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=u3iv8DRqH4soJ0A2JumoCW1zWlrHn/lw9r1TR/CyO+pcOvrzy+WSmuKBxvVW/C/TPgu73swQBaG4vcIKuCHgRcHKs0iKe1XZqIaJTeWpidqqe25zKa740SZooxmZibV3DueBzoA7lmYWLdE74GSa6CQBoFnCzJwoVqQtjssaNUc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=WCLHVOIL; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 5A690r6q2797652;
+	Thu, 6 Nov 2025 09:31:15 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	fSBcZQ0RQcmst4/RrknYi9gdsm4mdIdNyFnHTvoBzKs=; b=cDNgVcApKbRwtG7v
-	L5rHIcBYbNNuzNB8KDmIvCcdBIvVgdJM9C19bJ4ettuFGcrKpRk4XFZ8Biy6xQ/J
-	h0Qlfn87zo/YE3YTQyJpp1VRw/SuQKs2tCerqQhQSMha/BOn5RsomcgOe1I1YG8M
-	s/LaKbPVyi3eig/hC5TPmyYXnqcIk6FMtGp5czn7EYUHBNsVSwrPU2jE+VPJsYvW
-	d9q43herYiIKYu/IoMaHdzWUOmA5UnToWOgp9qJ8gul3ZAjsfz2bmHUZIgJ2y9zK
-	5XqYbkFUx7Tz5ac5CiD6DCtUtKVVFP5ljPBECo7kULDBQO8gAPuO5ZdBGktzpwfO
-	uDXRkg==
-Received: from mail-pj1-f69.google.com (mail-pj1-f69.google.com [209.85.216.69])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4a8an3tgvw-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Thu, 06 Nov 2025 09:15:27 +0000 (GMT)
-Received: by mail-pj1-f69.google.com with SMTP id 98e67ed59e1d1-3408686190eso612543a91.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 06 Nov 2025 01:15:27 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1762420527; x=1763025327; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=fSBcZQ0RQcmst4/RrknYi9gdsm4mdIdNyFnHTvoBzKs=;
-        b=WNyppZ41ePsCf26j0StWs/LI5b+bzeO+VIJ6njMdszO/66mchsnyGTcq09zxHL0SNM
-         hyCkTgIN7vK6jiv13cfzAmsQAFt9w2d0lVm+egqUueikUElQJK/nINmwwYtbgyLGzzJm
-         IjQCm0//b6iFEYQvfcCaBqL4uZ1F9gilGCQnxDfCd9/iuKhMF7zZsfZtRSn4IbnbZUuq
-         OANPsu0HKfR+xacY68McIH0eFJpvv575NFg9AZBw6aIQ0KrPPp9abpyhVtKRCiJiqhQP
-         eKlUCkUedeUTnCeIQYO50tIzZt/h+aOvbgGOLlLHMwW2XtoNH/EYlWvKQLaS3TsgUZ2s
-         06Jg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1762420527; x=1763025327;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=fSBcZQ0RQcmst4/RrknYi9gdsm4mdIdNyFnHTvoBzKs=;
-        b=cKil0sCKy56rNA7IGOo8zGTZ9W29OrwMe2vVBMWBOWy33gBfdiRKYLhl5/ieBi67cs
-         9EY+mJQGQy5zH1Km26QFbufJXrr9adPkyFRfdJH+8QK8rr8X0KMdRwR2ffNDVHXGzq4H
-         Vh7dsvY5P0fnbeu5V61qlhSnJ6FlEQJmN1/vNeHNotkNV8XvlO9cgWMcv6n8DCJjZ5x/
-         zxP9HcA5s37TpFSy0gSF4MbSB2bIWmEp1+gBD5F/5Z8TVowap4QUihomR4eX+t7uB0KM
-         RYiDksXJOZKlG71HK3+cLig39Tj+AnLpoMOhWZs87M26lgWy9qpVlMqmHlfNTPmSQfSc
-         8/9w==
-X-Forwarded-Encrypted: i=1; AJvYcCXDYRz4bFRKfSQEwKWY+V0c8s6lieYwYpfSgobptvxlrj4hAnvP76UoMAroiHeNNoV6CPG3ZvhLxulkgbqI@vger.kernel.org
-X-Gm-Message-State: AOJu0Ywsu+TdFG39T+AdJH58KwguLwjCmaYFDBFb+n5mSkHDYRRbXAAJ
-	uLVzFJD7mn6VxC8DyZs58B3YG/svxFrDsa80mhEXgF5F5bP3l2/PvgzrG2HEWl/5e/6kLCHYsGM
-	/ujlTV7KIPMnO4uqqxx61DYQmwPX0WUQX1qcnQq+c89vjC4t6bN7OBnt6CFkEPJb553Ah
-X-Gm-Gg: ASbGnctAiTDFKnVHopR4P4iYVZqFa8n3xUIdNQOIOVD36Fai43iblGUedYSmFdVqDrB
-	M6ew5blvokog+69z1cmZOaUnhS9Aek855NUf0NawI1KNzHDYjnkno+9L0RDLxW/SE5806l0Bdor
-	N2RExi8yBIhdOTas2Debk5DGWB01Q2kIBeFL9+xi5Io34qImhRHJBBVL90ZZ5TSwMiIuqipwTa1
-	RbPXQ9FZ3r3lseLTA843J3bjONMjI2VcfTeCyOajK+a/9IP0MsA9w+42gN98GJT4GT0XJXGXi/k
-	qLE69gREa5Flf/ntf51/htyRVxzpl43LxqWVubu+NVtuzcSkN0eSxTcEn/BvQtEuJCzg5LvUbX4
-	Y9taJrI5yZ7v0iGxC7l1ouspyWQ==
-X-Received: by 2002:a17:90b:2888:b0:33e:30b2:d20 with SMTP id 98e67ed59e1d1-341a70082demr8272606a91.33.1762420526752;
-        Thu, 06 Nov 2025 01:15:26 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHun9YYghwsNEVAON0drNEeOBr3tdiHVJCshN/1Daostzc8S6e6a1xDbSuel5MNU+po1yNqkw==
-X-Received: by 2002:a17:90b:2888:b0:33e:30b2:d20 with SMTP id 98e67ed59e1d1-341a70082demr8272554a91.33.1762420526210;
-        Thu, 06 Nov 2025 01:15:26 -0800 (PST)
-Received: from [10.218.33.29] ([202.46.22.19])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-341d08afb02sm1083005a91.0.2025.11.06.01.15.18
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 06 Nov 2025 01:15:25 -0800 (PST)
-Message-ID: <25e8453b-91fb-49f2-a61b-fd7b3267e558@oss.qualcomm.com>
-Date: Thu, 6 Nov 2025 14:44:58 +0530
+	E1ifgCrzhtp1+j9Pung6ohTcRTZrJt0ve1KAMLyjOMk=; b=WCLHVOILHMO6EOWz
+	K4oqoEaEdpNkA3DQqiwiXVQQkXZZuR0thIYFQHxfbK1wy9C+m2mZrccMOFD1pT+1
+	V5+2C2TiW/Ih7/84J7eTtGPfk72oaXvCCKpo7lizjbEj5urcb7woCax/sc20T5gZ
+	M+91LCFgY7G+0vNUKHLIVn6KDo4tYdikqzTe5PsGlbWpDebjkyLfiKy2MQ+t9Ila
+	wKmCZYsw3CcqvuH3ZFGiyObSrs/UgsIsYr2oTslwduN/ZYeZN4poo6a2xg0j7Ktt
+	SWHtCBHzf9q36hFEcdsJQ8TlXeZXEfQYHn+G2MKuOey6E3ZOpq4gfIhROX7C+66U
+	EPFY/A==
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4a8hyts7h3-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 06 Nov 2025 09:31:14 +0000 (GMT)
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+	by NALASPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 5A69VEqA020470
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 6 Nov 2025 09:31:14 GMT
+Received: from [10.204.78.32] (10.80.80.8) by nalasex01c.na.qualcomm.com
+ (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1748.24; Thu, 6 Nov
+ 2025 01:31:10 -0800
+Message-ID: <c6ef0324-c932-4c80-8252-97dd3ee255d3@quicinc.com>
+Date: Thu, 6 Nov 2025 15:01:07 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -103,113 +65,105 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 5/5] arm64: dts: qcom: sc8280xp: Add missing VDD_MXC links
-To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley
- <conor+dt@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Johan Hovold <johan+linaro@kernel.org>,
-        Mathieu Poirier <mathieu.poirier@linaro.org>,
-        Manivannan Sadhasivam <mani@kernel.org>, Vinod Koul <vkoul@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd
- <sboyd@kernel.org>, Taniya Das <quic_tdas@quicinc.com>,
-        Imran Shaik <quic_imrashai@quicinc.com>,
-        Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
-        Jagadeesh Kona <quic_jkona@quicinc.com>,
-        Ulf Hansson
- <ulf.hansson@linaro.org>,
-        Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Cc: Krzysztof Kozlowski <krzk@kernel.org>, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-remoteproc@vger.kernel.org, linux-clk@vger.kernel.org,
-        linux-pm@vger.kernel.org,
-        Jagadeesh Kona <jagadeesh.kona@oss.qualcomm.com>
-References: <20251104-topic-8280_mxc-v1-0-df545af0ef94@oss.qualcomm.com>
- <20251104-topic-8280_mxc-v1-5-df545af0ef94@oss.qualcomm.com>
- <1e464f5d-f4ed-4ee5-b966-fc7de586340a@oss.qualcomm.com>
- <7f7179b7-73a0-40f3-b921-888b3e21537c@oss.qualcomm.com>
+Subject: Re: [PATCH] arm64: dts: qcom: qcs6490-rb3gen2: Use 'edp_hot' function
+ for hpd gpio
+To: Bjorn Andersson <andersson@kernel.org>
+CC: <konradybcio@kernel.org>, <robh@kernel.org>, <krzk+dt@kernel.org>,
+        <conor+dt@kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <quic_riteshk@quicinc.com>, <quic_rajeevny@quicinc.com>,
+        <quic_vproddut@quicinc.com>
+References: <20251031085739.440153-1-quic_amitsi@quicinc.com>
+ <nzg7auudxocxnpnjsc2emot7sgh5azvucl72jqzgqsp4jhzint@hykb2xyx66uh>
 Content-Language: en-US
-From: Imran Shaik <imran.shaik@oss.qualcomm.com>
-In-Reply-To: <7f7179b7-73a0-40f3-b921-888b3e21537c@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Authority-Analysis: v=2.4 cv=W981lBWk c=1 sm=1 tr=0 ts=690c672f cx=c_pps
- a=vVfyC5vLCtgYJKYeQD43oA==:117 a=fChuTYTh2wq5r3m49p7fHw==:17
- a=IkcTkHD0fZMA:10 a=6UeiqGixMTsA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=EUspDBNiAAAA:8 a=IzPYbt_51FXaukp9Qk0A:9
- a=NqO74GWdXPXpGKcKHaDJD/ajO6k=:19 a=QEXdDO2ut3YA:10 a=rl5im9kqc5Lf4LNbBjHf:22
-X-Proofpoint-GUID: aOCeRFFWFi89jgtAs6vJDB38eIhdeQSQ
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMTA2MDA3NCBTYWx0ZWRfX6SMm58MdkDSY
- oG3Yjfj3NeQmvnHDUy3MjOrrwHeq+w+LkSeUPTskK8BYM7C/0bJjL+TmDX/vHNpc4rR11ROSpJ4
- F1ElkZOTrkIwqxsvZpZoZxaR7idRnpgZcn+m7Nr/+nM7iOinWJa0LUTyMDwAy1QJyk+u2h8xlK6
- yl4AKf4+ey8LLD4z7OdCb6MlnNpTkEgT4DmoRzjGMxmnPQYCNMRFCrHr2zKxT0/hoR+2zaEiDqK
- lmVuJT1Ixxf9HTlLJvPqVUfzzLzHQBIw2wAs2UyqAE2L+3bufxlsA/N/1SSaK2NbANsTYIFCNlZ
- o0REZ48ahxSGtSvwgIkh8ZeK6cU1c4+3yNdqvmi3hEwvVoBhPjSvrDMQCRl181R7+wmeckw/sSS
- nq4wY1aA+wR35dpBAQkGOo255/BfVw==
-X-Proofpoint-ORIG-GUID: aOCeRFFWFi89jgtAs6vJDB38eIhdeQSQ
+From: Amit Singh <quic_amitsi@quicinc.com>
+In-Reply-To: <nzg7auudxocxnpnjsc2emot7sgh5azvucl72jqzgqsp4jhzint@hykb2xyx66uh>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: e0rMN5I_0VamN8TIDerrPR0BN_k2Hq8v
+X-Proofpoint-ORIG-GUID: e0rMN5I_0VamN8TIDerrPR0BN_k2Hq8v
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMTA2MDA3NiBTYWx0ZWRfX8Qz6ZiMVY6Zd
+ R+RKR3EgmKNmdheHITTOGKMjZFXvYhV/aFKvNwTfEMpJPDjSpaEox8nQP7puL6jT5qF7gyN/EtN
+ eZtdwoxMpHxc/resGTxcCrAzxu6Ek/YvfoQOM28wBl746XstcJ7PpKw/8BA7z3c6ckO0cHk4xTe
+ uFnEs8xGgVYDl9UUa4q5qo5eIm8B9A7qG3YSP6FBivdCoc0jZHjKGs2GNrHQO1JhjFOZ+pxalQm
+ eWW4YRQ7zJlNKba6R+x0LibxxDmx8MwFIVIQCQd5+Q0Bq0vu117PkFEu5t2x7bLQ0YmI46A59LZ
+ cQZjQ35xbNlK5ZKHEgTkdNLPd+OkL5+9zMtFLsPVNrnRatBc2uRwDJMfFJhME2PL2LYGjcMhUvX
+ I+FhGpkqkT3taIJZ5D38M3lBI+3PBQ==
+X-Authority-Analysis: v=2.4 cv=X+Rf6WTe c=1 sm=1 tr=0 ts=690c6ae2 cx=c_pps
+ a=ouPCqIW2jiPt+lZRy3xVPw==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
+ a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=6UeiqGixMTsA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=X2bJkxrq0LOtwHL-icMA:9 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10 a=cPQSjfK2_nFv0Q5t_7PE:22
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
  definitions=2025-11-06_02,2025-11-06_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 phishscore=0 adultscore=0 spamscore=0 impostorscore=0
- bulkscore=0 lowpriorityscore=0 priorityscore=1501 malwarescore=0
- clxscore=1015 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2510240001
- definitions=main-2511060074
+ suspectscore=0 spamscore=0 bulkscore=0 impostorscore=0 priorityscore=1501
+ clxscore=1015 malwarescore=0 adultscore=0 lowpriorityscore=0 phishscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2510240001 definitions=main-2511060076
 
 
 
-On 11/5/2025 4:32 PM, Konrad Dybcio wrote:
-> On 11/5/25 10:21 AM, Imran Shaik wrote:
+On 11/2/2025 12:29 AM, Bjorn Andersson wrote:
+> On Fri, Oct 31, 2025 at 02:27:39PM +0530, Amit Singh wrote:
+>> Currently, hpd gpio is configured as a general-purpose gpio, which does
+>> not support interrupt generation. This change removes the generic
+>> hpd-gpios property and assigns the edp_hot function to the pin,
+>> enabling proper irq support.
 >>
->>
->> On 11/5/2025 1:01 AM, Konrad Dybcio wrote:
->>> From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
->>>
->>> To make sure that power rail is voted for, wire it up to its consumers.
->>>
->>> Fixes: 9bd07f2c558f ("arm64: dts: qcom: sc8280xp: Add in CAMCC for sc8280xp")
->>> Fixes: 152d1faf1e2f ("arm64: dts: qcom: add SC8280XP platform")
->>> Signed-off-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
->>> ---
->>>  arch/arm64/boot/dts/qcom/sc8280xp.dtsi | 22 ++++++++++++++++------
->>>  1 file changed, 16 insertions(+), 6 deletions(-)
->>>
->>> diff --git a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
->>> index 5334adebf278..643a61cc91b4 100644
->>> --- a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
->>> +++ b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
->>> @@ -4586,8 +4586,10 @@ camcc: clock-controller@ad00000 {
->>>  				 <&rpmhcc RPMH_CXO_CLK>,
->>>  				 <&rpmhcc RPMH_CXO_CLK_A>,
->>>  				 <&sleep_clk>;
->>> -			power-domains = <&rpmhpd SC8280XP_MMCX>;
->>> -			required-opps = <&rpmhpd_opp_low_svs>;
->>> +			power-domains = <&rpmhpd SC8280XP_MMCX>,
->>> +					<&rpmhpd SC8280XP_MXC>;
->>
->> I see that none of the CAMCC PLLs/clocks are on MXC rail on SC8280XP target.
->> So, MXC support is not required for CAMCC.
 > 
-> Hm, to the extent that camss is supported upstream, I could indeed
-> boot without pd_ignore_unused and the camera actually kept working..
+> No, it replaces the use of display-connector for hotplug detect with the
+> DP-controller's internal HPD logic.
 > 
-> I see in docs that there are links between MXC and various IPs within
-> camera so I'm a little confused. Would you know more?
+> There might be good reasons to do so, but you need to describe them.
 > 
+> I'm guessing that there are still some issues in the DP driver's logic
+> for handling of external HPD? This should be addressed by fixing that
+> logic in the DP driver, to ensure that this (display-connector +
+> hpd-gpios) works, and then you should send this patch again explaining
+> why the internal HPD hardware does a better job.
+> 
+> Regards,
+> Bjorn
 
-Not sure on the rail requirements from the camera core side, but from the
-camera clock controller side, we don't need the MXC support.
+Thanks for the feedback and clarification.
+
+We observed a specific use case where using the GPIO-based external HPD
+handling via display-connector leads to a functional issue.
+When the DisplayPort cable is already connected and the display is active,
+and we perform a system reboot, the display does not come up automatically
+after boot with the current configuration (using hpd-gpios).
+This happens because we do not receive a connect event post boot —
+the GPIO-based HPD path does not generate an interrupt in this scenario,
+as the line remains high and no edge event is triggered.
+
+However, when we configure the pin with the edp_hot function and use the
+internal HPD logic of the DP controller, the controller correctly detects
+the HPD state after reboot. The internal HPD block generates the necessary
+interrupt, and the display comes up automatically without requiring a
+replug event.
+
+This behavior aligns with other Qualcomm reference platforms where,
+if the controller’s internal HPD is available, it is preferred over
+the external GPIO path. Using the internal HPD provides more reliable
+detection and keeps the configuration consistent across platforms.
+So, this change ensures:
+1. The display recovers correctly after reboot when the cable
+remains connected.
+2. We leverage the controller’s native HPD interrupt capability for
+better reliability.
+3. We maintain consistency with other DP-enabled Qualcomm boards that
+use internal HPD.
+4. edp_hot follows the Source device behavior upon HPD pulse
+Detection [VESA DP standard v1.4 section 5.1.4].
+
+I’ll add these details to the commit message in the next revision.
 
 Thanks,
-Imran
-
-> 
-> I wasn't able to test venus because it locks up either way..
-> 
-> Konrad
-
+Amit
 
