@@ -1,282 +1,130 @@
-Return-Path: <linux-arm-msm+bounces-80578-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-80579-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ams.mirrors.kernel.org (ams.mirrors.kernel.org [IPv6:2a01:60a::1994:3:14])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7BA4DC3A70B
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 06 Nov 2025 12:04:25 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8FF26C3A7FC
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 06 Nov 2025 12:17:40 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ams.mirrors.kernel.org (Postfix) with ESMTPS id F2D8C34C6CE
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Nov 2025 11:04:24 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 82EB042410F
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Nov 2025 11:12:28 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 441672D47E8;
-	Thu,  6 Nov 2025 11:04:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B63AA30C622;
+	Thu,  6 Nov 2025 11:12:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="MeDLRnLO"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D459B2F12A8
-	for <linux-arm-msm@vger.kernel.org>; Thu,  6 Nov 2025 11:04:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
+Received: from mail-ej1-f51.google.com (mail-ej1-f51.google.com [209.85.218.51])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D13742EDD70
+	for <linux-arm-msm@vger.kernel.org>; Thu,  6 Nov 2025 11:12:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762427053; cv=none; b=f87HzbYAH2dHyUq1Ge0h2VEBYBnVAFbezkuqidZmC+xilCchOB/oanovgONjX+/10M2niLXnLIPnUfD6aO+uwx8EB15iu9UbhHYthFsgcvkIQvuAVG2nUj7MTyxO2Lfn3waaF4+TWY8h3ovFLB0jPekChvFPzEKuGP1Gi1GWDS8=
+	t=1762427543; cv=none; b=TvZMC9VKQ1tHgedwDQOKiZQ8IJmEKpPTe+9AknseH4xSsY6IctFlJC+IwVjRc/tXagfifZ1QoUKCOy4BETdtpB3towEOoGz5ANCW/Iz/LZqiwIPiBDAARDJeiynQ8ntEU/+k9xIh4dqnaUNNudvn17VRMmiYv28OSriUtUmza6E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762427053; c=relaxed/simple;
-	bh=scWRr2YmIbfZ/4TGeFc0QFABw72NbFgpJJM+0xKL6NU=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=SBjBytjSO6u860aD5ppL2DzgqrRRSBK5MoQ+VhB9vwvBHIO7BgfqMny4ctqroop/9XeHzu5Z9DsMJxG70kMK5wZ6oblq2B0qsCzMyNFX7DqAB5oxSafyG8Z1XUHkyeo7PwIi7Oyn4VFInHvizciFn6jKuIcbDMToFkFriciVPMA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; arc=none smtp.client-ip=217.140.110.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 569AD15A1
-	for <linux-arm-msm@vger.kernel.org>; Thu,  6 Nov 2025 03:04:02 -0800 (PST)
-Received: from e110455-lin.cambridge.arm.com (usa-sjc-imap-foss1.foss.arm.com [10.121.207.14])
-	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPA id DBBF63F63F
-	for <linux-arm-msm@vger.kernel.org>; Thu,  6 Nov 2025 03:04:09 -0800 (PST)
-Date: Thu, 6 Nov 2025 11:04:06 +0000
-From: Liviu Dudau <liviu.dudau@arm.com>
-To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Cc: "Kandpal, Suraj" <suraj.kandpal@intel.com>,
-	"linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
-	"freedreno@lists.freedesktop.org" <freedreno@lists.freedesktop.org>,
-	"dri-devel@lists.freedesktop.org" <dri-devel@lists.freedesktop.org>,
-	"intel-xe@lists.freedesktop.org" <intel-xe@lists.freedesktop.org>,
-	"intel-gfx@lists.freedesktop.org" <intel-gfx@lists.freedesktop.org>,
-	"kernel-list@raspberrypi.com" <kernel-list@raspberrypi.com>,
-	"amd-gfx@lists.freedesktop.org" <amd-gfx@lists.freedesktop.org>,
-	"linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-	"linux-renesas-soc@vger.kernel.org" <linux-renesas-soc@vger.kernel.org>,
-	"Nautiyal, Ankit K" <ankit.k.nautiyal@intel.com>,
-	"Murthy, Arun R" <arun.r.murthy@intel.com>,
-	"Shankar, Uma" <uma.shankar@intel.com>,
-	"Nikula, Jani" <jani.nikula@intel.com>,
-	"harry.wentland@amd.com" <harry.wentland@amd.com>,
-	"siqueira@igalia.com" <siqueira@igalia.com>,
-	"alexander.deucher@amd.com" <alexander.deucher@amd.com>,
-	"christian.koenig@amd.com" <christian.koenig@amd.com>,
-	"airlied@gmail.com" <airlied@gmail.com>,
-	"simona@ffwll.ch" <simona@ffwll.ch>,
-	"maarten.lankhorst@linux.intel.com" <maarten.lankhorst@linux.intel.com>,
-	"mripard@kernel.org" <mripard@kernel.org>,
-	"robin.clark@oss.qualcomm.com" <robin.clark@oss.qualcomm.com>,
-	"abhinav.kumar@linux.dev" <abhinav.kumar@linux.dev>,
-	"tzimmermann@suse.de" <tzimmermann@suse.de>,
-	"jessica.zhang@oss.qualcomm.com" <jessica.zhang@oss.qualcomm.com>,
-	"sean@poorly.run" <sean@poorly.run>,
-	"marijn.suijten@somainline.org" <marijn.suijten@somainline.org>,
-	"laurent.pinchart+renesas@ideasonboard.com" <laurent.pinchart+renesas@ideasonboard.com>,
-	"mcanal@igalia.com" <mcanal@igalia.com>,
-	"dave.stevenson@raspberrypi.com" <dave.stevenson@raspberrypi.com>,
-	"tomi.valkeinen+renesas@ideasonboard.com" <tomi.valkeinen+renesas@ideasonboard.com>,
-	"kieran.bingham+renesas@ideasonboard.com" <kieran.bingham+renesas@ideasonboard.com>,
-	"louis.chauvet@bootlin.com" <louis.chauvet@bootlin.com>
-Subject: Re: [PATCH v2 1/7] drm: writeback: Refactor drm_writeback_connector
- structure
-Message-ID: <aQyApokLttxf9spU@e110455-lin.cambridge.arm.com>
-References: <20251007054528.2900905-1-suraj.kandpal@intel.com>
- <20251007054528.2900905-2-suraj.kandpal@intel.com>
- <aQjDejhzGRYJT614@e110455-lin.cambridge.arm.com>
- <DM3PPF208195D8D5DDD56AA88E006E66AD9E3C4A@DM3PPF208195D8D.namprd11.prod.outlook.com>
- <aQoIBroBqQc3B-RD@e110455-lin.cambridge.arm.com>
- <CAO9ioeX2qEyjwi9LsnUh-cRv88iaRcdZtFr_yidf55A9_ZbLWw@mail.gmail.com>
+	s=arc-20240116; t=1762427543; c=relaxed/simple;
+	bh=k39p6ctwzumtM930CezhirQ3llb81chzlkpbZXG+C1w=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=ALVpsRbd7HvUhIjSlz4s3Mr5dmKeDdbkN0lkSkdLD8EthZmMqtS8+9kQ8CfZb95ysT9FhNCh7BNAQN9zgHnq1o4c/ev0TJ6NPP0hYP8UEn89nalzx4KGy/AzDodqchjIG++Ugx0gzTnj9YGC8o0WTDuYHt++9Hc3yC6tJCfoAiw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=MeDLRnLO; arc=none smtp.client-ip=209.85.218.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-ej1-f51.google.com with SMTP id a640c23a62f3a-b7200568b13so148896066b.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 06 Nov 2025 03:12:21 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1762427540; x=1763032340; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=2yrvTjvjO1pUk8F3CcXiYPOz5oOf/FwysOOSOBS5mvM=;
+        b=MeDLRnLOZKCKc364E71cyWH1QjArtOK7QVwNri34wdiwWhxx9WjH3MRp3m2vde1Qp4
+         fd08NF8dSBmmvCCX+TzfLktxLHqNpra7+FAc+W+o8wyJhYgo7vVdbLQTACZRrJ1l0pVb
+         qhmOBpqSCvdvEqjsPOvxrMiUHkDbC6ydbAvD5xKESvzu34QqJ+500RJYy42rZKoK2DV3
+         AIY3HYW12tdjF/ls1FXza8fqRL8riQvQiuQPXakEfC82LlFdcrWd/H6NJvzXm6Vga3xk
+         0C3aKUTNPoItMCBqJE1kvWi8BpUOu5lsK3niAGgU7uBZ5eSbDcS9z2v1nZNAt1aBcP+T
+         d7GA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1762427540; x=1763032340;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=2yrvTjvjO1pUk8F3CcXiYPOz5oOf/FwysOOSOBS5mvM=;
+        b=HdGOw6dbwK9nUvlLoT6rZn1/4ngFuICsZmQNpaRfdhkgwuGtqEmo8oChVRaktQRIp1
+         /iih+XeDgkprVKIG/G/KXaEQ5kgCzRbWCDw3rE5ChmIm6FfXFI5xukdMMTGwfoqVkGdY
+         L/5qEUcybAk4N/X2T97xY4bS3TcuyiXMeGZ6nHVDfPFHdshfoRCeNbKUsSd8Pi9z1VgV
+         +PjrQswcTs/33ZbDFKleM1gehBwCXcYxeWo72kTOKso/+d40niAtAh+FJ+99gz6s7NLT
+         tMT+Bm6LIMvHXvPABC/n2qtQJOaNkUkx+zBlnPjxRWpHwueMSXEBu2l3IDGeiM9NMfyy
+         Vryw==
+X-Forwarded-Encrypted: i=1; AJvYcCWiW1d0FcS4h2Cx+A1DBC9h38r12ZGc8LSzEvlhqX+/vrivPN+xcZWCPcv7EdraFTWuJ/LheV1emjbsCxs2@vger.kernel.org
+X-Gm-Message-State: AOJu0YwpsUtJ2BxYZWdNCB62hZ5gTyeEi8NAy6LY9x8Dz9mJQMrynh/D
+	i1ld3GA6yhMAp0Skhk6Ahj5Ytr2QVEn2ITPP2Ztp0zU4poYkdYkwmBly/AcgVg/3XRshYl4xrAc
+	ovYYV1vO/sa0HqjTladL5ZlaQAkrV/L9aeJrxiuWQJA==
+X-Gm-Gg: ASbGncv3U+pKFdYPV0N4y7VguEgYKvN8JKBANNB//oWCwI7sV6g2mg12tQLu8itOq4W
+	f+VBrY2F5hUmt1FeYH+9fH7o7rx/h7vVFCQVUEOFa0c9L87XEUqDBbVfN6zgKdivWnV7jtsLCwM
+	4xr8uyk6OvM5EnBNoXomD7JdcxBc4jO9StCl8Br0r2No6oyFx3i00jqExgQXlYmA+E9GGGASBt4
+	A0GKv7Jd8ZRLmrmkwTNfOxJrDNbE0XEC7zaZN0es+RKnPm2I4WTX8BAklAt2Q==
+X-Google-Smtp-Source: AGHT+IHUgEAII+KCZtG9kG3bTwp715Xxrh6yTyMBInhVCP+K/K/WKOOQZr1KOXhWjo8wScgSJ9aNwT8ZjsYf4IzDF4A=
+X-Received: by 2002:a17:906:9fc4:b0:b47:de64:df1e with SMTP id
+ a640c23a62f3a-b7265195d0cmr835459466b.4.1762427540227; Thu, 06 Nov 2025
+ 03:12:20 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAO9ioeX2qEyjwi9LsnUh-cRv88iaRcdZtFr_yidf55A9_ZbLWw@mail.gmail.com>
+References: <20251105154107.148187-1-ggo@tuxedocomputers.com>
+ <20251105154107.148187-2-ggo@tuxedocomputers.com> <20251106-lemon-kittiwake-of-freedom-dfcfdf@kuoka>
+In-Reply-To: <20251106-lemon-kittiwake-of-freedom-dfcfdf@kuoka>
+From: Ettore Chimenti <ettore.chimenti@linaro.org>
+Date: Thu, 6 Nov 2025 12:12:09 +0100
+X-Gm-Features: AWmQ_bk0LxY3qjnahgz6ixNPKz7DJgXQRgCibkCqf95T14Y4Ienoc9DL3NvbRxs
+Message-ID: <CACBDSOW=_dudXh_+rHSOpbShKewKSr+va5+1Ng0hJRyC2vp==Q@mail.gmail.com>
+Subject: Re: [PATCH v2 1/7] dt-bindings: vendor-prefixes: Add ASL Xiamen Technology
+To: Krzysztof Kozlowski <krzk@kernel.org>
+Cc: Georg Gottleuber <ggo@tuxedocomputers.com>, Bjorn Andersson <andersson@kernel.org>, 
+	Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org, 
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	Srinivas Kandagatla <srini@kernel.org>, stefan.schmidt@linaro.org, stephan.gerhold@linaro.org, 
+	wse@tuxedocomputers.com, cs@tuxedo.de
+Content-Type: text/plain; charset="UTF-8"
 
-On Wed, Nov 05, 2025 at 02:39:15AM +0200, Dmitry Baryshkov wrote:
-> On Tue, 4 Nov 2025 at 16:05, Liviu Dudau <liviu.dudau@arm.com> wrote:
+On Thu, 6 Nov 2025 at 09:05, Krzysztof Kozlowski <krzk@kernel.org> wrote:
+>
+> On Wed, Nov 05, 2025 at 04:41:01PM +0100, Georg Gottleuber wrote:
+> > From: Ettore Chimenti <ettore.chimenti@linaro.org>
 > >
-> > On Tue, Nov 04, 2025 at 05:11:25AM +0000, Kandpal, Suraj wrote:
-> > > > Subject: Re: [PATCH v2 1/7] drm: writeback: Refactor
-> > > > drm_writeback_connector structure
-> > > >
-> > > > On Tue, Oct 07, 2025 at 11:15:23AM +0530, Suraj Kandpal wrote:
-> > > > > Some drivers cannot work with the current design where the connector
-> > > > > is embedded within the drm_writeback_connector such as Intel and some
-> > > > > drivers that can get it working end up adding a lot of checks all
-> > > > > around the code to check if it's a writeback conenctor or not, this is
-> > > > > due to the limitation of inheritance in C.
-> > > > > To solve this move the drm_writeback_connector within the
-> > > > > drm_connector and remove the drm_connector base which was in
-> > > > > drm_writeback_connector. Make this drm_writeback_connector a union
-> > > > > with hdmi connector to save memory and since a connector can never be
-> > > > > both writeback and hdmi it should serve us well.
-> > > > > Do all other required modifications that come with these changes along
-> > > > > with addition of new function which returns the drm_connector when
-> > > > > drm_writeback_connector is present.
-> > > > > Modify drivers using the drm_writeback_connector to allow them to use
-> > > > > this connector without breaking them.
-> > > > > The drivers modified here are amd, komeda, mali, vc4, vkms, rcar_du,
-> > > > > msm
-> > > > >
-> > > > > Signed-off-by: Suraj Kandpal <suraj.kandpal@intel.com>
-> > > > > ---
-> > > > > V1 -> V2: Use &connector->writeback, make commit message imperative
-> > > > > (Dmitry)
-> > > > > ---
-> > > > >  .../gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c |  6 +-
-> > > > > .../gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.h |  2 +-
-> > > > > .../drm/amd/display/amdgpu_dm/amdgpu_dm_wb.c  |  8 +--
-> > > > > .../gpu/drm/arm/display/komeda/komeda_crtc.c  |  6 +-
-> > > > >  .../gpu/drm/arm/display/komeda/komeda_kms.h   |  6 +-
-> > > > >  .../arm/display/komeda/komeda_wb_connector.c  |  8 +--
-> > > > >  drivers/gpu/drm/arm/malidp_crtc.c             |  2 +-
-> > > > >  drivers/gpu/drm/arm/malidp_drv.h              |  2 +-
-> > > > >  drivers/gpu/drm/arm/malidp_hw.c               |  6 +-
-> > > > >  drivers/gpu/drm/arm/malidp_mw.c               |  8 +--
-> > > > >  drivers/gpu/drm/drm_atomic_uapi.c             |  2 +-
-> > > > >  drivers/gpu/drm/drm_writeback.c               | 35 ++++++----
-> > > >
-> > > > For the komeda and malidp drivers, as well as for the drm_writeback.c
-> > > > changes:
-> > > >
-> > > > Reviewed-by: Liviu Dudau <liviu.dudau@arm.com>
-> > > >
-> > > >
-> > > > [snip]
-> > > >
-> > > >
-> > > > > diff --git a/include/drm/drm_connector.h b/include/drm/drm_connector.h
-> > > > > index 8f34f4b8183d..1b090e6bddc1 100644
-> > > > > --- a/include/drm/drm_connector.h
-> > > > > +++ b/include/drm/drm_connector.h
-> > > > > @@ -1882,6 +1882,61 @@ struct drm_connector_cec {
-> > > > >   void *data;
-> > > > >  };
-> > > > >
-> > > > > +/**
-> > > > > + * struct drm_writeback_connector - DRM writeback connector  */
-> > > > > +struct drm_writeback_connector {
-> > > > > + /**
-> > > > > +  * @pixel_formats_blob_ptr:
-> > > > > +  *
-> > > > > +  * DRM blob property data for the pixel formats list on writeback
-> > > > > +  * connectors
-> > > > > +  * See also drm_writeback_connector_init()
-> > > > > +  */
-> > > > > + struct drm_property_blob *pixel_formats_blob_ptr;
-> > > > > +
-> > > > > + /** @job_lock: Protects job_queue */
-> > > > > + spinlock_t job_lock;
-> > > > > +
-> > > > > + /**
-> > > > > +  * @job_queue:
-> > > > > +  *
-> > > > > +  * Holds a list of a connector's writeback jobs; the last item is the
-> > > > > +  * most recent. The first item may be either waiting for the hardware
-> > > > > +  * to begin writing, or currently being written.
-> > > > > +  *
-> > > > > +  * See also: drm_writeback_queue_job() and
-> > > > > +  * drm_writeback_signal_completion()
-> > > > > +  */
-> > > > > + struct list_head job_queue;
-> > > > > +
-> > > > > + /**
-> > > > > +  * @fence_context:
-> > > > > +  *
-> > > > > +  * timeline context used for fence operations.
-> > > > > +  */
-> > > > > + unsigned int fence_context;
-> > > > > + /**
-> > > > > +  * @fence_lock:
-> > > > > +  *
-> > > > > +  * spinlock to protect the fences in the fence_context.
-> > > > > +  */
-> > > > > + spinlock_t fence_lock;
-> > > > > + /**
-> > > > > +  * @fence_seqno:
-> > > > > +  *
-> > > > > +  * Seqno variable used as monotonic counter for the fences
-> > > > > +  * created on the connector's timeline.
-> > > > > +  */
-> > > > > + unsigned long fence_seqno;
-> > > > > + /**
-> > > > > +  * @timeline_name:
-> > > > > +  *
-> > > > > +  * The name of the connector's fence timeline.
-> > > > > +  */
-> > > > > + char timeline_name[32];
-> > > > > +};
-> > > > > +
-> > > > >  /**
-> > > > >   * struct drm_connector - central DRM connector control structure
-> > > > >   *
-> > > > > @@ -2291,10 +2346,16 @@ struct drm_connector {
-> > > > >    */
-> > > > >   struct llist_node free_node;
-> > > > >
-> > > > > - /**
-> > > > > -  * @hdmi: HDMI-related variable and properties.
-> > > > > -  */
-> > > > > - struct drm_connector_hdmi hdmi;
-> > > > > + union {
-> > > >
-> > > > This is a surprising choice. Before this patch one had to have a separate
-> > > > writeback connector besides the HDMI connector. Going forward it looks like
-> > > > you still need two connectors, one that uses the writeback member and one
-> > > > that uses the hdmi one. Is that intended?
-> > > >
-> > > > I was expecting that you're going to declare the writeback member next to the
-> > > > hdmi, without overlap. If you do that, then you also don't need to move the
-> > > > struct drm_writeback declaration from the header file and it should be enough
-> > > > to include the drm_writeback.h file.
-> > >
-> > > Hi,
-> > > Thanks for the review
-> > > The reason for this came from the discussion on previous patches and was suggested by Dmitry.
-> > > The idea is that a connector can never be both an HDMI and writeback connector at the same time
-> > > Hence we save space if we pack them together.
+> > ASL Xiamen Technology Co. Ltd. is a Chinese high-speed interface and
+> > display system chip design company. Adding it to the vendor prefixes.
 > >
-> > Hmm, but you can still have all the CEC and HDMI codecs data in that connector,
-> > which feels strange.  Also, what's the issue with having a connector that has
-> > both a valid HDMI state and an associated writeback at the same time (i.e.
-> > don't use the union)? Writing back the memory the output that goes to HDMI is
-> > valid, right?
-> 
-> Writing back to memory requires a separate connector (with separate
-> setup). The CRTC should also support outputting data to both HDMI
-> _and_ Writeback connectors at the same time (aka cloning). Not all
-> configurations are possible, writeback requires additional bandwidth,
-> etc., etc.
-> 
+> > Link: https://www.asl-tek.com/
 > >
-> > Maybe that is not something that you considered, but with this patch (without union)
-> > we can drop the need to have a separate connector just for writeback. We're breaking
-> > user space compatibility, true, but it feels like a good change to be able to
-> > attach a writeback to any connector and get its output. The drivers that don't support
-> > that can reject the commit that attaches the writeback to the existing connector.
-> 
-> Well... No. It's not how it is being handled in the (existing)
-> hardware. Nor does it make it easier to handle resources for the
-> writeback.
+> > Signed-off-by: Ettore Chimenti <ettore.chimenti@linaro.org>
+> > ---
+> >  Documentation/devicetree/bindings/vendor-prefixes.yaml | 2 ++
+> >  1 file changed, 2 insertions(+)
+> >
+> > diff --git a/Documentation/devicetree/bindings/vendor-prefixes.yaml b/Documentation/devicetree/bindings/vendor-prefixes.yaml
+> > index f1d1882009ba..278cb879781f 100644
+> > --- a/Documentation/devicetree/bindings/vendor-prefixes.yaml
+> > +++ b/Documentation/devicetree/bindings/vendor-prefixes.yaml
+> > @@ -176,6 +176,8 @@ patternProperties:
+> >      description: All Sensors Corporation
+> >    "^asix,.*":
+> >      description: ASIX Electronics Corporation
+> > +  "^asl,.*":
+>
+> So the prefix is asl-tek, like its domain.
 
-Which (existing) hardware? Komeda can do it mainly because it doesn't have an HDMI connector,
-but an output that can be cloned to writeback while it is being sent out on a bus to an encoder.
-You have to remember that writeback is a connector because we didn't have a better concept for
-it. It doesn't have to be a separate connector from an HDMI or eDP or DP.
+Ack. Fixing in v3.
 
-Best regards,
-Liviu
+Best Regards,
+Ettore
 
-> 
-> -- 
-> With best wishes
-> Dmitry
-
--- 
-====================
-| I would like to |
-| fix the world,  |
-| but they're not |
-| giving me the   |
- \ source code!  /
-  ---------------
-    ¯\_(ツ)_/¯
+>
+> Best regards,
+> Krzysztof
+>
 
