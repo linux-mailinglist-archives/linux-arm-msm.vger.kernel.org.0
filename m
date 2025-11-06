@@ -1,184 +1,116 @@
-Return-Path: <linux-arm-msm+bounces-80521-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-80522-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 31AAFC393EC
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 06 Nov 2025 07:16:34 +0100 (CET)
+Received: from ams.mirrors.kernel.org (ams.mirrors.kernel.org [213.196.21.55])
+	by mail.lfdr.de (Postfix) with ESMTPS id 38162C39431
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 06 Nov 2025 07:21:17 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 79FA73B6D39
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Nov 2025 06:16:22 +0000 (UTC)
+	by ams.mirrors.kernel.org (Postfix) with ESMTPS id CDFC234EFD1
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Nov 2025 06:21:16 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id EFBBF2E03EC;
-	Thu,  6 Nov 2025 06:14:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 781932D8781;
+	Thu,  6 Nov 2025 06:21:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="ON/A/ePw";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="AW19Ratd"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="iWKpKvhJ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E2C22DFA3A
-	for <linux-arm-msm@vger.kernel.org>; Thu,  6 Nov 2025 06:14:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48C292D73AD;
+	Thu,  6 Nov 2025 06:21:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762409647; cv=none; b=HVUYIGYKHwKye49rqxNi5q81Az2DXldH6MMqd9xTscaWt1gyGpIRF5JjE9PNi5V4lRvVeG0ghfT4oydBvV6zRxOTP/eHiE6PPMPkDeXcqPuHBKN416mbyTwxOmFIIolF0pz/wMoXvCjVjIVnUhaAPTAlReEaWANSkXQZDXC9nEc=
+	t=1762410072; cv=none; b=fQ9rXuadsDo+QE0oHCLhhD1oGQ1wOKl5MbcqQq5c5SicjTmihvsdO9X9jp/HF0SL8z8S+oz1qX1swKNdJS2yy/zi8Jwu3j9PbPF2w2cy7g48KpiKDO2seuvbAIPe1AOOPNymyCjttFNXhqcwdbOuaB9/fK0wzycQUg5XZYgj8Zg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762409647; c=relaxed/simple;
-	bh=5Eowp/bww9m+te35duy+Gu3+ggKypneeWBbKzwgmR3I=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=e0ETWTMhTje26XUlDyLiAOh71+7cbI8EIzXmObWsj/YA4FHV/zGguBR4+g6ZwSNlLkUTShs7bhDhADACvXdtBr72FGkJmM9aPPaFGlB/WpgosCs93P7qzz2D6kMzR+rsRcZcZ+zsnoTICvugC8ePq/vJu2IRB+EhWmiWDJDIwRw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=ON/A/ePw; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=AW19Ratd; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 5A5N5ko82148405
-	for <linux-arm-msm@vger.kernel.org>; Thu, 6 Nov 2025 06:14:05 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:date:from:in-reply-to:message-id
-	:mime-version:references:subject:to; s=qcppdkim1; bh=6f0QmtnZfh1
-	cR6Ofnzn6CmW/kfWGJZlpWWAuS2d12t8=; b=ON/A/ePwcX2KNW8OyWlf/ctISBF
-	8YbVlajt0/DMtybn006v+IF7NLVZP3ErKkw+H7mq4l7LEMWvdik5fxvfup9FtI10
-	XOX+KotT/C6PA38QFsK80YMSZgW12Ju8TSswvS85G+K/QnKz9OV7OocPfoYXXXio
-	AJeXVP6SysN6D2yKJo8HKIVRxBWml6K5bDat/QCyRmgiU+yX5uLlxnDQ+9JfAPsw
-	zOMvs3qXIyJo3YhU5yDuu209dsevq15S0sNpLjLE2tDzI35hMnJhe0c2OXdJQ/uc
-	Q+aozpDUpMQzb6LruJAZcT6/nF5/HKlF4SvyV81U9smK8R5Xbd32tfVUwZQ==
-Received: from mail-pl1-f198.google.com (mail-pl1-f198.google.com [209.85.214.198])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4a8fxvs0pr-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Thu, 06 Nov 2025 06:14:05 +0000 (GMT)
-Received: by mail-pl1-f198.google.com with SMTP id d9443c01a7336-29523ed27e0so8612275ad.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 05 Nov 2025 22:14:04 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1762409644; x=1763014444; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=6f0QmtnZfh1cR6Ofnzn6CmW/kfWGJZlpWWAuS2d12t8=;
-        b=AW19RatdpEPIl2ezyoxWragYwSpoMicIjrzocXMInaZN3By0bhs7OTVCLNiWiYY3KW
-         QEQk6bdHjIOiLaS4yQy5y91OHVQPwfkO/K/9K1mZfwTB0YndTi62qkas3rLSOLnVPIWi
-         SlPh400VKr5pNg5OG7oOTMz2+E//cwX6cnYhD4yvWfUdCbUw5Kt9k6uH1QaAaDliDRs1
-         1NxE1cun3B1VzT09ocfY8GW0Egr3sT/CRhZPXvvsOBS0/2e/lBwRwt2iyz1Z4Ff5XoiC
-         65NqnNK0DnE0lp1RePrWTwadS4kUfF+U6mWSelfc/byLsQaowgKpbiKWxhJmYODsXs7b
-         h1kQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1762409644; x=1763014444;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=6f0QmtnZfh1cR6Ofnzn6CmW/kfWGJZlpWWAuS2d12t8=;
-        b=Iz4cqELZyB4yz0FKOrcC/nuMpAaJoJMreui+cVYR7oAzwFlTf89KPhB/8QtGlmId0B
-         rwBOVOkfwIFYv18B6gBsickzX63kF0Tv5qXf+SDbqEdVvKnkNsqeAyiDZcW2Dhq2jar5
-         Jo50KpentKb1KRbIYM3KJHf0vub9ZK821iG+3/jj20duYvxursdIKVsvZeWaSKsXyYAM
-         nSXhjGwXHnlWboB8GqbTIHuB+SaVqf2VfBK5j8DGX9O3Iljc2jmbeWlQgZsV8aeVzso6
-         RA24DkxqxhWktdLxg/7S3m/5fYwJsMoN7nmOKyuoJOyOHS2Ekm8jvAl6DOEtvSDGUUPO
-         0kwg==
-X-Forwarded-Encrypted: i=1; AJvYcCXJq9QQIZDJh5bk7UvphXIjN0qvjn6OWy4Jp+9IgKiwZANWMjPICTerl5QhvWDOljteytXCH+P3y0xl/e3u@vger.kernel.org
-X-Gm-Message-State: AOJu0YwnQh1TbTsOFFs7VGWr4hWjXPDEk5GwytnWQPyH+FkwbseSzodT
-	NxzY83C+y9x3K3H6f6tSGav1VMRsKjh6qCj/WHtdCaqjoD+atn+apfEFh49OQupvqjRn3sxKGzI
-	lkD8+ptQqSMGKqsujWmx280S4TcZXJWa/wrrJtiMRlQmwzzT6DVc8JGekLLMpEOplNfLI
-X-Gm-Gg: ASbGncvtVlCq0VPmu53FO4thXyYMtTxW2haYrTAnhMtTDg26Po5ccJphnnOrZq/Jhf0
-	6kT7cTKcOWQvElbdk1tiNdAHafNTfJ6tH/bjTvz/bgeJyXSv12tbhVTEE624u42E4bzE+hIIMKS
-	JrG1Xh0V/havCt87LwFc/H7FlavNkB3jfbX0cnARd8FWQ2D6U0iW97lPHkdNKFoLsY53X5tGrWm
-	vwZum7rEJxL0izcEzMg0dfREDHfINCzKwrYKoPuDd8HMbpfq0XVLLD7oi+dq9kuDqmeEZ/cX7yj
-	AL5mseLsY8lPHvGQooEYzTFRrweVyyHHz61FprpvezS4Hh+EegCrcf1ojUvmd0ky2GAjTbqIy4Z
-	kQJ2n7fP5RV90SBAa
-X-Received: by 2002:a17:902:ea0e:b0:27e:eabd:4b41 with SMTP id d9443c01a7336-2962ad11330mr76435695ad.7.1762409644082;
-        Wed, 05 Nov 2025 22:14:04 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGau024seW1k+6gAt1RgfaQE2/cFqOhIHoNflQP4yhKsBt34XSgC8/NMQQqGMjUdn+s4cLbug==
-X-Received: by 2002:a17:902:ea0e:b0:27e:eabd:4b41 with SMTP id d9443c01a7336-2962ad11330mr76435285ad.7.1762409643591;
-        Wed, 05 Nov 2025 22:14:03 -0800 (PST)
-Received: from work.. ([120.60.59.220])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-29651c73382sm15036305ad.69.2025.11.05.22.13.56
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 05 Nov 2025 22:14:03 -0800 (PST)
-From: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
-To: lpieralisi@kernel.org, kwilczynski@kernel.org, mani@kernel.org,
-        bhelgaas@google.com
-Cc: will@kernel.org, linux-pci@vger.kernel.org, linux-kernel@vger.kernel.org,
-        robh@kernel.org, linux-arm-msm@vger.kernel.org,
-        zhangsenchuan@eswincomputing.com,
-        Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
-Subject: [PATCH 3/3] PCI: dwc: Skip PME_Turn_Off and L2/L3 transition if no device is available
-Date: Thu,  6 Nov 2025 11:43:26 +0530
-Message-ID: <20251106061326.8241-4-manivannan.sadhasivam@oss.qualcomm.com>
-X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20251106061326.8241-1-manivannan.sadhasivam@oss.qualcomm.com>
-References: <20251106061326.8241-1-manivannan.sadhasivam@oss.qualcomm.com>
+	s=arc-20240116; t=1762410072; c=relaxed/simple;
+	bh=vV/ErRejkb+XSOk84LMIbZxiLpkolrasUDAWCHCwpjs=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=JzoI2Sc8Hv8Iu3t4F4xIuZQzC0Z+njW8KzIreuSY30p8MX9dIz0rjZh4BzKZZqjlgmZOAQQLp1V1qEKaeycZ2EwoeHaIzFGQbsgyff1eUZPxeqETzywr+87YNX5ciV4xiwMkRWeHc4b91238B+gUI1IP0nm50B0qwmZHUkeu7gM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=iWKpKvhJ; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DAD3DC4CEF7;
+	Thu,  6 Nov 2025 06:21:06 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1762410070;
+	bh=vV/ErRejkb+XSOk84LMIbZxiLpkolrasUDAWCHCwpjs=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=iWKpKvhJ4Y/4gqcGrvoldzHnieYvRinLCJ0GrFt/C/EbZaeXhCWrfXLPKaYSHrgeX
+	 Qr1eyHj7jhvYfaW1ts+iDGM6hRZLh6YbR3KNayc83vMaLTxPei7+QELWbkD9sc4P52
+	 fzPf/ZwIzYYfcs1LWhIFvu1vGa5fnbgUIW0195z1J7mdir7pbwvIJheCECu7HF0RuK
+	 A0P7N4goq2qjYZKfs2zKejb9HyBPKxJ0c9vHXiKj/yDS1t2/Wi2/9dyo5RqCTlJUnE
+	 lUxzJZ7ybzEBf6g628cloui/raPz7H3wS1g2D2tY57O4v1fwbO6YvOMZ3+Ad1/X6aJ
+	 OhzW8EHBGHgTQ==
+Date: Thu, 6 Nov 2025 11:51:00 +0530
+From: Manivannan Sadhasivam <mani@kernel.org>
+To: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
+Cc: Bjorn Helgaas <helgaas@kernel.org>, 
+	Lorenzo Pieralisi <lpieralisi@kernel.org>, Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kwilczynski@kernel.org>, 
+	Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>, linux-pci@vger.kernel.org, 
+	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, mayank.rana@oss.qualcomm.com, 
+	quic_vbadigan@quicinc.com
+Subject: Re: [PATCH] PCI: qcom: Program correct T_POWER_ON value for L1.2
+ exit timing
+Message-ID: <tecoemfjvcuwrvhiqxla2e7b27tgsmkahrbe2msr6vlh65alvp@vhlklrfasjd5>
+References: <20251104175657.GA1861670@bhelgaas>
+ <e459b4de-52f1-4c20-be84-07efdc9fed93@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMTA2MDA0OCBTYWx0ZWRfX33GCYchXHFDG
- 1r2DIBLKtz4zoV+6j/Gc1ctnCg1KRnJaanKWX44D3Vye9tb3iCtvFwAFo14qZPiSySZ27UGutP7
- /H997iTNpOMg5fr3BsvxDTvXfQdLrGdrOhVRl3fWnFIX5YfZiimJpmSBI2q9Dr+vGmFNn1eXVL6
- AIQ8KTN4eAbtY7uD3YhDIwSYyNvW4eSNLeZD6x30N2kMPnSCeZlS9Cm1MZXfVrvRNv/+3Zm83Vv
- f0PjMlOLvDB7vC8rrvbpFvyva+mvxJul3KpGxNVcnBzwQbR7waWU/XABpYlJnMw7pSrNRQYQ7r5
- OgWSC6svAQILHmgROiORGjUXEHv6Hbh6DU8hYfOPj4vdVVK6K/HI7NudhwcybfofBToJlpkpdjs
- FhJMnD0s9GQCy+hH/G7Q4Pkwo6kBMQ==
-X-Proofpoint-ORIG-GUID: _lMUBSGNI37mwp9qiN0iXnhZg-Wzo5kD
-X-Authority-Analysis: v=2.4 cv=OZSVzxTY c=1 sm=1 tr=0 ts=690c3cad cx=c_pps
- a=MTSHoo12Qbhz2p7MsH1ifg==:117 a=tomDxdmRQcfPzRosr6lsLA==:17
- a=6UeiqGixMTsA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=EUspDBNiAAAA:8 a=JlmoTVlqZe2UTokRIjkA:9 a=GvdueXVYPmCkWapjIL-Q:22
-X-Proofpoint-GUID: _lMUBSGNI37mwp9qiN0iXnhZg-Wzo5kD
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
- definitions=2025-11-06_01,2025-11-03_03,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 lowpriorityscore=0 bulkscore=0 priorityscore=1501
- malwarescore=0 adultscore=0 clxscore=1015 spamscore=0 impostorscore=0
- phishscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2510240001
- definitions=main-2511060048
+In-Reply-To: <e459b4de-52f1-4c20-be84-07efdc9fed93@oss.qualcomm.com>
 
-If there is no device available under the Root Ports, there is no point in
-sending PME_Turn_Off and waiting for L2/L3 transition, it will result in a
-timeout.
+On Thu, Nov 06, 2025 at 10:30:44AM +0530, Krishna Chaitanya Chundru wrote:
+> 
+> On 11/4/2025 11:26 PM, Bjorn Helgaas wrote:
+> > On Tue, Nov 04, 2025 at 05:42:45PM +0530, Krishna Chaitanya Chundru wrote:
+> > > The T_POWER_ON indicates the time (in μs) that a Port requires the port
+> > > on the opposite side of Link to wait in L1.2.Exit after sampling CLKREQ#
+> > > asserted before actively driving the interface. This value is used by
+> > > the ASPM driver to compute the LTR_L1.2_THRESHOLD.
+> > > 
+> > > Currently, the root port exposes a T_POWER_ON value of zero in the L1SS
+> > > capability registers, leading to incorrect LTR_L1.2_THRESHOLD calculations.
+> > > This can result in improper L1.2 exit behavior and can trigger AER's.
+> > > 
+> > > To address this, program the T_POWER_ON value to 80us (scale = 1,
+> > > value = 8) in the PCI_L1SS_CAP register during host initialization. This
+> > > ensures that ASPM can take the root port's T_POWER_ON value into account
+> > > while calculating the LTR_L1.2_THRESHOLD value.
+> > I think the question is whether the value depends on the circuit
+> > design of a particular platform (and should therefore come from DT),
+> > or whether it depends solely on the qcom device.
+> Yes it depends on design.
+> > PCIe r7.0, sec 5.5.4, says:
+> > 
+> >    The T_POWER_ON and Common_Mode_Restore_Time fields must be
+> >    programmed to the appropriate values based on the components and AC
+> >    coupling capacitors used in the connection linking the two
+> >    components. The determination of these values is design
+> >    implementation specific.
+> > 
+> > That suggests to me that maybe there should be devicetree properties
+> > related to these.  Obviously these would not be qcom-specific since
+> > this is standard PCIe stuff.
+> 
+> Yes Bjorn these are PCIe stuff only, I can go to Device tree route if we
+> have different values for each target, as of now we are using this same
+> value in all targets as recommended by our HW team. If there is at least one
+> more target or one more vendor who needs to program this we can take
+> devicetree property route.
+> 
+> I am ok to go with devicetree way also if you insists. - Krishna Chaitanya.
+> 
 
-Hence, skip those steps if no device is available during suspend. The
-resume flow remains unchanged.
+Since this is a PCI generic value, using devicetree property makes sense to me.
 
-Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
----
- drivers/pci/controller/dwc/pcie-designware-host.c | 5 +++++
- 1 file changed, 5 insertions(+)
+- Mani
 
-diff --git a/drivers/pci/controller/dwc/pcie-designware-host.c b/drivers/pci/controller/dwc/pcie-designware-host.c
-index 20c9333bcb1c..b6b8139e91e3 100644
---- a/drivers/pci/controller/dwc/pcie-designware-host.c
-+++ b/drivers/pci/controller/dwc/pcie-designware-host.c
-@@ -20,6 +20,7 @@
- #include <linux/platform_device.h>
- 
- #include "../../pci.h"
-+#include "../pci-host-common.h"
- #include "pcie-designware.h"
- 
- static struct pci_ops dw_pcie_ops;
-@@ -1129,6 +1130,9 @@ int dw_pcie_suspend_noirq(struct dw_pcie *pci)
- 	u32 val;
- 	int ret;
- 
-+	if (!pci_root_ports_have_device(pci->pp.bridge->bus))
-+		goto stop_link;
-+
- 	/*
- 	 * If L1SS is supported, then do not put the link into L2 as some
- 	 * devices such as NVMe expect low resume latency.
-@@ -1162,6 +1166,7 @@ int dw_pcie_suspend_noirq(struct dw_pcie *pci)
- 	 */
- 	udelay(1);
- 
-+stop_link:
- 	dw_pcie_stop_link(pci);
- 	if (pci->pp.ops->deinit)
- 		pci->pp.ops->deinit(&pci->pp);
 -- 
-2.48.1
-
+மணிவண்ணன் சதாசிவம்
 
