@@ -1,81 +1,84 @@
-Return-Path: <linux-arm-msm+bounces-80592-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-80593-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [142.0.200.124])
-	by mail.lfdr.de (Postfix) with ESMTPS id CFB11C3A9FE
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 06 Nov 2025 12:39:31 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3EB77C3AA99
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 06 Nov 2025 12:45:20 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 0FEB950077C
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Nov 2025 11:36:36 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 8A9A5425EF5
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Nov 2025 11:36:53 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E4573316193;
-	Thu,  6 Nov 2025 11:34:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9FAFC316912;
+	Thu,  6 Nov 2025 11:34:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b="VHcONQdh"
+	dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b="ANcSafSn"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f41.google.com (mail-wr1-f41.google.com [209.85.221.41])
+Received: from mail-wr1-f43.google.com (mail-wr1-f43.google.com [209.85.221.43])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D825F314D05
-	for <linux-arm-msm@vger.kernel.org>; Thu,  6 Nov 2025 11:34:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA1D7316198
+	for <linux-arm-msm@vger.kernel.org>; Thu,  6 Nov 2025 11:34:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762428881; cv=none; b=gWlMSZY3TZoRyyXA71QhO+a5Dnzdr/XnBtpTZnS4XGhmasTv96W42OmtMinjzbw4RFLHtZA2jgW7jIT1IDTv+v+E4KoQzWHROoUbPY9qfainCEADhO6FvwYB4UxouX86cFErT/NRGSKvreX1ZRuDCCfoRsRMeAt9Wfnn6bywGME=
+	t=1762428884; cv=none; b=a7nCwzlUVby/zdMkTOMLxc8dt6qcLwSH2UBY3bV7fE5Ze4JPvaRBUMdJ0fKvL7BI+QcXhd2E4vnCNxmBbEvgf7PIhZSGEOkjc1w6xDH9p0lwY/HhpeT7fXq/9QkaIaCTEm/68b5M0oq0SH8DrnokdY/UsAF0tUxJ8X+QkIpX0sI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762428881; c=relaxed/simple;
-	bh=HmUXLW2y1rVjaif1QbzcfjuElUDdKXykWdLm9c4LpXI=;
+	s=arc-20240116; t=1762428884; c=relaxed/simple;
+	bh=zl255ALAQZaKEsmkiwDZiuDGm964w4gYAhEZIIzCFA4=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=RhWpvymm+KIDUZzZ1BhPUskGCi10QSnWqtIX+1xMdXEW6d7sT2upg4v5eSiOnnUDRg1rygw5OkOvHNGCBoLXSJZzLdJqn3XY0T+xtKsAn2StCu0vPwuxYPMaQDu8g/B4qAyhkcaSpDrUnV/gnen22DCnN5c9qvGIvx4AS+QhULM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl; spf=none smtp.mailfrom=bgdev.pl; dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b=VHcONQdh; arc=none smtp.client-ip=209.85.221.41
+	 In-Reply-To:To:Cc; b=I1yKg5SvgFxm/qv9eBwcAzer4DGYMMdTxTS3sBvzSCG/dIV2h068MVVSQ+OVv1Pre6wC0U75RaKbLoLguQorhqfO1gThv3id64Ri1+mqnzCbLc2hc21U9UXaDllGBz6dPeOHR7te1G9fyvVvfBiQ2QuHL+m7yQXDiNfSAr7iSF0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl; spf=none smtp.mailfrom=bgdev.pl; dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b=ANcSafSn; arc=none smtp.client-ip=209.85.221.43
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl
 Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=bgdev.pl
-Received: by mail-wr1-f41.google.com with SMTP id ffacd0b85a97d-429c4c65485so682666f8f.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 06 Nov 2025 03:34:39 -0800 (PST)
+Received: by mail-wr1-f43.google.com with SMTP id ffacd0b85a97d-429bf011e6cso855478f8f.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 06 Nov 2025 03:34:41 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=bgdev-pl.20230601.gappssmtp.com; s=20230601; t=1762428878; x=1763033678; darn=vger.kernel.org;
+        d=bgdev-pl.20230601.gappssmtp.com; s=20230601; t=1762428880; x=1763033680; darn=vger.kernel.org;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=t7aHWUrzlgxNBbKWCNeGhQi8iWZi43My+Fzs3phWPnY=;
-        b=VHcONQdhjwWlt7k4S0daRAlmy3l2i8S88cmTgbJbowhe3knjB2JAE2sVULWNh78ecO
-         hn2M+xbyph+FJiyO9jq4GOWBkLYN7xRDmYRJsCP3AzxnMF0WQL3Oqt5mQVTeoPi/ocg+
-         VSW9Rcke1uVSR2dHoLdYvuotAEzE29AA+tLMeElp/Tf8lDXahjUCmKAD0k51riARVOBq
-         4jDEhZZ/ysGLA1UEh/MzenzZLvJoQO9aSlO2QBtRksWidF+gCllO29pN9vS6Sa1zgChX
-         p0jWoEX2iJQdFWwZPSaaH6BN9wS2mFv0bdhHhK3UVKHFivpUrmXBbzBoAVRUXzI/s0gb
-         Tz1Q==
+        bh=u1AelrTrZ5vi1Hql7yAT/NtmBB7MkGXnoGFEtYAxb6s=;
+        b=ANcSafSnKUYBXZJBT404r8HUcWU5EAXmoWGSiT8EV+n2+NjH3u6m2NVZZfdAomhRy7
+         WMDx+KlBThnHPy69CN4RWutIws7eAOV/gGVz6wQt/HPlr7QFaueKNti+iZNj2I2j2PS0
+         uFbAge1+BtYfETcyvJr/11iSNd+YTnblkm5hle6l2CLKbygFbLecJUE8oyFS/iGUgUQN
+         +1c0FUpoPdZY/wpWxhwxH3npYIuweGBQ8dJgHWJ1ZcdiT8kTOUVWTpMfnjjdhG55Feh8
+         PqYWiZYnfio1PFTFQmZCGDo76hpsNrrb1p0kHOgW11JSVYgRXGcVxfwEvZifl5/oMr2i
+         O4BA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1762428878; x=1763033678;
+        d=1e100.net; s=20230601; t=1762428880; x=1763033680;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=t7aHWUrzlgxNBbKWCNeGhQi8iWZi43My+Fzs3phWPnY=;
-        b=PsFQLEj8MhcQYVlz1gZlAJ/O14H1kM+lq1JNvTMZjuYK0H6WYKuq8Drs3TDvB2OtdA
-         2SGJrE5bR73bFD5Y2xnJNZzQK5bDPctmwVnTmYj+leNNbsnUorladNaNKwTJzi2W+3jz
-         vrPXccVEnvT3XIEVJM8jGC624kVu3YRkmxVxjCW5XQFwlHTz8Z0iDT4DjhbzNtR/zwKe
-         PY+tRam9ECP+kE2oNm6CFn5UVqfpfj7b1kjPwBbeyRW3Y2AQpWtLtO7JtOcMDOF78deG
-         4y/n55FzMQSTrlltrko2yL9Z6rh50Ql6nCc60gurmKKl7YR+pUq2t/wHZaIUPo2HcD/r
-         pC6Q==
-X-Forwarded-Encrypted: i=1; AJvYcCW88i39s2/zd13eO+4mkOHpzHKba5J54b3jhXOvyoiY8nTRGT6XgkYyeD4nAy6IdiPp3LzTGBtR/uy1uQr+@vger.kernel.org
-X-Gm-Message-State: AOJu0YwkRz7AJLXNKymx2G5Not2A3f4YmKFWAPY8tfn/eUQkNMbeckeX
-	9ngs9BHwx6MNuvsYsN67Fmt8FL+h3b6Lc44jSAX5Nju0rf6V3PqsudxCflU04TvmxbQ=
-X-Gm-Gg: ASbGnct87QpWY2FfS9KtWAzNzgMoG9qnbRlza4TRdKJqYmqU/QtjoQnVlUWY/JGXD9b
-	+V+0OANg5kIHG2xDBIh5knSZ+p9ZtvWtHrBdu4Fw2faYZhe6kBUR4V9ljsLuhC5C9yjcxk25vQH
-	OrEEzZk/WDr6mwaXjaJoY6kVGwOiP6494sJq+823Aqwdd+f7uHhg4lIImVpa+wCYV7teZtufeiW
-	ymKz3UKgdmLrVpHwA7dAjhgIjcOQ9OgQbqe8DHUEtGUxB2l55fLu+nv4UknWayDSzqqTmqj193u
-	0aNlkC2ZwXYtGU8C9T8t9VbfFrHYIwZEVAykomqaHSepot2+we15vTnpqt+fmd3V1sHRHVUYJdg
-	UH32EptikVsAUSZdNTC2L7Gjdd1veWA7EuRP/BG3ezIVWCfRo37DHSloBjKmGMLCsbh3/
-X-Google-Smtp-Source: AGHT+IHoK1O/+JDQW0JFse0/zrHgzULYmUJO8yjsG0GrRdQ5S3RvCjLR1rPwRSyZQozg3pEN49UEFQ==
-X-Received: by 2002:a05:6000:2585:b0:429:cacf:1075 with SMTP id ffacd0b85a97d-429e32e4649mr6174613f8f.17.1762428878188;
-        Thu, 06 Nov 2025 03:34:38 -0800 (PST)
+        bh=u1AelrTrZ5vi1Hql7yAT/NtmBB7MkGXnoGFEtYAxb6s=;
+        b=ecajs3m2KCTo1q+yO4BXR4+fK07lAjQMe+SR01wNcf5lxoJMyZc1Sjdv/LFnJoAxST
+         lbPslSMW/OJQeNLVAdPP3kTMVL/rf0WhCXyuMtgUGO6g3piHd7Tf8t9TzH5TvLx0zk81
+         FgodHI82iqHGnobuCJf4DYXJbmmUwMEQ6YxosrJxTz9lIh03rR7ztRrx7EdBWNwU+HI6
+         GGKe9mgneT9CSkXpusy5ozRqS914ryI7PQ4N0UQu2e81GRqekXDzISZK+0yTiqdwEi4U
+         TDh411kQw5LkFVud9AQNclgwdJQlnwd1CqPz2EtJfD4yKtr/28XMvCvNpTelIIOAdG6Y
+         26gw==
+X-Forwarded-Encrypted: i=1; AJvYcCXNfkUg325YoN8MCfG3znmwaqUBofvpRX2F2RsgNeFvMxjM6HRp1i3RWU2WDx0GlU+969GnnU/wGwLnaaXA@vger.kernel.org
+X-Gm-Message-State: AOJu0YxrlvXIl7M02/u9axTQGzia7kgjPSxQWJ1DDoGZKgssz7oP7Jl9
+	earboJGQYf8dwv2Y2KMS/EQZWFxoRihBf1UM1f+aTaRR5XRgXlI37LHhjLa1AiVmbcQ5YgBz7WG
+	Ez+ecm7w=
+X-Gm-Gg: ASbGncu00orVdSxxsnAmgDxZWSoJz4l2V2iK4R4Q5GCN+NCpW3LE9ZAkbUwUVuyFinu
+	TK6ilrmZbS+1VMimZX6d2lWQSLRT9BQiDACgpRszCHC7atoArcICnhrov5k2ThJxtKuA5XKbLUf
+	WT+B9L1I5dfxfc7Eqez0uhzOfAEEj7Mm/e9XblxNxn6KHnd6zsOFnaAtKXEw8J5K5Fhvu+Lypbr
+	o1O8xkMyAdUgIeuiKRTkQSNYBVIRTDSEkpYoehASBuJPQ61zut3rC0FcGB15i9apcUQzBJy+txM
+	x6WHKfef6fLDho9dFkhcVse7yeU0H0Afw8tI15C/cVKtAE9zQGuUjVuRI2pydDLjgfetM2TPpDz
+	2cE0E528ueIlRMmfHFPg1v11qmpHZezROrRdg3lkXaKUCZWAl+rlWHKPiY88rutQ+5H/+1c7kFq
+	N7GbI=
+X-Google-Smtp-Source: AGHT+IFj1cZgTujF+up66uGuYayospRqE039BqOL/vh201PFxdzzhjBpqpQn48ZfPe8i7w7L93Qd+g==
+X-Received: by 2002:a05:6000:220e:b0:429:b1e4:1f8f with SMTP id ffacd0b85a97d-429e32e5070mr6497326f8f.26.1762428880275;
+        Thu, 06 Nov 2025 03:34:40 -0800 (PST)
 Received: from [127.0.1.1] ([2a01:cb1d:dc:7e00:d9de:4038:a78:acab])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-429eb40379esm4389459f8f.9.2025.11.06.03.34.36
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-429eb40379esm4389459f8f.9.2025.11.06.03.34.38
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 06 Nov 2025 03:34:37 -0800 (PST)
+        Thu, 06 Nov 2025 03:34:38 -0800 (PST)
 From: Bartosz Golaszewski <brgl@bgdev.pl>
-Date: Thu, 06 Nov 2025 12:34:04 +0100
-Subject: [PATCH v8 08/11] crypto: qce - Map crypto memory for DMA
+Date: Thu, 06 Nov 2025 12:34:05 +0100
+Subject: [PATCH v8 09/11] crypto: qce - Add BAM DMA support for crypto
+ register I/O
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -84,7 +87,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20251106-qcom-qce-cmd-descr-v8-8-ecddca23ca26@linaro.org>
+Message-Id: <20251106-qcom-qce-cmd-descr-v8-9-ecddca23ca26@linaro.org>
 References: <20251106-qcom-qce-cmd-descr-v8-0-ecddca23ca26@linaro.org>
 In-Reply-To: <20251106-qcom-qce-cmd-descr-v8-0-ecddca23ca26@linaro.org>
 To: Vinod Koul <vkoul@kernel.org>, Jonathan Corbet <corbet@lwn.net>, 
@@ -99,113 +102,221 @@ Cc: dmaengine@vger.kernel.org, linux-doc@vger.kernel.org,
  linux-crypto@vger.kernel.org, 
  Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=3084;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=6220;
  i=bartosz.golaszewski@linaro.org; h=from:subject:message-id;
- bh=YrlK+FCBMpnN0mtgQnv4x5y020oK7SmjbrJXDNXzn5g=;
- b=owEBbQKS/ZANAwAKARGnLqAUcddyAcsmYgBpDIe9PAKKUyb4afZt0r5bIvZ+oWZJdtCAEcub9
- pOHJZBRI7qJAjMEAAEKAB0WIQQWnetsC8PEYBPSx58Rpy6gFHHXcgUCaQyHvQAKCRARpy6gFHHX
- chpXD/9NByZYb24rxG/Ghz2t9YYbHOU4a7LXMIg07ieVmtBqJwlhLP7h0sKuRaxHxREFUKO2Cac
- XvK0LjqloxZ6+ORHjrLB9zCDOAYud6CAbxZASMdM7nlv4LdWV8xPTxtHpM5KkGRPDSOkSW5WCch
- eBBrjBHTUQSdNUi+Z3/KrrBzuIIlk+LQzgQ4wPLqDf9mJ0YMemD2clgtLdILmqyYzWX8Wzt5iBp
- Clru+Ab+RQ8AD4rZP8+UMMUcQ1QMCZZ8C54WNeJPUgDsRlGJ/oGhZBiMuFOZrFIHB3UqdrrnRR5
- e8Zl4xh90DX51C9Ga5vCx6lgB37BT+dMpUTzW4vI6MnO6VRDLHRN2oudv2jv0MI/5HtC3rzFdMD
- sSR4wRIz+hVgpOj3t1jjdn2l5wmf7Ri/UzhbnfZKIY+PVFqBlcV4HnNG1eHKo+2x4imE5UGYd/J
- FWP/rUBnoI7G9ld+50zwCE2kNXsFcRB0ug5fDM0VCvja8L4UxhvbYY0MqL40j3BiwdKJapuRBY2
- iYbjGh9rI6R5NFLgeCEeYKNk2jrCi8sRZTlzpXP0rERk2yPNHSbaBi1T+52NzxOry3uZ6BGN/Yg
- hEpEM2VJXEIiH/UBD+o1L3l0Cln4piKV9RagSk83wK3BgvIfskBCmMikKWvtFqJqU2oFMeGd2yw
- WsgEqAgozobeU4A==
+ bh=M4HnnFvam5oHPkSCa/uXNClDyduly5DTAPL1JsMNmgQ=;
+ b=owEBbQKS/ZANAwAKARGnLqAUcddyAcsmYgBpDIe9uaFsYlEGaYn2NGGdVlGgTHNmB4zrBOISN
+ JQXO9aEbQmJAjMEAAEKAB0WIQQWnetsC8PEYBPSx58Rpy6gFHHXcgUCaQyHvQAKCRARpy6gFHHX
+ cloMD/9OF3fFH2ocL8Z7nOwKg8hP3vnD3EG40rjc7S45XAgFiuaaVtEYGt47J1hn5auhZhE2IAK
+ kljR1tQxdyDJW1iqFp7nDuO/6cR87scNn07feUv4MqrP/yjCnDSRBaY8DfzMzyeioKtW0c4E0cO
+ u4IM29wIE7jBKe7FvbkNWyEqyNTA9yE/4pKY26qtWErFlFGfGis6PogGVvL34xh0vrPOTclL5b/
+ I61MlHHlV/T5frrjCBD+E6okzpEbUhXzDWewFOeWArXuPtzbtu4PkrIuG81lVG9nFBmjEDpP67w
+ akLLNOZ0l7MfRCa61ndHr1qc5Dk9mmL2ch8OKfzHr0KuCfngaNyNaCxKv69yLKsvd89UdhYVgxB
+ uF0y5bbl3nX9j0zu+UqZjNhJcaSenCGyAZIHrw5wOZp+IXQ6UP4JWJqaIdLEqSWBcp88s8sdQYD
+ +a3Tk2pfDYFS+iE76C7u8daHc0E27rpHcvFF4KQJnC0WQEFWrCkM7ORDJf8ZuqREmTewbUCVDmC
+ fbxCzT4h0rlJIZmqVX4W7zUMhiGoOjVUgHGBeHPodk0P4qfOcGEfvmlKmktTJvJdFoie8341Nxu
+ VJ8ghg8DGUAysH97WgUNNEdnQ3twkr0TPoMUzlF5u+5kcn7n7kCsGA+P8DKBcvFDV0HwPL22Nz7
+ HlMl68BdRVIuL1w==
 X-Developer-Key: i=bartosz.golaszewski@linaro.org; a=openpgp;
  fpr=169DEB6C0BC3C46013D2C79F11A72EA01471D772
 
 From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 
-As the first step in converting the driver to using DMA for register
-I/O, let's map the crypto memory range.
+Implement the infrastructure for performing register I/O over BAM DMA,
+not CPU. No functional change yet.
 
 Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 ---
- drivers/crypto/qce/core.c | 25 +++++++++++++++++++++++--
- drivers/crypto/qce/core.h |  6 ++++++
- 2 files changed, 29 insertions(+), 2 deletions(-)
+ drivers/crypto/qce/core.h |   4 ++
+ drivers/crypto/qce/dma.c  | 109 ++++++++++++++++++++++++++++++++++++++++++++++
+ drivers/crypto/qce/dma.h  |   5 +++
+ 3 files changed, 118 insertions(+)
 
-diff --git a/drivers/crypto/qce/core.c b/drivers/crypto/qce/core.c
-index aac65041f585221b800f4d7756e4bf9d9f21d0a0..e486d366c0d63aa0e1f545da9265e8ce689b50e0 100644
---- a/drivers/crypto/qce/core.c
-+++ b/drivers/crypto/qce/core.c
-@@ -186,10 +186,19 @@ static int qce_check_version(struct qce_device *qce)
- 	return 0;
- }
- 
-+static void qce_crypto_unmap_dma(void *data)
-+{
-+	struct qce_device *qce = data;
-+
-+	dma_unmap_resource(qce->dev, qce->base_dma, qce->dma_size,
-+			   DMA_BIDIRECTIONAL, 0);
-+}
-+
- static int qce_crypto_probe(struct platform_device *pdev)
- {
- 	struct device *dev = &pdev->dev;
- 	struct qce_device *qce;
-+	struct resource *res;
- 	int ret;
- 
- 	qce = devm_kzalloc(dev, sizeof(*qce), GFP_KERNEL);
-@@ -199,7 +208,7 @@ static int qce_crypto_probe(struct platform_device *pdev)
- 	qce->dev = dev;
- 	platform_set_drvdata(pdev, qce);
- 
--	qce->base = devm_platform_ioremap_resource(pdev, 0);
-+	qce->base = devm_platform_get_and_ioremap_resource(pdev, 0, &res);
- 	if (IS_ERR(qce->base))
- 		return PTR_ERR(qce->base);
- 
-@@ -245,7 +254,19 @@ static int qce_crypto_probe(struct platform_device *pdev)
- 	qce->async_req_enqueue = qce_async_request_enqueue;
- 	qce->async_req_done = qce_async_request_done;
- 
--	return devm_qce_register_algs(qce);
-+	ret = devm_qce_register_algs(qce);
-+	if (ret)
-+		return ret;
-+
-+	qce->dma_size = resource_size(res);
-+	qce->base_dma = dma_map_resource(dev, res->start, qce->dma_size,
-+					 DMA_BIDIRECTIONAL, 0);
-+	qce->base_phys = res->start;
-+	ret = dma_mapping_error(dev, qce->base_dma);
-+	if (ret)
-+		return ret;
-+
-+	return devm_add_action_or_reset(qce->dev, qce_crypto_unmap_dma, qce);
- }
- 
- static const struct of_device_id qce_crypto_of_match[] = {
 diff --git a/drivers/crypto/qce/core.h b/drivers/crypto/qce/core.h
-index f092ce2d3b04a936a37805c20ac5ba78d8fdd2df..a80e12eac6c87e5321cce16c56a4bf5003474ef0 100644
+index a80e12eac6c87e5321cce16c56a4bf5003474ef0..d238097f834e4605f3825f23d0316d4196439116 100644
 --- a/drivers/crypto/qce/core.h
 +++ b/drivers/crypto/qce/core.h
-@@ -27,6 +27,9 @@
-  * @dma: pointer to dma data
-  * @burst_size: the crypto burst size
-  * @pipe_pair_id: which pipe pair id the device using
-+ * @base_dma: base DMA address
-+ * @base_phys: base physical address
-+ * @dma_size: size of memory mapped for DMA
+@@ -30,6 +30,8 @@
+  * @base_dma: base DMA address
+  * @base_phys: base physical address
+  * @dma_size: size of memory mapped for DMA
++ * @read_buf: Buffer for DMA to write back to
++ * @read_buf_dma: Mapped address of the read buffer
   * @async_req_enqueue: invoked by every algorithm to enqueue a request
   * @async_req_done: invoked by every algorithm to finish its request
   */
-@@ -43,6 +46,9 @@ struct qce_device {
- 	struct qce_dma_data dma;
- 	int burst_size;
- 	unsigned int pipe_pair_id;
-+	dma_addr_t base_dma;
-+	phys_addr_t base_phys;
-+	size_t dma_size;
+@@ -49,6 +51,8 @@ struct qce_device {
+ 	dma_addr_t base_dma;
+ 	phys_addr_t base_phys;
+ 	size_t dma_size;
++	__le32 *read_buf;
++	dma_addr_t read_buf_dma;
  	int (*async_req_enqueue)(struct qce_device *qce,
  				 struct crypto_async_request *req);
  	void (*async_req_done)(struct qce_device *qce, int ret);
+diff --git a/drivers/crypto/qce/dma.c b/drivers/crypto/qce/dma.c
+index bfa54d3401ca095a089656e81a37474d6f788acf..9bb9a8246cb054dd16b9ab6cf5cfabef51b1ef83 100644
+--- a/drivers/crypto/qce/dma.c
++++ b/drivers/crypto/qce/dma.c
+@@ -4,6 +4,8 @@
+  */
+ 
+ #include <linux/device.h>
++#include <linux/dma/qcom_bam_dma.h>
++#include <linux/dma-mapping.h>
+ #include <linux/dmaengine.h>
+ #include <crypto/scatterwalk.h>
+ 
+@@ -11,6 +13,98 @@
+ #include "dma.h"
+ 
+ #define QCE_IGNORE_BUF_SZ		(2 * QCE_BAM_BURST_SIZE)
++#define QCE_BAM_CMD_SGL_SIZE		128
++#define QCE_BAM_CMD_ELEMENT_SIZE	128
++#define QCE_MAX_REG_READ		8
++
++struct qce_desc_info {
++	struct dma_async_tx_descriptor *dma_desc;
++	enum dma_data_direction dir;
++};
++
++struct qce_bam_transaction {
++	struct bam_cmd_element bam_ce[QCE_BAM_CMD_ELEMENT_SIZE];
++	struct scatterlist wr_sgl[QCE_BAM_CMD_SGL_SIZE];
++	struct qce_desc_info *desc;
++	u32 bam_ce_idx;
++	u32 pre_bam_ce_idx;
++	u32 wr_sgl_cnt;
++};
++
++void qce_clear_bam_transaction(struct qce_device *qce)
++{
++	struct qce_bam_transaction *bam_txn = qce->dma.bam_txn;
++
++	bam_txn->bam_ce_idx = 0;
++	bam_txn->wr_sgl_cnt = 0;
++	bam_txn->bam_ce_idx = 0;
++	bam_txn->pre_bam_ce_idx = 0;
++}
++
++int qce_submit_cmd_desc(struct qce_device *qce)
++{
++	struct qce_desc_info *qce_desc = qce->dma.bam_txn->desc;
++	struct qce_bam_transaction *bam_txn = qce->dma.bam_txn;
++	struct dma_async_tx_descriptor *dma_desc;
++	struct dma_chan *chan = qce->dma.rxchan;
++	unsigned long attrs = DMA_PREP_CMD;
++	dma_cookie_t cookie;
++	unsigned int mapped;
++	int ret;
++
++	mapped = dma_map_sg_attrs(qce->dev, bam_txn->wr_sgl, bam_txn->wr_sgl_cnt,
++				  DMA_TO_DEVICE, attrs);
++	if (!mapped)
++		return -ENOMEM;
++
++	dma_desc = dmaengine_prep_slave_sg(chan, bam_txn->wr_sgl, bam_txn->wr_sgl_cnt,
++					   DMA_MEM_TO_DEV, attrs);
++	if (!dma_desc) {
++		dma_unmap_sg(qce->dev, bam_txn->wr_sgl, bam_txn->wr_sgl_cnt, DMA_TO_DEVICE);
++		return -ENOMEM;
++	}
++
++	qce_desc->dma_desc = dma_desc;
++	cookie = dmaengine_submit(qce_desc->dma_desc);
++
++	ret = dma_submit_error(cookie);
++	if (ret)
++		return ret;
++
++	qce_dma_issue_pending(&qce->dma);
++
++	return 0;
++}
++
++static void qce_prep_dma_cmd_desc(struct qce_device *qce, struct qce_dma_data *dma,
++				  unsigned int addr, void *buf)
++{
++	struct qce_bam_transaction *bam_txn = dma->bam_txn;
++	struct bam_cmd_element *bam_ce_buf;
++	int bam_ce_size, cnt, idx;
++
++	idx = bam_txn->bam_ce_idx;
++	bam_ce_buf = &bam_txn->bam_ce[idx];
++	bam_prep_ce_le32(bam_ce_buf, addr, BAM_WRITE_COMMAND, *((__le32 *)buf));
++
++	bam_ce_buf = &bam_txn->bam_ce[bam_txn->pre_bam_ce_idx];
++	bam_txn->bam_ce_idx++;
++	bam_ce_size = (bam_txn->bam_ce_idx - bam_txn->pre_bam_ce_idx) * sizeof(*bam_ce_buf);
++
++	cnt = bam_txn->wr_sgl_cnt;
++
++	sg_set_buf(&bam_txn->wr_sgl[cnt], bam_ce_buf, bam_ce_size);
++
++	++bam_txn->wr_sgl_cnt;
++	bam_txn->pre_bam_ce_idx = bam_txn->bam_ce_idx;
++}
++
++void qce_write_dma(struct qce_device *qce, unsigned int offset, u32 val)
++{
++	unsigned int reg_addr = ((unsigned int)(qce->base_phys) + offset);
++
++	qce_prep_dma_cmd_desc(qce, &qce->dma, reg_addr, &val);
++}
+ 
+ int devm_qce_dma_request(struct qce_device *qce)
+ {
+@@ -29,6 +123,21 @@ int devm_qce_dma_request(struct qce_device *qce)
+ 	if (!dma->result_buf)
+ 		return -ENOMEM;
+ 
++	dma->bam_txn = devm_kzalloc(dev, sizeof(*dma->bam_txn), GFP_KERNEL);
++	if (!dma->bam_txn)
++		return -ENOMEM;
++
++	dma->bam_txn->desc = devm_kzalloc(dev, sizeof(*dma->bam_txn->desc), GFP_KERNEL);
++	if (!dma->bam_txn->desc)
++		return -ENOMEM;
++
++	sg_init_table(dma->bam_txn->wr_sgl, QCE_BAM_CMD_SGL_SIZE);
++
++	qce->read_buf = dmam_alloc_coherent(qce->dev, QCE_MAX_REG_READ * sizeof(*qce->read_buf),
++					    &qce->read_buf_dma, GFP_KERNEL);
++	if (!qce->read_buf)
++		return -ENOMEM;
++
+ 	return 0;
+ }
+ 
+diff --git a/drivers/crypto/qce/dma.h b/drivers/crypto/qce/dma.h
+index 483789d9fa98e79d1283de8297bf2fc2a773f3a7..f05dfa9e6b25bd60e32f45079a8bc7e6a4cf81f9 100644
+--- a/drivers/crypto/qce/dma.h
++++ b/drivers/crypto/qce/dma.h
+@@ -8,6 +8,7 @@
+ 
+ #include <linux/dmaengine.h>
+ 
++struct qce_bam_transaction;
+ struct qce_device;
+ 
+ /* maximum data transfer block size between BAM and CE */
+@@ -32,6 +33,7 @@ struct qce_dma_data {
+ 	struct dma_chan *txchan;
+ 	struct dma_chan *rxchan;
+ 	struct qce_result_dump *result_buf;
++	struct qce_bam_transaction *bam_txn;
+ };
+ 
+ int devm_qce_dma_request(struct qce_device *qce);
+@@ -43,5 +45,8 @@ int qce_dma_terminate_all(struct qce_dma_data *dma);
+ struct scatterlist *
+ qce_sgtable_add(struct sg_table *sgt, struct scatterlist *sg_add,
+ 		unsigned int max_len);
++void qce_write_dma(struct qce_device *qce, unsigned int offset, u32 val);
++int qce_submit_cmd_desc(struct qce_device *qce);
++void qce_clear_bam_transaction(struct qce_device *qce);
+ 
+ #endif /* _DMA_H_ */
 
 -- 
 2.51.0
