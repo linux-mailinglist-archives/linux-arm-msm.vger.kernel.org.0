@@ -1,63 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-80537-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-80538-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [IPv6:2605:f480:58:1:0:1994:3:14])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7C940C3995D
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 06 Nov 2025 09:29:17 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 99BD2C39999
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 06 Nov 2025 09:35:07 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 478564E1414
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Nov 2025 08:29:16 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id B4BA93AE846
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Nov 2025 08:33:03 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id AA9A5302154;
-	Thu,  6 Nov 2025 08:29:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 36BBC305E21;
+	Thu,  6 Nov 2025 08:32:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="dR1kJ7Qs"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="VinMJkhX"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E168D302174;
-	Thu,  6 Nov 2025 08:29:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B73826F29C;
+	Thu,  6 Nov 2025 08:32:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762417754; cv=none; b=d+/i1H8RL4o4l2YJL30ojH5xbhj4fQnL2Y6kjuxwfX7HW56hSAqtR11Yd9xMVOqGmQYjE1l9vdP6Z0TWms5sRLQpHRACwSw4xafR0i/hDA38QF0Wda4xryV4iDv2QHCuucnv8BsQaOHSumOn8mfSiXeAonVlKjEz6uoFFAb8V4E=
+	t=1762417977; cv=none; b=JWn3XFDJbxWWe/NAJhFdLGTqWp4AOo1utLcN6M1BrVLUZxbDgFIa45JFLQklgQgjeCpDcg8JZOdL63KV/Q6wfsx07IWcPSj+Ud4xQN5g5pV4BBgNmGKRWfWQLisq1/Y08eZAPgB74dllpzX2+BiSlAvaSCLzjjKwTKqqdFVnlqs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762417754; c=relaxed/simple;
-	bh=wzbpmt9DYjDnOYsbKZsscaSDP3dQXL8FPtmzZlZYQ54=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=fggoKAJ6C7N2OlLQ6cUnRIS5g/xFhuKAMdqPHXG4KaMbazo/FNtLu0zw/4KQQL1WelWP4slY0yXDhUNpVc1OLI75N3TPGA2aCC3n58rNsg/GPEHNWEyyNkWg/ObKAWnO710U2xhb3kWiBppedCrlryTaPI/zst/v2TcDyRqvUMo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=dR1kJ7Qs; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 5A66RXmI1938890;
-	Thu, 6 Nov 2025 08:29:09 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	ftdAUJ1zoIYS6ZwSplDb8Q4d/5w7ZpnVJCEZRLJ60xY=; b=dR1kJ7QskziBRs+j
-	vTxdNn8yHcE6FSGAWiD7GxvXRPol3+8SGy07W4mdFhY/jaJ68VWAXoJBxjOTDmhf
-	pgR/QwArMmExgK84pjJZ+Bgm79DDZLc+hg2M0z5FcrrHArGtV4aaamFFonN7rDeP
-	+BGrXn+oWeIpvglIPXAXqVfU+454s54YCtWWotlDhQ/fJxiq9filghCWKhMUpRHe
-	P2u7kHCmnH8ESsG1CkMNFkYAg/FjlwlV3aKvaDItflx4uhFt2jXhWOiPwf6LI6W+
-	DwsCiOl8y848EkF0ecZpiIf5XvAmqNFWyAzzjJ1yxhTgn/RPNhdWGmyty9sVrpNd
-	eX41WQ==
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4a8apgtbsu-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 06 Nov 2025 08:29:09 +0000 (GMT)
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-	by NALASPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 5A68T8mD022667
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 6 Nov 2025 08:29:08 GMT
-Received: from [10.204.78.32] (10.80.80.8) by nalasex01c.na.qualcomm.com
- (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1748.24; Thu, 6 Nov
- 2025 00:29:04 -0800
-Message-ID: <3ddb78d0-5afd-4ba7-a0a2-bfd5ae3696c4@quicinc.com>
-Date: Thu, 6 Nov 2025 13:59:01 +0530
+	s=arc-20240116; t=1762417977; c=relaxed/simple;
+	bh=STsIu8bFTR4NVVgwpx4ApxUxvflTg7CNy3OA/0qIFVI=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=c7GGOgdkkqM2hgYnqVHkJi4nqjEXSqXBBUH9jmWdTcvak5s9ajgwHluOul28QBtq79HsTGFibZMzi79Xa4kwSOI460pwdGhPaX9wNgXJsU35tLnQvkZ7nbOsUQ4lzVMNReMJ1uux4dw5eVdkFxUEdqWIvsEITM5Lbb49YU6Cb+o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=VinMJkhX; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5DC2FC4CEF7;
+	Thu,  6 Nov 2025 08:32:53 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1762417976;
+	bh=STsIu8bFTR4NVVgwpx4ApxUxvflTg7CNy3OA/0qIFVI=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=VinMJkhXXWdQP01tDLFLrtP3H8KIin2BcURSLyMwjcA1dXrngEk4rc4af1HdhNzdE
+	 x+CML3UQugWjWfJq+ImPdoY5GWo6/WjeQL4XoNmm0iB+Bb7PVdl4MArMy6WdYle3WL
+	 254ppL2QGHSMc0Om6UUdhpwWsy5DTQJHlfQBeV1Ihfdieg3/ZeOOZ/LRe0GPvjhV0o
+	 0lpYLheNkSe9Jn5s0utpTeCs4cypwEEzGYEwtYQldzKY7sAYsEUsH8yyEE01oeResE
+	 FUeFD1iq8+BkCGl+HenUc4N8f/l0NskA7Kh/lFzPZTkcSQOcroksNkxwWAPwTlXgXw
+	 MQFMCI+KCFaJw==
+Message-ID: <0e274f07-1eef-4f2b-9db1-480961eb7005@kernel.org>
+Date: Thu, 6 Nov 2025 09:32:51 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -65,114 +50,90 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] arm64: dts: qcom: qcs6490-rb3gen2: Use 'edp_hot' function
- for hpd gpio
-To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-CC: <andersson@kernel.org>, <konradybcio@kernel.org>, <robh@kernel.org>,
-        <krzk+dt@kernel.org>, <conor+dt@kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <quic_riteshk@quicinc.com>,
-        <quic_rajeevny@quicinc.com>, <quic_vproddut@quicinc.com>
-References: <20251031085739.440153-1-quic_amitsi@quicinc.com>
- <a6fbpfulyhbnfoy2d6wf7hl6de3z34gxcu6f4lby7ncsyu3f2g@q6qcvdid7bko>
+Subject: Re: [PATCH v2 5/7] dt-bindings: arm: qcom: Add TUXEDO Computers
+ device
+To: Georg Gottleuber <ggo@tuxedocomputers.com>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org, Ettore Chimenti <ettore.chimenti@linaro.org>,
+ Srinivas Kandagatla <srini@kernel.org>, stefan.schmidt@linaro.org,
+ stephan.gerhold@linaro.org, wse@tuxedocomputers.com, cs@tuxedo.de
+References: <20251105154107.148187-1-ggo@tuxedocomputers.com>
+ <20251105154107.148187-6-ggo@tuxedocomputers.com>
+From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
-From: Amit Singh <quic_amitsi@quicinc.com>
-In-Reply-To: <a6fbpfulyhbnfoy2d6wf7hl6de3z34gxcu6f4lby7ncsyu3f2g@q6qcvdid7bko>
-Content-Type: text/plain; charset="UTF-8"
+Autocrypt: addr=krzk@kernel.org; keydata=
+ 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 a/A=
+In-Reply-To: <20251105154107.148187-6-ggo@tuxedocomputers.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMTA2MDA2OCBTYWx0ZWRfX/KnLMD9fo9j7
- 1MIVKhBPcGqPEBLQPbPBpQkx3+gyAq8vcSPjA/4d3QASVfAbwg9BBCjzccdh4N1ASXbf3NM2xR8
- Yd86MP41f3lTLOnWzH2gQ1oOwneHLSXrzVE1TrqmVloPvtt4/F+ixDdgmK+JfBGCsAEiy9r4BSH
- yNYgqjBF9bVU49MJZwiQZkkq6D4at9COUNTG0AP7Kzf1ifGMR9hMUR5H+NOVNJM2i4XLwBoIxeN
- gJMmpQu9WmWbpXHqf80ZrcWdoNU+PmScVBVkcqjIjVk0/a1H4ExbCdMj6c+5NRCSrnkEkW7fAUD
- BU2uc4DQSwVmlHSwWnNsunVjaiNellNciqN+2XHtQ3b0X1LjHkNdDEBKsNfo+CnfYVmK32/JAT7
- Rk5bksEfi+25/PUJNBhRzKlkzS7mIw==
-X-Authority-Analysis: v=2.4 cv=LoCfC3dc c=1 sm=1 tr=0 ts=690c5c55 cx=c_pps
- a=ouPCqIW2jiPt+lZRy3xVPw==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
- a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=6UeiqGixMTsA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=COk6AnOGAAAA:8 a=02aoYn3nmM_QT12xQSUA:9
- a=QEXdDO2ut3YA:10 a=TjNXssC_j7lpFel5tvFf:22 a=cPQSjfK2_nFv0Q5t_7PE:22
-X-Proofpoint-GUID: xKLl7KWg8PVDPyz-YzkWZXtHBKZ5XPRE
-X-Proofpoint-ORIG-GUID: xKLl7KWg8PVDPyz-YzkWZXtHBKZ5XPRE
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
- definitions=2025-11-06_01,2025-11-06_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 lowpriorityscore=0 clxscore=1015 malwarescore=0
- suspectscore=0 spamscore=0 phishscore=0 impostorscore=0 bulkscore=0
- adultscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2510240001
- definitions=main-2511060068
 
-
-
-On 11/1/2025 2:48 PM, Dmitry Baryshkov wrote:
-> On Fri, Oct 31, 2025 at 02:27:39PM +0530, Amit Singh wrote:
->> Currently, hpd gpio is configured as a general-purpose gpio, which does
+On 05/11/2025 16:41, Georg Gottleuber wrote:
+> Document the X1E80100-based TUXEDO laptop
 > 
-> HPD, GPIO
-
-Sure, will update in next version.
-
+> Signed-off-by: Georg Gottleuber <ggo@tuxedocomputers.com>
+> ---
+>  Documentation/devicetree/bindings/arm/qcom.yaml | 1 +
+>  1 file changed, 1 insertion(+)
 > 
->> not support interrupt generation.
-> 
-> This is not true. GPIOs support interrupt generation.
+> diff --git a/Documentation/devicetree/bindings/arm/qcom.yaml b/Documentation/devicetree/bindings/arm/qcom.yaml
+> index 18b5ed044f9f..6e5aa9d6e1a8 100644
+> --- a/Documentation/devicetree/bindings/arm/qcom.yaml
+> +++ b/Documentation/devicetree/bindings/arm/qcom.yaml
+> @@ -1073,6 +1073,7 @@ properties:
+>                - microsoft,romulus15
+>                - qcom,x1e80100-crd
+>                - qcom,x1e80100-qcp
+> +              - tuxedo,elite14gen1
+>            - const: qcom,x1e80100
 
-Will update the commit message.
+Cover letter says X1E78100, commit msg and bindings say X1E80100.
 
-> 
->> This change removes the generic
-> 
-> Documentation/process/submitting-patches.rst, see the paragraph around
-> "This patch" words.
+Something is for sure not saying right. Decide which one.
 
-Sure, will follow the guidelines. 
-
-> 
->> hpd-gpios property and assigns the edp_hot function to the pin,
->> enabling proper irq support.
-> 
-> What for?
-
-I'll update more details in the commit message.
-
-> 
->>
->> Fixes: 756efb7cb7293 ("arm64: dts: qcom: qcs6490-rb3gen2: Add DP output")
->> Signed-off-by: Amit Singh <quic_amitsi@quicinc.com>
->> ---
->>  arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts | 3 ---
->>  1 file changed, 3 deletions(-)
->>
->> diff --git a/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts b/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts
->> index c146161e4bb4..caa0b6784df3 100644
->> --- a/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts
->> +++ b/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts
->> @@ -49,8 +49,6 @@ dp-connector {
->>  		label = "DP";
->>  		type = "mini";
->>  
->> -		hpd-gpios = <&tlmm 60 GPIO_ACTIVE_HIGH>;
->> -
->>  		port {
->>  			dp_connector_in: endpoint {
->>  				remote-endpoint = <&mdss_edp_out>;
->> @@ -1420,7 +1418,6 @@ &wifi {
->>  /* PINCTRL - ADDITIONS TO NODES IN PARENT DEVICE TREE FILES */
->>  
->>  &edp_hot_plug_det {
->> -	function = "gpio";
->>  	bias-disable;
->>  };
->>  
->> -- 
->> 2.34.1
->>
-> 
-
+Best regards,
+Krzysztof
 
