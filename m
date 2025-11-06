@@ -1,245 +1,134 @@
-Return-Path: <linux-arm-msm+bounces-80635-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-80636-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [142.0.200.124])
-	by mail.lfdr.de (Postfix) with ESMTPS id 62E84C3C257
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 06 Nov 2025 16:46:14 +0100 (CET)
+Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [IPv6:2605:f480:58:1:0:1994:3:14])
+	by mail.lfdr.de (Postfix) with ESMTPS id 045ABC3C295
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 06 Nov 2025 16:48:39 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id AF8794EBAAC
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Nov 2025 15:45:59 +0000 (UTC)
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id E9B254E030C
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Nov 2025 15:48:37 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B09DA34402B;
-	Thu,  6 Nov 2025 15:45:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8C91D30F53A;
+	Thu,  6 Nov 2025 15:48:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b="LuMVblwO"
+	dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b="vnxDit2v"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f53.google.com (mail-wm1-f53.google.com [209.85.128.53])
+Received: from mail-pf1-f175.google.com (mail-pf1-f175.google.com [209.85.210.175])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0B3E340A63
-	for <linux-arm-msm@vger.kernel.org>; Thu,  6 Nov 2025 15:45:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31A72217F2E
+	for <linux-arm-msm@vger.kernel.org>; Thu,  6 Nov 2025 15:48:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.175
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762443908; cv=none; b=MiEizdr9e2gZEEMmSx73XBkh0AagOb5kkFJsJNzbzdR0JiARF4CO87+o77d11Rp29A9OdKKoSnvcUtjja++YZ+gK29SjsTyG/sipbCtUWxkO6w5sRwupM2BRWDb9ufl7zBD0OO/hAlJQJ1Ti0lh7nvwGQvB0SnCgVxcnN0tT6Xk=
+	t=1762444114; cv=none; b=ltC+ytIE88mE9ApzNX6EqxlBcf3QbpxQzBG2mNeb1DOBy1nih9i8UZUf2UAF7fOoIy7u2U4p4QHz1M9ZnXCiA7CkyvmOoJ1Y+Z9RMJWwATXJtSKENF2A/GjuObMooi2KrN2oBiurlJUUF04x6MuD85bPw1GKHXaOIKYrGwHXdKw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762443908; c=relaxed/simple;
-	bh=ZWq7Pm27cK1DpvY/EMDI4nfic014qXdOnMiOukcqk+0=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=mTn431t6w41FxMK9kS8V/uDhDRr96cfAVlAiELHUJtcqr3sFJxFHwzw3Ms9KYxfsaro9m+FEFp+gG6ILZvht43k3oGM+EJgscOl7pTP7Vpo1rN1CkA64vpFdI5/FgMo/Q46iJGyD6XzHuXmU3TttoU1AcFngHyXzk6uxF0FsvPM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl; spf=none smtp.mailfrom=bgdev.pl; dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b=LuMVblwO; arc=none smtp.client-ip=209.85.128.53
+	s=arc-20240116; t=1762444114; c=relaxed/simple;
+	bh=IzsySpkujMcR4WoEBmC55L6jaGwoKuDh9CSfvagLBlM=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=YLe7O341TkQAdxf1lG2dCtXE2blWBKR7/BnguqqW760vUgcUrp+mSLOXLuUvMHkHSMbakBuEe7ScVsuayYL9FkR+626kiENWdMmkxQuOlWmtvr+wRdZ+0Ok+A4JC/aVx3TVi0pblfW1TJ5tLnnF5K817LIe+Sw3+xcvdEhvTsuQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl; spf=none smtp.mailfrom=bgdev.pl; dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b=vnxDit2v; arc=none smtp.client-ip=209.85.210.175
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl
 Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=bgdev.pl
-Received: by mail-wm1-f53.google.com with SMTP id 5b1f17b1804b1-47728f914a4so6861945e9.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 06 Nov 2025 07:45:05 -0800 (PST)
+Received: by mail-pf1-f175.google.com with SMTP id d2e1a72fcca58-7ade456b6abso1054991b3a.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 06 Nov 2025 07:48:33 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=bgdev-pl.20230601.gappssmtp.com; s=20230601; t=1762443903; x=1763048703; darn=vger.kernel.org;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=esEdcTh2LbyZ9Fgnuw95sR3yJENLiwNORj0la+mn6sE=;
-        b=LuMVblwOk4/RnFDvvuzNd5ulo5Kp/fNm8Y8FrAVDofmfTdHYS0ebNnUdCjNi7nMDs/
-         OBUQKKUdgDCI/eXAMWwdaPfMPn9DpqI0h1H3jtOMrAmy+9NJyV49xxcnWIiua977en7/
-         sDOkqXuT6aAZ5J3XkyinBbrcQEzxSGsZPEGr6Xoip1/7cqvuFlXt6/XMh34K4FksKcEA
-         MEsqKyZ8JCxgI+wEy6HXjXQhQLNMk8doMaUE6iVCHlA4MiqHjiuBINSSG9Bv02mysZMc
-         dvYOBIv5cZg87g30dewNgojvm0CXgnhRtADQcqxUrapLNsdj7/MtjZQElmGwRbguQnml
-         vVEA==
+        d=bgdev-pl.20230601.gappssmtp.com; s=20230601; t=1762444112; x=1763048912; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=97N5NFxuu/uCytVCp353kHzM6K2Dbd7TnX+o0fzl0i0=;
+        b=vnxDit2vauZQMJwZ2ytrCOVucQuUZyaX3P9jn9+sZGDLDkFHL61/EcEYrZunmkgqPo
+         sfmeGvdn4+APinTvn5Z4sHdp2F4XCh2kLIdd3q3Y/SojuLAwfTkakZjYJbfoQBY4YtWj
+         R19eO6GqGUfkTjzt1gSwoUa7YkVeEgPGQ+krmgF6Gp+3ndvjQtHECwBLOjSpNMAI4sS7
+         O7k7L8OFkp8JZ8qsp1J1j3/IeRk9OnEy5O0zd6Y4j9Ko+cc+fOaPuiOYPx1g4yJbk03t
+         /05SY0vuqfiu2h4ppZBoBLeNa6F0uYpZXZQdwudojfoC9s3gU/aIwdaOkMs8E0+xaoD9
+         rc5Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1762443903; x=1763048703;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=esEdcTh2LbyZ9Fgnuw95sR3yJENLiwNORj0la+mn6sE=;
-        b=irmWOx1XPAyMlK0ErlHZ9VWn6ftBP6xBVlQNEytkqMpIFhh/WZRB21jq5R5lPJrQHj
-         lhTXUQ0Ldl5U2WS0dQAme9q1PfemZmCdCk3yP6iYJ4x8vomaJ+6Ui44FgEK4aw2pJFid
-         h10vT2Fg6RVwB+9meSpvfBLKgdK0ci0e3eIniXT2AF2tVAh/BKjRI8D32gzenev1+/Yb
-         9uZlI9LTXl39WuWquCSeLp40seb2pz3VaF5bYVewzPGg+Ivu6Isyn7jQoSYYObRFmYJ9
-         kyw8zbw3/9m9wP5wdlcVdPxbWhv7YE58JXaGpG1wRqda1ulfj38kHgLTVWHGqRTHzGTI
-         NgqQ==
-X-Gm-Message-State: AOJu0Yzifdl9LaUzL13f4aP3+mBf0m1uKHLiEiJ2PKoq/oe8AE+7poFK
-	ErffP/HGOPuFfERT8UpT/MTnX6GzPRQw8Wy0os/LO7uF4iXd2DR/nF9DCeMKroH475LU56Tkw39
-	5necNE7w=
-X-Gm-Gg: ASbGncs6HP5YaUNwUULAXPveAmusc6VQBWjswCR17wsmfrcK/GUH5MJbobdm08kI6JK
-	uq+5r6GZPVUJorqWs7p1OQSHDOT2e7HxHo3KMF3U9GsnpUMEYjgMdbOUVAwF9ph/a/qJBNMY5GP
-	PgRwGtIWLJJWhEtyo6iZpb+gXk7yZJiNZUbUHja1oRwcxgTuC11GNfRp7FAnWC2DJCeIUzfmxXN
-	PKqTEqPcwXM9UKoZgtu22YtDr0UimPus/9J3/ZjmgLqjnEEYbIi9qV/wyfNXOjKS/YyWPm+FMKw
-	ejZoDTMnuWpiqGDD/TKRMvczF96Gtr2fr8WEqW6zFTYwH2NtKrapbvVWZHwimHhxcPzYckV0xh0
-	5xv/djR6KS+WruzQz3O/MTYo2Tjl9Qkk56qUPG0aVjQjAjN0gRcGNYfUGH6WbsU4/otHHcEMvON
-	Y05J4e
-X-Google-Smtp-Source: AGHT+IEhmTqYfdZXcR34f8oucO4sNMzMcglUrQpy+XWcCDtrKQdVYJjqpPhuV6/BnBrxb3O3h50pRA==
-X-Received: by 2002:a05:600c:46ce:b0:471:14af:c715 with SMTP id 5b1f17b1804b1-4775cd9c05emr66589085e9.3.1762443903419;
-        Thu, 06 Nov 2025 07:45:03 -0800 (PST)
-Received: from [127.0.1.1] ([2a01:cb1d:dc:7e00:d9de:4038:a78:acab])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-47763e66b1fsm20621705e9.1.2025.11.06.07.45.01
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 06 Nov 2025 07:45:01 -0800 (PST)
-From: Bartosz Golaszewski <brgl@bgdev.pl>
-Date: Thu, 06 Nov 2025 16:44:52 +0100
-Subject: [PATCH 3/3] dmaengine: qcom: bam_dma: convert tasklet to a
- workqueue
+        d=1e100.net; s=20230601; t=1762444112; x=1763048912;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=97N5NFxuu/uCytVCp353kHzM6K2Dbd7TnX+o0fzl0i0=;
+        b=cVXUc4Dz4bdtMaBTq3oZorJj4KTZJvRxa8+YeJK9ecqzq0Y+n90Ex2MHwIlKPP6eC+
+         seDUU27nYJuxp/4JVKfm+/2KGpn/LBl4m2IRSlDaezRdweUPyekXNKwQs0tA/fXaYBgZ
+         iWihrr+VWJ0G/eXfXVl+2JOFFR9CoD8EsqMj4p5sJDeH6bB7z8V3ERnCR5KSYdYiQ0EY
+         tu+vQdp+Ji7a5Ad02/wu5vXQmZzv52RH2BMa1fUc+UB5AOf5Ho6HkkVvRiTMaLZPklyf
+         N1FzQXJYxyRGXF63WgPI2WXeghjl8FPxx5TRIol+0zQ1S+9h0dBet2pVfMqNYQyMpdl2
+         IYYQ==
+X-Forwarded-Encrypted: i=1; AJvYcCVWqtGLF3OY+cifVhjpPJQbBgvMHHiE1hLdbBhJbVEyooSL3pBw84zOgbpEJlmBM1hu8R0GliwTaSHg1h26@vger.kernel.org
+X-Gm-Message-State: AOJu0YxCSmS7v4NZ20HfvC5f0Ac3SQmuvxjQqWCtxgp5E7R4OZL/oMnv
+	Dnp84h0oMNqg36CnUwkcc3y8FkDxFkxhMgahhyMUXV4fzKXZQzIp54OkdZbJiEmVC+jXB7b/Aab
+	7zNYwBI7RzJVzYbeyRggFHF6zp179AqV2sjnnhJ3HBA==
+X-Gm-Gg: ASbGncvZJMXLKOD4neH052ENsBbSzCvq/0BkSwtZmMrFKAZ4s7dTdp6cxAR8900PQ8B
+	dzUxLH5OsSF81NJDpciOjNUwyKHgspZO7UWcol+XURiPS04ABar/j6CiulKGM+Zpw8tBb+oew8s
+	4wkdKhhzPTzYhI4ae8riTRonpbZi9n+HWuiGSEEAlSnEyHsbZDO/mE1DWHHyLIJzkVUe2KxXNqA
+	sl3BtGQT1JKMXAbGe5HiibUl4kf10G6pt9TF+NhNbD8uMOuAVyundIwM0/fW3LlMsRW4JMGI/XX
+	D5SDXuxB5V+B6a2jPgvbMLxVKw==
+X-Google-Smtp-Source: AGHT+IGkyMxFIxYqEfsxkoeH8/+bnCDt9rf3tx5Zv59yWcveQKoUxGPzEJY1muHMLt5mGF2Rg9TIu+z/TPDNf8xk2Uk=
+X-Received: by 2002:a05:6a20:7488:b0:34f:ec32:6a4b with SMTP id
+ adf61e73a8af0-35229d68476mr26916637.32.1762444112518; Thu, 06 Nov 2025
+ 07:48:32 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20251106-qcom-bam-dma-refactor-v1-3-0e2baaf3d81a@linaro.org>
-References: <20251106-qcom-bam-dma-refactor-v1-0-0e2baaf3d81a@linaro.org>
-In-Reply-To: <20251106-qcom-bam-dma-refactor-v1-0-0e2baaf3d81a@linaro.org>
-To: Vinod Koul <vkoul@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, dmaengine@vger.kernel.org, 
- linux-kernel@vger.kernel.org, 
- Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=3969;
- i=bartosz.golaszewski@linaro.org; h=from:subject:message-id;
- bh=si4pCCUV8uwm3sY3u1lXmrBH/4Zfvei8bJceXOrOIWE=;
- b=owEBbQKS/ZANAwAKARGnLqAUcddyAcsmYgBpDMJ3UfxwOakrKsFNxGyj8BtSpDAPTF7NZNotr
- edMLaTHzJKJAjMEAAEKAB0WIQQWnetsC8PEYBPSx58Rpy6gFHHXcgUCaQzCdwAKCRARpy6gFHHX
- cqTAEAChjL6VcpPC0zJqB1yMKMOSrYLQog0rwwZiC1Oui8df2pl3D9j2p+GPRjhF93EMzGzkCof
- 7DP7fiVmCT0Okz7U5KY8JVvN+VIPTUbzLTnF3GFMsvRjHV4GZ8aU9EUmmEHzi6raKf0ve+PY0Yn
- NBDj3uwtyFS4OgXhlierqbUjbPLCqzB0zR9e5jhNgS4jW9BkjnNt8Mm8jeEkFU4uHBRar0IUedc
- S8LoYwuVfdkzkRNsshO58gNkhVhn6UnkuCgwBmqwGTMtiS6gdiHfIVQznzvhuU+zCUWxGO9rLg3
- e2wpKh6HQNmJbcG2KqWCm5LYTWlWtC7wr+mPPDApuArqiVENpWCVkB3mY9t2u+fXgbv7rSnvQAm
- yBUy0xjkl8RHoDkCAfEKN+xiC6W34w+rNp9SzltMkhlGzLO38Pz9ZYMU5rSCM0IseTIiWnttscF
- dIJlPCS2EU6jugDEZZqfZwHg8oA1gaLVxoq3DvSjGERQVB+iu/MA4jApbT6+2hUGgqKo6AWVAjb
- 00kGSDAkwEf7EarmDe9HFZ7seubicjCzCjeJz/CBoF6sl+KRezsMv/nhm1eZDv/2wWVxJZp2ZQ3
- XCu2NyXc5TLZTHpZ4Lq/axxkH+EZwA10AbhBwE7gPeUzv9tygCCB6c5en6tWGoYSp8HhNb6Cg4x
- H5jpNhLUBCKdX0A==
-X-Developer-Key: i=bartosz.golaszewski@linaro.org; a=openpgp;
- fpr=169DEB6C0BC3C46013D2C79F11A72EA01471D772
+References: <20251105-pci-m2-v1-0-84b5f1f1e5e8@oss.qualcomm.com>
+ <20251105-pci-m2-v1-4-84b5f1f1e5e8@oss.qualcomm.com> <CAMRc=McB4Zk8WuSPL=7+7kX4RJbdFBNReWZyiFnH8vfVx3DxAg@mail.gmail.com>
+ <tc2r2mme4wtre7vb7xj22vz55pks4fbdabyl62mgutyhcjxnlx@qn4jvx3jqhie>
+ <CAMRc=McDYL_B+hFtLekevtB2XpUkaMN1dsDNeefvR+ppj4whFg@mail.gmail.com> <5wbwpr7ivnvpttacyl7b5fsexfda2uvoqau7yaaxuavskka4z6@vvntbnakzrjb>
+In-Reply-To: <5wbwpr7ivnvpttacyl7b5fsexfda2uvoqau7yaaxuavskka4z6@vvntbnakzrjb>
+From: Bartosz Golaszewski <brgl@bgdev.pl>
+Date: Thu, 6 Nov 2025 16:48:18 +0100
+X-Gm-Features: AWmQ_bkhQdbMkrAQ_h-vWt-L8tplAxdm964sVXmj6JsL9Vun-srDl-nRdBMs44k
+Message-ID: <CAMRc=MfCQgMd-7QczbnRuBAvXnhJ5QyUzRswECfKC3NbQ=rArg@mail.gmail.com>
+Subject: Re: [PATCH 4/4] power: sequencing: Add the Power Sequencing driver
+ for the PCIe M.2 connectors
+To: Manivannan Sadhasivam <mani@kernel.org>
+Cc: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>, 
+	Bjorn Helgaas <bhelgaas@google.com>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, linux-kernel@vger.kernel.org, 
+	linux-pci@vger.kernel.org, devicetree@vger.kernel.org, 
+	linux-arm-msm@vger.kernel.org, Stephan Gerhold <stephan.gerhold@linaro.org>, 
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+On Thu, Nov 6, 2025 at 3:32=E2=80=AFPM Manivannan Sadhasivam <mani@kernel.o=
+rg> wrote:
+>
+> >
+> > To answer your question: sure, there is nothing wrong with having a
+> > default match callback but first: I'd like to see more than one user
+> > before we generalize it, and second: it still needs some logic. What
+> > is the relationship between the firmware nodes of dev and pwrseq here
+> > exactly?
+> >
+>
+> The 'dev' belongs to the PCIe Root Port node where the graph port is defi=
+ned:
+>
+> &pcie6_port0 {
+>         ...
+>         port {
+>                 pcie6a_port0_ep: endpoint {
+>                         remote-endpoint =3D <&m2_pcie_ep>;
+>                 };
+>         };
+> };
+>
+> So I have to do remote-endpoint lookup from the pwrseq and compare the of=
+_node
+> of the parent with 'dev->of_node', I believe. If so, this looks like a co=
+mmon
+> pattern.
+>
 
-There is nothing in the interrupt handling that requires us to run in
-atomic context so convert the tasklet to a workqueue.
+Sounds right. I would still keep it in this driver until we have at
+least a second user that wants to do the same thing.
 
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
----
- drivers/dma/qcom/bam_dma.c | 32 ++++++++++++++++----------------
- 1 file changed, 16 insertions(+), 16 deletions(-)
-
-diff --git a/drivers/dma/qcom/bam_dma.c b/drivers/dma/qcom/bam_dma.c
-index bcd8de9a9a12621a36b49c31bff96f474468be06..40ad4179177fb7a074776db05b834da012f6a35f 100644
---- a/drivers/dma/qcom/bam_dma.c
-+++ b/drivers/dma/qcom/bam_dma.c
-@@ -42,6 +42,7 @@
- #include <linux/pm_runtime.h>
- #include <linux/scatterlist.h>
- #include <linux/slab.h>
-+#include <linux/workqueue.h>
- 
- #include "../dmaengine.h"
- #include "../virt-dma.h"
-@@ -397,8 +398,8 @@ struct bam_device {
- 	struct clk *bamclk;
- 	int irq;
- 
--	/* dma start transaction tasklet */
--	struct tasklet_struct task;
-+	/* dma start transaction workqueue */
-+	struct work_struct work;
- };
- 
- /**
-@@ -869,7 +870,7 @@ static u32 process_channel_irqs(struct bam_device *bdev)
- 			/*
- 			 * if complete, process cookie. Otherwise
- 			 * push back to front of desc_issued so that
--			 * it gets restarted by the tasklet
-+			 * it gets restarted by the work queue.
- 			 */
- 			if (!async_desc->num_desc) {
- 				vchan_cookie_complete(&async_desc->vd);
-@@ -899,9 +900,9 @@ static irqreturn_t bam_dma_irq(int irq, void *data)
- 
- 	srcs |= process_channel_irqs(bdev);
- 
--	/* kick off tasklet to start next dma transfer */
-+	/* kick off the work queue to start next dma transfer */
- 	if (srcs & P_IRQ)
--		tasklet_schedule(&bdev->task);
-+		schedule_work(&bdev->work);
- 
- 	ret = pm_runtime_get_sync(bdev->dev);
- 	if (ret < 0)
-@@ -1097,14 +1098,14 @@ static void bam_start_dma(struct bam_chan *bchan)
- }
- 
- /**
-- * dma_tasklet - DMA IRQ tasklet
-- * @t: tasklet argument (bam controller structure)
-+ * bam_dma_work() - DMA interrupt work queue callback
-+ * @work: work queue struct embedded in the BAM controller device struct
-  *
-  * Sets up next DMA operation and then processes all completed transactions
-  */
--static void dma_tasklet(struct tasklet_struct *t)
-+static void bam_dma_work(struct work_struct *work)
- {
--	struct bam_device *bdev = from_tasklet(bdev, t, task);
-+	struct bam_device *bdev = from_work(bdev, work, work);
- 	struct bam_chan *bchan;
- 	unsigned int i;
- 
-@@ -1117,14 +1118,13 @@ static void dma_tasklet(struct tasklet_struct *t)
- 		if (!list_empty(&bchan->vc.desc_issued) && !IS_BUSY(bchan))
- 			bam_start_dma(bchan);
- 	}
--
- }
- 
- /**
-  * bam_issue_pending - starts pending transactions
-  * @chan: dma channel
-  *
-- * Calls tasklet directly which in turn starts any pending transactions
-+ * Calls work queue directly which in turn starts any pending transactions
-  */
- static void bam_issue_pending(struct dma_chan *chan)
- {
-@@ -1292,14 +1292,14 @@ static int bam_dma_probe(struct platform_device *pdev)
- 	if (ret)
- 		goto err_disable_clk;
- 
--	tasklet_setup(&bdev->task, dma_tasklet);
-+	INIT_WORK(&bdev->work, bam_dma_work);
- 
- 	bdev->channels = devm_kcalloc(bdev->dev, bdev->num_channels,
- 				sizeof(*bdev->channels), GFP_KERNEL);
- 
- 	if (!bdev->channels) {
- 		ret = -ENOMEM;
--		goto err_tasklet_kill;
-+		goto err_workqueue_cancel;
- 	}
- 
- 	/* allocate and initialize channels */
-@@ -1364,8 +1364,8 @@ static int bam_dma_probe(struct platform_device *pdev)
- err_bam_channel_exit:
- 	for (i = 0; i < bdev->num_channels; i++)
- 		tasklet_kill(&bdev->channels[i].vc.task);
--err_tasklet_kill:
--	tasklet_kill(&bdev->task);
-+err_workqueue_cancel:
-+	cancel_work_sync(&bdev->work);
- err_disable_clk:
- 	clk_disable_unprepare(bdev->bamclk);
- 
-@@ -1399,7 +1399,7 @@ static void bam_dma_remove(struct platform_device *pdev)
- 			    bdev->channels[i].fifo_phys);
- 	}
- 
--	tasklet_kill(&bdev->task);
-+	cancel_work_sync(&bdev->work);
- 
- 	clk_disable_unprepare(bdev->bamclk);
- }
-
--- 
-2.51.0
-
+Bartosz
 
