@@ -1,132 +1,173 @@
-Return-Path: <linux-arm-msm+bounces-80540-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-80541-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ams.mirrors.kernel.org (ams.mirrors.kernel.org [213.196.21.55])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8FE96C39A00
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 06 Nov 2025 09:46:16 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id B71FDC39A22
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 06 Nov 2025 09:48:25 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ams.mirrors.kernel.org (Postfix) with ESMTPS id 3C3C335056C
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Nov 2025 08:46:16 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 2CE981A21112
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Nov 2025 08:48:50 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 756913090D5;
-	Thu,  6 Nov 2025 08:46:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B11C1308F35;
+	Thu,  6 Nov 2025 08:48:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="wLbTyywC"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="tmDL8kr5"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f49.google.com (mail-wm1-f49.google.com [209.85.128.49])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 935381C4A13
-	for <linux-arm-msm@vger.kernel.org>; Thu,  6 Nov 2025 08:46:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7EBBA3002C5;
+	Thu,  6 Nov 2025 08:48:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762418769; cv=none; b=agxWBileFRGpm1d48eRT8QyuYghsDcssnxvqq4HPGyEFa2KjwTENLOkeDM846BWSzLuLm6ujbqqYmrNY4HYMrAiQnaZa819X1MXMDsZmdfvAIy3pU6GECvATojSZhg5uVTfllsEeoiT0hBw974IZZjZv7PtZf2cRyfl2KNBNYp4=
+	t=1762418902; cv=none; b=V5w2A1EGVJbCAXbNv+xo0Mx21Ycuhn+5I5ZyRI7B2oGmrLeKqoe4OQZ4TfEQEtIn3GhBw/OUBAmMaGX0f4FfSsi4lDUDmuUAM55N65gtpx/idA/8BAyYiZzQp63hLauFm+sZTZrV4CPU42NI93wc7llXZ3KDGAGX/lxzDd97Mu4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762418769; c=relaxed/simple;
-	bh=kAZXwDplWfYOyaaONvDtrPWU/0/gLJGZ/FYvRKERuQs=;
+	s=arc-20240116; t=1762418902; c=relaxed/simple;
+	bh=zckLRNukcp03dx43dCWtDB8En+8nFsNdYJbK7sYTUZM=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=lY5eHW0ms/lhpnEWEwRdsVsQKzCa6o+hhGerNaqbjlHJ67/lDmfQipTbG+5AkEY5gjmDZTpC+RiqPIE40kcPXzJC8pUPh4U6nBJYNFmPvj8Ys75FV7sMvNnHTRFHXc2iOeKUe04+rqC6OrkzDHeMQwDgURYRSjqHYuUOuyOHQNI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=wLbTyywC; arc=none smtp.client-ip=209.85.128.49
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f49.google.com with SMTP id 5b1f17b1804b1-4710665e7deso2684455e9.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 06 Nov 2025 00:46:06 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1762418765; x=1763023565; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=S4GLlYfHZwuNWxVa94Xp1O9jDlukJQh5B00DffiN/3k=;
-        b=wLbTyywCyIQ3qgIdjo0K4heVXVSncAPE3Fusu2dWCB2oYxNV9M2pGP0aKuZHOusLVW
-         DkgtFbt9ISQRPU9fskiDBi3UOVULMWx31AEyK6xCqhF7cZX70J+DiFDcaSpgtQaPzt0B
-         8kb/hEcUqsqix0Zvdt7pHYVjW6zAxeAmiAVDSi2UkiCsY1ok45SRQZJYZnDL4mVttAjQ
-         YFVySXzDR1s23fbvsWAJk9L2K0jL8dUNYEExOceT0IpmR5uUmObKAXukjgB0gj93K3cm
-         HmBR4irqgf1HGuJjOuVI5Qg68yVjj37TNX6KnGGfKJhA0Oj3q0//NRjr5SzP+MQpF+MK
-         3T8A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1762418765; x=1763023565;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=S4GLlYfHZwuNWxVa94Xp1O9jDlukJQh5B00DffiN/3k=;
-        b=ZHxOwurtORWLu+xSa4F4dVik7VV0DWcgqtU8MoAgNxhq4Hyj4LPfv70W65VOVQVsgx
-         mMcDp40TcKOz7H7vQASfEaABUSdRaVJCI/J2PneCHOhlev0odtFGIog+lnYAtI9E2qLj
-         P3HPHwyBQCsKAeRYgRqfQkhpugYm27XC+tfspnEnViiOm1JjxKL7QiKyzRuj9jfzO0R2
-         ajoaQZhR8Lr4xsCi/42nQKS+oO7V21gt4/uJ5rChoXiYpayMLHuSBUVF9/BiIwBs4axl
-         SeJbBM9Euk4AExb8w/cOw0+HpD8odDR2f26CbTQ4EudxYWytQ/kCHfv5FhKuCL+zWWJt
-         qcTg==
-X-Forwarded-Encrypted: i=1; AJvYcCWAJNZsUm14JQa/mDVbE3cQRzc/e4KIOrJDdQHuE+tdlVn8Pd+EAd6FUxWJ5Tx8QOrUb9LFiTURpiPsW3pH@vger.kernel.org
-X-Gm-Message-State: AOJu0YyZXB3WVn3fYNIQCbsUsgnQdLpGwNIps6ezCd8BQtmlqbHKToAv
-	JbwjQYKbGl+sQCfsUvj73grsAR80hWsWIVJXYeSAKX2UCXHVz+4kv0PuZ0+s5eHi03s=
-X-Gm-Gg: ASbGncsnd0vm9I/Sk4fi798VBF7I+Ijix4ErjZ+q8A5BdlTwdXveJX49FkdJvfjiLw4
-	BbMKuU9wUZl6E9FVDFHZ/Xlb/+TtN0LokqbD+JttT9IZfRkyE6PfO0fT4o4qcWC8r9XEmkvvTgu
-	gHs8+/MTozkrIjPClaoR/x+SPhlW7D/ePhUXJcX5N1C/vmRdXxMVzrjw6Uj7jEsLzRlqIoki8Qs
-	rxoljMVkNhEFVaymcQUYJh7gYKGX8IE1KatCVFZpjdCo7vpFzWe9DiBQvmTU1klkTxQcxAvBBSG
-	fKCkwCraLE5YgTUSyhTd/gDeOP+qc8k2khoaUaPRWtYchprQJxbTEV2f/gmRzrWWKBzawedGfAZ
-	lU16qvXJHnivTuULfpJDWifdytXCGtjDQwUd0XIA3gNA9Iddf6mrvkAwXcoj8lxzLV1IaUWsga6
-	Y8dCAX1hk=
-X-Google-Smtp-Source: AGHT+IGg0bzpltSE5ccYQx/GMTS9rG2hOLendCmRdXe+0MP8d5pGmnwtwR+LGD1g/IMFzEfZg1oASQ==
-X-Received: by 2002:a05:600c:c4a4:b0:46f:aac5:daf with SMTP id 5b1f17b1804b1-4775ce2309fmr63450655e9.35.1762418764756;
-        Thu, 06 Nov 2025 00:46:04 -0800 (PST)
-Received: from linaro.org ([86.121.7.169])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-477640fb723sm10590405e9.10.2025.11.06.00.46.02
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 06 Nov 2025 00:46:03 -0800 (PST)
-Date: Thu, 6 Nov 2025 10:46:01 +0200
-From: Abel Vesa <abel.vesa@linaro.org>
-To: Xueyao An <xueyao.an@oss.qualcomm.com>
-Cc: Bjorn Andersson <andersson@kernel.org>, 
-	Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
+	 Content-Type:Content-Disposition:In-Reply-To; b=reEWf5nRptwLUhwrLHuBEieiFGJkA/qo4lvWsztjfg0uQeTqXWBQqS+30PMkbsZe+u4hMT9zLEGdUE9WmUj26IM3UU38Wy/mi20iglDsNFUVC4SMljqIlg6i4PXjGeQt8EVcFRb8Qic0NUnfe3aM4OvNwqQhqIabLIuJn84YCQA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=tmDL8kr5; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 870F6C116C6;
+	Thu,  6 Nov 2025 08:48:21 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1762418902;
+	bh=zckLRNukcp03dx43dCWtDB8En+8nFsNdYJbK7sYTUZM=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=tmDL8kr51DyTy99fAvpjF42DJxyl9vb9C54R2cbSW/SrQCkL/yd26tEj/EqR5fJUg
+	 GBHKPly/rLMv1rz9xGwfnq1EIZGOty1sDFIzq5GJjH3MjsM6mkcgUXLwIK+eGnJimU
+	 4L+dI2D4MkmrqmigeBJbKcM1H4D6hs1lapYS61EYLJl2GdkBZjFjOieGcYW4UE+Z8n
+	 Jpl7mYbIC9qarWF7+lkGeyNPyAMrIijFJ01JyE23AtC3U+yYD234NQGhEN2j+NLw9W
+	 fWIcCkq/IHRZ4HzBSFFu0NwlMBxU38UlyGd0M7bvi36oiBo7EfRitObQbAy04zx329
+	 wKfQ72AQCzBww==
+Date: Thu, 6 Nov 2025 09:48:19 +0100
+From: Krzysztof Kozlowski <krzk@kernel.org>
+To: David Heidelberg <david@ixit.cz>
+Cc: Neil Armstrong <neil.armstrong@linaro.org>, 
+	Jessica Zhang <jessica.zhang@oss.qualcomm.com>, Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, 
+	Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>, 
+	David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, Rob Herring <robh@kernel.org>, 
 	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v1] arm64: dts: qcom: HAMOA-IOT-SOM: Unreserve GPIOs
- blocking SPI11 access
-Message-ID: <7loumd2npp2tihe2jwvmgs7nh7iuunwahuww7kpwz7w5e54jwp@hrkhobo4fqhn>
-References: <20251105054548.2347569-1-xueyao.an@oss.qualcomm.com>
+	Thierry Reding <thierry.reding@gmail.com>, Sam Ravnborg <sam@ravnborg.org>, 
+	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, 
+	Casey Connolly <casey.connolly@linaro.org>, dri-devel@lists.freedesktop.org, devicetree@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, phone-devel@vger.kernel.org
+Subject: Re: [PATCH 01/12] dt-bindings: panel: Add Samsung SOFEF00 DDIC with
+ panel
+Message-ID: <20251106-enlightened-centipede-of-tempering-3cfa50@kuoka>
+References: <20251104-sofef00-rebuild-v1-0-dfcfa17eb176@ixit.cz>
+ <20251104-sofef00-rebuild-v1-1-dfcfa17eb176@ixit.cz>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20251105054548.2347569-1-xueyao.an@oss.qualcomm.com>
+In-Reply-To: <20251104-sofef00-rebuild-v1-1-dfcfa17eb176@ixit.cz>
 
-On 25-11-05 13:45:47, Xueyao An wrote:
-> GPIOs 44-47 were previously reserved, preventing Linux from accessing
-> SPI11 (qupv1_se3). Since there is no TZ use case for these pins on Linux,
-> they can be safely unreserved. Removing them from the reserved list
-> resolves the SPI11 access issue for Linux.
+On Tue, Nov 04, 2025 at 11:16:09PM +0100, David Heidelberg wrote:
+> Basic description for S6E3FC2X01 DDIC with attached panels
 > 
-> Signed-off-by: Xueyao An <xueyao.an@oss.qualcomm.com>
-
-Lowercase the hamoa-iot-som in subject line.
-
-With that fixed:
-
-Reviewed-by: Abel Vesa <abel.vesa@linaro.org>
-
-> ---
->  arch/arm64/boot/dts/qcom/hamoa-iot-som.dtsi | 3 +--
->  1 file changed, 1 insertion(+), 2 deletions(-)
+>  - Samsung AMS601NT22 6.01 inch, 1080x2160 pixels, 18:9 ratio
+>  - Samsung AMS628NW01 6.28 inch, 1080x2280 pixels, 19:9 ratio
 > 
-> diff --git a/arch/arm64/boot/dts/qcom/hamoa-iot-som.dtsi b/arch/arm64/boot/dts/qcom/hamoa-iot-som.dtsi
-> index 1aead50b8920..107ea8045f55 100644
-> --- a/arch/arm64/boot/dts/qcom/hamoa-iot-som.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/hamoa-iot-som.dtsi
-> @@ -451,8 +451,7 @@ &remoteproc_cdsp {
->  };
+> This panel has three supplies, while panel-simple-dsi is limited to one.
+> There is no user of this compatible, nor the compatible make sense.
+
+There are. git grep samsung,sofef00, gives me two users.
+
+> Remove it from simple DSI panel definitions.
+> 
+> Signed-off-by: David Heidelberg <david@ixit.cz>
+
+..
+
+>  additionalProperties: false
 >  
->  &tlmm {
-> -	gpio-reserved-ranges = <34 2>, /* TPM LP & INT */
-> -			       <44 4>; /* SPI (TPM) */
-> +	gpio-reserved-ranges = <34 2>; /* TPM LP & INT */
+>  required:
+>    - compatible
+> +  - power-supply
+>    - reg
 >  
->  	pcie4_default: pcie4-default-state {
->  		clkreq-n-pins {
-> -- 
-> 2.43.0
-> 
+>  examples:
+> diff --git a/Documentation/devicetree/bindings/display/panel/samsung,sofef00.yaml b/Documentation/devicetree/bindings/display/panel/samsung,sofef00.yaml
+> new file mode 100644
+> index 0000000000000..527a10e3b798e
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/display/panel/samsung,sofef00.yaml
+> @@ -0,0 +1,83 @@
+> +# SPDX-License-Identifier: GPL-2.0-only OR BSD-2-Clause
+> +%YAML 1.2
+> +---
+> +$id: http://devicetree.org/schemas/display/panel/samsung,sofef00.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> +
+> +title: Samsung SOFEF00 AMOLED DDIC
+> +
+> +description: The SOFEF00 is display driver IC with connected panel.
+
+Description goes below maintainers, see example-schema.
+
+> +
+> +maintainers:
+> +  - David Heidelberg <david@ixit.cz>
+> +
+> +allOf:
+> +  - $ref: panel-common.yaml#
+> +
+> +properties:
+> +  compatible:
+> +    items:
+> +      - enum:
+> +            # Samsung 6.01 inch, 1080x2160 pixels, 18:9 ratio
+> +          - samsung,sofef00-ams601nt22
+> +            # Samsung 6.28 inch, 1080x2280 pixels, 19:9 ratio
+> +          - samsung,sofef00-ams628nw01
+
+These were not in the old binding, so please explain in the commit msg
+reasons for adding new front compatibles.
+
+> +      - const: samsung,sofef00
+> +
+> +  reg:
+> +    maxItems: 1
+> +
+> +  reset-gpios: true
+
+Drop, not needed. It can stay required, though.
+
+> +
+> +  port: true
+
+Drop
+
+> +
+> +  vddio-supply:
+> +    description: VDD regulator
+> +
+> +  vci-supply:
+> +    description: VCI regulator
+> +
+> +  poc-supply:
+> +    description: POC regulator
+
+1st poc, then vci then vddio to keep it more-or-less sorted. Same in
+required list.
+
+> +
+> +required:
+> +  - compatible
+> +  - reset-gpios
+> +  - vddio-supply
+> +  - vci-supply
+> +  - poc-supply
+> +
+> +unevaluatedProperties: false
+
+Best regards,
+Krzysztof
+
 
