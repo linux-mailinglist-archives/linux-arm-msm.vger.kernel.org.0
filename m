@@ -1,119 +1,130 @@
-Return-Path: <linux-arm-msm+bounces-80679-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-80680-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5B4F4C3DF50
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 07 Nov 2025 01:13:42 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 76D15C3E0FA
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 07 Nov 2025 01:58:20 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 15F553AF82B
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Nov 2025 00:13:41 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 19E361887B30
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Nov 2025 00:58:45 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6121C21FF26;
-	Fri,  7 Nov 2025 00:13:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 752C92DF140;
+	Fri,  7 Nov 2025 00:58:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="j1C2LwBM"
+	dkim=pass (1024-bit key) header.d=samsung.com header.i=@samsung.com header.b="AnGgNMws"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.20])
+Received: from mailout1.samsung.com (mailout1.samsung.com [203.254.224.24])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00F4D20E334;
-	Fri,  7 Nov 2025 00:13:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.20
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B2942DF6E9
+	for <linux-arm-msm@vger.kernel.org>; Fri,  7 Nov 2025 00:58:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=203.254.224.24
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762474417; cv=none; b=o7hIdCMIHATt09A2Nt0PqCQ05BAPwG/riQtWI/eTleEUz0E/2vaTAIEfMgM/G77FZXfxF5Lc5MzU9fjv77jNDbnKooO7W82ArgCb2Mme1aMdHjadH0BRAt4AY+9qbTRgFNodGOY34dWU9ZhVVo+DQCwqjp0/U4z6eENg0DenUc8=
+	t=1762477096; cv=none; b=b4bQCSQTeQ+F0yO35fftof+Iz5bdp/Gitwl7JkUQWUYA6zLU+CubcBj2roeHED6gRSxpibYPGjAX9vJb3R+zr7va+vkic8X4UMqsmNswnVWsp8P2GscoAexXb1NcntYLtWo5QG9Feqzb+WPmZtmI3ujqpVWzaS4s/iu7w/SLDIg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762474417; c=relaxed/simple;
-	bh=2u4onrW1UIHYO/vrNYmY+JJnCXuAk11e42H3y3FcxMs=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=WMW9ZEdTFsw/WFM/1PbHV+tTSe1YkIdLS1vpyh0ZctABxqJRqlK4HTQzTJhfb+EqKyC+rr97Z9hpjVzyckH8kVcQZci/GSL3CGLmeZubUPw7H7ZROTLtg6GJ2umZDPUuwlkao0Q9ZkAymIAVzo9WTBH1zDMqboNiGhr21xj3J30=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=j1C2LwBM; arc=none smtp.client-ip=198.175.65.20
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1762474415; x=1794010415;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=2u4onrW1UIHYO/vrNYmY+JJnCXuAk11e42H3y3FcxMs=;
-  b=j1C2LwBMmlhNrJ9yBt5UHP+Jhkh6vPg/U/689JBlItToqW9aukGyP4o+
-   t8FGAEOOyB71dFEhOT3X4GdYkIcQps6QZElhcfg18hwuyIVYbGIM0E1/e
-   QySAORTGX49qgrD2oWFY8v/WpW8y8F7pn6Uf08pcso0rJV8XQ1jbYooQr
-   AFAxlvuPD6mx1GACi6EZO+DRgPqw53TiMSf0NMhL1+cduz/u7Vogf35fw
-   ULxisVJ+zEiCBKH94EiJ5JKO6V8uF5JIuGg/ubU89S+4cIIndh8+PMeXi
-   P0BSVdsq9V+ToOb5TlqAazlE0A3giv76CvGwHC4f5XTLbzqV/jWIins6G
-   Q==;
-X-CSE-ConnectionGUID: JoT5F7r1ScqRPVX8lYWBeQ==
-X-CSE-MsgGUID: jknhkFozRzamKIKtn/Z1mg==
-X-IronPort-AV: E=McAfee;i="6800,10657,11605"; a="64323423"
-X-IronPort-AV: E=Sophos;i="6.19,285,1754982000"; 
-   d="scan'208";a="64323423"
-Received: from orviesa008.jf.intel.com ([10.64.159.148])
-  by orvoesa112.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 06 Nov 2025 16:13:34 -0800
-X-CSE-ConnectionGUID: DUnYCn2xS7uSIeOWmK2iaA==
-X-CSE-MsgGUID: tpitvUBxSmGAnfkDhSxq3w==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.19,285,1754982000"; 
-   d="scan'208";a="188060916"
-Received: from lkp-server02.sh.intel.com (HELO 66d7546c76b2) ([10.239.97.151])
-  by orviesa008.jf.intel.com with ESMTP; 06 Nov 2025 16:13:32 -0800
-Received: from kbuild by 66d7546c76b2 with local (Exim 4.96)
-	(envelope-from <lkp@intel.com>)
-	id 1vHA6B-000UUS-36;
-	Fri, 07 Nov 2025 00:13:12 +0000
-Date: Fri, 7 Nov 2025 08:12:38 +0800
-From: kernel test robot <lkp@intel.com>
-To: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>,
-	lpieralisi@kernel.org, kwilczynski@kernel.org, mani@kernel.org,
-	bhelgaas@google.com
-Cc: llvm@lists.linux.dev, oe-kbuild-all@lists.linux.dev, will@kernel.org,
-	linux-pci@vger.kernel.org, linux-kernel@vger.kernel.org,
-	robh@kernel.org, linux-arm-msm@vger.kernel.org,
-	zhangsenchuan@eswincomputing.com,
-	Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
-Subject: Re: [PATCH 1/3] PCI: host-common: Add an API to check for any device
- under the Root Ports
-Message-ID: <202511070717.PZBzRyQO-lkp@intel.com>
-References: <20251106061326.8241-2-manivannan.sadhasivam@oss.qualcomm.com>
+	s=arc-20240116; t=1762477096; c=relaxed/simple;
+	bh=0QDWG7L4IHnws8vr5T7KCPG6YnvPkOmtAbSSWotGpM4=;
+	h=Mime-Version:Subject:From:To:CC:In-Reply-To:Message-ID:Date:
+	 Content-Type:References; b=bCbeYw3J/CeDpLkZWy1LkpQfWcCKX/uAHfGIo8Mq1znh9xiUl7bobJbYFG9EJnL6uwXHH0O529GQAkdR/nVrYczbKxJ0ZtZ4qIBKIghPn5ScrnEGlNLK440GaMsFFG0jJdllPfhCRwQju1sbF7SF2HAK6y8p/oWfiD/15utC6+U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=samsung.com; spf=pass smtp.mailfrom=samsung.com; dkim=pass (1024-bit key) header.d=samsung.com header.i=@samsung.com header.b=AnGgNMws; arc=none smtp.client-ip=203.254.224.24
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=samsung.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=samsung.com
+Received: from epcas1p4.samsung.com (unknown [182.195.41.48])
+	by mailout1.samsung.com (KnoxPortal) with ESMTP id 20251107005810epoutp013a9992d5520460212d754ec5c738bccd~1k5OEwcEN2550525505epoutp01L
+	for <linux-arm-msm@vger.kernel.org>; Fri,  7 Nov 2025 00:58:10 +0000 (GMT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 mailout1.samsung.com 20251107005810epoutp013a9992d5520460212d754ec5c738bccd~1k5OEwcEN2550525505epoutp01L
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
+	s=mail20170921; t=1762477091;
+	bh=0QDWG7L4IHnws8vr5T7KCPG6YnvPkOmtAbSSWotGpM4=;
+	h=Subject:Reply-To:From:To:CC:In-Reply-To:Date:References:From;
+	b=AnGgNMwsCRROBqQ+pa12Aylpy66jyVvBR81xlnysslq39rGqzhPh4ZQDxnSxo/zS8
+	 XG5nypBcHlrYVqRlLHG2T4PeOSMccE4DTOCkrP3YhfcHqwbTiVqMwyAU9BE6ZmKuiM
+	 fuQgVncYnNc+5E179LJ+t2AVNAn11LSxyCKUtfOs=
+Received: from epsnrtp02.localdomain (unknown [182.195.42.154]) by
+	epcas1p4.samsung.com (KnoxPortal) with ESMTPS id
+	20251107005810epcas1p425fd0fb429a10655df7cfc40010696a9~1k5Nmg-i31202112021epcas1p4T;
+	Fri,  7 Nov 2025 00:58:10 +0000 (GMT)
+Received: from epcas1p3.samsung.com (unknown [182.195.38.98]) by
+	epsnrtp02.localdomain (Postfix) with ESMTP id 4d2gf96HZXz2SSKk; Fri,  7 Nov
+	2025 00:58:09 +0000 (GMT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20251106061326.8241-2-manivannan.sadhasivam@oss.qualcomm.com>
+Mime-Version: 1.0
+Subject: RE: [PATCH RESEND v2] devfreq: move governor.h to a public header
+ location
+Reply-To: myungjoo.ham@samsung.com
+Sender: MyungJoo Ham <myungjoo.ham@samsung.com>
+From: MyungJoo Ham <myungjoo.ham@samsung.com>
+To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>, Kyungmin Park
+	<kyungmin.park@samsung.com>, Chanwoo Choi <cw00.choi@samsung.com>, Dmitry
+	Osipenko <digetx@gmail.com>, Thierry Reding <thierry.reding@gmail.com>,
+	Jonathan Hunter <jonathanh@nvidia.com>
+CC: "linux-pm@vger.kernel.org" <linux-pm@vger.kernel.org>,
+	"linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+	"linux-tegra@vger.kernel.org" <linux-tegra@vger.kernel.org>,
+	"linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>, Robie Basak
+	<robibasa@qti.qualcomm.com>
+X-Priority: 3
+X-Content-Kind-Code: NORMAL
+In-Reply-To: <20251030-governor-public-v2-1-432a11a9975a@oss.qualcomm.com>
+X-Drm-Type: N,general
+X-Msg-Generator: Mail
+X-Msg-Type: PERSONAL
+X-Reply-Demand: N
+Message-ID: <20251107005809epcms1p5f33e9560755367f0ba4b7df82c87fc85@epcms1p5>
+Date: Fri, 07 Nov 2025 09:58:09 +0900
+X-CMS-MailID: 20251107005809epcms1p5f33e9560755367f0ba4b7df82c87fc85
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="utf-8"
+CMS-TYPE: 101P
+X-CPGSPASS: Y
+X-CPGSPASS: Y
+cpgsPolicy: CPGSC10-361,Y
+X-CFilter-Loop: Reflected
+X-CMS-RootMailID: 20251030182636epcas1p2b332b417c1c42fb559a6f34e9e9f408c
+References: <20251030-governor-public-v2-1-432a11a9975a@oss.qualcomm.com>
+	<CGME20251030182636epcas1p2b332b417c1c42fb559a6f34e9e9f408c@epcms1p5>
 
-Hi Manivannan,
-
-kernel test robot noticed the following build warnings:
-
-[auto build test WARNING on pci/next]
-[also build test WARNING on pci/for-linus linus/master v6.18-rc4 next-20251106]
-[If your patch is applied to the wrong git tree, kindly drop us a note.
-And when submitting patch, we suggest to use '--base' as documented in
-https://git-scm.com/docs/git-format-patch#_base_tree_information]
-
-url:    https://github.com/intel-lab-lkp/linux/commits/Manivannan-Sadhasivam/PCI-host-common-Add-an-API-to-check-for-any-device-under-the-Root-Ports/20251106-141822
-base:   https://git.kernel.org/pub/scm/linux/kernel/git/pci/pci.git next
-patch link:    https://lore.kernel.org/r/20251106061326.8241-2-manivannan.sadhasivam%40oss.qualcomm.com
-patch subject: [PATCH 1/3] PCI: host-common: Add an API to check for any device under the Root Ports
-config: arm-randconfig-001-20251107 (https://download.01.org/0day-ci/archive/20251107/202511070717.PZBzRyQO-lkp@intel.com/config)
-compiler: clang version 17.0.6 (https://github.com/llvm/llvm-project 6009708b4367171ccdbf4b5905cb6a803753fe18)
-reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20251107/202511070717.PZBzRyQO-lkp@intel.com/reproduce)
-
-If you fix the issue in a separate patch/commit (i.e. not just a new version of
-the same patch/commit), kindly add following tags
-| Reported-by: kernel test robot <lkp@intel.com>
-| Closes: https://lore.kernel.org/oe-kbuild-all/202511070717.PZBzRyQO-lkp@intel.com/
-
-All warnings (new ones prefixed by >>):
-
->> Warning: drivers/pci/controller/pci-host-common.c:27 function parameter 'root_bus' not described in 'pci_root_ports_have_device'
-
--- 
-0-DAY CI Kernel Test Service
-https://github.com/intel/lkp-tests/wiki
+>Sender: Dmitry Baryshkov <dmitry.baryshkov=40oss.qualcomm.com>=C2=A0=0D=0A=
+>Date:=202025-10-31=2003:26=20(GMT+9)=0D=0A>Title:=20=5BPATCH=20RESEND=20v2=
+=5D=20devfreq:=20move=20governor.h=20to=20a=20public=20header=20location=0D=
+=0A>=0D=0A>Some=20device=20drivers=20(and=20out-of-tree=20modules)=20might=
+=20want=20to=20define=0D=0A>device-specific=20device=20governors.=20Rather=
+=20than=20restricting=20all=20of=20them=20to=0D=0A>be=20a=20part=20of=20dri=
+vers/devfreq/=20(which=20is=20not=20possible=20for=20out-of-tree=0D=0A>driv=
+ers=20anyway)=20move=20governor.h=20to=20include/linux/devfreq-governor.h=
+=20and=0D=0A>update=20all=20drivers=20to=20use=20it.=0D=0A>=0D=0A>The=20dev=
+freq_cpu_data=20is=20only=20used=20internally,=20by=20the=20passive=20gover=
+nor,=0D=0A>so=20it=20is=20moved=20to=20the=20driver=20source=20rather=20tha=
+n=20being=20a=20part=20of=20the=0D=0A>public=20interface.=0D=0A=0D=0AHi=21=
+=0D=0A=0D=0ACould=20you=20please=20direct=20me=20to=20the=20governors=20or=
+=20drivers=20needing=20this?=0D=0A(Qualcomm=20drivers?)=0D=0A=0D=0ACheers,=
+=0D=0AMyungJoo=0D=0A=0D=0A>=0D=0A>Reported-by:=20Robie=20Basak=20<robibasa=
+=40qti.qualcomm.com>=0D=0A>Acked-by:=20Jon=20Hunter=20<jonathanh=40nvidia.c=
+om>=0D=0A>Signed-off-by:=20Dmitry=20Baryshkov=20<dmitry.baryshkov=40oss.qua=
+lcomm.com>=0D=0A>---=0D=0A>Changes=20in=20v2:=0D=0A>-=20Fixed=20typo=20in=
+=20commit=20subject=20(Mikko=20Perttunen)=0D=0A>-=20Link=20to=20v1:=20https=
+://lore.kernel.org/r/20250903-governor-public-v1-1-111abd89a89a=40oss.qualc=
+omm.com=0D=0A>---=0D=0A>drivers/devfreq/devfreq.c=C2=A0=20=C2=A0=20=C2=A0=
+=20=C2=A0=20=C2=A0=20=C2=A0=20=C2=A0=20=C2=A0=20=C2=A0=20=C2=A0=20=C2=A0=20=
+=C2=A0=20=C2=A0=20=C2=A0=202=20+-=0D=0A>drivers/devfreq/governor_passive.c=
+=C2=A0=20=C2=A0=20=C2=A0=20=C2=A0=20=C2=A0=20=C2=A0=20=C2=A0=20=C2=A0=2027=
+=20+++++++++++++++++-=0D=0A>drivers/devfreq/governor_performance.c=C2=A0=20=
+=C2=A0=20=C2=A0=20=C2=A0=20=C2=A0=20=C2=A0=20=C2=A0=202=20+-=0D=0A>drivers/=
+devfreq/governor_powersave.c=C2=A0=20=C2=A0=20=C2=A0=20=C2=A0=20=C2=A0=20=
+=C2=A0=20=C2=A0=20=C2=A0=202=20+-=0D=0A>drivers/devfreq/governor_simpleonde=
+mand.c=C2=A0=20=C2=A0=20=C2=A0=20=C2=A0=20=C2=A0=20=C2=A0=202=20+-=0D=0A>dr=
+ivers/devfreq/governor_userspace.c=C2=A0=20=C2=A0=20=C2=A0=20=C2=A0=20=C2=
+=A0=20=C2=A0=20=C2=A0=20=C2=A0=202=20+-=0D=0A>drivers/devfreq/hisi_uncore_f=
+req.c=C2=A0=20=C2=A0=20=C2=A0=20=C2=A0=20=C2=A0=20=C2=A0=20=C2=A0=20=C2=A0=
+=20=C2=A0=203=20+-=0D=0A>drivers/devfreq/tegra30-devfreq.c=C2=A0=20=C2=A0=
+=20=C2=A0=20=C2=A0=20=C2=A0=20=C2=A0=20=C2=A0=20=C2=A0=20=C2=A0=20=C2=A0=20=
+3=20+-=0D=0A>.../governor.h=20=3D>=20include/linux/devfreq-governor.h=2033=
+=20+++-------------------=0D=0A>9=20files=20changed,=2037=20insertions(+),=
+=2039=20deletions(-)=0D=0A>=0D=0A>=0D=0A
 
