@@ -1,224 +1,245 @@
-Return-Path: <linux-arm-msm+bounces-80738-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-80740-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id BC354C3F69E
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 07 Nov 2025 11:26:01 +0100 (CET)
+Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [IPv6:2605:f480:58:1:0:1994:3:14])
+	by mail.lfdr.de (Postfix) with ESMTPS id 22243C3F747
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 07 Nov 2025 11:31:21 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 74A063B0A71
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Nov 2025 10:26:00 +0000 (UTC)
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 135F74EF254
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Nov 2025 10:30:35 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 13021304BCD;
-	Fri,  7 Nov 2025 10:25:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4F1243054F2;
+	Fri,  7 Nov 2025 10:30:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="n22hTG2P";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="XLyyb7ZT"
+	dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b="Qt7tHnHO"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f54.google.com (mail-wm1-f54.google.com [209.85.128.54])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FB343043D6
-	for <linux-arm-msm@vger.kernel.org>; Fri,  7 Nov 2025 10:25:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4435730C34A
+	for <linux-arm-msm@vger.kernel.org>; Fri,  7 Nov 2025 10:30:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762511158; cv=none; b=RrQBFD8EBF5c9opmLXjjrMDbkLvONbxhbzEPavYIXTP/DVoCmmWWjq09O4IjOh7mEYCGM7HAjMC15D66PV2VrZMhW5oyvEvoHnRt7KX/OX3RzIgLWibbLuhb/uQgb+NXm1XsIXVidTQUQoUKB4oJgVQ7OznTtJCz7cUeomzakRo=
+	t=1762511409; cv=none; b=bsOs/3hTOwWCTO+JCN07KvhCcoTRoc4AoX5ANi0nLAPh5d6pOgZaffW1nV103RimDoTb8J+npolk4L3/FOcqiYBXqJW+Yf9eJiqV9eh3rAG6lnvyEDihLw4iQU+2ov7dcWGAczFP7IS9RW2tExkA1yy7LmXiYIYKQ7Z3a/ppV1A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762511158; c=relaxed/simple;
-	bh=TfqVBbE95iBGfqw4ThDJ4Ix4Y/sO9BB/7GhORuIN2B8=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=anMcvN4L9aqEE9Jn5W/Ggvx2BKIazJdDDgHELgchzN6L+NurR8ksNy2tomRv4PD0Ct8UA5y/phG24THSNKgptaGKCzqgAAMvyVekGrhcmyOeojp7jBiHJjIgUuE2X/FxMZB5xOxGbK5wPoDWl95rtaZ9m+TpHuYAtcSmenYPp9k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=n22hTG2P; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=XLyyb7ZT; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 5A78HnBI4131423
-	for <linux-arm-msm@vger.kernel.org>; Fri, 7 Nov 2025 10:25:56 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	N0g2bzgjrGduYTi0M77+HVdu59jcso00dA0UqQXUwnk=; b=n22hTG2P7JZiFA+g
-	v4aZBSEYx1v4NED+z1Qv/3C8HbRWSla/52Jo200AXr1FM3e7i7KqVNIma3GHNduH
-	ePp/JujVaWa0U140adurEmofmxaBqgEXfNOPOnM6xYFWvPg5JN00OT7qEQa0RGta
-	3n/tvXzhRG/scn9ZNDxo3wnpRA1ssY4mk1pp1ti8G++/vHjhAbuB/gAgBQhOl7jq
-	JsnSjMnF1LvApUk95u3ngzSHxctjljAhr6WjH+UdhevbeqyBcLMkFNqwb8batD0B
-	E/wS/N5j9feAVt4Ai0ahrymnJZSzLh7+KPdbcHTFW+tZiibSzV+GfYfjHFqC/E8X
-	vYXyhw==
-Received: from mail-pl1-f199.google.com (mail-pl1-f199.google.com [209.85.214.199])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4a8u3x3pnf-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Fri, 07 Nov 2025 10:25:55 +0000 (GMT)
-Received: by mail-pl1-f199.google.com with SMTP id d9443c01a7336-294df925293so7932625ad.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 07 Nov 2025 02:25:55 -0800 (PST)
+	s=arc-20240116; t=1762511409; c=relaxed/simple;
+	bh=ZivlGpi+T1c5DUoMpOPkmITE34pLl/IzVvSOHSJ88dQ=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=NRIRQCA3jCMSQPxGf3hoAxnVUi/QlRBd92K641WVEdsjksueGwPN6zYeif9jfrYd1GYegioKrmOpsqcxo8Yue1dN2GBVj7qw5b7ErECpEIUGrXCfRzYueFPIijPNhhOetn+SrvJxKziz2r+OJ1phBY7bdOLQPswQLp1Nzmq7wTw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl; spf=none smtp.mailfrom=bgdev.pl; dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b=Qt7tHnHO; arc=none smtp.client-ip=209.85.128.54
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=bgdev.pl
+Received: by mail-wm1-f54.google.com with SMTP id 5b1f17b1804b1-477563bcaacso4163605e9.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 07 Nov 2025 02:30:05 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1762511155; x=1763115955; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=N0g2bzgjrGduYTi0M77+HVdu59jcso00dA0UqQXUwnk=;
-        b=XLyyb7ZTTl+FkhJjGKrfdNQDOrIj01X+cztPjNd+W9lWB/J4v/t3Yow9ddbAGyBHr3
-         t6XnsDdXdwJymDY8KSwzRqvfkms93AgLKcZB0nbA1U6AAxuDKEeFs1UBd92dIKG+9wxF
-         IBakTwPcHq3QaRN51D5/18iQ0ElBdd61V77Rql7eb3FuWyCSAfmEj9ib8g51VZAieKoK
-         RfXVe5Tx2iW7BnQO7DCS6IIHT8pOBHSgMvehPSsoRmBehzFOVyWN4nct3pCAv2Mnj640
-         HbCwvWUbQbXLTv6eljC72B2gGlVGzAC6Vv9oD9qS0wZcsi4/VE6QXydoze4m3CDaxfnQ
-         An7A==
+        d=bgdev-pl.20230601.gappssmtp.com; s=20230601; t=1762511404; x=1763116204; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=6lK1bWhoDlOt3D7+OTYGFbwlQlHjc0qM/7Y1vcvdtOY=;
+        b=Qt7tHnHOKYwWve8/Mc1P7q4DPt9m7/6AZPIFKwJY9nAT3XgMKT7RmaaF0dgG2I70Hk
+         cR5nykVZES05Wxue5bJN323q45/YpS2O/XDwnGmz8GE7YqfkLwbtW6m08NnPQt3+Uno4
+         HCKCCPovzurdENzUDLogDPGI9kr4OXpXl5b2jAbybpkGL3mqG97e5aYLGnFCxhlsg0sL
+         K2dvyGn0AJ3W0MXjbi8zAgMUTSho/5iWVLI1r42ZSeT7ZV/Juw9B19Ih42N/nuvHS0If
+         owDhkm9VgYIAp0vnNDnrc0dMbZjKZTrmwBVl8gRFN6pumy5WDu6wZidrgv7s+ICW2REg
+         ZZgA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1762511155; x=1763115955;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=N0g2bzgjrGduYTi0M77+HVdu59jcso00dA0UqQXUwnk=;
-        b=KHc1YouzDpzOofsmkGi+bHFlg13O4p8RyXwsYsHObpsUpuISFVZQf1cRynu4OtQTaS
-         /uyhWwAMbW8pSX4i7hWRp1F5HMTN6c/houRadNEF4woECt9tkQF69tI2d0l3IvKP0kNf
-         H1agssqpXIexTxLBBEJJeQb4SAQyKVKrawsRKHugcfLTTEvL2CDTwWodZf6EHb2EGv+E
-         KrMokypo+jm/WAnwoz3jagQ0ABfrm70RZJj2aYey9IptobkUIDg80313iFtW6LttfmBo
-         BoC4uy/p4aT0pp9/zDavkoIOC8FVZr6WiGjw4eVkH9GGbZhZu+bc4hNmmq3lQN/CZyTY
-         RxDw==
-X-Forwarded-Encrypted: i=1; AJvYcCWokxZJWxOHDaMI3YLRPNfMxN8J3NTAzqLN603cJspaLti/CttD102NhpsmvQx55Hpaj5bBmdZi2yCckQBY@vger.kernel.org
-X-Gm-Message-State: AOJu0YzZqqtI4jAEWiXkVRRW+bQDossbksdMjDWEXSWMcnf+Ei76+l2+
-	JBTA0t6caE1IZV4km+XZUC+FPeJai7hVsPuPNWqkz6DHkvUSbYTBxYQbdc93QC7Xx4ExJyPFVJo
-	5s95PTwHr1p500ymMAVBqmrWD14/D9RkzDLLNAJyT+mMwKnaV2/VhZxN6jg9IN4JYTJgr
-X-Gm-Gg: ASbGncuBsx1h9kt8krJb8tMUA2fM7GFscFwvOHIr01wGIYr8DTPw1x78UdrNj8p/9Ft
-	uP+7oVA0NzEhS5Zpz/435Ku8fHfxMQMbigKFlo6SYrTbGUAfG1cPDigmy4ClUwifjfPNRrbk8aV
-	4HYERpogbuIheOykFX2AW6q4rub8WvWf/bcp8JuLcjv8Xyh90tXj7OhbOtAeuE8JlfE7F88djtX
-	0T082Pxi6BC9oite0ewfzDLzpjG2UOUEw8eGerait6XDof/cj8b04X90S4V2utlnbHCNEQN1TBy
-	Tifh7+T+HfUVKh/xCEmpM3X3pleMKTpW2IYnA2dcGU6npbUV2s+wTp/644kp+6ZpF6eMxTNhl9Q
-	TrzK3DEfM7a+q80yGo1vZELpskmrce0c=
-X-Received: by 2002:a17:903:2305:b0:294:ccc6:ccfd with SMTP id d9443c01a7336-297c03e59b2mr38789835ad.24.1762511154815;
-        Fri, 07 Nov 2025 02:25:54 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IH1tMrg3W/RNIxDscOnZnps3MrCElLCpEcVd1QI5sytXqXnRNUDDFD2lrX1/cHKqttfpe64XQ==
-X-Received: by 2002:a17:903:2305:b0:294:ccc6:ccfd with SMTP id d9443c01a7336-297c03e59b2mr38789475ad.24.1762511154289;
-        Fri, 07 Nov 2025 02:25:54 -0800 (PST)
-Received: from [10.0.0.3] ([106.222.229.252])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2965096dbe4sm55763195ad.11.2025.11.07.02.25.50
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 07 Nov 2025 02:25:53 -0800 (PST)
-Message-ID: <1728c571-1e25-59e2-beae-124d9976fb3f@oss.qualcomm.com>
-Date: Fri, 7 Nov 2025 15:55:49 +0530
+        d=1e100.net; s=20230601; t=1762511404; x=1763116204;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=6lK1bWhoDlOt3D7+OTYGFbwlQlHjc0qM/7Y1vcvdtOY=;
+        b=u78D/oBSccaLdQt55rNjaX+nQ1+a+okI7l2S/u2CXBANTlQPWoEqvrvKmgCBwLE96w
+         489oJv+Rm0AlRSveKf5vb+RprWxGPT5L+N94QQe0l2F9HD7M8D3/r8xNFcOCnA0Wgobi
+         Yc6j/oYoJUMmZAmZZ7ur/bdXO5gRWl7ygCwBYMXfVbhMbyVxu+DpWsEL9ui0yLjRmMAd
+         RBiRh78UkBEleJkbd7/aDjKgk4iSMdp2t5M50gJu+Holk6c52iw7Yi8KtNie79RtWCdB
+         +y1ArvGRalv8rfPq4Z5LMLzJ0ciqJ6yJHySt6WeiS1vvzhQZC8pHCWtY4ezu91e2rkrw
+         b43g==
+X-Gm-Message-State: AOJu0YwkLbPgSEvgGOtRbza/iNZYUbty8hgLU63Gj7Lf+7onsSOGvS0A
+	oZS5ALXsKpnYq6DvFPPXf+RzOarICasYWM2ocB67U7/T2XgO90HkuMHCWgixTaQFDhU=
+X-Gm-Gg: ASbGnct5pVVf0wCumLL2oJG9E74qzv9TYzbIrMoomJK755v81gxX7+WcJ0J8y4azsC2
+	0+7ZafY1fM6gvzzJm+OuZ/dGdJnfEkyJG7+JWEfvmSQOOo5OkclZqOSSCMG9FM76XnIpkpYmiYe
+	QUQGhmjC59RXGkkVY5Zp7hcqlhDAU7MOtUKMdnzzQqAMzmLkgNkKf+Lzm1HOA1Eh8y4ZiejFVU2
+	ARCBC3Z7wHcqjKwfGYjgZtE+vS2F1QAZkqSVCOouIeIjBuvn8Ogf2ao25VfC0YjHCNqt+ECUNZI
+	Rv4Kht9fLE5+J7UfUGwvfQiHqq4gHP3VcG3hYwnSBAJQX/nwkqUKulQqATx6ac/LcHs+NFO1z+W
+	oA/KyoOFk2EXJZwEYy/V15AP4JbvA9BP0d2I1vZd4C16vPaZBgXbBDGs1nHaX+oxuMgBNXOPNlm
+	GJTXx67wz+xTH9RA==
+X-Google-Smtp-Source: AGHT+IGLasgznDpysA1VVPTGU5y82R7RrVgkRw3m6DuFOG2T0Xrl7Qi/ZwJh7t3lCXtqhciZW19mKg==
+X-Received: by 2002:a05:600c:1384:b0:471:14b1:da13 with SMTP id 5b1f17b1804b1-4776bc93e89mr17460965e9.14.1762511404248;
+        Fri, 07 Nov 2025 02:30:04 -0800 (PST)
+Received: from [127.0.1.1] ([2a01:cb1d:dc:7e00:fb6d:2ee:af61:f551])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-42ac67920fcsm4414864f8f.39.2025.11.07.02.30.01
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 07 Nov 2025 02:30:03 -0800 (PST)
+From: Bartosz Golaszewski <brgl@bgdev.pl>
+Subject: [PATCH v5 0/8] net: stmmac: qcom-ethqos: add support for SCMI
+ power domains
+Date: Fri, 07 Nov 2025 11:29:50 +0100
+Message-Id: <20251107-qcom-sa8255p-emac-v5-0-01d3e3aaf388@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.13.0
-Subject: Re: [PATCH v4 2/6] media: qcom: iris: Improve crop_offset handling
- for encoder
-Content-Language: en-US
-To: Wangao Wang <wangao.wang@oss.qualcomm.com>,
-        Vikash Garodia <vikash.garodia@oss.qualcomm.com>,
-        Abhinav Kumar <abhinav.kumar@linux.dev>,
-        Bryan O'Donoghue <bod@kernel.org>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>
-Cc: linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Neil Armstrong <neil.armstrong@linaro.org>, quic_qiweil@quicinc.com,
-        quic_renjiang@quicinc.com
-References: <20251106-iris_encoder_enhancements-v4-0-5d6cff963f1b@oss.qualcomm.com>
- <20251106-iris_encoder_enhancements-v4-2-5d6cff963f1b@oss.qualcomm.com>
-From: Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>
-In-Reply-To: <20251106-iris_encoder_enhancements-v4-2-5d6cff963f1b@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMTA3MDA4MyBTYWx0ZWRfX7lGZCo5GTEl8
- 4Xg2xjypJJYI9LEFoi4oMhP7zbaFjYzF6vga5ScFmw9gWJSn2HKZnbOIfcvb9tY5PlxQNOuqL3C
- Tp0ZKPA8lSrhRISKwhvhoI8pTuDYHSQxW3spGGxSKFLPOa9o47JE+joJDUYV8zN05+rJquj/N3I
- iDeAHyiujBjsqJQyMB7SoTcFwQhlGCsUR2ZgmU3F3BAfdcbSAz+12eXhN58r6a6wdBh6cR8Qs8u
- dW5s6tXW1TXmZkAbSscplPpTDdOtzDm+n5FqW153+vksYbXLHIU7YRQjjnv0r1D++nUjw/Qs78r
- WIqUfdL54IsxTaWWsGZubx6nFFTscUh/W808BL9tx/C8Of7ymw4D4pq94X9ctRzC50qFdH78gEW
- fgSMVXw331ObFDCpO8bm7/aaUhK5aQ==
-X-Proofpoint-ORIG-GUID: HozIHmirwtfHbKlg4zCZvtoTzx2lMh6L
-X-Proofpoint-GUID: HozIHmirwtfHbKlg4zCZvtoTzx2lMh6L
-X-Authority-Analysis: v=2.4 cv=BrKQAIX5 c=1 sm=1 tr=0 ts=690dc933 cx=c_pps
- a=JL+w9abYAAE89/QcEU+0QA==:117 a=L4UNg9I9cQSOxNpRiiGXlA==:17
- a=IkcTkHD0fZMA:10 a=6UeiqGixMTsA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=EUspDBNiAAAA:8 a=-McpUROWq26EwQPLxNQA:9
- a=QEXdDO2ut3YA:10 a=324X-CrmTo6CU4MGRt3R:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
- definitions=2025-11-07_02,2025-11-06_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- lowpriorityscore=0 spamscore=0 priorityscore=1501 impostorscore=0 bulkscore=0
- clxscore=1015 adultscore=0 phishscore=0 malwarescore=0 suspectscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2510240001 definitions=main-2511070083
+X-B4-Tracking: v=1; b=H4sIAB7KDWkC/23PSwrCMBCA4auUrI1M3q0r7yEu0pi2AdvURIJSe
+ nfTCorY5T8w3zATijY4G9GhmFCwyUXnhxxiVyDT6aG12F1yIwpUgAKOb8b3OOqSCjFi22uDSy6
+ BMqGNIBTlvTHYxj1W83TO3bl49+G5nkhkmb61isCGlggGzKhWlWmIlbI8Xt2gg9/70KKFS+xDE
+ KBqi2CZUEJJVVeUga7/CP4lyOZPiWeiUVJKgFIZq3+IeZ5fGplk2DkBAAA=
+X-Change-ID: 20250704-qcom-sa8255p-emac-8460235ac512
+To: Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>, 
+ Richard Cochran <richardcochran@gmail.com>, 
+ Andrew Lunn <andrew+netdev@lunn.ch>, 
+ "David S. Miller" <davem@davemloft.net>, Eric Dumazet <edumazet@google.com>, 
+ Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>, 
+ Maxime Coquelin <mcoquelin.stm32@gmail.com>, 
+ Alexandre Torgue <alexandre.torgue@foss.st.com>, 
+ Vinod Koul <vkoul@kernel.org>, Giuseppe Cavallaro <peppe.cavallaro@st.com>, 
+ Jose Abreu <joabreu@synopsys.com>, Chen-Yu Tsai <wens@kernel.org>, 
+ Jernej Skrabec <jernej.skrabec@gmail.com>, 
+ Samuel Holland <samuel@sholland.org>, 
+ Matthew Gerlach <matthew.gerlach@altera.com>, 
+ Neil Armstrong <neil.armstrong@linaro.org>, 
+ Kevin Hilman <khilman@baylibre.com>, Jerome Brunet <jbrunet@baylibre.com>, 
+ Martin Blumenstingl <martin.blumenstingl@googlemail.com>, 
+ Keguang Zhang <keguang.zhang@gmail.com>, Shawn Guo <shawnguo@kernel.org>, 
+ Sascha Hauer <s.hauer@pengutronix.de>, 
+ Pengutronix Kernel Team <kernel@pengutronix.de>, 
+ Fabio Estevam <festevam@gmail.com>, Jan Petrous <jan.petrous@oss.nxp.com>, 
+ s32@nxp.com, Romain Gantois <romain.gantois@bootlin.com>, 
+ Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>, 
+ Heiko Stuebner <heiko@sntech.de>, Chen Wang <unicorn_wang@outlook.com>, 
+ Inochi Amaoto <inochiama@gmail.com>, Emil Renner Berthing <kernel@esmil.dk>, 
+ Minda Chen <minda.chen@starfivetech.com>, Drew Fustini <fustini@kernel.org>, 
+ Guo Ren <guoren@kernel.org>, Fu Wei <wefu@redhat.com>, 
+ Nobuhiro Iwamatsu <nobuhiro.iwamatsu.x90@mail.toshiba>, 
+ Geert Uytterhoeven <geert+renesas@glider.be>, 
+ Magnus Damm <magnus.damm@gmail.com>, Maxime Ripard <mripard@kernel.org>, 
+ Shuang Liang <liangshuang@eswincomputing.com>, 
+ Zhi Li <lizhi2@eswincomputing.com>, 
+ Shangjuan Wei <weishangjuan@eswincomputing.com>, 
+ "G. Jaya Kumaran" <vineetha.g.jaya.kumaran@intel.com>, 
+ Clark Wang <xiaoning.wang@nxp.com>, Linux Team <linux-imx@nxp.com>, 
+ Frank Li <Frank.Li@nxp.com>, David Wu <david.wu@rock-chips.com>, 
+ Samin Guo <samin.guo@starfivetech.com>, 
+ Christophe Roullier <christophe.roullier@foss.st.com>, 
+ Swathi K S <swathi.ks@samsung.com>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, netdev@vger.kernel.org, 
+ linux-stm32@st-md-mailman.stormreply.com, 
+ linux-arm-kernel@lists.infradead.org, 
+ Drew Fustini <dfustini@tenstorrent.com>, linux-sunxi@lists.linux.dev, 
+ linux-amlogic@lists.infradead.org, linux-mips@vger.kernel.org, 
+ imx@lists.linux.dev, linux-renesas-soc@vger.kernel.org, 
+ linux-rockchip@lists.infradead.org, sophgo@lists.linux.dev, 
+ linux-riscv@lists.infradead.org, 
+ Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+X-Mailer: b4 0.14.2
+X-Developer-Signature: v=1; a=openpgp-sha256; l=4165;
+ i=bartosz.golaszewski@linaro.org; h=from:subject:message-id;
+ bh=ZivlGpi+T1c5DUoMpOPkmITE34pLl/IzVvSOHSJ88dQ=;
+ b=owEBbQKS/ZANAwAKARGnLqAUcddyAcsmYgBpDcojt3k/2PQCBq6F4SnzHXqKBXG0p9VyMcZAB
+ IR/euEb67iJAjMEAAEKAB0WIQQWnetsC8PEYBPSx58Rpy6gFHHXcgUCaQ3KIwAKCRARpy6gFHHX
+ cq4aEADTN+ZUS9OBISS21hcbWDotjjlsSXxfMzNstpmanMhTAjTDqTozFbZykCw0Vf274vKfVTb
+ 3g3WrNgP5cYiyZLsDLBQrRu6Ymi7HMPV/05dLA/ZwUDNCnI1z7BZ88PIdxY5BkCZVJ3GKChFHtc
+ /MO9zH6RfTWIudWrMD7Lfd9ZY6jZIvDoq773GGAi6RNBmUIuMwrmFa6KoiNx9FQ0NswFVmDySZh
+ JXxm6zVaFTbIkl9oXrLqI2XJ/gVgWH0/Z84+6CyYJJfsal7i8ARil61hGY321B8LC7SosFR+j7j
+ B++DT5/YtpyqEq7RWzvA9k+oYt2zfujGqApAhNHp98SeFy5vw7tmBvrmtAU5n+KbCm9f3NTe1i2
+ fknVSt8R40eV+g1TckJWN/2/vn4TyZd0s9D7Xa8ovqOBTJDAbL9f+suLfjhBL3R5AIF1jlWhh64
+ mk81XGCxt6IW5TnYAMUXhE+G4unUmH8c2hdj/NqoR1owhNhOADjIgBosXOV3YrxLMKT0gL57ydA
+ hvbBFUSxE6/hrs7QM6W8VUkwoGv2QB0OI8zxJo6s2F2ZMuoMMLhGpkgud1m20fPaPHx4HQTSZR5
+ +NT8ZRc9bQyTREbDWHw9J0JKcCeAP3mxkCDn1v3X1p7YmUtI4pBF/WjLgOT6OM9riUztf9yMJFV
+ h4+xLNJvvsQjMdw==
+X-Developer-Key: i=bartosz.golaszewski@linaro.org; a=openpgp;
+ fpr=169DEB6C0BC3C46013D2C79F11A72EA01471D772
 
+Add support for the firmware-managed variant of the DesignWare MAC on
+the sa8255p platform. This series contains new DT bindings and driver
+changes required to support the MAC in the STMMAC driver.
 
+It also reorganizes the ethqos code quite a bit to make the introduction
+of power domains into the driver a bit easier on the eye.
 
-On 11/6/2025 9:00 AM, Wangao Wang wrote:
-> The setting of HFI_PROP_CROP_OFFSETS for the OUTPUT port is correct,
-> but on the CAPTURE port it is used to inform the firmware about the
-> ROI, so crop_offset needs to be handled accordingly.
-> 
-> Signed-off-by: Wangao Wang <wangao.wang@oss.qualcomm.com>
+The DTS changes will go in separately.
 
-Does CROP use case work with just this patch and first one?
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+---
+Changes in v5:
+- Name the DT binding document after the new compatbile
+- Add missing space
+- Make the power-domains limits stricter
+- Link to v4: https://lore.kernel.org/r/20251104-qcom-sa8255p-emac-v4-0-f76660087cea@linaro.org
 
-Since you are enabling different features in your series, pls make sure
-features are working with individual patches.
+Changes in v4:
+- Remove the phys property from the SCMI bindings
+- Mark the power-domain-names property as required
+- Set maxItems for power-domains to 1 for all existing bindings to
+  maintain the current requirements after modifying the value in the
+  top-level document
+- Link to v3: https://lore.kernel.org/r/20251027-qcom-sa8255p-emac-v3-0-75767b9230ab@linaro.org
 
-Thanks,
-Dikshita
-> ---
->  .../media/platform/qcom/iris/iris_hfi_gen2_command.c   | 18 ++++++++++++++----
->  drivers/media/platform/qcom/iris/iris_venc.c           |  4 ++--
->  2 files changed, 16 insertions(+), 6 deletions(-)
-> 
-> diff --git a/drivers/media/platform/qcom/iris/iris_hfi_gen2_command.c b/drivers/media/platform/qcom/iris/iris_hfi_gen2_command.c
-> index aaa79dfe2db281bb77be7274233f093b0086b5d4..69034e1ea8eb64440646776a40dcc657453916db 100644
-> --- a/drivers/media/platform/qcom/iris/iris_hfi_gen2_command.c
-> +++ b/drivers/media/platform/qcom/iris/iris_hfi_gen2_command.c
-> @@ -215,8 +215,11 @@ static int iris_hfi_gen2_set_crop_offsets(struct iris_inst *inst, u32 plane)
->  	u32 port = iris_hfi_gen2_get_port(inst, plane);
->  	u32 bottom_offset, right_offset;
->  	u32 left_offset, top_offset;
-> +	u32 codec_align;
->  	u32 payload[2];
->  
-> +	codec_align = inst->codec == V4L2_PIX_FMT_HEVC ? 32 : 16;
-> +
->  	if (inst->domain == DECODER) {
->  		if (V4L2_TYPE_IS_OUTPUT(plane)) {
->  			bottom_offset = (inst->fmt_src->fmt.pix_mp.height - inst->crop.height);
-> @@ -230,10 +233,17 @@ static int iris_hfi_gen2_set_crop_offsets(struct iris_inst *inst, u32 plane)
->  			top_offset = inst->compose.top;
->  		}
->  	} else {
-> -		bottom_offset = (inst->fmt_dst->fmt.pix_mp.height - inst->enc_raw_height);
-> -		right_offset = (inst->fmt_dst->fmt.pix_mp.width - inst->enc_raw_width);
-> -		left_offset = inst->crop.left;
-> -		top_offset = inst->crop.top;
-> +		if (V4L2_TYPE_IS_OUTPUT(plane)) {
-> +			bottom_offset = (inst->enc_raw_height - inst->crop.height);
-> +			right_offset = (inst->enc_raw_width - inst->crop.width);
-> +			left_offset = inst->crop.left;
-> +			top_offset = inst->crop.top;
-> +		} else {
-> +			bottom_offset = (inst->fmt_dst->fmt.pix_mp.height - inst->enc_raw_height);
-> +			right_offset = (inst->fmt_dst->fmt.pix_mp.width - inst->enc_raw_width);
-> +			left_offset = 0;
-> +			top_offset = 0;
-> +		}
->  	}
->  
->  	payload[0] = FIELD_PREP(GENMASK(31, 16), left_offset) | top_offset;
-> diff --git a/drivers/media/platform/qcom/iris/iris_venc.c b/drivers/media/platform/qcom/iris/iris_venc.c
-> index 50a3eb975a2523abf1c2df128a66a762a1ed35c6..7ad747d2272f029e69a56572a188a032f898a3fb 100644
-> --- a/drivers/media/platform/qcom/iris/iris_venc.c
-> +++ b/drivers/media/platform/qcom/iris/iris_venc.c
-> @@ -62,8 +62,8 @@ int iris_venc_inst_init(struct iris_inst *inst)
->  
->  	inst->crop.left = 0;
->  	inst->crop.top = 0;
-> -	inst->crop.width = f->fmt.pix_mp.width;
-> -	inst->crop.height = f->fmt.pix_mp.height;
-> +	inst->crop.width = DEFAULT_WIDTH;
-> +	inst->crop.height = DEFAULT_HEIGHT;
->  
->  	inst->operating_rate = DEFAULT_FPS;
->  	inst->frame_rate = DEFAULT_FPS;
-> 
+Changes in v3:
+- Drop 'power' and 'perf' prefixes from power domain names
+- Rebase on top of Russell's changes to dwmac
+- Rebase on top of even more changes from Russell that are not yet
+  in next (E1vB6ld-0000000BIPy-2Qi4@rmk-PC.armlinux.org.uk)
+- Link to v2: https://lore.kernel.org/all/20251008-qcom-sa8255p-emac-v2-0-92bc29309fce@linaro.org/
+
+Changes in v2:
+- Fix the power-domains property in DT bindings
+- Rework the DT bindings example
+- Drop the DTS patch, it will go upstream separately
+- Link to v1: https://lore.kernel.org/r/20250910-qcom-sa8255p-emac-v1-0-32a79cf1e668@linaro.org
+
+---
+Bartosz Golaszewski (8):
+      dt-bindings: net: qcom: document the ethqos device for SCMI-based systems
+      net: stmmac: qcom-ethqos: use generic device properties
+      net: stmmac: qcom-ethqos: improve typing in devres callback
+      net: stmmac: qcom-ethqos: wrap emac driver data in additional structure
+      net: stmmac: qcom-ethqos: split power management fields into a separate structure
+      net: stmmac: qcom-ethqos: split power management context into a separate struct
+      net: stmmac: qcom-ethqos: define a callback for setting the serdes speed
+      net: stmmac: qcom-ethqos: add support for sa8255p
+
+ .../bindings/net/allwinner,sun7i-a20-gmac.yaml     |   3 +
+ .../bindings/net/altr,socfpga-stmmac.yaml          |   3 +
+ .../bindings/net/amlogic,meson-dwmac.yaml          |   3 +
+ .../devicetree/bindings/net/eswin,eic7700-eth.yaml |   3 +
+ .../devicetree/bindings/net/intel,dwmac-plat.yaml  |   3 +
+ .../bindings/net/loongson,ls1b-gmac.yaml           |   3 +
+ .../bindings/net/loongson,ls1c-emac.yaml           |   3 +
+ .../devicetree/bindings/net/nxp,dwmac-imx.yaml     |   3 +
+ .../devicetree/bindings/net/nxp,lpc1850-dwmac.yaml |   3 +
+ .../devicetree/bindings/net/nxp,s32-dwmac.yaml     |   3 +
+ .../devicetree/bindings/net/qcom,ethqos.yaml       |   3 +
+ .../bindings/net/qcom,sa8255p-ethqos.yaml          |  98 ++++++
+ .../devicetree/bindings/net/renesas,rzn1-gmac.yaml |   3 +
+ .../bindings/net/renesas,rzv2h-gbeth.yaml          |   3 +
+ .../devicetree/bindings/net/rockchip-dwmac.yaml    |   3 +
+ .../devicetree/bindings/net/snps,dwmac.yaml        |   5 +-
+ .../bindings/net/sophgo,cv1800b-dwmac.yaml         |   3 +
+ .../bindings/net/sophgo,sg2044-dwmac.yaml          |   3 +
+ .../bindings/net/starfive,jh7110-dwmac.yaml        |   3 +
+ .../devicetree/bindings/net/stm32-dwmac.yaml       |   3 +
+ .../devicetree/bindings/net/tesla,fsd-ethqos.yaml  |   3 +
+ .../devicetree/bindings/net/thead,th1520-gmac.yaml |   3 +
+ .../bindings/net/toshiba,visconti-dwmac.yaml       |   3 +
+ MAINTAINERS                                        |   1 +
+ drivers/net/ethernet/stmicro/stmmac/Kconfig        |   2 +-
+ .../ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c    | 342 +++++++++++++++++----
+ 26 files changed, 448 insertions(+), 63 deletions(-)
+---
+base-commit: 9c0826a5d9aa4d52206dd89976858457a2a8a7ed
+change-id: 20250704-qcom-sa8255p-emac-8460235ac512
+
+Best regards,
+-- 
+Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+
 
