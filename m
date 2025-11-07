@@ -1,84 +1,84 @@
-Return-Path: <linux-arm-msm+bounces-80792-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-80793-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id D5D3FC40C3F
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 07 Nov 2025 17:09:03 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id E6785C40C7F
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 07 Nov 2025 17:10:43 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 3833D18848E0
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Nov 2025 16:09:28 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 225915674EA
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Nov 2025 16:09:15 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3B9F932ED4A;
-	Fri,  7 Nov 2025 16:08:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B8953330B21;
+	Fri,  7 Nov 2025 16:08:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b="1HEvjRq0"
+	dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b="mLw/fGot"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-f54.google.com (mail-ed1-f54.google.com [209.85.208.54])
+Received: from mail-ed1-f43.google.com (mail-ed1-f43.google.com [209.85.208.43])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2BE12F3614
-	for <linux-arm-msm@vger.kernel.org>; Fri,  7 Nov 2025 16:08:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8D3532721B
+	for <linux-arm-msm@vger.kernel.org>; Fri,  7 Nov 2025 16:08:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762531735; cv=none; b=ZSJt7M7XhvXzZjMwi4QwJ1fp4hb9MLl5J+BmpIEAFg4HJRN+m4AdY6LytrX9qbYUu6zIxB+LsdZg61O8pt+ht6m6HQytiJO8c48JZCD0cx30CwILdb+q8tHgZNZqGb8Vs4kol4Lvx6oA9vzoQii7bSu+HLaeNS7HtlsbkjuiUlY=
+	t=1762531737; cv=none; b=AwhIhEB+k1f2nXNyo4r+syJl7bgwJpS65YYC9zuUN4xuWdbTCpdPQsTJTkGXKpZfgPLQuCIwQcYd5ohD4psJi0giPUaqehhZRRvIJh1mKPhW3/2w2e9r0bG0jXef65CM6j9HVvQMv6gQEcwP/uqRhBz50kRGl9eiuFhijGk3UFA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762531735; c=relaxed/simple;
-	bh=wCfL/0TbR2D1La8wfkO0vzsLgEQ1Zd5Y2m8FV9wi1Gg=;
+	s=arc-20240116; t=1762531737; c=relaxed/simple;
+	bh=FrKylvjtIbykfg6BNRKjScYknFwVxGFQEfuD+JLYCCg=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=pWKv7NBbaN3KZg/L9AE/2toDI4BnOpEHlH9Dj7Xzs4ntYi3GM/FAlNm9R8VyXTvP7fi+yQ6x2O6jQsZL203uSTpmgJCUSoYtgTOlGzLM5gwPdwloanpYzngQxq9ccSgGT/+rqDTsOvowXPEZCfiMGCBdjgbJTz3Gd+GLNgLdryg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=fairphone.com; spf=pass smtp.mailfrom=fairphone.com; dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b=1HEvjRq0; arc=none smtp.client-ip=209.85.208.54
+	 In-Reply-To:To:Cc; b=MnSZ6LdspiGA7V3FbCoE1dT+/06tu8AYE1osDQ1M2ZANlRbl3pCndpi9cuxKW3/n1ODn3zzxCpZ+f7yW7yrJvvEU9MWuXKQITrAV/7sx35Mx3srCDXJczXT0HV5jDuiXB8aMT2kBfG26bs/OyNyM8noNbGwWF1Gid/nFFfaDL5w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=fairphone.com; spf=pass smtp.mailfrom=fairphone.com; dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b=mLw/fGot; arc=none smtp.client-ip=209.85.208.43
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=fairphone.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fairphone.com
-Received: by mail-ed1-f54.google.com with SMTP id 4fb4d7f45d1cf-64074f01a6eso1650461a12.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 07 Nov 2025 08:08:52 -0800 (PST)
+Received: by mail-ed1-f43.google.com with SMTP id 4fb4d7f45d1cf-640c1fda178so1641050a12.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 07 Nov 2025 08:08:53 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=fairphone.com; s=fair; t=1762531731; x=1763136531; darn=vger.kernel.org;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=JYr/pky6aWVI2M5rA4U5Jbo/T6qeLZWOHBZOpvd4WCo=;
-        b=1HEvjRq07orEtdKMLrF/T1DERJoBqusNCgxa9cVyRFQOQPrXX1q0UEoTRPc3SbdAHt
-         biMnqwcsIZjXtaMKrb50II95uGXdcFSGgKlMUL7xizvYKBxpaGBtmis6DKlnEQC/7z6Z
-         N56YlbxILEhT1M55DItd3eHGOF5WnBB2t5rPqt2nW1QWrJaLN9kNUhjBa7wuVuJTqQ34
-         GYBHZSx7k+momuoIUEVgY5SxlreW3yclJpzwDgR6lWlHCaP6+3oYZPkLvM6kfqjcn5e1
-         uYyJQkQ47BFasAelH4H2O492RGsEPSLt9gYHjCIVa1kBtVudPL5TfgDdvCrtM4pXxxQA
-         jrrQ==
+        bh=M6OFyEM0mwtoBUd6fjbO6FrIz0k/kDLhqnCZDGR6L50=;
+        b=mLw/fGotcCQwPOCJGVL+xuq/OAELVkU5YcmAVQmghR2VUtWG9qU9Yesn2UaapGPOUA
+         ZstY427FF26r8ErT5jQkcVUAcug9cXJZXM339I6ruD3as7frY7Mv/i/bH9Plmvr50xul
+         SQgDvIaaVS0s6LGS/uLY5r/mQBis2Qn0EmCgoNa7tW3enNqyS8opyuIPgfqkEQ739lpO
+         tN1YbKYDu0Bx8yPcybmN7ufzJPkz0GpWrSV4B7aLaJTE+QLC3GUkKSenLtxVlgz4IIax
+         IUfjKNz905l525j50YXexlLsIe7TSMunug6FVkBUuAxjWjXQSGt1iZl79gWudU6hws+6
+         FY3Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20230601; t=1762531731; x=1763136531;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
          :cc:subject:date:message-id:reply-to;
-        bh=JYr/pky6aWVI2M5rA4U5Jbo/T6qeLZWOHBZOpvd4WCo=;
-        b=fdj9dTHjuhhp7jo3UJzoe6qDfH3lAcO6HHbOVNn8BHAqz8kOmLQWWVFT9OaPfhNGA3
-         YDi0ydmm8CazwQGpbe4tHp56ItirTsGXreqI5LhYkevfB83cw4V/VzwMlAXOrUFXmYBa
-         rYD9WRbHYZTCSnThg4QP5uXg0JOatvLhRVC128ecpA8HxTkj2j7EWl1FRJ+c67LLgEkV
-         AiW5s4Hpd+Wm+RBnImBX2W7SxwUIQIiGW+O4/1D6gI4xN6G3GA4jXSkKfwAkoLNQfkWp
-         zj349SnqxJJlyOQt0PpgkK5f1QIr0/MJs55NtW/P9up6bF/GNFG9e0biFMzVg28QSb/R
-         f90A==
-X-Forwarded-Encrypted: i=1; AJvYcCW610j9Rha02EBrzFD/ofiJg2mosFRtU++ptDyPUNiW45euWIGZSZmAN5nwQqTiT5Mwt3Of5AT4y2r7dI2o@vger.kernel.org
-X-Gm-Message-State: AOJu0YyMPYNeLov4iw92DsZ/CvIO+Bx0gl4LP/Sk6f4zzKT+1OW/o+nF
-	piOU4BDwHNZRgzWwnzXRGfmWTInmAvL/z9faTo/uocEgKLiGp9rkQHHZrGz+MLIoOXFfzo+wvwH
-	XrjSwqKo=
-X-Gm-Gg: ASbGncuDSlBsNRf/HJYGJLlYab0pwxDq9o41ioFwSzEwxhGLgZWoaRBE4js7Idg0+D2
-	YZ4zfrdVt5BNgBbLM1Vz2t+5iA82EcYjgW5z2o38F3qsfVOulVqH6oFCFeWtojt0/YnBSN9bTY4
-	6C5uo+/Ew9X55ENEXdPcioBgeTY7ehkhKEG0NC44SNPCOg8qbs2P5nIYE+QSwcrpSKEJ9uL09LQ
-	9Ymbai+3M7ue3y3D0RLvYaDc2r6mgHqr+sLe4rvDDroj4sKcfRCftcsARdvAu8Ot42MLJoOh10+
-	lAQ5FUA9Fe3M3jAb0b98gu3o7/wrr2AA1NVTFuyLhqmqKkNiUXSgkT4fSAeDtRJUhOPCbpTwSk4
-	Wm27ninBVBem1xq1Cg+jOe607onim3MEIyvPvc2vMOw5fEiS1+bAEoKoAKCWnvct/H+Ohu7hq5w
-	yschTu2udd4wTasmUdX6LEhit0JzUgmunQJ+9EZ1IC1WeM5H7i1MG7ICJpMuEcDhGk3w==
-X-Google-Smtp-Source: AGHT+IEpbRanFI/ly4pOhSKtJJYggLoWCyVGHF5JexpXtBfMcrU0Svhu9ZaKyv7MJNW8LAKNg2Ua6A==
-X-Received: by 2002:a05:6402:4406:b0:639:d9f4:165e with SMTP id 4fb4d7f45d1cf-6413f0a08c2mr3306548a12.29.1762531731003;
+        bh=M6OFyEM0mwtoBUd6fjbO6FrIz0k/kDLhqnCZDGR6L50=;
+        b=H7ztbQTBpD8GzK7TXSNTagD5Knzf0TRJOYxC8JzoIteYswnHQxysgxNbmxjTKwbyj1
+         rGc/OxYWHqfQUU/D1YwjmVwNg6SLl/xSircXYUGujjT48qC0qU+8mSAb0lSLQTIgPn3g
+         e4MoPbA/Xkz0WyibH6OJN4JhU9vVZNr+pReLrOgo+MggMr01p5qbdIzu+lfTsBdyeP5S
+         U1FbMGP8M5EQmuVSsmeymyKKYjppW6OmGBUuELNLJ4rRTQRQRkAQM6+4MO9TF+CbmDeQ
+         1a/rDtTwPM+kh2DbAB9CuNKW9mvr4ReO7k52rH2SeqOw6f8q+NNSfdhScOp5wyvtSelK
+         4hKg==
+X-Forwarded-Encrypted: i=1; AJvYcCWgPZOsV5rtc2Y1Rz8iCPnYcHx0/775BDNYFQ7kMcUjvLy1fRdJ4WSlpPwaD99eJal28vWelgxs72hbjuPC@vger.kernel.org
+X-Gm-Message-State: AOJu0YyBR4RJE9od2wxii/OCq0tnNMk6xL7CCwI8tP0qc7aQV3VfiMzW
+	2hh8uO98K86NDjTrzczrW1O6xlhe3vco+/Tftqk/jiaGQpkjV1eXNI1VtvKIllhgy41ymTgoABA
+	PnvXCOmk=
+X-Gm-Gg: ASbGncvdNbrNlYOuu0ZxC4cJ8zefkOuUWcJALSFRHum5HS3bDI9LW9DDov3LDZKPO4s
+	FgtoohoC9n8MOLX9g52JFFTJZwEErfjPr5lv0tFYJaIxk8rxp885WptWpLhCaARsfdR5EnwWKpU
+	fYxRxq35dl2llWtYv5p5SzDKHKb3dpV8pdMNO/wmlRC3XwJvlVsESynrNj0pQOU94vl7BzUrZXv
+	YmL24Nn05uKH25FOYAR5fiSrpLRSVICMOg47XKiYminRCvx5Y3MRvPEp1lLY3Hkz0gnQ67/meVR
+	OYuNNqecPrg02+GK7gv+r6kd+BZGTE7fmazzrYyP4iPxBY3PB4eZ36MhsemUuHUOEyLKi/X9IzL
+	r9lkEwctkvufisaGUQ+mSKtvmJe3vhfjiXjoYNPFC8eXYbaXIg9kjUkTkVJCyuQ39yM5FjEt2x6
+	kyhbHoSWZ/JprieC4FpubDTy3ZP2rI0tDWwFHyn6yA2jTAnGX02CMfb2U=
+X-Google-Smtp-Source: AGHT+IFc5yHu64pZOVzhmSiW9o358Hhl91qRFBo7frY9TOt1voWJpvXX8q8w1oYhoIzDVymNV/t2pA==
+X-Received: by 2002:a05:6402:3513:b0:640:e791:df67 with SMTP id 4fb4d7f45d1cf-6413ef03618mr3463236a12.10.1762531731544;
         Fri, 07 Nov 2025 08:08:51 -0800 (PST)
 Received: from [172.16.220.100] (144-178-202-139.static.ef-service.nl. [144.178.202.139])
-        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-6411f713959sm4444376a12.5.2025.11.07.08.08.50
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-6411f713959sm4444376a12.5.2025.11.07.08.08.51
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 07 Nov 2025 08:08:50 -0800 (PST)
+        Fri, 07 Nov 2025 08:08:51 -0800 (PST)
 From: Luca Weiss <luca.weiss@fairphone.com>
-Date: Fri, 07 Nov 2025 17:08:47 +0100
-Subject: [PATCH 1/5] dt-bindings: interconnect: qcom,sm6350-rpmh: Add
- clocks for QoS
+Date: Fri, 07 Nov 2025 17:08:48 +0100
+Subject: [PATCH 2/5] interconnect: qcom: icc-rpmh: Get parent's regmap for
+ nested NoCs
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -87,7 +87,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20251107-sm6350-icc-qos-v1-1-8275e5fc3f61@fairphone.com>
+Message-Id: <20251107-sm6350-icc-qos-v1-2-8275e5fc3f61@fairphone.com>
 References: <20251107-sm6350-icc-qos-v1-0-8275e5fc3f61@fairphone.com>
 In-Reply-To: <20251107-sm6350-icc-qos-v1-0-8275e5fc3f61@fairphone.com>
 To: Georgi Djakov <djakov@kernel.org>, Rob Herring <robh@kernel.org>, 
@@ -99,137 +99,56 @@ Cc: ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
  devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
  Luca Weiss <luca.weiss@fairphone.com>
 X-Mailer: b4 0.14.3
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1762531729; l=3518;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1762531729; l=1554;
  i=luca.weiss@fairphone.com; s=20250611; h=from:subject:message-id;
- bh=wCfL/0TbR2D1La8wfkO0vzsLgEQ1Zd5Y2m8FV9wi1Gg=;
- b=XFhe9WKdgQrhgwCeP/Zu9aHiY8hnx5TxEMqejAH60sY7NNNSJ7zYWpPjHr9tJL6L5Vxd/IUll
- 0+5xg/BwfpFCCSx7nx2Yh4b+QYUkjuUBCgHp1iuRuFkX3leuHhJRZFG
+ bh=FrKylvjtIbykfg6BNRKjScYknFwVxGFQEfuD+JLYCCg=;
+ b=nTRGQyYmySEkpmasdBUmEaPB51ISRGLTYkLSIUcHDR8tbweZYP3kljRlJhHKqSeem9gQeqLRC
+ DHVQ5/NTu3BDPGZMEfeU2PpcIDxP74CA8UJEXfBUhruv7IqiClWTtIv
 X-Developer-Key: i=luca.weiss@fairphone.com; a=ed25519;
  pk=O1aw+AAust5lEmgrNJ1Bs7PTY0fEsJm+mdkjExA69q8=
 
-Add the clocks for some interconnects to the bindings that are required
-to set up the QoS correctly. Update one of the examples to aggre2_noc to
-have an example with clocks.
+Since commit 57eb14779dfd ("interconnect: qcom: icc-rpmh: Support child
+NoC device probe") the icc-rpmh driver supports initializing child NoCs,
+but those child NoCs also need to be able to get the parent's regmap in
+order to enable QoS.
 
-Also while we're at it, remove #interconnect-cells: true as that's
-already provided from qcom,rpmh-common.yaml.
+Change the driver to support that and support programming QoS register.
 
 Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
 ---
- .../bindings/interconnect/qcom,sm6350-rpmh.yaml    | 65 ++++++++++++++++++----
- 1 file changed, 54 insertions(+), 11 deletions(-)
+ drivers/interconnect/qcom/icc-rpmh.c | 12 +++++++++++-
+ 1 file changed, 11 insertions(+), 1 deletion(-)
 
-diff --git a/Documentation/devicetree/bindings/interconnect/qcom,sm6350-rpmh.yaml b/Documentation/devicetree/bindings/interconnect/qcom,sm6350-rpmh.yaml
-index 49eb156b08e0..2dc16e4293a9 100644
---- a/Documentation/devicetree/bindings/interconnect/qcom,sm6350-rpmh.yaml
-+++ b/Documentation/devicetree/bindings/interconnect/qcom,sm6350-rpmh.yaml
-@@ -12,9 +12,6 @@ maintainers:
- description:
-   Qualcomm RPMh-based interconnect provider on SM6350.
+diff --git a/drivers/interconnect/qcom/icc-rpmh.c b/drivers/interconnect/qcom/icc-rpmh.c
+index f90c29111f48..2103185a44a5 100644
+--- a/drivers/interconnect/qcom/icc-rpmh.c
++++ b/drivers/interconnect/qcom/icc-rpmh.c
+@@ -308,7 +308,16 @@ int qcom_icc_rpmh_probe(struct platform_device *pdev)
+ 		struct resource *res;
+ 		void __iomem *base;
  
--allOf:
--  - $ref: qcom,rpmh-common.yaml#
--
- properties:
-   compatible:
-     enum:
-@@ -30,7 +27,9 @@ properties:
-   reg:
-     maxItems: 1
- 
--  '#interconnect-cells': true
-+  clocks:
-+    minItems: 1
-+    maxItems: 2
- 
- patternProperties:
-   '^interconnect-[a-z0-9\-]+$':
-@@ -46,8 +45,6 @@ patternProperties:
-           - qcom,sm6350-clk-virt
-           - qcom,sm6350-compute-noc
- 
--      '#interconnect-cells': true
--
-     required:
-       - compatible
- 
-@@ -57,10 +54,54 @@ required:
-   - compatible
-   - reg
- 
-+allOf:
-+  - $ref: qcom,rpmh-common.yaml#
-+  - if:
-+      properties:
-+        compatible:
-+          contains:
-+            enum:
-+              - qcom,sm6350-aggre1-noc
-+    then:
-+      properties:
-+        clocks:
-+          items:
-+            - description: aggre UFS PHY AXI clock
+-		base = devm_platform_get_and_ioremap_resource(pdev, 0, &res);
++		res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
++		if (!res) {
++			/* Try parent's regmap */
++			qp->regmap = dev_get_regmap(dev->parent, NULL);
++			if (qp->regmap)
++				goto regmap_done;
++			goto skip_qos_config;
++		}
 +
-+  - if:
-+      properties:
-+        compatible:
-+          contains:
-+            enum:
-+              - qcom,sm6350-aggre2-noc
-+    then:
-+      properties:
-+        clocks:
-+          items:
-+            - description: aggre USB3 PRIM AXI clock
-+            - description: RPMH CC IPA clock
-+
-+  - if:
-+      properties:
-+        compatible:
-+          contains:
-+            enum:
-+              - qcom,sm6350-aggre1-noc
-+              - qcom,sm6350-aggre2-noc
-+    then:
-+      required:
-+        - clocks
-+    else:
-+      properties:
-+        clocks: false
-+
- unevaluatedProperties: false
++		base = devm_ioremap_resource(dev, res);
+ 		if (IS_ERR(base))
+ 			goto skip_qos_config;
  
- examples:
-   - |
-+    #include <dt-bindings/clock/qcom,gcc-sm6350.h>
-+    #include <dt-bindings/clock/qcom,rpmh.h>
-+
-     config_noc: interconnect@1500000 {
-         compatible = "qcom,sm6350-config-noc";
-         reg = <0x01500000 0x28000>;
-@@ -68,14 +109,16 @@ examples:
-         qcom,bcm-voters = <&apps_bcm_voter>;
-     };
+@@ -318,6 +327,7 @@ int qcom_icc_rpmh_probe(struct platform_device *pdev)
+ 			goto skip_qos_config;
+ 		}
  
--    system_noc: interconnect@1620000 {
--        compatible = "qcom,sm6350-system-noc";
--        reg = <0x01620000 0x17080>;
-+    aggre2_noc: interconnect@1700000 {
-+        compatible = "qcom,sm6350-aggre2-noc";
-+        reg = <0x01700000 0x1f880>;
-         #interconnect-cells = <2>;
-         qcom,bcm-voters = <&apps_bcm_voter>;
-+        clocks = <&gcc GCC_AGGRE_USB3_PRIM_AXI_CLK>,
-+                 <&rpmhcc RPMH_IPA_CLK>;
- 
--        clk_virt: interconnect-clk-virt {
--            compatible = "qcom,sm6350-clk-virt";
-+        compute_noc: interconnect-compute-noc {
-+            compatible = "qcom,sm6350-compute-noc";
-             #interconnect-cells = <2>;
-             qcom,bcm-voters = <&apps_bcm_voter>;
-         };
++regmap_done:
+ 		qp->num_clks = devm_clk_bulk_get_all(qp->dev, &qp->clks);
+ 		if (qp->num_clks == -EPROBE_DEFER)
+ 			return dev_err_probe(dev, qp->num_clks, "Failed to get QoS clocks\n");
 
 -- 
 2.51.2
