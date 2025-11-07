@@ -1,246 +1,155 @@
-Return-Path: <linux-arm-msm+bounces-80785-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-80786-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7E393C404E8
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 07 Nov 2025 15:24:04 +0100 (CET)
+Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [142.0.200.124])
+	by mail.lfdr.de (Postfix) with ESMTPS id BC440C40659
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 07 Nov 2025 15:37:06 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id C7A904240BF
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Nov 2025 14:23:19 +0000 (UTC)
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 81B9C4E1807
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Nov 2025 14:37:05 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E2D8B31D387;
-	Fri,  7 Nov 2025 14:23:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 28F48329C7A;
+	Fri,  7 Nov 2025 14:28:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="D3EH6cRX";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="Cfempim0"
+	dkim=pass (2048-bit key) header.d=suse.com header.i=@suse.com header.b="UPdH/4Dw"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f48.google.com (mail-wm1-f48.google.com [209.85.128.48])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CC1431A808
-	for <linux-arm-msm@vger.kernel.org>; Fri,  7 Nov 2025 14:23:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71D65329E63
+	for <linux-arm-msm@vger.kernel.org>; Fri,  7 Nov 2025 14:28:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762525396; cv=none; b=YP38Zyh0F7WNZwJlmjL70kSAlBYYijBWwVPh5ITnlxQ/dtLpSfa4tKJqfWlwIRoI8A9UHv3kEigQClW5HF9DmJlFshL8S27qEJXfdZnHFvn3xpVcvEDn8I5jjA/RSEHQmHJVGRZKFOTkjADfYdm5vMSRq8kS+Xjuqo9xYhOa0KQ=
+	t=1762525734; cv=none; b=Pec9tHI+sMzqgkHg0WgWmpLYcKbFRU3Ytyx/m+Oc35Y0mCIOjmvk8CSqrw4SHhnw5hUrx8+RiX5fohHpAq/ZJBQLr+AoSnm9fnxagHSZulxpjf3g0cl5YC9IJcEZD/DxlbOPikQT5QPbDFxnEBgFgiAE9kxPgMRbsNUPTWxuKhc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762525396; c=relaxed/simple;
-	bh=4WF2qF+JmlZqW3TfWhi4guCSTWxjHU+MiXWc2g0vVfk=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=H922B2TH0m4hk2Fn1uy7zy3bBhHSzoNB51SXK7WzkNBs19wnSBN6VbXM2+M7I4tdq8EWUeCT9q5wtegVFNQSDlMfqNVAAEoMA8WWVtu9ECRCWMdB9tZ7AchcmUsmSL+h+G9gCYcIWTcnK2M63tVYj4WDJNac3G474lgKRaarE4E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=D3EH6cRX; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=Cfempim0; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 5A7BpmjZ528575
-	for <linux-arm-msm@vger.kernel.org>; Fri, 7 Nov 2025 14:23:14 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to; s=qcppdkim1; bh=+a2S++AQUY0fS2KV6X2nQwoI
-	E5xNiyzvEu1cwp1iZQ4=; b=D3EH6cRXHXlqi0AUa8ErSK/1mhyPS4IsS0+Tsl0e
-	AbK/mcejq0gjANtVa4azJivGnL2Q6QXA0LKdmVrCcTHEUsZZj9DhP2DJ6CjF7UQ0
-	ggTA/C1rlzOT+9M8Pa2aJF/tTaY3rMqzqrbaXWNXNffmJZcdi/nbXAd45omgtYwJ
-	uv3MM6iBu5guuFBv2pXBhTNlOVL4/v8kH++WkUj6/E4yhEitVolHsiuwVWcRyXO7
-	GVfkDkLpnBa0MosX1l5y5Lergwe/TQqWUDaAuq1aNkmZ0TmyHsr7V2FiODeyP4BU
-	SXfH15gbaOb5W9uXsL1bFgonRW5+jez1Rf7aH8eocyMmaQ==
-Received: from mail-qt1-f199.google.com (mail-qt1-f199.google.com [209.85.160.199])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4a905hu81n-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Fri, 07 Nov 2025 14:23:14 +0000 (GMT)
-Received: by mail-qt1-f199.google.com with SMTP id d75a77b69052e-4ed683b2770so5508251cf.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 07 Nov 2025 06:23:14 -0800 (PST)
+	s=arc-20240116; t=1762525734; c=relaxed/simple;
+	bh=3BhTKLrt8Wvihg8vp8choQ0z6FtpnObNcCgY0g7rt6U=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=qblMbHDavkVZ16f0PjOyOsbBEnqi5tqk0UqBFUC8ClkBe4JA1Zq3SCEdHC+wfoVpU95ifRBwb0d/pwFqFVfgv+pWADPp1QdTpzZSNV2w6sXgVx5r0/pyvmFjJw695AzdA6eQ9euGgeBFADyng8PBs9Cn7gglthxlMTA/WIjUPkY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=suse.com; spf=pass smtp.mailfrom=suse.com; dkim=pass (2048-bit key) header.d=suse.com header.i=@suse.com header.b=UPdH/4Dw; arc=none smtp.client-ip=209.85.128.48
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=suse.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.com
+Received: by mail-wm1-f48.google.com with SMTP id 5b1f17b1804b1-4711b95226dso8155645e9.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 07 Nov 2025 06:28:51 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1762525393; x=1763130193; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=+a2S++AQUY0fS2KV6X2nQwoIE5xNiyzvEu1cwp1iZQ4=;
-        b=Cfempim06B2R4exb9WNSitqZQMMQhqnV4geXcMNhEVt6NBvo1XxXLzOpGWxGDoIg42
-         QShlVxeHafusTYc2YB0MJFfP+CX6Z4y9t+iIR/n+utX9EOntqDaeja8GtHYwhTzTf42m
-         N016EXMM2tIcDkW0uzaVV4RsM7NnLK3Y5pnIN1+jwGeWZq5Cfz7bohw08rOUqlGgF7Kr
-         mQ90zLymz7qDWsCRwhaF2amczbEapfC5CO7g6cY/9Euzwr0vrSwGb0OCSbsa7sG6HJR3
-         CfvTJJqyZ9+GQreWQ0Cqpx9X2dA/JP+/Vf4Fab6ds5BFcbYndeS63Vj4UQSum9vCxWZF
-         j9og==
+        d=suse.com; s=google; t=1762525730; x=1763130530; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=tcbvvRs2xvl1u3FoZnWA9K4Q8QMEKWU1ON5YmKljc6k=;
+        b=UPdH/4DwWdOBXzrhJR7At9cVPp7MoA5VMbzwNkD1qCgMeXlLmjtkIGcD0dCaw4rc5r
+         U6daQOi2XupGPYhNYGcgtsKqenR2uzQugDAjcEeXBlh6IYDanL6R4M5sqLHOJyKgaCBh
+         2zf0TrJ6+u1KUBqU+om3tEV6u+oyP9y2qypBvReywd6h5ad6lMSbOCMZoCz2tp6lM957
+         5uejcsMQXepXY/F7BK4A25sAWCChtmILtmdgrp0X8ZT4rnJPtf2dbaHSfW/Jk0sIXHmD
+         poAuIJb0nwbDhuMLP79i5lhV/z3e+K+JZFt/Wsyg7QMYK6UszNRnBjupqAqFSHiRo808
+         2kWQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1762525393; x=1763130193;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=+a2S++AQUY0fS2KV6X2nQwoIE5xNiyzvEu1cwp1iZQ4=;
-        b=oIp2fENX1TDJXZ70S8rBqm7ddeJ8GVDJLzNCHO75s3yd/BqFMSwO2AxiRE4DZpZ14Z
-         tXf0OWh0CTlxLNxehFJ+n8nFQd0IxoR4k8GU/JD0xFmtVUjr/qOAesbujVJYSYjRC8t9
-         KXMCiQoTu4o0kxcv5SxmxGRYXSugcbWPYwuYUSrunayEn6njj2UAu4HyKQS5BZH9nz3M
-         wUWB+xie0INf1vgHy0eNn0cGOvsdg2P2czP6ETXrYGdESIDTR2Of2GzySWkBkcruqJmg
-         bLdCqYMyVQagMn1XA01PZJfl9wKstOVYMyHubyGXBs13b2M0Y1mqm09XQbmUy71lmy+B
-         XvGA==
-X-Forwarded-Encrypted: i=1; AJvYcCXcvDPkMqujkxbYNCZHEd1b1vO4sypyMFqEB3fbGOKuJZc1kOhev93C/ldQKMcOcawo8Aa9T/UjyzxKBwVS@vger.kernel.org
-X-Gm-Message-State: AOJu0Yz3dREOrr9XGCHlBtfjUFH6DSE0DE3bRPuN5egkyADeKTFlrcKL
-	/eHttnEES/new3JMojx1DXyomoAAOA8cS7zO8M2m5ZlPPcDmZX9iKDfEw0bFw2jf7XlQfBla/fI
-	lwpO8rj+4AnPYP73yuugRQ9oKJyxnNZhYS3VnV/kAS2bsPU4/8J030JXyfDnMWc4eydS/
-X-Gm-Gg: ASbGncu7Kj+pUXp4L0UcjOFqYUXwgxmrMZCN6xikjfO7T9wsWRPQ+r4uEb7tmCnBb+p
-	Zj3z0JTofyp6qAqrUz75lgzFyCzGnXCo6PUjCo3STHdfHU+zTI6VblU4s3Xs1XzKXprOEIUyjEL
-	pv5J7iAhDWsp8Db4Er7Y2rgdesEOP7VjDBj0RkZH7WwgTg+aVR8B8KUieMNn/dn2kUQFM4OhJyW
-	Y1u5WGvvhT2qBQ7b8ZdyDLtCDu+o9TVHD0X1NPLDQA8P0IVuNqdET7pcxGrBxJmLPqtuJdFwuUc
-	ZBgsSoIpOMILcXddPT3oCDJxdqlfY3RU3nGaWbhHwMqxcNQGBg3kjB5MInTm44JSSWGlVYhXfsF
-	mE98O7UnxJYD3YVNbDSMhGmIoUmEymoVx9F/hJTpB8Z9f7Sh9j3fEp/aoHWW1XSrgQOd7+Cz+Xm
-	HeDiA7XezPM7yc
-X-Received: by 2002:a05:622a:148c:b0:4ec:f477:60e9 with SMTP id d75a77b69052e-4ed94aadfc9mr39449441cf.76.1762525393089;
-        Fri, 07 Nov 2025 06:23:13 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IG+3yaL/5/mqUrpztFbYMzYBN6uO1ENGma7JKY17KMFkOU2Ru1L93K1rV93BVrdOZy//IT/hg==
-X-Received: by 2002:a05:622a:148c:b0:4ec:f477:60e9 with SMTP id d75a77b69052e-4ed94aadfc9mr39448991cf.76.1762525392601;
-        Fri, 07 Nov 2025 06:23:12 -0800 (PST)
-Received: from umbar.lan (2001-14ba-a0c3-3a00-264b-feff-fe8b-be8a.rev.dnainternet.fi. [2001:14ba:a0c3:3a00:264b:feff:fe8b:be8a])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-5944a014348sm1514752e87.7.2025.11.07.06.23.11
+        d=1e100.net; s=20230601; t=1762525730; x=1763130530;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=tcbvvRs2xvl1u3FoZnWA9K4Q8QMEKWU1ON5YmKljc6k=;
+        b=petZ8+LJPx/YNeS1W9OXWB3wRwKr2Pkw82DxP2Sqah5pbyNbapCoueyHjhqKx3vmGH
+         owG4Uxx6BYEmq38xodVT3p/3QX0gZVTAw/dCAWyqAivBJ4U65Ui0dfmuYpu74l0qrcca
+         RKcLQ2u1R7Jxwl3lJTOrJV7nsbMfSqPza4VrZf/AHw5QadBeHXTTyDZk5W7iqOPg3UQg
+         lrMAT/kOZdi3hmjaiCi+Z2LgCggMWJIjVLqZMrTfS4c+/XzN3yYgp1xtLA9SZ7PCtstQ
+         4TMSqJFwXGMGWy1y9zLWoq+RrGPotiemA+ln5jZekvwfbjvhasbgxnJhYpwOYL8Zp8xB
+         fTBA==
+X-Forwarded-Encrypted: i=1; AJvYcCWNaBQenSALkGoMtPHrYE7T+xWq+ePTr0hTzkpAo7373OForQpzljttLq65rCg8KnLnn53H2rj4yXlk5dSb@vger.kernel.org
+X-Gm-Message-State: AOJu0Yz7NM/EbJJu/TF6lXODoFUBT6jam1b/VXIwDdq02np/tDxecSPp
+	Qpm0SHwO1+R5WsCvM9yAhxM8ZMf3gx4LRF7CRrwj4NyAAG/SK4rLuUVS8Zm+F3IWKhM=
+X-Gm-Gg: ASbGnctwoykV2VBurjDmMJwUWt30ubYwtUpsFu2Opqglh6o2GMoS0NQZLuX/xw3jI3D
+	o9QotNyWGeFLaZo2TE19O/X/VNyWtYMw9frvjPaevt+IXuqnCsr/Sl3RpMRB+l07JC/oL1ZrNUB
+	Xw0bIWJUfGuk+5LC46ecT9ybIQXDprqtaUwyrLeeguRIEUctmUKZSQFIeQ93nHVuNTp5TmRHq61
+	bRLUXPOyfO0VKskiyQwOa6LxitkdUSzoq5QJl3xT+rY/yNWQd2DLi7iyRndsnXQVBypsTHMxJgk
+	eVOQw2zd3uAzctRAp0pxAID/1AAxzj0n7tVQH7+VvTWmPa2tPY91TVbvXezS+cfEsqVU0OaRWA7
+	CUXkTolJDajXWKPkI5TPbua5VqcrTCi88qA4tRmRvb3wxDJBKcypvJM5YDlqRLHDHKLy3WVBTGy
+	+3xU1EgrQ9aEuWthWjQd+QvJGT
+X-Google-Smtp-Source: AGHT+IGSUrN/hCHTEKNrK/nAtni+bSccTeEoJLzD46C+Lw2FCkxvsZIT3Eo/AVNFZdrzTW3STsHRog==
+X-Received: by 2002:a05:600c:4fd0:b0:477:582e:7a81 with SMTP id 5b1f17b1804b1-4776bc886femr28359035e9.4.1762525729708;
+        Fri, 07 Nov 2025 06:28:49 -0800 (PST)
+Received: from localhost.localdomain ([2a00:6d43:105:c401:e307:1a37:2e76:ce91])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4775cdcc552sm181970865e9.6.2025.11.07.06.28.48
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 07 Nov 2025 06:23:11 -0800 (PST)
-Date: Fri, 7 Nov 2025 16:23:09 +0200
-From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc: Krzysztof Kozlowski <krzk@kernel.org>, Rob Herring <robh@kernel.org>,
-        Saravana Kannan <saravanak@google.com>,
-        "Rafael J. Wysocki" <rafael@kernel.org>,
-        Viresh Kumar <viresh.kumar@linaro.org>,
-        Matthias Brugger <matthias.bgg@gmail.com>,
-        AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-        Yangtao Li <tiny.windzz@gmail.com>, Chen-Yu Tsai <wens@kernel.org>,
-        Jernej Skrabec <jernej.skrabec@gmail.com>,
-        Samuel Holland <samuel@sholland.org>,
-        Lorenzo Pieralisi <lpieralisi@kernel.org>,
-        Daniel Lezcano <daniel.lezcano@linaro.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>,
-        Thomas Gleixner <tglx@linutronix.de>,
-        Nicolas Ferre <nicolas.ferre@microchip.com>,
-        Alexandre Belloni <alexandre.belloni@bootlin.com>,
-        Claudiu Beznea <claudiu.beznea@tuxon.dev>,
-        Maximilian Luz <luzmaximilian@gmail.com>,
-        Hans de Goede <hansg@kernel.org>,
-        Ilpo =?utf-8?B?SsOkcnZpbmVu?= <ilpo.jarvinen@linux.intel.com>,
-        Daniel Lezcano <daniel.lezcano@kernel.org>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Jonathan Hunter <jonathanh@nvidia.com>, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org,
-        linux-mediatek@lists.infradead.org, linux-sunxi@lists.linux.dev,
-        linux-arm-msm@vger.kernel.org, platform-driver-x86@vger.kernel.org,
-        linux-tegra@vger.kernel.org
-Subject: Re: [PATCH 11/13] soc: qcom: Simplify with
- of_machine_get_match_data()
-Message-ID: <rxhmiudlnrn2pexqtwuuv2jrenrl2ezepknvrc3o34gaap247u@2tsfw6g33rmr>
-References: <20251106-b4-of-match-matchine-data-v1-0-d780ea1780c2@linaro.org>
- <20251106-b4-of-match-matchine-data-v1-11-d780ea1780c2@linaro.org>
- <odmsib3dsxzzggq4gcx7gmh6vq3crlv25fz4z2l2ntezvx6gbi@uelqojwjjait>
- <a8952b46-94b6-4fe5-a5be-d69aa41d44cd@kernel.org>
- <a06ed143-c497-4141-8b4d-98fcb322e130@linaro.org>
+        Fri, 07 Nov 2025 06:28:49 -0800 (PST)
+From: Marco Crivellari <marco.crivellari@suse.com>
+To: linux-kernel@vger.kernel.org,
+	linux-pci@vger.kernel.org,
+	mhi@lists.linux.dev,
+	linux-arm-msm@vger.kernel.org
+Cc: Tejun Heo <tj@kernel.org>,
+	Lai Jiangshan <jiangshanlai@gmail.com>,
+	Frederic Weisbecker <frederic@kernel.org>,
+	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
+	Marco Crivellari <marco.crivellari@suse.com>,
+	Michal Hocko <mhocko@suse.com>,
+	Manivannan Sadhasivam <mani@kernel.org>,
+	Krzysztof Wilczynski <kwilczynski@kernel.org>,
+	Kishon Vijay Abraham I <kishon@kernel.org>,
+	Bjorn Helgaas <bhelgaas@google.com>
+Subject: [PATCH] PCI: endpoint: epf-mhi: add WQ_PERCPU to alloc_workqueue users
+Date: Fri,  7 Nov 2025 15:28:35 +0100
+Message-ID: <20251107142835.237636-1-marco.crivellari@suse.com>
+X-Mailer: git-send-email 2.51.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <a06ed143-c497-4141-8b4d-98fcb322e130@linaro.org>
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMTA3MDExOCBTYWx0ZWRfX4cVlNDbbs2wi
- SmR1iKcARmPAwtZQTJWNCxqUtseuJdzBWVo6XuORLYpUp18/aRshAkk9xx2PBV8ys38qTw6TodC
- 0KX2GI/5e0hEMul1GAexGJSKeXoYdwdDV6baa4XH67WnW5q5c4DaIVs/NQeCM6WgyCusf/pElnq
- NElkyHN1ahtvz/RSWQ8H4cRIf/pNU5RT/ytTi5I9PthXFjTUl/GBSe0jCoJxxbKsNy576l/kF2c
- lJGCzV1lqoftXxDKfCYK3xUTVnbdNsGGnH9ct82yA51f3zpuFVHBh0KKXoY8wFhdg4qEXQwRpSn
- UVwAhBb7/CF26ft/5ImpSdZA0CWfE7CBYAtApQTP6RFXiR3e7tMOiRq/gWndFyBL54nX3I1bAfF
- +Olj/tZ5AUN6+UaSuq2T3c+9WBDc/w==
-X-Proofpoint-GUID: m-t23XNajKh4H2vnQlIzPZmGT8QY9OFu
-X-Authority-Analysis: v=2.4 cv=GMAF0+NK c=1 sm=1 tr=0 ts=690e00d2 cx=c_pps
- a=WeENfcodrlLV9YRTxbY/uA==:117 a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10
- a=6UeiqGixMTsA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=KKAkSRfTAAAA:8 a=Pc_8zquyR68SUQC9iicA:9 a=CjuIK1q_8ugA:10
- a=kacYvNCVWA4VmyqE58fU:22 a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-ORIG-GUID: m-t23XNajKh4H2vnQlIzPZmGT8QY9OFu
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
- definitions=2025-11-07_03,2025-11-06_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 impostorscore=0 phishscore=0 adultscore=0 suspectscore=0
- spamscore=0 priorityscore=1501 lowpriorityscore=0 bulkscore=0 malwarescore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2510240001 definitions=main-2511070118
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-On Fri, Nov 07, 2025 at 08:08:28AM +0100, Krzysztof Kozlowski wrote:
-> On 07/11/2025 08:02, Krzysztof Kozlowski wrote:
-> > On 07/11/2025 04:19, Dmitry Baryshkov wrote:
-> >> On Thu, Nov 06, 2025 at 08:07:18PM +0100, Krzysztof Kozlowski wrote:
-> >>> Replace open-coded getting root OF node, matching against it and getting
-> >>> the match data with new of_machine_get_match_data() helper.
-> >>>
-> >>> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> >>>
-> >>> ---
-> >>>
-> >>> Depends on the first OF patch.
-> >>> ---
-> >>>  drivers/soc/qcom/qcom_pd_mapper.c | 17 ++---------------
-> >>>  1 file changed, 2 insertions(+), 15 deletions(-)
-> >>>
-> >>> diff --git a/drivers/soc/qcom/qcom_pd_mapper.c b/drivers/soc/qcom/qcom_pd_mapper.c
-> >>> index 1bcbe69688d2..07198d44b559 100644
-> >>> --- a/drivers/soc/qcom/qcom_pd_mapper.c
-> >>> +++ b/drivers/soc/qcom/qcom_pd_mapper.c
-> >>> @@ -613,25 +613,12 @@ static void qcom_pdm_stop(struct qcom_pdm_data *data)
-> >>>  static struct qcom_pdm_data *qcom_pdm_start(void)
-> >>>  {
-> >>>  	const struct qcom_pdm_domain_data * const *domains;
-> >>> -	const struct of_device_id *match;
-> >>>  	struct qcom_pdm_data *data;
-> >>> -	struct device_node *root;
-> >>>  	int ret, i;
-> >>>  
-> >>> -	root = of_find_node_by_path("/");
-> >>> -	if (!root)
-> >>> -		return ERR_PTR(-ENODEV);
-> >>> -
-> >>> -	match = of_match_node(qcom_pdm_domains, root);
-> >>> -	of_node_put(root);
-> >>> -	if (!match) {
-> >>> -		pr_notice("PDM: no support for the platform, userspace daemon might be required.\n");
-> >>> -		return ERR_PTR(-ENODEV);
-> >>> -	}
-> >>> -
-> >>> -	domains = match->data;
-> >>> +	domains = of_machine_get_match_data(qcom_pdm_domains);
-> >>>  	if (!domains) {
-> >>> -		pr_debug("PDM: no domains\n");
-> >>> +		pr_notice("PDM: no support for the platform or no domains, userspace daemon might be required.\n");
-> >>>  		return ERR_PTR(-ENODEV);
-> >>>  	}
-> >>
-> >> Here you are mixing two cases:
-> >> - There is not match in the table (in which case the driver should print
-> >>   a notice)
-> >>
-> >> - There is a match in the table, but the data is NULL (the platform
-> >>   doesn't have PDM domains). In this case there should be no notice.
-> > 
-> > 
-> > Why? Existing code printed notice in both cases. Why refactoring which
-> > tries to keep code functionally equivalent should change it?
-> 
-> Ah, you mean there was a debug before. Well, then I am a bit confused
-> because table has entries without data (so expected condition) but old
-> code returned ERRNO in such case - so unexpected condition.
-> 
-> Wail failing the probe on expected condition?
-> 
-> Unless it is not really expected and notice in second case is valid as well.
+Currently if a user enqueues a work item using schedule_delayed_work() the
+used wq is "system_wq" (per-cpu wq) while queue_delayed_work() use
+WORK_CPU_UNBOUND (used when a cpu is not specified). The same applies to
+schedule_work() that is using system_wq and queue_work(), that makes use
+again of WORK_CPU_UNBOUND.
+This lack of consistency cannot be addressed without refactoring the API.
 
-If we know that there are no domains on the platform, then the notice
-definitely doesn't apply. Failing the probe is a separate topic. The
-rest of the code expects that _qcom_pdm_data is not NULL.
+alloc_workqueue() treats all queues as per-CPU by default, while unbound
+workqueues must opt-in via WQ_UNBOUND.
 
-> 
-> 
-> Best regards,
-> Krzysztof
+This default is suboptimal: most workloads benefit from unbound queues,
+allowing the scheduler to place worker threads where they’re needed and
+reducing noise when CPUs are isolated.
 
+This continues the effort to refactor workqueue APIs, which began with
+the introduction of new workqueues and a new alloc_workqueue flag in:
+
+commit 128ea9f6ccfb ("workqueue: Add system_percpu_wq and system_dfl_wq")
+commit 930c2ea566af ("workqueue: Add new WQ_PERCPU flag")
+
+This change adds a new WQ_PERCPU flag to explicitly request
+alloc_workqueue() to be per-cpu when WQ_UNBOUND has not been specified.
+
+With the introduction of the WQ_PERCPU flag (equivalent to !WQ_UNBOUND),
+any alloc_workqueue() caller that doesn’t explicitly specify WQ_UNBOUND
+must now use WQ_PERCPU.
+
+Once migration is complete, WQ_UNBOUND can be removed and unbound will
+become the implicit default.
+
+Suggested-by: Tejun Heo <tj@kernel.org>
+Signed-off-by: Marco Crivellari <marco.crivellari@suse.com>
+---
+ drivers/pci/endpoint/functions/pci-epf-mhi.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/drivers/pci/endpoint/functions/pci-epf-mhi.c b/drivers/pci/endpoint/functions/pci-epf-mhi.c
+index 6643a88c7a0c..27de533f0571 100644
+--- a/drivers/pci/endpoint/functions/pci-epf-mhi.c
++++ b/drivers/pci/endpoint/functions/pci-epf-mhi.c
+@@ -686,7 +686,7 @@ static int pci_epf_mhi_dma_init(struct pci_epf_mhi *epf_mhi)
+ 		goto err_release_tx;
+ 	}
+ 
+-	epf_mhi->dma_wq = alloc_workqueue("pci_epf_mhi_dma_wq", 0, 0);
++	epf_mhi->dma_wq = alloc_workqueue("pci_epf_mhi_dma_wq", WQ_PERCPU, 0);
+ 	if (!epf_mhi->dma_wq) {
+ 		ret = -ENOMEM;
+ 		goto err_release_rx;
 -- 
-With best wishes
-Dmitry
+2.51.1
+
 
