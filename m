@@ -1,135 +1,192 @@
-Return-Path: <linux-arm-msm+bounces-80699-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-80700-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5B9A3C3E9E9
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 07 Nov 2025 07:27:35 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 01362C3EAB4
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 07 Nov 2025 08:01:07 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id D2311188CD37
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Nov 2025 06:27:59 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 9FF6E3A5A6D
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Nov 2025 07:01:06 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id F3F17296BD6;
-	Fri,  7 Nov 2025 06:27:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8DD81302774;
+	Fri,  7 Nov 2025 07:01:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="J8XoqdpL"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from azure-sdnproxy.icoremail.net (azure-sdnproxy.icoremail.net [13.76.142.27])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7E978279327;
-	Fri,  7 Nov 2025 06:27:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=13.76.142.27
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DCC818E1F;
+	Fri,  7 Nov 2025 07:01:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762496850; cv=none; b=CzsWpGwALEDAaS4+0OZEsmCNZiFxJ5Yq4lgiIxCi+sB2naWQPu18oIqq0I63MIcngjJFWUdH7ue2SVK8GOeUDWQYe6opTNO2hsuhAbxjXczIXLDCmj/EKHJZQuxU/1BRCJbAmD4CyyyexHfglAzxpaoPwubv2MBsZxpJf9svEOU=
+	t=1762498864; cv=none; b=cc20HUqrIlK+1Hg1nxUXxCIQU7zsz2CvVC+qMpLR3OaJhKy5IAEs6E4KYYB4h5TWWUK6FTvb563zy2Iywr7w8ge64F9ZnrZ4yQzPqWsZkvgrASPr+wMda5WF9v9HcjWy+ZPivuY/W1VgLyx9o0lx7uN4tifF/LZ2tJQvCjerV2s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762496850; c=relaxed/simple;
-	bh=1xjpieqHeM59LEB9+HHGl4iCAgFiOjKdAsjb4ZTHO9Y=;
-	h=Date:From:To:Cc:Subject:In-Reply-To:References:Content-Type:
-	 MIME-Version:Message-ID; b=Ixv3+SaoxuS7t/Ox7w5F21+Tsjz8xFTsDhCXlNcD0HodRPB0e2ZKx4S7zzV3urjB31pivMXyddEgr6H1Bwe9Pwsc6QsYo+q/xjy/cMnbGgHHIaSgUz0nuninGuLD6FtxUIBh/qOcvqZb0N41UkDlnIpB6R9wHNsFfUK9sHo/JLU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=eswincomputing.com; spf=pass smtp.mailfrom=eswincomputing.com; arc=none smtp.client-ip=13.76.142.27
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=eswincomputing.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=eswincomputing.com
-Received: from zhangsenchuan$eswincomputing.com ( [10.12.96.83] ) by
- ajax-webmail-app2 (Coremail) ; Fri, 7 Nov 2025 14:27:15 +0800 (GMT+08:00)
-Date: Fri, 7 Nov 2025 14:27:15 +0800 (GMT+08:00)
-X-CM-HeaderCharset: UTF-8
-From: zhangsenchuan <zhangsenchuan@eswincomputing.com>
-To: "Manivannan Sadhasivam" <mani@kernel.org>
-Cc: "Manivannan Sadhasivam" <manivannan.sadhasivam@oss.qualcomm.com>,
-	lpieralisi@kernel.org, kwilczynski@kernel.org, bhelgaas@google.com,
-	will@kernel.org, linux-pci@vger.kernel.org,
-	linux-kernel@vger.kernel.org, robh@kernel.org,
-	linux-arm-msm@vger.kernel.org
-Subject: Re: Re: [PATCH 2/3] PCI: qcom: Check for the presence of a device
- instead of Link up during suspend
-X-Priority: 3
-X-Mailer: Coremail Webmail Server Version 2024.2-cmXT6 build
- 20241203(6b039d88) Copyright (c) 2002-2025 www.mailtech.cn
- mispb-72143050-eaf5-4703-89e0-86624513b4ce-eswincomputing.com
-In-Reply-To: <nhjlanhzndhlbtfohnkypwuzpw6nw43cysjmoam3qv4rrs22hr@ic3hgtfoeb6e>
-References: <20251106061326.8241-1-manivannan.sadhasivam@oss.qualcomm.com>
- <20251106061326.8241-3-manivannan.sadhasivam@oss.qualcomm.com>
- <35086b08.c4e.19a58a7d6bc.Coremail.zhangsenchuan@eswincomputing.com>
- <nhjlanhzndhlbtfohnkypwuzpw6nw43cysjmoam3qv4rrs22hr@ic3hgtfoeb6e>
-Content-Transfer-Encoding: base64
-Content-Type: text/plain; charset=UTF-8
+	s=arc-20240116; t=1762498864; c=relaxed/simple;
+	bh=7IExaqm9kL4UB43OQoAIA4czN1YbsR6llCUuEMZN6cY=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=Pdyknf+rgvMSafo2KQM00HFL7TfdlfuKjFQ+m2sVZu58WclORFLblatYJ+HtBN7oYiKKFaE6PjkUAy2kVTtKCCMisdDYOHfY6QcZ3ZFPdhDTJ3sG5JdFTH2SsKKefsDv54de+LTjnSQ4r+3LygLRNBJXSh86LuY158YuGUm2lFU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=J8XoqdpL; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CDAA3C4CEF5;
+	Fri,  7 Nov 2025 07:00:55 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1762498862;
+	bh=7IExaqm9kL4UB43OQoAIA4czN1YbsR6llCUuEMZN6cY=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=J8XoqdpLE8rp/PYaBBYd6XfMVDcLd3HU5zRoWJt3UDy4rykbxSDnbZuyEV/47Ktc3
+	 zHl2NeTYeUxyF1icSPlsq4PbitqEyfLzlBM7J7FC9AuXrx9RoE5YmlchdJfZPkpbxe
+	 917IzWD1yQlVNVbaRmd20aGiMz94MU7lPtEQ/i5ri7gtn//rNsYot0IJvw8Ntk534c
+	 0BzJryQqFbqJnAGBuSZ59Kg/5tbcSXnivWtw5W2j5tV5hWQw7ax74GYCqBCK4K+DFD
+	 tAmu/2e6Efg5v9M6xydZEMyYTfgeBWYvRnKmWQHOXHrP+mqKNKL73d9XAydqPMxQVL
+	 0zAHOfncj/gcQ==
+Message-ID: <aced7337-eabd-4b05-a0d3-eea7079d08ec@kernel.org>
+Date: Fri, 7 Nov 2025 08:00:53 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Message-ID: <311e1152.cc3.19a5cff7033.Coremail.zhangsenchuan@eswincomputing.com>
-X-Coremail-Locale: en_US
-X-CM-TRANSID:TQJkCgBnq65DkQ1peDpIAA--.1088W
-X-CM-SenderInfo: x2kd0wpvhquxxxdqqvxvzl0uprps33xlqjhudrp/1tbiAQETBmkMz
-	YETNQAAsa
-X-Coremail-Antispam: 1Ur529EdanIXcx71UUUUU7IcSsGvfJ3iIAIbVAYjsxI4VWxJw
-	CS07vEb4IE77IF4wCS07vE1I0E4x80FVAKz4kxMIAIbVAFxVCaYxvI4VCIwcAKzIAtYxBI
-	daVFxhVjvjDU=
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 01/13] of: Add wrappers to match root node with OF device
+ ID tables
+To: Frank Li <Frank.li@nxp.com>,
+ Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc: Rob Herring <robh@kernel.org>, Saravana Kannan <saravanak@google.com>,
+ "Rafael J. Wysocki" <rafael@kernel.org>,
+ Viresh Kumar <viresh.kumar@linaro.org>,
+ Matthias Brugger <matthias.bgg@gmail.com>,
+ AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+ Yangtao Li <tiny.windzz@gmail.com>, Chen-Yu Tsai <wens@kernel.org>,
+ Jernej Skrabec <jernej.skrabec@gmail.com>,
+ Samuel Holland <samuel@sholland.org>,
+ Lorenzo Pieralisi <lpieralisi@kernel.org>,
+ Daniel Lezcano <daniel.lezcano@linaro.org>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>, Thomas Gleixner
+ <tglx@linutronix.de>, Nicolas Ferre <nicolas.ferre@microchip.com>,
+ Alexandre Belloni <alexandre.belloni@bootlin.com>,
+ Claudiu Beznea <claudiu.beznea@tuxon.dev>,
+ Maximilian Luz <luzmaximilian@gmail.com>, Hans de Goede <hansg@kernel.org>,
+ =?UTF-8?Q?Ilpo_J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+ Daniel Lezcano <daniel.lezcano@kernel.org>,
+ Thierry Reding <thierry.reding@gmail.com>,
+ Jonathan Hunter <jonathanh@nvidia.com>, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org,
+ linux-arm-kernel@lists.infradead.org, linux-mediatek@lists.infradead.org,
+ linux-sunxi@lists.linux.dev, linux-arm-msm@vger.kernel.org,
+ platform-driver-x86@vger.kernel.org, linux-tegra@vger.kernel.org
+References: <20251106-b4-of-match-matchine-data-v1-0-d780ea1780c2@linaro.org>
+ <20251106-b4-of-match-matchine-data-v1-1-d780ea1780c2@linaro.org>
+ <aQz8rW9GE66xPYrL@lizhi-Precision-Tower-5810>
+From: Krzysztof Kozlowski <krzk@kernel.org>
+Content-Language: en-US
+Autocrypt: addr=krzk@kernel.org; keydata=
+ xsFNBFVDQq4BEAC6KeLOfFsAvFMBsrCrJ2bCalhPv5+KQF2PS2+iwZI8BpRZoV+Bd5kWvN79
+ cFgcqTTuNHjAvxtUG8pQgGTHAObYs6xeYJtjUH0ZX6ndJ33FJYf5V3yXqqjcZ30FgHzJCFUu
+ JMp7PSyMPzpUXfU12yfcRYVEMQrmplNZssmYhiTeVicuOOypWugZKVLGNm0IweVCaZ/DJDIH
+ gNbpvVwjcKYrx85m9cBVEBUGaQP6AT7qlVCkrf50v8bofSIyVa2xmubbAwwFA1oxoOusjPIE
+ J3iadrwpFvsZjF5uHAKS+7wHLoW9hVzOnLbX6ajk5Hf8Pb1m+VH/E8bPBNNYKkfTtypTDUCj
+ NYcd27tjnXfG+SDs/EXNUAIRefCyvaRG7oRYF3Ec+2RgQDRnmmjCjoQNbFrJvJkFHlPeHaeS
+ BosGY+XWKydnmsfY7SSnjAzLUGAFhLd/XDVpb1Een2XucPpKvt9ORF+48gy12FA5GduRLhQU
+ vK4tU7ojoem/G23PcowM1CwPurC8sAVsQb9KmwTGh7rVz3ks3w/zfGBy3+WmLg++C2Wct6nM
+ Pd8/6CBVjEWqD06/RjI2AnjIq5fSEH/BIfXXfC68nMp9BZoy3So4ZsbOlBmtAPvMYX6U8VwD
+ TNeBxJu5Ex0Izf1NV9CzC3nNaFUYOY8KfN01X5SExAoVTr09ewARAQABzSVLcnp5c3p0b2Yg
+ S296bG93c2tpIDxrcnprQGtlcm5lbC5vcmc+wsGVBBMBCgA/AhsDBgsJCAcDAgYVCAIJCgsE
+ FgIDAQIeAQIXgBYhBJvQfg4MUfjVlne3VBuTQ307QWKbBQJoF1BKBQkWlnSaAAoJEBuTQ307
+ QWKbHukP/3t4tRp/bvDnxJfmNdNVn0gv9ep3L39IntPalBFwRKytqeQkzAju0whYWg+R/rwp
+ +r2I1Fzwt7+PTjsnMFlh1AZxGDmP5MFkzVsMnfX1lGiXhYSOMP97XL6R1QSXxaWOpGNCDaUl
+ ajorB0lJDcC0q3xAdwzRConxYVhlgmTrRiD8oLlSCD5baEAt5Zw17UTNDnDGmZQKR0fqLpWy
+ 786Lm5OScb7DjEgcA2PRm17st4UQ1kF0rQHokVaotxRM74PPDB8bCsunlghJl1DRK9s1aSuN
+ hL1Pv9VD8b4dFNvCo7b4hfAANPU67W40AaaGZ3UAfmw+1MYyo4QuAZGKzaP2ukbdCD/DYnqi
+ tJy88XqWtyb4UQWKNoQqGKzlYXdKsldYqrLHGoMvj1UN9XcRtXHST/IaLn72o7j7/h/Ac5EL
+ 8lSUVIG4TYn59NyxxAXa07Wi6zjVL1U11fTnFmE29ALYQEXKBI3KUO1A3p4sQWzU7uRmbuxn
+ naUmm8RbpMcOfa9JjlXCLmQ5IP7Rr5tYZUCkZz08LIfF8UMXwH7OOEX87Y++EkAB+pzKZNNd
+ hwoXulTAgjSy+OiaLtuCys9VdXLZ3Zy314azaCU3BoWgaMV0eAW/+gprWMXQM1lrlzvwlD/k
+ whyy9wGf0AEPpLssLVt9VVxNjo6BIkt6d1pMg6mHsUEVzsFNBFVDXDQBEADNkrQYSREUL4D3
+ Gws46JEoZ9HEQOKtkrwjrzlw/tCmqVzERRPvz2Xg8n7+HRCrgqnodIYoUh5WsU84N03KlLue
+ MNsWLJBvBaubYN4JuJIdRr4dS4oyF1/fQAQPHh8Thpiz0SAZFx6iWKB7Qrz3OrGCjTPcW6ei
+ OMheesVS5hxietSmlin+SilmIAPZHx7n242u6kdHOh+/SyLImKn/dh9RzatVpUKbv34eP1wA
+ GldWsRxbf3WP9pFNObSzI/Bo3kA89Xx2rO2roC+Gq4LeHvo7ptzcLcrqaHUAcZ3CgFG88CnA
+ 6z6lBZn0WyewEcPOPdcUB2Q7D/NiUY+HDiV99rAYPJztjeTrBSTnHeSBPb+qn5ZZGQwIdUW9
+ YegxWKvXXHTwB5eMzo/RB6vffwqcnHDoe0q7VgzRRZJwpi6aMIXLfeWZ5Wrwaw2zldFuO4Dt
+ 91pFzBSOIpeMtfgb/Pfe/a1WJ/GgaIRIBE+NUqckM+3zJHGmVPqJP/h2Iwv6nw8U+7Yyl6gU
+ BLHFTg2hYnLFJI4Xjg+AX1hHFVKmvl3VBHIsBv0oDcsQWXqY+NaFahT0lRPjYtrTa1v3tem/
+ JoFzZ4B0p27K+qQCF2R96hVvuEyjzBmdq2esyE6zIqftdo4MOJho8uctOiWbwNNq2U9pPWmu
+ 4vXVFBYIGmpyNPYzRm0QPwARAQABwsF8BBgBCgAmAhsMFiEEm9B+DgxR+NWWd7dUG5NDfTtB
+ YpsFAmgXUF8FCRaWWyoACgkQG5NDfTtBYptO0w//dlXJs5/42hAXKsk+PDg3wyEFb4NpyA1v
+ qmx7SfAzk9Hf6lWwU1O6AbqNMbh6PjEwadKUk1m04S7EjdQLsj/MBSgoQtCT3MDmWUUtHZd5
+ RYIPnPq3WVB47GtuO6/u375tsxhtf7vt95QSYJwCB+ZUgo4T+FV4hquZ4AsRkbgavtIzQisg
+ Dgv76tnEv3YHV8Jn9mi/Bu0FURF+5kpdMfgo1sq6RXNQ//TVf8yFgRtTUdXxW/qHjlYURrm2
+ H4kutobVEIxiyu6m05q3e9eZB/TaMMNVORx+1kM3j7f0rwtEYUFzY1ygQfpcMDPl7pRYoJjB
+ dSsm0ZuzDaCwaxg2t8hqQJBzJCezTOIkjHUsWAK+tEbU4Z4SnNpCyM3fBqsgYdJxjyC/tWVT
+ AQ18NRLtPw7tK1rdcwCl0GFQHwSwk5pDpz1NH40e6lU+NcXSeiqkDDRkHlftKPV/dV+lQXiu
+ jWt87ecuHlpL3uuQ0ZZNWqHgZoQLXoqC2ZV5KrtKWb/jyiFX/sxSrodALf0zf+tfHv0FZWT2
+ zHjUqd0t4njD/UOsuIMOQn4Ig0SdivYPfZukb5cdasKJukG1NOpbW7yRNivaCnfZz6dTawXw
+ XRIV/KDsHQiyVxKvN73bThKhONkcX2LWuD928tAR6XMM2G5ovxLe09vuOzzfTWQDsm++9UKF a/A=
+In-Reply-To: <aQz8rW9GE66xPYrL@lizhi-Precision-Tower-5810>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-CgoKPiAtLS0tLU9yaWdpbmFsIE1lc3NhZ2VzLS0tLS0KPiBGcm9tOiAiTWFuaXZhbm5hbiBTYWRo
-YXNpdmFtIiA8bWFuaUBrZXJuZWwub3JnPgo+IFNlbmQgdGltZTpUaHVyc2RheSwgMDYvMTEvMjAy
-NSAxOTo1NzoxNgo+IFRvOiB6aGFuZ3NlbmNodWFuIDx6aGFuZ3NlbmNodWFuQGVzd2luY29tcHV0
-aW5nLmNvbT4KPiBDYzogIk1hbml2YW5uYW4gU2FkaGFzaXZhbSIgPG1hbml2YW5uYW4uc2FkaGFz
-aXZhbUBvc3MucXVhbGNvbW0uY29tPiwgbHBpZXJhbGlzaUBrZXJuZWwub3JnLCBrd2lsY3p5bnNr
-aUBrZXJuZWwub3JnLCBiaGVsZ2Fhc0Bnb29nbGUuY29tLCB3aWxsQGtlcm5lbC5vcmcsIGxpbnV4
-LXBjaUB2Z2VyLmtlcm5lbC5vcmcsIGxpbnV4LWtlcm5lbEB2Z2VyLmtlcm5lbC5vcmcsIHJvYmhA
-a2VybmVsLm9yZywgbGludXgtYXJtLW1zbUB2Z2VyLmtlcm5lbC5vcmcKPiBTdWJqZWN0OiBSZTog
-W1BBVENIIDIvM10gUENJOiBxY29tOiBDaGVjayBmb3IgdGhlIHByZXNlbmNlIG9mIGEgZGV2aWNl
-IGluc3RlYWQgb2YgTGluayB1cCBkdXJpbmcgc3VzcGVuZAo+IAo+IE9uIFRodSwgTm92IDA2LCAy
-MDI1IGF0IDA2OjEzOjA1UE0gKzA4MDAsIHpoYW5nc2VuY2h1YW4gd3JvdGU6Cj4gPiAKPiA+IAo+
-ID4gCj4gPiA+IC0tLS0tT3JpZ2luYWwgTWVzc2FnZXMtLS0tLQo+ID4gPiBGcm9tOiAiTWFuaXZh
-bm5hbiBTYWRoYXNpdmFtIiA8bWFuaXZhbm5hbi5zYWRoYXNpdmFtQG9zcy5xdWFsY29tbS5jb20+
-Cj4gPiA+IFNlbmQgdGltZTpUaHVyc2RheSwgMDYvMTEvMjAyNSAxNDoxMzoyNQo+ID4gPiBUbzog
-bHBpZXJhbGlzaUBrZXJuZWwub3JnLCBrd2lsY3p5bnNraUBrZXJuZWwub3JnLCBtYW5pQGtlcm5l
-bC5vcmcsIGJoZWxnYWFzQGdvb2dsZS5jb20KPiA+ID4gQ2M6IHdpbGxAa2VybmVsLm9yZywgbGlu
-dXgtcGNpQHZnZXIua2VybmVsLm9yZywgbGludXgta2VybmVsQHZnZXIua2VybmVsLm9yZywgcm9i
-aEBrZXJuZWwub3JnLCBsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZywgemhhbmdzZW5jaHVh
-bkBlc3dpbmNvbXB1dGluZy5jb20sICJNYW5pdmFubmFuIFNhZGhhc2l2YW0iIDxtYW5pdmFubmFu
-LnNhZGhhc2l2YW1Ab3NzLnF1YWxjb21tLmNvbT4KPiA+ID4gU3ViamVjdDogW1BBVENIIDIvM10g
-UENJOiBxY29tOiBDaGVjayBmb3IgdGhlIHByZXNlbmNlIG9mIGEgZGV2aWNlIGluc3RlYWQgb2Yg
-TGluayB1cCBkdXJpbmcgc3VzcGVuZAo+ID4gPiAKPiA+ID4gVGhlIHN1c3BlbmQgaGFuZGxlciBj
-aGVja3MgZm9yIHRoZSBQQ0llIExpbmsgdXAgdG8gZGVjaWRlIHdoZW4gdG8gdHVybiBvZmYKPiA+
-ID4gdGhlIGNvbnRyb2xsZXIgcmVzb3VyY2VzLiBCdXQgdGhpcyBjaGVjayBpcyByYWN5IGFzIHRo
-ZSBQQ0llIExpbmsgY2FuIGdvCj4gPiA+IGRvd24ganVzdCBhZnRlciB0aGlzIGNoZWNrLgo+ID4g
-PiAKPiA+ID4gU28gdXNlIHRoZSBuZXdseSBpbnRyb2R1Y2VkIEFQSSwgcGNpX3Jvb3RfcG9ydHNf
-aGF2ZV9kZXZpY2UoKSB0aGF0IGNoZWNrcwo+ID4gPiBmb3IgdGhlIHByZXNlbmNlIG9mIGEgZGV2
-aWNlIHVuZGVyIGFueSBvZiB0aGUgUm9vdCBQb3J0cyB0byByZXBsYWNlIHRoZQo+ID4gPiBMaW5r
-IHVwIGNoZWNrLgo+ID4gPiAKPiA+ID4gU2lnbmVkLW9mZi1ieTogTWFuaXZhbm5hbiBTYWRoYXNp
-dmFtIDxtYW5pdmFubmFuLnNhZGhhc2l2YW1Ab3NzLnF1YWxjb21tLmNvbT4KPiA+ID4gLS0tCj4g
-PiA+ICBkcml2ZXJzL3BjaS9jb250cm9sbGVyL2R3Yy9wY2llLXFjb20uYyB8IDYgKysrKy0tCj4g
-PiA+ICAxIGZpbGUgY2hhbmdlZCwgNCBpbnNlcnRpb25zKCspLCAyIGRlbGV0aW9ucygtKQo+ID4g
-PiAKPiA+ID4gZGlmZiAtLWdpdCBhL2RyaXZlcnMvcGNpL2NvbnRyb2xsZXIvZHdjL3BjaWUtcWNv
-bS5jIGIvZHJpdmVycy9wY2kvY29udHJvbGxlci9kd2MvcGNpZS1xY29tLmMKPiA+ID4gaW5kZXgg
-ODA1ZWRiYmZlN2ViLi5iMmI4OWUyZTQ5MTYgMTAwNjQ0Cj4gPiA+IC0tLSBhL2RyaXZlcnMvcGNp
-L2NvbnRyb2xsZXIvZHdjL3BjaWUtcWNvbS5jCj4gPiA+ICsrKyBiL2RyaXZlcnMvcGNpL2NvbnRy
-b2xsZXIvZHdjL3BjaWUtcWNvbS5jCj4gPiA+IEBAIC0yMDE4LDYgKzIwMTgsNyBAQCBzdGF0aWMg
-aW50IHFjb21fcGNpZV9wcm9iZShzdHJ1Y3QgcGxhdGZvcm1fZGV2aWNlICpwZGV2KQo+ID4gPiAg
-c3RhdGljIGludCBxY29tX3BjaWVfc3VzcGVuZF9ub2lycShzdHJ1Y3QgZGV2aWNlICpkZXYpCj4g
-PiA+ICB7Cj4gPiA+ICAJc3RydWN0IHFjb21fcGNpZSAqcGNpZTsKPiA+ID4gKwlzdHJ1Y3QgZHdf
-cGNpZV9ycCAqcHA7Cj4gPiA+ICAJaW50IHJldCA9IDA7Cj4gPiA+ICAKPiA+ID4gIAlwY2llID0g
-ZGV2X2dldF9kcnZkYXRhKGRldik7Cj4gPiA+IEBAIC0yMDUzLDggKzIwNTQsOSBAQCBzdGF0aWMg
-aW50IHFjb21fcGNpZV9zdXNwZW5kX25vaXJxKHN0cnVjdCBkZXZpY2UgKmRldikKPiA+ID4gIAkg
-KiBwb3dlcmRvd24gc3RhdGUuIFRoaXMgd2lsbCBhZmZlY3QgdGhlIGxpZmV0aW1lIG9mIHRoZSBz
-dG9yYWdlIGRldmljZXMKPiA+ID4gIAkgKiBsaWtlIE5WTWUuCj4gPiA+ICAJICovCj4gPiA+IC0J
-aWYgKCFkd19wY2llX2xpbmtfdXAocGNpZS0+cGNpKSkgewo+ID4gPiAtCQlxY29tX3BjaWVfaG9z
-dF9kZWluaXQoJnBjaWUtPnBjaS0+cHApOwo+ID4gPiArCXBwID0gJnBjaWUtPnBjaS0+cHA7Cj4g
-PiA+ICsJaWYgKCFwY2lfcm9vdF9wb3J0c19oYXZlX2RldmljZShwcC0+YnJpZGdlLT5idXMpKSB7
-Cj4gPiAKPiA+IEknbSBhIGxpdHRsZSBjb25mdXNlZC4KPiA+IFRoZSBwY2lfcm9vdF9wb3J0c19o
-YXZlX2RldmljZSBmdW5jdGlvbiBjYW4gaGVscCBjaGVjayBpZiB0aGVyZSBpcyBhbnkgZGV2aWNl
-IAo+ID4gYXZhaWxhYmxlIHVuZGVyIHRoZSBSb290IFBvcnRzLCBpZiB0aGVyZSBpcyBhIGRldmlj
-ZSBhdmFpbGFibGUsIHRoZSByZXNvdXJjZSAKPiA+IGNhbm5vdCBiZSByZWxlYXNlZCwgaXMgaXQg
-YWxzbyBuZWNlc3NhcnkgdG8gcmVsZWFzZSByZXNvdXJjZXMgd2hlbiBlbnRlcmluZyAKPiA+IHRo
-ZSBMMi9MMyBzdGF0ZT8KPiA+IAo+IAo+IEl0IGlzIHVwdG8gdGhlIGNvbnRyb2xsZXIgZHJpdmVy
-IHRvIGRlY2lkZS4gT25jZSB0aGUgbGluayBlbnRlcnMgTDIvTDMsIHRoZQo+IGRldmljZSB3aWxs
-IGJlIGluIEQzQ29sZCBzdGF0ZS4gU28gdGhlIGNvbnRyb2xsZXIgY2FuIGp1c3QgZGlzYWJsZSBh
-bGwgUENJZQo+IHJlc291cmNlcyB0byBzYXZlIHBvd2VyLgo+IAo+IEJ1dCBpdCBpcyBub3QgcG9z
-c2libGUgdG8gdHJhbnNpdGlvbiBhbGwgUENJZSBkZXZpY2VzIHRvIEQzQ29sZCBkdXJpbmcgc3Vz
-cGVuZCwKPiBmb3IgaW5zdGFuY2UgTlZNZS4gSSdtIGhvcGluZyB0byBmaXggaXQgdG9vIGluIHRo
-ZSBjb21pbmcgZGF5cy4KPiAKSGksIE1hbml2YW5uYW4KClRoYW5rIHlvdSBmb3IgeW91ciBleHBs
-YW5hdGlvbi4KCkJ5IHRoZSB3YXksIGluIHY1IHBhdGNoLCBJIHJlbW92ZWQgdGhlIGR3X3BjaWVf
-bGlua191cCBqdWRnbWVudCwgYW5kIGN1cnJlbnRseQpyZXNvdXJjZXMgYXJlIGRpcmVjdGx5IHJl
-bGVhc2VkLgpBdCBwcmVzZW50LCBpIGhhdmUgY29tcGxldGVkIHRoZSBwY2llIHY1IHBhdGNoIHdp
-dGhvdXQgYWRkaW5nIHRoZSAKcGNpX3Jvb3RfcG9ydHNfaGF2ZV9kZXZpY2UgZnVuY3Rpb24uIERv
-IEkgbmVlZCB0byB3YWl0IGZvciB5b3UgdG8gbWVyZ2UgaXQgCmJlZm9yZSBzZW5kaW5nIHRoZSBW
-NSBwYXRjaD8KCktpbmQgcmVnYXJkcywKU2VuY2h1YW4gWmhhbmc=
+On 06/11/2025 20:53, Frank Li wrote:
+> On Thu, Nov 06, 2025 at 08:07:08PM +0100, Krzysztof Kozlowski wrote:
+>> Several drivers duplicate same code for getting reference to the root
+>> node, matching it against 'struct of_device_id' table and getting out
+>> the match data from the table entry.
+>>
+>> There is a of_machine_compatible_match() wrapper but it takes array of
+>> strings, which is not suitable for many drivers since they want the
+>> driver data associated with each compatible.
+>>
+>> Add two wrappers, similar to existing of_device_get_match_data():
+>> 1. of_machine_device_match() doing only matching against 'struct
+>>    of_device_id' and returning bool.
+>> 2. of_machine_get_match_data() doing the matching and returning
+>>    associated driver data for found compatible.
+>>
+>> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+>>
+>> ---
+>>
+>> All further patches depend on this.
+>> ---
+> 
+> ...
+>>
+>> +/**
+>> + * of_machine_device_match - Test root of device tree against a of_device_id array
+>> + * @matches:	NULL terminated array of of_device_id match structures to search in
+>> + *
+>> + * Returns true if the root node has any of the given compatible values in its
+>> + * compatible property.
+>> + */
+>> +bool of_machine_device_match(const struct of_device_id *matches)
+> 
+> Will it be more useful if pass down path
+
+Path is fixed, there is no point to pass it. If you claim otherwise,
+please bring example what benefits would it bring, instead of just
+asking nitpicking questions.
+
+> 
+> of_machine_device_match(const char* path, const struct of_device_id *matches)
+> 
+> caller just pass "\", or NULL point as root
+> 
+>> +{
+>> +	struct device_node *root;
+>> +	const struct of_device_id *match = NULL;
+>> +
+>> +	root = of_find_node_by_path("/");
+> 
+> Use clean up will simplify code
+> 
+> 	struct device_node *root = __free(device_node) = of_find_node_by_path("/");
+Not much difference. Look at existing code first. This should not
+introduce different style.
+
+Best regards,
+Krzysztof
 
