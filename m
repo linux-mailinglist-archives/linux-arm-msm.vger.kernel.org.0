@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-80783-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-80784-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4C609C4029F
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 07 Nov 2025 14:43:02 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 56FB3C402F9
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 07 Nov 2025 14:49:23 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id EB03C18957F7
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Nov 2025 13:43:26 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 0141A188E0FB
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Nov 2025 13:49:48 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1C9412F28F5;
-	Fri,  7 Nov 2025 13:42:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id BEB2830F7E0;
+	Fri,  7 Nov 2025 13:49:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="oLKDg82F"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="FxwATd/m"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC18323D7DC;
-	Fri,  7 Nov 2025 13:42:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8AAB03081B9;
+	Fri,  7 Nov 2025 13:49:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762522978; cv=none; b=kY2Vsn3WIhjb7qz9TmSfmV3kLVsxO03Qx+ETu+NfEMa+nf2gzwXmRtAhcnjBty9JPlfd5SC/HVQH3a+GvUtFftlEoVcwkHilfXAtveB9f8mv9guzLu9QtdKXLLqC2BV2Qj0GyhkSJqOGVTEMLzkCtF+dnRhDcLX9tDPGjXbkYdQ=
+	t=1762523358; cv=none; b=advpvVxkR6hK0cLUtgkgR3UpyNJEcHC8wmEibgca1Jxm2YYMrkbsrInZ+aXgr+Sc16cIKnBqvKCqJwYe2s6V0o2lIttxTLr7TC8UygwgWI4acj+lPBOqFcLDyaVQAegZ0/BY6MAgIfHVEKBVy5RPbR6nXLaORRfnswLNwBCeCyg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762522978; c=relaxed/simple;
-	bh=iU+jSTY15PFC8KP0f//9WuWMfuZdFJ+bqYnKTNSdgmY=;
+	s=arc-20240116; t=1762523358; c=relaxed/simple;
+	bh=d5B/NwZk6ebhuP3QANVrGVMe+8wpDqpML+bx+HNq8b8=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=mz5+iBacJnbKRze5sBQO9qdfK4jfMcJZCX1UYe7imYBq9CwS1to3JgiFHKV8o+6IKJwrT8iF4si2rKakM3wxolpVGCpL2qxk8IEjdZH56cA8cr+OXv8LScgQQ10q7eQ3eMy/jRnQawK0sR+07sLTF/BLsNCenEGEXH64OUaV5zY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=oLKDg82F; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43944C4CEF8;
-	Fri,  7 Nov 2025 13:42:53 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=r4/RLamH0Nepjs1cV9e4Gi4p9P/MMCw9lB+eDEzUKmHOW1bII52Hi3+5E3tBJmAMQXWJ4kIeZZDTn6YPWBqxYN22UZDV7U8titvKLoaJu6QUGl77C0j8Yhcdw/sFYeg1mzaxo43M+cuJlciOEaJlektQahYBii71mVtcOunTEco=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=FxwATd/m; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD796C16AAE;
+	Fri,  7 Nov 2025 13:49:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1762522977;
-	bh=iU+jSTY15PFC8KP0f//9WuWMfuZdFJ+bqYnKTNSdgmY=;
+	s=k20201202; t=1762523358;
+	bh=d5B/NwZk6ebhuP3QANVrGVMe+8wpDqpML+bx+HNq8b8=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=oLKDg82F+u91uzMjhnAP+8PToVT5X6nf7YzskN/vAKT2/FiEpU7t31+1NMX+MTFOi
-	 xMasTpiG/E4tZvngRtnIUKex3vcbcRfmXA1e/HQkYG6iQ9vBKW3szvOsI5Ni99d+U3
-	 /A5p4bfweqOFPhWcPqKNjibPu6JxSnQrGEVj32aafCpa+aWqD5WENmt20583tZfPkD
-	 aToHMHbD89j7KQwaOyycqE9hLfn+mbmg+BFRRER9YKuRaGCHqmXREAKG3uTcggvMu3
-	 JkXHzc5yJ+c7AXxBlUgyJMvCZCWGD3vwlcM0jwjUJh+fWpXbNYPB5w8+IN3WMMX1pL
-	 YGWUeqUcv/68A==
-Message-ID: <f8bc25b7-12eb-4e3c-aa47-8c949f43711b@kernel.org>
-Date: Fri, 7 Nov 2025 14:42:51 +0100
+	b=FxwATd/m8lKRhqAEHtVD9zS/H2TdFm+MLoy6kMMqNMcutonTnJ1vWtEEJGz+bfOme
+	 HM4uYVegWRerovkPIBdg193QZ7aSPETucmcR/4nXcppPSC5dcNmflMUYNTzL3Vlzxo
+	 DTLC4WEwuclQn3jOCkXijJozd/4YKnKtJ/HYG6MEPK/bwkHZFmsVLLKbw1oKdRPVEt
+	 CeqkIa89ikZfgGUh06yOadq9LGXXgCoL3Oa2HphHAJUfGQvnCDFYAbRPA26hZ4IAdE
+	 S7srCKBhVv1Jq5uvY8Z6arBsSLIJGTD3PDu+6/v/0U1oPc9lzkgjUKlyX9D8VHi6qQ
+	 Jm5UFbWk5UBSw==
+Message-ID: <82a4fc28-1cd7-4d89-a521-6e6e5a133f3c@kernel.org>
+Date: Fri, 7 Nov 2025 14:49:12 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,8 +50,7 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 1/2] dt-bindings: media: qcom,qcs8300-camss: Add
- missing power supplies
+Subject: Re: [PATCH v5 2/2] arm64: dts: qcom: qcs8300: Add support for camss
 To: Vikram Sharma <quic_vikramsa@quicinc.com>, bryan.odonoghue@linaro.org,
  mchehab@kernel.org, robh@kernel.org, krzk+dt@kernel.org,
  conor+dt@kernel.org, andersson@kernel.org, konradybcio@kernel.org,
@@ -60,9 +59,9 @@ To: Vikram Sharma <quic_vikramsa@quicinc.com>, bryan.odonoghue@linaro.org,
 Cc: linux-arm-kernel@lists.infradead.org, quic_svankada@quicinc.com,
  linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
  devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- quic_nihalkum@quicinc.com, stable@vger.kernel.org
+ quic_nihalkum@quicinc.com, Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 References: <20251107132154.436017-1-quic_vikramsa@quicinc.com>
- <20251107132154.436017-2-quic_vikramsa@quicinc.com>
+ <20251107132154.436017-3-quic_vikramsa@quicinc.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -108,17 +107,33 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  jWt87ecuHlpL3uuQ0ZZNWqHgZoQLXoqC2ZV5KrtKWb/jyiFX/sxSrodALf0zf+tfHv0FZWT2
  zHjUqd0t4njD/UOsuIMOQn4Ig0SdivYPfZukb5cdasKJukG1NOpbW7yRNivaCnfZz6dTawXw
  XRIV/KDsHQiyVxKvN73bThKhONkcX2LWuD928tAR6XMM2G5ovxLe09vuOzzfTWQDsm++9UKF a/A=
-In-Reply-To: <20251107132154.436017-2-quic_vikramsa@quicinc.com>
+In-Reply-To: <20251107132154.436017-3-quic_vikramsa@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
 On 07/11/2025 14:21, Vikram Sharma wrote:
-> Add support for vdda-phy-supply and vdda-pll-supply in the QCS8300
-> CAMSS binding.
+> +			interconnects = <&gem_noc MASTER_APPSS_PROC QCOM_ICC_TAG_ACTIVE_ONLY
+> +					 &config_noc SLAVE_CAMERA_CFG QCOM_ICC_TAG_ACTIVE_ONLY>,
+> +					<&mmss_noc MASTER_CAMNOC_HF QCOM_ICC_TAG_ALWAYS
+> +					 &mc_virt SLAVE_EBI1 QCOM_ICC_TAG_ALWAYS>;
+> +			interconnect-names = "ahb",
+> +					     "hf_0";
+> +			iommus = <&apps_smmu 0x2400 0x20>;
+> +
+> +			power-domains = <&camcc CAM_CC_TITAN_TOP_GDSC>;
+> +			power-domain-names = "top";
 
-You cannot add support for something in the binding, but regardless of
-the wording - why adding support is a fix? Please describe the bug,
-because adding support does not sound like a fix at all.
+You introduce some unusual changes, not present in the existing sources,
+not being part of common (please read DTS coding style) or even qcom
+style. Please do not come with your own coding style.
+
+Your previous patch was correct here - you had here blank line. Any
+advises around this are just incorrect. Qualcomm SoC maintainer already
+expressed this in other patch:
+
+https://lore.kernel.org/all/4a4a24aa-d8a2-4150-a7bd-1d0a4b141116@oss.qualcomm.com/
+
+
 
 Best regards,
 Krzysztof
