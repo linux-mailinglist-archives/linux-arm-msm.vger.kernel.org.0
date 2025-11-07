@@ -1,267 +1,224 @@
-Return-Path: <linux-arm-msm+bounces-80737-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-80738-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [IPv6:2605:f480:58:1:0:1994:3:14])
-	by mail.lfdr.de (Postfix) with ESMTPS id E10DDC3F659
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 07 Nov 2025 11:21:27 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id BC354C3F69E
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 07 Nov 2025 11:26:01 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id DD7E24E6400
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Nov 2025 10:21:23 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 74A063B0A71
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Nov 2025 10:26:00 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2731C3043B0;
-	Fri,  7 Nov 2025 10:21:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 13021304BCD;
+	Fri,  7 Nov 2025 10:25:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=tuxedocomputers.com header.i=@tuxedocomputers.com header.b="mVIt0JxS"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="n22hTG2P";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="XLyyb7ZT"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail.tuxedocomputers.com (mail.tuxedocomputers.com [157.90.84.7])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46B3828F5;
-	Fri,  7 Nov 2025 10:21:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=157.90.84.7
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FB343043D6
+	for <linux-arm-msm@vger.kernel.org>; Fri,  7 Nov 2025 10:25:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762510881; cv=none; b=BOY1IfpwBzrMRu0SGQLwVFdScm5dCBFFXjjRj163jeOr3QuireYoB9S2n31ap6ySSuYgYOEw8c0rtrdnsnRKFEOJZk5ycOMIFc4hvKg/Ou3fpB/lhD8NjYeJ6VMGTf2e+XHOVxjwTnwUL7xZltHaIrWEI32kwAUz4nnk5No327o=
+	t=1762511158; cv=none; b=RrQBFD8EBF5c9opmLXjjrMDbkLvONbxhbzEPavYIXTP/DVoCmmWWjq09O4IjOh7mEYCGM7HAjMC15D66PV2VrZMhW5oyvEvoHnRt7KX/OX3RzIgLWibbLuhb/uQgb+NXm1XsIXVidTQUQoUKB4oJgVQ7OznTtJCz7cUeomzakRo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762510881; c=relaxed/simple;
-	bh=kdDuD/NbchqUR1pq4wY6ICk0xwchKZ88BQs4bw73aA0=;
+	s=arc-20240116; t=1762511158; c=relaxed/simple;
+	bh=TfqVBbE95iBGfqw4ThDJ4Ix4Y/sO9BB/7GhORuIN2B8=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Uz0tHW5LvtrxDvFQ6C7vApir37xgBmim9F/Kj5lJ42ua4bBHSvgub8yBw/SR1XviwB5MjNODJQMUi+AHpabtWf8v/54QP4DHeMqBY/ArGGMZ7WovdkZz9eoAeOkCJBv6cwa2s/J58eOy0/Ng6q30M5vBiiNwrmrRLCOENm2oWz8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=tuxedocomputers.com; spf=pass smtp.mailfrom=tuxedocomputers.com; dkim=pass (1024-bit key) header.d=tuxedocomputers.com header.i=@tuxedocomputers.com header.b=mVIt0JxS; arc=none smtp.client-ip=157.90.84.7
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=tuxedocomputers.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=tuxedocomputers.com
-Received: from [192.168.178.76] (business-24-134-207-61.pool2.vodafone-ip.de [24.134.207.61])
-	(Authenticated sender: g.gottleuber@tuxedocomputers.com)
-	by mail.tuxedocomputers.com (Postfix) with ESMTPSA id 243E32FC005B;
-	Fri,  7 Nov 2025 11:21:13 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=tuxedocomputers.com;
-	s=default; t=1762510873;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
-	bh=WJSTcuqn0xM1u+w3kSyW+WBSnRyoN5jFjw7Fx/Ymc4E=;
-	b=mVIt0JxScMP/4dwoZuSCj6Fq03Pi/KMq1hE+hi5UGs+qXnr2xUKhXCMeoGd5JjqRUX4akC
-	nESoACIPMpwfpvkKQKE2/rpNM9xUc6Oxchc5aSRR+kpE6XMlM2Z7SAtU34Rw9wcBhvXpk7
-	0GPzlgWoHSBQLsjavkeXbzGS9m8yr0Y=
-Authentication-Results: mail.tuxedocomputers.com;
-	auth=pass smtp.auth=g.gottleuber@tuxedocomputers.com smtp.mailfrom=g.gottleuber@tuxedocomputers.com
-Message-ID: <d1ed14ce-a948-4346-b6ae-4cda29a6a963@tuxedocomputers.com>
-Date: Fri, 7 Nov 2025 11:21:12 +0100
+	 In-Reply-To:Content-Type; b=anMcvN4L9aqEE9Jn5W/Ggvx2BKIazJdDDgHELgchzN6L+NurR8ksNy2tomRv4PD0Ct8UA5y/phG24THSNKgptaGKCzqgAAMvyVekGrhcmyOeojp7jBiHJjIgUuE2X/FxMZB5xOxGbK5wPoDWl95rtaZ9m+TpHuYAtcSmenYPp9k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=n22hTG2P; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=XLyyb7ZT; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 5A78HnBI4131423
+	for <linux-arm-msm@vger.kernel.org>; Fri, 7 Nov 2025 10:25:56 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	N0g2bzgjrGduYTi0M77+HVdu59jcso00dA0UqQXUwnk=; b=n22hTG2P7JZiFA+g
+	v4aZBSEYx1v4NED+z1Qv/3C8HbRWSla/52Jo200AXr1FM3e7i7KqVNIma3GHNduH
+	ePp/JujVaWa0U140adurEmofmxaBqgEXfNOPOnM6xYFWvPg5JN00OT7qEQa0RGta
+	3n/tvXzhRG/scn9ZNDxo3wnpRA1ssY4mk1pp1ti8G++/vHjhAbuB/gAgBQhOl7jq
+	JsnSjMnF1LvApUk95u3ngzSHxctjljAhr6WjH+UdhevbeqyBcLMkFNqwb8batD0B
+	E/wS/N5j9feAVt4Ai0ahrymnJZSzLh7+KPdbcHTFW+tZiibSzV+GfYfjHFqC/E8X
+	vYXyhw==
+Received: from mail-pl1-f199.google.com (mail-pl1-f199.google.com [209.85.214.199])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4a8u3x3pnf-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Fri, 07 Nov 2025 10:25:55 +0000 (GMT)
+Received: by mail-pl1-f199.google.com with SMTP id d9443c01a7336-294df925293so7932625ad.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 07 Nov 2025 02:25:55 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=oss.qualcomm.com; s=google; t=1762511155; x=1763115955; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=N0g2bzgjrGduYTi0M77+HVdu59jcso00dA0UqQXUwnk=;
+        b=XLyyb7ZTTl+FkhJjGKrfdNQDOrIj01X+cztPjNd+W9lWB/J4v/t3Yow9ddbAGyBHr3
+         t6XnsDdXdwJymDY8KSwzRqvfkms93AgLKcZB0nbA1U6AAxuDKEeFs1UBd92dIKG+9wxF
+         IBakTwPcHq3QaRN51D5/18iQ0ElBdd61V77Rql7eb3FuWyCSAfmEj9ib8g51VZAieKoK
+         RfXVe5Tx2iW7BnQO7DCS6IIHT8pOBHSgMvehPSsoRmBehzFOVyWN4nct3pCAv2Mnj640
+         HbCwvWUbQbXLTv6eljC72B2gGlVGzAC6Vv9oD9qS0wZcsi4/VE6QXydoze4m3CDaxfnQ
+         An7A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1762511155; x=1763115955;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=N0g2bzgjrGduYTi0M77+HVdu59jcso00dA0UqQXUwnk=;
+        b=KHc1YouzDpzOofsmkGi+bHFlg13O4p8RyXwsYsHObpsUpuISFVZQf1cRynu4OtQTaS
+         /uyhWwAMbW8pSX4i7hWRp1F5HMTN6c/houRadNEF4woECt9tkQF69tI2d0l3IvKP0kNf
+         H1agssqpXIexTxLBBEJJeQb4SAQyKVKrawsRKHugcfLTTEvL2CDTwWodZf6EHb2EGv+E
+         KrMokypo+jm/WAnwoz3jagQ0ABfrm70RZJj2aYey9IptobkUIDg80313iFtW6LttfmBo
+         BoC4uy/p4aT0pp9/zDavkoIOC8FVZr6WiGjw4eVkH9GGbZhZu+bc4hNmmq3lQN/CZyTY
+         RxDw==
+X-Forwarded-Encrypted: i=1; AJvYcCWokxZJWxOHDaMI3YLRPNfMxN8J3NTAzqLN603cJspaLti/CttD102NhpsmvQx55Hpaj5bBmdZi2yCckQBY@vger.kernel.org
+X-Gm-Message-State: AOJu0YzZqqtI4jAEWiXkVRRW+bQDossbksdMjDWEXSWMcnf+Ei76+l2+
+	JBTA0t6caE1IZV4km+XZUC+FPeJai7hVsPuPNWqkz6DHkvUSbYTBxYQbdc93QC7Xx4ExJyPFVJo
+	5s95PTwHr1p500ymMAVBqmrWD14/D9RkzDLLNAJyT+mMwKnaV2/VhZxN6jg9IN4JYTJgr
+X-Gm-Gg: ASbGncuBsx1h9kt8krJb8tMUA2fM7GFscFwvOHIr01wGIYr8DTPw1x78UdrNj8p/9Ft
+	uP+7oVA0NzEhS5Zpz/435Ku8fHfxMQMbigKFlo6SYrTbGUAfG1cPDigmy4ClUwifjfPNRrbk8aV
+	4HYERpogbuIheOykFX2AW6q4rub8WvWf/bcp8JuLcjv8Xyh90tXj7OhbOtAeuE8JlfE7F88djtX
+	0T082Pxi6BC9oite0ewfzDLzpjG2UOUEw8eGerait6XDof/cj8b04X90S4V2utlnbHCNEQN1TBy
+	Tifh7+T+HfUVKh/xCEmpM3X3pleMKTpW2IYnA2dcGU6npbUV2s+wTp/644kp+6ZpF6eMxTNhl9Q
+	TrzK3DEfM7a+q80yGo1vZELpskmrce0c=
+X-Received: by 2002:a17:903:2305:b0:294:ccc6:ccfd with SMTP id d9443c01a7336-297c03e59b2mr38789835ad.24.1762511154815;
+        Fri, 07 Nov 2025 02:25:54 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IH1tMrg3W/RNIxDscOnZnps3MrCElLCpEcVd1QI5sytXqXnRNUDDFD2lrX1/cHKqttfpe64XQ==
+X-Received: by 2002:a17:903:2305:b0:294:ccc6:ccfd with SMTP id d9443c01a7336-297c03e59b2mr38789475ad.24.1762511154289;
+        Fri, 07 Nov 2025 02:25:54 -0800 (PST)
+Received: from [10.0.0.3] ([106.222.229.252])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2965096dbe4sm55763195ad.11.2025.11.07.02.25.50
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 07 Nov 2025 02:25:53 -0800 (PST)
+Message-ID: <1728c571-1e25-59e2-beae-124d9976fb3f@oss.qualcomm.com>
+Date: Fri, 7 Nov 2025 15:55:49 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 6/7] arm64: dts: qcom: Add device tree for TUXEDO Elite
- 14 Gen1
-To: Krzysztof Kozlowski <krzk@kernel.org>,
- Georg Gottleuber <ggo@tuxedocomputers.com>
-Cc: Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- Ettore Chimenti <ettore.chimenti@linaro.org>,
- Srinivas Kandagatla <srini@kernel.org>, stefan.schmidt@linaro.org,
- stephan.gerhold@linaro.org, wse@tuxedocomputers.com, cs@tuxedo.de
-References: <20251105154107.148187-1-ggo@tuxedocomputers.com>
- <20251105154107.148187-7-ggo@tuxedocomputers.com>
- <20251106-excellent-cooperative-finch-5b379f@kuoka>
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.13.0
+Subject: Re: [PATCH v4 2/6] media: qcom: iris: Improve crop_offset handling
+ for encoder
 Content-Language: en-US
-From: Georg Gottleuber <g.gottleuber@tuxedocomputers.com>
-Autocrypt: addr=g.gottleuber@tuxedocomputers.com; keydata=
- xsFNBGgPWcABEACY/HWP9mAEt7CbrAzgH6KCAyrre7Bot8sgoTbhMZ9cb+BYrQEmeW05Hr5Z
- XsuwV63VgjR1rBnecySAsfl8IPEuOTncE0Ox7prT9U3pVKsY+v3HOYJiaB9UbQ2cMjXsKbIX
- uaQWYVkQNWCF0cQhiq0tmROq2WQjtc9ZbRgogi5G1VE/ePbGH8a+LQG4+aJdeRgZLeEQOm88
- ljnWfbnVbQNJXqq5IAyCjU9ZfnNtC+Y2o2KM4T+XC1NMfAWG82ef8WuXk9jNuRPDcIfwoI0w
- mnZGy/KSWLRJxOPzqOgNrpmmhjSBqykyQmiE9t9vjPGWlgF+s/ac1GaFuLTVJnYlO3OA5iLT
- 9VjGu4RuHBjwzmHPvp1eHN7GncoE4571TMXbeW6TCeGngv+RTm4dBtB1lOds/1CFOxc4ENZC
- TnGJHzciO7/hM3NB4HM9tkg31LoKTAoWRLiEQvtMTLmtrqHukd5OJp9Zoero8RUEhykSnFt8
- ojjcm4mZYf25n7r47nTpUq5G73jAF84biNh6PDp8RFoyWbTgzXQpDCwtUUjX2TgVomQZ5t3H
- 3gNYT5jfeLe5djxpR6as50k9XHE3Ux5wGlQvDqHAnY4bUq250WzzR0/RdJlKpzoczPaohAuB
- ggAXIHlmpVxcqUIBY9pTw1ILuQ+keia3DoBaliqwGrTam6lCBQARAQABzTNHZW9yZyBHb3R0
- bGV1YmVyIDxnLmdvdHRsZXViZXJAdHV4ZWRvY29tcHV0ZXJzLmNvbT7CwY0EEwEIADcWIQT9
- C+gw5/8BKoEjHTXh93ExJiZfygUCaA9ZwgUJBaOagAIbAwQLCQgHBRUICQoLBRYCAwEAAAoJ
- EOH3cTEmJl/K+7AP/RPo5hpY2anSDAlB2/Zrdp9LhAc8H6xA/9JnpvBgrbUakoVs7Z+hUexa
- eFSu0WM4EOX5U0mfS2RcLjChVLcLqnFEXe80JzloZdRNzDCb7AoaUqb5zocPa4JKFLNlk341
- vbkm9G5FCoy+qAXG4KSOMaxEE0MaeZR1p3js9c1puFaazrJbdLEN/KU5O5KZ8Jd6+TdIXqf6
- Ujf8rgIpsgeABcbE9Yg6PiFBuCa/BoSLsk+k4L9Sef9xoqFAiJHhcGkxULuRr5gRpPn8uHce
- ICv8qipFeI/YDI1mpjSzP8Vd5FU42qvSq2SCvwAbF1YFrwL5/8yeuE7jVHZb6oWJ9PuCQ/gC
- Ik9HjNLFUS6lKW7TvBWlpBO6Qu9Uh+PrPmciXLRJEdOJFiXRJBWxnF4hJqBufWss77aWn8TX
- rf56+zeyle4RPULbOZEjcbF0Zu7UgSS/vimAIGYkpOBFWxmXCjamcIk4nnFIcu6HweDyzTba
- 3ZLGx0ulHPyk/XkOaNNwJpAzqp0r5evQIoAu8m8XfKoDbx5sLQyHCihQjepKC37yE/FVOVSA
- QK0MjD+vTqCAnYAhiraXwre7kvUYMa7cxdGf6mQkyRkkvzOya7l6d9hBsx76XhCXuWuzYPd2
- eDd0vgAaIwXV1auVchshmM+2HtjnCmVKYLdkgWWwtnPd/7EApb4XzsFNBGgPWcMBEADsDpi3
- jr3oHFtaTOskn1YyywlgqdhWzDYHRxK/UAQ8R3Orknapb0Z+g0PQ70oxTjVqg/XopGrzS3yx
- Y3IN1bLHoRzfXXf/xhhZRsVu6cFATNpgw5133adn9Z35+3rvGPaZUh1eXr24ps9j9krKvzel
- XbcW1OrKQ/mzcleYOetMizmKK40DaxJdjpKVRU03BACvoIUdpWMUTqUyNkDqemt1px0nTyGb
- kObGaV6+3D1dXpz5loYjCG9MnDFFEll9pRgObTO0p7N2YrXUz9uoYHHG5OddD3HrGgSm2N75
- 8P35jobO/RLpBcJtqIBR3zGGfDlWkahkUESGSnImqELA8X1gise71VqpLc8ETHoRENAiuSzi
- Rb8HSKzuMpXr20o602Y46CYXkgwb6KAzT2QbBFKi7mQ79u1NcbC2mPkhdeDiUK2nF7lR7mKt
- r2sfGOG1uoYt6h57Ija5hQKHcaqEXeRZLKnR2O6vMpabEsZBewLJymAtay4oLhSm6ya6et8c
- CBftq0Pigj7H+zcalURdr8g8Xa2if5EI7C8LIxRmq9U7eCBnQDHnczIudtDT856QMsIfqcb7
- nGJFLpw1HIBiwquNzfzwIGlEyfxSepM6uY16HlCwthK+nw7zFbxS/PNqYLVQxvyl8fBjqcNt
- ROZnd7IY9CECa9St892EU1SLk1OPIwARAQABwsF8BBgBCAAmFiEE/QvoMOf/ASqBIx014fdx
- MSYmX8oFAmgPWcMFCQWjmoACGwwACgkQ4fdxMSYmX8rbdA//ajzMle1dGtsnJC7gITmEO2qf
- mcvmVE3+n4A6193oPlStCePyET2AHyRWv4rAbY3Wl2e3ii0z4G3f3ONWkxjvemnzJFl/EjyO
- HoEX8e+cncr3lWyudw8IqXFVogdlPdMNfI6SX1EKekCVPot/dNoCKrZUqbn3Ag4pldHUehuD
- M6FaI6zDO3jdiDWY+MxwvY0isleNT7J/EXSVUEURo6pcA6hASadHqYs7lBBE/GmEJNqTbfMY
- wKWEzSoxWAV8nVWVLej1uqffmoSXJt2M8SV41i3OA2SaSVSnQNd/KAEPk9Uhn/d7ZFdBLO+L
- USSsfabGu8Uv9Ez5+gXF7QoElqrUjwJQ+d8L1BfotSJMbAuikij9XyBkBbRuj3FxM8Yfp9cP
- l5vI0gqfMbj36QaNhXZYl5kK0Erw+mwnK8a2p7j7RtvtrvEu+khfTLrDQCpgznTK2W8G7oLn
- iAVOWlEtKQXXVoSoDRDCETJV6bfOzuA9qVNjXgwaQQfA/QrFMusPKW0oOgmE3sobkmo6PZVD
- Cj0BY3cLZSuTw5fXtFuYf3rhyrDfzu7KYCMlwJiadQSrhUWU7hBG3Ip3bbgXayqcG3ytQb/F
- j2o6LfW/2XyMPLuL42mc+aKmuHqk5PqTkvlTr/pn0temEL/ofJ0c2ygkgSZqAhg/yr01AQcX
- bsxTTcOuRnk=
-In-Reply-To: <20251106-excellent-cooperative-finch-5b379f@kuoka>
+To: Wangao Wang <wangao.wang@oss.qualcomm.com>,
+        Vikash Garodia <vikash.garodia@oss.qualcomm.com>,
+        Abhinav Kumar <abhinav.kumar@linux.dev>,
+        Bryan O'Donoghue <bod@kernel.org>,
+        Mauro Carvalho Chehab <mchehab@kernel.org>
+Cc: linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        Neil Armstrong <neil.armstrong@linaro.org>, quic_qiweil@quicinc.com,
+        quic_renjiang@quicinc.com
+References: <20251106-iris_encoder_enhancements-v4-0-5d6cff963f1b@oss.qualcomm.com>
+ <20251106-iris_encoder_enhancements-v4-2-5d6cff963f1b@oss.qualcomm.com>
+From: Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>
+In-Reply-To: <20251106-iris_encoder_enhancements-v4-2-5d6cff963f1b@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMTA3MDA4MyBTYWx0ZWRfX7lGZCo5GTEl8
+ 4Xg2xjypJJYI9LEFoi4oMhP7zbaFjYzF6vga5ScFmw9gWJSn2HKZnbOIfcvb9tY5PlxQNOuqL3C
+ Tp0ZKPA8lSrhRISKwhvhoI8pTuDYHSQxW3spGGxSKFLPOa9o47JE+joJDUYV8zN05+rJquj/N3I
+ iDeAHyiujBjsqJQyMB7SoTcFwQhlGCsUR2ZgmU3F3BAfdcbSAz+12eXhN58r6a6wdBh6cR8Qs8u
+ dW5s6tXW1TXmZkAbSscplPpTDdOtzDm+n5FqW153+vksYbXLHIU7YRQjjnv0r1D++nUjw/Qs78r
+ WIqUfdL54IsxTaWWsGZubx6nFFTscUh/W808BL9tx/C8Of7ymw4D4pq94X9ctRzC50qFdH78gEW
+ fgSMVXw331ObFDCpO8bm7/aaUhK5aQ==
+X-Proofpoint-ORIG-GUID: HozIHmirwtfHbKlg4zCZvtoTzx2lMh6L
+X-Proofpoint-GUID: HozIHmirwtfHbKlg4zCZvtoTzx2lMh6L
+X-Authority-Analysis: v=2.4 cv=BrKQAIX5 c=1 sm=1 tr=0 ts=690dc933 cx=c_pps
+ a=JL+w9abYAAE89/QcEU+0QA==:117 a=L4UNg9I9cQSOxNpRiiGXlA==:17
+ a=IkcTkHD0fZMA:10 a=6UeiqGixMTsA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=EUspDBNiAAAA:8 a=-McpUROWq26EwQPLxNQA:9
+ a=QEXdDO2ut3YA:10 a=324X-CrmTo6CU4MGRt3R:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
+ definitions=2025-11-07_02,2025-11-06_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ lowpriorityscore=0 spamscore=0 priorityscore=1501 impostorscore=0 bulkscore=0
+ clxscore=1015 adultscore=0 phishscore=0 malwarescore=0 suspectscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2510240001 definitions=main-2511070083
 
 
 
-Am 06.11.25 um 09:13 schrieb Krzysztof Kozlowski:
-> On Wed, Nov 05, 2025 at 04:41:06PM +0100, Georg Gottleuber wrote:
->>
->> Signed-off-by: Georg Gottleuber <ggo@tuxedocomputers.com>
->> Signed-off-by: Srinivas Kandagatla <srini@kernel.org>
->> Signed-off-by: Ettore Chimenti <ettore.chimenti@linaro.org>
+On 11/6/2025 9:00 AM, Wangao Wang wrote:
+> The setting of HFI_PROP_CROP_OFFSETS for the OUTPUT port is correct,
+> but on the CAPTURE port it is used to inform the firmware about the
+> ROI, so crop_offset needs to be handled accordingly.
 > 
-> Wrong order of tags. Ettore is not sending this.
+> Signed-off-by: Wangao Wang <wangao.wang@oss.qualcomm.com>
 
-Ack.
+Does CROP use case work with just this patch and first one?
 
->> ---
->>  arch/arm64/boot/dts/qcom/Makefile             |    2 +
->>  .../qcom/x1e80100-tuxedo-elite-14-gen1.dts    | 1486 +++++++++++++++++
->>  2 files changed, 1488 insertions(+)
->>  create mode 100644 arch/arm64/boot/dts/qcom/x1e80100-tuxedo-elite-14-gen1.dts
->>
->> diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
->> index 296688f7cb26..598bf4c6e84a 100644
->> --- a/arch/arm64/boot/dts/qcom/Makefile
->> +++ b/arch/arm64/boot/dts/qcom/Makefile
->> @@ -350,3 +350,5 @@ x1p42100-hp-omnibook-x14-el2-dtbs := x1p42100-hp-omnibook-x14.dtb x1-el2.dtbo
->>  dtb-$(CONFIG_ARCH_QCOM)	+= x1p42100-hp-omnibook-x14.dtb x1p42100-hp-omnibook-x14-el2.dtb
->>  x1p42100-lenovo-thinkbook-16-el2-dtbs	:= x1p42100-lenovo-thinkbook-16.dtb x1-el2.dtbo
->>  dtb-$(CONFIG_ARCH_QCOM)	+= x1p42100-lenovo-thinkbook-16.dtb x1p42100-lenovo-thinkbook-16-el2.dtb
->> +x1e80100-tuxedo-elite-14-gen1-el2-dtbs	:=  x1e80100-tuxedo-elite-14-gen1.dtb x1-el2.dtbo
->> +dtb-$(CONFIG_ARCH_QCOM)	+= x1e80100-tuxedo-elite-14-gen1.dtb
+Since you are enabling different features in your series, pls make sure
+features are working with individual patches.
+
+Thanks,
+Dikshita
+> ---
+>  .../media/platform/qcom/iris/iris_hfi_gen2_command.c   | 18 ++++++++++++++----
+>  drivers/media/platform/qcom/iris/iris_venc.c           |  4 ++--
+>  2 files changed, 16 insertions(+), 6 deletions(-)
 > 
-> Messed ordering. Please do not add to the end of lists. This applies
-> almost EVERYWHERE, for every sort of change because it only introduces
-> unnecessary conflicts when applying multiple patchsets.
-
-Ack.>
->> +	/*
->> +	 * TODO: These two regulators are actually part of the removable M.2
->> +	 * card and not the mainboard. Need to describe this differently.
->> +	 * Functionally it works correctly, because all we need to do is to
->> +	 * turn on the actual 3.3V supply above.
->> +	 */
->> +	vreg_wcn_0p95: regulator-wcn-0p95 {
->> +		compatible = "regulator-fixed";
->> +
->> +		regulator-name = "VREG_WCN_0P95";
->> +		regulator-min-microvolt = <950000>;
->> +		regulator-max-microvolt = <950000>;
->> +
->> +		vin-supply = <&vreg_wcn_3p3>;
->> +	};
->> +
->> +	vreg_wcn_1p9: regulator-wcn-1p9 {
->> +		compatible = "regulator-fixed";
->> +
->> +		regulator-name = "VREG_WCN_1P9";
->> +		regulator-min-microvolt = <1900000>;
->> +		regulator-max-microvolt = <1900000>;
->> +
->> +		vin-supply = <&vreg_wcn_3p3>;
->> +	};
->> +
->> +	vreg_rtmr0_1p15: regulator-rtmr0-1p15 {
+> diff --git a/drivers/media/platform/qcom/iris/iris_hfi_gen2_command.c b/drivers/media/platform/qcom/iris/iris_hfi_gen2_command.c
+> index aaa79dfe2db281bb77be7274233f093b0086b5d4..69034e1ea8eb64440646776a40dcc657453916db 100644
+> --- a/drivers/media/platform/qcom/iris/iris_hfi_gen2_command.c
+> +++ b/drivers/media/platform/qcom/iris/iris_hfi_gen2_command.c
+> @@ -215,8 +215,11 @@ static int iris_hfi_gen2_set_crop_offsets(struct iris_inst *inst, u32 plane)
+>  	u32 port = iris_hfi_gen2_get_port(inst, plane);
+>  	u32 bottom_offset, right_offset;
+>  	u32 left_offset, top_offset;
+> +	u32 codec_align;
+>  	u32 payload[2];
+>  
+> +	codec_align = inst->codec == V4L2_PIX_FMT_HEVC ? 32 : 16;
+> +
+>  	if (inst->domain == DECODER) {
+>  		if (V4L2_TYPE_IS_OUTPUT(plane)) {
+>  			bottom_offset = (inst->fmt_src->fmt.pix_mp.height - inst->crop.height);
+> @@ -230,10 +233,17 @@ static int iris_hfi_gen2_set_crop_offsets(struct iris_inst *inst, u32 plane)
+>  			top_offset = inst->compose.top;
+>  		}
+>  	} else {
+> -		bottom_offset = (inst->fmt_dst->fmt.pix_mp.height - inst->enc_raw_height);
+> -		right_offset = (inst->fmt_dst->fmt.pix_mp.width - inst->enc_raw_width);
+> -		left_offset = inst->crop.left;
+> -		top_offset = inst->crop.top;
+> +		if (V4L2_TYPE_IS_OUTPUT(plane)) {
+> +			bottom_offset = (inst->enc_raw_height - inst->crop.height);
+> +			right_offset = (inst->enc_raw_width - inst->crop.width);
+> +			left_offset = inst->crop.left;
+> +			top_offset = inst->crop.top;
+> +		} else {
+> +			bottom_offset = (inst->fmt_dst->fmt.pix_mp.height - inst->enc_raw_height);
+> +			right_offset = (inst->fmt_dst->fmt.pix_mp.width - inst->enc_raw_width);
+> +			left_offset = 0;
+> +			top_offset = 0;
+> +		}
+>  	}
+>  
+>  	payload[0] = FIELD_PREP(GENMASK(31, 16), left_offset) | top_offset;
+> diff --git a/drivers/media/platform/qcom/iris/iris_venc.c b/drivers/media/platform/qcom/iris/iris_venc.c
+> index 50a3eb975a2523abf1c2df128a66a762a1ed35c6..7ad747d2272f029e69a56572a188a032f898a3fb 100644
+> --- a/drivers/media/platform/qcom/iris/iris_venc.c
+> +++ b/drivers/media/platform/qcom/iris/iris_venc.c
+> @@ -62,8 +62,8 @@ int iris_venc_inst_init(struct iris_inst *inst)
+>  
+>  	inst->crop.left = 0;
+>  	inst->crop.top = 0;
+> -	inst->crop.width = f->fmt.pix_mp.width;
+> -	inst->crop.height = f->fmt.pix_mp.height;
+> +	inst->crop.width = DEFAULT_WIDTH;
+> +	inst->crop.height = DEFAULT_HEIGHT;
+>  
+>  	inst->operating_rate = DEFAULT_FPS;
+>  	inst->frame_rate = DEFAULT_FPS;
 > 
-> w > r, please keep things ordered. See also DTS coding style.
-
-Ack.
-
->> +		compatible = "regulator-fixed";
->> +
->> +		regulator-name = "VREG_RTMR0_1P15";
->> +		regulator-min-microvolt = <1150000>;
->> +		regulator-max-microvolt = <1150000>;
->> +
->> +		gpio = <&pmc8380_5_gpios 8 GPIO_ACTIVE_HIGH>;
->> +		enable-active-high;
->> +
->> +		pinctrl-0 = <&usb0_pwr_1p15_reg_en>;
->> +		pinctrl-names = "default";
->> +
->> +		regulator-boot-on;
->> +	};
->> +
->> +	vreg_rtmr0_1p8: regulator-rtmr0-1p8 {
->> +		compatible = "regulator-fixed";
->> +
->> +		regulator-name = "VREG_RTMR0_1P8";
->> +		regulator-min-microvolt = <1800000>;
->> +		regulator-max-microvolt = <1800000>;
->> +
->> +		gpio = <&pm8550ve_9_gpios 8 GPIO_ACTIVE_HIGH>;
->> +		enable-active-high;
->> +
->> +		pinctrl-0 = <&usb0_1p8_reg_en>;
->> +		pinctrl-names = "default";
->> +
->> +		regulator-boot-on;
->> +	};
->> +
->> +	vreg_rtmr0_3p3: regulator-rtmr0-3p3 {
->> +		compatible = "regulator-fixed";
->> +
->> +		regulator-name = "VREG_RTMR0_3P3";
->> +		regulator-min-microvolt = <3300000>;
->> +		regulator-max-microvolt = <3300000>;
->> +
->> +		gpio = <&pm8550_gpios 11 GPIO_ACTIVE_HIGH>;
->> +		enable-active-high;
->> +
->> +		pinctrl-0 = <&usb0_3p3_reg_en>;
->> +		pinctrl-names = "default";
->> +
->> +		regulator-boot-on;
->> +	};
->> +
->> +	sound {
->> +		compatible = "qcom,x1e80100-sndcard";
->> +		model = "X1E80100-TUXEDO-Elite-14";
->> +		audio-routing = "WooferLeft IN", "WSA WSA_SPK1 OUT",
->> +				"TweeterLeft IN", "WSA WSA_SPK2 OUT",
->> +				"WooferRight IN", "WSA2 WSA_SPK2 OUT",
->> +				"TweeterRight IN", "WSA2 WSA_SPK2 OUT",
->> +				"IN1_HPHL", "HPHL_OUT",
->> +				"IN2_HPHR", "HPHR_OUT",
->> +				"AMIC2", "MIC BIAS2",
->> +				"VA DMIC0", "MIC BIAS1",
->> +				"VA DMIC1", "MIC BIAS1",
->> +				"VA DMIC0", "VA MIC BIAS1",
->> +				"VA DMIC1", "VA MIC BIAS1",
->> +				"TX SWR_INPUT1", "ADC2_OUTPUT";
->> +
-> 
-> No USB ports for DisplayPort/HDMI audio? I think I saw HDMI connector.
-
-We are going to add that to v3.
-
-Regards,
-Georg
-
-> 
-> Best regards,
-> Krzysztof
-> 
-
 
