@@ -1,133 +1,81 @@
-Return-Path: <linux-arm-msm+bounces-80688-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-80689-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0A649C3E55B
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 07 Nov 2025 04:20:01 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 67A44C3E58F
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 07 Nov 2025 04:29:15 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id BC23A3AD87C
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Nov 2025 03:19:59 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id DA5D4188900B
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Nov 2025 03:29:39 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6CFFA2F1FE2;
-	Fri,  7 Nov 2025 03:19:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C4DC02DA753;
+	Fri,  7 Nov 2025 03:29:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="bn/g3237";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="H4nYr1gw"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="JdMebRk8"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.8])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BBFB2C375A
-	for <linux-arm-msm@vger.kernel.org>; Fri,  7 Nov 2025 03:19:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 055962F616C;
+	Fri,  7 Nov 2025 03:29:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.8
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762485598; cv=none; b=Uqct37UnFCGMhhBv9yzHFeHye3SqS+fsfLTjbUKX2ZT1+CHGXOe9LShETe9kno3ajlNcLYxsa2DAB2fiM97w9VXsG30BBXhq9pn90JoTkGpqu1HrM83OiDBpKJym+ZRDW7TqgwRP7wMrrO5bWkkv0GWKua+sfjv9l2ktf3zXHjQ=
+	t=1762486151; cv=none; b=ss2ow8b54v7eCIH0H8PPWzkPrf4gKZbrUhR7VmI6bnjUJFQF3dip3hSBXM6HTgjsf2pgInlrnAhmsHWideBbOpSgVSpdktVS5+6H4KRiRH9qetc/f919ukYiAHipMDn/sWZwVfx0PVTnWpR0OfnHJIgqQQ2WlxaH8pA182SGKhQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762485598; c=relaxed/simple;
-	bh=c8A14Q/V8GEKQyw/Jggt3KvMMi70EOyHMLOV1fzSV98=;
+	s=arc-20240116; t=1762486151; c=relaxed/simple;
+	bh=IImINCHPo8SydfXgzNxPKnocMV0I2PHbN0YbvkHwWSE=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Gihq64YIhIRAs8SFbDhs+uQ8uKaEZO3SNRKMRgr5QV0Cqu/DV+Sj2FSNLW/qqT/gAuM6KwY6lUHPK0USjoSjMqruKieTs4pat13PYv9DFSAOZehF3I/q6rDfiNZKilHrN9Hp0J/ffgBMTPVYw7IQTzgiiT5H3DG+AX0RLoGi/FQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=bn/g3237; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=H4nYr1gw; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 5A6Mhghl4131373
-	for <linux-arm-msm@vger.kernel.org>; Fri, 7 Nov 2025 03:19:56 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to; s=qcppdkim1; bh=M80K1COQSKSOsbnYlBiyMzUX
-	hbNJGsXiIzf10YFAobU=; b=bn/g3237YhT6RGT/NZXYeOvYm5A3Ef/qBwofC4bb
-	ob4Dv/kHYUnPlqmL0Xa1UDS8viZtBnAjyxyHlhbUdzUrYXhO4WGipDF/pR9Akiue
-	+PhN6YduFkOcBVFaCl6P/j44ij1qjqOtDIzTtkiR8ARG9UJNrLVau/QwrO4d3Sev
-	d5IEuMtiyWEz8BgDIp+/J9i7vls7cUmINJhhat1FNXPnBah8jPCaEUfWi7aXBjKK
-	Wb7W4dNnoH3GQCxQF56O02fdue9GWMkmlqu6Ild63nraYcyvLYV/K3nzCadQ0xjj
-	RhXXNa2/vwQChQFVbvEhClT+oiAhzPsfv+bBb2rK7oOBLw==
-Received: from mail-qt1-f199.google.com (mail-qt1-f199.google.com [209.85.160.199])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4a8u3x2hus-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Fri, 07 Nov 2025 03:19:55 +0000 (GMT)
-Received: by mail-qt1-f199.google.com with SMTP id d75a77b69052e-4e88ddf3cd0so9151351cf.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 06 Nov 2025 19:19:55 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1762485595; x=1763090395; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=M80K1COQSKSOsbnYlBiyMzUXhbNJGsXiIzf10YFAobU=;
-        b=H4nYr1gw8UP/zYarOxiyoDwoDw/ke/mQw8y3zSzCFLystxSDWPj0GSrCUi4veXh08/
-         Kb/tZKPLMYZhFiaT2nQmWLzespdO2omch3XGx1aws1WNnKs2lm5+uEQXiPUzsTCNPG6M
-         dVVLYQMpM0BqPLObxTPRI+h6PFCHkVg+yiIZAr5tLoRONPzi5j5ctxWTobisoThnJlHZ
-         Mx2mZKJwy63WyjRHgR4kV60FsG+ZIFwoEl0NPfrBGNI42/E8DjHmWvwLGsTAXfM6muSm
-         QVvZDic8dZOYA0iJ8oIte0PFHDrRVlDy9Fw1Yb9WdqHx5dbZ6qCiXTP6pM+yJZ4rZIUt
-         fPHg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1762485595; x=1763090395;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=M80K1COQSKSOsbnYlBiyMzUXhbNJGsXiIzf10YFAobU=;
-        b=uug4Kw8wJZ9y+oLn6wqhHE5ERU9+R7BV159GACdffPnnRsnaJJkCEMRb+pPPWXmeEw
-         xzh5GJ5ooBy4Sd1rQJfPeUuXysCSJzeIP6qcCg/2pOa8BkZ2EkfKHoU5IHMKpjU3iRuB
-         uFZwXw7rZbgBeNhSdFl+ZfJDF1Iu2oOZCJ+TgEj7mcMCG+2ctJ6yeGmnqARztP+k+bSG
-         bNTQQXJ5ZuKJfTqDMfCUxG7HWO+PT3+m3pDlXw/DAJMLsh/Lfqz1rPXQdYSvhbK8f6bC
-         roWWL5Ebng4ArCUrZ2wo/GMKER2SFepxAqvqSwW9SyFTLfvWAqg0At/71wlyS9GWay6m
-         3dFg==
-X-Forwarded-Encrypted: i=1; AJvYcCX4oACHgBZA/htztW85vmbbioRUSBjJ7yFE9pGirKdZCbocDdM/mXS+mm6O2DMrPaZt2Mz/CUWG2fK7Qf70@vger.kernel.org
-X-Gm-Message-State: AOJu0YwUeeLs4z9h5TRtBZQ6Tx65Pq3y1O4a8ag0hR8f/M/bmqzbNDki
-	XP0Sfv1zf/Fuixj07lnW6j6j9E7TvOdJV6x4JKZMRSYLogayo91aOsSfa5iy/bufWFqCwuJDA5u
-	2Vpyi3xsmGqpKF92PQk9ObDZMeWFq0uXWclVddIAq3jRes3tg1Y6KSvwf/o01Ppi69X5j
-X-Gm-Gg: ASbGncu+ajy18US0WFa9RkWEVRtLmIHrGn71bZzwJcIKHOQ0N/1jsBJUE9SnEOGjBn9
-	dE7N9fVubnIBJvDrU0Gn4HzJB09L2z3YsQGlyiLTirjdx1md/1RyBy6YDy4H7z0y8nt/YxHzBRG
-	SAy3xCpPMMY9pAmfMlazkqqAdu4DOaTwkBV5Z2NvjvRRIq4epY5SdbSTnYgyIQ2zofAKh4HFZrn
-	yBThycuv1WR+GC3XXHU3YUGKMw2JiTBW0SOZl973yVayPFTHz5SUCFnZm0S/VG1OMyNl7AyZEzd
-	OHKWHSg6w1YvMIyZQfJOfRSJoBMqmBVPllyM3ZIH1a8nkirWV/0tZmNN5hmB05N3K6367gMCVlQ
-	UvAgyvjqfOKTt09jZbUtIMEGPQFNKbxt+q5IG0H5RFYw/AgDy4+7hah4RrCEanOHmTIhjKQUBjX
-	ICM2PJqZh14rkM
-X-Received: by 2002:a05:622a:199e:b0:4b7:8d1c:1be2 with SMTP id d75a77b69052e-4ed94a67750mr18772811cf.50.1762485594830;
-        Thu, 06 Nov 2025 19:19:54 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IE4pxfXAI2QN5tx3rdS8w62pU9piMwAcGPSHdAchfcF87faMpVG/a4sNiNd3ZJ914ce0ITvXw==
-X-Received: by 2002:a05:622a:199e:b0:4b7:8d1c:1be2 with SMTP id d75a77b69052e-4ed94a67750mr18772491cf.50.1762485594416;
-        Thu, 06 Nov 2025 19:19:54 -0800 (PST)
-Received: from umbar.lan (2001-14ba-a0c3-3a00-264b-feff-fe8b-be8a.rev.dnainternet.fi. [2001:14ba:a0c3:3a00:264b:feff:fe8b:be8a])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-5944a593af0sm1136865e87.96.2025.11.06.19.19.52
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 06 Nov 2025 19:19:52 -0800 (PST)
-Date: Fri, 7 Nov 2025 05:19:50 +0200
-From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc: Rob Herring <robh@kernel.org>, Saravana Kannan <saravanak@google.com>,
-        "Rafael J. Wysocki" <rafael@kernel.org>,
-        Viresh Kumar <viresh.kumar@linaro.org>,
-        Matthias Brugger <matthias.bgg@gmail.com>,
-        AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-        Yangtao Li <tiny.windzz@gmail.com>, Chen-Yu Tsai <wens@kernel.org>,
-        Jernej Skrabec <jernej.skrabec@gmail.com>,
-        Samuel Holland <samuel@sholland.org>,
-        Lorenzo Pieralisi <lpieralisi@kernel.org>,
-        Daniel Lezcano <daniel.lezcano@linaro.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>,
-        Thomas Gleixner <tglx@linutronix.de>,
-        Nicolas Ferre <nicolas.ferre@microchip.com>,
-        Alexandre Belloni <alexandre.belloni@bootlin.com>,
-        Claudiu Beznea <claudiu.beznea@tuxon.dev>,
-        Maximilian Luz <luzmaximilian@gmail.com>,
-        Hans de Goede <hansg@kernel.org>,
-        Ilpo =?utf-8?B?SsOkcnZpbmVu?= <ilpo.jarvinen@linux.intel.com>,
-        Daniel Lezcano <daniel.lezcano@kernel.org>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Jonathan Hunter <jonathanh@nvidia.com>, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org,
-        linux-mediatek@lists.infradead.org, linux-sunxi@lists.linux.dev,
-        linux-arm-msm@vger.kernel.org, platform-driver-x86@vger.kernel.org,
-        linux-tegra@vger.kernel.org
-Subject: Re: [PATCH 12/13] soc: qcom: ubwc: Simplify with
- of_machine_get_match_data()
-Message-ID: <zdnlmxrlagpmwcfnzka7zgmrxzya564cjbd56l22fazxxhqpjw@64zf3akyfp4h>
-References: <20251106-b4-of-match-matchine-data-v1-0-d780ea1780c2@linaro.org>
- <20251106-b4-of-match-matchine-data-v1-12-d780ea1780c2@linaro.org>
+	 Content-Type:Content-Disposition:In-Reply-To; b=HemAU03x2lIIOgW1qrfsAdlmLsDarhRvrjJ91z7QEGlC5cnSz4xG0ALqI+sYD0PUcNNsgkhBjsI0Bdqmpc3GuxV+X8PCrNAOteNjYZjDJG7bG9GpmOwozIu3KC7gVAFW7tmHK2DRp6UAKcQquAzYuU7/oirXPKSgSaHH93uNZ7Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=JdMebRk8; arc=none smtp.client-ip=192.198.163.8
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1762486150; x=1794022150;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=IImINCHPo8SydfXgzNxPKnocMV0I2PHbN0YbvkHwWSE=;
+  b=JdMebRk8Xj33YjbNGVzPqXhj9xaqt2xFnHX4kF1uzam9FVCVUA/F/tlc
+   kH3Yq9jJjUUw/MaRn9hHJGSMqwRsvGQb86oFomCdJKgiNLf/siODYq9a5
+   ATYo8z7cdG1C6k41SydMFsMdzBY4VRdAfyOLs3cphWskqeVsu1K0ObdGn
+   nF2f1A61ZGj+zdnx9jtQPkiJ/vUJ5q7WXcqpFfddqsuC1cwzp61PRE0jy
+   CdfG2OweSCZQ4pgrvIULPwFOsu3buIm/5WbxpXfXolOCGcpI/QNCMCA3h
+   8mrXCqTjZtizrsDqHDljZuHQ/Bi6QHgUxIXRQxWi8Rks+hhM37ddC91c5
+   w==;
+X-CSE-ConnectionGUID: NCei9HNURhaS5eYJvVeeIw==
+X-CSE-MsgGUID: MueM+MNSQIWMykfIrhGjGQ==
+X-IronPort-AV: E=McAfee;i="6800,10657,11605"; a="82263948"
+X-IronPort-AV: E=Sophos;i="6.19,285,1754982000"; 
+   d="scan'208";a="82263948"
+Received: from orviesa005.jf.intel.com ([10.64.159.145])
+  by fmvoesa102.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 06 Nov 2025 19:29:09 -0800
+X-CSE-ConnectionGUID: Z6/WTQBjRRq8v4/Nzqz/1g==
+X-CSE-MsgGUID: phJBU6CNQ6OYLjJ23GpONA==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.19,285,1754982000"; 
+   d="scan'208";a="193102109"
+Received: from lkp-server02.sh.intel.com (HELO 66d7546c76b2) ([10.239.97.151])
+  by orviesa005.jf.intel.com with ESMTP; 06 Nov 2025 19:29:06 -0800
+Received: from kbuild by 66d7546c76b2 with local (Exim 4.96)
+	(envelope-from <lkp@intel.com>)
+	id 1vHD9q-000Uem-1y;
+	Fri, 07 Nov 2025 03:29:03 +0000
+Date: Fri, 7 Nov 2025 11:28:26 +0800
+From: kernel test robot <lkp@intel.com>
+To: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>,
+	lpieralisi@kernel.org, kwilczynski@kernel.org, mani@kernel.org,
+	bhelgaas@google.com
+Cc: llvm@lists.linux.dev, oe-kbuild-all@lists.linux.dev, will@kernel.org,
+	linux-pci@vger.kernel.org, linux-kernel@vger.kernel.org,
+	robh@kernel.org, linux-arm-msm@vger.kernel.org,
+	zhangsenchuan@eswincomputing.com,
+	Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
+Subject: Re: [PATCH 3/3] PCI: dwc: Skip PME_Turn_Off and L2/L3 transition if
+ no device is available
+Message-ID: <202511071025.JM5nTGnO-lkp@intel.com>
+References: <20251106061326.8241-4-manivannan.sadhasivam@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -136,48 +84,109 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20251106-b4-of-match-matchine-data-v1-12-d780ea1780c2@linaro.org>
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMTA3MDAyNCBTYWx0ZWRfX7ouVGI75WIGJ
- NgXUimpEuh1RiYOX+VdbkSBaSgr/Rjmu8k2fb/zaV4LZ+tE8Q1o91vXnvlMAZ71Un9iF+LHlD8k
- 6jbHoDdXoHWeyFMeAF9hJmFxzAU4ttV0roBYcOcHu+VC6reET/XJfPAHT2JBBrMyiD7EWj7I5jJ
- zMJgh0j2/aR1g/gH+ihGEqK2mCxcwRaaThzfGxYJ/uijZSWoRH4FPsESTmA4IGgSyEc/J1LG5fa
- 7zT7MG5ztkRr/1q213cQUUG2QP3Bh+kr85tns2Lhyl1u1BYQK9zCYLAtxPPszT6HpKT5c2QcJI6
- YGAYPBoiCI1gDs+LOl7cCLgNrHxtHt9Z/K8y/NReP84ZtWtrI8sOr3fnEI16ltFQFX74U2IhpUM
- CwarGv1yvbYpDvJqgJexXENVJAoJpQ==
-X-Proofpoint-ORIG-GUID: v8FBcm05sEJfWxF48suvegGYIwoCvp8N
-X-Proofpoint-GUID: v8FBcm05sEJfWxF48suvegGYIwoCvp8N
-X-Authority-Analysis: v=2.4 cv=BrKQAIX5 c=1 sm=1 tr=0 ts=690d655b cx=c_pps
- a=WeENfcodrlLV9YRTxbY/uA==:117 a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10
- a=6UeiqGixMTsA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=KKAkSRfTAAAA:8 a=EUspDBNiAAAA:8 a=228_68lKBFQWPJCgatoA:9 a=CjuIK1q_8ugA:10
- a=kacYvNCVWA4VmyqE58fU:22 a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
- definitions=2025-11-06_05,2025-11-06_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- lowpriorityscore=0 spamscore=0 priorityscore=1501 impostorscore=0 bulkscore=0
- clxscore=1015 adultscore=0 phishscore=0 malwarescore=0 suspectscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2510240001 definitions=main-2511070024
+In-Reply-To: <20251106061326.8241-4-manivannan.sadhasivam@oss.qualcomm.com>
 
-On Thu, Nov 06, 2025 at 08:07:19PM +0100, Krzysztof Kozlowski wrote:
-> Replace open-coded getting root OF node, matching against it and getting
-> the match data with new of_machine_get_match_data() helper.
-> 
-> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> 
-> ---
-> 
-> Depends on the first OF patch.
-> ---
->  drivers/soc/qcom/ubwc_config.c | 14 ++++----------
->  1 file changed, 4 insertions(+), 10 deletions(-)
-> 
+Hi Manivannan,
 
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+kernel test robot noticed the following build warnings:
 
+[auto build test WARNING on pci/next]
+[also build test WARNING on pci/for-linus linus/master v6.18-rc4 next-20251106]
+[If your patch is applied to the wrong git tree, kindly drop us a note.
+And when submitting patch, we suggest to use '--base' as documented in
+https://git-scm.com/docs/git-format-patch#_base_tree_information]
+
+url:    https://github.com/intel-lab-lkp/linux/commits/Manivannan-Sadhasivam/PCI-host-common-Add-an-API-to-check-for-any-device-under-the-Root-Ports/20251106-141822
+base:   https://git.kernel.org/pub/scm/linux/kernel/git/pci/pci.git next
+patch link:    https://lore.kernel.org/r/20251106061326.8241-4-manivannan.sadhasivam%40oss.qualcomm.com
+patch subject: [PATCH 3/3] PCI: dwc: Skip PME_Turn_Off and L2/L3 transition if no device is available
+config: arm-randconfig-001-20251107 (https://download.01.org/0day-ci/archive/20251107/202511071025.JM5nTGnO-lkp@intel.com/config)
+compiler: clang version 17.0.6 (https://github.com/llvm/llvm-project 6009708b4367171ccdbf4b5905cb6a803753fe18)
+reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20251107/202511071025.JM5nTGnO-lkp@intel.com/reproduce)
+
+If you fix the issue in a separate patch/commit (i.e. not just a new version of
+the same patch/commit), kindly add following tags
+| Reported-by: kernel test robot <lkp@intel.com>
+| Closes: https://lore.kernel.org/oe-kbuild-all/202511071025.JM5nTGnO-lkp@intel.com/
+
+All warnings (new ones prefixed by >>):
+
+>> drivers/pci/controller/dwc/pcie-designware-host.c:1133:6: warning: variable 'ret' is used uninitialized whenever 'if' condition is true [-Wsometimes-uninitialized]
+    1133 |         if (!pci_root_ports_have_device(pci->pp.bridge->bus))
+         |             ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+   drivers/pci/controller/dwc/pcie-designware-host.c:1176:9: note: uninitialized use occurs here
+    1176 |         return ret;
+         |                ^~~
+   drivers/pci/controller/dwc/pcie-designware-host.c:1133:2: note: remove the 'if' if its condition is always false
+    1133 |         if (!pci_root_ports_have_device(pci->pp.bridge->bus))
+         |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    1134 |                 goto stop_link;
+         |                 ~~~~~~~~~~~~~~
+   drivers/pci/controller/dwc/pcie-designware-host.c:1131:9: note: initialize the variable 'ret' to silence this warning
+    1131 |         int ret;
+         |                ^
+         |                 = 0
+   1 warning generated.
+
+
+vim +1133 drivers/pci/controller/dwc/pcie-designware-host.c
+
+  1126	
+  1127	int dw_pcie_suspend_noirq(struct dw_pcie *pci)
+  1128	{
+  1129		u8 offset = dw_pcie_find_capability(pci, PCI_CAP_ID_EXP);
+  1130		u32 val;
+  1131		int ret;
+  1132	
+> 1133		if (!pci_root_ports_have_device(pci->pp.bridge->bus))
+  1134			goto stop_link;
+  1135	
+  1136		/*
+  1137		 * If L1SS is supported, then do not put the link into L2 as some
+  1138		 * devices such as NVMe expect low resume latency.
+  1139		 */
+  1140		if (dw_pcie_readw_dbi(pci, offset + PCI_EXP_LNKCTL) & PCI_EXP_LNKCTL_ASPM_L1)
+  1141			return 0;
+  1142	
+  1143		if (pci->pp.ops->pme_turn_off) {
+  1144			pci->pp.ops->pme_turn_off(&pci->pp);
+  1145		} else {
+  1146			ret = dw_pcie_pme_turn_off(pci);
+  1147			if (ret)
+  1148				return ret;
+  1149		}
+  1150	
+  1151		ret = read_poll_timeout(dw_pcie_get_ltssm, val,
+  1152					val == DW_PCIE_LTSSM_L2_IDLE ||
+  1153					val <= DW_PCIE_LTSSM_DETECT_WAIT,
+  1154					PCIE_PME_TO_L2_TIMEOUT_US/10,
+  1155					PCIE_PME_TO_L2_TIMEOUT_US, false, pci);
+  1156		if (ret) {
+  1157			/* Only log message when LTSSM isn't in DETECT or POLL */
+  1158			dev_err(pci->dev, "Timeout waiting for L2 entry! LTSSM: 0x%x\n", val);
+  1159			return ret;
+  1160		}
+  1161	
+  1162		/*
+  1163		 * Per PCIe r6.0, sec 5.3.3.2.1, software should wait at least
+  1164		 * 100ns after L2/L3 Ready before turning off refclock and
+  1165		 * main power. This is harmless when no endpoint is connected.
+  1166		 */
+  1167		udelay(1);
+  1168	
+  1169	stop_link:
+  1170		dw_pcie_stop_link(pci);
+  1171		if (pci->pp.ops->deinit)
+  1172			pci->pp.ops->deinit(&pci->pp);
+  1173	
+  1174		pci->suspended = true;
+  1175	
+  1176		return ret;
+  1177	}
+  1178	EXPORT_SYMBOL_GPL(dw_pcie_suspend_noirq);
+  1179	
 
 -- 
-With best wishes
-Dmitry
+0-DAY CI Kernel Test Service
+https://github.com/intel/lkp-tests/wiki
 
