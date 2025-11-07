@@ -1,228 +1,125 @@
-Return-Path: <linux-arm-msm+bounces-80782-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-80783-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 262A1C40295
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 07 Nov 2025 14:41:57 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4C609C4029F
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 07 Nov 2025 14:43:02 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id BBD8D422F1B
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Nov 2025 13:41:49 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id EB03C18957F7
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Nov 2025 13:43:26 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 66D462F1FDE;
-	Fri,  7 Nov 2025 13:41:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1C9412F28F5;
+	Fri,  7 Nov 2025 13:42:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b="Mt0WyBo2"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="oLKDg82F"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from bali.collaboradmins.com (bali.collaboradmins.com [148.251.105.195])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 147872F12C5;
-	Fri,  7 Nov 2025 13:41:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.251.105.195
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC18323D7DC;
+	Fri,  7 Nov 2025 13:42:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762522909; cv=none; b=ApNPO01KHvrzxkinYRYjkziKIwVVYE+o8lK1ZSeLtZL515/T3AgGXIMq+hSpqbozgeu1AlhQ7wzkKZnQMAMGH8QHwLh5GBqRxZVdyx6mn9sOWScg5XmLdjtLx4tihhjYNtIFp8q5NrTPv/72OOdgz7hJ+I6tX71qtCQsLJqiDGM=
+	t=1762522978; cv=none; b=kY2Vsn3WIhjb7qz9TmSfmV3kLVsxO03Qx+ETu+NfEMa+nf2gzwXmRtAhcnjBty9JPlfd5SC/HVQH3a+GvUtFftlEoVcwkHilfXAtveB9f8mv9guzLu9QtdKXLLqC2BV2Qj0GyhkSJqOGVTEMLzkCtF+dnRhDcLX9tDPGjXbkYdQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762522909; c=relaxed/simple;
-	bh=tpsTqs/Y7T2Yvoo+xOTlHiByURwvXqjJIVJB/t75ng4=;
-	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=tYXJn91c9l9psaXTh2yYZ3GLm/3DpEHjvb+QspdcIjpH5QJuG5SGGmQ4LGvBPbl0o9sKKTVd1G52UzanwwHtz7bXd6HWVNeKnTXhlLh/JQVzY84YMT9kbhvvn+k8amB/ZgMYCWos18hm+zIeggOeps9N9zIUvk6NhhvMX4gNkCA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b=Mt0WyBo2; arc=none smtp.client-ip=148.251.105.195
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
-	s=mail; t=1762522905;
-	bh=tpsTqs/Y7T2Yvoo+xOTlHiByURwvXqjJIVJB/t75ng4=;
-	h=Subject:From:To:Cc:Date:In-Reply-To:References:From;
-	b=Mt0WyBo2k7zdUdi15ebiZyiNTF3LnC08Rab5FRqhzZD5QmpfCtuNqlpaV8NfGavVm
-	 OaHaxJRF5ZRglCF9gksUiqgwYhDb4RUNuqusYYGrPgWOHEVxhFjosoSDTB2rM5XAIb
-	 VPdUQAr6AYQdJxwffBZCX+0A0ywQ0xWEBW0+THxbnVI+ZtKdol00m9cuZPma4UnKQO
-	 NPHH4F2fY7WNPej8o13U+u2vm2Q2xSchx8YU/G+0N7Z++S96WoiN8B2HZfbeZsSJDE
-	 k69q2N+nk2WxBVWumVZGs7qdBBSUrJ8F6ACKYlD+l3lkocxyIJMmPh128Da6FFGNaP
-	 iFeJ2WrK4DtQw==
-Received: from [IPv6:2606:6d00:11:ef24::c41] (unknown [IPv6:2606:6d00:11:ef24::c41])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (prime256v1) server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	(Authenticated sender: nicolas)
-	by bali.collaboradmins.com (Postfix) with ESMTPSA id D06D517E0CA1;
-	Fri,  7 Nov 2025 14:41:43 +0100 (CET)
-Message-ID: <19cdb1996557824554789dccc805014b0fa2deda.camel@collabora.com>
-Subject: Re: [PATCH v4 1/5] media: uapi: videodev2: Add support for AV1
- stateful decoder
-From: Nicolas Dufresne <nicolas.dufresne@collabora.com>
-To: Hans Verkuil <hverkuil+cisco@kernel.org>, Deepa Guthyappa Madivalara	
- <deepa.madivalara@oss.qualcomm.com>, Mauro Carvalho Chehab
- <mchehab@kernel.org>,  Vikash Garodia <vikash.garodia@oss.qualcomm.com>,
- Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>,  Abhinav Kumar
- <abhinav.kumar@linux.dev>, Bryan O'Donoghue <bod@kernel.org>
-Cc: linux-media@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	linux-arm-msm@vger.kernel.org, kernel test robot <lkp@intel.com>, Bryan
- O'Donoghue <bryan.odonoghue@linaro.org>
-Date: Fri, 07 Nov 2025 08:41:41 -0500
-In-Reply-To: <6198674a-2af0-4906-9ffe-bc10e68eb5c5@kernel.org>
-References: <20251103-av1d_stateful_v3-v4-0-33cc1eaa83f2@oss.qualcomm.com>
-	 <20251103-av1d_stateful_v3-v4-1-33cc1eaa83f2@oss.qualcomm.com>
-	 <6198674a-2af0-4906-9ffe-bc10e68eb5c5@kernel.org>
-Autocrypt: addr=nicolas.dufresne@collabora.com; prefer-encrypt=mutual;
- keydata=mDMEaCN2ixYJKwYBBAHaRw8BAQdAM0EHepTful3JOIzcPv6ekHOenE1u0vDG1gdHFrChD
- /e0J05pY29sYXMgRHVmcmVzbmUgPG5pY29sYXNAbmR1ZnJlc25lLmNhPoicBBMWCgBEAhsDBQsJCA
- cCAiICBhUKCQgLAgQWAgMBAh4HAheABQkJZfd1FiEE7w1SgRXEw8IaBG8S2UGUUSlgcvQFAmibrjo
- CGQEACgkQ2UGUUSlgcvQlQwD/RjpU1SZYcKG6pnfnQ8ivgtTkGDRUJ8gP3fK7+XUjRNIA/iXfhXMN
- abIWxO2oCXKf3TdD7aQ4070KO6zSxIcxgNQFtDFOaWNvbGFzIER1ZnJlc25lIDxuaWNvbGFzLmR1Z
- nJlc25lQGNvbGxhYm9yYS5jb20+iJkEExYKAEECGwMFCwkIBwICIgIGFQoJCAsCBBYCAwECHgcCF4
- AWIQTvDVKBFcTDwhoEbxLZQZRRKWBy9AUCaCyyxgUJCWX3dQAKCRDZQZRRKWBy9ARJAP96pFmLffZ
- smBUpkyVBfFAf+zq6BJt769R0al3kHvUKdgD9G7KAHuioxD2v6SX7idpIazjzx8b8rfzwTWyOQWHC
- AAS0LU5pY29sYXMgRHVmcmVzbmUgPG5pY29sYXMuZHVmcmVzbmVAZ21haWwuY29tPoiZBBMWCgBBF
- iEE7w1SgRXEw8IaBG8S2UGUUSlgcvQFAmibrGYCGwMFCQll93UFCwkIBwICIgIGFQoJCAsCBBYCAw
- ECHgcCF4AACgkQ2UGUUSlgcvRObgD/YnQjfi4+L8f4fI7p1pPMTwRTcaRdy6aqkKEmKsCArzQBAK8
- bRLv9QjuqsE6oQZra/RB4widZPvphs78H0P6NmpIJ
-Organization: Collabora Canada
-Content-Type: multipart/signed; micalg="pgp-sha512";
-	protocol="application/pgp-signature"; boundary="=-es5HQ6y1SajJNzU3gUQu"
-User-Agent: Evolution 3.58.1 (3.58.1-1.fc43) 
+	s=arc-20240116; t=1762522978; c=relaxed/simple;
+	bh=iU+jSTY15PFC8KP0f//9WuWMfuZdFJ+bqYnKTNSdgmY=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=mz5+iBacJnbKRze5sBQO9qdfK4jfMcJZCX1UYe7imYBq9CwS1to3JgiFHKV8o+6IKJwrT8iF4si2rKakM3wxolpVGCpL2qxk8IEjdZH56cA8cr+OXv8LScgQQ10q7eQ3eMy/jRnQawK0sR+07sLTF/BLsNCenEGEXH64OUaV5zY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=oLKDg82F; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43944C4CEF8;
+	Fri,  7 Nov 2025 13:42:53 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1762522977;
+	bh=iU+jSTY15PFC8KP0f//9WuWMfuZdFJ+bqYnKTNSdgmY=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=oLKDg82F+u91uzMjhnAP+8PToVT5X6nf7YzskN/vAKT2/FiEpU7t31+1NMX+MTFOi
+	 xMasTpiG/E4tZvngRtnIUKex3vcbcRfmXA1e/HQkYG6iQ9vBKW3szvOsI5Ni99d+U3
+	 /A5p4bfweqOFPhWcPqKNjibPu6JxSnQrGEVj32aafCpa+aWqD5WENmt20583tZfPkD
+	 aToHMHbD89j7KQwaOyycqE9hLfn+mbmg+BFRRER9YKuRaGCHqmXREAKG3uTcggvMu3
+	 JkXHzc5yJ+c7AXxBlUgyJMvCZCWGD3vwlcM0jwjUJh+fWpXbNYPB5w8+IN3WMMX1pL
+	 YGWUeqUcv/68A==
+Message-ID: <f8bc25b7-12eb-4e3c-aa47-8c949f43711b@kernel.org>
+Date: Fri, 7 Nov 2025 14:42:51 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-
-
---=-es5HQ6y1SajJNzU3gUQu
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-Le vendredi 07 novembre 2025 =C3=A0 10:25 +0100, Hans Verkuil a =C3=A9crit=
-=C2=A0:
-> On 03/11/2025 14:24, Deepa Guthyappa Madivalara wrote:
-> > Introduce a new pixel format, V4L2_PIX_FMT_AV1, to the
-> > Video4Linux2(V4L2) API. This format is intended for AV1
-> > bitstreams in stateful decoding/encoding workflows.
-> > The fourcc code 'AV10' is used to distinguish
-> > this format from the existing V4L2_PIX_FMT_AV1_FRAME,
-> > which is used for stateless AV1 decoder implementation.
-> >=20
-> > Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-> > Reviewed-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
-> > Signed-off-by: Deepa Guthyappa Madivalara <deepa.madivalara@oss.qualcom=
-m.com>
-> > ---
-> > =C2=A0Documentation/userspace-api/media/v4l/pixfmt-compressed.rst | 8 +=
-+++++++
-> > =C2=A0include/uapi/linux/videodev2.h=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 | 1 +
-> > =C2=A02 files changed, 9 insertions(+)
-> >=20
-> > diff --git a/Documentation/userspace-api/media/v4l/pixfmt-compressed.rs=
-t b/Documentation/userspace-api/media/v4l/pixfmt-compressed.rst
-> > index c7efb0465db6480fe35be8557728c196e0e530f4..0c70410ffd4d58e0719d3cf=
-13ad336c97b454ae9 100644
-> > --- a/Documentation/userspace-api/media/v4l/pixfmt-compressed.rst
-> > +++ b/Documentation/userspace-api/media/v4l/pixfmt-compressed.rst
-> > @@ -275,6 +275,14 @@ Compressed Formats
-> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 of macroblocks to deco=
-de a full corresponding frame to the matching
-> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 capture buffer.
-> > =C2=A0
-> > +=C2=A0=C2=A0=C2=A0 * .. _V4L2-PIX-FMT-AV1:
-> > +
-> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 - ``V4L2_PIX_FMT_AV1``
-> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 - 'AV01'
-> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 - AV1 compressed video frame. This form=
-at is adapted for implementing AV1
-> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 pipeline. The decoder imple=
-ments stateful video decoder and expects one
-> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 Temporal Unit per buffer fr=
-om OBU-stream or AnnexB.
->=20
-> OK, but the next patch says:
->=20
-> 		case V4L2_PIX_FMT_AV1:		descr =3D "AV1 OBU stream"; break;
->=20
-> And Nicolas said here:
-
-Hmm, good catch, we had quite a bit of back and forth actually on the subje=
-ct.
-The discussion went toward that this is OBU Stream format, but it is concei=
-vable
-to enable Annex B support in the future using a control. That mandates that=
- OBU
-stream must always be supported for that format.
-
-I'd drop the "or AnnexB". Then I'd try and harmonize how we write OBU strea=
-m, I
-prefer without the -.
-
->=20
-> https://lore.kernel.org/linux-media/544147436308901fba85d6de48380c0c1eea7=
-c67.camel@ndufresne.ca/
->=20
-> "Perhaps "AV1 OBU stream", so its clear its no Annex B ?"
->=20
-> So if this is just for OBU streams and not Annex B, then the description =
-is wrong.
->=20
-> Since I'm no AV1 expert and have no idea what the difference between OBU =
-and Annex B streams is,
-> I can only comment on what looks like an inconsistency.
-
-Annex B is very unlike H.264 annex b. Its adds a wrapper around time units,
-making it faster to walk through displayable frames when you have the abili=
-ty to
-skip bytes. I've only ever seen it in tests vectors so far. My impression i=
-s
-that we'll never have a hardware that requires that.
-
-Nicolas
-
->=20
-> Regards,
->=20
-> 	Hans
->=20
-> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 The encoder generates one T=
-emporal Unit per buffer.
-> > =C2=A0.. raw:: latex
-> > =C2=A0
-> > =C2=A0=C2=A0=C2=A0=C2=A0 \normalsize
-> > diff --git a/include/uapi/linux/videodev2.h b/include/uapi/linux/videod=
-ev2.h
-> > index becd08fdbddb857f8f2bf205d2164dc6e20e80b2..cf0b71bbe0f9d397e1e6c88=
-433a0fc3ba11fb947 100644
-> > --- a/include/uapi/linux/videodev2.h
-> > +++ b/include/uapi/linux/videodev2.h
-> > @@ -775,6 +775,7 @@ struct v4l2_pix_format {
-> > =C2=A0#define V4L2_PIX_FMT_H264_SLICE v4l2_fourcc('S', '2', '6', '4') /=
-* H264 parsed slices */
-> > =C2=A0#define V4L2_PIX_FMT_HEVC_SLICE v4l2_fourcc('S', '2', '6', '5') /=
-* HEVC parsed slices */
-> > =C2=A0#define V4L2_PIX_FMT_AV1_FRAME v4l2_fourcc('A', 'V', '1', 'F') /*=
- AV1 parsed frame */
-> > +#define V4L2_PIX_FMT_AV1=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 v4l2_fourcc('A'=
-, 'V', '0', '1') /* AV1 */
-> > =C2=A0#define V4L2_PIX_FMT_SPK=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 v4l2_fourc=
-c('S', 'P', 'K', '0') /* Sorenson Spark */
-> > =C2=A0#define V4L2_PIX_FMT_RV30=C2=A0=C2=A0=C2=A0=C2=A0 v4l2_fourcc('R'=
-, 'V', '3', '0') /* RealVideo 8 */
-> > =C2=A0#define V4L2_PIX_FMT_RV40=C2=A0=C2=A0=C2=A0=C2=A0 v4l2_fourcc('R'=
-, 'V', '4', '0') /* RealVideo 9 & 10 */
-> >=20
-
---=-es5HQ6y1SajJNzU3gUQu
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: This is a digitally signed message part
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v5 1/2] dt-bindings: media: qcom,qcs8300-camss: Add
+ missing power supplies
+To: Vikram Sharma <quic_vikramsa@quicinc.com>, bryan.odonoghue@linaro.org,
+ mchehab@kernel.org, robh@kernel.org, krzk+dt@kernel.org,
+ conor+dt@kernel.org, andersson@kernel.org, konradybcio@kernel.org,
+ hverkuil-cisco@xs4all.nl, cros-qcom-dts-watchers@chromium.org,
+ catalin.marinas@arm.com, will@kernel.org
+Cc: linux-arm-kernel@lists.infradead.org, quic_svankada@quicinc.com,
+ linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+ quic_nihalkum@quicinc.com, stable@vger.kernel.org
+References: <20251107132154.436017-1-quic_vikramsa@quicinc.com>
+ <20251107132154.436017-2-quic_vikramsa@quicinc.com>
+From: Krzysztof Kozlowski <krzk@kernel.org>
+Content-Language: en-US
+Autocrypt: addr=krzk@kernel.org; keydata=
+ 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 a/A=
+In-Reply-To: <20251107132154.436017-2-quic_vikramsa@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
------BEGIN PGP SIGNATURE-----
+On 07/11/2025 14:21, Vikram Sharma wrote:
+> Add support for vdda-phy-supply and vdda-pll-supply in the QCS8300
+> CAMSS binding.
 
-iHUEABYKAB0WIQTvDVKBFcTDwhoEbxLZQZRRKWBy9AUCaQ33FQAKCRDZQZRRKWBy
-9GApAQD3K5fkh0Zh8EvSjULexP615g0OO4cvr2/lqmKcRy8RIAEA2q/rLvQIoZQb
-tpPtU48yqYAS7+2v+BzGQALQyzp5QwU=
-=8PzL
------END PGP SIGNATURE-----
+You cannot add support for something in the binding, but regardless of
+the wording - why adding support is a fix? Please describe the bug,
+because adding support does not sound like a fix at all.
 
---=-es5HQ6y1SajJNzU3gUQu--
+Best regards,
+Krzysztof
 
