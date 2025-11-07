@@ -1,201 +1,110 @@
-Return-Path: <linux-arm-msm+bounces-80697-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-80698-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [142.0.200.124])
-	by mail.lfdr.de (Postfix) with ESMTPS id A24E5C3E780
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 07 Nov 2025 05:44:26 +0100 (CET)
+Received: from ams.mirrors.kernel.org (ams.mirrors.kernel.org [213.196.21.55])
+	by mail.lfdr.de (Postfix) with ESMTPS id B74C1C3E9B6
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 07 Nov 2025 07:20:09 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 8BAE44E4EA5
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Nov 2025 04:44:25 +0000 (UTC)
+	by ams.mirrors.kernel.org (Postfix) with ESMTPS id 5E58E34B0D3
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Nov 2025 06:20:09 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4D6EF218EB1;
-	Fri,  7 Nov 2025 04:43:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4A4C11FDE01;
+	Fri,  7 Nov 2025 06:20:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="By8qjXKe";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="Oy7aNMof"
+	dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b="T+y+/CwW"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from bombadil.infradead.org (bombadil.infradead.org [198.137.202.133])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2A38221DAE
-	for <linux-arm-msm@vger.kernel.org>; Fri,  7 Nov 2025 04:43:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B93082AD25;
+	Fri,  7 Nov 2025 06:20:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.137.202.133
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762490638; cv=none; b=iV+zGYwId+NMhzOQsmLLKqh4Ejtf4mXHju0UO/MUcIF6AXKvyFnYdyEHdhTXEEH6SYpdAMsyKfmWQsonBQsTKaoWZRQsLi6BYRYVLphB9t+eBjTmTueSx5gCSrtOapWEu0y95ljWcngPZJ8JTETbXxUrK4wkK9dPrlpzgpPhtfQ=
+	t=1762496404; cv=none; b=k+RHi6t8OvjsIjFYQFSBJZrQPaw/hr9CeAgoMDocOvGRXdCGD9HY3okVvAufrd5QWe4cl4uMrNsUWNQbSISul4WzIZTjIduoxW7bqgvkLHNe2o0/XPUpLPjx64p2dZBqxnAauoCYFzUs5UTFUggxlUC7YHwAXO4A8sGsdXz5qnw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762490638; c=relaxed/simple;
-	bh=OCNG+lbnLrsMtQQi6jU70Anj+n9Dyq3TJC8OWSxY/RE=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qWF8JgnNg+TSyZW2alDPGfh8t+VheiPc4o7lJLJoT4GGSt95zUsQ6S5SOq6aXuE1jPPuf9zl9DrzaSer9q/dIwVSxQmgghVCDqGXCH3J9ftgTQzTkvjMTcQImL/sITrwoNQydscPO3HuczH7doH3uy3as++/6Hf1vEg/6yjCqJs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=By8qjXKe; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=Oy7aNMof; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 5A6H3gaB557154
-	for <linux-arm-msm@vger.kernel.org>; Fri, 7 Nov 2025 04:43:56 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:date:from:in-reply-to:message-id
-	:mime-version:references:subject:to; s=qcppdkim1; bh=n/8ug7G71RF
-	kHVlfRkLQOJyF+IERANZoPr4euRh/cgY=; b=By8qjXKey7Za9FflSh6zoa/qaPK
-	CRVzvqNYI7hRb8+QXh26hFf7rCI1cWNwS5WYrfC+5Y6UY8lkENmyXIS6dmNpCRKl
-	Iq5eeyHRh8WrE37EkqHkie6Rn6mnHahnAA91vDz75FhzAxQCsbXmNNqh9cS4vHT3
-	rTo9D0zKJ9n3IezHf6gHYY2bFYN5/LAKE9gk0ae+FBcysgtqFNDvC9Ccjh7B+8Ti
-	iiw1fY0UgQUY21xF7ob2rlwzMXJrw3uzwkM7ib/NDgvBfRXxAVuCRfRWGTKdN5dc
-	hAdMzZp9b6Qdv4ECOO3GOEpRTrnciVJFALSVabx2Ebl117FhF6jG7cE1q9A==
-Received: from mail-pg1-f199.google.com (mail-pg1-f199.google.com [209.85.215.199])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4a8yr9sqt3-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Fri, 07 Nov 2025 04:43:56 +0000 (GMT)
-Received: by mail-pg1-f199.google.com with SMTP id 41be03b00d2f7-ba433d88288so311792a12.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 06 Nov 2025 20:43:56 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1762490635; x=1763095435; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=n/8ug7G71RFkHVlfRkLQOJyF+IERANZoPr4euRh/cgY=;
-        b=Oy7aNMofDRtIUnlgMtUUh0RRBVl00B0P8gnTwpCwzPrF+xvI38yd7SmZwida6GzxdE
-         5wfOb/g4lj+PSRcX3f0KkrPBKPheCprJzWpgSNIxXmF1i/pIGgFxhnGnUViR5gXYS5CS
-         42dcLWMUTt+u/Vq/idjgPNLYuekm4pyoy92HOjF61n6/+Rtq9N9CzEY93zazzUNqGtGD
-         qCflXPpRpl0gaUIjd5xkNWjxEpmRZIBePIh/ZIfte1Nq2/c6kY9kcHpLJuAWr7dWxDZs
-         JyoM1PanRfTICduyxxOvuiZlg59GnDLBXc3gtORgorukQn9JjUzMVTn/fYYNGWWmTNUZ
-         wdVQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1762490635; x=1763095435;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=n/8ug7G71RFkHVlfRkLQOJyF+IERANZoPr4euRh/cgY=;
-        b=qvzAkqfL0374QJ1I4g6NO1Y0e5dPd2l025aSOIPcQ8clGCMEfbpYgdsdWT2wiJnbB6
-         A2sDYWrIQ8ZlA8jOKwD8hl8zjLRfW+j0jKrxMu90o+NGgc1wwwWeCDfUOaGbBBMhVejh
-         Kn6etdaHxI1oPUIAGQ80TgHqn1FDGa5B0gfb7onsKEI3w8PowV90ojHNRS+iYHZhONGW
-         SeDmrowOYE/70WdBDdeTKw9FHYeQ/OFcWpRI6jmAm6B/WenJ0yZt4IjOlNQE/RKwZK7X
-         hQEmy41KpjoAdwdymgAw3GripYnBbuwDhzTbd+pATBM6dsJXCSCIbwDeZ60Jor1ceap7
-         A/gg==
-X-Forwarded-Encrypted: i=1; AJvYcCV8gFutADdR3VEDHTNdKYT3plQpChftFh3lL36fM0fc8QQlykzP482O5mCqL+178TWdhDWJG7HuPZbbYcAA@vger.kernel.org
-X-Gm-Message-State: AOJu0Yw2hECr3SAXMamLml+SgIb7oBsYB4uGq4+fZCUls6FL81dMhDig
-	hk9szp1MsMTwhdeM1EIpOTRlnuZKxNHz1VClF//8Ho0kTSb3FMg2ZxwUrOK/DaooCwAxM2rjjHq
-	PgMsSrKx6iayvouGwJ6LY70sQUSbwogSUNsfOZMEKhnej6ErK4iukDQ/KLftllAugYHw0
-X-Gm-Gg: ASbGncsK0eod1YatLqFCePhoD6WrEQSg+9/qeqRPh+1E3zVGU70kSeLKTSGCFUcq5f3
-	e+zf0dYKlv3MndPE1vwUQt4C1KVsB0DfvDmw4NjUCIbxJn7ceMC7jENuZZJdxp1ke7guoyhOgh5
-	+g9G54P3wONKp4QIjIAFVWjJnJ9/n0IXL/osk6OKUivCn/9PGV1Br5h/gRMBFludScC/ruNt2a8
-	NgoUrik5U3SWYS5s6BCR9d+YKeTAnUvsK6Z40Pr/Kwcj/t3VcZyRsMZxwX3L3TN9T1JmaCE90B6
-	lJ4rcRlbIH+P/cF2MmtSKPrIa+hwVVEfE2VMDXBPZ4mPLnVpDfFtkTqs78bRv1+RWCugsAeDc7k
-	k0CqNGn1hI4WHEKquUA==
-X-Received: by 2002:a05:6a20:3d1f:b0:334:97dd:c5b4 with SMTP id adf61e73a8af0-3522896833bmr2548636637.27.1762490635358;
-        Thu, 06 Nov 2025 20:43:55 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFe0zp7BSw04nVAqkDvBmkfmyp4sTb3NsAfpV9LkGL7gKo5CyfozrrQaMq0UZVRtRmeP8Yagw==
-X-Received: by 2002:a05:6a20:3d1f:b0:334:97dd:c5b4 with SMTP id adf61e73a8af0-3522896833bmr2548600637.27.1762490634817;
-        Thu, 06 Nov 2025 20:43:54 -0800 (PST)
-Received: from work.. ([120.56.196.127])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-3434c332f1csm1142624a91.11.2025.11.06.20.43.48
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 06 Nov 2025 20:43:54 -0800 (PST)
-From: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
-To: lpieralisi@kernel.org, kwilczynski@kernel.org, mani@kernel.org,
-        bhelgaas@google.com
-Cc: will@kernel.org, linux-pci@vger.kernel.org, linux-kernel@vger.kernel.org,
-        robh@kernel.org, linux-arm-msm@vger.kernel.org,
-        zhangsenchuan@eswincomputing.com, vincent.guittot@linaro.org,
-        Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
-Subject: [PATCH v2 3/3] PCI: dwc: Check for the device presence during suspend and resume
-Date: Fri,  7 Nov 2025 10:13:19 +0530
-Message-ID: <20251107044319.8356-4-manivannan.sadhasivam@oss.qualcomm.com>
-X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20251107044319.8356-1-manivannan.sadhasivam@oss.qualcomm.com>
-References: <20251107044319.8356-1-manivannan.sadhasivam@oss.qualcomm.com>
+	s=arc-20240116; t=1762496404; c=relaxed/simple;
+	bh=QK4tnVEnx0dnUu1VZrRPH5XHyZSuEa5wnts9WKB07xc=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=trYwP7i5cXkFhc5QyLFKXnp3n/af0KkefdUrStdWNd0JrzS5yzcn5EC/NCs3wY4MBzNP+PxW4+Ous9lvpVEOd8JTelPGLUrXSoRCSm70jS7B3UctP+gLlzCPpclmEwwJgt4zt6x8wL/6BmJzgV0Ha/EZN00WzBd8rwff19v6DX8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=infradead.org; spf=none smtp.mailfrom=infradead.org; dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b=T+y+/CwW; arc=none smtp.client-ip=198.137.202.133
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=infradead.org
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=infradead.org
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=infradead.org; s=bombadil.20210309; h=Content-Transfer-Encoding:
+	Content-Type:In-Reply-To:From:References:Cc:To:Subject:MIME-Version:Date:
+	Message-ID:Sender:Reply-To:Content-ID:Content-Description;
+	bh=cx/OeR/TpXmHZozLgJx6VvSjc4tPJLhnHkHJTi2lSbo=; b=T+y+/CwWjmHf+F0zKFUbi4yg0S
+	pOqOmPKpfXbvaGTKYWi0KY47yOEBYUKywOJpBvGz7l94PhtsE4inro+ZXGbNDIS/ObLv4iGARtDZT
+	PA3XwsvZ3HbMBk55wj8LvauK3bCqjydtgy/En9ZhIs7hU+E0YLPGJ9PCWgKQPJed3/m943DDcYbDR
+	cUHUL9H2RmlJ7XruSVjh1iD2dagE8FIf777IVhmZVfiDrQlQnhaItGshJJ3wN/RYxAYKhqXj1ySx1
+	ZTT/aQYmqdgQW9aj9R+Cgzp6Kwb46grGj2GYC+mQkH+1cVQYJQmiAWGEIzIY+jl3uOcfw3SWU2UbY
+	o1logx0g==;
+Received: from [50.53.43.113] (helo=[192.168.254.34])
+	by bombadil.infradead.org with esmtpsa (Exim 4.98.2 #2 (Red Hat Linux))
+	id 1vHFpH-0000000GjAS-2VnY;
+	Fri, 07 Nov 2025 06:19:59 +0000
+Message-ID: <1f9aa097-27c2-49c0-b01c-cd0377143bb4@infradead.org>
+Date: Thu, 6 Nov 2025 22:19:58 -0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Authority-Analysis: v=2.4 cv=DrpbOW/+ c=1 sm=1 tr=0 ts=690d790c cx=c_pps
- a=Oh5Dbbf/trHjhBongsHeRQ==:117 a=NqeMpCPRvvPHbudmJ2rC7w==:17
- a=6UeiqGixMTsA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=EUspDBNiAAAA:8 a=Zg3KtlSndC8MviDn-J8A:9 a=_Vgx9l1VpLgwpw_dHYaR:22
-X-Proofpoint-ORIG-GUID: tPwbHwFL5lRDQEOMfhlmWXQXwEuj3pzn
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMTA3MDAzNCBTYWx0ZWRfX9ABf7B1gEYOz
- G1a8Ksg5AhCkrTs2mUMLo8NpUd/7fApQWc4WoDLnRyomD/fIWSHEtRZQE9vA2dpHCpYoqZf2GNI
- IX8Qv7fe02ftR3vg4UxA2EwjHzI0IC/urGfd+cFZjUcrBEfDgI94XoPLjCaEcpRdUrwpZQRAP5R
- Jn1MiBVuEWlAZVrL6qrFBiw5doAGWt9isWmSGaP/GOjN8BN4KYdiZ35oEYNGvCbDvgLw4jS2szm
- eSuQrogBH7NGcKJa+VLGl1bRnE4ynytz/QCcKpxD4fPxBCqU7lrUBavbM0rdqARsE0cMWoyIrOO
- VTJaKRRAQwC6y53WGlPC5am3atCsVM24tqRniOnwwzZDaERoxoI/9bc7P7DoqEgYVgNq5tf3FOq
- YaYamWb8D3g84kfGS1XNuvjyUMLhmg==
-X-Proofpoint-GUID: tPwbHwFL5lRDQEOMfhlmWXQXwEuj3pzn
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
- definitions=2025-11-06_05,2025-11-06_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 phishscore=0 adultscore=0 impostorscore=0 bulkscore=0
- clxscore=1015 priorityscore=1501 lowpriorityscore=0 malwarescore=0
- suspectscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2510240001
- definitions=main-2511070034
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v8 01/11] dmaengine: Add DMA_PREP_LOCK/DMA_PREP_UNLOCK
+ flags
+To: Bartosz Golaszewski <brgl@bgdev.pl>, Vinod Koul <vkoul@kernel.org>,
+ Jonathan Corbet <corbet@lwn.net>, Thara Gopinath <thara.gopinath@gmail.com>,
+ Herbert Xu <herbert@gondor.apana.org.au>,
+ "David S. Miller" <davem@davemloft.net>,
+ Udit Tiwari <quic_utiwari@quicinc.com>,
+ Daniel Perez-Zoghbi <dperezzo@quicinc.com>,
+ Md Sadre Alam <mdalam@qti.qualcomm.com>
+Cc: dmaengine@vger.kernel.org, linux-doc@vger.kernel.org,
+ linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+ linux-crypto@vger.kernel.org,
+ Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+References: <20251106-qcom-qce-cmd-descr-v8-0-ecddca23ca26@linaro.org>
+ <20251106-qcom-qce-cmd-descr-v8-1-ecddca23ca26@linaro.org>
+Content-Language: en-US
+From: Randy Dunlap <rdunlap@infradead.org>
+In-Reply-To: <20251106-qcom-qce-cmd-descr-v8-1-ecddca23ca26@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-If there is no device available under the Root Ports, there is no point in
-sending PME_Turn_Off and waiting for L2/L3 transition during suspend, it
-will result in a timeout. Hence, skip those steps if no device is available
-during suspend.
 
-During resume, do not wait for the link up if there was no device connected
-before suspend. It is very unlikely that a device will get connected while
-the host system was suspended.
 
-Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
----
- drivers/pci/controller/dwc/pcie-designware-host.c | 13 +++++++++++++
- 1 file changed, 13 insertions(+)
+On 11/6/25 3:33 AM, Bartosz Golaszewski wrote:
+>  Documentation/driver-api/dmaengine/provider.rst | 9 +++++++++
+>  include/linux/dmaengine.h                       | 6 ++++++
+>  2 files changed, 15 insertions(+)
+> 
+> diff --git a/Documentation/driver-api/dmaengine/provider.rst b/Documentation/driver-api/dmaengine/provider.rst
+> index 1594598b331782e4dddcf992159c724111db9cf3..6428211405472dd1147e363f5786acc91d95ed43 100644
+> --- a/Documentation/driver-api/dmaengine/provider.rst
+> +++ b/Documentation/driver-api/dmaengine/provider.rst
+> @@ -630,6 +630,15 @@ DMA_CTRL_REUSE
+>    - This flag is only supported if the channel reports the DMA_LOAD_EOT
+>      capability.
+>  
+> +- DMA_PREP_LOCK
+> +
+> +  - If set, the DMA controller will be locked for the duration of the current
+> +    transaction.
+> +
+> +- DMA_PREP_UNLOCK
+> +
+> +  - If set, DMA will release he controller lock.
 
-diff --git a/drivers/pci/controller/dwc/pcie-designware-host.c b/drivers/pci/controller/dwc/pcie-designware-host.c
-index 20c9333bcb1c..5a39e7139ec9 100644
---- a/drivers/pci/controller/dwc/pcie-designware-host.c
-+++ b/drivers/pci/controller/dwc/pcie-designware-host.c
-@@ -20,6 +20,7 @@
- #include <linux/platform_device.h>
- 
- #include "../../pci.h"
-+#include "../pci-host-common.h"
- #include "pcie-designware.h"
- 
- static struct pci_ops dw_pcie_ops;
-@@ -1129,6 +1130,9 @@ int dw_pcie_suspend_noirq(struct dw_pcie *pci)
- 	u32 val;
- 	int ret;
- 
-+	if (!pci_root_ports_have_device(pci->pp.bridge->bus))
-+		goto stop_link;
-+
- 	/*
- 	 * If L1SS is supported, then do not put the link into L2 as some
- 	 * devices such as NVMe expect low resume latency.
-@@ -1162,6 +1166,7 @@ int dw_pcie_suspend_noirq(struct dw_pcie *pci)
- 	 */
- 	udelay(1);
- 
-+stop_link:
- 	dw_pcie_stop_link(pci);
- 	if (pci->pp.ops->deinit)
- 		pci->pp.ops->deinit(&pci->pp);
-@@ -1195,6 +1200,14 @@ int dw_pcie_resume_noirq(struct dw_pcie *pci)
- 	if (ret)
- 		return ret;
- 
-+	/*
-+	 * If there was no device before suspend, skip waiting for link up as
-+	 * it is bound to fail. It is very unlikely that a device will get
-+	 * connected *during* suspend.
-+	 */
-+	if (!pci_root_ports_have_device(pci->pp.bridge->bus))
-+		return 0;
-+
- 	ret = dw_pcie_wait_for_link(pci);
- 	if (ret)
- 		return ret;
+                                the
+
+> +
+>  General Design Notes
+
 -- 
-2.48.1
+~Randy
 
 
