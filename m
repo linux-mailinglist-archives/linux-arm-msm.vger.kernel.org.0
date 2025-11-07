@@ -1,179 +1,185 @@
-Return-Path: <linux-arm-msm+bounces-80797-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-80798-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 11A7CC40DF3
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 07 Nov 2025 17:27:43 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4C8D2C40DC3
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 07 Nov 2025 17:25:57 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 620963AB457
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Nov 2025 16:24:35 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id EE36F1889A80
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Nov 2025 16:26:21 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E072E27991E;
-	Fri,  7 Nov 2025 16:24:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id F2D3527877D;
+	Fri,  7 Nov 2025 16:25:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="RoWUvi5t"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="XOPgB5C3"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-qt1-f177.google.com (mail-qt1-f177.google.com [209.85.160.177])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00CDF276020
-	for <linux-arm-msm@vger.kernel.org>; Fri,  7 Nov 2025 16:24:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.177
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10BF526E6E5;
+	Fri,  7 Nov 2025 16:25:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762532674; cv=none; b=COBYlsrPaDf9GCnPmxUSkoqy4ZBpeeCSGwXF9OIt1CjZ5rHez/r3hwi1kx+Yt8sbWFBI0B+rM4TCNeUTmih5gxZCzTHmbHEQkDpqHelxs3QJXIvQtATLioOwizTRA+xZeseeCXHN3tHwuQ6YgPGuJYzS+PelfSZVL1OuvTJkjPM=
+	t=1762532753; cv=none; b=bbQHsvb4aVumL27GCw7RFT5XCoorWMACRYhfsnC2EC+w1T4AYRXnp6+7W/2ShVey91yBr4GVp3HCf1Qzypg3+TuWliWBttPZtnzhvAE1UwYDWKWP+KMRdUlu5I9/bo/YDCMFku0eyJnBSxiX0s2DK42ObhHk/kqEWQgqSErfaQQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762532674; c=relaxed/simple;
-	bh=Y03UhLZaCnCjcJ7WP8An0sGjRjCfU0LH+nO/nDS9o1o=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=CVErUxjiLHPO/RCP04DzIzfOAeS+RX9jNiwqrPUouaQoerQ/+grfqGv3FI2oPie63MyOXo0b5CJPyzot4hsQPhwJ8x/HrN99FB8XXDjpTvkcpP/Q1victYBZMkZt9y9oT5h8Rsh9W7xW04yMeMpf1PehL2cOq9CRQXl1aYwccF8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=RoWUvi5t; arc=none smtp.client-ip=209.85.160.177
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-qt1-f177.google.com with SMTP id d75a77b69052e-4ed82ee9e57so12844921cf.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 07 Nov 2025 08:24:32 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1762532672; x=1763137472; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=Dg933HfjmwHj361hda6LQqGZtOS/62lJRP7depBzGUE=;
-        b=RoWUvi5tCQFpb3VhMuGblvT9VWYPFD+V+WvI8EtJ9zvm8OG744zmu66hIGJXeZ5EQD
-         OWxWTTwPgGyTRlxleeSvhQSzRg8CUCjtXT2hpCSdzthAxHrnOeAIFlolDBYS3ZyH2Sgu
-         MQJHdZYK6se1nd+giXLfZz0QTF+z/qBZmKQWEBjg154bi1rrfKu0j3nDQYDUI3QIgYLp
-         bJ2g1eA60iR/azO1pWZ8LpP7I2xEUShufhMJra7QbFgTbdO3tXeEno/8Olryf4TXyFjt
-         kbs6OV/YG8L5T4FOk0YH7nNOcVaNasx/mmb75XZTHCWwYvC5VXt3h+NUCP29z10cHZMj
-         ghIw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1762532672; x=1763137472;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=Dg933HfjmwHj361hda6LQqGZtOS/62lJRP7depBzGUE=;
-        b=eXhbUIa0KqfN0WKIdm356LDPgdcGs+1x7nqrTws3m5zGObojJjmuQtMmDKmaxhup6k
-         AjIksI6i1qD2+LImH63zo0hkSe3jiJ9OQpir4HLj/LtWp2dfKWdOTnHY/ugcXsJ9v+xh
-         FerG8N/pIsq8JIH3EAfcWsf07rSzeBQoZKMDleeOhSDcMM73uac56wdDDPzeY0CcB0jC
-         Tyu3oaaBcpqIHOprQUg+5DLHxXFA+KYcYCa/dwRE5d92oO6wtAxPo44xYsV+WnOYUMLo
-         6VJd2WPvew00lAMN2KsaePRlS4sX8jbBHZVT/ir+ELMfg1NRKSc0sZdxSm7bOSbgEGBE
-         XjSQ==
-X-Forwarded-Encrypted: i=1; AJvYcCXTgGO/JaKS4vYf4UH5MulEmcmXoqVIv1/sH5SiFDagzt1WZxA+C/FKUPsDl7aPYLgzCnKq/vHj4ITKi8cF@vger.kernel.org
-X-Gm-Message-State: AOJu0YwdNsP4wwpQfNqcJlu/rbpenqbHuI54yFHL/rKOCB09jD0PyxMZ
-	kaT9MQD+khTIhzguGj7aAMiGkfGn/c+xw4BzZ31KwS2Ris1cNzCctWAAFw21L82sWm+VDjwORji
-	8nIeVtzLELiL0pXfMbeYYj2CskplWYi9bkpaxH7aWxA==
-X-Gm-Gg: ASbGnctAEhK3tppM6mr8JsceSgf19ShwYatpFKq7cFStRpKpu6l0ZMNAMZw9Kov2lTf
-	zg8oH4uXFlaaWmYIuFQujD+pXLju4HYHQDfy+ngTGJiKfqftHT4sHOFWJiGxTKw54lXEhHJK2Rk
-	78UL2YhpfOk3Wr286rDbgVAwl/AQRs0IJYsfoKmkmjFyVYHag46t93QkmlHJC4HSQzDVBwOQON0
-	3kcqx1n+v9eyuQhH5lz7YqDkjndPUc8JXxwpe7V9NQMpPye5wRkpR/HjdNMZJfQW0nIA3mcQlyi
-	ma0udiLYyXf+o3skJQ==
-X-Google-Smtp-Source: AGHT+IHCkiDrjY2sdtFhfnWtIG5/yIGmjgCTWa+pkSAhfbWzXXqFVFpKvKWb21AxAOgEsY/fAjUmNILp7tvkwx81+WA=
-X-Received: by 2002:ac8:5d47:0:b0:4ec:ed61:997c with SMTP id
- d75a77b69052e-4ed94988581mr46526991cf.30.1762532671602; Fri, 07 Nov 2025
- 08:24:31 -0800 (PST)
+	s=arc-20240116; t=1762532753; c=relaxed/simple;
+	bh=8alfOU0mQaBaJpINi/m+qO51QxnigBe2rWYr+trrnn0=;
+	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=Gtlv4pMFKbCZ6yay5D5XfMa5gT5BrkfcrIk9UyJDh6eBj4lpZgC/KR1yFCcYFbi/zFyUT44QlzpEzcchkcVid9mb7NAZtdFiMiYxpKZutQsYS+EaBlXetqTs4i+2YnSqpqWjw0IB07WmLcluJZmpGCtWJ1y/0yO9PMEZVdu3spQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=XOPgB5C3; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 5A797wrY1709849;
+	Fri, 7 Nov 2025 16:25:42 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=qcppdkim1; bh=CrhGbWxcC1iUQeHqVcuxlH
+	gMynfCI5UcRitAyCyxlxA=; b=XOPgB5C34gh0lLy53qP92+JG8A+oUtlCpQo/5m
+	3aVgKVnTBC5yodbQRpysDYOgOSNPSU0plMfzFJLoOVY9xPqdSMFbbREl5iPCZqb0
+	wVgEVDNjr3ZTjwu+ZmcMNYlqlhfYH0+9RAxzNSmD2q+nexOQqqJQkcJ97s2dntFK
+	tL+9118GpjpkQRMJ7Hm/Ezz0s7ZW8QuAxgUEGY4gXCenI5Hq9CJbl0L2pGHgQz2h
+	udbU5mpNwdlv1tRH2DkqlEc7EL1+ZsBaMsEyz2k42gY4h6ceXM9Bk/GGNXNm3rSL
+	8N6UVJiez164I+DOsg5+MR4/T52J39a7udvPSQUKnv2K41Aw==
+Received: from nasanppmta02.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4a96ue2fgw-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 07 Nov 2025 16:25:42 +0000 (GMT)
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+	by NASANPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 5A7GPenW006277
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 7 Nov 2025 16:25:40 GMT
+Received: from hu-vikramsa-hyd.qualcomm.com (10.80.80.8) by
+ nasanex01b.na.qualcomm.com (10.46.141.250) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1748.24; Fri, 7 Nov 2025 08:25:35 -0800
+From: Vikram Sharma <quic_vikramsa@quicinc.com>
+To: <bryan.odonoghue@linaro.org>, <mchehab@kernel.org>, <robh@kernel.org>,
+        <krzk+dt@kernel.org>, <conor+dt@kernel.org>, <andersson@kernel.org>,
+        <konradybcio@kernel.org>, <hverkuil-cisco@xs4all.nl>,
+        <cros-qcom-dts-watchers@chromium.org>, <catalin.marinas@arm.com>,
+        <will@kernel.org>
+CC: <linux-arm-kernel@lists.infradead.org>, <quic_svankada@quicinc.com>,
+        <linux-media@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <quic_nihalkum@quicinc.com>, <quic_vikramsa@quicinc.com>
+Subject: [PATCH v6 0/2] qcom: qcs8300: Add qcs8300 camss support
+Date: Fri, 7 Nov 2025 21:55:19 +0530
+Message-ID: <20251107162521.511536-1-quic_vikramsa@quicinc.com>
+X-Mailer: git-send-email 2.25.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20251021-fix_etr_issue-v3-1-99a2d066fee2@oss.qualcomm.com>
- <176235893222.387743.2128022832743502879.b4-ty@arm.com> <CAJ9a7Vji3fFnc-XPhdTxh00QW+AjqLqJo=zt+SMwovttQRwR8Q@mail.gmail.com>
- <2835dd93-c945-4c19-9d10-0271b14147b2@arm.com>
-In-Reply-To: <2835dd93-c945-4c19-9d10-0271b14147b2@arm.com>
-From: Mike Leach <mike.leach@linaro.org>
-Date: Fri, 7 Nov 2025 16:24:19 +0000
-X-Gm-Features: AWmQ_bnU-O7JUHwcgVFk_3qB9Yn3r0GZGnNdkrfA5bMc_HIfGoFxxRf1tq0dPXQ
-Message-ID: <CAJ9a7VgXEQQmj6o7n-mPx0qtrCQXKmddGS6BugHb=xaxVAUTUQ@mail.gmail.com>
-Subject: Re: [PATCH v3] coresight: ETR: Fix ETR buffer use-after-free issue
-To: Suzuki K Poulose <suzuki.poulose@arm.com>
-Cc: James Clark <james.clark@linaro.org>, 
-	Alexander Shishkin <alexander.shishkin@linux.intel.com>, Linu Cherian <lcherian@marvell.com>, 
-	Xiaoqi Zhuang <xiaoqi.zhuang@oss.qualcomm.com>, coresight@lists.linaro.org, 
-	linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org, 
-	linux-arm-msm@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Authority-Analysis: v=2.4 cv=fYKgCkQF c=1 sm=1 tr=0 ts=690e1d86 cx=c_pps
+ a=JYp8KDb2vCoCEuGobkYCKw==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17
+ a=GEpy-HfZoHoA:10 a=6UeiqGixMTsA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=VwQbUJbxAAAA:8 a=COk6AnOGAAAA:8 a=EUspDBNiAAAA:8 a=Db8qaQl5Y44jcrp6U3UA:9
+ a=TjNXssC_j7lpFel5tvFf:22 a=cPQSjfK2_nFv0Q5t_7PE:22
+X-Proofpoint-ORIG-GUID: ufjOcVvIYD00xcJLq9GnOfCQdvlWUniz
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMTA3MDEzNSBTYWx0ZWRfX1pbUhqFpsZ2S
+ Z9esFPgOQzsjQkFR+m2g2gBcoQvjcjYNTuADTvQ4r240m/zbn734XrmRKgB1IkKDaNB/P6vtqLu
+ STlkeZSGQy8buj0XrrzjjfWWuEK9UjycPJZ2p+n2OcCfLr6g+T04aPBRfFPa+khnW1uvc6n61un
+ AC5mIZMv4D4pyzrzfKofrQ5BcfFfwzcsZczuqFiGHAJpgo0KQiDPAtCC6yF8Pw1JLyvOUP5NJg/
+ ZiXalaH23wQEb1uS0w5oJeCLYaRIyxNWDIET4FwSgmxrZvhONpsnva0L5y4Y0FBPoRXrTOSiaeG
+ Ww3yS7arCGWFAm01UCt3qsgNDFvVPJrXACmrPsyTBPzHBsMn8zp43JFMOh1Pn9x9qLHgTAkHGE5
+ GPCtEEg1h5iJLDN7xFhgXmTa/7IlNw==
+X-Proofpoint-GUID: ufjOcVvIYD00xcJLq9GnOfCQdvlWUniz
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
+ definitions=2025-11-07_04,2025-11-06_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ suspectscore=0 phishscore=0 priorityscore=1501 malwarescore=0 spamscore=0
+ lowpriorityscore=0 bulkscore=0 impostorscore=0 clxscore=1015 adultscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2510240001 definitions=main-2511070135
 
-Hi Suzuki,
+QCS8300 is a Qualcomm SoC. This series adds bindings and devicetree
+and driver changes to bring up CSIPHY, TPG, CSID, VFE/RDI interfaces
+in QCS8300.
 
-On Fri, 7 Nov 2025 at 13:28, Suzuki K Poulose <suzuki.poulose@arm.com> wrote:
->
-> Hi Mike
->
-> On 06/11/2025 14:14, Mike Leach wrote:
-> > Hi,
-> >
-> > Is this fixing the correct problem? If we prevent the buffer size from
-> > being changed while the sink is active - which is probably what we
-> > should do anyway as no real good can come from allowing this - then
-> > the problem disappears.
->
-> Good point. But this is completely fine for a running "sysfs" session,
-> as the values are not updated (unlike perf, where the session is
-> scheduled out and put back in ). So, I don't see why we can't change
-> the values while the sink is active ?
->
+QCS8300 provides
+- 2 x VFE, 3 RDI per VFE
+- 5 x VFE Lite, 6 RDI per VFE
+- 2 x CSID
+- 5 x CSID Lite
+- 3 x TPG
+- 3 x CSIPHY
 
-Why would you want to? There is no reason i can think of, that a user
-would need to alter parameters while the sink is running.
+Changes in v6:
+- Update commit text for bindings patch - Krzysztof 
+- Reverted back to v4 version of dt patch - Krzysztof
+- Link to v5:
+  https://lore.kernel.org/all/20251107132154.436017-1-quic_vikramsa@quicinc.com
 
-If this is a sysfs session and a user changes buffer sizes between
-enable commands as per Leo's example sequence - the result is a silent
-failure and confusion for the user as the captured buffer size is not
-in fact what he just set.
+Changes in v5:
+- Added Fixes: tag - Bryan
+- Removed empty lines between single properties - Vladimir
+- Modified binding phy supply description - Vladimir
+- Link to v4:
+  https://lore.kernel.org/all/20251015130130.2790829-1-quic_vikramsa@quicinc.com
 
-Moreover, the sysfs files (not just the buffer size) write directly
-into the internal drvdata structure, some of which are then used to
-program the TMC registers  on enable - which is common code between
-both sysfs and perf. Thus for perf you have a lovely race condition
-and for sysfs you again end up with values that do not apply to the
-session just run.
+Changes in v4 compared to v3:
+- Added supplies in bindings to enable camera sensor.
+  This change was earlier added as V3.1 of Binidings which was 
+  reviewed by Krzysztof and Bryan. Link to this discussion:
+  https://lore.kernel.org/all/20250910104915.1444669-1-quic_vikramsa@quicinc.com
+- Droped the zero-prefix from the size field un DT patch - Konrad
+- Link to v3:
+  https://lore.kernel.org/all/20250813053724.232494-1-quic_vikramsa@quicinc.com
 
-Seems more robust - not just for the sysfs buffer size. - to only
-permit changes when halted.
+Changes in v3 compared to v2:
+- Bindings and Device Tree: Reordered csid_wrapper to appear first in the
+  register list (as suggested by Bryan).
+- CSIPHY Driver: Updated the commit message for the CSIPHY patch.
+- VFE/CSID Resource Data: Reused the same resource data as sa8775p for VFE
+  and CSID.
+- Patch Series Order: Rearranged the patch sequence and moved the DTSI
+  update to the final patch in the series.
+- Code Cleanup: Removed duplicate data structures and reused existing
+  ones.
+- Optimization: Simplified and optimized conditional checks.
+- Link to v2:
+  https://lore.kernel.org/linux-arm-msm/20250711131134.215382-1-quic_vikramsa@quicinc.com/
 
-I have sent a follow up patch which should make things clearer.
+Changes compared to v1:
+- Changed the order for register entries in bindings - Krzysztof
+- Changed the naming for interrupts for consistency - Krzysztof
+- Combined separate series for driver and dtsi into one.
+- Rebased on top of latest version of sa8775p camss patches.
+- Link to v1:
+  Driver: https://lore.kernel.org/all/20250214095611.2498950-1-quic_vikramsa@quicinc.com
+  DTSI: https://lore.kernel.org/all/20250214094747.2483058-1-quic_vikramsa@quicinc.com  
 
-Regards
+We have tested this on qcs8300-ride board with 'Test Pattern Generator'
+https://lore.kernel.org/all/20250925-camss_tpg-v4-0-d2eb099902c8@oss.qualcomm.com/
 
-Mike
+Used following tools for the sanity check of these changes.
+- make CHECK_DTBS=y W=1 DT_SCHEMA_FILES=media/qcom,qcs8300-camss.yaml
+  qcom/qcs8300-ride.dtb
+- make DT_CHECKER_FLAGS=-m W=1 DT_SCHEMA_FILES=media/qcom,qcs8300-camss.yaml
+  dt_binding_check
+- make -j32 W=1
+- checkpatch.pl
 
+Vikram Sharma (2):
+  dt-bindings: media: qcom,qcs8300-camss: Add missing power supplies
+  arm64: dts: qcom: qcs8300: Add support for camss
 
-I've sent a follow up patch to address this - and the potential race
-condition.
->
-> >
-> > Changing the buffer size while the sink is active should return -EBUSY;
-> >
-> > Mike
-> >
-> > On Wed, 5 Nov 2025 at 16:13, Suzuki K Poulose <suzuki.poulose@arm.com> wrote:
-> >>
-> >>
-> >> On Tue, 21 Oct 2025 16:45:25 +0800, Xiaoqi Zhuang wrote:
-> >>> When ETR is enabled as CS_MODE_SYSFS, if the buffer size is changed
-> >>> and enabled again, currently sysfs_buf will point to the newly
-> >>> allocated memory(buf_new) and free the old memory(buf_old). But the
-> >>> etr_buf that is being used by the ETR remains pointed to buf_old, not
-> >>> updated to buf_new. In this case, it will result in a memory
-> >>> use-after-free issue.
-> >>>
-> >>> [...]
-> >>
-> >> Applied, thanks!
-> >>
-> >> [1/1] coresight: ETR: Fix ETR buffer use-after-free issue
-> >>        https://git.kernel.org/coresight/c/35501ac3c7d4
-> >>
-> >> Best regards,
-> >> --
-> >> Suzuki K Poulose <suzuki.poulose@arm.com>
-> >
-> >
-> >
->
-
+ .../bindings/media/qcom,qcs8300-camss.yaml    |  13 ++
+ arch/arm64/boot/dts/qcom/monaco.dtsi          | 172 ++++++++++++++++++
+ 2 files changed, 185 insertions(+)
 
 -- 
-Mike Leach
-Principal Engineer, ARM Ltd.
-Manchester Design Centre. UK
+2.34.1
+
 
