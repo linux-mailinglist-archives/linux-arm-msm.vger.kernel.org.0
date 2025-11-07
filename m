@@ -1,84 +1,83 @@
-Return-Path: <linux-arm-msm+bounces-80793-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-80794-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id E6785C40C7F
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 07 Nov 2025 17:10:43 +0100 (CET)
+Received: from ams.mirrors.kernel.org (ams.mirrors.kernel.org [213.196.21.55])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4EA6FC40C54
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 07 Nov 2025 17:09:18 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 225915674EA
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Nov 2025 16:09:15 +0000 (UTC)
+	by ams.mirrors.kernel.org (Postfix) with ESMTPS id 890403505EB
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Nov 2025 16:09:17 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B8953330B21;
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id ABFB8330B05;
 	Fri,  7 Nov 2025 16:08:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b="mLw/fGot"
+	dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b="mfuKlY07"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-f43.google.com (mail-ed1-f43.google.com [209.85.208.43])
+Received: from mail-ed1-f47.google.com (mail-ed1-f47.google.com [209.85.208.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8D3532721B
-	for <linux-arm-msm@vger.kernel.org>; Fri,  7 Nov 2025 16:08:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFE99329E7A
+	for <linux-arm-msm@vger.kernel.org>; Fri,  7 Nov 2025 16:08:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762531737; cv=none; b=AwhIhEB+k1f2nXNyo4r+syJl7bgwJpS65YYC9zuUN4xuWdbTCpdPQsTJTkGXKpZfgPLQuCIwQcYd5ohD4psJi0giPUaqehhZRRvIJh1mKPhW3/2w2e9r0bG0jXef65CM6j9HVvQMv6gQEcwP/uqRhBz50kRGl9eiuFhijGk3UFA=
+	t=1762531737; cv=none; b=eWFFf+Zz371YfVNNZzIjloi6VzR9PgTFcqvYzqlkuRfKxMl4m7J01TM8/JaLWsSAPxqBpHnZpGkjra+CGjzkMKGxMMV8FPg5BNon3qrGQIRxls6biQc8VKesrp3ZK6dLBOMVHHXE14zCTP2NitkeAjWZ8/SnkT3hTuRV0u0bdf4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1762531737; c=relaxed/simple;
-	bh=FrKylvjtIbykfg6BNRKjScYknFwVxGFQEfuD+JLYCCg=;
+	bh=yWJZX5pTtTBbyY/nQH9wW9jtpKcujH2KDm9MV6WcgRE=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=MnSZ6LdspiGA7V3FbCoE1dT+/06tu8AYE1osDQ1M2ZANlRbl3pCndpi9cuxKW3/n1ODn3zzxCpZ+f7yW7yrJvvEU9MWuXKQITrAV/7sx35Mx3srCDXJczXT0HV5jDuiXB8aMT2kBfG26bs/OyNyM8noNbGwWF1Gid/nFFfaDL5w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=fairphone.com; spf=pass smtp.mailfrom=fairphone.com; dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b=mLw/fGot; arc=none smtp.client-ip=209.85.208.43
+	 In-Reply-To:To:Cc; b=Ws4RnWZzSPh/t6L9h6Yw0icQ1XC0ALL/0xrkJ2r+IwpetW6ZqX9q/cGBhCWenrSyfGkk2WEllRVHX6LFInfaGK5U84BNfLGumPlpFlnrssdEY1JsEDlQWmseGhCf2c3hLuiWjRsLvlwtMPv5HuUlaR+N4luxl/XHmurRZocTf7Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=fairphone.com; spf=pass smtp.mailfrom=fairphone.com; dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b=mfuKlY07; arc=none smtp.client-ip=209.85.208.47
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=fairphone.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fairphone.com
-Received: by mail-ed1-f43.google.com with SMTP id 4fb4d7f45d1cf-640c1fda178so1641050a12.1
+Received: by mail-ed1-f47.google.com with SMTP id 4fb4d7f45d1cf-640f8a7aba2so1540890a12.0
         for <linux-arm-msm@vger.kernel.org>; Fri, 07 Nov 2025 08:08:53 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=fairphone.com; s=fair; t=1762531731; x=1763136531; darn=vger.kernel.org;
+        d=fairphone.com; s=fair; t=1762531732; x=1763136532; darn=vger.kernel.org;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=M6OFyEM0mwtoBUd6fjbO6FrIz0k/kDLhqnCZDGR6L50=;
-        b=mLw/fGotcCQwPOCJGVL+xuq/OAELVkU5YcmAVQmghR2VUtWG9qU9Yesn2UaapGPOUA
-         ZstY427FF26r8ErT5jQkcVUAcug9cXJZXM339I6ruD3as7frY7Mv/i/bH9Plmvr50xul
-         SQgDvIaaVS0s6LGS/uLY5r/mQBis2Qn0EmCgoNa7tW3enNqyS8opyuIPgfqkEQ739lpO
-         tN1YbKYDu0Bx8yPcybmN7ufzJPkz0GpWrSV4B7aLaJTE+QLC3GUkKSenLtxVlgz4IIax
-         IUfjKNz905l525j50YXexlLsIe7TSMunug6FVkBUuAxjWjXQSGt1iZl79gWudU6hws+6
-         FY3Q==
+        bh=i36NG4+CnxJdtK2RZ//DyiotcskYlbpoGKFREpNJxY8=;
+        b=mfuKlY07mc0etW1I6eSk8U2W497mQOF56sZ6VDWpJWEWRVSSGdyqOZbivlWLtybwZc
+         tiIAkg3/HcV4f1Qo/qNh8y5OJrKzLnpaE+uzHohQAqyJDjEPm7EQwX/Mou/w2bl2U+4c
+         mQ6hag13gzApHl/dCXqaZ7mJ1eFc1W8k/tB6t4QVPWxRIwjT4sAvG+CYjClTvGnMa4Fh
+         g4eRv26Qf4b2UmrWBoFI8RG8aXeCoNRl3mZhm+Xbbgh32MGzktsKB28k+opWnyxajyT1
+         B4H7efETIHotGR1ULbJ+5BfYtml5GXQQ8TXRTqa6i07fr9neskaX8bz/qWHI/KFue9lh
+         aL0Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1762531731; x=1763136531;
+        d=1e100.net; s=20230601; t=1762531732; x=1763136532;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
          :cc:subject:date:message-id:reply-to;
-        bh=M6OFyEM0mwtoBUd6fjbO6FrIz0k/kDLhqnCZDGR6L50=;
-        b=H7ztbQTBpD8GzK7TXSNTagD5Knzf0TRJOYxC8JzoIteYswnHQxysgxNbmxjTKwbyj1
-         rGc/OxYWHqfQUU/D1YwjmVwNg6SLl/xSircXYUGujjT48qC0qU+8mSAb0lSLQTIgPn3g
-         e4MoPbA/Xkz0WyibH6OJN4JhU9vVZNr+pReLrOgo+MggMr01p5qbdIzu+lfTsBdyeP5S
-         U1FbMGP8M5EQmuVSsmeymyKKYjppW6OmGBUuELNLJ4rRTQRQRkAQM6+4MO9TF+CbmDeQ
-         1a/rDtTwPM+kh2DbAB9CuNKW9mvr4ReO7k52rH2SeqOw6f8q+NNSfdhScOp5wyvtSelK
-         4hKg==
-X-Forwarded-Encrypted: i=1; AJvYcCWgPZOsV5rtc2Y1Rz8iCPnYcHx0/775BDNYFQ7kMcUjvLy1fRdJ4WSlpPwaD99eJal28vWelgxs72hbjuPC@vger.kernel.org
-X-Gm-Message-State: AOJu0YyBR4RJE9od2wxii/OCq0tnNMk6xL7CCwI8tP0qc7aQV3VfiMzW
-	2hh8uO98K86NDjTrzczrW1O6xlhe3vco+/Tftqk/jiaGQpkjV1eXNI1VtvKIllhgy41ymTgoABA
-	PnvXCOmk=
-X-Gm-Gg: ASbGncvdNbrNlYOuu0ZxC4cJ8zefkOuUWcJALSFRHum5HS3bDI9LW9DDov3LDZKPO4s
-	FgtoohoC9n8MOLX9g52JFFTJZwEErfjPr5lv0tFYJaIxk8rxp885WptWpLhCaARsfdR5EnwWKpU
-	fYxRxq35dl2llWtYv5p5SzDKHKb3dpV8pdMNO/wmlRC3XwJvlVsESynrNj0pQOU94vl7BzUrZXv
-	YmL24Nn05uKH25FOYAR5fiSrpLRSVICMOg47XKiYminRCvx5Y3MRvPEp1lLY3Hkz0gnQ67/meVR
-	OYuNNqecPrg02+GK7gv+r6kd+BZGTE7fmazzrYyP4iPxBY3PB4eZ36MhsemUuHUOEyLKi/X9IzL
-	r9lkEwctkvufisaGUQ+mSKtvmJe3vhfjiXjoYNPFC8eXYbaXIg9kjUkTkVJCyuQ39yM5FjEt2x6
-	kyhbHoSWZ/JprieC4FpubDTy3ZP2rI0tDWwFHyn6yA2jTAnGX02CMfb2U=
-X-Google-Smtp-Source: AGHT+IFc5yHu64pZOVzhmSiW9o358Hhl91qRFBo7frY9TOt1voWJpvXX8q8w1oYhoIzDVymNV/t2pA==
-X-Received: by 2002:a05:6402:3513:b0:640:e791:df67 with SMTP id 4fb4d7f45d1cf-6413ef03618mr3463236a12.10.1762531731544;
-        Fri, 07 Nov 2025 08:08:51 -0800 (PST)
+        bh=i36NG4+CnxJdtK2RZ//DyiotcskYlbpoGKFREpNJxY8=;
+        b=I1SxG3tPkvO5tPBZ9bwOrEIu1T/D3o+naPa4nGovXLDhNx8rffhNGDfbkkk6xBXiYN
+         uNeJhI2o9Oz5B3po7CbupU1zyKO5pjqQgwGX+GJXn4MkCvEyBSUjihtkvsrU0fGFP/BK
+         jf81HkFSiwZDOAL88V90dD95AOE2PBPqPHy3MxH8WDimjHTAoiesQafjdjAIHEF8uFCN
+         sPRXGcJxGCcS9aWn0qNzmSAbybaKIW/O96aXrit4MN4ZEB6b1RPYMWxv2SHNEa/osNOJ
+         M3p++1tI+lt6zTeCy9iK/Z+YkfarWiSf3ivyALm3caW3bH1rxdKEYjv5GkdGzgu9FQgF
+         ILKw==
+X-Forwarded-Encrypted: i=1; AJvYcCVT3pz0gxvNFFqHti+thJNlAkblz03a/rgr+IbBXd0Ov7g0E8FtlsMHWXtvz/+O3X/HQS81FkZG7y7Uz4+A@vger.kernel.org
+X-Gm-Message-State: AOJu0YwqvAwFUUbUsua4Cqwxb3MAUYBwfnQ0MqmkcJZcxjoDw0Pm2r+H
+	XtCcN6opRJ1xwfYiKVH06FjTVTMm5QG5md754kbD7x89lcDTzRtBD5fGt6nO35XqCYnd767SPQf
+	tQEA77k0=
+X-Gm-Gg: ASbGncvJjpmzG4DJoJCBJvP6V3rfFGTchCFNgt/G78IOYEtp9fUEIXJ6+13vDAhsBIr
+	gtiQ+VqC9KikNdm8djCTBxOacq/D6E81jadxU394G2Pdyp5AXRE+cR0qojtE4aonoYhc4tJby14
+	XvmGASqYvKp7w3LLXKmwfqqLbt/e+kmuqcNHD7Ic2dpI1/2aa3BuJNUfvQx/OsqLsJxLYsWQCoc
+	C1vUsc0q4cOX2sU/1qZ1bstBNdcJ2pp+mG/Mfoj+ZUxjW+BvsT54JslzSwKtfDtaQVdc+VRhJTK
+	h1TjNwv88DEz6ugXtqAu9gDnQ7GIeCVXX1MIUUNv1kIvvbbpfG2EDw/YAEYSxLhT8z6LJ+AVdAC
+	9iPvmLWxcFw+CvhND5aPqb0B3vBSnt9qYEKcfJUdnqbuqIVmdpw67pdff/rfRrSsqIeu7opVFwg
+	ndBcCZDMWSek7FTJ4BavlxGuSeJNtPnWa1XNekzX6c21e4HKlzgY0Wt24=
+X-Google-Smtp-Source: AGHT+IGwHC2zxo64CyGp8N6bbrIrT2S27jAM1f/m55hZJrxyvSql7IEb3+1EIi003K3x3H4dGc2jlg==
+X-Received: by 2002:a05:6402:146e:b0:640:7529:b8c7 with SMTP id 4fb4d7f45d1cf-6413f059981mr3730411a12.1.1762531732054;
+        Fri, 07 Nov 2025 08:08:52 -0800 (PST)
 Received: from [172.16.220.100] (144-178-202-139.static.ef-service.nl. [144.178.202.139])
         by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-6411f713959sm4444376a12.5.2025.11.07.08.08.51
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
         Fri, 07 Nov 2025 08:08:51 -0800 (PST)
 From: Luca Weiss <luca.weiss@fairphone.com>
-Date: Fri, 07 Nov 2025 17:08:48 +0100
-Subject: [PATCH 2/5] interconnect: qcom: icc-rpmh: Get parent's regmap for
- nested NoCs
+Date: Fri, 07 Nov 2025 17:08:49 +0100
+Subject: [PATCH 3/5] interconnect: qcom: sm6350: Remove empty BCM arrays
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -87,7 +86,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20251107-sm6350-icc-qos-v1-2-8275e5fc3f61@fairphone.com>
+Message-Id: <20251107-sm6350-icc-qos-v1-3-8275e5fc3f61@fairphone.com>
 References: <20251107-sm6350-icc-qos-v1-0-8275e5fc3f61@fairphone.com>
 In-Reply-To: <20251107-sm6350-icc-qos-v1-0-8275e5fc3f61@fairphone.com>
 To: Georgi Djakov <djakov@kernel.org>, Rob Herring <robh@kernel.org>, 
@@ -99,56 +98,63 @@ Cc: ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
  devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
  Luca Weiss <luca.weiss@fairphone.com>
 X-Mailer: b4 0.14.3
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1762531729; l=1554;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1762531729; l=1767;
  i=luca.weiss@fairphone.com; s=20250611; h=from:subject:message-id;
- bh=FrKylvjtIbykfg6BNRKjScYknFwVxGFQEfuD+JLYCCg=;
- b=nTRGQyYmySEkpmasdBUmEaPB51ISRGLTYkLSIUcHDR8tbweZYP3kljRlJhHKqSeem9gQeqLRC
- DHVQ5/NTu3BDPGZMEfeU2PpcIDxP74CA8UJEXfBUhruv7IqiClWTtIv
+ bh=yWJZX5pTtTBbyY/nQH9wW9jtpKcujH2KDm9MV6WcgRE=;
+ b=4zcbiYwJD4C2WWOQVJKpY7aqjPmWPTB217iJUU4vwEVsg9ocL9+9WFfA/TmTJ8b8SF0q7EKHn
+ 2vYniMUYxWGCIsvid0N4wRR0KUrob3/8yWJHfXYAAoNxwUcqme5i21c
 X-Developer-Key: i=luca.weiss@fairphone.com; a=ed25519;
  pk=O1aw+AAust5lEmgrNJ1Bs7PTY0fEsJm+mdkjExA69q8=
 
-Since commit 57eb14779dfd ("interconnect: qcom: icc-rpmh: Support child
-NoC device probe") the icc-rpmh driver supports initializing child NoCs,
-but those child NoCs also need to be able to get the parent's regmap in
-order to enable QoS.
-
-Change the driver to support that and support programming QoS register.
+Clean up the code by removing empty BCM arrays to save some lines.
 
 Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
 ---
- drivers/interconnect/qcom/icc-rpmh.c | 12 +++++++++++-
- 1 file changed, 11 insertions(+), 1 deletion(-)
+ drivers/interconnect/qcom/sm6350.c | 10 ----------
+ 1 file changed, 10 deletions(-)
 
-diff --git a/drivers/interconnect/qcom/icc-rpmh.c b/drivers/interconnect/qcom/icc-rpmh.c
-index f90c29111f48..2103185a44a5 100644
---- a/drivers/interconnect/qcom/icc-rpmh.c
-+++ b/drivers/interconnect/qcom/icc-rpmh.c
-@@ -308,7 +308,16 @@ int qcom_icc_rpmh_probe(struct platform_device *pdev)
- 		struct resource *res;
- 		void __iomem *base;
+diff --git a/drivers/interconnect/qcom/sm6350.c b/drivers/interconnect/qcom/sm6350.c
+index 99c435a5968f..246549cb761e 100644
+--- a/drivers/interconnect/qcom/sm6350.c
++++ b/drivers/interconnect/qcom/sm6350.c
+@@ -1526,9 +1526,6 @@ static const struct qcom_icc_desc sm6350_config_noc = {
+ 	.num_bcms = ARRAY_SIZE(config_noc_bcms),
+ };
  
--		base = devm_platform_get_and_ioremap_resource(pdev, 0, &res);
-+		res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
-+		if (!res) {
-+			/* Try parent's regmap */
-+			qp->regmap = dev_get_regmap(dev->parent, NULL);
-+			if (qp->regmap)
-+				goto regmap_done;
-+			goto skip_qos_config;
-+		}
-+
-+		base = devm_ioremap_resource(dev, res);
- 		if (IS_ERR(base))
- 			goto skip_qos_config;
+-static struct qcom_icc_bcm * const dc_noc_bcms[] = {
+-};
+-
+ static struct qcom_icc_node * const dc_noc_nodes[] = {
+ 	[MASTER_CNOC_DC_NOC] = &qhm_cnoc_dc_noc,
+ 	[SLAVE_GEM_NOC_CFG] = &qhs_gemnoc,
+@@ -1538,8 +1535,6 @@ static struct qcom_icc_node * const dc_noc_nodes[] = {
+ static const struct qcom_icc_desc sm6350_dc_noc = {
+ 	.nodes = dc_noc_nodes,
+ 	.num_nodes = ARRAY_SIZE(dc_noc_nodes),
+-	.bcms = dc_noc_bcms,
+-	.num_bcms = ARRAY_SIZE(dc_noc_bcms),
+ };
  
-@@ -318,6 +327,7 @@ int qcom_icc_rpmh_probe(struct platform_device *pdev)
- 			goto skip_qos_config;
- 		}
+ static struct qcom_icc_bcm * const gem_noc_bcms[] = {
+@@ -1600,9 +1595,6 @@ static const struct qcom_icc_desc sm6350_mmss_noc = {
+ 	.num_bcms = ARRAY_SIZE(mmss_noc_bcms),
+ };
  
-+regmap_done:
- 		qp->num_clks = devm_clk_bulk_get_all(qp->dev, &qp->clks);
- 		if (qp->num_clks == -EPROBE_DEFER)
- 			return dev_err_probe(dev, qp->num_clks, "Failed to get QoS clocks\n");
+-static struct qcom_icc_bcm * const npu_noc_bcms[] = {
+-};
+-
+ static struct qcom_icc_node * const npu_noc_nodes[] = {
+ 	[MASTER_NPU_SYS] = &amm_npu_sys,
+ 	[MASTER_NPU_NOC_CFG] = &qhm_npu_cfg,
+@@ -1620,8 +1612,6 @@ static struct qcom_icc_node * const npu_noc_nodes[] = {
+ static const struct qcom_icc_desc sm6350_npu_noc = {
+ 	.nodes = npu_noc_nodes,
+ 	.num_nodes = ARRAY_SIZE(npu_noc_nodes),
+-	.bcms = npu_noc_bcms,
+-	.num_bcms = ARRAY_SIZE(npu_noc_bcms),
+ };
+ 
+ static struct qcom_icc_bcm * const system_noc_bcms[] = {
 
 -- 
 2.51.2
