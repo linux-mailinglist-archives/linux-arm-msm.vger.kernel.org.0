@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-80700-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-80701-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 01362C3EAB4
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 07 Nov 2025 08:01:07 +0100 (CET)
+Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [IPv6:2605:f480:58:1:0:1994:3:14])
+	by mail.lfdr.de (Postfix) with ESMTPS id 97F0FC3EAD5
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 07 Nov 2025 08:02:13 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 9FF6E3A5A6D
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Nov 2025 07:01:06 +0000 (UTC)
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 7B7F24E2E34
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Nov 2025 07:02:12 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8DD81302774;
-	Fri,  7 Nov 2025 07:01:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 79F433064BB;
+	Fri,  7 Nov 2025 07:02:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="J8XoqdpL"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="binHR/LT"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DCC818E1F;
-	Fri,  7 Nov 2025 07:01:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B85D302774;
+	Fri,  7 Nov 2025 07:02:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762498864; cv=none; b=cc20HUqrIlK+1Hg1nxUXxCIQU7zsz2CvVC+qMpLR3OaJhKy5IAEs6E4KYYB4h5TWWUK6FTvb563zy2Iywr7w8ge64F9ZnrZ4yQzPqWsZkvgrASPr+wMda5WF9v9HcjWy+ZPivuY/W1VgLyx9o0lx7uN4tifF/LZ2tJQvCjerV2s=
+	t=1762498929; cv=none; b=bX6DvArsdu249hQPII3kQQB2QEZcnY7i6B7adPc/crmLg9feWx3R04iNLOn9Md2DRWCfwP15jeVajK7KHi3Ji2INJjzm9PfVnHYNw9VKCdpvIwWvOphym51JXTvR2Coxjmt8cZVxtYfTaM50TmTndbgjFl5ChkJTb0BEpLXy5xw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762498864; c=relaxed/simple;
-	bh=7IExaqm9kL4UB43OQoAIA4czN1YbsR6llCUuEMZN6cY=;
+	s=arc-20240116; t=1762498929; c=relaxed/simple;
+	bh=G4CqDOtfxOKTgeFOtwIs7RbRKrnzGiTvRUcznIc1IJs=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Pdyknf+rgvMSafo2KQM00HFL7TfdlfuKjFQ+m2sVZu58WclORFLblatYJ+HtBN7oYiKKFaE6PjkUAy2kVTtKCCMisdDYOHfY6QcZ3ZFPdhDTJ3sG5JdFTH2SsKKefsDv54de+LTjnSQ4r+3LygLRNBJXSh86LuY158YuGUm2lFU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=J8XoqdpL; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CDAA3C4CEF5;
-	Fri,  7 Nov 2025 07:00:55 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=oe4q9ezVVIZJEWPkMRHNJY8AMP0gmSEe/Ro/pwOG9nsqKfbu0ei1UC3C3a27f3De+4nasHeitHEzO+7VKjOmtUghez1xV1WKpa651UF2mEUECJNVeVgOotqwv4qCoF/JoVYOms2LXNG3+Am+sIDpawAVwafsYsHSqq5r9s6/pYs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=binHR/LT; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01BBDC4CEF8;
+	Fri,  7 Nov 2025 07:02:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1762498862;
-	bh=7IExaqm9kL4UB43OQoAIA4czN1YbsR6llCUuEMZN6cY=;
+	s=k20201202; t=1762498928;
+	bh=G4CqDOtfxOKTgeFOtwIs7RbRKrnzGiTvRUcznIc1IJs=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=J8XoqdpLE8rp/PYaBBYd6XfMVDcLd3HU5zRoWJt3UDy4rykbxSDnbZuyEV/47Ktc3
-	 zHl2NeTYeUxyF1icSPlsq4PbitqEyfLzlBM7J7FC9AuXrx9RoE5YmlchdJfZPkpbxe
-	 917IzWD1yQlVNVbaRmd20aGiMz94MU7lPtEQ/i5ri7gtn//rNsYot0IJvw8Ntk534c
-	 0BzJryQqFbqJnAGBuSZ59Kg/5tbcSXnivWtw5W2j5tV5hWQw7ax74GYCqBCK4K+DFD
-	 tAmu/2e6Efg5v9M6xydZEMyYTfgeBWYvRnKmWQHOXHrP+mqKNKL73d9XAydqPMxQVL
-	 0zAHOfncj/gcQ==
-Message-ID: <aced7337-eabd-4b05-a0d3-eea7079d08ec@kernel.org>
-Date: Fri, 7 Nov 2025 08:00:53 +0100
+	b=binHR/LTPx71bcgUOpp3wHw9VEYHZiJIYpwcCwT+C9Pwl26sij79RYSMEv0KrWSCI
+	 lYNKwlLw9+Pf487HDvLhCAk1IRxCqPT6sNSjOgFCiGoeBk6UHtNrH7hf7UnzuXepav
+	 FovCpkbsIUh3wPcVwMKKWCT/JpTkJv/jsRC4+WThT5aV6pVvWzD9CyiSc8BEbJK0Wx
+	 kqTRtjLEcgK5RF7LMY5KTNz78b0oeXC1QIY2iBZgQlM2hqU1NIk01RvCXZbwq26yCW
+	 Z7O63MTYVs4cMR5bP712CX0TQUkDXPPXjTFGEolrgnWI3dQOQLIGpYwXa4gkXD/k+A
+	 cr3ESFyspUD0Q==
+Message-ID: <a8952b46-94b6-4fe5-a5be-d69aa41d44cd@kernel.org>
+Date: Fri, 7 Nov 2025 08:02:00 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,9 +50,9 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 01/13] of: Add wrappers to match root node with OF device
- ID tables
-To: Frank Li <Frank.li@nxp.com>,
+Subject: Re: [PATCH 11/13] soc: qcom: Simplify with
+ of_machine_get_match_data()
+To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
  Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Cc: Rob Herring <robh@kernel.org>, Saravana Kannan <saravanak@google.com>,
  "Rafael J. Wysocki" <rafael@kernel.org>,
@@ -79,8 +79,8 @@ Cc: Rob Herring <robh@kernel.org>, Saravana Kannan <saravanak@google.com>,
  linux-sunxi@lists.linux.dev, linux-arm-msm@vger.kernel.org,
  platform-driver-x86@vger.kernel.org, linux-tegra@vger.kernel.org
 References: <20251106-b4-of-match-matchine-data-v1-0-d780ea1780c2@linaro.org>
- <20251106-b4-of-match-matchine-data-v1-1-d780ea1780c2@linaro.org>
- <aQz8rW9GE66xPYrL@lizhi-Precision-Tower-5810>
+ <20251106-b4-of-match-matchine-data-v1-11-d780ea1780c2@linaro.org>
+ <odmsib3dsxzzggq4gcx7gmh6vq3crlv25fz4z2l2ntezvx6gbi@uelqojwjjait>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -126,66 +126,67 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  jWt87ecuHlpL3uuQ0ZZNWqHgZoQLXoqC2ZV5KrtKWb/jyiFX/sxSrodALf0zf+tfHv0FZWT2
  zHjUqd0t4njD/UOsuIMOQn4Ig0SdivYPfZukb5cdasKJukG1NOpbW7yRNivaCnfZz6dTawXw
  XRIV/KDsHQiyVxKvN73bThKhONkcX2LWuD928tAR6XMM2G5ovxLe09vuOzzfTWQDsm++9UKF a/A=
-In-Reply-To: <aQz8rW9GE66xPYrL@lizhi-Precision-Tower-5810>
+In-Reply-To: <odmsib3dsxzzggq4gcx7gmh6vq3crlv25fz4z2l2ntezvx6gbi@uelqojwjjait>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 06/11/2025 20:53, Frank Li wrote:
-> On Thu, Nov 06, 2025 at 08:07:08PM +0100, Krzysztof Kozlowski wrote:
->> Several drivers duplicate same code for getting reference to the root
->> node, matching it against 'struct of_device_id' table and getting out
->> the match data from the table entry.
->>
->> There is a of_machine_compatible_match() wrapper but it takes array of
->> strings, which is not suitable for many drivers since they want the
->> driver data associated with each compatible.
->>
->> Add two wrappers, similar to existing of_device_get_match_data():
->> 1. of_machine_device_match() doing only matching against 'struct
->>    of_device_id' and returning bool.
->> 2. of_machine_get_match_data() doing the matching and returning
->>    associated driver data for found compatible.
+On 07/11/2025 04:19, Dmitry Baryshkov wrote:
+> On Thu, Nov 06, 2025 at 08:07:18PM +0100, Krzysztof Kozlowski wrote:
+>> Replace open-coded getting root OF node, matching against it and getting
+>> the match data with new of_machine_get_match_data() helper.
 >>
 >> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 >>
 >> ---
 >>
->> All further patches depend on this.
+>> Depends on the first OF patch.
 >> ---
-> 
-> ...
+>>  drivers/soc/qcom/qcom_pd_mapper.c | 17 ++---------------
+>>  1 file changed, 2 insertions(+), 15 deletions(-)
 >>
->> +/**
->> + * of_machine_device_match - Test root of device tree against a of_device_id array
->> + * @matches:	NULL terminated array of of_device_id match structures to search in
->> + *
->> + * Returns true if the root node has any of the given compatible values in its
->> + * compatible property.
->> + */
->> +bool of_machine_device_match(const struct of_device_id *matches)
+>> diff --git a/drivers/soc/qcom/qcom_pd_mapper.c b/drivers/soc/qcom/qcom_pd_mapper.c
+>> index 1bcbe69688d2..07198d44b559 100644
+>> --- a/drivers/soc/qcom/qcom_pd_mapper.c
+>> +++ b/drivers/soc/qcom/qcom_pd_mapper.c
+>> @@ -613,25 +613,12 @@ static void qcom_pdm_stop(struct qcom_pdm_data *data)
+>>  static struct qcom_pdm_data *qcom_pdm_start(void)
+>>  {
+>>  	const struct qcom_pdm_domain_data * const *domains;
+>> -	const struct of_device_id *match;
+>>  	struct qcom_pdm_data *data;
+>> -	struct device_node *root;
+>>  	int ret, i;
+>>  
+>> -	root = of_find_node_by_path("/");
+>> -	if (!root)
+>> -		return ERR_PTR(-ENODEV);
+>> -
+>> -	match = of_match_node(qcom_pdm_domains, root);
+>> -	of_node_put(root);
+>> -	if (!match) {
+>> -		pr_notice("PDM: no support for the platform, userspace daemon might be required.\n");
+>> -		return ERR_PTR(-ENODEV);
+>> -	}
+>> -
+>> -	domains = match->data;
+>> +	domains = of_machine_get_match_data(qcom_pdm_domains);
+>>  	if (!domains) {
+>> -		pr_debug("PDM: no domains\n");
+>> +		pr_notice("PDM: no support for the platform or no domains, userspace daemon might be required.\n");
+>>  		return ERR_PTR(-ENODEV);
+>>  	}
 > 
-> Will it be more useful if pass down path
+> Here you are mixing two cases:
+> - There is not match in the table (in which case the driver should print
+>   a notice)
+> 
+> - There is a match in the table, but the data is NULL (the platform
+>   doesn't have PDM domains). In this case there should be no notice.
 
-Path is fixed, there is no point to pass it. If you claim otherwise,
-please bring example what benefits would it bring, instead of just
-asking nitpicking questions.
 
-> 
-> of_machine_device_match(const char* path, const struct of_device_id *matches)
-> 
-> caller just pass "\", or NULL point as root
-> 
->> +{
->> +	struct device_node *root;
->> +	const struct of_device_id *match = NULL;
->> +
->> +	root = of_find_node_by_path("/");
-> 
-> Use clean up will simplify code
-> 
-> 	struct device_node *root = __free(device_node) = of_find_node_by_path("/");
-Not much difference. Look at existing code first. This should not
-introduce different style.
+Why? Existing code printed notice in both cases. Why refactoring which
+tries to keep code functionally equivalent should change it?
+
 
 Best regards,
 Krzysztof
