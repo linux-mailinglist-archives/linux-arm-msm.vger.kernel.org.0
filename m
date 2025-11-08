@@ -1,103 +1,100 @@
-Return-Path: <linux-arm-msm+bounces-80818-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-80821-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ams.mirrors.kernel.org (ams.mirrors.kernel.org [213.196.21.55])
-	by mail.lfdr.de (Postfix) with ESMTPS id A18EAC42600
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 08 Nov 2025 04:25:07 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 9ED6DC426A5
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 08 Nov 2025 05:24:35 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ams.mirrors.kernel.org (Postfix) with ESMTPS id 2639A346FC1
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  8 Nov 2025 03:25:07 +0000 (UTC)
+	by ams.mirrors.kernel.org (Postfix) with ESMTPS id 1BDA0349FAD
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  8 Nov 2025 04:24:35 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9ED5C2D59EF;
-	Sat,  8 Nov 2025 03:24:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 492C92D5932;
+	Sat,  8 Nov 2025 04:24:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="YddkaI5C";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="GnWyJf/g"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="bt0soVyy";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="V4P72yd+"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC2E42D5946
-	for <linux-arm-msm@vger.kernel.org>; Sat,  8 Nov 2025 03:24:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F6A82D8376
+	for <linux-arm-msm@vger.kernel.org>; Sat,  8 Nov 2025 04:24:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762572243; cv=none; b=QCZjqGx1qe5TO88i6hKYspDW3RKqHg3H8zb7F3rPxxswLiFx/BWE9aoeA/LAmhiLxUQKz1dMr+k5vc3dXTtfCaaMxDKds/wIh1ueC+GjND+Rpb/t2h2RRf1WOj7JWt61lKHDtnaP+jCY3iA3bFHlvEidgtvcS7D8MZBpQpCTrLI=
+	t=1762575856; cv=none; b=KCFVo8oH7I6486WnH1Sc4claVzubeIEdc+DwT8Umx0RcnSY7wbMga37/sQITdZ9c6i8Grdtj9cRHC5EwtS+xdqi2q6RRnJMKg5tUhBnfSHT34XwEL7zX58YZ2dANzTHu15i5St49vRTpdNxBsrAZpx5zuttpYYkTKFeYqaYPAk4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762572243; c=relaxed/simple;
-	bh=OVN34xQvWdQnzMzIUanYNvprU+WPc4hLhYjzqjWZYe4=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=o34u7YVvVcNlVKEnsCaaAvcgFubcVAUXOGO2f0QbVQ3xjcCKmaB4l70Xlg3bd1bxOrZa0fJ00WQ0bGTz7OY8aWWlHjVFhfav1YyNbq9B1gL7m+G1/5mhfPzQcK1t7ZTjrNx/IYn4nijVeTIAQhxB/RLcSpeAEzsSWP780FQlswE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=YddkaI5C; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=GnWyJf/g; arc=none smtp.client-ip=205.220.168.131
+	s=arc-20240116; t=1762575856; c=relaxed/simple;
+	bh=bSIuBiGfCZIEjCDAyTy63LfslP31QAHOyP8mwIbtjJQ=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=YRmYn6de9tBCZnP//K0102/pfNyTsAvAVhQ2Q7n9FA0si4JdZ9x3O25gFyozc/H5w8bD5PMYrWf4diEgSicvvaRw+kRD44xf5vMnzkQNrEZ/WePz+nR0pK8WqVQYB8TzzEDZUXptSqM7nB46S6kKwxIpYiizUdjmZwnqseiD1t4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=bt0soVyy; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=V4P72yd+; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 5A81Q309439534
-	for <linux-arm-msm@vger.kernel.org>; Sat, 8 Nov 2025 03:24:01 GMT
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 5A83Ptoc871383
+	for <linux-arm-msm@vger.kernel.org>; Sat, 8 Nov 2025 04:24:11 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	BaTV6fSJpghkMj44xjyrxIVyvBhGm3h7M0nGxOIbQk8=; b=YddkaI5CHnfKvASt
-	EkizRxRGDNN6yXKl0yrdid+Hqu2ankNm3IGK1CRQ9AnqhMq6bVHM/mXYbGVHw7cM
-	4ZmksXyCFIx6t/IQ1e8IEp7GwaoPYiqqTAPtApN7E+/xggacEbL9wGgSrR/myrGt
-	0+6tURjCVA3A/CW/SCfifdlZjLtn56UhuB6jqRc5LVCRI3gyhJYpCTQiRJ9uF5PN
-	a+gxlmHZQYNL3hD20aHpaTzNfIu35nMg4XQ+WCiT3lJsdk1mzhq8Aqqi8JWI/lmj
-	qGZai6Afag1pQ30HtXZ3h41zAAtc57hl2ehobJYcYwEZwYTZ44ESkkDyzl2HDfv/
-	5ri9Bg==
-Received: from mail-pl1-f200.google.com (mail-pl1-f200.google.com [209.85.214.200])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4a9ujfg745-1
+	cc:content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=qcppdkim1; bh=Wi3vWGnUpjpfRW8srtI05D
+	eHxanTwmx6o5HITixA0BI=; b=bt0soVyyG0kkFPXUyeLNqwf5xLupCUMy4DhC5N
+	tWXl7XyWslFe5mJt4fGvyDHWnJdTN+XcZn7iF0dslj+tytb1tOT6HwEenq01AZd1
+	bmul3f4olYyERZ0YZAn7d8TfGwkXqbboSFG36WShGpbYQyYqT7GLt8K2Z18imqBZ
+	um4I3MUeWXvjiskzinw6dECRTcRRf2OYzEvn5/VHDTrru4XJdebSgdjWgwme+vHU
+	pzEfxs1x67iewJEF8BOMBoqw2PaRh26QIe3rNtUDAGeMRyjIuEovU4KUuPq0eWLx
+	dhPiUy2vq+rKn0inZKtsJ0AJ4nP9hWXMgU2pOlI6G/4GEsjA==
+Received: from mail-pg1-f198.google.com (mail-pg1-f198.google.com [209.85.215.198])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4a9wxtg2cu-1
 	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Sat, 08 Nov 2025 03:24:01 +0000 (GMT)
-Received: by mail-pl1-f200.google.com with SMTP id d9443c01a7336-297dabf9fd0so6873905ad.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 07 Nov 2025 19:24:01 -0800 (PST)
+	for <linux-arm-msm@vger.kernel.org>; Sat, 08 Nov 2025 04:24:10 +0000 (GMT)
+Received: by mail-pg1-f198.google.com with SMTP id 41be03b00d2f7-b6a07eead63so322918a12.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 07 Nov 2025 20:24:10 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1762572241; x=1763177041; darn=vger.kernel.org;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=BaTV6fSJpghkMj44xjyrxIVyvBhGm3h7M0nGxOIbQk8=;
-        b=GnWyJf/gE0qk9B4vyjT6VxcZrK00juiKpIJYkIRUgwLF5jy4pPq0oC+Il+RtmCxfRm
-         kirsRI6zgJfBMYigUeC5dTUO909i/Pi+ZMFyPORp0+KEViz3OYhsStLWzzOP7QYXJpw8
-         wl5koUT9wD1C58dOffZY4NDAD3leOXtvGeW0SmyGSt9ikv0KttbvjD6B6CDXe6QOvIlq
-         4wYjXKc+lfPR7+jJm8gU9an3PRUIQR1OwcMWQktjtktntJte36mH8yNzrluLLYqikAov
-         0pnz+rcAIPoulGJ8mGvolxeXGDMj3gNdOHr6Tu8euyLS5r1lgUWOVVd9Cj2sPjR1MDdx
-         G9ag==
+        d=oss.qualcomm.com; s=google; t=1762575850; x=1763180650; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=Wi3vWGnUpjpfRW8srtI05DeHxanTwmx6o5HITixA0BI=;
+        b=V4P72yd+ykeZqSPGZgPSyMqIq+hKw2oOVgC3wRmTYDcMPPz8VvfyUwdw6QadJp+a6R
+         cYpNTruRvT0lFuHk6bkLjzeLYs77MjbcKi6Gh0HqnqIMBqZmx64oLurya0baIVPGbvGp
+         1fgR6AeJMrsCWuRF7so198JpHpd51TMArADsYu51mdBxl0yJdOmTaR4s6wyeZhH+Mj6M
+         VPy+qTiMNDJ6RknKeDMg7Xmw9TSxOBaxosa0UeVJYc4Q7TNLu0dPGcNlCJE5rK//PM8o
+         0W3EhXU6nzykMbgkuGN5ZQhlX0436xGBwHgVPzC9oOtR8+siqiUI/TPcI+07SL3MYg7z
+         o5pQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1762572241; x=1763177041;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=BaTV6fSJpghkMj44xjyrxIVyvBhGm3h7M0nGxOIbQk8=;
-        b=lIRQ1dTUuKYqT/Tbhi7AUGWYTeBHWrdqFreRtsa67Hak2PcfTHy+6Sl6uxaYO3g0D3
-         HPI1lvOXdoWLasSRZBRf6XkolyW9rmn8gYyJBXEvD18RHurE2f+BZ4tfilXb4DNgnzhP
-         7Fn7QR4CkUA5F5A3grQtrDaRC1omkLqcD8B1haWFwj5UHe14sQohIdc/dKBOXHis05iy
-         VmmdPg6YzfCDxxHkveHhGSZLPh+1dPMJ9zzKbzHCVOxyjli5Hpys+v224p4NdvrD736i
-         9CJCIB0n1gARKsf79FtFEkNL3YNfizr9fblsQ3xRhst8F//4yHfnKQgEHtvuJKjSf0t1
-         Bvlg==
-X-Forwarded-Encrypted: i=1; AJvYcCUP1/TjoW8sTqxgoPHPyz9uELIc/Sacin9yn87petS2W2oofkYZHB3j8n/1FCCJLVt7dZjhBxmIVzARvZht@vger.kernel.org
-X-Gm-Message-State: AOJu0Yzd+irAsw6rHqGEnXuvMofOHRopff08LTGHPe0zycJ9dEN9CPgf
-	TJAZYbyVhxNck8CsFGhqXeoOZLwTlO++C/mYYNmO5YZyHXV6IGkscC4+M+UuZMaEm+F6O+HLp1n
-	5wb5mkuhB46bIhrSbonICizpdFupqS4dSJ6i7SYTM/9fiwpdSP942V6Ih9zS9fC3yBW1B
-X-Gm-Gg: ASbGncuTU32z9X/3fsGR60QS+XVBzictMkeCI6wSNU+ySobpPOQt6IrVs5/mXn2emO1
-	atQM9v277ipcElxFMzFGe9inbISbFmgcKwLujGy1nnLzAzTvIDaJDgRGyLpo/6nsN4pPtKMdrf0
-	EECaDhNg6kQMLSdVa34+uJj4psna+SwQg8N6EyHOJUtKaZNGLQgupmoQ1k42+1Tbh+J5w7MfIm1
-	pAAl4meWjD5WRFQhF61q/Sl9VylUXkNR1Axc2m4OjhAIDbh1UsH0KValx0VzEOIfp2KLD1IZrEn
-	QLTFwFcWgn8w4XENCaCDDsKyjkdRzBMlf0pkm0Jj5LcPkUms0qcK+sZAt0G/T6ylaSlMUDgiLpR
-	3uEsxCXa6Ds24FzN9Qz7KjCS/yhm/HXk=
-X-Received: by 2002:a17:902:cf42:b0:295:3d5d:fe57 with SMTP id d9443c01a7336-297e5654e0bmr16448025ad.21.1762572240471;
-        Fri, 07 Nov 2025 19:24:00 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IG18eBJDNlQTKlU/W8HVbHalpdek9IgvR5aIZVa3oaBqvh3+zMvUcV20Fucl157NbrPRftPrw==
-X-Received: by 2002:a17:902:cf42:b0:295:3d5d:fe57 with SMTP id d9443c01a7336-297e5654e0bmr16447775ad.21.1762572239947;
-        Fri, 07 Nov 2025 19:23:59 -0800 (PST)
-Received: from [192.168.0.104] ([106.219.179.230])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-297d83c941esm19942445ad.44.2025.11.07.19.23.54
+        d=1e100.net; s=20230601; t=1762575850; x=1763180650;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=Wi3vWGnUpjpfRW8srtI05DeHxanTwmx6o5HITixA0BI=;
+        b=broHxBLThkqG18d+4kIPbUv718DjPDXYlf3A3xQsB2p5iDCAbyqNaSex4gI5ed6Ex1
+         A/9HTIlYSqmbHll7pF2YyMhlvbOT6i2iAAa5nveVVOAcWQaPczkQjad5pELH+eu1ZucZ
+         uicY8jICrP5uO995YXMm2zDWVn4DL2xrfoy2SbBoFDM1cpjFcbxpXWWk1ib2ZHGpvi2e
+         nJq3QgJOUtyeoqE8rRVqqWbj3Eap6563l+5s+qaDbRBeb7Zxf5tgl7X5jDh18N++CGFH
+         au2JWJTauNvMGaTTQr/1F1Liv5XE5eh523hZurDsL0UnwXjJ/Rm1uD/NbjOTewipP8l6
+         IEjA==
+X-Forwarded-Encrypted: i=1; AJvYcCUZUEcBW3bsH1efSKXnj8iyvvQ9pjB4ahuRO2XAEAx2SE8vS6YNqFR21DihHhV1guvRt2S9lIwXqQd89e7c@vger.kernel.org
+X-Gm-Message-State: AOJu0YwCPe1FWg46Odi28nnr8I7bnDrUMugEnc2ZLObnrBlAB8JzwXBN
+	ZKBVbOZUec/B9JnXbCpPGn2EIVyVggw1MSE3Q6WSHpoAzuCzUfBeZQnHGzcC3gWY43dS4Nlo2hY
+	VosAui+/UzIfgtv8yaNq2Mst1maoJmNuMAOP8w1lLzWcfiHs3dg/nL9/w0AC+uXJPLixq
+X-Gm-Gg: ASbGncuBhvtut096mxxVX8otSmlwZ5RgyZq3IU2dk47lc8u88/hVWDFAA5EutNt0q/e
+	1lKsYzHdJwZrqiGUXcH8FWj/ZFAGNgUfAY4MPmbCbSyMMNKQ5MrIX5flpXbYKToMMbLRvk3fQOY
+	XWlhY7euZpv0fbFFbBp7okwAW+Htef875G9nOzZfwHrOl9H3ZqoD5lWxtjShTQBUXgelWYIINuY
+	jv3zJra7mCkMX4xYpU1QLF5LYytvWbuuLmqqSiwVikNj0YzO/iy+FZKJEOF/QqKfS6tf84nDEXk
+	4XDKG6kFvr5RmBwHuYsN52Sbq+qQW5AanHXKQ5ye0tiuELmwhktiGWcibQH6H1XSAsRcv56uVpE
+	ymnzsYuL3x8WbzZbBSi0hdTsUpzmNAVi4Nbq9Ch77XDa9zPFPqHRsJUN6R6w=
+X-Received: by 2002:a17:902:d2c9:b0:296:4e0c:8013 with SMTP id d9443c01a7336-297e56d8ddbmr11167735ad.6.1762575849871;
+        Fri, 07 Nov 2025 20:24:09 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHrl1qrHv8E+G5GUEIE2uNV5CotKNTCUVa1+l5Jsy/637gK5QvLcxRi/O7xvkMhgTgsRO2tOw==
+X-Received: by 2002:a17:902:d2c9:b0:296:4e0c:8013 with SMTP id d9443c01a7336-297e56d8ddbmr11167555ad.6.1762575849246;
+        Fri, 07 Nov 2025 20:24:09 -0800 (PST)
+Received: from gu-dmadival-lv.qualcomm.com (Global_NAT1.qualcomm.com. [129.46.96.20])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2965096b90asm75442235ad.23.2025.11.07.20.24.08
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 07 Nov 2025 19:23:59 -0800 (PST)
-From: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
-Date: Sat, 08 Nov 2025 08:53:22 +0530
-Subject: [PATCH v2 4/4] power: sequencing: Add the Power Sequencing driver
- for the PCIe M.2 connectors
+        Fri, 07 Nov 2025 20:24:08 -0800 (PST)
+From: Deepa Guthyappa Madivalara <deepa.madivalara@oss.qualcomm.com>
+Subject: [PATCH v5 0/5] Enable support for AV1 stateful decoder
+Date: Fri, 07 Nov 2025 20:24:04 -0800
+Message-Id: <20251107-av1d_stateful_v3-v5-0-351652ba49cd@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -106,289 +103,299 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20251108-pci-m2-v2-4-e8bc4d7bf42d@oss.qualcomm.com>
-References: <20251108-pci-m2-v2-0-e8bc4d7bf42d@oss.qualcomm.com>
-In-Reply-To: <20251108-pci-m2-v2-0-e8bc4d7bf42d@oss.qualcomm.com>
-To: Bjorn Helgaas <bhelgaas@google.com>,
-        Manivannan Sadhasivam <mani@kernel.org>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Bartosz Golaszewski <brgl@bgdev.pl>
-Cc: linux-kernel@vger.kernel.org, linux-pci@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        Stephan Gerhold <stephan.gerhold@linaro.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-        linux-pm@vger.kernel.org,
-        Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
+X-B4-Tracking: v=1; b=H4sIAOTFDmkC/23PTW7DIBAF4KtErEvEgP9XvUdVRWOYaZASOwGbt
+ op892J7kUUjIaQ3Eh/zHiJS8BRFd3iIQMlHPw45lG8HYc84fJH0LmehlS5B6VZiAneKE07E8+W
+ UjLQ9t0wOAJ0V+dktEPufjfz43HOg+5zlaR8+4W5VVQuNTN7RKH3wUc79t5U0YH8h2dSEtuICG
+ Isu6ZXvMZK04/Xqpw4q00LdmNYqIjS9YzKVVqxrrqDGsmRXV0Zpse5x9nEaw+/WNJltkb2UUf9
+ L5ZOnAE3hqNRsi/cxxuN9xsv69TFfm5mKp5OhF06RHWOsBUJsDOsXzrIsfxS+RnCHAQAA
+X-Change-ID: 20251029-av1d_stateful_v3-cbf9fed11adc
+To: Mauro Carvalho Chehab <mchehab@kernel.org>,
+        Vikash Garodia <vikash.garodia@oss.qualcomm.com>,
+        Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>,
+        Abhinav Kumar <abhinav.kumar@linux.dev>,
+        Bryan O'Donoghue <bod@kernel.org>
+Cc: linux-media@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, kernel test robot <lkp@intel.com>,
+        Deepa Guthyappa Madivalara <deepa.madivalara@oss.qualcomm.com>,
+        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+        Nicolas Dufresne <nicolas.dufresne@collabora.com>
 X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=7872;
- i=manivannan.sadhasivam@oss.qualcomm.com; h=from:subject:message-id;
- bh=OVN34xQvWdQnzMzIUanYNvprU+WPc4hLhYjzqjWZYe4=;
- b=owEBbQGS/pANAwAKAVWfEeb+kc71AcsmYgBpDre2e1ol23eCJhpZHZQlupKAi1D9Fm3P/fwh8
- VtpWH6qOKOJATMEAAEKAB0WIQRnpUMqgUjL2KRYJ5dVnxHm/pHO9QUCaQ63tgAKCRBVnxHm/pHO
- 9TmVB/96wWPF84FNah50vmYOPwtXOxkcaBWx630Xv2S7ArFVwWcK5E1VikWnRtFIAtWvg9EgRsE
- baeRH3wRl3fHLbNvgq7+wtJv/ONcUaAu5q5nF9rMn5ckGpN7ZWFus0d4QCQ+xFxAUNP5CEtehHw
- 0Bjv2nxKfEuYbs2eSPjd0akHjO8cco1o5xF9BDADMJw+TJRHiZvVIZDDe7cN7y8Z31FtN4MpEZJ
- m4v7zA8DmJYttjtsAu0yL97RhT1WVSWt3uyfwaT26RL2RQ/jy3swgSQxX/Z2PIbtKHHgFWxgUjH
- oIj9SKvN3zlJM6r5V+YUVhd2zLMpKyxOowcKebMxdZ93f385
-X-Developer-Key: i=manivannan.sadhasivam@oss.qualcomm.com; a=openpgp;
- fpr=C668AEC3C3188E4C611465E7488550E901166008
-X-Authority-Analysis: v=2.4 cv=bpZBxUai c=1 sm=1 tr=0 ts=690eb7d1 cx=c_pps
- a=IZJwPbhc+fLeJZngyXXI0A==:117 a=qronr9GGDLuyXDLutoyxMA==:17
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1762575848; l=8777;
+ i=deepa.madivalara@oss.qualcomm.com; s=20250814; h=from:subject:message-id;
+ bh=bSIuBiGfCZIEjCDAyTy63LfslP31QAHOyP8mwIbtjJQ=;
+ b=U18YDaP2ATMwPvXjoOLcR4ARVnNHM5RC6dRv1CoCCKmIOlP4xPgqH4ckBxnacm32ZaugyVkzV
+ 6FfQW5jLeUuBHfWAJ7PzE+KOFePa55CTFpBcs+eyE1RfpS//AKdAzfi
+X-Developer-Key: i=deepa.madivalara@oss.qualcomm.com; a=ed25519;
+ pk=MOEXgyokievn+bgpHdS6Ixh/KQYyS90z2mqIbQ822FQ=
+X-Authority-Analysis: v=2.4 cv=fsXRpV4f c=1 sm=1 tr=0 ts=690ec5eb cx=c_pps
+ a=Qgeoaf8Lrialg5Z894R3/Q==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
  a=IkcTkHD0fZMA:10 a=6UeiqGixMTsA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=EUspDBNiAAAA:8 a=VwQbUJbxAAAA:8 a=7CQSdrXTAAAA:8
- a=Mi8d0xCGeq3gkRWnbWsA:9 a=QEXdDO2ut3YA:10 a=uG9DUKGECoFWVXl0Dc02:22
- a=a-qgeE7W1pNrGK8U0ZQC:22
-X-Proofpoint-GUID: 0fLeSZx_hBdqEPunbqexOJfwdZyi5nrM
-X-Proofpoint-ORIG-GUID: 0fLeSZx_hBdqEPunbqexOJfwdZyi5nrM
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMTA4MDAyNyBTYWx0ZWRfXyyrKXuTORyCU
- S/r8MM7G13aIwat3IAersDoQYnf833LRbWmkkEw1yLnBrdasI+fsAiydOzA5HyW06xUFj4EPmQY
- IhpeGv01HA391muj46knFXHF9PKW58oH1UOWF7ffkJfhSQ9ixqSMPot2Y6i592WnXLYRQwlhmQA
- yaFEphpFOwL81GTfTAzyao7zABa0epfavOJ9Dv+rV8CQIn6bDaDPbgAWhwsh7dfXSOWKjvG8g9L
- VjiyWKe9GE886PdJq3pJZF3Gz1heW3kruX9jvOJWt9rxI+5lDeRpjmQPoiOYz8KqcgyGLIwPpOf
- q3T/x9tuTuph8P0iXOD11gj3At7xuSDpFKpxcfJ7QUo03XaCF3Px7rmW2zfDQd5sRvLs0RqnD1A
- 3xASPQtoXuOr4vUhKWoEmP1Q++z81Q==
+ a=VkNPw1HP01LnGYTKEx00:22 a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8 a=QyXUC8HyAAAA:8
+ a=e5mUnYsNAAAA:8 a=rSFLfVtXdW1OZ3NksNsA:9 a=QEXdDO2ut3YA:10
+ a=x9snwWr2DeNwDh03kgHS:22 a=Vxmtnl_E_bksehYqCbjh:22
+X-Proofpoint-GUID: Tow4X_g8AQJa9WSPYWnXBSqMthZKT1li
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMTA4MDAzMyBTYWx0ZWRfXz80WMvnerjxr
+ DuY++owTymb3A3/zB+lmnBseBnU9RlNtyUBT9nDSbWoPr8ti2u0mhrnwUNFl+7vf65PxO0RKhF9
+ wc65pQfMrz/uiIbhORkUVq350QaGS2tThn1RfF540Q1D5i+9qlGtF9Khx5oVrSi4VL5NASCJDUn
+ DhkFUIF67cHz5E3qO/xamZ1jx27OBb8/X5KfiTBJg1vpRaTOz9O283KUodkUHfAwfeJEfMGOSTu
+ 5AxNiMkZyBp5V0Z0OkBedkNTSykRXvEFs6kgUW8cHZh444AsvrcpkX+ktA71QjL95fdaNyg9oz3
+ nY5e2zNuk3Ioj1NUBvdsVlsZtgGo8o+BJ3mIz13ciYpVOGd4RnMxTHlpGSxvT4B5Y3AMCAa25l2
+ uU8HsjSKLEw7xjRw12CBAOrWbhDKKA==
+X-Proofpoint-ORIG-GUID: Tow4X_g8AQJa9WSPYWnXBSqMthZKT1li
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
  definitions=2025-11-08_01,2025-11-06_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 clxscore=1015 bulkscore=0 suspectscore=0 impostorscore=0
- phishscore=0 lowpriorityscore=0 spamscore=0 adultscore=0 priorityscore=1501
+ impostorscore=0 suspectscore=0 phishscore=0 clxscore=1015 bulkscore=0
+ priorityscore=1501 adultscore=0 spamscore=0 lowpriorityscore=0 malwarescore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2510240001 definitions=main-2511080027
+ reason=mlx scancount=1 engine=8.22.0-2510240001 definitions=main-2511080033
 
-This driver is used to control the PCIe M.2 connectors of different
-Mechanical Keys attached to the host machines and supporting different
-interfaces like PCIe/SATA, USB/UART etc...
+Hi all,
 
-Currently, this driver supports only the Mechanical Key M connectors with
-PCIe interface. The driver also only supports driving the mandatory 3.3v
-and optional 1.8v power supplies. The optional signals of the Key M
-connectors are not currently supported.
+This patch series adds initial support for the AV1 stateful decoder
+codecs in iris decoder. Also it adds support for AV1 stateful decoder
+in V4l2. The objective of this work is to extend the Iris decoder's
+capabilities to handle AV1 format codec streams, including necessary
+format handling and buffer management.
 
-Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
+These patches also address the comments and feedback received from the
+patches previously sent. I have made the necessary improvements
+based on the community's suggestions.
+
+Changes in v5:
+- Updated Documentation (Hans, Nicolas)
+- Link to v4:
+  https://lore.kernel.org/r/20251103-av1d_stateful_v3-v4-0-33cc1eaa83f2@oss.qualcomm.com
+
+Changes in v4:
+- Reuse sm8550_vdec_output_config_params (Dikshita)
+- Add definition for 256 (Bryan)
+- Fix identation (Bryan)
+- Link to v3:
+  https://lore.kernel.org/r/20251030-av1d_stateful_v3-v3-0-a1184de52fc4@oss.qualcomm.com
+
+Changes in v3:
+- Updated fourcc could be to match the ISO specification (Nicolas)
+- Addressed comments and rebased changes to resolve potential merge
+  conflicts (Dikshita)
+- Updated GST MR
+- Link to v2:
+  https://lore.kernel.org/r/20251017-av1_irisdecoder-v2-0-964a5478139e@oss.qualcomm.com
+
+Changes in v2:
+- Updated documentation to target AV1 codec, not just AV1 decoder
+  (Nicolas)
+- Updated description for V4L2_PIX_FMT_AV1 (Nicolas)
+- Simplified buffer calculations and replaced numbers with relevant
+  enums (Bryan, Nicolas)
+- Improved commit text for patch 5/5
+- Fix for kernel test robot failure
+  Reported-by: kernel test robot <lkp@intel.com>
+  Closes:
+  https://lore.kernel.org/oe-kbuild-all/202510021620.4BVCZwgf-lkp@intel.com/
+- Link to v1:
+  https://lore.kernel.org/r/20251001-av1_irisdecoder-v1-0-9fb08f3b96a0@oss.qualcomm.com
+
+Changes since RFC:
+- Addressed CRC issues seen during fluster testing which
+  are fixed with firmware fix [1]
+- Added Documentation for AV1 stateful uapi [Nicholas]
+- Resolved issues reported by static tool analyzers
+- RFC:
+  https://lore.kernel.org/linux-media/20250902-rfc_split-v1-0-47307a70c061@oss.qualcomm.com/
+
+[1]:
+https://lore.kernel.org/linux-firmware/ff27f712-a96e-4fa6-7572-a0091537d8ac@oss.qualcomm.com/
+
+These patches are tested on SM8550 for AV1 decoder while
+ensuring other codecs are not affected.
+
+Gstreamer testing:
+Gstreamer MR for enabling AV1 stateful decoder:
+https://gitlab.freedesktop.org/gstreamer/gstreamer/-/merge_requests/9892
+
+Fluster testing:
+Test suite: AV1-TEST-VECTORS
+The result of fluster test on SM8550:
+135/242 testcases passed while testing AV1-TEST-VECTORS with
+GStreamer-AV1-V4L2-Gst1.0
+
+failing tests:
+unsupported content with bitdepth 10 (66 tests)
+Iris decoder supports only 8bit NV12
+av1-1-b10-00-quantizer-*
+
+Unsupported resolution (36 tests).
+Iris hardware decoder supports min resolution of 96x96
+av1-1-b8-01-size-*
+
+Unsupported colorformat (1 test)
+av1-1-b8-24-monochrome
+
+Unsupported SVC tests (2tests)
+av1-1-b8-22-svc-L2T1
+av1-1-b8-22-svc-L2T2
+
+Bitstream corruption issue: (2tests)
+av1-1-b8-03-sizeup
+av1-1-b8-03-sizedown
+
+Testsuite: CHROMIUM-8bit-AV1-TEST-VECTORS
+13/13 testcases passed while testing CHROMIUM-8bit-AV1-TEST-VECTORS with
+GStreamer-AV1-V4L2-Gst1.0
+
+Following the RFC feedback, focused on only IVF/MKV content
+as AV1 parser lacks support for below content
+AV1-ARGON-PROFILE0-CORE-ANNEX-B
+AV1-ARGON-PROFILE0-NON-ANNEX-B
+AV1-ARGON-PROFILE0-NON-ANNEX-B
+
+Unsupported test suites:
+Iris Decoder supports only PROFILE0/V4L2_MPEG_VIDEO_AV1_PROFILE_MAIN
+and 8 bit, 420 only
+AV1-ARGON-PROFILE1-CORE-ANNEX-B
+AV1-ARGON-PROFILE1-NON-ANNEX-B
+AV1-ARGON-PROFILE1-STRESS-ANNEX-B
+AV1-ARGON-PROFILE2-CORE-ANNEX-B
+AV1-ARGON-PROFILE2-NON-ANNEX-B
+AV1-ARGON-PROFILE2-STRESS-ANNEX-B
+CHROMIUM-10bit-AV1-TEST-VECTORS
+
+Compliance test for iris_driver device /dev/video0:
+
+Driver Info:
+		Driver name      : iris_driver
+		Card type        : Iris Decoder
+		Bus info         : platform:aa00000.video-codec
+		Driver version   : 6.17.0
+		Capabilities     : 0x84204000
+				Video Memory-to-Memory Multiplanar
+				Streaming
+				Extended Pix Format
+				Device Capabilities
+		Device Caps      : 0x04204000
+				Video Memory-to-Memory Multiplanar
+				Streaming
+				Extended Pix Format
+		Detected Stateful Decoder
+
+Required ioctls:
+		test VIDIOC_QUERYCAP: OK
+		test invalid ioctls: OK
+
+Allow for multiple opens:
+		test second /dev/video0 open: OK
+		test VIDIOC_QUERYCAP: OK
+		test VIDIOC_G/S_PRIORITY: OK
+		test for unlimited opens: OK
+
+Debug ioctls:
+		test VIDIOC_DBG_G/S_REGISTER: OK (Not Supported)
+		test VIDIOC_LOG_STATUS: OK (Not Supported)
+
+Input ioctls:
+		test VIDIOC_G/S_TUNER/ENUM_FREQ_BANDS: OK (Not
+Supported)
+		test VIDIOC_G/S_FREQUENCY: OK (Not Supported)
+		test VIDIOC_S_HW_FREQ_SEEK: OK (Not Supported)
+		test VIDIOC_ENUMAUDIO: OK (Not Supported)
+		test VIDIOC_G/S/ENUMINPUT: OK (Not Supported)
+		test VIDIOC_G/S_AUDIO: OK (Not Supported)
+		Inputs: 0 Audio Inputs: 0 Tuners: 0
+
+Output ioctls:
+		test VIDIOC_G/S_MODULATOR: OK (Not Supported)
+		test VIDIOC_G/S_FREQUENCY: OK (Not Supported)
+		test VIDIOC_ENUMAUDOUT: OK (Not Supported)
+		test VIDIOC_G/S/ENUMOUTPUT: OK (Not Supported)
+		test VIDIOC_G/S_AUDOUT: OK (Not Supported)
+		Outputs: 0 Audio Outputs: 0 Modulators: 0
+
+Input/Output configuration ioctls:
+		test VIDIOC_ENUM/G/S/QUERY_STD: OK (Not Supported)
+		test VIDIOC_ENUM/G/S/QUERY_DV_TIMINGS: OK (Not
+Supported)
+		test VIDIOC_DV_TIMINGS_CAP: OK (Not Supported)
+		test VIDIOC_G/S_EDID: OK (Not Supported)
+
+Control ioctls:
+		test VIDIOC_QUERY_EXT_CTRL/QUERYMENU: OK
+		test VIDIOC_QUERYCTRL: OK
+		test VIDIOC_G/S_CTRL: OK
+		test VIDIOC_G/S/TRY_EXT_CTRLS: OK
+		test VIDIOC_(UN)SUBSCRIBE_EVENT/DQEVENT: OK
+		test VIDIOC_G/S_JPEGCOMP: OK (Not Supported)
+		Standard Controls: 12 Private Controls: 0
+
+Format ioctls:
+		test VIDIOC_ENUM_FMT/FRAMESIZES/FRAMEINTERVALS: OK
+		test VIDIOC_G/S_PARM: OK (Not Supported)
+		test VIDIOC_G_FBUF: OK (Not Supported)
+		test VIDIOC_G_FMT: OK
+		test VIDIOC_TRY_FMT: OK
+		test VIDIOC_S_FMT: OK
+		test VIDIOC_G_SLICED_VBI_CAP: OK (Not Supported)
+		test Cropping: OK
+		test Composing: OK
+		test Scaling: OK (Not Supported)
+
+Codec ioctls:
+		test VIDIOC_(TRY_)ENCODER_CMD: OK (Not Supported)
+		test VIDIOC_G_ENC_INDEX: OK (Not Supported)
+		test VIDIOC_(TRY_)DECODER_CMD: OK
+
+Buffer ioctls:
+		test VIDIOC_REQBUFS/CREATE_BUFS/QUERYBUF: OK
+		test CREATE_BUFS maximum buffers: OK
+		test VIDIOC_REMOVE_BUFS: OK
+		test VIDIOC_EXPBUF: OK
+		test Requests: OK (Not Supported)
+		test blocking wait: OK
+
+Total for iris_driver device /dev/video0: 48, Succeeded: 48, Failed: 0,
+Warnings: 0
+
+Thanks,
+Deepa
+
+Signed-off-by: Deepa Guthyappa Madivalara <deepa.madivalara@oss.qualcomm.com>
 ---
- MAINTAINERS                               |   7 ++
- drivers/power/sequencing/Kconfig          |   8 ++
- drivers/power/sequencing/Makefile         |   1 +
- drivers/power/sequencing/pwrseq-pcie-m2.c | 163 ++++++++++++++++++++++++++++++
- 4 files changed, 179 insertions(+)
+Deepa Guthyappa Madivalara (5):
+      media: uapi: videodev2: Add support for AV1 stateful decoder
+      media: v4l2: Add description for V4L2_PIX_FMT_AV1 in v4l_fill_fmtdesc()
+      media: iris: Add support for AV1 format in iris decoder
+      media: iris: Define AV1-specific platform capabilities and properties
+      media: iris: Add internal buffer calculation for AV1 decoder
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 46126ce2f968e4f9260263f1574ee29f5ff0de1c..9b3f689d1f50c62afa3772a0c6802f99a98ac2de 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -20474,6 +20474,13 @@ F:	Documentation/driver-api/pwrseq.rst
- F:	drivers/power/sequencing/
- F:	include/linux/pwrseq/
- 
-+PCIE M.2 POWER SEQUENCING
-+M:	Manivannan Sadhasivam <mani@kernel.org>
-+L:	linux-pci@vger.kernel.org
-+S:	Maintained
-+F:	Documentation/devicetree/bindings/connector/pcie-m2-m-connector.yaml
-+F:	drivers/power/sequencing/pwrseq-pcie-m2.c
-+
- POWER STATE COORDINATION INTERFACE (PSCI)
- M:	Mark Rutland <mark.rutland@arm.com>
- M:	Lorenzo Pieralisi <lpieralisi@kernel.org>
-diff --git a/drivers/power/sequencing/Kconfig b/drivers/power/sequencing/Kconfig
-index 280f92beb5d0ed524e67a28d1c5dd264bbd6c87e..f5fff84566ba463b55d3cd0c07db34c82f9f1e31 100644
---- a/drivers/power/sequencing/Kconfig
-+++ b/drivers/power/sequencing/Kconfig
-@@ -35,4 +35,12 @@ config POWER_SEQUENCING_TH1520_GPU
- 	  GPU. This driver handles the complex clock and reset sequence
- 	  required to power on the Imagination BXM GPU on this platform.
- 
-+config POWER_SEQUENCING_PCIE_M2
-+	tristate "PCIe M.2 connector power sequencing driver"
-+	depends on OF || COMPILE_TEST
-+	help
-+	  Say Y here to enable the power sequencing driver for PCIe M.2
-+	  connectors. This driver handles the power sequencing for the M.2
-+	  connectors exposing multiple interfaces like PCIe, SATA, UART, etc...
-+
- endif
-diff --git a/drivers/power/sequencing/Makefile b/drivers/power/sequencing/Makefile
-index 96c1cf0a98ac54c9c1d65a4bb4e34289a3550fa1..0911d461829897c5018e26dbe475b28f6fb6914c 100644
---- a/drivers/power/sequencing/Makefile
-+++ b/drivers/power/sequencing/Makefile
-@@ -5,3 +5,4 @@ pwrseq-core-y				:= core.o
- 
- obj-$(CONFIG_POWER_SEQUENCING_QCOM_WCN)	+= pwrseq-qcom-wcn.o
- obj-$(CONFIG_POWER_SEQUENCING_TH1520_GPU) += pwrseq-thead-gpu.o
-+obj-$(CONFIG_POWER_SEQUENCING_PCIE_M2)	+= pwrseq-pcie-m2.o
-diff --git a/drivers/power/sequencing/pwrseq-pcie-m2.c b/drivers/power/sequencing/pwrseq-pcie-m2.c
-new file mode 100644
-index 0000000000000000000000000000000000000000..15659b009fb3e01227e40f26d633f675bc2af701
---- /dev/null
-+++ b/drivers/power/sequencing/pwrseq-pcie-m2.c
-@@ -0,0 +1,163 @@
-+// SPDX-License-Identifier: GPL-2.0-only
-+/*
-+ * Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
-+ * Author: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
-+ */
-+
-+#include <linux/device.h>
-+#include <linux/mod_devicetable.h>
-+#include <linux/module.h>
-+#include <linux/of.h>
-+#include <linux/of_graph.h>
-+#include <linux/of_platform.h>
-+#include <linux/platform_device.h>
-+#include <linux/pwrseq/provider.h>
-+#include <linux/regulator/consumer.h>
-+#include <linux/slab.h>
-+
-+struct pwrseq_pcie_m2_pdata {
-+	const struct pwrseq_target_data **targets;
-+};
-+
-+struct pwrseq_pcie_m2_ctx {
-+	struct pwrseq_device *pwrseq;
-+	struct device_node *of_node;
-+	const struct pwrseq_pcie_m2_pdata *pdata;
-+	struct regulator_bulk_data *regs;
-+	size_t num_vregs;
-+	struct notifier_block nb;
-+};
-+
-+static int pwrseq_pcie_m2_m_vregs_enable(struct pwrseq_device *pwrseq)
-+{
-+	struct pwrseq_pcie_m2_ctx *ctx = pwrseq_device_get_drvdata(pwrseq);
-+
-+	return regulator_bulk_enable(ctx->num_vregs, ctx->regs);
-+}
-+
-+static int pwrseq_pcie_m2_m_vregs_disable(struct pwrseq_device *pwrseq)
-+{
-+	struct pwrseq_pcie_m2_ctx *ctx = pwrseq_device_get_drvdata(pwrseq);
-+
-+	return regulator_bulk_disable(ctx->num_vregs, ctx->regs);
-+}
-+
-+static const struct pwrseq_unit_data pwrseq_pcie_m2_vregs_unit_data = {
-+	.name = "regulators-enable",
-+	.enable = pwrseq_pcie_m2_m_vregs_enable,
-+	.disable = pwrseq_pcie_m2_m_vregs_disable,
-+};
-+
-+static const struct pwrseq_unit_data *pwrseq_pcie_m2_m_unit_deps[] = {
-+	&pwrseq_pcie_m2_vregs_unit_data,
-+	NULL
-+};
-+
-+static const struct pwrseq_unit_data pwrseq_pcie_m2_m_pcie_unit_data = {
-+	.name = "pcie-enable",
-+	.deps = pwrseq_pcie_m2_m_unit_deps,
-+};
-+
-+static const struct pwrseq_target_data pwrseq_pcie_m2_m_pcie_target_data = {
-+	.name = "pcie",
-+	.unit = &pwrseq_pcie_m2_m_pcie_unit_data,
-+};
-+
-+static const struct pwrseq_target_data *pwrseq_pcie_m2_m_targets[] = {
-+	&pwrseq_pcie_m2_m_pcie_target_data,
-+	NULL
-+};
-+
-+static const struct pwrseq_pcie_m2_pdata pwrseq_pcie_m2_m_of_data = {
-+	.targets = pwrseq_pcie_m2_m_targets,
-+};
-+
-+static int pwrseq_pcie_m2_match(struct pwrseq_device *pwrseq,
-+				 struct device *dev)
-+{
-+	struct pwrseq_pcie_m2_ctx *ctx = pwrseq_device_get_drvdata(pwrseq);
-+	struct device_node *remote, *endpoint;
-+
-+	/*
-+	 * Traverse the 'remote-endpoint' nodes and check if the remote node's
-+	 * parent matches the OF node of 'dev'.
-+	 */
-+	for_each_endpoint_of_node(ctx->of_node, endpoint) {
-+		remote = of_graph_get_remote_port_parent(endpoint);
-+		if (remote && (remote == dev_of_node(dev))) {
-+			of_node_put(remote);
-+			of_node_put(endpoint);
-+			return PWRSEQ_MATCH_OK;
-+		}
-+		of_node_put(remote);
-+	}
-+
-+	return PWRSEQ_NO_MATCH;
-+}
-+
-+static int pwrseq_pcie_m2_probe(struct platform_device *pdev)
-+{
-+	struct device *dev = &pdev->dev;
-+	struct pwrseq_pcie_m2_ctx *ctx;
-+	struct pwrseq_config config = {};
-+	int ret;
-+
-+	ctx = devm_kzalloc(dev, sizeof(*ctx), GFP_KERNEL);
-+	if (!ctx)
-+		return -ENOMEM;
-+
-+	ctx->of_node = dev_of_node(dev);
-+	ctx->pdata = device_get_match_data(dev);
-+	if (!ctx->pdata)
-+		return dev_err_probe(dev, -ENODEV,
-+				     "Failed to obtain platform data\n");
-+
-+	/*
-+	 * Currently, of_regulator_bulk_get_all() is the only regulator API that
-+	 * allows to get all supplies in the devicetree node without manually
-+	 * specifying them.
-+	 */
-+	ret = of_regulator_bulk_get_all(dev, dev_of_node(dev), &ctx->regs);
-+	if (ret < 0)
-+		return dev_err_probe(dev, ret,
-+				     "Failed to get all regulators\n");
-+
-+	ctx->num_vregs = ret;
-+
-+	config.parent = dev;
-+	config.owner = THIS_MODULE;
-+	config.drvdata = ctx;
-+	config.match = pwrseq_pcie_m2_match;
-+	config.targets = ctx->pdata->targets;
-+
-+	ctx->pwrseq = devm_pwrseq_device_register(dev, &config);
-+	if (IS_ERR(ctx->pwrseq)) {
-+		regulator_bulk_free(ctx->num_vregs, ctx->regs);
-+		return dev_err_probe(dev, PTR_ERR(ctx->pwrseq),
-+				     "Failed to register the power sequencer\n");
-+	}
-+
-+	return 0;
-+}
-+
-+static const struct of_device_id pwrseq_pcie_m2_of_match[] = {
-+	{
-+		.compatible = "pcie-m2-m-connector",
-+		.data = &pwrseq_pcie_m2_m_of_data,
-+	},
-+	{ }
-+};
-+MODULE_DEVICE_TABLE(of, pwrseq_pcie_m2_of_match);
-+
-+static struct platform_driver pwrseq_pcie_m2_driver = {
-+	.driver = {
-+		.name = "pwrseq-pcie-m2",
-+		.of_match_table = pwrseq_pcie_m2_of_match,
-+	},
-+	.probe = pwrseq_pcie_m2_probe,
-+};
-+module_platform_driver(pwrseq_pcie_m2_driver);
-+
-+MODULE_AUTHOR("Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>");
-+MODULE_DESCRIPTION("Power Sequencing driver for PCIe M.2 connector");
-+MODULE_LICENSE("GPL");
+ .../userspace-api/media/v4l/pixfmt-compressed.rst  |   8 +
+ drivers/media/platform/qcom/iris/iris_buffer.h     |   2 +
+ drivers/media/platform/qcom/iris/iris_ctrls.c      |   8 +
+ drivers/media/platform/qcom/iris/iris_hfi_common.h |   3 +
+ .../platform/qcom/iris/iris_hfi_gen2_command.c     |  85 +++++-
+ .../platform/qcom/iris/iris_hfi_gen2_defines.h     |  11 +-
+ .../platform/qcom/iris/iris_hfi_gen2_response.c    |  22 ++
+ drivers/media/platform/qcom/iris/iris_instance.h   |   1 +
+ .../platform/qcom/iris/iris_platform_common.h      |  13 +
+ .../media/platform/qcom/iris/iris_platform_gen2.c  | 142 +++++++++-
+ .../platform/qcom/iris/iris_platform_sm8250.c      |  17 ++
+ drivers/media/platform/qcom/iris/iris_vdec.c       |  23 +-
+ drivers/media/platform/qcom/iris/iris_vidc.c       |   1 +
+ drivers/media/platform/qcom/iris/iris_vpu_buffer.c | 299 ++++++++++++++++++++-
+ drivers/media/platform/qcom/iris/iris_vpu_buffer.h | 116 ++++++++
+ drivers/media/v4l2-core/v4l2-ioctl.c               |   1 +
+ include/uapi/linux/videodev2.h                     |   1 +
+ 17 files changed, 726 insertions(+), 27 deletions(-)
+---
+base-commit: 163917839c0eea3bdfe3620f27f617a55fd76302
+change-id: 20251029-av1d_stateful_v3-cbf9fed11adc
+prerequisite-change-id:20250918-video-iris-ubwc-enable-87eac6f41fa4:v2
+prerequisite-patch-id: 11fd97eabf65d22120ff89985be5510599eb4159
+prerequisite-patch-id: aea5a497f31db23a05424fe2cddedec613571f2a
+prerequisite-patch-id: e3b10c34426c33432208e120a3e1239630893d88
 
+Best regards,
 -- 
-2.48.1
+Deepa Guthyappa Madivalara <deepa.madivalara@oss.qualcomm.com>
 
 
