@@ -1,308 +1,187 @@
-Return-Path: <linux-arm-msm+bounces-80847-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-80848-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2472CC432EF
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 08 Nov 2025 19:11:23 +0100 (CET)
+Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [IPv6:2605:f480:58:1:0:1994:3:14])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9DA23C43408
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 08 Nov 2025 20:44:16 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id D264C3AF4D7
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  8 Nov 2025 18:11:21 +0000 (UTC)
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 808704E192D
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  8 Nov 2025 19:44:15 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D757E244687;
-	Sat,  8 Nov 2025 18:11:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2DE7026D4CD;
+	Sat,  8 Nov 2025 19:44:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="ML3sUk6A";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="aCb2V+O/"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="Vat9R0Ui";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="HvdBgMV0"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 198882741DA
-	for <linux-arm-msm@vger.kernel.org>; Sat,  8 Nov 2025 18:11:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3538F2BD00C
+	for <linux-arm-msm@vger.kernel.org>; Sat,  8 Nov 2025 19:44:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762625469; cv=none; b=d5paA+ttxwJbw9lqeiwT7M/MWXGvh8ooDGflDA1Wd5V1QxONklJ0HeoaeskTygSZL9C20JWLvLoN57Ak/iG/GL/Pm/pGOL5/MT5Kj2hpGKgkRu5uvsA9ERYVyZbtIZCZR+j+/4LGrlzjwy97qwm3xYgDLG+lTYSMaedz53xq0Og=
+	t=1762631054; cv=none; b=SYibryflzsvAzmkU22B+6EFfDYXXZtAMPsznjhipKzz5+OJiV2FYDCIYCuDNLvyX0l6J9er0tP6HuLMkLuV+dDoog1oT5Eket1p9HDZmrlAroES10Q/0iXb6mDlG0EUK0bChYio/NGnZJoyiretOATdd89ldAItOCmSb9wUMhhQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762625469; c=relaxed/simple;
-	bh=fOsRuEG19Rm3C05snWo9jA5gpWqRYP4hAH53HLRrD/M=;
+	s=arc-20240116; t=1762631054; c=relaxed/simple;
+	bh=VTSz20rTG1aH0wrKhZOgUArplz/ieHDHEPZlov5X+mE=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=QIaYy/6ZHOisuvg6XI3j0bdNyQVZPj4zwX/f3lAM7OzhdPUdIR3JYgovnlXI+2t+NpoygzR3Q589glw+U1hlfEVJJ+GdHmLonnC8IhCLDUBCTKWCdQWoNx1WPN2TGApCS/v06tQ6qD9Cgc/H1QReV6Ko4/5BFAzIm/sa9SnslPU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=ML3sUk6A; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=aCb2V+O/; arc=none smtp.client-ip=205.220.180.131
+	 Content-Type:Content-Disposition:In-Reply-To; b=tcqXSPQClzGF4PnXPGuxKfBfJmqb1U3uKVmmnEBtE4cdHX6d20z/3d8YPyoeEuL9zNOGk3rqmL65U6nv6eztQOkXMwE4glon+W+aqzGmdgk16jLVezCFNGgQXiYtHoEfGH5F+q4lt6NzD0+zKCVU4wvSY8mwfGESB1kz3wV6oqs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=Vat9R0Ui; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=HvdBgMV0; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 5A8BrrrP2011159
-	for <linux-arm-msm@vger.kernel.org>; Sat, 8 Nov 2025 18:11:00 GMT
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 5A8J0TDJ2394724
+	for <linux-arm-msm@vger.kernel.org>; Sat, 8 Nov 2025 19:44:08 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to; s=qcppdkim1; bh=r6FePatGCvy+ETtTkeEM3vn/
-	9lE+wgGoRAkcvzm/jgE=; b=ML3sUk6ACc2NmDqhPQ4doplG60TbEkxIuGnrtpwM
-	bMd+Y5iSfoc9sw2DaeEjtvwJgjYEVA+7Vvuch2/bfK9NJLzoENfLtE2PNVvUzO0Z
-	yDmF7xCVhh0tEzeCq+Ss59uMVFcDF/YjK9VD7JcbVR1czc+WFmNqnv1lrkcQg6TA
-	IJ3DEI++iN35i+FJ/E60q+XeivmKITQOh/gOkWhiH8jwsJI9/Yo5TbAkGZTsqHqu
-	ID5mcvkK80231t5Y18lPOpa2RoNkVRBa6HvFGTXiV8gJswsYs7kWzOKnPcPyw1Fz
-	uH1m1ITMdOrzRo/cMabY0jdpxaj9vHdzSHDrEejHcAMqKg==
-Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com [209.85.219.72])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4a9xwfgyrb-1
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	FT3kHDy8XQ+OKhr6kp2cr3BCjcsGe48E1o0I9V0WZEI=; b=Vat9R0Uihty/VB7y
+	zZIthDCAXe3ANBxS5fD1ny/GOcwWhwUNtAneEM2rFpObJzBRS/nTQsr4Y6mri8Ag
+	6TkZZlD050Nlx15OfyElSOX/cCgDB5HGEK+zE294YQu64nlCcouFVmWJlo9PHpgh
+	JjWBlghdA7hZJz9YSny9U8rSLUc9N1o0O9+Cxak1JvNCgXB7QivevV+nQ9nEAudg
+	BcwJbkslZSn2+vZQgZjUuha8J3aEMgQzzK3B3T05yfdBKa9fB0bifeLaUnAM6laI
+	DQhp8djXKpqbv1/6nDcsq/fV9ljqb3Vuwp+S0YtzmF6dwcljB6/tTEfWK/kYDagS
+	wqBbhQ==
+Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com [209.85.160.200])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4a9y1h12uf-1
 	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Sat, 08 Nov 2025 18:10:59 +0000 (GMT)
-Received: by mail-qv1-f72.google.com with SMTP id 6a1803df08f44-87bf4ed75beso46899616d6.3
-        for <linux-arm-msm@vger.kernel.org>; Sat, 08 Nov 2025 10:10:59 -0800 (PST)
+	for <linux-arm-msm@vger.kernel.org>; Sat, 08 Nov 2025 19:44:08 +0000 (GMT)
+Received: by mail-qt1-f200.google.com with SMTP id d75a77b69052e-4edb35b1147so464881cf.0
+        for <linux-arm-msm@vger.kernel.org>; Sat, 08 Nov 2025 11:44:07 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1762625459; x=1763230259; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=r6FePatGCvy+ETtTkeEM3vn/9lE+wgGoRAkcvzm/jgE=;
-        b=aCb2V+O/EZQq/YoB3rPa6cnoWLgHERXTyAYPKSgvxoR7BoKBXSDNTVGWI01N1kjlb0
-         89hUiXOqIS/XP3CcHsQ6zN09z6ixDFLdLwGhGIBDnhCD9GYUqTqoh/nzHQU7ghL1p9lj
-         bfNcDSUQ4TcQ818nc+AenuwO3RjXlJgvEoa9ReBwTUjkkNidsXum8HCZWkU0JCkImAH+
-         /sFRVK9+abP85Yi2mTdJYLe7zRKjSCZKmGNjnKZEPojMnGf/6R0iUjHIyaXoyvbXRI1L
-         /zPbmxA430Z1f0VoVpsGbn/9J1FHx6166+5ukTNZSkqAAH5tFBBJlIwM15/h+8mOKHcI
-         zMvA==
+        d=oss.qualcomm.com; s=google; t=1762631047; x=1763235847; darn=vger.kernel.org;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=FT3kHDy8XQ+OKhr6kp2cr3BCjcsGe48E1o0I9V0WZEI=;
+        b=HvdBgMV09N4TZefxz8knlZ7Ziu0PY04Ff9MYCRVc6Ku0UZvihcxwoLr3ac0BnLzVwd
+         EQVZoaY4j/IYzm9N7lH8WDz1H+yDJrF5tIGjQ2+qZQ88FzxVvXkXsGOh52liRsJM/Kxg
+         PcOzfLKVbbcgpKUZNX2XEm3d+M75GtOn5eTLrFqC04s5SKqRFAJa99JESsC3RFYkMp9+
+         ANUWCbMbH5XlBgNtFOAY6Wbj2dng3dgCKP8H7bZZKS/n5rUuPC7o9ONcrliiXhM1Ay2e
+         2MmibjGy1neYnbP9iq3xomD0SOp8c23a9A/j5z/0VMxob6atoG6dPW2JkmhafF2gdA5f
+         KApg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1762625459; x=1763230259;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=r6FePatGCvy+ETtTkeEM3vn/9lE+wgGoRAkcvzm/jgE=;
-        b=GTZRKlvW05IjyTMLKI8BEJhMZozP10LXT+Y4q1EeZXlx265cQtql2dkmjmC+QYeTPg
-         g0Ln0kc9gWBzxv3fMZuNoXa44KhUSTeuEk3maejTlDEuZVKunn3zczkZWg6pX2gBwu41
-         HWNFhLEpCe9arheUc4zpFo2v2vXUZcmFRDbNsW+3mXRS1S9675QzYLUi3+OYGzMbfUDy
-         +6sJ/+/X2iwq3BZLSamhzWPoDlAE0PqkNm/kSWyfQ8bsNI88q4N+nyPHJPyPfxHvi0mu
-         ud3//imryPAsnjcIAhbAbqyiyyyiS/g1rR2lue/KkRkgpOgRaLGWLETsQ2XcDP6BE2s+
-         +ohQ==
-X-Forwarded-Encrypted: i=1; AJvYcCVatYSF1I28OIYL0PP3r+YK33yr0jOFK7UjH4fVFkbC1gnxfHwMDO0yqFbAGhNGm8Q9PL0iIRZ3r9fLUQ7U@vger.kernel.org
-X-Gm-Message-State: AOJu0YzeLgUu/OTU1sjJy79DeR55Ve2wXNxPPogwLIRop/C57g/4Qqx1
-	qogM+O8W8cWLyHCqixbQQ5WQjmQYAIG8DftqQl3KZ+0gJZYEmHvAwsSHPa/DAt7oP6Qtz+2c79X
-	SakBJR/ok61CIe9Q23J487mj9spVWYjN9MLNGTpTxLm8rUJB4dWDCjZX52tbvtb3CP9my
-X-Gm-Gg: ASbGncsG69pv2hhnvNM7aOOTLIfK84KI37Uw/LD/vVXatWkucG07/KKTDSg+nJ2S9TN
-	EcOR8TxAFLjHLGKbmvd1OvEW2Ipv5HbvG90IoC0D/izfSOnOhO+2sEU1WAGRb2tEznijwEWj/Qw
-	pf02R0cIHRFqFQvGTXsosfs+Qp+fFCIu0EQcuWsy1Grxya2KYGr1iS+3djceNO464XhaIpgINyz
-	1hUAZi4KR+DgJ1pdJ9s4CqPa+HCqxFkbS8G+yhRNE4HIWx6iVIpr+4bLn1TgGYK5qs3Hk5Atb2z
-	d26O/qxYe2ruD9xPO+drDg/ZVQIwc8T1LenYCgVJ8We85PMAwiGN5UAlhdEwthIXhTNpUcAtQb+
-	sPfzlEs10URpye9GKxMY/qKMYPqRkN5XFrzme7u9dQmVtJS3suTqe5e8Krs6jUAm782ChJR7wV8
-	kKDPMPY8ycHjEc
-X-Received: by 2002:ac8:7e94:0:b0:4ed:18dd:fd4 with SMTP id d75a77b69052e-4eda4eb97ebmr35129101cf.19.1762625459214;
-        Sat, 08 Nov 2025 10:10:59 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IF4i3GOQJbaFJJVYsZ0kR4yNKniHd76KAyDxpBZc6xL37rUmvj2LHwuC7290RKXWl1F0SzPcQ==
-X-Received: by 2002:ac8:7e94:0:b0:4ed:18dd:fd4 with SMTP id d75a77b69052e-4eda4eb97ebmr35128891cf.19.1762625458771;
-        Sat, 08 Nov 2025 10:10:58 -0800 (PST)
+        d=1e100.net; s=20230601; t=1762631047; x=1763235847;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=FT3kHDy8XQ+OKhr6kp2cr3BCjcsGe48E1o0I9V0WZEI=;
+        b=jqiUxWZmHMGJmn7Ey+dkksPifPGH3+OlrTZs9TbHSq3WUNTycvtlFgvkdHHKqKtrm+
+         jfTu8zGNF0EXdHAGKhqiAuVq+SbCNv1wlwI/1aLOoBeYlVuPiJbrdqu68XJneq8sBaSm
+         UXPAyzDKdPy99me6k6tn5STBVs9uENmjyXif5+XKC0KON5senMB6sa3i1RhgoqyX7ZG3
+         yC2FunLMQhxYZAu8o92Scoa08JY0msGXS6uU6Q9W30Yn2j0w35QMaAQnj8js6AjQbMtT
+         d+GfZSYGIHjQlu586oNVO5Z9UegYS7kLoo9VHwGxZobZiCO3M5gA8WZ9Kp8SFXEtKuNf
+         rC8g==
+X-Gm-Message-State: AOJu0Yz2QOA0Rwl/eUmoSNK+7TpMkQEcC+OD6vGIquCXKEvupEK+X0/h
+	wVX3S+Ihe0eOhUVv0L9E4Z5PSXnzkYgOcYMR5cDem1UXqV56ZAt+PZh6+lLRSbDCICUQdJGEtac
+	WmAPXr9n/JdhIsBRtmrGTPEBNKpcF9t7aU9C7M1MAyyQacPUPVOFbGrNAc4ukVOfbWt4OdFLW8j
+	XZ
+X-Gm-Gg: ASbGncsseZr6kUlvWTAZ8gXAsJMcvHuH7odoiD1D/4C2w0jlbFPJD15FskEli+lYaGp
+	UqoHe3yLSxCYzN2yAM2KPyCPN+TiJJfUYMmLOPmSPH2F32y3BWCHZ0tAlZWpBca/S9BbGGGFI8k
+	/P1T64Ni//IrahNYEicGGFWj6NiRYTSMBaSMyKaMFFzEJ9fZFgUgM2ly0qgKGwkDjRU9XFpudpQ
+	Yu2cvvW4oXKDu+Kzf701DYlDWn7X8vT1FekTu6CcQUEZxkRfLP1sjKAt3LHyR0LxgWaqKUkCubF
+	HUZAVQU9XpPcxxD3H9VlLrtPRN1IGxCOxH2baUolei02RV+fNqi9sgUhG5XYZ1mmvDyrgdSsQkM
+	dtjT946CHgwa9gcg4USjeg3WZ6gdTO4vpYa1PBIECdO9NuRGlo9pjZ/Per0a8m8vGNPB7uDxAw6
+	wQ6MphPp2oA7XV
+X-Received: by 2002:a05:622a:d2:b0:4ed:6803:6189 with SMTP id d75a77b69052e-4eda4f90165mr44035471cf.53.1762631046655;
+        Sat, 08 Nov 2025 11:44:06 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IF1izejizTOw2Xlf+6jFJ+KW1P8MwXGl0upmgZWePVoKX+KLFw1M9Kenun4O5QTw5VbgBHA8w==
+X-Received: by 2002:a05:622a:d2:b0:4ed:6803:6189 with SMTP id d75a77b69052e-4eda4f90165mr44035291cf.53.1762631046170;
+        Sat, 08 Nov 2025 11:44:06 -0800 (PST)
 Received: from umbar.lan (2001-14ba-a0c3-3a00-264b-feff-fe8b-be8a.rev.dnainternet.fi. [2001:14ba:a0c3:3a00:264b:feff:fe8b:be8a])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-5944a013bcdsm2342727e87.17.2025.11.08.10.10.56
+        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-37a5f0dd77dsm22231291fa.34.2025.11.08.11.44.03
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 08 Nov 2025 10:10:56 -0800 (PST)
-Date: Sat, 8 Nov 2025 20:10:54 +0200
+        Sat, 08 Nov 2025 11:44:05 -0800 (PST)
+Date: Sat, 8 Nov 2025 21:44:02 +0200
 From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-To: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
-Cc: Bjorn Helgaas <bhelgaas@google.com>,
-        Manivannan Sadhasivam <mani@kernel.org>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Bartosz Golaszewski <brgl@bgdev.pl>, linux-kernel@vger.kernel.org,
-        linux-pci@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org,
-        Stephan Gerhold <stephan.gerhold@linaro.org>, linux-pm@vger.kernel.org
-Subject: Re: [PATCH v2 1/4] dt-bindings: connector: Add PCIe M.2 Mechanical
- Key M connector
-Message-ID: <gmwg46c3za5z2ev34mms44gpq3sq7sb4jaozbdn5cejwbejbpo@wwr2j7dkjov4>
-References: <20251108-pci-m2-v2-0-e8bc4d7bf42d@oss.qualcomm.com>
- <20251108-pci-m2-v2-1-e8bc4d7bf42d@oss.qualcomm.com>
+To: philmb3487 <philmb3487@proton.me>
+Cc: "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>
+Subject: Re: SM8635 Porting Effort - PCI-E Card Doesn't Show Up
+Message-ID: <wtyikmhzyizezs45yqubflxivxj2iyk6dkutn643v7iokvqfcy@fxmysaq26gg5>
+References: <xAsYX3yZX3laVVaqB8tdxUoTWM3jFlYudJ7j62r-6redf_OJgS_eY2mEypJ0Ma8B26RKeCqQU2G7pYTKapYx0M0rPAEvdpA2oyOs4XA8tcE=@proton.me>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
-In-Reply-To: <20251108-pci-m2-v2-1-e8bc4d7bf42d@oss.qualcomm.com>
-X-Proofpoint-GUID: 5Ng2K6kyGjMrN5Xl_RUfLYGChvzNVFum
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMTA4MDE0NyBTYWx0ZWRfXyhDCwbBexZw7
- ncaRHkPScoRlsWlLYaesAM3PtDl7YPPU9L5DDGhEeZuhoTg7ON62hLepes5RjWadxVowFm9UOw8
- vKCBZAupu+9GeGa71clYEDo81JtiRj6FItAJQ3O7s1FqitqP5eo1QVKi4teMZvi3oByU9HItIOz
- cbMvzeUcnBxPnYV2eUmbUF9DNhqLtkim9imkYxVEEkOyEPYN+BfqeuTY/YbrZE47hTUjFKxSnjW
- 8yWG4nT3iLVigWu3XJi5HIf8Q6yDNFcUNTfhC4G6IzAfk7Yv8lksSaPe/tHMgqtnfeAwx32g305
- ptyNJgBjLKr+5LpRYqSDQH0F9DJzrKTYCrgiiTsNsaGFcybBJiqJGzr4Mxoa7mJ/TouizRg9Wxi
- /FV15ONtRVHUJkCT9SepffS5TwCrhQ==
-X-Authority-Analysis: v=2.4 cv=LaoxKzfi c=1 sm=1 tr=0 ts=690f87b3 cx=c_pps
- a=7E5Bxpl4vBhpaufnMqZlrw==:117 a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <xAsYX3yZX3laVVaqB8tdxUoTWM3jFlYudJ7j62r-6redf_OJgS_eY2mEypJ0Ma8B26RKeCqQU2G7pYTKapYx0M0rPAEvdpA2oyOs4XA8tcE=@proton.me>
+X-Proofpoint-ORIG-GUID: hQzuIJCzYeKDPGQ31fgiLgSn0DtLqaIL
+X-Proofpoint-GUID: hQzuIJCzYeKDPGQ31fgiLgSn0DtLqaIL
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMTA4MDE2MSBTYWx0ZWRfX1Zr+xfYSei4O
+ tU/oyVnUxEC2w/fvxoOGl5Q9NnAmXWcoW6GzbTESk/rVh0fyhNLAn6exB8jyLYhrDgJ3hTGimiV
+ Q4qJLi/LMJLfHOBh+Tbp8nGWF5n9mZNcwFSgRcsXc/PygENU6jHym7QpPahEOBf8Blvfj73+kRb
+ oyesNYa+vbigKcqLRMova91yZKv32RhXptXgfClhWGbtLQwbTurudmlt5K9+j5Xh60AXXNdr+pE
+ zaARLYXMZrv5CnQ1cT+TrqoBui3KDpNHOj+u1yjabKshDd+IT9n3pHPj2kL7KlHJrZILXCHCuF8
+ beQh/d/oOmCaOQnC8W3NFT/31uF6dkecVZ1Iy5UoPpCbowRsVfIacM4Fe4hpVco4c9zJMYPsMVe
+ FTi4/Ea5aWyAnom2KBf7RD2rDIb2RA==
+X-Authority-Analysis: v=2.4 cv=Xuj3+FF9 c=1 sm=1 tr=0 ts=690f9d88 cx=c_pps
+ a=JbAStetqSzwMeJznSMzCyw==:117 a=xqWC_Br6kY4A:10 a=8nJEP1OIZ-IA:10
  a=6UeiqGixMTsA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=gEfo2CItAAAA:8 a=EUspDBNiAAAA:8 a=i2rTrvYXNPCTwSvIQ-0A:9 a=CjuIK1q_8ugA:10
- a=pJ04lnu7RYOZP9TFuWaZ:22 a=sptkURWiP4Gy88Gu7hUp:22
-X-Proofpoint-ORIG-GUID: 5Ng2K6kyGjMrN5Xl_RUfLYGChvzNVFum
+ a=pvdlRqWQAAAA:8 a=p0WdMEafAAAA:8 a=OuZLqq7tAAAA:8 a=wUmQnC0ta2Xkn2KzdlYA:9
+ a=3ZKOabzyN94A:10 a=wPNLvfGTeEIA:10 a=uxP6HrT_eTzRwkO_Te1X:22
+ a=tRr4bHXEJ20fZlr3Elhh:22 a=AKGiAy9iJ-JzxKVHQNES:22 a=poXaRoVlC6wW9_mwW8W4:22
+ a=pHzHmUro8NiASowvMSCR:22 a=n87TN5wuljxrRezIQYnT:22
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
  definitions=2025-11-08_05,2025-11-06_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 phishscore=0 lowpriorityscore=0 malwarescore=0
- impostorscore=0 spamscore=0 adultscore=0 suspectscore=0 bulkscore=0
- clxscore=1015 classifier=typeunknown authscore=0 authtc= authcc=
+ bulkscore=0 adultscore=0 suspectscore=0 spamscore=0 phishscore=0
+ malwarescore=0 clxscore=1015 impostorscore=0 lowpriorityscore=0
+ priorityscore=1501 classifier=typeunknown authscore=0 authtc= authcc=
  route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2510240001
- definitions=main-2511080147
+ definitions=main-2511080161
 
-On Sat, Nov 08, 2025 at 08:53:19AM +0530, Manivannan Sadhasivam wrote:
-> Add the devicetree binding for PCIe M.2 Mechanical Key M connector defined
-> in the PCI Express M.2 Specification, r4.0, sec 5.3. This connector
-> provides interfaces like PCIe and SATA to attach the Solid State Drives
-> (SSDs) to the host machine along with additional interfaces like USB, and
-> SMB for debugging and supplementary features. At any point of time, the
-> connector can only support either PCIe or SATA as the primary host
-> interface.
+On Wed, Nov 05, 2025 at 11:24:05PM +0000, philmb3487 wrote:
+> Good day everyone,
 > 
-> The connector provides a primary power supply of 3.3v, along with an
-> optional 1.8v VIO supply for the Adapter I/O buffer circuitry operating at
-> 1.8v sideband signaling.
+> I have been for the past couple of months trying to bring up Linux on the SM8635, with mixed results. It is gueling work, very complex.
+> This is the first time I use a mailing list, please don't yell at me too badly if I did something wrong.
 > 
-> The connector also supplies optional signals in the form of GPIOs for fine
-> grained power management.
+> I have a wiki that explains those results and what I have done, it will be easier than typing everything here.
 > 
-> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
-> ---
->  .../bindings/connector/pcie-m2-m-connector.yaml    | 122 +++++++++++++++++++++
->  1 file changed, 122 insertions(+)
+> http://muyuwiki.ca
 > 
-> diff --git a/Documentation/devicetree/bindings/connector/pcie-m2-m-connector.yaml b/Documentation/devicetree/bindings/connector/pcie-m2-m-connector.yaml
-> new file mode 100644
-> index 0000000000000000000000000000000000000000..be0a3b43e8fd2a2a3b76cad4808ddde79dceaa21
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/connector/pcie-m2-m-connector.yaml
-> @@ -0,0 +1,122 @@
-> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
-> +%YAML 1.2
-> +---
-> +$id: http://devicetree.org/schemas/connector/pcie-m2-m-connector.yaml#
-> +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> +
-> +title: PCIe M.2 Mechanical Key M Connector
-> +
-> +maintainers:
-> +  - Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
-> +
-> +description:
-> +  A PCIe M.2 M connector node represents a physical PCIe M.2 Mechanical Key M
-> +  connector. The Mechanical Key M connectors are used to connect SSDs to the
-> +  host system over PCIe/SATA interfaces. These connectors also offer optional
-> +  interfaces like USB, SMB.
-> +
-> +properties:
-> +  compatible:
-> +    const: pcie-m2-m-connector
+> The reason I am writing today, besides presenting my project (and also Alexandr Zubtsov <internal.hellhound@mainlining.org> is helping with this), is that I can't get anything related to the wifi card working.
+> 
+> The wifi card is something like WCN7850 (although the DTS specifies a WCN6750 for the bluetooth chip, I'm not sure which one it is in reality), it sits on the PCI-Express bus, but unfortunately there is a complex sequence to bring up the device on that pci-express bus.
+> I've tried so many things, poking the GPIO, using the power sequencer driver (pwrseq-qcom-wcn) and the driver for pci sequencing (pci-pwrctrl-pwrseq) which aparently calls back into wcn sequencer. But nothing wants to work :-(. I'm pulling my hair out.
+> Take a look at my device tree, could you tell me what's wrong? I know there's a million things that are wrong, but let's focus on the pcie node.
 
-Is a generic compatible enough here? Compare this to the USB connectors,
-which, in case of an independent USB-B connector controlled/ing GPIOs,
-gets additional gpio-usb-b-connector?
+We don't know your platform (nor GPIOs, etc). However, let's separate
+two topics: is it a PCIe not working or a chip that you have is not
+working?
 
-> +
-> +  vpcie3v3-supply:
-> +    description: A phandle to the regulator for 3.3v supply.
-> +
-> +  vio1v8-supply:
-> +    description: A phandle to the regulator for VIO 1.8v supply.
-> +
-> +  ports:
-> +    $ref: /schemas/graph.yaml#/properties/ports
-> +    description: OF graph bindings modeling the interfaces exposed on the
-> +      connector. Since a single connector can have multiple interfaces, every
-> +      interface has an assigned OF graph port number as described below.
-> +
-> +    properties:
-> +      port@0:
-> +        $ref: /schemas/graph.yaml#/properties/port
-> +        description: PCIe/SATA interface
+I'd try the following items (asuming that you have either a vendor DT
+from downstream kernel or schematics):
 
-Should it be defined as having two endpoints: one for PCIe, one for
-SATA?
+- Identify whether it is an M.2 card or a soldered-in chip. M.2 cards
+  usually don't require all of the supplies and pins in order to bring
+  it up (describing it in DT is a separate topic though).
+- Identify power supplies to your WiFi/BT chip / card. Identify WLAN_ON,
+  BT_ON and SW_CTRL GPIOs (SW_CTRL is optional, I don't remember if
+  WCN7850 has it).
+- If you have SW_CTRL, it is the first thing to check: when all powers
+  are applied and either of WL_EN / BT_EN pins are up, SW_CTRL will also
+  get up.
+- Check that BT part is working. You might get some errors (especiallly
+  if the compatible is incorrect), but it should be able to read some
+  bits and pieces from the chip (here I mostly mean chip ID and similar
+  data).
+- Then you can take a look at PCIe. It is a high-speed interface, so
+  it's more error-prone. You need to make sure that the PHY is correctly
+  programmed, that all extra clocks are not gated, etc.
 
-> +
-> +      port@1:
-> +        $ref: /schemas/graph.yaml#/properties/port
-> +        description: USB interface
-> +
-> +      port@2:
-> +        $ref: /schemas/graph.yaml#/properties/port
-> +        description: SMB interface
-> +
-> +    required:
-> +      - port@0
-> +
-> +  clocks:
-> +    description: 32.768 KHz Suspend Clock (SUSCLK) input from the host system to
-> +      the M.2 card. Refer, PCI Express M.2 Specification r4.0, sec 3.1.12.1 for
-> +      more details.
-> +    maxItems: 1
-> +
-> +  pedet-gpios:
-> +    description: GPIO controlled connection to PEDET signal. This signal is used
-> +      by the host systems to determine the communication protocol that the M.2
-> +      card uses; SATA signaling (low) or PCIe signaling (high). Refer, PCI
-> +      Express M.2 Specification r4.0, sec 3.3.4.2 for more details.
-> +    maxItems: 1
-> +
-> +  led1-gpios:
-> +    description: GPIO controlled connection to LED_1# signal. This signal is
-> +      used by the M.2 card to indicate the card status via the system mounted
-> +      LED. Refer, PCI Express M.2 Specification r4.0, sec 3.1.12.2 for more
-> +      details.
-> +    maxItems: 1
-> +
-> +  viocfg-gpios:
-> +    description: GPIO controlled connection to IO voltage configuration
-> +      (VIO_CFG) signal. This signal is used by the M.2 card to indicate to the
-> +      host system that the card supports an independent IO voltage domain for
-> +      the sideband signals. Refer, PCI Express M.2 Specification r4.0, sec
-> +      3.1.15.1 for more details.
-> +    maxItems: 1
-> +
-> +  pwrdis-gpios:
-> +    description: GPIO controlled connection to Power Disable (PWRDIS) signal.
-> +      This signal is used by the host system to disable power on the M.2 card.
-> +      Refer, PCI Express M.2 Specification r4.0, sec 3.3.5.2 for more details.
-> +    maxItems: 1
-> +
-> +  pln-gpios:
-> +    description: GPIO controlled connection to Power Loss Notification (PLN#)
-> +      signal. This signal is use to notify the M.2 card by the host system that
-> +      the power loss event is expected to occur. Refer, PCI Express M.2
-> +      Specification r4.0, sec 3.2.17.1 for more details.
-> +    maxItems: 1
-> +
-> +  plas3-gpios:
-> +    description: GPIO controlled connection to Power Loss Acknowledge (PLA_S3#)
-> +      signal. This signal is used by the M.2 card to notify the host system, the
-> +      status of the M.2 card's preparation for power loss.
-> +    maxItems: 1
-> +
-> +required:
-> +  - compatible
-> +  - vpcie3v3-supply
-> +
-> +additionalProperties: false
-> +
-> +examples:
-> +  # PCI M.2 Key M connector for SSDs with PCIe interface
-> +  - |
-> +    connector {
-> +        compatible = "pcie-m2-m-connector";
-> +        vpcie3v3-supply = <&vreg_nvme>;
-> +
-> +        ports {
-> +            #address-cells = <1>;
-> +            #size-cells = <0>;
-> +
-> +            port@0 {
-> +                reg = <0>;
-> +
-> +                endpoint {
-> +                    remote-endpoint = <&pcie6_port0_ep>;
-> +                };
-> +            };
-> +        };
-> +    };
 > 
-> -- 
-> 2.48.1
+> https://gitlab.com/philmb3487/muyu6.17-dt#
+> 
+> Thanks-Philippe
 > 
 
 -- 
