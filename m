@@ -1,121 +1,184 @@
-Return-Path: <linux-arm-msm+bounces-80837-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-80838-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ams.mirrors.kernel.org (ams.mirrors.kernel.org [213.196.21.55])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1EEBAC42CDD
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 08 Nov 2025 13:33:57 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5564DC42E5A
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 08 Nov 2025 15:38:30 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ams.mirrors.kernel.org (Postfix) with ESMTPS id 9FBE7349AF0
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  8 Nov 2025 12:33:56 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 0D8193AFA18
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  8 Nov 2025 14:38:29 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9196623EA86;
-	Sat,  8 Nov 2025 12:33:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 849F1207A22;
+	Sat,  8 Nov 2025 14:38:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="U8Be14cR"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="QT7EnM/G"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f45.google.com (mail-wr1-f45.google.com [209.85.221.45])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 459071C84C6;
-	Sat,  8 Nov 2025 12:33:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 849BC1D63F7
+	for <linux-arm-msm@vger.kernel.org>; Sat,  8 Nov 2025 14:38:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762605231; cv=none; b=ETf1EbPMpFrUyh6utHslRn9cCWjUvlGycRFlqa4EN7ySfe71UGYpcTqfUFSxxRGZr+oxyMvUI6pKHXO08QPsnocP/ljg2hqMQ4b/dw1KHyNylQuDgW2Qv6QyXxuuUcKxCQAypUyOyweQ5Y1lTQV4p3y3GTAJyRQ5/IMYjfrFT7g=
+	t=1762612705; cv=none; b=BO0fYIIawT8Ji7dr2MHdDArQMKojp+OcyC1NANizfMOEReDAUQPatcmMPAGKvfBnPsaS2+AGoHpbH6r1NIdiu6tVK3/gBKXqJULUG+nZu0TCs0yUR8s3CfLiw/yYxEvNZcHGlPKHLZTiuTfCgR6tmb0FecMbn154/olPWzta2nc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762605231; c=relaxed/simple;
-	bh=k8FeKKKyTWxMCzlO2ToUpsOqrl/hY0TIWxgnSQEIoUA=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=j0QC1YwE9+TmKBeWyNgZww+VD9PdLnysGs+C1FrVh/RxyeC3t1sIRNG+wi1TRv2k7wGUrrKHFn+rjGlN5AbJFkHOrHFq/MN0+FA9g6FikhSuYYvVY3siFKHJi7mzQHU6oMdY2MFfRkp3yMHMCVUbmKtMTinbn8fc9ID6SLh9wV4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=U8Be14cR; arc=none smtp.client-ip=192.198.163.18
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1762605229; x=1794141229;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=k8FeKKKyTWxMCzlO2ToUpsOqrl/hY0TIWxgnSQEIoUA=;
-  b=U8Be14cRlylqC+9Fd5k8sQ38K3+ya0OQ1CzH1sM9k160h0gWZwj9AWxu
-   DYxDRUlwGA1OkHN+/MCJm+ETvlYrbxi1eLFr+pbrSr5FPCbD7lLnECLxV
-   g9bMFOTmMQVVIHToy7Qa6AVgoXkqWzkA9rSxx93PWGE2SRzIYuBBpOaE/
-   aEMIpnpKLarEUQoFqscbT/TQ48wEQcj0aiXbPnNnQA2brm5PdjrRrVXuo
-   xT5mK+lnRi5zu7gpaIJwUKjxSzSVa4ZePddjC0FZ6eappLiq0jaugqOqJ
-   sZMnArpHE1oHptJLtcbXDjFr798PkIY999rejGTtYRjGOCB1BUvHa1qYG
-   w==;
-X-CSE-ConnectionGUID: xeWt/3L7SZyqIJb6m/coVA==
-X-CSE-MsgGUID: XTjx8tIrSmixhbfqnr0NyQ==
-X-IronPort-AV: E=McAfee;i="6800,10657,11606"; a="63942052"
-X-IronPort-AV: E=Sophos;i="6.19,289,1754982000"; 
-   d="scan'208";a="63942052"
-Received: from orviesa010.jf.intel.com ([10.64.159.150])
-  by fmvoesa112.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 08 Nov 2025 04:33:49 -0800
-X-CSE-ConnectionGUID: jE6zrHbmR/qUn7ucISj+GA==
-X-CSE-MsgGUID: P18hk1rQSByQeXvnGLKhcw==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.19,289,1754982000"; 
-   d="scan'208";a="187575201"
-Received: from lkp-server01.sh.intel.com (HELO 6ef82f2de774) ([10.239.97.150])
-  by orviesa010.jf.intel.com with ESMTP; 08 Nov 2025 04:33:45 -0800
-Received: from kbuild by 6ef82f2de774 with local (Exim 4.96)
-	(envelope-from <lkp@intel.com>)
-	id 1vHi8U-0000v5-1l;
-	Sat, 08 Nov 2025 12:33:42 +0000
-Date: Sat, 8 Nov 2025 20:33:21 +0800
-From: kernel test robot <lkp@intel.com>
-To: Hrishabh Rajput via B4 Relay <devnull+hrishabh.rajput.oss.qualcomm.com@kernel.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	Wim Van Sebroeck <wim@linux-watchdog.org>,
-	Guenter Roeck <linux@roeck-us.net>, Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>
-Cc: oe-kbuild-all@lists.linux.dev, linux-arm-msm@vger.kernel.org,
-	linux-watchdog@vger.kernel.org, devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	Pavan Kondeti <pavan.kondeti@oss.qualcomm.com>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	Dmitry Baryshkov <lumag@kernel.org>,
-	Hrishabh Rajput <hrishabh.rajput@oss.qualcomm.com>
-Subject: Re: [PATCH v5 1/2] firmware: qcom: scm: Register gunyah watchdog
- device
-Message-ID: <202511082023.F71T0M1w-lkp@intel.com>
-References: <20251107-gunyah_watchdog-v5-1-4c6e3fb6eb17@oss.qualcomm.com>
+	s=arc-20240116; t=1762612705; c=relaxed/simple;
+	bh=cvwRyGoCNZb0l5Vkp0pBpQx4b8i+JQ5q1UuAHIXap0c=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=t+IG0WjQZ7DHAk7MxcSmEBCAqJQlQjvZXiDv6ugkVSSkUVrVDRJjAhNvZ2BnR3O3MJ8dGsFBIB0/JH0AkKZrsT0b8Zw829/TYOgUvWYi8pz8VlHWAKhbk74wEKbW32UkWEXoYiN1Ahxc7CCkAxkbkrA55Ic44yLsDoFcrctoN3o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=QT7EnM/G; arc=none smtp.client-ip=209.85.221.45
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wr1-f45.google.com with SMTP id ffacd0b85a97d-42b30bf0feaso41001f8f.1
+        for <linux-arm-msm@vger.kernel.org>; Sat, 08 Nov 2025 06:38:23 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1762612702; x=1763217502; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+         :from:references:cc:to:subject:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=CjskvN6jH7m+Duu1eq+hr6O2GRgMWF9LB47syyf4F5w=;
+        b=QT7EnM/GZuEExeh23wss394j1sChWEkQDOwj0Wv2YvhVCBXmVZySghX9dEjHVZRtXu
+         UccGkzVXKEr0J1viKmtSdOHoYE9YKsXUUgBAZUoEoYSXVouYCUHqM+Kth7OsSJmPpoLC
+         4khBt3zsMjXOYf9eNBwfjNxdwonfnU5dai0IqOT+adRXWXMLNgJUK4ds/M+VjwXv3ytD
+         lPJEjEdeLPUzvHfZ+E91UqCP8RcmJjnLcv9CIwf6dpRyXguQwsAMyz/Jv7xZ4Kbdik6A
+         6D6EOjUsuUIo4yK5dwzelSJ3uxOcnkXxiVk28h6OeMZl88w52m1zR1dtOlUNdBl1jkZH
+         AGpQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1762612702; x=1763217502;
+        h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+         :from:references:cc:to:subject:user-agent:mime-version:date
+         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=CjskvN6jH7m+Duu1eq+hr6O2GRgMWF9LB47syyf4F5w=;
+        b=h4Xz7dAhMDw05QMVnQPm3F9hWUyVKyhQRM2FdF1QsNToWBsxbLbzR6F4tqlB5p/tO9
+         ZePEK5h7wu0Ay81n6z51ufigzW7Q+6/GYq7q4Sb44P9inw1oN53ZRt1ekogzpE0SAx1I
+         khKvyj0vGvFcGcnPXm29tB5+gTLhJp9jsa1wLnk6V6XOiYxyak7VDUbB9siaQ/CJ1FBu
+         AIzMhbApDLFe2t0pMHlLs9QP3EVTqmhapJS7tfBgYaWTYncAirK9RX/qA0N5/YfzLSz8
+         3NKQJdHZ5nd6bpsnqBPZ5RNiVHF/eBrMiipqIp3DRJS6Xg1D92pJvsXB/PN1Im75pCng
+         pLUg==
+X-Forwarded-Encrypted: i=1; AJvYcCUUTzDmvRuaiIQHfhxAvqIEfISCJuI1Anfi23dD1N2a8k/XGgEcnXOVYjQz0ha/ecKfxuPjuNbHG1Iy2fzP@vger.kernel.org
+X-Gm-Message-State: AOJu0YyqMotbFE10GrXiGqXUcdEIqI3hBP76YvuqOi1QyZkGdKOqj688
+	h6kORUEZV66DohrqBuF1Vxuv/52CxCH8cIz8XXAmuaFlp0zeuhydljbtUAKucDL7+Wo=
+X-Gm-Gg: ASbGnct0GBfFX7t6pi4RKIByooHZW7I1S3pMdeNE4Evg7twjS35NRDvTKfaiQqiveg1
+	oCmfHpoLbFRyFkercHNFIGrzg/PpVxYsuqFpn83yiIdHgHLy4CdgBOc1b1DT3g57A9WI8obfqUm
+	s7Dt76Hz6FAz5MiMUrJz09E2wBrhdcmMQLo/o0htczMTgfk3DrObsiE8vCXNoX2nC+T1MzfRAag
+	wbrqm8Gh9J3rQCmw08E53moT0TiAkBDlzUncstvVc47QXbNZxqjsXPOaJZJLd9WkCBWhyZ2yH44
+	IDkIy23wRY5378oNqPw4cZ+G29HlrKUQwhY1CBLX0yUzaOi+VM7wSr/GSBcD5Rr1FiIm6NJGIWG
+	5GITtFzcG1sy0tOTu+TFfXTvIzQE9pK+MylUrme5kfpZbGfB+NrQOLbDpKbDH0j4dGBa1vj82/q
+	BlabkM1TzvFN6i3f1mNuAxEs9xX9+MoDg=
+X-Google-Smtp-Source: AGHT+IFiBiRhpsly3YGEqjvxj+Py3Q4DK+JCa0siSF6z5aJmBhaLltU7plhNOwZpv/U5i5Vxxf3qew==
+X-Received: by 2002:a05:600c:4ed1:b0:477:bb0:5e13 with SMTP id 5b1f17b1804b1-477732aa00amr11266585e9.8.1762612701759;
+        Sat, 08 Nov 2025 06:38:21 -0800 (PST)
+Received: from [192.168.1.29] ([178.197.219.123])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4776a278a32sm56562505e9.12.2025.11.08.06.38.19
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sat, 08 Nov 2025 06:38:20 -0800 (PST)
+Message-ID: <07cbc020-ece3-4483-b078-c265e3400d2b@linaro.org>
+Date: Sat, 8 Nov 2025 15:38:18 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20251107-gunyah_watchdog-v5-1-4c6e3fb6eb17@oss.qualcomm.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 05/13] cpufreq: ti: Simplify with
+ of_machine_device_match()
+To: Rob Herring <robh@kernel.org>, Saravana Kannan <saravanak@google.com>,
+ "Rafael J. Wysocki" <rafael@kernel.org>,
+ Viresh Kumar <viresh.kumar@linaro.org>,
+ Matthias Brugger <matthias.bgg@gmail.com>,
+ AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+ Yangtao Li <tiny.windzz@gmail.com>, Chen-Yu Tsai <wens@kernel.org>,
+ Jernej Skrabec <jernej.skrabec@gmail.com>,
+ Samuel Holland <samuel@sholland.org>,
+ Lorenzo Pieralisi <lpieralisi@kernel.org>,
+ Daniel Lezcano <daniel.lezcano@linaro.org>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>, Thomas Gleixner
+ <tglx@linutronix.de>, Nicolas Ferre <nicolas.ferre@microchip.com>,
+ Alexandre Belloni <alexandre.belloni@bootlin.com>,
+ Claudiu Beznea <claudiu.beznea@tuxon.dev>,
+ Maximilian Luz <luzmaximilian@gmail.com>, Hans de Goede <hansg@kernel.org>,
+ =?UTF-8?Q?Ilpo_J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+ Daniel Lezcano <daniel.lezcano@kernel.org>,
+ Thierry Reding <thierry.reding@gmail.com>,
+ Jonathan Hunter <jonathanh@nvidia.com>
+Cc: devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+ linux-pm@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+ linux-mediatek@lists.infradead.org, linux-sunxi@lists.linux.dev,
+ linux-arm-msm@vger.kernel.org, platform-driver-x86@vger.kernel.org,
+ linux-tegra@vger.kernel.org
+References: <20251106-b4-of-match-matchine-data-v1-0-d780ea1780c2@linaro.org>
+ <20251106-b4-of-match-matchine-data-v1-5-d780ea1780c2@linaro.org>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Content-Language: en-US
+Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
+ 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
+ 2+47PN9NZAOyb771QoVr8A==
+In-Reply-To: <20251106-b4-of-match-matchine-data-v1-5-d780ea1780c2@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-Hi Hrishabh,
+On 06/11/2025 20:07, Krzysztof Kozlowski wrote:
+>  static int ti_cpufreq_probe(struct platform_device *pdev)
+>  {
+>  	u32 version[VERSION_COUNT];
+> @@ -564,8 +554,7 @@ static int __init ti_cpufreq_init(void)
+>  	const struct of_device_id *match;
+>  
+>  	/* Check to ensure we are on a compatible platform */
+> -	match = ti_cpufreq_match_node();
+> -	if (match)
+> +	if (of_machine_device_match(ti_cpufreq_of_match))
+>  		platform_device_register_data(NULL, "ti-cpufreq", -1, match,
+>  					      sizeof(*match));
 
-kernel test robot noticed the following build errors:
+This is obviously wrong patch... weird my W=1 builds did not flag it.
 
-[auto build test ERROR on 6146a0f1dfae5d37442a9ddcba012add260bceb0]
-
-url:    https://github.com/intel-lab-lkp/linux/commits/Hrishabh-Rajput-via-B4-Relay/firmware-qcom-scm-Register-gunyah-watchdog-device/20251108-015559
-base:   6146a0f1dfae5d37442a9ddcba012add260bceb0
-patch link:    https://lore.kernel.org/r/20251107-gunyah_watchdog-v5-1-4c6e3fb6eb17%40oss.qualcomm.com
-patch subject: [PATCH v5 1/2] firmware: qcom: scm: Register gunyah watchdog device
-config: riscv-randconfig-r063-20251108 (https://download.01.org/0day-ci/archive/20251108/202511082023.F71T0M1w-lkp@intel.com/config)
-compiler: riscv64-linux-gcc (GCC) 8.5.0
-reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20251108/202511082023.F71T0M1w-lkp@intel.com/reproduce)
-
-If you fix the issue in a separate patch/commit (i.e. not just a new version of
-the same patch/commit), kindly add following tags
-| Reported-by: kernel test robot <lkp@intel.com>
-| Closes: https://lore.kernel.org/oe-kbuild-all/202511082023.F71T0M1w-lkp@intel.com/
-
-All errors (new ones prefixed by >>, old ones prefixed by <<):
-
->> ERROR: modpost: "arm_smccc_hypervisor_has_uuid" [drivers/firmware/qcom/qcom-scm.ko] undefined!
-
--- 
-0-DAY CI Kernel Test Service
-https://github.com/intel/lkp-tests/wiki
+Best regards,
+Krzysztof
 
