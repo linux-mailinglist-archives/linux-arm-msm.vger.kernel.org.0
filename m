@@ -1,88 +1,129 @@
-Return-Path: <linux-arm-msm+bounces-80833-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-80834-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [142.0.200.124])
-	by mail.lfdr.de (Postfix) with ESMTPS id 38E08C42C13
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 08 Nov 2025 12:44:06 +0100 (CET)
+Received: from ams.mirrors.kernel.org (ams.mirrors.kernel.org [213.196.21.55])
+	by mail.lfdr.de (Postfix) with ESMTPS id 01886C42C25
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 08 Nov 2025 12:45:02 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 1BA014E1855
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  8 Nov 2025 11:44:05 +0000 (UTC)
+	by ams.mirrors.kernel.org (Postfix) with ESMTPS id A19B43489F4
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  8 Nov 2025 11:45:01 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 65BCE2586E8;
-	Sat,  8 Nov 2025 11:44:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2A8DD214A8B;
+	Sat,  8 Nov 2025 11:44:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="pEdxv21q"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="MDIKg+AC"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00964283FF1;
-	Sat,  8 Nov 2025 11:43:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48373283FF1;
+	Sat,  8 Nov 2025 11:44:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762602239; cv=none; b=NIsIlJPjlVmB6ygIJMjPC2NOL89WiJdWjnIt62fw3CwUMPivP2D/fh4I/7T/E7PXvyHle4QC8oYX1ZwkIPCy+OSR4qVc8XCxSShoORjFbTSzLPhZXZxszdS3SSLtEY3mWUud6ks9rqW034Gt/I7/X1cPZgci0O0zs4+MkeAr2Q8=
+	t=1762602295; cv=none; b=OlYDV3TIsHYLzj9NQKXzqlAh4Wijv7vSF2LbzRuud9j9drgfDRlzhylYwbWSyR7TsnqDHYDZqoWkSNXolh92A5F6obht3CrTDc9EouXWazyjbk7RD6ozGg/tOg3cWi4eaIvx8z9T98623l+e7xdZUX71Pqqs6EGJloufY376RaA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762602239; c=relaxed/simple;
-	bh=E39zBR+/q8Bg8pTqde3U5WC0/GsvxvWX3vKNLyHS27U=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=hSMfU8jvIIqxqvEZ2yTwP4ghQ0z19kEu8fA8XSlXUsjJrf2TEr0xpbTRYZfgllkBb+ui2xNt+ChtfWx7NAfioIgF1esZSQzMrVZKdZ+P6oYwlh0HYBZlp+OqlCyvMNQ71HtFdKefPBPlsKsUSyd00KcjA4oEddBP9WfIcCqDEKs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=pEdxv21q; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A18E0C19422;
-	Sat,  8 Nov 2025 11:43:57 +0000 (UTC)
+	s=arc-20240116; t=1762602295; c=relaxed/simple;
+	bh=Bj/5JLyti6AUmKSCs+vze1+DXT6+I0gSQb91G9DyRXg=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=X5r0lXaQWgWvOLWBRAzvRiFemQYMqrSIH2dI8uPRyaQmQVLGj0r+u5jAdPBf9pAKJZkE/23H7ci7YUzXNTPc9Y/UJkiutyigS67CitPJaRtyQNSxhL9oZIxgfpD8c+zFQ0dG4RzitBn6BSW9NYlglWA6hmRXrS9aCUCQbOELcF4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=MDIKg+AC; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BCDDFC16AAE;
+	Sat,  8 Nov 2025 11:44:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1762602238;
-	bh=E39zBR+/q8Bg8pTqde3U5WC0/GsvxvWX3vKNLyHS27U=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=pEdxv21qocJeC0qMkvDuMhfJwTqyYCCHbgEJd2v2eFxjz7zoOrw91Nm0SmX9c41SG
-	 bSEKsZS7n7wUK2zBQUQbzNFjPsB0pHOxPzjcx9TgIv2tMSheVD0IDDfIxunixiTSnf
-	 7tUTJJD/mSD54PK+C2S7POiZ6YmlfskIWxL8PcY9m8/bOGHJ6zs5vDrriwTKYqkist
-	 e1Vc72tkibEThvA1oG6+GVp1aAJsIHr9mDQoGrpmssVqO9fGZR25Um54J+FdBkZMJl
-	 f4qT5bd7IRb8phRSsmhks47gcAuE4TeyPGIc49o/wATCcbSSFlZy/ZPlItyv1tx1UZ
-	 S6NQcVhnYumqg==
-Date: Sat, 8 Nov 2025 12:43:55 +0100
-From: Krzysztof Kozlowski <krzk@kernel.org>
-To: Vikram Sharma <quic_vikramsa@quicinc.com>
-Cc: bryan.odonoghue@linaro.org, mchehab@kernel.org, robh@kernel.org, 
-	krzk+dt@kernel.org, conor+dt@kernel.org, andersson@kernel.org, 
-	konradybcio@kernel.org, hverkuil-cisco@xs4all.nl, cros-qcom-dts-watchers@chromium.org, 
-	catalin.marinas@arm.com, will@kernel.org, linux-arm-kernel@lists.infradead.org, 
-	quic_svankada@quicinc.com, linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, quic_nihalkum@quicinc.com, 
-	stable@vger.kernel.org
-Subject: Re: [PATCH v6 1/2] dt-bindings: media: qcom,qcs8300-camss: Add
- missing power supplies
-Message-ID: <20251108-khaki-shark-of-devotion-cf4bce@kuoka>
-References: <20251107162521.511536-1-quic_vikramsa@quicinc.com>
- <20251107162521.511536-2-quic_vikramsa@quicinc.com>
+	s=k20201202; t=1762602293;
+	bh=Bj/5JLyti6AUmKSCs+vze1+DXT6+I0gSQb91G9DyRXg=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=MDIKg+ACQ8cKOO692eHIeRGgbFgeuCKM00SDwJ4RPD7az0ssfwLr92pgFoS+arMds
+	 8zq2W/j5GH9DEL3sb1JwfQq/fWb0DEivo9Eqm0Qf+Jd7CrAEMDVcFxZ5GSBNJFMy0q
+	 J5axiRHMvBDDoz7C9TXz8/fXhQOCtROdmqrV2nfD3/y/Lpl3ek2PJBh0x27PRjTTgs
+	 yAOwLjGXqXgMVaYDo7AIpw8BwAlaAGkHqOANbWUd4jlXf5ysltYpxyEwJiICqAr9xA
+	 +1TqYF8/SSyBZZN+m7Ml77sz4WsxCzWfmd3HSMOwJiVfcj7jofFqW0QoTrgTEDSiYM
+	 ULV8ha61dIBQQ==
+Message-ID: <ad3eb014-ab88-4eeb-a3a1-fd0cde67cdc2@kernel.org>
+Date: Sat, 8 Nov 2025 12:44:48 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20251107162521.511536-2-quic_vikramsa@quicinc.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v6 2/2] arm64: dts: qcom: qcs8300: Add support for camss
+To: Vikram Sharma <quic_vikramsa@quicinc.com>, bryan.odonoghue@linaro.org,
+ mchehab@kernel.org, robh@kernel.org, krzk+dt@kernel.org,
+ conor+dt@kernel.org, andersson@kernel.org, konradybcio@kernel.org,
+ hverkuil-cisco@xs4all.nl, cros-qcom-dts-watchers@chromium.org,
+ catalin.marinas@arm.com, will@kernel.org
+Cc: linux-arm-kernel@lists.infradead.org, quic_svankada@quicinc.com,
+ linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+ quic_nihalkum@quicinc.com, Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+References: <20251107162521.511536-1-quic_vikramsa@quicinc.com>
+ <20251107162521.511536-3-quic_vikramsa@quicinc.com>
+From: Krzysztof Kozlowski <krzk@kernel.org>
+Content-Language: en-US
+Autocrypt: addr=krzk@kernel.org; keydata=
+ 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 a/A=
+In-Reply-To: <20251107162521.511536-3-quic_vikramsa@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-On Fri, Nov 07, 2025 at 09:55:20PM +0530, Vikram Sharma wrote:
-> Add missing vdda-phy-supply and vdda-pll-supply in the (monaco)qcs8300
-> camss binding. While enabling imx412 sensor for qcs8300 we see a need
-> to add these supplies which were missing in initial submission.
+On 07/11/2025 17:25, Vikram Sharma wrote:
+> Add changes to support the camera subsystem on the QCS8300.
 > 
-> Fixes: 634a2958fae30 ("media: dt-bindings: Add qcom,qcs8300-camss compatible")
-> Cc: <stable@vger.kernel.org>
-> Co-developed-by: Nihal Kumar Gupta <quic_nihalkum@quicinc.com>
-> Signed-off-by: Nihal Kumar Gupta <quic_nihalkum@quicinc.com>
+> Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+> Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 > Signed-off-by: Vikram Sharma <quic_vikramsa@quicinc.com>
 > ---
->  .../bindings/media/qcom,qcs8300-camss.yaml          | 13 +++++++++++++
->  1 file changed, 13 insertions(+)
+>  arch/arm64/boot/dts/qcom/monaco.dtsi | 172 +++++++++++++++++++++++++++
+>  1 file changed, 172 insertions(+)
+
 
 Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
 Best regards,
 Krzysztof
-
 
