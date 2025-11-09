@@ -1,150 +1,146 @@
-Return-Path: <linux-arm-msm+bounces-80885-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-80886-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [142.0.200.124])
-	by mail.lfdr.de (Postfix) with ESMTPS id DD173C442AC
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 09 Nov 2025 17:49:21 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5B718C44482
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 09 Nov 2025 18:31:53 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id C5D934E168B
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  9 Nov 2025 16:49:20 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 52D093AB829
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  9 Nov 2025 17:31:50 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 11C072D9EF6;
-	Sun,  9 Nov 2025 16:49:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id EA342309DA1;
+	Sun,  9 Nov 2025 17:22:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="P9RwGyyR"
+	dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b="tlf32Vm4"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f50.google.com (mail-ed1-f50.google.com [209.85.208.50])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6E901AA7BF;
-	Sun,  9 Nov 2025 16:49:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E66BD3090CD
+	for <linux-arm-msm@vger.kernel.org>; Sun,  9 Nov 2025 17:22:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762706955; cv=none; b=NwYCPQBRN6w1T70r/3YhgWRKOUoKJn2wKh5EetkjqIdjlra39+E7za9pTnX2FHuPYhVLOo5V09Bv7CLE5ArPWa2tCq1HUvZLqTPFWD/1HUTQYWHvxBVJXlRAU7M2ys0RsrvvBJj8ckL9yfWEtdpSNpO/o30sdLGPVo8WZ12jpS4=
+	t=1762708976; cv=none; b=fyZR/z0xpPHsZ3805RfvnxxQZzga1ODfcqwMoUKhNDQgAQR2EEdA4NoskCgNHhRMWCRFiuv7+fNtdXcNQJP3DhSWcx5+DHejzBfbnJm78gGHvMmUAXb62qukb2WLL49FuI95xTGkaM/FBgZ+OlKue7N+7D9neU6mL9iG0jgtVTw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762706955; c=relaxed/simple;
-	bh=n4hSzcHd13twCNudNTmDw4sXbKY11Ss4Ov/R5YPLLzw=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=lHWoBZK1BXE0EBbXOAVGQZ9e11LpN68VsxVGfua5Itwm80pDhrX28/hTm1aVWl1MV8qGQLIlRTewN0klnD3fbzFp09uKpuf6X2GUEdojX2VLiiKWAjS979aDQyfNWy4GytMmVmGtbxUo4d8F1u/uHeGXSAQrhx4DzPCHVvpCfeE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=P9RwGyyR; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9B13C4CEF7;
-	Sun,  9 Nov 2025 16:49:04 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1762706954;
-	bh=n4hSzcHd13twCNudNTmDw4sXbKY11Ss4Ov/R5YPLLzw=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=P9RwGyyRA/kvUZWhJ5Obm4NXxCl4uM4orfTPuniXCdZfAVOOzHZ9AJtzYDn9LefRh
-	 JrCHXAYpxOesbk+4SZirluizDJPcZ4M/KXKJXVkDq2OPSZ0VooIlqmiCchzXVeQPo1
-	 NiZvrUlAld7U8AJfIqWde+gCYMDVim8pSicYR8+NW8qIuZm2eTpuAmTJSgH73QY+nf
-	 ZLvtPqNr5tE2wFohMEIJ37oxkFGp9I9Mg3oQ7a8y+VE3Lh3L455cJsqoyBtg+ut0ss
-	 tDZsmllo/KU0y94eAGMXxaEbOJAblOTxQlDCDF5iZqpJrXb/NWXAadGl7XkcN4tf6a
-	 ubAZJ6wX5K0Hw==
-Date: Sun, 9 Nov 2025 22:18:58 +0530
-From: Manivannan Sadhasivam <mani@kernel.org>
-To: Krzysztof Kozlowski <krzk@kernel.org>
-Cc: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>, 
-	Bjorn Helgaas <bhelgaas@google.com>, Lorenzo Pieralisi <lpieralisi@kernel.org>, 
-	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kwilczynski@kernel.org>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Abraham I <kishon@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
-	Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>, linux-pci@vger.kernel.org, devicetree@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>, Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Subject: Re: [PATCH v2 1/2] dt-bindings: PCI: qcom: Enforce check for PHY,
- PERST# properties
-Message-ID: <3wxfj3w2ilgmmmvntng4yohvorz3tn54egnyltg3dd3fwk67yq@f5p62em6sg2g>
-References: <20251106-pci-binding-v2-0-bebe9345fc4b@oss.qualcomm.com>
- <20251106-pci-binding-v2-1-bebe9345fc4b@oss.qualcomm.com>
- <20251108-toad-of-hypothetical-opportunity-ebfa74@kuoka>
+	s=arc-20240116; t=1762708976; c=relaxed/simple;
+	bh=8xrRb4Ja7YDYCikqkpnM1+9xLkErGoSE0Ilyg3K603U=;
+	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
+	 References:In-Reply-To; b=BajMSXuQEV06MLEqaNwYSTyaZ1nLdraufytDvfsaSxY16A7vLxuHqAtVt46k75R6W9JRmoq0iHcGocC+n6ePP+GjcdOp/N0Q2ZbDeRxp305BuRe+i/QFLF9a9UPtXlP8NV1SJ3nySSgUkHbUrBsS7WtSGgvp4a++uQO6wdfrd4s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=fairphone.com; spf=pass smtp.mailfrom=fairphone.com; dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b=tlf32Vm4; arc=none smtp.client-ip=209.85.208.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=fairphone.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fairphone.com
+Received: by mail-ed1-f50.google.com with SMTP id 4fb4d7f45d1cf-63b9da57cecso3659097a12.0
+        for <linux-arm-msm@vger.kernel.org>; Sun, 09 Nov 2025 09:22:53 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=fairphone.com; s=fair; t=1762708972; x=1763313772; darn=vger.kernel.org;
+        h=in-reply-to:references:to:from:subject:cc:message-id:date
+         :content-transfer-encoding:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=a7u5viM8iOHpulamZW8Yl5pjwnfS/F/QVQpeIUIajsE=;
+        b=tlf32Vm4NVrasKbkE996+Mj6XQVE03iUa6BZr/4GVFSrrOzf3ZgZdS0WAMnZw++XHF
+         wPAmk7eAJNPJSm8b9OfBtOjhyVHnYWFl+Q78i/d/WyVjXGOcMz8PNpar9PYBq6dP0+aa
+         el5n5PPNIQpi4CSO92ADIdilnEVstRU2D/PH8dmGQYeVO/PVWP/yVAjg+U3kAlyB2wqR
+         xHHRnazDTd7x3VviVzdyGH1a/mQw6NJ/xm6RJ70TGzKyYI+EdfBPb3G9VRzTLgfcVfLo
+         7GKfazWZWyc/lEa0gNbGh6VeOLO/TB9YDYIo2I/UxD1zTGmnqCtIJrJHkJFF5pB2+Nll
+         2/Yg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1762708972; x=1763313772;
+        h=in-reply-to:references:to:from:subject:cc:message-id:date
+         :content-transfer-encoding:mime-version:x-gm-gg:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=a7u5viM8iOHpulamZW8Yl5pjwnfS/F/QVQpeIUIajsE=;
+        b=WiuEH9xWUPB81XYj72SX1g/KMOeKssFiGgEGB92MkJwuzUi2HaAHMNw/rrqdNHLiXp
+         YvC6aL6Y2XXDquSUwrCRBUPOlDICadMYh7sRfwEDanspiQHkrO3E738QjPospBxvJolG
+         8oyZheuoqRPDK0btbS/PpvgzCefgbCLp0I1jWCDE+RzuETzlPUI1qnWbv9ef20bLBxWD
+         t5gJF4Da5arj5TbHOCDHjFIDttv4FJMv0zZfL0OZlHvYbfqW/IQ9qmYSAf6L275Y+ufY
+         0aejuxxN3+3YCiwq6muzVErPFvJg7+zpKIFyytcKyhX4PVSL9s9KoGsOQbXPMWBGaGJT
+         fEog==
+X-Forwarded-Encrypted: i=1; AJvYcCXYt3Ciher/NUxcbg/b18tXpbCFQueQvUbqszhFf97Uu1Jf4RlunMMaAR+ga67iL0P+pAySje/iQCjtcAsL@vger.kernel.org
+X-Gm-Message-State: AOJu0Ywx5vbD0BsAra+4Vc6YXwfbU2Mdm38YkOPSJ5PJ75GH5Qc2iNaR
+	eNPtUGa/a2s6kQCN9AOMKCFRbazKvpC4P53yyB6BvHrlBuzu5EylRI+Q3fORZY1v/4g=
+X-Gm-Gg: ASbGncvrG2CF98IGRg+M0mk+btD1IkWpLBp+zLYTJlhzHThvPZ+uDrUArPLRve04h7k
+	qPND1zHtQyfGeppRcKvVUswa4twa7OoaNEJHcrqqCdPOUNzxON3N3ShNPeDbaIfPcZie97mEe7i
+	mxH/88xP+i1iTZUOG04bRPp0ufl3N238JZL8Fht5LmuxEB6PTwjZzGTB9k9zSDBO98wBC98z5Xs
+	xEw2YVtSWVxmg6T558OfNcEWLHe5bOtTIjrN/aawMn8y17XKSupee8SZGM4b6bF68BBIwc6QcRr
+	9QDFBMpQxrJIc4qevamBKVUYvTJSSvsGaNmUTTWnnztGxUOoxFT9JEC9DXXNN7Kre8wTHDqEj4P
+	1So/g5BuEwV41UNp9zQdTVe7IyIP7mIhxRKyELobPY7tIPRtwG3hfv7i1gg6wF9ZcZPa16Ai7H7
+	2wTQhxQbIk7fQC/24MyfnKr65MBLkxiFldfmGeTqpQXrt+3olumsKFpIKOJb2CbBrvLg5+qcgVv
+	3TvjQkBL/Zw8453mWuUkutb9S274oOAr3s=
+X-Google-Smtp-Source: AGHT+IHiNx88guNnogcxy/ePccl6T4u99WrAa4tO6dTyzZ7pWo9gTArz9LqZTlbTuW3AfvNrVuFznA==
+X-Received: by 2002:a05:6402:3546:b0:640:f974:7629 with SMTP id 4fb4d7f45d1cf-6415dc205e6mr4941873a12.15.1762708971341;
+        Sun, 09 Nov 2025 09:22:51 -0800 (PST)
+Received: from localhost (2001-1c00-3b8a-ea00-c4de-d39d-05f4-c77a.cable.dynamic.v6.ziggo.nl. [2001:1c00:3b8a:ea00:c4de:d39d:5f4:c77a])
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-6415d91f486sm4786157a12.22.2025.11.09.09.22.50
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sun, 09 Nov 2025 09:22:51 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20251108-toad-of-hypothetical-opportunity-ebfa74@kuoka>
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Sun, 09 Nov 2025 18:22:50 +0100
+Message-Id: <DE4C6HV76V5M.1I1NJB2JCK1LN@fairphone.com>
+Cc: "Joel Selvaraj" <foss@joelselvaraj.com>, <linux-media@vger.kernel.org>,
+ <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+ <phone-devel@vger.kernel.org>
+Subject: Re: [PATCH RFC 8/8] media: qcom: camss: Remove D-PHY-only endpoint
+ restriction
+From: "Luca Weiss" <luca.weiss@fairphone.com>
+To: <david@ixit.cz>, "Robert Foss" <rfoss@kernel.org>, "Todor Tomov"
+ <todor.too@gmail.com>, "Bryan O'Donoghue" <bryan.odonoghue@linaro.org>,
+ "Vladimir Zapolskiy" <vladimir.zapolskiy@linaro.org>, "Mauro Carvalho
+ Chehab" <mchehab@kernel.org>, "Luca Weiss" <luca.weiss@fairphone.com>,
+ "Petr Hodina" <phodina@protonmail.com>, "Casey Connolly"
+ <casey.connolly@linaro.org>, "Dr. Git" <drgitx@gmail.com>
+X-Mailer: aerc 0.21.0-0-g5549850facc2
+References: <20251109-qcom-cphy-v1-0-165f7e79b0e1@ixit.cz>
+ <20251109-qcom-cphy-v1-8-165f7e79b0e1@ixit.cz>
+In-Reply-To: <20251109-qcom-cphy-v1-8-165f7e79b0e1@ixit.cz>
 
-On Sat, Nov 08, 2025 at 12:59:50PM +0100, Krzysztof Kozlowski wrote:
-> On Thu, Nov 06, 2025 at 04:57:16PM +0530, Manivannan Sadhasivam wrote:
-> > Currently, the binding supports specifying the required PHY, PERST#
-> > properties in two ways:
-> > 
-> > 1. Controller node (deprecated)
-> > 	- phys
-> > 	- perst-gpios
-> > 
-> > 2. Root Port node
-> > 	- phys
-> > 	- reset-gpios
-> > 
-> > But there is no check to make sure that the both variants are not mixed.
-> > For instance, if the Controller node specifies 'phys', 'reset-gpios',
-> 
-> Schema already does not allow it, unless I missed which schema defines
-> reset-gpios in controller node.
-> 
+On Sun Nov 9, 2025 at 10:39 AM CET, David Heidelberg via B4 Relay wrote:
+> From: David Heidelberg <david@ixit.cz>
+>
+> C-PHY mode is now supported, so the endpoint bus-type restriction to
+> D-PHY can be removed.
+>
+> Signed-off-by: David Heidelberg <david@ixit.cz>
+> ---
+>  drivers/media/platform/qcom/camss/camss.c | 9 ---------
+>  1 file changed, 9 deletions(-)
+>
+> diff --git a/drivers/media/platform/qcom/camss/camss.c b/drivers/media/pl=
+atform/qcom/camss/camss.c
+> index 248aa6b21b5ad..1408e8a03f0bd 100644
+> --- a/drivers/media/platform/qcom/camss/camss.c
+> +++ b/drivers/media/platform/qcom/camss/camss.c
+> @@ -4044,15 +4044,6 @@ static int camss_of_parse_endpoint_node(struct dev=
+ice *dev,
+>  	if (ret)
+>  		return ret;
+> =20
+> -	/*
+> -	 * Most SoCs support both D-PHY and C-PHY standards, but currently only
+> -	 * D-PHY is supported in the driver.
+> -	 */
+> -	if (vep.bus_type !=3D V4L2_MBUS_CSI2_DPHY) {
 
-'reset-gpios' is currently a valid property for both controller and Root Port
-nodes. Where does the schema restricts it?
+How about just adding && !=3D V4L2_MBUS_CSI2_CPHY to it? Good to check in
+any case imo.
 
-> > or if the Root Port node specifies 'phys', 'perst-gpios', then the driver
-> > will fail as reported. Hence, enforce the check in the binding to catch
-> > these issues.
-> 
-> I do not see such check.
-> 
+Regards
+Luca
 
-Don't you think the below required properties not enforce this check for Root
-Port and Controller node? This atleast makes sure that if 'phys' is present,
-'reset-gpios' would be required for Root Port and 'perst-gpios' is required for
-Controller node.
+> -		dev_err(dev, "Unsupported bus type %d\n", vep.bus_type);
+> -		return -EINVAL;
+> -	}
+> -
+>  	csd->interface.csiphy_id =3D vep.base.port;
+> =20
+>  	mipi_csi2 =3D &vep.bus.mipi_csi2;
 
-> > 
-> > It is also possible that DTs could have 'phys' property in Controller node
-> > and 'reset-gpios' properties in the Root Port node. It will also be a
-> > problem, but it is not possible to catch these cross-node issues in the
-> > binding.
-> 
-> ... so this commit changes nothing?
-> 
-> The commit actually does change, but something completely different than
-> you write here, so entire commit msg is describing entirely different
-> cast. What you achieve here is to require perst-gpios, if controller
-> node defined phys. Unfortunately your commit msg does not explain why
-> perst-gpios are now required...
-> 
-
-The Qcom PCIe controller node never supported 'reset-gpios' for PERST#. It used
-the 'perst-gpios' property instead. And I do not wanted to replace it with
-'reset-gpios' property since we had decided to move PERST# to Root Port node,
-where 'reset-gpios' is already the norm.
-
-> > 
-> > Reported-by: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
-> > Reported-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-> > Closes: https://lore.kernel.org/linux-pci/8f2e0631-6c59-4298-b36e-060708970ced@oss.qualcomm.com
-> > Suggested-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-> 
-> That's too many tags. Either someone reported you bug or someone
-> suggested you to do something, not both (and proposing solution is not
-> suggesting a commit since you already knew you need to make the commit
-> because of bug...)
-> 
-
-I disagree. Both Konrad and Krishna reported the issue in mixing up the
-properties and driver ended up failing the probe. Then Dmitry suggested a schema
-snippet [1] to catch these kind of mixups during DT validation. I did see it as
-a valid suggestion that deserved the tag.
-
-- Mani
-
-[1] https://lore.kernel.org/linux-pci/qref5ooh6pl2sznf7iifrbric7hsap63ffbytkizdyrzt6mtqz@q5r27ho2sbq3/
-
--- 
-மணிவண்ணன் சதாசிவம்
 
