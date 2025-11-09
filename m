@@ -1,146 +1,159 @@
-Return-Path: <linux-arm-msm+bounces-80886-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-80887-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5B718C44482
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 09 Nov 2025 18:31:53 +0100 (CET)
+Received: from ams.mirrors.kernel.org (ams.mirrors.kernel.org [213.196.21.55])
+	by mail.lfdr.de (Postfix) with ESMTPS id E2197C44516
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 09 Nov 2025 19:34:38 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 52D093AB829
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  9 Nov 2025 17:31:50 +0000 (UTC)
+	by ams.mirrors.kernel.org (Postfix) with ESMTPS id 558E9344818
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  9 Nov 2025 18:34:38 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id EA342309DA1;
-	Sun,  9 Nov 2025 17:22:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 693FE221540;
+	Sun,  9 Nov 2025 18:34:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b="tlf32Vm4"
+	dkim=pass (1024-bit key) header.d=collabora.com header.i=sebastian.reichel@collabora.com header.b="PbabfmMB"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-f50.google.com (mail-ed1-f50.google.com [209.85.208.50])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from sender4-pp-f112.zoho.com (sender4-pp-f112.zoho.com [136.143.188.112])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E66BD3090CD
-	for <linux-arm-msm@vger.kernel.org>; Sun,  9 Nov 2025 17:22:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.50
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762708976; cv=none; b=fyZR/z0xpPHsZ3805RfvnxxQZzga1ODfcqwMoUKhNDQgAQR2EEdA4NoskCgNHhRMWCRFiuv7+fNtdXcNQJP3DhSWcx5+DHejzBfbnJm78gGHvMmUAXb62qukb2WLL49FuI95xTGkaM/FBgZ+OlKue7N+7D9neU6mL9iG0jgtVTw=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762708976; c=relaxed/simple;
-	bh=8xrRb4Ja7YDYCikqkpnM1+9xLkErGoSE0Ilyg3K603U=;
-	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
-	 References:In-Reply-To; b=BajMSXuQEV06MLEqaNwYSTyaZ1nLdraufytDvfsaSxY16A7vLxuHqAtVt46k75R6W9JRmoq0iHcGocC+n6ePP+GjcdOp/N0Q2ZbDeRxp305BuRe+i/QFLF9a9UPtXlP8NV1SJ3nySSgUkHbUrBsS7WtSGgvp4a++uQO6wdfrd4s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=fairphone.com; spf=pass smtp.mailfrom=fairphone.com; dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b=tlf32Vm4; arc=none smtp.client-ip=209.85.208.50
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=fairphone.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fairphone.com
-Received: by mail-ed1-f50.google.com with SMTP id 4fb4d7f45d1cf-63b9da57cecso3659097a12.0
-        for <linux-arm-msm@vger.kernel.org>; Sun, 09 Nov 2025 09:22:53 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=fairphone.com; s=fair; t=1762708972; x=1763313772; darn=vger.kernel.org;
-        h=in-reply-to:references:to:from:subject:cc:message-id:date
-         :content-transfer-encoding:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=a7u5viM8iOHpulamZW8Yl5pjwnfS/F/QVQpeIUIajsE=;
-        b=tlf32Vm4NVrasKbkE996+Mj6XQVE03iUa6BZr/4GVFSrrOzf3ZgZdS0WAMnZw++XHF
-         wPAmk7eAJNPJSm8b9OfBtOjhyVHnYWFl+Q78i/d/WyVjXGOcMz8PNpar9PYBq6dP0+aa
-         el5n5PPNIQpi4CSO92ADIdilnEVstRU2D/PH8dmGQYeVO/PVWP/yVAjg+U3kAlyB2wqR
-         xHHRnazDTd7x3VviVzdyGH1a/mQw6NJ/xm6RJ70TGzKyYI+EdfBPb3G9VRzTLgfcVfLo
-         7GKfazWZWyc/lEa0gNbGh6VeOLO/TB9YDYIo2I/UxD1zTGmnqCtIJrJHkJFF5pB2+Nll
-         2/Yg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1762708972; x=1763313772;
-        h=in-reply-to:references:to:from:subject:cc:message-id:date
-         :content-transfer-encoding:mime-version:x-gm-gg:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=a7u5viM8iOHpulamZW8Yl5pjwnfS/F/QVQpeIUIajsE=;
-        b=WiuEH9xWUPB81XYj72SX1g/KMOeKssFiGgEGB92MkJwuzUi2HaAHMNw/rrqdNHLiXp
-         YvC6aL6Y2XXDquSUwrCRBUPOlDICadMYh7sRfwEDanspiQHkrO3E738QjPospBxvJolG
-         8oyZheuoqRPDK0btbS/PpvgzCefgbCLp0I1jWCDE+RzuETzlPUI1qnWbv9ef20bLBxWD
-         t5gJF4Da5arj5TbHOCDHjFIDttv4FJMv0zZfL0OZlHvYbfqW/IQ9qmYSAf6L275Y+ufY
-         0aejuxxN3+3YCiwq6muzVErPFvJg7+zpKIFyytcKyhX4PVSL9s9KoGsOQbXPMWBGaGJT
-         fEog==
-X-Forwarded-Encrypted: i=1; AJvYcCXYt3Ciher/NUxcbg/b18tXpbCFQueQvUbqszhFf97Uu1Jf4RlunMMaAR+ga67iL0P+pAySje/iQCjtcAsL@vger.kernel.org
-X-Gm-Message-State: AOJu0Ywx5vbD0BsAra+4Vc6YXwfbU2Mdm38YkOPSJ5PJ75GH5Qc2iNaR
-	eNPtUGa/a2s6kQCN9AOMKCFRbazKvpC4P53yyB6BvHrlBuzu5EylRI+Q3fORZY1v/4g=
-X-Gm-Gg: ASbGncvrG2CF98IGRg+M0mk+btD1IkWpLBp+zLYTJlhzHThvPZ+uDrUArPLRve04h7k
-	qPND1zHtQyfGeppRcKvVUswa4twa7OoaNEJHcrqqCdPOUNzxON3N3ShNPeDbaIfPcZie97mEe7i
-	mxH/88xP+i1iTZUOG04bRPp0ufl3N238JZL8Fht5LmuxEB6PTwjZzGTB9k9zSDBO98wBC98z5Xs
-	xEw2YVtSWVxmg6T558OfNcEWLHe5bOtTIjrN/aawMn8y17XKSupee8SZGM4b6bF68BBIwc6QcRr
-	9QDFBMpQxrJIc4qevamBKVUYvTJSSvsGaNmUTTWnnztGxUOoxFT9JEC9DXXNN7Kre8wTHDqEj4P
-	1So/g5BuEwV41UNp9zQdTVe7IyIP7mIhxRKyELobPY7tIPRtwG3hfv7i1gg6wF9ZcZPa16Ai7H7
-	2wTQhxQbIk7fQC/24MyfnKr65MBLkxiFldfmGeTqpQXrt+3olumsKFpIKOJb2CbBrvLg5+qcgVv
-	3TvjQkBL/Zw8453mWuUkutb9S274oOAr3s=
-X-Google-Smtp-Source: AGHT+IHiNx88guNnogcxy/ePccl6T4u99WrAa4tO6dTyzZ7pWo9gTArz9LqZTlbTuW3AfvNrVuFznA==
-X-Received: by 2002:a05:6402:3546:b0:640:f974:7629 with SMTP id 4fb4d7f45d1cf-6415dc205e6mr4941873a12.15.1762708971341;
-        Sun, 09 Nov 2025 09:22:51 -0800 (PST)
-Received: from localhost (2001-1c00-3b8a-ea00-c4de-d39d-05f4-c77a.cable.dynamic.v6.ziggo.nl. [2001:1c00:3b8a:ea00:c4de:d39d:5f4:c77a])
-        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-6415d91f486sm4786157a12.22.2025.11.09.09.22.50
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 09 Nov 2025 09:22:51 -0800 (PST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7973921C9E5;
+	Sun,  9 Nov 2025 18:34:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.112
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1762713275; cv=pass; b=p4Xx9A+xFLT1Xvih6GRC2bvyrDOaVjPL2H+APorwQRjt9t3HhpgB8aaz6kLNXfdi0kiCvwfNOWKMSQmYhi5VlYok6QZETTUjwefLDFLfc9ypi7P9K16uLzmGV1/d0955GI96n2f4Q4yhfX9OEC6Hi4/Rntvg9tpCRcUMnOE9nQI=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1762713275; c=relaxed/simple;
+	bh=vcl2WRG8ig0pt4U28bUUN8ohEswzlYl2LS+IoX3RUUM=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=uPrNFg4xk3cPN06DPiMWLxEzEimgbb5LyM03GCMWzXh3o5vEivIUDrtpOyYim1d+DXa8xIKhk+1DMORT2glL9K0AArpqqc1vwL5wmmSXHfdp8rnThH902Kii8njKcoYuJA5oy3x/lmQuxT58yFCLH5Z0kC6bk0LHP7j9UBJI3kg=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (1024-bit key) header.d=collabora.com header.i=sebastian.reichel@collabora.com header.b=PbabfmMB; arc=pass smtp.client-ip=136.143.188.112
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
+ARC-Seal: i=1; a=rsa-sha256; t=1762713264; cv=none; 
+	d=zohomail.com; s=zohoarc; 
+	b=XcMiy/RXv+jq541IzJYoepbrJpmXEUy6/atk1AOEuTJiohwFhlymJIlIfi5D6SjT2wGhk8Vm5fN8j59besbIpB/I1AOcIcIFFq/qplcz2Q33X+3Fr/NzcByLCOWhrRIx9ECv+dpdM0WsaSRC4ouzSs5RN7hEJ2xSL/JbW9Lw+Hk=
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
+	t=1762713264; h=Content-Type:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
+	bh=9Et9UYZ8BHyLLylfji7OkuBRbSAyMrXl07spb7ym+84=; 
+	b=XCNhvxRStxRQWcbg6P/HeQXuszXWJFKwem0h+qumPy9Nt8+s0FKs1hQ2I98t05uImfsFblWmGOubXhqvGZxNdCSj2ZOoHe2uO3t0bZPicW3rO7M5u10snRBY87iP4o6PuD/VDuDRqrXjZwTFtUGyGt2rHm/WojXKEt+gcpUQK4s=
+ARC-Authentication-Results: i=1; mx.zohomail.com;
+	dkim=pass  header.i=collabora.com;
+	spf=pass  smtp.mailfrom=sebastian.reichel@collabora.com;
+	dmarc=pass header.from=<sebastian.reichel@collabora.com>
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1762713264;
+	s=zohomail; d=collabora.com; i=sebastian.reichel@collabora.com;
+	h=Date:Date:From:From:To:To:Cc:Cc:Subject:Subject:Message-ID:References:MIME-Version:Content-Type:In-Reply-To:Message-Id:Reply-To;
+	bh=9Et9UYZ8BHyLLylfji7OkuBRbSAyMrXl07spb7ym+84=;
+	b=PbabfmMBf7dRcG2nTjvlPqxmvo7AShyf90YpGbwNKdx6zsUbcPSXUowQZB3uHqVJ
+	43DcYBaYUjujqg/z7mV1vXnefH01iBSyIgjPyjOgV4o3NNM0Mngl22dLqXD5kUN3gui
+	9i7TFH+RlfH8dwB4F/6Oj5qHg5zRD8cjjwjdfJEM=
+Received: by mx.zohomail.com with SMTPS id 1762713261111263.4400627931818;
+	Sun, 9 Nov 2025 10:34:21 -0800 (PST)
+Received: by venus (Postfix, from userid 1000)
+	id CCD33180CB7; Sun, 09 Nov 2025 19:34:09 +0100 (CET)
+Date: Sun, 9 Nov 2025 19:34:09 +0100
+From: Sebastian Reichel <sebastian.reichel@collabora.com>
+To: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
+Cc: Bjorn Helgaas <bhelgaas@google.com>, 
+	Manivannan Sadhasivam <mani@kernel.org>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Bartosz Golaszewski <brgl@bgdev.pl>, linux-kernel@vger.kernel.org, linux-pci@vger.kernel.org, 
+	devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+	Stephan Gerhold <stephan.gerhold@linaro.org>, Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>, 
+	linux-pm@vger.kernel.org
+Subject: Re: [PATCH v2 1/4] dt-bindings: connector: Add PCIe M.2 Mechanical
+ Key M connector
+Message-ID: <b6bj7tqpp55lx24qcf6czqydmjfm2xaztcada4iczptaiozc55@c5xkbdxwe5jp>
+References: <20251108-pci-m2-v2-0-e8bc4d7bf42d@oss.qualcomm.com>
+ <20251108-pci-m2-v2-1-e8bc4d7bf42d@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="zx4ltudquq64qrc6"
+Content-Disposition: inline
+In-Reply-To: <20251108-pci-m2-v2-1-e8bc4d7bf42d@oss.qualcomm.com>
+X-Zoho-Virus-Status: 1
+X-Zoho-Virus-Status: 1
+X-Zoho-AV-Stamp: zmail-av-1.5.1/262.655.73
+X-ZohoMailClient: External
+
+
+--zx4ltudquq64qrc6
+Content-Type: text/plain; protected-headers=v1; charset=us-ascii
+Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Sun, 09 Nov 2025 18:22:50 +0100
-Message-Id: <DE4C6HV76V5M.1I1NJB2JCK1LN@fairphone.com>
-Cc: "Joel Selvaraj" <foss@joelselvaraj.com>, <linux-media@vger.kernel.org>,
- <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
- <phone-devel@vger.kernel.org>
-Subject: Re: [PATCH RFC 8/8] media: qcom: camss: Remove D-PHY-only endpoint
- restriction
-From: "Luca Weiss" <luca.weiss@fairphone.com>
-To: <david@ixit.cz>, "Robert Foss" <rfoss@kernel.org>, "Todor Tomov"
- <todor.too@gmail.com>, "Bryan O'Donoghue" <bryan.odonoghue@linaro.org>,
- "Vladimir Zapolskiy" <vladimir.zapolskiy@linaro.org>, "Mauro Carvalho
- Chehab" <mchehab@kernel.org>, "Luca Weiss" <luca.weiss@fairphone.com>,
- "Petr Hodina" <phodina@protonmail.com>, "Casey Connolly"
- <casey.connolly@linaro.org>, "Dr. Git" <drgitx@gmail.com>
-X-Mailer: aerc 0.21.0-0-g5549850facc2
-References: <20251109-qcom-cphy-v1-0-165f7e79b0e1@ixit.cz>
- <20251109-qcom-cphy-v1-8-165f7e79b0e1@ixit.cz>
-In-Reply-To: <20251109-qcom-cphy-v1-8-165f7e79b0e1@ixit.cz>
+Subject: Re: [PATCH v2 1/4] dt-bindings: connector: Add PCIe M.2 Mechanical
+ Key M connector
+MIME-Version: 1.0
 
-On Sun Nov 9, 2025 at 10:39 AM CET, David Heidelberg via B4 Relay wrote:
-> From: David Heidelberg <david@ixit.cz>
->
-> C-PHY mode is now supported, so the endpoint bus-type restriction to
-> D-PHY can be removed.
->
-> Signed-off-by: David Heidelberg <david@ixit.cz>
+Hi,
+
+On Sat, Nov 08, 2025 at 08:53:19AM +0530, Manivannan Sadhasivam wrote:
+> Add the devicetree binding for PCIe M.2 Mechanical Key M connector defined
+> in the PCI Express M.2 Specification, r4.0, sec 5.3. This connector
+> provides interfaces like PCIe and SATA to attach the Solid State Drives
+> (SSDs) to the host machine along with additional interfaces like USB, and
+> SMB for debugging and supplementary features. At any point of time, the
+> connector can only support either PCIe or SATA as the primary host
+> interface.
+>=20
+> The connector provides a primary power supply of 3.3v, along with an
+> optional 1.8v VIO supply for the Adapter I/O buffer circuitry operating at
+> 1.8v sideband signaling.
+>=20
+> The connector also supplies optional signals in the form of GPIOs for fine
+> grained power management.
+>=20
+> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.=
+com>
 > ---
->  drivers/media/platform/qcom/camss/camss.c | 9 ---------
->  1 file changed, 9 deletions(-)
->
-> diff --git a/drivers/media/platform/qcom/camss/camss.c b/drivers/media/pl=
-atform/qcom/camss/camss.c
-> index 248aa6b21b5ad..1408e8a03f0bd 100644
-> --- a/drivers/media/platform/qcom/camss/camss.c
-> +++ b/drivers/media/platform/qcom/camss/camss.c
-> @@ -4044,15 +4044,6 @@ static int camss_of_parse_endpoint_node(struct dev=
-ice *dev,
->  	if (ret)
->  		return ret;
-> =20
-> -	/*
-> -	 * Most SoCs support both D-PHY and C-PHY standards, but currently only
-> -	 * D-PHY is supported in the driver.
-> -	 */
-> -	if (vep.bus_type !=3D V4L2_MBUS_CSI2_DPHY) {
+>  .../bindings/connector/pcie-m2-m-connector.yaml    | 122 +++++++++++++++=
+++++++
+>  1 file changed, 122 insertions(+)
 
-How about just adding && !=3D V4L2_MBUS_CSI2_CPHY to it? Good to check in
-any case imo.
+I would expect something similar to usb-connector.yaml, i.e. m2-connector.y=
+aml,
+which then defines
 
-Regards
-Luca
+compatible:
+  enum:
+    - m2-a-connector
+    - m2-b-connector
+    - m2-e-connector
+    - m2-m-connector
 
-> -		dev_err(dev, "Unsupported bus type %d\n", vep.bus_type);
-> -		return -EINVAL;
-> -	}
-> -
->  	csd->interface.csiphy_id =3D vep.base.port;
-> =20
->  	mipi_csi2 =3D &vep.bus.mipi_csi2;
+(also not sure if we need the PCIe prefix, it just seems to make the
+name longer)
 
+Greetings,
+
+-- Sebastian
+
+--zx4ltudquq64qrc6
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCgAdFiEE72YNB0Y/i3JqeVQT2O7X88g7+poFAmkQ3p4ACgkQ2O7X88g7
++pqL0w/+KpXEgKSf9yjlKS+VW0hpy/bZByO60LcxziTV0tm18r1nRuuezSKFJsuz
+GoF8wnfPkebcWhj92P0LiJuNeSSp09urvHOhB23gsBY4IzxiCTNOR0DtR/Rxl4cQ
+Mh55AQe/+ZIKnTw0ru0PyDCeCI8R3+MD20PJS2QiRZinie1ydWiwtb1w4awOm8Z2
+VgABufhD+koy633Zt3ION/H2E0ArauKZh2pNquZlRICeGBOJZ5tcWycCvc1/E+Km
+DfykhTQ997TTS1rwIKQ/fbu7bP9l9qJ2NGQ2j1BiGHkJIZBLbV3IwpA5yowbEkRJ
+WmuHh+wSMFej639g8pYzamDiXdmieOqi1BWPrU65JraaVg/TL1SSF0qTMo55DY9U
+GxQIW9ED9LCDOCpFhLOjcM92Dsj3HpFvVD5sYRIg3bE4imytxXWnrYv3Oc5Nx7aD
+3zDJPxLP/86+g78Z0ZZvbNtHx5pn9aUMq7bMcqUShFTb88KpPHsYCTvro+xkm4wZ
+PNqMWU0mhuAfqZeCeJbkmDQWS5iOFV3NZelt/TP4l6WNaC0CkqC/juXPpzAohLet
+4fAQsNim1LIDNSJBrUFoaUaLlbsbeRednbAM453Lpo6h/LoMIgEG5sAKAcr10goK
+KjrZLQCqKbvXPkCkgglHsUGEHtmcMkh+GghjnG3xEG+m5ON1pYM=
+=oxYb
+-----END PGP SIGNATURE-----
+
+--zx4ltudquq64qrc6--
 
