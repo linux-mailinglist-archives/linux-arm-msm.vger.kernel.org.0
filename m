@@ -1,159 +1,268 @@
-Return-Path: <linux-arm-msm+bounces-80887-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-80888-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ams.mirrors.kernel.org (ams.mirrors.kernel.org [213.196.21.55])
-	by mail.lfdr.de (Postfix) with ESMTPS id E2197C44516
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 09 Nov 2025 19:34:38 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id DBAF4C4458C
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 09 Nov 2025 20:06:38 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ams.mirrors.kernel.org (Postfix) with ESMTPS id 558E9344818
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  9 Nov 2025 18:34:38 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 547413A5F89
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  9 Nov 2025 19:06:32 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 693FE221540;
-	Sun,  9 Nov 2025 18:34:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9E37622A7E9;
+	Sun,  9 Nov 2025 19:06:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=collabora.com header.i=sebastian.reichel@collabora.com header.b="PbabfmMB"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="B65LChY6"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from sender4-pp-f112.zoho.com (sender4-pp-f112.zoho.com [136.143.188.112])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f46.google.com (mail-wr1-f46.google.com [209.85.221.46])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7973921C9E5;
-	Sun,  9 Nov 2025 18:34:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.112
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762713275; cv=pass; b=p4Xx9A+xFLT1Xvih6GRC2bvyrDOaVjPL2H+APorwQRjt9t3HhpgB8aaz6kLNXfdi0kiCvwfNOWKMSQmYhi5VlYok6QZETTUjwefLDFLfc9ypi7P9K16uLzmGV1/d0955GI96n2f4Q4yhfX9OEC6Hi4/Rntvg9tpCRcUMnOE9nQI=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762713275; c=relaxed/simple;
-	bh=vcl2WRG8ig0pt4U28bUUN8ohEswzlYl2LS+IoX3RUUM=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=uPrNFg4xk3cPN06DPiMWLxEzEimgbb5LyM03GCMWzXh3o5vEivIUDrtpOyYim1d+DXa8xIKhk+1DMORT2glL9K0AArpqqc1vwL5wmmSXHfdp8rnThH902Kii8njKcoYuJA5oy3x/lmQuxT58yFCLH5Z0kC6bk0LHP7j9UBJI3kg=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (1024-bit key) header.d=collabora.com header.i=sebastian.reichel@collabora.com header.b=PbabfmMB; arc=pass smtp.client-ip=136.143.188.112
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
-ARC-Seal: i=1; a=rsa-sha256; t=1762713264; cv=none; 
-	d=zohomail.com; s=zohoarc; 
-	b=XcMiy/RXv+jq541IzJYoepbrJpmXEUy6/atk1AOEuTJiohwFhlymJIlIfi5D6SjT2wGhk8Vm5fN8j59besbIpB/I1AOcIcIFFq/qplcz2Q33X+3Fr/NzcByLCOWhrRIx9ECv+dpdM0WsaSRC4ouzSs5RN7hEJ2xSL/JbW9Lw+Hk=
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
-	t=1762713264; h=Content-Type:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
-	bh=9Et9UYZ8BHyLLylfji7OkuBRbSAyMrXl07spb7ym+84=; 
-	b=XCNhvxRStxRQWcbg6P/HeQXuszXWJFKwem0h+qumPy9Nt8+s0FKs1hQ2I98t05uImfsFblWmGOubXhqvGZxNdCSj2ZOoHe2uO3t0bZPicW3rO7M5u10snRBY87iP4o6PuD/VDuDRqrXjZwTFtUGyGt2rHm/WojXKEt+gcpUQK4s=
-ARC-Authentication-Results: i=1; mx.zohomail.com;
-	dkim=pass  header.i=collabora.com;
-	spf=pass  smtp.mailfrom=sebastian.reichel@collabora.com;
-	dmarc=pass header.from=<sebastian.reichel@collabora.com>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1762713264;
-	s=zohomail; d=collabora.com; i=sebastian.reichel@collabora.com;
-	h=Date:Date:From:From:To:To:Cc:Cc:Subject:Subject:Message-ID:References:MIME-Version:Content-Type:In-Reply-To:Message-Id:Reply-To;
-	bh=9Et9UYZ8BHyLLylfji7OkuBRbSAyMrXl07spb7ym+84=;
-	b=PbabfmMBf7dRcG2nTjvlPqxmvo7AShyf90YpGbwNKdx6zsUbcPSXUowQZB3uHqVJ
-	43DcYBaYUjujqg/z7mV1vXnefH01iBSyIgjPyjOgV4o3NNM0Mngl22dLqXD5kUN3gui
-	9i7TFH+RlfH8dwB4F/6Oj5qHg5zRD8cjjwjdfJEM=
-Received: by mx.zohomail.com with SMTPS id 1762713261111263.4400627931818;
-	Sun, 9 Nov 2025 10:34:21 -0800 (PST)
-Received: by venus (Postfix, from userid 1000)
-	id CCD33180CB7; Sun, 09 Nov 2025 19:34:09 +0100 (CET)
-Date: Sun, 9 Nov 2025 19:34:09 +0100
-From: Sebastian Reichel <sebastian.reichel@collabora.com>
-To: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
-Cc: Bjorn Helgaas <bhelgaas@google.com>, 
-	Manivannan Sadhasivam <mani@kernel.org>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Bartosz Golaszewski <brgl@bgdev.pl>, linux-kernel@vger.kernel.org, linux-pci@vger.kernel.org, 
-	devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
-	Stephan Gerhold <stephan.gerhold@linaro.org>, Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>, 
-	linux-pm@vger.kernel.org
-Subject: Re: [PATCH v2 1/4] dt-bindings: connector: Add PCIe M.2 Mechanical
- Key M connector
-Message-ID: <b6bj7tqpp55lx24qcf6czqydmjfm2xaztcada4iczptaiozc55@c5xkbdxwe5jp>
-References: <20251108-pci-m2-v2-0-e8bc4d7bf42d@oss.qualcomm.com>
- <20251108-pci-m2-v2-1-e8bc4d7bf42d@oss.qualcomm.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0083A221554
+	for <linux-arm-msm@vger.kernel.org>; Sun,  9 Nov 2025 19:06:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.46
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1762715186; cv=none; b=ofuhaZLEaCuoUiR+9A0ya38dlSyNHUTGTBkpv93urhgBh1LFBPxeU9Lho77nqso8x74fQYR4vKmep1GJoBVG9Q3RvLz6hVdSZ0aMpgUoAIHHJLOZZjWOuBnEEfmP51JE8fgjo4xYsloZWxhS+zBnKz+ZIjrjH7fwSd5Oxl6rIoE=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1762715186; c=relaxed/simple;
+	bh=Tz6nhPicBjCYLSfhTOnICUxIjj/xdpDaK6V9VOSBwHA=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=gFexAfY8z8jxgGU3kPUq7+t62gwICLeUG+U+bb8DAfGgtKU/M6Ocq4db6SVsSseqbNKJ2scKMGe1w/6K/VVN9FCXXLDmZKkuujtFfJHJqMjsrzJR4mxdB/jrxyQRECdZzdDrZ64xuRQ34sh9PdvShzX+89La67mwgjMhp3G+MhY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=B65LChY6; arc=none smtp.client-ip=209.85.221.46
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wr1-f46.google.com with SMTP id ffacd0b85a97d-429c84bf326so191783f8f.3
+        for <linux-arm-msm@vger.kernel.org>; Sun, 09 Nov 2025 11:06:23 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1762715182; x=1763319982; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+         :from:references:cc:to:subject:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=1Y3W5ywvn7drSnOuge5r3/YGn5rwH+Mp+hb7awIgl3s=;
+        b=B65LChY6jJUiR7kXvfDNjLOTHeMfkhSj8MCFPILDsx4naw8lCKBjVAE6TL0T//SZ85
+         VVYbdFvuU/9PDgsDB1OS4kUDbzDE8lG0rVXeXbpJN2LWVAMU0rSszpTXH3qgyGg+MRN9
+         7JXg/p8dZnOTCokVt1jyNtpuOn9yPX0p54SRNysSfCVAZ8zYPvHWIgREvFu0V8v6sZef
+         3pjyQaQqRPdXy57eHc/L9GOkKSRCgRVZ7J/ZLW4WzM5Q+JxtwjpLkV5S8ixrtKM7p12F
+         MSsYTs6azESLWQramtm0czari3LdUOWjq25zdjZBHotkC1WyFDxT+8dZ4oUsJd60oTrx
+         r3Lw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1762715182; x=1763319982;
+        h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+         :from:references:cc:to:subject:user-agent:mime-version:date
+         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=1Y3W5ywvn7drSnOuge5r3/YGn5rwH+Mp+hb7awIgl3s=;
+        b=AAXWtK0SpEBcjVeugbzHMWUMTmqq6V0F0+78ZJ89V5bcgYL75fitfZ6VILcmgQygwT
+         wkbR47FR8sEfKt/zlSr3T9h+Ek+ClN7IbDxznGc2KDD91nS5noqDDKS8s9GTt7lbW26r
+         QDT5zY6dZwfe0Ntv7vv2dkNS4pEqHUbQOmLSvlNKnskf+jPwynPD+rNAYWl4lOdCBt5J
+         LJr+760rTOQFEYBtBbiZJmPqMYSwyfr9vR9mOz8g2fAB73w1Qr09CGEaeECroqc/Cads
+         vnpj6nkM9rNtfVy3jyLHu8APwhsX7Rw1eKpk5767LWKGROfrkOzPJkL94pNjHgZk6mHI
+         AcBg==
+X-Forwarded-Encrypted: i=1; AJvYcCW048xYXSCaOSU+ZXhzMgAgxmWhAYlBxKojuTx4r0yifPaf4Xl14tL9DJlYMBZdtYLj6d3dAC9IIt8ij91D@vger.kernel.org
+X-Gm-Message-State: AOJu0YxvsSUOoNPceTaTrv2arXNDM6xbwXITNSpnYHr77i3m2+FfKjsI
+	57uKc0b42YRjcYOPit6ypXjHaXTJy2Zn9oBfGd7JE+P7OFwWUPgl0wAlqoQkItDMyrw=
+X-Gm-Gg: ASbGncvr3gsuhaT4ZjlCycjlO9+jnlIgPI5e9uaIQdvmo/9HOAZb6iImYRs6DffZRtq
+	A8H2EKFOW/OMn04SDk43lsrIknxEdJAwXfr/0bjuETVyPs+2wdKM742A2un1qz6dz+MPavyMNS5
+	cfdE2OTfQHXD4rveKktm5dd1Rxd8H9iOuE79BhLzWfnhGxT9lHPybJQDVzKZz15WZRaomALdACb
+	U3y4CKXUQsDvIGS5ZKcXq8r6SGWwGONxiU1tgHCZ5ELKbFeF9CF4GQM6tPQUXwEoPBN1YQL73XG
+	CBhcQay7YL02OQoGga1zZ1xbQZtyKV5TChapfUQfijAkCh0BbB/fXU/Bhx6aD4QG+PIMU7P2wZs
+	9TZ7UJGJv69FEK44WICFnnvVgacl7hsq4MZQyUwzM91F44BbQWW/6ELQvDmjZdGBfOFKN6s0joF
+	OiwB5Jf50GUBr7B6wIZCxOF7UPm1U/CI4=
+X-Google-Smtp-Source: AGHT+IE/lbhJ0vCe2mId2P7awStumT/sI1M3BLEL1gPp+PFhAxOunSK8kwDpAn8OgL+MDe5CdFcyfg==
+X-Received: by 2002:a05:6000:2002:b0:426:fe0a:1bb3 with SMTP id ffacd0b85a97d-42b2dcab74dmr2388569f8f.7.1762715182253;
+        Sun, 09 Nov 2025 11:06:22 -0800 (PST)
+Received: from [192.168.1.29] ([178.197.219.123])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-42b380a3a30sm4153513f8f.4.2025.11.09.11.06.19
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sun, 09 Nov 2025 11:06:21 -0800 (PST)
+Message-ID: <86139020-d2bf-4dc8-8b38-d7faba838e46@linaro.org>
+Date: Sun, 9 Nov 2025 20:06:18 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="zx4ltudquq64qrc6"
-Content-Disposition: inline
-In-Reply-To: <20251108-pci-m2-v2-1-e8bc4d7bf42d@oss.qualcomm.com>
-X-Zoho-Virus-Status: 1
-X-Zoho-Virus-Status: 1
-X-Zoho-AV-Stamp: zmail-av-1.5.1/262.655.73
-X-ZohoMailClient: External
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 11/13] soc: qcom: Simplify with
+ of_machine_get_match_data()
+To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+ Krzysztof Kozlowski <krzk@kernel.org>
+Cc: Rob Herring <robh@kernel.org>, Saravana Kannan <saravanak@google.com>,
+ "Rafael J. Wysocki" <rafael@kernel.org>,
+ Viresh Kumar <viresh.kumar@linaro.org>,
+ Matthias Brugger <matthias.bgg@gmail.com>,
+ AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+ Yangtao Li <tiny.windzz@gmail.com>, Chen-Yu Tsai <wens@kernel.org>,
+ Jernej Skrabec <jernej.skrabec@gmail.com>,
+ Samuel Holland <samuel@sholland.org>,
+ Lorenzo Pieralisi <lpieralisi@kernel.org>,
+ Daniel Lezcano <daniel.lezcano@linaro.org>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>, Thomas Gleixner
+ <tglx@linutronix.de>, Nicolas Ferre <nicolas.ferre@microchip.com>,
+ Alexandre Belloni <alexandre.belloni@bootlin.com>,
+ Claudiu Beznea <claudiu.beznea@tuxon.dev>,
+ Maximilian Luz <luzmaximilian@gmail.com>, Hans de Goede <hansg@kernel.org>,
+ =?UTF-8?Q?Ilpo_J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+ Daniel Lezcano <daniel.lezcano@kernel.org>,
+ Thierry Reding <thierry.reding@gmail.com>,
+ Jonathan Hunter <jonathanh@nvidia.com>, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org,
+ linux-arm-kernel@lists.infradead.org, linux-mediatek@lists.infradead.org,
+ linux-sunxi@lists.linux.dev, linux-arm-msm@vger.kernel.org,
+ platform-driver-x86@vger.kernel.org, linux-tegra@vger.kernel.org
+References: <20251106-b4-of-match-matchine-data-v1-0-d780ea1780c2@linaro.org>
+ <20251106-b4-of-match-matchine-data-v1-11-d780ea1780c2@linaro.org>
+ <odmsib3dsxzzggq4gcx7gmh6vq3crlv25fz4z2l2ntezvx6gbi@uelqojwjjait>
+ <a8952b46-94b6-4fe5-a5be-d69aa41d44cd@kernel.org>
+ <a06ed143-c497-4141-8b4d-98fcb322e130@linaro.org>
+ <rxhmiudlnrn2pexqtwuuv2jrenrl2ezepknvrc3o34gaap247u@2tsfw6g33rmr>
+ <8fc8c945-ae67-4c58-837d-40bdf4d60035@kernel.org>
+ <3q5bpkktogs3pxjboihynjduabqrcuayyexjqdv3cgp5krjaxo@afnknyguuzxl>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Content-Language: en-US
+Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
+ 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
+ 2+47PN9NZAOyb771QoVr8A==
+In-Reply-To: <3q5bpkktogs3pxjboihynjduabqrcuayyexjqdv3cgp5krjaxo@afnknyguuzxl>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+
+On 08/11/2025 17:31, Dmitry Baryshkov wrote:
+> On Fri, Nov 07, 2025 at 03:58:26PM +0100, Krzysztof Kozlowski wrote:
+>> On 07/11/2025 15:23, Dmitry Baryshkov wrote:
+>>> On Fri, Nov 07, 2025 at 08:08:28AM +0100, Krzysztof Kozlowski wrote:
+>>>> On 07/11/2025 08:02, Krzysztof Kozlowski wrote:
+>>>>> On 07/11/2025 04:19, Dmitry Baryshkov wrote:
+>>>>>> On Thu, Nov 06, 2025 at 08:07:18PM +0100, Krzysztof Kozlowski wrote:
+>>>>>>> Replace open-coded getting root OF node, matching against it and getting
+>>>>>>> the match data with new of_machine_get_match_data() helper.
+>>>>>>>
+>>>>>>> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+>>>>>>>
+>>>>>>> ---
+>>>>>>>
+>>>>>>> Depends on the first OF patch.
+>>>>>>> ---
+>>>>>>>  drivers/soc/qcom/qcom_pd_mapper.c | 17 ++---------------
+>>>>>>>  1 file changed, 2 insertions(+), 15 deletions(-)
+>>>>>>>
+>>>>>>> diff --git a/drivers/soc/qcom/qcom_pd_mapper.c b/drivers/soc/qcom/qcom_pd_mapper.c
+>>>>>>> index 1bcbe69688d2..07198d44b559 100644
+>>>>>>> --- a/drivers/soc/qcom/qcom_pd_mapper.c
+>>>>>>> +++ b/drivers/soc/qcom/qcom_pd_mapper.c
+>>>>>>> @@ -613,25 +613,12 @@ static void qcom_pdm_stop(struct qcom_pdm_data *data)
+>>>>>>>  static struct qcom_pdm_data *qcom_pdm_start(void)
+>>>>>>>  {
+>>>>>>>  	const struct qcom_pdm_domain_data * const *domains;
+>>>>>>> -	const struct of_device_id *match;
+>>>>>>>  	struct qcom_pdm_data *data;
+>>>>>>> -	struct device_node *root;
+>>>>>>>  	int ret, i;
+>>>>>>>  
+>>>>>>> -	root = of_find_node_by_path("/");
+>>>>>>> -	if (!root)
+>>>>>>> -		return ERR_PTR(-ENODEV);
+>>>>>>> -
+>>>>>>> -	match = of_match_node(qcom_pdm_domains, root);
+>>>>>>> -	of_node_put(root);
+>>>>>>> -	if (!match) {
+>>>>>>> -		pr_notice("PDM: no support for the platform, userspace daemon might be required.\n");
+>>>>>>> -		return ERR_PTR(-ENODEV);
+>>>>>>> -	}
+>>>>>>> -
+>>>>>>> -	domains = match->data;
+>>>>>>> +	domains = of_machine_get_match_data(qcom_pdm_domains);
+>>>>>>>  	if (!domains) {
+>>>>>>> -		pr_debug("PDM: no domains\n");
+>>>>>>> +		pr_notice("PDM: no support for the platform or no domains, userspace daemon might be required.\n");
+>>>>>>>  		return ERR_PTR(-ENODEV);
+>>>>>>>  	}
+>>>>>>
+>>>>>> Here you are mixing two cases:
+>>>>>> - There is not match in the table (in which case the driver should print
+>>>>>>   a notice)
+>>>>>>
+>>>>>> - There is a match in the table, but the data is NULL (the platform
+>>>>>>   doesn't have PDM domains). In this case there should be no notice.
+>>>>>
+>>>>>
+>>>>> Why? Existing code printed notice in both cases. Why refactoring which
+>>>>> tries to keep code functionally equivalent should change it?
+>>>>
+>>>> Ah, you mean there was a debug before. Well, then I am a bit confused
+>>>> because table has entries without data (so expected condition) but old
+>>>> code returned ERRNO in such case - so unexpected condition.
+>>>>
+>>>> Wail failing the probe on expected condition?
+>>>>
+>>>> Unless it is not really expected and notice in second case is valid as well.
+>>>
+>>> If we know that there are no domains on the platform, then the notice
+>>> definitely doesn't apply. Failing the probe is a separate topic. The
+>>> rest of the code expects that _qcom_pdm_data is not NULL.
+>>
+>> I hoped that separate topic would be the reason, after commit msg
+>> adjustments, to keep this change, but if you insist that this must stay
+>> debug, then this patch should be just dropped because it is impossible
+>> to achieve with current helpers.
+> 
+> Having the same pr_notice would be misleading: we point users to running
+> userspace daemon, while we _know_ that the daemon is useless because
+> there are no PDs. One of the ways to solve it would be to add extra
+> wrapping, so that the data in the match table is never NULL.
+
+The message does not matter. It still returns ENODEV which is failing
+the probe. This leaves error messages in the dmesg already, if pdm is
+ever probed for these devices, so my change of debug->notice here
+really, really does not matter. Failing of probe is always a failure of
+system, so it is not an expected behavior.
+
+Anyway, I will just drop this change as I said.
 
 
---zx4ltudquq64qrc6
-Content-Type: text/plain; protected-headers=v1; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-Subject: Re: [PATCH v2 1/4] dt-bindings: connector: Add PCIe M.2 Mechanical
- Key M connector
-MIME-Version: 1.0
-
-Hi,
-
-On Sat, Nov 08, 2025 at 08:53:19AM +0530, Manivannan Sadhasivam wrote:
-> Add the devicetree binding for PCIe M.2 Mechanical Key M connector defined
-> in the PCI Express M.2 Specification, r4.0, sec 5.3. This connector
-> provides interfaces like PCIe and SATA to attach the Solid State Drives
-> (SSDs) to the host machine along with additional interfaces like USB, and
-> SMB for debugging and supplementary features. At any point of time, the
-> connector can only support either PCIe or SATA as the primary host
-> interface.
->=20
-> The connector provides a primary power supply of 3.3v, along with an
-> optional 1.8v VIO supply for the Adapter I/O buffer circuitry operating at
-> 1.8v sideband signaling.
->=20
-> The connector also supplies optional signals in the form of GPIOs for fine
-> grained power management.
->=20
-> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.=
-com>
-> ---
->  .../bindings/connector/pcie-m2-m-connector.yaml    | 122 +++++++++++++++=
-++++++
->  1 file changed, 122 insertions(+)
-
-I would expect something similar to usb-connector.yaml, i.e. m2-connector.y=
-aml,
-which then defines
-
-compatible:
-  enum:
-    - m2-a-connector
-    - m2-b-connector
-    - m2-e-connector
-    - m2-m-connector
-
-(also not sure if we need the PCIe prefix, it just seems to make the
-name longer)
-
-Greetings,
-
--- Sebastian
-
---zx4ltudquq64qrc6
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCgAdFiEE72YNB0Y/i3JqeVQT2O7X88g7+poFAmkQ3p4ACgkQ2O7X88g7
-+pqL0w/+KpXEgKSf9yjlKS+VW0hpy/bZByO60LcxziTV0tm18r1nRuuezSKFJsuz
-GoF8wnfPkebcWhj92P0LiJuNeSSp09urvHOhB23gsBY4IzxiCTNOR0DtR/Rxl4cQ
-Mh55AQe/+ZIKnTw0ru0PyDCeCI8R3+MD20PJS2QiRZinie1ydWiwtb1w4awOm8Z2
-VgABufhD+koy633Zt3ION/H2E0ArauKZh2pNquZlRICeGBOJZ5tcWycCvc1/E+Km
-DfykhTQ997TTS1rwIKQ/fbu7bP9l9qJ2NGQ2j1BiGHkJIZBLbV3IwpA5yowbEkRJ
-WmuHh+wSMFej639g8pYzamDiXdmieOqi1BWPrU65JraaVg/TL1SSF0qTMo55DY9U
-GxQIW9ED9LCDOCpFhLOjcM92Dsj3HpFvVD5sYRIg3bE4imytxXWnrYv3Oc5Nx7aD
-3zDJPxLP/86+g78Z0ZZvbNtHx5pn9aUMq7bMcqUShFTb88KpPHsYCTvro+xkm4wZ
-PNqMWU0mhuAfqZeCeJbkmDQWS5iOFV3NZelt/TP4l6WNaC0CkqC/juXPpzAohLet
-4fAQsNim1LIDNSJBrUFoaUaLlbsbeRednbAM453Lpo6h/LoMIgEG5sAKAcr10goK
-KjrZLQCqKbvXPkCkgglHsUGEHtmcMkh+GghjnG3xEG+m5ON1pYM=
-=oxYb
------END PGP SIGNATURE-----
-
---zx4ltudquq64qrc6--
+Best regards,
+Krzysztof
 
