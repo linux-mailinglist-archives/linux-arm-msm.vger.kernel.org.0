@@ -1,114 +1,96 @@
-Return-Path: <linux-arm-msm+bounces-81022-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-81023-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3AD82C46F4B
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Nov 2025 14:39:43 +0100 (CET)
+Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [IPv6:2605:f480:58:1:0:1994:3:14])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1805DC46FA2
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Nov 2025 14:41:53 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 92B94188EFAE
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Nov 2025 13:39:07 +0000 (UTC)
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 0031C4EB41E
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Nov 2025 13:41:31 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 398FC311C21;
-	Mon, 10 Nov 2025 13:36:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 932AF13C3F2;
+	Mon, 10 Nov 2025 13:41:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="nu/5d/oG";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="JlfD9z4Y"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="pbc7vYrC"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f65.google.com (mail-wr1-f65.google.com [209.85.221.65])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A784311C16
-	for <linux-arm-msm@vger.kernel.org>; Mon, 10 Nov 2025 13:36:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 376BF19F41C
+	for <linux-arm-msm@vger.kernel.org>; Mon, 10 Nov 2025 13:41:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.65
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762781766; cv=none; b=FMvlRBu/K6BZpsSOjQeYvKmsnfbhpEFJgWizsN3+90hYv1j7X55UUJ+LxbmdXBSxT6bAbvpWJAWcBGFvCRSOkTVv7G2xpZKspwqNojrhUnsT4y6SUlUWRcU9sQ3FvzdSHImElgLw6eQavcVAt8Urpow7Mq64lZ9b91CKNh3T9t0=
+	t=1762782088; cv=none; b=ogR7NmLHSJBWdBeruspxL3IasdoOGSw1zeMskImwBKgTsZvWQ9Pi5UEYW3RZUBUOCFCdwH+qclYSAwqKlQdMSQ9a8v/tZYfUfCRpD/aP2xH7Vl7ja4N3nNHyyYrBw2/6OXALC8Cnkdri53/QIKzbASAap0EwgULo2qdX5r5sJPs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762781766; c=relaxed/simple;
-	bh=QS9cmXQXKGnwoD3mp+GBzdPacfCPhiiv6IvqF7RF8mw=;
+	s=arc-20240116; t=1762782088; c=relaxed/simple;
+	bh=KN0w6qAe1O5qDfYrH8AatfJd0V7Fi4K8T0H7k/dpmFY=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=BOVTvi2gY9K9xAgGy9VTxxdAXi0qnad4I3ZcB29m2FMrdd427qiyffWnZKlpAM6XwuwBA2W+uTFJopPMSbjzp8/ewviAF3EHe8bBBiZG1G6t2fZFepgYXAozXEJgXfz7HdzVxj4GeuRIpXl1JKRqzseydC1Dpfx1I6dqpMp4DCQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=nu/5d/oG; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=JlfD9z4Y; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 5AA8UKxK1809202
-	for <linux-arm-msm@vger.kernel.org>; Mon, 10 Nov 2025 13:36:01 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to; s=qcppdkim1; bh=awc78OrtB3yTTjJ3NNR0OiAT
-	MRveR6javZmhFpqenTE=; b=nu/5d/oGWTBNWdterKNkxMYu1n7CXAIf05HSkfEx
-	ZLEz3kkLla/FdmoMAwmdlgPTDsOyMudJ5Ku1TkmlZGm6ySqR4bLqueSolciCEZee
-	VJvY0uu3kZ8mVCh3kzQjn9bOdfGFj459ZprPA6FY6C3B1QG4Os0aPn246S+UBJjA
-	eG64P7mpmzSKlXBtq/TD8pJB115bC3lvlsrUYMMvz41QJJmj0OK+G9PhY83wFTTm
-	9GAY11HGbTZ/t7cq4AeDn7kboJgJqh40XStRlKR6DNfG09Iparb2swr0zrbxO/pQ
-	s+U4VYUxk7UanBCg3SzfJdgLJJVs3EYaMlPKvXuv8vmZbg==
-Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com [209.85.160.198])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4ab5m1j17a-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Mon, 10 Nov 2025 13:36:01 +0000 (GMT)
-Received: by mail-qt1-f198.google.com with SMTP id d75a77b69052e-4ed6466f2baso86215191cf.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 10 Nov 2025 05:36:01 -0800 (PST)
+	 Content-Type:Content-Disposition:In-Reply-To; b=s3Ze/UMwhb/DaoamJKbtYB37yse9VRV0E60BxZpU1iEZFVGziHz+y9YcElC8FyeuLoYtCesNpynOgN1JtnuPyIGobamrUfc9D+Vny9yKEN87JbYGpR5UN/039GzkubdixdXW0+K/Rdl7aFXiT671NnzPGstYqLPGmwePheVnENc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=pbc7vYrC; arc=none smtp.client-ip=209.85.221.65
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wr1-f65.google.com with SMTP id ffacd0b85a97d-429ce7e79f8so2198809f8f.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 10 Nov 2025 05:41:25 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1762781760; x=1763386560; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1762782084; x=1763386884; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=awc78OrtB3yTTjJ3NNR0OiATMRveR6javZmhFpqenTE=;
-        b=JlfD9z4YYMfXVsmqxxfxSpMHmbnHkdy8uOGnhoXHPd7qn29AtYbv1vP+yj8fqOg1zO
-         1La6CCRRXaz2gahwXZBWCrik67CKHjHdZAk6b2ddhCmA1mYTD+gs15+f2fe8iSz1JceU
-         YKU7u9czms7sQ1LYk166rH7G4GFKORnCWO9kq1WBgLDCtMtfFpnjcKD7p0Rw5VNmh6gD
-         r423CU2VRcHABpUMDMAkoqkIsHxaI5D9NOxOO1txOuozIXSuKBcCaqw7uvhhhH960euZ
-         4tUM8Cc7RqgwLOnOd0EDkD8so93hw0+rNBPQhdFVSuKmb+b2LnttDpT7BL8vX5DdLQm0
-         WK0Q==
+        bh=7Z8vx2FUknmzQrwBbS9dXJNGrhupJ+dgMCFmrh9YnAA=;
+        b=pbc7vYrCAjZSR4EwQO642ibKThe7vnJWylQzVu6ScWbxHZgRXx61Gsa7WXDTfTYFjU
+         o+Fk0th0ZhrVFTDCSIHHdGsKDrnN6r94K1KXy0ORW6ztJkBWs5RQC/T4ZQVvt4qUt9rH
+         pGr6pjpx+1gwXwwZp2Zicth61lLae9S2iQ6lMfsjX+1MwxUjFwPkCYwQJU/3tYpIVNuQ
+         hga+qIxHJczsFmGngWXOI825HNreq6iihkIUtGeu+NtNSccwO1bcla/w9vENYDL3HNBx
+         hxh9+mMdS382cBVu34i9nGhAzxEQgod6kdNYpAHGuY2dFsJ5LR0wpKmnU8W/UEXxM+16
+         IVYQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1762781760; x=1763386560;
+        d=1e100.net; s=20230601; t=1762782084; x=1763386884;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=awc78OrtB3yTTjJ3NNR0OiATMRveR6javZmhFpqenTE=;
-        b=Gir4yD8qgMpUAlfT8l1eQfWVz+P5gJNfg7LIHpKq4bcooFA9Ve5QVSsAMWqnPJA6K/
-         bnf/CEcqRm96JBOBCdOyPGk8DElACpGef25snl9ZNrYJzQq3KkS9WtLK7+7ELlGCZgua
-         pZCG1KAftAxHYKuLBoMedP5yko/BEnkuMyy0u7OKp+X776J6T3dgFXm7AhEleMiPc7EO
-         qMaFzNB41fQ17hDqtqwrtKRyo7mFiVMj14okVx6S9k3jcpkGpc3g7cybK1AZqpsK9tM1
-         ifHugcaCGKdxreIyq1fCN7Z6MFz1lzCVBnCcjKdNbd9aHf27tempNjYErJnxb/rwgXJp
-         LPOA==
-X-Forwarded-Encrypted: i=1; AJvYcCWJMkeYXP9FJdxbV02ipY1K2s3IX6xNNtAk9FsSa3eSsvXgmbBcL/zOQHwknopMLu1vHh92/lGRxWvckgFj@vger.kernel.org
-X-Gm-Message-State: AOJu0YyS6idSo+9QGf90QZDvSp2MKJ/3MTLZQPl3tSf/TTpURtJzpKZd
-	lmJ46ifpSPCS0jlZERaRn54NuFvcTYPv65L4U9ekgxqAqkRlTcyrguSU+vbp5FmyYyq5so9o3Yz
-	VQ++SxgeKsS4/Unfy/hXCZ9lWv33lHHpRz3TqTff/tuMUKkl+TTiuAErrrbPn/VeTSkAu
-X-Gm-Gg: ASbGncvsM/p2SOP6I1k8fy3wnfcIZQac6r1l+HceNkKeKYio1IREvEuMkwvc6UDDdcr
-	Kvk7RIm4ANcaJ5pFk6fW6tZ1t1rKUE2fi8icjS+eLMc+uQzPRBrvV1U3uijwX/OO769M3buAnN9
-	LTA6l6LSo9Fhp/hHQlYAMieEC4QwAqJoDsZYnnB75gp8F6EcGLiDZlnflHuxAI2wrbGlDXTHDyb
-	lxIzuBZoDBY/iCfEhAVbczCdaONOCkVUntYqSAPW5eu0W7DKduBLYIDbytvt/Mvr4WoTkE5KyNt
-	wIxdh/v7MQk/SaV/RAJKhaDuL28JYTNvVplPHCAhg9svYH29bRJ6LEFxtoyBJdvBxNOmOzknRG8
-	qRMSW9UTb76xbsiAStWlnqxRs9yjTSdtRrLe44ZRLYDuxympfR8rlcg0zeHyQmDnE6XcysQPofZ
-	mSQ7GRS9upb/bP
-X-Received: by 2002:a05:622a:1a97:b0:4e8:b2df:fe1f with SMTP id d75a77b69052e-4eda4edad2fmr84130851cf.28.1762781760584;
-        Mon, 10 Nov 2025 05:36:00 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHXJ5BT/q7g/MBAV87Zw3lOF0GB6xqxQQW1RPh+OIbihbzKHhzyxU1QwSdJdQsAkfFK4qJhZw==
-X-Received: by 2002:a05:622a:1a97:b0:4e8:b2df:fe1f with SMTP id d75a77b69052e-4eda4edad2fmr84130551cf.28.1762781760095;
-        Mon, 10 Nov 2025 05:36:00 -0800 (PST)
-Received: from umbar.lan (2001-14ba-a0c3-3a00-264b-feff-fe8b-be8a.rev.dnainternet.fi. [2001:14ba:a0c3:3a00:264b:feff:fe8b:be8a])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-5944a024f49sm4049881e87.42.2025.11.10.05.35.59
+        bh=7Z8vx2FUknmzQrwBbS9dXJNGrhupJ+dgMCFmrh9YnAA=;
+        b=NAjOJrcvIwR+OUivdzZZRZkgpK8OTcx3pGp9ogqOfNlObPHFFCAjBMpI7cBK4P8o9C
+         3fK8bOVk1V2sWFEtYi8jPUb7Za1dvdhhkb6TW+paKN4xdcYWKQcnfeVeJ7+yIfEbQeZh
+         bjShWv88DHJuI6YlSrSa1x/oqMHJvsIdQ0cIJeVmMvOEW9J22O5cFBlDRK8dbaHmhVg2
+         apkN1wLe+Tqmcfr4qs709E/SDu1NQIzGMEIrFDoRUIEFlDTkDmdVJT79Cb0s2mg2wq8R
+         o97SvjtGFFy6lSx7oWm1Ycd0lPrXHJBroEF0UJlh0WwgikkM9aHckfMKivaz7zvKizWI
+         fmBw==
+X-Forwarded-Encrypted: i=1; AJvYcCUCRtFnfeKuH/uRsvHVhBACny4tejuGtQ0DuOgart1E+aYzrubcS2YdC98gk5S9YK2uTeszJKnzvVTJLNvZ@vger.kernel.org
+X-Gm-Message-State: AOJu0Yw4XiUHtL3y384Nu5hLpO4GlQSwWUxQL7u5nkxM3sd0yI1jpNc5
+	YUHvqf+ZTJPcsbRorj52i6FvsgcC+Zuz12QZpBhkh/0eIhGGNjDHMXWHXHmJtpH37RDEaZ1p3aR
+	3b1rw8xE2NP+/KFI=
+X-Gm-Gg: ASbGncuBNCTGuTFkhBLoVP/rwQpTd/rbmXpptqEQqvU7OX+EbYfBg4h7fYwQIxrU180
+	CtM0f0H4YgL8kQ15g0TibMxg84PC0ChH5/bgZkVMym+Q2ItEQWIc0Obl5oZKut8qKDgspxJp8Nu
+	49+FCNQLBpY0a3RlrKcjQiOdE6nLz5NYvR9BYM5/MyL6Dfgw2VG6HYNBAD6VQruwrTZ0J0iU55a
+	xajXl1SKv4X2Cm0XrCg5LwjL4itCkTWHYRWwsNhYc/XLrhaWsT4VEWhXEacGQmWdRp9Hk7xz10j
+	rzzGHrzeJhh+L+0695EtbIcDnm2FprZ6MhghcY963XVaU5Xvz3xl3p0ZCYhxAC14zeRRTVZbZt7
+	WX+U6AS+3VudyvbSYEWBFFQrMjuIPpRDVILGUfk0PrsU5p0RQ5IzU6YF7BYwcjVARGhWVQtCSvU
+	mdoxOEIboFrkA=
+X-Google-Smtp-Source: AGHT+IEW9Js0mnXx/rOq3W/yNiXQ1UEN+TONe9DJgelI9gDGHI0fV/F2A2Mdg0LAb9R9hkSCrd5i2g==
+X-Received: by 2002:a5d:5f42:0:b0:429:bca4:6b44 with SMTP id ffacd0b85a97d-42b2dc1f4e9mr7119563f8f.13.1762782084288;
+        Mon, 10 Nov 2025 05:41:24 -0800 (PST)
+Received: from linaro.org ([2a00:fbc:eb43:2253:ad6a:84ac:23bf:2782])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-42b29e4b9bdsm18489964f8f.32.2025.11.10.05.41.22
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 10 Nov 2025 05:35:59 -0800 (PST)
-Date: Mon, 10 Nov 2025 15:35:57 +0200
-From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-To: Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>
-Cc: Vikash Garodia <vikash.garodia@oss.qualcomm.com>,
-        Abhinav Kumar <abhinav.kumar@linux.dev>,
-        Bryan O'Donoghue <bod@kernel.org>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
-        Hans Verkuil <hverkuil@kernel.org>,
-        Stefan Schmidt <stefan.schmidt@linaro.org>,
-        linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, stable@vger.kernel.org,
-        Val Packett <val@packett.cool>
-Subject: Re: [PATCH v3] media: iris: Refine internal buffer reconfiguration
- logic for resolution change
-Message-ID: <l2djrmw5i7dfvlrqyn3a5yrohbtpxr72xwwrgojvsfwo7w4feb@254rjgan2fyz>
-References: <20251105-iris-seek-fix-v3-1-279debaba37a@oss.qualcomm.com>
+        Mon, 10 Nov 2025 05:41:23 -0800 (PST)
+Date: Mon, 10 Nov 2025 14:41:15 +0100
+From: Stephan Gerhold <stephan.gerhold@linaro.org>
+To: Georg Gottleuber <ggo@tuxedocomputers.com>
+Cc: Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+	Ettore Chimenti <ettore.chimenti@linaro.org>,
+	Srinivas Kandagatla <srini@kernel.org>, stefan.schmidt@linaro.org,
+	wse@tuxedocomputers.com, cs@tuxedo.de
+Subject: Re: [PATCH v2 6/7] arm64: dts: qcom: Add device tree for TUXEDO
+ Elite 14 Gen1
+Message-ID: <aRHre28Nbyv6ShbU@linaro.org>
+References: <20251105154107.148187-1-ggo@tuxedocomputers.com>
+ <20251105154107.148187-7-ggo@tuxedocomputers.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -117,108 +99,218 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20251105-iris-seek-fix-v3-1-279debaba37a@oss.qualcomm.com>
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMTEwMDExOCBTYWx0ZWRfX58aH5fHmeS2a
- nbZ5rm3ymkqgdVN323wpoT39IKSw/P3FjvAxEkam79/H/d0M7RLTwAQTO5+K6yg/7IQVMAntirU
- bV+gcHORPZ/KpIxVBUe7RnbMtdY4oG3E1Kd48FuHvxEQ1GckjG8mUv83hHgCR1LkoPn5DzvuwD4
- RaKfzlNPFFnx7sKOWGvoW9WYhIDZk4EWa+vZaXIFMWoiV0A+CIUmn5Yc68JFDfImyJR7vLTNBmk
- ksdV38/E/j4DyRhNJwEqe3c/BdJ0RHOioYvoyF1FCPKMq1sPZCPzHZTmTE090VipWpHC2OUpSbl
- o5lVIlXYPqogFqoWYnyaVGUhrIi8m6KcWCRMD4U1x6oPgowC0NmW6MIhSQJGoa0O1SxEipHiNor
- W2TAxtm9nUriTUG4RnAl5u2wapHT1w==
-X-Authority-Analysis: v=2.4 cv=TsXrRTXh c=1 sm=1 tr=0 ts=6911ea41 cx=c_pps
- a=mPf7EqFMSY9/WdsSgAYMbA==:117 a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10
- a=6UeiqGixMTsA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=e5mUnYsNAAAA:8 a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8 a=K7FOPutcZWfKzoRN3qAA:9
- a=CjuIK1q_8ugA:10 a=dawVfQjAaf238kedN5IG:22 a=Vxmtnl_E_bksehYqCbjh:22
-X-Proofpoint-ORIG-GUID: FLnjdc2UwctJfWc9HTVpnBj_AOWqUDTl
-X-Proofpoint-GUID: FLnjdc2UwctJfWc9HTVpnBj_AOWqUDTl
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
- definitions=2025-11-10_05,2025-11-10_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- adultscore=0 lowpriorityscore=0 clxscore=1015 phishscore=0 spamscore=0
- malwarescore=0 impostorscore=0 priorityscore=1501 bulkscore=0 suspectscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2510240001 definitions=main-2511100118
+In-Reply-To: <20251105154107.148187-7-ggo@tuxedocomputers.com>
 
-On Wed, Nov 05, 2025 at 11:17:37AM +0530, Dikshita Agarwal wrote:
-> Improve the condition used to determine when input internal buffers need
-> to be reconfigured during streamon on the capture port. Previously, the
-> check relied on the INPUT_PAUSE sub-state, which was also being set
-> during seek operations. This led to input buffers being queued multiple
-> times to the firmware, causing session errors due to duplicate buffer
-> submissions.
+On Wed, Nov 05, 2025 at 04:41:06PM +0100, Georg Gottleuber wrote:
+> Initial support for TUXEDO Elite 14 Gen1 based on Qualcomm Snapdragon X
+> Elite SoC (X1E78100).
 > 
-> This change introduces a more accurate check using the FIRST_IPSC and
-> DRC sub-states to ensure that input buffer reconfiguration is triggered
-> only during resolution change scenarios, such as streamoff/on on the
-> capture port. This avoids duplicate buffer queuing during seek
-> operations.
+> Working:
+> * Touchpad
+> * Keyboard
+> * eDP (no brightness control yet)
+> * NVMe
+> * USB Type-C port
+> * USB-C DP altmode
+> * HDMI-A port
+> * WiFi (WiFi 7 untested)
+> * Bluetooth
+> * GPU
+> * Video decoding
+> * USB Type-A
+> * Audio, speakers, microphones
+> 	- 4x speakers.
+> 	- 4x dmic
+> 	- headset
+> * Camera
+> * Fingerprint reader
 > 
-> Fixes: c1f8b2cc72ec ("media: iris: handle streamoff/on from client in dynamic resolution change")
-> Cc: stable@vger.kernel.org
-> Reported-by: Val Packett <val@packett.cool>
-> Closes: https://gitlab.freedesktop.org/gstreamer/gstreamer/-/issues/4700
-> Signed-off-by: Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>
+> Signed-off-by: Georg Gottleuber <ggo@tuxedocomputers.com>
+> Signed-off-by: Srinivas Kandagatla <srini@kernel.org>
+> Signed-off-by: Ettore Chimenti <ettore.chimenti@linaro.org>
 > ---
-> Changes in v3:
-> - Fixed the compilation issue
-> - Added stable@vger.kernel.org in Cc
-> - Link to v2: https://lore.kernel.org/r/20251104-iris-seek-fix-v2-1-c9dace39b43d@oss.qualcomm.com
+>  arch/arm64/boot/dts/qcom/Makefile             |    2 +
+>  .../qcom/x1e80100-tuxedo-elite-14-gen1.dts    | 1486 +++++++++++++++++
+>  2 files changed, 1488 insertions(+)
+>  create mode 100644 arch/arm64/boot/dts/qcom/x1e80100-tuxedo-elite-14-gen1.dts
 > 
-> Changes in v2:
-> - Removed spurious space and addressed other comments (Nicolas)
-> - Remove the unnecessary initializations (Self) 
-> - Link to v1: https://lore.kernel.org/r/20251103-iris-seek-fix-v1-1-6db5f5e17722@oss.qualcomm.com
-> ---
->  drivers/media/platform/qcom/iris/iris_common.c | 7 +++++--
->  1 file changed, 5 insertions(+), 2 deletions(-)
-> 
-> diff --git a/drivers/media/platform/qcom/iris/iris_common.c b/drivers/media/platform/qcom/iris/iris_common.c
-> index 9fc663bdaf3fc989fe1273b4d4280a87f68de85d..7f1c7fe144f707accc2e3da65ce37cd6d9dfeaff 100644
-> --- a/drivers/media/platform/qcom/iris/iris_common.c
-> +++ b/drivers/media/platform/qcom/iris/iris_common.c
-> @@ -91,12 +91,14 @@ int iris_process_streamon_input(struct iris_inst *inst)
->  int iris_process_streamon_output(struct iris_inst *inst)
->  {
->  	const struct iris_hfi_command_ops *hfi_ops = inst->core->hfi_ops;
-> -	bool drain_active = false, drc_active = false;
->  	enum iris_inst_sub_state clear_sub_state = 0;
-> +	bool drain_active, drc_active, first_ipsc;
->  	int ret = 0;
->  
->  	iris_scale_power(inst);
->  
-> +	first_ipsc = inst->sub_state & IRIS_INST_SUB_FIRST_IPSC;
+> diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
+> index 296688f7cb26..598bf4c6e84a 100644
+> --- a/arch/arm64/boot/dts/qcom/Makefile
+> +++ b/arch/arm64/boot/dts/qcom/Makefile
+> @@ -350,3 +350,5 @@ x1p42100-hp-omnibook-x14-el2-dtbs := x1p42100-hp-omnibook-x14.dtb x1-el2.dtbo
+>  dtb-$(CONFIG_ARCH_QCOM)	+= x1p42100-hp-omnibook-x14.dtb x1p42100-hp-omnibook-x14-el2.dtb
+>  x1p42100-lenovo-thinkbook-16-el2-dtbs	:= x1p42100-lenovo-thinkbook-16.dtb x1-el2.dtbo
+>  dtb-$(CONFIG_ARCH_QCOM)	+= x1p42100-lenovo-thinkbook-16.dtb x1p42100-lenovo-thinkbook-16-el2.dtb
+> +x1e80100-tuxedo-elite-14-gen1-el2-dtbs	:=  x1e80100-tuxedo-elite-14-gen1.dtb x1-el2.dtbo
+> +dtb-$(CONFIG_ARCH_QCOM)	+= x1e80100-tuxedo-elite-14-gen1.dtb
+
+Please also add x1e80100-tuxedo-elite-14-gen1-el2.dtb here (similar to
+the other lines), so that the EL2/KVM-specific DTB is automatically
+built and included in the installed DTBs.
+
+> diff --git a/arch/arm64/boot/dts/qcom/x1e80100-tuxedo-elite-14-gen1.dts b/arch/arm64/boot/dts/qcom/x1e80100-tuxedo-elite-14-gen1.dts
+> new file mode 100644
+> index 000000000000..0bfe5931434e
+> --- /dev/null
+> +++ b/arch/arm64/boot/dts/qcom/x1e80100-tuxedo-elite-14-gen1.dts
+> @@ -0,0 +1,1486 @@
+> [...]
+> +	vreg_edp_3p3: regulator-edp-3p3 {
+> +		compatible = "regulator-fixed";
 > +
->  	drain_active = inst->sub_state & IRIS_INST_SUB_DRAIN &&
->  		inst->sub_state & IRIS_INST_SUB_DRAIN_LAST;
->  
-> @@ -108,7 +110,8 @@ int iris_process_streamon_output(struct iris_inst *inst)
->  	else if (drain_active)
->  		clear_sub_state = IRIS_INST_SUB_DRAIN | IRIS_INST_SUB_DRAIN_LAST;
->  
-> -	if (inst->domain == DECODER && inst->sub_state & IRIS_INST_SUB_INPUT_PAUSE) {
-> +	/* Input internal buffer reconfiguration required in case of resolution change */
-> +	if (first_ipsc || drc_active) {
+> +		regulator-name = "VREG_EDP_3P3";
+> +		regulator-min-microvolt = <3300000>;
+> +		regulator-max-microvolt = <3300000>;
+> +
+> +		gpio = <&tlmm 54 GPIO_ACTIVE_HIGH>;
+> +		enable-active-high;
+> +
+> +		pinctrl-0 = <&edp_reg_en>;
+> +		pinctrl-names = "default";
+> +
+> +		regulator-always-on;
 
-Another question: can this now result in PIPE being sent for the ENCODER
-instance?
+Does this need to be always on? It should be possible to enable/disable
+this supply together with the panel (and it is already set as
+power-supply for the panel).
 
->  		ret = iris_alloc_and_queue_input_int_bufs(inst);
->  		if (ret)
->  			return ret;
-> 
-> ---
-> base-commit: 163917839c0eea3bdfe3620f27f617a55fd76302
-> change-id: 20251103-iris-seek-fix-7a25af22fa52
-> 
-> Best regards,
-> -- 
-> Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>
-> 
+> +		regulator-boot-on;
+> +	};
+> +
+> [...]
+> +	sound {
+> +		compatible = "qcom,x1e80100-sndcard";
+> +		model = "X1E80100-TUXEDO-Elite-14";
+> +		audio-routing = "WooferLeft IN", "WSA WSA_SPK1 OUT",
+> +				"TweeterLeft IN", "WSA WSA_SPK2 OUT",
+> +				"WooferRight IN", "WSA2 WSA_SPK2 OUT",
+> +				"TweeterRight IN", "WSA2 WSA_SPK2 OUT",
+> +				"IN1_HPHL", "HPHL_OUT",
+> +				"IN2_HPHR", "HPHR_OUT",
+> +				"AMIC2", "MIC BIAS2",
+> +				"VA DMIC0", "MIC BIAS1",
+> +				"VA DMIC1", "MIC BIAS1",
+> +				"VA DMIC0", "VA MIC BIAS1",
+> +				"VA DMIC1", "VA MIC BIAS1",
 
--- 
-With best wishes
-Dmitry
+Please drop the two "VA MIC BIAS" lines, see
+https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=b49e37de8e70bc433b526a9f4382f72b7ac6492e
+
+> +				"TX SWR_INPUT1", "ADC2_OUTPUT";
+> +
+> +		wcd-playback-dai-link {
+> +			link-name = "WCD Playback";
+> +
+> +			cpu {
+> +				sound-dai = <&q6apmbedai RX_CODEC_DMA_RX_0>;
+> +			};
+> +
+> +			codec {
+> +				sound-dai = <&wcd938x 0>, <&swr1 0>, <&lpass_rxmacro 0>;
+> +			};
+> +
+> +			platform {
+> +				sound-dai = <&q6apm>;
+> +			};
+> +		};
+> +
+> +		wcd-capture-dai-link {
+> +			link-name = "WCD Capture";
+> +
+> +			cpu {
+> +				sound-dai = <&q6apmbedai TX_CODEC_DMA_TX_3>;
+> +			};
+> +
+> +			codec {
+> +				sound-dai = <&wcd938x 1>, <&swr2 1>, <&lpass_txmacro 0>;
+> +			};
+> +
+> +			platform {
+> +				sound-dai = <&q6apm>;
+> +			};
+> +		};
+> +
+> +		wsa-dai-link {
+> +			link-name = "WSA Playback";
+> +
+> +			cpu {
+> +				sound-dai = <&q6apmbedai WSA_CODEC_DMA_RX_0>;
+> +			};
+> +
+> +			codec {
+> +				sound-dai = <&left_woofer>, <&left_tweeter>,
+> +					    <&swr0 0>, <&lpass_wsamacro 0>,
+> +					    <&right_woofer>, <&right_tweeter>,
+> +					    <&swr3 0>, <&lpass_wsa2macro 0>;
+> +			};
+> +
+> +			platform {
+> +				sound-dai = <&q6apm>;
+> +			};
+> +		};
+> +
+> +		va-dai-link {
+> +			link-name = "VA Capture";
+> +
+> +			cpu {
+> +				sound-dai = <&q6apmbedai VA_CODEC_DMA_TX_0>;
+> +			};
+> +
+> +			codec {
+> +				sound-dai = <&lpass_vamacro 0>;
+> +			};
+> +
+> +			platform {
+> +				sound-dai = <&q6apm>;
+> +			};
+> +		};
+> +	};
+> [...]
+> +&remoteproc_adsp {
+> +	firmware-name = "qcom/x1e80100/adsp.mbn",
+> +			"qcom/x1e80100/adsp_dtb.mbn";
+
+We need a custom ADSP firmware for the TUXEDO, so this needs to be a
+device-specific path (so that you can upload the correct firmware to
+linux-firmware). e.g. "qcom/x1e80100/TUXEDO/adsp.mbn"
+
+> +
+> +	status = "okay";
+> +};
+> +
+> +&remoteproc_cdsp {
+> +	firmware-name = "qcom/x1e80100/cdsp.mbn",
+> +			"qcom/x1e80100/cdsp_dtb.mbn";
+
+If you expect that production versions of this device will have the
+(firmware) secure boot enabled, this path should also be
+device-specific. If retail versions will allow loading arbitrary
+firmware this can stay as-is. 
+
+Same for all other "firmware-name"s.
+
+> +
+> +	status = "okay";
+> +};
+> +
+> +&smb2360_0 {
+> +	status = "okay";
+> +};
+> +
+> +&smb2360_0_eusb2_repeater {
+> +	vdd18-supply = <&vreg_l3d_1p8>;
+> +	vdd3-supply = <&vreg_l2b_3p0>;
+> +};
+> +
+> +&smb2360_1 {
+> +	status = "okay";
+> +};
+
+You have just a single USB-C port, so I would expect that there is also
+only a single SMB2360 instance (for charging). Perhaps you can just drop
+this node?
+
+Thanks,
+Stephan
 
