@@ -1,316 +1,385 @@
-Return-Path: <linux-arm-msm+bounces-81023-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-81024-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [IPv6:2605:f480:58:1:0:1994:3:14])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1805DC46FA2
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Nov 2025 14:41:53 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id D76BBC47074
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Nov 2025 14:52:27 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 0031C4EB41E
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Nov 2025 13:41:31 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 06EBC3A8807
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Nov 2025 13:45:50 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 932AF13C3F2;
-	Mon, 10 Nov 2025 13:41:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 745EE1F3B87;
+	Mon, 10 Nov 2025 13:45:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="pbc7vYrC"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="buUwUdVb";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="iGKLGuxO"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f65.google.com (mail-wr1-f65.google.com [209.85.221.65])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 376BF19F41C
-	for <linux-arm-msm@vger.kernel.org>; Mon, 10 Nov 2025 13:41:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.65
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E6CD15A86D
+	for <linux-arm-msm@vger.kernel.org>; Mon, 10 Nov 2025 13:45:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762782088; cv=none; b=ogR7NmLHSJBWdBeruspxL3IasdoOGSw1zeMskImwBKgTsZvWQ9Pi5UEYW3RZUBUOCFCdwH+qclYSAwqKlQdMSQ9a8v/tZYfUfCRpD/aP2xH7Vl7ja4N3nNHyyYrBw2/6OXALC8Cnkdri53/QIKzbASAap0EwgULo2qdX5r5sJPs=
+	t=1762782346; cv=none; b=JcjHY9se3PyCbHhoiwekBYSzp5h/m41l6NI4PByHx4ikotadxsaOrD7fenRixhFLLW9YDqubfF47moNv5IGY/tACKXk1UtlszfjkqlGCAmpyNKHIMmqp3Z6z9dUG+NovFVNNZ2KJ9WL0twQtmcunTs+OQxK9JYjl5v7kGxnyQj0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762782088; c=relaxed/simple;
-	bh=KN0w6qAe1O5qDfYrH8AatfJd0V7Fi4K8T0H7k/dpmFY=;
+	s=arc-20240116; t=1762782346; c=relaxed/simple;
+	bh=H6f8G2F54zA621dwndHMSg6QNIyKcA40Xj5J9hQ37Ks=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=s3Ze/UMwhb/DaoamJKbtYB37yse9VRV0E60BxZpU1iEZFVGziHz+y9YcElC8FyeuLoYtCesNpynOgN1JtnuPyIGobamrUfc9D+Vny9yKEN87JbYGpR5UN/039GzkubdixdXW0+K/Rdl7aFXiT671NnzPGstYqLPGmwePheVnENc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=pbc7vYrC; arc=none smtp.client-ip=209.85.221.65
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wr1-f65.google.com with SMTP id ffacd0b85a97d-429ce7e79f8so2198809f8f.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 10 Nov 2025 05:41:25 -0800 (PST)
+	 Content-Type:Content-Disposition:In-Reply-To; b=fd/2riBPUAbjecZYoK1g2OCYouJLUhvLPiz2y+werD/jkjeIjyko1AatwB2HW/vMjKHKGDC/ME11ZattGMLld5h8K3AT31Rv2+vlNx9uc+sj1LDt+Hj7+z5h+XBTx/I6RKAlalsPBdSis5CMxy7+UGIPg87fV1ByC9jmyFOKbow=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=buUwUdVb; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=iGKLGuxO; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 5AACNmIj3308282
+	for <linux-arm-msm@vger.kernel.org>; Mon, 10 Nov 2025 13:45:43 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	O8mCZ2i/SwfCz8Y6dHfv1Z03BRuaemPsHfu8tHyYWV4=; b=buUwUdVbzeXlAURk
+	SuCksaVMl2U9A06IGjD1MZyq7quSX0tdtw0yK59FVwlgzihRMeQkLPt5dMCv44Fy
+	rNW0FMTerkbARkiqPei3t+v0lOV7UavpmtwoGH5inJqA5mw6Vt7VbZpLeh9dxWJX
+	Da5KOBgcZTqcxoeK9lVd/iyrjqXVfVpTXx465aOD/JZLR0jAUf+iGLYrtIlJxjb1
+	TrKZfsH1SlZ2PVsL+tUKcfb9vzlei81Mta6YX/bbPPNNCebCp/TkGxfS0uAEx7wJ
+	5F3Yn9M7C+FzGfZgkX6YzfVLEMEfq5yu9EDiomZkXIkAvAu94teyTEsnjVlnvz8u
+	F/efUQ==
+Received: from mail-pf1-f199.google.com (mail-pf1-f199.google.com [209.85.210.199])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4abg0q872m-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Mon, 10 Nov 2025 13:45:43 +0000 (GMT)
+Received: by mail-pf1-f199.google.com with SMTP id d2e1a72fcca58-7aee84f1defso5587401b3a.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 10 Nov 2025 05:45:43 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1762782084; x=1763386884; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=7Z8vx2FUknmzQrwBbS9dXJNGrhupJ+dgMCFmrh9YnAA=;
-        b=pbc7vYrCAjZSR4EwQO642ibKThe7vnJWylQzVu6ScWbxHZgRXx61Gsa7WXDTfTYFjU
-         o+Fk0th0ZhrVFTDCSIHHdGsKDrnN6r94K1KXy0ORW6ztJkBWs5RQC/T4ZQVvt4qUt9rH
-         pGr6pjpx+1gwXwwZp2Zicth61lLae9S2iQ6lMfsjX+1MwxUjFwPkCYwQJU/3tYpIVNuQ
-         hga+qIxHJczsFmGngWXOI825HNreq6iihkIUtGeu+NtNSccwO1bcla/w9vENYDL3HNBx
-         hxh9+mMdS382cBVu34i9nGhAzxEQgod6kdNYpAHGuY2dFsJ5LR0wpKmnU8W/UEXxM+16
-         IVYQ==
+        d=oss.qualcomm.com; s=google; t=1762782343; x=1763387143; darn=vger.kernel.org;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=O8mCZ2i/SwfCz8Y6dHfv1Z03BRuaemPsHfu8tHyYWV4=;
+        b=iGKLGuxOi1CD1XiBNfvziQ/5iH9AM6SuNpRolLoHrEZ36Tvvayag1FMOJ20hCOlXZs
+         evC1npSjh3CdSfBir9s+Me+ET6n8Xr3fG5XbaGHo3UZys5Z7DJQzoEChTjAEb5FFHx5E
+         vNnS23ZJRpJ2Lq679yHMuTzzXYJekMVlmzWYgkAymRuM1N54yPHihmmLOEDfIna7+Tzd
+         +SFwkHCJQAWg05O1UeuL9rl3yzd6d3MPSHeREeNavMSA11grgj9byTw5oBPI5naf44yS
+         shoTJGdo+cyzvNjqr/+JJSKnKdU5lc8D4A6bz4f9O7pSVDNVK1syirCmh4AWHwBQ/5Zx
+         OhOQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1762782084; x=1763386884;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=7Z8vx2FUknmzQrwBbS9dXJNGrhupJ+dgMCFmrh9YnAA=;
-        b=NAjOJrcvIwR+OUivdzZZRZkgpK8OTcx3pGp9ogqOfNlObPHFFCAjBMpI7cBK4P8o9C
-         3fK8bOVk1V2sWFEtYi8jPUb7Za1dvdhhkb6TW+paKN4xdcYWKQcnfeVeJ7+yIfEbQeZh
-         bjShWv88DHJuI6YlSrSa1x/oqMHJvsIdQ0cIJeVmMvOEW9J22O5cFBlDRK8dbaHmhVg2
-         apkN1wLe+Tqmcfr4qs709E/SDu1NQIzGMEIrFDoRUIEFlDTkDmdVJT79Cb0s2mg2wq8R
-         o97SvjtGFFy6lSx7oWm1Ycd0lPrXHJBroEF0UJlh0WwgikkM9aHckfMKivaz7zvKizWI
-         fmBw==
-X-Forwarded-Encrypted: i=1; AJvYcCUCRtFnfeKuH/uRsvHVhBACny4tejuGtQ0DuOgart1E+aYzrubcS2YdC98gk5S9YK2uTeszJKnzvVTJLNvZ@vger.kernel.org
-X-Gm-Message-State: AOJu0Yw4XiUHtL3y384Nu5hLpO4GlQSwWUxQL7u5nkxM3sd0yI1jpNc5
-	YUHvqf+ZTJPcsbRorj52i6FvsgcC+Zuz12QZpBhkh/0eIhGGNjDHMXWHXHmJtpH37RDEaZ1p3aR
-	3b1rw8xE2NP+/KFI=
-X-Gm-Gg: ASbGncuBNCTGuTFkhBLoVP/rwQpTd/rbmXpptqEQqvU7OX+EbYfBg4h7fYwQIxrU180
-	CtM0f0H4YgL8kQ15g0TibMxg84PC0ChH5/bgZkVMym+Q2ItEQWIc0Obl5oZKut8qKDgspxJp8Nu
-	49+FCNQLBpY0a3RlrKcjQiOdE6nLz5NYvR9BYM5/MyL6Dfgw2VG6HYNBAD6VQruwrTZ0J0iU55a
-	xajXl1SKv4X2Cm0XrCg5LwjL4itCkTWHYRWwsNhYc/XLrhaWsT4VEWhXEacGQmWdRp9Hk7xz10j
-	rzzGHrzeJhh+L+0695EtbIcDnm2FprZ6MhghcY963XVaU5Xvz3xl3p0ZCYhxAC14zeRRTVZbZt7
-	WX+U6AS+3VudyvbSYEWBFFQrMjuIPpRDVILGUfk0PrsU5p0RQ5IzU6YF7BYwcjVARGhWVQtCSvU
-	mdoxOEIboFrkA=
-X-Google-Smtp-Source: AGHT+IEW9Js0mnXx/rOq3W/yNiXQ1UEN+TONe9DJgelI9gDGHI0fV/F2A2Mdg0LAb9R9hkSCrd5i2g==
-X-Received: by 2002:a5d:5f42:0:b0:429:bca4:6b44 with SMTP id ffacd0b85a97d-42b2dc1f4e9mr7119563f8f.13.1762782084288;
-        Mon, 10 Nov 2025 05:41:24 -0800 (PST)
-Received: from linaro.org ([2a00:fbc:eb43:2253:ad6a:84ac:23bf:2782])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-42b29e4b9bdsm18489964f8f.32.2025.11.10.05.41.22
+        d=1e100.net; s=20230601; t=1762782343; x=1763387143;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=O8mCZ2i/SwfCz8Y6dHfv1Z03BRuaemPsHfu8tHyYWV4=;
+        b=EqGBtNydWSl5WI8gMN5brDBrLadwSeTebtmBMFB6UP6xGTRv7aS01yxqgnWR2/KewM
+         LekAfUeZmTJV0/XC0ngHwBrE/Awq38VPpzrJIUgtUiLU04v0jQIfE+IA4rN4wVYFd04t
+         /dBH72E+PBKawYX5F6GW/peu411uw+L3VNM5VZguNuEefJ3MNfTJnXjmXKBm2hnoEqCx
+         D0cBGhoLK7OD1ZC0yo1DHSL5bAtm2kgOVYqURVgHkI69FEsl0M7RAQIDn3PraIaBeTOl
+         WvSz+N7N1MvCdB3bpA5v+fvXM9ZAu9gSaZlZ7cv4fmzvHtCvxIaVo+w5yrW+RLoH/6QS
+         SJig==
+X-Forwarded-Encrypted: i=1; AJvYcCVZvnTQsUfCGsIs7zAemao+z81KYX384HWhBY245MkBUqrww87ZnP3ag/+heRL7RRh1+0kDZhh3eZs5ytF1@vger.kernel.org
+X-Gm-Message-State: AOJu0YyHXqktRilP88RVi52mP4+54NfDl3rKfwW+59mdYzk9jH6od463
+	luUV1fmJSvI4rnWB1mfpdKx4p7RBV7rXvRaxmitl5I5GQ/W9F0lDJDco9Rl3BJly4Wgvn6euKVG
+	jjAd23aHM1FE0+GPN1FOUTBmmKTaAPyAm8uersp/bdXfFRcMkJ2/12lc/tjEwU+/KY63e
+X-Gm-Gg: ASbGncvcON29EdTamegFPDThg+UQUEifllK/8fWnZwvG92ZajisnBLnD8aC0M13LYin
+	hjKUGsGldFaor7UmBpnESxMjyAjDQn3LLCciitwntkRKFdn7lr5ouVQnez3Im5ozP3ghmKzKe9M
+	ImetWZlr3RVuZ/aSzHB8sjV5u02Q8NeGRWizzGju914lzVSc7/0IbHiKwyj/GhrLaJmHuw1KCMC
+	V6GX18ktUA6p4v/8tSMqkd1OgntUG1dNJwmKxOCjCQoqeI4iOkUIpsvn2HJwBfELmjG/mx8DTKe
+	aX+0+mNG3W+W/t34iqPZbCe7kbf7vEUgk4PU738wVnuB7LQ5f05OpH0sLqchNaxLiZ15rI4mzF7
+	XBMZpsE4qrTo8jkx8KSm9pfD+Dw==
+X-Received: by 2002:a05:6a00:23c1:b0:781:1b5a:95b2 with SMTP id d2e1a72fcca58-7b22717bb94mr12240164b3a.28.1762782342784;
+        Mon, 10 Nov 2025 05:45:42 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGwTkVKCC8Im0eYgJqpdGEW0O85HjOMi5fKaAZ3Jnn0Gmv9OubICv0N6ZVNCMiI6Qbx9GYJBw==
+X-Received: by 2002:a05:6a00:23c1:b0:781:1b5a:95b2 with SMTP id d2e1a72fcca58-7b22717bb94mr12240084b3a.28.1762782341965;
+        Mon, 10 Nov 2025 05:45:41 -0800 (PST)
+Received: from hu-mojha-hyd.qualcomm.com ([202.46.23.25])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-7b0ca1e7595sm11836585b3a.33.2025.11.10.05.45.32
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 10 Nov 2025 05:41:23 -0800 (PST)
-Date: Mon, 10 Nov 2025 14:41:15 +0100
-From: Stephan Gerhold <stephan.gerhold@linaro.org>
-To: Georg Gottleuber <ggo@tuxedocomputers.com>
-Cc: Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-	Ettore Chimenti <ettore.chimenti@linaro.org>,
-	Srinivas Kandagatla <srini@kernel.org>, stefan.schmidt@linaro.org,
-	wse@tuxedocomputers.com, cs@tuxedo.de
-Subject: Re: [PATCH v2 6/7] arm64: dts: qcom: Add device tree for TUXEDO
- Elite 14 Gen1
-Message-ID: <aRHre28Nbyv6ShbU@linaro.org>
-References: <20251105154107.148187-1-ggo@tuxedocomputers.com>
- <20251105154107.148187-7-ggo@tuxedocomputers.com>
+        Mon, 10 Nov 2025 05:45:41 -0800 (PST)
+Date: Mon, 10 Nov 2025 19:15:29 +0530
+From: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>
+To: Shivendra Pratap <shivendra.pratap@oss.qualcomm.com>
+Cc: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Sebastian Reichel <sre@kernel.org>, Rob Herring <robh@kernel.org>,
+        Sudeep Holla <sudeep.holla@arm.com>,
+        Souvik Chakravarty <Souvik.Chakravarty@arm.com>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>, Andy Yan <andy.yan@rock-chips.com>,
+        Mark Rutland <mark.rutland@arm.com>,
+        Lorenzo Pieralisi <lpieralisi@kernel.org>,
+        Arnd Bergmann <arnd@arndb.de>, Konrad Dybcio <konradybcio@kernel.org>,
+        cros-qcom-dts-watchers@chromium.org, Vinod Koul <vkoul@kernel.org>,
+        Catalin Marinas <catalin.marinas@arm.com>,
+        Will Deacon <will@kernel.org>,
+        Florian Fainelli <florian.fainelli@broadcom.com>,
+        Moritz Fischer <moritz.fischer@ettus.com>,
+        John Stultz <john.stultz@linaro.org>,
+        Matthias Brugger <matthias.bgg@gmail.com>,
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Andre Draszik <andre.draszik@linaro.org>,
+        Kathiravan Thirumoorthy <kathiravan.thirumoorthy@oss.qualcomm.com>,
+        linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org,
+        Elliot Berman <quic_eberman@quicinc.com>,
+        Xin Liu <xin.liu@oss.qualcomm.com>,
+        Srinivas Kandagatla <srini@kernel.org>,
+        Umang Chheda <umang.chheda@oss.qualcomm.com>,
+        Nirmesh Kumar Singh <nirmesh.singh@oss.qualcomm.com>
+Subject: Re: [PATCH v17 03/12] power: reset: reboot-mode: Add support for 64
+ bit magic
+Message-ID: <20251110134529.uljjqzb3vhda3vya@hu-mojha-hyd.qualcomm.com>
+References: <20251109-arm-psci-system_reset2-vendor-reboots-v17-0-46e085bca4cc@oss.qualcomm.com>
+ <20251109-arm-psci-system_reset2-vendor-reboots-v17-3-46e085bca4cc@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20251105154107.148187-7-ggo@tuxedocomputers.com>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20251109-arm-psci-system_reset2-vendor-reboots-v17-3-46e085bca4cc@oss.qualcomm.com>
+X-Authority-Analysis: v=2.4 cv=D6JK6/Rj c=1 sm=1 tr=0 ts=6911ec87 cx=c_pps
+ a=WW5sKcV1LcKqjgzy2JUPuA==:117 a=ZePRamnt/+rB5gQjfz0u9A==:17
+ a=IkcTkHD0fZMA:10 a=6UeiqGixMTsA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=EUspDBNiAAAA:8 a=fKl0S-9-5daLM7QqcyEA:9
+ a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=OpyuDcXvxspvyRM73sMx:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMTEwMDEyMCBTYWx0ZWRfXwG0ylcJDHdjh
+ za1/MBaJQmkLslO35mbCT/rYexTKcmaIF9xIjw2sfpDSPcgpNoW89gOwNz+ZKuoriFFywkE2LqG
+ /j6M4WNEQ+/mWAYR0fsoM4cZL7ratAtJm2iFqb/hjmVJAUGDETZp1lEoSGo2wPmndCUumtdpGDv
+ UQchFhDhOOHxmEj9lXdX5PmfJpE7To5VSlTZycfGbCD/Xk2sfa3lACNEbuYA3jR2uOHjhi9V9r7
+ JHIFdpfz5OO3rpfB1om5sAjs3BEmUpTNaXbdJG00dl6fHAKjjDPGJfwOhgIyu9vwTrTbHQ3tmDq
+ 9WhiOAPha1MXIEkhS5hwIGIHG04T7D8gk+z40TQlXZ9wz2uCWSDtUOG1rby0eBtd6kfE5T7WADM
+ 2i5vs9CjxvLWOCX+ttE+m6GDfP9ZMA==
+X-Proofpoint-GUID: j5VTvCXrXWzkV8Q0nXJNYCetUrZo_jZ1
+X-Proofpoint-ORIG-GUID: j5VTvCXrXWzkV8Q0nXJNYCetUrZo_jZ1
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
+ definitions=2025-11-10_05,2025-11-10_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501 adultscore=0 bulkscore=0 malwarescore=0 phishscore=0
+ lowpriorityscore=0 suspectscore=0 clxscore=1015 impostorscore=0 spamscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2510240001 definitions=main-2511100120
 
-On Wed, Nov 05, 2025 at 04:41:06PM +0100, Georg Gottleuber wrote:
-> Initial support for TUXEDO Elite 14 Gen1 based on Qualcomm Snapdragon X
-> Elite SoC (X1E78100).
+On Sun, Nov 09, 2025 at 08:07:16PM +0530, Shivendra Pratap wrote:
+> Current reboot-mode supports a single 32-bit argument for any
+> supported mode. Some reboot-mode based drivers may require
+> passing two independent 32-bit arguments during a reboot
+> sequence, for uses-cases, where a mode requires an additional
+> argument. Such drivers may not be able to use the reboot-mode
+> driver. For example, ARM PSCI vendor-specific resets, need two
+> arguments for its operation – reset_type and cookie, to complete
+> the reset operation. If a driver wants to implement this
+> firmware-based reset, it cannot use reboot-mode framework.
 > 
-> Working:
-> * Touchpad
-> * Keyboard
-> * eDP (no brightness control yet)
-> * NVMe
-> * USB Type-C port
-> * USB-C DP altmode
-> * HDMI-A port
-> * WiFi (WiFi 7 untested)
-> * Bluetooth
-> * GPU
-> * Video decoding
-> * USB Type-A
-> * Audio, speakers, microphones
-> 	- 4x speakers.
-> 	- 4x dmic
-> 	- headset
-> * Camera
-> * Fingerprint reader
+> Introduce 64-bit magic values in reboot-mode driver to
+> accommodate dual 32-bit arguments when specified via device tree.
+> In cases, where no second argument is passed from device tree,
+> keep the upper 32-bit of magic un-changed(0) to maintain backward
+> compatibility.
 > 
-> Signed-off-by: Georg Gottleuber <ggo@tuxedocomputers.com>
-> Signed-off-by: Srinivas Kandagatla <srini@kernel.org>
-> Signed-off-by: Ettore Chimenti <ettore.chimenti@linaro.org>
+> Update the current drivers using reboot-mode for a 64-bit magic
+> value.
+> 
+> Reviewed-by: Umang Chheda <umang.chheda@oss.qualcomm.com>
+> Reviewed-by: Nirmesh Kumar Singh <nirmesh.singh@oss.qualcomm.com>
+> Signed-off-by: Shivendra Pratap <shivendra.pratap@oss.qualcomm.com>
 > ---
->  arch/arm64/boot/dts/qcom/Makefile             |    2 +
->  .../qcom/x1e80100-tuxedo-elite-14-gen1.dts    | 1486 +++++++++++++++++
->  2 files changed, 1488 insertions(+)
->  create mode 100644 arch/arm64/boot/dts/qcom/x1e80100-tuxedo-elite-14-gen1.dts
+>  drivers/power/reset/nvmem-reboot-mode.c  | 13 +++++++++----
+>  drivers/power/reset/qcom-pon.c           | 11 ++++++++---
+>  drivers/power/reset/reboot-mode.c        | 19 +++++++++++++------
+>  drivers/power/reset/syscon-reboot-mode.c | 11 ++++++++---
+>  include/linux/reboot-mode.h              |  3 ++-
+>  5 files changed, 40 insertions(+), 17 deletions(-)
 > 
-> diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
-> index 296688f7cb26..598bf4c6e84a 100644
-> --- a/arch/arm64/boot/dts/qcom/Makefile
-> +++ b/arch/arm64/boot/dts/qcom/Makefile
-> @@ -350,3 +350,5 @@ x1p42100-hp-omnibook-x14-el2-dtbs := x1p42100-hp-omnibook-x14.dtb x1-el2.dtbo
->  dtb-$(CONFIG_ARCH_QCOM)	+= x1p42100-hp-omnibook-x14.dtb x1p42100-hp-omnibook-x14-el2.dtb
->  x1p42100-lenovo-thinkbook-16-el2-dtbs	:= x1p42100-lenovo-thinkbook-16.dtb x1-el2.dtbo
->  dtb-$(CONFIG_ARCH_QCOM)	+= x1p42100-lenovo-thinkbook-16.dtb x1p42100-lenovo-thinkbook-16-el2.dtb
-> +x1e80100-tuxedo-elite-14-gen1-el2-dtbs	:=  x1e80100-tuxedo-elite-14-gen1.dtb x1-el2.dtbo
-> +dtb-$(CONFIG_ARCH_QCOM)	+= x1e80100-tuxedo-elite-14-gen1.dtb
+> diff --git a/drivers/power/reset/nvmem-reboot-mode.c b/drivers/power/reset/nvmem-reboot-mode.c
+> index 41530b70cfc48c2a83fbbd96f523d5816960a0d1..5d73dde585b1fd438b1847f884feb37cd9e4dd5c 100644
+> --- a/drivers/power/reset/nvmem-reboot-mode.c
+> +++ b/drivers/power/reset/nvmem-reboot-mode.c
+> @@ -16,15 +16,20 @@ struct nvmem_reboot_mode {
+>  	struct nvmem_cell *cell;
+>  };
+>  
+> -static int nvmem_reboot_mode_write(struct reboot_mode_driver *reboot,
+> -				    unsigned int magic)
+> +static int nvmem_reboot_mode_write(struct reboot_mode_driver *reboot, u64 magic)
+>  {
+> -	int ret;
+>  	struct nvmem_reboot_mode *nvmem_rbm;
+> +	u32 magic_32;
+> +	int ret;
+> +
+> +	if (magic > U32_MAX)
+> +		return -EINVAL;
 
-Please also add x1e80100-tuxedo-elite-14-gen1-el2.dtb here (similar to
-the other lines), so that the EL2/KVM-specific DTB is automatically
-built and included in the installed DTBs.
 
-> diff --git a/arch/arm64/boot/dts/qcom/x1e80100-tuxedo-elite-14-gen1.dts b/arch/arm64/boot/dts/qcom/x1e80100-tuxedo-elite-14-gen1.dts
-> new file mode 100644
-> index 000000000000..0bfe5931434e
-> --- /dev/null
-> +++ b/arch/arm64/boot/dts/qcom/x1e80100-tuxedo-elite-14-gen1.dts
-> @@ -0,0 +1,1486 @@
-> [...]
-> +	vreg_edp_3p3: regulator-edp-3p3 {
-> +		compatible = "regulator-fixed";
-> +
-> +		regulator-name = "VREG_EDP_3P3";
-> +		regulator-min-microvolt = <3300000>;
-> +		regulator-max-microvolt = <3300000>;
-> +
-> +		gpio = <&tlmm 54 GPIO_ACTIVE_HIGH>;
-> +		enable-active-high;
-> +
-> +		pinctrl-0 = <&edp_reg_en>;
-> +		pinctrl-names = "default";
-> +
-> +		regulator-always-on;
-
-Does this need to be always on? It should be possible to enable/disable
-this supply together with the panel (and it is already set as
-power-supply for the panel).
-
-> +		regulator-boot-on;
-> +	};
-> +
-> [...]
-> +	sound {
-> +		compatible = "qcom,x1e80100-sndcard";
-> +		model = "X1E80100-TUXEDO-Elite-14";
-> +		audio-routing = "WooferLeft IN", "WSA WSA_SPK1 OUT",
-> +				"TweeterLeft IN", "WSA WSA_SPK2 OUT",
-> +				"WooferRight IN", "WSA2 WSA_SPK2 OUT",
-> +				"TweeterRight IN", "WSA2 WSA_SPK2 OUT",
-> +				"IN1_HPHL", "HPHL_OUT",
-> +				"IN2_HPHR", "HPHR_OUT",
-> +				"AMIC2", "MIC BIAS2",
-> +				"VA DMIC0", "MIC BIAS1",
-> +				"VA DMIC1", "MIC BIAS1",
-> +				"VA DMIC0", "VA MIC BIAS1",
-> +				"VA DMIC1", "VA MIC BIAS1",
-
-Please drop the two "VA MIC BIAS" lines, see
-https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=b49e37de8e70bc433b526a9f4382f72b7ac6492e
-
-> +				"TX SWR_INPUT1", "ADC2_OUTPUT";
-> +
-> +		wcd-playback-dai-link {
-> +			link-name = "WCD Playback";
-> +
-> +			cpu {
-> +				sound-dai = <&q6apmbedai RX_CODEC_DMA_RX_0>;
-> +			};
-> +
-> +			codec {
-> +				sound-dai = <&wcd938x 0>, <&swr1 0>, <&lpass_rxmacro 0>;
-> +			};
-> +
-> +			platform {
-> +				sound-dai = <&q6apm>;
-> +			};
-> +		};
-> +
-> +		wcd-capture-dai-link {
-> +			link-name = "WCD Capture";
-> +
-> +			cpu {
-> +				sound-dai = <&q6apmbedai TX_CODEC_DMA_TX_3>;
-> +			};
-> +
-> +			codec {
-> +				sound-dai = <&wcd938x 1>, <&swr2 1>, <&lpass_txmacro 0>;
-> +			};
-> +
-> +			platform {
-> +				sound-dai = <&q6apm>;
-> +			};
-> +		};
-> +
-> +		wsa-dai-link {
-> +			link-name = "WSA Playback";
-> +
-> +			cpu {
-> +				sound-dai = <&q6apmbedai WSA_CODEC_DMA_RX_0>;
-> +			};
-> +
-> +			codec {
-> +				sound-dai = <&left_woofer>, <&left_tweeter>,
-> +					    <&swr0 0>, <&lpass_wsamacro 0>,
-> +					    <&right_woofer>, <&right_tweeter>,
-> +					    <&swr3 0>, <&lpass_wsa2macro 0>;
-> +			};
-> +
-> +			platform {
-> +				sound-dai = <&q6apm>;
-> +			};
-> +		};
-> +
-> +		va-dai-link {
-> +			link-name = "VA Capture";
-> +
-> +			cpu {
-> +				sound-dai = <&q6apmbedai VA_CODEC_DMA_TX_0>;
-> +			};
-> +
-> +			codec {
-> +				sound-dai = <&lpass_vamacro 0>;
-> +			};
-> +
-> +			platform {
-> +				sound-dai = <&q6apm>;
-> +			};
-> +		};
-> +	};
-> [...]
-> +&remoteproc_adsp {
-> +	firmware-name = "qcom/x1e80100/adsp.mbn",
-> +			"qcom/x1e80100/adsp_dtb.mbn";
-
-We need a custom ADSP firmware for the TUXEDO, so this needs to be a
-device-specific path (so that you can upload the correct firmware to
-linux-firmware). e.g. "qcom/x1e80100/TUXEDO/adsp.mbn"
+I believe, we need a comment in all the client driver.. 
 
 > +
-> +	status = "okay";
-> +};
-> +
-> +&remoteproc_cdsp {
-> +	firmware-name = "qcom/x1e80100/cdsp.mbn",
-> +			"qcom/x1e80100/cdsp_dtb.mbn";
+> +	magic_32 = magic;
+>  
+>  	nvmem_rbm = container_of(reboot, struct nvmem_reboot_mode, reboot);
+>  
+> -	ret = nvmem_cell_write(nvmem_rbm->cell, &magic, sizeof(magic));
+> +	ret = nvmem_cell_write(nvmem_rbm->cell, &magic_32, sizeof(magic_32));
+>  	if (ret < 0)
+>  		dev_err(reboot->dev, "update reboot mode bits failed\n");
+>  
+> diff --git a/drivers/power/reset/qcom-pon.c b/drivers/power/reset/qcom-pon.c
+> index 7e108982a582e8243c5c806bd4a793646b87189f..d0ed9431a02313a7bbaa93743c16fa1ae713ddfe 100644
+> --- a/drivers/power/reset/qcom-pon.c
+> +++ b/drivers/power/reset/qcom-pon.c
+> @@ -27,17 +27,22 @@ struct qcom_pon {
+>  	long reason_shift;
+>  };
+>  
+> -static int qcom_pon_reboot_mode_write(struct reboot_mode_driver *reboot,
+> -				    unsigned int magic)
+> +static int qcom_pon_reboot_mode_write(struct reboot_mode_driver *reboot, u64 magic)
+>  {
+>  	struct qcom_pon *pon = container_of
+>  			(reboot, struct qcom_pon, reboot_mode);
+> +	u32 magic_32;
+>  	int ret;
+> 
 
-If you expect that production versions of this device will have the
-(firmware) secure boot enabled, this path should also be
-device-specific. If retail versions will allow loading arbitrary
-firmware this can stay as-is. 
+Since we are doing this change in reboot framework, client driver should know about
+it too about this new check because of framework.
 
-Same for all other "firmware-name"s.
+> +	if (magic > U32_MAX || (magic << pon->reason_shift) > U32_MAX)
 
-> +
-> +	status = "okay";
-> +};
-> +
-> +&smb2360_0 {
-> +	status = "okay";
-> +};
-> +
-> +&smb2360_0_eusb2_repeater {
-> +	vdd18-supply = <&vreg_l3d_1p8>;
-> +	vdd3-supply = <&vreg_l2b_3p0>;
-> +};
-> +
-> +&smb2360_1 {
-> +	status = "okay";
-> +};
 
-You have just a single USB-C port, so I would expect that there is also
-only a single SMB2360 instance (for charging). Perhaps you can just drop
-this node?
+is this (magic << pon->reason_shift) > U32_MAX really needed ..?
 
-Thanks,
-Stephan
+> +		return -EINVAL;
+> +
+> +	magic_32 = magic << pon->reason_shift;
+> +
+>  	ret = regmap_update_bits(pon->regmap,
+>  				 pon->baseaddr + PON_SOFT_RB_SPARE,
+>  				 GENMASK(7, pon->reason_shift),
+> -				 magic << pon->reason_shift);
+> +				 magic_32);
+>  	if (ret < 0)
+>  		dev_err(pon->dev, "update reboot mode bits failed\n");
+>  
+> diff --git a/drivers/power/reset/reboot-mode.c b/drivers/power/reset/reboot-mode.c
+> index eff60d6e04df2cb84ba59d38512654336f272f8a..873ac45cd7659b214b7c21958f580ca381e0a63d 100644
+> --- a/drivers/power/reset/reboot-mode.c
+> +++ b/drivers/power/reset/reboot-mode.c
+> @@ -19,12 +19,11 @@
+>  
+>  struct mode_info {
+>  	const char *mode;
+> -	u32 magic;
+> +	u64 magic;
+>  	struct list_head list;
+>  };
+>  
+> -static unsigned int get_reboot_mode_magic(struct reboot_mode_driver *reboot,
+> -					  const char *cmd)
+> +static u64 get_reboot_mode_magic(struct reboot_mode_driver *reboot, const char *cmd)
+>  {
+>  	const char *normal = "normal";
+>  	struct mode_info *info;
+> @@ -56,7 +55,7 @@ static int reboot_mode_notify(struct notifier_block *this,
+>  			      unsigned long mode, void *cmd)
+>  {
+>  	struct reboot_mode_driver *reboot;
+> -	unsigned int magic;
+> +	u64 magic;
+>  
+>  	reboot = container_of(this, struct reboot_mode_driver, reboot_notifier);
+>  	magic = get_reboot_mode_magic(reboot, cmd);
+> @@ -80,6 +79,8 @@ int reboot_mode_register(struct reboot_mode_driver *reboot, struct fwnode_handle
+>  	struct device_node *np;
+>  	struct property *prop;
+>  	size_t len = strlen(PREFIX);
+> +	u32 magic_arg1;
+> +	u32 magic_arg2;
+>  	int ret;
+>  
+>  	if (!fwnode)
+> @@ -101,12 +102,18 @@ int reboot_mode_register(struct reboot_mode_driver *reboot, struct fwnode_handle
+>  			goto error;
+>  		}
+>  
+> -		if (of_property_read_u32(np, prop->name, &info->magic)) {
+> -			pr_err("reboot mode %s without magic number\n", info->mode);
+> +		if (of_property_read_u32(np, prop->name, &magic_arg1)) {
+> +			pr_err("reboot mode without magic number\n");
+>  			kfree(info);
+>  			continue;
+>  		}
+>  
+> +		if (of_property_read_u32_index(np, prop->name, 1, &magic_arg2))
+> +			magic_arg2 = 0;
+> +
+> +		info->magic = magic_arg2;
+> +		info->magic = (info->magic << 32) | magic_arg1;
+> +
+>  		info->mode = kstrdup_const(prop->name + len, GFP_KERNEL);
+>  		if (!info->mode) {
+>  			ret =  -ENOMEM;
+> diff --git a/drivers/power/reset/syscon-reboot-mode.c b/drivers/power/reset/syscon-reboot-mode.c
+> index e0772c9f70f7a19cd8ec8a0b7fdbbaa7ba44afd0..3cbd000c512239b12ec51987e900d260540a9dea 100644
+> --- a/drivers/power/reset/syscon-reboot-mode.c
+> +++ b/drivers/power/reset/syscon-reboot-mode.c
+> @@ -20,16 +20,21 @@ struct syscon_reboot_mode {
+>  	u32 mask;
+>  };
+>  
+> -static int syscon_reboot_mode_write(struct reboot_mode_driver *reboot,
+> -				    unsigned int magic)
+> +static int syscon_reboot_mode_write(struct reboot_mode_driver *reboot, u64 magic)
+>  {
+>  	struct syscon_reboot_mode *syscon_rbm;
+> +	u32 magic_32;
+>  	int ret;
+>
+
+same here
+
+> +	if (magic > U32_MAX)
+> +		return -EINVAL;
+> +
+> +	magic_32 = magic;
+> +
+>  	syscon_rbm = container_of(reboot, struct syscon_reboot_mode, reboot);
+>  
+>  	ret = regmap_update_bits(syscon_rbm->map, syscon_rbm->offset,
+> -				 syscon_rbm->mask, magic);
+> +				 syscon_rbm->mask, magic_32);
+>  	if (ret < 0)
+>  		dev_err(reboot->dev, "update reboot mode bits failed\n");
+>  
+> diff --git a/include/linux/reboot-mode.h b/include/linux/reboot-mode.h
+> index 22f707ade4ba93592823ea8718d467dbfc5ffd7c..e0d3e8a54050a76f26846f456120b4c7e371d284 100644
+> --- a/include/linux/reboot-mode.h
+> +++ b/include/linux/reboot-mode.h
+> @@ -3,11 +3,12 @@
+>  #define __REBOOT_MODE_H__
+>  
+>  #include <linux/fwnode.h>
+> +#include <linux/types.h>
+>  
+>  struct reboot_mode_driver {
+>  	struct device *dev;
+>  	struct list_head head;
+> -	int (*write)(struct reboot_mode_driver *reboot, unsigned int magic);
+> +	int (*write)(struct reboot_mode_driver *reboot, u64 magic);
+>  	struct notifier_block reboot_notifier;
+>  };
+>  
+> 
+> -- 
+> 2.34.1
+> 
+
+-- 
+-Mukesh Ojha
 
