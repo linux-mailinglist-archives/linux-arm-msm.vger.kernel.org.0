@@ -1,102 +1,81 @@
-Return-Path: <linux-arm-msm+bounces-81144-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-81145-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id E2F15C492D7
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Nov 2025 21:04:53 +0100 (CET)
+Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [142.0.200.124])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0D5CBC49383
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Nov 2025 21:24:09 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id CB9AE188ED68
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Nov 2025 20:05:16 +0000 (UTC)
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id BFBBB4E3130
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Nov 2025 20:24:07 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0C6A033F8A6;
-	Mon, 10 Nov 2025 20:04:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id EB2482EBDFB;
+	Mon, 10 Nov 2025 20:24:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="iHZoEb+7";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="Z0QGnCEN"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="mts42I+x"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f54.google.com (mail-lf1-f54.google.com [209.85.167.54])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B93C32C946
-	for <linux-arm-msm@vger.kernel.org>; Mon, 10 Nov 2025 20:04:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9D6D28000B
+	for <linux-arm-msm@vger.kernel.org>; Mon, 10 Nov 2025 20:24:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762805077; cv=none; b=R6+bPeUcqh0Wj0Dokoxuvs9VFSrmBWm5wkv2Zj0bxA9FQDbQCtTcrhNtWygb7F3q1KE13qpACTQFU8o9dEndSvyhHRbdL7IRWyWGZJVxfpUgmHdrDm1p2O2c8U73U6aYh0G2eXJK5urtm2wyGSbaQu9D3KGsyWMSe9sjeSGGMxY=
+	t=1762806245; cv=none; b=K7q5fOi/9sGRIxnAIu5j51qZbmuh/HEU5aVLcH8wbsdQzSj5Rj3V33lHWEK+bgqioNMNDVQnP7rF6HUUB79M5hQjGMOEb0HfaNkxw0Q15MQpoj7kbV44jmuE4he7CSYTM86w1WVLD/4GHeRUWHRk45c8p5NQH8eP3FBC5XCP/cA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762805077; c=relaxed/simple;
-	bh=Fkcw2qew7eVStl/+jGAeuW+KaRb7Jjz96jXXyII4x7E=;
+	s=arc-20240116; t=1762806245; c=relaxed/simple;
+	bh=avENlQ35BzgI6tLMYtHuimKSX5F3uSHgrD8IvoL218c=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=VfQ3gmhcLKiLTlD5o2ctI2hAm4WZmGmNDI4+AxrFgx6iDZSB2tGpq0o2dRctvkp4T9CrgLP0w0YafUs8DdzpZ/5iMXoLQesibiBi0IrUg3GVxjrO+EZBCoz0DIV2JddjaYjVYw/9eQZeJMV/g2U7h248cFZ/99elcWTPOC/eyt0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=iHZoEb+7; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=Z0QGnCEN; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 5AAH3ks34167078
-	for <linux-arm-msm@vger.kernel.org>; Mon, 10 Nov 2025 20:04:34 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	wywLQuZS84UaCfivN9hBRyvo1mTqLh2yeP1DKGiRq6I=; b=iHZoEb+7rvrtIGQY
-	ZdifNm7zQg6ObBnG36sLNVmkMToc6JglIPMxJy+j4phnAhWq8JdOK3rZqcOuCjsE
-	DiVo5rYj7xi8eg/Un7A7vRRh3TM1+tSH2+nAdhMWS+qF28anMvbdkLpLngazP6wI
-	E+diKjovVkFr9MyuLeBfj3Bei45WdSbnWWoJKu/cK0vruY7q/cX1DJpClJfaiUOh
-	c95agm6xEj3zDG/f3oVL9T6UfIDhxsUFJ8oi6otHx0T0ttsMtMP4LFNPElBZx/MP
-	21YUa7uKEC1qe8PF+x8gaiT8YwV8G/kYqHSFY0UlOInvwhnVsdGaVd/A0146OewZ
-	NO3//g==
-Received: from mail-pg1-f199.google.com (mail-pg1-f199.google.com [209.85.215.199])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4abm4a0h2n-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Mon, 10 Nov 2025 20:04:34 +0000 (GMT)
-Received: by mail-pg1-f199.google.com with SMTP id 41be03b00d2f7-b969f3f5bb1so7462660a12.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 10 Nov 2025 12:04:34 -0800 (PST)
+	 In-Reply-To:Content-Type; b=DI87Dr2EWYQgpWtGP2XW7thZvSnlnxkENo3Zyo8Hn6jdPYrAKM1JwDfrlNKerUykAHe8gWhuDVXrGukmhLXFYRRWqQu8agjO2rxdHdkX3NbZz/5MMNpHuTjJAf4bLECa1egSLyLBWERL23n1iHxfQFLtyhlPXAgp08lVUxOhQE4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=mts42I+x; arc=none smtp.client-ip=209.85.167.54
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lf1-f54.google.com with SMTP id 2adb3069b0e04-59426dc96f2so397481e87.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 10 Nov 2025 12:24:03 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1762805073; x=1763409873; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=wywLQuZS84UaCfivN9hBRyvo1mTqLh2yeP1DKGiRq6I=;
-        b=Z0QGnCENeqnBC1x4msz9V78SSG1mSFNbdjn/kmikSlDnYlnXKm8Aeqhw/9OdMPFs1z
-         iTL1zaCInEyALdqvLpeesmCfr9xuvI2sxrSou8koyUZdfkzGJjm/BYtvXgw/2w9pKgWZ
-         pX0MORfru/gJqioEwgfyADXh3k4s9rdBmzOKiWfImfzBVtGZ0BKvdcSJu38zaJBWJpeN
-         6yZto2mZCne0+LYE8r8QyGACS3KyRgUvpdmOpDnvJ7ZlyvYVLj7mHNJfojwk258c5TGe
-         fhIkb3sNQUgnt9TXeglsBlvsk/yKEEuP/ahqh7Uu4isJZbt857fl1fXo2pVxSQykJrDm
-         GMpQ==
+        d=linaro.org; s=google; t=1762806242; x=1763411042; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to:subject
+         :user-agent:mime-version:date:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=GaNjgHiC4lYNLgJR1dvbSFLh/5KALMDQ9SZCFN88ta8=;
+        b=mts42I+xAsgv8eZE4+D5iwBfrt6505Gw+8ie43Jwc4Uzp8+eVtfzmeMalW/SBDv1pl
+         qyxEiUxi3qo6goc42iJ9vLKPEh6hGdcH3tBlkI7vnceyhz5Q9jAENVhhDY+FTgRkUw6k
+         DhVBDZ+ZwRtwyOu21RIMMBAtv3DuMV6FPLuMq5HjKfCW77HLhO8WycCrjy6f1exvn8EE
+         N9Hf0poSaaHl8rIusXBOvtFAL5YGqInPg9XbMI0C/vtNP8NOYUgF80uvujHE8T0CFuq7
+         ogybdERSxRHTkOOK3JaOCB/1r9uZp7+gHGIruaO0e5nfH9R0D81R9NuZqv5oyGRDf/iU
+         ERMw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1762805073; x=1763409873;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=wywLQuZS84UaCfivN9hBRyvo1mTqLh2yeP1DKGiRq6I=;
-        b=ESOZw2OsYDq8imxd96GnWD79omxjbNiPDKZIB8A2no84xQEOqJ5K97vXwalhPlJi/4
-         cf9o2qc/1jTbtN4HlW9+bp5YWYV1TemRNxIdEX9ZQ3I5V/K1ppjYuTFolXeEXX+Lj28J
-         18fYKVr6dc/azKSFLMP0BlllqLxDQlzqrg4bTIRC4V11ZKwjCA2VBL/goZoy2u4VtpQr
-         xayRFG0JqIjTFK3q6AtYstuGP9YNT1122Nhp7D65iPmLLBdyrCzjRNF1VOViyqq9v19V
-         rbRT8NheTSjwnn3YDhH8Y1ecvrLBscvKXi5gYLrS/YspiwiuTgfMHo7o8HrYHvPoUVVr
-         Sq2A==
-X-Forwarded-Encrypted: i=1; AJvYcCW4KVcn3Axa2o1JxKJHOrtnD3rLVw3AQzb99edMxjHuGi38dhuIJHLJFUP7W8MZHKCaK43+/Mlejg4jYoq2@vger.kernel.org
-X-Gm-Message-State: AOJu0YwDp8BhmTafvJcjcTmjcMnIYziH7BuE+HHITWr7Jr0sHK0115FG
-	esET2UseP4TSXHx+y9JQyxaQKEvhMp/7lZkRDAqX00OJ38py+VJXKVoB1tGttaBpLnmL6nSMnJB
-	UXgPwRYbZGoDMhouQxmIR6uy75GCsS5xuOF7rnbQKBqigil+p+nU4ggsQpu7IQY1ftvWs
-X-Gm-Gg: ASbGncv8M0cke4PhuOnUAT96tQVr9zcSgtHsO3/fhDEhRK5xg7zRdld+PYQkgYvmAmv
-	Pb2oE526hR5Z1FWEjFmu9uX6NBpDDbvuejGTmRJP4Jc6kVewypLD+iWpuLD0cZBDLumRWcsTEVu
-	1EAO6trPEfCaD8YRpV17eQ34MoVAv+kqc7Lfr1z39GmQeoxrWu8UgiRpvBHc/7UxOTrbSvoERGj
-	5W9GYrBRXYy0nKP6GzR08aO1ZX/uWrpjHRVJNVyUl1Z9z7gdfcKdGeTXCcB521tEpY+P6mJafC+
-	XfSr3vzAIBonb9O4Ls+Q17Gb4bT6qt++7d1RRxzKFpOSLMSuTuMIXOhhjfKTvTbqspxFEVzbgRM
-	1aY8Exoh+K05n6Hx+AeFcL8baQZ+5v0mhGvOEHN0ZcH7NpbxtSIdM5OJAeg58JHUbzg==
-X-Received: by 2002:a17:902:c94b:b0:294:9813:4512 with SMTP id d9443c01a7336-297e540dd6fmr127849625ad.3.1762805073096;
-        Mon, 10 Nov 2025 12:04:33 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGgRlu+QHDT2qRkN8FN4ZfcELPFfekO3p0qsOXqvaypumnws68i1D7DWIV/z8geDOvCYuPmxQ==
-X-Received: by 2002:a17:902:c94b:b0:294:9813:4512 with SMTP id d9443c01a7336-297e540dd6fmr127849065ad.3.1762805072440;
-        Mon, 10 Nov 2025 12:04:32 -0800 (PST)
-Received: from [192.168.1.3] (c-24-130-122-79.hsd1.ca.comcast.net. [24.130.122.79])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-297ed6808ddsm81285505ad.17.2025.11.10.12.04.31
+        d=1e100.net; s=20230601; t=1762806242; x=1763411042;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to:subject
+         :user-agent:mime-version:date:message-id:x-gm-gg:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=GaNjgHiC4lYNLgJR1dvbSFLh/5KALMDQ9SZCFN88ta8=;
+        b=iBKHDGJZvd7G7AwFZT3CtucRtQfvOEMBL7WMiZpKUiap2FJfK1/kDDBEk8JTIzh3Ie
+         1pVa5u3ansN2z0Z4f80P69Msfa1HSQ+81piWguV9R7+TvID7eI+Dpt4nBLwx8HCS5hUS
+         5lzdU4Zi2SmcJxyAuIx/ovH31yPeQckyypod2WMbIzwevlYhHb88oIEs+0ads0gkrY1N
+         TH3r1CNiy6VF6Y260b8Eg5ejjfbWgjXFUk9M/8GyKa+UmrabwZ8kbfAOotJlcKBKko6v
+         +NJpNXPwpo6gdRsfuRwDl0DzIGu9NorBmpCMZ7rQf32tuQ/Zht5jnx5aJyORRImLg/Nj
+         WzWA==
+X-Forwarded-Encrypted: i=1; AJvYcCUlfJQ1QH8mo0KIVgdlaxCKFzBBpKSDQ6/1Km5PgTjRfo1FWuEyyvy/RDyuAnbWI407J07gfk4tub9h57hs@vger.kernel.org
+X-Gm-Message-State: AOJu0YytXsNmO9v0Utcofm8WEiQ9PVsPzlLBPGiWVwPsgfUB6v6I0mUG
+	EjWAvHeh+8ERLYQRdRVS33z3UkuxM7l++NXjS9K3/bMNioKEYa7Xyr65lRwP8WSAgZ0=
+X-Gm-Gg: ASbGnctF2HDwrRnSjOAdI6i1AXynGlciUP/7/2AV3jKP1XaO9MXLWFvhquoKmEIFz0F
+	IDhcS/EM+kGUR7pxWIWZtrGHJEqssJEfbwR6q+qahZigtKF8RZRKteYs2H549fTJK4/Zybgcpx/
+	+gjbsAAXtPmyvrsKv7mkw6RYo3g/yWrK6AeMub+yhMLWeQVSSNEJVZk8uF6TtIE2Di1SIexwuRM
+	51wCw9ftxpcOatV///Rx8eoFEEy04nbq9EQipwc2CTmwKyp9xwy4S1Zxzo/TlS8l5ibxYHt313v
+	s2naR9r73giM2iaE2v4G/mnGnZtaioQlTRzQ8tXdmqIR3zULkG0SJ/zzfqZVjlgeXfecs1U3LfZ
+	/OuNsyxycKuRYi3F0i8aCmQyUdkUiGBNEy7PqKOXEujO//AXO2Ie5s0SvBPSp3uJa4KEz26zbTc
+	X/JrxpPHJ7ub58vOjQE73+r6nm1XaFvwUdBxzCDboPbx6wsUl8hx13jIE=
+X-Google-Smtp-Source: AGHT+IH8eu2yFwyQ/7LEhVqdgKoEtPLjRlteAv+Gq5Xpiwbyk2U8UW/TW9k1sGKDpmscx/ao2kCmVA==
+X-Received: by 2002:a05:6512:3c8c:b0:594:2d0d:a3dc with SMTP id 2adb3069b0e04-5945f1dc4f9mr1551360e87.6.1762806242080;
+        Mon, 10 Nov 2025 12:24:02 -0800 (PST)
+Received: from [192.168.1.100] (91-159-24-186.elisa-laajakaista.fi. [91.159.24.186])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-594549b4cd1sm3681566e87.8.2025.11.10.12.23.59
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 10 Nov 2025 12:04:32 -0800 (PST)
-Message-ID: <2b34ceae-5e31-4dba-93e5-3fa35754fab6@oss.qualcomm.com>
-Date: Mon, 10 Nov 2025 12:04:30 -0800
+        Mon, 10 Nov 2025 12:24:01 -0800 (PST)
+Message-ID: <df209178-2871-4317-bfb6-d6605fb9f19b@linaro.org>
+Date: Mon, 10 Nov 2025 22:23:52 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -104,94 +83,131 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 0/3] ath10k: Introduce a devicetree quirk to skip host
- cap QMI requests
-To: david@ixit.cz, Johannes Berg <johannes@sipsolutions.net>,
-        Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>, Jeff Johnson <jjohnson@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>
-Cc: linux-wireless@vger.kernel.org, devicetree@vger.kernel.org,
-        ath10k@lists.infradead.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, phone-devel@vger.kernel.org,
-        Amit Pundir <amit.pundir@linaro.org>
-References: <20251110-skip-host-cam-qmi-req-v2-0-0daf485a987a@ixit.cz>
-From: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
-Content-Language: en-US
-In-Reply-To: <20251110-skip-host-cam-qmi-req-v2-0-0daf485a987a@ixit.cz>
-Content-Type: text/plain; charset=UTF-8
+Subject: Re: [PATCH RFC 1/8] media: qcom: camss: csiphy-3ph: Add Gen2 v1.1
+ MIPI CSI-2 CPHY init
+To: david@ixit.cz, Robert Foss <rfoss@kernel.org>,
+ Todor Tomov <todor.too@gmail.com>,
+ Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+ Mauro Carvalho Chehab <mchehab@kernel.org>,
+ Luca Weiss <luca.weiss@fairphone.com>, Petr Hodina <phodina@protonmail.com>,
+ Casey Connolly <casey.connolly@linaro.org>, "Dr. Git" <drgitx@gmail.com>
+Cc: Joel Selvaraj <foss@joelselvaraj.com>, linux-media@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+ phone-devel@vger.kernel.org
+References: <20251109-qcom-cphy-v1-0-165f7e79b0e1@ixit.cz>
+ <20251109-qcom-cphy-v1-1-165f7e79b0e1@ixit.cz>
+From: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+In-Reply-To: <20251109-qcom-cphy-v1-1-165f7e79b0e1@ixit.cz>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Proofpoint-GUID: sVdlWUv4agrZGFe6yPiLjUtSIf7-kkqG
-X-Authority-Analysis: v=2.4 cv=G6kR0tk5 c=1 sm=1 tr=0 ts=69124552 cx=c_pps
- a=Oh5Dbbf/trHjhBongsHeRQ==:117 a=Tg7Z00WN3eLgNEO9NLUKUQ==:17
- a=IkcTkHD0fZMA:10 a=6UeiqGixMTsA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=VwQbUJbxAAAA:8 a=p0WdMEafAAAA:8
- a=V89vUnNgf5GAzAs4dTEA:9 a=QEXdDO2ut3YA:10 a=_Vgx9l1VpLgwpw_dHYaR:22
- a=poXaRoVlC6wW9_mwW8W4:22 a=pHzHmUro8NiASowvMSCR:22 a=n87TN5wuljxrRezIQYnT:22
-X-Proofpoint-ORIG-GUID: sVdlWUv4agrZGFe6yPiLjUtSIf7-kkqG
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMTEwMDE3MCBTYWx0ZWRfXyutINhl9/EsY
- cyXWDxfbmKQnFeuGxiOXe/SIYEXIlU6OaZyff9dYwU5eYuQK+Fn9Hre2uUOXrbPXnVf7pCPMOoN
- Ghi+uXGxZ/Old9r7iJtr//rETKh0g3pnG0DhHo85CGF5kz/OihT4vA+txzbkf/rDlXH9zyPPwg3
- pjpwzSgt4G/r6nXgd/hOTqcDBbBqV3YsEuIDWPoVz7g/Qoi0+dGSiUFTwK0PTHCmgJEnWD9BK0O
- PydTo5tXOEa4TfKouBJG9229QjDphLiUnp102QUxW+bIlqHf+PS8deNXkXzw2uQmagMhGzFaYw2
- JmXaQnINP8fxAUrBzSdz0OI3IhxjbMLenIMzWKTCKx8EM1m22hEKgXGPR3DKnfTDlqpRcNR2KJ0
- aG9mUAfjhNxKlc7AmQLjZ3PLRJ9jsw==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
- definitions=2025-11-10_07,2025-11-10_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 phishscore=0 spamscore=0 bulkscore=0 suspectscore=0
- lowpriorityscore=0 clxscore=1011 malwarescore=0 impostorscore=0 adultscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2510240001 definitions=main-2511100170
 
-On 11/10/2025 6:26 AM, David Heidelberg via B4 Relay wrote:
-> This quirk is used so far for Xiaomi Poco F1.
+On 11/9/25 11:39, David Heidelberg via B4 Relay wrote:
+> From: Casey Connolly <casey.connolly@linaro.org>
 > 
-> I'm resending it after ~ 4 years since initial send due to Snapdragon
-> 845 being one of best supported platform for mobile phones running
-> Linux, so it would be shame to not have shiny support.
+> Add a PHY configuration sequence for the sdm845 which uses a Qualcomm
+> Gen 2 version 1.1 CSI-2 PHY.
 > 
-> I'm very much open to suggestions how to solve this in a different way,
-> as the original discussion thread got quiet, see
->   https://lore.kernel.org/all/b796bfee-b753-479a-a8d6-ba1fe3ee6222@ixit.cz/
+> The PHY can be configured as two phase or three phase in C-PHY or D-PHY
+> mode. This configuration supports three-phase C-PHY mode.
 > 
-> There could be other devices in need of this quirk, but if they're not,
-> we could make it compatible specific quirk.
-> 
-> Until merged, available also at:
->   https://gitlab.com/dhxx/linux/-/commits/b4/skip-host-cam-qmi-req
-> 
+> Signed-off-by: Casey Connolly <casey.connolly@linaro.org>
 > Signed-off-by: David Heidelberg <david@ixit.cz>
 > ---
-> Amit Pundir (3):
->       dt-bindings: wireless: ath10k: Introduce quirk to skip host cap QMI requests
->       ath10k: Introduce a devicetree quirk to skip host cap QMI requests
->       arm64: dts: qcom: sdm845-xiaomi-beryllium: Enable ath10k host-cap skip quirk
+>   .../platform/qcom/camss/camss-csiphy-3ph-1-0.c     | 64 ++++++++++++++++++++++
+>   1 file changed, 64 insertions(+)
 > 
->  .../devicetree/bindings/net/wireless/qcom,ath10k.yaml       |  6 ++++++
->  .../arm64/boot/dts/qcom/sdm845-xiaomi-beryllium-common.dtsi |  2 ++
->  drivers/net/wireless/ath/ath10k/qmi.c                       | 13 ++++++++++---
->  drivers/net/wireless/ath/ath10k/snoc.c                      |  3 +++
->  drivers/net/wireless/ath/ath10k/snoc.h                      |  1 +
->  5 files changed, 22 insertions(+), 3 deletions(-)
-> ---
-> base-commit: ab40c92c74c6b0c611c89516794502b3a3173966
-> change-id: 20251110-skip-host-cam-qmi-req-e155628ebc39
+> diff --git a/drivers/media/platform/qcom/camss/camss-csiphy-3ph-1-0.c b/drivers/media/platform/qcom/camss/camss-csiphy-3ph-1-0.c
+> index 619abbf607813..f28c32d1a4ec5 100644
+> --- a/drivers/media/platform/qcom/camss/camss-csiphy-3ph-1-0.c
+> +++ b/drivers/media/platform/qcom/camss/camss-csiphy-3ph-1-0.c
+> @@ -144,6 +144,7 @@ csiphy_lane_regs lane_regs_sa8775p[] = {
+>   };
+>   
+>   /* GEN2 1.0 2PH */
+> +/* 5 entries: clock + 4 lanes */
+>   static const struct
+>   csiphy_lane_regs lane_regs_sdm845[] = {
+>   	{0x0004, 0x0C, 0x00, CSIPHY_DEFAULT_PARAMS},
+> @@ -218,6 +219,69 @@ csiphy_lane_regs lane_regs_sdm845[] = {
+>   	{0x0664, 0x7F, 0x00, CSIPHY_DEFAULT_PARAMS},
+>   };
+>   
+> +/* GEN2 1.0 3PH */
+> +/* 3 entries: 3 lanes (C-PHY) */
+> +static const struct
+> +csiphy_lane_regs lane_regs_sdm845_3ph[] = {
+> +	{0x015C, 0x43, 0x00, CSIPHY_DEFAULT_PARAMS},
+> +	{0x0168, 0xA0, 0x00, CSIPHY_DEFAULT_PARAMS},
+> +	{0x016C, 0x25, 0x00, CSIPHY_DEFAULT_PARAMS},
+> +	{0x0104, 0x06, 0x00, CSIPHY_DEFAULT_PARAMS},
+> +	{0x010C, 0x12, 0x00, CSIPHY_SETTLE_CNT_LOWER_BYTE},
+> +	{0x0108, 0x00, 0x00, CSIPHY_SETTLE_CNT_HIGHER_BYTE},
+> +	{0x0114, 0x20, 0x00, CSIPHY_DEFAULT_PARAMS},
+> +	{0x0150, 0x00, 0x00, CSIPHY_DEFAULT_PARAMS},
+> +	{0x0118, 0x3e, 0x00, CSIPHY_DEFAULT_PARAMS},
+> +	{0x011C, 0x41, 0x00, CSIPHY_DEFAULT_PARAMS},
+> +	{0x0120, 0x41, 0x00, CSIPHY_DEFAULT_PARAMS},
+> +	{0x0124, 0x7F, 0x00, CSIPHY_DEFAULT_PARAMS},
+> +	{0x0128, 0x00, 0x00, CSIPHY_DEFAULT_PARAMS},
+> +	{0x012C, 0x00, 0x00, CSIPHY_DEFAULT_PARAMS},
+> +	{0x0144, 0x12, 0x00, CSIPHY_DEFAULT_PARAMS},
+> +	{0x0160, 0x02, 0x00, CSIPHY_DEFAULT_PARAMS},
+> +	{0x01CC, 0x41, 0x00, CSIPHY_DEFAULT_PARAMS},
+> +	{0x0164, 0x00, 0x00, CSIPHY_DEFAULT_PARAMS},
+> +	{0x01DC, 0x51, 0x00, CSIPHY_DEFAULT_PARAMS},
+> +	{0x035C, 0x43, 0x00, CSIPHY_DEFAULT_PARAMS},
+> +	{0x0368, 0xA0, 0x00, CSIPHY_DEFAULT_PARAMS},
+> +	{0x036C, 0x25, 0x00, CSIPHY_DEFAULT_PARAMS},
+> +	{0x0304, 0x06, 0x00, CSIPHY_DEFAULT_PARAMS},
+> +	{0x030C, 0x12, 0x00, CSIPHY_SETTLE_CNT_LOWER_BYTE},
+> +	{0x0308, 0x00, 0x00, CSIPHY_SETTLE_CNT_HIGHER_BYTE},
+> +	{0x0314, 0x20, 0x00, CSIPHY_DEFAULT_PARAMS},
+> +	{0x0350, 0x00, 0x00, CSIPHY_DEFAULT_PARAMS},
+> +	{0x0318, 0x3e, 0x00, CSIPHY_DEFAULT_PARAMS},
+> +	{0x031C, 0x41, 0x00, CSIPHY_DEFAULT_PARAMS},
+> +	{0x0320, 0x41, 0x00, CSIPHY_DEFAULT_PARAMS},
+> +	{0x0324, 0x7F, 0x00, CSIPHY_DEFAULT_PARAMS},
+> +	{0x0328, 0x00, 0x00, CSIPHY_DEFAULT_PARAMS},
+> +	{0x032C, 0x00, 0x00, CSIPHY_DEFAULT_PARAMS},
+> +	{0x0344, 0x12, 0x00, CSIPHY_DEFAULT_PARAMS},
+> +	{0x0360, 0x02, 0x00, CSIPHY_DEFAULT_PARAMS},
+> +	{0x03CC, 0x41, 0x00, CSIPHY_DEFAULT_PARAMS},
+> +	{0x0364, 0x00, 0x00, CSIPHY_DEFAULT_PARAMS},
+> +	{0x03DC, 0x51, 0x00, CSIPHY_DEFAULT_PARAMS},
+> +	{0x055C, 0x43, 0x00, CSIPHY_DEFAULT_PARAMS},
+
+You may find it be more structured, if the array is split between
+0x01zz, 0x03zz and 0x05zz blocks by new lines, each of those three
+blocks is a configuration of one of three lanes in total.
+
+> +	{0x0568, 0xA0, 0x00, CSIPHY_DEFAULT_PARAMS},
+> +	{0x056C, 0x25, 0x00, CSIPHY_DEFAULT_PARAMS},
+> +	{0x0504, 0x06, 0x00, CSIPHY_DEFAULT_PARAMS},
+> +	{0x050C, 0x12, 0x00, CSIPHY_SETTLE_CNT_LOWER_BYTE},
+> +	{0x0508, 0x00, 0x00, CSIPHY_SETTLE_CNT_HIGHER_BYTE},
+> +	{0x0514, 0x20, 0x00, CSIPHY_DEFAULT_PARAMS},
+> +	{0x0550, 0x00, 0x00, CSIPHY_DEFAULT_PARAMS},
+> +	{0x0518, 0x3e, 0x00, CSIPHY_DEFAULT_PARAMS},
+> +	{0x051C, 0x41, 0x00, CSIPHY_DEFAULT_PARAMS},
+> +	{0x0520, 0x41, 0x00, CSIPHY_DEFAULT_PARAMS},
+> +	{0x0524, 0x7F, 0x00, CSIPHY_DEFAULT_PARAMS},
+> +	{0x0528, 0x00, 0x00, CSIPHY_DEFAULT_PARAMS},
+> +	{0x052C, 0x00, 0x00, CSIPHY_DEFAULT_PARAMS},
+> +	{0x0544, 0x12, 0x00, CSIPHY_DEFAULT_PARAMS},
+> +	{0x0560, 0x02, 0x00, CSIPHY_DEFAULT_PARAMS},
+> +	{0x05CC, 0x41, 0x00, CSIPHY_DEFAULT_PARAMS},
+> +	{0x0564, 0x00, 0x00, CSIPHY_DEFAULT_PARAMS},
+> +	{0x05DC, 0x51, 0x00, CSIPHY_DEFAULT_PARAMS},
+> +};
+> +
+>   /* GEN2 1.1 2PH */
+>   static const struct
+>   csiphy_lane_regs lane_regs_sc8280xp[] = {
 > 
-> Best regards,
 
-The original thread predates me becoming an ath.git maintainer.
-Just for my information, is the firmware and board files for this platform
-available in linux-firmware? Or does it leverage the files already present
-from the original (Android?) installation?
+Reviewed-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
 
-I ask because the alternative solution suggested by Kalle would require
-modification of the board file on the device, and that seems more of a hassle
-than just modifying the DT.
-
-So I'm personally OK with this suggested approach.
-
-/jeff
+-- 
+Best wishes,
+Vladimir
 
