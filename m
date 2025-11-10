@@ -1,101 +1,101 @@
-Return-Path: <linux-arm-msm+bounces-81085-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-81088-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [142.0.200.124])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5ACD0C4825B
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Nov 2025 17:56:42 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 3666EC4832C
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Nov 2025 18:06:00 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 1878C4FCEDC
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Nov 2025 16:49:39 +0000 (UTC)
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 364D94F079B
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Nov 2025 16:54:29 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1002732ED45;
-	Mon, 10 Nov 2025 16:40:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 49853285042;
+	Mon, 10 Nov 2025 16:50:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="mfb5RfcM";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="BoIYBQy+"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="B9SJqo/c";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="FJ9GdYke"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96AC731B107
-	for <linux-arm-msm@vger.kernel.org>; Mon, 10 Nov 2025 16:40:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA9EA319867
+	for <linux-arm-msm@vger.kernel.org>; Mon, 10 Nov 2025 16:50:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762792845; cv=none; b=su8JvaMqRnDv9GqVxjnvK4O4Vge8prJaRF3GOQk5EpxuYxs1BH0MoMW/Gr1HmqUGX8ccDFRFvoMhV92edG0wSPID3rs6orWnZkJVV+Lj5TF4x9AtxhF6oJA6ylHrd99w2kg1QfeB+LSl752PCcbOixvVqACeQYZ4mC0SaRAzMkk=
+	t=1762793421; cv=none; b=tVXBllf3ctURIiaj4Zk+ya/NJdavsBh5S98pW1FoVZt6dHngneXeqkPZArFSJiSxDnsJRw0wgefDeUPmfkz4jgtV4kiJ9Vn80DjkttojXNnKTD0pU6SFwaO8yXU+zBpb76hleMCu2lYJ6cAFcjDxnmoIv8O89T/vbbKvIqibqJs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762792845; c=relaxed/simple;
-	bh=NcxT59isJ8a73ABBo5632Wjovo4V8SjmsWcRhDa2gQw=;
+	s=arc-20240116; t=1762793421; c=relaxed/simple;
+	bh=r5aNW3E/uItx4ZgEv5XbsTsCl67yqo8Wr7EDeQUCiVU=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=RkNV6n0jVLWMpFFkJbUKXvIkTbWOImTSoEhIfiCMxraHLEi8uXZosnkQmpZZ+05n+2/tc/V/BzTHz9xWurPTdcerilqhNvZWp0atZcWNqkizFlUwDlfEunJgPY91FxNwGFIvWJtIa/NL1WjWY7891Pyjjj22zmMNt/JiaBFjgw8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=mfb5RfcM; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=BoIYBQy+; arc=none smtp.client-ip=205.220.168.131
+	 In-Reply-To:To:Cc; b=YKmGiIWiCeAPCZxSiPXRH8GrCGlEFhc5pREXTLZsYW3HleRp+M3I7Km4736qrOW2dxhzr8mXObNGsOE56ap9/FbOMDH47a+DEXOxj73nJxjTN/mQJhwYUXGcnVmYwl35deGt5iMIkJxGpPzDpbhZPAZuX1oVWT0XdJ4KRgtqADk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=B9SJqo/c; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=FJ9GdYke; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 5AABZgAw3271132
-	for <linux-arm-msm@vger.kernel.org>; Mon, 10 Nov 2025 16:40:44 GMT
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 5AAD0wCw3676831
+	for <linux-arm-msm@vger.kernel.org>; Mon, 10 Nov 2025 16:50:17 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	NK80NgI1LQ+xDyFsHtTpc6wl2L9uxC1wWhpBghxroMY=; b=mfb5RfcMzuKHoEwN
-	bE/7sAthi6igUtT7/JkWPEeev5XN9rHHFoloGCk0VSPlSTJG/dFXReEi9t/AFBwF
-	rLZOEj5lM0LS5lQodxix27ElTFsUVSWdWpfmnn0RI2jvTQB1wyMIgul1RZmgYMNX
-	9rP9bkQNkRJEz4VpaQgvOBKccWu5MbtL1J8lX2xtbaws10fA2Zng1C49+WajOKC3
-	ZghEAo8v/AcssjoShvDRK9kH66nbQ+SZsP4d71kPVOoCbMlwdNpKrQC3jhjDbrRs
-	M+y7S8EKKJQTlh7J1QFtJij2Nhtgxngc65a8UVrLyawJGF4EKvPz7jU8rxty20MU
-	UvZ+hA==
-Received: from mail-pj1-f70.google.com (mail-pj1-f70.google.com [209.85.216.70])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4abfafrvue-1
+	s54gvATO6D8ni0BziC5bOrsJP88CdVIwOWTVNSqeo7Y=; b=B9SJqo/ccar0DWwm
+	EpGN4e5nk45JX3Q3g/WSim1PyJ1W/UZeLzFZVzvYrV95RguJTnBRRIGqahHA+nDY
+	PWnrB/2dV4UizaPrtinAqA6zb2s8IiOgqwfWc3GZ1RzU/scM0HQUlKS2khnljzfO
+	7legFp+imW6wTUosyMVa4GtE5d9Fxw/QwhHvQ56I4HJlmqem43H/lVx/UhoCsWQJ
+	201RSClraABtvjGwaj+GW5XDOq7yogfHkLUbQtEGybE7MSx6yTwAmyP7vv11jBep
+	d2WF8/E4p2diJFAgn56Kb1RLzfyV2nnT7AIG/vp+jvJ0CCzSx7XtcuO9TdeI6KKj
+	TVgz0A==
+Received: from mail-oo1-f69.google.com (mail-oo1-f69.google.com [209.85.161.69])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4abgjh8rg3-1
 	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Mon, 10 Nov 2025 16:40:43 +0000 (GMT)
-Received: by mail-pj1-f70.google.com with SMTP id 98e67ed59e1d1-343823be748so1919044a91.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 10 Nov 2025 08:40:43 -0800 (PST)
+	for <linux-arm-msm@vger.kernel.org>; Mon, 10 Nov 2025 16:50:17 +0000 (GMT)
+Received: by mail-oo1-f69.google.com with SMTP id 006d021491bc7-656c96ed908so8291075eaf.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 10 Nov 2025 08:50:17 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1762792843; x=1763397643; darn=vger.kernel.org;
+        d=oss.qualcomm.com; s=google; t=1762793417; x=1763398217; darn=vger.kernel.org;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=NK80NgI1LQ+xDyFsHtTpc6wl2L9uxC1wWhpBghxroMY=;
-        b=BoIYBQy+xeS4j/gLdjlch7JC4YKpDIGr+DajJE7xuWoT/hiNHWgmMZllC24jBjlvEq
-         ym28J0c1QhTuPLptOb9LvADOrgZpog9VNJMyNJ5+cS3zsVLc6U+0NhsAV12LbX/a+akk
-         r0Su+uIK2J5Jo/WdQWGYXa1LzkOz6/sZdALvLIrswCIANVYUV0TbSfJBxEsZCQDblAIY
-         /LAftkwRPXR06uXf7CvlhS3vVKJ38B0fjzJwEN1b9D9H2JU3EVOfqYn5JLhbD74azjZt
-         EE+vMXBtSjtijsKaS6szBcHZnVfCwkrw2zlYQkmx+tpJesopmmynlRICO4I/6nhckyxk
-         rzPQ==
+        bh=s54gvATO6D8ni0BziC5bOrsJP88CdVIwOWTVNSqeo7Y=;
+        b=FJ9GdYke8mv6w2qNKMfcdMaQpXLwKnFsvmbkk4LuH51LSuUO+ZCbJQKKMgbdp+om+M
+         Xg5v6mYSJrw2rHYcg/XqWgshFqIPAvz83LBz621n3SC+L8N45WlCJuAcSwSczPDFpKP2
+         hFrTlr9ZlpA1oOeL3HTlXp1XvAWq8ReBVqGuPuBu6bc3/XIfy2bE4q7HTLfwI/ULtxiZ
+         mU90mYI8BuAINwA2+TnzW1lcnrLraf14GulW6cFmNSxpeIhImWSbiLV28DZWs4LYYNS4
+         uw1haR7hLFTvMeaH2nvPD3iCyX8+0H9UbTJFYi4snUSjYcRNKRF5cyFNGflAZH+IpDEL
+         ayJA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1762792843; x=1763397643;
+        d=1e100.net; s=20230601; t=1762793417; x=1763398217;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
          :cc:subject:date:message-id:reply-to;
-        bh=NK80NgI1LQ+xDyFsHtTpc6wl2L9uxC1wWhpBghxroMY=;
-        b=k0ecfHrVVr1Xvbmoj6jUzTPt5cs06KBjLZmTAS1s4B0fCprt/Ij2bQqd1jGluOuvm3
-         tO70Yrr2pPFT5mCKlryz6B6rN5vMoYifKKF30mreEJC/TuMUES2DR2qud3i6qYhVgTBp
-         m/NtvJLk1wGuMLRFh6ePbG8vpjYNGPJMnZBmi1Gc+y5EQnAikq5+S/5Oy9dU6r0zFUyw
-         QW++ouvSG3/AO4OsoMtdJol0iKEuwNvPaLU7tEgQtph4MIu9knFwjYhhif0jGg67yOah
-         ENqwM58rwPIrhpKkJNl7XI6Zvin8dXjrUErtWfHYEVegARTzX6Fnh6kTxobumP8E/Do5
-         Ukfw==
-X-Gm-Message-State: AOJu0Yx3PR7vQKcSZbgqJB2DN83vnwpjSq9FXdJ1dUkQs0BOvzKNLXLe
-	JezQLNyGPl/VZ9b/6JTQuARKovQCwHwPAZ4ZqD9EudfgnnxgAfM7NnrtSuA3EEqDbG7sW3ZU2Ia
-	1GAk1aavnWI6dL8cKBR6nk9RGjrZEhP7Wk8fHRGGBMNq6UGcMUUvjStbCmmZ4VeVYLbx3
-X-Gm-Gg: ASbGnctkPxlnImGYdy3yA08EICKIceYVCmG30+IVkyKun5MmIH5ANsrkzKiUUsSeA8/
-	yy5TMal8tiDO5lz0WPstxgFzQ5+ZaPDn2oXGzBHheHXac9hEG82NjsCsQCZuusJtl8HHoHlk7tl
-	+OVXQG/8Jlk3GUvozDufcTniDWNgJc6Bc6osDTHWSRjI9bxXmG1E2i+UNNc962JoT4b/WrdDwgZ
-	4pFaqSx0RiYmEQJCVesf5D688ks9a5SqjHEVV8X/sQ4s/AmcQBcEI6Nk8TiyPU9iK0tM1/k8Tqp
-	G4l5Ovb/jAfDGSa7juSW2akTyLAw4+J2bO5bncIKyfJi48YLinhoy3ix54xtsTwGn2op2ADJfzG
-	DYmZwT39y1flBO/ifPQu2LwM=
-X-Received: by 2002:a17:90b:3bcb:b0:340:b152:efe7 with SMTP id 98e67ed59e1d1-3436cb91d57mr10342253a91.11.1762792842912;
-        Mon, 10 Nov 2025 08:40:42 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHKgiLlV4ge4N7aykjwSwNvV4o0Enwd4Uv2Fhb5/BsT0fXjzUdfmFl0uh16HkMMpYGhsNkY5A==
-X-Received: by 2002:a17:90b:3bcb:b0:340:b152:efe7 with SMTP id 98e67ed59e1d1-3436cb91d57mr10342217a91.11.1762792842430;
-        Mon, 10 Nov 2025 08:40:42 -0800 (PST)
+        bh=s54gvATO6D8ni0BziC5bOrsJP88CdVIwOWTVNSqeo7Y=;
+        b=YPj7SH+fQ/7QDJcABbYUkgqwZ/GA6UgoKvg1rDPUjVQTDlbMEQuRh53mhBWAyK+8Ka
+         fDq+blt4MEeiB0Xwv7wV3VcknzPvWIygRvVuj0R4PjErOGxYIMo9G1j5i1PmGHwr5dGY
+         D87JWd9tXqoUs5X07qlMbzdQPIiXea5Yynh6mSWeVGTr5ZZLKxSxwxONrEohH7yC1woM
+         3OMG2yNMi9wergCI+nPFjcQZRxOAkjR6AXafUA/DYkk1mOhKzDtVMh7/iRsjW4YKwafk
+         JezlcPUhcuPQu0NuHoKTFPig41mMqhtpvntk8DwI1wxtUBJhyICo+R/TP2yEMax/m3J6
+         w1rQ==
+X-Gm-Message-State: AOJu0Yw0h3UJYba2bz9Vil6wUpStc/WlS5aql1b1WatpgsHrRkq6Yp1N
+	cruHR+alIzxgdHWuc1bOsTCZfyrEgTMSiGhW61huSpHUY7AuKOiPPIUnW7fpHBhxUErhwziMwQh
+	vV9k0ICRdQcmV+oYiSAYcWqsGjNbW8jiDhMA0/4Q/B4BIrbvsRror9gyjrs/3IqKCd084
+X-Gm-Gg: ASbGncufe7JgxhK8fPwKom55zdlmJaH699VLv4iotlu9+Jbgef1Nq7DIiBq72FnT39k
+	EzcMGiiZdiIkAgfMdSKpaJcf/AjvJLTeLcb17vvle74qwkLRrWnSQPjV+Fopr4vT8NyYAkiEwUL
+	m4lb+4m2PlRBOitVqtOUDcnb7GY9wtbxjE534RDDMFXv2FMD+B0Th6t59tIRDlLNlM/zLtv2nuH
+	3I8jTXjyvh7xK/thyP26rWvPMeou+HE+eK+Ze1gbQBhuGmjz7nUx6eadlpeTVCymxyN/N3GX0iq
+	oUnYMZDniKlAT4YK1EVtZNiur6Zd/QiIhV2zrLHhLJSHeFf2PCQ6a0Nq2klOJgf2V67HmTCvzvs
+	sp4ZprYUeyPmj9ouJggBMLpQ=
+X-Received: by 2002:a17:90b:4f8b:b0:32e:d599:1f66 with SMTP id 98e67ed59e1d1-3436ccfef31mr9815557a91.30.1762792762245;
+        Mon, 10 Nov 2025 08:39:22 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IH8T54Xq/plXK42McJSnIumoygP0uzqkucpZsWL3h9kKQjf++KmCwibd/524qGt+Z7/DHeBUw==
+X-Received: by 2002:a17:90b:4f8b:b0:32e:d599:1f66 with SMTP id 98e67ed59e1d1-3436ccfef31mr9815507a91.30.1762792761612;
+        Mon, 10 Nov 2025 08:39:21 -0800 (PST)
 Received: from hu-akhilpo-hyd.qualcomm.com ([202.46.23.25])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-3434c337b20sm11468922a91.13.2025.11.10.08.40.34
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-3434c337b20sm11468922a91.13.2025.11.10.08.39.13
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 10 Nov 2025 08:40:42 -0800 (PST)
+        Mon, 10 Nov 2025 08:39:21 -0800 (PST)
 From: Akhil P Oommen <akhilpo@oss.qualcomm.com>
-Date: Mon, 10 Nov 2025 22:07:25 +0530
-Subject: [PATCH v2 19/21] dt-bindings: display/msm/gmu: Add Adreno 840 GMU
+Date: Mon, 10 Nov 2025 22:07:15 +0530
+Subject: [PATCH v2 09/21] drm/msm/a6xx: Rebase GMU register offsets
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -104,7 +104,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20251110-kaana-gpu-support-v2-19-bef18acd5e94@oss.qualcomm.com>
+Message-Id: <20251110-kaana-gpu-support-v2-9-bef18acd5e94@oss.qualcomm.com>
 References: <20251110-kaana-gpu-support-v2-0-bef18acd5e94@oss.qualcomm.com>
 In-Reply-To: <20251110-kaana-gpu-support-v2-0-bef18acd5e94@oss.qualcomm.com>
 To: Rob Clark <robin.clark@oss.qualcomm.com>,
@@ -130,93 +130,626 @@ Cc: linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
         linux-arm-kernel@lists.infradead.org, iommu@lists.linux.dev,
         devicetree@vger.kernel.org, Akhil P Oommen <akhilpo@oss.qualcomm.com>
 X-Mailer: b4 0.14.3
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1762792679; l=1792;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1762792679; l=27180;
  i=akhilpo@oss.qualcomm.com; s=20240726; h=from:subject:message-id;
- bh=NcxT59isJ8a73ABBo5632Wjovo4V8SjmsWcRhDa2gQw=;
- b=eQNZUxkw5igOzSHswIKdod1+5/8HKSYuY9+tGDZhsMU72Rcrco55Fm5uE0tPCMdIF2KWAnNZM
- /YOiz8V/KyiDqaG+09P3D1DWGc74RvvkXZCpIovZE2CAEjx+EVlVC6f
+ bh=r5aNW3E/uItx4ZgEv5XbsTsCl67yqo8Wr7EDeQUCiVU=;
+ b=KLRb/kV79oAUFE3WpjtQ7ul+kwRjNIKfTCiREgvTaOHu6rpx2bIefgyVIKWPboclvpvWlVi3H
+ 68lEJEFdVmVDQDAFGZFpKzsDu/jAThLwWOzVy397e8RaUXlnAlEXxSq
 X-Developer-Key: i=akhilpo@oss.qualcomm.com; a=ed25519;
  pk=lmVtttSHmAUYFnJsQHX80IIRmYmXA4+CzpGcWOOsfKA=
-X-Proofpoint-ORIG-GUID: YE70EkqYZxxjB8SPfCAxIntV0sgNiflz
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMTEwMDE0MCBTYWx0ZWRfXzu2ctFEULl6O
- ahIFmNJlMECQoTyYUCIjcK12Y5ZMfKAwmWJSW1adrJzNKOzflzmMLgt5GZPxXhTWoVv/Om/anxu
- Z/fNMSIg9D9KZMj1O82VQv+JmFxaIJJG1Z6sKqIusTfpi6CRM8LT4DZhDiRY9PV6WLpyRAL9ch3
- LlmLkXBto2vNHiaxuxRO9D6DX/If7/bY3S0qrCjpBHURARagvnlvwao87ZwyQzUsnlrTVEB3K2f
- dNrfjfh7qtufDtfsMf6lB27rqqbL04xA+7qk6ZVE1i3RoVAsnVYEPD6pjuVhVq0Pmfwt4iwtxa0
- 0F2wwrIbaf5awT66iPXGtlgrmIjsslABpCCLYs+FaxZN/B9WxmyyzGNxWyeb0DCiho98sbrVBIH
- qZAizRBFNQsK342Mg64dgD/b9mAndg==
-X-Authority-Analysis: v=2.4 cv=UZJciaSN c=1 sm=1 tr=0 ts=6912158b cx=c_pps
- a=0uOsjrqzRL749jD1oC5vDA==:117 a=ZePRamnt/+rB5gQjfz0u9A==:17
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMTEwMDE0MiBTYWx0ZWRfX/OAQO6lujmmM
+ QwHPy2tIXkelhMkAaZ39yUvH3QVmfLENxTdX2sYCnBE5/K6O+E+tmNXLeGcab6wu7CxvKkOqnVm
+ /n1zoF4FITMNyyarA6w0owOqQVDT9Jbk6tpk0Mja8lBTpvEMHKxQsJP/cPYO+Z9x2kFoDzRDp8L
+ o9D90WY43W2ElTbqe2hDzubWE/3LheHN7sBJT+Xh+VmJHeqz5w3dsKMikLwSSKtd4+te/0hcgil
+ q1hqZovc94Gq5Sp9mqj8U7J6KzuQsytJUPUI2+795oMkUgBIFK0eU+z7fzFoYQwlBTBURy4umNc
+ r4+EhUZ0FiaKzobN3nWHA2oUy/AK8BMmcMHJxuJi/wpog4aw0ZyR/A+FaY4P4wBVCEx3XmANQob
+ +TAUQ8KDUi5CZn/NKoWf7fSKmy/OKg==
+X-Proofpoint-GUID: KywwW1Jy3LmmQQIQbjuoDG9Qt1a8rAPM
+X-Proofpoint-ORIG-GUID: KywwW1Jy3LmmQQIQbjuoDG9Qt1a8rAPM
+X-Authority-Analysis: v=2.4 cv=La8xKzfi c=1 sm=1 tr=0 ts=691217c9 cx=c_pps
+ a=lVi5GcDxkcJcfCmEjVJoaw==:117 a=ZePRamnt/+rB5gQjfz0u9A==:17
  a=IkcTkHD0fZMA:10 a=6UeiqGixMTsA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8
- a=e8idWDajkKX97RI96f4A:9 a=QEXdDO2ut3YA:10 a=mQ_c8vxmzFEMiUWkPHU9:22
-X-Proofpoint-GUID: YE70EkqYZxxjB8SPfCAxIntV0sgNiflz
+ a=VkNPw1HP01LnGYTKEx00:22 a=e5mUnYsNAAAA:8 a=EUspDBNiAAAA:8
+ a=MFT4mc8oYmYGVuw2jiIA:9 a=QEXdDO2ut3YA:10 a=rBiNkAWo9uy_4UTK5NWh:22
+ a=Vxmtnl_E_bksehYqCbjh:22
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
  definitions=2025-11-10_06,2025-11-10_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- lowpriorityscore=0 clxscore=1015 suspectscore=0 malwarescore=0
- impostorscore=0 adultscore=0 priorityscore=1501 spamscore=0 phishscore=0
- bulkscore=0 classifier=typeunknown authscore=0 authtc= authcc= route=outbound
- adjust=0 reason=mlx scancount=1 engine=8.22.0-2510240001
- definitions=main-2511100140
+ suspectscore=0 spamscore=0 adultscore=0 phishscore=0 priorityscore=1501
+ clxscore=1015 malwarescore=0 bulkscore=0 impostorscore=0 lowpriorityscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2510240001 definitions=main-2511100142
 
-Document Adreno 840 GMU in the dt-binding specification.
+GMU registers are always at a fixed offset from the GPU base address,
+a consistency maintained at least within a given architecture generation.
+In A8x family, the base address of the GMU has changed, but the offsets
+of the gmu registers remain largely the same. To enable reuse of the gmu
+code for A8x chipsets, update the gmu register offsets to be relative
+to the GPU's base address instead of GMU's.
 
-Acked-by: Rob Herring (Arm) <robh@kernel.org>
 Signed-off-by: Akhil P Oommen <akhilpo@oss.qualcomm.com>
 ---
- .../devicetree/bindings/display/msm/gmu.yaml       | 30 +++++++++++++++++++++-
- 1 file changed, 29 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/msm/adreno/a6xx_gmu.c             | 100 +++++----
+ drivers/gpu/drm/msm/adreno/a6xx_gmu.h             |  20 +-
+ drivers/gpu/drm/msm/registers/adreno/a6xx_gmu.xml | 248 +++++++++++-----------
+ 3 files changed, 193 insertions(+), 175 deletions(-)
 
-diff --git a/Documentation/devicetree/bindings/display/msm/gmu.yaml b/Documentation/devicetree/bindings/display/msm/gmu.yaml
-index afc187935744..2ef8fd7e9f52 100644
---- a/Documentation/devicetree/bindings/display/msm/gmu.yaml
-+++ b/Documentation/devicetree/bindings/display/msm/gmu.yaml
-@@ -21,7 +21,7 @@ properties:
-   compatible:
-     oneOf:
-       - items:
--          - pattern: '^qcom,adreno-gmu-[67][0-9][0-9]\.[0-9]$'
-+          - pattern: '^qcom,adreno-gmu-[6-8][0-9][0-9]\.[0-9]$'
-           - const: qcom,adreno-gmu
-       - items:
-           - pattern: '^qcom,adreno-gmu-x[1-9][0-9][0-9]\.[0-9]$'
-@@ -299,6 +299,34 @@ allOf:
-       required:
-         - qcom,qmp
+diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
+index 306fc08492e4..1495f874e30e 100644
+--- a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
++++ b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
+@@ -584,22 +584,19 @@ static inline void pdc_write(void __iomem *ptr, u32 offset, u32 value)
+ 	writel(value, ptr + (offset << 2));
+ }
  
-+  - if:
-+      properties:
-+        compatible:
-+          contains:
-+            const: qcom,adreno-gmu-840.1
-+    then:
-+      properties:
-+        reg:
-+          items:
-+            - description: Core GMU registers
-+        reg-names:
-+          items:
-+            - const: gmu
-+        clocks:
-+          items:
-+            - description: GPU AHB clock
-+            - description: GMU clock
-+            - description: GPU CX clock
-+            - description: GPU MEMNOC clock
-+            - description: GMU HUB clock
-+        clock-names:
-+          items:
-+            - const: ahb
-+            - const: gmu
-+            - const: cxo
-+            - const: memnoc
-+            - const: hub
+-static void __iomem *a6xx_gmu_get_mmio(struct platform_device *pdev,
+-		const char *name);
+-
+ static void a6xx_gmu_rpmh_init(struct a6xx_gmu *gmu)
+ {
+ 	struct a6xx_gpu *a6xx_gpu = container_of(gmu, struct a6xx_gpu, gmu);
+ 	struct adreno_gpu *adreno_gpu = &a6xx_gpu->base;
+ 	struct platform_device *pdev = to_platform_device(gmu->dev);
+-	void __iomem *pdcptr = a6xx_gmu_get_mmio(pdev, "gmu_pdc");
++	void __iomem *pdcptr = devm_platform_ioremap_resource_byname(pdev, "gmu_pdc");
+ 	u32 seqmem0_drv0_reg = REG_A6XX_RSCC_SEQ_MEM_0_DRV0;
+ 	void __iomem *seqptr = NULL;
+ 	uint32_t pdc_address_offset;
+ 	bool pdc_in_aop = false;
+ 
+ 	if (IS_ERR(pdcptr))
+-		goto err;
++		return;
+ 
+ 	if (adreno_is_a650_family(adreno_gpu) ||
+ 	    adreno_is_a7xx(adreno_gpu))
+@@ -612,9 +609,9 @@ static void a6xx_gmu_rpmh_init(struct a6xx_gmu *gmu)
+ 		pdc_address_offset = 0x30080;
+ 
+ 	if (!pdc_in_aop) {
+-		seqptr = a6xx_gmu_get_mmio(pdev, "gmu_pdc_seq");
++		seqptr = devm_platform_ioremap_resource_byname(pdev, "gmu_pdc_seq");
+ 		if (IS_ERR(seqptr))
+-			goto err;
++			return;
+ 	}
+ 
+ 	/* Disable SDE clock gating */
+@@ -704,12 +701,6 @@ static void a6xx_gmu_rpmh_init(struct a6xx_gmu *gmu)
+ 
+ 	/* ensure no writes happen before the uCode is fully written */
+ 	wmb();
+-
+-err:
+-	if (!IS_ERR_OR_NULL(pdcptr))
+-		iounmap(pdcptr);
+-	if (!IS_ERR_OR_NULL(seqptr))
+-		iounmap(seqptr);
+ }
+ 
+ /*
+@@ -1795,27 +1786,6 @@ static int a6xx_gmu_clocks_probe(struct a6xx_gmu *gmu)
+ 	return 0;
+ }
+ 
+-static void __iomem *a6xx_gmu_get_mmio(struct platform_device *pdev,
+-		const char *name)
+-{
+-	void __iomem *ret;
+-	struct resource *res = platform_get_resource_byname(pdev,
+-			IORESOURCE_MEM, name);
+-
+-	if (!res) {
+-		DRM_DEV_ERROR(&pdev->dev, "Unable to find the %s registers\n", name);
+-		return ERR_PTR(-EINVAL);
+-	}
+-
+-	ret = ioremap(res->start, resource_size(res));
+-	if (!ret) {
+-		DRM_DEV_ERROR(&pdev->dev, "Unable to map the %s registers\n", name);
+-		return ERR_PTR(-EINVAL);
+-	}
+-
+-	return ret;
+-}
+-
+ static int a6xx_gmu_get_irq(struct a6xx_gmu *gmu, struct platform_device *pdev,
+ 		const char *name, irq_handler_t handler)
+ {
+@@ -1866,7 +1836,6 @@ void a6xx_gmu_remove(struct a6xx_gpu *a6xx_gpu)
+ {
+ 	struct adreno_gpu *adreno_gpu = &a6xx_gpu->base;
+ 	struct a6xx_gmu *gmu = &a6xx_gpu->gmu;
+-	struct platform_device *pdev = to_platform_device(gmu->dev);
+ 
+ 	mutex_lock(&gmu->lock);
+ 	if (!gmu->initialized) {
+@@ -1895,8 +1864,6 @@ void a6xx_gmu_remove(struct a6xx_gpu *a6xx_gpu)
+ 		qmp_put(gmu->qmp);
+ 
+ 	iounmap(gmu->mmio);
+-	if (platform_get_resource_byname(pdev, IORESOURCE_MEM, "rscc"))
+-		iounmap(gmu->rscc);
+ 	gmu->mmio = NULL;
+ 	gmu->rscc = NULL;
+ 
+@@ -1922,10 +1889,38 @@ static int cxpd_notifier_cb(struct notifier_block *nb,
+ 	return 0;
+ }
+ 
++static void __iomem *a6xx_gmu_get_mmio(struct platform_device *pdev,
++		const char *name, resource_size_t *start)
++{
++	void __iomem *ret;
++	struct resource *res = platform_get_resource_byname(pdev,
++			IORESOURCE_MEM, name);
 +
-   - if:
-       properties:
-         compatible:
++	if (!res) {
++		DRM_DEV_ERROR(&pdev->dev, "Unable to find the %s registers\n", name);
++		return ERR_PTR(-EINVAL);
++	}
++
++	ret = ioremap(res->start, resource_size(res));
++	if (!ret) {
++		DRM_DEV_ERROR(&pdev->dev, "Unable to map the %s registers\n", name);
++		return ERR_PTR(-EINVAL);
++	}
++
++	if (start)
++		*start = res->start;
++
++	return ret;
++}
++
+ int a6xx_gmu_wrapper_init(struct a6xx_gpu *a6xx_gpu, struct device_node *node)
+ {
+ 	struct platform_device *pdev = of_find_device_by_node(node);
++	struct adreno_gpu *adreno_gpu = &a6xx_gpu->base;
++	struct msm_gpu *gpu = &adreno_gpu->base;
+ 	struct a6xx_gmu *gmu = &a6xx_gpu->gmu;
++	resource_size_t start;
++	struct resource *res;
+ 	int ret;
+ 
+ 	if (!pdev)
+@@ -1943,12 +1938,21 @@ int a6xx_gmu_wrapper_init(struct a6xx_gpu *a6xx_gpu, struct device_node *node)
+ 	gmu->legacy = true;
+ 
+ 	/* Map the GMU registers */
+-	gmu->mmio = a6xx_gmu_get_mmio(pdev, "gmu");
++	gmu->mmio = a6xx_gmu_get_mmio(pdev, "gmu", &start);
+ 	if (IS_ERR(gmu->mmio)) {
+ 		ret = PTR_ERR(gmu->mmio);
+ 		goto err_mmio;
+ 	}
+ 
++	res = platform_get_resource_byname(gpu->pdev, IORESOURCE_MEM, "kgsl_3d0_reg_memory");
++	if (!res) {
++		ret = -EINVAL;
++		goto err_mmio;
++	}
++
++	/* Identify gmu base offset from gpu base address */
++	gmu->mmio_offset = (u32)(start - res->start);
++
+ 	gmu->cxpd = dev_pm_domain_attach_by_name(gmu->dev, "cx");
+ 	if (IS_ERR(gmu->cxpd)) {
+ 		ret = PTR_ERR(gmu->cxpd);
+@@ -1989,10 +1993,13 @@ int a6xx_gmu_wrapper_init(struct a6xx_gpu *a6xx_gpu, struct device_node *node)
+ 
+ int a6xx_gmu_init(struct a6xx_gpu *a6xx_gpu, struct device_node *node)
+ {
++	struct platform_device *pdev = of_find_device_by_node(node);
+ 	struct adreno_gpu *adreno_gpu = &a6xx_gpu->base;
++	struct msm_gpu *gpu = &adreno_gpu->base;
+ 	struct a6xx_gmu *gmu = &a6xx_gpu->gmu;
+-	struct platform_device *pdev = of_find_device_by_node(node);
+ 	struct device_link *link;
++	resource_size_t start;
++	struct resource *res;
+ 	int ret;
+ 
+ 	if (!pdev)
+@@ -2087,15 +2094,24 @@ int a6xx_gmu_init(struct a6xx_gpu *a6xx_gpu, struct device_node *node)
+ 		goto err_memory;
+ 
+ 	/* Map the GMU registers */
+-	gmu->mmio = a6xx_gmu_get_mmio(pdev, "gmu");
++	gmu->mmio = a6xx_gmu_get_mmio(pdev, "gmu", &start);
+ 	if (IS_ERR(gmu->mmio)) {
+ 		ret = PTR_ERR(gmu->mmio);
+ 		goto err_memory;
+ 	}
+ 
++	res = platform_get_resource_byname(gpu->pdev, IORESOURCE_MEM, "kgsl_3d0_reg_memory");
++	if (!res) {
++		ret = -EINVAL;
++		goto err_mmio;
++	}
++
++	/* Identify gmu base offset from gpu base address */
++	gmu->mmio_offset = (u32)(start - res->start);
++
+ 	if (adreno_is_a650_family(adreno_gpu) ||
+ 	    adreno_is_a7xx(adreno_gpu)) {
+-		gmu->rscc = a6xx_gmu_get_mmio(pdev, "rscc");
++		gmu->rscc = devm_platform_ioremap_resource_byname(pdev, "rscc");
+ 		if (IS_ERR(gmu->rscc)) {
+ 			ret = -ENODEV;
+ 			goto err_mmio;
+@@ -2173,8 +2189,6 @@ int a6xx_gmu_init(struct a6xx_gpu *a6xx_gpu, struct device_node *node)
+ 
+ err_mmio:
+ 	iounmap(gmu->mmio);
+-	if (platform_get_resource_byname(pdev, IORESOURCE_MEM, "rscc"))
+-		iounmap(gmu->rscc);
+ 	free_irq(gmu->gmu_irq, gmu);
+ 	free_irq(gmu->hfi_irq, gmu);
+ 
+diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gmu.h b/drivers/gpu/drm/msm/adreno/a6xx_gmu.h
+index 06cfc294016f..55b1c78daa8b 100644
+--- a/drivers/gpu/drm/msm/adreno/a6xx_gmu.h
++++ b/drivers/gpu/drm/msm/adreno/a6xx_gmu.h
+@@ -68,6 +68,7 @@ struct a6xx_gmu {
+ 	struct drm_gpuvm *vm;
+ 
+ 	void __iomem *mmio;
++	u32 mmio_offset;
+ 	void __iomem *rscc;
+ 
+ 	int hfi_irq;
+@@ -130,20 +131,23 @@ struct a6xx_gmu {
+ 	unsigned long status;
+ };
+ 
++#define GMU_BYTE_OFFSET(gmu, offset) (((offset) << 2) - (gmu)->mmio_offset)
++
+ static inline u32 gmu_read(struct a6xx_gmu *gmu, u32 offset)
+ {
+-	return readl(gmu->mmio + (offset << 2));
++	/* The 'offset' is based on GPU's start address. Adjust it */
++	return readl(gmu->mmio + GMU_BYTE_OFFSET(gmu, offset));
+ }
+ 
+ static inline void gmu_write(struct a6xx_gmu *gmu, u32 offset, u32 value)
+ {
+-	writel(value, gmu->mmio + (offset << 2));
++	writel(value, gmu->mmio + GMU_BYTE_OFFSET(gmu, offset));
+ }
+ 
+ static inline void
+ gmu_write_bulk(struct a6xx_gmu *gmu, u32 offset, const u32 *data, u32 size)
+ {
+-	memcpy_toio(gmu->mmio + (offset << 2), data, size);
++	memcpy_toio(gmu->mmio + GMU_BYTE_OFFSET(gmu, offset), data, size);
+ 	wmb();
+ }
+ 
+@@ -160,17 +164,17 @@ static inline u64 gmu_read64(struct a6xx_gmu *gmu, u32 lo, u32 hi)
+ {
+ 	u64 val;
+ 
+-	val = (u64) readl(gmu->mmio + (lo << 2));
+-	val |= ((u64) readl(gmu->mmio + (hi << 2)) << 32);
++	val = gmu_read(gmu, lo);
++	val |= ((u64) gmu_read(gmu, hi) << 32);
+ 
+ 	return val;
+ }
+ 
+ #define gmu_poll_timeout(gmu, addr, val, cond, interval, timeout) \
+-	readl_poll_timeout((gmu)->mmio + ((addr) << 2), val, cond, \
+-		interval, timeout)
++	readl_poll_timeout((gmu)->mmio + (GMU_BYTE_OFFSET(gmu, addr)), val, \
++		cond, interval, timeout)
+ #define gmu_poll_timeout_atomic(gmu, addr, val, cond, interval, timeout) \
+-	readl_poll_timeout_atomic((gmu)->mmio + ((addr) << 2), val, cond, \
++	readl_poll_timeout_atomic((gmu)->mmio + (GMU_BYTE_OFFSET(gmu, addr)), val, cond, \
+ 		interval, timeout)
+ 
+ static inline u32 gmu_read_rscc(struct a6xx_gmu *gmu, u32 offset)
+diff --git a/drivers/gpu/drm/msm/registers/adreno/a6xx_gmu.xml b/drivers/gpu/drm/msm/registers/adreno/a6xx_gmu.xml
+index b15a242d974d..09b8a0b9c0de 100644
+--- a/drivers/gpu/drm/msm/registers/adreno/a6xx_gmu.xml
++++ b/drivers/gpu/drm/msm/registers/adreno/a6xx_gmu.xml
+@@ -40,56 +40,56 @@ xsi:schemaLocation="https://gitlab.freedesktop.org/freedreno/ rules-fd.xsd">
+ 		<bitfield name="IRQ_MASK_BIT" pos="0" />
+ 	</bitset>
+ 
+-	<reg32 offset="0x80" name="GPU_GMU_GX_SPTPRAC_CLOCK_CONTROL"/>
+-	<reg32 offset="0x81" name="GMU_GX_SPTPRAC_POWER_CONTROL"/>
+-	<reg32 offset="0xc00" name="GMU_CM3_ITCM_START"/>
+-	<reg32 offset="0x1c00" name="GMU_CM3_DTCM_START"/>
+-	<reg32 offset="0x23f0" name="GMU_NMI_CONTROL_STATUS"/>
+-	<reg32 offset="0x23f8" name="GMU_BOOT_SLUMBER_OPTION"/>
+-	<reg32 offset="0x23f9" name="GMU_GX_VOTE_IDX"/>
+-	<reg32 offset="0x23fa" name="GMU_MX_VOTE_IDX"/>
+-	<reg32 offset="0x23fc" name="GMU_DCVS_ACK_OPTION"/>
+-	<reg32 offset="0x23fd" name="GMU_DCVS_PERF_SETTING"/>
+-	<reg32 offset="0x23fe" name="GMU_DCVS_BW_SETTING"/>
+-	<reg32 offset="0x23ff" name="GMU_DCVS_RETURN"/>
+-	<reg32 offset="0x2bf8" name="GMU_CORE_FW_VERSION">
++	<reg32 offset="0x1a880" name="GPU_GMU_GX_SPTPRAC_CLOCK_CONTROL"/>
++	<reg32 offset="0x1a881" name="GMU_GX_SPTPRAC_POWER_CONTROL"/>
++	<reg32 offset="0x1b400" name="GMU_CM3_ITCM_START"/>
++	<reg32 offset="0x1c400" name="GMU_CM3_DTCM_START"/>
++	<reg32 offset="0x1cbf0" name="GMU_NMI_CONTROL_STATUS"/>
++	<reg32 offset="0x1cbf8" name="GMU_BOOT_SLUMBER_OPTION"/>
++	<reg32 offset="0x1cbf9" name="GMU_GX_VOTE_IDX"/>
++	<reg32 offset="0x1cbfa" name="GMU_MX_VOTE_IDX"/>
++	<reg32 offset="0x1cbfc" name="GMU_DCVS_ACK_OPTION"/>
++	<reg32 offset="0x1cbfd" name="GMU_DCVS_PERF_SETTING"/>
++	<reg32 offset="0x1cbfe" name="GMU_DCVS_BW_SETTING"/>
++	<reg32 offset="0x1cbff" name="GMU_DCVS_RETURN"/>
++	<reg32 offset="0x1d3f8" name="GMU_CORE_FW_VERSION">
+ 		<bitfield name="MAJOR" low="28" high="31"/>
+ 		<bitfield name="MINOR" low="16" high="27"/>
+ 		<bitfield name="STEP" low="0" high="15"/>
+ 	</reg32>
+-	<reg32 offset="0x4c00" name="GMU_ICACHE_CONFIG"/>
+-	<reg32 offset="0x4c01" name="GMU_DCACHE_CONFIG"/>
+-	<reg32 offset="0x4c0f" name="GMU_SYS_BUS_CONFIG"/>
+-	<reg32 offset="0x5000" name="GMU_CM3_SYSRESET"/>
+-	<reg32 offset="0x5001" name="GMU_CM3_BOOT_CONFIG"/>
+-	<reg32 offset="0x501a" name="GMU_CM3_FW_BUSY"/>
+-	<reg32 offset="0x501c" name="GMU_CM3_FW_INIT_RESULT"/>
+-	<reg32 offset="0x502d" name="GMU_CM3_CFG"/>
+-	<reg32 offset="0x5040" name="GMU_CX_GMU_POWER_COUNTER_ENABLE"/>
+-	<reg32 offset="0x5041" name="GMU_CX_GMU_POWER_COUNTER_SELECT_0"/>
+-	<reg32 offset="0x5042" name="GMU_CX_GMU_POWER_COUNTER_SELECT_1"/>
+-	<reg32 offset="0x5044" name="GMU_CX_GMU_POWER_COUNTER_XOCLK_0_L"/>
+-	<reg32 offset="0x5045" name="GMU_CX_GMU_POWER_COUNTER_XOCLK_0_H"/>
+-	<reg32 offset="0x5046" name="GMU_CX_GMU_POWER_COUNTER_XOCLK_1_L"/>
+-	<reg32 offset="0x5047" name="GMU_CX_GMU_POWER_COUNTER_XOCLK_1_H"/>
+-	<reg32 offset="0x5048" name="GMU_CX_GMU_POWER_COUNTER_XOCLK_2_L"/>
+-	<reg32 offset="0x5049" name="GMU_CX_GMU_POWER_COUNTER_XOCLK_2_H"/>
+-	<reg32 offset="0x504a" name="GMU_CX_GMU_POWER_COUNTER_XOCLK_3_L"/>
+-	<reg32 offset="0x504b" name="GMU_CX_GMU_POWER_COUNTER_XOCLK_3_H"/>
+-	<reg32 offset="0x504c" name="GMU_CX_GMU_POWER_COUNTER_XOCLK_4_L"/>
+-	<reg32 offset="0x504d" name="GMU_CX_GMU_POWER_COUNTER_XOCLK_4_H"/>
+-	<reg32 offset="0x504e" name="GMU_CX_GMU_POWER_COUNTER_XOCLK_5_L"/>
+-	<reg32 offset="0x504f" name="GMU_CX_GMU_POWER_COUNTER_XOCLK_5_H"/>
+-	<reg32 offset="0x50c0" name="GMU_PWR_COL_INTER_FRAME_CTRL">
++	<reg32 offset="0x1f400" name="GMU_ICACHE_CONFIG"/>
++	<reg32 offset="0x1f401" name="GMU_DCACHE_CONFIG"/>
++	<reg32 offset="0x1f40f" name="GMU_SYS_BUS_CONFIG"/>
++	<reg32 offset="0x1f800" name="GMU_CM3_SYSRESET"/>
++	<reg32 offset="0x1f801" name="GMU_CM3_BOOT_CONFIG"/>
++	<reg32 offset="0x1f81a" name="GMU_CM3_FW_BUSY"/>
++	<reg32 offset="0x1f81c" name="GMU_CM3_FW_INIT_RESULT"/>
++	<reg32 offset="0x1f82d" name="GMU_CM3_CFG"/>
++	<reg32 offset="0x1f840" name="GMU_CX_GMU_POWER_COUNTER_ENABLE"/>
++	<reg32 offset="0x1f841" name="GMU_CX_GMU_POWER_COUNTER_SELECT_0"/>
++	<reg32 offset="0x1f842" name="GMU_CX_GMU_POWER_COUNTER_SELECT_1"/>
++	<reg32 offset="0x1f844" name="GMU_CX_GMU_POWER_COUNTER_XOCLK_0_L"/>
++	<reg32 offset="0x1f845" name="GMU_CX_GMU_POWER_COUNTER_XOCLK_0_H"/>
++	<reg32 offset="0x1f846" name="GMU_CX_GMU_POWER_COUNTER_XOCLK_1_L"/>
++	<reg32 offset="0x1f847" name="GMU_CX_GMU_POWER_COUNTER_XOCLK_1_H"/>
++	<reg32 offset="0x1f848" name="GMU_CX_GMU_POWER_COUNTER_XOCLK_2_L"/>
++	<reg32 offset="0x1f849" name="GMU_CX_GMU_POWER_COUNTER_XOCLK_2_H"/>
++	<reg32 offset="0x1f84a" name="GMU_CX_GMU_POWER_COUNTER_XOCLK_3_L"/>
++	<reg32 offset="0x1f84b" name="GMU_CX_GMU_POWER_COUNTER_XOCLK_3_H"/>
++	<reg32 offset="0x1f84c" name="GMU_CX_GMU_POWER_COUNTER_XOCLK_4_L"/>
++	<reg32 offset="0x1f84d" name="GMU_CX_GMU_POWER_COUNTER_XOCLK_4_H"/>
++	<reg32 offset="0x1f84e" name="GMU_CX_GMU_POWER_COUNTER_XOCLK_5_L"/>
++	<reg32 offset="0x1f84f" name="GMU_CX_GMU_POWER_COUNTER_XOCLK_5_H"/>
++	<reg32 offset="0x1f8c0" name="GMU_PWR_COL_INTER_FRAME_CTRL">
+ 		<bitfield name="IFPC_ENABLE" pos="0" type="boolean"/>
+ 		<bitfield name="HM_POWER_COLLAPSE_ENABLE" pos="1" type="boolean"/>
+ 		<bitfield name="SPTPRAC_POWER_CONTROL_ENABLE" pos="2" type="boolean"/>
+ 		<bitfield name="NUM_PASS_SKIPS" low="10" high="13"/>
+ 		<bitfield name="MIN_PASS_LENGTH" low="14" high="31"/>
+ 	</reg32>
+-	<reg32 offset="0x50c1" name="GMU_PWR_COL_INTER_FRAME_HYST"/>
+-	<reg32 offset="0x50c2" name="GMU_PWR_COL_SPTPRAC_HYST"/>
+-	<reg32 offset="0x50d0" name="GMU_SPTPRAC_PWR_CLK_STATUS">
++	<reg32 offset="0x1f8c1" name="GMU_PWR_COL_INTER_FRAME_HYST"/>
++	<reg32 offset="0x1f8c2" name="GMU_PWR_COL_SPTPRAC_HYST"/>
++	<reg32 offset="0x1f8d0" name="GMU_SPTPRAC_PWR_CLK_STATUS">
+ 		<bitfield name="SPTPRAC_GDSC_POWERING_OFF" pos="0" type="boolean"/>
+ 		<bitfield name="SPTPRAC_GDSC_POWERING_ON" pos="1" type="boolean"/>
+ 		<bitfield name="SPTPRAC_GDSC_POWER_OFF" pos="2" type="boolean"/>
+@@ -99,15 +99,15 @@ xsi:schemaLocation="https://gitlab.freedesktop.org/freedreno/ rules-fd.xsd">
+ 		<bitfield name="GX_HM_GDSC_POWER_OFF" pos="6" type="boolean"/>
+ 		<bitfield name="GX_HM_CLK_OFF" pos="7" type="boolean"/>
+ 	</reg32>
+-	<reg32 offset="0x50d0" name="GMU_SPTPRAC_PWR_CLK_STATUS" variants="A7XX">
++	<reg32 offset="0x1f8d0" name="GMU_SPTPRAC_PWR_CLK_STATUS" variants="A7XX-">
+ 		<bitfield name="GX_HM_GDSC_POWER_OFF" pos="0" type="boolean"/>
+ 		<bitfield name="GX_HM_CLK_OFF" pos="1" type="boolean"/>
+ 	</reg32>
+-	<reg32 offset="0x50e4" name="GMU_GPU_NAP_CTRL">
++	<reg32 offset="0x1f8e4" name="GMU_GPU_NAP_CTRL">
+ 		<bitfield name="HW_NAP_ENABLE" pos="0"/>
+ 		<bitfield name="SID" low="4" high="8"/>
+ 	</reg32>
+-	<reg32 offset="0x50e8" name="GMU_RPMH_CTRL">
++	<reg32 offset="0x1f8e8" name="GMU_RPMH_CTRL">
+ 		<bitfield name="RPMH_INTERFACE_ENABLE" pos="0" type="boolean"/>
+ 		<bitfield name="LLC_VOTE_ENABLE" pos="4" type="boolean"/>
+ 		<bitfield name="DDR_VOTE_ENABLE" pos="8" type="boolean"/>
+@@ -119,71 +119,71 @@ xsi:schemaLocation="https://gitlab.freedesktop.org/freedreno/ rules-fd.xsd">
+ 		<bitfield name="CX_MIN_VOTE_ENABLE" pos="14" type="boolean"/>
+ 		<bitfield name="GFX_MIN_VOTE_ENABLE" pos="15" type="boolean"/>
+ 	</reg32>
+-	<reg32 offset="0x50e9" name="GMU_RPMH_HYST_CTRL"/>
+-	<reg32 offset="0x50ec" name="GPU_GMU_CX_GMU_RPMH_POWER_STATE"/>
+-	<reg32 offset="0x50f0" name="GPU_GMU_CX_GMU_CX_FAL_INTF"/>
+-	<reg32 offset="0x50f1" name="GPU_GMU_CX_GMU_CX_FALNEXT_INTF"/>
+-	<reg32 offset="0x5100" name="GPU_GMU_CX_GMU_PWR_COL_CP_MSG"/>
+-	<reg32 offset="0x5101" name="GPU_GMU_CX_GMU_PWR_COL_CP_RESP"/>
+-	<reg32 offset="0x51f0" name="GMU_BOOT_KMD_LM_HANDSHAKE"/>
+-	<reg32 offset="0x5157" name="GMU_LLM_GLM_SLEEP_CTRL"/>
+-	<reg32 offset="0x5158" name="GMU_LLM_GLM_SLEEP_STATUS"/>
+-	<reg32 offset="0x5088" name="GMU_ALWAYS_ON_COUNTER_L"/>
+-	<reg32 offset="0x5089" name="GMU_ALWAYS_ON_COUNTER_H"/>
+-	<reg32 offset="0x50c3" name="GMU_GMU_PWR_COL_KEEPALIVE"/>
+-	<reg32 offset="0x50c4" name="GMU_PWR_COL_PREEMPT_KEEPALIVE"/>
+-	<reg32 offset="0x5180" name="GMU_HFI_CTRL_STATUS"/>
+-	<reg32 offset="0x5181" name="GMU_HFI_VERSION_INFO"/>
+-	<reg32 offset="0x5182" name="GMU_HFI_SFR_ADDR"/>
+-	<reg32 offset="0x5183" name="GMU_HFI_MMAP_ADDR"/>
+-	<reg32 offset="0x5184" name="GMU_HFI_QTBL_INFO"/>
+-	<reg32 offset="0x5185" name="GMU_HFI_QTBL_ADDR"/>
+-	<reg32 offset="0x5186" name="GMU_HFI_CTRL_INIT"/>
+-	<reg32 offset="0x5190" name="GMU_GMU2HOST_INTR_SET"/>
+-	<reg32 offset="0x5191" name="GMU_GMU2HOST_INTR_CLR"/>
+-	<reg32 offset="0x5192" name="GMU_GMU2HOST_INTR_INFO">
++	<reg32 offset="0x1f8e9" name="GMU_RPMH_HYST_CTRL"/>
++	<reg32 offset="0x1f8ec" name="GPU_GMU_CX_GMU_RPMH_POWER_STATE"/>
++	<reg32 offset="0x1f8f0" name="GPU_GMU_CX_GMU_CX_FAL_INTF"/>
++	<reg32 offset="0x1f8f1" name="GPU_GMU_CX_GMU_CX_FALNEXT_INTF"/>
++	<reg32 offset="0x1f900" name="GPU_GMU_CX_GMU_PWR_COL_CP_MSG"/>
++	<reg32 offset="0x1f901" name="GPU_GMU_CX_GMU_PWR_COL_CP_RESP"/>
++	<reg32 offset="0x1f9f0" name="GMU_BOOT_KMD_LM_HANDSHAKE"/>
++	<reg32 offset="0x1f957" name="GMU_LLM_GLM_SLEEP_CTRL"/>
++	<reg32 offset="0x1f958" name="GMU_LLM_GLM_SLEEP_STATUS"/>
++	<reg32 offset="0x1f888" name="GMU_ALWAYS_ON_COUNTER_L"/>
++	<reg32 offset="0x1f889" name="GMU_ALWAYS_ON_COUNTER_H"/>
++	<reg32 offset="0x1f8c3" name="GMU_GMU_PWR_COL_KEEPALIVE"/>
++	<reg32 offset="0x1f8c4" name="GMU_PWR_COL_PREEMPT_KEEPALIVE"/>
++	<reg32 offset="0x1f980" name="GMU_HFI_CTRL_STATUS"/>
++	<reg32 offset="0x1f981" name="GMU_HFI_VERSION_INFO"/>
++	<reg32 offset="0x1f982" name="GMU_HFI_SFR_ADDR"/>
++	<reg32 offset="0x1f983" name="GMU_HFI_MMAP_ADDR"/>
++	<reg32 offset="0x1f984" name="GMU_HFI_QTBL_INFO"/>
++	<reg32 offset="0x1f985" name="GMU_HFI_QTBL_ADDR"/>
++	<reg32 offset="0x1f986" name="GMU_HFI_CTRL_INIT"/>
++	<reg32 offset="0x1f990" name="GMU_GMU2HOST_INTR_SET"/>
++	<reg32 offset="0x1f991" name="GMU_GMU2HOST_INTR_CLR"/>
++	<reg32 offset="0x1f992" name="GMU_GMU2HOST_INTR_INFO">
+ 		<bitfield name="MSGQ" pos="0" type="boolean"/>
+ 		<bitfield name="CM3_FAULT" pos="23" type="boolean"/>
+ 	</reg32>
+-	<reg32 offset="0x5193" name="GMU_GMU2HOST_INTR_MASK"/>
+-	<reg32 offset="0x5194" name="GMU_HOST2GMU_INTR_SET"/>
+-	<reg32 offset="0x5195" name="GMU_HOST2GMU_INTR_CLR"/>
+-	<reg32 offset="0x5196" name="GMU_HOST2GMU_INTR_RAW_INFO"/>
+-	<reg32 offset="0x5197" name="GMU_HOST2GMU_INTR_EN_0"/>
+-	<reg32 offset="0x5198" name="GMU_HOST2GMU_INTR_EN_1"/>
+-	<reg32 offset="0x5199" name="GMU_HOST2GMU_INTR_EN_2"/>
+-	<reg32 offset="0x519a" name="GMU_HOST2GMU_INTR_EN_3"/>
+-	<reg32 offset="0x519b" name="GMU_HOST2GMU_INTR_INFO_0"/>
+-	<reg32 offset="0x519c" name="GMU_HOST2GMU_INTR_INFO_1"/>
+-	<reg32 offset="0x519d" name="GMU_HOST2GMU_INTR_INFO_2"/>
+-	<reg32 offset="0x519e" name="GMU_HOST2GMU_INTR_INFO_3"/>
+-	<reg32 offset="0x51c5" name="GMU_GENERAL_0"/>
+-	<reg32 offset="0x51c6" name="GMU_GENERAL_1"/>
+-	<reg32 offset="0x51cb" name="GMU_GENERAL_6"/>
+-	<reg32 offset="0x51cc" name="GMU_GENERAL_7"/>
+-	<reg32 offset="0x51cd" name="GMU_GENERAL_8" variants="A7XX"/>
+-	<reg32 offset="0x51ce" name="GMU_GENERAL_9" variants="A7XX"/>
+-	<reg32 offset="0x51cf" name="GMU_GENERAL_10" variants="A7XX"/>
+-	<reg32 offset="0x515d" name="GMU_ISENSE_CTRL"/>
+-	<reg32 offset="0x8920" name="GPU_CS_ENABLE_REG"/>
+-	<reg32 offset="0x515d" name="GPU_GMU_CX_GMU_ISENSE_CTRL"/>
+-	<reg32 offset="0x8578" name="GPU_CS_AMP_CALIBRATION_CONTROL3"/>
+-	<reg32 offset="0x8558" name="GPU_CS_AMP_CALIBRATION_CONTROL2"/>
+-	<reg32 offset="0x8580" name="GPU_CS_A_SENSOR_CTRL_0"/>
+-	<reg32 offset="0x27ada" name="GPU_CS_A_SENSOR_CTRL_2"/>
+-	<reg32 offset="0x881a" name="GPU_CS_SENSOR_GENERAL_STATUS"/>
+-	<reg32 offset="0x8957" name="GPU_CS_AMP_CALIBRATION_CONTROL1"/>
+-	<reg32 offset="0x881a" name="GPU_CS_SENSOR_GENERAL_STATUS"/>
+-	<reg32 offset="0x881d" name="GPU_CS_AMP_CALIBRATION_STATUS1_0"/>
+-	<reg32 offset="0x881f" name="GPU_CS_AMP_CALIBRATION_STATUS1_2"/>
+-	<reg32 offset="0x8821" name="GPU_CS_AMP_CALIBRATION_STATUS1_4"/>
+-	<reg32 offset="0x8965" name="GPU_CS_AMP_CALIBRATION_DONE"/>
+-	<reg32 offset="0x896d" name="GPU_CS_AMP_PERIOD_CTRL"/>
+-	<reg32 offset="0x8965" name="GPU_CS_AMP_CALIBRATION_DONE"/>
+-	<reg32 offset="0x514d" name="GPU_GMU_CX_GMU_PWR_THRESHOLD"/>
+-	<reg32 offset="0x9303" name="GMU_AO_INTERRUPT_EN"/>
+-	<reg32 offset="0x9304" name="GMU_AO_HOST_INTERRUPT_CLR"/>
+-	<reg32 offset="0x9305" name="GMU_AO_HOST_INTERRUPT_STATUS">
++	<reg32 offset="0x1f993" name="GMU_GMU2HOST_INTR_MASK"/>
++	<reg32 offset="0x1f994" name="GMU_HOST2GMU_INTR_SET"/>
++	<reg32 offset="0x1f995" name="GMU_HOST2GMU_INTR_CLR"/>
++	<reg32 offset="0x1f996" name="GMU_HOST2GMU_INTR_RAW_INFO"/>
++	<reg32 offset="0x1f997" name="GMU_HOST2GMU_INTR_EN_0"/>
++	<reg32 offset="0x1f998" name="GMU_HOST2GMU_INTR_EN_1"/>
++	<reg32 offset="0x1f999" name="GMU_HOST2GMU_INTR_EN_2"/>
++	<reg32 offset="0x1f99a" name="GMU_HOST2GMU_INTR_EN_3"/>
++	<reg32 offset="0x1f99b" name="GMU_HOST2GMU_INTR_INFO_0"/>
++	<reg32 offset="0x1f99c" name="GMU_HOST2GMU_INTR_INFO_1"/>
++	<reg32 offset="0x1f99d" name="GMU_HOST2GMU_INTR_INFO_2"/>
++	<reg32 offset="0x1f99e" name="GMU_HOST2GMU_INTR_INFO_3"/>
++	<reg32 offset="0x1f9c5" name="GMU_GENERAL_0"/>
++	<reg32 offset="0x1f9c6" name="GMU_GENERAL_1"/>
++	<reg32 offset="0x1f9cb" name="GMU_GENERAL_6"/>
++	<reg32 offset="0x1f9cc" name="GMU_GENERAL_7"/>
++	<reg32 offset="0x1f9cd" name="GMU_GENERAL_8" variants="A7XX"/>
++	<reg32 offset="0x1f9ce" name="GMU_GENERAL_9" variants="A7XX"/>
++	<reg32 offset="0x1f9cf" name="GMU_GENERAL_10" variants="A7XX"/>
++	<reg32 offset="0x1f95d" name="GMU_ISENSE_CTRL"/>
++	<reg32 offset="0x23120" name="GPU_CS_ENABLE_REG"/>
++	<reg32 offset="0x1f95d" name="GPU_GMU_CX_GMU_ISENSE_CTRL"/>
++	<reg32 offset="0x22d78" name="GPU_CS_AMP_CALIBRATION_CONTROL3"/>
++	<reg32 offset="0x22d58" name="GPU_CS_AMP_CALIBRATION_CONTROL2"/>
++	<reg32 offset="0x22d80" name="GPU_CS_A_SENSOR_CTRL_0"/>
++	<reg32 offset="0x422da" name="GPU_CS_A_SENSOR_CTRL_2"/>
++	<reg32 offset="0x2301a" name="GPU_CS_SENSOR_GENERAL_STATUS"/>
++	<reg32 offset="0x23157" name="GPU_CS_AMP_CALIBRATION_CONTROL1"/>
++	<reg32 offset="0x2301a" name="GPU_CS_SENSOR_GENERAL_STATUS"/>
++	<reg32 offset="0x2301d" name="GPU_CS_AMP_CALIBRATION_STATUS1_0"/>
++	<reg32 offset="0x2301f" name="GPU_CS_AMP_CALIBRATION_STATUS1_2"/>
++	<reg32 offset="0x23021" name="GPU_CS_AMP_CALIBRATION_STATUS1_4"/>
++	<reg32 offset="0x23165" name="GPU_CS_AMP_CALIBRATION_DONE"/>
++	<reg32 offset="0x2316d" name="GPU_CS_AMP_PERIOD_CTRL"/>
++	<reg32 offset="0x23165" name="GPU_CS_AMP_CALIBRATION_DONE"/>
++	<reg32 offset="0x1f94d" name="GPU_GMU_CX_GMU_PWR_THRESHOLD"/>
++	<reg32 offset="0x23b03" name="GMU_AO_INTERRUPT_EN"/>
++	<reg32 offset="0x23b04" name="GMU_AO_HOST_INTERRUPT_CLR"/>
++	<reg32 offset="0x23b05" name="GMU_AO_HOST_INTERRUPT_STATUS">
+ 		<bitfield name="WDOG_BITE" pos="0" type="boolean"/>
+ 		<bitfield name="RSCC_COMP" pos="1" type="boolean"/>
+ 		<bitfield name="VDROOP" pos="2" type="boolean"/>
+@@ -191,27 +191,27 @@ xsi:schemaLocation="https://gitlab.freedesktop.org/freedreno/ rules-fd.xsd">
+ 		<bitfield name="DBD_WAKEUP" pos="4" type="boolean"/>
+ 		<bitfield name="HOST_AHB_BUS_ERROR" pos="5" type="boolean"/>
+ 	</reg32>
+-	<reg32 offset="0x9306" name="GMU_AO_HOST_INTERRUPT_MASK"/>
+-	<reg32 offset="0x9309" name="GPU_GMU_AO_GMU_CGC_MODE_CNTL"/>
+-	<reg32 offset="0x930a" name="GPU_GMU_AO_GMU_CGC_DELAY_CNTL"/>
+-	<reg32 offset="0x930b" name="GPU_GMU_AO_GMU_CGC_HYST_CNTL"/>
+-	<reg32 offset="0x930c" name="GPU_GMU_AO_GPU_CX_BUSY_STATUS">
++	<reg32 offset="0x23b06" name="GMU_AO_HOST_INTERRUPT_MASK"/>
++	<reg32 offset="0x23b09" name="GPU_GMU_AO_GMU_CGC_MODE_CNTL"/>
++	<reg32 offset="0x23b0a" name="GPU_GMU_AO_GMU_CGC_DELAY_CNTL"/>
++	<reg32 offset="0x23b0b" name="GPU_GMU_AO_GMU_CGC_HYST_CNTL"/>
++	<reg32 offset="0x23b0c" name="GPU_GMU_AO_GPU_CX_BUSY_STATUS">
+ 		<bitfield name = "GPUBUSYIGNAHB" pos="23" type="boolean"/>
+ 	</reg32>
+-	<reg32 offset="0x930d" name="GPU_GMU_AO_GPU_CX_BUSY_STATUS2"/>
+-	<reg32 offset="0x930e" name="GPU_GMU_AO_GPU_CX_BUSY_MASK"/>
+-	<reg32 offset="0x9310" name="GMU_AO_AHB_FENCE_CTRL"/>
+-	<reg32 offset="0x9313" name="GMU_AHB_FENCE_STATUS"/>
+-	<reg32 offset="0x9314" name="GMU_AHB_FENCE_STATUS_CLR"/>
+-	<reg32 offset="0x9315" name="GMU_RBBM_INT_UNMASKED_STATUS"/>
+-	<reg32 offset="0x9316" name="GMU_AO_SPARE_CNTL"/>
+-	<reg32 offset="0x9307" name="GMU_RSCC_CONTROL_REQ"/>
+-	<reg32 offset="0x9308" name="GMU_RSCC_CONTROL_ACK"/>
+-	<reg32 offset="0x9311" name="GMU_AHB_FENCE_RANGE_0"/>
+-	<reg32 offset="0x9312" name="GMU_AHB_FENCE_RANGE_1"/>
+-	<reg32 offset="0x9c03" name="GPU_CC_GX_GDSCR"/>
+-	<reg32 offset="0x9d42" name="GPU_CC_GX_DOMAIN_MISC"/>
+-	<reg32 offset="0xc001" name="GPU_CPR_FSM_CTL"/>
++	<reg32 offset="0x23b0d" name="GPU_GMU_AO_GPU_CX_BUSY_STATUS2"/>
++	<reg32 offset="0x23b0e" name="GPU_GMU_AO_GPU_CX_BUSY_MASK"/>
++	<reg32 offset="0x23b10" name="GMU_AO_AHB_FENCE_CTRL"/>
++	<reg32 offset="0x23b13" name="GMU_AHB_FENCE_STATUS"/>
++	<reg32 offset="0x23b14" name="GMU_AHB_FENCE_STATUS_CLR"/>
++	<reg32 offset="0x23b15" name="GMU_RBBM_INT_UNMASKED_STATUS"/>
++	<reg32 offset="0x23b16" name="GMU_AO_SPARE_CNTL"/>
++	<reg32 offset="0x23b07" name="GMU_RSCC_CONTROL_REQ"/>
++	<reg32 offset="0x23b08" name="GMU_RSCC_CONTROL_ACK"/>
++	<reg32 offset="0x23b11" name="GMU_AHB_FENCE_RANGE_0"/>
++	<reg32 offset="0x23b12" name="GMU_AHB_FENCE_RANGE_1"/>
++	<reg32 offset="0x24403" name="GPU_CC_GX_GDSCR"/>
++	<reg32 offset="0x24542" name="GPU_CC_GX_DOMAIN_MISC"/>
++	<reg32 offset="0x26801" name="GPU_CPR_FSM_CTL"/>
+ 
+ 	<!-- starts at offset 0x8c00 on most gpus -->
+ 	<reg32 offset="0x0004" name="GPU_RSCC_RSC_STATUS0_DRV0"/>
 
 -- 
 2.51.0
