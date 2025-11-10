@@ -1,169 +1,146 @@
-Return-Path: <linux-arm-msm+bounces-80989-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-80990-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [142.0.200.124])
-	by mail.lfdr.de (Postfix) with ESMTPS id ED755C464E3
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Nov 2025 12:36:58 +0100 (CET)
+Received: from ams.mirrors.kernel.org (ams.mirrors.kernel.org [IPv6:2a01:60a::1994:3:14])
+	by mail.lfdr.de (Postfix) with ESMTPS id EBCA2C464D3
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Nov 2025 12:36:21 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 0D8174EC73F
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Nov 2025 11:33:19 +0000 (UTC)
+	by ams.mirrors.kernel.org (Postfix) with ESMTPS id 978183480E2
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Nov 2025 11:36:21 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3BB56307AE8;
-	Mon, 10 Nov 2025 11:32:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 742AB30BB95;
+	Mon, 10 Nov 2025 11:35:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="UNmq8akE"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Yh5WZxVb"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f53.google.com (mail-wm1-f53.google.com [209.85.128.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0AD82255E43;
-	Mon, 10 Nov 2025 11:32:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C7DA30AACC
+	for <linux-arm-msm@vger.kernel.org>; Mon, 10 Nov 2025 11:35:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762774346; cv=none; b=Vglf3+v9vvT27IUNEMnJiMFOLwDX0M4IBfoM0YI8QafKuXRTEg+THh67qsWIStOfK8CFHIVxGq8/rw2MVqVuRYphxIBRpP94KvaehSAmwIe5RUxn9vnxPe0wZAShJbCnFqyjlaJ+ppjR9tlmnxNwQjSZkpeP9ocfq7w+WNeyjnI=
+	t=1762774556; cv=none; b=G3DZQVyoL5JKLIQS0N1Ih/eVLQS342drJfPNmL5KzBPRJeM88RRJlXAI2gorwGzleFzfHhjvzKZ1oB2yhJeJTHJF0UJ6VBPesUcVuFp8ozIv+b9A3PoAWC5vdHQbSLDTYlMPsaw570CF/WMBR6dp3V1KeN1f7QUkLK1WF72a278=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762774346; c=relaxed/simple;
-	bh=bMeE+5B5dtl5t9xya726sZPElWX+pnp2Rz6tIuzftiM=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=kBDVpezyD8/il7gUdkUkSplufWmYLGVWOJoN16I7uzpyU2ou3d+zutY+JYUw9wapg0IFql6Dv/SDwiIE57/tJmUjLID1MGCuIses4888DQ+Kis4SLjmw7OqPY2G+g+UowBUS7EO/FNmxz8w0OSo0nHPtCKIRqIRWJ/bwqpXPVSQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=UNmq8akE; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48E39C4CEFB;
-	Mon, 10 Nov 2025 11:32:25 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1762774345;
-	bh=bMeE+5B5dtl5t9xya726sZPElWX+pnp2Rz6tIuzftiM=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=UNmq8akE3N8+6v6VBYH3+k0pevABP3qNlLemgnv1970X+/xMcEvz8QA4zgBSH8nst
-	 K5N8q/gYbJphoV1j2n2/Q0C3M48x1hD8ytNZ1i2kekooxnZFo3IuwUjiOzQAnnnotS
-	 LTq4riMmRydNWUyNLNHhmE5Pg4vNK054U+lc2du8zHGR9OL9Ry8LGI7dZft5nkif8q
-	 OUXK+NQVN85eDi8anfR2F4zc1l23t7aetctxD4k66D28wVJCvRPdJF5V7hwnfka00f
-	 GhHyDVYcuAjUBngz0k9pPiybOlDJIswTDrGhOnf3ZkEPqJ48m2EN3yGHXiDiDH8pkL
-	 +xQywMrEXy3aw==
-Date: Mon, 10 Nov 2025 12:32:23 +0100
-From: Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= <ukleinek@kernel.org>
-To: george.moussalem@outlook.com, Bjorn Andersson <andersson@kernel.org>
-Cc: Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Baruch Siach <baruch@tkos.co.il>, Konrad Dybcio <konradybcio@kernel.org>, 
-	linux-arm-msm@vger.kernel.org, linux-pwm@vger.kernel.org, devicetree@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, Devi Priya <quic_devipriy@quicinc.com>, 
-	Baruch Siach <baruch.siach@siklu.com>, Krzysztof Kozlowski <krzk@kernel.org>
-Subject: Re: [PATCH v18 1/6] dt-bindings: pwm: add IPQ6018 binding
-Message-ID: <lkbwgakmqknqptsjrb7hvxv3bxi3fo62vml7tmf4avo7nr7cue@dwsovmchu2pp>
-References: <20251029-ipq-pwm-v18-0-edbef8efbb8e@outlook.com>
- <20251029-ipq-pwm-v18-1-edbef8efbb8e@outlook.com>
- <gkvbziqeae53bunqd556r4swaye4s4lcnwthryouynwfwqrnsi@6o4cjgxiwxco>
+	s=arc-20240116; t=1762774556; c=relaxed/simple;
+	bh=AL9VUTAnPmoOffKlIJNa0kvWod/v0SpUxAnrML35V+s=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=iAZ4eZ33ZVzsgpol8xJoPIP+Ai8XNavbq2hVzOA4jDAF4YKk5Mi7ozMoTIFFOXHACpluAm2EW0sNoYHEII2fZHbPWqwj3sssyIYdZEkY8kJwiRkIIWZ2KcjNPV9deh5qNUs1mjJSrHLTDrRiz/dIMMpBfO3urCHbRRA55KC3/e8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Yh5WZxVb; arc=none smtp.client-ip=209.85.128.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wm1-f53.google.com with SMTP id 5b1f17b1804b1-477549b3082so25779735e9.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 10 Nov 2025 03:35:54 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1762774553; x=1763379353; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=5y6wCAKSaMKPZ+2wBt9jzrpJq7K1/r6VCG/1Dr2iUWQ=;
+        b=Yh5WZxVbt8FkT4g7ceHlcT4nG5nZjs4aiwypFKjbTCkX4X/A7PTlFZgdKCgBy4bsjI
+         IAdI7RzbOVCCZKN22E+8M2FoNQxxnrE9NwjhhVDsUfae17K2xnpD+Fys49MMiogXY8q9
+         2+hAhXk8nJCM30P8pG6PyS8GSwwEryLyCcq4PfEMpVO/dLSwyCVAE3s66SQgIiInHu92
+         79W9KicD6e2eyArPu1op2ekeVsWKWGZ+UAp/z1rmGwuInIU1makD1Meewzx7ePplk40u
+         fuTLVj3q5bXLLlh0kCL1B2egFwivheaMznl6P2fWBPrJSdAf228vdUrHvhLdceBgjyx2
+         VI8w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1762774553; x=1763379353;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=5y6wCAKSaMKPZ+2wBt9jzrpJq7K1/r6VCG/1Dr2iUWQ=;
+        b=NmevaUkchEN92kiN8gxUqxhB3kVHydeHkhRBiqJSoQHzxGfkR+PvwWFkzvUFuwY/Dw
+         F3f9HpJuSvbmuREDtD8K3dda6VzqTfbKjsd1XRqkv6L/k4SjUYdjYA6x/3g2TwqJjw7U
+         x8YeFSn2QMXB3+Dohn+22lrib1QwwIC+7kptfBF9oPpqGfmZ/0BqemWRXrLKoHp+9/mS
+         Wvf6TEhaWnKApo/kSlm3I+fTfEjfWQigQHPkYS16NGC+QaarIdIUU50x0zynKJNxqnW3
+         tAmNL/pC51fWQkmvCAbe+GHuh/mpdmtL6WjvK5YUI5Ilcy10HwK81zTOATbqjeJhET1Z
+         h8Yw==
+X-Forwarded-Encrypted: i=1; AJvYcCXRm4P11VOTWrTcAf+EKsORpFe7xiwEsG5jGLoV7xfrMHZj62KqspfTFJcfEAmgJF0+fm1cXagEymw5CRQL@vger.kernel.org
+X-Gm-Message-State: AOJu0Yz6Roid+7jRGn9SFWFTHx92CfdaB71K0c8ivtbsm0TQsOT29zUN
+	3cMiwjd67KCpt3Czvovc0Krf56NB9hGrUNB42rDV5+/86m+W4/WHIEU9IID289B4YZk=
+X-Gm-Gg: ASbGncuFOHcdDg068W7EQ6y2EVZRQD7YrZRhSzRf97RhmnIKEm33KUhHqGvxnU3zzG0
+	0dvbgZryvSZ/joOnjwVB9JDUbaaN9krhmnwW1RydMRcoM6Ug+lhmHn2rKL168MqNaJMEtsBEZdq
+	W713xCghesFDIIqkvN0ytSZPZKFObc+rLO7yiT9KQD/hkDpEf5NFnKbNf/bN1AKzM/wPAycIku3
+	Sm6DGNZCwOoWLEzJZpmcNKT2PkOTjNnJROpLbRCCdokzOmz88yqawH/xGQHYUGnkzsQqHNJCFxq
+	xeSV266kzO3RHR1kdKbfiglWWGFTacYb9F9Ti4Chu+GcbvRdrtz0vD9wygxzaPM2dVFkHtgycZE
+	mQ4dt5WLNDg0B6QbHUlG7+wh3+Mhh2pxE2JXs1WT9MyH/5jGEeT1IweGtLJU160DY/5fCyEARKv
+	mucGL7t4IsQ7Pde/r/dQzYZceu1sJnw8Fyr25zT3g5Cg==
+X-Google-Smtp-Source: AGHT+IH7a4ZIA6K1hyshUjilyezxAd12GR80z/y8NgV7hZhcHkivP2UCzIhZhQjPDXMAGanfBiROLA==
+X-Received: by 2002:a05:600c:4704:b0:477:a9e:859b with SMTP id 5b1f17b1804b1-4777327cb50mr60888925e9.24.1762774552976;
+        Mon, 10 Nov 2025 03:35:52 -0800 (PST)
+Received: from [192.168.0.21] (188-141-3-146.dynamic.upc.ie. [188.141.3.146])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4776bccd41bsm197008495e9.2.2025.11.10.03.35.52
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 10 Nov 2025 03:35:52 -0800 (PST)
+Message-ID: <26bc458f-1db1-44e3-937a-f3ee7c1027be@linaro.org>
+Date: Mon, 10 Nov 2025 11:35:51 +0000
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="mwtelqqfu255nqhk"
-Content-Disposition: inline
-In-Reply-To: <gkvbziqeae53bunqd556r4swaye4s4lcnwthryouynwfwqrnsi@6o4cjgxiwxco>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH RFC 2/8] media: qcom: camss: csiphy: Introduce C-PHY
+To: david@ixit.cz, Robert Foss <rfoss@kernel.org>,
+ Todor Tomov <todor.too@gmail.com>,
+ Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
+ Mauro Carvalho Chehab <mchehab@kernel.org>,
+ Luca Weiss <luca.weiss@fairphone.com>, Petr Hodina <phodina@protonmail.com>,
+ Casey Connolly <casey.connolly@linaro.org>, "Dr. Git" <drgitx@gmail.com>
+Cc: Joel Selvaraj <foss@joelselvaraj.com>, linux-media@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+ phone-devel@vger.kernel.org
+References: <20251109-qcom-cphy-v1-0-165f7e79b0e1@ixit.cz>
+ <20251109-qcom-cphy-v1-2-165f7e79b0e1@ixit.cz>
+From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Content-Language: en-US
+In-Reply-To: <20251109-qcom-cphy-v1-2-165f7e79b0e1@ixit.cz>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
+On 09/11/2025 09:39, David Heidelberg via B4 Relay wrote:
+> From: David Heidelberg <david@ixit.cz>
+> 
+> Read C-PHY from the device-tree bus-type and save it into the csiphy
+> structure for later use.
+> 
+> For C-PHY, skip clock line configuration, as there is none.
+> 
+> Signed-off-by: David Heidelberg <david@ixit.cz>
+> ---
+>   drivers/media/platform/qcom/camss/camss-csiphy.h | 2 ++
+>   drivers/media/platform/qcom/camss/camss.c        | 8 ++++++--
+>   2 files changed, 8 insertions(+), 2 deletions(-)
+> 
+> diff --git a/drivers/media/platform/qcom/camss/camss-csiphy.h b/drivers/media/platform/qcom/camss/camss-csiphy.h
+> index 895f80003c441..8f7d0e4c73075 100644
+> --- a/drivers/media/platform/qcom/camss/camss-csiphy.h
+> +++ b/drivers/media/platform/qcom/camss/camss-csiphy.h
+> @@ -28,11 +28,13 @@ struct csiphy_lane {
+>   
+>   /**
+>    * struct csiphy_lanes_cfg - CSIPHY lanes configuration
+> + * @cphy:     true if C-PHY is used, false if D-PHY is used
+>    * @num_data: number of data lanes
+>    * @data:     data lanes configuration
+>    * @clk:      clock lane configuration (only for D-PHY)
+>    */
+>   struct csiphy_lanes_cfg {
+> +	bool cphy;
 
---mwtelqqfu255nqhk
-Content-Type: text/plain; protected-headers=v1; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-Subject: Re: [PATCH v18 1/6] dt-bindings: pwm: add IPQ6018 binding
-MIME-Version: 1.0
+Should be an integer from
 
-Hello,
+include/dt-bindings/phy/phy.h
 
-On Wed, Oct 29, 2025 at 10:22:41AM -0500, Bjorn Andersson wrote:
-> On Wed, Oct 29, 2025 at 12:36:57PM +0400, George Moussalem via B4 Relay w=
-rote:
-> > From: Devi Priya <quic_devipriy@quicinc.com>
-> >=20
-> > DT binding for the PWM block in Qualcomm IPQ6018 SoC.
-> > [George: added compatibles for IPQ5018, IPQ5332, and IPQ9574]
-> >=20
-> > Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-> > Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> > Co-developed-by: Baruch Siach <baruch.siach@siklu.com>
-> > Signed-off-by: Baruch Siach <baruch.siach@siklu.com>
-> > Signed-off-by: Devi Priya <quic_devipriy@quicinc.com>
->=20
-> This is where we expect the [George: ...] comment.
->=20
-> I'll leave it up to Uwe to determine if he'd like you to resubmit this
-> or not though...
+- PHY_TYPE_DPHY
+- PHY_TYPE_CPHY
 
-Don't resubmit because of that. BTW I only think this type of comment is
-important for changes that happen without involving the mailing list. A
-typical scenario is when a maintainer does some changes while applying
-the patch. In this case I'd say not mentioning the changes you did since
-you picked up the series is completely fine.
+this should be indicated in the dt and latched here.
 
-> > ---
-> >  .../devicetree/bindings/pwm/qcom,ipq6018-pwm.yaml  | 51 ++++++++++++++=
-++++++++
-> >  1 file changed, 51 insertions(+)
-> >=20
-> > diff --git a/Documentation/devicetree/bindings/pwm/qcom,ipq6018-pwm.yam=
-l b/Documentation/devicetree/bindings/pwm/qcom,ipq6018-pwm.yaml
-> > new file mode 100644
-> > index 0000000000000000000000000000000000000000..ca8e916f03276e93d755d57=
-4e2567b0e4b86a8ce
-> > --- /dev/null
-> > +++ b/Documentation/devicetree/bindings/pwm/qcom,ipq6018-pwm.yaml
-> > @@ -0,0 +1,51 @@
-> > +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
-> > +%YAML 1.2
-> > +---
-> > +$id: http://devicetree.org/schemas/pwm/qcom,ipq6018-pwm.yaml#
-> > +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> > +
-> > +title: Qualcomm IPQ6018 PWM controller
-> > +
-> > +maintainers:
-> > +  - George Moussalem <george.moussalem@outlook.com>
-> > +
-> > +properties:
-> > +  compatible:
-> > +    oneOf:
-> > +      - items:
-> > +          - enum:
-> > +              - qcom,ipq5018-pwm
-> > +              - qcom,ipq5332-pwm
-> > +              - qcom,ipq9574-pwm
-> > +          - const: qcom,ipq6018-pwm
-> > +      - const: qcom,ipq6018-pwm
-> > +
-> > +  reg:
-> > +    maxItems: 1
-> > +
-> > +  clocks:
-> > +    maxItems: 1
-> > +
-> > +  "#pwm-cells":
-> > +    const: 2
-
-Please use 3 here.
-
-Best regards
-Uwe
-
---mwtelqqfu255nqhk
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAABCgAdFiEEP4GsaTp6HlmJrf7Tj4D7WH0S/k4FAmkRzUEACgkQj4D7WH0S
-/k681wf+KedyXgpShz7il9/w8yt94Dux1ecSUur+tzXHYf6YZ1FfkxM8fcwX2yBf
-3I2Nhfxx1s1Ga1Rm8sR89Jpy1P8mNkq5w4yaRViZvsXFxj8LIAvxveOEMe+K/pnK
-MYVtk1GXyWAl1dkQqC4R+NwohRH7eFWnFoEKzhx7VNvEH+ILuz2jGL2xrIDt3xyf
-DT1TE0op7ZitOrhXFGVqo3UQWGPeEtM/ScArBtCa74DNhLSYQR9Teu9qbzbLpxvf
-j6JjV6NFPIQ82N/YLOLDSHcOETVsIxXDHvnp08VyLJRDL11LEEipCmWkpgz6SG2u
-6rdlUm6trjmC0eEhTJ361cQt3e5QvA==
-=xn2Y
------END PGP SIGNATURE-----
-
---mwtelqqfu255nqhk--
+---
+bod
 
