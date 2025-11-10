@@ -1,153 +1,113 @@
-Return-Path: <linux-arm-msm+bounces-81044-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-81043-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ams.mirrors.kernel.org (ams.mirrors.kernel.org [IPv6:2a01:60a::1994:3:14])
-	by mail.lfdr.de (Postfix) with ESMTPS id 75B0BC47609
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Nov 2025 15:57:45 +0100 (CET)
+Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [142.0.200.124])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4EB7CC475D3
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Nov 2025 15:54:38 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ams.mirrors.kernel.org (Postfix) with ESMTPS id 22D14349D66
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Nov 2025 14:57:45 +0000 (UTC)
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 3F4034ED340
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Nov 2025 14:54:35 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4F015314D21;
-	Mon, 10 Nov 2025 14:57:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id AFFD93148DB;
+	Mon, 10 Nov 2025 14:54:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="POmX0mC5"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx3.molgen.mpg.de (mx3.molgen.mpg.de [141.14.17.11])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E92CA314B76;
-	Mon, 10 Nov 2025 14:57:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=141.14.17.11
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70262310647;
+	Mon, 10 Nov 2025 14:54:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762786647; cv=none; b=UYEbqnWdx7NnNoQQ2fGJ/ANutsSdBuVtiyM+ftZBcivu6EkTfkgCjJNihkXJJWJNwKbL+gyDSWzLj7qzInAZxMBd2if/udgu4nJPm/qnmdkQFEQYhClncOl8Akh0VYAlc/HNjmRLf3Jbr05Xz8/yMmYyO5Av0nwswJe1XqxDqyY=
+	t=1762786468; cv=none; b=f0A/FPAEscPG/vkYX9TFR6H6R8xOXr813iY21gQbAW0+4RKSrxWfFI6SRknSrlADsLewxropL7my0UWKMMuN+8aWABNCGV3Y5hTD6fRkNw+t++jE4sgQXzFC44kQhFDAU66RGXQjP08/kRRV+L7wHl6s9EASj93Q5tQh4O23KEw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762786647; c=relaxed/simple;
-	bh=ytkZLxUvZNz1oafWKGBnM5poTq2DgkQpU0drTR4RYJQ=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=tzMIoXRT41im5zssPk/sKPPzfr0HsRRw+Stixisk+MTdP/Ug6mnFh3Ws6l0MMW/u8QaY85e5K037fN/DE5KL5BHK42J3mCi/oyN9cYs/tdIYmMZc4s7banEL70wKXSWf8Rorw29krUD1ro0fwT7RFTFoWo68670wfJ7gl/hTzlQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=molgen.mpg.de; spf=pass smtp.mailfrom=molgen.mpg.de; arc=none smtp.client-ip=141.14.17.11
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=molgen.mpg.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=molgen.mpg.de
-Received: from [141.14.220.42] (g42.guest.molgen.mpg.de [141.14.220.42])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-	(No client certificate requested)
-	(Authenticated sender: pmenzel)
-	by mx.molgen.mpg.de (Postfix) with ESMTPSA id C523461CC3FED;
-	Mon, 10 Nov 2025 15:57:08 +0100 (CET)
-Message-ID: <8c5da0af-0c41-433e-894c-a7bb69a2e85a@molgen.mpg.de>
-Date: Mon, 10 Nov 2025 15:57:07 +0100
+	s=arc-20240116; t=1762786468; c=relaxed/simple;
+	bh=mEjP87HZG7Mebgtk8XrHMqGp+mfebsTawJI6PaWKOrs=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=XhiUkFh0p2OdzboDUf1jAeH98NWjs1xKzWe9wIfPMAFo6QCB2FwIzx5fsOBnX04sOTPcQzKLfv/5ipubbPV8YiRwSmWbJVFIddjWjj42rtnKpA9sIHbaTMGkfdR5lae82AguEzM0Rdh2GTTtxYH8K4n6nEjMpvZfnn4KqFFGiwA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=POmX0mC5; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CFB47C16AAE;
+	Mon, 10 Nov 2025 14:54:26 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1762786468;
+	bh=mEjP87HZG7Mebgtk8XrHMqGp+mfebsTawJI6PaWKOrs=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=POmX0mC5DyipsOptxWeb7toyp70bThIxLtmC93Mrhythx9+veMhRlhFCD/5K8MQRY
+	 KFw/7f4xWPlveqoNhWFmAp7r/gE2sdeqcI4YzlCzYTU2mRiPKO7k1Ang/itACssrqJ
+	 0VBq1zbFDJX7QzSnNIJ5PFvrqzwfOedgJBkpwunmyDPSoe691OSMqTrmgIkvy3R5se
+	 3YcLndelm0HkD6murQHD/r84VebHHgsXutIrvpiNTpLEm0b/C0rp/Rqu/+W6j936rG
+	 sX7RNOaGrtL/K5tKFVtAj6lhMC+Hdhuyvj0mkOesroZud8KXyNL8JG6JdMCp9jRpYN
+	 +iiAtEFOsGrhg==
+Date: Mon, 10 Nov 2025 08:58:33 -0600
+From: Bjorn Andersson <andersson@kernel.org>
+To: Sarthak Garg <sarthak.garg@oss.qualcomm.com>
+Cc: Krzysztof Kozlowski <krzk@kernel.org>, 
+	Ulf Hansson <ulf.hansson@linaro.org>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Konrad Dybcio <konradybcio@kernel.org>, linux-mmc@vger.kernel.org, devicetree@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, quic_nguyenb@quicinc.com, 
+	quic_rampraka@quicinc.com, quic_pragalla@quicinc.com, quic_sayalil@quicinc.com, 
+	quic_nitirawa@quicinc.com, quic_bhaskarv@quicinc.com, kernel@oss.qualcomm.com
+Subject: Re: [PATCH V3 1/4] dt-bindings: mmc: sdhci-msm: Add sm8750 compatible
+Message-ID: <77qbioe5jfu3pwlmsg5wve3twslurvldkw7xuo6dif5hrnu77s@rv7hgegh2ygx>
+References: <20251026111746.3195861-1-sarthak.garg@oss.qualcomm.com>
+ <20251026111746.3195861-2-sarthak.garg@oss.qualcomm.com>
+ <0c791304-928e-4075-87c0-bd37ebd8e351@kernel.org>
+ <522f353b-7965-467c-9951-9829e58dc681@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 1/1] Bluetooth: btusb: add default nvm file
-To: Shuai Zhang <quic_shuaz@quicinc.com>
-Cc: Marcel Holtmann <marcel@holtmann.org>,
- Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
- linux-bluetooth@vger.kernel.org, linux-kernel@vger.kernel.org,
- linux-arm-msm@vger.kernel.org, quic_chejiang@quicinc.com,
- quic_jiaymao@quicinc.com, quic_chezhou@quicinc.com
-References: <20251110132225.2413017-1-quic_shuaz@quicinc.com>
- <20251110132225.2413017-2-quic_shuaz@quicinc.com>
-Content-Language: en-US
-From: Paul Menzel <pmenzel@molgen.mpg.de>
-In-Reply-To: <20251110132225.2413017-2-quic_shuaz@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <522f353b-7965-467c-9951-9829e58dc681@oss.qualcomm.com>
 
-Dear Shuai,
-
-
-Am 10.11.25 um 14:22 schrieb Shuai Zhang:
-> If no NVM file matches the board_id, load the default NVM file to ensure
-> basic Bluetooth functionality. The default NVM file may differ in
-> functionality and performance because specific NVM files enable certain
-> vendor commands based on chip capabilities. This fallback improves
-> compatibility when a dedicated NVM file is not available.
+On Mon, Nov 10, 2025 at 12:17:51PM +0530, Sarthak Garg wrote:
 > 
-> Also, pass board_id explicitly to select the correct NVM file. This is
-> required for proper NVM file determination.
+> On 10/27/2025 8:00 PM, Krzysztof Kozlowski wrote:
+> > On 26/10/2025 12:17, Sarthak Garg wrote:
+> > > Document the compatible string for the SDHCI controller on the
+> > > sm8750 platform.
+> > > 
+> > > Signed-off-by: Sarthak Garg <sarthak.garg@oss.qualcomm.com>
+> > > Acked-by: Rob Herring (Arm) <robh@kernel.org>
+> > > ---
+> > 
+> > 
+> > Why are you sending third time the same, even though this was applied
+> > long time ago at v1? Please do not send unnecessary patches, this just
+> > clutters people's mailboxes.
+> > 
+> > Best regards,
+> > Krzysztof
 > 
-> Signed-off-by: Shuai Zhang <quic_shuaz@quicinc.com>
-> ---
->   drivers/bluetooth/btusb.c | 28 +++++++++++++++++++---------
->   1 file changed, 19 insertions(+), 9 deletions(-)
 > 
-> diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
-> index dcbff7641..09e81320c 100644
-> --- a/drivers/bluetooth/btusb.c
-> +++ b/drivers/bluetooth/btusb.c
-> @@ -3482,15 +3482,14 @@ static int btusb_setup_qca_load_rampatch(struct hci_dev *hdev,
->   }
->   
->   static void btusb_generate_qca_nvm_name(char *fwname, size_t max_size,
-> -					const struct qca_version *ver)
-> +					const struct qca_version *ver,
-> +					u16 board_id)
->   {
->   	u32 rom_version = le32_to_cpu(ver->rom_version);
->   	const char *variant, *fw_subdir;
->   	int len;
-> -	u16 board_id;
->   
->   	fw_subdir = qca_get_fw_subdirectory(ver);
-> -	board_id = qca_extract_board_id(ver);
->   
->   	switch (le32_to_cpu(ver->ram_version)) {
->   	case WCN6855_2_0_RAM_VERSION_GF:
-> @@ -3517,14 +3516,14 @@ static void btusb_generate_qca_nvm_name(char *fwname, size_t max_size,
->   
->   static int btusb_setup_qca_load_nvm(struct hci_dev *hdev,
->   				    struct qca_version *ver,
-> -				    const struct qca_device_info *info)
-> +				    const struct qca_device_info *info,
-> +				    u16 board_id)
->   {
->   	const struct firmware *fw;
->   	char fwname[80];
->   	int err;
->   
-> -	btusb_generate_qca_nvm_name(fwname, sizeof(fwname), ver);
-> -
-> +	btusb_generate_qca_nvm_name(fwname, sizeof(fwname), ver, board_id);
->   	err = request_firmware(&fw, fwname, &hdev->dev);
->   	if (err) {
->   		bt_dev_err(hdev, "failed to request NVM file: %s (%d)",
-> @@ -3606,10 +3605,21 @@ static int btusb_setup_qca(struct hci_dev *hdev)
->   	btdata->qca_dump.controller_id = le32_to_cpu(ver.rom_version);
->   
->   	if (!(status & QCA_SYSCFG_UPDATED)) {
-> -		err = btusb_setup_qca_load_nvm(hdev, &ver, info);
-> -		if (err < 0)
-> -			return err;
-> +		u16 board_id = qca_extract_board_id(&ver);
->   
-> +		err = btusb_setup_qca_load_nvm(hdev, &ver, info, board_id);
-> +		if (err < 0) {
-> +			/* If the board-specific NVM file is not found, set board_id to 0
-> +			 * and load the default NVM file to ensure basic functionality.
-> +			 */
-> +			if (err == -ENOENT && board_id != 0) {
-> +				err = btusb_setup_qca_load_nvm(hdev, &ver, info, 0);
-> +				if (err < 0)
-> +					return err;
-> +			} else {
-> +				return err;
-> +			}
-> +		}
->   		/* WCN6855 2.1 and later will reset to apply firmware downloaded here, so
->   		 * wait ~100ms for reset Done then go ahead, otherwise, it maybe
->   		 * cause potential enable failure.
+> I had assumed that we need to repost the entire patch series regardless of
+> whether some patches were already ACKed or applied. I’ll make sure to avoid
+> resending already accepted patches in future submissions to keep the mailbox
+> clean.
+> 
 
-Reviewed-by: Paul Menzel <pmenzel@molgen.mpg.de>
+In the end maintainers are going to merge your patches onto the tip of
+their branch(es).
 
+So, if you didn't rebase your changes past the merge of this binding,
+did you validate that the other changes in the series still applies? Do
+they still compile? Do they still work as intended?
 
-Kind regards,
+Regards,
+Bjorn
 
-Paul
+> 
+> Regards,
+> 
+> Sarthak
+> 
+> 
 
