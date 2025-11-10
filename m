@@ -1,66 +1,73 @@
-Return-Path: <linux-arm-msm+bounces-81051-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-81052-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [142.0.200.124])
-	by mail.lfdr.de (Postfix) with ESMTPS id F0684C47849
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Nov 2025 16:26:33 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 38FA6C47894
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Nov 2025 16:29:11 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 4C1784F580C
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Nov 2025 15:19:17 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 3559618812BB
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Nov 2025 15:26:52 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 86911311960;
-	Mon, 10 Nov 2025 15:18:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8C288244694;
+	Mon, 10 Nov 2025 15:26:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="TMbris1l"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="NEi3pw/N"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56B3D22FDEA;
-	Mon, 10 Nov 2025 15:18:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 591AC2264BA;
+	Mon, 10 Nov 2025 15:26:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762787881; cv=none; b=C6DNfQB1gQWgeS8Az/AZbLvOxmExcehfXzf1/UKCWNd9/VB5bNjHWupNNj+YA/aa+NHFUdaoWVa66PXaFG/7OpuLhbaX3wdDj4jRm7BWfJcApCNv6TUy8zIHDBTdkG4zAZxVIEKh5BPLkglnRPSV99yu2LtKBc8+jHtoQLMhLdI=
+	t=1762788382; cv=none; b=TN4vD6Qo83tQ5snpsPxEA/ITtRFGrMgQswCDoZ0z1Uvn40MNcHekEgv1fwBl/OPI3vaVhdEEPZ9ETQB+rcF1yy7Xf0fWvMlXfIXAegDQ+FpCXIacXkd0IhcUyXwD2UjGoE2o5126FbN/WT3Zn16E7BtMs6Pw7qJiaPvVwWR6E0M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762787881; c=relaxed/simple;
-	bh=bXd9TtF3dk2wRq/oyzyztTa7C2oi3PkIcAOa05k8Tlc=;
+	s=arc-20240116; t=1762788382; c=relaxed/simple;
+	bh=oUgWF0RUu+mB1/5X7J8Lib1+YnLUj4YxOYKGEf0wWH0=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=i2YY4gNnJPHCC01tJJeyqx02n1cgur6F66B3aWVp5QOMB8fjPbgsNqYBMSfPj2KNzp1tgmu6i3oIrW4V0SNEcb+7GpdFjLGLZoq61xMTX7yGE0nZ/o+qQ6qDboFwM2CsQeuuzIEXS6NiHwkQg6jpNXAEer4D99n78wLBqNTcX30=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=TMbris1l; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43FDBC4CEF5;
-	Mon, 10 Nov 2025 15:17:59 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=UxGyNLLvNKFc6l6+BTlb3Q45AhFYOIgOG3YIRfIHYQtC1X1ycNtaQ8LMEB4OOTfOzAhKFtP9RXuL1vZSAn8XfSnYTd0dSQzPY/bE0PmvKSkI6UFzXYWxHm6TBjIhCDYcTtpgZ4ozy9vtwaZIe3zrJpsS7/9g2Ml4H2aIwSv6IB8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=NEi3pw/N; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86160C4CEFB;
+	Mon, 10 Nov 2025 15:26:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1762787880;
-	bh=bXd9TtF3dk2wRq/oyzyztTa7C2oi3PkIcAOa05k8Tlc=;
+	s=k20201202; t=1762788381;
+	bh=oUgWF0RUu+mB1/5X7J8Lib1+YnLUj4YxOYKGEf0wWH0=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=TMbris1lF1zUOR+rGlAjOMgRPn2kNYoJHRbnvYFQWaaIX14n+LHehqDy0FcnNZa5v
-	 hwc5SOnQDIhKdThiA/NIwcIbGGcIsksIDSVbZBNxyQr8VaaYKF9Zi9BFzHgKNlB67E
-	 vRNE7hp+l1PUBjxVkQ2B1Xg2oeOiaxcjHNl7XgxwZJhl3FoA0A5XJYNFareLSD+B13
-	 IZI+uziLiPWuqSoo8y0FZXBO6Ec2by7B5cDqiXUUrxYxRUV24bABkd1QnqWrO+6vwx
-	 Uosw+h6nEz+AAWMEzPQnBCCXb3zJGZU0GpcfGkIWB1DtbBARyGyE8Qz8vlENswZHZn
-	 ozHwZ7m8HVdUg==
-Date: Mon, 10 Nov 2025 09:22:06 -0600
+	b=NEi3pw/N8drkjbFObP4vqAMkSx9U17WFA1bbYOZYToSNXxmPQLzT6NXLMV/1G23X6
+	 QHehiRrMOiARo9hAnf9MGLSsJbV15Xs0N4T+ZACfLp/Vc9pUgUHiEGsG9krkL8k0q0
+	 5friH9S5o9xUQNXyiBEiTHPr6fytp1DjQld1K0wumVqmhFjOXTVxTqEcCj4ZMztsK5
+	 r8Xc+b8mVufve+txLpSjZFDpywY64xjKXsTG3g/+UmRWtFIGzHF0Iohlp5bwhAPq6J
+	 0jtFJFBVDOY2VkHF5hPZnqBsCJY2rcjXjgHQR8sfLT53f76cI7+MdGOxW0DPojdKMH
+	 39wTD61gcg0Kg==
+Date: Mon, 10 Nov 2025 09:30:26 -0600
 From: Bjorn Andersson <andersson@kernel.org>
-To: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Cc: Stefan Wahren <wahrenst@gmx.net>, Vinod Koul <vkoul@kernel.org>, 
-	Thomas Andreatta <thomasandreatta2000@gmail.com>, Caleb Sander Mateos <csander@purestorage.com>, 
-	dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	linux-rpi-kernel@lists.infradead.org, linux-arm-kernel@lists.infradead.org, 
-	linux-arm-msm@vger.kernel.org, Olivier Dautricourt <olivierdautricourt@gmail.com>, 
-	Stefan Roese <sr@denx.de>, Florian Fainelli <florian.fainelli@broadcom.com>, 
-	Broadcom internal kernel review list <bcm-kernel-feedback-list@broadcom.com>, Ray Jui <rjui@broadcom.com>, 
-	Scott Branden <sbranden@broadcom.com>, Lars-Peter Clausen <lars@metafoo.de>, 
-	Eugeniy Paltsev <Eugeniy.Paltsev@synopsys.com>, Daniel Mack <daniel@zonque.org>, 
-	Haojian Zhuang <haojian.zhuang@gmail.com>, Robert Jarzmik <robert.jarzmik@free.fr>, 
-	Lizhi Hou <lizhi.hou@amd.com>, Brian Xu <brian.xu@amd.com>, 
-	Raj Kumar Rampelli <raj.kumar.rampelli@amd.com>, Michal Simek <michal.simek@amd.com>, 
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: Re: [PATCH v2 00/13] dmaengine: introduce sg_nents_for_dma() and
- convert users
-Message-ID: <h4twbib3pxrcmohckzg7d64moo5v5gjtdu3pz5wtroegdylcuh@7po5qbe3h2au>
-References: <20251110103805.3562136-1-andriy.shevchenko@linux.intel.com>
+To: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>
+Cc: Shivendra Pratap <shivendra.pratap@oss.qualcomm.com>, 
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>, Sebastian Reichel <sre@kernel.org>, 
+	Rob Herring <robh@kernel.org>, Sudeep Holla <sudeep.holla@arm.com>, 
+	Souvik Chakravarty <Souvik.Chakravarty@arm.com>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+	Conor Dooley <conor+dt@kernel.org>, Andy Yan <andy.yan@rock-chips.com>, 
+	Mark Rutland <mark.rutland@arm.com>, Lorenzo Pieralisi <lpieralisi@kernel.org>, 
+	Arnd Bergmann <arnd@arndb.de>, Konrad Dybcio <konradybcio@kernel.org>, 
+	cros-qcom-dts-watchers@chromium.org, Vinod Koul <vkoul@kernel.org>, 
+	Catalin Marinas <catalin.marinas@arm.com>, Will Deacon <will@kernel.org>, 
+	Florian Fainelli <florian.fainelli@broadcom.com>, Moritz Fischer <moritz.fischer@ettus.com>, 
+	John Stultz <john.stultz@linaro.org>, Matthias Brugger <matthias.bgg@gmail.com>, 
+	Krzysztof Kozlowski <krzk@kernel.org>, Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>, 
+	Stephen Boyd <swboyd@chromium.org>, Andre Draszik <andre.draszik@linaro.org>, 
+	Kathiravan Thirumoorthy <kathiravan.thirumoorthy@oss.qualcomm.com>, linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	devicetree@vger.kernel.org, linux-arm-kernel@lists.infradead.org, 
+	linux-arm-msm@vger.kernel.org, Elliot Berman <quic_eberman@quicinc.com>, 
+	Xin Liu <xin.liu@oss.qualcomm.com>, Srinivas Kandagatla <srini@kernel.org>, 
+	Elliot Berman <elliot.berman@oss.qualcomm.com>, Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Subject: Re: [PATCH v17 09/12] arm64: dts: qcom: qcs6490-rb3gen2: Add PSCI
+ SYSTEM_RESET2 types
+Message-ID: <btvknf3tcqhgxzf7ckyvfwix6hxle2bs4whyayan5haaejo3sm@gnbszdys32lm>
+References: <20251109-arm-psci-system_reset2-vendor-reboots-v17-0-46e085bca4cc@oss.qualcomm.com>
+ <20251109-arm-psci-system_reset2-vendor-reboots-v17-9-46e085bca4cc@oss.qualcomm.com>
+ <20251110122824.5je5jfoanivl6xrh@hu-mojha-hyd.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -69,67 +76,66 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20251110103805.3562136-1-andriy.shevchenko@linux.intel.com>
+In-Reply-To: <20251110122824.5je5jfoanivl6xrh@hu-mojha-hyd.qualcomm.com>
 
-On Mon, Nov 10, 2025 at 11:23:27AM +0100, Andy Shevchenko wrote:
-> A handful of the DMAengine drivers use same routine to calculate the number of
-> SG entries needed for the given DMA transfer. Provide a common helper for them
-> and convert.
+On Mon, Nov 10, 2025 at 05:58:24PM +0530, Mukesh Ojha wrote:
+> On Sun, Nov 09, 2025 at 08:07:22PM +0530, Shivendra Pratap wrote:
+> > From: Elliot Berman <elliot.berman@oss.qualcomm.com>
+> > 
+> > Add support for SYSTEM_RESET2 vendor-specific resets in
+> > qcs6490-rb3gen2 as reboot-modes.  Describe the resets:
+> > "bootloader" will cause device to reboot and stop in the
+> > bootloader's fastboot mode. "edl" will cause device to reboot
+> > into "emergency download mode", which permits loading images via
+> > the Firehose protocol.
+> > 
+> > Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+> > Signed-off-by: Elliot Berman <elliot.berman@oss.qualcomm.com>
+> > Signed-off-by: Shivendra Pratap <shivendra.pratap@oss.qualcomm.com>
+> > ---
+> >  arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts | 7 +++++++
+> >  1 file changed, 7 insertions(+)
+> > 
+> > diff --git a/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts b/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts
+> > index 721a26d49ccaeb1429e2cc1c3a5c8d9517da3be6..cebdedd5d614b9efb6dfbee91dd67f3c3e322a38 100644
+> > --- a/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts
+> > +++ b/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts
+> > @@ -935,6 +935,13 @@ &pon_resin {
+> >  	status = "okay";
+> >  };
+> >  
+> > +&psci {
+> > +	reboot-mode {
+> > +		mode-bootloader = <0x10001 0x2>;
+> > +		mode-edl = <0 0x1>;
+> > +	};
+> > +};
+> > +
 > 
-> I left the new helper on SG level of API because brief grepping shows potential
-> candidates outside of DMA engine, e.g.:
-> 
->   drivers/crypto/chelsio/chcr_algo.c:154:  nents += DIV_ROUND_UP(less, entlen);
->   drivers/spi/spi-stm32.c:1495:  /* Count the number of entries needed */
+> Make sense for this as it leverages sc7280 and adding it there would not
+> have made sense.
 > 
 
-Comment in patch 1, but for the rest.
+Why wouldn't it make sense?
 
-Reviewed-by: Bjorn Andersson <andersson@kernel.org>
+> Acked-by: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>
+> 
+
+Please read submitting-patches.rst about Acked-by, and use Reviewed-by
+going forward.
 
 Regards,
 Bjorn
 
-> Changelog v2:
-> - dropped outdated patches (only 9 years passed :-)
-> - rebased on top of the current kernel
-> - left API SG wide It might
-> 
-> v1: https://patchwork.kernel.org/project/linux-dmaengine/patch/20161021173535.100245-1-andriy.shevchenko@linux.intel.com/
-> 
-> Andy Shevchenko (13):
->   scatterlist: introduce sg_nents_for_dma() helper
->   dmaengine: altera-msgdma: use sg_nents_for_dma() helper
->   dmaengine: axi-dmac: use sg_nents_for_dma() helper
->   dmaengine: bcm2835-dma: use sg_nents_for_dma() helper
->   dmaengine: dw-axi-dmac: use sg_nents_for_dma() helper
->   dmaengine: k3dma: use sg_nents_for_dma() helper
->   dmaengine: lgm: use sg_nents_for_dma() helper
->   dmaengine: pxa-dma: use sg_nents_for_dma() helper
->   dmaengine: qcom: adm: use sg_nents_for_dma() helper
->   dmaengine: qcom: bam_dma: use sg_nents_for_dma() helper
->   dmaengine: sa11x0: use sg_nents_for_dma() helper
->   dmaengine: sh: use sg_nents_for_dma() helper
->   dmaengine: xilinx: xdma: use sg_nents_for_dma() helper
-> 
->  drivers/dma/altera-msgdma.c                   |  5 ++--
->  drivers/dma/bcm2835-dma.c                     | 19 +-------------
->  drivers/dma/dma-axi-dmac.c                    |  5 +---
->  .../dma/dw-axi-dmac/dw-axi-dmac-platform.c    |  6 ++---
->  drivers/dma/k3dma.c                           |  9 ++-----
->  drivers/dma/lgm/lgm-dma.c                     |  9 ++-----
->  drivers/dma/pxa_dma.c                         |  5 ++--
->  drivers/dma/qcom/bam_dma.c                    |  9 ++-----
->  drivers/dma/qcom/qcom_adm.c                   |  9 +++----
->  drivers/dma/sa11x0-dma.c                      |  6 ++---
->  drivers/dma/sh/shdma-base.c                   |  5 ++--
->  drivers/dma/xilinx/xdma.c                     |  6 ++---
->  include/linux/scatterlist.h                   |  2 ++
->  lib/scatterlist.c                             | 25 +++++++++++++++++++
->  14 files changed, 51 insertions(+), 69 deletions(-)
+> >  &qup_uart7_cts {
+> >  	/*
+> >  	 * Configure a bias-bus-hold on CTS to lower power
+> > 
+> > -- 
+> > 2.34.1
+> > 
 > 
 > -- 
-> 2.50.1
-> 
+> -Mukesh Ojha
 > 
 
