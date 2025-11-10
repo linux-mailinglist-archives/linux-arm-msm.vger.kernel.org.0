@@ -1,177 +1,328 @@
-Return-Path: <linux-arm-msm+bounces-81059-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-81061-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1F364C47D0A
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Nov 2025 17:13:09 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0B1C9C47E34
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Nov 2025 17:19:46 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id A2D321889F73
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Nov 2025 16:05:17 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 410D31896E0F
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Nov 2025 16:12:01 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 86602277023;
-	Mon, 10 Nov 2025 16:04:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A3C732798F8;
+	Mon, 10 Nov 2025 16:11:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=ixit.cz header.i=@ixit.cz header.b="OWoTnNo+"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="nI2bQjqY"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from ixit.cz (ip-94-112-25-9.bb.vodafone.cz [94.112.25.9])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0ADB9274B32;
-	Mon, 10 Nov 2025 16:04:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=94.112.25.9
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74B1926FA77;
+	Mon, 10 Nov 2025 16:11:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762790688; cv=none; b=SrvP3LuCxedv+TwxN9eGl0/Wo8+PbOFt7/AO4WaEHJPtzwZpUUq1X620NZqEEg3ddghAYDxYyKAsBOi9hTYrJ2PeM0APCQPyr0woeRpsUkvRr9FJPatxbQEN4AJmt2qwJsDXCL/LOy/Iielyx6z8p+qps9umJF7JQhSsRVa8sOk=
+	t=1762791087; cv=none; b=GFhTQlUaD7KSi2C53CVDHZ72RuXXH/T+yBJ9m+1JMOhDELl71K6Hm9qgQoiplUq9YHbhEpE2DuegpfyjFTAU+Nkq7yhGeK4RWR2N+SQhFAcDyKaPUi00l0Xb7LbyEJ0vftY31y+mmQZ8jQCN53+JOeUJJsLZVAdnJoBAZ7I/Ffk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762790688; c=relaxed/simple;
-	bh=kv4Vq5wtS3JRrjbQqkk4nTAvEfRYYDNfg2iKngv5+Kc=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=bZho2gKO11uBJIxEBQP3BGDKU6GTRC1r/TYhmVwMH1FAJFyInbuNpkRO4Lr/EMQcyoLwlMWU2NM/sWjk7JuWEgYNUllskOBW3HYMO2ScOPKismsTGS7j1a39AZ6pzfRwvRWtbi+1EBc10Slv82Cay88yI+rZl/710pPhgM0L5mg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ixit.cz; spf=pass smtp.mailfrom=ixit.cz; dkim=pass (1024-bit key) header.d=ixit.cz header.i=@ixit.cz header.b=OWoTnNo+; arc=none smtp.client-ip=94.112.25.9
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ixit.cz
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ixit.cz
-Received: from [10.0.0.200] (unknown [10.0.0.1])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange x25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-	(No client certificate requested)
-	by ixit.cz (Postfix) with ESMTPSA id 143AE5341253;
-	Mon, 10 Nov 2025 17:04:36 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ixit.cz; s=dkim;
-	t=1762790676;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
-	bh=zO8m+PMVGX7GOfax0A/1JrTYsgZuiAvHWe2nRQ/tu5w=;
-	b=OWoTnNo+q8W5cqAnQpq53M8qrztwUTo4afiD3TcwTbjIUl16MdTmEfaqzNpY68GS3RjeVA
-	KUHMobhG1g3oYsdkBLbWR8lchCc1pMK9j6CDoRCgsjUuWKFw/pdDnSk1/BaO8CApPpQT2V
-	AfsKKH26lfvUs77lgbIM22Hrvl5LXig=
-Message-ID: <5fbe9d10-5d6d-404c-8f47-e4a12ebe7eeb@ixit.cz>
-Date: Mon, 10 Nov 2025 17:04:35 +0100
+	s=arc-20240116; t=1762791087; c=relaxed/simple;
+	bh=KmpOICxoGbog03HrT+73C14r5/ttDHWLADzMXpIzHEI=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=ei00LEE8I5NIHknR8fKsC9zE74Du6y7AEuJple1ub9Ij3VwZ6WwXLnzbMcX/ZJLDGgoakVBTA6ECTvW+yfguTYFbPRJjjNi7oyFShoOWc0Lc8+tMocgEU900A4iKi15lZrMm5PP4ElLLrETF7cYBqLe3Bj68vUfOsdmq86voYBE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=nI2bQjqY; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0C8AC113D0;
+	Mon, 10 Nov 2025 16:11:24 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1762791087;
+	bh=KmpOICxoGbog03HrT+73C14r5/ttDHWLADzMXpIzHEI=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=nI2bQjqYTL36NWtatW8+wvLmtWv8gRbVpOP0oQOrTDXss61hhWO/148mMGpx1u3Po
+	 O0jIy3mEqPFqgXEz7e+w+qRmcUL6vFzgjke+FLKv7HGEPKVLUIazZbou2/8Rf4WIqw
+	 BicYEJ+Aa6LO06fejAkSRt3B2DsZAhyXdIRtK5YkRrdxGPL9cRoq291ROyqJU4wsYv
+	 9BCDaxN15BkuRoG2AmJPEPd7wB7uPx+S7+fMLe9THw7dvWuhafHytwxYQ2nYd9fv0n
+	 31UJ1gVjfbzVu37QJc+cxQkT5hiOmUhJIrF0Xba2EedDNsaVe1tB/cgIkyRxiZMF2P
+	 VF7e62Eqljnig==
+Date: Mon, 10 Nov 2025 10:15:32 -0600
+From: Bjorn Andersson <andersson@kernel.org>
+To: Shivendra Pratap <shivendra.pratap@oss.qualcomm.com>
+Cc: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>, 
+	Sebastian Reichel <sre@kernel.org>, Rob Herring <robh@kernel.org>, 
+	Sudeep Holla <sudeep.holla@arm.com>, Souvik Chakravarty <Souvik.Chakravarty@arm.com>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Andy Yan <andy.yan@rock-chips.com>, Mark Rutland <mark.rutland@arm.com>, 
+	Lorenzo Pieralisi <lpieralisi@kernel.org>, Arnd Bergmann <arnd@arndb.de>, 
+	Konrad Dybcio <konradybcio@kernel.org>, cros-qcom-dts-watchers@chromium.org, 
+	Vinod Koul <vkoul@kernel.org>, Catalin Marinas <catalin.marinas@arm.com>, 
+	Will Deacon <will@kernel.org>, Florian Fainelli <florian.fainelli@broadcom.com>, 
+	Moritz Fischer <moritz.fischer@ettus.com>, John Stultz <john.stultz@linaro.org>, 
+	Matthias Brugger <matthias.bgg@gmail.com>, Krzysztof Kozlowski <krzk@kernel.org>, 
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>, Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>, 
+	Stephen Boyd <swboyd@chromium.org>, Andre Draszik <andre.draszik@linaro.org>, 
+	Kathiravan Thirumoorthy <kathiravan.thirumoorthy@oss.qualcomm.com>, linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	devicetree@vger.kernel.org, linux-arm-kernel@lists.infradead.org, 
+	linux-arm-msm@vger.kernel.org, Elliot Berman <quic_eberman@quicinc.com>, 
+	Xin Liu <xin.liu@oss.qualcomm.com>, Srinivas Kandagatla <srini@kernel.org>
+Subject: Re: [PATCH v17 05/12] power: reset: reboot-mode: Expose sysfs for
+ registered reboot_modes
+Message-ID: <qhlxxfsyc42xemerhi36myvil3bf45isgmpugkuqzsvgcc3ifn@njrtwuooij2q>
+References: <20251109-arm-psci-system_reset2-vendor-reboots-v17-0-46e085bca4cc@oss.qualcomm.com>
+ <20251109-arm-psci-system_reset2-vendor-reboots-v17-5-46e085bca4cc@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/3] arm64: dts: qcom: sdm845-oneplus: add ath10k
- calibration variant
-To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Cc: Dylan Van Assche <me@dylanvanassche.be>,
- Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- phone-devel@vger.kernel.org
-References: <20251110-sdm845-calibration-variants-v1-0-2c536ada77c2@ixit.cz>
- <20251110-sdm845-calibration-variants-v1-1-2c536ada77c2@ixit.cz>
- <wqjil4hhrbsozvhwdf355dqpwu736z4x2nwnurug2bpx23ed3g@c4shkwfyohky>
-Content-Language: en-US
-From: David Heidelberg <david@ixit.cz>
-Autocrypt: addr=david@ixit.cz; keydata=
- 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
-In-Reply-To: <wqjil4hhrbsozvhwdf355dqpwu736z4x2nwnurug2bpx23ed3g@c4shkwfyohky>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20251109-arm-psci-system_reset2-vendor-reboots-v17-5-46e085bca4cc@oss.qualcomm.com>
 
-On 10/11/2025 16:58, Dmitry Baryshkov wrote:
-> On Mon, Nov 10, 2025 at 04:37:46PM +0100, David Heidelberg via B4 Relay wrote:
->> From: Dylan Van Assche <me@dylanvanassche.be>
->>
->> SDM845-based Oneplus 6 and 6T have their own calibration files
->> for the WCN3990 WiFi/Bluetooth radio with the ath10k driver.
->> Add the calibration variant name to the DTS to reflect this to
->> allow using the calibration files from linux-firmware.
->>
->> [David] Adjust the compatible as ath10k-calibration-variant is deprecated
->> Signed-off-by: Dylan Van Assche <me@dylanvanassche.be>
->> Signed-off-by: David Heidelberg <david@ixit.cz>
->> ---
->>   arch/arm64/boot/dts/qcom/sdm845-oneplus-common.dtsi | 1 +
->>   1 file changed, 1 insertion(+)
->>
->> diff --git a/arch/arm64/boot/dts/qcom/sdm845-oneplus-common.dtsi b/arch/arm64/boot/dts/qcom/sdm845-oneplus-common.dtsi
->> index db6dd04c51bb5..a0c2f6efec59d 100644
->> --- a/arch/arm64/boot/dts/qcom/sdm845-oneplus-common.dtsi
->> +++ b/arch/arm64/boot/dts/qcom/sdm845-oneplus-common.dtsi
->> @@ -929,5 +929,6 @@ &wifi {
->>   	vdd-3.3-ch0-supply = <&vreg_l25a_3p3>;
->>   	vdd-3.3-ch1-supply = <&vreg_l23a_3p3>;
->>   
->> +	qcom,calibration-variant = "oneplus_sdm845";
+On Sun, Nov 09, 2025 at 08:07:18PM +0530, Shivendra Pratap wrote:
+> Currently, there is no standardized mechanism for userspace to
+> discover which reboot-modes are supported on a given platform.
+> This limitation forces tools and scripts to rely on hardcoded
+> assumptions about the supported reboot-modes.
 > 
-> oneplus_sdm845_6? or oneplus_6_6t? SDM845 is too broad.
-
-I verified with 
-https://git.kernel.org/pub/scm/linux/kernel/git/firmware/linux-firmware.git/tree/ath10k/WCN3990/hw1.0/board-2.bin
-
-$ strings board-2.bin | rg oneplus
-bus=snoc,qmi-board-id=ff,qmi-chip-id=30214,variant=oneplus_sdm845mmm
-
-$ ./ath10k-bdencoder -e ~/Downloads/board-2.bin
-...
-bus=snoc,qmi-board-id=ff,qmi-chip-id=30214,variant=oneplus_sdm845.bin 
-created size: 19152
-...
-
-Since OP6/6T should have same WiFi.
-
-David>
-> BTW: Were those board files sent to the ath10k ML for inclusion?
+> Create a class 'reboot-mode' and a device under it to expose a
+> sysfs interface to show the available reboot mode arguments to
+> userspace. Use the driver_name field of the struct
+> reboot_mode_driver to create the device. For device-based
+> drivers, configure the device driver name as driver_name.
 > 
->>   	qcom,snoc-host-cap-8bit-quirk;
->>   };
->>
->> -- 
->> 2.51.0
->>
->>
+> This results in the creation of:
+>   /sys/class/reboot-mode/<driver>/reboot_modes
 > 
--- 
-David Heidelberg
+> This read-only sysfs file will exposes the list of supported
+> reboot modes arguments provided by the driver, enabling userspace
+> to query the list of arguments.
+> 
 
+I like this addition, and your commit message reasoning about this
+addition. But, while touching upon the same subject, you've made this
+series add two separate things.
+
+So now this part can't be merged unless there's agreement on the PSCI
+SYSTEM_RESET2, and the PSCI SYSTEM_RESET2 can't be merged unless this
+sysfs interface is agreed upon.
+
+Unless I'm missing some clear dependency here, it would have been better
+to keep these two topics in separate series, and drive them to
+conclusion independently.
+
+> Signed-off-by: Shivendra Pratap <shivendra.pratap@oss.qualcomm.com>
+> ---
+>  drivers/power/reset/reboot-mode.c | 62 ++++++++++++++++++++++++++++++++++++++-
+>  include/linux/reboot-mode.h       |  2 ++
+>  2 files changed, 63 insertions(+), 1 deletion(-)
+> 
+> diff --git a/drivers/power/reset/reboot-mode.c b/drivers/power/reset/reboot-mode.c
+> index 873ac45cd7659b214b7c21958f580ca381e0a63d..582aa7f8ed7fa485c5a67877558c9b15d3600ef4 100644
+> --- a/drivers/power/reset/reboot-mode.c
+> +++ b/drivers/power/reset/reboot-mode.c
+> @@ -6,6 +6,7 @@
+>  #define pr_fmt(fmt)	"reboot-mode: " fmt
+>  
+>  #include <linux/device.h>
+> +#include <linux/err.h>
+>  #include <linux/init.h>
+>  #include <linux/kernel.h>
+>  #include <linux/list.h>
+> @@ -23,6 +24,8 @@ struct mode_info {
+>  	struct list_head list;
+>  };
+>  
+> +static struct class *rb_class;
+
+Why not "static const struct class reboot_mode_class" and then a
+class_register() call? Why do you need the class dynamically allocated
+on the heap?
+
+> +
+>  static u64 get_reboot_mode_magic(struct reboot_mode_driver *reboot, const char *cmd)
+>  {
+>  	const char *normal = "normal";
+> @@ -65,6 +68,51 @@ static int reboot_mode_notify(struct notifier_block *this,
+>  	return NOTIFY_DONE;
+>  }
+>  
+> +static ssize_t reboot_modes_show(struct device *dev, struct device_attribute *attr, char *buf)
+> +{
+> +	struct reboot_mode_driver *reboot;
+> +	struct mode_info *info;
+> +	ssize_t size = 0;
+> +
+> +	reboot = (struct reboot_mode_driver *)dev_get_drvdata(dev);
+> +	if (!reboot)
+> +		return -ENODATA;
+> +
+> +	list_for_each_entry(info, &reboot->head, list)
+> +		size += sysfs_emit_at(buf, size, "%s ", info->mode);
+> +
+> +	if (size) {
+> +		size += sysfs_emit_at(buf, size - 1, "\n");
+> +		return size;
+> +	}
+> +
+> +	return -ENODATA;
+> +}
+> +static DEVICE_ATTR_RO(reboot_modes);
+> +
+> +static int create_reboot_mode_device(struct reboot_mode_driver *reboot)
+
+Note how (almost) all other function names in this file start with
+a "reboot_mode_" prefix.
+
+> +{
+> +	int ret = 0;
+
+First use is an assignment, no need for you to zero-initialize it here.
+
+> +
+> +	if (!rb_class) {
+> +		rb_class = class_create("reboot-mode");
+> +		if (IS_ERR(rb_class))
+> +			return PTR_ERR(rb_class);
+> +	}
+> +
+> +	reboot->reboot_dev = device_create(rb_class, NULL, 0, (void *)reboot, reboot->driver_name);
+
+Every struct reboot_mode_driver is going to end up having one of these,
+so why not incorporate it into the reboot_mode_driver in the first
+place. It avoids the extra heap allocation, and you can use
+container_of() instead of drv_data to find your reboot_mode_driver in
+the reboot_modes_show() above.
+
+
+Just:
+  reboot->reboot_dev.class = &reboot_mode_class;
+  dev_set_name(&reboot->reboot_dev, reboot->driver_name);
+  ret = device_register(&reboot->reboot_dev);
+
+> +	if (IS_ERR(reboot->reboot_dev))
+> +		return PTR_ERR(reboot->reboot_dev);
+> +
+> +	ret = device_create_file(reboot->reboot_dev, &dev_attr_reboot_modes);
+
+Manually creating sysfs attributes is both error prone and racy, so if
+you can you should avoid it.
+
+Here you have the opportunity to just statically assign
+reboot_mode_class->dev_groups to an ATTRIBUTE_GROUP() with your
+attribute and it will all be handled for you.
+
+> +	if (ret) {
+> +		device_unregister(reboot->reboot_dev);
+> +		return ret;
+> +	}
+> +
+> +	return ret;
+> +}
+> +
+>  /**
+>   * reboot_mode_register - register a reboot mode driver
+>   * @reboot: reboot mode driver
+> @@ -83,13 +131,17 @@ int reboot_mode_register(struct reboot_mode_driver *reboot, struct fwnode_handle
+>  	u32 magic_arg2;
+>  	int ret;
+>  
+> -	if (!fwnode)
+> +	if (!fwnode || !reboot->driver_name)
+>  		return -EINVAL;
+>  
+>  	np = to_of_node(fwnode);
+>  	if (!np)
+>  		return -EINVAL;
+>  
+> +	ret = create_reboot_mode_device(reboot);
+> +	if (ret)
+> +		return ret;
+> +
+>  	INIT_LIST_HEAD(&reboot->head);
+>  
+>  	for_each_property_of_node(np, prop) {
+> @@ -142,6 +194,8 @@ int reboot_mode_register(struct reboot_mode_driver *reboot, struct fwnode_handle
+>  		kfree(info);
+>  	}
+>  
+> +	device_remove_file(reboot->reboot_dev, &dev_attr_reboot_modes);
+> +	device_unregister(reboot->reboot_dev);
+>  	return ret;
+>  }
+>  EXPORT_SYMBOL_GPL(reboot_mode_register);
+> @@ -155,6 +209,9 @@ int reboot_mode_unregister(struct reboot_mode_driver *reboot)
+>  	struct mode_info *info;
+>  	struct mode_info *next;
+>  
+> +	if (!reboot->reboot_dev)
+> +		return -EINVAL;
+> +
+>  	unregister_reboot_notifier(&reboot->reboot_notifier);
+>  
+>  	list_for_each_entry_safe(info, next, &reboot->head, list) {
+> @@ -163,6 +220,8 @@ int reboot_mode_unregister(struct reboot_mode_driver *reboot)
+>  		kfree(info);
+>  	}
+>  
+> +	device_remove_file(reboot->reboot_dev, &dev_attr_reboot_modes);
+> +	device_unregister(reboot->reboot_dev);
+>  	return 0;
+>  }
+>  EXPORT_SYMBOL_GPL(reboot_mode_unregister);
+> @@ -192,6 +251,7 @@ int devm_reboot_mode_register(struct device *dev,
+>  	if (!dr)
+>  		return -ENOMEM;
+>  
+> +	reboot->driver_name = reboot->dev->driver->name;
+
+It seems unlikely that we will have multiple instances of the same
+driver influencing the actual reboot mode, but we could very well have
+multiple instances of the same driver calling
+devm_reboot_mode_register(). E.g. on a board two PMICs, both with PON
+blocks (but only one considered as the source for boot mode).
+
+In that case you will end up trying to create multiple devices with the
+name "qcom-pon", presumably that will fail and per your error handling
+you have now disabled the reboot-mechanism for all but the first pon
+instance that was registered.
+
+It also creates some asymmetry between devm_reboot_mode_register() and
+reboot_mode_register(), in that the one API the client driver decides
+the name, in other it's hard coded to the driver name (and if the client
+did specify a name - which they should if they use the non-devm one- it
+will be overwritten).
+
+
+
+On that note, I would argue that aborting the registration of
+reboot-modes, just because we failed to create the convenient "debug"
+interface, doesn't make sense. I think it would be better to just
+continue even when create_reboot_mode_device() returns an error.
+
+>  	rc = reboot_mode_register(reboot, of_fwnode_handle(reboot->dev->of_node));
+>  	if (rc) {
+>  		devres_free(dr);
+> diff --git a/include/linux/reboot-mode.h b/include/linux/reboot-mode.h
+> index e0d3e8a54050a76f26846f456120b4c7e371d284..81c149edf40fbcf0d3427c2e12eb415199cb153b 100644
+> --- a/include/linux/reboot-mode.h
+> +++ b/include/linux/reboot-mode.h
+> @@ -7,6 +7,8 @@
+>  
+>  struct reboot_mode_driver {
+>  	struct device *dev;
+> +	struct device *reboot_dev;
+
+As suggested above:
+
+struct device reboot_dev;
+
+Regards,
+Bjorn
+
+> +	const char *driver_name;
+>  	struct list_head head;
+>  	int (*write)(struct reboot_mode_driver *reboot, u64 magic);
+>  	struct notifier_block reboot_notifier;
+> 
+> -- 
+> 2.34.1
+> 
 
