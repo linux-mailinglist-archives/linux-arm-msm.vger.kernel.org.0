@@ -1,385 +1,237 @@
-Return-Path: <linux-arm-msm+bounces-81024-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-81025-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id D76BBC47074
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Nov 2025 14:52:27 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id D9288C4707D
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Nov 2025 14:52:35 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 06EBC3A8807
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Nov 2025 13:45:50 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id A13261881B01
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Nov 2025 13:52:37 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 745EE1F3B87;
-	Mon, 10 Nov 2025 13:45:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B9EBA223DF9;
+	Mon, 10 Nov 2025 13:52:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="buUwUdVb";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="iGKLGuxO"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="KzjsP0iU";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="OMx9iuqP"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E6CD15A86D
-	for <linux-arm-msm@vger.kernel.org>; Mon, 10 Nov 2025 13:45:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CE183054D2
+	for <linux-arm-msm@vger.kernel.org>; Mon, 10 Nov 2025 13:51:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762782346; cv=none; b=JcjHY9se3PyCbHhoiwekBYSzp5h/m41l6NI4PByHx4ikotadxsaOrD7fenRixhFLLW9YDqubfF47moNv5IGY/tACKXk1UtlszfjkqlGCAmpyNKHIMmqp3Z6z9dUG+NovFVNNZ2KJ9WL0twQtmcunTs+OQxK9JYjl5v7kGxnyQj0=
+	t=1762782722; cv=none; b=SJJOpCYoPnPscCqIVxMCKfxVFVBIMyH81IEqM/UAEvxtj3nm4pFaHAwb9FE2NTgq29RqBPRcV9if4NrU5G6mES8jI5KnILXnsJYcbuzbr9Z/ek026t5VlXZpY2joDgqA+2uVT1drhOt9q1CtAyvhGzDpy/XZg8zg4rZLyBVWroc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762782346; c=relaxed/simple;
-	bh=H6f8G2F54zA621dwndHMSg6QNIyKcA40Xj5J9hQ37Ks=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=fd/2riBPUAbjecZYoK1g2OCYouJLUhvLPiz2y+werD/jkjeIjyko1AatwB2HW/vMjKHKGDC/ME11ZattGMLld5h8K3AT31Rv2+vlNx9uc+sj1LDt+Hj7+z5h+XBTx/I6RKAlalsPBdSis5CMxy7+UGIPg87fV1ByC9jmyFOKbow=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=buUwUdVb; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=iGKLGuxO; arc=none smtp.client-ip=205.220.168.131
+	s=arc-20240116; t=1762782722; c=relaxed/simple;
+	bh=4H2fw1nZerKjCesvxPE/tv7CG+Zj55dfVDI0escuNWk=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=YJa8iA9v2EiSY5q9p1OjFtaQqM2PaLuASoqy38mHk/LZJZsm4Qiq0jwxuvhfovgWpfeGDA8GNM3fzQ1XFIGtjZwzuL8q+KeTJ/CNs+INWof1p+dqx+wjgw447IStCpRkqEDRGmFxG+fNYjdTCOfFn0d810qD47G8mgI0RRuIKh0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=KzjsP0iU; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=OMx9iuqP; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 5AACNmIj3308282
-	for <linux-arm-msm@vger.kernel.org>; Mon, 10 Nov 2025 13:45:43 GMT
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 5AA9CgNg3146226
+	for <linux-arm-msm@vger.kernel.org>; Mon, 10 Nov 2025 13:51:59 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	O8mCZ2i/SwfCz8Y6dHfv1Z03BRuaemPsHfu8tHyYWV4=; b=buUwUdVbzeXlAURk
-	SuCksaVMl2U9A06IGjD1MZyq7quSX0tdtw0yK59FVwlgzihRMeQkLPt5dMCv44Fy
-	rNW0FMTerkbARkiqPei3t+v0lOV7UavpmtwoGH5inJqA5mw6Vt7VbZpLeh9dxWJX
-	Da5KOBgcZTqcxoeK9lVd/iyrjqXVfVpTXx465aOD/JZLR0jAUf+iGLYrtIlJxjb1
-	TrKZfsH1SlZ2PVsL+tUKcfb9vzlei81Mta6YX/bbPPNNCebCp/TkGxfS0uAEx7wJ
-	5F3Yn9M7C+FzGfZgkX6YzfVLEMEfq5yu9EDiomZkXIkAvAu94teyTEsnjVlnvz8u
-	F/efUQ==
-Received: from mail-pf1-f199.google.com (mail-pf1-f199.google.com [209.85.210.199])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4abg0q872m-1
+	NZlV3jIxROciPtUCqpcLAitOvegR1QpOAc5SMbgsl7k=; b=KzjsP0iU+L0zRHhL
+	Z0MFLqIYsKYfVMR418odKMNhC4UYcKfQVBqErdGlrvXdAYI4gx4qzTGpDdLMlkAs
+	F828rcYyNa1j4PAz2ZlpGIh+0wDD3FEUlVau6j3tXMBUsvlL2HyMW6SpHVMhVWYy
+	UK9mAFTKrkH2ZTQ1dMDJl/2RlrVNjYZgoZkDIHhM5ikQ0S1G7wnkC09QSGC4USW5
+	4zk3MGw+76iUb6wuQsFABEUD1T1mWczuf786DKmT/+AKVzBZ2kziuBhdmOQmEMei
+	QFzMG6V1pyet4V5kRZt3WxQsPtbRUiqmYQRbLNt18ikznKHjOpbundYfMqFyWnxw
+	61GU5w==
+Received: from mail-pl1-f199.google.com (mail-pl1-f199.google.com [209.85.214.199])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4abd7hrsys-1
 	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Mon, 10 Nov 2025 13:45:43 +0000 (GMT)
-Received: by mail-pf1-f199.google.com with SMTP id d2e1a72fcca58-7aee84f1defso5587401b3a.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 10 Nov 2025 05:45:43 -0800 (PST)
+	for <linux-arm-msm@vger.kernel.org>; Mon, 10 Nov 2025 13:51:58 +0000 (GMT)
+Received: by mail-pl1-f199.google.com with SMTP id d9443c01a7336-29557f43d56so39387835ad.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 10 Nov 2025 05:51:58 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1762782343; x=1763387143; darn=vger.kernel.org;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=O8mCZ2i/SwfCz8Y6dHfv1Z03BRuaemPsHfu8tHyYWV4=;
-        b=iGKLGuxOi1CD1XiBNfvziQ/5iH9AM6SuNpRolLoHrEZ36Tvvayag1FMOJ20hCOlXZs
-         evC1npSjh3CdSfBir9s+Me+ET6n8Xr3fG5XbaGHo3UZys5Z7DJQzoEChTjAEb5FFHx5E
-         vNnS23ZJRpJ2Lq679yHMuTzzXYJekMVlmzWYgkAymRuM1N54yPHihmmLOEDfIna7+Tzd
-         +SFwkHCJQAWg05O1UeuL9rl3yzd6d3MPSHeREeNavMSA11grgj9byTw5oBPI5naf44yS
-         shoTJGdo+cyzvNjqr/+JJSKnKdU5lc8D4A6bz4f9O7pSVDNVK1syirCmh4AWHwBQ/5Zx
-         OhOQ==
+        d=oss.qualcomm.com; s=google; t=1762782718; x=1763387518; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=NZlV3jIxROciPtUCqpcLAitOvegR1QpOAc5SMbgsl7k=;
+        b=OMx9iuqPENASHMh9jiIpA0ouxHqXs8cgxWB9Gmq8GAXbEAE5ROiKU+OnlcX7GqFzmo
+         +v/9HvrnkmM4EE1+l4xkxAKWZaPoSKD28BC8ncPpRYnDGPeWqbBCCijafizFY+vuqxZ0
+         wuq2jCj2yHHBrkrSWQ/tRFW/TRAsFvHpU5bM4QjRrfSdNa1XYUZrL9CvdamzCTp8Ceuq
+         HVTJS6lO9Ec6mTJ4M4rYSs4UnxIAN2G6HWgk8Z90RugUquFG3zIHIu7M6u+SY2XPXXx6
+         x0aLUqmp+PAnMkFD+fKcdxTF2cFAheAbiZDaAV66Z27Xnr+3drLoDbf/XU4m2udboHDZ
+         oGTQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1762782343; x=1763387143;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=O8mCZ2i/SwfCz8Y6dHfv1Z03BRuaemPsHfu8tHyYWV4=;
-        b=EqGBtNydWSl5WI8gMN5brDBrLadwSeTebtmBMFB6UP6xGTRv7aS01yxqgnWR2/KewM
-         LekAfUeZmTJV0/XC0ngHwBrE/Awq38VPpzrJIUgtUiLU04v0jQIfE+IA4rN4wVYFd04t
-         /dBH72E+PBKawYX5F6GW/peu411uw+L3VNM5VZguNuEefJ3MNfTJnXjmXKBm2hnoEqCx
-         D0cBGhoLK7OD1ZC0yo1DHSL5bAtm2kgOVYqURVgHkI69FEsl0M7RAQIDn3PraIaBeTOl
-         WvSz+N7N1MvCdB3bpA5v+fvXM9ZAu9gSaZlZ7cv4fmzvHtCvxIaVo+w5yrW+RLoH/6QS
-         SJig==
-X-Forwarded-Encrypted: i=1; AJvYcCVZvnTQsUfCGsIs7zAemao+z81KYX384HWhBY245MkBUqrww87ZnP3ag/+heRL7RRh1+0kDZhh3eZs5ytF1@vger.kernel.org
-X-Gm-Message-State: AOJu0YyHXqktRilP88RVi52mP4+54NfDl3rKfwW+59mdYzk9jH6od463
-	luUV1fmJSvI4rnWB1mfpdKx4p7RBV7rXvRaxmitl5I5GQ/W9F0lDJDco9Rl3BJly4Wgvn6euKVG
-	jjAd23aHM1FE0+GPN1FOUTBmmKTaAPyAm8uersp/bdXfFRcMkJ2/12lc/tjEwU+/KY63e
-X-Gm-Gg: ASbGncvcON29EdTamegFPDThg+UQUEifllK/8fWnZwvG92ZajisnBLnD8aC0M13LYin
-	hjKUGsGldFaor7UmBpnESxMjyAjDQn3LLCciitwntkRKFdn7lr5ouVQnez3Im5ozP3ghmKzKe9M
-	ImetWZlr3RVuZ/aSzHB8sjV5u02Q8NeGRWizzGju914lzVSc7/0IbHiKwyj/GhrLaJmHuw1KCMC
-	V6GX18ktUA6p4v/8tSMqkd1OgntUG1dNJwmKxOCjCQoqeI4iOkUIpsvn2HJwBfELmjG/mx8DTKe
-	aX+0+mNG3W+W/t34iqPZbCe7kbf7vEUgk4PU738wVnuB7LQ5f05OpH0sLqchNaxLiZ15rI4mzF7
-	XBMZpsE4qrTo8jkx8KSm9pfD+Dw==
-X-Received: by 2002:a05:6a00:23c1:b0:781:1b5a:95b2 with SMTP id d2e1a72fcca58-7b22717bb94mr12240164b3a.28.1762782342784;
-        Mon, 10 Nov 2025 05:45:42 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGwTkVKCC8Im0eYgJqpdGEW0O85HjOMi5fKaAZ3Jnn0Gmv9OubICv0N6ZVNCMiI6Qbx9GYJBw==
-X-Received: by 2002:a05:6a00:23c1:b0:781:1b5a:95b2 with SMTP id d2e1a72fcca58-7b22717bb94mr12240084b3a.28.1762782341965;
-        Mon, 10 Nov 2025 05:45:41 -0800 (PST)
-Received: from hu-mojha-hyd.qualcomm.com ([202.46.23.25])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-7b0ca1e7595sm11836585b3a.33.2025.11.10.05.45.32
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 10 Nov 2025 05:45:41 -0800 (PST)
-Date: Mon, 10 Nov 2025 19:15:29 +0530
-From: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>
-To: Shivendra Pratap <shivendra.pratap@oss.qualcomm.com>
-Cc: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Sebastian Reichel <sre@kernel.org>, Rob Herring <robh@kernel.org>,
-        Sudeep Holla <sudeep.holla@arm.com>,
-        Souvik Chakravarty <Souvik.Chakravarty@arm.com>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>, Andy Yan <andy.yan@rock-chips.com>,
-        Mark Rutland <mark.rutland@arm.com>,
-        Lorenzo Pieralisi <lpieralisi@kernel.org>,
-        Arnd Bergmann <arnd@arndb.de>, Konrad Dybcio <konradybcio@kernel.org>,
-        cros-qcom-dts-watchers@chromium.org, Vinod Koul <vkoul@kernel.org>,
-        Catalin Marinas <catalin.marinas@arm.com>,
-        Will Deacon <will@kernel.org>,
-        Florian Fainelli <florian.fainelli@broadcom.com>,
-        Moritz Fischer <moritz.fischer@ettus.com>,
-        John Stultz <john.stultz@linaro.org>,
-        Matthias Brugger <matthias.bgg@gmail.com>,
-        Krzysztof Kozlowski <krzk@kernel.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Andre Draszik <andre.draszik@linaro.org>,
-        Kathiravan Thirumoorthy <kathiravan.thirumoorthy@oss.qualcomm.com>,
-        linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org,
-        Elliot Berman <quic_eberman@quicinc.com>,
-        Xin Liu <xin.liu@oss.qualcomm.com>,
-        Srinivas Kandagatla <srini@kernel.org>,
-        Umang Chheda <umang.chheda@oss.qualcomm.com>,
-        Nirmesh Kumar Singh <nirmesh.singh@oss.qualcomm.com>
-Subject: Re: [PATCH v17 03/12] power: reset: reboot-mode: Add support for 64
- bit magic
-Message-ID: <20251110134529.uljjqzb3vhda3vya@hu-mojha-hyd.qualcomm.com>
-References: <20251109-arm-psci-system_reset2-vendor-reboots-v17-0-46e085bca4cc@oss.qualcomm.com>
- <20251109-arm-psci-system_reset2-vendor-reboots-v17-3-46e085bca4cc@oss.qualcomm.com>
+        d=1e100.net; s=20230601; t=1762782718; x=1763387518;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=NZlV3jIxROciPtUCqpcLAitOvegR1QpOAc5SMbgsl7k=;
+        b=LYwCPKdyRRj5q3W2/Gdc66fkAE21KAJO8wMrie6qiDgcw3pxrFljl4B/qdaY+GQH7J
+         5tGxr7UtlC/EvA+CBVPnI6RLRqKFfN8hHsiMW+EtLjsVFZzlFGADMcac+Lz5putpCLkX
+         AuJT1MLAQVA0mJ/89XWCkdvOmTKB8a/EghLY0c7kJLoXqwGcWwCg8euhFjQQWHqKJ+qT
+         0FDBWVpZM2MGoVL4XHMZvUnUIhbbmzRDg5emoVaJ9QNx4GmbIMUr0OMSRmA+HvzYhmLT
+         A7iLBLanGP51EU8q7rAlGMPNey7PAJgY+n8bwSHi//L703uBNr9d5ybUkDaiOSqymMbx
+         4N+Q==
+X-Forwarded-Encrypted: i=1; AJvYcCX7qRjkc/hhph5Q93Im3KUWA5PJqMoILRa8e0bNtFqAC/1fo+y9fqQayp3QyVGWoH4h7tGC+h0a9J17c0fw@vger.kernel.org
+X-Gm-Message-State: AOJu0Yy65qTFktnDiu5qbzeGOfmC4+lq04HlgP1ojGEnvag+zscQS3N9
+	T6JQs/YbWGcX4zorG3JYiNpJElQjOrTBUMr+TjyNV55IR8VjSt8gSl3yoRK8MtVje2QXFnTHJkW
+	lfovsKpe3lOdxS/p+k+BxFXYucppTtn1RPtCbYE+A66NyPVA22FQ+C3mRn5bp3t5XZQBo
+X-Gm-Gg: ASbGncsLNROIfhC+jA/9S/qCiWUajtKI4ZUMf6iwr53h9aEDcDsS7+m7IacXD7T1Kk9
+	SWiG8z7E4Xf/NaWZpBbzS0Nz9H8T7PDQZBTPsdrfEyXyjqK15V5k9LsWBKn7rf4/VXYLLrYbM05
+	Av75ddBX8Endsg+6JUWw4QQBQd76B2JqTTajnRMhiF4L03esvkrzLPlWQSMl3vj7xpaZ4Afv93m
+	Z0oZZhXvh0rgOD9Vrt48/J6St54Qts3hf2k7aYEhjYYBBFy6WM8b4ZZuXtXEe3JVuGpRfUPbO1S
+	BnFg1oWDA4Me6ryT65zgfytNf8rUoSYIJWUJvlmqrwE7rDTNFbuvUJgqB5BzHd7uzoAiMoexLTH
+	fwy6Ff8VzAwUIsHuDI4CrfhNmba0iZeA=
+X-Received: by 2002:a17:902:d581:b0:293:623:3260 with SMTP id d9443c01a7336-297e572957amr115879055ad.57.1762782717730;
+        Mon, 10 Nov 2025 05:51:57 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGfqiqS1BOPe+VMlfkJU0zIOGZuKtCtWI9NqPiJ0S4bKUKfTOQjBnZhjxrbV+/OQHnCK4jKBg==
+X-Received: by 2002:a17:902:d581:b0:293:623:3260 with SMTP id d9443c01a7336-297e572957amr115878545ad.57.1762782717110;
+        Mon, 10 Nov 2025 05:51:57 -0800 (PST)
+Received: from [10.0.0.3] ([106.222.229.252])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-3434c344838sm11109221a91.15.2025.11.10.05.51.53
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 10 Nov 2025 05:51:56 -0800 (PST)
+Message-ID: <f28068ea-c14b-8502-f252-3ddfe4eb874d@oss.qualcomm.com>
+Date: Mon, 10 Nov 2025 19:21:51 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20251109-arm-psci-system_reset2-vendor-reboots-v17-3-46e085bca4cc@oss.qualcomm.com>
-X-Authority-Analysis: v=2.4 cv=D6JK6/Rj c=1 sm=1 tr=0 ts=6911ec87 cx=c_pps
- a=WW5sKcV1LcKqjgzy2JUPuA==:117 a=ZePRamnt/+rB5gQjfz0u9A==:17
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.13.0
+Subject: Re: [PATCH v3] media: iris: Refine internal buffer reconfiguration
+ logic for resolution change
+To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Cc: Vikash Garodia <vikash.garodia@oss.qualcomm.com>,
+        Abhinav Kumar <abhinav.kumar@linux.dev>,
+        Bryan O'Donoghue <bod@kernel.org>,
+        Mauro Carvalho Chehab <mchehab@kernel.org>,
+        Hans Verkuil <hverkuil@kernel.org>,
+        Stefan Schmidt <stefan.schmidt@linaro.org>,
+        linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, stable@vger.kernel.org,
+        Val Packett <val@packett.cool>
+References: <20251105-iris-seek-fix-v3-1-279debaba37a@oss.qualcomm.com>
+ <l2djrmw5i7dfvlrqyn3a5yrohbtpxr72xwwrgojvsfwo7w4feb@254rjgan2fyz>
+Content-Language: en-US
+From: Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>
+In-Reply-To: <l2djrmw5i7dfvlrqyn3a5yrohbtpxr72xwwrgojvsfwo7w4feb@254rjgan2fyz>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-GUID: t4modngGq3QA8NbbgzKlHo8UuYKhnxNN
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMTEwMDEyMSBTYWx0ZWRfX/DmsJQXpIu6u
+ DbGNLKmu5fi+n5QOYfdQrZ/VqfOQ4qQKtqGiOvFwIfuyYUhuu91kfipfAjPsozFHGDDeHg/Etlq
+ ZFQrvEhgRaaWwb0sCTc/RFR7qmNM3d1aHXR4wl9Duh0GI4Lavkmrd/fa6AmoBZyG249Kq2AaUng
+ VKQGA6wOnO3RXBPkl1B9Kz6xC6pITsZOS0NTc1QHfJXVBVewR6qroth1FslGwBSx3/f4NQEA1g8
+ SyZbIbd/XGbcBC9R+sfJ2VxeqLI4nDDyINAQ47ZsOuUoj5D73yBKCtZPlPJth2qhJGb8XdzMCWf
+ 7GIAK9dq+XvHFz/FgXS+xsvacpTQsVSxN2Ac5QhwALT9ayFy1xoalL3g6nspcGSQDkckls1n4OM
+ JJw+P9upoMdw1jIasjO/mhgzky6VKw==
+X-Proofpoint-ORIG-GUID: t4modngGq3QA8NbbgzKlHo8UuYKhnxNN
+X-Authority-Analysis: v=2.4 cv=Yt4ChoYX c=1 sm=1 tr=0 ts=6911edfe cx=c_pps
+ a=JL+w9abYAAE89/QcEU+0QA==:117 a=L4UNg9I9cQSOxNpRiiGXlA==:17
  a=IkcTkHD0fZMA:10 a=6UeiqGixMTsA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=EUspDBNiAAAA:8 a=fKl0S-9-5daLM7QqcyEA:9
- a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=OpyuDcXvxspvyRM73sMx:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMTEwMDEyMCBTYWx0ZWRfXwG0ylcJDHdjh
- za1/MBaJQmkLslO35mbCT/rYexTKcmaIF9xIjw2sfpDSPcgpNoW89gOwNz+ZKuoriFFywkE2LqG
- /j6M4WNEQ+/mWAYR0fsoM4cZL7ratAtJm2iFqb/hjmVJAUGDETZp1lEoSGo2wPmndCUumtdpGDv
- UQchFhDhOOHxmEj9lXdX5PmfJpE7To5VSlTZycfGbCD/Xk2sfa3lACNEbuYA3jR2uOHjhi9V9r7
- JHIFdpfz5OO3rpfB1om5sAjs3BEmUpTNaXbdJG00dl6fHAKjjDPGJfwOhgIyu9vwTrTbHQ3tmDq
- 9WhiOAPha1MXIEkhS5hwIGIHG04T7D8gk+z40TQlXZ9wz2uCWSDtUOG1rby0eBtd6kfE5T7WADM
- 2i5vs9CjxvLWOCX+ttE+m6GDfP9ZMA==
-X-Proofpoint-GUID: j5VTvCXrXWzkV8Q0nXJNYCetUrZo_jZ1
-X-Proofpoint-ORIG-GUID: j5VTvCXrXWzkV8Q0nXJNYCetUrZo_jZ1
+ a=VkNPw1HP01LnGYTKEx00:22 a=e5mUnYsNAAAA:8 a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8
+ a=mVG3C3KJgNa-X6cAQn4A:9 a=QEXdDO2ut3YA:10 a=324X-CrmTo6CU4MGRt3R:22
+ a=Vxmtnl_E_bksehYqCbjh:22
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
  definitions=2025-11-10_05,2025-11-10_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 adultscore=0 bulkscore=0 malwarescore=0 phishscore=0
- lowpriorityscore=0 suspectscore=0 clxscore=1015 impostorscore=0 spamscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2510240001 definitions=main-2511100120
+ bulkscore=0 adultscore=0 spamscore=0 phishscore=0 malwarescore=0
+ impostorscore=0 clxscore=1015 suspectscore=0 lowpriorityscore=0
+ priorityscore=1501 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2510240001
+ definitions=main-2511100121
 
-On Sun, Nov 09, 2025 at 08:07:16PM +0530, Shivendra Pratap wrote:
-> Current reboot-mode supports a single 32-bit argument for any
-> supported mode. Some reboot-mode based drivers may require
-> passing two independent 32-bit arguments during a reboot
-> sequence, for uses-cases, where a mode requires an additional
-> argument. Such drivers may not be able to use the reboot-mode
-> driver. For example, ARM PSCI vendor-specific resets, need two
-> arguments for its operation – reset_type and cookie, to complete
-> the reset operation. If a driver wants to implement this
-> firmware-based reset, it cannot use reboot-mode framework.
+
+
+On 11/10/2025 7:05 PM, Dmitry Baryshkov wrote:
+> On Wed, Nov 05, 2025 at 11:17:37AM +0530, Dikshita Agarwal wrote:
+>> Improve the condition used to determine when input internal buffers need
+>> to be reconfigured during streamon on the capture port. Previously, the
+>> check relied on the INPUT_PAUSE sub-state, which was also being set
+>> during seek operations. This led to input buffers being queued multiple
+>> times to the firmware, causing session errors due to duplicate buffer
+>> submissions.
+>>
+>> This change introduces a more accurate check using the FIRST_IPSC and
+>> DRC sub-states to ensure that input buffer reconfiguration is triggered
+>> only during resolution change scenarios, such as streamoff/on on the
+>> capture port. This avoids duplicate buffer queuing during seek
+>> operations.
+>>
+>> Fixes: c1f8b2cc72ec ("media: iris: handle streamoff/on from client in dynamic resolution change")
+>> Cc: stable@vger.kernel.org
+>> Reported-by: Val Packett <val@packett.cool>
+>> Closes: https://gitlab.freedesktop.org/gstreamer/gstreamer/-/issues/4700
+>> Signed-off-by: Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>
+>> ---
+>> Changes in v3:
+>> - Fixed the compilation issue
+>> - Added stable@vger.kernel.org in Cc
+>> - Link to v2: https://lore.kernel.org/r/20251104-iris-seek-fix-v2-1-c9dace39b43d@oss.qualcomm.com
+>>
+>> Changes in v2:
+>> - Removed spurious space and addressed other comments (Nicolas)
+>> - Remove the unnecessary initializations (Self) 
+>> - Link to v1: https://lore.kernel.org/r/20251103-iris-seek-fix-v1-1-6db5f5e17722@oss.qualcomm.com
+>> ---
+>>  drivers/media/platform/qcom/iris/iris_common.c | 7 +++++--
+>>  1 file changed, 5 insertions(+), 2 deletions(-)
+>>
+>> diff --git a/drivers/media/platform/qcom/iris/iris_common.c b/drivers/media/platform/qcom/iris/iris_common.c
+>> index 9fc663bdaf3fc989fe1273b4d4280a87f68de85d..7f1c7fe144f707accc2e3da65ce37cd6d9dfeaff 100644
+>> --- a/drivers/media/platform/qcom/iris/iris_common.c
+>> +++ b/drivers/media/platform/qcom/iris/iris_common.c
+>> @@ -91,12 +91,14 @@ int iris_process_streamon_input(struct iris_inst *inst)
+>>  int iris_process_streamon_output(struct iris_inst *inst)
+>>  {
+>>  	const struct iris_hfi_command_ops *hfi_ops = inst->core->hfi_ops;
+>> -	bool drain_active = false, drc_active = false;
+>>  	enum iris_inst_sub_state clear_sub_state = 0;
+>> +	bool drain_active, drc_active, first_ipsc;
+>>  	int ret = 0;
+>>  
+>>  	iris_scale_power(inst);
+>>  
+>> +	first_ipsc = inst->sub_state & IRIS_INST_SUB_FIRST_IPSC;
+>> +
+>>  	drain_active = inst->sub_state & IRIS_INST_SUB_DRAIN &&
+>>  		inst->sub_state & IRIS_INST_SUB_DRAIN_LAST;
+>>  
+>> @@ -108,7 +110,8 @@ int iris_process_streamon_output(struct iris_inst *inst)
+>>  	else if (drain_active)
+>>  		clear_sub_state = IRIS_INST_SUB_DRAIN | IRIS_INST_SUB_DRAIN_LAST;
+>>  
+>> -	if (inst->domain == DECODER && inst->sub_state & IRIS_INST_SUB_INPUT_PAUSE) {
+>> +	/* Input internal buffer reconfiguration required in case of resolution change */
+>> +	if (first_ipsc || drc_active) {
 > 
-> Introduce 64-bit magic values in reboot-mode driver to
-> accommodate dual 32-bit arguments when specified via device tree.
-> In cases, where no second argument is passed from device tree,
-> keep the upper 32-bit of magic un-changed(0) to maintain backward
-> compatibility.
+> Another question: can this now result in PIPE being sent for the ENCODER
+> instance?
+
+This state check will never be true for Encoder.
+
+Thanks,
+Dikshita
 > 
-> Update the current drivers using reboot-mode for a 64-bit magic
-> value.
+>>  		ret = iris_alloc_and_queue_input_int_bufs(inst);
+>>  		if (ret)
+>>  			return ret;
+>>
+>> ---
+>> base-commit: 163917839c0eea3bdfe3620f27f617a55fd76302
+>> change-id: 20251103-iris-seek-fix-7a25af22fa52
+>>
+>> Best regards,
+>> -- 
+>> Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>
+>>
 > 
-> Reviewed-by: Umang Chheda <umang.chheda@oss.qualcomm.com>
-> Reviewed-by: Nirmesh Kumar Singh <nirmesh.singh@oss.qualcomm.com>
-> Signed-off-by: Shivendra Pratap <shivendra.pratap@oss.qualcomm.com>
-> ---
->  drivers/power/reset/nvmem-reboot-mode.c  | 13 +++++++++----
->  drivers/power/reset/qcom-pon.c           | 11 ++++++++---
->  drivers/power/reset/reboot-mode.c        | 19 +++++++++++++------
->  drivers/power/reset/syscon-reboot-mode.c | 11 ++++++++---
->  include/linux/reboot-mode.h              |  3 ++-
->  5 files changed, 40 insertions(+), 17 deletions(-)
-> 
-> diff --git a/drivers/power/reset/nvmem-reboot-mode.c b/drivers/power/reset/nvmem-reboot-mode.c
-> index 41530b70cfc48c2a83fbbd96f523d5816960a0d1..5d73dde585b1fd438b1847f884feb37cd9e4dd5c 100644
-> --- a/drivers/power/reset/nvmem-reboot-mode.c
-> +++ b/drivers/power/reset/nvmem-reboot-mode.c
-> @@ -16,15 +16,20 @@ struct nvmem_reboot_mode {
->  	struct nvmem_cell *cell;
->  };
->  
-> -static int nvmem_reboot_mode_write(struct reboot_mode_driver *reboot,
-> -				    unsigned int magic)
-> +static int nvmem_reboot_mode_write(struct reboot_mode_driver *reboot, u64 magic)
->  {
-> -	int ret;
->  	struct nvmem_reboot_mode *nvmem_rbm;
-> +	u32 magic_32;
-> +	int ret;
-> +
-> +	if (magic > U32_MAX)
-> +		return -EINVAL;
-
-
-I believe, we need a comment in all the client driver.. 
-
-> +
-> +	magic_32 = magic;
->  
->  	nvmem_rbm = container_of(reboot, struct nvmem_reboot_mode, reboot);
->  
-> -	ret = nvmem_cell_write(nvmem_rbm->cell, &magic, sizeof(magic));
-> +	ret = nvmem_cell_write(nvmem_rbm->cell, &magic_32, sizeof(magic_32));
->  	if (ret < 0)
->  		dev_err(reboot->dev, "update reboot mode bits failed\n");
->  
-> diff --git a/drivers/power/reset/qcom-pon.c b/drivers/power/reset/qcom-pon.c
-> index 7e108982a582e8243c5c806bd4a793646b87189f..d0ed9431a02313a7bbaa93743c16fa1ae713ddfe 100644
-> --- a/drivers/power/reset/qcom-pon.c
-> +++ b/drivers/power/reset/qcom-pon.c
-> @@ -27,17 +27,22 @@ struct qcom_pon {
->  	long reason_shift;
->  };
->  
-> -static int qcom_pon_reboot_mode_write(struct reboot_mode_driver *reboot,
-> -				    unsigned int magic)
-> +static int qcom_pon_reboot_mode_write(struct reboot_mode_driver *reboot, u64 magic)
->  {
->  	struct qcom_pon *pon = container_of
->  			(reboot, struct qcom_pon, reboot_mode);
-> +	u32 magic_32;
->  	int ret;
-> 
-
-Since we are doing this change in reboot framework, client driver should know about
-it too about this new check because of framework.
-
-> +	if (magic > U32_MAX || (magic << pon->reason_shift) > U32_MAX)
-
-
-is this (magic << pon->reason_shift) > U32_MAX really needed ..?
-
-> +		return -EINVAL;
-> +
-> +	magic_32 = magic << pon->reason_shift;
-> +
->  	ret = regmap_update_bits(pon->regmap,
->  				 pon->baseaddr + PON_SOFT_RB_SPARE,
->  				 GENMASK(7, pon->reason_shift),
-> -				 magic << pon->reason_shift);
-> +				 magic_32);
->  	if (ret < 0)
->  		dev_err(pon->dev, "update reboot mode bits failed\n");
->  
-> diff --git a/drivers/power/reset/reboot-mode.c b/drivers/power/reset/reboot-mode.c
-> index eff60d6e04df2cb84ba59d38512654336f272f8a..873ac45cd7659b214b7c21958f580ca381e0a63d 100644
-> --- a/drivers/power/reset/reboot-mode.c
-> +++ b/drivers/power/reset/reboot-mode.c
-> @@ -19,12 +19,11 @@
->  
->  struct mode_info {
->  	const char *mode;
-> -	u32 magic;
-> +	u64 magic;
->  	struct list_head list;
->  };
->  
-> -static unsigned int get_reboot_mode_magic(struct reboot_mode_driver *reboot,
-> -					  const char *cmd)
-> +static u64 get_reboot_mode_magic(struct reboot_mode_driver *reboot, const char *cmd)
->  {
->  	const char *normal = "normal";
->  	struct mode_info *info;
-> @@ -56,7 +55,7 @@ static int reboot_mode_notify(struct notifier_block *this,
->  			      unsigned long mode, void *cmd)
->  {
->  	struct reboot_mode_driver *reboot;
-> -	unsigned int magic;
-> +	u64 magic;
->  
->  	reboot = container_of(this, struct reboot_mode_driver, reboot_notifier);
->  	magic = get_reboot_mode_magic(reboot, cmd);
-> @@ -80,6 +79,8 @@ int reboot_mode_register(struct reboot_mode_driver *reboot, struct fwnode_handle
->  	struct device_node *np;
->  	struct property *prop;
->  	size_t len = strlen(PREFIX);
-> +	u32 magic_arg1;
-> +	u32 magic_arg2;
->  	int ret;
->  
->  	if (!fwnode)
-> @@ -101,12 +102,18 @@ int reboot_mode_register(struct reboot_mode_driver *reboot, struct fwnode_handle
->  			goto error;
->  		}
->  
-> -		if (of_property_read_u32(np, prop->name, &info->magic)) {
-> -			pr_err("reboot mode %s without magic number\n", info->mode);
-> +		if (of_property_read_u32(np, prop->name, &magic_arg1)) {
-> +			pr_err("reboot mode without magic number\n");
->  			kfree(info);
->  			continue;
->  		}
->  
-> +		if (of_property_read_u32_index(np, prop->name, 1, &magic_arg2))
-> +			magic_arg2 = 0;
-> +
-> +		info->magic = magic_arg2;
-> +		info->magic = (info->magic << 32) | magic_arg1;
-> +
->  		info->mode = kstrdup_const(prop->name + len, GFP_KERNEL);
->  		if (!info->mode) {
->  			ret =  -ENOMEM;
-> diff --git a/drivers/power/reset/syscon-reboot-mode.c b/drivers/power/reset/syscon-reboot-mode.c
-> index e0772c9f70f7a19cd8ec8a0b7fdbbaa7ba44afd0..3cbd000c512239b12ec51987e900d260540a9dea 100644
-> --- a/drivers/power/reset/syscon-reboot-mode.c
-> +++ b/drivers/power/reset/syscon-reboot-mode.c
-> @@ -20,16 +20,21 @@ struct syscon_reboot_mode {
->  	u32 mask;
->  };
->  
-> -static int syscon_reboot_mode_write(struct reboot_mode_driver *reboot,
-> -				    unsigned int magic)
-> +static int syscon_reboot_mode_write(struct reboot_mode_driver *reboot, u64 magic)
->  {
->  	struct syscon_reboot_mode *syscon_rbm;
-> +	u32 magic_32;
->  	int ret;
->
-
-same here
-
-> +	if (magic > U32_MAX)
-> +		return -EINVAL;
-> +
-> +	magic_32 = magic;
-> +
->  	syscon_rbm = container_of(reboot, struct syscon_reboot_mode, reboot);
->  
->  	ret = regmap_update_bits(syscon_rbm->map, syscon_rbm->offset,
-> -				 syscon_rbm->mask, magic);
-> +				 syscon_rbm->mask, magic_32);
->  	if (ret < 0)
->  		dev_err(reboot->dev, "update reboot mode bits failed\n");
->  
-> diff --git a/include/linux/reboot-mode.h b/include/linux/reboot-mode.h
-> index 22f707ade4ba93592823ea8718d467dbfc5ffd7c..e0d3e8a54050a76f26846f456120b4c7e371d284 100644
-> --- a/include/linux/reboot-mode.h
-> +++ b/include/linux/reboot-mode.h
-> @@ -3,11 +3,12 @@
->  #define __REBOOT_MODE_H__
->  
->  #include <linux/fwnode.h>
-> +#include <linux/types.h>
->  
->  struct reboot_mode_driver {
->  	struct device *dev;
->  	struct list_head head;
-> -	int (*write)(struct reboot_mode_driver *reboot, unsigned int magic);
-> +	int (*write)(struct reboot_mode_driver *reboot, u64 magic);
->  	struct notifier_block reboot_notifier;
->  };
->  
-> 
-> -- 
-> 2.34.1
-> 
-
--- 
--Mukesh Ojha
 
