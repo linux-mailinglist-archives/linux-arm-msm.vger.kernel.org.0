@@ -1,119 +1,247 @@
-Return-Path: <linux-arm-msm+bounces-81106-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-81107-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [142.0.200.124])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1CB79C489C1
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Nov 2025 19:39:40 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id E9909C48A21
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Nov 2025 19:47:47 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 2D7F54E2065
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Nov 2025 18:36:32 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 7F597188B5DE
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Nov 2025 18:48:12 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 282722E62D9;
-	Mon, 10 Nov 2025 18:36:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9039B32ABC5;
+	Mon, 10 Nov 2025 18:47:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="qHjgQXbi"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="LGoJh2Bf"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.21])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9A17242925;
-	Mon, 10 Nov 2025 18:36:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66A8B321445;
+	Mon, 10 Nov 2025 18:47:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.21
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762799788; cv=none; b=VGyhPOKqXewDbljNCDIKAIuCuzfVYF+ZBMMqualfwykAH2798XVQT8oung++V2efaCtUQL9rLs6OYusOVtMKQ3EqN3tQYM5+WAZr+Pv82Jkrkkye0ZSy3GPRX94v0DF2yCCeMUqqb+EiKlgVTahOcgtRDWEB7LyhTwTXvbJMcqg=
+	t=1762800461; cv=none; b=lYCRzW+zeLP/NPkDfHQprL/qzGw6aJfHb3DTU7Wp7zqXzPALRqOn2YOvdAytnJ6G6NmnBQConTuZT3WIbWAsgI5OigvQcvTqv27YzfwQos9nOej3mxO4/yUeTE4vCsP5+w1HELD3IOlzwsLn17hz6QqLoMww2hCHKRUwo93Ll+8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762799788; c=relaxed/simple;
-	bh=X2UMR+ek8t4dC9FVAihJ8te21o4CcIV3uaXVHjtVgcI=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=aChs30n3E2AhK+AAntc/VWrGXRy2Bgs8f1eKOfqlHUH/hifohQ47C8Jp8rYE+7XPfFDNDyOY0lIjPAU9VSTfDwYSZnFD9Y0e3q1qYlAJsQKPfvyrMOaw9iS9SHOjlEdDc5yoqyQdZZUFNLqS0Me4vk6PSx2k/yk69RSEduBSI+4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=qHjgQXbi; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6263C116B1;
-	Mon, 10 Nov 2025 18:36:25 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1762799787;
-	bh=X2UMR+ek8t4dC9FVAihJ8te21o4CcIV3uaXVHjtVgcI=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=qHjgQXbiAMJaLpbNPCzTNjHjQvoLTAlkmWF++9regAa9FjAr6Zu6vqf7TY/j0EJTl
-	 iGiOQpzp0AnQMKNXY6qj+2KPgHeiceemXV8Up9jDQe3GfrfYsaKWN7Og/6TUQKFFrR
-	 C7JuU/vC5nfFRY7jnEH202SPLeFN0sbaCwwbC8F5O8VdLzL5g1lRhOsf3hu2IBsoNw
-	 ZkQQKXckpe7gyO/9uUQlZm9s1pZ34252/byXsxLdczV5Ez1OCWBgCDiZQSROTnPTJy
-	 fooEUE8E7vlmmo4H/j+LtSMMPVe6N0WoC4iyEN7g8v6OlCm26TbVtzCmU359R2ixV/
-	 pwCqNZMVW0Akw==
-Date: Mon, 10 Nov 2025 19:36:21 +0100
-From: Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= <ukleinek@kernel.org>
-To: George Moussalem <george.moussalem@outlook.com>
-Cc: Bjorn Andersson <andersson@kernel.org>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Baruch Siach <baruch@tkos.co.il>, Konrad Dybcio <konradybcio@kernel.org>, 
-	linux-arm-msm@vger.kernel.org, linux-pwm@vger.kernel.org, devicetree@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, Devi Priya <quic_devipriy@quicinc.com>, 
-	Baruch Siach <baruch.siach@siklu.com>, Krzysztof Kozlowski <krzk@kernel.org>
-Subject: Re: [PATCH v18 1/6] dt-bindings: pwm: add IPQ6018 binding
-Message-ID: <tqbdvt2yj2e7ycxiu7nlvwgeh4cf7em6n7gia7cd4f7lsqjdeg@ksyfpy63laop>
-References: <20251029-ipq-pwm-v18-0-edbef8efbb8e@outlook.com>
- <20251029-ipq-pwm-v18-1-edbef8efbb8e@outlook.com>
- <gkvbziqeae53bunqd556r4swaye4s4lcnwthryouynwfwqrnsi@6o4cjgxiwxco>
- <lkbwgakmqknqptsjrb7hvxv3bxi3fo62vml7tmf4avo7nr7cue@dwsovmchu2pp>
- <DS7PR19MB88832537DA9998530BAAC9C39DCEA@DS7PR19MB8883.namprd19.prod.outlook.com>
+	s=arc-20240116; t=1762800461; c=relaxed/simple;
+	bh=wAsccoU8w3B4eRMZuq2gxUaDz+Dt38AFte0j5k5tPOM=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=f8b3W5vuv4s+XrWqI8Pq0RA3TaRw/MEVpgYTAM1ahjT1QyE7YmmDTJTBLniQowlxO8/sMtpIWDtIkVUfm9pabR0MK5QKdPljqSm3yNWLGVd55TvuBd9t0f85I+EzBcQz5VReCQ7quExOZuOi8ZKznIeSpKmiZMJ8ZxQ0GURhXF0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=pass smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=LGoJh2Bf; arc=none smtp.client-ip=198.175.65.21
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.intel.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1762800459; x=1794336459;
+  h=from:to:cc:subject:date:message-id:mime-version:
+   content-transfer-encoding;
+  bh=wAsccoU8w3B4eRMZuq2gxUaDz+Dt38AFte0j5k5tPOM=;
+  b=LGoJh2BfuuEOTUk0FiynunvbwgLCHK795YE0dQ/MitEsCtJpwtpHTNiH
+   Nj6DYMl0zfgqyZKeLkaIY24F4IrEO/yRszpr2pGlrgkllCR9uwnm+Ad6P
+   t82nYcC5sYBsM3u38jMXlH3omlApFSwmhr+bGxDW3c0GIsGsznSIq1Vl/
+   prU9QmGB93oR52h+IN8sUUIdWFSOtsVDl1/upJtDsCuargTd1crVycmb7
+   s+FgSrUKSzRx6B9/FNN0VMBgC2vv5PHlNXMAIzZWbsk4J9qBNsuspoSjD
+   eJsTYEWjytAZvwraGcA8LHnyUUyOAE+gQXStxJ4820FW5AMOL1xxCPDSO
+   A==;
+X-CSE-ConnectionGUID: 8l0vfIDUQsig8WVTeYr+tA==
+X-CSE-MsgGUID: w/1pe4BtTF24tYVmPynttA==
+X-IronPort-AV: E=McAfee;i="6800,10657,11531"; a="64769602"
+X-IronPort-AV: E=Sophos;i="6.17,312,1747724400"; 
+   d="scan'208";a="64769602"
+Received: from fmviesa004.fm.intel.com ([10.60.135.144])
+  by orvoesa113.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 10 Nov 2025 10:47:38 -0800
+X-CSE-ConnectionGUID: i9YCGhVJRUGQcVlTpVIfpg==
+X-CSE-MsgGUID: Z0/CCH/BSBOYpkaQrxg0zg==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.19,294,1754982000"; 
+   d="scan'208";a="193749558"
+Received: from black.igk.intel.com ([10.91.253.5])
+  by fmviesa004.fm.intel.com with ESMTP; 10 Nov 2025 10:47:29 -0800
+Received: by black.igk.intel.com (Postfix, from userid 1003)
+	id E8E2195; Mon, 10 Nov 2025 19:47:28 +0100 (CET)
+From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+To: Corey Minyard <corey@minyard.net>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	"Dr. David Alan Gilbert" <linux@treblig.org>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Rob Clark <robin.clark@oss.qualcomm.com>,
+	Matthew Brost <matthew.brost@intel.com>,
+	Hans Verkuil <hverkuil@kernel.org>,
+	Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>,
+	Ulf Hansson <ulf.hansson@linaro.org>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Vitaly Lifshits <vitaly.lifshits@intel.com>,
+	Manivannan Sadhasivam <mani@kernel.org>,
+	Niklas Cassel <cassel@kernel.org>,
+	Calvin Owens <calvin@wbinvd.org>,
+	Sagi Maimon <maimon.sagi@gmail.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Karan Tilak Kumar <kartilak@cisco.com>,
+	Casey Schaufler <casey@schaufler-ca.com>,
+	Steven Rostedt <rostedt@goodmis.org>,
+	Petr Mladek <pmladek@suse.com>,
+	Max Kellermann <max.kellermann@ionos.com>,
+	Takashi Iwai <tiwai@suse.de>,
+	linux-doc@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	openipmi-developer@lists.sourceforge.net,
+	linux-media@vger.kernel.org,
+	dri-devel@lists.freedesktop.org,
+	linaro-mm-sig@lists.linaro.org,
+	amd-gfx@lists.freedesktop.org,
+	linux-arm-msm@vger.kernel.org,
+	freedreno@lists.freedesktop.org,
+	intel-xe@lists.freedesktop.org,
+	linux-mmc@vger.kernel.org,
+	netdev@vger.kernel.org,
+	intel-wired-lan@lists.osuosl.org,
+	linux-pci@vger.kernel.org,
+	linux-s390@vger.kernel.org,
+	linux-scsi@vger.kernel.org,
+	linux-staging@lists.linux.dev,
+	ceph-devel@vger.kernel.org,
+	linux-trace-kernel@vger.kernel.org,
+	linux-sound@vger.kernel.org
+Cc: Rasmus Villemoes <linux@rasmusvillemoes.dk>,
+	Sergey Senozhatsky <senozhatsky@chromium.org>,
+	Jonathan Corbet <corbet@lwn.net>,
+	Sumit Semwal <sumit.semwal@linaro.org>,
+	Gustavo Padovan <gustavo@padovan.org>,
+	David Airlie <airlied@gmail.com>,
+	Simona Vetter <simona@ffwll.ch>,
+	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+	Maxime Ripard <mripard@kernel.org>,
+	Dmitry Baryshkov <lumag@kernel.org>,
+	Abhinav Kumar <abhinav.kumar@linux.dev>,
+	Jessica Zhang <jesszhan0024@gmail.com>,
+	Sean Paul <sean@poorly.run>,
+	Marijn Suijten <marijn.suijten@somainline.org>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	Lucas De Marchi <lucas.demarchi@intel.com>,
+	=?UTF-8?q?Thomas=20Hellstr=C3=B6m?= <thomas.hellstrom@linux.intel.com>,
+	Rodrigo Vivi <rodrigo.vivi@intel.com>,
+	Mauro Carvalho Chehab <mchehab@kernel.org>,
+	Vladimir Oltean <olteanv@gmail.com>,
+	Andrew Lunn <andrew@lunn.ch>,
+	"David S. Miller" <davem@davemloft.net>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Przemek Kitszel <przemyslaw.kitszel@intel.com>,
+	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
+	Kishon Vijay Abraham I <kishon@kernel.org>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Rodolfo Giometti <giometti@enneenne.com>,
+	Jonathan Lemon <jonathan.lemon@gmail.com>,
+	Vadim Fedorenko <vadim.fedorenko@linux.dev>,
+	Richard Cochran <richardcochran@gmail.com>,
+	Stefan Haberland <sth@linux.ibm.com>,
+	Jan Hoeppner <hoeppner@linux.ibm.com>,
+	Heiko Carstens <hca@linux.ibm.com>,
+	Vasily Gorbik <gor@linux.ibm.com>,
+	Alexander Gordeev <agordeev@linux.ibm.com>,
+	Christian Borntraeger <borntraeger@linux.ibm.com>,
+	Sven Schnelle <svens@linux.ibm.com>,
+	Satish Kharat <satishkh@cisco.com>,
+	Sesidhar Baddela <sebaddel@cisco.com>,
+	"James E.J. Bottomley" <James.Bottomley@HansenPartnership.com>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	Xiubo Li <xiubli@redhat.com>,
+	Ilya Dryomov <idryomov@gmail.com>,
+	Masami Hiramatsu <mhiramat@kernel.org>,
+	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Jaroslav Kysela <perex@perex.cz>,
+	Takashi Iwai <tiwai@suse.com>
+Subject: [PATCH v1 00/23] treewide: Introduce %ptS for struct timespec64 and convert users
+Date: Mon, 10 Nov 2025 19:40:19 +0100
+Message-ID: <20251110184727.666591-1-andriy.shevchenko@linux.intel.com>
+X-Mailer: git-send-email 2.50.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="s5dbfl4angh7vjuo"
-Content-Disposition: inline
-In-Reply-To: <DS7PR19MB88832537DA9998530BAAC9C39DCEA@DS7PR19MB8883.namprd19.prod.outlook.com>
+Content-Transfer-Encoding: 8bit
 
 
---s5dbfl4angh7vjuo
-Content-Type: text/plain; protected-headers=v1; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-Subject: Re: [PATCH v18 1/6] dt-bindings: pwm: add IPQ6018 binding
-MIME-Version: 1.0
+Here is the third part of unification time printing in the kernel.
+This time for struct timespec64. The first patch brings support
+into printf() implementation (test cases and documentation update
+included) followed by the treewide conversion of the current users.
 
-Hello George,
+The idea is to have one or a few biggest users included, the rest
+can be taken next release cycle on the subsystem basis, but I won't
+object if the respective maintainers already give their tags. Depending
+on the tags received it may go via dedicated subsystem or via PRINTK
+tree.
 
-On Mon, Nov 10, 2025 at 03:41:49PM +0400, George Moussalem wrote:
-> On 11/10/25 15:32, Uwe Kleine-K=F6nig wrote:
-> >>> +  "#pwm-cells":
-> >>> +    const: 2
-> >=20
-> > Please use 3 here.
->=20
-> The driver doesn't support polarity and I don't know whether the HW even
-> supports it. Hence, I kept it as 2 as originally submitted by qcom
-> (Devi). I don't have access to the datasheets. Would you like me to
-> resubmit a new version anyways or keep as is?
+Note, not everything was compile-tested. Kunit test has been passed, though.
 
-I want all new drivers use 3 pwm-cells for consistency even if the
-hardware doesn't support the (currently) only flag. Additionally this
-simplifies things like pwm nexus nodes (see
-e71e46a6f19c46b38983bebde8bfac1c04968fdf).
+Andy Shevchenko (23):
+  lib/vsprintf: Add specifier for printing struct timespec64
+  ALSA: seq: Switch to use %ptSp
+  ceph: Switch to use %ptSp
+  libceph: Switch to use %ptSp
+  dma-buf: Switch to use %ptSp
+  drm/amdgpu: Switch to use %ptSp
+  drm/msm: Switch to use %ptSp
+  drm/vblank: Switch to use %ptSp
+  drm/xe: Switch to use %ptSp
+  e1000e: Switch to use %ptSp
+  igb: Switch to use %ptSp
+  ipmi: Switch to use %ptSp
+  media: av7110: Switch to use %ptSp
+  media: v4l2-ioctl: Switch to use %ptSp
+  mmc: mmc_test: Switch to use %ptSp
+  net: dsa: sja1105: Switch to use %ptSp
+  PCI: epf-test: Switch to use %ptSp
+  pps: Switch to use %ptSp
+  ptp: ocp: Switch to use %ptSp
+  s390/dasd: Switch to use %ptSp
+  scsi: fnic: Switch to use %ptS
+  scsi: snic: Switch to use %ptSp
+  tracing: Switch to use %ptSp
 
-So yes, please change to 3.
+ Documentation/core-api/printk-formats.rst     | 11 ++++-
+ drivers/char/ipmi/ipmi_si_intf.c              |  3 +-
+ drivers/char/ipmi/ipmi_ssif.c                 |  6 +--
+ drivers/dma-buf/sync_debug.c                  |  2 +-
+ .../gpu/drm/amd/amdgpu/amdgpu_dev_coredump.c  |  3 +-
+ drivers/gpu/drm/drm_vblank.c                  |  6 +--
+ .../gpu/drm/msm/disp/msm_disp_snapshot_util.c |  3 +-
+ drivers/gpu/drm/msm/msm_gpu.c                 |  3 +-
+ drivers/gpu/drm/xe/xe_devcoredump.c           |  4 +-
+ drivers/media/v4l2-core/v4l2-ioctl.c          |  5 +-
+ drivers/mmc/core/mmc_test.c                   | 18 +++----
+ drivers/net/dsa/sja1105/sja1105_tas.c         |  8 ++--
+ drivers/net/ethernet/intel/e1000e/ptp.c       |  7 +--
+ drivers/net/ethernet/intel/igb/igb_ptp.c      |  7 +--
+ drivers/pci/endpoint/functions/pci-epf-test.c |  5 +-
+ drivers/pps/generators/pps_gen_parport.c      |  3 +-
+ drivers/pps/kapi.c                            |  3 +-
+ drivers/ptp/ptp_ocp.c                         | 15 +++---
+ drivers/s390/block/dasd.c                     |  3 +-
+ drivers/scsi/fnic/fnic_trace.c                | 46 ++++++++----------
+ drivers/scsi/snic/snic_debugfs.c              | 10 ++--
+ drivers/scsi/snic/snic_trc.c                  |  5 +-
+ drivers/staging/media/av7110/av7110.c         |  2 +-
+ fs/ceph/dir.c                                 |  5 +-
+ fs/ceph/inode.c                               | 47 ++++++-------------
+ fs/ceph/xattr.c                               |  6 +--
+ kernel/trace/trace_output.c                   |  6 +--
+ lib/tests/printf_kunit.c                      |  4 ++
+ lib/vsprintf.c                                | 25 ++++++++++
+ net/ceph/messenger_v2.c                       |  6 +--
+ sound/core/seq/seq_queue.c                    |  2 +-
+ sound/core/seq/seq_timer.c                    |  6 +--
+ 32 files changed, 131 insertions(+), 154 deletions(-)
 
-Best regards
-Uwe
+-- 
+2.50.1
 
---s5dbfl4angh7vjuo
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAABCgAdFiEEP4GsaTp6HlmJrf7Tj4D7WH0S/k4FAmkSMKMACgkQj4D7WH0S
-/k6MvwgAmAv345GS0OBmiRO1V+Um4ZZv+MMGog8wAp4dG4wNqRSfg+bJcDwN/11Z
-4yRhFo26C4hVPPs5JYHOx178k2EwvOtphK1flrb9r91w+24ySpvPDHhOzbOlk91M
-sVhXrVXHAUaVxZS+2lbyqXzWptistZhDfLGMso0s1M20vVYsmdMJkF7Z0N5OSzhW
-qplkJltikAmqaqYr8SPAVbH/a0mtPKProR/WPrV64gf9PFo6LwIpD9julJiJLlMB
-Ke//T2lvmH3YJwOov7UfszhXp7+TA8yKhwmxePPGcag7JIycFKsanR04XwvpB6JQ
-ADIY4Fd/OKtJZVbiAUf27scd1cMV0g==
-=XKuc
------END PGP SIGNATURE-----
-
---s5dbfl4angh7vjuo--
 
