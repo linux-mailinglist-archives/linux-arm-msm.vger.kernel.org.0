@@ -1,65 +1,65 @@
-Return-Path: <linux-arm-msm+bounces-81124-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-81128-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3BDB2C48CC1
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Nov 2025 19:57:42 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id C263CC48D43
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Nov 2025 20:00:59 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id A548318906C9
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Nov 2025 18:56:28 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 373C51886557
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Nov 2025 18:58:17 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3F291343D85;
-	Mon, 10 Nov 2025 18:48:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 09FE5346FA4;
+	Mon, 10 Nov 2025 18:48:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="SWtbDKj8"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="Xr+xfnAY"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.12])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3242733F372;
-	Mon, 10 Nov 2025 18:48:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 399CA343D76;
+	Mon, 10 Nov 2025 18:48:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.12
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762800489; cv=none; b=gVcglp2zXtb42XL/UacA5B90etn6mup15/hmD4UFxqIy4/XcfaDw5waV/aCe5oakwbsyo6gmhxUlbk8A5QsIFnO72Njke278rZ2UhRqQxXNsyJZXFk7fdAxjnSslv4f2n6n851SFYyNIMu1SLz444D8lN7FezkZG1a2Fn9zeDXY=
+	t=1762800492; cv=none; b=SB09FTRGdn5ylZBjmmFvudU1c8xS+04vBBczZLk5In93LeikQViBI3aHOgParwuldiYCSHwPrZLFRnaEgRUF234ahJObdXWt5YGK5J7qBO7ElGyDMFw5ifVBVp/0eDSXM1ra2ez38FgO1nPEQJWKwz4EnTZYiTIxxOThyE5U9/A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762800489; c=relaxed/simple;
-	bh=/jrYLjDfZzQMPUrwgBXX7noMOw5eDva5SlIg2j2SoEQ=;
+	s=arc-20240116; t=1762800492; c=relaxed/simple;
+	bh=2GLm4NVkdUuOv+K7T0bT1SYFkvMIdVSo+0VB+hLNaFU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hB9WW9tgl35mCVGkCruhGgDiaJNFabOIDmYDLs7pa1KXM3WZ0eUi17KwM5f+9rzNdxYmfuWXUBwK8fuieHrDnQfOLYlOHzQxV7Y/o5vrwvDhRiNa+Dh3cEAePwLN0LymCC9ygcfa/3izpTvXaQLC/Vz7z/g01GweZkB7ZH2WiHs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=pass smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=SWtbDKj8; arc=none smtp.client-ip=192.198.163.12
+	 MIME-Version; b=bXXacTMIbQ1lqJEN2fF+7ThLit1g35fOanYMOMCzSjB2M1dgSUTnj8ZDl2b9LXItiWVWbvJijoVAE8AIvsXX1oRKndr7uO9rGcS273UPNX4wBiTxfHVWEjL0Tn4IaOkPUDJLP0Q3E/eLBkc8llxSeFhZsPdGZO1zwMJ9QW2Mj6E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=pass smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=Xr+xfnAY; arc=none smtp.client-ip=192.198.163.12
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.intel.com
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1762800487; x=1794336487;
+  t=1762800490; x=1794336490;
   h=from:to:cc:subject:date:message-id:in-reply-to:
    references:mime-version:content-transfer-encoding;
-  bh=/jrYLjDfZzQMPUrwgBXX7noMOw5eDva5SlIg2j2SoEQ=;
-  b=SWtbDKj83fijC3v3u5aD7e+hKc1DS8itsAl3/dul0DnPAG8EoPaBnC8r
-   KfDLBM7zKjDh2mPJAgb55KmEBYMTVPUckVUawTCRBsDv37wjH7/jqyfaD
-   ziPasgfJLiPK+UIprZY05MlURgVQPh7wAo4Ijl1+3C1qpkPsc3LxG/J3v
-   KnIArLrRTDxKLVA0JWp0WmpdOTQOCVeMhyp8ccpupJOIPnd8Jaa4L06HN
-   hI1uDEpH+E0KumeRrcrPp0q4GiHfTD7XBK8mXaM+f5pfhuflWPVp+2E7c
-   tRLcn7pIEOa2a7zjaWWjuKVUXs4pnQLe1oA2XEfmItGwTHFKGs7VorZk3
-   Q==;
-X-CSE-ConnectionGUID: cTZNZpXjQSqOEUgjMltwVw==
-X-CSE-MsgGUID: 2JJENxZtTA22FI9r2SO5xA==
-X-IronPort-AV: E=McAfee;i="6800,10657,11609"; a="68714894"
+  bh=2GLm4NVkdUuOv+K7T0bT1SYFkvMIdVSo+0VB+hLNaFU=;
+  b=Xr+xfnAYCxe6MhlF0FQVyvroEoodza+3zQHhG5UOIG/Gfb8q94Epgg5B
+   wAZ45kaq0pRGU1Iu2hWVtf/WPTAfK/MVIwX4XUM7oIZWYQGgDoYdzXKfA
+   Mgq66IjrkrtCIK+gS0jzXUknnIjiskEM4t5YRCzLS+2STRJNcFPGR2bKD
+   Fckq8z534e6b3qRwXtIloMhEX/afk2NU/Nf7Jbzb+Kicxupv5XyJ0wTll
+   LZ9Vs6Z7igbRCKG8lLs6IJIcEw5AzR3DPG4wmbhcL0G2ak9QIAj/KC9j7
+   GoUofSAjQXufth9awgckdiQDFPF63HkRBMdoSldsSH/i9EQS1eQ9cYdKg
+   g==;
+X-CSE-ConnectionGUID: HTrrBqHJR1OuiBUhZjvStw==
+X-CSE-MsgGUID: gkzU4w97SOOl0WpoEoTRgA==
+X-IronPort-AV: E=McAfee;i="6800,10657,11609"; a="68714896"
 X-IronPort-AV: E=Sophos;i="6.19,294,1754982000"; 
-   d="scan'208";a="68714894"
+   d="scan'208";a="68714896"
 Received: from fmviesa008.fm.intel.com ([10.60.135.148])
   by fmvoesa106.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 10 Nov 2025 10:48:06 -0800
-X-CSE-ConnectionGUID: tQxkWAukTcCWsmo5RGoj9w==
-X-CSE-MsgGUID: 5oUCymEZTJWvji6oAMQPvQ==
+X-CSE-ConnectionGUID: T9JvXfd2RP6uhr7fMRGrgQ==
+X-CSE-MsgGUID: Pv4wkjngReqizgRny5HiIw==
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="6.19,294,1754982000"; 
-   d="scan'208";a="188985837"
+   d="scan'208";a="188985842"
 Received: from black.igk.intel.com ([10.91.253.5])
-  by fmviesa008.fm.intel.com with ESMTP; 10 Nov 2025 10:47:57 -0800
+  by fmviesa008.fm.intel.com with ESMTP; 10 Nov 2025 10:47:58 -0800
 Received: by black.igk.intel.com (Postfix, from userid 1003)
-	id 6B742A7; Mon, 10 Nov 2025 19:47:29 +0100 (CET)
+	id 71F03A8; Mon, 10 Nov 2025 19:47:29 +0100 (CET)
 From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 To: Corey Minyard <corey@minyard.net>,
 	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
@@ -157,9 +157,9 @@ Cc: Rasmus Villemoes <linux@rasmusvillemoes.dk>,
 	Andrew Morton <akpm@linux-foundation.org>,
 	Jaroslav Kysela <perex@perex.cz>,
 	Takashi Iwai <tiwai@suse.com>
-Subject: [PATCH v1 18/23] pps: Switch to use %ptSp
-Date: Mon, 10 Nov 2025 19:40:37 +0100
-Message-ID: <20251110184727.666591-19-andriy.shevchenko@linux.intel.com>
+Subject: [PATCH v1 19/23] ptp: ocp: Switch to use %ptSp
+Date: Mon, 10 Nov 2025 19:40:38 +0100
+Message-ID: <20251110184727.666591-20-andriy.shevchenko@linux.intel.com>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20251110184727.666591-1-andriy.shevchenko@linux.intel.com>
 References: <20251110184727.666591-1-andriy.shevchenko@linux.intel.com>
@@ -174,40 +174,56 @@ Content-Transfer-Encoding: 8bit
 Use %ptSp instead of open coded variants to print content of
 struct timespec64 in human readable format.
 
+While at it, fix wrong use of %ptT against struct timespec64.
+It's kinda lucky that it worked just because the first member
+there 64-bit and it's of time64_t type. Now with %ptS it may
+be used correctly.
+
 Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 ---
- drivers/pps/generators/pps_gen_parport.c | 3 +--
- drivers/pps/kapi.c                       | 3 +--
- 2 files changed, 2 insertions(+), 4 deletions(-)
+ drivers/ptp/ptp_ocp.c | 15 ++++++---------
+ 1 file changed, 6 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/pps/generators/pps_gen_parport.c b/drivers/pps/generators/pps_gen_parport.c
-index f5eeb4dd01ad..05bbf8d30ef1 100644
---- a/drivers/pps/generators/pps_gen_parport.c
-+++ b/drivers/pps/generators/pps_gen_parport.c
-@@ -80,8 +80,7 @@ static enum hrtimer_restart hrtimer_event(struct hrtimer *timer)
- 	/* check if we are late */
- 	if (expire_time.tv_sec != ts1.tv_sec || ts1.tv_nsec > lim) {
- 		local_irq_restore(flags);
--		pr_err("we are late this time %lld.%09ld\n",
--				(s64)ts1.tv_sec, ts1.tv_nsec);
-+		pr_err("we are late this time %ptSp\n", &ts1);
- 		goto done;
- 	}
+diff --git a/drivers/ptp/ptp_ocp.c b/drivers/ptp/ptp_ocp.c
+index a5c363252986..a0bb8d3045d2 100644
+--- a/drivers/ptp/ptp_ocp.c
++++ b/drivers/ptp/ptp_ocp.c
+@@ -3261,7 +3261,7 @@ signal_show(struct device *dev, struct device_attribute *attr, char *buf)
+ 			   signal->duty, signal->phase, signal->polarity);
  
-diff --git a/drivers/pps/kapi.c b/drivers/pps/kapi.c
-index e9389876229e..6985c34de2ce 100644
---- a/drivers/pps/kapi.c
-+++ b/drivers/pps/kapi.c
-@@ -163,8 +163,7 @@ void pps_event(struct pps_device *pps, struct pps_event_time *ts, int event,
- 	/* check event type */
- 	BUG_ON((event & (PPS_CAPTUREASSERT | PPS_CAPTURECLEAR)) == 0);
+ 	ts = ktime_to_timespec64(signal->start);
+-	count += sysfs_emit_at(buf, count, " %ptT TAI\n", &ts);
++	count += sysfs_emit_at(buf, count, " %ptS TAI\n", &ts);
  
--	dev_dbg(&pps->dev, "PPS event at %lld.%09ld\n",
--			(s64)ts->ts_real.tv_sec, ts->ts_real.tv_nsec);
-+	dev_dbg(&pps->dev, "PPS event at %ptSp\n", &ts->ts_real);
+ 	return count;
+ }
+@@ -4287,11 +4287,9 @@ ptp_ocp_summary_show(struct seq_file *s, void *data)
+ 		ns += (s64)bp->utc_tai_offset * NSEC_PER_SEC;
+ 		sys_ts = ns_to_timespec64(ns);
  
- 	timespec_to_pps_ktime(&ts_real, ts->ts_real);
+-		seq_printf(s, "%7s: %lld.%ld == %ptT TAI\n", "PHC",
+-			   ts.tv_sec, ts.tv_nsec, &ts);
+-		seq_printf(s, "%7s: %lld.%ld == %ptT UTC offset %d\n", "SYS",
+-			   sys_ts.tv_sec, sys_ts.tv_nsec, &sys_ts,
+-			   bp->utc_tai_offset);
++		seq_printf(s, "%7s: %ptSp == %ptS TAI\n", "PHC", &ts, &ts);
++		seq_printf(s, "%7s: %ptSp == %ptS UTC offset %d\n", "SYS",
++			   &sys_ts, &sys_ts, bp->utc_tai_offset);
+ 		seq_printf(s, "%7s: PHC:SYS offset: %lld  window: %lld\n", "",
+ 			   timespec64_to_ns(&ts) - ns,
+ 			   post_ns - pre_ns);
+@@ -4499,9 +4497,8 @@ ptp_ocp_phc_info(struct ptp_ocp *bp)
+ 		 ptp_clock_index(bp->ptp));
  
+ 	if (!ptp_ocp_gettimex(&bp->ptp_info, &ts, NULL))
+-		dev_info(&bp->pdev->dev, "Time: %lld.%ld, %s\n",
+-			 ts.tv_sec, ts.tv_nsec,
+-			 bp->sync ? "in-sync" : "UNSYNCED");
++		dev_info(&bp->pdev->dev, "Time: %ptSp, %s\n",
++			 &ts, bp->sync ? "in-sync" : "UNSYNCED");
+ }
+ 
+ static void
 -- 
 2.50.1
 
