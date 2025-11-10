@@ -1,73 +1,94 @@
-Return-Path: <linux-arm-msm+bounces-81052-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-81053-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 38FA6C47894
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Nov 2025 16:29:11 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 64A6DC47902
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Nov 2025 16:34:20 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 3559618812BB
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Nov 2025 15:26:52 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 1CAB41887D64
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Nov 2025 15:34:44 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8C288244694;
-	Mon, 10 Nov 2025 15:26:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2058B258EF6;
+	Mon, 10 Nov 2025 15:33:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="NEi3pw/N"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="UbOW3SK3"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.10])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 591AC2264BA;
-	Mon, 10 Nov 2025 15:26:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B7911D416C;
+	Mon, 10 Nov 2025 15:33:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.10
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762788382; cv=none; b=TN4vD6Qo83tQ5snpsPxEA/ITtRFGrMgQswCDoZ0z1Uvn40MNcHekEgv1fwBl/OPI3vaVhdEEPZ9ETQB+rcF1yy7Xf0fWvMlXfIXAegDQ+FpCXIacXkd0IhcUyXwD2UjGoE2o5126FbN/WT3Zn16E7BtMs6Pw7qJiaPvVwWR6E0M=
+	t=1762788828; cv=none; b=HbIUavC2w4Yk1yNMo8ec8FLp/szJWHP30UjfDy9XCik6n5ztR+ubC8vW9mBTxFbDVCytFpcRZ2hN1SOC/Ps5Z0tLBXB0sv3Tjp8ocep08D+dKQF61NhQVKQrb69AtTu56MKWMbMELtKa/7clu5VZtVyMtwc8rOOXbDIO0qsgtIU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762788382; c=relaxed/simple;
-	bh=oUgWF0RUu+mB1/5X7J8Lib1+YnLUj4YxOYKGEf0wWH0=;
+	s=arc-20240116; t=1762788828; c=relaxed/simple;
+	bh=+rymyB2H1GCpplFZN98ExnpzW0O9nCkV8E0c0HQjmWE=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=UxGyNLLvNKFc6l6+BTlb3Q45AhFYOIgOG3YIRfIHYQtC1X1ycNtaQ8LMEB4OOTfOzAhKFtP9RXuL1vZSAn8XfSnYTd0dSQzPY/bE0PmvKSkI6UFzXYWxHm6TBjIhCDYcTtpgZ4ozy9vtwaZIe3zrJpsS7/9g2Ml4H2aIwSv6IB8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=NEi3pw/N; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86160C4CEFB;
-	Mon, 10 Nov 2025 15:26:19 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1762788381;
-	bh=oUgWF0RUu+mB1/5X7J8Lib1+YnLUj4YxOYKGEf0wWH0=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=NEi3pw/N8drkjbFObP4vqAMkSx9U17WFA1bbYOZYToSNXxmPQLzT6NXLMV/1G23X6
-	 QHehiRrMOiARo9hAnf9MGLSsJbV15Xs0N4T+ZACfLp/Vc9pUgUHiEGsG9krkL8k0q0
-	 5friH9S5o9xUQNXyiBEiTHPr6fytp1DjQld1K0wumVqmhFjOXTVxTqEcCj4ZMztsK5
-	 r8Xc+b8mVufve+txLpSjZFDpywY64xjKXsTG3g/+UmRWtFIGzHF0Iohlp5bwhAPq6J
-	 0jtFJFBVDOY2VkHF5hPZnqBsCJY2rcjXjgHQR8sfLT53f76cI7+MdGOxW0DPojdKMH
-	 39wTD61gcg0Kg==
-Date: Mon, 10 Nov 2025 09:30:26 -0600
-From: Bjorn Andersson <andersson@kernel.org>
-To: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>
-Cc: Shivendra Pratap <shivendra.pratap@oss.qualcomm.com>, 
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>, Sebastian Reichel <sre@kernel.org>, 
-	Rob Herring <robh@kernel.org>, Sudeep Holla <sudeep.holla@arm.com>, 
-	Souvik Chakravarty <Souvik.Chakravarty@arm.com>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
-	Conor Dooley <conor+dt@kernel.org>, Andy Yan <andy.yan@rock-chips.com>, 
-	Mark Rutland <mark.rutland@arm.com>, Lorenzo Pieralisi <lpieralisi@kernel.org>, 
-	Arnd Bergmann <arnd@arndb.de>, Konrad Dybcio <konradybcio@kernel.org>, 
-	cros-qcom-dts-watchers@chromium.org, Vinod Koul <vkoul@kernel.org>, 
-	Catalin Marinas <catalin.marinas@arm.com>, Will Deacon <will@kernel.org>, 
-	Florian Fainelli <florian.fainelli@broadcom.com>, Moritz Fischer <moritz.fischer@ettus.com>, 
-	John Stultz <john.stultz@linaro.org>, Matthias Brugger <matthias.bgg@gmail.com>, 
-	Krzysztof Kozlowski <krzk@kernel.org>, Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>, 
-	Stephen Boyd <swboyd@chromium.org>, Andre Draszik <andre.draszik@linaro.org>, 
-	Kathiravan Thirumoorthy <kathiravan.thirumoorthy@oss.qualcomm.com>, linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	devicetree@vger.kernel.org, linux-arm-kernel@lists.infradead.org, 
-	linux-arm-msm@vger.kernel.org, Elliot Berman <quic_eberman@quicinc.com>, 
-	Xin Liu <xin.liu@oss.qualcomm.com>, Srinivas Kandagatla <srini@kernel.org>, 
-	Elliot Berman <elliot.berman@oss.qualcomm.com>, Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Subject: Re: [PATCH v17 09/12] arm64: dts: qcom: qcs6490-rb3gen2: Add PSCI
- SYSTEM_RESET2 types
-Message-ID: <btvknf3tcqhgxzf7ckyvfwix6hxle2bs4whyayan5haaejo3sm@gnbszdys32lm>
-References: <20251109-arm-psci-system_reset2-vendor-reboots-v17-0-46e085bca4cc@oss.qualcomm.com>
- <20251109-arm-psci-system_reset2-vendor-reboots-v17-9-46e085bca4cc@oss.qualcomm.com>
- <20251110122824.5je5jfoanivl6xrh@hu-mojha-hyd.qualcomm.com>
+	 Content-Type:Content-Disposition:In-Reply-To; b=uuJcQbQ1lHRtr0l1FxPEniXCdPrvXmugWm3KQAfZFoJRcmkRKGeV8YgPwN3MJJuCoCZbOY/LyA5Co5bDzQkQWgiVPWIZrNlTlecQ9/cDhrxmnDgJ2VK6rHc3yzcc68RMijDs65Arjzf1vFA+icxzaNcyJeQnr+co6YdcML7nG2o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=pass smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=UbOW3SK3; arc=none smtp.client-ip=198.175.65.10
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.intel.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1762788826; x=1794324826;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=+rymyB2H1GCpplFZN98ExnpzW0O9nCkV8E0c0HQjmWE=;
+  b=UbOW3SK3fZRqEhqvS0xR8aj0rQFNGsXYJNhWFvrHN37ppp9EXmAfzI5m
+   y6VMyXcKEDObbAMQ/56auh9nQk4pY5CMGFBIv/YfYSjM/nDaewc0fBlgR
+   tAUtrJMGpvQKO2LisIHdUAbi3KamcWHYe4fnReASai1QMfzNsf2ekMlOV
+   J8LvC/at8btzoS2YD29iPDrazsT1QlJl+qp/VcmaIsSdeQ6E4rZlg/Q/L
+   r0u/tkfeuPfZ1OkrRdtrouOCJevfLqWMldpldtDOUbYofNh8HOU03Flxr
+   vcpy1kch5KWbJMmd+Oj9LpwEliX4/V2Hf7q6lgIaxNuq8GyqZYvPK9xPT
+   A==;
+X-CSE-ConnectionGUID: cADGsg1wSXqZSRXQBd8VmA==
+X-CSE-MsgGUID: +Yg0UMphRsmL9Pdq9yuVlA==
+X-IronPort-AV: E=McAfee;i="6800,10657,11609"; a="82237648"
+X-IronPort-AV: E=Sophos;i="6.19,294,1754982000"; 
+   d="scan'208";a="82237648"
+Received: from fmviesa003.fm.intel.com ([10.60.135.143])
+  by orvoesa102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 10 Nov 2025 07:33:38 -0800
+X-CSE-ConnectionGUID: IwSUOry/SDKpLQ2tpxmPnA==
+X-CSE-MsgGUID: fQundh82RRibb0QT8W8jhQ==
+X-ExtLoop1: 1
+Received: from kniemiec-mobl1.ger.corp.intel.com (HELO ashevche-desk.local) ([10.245.245.235])
+  by fmviesa003-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 10 Nov 2025 07:33:33 -0800
+Received: from andy by ashevche-desk.local with local (Exim 4.98.2)
+	(envelope-from <andriy.shevchenko@linux.intel.com>)
+	id 1vITtZ-00000007V6M-2rxB;
+	Mon, 10 Nov 2025 17:33:29 +0200
+Date: Mon, 10 Nov 2025 17:33:29 +0200
+From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+To: Bjorn Andersson <andersson@kernel.org>
+Cc: Stefan Wahren <wahrenst@gmx.net>, Vinod Koul <vkoul@kernel.org>,
+	Thomas Andreatta <thomasandreatta2000@gmail.com>,
+	Caleb Sander Mateos <csander@purestorage.com>,
+	dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org,
+	linux-rpi-kernel@lists.infradead.org,
+	linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org,
+	Olivier Dautricourt <olivierdautricourt@gmail.com>,
+	Stefan Roese <sr@denx.de>,
+	Florian Fainelli <florian.fainelli@broadcom.com>,
+	Broadcom internal kernel review list <bcm-kernel-feedback-list@broadcom.com>,
+	Ray Jui <rjui@broadcom.com>, Scott Branden <sbranden@broadcom.com>,
+	Lars-Peter Clausen <lars@metafoo.de>,
+	Eugeniy Paltsev <Eugeniy.Paltsev@synopsys.com>,
+	Daniel Mack <daniel@zonque.org>,
+	Haojian Zhuang <haojian.zhuang@gmail.com>,
+	Robert Jarzmik <robert.jarzmik@free.fr>,
+	Lizhi Hou <lizhi.hou@amd.com>, Brian Xu <brian.xu@amd.com>,
+	Raj Kumar Rampelli <raj.kumar.rampelli@amd.com>,
+	Michal Simek <michal.simek@amd.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: Re: [PATCH v2 01/13] scatterlist: introduce sg_nents_for_dma() helper
+Message-ID: <aRIFyR0maAfZF7MN@smile.fi.intel.com>
+References: <20251110103805.3562136-1-andriy.shevchenko@linux.intel.com>
+ <20251110103805.3562136-2-andriy.shevchenko@linux.intel.com>
+ <waid6zxayuxacb6sntlxwgyjia3w25sfz2tzxxzb4tkqgmx63o@ndpztxeh6o32>
+ <jea2owcqtjeomlbwkfopt3ujsnakn4p3xeyqhh7s4kowf7k7dr@deyg5pky5udo>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -76,66 +97,51 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20251110122824.5je5jfoanivl6xrh@hu-mojha-hyd.qualcomm.com>
+In-Reply-To: <jea2owcqtjeomlbwkfopt3ujsnakn4p3xeyqhh7s4kowf7k7dr@deyg5pky5udo>
+Organization: Intel Finland Oy - BIC 0357606-4 - c/o Alberga Business Park, 6
+ krs, Bertel Jungin Aukio 5, 02600 Espoo
 
-On Mon, Nov 10, 2025 at 05:58:24PM +0530, Mukesh Ojha wrote:
-> On Sun, Nov 09, 2025 at 08:07:22PM +0530, Shivendra Pratap wrote:
-> > From: Elliot Berman <elliot.berman@oss.qualcomm.com>
-> > 
-> > Add support for SYSTEM_RESET2 vendor-specific resets in
-> > qcs6490-rb3gen2 as reboot-modes.  Describe the resets:
-> > "bootloader" will cause device to reboot and stop in the
-> > bootloader's fastboot mode. "edl" will cause device to reboot
-> > into "emergency download mode", which permits loading images via
-> > the Firehose protocol.
-> > 
-> > Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-> > Signed-off-by: Elliot Berman <elliot.berman@oss.qualcomm.com>
-> > Signed-off-by: Shivendra Pratap <shivendra.pratap@oss.qualcomm.com>
-> > ---
-> >  arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts | 7 +++++++
-> >  1 file changed, 7 insertions(+)
-> > 
-> > diff --git a/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts b/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts
-> > index 721a26d49ccaeb1429e2cc1c3a5c8d9517da3be6..cebdedd5d614b9efb6dfbee91dd67f3c3e322a38 100644
-> > --- a/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts
-> > +++ b/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts
-> > @@ -935,6 +935,13 @@ &pon_resin {
-> >  	status = "okay";
-> >  };
-> >  
-> > +&psci {
-> > +	reboot-mode {
-> > +		mode-bootloader = <0x10001 0x2>;
-> > +		mode-edl = <0 0x1>;
-> > +	};
-> > +};
-> > +
+On Mon, Nov 10, 2025 at 09:21:18AM -0600, Bjorn Andersson wrote:
+> On Mon, Nov 10, 2025 at 09:05:26AM -0600, Bjorn Andersson wrote:
+> > On Mon, Nov 10, 2025 at 11:23:28AM +0100, Andy Shevchenko wrote:
+
+...
+
+> > >  int sg_nents(struct scatterlist *sg);
+> > >  int sg_nents_for_len(struct scatterlist *sg, u64 len);
+> > > +int sg_nents_for_dma(struct scatterlist *sgl, unsigned int sglen, size_t len);
+
+
+^^^
+
+> > > +int sg_nents_for_dma(struct scatterlist *sgl, unsigned int sglen, size_t len)
 > 
-> Make sense for this as it leverages sc7280 and adding it there would not
-> have made sense.
-> 
+> All but two clients store the value in an unsigned int. Changing the
+> return type to unsigned int also signals that the function is just
+> returning a count (no errors).
 
-Why wouldn't it make sense?
+The type is chosen for the consistency with the existing APIs.
+So, I prefer consistency in this case, if we need to change type, we need to do
+that for all above APIs I believe. And this is out of the scope here.
 
-> Acked-by: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>
-> 
+Personally I was also puzzled of the choice as *nents members are all unsigned
+int in the scatterlist.h.
 
-Please read submitting-patches.rst about Acked-by, and use Reviewed-by
-going forward.
+...
 
-Regards,
-Bjorn
+> > We need an EXPORT_SYMBOL() here.
 
-> >  &qup_uart7_cts {
-> >  	/*
-> >  	 * Configure a bias-bus-hold on CTS to lower power
+Good catch! I'll add it in next version.
+
+> > With that, this looks good to me.
 > > 
-> > -- 
-> > 2.34.1
-> > 
-> 
-> -- 
-> -Mukesh Ojha
-> 
+> > Reviewed-by: Bjorn Andersson <andersson@kernel.org>
+
+Thanks!
+
+-- 
+With Best Regards,
+Andy Shevchenko
+
+
 
