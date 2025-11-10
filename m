@@ -1,147 +1,114 @@
-Return-Path: <linux-arm-msm+bounces-81053-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-81055-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 64A6DC47902
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Nov 2025 16:34:20 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 93AB9C47B69
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Nov 2025 16:56:36 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 1CAB41887D64
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Nov 2025 15:34:44 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 621EC3A6873
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Nov 2025 15:39:08 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2058B258EF6;
-	Mon, 10 Nov 2025 15:33:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D484F31770E;
+	Mon, 10 Nov 2025 15:37:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="UbOW3SK3"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="dpQ+tuTV"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.10])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B7911D416C;
-	Mon, 10 Nov 2025 15:33:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.10
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3ECF31691B;
+	Mon, 10 Nov 2025 15:37:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762788828; cv=none; b=HbIUavC2w4Yk1yNMo8ec8FLp/szJWHP30UjfDy9XCik6n5ztR+ubC8vW9mBTxFbDVCytFpcRZ2hN1SOC/Ps5Z0tLBXB0sv3Tjp8ocep08D+dKQF61NhQVKQrb69AtTu56MKWMbMELtKa/7clu5VZtVyMtwc8rOOXbDIO0qsgtIU=
+	t=1762789067; cv=none; b=ju0wBqIhQU0B3F+3DAPJlGb+/pkrThHFM6e+eWR9rDc8r9El9gKh9EN+dnr8AA1IGnjyEBk3TiJKpgnkvZqgBOaJ6Qaph7JEePJITh3ZhUrwsvyqzzyXxuRw00pf3dFuE/hnABNtUTUhDvw/6idq7yh4yH3MuJRqTcsRwpzbj/I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762788828; c=relaxed/simple;
-	bh=+rymyB2H1GCpplFZN98ExnpzW0O9nCkV8E0c0HQjmWE=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=uuJcQbQ1lHRtr0l1FxPEniXCdPrvXmugWm3KQAfZFoJRcmkRKGeV8YgPwN3MJJuCoCZbOY/LyA5Co5bDzQkQWgiVPWIZrNlTlecQ9/cDhrxmnDgJ2VK6rHc3yzcc68RMijDs65Arjzf1vFA+icxzaNcyJeQnr+co6YdcML7nG2o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=pass smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=UbOW3SK3; arc=none smtp.client-ip=198.175.65.10
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.intel.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1762788826; x=1794324826;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=+rymyB2H1GCpplFZN98ExnpzW0O9nCkV8E0c0HQjmWE=;
-  b=UbOW3SK3fZRqEhqvS0xR8aj0rQFNGsXYJNhWFvrHN37ppp9EXmAfzI5m
-   y6VMyXcKEDObbAMQ/56auh9nQk4pY5CMGFBIv/YfYSjM/nDaewc0fBlgR
-   tAUtrJMGpvQKO2LisIHdUAbi3KamcWHYe4fnReASai1QMfzNsf2ekMlOV
-   J8LvC/at8btzoS2YD29iPDrazsT1QlJl+qp/VcmaIsSdeQ6E4rZlg/Q/L
-   r0u/tkfeuPfZ1OkrRdtrouOCJevfLqWMldpldtDOUbYofNh8HOU03Flxr
-   vcpy1kch5KWbJMmd+Oj9LpwEliX4/V2Hf7q6lgIaxNuq8GyqZYvPK9xPT
-   A==;
-X-CSE-ConnectionGUID: cADGsg1wSXqZSRXQBd8VmA==
-X-CSE-MsgGUID: +Yg0UMphRsmL9Pdq9yuVlA==
-X-IronPort-AV: E=McAfee;i="6800,10657,11609"; a="82237648"
-X-IronPort-AV: E=Sophos;i="6.19,294,1754982000"; 
-   d="scan'208";a="82237648"
-Received: from fmviesa003.fm.intel.com ([10.60.135.143])
-  by orvoesa102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 10 Nov 2025 07:33:38 -0800
-X-CSE-ConnectionGUID: IwSUOry/SDKpLQ2tpxmPnA==
-X-CSE-MsgGUID: fQundh82RRibb0QT8W8jhQ==
-X-ExtLoop1: 1
-Received: from kniemiec-mobl1.ger.corp.intel.com (HELO ashevche-desk.local) ([10.245.245.235])
-  by fmviesa003-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 10 Nov 2025 07:33:33 -0800
-Received: from andy by ashevche-desk.local with local (Exim 4.98.2)
-	(envelope-from <andriy.shevchenko@linux.intel.com>)
-	id 1vITtZ-00000007V6M-2rxB;
-	Mon, 10 Nov 2025 17:33:29 +0200
-Date: Mon, 10 Nov 2025 17:33:29 +0200
-From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-To: Bjorn Andersson <andersson@kernel.org>
-Cc: Stefan Wahren <wahrenst@gmx.net>, Vinod Koul <vkoul@kernel.org>,
-	Thomas Andreatta <thomasandreatta2000@gmail.com>,
-	Caleb Sander Mateos <csander@purestorage.com>,
-	dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org,
-	linux-rpi-kernel@lists.infradead.org,
-	linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org,
-	Olivier Dautricourt <olivierdautricourt@gmail.com>,
-	Stefan Roese <sr@denx.de>,
-	Florian Fainelli <florian.fainelli@broadcom.com>,
-	Broadcom internal kernel review list <bcm-kernel-feedback-list@broadcom.com>,
-	Ray Jui <rjui@broadcom.com>, Scott Branden <sbranden@broadcom.com>,
-	Lars-Peter Clausen <lars@metafoo.de>,
-	Eugeniy Paltsev <Eugeniy.Paltsev@synopsys.com>,
-	Daniel Mack <daniel@zonque.org>,
-	Haojian Zhuang <haojian.zhuang@gmail.com>,
-	Robert Jarzmik <robert.jarzmik@free.fr>,
-	Lizhi Hou <lizhi.hou@amd.com>, Brian Xu <brian.xu@amd.com>,
-	Raj Kumar Rampelli <raj.kumar.rampelli@amd.com>,
-	Michal Simek <michal.simek@amd.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: Re: [PATCH v2 01/13] scatterlist: introduce sg_nents_for_dma() helper
-Message-ID: <aRIFyR0maAfZF7MN@smile.fi.intel.com>
-References: <20251110103805.3562136-1-andriy.shevchenko@linux.intel.com>
- <20251110103805.3562136-2-andriy.shevchenko@linux.intel.com>
- <waid6zxayuxacb6sntlxwgyjia3w25sfz2tzxxzb4tkqgmx63o@ndpztxeh6o32>
- <jea2owcqtjeomlbwkfopt3ujsnakn4p3xeyqhh7s4kowf7k7dr@deyg5pky5udo>
+	s=arc-20240116; t=1762789067; c=relaxed/simple;
+	bh=SA6xGNbHN6b9mWUXMWX+xDVjRNsrYUlySOFnrE7Xc90=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=L3D6jWKz8j/u3siqFw25UXrESBIgSZUh5xvxbwFtzpR2eQde46wh/RInwV8Oioa4bBRZS/YDPV5jLvV5lHW1FvPsHlViP33t4BhsT5flXvbwHQh8o5lUAuZxpyaVVl98VOki/1DZ9YbT0NCqcoxQn0L66W7lvTTVWFIh6FUh4NQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=dpQ+tuTV; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 2B1B4C19422;
+	Mon, 10 Nov 2025 15:37:47 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1762789067;
+	bh=SA6xGNbHN6b9mWUXMWX+xDVjRNsrYUlySOFnrE7Xc90=;
+	h=From:Subject:Date:To:Cc:Reply-To:From;
+	b=dpQ+tuTVvkURZKNKhuG6lslngT94GQTL9iy17dngagaropX1IiecxKsAtN20HA5MW
+	 qig5fX0A7VDqKZW7KcQ++jlw9glpRzx+wCltKdMSM9n3oBTMMUZJKMfLQ+PXjmMjQM
+	 0FnVSJ5JQHeLEIJ7GjRBjfD1TIZ6ITI6KFCq7rsUYLNE75T0KTNAkelv8Jk18uzFlW
+	 xxTYBMtzC69EX8+36sLsUl7MKHJUl548QvOpUejnZbZXwHS6JZ9iDb1EDKrHIowbvu
+	 eF0K/NE+Y5H8lmWxhC+WJjPsZYmhxowwnOVSMwbVLAafXauY4JqLGHDOeNPdXiIEe9
+	 B1qhQdW5vvG+g==
+Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 23723CCFA1A;
+	Mon, 10 Nov 2025 15:37:47 +0000 (UTC)
+From: David Heidelberg via B4 Relay <devnull+david.ixit.cz@kernel.org>
+Subject: [PATCH 0/3] ath10k calibration variants for sdm845 phones
+Date: Mon, 10 Nov 2025 16:37:45 +0100
+Message-Id: <20251110-sdm845-calibration-variants-v1-0-2c536ada77c2@ixit.cz>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <jea2owcqtjeomlbwkfopt3ujsnakn4p3xeyqhh7s4kowf7k7dr@deyg5pky5udo>
-Organization: Intel Finland Oy - BIC 0357606-4 - c/o Alberga Business Park, 6
- krs, Bertel Jungin Aukio 5, 02600 Espoo
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAMkGEmkC/x3MQQqDQAxA0atI1g0YqzL0KtJFOpNpAzqVREQQ7
+ 96hyweff4KLqTg8mhNMdnX9lgq6NRA/XN6Cmqqha7uBiFr0tIR+wMizvoy3muPOplw2x3HkdKe
+ cQ4gM9bCaZD3+9+l5XT80qa2rbQAAAA==
+X-Change-ID: 20251110-sdm845-calibration-variants-66ad31ff88ca
+To: Dylan Van Assche <me@dylanvanassche.be>, 
+ Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, phone-devel@vger.kernel.org, 
+ David Heidelberg <david@ixit.cz>
+X-Mailer: b4 0.14.3
+X-Developer-Signature: v=1; a=openpgp-sha256; l=808; i=david@ixit.cz;
+ h=from:subject:message-id;
+ bh=SA6xGNbHN6b9mWUXMWX+xDVjRNsrYUlySOFnrE7Xc90=;
+ b=owEBbQKS/ZANAwAIAWACP8TTSSByAcsmYgBpEgbJg4ACLHbh+CbhUqCU1Iqlj6FH3DtSXLTrq
+ fQ3jFDg3mOJAjMEAAEIAB0WIQTXegnP7twrvVOnBHRgAj/E00kgcgUCaRIGyQAKCRBgAj/E00kg
+ clmpEACAIlVRtrvTyYZp+9rq6kTrYLEedExOTvk2bp+o5P41RWmS/9UPBatSv/Llu4740RzC4LM
+ Uod9xCjWeiiSHpGdmRSD4IBWI9eXofqAHBK+saxCYTB9j8DsgASFQkvcSl3bgkl4VTE8py3jN7n
+ mmX18oBN3AnEtRH0sa9btpNZExZHZtJNKQPdRqf/pCdxBaFYzdjS2OaOu6rnYdotONo/m85eQP2
+ fhcjq4/nhgX7ZM3OSaOLOEQ3SgJhjXnRSueHftxQNria+eI0XMbtDIGW+YYpvouB2x/R5t4NuZm
+ jCRNkxih6eaJitx3JHvLpO65wuyDaQafZ92+hJUGoM00k+50U8DBje/absmmoH/Zti0IhtTMLBf
+ q9DORt/Q0SAovdjlITnU8/Y/W61887SEwQZMEXiKFiFycygkjdJPUNqHZWassdhCq6Ids7OytwJ
+ dLY8HC0Nl2u+ADIsOUo8FQLC1EvmZtcBHXZkdSTsdD53iFt1Ke44lT7tqfAQ2wLUpnfbxwdqda2
+ nwtKrzeMiS1dQH7Oee7UZ/oo3ogyGL9AV+hPJxgMfbrozSunPI6mhqEGcAToDEEBXR2KrwIVjNA
+ RIo7NzFQnni8m2noT0iQNywfD0JYxB5vTHZSaw/iX41A/KTjS5Ix2WAqETaDeW4NCsa/Dya1mE3
+ a6TxPt8EfDfjShg==
+X-Developer-Key: i=david@ixit.cz; a=openpgp;
+ fpr=D77A09CFEEDC2BBD53A7047460023FC4D3492072
+X-Endpoint-Received: by B4 Relay for david@ixit.cz/default with auth_id=355
+X-Original-From: David Heidelberg <david@ixit.cz>
+Reply-To: david@ixit.cz
 
-On Mon, Nov 10, 2025 at 09:21:18AM -0600, Bjorn Andersson wrote:
-> On Mon, Nov 10, 2025 at 09:05:26AM -0600, Bjorn Andersson wrote:
-> > On Mon, Nov 10, 2025 at 11:23:28AM +0100, Andy Shevchenko wrote:
+Let's leaverage linux-firmware and use calibration from the board-2.bin.
 
-...
+Signed-off-by: David Heidelberg <david@ixit.cz>
+---
+Dylan Van Assche (3):
+      arm64: dts: qcom: sdm845-oneplus: add ath10k calibration variant
+      arm64: dts: qcom: sdm845-xiaomi-beryllium: Add ath10k calibration variant
+      arm64: dts: qcom: sdm845-shift-axolotl: Add ath10k calibration variant
 
-> > >  int sg_nents(struct scatterlist *sg);
-> > >  int sg_nents_for_len(struct scatterlist *sg, u64 len);
-> > > +int sg_nents_for_dma(struct scatterlist *sgl, unsigned int sglen, size_t len);
+ arch/arm64/boot/dts/qcom/sdm845-oneplus-common.dtsi          | 1 +
+ arch/arm64/boot/dts/qcom/sdm845-shift-axolotl.dts            | 1 +
+ arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium-common.dtsi | 3 +++
+ 3 files changed, 5 insertions(+)
+---
+base-commit: ab40c92c74c6b0c611c89516794502b3a3173966
+change-id: 20251110-sdm845-calibration-variants-66ad31ff88ca
 
-
-^^^
-
-> > > +int sg_nents_for_dma(struct scatterlist *sgl, unsigned int sglen, size_t len)
-> 
-> All but two clients store the value in an unsigned int. Changing the
-> return type to unsigned int also signals that the function is just
-> returning a count (no errors).
-
-The type is chosen for the consistency with the existing APIs.
-So, I prefer consistency in this case, if we need to change type, we need to do
-that for all above APIs I believe. And this is out of the scope here.
-
-Personally I was also puzzled of the choice as *nents members are all unsigned
-int in the scatterlist.h.
-
-...
-
-> > We need an EXPORT_SYMBOL() here.
-
-Good catch! I'll add it in next version.
-
-> > With that, this looks good to me.
-> > 
-> > Reviewed-by: Bjorn Andersson <andersson@kernel.org>
-
-Thanks!
-
+Best regards,
 -- 
-With Best Regards,
-Andy Shevchenko
+David Heidelberg <david@ixit.cz>
 
 
 
