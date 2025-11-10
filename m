@@ -1,149 +1,271 @@
-Return-Path: <linux-arm-msm+bounces-81039-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-81041-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id C2E6AC473D6
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Nov 2025 15:36:11 +0100 (CET)
+Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [IPv6:2605:f480:58:1:0:1994:3:14])
+	by mail.lfdr.de (Postfix) with ESMTPS id B8A3FC47403
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Nov 2025 15:38:33 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 02ABE3B2413
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Nov 2025 14:35:45 +0000 (UTC)
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 968374E1919
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Nov 2025 14:38:32 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D8BCD3161AC;
-	Mon, 10 Nov 2025 14:34:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 62C602EBBB2;
+	Mon, 10 Nov 2025 14:38:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="euMn4C7Q"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="Fs/1mSr6";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="Jn/8Yvrk"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACC5F31619C;
-	Mon, 10 Nov 2025 14:34:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6DFC30E858
+	for <linux-arm-msm@vger.kernel.org>; Mon, 10 Nov 2025 14:38:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762785281; cv=none; b=Dj6WJQmsnBtrNm3CCTxAyzWfOMtfCjJ/wWYqNUC7IyIKGAX1iBMuGHxEskMMsQ7vJm+Rh7wKYi71argE8cO7AWamJCJlx9sMfGVruqO3RrYeD0jtE+lyqN3v4LGH7725pfBaFAh4y70Tp++jFfLjoHiESfl2riFIKdEs7xECXGA=
+	t=1762785510; cv=none; b=XOJR7xTArUAFWH3yIvXiO+arLRx6uWLLrYMxFPjkXg9DR+KnVT3pHJs+YNQwgJbg+J29I2cyRfYAJgNjw7bKLEjs+hux+VWswMmNrSxqpae78zfBTcMPJpZ9JyLTypVCB6tE/maYn8aB00GgFUQCC7FYL7kZ+qPnpKSwb7YJ1VQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762785281; c=relaxed/simple;
-	bh=p5mOTbv6oa2TepVbieNtqJBJqKXg2bBu1I5v+nPHcnM=;
-	h=Date:Content-Type:MIME-Version:From:Cc:To:In-Reply-To:References:
-	 Message-Id:Subject; b=YNwvHO6acfq7v6pDfWuXy2ob7xuj6K3Nhi+OKnhKn0kSz7d5FKg8YalQ+XQ4Oc5Js3SpVkaV/RMlMwcSl2ZMldOvkT8AkWT1qfU95E1kj4Axl2X+bhRSWGpiW9V0NxaL9Kkuvm+mJurZYw6qFICToIpiZifWyVJqYNyJt0ft4hU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=euMn4C7Q; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 04E23C19425;
-	Mon, 10 Nov 2025 14:34:40 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1762785281;
-	bh=p5mOTbv6oa2TepVbieNtqJBJqKXg2bBu1I5v+nPHcnM=;
-	h=Date:From:Cc:To:In-Reply-To:References:Subject:From;
-	b=euMn4C7Q43tiwHmRBmQquN7ZxYM2OPEpgeGPiLC3VODrf/x+vYfPhwHK+/UHZ3bjZ
-	 21jeYF1BaIlmG8n7DH+JnnxsHuMrQj+Ng+EVSDGEAjiT1QcpSThMl5+ogdhUnXTUI0
-	 N9YI+95knzD8QcsgmCczPEcMLgBOAX7E1intZ2vB5FL54CNfh5f4ep/UDo7sWiQ63M
-	 58d+5Flsj61QNSw6I3/8i13SNYhAhnNRgFgXsP73VCWImNWTxNw546SCW8WuVctJtg
-	 5N8EA84hsoKhOu2L6mN86DAAg/KLudpnyrsyObvvtdFpAT4fYCqTrPtP+RfdFJ26BO
-	 5wRPbZpxCA09g==
-Date: Mon, 10 Nov 2025 08:34:39 -0600
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
+	s=arc-20240116; t=1762785510; c=relaxed/simple;
+	bh=Kv+GgVexbGopxr7yumqlBiancGmQZWWVjQWyj1jNkno=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=f4F3NpTb/kPr9PUJq36rPrc0+rhyYnKO2GkTEMmgHeuRRtq0Q44YLgl8O8pnsuLc7GSXqhljywtBnx1Xlp3m7Ss0Fgb9timkj5x+vtMLwP3fYI4jfmzXszFG8YAgFY628P4qHYmhXr+cSbKhKEcG0wvQzahAyeQzvXjtQ2PWIrI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=Fs/1mSr6; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=Jn/8Yvrk; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 5AAEBlLU2861413
+	for <linux-arm-msm@vger.kernel.org>; Mon, 10 Nov 2025 14:38:27 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	DjXlGf6kCK1SRmg1a5VtEsJaR1Zk+XRBUVbJsc742Xk=; b=Fs/1mSr6ibXTZsBm
+	K5ACt9BDv18vhbSavu73Iw/bUfBeSMqG7PKz/LE6fa3WvrCs53lpV5uD38jrsVYT
+	Lzpw3TaCvOuBJYvrK8X+QejBmwOf4xpqIIxkvBIuGFQQWx1iwazN731vOfPTfVDW
+	buOdmttgzcjg/yKdGIZsnELNhOAt7w095Q1A//CC1fIhwKZmZ25t1hY17sr/SX7t
+	k6haVM9zF1eFi4QBlG/VcSq2if1FrHkoGtm/w6qrY2XhWbhWyleUkZEKZLx1hflH
+	POTYPJ6J6MNQIMYGIiUF6Vr/7q92cffk777Huwd3iWZNwM24E8o92VkFv59jC6P7
+	x/DVOA==
+Received: from mail-pj1-f70.google.com (mail-pj1-f70.google.com [209.85.216.70])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4abbwe1a1e-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Mon, 10 Nov 2025 14:38:27 +0000 (GMT)
+Received: by mail-pj1-f70.google.com with SMTP id 98e67ed59e1d1-3436d81a532so5040033a91.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 10 Nov 2025 06:38:27 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=oss.qualcomm.com; s=google; t=1762785506; x=1763390306; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=DjXlGf6kCK1SRmg1a5VtEsJaR1Zk+XRBUVbJsc742Xk=;
+        b=Jn/8YvrkizRMJyTkETr5o6pggtaQ/KMqLDmwX1QAudTOWslftxuGHCgYF36uQ91EHy
+         zEUJ3ckOexQOG4nV09RtiZVCtgBgYhHmGMXNLF97Jr1IykxoNSqRbIsOC5AjZIcSiUGd
+         o1ccuVdhdBrl6MIM3/MTDYNGo4/T1EwOBWhRh8ejzbJh0yfrTSlk/CgNcjGosODHv8UP
+         VgKDoDtiIeEF2pQWCO1iEIljWO9bhTz9OyooD6Rr8jGUKfIs/xRy42qWCOZxm9wzocG4
+         XAunKGg1LQH5nPQdPmwNL29uNCipIbRkaEjBLfshAWc8HqbqqYWWl2ghUmMF23c18yWd
+         4zvw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1762785506; x=1763390306;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=DjXlGf6kCK1SRmg1a5VtEsJaR1Zk+XRBUVbJsc742Xk=;
+        b=rqdUmBIIYQB93Mlpfs+6kbIm7wk16Q1C2jJN2nKMFMeHzG1OFrNecJTOcwx2lOqeIU
+         jW60ffsOlMrDx48NinvldY/iGLDYNr1v/GIph3UwBnRfaYYw+f21rpcHI4OxEqMSs7wo
+         2E0glEEF4WmvlWa/UPOKvUXOZHmCjkTEJmfy8noGal3FXdeV8LSxndM/OBiHHTcTwK+K
+         XJ6yVubiSSQje7r6hk6QRZHHoF3/gNjbtrgGT/CcVVIM1MGwf3vM31NJyle4VrSPZgay
+         yHzCIV8Tf3icyfvf5yb93pakkr0EILKD3RcpnlnBJTbDAlMJg0zgTb9epq0uak0tT3mo
+         gGvw==
+X-Forwarded-Encrypted: i=1; AJvYcCXBL5uPaHMlYU9OGbMWS4zPQE3hz2ntfHpaO6gVP7NZk0z/KAzvujG5ldSJ0QUrRco17TPAD3zpFROsBKHL@vger.kernel.org
+X-Gm-Message-State: AOJu0YwSQIfzc6l/OiSLkOS7vJHISfcdlRYAg7gviAZ9VmQD12eqcLpt
+	SPAg2dZHWeun/0oXB6HUciDM0FzzWXWGgG6Y2C31mBtG0gKl1BnwHVH3NYgdRwuv/a4Xpk1QRDI
+	Mkm6RqWOG1ttwsBthyyoC3bP5ClisMTIDFGFcyCAHvGqIAQ4iM5eFRNI2mIxnx9Qi4Q7l
+X-Gm-Gg: ASbGncso/1Or9Auh7ZEmuXQ7pV6tRgW8GLRrjiKPkmpjL/Pv18H6bSj74JsNb5x/lou
+	AWdk119Qa4F7Rq1QiR3NibABlRojOJDhZIy78fEiLX3B/I/gLfEl53mU9XgWuaOSP9A/p7q1kQQ
+	XqDBDZMKnx1bci7eavacUXZUgRxnYuiSX0HDn39J7xVcleuqvkWv6e08OYKO5FRgNGSGVod5cPT
+	7F887DfG3S8RLNe4lbVpzhC7olp+nB1O8BCVg/59h9ElkZR0S/Pvd8FP0epxMkC6hBSMtTeLUqD
+	j9qrQ49g/rRqzPoFObjzgLBM1X0IdyA1vicTLXKFfFIIDx/WR3RRJX76XMDME6EUw6XdUiJzAv3
+	8/dZW8eBxGg6Js4B9YSNCuY+xCj4SfkrI
+X-Received: by 2002:a17:90a:ec84:b0:340:bde5:c9e3 with SMTP id 98e67ed59e1d1-3436cb91ec3mr10817670a91.23.1762785506396;
+        Mon, 10 Nov 2025 06:38:26 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFcDiYkW+6pedjCMiR1BaFljPhTaDiM32XOE7C47GkBGlZcqk0BMUcwHHXae+/cHPVW0xghTA==
+X-Received: by 2002:a17:90a:ec84:b0:340:bde5:c9e3 with SMTP id 98e67ed59e1d1-3436cb91ec3mr10817613a91.23.1762785505845;
+        Mon, 10 Nov 2025 06:38:25 -0800 (PST)
+Received: from [10.219.57.23] ([202.46.23.19])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-341d0aee149sm8431073a91.1.2025.11.10.06.38.17
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 10 Nov 2025 06:38:25 -0800 (PST)
+Message-ID: <16521e84-9da6-53a7-febe-9decb6970c06@oss.qualcomm.com>
+Date: Mon, 10 Nov 2025 20:08:15 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: "Rob Herring (Arm)" <robh@kernel.org>
-Cc: linux-kernel@vger.kernel.org, Conor Dooley <conor+dt@kernel.org>, 
- quic_rampraka@quicinc.com, kernel@oss.qualcomm.com, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>, linux-arm-msm@vger.kernel.org, 
- Konrad Dybcio <konradybcio@kernel.org>, devicetree@vger.kernel.org, 
- quic_nguyenb@quicinc.com, Bjorn Andersson <andersson@kernel.org>, 
- quic_sayalil@quicinc.com, quic_nitirawa@quicinc.com, 
- quic_pragalla@quicinc.com, quic_bhaskarv@quicinc.com
-To: Sarthak Garg <sarthak.garg@oss.qualcomm.com>
-In-Reply-To: <20251110085013.802976-1-sarthak.garg@oss.qualcomm.com>
-References: <20251110085013.802976-1-sarthak.garg@oss.qualcomm.com>
-Message-Id: <176278493549.154734.6896546468288117637.robh@kernel.org>
-Subject: Re: [PATCH V4 0/3] Add SD Card support for sm8750 SoC and boards
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.5.1
+Subject: Re: [PATCH v17 03/12] power: reset: reboot-mode: Add support for 64
+ bit magic
+Content-Language: en-US
+To: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>
+Cc: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Sebastian Reichel <sre@kernel.org>, Rob Herring <robh@kernel.org>,
+        Sudeep Holla <sudeep.holla@arm.com>,
+        Souvik Chakravarty <Souvik.Chakravarty@arm.com>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley
+ <conor+dt@kernel.org>,
+        Andy Yan <andy.yan@rock-chips.com>,
+        Mark Rutland <mark.rutland@arm.com>,
+        Lorenzo Pieralisi <lpieralisi@kernel.org>,
+        Arnd Bergmann <arnd@arndb.de>, Konrad Dybcio <konradybcio@kernel.org>,
+        cros-qcom-dts-watchers@chromium.org, Vinod Koul <vkoul@kernel.org>,
+        Catalin Marinas <catalin.marinas@arm.com>,
+        Will Deacon <will@kernel.org>,
+        Florian Fainelli <florian.fainelli@broadcom.com>,
+        Moritz Fischer <moritz.fischer@ettus.com>,
+        John Stultz <john.stultz@linaro.org>,
+        Matthias Brugger <matthias.bgg@gmail.com>,
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Andre Draszik
+ <andre.draszik@linaro.org>,
+        Kathiravan Thirumoorthy <kathiravan.thirumoorthy@oss.qualcomm.com>,
+        linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org,
+        Elliot Berman <quic_eberman@quicinc.com>,
+        Xin Liu <xin.liu@oss.qualcomm.com>,
+        Srinivas Kandagatla <srini@kernel.org>,
+        Umang Chheda <umang.chheda@oss.qualcomm.com>,
+        Nirmesh Kumar Singh <nirmesh.singh@oss.qualcomm.com>
+References: <20251109-arm-psci-system_reset2-vendor-reboots-v17-0-46e085bca4cc@oss.qualcomm.com>
+ <20251109-arm-psci-system_reset2-vendor-reboots-v17-3-46e085bca4cc@oss.qualcomm.com>
+ <20251110134529.uljjqzb3vhda3vya@hu-mojha-hyd.qualcomm.com>
+From: Shivendra Pratap <shivendra.pratap@oss.qualcomm.com>
+In-Reply-To: <20251110134529.uljjqzb3vhda3vya@hu-mojha-hyd.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-GUID: SX8WBevQiPPr4ELB8CljKB7PygAurRvL
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMTEwMDEyNiBTYWx0ZWRfX9B9OK/6pgDYw
+ SV0wpaMeplEsPXTMC2GDkZ4aOs9luXtGymTvAOAcq+poIS56X7Ga2nYBOkGKgw6EusxdsHfpzuE
+ oBfModDJ9iA/0I3x6wgPZ5GcT0nCbyQvqozYL378J1yzRWRG6C5nY89Bw21ViWzzTa6rkje9z34
+ JEci/1Ec941K3WdNT6/uckZByEKK664PTDHWnckOU4OYKLrP1Otqw47md+Ar8zBU78CVlz931Rr
+ CmY7vLVbKgvqoJjf8Cwb/wCTw0hb0dRNKZS7uTY8ulBanIR4f5h1ykxdhW17vMz8Q3PkSMJiwoD
+ F2z/a5sPEHzfwZR21bA8oBEC0/siF/TawP/oCWrUxC8wedQ35pBs8KpqOz5/J8PpNOlV5FVxACu
+ S2SJt+DnQ8NDqBoEV46sJqsKerRe3w==
+X-Authority-Analysis: v=2.4 cv=GbEaXAXL c=1 sm=1 tr=0 ts=6911f8e3 cx=c_pps
+ a=0uOsjrqzRL749jD1oC5vDA==:117 a=j4ogTh8yFefVWWEFDRgCtg==:17
+ a=IkcTkHD0fZMA:10 a=6UeiqGixMTsA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=vG-lknqJ1RofaPO6YZUA:9 a=QEXdDO2ut3YA:10
+ a=mQ_c8vxmzFEMiUWkPHU9:22
+X-Proofpoint-ORIG-GUID: SX8WBevQiPPr4ELB8CljKB7PygAurRvL
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
+ definitions=2025-11-10_05,2025-11-10_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ clxscore=1015 malwarescore=0 priorityscore=1501 phishscore=0 bulkscore=0
+ spamscore=0 adultscore=0 impostorscore=0 lowpriorityscore=0 suspectscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2510240001 definitions=main-2511100126
 
 
-On Mon, 10 Nov 2025 14:20:10 +0530, Sarthak Garg wrote:
-> Add SD Card support for sm8750 SoC, including MTP and QRD boards.
+
+On 11/10/2025 7:15 PM, Mukesh Ojha wrote:
+> On Sun, Nov 09, 2025 at 08:07:16PM +0530, Shivendra Pratap wrote:
+>> Current reboot-mode supports a single 32-bit argument for any
+
+[SNIP..]
+
+>>  
+>> -static int nvmem_reboot_mode_write(struct reboot_mode_driver *reboot,
+>> -				    unsigned int magic)
+>> +static int nvmem_reboot_mode_write(struct reboot_mode_driver *reboot, u64 magic)
+>>  {
+>> -	int ret;
+>>  	struct nvmem_reboot_mode *nvmem_rbm;
+>> +	u32 magic_32;
+>> +	int ret;
+>> +
+>> +	if (magic > U32_MAX)
+>> +		return -EINVAL;
 > 
-> - Changed from v3
->     - As suggested by Krzysztof Kozlowski refactor the code to follow
->       DTS coding style and use hex everywhere in reg.
 > 
-> - Changed from v2
->     - As suggested by Abel Vesa move the GPIO configuration for SD card
->       detection (specifically the pin settings for gpio55) from the
->       SoC-level device tree (sm8750.dtsi) to the board-specific device
->       tree files.
+> I believe, we need a comment in all the client driver.. 
+
+Ack. Will add a comment.
+
 > 
-> - Changed from v1
->     - As suggested by Konrad Dybcio the patch into separate commits per
->       board and did formatting improvements (e.g. aligning < symbols,
->       placing each item on a new line).
->     - Addressed Konrad Dybcio comment to use SVS_L1 for opp-202000000.
+>> +
+>> +	magic_32 = magic;
+>>  
+>>  	nvmem_rbm = container_of(reboot, struct nvmem_reboot_mode, reboot);
+>>  
+>> -	ret = nvmem_cell_write(nvmem_rbm->cell, &magic, sizeof(magic));
+>> +	ret = nvmem_cell_write(nvmem_rbm->cell, &magic_32, sizeof(magic_32));
+>>  	if (ret < 0)
+>>  		dev_err(reboot->dev, "update reboot mode bits failed\n");
+>>  
+>> diff --git a/drivers/power/reset/qcom-pon.c b/drivers/power/reset/qcom-pon.c
+>> index 7e108982a582e8243c5c806bd4a793646b87189f..d0ed9431a02313a7bbaa93743c16fa1ae713ddfe 100644
+>> --- a/drivers/power/reset/qcom-pon.c
+>> +++ b/drivers/power/reset/qcom-pon.c
+>> @@ -27,17 +27,22 @@ struct qcom_pon {
+>>  	long reason_shift;
+>>  };
+>>  
+>> -static int qcom_pon_reboot_mode_write(struct reboot_mode_driver *reboot,
+>> -				    unsigned int magic)
+>> +static int qcom_pon_reboot_mode_write(struct reboot_mode_driver *reboot, u64 magic)
+>>  {
+>>  	struct qcom_pon *pon = container_of
+>>  			(reboot, struct qcom_pon, reboot_mode);
+>> +	u32 magic_32;
+>>  	int ret;
+>>
 > 
-> Sarthak Garg (3):
->   arm64: dts: qcom: sm8750: Add SDC2 nodes for sm8750 soc
->   arm64: dts: qcom: sm8750-mtp: Add SDC2 node for sm8750 mtp board
->   arm64: dts: qcom: sm8750-qrd: Add SDC2 node for sm8750 qrd board
+> Since we are doing this change in reboot framework, client driver should know about
+> it too about this new check because of framework.
+
+ok.
+
 > 
->  arch/arm64/boot/dts/qcom/sm8750-mtp.dts | 23 +++++++++++
->  arch/arm64/boot/dts/qcom/sm8750-qrd.dts | 23 +++++++++++
->  arch/arm64/boot/dts/qcom/sm8750.dtsi    | 54 +++++++++++++++++++++++++
->  3 files changed, 100 insertions(+)
-> 
-> --
-> 2.34.1
+>> +	if (magic > U32_MAX || (magic << pon->reason_shift) > U32_MAX)
 > 
 > 
+> is this (magic << pon->reason_shift) > U32_MAX really needed ..?
+
+Can be omitted as we already checked magic > U32_MAX. Will
+remove it.
+
 > 
 
+[SNIP..]
 
-My bot found new DTB warnings on the .dts files added or changed in this
-series.
+>> diff --git a/drivers/power/reset/syscon-reboot-mode.c b/drivers/power/reset/syscon-reboot-mode.c
+>> index e0772c9f70f7a19cd8ec8a0b7fdbbaa7ba44afd0..3cbd000c512239b12ec51987e900d260540a9dea 100644
+>> --- a/drivers/power/reset/syscon-reboot-mode.c
+>> +++ b/drivers/power/reset/syscon-reboot-mode.c
+>> @@ -20,16 +20,21 @@ struct syscon_reboot_mode {
+>>  	u32 mask;
+>>  };
+>>  
+>> -static int syscon_reboot_mode_write(struct reboot_mode_driver *reboot,
+>> -				    unsigned int magic)
+>> +static int syscon_reboot_mode_write(struct reboot_mode_driver *reboot, u64 magic)
+>>  {
+>>  	struct syscon_reboot_mode *syscon_rbm;
+>> +	u32 magic_32;
+>>  	int ret;
+>>
+> 
+> same here
 
-Some warnings may be from an existing SoC .dtsi. Or perhaps the warnings
-are fixed by another series. Ultimately, it is up to the platform
-maintainer whether these warnings are acceptable or not. No need to reply
-unless the platform maintainer has comments.
+will add comment here.
 
-If you already ran DT checks and didn't see these error(s), then
-make sure dt-schema is up to date:
-
-  pip3 install dtschema --upgrade
-
-
-This patch series was applied (using b4) to base:
- Base: attempting to guess base-commit...
- Base: tags/v6.18-rc1-53-gc2703c90161b (exact match)
- Base: tags/v6.18-rc1-53-gc2703c90161b (use --merge-base to override)
-
-If this is not the correct base, please add 'base-commit' tag
-(or use b4 which does this automatically)
-
-New warnings running 'make CHECK_DTBS=y for arch/arm64/boot/dts/qcom/' for 20251110085013.802976-1-sarthak.garg@oss.qualcomm.com:
-
-arch/arm64/boot/dts/qcom/sm8750-mtp.dtb: mmc@8804000 (qcom,sm8750-sdhci): compatible: 'oneOf' conditional failed, one must be fixed:
-	['qcom,sm8750-sdhci', 'qcom,sdhci-msm-v5'] is too long
-	'qcom,sm8750-sdhci' is not one of ['qcom,sdhci-msm-v4']
-	'qcom,sm8750-sdhci' is not one of ['qcom,apq8084-sdhci', 'qcom,ipq4019-sdhci', 'qcom,ipq8074-sdhci', 'qcom,msm8226-sdhci', 'qcom,msm8953-sdhci', 'qcom,msm8974-sdhci', 'qcom,msm8976-sdhci', 'qcom,msm8916-sdhci', 'qcom,msm8992-sdhci', 'qcom,msm8994-sdhci', 'qcom,msm8996-sdhci', 'qcom,msm8998-sdhci']
-	'qcom,sm8750-sdhci' is not one of ['qcom,ipq5018-sdhci', 'qcom,ipq5332-sdhci', 'qcom,ipq5424-sdhci', 'qcom,ipq6018-sdhci', 'qcom,ipq9574-sdhci', 'qcom,milos-sdhci', 'qcom,qcm2290-sdhci', 'qcom,qcs404-sdhci', 'qcom,qcs615-sdhci', 'qcom,qcs8300-sdhci', 'qcom,qdu1000-sdhci', 'qcom,sa8775p-sdhci', 'qcom,sar2130p-sdhci', 'qcom,sc7180-sdhci', 'qcom,sc7280-sdhci', 'qcom,sc8280xp-sdhci', 'qcom,sdm630-sdhci', 'qcom,sdm670-sdhci', 'qcom,sdm845-sdhci', 'qcom,sdx55-sdhci', 'qcom,sdx65-sdhci', 'qcom,sdx75-sdhci', 'qcom,sm6115-sdhci', 'qcom,sm6125-sdhci', 'qcom,sm6350-sdhci', 'qcom,sm6375-sdhci', 'qcom,sm7150-sdhci', 'qcom,sm8150-sdhci', 'qcom,sm8250-sdhci', 'qcom,sm8350-sdhci', 'qcom,sm8450-sdhci', 'qcom,sm8550-sdhci', 'qcom,sm8650-sdhci', 'qcom,x1e80100-sdhci']
-	'qcom,sdhci-msm-v4' was expected
-	from schema $id: http://devicetree.org/schemas/mmc/sdhci-msm.yaml
-arch/arm64/boot/dts/qcom/sm8750-mtp.dtb: /soc@0/mmc@8804000: failed to match any schema with compatible: ['qcom,sm8750-sdhci', 'qcom,sdhci-msm-v5']
-arch/arm64/boot/dts/qcom/sm8750-qrd.dtb: mmc@8804000 (qcom,sm8750-sdhci): compatible: 'oneOf' conditional failed, one must be fixed:
-	['qcom,sm8750-sdhci', 'qcom,sdhci-msm-v5'] is too long
-	'qcom,sm8750-sdhci' is not one of ['qcom,sdhci-msm-v4']
-	'qcom,sm8750-sdhci' is not one of ['qcom,apq8084-sdhci', 'qcom,ipq4019-sdhci', 'qcom,ipq8074-sdhci', 'qcom,msm8226-sdhci', 'qcom,msm8953-sdhci', 'qcom,msm8974-sdhci', 'qcom,msm8976-sdhci', 'qcom,msm8916-sdhci', 'qcom,msm8992-sdhci', 'qcom,msm8994-sdhci', 'qcom,msm8996-sdhci', 'qcom,msm8998-sdhci']
-	'qcom,sm8750-sdhci' is not one of ['qcom,ipq5018-sdhci', 'qcom,ipq5332-sdhci', 'qcom,ipq5424-sdhci', 'qcom,ipq6018-sdhci', 'qcom,ipq9574-sdhci', 'qcom,milos-sdhci', 'qcom,qcm2290-sdhci', 'qcom,qcs404-sdhci', 'qcom,qcs615-sdhci', 'qcom,qcs8300-sdhci', 'qcom,qdu1000-sdhci', 'qcom,sa8775p-sdhci', 'qcom,sar2130p-sdhci', 'qcom,sc7180-sdhci', 'qcom,sc7280-sdhci', 'qcom,sc8280xp-sdhci', 'qcom,sdm630-sdhci', 'qcom,sdm670-sdhci', 'qcom,sdm845-sdhci', 'qcom,sdx55-sdhci', 'qcom,sdx65-sdhci', 'qcom,sdx75-sdhci', 'qcom,sm6115-sdhci', 'qcom,sm6125-sdhci', 'qcom,sm6350-sdhci', 'qcom,sm6375-sdhci', 'qcom,sm7150-sdhci', 'qcom,sm8150-sdhci', 'qcom,sm8250-sdhci', 'qcom,sm8350-sdhci', 'qcom,sm8450-sdhci', 'qcom,sm8550-sdhci', 'qcom,sm8650-sdhci', 'qcom,x1e80100-sdhci']
-	'qcom,sdhci-msm-v4' was expected
-	from schema $id: http://devicetree.org/schemas/mmc/sdhci-msm.yaml
-arch/arm64/boot/dts/qcom/sm8750-qrd.dtb: /soc@0/mmc@8804000: failed to match any schema with compatible: ['qcom,sm8750-sdhci', 'qcom,sdhci-msm-v5']
-
-
-
-
-
+thanks,
+Shivendra
 
