@@ -1,195 +1,152 @@
-Return-Path: <linux-arm-msm+bounces-80941-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-80942-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id AFE5AC4571D
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Nov 2025 09:51:11 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 870A0C45789
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Nov 2025 09:58:00 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 4C8773B3EBA
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Nov 2025 08:51:07 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 576EB188FBC2
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Nov 2025 08:58:25 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5DE5B2FD7A3;
-	Mon, 10 Nov 2025 08:50:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id BFEF22F7442;
+	Mon, 10 Nov 2025 08:57:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="YqLCHXYy";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="BCTZsh2Z"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="e/j7MBQo"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oa1-f42.google.com (mail-oa1-f42.google.com [209.85.160.42])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDD9F2FE56E
-	for <linux-arm-msm@vger.kernel.org>; Mon, 10 Nov 2025 08:50:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 006CC2FCBF7
+	for <linux-arm-msm@vger.kernel.org>; Mon, 10 Nov 2025 08:57:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762764643; cv=none; b=cYtjXDFDyhkk0bR2hEr8KlWnhNf46EavGKjaADKuU0niH2/Zg11HDhHko0NNepihJiCWSqrtHORX9CzaxO8PfOqlBnzm950sdjGbCT1ptC5BgRVToFZjX3vrurJoBy5NBdSDSfqBNaMLehCRrwBFG0HeZ11M0EjTIHQLV5sKPhA=
+	t=1762765072; cv=none; b=EJSx4p+mMnIoixuMeNdbehvMQ5mOj2aDfgJ/KS+kfCO0ddtRvdleW5CYo43QLtm+FDOJeZsnEPCeJQD7DFFFegjNQVnRfW42klMWG8g36Qe0cpC9A72Qi9ICpykv7sIYvcCjfsVx59Im7pFLVtpwPbvi5eo6Q3SE38lwIk9rN2M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762764643; c=relaxed/simple;
-	bh=uI9I1fkK7CXeQsPWFeT+xjn50HGW1cXwe2C64/oLTqU=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=sG/ScE7j8dNC1DDAnrViMiV0Ni06WUuxMUa/icg1GwHYMKzaj5tVzgm0QialG+WVYbR86GEFdYVSfut0xg3/+WT22TfSLv8Xa05s8J1CeN+R8APUAupHrD7yIdOWbCMcFfZI3NWq3EV39CzRKuaQF92AwH6a+0kBJhiNcR3qgDE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=YqLCHXYy; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=BCTZsh2Z; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 5AA8T3Jh1494023
-	for <linux-arm-msm@vger.kernel.org>; Mon, 10 Nov 2025 08:50:41 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:date:from:in-reply-to:message-id
-	:mime-version:references:subject:to; s=qcppdkim1; bh=NBZd3PMviR5
-	5grv86w6EJGN6jeYZhx9rfGhFYWoVYFI=; b=YqLCHXYyDVoDCN1vQPGojMa18yk
-	0Mz1n3jBudvDXD5kvKLAgra/eZ0N3YhsLJUxjalff7AU7PwEfV7gdYzMB8pXUFlN
-	ZWiA86zp/eJVMmVhQulQz1g0IkQKbHMJkL5brn8QhpfRmItL6d1qkfFt3OQKCaby
-	hvnKh5aA1w8oa5dIO2Lk4xaFqaRcKTkd/m3YLbxA/CEY9BayY1dwUiVQYvJc67XB
-	UtwtepHz02red35fuJNCxsbGx+P6cnoewrwTzM7cAv6ltll4BALTwo6K9WySLiQR
-	+QAld79/edyCjPhbhrI0p9bGcSx/ly3GftbIhYjkOk74rV7Cj8/boig3MNA==
-Received: from mail-pl1-f199.google.com (mail-pl1-f199.google.com [209.85.214.199])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4a9xs7c12q-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Mon, 10 Nov 2025 08:50:40 +0000 (GMT)
-Received: by mail-pl1-f199.google.com with SMTP id d9443c01a7336-2964d6164bfso10006185ad.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 10 Nov 2025 00:50:40 -0800 (PST)
+	s=arc-20240116; t=1762765072; c=relaxed/simple;
+	bh=5GHxvDWQcxyWdVLkU5N2dv4/sQx2GEcWltELKfBhSMg=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=E+OFxLTnj7AK5C6CBP34FrIjl7M5MZpoQwtrTd3wKUpaPALbkYfQC89elJOpk6OjGAvz9+Sd39KdJpddC10wKfFtIHtAPPAL+SLlFNCOzQaNJxFL9j+OfJVBbFUNrO2hfAzGhKumostm6rKCuOy/EMnYAGY4tHcFSpbxAAfy+a8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=e/j7MBQo; arc=none smtp.client-ip=209.85.160.42
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-oa1-f42.google.com with SMTP id 586e51a60fabf-3d18422565eso1791782fac.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 10 Nov 2025 00:57:50 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1762764640; x=1763369440; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+        d=linaro.org; s=google; t=1762765070; x=1763369870; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=NBZd3PMviR55grv86w6EJGN6jeYZhx9rfGhFYWoVYFI=;
-        b=BCTZsh2ZtHw0/DHV/KftRlgbVqF/vpO1itFhODSUigJFBFC79SJvpBKpltTNXuu5/f
-         L6qmDl3MH82Iyzyy6rCUs9WNwXtq4k6AGEmX2dNCqzQrvQMJ12sxnlQiGdcDQVQblAZR
-         1g/g210SBGIH6GJG2ac5WL3/9E9VFWd44Zd/faxL80u5MK1Hnaivm/6ZSsTCu6VW2hwq
-         hBeK0dPSQakehzKwxuSov00dIouOSe5+7usZfuiquYF9Q+RQrPDxCAE9YThOPUernOZr
-         0tJhL7nb2sY1KGjUh7FXmwbCv0AiYVnae6ANTjfiTN5wKgUroicIKRF7OvllxJgz5ele
-         XMSQ==
+        bh=I+DU4bC9oY8isR66wkaZVD1cgl7C2T/3TuAVsgHOOjs=;
+        b=e/j7MBQorKMv3qhfZeOQYJho6w+nD4h2hGcT7LJ64J8+9Vg+Q51G6QBqasYV2cCoLq
+         8FDDenKGD4F9Swc9Z6VrZ+NrTg3nlf8DC3pLMEJGle3g1sSF6INESYbuI3z/ivk0K6Zq
+         VO1X3xfLKRM11XLURzU86C6NeH9/FvwwF94qgC1KO0swnuJzeQXDE/Y34ALETmvD5hGm
+         s7t2j8VZmwpr03U0qvfkw3NH7kOWhT+x4bNhhMuBxdrGeHup6S2YmXlYOllpjEi9JGV+
+         xql8kq7nIEQdOxUaZ1q9Yl8er0/OxZtxzf4TJmZ3zMpHahpKAe7KvrXu9YpRz20nNdju
+         XG6A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1762764640; x=1763369440;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+        d=1e100.net; s=20230601; t=1762765070; x=1763369870;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=NBZd3PMviR55grv86w6EJGN6jeYZhx9rfGhFYWoVYFI=;
-        b=cKTe205hNUQykx1oZs6raaJjjaS6t7YYlckKCHK79LFCf56wFPn6dk+tB13go8KxGY
-         5gqNM+KgelRG4u9JWr7lo6deV6vmcYIaDd/NBigjQCp2tGIPB0q0EGIF1OSkPfpJrA86
-         gYSBnBqbophvtm7JoqYmeqs6tfLrjiMyxp6FbMJjM3+hvorPmbECxEGGmKJRNQUSjdYT
-         wtBIlXX9PIoZz0X5SuO0Q3jK+W+cTyRbKxgIWVBprSv0C3E46tF2PFaMtnlottLZ2RVN
-         4DCBegN70w4xy+FRkhsl6Vyb/oeU7IBPcjhIzUdZwHW+LcI36MrB2MDKwks1vicgtMIP
-         boAg==
-X-Gm-Message-State: AOJu0Yys4JND2EwzvONuO+ssIeqtG2Tq4JorMNo4lX89SRoFdwVpONha
-	JFvTeNfry8EM7H3rhqNWWsdAHVWorFZBwhzEhrwIe7HMxToCnNqolL5stajK032k0/MN5F9pJ8A
-	W5R9gCQojO94vR2qcFJUOn0D2di9y1pTolzwr9erBA/QEzQInyhkiQOuBGe/ZHRuzUX0=
-X-Gm-Gg: ASbGncu6NruWaHCs1yWZ26CeLKcnEWKcyhIyM7DysGthvWlWf35xiGxBHRJNwRT6Isb
-	itcwFa5mdYGtbWVYowtt5DnIbHziHGU/5LaHfE0SaWt7bvJ4Lw/VD0ErnfkD5JjkIHGNdnjb+3O
-	4EviIGKCiaR/plALrBZaVIdLlDxYWdqcK4/dR1ELLDBp/qv1O37P1ULEj2gI2X1lZ2pX3ccQ5G1
-	iXpT20Yz8f9pNd2P+hbnevaeVzQRg0slNeASlg+/ij9sUzeTKKHKh1UATBUEYD820PUb8od3BKb
-	DGrPUyi1V9mNNn7AWxzzLpGLtxPHwtRJdCOmfnZmYdIJjeCvbobJR6dCBpJGqLfHcAM47UfJbCm
-	U5i/ajqHefvkPsen3g2etCrtNeZl6sA==
-X-Received: by 2002:a17:903:244a:b0:295:f960:be2a with SMTP id d9443c01a7336-297e5712034mr48843865ad.8.1762764640156;
-        Mon, 10 Nov 2025 00:50:40 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGbKwjSpzaqIwETQ7AXQ0mZlRymqM+XUs2HO3ow8cFOplYqI2CXTamxE/t21BFzUSI9M3CTZw==
-X-Received: by 2002:a17:903:244a:b0:295:f960:be2a with SMTP id d9443c01a7336-297e5712034mr48843745ad.8.1762764639641;
-        Mon, 10 Nov 2025 00:50:39 -0800 (PST)
-Received: from hu-sartgarg-hyd.qualcomm.com ([202.46.22.19])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-29650c5f94fsm138691365ad.40.2025.11.10.00.50.34
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 10 Nov 2025 00:50:39 -0800 (PST)
-From: Sarthak Garg <sarthak.garg@oss.qualcomm.com>
-To: Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, quic_nguyenb@quicinc.com,
-        quic_rampraka@quicinc.com, quic_pragalla@quicinc.com,
-        quic_sayalil@quicinc.com, quic_nitirawa@quicinc.com,
-        quic_bhaskarv@quicinc.com, kernel@oss.qualcomm.com,
-        Sarthak Garg <sarthak.garg@oss.qualcomm.com>,
-        Abel Vesa <abel.vesa@linaro.org>
-Subject: [PATCH V4 3/3] arm64: dts: qcom: sm8750-qrd: Add SDC2 node for sm8750 qrd board
-Date: Mon, 10 Nov 2025 14:20:13 +0530
-Message-Id: <20251110085013.802976-4-sarthak.garg@oss.qualcomm.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20251110085013.802976-1-sarthak.garg@oss.qualcomm.com>
-References: <20251110085013.802976-1-sarthak.garg@oss.qualcomm.com>
+        bh=I+DU4bC9oY8isR66wkaZVD1cgl7C2T/3TuAVsgHOOjs=;
+        b=b5XyN+h4UOaBJFdPShxC4ARgui0B7z/QDU5WDDbLf+4p+4WiCMhegWqGob35Ww7gLb
+         RtuuO2Cmq0wjyunQmNzFx7nWXdQsILH7fb+RZLjyCwDYnOxhOhZtAljgqNyT1xZge6ef
+         TVL+8zjF23KFaLlZ/KCZy/uX4dJ0O3V1x3CMXvM2HXc0qCNhX9ZCAwDJZmiLL4KZmLsE
+         XrmCu6wC3rCNMoIK6um/uWlYyzo092t69DIsNHpDr6FQy9dTGMJrJ4Z/5XufgkhzvCET
+         inDlmF+ClOvU0o1t6/kQpyoiZrE/C3gnu1WcQfXwXO+UmCdl2DZkgO2LfhKaTD4v3lsy
+         OHqw==
+X-Forwarded-Encrypted: i=1; AJvYcCV9DKS4b18pKxBUMs3NbJvUjF57jCSh8BAtua7dx/+c8wddVsaTEeX4VzetqZgydxLMDgNTjKVl/KLXbzhq@vger.kernel.org
+X-Gm-Message-State: AOJu0YyekK87Ycn5gXfwCST1t1RBF1KmFmxi+LvnT0ocnoiNckkEDZOT
+	FTmJ4HbVDLNkQTQVpRm86UXREOMtk/ce1n5sNvETPWMWiChV9l46vG8iNjtfrEh1ykyrZ1IG1N3
+	e0cpLmWb3EpZOXw0XBmnz4W17CuHcNexW8Jm9tDoszw==
+X-Gm-Gg: ASbGncvewT1uJ0mmt2ICiMidB60bwjT7AylEvk5hGE3J9PRoTH40QgR0KqYYVSZWaPJ
+	VpOKaUpOJiZzKHqsk9y9IJiG/CwSIYPM08MMdkw9I5d0pzauMBV2GBi3DMZXLGLwHKWeElBTVTf
+	1MXKv0zZtoCtmaZgNURYGbqRehlilDnwTRIKuD1qPuLbDp7B77MPzz4YIzaePV9QLIIf+ktzroc
+	7zG5df7jXXLXZdAB6FoMYHUBS0xiq5BzCQW2FHC/6D+hkJx4KkUnAMjrCQhDlDKLbyZ9jcaxSUb
+	vCN/
+X-Google-Smtp-Source: AGHT+IEvNSWQF8V50WXZvHvTh5vdg6c1kYKSH5fDM/Ta6RUD/FEZDy3lz08IzLZFRWp24NzfBrjEWgoxjvYDKgubZn0=
+X-Received: by 2002:a05:6870:899a:b0:3d4:760f:544b with SMTP id
+ 586e51a60fabf-3e7c294ab31mr5259236fac.46.1762765070045; Mon, 10 Nov 2025
+ 00:57:50 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-GUID: d39p_2ZTCrriEhRSau0dc2hCBO9N9dsi
-X-Proofpoint-ORIG-GUID: d39p_2ZTCrriEhRSau0dc2hCBO9N9dsi
-X-Authority-Analysis: v=2.4 cv=LtifC3dc c=1 sm=1 tr=0 ts=6911a760 cx=c_pps
- a=JL+w9abYAAE89/QcEU+0QA==:117 a=fChuTYTh2wq5r3m49p7fHw==:17
- a=6UeiqGixMTsA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=EUspDBNiAAAA:8 a=KKAkSRfTAAAA:8 a=zXSOlch8-c1XrFqEhSQA:9
- a=324X-CrmTo6CU4MGRt3R:22 a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMTEwMDA3NyBTYWx0ZWRfX+2lZj5ziFKag
- pxrqH5RZpeIstAqYBcXI4g0BGdjJ+4sUw7hrT6T70poD0W3X5JhM0SLf9l3ns1sJ31kJDBMnTrF
- wmy4YeyosfpwSZac6gdlqZE52bgOt/PLpQCiFw/pgOwngnIzFuCREEtTNJqUW+kyeHw/8tJSllc
- vlLBT3BlXqfmPx4rxgXTH9Fe/jHsIO4XVwxZz9lMNrH9qgO3AELSZvEAsGRbvMDwBvphdLmHhIu
- 7UxFOo+UpB4TY+4BS7ajLuarnuNoaJrD91+QUQVXJ68AH9qNPhyiSNYUt4QLlXSKwrQjsGyMcm7
- jm35BSo6sAcT4Qkav6lbfbKM51geu6Jq+EwSViDVzRO87ZrWE29TeB85Wso9F1BgDVF5Z4QDnOF
- xABj0yizTOYYvtxVjXrrNAWVYdMwZA==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
- definitions=2025-11-10_03,2025-11-06_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- adultscore=0 clxscore=1015 suspectscore=0 phishscore=0 lowpriorityscore=0
- impostorscore=0 priorityscore=1501 malwarescore=0 spamscore=0 bulkscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2510240001 definitions=main-2511100077
+References: <20251105-aheev-uninitialized-free-attr-tee-v1-1-2e1ee8483bc5@gmail.com>
+In-Reply-To: <20251105-aheev-uninitialized-free-attr-tee-v1-1-2e1ee8483bc5@gmail.com>
+From: Jens Wiklander <jens.wiklander@linaro.org>
+Date: Mon, 10 Nov 2025 09:57:38 +0100
+X-Gm-Features: AWmQ_bmbfwlbuD27u393tcu35e2C0scPDS3Uy66i-DK7aOy74DFrH1rStFwJq9A
+Message-ID: <CAHUa44GYnZFaZQBNbV0=RSR7r61+ErYdQtEsRObNALz2CwT_Gg@mail.gmail.com>
+Subject: Re: [PATCH] tee: fix uninitialized pointers with free attr
+To: Ally Heev <allyheev@gmail.com>
+Cc: Amirreza Zarrabi <amirreza.zarrabi@oss.qualcomm.com>, Sumit Garg <sumit.garg@kernel.org>, 
+	linux-arm-msm@vger.kernel.org, op-tee@lists.trustedfirmware.org, 
+	linux-kernel@vger.kernel.org, Dan Carpenter <dan.carpenter@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Enable SD Card host controller for sm8750 qrd board.
+Hi,
 
-Signed-off-by: Sarthak Garg <sarthak.garg@oss.qualcomm.com>
-Reviewed-by: Abel Vesa <abel.vesa@linaro.org>
----
- arch/arm64/boot/dts/qcom/sm8750-qrd.dts | 23 +++++++++++++++++++++++
- 1 file changed, 23 insertions(+)
+On Wed, Nov 5, 2025 at 3:20=E2=80=AFPM Ally Heev <allyheev@gmail.com> wrote=
+:
+>
+> Uninitialized pointers with `__free` attribute can cause undefined
+> behaviour as the memory assigned(randomly) to the pointer is freed
+> automatically when the pointer goes out of scope
+>
+> tee doesn't have any bugs related to this as of now, but
+> it is better to initialize and assign pointers with `__free` attr
+> in one statement to ensure proper scope-based cleanup
+>
+> Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
+> Closes: https://lore.kernel.org/all/aPiG_F5EBQUjZqsl@stanley.mountain/
+> Signed-off-by: Ally Heev <allyheev@gmail.com>
+> ---
+>  drivers/tee/qcomtee/call.c | 5 +++--
+>  1 file changed, 3 insertions(+), 2 deletions(-)
+>
+> diff --git a/drivers/tee/qcomtee/call.c b/drivers/tee/qcomtee/call.c
+> index ac134452cc9cfd384c28d41547545f2c5748d86c..8b7b4decddd8d1811dc0a7cc4=
+6a4a4fbada45526 100644
+> --- a/drivers/tee/qcomtee/call.c
+> +++ b/drivers/tee/qcomtee/call.c
+> @@ -645,12 +645,13 @@ static void qcomtee_get_version(struct tee_device *=
+teedev,
+>  static void qcomtee_get_qtee_feature_list(struct tee_context *ctx, u32 i=
+d,
+>                                           u32 *version)
+>  {
+> -       struct qcomtee_object_invoke_ctx *oic __free(kfree);
+>         struct qcomtee_object *client_env, *service;
+>         struct qcomtee_arg u[3] =3D { 0 };
+>         int result;
+>
+> -       oic =3D qcomtee_object_invoke_ctx_alloc(ctx);
+> +       struct qcomtee_object_invoke_ctx *oic __free(kfree) =3D
+> +               qcomtee_object_invoke_ctx_alloc(ctx);
 
-diff --git a/arch/arm64/boot/dts/qcom/sm8750-qrd.dts b/arch/arm64/boot/dts/qcom/sm8750-qrd.dts
-index 13c7b9664c89..e08bebf93966 100644
---- a/arch/arm64/boot/dts/qcom/sm8750-qrd.dts
-+++ b/arch/arm64/boot/dts/qcom/sm8750-qrd.dts
-@@ -916,6 +916,22 @@ &remoteproc_mpss {
- 	status = "okay";
- };
- 
-+&sdhc_2 {
-+	cd-gpios = <&tlmm 55 GPIO_ACTIVE_LOW>;
-+
-+	vmmc-supply = <&vreg_l9b_2p9>;
-+	vqmmc-supply = <&vreg_l8b_1p8>;
-+
-+	no-sdio;
-+	no-mmc;
-+
-+	pinctrl-0 = <&sdc2_default &sdc2_card_det_n>;
-+	pinctrl-1 = <&sdc2_sleep &sdc2_card_det_n>;
-+	pinctrl-names = "default", "sleep";
-+
-+	status = "okay";
-+};
-+
- &swr0 {
- 	status = "okay";
- 
-@@ -1031,6 +1047,13 @@ wcd_default: wcd-reset-n-active-state {
- 		bias-disable;
- 		output-low;
- 	};
-+
-+	sdc2_card_det_n: sd-card-det-n-state {
-+		pins = "gpio55";
-+		function = "gpio";
-+		drive-strength = <2>;
-+		bias-pull-up;
-+	};
- };
- 
- &uart7 {
--- 
-2.34.1
+Can we zero-initialize oic at its original location instead? Doing it
+here looks messy.
 
+Thanks,
+Jens
+
+> +
+>         if (!oic)
+>                 return;
+>
+>
+> ---
+> base-commit: c9cfc122f03711a5124b4aafab3211cf4d35a2ac
+> change-id: 20251105-aheev-uninitialized-free-attr-tee-0221e45ec5a2
+>
+> Best regards,
+> --
+> Ally Heev <allyheev@gmail.com>
+>
 
