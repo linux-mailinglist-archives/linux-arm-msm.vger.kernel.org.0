@@ -1,165 +1,195 @@
-Return-Path: <linux-arm-msm+bounces-80893-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-80894-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8B229C44954
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 09 Nov 2025 23:41:01 +0100 (CET)
+Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [IPv6:2605:f480:58:1:0:1994:3:14])
+	by mail.lfdr.de (Postfix) with ESMTPS id 56CABC44BA7
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Nov 2025 02:30:01 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 54D28188A6D9
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  9 Nov 2025 22:41:26 +0000 (UTC)
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id DD3E24E67A0
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Nov 2025 01:29:52 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 52DFC258EE0;
-	Sun,  9 Nov 2025 22:40:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A9492221D92;
+	Mon, 10 Nov 2025 01:29:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="H6/ufYUE"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="bM0mKyU6";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="ItAAtIhA"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.9])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A58A624A049;
-	Sun,  9 Nov 2025 22:40:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.9
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 267C921D3F6
+	for <linux-arm-msm@vger.kernel.org>; Mon, 10 Nov 2025 01:29:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762728058; cv=none; b=Ryl/pqseQG5CBgEff26itAvMA7ZsyqAV/w0n9Oc4qifj7qnJ9KkfqOMchTU+FDnpzD87DKHeBRRmVOnrTZEZMLQOXS/sHUUKf/njzW6BvLEBqbRiZBibwNSCp1ZK+dLHHpS9QPC/Jqxe0EmPmQqBlF9qqtumpuSJ+rT/iy+U64Q=
+	t=1762738191; cv=none; b=D1Awm8uOVbdOo0tcb2l5QuPBgQMb94tApkRI1L+jvPu8Dsmhb0KErhljgiriyiIdRfajAGt6EwLGMmn2mEPd2vGMv4DmQxCMIWToApo24VGP0CfCLMty4bE0aySEVvAs6Qzon10A/tHtsvvKvNljUB1zYTLRXxyGS4WtnZjQMcs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762728058; c=relaxed/simple;
-	bh=cMmPa9Fxj7ZO+ut5H2ulYJ53jkvVxvjyBkouir73++0=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=YCawxlEKfcDb5tbT7T6E3+ljUYDXnHWr7lTXz5YmPDYh7Rq0EB76G1YX1lESXWpi6tYr10w3jHzCSDsZauDz/aVYYnq0XzJpmfdKoy+XfWXBPVzQLZmuH9jO8QcqDW1zaU/rbFlJAq95S1oiOF186T8AlUZbjvOyPbafjHCowqo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=H6/ufYUE; arc=none smtp.client-ip=192.198.163.9
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1762728057; x=1794264057;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=cMmPa9Fxj7ZO+ut5H2ulYJ53jkvVxvjyBkouir73++0=;
-  b=H6/ufYUExB+5X8KVqNlDYlQELHoLdvkQtDhRlo4VR7+LVeIDBNJdjaR2
-   NivFWtMjisJP8eWLf+pj0aDtiAN+eE0zXU+fLTuGrxhcoWZdeO/jvM3Hy
-   HuecjagmKFkKIR3HoSAM5l6GaocT37n2stCtBwVDS7YrB/mtAv+zfNKYV
-   ZTss8PMisgAaSskC7Ena5XEIwFpGrPC8qSWb1NQL+2aLRnO0g2zFSvjMr
-   51tn0Rpz53keNXBR/FesSQe/ts/P30r70UcoIcO1uQ7vv5siw18nM/nsS
-   k8eZpYyemMnocZZZ/xcXzBBiEN7McUbMPcp54EXQBgxb6+SslDLWsBDir
-   w==;
-X-CSE-ConnectionGUID: RhgSzLsaQxiAmIXyjh9FSQ==
-X-CSE-MsgGUID: IJKCj/EGQDa8jwv5ZqAq/g==
-X-IronPort-AV: E=McAfee;i="6800,10657,11608"; a="75472365"
-X-IronPort-AV: E=Sophos;i="6.19,292,1754982000"; 
-   d="scan'208";a="75472365"
-Received: from fmviesa004.fm.intel.com ([10.60.135.144])
-  by fmvoesa103.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 09 Nov 2025 14:40:56 -0800
-X-CSE-ConnectionGUID: xAz8T/LTTc2AJbg4gm+ITg==
-X-CSE-MsgGUID: lWAqsRqVTdurGKj8c/WK7w==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.19,292,1754982000"; 
-   d="scan'208";a="193540812"
-Received: from lkp-server01.sh.intel.com (HELO 6ef82f2de774) ([10.239.97.150])
-  by fmviesa004.fm.intel.com with ESMTP; 09 Nov 2025 14:40:53 -0800
-Received: from kbuild by 6ef82f2de774 with local (Exim 4.96)
-	(envelope-from <lkp@intel.com>)
-	id 1vIE5b-0002Sl-1r;
-	Sun, 09 Nov 2025 22:40:51 +0000
-Date: Mon, 10 Nov 2025 06:40:17 +0800
-From: kernel test robot <lkp@intel.com>
-To: Sumit Kumar <sumit.kumar@oss.qualcomm.com>,
-	Manivannan Sadhasivam <mani@kernel.org>
-Cc: oe-kbuild-all@lists.linux.dev,
-	Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>,
-	Akhil Vinod <akhil.vinod@oss.qualcomm.com>,
-	Subramanian Ananthanarayanan <subramanian.ananthanarayanan@oss.qualcomm.com>,
-	linux-kernel@vger.kernel.org, mhi@lists.linux.dev,
-	linux-arm-msm@vger.kernel.org, quic_vpernami@quicinc.com,
-	Sumit Kumar <sumit.kumar@oss.qualcomm.com>
-Subject: Re: [PATCH v2 3/3] bus: mhi: ep: Add loopback driver for data path
- testing
-Message-ID: <202511100649.KfikwcaY-lkp@intel.com>
-References: <20251104-loopback_mhi-v2-3-727a3fd9aa74@oss.qualcomm.com>
+	s=arc-20240116; t=1762738191; c=relaxed/simple;
+	bh=2NZzeLexcBBGUyZzml9soZ/Jeo3S3S8JioTiz76iY+0=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=c2LpWAuJOQykKHMPfhmcxFARjxEdP4YG/GHhNsnyHxVEkzAHixSc50kcSjbUaAz9fX4X+7O6KizSVOLxWNmsClj47ok+vY+bcxRe1Ml1XiqjoqztttfQEf1DdEmWnxmZgKXGDlVqXaGBS/91si2e6rigPVSLurmKWK45pKTFpsQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=bM0mKyU6; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=ItAAtIhA; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 5AA0XBGY1808874
+	for <linux-arm-msm@vger.kernel.org>; Mon, 10 Nov 2025 01:29:49 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	mvQPOUskdjWPrB4UtpqZJVcpnC9hm6QOIT/T8aJTbnM=; b=bM0mKyU6Z/3L9xQy
+	vBJM0QCch4B1nhqDc5Sm+teT0SV5j0X54eda9BFhrlQFjdVzyoY7E7TEX1CzFo0E
+	rKVwFtLjAC7ta6Gi62J2m8unBIw89FWqEbM2MZv+XORblBHW+CeOjlykiKL8kS6n
+	xpxdukS0KQXdeXmE7b8a3bm3IM8hS2wg6ipoi3v1XC4UZnmU6UB1mayTww24u6jz
+	0P3PDht63XhXWyy2kcczsNbQ581u5Jhfclz85OuN3pU1Ob1Yv+/rgmiAfq6LHL2Y
+	8PJF4B+iZuxCfY1eV/dHV0t/dfJ81PgIk1w8g5JgeYdtpab9hFVS4kCs6s+RdJxE
+	wR1w3A==
+Received: from mail-pj1-f70.google.com (mail-pj1-f70.google.com [209.85.216.70])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4ab5m1g2nf-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Mon, 10 Nov 2025 01:29:49 +0000 (GMT)
+Received: by mail-pj1-f70.google.com with SMTP id 98e67ed59e1d1-3407734d98bso3163753a91.3
+        for <linux-arm-msm@vger.kernel.org>; Sun, 09 Nov 2025 17:29:49 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=oss.qualcomm.com; s=google; t=1762738188; x=1763342988; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=mvQPOUskdjWPrB4UtpqZJVcpnC9hm6QOIT/T8aJTbnM=;
+        b=ItAAtIhAAESrKHnS2Rq54HmUUwj4z5TRluvYRoC2DwBKX9fby+FTQwm0er1lm8ULd4
+         IuGj9T178BZ9BS9Rsu/4QTdtgtWaXKxSCKhxdA/x2+BmODZstNi9ozUgyWT6RxPkkBMT
+         wTeNtrYD7PSszpFy6cK//lv3NKa8yyoC+ytwYqpPPPrUlibGwsRhZG0sJR+jxajHuJcC
+         QWudY6QlgBvC+r47MJ0zOkCcclF6GClmVoE3c+R/ra6bJvw38blXwivgJ/XxXJo+Dxo6
+         4cl+USt+C9dJB7Xe+1CmREQw/31KLHPIrJCuqska5Ff4F6EP7qepjTSGIRwQtedpUXUJ
+         VnIQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1762738188; x=1763342988;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=mvQPOUskdjWPrB4UtpqZJVcpnC9hm6QOIT/T8aJTbnM=;
+        b=q80SxOKEctOOlSxui0n9NfQMTmCHOUxcx2G59Shpkm7PGNaPkmRNTZP6KXDR/mtf77
+         7YuK3jDckutNgwakajQxeWeCjuZA/6BBRSNSxxoe45jADuX3IsM7A+DCbfOQiucLGK8K
+         gJMQ1iEOyfEAzLDmxuN3RMUBNrD6mr0SNlPTZMwEuCB9jTD24MEpSBkGD1x1UxLEi8RP
+         wq5oSlNNMLJ3dyw9Jp0gm3uyCGAG4BjyCjPoJ/3ilw5C2nKBhONKX6UjTC1ghZMC6Hun
+         6nKYj4PPua2Ec4gHn8hn70MFG2GGd1aQg4vU0kfofHreN9ljSI0pMzuib5C0/9YhUOdg
+         h2nQ==
+X-Gm-Message-State: AOJu0YxdJ4ncXOdslu5ADj1+qLZqY1CiBXjirTZB3iWCgyTKYlGMNIi2
+	4kazI94AofbxijVUnW+/r6IC1e/9MLmmU+gZ1XBtLmKFEEfeviC2QpibuS7PYodk5x0hZxLlKts
+	sJBwURVZGQ1FJBv6QG5SK1xs1+NQO5VR3wpz5jE03mAmws8btmYF95Riy4LOzXAo/P43M
+X-Gm-Gg: ASbGncu7n+hMyTs14LQeTE8iDVxGKTGAyWKp1GJ4x97/vv7pzvP8+jO/cxqXRSVdtNN
+	rKWpjkOVi++0415TvtLIN00NRbHR5LXUvNbeEiydgZgNJUtUODi6kUY2E6wwWBgLOLsrtquGxIH
+	Q4mHyG0aBqABvLXb2Ufbmm3Mymrzfq0YPtz6SoT8Eb1XZQm19teOPveZP4NVRpW9XIiB8sG1rCG
+	GGdbfnBOJF18DVPHeq0oNuJOwsWgOlnGjYRQOHxtbjq2OL9RPfOSI5R8smgRRo99VBk2FR+pimI
+	CKcwuI+V2mT6No0hXkJT8T5qd+bNNeL+KbjUfZ9Syn/ixra96hAQscHOlDtSbB1W7PzZXUv9UkG
+	WUJIWJe75dKwjwuCd98yCVU4B885ls5Va3iirR6aOktHkQ5EVjgYF3eTGSxtgpedp
+X-Received: by 2002:a17:90a:e7ca:b0:33d:a0fd:257b with SMTP id 98e67ed59e1d1-3436cd0bd68mr8856904a91.36.1762738188461;
+        Sun, 09 Nov 2025 17:29:48 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IF/zpXBoEI0qZfIbWB/NFb7Wa9KJd0FMTt/M01D8g42vf/KLbZfvlDMgxiy/2OU7k021aGKxw==
+X-Received: by 2002:a17:90a:e7ca:b0:33d:a0fd:257b with SMTP id 98e67ed59e1d1-3436cd0bd68mr8856887a91.36.1762738187957;
+        Sun, 09 Nov 2025 17:29:47 -0800 (PST)
+Received: from [10.133.33.229] (tpe-colo-wan-fw-bordernet.qualcomm.com. [103.229.16.4])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-3436c3d7dddsm5695497a91.7.2025.11.09.17.29.42
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sun, 09 Nov 2025 17:29:47 -0800 (PST)
+Message-ID: <b80a5bda-e0fd-4471-9aea-bf3b39ec64e6@oss.qualcomm.com>
+Date: Mon, 10 Nov 2025 09:29:40 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20251104-loopback_mhi-v2-3-727a3fd9aa74@oss.qualcomm.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 1/2] dt-bindings: arm: add CTCU device for monaco
+To: Suzuki K Poulose <suzuki.poulose@arm.com>,
+        Mike Leach <mike.leach@linaro.org>,
+        James Clark <james.clark@linaro.org>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Tingwei Zhang <tingwei.zhang@oss.qualcomm.com>,
+        Yuanfang Zhang <yuanfang.zhang@oss.qualcomm.com>,
+        Mao Jinlong <jinlong.mao@oss.qualcomm.com>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, coresight@lists.linaro.org,
+        linux-arm-kernel@lists.infradead.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, Krzysztof Kozlowski <krzk@kernel.org>
+References: <20251103-enable-ctcu-for-monaco-v4-0-92ff83201584@oss.qualcomm.com>
+ <20251103-enable-ctcu-for-monaco-v4-1-92ff83201584@oss.qualcomm.com>
+Content-Language: en-US
+From: Jie Gan <jie.gan@oss.qualcomm.com>
+In-Reply-To: <20251103-enable-ctcu-for-monaco-v4-1-92ff83201584@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMTEwMDAxMSBTYWx0ZWRfX7e6tHHZ026f2
+ 2/cwRJZk47ABiXwpjMGeKgyyfvUhcEsRtG18Ew/2eDhNwi8BhFjAKY2TtcIzBh6Zo7UkdZdZNy5
+ lferzSBm6og1HQwMiF5H9FxbcFNaQp2PT7OwlWH6OBqQTHTeu3Lr2gL9dHZPXcRBT+QIu64VY47
+ DumBC6HLNKL408TNvwwlfB5xfGu3fDEo1/hJDFU1Tpaoz8VzlfUvBmOxdlxPoLkpPW53TRAuYp7
+ N1uCog6ooruJmX/U/Ki/0ts86Z6sQYcmt5a0dj0e1y3n5ncBTfivtDjUidZP9wM4A8lh9Z0wu8D
+ FqtORQhQ7QuvD/nJwQkj5oWhUndmOLppE6wbIpldy7RQWUT1CFmd28WqLZOpO74Fcn2du8+cK8i
+ kS2nlvyG7FNpIPS7CtCIUp38SWgtng==
+X-Authority-Analysis: v=2.4 cv=TsXrRTXh c=1 sm=1 tr=0 ts=6911400d cx=c_pps
+ a=0uOsjrqzRL749jD1oC5vDA==:117 a=nuhDOHQX5FNHPW3J6Bj6AA==:17
+ a=IkcTkHD0fZMA:10 a=6UeiqGixMTsA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=KKAkSRfTAAAA:8 a=7CQSdrXTAAAA:8 a=VwQbUJbxAAAA:8
+ a=EUspDBNiAAAA:8 a=51A4gIhVuH9znBGuUk4A:9 a=QEXdDO2ut3YA:10
+ a=mQ_c8vxmzFEMiUWkPHU9:22 a=cvBusfyB2V15izCimMoJ:22 a=a-qgeE7W1pNrGK8U0ZQC:22
+X-Proofpoint-ORIG-GUID: y1n-XBroGnbcTUBJvntX8uGBJ5PFCakz
+X-Proofpoint-GUID: y1n-XBroGnbcTUBJvntX8uGBJ5PFCakz
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
+ definitions=2025-11-09_10,2025-11-06_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ adultscore=0 lowpriorityscore=0 clxscore=1015 phishscore=0 spamscore=0
+ malwarescore=0 impostorscore=0 priorityscore=1501 bulkscore=0 suspectscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2510240001 definitions=main-2511100011
 
-Hi Sumit,
 
-kernel test robot noticed the following build warnings:
 
-[auto build test WARNING on e6b9dce0aeeb91dfc0974ab87f02454e24566182]
+On 11/3/2025 3:06 PM, Jie Gan wrote:
+> The CTCU device for monaco shares the same configurations as SA8775p. Add
+> a fallback to enable the CTCU for monaco to utilize the compitable of the
+> SA8775p.
+> 
 
-url:    https://github.com/intel-lab-lkp/linux/commits/Sumit-Kumar/bus-mhi-host-Add-loopback-driver-with-sysfs-interface/20251104-174320
-base:   e6b9dce0aeeb91dfc0974ab87f02454e24566182
-patch link:    https://lore.kernel.org/r/20251104-loopback_mhi-v2-3-727a3fd9aa74%40oss.qualcomm.com
-patch subject: [PATCH v2 3/3] bus: mhi: ep: Add loopback driver for data path testing
-config: csky-randconfig-r061-20251110 (https://download.01.org/0day-ci/archive/20251110/202511100649.KfikwcaY-lkp@intel.com/config)
-compiler: csky-linux-gcc (GCC) 15.1.0
+Gentle reminder. Not sure do we have a change to apply this patch?
 
-If you fix the issue in a separate patch/commit (i.e. not just a new version of
-the same patch/commit), kindly add following tags
-| Reported-by: kernel test robot <lkp@intel.com>
-| Closes: https://lore.kernel.org/oe-kbuild-all/202511100649.KfikwcaY-lkp@intel.com/
+Thanks,
+Jie
 
-cocci warnings: (new ones prefixed by >>)
->> drivers/bus/mhi/ep/mhi_ep_loopback.c:80:2-7: WARNING: NULL check before some freeing functions is not needed.
---
->> drivers/bus/mhi/ep/mhi_ep_loopback.c:46:8-15: WARNING opportunity for kmemdup
 
-vim +80 drivers/bus/mhi/ep/mhi_ep_loopback.c
+> Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> Acked-by: Suzuki K Poulose <suzuki.poulose@arm.com>
+> Reviewed-by: Bjorn Andersson <andersson@kernel.org>
+> Signed-off-by: Jie Gan <jie.gan@oss.qualcomm.com>
+> ---
+>   Documentation/devicetree/bindings/arm/qcom,coresight-ctcu.yaml | 9 +++++++--
+>   1 file changed, 7 insertions(+), 2 deletions(-)
+> 
+> diff --git a/Documentation/devicetree/bindings/arm/qcom,coresight-ctcu.yaml b/Documentation/devicetree/bindings/arm/qcom,coresight-ctcu.yaml
+> index c969c16c21ef..460f38ddbd73 100644
+> --- a/Documentation/devicetree/bindings/arm/qcom,coresight-ctcu.yaml
+> +++ b/Documentation/devicetree/bindings/arm/qcom,coresight-ctcu.yaml
+> @@ -26,8 +26,13 @@ description: |
+>   
+>   properties:
+>     compatible:
+> -    enum:
+> -      - qcom,sa8775p-ctcu
+> +    oneOf:
+> +      - items:
+> +          - enum:
+> +              - qcom,qcs8300-ctcu
+> +          - const: qcom,sa8775p-ctcu
+> +      - enum:
+> +          - qcom,sa8775p-ctcu
+>   
+>     reg:
+>       maxItems: 1
+> 
 
-    37	
-    38	static void mhi_ep_loopback_ul_callback(struct mhi_ep_device *mhi_dev,
-    39						struct mhi_result *mhi_res)
-    40	{
-    41		struct mhi_ep_loopback *mhi_ep_lb = dev_get_drvdata(&mhi_dev->dev);
-    42		struct mhi_ep_loopback_work *mhi_ep_lb_work;
-    43		void *buf;
-    44	
-    45		if (!(mhi_res->transaction_status)) {
-  > 46			buf = kmalloc(mhi_res->bytes_xferd, GFP_KERNEL);
-    47			if (!buf) {
-    48				dev_err(&mhi_dev->dev, "Failed to allocate buffer\n");
-    49				return;
-    50			}
-    51	
-    52			memcpy(buf, mhi_res->buf_addr, mhi_res->bytes_xferd);
-    53	
-    54			mhi_ep_lb_work = kmalloc(sizeof(*mhi_ep_lb_work), GFP_KERNEL);
-    55			if (!mhi_ep_lb_work) {
-    56				dev_err(&mhi_dev->dev, "Unable to allocate the work structure\n");
-    57				kfree(buf);
-    58				return;
-    59			}
-    60	
-    61			INIT_WORK(&mhi_ep_lb_work->work, mhi_ep_loopback_work_handler);
-    62			mhi_ep_lb_work->mdev = mhi_dev;
-    63			mhi_ep_lb_work->buf = buf;
-    64			mhi_ep_lb_work->len = mhi_res->bytes_xferd;
-    65	
-    66			queue_work(mhi_ep_lb->loopback_wq, &mhi_ep_lb_work->work);
-    67		}
-    68	}
-    69	
-    70	static void mhi_ep_loopback_dl_callback(struct mhi_ep_device *mhi_dev,
-    71						struct mhi_result *mhi_res)
-    72	{
-    73		void *buf;
-    74	
-    75		if (mhi_res->transaction_status)
-    76			return;
-    77	
-    78		buf = mhi_res->buf_addr;
-    79		if (buf)
-  > 80			kfree(buf);
-    81	}
-    82	
-
--- 
-0-DAY CI Kernel Test Service
-https://github.com/intel/lkp-tests/wiki
 
