@@ -1,153 +1,134 @@
-Return-Path: <linux-arm-msm+bounces-81030-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-81033-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [IPv6:2605:f480:58:1:0:1994:3:14])
-	by mail.lfdr.de (Postfix) with ESMTPS id E14C6C471C2
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Nov 2025 15:11:22 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id B9050C472A4
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Nov 2025 15:26:37 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 3E44D4EC755
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Nov 2025 14:11:16 +0000 (UTC)
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id E876D4E233E
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Nov 2025 14:26:34 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C6EF1312804;
-	Mon, 10 Nov 2025 14:11:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A2233313263;
+	Mon, 10 Nov 2025 14:26:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=microchip.com header.i=@microchip.com header.b="fqaK0G2U"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="pb5mDbCk"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from esa.microchip.iphmx.com (esa.microchip.iphmx.com [68.232.153.233])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EEE48228CBC;
-	Mon, 10 Nov 2025 14:11:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=68.232.153.233
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E1B3303CB4;
+	Mon, 10 Nov 2025 14:26:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762783872; cv=none; b=tz8CDxOGp/kyPFqLC0A4YG+7LgFDGOGA141tESGz4ccfK2X+6cKKPUFvW/sZWF9GjHo2wY86L+8ZXxEoU28TpbEZ55Xk6EbZ8LWGG/Y+Y/eTwEHN1dVLe8tvBCxXFP/xdf++7ET/PL0HLwaGPYSr6Bems/EmB2KQbzzO6qoW3Dg=
+	t=1762784788; cv=none; b=bitzClYmVCLW3KKbn1GzfysVLzNSj4wTD1aj5rKdPdjwMrqiKlI2UCqrcaEv9fjSI3Ahd3KFfov47vkk3FXz8qyOfwxL/KXTwHsHFDv5NOwWAJxtOyAWh8Ycv8WUyADrvkCp39q8tb9NJ1ns0z/XWh8Lzzahb7rHKgc2a6rEzAM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762783872; c=relaxed/simple;
-	bh=48QFvVDn/gQXwmUmio9XPnllOgtcyyXloU9GmXy3GXQ=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=LVahrcXrN4H1IioAgXAz8aTuqd7QdqUIInRoLVkmQ89upAVx5GqQEZubW93hTwX1SreSNJQfien89cZ6cBPqqN5YBVEEIw/dqTVCx22sZbsbe5FWyXjZtLMMiDScvokoN4wdvSeUgr/ZGmnW4AZ3EDV8JslaZWQ2qGZcg8/CnRY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=microchip.com; spf=pass smtp.mailfrom=microchip.com; dkim=pass (2048-bit key) header.d=microchip.com header.i=@microchip.com header.b=fqaK0G2U; arc=none smtp.client-ip=68.232.153.233
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=microchip.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=microchip.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=microchip.com; i=@microchip.com; q=dns/txt; s=mchp;
-  t=1762783871; x=1794319871;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=48QFvVDn/gQXwmUmio9XPnllOgtcyyXloU9GmXy3GXQ=;
-  b=fqaK0G2UuX2xilf+tgALA4wwHmLX2BJVjU9Cgrnf49Jfrhwg/vCwKqds
-   Oq4ZG4kgnKjEBWM13ip1XXF29R8TJlo3yGqxp9YUrEnPfllFLkpS4hs0D
-   ffXxx3ThOx/wtcSttt2NxiiW0R3ZINvncu+u0ITrTPilJYJZKYUtBk5hT
-   HS1oAUOWac689eAA2JHftXAl8NFZ7z3AdUyOFfzhZetpBHsrbeu9fIxvy
-   ENVVzf0Dn1e7JaA0kcvyrJYXbRSTgAfSIxyvoMr1kgLgR95NUWS94R5Na
-   3exCpgiKT7XlGQ5lfBz5/skC0bjkxXd1L6djneJHO9mTLXmdFF4UOhQdH
-   g==;
-X-CSE-ConnectionGUID: 7jHQAg5DRaCcnmeaPG7SRg==
-X-CSE-MsgGUID: cZ/bQKkfRpi6h9O940oGMw==
-X-IronPort-AV: E=Sophos;i="6.19,293,1754982000"; 
-   d="scan'208";a="280277302"
-X-Amp-Result: SKIPPED(no attachment in message)
-Received: from unknown (HELO email.microchip.com) ([170.129.1.10])
-  by esa5.microchip.iphmx.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 10 Nov 2025 07:11:09 -0700
-Received: from chn-vm-ex04.mchp-main.com (10.10.87.151) by
- chn-vm-ex3.mchp-main.com (10.10.87.32) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.2.2562.29; Mon, 10 Nov 2025 07:10:29 -0700
-Received: from [10.159.245.205] (10.10.85.11) by chn-vm-ex04.mchp-main.com
- (10.10.85.152) with Microsoft SMTP Server id 15.1.2507.58 via Frontend
- Transport; Mon, 10 Nov 2025 07:10:23 -0700
-Message-ID: <e7ddaff8-0d8a-4d79-a2b1-97aaac524a83@microchip.com>
-Date: Mon, 10 Nov 2025 15:10:23 +0100
+	s=arc-20240116; t=1762784788; c=relaxed/simple;
+	bh=L3nGmc65cfsV6qiQ+LYogmLlv8XDTxddUlOLJY174z8=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=oXjJXsz5agJBoImMHFTtw71emXlGVvSght2CiiaRP44TQ4GrC31D2oUK1p8Utr6faSfcKyNvqx/SiZ53CrY0lBZ9BqMLssEocxdtm8kFrVfahHKtIigyvuRrOCpbnyAClCIXdi8yBZZefkIWQfDMdFch1Abk8LZF8oh55dF0ZKA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=pb5mDbCk; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPS id EAF39C116B1;
+	Mon, 10 Nov 2025 14:26:27 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1762784788;
+	bh=L3nGmc65cfsV6qiQ+LYogmLlv8XDTxddUlOLJY174z8=;
+	h=From:Subject:Date:To:Cc:Reply-To:From;
+	b=pb5mDbCkKZdH2m8BQACdqKZTCEu/n2DXSP7srbHxmdAfOHZJx570wJUD1kaBc9F5R
+	 BDY/1DOm+chtaitlSvHxBhq61A0zZuh09dAOnWyOW1lpnBireJRGv9ro2SmzN4v0QL
+	 iwPG/dSqO8kLVqkqoXszDEjG7lq0JctbcJFRWd6V0k836Th6vG/0pICswr6ggCS3Pp
+	 U6k/cf7kx0bSB/QJr4UieU0PGZDwlYST0qrG5O3jQnheDVFTplpjsexhcO5KynNAIt
+	 vFzUM1kx2OWgmb17zx7n1OjEpn+LHyN+SQCSodpUZ5Q024jb+79u65maN66FLiFP9I
+	 RW7dE0h08629w==
+Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DDBD0CCFA1A;
+	Mon, 10 Nov 2025 14:26:27 +0000 (UTC)
+From: David Heidelberg via B4 Relay <devnull+david.ixit.cz@kernel.org>
+Subject: [PATCH v2 0/3] ath10k: Introduce a devicetree quirk to skip host
+ cap QMI requests
+Date: Mon, 10 Nov 2025 15:26:23 +0100
+Message-Id: <20251110-skip-host-cam-qmi-req-v2-0-0daf485a987a@ixit.cz>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 08/13] irqchip/atmel-aic: Simplify with
- of_machine_get_match_data()
-To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, Rob Herring
-	<robh@kernel.org>, Saravana Kannan <saravanak@google.com>, "Rafael J.
- Wysocki" <rafael@kernel.org>, Viresh Kumar <viresh.kumar@linaro.org>,
-	Matthias Brugger <matthias.bgg@gmail.com>, AngeloGioacchino Del Regno
-	<angelogioacchino.delregno@collabora.com>, Yangtao Li
-	<tiny.windzz@gmail.com>, Chen-Yu Tsai <wens@kernel.org>, Jernej Skrabec
-	<jernej.skrabec@gmail.com>, Samuel Holland <samuel@sholland.org>, Lorenzo
- Pieralisi <lpieralisi@kernel.org>, Daniel Lezcano
-	<daniel.lezcano@linaro.org>, Bjorn Andersson <andersson@kernel.org>, Konrad
- Dybcio <konradybcio@kernel.org>, Thomas Gleixner <tglx@linutronix.de>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>, Claudiu Beznea
-	<claudiu.beznea@tuxon.dev>, Maximilian Luz <luzmaximilian@gmail.com>, Hans de
- Goede <hansg@kernel.org>, =?UTF-8?Q?Ilpo_J=C3=A4rvinen?=
-	<ilpo.jarvinen@linux.intel.com>, Daniel Lezcano <daniel.lezcano@kernel.org>,
-	Thierry Reding <thierry.reding@gmail.com>, Jonathan Hunter
-	<jonathanh@nvidia.com>
-CC: <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-	<linux-pm@vger.kernel.org>, <linux-arm-kernel@lists.infradead.org>,
-	<linux-mediatek@lists.infradead.org>, <linux-sunxi@lists.linux.dev>,
-	<linux-arm-msm@vger.kernel.org>, <platform-driver-x86@vger.kernel.org>,
-	<linux-tegra@vger.kernel.org>
-References: <20251106-b4-of-match-matchine-data-v1-0-d780ea1780c2@linaro.org>
- <20251106-b4-of-match-matchine-data-v1-8-d780ea1780c2@linaro.org>
-From: Nicolas Ferre <nicolas.ferre@microchip.com>
-Content-Language: en-US, fr
-Organization: microchip
-In-Reply-To: <20251106-b4-of-match-matchine-data-v1-8-d780ea1780c2@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAA/2EWkC/x3MQQ6CMBCF4auYrh3SqZaAK+9hXFQYYCJtYVqNC
+ eHuNmxe8i3ev6lEwpTU7bQpoS8njqHAnE+qm1wYCbgvVkYbi4ga0psXmGLK0DkPq2cQWoHQ2to
+ 09OourSrfRWjg39F9PIsHiR7yJOSOGtYatW1sg4DttS4LI2dIFHog73gG5zlXyyf0LPeZg5NYR
+ RnVvv8BHXRHebIAAAA=
+X-Change-ID: 20251110-skip-host-cam-qmi-req-e155628ebc39
+To: Johannes Berg <johannes@sipsolutions.net>, 
+ Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>, Jeff Johnson <jjohnson@kernel.org>, 
+ Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konradybcio@kernel.org>
+Cc: linux-wireless@vger.kernel.org, devicetree@vger.kernel.org, 
+ ath10k@lists.infradead.org, linux-kernel@vger.kernel.org, 
+ linux-arm-msm@vger.kernel.org, phone-devel@vger.kernel.org, 
+ David Heidelberg <david@ixit.cz>, Amit Pundir <amit.pundir@linaro.org>, 
+ Bjorn Andersson <andersson@kernel.org>
+X-Mailer: b4 0.14.3
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1577; i=david@ixit.cz;
+ h=from:subject:message-id;
+ bh=L3nGmc65cfsV6qiQ+LYogmLlv8XDTxddUlOLJY174z8=;
+ b=owEBbQKS/ZANAwAIAWACP8TTSSByAcsmYgBpEfYS7iCjxoLP0PYyTp6kzSTKLNz3Min/kJQM+
+ +zutAUqZSOJAjMEAAEIAB0WIQTXegnP7twrvVOnBHRgAj/E00kgcgUCaRH2EgAKCRBgAj/E00kg
+ cmr0D/44yLirU8sAm10sSfdpjaByLaHLJ31fqEwiWiOfg1nSaysGs2tB9VxmWhkb7aBtP1IVBQ0
+ lgZDpZQ9MbxExySnG4MRztMmXK0Fta/fA+Ng7VW754pQYzDxBWEUwjdOPsrfXOZ/PfbGdPVkN1W
+ L2p3LEgCkB9zBQ0WddnxTRNFKwBrYgySEAk/qjHZeIX/aD25Jr8IpRrGtkMgOstpwkkwhXmxR1y
+ ThsRwgeglDN4/PndoiIo01PO/YzUNCASLCgh/WWd4E8QSQuQ7+zPmVOHzjtXxVUKaeiiIzDK3Jh
+ zzYIJAnG8m5bash9NwGW9MSpwudewo5lxV+9/wAbk/E9Ol+uHf14Q/jW0xb40yTWLHNJDbtwfEm
+ ZXuyjVg2tlKVrZi+hmrI58OkD2VYjuIGm9OH+jdkCwZyAyoKxHE471m/qaZcZ27wB54J68IPr5n
+ QuQ744n6lddLMMET0L/jFa82yWBV9vhCouk+WQFX+Wm/1SPedSEMz1NH4ax5Lxeel/I9jX26xnk
+ PyCaaQWkAxg5qinGYs+LOLzGNjnfc8ElGRoSJQznPbVtSwZcb62l2U900GSUe7Rhvt+TNDami4j
+ Qd79ebuzvzBzMCeylNo4sjsI1PuRrzzifjwYHtPklpa0d9iKG+qRMIHGVEYZWza+5cWDIIx7ZLh
+ vvJdMvAfrCGgVAA==
+X-Developer-Key: i=david@ixit.cz; a=openpgp;
+ fpr=D77A09CFEEDC2BBD53A7047460023FC4D3492072
+X-Endpoint-Received: by B4 Relay for david@ixit.cz/default with auth_id=355
+X-Original-From: David Heidelberg <david@ixit.cz>
+Reply-To: david@ixit.cz
 
-On 06/11/2025 at 20:07, Krzysztof Kozlowski wrote:
-> Replace open-coded getting root OF node, matching against it and getting
-> the match data with new of_machine_get_match_data() helper.
-> 
-> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+This quirk is used so far for Xiaomi Poco F1.
 
-Acked-by: Nicolas Ferre <nicolas.ferre@microchip.com>
+I'm resending it after ~ 4 years since initial send due to Snapdragon
+845 being one of best supported platform for mobile phones running
+Linux, so it would be shame to not have shiny support.
 
-Thanks Krzysztof, best regards,
-   Nicolas
+I'm very much open to suggestions how to solve this in a different way,
+as the original discussion thread got quiet, see
+  https://lore.kernel.org/all/b796bfee-b753-479a-a8d6-ba1fe3ee6222@ixit.cz/
 
-> ---
-> 
-> Depends on the first OF patch.
-> ---
->   drivers/irqchip/irq-atmel-aic-common.c | 15 +++------------
->   1 file changed, 3 insertions(+), 12 deletions(-)
-> 
-> diff --git a/drivers/irqchip/irq-atmel-aic-common.c b/drivers/irqchip/irq-atmel-aic-common.c
-> index 3cad30a40c19..e68853815c7a 100644
-> --- a/drivers/irqchip/irq-atmel-aic-common.c
-> +++ b/drivers/irqchip/irq-atmel-aic-common.c
-> @@ -187,20 +187,11 @@ void __init aic_common_rtt_irq_fixup(void)
-> 
->   static void __init aic_common_irq_fixup(const struct of_device_id *matches)
->   {
-> -       struct device_node *root = of_find_node_by_path("/");
-> -       const struct of_device_id *match;
-> +       void (*fixup)(void);
-> 
-> -       if (!root)
-> -               return;
-> -
-> -       match = of_match_node(matches, root);
-> -
-> -       if (match) {
-> -               void (*fixup)(void) = match->data;
-> +       fixup = of_machine_get_match_data(matches);
-> +       if (fixup)
->                  fixup();
-> -       }
-> -
-> -       of_node_put(root);
->   }
-> 
->   struct irq_domain *__init aic_common_of_init(struct device_node *node,
-> 
-> --
-> 2.48.1
-> 
+There could be other devices in need of this quirk, but if they're not,
+we could make it compatible specific quirk.
+
+Until merged, available also at:
+  https://gitlab.com/dhxx/linux/-/commits/b4/skip-host-cam-qmi-req
+
+Signed-off-by: David Heidelberg <david@ixit.cz>
+---
+Amit Pundir (3):
+      dt-bindings: wireless: ath10k: Introduce quirk to skip host cap QMI requests
+      ath10k: Introduce a devicetree quirk to skip host cap QMI requests
+      arm64: dts: qcom: sdm845-xiaomi-beryllium: Enable ath10k host-cap skip quirk
+
+ .../devicetree/bindings/net/wireless/qcom,ath10k.yaml       |  6 ++++++
+ .../arm64/boot/dts/qcom/sdm845-xiaomi-beryllium-common.dtsi |  2 ++
+ drivers/net/wireless/ath/ath10k/qmi.c                       | 13 ++++++++++---
+ drivers/net/wireless/ath/ath10k/snoc.c                      |  3 +++
+ drivers/net/wireless/ath/ath10k/snoc.h                      |  1 +
+ 5 files changed, 22 insertions(+), 3 deletions(-)
+---
+base-commit: ab40c92c74c6b0c611c89516794502b3a3173966
+change-id: 20251110-skip-host-cam-qmi-req-e155628ebc39
+
+Best regards,
+-- 
+David Heidelberg <david@ixit.cz>
+
 
 
