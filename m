@@ -1,164 +1,119 @@
-Return-Path: <linux-arm-msm+bounces-81101-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-81106-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id B7D34C48961
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Nov 2025 19:36:09 +0100 (CET)
+Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [142.0.200.124])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1CB79C489C1
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Nov 2025 19:39:40 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 8BB323A3D6C
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Nov 2025 18:32:11 +0000 (UTC)
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 2D7F54E2065
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Nov 2025 18:36:32 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id F37E832E6AC;
-	Mon, 10 Nov 2025 18:29:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 282722E62D9;
+	Mon, 10 Nov 2025 18:36:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="nmdgkZUw"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="qHjgQXbi"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE81632E6A0;
-	Mon, 10 Nov 2025 18:29:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9A17242925;
+	Mon, 10 Nov 2025 18:36:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762799345; cv=none; b=K/lo6881LFE0Ox2mbizaQojDiNv9bUuKSAIPT9m+NRQitBYU0LDBcfz2gi/nwrzYP/3hVZYeUOxe/h15FMdfm69PI5aoBshSj7qfo6WaylcKj1mlIbWwsqMWliy8bFK8WSJQFuqXlEQdT2EzzuKGe0mOXb3/GEmSQSAbxPbsmaU=
+	t=1762799788; cv=none; b=VGyhPOKqXewDbljNCDIKAIuCuzfVYF+ZBMMqualfwykAH2798XVQT8oung++V2efaCtUQL9rLs6OYusOVtMKQ3EqN3tQYM5+WAZr+Pv82Jkrkkye0ZSy3GPRX94v0DF2yCCeMUqqb+EiKlgVTahOcgtRDWEB7LyhTwTXvbJMcqg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762799345; c=relaxed/simple;
-	bh=u9Jb89JkKBZeEXePVaq8UqB4TuhULaWnLyCjR38ppvI=;
+	s=arc-20240116; t=1762799788; c=relaxed/simple;
+	bh=X2UMR+ek8t4dC9FVAihJ8te21o4CcIV3uaXVHjtVgcI=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=MIPAsVfzqnC6HLkuO3lZ/k6LVTpuJVa+K7kCpvhTnv5jMINV8Iq0dK+CCXugUZxCmWNDAN+ZZzEi/9pDtIJLbu/jTZ9HS8at9BsR4ZecvYZU4FcwzcfCXJp0iqOD62AwnKxgbMr1/DO3svm+04urP/elGmdMxAo96DzUxF+3mLs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=nmdgkZUw; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D63A2C4CEF5;
-	Mon, 10 Nov 2025 18:29:02 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=aChs30n3E2AhK+AAntc/VWrGXRy2Bgs8f1eKOfqlHUH/hifohQ47C8Jp8rYE+7XPfFDNDyOY0lIjPAU9VSTfDwYSZnFD9Y0e3q1qYlAJsQKPfvyrMOaw9iS9SHOjlEdDc5yoqyQdZZUFNLqS0Me4vk6PSx2k/yk69RSEduBSI+4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=qHjgQXbi; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6263C116B1;
+	Mon, 10 Nov 2025 18:36:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1762799345;
-	bh=u9Jb89JkKBZeEXePVaq8UqB4TuhULaWnLyCjR38ppvI=;
+	s=k20201202; t=1762799787;
+	bh=X2UMR+ek8t4dC9FVAihJ8te21o4CcIV3uaXVHjtVgcI=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=nmdgkZUwBErlZ4R16rraci9mo0wDpQbaUlJ80M2tD0YhX2zZBk4FM55WGhg6jopmP
-	 8TLIN7zJLQlkoApbwuqW02D6rWpvDo6pZcGSVwrqJ+OTOOZaFw477qCXI6ekqSD1wk
-	 DAtMwRluIYZ2U1Uaz9xCCWzihVzLJH49FMJN77vrbtb4tvcilMbPkfiZng/AERMyb7
-	 5pz8cAXv+gchZkSZRd34XnFwevKx+uRiARAzJbM3yYR4oS7zLY5zizhkSURATxvYST
-	 1e/WDB6iTHrIsA757VXJ91Xey3mb7tPLIdrc9Hpg+xcEzyEevI13Vnwndb0fU+oeI2
-	 8n/sodalpELIA==
-Date: Mon, 10 Nov 2025 12:33:10 -0600
-From: Bjorn Andersson <andersson@kernel.org>
-To: Shivendra Pratap <shivendra.pratap@oss.qualcomm.com>
-Cc: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>, 
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>, Sebastian Reichel <sre@kernel.org>, 
-	Rob Herring <robh@kernel.org>, Sudeep Holla <sudeep.holla@arm.com>, 
-	Souvik Chakravarty <Souvik.Chakravarty@arm.com>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
-	Conor Dooley <conor+dt@kernel.org>, Andy Yan <andy.yan@rock-chips.com>, 
-	Mark Rutland <mark.rutland@arm.com>, Lorenzo Pieralisi <lpieralisi@kernel.org>, 
-	Arnd Bergmann <arnd@arndb.de>, Konrad Dybcio <konradybcio@kernel.org>, 
-	cros-qcom-dts-watchers@chromium.org, Vinod Koul <vkoul@kernel.org>, 
-	Catalin Marinas <catalin.marinas@arm.com>, Will Deacon <will@kernel.org>, 
-	Florian Fainelli <florian.fainelli@broadcom.com>, Moritz Fischer <moritz.fischer@ettus.com>, 
-	John Stultz <john.stultz@linaro.org>, Matthias Brugger <matthias.bgg@gmail.com>, 
-	Krzysztof Kozlowski <krzk@kernel.org>, Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>, 
-	Stephen Boyd <swboyd@chromium.org>, Andre Draszik <andre.draszik@linaro.org>, 
-	Kathiravan Thirumoorthy <kathiravan.thirumoorthy@oss.qualcomm.com>, linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	devicetree@vger.kernel.org, linux-arm-kernel@lists.infradead.org, 
-	linux-arm-msm@vger.kernel.org, Elliot Berman <quic_eberman@quicinc.com>, 
-	Xin Liu <xin.liu@oss.qualcomm.com>, Srinivas Kandagatla <srini@kernel.org>, 
-	Umang Chheda <umang.chheda@oss.qualcomm.com>, Nirmesh Kumar Singh <nirmesh.singh@oss.qualcomm.com>
-Subject: Re: [PATCH v17 03/12] power: reset: reboot-mode: Add support for 64
- bit magic
-Message-ID: <zejaqakbtufwzlzs7xc7xzxezcylqjkmu4nne2mro4riuhgbkc@hlgu3u2w36bb>
-References: <20251109-arm-psci-system_reset2-vendor-reboots-v17-0-46e085bca4cc@oss.qualcomm.com>
- <20251109-arm-psci-system_reset2-vendor-reboots-v17-3-46e085bca4cc@oss.qualcomm.com>
- <20251110134529.uljjqzb3vhda3vya@hu-mojha-hyd.qualcomm.com>
- <gzj4r4elqewjt2gjzhuamslvobz5fgyvt672brwknoozlsplaq@wsebzmi2l6pc>
- <681a72ba-d8fb-bfc2-d2bb-d80ac667bc5c@oss.qualcomm.com>
+	b=qHjgQXbiAMJaLpbNPCzTNjHjQvoLTAlkmWF++9regAa9FjAr6Zu6vqf7TY/j0EJTl
+	 iGiOQpzp0AnQMKNXY6qj+2KPgHeiceemXV8Up9jDQe3GfrfYsaKWN7Og/6TUQKFFrR
+	 C7JuU/vC5nfFRY7jnEH202SPLeFN0sbaCwwbC8F5O8VdLzL5g1lRhOsf3hu2IBsoNw
+	 ZkQQKXckpe7gyO/9uUQlZm9s1pZ34252/byXsxLdczV5Ez1OCWBgCDiZQSROTnPTJy
+	 fooEUE8E7vlmmo4H/j+LtSMMPVe6N0WoC4iyEN7g8v6OlCm26TbVtzCmU359R2ixV/
+	 pwCqNZMVW0Akw==
+Date: Mon, 10 Nov 2025 19:36:21 +0100
+From: Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= <ukleinek@kernel.org>
+To: George Moussalem <george.moussalem@outlook.com>
+Cc: Bjorn Andersson <andersson@kernel.org>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Baruch Siach <baruch@tkos.co.il>, Konrad Dybcio <konradybcio@kernel.org>, 
+	linux-arm-msm@vger.kernel.org, linux-pwm@vger.kernel.org, devicetree@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, Devi Priya <quic_devipriy@quicinc.com>, 
+	Baruch Siach <baruch.siach@siklu.com>, Krzysztof Kozlowski <krzk@kernel.org>
+Subject: Re: [PATCH v18 1/6] dt-bindings: pwm: add IPQ6018 binding
+Message-ID: <tqbdvt2yj2e7ycxiu7nlvwgeh4cf7em6n7gia7cd4f7lsqjdeg@ksyfpy63laop>
+References: <20251029-ipq-pwm-v18-0-edbef8efbb8e@outlook.com>
+ <20251029-ipq-pwm-v18-1-edbef8efbb8e@outlook.com>
+ <gkvbziqeae53bunqd556r4swaye4s4lcnwthryouynwfwqrnsi@6o4cjgxiwxco>
+ <lkbwgakmqknqptsjrb7hvxv3bxi3fo62vml7tmf4avo7nr7cue@dwsovmchu2pp>
+ <DS7PR19MB88832537DA9998530BAAC9C39DCEA@DS7PR19MB8883.namprd19.prod.outlook.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="s5dbfl4angh7vjuo"
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <681a72ba-d8fb-bfc2-d2bb-d80ac667bc5c@oss.qualcomm.com>
-
-On Mon, Nov 10, 2025 at 11:22:40PM +0530, Shivendra Pratap wrote:
-> 
-> 
-> On 11/10/2025 10:00 PM, Bjorn Andersson wrote:
-> > On Mon, Nov 10, 2025 at 07:15:29PM +0530, Mukesh Ojha wrote:
-> >> On Sun, Nov 09, 2025 at 08:07:16PM +0530, Shivendra Pratap wrote:
-> >>> Current reboot-mode supports a single 32-bit argument for any
-> >>> supported mode. Some reboot-mode based drivers may require
-> >>> passing two independent 32-bit arguments during a reboot
-> >>> sequence, for uses-cases, where a mode requires an additional
-> >>> argument. Such drivers may not be able to use the reboot-mode
-> >>> driver. For example, ARM PSCI vendor-specific resets, need two
-> >>> arguments for its operation – reset_type and cookie, to complete
-> >>> the reset operation. If a driver wants to implement this
-> >>> firmware-based reset, it cannot use reboot-mode framework.
-> >>>
-> >>> Introduce 64-bit magic values in reboot-mode driver to
-> >>> accommodate dual 32-bit arguments when specified via device tree.
-> >>> In cases, where no second argument is passed from device tree,
-> >>> keep the upper 32-bit of magic un-changed(0) to maintain backward
-> >>> compatibility.
-> >>>
-> >>> Update the current drivers using reboot-mode for a 64-bit magic
-> >>> value.
-> 
-> [SNIP..]
-> 
-> >>> +	if (magic > U32_MAX)
-> >>> +		return -EINVAL;
-> >>> +
-> >>> +	magic_32 = magic;
-> >>> +
-> >>>  	syscon_rbm = container_of(reboot, struct syscon_reboot_mode, reboot);
-> >>>  
-> >>>  	ret = regmap_update_bits(syscon_rbm->map, syscon_rbm->offset,
-> >>> -				 syscon_rbm->mask, magic);
-> >>> +				 syscon_rbm->mask, magic_32);
-> > 
-> > As above, if we're no longer silently discarding bits, I think we should
-> > compare the magic against syscon_rbm->mask.
-> > 
-> > No need for a local variable, just type cast after checking the validity.
-> 
-> Trying to summarize below why we added these check-
-> 
-> the patch in v11 used typecasting and did not have any of these checks(link below):
-> https://lore.kernel.org/all/20250717-arm-psci-system_reset2-vendor-reboots-v11-2-df3e2b2183c3@oss.qualcomm.com/
-> 
-> As per below upstream review, type cast was removed and bound checks were added all-over patchset:
-> "As a general rule of thumb, code with casts is poor quality code. Try
-> to write the code without casts." - 
-> https://lore.kernel.org/all/8d4a42b6-657f-4c30-8e25-4213d8d53a89@lunn.ch/
-> 
-> We can revert to the typecast way. Please suggest.
-> 
-
-Okay, I'm okay with Andrew's original request, stick to that for the
-nvmem case. Although I don't fancy the name "magic_32", and would prefer
-that you just call it "value" or something.
+In-Reply-To: <DS7PR19MB88832537DA9998530BAAC9C39DCEA@DS7PR19MB8883.namprd19.prod.outlook.com>
 
 
-For pon and syscon however, I'm wondering why you have ignored Andrew's
-other request from that same email:
+--s5dbfl4angh7vjuo
+Content-Type: text/plain; protected-headers=v1; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+Subject: Re: [PATCH v18 1/6] dt-bindings: pwm: add IPQ6018 binding
+MIME-Version: 1.0
 
-"""
-You might be able to go further, and validate that magic actually fits
-into the field when you consider the << pon->reason_shift.
-"""
+Hello George,
 
-Writing "if (magic > U32_MAX)" in a snippet of code where magic isn't
-allowed to be more than either 32 or 64 is misleading.
+On Mon, Nov 10, 2025 at 03:41:49PM +0400, George Moussalem wrote:
+> On 11/10/25 15:32, Uwe Kleine-K=F6nig wrote:
+> >>> +  "#pwm-cells":
+> >>> +    const: 2
+> >=20
+> > Please use 3 here.
+>=20
+> The driver doesn't support polarity and I don't know whether the HW even
+> supports it. Hence, I kept it as 2 as originally submitted by qcom
+> (Devi). I don't have access to the datasheets. Would you like me to
+> resubmit a new version anyways or keep as is?
 
-For syscon, it's true that the parameter is an unsigned long, but the
-actual limit better be based on syscon_rbm->mask.
+I want all new drivers use 3 pwm-cells for consistency even if the
+hardware doesn't support the (currently) only flag. Additionally this
+simplifies things like pwm nexus nodes (see
+e71e46a6f19c46b38983bebde8bfac1c04968fdf).
 
-Regards,
-Bjorn
+So yes, please change to 3.
 
-> thanks,
-> Shivendra
+Best regards
+Uwe
+
+--s5dbfl4angh7vjuo
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAABCgAdFiEEP4GsaTp6HlmJrf7Tj4D7WH0S/k4FAmkSMKMACgkQj4D7WH0S
+/k6MvwgAmAv345GS0OBmiRO1V+Um4ZZv+MMGog8wAp4dG4wNqRSfg+bJcDwN/11Z
+4yRhFo26C4hVPPs5JYHOx178k2EwvOtphK1flrb9r91w+24ySpvPDHhOzbOlk91M
+sVhXrVXHAUaVxZS+2lbyqXzWptistZhDfLGMso0s1M20vVYsmdMJkF7Z0N5OSzhW
+qplkJltikAmqaqYr8SPAVbH/a0mtPKProR/WPrV64gf9PFo6LwIpD9julJiJLlMB
+Ke//T2lvmH3YJwOov7UfszhXp7+TA8yKhwmxePPGcag7JIycFKsanR04XwvpB6JQ
+ADIY4Fd/OKtJZVbiAUf27scd1cMV0g==
+=XKuc
+-----END PGP SIGNATURE-----
+
+--s5dbfl4angh7vjuo--
 
