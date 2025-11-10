@@ -1,158 +1,137 @@
-Return-Path: <linux-arm-msm+bounces-80944-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-80945-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7670EC458AC
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Nov 2025 10:13:18 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 67FA5C458CD
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Nov 2025 10:14:14 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 1FA08188FAAA
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Nov 2025 09:13:43 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 524F23B59D9
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Nov 2025 09:13:44 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3D8BF2FF151;
-	Mon, 10 Nov 2025 09:13:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 495192FF168;
+	Mon, 10 Nov 2025 09:13:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="jbaqOO6S"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from azure-sdnproxy.icoremail.net (azure-sdnproxy.icoremail.net [52.229.205.26])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2680E2FC89F;
-	Mon, 10 Nov 2025 09:13:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=52.229.205.26
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1DD0E212560;
+	Mon, 10 Nov 2025 09:13:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762765986; cv=none; b=o0rTNtlXvaw62DWOrHu+Ux+3T1i1vCrrKnIjL9OaJCLPiaUpZoutZNDsPd+MSEXba/ar9Wx3hIbn16rGU0uBY+A09uX1fRDY2KINIGPdxiiXcPOscRKd2DAbPDI1G17P3Lij+RBFhiQZ7DPW4u2ktYsGv9zSCGQpIy7rCmlosHo=
+	t=1762766006; cv=none; b=IvfUhPBFtRrJ4aJvUy3S0LIuauxbjqp8zNynK3XZJa3goCtnlaI2fmAxBqzRIYmEwEXlwXkdCifdRz7XhfmlOIDFVymYFbwJRj+3lrGowErfJ0Qj/Nisk+/CGVoX7HY/553sBiTFV5ErjB3bOylYJBpz19i7VuK2AiYE7Pot4V0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762765986; c=relaxed/simple;
-	bh=9u1iCCFaJVVRUnPC6w8LlPngxI4hdJ58PuC60PIrX4o=;
-	h=Date:From:To:Cc:Subject:In-Reply-To:References:Content-Type:
-	 MIME-Version:Message-ID; b=HHEji6BgKINQvMkzoLQPJAXk9cPbOXAtgVZsCH9TyaGqTt8/iBbmX86sZpqgsMM6J5a9D2ngy0LlypwpQOYnJ/oSbBX4FNJKkmIatwOek/iJq74IFiackw2RcnfUydyahsbA0bYKVLkjIlqb1NpKatRyNpxA220rIjBcp8K/GJY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=eswincomputing.com; spf=pass smtp.mailfrom=eswincomputing.com; arc=none smtp.client-ip=52.229.205.26
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=eswincomputing.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=eswincomputing.com
-Received: from zhangsenchuan$eswincomputing.com ( [10.12.96.83] ) by
- ajax-webmail-app2 (Coremail) ; Mon, 10 Nov 2025 17:12:51 +0800 (GMT+08:00)
-Date: Mon, 10 Nov 2025 17:12:51 +0800 (GMT+08:00)
-X-CM-HeaderCharset: UTF-8
-From: zhangsenchuan <zhangsenchuan@eswincomputing.com>
-To: "Manivannan Sadhasivam" <mani@kernel.org>
-Cc: "Manivannan Sadhasivam" <manivannan.sadhasivam@oss.qualcomm.com>,
-	lpieralisi@kernel.org, kwilczynski@kernel.org, bhelgaas@google.com,
-	will@kernel.org, linux-pci@vger.kernel.org,
-	linux-kernel@vger.kernel.org, robh@kernel.org,
-	linux-arm-msm@vger.kernel.org
-Subject: Re: Re: [PATCH 2/3] PCI: qcom: Check for the presence of a device
- instead of Link up during suspend
-X-Priority: 3
-X-Mailer: Coremail Webmail Server Version 2024.2-cmXT6 build
- 20241203(6b039d88) Copyright (c) 2002-2025 www.mailtech.cn
- mispb-72143050-eaf5-4703-89e0-86624513b4ce-eswincomputing.com
-In-Reply-To: <fnayczbumpynzvhafv3ryozlg2qwsxsyzpn5p44kc4o3hy7uux@lp5qgsd6ajtw>
-References: <20251106061326.8241-1-manivannan.sadhasivam@oss.qualcomm.com>
- <20251106061326.8241-3-manivannan.sadhasivam@oss.qualcomm.com>
- <35086b08.c4e.19a58a7d6bc.Coremail.zhangsenchuan@eswincomputing.com>
- <nhjlanhzndhlbtfohnkypwuzpw6nw43cysjmoam3qv4rrs22hr@ic3hgtfoeb6e>
- <311e1152.cc3.19a5cff7033.Coremail.zhangsenchuan@eswincomputing.com>
- <fnayczbumpynzvhafv3ryozlg2qwsxsyzpn5p44kc4o3hy7uux@lp5qgsd6ajtw>
-Content-Transfer-Encoding: base64
-Content-Type: text/plain; charset=UTF-8
+	s=arc-20240116; t=1762766006; c=relaxed/simple;
+	bh=ozqUDcensak/8G7dfcCGnqzO7BNxUQLL3rY5M2dtdg8=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=tryY1U0JW6gBtTVP72+1m5kV+ceeJ4cpQWcCVfmxj3rQgULTdVECjV8AcEfaKB4ctdCYkFFS/87b8mOk286eBu7Li2uCNw6vAqjLZ3855U3e4kTIl6V0cAffM1Hqu5hce96pfCrJwggXkig5BAdMwPoI56pR9Zxz7c5AEWGCjBk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=jbaqOO6S; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5542BC19425;
+	Mon, 10 Nov 2025 09:13:22 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1762766005;
+	bh=ozqUDcensak/8G7dfcCGnqzO7BNxUQLL3rY5M2dtdg8=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=jbaqOO6S7vUjM1RdDqi1HKSdpmMQizgF0RD+2CpbhXhb4zkgkUBNNFUN6RuUjIZy9
+	 gcpws3UVICLCD1LeM/jdlan+tmX7yZZIM55i9GmcKiREm8SPK5yTEek2/zNDNh5Jtt
+	 YJhntTD4GBYoXoAC7suqU3GxztsenBrXRnSHczoXNr1FfzOaByOw2gyESw+ygzUYe/
+	 FdJfSVOoSGBZCizfnisex8bEC6yr4wfmFcnliMhMjzJQ4pTwZx82DmAEf0+bX7WqL3
+	 ZsJshIedNdd+okZ+wgO1fEq0m/nxGyBo7bO5JkZfCTUqsjJ5RoM1ifTfGbB4D0EuU9
+	 C8KlI9wg1SUHA==
+Message-ID: <35e8ef89-3fbc-48ac-9b2b-10c2e95ab024@kernel.org>
+Date: Mon, 10 Nov 2025 10:13:20 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Message-ID: <503961f9.dd6.19a6d0a1e94.Coremail.zhangsenchuan@eswincomputing.com>
-X-Coremail-Locale: en_US
-X-CM-TRANSID:TQJkCgDnK6+TrBFpINNyAA--.1237W
-X-CM-SenderInfo: x2kd0wpvhquxxxdqqvxvzl0uprps33xlqjhudrp/1tbiAQECBmkQw
-	gEm0AAAsI
-X-Coremail-Antispam: 1Ur529EdanIXcx71UUUUU7IcSsGvfJ3iIAIbVAYjsxI4VW3Jw
-	CS07vEb4IE77IF4wCS07vE1I0E4x80FVAKz4kxMIAIbVAFxVCaYxvI4VCIwcAKzIAtYxBI
-	daVFxhVjvjDU=
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH V4 1/3] arm64: dts: qcom: sm8750: Add SDC2 nodes for
+ sm8750 soc
+To: Sarthak Garg <sarthak.garg@oss.qualcomm.com>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org, quic_nguyenb@quicinc.com,
+ quic_rampraka@quicinc.com, quic_pragalla@quicinc.com,
+ quic_sayalil@quicinc.com, quic_nitirawa@quicinc.com,
+ quic_bhaskarv@quicinc.com, kernel@oss.qualcomm.com
+References: <20251110085013.802976-1-sarthak.garg@oss.qualcomm.com>
+ <20251110085013.802976-2-sarthak.garg@oss.qualcomm.com>
+From: Krzysztof Kozlowski <krzk@kernel.org>
+Content-Language: en-US
+Autocrypt: addr=krzk@kernel.org; keydata=
+ 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 a/A=
+In-Reply-To: <20251110085013.802976-2-sarthak.garg@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-CgoKPiAtLS0tLU9yaWdpbmFsIE1lc3NhZ2VzLS0tLS0KPiBGcm9tOiAiTWFuaXZhbm5hbiBTYWRo
-YXNpdmFtIiA8bWFuaUBrZXJuZWwub3JnPgo+IFNlbmQgdGltZTpTYXR1cmRheSwgMDgvMTEvMjAy
-NSAxODoyNTozNgo+IFRvOiB6aGFuZ3NlbmNodWFuIDx6aGFuZ3NlbmNodWFuQGVzd2luY29tcHV0
-aW5nLmNvbT4KPiBDYzogIk1hbml2YW5uYW4gU2FkaGFzaXZhbSIgPG1hbml2YW5uYW4uc2FkaGFz
-aXZhbUBvc3MucXVhbGNvbW0uY29tPiwgbHBpZXJhbGlzaUBrZXJuZWwub3JnLCBrd2lsY3p5bnNr
-aUBrZXJuZWwub3JnLCBiaGVsZ2Fhc0Bnb29nbGUuY29tLCB3aWxsQGtlcm5lbC5vcmcsIGxpbnV4
-LXBjaUB2Z2VyLmtlcm5lbC5vcmcsIGxpbnV4LWtlcm5lbEB2Z2VyLmtlcm5lbC5vcmcsIHJvYmhA
-a2VybmVsLm9yZywgbGludXgtYXJtLW1zbUB2Z2VyLmtlcm5lbC5vcmcKPiBTdWJqZWN0OiBSZTog
-W1BBVENIIDIvM10gUENJOiBxY29tOiBDaGVjayBmb3IgdGhlIHByZXNlbmNlIG9mIGEgZGV2aWNl
-IGluc3RlYWQgb2YgTGluayB1cCBkdXJpbmcgc3VzcGVuZAo+IAo+IE9uIEZyaSwgTm92IDA3LCAy
-MDI1IGF0IDAyOjI3OjE1UE0gKzA4MDAsIHpoYW5nc2VuY2h1YW4gd3JvdGU6Cj4gPiAKPiA+IAo+
-ID4gCj4gPiA+IC0tLS0tT3JpZ2luYWwgTWVzc2FnZXMtLS0tLQo+ID4gPiBGcm9tOiAiTWFuaXZh
-bm5hbiBTYWRoYXNpdmFtIiA8bWFuaUBrZXJuZWwub3JnPgo+ID4gPiBTZW5kIHRpbWU6VGh1cnNk
-YXksIDA2LzExLzIwMjUgMTk6NTc6MTYKPiA+ID4gVG86IHpoYW5nc2VuY2h1YW4gPHpoYW5nc2Vu
-Y2h1YW5AZXN3aW5jb21wdXRpbmcuY29tPgo+ID4gPiBDYzogIk1hbml2YW5uYW4gU2FkaGFzaXZh
-bSIgPG1hbml2YW5uYW4uc2FkaGFzaXZhbUBvc3MucXVhbGNvbW0uY29tPiwgbHBpZXJhbGlzaUBr
-ZXJuZWwub3JnLCBrd2lsY3p5bnNraUBrZXJuZWwub3JnLCBiaGVsZ2Fhc0Bnb29nbGUuY29tLCB3
-aWxsQGtlcm5lbC5vcmcsIGxpbnV4LXBjaUB2Z2VyLmtlcm5lbC5vcmcsIGxpbnV4LWtlcm5lbEB2
-Z2VyLmtlcm5lbC5vcmcsIHJvYmhAa2VybmVsLm9yZywgbGludXgtYXJtLW1zbUB2Z2VyLmtlcm5l
-bC5vcmcKPiA+ID4gU3ViamVjdDogUmU6IFtQQVRDSCAyLzNdIFBDSTogcWNvbTogQ2hlY2sgZm9y
-IHRoZSBwcmVzZW5jZSBvZiBhIGRldmljZSBpbnN0ZWFkIG9mIExpbmsgdXAgZHVyaW5nIHN1c3Bl
-bmQKPiA+ID4gCj4gPiA+IE9uIFRodSwgTm92IDA2LCAyMDI1IGF0IDA2OjEzOjA1UE0gKzA4MDAs
-IHpoYW5nc2VuY2h1YW4gd3JvdGU6Cj4gPiA+ID4gCj4gPiA+ID4gCj4gPiA+ID4gCj4gPiA+ID4g
-PiAtLS0tLU9yaWdpbmFsIE1lc3NhZ2VzLS0tLS0KPiA+ID4gPiA+IEZyb206ICJNYW5pdmFubmFu
-IFNhZGhhc2l2YW0iIDxtYW5pdmFubmFuLnNhZGhhc2l2YW1Ab3NzLnF1YWxjb21tLmNvbT4KPiA+
-ID4gPiA+IFNlbmQgdGltZTpUaHVyc2RheSwgMDYvMTEvMjAyNSAxNDoxMzoyNQo+ID4gPiA+ID4g
-VG86IGxwaWVyYWxpc2lAa2VybmVsLm9yZywga3dpbGN6eW5za2lAa2VybmVsLm9yZywgbWFuaUBr
-ZXJuZWwub3JnLCBiaGVsZ2Fhc0Bnb29nbGUuY29tCj4gPiA+ID4gPiBDYzogd2lsbEBrZXJuZWwu
-b3JnLCBsaW51eC1wY2lAdmdlci5rZXJuZWwub3JnLCBsaW51eC1rZXJuZWxAdmdlci5rZXJuZWwu
-b3JnLCByb2JoQGtlcm5lbC5vcmcsIGxpbnV4LWFybS1tc21Admdlci5rZXJuZWwub3JnLCB6aGFu
-Z3NlbmNodWFuQGVzd2luY29tcHV0aW5nLmNvbSwgIk1hbml2YW5uYW4gU2FkaGFzaXZhbSIgPG1h
-bml2YW5uYW4uc2FkaGFzaXZhbUBvc3MucXVhbGNvbW0uY29tPgo+ID4gPiA+ID4gU3ViamVjdDog
-W1BBVENIIDIvM10gUENJOiBxY29tOiBDaGVjayBmb3IgdGhlIHByZXNlbmNlIG9mIGEgZGV2aWNl
-IGluc3RlYWQgb2YgTGluayB1cCBkdXJpbmcgc3VzcGVuZAo+ID4gPiA+ID4gCj4gPiA+ID4gPiBU
-aGUgc3VzcGVuZCBoYW5kbGVyIGNoZWNrcyBmb3IgdGhlIFBDSWUgTGluayB1cCB0byBkZWNpZGUg
-d2hlbiB0byB0dXJuIG9mZgo+ID4gPiA+ID4gdGhlIGNvbnRyb2xsZXIgcmVzb3VyY2VzLiBCdXQg
-dGhpcyBjaGVjayBpcyByYWN5IGFzIHRoZSBQQ0llIExpbmsgY2FuIGdvCj4gPiA+ID4gPiBkb3du
-IGp1c3QgYWZ0ZXIgdGhpcyBjaGVjay4KPiA+ID4gPiA+IAo+ID4gPiA+ID4gU28gdXNlIHRoZSBu
-ZXdseSBpbnRyb2R1Y2VkIEFQSSwgcGNpX3Jvb3RfcG9ydHNfaGF2ZV9kZXZpY2UoKSB0aGF0IGNo
-ZWNrcwo+ID4gPiA+ID4gZm9yIHRoZSBwcmVzZW5jZSBvZiBhIGRldmljZSB1bmRlciBhbnkgb2Yg
-dGhlIFJvb3QgUG9ydHMgdG8gcmVwbGFjZSB0aGUKPiA+ID4gPiA+IExpbmsgdXAgY2hlY2suCj4g
-PiA+ID4gPiAKPiA+ID4gPiA+IFNpZ25lZC1vZmYtYnk6IE1hbml2YW5uYW4gU2FkaGFzaXZhbSA8
-bWFuaXZhbm5hbi5zYWRoYXNpdmFtQG9zcy5xdWFsY29tbS5jb20+Cj4gPiA+ID4gPiAtLS0KPiA+
-ID4gPiA+ICBkcml2ZXJzL3BjaS9jb250cm9sbGVyL2R3Yy9wY2llLXFjb20uYyB8IDYgKysrKy0t
-Cj4gPiA+ID4gPiAgMSBmaWxlIGNoYW5nZWQsIDQgaW5zZXJ0aW9ucygrKSwgMiBkZWxldGlvbnMo
-LSkKPiA+ID4gPiA+IAo+ID4gPiA+ID4gZGlmZiAtLWdpdCBhL2RyaXZlcnMvcGNpL2NvbnRyb2xs
-ZXIvZHdjL3BjaWUtcWNvbS5jIGIvZHJpdmVycy9wY2kvY29udHJvbGxlci9kd2MvcGNpZS1xY29t
-LmMKPiA+ID4gPiA+IGluZGV4IDgwNWVkYmJmZTdlYi4uYjJiODllMmU0OTE2IDEwMDY0NAo+ID4g
-PiA+ID4gLS0tIGEvZHJpdmVycy9wY2kvY29udHJvbGxlci9kd2MvcGNpZS1xY29tLmMKPiA+ID4g
-PiA+ICsrKyBiL2RyaXZlcnMvcGNpL2NvbnRyb2xsZXIvZHdjL3BjaWUtcWNvbS5jCj4gPiA+ID4g
-PiBAQCAtMjAxOCw2ICsyMDE4LDcgQEAgc3RhdGljIGludCBxY29tX3BjaWVfcHJvYmUoc3RydWN0
-IHBsYXRmb3JtX2RldmljZSAqcGRldikKPiA+ID4gPiA+ICBzdGF0aWMgaW50IHFjb21fcGNpZV9z
-dXNwZW5kX25vaXJxKHN0cnVjdCBkZXZpY2UgKmRldikKPiA+ID4gPiA+ICB7Cj4gPiA+ID4gPiAg
-CXN0cnVjdCBxY29tX3BjaWUgKnBjaWU7Cj4gPiA+ID4gPiArCXN0cnVjdCBkd19wY2llX3JwICpw
-cDsKPiA+ID4gPiA+ICAJaW50IHJldCA9IDA7Cj4gPiA+ID4gPiAgCj4gPiA+ID4gPiAgCXBjaWUg
-PSBkZXZfZ2V0X2RydmRhdGEoZGV2KTsKPiA+ID4gPiA+IEBAIC0yMDUzLDggKzIwNTQsOSBAQCBz
-dGF0aWMgaW50IHFjb21fcGNpZV9zdXNwZW5kX25vaXJxKHN0cnVjdCBkZXZpY2UgKmRldikKPiA+
-ID4gPiA+ICAJICogcG93ZXJkb3duIHN0YXRlLiBUaGlzIHdpbGwgYWZmZWN0IHRoZSBsaWZldGlt
-ZSBvZiB0aGUgc3RvcmFnZSBkZXZpY2VzCj4gPiA+ID4gPiAgCSAqIGxpa2UgTlZNZS4KPiA+ID4g
-PiA+ICAJICovCj4gPiA+ID4gPiAtCWlmICghZHdfcGNpZV9saW5rX3VwKHBjaWUtPnBjaSkpIHsK
-PiA+ID4gPiA+IC0JCXFjb21fcGNpZV9ob3N0X2RlaW5pdCgmcGNpZS0+cGNpLT5wcCk7Cj4gPiA+
-ID4gPiArCXBwID0gJnBjaWUtPnBjaS0+cHA7Cj4gPiA+ID4gPiArCWlmICghcGNpX3Jvb3RfcG9y
-dHNfaGF2ZV9kZXZpY2UocHAtPmJyaWRnZS0+YnVzKSkgewo+ID4gPiA+IAo+ID4gPiA+IEknbSBh
-IGxpdHRsZSBjb25mdXNlZC4KPiA+ID4gPiBUaGUgcGNpX3Jvb3RfcG9ydHNfaGF2ZV9kZXZpY2Ug
-ZnVuY3Rpb24gY2FuIGhlbHAgY2hlY2sgaWYgdGhlcmUgaXMgYW55IGRldmljZSAKPiA+ID4gPiBh
-dmFpbGFibGUgdW5kZXIgdGhlIFJvb3QgUG9ydHMsIGlmIHRoZXJlIGlzIGEgZGV2aWNlIGF2YWls
-YWJsZSwgdGhlIHJlc291cmNlIAo+ID4gPiA+IGNhbm5vdCBiZSByZWxlYXNlZCwgaXMgaXQgYWxz
-byBuZWNlc3NhcnkgdG8gcmVsZWFzZSByZXNvdXJjZXMgd2hlbiBlbnRlcmluZyAKPiA+ID4gPiB0
-aGUgTDIvTDMgc3RhdGU/Cj4gPiA+ID4gCj4gPiA+IAo+ID4gPiBJdCBpcyB1cHRvIHRoZSBjb250
-cm9sbGVyIGRyaXZlciB0byBkZWNpZGUuIE9uY2UgdGhlIGxpbmsgZW50ZXJzIEwyL0wzLCB0aGUK
-PiA+ID4gZGV2aWNlIHdpbGwgYmUgaW4gRDNDb2xkIHN0YXRlLiBTbyB0aGUgY29udHJvbGxlciBj
-YW4ganVzdCBkaXNhYmxlIGFsbCBQQ0llCj4gPiA+IHJlc291cmNlcyB0byBzYXZlIHBvd2VyLgo+
-ID4gPiAKPiA+ID4gQnV0IGl0IGlzIG5vdCBwb3NzaWJsZSB0byB0cmFuc2l0aW9uIGFsbCBQQ0ll
-IGRldmljZXMgdG8gRDNDb2xkIGR1cmluZyBzdXNwZW5kLAo+ID4gPiBmb3IgaW5zdGFuY2UgTlZN
-ZS4gSSdtIGhvcGluZyB0byBmaXggaXQgdG9vIGluIHRoZSBjb21pbmcgZGF5cy4KPiA+ID4gCj4g
-PiBIaSwgTWFuaXZhbm5hbgo+ID4gCj4gPiBUaGFuayB5b3UgZm9yIHlvdXIgZXhwbGFuYXRpb24u
-Cj4gPiAKPiA+IEJ5IHRoZSB3YXksIGluIHY1IHBhdGNoLCBJIHJlbW92ZWQgdGhlIGR3X3BjaWVf
-bGlua191cCBqdWRnbWVudCwgYW5kIGN1cnJlbnRseQo+ID4gcmVzb3VyY2VzIGFyZSBkaXJlY3Rs
-eSByZWxlYXNlZC4KPiA+IEF0IHByZXNlbnQsIGkgaGF2ZSBjb21wbGV0ZWQgdGhlIHBjaWUgdjUg
-cGF0Y2ggd2l0aG91dCBhZGRpbmcgdGhlIAo+ID4gcGNpX3Jvb3RfcG9ydHNfaGF2ZV9kZXZpY2Ug
-ZnVuY3Rpb24uIERvIEkgbmVlZCB0byB3YWl0IGZvciB5b3UgdG8gbWVyZ2UgaXQgCj4gPiBiZWZv
-cmUgc2VuZGluZyB0aGUgVjUgcGF0Y2g/Cj4gPiAKPiAKPiBJJ3ZlIG1lcmdlZCBteSBzZXJpZXMg
-dG8gcGNpL2NvbnRyb2xsZXIvZHdjIGJyYW5jaC4gWW91IGNhbiB1c2UgdGhpcyBicmFuY2ggYXMg
-YQo+IGJhc2UgZm9yIHlvdXIgdjUuCj4gCkhpLCBNYW5pdmFubmFuCgpUaGFuayB5b3UgdmVyeSBt
-dWNoIGZvciB0aGUgbmV3bHkgY3JlYXRlZCBicmFuY2guIEkgaGF2ZSBhbHJlYWR5IHN1Ym1pdHRl
-ZCBhIHY1IApwYXRjaCBiYXNlZCBvbiB0aGlzIGJyYW5jaC4KCktpbmQgcmVnYXJkcywKU2VuY2h1
-YW4gWmhhbmc=
+On 10/11/2025 09:50, Sarthak Garg wrote:
+> Add SD Card host controller for sm8750 soc.
+> 
+> Signed-off-by: Sarthak Garg <sarthak.garg@oss.qualcomm.com>
+> ---
+>  arch/arm64/boot/dts/qcom/sm8750.dtsi | 54 ++++++++++++++++++++++++++++
+>  1 file changed, 54 insertions(+)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/sm8750.dtsi b/arch/arm64/boot/dts/qcom/sm8750.dtsi
+> index a82d9867c7cb..95b210fbfead 100644
+> --- a/arch/arm64/boot/dts/qcom/sm8750.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sm8750.dtsi
+> @@ -3482,6 +3482,60 @@ pcie0_phy: phy@1c06000 {
+>  			status = "disabled";
+>  		};
+>  
+> +		sdhc_2: mmc@8804000 {
+
+Nothing improved.
+
+Best regards,
+Krzysztof
 
