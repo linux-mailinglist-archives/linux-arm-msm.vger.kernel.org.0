@@ -1,271 +1,122 @@
-Return-Path: <linux-arm-msm+bounces-81041-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-81040-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [IPv6:2605:f480:58:1:0:1994:3:14])
-	by mail.lfdr.de (Postfix) with ESMTPS id B8A3FC47403
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Nov 2025 15:38:33 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id CF1DDC473E8
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Nov 2025 15:37:16 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 968374E1919
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Nov 2025 14:38:32 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 6C5ED3B06EC
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Nov 2025 14:36:14 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 62C602EBBB2;
-	Mon, 10 Nov 2025 14:38:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 48C83313E06;
+	Mon, 10 Nov 2025 14:35:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="Fs/1mSr6";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="Jn/8Yvrk"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Y3UKjnX8"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6DFC30E858
-	for <linux-arm-msm@vger.kernel.org>; Mon, 10 Nov 2025 14:38:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C76131355F;
+	Mon, 10 Nov 2025 14:35:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762785510; cv=none; b=XOJR7xTArUAFWH3yIvXiO+arLRx6uWLLrYMxFPjkXg9DR+KnVT3pHJs+YNQwgJbg+J29I2cyRfYAJgNjw7bKLEjs+hux+VWswMmNrSxqpae78zfBTcMPJpZ9JyLTypVCB6tE/maYn8aB00GgFUQCC7FYL7kZ+qPnpKSwb7YJ1VQ=
+	t=1762785315; cv=none; b=dhchazKegpdj/NLCXivlxy4tr2D3PJNeU05STXO9xhzEWA71ta5pYBO970ohHFXa+HiQq4+2d7Q+ad1fHo5T3YyGwNJXLc7PaI5e9b4mJ+wlAqxuSyKWQ7N2r4lcTSNR/XuXB099zW8Knmwy9TCBoL28D6gdrmnJ+JAQPND+TbM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762785510; c=relaxed/simple;
-	bh=Kv+GgVexbGopxr7yumqlBiancGmQZWWVjQWyj1jNkno=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=f4F3NpTb/kPr9PUJq36rPrc0+rhyYnKO2GkTEMmgHeuRRtq0Q44YLgl8O8pnsuLc7GSXqhljywtBnx1Xlp3m7Ss0Fgb9timkj5x+vtMLwP3fYI4jfmzXszFG8YAgFY628P4qHYmhXr+cSbKhKEcG0wvQzahAyeQzvXjtQ2PWIrI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=Fs/1mSr6; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=Jn/8Yvrk; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 5AAEBlLU2861413
-	for <linux-arm-msm@vger.kernel.org>; Mon, 10 Nov 2025 14:38:27 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	DjXlGf6kCK1SRmg1a5VtEsJaR1Zk+XRBUVbJsc742Xk=; b=Fs/1mSr6ibXTZsBm
-	K5ACt9BDv18vhbSavu73Iw/bUfBeSMqG7PKz/LE6fa3WvrCs53lpV5uD38jrsVYT
-	Lzpw3TaCvOuBJYvrK8X+QejBmwOf4xpqIIxkvBIuGFQQWx1iwazN731vOfPTfVDW
-	buOdmttgzcjg/yKdGIZsnELNhOAt7w095Q1A//CC1fIhwKZmZ25t1hY17sr/SX7t
-	k6haVM9zF1eFi4QBlG/VcSq2if1FrHkoGtm/w6qrY2XhWbhWyleUkZEKZLx1hflH
-	POTYPJ6J6MNQIMYGIiUF6Vr/7q92cffk777Huwd3iWZNwM24E8o92VkFv59jC6P7
-	x/DVOA==
-Received: from mail-pj1-f70.google.com (mail-pj1-f70.google.com [209.85.216.70])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4abbwe1a1e-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Mon, 10 Nov 2025 14:38:27 +0000 (GMT)
-Received: by mail-pj1-f70.google.com with SMTP id 98e67ed59e1d1-3436d81a532so5040033a91.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 10 Nov 2025 06:38:27 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1762785506; x=1763390306; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=DjXlGf6kCK1SRmg1a5VtEsJaR1Zk+XRBUVbJsc742Xk=;
-        b=Jn/8YvrkizRMJyTkETr5o6pggtaQ/KMqLDmwX1QAudTOWslftxuGHCgYF36uQ91EHy
-         zEUJ3ckOexQOG4nV09RtiZVCtgBgYhHmGMXNLF97Jr1IykxoNSqRbIsOC5AjZIcSiUGd
-         o1ccuVdhdBrl6MIM3/MTDYNGo4/T1EwOBWhRh8ejzbJh0yfrTSlk/CgNcjGosODHv8UP
-         VgKDoDtiIeEF2pQWCO1iEIljWO9bhTz9OyooD6Rr8jGUKfIs/xRy42qWCOZxm9wzocG4
-         XAunKGg1LQH5nPQdPmwNL29uNCipIbRkaEjBLfshAWc8HqbqqYWWl2ghUmMF23c18yWd
-         4zvw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1762785506; x=1763390306;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=DjXlGf6kCK1SRmg1a5VtEsJaR1Zk+XRBUVbJsc742Xk=;
-        b=rqdUmBIIYQB93Mlpfs+6kbIm7wk16Q1C2jJN2nKMFMeHzG1OFrNecJTOcwx2lOqeIU
-         jW60ffsOlMrDx48NinvldY/iGLDYNr1v/GIph3UwBnRfaYYw+f21rpcHI4OxEqMSs7wo
-         2E0glEEF4WmvlWa/UPOKvUXOZHmCjkTEJmfy8noGal3FXdeV8LSxndM/OBiHHTcTwK+K
-         XJ6yVubiSSQje7r6hk6QRZHHoF3/gNjbtrgGT/CcVVIM1MGwf3vM31NJyle4VrSPZgay
-         yHzCIV8Tf3icyfvf5yb93pakkr0EILKD3RcpnlnBJTbDAlMJg0zgTb9epq0uak0tT3mo
-         gGvw==
-X-Forwarded-Encrypted: i=1; AJvYcCXBL5uPaHMlYU9OGbMWS4zPQE3hz2ntfHpaO6gVP7NZk0z/KAzvujG5ldSJ0QUrRco17TPAD3zpFROsBKHL@vger.kernel.org
-X-Gm-Message-State: AOJu0YwSQIfzc6l/OiSLkOS7vJHISfcdlRYAg7gviAZ9VmQD12eqcLpt
-	SPAg2dZHWeun/0oXB6HUciDM0FzzWXWGgG6Y2C31mBtG0gKl1BnwHVH3NYgdRwuv/a4Xpk1QRDI
-	Mkm6RqWOG1ttwsBthyyoC3bP5ClisMTIDFGFcyCAHvGqIAQ4iM5eFRNI2mIxnx9Qi4Q7l
-X-Gm-Gg: ASbGncso/1Or9Auh7ZEmuXQ7pV6tRgW8GLRrjiKPkmpjL/Pv18H6bSj74JsNb5x/lou
-	AWdk119Qa4F7Rq1QiR3NibABlRojOJDhZIy78fEiLX3B/I/gLfEl53mU9XgWuaOSP9A/p7q1kQQ
-	XqDBDZMKnx1bci7eavacUXZUgRxnYuiSX0HDn39J7xVcleuqvkWv6e08OYKO5FRgNGSGVod5cPT
-	7F887DfG3S8RLNe4lbVpzhC7olp+nB1O8BCVg/59h9ElkZR0S/Pvd8FP0epxMkC6hBSMtTeLUqD
-	j9qrQ49g/rRqzPoFObjzgLBM1X0IdyA1vicTLXKFfFIIDx/WR3RRJX76XMDME6EUw6XdUiJzAv3
-	8/dZW8eBxGg6Js4B9YSNCuY+xCj4SfkrI
-X-Received: by 2002:a17:90a:ec84:b0:340:bde5:c9e3 with SMTP id 98e67ed59e1d1-3436cb91ec3mr10817670a91.23.1762785506396;
-        Mon, 10 Nov 2025 06:38:26 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFcDiYkW+6pedjCMiR1BaFljPhTaDiM32XOE7C47GkBGlZcqk0BMUcwHHXae+/cHPVW0xghTA==
-X-Received: by 2002:a17:90a:ec84:b0:340:bde5:c9e3 with SMTP id 98e67ed59e1d1-3436cb91ec3mr10817613a91.23.1762785505845;
-        Mon, 10 Nov 2025 06:38:25 -0800 (PST)
-Received: from [10.219.57.23] ([202.46.23.19])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-341d0aee149sm8431073a91.1.2025.11.10.06.38.17
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 10 Nov 2025 06:38:25 -0800 (PST)
-Message-ID: <16521e84-9da6-53a7-febe-9decb6970c06@oss.qualcomm.com>
-Date: Mon, 10 Nov 2025 20:08:15 +0530
+	s=arc-20240116; t=1762785315; c=relaxed/simple;
+	bh=H+NeCQZyJ3FrRAyNmW1uwJi2sTQM5CPCDpAyzhoE1nA=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=rRLcexf1j4ng77n9DViI595F7/SBkWYoVY0dthsngMEI9UqvhVqKl+W3El/BwdLx9IDgjlzXCMdHhcDr1YK0rhvuodxTbphw7eYVWfy0HBFlIAzFd1L5vK+8ex9R414Nuww+9MzpUffCOkRZqVy8b/b0MBXsxN7icJcuhg4rX7k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Y3UKjnX8; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 037CFC19424;
+	Mon, 10 Nov 2025 14:35:13 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1762785315;
+	bh=H+NeCQZyJ3FrRAyNmW1uwJi2sTQM5CPCDpAyzhoE1nA=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=Y3UKjnX8hUBPhrVYuuBNZfHdauDMLUzlXl65kSP7yd4j/iPDwmNgqMjPQasE3l/+a
+	 LN012CHjB7A5J3Tm4oLVPyhJIUlv74CnNgCVTTbvKlRy06M4z0dQ5Zc4IjUr9JTmcb
+	 yutHNZUZxZHOdBGqjolmM6kOYokzwnmwUo6zmJsHhiBNNVg0AJwlzYmKdnlxQs5HH6
+	 1o6zeo7buInBDFgnOoYlC6Xxa6Kza16jhdq+lXcXDU/ZABPSmbHoLhyGjkTE7ViVpL
+	 /wYjdAWmP9brLyMjhlzXuA4y5Uj4+IXc/NSmGa+55hDOUlpxHHKkFKozjgYDHWGA6A
+	 9csQy72zVAGGg==
+Date: Mon, 10 Nov 2025 08:39:20 -0600
+From: Bjorn Andersson <andersson@kernel.org>
+To: Sarthak Garg <sarthak.garg@oss.qualcomm.com>
+Cc: Adrian Hunter <adrian.hunter@intel.com>, 
+	Ulf Hansson <ulf.hansson@linaro.org>, linux-mmc@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, quic_nguyenb@quicinc.com, quic_rampraka@quicinc.com, 
+	quic_pragalla@quicinc.com, quic_sayalil@quicinc.com, quic_nitirawa@quicinc.com, 
+	quic_bhaskarv@quicinc.com, kernel@oss.qualcomm.com
+Subject: Re: [PATCH V1] mmc: sdhci-msm: Avoid early clock doubling during
+ HS400 transition
+Message-ID: <wshfjbdjmoe5hfsmh2rrwxiy67wo4k6i7bzap4hz4n5j22uiol@xz7wfxaw4bve>
+References: <20251110063801.641866-1-sarthak.garg@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.5.1
-Subject: Re: [PATCH v17 03/12] power: reset: reboot-mode: Add support for 64
- bit magic
-Content-Language: en-US
-To: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>
-Cc: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Sebastian Reichel <sre@kernel.org>, Rob Herring <robh@kernel.org>,
-        Sudeep Holla <sudeep.holla@arm.com>,
-        Souvik Chakravarty <Souvik.Chakravarty@arm.com>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley
- <conor+dt@kernel.org>,
-        Andy Yan <andy.yan@rock-chips.com>,
-        Mark Rutland <mark.rutland@arm.com>,
-        Lorenzo Pieralisi <lpieralisi@kernel.org>,
-        Arnd Bergmann <arnd@arndb.de>, Konrad Dybcio <konradybcio@kernel.org>,
-        cros-qcom-dts-watchers@chromium.org, Vinod Koul <vkoul@kernel.org>,
-        Catalin Marinas <catalin.marinas@arm.com>,
-        Will Deacon <will@kernel.org>,
-        Florian Fainelli <florian.fainelli@broadcom.com>,
-        Moritz Fischer <moritz.fischer@ettus.com>,
-        John Stultz <john.stultz@linaro.org>,
-        Matthias Brugger <matthias.bgg@gmail.com>,
-        Krzysztof Kozlowski <krzk@kernel.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Andre Draszik
- <andre.draszik@linaro.org>,
-        Kathiravan Thirumoorthy <kathiravan.thirumoorthy@oss.qualcomm.com>,
-        linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org,
-        Elliot Berman <quic_eberman@quicinc.com>,
-        Xin Liu <xin.liu@oss.qualcomm.com>,
-        Srinivas Kandagatla <srini@kernel.org>,
-        Umang Chheda <umang.chheda@oss.qualcomm.com>,
-        Nirmesh Kumar Singh <nirmesh.singh@oss.qualcomm.com>
-References: <20251109-arm-psci-system_reset2-vendor-reboots-v17-0-46e085bca4cc@oss.qualcomm.com>
- <20251109-arm-psci-system_reset2-vendor-reboots-v17-3-46e085bca4cc@oss.qualcomm.com>
- <20251110134529.uljjqzb3vhda3vya@hu-mojha-hyd.qualcomm.com>
-From: Shivendra Pratap <shivendra.pratap@oss.qualcomm.com>
-In-Reply-To: <20251110134529.uljjqzb3vhda3vya@hu-mojha-hyd.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-GUID: SX8WBevQiPPr4ELB8CljKB7PygAurRvL
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMTEwMDEyNiBTYWx0ZWRfX9B9OK/6pgDYw
- SV0wpaMeplEsPXTMC2GDkZ4aOs9luXtGymTvAOAcq+poIS56X7Ga2nYBOkGKgw6EusxdsHfpzuE
- oBfModDJ9iA/0I3x6wgPZ5GcT0nCbyQvqozYL378J1yzRWRG6C5nY89Bw21ViWzzTa6rkje9z34
- JEci/1Ec941K3WdNT6/uckZByEKK664PTDHWnckOU4OYKLrP1Otqw47md+Ar8zBU78CVlz931Rr
- CmY7vLVbKgvqoJjf8Cwb/wCTw0hb0dRNKZS7uTY8ulBanIR4f5h1ykxdhW17vMz8Q3PkSMJiwoD
- F2z/a5sPEHzfwZR21bA8oBEC0/siF/TawP/oCWrUxC8wedQ35pBs8KpqOz5/J8PpNOlV5FVxACu
- S2SJt+DnQ8NDqBoEV46sJqsKerRe3w==
-X-Authority-Analysis: v=2.4 cv=GbEaXAXL c=1 sm=1 tr=0 ts=6911f8e3 cx=c_pps
- a=0uOsjrqzRL749jD1oC5vDA==:117 a=j4ogTh8yFefVWWEFDRgCtg==:17
- a=IkcTkHD0fZMA:10 a=6UeiqGixMTsA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=vG-lknqJ1RofaPO6YZUA:9 a=QEXdDO2ut3YA:10
- a=mQ_c8vxmzFEMiUWkPHU9:22
-X-Proofpoint-ORIG-GUID: SX8WBevQiPPr4ELB8CljKB7PygAurRvL
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
- definitions=2025-11-10_05,2025-11-10_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 malwarescore=0 priorityscore=1501 phishscore=0 bulkscore=0
- spamscore=0 adultscore=0 impostorscore=0 lowpriorityscore=0 suspectscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2510240001 definitions=main-2511100126
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20251110063801.641866-1-sarthak.garg@oss.qualcomm.com>
+
+On Mon, Nov 10, 2025 at 12:08:01PM +0530, Sarthak Garg wrote:
+> According to the hardware programming guide, the clock frequency must
+> remain below 52MHz during the transition to HS400 mode.
+> 
+> However,in the current implementation, the timing is set to HS400 (a
+> DDR mode) before adjusting the clock. This causes the clock to double
+> prematurely to 104MHz during the transition phase, violating the
+> specification and potentially resulting in CRC errors or CMD timeouts.
+> 
+> This change ensures that clock doubling is avoided during intermediate
+> transitions and is applied only when the card requires a 200MHz clock
+> for HS400 operation.
+> 
+> Signed-off-by: Sarthak Garg <sarthak.garg@oss.qualcomm.com>
+> ---
+>  drivers/mmc/host/sdhci-msm.c | 3 ++-
+>  1 file changed, 2 insertions(+), 1 deletion(-)
+> 
+> diff --git a/drivers/mmc/host/sdhci-msm.c b/drivers/mmc/host/sdhci-msm.c
+> index 4e5edbf2fc9b..eca6a09a4547 100644
+> --- a/drivers/mmc/host/sdhci-msm.c
+> +++ b/drivers/mmc/host/sdhci-msm.c
+> @@ -355,7 +355,8 @@ static unsigned int msm_get_clock_mult_for_bus_mode(struct sdhci_host *host)
+>  	 */
+>  	if (ios.timing == MMC_TIMING_UHS_DDR50 ||
+>  	    ios.timing == MMC_TIMING_MMC_DDR52 ||
+> -	    ios.timing == MMC_TIMING_MMC_HS400 ||
+> +	    (ios.timing == MMC_TIMING_MMC_HS400 &&
+> +	    ios.clock == MMC_HS200_MAX_DTR) ||
+
+It's a bit ugly that sdhci_msm_execute_tuning() passes ios.clock as an
+argument to msm_set_clock_rate_for_bus_mode(), which then calls
+msm_get_clock_mult_for_bus_mode() where you reach back into ios.clock.
+
+In fact, having msm_get_clock_mult_for_bus_mode() reach into
+host->mmc->ios to get ios.timing, seems a violation of the original
+intent of the prototype.
 
 
+How about cleaning this up and passing "timing" as an argument to
+msm_set_clock_rate_for_bus_mode(), and then pass host, clock, and timing
+to msm_get_clock_mult_for_bus_mode()?
 
-On 11/10/2025 7:15 PM, Mukesh Ojha wrote:
-> On Sun, Nov 09, 2025 at 08:07:16PM +0530, Shivendra Pratap wrote:
->> Current reboot-mode supports a single 32-bit argument for any
+That way we avoid this mix of passing parameters to the functions in
+both arguments and in state at the same time.
 
-[SNIP..]
+Regards,
+Bjorn
 
->>  
->> -static int nvmem_reboot_mode_write(struct reboot_mode_driver *reboot,
->> -				    unsigned int magic)
->> +static int nvmem_reboot_mode_write(struct reboot_mode_driver *reboot, u64 magic)
->>  {
->> -	int ret;
->>  	struct nvmem_reboot_mode *nvmem_rbm;
->> +	u32 magic_32;
->> +	int ret;
->> +
->> +	if (magic > U32_MAX)
->> +		return -EINVAL;
+>  	    host->flags & SDHCI_HS400_TUNING)
+>  		return 2;
+>  	return 1;
+> -- 
+> 2.34.1
 > 
 > 
-> I believe, we need a comment in all the client driver.. 
-
-Ack. Will add a comment.
-
-> 
->> +
->> +	magic_32 = magic;
->>  
->>  	nvmem_rbm = container_of(reboot, struct nvmem_reboot_mode, reboot);
->>  
->> -	ret = nvmem_cell_write(nvmem_rbm->cell, &magic, sizeof(magic));
->> +	ret = nvmem_cell_write(nvmem_rbm->cell, &magic_32, sizeof(magic_32));
->>  	if (ret < 0)
->>  		dev_err(reboot->dev, "update reboot mode bits failed\n");
->>  
->> diff --git a/drivers/power/reset/qcom-pon.c b/drivers/power/reset/qcom-pon.c
->> index 7e108982a582e8243c5c806bd4a793646b87189f..d0ed9431a02313a7bbaa93743c16fa1ae713ddfe 100644
->> --- a/drivers/power/reset/qcom-pon.c
->> +++ b/drivers/power/reset/qcom-pon.c
->> @@ -27,17 +27,22 @@ struct qcom_pon {
->>  	long reason_shift;
->>  };
->>  
->> -static int qcom_pon_reboot_mode_write(struct reboot_mode_driver *reboot,
->> -				    unsigned int magic)
->> +static int qcom_pon_reboot_mode_write(struct reboot_mode_driver *reboot, u64 magic)
->>  {
->>  	struct qcom_pon *pon = container_of
->>  			(reboot, struct qcom_pon, reboot_mode);
->> +	u32 magic_32;
->>  	int ret;
->>
-> 
-> Since we are doing this change in reboot framework, client driver should know about
-> it too about this new check because of framework.
-
-ok.
-
-> 
->> +	if (magic > U32_MAX || (magic << pon->reason_shift) > U32_MAX)
-> 
-> 
-> is this (magic << pon->reason_shift) > U32_MAX really needed ..?
-
-Can be omitted as we already checked magic > U32_MAX. Will
-remove it.
-
-> 
-
-[SNIP..]
-
->> diff --git a/drivers/power/reset/syscon-reboot-mode.c b/drivers/power/reset/syscon-reboot-mode.c
->> index e0772c9f70f7a19cd8ec8a0b7fdbbaa7ba44afd0..3cbd000c512239b12ec51987e900d260540a9dea 100644
->> --- a/drivers/power/reset/syscon-reboot-mode.c
->> +++ b/drivers/power/reset/syscon-reboot-mode.c
->> @@ -20,16 +20,21 @@ struct syscon_reboot_mode {
->>  	u32 mask;
->>  };
->>  
->> -static int syscon_reboot_mode_write(struct reboot_mode_driver *reboot,
->> -				    unsigned int magic)
->> +static int syscon_reboot_mode_write(struct reboot_mode_driver *reboot, u64 magic)
->>  {
->>  	struct syscon_reboot_mode *syscon_rbm;
->> +	u32 magic_32;
->>  	int ret;
->>
-> 
-> same here
-
-will add comment here.
-
-thanks,
-Shivendra
 
