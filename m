@@ -1,246 +1,158 @@
-Return-Path: <linux-arm-msm+bounces-80943-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-80944-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id EE1D5C457D5
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Nov 2025 10:02:07 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7670EC458AC
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Nov 2025 10:13:18 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id B51543B4B2E
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Nov 2025 09:01:52 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 1FA08188FAAA
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Nov 2025 09:13:43 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C52162FE06B;
-	Mon, 10 Nov 2025 09:01:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="oBHsj9cH";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="hDN87T2k"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3D8BF2FF151;
+	Mon, 10 Nov 2025 09:13:06 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1EABA1DDC28
-	for <linux-arm-msm@vger.kernel.org>; Mon, 10 Nov 2025 09:01:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+Received: from azure-sdnproxy.icoremail.net (azure-sdnproxy.icoremail.net [52.229.205.26])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2680E2FC89F;
+	Mon, 10 Nov 2025 09:13:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=52.229.205.26
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762765289; cv=none; b=nTno3ZayUzplACSk2wLJw3vAErscoQA3rx0iBp0C4a5MtrQZk5L6lL9uTJLt6+twPGKc4r6HThG8rbxiN4PMSl6rRiD52jaa4AP92/dOJKFSu3pdO2rppKJ2IP0QnNoP2ed9hSu/QmAj26uYuCYTDU0X0sPJ3Nnk8JiwgXrbDnU=
+	t=1762765986; cv=none; b=o0rTNtlXvaw62DWOrHu+Ux+3T1i1vCrrKnIjL9OaJCLPiaUpZoutZNDsPd+MSEXba/ar9Wx3hIbn16rGU0uBY+A09uX1fRDY2KINIGPdxiiXcPOscRKd2DAbPDI1G17P3Lij+RBFhiQZ7DPW4u2ktYsGv9zSCGQpIy7rCmlosHo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762765289; c=relaxed/simple;
-	bh=ccU9+qFZKZ7fCj6QGTBAJFQ2jYzt7LtNENdW2LxoxZM=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=TMbdKO30ozK+LYsnjyF1bHVYw3lpIazYLht1Y1dBy3AKfRpksBuBRj2mKjfVefGt8Zv05bb7Dav8u5CocPCe2U0gzyxh31rpf8PaMojNajdtY5BfgcG4JUQNjZ7CJzFr00AIVogFxzwvdEkoBtGi93iCDwOdxEymA58Q618cv+I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=oBHsj9cH; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=hDN87T2k; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 5AA7haek2861774
-	for <linux-arm-msm@vger.kernel.org>; Mon, 10 Nov 2025 09:01:27 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	VjFJkh56K7+vszlTQwAFFoNDcHFHTbltKiU2coQ24F0=; b=oBHsj9cHNfV3LU1I
-	sFoJT6aShUeZc8d0f3vdWt+u/3N//1Fvm2dr2uxQ/eyzcpGLKCgoaZ+MsiLFtMOX
-	FoRTXJv0qDDwV3NymRDkiKs1d5QGm4+qElBFpSTEwSPd0ZcLr116MIeMiHl7xAY4
-	NLj53CAMe+0qoZa4//1AeqaJi9hznbIjj69OiDDpTPxI/gntZ7JS7yDzKX0xPV6t
-	M4TCsYocoZU689koXIdQPhpVugaztfHNkZ14ShVS2Z5y5ZOZGq+hc2LXwp97DrYa
-	EEPgMLgL7RspzC/nVxFFQBqko9HPf6xn+f8ChMDAzitv3wW2Q3D5xNU/4g6AeeN6
-	SwgJWg==
-Received: from mail-pf1-f199.google.com (mail-pf1-f199.google.com [209.85.210.199])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4abbwe0716-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Mon, 10 Nov 2025 09:01:26 +0000 (GMT)
-Received: by mail-pf1-f199.google.com with SMTP id d2e1a72fcca58-7aa440465a1so5610344b3a.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 10 Nov 2025 01:01:26 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1762765286; x=1763370086; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=VjFJkh56K7+vszlTQwAFFoNDcHFHTbltKiU2coQ24F0=;
-        b=hDN87T2kp6VJqO0OvbvXMVw0HYNpKhIuZwr5aS9HCVCLAjLR4/LSv4/YIinliICBzP
-         zoRYB8HKA3NPhJGmXqOJnJARb4gV6fcnpocsaZ+A7kTU1E9Rfc1HXo4ZknGYf8h9Op2Y
-         icODd4koIhs81idVQ4MbvWVFY98HA576uhjFXLnsFoH1tXy1ACLnGjL6yvYBnhA/6BoB
-         IqxGjDFO4kXQhPZuYSTVl6xiOhNuRJk6Ohb89s/iVot9gsmkdZZa1YbO23IZwojCUaSW
-         hKVYguEjTdLiDtlOZDzvfdEZMmSv/7BteTmsB6/5uZTlH/T9o+DckffTm8W3Ot1SDo69
-         hwwA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1762765286; x=1763370086;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=VjFJkh56K7+vszlTQwAFFoNDcHFHTbltKiU2coQ24F0=;
-        b=n40K2DYLlOvhd/BpV3O3l9tjAuNCiL7nxnDwjQ0XZkVQ2dCFApsqcq5/6CHgnbCEc+
-         K6nv2qap30NNdsQAcSxgUGkq859q+yuL8FARsiaE8kbnO6KhpznafAvbumGFtF75r6+t
-         meOnKwuYZWiozSL+K63Q2mORq+lYQbwSJnLz3muiy5tNYZYddZaDwI0VD3IwTZCkDOCR
-         84Kqcdi6xGye+dYrUzE6IO46MelFCi7qvW+naQY5VVIanCtgWbFSNuZHYObtoiYXK97x
-         SeCK367s0c4iKErhu3d5YzeH37HC7II7a27Jvk9wNP01tBrW7Lk7H1YIlExg3BAvA1vq
-         6Icg==
-X-Forwarded-Encrypted: i=1; AJvYcCV1Wav1WQDnBq2m6fZSw7QruVd7yp4tA9COVDHUCu5RUJEbEHi11VXh7fvT7W1a2iMckp0yRQEJA0N6Koc+@vger.kernel.org
-X-Gm-Message-State: AOJu0Yz9LVPOzT8ZrjKXjJULJ1+NCgJbrt6d35djQ8eeKyEVyZ9FIsEp
-	rWIe15KizAjyDW/a41meTmY/K9gXuqhfuXBSx16PD3eDtfT40+hRt9EimqaGfMWY38XfBhMqHiY
-	dL8SNhTWx9RpkKMPpB7FQEgC21ZP17OFQGsjKh7J2q8oZtf2vQh1aBywxq0K4H8VH7u11
-X-Gm-Gg: ASbGncsZP5ghWdkTnyRrclbEaWzjmCYCmTVTUsuGwNT5O3BZwmnTmabYYIIA3SNK9uf
-	x61Z8koSIdH9tEepNCGU9lrzsxm+rorqu/6I3YNVbBg0IOTekQeuKCqLqd9zYPB/a67EEUgaC1T
-	AkwT4Whhyw4zA22dvDuqEA36UbMyd20URJLKFgsnAuBjZmH/9aR+qu8l+37i8JpW7VATJgXaQaL
-	hpKU7Lbo8vTYq+G4AkID8LN4b6M4zKbGQuGB1UbCPKdUPBHlwTqhJm7uCupjsSV8avXR4DLO6YF
-	pOaD5WszE41Z/nwTx3CcFrgaaDI2Fvvywx5yyU5Z7nSB6JJYJbr7pnWIwOnvfX/F8B7epnhct/X
-	vskmsveE+LkS9Hj916oeJIDZ3K3XEDmo=
-X-Received: by 2002:aa7:888e:0:b0:7ab:f72e:8f9b with SMTP id d2e1a72fcca58-7b226b90d5bmr9656074b3a.25.1762765285800;
-        Mon, 10 Nov 2025 01:01:25 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHosFOAqp8NttTocVa+upK1X6V+G4BalraqG8mZS3F39o6UgfwXEKMpvqi7/lIqmyWo+/KjJA==
-X-Received: by 2002:aa7:888e:0:b0:7ab:f72e:8f9b with SMTP id d2e1a72fcca58-7b226b90d5bmr9656005b3a.25.1762765285176;
-        Mon, 10 Nov 2025 01:01:25 -0800 (PST)
-Received: from [10.0.0.3] ([106.222.229.252])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-7b0c963586fsm10881884b3a.10.2025.11.10.01.01.21
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 10 Nov 2025 01:01:24 -0800 (PST)
-Message-ID: <220c9fe4-00b4-3b42-0e80-8730a6388bde@oss.qualcomm.com>
-Date: Mon, 10 Nov 2025 14:31:20 +0530
+	s=arc-20240116; t=1762765986; c=relaxed/simple;
+	bh=9u1iCCFaJVVRUnPC6w8LlPngxI4hdJ58PuC60PIrX4o=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:References:Content-Type:
+	 MIME-Version:Message-ID; b=HHEji6BgKINQvMkzoLQPJAXk9cPbOXAtgVZsCH9TyaGqTt8/iBbmX86sZpqgsMM6J5a9D2ngy0LlypwpQOYnJ/oSbBX4FNJKkmIatwOek/iJq74IFiackw2RcnfUydyahsbA0bYKVLkjIlqb1NpKatRyNpxA220rIjBcp8K/GJY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=eswincomputing.com; spf=pass smtp.mailfrom=eswincomputing.com; arc=none smtp.client-ip=52.229.205.26
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=eswincomputing.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=eswincomputing.com
+Received: from zhangsenchuan$eswincomputing.com ( [10.12.96.83] ) by
+ ajax-webmail-app2 (Coremail) ; Mon, 10 Nov 2025 17:12:51 +0800 (GMT+08:00)
+Date: Mon, 10 Nov 2025 17:12:51 +0800 (GMT+08:00)
+X-CM-HeaderCharset: UTF-8
+From: zhangsenchuan <zhangsenchuan@eswincomputing.com>
+To: "Manivannan Sadhasivam" <mani@kernel.org>
+Cc: "Manivannan Sadhasivam" <manivannan.sadhasivam@oss.qualcomm.com>,
+	lpieralisi@kernel.org, kwilczynski@kernel.org, bhelgaas@google.com,
+	will@kernel.org, linux-pci@vger.kernel.org,
+	linux-kernel@vger.kernel.org, robh@kernel.org,
+	linux-arm-msm@vger.kernel.org
+Subject: Re: Re: [PATCH 2/3] PCI: qcom: Check for the presence of a device
+ instead of Link up during suspend
+X-Priority: 3
+X-Mailer: Coremail Webmail Server Version 2024.2-cmXT6 build
+ 20241203(6b039d88) Copyright (c) 2002-2025 www.mailtech.cn
+ mispb-72143050-eaf5-4703-89e0-86624513b4ce-eswincomputing.com
+In-Reply-To: <fnayczbumpynzvhafv3ryozlg2qwsxsyzpn5p44kc4o3hy7uux@lp5qgsd6ajtw>
+References: <20251106061326.8241-1-manivannan.sadhasivam@oss.qualcomm.com>
+ <20251106061326.8241-3-manivannan.sadhasivam@oss.qualcomm.com>
+ <35086b08.c4e.19a58a7d6bc.Coremail.zhangsenchuan@eswincomputing.com>
+ <nhjlanhzndhlbtfohnkypwuzpw6nw43cysjmoam3qv4rrs22hr@ic3hgtfoeb6e>
+ <311e1152.cc3.19a5cff7033.Coremail.zhangsenchuan@eswincomputing.com>
+ <fnayczbumpynzvhafv3ryozlg2qwsxsyzpn5p44kc4o3hy7uux@lp5qgsd6ajtw>
+Content-Transfer-Encoding: base64
+Content-Type: text/plain; charset=UTF-8
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.13.0
-Subject: Re: [PATCH v3] media: iris: Refine internal buffer reconfiguration
- logic for resolution change
-Content-Language: en-US
-To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Cc: Vikash Garodia <vikash.garodia@oss.qualcomm.com>,
-        Abhinav Kumar <abhinav.kumar@linux.dev>,
-        Bryan O'Donoghue <bod@kernel.org>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
-        Hans Verkuil <hverkuil@kernel.org>,
-        Stefan Schmidt <stefan.schmidt@linaro.org>,
-        linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, stable@vger.kernel.org,
-        Val Packett <val@packett.cool>
-References: <20251105-iris-seek-fix-v3-1-279debaba37a@oss.qualcomm.com>
- <2uvinljz3gevbusjrz3bzi3nicelv3t6a64gliv4mdv6cbllvp@fz3qbyukypho>
-From: Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>
-In-Reply-To: <2uvinljz3gevbusjrz3bzi3nicelv3t6a64gliv4mdv6cbllvp@fz3qbyukypho>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-GUID: arGkJVElql3dCJGUywd5uIsxe5bmdVCV
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMTEwMDA3OSBTYWx0ZWRfX7/34Vk/0jfBl
- xVAakONTT6BqPU6T0F9WiKrncpVl0+08EPU/wKEtL7hrez0Hne80aGas8w+R5VgvyrC8XRh9vNV
- koK8zjvzWj4ZGFyM3xE3k2nqjTmmXw5jn6siFHYK34CUM91e0+Bok+u2MwdqavpEULgakf42Ng9
- 2KAtg9wWs/pnPJMUsnkAZ8d9vLa/dZQCGcNihv5fvQj2oN6QIWamt+919yB66XenYT3DEIJh5fn
- ot/eFKZPs1+QZaho+GCNwauvbEe2C3/C0T71beYF8LJccomE7B44STY/LEfiMccPtX2D+FDUVPP
- GX5DIARpSkwqAEuhmrPTmtV6VXkLH0oI5W84Af/pB46dBK0i0/dDkg2EB3cN6JJeqQriSESxfVf
- Ppk2IXibMgofRBv4r0U0K6O5IzT2tw==
-X-Authority-Analysis: v=2.4 cv=GbEaXAXL c=1 sm=1 tr=0 ts=6911a9e6 cx=c_pps
- a=WW5sKcV1LcKqjgzy2JUPuA==:117 a=L4UNg9I9cQSOxNpRiiGXlA==:17
- a=IkcTkHD0fZMA:10 a=6UeiqGixMTsA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=e5mUnYsNAAAA:8 a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8
- a=xnInQRZk-M5WjpmsOPIA:9 a=QEXdDO2ut3YA:10 a=OpyuDcXvxspvyRM73sMx:22
- a=Vxmtnl_E_bksehYqCbjh:22
-X-Proofpoint-ORIG-GUID: arGkJVElql3dCJGUywd5uIsxe5bmdVCV
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
- definitions=2025-11-10_03,2025-11-06_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 malwarescore=0 priorityscore=1501 phishscore=0 bulkscore=0
- spamscore=0 adultscore=0 impostorscore=0 lowpriorityscore=0 suspectscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2510240001 definitions=main-2511100079
+Message-ID: <503961f9.dd6.19a6d0a1e94.Coremail.zhangsenchuan@eswincomputing.com>
+X-Coremail-Locale: en_US
+X-CM-TRANSID:TQJkCgDnK6+TrBFpINNyAA--.1237W
+X-CM-SenderInfo: x2kd0wpvhquxxxdqqvxvzl0uprps33xlqjhudrp/1tbiAQECBmkQw
+	gEm0AAAsI
+X-Coremail-Antispam: 1Ur529EdanIXcx71UUUUU7IcSsGvfJ3iIAIbVAYjsxI4VW3Jw
+	CS07vEb4IE77IF4wCS07vE1I0E4x80FVAKz4kxMIAIbVAFxVCaYxvI4VCIwcAKzIAtYxBI
+	daVFxhVjvjDU=
 
-
-
-On 11/10/2025 2:46 AM, Dmitry Baryshkov wrote:
-> On Wed, Nov 05, 2025 at 11:17:37AM +0530, Dikshita Agarwal wrote:
->> Improve the condition used to determine when input internal buffers need
->> to be reconfigured during streamon on the capture port. Previously, the
->> check relied on the INPUT_PAUSE sub-state, which was also being set
->> during seek operations. This led to input buffers being queued multiple
->> times to the firmware, causing session errors due to duplicate buffer
->> submissions.
->>
->> This change introduces a more accurate check using the FIRST_IPSC and
->> DRC sub-states to ensure that input buffer reconfiguration is triggered
->> only during resolution change scenarios, such as streamoff/on on the
->> capture port. This avoids duplicate buffer queuing during seek
->> operations.
->>
->> Fixes: c1f8b2cc72ec ("media: iris: handle streamoff/on from client in dynamic resolution change")
->> Cc: stable@vger.kernel.org
->> Reported-by: Val Packett <val@packett.cool>
->> Closes: https://gitlab.freedesktop.org/gstreamer/gstreamer/-/issues/4700
->> Signed-off-by: Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>
->> ---
->> Changes in v3:
->> - Fixed the compilation issue
->> - Added stable@vger.kernel.org in Cc
->> - Link to v2: https://lore.kernel.org/r/20251104-iris-seek-fix-v2-1-c9dace39b43d@oss.qualcomm.com
->>
->> Changes in v2:
->> - Removed spurious space and addressed other comments (Nicolas)
->> - Remove the unnecessary initializations (Self) 
->> - Link to v1: https://lore.kernel.org/r/20251103-iris-seek-fix-v1-1-6db5f5e17722@oss.qualcomm.com
->> ---
->>  drivers/media/platform/qcom/iris/iris_common.c | 7 +++++--
->>  1 file changed, 5 insertions(+), 2 deletions(-)
->>
->> diff --git a/drivers/media/platform/qcom/iris/iris_common.c b/drivers/media/platform/qcom/iris/iris_common.c
->> index 9fc663bdaf3fc989fe1273b4d4280a87f68de85d..7f1c7fe144f707accc2e3da65ce37cd6d9dfeaff 100644
->> --- a/drivers/media/platform/qcom/iris/iris_common.c
->> +++ b/drivers/media/platform/qcom/iris/iris_common.c
->> @@ -91,12 +91,14 @@ int iris_process_streamon_input(struct iris_inst *inst)
->>  int iris_process_streamon_output(struct iris_inst *inst)
->>  {
->>  	const struct iris_hfi_command_ops *hfi_ops = inst->core->hfi_ops;
->> -	bool drain_active = false, drc_active = false;
->>  	enum iris_inst_sub_state clear_sub_state = 0;
->> +	bool drain_active, drc_active, first_ipsc;
->>  	int ret = 0;
->>  
->>  	iris_scale_power(inst);
->>  
->> +	first_ipsc = inst->sub_state & IRIS_INST_SUB_FIRST_IPSC;
->> +
->>  	drain_active = inst->sub_state & IRIS_INST_SUB_DRAIN &&
->>  		inst->sub_state & IRIS_INST_SUB_DRAIN_LAST;
->>  
->> @@ -108,7 +110,8 @@ int iris_process_streamon_output(struct iris_inst *inst)
->>  	else if (drain_active)
->>  		clear_sub_state = IRIS_INST_SUB_DRAIN | IRIS_INST_SUB_DRAIN_LAST;
->>  
->> -	if (inst->domain == DECODER && inst->sub_state & IRIS_INST_SUB_INPUT_PAUSE) {
->> +	/* Input internal buffer reconfiguration required in case of resolution change */
->> +	if (first_ipsc || drc_active) {
->>  		ret = iris_alloc_and_queue_input_int_bufs(inst);
->>  		if (ret)
->>  			return ret;
-> 
-> I will repeat my (unanswered) question from v2:
-> 
-> After this line comes manual writing of STAGE and PIPE. Could you please
-> point out where is the driver updating the resolution in the firmware?
-> And if it does, why do we need to write STAGE and PIPE again?
-
-Sorry for late reply,
-
-During streamon on the output port, the driver sets the resolution in the
-firmware. However, during Dynamic Resolution Change (DRC), the resolution
-update originates from the firmware and is communicated to the driver. As a
-result, the driver does not proactively update the resolution in the
-firmware during DRC.
-
-STAGE parameter depends on the resolution, the driver must update the
-firmware with the new STAGE value after a resolution change to ensure
-proper operation.
-
-On the other hand, the PIPE value is independent of resolution. It is
-typically updated to 1 for interlaced content, which is identified during
-the sequence change. Currently, the Iris driver does not support interlaced
-content, so updating the PIPE value during DRC handling is redundant.
-However, this update is harmless and will be necessary once interlace
-support is added in the future.
-
-Thanks,
-Dikshita
-> 
+CgoKPiAtLS0tLU9yaWdpbmFsIE1lc3NhZ2VzLS0tLS0KPiBGcm9tOiAiTWFuaXZhbm5hbiBTYWRo
+YXNpdmFtIiA8bWFuaUBrZXJuZWwub3JnPgo+IFNlbmQgdGltZTpTYXR1cmRheSwgMDgvMTEvMjAy
+NSAxODoyNTozNgo+IFRvOiB6aGFuZ3NlbmNodWFuIDx6aGFuZ3NlbmNodWFuQGVzd2luY29tcHV0
+aW5nLmNvbT4KPiBDYzogIk1hbml2YW5uYW4gU2FkaGFzaXZhbSIgPG1hbml2YW5uYW4uc2FkaGFz
+aXZhbUBvc3MucXVhbGNvbW0uY29tPiwgbHBpZXJhbGlzaUBrZXJuZWwub3JnLCBrd2lsY3p5bnNr
+aUBrZXJuZWwub3JnLCBiaGVsZ2Fhc0Bnb29nbGUuY29tLCB3aWxsQGtlcm5lbC5vcmcsIGxpbnV4
+LXBjaUB2Z2VyLmtlcm5lbC5vcmcsIGxpbnV4LWtlcm5lbEB2Z2VyLmtlcm5lbC5vcmcsIHJvYmhA
+a2VybmVsLm9yZywgbGludXgtYXJtLW1zbUB2Z2VyLmtlcm5lbC5vcmcKPiBTdWJqZWN0OiBSZTog
+W1BBVENIIDIvM10gUENJOiBxY29tOiBDaGVjayBmb3IgdGhlIHByZXNlbmNlIG9mIGEgZGV2aWNl
+IGluc3RlYWQgb2YgTGluayB1cCBkdXJpbmcgc3VzcGVuZAo+IAo+IE9uIEZyaSwgTm92IDA3LCAy
+MDI1IGF0IDAyOjI3OjE1UE0gKzA4MDAsIHpoYW5nc2VuY2h1YW4gd3JvdGU6Cj4gPiAKPiA+IAo+
+ID4gCj4gPiA+IC0tLS0tT3JpZ2luYWwgTWVzc2FnZXMtLS0tLQo+ID4gPiBGcm9tOiAiTWFuaXZh
+bm5hbiBTYWRoYXNpdmFtIiA8bWFuaUBrZXJuZWwub3JnPgo+ID4gPiBTZW5kIHRpbWU6VGh1cnNk
+YXksIDA2LzExLzIwMjUgMTk6NTc6MTYKPiA+ID4gVG86IHpoYW5nc2VuY2h1YW4gPHpoYW5nc2Vu
+Y2h1YW5AZXN3aW5jb21wdXRpbmcuY29tPgo+ID4gPiBDYzogIk1hbml2YW5uYW4gU2FkaGFzaXZh
+bSIgPG1hbml2YW5uYW4uc2FkaGFzaXZhbUBvc3MucXVhbGNvbW0uY29tPiwgbHBpZXJhbGlzaUBr
+ZXJuZWwub3JnLCBrd2lsY3p5bnNraUBrZXJuZWwub3JnLCBiaGVsZ2Fhc0Bnb29nbGUuY29tLCB3
+aWxsQGtlcm5lbC5vcmcsIGxpbnV4LXBjaUB2Z2VyLmtlcm5lbC5vcmcsIGxpbnV4LWtlcm5lbEB2
+Z2VyLmtlcm5lbC5vcmcsIHJvYmhAa2VybmVsLm9yZywgbGludXgtYXJtLW1zbUB2Z2VyLmtlcm5l
+bC5vcmcKPiA+ID4gU3ViamVjdDogUmU6IFtQQVRDSCAyLzNdIFBDSTogcWNvbTogQ2hlY2sgZm9y
+IHRoZSBwcmVzZW5jZSBvZiBhIGRldmljZSBpbnN0ZWFkIG9mIExpbmsgdXAgZHVyaW5nIHN1c3Bl
+bmQKPiA+ID4gCj4gPiA+IE9uIFRodSwgTm92IDA2LCAyMDI1IGF0IDA2OjEzOjA1UE0gKzA4MDAs
+IHpoYW5nc2VuY2h1YW4gd3JvdGU6Cj4gPiA+ID4gCj4gPiA+ID4gCj4gPiA+ID4gCj4gPiA+ID4g
+PiAtLS0tLU9yaWdpbmFsIE1lc3NhZ2VzLS0tLS0KPiA+ID4gPiA+IEZyb206ICJNYW5pdmFubmFu
+IFNhZGhhc2l2YW0iIDxtYW5pdmFubmFuLnNhZGhhc2l2YW1Ab3NzLnF1YWxjb21tLmNvbT4KPiA+
+ID4gPiA+IFNlbmQgdGltZTpUaHVyc2RheSwgMDYvMTEvMjAyNSAxNDoxMzoyNQo+ID4gPiA+ID4g
+VG86IGxwaWVyYWxpc2lAa2VybmVsLm9yZywga3dpbGN6eW5za2lAa2VybmVsLm9yZywgbWFuaUBr
+ZXJuZWwub3JnLCBiaGVsZ2Fhc0Bnb29nbGUuY29tCj4gPiA+ID4gPiBDYzogd2lsbEBrZXJuZWwu
+b3JnLCBsaW51eC1wY2lAdmdlci5rZXJuZWwub3JnLCBsaW51eC1rZXJuZWxAdmdlci5rZXJuZWwu
+b3JnLCByb2JoQGtlcm5lbC5vcmcsIGxpbnV4LWFybS1tc21Admdlci5rZXJuZWwub3JnLCB6aGFu
+Z3NlbmNodWFuQGVzd2luY29tcHV0aW5nLmNvbSwgIk1hbml2YW5uYW4gU2FkaGFzaXZhbSIgPG1h
+bml2YW5uYW4uc2FkaGFzaXZhbUBvc3MucXVhbGNvbW0uY29tPgo+ID4gPiA+ID4gU3ViamVjdDog
+W1BBVENIIDIvM10gUENJOiBxY29tOiBDaGVjayBmb3IgdGhlIHByZXNlbmNlIG9mIGEgZGV2aWNl
+IGluc3RlYWQgb2YgTGluayB1cCBkdXJpbmcgc3VzcGVuZAo+ID4gPiA+ID4gCj4gPiA+ID4gPiBU
+aGUgc3VzcGVuZCBoYW5kbGVyIGNoZWNrcyBmb3IgdGhlIFBDSWUgTGluayB1cCB0byBkZWNpZGUg
+d2hlbiB0byB0dXJuIG9mZgo+ID4gPiA+ID4gdGhlIGNvbnRyb2xsZXIgcmVzb3VyY2VzLiBCdXQg
+dGhpcyBjaGVjayBpcyByYWN5IGFzIHRoZSBQQ0llIExpbmsgY2FuIGdvCj4gPiA+ID4gPiBkb3du
+IGp1c3QgYWZ0ZXIgdGhpcyBjaGVjay4KPiA+ID4gPiA+IAo+ID4gPiA+ID4gU28gdXNlIHRoZSBu
+ZXdseSBpbnRyb2R1Y2VkIEFQSSwgcGNpX3Jvb3RfcG9ydHNfaGF2ZV9kZXZpY2UoKSB0aGF0IGNo
+ZWNrcwo+ID4gPiA+ID4gZm9yIHRoZSBwcmVzZW5jZSBvZiBhIGRldmljZSB1bmRlciBhbnkgb2Yg
+dGhlIFJvb3QgUG9ydHMgdG8gcmVwbGFjZSB0aGUKPiA+ID4gPiA+IExpbmsgdXAgY2hlY2suCj4g
+PiA+ID4gPiAKPiA+ID4gPiA+IFNpZ25lZC1vZmYtYnk6IE1hbml2YW5uYW4gU2FkaGFzaXZhbSA8
+bWFuaXZhbm5hbi5zYWRoYXNpdmFtQG9zcy5xdWFsY29tbS5jb20+Cj4gPiA+ID4gPiAtLS0KPiA+
+ID4gPiA+ICBkcml2ZXJzL3BjaS9jb250cm9sbGVyL2R3Yy9wY2llLXFjb20uYyB8IDYgKysrKy0t
+Cj4gPiA+ID4gPiAgMSBmaWxlIGNoYW5nZWQsIDQgaW5zZXJ0aW9ucygrKSwgMiBkZWxldGlvbnMo
+LSkKPiA+ID4gPiA+IAo+ID4gPiA+ID4gZGlmZiAtLWdpdCBhL2RyaXZlcnMvcGNpL2NvbnRyb2xs
+ZXIvZHdjL3BjaWUtcWNvbS5jIGIvZHJpdmVycy9wY2kvY29udHJvbGxlci9kd2MvcGNpZS1xY29t
+LmMKPiA+ID4gPiA+IGluZGV4IDgwNWVkYmJmZTdlYi4uYjJiODllMmU0OTE2IDEwMDY0NAo+ID4g
+PiA+ID4gLS0tIGEvZHJpdmVycy9wY2kvY29udHJvbGxlci9kd2MvcGNpZS1xY29tLmMKPiA+ID4g
+PiA+ICsrKyBiL2RyaXZlcnMvcGNpL2NvbnRyb2xsZXIvZHdjL3BjaWUtcWNvbS5jCj4gPiA+ID4g
+PiBAQCAtMjAxOCw2ICsyMDE4LDcgQEAgc3RhdGljIGludCBxY29tX3BjaWVfcHJvYmUoc3RydWN0
+IHBsYXRmb3JtX2RldmljZSAqcGRldikKPiA+ID4gPiA+ICBzdGF0aWMgaW50IHFjb21fcGNpZV9z
+dXNwZW5kX25vaXJxKHN0cnVjdCBkZXZpY2UgKmRldikKPiA+ID4gPiA+ICB7Cj4gPiA+ID4gPiAg
+CXN0cnVjdCBxY29tX3BjaWUgKnBjaWU7Cj4gPiA+ID4gPiArCXN0cnVjdCBkd19wY2llX3JwICpw
+cDsKPiA+ID4gPiA+ICAJaW50IHJldCA9IDA7Cj4gPiA+ID4gPiAgCj4gPiA+ID4gPiAgCXBjaWUg
+PSBkZXZfZ2V0X2RydmRhdGEoZGV2KTsKPiA+ID4gPiA+IEBAIC0yMDUzLDggKzIwNTQsOSBAQCBz
+dGF0aWMgaW50IHFjb21fcGNpZV9zdXNwZW5kX25vaXJxKHN0cnVjdCBkZXZpY2UgKmRldikKPiA+
+ID4gPiA+ICAJICogcG93ZXJkb3duIHN0YXRlLiBUaGlzIHdpbGwgYWZmZWN0IHRoZSBsaWZldGlt
+ZSBvZiB0aGUgc3RvcmFnZSBkZXZpY2VzCj4gPiA+ID4gPiAgCSAqIGxpa2UgTlZNZS4KPiA+ID4g
+PiA+ICAJICovCj4gPiA+ID4gPiAtCWlmICghZHdfcGNpZV9saW5rX3VwKHBjaWUtPnBjaSkpIHsK
+PiA+ID4gPiA+IC0JCXFjb21fcGNpZV9ob3N0X2RlaW5pdCgmcGNpZS0+cGNpLT5wcCk7Cj4gPiA+
+ID4gPiArCXBwID0gJnBjaWUtPnBjaS0+cHA7Cj4gPiA+ID4gPiArCWlmICghcGNpX3Jvb3RfcG9y
+dHNfaGF2ZV9kZXZpY2UocHAtPmJyaWRnZS0+YnVzKSkgewo+ID4gPiA+IAo+ID4gPiA+IEknbSBh
+IGxpdHRsZSBjb25mdXNlZC4KPiA+ID4gPiBUaGUgcGNpX3Jvb3RfcG9ydHNfaGF2ZV9kZXZpY2Ug
+ZnVuY3Rpb24gY2FuIGhlbHAgY2hlY2sgaWYgdGhlcmUgaXMgYW55IGRldmljZSAKPiA+ID4gPiBh
+dmFpbGFibGUgdW5kZXIgdGhlIFJvb3QgUG9ydHMsIGlmIHRoZXJlIGlzIGEgZGV2aWNlIGF2YWls
+YWJsZSwgdGhlIHJlc291cmNlIAo+ID4gPiA+IGNhbm5vdCBiZSByZWxlYXNlZCwgaXMgaXQgYWxz
+byBuZWNlc3NhcnkgdG8gcmVsZWFzZSByZXNvdXJjZXMgd2hlbiBlbnRlcmluZyAKPiA+ID4gPiB0
+aGUgTDIvTDMgc3RhdGU/Cj4gPiA+ID4gCj4gPiA+IAo+ID4gPiBJdCBpcyB1cHRvIHRoZSBjb250
+cm9sbGVyIGRyaXZlciB0byBkZWNpZGUuIE9uY2UgdGhlIGxpbmsgZW50ZXJzIEwyL0wzLCB0aGUK
+PiA+ID4gZGV2aWNlIHdpbGwgYmUgaW4gRDNDb2xkIHN0YXRlLiBTbyB0aGUgY29udHJvbGxlciBj
+YW4ganVzdCBkaXNhYmxlIGFsbCBQQ0llCj4gPiA+IHJlc291cmNlcyB0byBzYXZlIHBvd2VyLgo+
+ID4gPiAKPiA+ID4gQnV0IGl0IGlzIG5vdCBwb3NzaWJsZSB0byB0cmFuc2l0aW9uIGFsbCBQQ0ll
+IGRldmljZXMgdG8gRDNDb2xkIGR1cmluZyBzdXNwZW5kLAo+ID4gPiBmb3IgaW5zdGFuY2UgTlZN
+ZS4gSSdtIGhvcGluZyB0byBmaXggaXQgdG9vIGluIHRoZSBjb21pbmcgZGF5cy4KPiA+ID4gCj4g
+PiBIaSwgTWFuaXZhbm5hbgo+ID4gCj4gPiBUaGFuayB5b3UgZm9yIHlvdXIgZXhwbGFuYXRpb24u
+Cj4gPiAKPiA+IEJ5IHRoZSB3YXksIGluIHY1IHBhdGNoLCBJIHJlbW92ZWQgdGhlIGR3X3BjaWVf
+bGlua191cCBqdWRnbWVudCwgYW5kIGN1cnJlbnRseQo+ID4gcmVzb3VyY2VzIGFyZSBkaXJlY3Rs
+eSByZWxlYXNlZC4KPiA+IEF0IHByZXNlbnQsIGkgaGF2ZSBjb21wbGV0ZWQgdGhlIHBjaWUgdjUg
+cGF0Y2ggd2l0aG91dCBhZGRpbmcgdGhlIAo+ID4gcGNpX3Jvb3RfcG9ydHNfaGF2ZV9kZXZpY2Ug
+ZnVuY3Rpb24uIERvIEkgbmVlZCB0byB3YWl0IGZvciB5b3UgdG8gbWVyZ2UgaXQgCj4gPiBiZWZv
+cmUgc2VuZGluZyB0aGUgVjUgcGF0Y2g/Cj4gPiAKPiAKPiBJJ3ZlIG1lcmdlZCBteSBzZXJpZXMg
+dG8gcGNpL2NvbnRyb2xsZXIvZHdjIGJyYW5jaC4gWW91IGNhbiB1c2UgdGhpcyBicmFuY2ggYXMg
+YQo+IGJhc2UgZm9yIHlvdXIgdjUuCj4gCkhpLCBNYW5pdmFubmFuCgpUaGFuayB5b3UgdmVyeSBt
+dWNoIGZvciB0aGUgbmV3bHkgY3JlYXRlZCBicmFuY2guIEkgaGF2ZSBhbHJlYWR5IHN1Ym1pdHRl
+ZCBhIHY1IApwYXRjaCBiYXNlZCBvbiB0aGlzIGJyYW5jaC4KCktpbmQgcmVnYXJkcywKU2VuY2h1
+YW4gWmhhbmc=
 
