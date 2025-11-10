@@ -1,185 +1,128 @@
-Return-Path: <linux-arm-msm+bounces-80898-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-80902-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ams.mirrors.kernel.org (ams.mirrors.kernel.org [213.196.21.55])
-	by mail.lfdr.de (Postfix) with ESMTPS id C89F6C44D9E
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Nov 2025 04:41:53 +0100 (CET)
+Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [142.0.200.124])
+	by mail.lfdr.de (Postfix) with ESMTPS id 66B06C44E16
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Nov 2025 05:00:31 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ams.mirrors.kernel.org (Postfix) with ESMTPS id 47B54345BFA
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Nov 2025 03:41:53 +0000 (UTC)
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 944674E72B4
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Nov 2025 04:00:28 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 919842853F1;
-	Mon, 10 Nov 2025 03:41:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0DDD3263C8A;
+	Mon, 10 Nov 2025 04:00:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="JK1EF/7K"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="JSvIUDg8"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pj1-f45.google.com (mail-pj1-f45.google.com [209.85.216.45])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3D61284881;
-	Mon, 10 Nov 2025 03:41:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 066571E50E
+	for <linux-arm-msm@vger.kernel.org>; Mon, 10 Nov 2025 04:00:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762746108; cv=none; b=j54/m41dIdc8W5lrD7mqAqWkRnHmW4e2s3VcPZoatk0hFG4yC1NmJSU61xBU5lOdbdPPsG1nqVXeUOC/D1U4Fpptu1hy0l+CH8FBkjOfeUTWlzYgUIVPBygiIVCaxlj/aF+N6gsnQS+lCqyeCtFjxYOcby6EvPtoUZN3WVaJ2/Y=
+	t=1762747220; cv=none; b=r8iJDvgkP6TlhV5rX1WK2OfjDWLMVxXzrcNaHwbpTms653L7DJrQh31Ki+wfGP38RRXFPf5bihT6rQb+SI0c3dzypvJB0wooyUEgTlkSkpMRVTa5HoumSnnQ3Y0C+l+IIqZNSz8aK64gtR5Rd1GA+TzpvDjM5ClVU19hyQNOVYo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762746108; c=relaxed/simple;
-	bh=S/Cz5F06ngyhzMhBgVN+Ac0aYF/QGzq4884F8Xl88N0=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=ViOKIb/rPp08fSLwUJ7aglVZANZX5qUtRK05Db3LLX/SwjvOkXz8OEPPBsYV8RbedZa2ZLNNDF7sFzJuljaAJ+TqB8eseAY/o/OjJrFakeIt9Cq4/bfvb2QZNgOdc0PofDOFc1BRs/zl8ALYRwfnVyDoH8YRPGHrN7VYEE8zcvk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=qualcomm.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=JK1EF/7K; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=qualcomm.com
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 5AA37Yqa2166635;
-	Mon, 10 Nov 2025 03:41:43 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:date:from:in-reply-to:message-id
-	:mime-version:references:subject:to; s=qcppdkim1; bh=IGBWDcvxggn
-	7ScLoF3zN2yUt0r4CqfcX86wQXwfqK6A=; b=JK1EF/7KGNsRWmMBXHCXlYXX5mQ
-	TOX2CJ/3ZouH6H36zifsAkN1+DgPOoh4oBzwKP9UNS237itf5VesM9ReA12yTeR4
-	DXBjLkVtyxvpQwF0/cWNktgDH4JBvvC2E/EpUABhjBJOEdxPX84JL6y9FAVSmJ+T
-	VHskU4wOZm2qwlfACorHXqGys6/mODxWSTgB3ktI6PhqDia+2ZMFoPmvc1d1xGhb
-	Zye+axtdpTuRy3UXbT/f6Ch19xgrMd4zYSzN3OpiZxwgzU/c6eLZl+YrztumJU5C
-	QusNaj+IU1o4vWVCuRM1+lcrJkZDAv8JgRV11ctvcculB1doIYbQrme2n/g==
-Received: from aptaippmta02.qualcomm.com (tpe-colo-wan-fw-bordernet.qualcomm.com [103.229.16.4])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4ab7vcr2ff-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 10 Nov 2025 03:41:43 +0000 (GMT)
-Received: from pps.filterd (APTAIPPMTA02.qualcomm.com [127.0.0.1])
-	by APTAIPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTP id 5AA3feuE028459;
-	Mon, 10 Nov 2025 03:41:40 GMT
-Received: from pps.reinject (localhost [127.0.0.1])
-	by APTAIPPMTA02.qualcomm.com (PPS) with ESMTPS id 4a9xxm6p6s-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 10 Nov 2025 03:41:40 +0000
-Received: from APTAIPPMTA02.qualcomm.com (APTAIPPMTA02.qualcomm.com [127.0.0.1])
-	by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 5AA3fe6s028454;
-	Mon, 10 Nov 2025 03:41:40 GMT
-Received: from bt-iot-sh02-lnx.ap.qualcomm.com (bt-iot-sh02-lnx.qualcomm.com [10.253.144.65])
-	by APTAIPPMTA02.qualcomm.com (PPS) with ESMTPS id 5AA3feQ7028452
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 10 Nov 2025 03:41:40 +0000
-Received: by bt-iot-sh02-lnx.ap.qualcomm.com (Postfix, from userid 4467449)
-	id 5EFF723599; Mon, 10 Nov 2025 11:41:39 +0800 (CST)
-From: Shuai Zhang <quic_shuaz@quicinc.com>
-To: Marcel Holtmann <marcel@holtmann.org>,
-        Luiz Augusto von Dentz <luiz.dentz@gmail.com>
-Cc: linux-bluetooth@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, quic_chejiang@quicinc.com,
-        quic_jiaymao@quicinc.com, quic_chezhou@quicinc.com,
-        Shuai Zhang <quic_shuaz@quicinc.com>
-Subject: [PATCH v4 1/1] Bluetooth: btusb: add default nvm file
-Date: Mon, 10 Nov 2025 11:41:34 +0800
-Message-Id: <20251110034134.1016537-2-quic_shuaz@quicinc.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20251110034134.1016537-1-quic_shuaz@quicinc.com>
-References: <20251110034134.1016537-1-quic_shuaz@quicinc.com>
+	s=arc-20240116; t=1762747220; c=relaxed/simple;
+	bh=+YLA1pF2u5tBPkoi+r5JyGU4phxXNOGQYDiMD+cdBrs=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=kmpKYjkHA9lQp6xKzjyrANjeLrTUh1zAOl60emBYBl1icF+EqFhJZMoiWD/G1iF1ul1SJSblp0EOMuP853g1V2jf+1QI4W/mDEdkt5kprF1xX7GHUee0MY2Br2vg7ZHnQ/VH7GrNMqYM1TPtao03xGfxz1Vj+ylHfr6IjQv1blM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=JSvIUDg8; arc=none smtp.client-ip=209.85.216.45
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-pj1-f45.google.com with SMTP id 98e67ed59e1d1-340c39ee02dso2087473a91.1
+        for <linux-arm-msm@vger.kernel.org>; Sun, 09 Nov 2025 20:00:18 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1762747218; x=1763352018; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=FMUfG6d8YJVoEPCuzvVWiCBdiIaGW3adtjAXZfiawOQ=;
+        b=JSvIUDg8rQ3V0s/QpgDPUq737Jx3R8xpJ3SYe7SPnMaw1peTcli+FfgqGvcCWqKDah
+         MEZHNxcHwaOtyqZrdRC6kRWesz92SK8C0gUWvHh+bpHc2jqxju3m3U7bD+jfWLfp9uHN
+         RK82IenK4UDxS8vLZNV4BZ7Iu+GD5nKFfrun6TVUFaLwSkEhzkL9KD1+ZmOS5MHt+HRV
+         rXg63rA6+DqMgMlod3wDt11GUUHGeXMycwQNa+3b0gwWq3QIEDzwFcSRbnRJHN/auy3d
+         l3bIKbePqhjA4v029FKl8MuMiM8599sm2Rzh/1g39LpUEWcmnrlT+/1dQLHzStkwAF19
+         h1bQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1762747218; x=1763352018;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=FMUfG6d8YJVoEPCuzvVWiCBdiIaGW3adtjAXZfiawOQ=;
+        b=L8HG5YNsHiC7NsBMxs4Kh9a+e6hqbalJY+Bi7mebyrxwW8EdEhWLzIvES9dySRJaKA
+         3X/fz6l04xZiOOgLWTIlgVbEUHyyJpIA3HLpXX8BkM4fhaMCxVdFGA2nFcelYE+sHlNS
+         3qbSo2x0Ol5wwYYm5BIJ5HVLRI3P6UYeOlVBVTZ51MNB9vB0o55brMKZSAsDt/JztrvI
+         3bvCGc3dDyZZQAd3kaJY2p+rHNj31QlDK2Wfsdv2uPDSaleCjpsCU1R/X3i/gEvWOFRp
+         a2adqSeRG3EZpL06y5NkArtC5sVtJ2fbxcArDbbYnjCge+++ynD8K/9uIkBu1CzirK0F
+         mQPw==
+X-Forwarded-Encrypted: i=1; AJvYcCVvZPkfNwPyEr03VRZ9jGd210R4/dsgONxu0/GpW6qof4IS+bs8vdxBfrN7SLbcPX1G3Hhhb7LB6hs+Ba5m@vger.kernel.org
+X-Gm-Message-State: AOJu0YzPAA1Lq85BD+zeV8Hpl1Agwrm7HSbAkH1a3AjLk3ZVNZkfZH3J
+	ALUBuuixBKphHj4WZZXu0h50EKcdcaE2OwlJ5KdABa228IcMMH65XeQM
+X-Gm-Gg: ASbGncv+R/5RJQYCN7qmWTCvbipLLu0zTDJFbtENF9jCPMXnwvpOa7TcYHcXBjRyPFG
+	04vTsa/mYGdmlRfxdLlGNwMrIw7mEZcEAAZREE4mkn8zEUcIcw3HL4XBhQjzz5B2W68CgdudRZP
+	f0CjO339q8/xQHthY/lHDictugM0vDmvNzdUtK4orVAoz6F6oZJAfzk3pWtvkOijbQKutIlT7Mb
+	6v9vQnE9ySVxWwr7di0FREqqdNml2rHH7p02em13HJ/SBUls3cbr0gjgDitOuxfZP5mPC/CCfLD
+	tHG1OL8sJIWhOPMixXBG0oy1JU9Egrfdut1yg4dGWQg9pU9exbAq5h/203jY5w9QM9iSxQ3gxJf
+	NxXABa1d3gwT5B5iUgfm+fHgqP/kUUL+hLcnE4nBxACAw38rWPdleGFyfX2e+zC+bjbkZ+5tJ67
+	z/a69V38Qk5Uk=
+X-Google-Smtp-Source: AGHT+IGylS3DANSimRKsqAmshVHWUS6uHhBsurOh5pZoC5DU/3TeXp2D1eGJLyuUWjqFxc7R7ZxiJw==
+X-Received: by 2002:a17:90b:5588:b0:343:60ab:ca8e with SMTP id 98e67ed59e1d1-3436ccf9da2mr10566796a91.17.1762747216926;
+        Sun, 09 Nov 2025 20:00:16 -0800 (PST)
+Received: from archie.me ([210.87.74.117])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-3437221b329sm5519516a91.16.2025.11.09.20.00.15
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 09 Nov 2025 20:00:16 -0800 (PST)
+Received: by archie.me (Postfix, from userid 1000)
+	id B7B4B41F3D47; Mon, 10 Nov 2025 11:00:13 +0700 (WIB)
+From: Bagas Sanjaya <bagasdotme@gmail.com>
+To: Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+	Linux Documentation <linux-doc@vger.kernel.org>,
+	Linux ARM MSM <linux-arm-msm@vger.kernel.org>,
+	Linux DRI Development <dri-devel@lists.freedesktop.org>
+Cc: Jeff Hugo <jeff.hugo@oss.qualcomm.com>,
+	Carl Vanderlip <carl.vanderlip@oss.qualcomm.com>,
+	Oded Gabbay <ogabbay@kernel.org>,
+	Jonathan Corbet <corbet@lwn.net>,
+	Bagas Sanjaya <bagasdotme@gmail.com>,
+	Youssef Samir <youssef.abdulrahman@oss.qualcomm.com>,
+	Pranjal Ramajor Asha Kanojiya <quic_pkanojiy@quicinc.com>,
+	Zack McKevitt <zachary.mckevitt@oss.qualcomm.com>,
+	Aswin Venkatesan <aswivenk@qti.qualcomm.com>
+Subject: [PATCH 0/2] accel/qaic documentation fixes
+Date: Mon, 10 Nov 2025 10:59:51 +0700
+Message-ID: <20251110035952.25778-2-bagasdotme@gmail.com>
+X-Mailer: git-send-email 2.51.2
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+X-Developer-Signature: v=1; a=openpgp-sha256; l=720; i=bagasdotme@gmail.com; h=from:subject; bh=+YLA1pF2u5tBPkoi+r5JyGU4phxXNOGQYDiMD+cdBrs=; b=owGbwMvMwCX2bWenZ2ig32LG02pJDJmCSfFXI9PM/p+54WFUsvFkzdomDv+PhZf0hNiuf5x+e YX0/Z2sHaUsDGJcDLJiiiyTEvmaTu8yErnQvtYRZg4rE8gQBi5OAZhIpxfDPwOD25v26U9xXiG9 6GKHacdzFTmGCRYnJPqjNNidFmq++svwP0i4nOsFx8qwC3+U1ijM3X1phaSvyUbbokzDizxrGYO eMAAA
+X-Developer-Key: i=bagasdotme@gmail.com; a=openpgp; fpr=701B806FDCA5D3A58FFB8F7D7C276C64A5E44A1D
 Content-Transfer-Encoding: 8bit
-X-QCInternal: smtphost
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMTEwMDAyOCBTYWx0ZWRfX5YUyEUhd4/T+
- x0AZoZH+KKMnAwTH0UOzMuJEzkVYCe6tot3auWsrfwzxsMcWuxSaYcxCQ3TfppKcwYVUSb5h1fU
- xE4ZSYrHre0lqD5ejiBk43UEpBV5MGvEsqDslnjk6PfEhJXZt3V4A+q3B9sIzayty/4083t2W8B
- nJ6Yz3jOpqNUYEyRTxZHbVgn54AJi+o5GlJAahvVlI818dchPiqomgIvhgmDLsbyxVcndi1OOaW
- t/doZ69YkUP1uAlrawzrt6HovOidMPZr4oAh5zwI0y7aS2iIjFpRz13M4vdAmXFiGncIEG6hcbm
- UtwVFbJGfBToEDw5NntSfHmr2HH9TNZX8IOr/qgePQds1B3dsDlJbWjcCPEQawBxvYq3M/qBrwZ
- TzZGJaQU3IpSCi3x8um6br0zo2rYyg==
-X-Proofpoint-GUID: 7pgFLiyQuzX3fBCHaZ0XJwXlG9599dYm
-X-Authority-Analysis: v=2.4 cv=E8HAZKdl c=1 sm=1 tr=0 ts=69115ef7 cx=c_pps
- a=nuhDOHQX5FNHPW3J6Bj6AA==:117 a=nuhDOHQX5FNHPW3J6Bj6AA==:17
- a=6UeiqGixMTsA:10 a=VkNPw1HP01LnGYTKEx00:22 a=COk6AnOGAAAA:8
- a=J2RAPmYWl02GzY4tkNoA:9 a=TjNXssC_j7lpFel5tvFf:22 a=cPQSjfK2_nFv0Q5t_7PE:22
-X-Proofpoint-ORIG-GUID: 7pgFLiyQuzX3fBCHaZ0XJwXlG9599dYm
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
- definitions=2025-11-10_01,2025-11-06_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0 priorityscore=1501 impostorscore=0 malwarescore=0 adultscore=0
- bulkscore=0 clxscore=1015 spamscore=0 suspectscore=0 lowpriorityscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2510240001 definitions=main-2511100028
 
-If no NVM file matches the board_id, load the default NVM file.
+Hi,
 
-Signed-off-by: Shuai Zhang <quic_shuaz@quicinc.com>
----
- drivers/bluetooth/btusb.c | 26 +++++++++++++++++---------
- 1 file changed, 17 insertions(+), 9 deletions(-)
+Here are two documentation (indentation) fixes for accel/qaic as reported in
+linux-next ([1], [2]).
 
-diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
-index dcbff7641..020dbb0ab 100644
---- a/drivers/bluetooth/btusb.c
-+++ b/drivers/bluetooth/btusb.c
-@@ -3482,15 +3482,14 @@ static int btusb_setup_qca_load_rampatch(struct hci_dev *hdev,
- }
- 
- static void btusb_generate_qca_nvm_name(char *fwname, size_t max_size,
--					const struct qca_version *ver)
-+					const struct qca_version *ver,
-+					u16 board_id)
- {
- 	u32 rom_version = le32_to_cpu(ver->rom_version);
- 	const char *variant, *fw_subdir;
- 	int len;
--	u16 board_id;
- 
- 	fw_subdir = qca_get_fw_subdirectory(ver);
--	board_id = qca_extract_board_id(ver);
- 
- 	switch (le32_to_cpu(ver->ram_version)) {
- 	case WCN6855_2_0_RAM_VERSION_GF:
-@@ -3517,14 +3516,14 @@ static void btusb_generate_qca_nvm_name(char *fwname, size_t max_size,
- 
- static int btusb_setup_qca_load_nvm(struct hci_dev *hdev,
- 				    struct qca_version *ver,
--				    const struct qca_device_info *info)
-+				    const struct qca_device_info *info,
-+				    u16 board_id)
- {
- 	const struct firmware *fw;
- 	char fwname[80];
- 	int err;
- 
--	btusb_generate_qca_nvm_name(fwname, sizeof(fwname), ver);
--
-+	btusb_generate_qca_nvm_name(fwname, sizeof(fwname), ver, board_id);
- 	err = request_firmware(&fw, fwname, &hdev->dev);
- 	if (err) {
- 		bt_dev_err(hdev, "failed to request NVM file: %s (%d)",
-@@ -3606,10 +3605,19 @@ static int btusb_setup_qca(struct hci_dev *hdev)
- 	btdata->qca_dump.controller_id = le32_to_cpu(ver.rom_version);
- 
- 	if (!(status & QCA_SYSCFG_UPDATED)) {
--		err = btusb_setup_qca_load_nvm(hdev, &ver, info);
--		if (err < 0)
--			return err;
-+		u16 board_id = qca_extract_board_id(&ver);
- 
-+		err = btusb_setup_qca_load_nvm(hdev, &ver, info, board_id);
-+		if (err < 0) {
-+			//if the board id is not 0, try to load the defalut nvm file
-+			if (err == -ENOENT && board_id != 0) {
-+				err = btusb_setup_qca_load_nvm(hdev, &ver, info, 0);
-+				if (err < 0)
-+					return err;
-+			} else {
-+				return err;
-+			}
-+		}
- 		/* WCN6855 2.1 and later will reset to apply firmware downloaded here, so
- 		 * wait ~100ms for reset Done then go ahead, otherwise, it maybe
- 		 * cause potential enable failure.
+Enjoy!
+
+[1]: https://lore.kernel.org/linux-next/20251110132401.200d88bd@canb.auug.org.au/
+[2]: https://lore.kernel.org/linux-next/20251110135038.29e96051@canb.auug.org.au/
+
+Bagas Sanjaya (2):
+  accel/qaic: Separate DBC_STATE_* definition list
+  accel/qaic: Format DBC states table in sysfs ABI documentation
+
+ Documentation/ABI/stable/sysfs-driver-qaic | 17 ++++++++++-------
+ Documentation/accel/qaic/aic100.rst        |  1 +
+ 2 files changed, 11 insertions(+), 7 deletions(-)
+
+
+base-commit: a2b0c33e9423cd06133304e2f81c713849059b10
 -- 
-2.34.1
+An old man doll... just what I always wanted! - Clara
 
 
