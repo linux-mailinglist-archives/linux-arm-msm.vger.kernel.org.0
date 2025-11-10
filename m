@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-80925-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-80926-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [142.0.200.124])
-	by mail.lfdr.de (Postfix) with ESMTPS id 774ACC452B7
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Nov 2025 08:08:51 +0100 (CET)
+Received: from ams.mirrors.kernel.org (ams.mirrors.kernel.org [213.196.21.55])
+	by mail.lfdr.de (Postfix) with ESMTPS id 85875C452CE
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Nov 2025 08:09:35 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 540F44E5A99
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Nov 2025 07:08:50 +0000 (UTC)
+	by ams.mirrors.kernel.org (Postfix) with ESMTPS id 3085F346D53
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Nov 2025 07:09:35 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 297992E92C3;
-	Mon, 10 Nov 2025 07:08:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0CB782E9EB1;
+	Mon, 10 Nov 2025 07:09:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Qco3PRlm"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ZiHWJ5Ii"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E449B2765F5;
-	Mon, 10 Nov 2025 07:08:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDF702E9EAC;
+	Mon, 10 Nov 2025 07:09:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762758525; cv=none; b=QpV9N1QJvmGgnpJGh9CBPYyyeByzmXhGbXIisGsHUmpDI5KN/yGWDuyE+QlzkxiSh2knO3eCdV0r9yIOfwNPY+uMdqbgkpQzUM+x+6PSiDLJTRqWmBFa05PMg5CJXkseBMaTszrbVaJub9791oX3+X+GDuz8chLug/NgspiBSK4=
+	t=1762758563; cv=none; b=FYtzzoNoWTCmXRsecwZ0O9Gd6A3IKZmiBG+f4rgFoR44r5tz3AZe27tTOM4mEpS9AT2LdcFf40Clf83UKdkDUYK7wEEWOk5ky3m8/me+DUnmw/kq9mBoQgDbg6j76bR00XLj83q0B9ohKzIYGpq712QBbbY/UMnwU3K95vnNNzc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762758525; c=relaxed/simple;
-	bh=s/UlwDxa4lZldx2EmzKFA28mEslyUx/A8Tr18z/6kUQ=;
+	s=arc-20240116; t=1762758563; c=relaxed/simple;
+	bh=qDVewr2PZ91zstRoM3mDnHlEOMzFupzrbMTA7jUsgi0=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=ps7K001xkUHj3uaf3tzSnsF5ZxCPUMGOqWipQ/gXde1gI8INBaFw7iE9+jqCdOjUHHL0oxQwEQJjxGopHO+L6+iEIRhcxCHLiCltdRmp14EmFRobDe5+42aJmRgxoCJ5lErtOC/VY16DjX6W8IQcQDH+I8EFTe5QHhiTE4fr+VE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Qco3PRlm; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB2B4C4CEF5;
-	Mon, 10 Nov 2025 07:08:40 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=PPI7n8LEkNSP8X3qyou+ECmjvagA0eTUXF51tUzc1/LPjMjObwusM47jsk3K8yTaPV4vloTb+1UeY124Xb5RYbD/kFHzAryv8iP0qdhQFFI8KxVkF/naX/Xa9foK0Y5fZqsFNaqC7RFFbLXA43vgEUFQGEvlb+UBPWi22HUqc+0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ZiHWJ5Ii; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8CEC7C116D0;
+	Mon, 10 Nov 2025 07:09:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1762758524;
-	bh=s/UlwDxa4lZldx2EmzKFA28mEslyUx/A8Tr18z/6kUQ=;
+	s=k20201202; t=1762758563;
+	bh=qDVewr2PZ91zstRoM3mDnHlEOMzFupzrbMTA7jUsgi0=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=Qco3PRlmJ2oqMfhM1gjcCcaRsVMPI2NeUiR3ssYYcCiVj/eyRzRYmVnKUe8ZWExC6
-	 9tz3vcy03T0ewMDqoaS/sKVT8Y3nDLz5oeLJv2kybu202vu3jcJ7WhGf9t14LusFWU
-	 xZ8w8QL8P1QtxatrO3F6bwnoFAqG15VmIqVJ79YkD2qrhBUD+cdzSz4fjxQc4zskSD
-	 vIn/SFL5oRZuo0MSc1V6qAda1iZqLxOAyrRYtJAUBB0/m3L66u2WnDrCS3rqcrxvTr
-	 2mYQd/vN2kbPBmzSNF1KLM+WkSOKNbOKDHDvyDg7qLL7WnDnkoyslHBStRpy7TJQAQ
-	 CGqPnCkW+UZZQ==
-Message-ID: <6a2c593a-20b5-462f-bb6a-7d51dad1eb75@kernel.org>
-Date: Mon, 10 Nov 2025 08:08:38 +0100
+	b=ZiHWJ5Ii4o/8mJKH60HLhEEpc4S9QBje7Zi9DXb7UmsrUAr07uN3bAMJrDTUTJ7+N
+	 UvYq+vzf32bzuiV8f1aC3R6zGQdOArh5V/vEyPNmauQpqtg8q1GVodRSNj9fnfZvnN
+	 8fEGT6OLCm15b6o9eo6ebDrms31nKQv1E91uE9BnOxi12ABEvxE1XI2+rTXTsXTRvZ
+	 MHJFBAC5TvrxAPW84G1g0PEiFdj1MY+uysc6aGIsomlQEp0QYjwMpsToE6V8rPxH6H
+	 1UbUmXhCKmSy63YIV2i+mn4nZQh313vMoA0nLAi0JZQVC4WrKqCnrwrkneT08z1TYM
+	 sxl8VRzvyboyQ==
+Message-ID: <abab58ae-ff34-4092-b40a-7f249bd09358@kernel.org>
+Date: Mon, 10 Nov 2025 08:09:17 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,7 +50,8 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH V3 1/4] dt-bindings: mmc: sdhci-msm: Add sm8750 compatible
+Subject: Re: [PATCH V3 2/4] arm64: dts: qcom: sm8750: Add SDC2 nodes for
+ sm8750 soc
 To: Sarthak Garg <sarthak.garg@oss.qualcomm.com>,
  Ulf Hansson <ulf.hansson@linaro.org>, Rob Herring <robh@kernel.org>,
  Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
@@ -62,9 +63,9 @@ Cc: linux-mmc@vger.kernel.org, devicetree@vger.kernel.org,
  quic_pragalla@quicinc.com, quic_sayalil@quicinc.com,
  quic_nitirawa@quicinc.com, quic_bhaskarv@quicinc.com, kernel@oss.qualcomm.com
 References: <20251026111746.3195861-1-sarthak.garg@oss.qualcomm.com>
- <20251026111746.3195861-2-sarthak.garg@oss.qualcomm.com>
- <0c791304-928e-4075-87c0-bd37ebd8e351@kernel.org>
- <522f353b-7965-467c-9951-9829e58dc681@oss.qualcomm.com>
+ <20251026111746.3195861-3-sarthak.garg@oss.qualcomm.com>
+ <3170ad12-0d79-4cb1-aedc-d2c9f1da366f@kernel.org>
+ <0fccd9f6-f833-4192-b7ac-cadc4a048cad@oss.qualcomm.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -110,35 +111,38 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  jWt87ecuHlpL3uuQ0ZZNWqHgZoQLXoqC2ZV5KrtKWb/jyiFX/sxSrodALf0zf+tfHv0FZWT2
  zHjUqd0t4njD/UOsuIMOQn4Ig0SdivYPfZukb5cdasKJukG1NOpbW7yRNivaCnfZz6dTawXw
  XRIV/KDsHQiyVxKvN73bThKhONkcX2LWuD928tAR6XMM2G5ovxLe09vuOzzfTWQDsm++9UKF a/A=
-In-Reply-To: <522f353b-7965-467c-9951-9829e58dc681@oss.qualcomm.com>
+In-Reply-To: <0fccd9f6-f833-4192-b7ac-cadc4a048cad@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 
-On 10/11/2025 07:47, Sarthak Garg wrote:
+On 10/11/2025 08:06, Sarthak Garg wrote:
 > 
-> On 10/27/2025 8:00 PM, Krzysztof Kozlowski wrote:
+> On 10/27/2025 8:02 PM, Krzysztof Kozlowski wrote:
 >> On 26/10/2025 12:17, Sarthak Garg wrote:
->>> Document the compatible string for the SDHCI controller on the
->>> sm8750 platform.
+>>> Add SD Card host controller for sm8750 soc.
 >>>
 >>> Signed-off-by: Sarthak Garg <sarthak.garg@oss.qualcomm.com>
->>> Acked-by: Rob Herring (Arm) <robh@kernel.org>
 >>> ---
->>
->>
->> Why are you sending third time the same, even though this was applied
->> long time ago at v1? Please do not send unnecessary patches, this just
->> clutters people's mailboxes.
->>
->> Best regards,
->> Krzysztof
+>>>   arch/arm64/boot/dts/qcom/sm8750.dtsi | 54 ++++++++++++++++++++++++++++
+>>>   1 file changed, 54 insertions(+)
+>>>
+>>> diff --git a/arch/arm64/boot/dts/qcom/sm8750.dtsi b/arch/arm64/boot/dts/qcom/sm8750.dtsi
+>>> index a82d9867c7cb..50e1fa67c093 100644
+>>> --- a/arch/arm64/boot/dts/qcom/sm8750.dtsi
+>>> +++ b/arch/arm64/boot/dts/qcom/sm8750.dtsi
+>>> @@ -2060,6 +2060,60 @@ ice: crypto@1d88000 {
+>>>   			clocks = <&gcc GCC_UFS_PHY_ICE_CORE_CLK>;
+>>>   		};
+>>>   
+>>> +		sdhc_2: mmc@8804000 {
+>> Completely messed ordering.
 > 
 > 
-> I had assumed that we need to repost the entire patch series regardless 
-> of whether some patches were already ACKed or applied. I’ll make sure to 
+> Do you mean the property order within the sdhc_2 device tree node ?
+> 
+> What ordering do we need to follow here ?
 
-Why? What sort of documentation ever suggested sending things which are
-applied? What sort of logic drives it?
+The one from coding style.
 
 Best regards,
 Krzysztof
