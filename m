@@ -1,178 +1,120 @@
-Return-Path: <linux-arm-msm+bounces-81183-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-81184-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 96BEFC4C243
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Nov 2025 08:40:44 +0100 (CET)
+Received: from ams.mirrors.kernel.org (ams.mirrors.kernel.org [IPv6:2a01:60a::1994:3:14])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8F7B4C4C246
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Nov 2025 08:40:49 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 4C69A189D0B8
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Nov 2025 07:41:09 +0000 (UTC)
+	by ams.mirrors.kernel.org (Postfix) with ESMTPS id 3BD5D34DB9A
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Nov 2025 07:40:49 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 51A1A32C320;
-	Tue, 11 Nov 2025 07:40:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id ED4E132ABC7;
+	Tue, 11 Nov 2025 07:40:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=packett.cool header.i=@packett.cool header.b="kj0fp8Gs"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ZK5R/GTy"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from out-173.mta1.migadu.com (out-173.mta1.migadu.com [95.215.58.173])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f54.google.com (mail-ed1-f54.google.com [209.85.208.54])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBFA232C328
-	for <linux-arm-msm@vger.kernel.org>; Tue, 11 Nov 2025 07:40:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 359B932C328
+	for <linux-arm-msm@vger.kernel.org>; Tue, 11 Nov 2025 07:40:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762846839; cv=none; b=PW+gX83Pjp3bls5FX49YRfUPnabmooXH/1vAWv7i6pJ4C/MgaJ/1bDFJYvBYViW7WP9tZsubvBI0D1AbpNS47FBMsR/EDWXIbl4+7dSA7IQrwOIXV6aTbCMaewZBG9re/B1CSf2QDuLSP2zu3OZf1LPvnu5GzvMmDeYCWy0vHnw=
+	t=1762846846; cv=none; b=Rva9zzlbJrMkD7pLRsdMTGl5IcOH21QlLGzSz09CDxdy8HdaL562IKoCJN3YTrwEtq5DK6F2eDI+XXJQrsPPL2zAGcv/p6+F+VXQVlhbXTJMgL37RD4bIPdbVjCnaQik/HYm+lnfHNcfSbkIqIAFi9YRsV6J/34SZ4xsw5BhWn8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762846839; c=relaxed/simple;
-	bh=/eAcCADFx1KN9TUNrzyCjPaC853i99Gc+U9+8pcCGB8=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=A8Ndcmlqdi96UpXiEIBEfCmYHVbcLb/mK28yJ1WZ8xN87QmS/0O6JJxBI18sJtEppBIeJNmheuuL3sOhlKcH7y9uj8w+fY/0cQwQzVW4E0AFW/u/1SLqe42E8C6Zxz4bAWr1UtQ5kJi3DVNGu1qm3NPE+V1xZtFg1eWj5CY5zaI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=packett.cool; spf=pass smtp.mailfrom=packett.cool; dkim=pass (2048-bit key) header.d=packett.cool header.i=@packett.cool header.b=kj0fp8Gs; arc=none smtp.client-ip=95.215.58.173
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=packett.cool
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=packett.cool
-Message-ID: <c27b5514-1691-448a-9823-8b35955b0fc6@packett.cool>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=packett.cool;
-	s=key1; t=1762846824;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=2eSCPUFxckyk8DCfOmruedDrJB+PpW6As/uwDjHVXw0=;
-	b=kj0fp8GszZ+3R1nRN0IU+NipUQ6W2ywmEDXw9Gb1tforA+jEjkBCKuvFGzFUkYjuZtSUKi
-	5mhP7jivZrXjI3yqkV/XWw8W11SUr5KC3B+YQKgm9KY1yz5jFoZRJs6QrVR2nRll1zlin2
-	CBWNyCs1IxKl7Mo7zcKP9wOjt+4scFRWYPtnd0Ev4Z11ytiDJ/+h+bZU2Pyf3yVzT1FXXf
-	uG5+z13kbKJFFmgMqa9lyMe/kpt05ZLJWYeugprNdqL+3bo+p1QGicE8nio3p4UAHExbu3
-	4ZdxHSPURnpPRStgAG+6BNSWBqob7hekQ1ZYlkrrjo52bEb/7NugefSuuAyWnA==
-Date: Tue, 11 Nov 2025 04:40:01 -0300
+	s=arc-20240116; t=1762846846; c=relaxed/simple;
+	bh=BXvcCjdO7qB+nC6mPywbTmCoNCrPFNZ+Cz9Suyc+IIA=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=SlANaurec6kOglrj+v81RqkBdORWAUsXalW9dmiCVudbdxkPdSbok2fjwBmkX+g8d5GoijmYZsOxDr4JVo8MaoP+tzVFYBZ03qeOCvpPh+6caiBzuii0cQBkr38vLm0MZHfgBYeGxT76lW8T2TxONbEc7C/AiqJlP6ZP8RZTRD4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ZK5R/GTy; arc=none smtp.client-ip=209.85.208.54
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-ed1-f54.google.com with SMTP id 4fb4d7f45d1cf-64180bd67b7so2724648a12.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 10 Nov 2025 23:40:44 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1762846843; x=1763451643; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=ZsQb36AG+bhheqgPWqJ+04ViBL68K7NDw9cmmMWzaYk=;
+        b=ZK5R/GTyhB1K1GLOvYd+np8/twX/3IJUELwy22GZsrbwkITpxssZ3FRQ0CIksB2IMK
+         VO46EN45tR7Be4by/9hYyXkvS6xBmWgI3sm28q3gzzH1IHZjCcV1QP38lEXRPF1g4LxF
+         76PazOgniBhfAXONZ86nnWCuRaSfYzcxyjp2CWGoKMPZEqFzMUwl9xwFonHyovErRbkH
+         g4lFCFEKAoE06WnPLpIoiXFF43QDDADHw34+KKrE1YPEzTaygHs/7s5JpdyGS164VyIr
+         xbtBrq8B6kpMX9S9uDwtEgnpF5eTOs4zten9tgN3UrkTgWLgSXauB3qd8hpnY4kVOUGX
+         2EdQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1762846843; x=1763451643;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=ZsQb36AG+bhheqgPWqJ+04ViBL68K7NDw9cmmMWzaYk=;
+        b=qqnri7R9olaMxgzvm2aqxMsMlCmMfJduEUJweWg0gpJThNzfQZwOXh83blbstFxcO4
+         BzTj/3GlWkcUlgCdmPugzn+5NI4K5Ks7tT7m5giD9cTZmwfid/ywzgjTeKro1xF0kNML
+         bYTrYZrIyOjhMcmzqM31p4qSxMJAV5z4rGTbNlY8o8SjETE57t5b0nla5dXpD7rVf5tH
+         Mxn/3dP5ywonkvCyPnfBNVSYlJ58LOW1S2Bm+rYWqSra9T4MURUuR1XfspnUTsq2P/kI
+         CqLQAiw9Q7XdwUhPTAvoRnFnU3J4uSklsgRXKglyH6O1lzW8ruywqdwvLJ6uFSaNSNcP
+         h/JQ==
+X-Gm-Message-State: AOJu0YxZ4CnKVO96BqjnOjvBFmTPKrGc+YUt7iYsNpAFVckLG47b/qhr
+	DNU1CHskHG7lFBnIYa/cGU/OxxbDAxImXV8wE4Maz0I1cw7cVe70K4j3
+X-Gm-Gg: ASbGncv9tXxiusOrgxR+PBnx7cnUW2Ep3zSjMuCn6KjyuFGrDN3F5Ozp4MBjOIrD9ei
+	/Rgr8D6Zlgp7mCUm4kecMBuVdU6djNPSgnThSQrb4q57JuHxrm+NuJ3z6BCbnDCpMj2jA82+yF4
+	ltCYIJWSLGCDc8qvtfIBDBW6xBc7i9tHpblKXmfH2wKs0eUey32TQctFsF7XfUA8vRezgjLtsXO
+	s6YcEPGgrEFwLhHfaBDex2Bt/2Pb3+a9uw1bsNjUcXzfwaDcanP2FjG1qFeykLSiwyVlbeTZLoS
+	5+KeKbKfYliksEPJz25M1s0p5JpJRIK/mALqVmG6apV7sO6npfWT4LGq89VnSdpYKaU/gd8Ma4S
+	5rAzbCIAjmdB3XwITPL52N2b/Em7QaeP62WTtRhfogPGrRQHKswV45+nZT8PCfp8qgNJYeNp27I
+	I3jDw1y/iZoBQFpXq2i/j7tLnaMp6l4Q==
+X-Google-Smtp-Source: AGHT+IFgWTXwLMk5JFvVCa+4XZXkf4lHdagCP7wOpENFy5OZ1ezyvwlm5aeg76PzyxRG//MwPLwN+Q==
+X-Received: by 2002:a05:6402:3045:10b0:640:f8a7:aa25 with SMTP id 4fb4d7f45d1cf-6415e83eeb7mr6906192a12.30.1762846843459;
+        Mon, 10 Nov 2025 23:40:43 -0800 (PST)
+Received: from [192.168.0.253] (5D59A51C.catv.pool.telekom.hu. [93.89.165.28])
+        by smtp.googlemail.com with ESMTPSA id 4fb4d7f45d1cf-6411f713a68sm13060667a12.2.2025.11.10.23.40.41
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 10 Nov 2025 23:40:41 -0800 (PST)
+From: Gabor Juhos <j4g8y7@gmail.com>
+Subject: [PATCH 0/2] soc: qcom: mdt_loader: minor cleanups
+Date: Tue, 11 Nov 2025 08:40:09 +0100
+Message-Id: <20251111-mdt-loader-cleanup-v1-0-71afee094dce@gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Subject: Re: [PATCH v2 0/2] PCI/ASPM: Enable ASPM and Clock PM by default on
- devicetree platforms
-To: Manivannan Sadhasivam <mani@kernel.org>
-Cc: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
- manivannan.sadhasivam@oss.qualcomm.com,
- Rob Clark <robin.clark@oss.qualcomm.com>,
- Vignesh Raman <vignesh.raman@collabora.com>,
- Valentine Burley <valentine.burley@collabora.com>,
- Bjorn Helgaas <bhelgaas@google.com>,
- Lorenzo Pieralisi <lpieralisi@kernel.org>,
- =?UTF-8?Q?Krzysztof_Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
- Rob Herring <robh@kernel.org>, linux-pci@vger.kernel.org,
- linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
- "David E. Box" <david.e.box@linux.intel.com>,
- Kai-Heng Feng <kai.heng.feng@canonical.com>,
- "Rafael J. Wysocki" <rafael@kernel.org>,
- Heiner Kallweit <hkallweit1@gmail.com>,
- Chia-Lin Kao <acelan.kao@canonical.com>, Bjorn Helgaas <helgaas@kernel.org>
-References: <20250922-pci-dt-aspm-v2-0-2a65cf84e326@oss.qualcomm.com>
- <4cp5pzmlkkht2ni7us6p3edidnk25l45xrp6w3fxguqcvhq2id@wjqqrdpkypkf>
- <36f05566-8c7a-485b-96e7-9792ab355374@packett.cool>
- <qy4cnuj2dfpfsorpke6vg3skjyj2hgts5hhrrn5c5rzlt6l6uv@b4npmattvfcm>
-Content-Language: en-US
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
-From: Val Packett <val@packett.cool>
-In-Reply-To: <qy4cnuj2dfpfsorpke6vg3skjyj2hgts5hhrrn5c5rzlt6l6uv@b4npmattvfcm>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Migadu-Flow: FLOW_OUT
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAFnoEmkC/x3MMQqAMAxA0atIZgNNQUSvIg6xjRrQKq2KIN7d4
+ viG/x9IElUStMUDUS5NuoUMKgtwM4dJUH02WGMrIjK4+gOXjb1EdItwOHe01FDFXA+mcZDDPcq
+ o9z/t+vf9AHgK5l9kAAAA
+X-Change-ID: 20251110-mdt-loader-cleanup-21915aa7b09c
+To: Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konradybcio@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, 
+ Gabor Juhos <j4g8y7@gmail.com>
+X-Mailer: b4 0.14.2
 
+The series contains two small patches to clean up the mdt loader code
+a bit.
 
-On 11/11/25 4:19 AM, Manivannan Sadhasivam wrote:
-> On Tue, Nov 11, 2025 at 03:51:03AM -0300, Val Packett wrote:
->> On 11/8/25 1:18 PM, Dmitry Baryshkov wrote:
->>> On Mon, Sep 22, 2025 at 09:46:43PM +0530, Manivannan Sadhasivam via B4 Relay wrote:
->>>> Hi,
->>>>
->>>> This series is one of the 'let's bite the bullet' kind, where we have decided to
->>>> enable all ASPM and Clock PM states by default on devicetree platforms [1]. The
->>>> reason why devicetree platforms were chosen because, it will be of minimal
->>>> impact compared to the ACPI platforms. So seemed ideal to test the waters.
->>>>
->>>> This series is tested on Lenovo Thinkpad T14s based on Snapdragon X1 SoC. All
->>>> supported ASPM states are getting enabled for both the NVMe and WLAN devices by
->>>> default.
->>>> [..]
->>> The series breaks the DRM CI on DB820C board (apq8096, PCIe network
->>> card, NFS root). The board resets randomly after some time ([1]).
->> Is that reset.. due to the watchdog resetting a hard-frozen system?
->>
->> Me and a bunch of other people in the #aarch64-laptops irc/matrix room have
->> been experiencing these random hard freezes with ASPM enabled for the NVMe
->> SSD, on Hamoa (and Purwa too I think) devices.
->>
-> Interesting! ASPM is tested and found to be working on Hamoa and other Qcom
-> chipsets also, except Makena based chipsets that doesn't support L0s due to
-> incorrect PHY settings. APQ8096 might be an exception since it is a really old
-> target and I'm digging up internally regarding the ASPM support.
->
->> Totally unpredictable, could be after 4 minutes or 4 days of uptime.
->> Panic-indicator LED not blinking, no reaction to magic SysRq, display image
->> frozen, just a complete hang until the watchdog does the reset.
->>
-> I have KIOXIA SSD on my T14s. I do see some random hang, but I thought those
-> predate the ASPM enablement as I saw them earlier as well. But even before this
-> series, we had ASPM enabled for SSDs on Qcom targets (or devices that gets
-> enumerated during initial bus scan), so it might be that the SSD doesn't support
-> ASPM well enough.
+The first patch merges the __mdt_load() and qcom_mdt_load_no_init()
+functions in order to remove a superfluous wrapper function, whilst
+the second one renames a parameter of qcom_mdt_load() to make it
+consistent with other functions.
 
-I certainly remember that ASPM *was* enabled by default when I first got 
-this laptop, via the custom way that predates this series.
+Signed-off-by: Gabor Juhos <j4g8y7@gmail.com>
+---
+Gabor Juhos (2):
+      soc: qcom: mdt_loader: merge __qcom_mdt_load() and qcom_mdt_load_no_init()
+      soc: qcom: mdt_loader: rename 'firmware' parameter of qcom_mdt_load()
 
-Actually that custom enablement code getting removed was how I 
-discovered it was ASPM related!
+ drivers/soc/qcom/mdt_loader.c | 52 ++++++++++++++++++-------------------------
+ 1 file changed, 22 insertions(+), 30 deletions(-)
+---
+base-commit: 682921ab33129ec46392b27e9dafcb206c2a08dd
+change-id: 20251110-mdt-loader-cleanup-21915aa7b09c
 
-I pulled linux-next once and suddenly the system became stable!.. and 
-then I noticed +2W of battery drain..
-
-> But I'm clueless on why it results in a hang. What I know on ARM platforms is
-> that we get SError aborts and other crazy bus/NOC issues if the device doesn't
-> respond to the PCIe read request. So the hang could be due to one of those
-> issues.
-
-Could the kernel be making requests before the device fully resumed from 
-a sleep state?
-
->> I have confirmed with a modified (to accept args) enable-aspm.sh script[1]
->> that disabling ASPM *only* for the SSD, while keeping it *on* for the WiFi
->> adapter, is enough to keep the system stable (got to about a month of uptime
->> in that state).
->>
-> So this confirms that the controller supports it, and the device (SSD) might be
-> of fault here.
->
->> If you have reproduced the same issue on an entirely different SoC, it's
->> probably a general driver issue.
->>
->> Please, please help us debug this using your internal secret debug equipment
->> :)
->>
-> Starting from v6.18-rc3, we only enable L0s and L1 by default on all devicetree
-> platforms. Are you seeing the hangs post -rc3 also? If so, could you please
-> share the SSD model by doing 'lspci -nn'?
-
-Yes, still seeing them on 6.18.0-rc4-next-20251107. At least with 
-pcie_aspm=force (have been using that recently, so likely all my testing 
-"post -rc3" was with force on.. but others have been testing without it)
-
-I'm currently using the stock drive: Sandisk Corp PC SN740 NVMe SSD 
-(DRAM-less) [15b7:5015] (rev 01)
-
-Though for a couple months I've used a 3rd party one, an SK Hynix BC901 
-[1c5c:1d59]
-
-And other users have different other models and still have the same issue.
-
-// Every time something PCIe related is posted to the mailing lists I've 
-been wondering if it could solve this :D
-"Program correct T_POWER_ON value for L1.2 exit timing" didn't help. 
-Testing "Remove DPC Extended Capability" now..
-
-
-~val
+Best regards,
+-- 
+Gabor Juhos <j4g8y7@gmail.com>
 
 
