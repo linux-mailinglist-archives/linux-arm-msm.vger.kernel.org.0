@@ -1,166 +1,171 @@
-Return-Path: <linux-arm-msm+bounces-81311-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-81312-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [IPv6:2605:f480:58:1:0:1994:3:14])
-	by mail.lfdr.de (Postfix) with ESMTPS id A992FC4F1BB
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Nov 2025 17:47:28 +0100 (CET)
+Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [142.0.200.124])
+	by mail.lfdr.de (Postfix) with ESMTPS id 12C42C4F1F4
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Nov 2025 17:51:35 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 136AE4E2FBB
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Nov 2025 16:43:12 +0000 (UTC)
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 5054B4EDAC8
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Nov 2025 16:48:26 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A17C1366545;
-	Tue, 11 Nov 2025 16:43:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 98E0536CE1C;
+	Tue, 11 Nov 2025 16:48:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="cA6NfSRa"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="VX/zQ+Mr"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74BA22D8DDA;
-	Tue, 11 Nov 2025 16:43:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A7F62D979F;
+	Tue, 11 Nov 2025 16:48:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762879389; cv=none; b=VN9+jDi8ukq87tI66D2RvbzFFT6nhMGxwBJFZuDif84pTxqYpBgF1/a3LjUL05YvWuaqrjWE4hQoUuV9Xz0g+OunEG1wDc516DegdLOV4K4CvdfFJZWLADx51VW1AFJdwbgnEhN4jXNmBTXJmt7xSdYrs+dXIwztYAV8UZGAeCk=
+	t=1762879704; cv=none; b=U1TnR2t0riYUpcrzI7ZxoueIAKusunbeCZaadyTJLBv9fUEzSVL35udM4pLSIOoCw5LEfM7nbx4WxdNn6S/cUQTYSh97bdCu37mL5Ja2SQTrb0LjS3cibsnDIdcMVvwoF04vYQwaROk7uybE0R+2rQbrVtVn9b8GFDSh7kjdU94=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762879389; c=relaxed/simple;
-	bh=ymIv2XmLKmBikeDaavFp5j6Vf01oLyyEEmybdOlwNE4=;
+	s=arc-20240116; t=1762879704; c=relaxed/simple;
+	bh=QAvwD+snMlu/Jt3TEUyKWNI/wTAgmcqVgGGWrd7NCxc=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=VW3cK4I0CH9bA5o9nnB2QECJGajRBlEd6H75YDHa7BMBjqD5Etln+JEd/afPT6UGCwwEOfKrzYEW/XpwltLsd1iDrvul2mbxV1q7yWb9RVG0U+dAc/6YhARr2ePpEzotWi2HhtIesT2Y0cyrC9kiH7fSOFjuJTA5U30M+b/yNqQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=cA6NfSRa; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E0F7C4CEF5;
-	Tue, 11 Nov 2025 16:43:08 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=Rw0TUNkVYX5mixOCVIE+qx+GxY3hzi7P0FjKPpRUDO6IBE5LKReq1jcut3kuVVStRSmKBm43HA2RdY2A9hN7zyLv4B5yGK/QTS76F/9aQYOnZPJe6CAJ/K/+TN+hWw4OODwE6e16l0G+LeRKkGUhOzaIKl2dpxYaNzKVZAIe8o8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=VX/zQ+Mr; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D216C113D0;
+	Tue, 11 Nov 2025 16:48:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1762879388;
-	bh=ymIv2XmLKmBikeDaavFp5j6Vf01oLyyEEmybdOlwNE4=;
+	s=k20201202; t=1762879703;
+	bh=QAvwD+snMlu/Jt3TEUyKWNI/wTAgmcqVgGGWrd7NCxc=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=cA6NfSRa0UklYUuKU+oSfTLjJU9hDSw6ryaU9+Y6RC3gTnxUm50500ZZqf1rH1s2g
-	 K7IyeEKKbt83fCABf/5KT6MNkexLR3blFqcHy3trLKdWKYqLJD8MdXgjEyeYsw2Fna
-	 h+R9nOI8yJTSdwHbykW87+TUDqJn2BsUnwkVW/KnLNzo0nYpZytz60VK5IsNTK5zT9
-	 E/nP3UolhRZ98396VogMEpEUDFqJ2UmW//QDgeR4r1/XRgKYps3577NSyTh6ngylOh
-	 q38DDRUJYLU4o7QmRkNHZ7c6cDSmWzS1oCS4+Wv+ZvbHiR/gW+gJgvvAmFx79TBqjv
-	 dNIxQp2WHVuIQ==
-Date: Tue, 11 Nov 2025 10:47:21 -0600
+	b=VX/zQ+MraddmjGS5f342TmJypvx87sOhUbJxHx0rqYphAz3YQmrJUNZuQBNXaRXGm
+	 hrfBbAUIvwgkEvXJMgQUvHLi4bgfa8AlbUlOzsJkkDfWOC69e4Q33z/O93FyufXUk9
+	 P/aA7/fHxMEcwzOtHB2sfxCuFSOZhKsFRys6LHAUnteHtY3ctsHN/gLFHgGJlwUtGw
+	 WDGrLDBSa6pW4WNWoE83le9Q1tpITLm8SmWmBqt06uxcnZAeioOFZqTlEWF45/5dMv
+	 Pal1wuA4DLTVZX6mU+TS4qq96/+JuwEG8bL9GNUtLjAvmuWUYdVKsbwX4X41oDV1Gd
+	 N7BvOLOnr9z+g==
+Date: Tue, 11 Nov 2025 10:52:34 -0600
 From: Bjorn Andersson <andersson@kernel.org>
-To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Cc: Amit Singh <quic_amitsi@quicinc.com>, konradybcio@kernel.org, 
-	robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org, 
-	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	quic_riteshk@quicinc.com, quic_rajeevny@quicinc.com, quic_vproddut@quicinc.com
-Subject: Re: [PATCH] arm64: dts: qcom: qcs6490-rb3gen2: Use 'edp_hot'
- function for hpd gpio
-Message-ID: <jqfmzls6eeydxozzyewkfutqpdzfavlx6mci6pl6f2ts7cjjeg@b32k3pf362zb>
-References: <20251031085739.440153-1-quic_amitsi@quicinc.com>
- <nzg7auudxocxnpnjsc2emot7sgh5azvucl72jqzgqsp4jhzint@hykb2xyx66uh>
- <c6ef0324-c932-4c80-8252-97dd3ee255d3@quicinc.com>
- <rqufdgme5cmtbvharugka2zc6c4g4am4j6enrkanc6uaxdbr77@dlptsjv7u7lr>
+To: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>
+Cc: Shivendra Pratap <shivendra.pratap@oss.qualcomm.com>, 
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>, Sebastian Reichel <sre@kernel.org>, 
+	Rob Herring <robh@kernel.org>, Sudeep Holla <sudeep.holla@arm.com>, 
+	Souvik Chakravarty <Souvik.Chakravarty@arm.com>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+	Conor Dooley <conor+dt@kernel.org>, Andy Yan <andy.yan@rock-chips.com>, 
+	Mark Rutland <mark.rutland@arm.com>, Lorenzo Pieralisi <lpieralisi@kernel.org>, 
+	Arnd Bergmann <arnd@arndb.de>, Konrad Dybcio <konradybcio@kernel.org>, 
+	cros-qcom-dts-watchers@chromium.org, Vinod Koul <vkoul@kernel.org>, 
+	Catalin Marinas <catalin.marinas@arm.com>, Will Deacon <will@kernel.org>, 
+	Florian Fainelli <florian.fainelli@broadcom.com>, Moritz Fischer <moritz.fischer@ettus.com>, 
+	John Stultz <john.stultz@linaro.org>, Matthias Brugger <matthias.bgg@gmail.com>, 
+	Krzysztof Kozlowski <krzk@kernel.org>, Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>, 
+	Stephen Boyd <swboyd@chromium.org>, Andre Draszik <andre.draszik@linaro.org>, 
+	Kathiravan Thirumoorthy <kathiravan.thirumoorthy@oss.qualcomm.com>, linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	devicetree@vger.kernel.org, linux-arm-kernel@lists.infradead.org, 
+	linux-arm-msm@vger.kernel.org, Elliot Berman <quic_eberman@quicinc.com>, 
+	Xin Liu <xin.liu@oss.qualcomm.com>, Srinivas Kandagatla <srini@kernel.org>, 
+	Elliot Berman <elliot.berman@oss.qualcomm.com>, Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Subject: Re: [PATCH v17 09/12] arm64: dts: qcom: qcs6490-rb3gen2: Add PSCI
+ SYSTEM_RESET2 types
+Message-ID: <cvfr4zaceknma6camborq4ro3lwbx3dfps2zjagwhwmvwoxriz@jwybwtzdd46u>
+References: <20251109-arm-psci-system_reset2-vendor-reboots-v17-0-46e085bca4cc@oss.qualcomm.com>
+ <20251109-arm-psci-system_reset2-vendor-reboots-v17-9-46e085bca4cc@oss.qualcomm.com>
+ <20251110122824.5je5jfoanivl6xrh@hu-mojha-hyd.qualcomm.com>
+ <btvknf3tcqhgxzf7ckyvfwix6hxle2bs4whyayan5haaejo3sm@gnbszdys32lm>
+ <20251110161950.ngs4ihn3asijoqks@hu-mojha-hyd.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <rqufdgme5cmtbvharugka2zc6c4g4am4j6enrkanc6uaxdbr77@dlptsjv7u7lr>
+In-Reply-To: <20251110161950.ngs4ihn3asijoqks@hu-mojha-hyd.qualcomm.com>
 
-On Tue, Nov 11, 2025 at 05:14:54PM +0200, Dmitry Baryshkov wrote:
-> On Thu, Nov 06, 2025 at 03:01:07PM +0530, Amit Singh wrote:
-> > 
-> > 
-> > On 11/2/2025 12:29 AM, Bjorn Andersson wrote:
-> > > On Fri, Oct 31, 2025 at 02:27:39PM +0530, Amit Singh wrote:
-> > >> Currently, hpd gpio is configured as a general-purpose gpio, which does
-> > >> not support interrupt generation. This change removes the generic
-> > >> hpd-gpios property and assigns the edp_hot function to the pin,
-> > >> enabling proper irq support.
-> > >>
+On Mon, Nov 10, 2025 at 09:49:50PM +0530, Mukesh Ojha wrote:
+> On Mon, Nov 10, 2025 at 09:30:26AM -0600, Bjorn Andersson wrote:
+> > On Mon, Nov 10, 2025 at 05:58:24PM +0530, Mukesh Ojha wrote:
+> > > On Sun, Nov 09, 2025 at 08:07:22PM +0530, Shivendra Pratap wrote:
+> > > > From: Elliot Berman <elliot.berman@oss.qualcomm.com>
+> > > > 
+> > > > Add support for SYSTEM_RESET2 vendor-specific resets in
+> > > > qcs6490-rb3gen2 as reboot-modes.  Describe the resets:
+> > > > "bootloader" will cause device to reboot and stop in the
+> > > > bootloader's fastboot mode. "edl" will cause device to reboot
+> > > > into "emergency download mode", which permits loading images via
+> > > > the Firehose protocol.
+> > > > 
+> > > > Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+> > > > Signed-off-by: Elliot Berman <elliot.berman@oss.qualcomm.com>
+> > > > Signed-off-by: Shivendra Pratap <shivendra.pratap@oss.qualcomm.com>
+> > > > ---
+> > > >  arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts | 7 +++++++
+> > > >  1 file changed, 7 insertions(+)
+> > > > 
+> > > > diff --git a/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts b/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts
+> > > > index 721a26d49ccaeb1429e2cc1c3a5c8d9517da3be6..cebdedd5d614b9efb6dfbee91dd67f3c3e322a38 100644
+> > > > --- a/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts
+> > > > +++ b/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts
+> > > > @@ -935,6 +935,13 @@ &pon_resin {
+> > > >  	status = "okay";
+> > > >  };
+> > > >  
+> > > > +&psci {
+> > > > +	reboot-mode {
+> > > > +		mode-bootloader = <0x10001 0x2>;
+> > > > +		mode-edl = <0 0x1>;
+> > > > +	};
+> > > > +};
+> > > > +
 > > > 
-> > > No, it replaces the use of display-connector for hotplug detect with the
-> > > DP-controller's internal HPD logic.
+> > > Make sense for this as it leverages sc7280 and adding it there would not
+> > > have made sense.
 > > > 
-> > > There might be good reasons to do so, but you need to describe them.
-> > > 
-> > > I'm guessing that there are still some issues in the DP driver's logic
-> > > for handling of external HPD? This should be addressed by fixing that
-> > > logic in the DP driver, to ensure that this (display-connector +
-> > > hpd-gpios) works, and then you should send this patch again explaining
-> > > why the internal HPD hardware does a better job.
-> > > 
-> > > Regards,
-> > > Bjorn
 > > 
-> > Thanks for the feedback and clarification.
-> > 
-> > We observed a specific use case where using the GPIO-based external HPD
-> > handling via display-connector leads to a functional issue.
+> > Why wouldn't it make sense?
 > 
-> You are describing driver behaviour. It is known that this part of the
-> DP driver is broken. There is nothing wrong with using HPD pin as a GPIO
-> in the DP connector.
-> 
+> It is better to add for platforms we know their firmware support this
+> from day1 and not add for something like chrome or any other variant of
+> sc7280 where this support would never come or not tested.
 
-I agree.
+So SYSTEM_RESET2 only exist in newer firmware versions and hence this
+isn't (and won't be) broadly available in SC7280 devices.
 
-> > When the DisplayPort cable is already connected and the display is active,
-> > and we perform a system reboot, the display does not come up automatically
-> > after boot with the current configuration (using hpd-gpios).
-> > This happens because we do not receive a connect event post boot —
-> > the GPIO-based HPD path does not generate an interrupt in this scenario,
-> > as the line remains high and no edge event is triggered.
+That would be excellent information to put in the commit message, so
+others writing Kodiak dts doesn't feel the urge to copy this and debug
+why it doesn't work.
+
 > > 
-> > However, when we configure the pin with the edp_hot function and use the
-> > internal HPD logic of the DP controller, the controller correctly detects
-> > the HPD state after reboot. The internal HPD block generates the necessary
-> > interrupt, and the display comes up automatically without requiring a
-> > replug event.
+> > > Acked-by: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>
+> > > 
 > > 
-> > This behavior aligns with other Qualcomm reference platforms where,
-> > if the controller’s internal HPD is available, it is preferred over
-> > the external GPIO path. Using the internal HPD provides more reliable
-> > detection and keeps the configuration consistent across platforms.
-> > So, this change ensures:
-> > 1. The display recovers correctly after reboot when the cable
-> > remains connected.
-> > 2. We leverage the controller’s native HPD interrupt capability for
-> > better reliability.
-> > 3. We maintain consistency with other DP-enabled Qualcomm boards that
-> > use internal HPD.
+> > Please read submitting-patches.rst about Acked-by, and use Reviewed-by
+> > going forward.
 > 
-> I think, this DT might have been purposedly written in order to show how
-> the HPD signals can be coming from the GPIO pin through the external
-> bridge. As such I'm really reluctant to ack this change.
+> I was acking the idea of this particular change in platform file compared to
+> other patches, if above reason looks fine, can be converted to R-by.
 > 
 
-That is correct, I explicitly wanted to describe the connector and the
-HPD signal therein, and at the time of merging this worked (I was even
-under the impression that we do get the right HPD state at boot and
-bring up the display, but it's been a while so I'm not 100% certain that
-I tested that scenario).
-
-I'm fine with dropping the hpd-gpios for reasons such that the HPD
-hardware does a better job at HPD handling - but that's not what we have
-here. So I share your reluctance.
-
-
-PS. Using the internal HPD for detection implies that we need to keep
-the DP block powered and (partially) clocked, so we should at some point
-figure out how to dynamically switch between GPIO and HPD...
+That's appreciated, but per the documentation, the meaning of acked-by
+is different.
 
 Regards,
 Bjorn
 
-> > 4. edp_hot follows the Source device behavior upon HPD pulse
-> > Detection [VESA DP standard v1.4 section 5.1.4].
 > > 
-> > I’ll add these details to the commit message in the next revision.
+> > Regards,
+> > Bjorn
 > > 
-> > Thanks,
-> > Amit
+> > > >  &qup_uart7_cts {
+> > > >  	/*
+> > > >  	 * Configure a bias-bus-hold on CTS to lower power
+> > > > 
+> > > > -- 
+> > > > 2.34.1
+> > > > 
+> > > 
+> > > -- 
+> > > -Mukesh Ojha
+> > > 
 > 
 > -- 
-> With best wishes
-> Dmitry
+> -Mukesh Ojha
 
