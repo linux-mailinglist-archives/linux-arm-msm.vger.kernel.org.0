@@ -1,63 +1,77 @@
-Return-Path: <linux-arm-msm+bounces-81306-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-81307-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3B0C3C4EF47
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Nov 2025 17:14:35 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id D752BC4F028
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Nov 2025 17:21:42 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 5789918C2914
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Nov 2025 16:14:54 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 2BDF93BB565
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Nov 2025 16:21:08 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CDD5036C5AF;
-	Tue, 11 Nov 2025 16:14:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9028D36CDF9;
+	Tue, 11 Nov 2025 16:21:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="f5wcdImD"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="mUjvpjMb"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 993B633556E;
-	Tue, 11 Nov 2025 16:14:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 613D036C59A;
+	Tue, 11 Nov 2025 16:21:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762877651; cv=none; b=YlufL1VKa5IySp4e6uWas4X95279/Uf0zjPvGdhydhlSAfIrZ7pTWwfpDMVsHPWUBucnG5QMy1wAoGHGLT2tegjMVmUlyVfDmi02NZNeLbFvJdECp3jWrRYXgXRT0b4E/JPcKLXSgi3DNVOH3Zg66jLijHZTPxLlpcOJkjy9CAI=
+	t=1762878063; cv=none; b=RDh726Ui86PJtPROAqm9U7Q7J8be5P/YFoMBEbPfTCZYIita8cdGIc6rRRBZsfEkVhVelTXJwEBTtS5xAMrGyQRrRsDYuShdZyYDW9OX3N9qkuJBtzRTVJXozvqBF7NXJWBPn9jCNmOHlxJNaeZbkqrC1Mrz7nXHPrKWPUr+njE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762877651; c=relaxed/simple;
-	bh=rKuraMxsrbsZcrLfC4Ao1ior3+JXNK/ji1oPIQxDgOg=;
+	s=arc-20240116; t=1762878063; c=relaxed/simple;
+	bh=iovQHCOTUN55wUvNH0b2ic0AbO7TgNyy9k87I1v/EvU=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=a+X1EPyZvq+hW4t5oCTYSvgy0WbofI160WCVZvE6T56l3YcKcJ52RJdRvKTxsxxKayIVbK/Q9okP2GXce3WqgjbB/pEkq/UT7XQPJfv4bTeklWbAEfG2sq+aQAakh+EZgYx5P4V42l0Dn3nHTmW9ws75si/Zi0DCDnz2FFYCIuE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=f5wcdImD; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA057C19421;
-	Tue, 11 Nov 2025 16:14:09 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=Utc2oQOLLDJfPuYjPK+bvLspUVjrqcvhNKx12rmwDrcJpyDtUlHLofvHDgQOixKdiwDs1/4SybO6JnKyLZikKyekmvaTJH23e5TZVTJ4Dt9OmEwiFfbKy6Vc+yUjX6FNBKGjIt0/CfV5CWAj6dqXb+8t/sZy8MntBRoHnkzycBM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=mUjvpjMb; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D63CBC4CEF5;
+	Tue, 11 Nov 2025 16:21:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1762877651;
-	bh=rKuraMxsrbsZcrLfC4Ao1ior3+JXNK/ji1oPIQxDgOg=;
+	s=k20201202; t=1762878063;
+	bh=iovQHCOTUN55wUvNH0b2ic0AbO7TgNyy9k87I1v/EvU=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=f5wcdImDYU2/nFXMnUcIDAb5XS41qFc+EwBQw8sqTJkUI72wjGzzRCdD+4xu0qs/n
-	 BjOHxDYmPWu1zT/ZzqxMd7s7NiaFnhAxLNBVMbUP9CKnk+RnIZcD1ZRzJQKQS2G9lW
-	 57F+ztXjUfq+hmEGQysuPXz1GJ5xe26dLmO9PXcIiZoB/PxFMjcoOobg075R8lTT/x
-	 HhIFtdxhYmqRsbm5fdO/4nDYU4daaQ2kAOBGUexm/PTmzT/+ZmzEBR7YoGrVQRgWjn
-	 CLL7hCCxwiLxTuGO3LoTl5JAU2zV+7kep85Zd1iIdAl+xdy7i48h7OZhe7vxfrCGTP
-	 P1TM6fH7MBD+w==
-Date: Tue, 11 Nov 2025 10:18:22 -0600
+	b=mUjvpjMb5nWSH3Ej5Z6ekUtxyctHK1iWozXPaNNnLbgkyXsh7sIh6/wpN3U2Kqtaz
+	 pgz1NYRD0Ge54tnICRqeTqxB/U709bSsmp4nAMLBENSYcuJi8j88LicRiTH55yp1R4
+	 4cmPMfvFaaN+92h00ZpxOjncZfiqBh79fYETDtMIf0zKtsslp11kNiiwXUmSO8ZRue
+	 xt4sold8J7PsWbk5uoXkPaG23sxeWhlUHlK75vxwyGliH7XfqyVMKLNFo626dsivUn
+	 1v2iVu4b1OzKgn8BBC9Zl4bWdMRk0OiLJiwUxAAB8dhZmQtzERxkkTVdLvrn8ElOpu
+	 BdA50TiZ+15XQ==
+Date: Tue, 11 Nov 2025 10:25:13 -0600
 From: Bjorn Andersson <andersson@kernel.org>
-To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Cc: Krzysztof Kozlowski <krzk@kernel.org>, 
-	Riccardo Mereu <r.mereu.kernel@arduino.cc>, konradybcio@kernel.org, robh@kernel.org, krzk+dt@kernel.org, 
-	conor+dt@kernel.org, broonie@kernel.org, linux@roeck-us.net, 
-	Jonathan.Cameron@huawei.com, wenswang@yeah.net, naresh.solanki@9elements.com, 
-	michal.simek@amd.com, nuno.sa@analog.com, chou.cosmo@gmail.com, 
-	grantpeltier93@gmail.com, eajames@linux.ibm.com, farouk.bouabid@cherry.de, 
-	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	linux-spi@vger.kernel.org, mm.facchin@arduino.cc, Riccardo Mereu <r.mereu@arduino.cc>
-Subject: Re: [PATCH 3/5] dt-binding: arm: qcom: add arduino unoq codename
-Message-ID: <jjzeljmhwaem4uiz76ec3wlijtej6xz6qzxxr6v22g2ioy6mqg@rdm4ibk5puld>
-References: <20251106153119.266840-1-r.mereu@arduino.cc>
- <20251106153119.266840-4-r.mereu@arduino.cc>
- <2c67a82a-3a4a-44e5-8c82-42ec6320d5b5@kernel.org>
- <fuz3se3hwtoqlgcifo35qozda5xy2gneatm64f5nsq6n75jteo@vqbu7naldfgq>
+To: Shivendra Pratap <shivendra.pratap@oss.qualcomm.com>
+Cc: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>, 
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>, Sebastian Reichel <sre@kernel.org>, 
+	Rob Herring <robh@kernel.org>, Sudeep Holla <sudeep.holla@arm.com>, 
+	Souvik Chakravarty <Souvik.Chakravarty@arm.com>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+	Conor Dooley <conor+dt@kernel.org>, Andy Yan <andy.yan@rock-chips.com>, 
+	Mark Rutland <mark.rutland@arm.com>, Lorenzo Pieralisi <lpieralisi@kernel.org>, 
+	Arnd Bergmann <arnd@arndb.de>, Konrad Dybcio <konradybcio@kernel.org>, 
+	cros-qcom-dts-watchers@chromium.org, Vinod Koul <vkoul@kernel.org>, 
+	Catalin Marinas <catalin.marinas@arm.com>, Will Deacon <will@kernel.org>, 
+	Florian Fainelli <florian.fainelli@broadcom.com>, Moritz Fischer <moritz.fischer@ettus.com>, 
+	John Stultz <john.stultz@linaro.org>, Matthias Brugger <matthias.bgg@gmail.com>, 
+	Krzysztof Kozlowski <krzk@kernel.org>, Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>, 
+	Stephen Boyd <swboyd@chromium.org>, Andre Draszik <andre.draszik@linaro.org>, 
+	Kathiravan Thirumoorthy <kathiravan.thirumoorthy@oss.qualcomm.com>, linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	devicetree@vger.kernel.org, linux-arm-kernel@lists.infradead.org, 
+	linux-arm-msm@vger.kernel.org, Elliot Berman <quic_eberman@quicinc.com>, 
+	Xin Liu <xin.liu@oss.qualcomm.com>, Srinivas Kandagatla <srini@kernel.org>, 
+	Umang Chheda <umang.chheda@oss.qualcomm.com>, Nirmesh Kumar Singh <nirmesh.singh@oss.qualcomm.com>
+Subject: Re: [PATCH v17 03/12] power: reset: reboot-mode: Add support for 64
+ bit magic
+Message-ID: <axle2c3i3vfyxpql43dqb4zwzjj65xhsjuhojyf5x26wqo352v@z3nwctubwanx>
+References: <20251109-arm-psci-system_reset2-vendor-reboots-v17-0-46e085bca4cc@oss.qualcomm.com>
+ <20251109-arm-psci-system_reset2-vendor-reboots-v17-3-46e085bca4cc@oss.qualcomm.com>
+ <20251110134529.uljjqzb3vhda3vya@hu-mojha-hyd.qualcomm.com>
+ <gzj4r4elqewjt2gjzhuamslvobz5fgyvt672brwknoozlsplaq@wsebzmi2l6pc>
+ <681a72ba-d8fb-bfc2-d2bb-d80ac667bc5c@oss.qualcomm.com>
+ <zejaqakbtufwzlzs7xc7xzxezcylqjkmu4nne2mro4riuhgbkc@hlgu3u2w36bb>
+ <5c83c9a1-e123-95bb-1434-588ee8c52b25@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -67,51 +81,116 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <fuz3se3hwtoqlgcifo35qozda5xy2gneatm64f5nsq6n75jteo@vqbu7naldfgq>
+In-Reply-To: <5c83c9a1-e123-95bb-1434-588ee8c52b25@oss.qualcomm.com>
 
-On Tue, Nov 11, 2025 at 02:27:03PM +0200, Dmitry Baryshkov wrote:
-> On Fri, Nov 07, 2025 at 08:13:48AM +0100, Krzysztof Kozlowski wrote:
-> > On 06/11/2025 16:31, Riccardo Mereu wrote:
-> > > From: Riccardo Mereu <r.mereu.kernel@arduino.cc>
-> > > 
-> > > Document Arduino UnoQ. Arduino UnoQ is a single-board computer
+On Tue, Nov 11, 2025 at 08:20:43PM +0530, Shivendra Pratap wrote:
+> 
+> 
+> On 11/11/2025 12:03 AM, Bjorn Andersson wrote:
+> > On Mon, Nov 10, 2025 at 11:22:40PM +0530, Shivendra Pratap wrote:
+> >>
+> >>
+> >> On 11/10/2025 10:00 PM, Bjorn Andersson wrote:
+> >>> On Mon, Nov 10, 2025 at 07:15:29PM +0530, Mukesh Ojha wrote:
+> >>>> On Sun, Nov 09, 2025 at 08:07:16PM +0530, Shivendra Pratap wrote:
+> >>>>> Current reboot-mode supports a single 32-bit argument for any
+> >>>>> supported mode. Some reboot-mode based drivers may require
+> >>>>> passing two independent 32-bit arguments during a reboot
+> >>>>> sequence, for uses-cases, where a mode requires an additional
+> >>>>> argument. Such drivers may not be able to use the reboot-mode
+> >>>>> driver. For example, ARM PSCI vendor-specific resets, need two
+> >>>>> arguments for its operation – reset_type and cookie, to complete
+> >>>>> the reset operation. If a driver wants to implement this
+> >>>>> firmware-based reset, it cannot use reboot-mode framework.
+> >>>>>
+> >>>>> Introduce 64-bit magic values in reboot-mode driver to
+> >>>>> accommodate dual 32-bit arguments when specified via device tree.
+> >>>>> In cases, where no second argument is passed from device tree,
+> >>>>> keep the upper 32-bit of magic un-changed(0) to maintain backward
+> >>>>> compatibility.
+> >>>>>
+> >>>>> Update the current drivers using reboot-mode for a 64-bit magic
+> >>>>> value.
+> >>
+> >> [SNIP..]
+> >>
+> >>>>> +	if (magic > U32_MAX)
+> >>>>> +		return -EINVAL;
+> >>>>> +
+> >>>>> +	magic_32 = magic;
+> >>>>> +
+> >>>>>  	syscon_rbm = container_of(reboot, struct syscon_reboot_mode, reboot);
+> >>>>>  
+> >>>>>  	ret = regmap_update_bits(syscon_rbm->map, syscon_rbm->offset,
+> >>>>> -				 syscon_rbm->mask, magic);
+> >>>>> +				 syscon_rbm->mask, magic_32);
+> >>>
+> >>> As above, if we're no longer silently discarding bits, I think we should
+> >>> compare the magic against syscon_rbm->mask.
+> >>>
+> >>> No need for a local variable, just type cast after checking the validity.
+> >>
+> >> Trying to summarize below why we added these check-
+> >>
+> >> the patch in v11 used typecasting and did not have any of these checks(link below):
+> >> https://lore.kernel.org/all/20250717-arm-psci-system_reset2-vendor-reboots-v11-2-df3e2b2183c3@oss.qualcomm.com/
+> >>
+> >> As per below upstream review, type cast was removed and bound checks were added all-over patchset:
+> >> "As a general rule of thumb, code with casts is poor quality code. Try
+> >> to write the code without casts." - 
+> >> https://lore.kernel.org/all/8d4a42b6-657f-4c30-8e25-4213d8d53a89@lunn.ch/
+> >>
+> >> We can revert to the typecast way. Please suggest.
+> >>
 > > 
-> > compatible says imola, not unoq.
+> > Okay, I'm okay with Andrew's original request, stick to that for the
+> > nvmem case. Although I don't fancy the name "magic_32", and would prefer
+> > that you just call it "value" or something.
 > 
-> And compatibles for various ChromeBooks also use codenames. I think it's
-> not the first time the vendor uses a codename instead of the marketing
-> name inside the compat string.
+> sure will make it proper wherever applicable. 
+> 
+> > 
+> > 
+> > For pon and syscon however, I'm wondering why you have ignored Andrew's
+> > other request from that same email:
+> > 
+> > """
+> > You might be able to go further, and validate that magic actually fits
+> > into the field when you consider the << pon->reason_shift.
+> > """
+> > 
+> > Writing "if (magic > U32_MAX)" in a snippet of code where magic isn't
+> > allowed to be more than either 32 or 64 is misleading.
+> > 
+> > For syscon, it's true that the parameter is an unsigned long, but the
+> > actual limit better be based on syscon_rbm->mask.
+> 
+> May be i was not able to interpret it correctly. Basically tried to
+> make sure that magic that now coming in a "u64 magic" should be passed
+> ahead only it its a 32 bit value.
 > 
 
-I appreciate the use of the codename, but both subject and commit
-message is talking about "UnoQ" only and then "imola" shows up only in
-the patch.
+That is the correct interpretation of the original ask. But what I'm
+saying is that if you write:
 
-@Riccardo, please introduce "imola" in the commit message, so we know
-what it is.
+if (magic > U32_MAX)
+
+then that means "check that magic isn't larger than 32 bits". So the
+reader will see that and understand that magic can only be 32 bits.
+
+But the actual PON magic value is 5 or 6 bits, not 32 - so you should
+check that the value fits in 5 or 6 bits.
+
+> So should i get rid of the checks done here for syscon and pon?
+> 
+
+Continuing to silently ignoring other bits would be one option, but
+you've been asked to sanity check the values, so please do that. You
+have the code, just compare with the correct value.
 
 Regards,
 Bjorn
 
-> > 
-> > > combining Qualcomm Dragonwing™ QRB2210 microprocessor with
-> > > STMicroelectronics STM32U585 microcontroller.
-> > > 
-> > > Signed-off-by: Riccardo Mereu <r.mereu@arduino.cc>
-> > > ---
-> > 
-> > 
-> > Please use subject prefixes matching the subsystem. You can get them for
-> > example with `git log --oneline -- DIRECTORY_OR_FILE` on the directory
-> > your patch is touching. For bindings, the preferred subjects are
-> > explained here:
-> > https://www.kernel.org/doc/html/latest/devicetree/bindings/submitting-patches.html#i-for-patch-submitters
-> > 
-> > 
-> > Best regards,
-> > Krzysztof
-> 
-> -- 
-> With best wishes
-> Dmitry
+> thanks,
+> Shivendra
 
