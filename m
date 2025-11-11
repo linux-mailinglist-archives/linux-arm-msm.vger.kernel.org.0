@@ -1,182 +1,281 @@
-Return-Path: <linux-arm-msm+bounces-81210-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-81211-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 10C74C4D1E2
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Nov 2025 11:42:17 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7E5ACC4D28A
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Nov 2025 11:48:52 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 3933D189DE7C
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Nov 2025 10:42:25 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id C4B503A890E
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Nov 2025 10:43:04 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id AEEE334EF1C;
-	Tue, 11 Nov 2025 10:41:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2A81334F482;
+	Tue, 11 Nov 2025 10:42:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="fQR7HdcO"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HLVPssYf"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f172.google.com (mail-pl1-f172.google.com [209.85.214.172])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C63634EF13;
-	Tue, 11 Nov 2025 10:41:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78B5434F468
+	for <linux-arm-msm@vger.kernel.org>; Tue, 11 Nov 2025 10:42:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762857716; cv=none; b=UNjeiy0wWVHvuC7iCsC9jga4/R+QhKm4w6nWY2HuCr5IUtJ5vZ8bBKu1IeL9G3QcxMV6WC+OQQ29r8Htjmme4cu4hl+61qh0FxuH+wcmf7i7bo02NEGnEcA3ZC+rUaSV064B95l5lqJeU3RbY20VC9RHy5xGiXRUBt3xfRS3Rpg=
+	t=1762857775; cv=none; b=OwfWJVegiNuOA4ISUcLCQLvIWRRqt6xKB7QvPovWiO31BBZIF/ryscY8RJ4hnkYqdFAyVnBW4BQjS6gT7nfSsP9CNxKUhZQB7r3q2Hzk61UwvJlSz4TZFPPNFWMqe/uWd8SXNDuzx0D4Bz9/8J206D48WIrgcdJqu5hKab74FnM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762857716; c=relaxed/simple;
-	bh=NPcaHYhKRGkQGSIVVfqEfkF80g8ZkR0Q3JqOUcG6v2I=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=erv1TnkweJsqpiM/wNWrKVYch4+ZoiGGmg18SrCLLFo3KVo7ObhTH4STFidnxaxrunkzlJ7IwFCubHetuHlbvWfK3n8oI+0g0eiYFc9F0JRZev+OX9wM0+dylhPoTbh5lEANx/8gBwj1ciDL4lBNOai71GZPNcSRBN7zs0XsAPM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=fQR7HdcO; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0BEFC4CEF7;
-	Tue, 11 Nov 2025 10:41:52 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1762857716;
-	bh=NPcaHYhKRGkQGSIVVfqEfkF80g8ZkR0Q3JqOUcG6v2I=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=fQR7HdcOgKgx/ZXyCXMEK5sFWCT6/ddD8ZiLyMk+Ph8las/yLL505FnVA6r7isH+s
-	 sQWTnyLcGIKdh1S8+HuZcMwtiT7fwP8ExWuOoalYDSkD8j+3Qwg29Rjbn9qGORsgWG
-	 Yr756m51/mU4TDGhQgSW6/VKTEyw8QYCpkff7AqKzPzoi2xLMZEdRXbUvvSCDWgebr
-	 gBAW03FUcLsT8LAnjO248vnUZ9lFxOAgg+PZOQ7ZB5qIbu8AgIIhjwxqHX4+RbSb52
-	 BhT9DSr1rsOqlURuGw5gOJu8HtmBk7GNYi69iMmGzJWocoi2nXX6tFxt+aSiw3T0Vb
-	 b7rUalMPOPPbw==
-Message-ID: <60583236-692f-4605-9f56-f7dadb46558d@kernel.org>
-Date: Tue, 11 Nov 2025 11:41:51 +0100
+	s=arc-20240116; t=1762857775; c=relaxed/simple;
+	bh=07HBWmrT/H7zno+mG0Fc4iUEDkZr7DmZa2LvkHNFOQU=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=hSJ0kv+xuvDot+TlXSkI5tYk8metC7zcaN31chOxtgD7MO5Ertsaxe2zsMMFdJ9+q3dNV/ZeHh3W1WJdtGHksaEyg9FdCfmarUshHpiAIevYE9cG7YzNda0VspFgJ6skf4MoBPyYPX/rO4kNAc1f5Mr51ELWItgkkfJ5PGbWnjk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=HLVPssYf; arc=none smtp.client-ip=209.85.214.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-pl1-f172.google.com with SMTP id d9443c01a7336-298456bb53aso3393115ad.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 11 Nov 2025 02:42:53 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1762857773; x=1763462573; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=fYUsDbsuuzTOSOtHBw8aAUbI3zAG5zqYtHfT8rBYa7k=;
+        b=HLVPssYftnHHNoapg3S2CqXrYMBkcu5mTq50K2WuFegHFT782sdFkBgXDclUscFsEB
+         FVm8iLMyj4O+navQXXvrXBFtUJ23yXKkPZxc+9aPFXYIv5yoJcBAMj5H+v+Iyrk2y0hL
+         /qSUdKroU9dP3tFuq4Mxm95FgMp/RF1VaqgRDSITHREpA1c/K5ptW6ZDKFhdgxpV11n4
+         OXCc/sgrI071IkdjBTplSWL5z+VuSLUmnuuxBEGieNWrVHT0cSijpUERXHBlEC8/CTJ/
+         XgTEj8OujyGezYSCfYM41EktMdo7PzOi4Nf7PekP3c++X7Ms5dziSdqyKEMS7SVqhSrN
+         ITPQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1762857773; x=1763462573;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=fYUsDbsuuzTOSOtHBw8aAUbI3zAG5zqYtHfT8rBYa7k=;
+        b=JPrOrLOSjbErPNCM2V63/YusUpBnbIWPPtFtsWplShsP5EfFFJ2gmlWPwFvdamHoEV
+         f2uiUd2VT7/44iJ74VHNi7kwuLTzIXrNp7gF5Z6Os8MEKD+7/oWzPYRlScmAW1lbV3mb
+         2D7Lh2qrEUJNXzuJWRoEqzYdzJX2PV8XKoT8ILHjLmDFEVNsw6LzHlgfBA/J4aymWN2d
+         e/T/b9sEwHWrt/C+I59fKTbJZ2bvmY9/uGpKOi1bzO63dOx7zz5VHQLDaIis/2GQHkx7
+         QaoB2hn6M3tKz5F2gFe4nwZV/lRnZZD+q1/FRRpwJlIwjy0G1CXdfOhf1RaWBi/ZT9K/
+         tygw==
+X-Forwarded-Encrypted: i=1; AJvYcCVCLYVpC4ZxLS8MRrrB6ieGeqdni5DXrFaTOe6x6v4y9s4wiFySaaAb1XeaySXCrbhwkyDSqFid76TvmMKP@vger.kernel.org
+X-Gm-Message-State: AOJu0YwGHrF0m3z2PjhAa4oqhQks9ivvta+Z0bYZ7b+NffuLRGaSDlbA
+	/QyBMB7Z8bXTNEBlcUEa119bYHG7pHq6S8H3z9DZcD8CmCWD6K1vAMWZUUF3Ew==
+X-Gm-Gg: ASbGncvubilw4hHXzy8X86KOlyAoPqlAPt5aEM85Ppd3jRrDlb4oYD6i28M/NTIc9FK
+	CKmTIIGakyGmgkieWvvLKmd6HbIHxMtV95+Yh2R4nKSvHi+M9+M5LAxMZJpkKwH1ANkD3mmtfQf
+	5qIEet00LyQvci+0yydeaeeHrdtfN2miB2OZhZKYFoJR/hgJKsuT/lTqVj612OwgNKaO+r+vOs1
+	LG8+IE14HXRzXaUgXO4H7OyxJ+o8Dcr/wrbTEG3fdQad447af07Bj7gz5W8GzsznWWC5pI0vs+D
+	l+dVsIivyT2Defd+58PwPeFLB6JI3hWU536koss4qvULjfXFu+Ttue0OIHnsPRipRfkdD4zMvcA
+	Z1rYrmD6+yd5tqoSs0ZsSbePjHau7IsqDFnNjSfoueT4AkpOUR9tpm+PstpRQZh0lPSTfcwpSN1
+	QPDqWPRVzgaeXRQykeh6ehUpwFJg==
+X-Google-Smtp-Source: AGHT+IHKKW8uq/mixyYVwcE/GpKbjkb15Z3bYzo5IdPyn+w9o2ptPT8ipRXj2MXgq6Fk0DjaNvvO6g==
+X-Received: by 2002:a17:902:e78f:b0:28d:18d3:46ca with SMTP id d9443c01a7336-297e56df08emr157512625ad.49.1762857772692;
+        Tue, 11 Nov 2025 02:42:52 -0800 (PST)
+Received: from test-HP-Desktop-Pro-G3.. ([103.218.174.23])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-29846334db5sm9875235ad.32.2025.11.11.02.42.49
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 11 Nov 2025 02:42:52 -0800 (PST)
+From: Sudarshan Shetty <tessolveupstream@gmail.com>
+To: andersson@kernel.org,
+	konradybcio@kernel.org
+Cc: robh@kernel.org,
+	krzk+dt@kernel.org,
+	conor+dt@kernel.org,
+	linux-arm-msm@vger.kernel.org,
+	devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	Sudarshan Shetty <tessolveupstream@gmail.com>
+Subject: [PATCH v1 1/2] dt-bindings: arm: qcom: Add waveshare MIPI-DSI panels support
+Date: Tue, 11 Nov 2025 16:12:44 +0530
+Message-Id: <20251111104245.3420041-1-tessolveupstream@gmail.com>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 1/2] firmware: qcom: scm: Register gunyah watchdog
- device
-To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
- Pavan Kondeti <pavan.kondeti@oss.qualcomm.com>
-Cc: hrishabh.rajput@oss.qualcomm.com, Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>,
- Wim Van Sebroeck <wim@linux-watchdog.org>, Guenter Roeck
- <linux@roeck-us.net>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
- linux-watchdog@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, Neil Armstrong <neil.armstrong@linaro.org>
-References: <20251107-gunyah_watchdog-v5-0-4c6e3fb6eb17@oss.qualcomm.com>
- <20251107-gunyah_watchdog-v5-1-4c6e3fb6eb17@oss.qualcomm.com>
- <hbxtbaoavlsw7pbmg3cfkbyx4nacjfiikckhqgpvlggbh6hu5b@jyporqecfzni>
- <263d1390-eff5-4846-b2c2-31f96fc3248e@quicinc.com>
- <3794bb0e-5e2c-4d5e-8d81-d302fa36677c@quicinc.com>
- <56aqammkwte3tcdzni2unufjp4t4yaqazzdkigrwqsxp3ghcqe@ppe2pjwg3hrl>
-From: Krzysztof Kozlowski <krzk@kernel.org>
-Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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 a/A=
-In-Reply-To: <56aqammkwte3tcdzni2unufjp4t4yaqazzdkigrwqsxp3ghcqe@ppe2pjwg3hrl>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 
-On 11/11/2025 11:34, Dmitry Baryshkov wrote:
-> On Tue, Nov 11, 2025 at 10:51:43AM +0530, Pavan Kondeti wrote:
->> On Mon, Nov 10, 2025 at 09:43:53AM +0530, Pavan Kondeti wrote:
->>> On Sat, Nov 08, 2025 at 07:26:46PM +0200, Dmitry Baryshkov wrote:
->>>>> +static void qcom_scm_gunyah_wdt_free(void *data)
->>>>> +{
->>>>> +	struct platform_device *gunyah_wdt_dev = data;
->>>>> +
->>>>> +	platform_device_unregister(gunyah_wdt_dev);
->>>>> +}
->>>>> +
->>>>> +static void qcom_scm_gunyah_wdt_init(struct qcom_scm *scm)
->>>>> +{
->>>>> +	struct platform_device *gunyah_wdt_dev;
->>>>> +	struct device_node *np;
->>>>> +	bool of_wdt_available;
->>>>> +	int i;
->>>>> +	uuid_t gunyah_uuid = UUID_INIT(0xc1d58fcd, 0xa453, 0x5fdb, 0x92, 0x65,
->>>>
->>>> static const?
->>>>
->>>>> +				       0xce, 0x36, 0x67, 0x3d, 0x5f, 0x14);
->>>>> +	static const char * const of_wdt_compatible[] = {
->>>>> +		"qcom,kpss-wdt",
->>>>> +		"arm,sbsa-gwdt",
->>>>> +	};
->>>>> +
->>>>> +	/* Bail out if we are not running under Gunyah */
->>>>> +	if (!arm_smccc_hypervisor_has_uuid(&gunyah_uuid))
->>>>> +		return;
->>>>
->>>> This rquires 'select HAVE_ARM_SMCCC_DISCOVERY'
->>>>
->>>
->>> Probably `depends on HAVE_ARM_SMCCC_DISCOVERY` is correct here.
->>>
->>
->> Dmitry / Bjorn,
->>
->> We are debating on this internally on how to resolve this dependency
->>
->> - QCOM_SCM depends on HAVE_ARM_SMCCC_DISCOVERY which means restricting
->>   QCOM_SCM compilation than what it is today.
->>
->> - Adding #ifdefry around arm_smccc_hypervisor_has_uuid usage in qcom scm driver 
->>
->> - Adding stub for `arm_smccc_hypervisor_has_uuid()` which is not done
->>   for any of the functions defined in drivers/firmware/smccc/smccc.c
->>
->> We are trending towards the first option above. Please let us know if
->> you think otherwise.
-> 
-> The same as before: 'select HAVE_ARM_SMCCC_DISCOVERY'.
+Device tree bindings for Waveshare MIPI-DSI panels
+of various sizes (5.0, 5.5, 7.0, 8.0, and 10.1).
+These panels require proper power sequencing via an external
+regulator and a backlight node for brightness control.
 
-HAVE_ARM_SMCCC_DISCOVERY has a dependency which is not always selected
-(e.g. ARM32), thus selecting it might lead to warnings of unmet
-dependencies. Whichever they choose here, they need to be sure to
-actually compile test it, because existing patch lacks that and reports
-are proving lack of building.
+Signed-off-by: Sudarshan Shetty <tessolveupstream@gmail.com>
+---
+ .../display/panel/waveshare,dsi-panel.yaml    | 84 +++++++++++++++++++
+ ...waveshare,touchscreen-panel-regulator.yaml | 72 ++++++++++++++++
+ 2 files changed, 156 insertions(+)
+ create mode 100644 Documentation/devicetree/bindings/display/panel/waveshare,dsi-panel.yaml
+ create mode 100644 Documentation/devicetree/bindings/regulator/waveshare,touchscreen-panel-regulator.yaml
 
-Best regards,
-Krzysztof
+diff --git a/Documentation/devicetree/bindings/display/panel/waveshare,dsi-panel.yaml b/Documentation/devicetree/bindings/display/panel/waveshare,dsi-panel.yaml
+new file mode 100644
+index 000000000000..a42ce065124f
+--- /dev/null
++++ b/Documentation/devicetree/bindings/display/panel/waveshare,dsi-panel.yaml
+@@ -0,0 +1,84 @@
++# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
++%YAML 1.2
++---
++$id: http://devicetree.org/schemas/display/panel/waveshare,dsi-panel.yaml#
++$schema: http://devicetree.org/meta-schemas/core.yaml#
++
++title: Waveshare 10.1" DSI Touch Display Panel
++
++maintainers:
++  - Sudarshan Shetty <tessolveupstream@gmail.com>
++
++allOf:
++  - $ref: panel-common.yaml#
++
++properties:
++  compatible:
++    enum:
++      - waveshare,12.3-dsi-touch-a,4lane
++      - waveshare,10.1-dsi-touch-a
++      - waveshare,10.1-dsi-touch-a-4lane
++      - waveshare,10.1-dsi-touch-b
++      - waveshare,10.1-dsi-touch-b,4lane
++      - waveshare,9.0-dsi-touch-b
++      - waveshare,9.0-dsi-touch-b,4lane
++      - waveshare,8.8-dsi-touch-a
++      - waveshare,8.0-dsi-touch-a
++      - waveshare,8.0-dsi-touch-a-4lane
++      - waveshare,7.0-dsi-touch-a
++      - waveshare,7.0-dsi-touch-b
++      - waveshare,5.5-dsi-touch-a
++      - waveshare,5.0-dsi-touch-a
++      - waveshare,4.0-dsi-touch-c
++      - waveshare,3.4-dsi-touch-c
++
++  reg:
++    description: DSI virtual channel
++    maxItems: 1
++
++  vdd-supply:
++    description: Power supply regulator for the panel
++
++  reset-gpios:
++    maxItems: 1
++    description: GPIO to control panel reset
++
++  enable-gpios:
++    maxItems: 1
++    description: GPIO to control panel power enable
++
++required:
++  - compatible
++  - reg
++  - vdd-supply
++  - reset-gpios
++  - enable-gpios
++
++unevaluatedProperties: false
++
++examples:
++  - |
++    #include <dt-bindings/gpio/gpio.h>
++
++    dsi@ae94000 {
++        #address-cells = <1>;
++        #size-cells = <0>;
++
++        panel@1 {
++            compatible = "waveshare,10.1-dsi-touch-a";
++            reg = <1>;
++            vdd-supply = <&vreg_l11a>;
++            reset-gpios = <&display_mcu 1 GPIO_ACTIVE_HIGH>;
++            enable-gpios = <&display_mcu 2 GPIO_ACTIVE_HIGH>;
++
++            port {
++                panel_in: endpoint {
++                    remote-endpoint = <&mdss_dsi0_out>;
++                };
++            };
++        };
++    };
++
++    mdss_dsi0_out: endpoint {
++        remote-endpoint = <&panel_in>;
++    };
+diff --git a/Documentation/devicetree/bindings/regulator/waveshare,touchscreen-panel-regulator.yaml b/Documentation/devicetree/bindings/regulator/waveshare,touchscreen-panel-regulator.yaml
+new file mode 100644
+index 000000000000..be81be5d2d74
+--- /dev/null
++++ b/Documentation/devicetree/bindings/regulator/waveshare,touchscreen-panel-regulator.yaml
+@@ -0,0 +1,72 @@
++# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
++%YAML 1.2
++---
++$id: http://devicetree.org/schemas/regulator/waveshare,touchscreen-panel-regulator.yaml#
++$schema: http://devicetree.org/meta-schemas/core.yaml#
++
++title: Waveshare Touchscreen Panel Regulator
++
++maintainers:
++  - Sudarshan Shetty <tessolveupstream@gmail.com>
++
++description: |
++  Regulator driver for Waveshare touchscreen display units.
++  This regulator enables and disables panel power and provides
++  backlight control over I2C.
++
++properties:
++  compatible:
++    const: waveshare,touchscreen-panel-regulator
++
++  reg:
++    maxItems: 1
++    description: I2C address of the regulator device
++
++  vin-supply:
++    description: Input supply regulator for the panel
++
++  enable-gpios:
++    maxItems: 1
++    description: GPIO to enable/disable regulator
++
++required:
++  - compatible
++  - reg
++  - vin-supply
++
++additionalProperties: false
++
++examples:
++  - |
++    /dts-v1/;
++    /plugin/;
++
++    / {
++        #address-cells = <1>;
++        #size-cells = <1>;
++
++        gpio: gpio-controller {
++            compatible = "test,gpio";
++            #gpio-cells = <2>;
++        };
++
++        vdd_3v3: regulator {
++            compatible = "regulator-fixed";
++            regulator-name = "vdd_3v3";
++            regulator-min-microvolt = <3300000>;
++            regulator-max-microvolt = <3300000>;
++        };
++
++        i2c@980000 {
++            #address-cells = <1>;
++            #size-cells = <0>;
++            compatible = "test,i2c";
++
++            panel-regulator@3c {
++                compatible = "waveshare,touchscreen-panel-regulator";
++                reg = <0x3c>;
++                vin-supply = <&vdd_3v3>;
++                enable-gpios = <&gpio 2 0>; /* active high */
++            };
++        };
++    };
+-- 
+2.34.1
+
 
