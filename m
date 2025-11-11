@@ -1,228 +1,289 @@
-Return-Path: <linux-arm-msm+bounces-81175-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-81176-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0C020C4B894
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Nov 2025 06:23:00 +0100 (CET)
+Received: from ams.mirrors.kernel.org (ams.mirrors.kernel.org [IPv6:2a01:60a::1994:3:14])
+	by mail.lfdr.de (Postfix) with ESMTPS id E8184C4B922
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Nov 2025 06:51:19 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 217803B0359
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Nov 2025 05:22:44 +0000 (UTC)
+	by ams.mirrors.kernel.org (Postfix) with ESMTPS id 0A1C934E0A4
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Nov 2025 05:51:19 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7E77B280329;
-	Tue, 11 Nov 2025 05:22:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 60A6426E6F7;
+	Tue, 11 Nov 2025 05:51:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="MosCMOCW";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="L2DgMTqq"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="gJAMKUAP"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8654281369
-	for <linux-arm-msm@vger.kernel.org>; Tue, 11 Nov 2025 05:22:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55F8825A2BB;
+	Tue, 11 Nov 2025 05:51:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762838559; cv=none; b=uiqsN9RJySTPZg/0wbtwTvEqrvbn+cKRfgoxI41eZelngqUfFr8t5TIMq+HiKTdYUbwQp1bDMqoKse9/+Bp9s/hZHjfct147TEmWD0B/Og/pkhMF78x4rggmpmLkyN2Cf0QkTnwUu9mVGjHIbiSE1EF5boQoPuOk2f5ulHO6BoI=
+	t=1762840276; cv=none; b=LeCIEqGsd//Z2ldifiuVNfTMeAz75ncBraSxs/QA5he6zwmXcraX99S2knTaAFvF03qZSZDYlLbz+GNfUBuj7jzAeSkE6T86NGm5NH4+aJE8lMECOWX0gve4hRqj/ed+YDAhn8tQISV2KnNm/YGC3zJhYNMHbnXuHHnJx/1gnKw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762838559; c=relaxed/simple;
-	bh=9OF1VOFFihuJuwmCepEzHh2ATgtLynGxJRG5+laPChQ=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=oGXaBCECpaSlv8L2KO0a+MxNCs5npsg6T4xsdQEpok6rfLl615JxhjFeMtDGtnYEfzGbZEN0/NlJ4doeyzQcOcMMw2XL/Z2d/JloeGeiIYlSX8z1zeTwyiGsHQrmcBlU7U9jHbkvPZGAxTegvuGjSnV8tt0CQb6RUyVV5Pjk7AE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=MosCMOCW; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=L2DgMTqq; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 5AB2Z31c3984882
-	for <linux-arm-msm@vger.kernel.org>; Tue, 11 Nov 2025 05:22:36 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	s=arc-20240116; t=1762840276; c=relaxed/simple;
+	bh=/SLqfswm1aBdyVMt43HObYBoVG/w5wutjuTmSL5va/Q=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=rXyAqCKYT2EZQQM/h1IlwiK5iv5e3a074Rtv0Uk4gETDZBAkF6hMc0sMJRI6Fq6kLYLR6QfGFBfWuoH+Xi2YtJi9qxTNAI1R88cfycReSEqqV9EZ4gydOAyDltYkUYK4xxT5IkoHbCVH/G1/TiP6H0e9yuH8wP4fAzlvWZg+uSE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=gJAMKUAP; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 5AB46BMV4167218;
+	Tue, 11 Nov 2025 05:51:08 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	7Te5+jGKVmczWAFRX4897loQZ9s+94IKGhi21It1SFQ=; b=MosCMOCW3NChtPvs
-	1bMlSDAStRvBjBJXjFGSIIe7xvCam9wnhaxQzB66lwiNjiOQ/qnwNa72xMafmilu
-	PlW8P2WijEWhS+bhRRQAXYqJLiEkCvJ596Xzxl7HtrFjvcmw+PTma5FAp1Ajap3S
-	zSR/bK8hYfviy4wkcYa2aMxyZzhPXjbuRNawLs/NE07hoRJmFMmUUbwsevY3uyI2
-	YbohSNdFNIDmOFZ9+jTEEsg04GL3AF5R29fevs0MOKf8/aU64bqQwYd7xkC7gHp3
-	TVtvbwICqiGH13o6ULl4Jr3PVpkNBc1KxT1P+VTTrC7BHTPWphRa/nyb9pBsstbH
-	pb/Wqw==
-Received: from mail-pg1-f197.google.com (mail-pg1-f197.google.com [209.85.215.197])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4abjxqj1ea-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Tue, 11 Nov 2025 05:22:36 +0000 (GMT)
-Received: by mail-pg1-f197.google.com with SMTP id 41be03b00d2f7-ba795c4d4a2so2756850a12.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 10 Nov 2025 21:22:36 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1762838556; x=1763443356; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=7Te5+jGKVmczWAFRX4897loQZ9s+94IKGhi21It1SFQ=;
-        b=L2DgMTqqT2kHCVAgyb0L1d2M5AhD+8YwPLnlM3JJuLvnoQT52aDkTGLek27Fk+JsgD
-         GzQ6+tMMzpuL0JH/H7WfN5t30E8xUoA1VAzSTLcxEw1bpcZVTt6BZhtLM6PmNWC/Jd98
-         Rcug8a9m/InRbm5nO2yrljyXpMndqB/rojuoyKE292y8hcW4N0zd7gqoiQ/99+REL6Dg
-         Es883jIpXTGBBAiu8xGZH9IB1U0jcAf5i9yKDStuO57EKDYuLS0hGah8EpvuutqCZhPp
-         LZOi/txN8ca/FYp4mYf3czoqx44XLmcS/M7kIlQQlN2Hp/jmPvWCAE1GBuOqRI7oczq1
-         zASQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1762838556; x=1763443356;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=7Te5+jGKVmczWAFRX4897loQZ9s+94IKGhi21It1SFQ=;
-        b=QTUZ2PMcpMf5w1un45T4Irgl+V4rxJNQV8HEInqkbLk9xm0mLY/4xyADne89SHVijo
-         SiSwQzqigbVfzprkLpFrTlpQUT6jzHmrtuDCECRNK7iVcP4pB9EsqPesSIYyJa0whi5O
-         XTx5RilHpkGcP3uFyZdnF6koDu5dZFcSKi4R13X3LZ/8FZqEm49jm5S4Q3Ngkw+xLM35
-         Fqpw1nEvC/RQchvryb0VtPdelGdI3w+0PzKz3BCXcGl2rPQiuXqTYJXQkT26AJSLPAUj
-         ruax9RZMHY/TBdVNtbjf1MutRh8C2TMPMNbfrCgQ2kN+MIkT+ZGIvl+vBehFUtQ6OBdM
-         xSWw==
-X-Forwarded-Encrypted: i=1; AJvYcCXtKRFRP/3aHpVyYll3HUyNy2OT2q1AEnJ/vviJkb+rBrdy84IPismC/Bx4G1iuYI0f1Voz1nYZ7jMe6feq@vger.kernel.org
-X-Gm-Message-State: AOJu0YxdaKQxIoG6K9XZQh6KZDRF+KhUtPlTTU6kA5We72ii+73xQr7G
-	orwUh55L7LZwWq4A8UpFPj00vkWt454n98E94F1N4OaYfKF85s+1eZrK/JidUjQxXMAWjHArdq6
-	qAyoNiOqipMs6iS0TOaTe/yuMqpOf2Wf9i+hGL7shbLLKCLaPu50kmvRA1sLEqD02nSdh
-X-Gm-Gg: ASbGncs/S6x0jaV/bWFJTcrweZ9krGUJWTBq5DW+lkJ9boFQVhGaoGeK5BexiAnMfxi
-	NR4N1NgEKxWuu1rgb0oTrmQXmIMU5IK+C0Mc754DeohgGjhzuD0gIoPIvfik39Pq1MkUXdvB/cj
-	0cfTKZAFXwMO3zXHa7XMmn34/OIYNvl/+LKYn9R4tM8WBhvRdUeZBX6LMGLQyM3Dh8HBJYywAM5
-	E45I3V63Vt18gnZMj/FTIO4v7fTJ8slrizywhG6lOqSrY3qv9NpIlO9u2mjfbJ4KG+JUmVNpXHT
-	f+SUHExZ6qYZddrxwrIzoqaOmDff0TAC5PNDNJKMLkWZLOIb18GQIAOC0FgU9uerLh0ygbpn5YY
-	1fQm94noDRea1m5+lt3ew/hUhnPXCtfc=
-X-Received: by 2002:a17:903:244a:b0:246:7a43:3f66 with SMTP id d9443c01a7336-297e561ac3dmr145696035ad.7.1762838555595;
-        Mon, 10 Nov 2025 21:22:35 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IG44dhpC7FpqpgcK7ljK7RCCQ2W7yUdgoVHyPBRAs0CPdhZrrNwS6XdCmzCnymqvg8hfGr33Q==
-X-Received: by 2002:a17:903:244a:b0:246:7a43:3f66 with SMTP id d9443c01a7336-297e561ac3dmr145695555ad.7.1762838554961;
-        Mon, 10 Nov 2025 21:22:34 -0800 (PST)
-Received: from [10.218.32.171] ([202.46.22.19])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-29650c5f011sm165660855ad.25.2025.11.10.21.22.27
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 10 Nov 2025 21:22:34 -0800 (PST)
-Message-ID: <5cd78217-8da9-4290-b098-8210280e65d8@oss.qualcomm.com>
-Date: Tue, 11 Nov 2025 10:52:25 +0530
+	Q/zBP6T7BvWjd8aqlVDbZzBTQ4nfBaqYzBBH1DcIAKo=; b=gJAMKUAPEEDN2cJ2
+	IqwnnBafP9aylzBIeHvOCqFkL9AmPYfosrJqekFiBywoiOTgHtxY7Bn21ZnNVUbP
+	IWINvRtLCARSmnr/co330PgpHkAw3XEaoX10CUUIFWgAkFm/MBK5W3uArCIFg44x
+	ucZ7su5y9lw/IMK7NAJcd7FoFgK7NDYKWrWTmlNlkSY/M/n1NUSLP85XfGvOtrDI
+	Q0Nal7jh4zsBPVaqUaJXUeGwI17fq994FNh3YBCvLPb3yWOSsyii+1PDdirR5fd7
+	VjUoza0tSUyFQKrf2S96X3MmBjSXrIEhndsKr1LPzWUHDgO84TkCZc1Cb1F0msZm
+	IdHKUQ==
+Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4abm4a1sw5-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 11 Nov 2025 05:51:08 +0000 (GMT)
+Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
+	by NASANPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 5AB5p747001273
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 11 Nov 2025 05:51:07 GMT
+Received: from [10.151.36.184] (10.80.80.8) by nasanex01a.na.qualcomm.com
+ (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1748.24; Mon, 10 Nov
+ 2025 21:50:04 -0800
+Message-ID: <392ba04d-66c5-96c3-628d-8c9edf49333b@quicinc.com>
+Date: Tue, 11 Nov 2025 11:19:51 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1 2/4] pinctrl: qcom: msm: Fix potential deadlock in
- pinmux configuration
-To: Bjorn Andersson <andersson@kernel.org>
-Cc: Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley
- <conor+dt@kernel.org>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Jiri Slaby <jirislaby@kernel.org>, Dmitry Baryshkov <lumag@kernel.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-gpio@vger.kernel.org,
-        linux-serial@vger.kernel.org, alexey.klimov@linaro.org,
-        krzk@kernel.org, bryan.odonoghue@linaro.org,
-        jorge.ramirez@oss.qualcomm.com, dmitry.baryshkov@oss.qualcomm.com,
-        Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, psodagud@quicinc.com,
-        djaggi@quicinc.com, quic_msavaliy@quicinc.com,
-        quic_vtanuku@quicinc.com, quic_arandive@quicinc.com,
-        quic_shazhuss@quicinc.com, quic_cchiluve@quicinc.com,
-        Prasad Sodagudi <prasad.sodagudi@oss.qualcomm.com>
-References: <20251110101043.2108414-1-praveen.talari@oss.qualcomm.com>
- <20251110101043.2108414-3-praveen.talari@oss.qualcomm.com>
- <l2jnveusblgo5cfou3mx3usn7qgenj65wfyrnycmaqamkvhkee@gy745hkc3poc>
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.15.1
+Subject: Re: [PATCH v3] mmc: sdhci-msm: Enable ICE support for non-cmdq eMMC
+ devices
+To: Adrian Hunter <adrian.hunter@intel.com>, <ulf.hansson@linaro.org>,
+        <linux-mmc@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, Eric Biggers <ebiggers@kernel.org>
+CC: <quic_varada@quicinc.com>
+References: <20251104063943.3424529-1-quic_mdalam@quicinc.com>
+ <ae37c98b-927e-44e4-b83c-71753d61e2cc@intel.com>
 Content-Language: en-US
-From: Praveen Talari <praveen.talari@oss.qualcomm.com>
-In-Reply-To: <l2jnveusblgo5cfou3mx3usn7qgenj65wfyrnycmaqamkvhkee@gy745hkc3poc>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMTExMDAzOSBTYWx0ZWRfX/rugbTXkk08f
- fiUzRFbskyT8VHlD5Dr5ExppPNmkMMti2TrEFrU4gj1Tf/adPAFiJom7V9ZCKqdippSXCroaSVs
- ancMM9CTOgqN1E+n1vRTJFPDF/0WZCo7Qmm770qI5XjLoBZba3fRocKcGaHrvPhXckddpkYn4OD
- Dbo6M9AqTlzhIvNH9jtavVWuNScHflbdRQI85hOlVj8mgzlZBR0Nk1Sx5wNPLYdeo33pC1lRtxX
- IgZcB+apmF6P/bPCNCzY/+s/LtD9Z4vBymO2npjbT1J4WwZB7Nh1DrEiWhTNewg32N0PGVmVD18
- SFOpBlFo+Z4akieeXoGGR8rQY76QoraPOwcaL0xv5Vefbl95HItQU1cg6A5EZItt+zkJ3tje6WI
- lP3wli6E3dtPov1uxwEmzGo1JP7aUQ==
-X-Authority-Analysis: v=2.4 cv=CsKys34D c=1 sm=1 tr=0 ts=6912c81c cx=c_pps
- a=rz3CxIlbcmazkYymdCej/Q==:117 a=fChuTYTh2wq5r3m49p7fHw==:17
- a=IkcTkHD0fZMA:10 a=6UeiqGixMTsA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8
- a=IV0jPyGM1QMGTU76z_QA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=bFCP_H2QrGi7Okbo017w:22
-X-Proofpoint-ORIG-GUID: tE4yEVF8olF1JxbhLNSV1dA-_I5iE4J-
-X-Proofpoint-GUID: tE4yEVF8olF1JxbhLNSV1dA-_I5iE4J-
+From: Md Sadre Alam <quic_mdalam@quicinc.com>
+In-Reply-To: <ae37c98b-927e-44e4-b83c-71753d61e2cc@intel.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01a.na.qualcomm.com (10.52.223.231)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: EQT8Iv1VyiPAk4vbWTE-t7LO_WtpKUSj
+X-Authority-Analysis: v=2.4 cv=G6kR0tk5 c=1 sm=1 tr=0 ts=6912cecc cx=c_pps
+ a=JYp8KDb2vCoCEuGobkYCKw==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17
+ a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=6UeiqGixMTsA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=COk6AnOGAAAA:8 a=QyXUC8HyAAAA:8
+ a=8BPlPp1vl7OZ_UTcvjIA:9 a=QEXdDO2ut3YA:10 a=TjNXssC_j7lpFel5tvFf:22
+ a=cPQSjfK2_nFv0Q5t_7PE:22 a=HhbK4dLum7pmb74im6QT:22 a=pHzHmUro8NiASowvMSCR:22
+ a=Ew2E2A-JSTLzCXPT_086:22
+X-Proofpoint-ORIG-GUID: EQT8Iv1VyiPAk4vbWTE-t7LO_WtpKUSj
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMTExMDA0MyBTYWx0ZWRfX7a5FbUEglhEp
+ ShyDEpce/Bv1nYnRcjN5XKn5UIqE5ovhQYHva7qbGEtWan068k/BZtJm/r05J1Bs19R1yyZL5k6
+ h0Tgo/oOHj8DpSwhmuj9A8LQwROffSvmmykkEsXi09p6BWCF5/BZ7zt9fmz+5xDE5ju5NJ8Wlju
+ 7Atggy10d6MhKv5k5JGGWf4zoPEedr6Rrva6G87dt0rpOS+hJBPnX4td1fNRppAakgf7n1Alnbm
+ Km8n43dAajgr/KF48Ww8GS1ZwQ356IYdcSsSuhS/sEqqpumPbfRWHju7cVJHY5iJpcnOeASYJSH
+ kjUdaw75LAJR0rZaFDnSu/Ay3USv09IXbyFqIbotZbbfRUhBIquzpkLgJhjr8uT05rZIn0tfMgD
+ UGhYtH+9B++eVkD1VffOuI1CLmPm0A==
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
  definitions=2025-11-11_01,2025-11-10_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 impostorscore=0 bulkscore=0 clxscore=1015 phishscore=0
- adultscore=0 malwarescore=0 priorityscore=1501 lowpriorityscore=0 spamscore=0
+ priorityscore=1501 phishscore=0 spamscore=0 bulkscore=0 suspectscore=0
+ lowpriorityscore=0 clxscore=1015 malwarescore=0 impostorscore=0 adultscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2510240001 definitions=main-2511110039
+ reason=mlx scancount=1 engine=8.22.0-2510240001 definitions=main-2511110043
 
-Hi Bjorn,
+Hi,
 
-Thank you for review.
-
-On 11/11/2025 9:38 AM, Bjorn Andersson wrote:
-> On Mon, Nov 10, 2025 at 03:40:41PM +0530, Praveen Talari wrote:
->> Replace disable_irq() with disable_irq_nosync() in msm_pinmux_set_mux()
->> to prevent potential deadlock when wakeup IRQ is triggered on the same
-> 
-> "potential"? In what case will calling disable_irq() from the irq
-> handler of that irq not deadlock?
-> 
->> GPIO being reconfigured.
+On 11/10/2025 2:16 PM, Adrian Hunter wrote:
+> On 04/11/2025 08:39, Md Sadre Alam wrote:
+>> Enable Inline Crypto Engine (ICE) support for eMMC devices that operate
+>> without Command Queue Engine (CQE).This allows hardware-accelerated
+>> encryption and decryption for standard (non-CMDQ) requests.
 >>
->> The issue occurs when a wakeup IRQ is triggered on a GPIO and the IRQ
->> handler attempts to reconfigure the same GPIO's pinmux. In this scenario,
->> msm_pinmux_set_mux() calls disable_irq() which waits for the currently
->> running IRQ handler to complete, creating a circular dependency that
->> results in deadlock.
+>> This patch:
+>> - Adds ICE register definitions for non-CMDQ crypto configuration
+>> - Implements a per-request crypto setup via sdhci_msm_ice_cfg()
+>> - Hooks into the request path via mmc_host_ops.request
+>> - Initializes ICE hardware during CQE setup for compatible platforms
 >>
->> Using disable_irq_nosync() avoids waiting for the IRQ handler to
->> complete, preventing the deadlock condition while still properly
->> disabling the interrupt during pinmux reconfiguration.
+>> With this, non-CMDQ eMMC devices can benefit from inline encryption,
+>> improving performance for encrypted I/O while maintaining compatibility
+>> with existing CQE crypto support.
 >>
->> Suggested-by: Prasad Sodagudi <prasad.sodagudi@oss.qualcomm.com>
+>> Signed-off-by: Md Sadre Alam <quic_mdalam@quicinc.com>
+>> Acked-by: Adrian Hunter <adrian.hunter@intel.com>
+>> ---
+>>
+>> Change in [v3]
+>>
+>> * Refactored logic to use separate code paths for crypto_ctx != NULL and
+>>    crypto_ctx == NULL to improve readability.
+>>
+>> * Renamed bypass to crypto_enable to align with bitfield semantics.
+>>
+>> * Removed slot variable
+>>
+>> * Added ICE initialization sequence for non-CMDQ eMMC devices before
+>>    __sdhci_add_host()
+>>
+>> Change in [v2]
+>>
+>> * Moved NONCQ_CRYPTO_PARM and NONCQ_CRYPTO_DUN register definitions into
+>>    sdhci-msm.c
+>>
+>> * Introduced use of GENMASK() and FIELD_PREP() macros for cleaner and more
+>>    maintainable bitfield handling in ICE configuration.
+>>
+>> * Removed redundant if (!mrq || !cq_host) check from sdhci_msm_ice_cfg()
+>>    as both are guaranteed to be valid in the current call path.
+>>
+>> * Added assignment of host->mmc_host_ops.request = sdhci_msm_request; to
+>>    integrate ICE configuration into the standard request path for non-CMDQ
+>>    eMMC devices.
+>>
+>> * Removed sdhci_crypto_cfg() from sdhci.c and its invocation in sdhci_request()
+>>
+>> Change in [v1]
+>>
+>> * Added initial support for Inline Crypto Engine (ICE) on non-CMDQ eMMC
+>>    devices.
+>>
+>>   drivers/mmc/host/sdhci-msm.c | 71 ++++++++++++++++++++++++++++++++++++
+>>   1 file changed, 71 insertions(+)
+>>
+>> diff --git a/drivers/mmc/host/sdhci-msm.c b/drivers/mmc/host/sdhci-msm.c
+>> index 4e5edbf2fc9b..6ce205238720 100644
+>> --- a/drivers/mmc/host/sdhci-msm.c
+>> +++ b/drivers/mmc/host/sdhci-msm.c
+>> @@ -157,6 +157,18 @@
+>>   #define CQHCI_VENDOR_CFG1	0xA00
+>>   #define CQHCI_VENDOR_DIS_RST_ON_CQ_EN	(0x3 << 13)
+>>   
+>> +/* non command queue crypto enable register*/
+>> +#define NONCQ_CRYPTO_PARM		0x70
+>> +#define NONCQ_CRYPTO_DUN		0x74
+>> +
+>> +#define DISABLE_CRYPTO			BIT(15)
+>> +#define CRYPTO_GENERAL_ENABLE		BIT(1)
+>> +#define HC_VENDOR_SPECIFIC_FUNC4	0x260
+>> +#define ICE_HCI_SUPPORT			BIT(28)
+>> +
+>> +#define ICE_HCI_PARAM_CCI	GENMASK(7, 0)
+>> +#define ICE_HCI_PARAM_CE	GENMASK(8, 8)
+>> +
+>>   struct sdhci_msm_offset {
+>>   	u32 core_hc_mode;
+>>   	u32 core_mci_data_cnt;
+>> @@ -1885,6 +1897,48 @@ static void sdhci_msm_set_clock(struct sdhci_host *host, unsigned int clock)
+>>   
+>>   #ifdef CONFIG_MMC_CRYPTO
+>>   
+>> +static int sdhci_msm_ice_cfg(struct sdhci_host *host, struct mmc_request *mrq)
+>> +{
+>> +	struct sdhci_pltfm_host *pltfm_host = sdhci_priv(host);
+>> +	struct sdhci_msm_host *msm_host = sdhci_pltfm_priv(pltfm_host);
+>> +	struct mmc_host *mmc = msm_host->mmc;
+>> +	struct cqhci_host *cq_host = mmc->cqe_private;
+>> +	unsigned int crypto_params = 0;
+>> +	int key_index;
+>> +	bool crypto_enable;
+>> +	u64 dun = 0;
+>> +
+>> +	if (mrq->crypto_ctx) {
+>> +		crypto_enable = true;
+>> +		dun = mrq->crypto_ctx->bc_dun[0];
+>> +		key_index = mrq->crypto_key_slot;
+>> +		crypto_params = FIELD_PREP(ICE_HCI_PARAM_CE, crypto_enable) |
+>> +				FIELD_PREP(ICE_HCI_PARAM_CCI, key_index);
+>> +
+>> +		cqhci_writel(cq_host, crypto_params, NONCQ_CRYPTO_PARM);
+>> +		cqhci_writel(cq_host, lower_32_bits(dun), NONCQ_CRYPTO_DUN);
+>> +	} else {
+>> +		crypto_enable = false;
+>> +		key_index = 0;
+>> +		cqhci_writel(cq_host, crypto_params, NONCQ_CRYPTO_PARM);
+>> +	}
+>> +
+>> +	/* Ensure crypto configuration is written before proceeding */
+>> +	wmb();
+>> +
+>> +	return 0;
+>> +}
+>> +
+>> +static void sdhci_msm_request(struct mmc_host *mmc, struct mmc_request *mrq)
+>> +{
+>> +	struct sdhci_host *host = mmc_priv(mmc);
+>> +
+>> +	if (mmc->caps2 & MMC_CAP2_CRYPTO)
+>> +		sdhci_msm_ice_cfg(host, mrq);
+>> +
+>> +	sdhci_request(mmc, mrq);
+>> +}
+>> +
+>>   static const struct blk_crypto_ll_ops sdhci_msm_crypto_ops; /* forward decl */
+>>   
+>>   static int sdhci_msm_ice_init(struct sdhci_msm_host *msm_host,
+>> @@ -2131,6 +2185,8 @@ static int sdhci_msm_cqe_add_host(struct sdhci_host *host,
+>>   	struct cqhci_host *cq_host;
+>>   	bool dma64;
+>>   	u32 cqcfg;
+>> +	u32 config;
+>> +	u32 ice_cap;
+>>   	int ret;
+>>   
+>>   	/*
+>> @@ -2181,6 +2237,18 @@ static int sdhci_msm_cqe_add_host(struct sdhci_host *host,
+>>   	if (host->flags & SDHCI_USE_64_BIT_DMA)
+>>   		host->desc_sz = 12;
+>>   
+>> +	/* Initialize ICE for non-CMDQ eMMC devices */
+>> +	config = sdhci_readl(host, HC_VENDOR_SPECIFIC_FUNC4);
+>> +	config &= ~DISABLE_CRYPTO;
+>> +	sdhci_writel(host, config, HC_VENDOR_SPECIFIC_FUNC4);
+>> +	ice_cap = cqhci_readl(cq_host, CQHCI_CAP);
+>> +	if (ice_cap & ICE_HCI_SUPPORT) {
+>> +		config = cqhci_readl(cq_host, CQHCI_CFG);
+>> +		config |= CRYPTO_GENERAL_ENABLE;
+>> +		cqhci_writel(cq_host, config, CQHCI_CFG);
+>> +	}
+>> +	sdhci_msm_ice_enable(msm_host);
 > 
-> That's weird, I debugged your deadlock for you and told you to make this
-> very change in:
+> Perhaps this could all be done lazily in sdhci_msm_ice_cfg() ?
+> e.g.
 > 
-> https://lore.kernel.org/all/7sxsfyu2kqbycyfftwfhrncwk3dfnubmzhyi2rqi3jtvi5qsnh@bya3cii45zhn/
-> 
-> So I guess Prasad told you how to fix this issue before I invested the
-> time helping you?
+> 	if (mrq->crypto_ctx) {
+> 		if (!msm_host->ice_init_done) {
+> 			sdhci_msm_non_cqe_ice_init(host, ...);
+> 			msm_host->ice_init_done = true;
+> 		}
+> 		...
+>
+Thanks for the suggestion! Lazily initializing ICE in 
+sdhci_msm_ice_cfg() based on mrq->crypto_ctx does seem like
+a clean and efficient approach. It would avoid unnecessary
+setup when crypto isn't involved and keep the init path tightly
+scoped.
 
-Yes, that’s correct. Prasad had suggested it earlier.
+Let me check and add in next revision.
 
 Thanks,
-Praveen Talari
+Alam.
 
-> 
-> 
-> Change looks good, and description captures the problem.
-> 
-> Reviewed-by: Bjorn Andersson <andersson@kernel.org>
-> 
-> Regards,
-> Bjorn
-> 
->> Signed-off-by: Praveen Talari <praveen.talari@oss.qualcomm.com>
->> ---
->>   drivers/pinctrl/qcom/pinctrl-msm.c | 2 +-
->>   1 file changed, 1 insertion(+), 1 deletion(-)
->>
->> diff --git a/drivers/pinctrl/qcom/pinctrl-msm.c b/drivers/pinctrl/qcom/pinctrl-msm.c
->> index 67525d542c5b..e99871b90ab9 100644
->> --- a/drivers/pinctrl/qcom/pinctrl-msm.c
->> +++ b/drivers/pinctrl/qcom/pinctrl-msm.c
->> @@ -189,7 +189,7 @@ static int msm_pinmux_set_mux(struct pinctrl_dev *pctldev,
->>   	 */
->>   	if (d && i != gpio_func &&
->>   	    !test_and_set_bit(d->hwirq, pctrl->disabled_for_mux))
->> -		disable_irq(irq);
->> +		disable_irq_nosync(irq);
->>   
->>   	raw_spin_lock_irqsave(&pctrl->lock, flags);
->>   
->> -- 
->> 2.34.1
->>
+
 
