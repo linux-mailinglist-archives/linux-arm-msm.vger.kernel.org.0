@@ -1,210 +1,185 @@
-Return-Path: <linux-arm-msm+bounces-81279-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-81281-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 63F81C4E343
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Nov 2025 14:41:12 +0100 (CET)
+Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [142.0.200.124])
+	by mail.lfdr.de (Postfix) with ESMTPS id 28A13C4E3D3
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Nov 2025 14:50:03 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id A29A01897682
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Nov 2025 13:41:08 +0000 (UTC)
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 082934E0284
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Nov 2025 13:50:02 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BB45A34250B;
-	Tue, 11 Nov 2025 13:40:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="kzk210YO";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="Y3oGcWS2"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 860FB33123A;
+	Tue, 11 Nov 2025 13:50:00 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D434D340281
-	for <linux-arm-msm@vger.kernel.org>; Tue, 11 Nov 2025 13:40:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5869D1EB5CE;
+	Tue, 11 Nov 2025 13:50:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762868409; cv=none; b=mYTXzsK9rrFF5hOY3K70tvNc+XDqDzhGPVkzBJ98yRo0BKyv6BgwWNIBmj/jEas9xRydVgnrw6T/hnD1Scqr/pU+Ei+WjWaW9CU04YNTggc8iw61Jeo4VP7dsihqU/tAoxPCG6BeQUIXe6Xt+fQmjsmuJ/yWN50Mks8fewdk1Sw=
+	t=1762869000; cv=none; b=QBeNeLiSYez+828ssQ6qJmxxzDPcJYVuobQ0ofpTX0u4QIlVIljj68cqP6dmdJEfBtzAjavC6oDbYep5Z5Gg70TQRE5MpLWDlWvFJizDboBCXE5JVcMm8qJxH1EDkjAhMUf+pGbmCwB+DbPnR7/BN6ohvXA1SmTGp9jKWu2rm8s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762868409; c=relaxed/simple;
-	bh=s2AjnkkPP2KRJHp+NjW1PV3jCSHP+i1I/AkGCZAB5+o=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=gSp+Z19fCni0Xc0wSjcP3ENxjTblyt6M0yvgYol9+8EL0e7qldXfQ2eGyJF0F5zTqfUQVHPNI/mWUil6Ywos4djXLjpdQHX9N4XPsnaeGZR7pJVc0yxISQlZlmKW89HdMRIhGIfBRwdEUfg+4loULOsW0nLRdAEAEmmVEjlL9W0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=kzk210YO; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=Y3oGcWS2; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 5ABBG86M2425254
-	for <linux-arm-msm@vger.kernel.org>; Tue, 11 Nov 2025 13:40:05 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to; s=qcppdkim1; bh=m/9OP2fjJmx3ZLFyrTIOYLQZ
-	UJpxWFVVOvLJMaZcRx4=; b=kzk210YOKcVVi9iPIY1l2uifnvu4ZI3+R485EIuL
-	bJgyV/L/R7oK6k+Y02rhWa0tdG6EPQ6ePFLUXpmasZ4137y2dLBzqGaFZsxPVshG
-	Q4LKtjVSuoRKx0UJNU8mjO3jRZP++LfB7TKMf4vxnnW+7gscLWpiK4oNd2BwPzkm
-	LMr3CcOOffrLtco5jz66kDU9lVO/yYjz3SSxYDp+WKHoL115xfkHWotVWcwimMNc
-	d3pogRbdiP9N3l910mIqdZF3sb4StNESK+zvBkqOQQnoySGBc668rwl93qg4/fuH
-	JdfGbAuhNHd1Mj4+ESoPlT+QYg6UcxcqyzXgxNAHd17p8A==
-Received: from mail-pj1-f71.google.com (mail-pj1-f71.google.com [209.85.216.71])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4ac2350rva-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Tue, 11 Nov 2025 13:40:05 +0000 (GMT)
-Received: by mail-pj1-f71.google.com with SMTP id 98e67ed59e1d1-3438b1220bcso3065964a91.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 11 Nov 2025 05:40:05 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1762868404; x=1763473204; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=m/9OP2fjJmx3ZLFyrTIOYLQZUJpxWFVVOvLJMaZcRx4=;
-        b=Y3oGcWS2ifHMBskd3Ad8EKA1+gJtVyuE5EXDuJ4eizV/gR8SxgJrP10pCUNGCjiGQi
-         hB3Oa6DA+zahjp3KX/SXvAvlz5Mj6jC5UYNGgPf+stvMqPqUkUkT0v9CIvu+WcmJV2BK
-         p1lb4BcPmK+qEiU9RovYllY0Tp+L9Ut8e8vWcbUzKWxLPy272D6emcXQO3Ob0BKFWYYU
-         CY9ziZrVSfi8X97ZSk+zpnUD88JSR/ZuWlcUqzrp7NWaOaoLTEMOOvVHJg2NK4CxS9FP
-         De1GXI8yvQOroyNGRizr9ilnN2YiOjePyN8CQfjwtRXr0MdCacTZYAdK20NPhREVPyJ5
-         N9UA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1762868404; x=1763473204;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=m/9OP2fjJmx3ZLFyrTIOYLQZUJpxWFVVOvLJMaZcRx4=;
-        b=Y9exfmJZO/7aKE6ISDCcotGE4uypIZeALzmg1ON/j14IkGtCXuY19QsrSPs/vCxmRF
-         WZo0xQnIGVygZlA6GrH9k46BYYjoDVxpQy/wO1C7NAgCfhty2TFdJK+7e5xCePb+JiSY
-         HgQ7MRMjj2d7WSokvCZCAAtH5MVyw5xng2F7HBTHlr/Vk+ov9LMTgz1xXQy0HI3OTDAg
-         izuUpNIGMpuDf2Q0YTviRD/LC6BJkkzxgcI08jHXy//Ft13Bkek/vroGaroMbijVA/q8
-         RNWyW42JiPXAFNAHA6B5pXDu1JxBzg9kji803rTAs4LpeeBL0TnS79oxslNftMdUQK/A
-         lQxg==
-X-Forwarded-Encrypted: i=1; AJvYcCUTYCdOg07TDgXpCWc8uUfbWRDQbZPnCMveuNQyiFh0Yz/pOk/odHzALtb+YALrqmgRCrmPcIRdf8qmkGKp@vger.kernel.org
-X-Gm-Message-State: AOJu0YzIp+KAChBk+8Quw59XPlW7fgWcmgJ+Qhu3upBPPvrRdSmWaNZe
-	EDOt34gDEOJHJwrJGK6sJlh/N/YaB3p9vJmuqfZT/QDaPM+Oc/BOJYPdQ8MkzJwET4ihpRXJEp+
-	mn+w+Jac72dV9rVFWvIUFsP5C7hWOVLTxt7j8PBwzGjtKMqYRTINtDo8uJi/0vcUc5D7SoHWAcx
-	Foxu8S08dyKL/9U/xeOSDglNqGwh//jAGAyqQjqQOTOIc=
-X-Gm-Gg: ASbGncumVVtH0L9Vov6Ul/Odtk7GJ2JMsZm9zGGihPdNP2S7C72rBE0mRJRcx8yF6gE
-	9EIHi9Z0eTcD976ueG4aaYm14LUDONZkprUT/ZlVnWYVo2bMdSp7UzHCu+fh9J9igtJda5juzFW
-	nsYQJ41CqfsE5xLBynGw5L6p5nktA/f1Bf3mDWso7kePx20l6M7Vi5
-X-Received: by 2002:a17:90b:4a4d:b0:341:8ad7:5f7a with SMTP id 98e67ed59e1d1-3436cbf8ee9mr14324782a91.18.1762868404463;
-        Tue, 11 Nov 2025 05:40:04 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHwgaH141MDvs6mYUD4Q5X8qYaZSdZRIsl83tR7MOsbdijrnHMQlgky3eynMPNNlWF7eVvF8AMO1yx39XcY/Yc=
-X-Received: by 2002:a17:90b:4a4d:b0:341:8ad7:5f7a with SMTP id
- 98e67ed59e1d1-3436cbf8ee9mr14324690a91.18.1762868403713; Tue, 11 Nov 2025
- 05:40:03 -0800 (PST)
+	s=arc-20240116; t=1762869000; c=relaxed/simple;
+	bh=5GpXHLHRJGsJHTeSfUYGezyAdRVn5kGG5dFfNDfJhi0=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=X6kBv9a8cI576StBM4GFjqg9HsOH5ne0JEchAHDyTRrFJ0XQo0eEaiNfSnIWYsf9+iCmMjPcwyJYiyGpQD1S8NJLzOHTTCKy5qKZmUmyU4fjgLoXl9zqRCiCLfJwIa7zQt1ScYb+P4EiADB4aVFA1qvuwYJzojJ/8IE9LAf442E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99694C16AAE;
+	Tue, 11 Nov 2025 13:49:55 +0000 (UTC)
+Date: Tue, 11 Nov 2025 19:19:45 +0530
+From: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
+To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Cc: Manivannan Sadhasivam <mani@kernel.org>, 
+	Bjorn Helgaas <bhelgaas@google.com>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Bartosz Golaszewski <brgl@bgdev.pl>, linux-kernel@vger.kernel.org, linux-pci@vger.kernel.org, 
+	devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+	Stephan Gerhold <stephan.gerhold@linaro.org>, linux-pm@vger.kernel.org
+Subject: Re: [PATCH v2 1/4] dt-bindings: connector: Add PCIe M.2 Mechanical
+ Key M connector
+Message-ID: <n3efko3q7i64qmipgxz5yjeqvgmw26b4dvwofe6qnx7xqsjtx5@bbbpxmfioxrj>
+References: <20251108-pci-m2-v2-0-e8bc4d7bf42d@oss.qualcomm.com>
+ <20251108-pci-m2-v2-1-e8bc4d7bf42d@oss.qualcomm.com>
+ <gmwg46c3za5z2ev34mms44gpq3sq7sb4jaozbdn5cejwbejbpo@wwr2j7dkjov4>
+ <qrgaulegz2tb7yzklyl7rpkgbf6ysx44bxtyn6n3tcyq4an4e5@bzngutkvfno3>
+ <5kedk7c6kc2e5j4kqeyik6i7ju54sdn6etjhpwl2vt4nq6c6ug@2yld4hpvbuzg>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20251107-knp_video-v3-0-50c86cbb0eb8@oss.qualcomm.com>
- <3vbq76dpjnadfrnufojq4zqiv7p5p555rhxfx6yoncc354p3lk@ohcs3ldhuoao> <2d56fc4b-6e3c-4f83-aab1-c48db3b8bb2d@oss.qualcomm.com>
-In-Reply-To: <2d56fc4b-6e3c-4f83-aab1-c48db3b8bb2d@oss.qualcomm.com>
-From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Date: Tue, 11 Nov 2025 15:39:52 +0200
-X-Gm-Features: AWmQ_blXQdwosO6i2_FdIYV6vtohi336OUCTfZYSjCdbYIy9ZUUucC_8UFt7TfE
-Message-ID: <CAO9ioeXSXwm03e_j8TuXz2Sqr1J2n3uEFH6dJoKVyE+hJx+woQ@mail.gmail.com>
-Subject: Re: [PATCH v3 0/6] media: iris: prepare support for video codecs on
- Qcom vpu4 platform
-To: Vikash Garodia <vikash.garodia@oss.qualcomm.com>
-Cc: Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>,
-        Abhinav Kumar <abhinav.kumar@linux.dev>,
-        "Bryan O'Donoghue" <bod@kernel.org>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
-        Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Philipp Zabel <p.zabel@pengutronix.de>,
-        Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-        linux-arm-msm@vger.kernel.org, linux-media@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Vishnu Reddy <busanna.reddy@oss.qualcomm.com>,
-        "Bryan O'Donoghue" <bryan.odonoghue@linaro.org>,
-        Vishnu Reddy <quic_bvisredd@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMTExMDEwOSBTYWx0ZWRfX2ny2FGgnur/g
- OMZ3apKa/IlDVocNry7KYGZy/+j8NvmS6fbxiQihJITRmAoWvQXguIEjcz7U3l8e4wJBEUzEtqo
- ljCLAGNnW5TV7ATCtFCSme8yxIzX3vhEiQasNKDxJT8K+XOK0oXV56EjhoIPCWPhTQYxc/2/M1b
- /Y7wGCg/qe900Dznmwm8kZ4uYhTyFpleQbAKelCNQGUvIT6c0REyuxo4F/lMzPfN1APAm6djqx1
- cpiq7PGsEQ0yo2GNvu4o0g3gPrjIx3dnnUF5zI+fPKqmnWFB5grapqLh2bID6zAmtx33DPtIkkX
- 5JMZrrjcL2J8/N28vAbWSrdB0IqAdwX+VaB7+s81ee4m/cf5g6jN2EWVGBX4BleyyWBlfvBRGnc
- Kvuil2zk8Vl9pqWX+9J+VluWGnNxKg==
-X-Proofpoint-ORIG-GUID: mnp2zu_SmPoKv9CyzagTyPPbAs7z21Xs
-X-Proofpoint-GUID: mnp2zu_SmPoKv9CyzagTyPPbAs7z21Xs
-X-Authority-Analysis: v=2.4 cv=O8I0fR9W c=1 sm=1 tr=0 ts=69133cb5 cx=c_pps
- a=UNFcQwm+pnOIJct1K4W+Mw==:117 a=IkcTkHD0fZMA:10 a=6UeiqGixMTsA:10
- a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22 a=EUspDBNiAAAA:8
- a=V0DlmUR_jgQx3hgdKxUA:9 a=QEXdDO2ut3YA:10 a=uKXjsCUrEbL0IQVhDsJ9:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
- definitions=2025-11-11_02,2025-11-11_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 clxscore=1015 bulkscore=0 priorityscore=1501
- lowpriorityscore=0 malwarescore=0 spamscore=0 adultscore=0 phishscore=0
- impostorscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2510240001
- definitions=main-2511110109
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <5kedk7c6kc2e5j4kqeyik6i7ju54sdn6etjhpwl2vt4nq6c6ug@2yld4hpvbuzg>
 
-On Tue, 11 Nov 2025 at 14:43, Vikash Garodia
-<vikash.garodia@oss.qualcomm.com> wrote:
->
->
-> On 11/11/2025 4:08 PM, Dmitry Baryshkov wrote:
-> > On Fri, Nov 07, 2025 at 03:19:35PM +0530, Vikash Garodia wrote:
-> >> Upcoming Qualcomm kaanapali platform have a newer generation of video
-> >> IP, iris4 or vpu4. The hardware have evolved mostly w.r.t higher number
-> >> of power domains as well as multiple clock sources. It has support for
-> >> new codec(apv), when compared to prior generation.
-> >>
-> >>  From previous version of this series, the kaanapali binding patch(#1/8)
-> >> and the compatible patch(#8/8) have been dropped. The discussion for
-> >> this is captured here [1].
-> >> The series introducs buffer calculation and power sequence for vpu4. It
-> >> prepares for vpu4 when kaanapali is enabled after the binding discussion
-> >> is concluded.
-> >>
-> >>
-> >> gstreamer test:
-> >> Decoders validated with below commands, codec specific:
-> > Why not just run the fluster testsuite?
-> >
->
-> yeah, fluster can also be executed. Individual codec commands were
-> explicitly called out incase someone wants to run standalone gst pipeline.
+On Sun, Nov 09, 2025 at 10:13:59PM +0200, Dmitry Baryshkov wrote:
+> On Sun, Nov 09, 2025 at 09:48:02PM +0530, Manivannan Sadhasivam wrote:
+> > On Sat, Nov 08, 2025 at 08:10:54PM +0200, Dmitry Baryshkov wrote:
+> > > On Sat, Nov 08, 2025 at 08:53:19AM +0530, Manivannan Sadhasivam wrote:
+> > > > Add the devicetree binding for PCIe M.2 Mechanical Key M connector defined
+> > > > in the PCI Express M.2 Specification, r4.0, sec 5.3. This connector
+> > > > provides interfaces like PCIe and SATA to attach the Solid State Drives
+> > > > (SSDs) to the host machine along with additional interfaces like USB, and
+> > > > SMB for debugging and supplementary features. At any point of time, the
+> > > > connector can only support either PCIe or SATA as the primary host
+> > > > interface.
+> > > > 
+> > > > The connector provides a primary power supply of 3.3v, along with an
+> > > > optional 1.8v VIO supply for the Adapter I/O buffer circuitry operating at
+> > > > 1.8v sideband signaling.
+> > > > 
+> > > > The connector also supplies optional signals in the form of GPIOs for fine
+> > > > grained power management.
+> > > > 
+> > > > Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
+> > > > ---
+> > > >  .../bindings/connector/pcie-m2-m-connector.yaml    | 122 +++++++++++++++++++++
+> > > >  1 file changed, 122 insertions(+)
+> > > > 
+> > > > diff --git a/Documentation/devicetree/bindings/connector/pcie-m2-m-connector.yaml b/Documentation/devicetree/bindings/connector/pcie-m2-m-connector.yaml
+> > > > new file mode 100644
+> > > > index 0000000000000000000000000000000000000000..be0a3b43e8fd2a2a3b76cad4808ddde79dceaa21
+> > > > --- /dev/null
+> > > > +++ b/Documentation/devicetree/bindings/connector/pcie-m2-m-connector.yaml
+> > > > @@ -0,0 +1,122 @@
+> > > > +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+> > > > +%YAML 1.2
+> > > > +---
+> > > > +$id: http://devicetree.org/schemas/connector/pcie-m2-m-connector.yaml#
+> > > > +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> > > > +
+> > > > +title: PCIe M.2 Mechanical Key M Connector
+> > > > +
+> > > > +maintainers:
+> > > > +  - Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
+> > > > +
+> > > > +description:
+> > > > +  A PCIe M.2 M connector node represents a physical PCIe M.2 Mechanical Key M
+> > > > +  connector. The Mechanical Key M connectors are used to connect SSDs to the
+> > > > +  host system over PCIe/SATA interfaces. These connectors also offer optional
+> > > > +  interfaces like USB, SMB.
+> > > > +
+> > > > +properties:
+> > > > +  compatible:
+> > > > +    const: pcie-m2-m-connector
+> > > 
+> > > Is a generic compatible enough here? Compare this to the USB connectors,
+> > > which, in case of an independent USB-B connector controlled/ing GPIOs,
+> > > gets additional gpio-usb-b-connector?
+> > > 
+> > 
+> > I can't comment on it as I've not seen such usecases as of now. But I do think
+> > that this generic compatible should satisfy most of the design requirements. If
+> > necessity arises, a custom compatible could be introduced with this generic one
+> > as a fallback.
+> 
+> Ack
+> 
+> > 
+> > > > +
+> > > > +  vpcie3v3-supply:
+> > > > +    description: A phandle to the regulator for 3.3v supply.
+> > > > +
+> > > > +  vio1v8-supply:
+> > > > +    description: A phandle to the regulator for VIO 1.8v supply.
+> > > > +
+> > > > +  ports:
+> > > > +    $ref: /schemas/graph.yaml#/properties/ports
+> > > > +    description: OF graph bindings modeling the interfaces exposed on the
+> > > > +      connector. Since a single connector can have multiple interfaces, every
+> > > > +      interface has an assigned OF graph port number as described below.
+> > > > +
+> > > > +    properties:
+> > > > +      port@0:
+> > > > +        $ref: /schemas/graph.yaml#/properties/port
+> > > > +        description: PCIe/SATA interface
+> > > 
+> > > Should it be defined as having two endpoints: one for PCIe, one for
+> > > SATA?
+> > > 
+> > 
+> > I'm not sure. From the dtschema of the connector node:
+> > 
+> > "If a single port is connected to more than one remote device, an 'endpoint'
+> > child node must be provided for each link"
+> > 
+> > Here, a single port is atmost connected to only one endpoint and that endpoint
+> > could PCIe/SATA. So IMO, defining two endpoint nodes doesn't fit here.
+> 
+> I think this needs to be better defined. E.g. there should be either one
+> endpoint going to the shared SATA / PCIe MUX, which should then be
+> controlled somehow, in a platform-specific way (how?) or there should be
+> two endpoints defined, e.g. @0 for SATA and @1 for PCIe (should we
+> prevent powering up M.2 if PEDET points out the unsupported function?).
+> (Note: these questions might be the definitive point for the bare
+> m2-m-connector vs gpio-m2-m-connector: the former one defines just the
+> M.2 signals, letting e.g. UEFI or PCIe controller to react to them, the
+> latter one defines how to control MUXes, the behaviour wrt PEDET, etc.,
+> performing all those actions in OS driver).
+> 
 
-Please switch to fluster (in addition to Gst), ideally running all
-test cases for a codec. While enabling SC7280 support I found that
-there are enough corner cases which are being ignored by the driver.
-One additional bonus is that fluster runs several process in parallel
-by default, catching issues caused by several decode threads running
-in parallel.
+In the case of an external GPIO controlled MUX for PCIe/SATA interface, I would
+assume that the MUX will be controlled by the PEDET itself. PEDET will be driven
+low by the card if it uses SATA, pulled high (NC) if it uses PCIe. Then that
+signal will help the MUX to route the proper interface to the connector.
 
->
-> >> gst-launch-1.0 multifilesrc location=<input_file.h264> stop-index=0 !
-> >> parsebin ! v4l2h264dec ! video/x-raw ! videoconvert dither=none !
-> >> video/x-raw,format=I420 ! filesink location=<output_file.yuv>
-> >>
-> >> gst-launch-1.0 multifilesrc location=<input_file.hevc> stop-index=0 !
-> >> parsebin ! v4l2h265dec ! video/x-raw ! videoconvert dither=none !
-> >> video/x-raw,format=I420 ! filesink location=<output_file.yuv>
-> >>
-> >> gst-launch-1.0 filesrc location=<input_file.webm> stop-index=0 !
-> >> parsebin ! vp9dec ! video/x-raw ! videoconvert dither=none !
-> >> video/x-raw,format=I420 ! filesink location=<output_file.yuv>
-> >>
-> >> Encoders validated with below commands:
-> >> gst-launch-1.0 -v filesrc location=<input_file.yuv> ! rawvideoparse
-> >> format=nv12 width=<width> height=<height> framerate=30/1 ! v4l2h264enc
-> >> capture-io-mode=4 output-io-mode=4 ! filesink sync=true
-> >> location=<output_file.h264>
-> >>
-> >> gst-launch-1.0 -v filesrc location=<input_file.yuv> ! rawvideoparse
-> >> format=nv12 width=<width> height=<height> framerate=30/1 ! v4l2h265enc
-> >> capture-io-mode=4 output-io-mode=4 ! filesink sync=true
-> >> location=<output_file.hevc>
->
-> Regards,
-> Vikash
+Even in that case, there should be a single endpoint coming from the MUX to the
+connector.
 
+> Likewise, for USB you specify just the port, but is it just USB 2.0 or
+> USB 3.0 port? In the latter case we should have two endpoints defined,
+> one for DP/DM and another one for SS singnals.
+> 
 
+The M.2 spec limits the USB interface to 2.0 for Key M. I missed mentioning it.
+
+- Mani
 
 -- 
-With best wishes
-Dmitry
+மணிவண்ணன் சதாசிவம்
 
