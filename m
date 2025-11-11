@@ -1,34 +1,34 @@
-Return-Path: <linux-arm-msm+bounces-81163-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-81164-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 593C0C4B616
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Nov 2025 04:59:00 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 35CCBC4B62D
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Nov 2025 05:00:43 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 3276C1890BF2
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Nov 2025 03:59:25 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id E84FC3B5A9A
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Nov 2025 04:00:41 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 079963128CB;
-	Tue, 11 Nov 2025 03:58:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 462BA1A3BD7;
+	Tue, 11 Nov 2025 04:00:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=lunn.ch header.i=@lunn.ch header.b="bb7j0aBA"
+	dkim=pass (1024-bit key) header.d=lunn.ch header.i=@lunn.ch header.b="Y8e97wOi"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from vps0.lunn.ch (vps0.lunn.ch [156.67.10.101])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C83E2FD67A;
-	Tue, 11 Nov 2025 03:58:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CE1C20ED;
+	Tue, 11 Nov 2025 04:00:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=156.67.10.101
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762833534; cv=none; b=XqbtMlIwzHDsNB6hEIITvYjTYOG87oYoIWcrzJ9DW4Y7C0sNO0b8IgyfAep+x4MoUm8f2WokTUcxLbsnYoOeFyfvZriPr1puiogrvQ0CA+IlS+aPmupgwpj19F55uVKnEhfc4kLx7s7Rm9wfwjFPFMzKB6As7dYe4/CE4+kbhdg=
+	t=1762833638; cv=none; b=CoM/0giMbStvONiyEgShnE1ypK7YUPodbvP7NF5kP9h1zlsRhv+F9xZfVYmssbNnRMYEJmyhLw4cVuqnD2UqnsAjNk3DJnEcKzbv637l4icB6DNbmtENYC6YmlK3zSXfywxYcH7hkb4BYG+zGPn8b3Y8t2BdT6ySNl2VzmNAUGI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762833534; c=relaxed/simple;
-	bh=AYGSMRIFbVoBYpbYxtM7gO+C0wiGDQ9RGkDynVoBkiI=;
+	s=arc-20240116; t=1762833638; c=relaxed/simple;
+	bh=FS82Du6xPjxsf7+cs8yITjrHqmV2wtHo8A3L6219qHo=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=fqeAluGUUCwePM9SHQCbrE4h4zfVdBxm9HVa+KbvPyhtShmwt3r9QnDJentqFfWoNmmfV9TzAwCK/EdzwHGrQ19S4zQ2YDEFYYZ4OtqOUNhLhGr1iseTXiy+UjUSt+JP0hm/JvceN6Bmw6rvv0q6DmJvfsEQe6z77c951y64HbI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lunn.ch; spf=pass smtp.mailfrom=lunn.ch; dkim=pass (1024-bit key) header.d=lunn.ch header.i=@lunn.ch header.b=bb7j0aBA; arc=none smtp.client-ip=156.67.10.101
+	 Content-Type:Content-Disposition:In-Reply-To; b=tzfDuRUAohXnrkSytOwbRfJiOq25tBekPCj+l3Ir6wvMcxZG0WB7mRqDlnV6gcJf3iTySObd64LeTwAoglRVvGv0GhN5En/XYMWCi+fNfzU+8QNblh9ggTHiKe+hfZXuVeiZchzt121RpW4I5eTxgRE6LAWrJ3lMCKvHf9qm8rE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lunn.ch; spf=pass smtp.mailfrom=lunn.ch; dkim=pass (1024-bit key) header.d=lunn.ch header.i=@lunn.ch header.b=Y8e97wOi; arc=none smtp.client-ip=156.67.10.101
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lunn.ch
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=lunn.ch
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=lunn.ch;
@@ -36,13 +36,13 @@ DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=lunn.ch;
 	References:Message-ID:Subject:Cc:To:From:Date:From:Sender:Reply-To:Subject:
 	Date:Message-ID:To:Cc:MIME-Version:Content-Type:Content-Transfer-Encoding:
 	Content-ID:Content-Description:Content-Disposition:In-Reply-To:References;
-	bh=bmQrc44iJz5u+hImAPDDt4huoJSd7wm/+r68X7iQLaw=; b=bb7j0aBATwc8+DvD1MF0ml6VvU
-	moqxFUWPjEp62mqmxs0Dncr+iKlq9Wy9d/LUMvVxGeqbLJ1vXQxZzygMLY8YN3ES4zXZUJIXPwdTP
-	LxuQ+GneAX8FDApKuoDH4kpWEiyJtMyNn9loKzGn5Dmfjm0c4mSOSag0jTYEVhSlVeUY=;
+	bh=Y2U2Nk8OC9pdQsbe0WYQ+B3AeQ1vBG9SlV20DmuzAjY=; b=Y8e97wOiB3gptVW8uHMc+bI7T0
+	zaTgOInWASr6H075QJbzk/4+CmBUCH/uDTavbfz00hz9tJ1aBF18jVLbvH5GXV/aG3ZUNQfYXjSy1
+	iohPjtCt3nHjtqZ1f8OHvlSPkoeDUW9ddOmaNAbwnzhGLNz51JubfTjjHCZYq2eWDKpk=;
 Received: from andrew by vps0.lunn.ch with local (Exim 4.94.2)
 	(envelope-from <andrew@lunn.ch>)
-	id 1vIfWk-00DaWu-Cw; Tue, 11 Nov 2025 04:58:42 +0100
-Date: Tue, 11 Nov 2025 04:58:42 +0100
+	id 1vIfYO-00DaXu-1Y; Tue, 11 Nov 2025 05:00:24 +0100
+Date: Tue, 11 Nov 2025 05:00:24 +0100
 From: Andrew Lunn <andrew@lunn.ch>
 To: Maxime Chevallier <maxime.chevallier@bootlin.com>
 Cc: davem@davemloft.net, netdev@vger.kernel.org,
@@ -68,11 +68,11 @@ Cc: davem@davemloft.net, netdev@vger.kernel.org,
 	Romain Gantois <romain.gantois@bootlin.com>,
 	Daniel Golle <daniel@makrotopia.org>,
 	Dimitri Fedrau <dimitri.fedrau@liebherr.com>
-Subject: Re: [PATCH net-next v15 07/15] net: phy: Introduce generic SFP
- handling for PHY drivers
-Message-ID: <7fac025c-3ec3-4900-9fa0-5e1a06cafeb4@lunn.ch>
+Subject: Re: [PATCH net-next v15 08/15] net: phy: marvell-88x2222: Support
+ SFP through phy_port interface
+Message-ID: <0a4ce50b-3117-465e-8f6f-1228ea5bac2e@lunn.ch>
 References: <20251106094742.2104099-1-maxime.chevallier@bootlin.com>
- <20251106094742.2104099-8-maxime.chevallier@bootlin.com>
+ <20251106094742.2104099-9-maxime.chevallier@bootlin.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -81,36 +81,12 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20251106094742.2104099-8-maxime.chevallier@bootlin.com>
+In-Reply-To: <20251106094742.2104099-9-maxime.chevallier@bootlin.com>
 
-On Thu, Nov 06, 2025 at 10:47:32AM +0100, Maxime Chevallier wrote:
-> There are currently 4 PHY drivers that can drive downstream SFPs:
-> marvell.c, marvell10g.c, at803x.c and marvell-88x2222.c. Most of the
-> logic is boilerplate, either calling into generic phylib helpers (for
-> SFP PHY attach, bus attach, etc.) or performing the same tasks with a
-> bit of validation :
->  - Getting the module's expected interface mode
->  - Making sure the PHY supports it
->  - Optionaly perform some configuration to make sure the PHY outputs
->    the right mode
-> 
-> This can be made more generic by leveraging the phy_port, and its
-> configure_mii() callback which allows setting a port's interfaces when
-> the port is a serdes.
-> 
-> Introduce a generic PHY SFP support. If a driver doesn't probe the SFP
-> bus itself, but an SFP phandle is found in devicetree/firmware, then the
-> generic PHY SFP support will be used, relying on port ops.
-> 
-> PHY driver need to :
->  - Register a .attach_port() callback
->  - When a serdes port is registered to the PHY, drivers must set
->    port->interfaces to the set of PHY_INTERFACE_MODE the port can output
->  - If the port has limitations regarding speed, duplex and aneg, the
->    port can also fine-tune the final linkmodes that can be supported
->  - The port may register a set of ops, including .configure_mii(), that
->    will be called at module_insert time to adjust the interface based on
->    the module detected.
+On Thu, Nov 06, 2025 at 10:47:33AM +0100, Maxime Chevallier wrote:
+> The 88x2222 PHY from Marvell only supports serialised modes as its
+> line-facing interfaces. Convert that driver to the generic phylib SFP
+> handling.
 > 
 > Reviewed-by: Christophe Leroy <christophe.leroy@csgroup.eu>
 > Signed-off-by: Maxime Chevallier <maxime.chevallier@bootlin.com>
