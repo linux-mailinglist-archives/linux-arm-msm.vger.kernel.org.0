@@ -1,169 +1,120 @@
-Return-Path: <linux-arm-msm+bounces-81154-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-81156-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id CF5D0C49D52
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Nov 2025 01:11:43 +0100 (CET)
+Received: from ams.mirrors.kernel.org (ams.mirrors.kernel.org [213.196.21.55])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2A9CAC4A55D
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Nov 2025 02:20:21 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 8E3723ADB9C
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Nov 2025 00:11:42 +0000 (UTC)
+	by ams.mirrors.kernel.org (Postfix) with ESMTPS id CAA6D34BF16
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Nov 2025 01:20:20 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DECE434D3A4;
-	Tue, 11 Nov 2025 00:11:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 64B03341AD7;
+	Tue, 11 Nov 2025 01:11:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="RQNhfVxW"
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AcAeMwW6"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E51717D6;
-	Tue, 11 Nov 2025 00:11:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31F33341AC7;
+	Tue, 11 Nov 2025 01:11:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762819899; cv=none; b=ASJdmkX7niKebNSKI514wIr6iBDkQ8iDvFTXsvF4o5TIBIRYKfJHPWVEzG/yqkH/zq4iS98kR+DKK0CvcNV3tud4RXXwZi9wUeD5rGFrGrQ4bTDf1m4Tf1vaSlFnEEnPxOsFygXGTX2UKZRve7kWe+notf6fEKoUEA4zcPXtvpk=
+	t=1762823510; cv=none; b=LrXiSyBP9oKeTExBalcy/9QTXDOmj+69nRT3qY9uUbmgW2dB4XvRGY+GkEEUT+CaGBlxyZNDfhg9R/zkcNW/G0l/obyTibBUND8D0jvzAfgHTwIPUhlFIPqScXFMCr86hU3KekMdYKF1c6zkB0KDTedFKvZPxEjLe/qegnx7VgE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762819899; c=relaxed/simple;
-	bh=UJb6mXnrZynjLpPgHUrW0+nPkNlnIA1ohpPmrhdt5kI=;
-	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
-	 Content-Disposition:In-Reply-To; b=TXi8Wi80fCmXlZBuZvb0nZMteS9+QsWmfuYmjnr4Uaw9mTPoHTY+tI6IGmLxwvbN2OMLB0jjrp9TSMqyQcA7NX+uFT87J3VjN/pMiZxUD+MM8rKlpZes74FZsQ8BdKXuc26o6865gLNYIoKantNk/7vFYRcyysFOvW+GZ8zggz0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=RQNhfVxW; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE3B5C113D0;
-	Tue, 11 Nov 2025 00:11:38 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1762819899;
-	bh=UJb6mXnrZynjLpPgHUrW0+nPkNlnIA1ohpPmrhdt5kI=;
-	h=Date:From:To:Cc:Subject:In-Reply-To:From;
-	b=RQNhfVxWS3kSkUZ3/Yn/h0BmXL51tmLd+96fcvkdQVv1vGLPiWTHRkycOoEeo86n+
-	 AomTbI2OwWKrh916BvopP2FmTFRSTMpM+ffKgocFApMJHdp1EKgU6X5hO4qa0osljw
-	 17UC1rMSI+vUK4hzsEvsvxu9BntOhbPUYi/m0034GgTDaN8qQYvPNZ+teI5+B2ybWa
-	 HwOKozmrkxff/CrJtzPPwDnYAm5CuGW9jLgaRZXE1tGy7RFW1GXxjP1lsvTw64BiD6
-	 3+AvpY4WKIjmTgnbEp1K+YKbfLbuPtZz53Jb09WBB7saLr4xY2Ybz2RWqug2curgjQ
-	 RYENRwzTM6ubQ==
-Date: Mon, 10 Nov 2025 18:11:37 -0600
-From: Bjorn Helgaas <helgaas@kernel.org>
-To: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Cc: Corey Minyard <corey@minyard.net>,
-	Christian =?utf-8?B?S8O2bmln?= <christian.koenig@amd.com>,
-	"Dr. David Alan Gilbert" <linux@treblig.org>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Thomas Zimmermann <tzimmermann@suse.de>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	Rob Clark <robin.clark@oss.qualcomm.com>,
-	Matthew Brost <matthew.brost@intel.com>,
-	Hans Verkuil <hverkuil@kernel.org>,
-	Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>,
-	Ulf Hansson <ulf.hansson@linaro.org>,
-	Vitaly Lifshits <vitaly.lifshits@intel.com>,
-	Manivannan Sadhasivam <mani@kernel.org>,
-	Niklas Cassel <cassel@kernel.org>, Calvin Owens <calvin@wbinvd.org>,
-	Sagi Maimon <maimon.sagi@gmail.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
-	Karan Tilak Kumar <kartilak@cisco.com>,
-	Casey Schaufler <casey@schaufler-ca.com>,
-	Steven Rostedt <rostedt@goodmis.org>,
-	Petr Mladek <pmladek@suse.com>,
-	Max Kellermann <max.kellermann@ionos.com>,
-	Takashi Iwai <tiwai@suse.de>, linux-doc@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	openipmi-developer@lists.sourceforge.net,
-	linux-media@vger.kernel.org, dri-devel@lists.freedesktop.org,
-	linaro-mm-sig@lists.linaro.org, amd-gfx@lists.freedesktop.org,
-	linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
-	intel-xe@lists.freedesktop.org, linux-mmc@vger.kernel.org,
-	netdev@vger.kernel.org, intel-wired-lan@lists.osuosl.org,
-	linux-pci@vger.kernel.org, linux-s390@vger.kernel.org,
-	linux-scsi@vger.kernel.org, linux-staging@lists.linux.dev,
-	ceph-devel@vger.kernel.org, linux-trace-kernel@vger.kernel.org,
-	linux-sound@vger.kernel.org,
-	Rasmus Villemoes <linux@rasmusvillemoes.dk>,
-	Sergey Senozhatsky <senozhatsky@chromium.org>,
-	Jonathan Corbet <corbet@lwn.net>,
-	Sumit Semwal <sumit.semwal@linaro.org>,
-	Gustavo Padovan <gustavo@padovan.org>,
-	David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
-	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-	Maxime Ripard <mripard@kernel.org>,
-	Dmitry Baryshkov <lumag@kernel.org>,
-	Abhinav Kumar <abhinav.kumar@linux.dev>,
-	Jessica Zhang <jesszhan0024@gmail.com>, Sean Paul <sean@poorly.run>,
-	Marijn Suijten <marijn.suijten@somainline.org>,
+	s=arc-20240116; t=1762823510; c=relaxed/simple;
+	bh=w62OGB6d91pbiylO8LycuB3Ke7bGhejqjK2oZGtQFQg=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=ev9pJk1PDpt7NbVb019BGQlToST7HQYCSn7qnDToxxCNBILjKqwj/o5pqmdwYczRsI9eRlxD6uJ2AWNegWmvLIqVOTmU/0NoMhlFGR+ppJ9r59XXyia/pbAKl6bDkZxJGTPs1oMt0sx3XYZLkGz7ax2R2t39zTZUcwqh9GhgUsU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AcAeMwW6; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C32F8C116B1;
+	Tue, 11 Nov 2025 01:11:49 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1762823510;
+	bh=w62OGB6d91pbiylO8LycuB3Ke7bGhejqjK2oZGtQFQg=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=AcAeMwW6v40zVIMk85aw/v6FQzTu2ppZ6fWz1ieLpLAYwG5MEplxY2yyH8m7ZxZy6
+	 5O3Z95zHcmz3yL4jmOfd3dEuwndHXkHs0djXMZ3r+jXjV0wHtMbf/Ofqyi/zYfMOiF
+	 nTUEtI0kClmgPyCTZ2tDcUbZxfjV37/btp6tRBVw=
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: stable@vger.kernel.org
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	patches@lists.linux.dev,
+	Bjorn Andersson <andersson@kernel.org>,
 	Konrad Dybcio <konradybcio@kernel.org>,
-	Lucas De Marchi <lucas.demarchi@intel.com>,
-	Thomas =?utf-8?Q?Hellstr=C3=B6m?= <thomas.hellstrom@linux.intel.com>,
-	Rodrigo Vivi <rodrigo.vivi@intel.com>,
-	Mauro Carvalho Chehab <mchehab@kernel.org>,
-	Vladimir Oltean <olteanv@gmail.com>, Andrew Lunn <andrew@lunn.ch>,
-	"David S. Miller" <davem@davemloft.net>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
-	Przemek Kitszel <przemyslaw.kitszel@intel.com>,
-	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
-	Kishon Vijay Abraham I <kishon@kernel.org>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Rodolfo Giometti <giometti@enneenne.com>,
-	Jonathan Lemon <jonathan.lemon@gmail.com>,
-	Vadim Fedorenko <vadim.fedorenko@linux.dev>,
-	Richard Cochran <richardcochran@gmail.com>,
-	Stefan Haberland <sth@linux.ibm.com>,
-	Jan Hoeppner <hoeppner@linux.ibm.com>,
-	Heiko Carstens <hca@linux.ibm.com>,
-	Vasily Gorbik <gor@linux.ibm.com>,
-	Alexander Gordeev <agordeev@linux.ibm.com>,
-	Christian Borntraeger <borntraeger@linux.ibm.com>,
-	Sven Schnelle <svens@linux.ibm.com>,
-	Satish Kharat <satishkh@cisco.com>,
-	Sesidhar Baddela <sebaddel@cisco.com>,
-	"James E.J. Bottomley" <James.Bottomley@hansenpartnership.com>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	Xiubo Li <xiubli@redhat.com>, Ilya Dryomov <idryomov@gmail.com>,
-	Masami Hiramatsu <mhiramat@kernel.org>,
-	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Jaroslav Kysela <perex@perex.cz>, Takashi Iwai <tiwai@suse.com>
-Subject: Re: [PATCH v1 17/23] PCI: epf-test: Switch to use %ptSp
-Message-ID: <20251111001137.GA2145521@bhelgaas>
+	linux-arm-msm@vger.kernel.org,
+	Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.17 314/849] drm/bridge: display-connector: dont set OP_DETECT for DisplayPorts
+Date: Tue, 11 Nov 2025 09:38:04 +0900
+Message-ID: <20251111004544.004144487@linuxfoundation.org>
+X-Mailer: git-send-email 2.51.2
+In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
+References: <20251111004536.460310036@linuxfoundation.org>
+User-Agent: quilt/0.69
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20251110184727.666591-18-andriy.shevchenko@linux.intel.com>
+Content-Transfer-Encoding: 8bit
 
-On Mon, Nov 10, 2025 at 07:40:36PM +0100, Andy Shevchenko wrote:
-> Use %ptSp instead of open coded variants to print content of
-> struct timespec64 in human readable format.
-> 
-> Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+6.17-stable review patch.  If anyone has any objections, please let me know.
 
-Acked-by: Bjorn Helgaas <bhelgaas@google.com>
+------------------
 
-> ---
->  drivers/pci/endpoint/functions/pci-epf-test.c | 5 ++---
->  1 file changed, 2 insertions(+), 3 deletions(-)
-> 
-> diff --git a/drivers/pci/endpoint/functions/pci-epf-test.c b/drivers/pci/endpoint/functions/pci-epf-test.c
-> index b05e8db575c3..debd235253c5 100644
-> --- a/drivers/pci/endpoint/functions/pci-epf-test.c
-> +++ b/drivers/pci/endpoint/functions/pci-epf-test.c
-> @@ -331,9 +331,8 @@ static void pci_epf_test_print_rate(struct pci_epf_test *epf_test,
->  		rate = div64_u64(size * NSEC_PER_SEC, ns * 1000);
->  
->  	dev_info(&epf_test->epf->dev,
-> -		 "%s => Size: %llu B, DMA: %s, Time: %llu.%09u s, Rate: %llu KB/s\n",
-> -		 op, size, dma ? "YES" : "NO",
-> -		 (u64)ts.tv_sec, (u32)ts.tv_nsec, rate);
-> +		 "%s => Size: %llu B, DMA: %s, Time: %ptSp s, Rate: %llu KB/s\n",
-> +		 op, size, dma ? "YES" : "NO", &ts, rate);
->  }
->  
->  static void pci_epf_test_copy(struct pci_epf_test *epf_test,
-> -- 
-> 2.50.1
-> 
+From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+
+[ Upstream commit cb640b2ca54617f4a9d4d6efd5ff2afd6be11f19 ]
+
+Detecting the monitor for DisplayPort targets is more complicated than
+just reading the HPD pin level: it requires reading the DPCD in order to
+check what kind of device is attached to the port and whether there is
+an actual display attached.
+
+In order to let DRM framework handle such configurations, disable
+DRM_BRIDGE_OP_DETECT for dp-connector devices, letting the actual DP
+driver perform detection. This still keeps DRM_BRIDGE_OP_HPD enabled, so
+it is valid for the bridge to report HPD events.
+
+Currently inside the kernel there are only two targets which list
+hpd-gpios for dp-connector devices: arm64/qcom/qcs6490-rb3gen2 and
+arm64/qcom/sa8295p-adp. Both should be fine with this change.
+
+Cc: Bjorn Andersson <andersson@kernel.org>
+Cc: Konrad Dybcio <konradybcio@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org
+Acked-by: Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>
+Link: https://lore.kernel.org/r/20250802-dp-conn-no-detect-v1-1-2748c2b946da@oss.qualcomm.com
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
+---
+ drivers/gpu/drm/bridge/display-connector.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/drivers/gpu/drm/bridge/display-connector.c b/drivers/gpu/drm/bridge/display-connector.c
+index 52b7b5889e6fe..4f0295efb8f68 100644
+--- a/drivers/gpu/drm/bridge/display-connector.c
++++ b/drivers/gpu/drm/bridge/display-connector.c
+@@ -373,7 +373,8 @@ static int display_connector_probe(struct platform_device *pdev)
+ 	if (conn->bridge.ddc)
+ 		conn->bridge.ops |= DRM_BRIDGE_OP_EDID
+ 				 |  DRM_BRIDGE_OP_DETECT;
+-	if (conn->hpd_gpio)
++	/* Detecting the monitor requires reading DPCD */
++	if (conn->hpd_gpio && type != DRM_MODE_CONNECTOR_DisplayPort)
+ 		conn->bridge.ops |= DRM_BRIDGE_OP_DETECT;
+ 	if (conn->hpd_irq >= 0)
+ 		conn->bridge.ops |= DRM_BRIDGE_OP_HPD;
+-- 
+2.51.0
+
+
+
 
