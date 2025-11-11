@@ -1,78 +1,65 @@
-Return-Path: <linux-arm-msm+bounces-81172-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-81167-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [142.0.200.124])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1A282C4B6D5
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Nov 2025 05:11:59 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id F052AC4B660
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Nov 2025 05:04:16 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id D6CD14F6C89
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Nov 2025 04:09:12 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 8D062189439F
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Nov 2025 04:04:39 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 88EB434B183;
-	Tue, 11 Nov 2025 04:08:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5403128003A;
+	Tue, 11 Nov 2025 04:04:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=lunn.ch header.i=@lunn.ch header.b="XKCQsOF0"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Y6zKlGzi"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from vps0.lunn.ch (vps0.lunn.ch [156.67.10.101])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F30223148D8;
-	Tue, 11 Nov 2025 04:08:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=156.67.10.101
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 121F320ED;
+	Tue, 11 Nov 2025 04:04:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762834084; cv=none; b=epAMzLTAHtHpmxd/FsSjHAglZ+iTHaFF7fEr5RvLub5IC4peJR5mmas5v53C4R7jcjWLSOtxuG1NwTm/HSwtphgdGVCOR0tgoboXBVoCE330SuN24CjXzV/qOciJ+p4UQyTfUv0wjz41eGfuobO5YeGUz/sqppoLdhBHNNe7F24=
+	t=1762833841; cv=none; b=kVaFIiX+uHTtq4NAY34iu7ViK6kYWQfSM8p/LWIJJVF2MFvTaBwg2GoGLIykXlkapmWSiLW+v1+cDSJAcKJXa3nQjTcNFAcpuvu0fnPnWpIW1E6wiYPi8jC3PEGnigrS6MUtJabzbWI7sqOdwdkXVUU5J86jYAflnVEpYySOQE0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762834084; c=relaxed/simple;
-	bh=3kzAFjCM6HbXSpkV+jQ9TGQC4bAtu1w924qOSfk6wzY=;
+	s=arc-20240116; t=1762833841; c=relaxed/simple;
+	bh=5yESDvzUI5BgeeIMK00M3a30TNEx4W3yOd0yGANujh8=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=QNJ53D/romk9mg1oONbm0NkveiMuE05ByW85xPRgvD+iVLmP5zn9bxkcSUnpMvAE4gxxrnmq+c/dDdqxFkG+vWjgAQdHTeoZO2mG3tMfDWM8WTbwX//TCshMED7Bn6o+27hijK/4m2uYJ2sOO7H1ixUnIdlFlGhwJGPvK0qozOQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lunn.ch; spf=pass smtp.mailfrom=lunn.ch; dkim=pass (1024-bit key) header.d=lunn.ch header.i=@lunn.ch header.b=XKCQsOF0; arc=none smtp.client-ip=156.67.10.101
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lunn.ch
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=lunn.ch
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=lunn.ch;
-	s=20171124; h=In-Reply-To:Content-Disposition:Content-Type:MIME-Version:
-	References:Message-ID:Subject:Cc:To:From:Date:From:Sender:Reply-To:Subject:
-	Date:Message-ID:To:Cc:MIME-Version:Content-Type:Content-Transfer-Encoding:
-	Content-ID:Content-Description:Content-Disposition:In-Reply-To:References;
-	bh=Gd10wbrN2noGIROSPOS+j8rDV/mJIhsf3ducn3FrnCU=; b=XKCQsOF0NRdKSrpk3e7LM+5zvv
-	GgeuD3o+ZS9X2X7xT3/GmwP4i1mldHv/nitvF0SI7Cxqkl9F+FI2Eti85pSauTvRN0LQ880Jumv8D
-	M5c6TK0hNPIICFUQtcCHLaQmFvrhqexWyIgWLRxGge3rHIx1kloJOb0QuchsDZ36/sHE=;
-Received: from andrew by vps0.lunn.ch with local (Exim 4.94.2)
-	(envelope-from <andrew@lunn.ch>)
-	id 1vIffd-00Dae4-0p; Tue, 11 Nov 2025 05:07:53 +0100
-Date: Tue, 11 Nov 2025 05:07:53 +0100
-From: Andrew Lunn <andrew@lunn.ch>
-To: Maxime Chevallier <maxime.chevallier@bootlin.com>
-Cc: davem@davemloft.net, netdev@vger.kernel.org,
-	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-	thomas.petazzoni@bootlin.com, Jakub Kicinski <kuba@kernel.org>,
-	Eric Dumazet <edumazet@google.com>, Paolo Abeni <pabeni@redhat.com>,
-	Russell King <linux@armlinux.org.uk>,
-	linux-arm-kernel@lists.infradead.org,
-	Christophe Leroy <christophe.leroy@csgroup.eu>,
-	Herve Codina <herve.codina@bootlin.com>,
-	Florian Fainelli <f.fainelli@gmail.com>,
-	Heiner Kallweit <hkallweit1@gmail.com>,
-	Vladimir Oltean <vladimir.oltean@nxp.com>,
-	=?iso-8859-1?Q?K=F6ry?= Maincent <kory.maincent@bootlin.com>,
-	Marek =?iso-8859-1?Q?Beh=FAn?= <kabel@kernel.org>,
-	Oleksij Rempel <o.rempel@pengutronix.de>,
-	=?iso-8859-1?Q?Nicol=F2?= Veronese <nicveronese@gmail.com>,
-	Simon Horman <horms@kernel.org>, mwojtas@chromium.org,
-	Antoine Tenart <atenart@kernel.org>, devicetree@vger.kernel.org,
-	Conor Dooley <conor+dt@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Rob Herring <robh@kernel.org>,
-	Romain Gantois <romain.gantois@bootlin.com>,
-	Daniel Golle <daniel@makrotopia.org>,
-	Dimitri Fedrau <dimitri.fedrau@liebherr.com>
-Subject: Re: [PATCH net-next v15 14/15] net: phy: dp83822: Add SFP support
- through the phy_port interface
-Message-ID: <5b9a42b0-e2f8-490a-be5a-21c998717074@lunn.ch>
-References: <20251106094742.2104099-1-maxime.chevallier@bootlin.com>
- <20251106094742.2104099-15-maxime.chevallier@bootlin.com>
+	 Content-Type:Content-Disposition:In-Reply-To; b=PhKpY+s7ygCKtbaEJjXinDahm73MCweQefu4PBSlc65YczAOlyca38G1Ui/k3lGOPje3kFJvBmErHFLKHOAbgoQRWBImaGyfyWS1Ef9a20HI/qZzYtNafShTfAe+qKK8zl/StBb5t5PO4KdrQOUr7I6fWkajTWLiDINIMBpe6vI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Y6zKlGzi; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98C4DC4CEFB;
+	Tue, 11 Nov 2025 04:03:58 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1762833840;
+	bh=5yESDvzUI5BgeeIMK00M3a30TNEx4W3yOd0yGANujh8=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=Y6zKlGziGHfGlLWxf6kkVE4MRCuw25GMSHNKVoNyXdCpQRQy9bLVF7Jaib+ALvHlq
+	 R/hSrXo3CXDs6QO70gzLiIwo6arusnv1TnLlsaFrPdjWKxnSqim92EV9sn028Hlzpu
+	 cylLYdGwV88NOJp2M2ccDBnvA4+bLYxyzHKsrbXmIgRPFziDktH73pBkZTq61hIffw
+	 ZZNBrxX3defk7itPm3t1M7gpC687YEVwLH8j3E2xxWQ21vQOYA4UpG9RL7krKi/K8M
+	 YMssT2V4jiAtkI5aU1UWtb/9SeTEnK70LrR9l8yxKfk2UIjw2sdDbq/3CvFBQCRlON
+	 HLQLWBLF/6TMw==
+Date: Mon, 10 Nov 2025 22:08:08 -0600
+From: Bjorn Andersson <andersson@kernel.org>
+To: Praveen Talari <praveen.talari@oss.qualcomm.com>
+Cc: Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Linus Walleij <linus.walleij@linaro.org>, Greg Kroah-Hartman <gregkh@linuxfoundation.org>, 
+	Jiri Slaby <jirislaby@kernel.org>, Dmitry Baryshkov <lumag@kernel.org>, 
+	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	linux-gpio@vger.kernel.org, linux-serial@vger.kernel.org, alexey.klimov@linaro.org, 
+	krzk@kernel.org, bryan.odonoghue@linaro.org, jorge.ramirez@oss.qualcomm.com, 
+	dmitry.baryshkov@oss.qualcomm.com, Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, 
+	psodagud@quicinc.com, djaggi@quicinc.com, quic_msavaliy@quicinc.com, 
+	quic_vtanuku@quicinc.com, quic_arandive@quicinc.com, quic_shazhuss@quicinc.com, 
+	quic_cchiluve@quicinc.com, Prasad Sodagudi <prasad.sodagudi@oss.qualcomm.com>
+Subject: Re: [PATCH v1 2/4] pinctrl: qcom: msm: Fix potential deadlock in
+ pinmux configuration
+Message-ID: <l2jnveusblgo5cfou3mx3usn7qgenj65wfyrnycmaqamkvhkee@gy745hkc3poc>
+References: <20251110101043.2108414-1-praveen.talari@oss.qualcomm.com>
+ <20251110101043.2108414-3-praveen.talari@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -81,19 +68,64 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20251106094742.2104099-15-maxime.chevallier@bootlin.com>
+In-Reply-To: <20251110101043.2108414-3-praveen.talari@oss.qualcomm.com>
 
-On Thu, Nov 06, 2025 at 10:47:39AM +0100, Maxime Chevallier wrote:
-> The DP83822 can support 100BaseFX. This mode was only accessible through
-> custom DT properties, but there also exist SFP modules that support
-> these modes. As this only requires setting the relevant supported
-> interface in the driver, expose the port capability with the new
-> phy_port API, allowing SFP support.
+On Mon, Nov 10, 2025 at 03:40:41PM +0530, Praveen Talari wrote:
+> Replace disable_irq() with disable_irq_nosync() in msm_pinmux_set_mux()
+> to prevent potential deadlock when wakeup IRQ is triggered on the same
+
+"potential"? In what case will calling disable_irq() from the irq
+handler of that irq not deadlock?
+
+> GPIO being reconfigured.
 > 
-> Reviewed-by: Christophe Leroy <christophe.leroy@csgroup.eu>
-> Signed-off-by: Maxime Chevallier <maxime.chevallier@bootlin.com>
+> The issue occurs when a wakeup IRQ is triggered on a GPIO and the IRQ
+> handler attempts to reconfigure the same GPIO's pinmux. In this scenario,
+> msm_pinmux_set_mux() calls disable_irq() which waits for the currently
+> running IRQ handler to complete, creating a circular dependency that
+> results in deadlock.
+> 
+> Using disable_irq_nosync() avoids waiting for the IRQ handler to
+> complete, preventing the deadlock condition while still properly
+> disabling the interrupt during pinmux reconfiguration.
+> 
+> Suggested-by: Prasad Sodagudi <prasad.sodagudi@oss.qualcomm.com>
 
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+That's weird, I debugged your deadlock for you and told you to make this
+very change in:
 
-    Andrew
+https://lore.kernel.org/all/7sxsfyu2kqbycyfftwfhrncwk3dfnubmzhyi2rqi3jtvi5qsnh@bya3cii45zhn/
+
+So I guess Prasad told you how to fix this issue before I invested the
+time helping you?
+
+
+Change looks good, and description captures the problem.
+
+Reviewed-by: Bjorn Andersson <andersson@kernel.org>
+
+Regards,
+Bjorn
+
+> Signed-off-by: Praveen Talari <praveen.talari@oss.qualcomm.com>
+> ---
+>  drivers/pinctrl/qcom/pinctrl-msm.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/drivers/pinctrl/qcom/pinctrl-msm.c b/drivers/pinctrl/qcom/pinctrl-msm.c
+> index 67525d542c5b..e99871b90ab9 100644
+> --- a/drivers/pinctrl/qcom/pinctrl-msm.c
+> +++ b/drivers/pinctrl/qcom/pinctrl-msm.c
+> @@ -189,7 +189,7 @@ static int msm_pinmux_set_mux(struct pinctrl_dev *pctldev,
+>  	 */
+>  	if (d && i != gpio_func &&
+>  	    !test_and_set_bit(d->hwirq, pctrl->disabled_for_mux))
+> -		disable_irq(irq);
+> +		disable_irq_nosync(irq);
+>  
+>  	raw_spin_lock_irqsave(&pctrl->lock, flags);
+>  
+> -- 
+> 2.34.1
+> 
 
