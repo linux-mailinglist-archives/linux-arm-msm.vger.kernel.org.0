@@ -1,217 +1,130 @@
-Return-Path: <linux-arm-msm+bounces-81269-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-81271-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [142.0.200.124])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9833AC4DF05
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Nov 2025 13:58:22 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 976FAC4DBE9
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Nov 2025 13:34:30 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 51B2E4FFA03
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Nov 2025 12:48:32 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 692A8188BA9F
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Nov 2025 12:34:55 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id EC9133711AA;
-	Tue, 11 Nov 2025 12:30:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6A6FA3A8D79;
+	Tue, 11 Nov 2025 12:34:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="eSxsaPr6";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="JuaxlcbR"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Oc6cH8e7"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A01636E1AE
-	for <linux-arm-msm@vger.kernel.org>; Tue, 11 Nov 2025 12:30:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A7F83A8D6F;
+	Tue, 11 Nov 2025 12:34:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762864208; cv=none; b=YXXew13Dny1hIPlGPUtxlRDPImp68qYf9SLyHiZqSrSE9EV1cve/NcU9Ycs+N6lujUNtD7/UbqMMHFG+y9FeK6ns0bMp2N2E4DUTFI/axfHEWcNx+V0BCPG1AySz7LSqAx9cB/L+3dR3j6UVyGGR0WPLTBvfgIpiHkh7UGy2IME=
+	t=1762864464; cv=none; b=Clzqump8helcoFZAzJIDRwIZ80sMmqMdtwkrTEC2wTk4WMQjR1ndGX3SQr2cWprC2fn9W82vMf5L22sU0QQPwCkrP0ZHWOyHi43e//CcAY1kGoXsHM/CBv8re2zAKmF1WJ5NjF+tsL2L1UYAUyT1gCpF+9ICI875VVi2tJfsP2Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762864208; c=relaxed/simple;
-	bh=dB8Ue9D/OJCd2P+B6eSyqNbmWDWbA3cTGphzjnIuCJY=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=iuGwb1l9D9Hg2oVktPHs8QDv0jafZ+PkbpiNHlhxvKyPIGMsM+rjEItBZribtMPO7WgaOkndlTXOdGjgk68qV6KAY8xUf2pBlLQXwrmMxhEzLM+VY3VmMLBY8dRYlfGuOhT69C2aC3ZYaDN2Y7OGvF4VVQdWM1YTcSVQHFpDfiA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=eSxsaPr6; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=JuaxlcbR; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 5ABBGVgY2129963
-	for <linux-arm-msm@vger.kernel.org>; Tue, 11 Nov 2025 12:30:06 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to; s=qcppdkim1; bh=hBs6+xWoLI/U3b24rkOBpj2F
-	X7NTpjk+sdbP859Hs0s=; b=eSxsaPr6WrcV5ySsbXB9AYitmCJYpQFggD+nREFQ
-	pG2uX8DRL+X4TNu0TEJNH3G+Y5fIs/zXNu2GsVVsftljOFzfCI8q+xSN9ZVKt1cT
-	AMDCAAHdDWd/Mxp6Sd55K0MV7R/lCekb+a/txYFISaZ+94e74VSkE53HZRFEp7cq
-	qt+W2abJoVe9XYk9We8mvXHVJK1DjbzSk2RJlKWPCCv22CRu5Rgch/8QLMQflF/B
-	1n0dSArA4TyMHwSIW6cxDBUBwEkQqzfSg4mPnd1nLaokUVQOdfvXxr15mFYEquou
-	8Z0hfWV8uUOGrGUV5fmx5by/rgYi4TxCgnswYT5FUlljDQ==
-Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com [209.85.222.198])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4abvhthkhp-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Tue, 11 Nov 2025 12:30:06 +0000 (GMT)
-Received: by mail-qk1-f198.google.com with SMTP id af79cd13be357-8b264bbe20bso828092085a.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 11 Nov 2025 04:30:06 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1762864206; x=1763469006; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=hBs6+xWoLI/U3b24rkOBpj2FX7NTpjk+sdbP859Hs0s=;
-        b=JuaxlcbRZkQbjzX9tRMI6NY7pcYSG9Ty9SEU8gXdHCpvVtThRdHBBfYvV7VVFVjTd8
-         O5oE3aJkel1zuGwOo6VIVardtaeqe36epmrv1RluJpCkV7pBo2poIR4ud/ZYacUoXQKo
-         V1xDvdLSC07bSs4ywihIiY8ivJYNrPhbNhRyN9szo0ffoCdhuNG/76+89hv25Qz/QKGR
-         s8v01TCRnZ9KPCyepzJdAPMqGHkd3agZ+sXkSTKi00E7Z5AUD9SrVtP3T+ufsv+c5lvv
-         kPrQXC2rcYTGoiEadK0Xy5vOI8dqYOGA0t4T3pWQkcRzgArcxqUBCNFBzyCK8A1KNpFG
-         T1tg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1762864206; x=1763469006;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=hBs6+xWoLI/U3b24rkOBpj2FX7NTpjk+sdbP859Hs0s=;
-        b=Ce3NWpqbURt8mf6xb4YAZTVPhL3pAb2SAaJr2+lVGVkwtEzoQTzWHkOGai7LZRdgN8
-         6qK2C7cV5Gktfw2Y2xkQZ+MeI80c70IxslcqdvZrUpzgLIYEKewjGW+EwmHZuSR9S6fE
-         tLxxG2UV4eEiAVMUZksp0Wbq362nPb/83tW3kgb5BhLmbKPeSasTQCCVsCfMZWp5e3h8
-         P8Y+lpBkQ3TnJCPYWn4Kt8owSbQgYgWCbT3x9MCAforCDzEGo3ygPqClU/fJKyrf7ugX
-         esOSGr++Xkw+YrJde8K2iXfjbqfmJPDDasS03WnMcH271aqFAov5dwRa4w5voQL9VY3q
-         OIDA==
-X-Forwarded-Encrypted: i=1; AJvYcCVMqSER3QdlYIENlsoSU8s+wHYLC2mSxtQK7Byc7MzClDuRh9UKxl+rZd4v6M0mHtccLrHMIxc7woLtoSxR@vger.kernel.org
-X-Gm-Message-State: AOJu0YzIsZ6bQeRa/tNCY2u9QucKjt8y5X7ZurS+c0a5yrddkBlr0p6B
-	suoHCYVqBtMO8oW43pzphGo3sitymn5GYpVJ7e4Pp/h/p59/1qrJY07ySJ5oPmJ3n9rH7pYwly+
-	SXxIdEDC+1yUfSbTWD7KW9w8UfyVoIpHa15MTXNwE3IlZ7HSjxW50gHYb5gNzZ3/8cCea
-X-Gm-Gg: ASbGncvjru2wrwS9V/v6hNW8AqEU5jqVMtjpq0DnM9Wv0QCHmYW+iPlr+GdkKXHX7Oi
-	ALAjyrLBqjVJXnS6ugO1aAy1/BXfbL6EWsASX7HkfXd0di+5HLdj4y3fFDDeslngCLJpLxGD7R6
-	qwB8T0HlA3bLnnET0noHsSrpRd+O9y/avPyLD3gLJyRqttAu5WwnlwOfnksDk7XfYtWZq6kh6KV
-	6oGnzMzYLzs1KM8rY1uKuMZqUZKvfEoxeaxguCngOPNqCJ7aKxcRNbw/NcWNCTIPiaDDzGYlgEu
-	7Ul8c4xAwQ80bGpahvp8s72tW4iHdipswbgcX7MNiZKIDz0eUtmU3OTihdUhBGgeeKxKYolbWzv
-	ndFfggDAiOcSX44OpLKp4hAcgJ673aYWxaW5GHC7SYW5eq2RBZK6ULdEEEaxK5UD7GAVXxdMzEn
-	yoWSKcUAo3vqRI
-X-Received: by 2002:ac8:5f94:0:b0:4ec:fb4d:105e with SMTP id d75a77b69052e-4eda4fe0a8bmr137123201cf.69.1762864205677;
-        Tue, 11 Nov 2025 04:30:05 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IF/wAmTt64QZYcRPu2yVc2CYacZ2Ql3aGNECWBHUNigTi3vj/RKjWKUB+wbah0KY0qbLTwsww==
-X-Received: by 2002:ac8:5f94:0:b0:4ec:fb4d:105e with SMTP id d75a77b69052e-4eda4fe0a8bmr137122491cf.69.1762864204948;
-        Tue, 11 Nov 2025 04:30:04 -0800 (PST)
-Received: from umbar.lan (2001-14ba-a0c3-3a00-264b-feff-fe8b-be8a.rev.dnainternet.fi. [2001:14ba:a0c3:3a00:264b:feff:fe8b:be8a])
-        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-37a5f078765sm44935281fa.19.2025.11.11.04.30.04
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 11 Nov 2025 04:30:04 -0800 (PST)
-Date: Tue, 11 Nov 2025 14:30:02 +0200
-From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-To: Bartosz Golaszewski <brgl@bgdev.pl>
-Cc: Vinod Koul <vkoul@kernel.org>, Jonathan Corbet <corbet@lwn.net>,
-        Thara Gopinath <thara.gopinath@gmail.com>,
-        Herbert Xu <herbert@gondor.apana.org.au>,
-        "David S. Miller" <davem@davemloft.net>,
-        Udit Tiwari <quic_utiwari@quicinc.com>,
-        Daniel Perez-Zoghbi <dperezzo@quicinc.com>,
-        Md Sadre Alam <mdalam@qti.qualcomm.com>, dmaengine@vger.kernel.org,
-        linux-doc@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-crypto@vger.kernel.org,
-        Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Subject: Re: [PATCH v8 01/11] dmaengine: Add DMA_PREP_LOCK/DMA_PREP_UNLOCK
- flags
-Message-ID: <xozu7tlourkzuclx7brdgzzwomulrbznmejx5d4lr6dksasctd@zngg5ptmedej>
-References: <20251106-qcom-qce-cmd-descr-v8-0-ecddca23ca26@linaro.org>
- <20251106-qcom-qce-cmd-descr-v8-1-ecddca23ca26@linaro.org>
+	s=arc-20240116; t=1762864464; c=relaxed/simple;
+	bh=oJHHP/sCumz0LK6v3+qYS89WnkQEB+RP1IS+56P1ZN4=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=k8q1FWzcVHg6mFkA9hpO5LGFKvXxHTdCOle1f+6JRj+h6TPEmTa+wXzCbV/En/UEva+eOpskya+KgZAQ/SCX2fUK2FIR66WfCqczUDSnqywoQU3gDWPf7utCaSpqV3sl+PU6zj4K87qxjR/K+ZWsTvzNKhWHarS/dsFouKC5+Cw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Oc6cH8e7; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPS id B7A4EC116D0;
+	Tue, 11 Nov 2025 12:34:23 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1762864463;
+	bh=oJHHP/sCumz0LK6v3+qYS89WnkQEB+RP1IS+56P1ZN4=;
+	h=From:Subject:Date:To:Cc:Reply-To:From;
+	b=Oc6cH8e7DPj0WRd5lF6kMjyhTnXrbZ0cFAuJQ2CoPz4pAHTJ6extkgRWGELdsWDY2
+	 M+/35dCCMndnfmELsptsWRWxxa/55ZCXZ3dxQuaRyUrGdd50UABnUqf3+53QOoW/cN
+	 KG3mTIi/m+dZAcxmJPbJf8v3WHVOT+2SzJmZflkMO7Dgrs7vYqLP3n4Rf8nBht1BDY
+	 aegu8EJTVWblyh2Zj0Vdu8Dr4EU+dNmgad76qCfKmTeZrofAWHnC+m06P7055NVzD4
+	 YMueVXdzAdaNfCHcHtimhT8w9LGongayuoubOmYGoZ6/dX8AgONWbdHGs+u1WrfBkm
+	 2nRiyxZBLbJgw==
+Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A9204CCFA18;
+	Tue, 11 Nov 2025 12:34:23 +0000 (UTC)
+From: David Heidelberg via B4 Relay <devnull+david.ixit.cz@kernel.org>
+Subject: [PATCH 0/2] ath10k: Introduce a firmware quirk to skip host cap
+ QMI requests
+Date: Tue, 11 Nov 2025 13:34:21 +0100
+Message-Id: <20251111-xiaomi-beryllium-firmware-v1-0-836b9c51ad86@ixit.cz>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20251106-qcom-qce-cmd-descr-v8-1-ecddca23ca26@linaro.org>
-X-Proofpoint-GUID: SWPLdbxSB6LWGQKyk-Qq7CFobLCjRxDR
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMTExMDA5OSBTYWx0ZWRfX7QH42RfAsT0W
- 7NSA9zx7i37l7yOwfAMoUHy3Y6CixJj7NbBVEOVZBUvV3N7X4Lvrjez7plYerp37FCEpzbIgyYX
- DU6T3xlsBAJlBuDcY5j19P4vfZgnFr0sII18U9FQIaBItxU/VVvLkFGrzVbU34eSXBM6vW2Sye3
- pid4rkxOHCpZrv1R155H9QFpb7BnhYQpg8idTXgU5Bg3CaL3/+7085q/gzEP+UqZNdbHGOpq0Jy
- Q/tAOs4xLvip85oNJNvMnYqYK1+dqycgJise5qqnW/+Cx4newwZy3d4YxUWD/CjB0OZZe8xTjz5
- d/oFPEpWrTxRzoqlq5Gh/EgMXZObfziiOG2imA6vnsnVGkWDgKsUJ1+jcfpj5MfbVDRDAxByD7k
- Jv6uGPtRHhKi9XYDYhbXsw4LWJp5lg==
-X-Proofpoint-ORIG-GUID: SWPLdbxSB6LWGQKyk-Qq7CFobLCjRxDR
-X-Authority-Analysis: v=2.4 cv=d4b4CBjE c=1 sm=1 tr=0 ts=69132c4e cx=c_pps
- a=qKBjSQ1v91RyAK45QCPf5w==:117 a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10
- a=6UeiqGixMTsA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=KKAkSRfTAAAA:8 a=8Z5QE3b6LG9DqZ8cva8A:9 a=CjuIK1q_8ugA:10
- a=NFOGd7dJGGMPyQGDc5-O:22 a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
- definitions=2025-11-11_02,2025-11-11_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 clxscore=1015 impostorscore=0 suspectscore=0 phishscore=0
- adultscore=0 spamscore=0 bulkscore=0 lowpriorityscore=0 malwarescore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2510240001 definitions=main-2511110099
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAE0tE2kC/x2MQQ6CMBQFr0L+2p9QVDRexbio5RVeQsH8BsUQ7
+ m7j7GYxs0mGEVlu1SaGNzPnqYg7VBIGP/VQdsWlqZuzK+hKPyfqE/YdRy5JIy19vEG7qzueAtp
+ LRJDSvwyR6/99f+z7D62fNEJrAAAA
+X-Change-ID: 20251111-xiaomi-beryllium-firmware-d8134ce67fec
+To: Jeff Johnson <jjohnson@kernel.org>, 
+ Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>, Joel Selvaraj <foss@joelselvaraj.com>
+Cc: linux-wireless@vger.kernel.org, ath10k@lists.infradead.org, 
+ linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+ devicetree@vger.kernel.org, phone-devel@vger.kernel.org, 
+ David Heidelberg <david@ixit.cz>, 
+ Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+X-Mailer: b4 0.14.3
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1304; i=david@ixit.cz;
+ h=from:subject:message-id;
+ bh=oJHHP/sCumz0LK6v3+qYS89WnkQEB+RP1IS+56P1ZN4=;
+ b=owEBbQKS/ZANAwAIAWACP8TTSSByAcsmYgBpEy1OwcfWAIeMvcoH7yTxn6/FgW06G7MYu7TJ9
+ 3Wdp4Q589SJAjMEAAEIAB0WIQTXegnP7twrvVOnBHRgAj/E00kgcgUCaRMtTgAKCRBgAj/E00kg
+ cvrkEACqwypCmP83LT1ayifRqq1ffXXYD3H3G5YV2cGif21zY5CAORRr4/wJpFuiwuyjT6/NZXy
+ /ejAlrVl321fcHwDGZBKjdnWfckKbbS9CQlfWiCjfO4AtEemlMXr5pkSqx95KzX1CdFKyVxofqt
+ dTut69E0VaYPwx5epvtVlBWpBZMym6h3x4kKguwRg34za1d2PKu6J/vT2O2Hgo57y/hsnasQELe
+ qjA2y36mo0pxc9KvjZJcFX3RCbUSi+rJGsEglSKPo0fqmfBmzxcvLZNwz3UIyZoZ6qlvgspH5FF
+ DclCcuAwl68HaSLxqi3ZM+QtZY1IJUEyRBVqZH7xu65bzKAUJlQ1w4Okx66Mu1IlVOrNYcarggS
+ frzdCVSi6QtTCSa6FhOQwAmCgoM77DqFnFZ0IeOoncU8Ul34GPsZEA1Muc3MkYNr7Ukj/gSwZNg
+ kRnlKjBxUU5HzUmypt2ai6UbbG6Yb3UFDMvlIoUnA5GiLycUPWqmwuo8syHZvdYOyBn4ZRmcqDu
+ WiJzK251OOXpU2p/lBNfniLKr5Q1L4k+PUIZDG9r71kDnNrjvYLj8L3pTR5fhKFCjBtaL36Pxgx
+ py/Y+oAhfY41AiU9MT+wuLT9+1tCM1EYfTiSWwzAGCg0ix3TIzc2yqa1e6Oe/8xRtjcoLsRwxKp
+ q/9mhNW7f+Drgtw==
+X-Developer-Key: i=david@ixit.cz; a=openpgp;
+ fpr=D77A09CFEEDC2BBD53A7047460023FC4D3492072
+X-Endpoint-Received: by B4 Relay for david@ixit.cz/default with auth_id=355
+X-Original-From: David Heidelberg <david@ixit.cz>
+Reply-To: david@ixit.cz
 
-On Thu, Nov 06, 2025 at 12:33:57PM +0100, Bartosz Golaszewski wrote:
-> From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-> 
-> Some DMA engines may be accessed from linux and the TrustZone
-> simultaneously. In order to allow synchronization, add lock and unlock
-> flags for the command descriptor that allow the caller to request the
-> controller to be locked for the duration of the transaction in an
-> implementation-dependent way.
+It's follow up of recent discussion from
 
-What is the expected behaviour if Linux "locks" the engine and then TZ
-tries to use it before Linux has a chance to unlock it.
+https://lore.kernel.org/all/20251110-skip-host-cam-qmi-req-v2-0-0daf485a987a@ixit.cz/
 
-> 
-> Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-> ---
->  Documentation/driver-api/dmaengine/provider.rst | 9 +++++++++
->  include/linux/dmaengine.h                       | 6 ++++++
->  2 files changed, 15 insertions(+)
-> 
-> diff --git a/Documentation/driver-api/dmaengine/provider.rst b/Documentation/driver-api/dmaengine/provider.rst
-> index 1594598b331782e4dddcf992159c724111db9cf3..6428211405472dd1147e363f5786acc91d95ed43 100644
-> --- a/Documentation/driver-api/dmaengine/provider.rst
-> +++ b/Documentation/driver-api/dmaengine/provider.rst
-> @@ -630,6 +630,15 @@ DMA_CTRL_REUSE
->    - This flag is only supported if the channel reports the DMA_LOAD_EOT
->      capability.
->  
-> +- DMA_PREP_LOCK
-> +
-> +  - If set, the DMA controller will be locked for the duration of the current
-> +    transaction.
-> +
-> +- DMA_PREP_UNLOCK
-> +
-> +  - If set, DMA will release he controller lock.
-> +
->  General Design Notes
->  ====================
->  
-> diff --git a/include/linux/dmaengine.h b/include/linux/dmaengine.h
-> index 99efe2b9b4ea9844ca6161208362ef18ef111d96..c02be4bc8ac4c3db47c7c11751b949e3479e7cb8 100644
-> --- a/include/linux/dmaengine.h
-> +++ b/include/linux/dmaengine.h
-> @@ -200,6 +200,10 @@ struct dma_vec {
->   *  transaction is marked with DMA_PREP_REPEAT will cause the new transaction
->   *  to never be processed and stay in the issued queue forever. The flag is
->   *  ignored if the previous transaction is not a repeated transaction.
-> + *  @DMA_PREP_LOCK: tell the driver that there is a lock bit set on command
-> + *  descriptor.
-> + *  @DMA_PREP_UNLOCK: tell the driver that there is a un-lock bit set on command
-> + *  descriptor.
->   */
->  enum dma_ctrl_flags {
->  	DMA_PREP_INTERRUPT = (1 << 0),
-> @@ -212,6 +216,8 @@ enum dma_ctrl_flags {
->  	DMA_PREP_CMD = (1 << 7),
->  	DMA_PREP_REPEAT = (1 << 8),
->  	DMA_PREP_LOAD_EOT = (1 << 9),
-> +	DMA_PREP_LOCK = (1 << 10),
-> +	DMA_PREP_UNLOCK = (1 << 11),
->  };
->  
->  /**
-> 
-> -- 
-> 2.51.0
-> 
+doing the workaround directly in firmware, so we don't pollute
+device-tree.
 
+I added the change needed to be done in Xiaomi Poco F1, so it's grouped,
+but I'm open to getting in first commit and sending the second later,
+when all firmwares and tools changes land.
+
+References:
+ - https://gitlab.com/kernel-firmware/linux-firmware/-/merge_requests/780
+ - https://github.com/qca/qca-swiss-army-knife/pull/13
+
+Signed-off-by: David Heidelberg <david@ixit.cz>
+---
+David Heidelberg (2):
+      ath10k: Introduce a firmware quirk to skip host cap QMI requests
+      arm64: dts: qcom: xiaomi-beryllium: Add firmware-name qualifier to WiFi node
+
+ .../arm64/boot/dts/qcom/sdm845-xiaomi-beryllium-common.dtsi |  2 ++
+ drivers/net/wireless/ath/ath10k/core.c                      |  1 +
+ drivers/net/wireless/ath/ath10k/core.h                      |  3 +++
+ drivers/net/wireless/ath/ath10k/qmi.c                       | 13 ++++++++++---
+ 4 files changed, 16 insertions(+), 3 deletions(-)
+---
+base-commit: 2666975a8905776d306bee01c5d98a0395bda1c9
+change-id: 20251111-xiaomi-beryllium-firmware-d8134ce67fec
+
+Best regards,
 -- 
-With best wishes
-Dmitry
+David Heidelberg <david@ixit.cz>
+
+
 
