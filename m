@@ -1,130 +1,182 @@
-Return-Path: <linux-arm-msm+bounces-81209-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-81210-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id AE2EFC4D239
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Nov 2025 11:45:38 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 10C74C4D1E2
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Nov 2025 11:42:17 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id F29AC3A28FF
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Nov 2025 10:41:40 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 3933D189DE7C
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Nov 2025 10:42:25 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C14FF34EF16;
-	Tue, 11 Nov 2025 10:41:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id AEEE334EF1C;
+	Tue, 11 Nov 2025 10:41:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="BsBzDYgd"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="fQR7HdcO"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yw1-f170.google.com (mail-yw1-f170.google.com [209.85.128.170])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2AFCF34EF13
-	for <linux-arm-msm@vger.kernel.org>; Tue, 11 Nov 2025 10:41:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.170
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C63634EF13;
+	Tue, 11 Nov 2025 10:41:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762857698; cv=none; b=IXDMGhh5LBCsIjlN6PC2nr5/5fnUEx+zIBOptGa24MHI3jp5Yg52ucrNMoXhk22fJHHjEUzBG4pAoth5vLOzE/A0Wsf1+Xo8i0OLAD4cndzntYuWJADotDnYmVizqspKQsamm/xVc4PH2wvfdGfnSu4fBErUR3IRVsnXTcOtr18=
+	t=1762857716; cv=none; b=UNjeiy0wWVHvuC7iCsC9jga4/R+QhKm4w6nWY2HuCr5IUtJ5vZ8bBKu1IeL9G3QcxMV6WC+OQQ29r8Htjmme4cu4hl+61qh0FxuH+wcmf7i7bo02NEGnEcA3ZC+rUaSV064B95l5lqJeU3RbY20VC9RHy5xGiXRUBt3xfRS3Rpg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762857698; c=relaxed/simple;
-	bh=0cCxQ4zVWtY3CYLsY1wEHVW86S85uWrXzNYWN3lThqE=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=PY2c3UVXN4o71f9eLsBUxpRgM2dRpA8TEhr+KDBfkZqCuedCMFcg3PxRk5BUKc4QJgTLm1oxCJKtXZkkTGPJlK0cUh4Xg1lez34VTa4RCJFnKYxfm6TOnevwcmXCjPOGsex6DSu2Y7COPUycBVgzHyO1aBClscLoOtBK8Ym539s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=BsBzDYgd; arc=none smtp.client-ip=209.85.128.170
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-yw1-f170.google.com with SMTP id 00721157ae682-787f28f89faso18792327b3.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 11 Nov 2025 02:41:35 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1762857695; x=1763462495; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=0cCxQ4zVWtY3CYLsY1wEHVW86S85uWrXzNYWN3lThqE=;
-        b=BsBzDYgdLq5JYwIPqSNeLozEHIi9qdflkd/j+ui5ZkmusTeSLTraVh0m1pdGS7gOCV
-         64pTgt6ji6t0/RlTTav+AJBDlWDXohuCpjSaYCqbZZMCQXwfYjDLgsAje2blEWsbDPza
-         ZLkyEtyiLklNhaHYyqwFdzZrtH+Zp4Bbqerbkrwr7weYuMQmI1CQUNcfE9lrJSBzCuRy
-         Sk6lKnxRtyVwNdW8vfFhBIVU71FHD+tbM4GY6sacppRZUjIG2NJuiwAkbcSiml8mD1ah
-         eSJXv/ko8om9hSU1bk0k35hMHNajUUhmz8o8BDZozzGF1fXDgHO5xFoiTGcSjcqgd5Q4
-         Lz8g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1762857695; x=1763462495;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=0cCxQ4zVWtY3CYLsY1wEHVW86S85uWrXzNYWN3lThqE=;
-        b=TJNhGyVWKi0sdwNkynq55ZU/ZEOP9lA0++FXmwusec1GvjuB6I6b0grxnsCIpc/eRI
-         pH51jmqUkHeEv2nC3awHF2/UmQk5h6CGTnjFbzofD7p5Kb21bWZR7rXfqSfP1cHefEC+
-         HbnTH1BaOH/HGagFq8lAnpErUd3+lzTEFudhogx4BveFWOT5q0bfZnKlqIuZ21j7Nrni
-         2VZX2EuAG9ZONzC//Q6V30gXJ9zW0i2KM3A1VimyCFDoRDV6IuRUzwmJZhDV24LsSRvn
-         /M36NbEa17BVzE+BxmjtiGq0shoHK7sB+iaZCcDJmeiOC3f/NfWV+l4ErqXWOkJy59QH
-         PwBw==
-X-Forwarded-Encrypted: i=1; AJvYcCUuqgfIwsriUSHaX9uRspua8swI6u+jWgdfA29eXF6HaJXbgwA/neDoY5Xyifdn/r9yFzJUjXNJmRP/eUbp@vger.kernel.org
-X-Gm-Message-State: AOJu0Yz3Iirp2VLZDX/qENAhN5natgCQEnOBFaQ+YlvmOw97uP5MyvjH
-	YyeF5LdPYS/qgXs6tOA3Go5Cib0FlbyHXX7XdXCCPTUIrBlZMJz86w+CdlWRQzYn8kDKMzUij7o
-	bD9V5ImEw9G5c/f/pNrZGnG/wYxAPM5wZj3FNVusJiA==
-X-Gm-Gg: ASbGncsvTCs27Aj6H4amYjKLEOuj3cMCnSrCsrOKGksx2ns621vwmMM8h25efXYbjoF
-	WbdRRgvGmhOo/112+MW4CnhvsaauiGpWAtIzl1r4/xD1Znjooj0Fxd5d4zHvOSjD8zKCq6BIIqe
-	UrxfnFPYUh1ZgZtVi1eqi4HgvhgQz2BSzxnQ/EwiClwq8v1tkjq/g02hj0xKRhihrpL8SR3xbh8
-	b7WugudLfkMwWReZqFerW7jbakluy9F+P92YitOSzT24NxGEt+Z8njxEq2/
-X-Google-Smtp-Source: AGHT+IHoTEqTIMeK7JCIYihCqYCVhAe4gzTa4C+3j+k47suT30AzzIQmG9wEWL0FkhepDKD6CvXqSafZZ1SR1+atEmQ=
-X-Received: by 2002:a05:690c:8687:10b0:787:cab5:79a1 with SMTP id
- 00721157ae682-787d543ce2dmr101353817b3.32.1762857694963; Tue, 11 Nov 2025
- 02:41:34 -0800 (PST)
+	s=arc-20240116; t=1762857716; c=relaxed/simple;
+	bh=NPcaHYhKRGkQGSIVVfqEfkF80g8ZkR0Q3JqOUcG6v2I=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=erv1TnkweJsqpiM/wNWrKVYch4+ZoiGGmg18SrCLLFo3KVo7ObhTH4STFidnxaxrunkzlJ7IwFCubHetuHlbvWfK3n8oI+0g0eiYFc9F0JRZev+OX9wM0+dylhPoTbh5lEANx/8gBwj1ciDL4lBNOai71GZPNcSRBN7zs0XsAPM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=fQR7HdcO; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0BEFC4CEF7;
+	Tue, 11 Nov 2025 10:41:52 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1762857716;
+	bh=NPcaHYhKRGkQGSIVVfqEfkF80g8ZkR0Q3JqOUcG6v2I=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=fQR7HdcOgKgx/ZXyCXMEK5sFWCT6/ddD8ZiLyMk+Ph8las/yLL505FnVA6r7isH+s
+	 sQWTnyLcGIKdh1S8+HuZcMwtiT7fwP8ExWuOoalYDSkD8j+3Qwg29Rjbn9qGORsgWG
+	 Yr756m51/mU4TDGhQgSW6/VKTEyw8QYCpkff7AqKzPzoi2xLMZEdRXbUvvSCDWgebr
+	 gBAW03FUcLsT8LAnjO248vnUZ9lFxOAgg+PZOQ7ZB5qIbu8AgIIhjwxqHX4+RbSb52
+	 BhT9DSr1rsOqlURuGw5gOJu8HtmBk7GNYi69iMmGzJWocoi2nXX6tFxt+aSiw3T0Vb
+	 b7rUalMPOPPbw==
+Message-ID: <60583236-692f-4605-9f56-f7dadb46558d@kernel.org>
+Date: Tue, 11 Nov 2025 11:41:51 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20251029-gpio-shared-v3-0-71c568acf47c@linaro.org> <20251029-gpio-shared-v3-3-71c568acf47c@linaro.org>
-In-Reply-To: <20251029-gpio-shared-v3-3-71c568acf47c@linaro.org>
-From: Linus Walleij <linus.walleij@linaro.org>
-Date: Tue, 11 Nov 2025 11:41:17 +0100
-X-Gm-Features: AWmQ_bn0WFQEeQmuj7iPjvAHMQKL1gkynLIxqjiJlR4NSYtZ2qnuSvoaANZDav4
-Message-ID: <CACRpkdZwO8mXvjwS7xgVvHmcpF+_pgKYsj3c3QRUcYWPdCt5ng@mail.gmail.com>
-Subject: Re: [PATCH v3 03/10] gpiolib: implement low-level, shared GPIO support
-To: Bartosz Golaszewski <brgl@bgdev.pl>
-Cc: Kees Cook <kees@kernel.org>, Mika Westerberg <westeri@kernel.org>, 
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>, Andrew Morton <akpm@linux-foundation.org>, 
-	Manivannan Sadhasivam <mani@kernel.org>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Saravana Kannan <saravanak@google.com>, Greg Kroah-Hartman <gregkh@linuxfoundation.org>, 
-	Andy Shevchenko <andy@kernel.org>, Catalin Marinas <catalin.marinas@arm.com>, Will Deacon <will@kernel.org>, 
-	Srinivas Kandagatla <srini@kernel.org>, Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>, 
-	Jaroslav Kysela <perex@perex.cz>, Takashi Iwai <tiwai@suse.com>, 
-	Alexey Klimov <alexey.klimov@linaro.org>, linux-hardening@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, linux-gpio@vger.kernel.org, 
-	linux-arm-kernel@lists.infradead.org, linux-sound@vger.kernel.org, 
-	linux-arm-msm@vger.kernel.org, 
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v5 1/2] firmware: qcom: scm: Register gunyah watchdog
+ device
+To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+ Pavan Kondeti <pavan.kondeti@oss.qualcomm.com>
+Cc: hrishabh.rajput@oss.qualcomm.com, Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>,
+ Wim Van Sebroeck <wim@linux-watchdog.org>, Guenter Roeck
+ <linux@roeck-us.net>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
+ linux-watchdog@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org, Neil Armstrong <neil.armstrong@linaro.org>
+References: <20251107-gunyah_watchdog-v5-0-4c6e3fb6eb17@oss.qualcomm.com>
+ <20251107-gunyah_watchdog-v5-1-4c6e3fb6eb17@oss.qualcomm.com>
+ <hbxtbaoavlsw7pbmg3cfkbyx4nacjfiikckhqgpvlggbh6hu5b@jyporqecfzni>
+ <263d1390-eff5-4846-b2c2-31f96fc3248e@quicinc.com>
+ <3794bb0e-5e2c-4d5e-8d81-d302fa36677c@quicinc.com>
+ <56aqammkwte3tcdzni2unufjp4t4yaqazzdkigrwqsxp3ghcqe@ppe2pjwg3hrl>
+From: Krzysztof Kozlowski <krzk@kernel.org>
+Content-Language: en-US
+Autocrypt: addr=krzk@kernel.org; keydata=
+ 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 a/A=
+In-Reply-To: <56aqammkwte3tcdzni2unufjp4t4yaqazzdkigrwqsxp3ghcqe@ppe2pjwg3hrl>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-On Wed, Oct 29, 2025 at 12:21=E2=80=AFPM Bartosz Golaszewski <brgl@bgdev.pl=
-> wrote:
+On 11/11/2025 11:34, Dmitry Baryshkov wrote:
+> On Tue, Nov 11, 2025 at 10:51:43AM +0530, Pavan Kondeti wrote:
+>> On Mon, Nov 10, 2025 at 09:43:53AM +0530, Pavan Kondeti wrote:
+>>> On Sat, Nov 08, 2025 at 07:26:46PM +0200, Dmitry Baryshkov wrote:
+>>>>> +static void qcom_scm_gunyah_wdt_free(void *data)
+>>>>> +{
+>>>>> +	struct platform_device *gunyah_wdt_dev = data;
+>>>>> +
+>>>>> +	platform_device_unregister(gunyah_wdt_dev);
+>>>>> +}
+>>>>> +
+>>>>> +static void qcom_scm_gunyah_wdt_init(struct qcom_scm *scm)
+>>>>> +{
+>>>>> +	struct platform_device *gunyah_wdt_dev;
+>>>>> +	struct device_node *np;
+>>>>> +	bool of_wdt_available;
+>>>>> +	int i;
+>>>>> +	uuid_t gunyah_uuid = UUID_INIT(0xc1d58fcd, 0xa453, 0x5fdb, 0x92, 0x65,
+>>>>
+>>>> static const?
+>>>>
+>>>>> +				       0xce, 0x36, 0x67, 0x3d, 0x5f, 0x14);
+>>>>> +	static const char * const of_wdt_compatible[] = {
+>>>>> +		"qcom,kpss-wdt",
+>>>>> +		"arm,sbsa-gwdt",
+>>>>> +	};
+>>>>> +
+>>>>> +	/* Bail out if we are not running under Gunyah */
+>>>>> +	if (!arm_smccc_hypervisor_has_uuid(&gunyah_uuid))
+>>>>> +		return;
+>>>>
+>>>> This rquires 'select HAVE_ARM_SMCCC_DISCOVERY'
+>>>>
+>>>
+>>> Probably `depends on HAVE_ARM_SMCCC_DISCOVERY` is correct here.
+>>>
+>>
+>> Dmitry / Bjorn,
+>>
+>> We are debating on this internally on how to resolve this dependency
+>>
+>> - QCOM_SCM depends on HAVE_ARM_SMCCC_DISCOVERY which means restricting
+>>   QCOM_SCM compilation than what it is today.
+>>
+>> - Adding #ifdefry around arm_smccc_hypervisor_has_uuid usage in qcom scm driver 
+>>
+>> - Adding stub for `arm_smccc_hypervisor_has_uuid()` which is not done
+>>   for any of the functions defined in drivers/firmware/smccc/smccc.c
+>>
+>> We are trending towards the first option above. Please let us know if
+>> you think otherwise.
+> 
+> The same as before: 'select HAVE_ARM_SMCCC_DISCOVERY'.
 
-> From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
->
-> This module scans the device tree (for now only OF nodes are supported
-> but care is taken to make other fwnode implementations easy to
-> integrate) and determines which GPIO lines are shared by multiple users.
-> It stores that information in memory. When the GPIO chip exposing shared
-> lines is registered, the shared GPIO descriptors it exposes are marked
-> as shared and virtual "proxy" devices that mediate access to the shared
-> lines are created. When a consumer of a shared GPIO looks it up, its
-> fwnode lookup is redirected to a just-in-time machine lookup that points
-> to this proxy device.
->
-> This code can be compiled out on platforms which don't use shared GPIOs.
->
-> Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+HAVE_ARM_SMCCC_DISCOVERY has a dependency which is not always selected
+(e.g. ARM32), thus selecting it might lead to warnings of unmet
+dependencies. Whichever they choose here, they need to be sure to
+actually compile test it, because existing patch lacks that and reports
+are proving lack of building.
 
-The concept is sound and we have to begin somewhere, optimizations
-for code reuse and cleanups can be done in-tree.
-
-So:
-
-Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
-
-Yours,
-Linus Walleij
+Best regards,
+Krzysztof
 
