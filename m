@@ -1,81 +1,81 @@
-Return-Path: <linux-arm-msm+bounces-81426-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-81427-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id DB618C52A59
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Nov 2025 15:17:38 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 75FEFC52ABC
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Nov 2025 15:21:24 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id BAF1C42820D
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Nov 2025 13:57:07 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id AE8AA4A031D
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Nov 2025 13:57:25 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9000F26ED3A;
-	Wed, 12 Nov 2025 13:55:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2992733ADBF;
+	Wed, 12 Nov 2025 13:55:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b="G9cdtQQ1"
+	dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b="peYjgCqc"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f52.google.com (mail-wm1-f52.google.com [209.85.128.52])
+Received: from mail-wm1-f51.google.com (mail-wm1-f51.google.com [209.85.128.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02DE0338901
-	for <linux-arm-msm@vger.kernel.org>; Wed, 12 Nov 2025 13:55:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6FE233A026
+	for <linux-arm-msm@vger.kernel.org>; Wed, 12 Nov 2025 13:55:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762955753; cv=none; b=W9ZHZUaSPcp++zWqC5IHNxCzAPhZtmvXWitn58GrF84IrtXAvhjDGa7Lhw0AgQM5KejgHBxWimKkP+ICovoReOJpWKZ+0s/QQ3LkzKIGqzAs/qJTx+bYkAvq+sQVtntYJaAT9fY3i0RqvPhqxPYGVItu3whbc7MSpHnUJ8Qdqio=
+	t=1762955755; cv=none; b=f2EN2kujAp81QRYFKggS/TIFhHTvVdYAWQVjA64HPhCW4rUPycjYx5WR8N47PP29xZbKQA9OwVW+1vyNTrh5KILnCzP18N0gs1L4UZV8beb2hals57SNQ7Ky+xQGmGzGWwnc8NbrBzZb7Xgwgj0U8SilfaqeEgrRPch4FDZHTIM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762955753; c=relaxed/simple;
-	bh=QD6mLhmU5x+wBz3cjbrtkC+qGfrTopjdkBF+9DflXwU=;
+	s=arc-20240116; t=1762955755; c=relaxed/simple;
+	bh=SjuucycP/0Q2Xk30EDiwcJsYjdryTcHS9+y5uWbSXvs=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=BcoWWRFMTDxLM7iH8JIUBBnGfIDPOaLdqvIZrlAlvqPG4NWR5Rczw00XIM4jaZPf6y62G4VBgmlE4wVJULIXS9F2NwnoakNPT+koRJpxVPTX2FEUaHhO8a9wFs7KFNGJN7nCXT4+jqUCGEDd5Kpa38B6Qx/oO7de4cw+1ScpmP0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl; spf=none smtp.mailfrom=bgdev.pl; dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b=G9cdtQQ1; arc=none smtp.client-ip=209.85.128.52
+	 In-Reply-To:To:Cc; b=M5HMJ39bgr2uDUnSQIo+o5dI6v1J/jEhT7y8Zi9lnJkKjvXHGs4+CGFn7HdcrzKj9Mp7LGdYmF9/oBKNC2mPbVgTWQ1+UqS6v9/kn7Vq8HcM8Qwr9T5YP4nBeRz2VmEOqxomWKhs5CXTrKNFTNqartKqPu826sqOnULxujSicY4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl; spf=none smtp.mailfrom=bgdev.pl; dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b=peYjgCqc; arc=none smtp.client-ip=209.85.128.51
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl
 Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=bgdev.pl
-Received: by mail-wm1-f52.google.com with SMTP id 5b1f17b1804b1-47778704516so4535015e9.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 12 Nov 2025 05:55:50 -0800 (PST)
+Received: by mail-wm1-f51.google.com with SMTP id 5b1f17b1804b1-47721743fd0so4933365e9.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 12 Nov 2025 05:55:52 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=bgdev-pl.20230601.gappssmtp.com; s=20230601; t=1762955749; x=1763560549; darn=vger.kernel.org;
+        d=bgdev-pl.20230601.gappssmtp.com; s=20230601; t=1762955751; x=1763560551; darn=vger.kernel.org;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=uqf/JX2L7LJxSdDCATW4KSy8LDgu/Cgd29UQPhypHSU=;
-        b=G9cdtQQ1YZnO4Hg+LaiYa/oQKY6AVRB8+suvDjiCT+MJIXz+pNTsErPllL5qRpzDXD
-         ixZZpIv8pLhEwSHQbhGTXP6GjpoR1giPT9ibRN8ZYuXITPIws4WijFL5zRjzYodTBTz6
-         UURLhKKtYvDE2NDchvySwxLjBX/7Nw/HCqJK/3n0e2FdLmWKXZHdhl4FpY30UqlgDaRZ
-         +k81t73BF/9bbHz9r9P7qQL+xQZzbkoNyygg3ntm0MdPi51RRSOAsTYUa2Oqrp5IXUxh
-         hOYVNPc9/BRY6LA8sVL1IYar8wkzI43v0H4lsyZXIW4ZuS7GhK+BU30eizai7gQNmrDm
-         YKSA==
+        bh=79Q7HabNP3kse4nLU/vAYoWcwWnuSm1uGzBIAnSPTng=;
+        b=peYjgCqcQ2d1Rhz1LjANgzHoPt40wgWy/YWTR9e9FKL8+bn4nqFOCkDKg3ZA8e/wNV
+         4beyRt2u8UyeQ10MCBNKmnJ/3ophvLmgk1n4KVVj3Rgr+pBzf0BQg314S73LdYD3C6+g
+         4FaJWgW88lUdUue+IBTcb4IOvnJ7iGJuVMwwakdccz/IEJFlq3k4q+29Ad/XKFBssCjm
+         9+gcJ1oydLy03/G4COAV9kmwyxXm+InBc7kndRDcfgcF43PVvSH4t8z/zd6SzCb0yUTE
+         xy4iWiRbc9WdE7jTbXWUj3oMI7NhRogi+utZhSi3maixHZk9mxlY2rii1w9RfwcMmpZ7
+         rqKA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1762955749; x=1763560549;
+        d=1e100.net; s=20230601; t=1762955751; x=1763560551;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
          :cc:subject:date:message-id:reply-to;
-        bh=uqf/JX2L7LJxSdDCATW4KSy8LDgu/Cgd29UQPhypHSU=;
-        b=nsRtAfJdzjKK0/4jl+E/PYB/n49pqMSJkxant8U9E64w05c7/uwLd8/RR0+WmnMF3k
-         yhqzHzDLr20PHD+K9p0N5jHlrc1jeBj1noAfS8zd4v+aYZFUjKhKw4f+8+z6nvB0jf/z
-         HmmHm9n9197A2UqvKKQWEAr7zJcuLNblgWlnXjkfk8+kqt294sW3J0x15VjnJX3ACbRe
-         bMrFT5cX60I4nB47HThGNjrlsBjO1Gy6ptMK2i/YzUTtv2ej9nJ3sb40KS+aqkGAk9a7
-         BfzT3BcpaL5edSbZJbUOltxgpuPAEoWk8hP0JVqdLuo7G+opc2uvRrYQdDpJvvJIA0JW
-         IqzQ==
-X-Forwarded-Encrypted: i=1; AJvYcCUBTh/jObyr6l8RwBxoayTEEryvQd1YSFXyJqImZFcJp0sFBUJWkQGJM6WkVq7iDRCxT6bRlrHd+5YaLIYj@vger.kernel.org
-X-Gm-Message-State: AOJu0YyCNFyxRvXV8BQwRTbTY1Wrr0JvdM9Qt2HmyfwA1Fzobp5pzfg9
-	XcPOCsgSWzthhtyMUdGP3XhJFS4Dht7F8c5/uuTLbEeg70QgB+qn8srbvPlkLEygHj4=
-X-Gm-Gg: ASbGncsGwnu1Cd4PsOGxUInm8IK4dINqOHXsMWB2LUuJUXHDo7vbmZBpCRwf9Kg2c6D
-	NO8SaieOcLUOyOAq6WL8BzMO5b/vTNv/e9K0VNrXg6Ze2xedPvehZfDhe8P1WJ2coctTk8tIUvW
-	KL+tVP1Zrmkb+xlAR+KS5BMQoLL1uZq+RndNJynYJblOAb4y/k5kU+cr64WWig0giLumNRb+48c
-	og0rqZbTtGogS2Sx2ax2Fy9P2zCo34GgWUboFiI5/RJHRsfz5axubIhVXakFk9b9NGTI869DLaB
-	WiZRmw1bSLj7c865fSHX7hbI+YCp7i8brq8G7b8Yo4tNAtImAFTcN39jIvxSAosyY+4cckfWCrD
-	TSGVWXEpdUmuUfybyg5CZjy2tYbTc6mCBuODJkKJ81l0z7MeL87cW2iclSK34FLaw4Hg=
-X-Google-Smtp-Source: AGHT+IEFNNscHY36LRUkabyqy8pJkgvj8lmUeTc4bSwD2osPChT3dNC9Hz4duL4aGHcwmKNCJ8VeaQ==
-X-Received: by 2002:a05:600c:3113:b0:45d:d353:a491 with SMTP id 5b1f17b1804b1-47787044ccbmr30737595e9.1.1762955749313;
-        Wed, 12 Nov 2025 05:55:49 -0800 (PST)
+        bh=79Q7HabNP3kse4nLU/vAYoWcwWnuSm1uGzBIAnSPTng=;
+        b=JufGdfZrp6w1fjfy5xRD5ch203XWj+FRWcY7itHQ5Fc9/9Xsv4CgitFvSq3Jy3jFWm
+         FeP2/hPsCdGJMkTSK1mvTiUPhU1FeIVqCZWZ+36AdUCuVSD1YwZIwzXqyTISp6g1/kNU
+         bU8oLQfsiM6NSuM1Kz0qveInD9Yd4n9L9EOiGplU55CvDihOeAAlrhnneInRQsihEDCw
+         7loldDIt4D20NSbqognanfsLUVrQTDLH2wcJvaDbpZpw3Ihk4jTG7aQy642qtHjOXdFQ
+         HdNncIiNETOP2lwr+EQrc0mPP9iaF4jNlB+6wbkeyIvZZ9Wmot0uQyi1A88IDJ5pDoUH
+         FWSQ==
+X-Forwarded-Encrypted: i=1; AJvYcCWiNTlQYK7kABNEN4OdiJFMcbiAcUyncqraRloXGnInnXQdfP9xTccTvhXY5TxyI1Z/DnGp6OJKXmC1QqHw@vger.kernel.org
+X-Gm-Message-State: AOJu0YxzyfWNz/3OC3nkSgc6MHNIIu1DINLPQfL0JXmOc8ahWqjYDJR/
+	xWZsMEuGQ354u9Jqz75iGHQUvWtdx9Q29kf6mJYsYJ5rVUvgwLw6t+iwbx8a1uGxvvM=
+X-Gm-Gg: ASbGncsAt/JGnxwwY5740jl0GCmvZoMG7ZhQfCvBRGMED21ZgpBC4HAGznHR4ctdMkQ
+	E0z6ozmHq7fd8UG9it+LFoTmi7kCXbApMvJXz9fNR1AbJeNOquh/I48OBSlOzfNfq9czgi96CUP
+	UBg8hpGBbybT90O739zRhhvBP/NH83XLAwLdyyN9khWBXvn/EOC39HBc7Eqetl0DcP7vluAHmCI
+	Qw8iklMBt+EGHAZyNF1EPBznhJiAvv6r2Tnb/CFEgvH5HeVYVZlixnypye9dQonS5p+sPAxc+RU
+	5UdHe9HgyqIwRjnM8MRgVOASARYB2iX2PuaqNXqllvumNDxsj4NiRPzJRYdEYlFqJFjVyp3ZjPo
+	0yxIgR7Tnpu58E1lfDhlv/DZe3OLaUygLBvzT6E6IISbHyOI+KLTGc4wumtJKsouOS8w=
+X-Google-Smtp-Source: AGHT+IH/gUeUf4a+LjvPsAKw42U6Jw2pmBzvctQUKX6vryQGuNHC73dD3y2nVLgM1qQW+g7uw5YxOg==
+X-Received: by 2002:a05:600c:1c02:b0:46e:4e6d:79f4 with SMTP id 5b1f17b1804b1-47787085b43mr32791955e9.15.1762955751026;
+        Wed, 12 Nov 2025 05:55:51 -0800 (PST)
 Received: from [127.0.1.1] ([2a01:cb1d:dc:7e00:2a6:e453:42d3:11])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-47787e2b835sm37711685e9.2.2025.11.12.05.55.47
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-47787e2b835sm37711685e9.2.2025.11.12.05.55.49
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 12 Nov 2025 05:55:48 -0800 (PST)
+        Wed, 12 Nov 2025 05:55:50 -0800 (PST)
 From: Bartosz Golaszewski <brgl@bgdev.pl>
-Date: Wed, 12 Nov 2025 14:55:35 +0100
-Subject: [PATCH v4 06/10] gpio: provide gpiod_is_shared()
+Date: Wed, 12 Nov 2025 14:55:36 +0100
+Subject: [PATCH v4 07/10] arm64: select HAVE_SHARED_GPIOS for ARCH_QCOM
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -84,7 +84,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20251112-gpio-shared-v4-6-b51f97b1abd8@linaro.org>
+Message-Id: <20251112-gpio-shared-v4-7-b51f97b1abd8@linaro.org>
 References: <20251112-gpio-shared-v4-0-b51f97b1abd8@linaro.org>
 In-Reply-To: <20251112-gpio-shared-v4-0-b51f97b1abd8@linaro.org>
 To: Kees Cook <kees@kernel.org>, Mika Westerberg <westeri@kernel.org>, 
@@ -107,145 +107,47 @@ Cc: linux-hardening@vger.kernel.org, linux-kernel@vger.kernel.org,
  linux-sound@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
  Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=4871;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=787;
  i=bartosz.golaszewski@linaro.org; h=from:subject:message-id;
- bh=rku5j8/61mOnZo3K42RMkCwcBTvPmLvpWhJ//UjCrvY=;
- b=owEBbQKS/ZANAwAKAQWdLsv/NoTDAcsmYgBpFJHW5VasetWt4Jh3G+BgPMs12efA7BJwxMkfN
- LcE6bdJIyqJAjMEAAEKAB0WIQSR5RMt5bVGHXuiZfwFnS7L/zaEwwUCaRSR1gAKCRAFnS7L/zaE
- wyd0D/9nnLMMOh4sABy5YsnZXVjgdMnmhhhkvdisFsVsPBV5TdVo/A7IhF054U2v5Uf6AF6M79q
- JKYRgvSvOiVoAK9cd6Go279E5RxLepgNj3QQeUZktSE7dYru17LTKqyFhuCl4nTbJBa4vKMFpZk
- 4FmCLE00GUkv9sFfJaTYmLAoM9bKTl5a5PCL/lzQlAOXeQNcW8nuTLFWQ5DjYj6NCXX1BtvluBX
- fGN2+VFE4s4ZG2eMA6SjZXl2Ld7Or34kZqrNk29UjtwLu5tHGZlitked6O287oU0aUDEOuOoe58
- wuq0mXhxryoQoVZ5vaRLg6/nln6JZEiiNUPyA6IJr4d+xvhE3Y5A1H4pxDrDfBUPGCOc+mTPVqf
- t+KydMKuSENCE9s0hrAMkJXGfTq2XWMDfVmAk5eLqgJ8AOBcbvFUWuWvnClrCWJELcKLNXqJq7H
- k/YyvmMLu3gj04lAngDuLFhdostRkko2DGNlRe+qHZO3O4XErlCwRB6srlPh4jpjlzyrnBJLLSi
- ddeU7IRRp+5x+JvnFQFQguPXJfiI/UT5/gYie1UKRGbctmpjnwmeEG4GtZTXOCNaxV8c50oPVyi
- BjJodEz9ejOIsugiXzpWd7gGACNRr1Jmrj+Bi38K3wLeJLqGzlaOwsPe+lHRPC/aSKek5zBPSF8
- 1gKY7wU6NFDHO7A==
+ bh=90mV0HhkOk2X6mMXJGqXC5YmpVRGBZfIYfoK677b6nQ=;
+ b=owEBbQKS/ZANAwAKAQWdLsv/NoTDAcsmYgBpFJHWKXa26OvbXIS4uHVQend8AfFjaKwOvW6+K
+ RoSgKje/vqJAjMEAAEKAB0WIQSR5RMt5bVGHXuiZfwFnS7L/zaEwwUCaRSR1gAKCRAFnS7L/zaE
+ w8FED/9S0v4o+f9rGc1s0XjtxWxXWXuNhwckzJpl54CVdCRP15Zt9niJgx99JnLVX1N+zdXNb2r
+ bcQUImzoeX4vFqcEQmDElGa0VPK/jtIt692Iif0FFmMDx9gCqIQP6mQBUYAg5A2KRlHdJrCEBg/
+ jbA0PjfGTb44eHjdclModiPVQszACjKZ/ZXeLEt9tkRtbxMDw7ejcyi8cEb582U+DxuKTIOVfox
+ J9A541EE3wpE2mKBEvafm6T9EGQPzPKPAnO3h38+47EokVn/GMgcDB954UlKsfB4e9P/8g/c/KP
+ Hd61CiZku177YQDBAUPoTJyxh4k6YnSgrlbHP+m3Rd6vvx8q/T1jkX19j3tC75jJVcJyeU3sZGa
+ 1J7xaTyvI50YiNZIcuzhIekT7k6h73SXyGHlr2nFXvrxHVMmfxIumWEsIAZjZfjB6tSpT5MB5ZN
+ FeeVzl2+rKUM7sxp+Ar+gUGoeIzWaehG4UlbAhpCjNzHpjqeXXoHiZba+jpr4u8X/Qo7DmVUwhw
+ Ja+LNPcgi2ikEL8fqramAAzy9xN87Ug6cX/EkhTCeJqmMMBaF01/U/Ig2piBAxtlXiEtmIRImIA
+ qcOBn+9X6Iz611rrgSjwYrRQGCAOnAnvY0KNXrKWlSBudjWzAl4SlV+EzfCuQEvo9vxDTetF8Lq
+ RSondTaSYnSH9qA==
 X-Developer-Key: i=bartosz.golaszewski@linaro.org; a=openpgp;
  fpr=169DEB6C0BC3C46013D2C79F11A72EA01471D772
 
 From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 
-Provide an interface allowing consumers to check if a GPIO descriptor
-represents a GPIO that can potentially be shared by multiple consumers
-at the same time. This is exposed to allow subsystems that already
-work around the limitations of the current non-exclusive GPIO handling
-in some ways, to gradually convert to relying on the new shared GPIO
-feature of GPIOLIB.
+Some qualcomm platforms use shared GPIOs. Enable support for them by
+selecting the Kconfig switch provided by GPIOLIB.
 
-Extend the gpiolib-shared module to mark the GPIO shared proxy
-descriptors with a flag checked by the new interface.
-
-Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
 Acked-by: Linus Walleij <linus.walleij@linaro.org>
 Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 ---
- drivers/gpio/gpiolib-shared.c | 18 ++++++++++++++++++
- drivers/gpio/gpiolib.c        | 20 ++++++++++++++++++++
- drivers/gpio/gpiolib.h        |  1 +
- include/linux/gpio/consumer.h |  9 +++++++++
- 4 files changed, 48 insertions(+)
+ arch/arm64/Kconfig.platforms | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/gpio/gpiolib-shared.c b/drivers/gpio/gpiolib-shared.c
-index 56b9b03cbb6dbcdf095a656fc36ff321770035da..c22eaf05eef23a7f5f111708c3db9412c4c30231 100644
---- a/drivers/gpio/gpiolib-shared.c
-+++ b/drivers/gpio/gpiolib-shared.c
-@@ -314,6 +314,24 @@ int gpio_device_setup_shared(struct gpio_device *gdev)
+diff --git a/arch/arm64/Kconfig.platforms b/arch/arm64/Kconfig.platforms
+index 13173795c43d4f28e2d47acc700f80a165d44671..3dbff0261f0add0516d8cb3fd0f29e277af94f20 100644
+--- a/arch/arm64/Kconfig.platforms
++++ b/arch/arm64/Kconfig.platforms
+@@ -316,6 +316,7 @@ config ARCH_QCOM
+ 	select GPIOLIB
+ 	select PINCTRL
+ 	select HAVE_PWRCTRL if PCI
++	select HAVE_SHARED_GPIOS
+ 	help
+ 	  This enables support for the ARMv8 based Qualcomm chipsets.
  
- 	guard(mutex)(&gpio_shared_lock);
- 
-+	list_for_each_entry(entry, &gpio_shared_list, list) {
-+		list_for_each_entry(ref, &entry->refs, list) {
-+			if (gdev->dev.parent == &ref->adev.dev) {
-+				/*
-+				 * This is a shared GPIO proxy. Mark its
-+				 * descriptor as such and return here.
-+				 */
-+				__set_bit(GPIOD_FLAG_SHARED_PROXY,
-+					  &gdev->descs[0].flags);
-+				return 0;
-+			}
-+		}
-+	}
-+
-+	/*
-+	 * This is not a shared GPIO proxy but it still may be the device
-+	 * exposing shared pins. Find them and create the proxy devices.
-+	 */
- 	list_for_each_entry(entry, &gpio_shared_list, list) {
- 		if (!device_match_fwnode(&gdev->dev, entry->fwnode))
- 			continue;
-diff --git a/drivers/gpio/gpiolib.c b/drivers/gpio/gpiolib.c
-index c59fe05c838e073b4bc99c4a7667cb1ff40c26b4..91e0c384f34ae5c0ed61ccd3a978685d4f72e867 100644
---- a/drivers/gpio/gpiolib.c
-+++ b/drivers/gpio/gpiolib.c
-@@ -3997,6 +3997,26 @@ int gpiod_set_consumer_name(struct gpio_desc *desc, const char *name)
- }
- EXPORT_SYMBOL_GPL(gpiod_set_consumer_name);
- 
-+/**
-+ * gpiod_is_shared() - check if this GPIO can be shared by multiple consumers
-+ * @desc: GPIO to inspect
-+ *
-+ * Returns:
-+ * True if this GPIO can be shared by multiple consumers at once. False if it's
-+ * a regular, exclusive GPIO.
-+ *
-+ * Note:
-+ * This function returning true does not mean that this GPIO is currently being
-+ * shared. It means the GPIO core has registered the fact that the firmware
-+ * configuration indicates that it can be shared by multiple consumers and is
-+ * in charge of arbitrating the access.
-+ */
-+bool gpiod_is_shared(const struct gpio_desc *desc)
-+{
-+	return test_bit(GPIOD_FLAG_SHARED_PROXY, &desc->flags);
-+}
-+EXPORT_SYMBOL_GPL(gpiod_is_shared);
-+
- /**
-  * gpiod_to_irq() - return the IRQ corresponding to a GPIO
-  * @desc: gpio whose IRQ will be returned (already requested)
-diff --git a/drivers/gpio/gpiolib.h b/drivers/gpio/gpiolib.h
-index c9de4bb10584206f4888c0f28468762a3680aae6..77f6f2936dc263a67b31a38799a841128a57603a 100644
---- a/drivers/gpio/gpiolib.h
-+++ b/drivers/gpio/gpiolib.h
-@@ -205,6 +205,7 @@ struct gpio_desc {
- #define GPIOD_FLAG_EVENT_CLOCK_REALTIME	18 /* GPIO CDEV reports REALTIME timestamps in events */
- #define GPIOD_FLAG_EVENT_CLOCK_HTE	19 /* GPIO CDEV reports hardware timestamps in events */
- #define GPIOD_FLAG_SHARED		20 /* GPIO is shared by multiple consumers */
-+#define GPIOD_FLAG_SHARED_PROXY		21 /* GPIO is a virtual proxy to a physically shared pin. */
- 
- 	/* Connection label */
- 	struct gpio_desc_label __rcu *label;
-diff --git a/include/linux/gpio/consumer.h b/include/linux/gpio/consumer.h
-index 994d46874d560416175c9099e18180237839bd4c..cafeb7a40ad1c25aeb7deaf598410d5f2f004a82 100644
---- a/include/linux/gpio/consumer.h
-+++ b/include/linux/gpio/consumer.h
-@@ -167,6 +167,8 @@ int gpiod_cansleep(const struct gpio_desc *desc);
- int gpiod_to_irq(const struct gpio_desc *desc);
- int gpiod_set_consumer_name(struct gpio_desc *desc, const char *name);
- 
-+bool gpiod_is_shared(const struct gpio_desc *desc);
-+
- /* Convert between the old gpio_ and new gpiod_ interfaces */
- struct gpio_desc *gpio_to_desc(unsigned gpio);
- int desc_to_gpio(const struct gpio_desc *desc);
-@@ -522,6 +524,13 @@ static inline int gpiod_set_consumer_name(struct gpio_desc *desc,
- 	return -EINVAL;
- }
- 
-+static inline bool gpiod_is_shared(const struct gpio_desc *desc)
-+{
-+	/* GPIO can never have been requested */
-+	WARN_ON(desc);
-+	return false;
-+}
-+
- static inline struct gpio_desc *gpio_to_desc(unsigned gpio)
- {
- 	return NULL;
 
 -- 
 2.51.0
