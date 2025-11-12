@@ -1,69 +1,61 @@
-Return-Path: <linux-arm-msm+bounces-81469-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-81470-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [IPv6:2605:f480:58:1:0:1994:3:14])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2E5BEC53C2B
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Nov 2025 18:45:03 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 42C5AC539A1
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Nov 2025 18:12:27 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 469CD5A15D3
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Nov 2025 16:22:11 +0000 (UTC)
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 020114FA5BF
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Nov 2025 16:29:47 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 43D402F60CF;
-	Wed, 12 Nov 2025 16:21:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6104E33B6C7;
+	Wed, 12 Nov 2025 16:29:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="eICHlZjl"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Umd7piN3"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14D1135CBC9;
-	Wed, 12 Nov 2025 16:21:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30FE02550AF;
+	Wed, 12 Nov 2025 16:29:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762964517; cv=none; b=enpXPUYIUf++L+wGie7xXIiEQ5JAx72A6E2HpW0fvakr6U6sH7Bq3jenCK5Qk09fmtdY+g3YLEWLRt8QOzhTT7CETy4Ob/90FCRmfPoxA2+ggJubBoM5YvZJ34sVOTKYW/sConFSH9unhwigfM3GBv/3y9RzOkpX+FHWhg+fGv8=
+	t=1762964982; cv=none; b=dHZsgFciV1oq73Wb+7di0ewfHM4Kk9m74/BnnvWCSY5m95m8xHHtSKtoaTjw4LORfZ0e/tzQtqkPg3wgTtzpeS19FvQ447hMV2ATIeE3gRBUHD5i0QuVLQoDedRnXf7uwseHXp+3Zp3HrBxynEYRpP7C5c9Rm++LQ3lHbfUHjGA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762964517; c=relaxed/simple;
-	bh=Zh168JDIc9MiMw3gLGbFf968cd68Wl7hb46fJ2WOYuU=;
+	s=arc-20240116; t=1762964982; c=relaxed/simple;
+	bh=DP5D2zjQPq84AdGMdpDugauF+Uw5VjnEZ/jSz0bVjQU=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=FBr1u8TAsjDiXOQGl88OgpMLrrkeJpS0VACFO4SpHkw3TjqEbmqdAJZyYt92EBQvtr0FY8VdYS3pRijo8kgkj//dBJk1+094uzw1MJurd99mbWq4ePaQz8CLjVTjN9Piq3G6NiYxrfXwRI+l/4kPqpKQqAfcfGrU26iCRt0Bn3g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=eICHlZjl; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B161C4CEF7;
-	Wed, 12 Nov 2025 16:21:55 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=bPA3xYsQ/qhnulSL7SrKJnZINOAfLWzqnFUusD2My+H3PfMj061FdAoKHuopk9MvyCES7OIhOwTdCTuWsjJBGiHDasnEkSFyvi3vhVxgBnX1MRFySJNgjbW8qeBieI2hhtG86sbQv/xYR+IQek3UdlGh8jY/fsLlL+w41k7LJys=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Umd7piN3; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39F77C4CEF1;
+	Wed, 12 Nov 2025 16:29:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1762964516;
-	bh=Zh168JDIc9MiMw3gLGbFf968cd68Wl7hb46fJ2WOYuU=;
+	s=k20201202; t=1762964981;
+	bh=DP5D2zjQPq84AdGMdpDugauF+Uw5VjnEZ/jSz0bVjQU=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=eICHlZjlShpWTATZ3YMOxgYCp41J0414pLfqz8PciAYbQF6prUpL9HQMaDGb+iB69
-	 ZPMHj257wv6AAkR11bC3cw40Ks1iFVRyxWQw4tx1y3TLOxgwG+osbAqGJkkJWoKSxR
-	 Zx/zX/3JZ7p5/Ix27Rc9kQ9rNS/EsJxzjnVv8tAEVc24Sangy8j56NlzQTI8Mzk2JI
-	 RG4OrWAGDA6LyHcLefXpo4zVy8W5nKJFqNX43dJg7/Syp3EayY+GbUV/HvnC13YGVY
-	 SsQsvuEZnQ4zb6Z+YpOvchBOwkJDtZzQr9YX7AXw+sRee9xIm7GK8b3qTp8ayihgv2
-	 QSYvUd/2nIOqA==
-Date: Wed, 12 Nov 2025 10:26:13 -0600
+	b=Umd7piN3+04i8gvUPVvGaPzCgGl9OYviITEvXRjtjkY1zWB08XfPwM596K5Xx+yTT
+	 6jlBuI7jmtuhSTV7HXyJghjYGq5GvSUuhsHoVQf8x7f6Efsa18iC+7AbtoXVU0DQ6u
+	 7BUti4EwiDji9mD8ATudxo8+lYjVmK1qJZxU6Ok6WQAjwL78NTMNsJg58rwKM9fp0X
+	 2n1VDrUQ4c6yPc2d25GV8oAYeb+103t3lBtA8GMELK9WhJ+C8+NnE2+2IHyfEW8YMy
+	 3I20JVe9pmiZnDbpF0qEFXF0ZvGvKvTeFJmY/VBdros8N5KrXxzSxt0pI09T3CsiQG
+	 aywUJlcTIjY8A==
+Date: Wed, 12 Nov 2025 10:33:58 -0600
 From: Bjorn Andersson <andersson@kernel.org>
-To: Hrishabh Rajput <hrishabh.rajput@oss.qualcomm.com>
-Cc: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>, 
-	Pavan Kondeti <pavan.kondeti@oss.qualcomm.com>, Konrad Dybcio <konradybcio@kernel.org>, 
-	Wim Van Sebroeck <wim@linux-watchdog.org>, Guenter Roeck <linux@roeck-us.net>, 
-	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
-	Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org, linux-watchdog@vger.kernel.org, 
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	Neil Armstrong <neil.armstrong@linaro.org>, Krzysztof Kozlowski <krzk@kernel.org>
-Subject: Re: [PATCH v5 1/2] firmware: qcom: scm: Register gunyah watchdog
- device
-Message-ID: <55kuc3flqzebmfnrerhkz76jqg23xhmc7wiic5faicwtffozgi@xviskbliwgkq>
-References: <20251107-gunyah_watchdog-v5-1-4c6e3fb6eb17@oss.qualcomm.com>
- <hbxtbaoavlsw7pbmg3cfkbyx4nacjfiikckhqgpvlggbh6hu5b@jyporqecfzni>
- <263d1390-eff5-4846-b2c2-31f96fc3248e@quicinc.com>
- <3794bb0e-5e2c-4d5e-8d81-d302fa36677c@quicinc.com>
- <56aqammkwte3tcdzni2unufjp4t4yaqazzdkigrwqsxp3ghcqe@ppe2pjwg3hrl>
- <60583236-692f-4605-9f56-f7dadb46558d@kernel.org>
- <zbwcg5pkdspkcnvaitac6y5iko346qyuzuipqhkoedcaqm2dpa@zmszuwhm5q7z>
- <6bebcf6c-9328-4cd6-b77c-a147338d607a@oss.qualcomm.com>
- <nkh73mo4h5kj2lrz7paop7fn3ow2itxl5vh43muw6n5dxgmco3@tgvbmdxhbiqo>
- <68dbaf42-0d64-45f7-8410-ebcbae2da612@oss.qualcomm.com>
+To: Ziyue Zhang <ziyue.zhang@oss.qualcomm.com>
+Cc: konradybcio@kernel.org, robh@kernel.org, krzk+dt@kernel.org, 
+	conor+dt@kernel.org, jingoohan1@gmail.com, mani@kernel.org, lpieralisi@kernel.org, 
+	kwilczynski@kernel.org, bhelgaas@google.com, johan+linaro@kernel.org, vkoul@kernel.org, 
+	kishon@kernel.org, neil.armstrong@linaro.org, abel.vesa@linaro.org, kw@linux.com, 
+	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	linux-pci@vger.kernel.org, linux-phy@lists.infradead.org, qiang.yu@oss.qualcomm.com, 
+	krishna.chundru@oss.qualcomm.com, quic_vbadigan@quicinc.com
+Subject: Re: [PATCH v3 2/2] arm64: dts: qcom: Add PCIe3 and PCIe5 regulators
+ for HAMAO-IOT-EVK board
+Message-ID: <6iuuosajwue35goout6ohpdbmdoahc6f3gxicliiin6wq3ggjh@m7nkqnsxq63h>
+References: <20251112090316.936187-1-ziyue.zhang@oss.qualcomm.com>
+ <20251112090316.936187-3-ziyue.zhang@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -72,93 +64,146 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <68dbaf42-0d64-45f7-8410-ebcbae2da612@oss.qualcomm.com>
+In-Reply-To: <20251112090316.936187-3-ziyue.zhang@oss.qualcomm.com>
 
-On Wed, Nov 12, 2025 at 10:07:26AM +0530, Hrishabh Rajput wrote:
+On Wed, Nov 12, 2025 at 05:03:16PM +0800, Ziyue Zhang wrote:
+> HAMAO IoT EVK uses PCIe5 to connect an SDX65 module for WWAN functionality
+> and PCIe3 to connect a SATA controller. These interfaces require multiple
+> voltage rails: PCIe5 needs 3.3V supplied by vreg_wwan, while PCIe3 requires
+> 12V, 3.3V, and 3.3V AUX rails, controlled via PMIC GPIOs.
 > 
-> On 11/11/2025 8:35 PM, Dmitry Baryshkov wrote:
-> > On Tue, Nov 11, 2025 at 07:30:59PM +0530, Hrishabh Rajput wrote:
-> > > On 11/11/2025 5:52 PM, Dmitry Baryshkov wrote:
-> > > > On Tue, Nov 11, 2025 at 11:41:51AM +0100, Krzysztof Kozlowski wrote:
-> > > > > On 11/11/2025 11:34, Dmitry Baryshkov wrote:
-> > > > > > On Tue, Nov 11, 2025 at 10:51:43AM +0530, Pavan Kondeti wrote:
-> > > > > > > On Mon, Nov 10, 2025 at 09:43:53AM +0530, Pavan Kondeti wrote:
-> > > > > > > > On Sat, Nov 08, 2025 at 07:26:46PM +0200, Dmitry Baryshkov wrote:
-> > > > > > > > > > +static void qcom_scm_gunyah_wdt_free(void *data)
-> > > > > > > > > > +{
-> > > > > > > > > > +	struct platform_device *gunyah_wdt_dev = data;
-> > > > > > > > > > +
-> > > > > > > > > > +	platform_device_unregister(gunyah_wdt_dev);
-> > > > > > > > > > +}
-> > > > > > > > > > +
-> > > > > > > > > > +static void qcom_scm_gunyah_wdt_init(struct qcom_scm *scm)
-> > > > > > > > > > +{
-> > > > > > > > > > +	struct platform_device *gunyah_wdt_dev;
-> > > > > > > > > > +	struct device_node *np;
-> > > > > > > > > > +	bool of_wdt_available;
-> > > > > > > > > > +	int i;
-> > > > > > > > > > +	uuid_t gunyah_uuid = UUID_INIT(0xc1d58fcd, 0xa453, 0x5fdb, 0x92, 0x65,
-> > > > > > > > > static const?
-> > > > > > > > > 
-> > > > > > > > > > +				       0xce, 0x36, 0x67, 0x3d, 0x5f, 0x14);
-> > > > > > > > > > +	static const char * const of_wdt_compatible[] = {
-> > > > > > > > > > +		"qcom,kpss-wdt",
-> > > > > > > > > > +		"arm,sbsa-gwdt",
-> > > > > > > > > > +	};
-> > > > > > > > > > +
-> > > > > > > > > > +	/* Bail out if we are not running under Gunyah */
-> > > > > > > > > > +	if (!arm_smccc_hypervisor_has_uuid(&gunyah_uuid))
-> > > > > > > > > > +		return;
-> > > > > > > > > This rquires 'select HAVE_ARM_SMCCC_DISCOVERY'
-> > > > > > > > > 
-> > > > > > > > Probably `depends on HAVE_ARM_SMCCC_DISCOVERY` is correct here.
-> > > > > > > > 
-> > > > > > > Dmitry / Bjorn,
-> > > > > > > 
-> > > > > > > We are debating on this internally on how to resolve this dependency
-> > > > > > > 
-> > > > > > > - QCOM_SCM depends on HAVE_ARM_SMCCC_DISCOVERY which means restricting
-> > > > > > >     QCOM_SCM compilation than what it is today.
-> > > > > > > 
-> > > > > > > - Adding #ifdefry around arm_smccc_hypervisor_has_uuid usage in qcom scm driver
-> > > > > > > 
-> > > > > > > - Adding stub for `arm_smccc_hypervisor_has_uuid()` which is not done
-> > > > > > >     for any of the functions defined in drivers/firmware/smccc/smccc.c
-> > > > > > > 
-> > > > > > > We are trending towards the first option above. Please let us know if
-> > > > > > > you think otherwise.
-> > > > > > The same as before: 'select HAVE_ARM_SMCCC_DISCOVERY'.
-> > > > > HAVE_ARM_SMCCC_DISCOVERY has a dependency which is not always selected
-> > > > > (e.g. ARM32), thus selecting it might lead to warnings of unmet
-> > > > > dependencies.
-> > > > Then `if (!IS_ENABLED(CONFIG_HAVE_ARM_SMCCC_DISCOVERY))` might be a good
-> > > > option here (and depend on GICv3 selecting it).
-> > > Thanks a lot Dmitry, wemade the change below and compile tested on various
-> > > architectures (ARM64, ARM32, x86, PowerPC, RISC-V and MIPS) and it was
-> > > success.
-> > > 
-> > > We will include it in our next patch version, if there are no further
-> > > concerns.
-> > > 
-> > > }; /* Bail out if we are not running under Gunyah */ - if
-> > > (!arm_smccc_hypervisor_has_uuid(&gunyah_uuid)) + if
-> > > (!IS_ENABLED(CONFIG_HAVE_ARM_SMCCC_DISCOVERY) || +
-> > > !arm_smccc_hypervisor_has_uuid(&gunyah_uuid)) return; /*
-> > Unreadable. Don't you read what you are sending?
-> 
-> Sorry, my mail client messed up the formatting while sending. Here is the
-> proper version:
-> 
-> /* Bail out if we are not running under Gunyah */
-> -	if (!arm_smccc_hypervisor_has_uuid(&gunyah_uuid))
-> +	if (!IS_ENABLED(CONFIG_HAVE_ARM_SMCCC_DISCOVERY) ||
-> +	    !arm_smccc_hypervisor_has_uuid(&gunyah_uuid))
-> 		return;
 
-LGTM
+I love it! Thank you for the clear description.
 
+Regards,
+Bjorn
+
+> Add the required fixed regulators with related pin configuration, and
+> connect them to the PCIe3 and PCIe5 ports to ensure proper power for the
+> SDX65 module and SATA controller.
 > 
-> Thanks,
-> Hrishabh
+> Signed-off-by: Ziyue Zhang <ziyue.zhang@oss.qualcomm.com>
+> Reviewed-by: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
+> ---
+>  arch/arm64/boot/dts/qcom/hamoa-iot-evk.dts | 83 ++++++++++++++++++++++
+>  1 file changed, 83 insertions(+)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/hamoa-iot-evk.dts b/arch/arm64/boot/dts/qcom/hamoa-iot-evk.dts
+> index 36dd6599402b..ac17f7cb8b3d 100644
+> --- a/arch/arm64/boot/dts/qcom/hamoa-iot-evk.dts
+> +++ b/arch/arm64/boot/dts/qcom/hamoa-iot-evk.dts
+> @@ -199,6 +199,48 @@ vreg_nvme: regulator-nvme {
+>  		regulator-boot-on;
+>  	};
+>  
+> +	vreg_pcie_12v: regulator-pcie-12v {
+> +		compatible = "regulator-fixed";
+> +
+> +		regulator-name = "VREG_PCIE_12V";
+> +		regulator-min-microvolt = <12000000>;
+> +		regulator-max-microvolt = <12000000>;
+> +
+> +		gpio = <&pm8550ve_8_gpios 8 GPIO_ACTIVE_HIGH>;
+> +		enable-active-high;
+> +
+> +		pinctrl-0 = <&pcie_x8_12v>;
+> +		pinctrl-names = "default";
+> +	};
+> +
+> +	vreg_pcie_3v3: regulator-pcie-3v3 {
+> +		compatible = "regulator-fixed";
+> +
+> +		regulator-name = "VREG_PCIE_3P3";
+> +		regulator-min-microvolt = <3300000>;
+> +		regulator-max-microvolt = <3300000>;
+> +
+> +		gpio = <&pmc8380_3_gpios 6 GPIO_ACTIVE_HIGH>;
+> +		enable-active-high;
+> +
+> +		pinctrl-0 = <&pm_sde7_main_3p3_en>;
+> +		pinctrl-names = "default";
+> +	};
+> +
+> +	vreg_pcie_3v3_aux: regulator-pcie-3v3-aux {
+> +		compatible = "regulator-fixed";
+> +
+> +		regulator-name = "VREG_PCIE_3P3_AUX";
+> +		regulator-min-microvolt = <3300000>;
+> +		regulator-max-microvolt = <3300000>;
+> +
+> +		gpio = <&pmc8380_3_gpios 8 GPIO_ACTIVE_HIGH>;
+> +		enable-active-high;
+> +
+> +		pinctrl-0 = <&pm_sde7_aux_3p3_en>;
+> +		pinctrl-names = "default";
+> +	};
+> +
+>  	/* Left unused as the retimer is not used on this board. */
+>  	vreg_rtmr0_1p15: regulator-rtmr0-1p15 {
+>  		compatible = "regulator-fixed";
+> @@ -844,6 +886,16 @@ &mdss_dp3_phy {
+>  	status = "okay";
+>  };
+>  
+> +&pcie3_port {
+> +	vpcie12v-supply = <&vreg_pcie_12v>;
+> +	vpcie3v3-supply = <&vreg_pcie_3v3>;
+> +	vpcie3v3aux-supply = <&vreg_pcie_3v3_aux>;
+> +};
+> +
+> +&pcie5 {
+> +	vddpe-3v3-supply = <&vreg_wwan>;
+> +};
+> +
+>  &pcie6a {
+>  	vddpe-3v3-supply = <&vreg_nvme>;
+>  };
+> @@ -868,6 +920,17 @@ usb0_3p3_reg_en: usb0-3p3-reg-en-state {
+>  	};
+>  };
+>  
+> +&pm8550ve_8_gpios {
+> +	pcie_x8_12v: pcie-12v-default-state {
+> +		pins = "gpio8";
+> +		function = "normal";
+> +		output-enable;
+> +		output-high;
+> +		bias-pull-down;
+> +		power-source = <0>;
+> +	};
+> +};
+> +
+>  &pm8550ve_9_gpios {
+>  	usb0_1p8_reg_en: usb0-1p8-reg-en-state {
+>  		pins = "gpio8";
+> @@ -879,6 +942,26 @@ usb0_1p8_reg_en: usb0-1p8-reg-en-state {
+>  	};
+>  };
+>  
+> +&pmc8380_3_gpios {
+> +	pm_sde7_aux_3p3_en: pcie-aux-3p3-default-state {
+> +		pins = "gpio8";
+> +		function = "normal";
+> +		output-enable;
+> +		output-high;
+> +		bias-pull-down;
+> +		power-source = <0>;
+> +	};
+> +
+> +	pm_sde7_main_3p3_en: pcie-main-3p3-default-state {
+> +		pins = "gpio6";
+> +		function = "normal";
+> +		output-enable;
+> +		output-high;
+> +		bias-pull-down;
+> +		power-source = <0>;
+> +	};
+> +};
+> +
+>  &pmc8380_5_gpios {
+>  	usb0_pwr_1p15_reg_en: usb0-pwr-1p15-reg-en-state {
+>  		pins = "gpio8";
+> -- 
+> 2.34.1
 > 
 
