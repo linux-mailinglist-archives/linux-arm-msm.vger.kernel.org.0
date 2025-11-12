@@ -1,100 +1,100 @@
-Return-Path: <linux-arm-msm+bounces-81339-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-81340-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id D3CFFC50B4C
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Nov 2025 07:29:13 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 55FE8C50B94
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Nov 2025 07:36:05 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 53CDD1899933
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Nov 2025 06:29:34 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id A2C593B41D5
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Nov 2025 06:35:55 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E65802D7813;
-	Wed, 12 Nov 2025 06:29:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E1EB92DEA94;
+	Wed, 12 Nov 2025 06:35:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="SgKdOT9b";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="RiFQUaXT"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="PjUveni1";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="E7znkbji"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FF361C5D77
-	for <linux-arm-msm@vger.kernel.org>; Wed, 12 Nov 2025 06:29:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C93BDA930
+	for <linux-arm-msm@vger.kernel.org>; Wed, 12 Nov 2025 06:35:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762928945; cv=none; b=Iq+XTX4mjydrddOqq2/33mi/fepMvzWYrllT/1OI6/Bob0YM1Y6myWd7YW3F3mjToEE/2dmoudO90zqWwbYOWeO4NdXCsclVXx/R+1XNa3o/GyBKv0FujT//ly6a/uUHD78rpolfFkI8zx2nkiqtOREduFo+/YyrW5CH6Abp9fM=
+	t=1762929350; cv=none; b=kokMGkGlWEeQmX7Um3rRsUnpH4y5wn7bFTRW2WKMAxZxYot+L/fEcEdBydF6rmQ48pjFickZzNHYwV/UlbWpl45ntbQcQVtS0WT6e8lrPjl6/gzTTktgBr93KV6LKXL5DAnKDc7gfSb7fIq+pxMdPipETXxw17rL97fvtjWk8/E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762928945; c=relaxed/simple;
-	bh=A7CUWqMjauXHT6hHhvu+ZIxufMH4sPH9yuX5FupcZVY=;
+	s=arc-20240116; t=1762929350; c=relaxed/simple;
+	bh=iHNbur1CgPu9EMbbpr1oIxjrkDUOkh1go5m1xX4q/8Q=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=dwQZsaGhN8SY8Mp9QBJ1o4sOHTo+zTEI6EPJaBAjFtIryWEt/cKTmLccPqmQx9mDia8lynw0mY5cG9bzG+sRJUzB1zYxRYHSD6OahYeIfqGgNluSoAmPSRHmkbdw3AxW62zyvyL5GqkSAfoNE5FAufuTyS2840RBNOFS7mEz9sY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=SgKdOT9b; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=RiFQUaXT; arc=none smtp.client-ip=205.220.180.131
+	 Content-Type:Content-Disposition:In-Reply-To; b=hsihJIcfww1cw3JQDx0bTF5RVwC8BmuoEVXz+POL0ze04Vp0m+S8vTfB8oCSKGEeGc5j38p9r+MHkgGzfAGnf9nCFVaGoOQalePZFU+125YSEYufImfPrYnpYd/iLT7oRm7chhzm7eYXQqy3vv4uBETAfbHqh4N0KmiaqQtYs9U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=PjUveni1; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=E7znkbji; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 5ABN3dOZ3924235
-	for <linux-arm-msm@vger.kernel.org>; Wed, 12 Nov 2025 06:29:03 GMT
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 5AC3HZN34053645
+	for <linux-arm-msm@vger.kernel.org>; Wed, 12 Nov 2025 06:35:48 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	FzAUhRKeGOhDrL0SVzP88ptswnErMqcNrlcNyCzXAfU=; b=SgKdOT9bNkdk2FG2
-	oLkEW/LEAQK9mTDR635/9241IOdAebnYCzzVOk9KKYiwBfkKVuR0GAp9+SRb96xj
-	ivb/+UVJLrKHI7Z5UjWDLuf1jQ8d3vujsNScV1TrCb2xN4hEympNeuwJvI6nTkvf
-	HCAqcJ5776+1wLfT9fXDD84FLtLrAyO2+flNveFjL4Yt/+Aq7wA53qdiEolDPv+y
-	syRoIwia6rb0pKPQP8tJayNCxAnAiZgDsptmyLYLcCq1cqKZun+AtpPFUnqhkvmh
-	Lqsh7Rcp8/yPvsy7Pif/AQuBD7Xcodu5CfsUbOK+1ymtyMt6IgB15lvjNDfV4IaQ
-	eizd2w==
-Received: from mail-pj1-f69.google.com (mail-pj1-f69.google.com [209.85.216.69])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4acefus0q8-1
+	iEFXFi5trTxomRGsS7gEFHXX8gbfIDxo43cEy1pNfI0=; b=PjUveni14tOQgjUq
+	TdUk7WXuyNPIVnRtvQcMvOoYLtM05b+VwEjKuJFP4b3KdXKXEl9tXgKanhjXbIbE
+	0uyJVyTqkGgWqRPJzOIwY5aVtjM2U0jsDXMxv/KTZAcsI5IdYLJegrFZUvJZACtp
+	fOIsYaeSBvfjy6G3hWRaHXwhzxvTeCRNNuhxdLghui/fsHFSiSSswt/Q71GbaH4L
+	kjV4PvWP4Y7s0EuUNbFIPl+WYqOUeg2u24spHDxRDddhZ/ygcr0fDjC/O9KmFyVe
+	Z6Mgr6N0r/xaX9KIxg0M9wXirapBhIQBuFugevnWnV52kmijmbw22f4xGo79lNXw
+	sbJHXA==
+Received: from mail-pl1-f197.google.com (mail-pl1-f197.google.com [209.85.214.197])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4acj6v8g8u-1
 	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Wed, 12 Nov 2025 06:29:03 +0000 (GMT)
-Received: by mail-pj1-f69.google.com with SMTP id 98e67ed59e1d1-340bb1bf12aso1441408a91.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 11 Nov 2025 22:29:03 -0800 (PST)
+	for <linux-arm-msm@vger.kernel.org>; Wed, 12 Nov 2025 06:35:48 +0000 (GMT)
+Received: by mail-pl1-f197.google.com with SMTP id d9443c01a7336-2982b47ce35so6265455ad.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 11 Nov 2025 22:35:47 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1762928942; x=1763533742; darn=vger.kernel.org;
+        d=oss.qualcomm.com; s=google; t=1762929347; x=1763534147; darn=vger.kernel.org;
         h=in-reply-to:content-transfer-encoding:content-disposition
          :mime-version:references:message-id:subject:cc:to:from:date:from:to
          :cc:subject:date:message-id:reply-to;
-        bh=FzAUhRKeGOhDrL0SVzP88ptswnErMqcNrlcNyCzXAfU=;
-        b=RiFQUaXTtg8GPTSaOLHIlhG8QbrFZjkJ7+zXhzD6cNzFRETilMSnHZFQOyrUhF5W4j
-         CThLa2tau33YXv0u6q9ip6aXkjH3QJesAEEgtVGiT1m/dfi9SugEq2kQdCs1eOUh4CGR
-         B9hmMqQqTiqVPkclKbGDdNAmcfPD2z1h0J1JLYtU+GVxl8vRrC2PmwYSMMVJvY2gXWHY
-         2SspnZnQ3dXTASO6K0Ys/RVp528b2FGGP2YBpV694XiMj5Ef+M2oZd7vSdPJRpIiejny
-         WCUaIbnM7B2/VdpViSZCc8CiBCKWT5KOLkZj+p5CXwU6bOdVInkY5dxmYn47QNnovICJ
-         tlUA==
+        bh=iEFXFi5trTxomRGsS7gEFHXX8gbfIDxo43cEy1pNfI0=;
+        b=E7znkbji9uQvyZBasrBQvXo8dnxoyYW4F+j0fS4m3y4zWL3xL1qVCswirGCx19LK1e
+         N3VlIYih9uXqE9kMoLRK3IwnqbHGvhNgjSdUnDMD0w+4eXxPDkUbm0jskO7nN7AGfQUv
+         i+c3tjiUlfGrHakXXvFRxTFnl75NUh+NQVbKgMUzVfB25Rx2sdXPRJ9rgv7oRdhpRIKV
+         aj02cHXfoXXdoP2dJHLNYynOqiNl5ZZzomtweJEfsrPQCzW5w4TX9hEa/oU9fA93ONI5
+         TVtvtFG+1Q/TG/z/qwjLFa7uoKU3/7HJhl1501N9iqFNHZaZMkE9jd2wFQY+WV4ry0du
+         Zp+Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1762928942; x=1763533742;
+        d=1e100.net; s=20230601; t=1762929347; x=1763534147;
         h=in-reply-to:content-transfer-encoding:content-disposition
          :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=FzAUhRKeGOhDrL0SVzP88ptswnErMqcNrlcNyCzXAfU=;
-        b=nwfB5cJ8SoZMWCG5EqOj0WvVyIQa4+4w7EYJd5kj9Q70EOnZ/KWYTum5J8U2AoZf7I
-         k4coIia6W5n/Ad6NY37/DbBZ++5NKIA3hegHtgEWGwuhZka7inCiOtg4ql+6lzun5ERt
-         aF/oOJ6qzlcfxKCyXn45eCuL+ICcUk4SsAavmq+YszGkixaT8NSJfJaTEMGpd8QeuF8O
-         alWUWATAc6aVzaAi5/LE3eNa+klpPf2jeY0CwP7UFtqL7YmQ18jvnWBTevzvuIyZFmOb
-         PjraUopiKqmnY0UPHmU9/Ez6ibzrhyYuhJCguQFDFoLHEsuue2vMfZqPoepvnaa6Um40
-         gJCQ==
-X-Forwarded-Encrypted: i=1; AJvYcCWKT5pMCLvEdaOGWHCp3jDb5FSRbfOqmAgZK0XnwGs62Jq8Q6xXIY/7rWGG9ttFqFPuAg3MYyqVdcz4lkJG@vger.kernel.org
-X-Gm-Message-State: AOJu0Yzip4X4beTk/87DSv6HBkYX6ke6uJBQdnU4xp7Iqr7ivU6QJ0y8
-	g4XbTBl1nu6rCbIK+kKOCREq9C6D8rAaDFkHHz1y1WtGwOHhIcR4WBLIjucNl8JmR6biTwSp2XG
-	Dh3alJcQ9BvOOEZuqZ0KK6yAqDThf6k9IfPBWGLHTSPtZstx7L8cOBTahsUbID+ydY7HM
-X-Gm-Gg: ASbGncskda0BHsbIFMvq3hQ2IwHfoe1be2ez9+lI5v3jnI31fR09aRmaEK8LgVcxnWi
-	OqBaUQD0C6UyWLHopv/RzoOK7Ij1mPBp3E/7i5Ra2tEeoDpoN45k7nKJ2g+ANtmJrNBacma10g3
-	NkUKEcqd6uHksi5n4syT7cSzFKF52yUSe2NyF10NPfp1AVFIDuvVYgtxRUgRHfIrMPay0F7beSI
-	axH73pmz3RAUiAn4GXmBRg+pxR+6y2tprjqpYNRweZMzmrkbvDTgsS2V5mdnY3LEX0+kDai9xoh
-	d5PiFFQstwnzV4ni2wh/B01j+iJkp7smo7VDYJoCeWakICZCgYIdtyRNGu6QWQjRrWs9KRsQjXb
-	EFLIngagQp495NkfNOEUQlwNP+f/+/aH9pKbQ
-X-Received: by 2002:a17:90b:3dd0:b0:341:8adc:76d2 with SMTP id 98e67ed59e1d1-343dddeef9emr3091932a91.16.1762928942281;
-        Tue, 11 Nov 2025 22:29:02 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFoBsSl4PPVzSUNTAvxsQL7O5rfO/S9VTHWSRRJfl3UQVRGtUcOGu7eHItKP8uuHcfci1PbXg==
-X-Received: by 2002:a17:90b:3dd0:b0:341:8adc:76d2 with SMTP id 98e67ed59e1d1-343dddeef9emr3091904a91.16.1762928941763;
-        Tue, 11 Nov 2025 22:29:01 -0800 (PST)
+        bh=iEFXFi5trTxomRGsS7gEFHXX8gbfIDxo43cEy1pNfI0=;
+        b=ROI04b0TAUO3LydQufdYcZsMaettAIJwXfgTza+Hqfp7Rh6olK958k1HccrwIeXsTO
+         EeJFWITObMkT/ZvXHd624o730osokMANT31uV/Hx0XA3/13A1GLF8914966PjTstwGVi
+         pjiMZPSTuNARnDWQPARbfMIAqliqXHLgMAGewL6el66OxodQRgXHRQAHM5X20ftxlUTI
+         +RocrTBP+hXDby3rixZtgf0yYyjL3N9D6uUZ9MQZlZu/9EEb2m59yFviZMymyg9tZvJ+
+         RlvP/dIhWrCo76CajS37yxhbgzOvS/niirn4cDwqsvsK/nJHG/mx3nQkDlqv24i0Lxia
+         vzTQ==
+X-Forwarded-Encrypted: i=1; AJvYcCVgls2+4lwqLsw2oGQ3QokM5umct4hG9xWk9jAkxmWMcm1HNF0av12VO8M3UMKh3vC2PyFV9kFAyHJxihRk@vger.kernel.org
+X-Gm-Message-State: AOJu0YztoBreNxiuHxGUX0wDr+mZswTXYsmNeHcRafsKCZ16RrEu3xon
+	TnmOA2w0l9zHfYC3HNJ8eyC4C5ic4birD6ej7ulxyHnUSqAIzC7bkJtcFwS17RxBMY28VFvXeFX
+	8baqpB7Fk6neZZGAf52FMYuJZmEK8f/Lcv50/oNf8jwrdNNEa6OUFkaohHD+XP/ujcxtW
+X-Gm-Gg: ASbGncuxHunh3nvOmKClk7LnZEANNXZqJUaW6fdgUCbYtX9BZi7ZjpQZeB0QtDDAtMg
+	0I9ZAD0x8LEX1nZ8VEBadZ1JRpI5AU4ieQdJP0esnRV2Ey1px9PudrSXvfYyZPFMwVAP+ZYVO6I
+	ABkuyJSVhYHtdzRRPPrYE2kdCpHWJm1GTWnAoE5ztcWI5w7w8s4D9SqcaRQ0uH4lBCQsrffnHIB
+	TZvHZk0+2sm/5cPd1KnzG6FFbV65T3JkI/H9rtSQCvcJPrdRWZ8eYcEur/Ng3gQK/fjC3aNoi16
+	nDwE7QG19yrdisquTs4ta3sdPYlvmptHDOsGuK8kNR8fg/LdCN7DWLIzZHqEDo90Epqe6JZCmgS
+	0sgxIFgrlDv1RimBDANh7ynxp6kB6GgMEjGR3
+X-Received: by 2002:a17:903:2f88:b0:295:557e:746a with SMTP id d9443c01a7336-2984ed34126mr22611415ad.13.1762929347280;
+        Tue, 11 Nov 2025 22:35:47 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFBwTkfpC11yPeikWLPdn9cJivKbZakW5wxhoCWISx28xcRHZjpVs5bJWxOlZmoKbf+AA/WdQ==
+X-Received: by 2002:a17:903:2f88:b0:295:557e:746a with SMTP id d9443c01a7336-2984ed34126mr22611105ad.13.1762929346761;
+        Tue, 11 Nov 2025 22:35:46 -0800 (PST)
 Received: from hu-arakshit-hyd.qualcomm.com ([202.46.22.19])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-7b0cc179f14sm17849673b3a.45.2025.11.11.22.28.59
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2984dbd8ed3sm18403175ad.15.2025.11.11.22.35.43
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 11 Nov 2025 22:29:01 -0800 (PST)
-Date: Wed, 12 Nov 2025 11:58:57 +0530
+        Tue, 11 Nov 2025 22:35:46 -0800 (PST)
+Date: Wed, 12 Nov 2025 12:05:41 +0530
 From: Abhinaba Rakshit <abhinaba.rakshit@oss.qualcomm.com>
 To: Manivannan Sadhasivam <mani@kernel.org>
 Cc: Bjorn Andersson <andersson@kernel.org>,
@@ -103,11 +103,10 @@ Cc: Bjorn Andersson <andersson@kernel.org>,
         "Martin K. Petersen" <martin.petersen@oracle.com>,
         linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
         linux-scsi@vger.kernel.org
-Subject: Re: [PATCH 2/2] ufs: host: scale ICE clock
-Message-ID: <aRQpKdRkadwN2WaA@hu-arakshit-hyd.qualcomm.com>
+Subject: Re: [PATCH 0/2] Enable UFS ICE clock scaling
+Message-ID: <aRQqvbn6cuTBde5u@hu-arakshit-hyd.qualcomm.com>
 References: <20251001-enable-ufs-ice-clock-scaling-v1-0-ec956160b696@oss.qualcomm.com>
- <20251001-enable-ufs-ice-clock-scaling-v1-2-ec956160b696@oss.qualcomm.com>
- <rge3ozfojjpurnxi5otwuobzcw5v6fstlvpodw4icmhimauckx@wpdb4orkjd5t>
+ <iy6ls7c2bjnzpfcuact4vd5fba7phmng2vlhzaxxix6hlevjbz@gnva4h2d4vsm>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -117,77 +116,87 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <rge3ozfojjpurnxi5otwuobzcw5v6fstlvpodw4icmhimauckx@wpdb4orkjd5t>
-X-Proofpoint-GUID: zcGgleFuzseuuoaNtapyjoEXDDXTNvDr
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMTEyMDA0OSBTYWx0ZWRfXwJHFI7uPoipc
- OWJzb5PKTQQXIb6trUHHag5BT5R0ko/S8iyBquDY1ngIkHFPtpL8cYlw6LBrUrfW/0sQD4gl7g5
- N5uZIwr7Veh3IKb1MhPVXRAuyO/LapLXQ7YkTgGY7X4dgD7XEOy8Wx4gxWplTnw1mnC6dGvsTbd
- TsymNWLSwMtoGIXA2kfpSdYkGnSh8S55UtUNTxu4hc3TF6MrRSBVwSp8b+lpPb1CiNCA+Qzu4Yp
- MWPd+s73+5Q/WhlXmkwGSrsZPexCEy9WgqClHupUZYwMWShWw726Z3QzZVyLh6XDjahGcBdGeDx
- QS2aGRyB9WO52AyYjmeBuHx63M9eZzpvWoVf8a2EQCBCW1usrF75YV/IVS4SZ8xoh6MlwqWNyrX
- SY8UCwK4WByRYJapGvXZ8uoQ4qdmdA==
-X-Proofpoint-ORIG-GUID: zcGgleFuzseuuoaNtapyjoEXDDXTNvDr
-X-Authority-Analysis: v=2.4 cv=H8HWAuYi c=1 sm=1 tr=0 ts=6914292f cx=c_pps
- a=vVfyC5vLCtgYJKYeQD43oA==:117 a=fChuTYTh2wq5r3m49p7fHw==:17
+In-Reply-To: <iy6ls7c2bjnzpfcuact4vd5fba7phmng2vlhzaxxix6hlevjbz@gnva4h2d4vsm>
+X-Proofpoint-GUID: niOedyvISSbK-cqARfum99V1dsrI_G2b
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMTEyMDA1MCBTYWx0ZWRfX8eJOnd6AFH9Q
+ HQdyqjKaIE9siuuns+BDMweuVp4OlgWyT5OgE5tgcprSv8tQ3J95vYsKEH5Uxs1Mm1Ro636Z7ci
+ 7Y/dc28oU8Xf0mJl07JUxXNeeUB59V/Z4b4V5RNjgQmNYVRM8GbK9bZEPlHZmOhiYJHLUcNsuqE
+ Z0U6XAT3alH1tFD/LQpr0/B6O/WOfXwi/VTv1goh4LvcKnff8cx2B6+0SIaxSgtik99KET7hdAr
+ u0O2F7S9CZE3lxeWbP2+Vzow/X13lybjfNLnK8fC20IPPG3OfwyFEDl+0HhiutKtST/AXueTYfc
+ MW8pK8Hut6ZVdXFs+QjgZ+MWqOt7W4VGvJDexz1sahTfGdx4fZuapAmeoWVVQRb9ZO4+va4c24+
+ f0t26myeVx49Y/Rc0YcML3sSUKdOPg==
+X-Authority-Analysis: v=2.4 cv=f8dFxeyM c=1 sm=1 tr=0 ts=69142ac4 cx=c_pps
+ a=cmESyDAEBpBGqyK7t0alAg==:117 a=fChuTYTh2wq5r3m49p7fHw==:17
  a=IkcTkHD0fZMA:10 a=6UeiqGixMTsA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=EUspDBNiAAAA:8 a=OMFupFYHVdvZUXidDu4A:9
- a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=rl5im9kqc5Lf4LNbBjHf:22
+ a=VkNPw1HP01LnGYTKEx00:22 a=EUspDBNiAAAA:8 a=gthY3zcKJWpGDLxpuiMA:9
+ a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=1OuFwYUASf3TG4hYMiVC:22
+X-Proofpoint-ORIG-GUID: niOedyvISSbK-cqARfum99V1dsrI_G2b
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
  definitions=2025-11-12_02,2025-11-11_03,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- adultscore=0 phishscore=0 clxscore=1015 impostorscore=0 suspectscore=0
- priorityscore=1501 spamscore=0 bulkscore=0 lowpriorityscore=0 malwarescore=0
+ impostorscore=0 phishscore=0 bulkscore=0 lowpriorityscore=0 spamscore=0
+ adultscore=0 priorityscore=1501 clxscore=1015 malwarescore=0 suspectscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2510240001 definitions=main-2511120049
+ reason=mlx scancount=1 engine=8.22.0-2510240001 definitions=main-2511120050
 
-On Fri, Oct 03, 2025 at 10:14:44PM +0530, Manivannan Sadhasivam wrote:
-> On Wed, Oct 01, 2025 at 05:08:20PM +0530, Abhinaba Rakshit wrote:
-> > Scale ICE clock from ufs controller.
+On Fri, Oct 03, 2025 at 10:18:15PM +0530, Manivannan Sadhasivam wrote:
+> On Wed, Oct 01, 2025 at 05:08:18PM +0530, Abhinaba Rakshit wrote:
+> > This API enables dynamic scaling of the ICE (Inline Crypto Engine) clock,
+> 
+> Which API?
+
+Will keep it more specific and update in patchset v2.
+
+> 
+> > which is tightly integrated with the host controller. It is invoked by the UFS 
+> > host controller driver in response to clock scaling requests, ensuring
+> > coordination between ICE and the host controller.
+> > 
+> > This API helps prevent degradation in storage read/write KPIs,
+> > maintaining consistent I/O throughput performance.
+> 
+> I'd expect clock scaling to save some power, than 'preventing degradation in
+> performance'.
+
+The solution should achieve both objectives: maintaining functionality while
+dynamically downscaling the clock during periods of low read/write activity to
+reduce power consumption.
+Will update with more details in patchset v2.
+
+> 
+> > 
+> > The implementation has been tested using tiotest to verify that enabling ICE
+> > does not negatively impact host controller I/O performance during
+> > read/write operations.
 > > 
 > 
-> Explain the purpose.
+> On which platform?
 
-Sure, will add more details in patchset v2.
-
-> 
-> > Signed-off-by: Abhinaba Rakshit <abhinaba.rakshit@oss.qualcomm.com>
-> > ---
-> >  drivers/ufs/host/ufs-qcom.c | 14 ++++++++++++++
-> >  1 file changed, 14 insertions(+)
-> > 
-> > diff --git a/drivers/ufs/host/ufs-qcom.c b/drivers/ufs/host/ufs-qcom.c
-> > index 3e83dc51d53857d5a855df4e4dfa837747559dad..2964b95a4423e887c0414ed9399cc02d37b5229a 100644
-> > --- a/drivers/ufs/host/ufs-qcom.c
-> > +++ b/drivers/ufs/host/ufs-qcom.c
-> > @@ -305,6 +305,13 @@ static int ufs_qcom_ice_prepare_key(struct blk_crypto_profile *profile,
-> >  	return qcom_ice_prepare_key(host->ice, lt_key, lt_key_size, eph_key);
-> >  }
-> >  
-> > +static int ufs_qcom_ice_scale_clk(struct ufs_qcom_host *host, bool scale_up)
-> > +{
-> > +	if (host->hba->caps & UFSHCD_CAP_CRYPTO)
-> > +		return qcom_ice_scale_clk(host->ice, scale_up);
-> 
-> newline
-> 
-> > +	return 0;
-> > +}
-> > +
-> >  static const struct blk_crypto_ll_ops ufs_qcom_crypto_ops = {
-> >  	.keyslot_program	= ufs_qcom_ice_keyslot_program,
-> >  	.keyslot_evict		= ufs_qcom_ice_keyslot_evict,
-> > @@ -339,6 +346,11 @@ static void ufs_qcom_config_ice_allocator(struct ufs_qcom_host *host)
-> >  {
-> 
-> > +static inline int ufs_qcom_ice_scale_clk(struct ufs_qcom_host *host, bool scale_up)
-> 
-> Drop the 'inline' keyword.
-
-Will update this in patchset v2.
+Currently we have tested on Kodiak and Talos, with additional device-tree changes.
+Will also update the tests details better in patchset v2.
 
 > 
 > - Mani
+> 
+> > Signed-off-by: Abhinaba Rakshit <abhinaba.rakshit@oss.qualcomm.com>
+> > ---
+> > Abhinaba Rakshit (2):
+> >       soc: qcom: ice: enable ICE clock scaling API
+> >       ufs: host: scale ICE clock
+> > 
+> >  drivers/soc/qcom/ice.c      | 25 +++++++++++++++++++++++++
+> >  drivers/ufs/host/ufs-qcom.c | 14 ++++++++++++++
+> >  include/soc/qcom/ice.h      |  1 +
+> >  3 files changed, 40 insertions(+)
+> > ---
+> > base-commit: 3b9b1f8df454caa453c7fb07689064edb2eda90a
+> > change-id: 20251001-enable-ufs-ice-clock-scaling-9c55598295f6
+> > 
+> > Best regards,
+> > -- 
+> > Abhinaba Rakshit <abhinaba.rakshit@oss.qualcomm.com>
+> > 
 > 
 > -- 
 > மணிவண்ணன் சதாசிவம்
