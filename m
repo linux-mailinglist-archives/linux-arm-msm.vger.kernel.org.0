@@ -1,215 +1,253 @@
-Return-Path: <linux-arm-msm+bounces-81493-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-81494-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ams.mirrors.kernel.org (ams.mirrors.kernel.org [IPv6:2a01:60a::1994:3:14])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7857DC5464E
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Nov 2025 21:16:37 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2902EC548C9
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Nov 2025 22:08:52 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ams.mirrors.kernel.org (Postfix) with ESMTPS id ED655343390
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Nov 2025 20:16:36 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id C5E7B3B5E26
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Nov 2025 21:07:48 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 37BCA28506B;
-	Wed, 12 Nov 2025 20:16:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 370D31482E8;
+	Wed, 12 Nov 2025 21:07:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="ihVriTSa";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="f9BsP4Qe"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="aULWBmZ3"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0F84202C48
-	for <linux-arm-msm@vger.kernel.org>; Wed, 12 Nov 2025 20:16:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E1C32D9792
+	for <linux-arm-msm@vger.kernel.org>; Wed, 12 Nov 2025 21:07:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762978594; cv=none; b=P4q2OwMMtpvRqz+54qaWHhMAmWvNUvPPgVCm2YJa8HfdsWYMKpKXGo4aM5Qd1nFeo45iFx59qZnGd8PsxmbBkyVa4pnw5EfbCCz4BFMFAE5tD5eHXn+afosm338/WZ9X+UiORW39f6SfkiXJDCLGgbRMevvQt7lvOgNqTy7hKeE=
+	t=1762981663; cv=none; b=fA/QgVcNH49zxUcbX9SoC6aSDkZawYrqlE0nyPqYoIRV9EQ+YofPsKiYGVHWpugZLZ5oNIWCgKeHMuRXJubatUw4kqWJYRQUwxF/7ykuCFiw6Y8RTL7CgdeWKXL2v2sURK7tKibsLj0T7WwkGc9MIvXLYJXOaYIaYkxlrcbyZNM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762978594; c=relaxed/simple;
-	bh=NJls4GyFWCvk7Kv2DJYPUreZYvie+xSOehSfPD+ZPa4=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=fIEpKCne8ZT/rEXp78VCw8Mwkj/xEUWzum3miU2E3XrqgoMNFqBc1KzTod2Oe9M3pmDDqlBJPvBaYgOVN/AWr6Okh6Nc0yr3xMX9W2yNrh2QAKH/G56Le+0ba2ZLayMuXWgMJ1osc4qIF7Sn+ZEJKGuKRNOOeOV3VycPDAveH70=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=ihVriTSa; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=f9BsP4Qe; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 5ACHMSQv907942
-	for <linux-arm-msm@vger.kernel.org>; Wed, 12 Nov 2025 20:16:31 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to; s=qcppdkim1; bh=SEIsm1QuXuVAqb/gdqCKCH2F
-	djtpCPc2G+DMhs9vNSo=; b=ihVriTSaRSwwCPDbC/zk2ud7F8z2n4NFTFqaLpJb
-	GL1AjYV7Bq630v7UKgS/KBtqoAlkyMPNDOtI2kSHmy4c37mG68+4d41dze/O792K
-	mRQ5VRqHW2gTQpqztXbPfFg7v7jOe5guYoNIuZPwsaT+tIRaZPfeFOnTc8N4jpaw
-	jsJziZl+o0l/dRs4L1qqJtJEfCrty0qvIMxOafGVD9dN1NEpFnVB2IIRmZfds746
-	6ZsUWEhZx4YzPaQ5R8klkeJBsLsn6c3ODsRAEeuBMX33ljZwewUSksRw9HWDIiDh
-	D9NKGceX4gnUvQNCC/IHptzEXz87zeLQ4sAsy42ayZcxyA==
-Received: from mail-qt1-f199.google.com (mail-qt1-f199.google.com [209.85.160.199])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4acqur9wut-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Wed, 12 Nov 2025 20:16:30 +0000 (GMT)
-Received: by mail-qt1-f199.google.com with SMTP id d75a77b69052e-4ed74e6c468so408721cf.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 12 Nov 2025 12:16:30 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1762978590; x=1763583390; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=SEIsm1QuXuVAqb/gdqCKCH2FdjtpCPc2G+DMhs9vNSo=;
-        b=f9BsP4Qez1Xx0cplJV+yp/NenOADLE5X5Itg27/ZdUlHQE6fvvqub8G5gP6ni5YyYX
-         k9YVjBlf5/V5usIBBBKQahO8wVWDkkSuwaPmtK0vaLNLcHPeXv4D/tS/AkiNRS+HCkH1
-         3mP01QYyWAYiaE8jd4rew9eiPuQSsedlO2zd1O7fnucV5rdG11yavw20hnKkRbfdroKw
-         7Z+izJM+EtTDoHEvFfWI/GVbI0qbNdYAwPSFOYJkp8TVm6QvrFyHamrlpvzcfG5ks94C
-         leKjM9cKQXdYvW/QKGSlb67Ojg6jzXoeZCnuqy1J7qYglrEwBCT+aDHlYaLtSOo9SdzL
-         KHcA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1762978590; x=1763583390;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=SEIsm1QuXuVAqb/gdqCKCH2FdjtpCPc2G+DMhs9vNSo=;
-        b=HlMmHRludU5id8wAaeZFmwrOgPW4/mdPMF/wyMN4uJVPycBBxyWczNxr4lZA21mABH
-         aNizs1wcU7UTsVJAxbOYZcabw3jbOXu12bkyBAaWZIDr9yx5ocxpb4p8Wu2hcQJxzWGe
-         3VuW2zs1GZM4OV8UbPUZTGttqyzx0piAuSfJxT9qtpYExTHnU3jJnkHmtxeeZ0OCN460
-         k7hp+TNspY3C8/V5mhcHEaFf/0BdRaIcesl/Xyg/KMgMOwroU7VzJ+rkF6euuci3fKRz
-         KvGpc0Oc9eR7rck+pRMjFmAiVagbegcEgbVxhZxyGg1eI90c/LYi13CA7WE/VLNkDTrj
-         qpOg==
-X-Forwarded-Encrypted: i=1; AJvYcCUXXZWeqRWTn/i6tSFPGecgBBYojtLfs6y+VMzy8fEDUOcnjGZiuZsa8UNWI62Y3TUKSGwHKnKS0csxWeZu@vger.kernel.org
-X-Gm-Message-State: AOJu0Yy5kzA4kwwcdmX8TbnHbpttl7GA3s9PreEEt/xRTPraOBWYkcPR
-	0UMMoR/3IjD5SMEN138mPG1hrbgRQX+xepoGAc7Z3G0kMilYNj5ryZCeNd4nZlIPKgFuRxKzgec
-	App33qb/NOLaFCI3iAjvUHrrlOKlOsNd8/buNsXy0fitqflfF2ktSpGqIp/NxRXmoTzRX
-X-Gm-Gg: ASbGncvsXgLQgE0az3sNitiVqy24xkcITrsXvayezjbcNQouV9dT79bNN9wRjYW1TE5
-	cJdG41lOBz578hG5EWRpnuBpVJPd8BUD3on6BVca3lOOMgd9Yvg9w6xyJUR8eIsGcBt9+lJ2Ctt
-	qfo8Y6f/skfK2k+R+J+boxdo17Jce546EX6wk1mIUF2iYNSIDoIpZfQVG+omPEqKiRi0YtQSA1N
-	P956HZhSZv2hOLhAHdmCLanseScB/H65jn0aF4ESx1b+gTILqiC+33xqcD3BI1nTeLV/jJ291jO
-	w1j1A0YO09SUukSGOkGVS9QFeGhd319DmV7A9IpLZcap74uz+Dtbclmca6ZLEniRHm+UMt19J8b
-	0p9BU9fJoPSTCMjzzpH/q5xsQtKRzlPBZ8MPrjmPgvqydDJxthuvrXOSek5e30enY7UCeHUp9wr
-	tpS06s+MDOpRFu
-X-Received: by 2002:ac8:58c1:0:b0:4ed:b1fa:ae22 with SMTP id d75a77b69052e-4eddbdda755mr50502481cf.72.1762978590123;
-        Wed, 12 Nov 2025 12:16:30 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFFsLk33Oy565qDfTn4b0pivb1XviqK+/o97w/mSbFKDBRqbgTJYqrGARQYDUzrgSVuBOWUfA==
-X-Received: by 2002:ac8:58c1:0:b0:4ed:b1fa:ae22 with SMTP id d75a77b69052e-4eddbdda755mr50501881cf.72.1762978589575;
-        Wed, 12 Nov 2025 12:16:29 -0800 (PST)
-Received: from umbar.lan (2001-14ba-a0c3-3a00-264b-feff-fe8b-be8a.rev.dnainternet.fi. [2001:14ba:a0c3:3a00:264b:feff:fe8b:be8a])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-5944a0318cdsm6141910e87.44.2025.11.12.12.16.28
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 12 Nov 2025 12:16:28 -0800 (PST)
-Date: Wed, 12 Nov 2025 22:16:27 +0200
-From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-To: Bjorn Andersson <andersson@kernel.org>
-Cc: Gopi Botlagunta <venkata.botlagunta@oss.qualcomm.com>,
-        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        venkata.valluru@oss.qualcomm.com, jessica.zhang@oss.qualcomm.com,
-        Yi Zhang <zhanyi@qti.qualcomm.com>
-Subject: Re: [PATCH 1/2] arm64: dts: qcom: Enable lvds panel-DV215FHM-R01 for
- rb3gen2 industrial mezzanine
-Message-ID: <vz7u2jsb677imufu6aillcqnnaybed3occniyx3fgniwtxzij5@uplpfhhyjk5k>
-References: <20251112-add-lt9211c-bridge-for-rb3gen2-industrial-mezzanine-v1-0-6eab844ec3ac@oss.qualcomm.com>
- <20251112-add-lt9211c-bridge-for-rb3gen2-industrial-mezzanine-v1-1-6eab844ec3ac@oss.qualcomm.com>
- <kosvayxmpbngn56v7t734f4qqrc2rptkjdd7q5q23brg22dvov@cxs7kzzuapim>
- <qps5fkbgdqqvoqa3m5l4naksyc4aoq4xqnciyrpkrbs5qcno7c@aa6ync6sk4ju>
+	s=arc-20240116; t=1762981663; c=relaxed/simple;
+	bh=u8q2TZF20ibeYFuY8h4yCLkgQDj7Xrhx2gKQ62/nSkk=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=Dppwb/zwk80tr58MbWKqJQGeBRpYkyQxLHuh1DBMKWIUXAotSo+AMNiQT9/h6+QeulMuQeI+JpwDzcMZKlaGmmpo90nAqgtSiuhzTFxhhoy2f2pG5ss4cRFcMN1zV2/f9Oy3X9CO6pk4TzeF/GFH7bWJvWI/v+xOgsMhsl+YE8c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=aULWBmZ3; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E7BBC4CEF8
+	for <linux-arm-msm@vger.kernel.org>; Wed, 12 Nov 2025 21:07:42 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1762981662;
+	bh=u8q2TZF20ibeYFuY8h4yCLkgQDj7Xrhx2gKQ62/nSkk=;
+	h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+	b=aULWBmZ3rD1NOHg1GcQ4Dq2EBVHRlCDrSxReNcyrhsRiK1A2FuL00TwRxPiGuN4Db
+	 OKIrCUVIDLpK8jqGmMEAEZvERB8tg6pMwBoAiH4CsPX0gnoN+1qcTm+mxekJWDG+9G
+	 XgM8haSqwQasnU2/WgQCSpjtRUpEg+ytNyBljhB8bPSMB3jcrBn4aNlywo2AAlqTOl
+	 MWMANIebhQ1TxnenHMk2MDfOXtC8a2P8AZjlXo5da3Ts9/Kx00vg7gtFqYVpRUFxvA
+	 HcOZNzSR+8nmU8KV1v59K2b+h6WZxg8f9EB4/qrujfwGgn6fQlSZy7FZz2Futss1Rf
+	 Xne5czQMN2nQg==
+Received: by mail-ed1-f51.google.com with SMTP id 4fb4d7f45d1cf-640860f97b5so148497a12.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 12 Nov 2025 13:07:42 -0800 (PST)
+X-Forwarded-Encrypted: i=1; AJvYcCWCQi7rMx5z+8AuGwPVq+/GisJfZ3NTjxr9x4L0Q6UHmpt5i8DrKIowGsBqN1TLk+YfJkGHE9vWMfpFxtmV@vger.kernel.org
+X-Gm-Message-State: AOJu0YzOw2ouSsFRnBsXvvVvL4wzSBry38xg0nK3z7gCeZBKSMiA+pgR
+	ZwsD6NFd61ZQOyA6bO0NqURYndQOiT41BngLrS0qxf+qxTOgC+4PKye4+8Nb7Hy7itWssEhqrAb
+	j44WXyNPkfP9xiJQvS8nvtIlXOCsXyw==
+X-Google-Smtp-Source: AGHT+IEIy21Sb3B7FBrgAI8SVidk1uSmlkEpW+/mXMU6zQinRFFusx79rk2YkYD+SPkgL7pLFxsxRVnlBhzaVvKVnfk=
+X-Received: by 2002:a05:6402:2106:b0:641:27d8:ec72 with SMTP id
+ 4fb4d7f45d1cf-6431a39656dmr3803888a12.4.1762981660959; Wed, 12 Nov 2025
+ 13:07:40 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <qps5fkbgdqqvoqa3m5l4naksyc4aoq4xqnciyrpkrbs5qcno7c@aa6ync6sk4ju>
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMTEyMDE2NCBTYWx0ZWRfX3qU1GV+a7L3T
- mxXY197TjV9RPqN6JVOXqWIu+ExJONOhw89enG7WqOC8Zg/yb6ssaxM+tI22OvchPtoHSAK6WvB
- EWU5liHgJZRyQgOjSHL+w78rDl+VG+0f0srY+XFfp+yrOn6hniQVWsPrOTMOjN6ki8BSWQ5KcZH
- rUFTwYO4BmvjfzICn69CHtTMVJu25ECEio6dqe+DifTfK5iGiPzU36Oc3FaDJ4gD/zrBkJvUkqW
- EUhOnACoK6SKUHgYBDAd0sVfKqSmPwRbh/uGFp6u3Qvu7m7BnuNr5ZTIJncZKJmotnPsekWq9QH
- Gep3X5SpKi+PoDe48rSw/ZEzGPEE7dTdqaMHHJ7T3v2ywr4hMaMD2+tgeNi00+1yWV5Ah3y0/P2
- 3Mw6IWeAoTfctkdS+poGUibS2lGwyA==
-X-Proofpoint-GUID: qimkajVPxO-5XsYyLQbN_jlUGQ13jdxL
-X-Authority-Analysis: v=2.4 cv=bbBmkePB c=1 sm=1 tr=0 ts=6914eb1f cx=c_pps
- a=WeENfcodrlLV9YRTxbY/uA==:117 a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10
- a=6UeiqGixMTsA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=EUspDBNiAAAA:8 a=EjFe0Bf2cYtm2qUX5RUA:9 a=CjuIK1q_8ugA:10
- a=kacYvNCVWA4VmyqE58fU:22
-X-Proofpoint-ORIG-GUID: qimkajVPxO-5XsYyLQbN_jlUGQ13jdxL
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
- definitions=2025-11-12_06,2025-11-12_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 bulkscore=0 impostorscore=0 lowpriorityscore=0
- priorityscore=1501 malwarescore=0 phishscore=0 spamscore=0 clxscore=1015
- adultscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2510240001
- definitions=main-2511120164
+References: <20251112-pci-m2-e-v1-0-97413d6bf824@oss.qualcomm.com>
+In-Reply-To: <20251112-pci-m2-e-v1-0-97413d6bf824@oss.qualcomm.com>
+From: Rob Herring <robh@kernel.org>
+Date: Wed, 12 Nov 2025 15:07:29 -0600
+X-Gmail-Original-Message-ID: <CAL_Jsq+rOGUETwhPuzSsC6bhq1Q10k=pCRnZrnoDbCxVYV91YA@mail.gmail.com>
+X-Gm-Features: AWmQ_bkhxcdj-NsfzZ0QRxOltuG2xQHMKmcPZ2R7l6HHsGWU07rxfsx54qGm66Y
+Message-ID: <CAL_Jsq+rOGUETwhPuzSsC6bhq1Q10k=pCRnZrnoDbCxVYV91YA@mail.gmail.com>
+Subject: Re: [PATCH 0/9] Add support for handling PCIe M.2 Key E connectors in devicetree
+To: manivannan.sadhasivam@oss.qualcomm.com
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Jiri Slaby <jirislaby@kernel.org>, 
+	Nathan Chancellor <nathan@kernel.org>, Nicolas Schier <nicolas.schier@linux.dev>, 
+	Hans de Goede <hansg@kernel.org>, =?UTF-8?Q?Ilpo_J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>, 
+	Mark Pearson <mpearson-lenovo@squebb.ca>, "Derek J. Clark" <derekjohn.clark@gmail.com>, 
+	Manivannan Sadhasivam <mani@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Marcel Holtmann <marcel@holtmann.org>, Luiz Augusto von Dentz <luiz.dentz@gmail.com>, 
+	Bartosz Golaszewski <brgl@bgdev.pl>, linux-serial@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	linux-kbuild@vger.kernel.org, platform-driver-x86@vger.kernel.org, 
+	linux-pci@vger.kernel.org, devicetree@vger.kernel.org, 
+	linux-arm-msm@vger.kernel.org, linux-bluetooth@vger.kernel.org, 
+	linux-pm@vger.kernel.org, Stephan Gerhold <stephan.gerhold@linaro.org>, 
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Wed, Nov 12, 2025 at 10:53:36AM -0600, Bjorn Andersson wrote:
-> On Wed, Nov 12, 2025 at 05:02:20PM +0200, Dmitry Baryshkov wrote:
-> > On Wed, Nov 12, 2025 at 08:18:11PM +0530, Gopi Botlagunta wrote:
-> > > Below is the routing diagram of dsi lanes from qcs6490 soc to
-> > > mezzanine.
-> > > 
-> > > DSI0 --> SW1403.4 --> LT9611uxc --> hdmi port
-> > >                  |
-> > >                   --> SW2700.1 --> dsi connector
-> > >                               |
-> > >                                --> LT9211c --> LVDS connector
-> > > 
-> > > Disable hdmi connector for industrial mezzanine and enable
-> > > LT9211c bridge and lvds panel node.
-> > > LT9211c is powered by default with reset gpio connected to 117.
-> > > 
-> > > Signed-off-by: Yi Zhang <zhanyi@qti.qualcomm.com>
-> > > Signed-off-by: Gopi Botlagunta <venkata.botlagunta@oss.qualcomm.com>
-> > > ---
-> > >  .../qcom/qcs6490-rb3gen2-industrial-mezzanine.dtso | 106 +++++++++++++++++++++
-> > >  1 file changed, 106 insertions(+)
-> > > 
-> > > diff --git a/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2-industrial-mezzanine.dtso b/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2-industrial-mezzanine.dtso
-> > > index 619a42b5ef48..cc8ee1643167 100644
-> > > --- a/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2-industrial-mezzanine.dtso
-> > > +++ b/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2-industrial-mezzanine.dtso
-> > > @@ -8,6 +8,112 @@
-> > >  #include <dt-bindings/clock/qcom,gcc-sc7280.h>
-> > >  #include <dt-bindings/pinctrl/qcom,pmic-gpio.h>
-> > >  
-> > > +/ {
-> > > +
-> > > +	hdmi-connector {
-> > > +		status = "disabled";
-> > > +	};
-> > > +
-> > > +	panel_lvds: panel-lvds@0 {
-> > > +		compatible = "panel-lvds";
-> > 
-> > Please describe the actual panel using compatible, etc. It's not that
-> > this is some generic uknown LVDS panel.
-> > 
-> 
-> I presume the mezzanine doesn't have a panel, so how do we provide the
-> description of the mezzanine such that a developer can quickly get up to
-> speed with their specific panel connected to it?
-> 
-> Do we leave this node disabled, just for reference, or do we specify a
-> specific panel and then have the developer copy and adopt this to their
-> panel?
-> 
-> The benefit of doing it like that is that we provide a complete example
-> and something we can test. But at the same time, If I presume we might
-> have users of the mezzanine without an attached LVDS panel?
-> 
-> > > +		data-mapping = "vesa-24";
-> > > +		width-mm = <476>;
-> > > +		height-mm = <268>;
-> 
-> The way this patch is written we certainly have some specific panel in
-> mind...
+On Wed, Nov 12, 2025 at 8:45=E2=80=AFAM Manivannan Sadhasivam via B4 Relay
+<devnull+manivannan.sadhasivam.oss.qualcomm.com@kernel.org> wrote:
+>
+> Hi,
+>
+> This series is the continuation of the series [1] that added the initial =
+support
+> for the PCIe M.2 connectors. This series extends it by adding support for=
+ Key E
+> connectors. These connectors are used to connect the Wireless Connectivit=
+y
+> devices such as WiFi, BT, NFC and GNSS devices to the host machine over
+> interfaces such as PCIe/SDIO, USB/UART and NFC. This series adds support =
+for
+> connectors that expose PCIe interface for WiFi and UART interface for BT.=
+ Other
+> interfaces are left for future improvements.
+>
+> Serdev device support for BT
+> =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D
+>
+> Adding support for the PCIe interface was mostly straightforward and a lo=
+t
+> similar to the previous Key M connector. But adding UART interface has pr=
+oved to
+> be tricky. This is mostly because of the fact UART is a non-discoverable =
+bus,
+> unlike PCIe which is discoverable. So this series relied on the PCI notif=
+ier to
+> create the serdev device for UART/BT. This means the PCIe interface will =
+be
+> brought up first and after the PCIe device enumeration, the serdev device=
+ will
+> be created by the pwrseq driver. This logic is necessary since the connec=
+tor
+> driver and DT node don't describe the device, but just the connector. So =
+to make
+> the connector interface Plug and Play, the connector driver uses the PCIe=
+ device
+> ID to identify the card and creates the serdev device. This logic could b=
+e
+> extended in the future to support more M.2 cards. Even if the M.2 card us=
+es SDIO
+> interface for connecting WLAN, a SDIO notifier could be added to create t=
+he
+> serdev device.
+>
+> Open questions
+> =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+>
+> Though this series adds the relevant functionality for handling the M.2 K=
+ey M
+> connectors, there are still a few open questions exists on the design.
+>
+> 1. I've used the M.2 card model name as the serdev device name. This is f=
+ound
+> out by comparing the PCIe VID:PID in the notifier. Is this approach accep=
+table?
+> I did not use the PID as the serdev name since it will vary if the SDIO
+> interface is used in the future.
+>
+> 2. PCIe client drivers of some M.2 WLAN cards like the Qcom QCA6390, rely=
+ on
+> the PCIe device DT node to extract properties such as
+> 'qcom,calibration-variant', 'firmware-name', etc... For those drivers, sh=
+ould we
+> add the PCIe DT node in the Root Port in conjunction with the Port node a=
+s
+> below?
+>
+> pcie@0 {
+>         wifi@0 {
+>                 compatible =3D "pci17cb,1103";
+>                 ...
+>                 qcom,calibration-variant =3D "LE_X13S";
+>         };
+>
+>         port {
+>                 pcie4_port0_ep: endpoint {
+>                         remote-endpoint =3D <&m2_e_pcie_ep>;
+>                 };
+>         };
+> };
+>
+> This will also require marking the PMU supplies optional in the relevant =
+ath
+> bindings for M.2 cards.
+>
+> 3. Some M.2 cards require specific power up sequence like delays between
+> regulator/GPIO and such. For instance, the WCN7850 card supported in this=
+ series
+> requires 50ms delay between powering up an interface and driving it. I've=
+ just
+> hardcoded the delay in the driver, but it is a pure hack. Since the pwrse=
+q
+> driver doesn't know anything about the device it is dealing with before p=
+owering
+> it ON, how should it handle the device specific power requirements? Shoul=
+d we
+> hardcode the device specific property in the connector node? But then, it=
+ will
+> no longer become a generic M.2 connector and sort of defeats the purpose =
+of the
+> connector binding.
+>
+> I hope to address these questions with the help of the relevant subsystem
+> maintainers and the community. Until then, this series is *not* mergeable=
+ as a
+> whole.
+>
+> Testing
+> =3D=3D=3D=3D=3D=3D=3D
+>
+> This series, together with the devicetree changes [2] was tested on the
+> Qualcomm X1e based Lenovo Thinkpad T14s Laptop which has the WCN7850 WLAN=
+/BT M.2
+> card connected over PCIe and UART.
+>
+> [1] https://lore.kernel.org/linux-pci/20251108-pci-m2-v2-0-e8bc4d7bf42d@o=
+ss.qualcomm.com
+> [2] https://github.com/Mani-Sadhasivam/linux/commit/d39b81b3ff1ecfb0d423b=
+4da0771925d41648b5a
+>
+> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.=
+com>
+> ---
+> Manivannan Sadhasivam (9):
+>       serdev: Convert to_serdev_device() and to_serdev_controller() helpe=
+rs to macros
+>       serdev: Add serdev device based driver match support
+>       serdev: Allow passing the serdev device name to serdev_device_add()
+>       serdev: Add an API to find the serdev controller associated with th=
+e devicetree node
+>       serdev: Add modalias support for serdev client devices
+>       serdev: Skip registering serdev devices from DT is external connect=
+or is used
+>       dt-bindings: connector: Add PCIe M.2 Mechanical Key E connector
+>       Bluetooth: hci_qca: Add support for WCN7850 PCIe M.2 card
+>       power: sequencing: pcie-m2: Add support for PCIe M.2 Key E connecto=
+rs
+>
+>  .../bindings/connector/pcie-m2-e-connector.yaml    | 154 +++++++++++++++
+>  MAINTAINERS                                        |   1 +
+>  drivers/bluetooth/hci_qca.c                        |  20 ++
+>  drivers/platform/x86/dell/dell-uart-backlight.c    |   2 +-
+>  .../x86/lenovo/yoga-tab2-pro-1380-fastcharger.c    |   2 +-
+>  drivers/platform/x86/x86-android-tablets/core.c    |   2 +-
+>  drivers/power/sequencing/Kconfig                   |   1 +
+>  drivers/power/sequencing/pwrseq-pcie-m2.c          | 218 +++++++++++++++=
++++++-
+>  drivers/tty/serdev/core.c                          |  77 +++++++-
+>  include/linux/mod_devicetable.h                    |   8 +
+>  include/linux/serdev.h                             |  25 ++-
+>  scripts/mod/devicetable-offsets.c                  |   3 +
+>  scripts/mod/file2alias.c                           |   8 +
+>  13 files changed, 494 insertions(+), 27 deletions(-)
+> ---
+> base-commit: db81ec30672bb228cd7cd809edeeae661d621f2d
 
-It's even mentioned in the subject: BOE DV215FHM-R01. Having a proper
-panel compatible is demanded by the panel-lvds bindings.
+git show db81ec30672bb228cd7cd80
+fatal: ambiguous argument 'db81ec30672bb228cd7cd80': unknown revision
+or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
 
+This series doesn't apply.
 
--- 
-With best wishes
-Dmitry
+Rob
 
