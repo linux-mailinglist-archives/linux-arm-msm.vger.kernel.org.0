@@ -1,213 +1,238 @@
-Return-Path: <linux-arm-msm+bounces-81434-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-81420-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [142.0.200.124])
-	by mail.lfdr.de (Postfix) with ESMTPS id 23AD7C52B1C
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Nov 2025 15:24:55 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 098EAC529BF
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Nov 2025 15:06:44 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 5BF274E2429
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Nov 2025 14:04:26 +0000 (UTC)
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 5CA634FBD6B
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Nov 2025 13:55:49 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B0A11222587;
-	Wed, 12 Nov 2025 14:04:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 46D8C2459E7;
+	Wed, 12 Nov 2025 13:55:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="cSWdgjYk";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="exMQlao9"
+	dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b="FYMhWJun"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f45.google.com (mail-wm1-f45.google.com [209.85.128.45])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C92E1ADC83
-	for <linux-arm-msm@vger.kernel.org>; Wed, 12 Nov 2025 14:04:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1344323EA96
+	for <linux-arm-msm@vger.kernel.org>; Wed, 12 Nov 2025 13:55:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762956264; cv=none; b=Z8WysNZ8kcuUB9Hxe+yfWNwuQ6xKFfxahs9Pr9+pxTNqLIqNdB9nbe1gXn3F7gr113MulkrPAojAl4VkFjQMa714EBPqqNVB4HLver1XLz5iIGUxVoQOJOTW5PWG15AdJd9kUhcN1nQE3yvKIDtVjJeRh48o5vgJgnJcZU83pt8=
+	t=1762955743; cv=none; b=uJ3RZ3nbjRAD6CbLe43Zw+O3OIX/Eakexl8CV8u65bUxb8h86lItciQ9SKMwQ5ATFqb1VBSKX6agvhrUWDF8p6sSJYbOCL4Z+sm1OF7Kc0HiBgpi+xv/fSmqkIMR4Vt6wXrJ/hoFdxpi0zcOtf5xPNd7Z0fFeNd27VVJRYKPOCM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762956264; c=relaxed/simple;
-	bh=OAryLYQkLLUmB/WMe+NZx5UWRsH3+TBfVnEaugxiuw0=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=UOPRDETHfuDZXUJk3GrxRD36Z9EgA+P4wTjvsPpqqmfJcFkhMbe5nZHrfG97Rxf3A50zh8G8Fsew+OqAY15aiTELrqoaMM7XhBJ3bGawxfxtGlPvRbOE3nA2c6gAF+T13YdSwT94HQjtbbEnSDR3AXcMPJFWVlSP+jXYcWC1wWk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=cSWdgjYk; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=exMQlao9; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 5AC7batW3503482
-	for <linux-arm-msm@vger.kernel.org>; Wed, 12 Nov 2025 14:04:22 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	RTdtyUKWWBMzxYsC5nXPivGVgsscMtomVbfKa/HEHHo=; b=cSWdgjYkemJrNc1g
-	pFfqjO1NFr+lWhKcYSBN7fNg0B9phMoU5W7dun4wLxb4ZFE12v6b/qKyaFp1z+dh
-	pI3/hIHiz4SZqa7t7qWngw21byrArSI5wl3ivV1IRxI4VuIwTyj+HxHHT6182eNZ
-	BiYCPXszvnAGl7xVByzRqLw9c4AntRPbjLeb8F3P8hVYotjfjT61CEKh6mVFSz4A
-	wg1jy04dv8QNy1J7vR6T4BMUZoiVJ5dOqJeI4m68iIzg33F1GsFOhe5Vb7qe43/g
-	PDlJm8t4vw4a51B4h4ZbmL3tqMfjC4a6EoP6PPyR7o+l9nwCWno+z9i6gDKe3TAP
-	FG8EXg==
-Received: from mail-pl1-f200.google.com (mail-pl1-f200.google.com [209.85.214.200])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4acdcc2pjw-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Wed, 12 Nov 2025 14:04:22 +0000 (GMT)
-Received: by mail-pl1-f200.google.com with SMTP id d9443c01a7336-29558b13bb9so1572035ad.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 12 Nov 2025 06:04:22 -0800 (PST)
+	s=arc-20240116; t=1762955743; c=relaxed/simple;
+	bh=ml3z2pXKnumVWoVR4wBDLwJ0K3TTyVqmRXtK2nzVm5A=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=GRgdqdIVFuMabeKEqdF9EQroPaFLDGh4lm20Z09iIo8F5uRqwcFcWysAT9g2FEzvUdh4ManVi22uY3UZ+qcU5gG8Vps09HzklA3d6ShDR5iiUscXF3XrhSNaPsLT24haNiz3/uPY0EK4MXW2f7FUYxROHcnmdcgqXkF4iAUXUfc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl; spf=none smtp.mailfrom=bgdev.pl; dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b=FYMhWJun; arc=none smtp.client-ip=209.85.128.45
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=bgdev.pl
+Received: by mail-wm1-f45.google.com with SMTP id 5b1f17b1804b1-4777707a7c2so6704585e9.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 12 Nov 2025 05:55:39 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1762956262; x=1763561062; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=RTdtyUKWWBMzxYsC5nXPivGVgsscMtomVbfKa/HEHHo=;
-        b=exMQlao9vmv1JyHEaYYaFiBzrdQxRJBDXfnE1A70LlfNG5XE5Dy+9Ld/Rc7+UFxBNk
-         mgcvetZfaDsxPNVlC3BIrpZD/bdm3Qi/4vxdZyrK9MyI9yFs1lpXPtSZthexF5uFawpq
-         m0Iq0GZneJTsY9GfU2MDz8Wn/fHzoLu0JlYPuYN6eZHkscLBnj9FnUev8M/uw+YloqGc
-         hp0dzbYsYierB9+P3zAxszxcZHMMTmgbrmYRFge4WV4yF3xVShp3LICHnQgMzbTDCIC1
-         JFpFih8MKUfffeRMgiAgodCKvdWGTS54Fx2Sbo00OP4WCShiSTFy8ubng8rneOecEsJt
-         TUWg==
+        d=bgdev-pl.20230601.gappssmtp.com; s=20230601; t=1762955738; x=1763560538; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=XBFAMrOJQxMwscqUKdzjpajXl7OxXxRyAGXjE2x3Poc=;
+        b=FYMhWJunB245ylKDnxfCQ3MPPBrSi3daQCeKtp2u9fAVliGAITs17iVZUms/ZdPwYc
+         3a9dv1YW5GM6sjXzLqbH3P2jFzCGUYki9UQAcm8SGxD3apD2sAXYDoHsZsGlao8aNbJ6
+         EbVlaoDFdTq2UgsBKiZwjWpOoPK7ymDwEU/thtkznb5n5ivFGLyPFJUBdZBhqOpYMiVf
+         68/lKbt/lY2GqOMgH6ry4DAzsxzX5PW3oSmR5GVNRNo2rVBVD2Oic6INPnAzG6PBhluT
+         fe70xVhuw/58ZYC+i9OqR0EycTy2TYyuqgNabfU9T7VSdaFJ6d9b9Fk9rmHMbxx+yaKQ
+         9CLA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1762956262; x=1763561062;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=RTdtyUKWWBMzxYsC5nXPivGVgsscMtomVbfKa/HEHHo=;
-        b=l6IPfHRUVvEC0Z+Lxypm7pohNpcMK8BdsB2t0MQreONVFkT8yR+0Se3L832Tl5wTCE
-         pHUk19VxwL6MU6nueMlKhSGpvJHaD/yrLl2hG+0UQyBlgamDNa+upPP28X+iaI/X+N9x
-         Umycrm3Go6WcaindsUr7ixMOTdyhDV/WmOgpp2HnqM4VfQo0xYaKh9ITTChN5GyYauF4
-         LpWhSMeABPqZbFQGyVoN5nwmA6OKictTz1fi9JZnpneUUibKE0n5wUeOPb/64Prps+LS
-         0+fnXG/1O11AbaZNMWzUjRu5K59FtRJvPkTie0LPRk8hw+MvoW02oiOqbJ8FlQ61oFfZ
-         8k2A==
-X-Gm-Message-State: AOJu0YzpR9BJED8MpLdHWtMLBqW2QZCY6jSNb4lfJkJrs7SDn0kE4V4Y
-	4/aP9ZsAX43RzaUVNAPkfgRgs82/MTdpDeL735Vu4RK3qQuh2T/RQmrKKp5q41/XEstpCoSeCHa
-	+A2Kwk1LRVHjoMoZcdjzBNnCSmhpY6qDObz8wa5sp55w9brRCRy9HtY/SwMU6N9bK5mqs
-X-Gm-Gg: ASbGncv75MF1+XGqtcmC+deR+oRdTElEDZO83AmNAqyRiqZ5IDFJnntzfLqJQTOobaJ
-	b75qGSR/RYzP9gpLMmbQbnrLcOpVkhq9PbLKn4/9X2TisI1BgqoMblNTOxhkqO/XQ2n2u9SNywJ
-	4qlIK6f7OQ/xoDvsSkwq9Ezd4ilhyaUhrTtjdzLguo8+OkCxMypw0GThj3Z2L24bQpJULt5GmyL
-	d/mYA/Dni9UPOFvCZ54DufHAtQD4CLtpdosSBGP+awcZNTMFZgEJSDHxTZjd+O156YYJ0cfXVag
-	sV7waUbyCXQLy0+dKOrH1ocKwcM0omNr+8y9jaYPAn9YSBjavHWljPau/NpDMBotLfsgY2HnYIf
-	LrFQF8fUafcCu3zr78kVvttDvsJ5KdMOUq+vNYPFNYd+vlKrMNN4V/6T5
-X-Received: by 2002:a05:622a:1209:b0:4ec:ed46:ab6d with SMTP id d75a77b69052e-4eddbdad3damr29223851cf.9.1762955569064;
-        Wed, 12 Nov 2025 05:52:49 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFcy1zE3l/tMASsQZC9DN852+GpFxCEn0w3eDqVGBouDX1a9/hlv2AeSAGGjvnQlClfa38f9w==
-X-Received: by 2002:a05:622a:1209:b0:4ec:ed46:ab6d with SMTP id d75a77b69052e-4eddbdad3damr29223501cf.9.1762955568364;
-        Wed, 12 Nov 2025 05:52:48 -0800 (PST)
-Received: from [192.168.119.202] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-b72bf723172sm1585335666b.32.2025.11.12.05.52.46
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 12 Nov 2025 05:52:47 -0800 (PST)
-Message-ID: <f5c7eb1c-28b1-4cf1-afb0-b993384b7712@oss.qualcomm.com>
-Date: Wed, 12 Nov 2025 14:52:45 +0100
+        d=1e100.net; s=20230601; t=1762955738; x=1763560538;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=XBFAMrOJQxMwscqUKdzjpajXl7OxXxRyAGXjE2x3Poc=;
+        b=cxG+UxsRWPwHJXu43hP3UmBqrsPsQlvQLMgykkemVaTGh0HJJnMXURW8pw2LvfZDm6
+         KZ/boJa+L7tjdvwxhe+PI1ojiVRzfZ6DXWdPW2I+5Ojbtmz2/1fCYVjX9GWbVdATQhB1
+         4OZPjqtXzUGmd182y5XHW+d0tDt8G52gkib4BZQn3wd76v+3jVD8HJVCOr2O655VcUll
+         99zgAxmJbNDUzT95CNb7oiFm8GlG5AlqiNQ3xI3XpmkbBvKg0rMYGIAdMi9uLAYjv3rr
+         Sh15wPZSAZ1/5NMNjb/5Jkp5lHaUiYFRyxGhtOfOSZl3oBX862oCNqJdR059M55GXGPD
+         Kf2Q==
+X-Forwarded-Encrypted: i=1; AJvYcCVO6n0Q+Tdsxx4JFLruwexKqG1INLGhGNfAdyhKu9hdhoFDuN0aCsVwipprkjOSnioNRJhxS/KefGQBJJGl@vger.kernel.org
+X-Gm-Message-State: AOJu0YxvWp1rh76AKZSzI8v9p2B6ayY3sxf/wh+kRVo3ogewzB67VDP4
+	3xvupFGGRg3LaZ/yLViz51/niD1wZJ/FX8WGaPfAQ33xPws/ui4BbVgEUHHlYwdVpsQ=
+X-Gm-Gg: ASbGncuR9LyodVk+mUgKCIWaoZC8ueCfhgjTmJT86vktiaeatWAx+rrhKyDXA52traW
+	dgGqpZV4zOrm0rewMByHbQbjxKdtrcpthbpqrqqdOMkzkQJk2PYXB4Ku40T7jM5RpECOwX6hAVS
+	J9J73PdxpEm8oRLg6w2fd6tOGDAHLtdGN83f88Ud8lYL+cFpmSURGKsdWVfB7KAv3F3AvGbN1Pn
+	3uU/0EQMN+CpueXUGSzJ55hslYICtYXI9tpBExO06x3qmfO4zQP/nHXPl0HXL/BoxjiMkOG0btz
+	0FtZSqFRFhD2j4yOaof2Y6qfq9A8WZRTuCkNwDUkGNkqz+owdz7S2gLM2+pFyzqpdzwuODj9cgM
+	LJwzaevKkE1VxdK7UAew4SnJ4u58TnSp08B3mqzJ8aZ7lcafdS2veppwb9xzO3acob/byTpUKfk
+	3n/g==
+X-Google-Smtp-Source: AGHT+IFKbQP8SOa1kCByQ4QNAMeH3OJkwfo0T2LCw/ncI1JxiJlrem/nOWVbpAKDdbocGkE7atAYEw==
+X-Received: by 2002:a7b:c3ca:0:b0:475:dadd:c474 with SMTP id 5b1f17b1804b1-477814424a6mr41685355e9.10.1762955737889;
+        Wed, 12 Nov 2025 05:55:37 -0800 (PST)
+Received: from [127.0.1.1] ([2a01:cb1d:dc:7e00:2a6:e453:42d3:11])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-47787e2b835sm37711685e9.2.2025.11.12.05.55.36
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 12 Nov 2025 05:55:37 -0800 (PST)
+From: Bartosz Golaszewski <brgl@bgdev.pl>
+Subject: [PATCH v4 00/10] gpio: improve support for shared GPIOs
+Date: Wed, 12 Nov 2025 14:55:29 +0100
+Message-Id: <20251112-gpio-shared-v4-0-b51f97b1abd8@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/3] arm64: dts: qcom: sdm630/660: Add CDSP-related
- nodes
-To: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>,
-        Nickolay Goppen <setotau@mainlining.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht,
-        linux@mainlining.org
-References: <20251023-qcom-sdm660-cdsp-adsp-dts-v2-0-895ffe50ab5f@mainlining.org>
- <20251023-qcom-sdm660-cdsp-adsp-dts-v2-1-895ffe50ab5f@mainlining.org>
- <07066c46-4121-48da-846a-3a180d245589@oss.qualcomm.com>
- <47b40a91-8365-4431-9fd9-1e48fad2a4e1@mainlining.org>
- <a3cb6633-1595-41e7-8e87-ca48a98f822c@mainlining.org>
- <83c3aea5-764e-4e60-8b16-67b474f19357@oss.qualcomm.com>
- <d17548bb-ddce-4d60-8dc4-2c0633989299@oss.qualcomm.com>
-Content-Language: en-US
-From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-In-Reply-To: <d17548bb-ddce-4d60-8dc4-2c0633989299@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-GUID: UmaYaL_r3yIMeqASOrL-OaKl2oupsG3F
-X-Proofpoint-ORIG-GUID: UmaYaL_r3yIMeqASOrL-OaKl2oupsG3F
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMTEyMDExNCBTYWx0ZWRfX6x4BMh8mp20s
- FRMaRJC2qOnPdGOat0w28fGqFeeqrjKmnVJLWcgsnqQdm9SWtaV1TMlqs1GXXzrN8eD+J9QDLhS
- 9RouIZkZkcJhLheGzKSVZZgADV0SEgch7iIspbTT6UHLHQ7wLPVBF6MnaOLtwC2VrAKx5TnaNnF
- JjcGdIx8HVLWD1OPEftM3Ngq4zNr0z8GmNHq465qpCBDz4eakusBQGtA9S8aZTze6bOLkfHLhUF
- tGYfG6e2LG/bZzNKAFUTZCDsUVy1SM81xJWFT8SoOb5sjtb2mpheN2/0nX7VeGMgN1u/vQ2c1a+
- qetWbY12wroT8qiA0CMGGd/EtH75dNGc2u+fuxGSWmYwXKfQ40a/4aeWb1bFIxhoeABuDaMiov0
- 6IA3sV0MdxL4fOfk33jmeAoO459/CA==
-X-Authority-Analysis: v=2.4 cv=L/0QguT8 c=1 sm=1 tr=0 ts=691493e6 cx=c_pps
- a=IZJwPbhc+fLeJZngyXXI0A==:117 a=FpWmc02/iXfjRdCD7H54yg==:17
- a=IkcTkHD0fZMA:10 a=6UeiqGixMTsA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=OuZLqq7tAAAA:8 a=eRqVM4IRrQ2YyvCDTyEA:9
- a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=uG9DUKGECoFWVXl0Dc02:22
- a=AKGiAy9iJ-JzxKVHQNES:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
- definitions=2025-11-12_03,2025-11-11_03,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 malwarescore=0 bulkscore=0 lowpriorityscore=0
- clxscore=1015 adultscore=0 suspectscore=0 spamscore=0 impostorscore=0
- phishscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2510240001
- definitions=main-2511120114
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIANGRFGkC/2XNTQrCMBCG4atI1kby27SuvIe4SNNJOyBNSSQop
+ Xc3LSIWl9/A885MEkSERM6HmUTImDCMZajjgbjBjj1Q7MomggnNGlbTfsJA02AjdLQy4KQWda3
+ aihQxRfD43GrXW9kDpkeIry2e+Xr9dITadTKnjBqjwYCHllt5ueNoYziF2JM1lMUXcybEHouCO
+ 6ms5b7tPKv+sPzFzR7L9TN3uqqt88q4HV6W5Q1O6cYmIQEAAA==
+X-Change-ID: 20250908-gpio-shared-67ec352884b6
+To: Kees Cook <kees@kernel.org>, Mika Westerberg <westeri@kernel.org>, 
+ Dmitry Torokhov <dmitry.torokhov@gmail.com>, 
+ Andrew Morton <akpm@linux-foundation.org>, 
+ Linus Walleij <linus.walleij@linaro.org>, 
+ Manivannan Sadhasivam <mani@kernel.org>, Rob Herring <robh@kernel.org>, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>, Saravana Kannan <saravanak@google.com>, 
+ Greg Kroah-Hartman <gregkh@linuxfoundation.org>, 
+ Andy Shevchenko <andy@kernel.org>, Bartosz Golaszewski <brgl@bgdev.pl>, 
+ Catalin Marinas <catalin.marinas@arm.com>, Will Deacon <will@kernel.org>, 
+ Srinivas Kandagatla <srini@kernel.org>, Liam Girdwood <lgirdwood@gmail.com>, 
+ Mark Brown <broonie@kernel.org>, Jaroslav Kysela <perex@perex.cz>, 
+ Takashi Iwai <tiwai@suse.com>, Alexey Klimov <alexey.klimov@linaro.org>, 
+ Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konradybcio@kernel.org>
+Cc: linux-hardening@vger.kernel.org, linux-kernel@vger.kernel.org, 
+ linux-gpio@vger.kernel.org, linux-arm-kernel@lists.infradead.org, 
+ linux-sound@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+ Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+X-Mailer: b4 0.14.2
+X-Developer-Signature: v=1; a=openpgp-sha256; l=5266;
+ i=bartosz.golaszewski@linaro.org; h=from:subject:message-id;
+ bh=ml3z2pXKnumVWoVR4wBDLwJ0K3TTyVqmRXtK2nzVm5A=;
+ b=owEBbQKS/ZANAwAKAQWdLsv/NoTDAcsmYgBpFJHUGKHmIdlssRyuI2zDM2oFpYK4thJPAm+An
+ vHpyc0KzgaJAjMEAAEKAB0WIQSR5RMt5bVGHXuiZfwFnS7L/zaEwwUCaRSR1AAKCRAFnS7L/zaE
+ w33fD/4wxGJ2NszFom9FCtcgZxRPtXC4TIw0cdgBDpHnMlLRoRgOAjdfUJihy0bw6eS2jS7ljuF
+ xl+cvSgGjYZKuVQ9KhCVKpDSqiVJL04dSv+zJVRrShx7nRCM4wF3iMJ6CKgZcNw77haE9dlLp/m
+ YG4swj9fw7Huu/DrvNJYEVevDnUOWOUHcq8BBT3F31cqHz7nROXVUOQG72XkSv6qWDmth5+heLG
+ RQ4hzKrShyu9Uq6lEtmyGeW/WoCa1Cg2AM25q8a9TF+FxAjOc3lblwDpzJnUFwluqiYs57b60Cl
+ a19ONlSGyD43DGZ1PE+RxelEz21/fY/3ZOsVyoKRKs8FbKaJVpSPIJ9HoKEgSnbm6m2k02MGeVn
+ KtGdBzVa5LA9oIDJzoi4264FN2pzMc3lCcLDe3bht5K410FQxoMOEmWbPEOMvapBeMyNqC7YDi+
+ 89I2llq8RZt6kTdrtTsVbIJvUEq2MphlgBo7crobjaqWe4kjaodXe6FZK/UDZWi82s6g5f374Jf
+ YQE7UzlHuW0iJeFZjwocqK5NwOQiOen7mVIonjAGkQUGpoLYR1CpLzkEIBsTUm+n/P3QuEy2Ycw
+ ArR5jiJEL6GoiqMTZUtZ11BjOQg5A+/xtxylAdWow8iwqEymoQ1S2EreHkiy83bfB4vpkmE9g9G
+ HS6Gr22pXsrOo7Q==
+X-Developer-Key: i=bartosz.golaszewski@linaro.org; a=openpgp;
+ fpr=169DEB6C0BC3C46013D2C79F11A72EA01471D772
 
-On 11/10/25 6:41 PM, Srinivas Kandagatla wrote:
-> On 11/3/25 12:52 PM, Konrad Dybcio wrote:
->> On 10/31/25 12:30 PM, Nickolay Goppen wrote:
->>>
->>> 24.10.2025 16:58, Nickolay Goppen пишет:
->>>>
->>>> 24.10.2025 11:28, Konrad Dybcio пишет:
->>>>> On 10/23/25 9:51 PM, Nickolay Goppen wrote:
->>>>>> In order to enable CDSP support for SDM660 SoC:
->>>>>>   * add shared memory p2p nodes for CDSP
->>>>>>   * add CDSP-specific smmu node
->>>>>>   * add CDSP peripheral image loader node
->>>>>>
->>>>>> Memory region for CDSP in SDM660 occupies the same spot as
->>>>>> TZ buffer mem defined in sdm630.dtsi (which does not have CDSP).
->>>>>> In sdm660.dtsi replace buffer_mem inherited from SDM630 with
->>>>>> cdsp_region, which is also larger in size.
->>>>>>
->>>>>> SDM636 also doesn't have CDSP, so remove inherited from sdm660.dtsi
->>>>>> related nodes and add buffer_mem back.
->>>>>>
->>>>>> Signed-off-by: Nickolay Goppen <setotau@mainlining.org>
->>>>>> ---
->>>>> [...]
->>>>>
->>>>>> +            label = "turing";
->>>>> "cdsp"
->>>> Ok, I'll change this in the next revision.
->>>>>> +            mboxes = <&apcs_glb 29>;
->>>>>> +            qcom,remote-pid = <5>;
->>>>>> +
->>>>>> +            fastrpc {
->>>>>> +                compatible = "qcom,fastrpc";
->>>>>> +                qcom,glink-channels = "fastrpcglink-apps-dsp";
->>>>>> +                label = "cdsp";
->>>>>> +                qcom,non-secure-domain;
->>>>> This shouldn't matter, both a secure and a non-secure device is
->>>>> created for CDSP
->>>> I've added this property, because it is used in other SoC's, such as SDM845 and SM6115 for both ADSP and CDSP
->>> Is this property not neccessary anymore?
->>
->> +Srini?
-> 
-> That is true, we do not require this for CDSP, as CDSP allows both
-> unsigned and signed loading, we create both secured and non-secure node
-> by default. May be we can provide that clarity in yaml bindings so that
-> it gets caught during dtb checks.
-> 
-> 
-> However in ADSP case, we only support singed modules, due to historical
-> reasons how this driver evolved over years, we have this flag to allow
-> compatiblity for such users.
+Bjorn, Konrad: I should have Cc'ed you on v1 but I just went with what
+came out of b4 --auto-to-cc. It only gave me arm-msm. :( Patch 7 from
+this series however impacts Qualcomm platforms. It's a runtime dependency
+of patches 8 and 9. Would you mind Acking it so that I can take it into
+an immutable branch that I'll make available to Mark Brown for him to
+take patches 8-10 through the ASoC and regulator trees for v6.19?
 
-Does that mean that we can only load signed modules on the ADSP, but
-the driver behavior was previously such that unsigned modules were
-allowed (which was presumably fine on devboards, but not on fused
-devices)?
+Problem statement: GPIOs are implemented as a strictly exclusive
+resource in the kernel but there are lots of platforms on which single
+pin is shared by multiple devices which don't communicate so need some
+way of properly sharing access to a GPIO. What we have now is the
+GPIOD_FLAGS_BIT_NONEXCLUSIVE flag which was introduced as a hack and
+doesn't do any locking or arbitration of access - it literally just hand
+the same GPIO descriptor to all interested users.
 
-Konrad
+The proposed solution is composed of three major parts: the high-level,
+shared GPIO proxy driver that arbitrates access to the shared pin and
+exposes a regular GPIO chip interface to consumers, a low-level shared
+GPIOLIB module that scans firmware nodes and creates auxiliary devices
+that attach to the proxy driver and finally a set of core GPIOLIB
+changes that plug the former into the GPIO lookup path.
+
+The changes are implemented in a way that allows to seamlessly compile
+out any code related to sharing GPIOs for systems that don't need it.
+
+The practical use-case for this are the powerdown GPIOs shared by
+speakers on Qualcomm db845c platform, however I have also extensively
+tested it using gpio-virtuser on arm64 qemu with various DT
+configurations.
+
+I'm Cc'ing some people that may help with reviewing/be interested in
+this: OF maintainers (because the main target are OF systems initially),
+Mark Brown because most users of GPIOD_FLAGS_BIT_NONEXCLUSIVE live
+in audio or regulator drivers and one of the goals of this series is
+dropping the hand-crafted GPIO enable counting via struct
+regulator_enable_gpio in regulator core), Andy and Mika because I'd like
+to also cover ACPI (even though I don't know about any ACPI platform that
+would need this at the moment, I think it makes sense to make the
+solution complete), Dmitry (same thing but for software nodes), Mani
+(because you have a somewhat related use-case for the PERST# signal and
+I'd like to hear your input on whether this is something you can use or
+maybe it needs a separate, implicit gpio-perst driver similar to what
+Krzysztof did for reset-gpios) and Greg (because I mentioned this to you
+last week in person and I also use the auxiliary bus for the proxy
+devices).
+
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+---
+Changes in v4:
+- Collect tags
+- Extend Cc list
+- Link to v3: https://lore.kernel.org/r/20251029-gpio-shared-v3-0-71c568acf47c@linaro.org
+
+Changes in v3:
+- Make strends() a static inline function
+- Use an empty release() callback for auxiliary devices
+- Refactor the code for finding the shared descriptors in the GPIOLIB
+  shared module, split it into several smaller functions
+- Use str_high_low() where applicable
+- Use non-atomic bit ops where atomicity is not required
+- Link to v2: https://lore.kernel.org/r/20251022-gpio-shared-v2-0-d34aa1fbdf06@linaro.org
+
+Changes in v2:
+- Fix a memory leak in error path in gpiolib-shared
+- Drop the gpio-wcd934x fix that already went upstream
+- Free resources used during scanning by GPIOs that turned out to be
+  unique
+- Rework the OF property scanning
+- Add patches making the regulator subsystem aware of shared GPIOs
+  managed by GPIOLIB
+- Link to v1: https://lore.kernel.org/r/20250924-gpio-shared-v1-0-775e7efeb1a3@linaro.org
+
+---
+Bartosz Golaszewski (10):
+      string: provide strends()
+      gpiolib: define GPIOD_FLAG_SHARED
+      gpiolib: implement low-level, shared GPIO support
+      gpio: shared-proxy: implement the shared GPIO proxy driver
+      gpiolib: support shared GPIOs in core subsystem code
+      gpio: provide gpiod_is_shared()
+      arm64: select HAVE_SHARED_GPIOS for ARCH_QCOM
+      ASoC: wsa881x: drop GPIOD_FLAGS_BIT_NONEXCLUSIVE flag from GPIO lookup
+      ASoC: wsa883x: drop GPIOD_FLAGS_BIT_NONEXCLUSIVE flag from GPIO lookup
+      regulator: make the subsystem aware of shared GPIOs
+
+ arch/arm64/Kconfig.platforms     |   1 +
+ drivers/gpio/Kconfig             |  17 ++
+ drivers/gpio/Makefile            |   2 +
+ drivers/gpio/gpio-shared-proxy.c | 333 +++++++++++++++++++++++
+ drivers/gpio/gpiolib-shared.c    | 558 +++++++++++++++++++++++++++++++++++++++
+ drivers/gpio/gpiolib-shared.h    |  71 +++++
+ drivers/gpio/gpiolib.c           |  70 ++++-
+ drivers/gpio/gpiolib.h           |   2 +
+ drivers/regulator/core.c         |   8 +
+ include/linux/gpio/consumer.h    |   9 +
+ include/linux/string.h           |  18 ++
+ lib/tests/string_kunit.c         |  13 +
+ sound/soc/codecs/wsa881x.c       |   3 +-
+ sound/soc/codecs/wsa883x.c       |   7 +-
+ 14 files changed, 1096 insertions(+), 16 deletions(-)
+---
+base-commit: 96bf1bb63977b67d1a3e4a3645f857bc3fa03f48
+change-id: 20250908-gpio-shared-67ec352884b6
+
+Best regards,
+-- 
+Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+
 
