@@ -1,186 +1,213 @@
-Return-Path: <linux-arm-msm+bounces-81375-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-81376-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2DB5AC51A72
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Nov 2025 11:30:10 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id A1267C51A7B
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Nov 2025 11:30:29 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 36E7F3BBBAE
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Nov 2025 10:22:58 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id EB51C1884B1A
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Nov 2025 10:29:43 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 42D973019CF;
-	Wed, 12 Nov 2025 10:22:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 74239305058;
+	Wed, 12 Nov 2025 10:29:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="A3D2P2Im";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="WpNVcgUL"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="WbO2yc3l"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f50.google.com (mail-wr1-f50.google.com [209.85.221.50])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D77B2F0696
-	for <linux-arm-msm@vger.kernel.org>; Wed, 12 Nov 2025 10:22:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E4E83043A2
+	for <linux-arm-msm@vger.kernel.org>; Wed, 12 Nov 2025 10:29:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762942973; cv=none; b=Xjtaj0fmK3SPHLRpIlo+cDNgN3sBmGk8htUvtT7yLLtMCNuklTJgB2L+lRQavWJn9bNchnueFbawTdHrNauAYwXQWXgiRlRIEWM7tWMn1KhlXvGgK77HwOrgCtiOfvDCHXkibLonDKqqRxJswQiofn/I4rCmsjLTa0TRqBRmDnI=
+	t=1762943350; cv=none; b=s/k57bVN7A6NU+Ppj+hOkAUsZdqjEX2CV2c2wcB96FOroJlN3mvTrWmHi94KELEChbgCPDGh0+pbNfwn6L0q4Up7ElZh9RFUd888mDtnZDTHfi5Xc4FzA0F3Jx3VaPV/XZUicP/hsrhn31GLEmNH07IwOvTHbLLSlKYbQhKEmhE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762942973; c=relaxed/simple;
-	bh=dkOkT9HWZuMRwVOPFG80dYooCAaGN2chaqeXAY7vEXU=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=om3Uvc4un225/02BynGs1orZegU5DIkBvYzAJ0yDM6zp5qzYEa3Ka3G97f9aiq99KExAKKncS+hWNRGVstCBgGNkOUz+RgfPjfpqUXnuFw5cgurtFH7DylzWi9SrEkCNcWHfv1BBpGfiWQYj0mmkfe+LlUP3fNgbtvEpH/4dfeU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=A3D2P2Im; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=WpNVcgUL; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 5AC7n4O43502871
-	for <linux-arm-msm@vger.kernel.org>; Wed, 12 Nov 2025 10:22:50 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	5rwAyU0aPBERjod7wgKA1iXuGw5l4SeREMu619RQNrI=; b=A3D2P2ImD5qeuGzo
-	jpBbHoHhTWoTnBAVC6dE7Q74dffCYK3d80Avh5EWOL9OPMibphll25jw/a+c2fLK
-	C5Xv6OpsbOgjUViRvORZ+CEajalz9Rufz8i3y5mJ2xlMsqWP4CYR0jS6FfxV65Z5
-	d867ln9H65q5ZU2XS8q/+NvwyDNLhI9aTeuQXWh7xnlDZOaHMasR3hzUsIAjzWVE
-	evSA5abf0Rm28Ey5jE+QIs1WuH5Y0eqCeH35kW5hDrm/kkpjf/WzOU/kUnT+0InI
-	kNXy1SsstRtaRY8vrTCrNCkHCRaxLqzO05nSOfn6qD8vBhrVoyDKg2u63Tt/Z4Th
-	9sFYBQ==
-Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com [209.85.160.200])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4acdcc22b9-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Wed, 12 Nov 2025 10:22:50 +0000 (GMT)
-Received: by mail-qt1-f200.google.com with SMTP id d75a77b69052e-4ed83a05863so1995271cf.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 12 Nov 2025 02:22:50 -0800 (PST)
+	s=arc-20240116; t=1762943350; c=relaxed/simple;
+	bh=5+dyAstf0xhbGIWyYKa5+nXexFcqNXdclmhKrec/Eu0=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=b96Xd21gwlX/VWPG97r3wXHYbCoNrDHROWgn/PhxXeB03a2wIwYklppam54uApJVL6wwhvUpTtPEhFLetiVkV9LLEL4+zLDia4mRCY3w8KvIKpaI78aZbrZFoFvyy4zed58hmEQTMjfzkjwz1FQtqimcBDZKkFrnrHxK15wQUqI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=WbO2yc3l; arc=none smtp.client-ip=209.85.221.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wr1-f50.google.com with SMTP id ffacd0b85a97d-42b3298502cso62101f8f.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 12 Nov 2025 02:29:05 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1762942970; x=1763547770; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=5rwAyU0aPBERjod7wgKA1iXuGw5l4SeREMu619RQNrI=;
-        b=WpNVcgULTtW/6vsvJhBUUJmaEai0/fPfsn2K9hmD95FB4oYBfhFITDDCF1fYoew3rP
-         dvjg6/Nmr4YFdD74zerD5Joo6AHFTNpbsXf2M1OSnYtzFyEMLSST9BGG8xDTR6jLYUTE
-         TrJnATylRFK8kj2G148L9ZyEBnKehXaD0Kp/ma0nJ6XTLLUBQ7IpPPc2UBV8vNqYEKY4
-         eOOmr5ePeeG311YWIunom5lu2pUXD6qwsqifc9XfaVto5YiuFAqJT7E9sSLTp4O6qozM
-         34w5jozkzQWxyBBRH1Bzv6y2zDeDc/c2QkM+YSFPl8oCaq9VM/tLPqKs4dRzrVNz4Gfr
-         kEIA==
+        d=linaro.org; s=google; t=1762943344; x=1763548144; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=c8EF6cBHJBO/Q2isSVRmRC/bblG4Ra8gNeer+nZltPQ=;
+        b=WbO2yc3lRp8/JDbrD2HGJpgCLlIrPZ3DBPgY9pPDNxeuHBUFc2KovA/0uTkI4zV4q8
+         ZSG1ewVlWw3JWbmFJmbgMWk+dq9FLscTBZL+gJq3ujQyIri/7aP92OffImO7Ab8zSlLw
+         i+aeWXXYavknBSb2A+mnWwTaaE0FC546rxmEdb8nFRM/iByjW3K+rC4iskxM/0RApC+W
+         49E1Ka9zKeYD3gLf65WfPePi7+woAlLSNn2PwHI6883i/n+vFqvSa5ofPQwIqwYP7N4x
+         rTzIuXIl1FZMA5S+bGos//7+ZFVYztQ6ckF0xLFflYfdEs2IFA3Q1IUXuqfhpViLcyT1
+         8dlg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1762942970; x=1763547770;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=5rwAyU0aPBERjod7wgKA1iXuGw5l4SeREMu619RQNrI=;
-        b=WM32lCoSF9/6reYoTHCAx+s/m9zQuO05A7Uz8wR2Z8uK8wTOTXenFOSdmwg/p4ODfn
-         L3x6hnRyamGIY4B7RgQJzVggVRYVY0vio7FRfrvqjB3Ci8ZgD4oCeNl44+ZvEndtQaqX
-         SPnQa3GzPY5ZhDHg1GNKnU5US42q6oyUPPGpeGppfGLfxGUYWYgIAp5+rOStiQjIKuz3
-         JwPKvX2G8ho6/R8tqjpEe4y7OUtkl4sofTsKhS3/GUf/W2BsYKuOYML5lwA3lsyDDqRW
-         AAFlcrtTNZY5zgra+hRUGXyLjgp42Mv2GE5zgZYYQw8wC7m29PqGUpF00YcCmDEfYXBu
-         FZ5Q==
-X-Gm-Message-State: AOJu0YxqVT+8zWt9IynR2XIXYzsvL23k+MOM5KzbHIuJ4UVUUN3MrcZd
-	BqXgBq0Vm2Mkrd4L3N/4On9j+IahG0EblnZ3Mm1NCU/M7cIGOMNTDpJWiqST5EZSDEaRv7pZNFw
-	NKkW0V0t7pK+DIQrfJ1X1F05NBvuLww+k+lfyj0sJgZuZLqil5kPTDSnjivOrW+tokN30
-X-Gm-Gg: ASbGncudxgKvLFygaPcZFRdl2+DmK6zFUUv/u09Y9nMZmfJTG3civEEpJ5HSG+GvzEC
-	MDzH1A2WF+u2rNlWXTtv1F8DOc6izTsDBt6yRe6QtctKcfwRyicMgTCExpBsLmwr4wXMWf/Mz4J
-	miht2Lhf6VFnRViJWgxxGk+quEo5dGalnjth7mGKw2NGIKZs3VmO2Z4ocK8zl40VdvSDGARqhhl
-	JMks1N94P+RDDsFpTc9tQSVgGPZMM5RtNyNzHjXNzz9NYGzQr/ytLXaCVqW7BtHfJqGG6Oz14ik
-	2w+Y7agZepuuPeN8tWOWxhSrmAtHy4+/jOm5dntbCvAKYz0bbt0TXoZgti077qaFc6T2A0OW82O
-	aZbzgM5YxoqvU2tbrmM6qNwM73U055yYEg0Mqi10Z8attWgP+/pxb/OLs
-X-Received: by 2002:a05:622a:d0:b0:4ec:f53b:418e with SMTP id d75a77b69052e-4eddbc6bc3dmr20363091cf.2.1762942969399;
-        Wed, 12 Nov 2025 02:22:49 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGebY4K7Namd6glwHLtMAZE0lf4hL9guGKfOfliFjM5eEuz55Nipc9SN3o1JFfip8JTUrox/Q==
-X-Received: by 2002:a05:622a:d0:b0:4ec:f53b:418e with SMTP id d75a77b69052e-4eddbc6bc3dmr20362721cf.2.1762942968808;
-        Wed, 12 Nov 2025 02:22:48 -0800 (PST)
-Received: from [192.168.119.202] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
-        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-6411f862bd0sm15744925a12.26.2025.11.12.02.22.45
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 12 Nov 2025 02:22:48 -0800 (PST)
-Message-ID: <28d62905-c191-4c3a-995e-a4146ffce619@oss.qualcomm.com>
-Date: Wed, 12 Nov 2025 11:22:44 +0100
+        d=1e100.net; s=20230601; t=1762943344; x=1763548144;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=c8EF6cBHJBO/Q2isSVRmRC/bblG4Ra8gNeer+nZltPQ=;
+        b=e+57cu1U2R0tlrNfN5ccgDWUzq8NXiOrYo3QIVXoYUcMRfudLKA4T/zUMfNXAhk4bb
+         ZPt0mWMmQDl9NHZfbH+Wl/ZNK41DfqRw0j7I0ZzniDY1XfeVLQpAwu3Z/KvIYkiTOqao
+         eN94YkcrYmwi4IDf5aUm0TWZNe+WYqkBlyaKv7iBPK3NVWXrGVNhjfw/DsyaB1OAPYmk
+         lqipRbg/uWL4dXRci8tdrfCenKa6AwI6yXdLaUGEV8r/+w3/4OgJFjEOhMJEEkiYWPBS
+         2JUVxX70+ImN3+iLGX1xKu7peebIbyANzyGGKVxOdsQ9onmgZOle7Qyo3/u2Rj0h0EVo
+         9zLw==
+X-Forwarded-Encrypted: i=1; AJvYcCUn7d5jdCUYP2N2kQp0JSVxRCRN68940vRQ65Q5tpLfYkec8pmmgQZ71CEzsJqZi5xrOphQ6zMRwb4ov2Wr@vger.kernel.org
+X-Gm-Message-State: AOJu0YwfmOhsbnAEkdW+sLrvUp+QXOfLkcDrhGSkw7PepFoNQU2OAWTk
+	4XsJPvEuUlzjWAeeLutAUSePDI+DaVzDcwjrhalTlFeL5NIOcVNvNARv4U7L+va++SY=
+X-Gm-Gg: ASbGncv4yw2n1D6vOFcy0090Gejk2e2PmrBv1cwkcP+vzxpQ8HdIONRLnzPnGCnun0/
+	XyddAvUKOx8qsrZA1wi3r6FKY9lQIJzg0B/xVZDDf4s8AkJPXWB47RmN8IHZzDnLNTnHbHs/yyU
+	UsR4keqtxniMWxGh7pFfiIp//kFL0xewipVo+oSp9wktQf2hSftBjl8X3pP9ao4ygE+uJ0nYnV7
+	AUPNbdvZG105/i7h7ypag77KveQFBobSc9RBHtg5Y80k6dvW32KYiY8wCdyrMbfeoH/dN7uug3a
+	yj0rggHQsZH66ZVAtLR8Wmg5GlIq22Wcffd67sPpwjBqmmEo9x2pFaYlBvzOyTtt7JDuTqeK+rI
+	BOwyEyx9WL6cpajjLuGaocfWfpYtCIW6gdRNtk2sMMB9VL5nNZu4OK15tlCzIQ35MsGjlnzp93F
+	VYMeDk0py5ytsdZ0Xh
+X-Google-Smtp-Source: AGHT+IEMmjHlZdR4rkkkBtikr3kREAJzYe3gVzEQY2F/CPNjTW6FIV3Gq5nMQMHGsI7EpVQgzvavzw==
+X-Received: by 2002:a05:6000:230e:b0:42b:3746:3b83 with SMTP id ffacd0b85a97d-42b4bdb73bbmr1049650f8f.8.1762943344377;
+        Wed, 12 Nov 2025 02:29:04 -0800 (PST)
+Received: from [127.0.1.1] ([178.197.219.123])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-42b32ecf522sm22020001f8f.45.2025.11.12.02.29.02
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 12 Nov 2025 02:29:03 -0800 (PST)
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Subject: [PATCH v2 00/11] of: Add wrappers to match root node with OF
+ device ID tables
+Date: Wed, 12 Nov 2025 11:28:45 +0100
+Message-Id: <20251112-b4-of-match-matchine-data-v2-0-d46b72003fd6@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 05/21] drm/msm/adreno: Move adreno_gpu_func to
- catalogue
-To: Akhil P Oommen <akhilpo@oss.qualcomm.com>,
-        Rob Clark <robin.clark@oss.qualcomm.com>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>, Sean Paul <sean@poorly.run>,
-        Dmitry Baryshkov <lumag@kernel.org>,
-        Abhinav Kumar
- <abhinav.kumar@linux.dev>,
-        Jessica Zhang <jesszhan0024@gmail.com>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
-        Jonathan Marek <jonathan@marek.ca>,
-        Jordan Crouse
- <jordan@cosmicpenguin.net>,
-        Will Deacon <will@kernel.org>, Robin Murphy <robin.murphy@arm.com>,
-        Joerg Roedel <joro@8bytes.org>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-        Maxime Ripard <mripard@kernel.org>,
-        Thomas Zimmermann <tzimmermann@suse.de>,
-        Connor Abbott <cwabbott0@gmail.com>
-Cc: linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
-        linux-arm-kernel@lists.infradead.org, iommu@lists.linux.dev,
-        devicetree@vger.kernel.org
-References: <20251110-kaana-gpu-support-v2-0-bef18acd5e94@oss.qualcomm.com>
- <20251110-kaana-gpu-support-v2-5-bef18acd5e94@oss.qualcomm.com>
-Content-Language: en-US
-From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-In-Reply-To: <20251110-kaana-gpu-support-v2-5-bef18acd5e94@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-Proofpoint-GUID: Za09xUzGO92mzpKaUlOkniVIeVHubcLv
-X-Proofpoint-ORIG-GUID: Za09xUzGO92mzpKaUlOkniVIeVHubcLv
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMTEyMDA4MyBTYWx0ZWRfXzWghx/rzc/9R
- 8SyNzeySLR+zQYwnhnUKy0g08xrmsDeC/wmyHbm339SZI7zRwhDsOG5/pfStnQdqTWWARTNC7kA
- quS4dfuPZTZHHVqFiP+4xKbUNXZytihquJVenqupBaDxManPM+tgUVJfg8fjybY3Y8rCary9kgx
- QFT53qD8YzSjJ1duf1gMp+tEAHAl607LKTAzZVxygxKj9MEh0EJ5zjcw7mdbJGMH9R+9xDtNyb1
- QOvwAsk7CH9xyTkPrL2Eb5CUHoSwouaCZebJhfwXn5f/el0Aexxfpr/p8xaR4s0Gd41LNkenZuJ
- tKnpnMbdHufftE2G3FBEal6HdznTFok02lUGJRZSKajJKmVUkLg9tvg5CDDF0lVhkCWoVFWNVGV
- 8sidopRVzEKDQbt6GZNqt6CWgSa1wA==
-X-Authority-Analysis: v=2.4 cv=L/0QguT8 c=1 sm=1 tr=0 ts=69145ffa cx=c_pps
- a=JbAStetqSzwMeJznSMzCyw==:117 a=FpWmc02/iXfjRdCD7H54yg==:17
- a=IkcTkHD0fZMA:10 a=6UeiqGixMTsA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=EUspDBNiAAAA:8 a=p7PcLuspDTVbkQel-sEA:9
- a=QEXdDO2ut3YA:10 a=uxP6HrT_eTzRwkO_Te1X:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
- definitions=2025-11-12_03,2025-11-11_03,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 malwarescore=0 bulkscore=0 lowpriorityscore=0
- clxscore=1015 adultscore=0 suspectscore=0 spamscore=0 impostorscore=0
- phishscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2510240001
- definitions=main-2511120083
+X-B4-Tracking: v=1; b=H4sIAF5hFGkC/42NQQrCMBBFr1Jm7UgSYiyuvId0MW0n7YAmkpSgl
+ N7dWC/g5sP78N9fIXMSznBpVkhcJEsMFcyhgWGmMDHKWBmMMietlcPeYvT4oGWYfymBcaSF0JK
+ zvVfWtdpC3T8Te3nt7ltXeZa8xPTer4r+tv9Yi0aF47lVTLrmYK53CZTiMaYJum3bPr5NAz/DA
+ AAA
+X-Change-ID: 20251106-b4-of-match-matchine-data-4a64bf046814
+To: Rob Herring <robh@kernel.org>, Saravana Kannan <saravanak@google.com>, 
+ "Rafael J. Wysocki" <rafael@kernel.org>, 
+ Viresh Kumar <viresh.kumar@linaro.org>, 
+ Matthias Brugger <matthias.bgg@gmail.com>, 
+ AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>, 
+ Yangtao Li <tiny.windzz@gmail.com>, Chen-Yu Tsai <wens@kernel.org>, 
+ Jernej Skrabec <jernej.skrabec@gmail.com>, 
+ Samuel Holland <samuel@sholland.org>, 
+ Lorenzo Pieralisi <lpieralisi@kernel.org>, 
+ Daniel Lezcano <daniel.lezcano@linaro.org>, 
+ Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konradybcio@kernel.org>, 
+ Thomas Gleixner <tglx@linutronix.de>, 
+ Nicolas Ferre <nicolas.ferre@microchip.com>, 
+ Alexandre Belloni <alexandre.belloni@bootlin.com>, 
+ Claudiu Beznea <claudiu.beznea@tuxon.dev>, 
+ Maximilian Luz <luzmaximilian@gmail.com>, Hans de Goede <hansg@kernel.org>, 
+ =?utf-8?q?Ilpo_J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>, 
+ Daniel Lezcano <daniel.lezcano@kernel.org>, 
+ Thierry Reding <thierry.reding@gmail.com>, 
+ Jonathan Hunter <jonathanh@nvidia.com>
+Cc: devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+ linux-pm@vger.kernel.org, linux-arm-kernel@lists.infradead.org, 
+ linux-mediatek@lists.infradead.org, linux-sunxi@lists.linux.dev, 
+ linux-arm-msm@vger.kernel.org, platform-driver-x86@vger.kernel.org, 
+ linux-tegra@vger.kernel.org, 
+ Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, 
+ Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, 
+ Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+X-Mailer: b4 0.14.3
+X-Developer-Signature: v=1; a=openpgp-sha256; l=3319;
+ i=krzysztof.kozlowski@linaro.org; h=from:subject:message-id;
+ bh=5+dyAstf0xhbGIWyYKa5+nXexFcqNXdclmhKrec/Eu0=;
+ b=owEBbQKS/ZANAwAKAcE3ZuaGi4PXAcsmYgBpFGFgkKzLKPJ79bhNkhzUMxTf7Rq0m0OFEmF4q
+ dnv57GH9wqJAjMEAAEKAB0WIQTd0mIoPREbIztuuKjBN2bmhouD1wUCaRRhYAAKCRDBN2bmhouD
+ 18J1EACLN9dO8VHBUsLifJcqZjQO60hgIzWj+1YfL7nCpzD4o/V3Zb9fmbppxoW4A8qBWHFp+9z
+ bla89lZvHQZo5Io3ja8lW7quIu9nzOFwt9GGBLMYb+Y4ukJpyT7gnUqW8MSni+LVw0fGpJwzl4c
+ khYK2MI/R/M9d8wpqyfT9qS9+54jhVEmCX7oAcfw6fUOJghJ82AjVlioaejmfFriDfgq1AqC7Tt
+ tLYC/FxWxmwChwzttO5J6CuIWkPJQQoqWoFeMjSJqgz0In8mhbWxhp1F6NyiLwj1BL9z6dGyTRX
+ L7/11go/X9B2H+c37Dx4RMwFJb5p53L1RfJ+cc5Ub1MMcEhPFlxWk7LVM0QTk1T1sIszZNTiSch
+ rRf7xEqCdXvr9Fpd+TIK7K7Wm11BCoErJWT6hj0bsWLVtyC3N+y5Pfk/nekv4/4e2hbWTQg3cQf
+ MCAmbLzployqG0E87eyUpzn8cC9Zyu9YZs2rc1Mrc4ZHC7AJlaWEAPmoNfpCZVFKErcfVMjy0a8
+ PPMvUe1+u/lpKCkXWSD8JfOk+mFkqB8gR2Kh+tMtX6hJHj8J05MZAWwknwQKHYYwAY6QKdUnk3g
+ zOhsW95VFgRYFLBwwC+Cz0wjXr5kwLh4U2ZhwY0tRVnLtCw0DWHx6zGGwKRTG/YKbYQjDuv2t7S
+ KoMdrL+EsQdcY+Q==
+X-Developer-Key: i=krzysztof.kozlowski@linaro.org; a=openpgp;
+ fpr=9BD07E0E0C51F8D59677B7541B93437D3B41629B
 
-On 11/10/25 5:37 PM, Akhil P Oommen wrote:
-> In A6x family (which is a pretty big one), there are separate
-> adreno_func definitions for each sub-generations. To streamline the
-> identification of the correct struct for a gpu, move it to the
-> catalogue and move the gpu_init routine to struct adreno_gpu_funcs.
-> 
-> Signed-off-by: Akhil P Oommen <akhilpo@oss.qualcomm.com>
-> ---
+Changes in v2:
+- Drop cpufreq/ti change: not correct.
+- Drop soc/qcom/qcom_pd_mapper.c - objections from Dmitry and I think
+  better to drop the patch in such case.
+- I did not implement feedback for first patch to make the
+  of_machine_compatible_match() matching machines in arbitrary nodes,
+  because there is no such use case possible and no arguments were provided.
+  I also did not use cleanup.h in first patch because existing code
+  of_device_get_match_data() does not use it and I prefer uniformity.
 
-[...]
+- Add Ack/Rb tags.
+- Link to v1: https://patch.msgid.link/20251106-b4-of-match-matchine-data-v1-0-d780ea1780c2@linaro.org
 
+Dependency/merging
+==================
+All patches depend on the first patch, thus everything could go via
+Rob's tree with people's acks.
 
-> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_catalog.c b/drivers/gpu/drm/msm/adreno/a6xx_catalog.c
-> index 44df6410bce1..9007a0e82a59 100644
-> --- a/drivers/gpu/drm/msm/adreno/a6xx_catalog.c
-> +++ b/drivers/gpu/drm/msm/adreno/a6xx_catalog.c
-> @@ -683,7 +683,7 @@ static const struct adreno_info a6xx_gpus[] = {
+Description
+===========
+Several drivers duplicate same code for getting reference to the root
+node, matching it against 'struct of_device_id' table and getting out
+the match data from the table entry.
 
-Somewhere among this diff, a619_holi needs to have gmu_wrapper funcs
-instead
+There is a of_machine_compatible_match() wrapper but it takes array of
+strings, which is not suitable for many drivers since they want the
+driver data associated with each compatible.
 
-Konrad
+Add two wrappers, similar to existing of_device_get_match_data():
+1. of_machine_device_match() doing only matching against 'struct
+   of_device_id' and returning bool.
+2. of_machine_get_match_data() doing the matching and returning
+   associated driver data for found compatible.
+
+Best regards,
+Krzysztof
+
+---
+Krzysztof Kozlowski (11):
+      of: Add wrappers to match root node with OF device ID tables
+      cpufreq: dt-platdev: Simplify with of_machine_get_match_data()
+      cpufreq: mediatek: Simplify with of_machine_get_match_data()
+      cpufreq: sun50i: Simplify with of_machine_device_match()
+      cpuidle: big_little: Simplify with of_machine_device_match()
+      firmware: qcom: scm: Simplify with of_machine_device_match()
+      irqchip/atmel-aic: Simplify with of_machine_get_match_data()
+      platform: surface: Simplify with of_machine_get_match_data()
+      powercap: dtpm: Simplify with of_machine_get_match_data()
+      soc: qcom: ubwc: Simplify with of_machine_get_match_data()
+      soc: tegra: Simplify with of_machine_device_match()
+
+ drivers/cpufreq/cpufreq-dt-platdev.c               | 15 ++-----
+ drivers/cpufreq/mediatek-cpufreq.c                 | 12 +-----
+ drivers/cpufreq/sun50i-cpufreq-nvmem.c             | 11 +----
+ drivers/cpuidle/cpuidle-big_little.c               | 11 +----
+ drivers/firmware/qcom/qcom_scm.c                   | 17 +-------
+ drivers/irqchip/irq-atmel-aic-common.c             | 15 ++-----
+ drivers/of/base.c                                  | 47 ++++++++++++++++++++++
+ .../platform/surface/surface_aggregator_registry.c | 13 +-----
+ drivers/powercap/dtpm.c                            | 16 +-------
+ drivers/soc/qcom/ubwc_config.c                     | 14 ++-----
+ drivers/soc/tegra/common.c                         | 12 +-----
+ include/linux/of.h                                 | 13 ++++++
+ 12 files changed, 79 insertions(+), 117 deletions(-)
+---
+base-commit: a4ebba34e722123f1c09ce3282e26f052fc8b27f
+change-id: 20251106-b4-of-match-matchine-data-4a64bf046814
+
+Best regards,
+-- 
+Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+
 
