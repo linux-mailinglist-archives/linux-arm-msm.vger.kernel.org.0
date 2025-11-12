@@ -1,158 +1,137 @@
-Return-Path: <linux-arm-msm+bounces-81479-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-81480-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [142.0.200.124])
-	by mail.lfdr.de (Postfix) with ESMTPS id DD6C8C53C37
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Nov 2025 18:45:28 +0100 (CET)
+Received: from ams.mirrors.kernel.org (ams.mirrors.kernel.org [213.196.21.55])
+	by mail.lfdr.de (Postfix) with ESMTPS id 07443C53A86
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Nov 2025 18:24:18 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 3FB575034C1
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Nov 2025 17:18:26 +0000 (UTC)
+	by ams.mirrors.kernel.org (Postfix) with ESMTPS id 7816434894A
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Nov 2025 17:20:26 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1EAE1346FC3;
-	Wed, 12 Nov 2025 17:16:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="GpRL7Cxr"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1127F345741;
+	Wed, 12 Nov 2025 17:20:05 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f41.google.com (mail-wm1-f41.google.com [209.85.128.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mailgw.kylinos.cn (mailgw.kylinos.cn [124.126.103.232])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BF94346E68
-	for <linux-arm-msm@vger.kernel.org>; Wed, 12 Nov 2025 17:16:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C44E43451A3;
+	Wed, 12 Nov 2025 17:20:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=124.126.103.232
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762967816; cv=none; b=pWBta+l1NWq8oi1wDAn3eBrVEV2gzz9lsm+jG1xDF2lObzgV4etURrdCRkFxeCoNRaDVNNXcLDg26WWH1Is/SAWjv0ZbrijuydRGuAMsKaeQnuLFcdd++rAsmfedIcaNHsSn5v5Z/d3PWgZ6XNK7DPdHZIlfZqC0L0u0Stz8CYQ=
+	t=1762968005; cv=none; b=g2N2Byj0w5FB72c9MtrzT7lkkP2mnlh0eSi5Kr2tKMuEtKamLnRnsc5laClY24QUakiiCfblBBAcl9IOxOtIBJi+v90OF+H1wm3d+pPUBe3zzWlpAKuWRtweySBd04VlIGDUr/Ve77hGSQm15Ob+soPUEuB2Z87H4EYxoZyTKho=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762967816; c=relaxed/simple;
-	bh=iiMESZBmokR5+/LPNrjKbowyRucTsoIMCT4ESK7O004=;
-	h=Mime-Version:Content-Type:Date:Message-Id:Subject:From:To:Cc:
-	 References:In-Reply-To; b=ItqSIdC8xPtQPjOBvgyq4hB3XV++pRsv/9MbVT9xYFfkESmLCUkTK3LCduhxQ1WsuDwJh9aXptdjODcJglhPAbGdoSmist0tWjU0D++9fce02Q6wN5vI8hdUCqvlVXl14Rk3Po/2k/RwKMMvQhbj1A1gWf2mub2MPtN2PbrnfWo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=GpRL7Cxr; arc=none smtp.client-ip=209.85.128.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f41.google.com with SMTP id 5b1f17b1804b1-47758595eecso5899905e9.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 12 Nov 2025 09:16:54 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1762967813; x=1763572613; darn=vger.kernel.org;
-        h=in-reply-to:references:cc:to:from:subject:message-id:date
-         :content-transfer-encoding:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=iiMESZBmokR5+/LPNrjKbowyRucTsoIMCT4ESK7O004=;
-        b=GpRL7CxrRFx5sPYkiKaq/kIXW2ATW/s4UELrw2+KcNS1tux0hR5+SULsz1oK5AKVzb
-         y+6o89hQwQXNnh3XjlmX7zFFtdrymI6+dXRIMENF/FdKv1EaWpXgjav7afrOR0+Cn4wj
-         Kv1y0KEF+JmyUYuIp0a59um1mMV68r5DjwqLQvDFHN7jMIHA1A4cVazTBWD3BAUBswOr
-         0njPJ+8m94dSgcDeCgMzK5s+s6oLaaROCytaVWkolVQb5awzdWdalgBNPnNdHjr1lS0G
-         ad2ygOSlLwTpums6JBsynHkuwH4A99ZqGhUgJ8UwVgsMrnV5uXWDxls+H4fRKLjOz40o
-         +cew==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1762967813; x=1763572613;
-        h=in-reply-to:references:cc:to:from:subject:message-id:date
-         :content-transfer-encoding:mime-version:x-gm-gg:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=iiMESZBmokR5+/LPNrjKbowyRucTsoIMCT4ESK7O004=;
-        b=SPe9cQzOX4ncTP24+w+XoTAncdEK06GBFzUfhXgTgQIMlvCsRXtxSOtaB+BT+w2Rop
-         pAEjwklCNPaDPaKJi0qr5+ju2l9XHW1fgD4Jm4QViZnpVfy/1BhR8baoLGZhRYW/pnp9
-         aNpwA9C0f23SKw+BD+L9GYkevXYk2skMGw2VwuxUWwnyUK5P1KP030tLaY/mhvYPY/MT
-         VUFojvjJYuiSmBr4O+SATAKCL35kuXfJktViJ+SDYmWX9PMiR/fpLa+vD29yyH/UjlzZ
-         DzJKeI699ag+dlQxfi3m92YQv9D6aZK+QoxonjLXOiG8d4O18zbFEFo+KWMPQg4aMnFR
-         cLHg==
-X-Forwarded-Encrypted: i=1; AJvYcCXa8yL7N8fmCkWhS/GFdiwi7Dnomyca9eOPC2oEowHPGX4SReoO2Cqq71Q+SOwtHRp9sYyIBaBnPikOY5+W@vger.kernel.org
-X-Gm-Message-State: AOJu0Yz7RvuvDleK9rKL1+bkRHOtIvYshRNPps0bVT4VHqUaxonjeGLf
-	E/0zS66A7MU3wJPI2S1uGntVYeDeq9XfVM/UIC8Cd/BAXVznMNZb0T7Kkz0bYYb7DX0=
-X-Gm-Gg: ASbGnctx+mgIS6x+o2aq5VprD8t9W1jwav/0d76MZ03nHjB+ljHteOjn86UE9z2m46f
-	3HbFS522dB4RHD9KYXeD6zH7KdU4U4Uw6dsFWF479zBEhF5wJO9cZ8PggOHqnfrur78q4opayqh
-	yLurLxWGZrYFPL0nukN6RB8JnRkOa2mJIBU5iHVK7JNgPGrwcuM9PYPZOKjCy7J1fN+cEKkJg0Y
-	6wYXBFyptZSyVYUI66EQn2hxf6HyNs94xTtm4eqaG5YiusJNWXNV8cvsaK/XKPZbnIbLkJ53RZj
-	wlNgjHLrE0swhGWChxOAqX8PKDoRrdiq2cufZUiDvKMJFxNIUc0es7IqzqX7/e4z6XksLaSGmRY
-	qJwI4SFHuE80ebi8KsqL57Cg3l3D/yNCM6/Md0roFaT5s0yMb0AuEvfN+H7aPLIbZBwt1kYLgKx
-	NwkIWM
-X-Google-Smtp-Source: AGHT+IFK1LEgbdoe82XE3jZoJK10kkTDE6sfjAoioDSlpzb+hbqMgzQ5j6+nhIYvnoRpyBG+UEDLMg==
-X-Received: by 2002:a05:600c:45c4:b0:477:542a:7ed1 with SMTP id 5b1f17b1804b1-477870b9237mr36446515e9.19.1762967812580;
-        Wed, 12 Nov 2025 09:16:52 -0800 (PST)
-Received: from localhost ([2a02:c7c:7259:a00:4fbd:5c9b:d8a2:ee64])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-47787e51f54sm45322705e9.8.2025.11.12.09.16.51
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 12 Nov 2025 09:16:52 -0800 (PST)
+	s=arc-20240116; t=1762968005; c=relaxed/simple;
+	bh=DbnY/x2YtJHNcfRvXqXgSvH0s1JmoypXph38fcRbzjE=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=i7n82T821JgGYCr//7LppkjnjxMMVmtqVrfsgOuLljmp+NTeNjxNWsx3ydLwOo+ZwxlK/xu13g60UIwnQpS/ataxzWgQfrIDJ31PHfTfOa1OFEsaahCWRzQv1+bW2pj/uMFmLu/D1kRp+Yljckp+ox+utiFNoAuT9T1QukYSTUo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kylinos.cn; spf=pass smtp.mailfrom=kylinos.cn; arc=none smtp.client-ip=124.126.103.232
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kylinos.cn
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kylinos.cn
+X-UUID: ceb250d6bfeb11f0a38c85956e01ac42-20251113
+X-CTIC-Tags:
+	HR_CC_COUNT, HR_CC_DOMAIN_COUNT, HR_CC_NAME, HR_CC_NO_NAME, HR_CTE_8B
+	HR_CTT_MISS, HR_DATE_H, HR_DATE_WKD, HR_DATE_ZONE, HR_FROM_NAME
+	HR_SJ_LANG, HR_SJ_LEN, HR_SJ_LETTER, HR_SJ_NOR_SYM, HR_SJ_PHRASE
+	HR_SJ_PHRASE_LEN, HR_SJ_WS, HR_TO_COUNT, HR_TO_DOMAIN_COUNT, HR_TO_NO_NAME
+	IP_UNTRUSTED, SRC_UNTRUSTED, IP_LOWREP, SRC_LOWREP, DN_TRUSTED
+	SRC_TRUSTED, SA_EXISTED, SN_EXISTED, SPF_NOPASS, DKIM_NOPASS
+	DMARC_NOPASS, CIE_BAD, CIE_GOOD, CIE_GOOD_SPF, GTI_FG_BS
+	GTI_RG_INFO, GTI_C_BU, AMN_GOOD, ABX_MISS_RDNS
+X-CID-P-RULE: Release_Ham
+X-CID-O-INFO: VERSION:1.3.6,REQID:0bf9be2b-6375-4dc2-9421-be126dd8db82,IP:10,U
+	RL:0,TC:0,Content:0,EDM:25,RT:0,SF:-30,FILE:0,BULK:0,RULE:Release_Ham,ACTI
+	ON:release,TS:5
+X-CID-INFO: VERSION:1.3.6,REQID:0bf9be2b-6375-4dc2-9421-be126dd8db82,IP:10,URL
+	:0,TC:0,Content:0,EDM:25,RT:0,SF:-30,FILE:0,BULK:0,RULE:Release_Ham,ACTION
+	:release,TS:5
+X-CID-META: VersionHash:a9d874c,CLOUDID:394edc65d7854e1d9a3c2af0a673f48f,BulkI
+	D:251113011956PDO1GP7J,BulkQuantity:0,Recheck:0,SF:10|66|78|102|850,TC:nil
+	,Content:0|15|50,EDM:5,IP:-2,URL:0,File:nil,RT:nil,Bulk:nil,QS:nil,BEC:nil
+	,COL:0,OSI:0,OSA:0,AV:0,LES:1,SPR:NO,DKR:0,DKP:0,BRR:0,BRE:0,ARC:0
+X-CID-BVR: 2,SSN|SDN
+X-CID-BAS: 2,SSN|SDN,0,_
+X-CID-FACTOR: TF_CID_SPAM_SNR
+X-CID-RHF: D41D8CD98F00B204E9800998ECF8427E
+X-UUID: ceb250d6bfeb11f0a38c85956e01ac42-20251113
+X-User: hehuiwen@kylinos.cn
+Received: from localhost.localdomain [(220.202.195.89)] by mailgw.kylinos.cn
+	(envelope-from <hehuiwen@kylinos.cn>)
+	(Generic MTA with TLSv1.3 TLS_AES_256_GCM_SHA384 256/256)
+	with ESMTP id 434298174; Thu, 13 Nov 2025 01:19:55 +0800
+From: Huiwen He <hehuiwen@kylinos.cn>
+To: robin.clark@oss.qualcomm.com
+Cc: sean@poorly.run,
+	konradybcio@kernel.org,
+	lumag@kernel.org,
+	abhinav.kumar@linux.dev,
+	jesszhan0024@gmail.com,
+	marijn.suijten@somainline.org,
+	airlied@gmail.com,
+	simona@ffwll.ch,
+	linux-arm-msm@vger.kernel.org,
+	dri-devel@lists.freedesktop.org,
+	freedreno@lists.freedesktop.org,
+	linux-kernel@vger.kernel.org,
+	Huiwen He <hehuiwen@kylinos.cn>
+Subject: [PATCH] drm/msm: fix missing NULL check after kcalloc in crashstate_get_bos()
+Date: Thu, 13 Nov 2025 01:19:47 +0800
+Message-Id: <20251112171947.486220-1-hehuiwen@kylinos.cn>
+X-Mailer: git-send-email 2.25.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Wed, 12 Nov 2025 17:16:51 +0000
-Message-Id: <DE6VXJQPNX0Z.1LE0XW9T5T1LR@linaro.org>
-Subject: Re: [PATCH v3 06/12] ASoC: codecs: add wsa881x-i2c amplifier codec
- driver
-From: "Alexey Klimov" <alexey.klimov@linaro.org>
-To: "Srinivas Kandagatla" <srini.kernel@gmail.com>, "Srinivas Kandagatla"
- <srini@kernel.org>, "Mark Brown" <broonie@kernel.org>,
- <linux-sound@vger.kernel.org>
-Cc: "Mark Brown" <broonie@kernel.org>, <linux-sound@vger.kernel.org>, "Liam
- Girdwood" <lgirdwood@gmail.com>, "Rob Herring" <robh@kernel.org>,
- "Krzysztof Kozlowski" <krzk+dt@kernel.org>, "Krzysztof Kozlowski"
- <krzysztof.kozlowski@linaro.org>, "Conor Dooley" <conor+dt@kernel.org>,
- "Bjorn Andersson" <andersson@kernel.org>, "Dmitry Baryshkov"
- <lumag@kernel.org>, "Konrad Dybcio" <konradybcio@kernel.org>, "Konrad
- Dybcio" <konrad.dybcio@oss.qualcomm.com>, "Jaroslav Kysela"
- <perex@perex.cz>, "Takashi Iwai" <tiwai@suse.com>,
- <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
- <linux-kernel@vger.kernel.org>, <linux-gpio@vger.kernel.org>
-X-Mailer: aerc 0.20.0
-References: <20250522-rb2_audio_v3-v3-0-9eeb08cab9dc@linaro.org>
- <20250522-rb2_audio_v3-v3-6-9eeb08cab9dc@linaro.org>
- <1c7d62f5-1816-4ecf-9376-2751ec06830b@gmail.com>
-In-Reply-To: <1c7d62f5-1816-4ecf-9376-2751ec06830b@gmail.com>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 
-Hello Srini,
+The crashstate_get_bos() function allocates memory for `state->bos`
+using kcalloc(), but the vmbind path does not check for allocation
+failure before dereferencing it in the following drm_gpuvm_for_each_va()
+loop. This could lead to a NULL pointer dereference if memory allocation
+fails.
 
-On Thu May 29, 2025 at 11:05 AM BST, Srinivas Kandagatla wrote:
->
-> On 5/22/25 6:40 PM, Alexey Klimov wrote:
->> Add support to analog mode of WSA8810/WSA8815 Class-D Smart Speaker
->> family of amplifiers. Such amplifiers are primarily interfaced with
->> SoundWire but they also support analog mode which is configurable by
->> setting one of the pins to high/low. In such case the WSA881X amplifier
->> is configurable only using i2c.
->>=20
->> To have stereo two WSA881X amplifiers are required but mono
->> configurations are also possible.
+Fix this by wrapping the drm_gpuvm_for_each_va() loop with a NULL check
+on state->bos, similar to the safety check in the non-vmbind path.
 
-[...]
+Fixes: af9aa6f316b3d ("drm/msm: Crashdump support for sparse")
+Signed-off-by: Huiwen He <hehuiwen@kylinos.cn>
+---
+ drivers/gpu/drm/msm/msm_gpu.c | 17 +++++++++--------
+ 1 file changed, 9 insertions(+), 8 deletions(-)
 
->> --- /dev/null
->> +++ b/sound/soc/codecs/wsa881x-i2c.c
-
-[..]
-
->> +struct reg_default wsa881x_ana_reg_defaults[] =3D {
->
-> This does not make sense.
->
-> All the regmaps should be same, it should not change with the change in
-> interface from SWD to I2C.
->
-> Could you calrify this before we start reviewing rest of the driver.
-
-It was sent initially in nov 2024 I guess and that one was v3. v2 was
-sent in December 2024.
-
-I am currently reimplementing this. I obviously agree that registers
-are the same but why we should be 100% sure that regs defaults
-should be the same if the mode is different?
-
-Or do you suggest/expect that, for instance, analog defaults should be
-kinds applied on top of common (swd) default values?
-
-
-[....]
-(The rest of original email was sent and quoted but I did not
-see any comments there, so I removed it but if I missed smth there
-please let me know)
-
-Thanks,
-Alexey
+diff --git a/drivers/gpu/drm/msm/msm_gpu.c b/drivers/gpu/drm/msm/msm_gpu.c
+index 17759abc46d7..a9b5f5106ebc 100644
+--- a/drivers/gpu/drm/msm/msm_gpu.c
++++ b/drivers/gpu/drm/msm/msm_gpu.c
+@@ -287,16 +287,17 @@ static void crashstate_get_bos(struct msm_gpu_state *state, struct msm_gem_submi
+ 
+ 		state->bos = kcalloc(cnt, sizeof(struct msm_gpu_state_bo), GFP_KERNEL);
+ 
+-		drm_gpuvm_for_each_va (vma, submit->vm) {
+-			bool dump = rd_full || (vma->flags & MSM_VMA_DUMP);
++		if (state->bos)
++			drm_gpuvm_for_each_va(vma, submit->vm) {
++				bool dump = rd_full || (vma->flags & MSM_VMA_DUMP);
+ 
+-			/* Skip MAP_NULL/PRR VMAs: */
+-			if (!vma->gem.obj)
+-				continue;
++				/* Skip MAP_NULL/PRR VMAs: */
++				if (!vma->gem.obj)
++					continue;
+ 
+-			msm_gpu_crashstate_get_bo(state, vma->gem.obj, vma->va.addr,
+-						  dump, vma->gem.offset, vma->va.range);
+-		}
++				msm_gpu_crashstate_get_bo(state, vma->gem.obj, vma->va.addr,
++							  dump, vma->gem.offset, vma->va.range);
++			}
+ 
+ 		drm_exec_fini(&exec);
+ 	} else {
+-- 
+2.25.1
 
 
