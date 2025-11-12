@@ -1,177 +1,265 @@
-Return-Path: <linux-arm-msm+bounces-81387-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-81388-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 18DA4C51B9B
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Nov 2025 11:42:06 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id DA5D7C51C01
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Nov 2025 11:47:25 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id C99B14257BA
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Nov 2025 10:32:37 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 32CFA3B0584
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Nov 2025 10:37:42 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 646953128D3;
-	Wed, 12 Nov 2025 10:29:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E7E3A305068;
+	Wed, 12 Nov 2025 10:37:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="UfP3rUrK"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="p0Oz30K3";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="VEE83gR6"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f46.google.com (mail-wr1-f46.google.com [209.85.221.46])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB4463126A2
-	for <linux-arm-msm@vger.kernel.org>; Wed, 12 Nov 2025 10:29:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27D8629BD9B
+	for <linux-arm-msm@vger.kernel.org>; Wed, 12 Nov 2025 10:37:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762943371; cv=none; b=hVqc2+rf7IqeMKe85WF9l6e0iscTNgZ9dWTfB7EcjeiGwwjMYa9jAZPo7RgcDQXu+vpDtfxEZqmdtJcyKEBu52+wO/jQRBg4cwcumo/1TcbV6EcOMEg5NvG8UMowdqbidPo0mGQeOJ5b1xacYHtb3sGLIOUb1CPWi+EWBlbOoec=
+	t=1762943856; cv=none; b=Wncpzbzqlmsp2zK9WZt+towJzR4EHRJL0eqrQtFMBG4P0EoiF1cTHBtjomiDcBnxd6KGe6VWqUdxJCcEV6ZwvwXLz2x4DE4aq2zg2IO967gPv87jwOc8SUMaZItXiZ561c+8QMkeNxOJ/Ffhfbq5hR1EW1Q4pzh82rKAiMyFj4A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762943371; c=relaxed/simple;
-	bh=GB94KyWxhTOTJwckGHT/UMyyYTBhNHxn8zgXA+NUlbM=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=Y6dD2Qtq+cMZmu6JO6dIxtgdMXAin8GFijcRPXb/EfgvIsnXF3jb9cJ5EfDaCBF/yJreUSyAkwXPBjUnzAchuklIW+Y7/5micO5BdzUALz3H0GBKEQDCKd0Qh4Ne6jHdtDowjTuWp1Bgzy5Jf6S3obHF3+x0dvYlhWytCaaZUT8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=UfP3rUrK; arc=none smtp.client-ip=209.85.221.46
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wr1-f46.google.com with SMTP id ffacd0b85a97d-42b3288fc31so81309f8f.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 12 Nov 2025 02:29:28 -0800 (PST)
+	s=arc-20240116; t=1762943856; c=relaxed/simple;
+	bh=dx6zm7iYDFsu+uW4HxvS1RA6sCHD+I68rch7mq06/pw=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=UmYwPtMtWDSbN5heU+To8YR332r3V+sI9T2cw0WqHVSpDuwUsYytRJiUajNsB5oaWJT5ZzLr6zqJjc3O1UDiQWWa+uHRUrejzGQfb4SZ7g3SQlUljxTnM7KEVCN2UuqtjsNzYZe271KV2QIIcJi9ZWktn14SIQdkQDxU5QIiGbg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=p0Oz30K3; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=VEE83gR6; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 5AC9gLHL960182
+	for <linux-arm-msm@vger.kernel.org>; Wed, 12 Nov 2025 10:37:33 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	yEvEVaysBiDJvqu7zSpO/ven4wuPjiUA9FzLjPjO1Lk=; b=p0Oz30K3ZkEWwuzp
+	iqiim70ICP+vQQno+zYJnXP3FiLNW/NqOujPtIY2anc++sqN5gaDBPycS0NGFyFX
+	dpaoAHlUUwgvFGRmEFlte6Q8mA+lKrD9UJkcg1RWWZA4pZpilpZt69WCHX9kZaoz
+	3iG3mxKT/mv/TWO1givhucRFRitwKYp92KbL6yeP7RnsGST1HSYK6DeJ8D2z78pf
+	fLH8OFRFwugXCRlNnTYSgmUaLMsZMHKuIBbKB7GCEQEYfqshTC+LviPVOOA7SKdX
+	CXobtf7q7JlojXQJW4Mn8oAhLcQ+baKjrmDIsLWcCpZC6lJXo78vrDERvDKQ13HS
+	/bV64Q==
+Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com [209.85.222.198])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4acquer6pr-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Wed, 12 Nov 2025 10:37:33 +0000 (GMT)
+Received: by mail-qk1-f198.google.com with SMTP id af79cd13be357-8b10c2ea0b5so29413985a.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 12 Nov 2025 02:37:32 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1762943367; x=1763548167; darn=vger.kernel.org;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=BOzNeziSlOyb1g3MGAncFJukfzAYPENN5aoa0rhsnAI=;
-        b=UfP3rUrKFGJ6EMQvtpAP+QL72+dMdLmHpZ/ppS7BaBEkHkzVn3LpIufiidM8a8ENDC
-         IBJeK3VuatTjIuDzw4RRmHaMAjtM67Rl19Wm/TfCTB1I3ihJJkr4rIn0pxhc5yGnqyCe
-         hSyorx262v8gpAonmTLCiPYg7gS0bwbsShPm5xPtlZRwciRlal8ufZgwXUE3kgyK8l1o
-         HdXvP/51J87FgSJdcT1LzYXq/OaL6qSS9UJpc9a/Jk3kfYfVcJnJZfRfZJeijVeAlx8b
-         YLl4YgaFdTJP1PbMIWxLsXzC+qzxiZVpKXPgM4H5lhJT1EGmV5tUnqv4KKfGy1TsVq2Y
-         5k9A==
+        d=oss.qualcomm.com; s=google; t=1762943852; x=1763548652; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=yEvEVaysBiDJvqu7zSpO/ven4wuPjiUA9FzLjPjO1Lk=;
+        b=VEE83gR6V7jtim28gTs/PCIFOLUi9MFEcCGi4zuC1QmE/TgAjPAAbv3G5b0Y74LPJ+
+         dCGSwTwi0JD16zsuuRmg1js1utJv379J5aYUF1IVOC8+4j94O1NvH/NqQDs4hvh9ODwy
+         UTArToPX9DjwV4bGi3mJ3UtQBqv6tv+CYkqCQGmaTLVSI88jwGgKqU9nvO3B7Bnw5Kp6
+         ppu1P8wYMe084IIucPGuYKr7v/hhouW9mBeUUNWInBE/5w+zJFppt2JbkwhBYQqGbBmi
+         eDEbAz/+/Dn2gN0tWC7v7J5KF0pr2KZqFd2xr4vfX94yJZe2APTjQ7SGmuRmL7lOWnZl
+         UH2A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1762943367; x=1763548167;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=BOzNeziSlOyb1g3MGAncFJukfzAYPENN5aoa0rhsnAI=;
-        b=NFVR70p01kB84tP0BeCcOhJ6SRgiE07n2YivE4ZbIClXumULCclVndtK8vITb49EZM
-         ZM4AgJFb+4/B72VkP62QayeIdaYPNCL/8jch90GRv14rIMZ9EsT4pWeGD3iHqNeViWqZ
-         KLrW9a03gCXlOV1ZZFXs5QNUEprRw2ChT2U7yWRjAGxcbrgNg+NcEV3Rg1hs5Sv3gIAP
-         +OI8+shuJTaUfWVROeAQeKB2G5KRUZynWbizwjeEkdbAehypd/4YMC2XJ/o4sqZTecPy
-         A+gC191TcDI32WCDhMXv0YpCt0HkqPAH8RJmnB11+kFy/Wi3vQRLsm/Kf75jokM+Lckh
-         XfQw==
-X-Forwarded-Encrypted: i=1; AJvYcCX7SZOnKgYkmGvhNfR7geoDzDokaFTGZAdQ1HhSHPr+eWQGP0grkD1rTU20/rpVpQZJ7/knUZYe8HySrVDc@vger.kernel.org
-X-Gm-Message-State: AOJu0YwuNUAz/+RU0hXhDjdDF45GR+Nt3TJTeR+tvCMgjRSHJG+APs7t
-	yHmriMREZKOsK8XUldHyWD0RlwR4s4andlQrtz3cfueYw29GDA+iyRNATj9sR8eRM8c=
-X-Gm-Gg: ASbGncva2+vayx+IPPVzXn2D+SnD5g6zQPCy8TLR+uXtjRLe1qXdotNf0HA/1yhPvFR
-	9t8eKL/IW6M6dfutPkkKFm5OynCZGRzEKFolbuF2Q5nwEZQtY5Kh3JerRHlGVaDTvf9kJVl5CCl
-	sWBdGnU3ojZ2sWJVWhZ9MuaMRuAJNm/ZRoi9Ph3RqbL8NDvUaaRm5/dazykx18b/SMMik40kTa+
-	RYznLk6lO10zsAfaHpkQWOaXONVdltwxj5slOmY6GqAT3gd4lMlkOe9uYCG0zi0X+wSK0ILKGa0
-	jVIHuA1TN2YOmvpDxm19LT1C4OtH4m5sKSF+9mSeS8nu+6OEIMFlTjtH2srjC7Svn+p13V01seU
-	aC45pt9djrkqbIZGKeydNKAul+hnGvdzxrqtgI7Ndv0MepXoAizBXdpt1woVsT1NhP7HFlHo4VF
-	HGWKSj0Che5chy13tg
-X-Google-Smtp-Source: AGHT+IGy7b4A4+u/uGsBiLyOXS7Gsk6nxN9fGfA8X4fo9GU6bM3+pQFL29gZ0wTZR8WKoFNMAnOUPg==
-X-Received: by 2002:a05:6000:2888:b0:429:ed57:d17f with SMTP id ffacd0b85a97d-42b4bdaf0ffmr1104643f8f.6.1762943366954;
-        Wed, 12 Nov 2025 02:29:26 -0800 (PST)
-Received: from [127.0.1.1] ([178.197.219.123])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-42b32ecf522sm22020001f8f.45.2025.11.12.02.29.25
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 12 Nov 2025 02:29:26 -0800 (PST)
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Date: Wed, 12 Nov 2025 11:28:56 +0100
-Subject: [PATCH v2 11/11] soc: tegra: Simplify with
- of_machine_device_match()
+        d=1e100.net; s=20230601; t=1762943852; x=1763548652;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=yEvEVaysBiDJvqu7zSpO/ven4wuPjiUA9FzLjPjO1Lk=;
+        b=cVONU/WYIrCnd558M/DAcHCJlV+Gz8NFqzfv5uz8ziT8HTFbZO/eoATkE3Q8qt4T8W
+         wfWBX+PdvPXEm1+sfQwIG/CUqb5XO/uwaABB+/58YTzhzcxA6u8eSJ8cj7xqmVEIjLLR
+         BmzkgsPvFI7D+AHb78yAzxhNqAZgLiheUYsSeNh2sMfRc117Tz9NlHVPANg+05bTmX8S
+         e1PZrvAisTVI0SgDo7dQLXoDaB4hmGcT4ztviRsF+JDimSWR/ASvZmJkUbMH2zjEZuG8
+         R2x8qTjvuJzAPTYkhkAnFj8n/8e5jVnTA3pQ/tPfsImb/Zxxg3/QY1hsKjR4t2NhJNDB
+         juPg==
+X-Gm-Message-State: AOJu0YzcD8KCa+oVvrJqxy5uLmf5qcd9uy+GAuOzFMcTmGz36wLtMydl
+	otp/+qk6FIfRWzKFn+mrZnPNc4+pEG8yWAdcvNbRZ9opVyssGmkWd8Af7e8k+n4AAgNnXKzxq8e
+	KK5odu7CMqA+t1e/h6Dw7mkTYTwVHAYmQj8ua4ppZzysrTFrI9eaP1GZ0EjStA74QqRqo
+X-Gm-Gg: ASbGnct1JwSYclin4cZ7reWQPgNOJhQNAkqjhPTccbUjLaPhQ2FXg0pZEwGCfCg8Gv5
+	GzufXQX4yrmINfKMZEUswCPs1Zw0lsWQ9vJJcbUWZTLAkGzjbudrUXlnJdmXQA1LocZNTniMfda
+	VFkHTVs6L4gH3O/ukjhHFi3HZrQ6XL0N5zhV7cKCKMCbJvd8IgeP6psztzJE0o0uz366ohMt6YC
+	mguIohW0C+5igDrIR3DAkBLmooTysKftYJXv9wpDO+FG4C5g/00UncUmNGxZwKoTg9IveCPE99b
+	AoS0nNfznweQ/fnIOTLjwwsBM7393R9/HN00w4dMofLLG55a+E3XlvXaCm5R38b8o9yvhLr7osT
+	V6S9n7qzA9QEbVTWGoZpYMGcAVo5h/lNNFj7z6FnTaZxXmBturN64YEqJ
+X-Received: by 2002:a05:620a:c44:b0:8a2:eb35:8df9 with SMTP id af79cd13be357-8b29b96bfacmr174330085a.11.1762943852379;
+        Wed, 12 Nov 2025 02:37:32 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHnodYPH8G4uSHNNb8nQWE1cE1kx1PmZfPb6CE/gBIDzIV9Um7jRFbvxAfRziignE7KgxTdXA==
+X-Received: by 2002:a05:620a:c44:b0:8a2:eb35:8df9 with SMTP id af79cd13be357-8b29b96bfacmr174327385a.11.1762943851866;
+        Wed, 12 Nov 2025 02:37:31 -0800 (PST)
+Received: from [192.168.119.202] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-b72bfa0f37csm1559184066b.64.2025.11.12.02.37.28
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 12 Nov 2025 02:37:31 -0800 (PST)
+Message-ID: <ae21a963-696a-48f3-af91-ee72aef4b60d@oss.qualcomm.com>
+Date: Wed, 12 Nov 2025 11:37:27 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 16/21] drm/msm/adreno: Do CX GBIF config before GMU
+ start
+To: Akhil P Oommen <akhilpo@oss.qualcomm.com>,
+        Rob Clark <robin.clark@oss.qualcomm.com>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>, Sean Paul <sean@poorly.run>,
+        Dmitry Baryshkov <lumag@kernel.org>,
+        Abhinav Kumar
+ <abhinav.kumar@linux.dev>,
+        Jessica Zhang <jesszhan0024@gmail.com>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+        Jonathan Marek <jonathan@marek.ca>,
+        Jordan Crouse
+ <jordan@cosmicpenguin.net>,
+        Will Deacon <will@kernel.org>, Robin Murphy <robin.murphy@arm.com>,
+        Joerg Roedel <joro@8bytes.org>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+        Maxime Ripard <mripard@kernel.org>,
+        Thomas Zimmermann <tzimmermann@suse.de>,
+        Connor Abbott <cwabbott0@gmail.com>
+Cc: linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+        linux-arm-kernel@lists.infradead.org, iommu@lists.linux.dev,
+        devicetree@vger.kernel.org
+References: <20251110-kaana-gpu-support-v2-0-bef18acd5e94@oss.qualcomm.com>
+ <20251110-kaana-gpu-support-v2-16-bef18acd5e94@oss.qualcomm.com>
+Content-Language: en-US
+From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+In-Reply-To: <20251110-kaana-gpu-support-v2-16-bef18acd5e94@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Message-Id: <20251112-b4-of-match-matchine-data-v2-11-d46b72003fd6@linaro.org>
-References: <20251112-b4-of-match-matchine-data-v2-0-d46b72003fd6@linaro.org>
-In-Reply-To: <20251112-b4-of-match-matchine-data-v2-0-d46b72003fd6@linaro.org>
-To: Rob Herring <robh@kernel.org>, Saravana Kannan <saravanak@google.com>, 
- "Rafael J. Wysocki" <rafael@kernel.org>, 
- Viresh Kumar <viresh.kumar@linaro.org>, 
- Matthias Brugger <matthias.bgg@gmail.com>, 
- AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>, 
- Yangtao Li <tiny.windzz@gmail.com>, Chen-Yu Tsai <wens@kernel.org>, 
- Jernej Skrabec <jernej.skrabec@gmail.com>, 
- Samuel Holland <samuel@sholland.org>, 
- Lorenzo Pieralisi <lpieralisi@kernel.org>, 
- Daniel Lezcano <daniel.lezcano@linaro.org>, 
- Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konradybcio@kernel.org>, 
- Thomas Gleixner <tglx@linutronix.de>, 
- Nicolas Ferre <nicolas.ferre@microchip.com>, 
- Alexandre Belloni <alexandre.belloni@bootlin.com>, 
- Claudiu Beznea <claudiu.beznea@tuxon.dev>, 
- Maximilian Luz <luzmaximilian@gmail.com>, Hans de Goede <hansg@kernel.org>, 
- =?utf-8?q?Ilpo_J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>, 
- Daniel Lezcano <daniel.lezcano@kernel.org>, 
- Thierry Reding <thierry.reding@gmail.com>, 
- Jonathan Hunter <jonathanh@nvidia.com>
-Cc: devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
- linux-pm@vger.kernel.org, linux-arm-kernel@lists.infradead.org, 
- linux-mediatek@lists.infradead.org, linux-sunxi@lists.linux.dev, 
- linux-arm-msm@vger.kernel.org, platform-driver-x86@vger.kernel.org, 
- linux-tegra@vger.kernel.org, 
- Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-X-Mailer: b4 0.14.3
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1047;
- i=krzysztof.kozlowski@linaro.org; h=from:subject:message-id;
- bh=GB94KyWxhTOTJwckGHT/UMyyYTBhNHxn8zgXA+NUlbM=;
- b=owEBbQKS/ZANAwAKAcE3ZuaGi4PXAcsmYgBpFGFtg/s4nNx0uYgFz0GOtpfIGABdMtbdQMANV
- +JRa/rp5UaJAjMEAAEKAB0WIQTd0mIoPREbIztuuKjBN2bmhouD1wUCaRRhbQAKCRDBN2bmhouD
- 1w/fEACKMeFrgy5574qcsFru9xUr0YzMLGL2fJ86eoBrcMob9jAASCEdZ4D1Ej7bxnGW90YnM8p
- kQTuDSm0k1uWwm9FiVqJrUcnQf+MzR+X7U/gz94Kt90nLdBQV5YnPGcIsm3iHmIP4oVXHOpXokP
- x2OCQWPmfvbyFBjPZBy/1jGg6gNsMuRrWRfRLgz8jGcpoJMIafCEYZfKGZHHy3oWdOtwum/ndpN
- lJWa/sWwNglSxmB4Nu9YPiMgt1dJKy/7Tv6q+BiTDc81aEuRjfamh5IFFc9Urmb7O3UHiKtdokW
- b1zy3QDFK7/HNrHvi3T+16GKEVsHfU1sSG6d5jbbhEGoCC9GzPoirQLGKCjP2yaONa2vevaXN2G
- eCDpQZj58sVFngMltyb2r24bL9TAKWfw4nb7Z3kkOHAoRHS3yYZ9Jukr2BH4hKPGGItXAk845US
- AqAxHGs1G+QmXZZE0T6JjmUDUuPP8GFF0/gXiPr8oQLTQn/qjJCF2+svvkeWcT5zGvadb1pZvRz
- sS70yht/Xs4f0SAUjiukfj1ZmpBioU08dGxd6BUYbPY3gEBd6rQAqXDRnOfk62c+DVnksvKFMWc
- jrZSlC+mX8Y6PtbObKFPeYpzQQgx1xpwIgMl1zj9pilDXpDo8QxzUh4CwjnjvF+KeaSAVtnx/8E
- ZrNgwAuRB6iES6w==
-X-Developer-Key: i=krzysztof.kozlowski@linaro.org; a=openpgp;
- fpr=9BD07E0E0C51F8D59677B7541B93437D3B41629B
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMTEyMDA4NSBTYWx0ZWRfXwwlHXPK97hqx
+ YV4jbQHdFVsjBeCGrgrRzx/mD68id6tZq7MCNqnDUEJVTYZMG7aHlgS37r2CB5NGgHpUfpuDn3o
+ KXzCtNMx8hjGoxSO5cng0b2cc0yPtATklm0GtLXAd+rfie5isuk6xbFs0yF0ArFobourtCQxZIA
+ VvEFdexO9j5UHFIqr6RAnCnXoKaS4j2k56IAmsiFP4JDa3kZV3WVJbda8wsm9oxAmKmTCQ2Fes/
+ EXzno0pr0laRgLPUvO5gFrPDRrfH+sp8iGq76Amyu52HXeHvdSMq3K1RE0IHfcIEnoZajr6EfnN
+ /9mFq+ANw6BNH+A9Kf76xZQWaylN64UbdeJdzPA5GzwHps1i6j0EVjh4OYBcKvMOhHAcjoP0QSK
+ VyNF7ofI+KyQoELolTuN3ikPo5pJzg==
+X-Proofpoint-ORIG-GUID: FlMSY_KSxv9EK2TqsMPN9MtivinibOBq
+X-Authority-Analysis: v=2.4 cv=cPztc1eN c=1 sm=1 tr=0 ts=6914636d cx=c_pps
+ a=qKBjSQ1v91RyAK45QCPf5w==:117 a=FpWmc02/iXfjRdCD7H54yg==:17
+ a=IkcTkHD0fZMA:10 a=6UeiqGixMTsA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=EUspDBNiAAAA:8 a=XltbfQAJAwjtl7jyp1EA:9
+ a=QEXdDO2ut3YA:10 a=NFOGd7dJGGMPyQGDc5-O:22
+X-Proofpoint-GUID: FlMSY_KSxv9EK2TqsMPN9MtivinibOBq
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
+ definitions=2025-11-12_03,2025-11-11_03,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ lowpriorityscore=0 priorityscore=1501 malwarescore=0 suspectscore=0
+ spamscore=0 bulkscore=0 impostorscore=0 adultscore=0 phishscore=0
+ clxscore=1015 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2510240001
+ definitions=main-2511120085
 
-Replace open-coded getting root OF node and matching against it with
-new of_machine_device_match() helper.
+On 11/10/25 5:37 PM, Akhil P Oommen wrote:
+> GMU lies on the CX domain and accesses CX GBIF. So do CX GBIF
+> configurations before GMU wakes up. This was not a problem so far, but
+> A840 GPU is very sensitive to this requirement. Also, move these
+> registers to the catalog.
+> 
+> Signed-off-by: Akhil P Oommen <akhilpo@oss.qualcomm.com>
+> ---
 
-Reviewed-by: Jon Hunter <jonathanh@nvidia.com>
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
----
+[...]
 
-Depends on the first OF patch.
----
- drivers/soc/tegra/common.c | 12 +-----------
- 1 file changed, 1 insertion(+), 11 deletions(-)
+> +	/* For A7x and newer, do the CX GBIF configurations before GMU wake up */
+> +	for (int i = 0; (gbif_cx && gbif_cx[i].offset); i++)
+> +		gpu_write(gpu, gbif_cx[i].offset, gbif_cx[i].value);
 
-diff --git a/drivers/soc/tegra/common.c b/drivers/soc/tegra/common.c
-index dff6d5ef4e46..d82b7670abb7 100644
---- a/drivers/soc/tegra/common.c
-+++ b/drivers/soc/tegra/common.c
-@@ -27,17 +27,7 @@ static const struct of_device_id tegra_machine_match[] = {
- 
- bool soc_is_tegra(void)
- {
--	const struct of_device_id *match;
--	struct device_node *root;
--
--	root = of_find_node_by_path("/");
--	if (!root)
--		return false;
--
--	match = of_match_node(tegra_machine_match, root);
--	of_node_put(root);
--
--	return match != NULL;
-+	return of_machine_device_match(tegra_machine_match);
- }
- 
- static int tegra_core_dev_init_opp_state(struct device *dev)
+We haven't been doing this a lot in the GPU driver, but adding a
+.num_entries-like field is both more memory efficient and less error-prone
 
--- 
-2.48.1
+> +
+> +	/* For A7x and newer, do the CX GBIF configurations before GMU wake up */
 
+duplicate comment
+
+> +	if (adreno_is_a8xx(adreno_gpu)) {
+> +		gpu_write(gpu, REG_A8XX_GBIF_CX_CONFIG, 0x20023000);
+> +		gmu_write(gmu, REG_A6XX_GMU_MRC_GBIF_QOS_CTRL, 0x33);
+
+Either set this prio value here, or in a8xx_gpu.c
+
+> +	}
+> +
+>  	/* Set up the lowest idle level on the GMU */
+>  	a6xx_gmu_power_config(gmu);
+>  
+> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+> index 029f7bd25baf..66771958edb2 100644
+> --- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+> +++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+> @@ -1265,17 +1265,20 @@ static int hw_init(struct msm_gpu *gpu)
+>  	/* enable hardware clockgating */
+>  	a6xx_set_hwcg(gpu, true);
+>  
+> -	/* VBIF/GBIF start*/
+> -	if (adreno_is_a610_family(adreno_gpu) ||
+> -	    adreno_is_a640_family(adreno_gpu) ||
+> -	    adreno_is_a650_family(adreno_gpu) ||
+> -	    adreno_is_a7xx(adreno_gpu)) {
+> +	/* For gmuwrapper implementations, do the VBIF/GBIF CX configuration here */
+> +	if (adreno_is_a610_family(adreno_gpu)) {
+>  		gpu_write(gpu, REG_A6XX_GBIF_QSB_SIDE0, 0x00071620);
+
+a640/650 family GPUs didn't receive a .gbif_cx addition in the catalog to match
+
+>  		gpu_write(gpu, REG_A6XX_GBIF_QSB_SIDE1, 0x00071620);
+>  		gpu_write(gpu, REG_A6XX_GBIF_QSB_SIDE2, 0x00071620);
+>  		gpu_write(gpu, REG_A6XX_GBIF_QSB_SIDE3, 0x00071620);
+> -		gpu_write(gpu, REG_A6XX_RBBM_GBIF_CLIENT_QOS_CNTL,
+> -			  adreno_is_a7xx(adreno_gpu) ? 0x2120212 : 0x3);
+> +	}
+> +
+> +	if (adreno_is_a610_family(adreno_gpu) ||
+> +	    adreno_is_a640_family(adreno_gpu) ||
+> +	    adreno_is_a650_family(adreno_gpu)) {
+> +		gpu_write(gpu, REG_A6XX_RBBM_GBIF_CLIENT_QOS_CNTL, 0x3);
+> +	} else if (adreno_is_a7xx(adreno_gpu)) {
+> +		gpu_write(gpu, REG_A6XX_RBBM_GBIF_CLIENT_QOS_CNTL, 0x2120212);
+>  	} else {
+>  		gpu_write(gpu, REG_A6XX_RBBM_VBIF_CLIENT_QOS_CNTL, 0x3);
+
+Downstream seems to set QOS_CNTL at the same time as QSB_SIDEn for
+these targets
+
+
+>  	}
+> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.h b/drivers/gpu/drm/msm/adreno/a6xx_gpu.h
+> index 031ca0e4b689..cf700f7de09b 100644
+> --- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.h
+> +++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.h
+> @@ -46,6 +46,7 @@ struct a6xx_info {
+>  	const struct adreno_protect *protect;
+>  	const struct adreno_reglist_list *pwrup_reglist;
+>  	const struct adreno_reglist_list *ifpc_reglist;
+> +	const struct adreno_reglist *gbif_cx;
+>  	const struct adreno_reglist_pipe *nonctxt_reglist;
+>  	u32 gmu_chipid;
+>  	u32 gmu_cgc_mode;
+> diff --git a/drivers/gpu/drm/msm/adreno/a8xx_gpu.c b/drivers/gpu/drm/msm/adreno/a8xx_gpu.c
+> index 2ef69161f1d0..ad140b0d641d 100644
+> --- a/drivers/gpu/drm/msm/adreno/a8xx_gpu.c
+> +++ b/drivers/gpu/drm/msm/adreno/a8xx_gpu.c
+> @@ -500,6 +500,9 @@ static int hw_init(struct msm_gpu *gpu)
+>  
+>  	gpu_write(gpu, REG_A6XX_RBBM_SECVID_TSB_CNTL, 0);
+>  
+> +	/* Increase priority of GMU traffic over GPU traffic */
+> +	gmu_write(gmu, REG_A6XX_GMU_MRC_GBIF_QOS_CTRL, 0x33);
+
+Kgsl (later) added this for A740 too - would it be beneficial to enable
+unconditionally on gen7+?
+
+Konrad
 
