@@ -1,180 +1,133 @@
-Return-Path: <linux-arm-msm+bounces-81407-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-81408-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [142.0.200.124])
-	by mail.lfdr.de (Postfix) with ESMTPS id 10C6BC52237
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Nov 2025 12:59:52 +0100 (CET)
+Received: from ams.mirrors.kernel.org (ams.mirrors.kernel.org [213.196.21.55])
+	by mail.lfdr.de (Postfix) with ESMTPS id B09C4C524B5
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Nov 2025 13:43:50 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 3E8BE4EA41C
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Nov 2025 11:52:58 +0000 (UTC)
+	by ams.mirrors.kernel.org (Postfix) with ESMTPS id 5B34534BC63
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Nov 2025 12:43:50 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 794733148A8;
-	Wed, 12 Nov 2025 11:52:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 255DF335067;
+	Wed, 12 Nov 2025 12:43:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b="TeTaT22D"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="uxo36mmt"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from bali.collaboradmins.com (bali.collaboradmins.com [148.251.105.195])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f42.google.com (mail-lf1-f42.google.com [209.85.167.42])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A512C313E3B;
-	Wed, 12 Nov 2025 11:52:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.251.105.195
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45C3C32ED4F
+	for <linux-arm-msm@vger.kernel.org>; Wed, 12 Nov 2025 12:43:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762948374; cv=none; b=XhUqL9+KLF+FTfL7/ua0uJWP+fEgQZhhTw+gIvs9bp1LKAQULtzLOVbLaigeC/4FCIwHgR2kv4RSxfePMiWhiGWrAv+vddZvIqKr5HWOaFKCg1AZXNgl6Npv2/CldRtE+ZPlZ37/WZnK/BNMzNokjoBUBPPTGuqQqzvj48LMhDw=
+	t=1762951427; cv=none; b=Bo0NX2ilJ4o9HNjyeyMhKYBnLiX4q22HLfRbJb9cDu5j2ZVaBk0YrUbZAKv5I7/e6k+M2fmkcBBpYEiS5hOKgG4xR+M/r8pYPMGKZ+MhjtyxtD6QiAyKeRBN1wYZ7imzUZT144QwfAsh3fKy07zQopIYjpLlzkWaGedBTq+gpL8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762948374; c=relaxed/simple;
-	bh=E6HjezHpr/eYmZXi+/xXABXVhexayoEiHe9ZqY+Gpng=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=AOqqs+7yRe58tAOdB+hz/lRnprsSquQ02skg2M0QpmR455jXRQij/H/wa44+FKworA8KKPY6okOTHPImkp3eopaBcZD26OCzzxkKOFuzsqo7a50bQJbYQBmiesg4uzjI9uDD1oZNiFyph4E+dQErZ6+6ISgmb0e55UtCzt+xOWM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b=TeTaT22D; arc=none smtp.client-ip=148.251.105.195
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
-	s=mail; t=1762948370;
-	bh=E6HjezHpr/eYmZXi+/xXABXVhexayoEiHe9ZqY+Gpng=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=TeTaT22DJTm759f0/H9mXM+ubPyd1ePNPC1034/JqWtk8+Ga8tZzX2DDXUl/OmEW0
-	 9uHGrXsWuZmuxiVXmJwyON/tW+f7tC1lHjzhqPkEQk0louODcdoLLg2jUDyUsqTyRo
-	 4TPplTsIhtGitO6e2Nm6J29fZCUzstP3RqeNwDTSQvbzkgQn/l7O/9bFEB6jItD65z
-	 TvtPwEuZ54R8f3ATabV1XzPjjQBx2P6EZhfxlCXhhXxKi9/j//3OYe20L+g+3DRReZ
-	 +VBEERL8iaTc2uzfml+vXq82jk/UlrA+1Gx4VYtNAJeeXsp7hbCD0J5zgOc0jRcoOw
-	 TdYfTH8d9BmGg==
-Received: from [192.168.1.100] (2-237-20-237.ip236.fastwebnet.it [2.237.20.237])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	(Authenticated sender: kholk11)
-	by bali.collaboradmins.com (Postfix) with ESMTPSA id D5D7B17E0927;
-	Wed, 12 Nov 2025 12:52:48 +0100 (CET)
-Message-ID: <f949c2a6-df24-41bb-aac7-f5567d03c5f5@collabora.com>
-Date: Wed, 12 Nov 2025 12:52:48 +0100
+	s=arc-20240116; t=1762951427; c=relaxed/simple;
+	bh=oDG71wLkZH6zNZ8BBmCy1cYzzKvLo2hY7GqxG8NdDxk=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=fVvh2zBf3j8FHhySs9NPz9ez760YhXUiUL+E8yZGSIjzlbqeuB+Avli81nl8XvRVt0v3BjAC/O5XkEraa4lGsHgu7uZVw/RzHAzgYhAUeYLY5fJpShpEFdtaMzoGvHOC8YNxGjolL5LhhMmFeiPPGzNV5D7m/vE6LkGJzN26pQk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=uxo36mmt; arc=none smtp.client-ip=209.85.167.42
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lf1-f42.google.com with SMTP id 2adb3069b0e04-594516d941cso865549e87.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 12 Nov 2025 04:43:45 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1762951423; x=1763556223; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=oDG71wLkZH6zNZ8BBmCy1cYzzKvLo2hY7GqxG8NdDxk=;
+        b=uxo36mmtj8Hh+wII3sTWzpG8uou1bkkJCbYDvyvOcxOOpzOUM7cmRMlItxiPTpT3lA
+         0G3JQ0olpAdjQaaMDHrN4TDKa9GjJx7tk6u6pd3Mc2Txjn7ROQuK4pSzF8Gq7fX4YyOk
+         MZjPar6m400HZLMhAqlqqVEBOJxUwcjMmfTtUkAK9CMhlolvzTw3+2VH+L4mzl1GdxMZ
+         qr8/FIgPcanmRg1Oen4DdUs9Iryg673YXkKnJj6U2FDyOB0MPjflGMfZpKyT9PHjSijc
+         u+lPz5943ICxpmNykEHYHxTVJeIAbR2JReXirkb5hro76hxAHTHg91ciWg2dX/tjksOM
+         AkWw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1762951423; x=1763556223;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=oDG71wLkZH6zNZ8BBmCy1cYzzKvLo2hY7GqxG8NdDxk=;
+        b=akYS6AFPyA4wzigW6RGqS7jZ7Ri7WfxYy4175hZV8BKEEJgOpjXoxdvAmtgPhmw4m7
+         X4g9r6lSF0jAkiF+iQJqRmwLALRRjFIG45vE0H1474yUSjV18wY7DV2AB+FOdYsIii25
+         0B0ttY5Ta9EGVUlTiXBz8xYmK7+edsnVjYTpMdm36USKz6snk+hIYvOKHTjdkjRA/PN9
+         37NB5XFIQxAyikI9sVlrbcJqL8zYwQVzMJrsmj7KOhHv0ppxeyKuo6+d4Ejf7X8lJ/mh
+         XeH1tvNh1KSGDaFeIYZtVGos++Ag6/GCm6KjGThUB40JYgNjmTGq4pfU79PF1jiis2Mm
+         c4Ag==
+X-Forwarded-Encrypted: i=1; AJvYcCVhwia423ZqNwLsi+420wPbeaP9FL/HCcvd8ddRZIR6zpPtYON7b5QYL0h/z5wXaCQki1zc73vN9xI4edP7@vger.kernel.org
+X-Gm-Message-State: AOJu0YyqzFn7nxk6X778kCKqhRCT0zj9oYJCz60ypoIUHb9IJAUI94UT
+	0F1mGphNCVg5yTRqidWG2w35K64LAnx4h3NroNNQ+LnCmrcNLShWrC2DoX6Hx/dp+Z4UqEQZLMG
+	BmBXL8xqM0TvnsJh1HIU6sNgABlKnOf4npp6l1A+PzQ==
+X-Gm-Gg: ASbGncv+7mtUbcxoiovMxQFJqbsEBjSjqoJO8bANVtZUxy+SG47LiwitBhiSE1UcaMn
+	cjcGCahNeZHT3Rvm+AwRA2uYSMHeaS0DshhlkHZI5Jj56mCPWqSzijlooAF5P+JOiisKDtlRWB/
+	jlFaBnODTAxH0vebIzeO9ErOitLl00rsUj/b6zFg3PzDkUAKWIS3lJSRE9QDR4MtY+3XIoTM5JN
+	c96rcLWSKTI6JkzL46gPQro6bMQkJAnmWjvg++t4Hx65QY9iMvAyJBqYfj+
+X-Google-Smtp-Source: AGHT+IFKrAN2G2zTZh4SCpeU6gZa9GThIvhb7rVDTGkR/MLZ+R0xImuA8WoUYuizes16PmjbOY9KlVCaKR3Fm5qO6C8=
+X-Received: by 2002:a05:6512:b9d:b0:595:7e01:6b3a with SMTP id
+ 2adb3069b0e04-5957e016e6emr28072e87.14.1762951423456; Wed, 12 Nov 2025
+ 04:43:43 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 00/11] of: Add wrappers to match root node with OF
- device ID tables
-To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
- Rob Herring <robh@kernel.org>, Saravana Kannan <saravanak@google.com>,
- "Rafael J. Wysocki" <rafael@kernel.org>,
- Viresh Kumar <viresh.kumar@linaro.org>,
- Matthias Brugger <matthias.bgg@gmail.com>, Yangtao Li
- <tiny.windzz@gmail.com>, Chen-Yu Tsai <wens@kernel.org>,
- Jernej Skrabec <jernej.skrabec@gmail.com>,
- Samuel Holland <samuel@sholland.org>,
- Lorenzo Pieralisi <lpieralisi@kernel.org>,
- Daniel Lezcano <daniel.lezcano@linaro.org>,
- Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>, Thomas Gleixner
- <tglx@linutronix.de>, Nicolas Ferre <nicolas.ferre@microchip.com>,
- Alexandre Belloni <alexandre.belloni@bootlin.com>,
- Claudiu Beznea <claudiu.beznea@tuxon.dev>,
- Maximilian Luz <luzmaximilian@gmail.com>, Hans de Goede <hansg@kernel.org>,
- =?UTF-8?Q?Ilpo_J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
- Daniel Lezcano <daniel.lezcano@kernel.org>,
- Thierry Reding <thierry.reding@gmail.com>,
- Jonathan Hunter <jonathanh@nvidia.com>
-Cc: devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- linux-pm@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
- linux-mediatek@lists.infradead.org, linux-sunxi@lists.linux.dev,
- linux-arm-msm@vger.kernel.org, platform-driver-x86@vger.kernel.org,
- linux-tegra@vger.kernel.org, Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
- Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-References: <20251112-b4-of-match-matchine-data-v2-0-d46b72003fd6@linaro.org>
-From: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Content-Language: en-US
-In-Reply-To: <20251112-b4-of-match-matchine-data-v2-0-d46b72003fd6@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+References: <20251110101043.2108414-1-praveen.talari@oss.qualcomm.com> <20251110101043.2108414-3-praveen.talari@oss.qualcomm.com>
+In-Reply-To: <20251110101043.2108414-3-praveen.talari@oss.qualcomm.com>
+From: Linus Walleij <linus.walleij@linaro.org>
+Date: Wed, 12 Nov 2025 13:43:30 +0100
+X-Gm-Features: AWmQ_blw_0zZEbC2wTIU0HIhaE3Pg5Px5M6V4b6IhL47o7V7zMZgJkY7fz-LNV8
+Message-ID: <CACRpkdYEbxtjoi8KQxS5fY6xr3UZwQmG-yKvT3L8fRcCXDaAwQ@mail.gmail.com>
+Subject: Re: [PATCH v1 2/4] pinctrl: qcom: msm: Fix potential deadlock in
+ pinmux configuration
+To: Praveen Talari <praveen.talari@oss.qualcomm.com>
+Cc: Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, 
+	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Jiri Slaby <jirislaby@kernel.org>, 
+	Dmitry Baryshkov <lumag@kernel.org>, linux-arm-msm@vger.kernel.org, 
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	linux-gpio@vger.kernel.org, linux-serial@vger.kernel.org, 
+	alexey.klimov@linaro.org, krzk@kernel.org, bryan.odonoghue@linaro.org, 
+	jorge.ramirez@oss.qualcomm.com, dmitry.baryshkov@oss.qualcomm.com, 
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, psodagud@quicinc.com, djaggi@quicinc.com, 
+	quic_msavaliy@quicinc.com, quic_vtanuku@quicinc.com, 
+	quic_arandive@quicinc.com, quic_shazhuss@quicinc.com, 
+	quic_cchiluve@quicinc.com, Prasad Sodagudi <prasad.sodagudi@oss.qualcomm.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Il 12/11/25 11:28, Krzysztof Kozlowski ha scritto:
-> Changes in v2:
+Hi Praveen,
 
-Note:
+thanks for your patch!
 
-Looks ok based on code and based on testing on the following platforms:
-  - tegra: Jetson Xavier NX Development Kit
-  - qcom: sdm630 Sony Xperia XA2 (Nile), sc7180 Trogdor Lazor Chromebook
-  - mediatek: MT6795 Xperia M5 (midstream kernel), MT8173 Elm Chromebook
-              MT8365 Genio 350 (mt8365-evk)
+On Mon, Nov 10, 2025 at 11:11=E2=80=AFAM Praveen Talari
+<praveen.talari@oss.qualcomm.com> wrote:
 
-Tested-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+> Replace disable_irq() with disable_irq_nosync() in msm_pinmux_set_mux()
+> to prevent potential deadlock when wakeup IRQ is triggered on the same
+> GPIO being reconfigured.
+>
+> The issue occurs when a wakeup IRQ is triggered on a GPIO and the IRQ
+> handler attempts to reconfigure the same GPIO's pinmux. In this scenario,
+> msm_pinmux_set_mux() calls disable_irq() which waits for the currently
+> running IRQ handler to complete, creating a circular dependency that
+> results in deadlock.
+>
+> Using disable_irq_nosync() avoids waiting for the IRQ handler to
+> complete, preventing the deadlock condition while still properly
+> disabling the interrupt during pinmux reconfiguration.
+>
+> Suggested-by: Prasad Sodagudi <prasad.sodagudi@oss.qualcomm.com>
+> Signed-off-by: Praveen Talari <praveen.talari@oss.qualcomm.com>
 
-Cheers,
-Angelo
+I applied this patch 2/4 to the pin control tree for fixes.
 
-> - Drop cpufreq/ti change: not correct.
-> - Drop soc/qcom/qcom_pd_mapper.c - objections from Dmitry and I think
->    better to drop the patch in such case.
-> - I did not implement feedback for first patch to make the
->    of_machine_compatible_match() matching machines in arbitrary nodes,
->    because there is no such use case possible and no arguments were provided.
->    I also did not use cleanup.h in first patch because existing code
->    of_device_get_match_data() does not use it and I prefer uniformity.
-> 
-> - Add Ack/Rb tags.
-> - Link to v1: https://patch.msgid.link/20251106-b4-of-match-matchine-data-v1-0-d780ea1780c2@linaro.org
-> 
-> Dependency/merging
-> ==================
-> All patches depend on the first patch, thus everything could go via
-> Rob's tree with people's acks.
-> 
-> Description
-> ===========
-> Several drivers duplicate same code for getting reference to the root
-> node, matching it against 'struct of_device_id' table and getting out
-> the match data from the table entry.
-> 
-> There is a of_machine_compatible_match() wrapper but it takes array of
-> strings, which is not suitable for many drivers since they want the
-> driver data associated with each compatible.
-> 
-> Add two wrappers, similar to existing of_device_get_match_data():
-> 1. of_machine_device_match() doing only matching against 'struct
->     of_device_id' and returning bool.
-> 2. of_machine_get_match_data() doing the matching and returning
->     associated driver data for found compatible.
-> 
-> Best regards,
-> Krzysztof
-> 
-> ---
-> Krzysztof Kozlowski (11):
->        of: Add wrappers to match root node with OF device ID tables
->        cpufreq: dt-platdev: Simplify with of_machine_get_match_data()
->        cpufreq: mediatek: Simplify with of_machine_get_match_data()
->        cpufreq: sun50i: Simplify with of_machine_device_match()
->        cpuidle: big_little: Simplify with of_machine_device_match()
->        firmware: qcom: scm: Simplify with of_machine_device_match()
->        irqchip/atmel-aic: Simplify with of_machine_get_match_data()
->        platform: surface: Simplify with of_machine_get_match_data()
->        powercap: dtpm: Simplify with of_machine_get_match_data()
->        soc: qcom: ubwc: Simplify with of_machine_get_match_data()
->        soc: tegra: Simplify with of_machine_device_match()
-> 
->   drivers/cpufreq/cpufreq-dt-platdev.c               | 15 ++-----
->   drivers/cpufreq/mediatek-cpufreq.c                 | 12 +-----
->   drivers/cpufreq/sun50i-cpufreq-nvmem.c             | 11 +----
->   drivers/cpuidle/cpuidle-big_little.c               | 11 +----
->   drivers/firmware/qcom/qcom_scm.c                   | 17 +-------
->   drivers/irqchip/irq-atmel-aic-common.c             | 15 ++-----
->   drivers/of/base.c                                  | 47 ++++++++++++++++++++++
->   .../platform/surface/surface_aggregator_registry.c | 13 +-----
->   drivers/powercap/dtpm.c                            | 16 +-------
->   drivers/soc/qcom/ubwc_config.c                     | 14 ++-----
->   drivers/soc/tegra/common.c                         | 12 +-----
->   include/linux/of.h                                 | 13 ++++++
->   12 files changed, 79 insertions(+), 117 deletions(-)
-> ---
-> base-commit: a4ebba34e722123f1c09ce3282e26f052fc8b27f
-> change-id: 20251106-b4-of-match-matchine-data-4a64bf046814
-> 
-> Best regards,
+I removed the word "potential" from subject and text so as to
+reflect what Bjorn is saying: it's a very real issue.
 
+Thanks for fixing this!
+Linus Walleij
 
