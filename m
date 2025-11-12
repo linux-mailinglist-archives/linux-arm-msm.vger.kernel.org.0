@@ -1,81 +1,81 @@
-Return-Path: <linux-arm-msm+bounces-81422-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-81423-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 028D9C529DA
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Nov 2025 15:08:02 +0100 (CET)
+Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [142.0.200.124])
+	by mail.lfdr.de (Postfix) with ESMTPS id 71981C529D4
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Nov 2025 15:07:37 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id A9D8F426F9A
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Nov 2025 13:56:01 +0000 (UTC)
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 41F3C4FCA83
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Nov 2025 13:56:24 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 83A06262FDD;
-	Wed, 12 Nov 2025 13:55:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A39242F068F;
+	Wed, 12 Nov 2025 13:55:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b="WE6btBxV"
+	dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b="ZrrncgSs"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f48.google.com (mail-wm1-f48.google.com [209.85.128.48])
+Received: from mail-wr1-f49.google.com (mail-wr1-f49.google.com [209.85.221.49])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D00392472BB
-	for <linux-arm-msm@vger.kernel.org>; Wed, 12 Nov 2025 13:55:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF8B526A0D5
+	for <linux-arm-msm@vger.kernel.org>; Wed, 12 Nov 2025 13:55:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762955745; cv=none; b=pOlVYAEL2Cgz66uqxTCmKyqr6qNKeSFDd7K9KYXy9y8HiZ8cIskuyFHKF4moz8gZ8UmRIb7LLy/OynI9IxMFx9kmL/0sg9RnEds0xp/iNYHSu572Bwkng+cJOi6azJMjVcJKNMnAbbx4uM0PmTYKbmD4k4ghB/AmaRK5zwr0apM=
+	t=1762955748; cv=none; b=EyI6gmbUChZx/frpzz61uzj+/J3jC9FFX3T8yhtZhuSbnTaMb+cCTAYar/Hm4wCYZ9RmPNKAwfJuYh/9OCL8Xg/pPXqxxnddxbp6agL4YBrtoiN+r26ygTNaZn+TYrCgQ8vxB1wJCP4Dnxx+rdSPwffmnZTo16TxnWz/Ch1/Yhk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762955745; c=relaxed/simple;
-	bh=KN033bDXd68p0ygzAwO9lMJaY9FplVJ3RsK58yXEA24=;
+	s=arc-20240116; t=1762955748; c=relaxed/simple;
+	bh=en1OCTYsU/wC0ciRBSnmX7Wpxzjfhc9j6Jstyzo3nSI=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=qnBMNq1/FikNPTJgRW4WaHaBblU8RqFMcvQXbUGbhXrvOMvACayQb9b40AJFvIKLSaoIfzC5PXbx+Ulv8/fyisfmY/MFdx0lhIXITdfvA9cwgAsx7uIfRPcABWfK0Au8sfmS9YSyuM2w63n3bkDVHCSbZjDEDe8SC8P1cIOrKnc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl; spf=none smtp.mailfrom=bgdev.pl; dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b=WE6btBxV; arc=none smtp.client-ip=209.85.128.48
+	 In-Reply-To:To:Cc; b=dWZiFMgJYSRLRiT54SfVtMZ3da4GuwtK/BXcv55e0QRK2QVnn2QLGtdpEBvej+ogVD+YEzi9pLggVvJJ3sQLXWNN4vkLNFs5ZlAA3QpQGQ67dBFbM836UCG0/i2Q6gJm1S/e2o3TFDS8U7yB3xuo239NcSG5gxMAvQ6yNJHL9QU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl; spf=none smtp.mailfrom=bgdev.pl; dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b=ZrrncgSs; arc=none smtp.client-ip=209.85.221.49
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl
 Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=bgdev.pl
-Received: by mail-wm1-f48.google.com with SMTP id 5b1f17b1804b1-47789cd2083so3853205e9.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 12 Nov 2025 05:55:43 -0800 (PST)
+Received: by mail-wr1-f49.google.com with SMTP id ffacd0b85a97d-42b47f662a0so398943f8f.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 12 Nov 2025 05:55:45 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=bgdev-pl.20230601.gappssmtp.com; s=20230601; t=1762955742; x=1763560542; darn=vger.kernel.org;
+        d=bgdev-pl.20230601.gappssmtp.com; s=20230601; t=1762955744; x=1763560544; darn=vger.kernel.org;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=2hgFs5jtdGYJBZ1LEdVbgHUHnMs4CKKuQJyrqRFEph4=;
-        b=WE6btBxVDTXx8n/dyWjbAKye7yMioyNQIy2em+DowK6RvO/+CgSaF3xiOwEpadP6J5
-         Yu8dO/6INKWUvsFR0NkfG3bXVYJKlP65eX8EbUhw838I+0Y5SpEzJVqlNOJFsoQ90+8K
-         g6H5v0ru/aiWVUtw53AV2066R+F8u5cLQSvrnFErvWu1tZye2n2zzZkCg09nwtaLa1l5
-         jXdMSzePO+XkhnI6u89UMZC52jNS8BGZqqerC/jyGIO5VLzWf4NhHu+Xyj6iBw1ZA5fE
-         2JClMCr1oPzngthmuIaW6WJjGBkx3dYFE11YvCjpQoRLvXin6W4bycFfslfmQGv0/REk
-         igig==
+        bh=bU0p5jhyAkg+9M5zCJdzo0UOszCY1ZswUrkywMR8tm8=;
+        b=ZrrncgSsj4x5AM7AD5OOmGA+t9peyuZ2rq17yrfG6/nIp+IXtlfwXM2FPFbTg5kg2s
+         5usT2UvSAPCtfMN8uRBAnMpHu9G7LoQYMzIpVInK1gAcbNNwry1u/NNMOP7Ul9TDSEeQ
+         3IQ7omlE/hfhRvHXxxrm1EscaZESiweiB8eVNmfX5Pp/5907cdKe5+0PAdBdfY9QuaMO
+         emaS7OV2DA8WJM5xdfn2n6BE/tYoBTQ9L1rPYmvWPncsNkVaBsl/UODTroKrG1iPhkXW
+         ymlwPT0+epozRmsSOpBOZKlOmfnZ2sTXSWVpLMxlpL6eULRDfTvQcUoDxGiHdYmzzg2V
+         i0mQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1762955742; x=1763560542;
+        d=1e100.net; s=20230601; t=1762955744; x=1763560544;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
          :cc:subject:date:message-id:reply-to;
-        bh=2hgFs5jtdGYJBZ1LEdVbgHUHnMs4CKKuQJyrqRFEph4=;
-        b=hOoOcqi4ZCQKu40zDCAgHd6O3Q0lcZms2QTyoaOy3kJfUvQQHrQICjiDSwNYeLjWry
-         qakcdTyGOnKO4zSmKlqqiVBw5kHE5vx5NllhLlBrpla5PG9YIAf1nHLcdqhbrfynZrc9
-         /UtvrwBi3tkFf1sNz74+JSXTHuFW2IsJtSFeinGn/QrFnPZnsOTaP6jxBkCnhrr2b18V
-         NS+p+gxtQ6Ho+zgMyiK4aQZLyuW7PB5/yFDUQE4WkFT2ExqtP6qaZUtjWFwGBiKBetxY
-         Q3tNT9tziIiX/hp/X9r3jhQ2TlFLgr1CeSXbhQbyp19ER1lZTmsW4Psn+QOmAQN01DZU
-         6Rig==
-X-Forwarded-Encrypted: i=1; AJvYcCXVO0UD6C34aIwnPwyJG/7tELCXtm0Xhs6SUig0iF8zLO26a4QJMVie52ATn7+TBt4QTkjNjnppZQ5J9Drb@vger.kernel.org
-X-Gm-Message-State: AOJu0Yxq8fYSNjDYOzSNEvY0KTM2k1gR3b4RNFmYIzn9p/uTMrrr7yv8
-	sqgZWxBazj9fktR38EBy85ExlBXTuAz0cDFfy/b+fOd6avIN4UTAxGlqnuOJsWS5HPg=
-X-Gm-Gg: ASbGncu0vnXD5JchEeSbvixs0q0CGi/9nEoxTnmdx/6xVCsGBhx7M0B0gYIyWHC4DHd
-	AIqJ5FKCZQq27TOHOhsSu2k2VsgY14vbonK7PI0bbG0MFuNqQYuBsohsXwjGQASWCcY7MSyvnN4
-	83pAxuLOWV8YOwbxDQ2EYSIco1hq1X1/zwFhC6SnqeQsAgwf8SkMAgBvloV5yLShXxsQdn6NvIp
-	X4MJbDmE0rnM+qGZio1Wf6u6mfj9O/Opq3drTCzfeg8AQbLjrVsUknqiMYqbrx5mhDYu4ruEiMa
-	QTuX0CcwY/wzdOKywYli0h6wCkKKgToWHcJtN7SryuSXLbZ7RpuVY+8ZwvyDS1ZSQ/bscMIeHST
-	e0V980tcUbZzrQSj3tTOxz1AO6cgp5EvcTicJosvXD4XifnugvmXankCq4BBC5mrAfDk=
-X-Google-Smtp-Source: AGHT+IGpKMpu73nkeB94rPHaIZutixTAdFFPa6qysCajDttSQ0OQGd/OBq10tj2PVKg3TstrN7uRIQ==
-X-Received: by 2002:a05:600c:4f91:b0:46e:4704:b01e with SMTP id 5b1f17b1804b1-477870708e1mr27099245e9.8.1762955742150;
-        Wed, 12 Nov 2025 05:55:42 -0800 (PST)
+        bh=bU0p5jhyAkg+9M5zCJdzo0UOszCY1ZswUrkywMR8tm8=;
+        b=LNJQgXcZJo+DB7WLmkRdzj7WePw8L0EpKU3DzXTFMGYGPUg/tNfCXkT9lx7Fv1Bdky
+         JzT2agaM6b4c77CpmiMHd/eVCV2ANB35dF1c2KCot7RumXM/lRkkwjmf4asWXnqnNqwL
+         OIcV1KcqbHvXhnWcb4t0RWqH+xv4mckuYUOI0oDeqDgi742jNsqOZMCj72xvJSnV3FxF
+         +RMsxt04wGecnNg7yF1sICGhoHPI/3Ke79IZWNYA101LvoAYM2MY+//tWehTxSWC3Y67
+         Nq/EU0jTzCu1wlgxWVYFhIILNfGNxmOKUj7CPI4kEc3P2+mojCjDYTPml72Qp003/mO1
+         RDQw==
+X-Forwarded-Encrypted: i=1; AJvYcCVawu4oirWaMCQctb6p+t0msxMkrc3Qt3SzpmaFAlFObiB6knh+jW6rJvgCnwprSudi4u++HcpfeDs2Qd1q@vger.kernel.org
+X-Gm-Message-State: AOJu0Yy5Vuj13TyTEAsONYiCjsPFS17GKGQCdTBDXd2vFlHd8nOvcsZr
+	oMzG7I1eOELEDAHseV/rSJnOPfpr87B1umc9fjvIuj3hkMDc8yMrAh5IUKGceavcW2g=
+X-Gm-Gg: ASbGncsQuy2m8WMpxpedRPiN/adfkFIm8Cb9JHwF0riPyN2tPILTZL9gZQRwUZSHNar
+	flKih+o4U/l+dODIK8pVMa3sNl2DBGpVu0PsWy+L0tu+bDsWIeWTUusyaAS9aX9u9Hk5M+6t/oy
+	fYOshxDl5vb4cnYdNu5+h1Vh0b9Wsnw9r4y/ZtsoON7WoB/0wPB+i4Cv0A0um2wBZiWLLUF7auz
+	S9p0isRpowTd2+60MivANEgOduKmok8mYblU2JtSelZ8OSNGKoI6joc9o/y9XPSo9swPx1w49ft
+	daZzyMLpbgRQvaNgNIFPWTcs5FjAQsKgNGWWPyBxop517xD2dGT0hrHP6fvImB1wSdz34PGMMsW
+	08hsNcZgrTx8R9iEz0G/ky2K9rgNoWk0RekAGr/PPrZeVpLTUcDINkqzDTm0uNcq76MA=
+X-Google-Smtp-Source: AGHT+IGjwTXgphW/quEnGs67bFJbXJ9C9T372lL4McIb3rt4uORpNQqnqrGlLen4DAphFbFwLbGdBw==
+X-Received: by 2002:a05:6000:381:b0:425:6fb5:2add with SMTP id ffacd0b85a97d-42b432c933fmr6469629f8f.19.1762955743952;
+        Wed, 12 Nov 2025 05:55:43 -0800 (PST)
 Received: from [127.0.1.1] ([2a01:cb1d:dc:7e00:2a6:e453:42d3:11])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-47787e2b835sm37711685e9.2.2025.11.12.05.55.40
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-47787e2b835sm37711685e9.2.2025.11.12.05.55.42
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 12 Nov 2025 05:55:41 -0800 (PST)
+        Wed, 12 Nov 2025 05:55:43 -0800 (PST)
 From: Bartosz Golaszewski <brgl@bgdev.pl>
-Date: Wed, 12 Nov 2025 14:55:31 +0100
-Subject: [PATCH v4 02/10] gpiolib: define GPIOD_FLAG_SHARED
+Date: Wed, 12 Nov 2025 14:55:32 +0100
+Subject: [PATCH v4 03/10] gpiolib: implement low-level, shared GPIO support
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -84,7 +84,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20251112-gpio-shared-v4-2-b51f97b1abd8@linaro.org>
+Message-Id: <20251112-gpio-shared-v4-3-b51f97b1abd8@linaro.org>
 References: <20251112-gpio-shared-v4-0-b51f97b1abd8@linaro.org>
 In-Reply-To: <20251112-gpio-shared-v4-0-b51f97b1abd8@linaro.org>
 To: Kees Cook <kees@kernel.org>, Mika Westerberg <westeri@kernel.org>, 
@@ -107,49 +107,709 @@ Cc: linux-hardening@vger.kernel.org, linux-kernel@vger.kernel.org,
  linux-sound@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
  Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1141;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=18980;
  i=bartosz.golaszewski@linaro.org; h=from:subject:message-id;
- bh=fe01g4C6qCSbAEu6zmke8JCgZ5Eo9dDIwKAhmTSay1w=;
- b=owEBbQKS/ZANAwAKAQWdLsv/NoTDAcsmYgBpFJHVBTDDrvJHZ80xPG9a4F7QqcyJzJgbcSXHa
- oo9SZzZ15CJAjMEAAEKAB0WIQSR5RMt5bVGHXuiZfwFnS7L/zaEwwUCaRSR1QAKCRAFnS7L/zaE
- w91FEACnpe+vPiO9uBC+BsokWIYfbDME+aBKEozY7SwP0GRthdoEWwpZO7sgtgsDqvbBiW27PQj
- u3dNIE3sC+Xq4qVOYGD1CwpgZRYk+nWkm0G/rdY9Cdt3WkjzDjmRKQ6nfYxQ8QCUe3oWOHRD2aD
- FIGPCTly2E8ANXYEWTCdTDIlSifKrLDkfDYoiYC4zvzVFh7yfTrfN3OorFzIpqoBDiFUdOF5v4R
- kZXRmcAik8hp+cSw2IqltJYa0IpkM3fi35svUUVAiaLFemUnTXLwinqOdZXoAR3NUUIkg+yfyGT
- Ng+kpi792Y0jFdeMbPRqb7Brix32Pi7kA6zS6AWsT36I9rQzC1uWHWh10ar6IO4g/0eihjuFPkq
- lIUPxsIpKrOIaKFX5oLZFonmQNcTu/QgsBF3WvKDnb+soIUb4YRd94DdPk93QpQ+YX0A+xvfNvf
- WxDOUFlr8mhOjvU+AbCZTnisyN6TBs1WfXYv2BMxjlOki2kzA6/hsumjEZ41oXWs/fNBeAOSZiV
- uAFemOSTTwgXTlYdblMtR4YBxsA+hUnf62j8isuIFTVeDl04b/T9Q6CDK87kqWqQNOrJgJL27OE
- djN1+y17ilgzoN87pxNZICYpjc2tighS0XY2870Hyn8BpJTZ2mwyf627na0bY0v18oddUykWYfU
- xrHzssrVMLnGRhg==
+ bh=fGWc99aevRaj31ao5XoPsk2kEtFdFEMQgrWVi2eCMFQ=;
+ b=owEBbQKS/ZANAwAKAQWdLsv/NoTDAcsmYgBpFJHVbPA43EaseVfSX0YKeV1n6c3lUytGFYKMQ
+ qOR+nIyP/CJAjMEAAEKAB0WIQSR5RMt5bVGHXuiZfwFnS7L/zaEwwUCaRSR1QAKCRAFnS7L/zaE
+ w0yED/4hGzDn9JtFjJB6Rl5hGCn+zz3FKZowQ9V+bLXrL5b9DBiC6tWBrmTCIMVYXWsT0pQz50X
+ VKWVeR5j6UKhmVXdxRFcLSya1c+lhgnobKVAGnt0t95dWeJbWuF1tJvqJpOsTCvExH1UKzsmz6S
+ u9Zs4fC99CNCaQWQnQsqzAMjwZUZ0z9pPnpxZemZ9LIa9gd32X0BhGCDOkAl8yFj4ree5Zq4U0b
+ euGkmwlZiEhSUlflf2mBeq7PhE76YaQMIF2H4kgGmqaR3kzshivWV6RW0Av35o17SfdMeDMa0lE
+ zYLrWoasrgeULHqLUJd9AG4/w9jY/chzQULjh3fgjD5WEX5boRORQeS/OnJHaTirktJRWvsY//E
+ qropO7m7VMaiHVyhbDOJhL/hcRP5IQW1unfYF4g/yaZfz2W5gpNAoVheti14ewwDNbRtW8nmRvn
+ Ihv+FbYXHBSz8+0T89x5CTHgZLFtpRtqKsaOnjOgf8oHZBUiikB2xRKRyZ/i7wBKjsIxP6tToh8
+ r7LtKd8Aupxc5cF5NYj8MrUal/rqSJqh2OZEMP3x2yMx7S3Dv3kP7sFkcGjoUmToBAsA9Gp7ueH
+ fmOcjDHbG/Db3x3uwcFt81HDnC1ZNOxR6wgsDXIU8jbN4y0MUGqMsJL7z7D9pdMjNJROKse9vDt
+ Gw97+dAd3rrfM1A==
 X-Developer-Key: i=bartosz.golaszewski@linaro.org; a=openpgp;
  fpr=169DEB6C0BC3C46013D2C79F11A72EA01471D772
 
 From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 
-Define a new GPIO descriptor flag for marking pins that are shared by
-multiple consumer. This flag will be used in several places so we need
-to do it in advance and separately from other changes.
+This module scans the device tree (for now only OF nodes are supported
+but care is taken to make other fwnode implementations easy to
+integrate) and determines which GPIO lines are shared by multiple users.
+It stores that information in memory. When the GPIO chip exposing shared
+lines is registered, the shared GPIO descriptors it exposes are marked
+as shared and virtual "proxy" devices that mediate access to the shared
+lines are created. When a consumer of a shared GPIO looks it up, its
+fwnode lookup is redirected to a just-in-time machine lookup that points
+to this proxy device.
+
+This code can be compiled out on platforms which don't use shared GPIOs.
 
 Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
 Acked-by: Linus Walleij <linus.walleij@linaro.org>
 Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 ---
- drivers/gpio/gpiolib.h | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/gpio/Kconfig          |   8 +
+ drivers/gpio/Makefile         |   1 +
+ drivers/gpio/gpiolib-shared.c | 540 ++++++++++++++++++++++++++++++++++++++++++
+ drivers/gpio/gpiolib-shared.h |  71 ++++++
+ 4 files changed, 620 insertions(+)
 
-diff --git a/drivers/gpio/gpiolib.h b/drivers/gpio/gpiolib.h
-index 14e6a9807a89da6d7c6594a0a2de5f5032c49e0d..c9de4bb10584206f4888c0f28468762a3680aae6 100644
---- a/drivers/gpio/gpiolib.h
-+++ b/drivers/gpio/gpiolib.h
-@@ -204,6 +204,7 @@ struct gpio_desc {
- #define GPIOD_FLAG_EDGE_FALLING		17 /* GPIO CDEV detects falling edge events */
- #define GPIOD_FLAG_EVENT_CLOCK_REALTIME	18 /* GPIO CDEV reports REALTIME timestamps in events */
- #define GPIOD_FLAG_EVENT_CLOCK_HTE	19 /* GPIO CDEV reports hardware timestamps in events */
-+#define GPIOD_FLAG_SHARED		20 /* GPIO is shared by multiple consumers */
+diff --git a/drivers/gpio/Kconfig b/drivers/gpio/Kconfig
+index ce237398fa00eddad49afe995accae3abbb4b2cb..f90b4d3e77f7cab46525b7adfcf114a21d276678 100644
+--- a/drivers/gpio/Kconfig
++++ b/drivers/gpio/Kconfig
+@@ -6,6 +6,9 @@
+ config GPIOLIB_LEGACY
+ 	def_bool y
  
- 	/* Connection label */
- 	struct gpio_desc_label __rcu *label;
++config HAVE_SHARED_GPIOS
++	bool
++
+ menuconfig GPIOLIB
+ 	bool "GPIO Support"
+ 	help
+@@ -42,6 +45,11 @@ config GPIOLIB_IRQCHIP
+ 	select IRQ_DOMAIN
+ 	bool
+ 
++config GPIO_SHARED
++	def_bool y
++	depends on HAVE_SHARED_GPIOS || COMPILE_TEST
++	select AUXILIARY_BUS
++
+ config DEBUG_GPIO
+ 	bool "Debug GPIO calls"
+ 	depends on DEBUG_KERNEL
+diff --git a/drivers/gpio/Makefile b/drivers/gpio/Makefile
+index ee260a0809d36cd07987f04e0ef17b05af764214..48f309c764e3286c23dbe604be933f7180f0b89a 100644
+--- a/drivers/gpio/Makefile
++++ b/drivers/gpio/Makefile
+@@ -12,6 +12,7 @@ obj-$(CONFIG_GPIO_SYSFS)	+= gpiolib-sysfs.o
+ obj-$(CONFIG_GPIO_ACPI)		+= gpiolib-acpi.o
+ gpiolib-acpi-y			:= gpiolib-acpi-core.o gpiolib-acpi-quirks.o
+ obj-$(CONFIG_GPIOLIB)		+= gpiolib-swnode.o
++obj-$(CONFIG_GPIO_SHARED)	+= gpiolib-shared.o
+ 
+ # Device drivers. Generally keep list sorted alphabetically
+ obj-$(CONFIG_GPIO_REGMAP)	+= gpio-regmap.o
+diff --git a/drivers/gpio/gpiolib-shared.c b/drivers/gpio/gpiolib-shared.c
+new file mode 100644
+index 0000000000000000000000000000000000000000..56b9b03cbb6dbcdf095a656fc36ff321770035da
+--- /dev/null
++++ b/drivers/gpio/gpiolib-shared.c
+@@ -0,0 +1,540 @@
++// SPDX-License-Identifier: GPL-2.0-only
++/*
++ * Copyright (C) 2025 Linaro Ltd.
++ */
++
++#define pr_fmt(fmt) KBUILD_MODNAME ": " fmt
++
++#include <linux/auxiliary_bus.h>
++#include <linux/cleanup.h>
++#include <linux/device.h>
++#include <linux/fwnode.h>
++#include <linux/gpio/consumer.h>
++#include <linux/gpio/machine.h>
++#include <linux/idr.h>
++#include <linux/kref.h>
++#include <linux/list.h>
++#include <linux/lockdep.h>
++#include <linux/module.h>
++#include <linux/mutex.h>
++#include <linux/of.h>
++#include <linux/overflow.h>
++#include <linux/printk.h>
++#include <linux/property.h>
++#include <linux/slab.h>
++#include <linux/string.h>
++
++#include "gpiolib.h"
++#include "gpiolib-shared.h"
++
++/* Represents a single reference to a GPIO pin. */
++struct gpio_shared_ref {
++	struct list_head list;
++	/* Firmware node associated with this GPIO's consumer. */
++	struct fwnode_handle *fwnode;
++	/* GPIO flags this consumer uses for the request. */
++	enum gpiod_flags flags;
++	char *con_id;
++	int dev_id;
++	struct auxiliary_device adev;
++	struct gpiod_lookup_table *lookup;
++};
++
++/* Represents a single GPIO pin. */
++struct gpio_shared_entry {
++	struct list_head list;
++	/* Firmware node associated with the GPIO controller. */
++	struct fwnode_handle *fwnode;
++	/* Hardware offset of the GPIO within its chip. */
++	unsigned int offset;
++	/* Index in the property value array. */
++	size_t index;
++	struct gpio_shared_desc *shared_desc;
++	struct kref ref;
++	struct list_head refs;
++};
++
++static LIST_HEAD(gpio_shared_list);
++static DEFINE_MUTEX(gpio_shared_lock);
++static DEFINE_IDA(gpio_shared_ida);
++
++static struct gpio_shared_entry *
++gpio_shared_find_entry(struct fwnode_handle *controller_node,
++		       unsigned int offset)
++{
++	struct gpio_shared_entry *entry;
++
++	list_for_each_entry(entry, &gpio_shared_list, list) {
++		if (entry->fwnode == controller_node && entry->offset == offset)
++			return entry;
++	}
++
++	return NULL;
++}
++
++#if IS_ENABLED(CONFIG_OF)
++static int gpio_shared_of_traverse(struct device_node *curr)
++{
++	struct gpio_shared_entry *entry;
++	size_t con_id_len, suffix_len;
++	struct fwnode_handle *fwnode;
++	struct of_phandle_args args;
++	struct property *prop;
++	unsigned int offset;
++	const char *suffix;
++	int ret, count, i;
++
++	for_each_property_of_node(curr, prop) {
++		/*
++		 * The standard name for a GPIO property is "foo-gpios"
++		 * or "foo-gpio". Some bindings also use "gpios" or "gpio".
++		 * There are some legacy device-trees which have a different
++		 * naming convention and for which we have rename quirks in
++		 * place in gpiolib-of.c. I don't think any of them require
++		 * support for shared GPIOs so for now let's just ignore
++		 * them. We can always just export the quirk list and
++		 * iterate over it here.
++		 */
++		if (!strends(prop->name, "-gpios") &&
++		    !strends(prop->name, "-gpio") &&
++		    strcmp(prop->name, "gpios") != 0 &&
++		    strcmp(prop->name, "gpio") != 0)
++			continue;
++
++		count = of_count_phandle_with_args(curr, prop->name,
++						   "#gpio-cells");
++		if (count <= 0)
++			continue;
++
++		for (i = 0; i < count; i++) {
++			struct device_node *np __free(device_node) = NULL;
++
++			ret = of_parse_phandle_with_args(curr, prop->name,
++							 "#gpio-cells", i,
++							 &args);
++			if (ret)
++				continue;
++
++			np = args.np;
++
++			if (!of_property_present(np, "gpio-controller"))
++				continue;
++
++			/*
++			 * We support 1, 2 and 3 cell GPIO bindings in the
++			 * kernel currently. There's only one old MIPS dts that
++			 * has a one-cell binding but there's no associated
++			 * consumer so it may as well be an error. There don't
++			 * seem to be any 3-cell users of non-exclusive GPIOs,
++			 * so we can skip this as well. Let's occupy ourselves
++			 * with the predominant 2-cell binding with the first
++			 * cell indicating the hardware offset of the GPIO and
++			 * the second defining the GPIO flags of the request.
++			 */
++			if (args.args_count != 2)
++				continue;
++
++			fwnode = of_fwnode_handle(args.np);
++			offset = args.args[0];
++
++			entry = gpio_shared_find_entry(fwnode, offset);
++			if (!entry) {
++				entry = kzalloc(sizeof(*entry), GFP_KERNEL);
++				if (!entry)
++					return -ENOMEM;
++
++				entry->fwnode = fwnode_handle_get(fwnode);
++				entry->offset = offset;
++				entry->index = count;
++				INIT_LIST_HEAD(&entry->refs);
++
++				list_add_tail(&entry->list, &gpio_shared_list);
++			}
++
++			struct gpio_shared_ref *ref __free(kfree) =
++					kzalloc(sizeof(*ref), GFP_KERNEL);
++			if (!ref)
++				return -ENOMEM;
++
++			ref->fwnode = fwnode_handle_get(of_fwnode_handle(curr));
++			ref->flags = args.args[1];
++
++			if (strends(prop->name, "gpios"))
++				suffix = "-gpios";
++			else if (strends(prop->name, "gpio"))
++				suffix = "-gpio";
++			else
++				suffix = NULL;
++			if (!suffix)
++				continue;
++
++			/* We only set con_id if there's actually one. */
++			if (strcmp(prop->name, "gpios") && strcmp(prop->name, "gpio")) {
++				ref->con_id = kstrdup(prop->name, GFP_KERNEL);
++				if (!ref->con_id)
++					return -ENOMEM;
++
++				con_id_len = strlen(ref->con_id);
++				suffix_len = strlen(suffix);
++
++				ref->con_id[con_id_len - suffix_len] = '\0';
++			}
++
++			ref->dev_id = ida_alloc(&gpio_shared_ida, GFP_KERNEL);
++			if (ref->dev_id < 0) {
++				kfree(ref->con_id);
++				return -ENOMEM;
++			}
++
++			if (!list_empty(&entry->refs))
++				pr_debug("GPIO %u at %s is shared by multiple firmware nodes\n",
++					 entry->offset, fwnode_get_name(entry->fwnode));
++
++			list_add_tail(&no_free_ptr(ref)->list, &entry->refs);
++		}
++	}
++
++	for_each_child_of_node_scoped(curr, child) {
++		ret = gpio_shared_of_traverse(child);
++		if (ret)
++			return ret;
++	}
++
++	return 0;
++}
++
++static int gpio_shared_of_scan(void)
++{
++	return gpio_shared_of_traverse(of_root);
++}
++#else
++static int gpio_shared_of_scan(void)
++{
++	return 0;
++}
++#endif /* CONFIG_OF */
++
++static void gpio_shared_adev_release(struct device *dev)
++{
++
++}
++
++static int gpio_shared_make_adev(struct gpio_device *gdev,
++				 struct gpio_shared_ref *ref)
++{
++	struct auxiliary_device *adev = &ref->adev;
++	int ret;
++
++	lockdep_assert_held(&gpio_shared_lock);
++
++	memset(adev, 0, sizeof(*adev));
++
++	adev->id = ref->dev_id;
++	adev->name = "proxy";
++	adev->dev.parent = gdev->dev.parent;
++	adev->dev.release = gpio_shared_adev_release;
++
++	ret = auxiliary_device_init(adev);
++	if (ret)
++		return ret;
++
++	ret = auxiliary_device_add(adev);
++	if (ret) {
++		auxiliary_device_uninit(adev);
++		return ret;
++	}
++
++	pr_debug("Created an auxiliary GPIO proxy %s for GPIO device %s\n",
++		 dev_name(&adev->dev), gpio_device_get_label(gdev));
++
++	return 0;
++}
++
++int gpio_shared_add_proxy_lookup(struct device *consumer, unsigned long lflags)
++{
++	const char *dev_id = dev_name(consumer);
++	struct gpio_shared_entry *entry;
++	struct gpio_shared_ref *ref;
++
++	struct gpiod_lookup_table *lookup __free(kfree) =
++			kzalloc(struct_size(lookup, table, 2), GFP_KERNEL);
++	if (!lookup)
++		return -ENOMEM;
++
++	guard(mutex)(&gpio_shared_lock);
++
++	list_for_each_entry(entry, &gpio_shared_list, list) {
++		list_for_each_entry(ref, &entry->refs, list) {
++			if (!device_match_fwnode(consumer, ref->fwnode))
++				continue;
++
++			/* We've already done that on a previous request. */
++			if (ref->lookup)
++				return 0;
++
++			char *key __free(kfree) =
++				kasprintf(GFP_KERNEL,
++					  KBUILD_MODNAME ".proxy.%u",
++					  ref->adev.id);
++			if (!key)
++				return -ENOMEM;
++
++			pr_debug("Adding machine lookup entry for a shared GPIO for consumer %s, with key '%s' and con_id '%s'\n",
++				 dev_id, key, ref->con_id ?: "none");
++
++			lookup->dev_id = dev_id;
++			lookup->table[0] = GPIO_LOOKUP(no_free_ptr(key), 0,
++						       ref->con_id, lflags);
++
++			gpiod_add_lookup_table(no_free_ptr(lookup));
++
++			return 0;
++		}
++	}
++
++	/* We warn here because this can only happen if the programmer borked. */
++	WARN_ON(1);
++	return -ENOENT;
++}
++
++static void gpio_shared_remove_adev(struct auxiliary_device *adev)
++{
++	lockdep_assert_held(&gpio_shared_lock);
++
++	auxiliary_device_uninit(adev);
++	auxiliary_device_delete(adev);
++}
++
++int gpio_device_setup_shared(struct gpio_device *gdev)
++{
++	struct gpio_shared_entry *entry;
++	struct gpio_shared_ref *ref;
++	unsigned long *flags;
++	int ret;
++
++	guard(mutex)(&gpio_shared_lock);
++
++	list_for_each_entry(entry, &gpio_shared_list, list) {
++		if (!device_match_fwnode(&gdev->dev, entry->fwnode))
++			continue;
++
++		if (list_count_nodes(&entry->refs) <= 1)
++			continue;
++
++		flags = &gdev->descs[entry->offset].flags;
++
++		__set_bit(GPIOD_FLAG_SHARED, flags);
++		/*
++		 * Shared GPIOs are not requested via the normal path. Make
++		 * them inaccessible to anyone even before we register the
++		 * chip.
++		 */
++		__set_bit(GPIOD_FLAG_REQUESTED, flags);
++
++		pr_debug("GPIO %u owned by %s is shared by multiple consumers\n",
++			 entry->offset, gpio_device_get_label(gdev));
++
++		list_for_each_entry(ref, &entry->refs, list) {
++			pr_debug("Setting up a shared GPIO entry for %s\n",
++				 fwnode_get_name(ref->fwnode));
++
++			ret = gpio_shared_make_adev(gdev, ref);
++			if (ret)
++				return ret;
++		}
++	}
++
++	return 0;
++}
++
++void gpio_device_teardown_shared(struct gpio_device *gdev)
++{
++	struct gpio_shared_entry *entry;
++	struct gpio_shared_ref *ref;
++
++	guard(mutex)(&gpio_shared_lock);
++
++	list_for_each_entry(entry, &gpio_shared_list, list) {
++		if (!device_match_fwnode(&gdev->dev, entry->fwnode))
++			continue;
++
++		list_for_each_entry(ref, &entry->refs, list) {
++			gpiod_remove_lookup_table(ref->lookup);
++			kfree(ref->lookup->table[0].key);
++			kfree(ref->lookup);
++			ref->lookup = NULL;
++			gpio_shared_remove_adev(&ref->adev);
++		}
++	}
++}
++
++static void gpio_shared_release(struct kref *kref)
++{
++	struct gpio_shared_entry *entry =
++		container_of(kref, struct gpio_shared_entry, ref);
++	struct gpio_shared_desc *shared_desc = entry->shared_desc;
++
++	guard(mutex)(&gpio_shared_lock);
++
++	gpio_device_put(shared_desc->desc->gdev);
++	if (shared_desc->can_sleep)
++		mutex_destroy(&shared_desc->mutex);
++	kfree(shared_desc);
++	entry->shared_desc = NULL;
++}
++
++static void gpiod_shared_put(void *data)
++{
++	struct gpio_shared_entry *entry = data;
++
++	lockdep_assert_not_held(&gpio_shared_lock);
++
++	kref_put(&entry->ref, gpio_shared_release);
++}
++
++static struct gpio_shared_desc *
++gpiod_shared_desc_create(struct gpio_shared_entry *entry)
++{
++	struct gpio_shared_desc *shared_desc;
++	struct gpio_device *gdev;
++
++	shared_desc = kzalloc(sizeof(*shared_desc), GFP_KERNEL);
++	if (!shared_desc)
++		return ERR_PTR(-ENOMEM);
++
++	gdev = gpio_device_find_by_fwnode(entry->fwnode);
++	if (!gdev) {
++		kfree(shared_desc);
++		return ERR_PTR(-EPROBE_DEFER);
++	}
++
++	shared_desc->desc = &gdev->descs[entry->offset];
++	shared_desc->can_sleep = gpiod_cansleep(shared_desc->desc);
++	if (shared_desc->can_sleep)
++		mutex_init(&shared_desc->mutex);
++	else
++		spin_lock_init(&shared_desc->spinlock);
++
++	return shared_desc;
++}
++
++static struct gpio_shared_entry *gpiod_shared_find(struct auxiliary_device *adev)
++{
++	struct gpio_shared_desc *shared_desc;
++	struct gpio_shared_entry *entry;
++	struct gpio_shared_ref *ref;
++
++	guard(mutex)(&gpio_shared_lock);
++
++	list_for_each_entry(entry, &gpio_shared_list, list) {
++		list_for_each_entry(ref, &entry->refs, list) {
++			if (adev != &ref->adev)
++				continue;
++
++			if (entry->shared_desc) {
++				kref_get(&entry->ref);
++				return entry;
++			}
++
++			shared_desc = gpiod_shared_desc_create(entry);
++			if (IS_ERR(shared_desc))
++				return ERR_CAST(shared_desc);
++
++			kref_init(&entry->ref);
++			entry->shared_desc = shared_desc;
++
++			pr_debug("Device %s acquired a reference to the shared GPIO %u owned by %s\n",
++				 dev_name(&adev->dev), gpiod_hwgpio(shared_desc->desc),
++				 gpio_device_get_label(shared_desc->desc->gdev));
++
++
++			return entry;
++		}
++	}
++
++	return ERR_PTR(-ENOENT);
++}
++
++struct gpio_shared_desc *devm_gpiod_shared_get(struct device *dev)
++{
++	struct gpio_shared_entry *entry;
++	int ret;
++
++	entry = gpiod_shared_find(to_auxiliary_dev(dev));
++	if (IS_ERR(entry))
++		return ERR_CAST(entry);
++
++	ret = devm_add_action_or_reset(dev, gpiod_shared_put, entry);
++	if (ret)
++		return ERR_PTR(ret);
++
++	return entry->shared_desc;
++}
++EXPORT_SYMBOL_GPL(devm_gpiod_shared_get);
++
++static void gpio_shared_drop_ref(struct gpio_shared_ref *ref)
++{
++	list_del(&ref->list);
++	kfree(ref->con_id);
++	ida_free(&gpio_shared_ida, ref->dev_id);
++	fwnode_handle_put(ref->fwnode);
++	kfree(ref);
++}
++
++static void gpio_shared_drop_entry(struct gpio_shared_entry *entry)
++{
++	list_del(&entry->list);
++	fwnode_handle_put(entry->fwnode);
++	kfree(entry);
++}
++
++/*
++ * This is only called if gpio_shared_init() fails so it's in fact __init and
++ * not __exit.
++ */
++static void __init gpio_shared_teardown(void)
++{
++	struct gpio_shared_entry *entry, *epos;
++	struct gpio_shared_ref *ref, *rpos;
++
++	list_for_each_entry_safe(entry, epos, &gpio_shared_list, list) {
++		list_for_each_entry_safe(ref, rpos, &entry->refs, list)
++			gpio_shared_drop_ref(ref);
++
++		gpio_shared_drop_entry(entry);
++	}
++}
++
++static void gpio_shared_free_exclusive(void)
++{
++	struct gpio_shared_entry *entry, *epos;
++
++	list_for_each_entry_safe(entry, epos, &gpio_shared_list, list) {
++		if (list_count_nodes(&entry->refs) > 1)
++			continue;
++
++		gpio_shared_drop_ref(list_first_entry(&entry->refs,
++						      struct gpio_shared_ref,
++						      list));
++		gpio_shared_drop_entry(entry);
++	}
++}
++
++static int __init gpio_shared_init(void)
++{
++	int ret;
++
++	/* Right now, we only support OF-based systems. */
++	ret = gpio_shared_of_scan();
++	if (ret) {
++		gpio_shared_teardown();
++		pr_err("Failed to scan OF nodes for shared GPIOs: %d\n", ret);
++		return ret;
++	}
++
++	gpio_shared_free_exclusive();
++
++	pr_debug("Finished scanning firmware nodes for shared GPIOs\n");
++	return 0;
++}
++postcore_initcall(gpio_shared_init);
+diff --git a/drivers/gpio/gpiolib-shared.h b/drivers/gpio/gpiolib-shared.h
+new file mode 100644
+index 0000000000000000000000000000000000000000..667dbdff3585066b7cbe2ebe476725fe7d683d84
+--- /dev/null
++++ b/drivers/gpio/gpiolib-shared.h
+@@ -0,0 +1,71 @@
++/* SPDX-License-Identifier: GPL-2.0 */
++
++#ifndef __LINUX_GPIO_SHARED_H
++#define __LINUX_GPIO_SHARED_H
++
++#include <linux/cleanup.h>
++#include <linux/lockdep.h>
++#include <linux/mutex.h>
++#include <linux/spinlock.h>
++
++struct gpio_device;
++struct gpio_desc;
++struct device;
++
++#if IS_ENABLED(CONFIG_GPIO_SHARED)
++
++int gpio_device_setup_shared(struct gpio_device *gdev);
++void gpio_device_teardown_shared(struct gpio_device *gdev);
++int gpio_shared_add_proxy_lookup(struct device *consumer, unsigned long lflags);
++
++#else
++
++static inline int gpio_device_setup_shared(struct gpio_device *gdev)
++{
++	return 0;
++}
++
++static inline void gpio_device_teardown_shared(struct gpio_device *gdev) { }
++
++static inline int gpio_shared_add_proxy_lookup(struct device *consumer,
++					       unsigned long lflags)
++{
++	return 0;
++}
++
++#endif /* CONFIG_GPIO_SHARED */
++
++struct gpio_shared_desc {
++	struct gpio_desc *desc;
++	bool can_sleep;
++	unsigned long cfg;
++	unsigned int usecnt;
++	unsigned int highcnt;
++	union {
++		struct mutex mutex;
++		spinlock_t spinlock;
++	};
++};
++
++struct gpio_shared_desc *devm_gpiod_shared_get(struct device *dev);
++
++DEFINE_LOCK_GUARD_1(gpio_shared_desc_lock, struct gpio_shared_desc,
++	if (_T->lock->can_sleep)
++		mutex_lock(&_T->lock->mutex);
++	else
++		spin_lock_irqsave(&_T->lock->spinlock, _T->flags),
++	if (_T->lock->can_sleep)
++		mutex_unlock(&_T->lock->mutex);
++	else
++		spin_unlock_irqrestore(&_T->lock->spinlock, _T->flags),
++	unsigned long flags)
++
++static inline void gpio_shared_lockdep_assert(struct gpio_shared_desc *shared_desc)
++{
++	if (shared_desc->can_sleep)
++		lockdep_assert_held(&shared_desc->mutex);
++	else
++		lockdep_assert_held(&shared_desc->spinlock);
++}
++
++#endif /* __LINUX_GPIO_SHARED_H */
 
 -- 
 2.51.0
