@@ -1,182 +1,164 @@
-Return-Path: <linux-arm-msm+bounces-81468-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-81469-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [IPv6:2605:f480:58:1:0:1994:3:14])
-	by mail.lfdr.de (Postfix) with ESMTPS id E04A9C53995
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Nov 2025 18:12:13 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 2E5BEC53C2B
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Nov 2025 18:45:03 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 3F8D74FEAAE
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Nov 2025 16:19:53 +0000 (UTC)
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 469CD5A15D3
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Nov 2025 16:22:11 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 644AD338904;
-	Wed, 12 Nov 2025 16:15:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 43D402F60CF;
+	Wed, 12 Nov 2025 16:21:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=ixit.cz header.i=@ixit.cz header.b="dFZT/x2j"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="eICHlZjl"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from ixit.cz (ip-94-112-25-9.bb.vodafone.cz [94.112.25.9])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E25BF344046;
-	Wed, 12 Nov 2025 16:15:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=94.112.25.9
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14D1135CBC9;
+	Wed, 12 Nov 2025 16:21:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762964145; cv=none; b=sr7xyVSZ68Kcoh4SeO8g3XON7PwnIo4t3AFobeP0p275FzsPv56316JYnX473JqjKliKAbBKjuaGiuYmmZy5YRMJ8lHedyp8jCgowoBk2s/UNcHPMaHn7sEwaBD3yWwJA7JMZJIL7gp3eYZSMHY2gozcx0oKboTXSzojz2fwmN4=
+	t=1762964517; cv=none; b=enpXPUYIUf++L+wGie7xXIiEQ5JAx72A6E2HpW0fvakr6U6sH7Bq3jenCK5Qk09fmtdY+g3YLEWLRt8QOzhTT7CETy4Ob/90FCRmfPoxA2+ggJubBoM5YvZJ34sVOTKYW/sConFSH9unhwigfM3GBv/3y9RzOkpX+FHWhg+fGv8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762964145; c=relaxed/simple;
-	bh=olkpgCKh03uV3grXvuaSmg3bzEMBr5UCSAdtuIEK/bE=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Bz7ouL3uYYMgkOf2SgyQcUuAMxyWmP2uI8BpDa9saCmKA5WopD9wHq7AriUG51nU2ISxw4yozYfJlBVxN3Vl0jZGEJKJQyPa1VTNxpmtoQ/dn021h2Qq457EFon9IMjsRwryHH17V1omN1n4QggbftxwlWW8/3jBceVbMRV8Hjk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ixit.cz; spf=pass smtp.mailfrom=ixit.cz; dkim=pass (1024-bit key) header.d=ixit.cz header.i=@ixit.cz header.b=dFZT/x2j; arc=none smtp.client-ip=94.112.25.9
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ixit.cz
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ixit.cz
-Received: from [10.0.0.200] (unknown [10.0.0.1])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange x25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-	(No client certificate requested)
-	by ixit.cz (Postfix) with ESMTPSA id ACED2534013D;
-	Wed, 12 Nov 2025 17:15:32 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ixit.cz; s=dkim;
-	t=1762964132;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
-	bh=jnJ2LHnU8lNAnR/8HhL/GIj/kbcJUDrcfUT2I3tCpLM=;
-	b=dFZT/x2joLPys2+3yv3mNHqtQG3By0ql7V2emLnijLW/GjGsFYrkq2sYq/g1nETS5ups/g
-	ZGqgjVc7X+4jlSDda8SkbSUuzFso1M7NssjB8A9lYwAsq2tQI2mkQAwpkRERYeHau4/kgm
-	VdsmX9hWDJgg/2eZw5Gmvs1FAROqcSE=
-Message-ID: <cf9fcb8e-b346-4589-910f-09bbcc58f9b7@ixit.cz>
-Date: Wed, 12 Nov 2025 17:15:32 +0100
+	s=arc-20240116; t=1762964517; c=relaxed/simple;
+	bh=Zh168JDIc9MiMw3gLGbFf968cd68Wl7hb46fJ2WOYuU=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=FBr1u8TAsjDiXOQGl88OgpMLrrkeJpS0VACFO4SpHkw3TjqEbmqdAJZyYt92EBQvtr0FY8VdYS3pRijo8kgkj//dBJk1+094uzw1MJurd99mbWq4ePaQz8CLjVTjN9Piq3G6NiYxrfXwRI+l/4kPqpKQqAfcfGrU26iCRt0Bn3g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=eICHlZjl; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B161C4CEF7;
+	Wed, 12 Nov 2025 16:21:55 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1762964516;
+	bh=Zh168JDIc9MiMw3gLGbFf968cd68Wl7hb46fJ2WOYuU=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=eICHlZjlShpWTATZ3YMOxgYCp41J0414pLfqz8PciAYbQF6prUpL9HQMaDGb+iB69
+	 ZPMHj257wv6AAkR11bC3cw40Ks1iFVRyxWQw4tx1y3TLOxgwG+osbAqGJkkJWoKSxR
+	 Zx/zX/3JZ7p5/Ix27Rc9kQ9rNS/EsJxzjnVv8tAEVc24Sangy8j56NlzQTI8Mzk2JI
+	 RG4OrWAGDA6LyHcLefXpo4zVy8W5nKJFqNX43dJg7/Syp3EayY+GbUV/HvnC13YGVY
+	 SsQsvuEZnQ4zb6Z+YpOvchBOwkJDtZzQr9YX7AXw+sRee9xIm7GK8b3qTp8ayihgv2
+	 QSYvUd/2nIOqA==
+Date: Wed, 12 Nov 2025 10:26:13 -0600
+From: Bjorn Andersson <andersson@kernel.org>
+To: Hrishabh Rajput <hrishabh.rajput@oss.qualcomm.com>
+Cc: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>, 
+	Pavan Kondeti <pavan.kondeti@oss.qualcomm.com>, Konrad Dybcio <konradybcio@kernel.org>, 
+	Wim Van Sebroeck <wim@linux-watchdog.org>, Guenter Roeck <linux@roeck-us.net>, 
+	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+	Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org, linux-watchdog@vger.kernel.org, 
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	Neil Armstrong <neil.armstrong@linaro.org>, Krzysztof Kozlowski <krzk@kernel.org>
+Subject: Re: [PATCH v5 1/2] firmware: qcom: scm: Register gunyah watchdog
+ device
+Message-ID: <55kuc3flqzebmfnrerhkz76jqg23xhmc7wiic5faicwtffozgi@xviskbliwgkq>
+References: <20251107-gunyah_watchdog-v5-1-4c6e3fb6eb17@oss.qualcomm.com>
+ <hbxtbaoavlsw7pbmg3cfkbyx4nacjfiikckhqgpvlggbh6hu5b@jyporqecfzni>
+ <263d1390-eff5-4846-b2c2-31f96fc3248e@quicinc.com>
+ <3794bb0e-5e2c-4d5e-8d81-d302fa36677c@quicinc.com>
+ <56aqammkwte3tcdzni2unufjp4t4yaqazzdkigrwqsxp3ghcqe@ppe2pjwg3hrl>
+ <60583236-692f-4605-9f56-f7dadb46558d@kernel.org>
+ <zbwcg5pkdspkcnvaitac6y5iko346qyuzuipqhkoedcaqm2dpa@zmszuwhm5q7z>
+ <6bebcf6c-9328-4cd6-b77c-a147338d607a@oss.qualcomm.com>
+ <nkh73mo4h5kj2lrz7paop7fn3ow2itxl5vh43muw6n5dxgmco3@tgvbmdxhbiqo>
+ <68dbaf42-0d64-45f7-8410-ebcbae2da612@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH RFC 2/8] media: qcom: camss: csiphy: Introduce C-PHY
-To: Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
- Robert Foss <rfoss@kernel.org>, Todor Tomov <todor.too@gmail.com>,
- Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
- Mauro Carvalho Chehab <mchehab@kernel.org>,
- Luca Weiss <luca.weiss@fairphone.com>, Petr Hodina <phodina@protonmail.com>,
- Casey Connolly <casey.connolly@linaro.org>, "Dr. Git" <drgitx@gmail.com>
-Cc: Joel Selvaraj <foss@joelselvaraj.com>, linux-media@vger.kernel.org,
- linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
- phone-devel@vger.kernel.org
-References: <20251109-qcom-cphy-v1-0-165f7e79b0e1@ixit.cz>
- <20251109-qcom-cphy-v1-2-165f7e79b0e1@ixit.cz>
- <26bc458f-1db1-44e3-937a-f3ee7c1027be@linaro.org>
-Content-Language: en-US
-From: David Heidelberg <david@ixit.cz>
-Autocrypt: addr=david@ixit.cz; keydata=
- xsFNBF5v1x4BEADS3EddwsNsvVAI1XF8uQKbdYPY/GhjaSLziwVnbwv5BGwqB1tfXoHnccoA
- 9kTgKAbiXG/CiZFhD6l4WCIskQDKzyQN3JhCUIxh16Xyw0lECI7iqoW9LmMoN1dNKcUmCO9g
- lZxQaOl+1bY/7ttd7DapLh9rmBXJ2lKiMEaIpUwb/Nw0d7Enp4Jy2TpkhPywIpUn8CoJCv3/
- 61qbvI9y5utB/UhfMAUXsaAgwEJyGPAqHlC0YZjaTwOu+YQUE3AFzhCbksq95CwDz4U4gdls
- dmv9tkATfu2OmzERZQ6vJTehK0Pu4l5KmCAzYg42I9Dy4E6b17x6NncKbcByQFOXMtG0qVUk
- F1yeeOQUHwu+8t3ZDMBUhCkRL/juuoqLmyDWKMc0hKNNeZ9BNXgB8fXkRLWEUfgDXsFyEkKp
- NxUy5bDRlivf6XfExnikk5kj9l2gGlNQwqROti/46bfbmlmc/a2GM4k8ZyalHNEAdwtXYSpP
- 8JJmlbQ7hNTLkc3HQLRsIocN5th/ur7pPMz1Beyp0gbE9GcOceqmdZQB80vJ01XDyCAihf6l
- AMnzwpXZsjqIqH9r7T7tM6tVEVbPSwPt4eZYXSoJijEBC/43TBbmxDX+5+3txRaSCRQrG9dY
- k3mMGM3xJLCps2KnaqMcgUnvb1KdTgEFUZQaItw7HyRd6RppewARAQABzSBEYXZpZCBIZWlk
- ZWxiZXJnIDxkYXZpZEBpeGl0LmN6PsLBlAQTAQgAPgIbAwULCQgHAgYVCgkICwIEFgIDAQIe
- AQIXgBYhBNd6Cc/u3Cu9U6cEdGACP8TTSSByBQJl+KksBQkPDaAOAAoJEGACP8TTSSBy6IAQ
- AMqFqVi9LLxCEcUWBn82ssQGiVSDniKpFE/tp7lMXflwhjD5xoftoWOmMYkiWE86t5x5Fsp7
- afALx7SEDz599F1K1bLnaga+budu55JEAYGudD2WwpLJ0kPzRhqBwGFIx8k6F+goZJzxPDsf
- loAtXQE62UvEKa4KRRcZmF0GGoRsgA7vE7OnV8LMeocdD3eb2CuXLzauHAfdvqF50IfPH/sE
- jbzROiAZU+WgrwU946aOzrN8jVU+Cy8XAccGAZxsmPBfhTY5f2VN1IqvfaRdkKKlmWVJWGw+
- ycFpAEJKFRdfcc5PSjUJcALn5C+hxzL2hBpIZJdfdfStn+DWHXNgBeRDiZj1x6vvyaC43RAb
- VXvRzOQfG4EaMVMIOvBjBA/FtIpb1gtXA42ewhvPnd5RVCqD9YYUxsVpJ9d+XsAy7uib3BsV
- W2idAEsPtoqhVhq8bCUs/G4sC2DdyGZK8MRFDJqciJSUbqA+5z1ZCuE8UOPDpZKiW6H/OuOM
- zDcjh0lOzr4p+/1TSg1PbUh7fQ+nbMuiT044sC1lLtJK0+Zyn0GwhR82oNM4fldNsaHRW42w
- QGD35+eNo5Pvb3We5XRMlBdhFnj7Siggp4J8/PJ6MJvRyC+RIJPGtbdMB2/RxWunFLn87e5w
- UgwR9jPMHAstuTR1yR23c4SIYoQ2fzkrRzuazsFNBF5v1x4BEADnlrbta2WL87BlEOotZUh0
- zXANMrNV15WxexsirLetfqbs0AGCaTRNj+uWlTUDJRXOVIwzmF76Us3I2796+Od2ocNpLheZ
- 7EIkq8budtLVd1c06qJ+GMraz51zfgSIazVInNMPk9T6fz0lembji5yEcNPNNBA4sHiFmXfo
- IhepHFOBApjS0CiOPqowYxSTPe/DLcJ/LDwWpTi37doKPhBwlHev1BwVCbrLEIFjY0MLM0aT
- jiBBlyLJaTqvE48gblonu2SGaNmGtkC3VoQUQFcVYDXtlL9CVbNo7BAt5gwPcNqEqkUL60Jh
- FtvVSKyQh6gn7HHsyMtgltjZ3NKjv8S3yQd7zxvCn79tCKwoeNevsvoMq/bzlKxc9QiKaRPO
- aDj3FtW7R/3XoKJBY8Hckyug6uc2qYWRpnuXc0as6S0wfek6gauExUttBKrtSbPPHiuTeNHt
- NsT4+dyvaJtQKPBTbPHkXpTO8e1+YAg7kPj3aKFToE/dakIh8iqUHLNxywDAamRVn8Ha67WO
- AEAA3iklJ49QQk2ZyS1RJ2Ul28ePFDZ3QSr9LoJiOBZv9XkbhXS164iRB7rBZk6ZRVgCz3V6
- hhhjkipYvpJ/fpjXNsVL8jvel1mYNf0a46T4QQDQx4KQj0zXJbC2fFikAtu1AULktF4iEXEI
- rSjFoqhd4euZ+QARAQABwsF8BBgBCAAmAhsMFiEE13oJz+7cK71TpwR0YAI/xNNJIHIFAmX4
- qVAFCQ8NoDIACgkQYAI/xNNJIHKN4A/+Ine2Ii7JiuGITjJkcV6pgKlfwYdEs4eFD1pTRb/K
- 5dprUz3QSLP41u9OJQ23HnESMvn31UENk9ffebNoW7WxZ/8cTQY0JY/cgTTrlNXtyAlGbR3/
- 3Q/VBJptf04Er7I6TaKAmqWzdVeKTw33LljpkHp02vrbOdylb4JQG/SginLV9purGAFptYRO
- 8JNa2J4FAQtQTrfOUjulOWMxy7XRkqK3QqLcPW79/CFn7q1yxamPkpoXUJq9/fVjlhk7P+da
- NYQpe4WQQnktBY29SkFnvfIAwqIVU8ix5Oz8rghuCcAdR7lEJ7hCX9bR0EE05FOXdZy5FWL9
- GHvFa/Opkq3DPmFl/0nt4HJqq1Nwrr+WR6d0414oo1n2hPEllge/6iD3ZYwptTvOFKEw/v0A
- yqOoYSiKX9F7Ko7QO+VnYeVDsDDevKic2T/4GDpcSVd9ipiKxCQvUAzKUH7RUpqDTa+rYurm
- zRKcgRumz2Tc1ouHj6qINlzEe3a5ldctIn/dvR1l2Ko7GBTG+VGp9U5NOAEkGpxHG9yg6eeY
- fFYnMme51H/HKiyUlFiE3yd5LSmv8Dhbf+vsI4x6BOOOq4Iyop/Exavj1owGxW0hpdUGcCl1
- ovlwVPO/6l/XLAmSGwdnGqok5eGZQzSst0tj9RC9O0dXO1TZocOsf0tJ8dR2egX4kxM=
-In-Reply-To: <26bc458f-1db1-44e3-937a-f3ee7c1027be@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <68dbaf42-0d64-45f7-8410-ebcbae2da612@oss.qualcomm.com>
 
-On 10/11/2025 12:35, Bryan O'Donoghue wrote:
-> On 09/11/2025 09:39, David Heidelberg via B4 Relay wrote:
->> From: David Heidelberg <david@ixit.cz>
->>
->> Read C-PHY from the device-tree bus-type and save it into the csiphy
->> structure for later use.
->>
->> For C-PHY, skip clock line configuration, as there is none.
->>
->> Signed-off-by: David Heidelberg <david@ixit.cz>
->> ---
->>   drivers/media/platform/qcom/camss/camss-csiphy.h | 2 ++
->>   drivers/media/platform/qcom/camss/camss.c        | 8 ++++++--
->>   2 files changed, 8 insertions(+), 2 deletions(-)
->>
->> diff --git a/drivers/media/platform/qcom/camss/camss-csiphy.h b/ 
->> drivers/media/platform/qcom/camss/camss-csiphy.h
->> index 895f80003c441..8f7d0e4c73075 100644
->> --- a/drivers/media/platform/qcom/camss/camss-csiphy.h
->> +++ b/drivers/media/platform/qcom/camss/camss-csiphy.h
->> @@ -28,11 +28,13 @@ struct csiphy_lane {
->>   /**
->>    * struct csiphy_lanes_cfg - CSIPHY lanes configuration
->> + * @cphy:     true if C-PHY is used, false if D-PHY is used
->>    * @num_data: number of data lanes
->>    * @data:     data lanes configuration
->>    * @clk:      clock lane configuration (only for D-PHY)
->>    */
->>   struct csiphy_lanes_cfg {
->> +    bool cphy;
+On Wed, Nov 12, 2025 at 10:07:26AM +0530, Hrishabh Rajput wrote:
 > 
-> Should be an integer from
+> On 11/11/2025 8:35 PM, Dmitry Baryshkov wrote:
+> > On Tue, Nov 11, 2025 at 07:30:59PM +0530, Hrishabh Rajput wrote:
+> > > On 11/11/2025 5:52 PM, Dmitry Baryshkov wrote:
+> > > > On Tue, Nov 11, 2025 at 11:41:51AM +0100, Krzysztof Kozlowski wrote:
+> > > > > On 11/11/2025 11:34, Dmitry Baryshkov wrote:
+> > > > > > On Tue, Nov 11, 2025 at 10:51:43AM +0530, Pavan Kondeti wrote:
+> > > > > > > On Mon, Nov 10, 2025 at 09:43:53AM +0530, Pavan Kondeti wrote:
+> > > > > > > > On Sat, Nov 08, 2025 at 07:26:46PM +0200, Dmitry Baryshkov wrote:
+> > > > > > > > > > +static void qcom_scm_gunyah_wdt_free(void *data)
+> > > > > > > > > > +{
+> > > > > > > > > > +	struct platform_device *gunyah_wdt_dev = data;
+> > > > > > > > > > +
+> > > > > > > > > > +	platform_device_unregister(gunyah_wdt_dev);
+> > > > > > > > > > +}
+> > > > > > > > > > +
+> > > > > > > > > > +static void qcom_scm_gunyah_wdt_init(struct qcom_scm *scm)
+> > > > > > > > > > +{
+> > > > > > > > > > +	struct platform_device *gunyah_wdt_dev;
+> > > > > > > > > > +	struct device_node *np;
+> > > > > > > > > > +	bool of_wdt_available;
+> > > > > > > > > > +	int i;
+> > > > > > > > > > +	uuid_t gunyah_uuid = UUID_INIT(0xc1d58fcd, 0xa453, 0x5fdb, 0x92, 0x65,
+> > > > > > > > > static const?
+> > > > > > > > > 
+> > > > > > > > > > +				       0xce, 0x36, 0x67, 0x3d, 0x5f, 0x14);
+> > > > > > > > > > +	static const char * const of_wdt_compatible[] = {
+> > > > > > > > > > +		"qcom,kpss-wdt",
+> > > > > > > > > > +		"arm,sbsa-gwdt",
+> > > > > > > > > > +	};
+> > > > > > > > > > +
+> > > > > > > > > > +	/* Bail out if we are not running under Gunyah */
+> > > > > > > > > > +	if (!arm_smccc_hypervisor_has_uuid(&gunyah_uuid))
+> > > > > > > > > > +		return;
+> > > > > > > > > This rquires 'select HAVE_ARM_SMCCC_DISCOVERY'
+> > > > > > > > > 
+> > > > > > > > Probably `depends on HAVE_ARM_SMCCC_DISCOVERY` is correct here.
+> > > > > > > > 
+> > > > > > > Dmitry / Bjorn,
+> > > > > > > 
+> > > > > > > We are debating on this internally on how to resolve this dependency
+> > > > > > > 
+> > > > > > > - QCOM_SCM depends on HAVE_ARM_SMCCC_DISCOVERY which means restricting
+> > > > > > >     QCOM_SCM compilation than what it is today.
+> > > > > > > 
+> > > > > > > - Adding #ifdefry around arm_smccc_hypervisor_has_uuid usage in qcom scm driver
+> > > > > > > 
+> > > > > > > - Adding stub for `arm_smccc_hypervisor_has_uuid()` which is not done
+> > > > > > >     for any of the functions defined in drivers/firmware/smccc/smccc.c
+> > > > > > > 
+> > > > > > > We are trending towards the first option above. Please let us know if
+> > > > > > > you think otherwise.
+> > > > > > The same as before: 'select HAVE_ARM_SMCCC_DISCOVERY'.
+> > > > > HAVE_ARM_SMCCC_DISCOVERY has a dependency which is not always selected
+> > > > > (e.g. ARM32), thus selecting it might lead to warnings of unmet
+> > > > > dependencies.
+> > > > Then `if (!IS_ENABLED(CONFIG_HAVE_ARM_SMCCC_DISCOVERY))` might be a good
+> > > > option here (and depend on GICv3 selecting it).
+> > > Thanks a lot Dmitry, wemade the change below and compile tested on various
+> > > architectures (ARM64, ARM32, x86, PowerPC, RISC-V and MIPS) and it was
+> > > success.
+> > > 
+> > > We will include it in our next patch version, if there are no further
+> > > concerns.
+> > > 
+> > > }; /* Bail out if we are not running under Gunyah */ - if
+> > > (!arm_smccc_hypervisor_has_uuid(&gunyah_uuid)) + if
+> > > (!IS_ENABLED(CONFIG_HAVE_ARM_SMCCC_DISCOVERY) || +
+> > > !arm_smccc_hypervisor_has_uuid(&gunyah_uuid)) return; /*
+> > Unreadable. Don't you read what you are sending?
 > 
-> include/dt-bindings/phy/phy.h
+> Sorry, my mail client messed up the formatting while sending. Here is the
+> proper version:
 > 
-> - PHY_TYPE_DPHY
-> - PHY_TYPE_CPHY
-> 
-> this should be indicated in the dt and latched here.
+> /* Bail out if we are not running under Gunyah */
+> -	if (!arm_smccc_hypervisor_has_uuid(&gunyah_uuid))
+> +	if (!IS_ENABLED(CONFIG_HAVE_ARM_SMCCC_DISCOVERY) ||
+> +	    !arm_smccc_hypervisor_has_uuid(&gunyah_uuid))
+> 		return;
 
-Would it make sense to rather use the int from:
-
-include/dt-bindings/media/video-interfaces.h
-
-  - MEDIA_BUS_TYPE_CSI2_CPHY
-  - MEDIA_BUS_TYPE_CSI2_DPHY
-  - ...
-
-?
-
-This one is always used with the endpoint bus-type.
-
-David
+LGTM
 
 > 
-> ---
-> bod
-
--- 
-David Heidelberg
-
+> Thanks,
+> Hrishabh
+> 
 
