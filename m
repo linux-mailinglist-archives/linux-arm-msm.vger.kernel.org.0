@@ -1,81 +1,83 @@
-Return-Path: <linux-arm-msm+bounces-81458-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-81459-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2AB44C5300C
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Nov 2025 16:25:48 +0100 (CET)
+Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [142.0.200.124])
+	by mail.lfdr.de (Postfix) with ESMTPS id 95F4AC53147
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Nov 2025 16:37:54 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 26EBD4277D0
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Nov 2025 15:11:10 +0000 (UTC)
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 30C9C506F41
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Nov 2025 15:11:24 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B36F3350D77;
-	Wed, 12 Nov 2025 15:02:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E5E3F351FC5;
+	Wed, 12 Nov 2025 15:02:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="IK+epNR8"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="N0THOjKB"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f45.google.com (mail-wm1-f45.google.com [209.85.128.45])
+Received: from mail-wm1-f54.google.com (mail-wm1-f54.google.com [209.85.128.54])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE0CF350A1F
-	for <linux-arm-msm@vger.kernel.org>; Wed, 12 Nov 2025 15:02:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 787D6351FAA
+	for <linux-arm-msm@vger.kernel.org>; Wed, 12 Nov 2025 15:02:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762959775; cv=none; b=pXe8u71yEvVZfL+21zJTIJZIhFUntZkZTaimj5jdtiBV0eXYbmERkdyzXcij3xzchWHL7mCU4T/2wJ5wVjxFbY+9fUYrT1VTq3h6oXxxNaMTGGxDHo3qtTBq13bbHxyMTvoGMoTFZ8ubhSkr8ucMVWgU8PN8jzjzQntDfu/u9mE=
+	t=1762959778; cv=none; b=Y18B9l5Eqk4IKsJycK8jetYawwr3DPHUq6UdLoe/uFH9lE2Mrgf//Xj8c1C9OJS82PBXGfzx3kw2NHc0bWG1W+EtM6S4rqpua1CmBXmflHkHdmSiei+CbBQuMhNCLA3hPrHEo7GE7TBQgDoTtHsrm7mflC+l5JO3Otk4KKk/m0c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762959775; c=relaxed/simple;
-	bh=HE5YbcsNS4jmWAOg2lcXsIcrJZ7BYruxpSyyrBzFsXs=;
-	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=pow2kFjuiR4PSvs5OToVKgKKHKLsZLHai2IodsoCRMMhMOm6/AfX+qDxU/EN8pToxPeeKKOhaljcwtAofYGrbUvudCiYOW9wCHHnLTTGKYoNkexsauSCGfsHJJz6M584dmSFCt/uY7btqTQU1t92LH+9z6wWp7T7l14EmLTVKF4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=IK+epNR8; arc=none smtp.client-ip=209.85.128.45
+	s=arc-20240116; t=1762959778; c=relaxed/simple;
+	bh=SZkpG7T+jtXj3S0sKIh2OimOvWlcAK3Wp1s+TIfJaGw=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
+	 In-Reply-To:To:Cc; b=NRYS8RFlgw+KEHwNLJiTiLs9YK6TCR3keo7ssu+LeqXLB6mIoTxb2iLAGJxoizBgfrF12nxwfNFOfr/go8KrNANKcTnpBstLI5mdWcypnI/UI0ZEKj9WP9+1POysJeaPj1wa0Ilobv0jJGJrONevFvcMvx4PzPUQh4yYFctlg5w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=N0THOjKB; arc=none smtp.client-ip=209.85.128.54
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f45.google.com with SMTP id 5b1f17b1804b1-47776c366ccso459325e9.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 12 Nov 2025 07:02:53 -0800 (PST)
+Received: by mail-wm1-f54.google.com with SMTP id 5b1f17b1804b1-477774a878aso299685e9.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 12 Nov 2025 07:02:56 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1762959772; x=1763564572; darn=vger.kernel.org;
-        h=cc:to:content-transfer-encoding:mime-version:message-id:date
-         :subject:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=RYC+gren7S/DsrpYA960+3xoMWr2GIngvSyf9LyJ6j4=;
-        b=IK+epNR8QzUgBp+2vQwIb7UbA26WDuZEknyxK+3RwtSM2GBd18bA+oZw8kfG9qgVU9
-         gCXWeEffD0Md/PDCEnv2qNWvkw2KTujE9kB/4wkwGNJvbue/9uEMRU8T5uU3tvJPROf1
-         uEy4+QWbk3ijQTCvl2WJu4aJXNEeWCUezJ3cFmSPqCVUc5oGKUKZNS7Jw3Nx3Chex+ha
-         6S0XFFDdNs/cTHx5Zx/ewgeH0r9Z1+6vi5Qe9O+1mjTfHRf3udsDeCnpPRBGAZ55VM4k
-         vROGayjT6gM5fEudJ5YG5Wz9jbWxkmTAk5J4mjDBh8HFYteNCSxd+J/KwL2EY+/TefMy
-         tJPA==
+        d=linaro.org; s=google; t=1762959775; x=1763564575; darn=vger.kernel.org;
+        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=lYykgn3Duc/zFgl6vnXbVFF3VBhSA8EC/7WY6JYciNw=;
+        b=N0THOjKB2fKY8Bxt2mNuAuqMUbh9yhjPdlqxcqP4M71bwuRBm9htMyBAUTwSFAF6O3
+         evdCiu9XtBnJxobMgxkep+OGjA/RXH8XWPMV50nuz+iOFBu9uPNY2oQQ3S7L0hocsBM5
+         87Gx/t5qKYadJAMWrC1yTCh3gikDxVDCian7IQB75XAKlQJshmIceb6F27j98LXrfqNU
+         5i+XS9CQMetOvlH3bNPnRXQs/NDLE72hsnwuXDz/TGnSQyv6A2eIxnd1JDV9mxzkn8MN
+         iBaGbuLt7r62OQBm4D2W0FRllF5ArQV+FW26+H5My8VO/d64k3/nwKRZFo/2UWB6B9a6
+         Ivzg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1762959772; x=1763564572;
-        h=cc:to:content-transfer-encoding:mime-version:message-id:date
-         :subject:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=RYC+gren7S/DsrpYA960+3xoMWr2GIngvSyf9LyJ6j4=;
-        b=Qj6a9XzKRswLclInHXefavftok9gEN29oKKjGTiscviihnLYgLkaF1oNGEvbWgSozK
-         CGhhmeNLY25F4KOVyrA5ihHwRW8gQc25i9+OPuy17QtR+Y152xh+ZT4IOGRFpIFQvb+4
-         6oegnclML5stQXYt2S/a9mz7ZXEoPbVJwMWORYAhj3Y5eWWwBUbv3YEvVw8AEN5RXpC2
-         nSgMmXr4PTgHisBghkjYpcoljrKVs+uDBe0ouoilYyHFCrHj0VhJk6iZwdEmHRuqEArF
-         5qRoXEZql4niFmS/8pmjt6IUU2isqMBHmCC2jCEDj1dT8ytVz7/Qg8u6/ORwhTkat98n
-         RSsQ==
-X-Forwarded-Encrypted: i=1; AJvYcCW2PIuydxQjU16qFD1rJD68u/xk3t19CBMHZeVbEK9vM3+h0FZqrb/aEoNcd8sU180FumPgZO4jwnLCbee5@vger.kernel.org
-X-Gm-Message-State: AOJu0YzOpwjEvJkHUEA2g8d+zxE9oYsojds53k/Rkxt0ldDuSNFxAhlo
-	mukmRBseoHFe8KXhkjkqOh8HN9sWY6kYlCppm2/G311K2v2AXxPlGIpGP5ibA6uJ72M=
-X-Gm-Gg: ASbGncsLpSv2/u0jt5aaMiNBsxbAXwlwm1iupeLN/ICap+rYu8FmZJeLv+iAX3LAVEX
-	w5k9HRMSnd6sTXvJYV6Thg/7L4zZd3gpkUYPBcYUJcNtM2uK9/w1s/cvnhRVqZI8VqePh3pHCgT
-	rIxUL0wKBDdzxF5/nfSbe0xB3Gdn6exnGhPNH1X2n4uM2tlR6QhiufG8+jrIQ1E5WAQ3VTvO5hp
-	w1Xfb6hgnq65Qgw8U9uZMQucxZE+RBLH2kgnO0dqdVFQzehJVGHVAS9Jg0T48+yMGPhnIxLZeMI
-	srvqxSYB8ozAjcXcjEgriWAY32ANspnNz9yzOs6O5WsVwTSfspiiW9rvwJmLvE99uz2RWtzNY7S
-	X1jiPMmrwJKY8uVFFzcnqKFaUlMBgOYRgfGKw4rKfRlQMjn1mWF1RVOPp+o4aG052Y+W0gUSJ7R
-	kbySnk0XdWdTJsgDt2Ry8Hn1sQRHQ=
-X-Google-Smtp-Source: AGHT+IETzVE2VKwqFVH1XqBJLCkHBsPLTIoU5dTY0nKMzwvieSfZCkPkcXhxokoy2+Ls8Ec6/kdKEA==
-X-Received: by 2002:a05:600c:1f8c:b0:46e:36f9:c57e with SMTP id 5b1f17b1804b1-477871f41e5mr15998705e9.5.1762959771899;
-        Wed, 12 Nov 2025 07:02:51 -0800 (PST)
+        d=1e100.net; s=20230601; t=1762959775; x=1763564575;
+        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+         :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=lYykgn3Duc/zFgl6vnXbVFF3VBhSA8EC/7WY6JYciNw=;
+        b=Tzr6cu8tJCNRUVdC+w04O8a1AfXXu0v0Lh06ywT2zWCxQ7iibKTGfR/myFpg4Cxd07
+         R0Y8W9Z0Om0qmGkjqOuhG4dlbd/4I3xfBmtE9LyLLqHhorsfZ4AzDb5hQfKo7ul9CPet
+         K+/T7dOnFz8Ui3nMu8Us+Ys/b7o22xPH+C4iGXzqCj3s+ymYRb1hoIsHRj1XcveolOr5
+         /o1yE0oCfXvmadADr44KOBMjdsYphaiYdKucQFgJYI5CTn3qZvuvVGjmVE7pT/OcIFJY
+         Eieesij0GOW+Hczka4x+naRCny/EC/havNDRZLvFrCX9qhaqMhrTrLuIZGWUWFqMeLVB
+         ez9w==
+X-Forwarded-Encrypted: i=1; AJvYcCUfU9rrfanl1Pkcu5rWz8JWOms7uu88YUitjWzxDPzZli0QDeXbZ9m2zHWJIFUJkRXzaI5isFSntNzXqMRq@vger.kernel.org
+X-Gm-Message-State: AOJu0YxvDCXVPz/3FtppGHJAgm3HyKLzgu+4dc5VABASsFjnAf+doECG
+	/Xp4ETqab9t6daVjCCKH4UpzR5JszZvSyJwTXcQDuXD/mjeSwCbg2h4JqSqHH0X2cdQ=
+X-Gm-Gg: ASbGncv4L4IMhlKGsFvgk0CYfSKOy/r1WiOzDtN2ub0zdCfAJ25czXWUnNq7EHQWLOc
+	V0NzXMWwW+OjmG2PCaHmAm8wt4W7rniFjhDNcNB834J/HmWX08OjyI0Jfl2GHOW9xyuX4F1c7L9
+	5JsSrV9k6KqzmujvQvvgEBMfbCwzI5vHrL9tZ4aE7u0OTQQHU5VwQa/ybQvutfhZcMw0Vaj8gOK
+	Q9hEOs76oU/1g6jPxP648hdJP2gfZXyKTL4BRJC9qh+5k9JO7xE6hJT6y8j6pV4/16I5GATrLNe
+	nCnCTnSC6dVA5+Tz57xk4CaLVoZEqRQ7fdzJjXMtB94k6CZZjiPlIV+aK7YEW7VBiQSJ9i7Pknv
+	Vg1UcNJC8xzYeBajSUMW/NQpFzdP19WDgsh72SildL0ki0mRfbOPEUhWSxcrTGL4tGXO6pZ2Q6x
+	VEtfSFjRDaWBwC9donLNwQdCNhNXU=
+X-Google-Smtp-Source: AGHT+IGXch2N7NhagF+hbyHlTCMr/EFD8P+YFjG1kG9O1MOI8xXi2wzQyJ3tN+nFtMatNNWd/HLqdA==
+X-Received: by 2002:a05:600c:3511:b0:471:3b6:e24 with SMTP id 5b1f17b1804b1-477870c0e89mr17339175e9.8.1762959774506;
+        Wed, 12 Nov 2025 07:02:54 -0800 (PST)
 Received: from [127.0.1.1] ([178.197.219.123])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-477889be9a1sm15134355e9.6.2025.11.12.07.02.50
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-477889be9a1sm15134355e9.6.2025.11.12.07.02.52
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 12 Nov 2025 07:02:51 -0800 (PST)
+        Wed, 12 Nov 2025 07:02:52 -0800 (PST)
 From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: [PATCH v2 0/4] arm64: dts: qcom: sm8750: Enable display
-Date: Wed, 12 Nov 2025 16:02:37 +0100
-Message-Id: <20251112-sm8750-display-dts-v2-0-d1567c583821@linaro.org>
+Date: Wed, 12 Nov 2025 16:02:38 +0100
+Subject: [PATCH v2 1/4] arm64: dts: qcom: sm8750: Add display (MDSS) with
+ Display CC
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -84,11 +86,9 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIAI2hFGkC/32NQQ6CMBBFr0Jm7ZjSFkFW3sOwqNDCJEhxikRCu
- LsVF+5cvpf891cIlskGKJMV2M4UyA8R5CGBujNDa5GayCCFzISWGsO9yDOBDYWxNws2U0Ctc50
- ro5RzDuJwZOvotUev1ZfZPp6xPf1kR2HyvOzHc/qxfz/mFAWe3E3K2pwzp4pLT4Nhf/TcQrVt2
- xt8m3kkygAAAA==
-X-Change-ID: 20250424-sm8750-display-dts-447473a33fff
+Message-Id: <20251112-sm8750-display-dts-v2-1-d1567c583821@linaro.org>
+References: <20251112-sm8750-display-dts-v2-0-d1567c583821@linaro.org>
+In-Reply-To: <20251112-sm8750-display-dts-v2-0-d1567c583821@linaro.org>
 To: Bjorn Andersson <andersson@kernel.org>, 
  Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
  Krzysztof Kozlowski <krzk+dt@kernel.org>, 
@@ -97,57 +97,492 @@ Cc: Jessica Zhang <jesszhan@quicinc.com>,
  Abhinav Kumar <abhinavk@quicinc.com>, Abel Vesa <abel.vesa@linaro.org>, 
  linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
  linux-kernel@vger.kernel.org, 
- Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, 
- Neil Armstrong <neil.armstrong@linaro.org>
+ Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 X-Mailer: b4 0.14.3
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1126;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=12051;
  i=krzysztof.kozlowski@linaro.org; h=from:subject:message-id;
- bh=HE5YbcsNS4jmWAOg2lcXsIcrJZ7BYruxpSyyrBzFsXs=;
- b=owEBbQKS/ZANAwAKAcE3ZuaGi4PXAcsmYgBpFKGT5cy9NK5gxIgGywCJpipAZUKlUKDYxSuhI
- cDAIMtSLfyJAjMEAAEKAB0WIQTd0mIoPREbIztuuKjBN2bmhouD1wUCaRShkwAKCRDBN2bmhouD
- 1wxqD/wJPdhcDm9HXftoluK3u74i3UK5rzoGpCJcl6yQf66ihGOIdOjzSPnqYy4SzLS0NloclHs
- YDE6uzrOBhk1I0s9urDir12aFvuMkN9Ad32MK56L1qMO7OvPgW0BHAsnz2/C68Ygi3+n8FsTCm5
- AzmPtP22zbosvBEjOefRhB7Rf1ZOSFef+M5T+pfX38pRUfcDYocj4bW3wdA1k+0cH1sDk1NABL6
- KX3UBSgtsVgPhc/2C37oNF4SRSankZhQGkWocOUFSu3b3uHQvEOR9lfN4VSKsQ0ZOTXIVYOpJDq
- gq4lib2EoPHc5GHQ1wY8caOw0v0PgmZXCtpr0PErv3A0lOu7yqEOPuH7meBUEdLEhkGGWIliCGf
- JmVmXgwpCpO1jDkPko9+/maU5kI88WtmNMaIyiYRPxmLbTTOdVqdW4KUfywPrxgIQls31MJqgEB
- 105WD59TnYU6PswyqyRxxi9nAAOLDiuz7h1Kz2t4H/dySk40TAijJCnJBVqN0XbQStdI5aAzzcd
- uYCNgQBdDTznD5c9kAjIgi7eRyadq2xxS2hf6T3eKI6p4Pi8OfoF7c1KMu3ET6YVSVvsaTa/9ds
- 4jbMK6rZH78WaObRdL2Q4cwt4HU/o/wDzNjbaNKb2hZIVUXEbRdAr3+Rck8nJYyRgeL3xdmfZKo
- sOeuVzp3Uf6So+g==
+ bh=SZkpG7T+jtXj3S0sKIh2OimOvWlcAK3Wp1s+TIfJaGw=;
+ b=owEBbQKS/ZANAwAKAcE3ZuaGi4PXAcsmYgBpFKGWbXbYoz4II4WZX5vo4QrgKxnSTV43Lm5fj
+ E5nA6ydFR+JAjMEAAEKAB0WIQTd0mIoPREbIztuuKjBN2bmhouD1wUCaRShlgAKCRDBN2bmhouD
+ 18toD/9c1esn7NQZYiJNw0/maQmUA4/NYwhOMSoXTTqRCz+tc365lJFVolalRB4/tn10ELoip67
+ hJ8UXYM7cu0L2GZ9cuDP5cEGMJTiTirGopatOMGCF10VY14FUeH3ip1mkN2yBtVrJOtfF6rxqmZ
+ fpl96IYrSTyHBu1EMYrWdO1SlGlT05E5IxVeh7JbQPU2+Zn/eX3PUKpX3dEcqXGgEMPtsnvK74y
+ wOdn+nxEIf3QSkT22aHJSWrQNr2B/zz9sDEyf18PhXIK3y8az1oL5vD7Ufdu71PoLZ19WAvV16s
+ DdVWm4avfmYhEMgECdDRBpPKdymupUTDWBPCTRNozo4bTYWT4PWZi0gcE721NZlI/Apqab8AaG7
+ quc4qIcrClVy/bdah+PMw2Otqv/pX3EuySWIBiPjFFomDXn1Vb9jN/8BhtxI/hXy2YD9GvK+rAY
+ qiu8OIIkbnnn0hRpG2jdwyG0kQlTOaWOiBi8gZ86I3jWZqLCNm+vSVxYmq2TCI/Ro8Huq2E2iMF
+ vQ3a6rLBcXfhoDrfFDBjmpqMoY8jeLZv6ZWQ3Ok44SxBTOPeBdBsl7ioHON6GkjaWWvUlT8Ywqy
+ CfZ0eJatSLzOeycXKMuYsi9+Xo1QlYHY9qF0aICXki2slRNaMxSdYYFM7s+j0Wam3KfpSUAK2m5
+ y9gKxt4KJyLqWnQ==
 X-Developer-Key: i=krzysztof.kozlowski@linaro.org; a=openpgp;
  fpr=9BD07E0E0C51F8D59677B7541B93437D3B41629B
 
-Changes in v2:
-- Add Rb tags
-- Re-order nodes/sort by unit address
-- Add low_svs_d1 opps for DSI and DPU
-- Add DP Pixel1 clock (they were added to other targets as well, also
-  Abel pointed it out)
-- Some context changes due to dependency changes/merging
-- Link to v1: https://lore.kernel.org/r/20250424-sm8750-display-dts-v1-0-6fb22ca95f38@linaro.org
+Add device nodes for entire display: MDSS, DPU, DSI, DSI PHYs,
+DisplayPort and Display Clock Controller.
 
-All dependencies, including bindings, were merged, so this can be applied.
-
-Best regards,
-Krzysztof
-
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 ---
-Krzysztof Kozlowski (4):
-      arm64: dts: qcom: sm8750: Add display (MDSS) with Display CC
-      arm64: dts: qcom: sm8750-mtp: Enable display
-      arm64: dts: qcom: sm8750-mtp: Enable USB headset and Type-C altmode
-      arm64: dts: qcom: sm8750-mtp: Enable DisplayPort over USB
+ arch/arm64/boot/dts/qcom/sm8750.dtsi | 437 +++++++++++++++++++++++++++++++++++
+ 1 file changed, 437 insertions(+)
 
- arch/arm64/boot/dts/qcom/sm8750-mtp.dts | 125 +++++++++
- arch/arm64/boot/dts/qcom/sm8750.dtsi    | 439 ++++++++++++++++++++++++++++++++
- 2 files changed, 564 insertions(+)
----
-base-commit: a8ba620487d1fa78a0b1f96622f0167d37c99054
-change-id: 20250424-sm8750-display-dts-447473a33fff
+diff --git a/arch/arm64/boot/dts/qcom/sm8750.dtsi b/arch/arm64/boot/dts/qcom/sm8750.dtsi
+index 3f0b57f428bb..11194b34e6dc 100644
+--- a/arch/arm64/boot/dts/qcom/sm8750.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm8750.dtsi
+@@ -3,7 +3,9 @@
+  * Copyright (c) 2024 Qualcomm Innovation Center, Inc. All rights reserved.
+  */
+ 
++#include <dt-bindings/clock/qcom,dsi-phy-28nm.h>
+ #include <dt-bindings/clock/qcom,rpmh.h>
++#include <dt-bindings/clock/qcom,sm8750-dispcc.h>
+ #include <dt-bindings/clock/qcom,sm8750-gcc.h>
+ #include <dt-bindings/clock/qcom,sm8750-tcsr.h>
+ #include <dt-bindings/dma/qcom-gpi.h>
+@@ -2740,6 +2742,441 @@ usb_dwc3_ss: endpoint {
+ 			};
+ 		};
+ 
++		mdss: display-subsystem@ae00000 {
++			compatible = "qcom,sm8750-mdss";
++			reg = <0x0 0x0ae00000 0x0 0x1000>;
++			reg-names = "mdss";
++
++			interrupts = <GIC_SPI 83 IRQ_TYPE_LEVEL_HIGH>;
++
++			clocks = <&dispcc DISP_CC_MDSS_AHB_CLK>,
++				 <&gcc GCC_DISP_HF_AXI_CLK>,
++				 <&dispcc DISP_CC_MDSS_MDP_CLK>;
++
++			resets = <&dispcc DISP_CC_MDSS_CORE_BCR>;
++
++			interconnects = <&mmss_noc MASTER_MDP QCOM_ICC_TAG_ALWAYS
++					 &mc_virt SLAVE_EBI1 QCOM_ICC_TAG_ALWAYS>,
++					<&gem_noc MASTER_APPSS_PROC QCOM_ICC_TAG_ACTIVE_ONLY
++					 &config_noc SLAVE_DISPLAY_CFG QCOM_ICC_TAG_ACTIVE_ONLY>;
++			interconnect-names = "mdp0-mem",
++					     "cpu-cfg";
++
++			power-domains = <&dispcc MDSS_GDSC>;
++
++			iommus = <&apps_smmu 0x800 0x2>;
++
++			interrupt-controller;
++			#interrupt-cells = <1>;
++
++			#address-cells = <2>;
++			#size-cells = <2>;
++			ranges;
++
++			status = "disabled";
++
++			mdss_mdp: display-controller@ae01000 {
++				compatible = "qcom,sm8750-dpu";
++				reg = <0 0x0ae01000 0 0x93000>,
++				      <0 0x0aeb0000 0 0x2008>;
++				reg-names = "mdp",
++					    "vbif";
++
++				interrupts-extended = <&mdss 0>;
++
++				clocks = <&gcc GCC_DISP_HF_AXI_CLK>,
++					 <&dispcc DISP_CC_MDSS_AHB_CLK>,
++					 <&dispcc DISP_CC_MDSS_MDP_LUT_CLK>,
++					 <&dispcc DISP_CC_MDSS_MDP_CLK>,
++					 <&dispcc DISP_CC_MDSS_VSYNC_CLK>;
++				clock-names = "nrt_bus",
++					      "iface",
++					      "lut",
++					      "core",
++					      "vsync";
++
++				assigned-clocks = <&dispcc DISP_CC_MDSS_VSYNC_CLK>;
++				assigned-clock-rates = <19200000>;
++
++				operating-points-v2 = <&mdp_opp_table>;
++
++				power-domains = <&rpmhpd RPMHPD_MMCX>;
++
++				ports {
++					#address-cells = <1>;
++					#size-cells = <0>;
++
++					port@0 {
++						reg = <0>;
++
++						dpu_intf1_out: endpoint {
++							remote-endpoint = <&mdss_dsi0_in>;
++						};
++					};
++
++					port@1 {
++						reg = <1>;
++
++						dpu_intf2_out: endpoint {
++							remote-endpoint = <&mdss_dsi1_in>;
++						};
++					};
++
++					port@2 {
++						reg = <2>;
++
++						dpu_intf0_out: endpoint {
++							remote-endpoint = <&mdss_dp0_in>;
++						};
++					};
++				};
++
++				mdp_opp_table: opp-table {
++					compatible = "operating-points-v2";
++
++					opp-156000000 {
++						opp-hz = /bits/ 64 <156000000>;
++						required-opps = <&rpmhpd_opp_low_svs_d1>;
++					};
++
++					opp-207000000 {
++						opp-hz = /bits/ 64 <207000000>;
++						required-opps = <&rpmhpd_opp_low_svs>;
++					};
++
++					opp-337000000 {
++						opp-hz = /bits/ 64 <337000000>;
++						required-opps = <&rpmhpd_opp_svs>;
++					};
++
++					opp-417000000 {
++						opp-hz = /bits/ 64 <417000000>;
++						required-opps = <&rpmhpd_opp_svs_l1>;
++					};
++
++					opp-532000000 {
++						opp-hz = /bits/ 64 <532000000>;
++						required-opps = <&rpmhpd_opp_nom>;
++					};
++
++					opp-575000000 {
++						opp-hz = /bits/ 64 <575000000>;
++						required-opps = <&rpmhpd_opp_nom_l1>;
++					};
++				};
++			};
++
++			mdss_dsi0: dsi@ae94000 {
++				compatible = "qcom,sm8750-dsi-ctrl", "qcom,mdss-dsi-ctrl";
++				reg = <0x0 0x0ae94000 0x0 0x400>;
++				reg-names = "dsi_ctrl";
++
++				interrupts-extended = <&mdss 4>;
++
++				clocks = <&dispcc DISP_CC_MDSS_BYTE0_CLK>,
++					 <&dispcc DISP_CC_MDSS_BYTE0_INTF_CLK>,
++					 <&dispcc DISP_CC_MDSS_PCLK0_CLK>,
++					 <&dispcc DISP_CC_MDSS_ESC0_CLK>,
++					 <&dispcc DISP_CC_MDSS_AHB_CLK>,
++					 <&gcc GCC_DISP_HF_AXI_CLK>,
++					 <&mdss_dsi0_phy DSI_PIXEL_PLL_CLK>,
++					 <&mdss_dsi0_phy DSI_BYTE_PLL_CLK>,
++					 <&dispcc DISP_CC_ESYNC0_CLK>,
++					 <&dispcc DISP_CC_OSC_CLK>,
++					 <&dispcc DISP_CC_MDSS_BYTE0_CLK_SRC>,
++					 <&dispcc DISP_CC_MDSS_PCLK0_CLK_SRC>;
++				clock-names = "byte",
++					      "byte_intf",
++					      "pixel",
++					      "core",
++					      "iface",
++					      "bus",
++					      "dsi_pll_pixel",
++					      "dsi_pll_byte",
++					      "esync",
++					      "osc",
++					      "byte_src",
++					      "pixel_src";
++
++				operating-points-v2 = <&mdss_dsi_opp_table>;
++
++				power-domains = <&rpmhpd RPMHPD_MMCX>;
++
++				phys = <&mdss_dsi0_phy>;
++				phy-names = "dsi";
++
++				#address-cells = <1>;
++				#size-cells = <0>;
++
++				status = "disabled";
++
++				ports {
++					#address-cells = <1>;
++					#size-cells = <0>;
++
++					port@0 {
++						reg = <0>;
++
++						mdss_dsi0_in: endpoint {
++							remote-endpoint = <&dpu_intf1_out>;
++						};
++					};
++
++					port@1 {
++						reg = <1>;
++
++						mdss_dsi0_out: endpoint {
++						};
++					};
++				};
++
++				mdss_dsi_opp_table: opp-table {
++					compatible = "operating-points-v2";
++
++					opp-140630000 {
++						opp-hz = /bits/ 64 <140630000>;
++						required-opps = <&rpmhpd_opp_low_svs_d1>;
++					};
++
++					opp-187500000 {
++						opp-hz = /bits/ 64 <187500000>;
++						required-opps = <&rpmhpd_opp_low_svs>;
++					};
++
++					opp-300000000 {
++						opp-hz = /bits/ 64 <300000000>;
++						required-opps = <&rpmhpd_opp_svs>;
++					};
++
++					opp-358000000 {
++						opp-hz = /bits/ 64 <358000000>;
++						required-opps = <&rpmhpd_opp_svs_l1>;
++					};
++				};
++			};
++
++			mdss_dsi0_phy: phy@ae95000 {
++				compatible = "qcom,sm8750-dsi-phy-3nm";
++				reg = <0x0 0x0ae95000 0x0 0x200>,
++				      <0x0 0x0ae95200 0x0 0x280>,
++				      <0x0 0x0ae95500 0x0 0x400>;
++				reg-names = "dsi_phy",
++					    "dsi_phy_lane",
++					    "dsi_pll";
++
++				clocks = <&dispcc DISP_CC_MDSS_AHB_CLK>,
++					 <&bi_tcxo_div2>;
++				clock-names = "iface",
++					      "ref";
++
++				#clock-cells = <1>;
++				#phy-cells = <0>;
++
++				status = "disabled";
++			};
++
++			mdss_dsi1: dsi@ae96000 {
++				compatible = "qcom,sm8750-dsi-ctrl", "qcom,mdss-dsi-ctrl";
++				reg = <0x0 0x0ae96000 0x0 0x400>;
++				reg-names = "dsi_ctrl";
++
++				interrupts-extended = <&mdss 5>;
++
++				clocks = <&dispcc DISP_CC_MDSS_BYTE1_CLK>,
++					 <&dispcc DISP_CC_MDSS_BYTE1_INTF_CLK>,
++					 <&dispcc DISP_CC_MDSS_PCLK1_CLK>,
++					 <&dispcc DISP_CC_MDSS_ESC1_CLK>,
++					 <&dispcc DISP_CC_MDSS_AHB_CLK>,
++					 <&gcc GCC_DISP_HF_AXI_CLK>,
++					 <&mdss_dsi1_phy DSI_PIXEL_PLL_CLK>,
++					 <&mdss_dsi1_phy DSI_BYTE_PLL_CLK>,
++					 <&dispcc DISP_CC_ESYNC1_CLK>,
++					 <&dispcc DISP_CC_OSC_CLK>,
++					 <&dispcc DISP_CC_MDSS_BYTE1_CLK_SRC>,
++					 <&dispcc DISP_CC_MDSS_PCLK1_CLK_SRC>;
++				clock-names = "byte",
++					      "byte_intf",
++					      "pixel",
++					      "core",
++					      "iface",
++					      "bus",
++					      "dsi_pll_pixel",
++					      "dsi_pll_byte",
++					      "esync",
++					      "osc",
++					      "byte_src",
++					      "pixel_src";
++
++				operating-points-v2 = <&mdss_dsi_opp_table>;
++
++				power-domains = <&rpmhpd RPMHPD_MMCX>;
++
++				phys = <&mdss_dsi1_phy>;
++				phy-names = "dsi";
++
++				#address-cells = <1>;
++				#size-cells = <0>;
++
++				status = "disabled";
++
++				ports {
++					#address-cells = <1>;
++					#size-cells = <0>;
++
++					port@0 {
++						reg = <0>;
++
++						mdss_dsi1_in: endpoint {
++							remote-endpoint = <&dpu_intf2_out>;
++						};
++					};
++
++					port@1 {
++						reg = <1>;
++
++						mdss_dsi1_out: endpoint {
++						};
++					};
++				};
++			};
++
++			mdss_dsi1_phy: phy@ae97000 {
++				compatible = "qcom,sm8750-dsi-phy-3nm";
++				reg = <0x0 0x0ae97000 0x0 0x200>,
++				      <0x0 0x0ae97200 0x0 0x280>,
++				      <0x0 0x0ae97500 0x0 0x400>;
++				reg-names = "dsi_phy",
++					    "dsi_phy_lane",
++					    "dsi_pll";
++
++				clocks = <&dispcc DISP_CC_MDSS_AHB_CLK>,
++					 <&rpmhcc RPMH_CXO_CLK>;
++				clock-names = "iface",
++					      "ref";
++
++				#clock-cells = <1>;
++				#phy-cells = <0>;
++
++				status = "disabled";
++			};
++
++			mdss_dp0: displayport-controller@af54000 {
++				compatible = "qcom,sm8750-dp", "qcom,sm8650-dp";
++				reg = <0x0 0xaf54000 0x0 0x104>,
++				      <0x0 0xaf54200 0x0 0xc0>,
++				      <0x0 0xaf55000 0x0 0x770>,
++				      <0x0 0xaf56000 0x0 0x9c>,
++				      <0x0 0xaf57000 0x0 0x9c>;
++
++				interrupts-extended = <&mdss 12>;
++
++				clocks = <&dispcc DISP_CC_MDSS_AHB_CLK>,
++					 <&dispcc DISP_CC_MDSS_DPTX0_AUX_CLK>,
++					 <&dispcc DISP_CC_MDSS_DPTX0_LINK_CLK>,
++					 <&dispcc DISP_CC_MDSS_DPTX0_LINK_INTF_CLK>,
++					 <&dispcc DISP_CC_MDSS_DPTX0_PIXEL0_CLK>,
++					 <&dispcc DISP_CC_MDSS_DPTX0_PIXEL1_CLK>;
++				clock-names = "core_iface",
++					      "core_aux",
++					      "ctrl_link",
++					      "ctrl_link_iface",
++					      "stream_pixel",
++					      "stream_1_pixel";
++
++				assigned-clocks = <&dispcc DISP_CC_MDSS_DPTX0_LINK_CLK_SRC>,
++						  <&dispcc DISP_CC_MDSS_DPTX0_PIXEL0_CLK_SRC>,
++						  <&dispcc DISP_CC_MDSS_DPTX0_PIXEL1_CLK_SRC>;
++				assigned-clock-parents = <&usb_dp_qmpphy QMP_USB43DP_DP_LINK_CLK>,
++							 <&usb_dp_qmpphy QMP_USB43DP_DP_VCO_DIV_CLK>,
++							 <&usb_dp_qmpphy QMP_USB43DP_DP_VCO_DIV_CLK>;
++
++				operating-points-v2 = <&dp_opp_table>;
++
++				power-domains = <&rpmhpd RPMHPD_MMCX>;
++
++				phys = <&usb_dp_qmpphy QMP_USB43DP_DP_PHY>;
++				phy-names = "dp";
++
++				#sound-dai-cells = <0>;
++
++				status = "disabled";
++
++				dp_opp_table: opp-table {
++					compatible = "operating-points-v2";
++
++					opp-192000000 {
++						opp-hz = /bits/ 64 <192000000>;
++						required-opps = <&rpmhpd_opp_low_svs_d1>;
++					};
++
++					opp-270000000 {
++						opp-hz = /bits/ 64 <270000000>;
++						required-opps = <&rpmhpd_opp_low_svs>;
++					};
++
++					opp-540000000 {
++						opp-hz = /bits/ 64 <540000000>;
++						required-opps = <&rpmhpd_opp_svs_l1>;
++					};
++
++					opp-810000000 {
++						opp-hz = /bits/ 64 <810000000>;
++						required-opps = <&rpmhpd_opp_nom>;
++					};
++				};
++
++				ports {
++					#address-cells = <1>;
++					#size-cells = <0>;
++
++					port@0 {
++						reg = <0>;
++
++						mdss_dp0_in: endpoint {
++							remote-endpoint = <&dpu_intf0_out>;
++						};
++					};
++
++					port@1 {
++						reg = <1>;
++
++						mdss_dp0_out: endpoint {
++							data-lanes = <0 1 2 3>;
++						};
++					};
++				};
++			};
++		};
++
++		dispcc: clock-controller@af00000 {
++			compatible = "qcom,sm8750-dispcc";
++			reg = <0 0x0af00000 0 0x20000>;
++
++			clocks = <&bi_tcxo_div2>,
++				 <&bi_tcxo_ao_div2>,
++				 <&gcc GCC_DISP_AHB_CLK>,
++				 <&sleep_clk>,
++				 <&mdss_dsi0_phy DSI_BYTE_PLL_CLK>,
++				 <&mdss_dsi0_phy DSI_PIXEL_PLL_CLK>,
++				 <&mdss_dsi1_phy DSI_BYTE_PLL_CLK>,
++				 <&mdss_dsi1_phy DSI_PIXEL_PLL_CLK>,
++				 <&usb_dp_qmpphy QMP_USB43DP_DP_LINK_CLK>,
++				 <&usb_dp_qmpphy QMP_USB43DP_DP_VCO_DIV_CLK>,
++				 <0>, /* dp1 */
++				 <0>,
++				 <0>, /* dp2 */
++				 <0>,
++				 <0>, /* dp3 */
++				 <0>;
++
++			power-domains = <&rpmhpd RPMHPD_MMCX>;
++			required-opps = <&rpmhpd_opp_low_svs>;
++
++			#clock-cells = <1>;
++			#reset-cells = <1>;
++			#power-domain-cells = <1>;
++		};
++
+ 		pdc: interrupt-controller@b220000 {
+ 			compatible = "qcom,sm8750-pdc", "qcom,pdc";
+ 			reg = <0x0 0x0b220000 0x0 0x10000>, <0x0 0x164400f0 0x0 0x64>;
 
-Best regards,
 -- 
-Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+2.48.1
 
 
