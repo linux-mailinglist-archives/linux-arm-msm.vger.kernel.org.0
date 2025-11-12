@@ -1,112 +1,228 @@
-Return-Path: <linux-arm-msm+bounces-81466-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-81467-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [142.0.200.124])
-	by mail.lfdr.de (Postfix) with ESMTPS id B2F8BC5378C
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Nov 2025 17:42:40 +0100 (CET)
+Received: from ams.mirrors.kernel.org (ams.mirrors.kernel.org [IPv6:2a01:60a::1994:3:14])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4E541C5368A
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Nov 2025 17:32:54 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 517784FA6A1
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Nov 2025 15:55:13 +0000 (UTC)
+	by ams.mirrors.kernel.org (Postfix) with ESMTPS id 5C8BF35B9C9
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Nov 2025 16:19:33 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2B766343204;
-	Wed, 12 Nov 2025 15:51:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id BB2DE2D3233;
+	Wed, 12 Nov 2025 16:15:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Poky9x1K"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Mj9LpvMV"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4573342CBC;
-	Wed, 12 Nov 2025 15:51:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 906102D0C70;
+	Wed, 12 Nov 2025 16:15:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762962676; cv=none; b=UmOht5QBD0n6AHsV8iXK/GEe64DOVssI6ADTnoVJzz/ESt8Mi+xbEMhcqlMGFqTGHg4OAQ5I8NW7wMScvwLZV9puH92HCVE/QvZIXod8HwKe5TnAdPOZ5r5qTGFm7GeeyH5vRNpFKdF0YZ490coTP8/xnBEZJ4MQF8rLTK1wWIw=
+	t=1762964129; cv=none; b=aG1Q0zdy/U1sCnZVO2RlKNKPK2Wb/R6m9D52dMXvKN59r9e5GYSDtXA6Gem4bOdyS4n1xodBB2LvqJzZDBnGVlaHWgrO2+3WbW4D8uH8gFJmBsuPn7RY/6dBUngENoHakogoIvx0oaxGz2O3eeBSuqkddGczJ4tSQkZwKTS3dUU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762962676; c=relaxed/simple;
-	bh=u5ESzxUqeIUXpNvJKjm152o+SRtiujAE19ZGW+GxdNA=;
+	s=arc-20240116; t=1762964129; c=relaxed/simple;
+	bh=jr2jj0NNeOlSkjn/MTgOK8TwOXuV3wzWI3+dwpzsasI=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=FqEUneRVozZHeD1enPqlTUk0jS1IEh4phQ6Ws8EUyKjvJ15Cv/1H2212IxvcGpLOaSkDKu3eC802YLIuSj4JbUT0xUpI0V01yjQGeTwV4WZX7HXOtKGNyxB7ZOjfJxfQy71rFgHz1J/Pzzo+P9REz/dMkG82h7Bv63rkOYDLqlY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Poky9x1K; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F47CC4CEF8;
-	Wed, 12 Nov 2025 15:51:09 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=pWI0gkO0Icwsb8cNhZLg8emvgtoW73qVSIl2Fe5MN84+T9na0qnqItW9rfp0brwsxp1ATnznyGBHaJlgAP5X1f0IFmauUCTmOanXxoVOGJ3CBm3EzfCXoYI1EpdLR5voDioTsWM9U3lqfhiM/CQRiJA0UUFOsYQLqMuwIVvzdXM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Mj9LpvMV; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BBC66C19421;
+	Wed, 12 Nov 2025 16:15:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1762962675;
-	bh=u5ESzxUqeIUXpNvJKjm152o+SRtiujAE19ZGW+GxdNA=;
+	s=k20201202; t=1762964129;
+	bh=jr2jj0NNeOlSkjn/MTgOK8TwOXuV3wzWI3+dwpzsasI=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=Poky9x1KlKCgf+rsX9JUWdq804cVgnpsS0hfzM0JlzHIqRYMAKQQOavG7eOywtdrG
-	 BldjaJwhemrAvaAFxZ2KtzanWDLoAMA92Vw7rsZQeAcsNUUpUvBQVcuLxtM/k2zbmF
-	 NeknmECKdXvIx92FUOiPhDBNfAKjva16wejUc+wBYBrcH4VtQSfPWYW6ShiJUoVKfz
-	 IoaKXvjxPwDY4qVlsl3OBJdaqVM6GBWNvTec1cUObCqfYyc3311+Qc597P7KoP4vm/
-	 /+j7Y9JSD7SRxNhHgU1t0z1PFor5qnc0niTAkvvNmC5Sf36jf4DZrME783VkwR5Q8F
-	 BM4ksKsjOukkw==
-Date: Wed, 12 Nov 2025 21:21:01 +0530
-From: Manivannan Sadhasivam <mani@kernel.org>
+	b=Mj9LpvMVqFq1XK8hFK01+6fDPWy0GZ4hFzSQRnsscaqExHcki2FWF6EcGc7m/47Qo
+	 DYhRguS1QQa86Z5dNX6yE2YqvoQhRitm3fngt2DrdXllEoxw8NEVk7elFgmjYw0aw2
+	 ibScTaCQLyxqPNP8qCV9UaYwAHaOq889OecEJqN2WZXp8mliHYkIpo76pGFOh9QrhK
+	 jYIAGr6CAh2ow2WAqgzdweMqHVOIdC4P7DLjCgPeF55tRNEzTB7LW5Sh5ke0I63Nwe
+	 AywdXC3cXmh1djRf223iA7ZJqPJU87toDrtD/Ko4v5neIwZjCbq67FVMAfVQPxBT0Q
+	 fr/9/J2Cyr+rw==
+Date: Wed, 12 Nov 2025 10:19:46 -0600
+From: Bjorn Andersson <andersson@kernel.org>
 To: Bartosz Golaszewski <brgl@bgdev.pl>
-Cc: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>, 
-	Bjorn Helgaas <bhelgaas@google.com>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, linux-kernel@vger.kernel.org, 
-	linux-pci@vger.kernel.org, devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
-	Stephan Gerhold <stephan.gerhold@linaro.org>, Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>, 
-	linux-pm@vger.kernel.org
-Subject: Re: [PATCH v2 4/4] power: sequencing: Add the Power Sequencing
- driver for the PCIe M.2 connectors
-Message-ID: <upicsvybnw6by37ofry5zij5uqrejrdw5qkm5325ti4ayd7saa@iccgisoo63yp>
-References: <20251108-pci-m2-v2-0-e8bc4d7bf42d@oss.qualcomm.com>
- <20251108-pci-m2-v2-4-e8bc4d7bf42d@oss.qualcomm.com>
- <CAMRc=Mfh-5D4Fv+HGJLFMUcOGKPkq7Jsz64LZcTiYxP0b87goQ@mail.gmail.com>
+Cc: Vinod Koul <vkoul@kernel.org>, linux-arm-msm@vger.kernel.org, 
+	dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Subject: Re: [PATCH 3/3] dmaengine: qcom: bam_dma: convert tasklet to a
+ workqueue
+Message-ID: <rrw7q7cmkaykng5mnyqk5oxsjednptx3yvjilh3tf5uub4nxzh@p5a4sbgbaha2>
+References: <20251106-qcom-bam-dma-refactor-v1-0-0e2baaf3d81a@linaro.org>
+ <20251106-qcom-bam-dma-refactor-v1-3-0e2baaf3d81a@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAMRc=Mfh-5D4Fv+HGJLFMUcOGKPkq7Jsz64LZcTiYxP0b87goQ@mail.gmail.com>
+In-Reply-To: <20251106-qcom-bam-dma-refactor-v1-3-0e2baaf3d81a@linaro.org>
 
-On Wed, Nov 12, 2025 at 04:04:51PM +0100, Bartosz Golaszewski wrote:
-> On Sat, Nov 8, 2025 at 4:24 AM Manivannan Sadhasivam
-> <manivannan.sadhasivam@oss.qualcomm.com> wrote:
-> >
-> > +
-> > +static int pwrseq_pcie_m2_match(struct pwrseq_device *pwrseq,
-> > +                                struct device *dev)
-> > +{
-> > +       struct pwrseq_pcie_m2_ctx *ctx = pwrseq_device_get_drvdata(pwrseq);
-> > +       struct device_node *remote, *endpoint;
-> > +
-> > +       /*
-> > +        * Traverse the 'remote-endpoint' nodes and check if the remote node's
-> > +        * parent matches the OF node of 'dev'.
-> > +        */
-> > +       for_each_endpoint_of_node(ctx->of_node, endpoint) {
-> > +               remote = of_graph_get_remote_port_parent(endpoint);
-> > +               if (remote && (remote == dev_of_node(dev))) {
-> > +                       of_node_put(remote);
-> > +                       of_node_put(endpoint);
-> > +                       return PWRSEQ_MATCH_OK;
-> > +               }
-> > +               of_node_put(remote);
-> > +       }
-> > +
-> > +       return PWRSEQ_NO_MATCH;
-> > +}
+On Thu, Nov 06, 2025 at 04:44:52PM +0100, Bartosz Golaszewski wrote:
+> From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 > 
-> Nit: I would simplify this function with __free(device_node) since
-> there'll be a v3 anyway. Other than that it looks good, so when the
-> bindings get acked I assume this can go into the pwrseq/for-next?
-> There don't seem to be any build-time dependencies between this and
-> the PCI part.
+> There is nothing in the interrupt handling that requires us to run in
+> atomic context so convert the tasklet to a workqueue.
 > 
+> Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 
-Yes. Pwrseq patches can go independently. It won't affect functionality as well,
-since I haven't submitted the devicetree changes.
+Reviewed-by: Bjorn Andersson <andersson@kernel.org>
 
-- Mani
+I like the patch, getting off the tasklet is nice. But reading the
+patch/driver spawned some additional questions (not (necessarily)
+feedback to this patch).
 
--- 
-மணிவண்ணன் சதாசிவம்
+> ---
+>  drivers/dma/qcom/bam_dma.c | 32 ++++++++++++++++----------------
+>  1 file changed, 16 insertions(+), 16 deletions(-)
+> 
+> diff --git a/drivers/dma/qcom/bam_dma.c b/drivers/dma/qcom/bam_dma.c
+> index bcd8de9a9a12621a36b49c31bff96f474468be06..40ad4179177fb7a074776db05b834da012f6a35f 100644
+> --- a/drivers/dma/qcom/bam_dma.c
+> +++ b/drivers/dma/qcom/bam_dma.c
+> @@ -42,6 +42,7 @@
+>  #include <linux/pm_runtime.h>
+>  #include <linux/scatterlist.h>
+>  #include <linux/slab.h>
+> +#include <linux/workqueue.h>
+>  
+>  #include "../dmaengine.h"
+>  #include "../virt-dma.h"
+> @@ -397,8 +398,8 @@ struct bam_device {
+>  	struct clk *bamclk;
+>  	int irq;
+>  
+> -	/* dma start transaction tasklet */
+> -	struct tasklet_struct task;
+> +	/* dma start transaction workqueue */
+> +	struct work_struct work;
+>  };
+>  
+>  /**
+> @@ -869,7 +870,7 @@ static u32 process_channel_irqs(struct bam_device *bdev)
+>  			/*
+>  			 * if complete, process cookie. Otherwise
+>  			 * push back to front of desc_issued so that
+> -			 * it gets restarted by the tasklet
+> +			 * it gets restarted by the work queue.
+>  			 */
+>  			if (!async_desc->num_desc) {
+>  				vchan_cookie_complete(&async_desc->vd);
+> @@ -899,9 +900,9 @@ static irqreturn_t bam_dma_irq(int irq, void *data)
+>  
+>  	srcs |= process_channel_irqs(bdev);
+>  
+> -	/* kick off tasklet to start next dma transfer */
+> +	/* kick off the work queue to start next dma transfer */
+>  	if (srcs & P_IRQ)
+> -		tasklet_schedule(&bdev->task);
+> +		schedule_work(&bdev->work);
+
+I'm not entirely familiar with the BAM driver, but wouldn't it be
+preferable to make the interrupt handler threaded and just kick off the
+next set of transactions directly from here? To reduce the downtime
+between transactions when more are ready queued.
+
+It seems this might be of concern when we have queued more transfers
+than can fit in the hardware, but I don't have any data indicating how
+often this happens.
+
+>  
+>  	ret = pm_runtime_get_sync(bdev->dev);
+
+The "bus" clock is tied to the PM runtime state, so I presume this is
+here in order to ensure the block is clocked for the following register
+accesses(?)
+
+But process_channel_irqs() was just all over the same register space.
+
+
+Also noteworthy is that none of the pm_runtime_get_sync() in this driver
+calls have adequate error handling.
+
+Regards,
+Bjorn
+
+>  	if (ret < 0)
+> @@ -1097,14 +1098,14 @@ static void bam_start_dma(struct bam_chan *bchan)
+>  }
+>  
+>  /**
+> - * dma_tasklet - DMA IRQ tasklet
+> - * @t: tasklet argument (bam controller structure)
+> + * bam_dma_work() - DMA interrupt work queue callback
+> + * @work: work queue struct embedded in the BAM controller device struct
+>   *
+>   * Sets up next DMA operation and then processes all completed transactions
+>   */
+> -static void dma_tasklet(struct tasklet_struct *t)
+> +static void bam_dma_work(struct work_struct *work)
+>  {
+> -	struct bam_device *bdev = from_tasklet(bdev, t, task);
+> +	struct bam_device *bdev = from_work(bdev, work, work);
+>  	struct bam_chan *bchan;
+>  	unsigned int i;
+>  
+> @@ -1117,14 +1118,13 @@ static void dma_tasklet(struct tasklet_struct *t)
+>  		if (!list_empty(&bchan->vc.desc_issued) && !IS_BUSY(bchan))
+>  			bam_start_dma(bchan);
+>  	}
+> -
+>  }
+>  
+>  /**
+>   * bam_issue_pending - starts pending transactions
+>   * @chan: dma channel
+>   *
+> - * Calls tasklet directly which in turn starts any pending transactions
+> + * Calls work queue directly which in turn starts any pending transactions
+>   */
+>  static void bam_issue_pending(struct dma_chan *chan)
+>  {
+> @@ -1292,14 +1292,14 @@ static int bam_dma_probe(struct platform_device *pdev)
+>  	if (ret)
+>  		goto err_disable_clk;
+>  
+> -	tasklet_setup(&bdev->task, dma_tasklet);
+> +	INIT_WORK(&bdev->work, bam_dma_work);
+>  
+>  	bdev->channels = devm_kcalloc(bdev->dev, bdev->num_channels,
+>  				sizeof(*bdev->channels), GFP_KERNEL);
+>  
+>  	if (!bdev->channels) {
+>  		ret = -ENOMEM;
+> -		goto err_tasklet_kill;
+> +		goto err_workqueue_cancel;
+>  	}
+>  
+>  	/* allocate and initialize channels */
+> @@ -1364,8 +1364,8 @@ static int bam_dma_probe(struct platform_device *pdev)
+>  err_bam_channel_exit:
+>  	for (i = 0; i < bdev->num_channels; i++)
+>  		tasklet_kill(&bdev->channels[i].vc.task);
+> -err_tasklet_kill:
+> -	tasklet_kill(&bdev->task);
+> +err_workqueue_cancel:
+> +	cancel_work_sync(&bdev->work);
+>  err_disable_clk:
+>  	clk_disable_unprepare(bdev->bamclk);
+>  
+> @@ -1399,7 +1399,7 @@ static void bam_dma_remove(struct platform_device *pdev)
+>  			    bdev->channels[i].fifo_phys);
+>  	}
+>  
+> -	tasklet_kill(&bdev->task);
+> +	cancel_work_sync(&bdev->work);
+>  
+>  	clk_disable_unprepare(bdev->bamclk);
+>  }
+> 
+> -- 
+> 2.51.0
+> 
+> 
 
