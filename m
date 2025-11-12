@@ -1,55 +1,54 @@
-Return-Path: <linux-arm-msm+bounces-81417-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-81418-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 094E8C5282F
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Nov 2025 14:39:24 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3CBFCC5291A
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Nov 2025 14:54:54 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 0B5411898290
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Nov 2025 13:38:23 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 005D6189B291
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Nov 2025 13:51:00 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4509946BF;
-	Wed, 12 Nov 2025 13:37:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C73EB222587;
+	Wed, 12 Nov 2025 13:50:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b="FMJuKDZ8"
+	dkim=pass (1024-bit key) header.d=tuxedocomputers.com header.i=@tuxedocomputers.com header.b="rdx9qIKi"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtpout-02.galae.net (smtpout-02.galae.net [185.246.84.56])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail.tuxedocomputers.com (mail.tuxedocomputers.com [157.90.84.7])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5599730C34A
-	for <linux-arm-msm@vger.kernel.org>; Wed, 12 Nov 2025 13:37:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.246.84.56
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27AA721FF46;
+	Wed, 12 Nov 2025 13:50:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=157.90.84.7
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762954675; cv=none; b=dtQe9CHZRN5BdaKNti0ykx8OJNd49MoMXKenKudpzvWdAYbG2IAFcUzDUcmPPUI023Pzlz3kZ/9ZdBPv5/1TjPA4lLufVbZsxlT4hidSMr2aCowKNxziMtthsAgtFqub8fIhWjvHz4bSaykUSYVHJDzrSaNWcyoybhnAbFOdEls=
+	t=1762955430; cv=none; b=fwsbNn0HdLvsizhctJ1UflB7XqV9uCMc0ss2pcuWjQ/CiycclP1gesY42mh3y8DxfTIlnKm9NPGvca0vJkA4/IBP5dqVkMAKntr5R3bfyOLEO7Ofj/PUgwuCMxmdhHjDqUIbvFiZKUsclmU/ODCZksffqvAHuQdXbQKgy7SytZ0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762954675; c=relaxed/simple;
-	bh=7HScbcnt+U5pMViwPUOapzVnPg1442mpZQQO/UftwMs=;
+	s=arc-20240116; t=1762955430; c=relaxed/simple;
+	bh=7cl7TuwskHAaFGU9JBvTcFPO3OAalOvjMP+B5Z4aFQs=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=KG6oVZxPfzwzBXMCnK+uuos0VekG6QKBsCEqH2U9HwHq6DR1zaMPxpX53mSTB3J8yFGkZy1dRR4KEPWUjwJJW8hfI4LttRRNO8selheUMQUSiYufKYEoVy5kkb6+Si3MktDhh3kldp3gZPIOUQvsHlNNV83i9FmzhSHL3usVH+4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com; spf=pass smtp.mailfrom=bootlin.com; dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b=FMJuKDZ8; arc=none smtp.client-ip=185.246.84.56
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bootlin.com
-Received: from smtpout-01.galae.net (smtpout-01.galae.net [212.83.139.233])
-	by smtpout-02.galae.net (Postfix) with ESMTPS id A24711A1A29;
-	Wed, 12 Nov 2025 13:37:50 +0000 (UTC)
-Received: from mail.galae.net (mail.galae.net [212.83.136.155])
-	by smtpout-01.galae.net (Postfix) with ESMTPS id 6ADE06070B;
-	Wed, 12 Nov 2025 13:37:50 +0000 (UTC)
-Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon) with ESMTPSA id 126FA102F16E2;
-	Wed, 12 Nov 2025 14:37:40 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=dkim;
-	t=1762954669; h=from:subject:date:message-id:to:cc:mime-version:content-type:
-	 content-transfer-encoding:content-language:in-reply-to:references;
-	bh=SgZfesCetY4oHvl5h838KNujUcn8Vd//cFUVGen2iPY=;
-	b=FMJuKDZ8BinI+FLM8rQQYM1P95xSOnbXoDKeJX1JKeNhlx2VD2Kgvt38kskzvKKYSJ/S78
-	vPGvQGQL/hJ659RvOdvPRl30w0qoHWa/n73nGPqDDVGqRWVzvLvfBF6NK9VrGALfq05uY8
-	nX9KCCokyIq4T5m9kAPBa1/z4YToLM7HYuWEMMpaXbflNe6dzzZwzFXv+2KmDRLEvQR2tY
-	BhxpY5iT3dgg88OczC6vCcb0MSmVTR67/YZTEmmjhgsu7L6DG8O0pA14w6r5bSpYj7ZNbe
-	3CnRca/IH3scqTddJqWPsgBrjX+qcBSFGY+9ac4YjgQn7AnZYl4vlHsTczY/Cw==
-Message-ID: <7c96aca1-ffa7-49b9-9fc2-04229da338b6@bootlin.com>
-Date: Wed, 12 Nov 2025 14:37:40 +0100
+	 In-Reply-To:Content-Type; b=qoUnlgPsbB9sVnSxagKa4p7c7MOTkPkT2aJRCxdYzBFfclZpNPMPMjLl9THCXdNl5SfjzpHqfQaQ0fuox4ZL8SLsN1K8aJFS55Fsmtc2HdyxemijPKKpMqkY6JZPrxPktRh1ep8WBZ1IOlD+o0ScS70xCkLk3hYmlcwTaXFt0v4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=tuxedocomputers.com; spf=pass smtp.mailfrom=tuxedocomputers.com; dkim=pass (1024-bit key) header.d=tuxedocomputers.com header.i=@tuxedocomputers.com header.b=rdx9qIKi; arc=none smtp.client-ip=157.90.84.7
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=tuxedocomputers.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=tuxedocomputers.com
+Received: from [192.168.178.76] (business-24-134-207-61.pool2.vodafone-ip.de [24.134.207.61])
+	(Authenticated sender: g.gottleuber@tuxedocomputers.com)
+	by mail.tuxedocomputers.com (Postfix) with ESMTPSA id 4ACDD2FC0061;
+	Wed, 12 Nov 2025 14:50:24 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=tuxedocomputers.com;
+	s=default; t=1762955424;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+	bh=EHEYMlfrKUZPNLYAQuLIe9g6EBuDE9wJaoXtifI+35s=;
+	b=rdx9qIKibomwHkkNzEZDvd/QJQdYuC0VmnKv+I1XJCI+gemdY0gjO9vv4+zjk32Mayi5D6
+	G5t0YF4fSVAZkKrtndooJyB+luRoC07RAtF2gmFE4jyL/JS3c+M4XEKehgDMx1i8008IBt
+	Uq07Sp1evrjnhd+jYY5XNRyHH0GCAVY=
+Authentication-Results: mail.tuxedocomputers.com;
+	auth=pass smtp.auth=g.gottleuber@tuxedocomputers.com smtp.mailfrom=g.gottleuber@tuxedocomputers.com
+Message-ID: <fbd1a17a-937a-4b66-a1c7-5a3020e1332c@tuxedocomputers.com>
+Date: Wed, 12 Nov 2025 14:50:23 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -57,223 +56,294 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH net-next v15 01/15] dt-bindings: net: Introduce the
- ethernet-connector description
-To: Rob Herring <robh@kernel.org>
-Cc: davem@davemloft.net, netdev@vger.kernel.org,
- linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
- thomas.petazzoni@bootlin.com, Andrew Lunn <andrew@lunn.ch>,
- Jakub Kicinski <kuba@kernel.org>, Eric Dumazet <edumazet@google.com>,
- Paolo Abeni <pabeni@redhat.com>, Russell King <linux@armlinux.org.uk>,
- linux-arm-kernel@lists.infradead.org,
- Christophe Leroy <christophe.leroy@csgroup.eu>,
- Herve Codina <herve.codina@bootlin.com>,
- Florian Fainelli <f.fainelli@gmail.com>,
- Heiner Kallweit <hkallweit1@gmail.com>,
- Vladimir Oltean <vladimir.oltean@nxp.com>,
- =?UTF-8?Q?K=C3=B6ry_Maincent?= <kory.maincent@bootlin.com>,
- =?UTF-8?Q?Marek_Beh=C3=BAn?= <kabel@kernel.org>,
- Oleksij Rempel <o.rempel@pengutronix.de>,
- =?UTF-8?Q?Nicol=C3=B2_Veronese?= <nicveronese@gmail.com>,
- Simon Horman <horms@kernel.org>, mwojtas@chromium.org,
- Antoine Tenart <atenart@kernel.org>, devicetree@vger.kernel.org,
- Conor Dooley <conor+dt@kernel.org>, Krzysztof Kozlowski
- <krzk+dt@kernel.org>, Romain Gantois <romain.gantois@bootlin.com>,
- Daniel Golle <daniel@makrotopia.org>,
- Dimitri Fedrau <dimitri.fedrau@liebherr.com>
-References: <20251106094742.2104099-1-maxime.chevallier@bootlin.com>
- <20251106094742.2104099-2-maxime.chevallier@bootlin.com>
- <20251112124355.GA1269790-robh@kernel.org>
-From: Maxime Chevallier <maxime.chevallier@bootlin.com>
+Subject: Re: [PATCH v2 6/7] arm64: dts: qcom: Add device tree for TUXEDO Elite
+ 14 Gen1
+To: Stephan Gerhold <stephan.gerhold@linaro.org>,
+ Georg Gottleuber <ggo@tuxedocomputers.com>
+Cc: Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+ Ettore Chimenti <ettore.chimenti@linaro.org>,
+ Srinivas Kandagatla <srini@kernel.org>, stefan.schmidt@linaro.org,
+ wse@tuxedocomputers.com, cs@tuxedo.de
+References: <20251105154107.148187-1-ggo@tuxedocomputers.com>
+ <20251105154107.148187-7-ggo@tuxedocomputers.com>
+ <aRHre28Nbyv6ShbU@linaro.org>
 Content-Language: en-US
-In-Reply-To: <20251112124355.GA1269790-robh@kernel.org>
+From: Georg Gottleuber <g.gottleuber@tuxedocomputers.com>
+Autocrypt: addr=g.gottleuber@tuxedocomputers.com; keydata=
+ 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
+ bsxTTcOuRnk=
+In-Reply-To: <aRHre28Nbyv6ShbU@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-Last-TLS-Session-Version: TLSv1.3
 
-Hi Rob,
 
-On 12/11/2025 13:43, Rob Herring wrote:
-> On Thu, Nov 06, 2025 at 10:47:26AM +0100, Maxime Chevallier wrote:
->> The ability to describe the physical ports of Ethernet devices is useful
->> to describe multi-port devices, as well as to remove any ambiguity with
->> regard to the nature of the port.
+
+Am 10.11.25 um 14:41 schrieb Stephan Gerhold:
+> On Wed, Nov 05, 2025 at 04:41:06PM +0100, Georg Gottleuber wrote:
+>> Initial support for TUXEDO Elite 14 Gen1 based on Qualcomm Snapdragon X
+>> Elite SoC (X1E78100).
 >>
->> Moreover, describing ports allows for a better description of features
->> that are tied to connectors, such as PoE through the PSE-PD devices.
+>> Working:
+>> * Touchpad
+>> * Keyboard
+>> * eDP (no brightness control yet)
+>> * NVMe
+>> * USB Type-C port
+>> * USB-C DP altmode
+>> * HDMI-A port
+>> * WiFi (WiFi 7 untested)
+>> * Bluetooth
+>> * GPU
+>> * Video decoding
+>> * USB Type-A
+>> * Audio, speakers, microphones
+>> 	- 4x speakers.
+>> 	- 4x dmic
+>> 	- headset
+>> * Camera
+>> * Fingerprint reader
 >>
->> Introduce a binding to allow describing the ports, for now with 2
->> attributes :
->>
->>  - The number of lanes, which is a quite generic property that allows
->>    differentating between multiple similar technologies such as BaseT1
->>    and "regular" BaseT (which usually means BaseT4).
->>
->>  - The media that can be used on that port, such as BaseT for Twisted
->>    Copper, BaseC for coax copper, BaseS/L for Fiber, BaseK for backplane
->>    ethernet, etc. This allows defining the nature of the port, and
->>    therefore avoids the need for vendor-specific properties such as
->>    "micrel,fiber-mode" or "ti,fiber-mode".
->>
->> The port description lives in its own file, as it is intended in the
->> future to allow describing the ports for phy-less devices.
->>
->> Signed-off-by: Maxime Chevallier <maxime.chevallier@bootlin.com>
+>> Signed-off-by: Georg Gottleuber <ggo@tuxedocomputers.com>
+>> Signed-off-by: Srinivas Kandagatla <srini@kernel.org>
+>> Signed-off-by: Ettore Chimenti <ettore.chimenti@linaro.org>
 >> ---
->>  .../bindings/net/ethernet-connector.yaml      | 53 +++++++++++++++++++
->>  .../devicetree/bindings/net/ethernet-phy.yaml | 18 +++++++
->>  MAINTAINERS                                   |  1 +
->>  3 files changed, 72 insertions(+)
->>  create mode 100644 Documentation/devicetree/bindings/net/ethernet-connector.yaml
+>>  arch/arm64/boot/dts/qcom/Makefile             |    2 +
+>>  .../qcom/x1e80100-tuxedo-elite-14-gen1.dts    | 1486 +++++++++++++++++
+>>  2 files changed, 1488 insertions(+)
+>>  create mode 100644 arch/arm64/boot/dts/qcom/x1e80100-tuxedo-elite-14-gen1.dts
 >>
->> diff --git a/Documentation/devicetree/bindings/net/ethernet-connector.yaml b/Documentation/devicetree/bindings/net/ethernet-connector.yaml
+>> diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
+>> index 296688f7cb26..598bf4c6e84a 100644
+>> --- a/arch/arm64/boot/dts/qcom/Makefile
+>> +++ b/arch/arm64/boot/dts/qcom/Makefile
+>> @@ -350,3 +350,5 @@ x1p42100-hp-omnibook-x14-el2-dtbs := x1p42100-hp-omnibook-x14.dtb x1-el2.dtbo
+>>  dtb-$(CONFIG_ARCH_QCOM)	+= x1p42100-hp-omnibook-x14.dtb x1p42100-hp-omnibook-x14-el2.dtb
+>>  x1p42100-lenovo-thinkbook-16-el2-dtbs	:= x1p42100-lenovo-thinkbook-16.dtb x1-el2.dtbo
+>>  dtb-$(CONFIG_ARCH_QCOM)	+= x1p42100-lenovo-thinkbook-16.dtb x1p42100-lenovo-thinkbook-16-el2.dtb
+>> +x1e80100-tuxedo-elite-14-gen1-el2-dtbs	:=  x1e80100-tuxedo-elite-14-gen1.dtb x1-el2.dtbo
+>> +dtb-$(CONFIG_ARCH_QCOM)	+= x1e80100-tuxedo-elite-14-gen1.dtb
+> 
+> Please also add x1e80100-tuxedo-elite-14-gen1-el2.dtb here (similar to
+> the other lines), so that the EL2/KVM-specific DTB is automatically
+> built and included in the installed DTBs.
+> 
+>> diff --git a/arch/arm64/boot/dts/qcom/x1e80100-tuxedo-elite-14-gen1.dts b/arch/arm64/boot/dts/qcom/x1e80100-tuxedo-elite-14-gen1.dts
 >> new file mode 100644
->> index 000000000000..2b67907582c7
+>> index 000000000000..0bfe5931434e
 >> --- /dev/null
->> +++ b/Documentation/devicetree/bindings/net/ethernet-connector.yaml
->> @@ -0,0 +1,53 @@
->> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
->> +%YAML 1.2
->> +---
->> +$id: http://devicetree.org/schemas/net/ethernet-connector.yaml#
->> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+>> +++ b/arch/arm64/boot/dts/qcom/x1e80100-tuxedo-elite-14-gen1.dts
+>> @@ -0,0 +1,1486 @@
+>> [...]
+>> +	vreg_edp_3p3: regulator-edp-3p3 {
+>> +		compatible = "regulator-fixed";
 >> +
->> +title: Generic Ethernet Connector
+>> +		regulator-name = "VREG_EDP_3P3";
+>> +		regulator-min-microvolt = <3300000>;
+>> +		regulator-max-microvolt = <3300000>;
 >> +
->> +maintainers:
->> +  - Maxime Chevallier <maxime.chevallier@bootlin.com>
+>> +		gpio = <&tlmm 54 GPIO_ACTIVE_HIGH>;
+>> +		enable-active-high;
 >> +
->> +description:
->> +  An Ethernet Connector represents the output of a network component such as
->> +  a PHY, an Ethernet controller with no PHY, or an SFP module.
+>> +		pinctrl-0 = <&edp_reg_en>;
+>> +		pinctrl-names = "default";
 >> +
->> +properties:
->> +
->> +  pairs:
->> +    description:
->> +      Defines the number of BaseT pairs that are used on the connector.
->> +    $ref: /schemas/types.yaml#/definitions/uint32
+>> +		regulator-always-on;
 > 
-> Constraints? Wouldn't 4 pairs be the max?
+> Does this need to be always on? It should be possible to enable/disable
+> this supply together with the panel (and it is already set as
+> power-supply for the panel).
 
-Andrew also made that remark on the code, I'll add a constraint on
-1, 2 or 4 pairs.
+Nice catch. I agree with you.
 
-> 
-> Is it possible you need to know which pairs are wired?
-
-For now I don't think so, except maybe for when 2 pairs are wired
-when 4 are supported on the PHY and connector, but even then I don't
-think HW designers have a choice about which one to use. It's unclear
-to me wether this would be useful.
-
-> 
+>> +		regulator-boot-on;
+>> +	};
 >> +
->> +  media:
+>> [...]
+>> +	sound {
+>> +		compatible = "qcom,x1e80100-sndcard";
+>> +		model = "X1E80100-TUXEDO-Elite-14";
+>> +		audio-routing = "WooferLeft IN", "WSA WSA_SPK1 OUT",
+>> +				"TweeterLeft IN", "WSA WSA_SPK2 OUT",
+>> +				"WooferRight IN", "WSA2 WSA_SPK2 OUT",
+>> +				"TweeterRight IN", "WSA2 WSA_SPK2 OUT",
+>> +				"IN1_HPHL", "HPHL_OUT",
+>> +				"IN2_HPHR", "HPHR_OUT",
+>> +				"AMIC2", "MIC BIAS2",
+>> +				"VA DMIC0", "MIC BIAS1",
+>> +				"VA DMIC1", "MIC BIAS1",
+>> +				"VA DMIC0", "VA MIC BIAS1",
+>> +				"VA DMIC1", "VA MIC BIAS1",
 > 
-> Both of these names are a bit generic though I don't have a better 
-> suggestion.
-> 
->> +    description:
->> +      The mediums, as defined in 802.3, that can be used on the port.
->> +    enum:
->> +      - BaseT
->> +      - BaseK
->> +      - BaseS
->> +      - BaseC
->> +      - BaseL
->> +      - BaseD
->> +      - BaseE
->> +      - BaseF
->> +      - BaseV
->> +      - BaseMLD
->> +
->> +required:
->> +  - media
->> +
->> +allOf:
->> +  - if:
->> +      properties:
->> +        media:
->> +          contains:
->> +            const: BaseT
->> +    then:
->> +      required:
->> +        - pairs
-> 
-> else:
->   properties:
->     pairs: false
-> 
-> ??
+> Please drop the two "VA MIC BIAS" lines, see
+> https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=b49e37de8e70bc433b526a9f4382f72b7ac6492e
 
-Ah I didn't know this was necessary, I'll add that, thanks !
+Ack.
 
+>> +				"TX SWR_INPUT1", "ADC2_OUTPUT";
+>> +
+>> +		wcd-playback-dai-link {
+>> +			link-name = "WCD Playback";
+>> +
+>> +			cpu {
+>> +				sound-dai = <&q6apmbedai RX_CODEC_DMA_RX_0>;
+>> +			};
+>> +
+>> +			codec {
+>> +				sound-dai = <&wcd938x 0>, <&swr1 0>, <&lpass_rxmacro 0>;
+>> +			};
+>> +
+>> +			platform {
+>> +				sound-dai = <&q6apm>;
+>> +			};
+>> +		};
+>> +
+>> +		wcd-capture-dai-link {
+>> +			link-name = "WCD Capture";
+>> +
+>> +			cpu {
+>> +				sound-dai = <&q6apmbedai TX_CODEC_DMA_TX_3>;
+>> +			};
+>> +
+>> +			codec {
+>> +				sound-dai = <&wcd938x 1>, <&swr2 1>, <&lpass_txmacro 0>;
+>> +			};
+>> +
+>> +			platform {
+>> +				sound-dai = <&q6apm>;
+>> +			};
+>> +		};
+>> +
+>> +		wsa-dai-link {
+>> +			link-name = "WSA Playback";
+>> +
+>> +			cpu {
+>> +				sound-dai = <&q6apmbedai WSA_CODEC_DMA_RX_0>;
+>> +			};
+>> +
+>> +			codec {
+>> +				sound-dai = <&left_woofer>, <&left_tweeter>,
+>> +					    <&swr0 0>, <&lpass_wsamacro 0>,
+>> +					    <&right_woofer>, <&right_tweeter>,
+>> +					    <&swr3 0>, <&lpass_wsa2macro 0>;
+>> +			};
+>> +
+>> +			platform {
+>> +				sound-dai = <&q6apm>;
+>> +			};
+>> +		};
+>> +
+>> +		va-dai-link {
+>> +			link-name = "VA Capture";
+>> +
+>> +			cpu {
+>> +				sound-dai = <&q6apmbedai VA_CODEC_DMA_TX_0>;
+>> +			};
+>> +
+>> +			codec {
+>> +				sound-dai = <&lpass_vamacro 0>;
+>> +			};
+>> +
+>> +			platform {
+>> +				sound-dai = <&q6apm>;
+>> +			};
+>> +		};
+>> +	};
+>> [...]
+>> +&remoteproc_adsp {
+>> +	firmware-name = "qcom/x1e80100/adsp.mbn",
+>> +			"qcom/x1e80100/adsp_dtb.mbn";
 > 
+> We need a custom ADSP firmware for the TUXEDO, so this needs to be a
+> device-specific path (so that you can upload the correct firmware to
+> linux-firmware). e.g. "qcom/x1e80100/TUXEDO/adsp.mbn"
+
+Ack.
+
 >> +
->> +additionalProperties: true
+>> +	status = "okay";
+>> +};
 >> +
->> +...
->> diff --git a/Documentation/devicetree/bindings/net/ethernet-phy.yaml b/Documentation/devicetree/bindings/net/ethernet-phy.yaml
->> index 2ec2d9fda7e3..f434768d6bae 100644
->> --- a/Documentation/devicetree/bindings/net/ethernet-phy.yaml
->> +++ b/Documentation/devicetree/bindings/net/ethernet-phy.yaml
->> @@ -277,6 +277,17 @@ properties:
->>  
->>      additionalProperties: false
->>  
->> +  mdi:
->> +    type: object
->> +
->> +    patternProperties:
->> +      '^connector-[a-f0-9]+$':
+>> +&remoteproc_cdsp {
+>> +	firmware-name = "qcom/x1e80100/cdsp.mbn",
+>> +			"qcom/x1e80100/cdsp_dtb.mbn";
 > 
-> Unit addresses are hex, index suffixes are decimal: connector-[0-9]+
-
-Ah right, indeed. I'll address that.
-
+> If you expect that production versions of this device will have the
+> (firmware) secure boot enabled, this path should also be
+> device-specific. If retail versions will allow loading arbitrary
+> firmware this can stay as-is. 
 > 
+> Same for all other "firmware-name"s.
+
+Ack.
+
+>> +
+>> +	status = "okay";
+>> +};
+>> +
+>> +&smb2360_0 {
+>> +	status = "okay";
+>> +};
+>> +
+>> +&smb2360_0_eusb2_repeater {
+>> +	vdd18-supply = <&vreg_l3d_1p8>;
+>> +	vdd3-supply = <&vreg_l2b_3p0>;
+>> +};
+>> +
+>> +&smb2360_1 {
+>> +	status = "okay";
+>> +};
 > 
->> +        $ref: /schemas/net/ethernet-connector.yaml#
->> +
->> +        unevaluatedProperties: false
->> +
->> +    additionalProperties: false
->> +
->>  required:
->>    - reg
->>  
->> @@ -313,5 +324,12 @@ examples:
->>                      default-state = "keep";
->>                  };
->>              };
->> +            /* Fast Ethernet port, with only 2 pairs wired */
->> +            mdi {
->> +                connector-0 {
->> +                    pairs = <2>;
->> +                    media = "BaseT";
->> +                };
->> +            };
->>          };
->>      };
->> diff --git a/MAINTAINERS b/MAINTAINERS
->> index 1ab7e8746299..19ba82b98616 100644
->> --- a/MAINTAINERS
->> +++ b/MAINTAINERS
->> @@ -9276,6 +9276,7 @@ R:	Russell King <linux@armlinux.org.uk>
->>  L:	netdev@vger.kernel.org
->>  S:	Maintained
->>  F:	Documentation/ABI/testing/sysfs-class-net-phydev
->> +F:	Documentation/devicetree/bindings/net/ethernet-connector.yaml
->>  F:	Documentation/devicetree/bindings/net/ethernet-phy.yaml
->>  F:	Documentation/devicetree/bindings/net/mdio*
->>  F:	Documentation/devicetree/bindings/net/qca,ar803x.yaml
->> -- 
->> 2.49.0
->>
+> You have just a single USB-C port, so I would expect that there is also
+> only a single SMB2360 instance (for charging). Perhaps you can just drop
+> this node?
 
-Thanks for reviewing !
+Tested without this. Seems OK. Ack.
 
-Maxime
-
+Thanks,
+Georg
 
