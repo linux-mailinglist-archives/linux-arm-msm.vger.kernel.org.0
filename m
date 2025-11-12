@@ -1,168 +1,132 @@
-Return-Path: <linux-arm-msm+bounces-81462-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-81463-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [142.0.200.124])
-	by mail.lfdr.de (Postfix) with ESMTPS id ACB81C52FC5
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Nov 2025 16:23:55 +0100 (CET)
+Received: from ams.mirrors.kernel.org (ams.mirrors.kernel.org [IPv6:2a01:60a::1994:3:14])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3A12CC53085
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Nov 2025 16:29:22 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 24A2B5052C0
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Nov 2025 15:12:06 +0000 (UTC)
+	by ams.mirrors.kernel.org (Postfix) with ESMTPS id 7A3E03586AD
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Nov 2025 15:12:32 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4888435292E;
-	Wed, 12 Nov 2025 15:03:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2CA6333C510;
+	Wed, 12 Nov 2025 15:05:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="HC9G5MQS"
+	dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b="cW/Ju3Xd"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f49.google.com (mail-wr1-f49.google.com [209.85.221.49])
+Received: from mail-lj1-f175.google.com (mail-lj1-f175.google.com [209.85.208.175])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 286623431E3
-	for <linux-arm-msm@vger.kernel.org>; Wed, 12 Nov 2025 15:03:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 539AC2882D3
+	for <linux-arm-msm@vger.kernel.org>; Wed, 12 Nov 2025 15:05:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.175
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762959784; cv=none; b=fGXn4KWWWugqYFHEEmx2dPO50zLreRd7Ac5CxFpQkPNWCftUmKGh+VBiKVnCbNGtmYNyXW8QbW332BgS+zHW1lgK6VJLJnBdL2lgBTuWMKB5r0KlFkHnALbaNaPRRi9hixIq30sjNaUY4dZcWcZ0Vm0HV9vwwZ3iC4crYWN4pIA=
+	t=1762959908; cv=none; b=Fip/Cs/2o+uouIOOP9IFsyAGgiWtEQ5bYho0ST4xWGbgPpah29+aqq5Y3BY50KDapH/vZBGH6m+wlJjziGb6qxgJfykCIaTf6P1VVCosL3XBd1JW+b012aQAL7tZE27cWV8wEOsE+N/Vp4A1QuICsO5EEQ89ljHYW8GmH06h/NQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762959784; c=relaxed/simple;
-	bh=CEg/BR0cwvUubt7wKmvcZpBYJWSSViaS4k1tDGeLsnM=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=JYHSS6z3oDUEmzELV9fUX8pZ+A4Iod+lTCnAfoQFZtnO83x1ypZBX3F0kVXYSo/ILiaXAwwncroRczqOjcFlEdAxyDJnCEh1/cxop3Xl9fseHOkaO4AupN044A2+aNglqW2cbmNv8ekdeb5feqoGkbsKIDgIfgM007AgK0qH2Zo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=HC9G5MQS; arc=none smtp.client-ip=209.85.221.49
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wr1-f49.google.com with SMTP id ffacd0b85a97d-429cbdab700so116013f8f.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 12 Nov 2025 07:03:00 -0800 (PST)
+	s=arc-20240116; t=1762959908; c=relaxed/simple;
+	bh=FIAphDibMa8xAGt0oMhOdg/Lxpd1tnylTtVjb7k1iJM=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=HpqTviUYb4j0oO5ZrgrLgR4D8rxMeikVv496NZDGALhzYbxhrYEahsC3d9KPmnVYCbd3E8IWbgfyRtvAB9K9ltD0WfyOGXfUUgta0uVTG5IRgnx0M3dSX1R7ZMSrickuiRx/eF4NghgF62Fl9ULnb2ZKL6UklbKV4i9m7xcy4fo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl; spf=none smtp.mailfrom=bgdev.pl; dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b=cW/Ju3Xd; arc=none smtp.client-ip=209.85.208.175
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=bgdev.pl
+Received: by mail-lj1-f175.google.com with SMTP id 38308e7fff4ca-37a33b06028so8894861fa.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 12 Nov 2025 07:05:06 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1762959779; x=1763564579; darn=vger.kernel.org;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=dt/UyglSFhPayVd5V58V0cdDUFPe2/XCsVkpQyASDuI=;
-        b=HC9G5MQS97jbk8GJjNa5Wn9wGfz+T0WSwLorV7NghPu2jtKkyN3NhWSI5tIirH16Cy
-         vTtx3GuFwgPW2tAvtdw89lJW55wP/SvXxgq6OjDUMGy7CIYfPoCAHMHYIAbj+kWvByz6
-         gs66gub7azOQWXbM5PxDGpg+HG8n3Lo2z0KIC2HPcFqLN7xzSIV1y0knjYm3LNU376pd
-         aNxGoGxx9WxcAvsDlmBe538yRTyQh6BqDeKr5gk4haGd+1lKxc3QZZyyFPNV3MFjCq1d
-         4y0QzbrHb7Cw/xTFzCaUUXMQzw6QYJ0FNVBbkYyhv+sfl2CiJaQw4IhSwuF0I3s2zhC7
-         Rd2g==
+        d=bgdev-pl.20230601.gappssmtp.com; s=20230601; t=1762959904; x=1763564704; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=rmsnGw4PfJsQw8KA/neT+eebP5BBF6SBpPNbiarSAls=;
+        b=cW/Ju3Xd3wL9t399QvrP4TM9yvMhC39qt/nLYOjU24Z7Kn1reRSli5ecLHUb3SOEcS
+         566R0xKvlxdBI3pyDLqDhsduggbl4iCU0JTsV30M9e6092s/uk5/BMMNnBg2FGc8/v/T
+         lDNILxxMVlWst86bBVJgVDT0g9uOmhVLD1oTUDMHKpHx2FXRI+9m03pYciEl6oh2DHVt
+         XNFiGc/yerpmhbJhKwv9Nrk8qA9QeCzm83o7iwZRo+d0X/xePfK8h1oQFrBH8JI7Bw7o
+         dcD1ew1iXmnihKvT5whwRyOovuDnTOxSL6M/zp3nFlHsWJlXeTHHlFQFf3wRlATiZ+ys
+         539g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1762959779; x=1763564579;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=dt/UyglSFhPayVd5V58V0cdDUFPe2/XCsVkpQyASDuI=;
-        b=OoEn0WmEVXct7w7L4LOmc5+uTLGtLBi8xf8j/gqIHXP0l+j4130HTM1K5pDiIpHNbq
-         D0Ia82RJxUxnja8oMo0ytd3D82li9xZVA2y7QcnMRz3QK2DE4FEKqgTps+V1JbBVFVFs
-         KBta2NqFe//PfpX/5GZc8Rj+q2uf519WkdFfUKjtOI0aNWOXXAhsOcoB8WHDIRFP5NxI
-         8fu8yeH4I2uQqvkHcMHehl8HPwdZrWIMB08TjMiYRdf4G3HiCpvEBwVl81BJEE/rTsWk
-         5p6U6e9j6kaNinq6sDytRYBVSSxhhniI9yGb9Uky2Shpm0/zpcb4cL6VecfP9Dy3HDyZ
-         Gxzg==
-X-Forwarded-Encrypted: i=1; AJvYcCVSAN/3ByRORchgd9v5Tk6UomKt9mRw1PAobmJzQ5KgNpxKEv0729tn0+AUFYu+Obnau7tfzxDytzm+1w9B@vger.kernel.org
-X-Gm-Message-State: AOJu0YxJMLN9bsEkvfhpYATbtshEuiHEUIJumLS5huW3bT+Jh4tnEAmg
-	ZCABQNfrn8l2DNrKb1f3FPy5U+WiS///p4wjS2HtfJoNOI4XFCenLojm3ykFE8oUg0c=
-X-Gm-Gg: ASbGnct7w0lePwSiBOIIBaP3hpK431oIsXAjphDRDhNrafiZWtEPO908epfgwKsUzL4
-	E1sRFLQTahzazAxs8aTqjsAii8s+NJuePH+MT2R7ZMMxXqiPfdAizaMlOilb0WV8ZvYtMbgVqlM
-	MAjPpvT+48zQCea2UaiwOhGat+E94gXYs+Pj+h7OXQflgiICQWACei/UPtUZ5ljiB1TPYIDIMAL
-	moCfhiPu9XEtFATfkfgB/El8J0a2DCfh6zYdxJ7zPB7Cxb7fcwogstvHZTJHzYjRqKt4hLiSOAb
-	zhoGjciY10yEY88mbekoA5mKRoIacoCvv/Ng43GK+ACEtHi0d1DyGGiNqjGqFRjS/J68KDAPZkP
-	v7WxtC27FzIuCoa6EwUj9UFQIvj2QXNDCXK5EoJRMxjivnynRumlzu3DHX2t6nw9HL9i+twkxSz
-	kOB0mOtmciD19ychgF
-X-Google-Smtp-Source: AGHT+IENBm+sbHBZP8sKCFX53F0pXmzcEsrL3oVAqUeDgHS/EPxC04oGQPAKqUYSRNnCMVrGCIyjSg==
-X-Received: by 2002:a05:600c:190d:b0:475:decc:2a0b with SMTP id 5b1f17b1804b1-477871e67edmr17544805e9.3.1762959779385;
-        Wed, 12 Nov 2025 07:02:59 -0800 (PST)
-Received: from [127.0.1.1] ([178.197.219.123])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-477889be9a1sm15134355e9.6.2025.11.12.07.02.57
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 12 Nov 2025 07:02:58 -0800 (PST)
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Date: Wed, 12 Nov 2025 16:02:41 +0100
-Subject: [PATCH v2 4/4] arm64: dts: qcom: sm8750-mtp: Enable DisplayPort
- over USB
+        d=1e100.net; s=20230601; t=1762959904; x=1763564704;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=rmsnGw4PfJsQw8KA/neT+eebP5BBF6SBpPNbiarSAls=;
+        b=wz9UMVfjUaRba1XJPclcj/3WdEgXKkw6WGdZ87Oghli2+5Cqtg4TuQDv7wrd86i6oG
+         AZjdW3jBLAVg5hCGm1aS5tZZ0cL7mi1Sql4XGZLd2uVD8ofbwRSnUSA+8YZGmF9QcmnT
+         ueh+ZfcV+aJsUnwjJrtdzFXkRCFzi5h5aom5ObbEv6i16/dQ2qNTbtkt93pyi0ErDHDl
+         a8dNGEl+aI4EKcCFcVdshpFcZsfkA4CZMCFvTJzO+cc2mQfw8pOGez5McjkuOpYvyhiW
+         MwwJFN2z8pg+gtXMCpPYq/14dRNUAKTpcyt7Su2x+R8VK6zUzLzEztQsHD8IhOy9lqEw
+         JYSQ==
+X-Forwarded-Encrypted: i=1; AJvYcCXjvmYPehRz0ZYIY05um/XY/zX/zKawNHoFjiMpHO6QETvUNsyOi+T2I68+axBMzBX2G+z1sqIFOyoVj2bA@vger.kernel.org
+X-Gm-Message-State: AOJu0YxOyaJHAExZf9yXCLJXupCLzn/0ADaKRc8Yjz1k8b1SeknOYIEy
+	exF1aJ2ZhhqIzSISiFCRvKB5pkdw4LmPRO5RQp4Rpy2S80788atqrAVFiTqBtRlg710DihdAEwH
+	NpdFoqPStaZ3ofjcQWmlCthhFW1J5MU98yx+SuoHd9w==
+X-Gm-Gg: ASbGncsRy0wfgMq94Cspa2TkTp8hKGFuU6RkzcBlTyXVxEF58dVw9SMcjWfWl2ri9W3
+	iJ+l/EFImMut4NNwKuaoq2dZPO02nmAk1Pzh7W0NQ0clX1u57Svmk9zMbDRFrnDga+rC/ePcq8t
+	EPGUOa2qosaAFS/MfI3iYB1JMB9bkjc8E1S4U8bywCqur3ydmT/vPSvHtslYARum5ojyxn7xLtX
+	xITTO7Eb84HO4w8HYzV7dMcWNVSbijKTGBX000IdoQIrcQBhmPK3EZzB3qfqHJdsQq+125wrecw
+	vgQPoZ8jL874
+X-Google-Smtp-Source: AGHT+IGpFZP82Q3cbrNeFsJc4tKVrryXSSKN61jox+qRc2N3O6n0Phs2f40ef+TfbeVUzZ7oOVHXjU/rRF9NrH3t2mo=
+X-Received: by 2002:a05:6512:2244:b0:594:4ebf:e6eb with SMTP id
+ 2adb3069b0e04-59576df8bf0mr1056064e87.14.1762959904372; Wed, 12 Nov 2025
+ 07:05:04 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20251112-sm8750-display-dts-v2-4-d1567c583821@linaro.org>
-References: <20251112-sm8750-display-dts-v2-0-d1567c583821@linaro.org>
-In-Reply-To: <20251112-sm8750-display-dts-v2-0-d1567c583821@linaro.org>
-To: Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>
-Cc: Jessica Zhang <jesszhan@quicinc.com>, 
- Abhinav Kumar <abhinavk@quicinc.com>, Abel Vesa <abel.vesa@linaro.org>, 
- linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
- linux-kernel@vger.kernel.org, Neil Armstrong <neil.armstrong@linaro.org>, 
- Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-X-Mailer: b4 0.14.3
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1286;
- i=krzysztof.kozlowski@linaro.org; h=from:subject:message-id;
- bh=CEg/BR0cwvUubt7wKmvcZpBYJWSSViaS4k1tDGeLsnM=;
- b=owEBbQKS/ZANAwAKAcE3ZuaGi4PXAcsmYgBpFKGZgloiB5z8Wsgzr1Yow0LPIkOoaluZ9a68n
- 3x4mR/A6g2JAjMEAAEKAB0WIQTd0mIoPREbIztuuKjBN2bmhouD1wUCaRShmQAKCRDBN2bmhouD
- 1+51D/42Ubx4mQ5x+yvDt2GRYc5frR8p9FJ/0mrqW+lkuRup2kHaxcRxavznDik5eHfmZzqyxBG
- CwbbSp6+/FoQ9YGSThrLYWjBYtBVEeGQfuGvPi7icsTLbENAkbc1r+yY/698RC0qHpxrSMtM4jL
- cTU8k8gqY+6MAoU1W47GWeq3eh9N458CgkQAXvI2yORr2iM4Rhd2BQgfCX45BUzpuaNoMoQysX/
- IyF3YZyFt2stdXoiwD8ImA8pUd7KAlC3gNb97q6uq5lM9/dUC+r4J8rfboc8n8L2arsMFbz9x24
- 3eaLwLmMUT2TuZpIEXshT34KfbgEw5OVRlZpIsnOThayAUapeHJ8sAkgDz1zCXO3Pbc2zpL5s8i
- gOhj4VeXNS07dkGUKMMnWdDaMMZqvMbAW6ziM9giqnQD1hFdhlXtQwImSSS+JZHJulKkSP/svT1
- OfbUp1gWTTzw/29YBg35QdPb/2vT/xAnMl58Jxwve5Zylx+4TJSS6xcxXYPTQrYduqJ323Uruav
- pWVcM3zsJuIPLkB4gx7FkZ5uU7ZpTQckEY44F75gvtIAcCF8wQW+5aqicSpmDFdnc9tYaZmqs+m
- ZEyGnRRmHxyiQD2/fGOoNc/HX27nfMwa5F/GLLKrjhu6K1zYtvmCSNhte2sRLzzAmTrITsCpioe
- 5JRgAM2UdB8auNg==
-X-Developer-Key: i=krzysztof.kozlowski@linaro.org; a=openpgp;
- fpr=9BD07E0E0C51F8D59677B7541B93437D3B41629B
+References: <20251108-pci-m2-v2-0-e8bc4d7bf42d@oss.qualcomm.com> <20251108-pci-m2-v2-4-e8bc4d7bf42d@oss.qualcomm.com>
+In-Reply-To: <20251108-pci-m2-v2-4-e8bc4d7bf42d@oss.qualcomm.com>
+From: Bartosz Golaszewski <brgl@bgdev.pl>
+Date: Wed, 12 Nov 2025 16:04:51 +0100
+X-Gm-Features: AWmQ_bn6jfC1UwRAcmNPmB9esLpHkqY8yzwF9QLHVPKS_PQlxia95vgSqktJHYI
+Message-ID: <CAMRc=Mfh-5D4Fv+HGJLFMUcOGKPkq7Jsz64LZcTiYxP0b87goQ@mail.gmail.com>
+Subject: Re: [PATCH v2 4/4] power: sequencing: Add the Power Sequencing driver
+ for the PCIe M.2 connectors
+To: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
+Cc: Bjorn Helgaas <bhelgaas@google.com>, Manivannan Sadhasivam <mani@kernel.org>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, linux-kernel@vger.kernel.org, 
+	linux-pci@vger.kernel.org, devicetree@vger.kernel.org, 
+	linux-arm-msm@vger.kernel.org, Stephan Gerhold <stephan.gerhold@linaro.org>, 
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>, linux-pm@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Hook up DisplayPort parts over Type-C USB on MTP8750.
+On Sat, Nov 8, 2025 at 4:24=E2=80=AFAM Manivannan Sadhasivam
+<manivannan.sadhasivam@oss.qualcomm.com> wrote:
+>
+> +
+> +static int pwrseq_pcie_m2_match(struct pwrseq_device *pwrseq,
+> +                                struct device *dev)
+> +{
+> +       struct pwrseq_pcie_m2_ctx *ctx =3D pwrseq_device_get_drvdata(pwrs=
+eq);
+> +       struct device_node *remote, *endpoint;
+> +
+> +       /*
+> +        * Traverse the 'remote-endpoint' nodes and check if the remote n=
+ode's
+> +        * parent matches the OF node of 'dev'.
+> +        */
+> +       for_each_endpoint_of_node(ctx->of_node, endpoint) {
+> +               remote =3D of_graph_get_remote_port_parent(endpoint);
+> +               if (remote && (remote =3D=3D dev_of_node(dev))) {
+> +                       of_node_put(remote);
+> +                       of_node_put(endpoint);
+> +                       return PWRSEQ_MATCH_OK;
+> +               }
+> +               of_node_put(remote);
+> +       }
+> +
+> +       return PWRSEQ_NO_MATCH;
+> +}
 
-Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
----
- arch/arm64/boot/dts/qcom/sm8750-mtp.dts | 4 ++++
- arch/arm64/boot/dts/qcom/sm8750.dtsi    | 2 ++
- 2 files changed, 6 insertions(+)
+Nit: I would simplify this function with __free(device_node) since
+there'll be a v3 anyway. Other than that it looks good, so when the
+bindings get acked I assume this can go into the pwrseq/for-next?
+There don't seem to be any build-time dependencies between this and
+the PCI part.
 
-diff --git a/arch/arm64/boot/dts/qcom/sm8750-mtp.dts b/arch/arm64/boot/dts/qcom/sm8750-mtp.dts
-index a08bedd2987e..8d5a5d89a2ad 100644
---- a/arch/arm64/boot/dts/qcom/sm8750-mtp.dts
-+++ b/arch/arm64/boot/dts/qcom/sm8750-mtp.dts
-@@ -983,6 +983,10 @@ &mdss {
- 	status = "okay";
- };
- 
-+&mdss_dp0 {
-+	status = "okay";
-+};
-+
- &mdss_dsi0 {
- 	vdda-supply = <&vreg_l3g_1p2>;
- 
-diff --git a/arch/arm64/boot/dts/qcom/sm8750.dtsi b/arch/arm64/boot/dts/qcom/sm8750.dtsi
-index 11194b34e6dc..6584e324a163 100644
---- a/arch/arm64/boot/dts/qcom/sm8750.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8750.dtsi
-@@ -2648,6 +2648,7 @@ port@2 {
- 					reg = <2>;
- 
- 					usb_dp_qmpphy_dp_in: endpoint {
-+						remote-endpoint = <&mdss_dp0_out>;
- 					};
- 				};
- 			};
-@@ -3142,6 +3143,7 @@ port@1 {
- 
- 						mdss_dp0_out: endpoint {
- 							data-lanes = <0 1 2 3>;
-+							remote-endpoint = <&usb_dp_qmpphy_dp_in>;
- 						};
- 					};
- 				};
-
--- 
-2.48.1
-
+Bart
 
