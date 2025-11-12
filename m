@@ -1,55 +1,55 @@
-Return-Path: <linux-arm-msm+bounces-81353-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-81354-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [142.0.200.124])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8D2F8C51152
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Nov 2025 09:21:46 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 8B8EEC5118E
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Nov 2025 09:25:43 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id B91AC4F4FAA
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Nov 2025 08:16:47 +0000 (UTC)
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 2A04B4E2722
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Nov 2025 08:23:37 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4A1F62F533B;
-	Wed, 12 Nov 2025 08:16:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C309D2D6E42;
+	Wed, 12 Nov 2025 08:23:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b="vi/Gk5XL"
+	dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b="g3Mg4xdX"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtpout-04.galae.net (smtpout-04.galae.net [185.171.202.116])
+Received: from smtpout-03.galae.net (smtpout-03.galae.net [185.246.85.4])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 109AE2F5302
-	for <linux-arm-msm@vger.kernel.org>; Wed, 12 Nov 2025 08:16:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.171.202.116
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB49827EFE9;
+	Wed, 12 Nov 2025 08:23:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.246.85.4
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762935396; cv=none; b=sHt2En/rSVA+PwuN0ZQhVPfG4q5sBMeOvbyfUSJgo84N9EgGAqH/XvOnLrm0BZZxEW6jkgPb/pyrdGVIWQ66n8Yp4N+6srVsxQhC46IJjbFxmnX2fvkYjHslG4JaWCcUyZMmLRMI0G3BmMfK+S9PdDW/K906aD5bl7GifiGN/54=
+	t=1762935812; cv=none; b=jn/NL7fjMcpVp5OSTaSbkDkkbGt3thjtee+7+jRf5x6RpWulXzHg9DheLqYmrQPiDTJtyYW+HI7XDszW/eg+GI/HlZXNhJok0Xm6nuL6Vjl10z5qeflDTNQtebQHlb5RDUdPiyaSF21pPMqt4vgtcHnM/gWbdCZxCQQbcIy0TsY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762935396; c=relaxed/simple;
-	bh=D2VhTMOIho5TF5gmeTYsJz1QMNfT6fyktvgzdUCAGF0=;
+	s=arc-20240116; t=1762935812; c=relaxed/simple;
+	bh=leHrsHC3HX5T+UeIMtqLU31BJdR5MqyeYMo8G7lur0k=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=JRHVGAfjFyKx/7KnBcKFIubH0LmvtMIRTXZuzppaMMxVoVAIoehRTYZHvx4Jv2ClX51hwVdgpSCgj2cn5Go6qeLTjz/R3W/Yz20gNVf6vQwMFMWD8gYD5yc9gkdWgF1ypYHzq2Araq9yyN9SPay4pmj+AEpWwb8VbkoXpW9nO/o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com; spf=pass smtp.mailfrom=bootlin.com; dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b=vi/Gk5XL; arc=none smtp.client-ip=185.171.202.116
+	 In-Reply-To:Content-Type; b=MVXTYgfBaxdBYam9rMbnh2BKxqhs4IrVc74EujgzzHAxE9OqB2SZ4wQxqpFvx4r04xia9XvrRg454PbSV0CzVERlLkOo84wG6irNv8WNsVPSnoFsJ8h5gIOJBYJ2aLwXxV33+sWwixEYl7vtGukK/oyBafIyijU9nUdiAc/yWVQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com; spf=pass smtp.mailfrom=bootlin.com; dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b=g3Mg4xdX; arc=none smtp.client-ip=185.246.85.4
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bootlin.com
 Received: from smtpout-01.galae.net (smtpout-01.galae.net [212.83.139.233])
-	by smtpout-04.galae.net (Postfix) with ESMTPS id 82ABAC0F55A;
-	Wed, 12 Nov 2025 08:16:09 +0000 (UTC)
+	by smtpout-03.galae.net (Postfix) with ESMTPS id 22F7C4E4165C;
+	Wed, 12 Nov 2025 08:23:29 +0000 (UTC)
 Received: from mail.galae.net (mail.galae.net [212.83.136.155])
-	by smtpout-01.galae.net (Postfix) with ESMTPS id E91766070B;
-	Wed, 12 Nov 2025 08:16:30 +0000 (UTC)
-Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon) with ESMTPSA id 0D00810371904;
-	Wed, 12 Nov 2025 09:16:20 +0100 (CET)
+	by smtpout-01.galae.net (Postfix) with ESMTPS id E7F976070B;
+	Wed, 12 Nov 2025 08:23:28 +0000 (UTC)
+Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon) with ESMTPSA id 3728B1037196F;
+	Wed, 12 Nov 2025 09:23:22 +0100 (CET)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=dkim;
-	t=1762935389; h=from:subject:date:message-id:to:cc:mime-version:content-type:
+	t=1762935807; h=from:subject:date:message-id:to:cc:mime-version:content-type:
 	 content-transfer-encoding:content-language:in-reply-to:references;
-	bh=HQnMOSoBh6c02XpaM92rHFo3ekXwzKheXU/0txW3bog=;
-	b=vi/Gk5XLFGdPJ7ioZPuZQMq1Sw+qBGaB2Ibv2uhLkgVRAFIsTHFnB5wiGmnJsH+lEQ6qCV
-	KR3geUy9jHdD3rpPNj0UAev3bdA1gOAkxKr62rt5HgQ/rqbOiOu+5w6Lwcvkgu4R4opMfl
-	qJBgCadS4hhctbc1ioqQJKIFBT/wMdZcNDqamrTovDLBGo2GPEXyGVGiZEk6Gk4EWsCx9v
-	GGVQnQaULWqeyhaaLU5WMJT0oUCnv2qSB8uyBc5bPWmF5xZMNGK5UaJOtagxQ3q/G2wRjt
-	hxnPc6/6K8H8U3baaySQ00ln7aW5kILINmz9UUEtgpMsv0SFu3FAnGXg7rTwQQ==
-Message-ID: <dd488c39-3aa3-43f6-8cf7-abca4af3cc7a@bootlin.com>
-Date: Wed, 12 Nov 2025 09:16:20 +0100
+	bh=rTnbgSuE6RgEYpYQF2xhT+pvJdvD6WChCNxRoxD+Pr4=;
+	b=g3Mg4xdXi7Vo0r1FgrG9Rjot6Ej08ydVfBPOwi8fdXDBWr5eT9S6lnTvA26SsxaTHQ9gx4
+	BFaeeJOaIuWS80K+dWG1DJtjToCM74e59oy4iMKORNxT5ehTm7Aw9jIW0q9OjQ9292A7Ki
+	Pl4MUmnLn79fRrj9sFOmIkberIWtNCbPlj/sdUydxvgUsd4/XwUV0H7E6dX/B/6Wo104bM
+	io/Vmu5l+cCK2zU8bMrnt2Dk6RgfCqQLBohwNnbyt4blColBHfqaVsWwmnjjzL1MpUdx3f
+	qyVc/l0tHLVm+gq7dX2oL4rdXTWFHjYKftqfCgZms2gUK2eK9bvvnK5rb734Dg==
+Message-ID: <33bad77f-8468-4e4a-a60d-adf9e1145816@bootlin.com>
+Date: Wed, 12 Nov 2025 09:23:21 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -57,8 +57,8 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH net-next v15 01/15] dt-bindings: net: Introduce the
- ethernet-connector description
+Subject: Re: [PATCH net-next v15 03/15] net: phy: Introduce PHY ports
+ representation
 To: Andrew Lunn <andrew@lunn.ch>
 Cc: davem@davemloft.net, netdev@vger.kernel.org,
  linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
@@ -82,40 +82,77 @@ Cc: davem@davemloft.net, netdev@vger.kernel.org,
  Daniel Golle <daniel@makrotopia.org>,
  Dimitri Fedrau <dimitri.fedrau@liebherr.com>
 References: <20251106094742.2104099-1-maxime.chevallier@bootlin.com>
- <20251106094742.2104099-2-maxime.chevallier@bootlin.com>
- <56410c74-3d0e-4cdc-87a0-230cad8f691a@lunn.ch>
+ <20251106094742.2104099-4-maxime.chevallier@bootlin.com>
+ <fc89e17f-c6f5-4a84-8780-737969ed2e22@lunn.ch>
 From: Maxime Chevallier <maxime.chevallier@bootlin.com>
 Content-Language: en-US
-In-Reply-To: <56410c74-3d0e-4cdc-87a0-230cad8f691a@lunn.ch>
+In-Reply-To: <fc89e17f-c6f5-4a84-8780-737969ed2e22@lunn.ch>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Last-TLS-Session-Version: TLSv1.3
 
 
 
-On 11/11/2025 04:34, Andrew Lunn wrote:
-> On Thu, Nov 06, 2025 at 10:47:26AM +0100, Maxime Chevallier wrote:
->> The ability to describe the physical ports of Ethernet devices is useful
->> to describe multi-port devices, as well as to remove any ambiguity with
->> regard to the nature of the port.
->>
->> Moreover, describing ports allows for a better description of features
->> that are tied to connectors, such as PoE through the PSE-PD devices.
->>
->> Introduce a binding to allow describing the ports, for now with 2
->> attributes :
->>
->>  - The number of lanes, which is a quite generic property that allows
->>    differentating between multiple similar technologies such as BaseT1
->>    and "regular" BaseT (which usually means BaseT4).
+On 11/11/2025 04:53, Andrew Lunn wrote:
+>> +/**
+>> + * phy_caps_medium_get_supported() - Returns linkmodes supported on a given medium
+>> + * @supported: After this call, contains all possible linkmodes on a given medium,
+>> + *	       and with the given number of lanes, or less.
 > 
-> You still use lanes here, but the implementation has moved on to
-> pairs.
-> 
-> Please add my Reviewed-by when you fix this.
+> lanes -> pairs?
 
-Arg, I've made updates on lanes -> pairs, but as you point out I have
-missed a few :( thanks for spotting this,
+indeed :(
+
+> 
+>> +	/* The PHY driver might have added, removed or set medium/lanes info,
+>> +	 * so update the port supported accordingly.
+> 
+> lanes -> pairs?
+
+yes true :(
+> 
+>> +struct phy_port *phy_of_parse_port(struct device_node *dn)
+>> +{
+>> +	struct fwnode_handle *fwnode = of_fwnode_handle(dn);
+>> +	enum ethtool_link_medium medium;
+>> +	struct phy_port *port;
+>> +	const char *med_str;
+>> +	u32 pairs = 0, mediums = 0;
+>> +	int ret;
+>> +
+>> +	ret = fwnode_property_read_u32(fwnode, "pairs", &pairs);
+>> +	if (ret)
+>> +		return ERR_PTR(ret);
+>> +
+> 
+> I think this needs to come later. It is not critical now, but when we
+> come to add other medium, it will need moving. If we add say -K, and
+> need lanes, we don't want to error out here because pairs is missing.
+
+Ack, I'll relax the check
+
+> 
+>> +	ret = fwnode_property_read_string(fwnode, "media", &med_str);
+>> +	if (ret)
+>> +		return ERR_PTR(ret);
+>> +
+>> +	medium = ethtool_str_to_medium(med_str);
+>> +	if (medium == ETHTOOL_LINK_MEDIUM_NONE)
+>> +		return ERR_PTR(-EINVAL);
+> 
+>> +	if (pairs && medium != ETHTOOL_LINK_MEDIUM_BASET) {
+>> +		pr_err("pairs property is only compatible with BaseT medium\n");
+>> +		return ERR_PTR(-EINVAL);
+>> +	}
+> 
+> This i think needs changing, if medium == ETHTOOL_LINK_MEDIUM_BASET
+> then get pairs, and validate it. I would probably also test it is 1,
+> 2, or 4.
+
+That's fine by me :) I'll update the binding as well then, as having 3
+pairs will never be correct.
+
+Thanks a lot for looking at this !
 
 Maxime
 
