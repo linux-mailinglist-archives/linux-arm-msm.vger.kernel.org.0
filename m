@@ -1,47 +1,47 @@
-Return-Path: <linux-arm-msm+bounces-81436-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-81438-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6F78DC52FBC
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Nov 2025 16:23:40 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id AD090C52EE3
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Nov 2025 16:15:59 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 30931505568
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Nov 2025 14:27:03 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id DB29F505E4F
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Nov 2025 14:27:31 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4A7082F0698;
-	Wed, 12 Nov 2025 14:26:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 48EF133A030;
+	Wed, 12 Nov 2025 14:26:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="dH8qx+eg"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="IjNF7uqq"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F69D2C2340;
-	Wed, 12 Nov 2025 14:26:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18580339B44;
+	Wed, 12 Nov 2025 14:26:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762957610; cv=none; b=jLXyd72IuKjl7j38ZuyZB+qoLKbLg/fVw/XwHHqOo/pD1atG6KD+bdSmCQC5vakL74MK1mh1lc057u9OBPKtjo1LUYpRn8V/xH742ziwfLMIndOq+of8YJJfQN+FQ9fl8tE5BZ+r/Bkvv5HiZeC0eguJi9aFwBaFE8Fql26dC/4=
+	t=1762957614; cv=none; b=M3dYy2PGCp82L1eHzdRtdNUQHETqz2wY8vvK402b1cWPkRr7kxmOGyEznqDLa0gN3wEHsSuPUsRtwYoC3Thn+2eEBiOOx5nAjCoywa3iIRAzIrj60bfkhbTneO2MLevhxQbzb4wDy1IV/X3G0tyqY/Lsnzu2xxZYHx03RT3swCI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762957610; c=relaxed/simple;
-	bh=9VysWk+Q/2Wk/gqHBbWZCfUFWziKZ/B3UYPT/bITXRw=;
+	s=arc-20240116; t=1762957614; c=relaxed/simple;
+	bh=H2w2LdgGmezNcpuEixmnvVoao2GmwFUKtVrfj1/uvXs=;
 	h=Date:Content-Type:MIME-Version:From:Cc:To:In-Reply-To:References:
-	 Message-Id:Subject; b=lXTTg2NFbJz2hQbV6pvtSijgtxIbX2CZCvraa5IUyodCBTHjRv19h539BHpfqhADb3Rv96TJz7rDktEOJqkPFcrG6ZVm73VghsLQKKJxTqkqVlPcTO5kOlZpcg20Lz5wry7ipMubw89oYZiop+wGRZkmWDCvHPLj8RVZ4pXwDyo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=dH8qx+eg; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9ABD3C4CEF7;
-	Wed, 12 Nov 2025 14:26:49 +0000 (UTC)
+	 Message-Id:Subject; b=bP20CXAvlXsqDN1eOV973XrLxza6M2uBd9fG++MSpSjcNv8tBGgB5IHBzH/5iLPz3L52KjCYNbT1hGfspk0l2g/vEOXtUvUezyj8pbkXfLlWPTd/2YDK+HDXuXh9iJIWQMnFM/xuB/ryvUztMFza4FFzvpK7qk5f9rHDMcdf+MQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=IjNF7uqq; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66280C4CEF7;
+	Wed, 12 Nov 2025 14:26:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1762957609;
-	bh=9VysWk+Q/2Wk/gqHBbWZCfUFWziKZ/B3UYPT/bITXRw=;
+	s=k20201202; t=1762957613;
+	bh=H2w2LdgGmezNcpuEixmnvVoao2GmwFUKtVrfj1/uvXs=;
 	h=Date:From:Cc:To:In-Reply-To:References:Subject:From;
-	b=dH8qx+egXHPxyfOel824HrCIBDbNrypdx7SuHvrxW2/B0Ocf7fZYFVmQL4Mrs7AZW
-	 wmZECb+Bw6NVGgiu+eZqYvVnpCX0HGXX+aZHUDBjKnNn3EmukzFF8TG631usntrpFU
-	 kD2CECtjjngcD9rmTca4bKoKLxcozGx6abjiBogLjGgb1/Fgs6O/E2ba3HyKkly3IK
-	 Rtwe4JSbHypds8wldR5BaX66clBl5kC6YhxjC2L0W2dLSGUqI+sQlGrIgPLBdLvkAa
-	 bvkgfWGCPiOgLrekymTEcL9JgRWbZvGpOhB8KTQNM9G6iX4ekzsQWPRKrKxUgEcUjB
-	 JmP2r87WFVxRA==
-Date: Wed, 12 Nov 2025 08:26:47 -0600
+	b=IjNF7uqqNg5rrKU/aLdvqUsFeBdhedBmMfNzyX0WYxgSDCdHq8LUGYVnCl0ee2RaI
+	 vqugYI+Wm/QG9fGt0byyDrtNCwuipOx3dEtJzP73FN/Ta9b0C07/V7zeSMkE6mXful
+	 +oNX3IQtr7X2veplfVe31J0NX7zH1CB9POYPnqNOdMDZsKf3i2Jm3LD/1IRXunODL7
+	 r83SUqmvUSSgWToyW8UpLcRzc3erMJFHoCINdohZ+h2Ahg0Je6ViYZ+p4exDCXtq6h
+	 9Bn87hvTtMLuBsZa4P96xo5rJAnJhCViV09X1cJuMMdL9jskDN+PR9D7gStgarHzkq
+	 GXIFRiEMfg4hw==
+Date: Wed, 12 Nov 2025 08:26:52 -0600
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
@@ -51,43 +51,37 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 From: "Rob Herring (Arm)" <robh@kernel.org>
-Cc: Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Bjorn Andersson <andersson@kernel.org>, linux-arm-msm@vger.kernel.org, 
- linux-kernel@vger.kernel.org, Konrad Dybcio <konradybcio@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>, devicetree@vger.kernel.org
-To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-In-Reply-To: <20251111-db820c-pro-v1-0-6eece16c5c23@oss.qualcomm.com>
-References: <20251111-db820c-pro-v1-0-6eece16c5c23@oss.qualcomm.com>
-Message-Id: <176295563376.1637834.15728252609575729805.robh@kernel.org>
-Subject: Re: [PATCH 0/2] arm64: dts: qcom: add AP8096SG variant of DB820c
+Cc: linux-bluetooth@vger.kernel.org, quic_shuaz@quicinc.com, 
+ quic_chezhou@quicinc.com, Bjorn Andersson <andersson@kernel.org>, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>, linux-kernel@vger.kernel.org, 
+ Konrad Dybcio <konradybcio@kernel.org>, linux-arm-msm@vger.kernel.org, 
+ cheng.jiang@oss.qualcomm.com, quic_jiaymao@quicinc.com, 
+ devicetree@vger.kernel.org
+To: Wei Deng <wei.deng@oss.qualcomm.com>
+In-Reply-To: <20251112071147.1450258-1-wei.deng@oss.qualcomm.com>
+References: <20251112071147.1450258-1-wei.deng@oss.qualcomm.com>
+Message-Id: <176295563483.1637887.5249582727821921773.robh@kernel.org>
+Subject: Re: [PATCH v2 0/1] arm64: dts: qcom: lemans-evk: Enable Bluetooth
+ support
 
 
-On Tue, 11 Nov 2025 18:02:50 +0200, Dmitry Baryshkov wrote:
-> While debugging a crash in the DRM CI setup I noticed that the kernel
-> warns about the unsupported hardware in CPU OPP tables. After a small
-> research I found that board indeed uses APQ8096SG rather than APQ8096.
-> Add DT file for these boards.
+On Wed, 12 Nov 2025 12:41:46 +0530, Wei Deng wrote:
+> Changes for v2
+> - Update commit message
+> - Remove qup_uart17 settings
+> - Remove CC stable
+> - V1 link
+>   https://lore.kernel.org/all/20251110055709.319587-1-wei.deng@oss.qualcomm.com/
 > 
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-> ---
-> Dmitry Baryshkov (2):
->       dt-bindings: arm: qcom: add Dragonboard 820c using APQ8096SG SoC
->       arm64: dts: qcom: add apq8096sg-db820c, AP8096SG variant of DB820c
+> Wei Deng (1):
+>   arm64: dts: qcom: lemans-evk: Enable Bluetooth support
 > 
->  Documentation/devicetree/bindings/arm/qcom.yaml    |    7 +
->  arch/arm64/boot/dts/qcom/Makefile                  |    1 +
->  arch/arm64/boot/dts/qcom/apq8096-db820c.dts        | 1126 +-------------------
->  .../{apq8096-db820c.dts => apq8096-db820c.dtsi}    |    5 -
->  arch/arm64/boot/dts/qcom/apq8096sg-db820c.dts      |   15 +
->  5 files changed, 24 insertions(+), 1130 deletions(-)
-> ---
-> base-commit: ab40c92c74c6b0c611c89516794502b3a3173966
-> change-id: 20251111-db820c-pro-8ecd2a28520e
+>  arch/arm64/boot/dts/qcom/lemans-evk.dts | 99 +++++++++++++++++++++++++
+>  1 file changed, 99 insertions(+)
 > 
-> Best regards,
 > --
-> With best wishes
-> Dmitry
+> 2.25.1
 > 
 > 
 > 
@@ -108,19 +102,21 @@ make sure dt-schema is up to date:
 
 
 This patch series was applied (using b4) to base:
- Base: ab40c92c74c6b0c611c89516794502b3a3173966 (use --merge-base to override)
+ Base: attempting to guess base-commit...
+ Base: tags/next-20251112 (exact match)
+ Base: tags/next-20251112 (use --merge-base to override)
 
 If this is not the correct base, please add 'base-commit' tag
 (or use b4 which does this automatically)
 
-New warnings running 'make CHECK_DTBS=y for arch/arm64/boot/dts/qcom/' for 20251111-db820c-pro-v1-0-6eece16c5c23@oss.qualcomm.com:
+New warnings running 'make CHECK_DTBS=y for arch/arm64/boot/dts/qcom/' for 20251112071147.1450258-1-wei.deng@oss.qualcomm.com:
 
-arch/arm64/boot/dts/qcom/apq8096sg-db820c.dtb: usb@6af8800 (qcom,msm8996-dwc3): 'extcon' does not match any of the regexes: '^pinctrl-[0-9]+$', '^usb@[0-9a-f]+$'
-	from schema $id: http://devicetree.org/schemas/usb/qcom,dwc3.yaml
-arch/arm64/boot/dts/qcom/apq8096sg-db820c.dtb: usb@76f8800 (qcom,msm8996-dwc3): 'extcon' does not match any of the regexes: '^pinctrl-[0-9]+$', '^usb@[0-9a-f]+$'
-	from schema $id: http://devicetree.org/schemas/usb/qcom,dwc3.yaml
-arch/arm64/boot/dts/qcom/apq8096sg-db820c.dtb: syscon@9a10000 (syscon): compatible: ['syscon'] is too short
-	from schema $id: http://devicetree.org/schemas/mfd/syscon-common.yaml
+arch/arm64/boot/dts/qcom/lemans-evk.dtb: wcn6855-pmu (qcom,wcn6855-pmu): 'vddpcielp3-supply', 'vddpcielp9-supply' do not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/regulator/qcom,qca6390-pmu.yaml
+arch/arm64/boot/dts/qcom/lemans-evk.dtb: wcn6855-pmu (qcom,wcn6855-pmu): 'vddpcie1p3-supply' is a required property
+	from schema $id: http://devicetree.org/schemas/regulator/qcom,qca6390-pmu.yaml
+arch/arm64/boot/dts/qcom/lemans-evk.dtb: wcn6855-pmu (qcom,wcn6855-pmu): 'vddpcie1p9-supply' is a required property
+	from schema $id: http://devicetree.org/schemas/regulator/qcom,qca6390-pmu.yaml
 
 
 
