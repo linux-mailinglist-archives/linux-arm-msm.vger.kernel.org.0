@@ -1,228 +1,120 @@
-Return-Path: <linux-arm-msm+bounces-81467-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-81471-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ams.mirrors.kernel.org (ams.mirrors.kernel.org [IPv6:2a01:60a::1994:3:14])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4E541C5368A
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Nov 2025 17:32:54 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id AB9F1C53891
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Nov 2025 17:57:37 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ams.mirrors.kernel.org (Postfix) with ESMTPS id 5C8BF35B9C9
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Nov 2025 16:19:33 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 52B7756369E
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Nov 2025 16:32:59 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BB2DE2D3233;
-	Wed, 12 Nov 2025 16:15:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6D82F34250C;
+	Wed, 12 Nov 2025 16:32:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Mj9LpvMV"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Kolr7ydK"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 906102D0C70;
-	Wed, 12 Nov 2025 16:15:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F6A233C53F;
+	Wed, 12 Nov 2025 16:32:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762964129; cv=none; b=aG1Q0zdy/U1sCnZVO2RlKNKPK2Wb/R6m9D52dMXvKN59r9e5GYSDtXA6Gem4bOdyS4n1xodBB2LvqJzZDBnGVlaHWgrO2+3WbW4D8uH8gFJmBsuPn7RY/6dBUngENoHakogoIvx0oaxGz2O3eeBSuqkddGczJ4tSQkZwKTS3dUU=
+	t=1762965148; cv=none; b=lKs0v9C50Cj+JabJUkaeiq7LW8L8oMKQm03M7WDujCP5dEN9Aqr9fKeX0KSBvhPo8cXRrE55yoPelUWU2n3TQuyqDndTW9G6/K1WvfSM9tB8SM8Nk4dL6Xo13dJ3grdk6UTHbdV0UGfNBMd4LrF6OFyfIkowPZc+DYNg7XhftsQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762964129; c=relaxed/simple;
-	bh=jr2jj0NNeOlSkjn/MTgOK8TwOXuV3wzWI3+dwpzsasI=;
+	s=arc-20240116; t=1762965148; c=relaxed/simple;
+	bh=TGE/p1r9FCUCFgwWgcDgzkM4sT69JijtRoehdTdV80o=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=pWI0gkO0Icwsb8cNhZLg8emvgtoW73qVSIl2Fe5MN84+T9na0qnqItW9rfp0brwsxp1ATnznyGBHaJlgAP5X1f0IFmauUCTmOanXxoVOGJ3CBm3EzfCXoYI1EpdLR5voDioTsWM9U3lqfhiM/CQRiJA0UUFOsYQLqMuwIVvzdXM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Mj9LpvMV; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BBC66C19421;
-	Wed, 12 Nov 2025 16:15:28 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=dtEz+wHo+n1PD6uL9DY1aLuogcYcOx/bxdsm4NNw+GBG2dpkRXRxUsLtvFFc5VinzCfK/fLxHuL0NbLV3ktJLC4xWgFR8TK6NoOGHr1Xx7LgiXF762tq/UdmpQ1zr6lzH1T+fCU1qyPz/xuFSe6ROpbkphxuKlQcxQ4dqLIZ8SQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Kolr7ydK; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC0FCC4AF0E;
+	Wed, 12 Nov 2025 16:32:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1762964129;
-	bh=jr2jj0NNeOlSkjn/MTgOK8TwOXuV3wzWI3+dwpzsasI=;
+	s=k20201202; t=1762965147;
+	bh=TGE/p1r9FCUCFgwWgcDgzkM4sT69JijtRoehdTdV80o=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=Mj9LpvMVqFq1XK8hFK01+6fDPWy0GZ4hFzSQRnsscaqExHcki2FWF6EcGc7m/47Qo
-	 DYhRguS1QQa86Z5dNX6yE2YqvoQhRitm3fngt2DrdXllEoxw8NEVk7elFgmjYw0aw2
-	 ibScTaCQLyxqPNP8qCV9UaYwAHaOq889OecEJqN2WZXp8mliHYkIpo76pGFOh9QrhK
-	 jYIAGr6CAh2ow2WAqgzdweMqHVOIdC4P7DLjCgPeF55tRNEzTB7LW5Sh5ke0I63Nwe
-	 AywdXC3cXmh1djRf223iA7ZJqPJU87toDrtD/Ko4v5neIwZjCbq67FVMAfVQPxBT0Q
-	 fr/9/J2Cyr+rw==
-Date: Wed, 12 Nov 2025 10:19:46 -0600
+	b=Kolr7ydK7VpWICD1e82U3h5brfhIMjAi2+x3TRfMw8GqyuFndLrP+1N1giEH3461F
+	 tbCcoc5oYdZfwmi3Ff830DyWNIQ6da5u+mScmMZOQs29A62bUkphhjn6yKXMsVdjuH
+	 k2V2SOnBxneJi0qsbnemJKXLhrCaDuvjItw+7GbcscSKFPwDEinIKwpyz1sqzjRhzj
+	 Xp3hIOgTQUaNiKOqIOFS3u5lwJ5emeCiA+PpC6E5RgbhO1FhpG7C/vxJnDuJWhGVP0
+	 BDJ0SogafTioSnoPpd3yBNidLMLzmZ0no+DTvnqIo5LptKKT4ZFIq2/zddnItrbOXQ
+	 FPlJXBHMwVNNA==
+Date: Wed, 12 Nov 2025 10:36:45 -0600
 From: Bjorn Andersson <andersson@kernel.org>
-To: Bartosz Golaszewski <brgl@bgdev.pl>
-Cc: Vinod Koul <vkoul@kernel.org>, linux-arm-msm@vger.kernel.org, 
-	dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Subject: Re: [PATCH 3/3] dmaengine: qcom: bam_dma: convert tasklet to a
- workqueue
-Message-ID: <rrw7q7cmkaykng5mnyqk5oxsjednptx3yvjilh3tf5uub4nxzh@p5a4sbgbaha2>
-References: <20251106-qcom-bam-dma-refactor-v1-0-0e2baaf3d81a@linaro.org>
- <20251106-qcom-bam-dma-refactor-v1-3-0e2baaf3d81a@linaro.org>
+To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Cc: Loic Poulain <loic.poulain@oss.qualcomm.com>, konradybcio@kernel.org, 
+	robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org, sre@kernel.org, 
+	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, linux-pm@vger.kernel.org
+Subject: Re: [PATCH 3/5] dt-bindings: firmware: qcom,scm: Document reboot mode
+Message-ID: <sdhnchve6r5i4frhlx5q7lod5npzosbfdjjyd56l2z5ksoe4t4@lhm6d2pzsztm>
+References: <20251103182006.1158383-1-loic.poulain@oss.qualcomm.com>
+ <20251103182006.1158383-4-loic.poulain@oss.qualcomm.com>
+ <aqoxdaq72prkeqwxmmohlmbpx7icuc32sej7did6vt6rzrgfib@bvmt7ppkvloc>
+ <CAFEp6-2GGA2gvBKfO0fZemVmJmjQpTQEJ0vLfEewfhHKOYQGSQ@mail.gmail.com>
+ <be0a418b-5e8f-4895-a3b8-482b6ad6a40e@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20251106-qcom-bam-dma-refactor-v1-3-0e2baaf3d81a@linaro.org>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <be0a418b-5e8f-4895-a3b8-482b6ad6a40e@oss.qualcomm.com>
 
-On Thu, Nov 06, 2025 at 04:44:52PM +0100, Bartosz Golaszewski wrote:
-> From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+On Wed, Nov 05, 2025 at 10:44:05AM +0100, Konrad Dybcio wrote:
+> On 11/4/25 10:19 PM, Loic Poulain wrote:
+> > On Tue, Nov 4, 2025 at 3:12 AM Bjorn Andersson <andersson@kernel.org> wrote:
+> >>
+> >> On Mon, Nov 03, 2025 at 07:20:04PM +0100, Loic Poulain wrote:
+> >>> SCM can be used to support reboot mode such as Emergency Recovery Mode.
+> >>
+> >> "such as"? Do we have any other useful bits in here?
+> > 
+> >  I heard we may have different EDL modes supported like USB or SD
+> > based EDL, but I don't know much about the details.
+> > 
+> >>
+> >>>
+> >>> Signed-off-by: Loic Poulain <loic.poulain@oss.qualcomm.com>
+> >>> ---
+> >>>  Documentation/devicetree/bindings/firmware/qcom,scm.yaml | 4 ++++
+> >>>  1 file changed, 4 insertions(+)
+> >>>
+> >>> diff --git a/Documentation/devicetree/bindings/firmware/qcom,scm.yaml b/Documentation/devicetree/bindings/firmware/qcom,scm.yaml
+> >>> index b913192219e4..c8bb7dacd900 100644
+> >>> --- a/Documentation/devicetree/bindings/firmware/qcom,scm.yaml
+> >>> +++ b/Documentation/devicetree/bindings/firmware/qcom,scm.yaml
+> >>> @@ -121,6 +121,10 @@ properties:
+> >>>            - description: offset of the download mode control register
+> >>>      description: TCSR hardware block
+> >>>
+> >>> +patternProperties:
+> >>> +  "^mode-.*$":
+> >>
+> >> I'd only ever expect mode-edl = <1>. Do we have additional modes that
+> >> warrant the generic nature of this?
+> > 
+> > We may extend this to mode-ramdump if it makes sense, but as of now
+> > it's indeed only edl, will fix it.
 > 
-> There is nothing in the interrupt handling that requires us to run in
-> atomic context so convert the tasklet to a workqueue.
+> Would adding ramdump here be a matter of:
 > 
-> Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-
-Reviewed-by: Bjorn Andersson <andersson@kernel.org>
-
-I like the patch, getting off the tasklet is nice. But reading the
-patch/driver spawned some additional questions (not (necessarily)
-feedback to this patch).
-
-> ---
->  drivers/dma/qcom/bam_dma.c | 32 ++++++++++++++++----------------
->  1 file changed, 16 insertions(+), 16 deletions(-)
+> + mode-ramdump = <0xmagic>
 > 
-> diff --git a/drivers/dma/qcom/bam_dma.c b/drivers/dma/qcom/bam_dma.c
-> index bcd8de9a9a12621a36b49c31bff96f474468be06..40ad4179177fb7a074776db05b834da012f6a35f 100644
-> --- a/drivers/dma/qcom/bam_dma.c
-> +++ b/drivers/dma/qcom/bam_dma.c
-> @@ -42,6 +42,7 @@
->  #include <linux/pm_runtime.h>
->  #include <linux/scatterlist.h>
->  #include <linux/slab.h>
-> +#include <linux/workqueue.h>
->  
->  #include "../dmaengine.h"
->  #include "../virt-dma.h"
-> @@ -397,8 +398,8 @@ struct bam_device {
->  	struct clk *bamclk;
->  	int irq;
->  
-> -	/* dma start transaction tasklet */
-> -	struct tasklet_struct task;
-> +	/* dma start transaction workqueue */
-> +	struct work_struct work;
->  };
->  
->  /**
-> @@ -869,7 +870,7 @@ static u32 process_channel_irqs(struct bam_device *bdev)
->  			/*
->  			 * if complete, process cookie. Otherwise
->  			 * push back to front of desc_issued so that
-> -			 * it gets restarted by the tasklet
-> +			 * it gets restarted by the work queue.
->  			 */
->  			if (!async_desc->num_desc) {
->  				vchan_cookie_complete(&async_desc->vd);
-> @@ -899,9 +900,9 @@ static irqreturn_t bam_dma_irq(int irq, void *data)
->  
->  	srcs |= process_channel_irqs(bdev);
->  
-> -	/* kick off tasklet to start next dma transfer */
-> +	/* kick off the work queue to start next dma transfer */
->  	if (srcs & P_IRQ)
-> -		tasklet_schedule(&bdev->task);
-> +		schedule_work(&bdev->work);
+> ?
+> 
+> If so, please add it too
+> 
 
-I'm not entirely familiar with the BAM driver, but wouldn't it be
-preferable to make the interrupt handler threaded and just kick off the
-next set of transactions directly from here? To reduce the downtime
-between transactions when more are ready queued.
-
-It seems this might be of concern when we have queued more transfers
-than can fit in the hardware, but I don't have any data indicating how
-often this happens.
-
->  
->  	ret = pm_runtime_get_sync(bdev->dev);
-
-The "bus" clock is tied to the PM runtime state, so I presume this is
-here in order to ensure the block is clocked for the following register
-accesses(?)
-
-But process_channel_irqs() was just all over the same register space.
-
-
-Also noteworthy is that none of the pm_runtime_get_sync() in this driver
-calls have adequate error handling.
+But what does that mean? "Hey computer, perform a graceful shutdown and
+when you're done, give me a ramdump"?
 
 Regards,
 Bjorn
 
->  	if (ret < 0)
-> @@ -1097,14 +1098,14 @@ static void bam_start_dma(struct bam_chan *bchan)
->  }
->  
->  /**
-> - * dma_tasklet - DMA IRQ tasklet
-> - * @t: tasklet argument (bam controller structure)
-> + * bam_dma_work() - DMA interrupt work queue callback
-> + * @work: work queue struct embedded in the BAM controller device struct
->   *
->   * Sets up next DMA operation and then processes all completed transactions
->   */
-> -static void dma_tasklet(struct tasklet_struct *t)
-> +static void bam_dma_work(struct work_struct *work)
->  {
-> -	struct bam_device *bdev = from_tasklet(bdev, t, task);
-> +	struct bam_device *bdev = from_work(bdev, work, work);
->  	struct bam_chan *bchan;
->  	unsigned int i;
->  
-> @@ -1117,14 +1118,13 @@ static void dma_tasklet(struct tasklet_struct *t)
->  		if (!list_empty(&bchan->vc.desc_issued) && !IS_BUSY(bchan))
->  			bam_start_dma(bchan);
->  	}
-> -
->  }
->  
->  /**
->   * bam_issue_pending - starts pending transactions
->   * @chan: dma channel
->   *
-> - * Calls tasklet directly which in turn starts any pending transactions
-> + * Calls work queue directly which in turn starts any pending transactions
->   */
->  static void bam_issue_pending(struct dma_chan *chan)
->  {
-> @@ -1292,14 +1292,14 @@ static int bam_dma_probe(struct platform_device *pdev)
->  	if (ret)
->  		goto err_disable_clk;
->  
-> -	tasklet_setup(&bdev->task, dma_tasklet);
-> +	INIT_WORK(&bdev->work, bam_dma_work);
->  
->  	bdev->channels = devm_kcalloc(bdev->dev, bdev->num_channels,
->  				sizeof(*bdev->channels), GFP_KERNEL);
->  
->  	if (!bdev->channels) {
->  		ret = -ENOMEM;
-> -		goto err_tasklet_kill;
-> +		goto err_workqueue_cancel;
->  	}
->  
->  	/* allocate and initialize channels */
-> @@ -1364,8 +1364,8 @@ static int bam_dma_probe(struct platform_device *pdev)
->  err_bam_channel_exit:
->  	for (i = 0; i < bdev->num_channels; i++)
->  		tasklet_kill(&bdev->channels[i].vc.task);
-> -err_tasklet_kill:
-> -	tasklet_kill(&bdev->task);
-> +err_workqueue_cancel:
-> +	cancel_work_sync(&bdev->work);
->  err_disable_clk:
->  	clk_disable_unprepare(bdev->bamclk);
->  
-> @@ -1399,7 +1399,7 @@ static void bam_dma_remove(struct platform_device *pdev)
->  			    bdev->channels[i].fifo_phys);
->  	}
->  
-> -	tasklet_kill(&bdev->task);
-> +	cancel_work_sync(&bdev->work);
->  
->  	clk_disable_unprepare(bdev->bamclk);
->  }
-> 
-> -- 
-> 2.51.0
-> 
-> 
+> Konrad
 
