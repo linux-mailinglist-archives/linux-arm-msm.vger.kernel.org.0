@@ -1,253 +1,253 @@
-Return-Path: <linux-arm-msm+bounces-81631-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-81623-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [142.0.200.124])
-	by mail.lfdr.de (Postfix) with ESMTPS id BCD24C582FB
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Nov 2025 16:04:18 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id E2224C58021
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Nov 2025 15:45:58 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id BD0F94E635C
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Nov 2025 15:03:21 +0000 (UTC)
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 84E554E807E
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Nov 2025 14:40:06 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2A6472E8B68;
-	Thu, 13 Nov 2025 15:02:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0F7262D0637;
+	Thu, 13 Nov 2025 14:40:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="VRe81eVr"
+	dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b="GahRMcoJ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.21])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lj1-f171.google.com (mail-lj1-f171.google.com [209.85.208.171])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB5E62E5429;
-	Thu, 13 Nov 2025 15:02:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.21
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7942C2C376B
+	for <linux-arm-msm@vger.kernel.org>; Thu, 13 Nov 2025 14:40:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763046164; cv=none; b=buzQqCvsp94Qlfnuvm0AVarUqsmtGca7CojrB7VLXiamedlsmfEfiKQFpKhZNQ1uQ77Be7OXvthG3MfhWUkUTPETgnMjrbOcPN89dtoojJu2Om7ql684bqlFErK96cVSsw1C+FQQN5oLueiY977L2Qk8oB1uN85Ug8DrRyf86i8=
+	t=1763044804; cv=none; b=SiPBXgz2hwtJ363Vcj5pljT7mvZ5Me8jGL165m6+ZsZaV0TFt47eVT/Tsxq+qn/vVhg38uCu1P8nKN7U9sRwiwLbZ8lWaE4qI+Oq66vD4v6TIZ0VuYhWBg1Lj9/Gvz68kDjckWc2uu6AvsWRU6k0IhTkB8JylmmrsSswT4/neSY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763046164; c=relaxed/simple;
-	bh=vx0/Sdb0miwmSnREMEy30Z2f25MQbxHWNPqxk4mpfZk=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=fO8ppQznr8OHjx8PyrBQcy88qgnRphpbNMmEbBfwnKNT6d+JMkXuQ17xDhzOl9CId9CMExBalCnKX7RDeaC0ZOg4KjRgE35cjkYvJbSRBA2hsB/rlRg40Hhzz49twLrnLC/ZZ11iHtMA9cff0qrTp0wLt+L8aoUhwyTDzASeJjQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=pass smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=VRe81eVr; arc=none smtp.client-ip=198.175.65.21
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.intel.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1763046162; x=1794582162;
-  h=from:to:cc:subject:date:message-id:mime-version:
-   content-transfer-encoding;
-  bh=vx0/Sdb0miwmSnREMEy30Z2f25MQbxHWNPqxk4mpfZk=;
-  b=VRe81eVrxoCBcgzavv3+aNRPrGhNBHEh7nmxzooX0ReTUfIZs8jAxNP4
-   /tX+MOjoLOsdyd/1ZKHTia1TRiGwI6t7WnmqDOz3F6XTm8AjTJgezyfeX
-   1EeNWEc4NiiAUTLLOymowCHjAjqUrDBTotzOssGvl49sqmIIG7UjEgq7O
-   QDnFA7oN+K309bir8LcArClFjq9EU9US4PZRkzgS/W2OoGG3iVyBnfqxC
-   0m75w/LEM5KsUEYdEnbfTlaLAIinVZY69V7cM+Klr6/AXvfMp3USRP4Qd
-   9qGG98IeTPjLKQCJAR+iSREJNr7Du7v37w8CEMsJCdo6BIxeDuQw2Msns
-   w==;
-X-CSE-ConnectionGUID: 7EPVwNgAQSWdDwd00ZQDZQ==
-X-CSE-MsgGUID: 6/jJcZf/QleX9QsyyS8Pqw==
-X-IronPort-AV: E=McAfee;i="6800,10657,11531"; a="65054025"
-X-IronPort-AV: E=Sophos;i="6.17,312,1747724400"; 
-   d="scan'208";a="65054025"
-Received: from fmviesa001.fm.intel.com ([10.60.135.141])
-  by orvoesa113.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 13 Nov 2025 07:02:41 -0800
-X-CSE-ConnectionGUID: LWhFLovNRgWDoJiNm0HUow==
-X-CSE-MsgGUID: nE6QdQs7Rjq7/OOgIgzs2g==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.19,302,1754982000"; 
-   d="scan'208";a="220324615"
-Received: from black.igk.intel.com ([10.91.253.5])
-  by fmviesa001.fm.intel.com with ESMTP; 13 Nov 2025 07:02:20 -0800
-Received: by black.igk.intel.com (Postfix, from userid 1003)
-	id 008C496; Thu, 13 Nov 2025 16:02:18 +0100 (CET)
-From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-To: Corey Minyard <corey@minyard.net>,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-	"Dr. David Alan Gilbert" <linux@treblig.org>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Thomas Zimmermann <tzimmermann@suse.de>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	Rob Clark <robin.clark@oss.qualcomm.com>,
-	Matthew Brost <matthew.brost@intel.com>,
-	Ulf Hansson <ulf.hansson@linaro.org>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
-	Vitaly Lifshits <vitaly.lifshits@intel.com>,
-	Manivannan Sadhasivam <mani@kernel.org>,
-	Niklas Cassel <cassel@kernel.org>,
-	Calvin Owens <calvin@wbinvd.org>,
-	Vadim Fedorenko <vadim.fedorenko@linux.dev>,
-	Sagi Maimon <maimon.sagi@gmail.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
-	Karan Tilak Kumar <kartilak@cisco.com>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>,
-	Casey Schaufler <casey@schaufler-ca.com>,
-	Steven Rostedt <rostedt@goodmis.org>,
-	Petr Mladek <pmladek@suse.com>,
-	Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>,
-	Max Kellermann <max.kellermann@ionos.com>,
-	linux-doc@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	openipmi-developer@lists.sourceforge.net,
-	linux-media@vger.kernel.org,
-	dri-devel@lists.freedesktop.org,
-	linaro-mm-sig@lists.linaro.org,
-	amd-gfx@lists.freedesktop.org,
-	linux-arm-msm@vger.kernel.org,
-	freedreno@lists.freedesktop.org,
-	intel-xe@lists.freedesktop.org,
-	linux-mmc@vger.kernel.org,
-	netdev@vger.kernel.org,
-	intel-wired-lan@lists.osuosl.org,
-	linux-pci@vger.kernel.org,
-	linux-s390@vger.kernel.org,
-	linux-scsi@vger.kernel.org,
-	linux-staging@lists.linux.dev,
-	ceph-devel@vger.kernel.org,
-	linux-trace-kernel@vger.kernel.org
-Cc: Rasmus Villemoes <linux@rasmusvillemoes.dk>,
-	Sergey Senozhatsky <senozhatsky@chromium.org>,
-	Jonathan Corbet <corbet@lwn.net>,
-	Sumit Semwal <sumit.semwal@linaro.org>,
-	Gustavo Padovan <gustavo@padovan.org>,
-	David Airlie <airlied@gmail.com>,
-	Simona Vetter <simona@ffwll.ch>,
-	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-	Maxime Ripard <mripard@kernel.org>,
-	Dmitry Baryshkov <lumag@kernel.org>,
-	Abhinav Kumar <abhinav.kumar@linux.dev>,
-	Jessica Zhang <jesszhan0024@gmail.com>,
-	Sean Paul <sean@poorly.run>,
-	Marijn Suijten <marijn.suijten@somainline.org>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	Lucas De Marchi <lucas.demarchi@intel.com>,
-	=?UTF-8?q?Thomas=20Hellstr=C3=B6m?= <thomas.hellstrom@linux.intel.com>,
-	Rodrigo Vivi <rodrigo.vivi@intel.com>,
-	Vladimir Oltean <olteanv@gmail.com>,
-	Andrew Lunn <andrew@lunn.ch>,
-	"David S. Miller" <davem@davemloft.net>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
-	Przemek Kitszel <przemyslaw.kitszel@intel.com>,
-	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
-	Kishon Vijay Abraham I <kishon@kernel.org>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Rodolfo Giometti <giometti@enneenne.com>,
-	Jonathan Lemon <jonathan.lemon@gmail.com>,
-	Richard Cochran <richardcochran@gmail.com>,
-	Stefan Haberland <sth@linux.ibm.com>,
-	Jan Hoeppner <hoeppner@linux.ibm.com>,
-	Heiko Carstens <hca@linux.ibm.com>,
-	Vasily Gorbik <gor@linux.ibm.com>,
-	Alexander Gordeev <agordeev@linux.ibm.com>,
-	Christian Borntraeger <borntraeger@linux.ibm.com>,
-	Sven Schnelle <svens@linux.ibm.com>,
-	Satish Kharat <satishkh@cisco.com>,
-	Sesidhar Baddela <sebaddel@cisco.com>,
-	"James E.J. Bottomley" <James.Bottomley@HansenPartnership.com>,
-	Mauro Carvalho Chehab <mchehab@kernel.org>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	Xiubo Li <xiubli@redhat.com>,
-	Ilya Dryomov <idryomov@gmail.com>,
-	Masami Hiramatsu <mhiramat@kernel.org>,
-	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH v3 00/21] treewide: Introduce %ptS for struct timespec64 and convert users
-Date: Thu, 13 Nov 2025 15:32:14 +0100
-Message-ID: <20251113150217.3030010-1-andriy.shevchenko@linux.intel.com>
-X-Mailer: git-send-email 2.50.1
+	s=arc-20240116; t=1763044804; c=relaxed/simple;
+	bh=LghFzzgYBjyF4DUix/4QjpTX8Cu2IkIHbWjtdoIpPok=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=BtrFFLdhPp+nae2biIiPWbPD04UBPpwR7ciAT7bA7gFGCIYhH3X6n5rx8Pvwsh314LzMDEaMjYAWedFD9/hhL89i9aq0H6gZUjtYaB2in/UM1pZ5fhUb9ASQRTlN7Vv0Oe9uI2e9/5laj3VtVCApFH3zxbADjlTodEyy0kVXnNI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl; spf=none smtp.mailfrom=bgdev.pl; dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b=GahRMcoJ; arc=none smtp.client-ip=209.85.208.171
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=bgdev.pl
+Received: by mail-lj1-f171.google.com with SMTP id 38308e7fff4ca-37a2dced861so18517841fa.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 13 Nov 2025 06:40:02 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=bgdev-pl.20230601.gappssmtp.com; s=20230601; t=1763044800; x=1763649600; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=wl4571SxJAzignqkvu+iEEF0Pe+/jqH/UWVoWMdIiw4=;
+        b=GahRMcoJi3n7zVWIHvX+LiLzkfo+HKvHAaJJzWiW91ExIvEDeInJDw0hhQSvy3pJtB
+         74l030XK/02bd/yErd+bcq3e02xbBXSRPforr+q6sGYgacQoNvEUzRWVRDopRyCXKsx1
+         oHFFjHx3hfza3oim4JACBu6zmcWSsyUmjlBRtEkUjXvLGPWWM6dCRyfkT4VMovtJROJ5
+         K0iybyc9NVMDnAi50uSHZBJe/2N0t7foBl82mpQSQZSIgweyhgfogdl+OMijlZtN3NZ5
+         Lr2m2Ei+w+r7ncHV3yOHot/YFXNdp+z5dqjyFPr9JhEYQRRZWqiMvO30c7O9iI/98eL3
+         c2Yw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1763044800; x=1763649600;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=wl4571SxJAzignqkvu+iEEF0Pe+/jqH/UWVoWMdIiw4=;
+        b=inOCbA2CryofCPFfEmU5fpb1hzHKU5NO2MIkzYSnnz/uVZM7OckkQNto9MMAVJeYLL
+         iwtTPxzcJMnDqJLAV6YK60FmORfZDi+lXKhFDV8fhv4vxCn1XAFGOzeqkD05hgnsbGNZ
+         U3Qpat0IQyNk5nprUJxIGgz286ceNnhOeCIv228IhZrlgRGH8wqQPqbuj5VsGQhDOwvo
+         jqN/p6FXym3QPIEcAeerBrjyO0rz8BJlnfjVsD+zz5o8Nav6B4bkwA2ssVzKKLcW5V2o
+         CVdDD1hRZFrlaA/M6xrCvPMDoJhN9pQH3iYzCaZXYNbWJSpkpzy6aNRLAyX4LgTCSVFy
+         ollg==
+X-Forwarded-Encrypted: i=1; AJvYcCUQXoKdb9cvbIfnOdpmK1hjNfdelOKQyeQLhW+UYcQvL5p8y64Q1u3FEU76yYKlAT23lOtbNC0cgXk15wZd@vger.kernel.org
+X-Gm-Message-State: AOJu0YyDr/SgAbuH5fYquQuvP4Az2g+rCIG2YNNxKCFwEvcfY2XE4T2X
+	vanpr7VlJL/Qs6n1KEVkyI3O8IZNYOeAnu8Efl5h+R4hntXPMOKv6DJGRRuHfJx+hAbLSh2xAGP
+	qXUEnUHiC+s4yl0CzUN0wXxazp1D2CKgjNagdDY5WFg==
+X-Gm-Gg: ASbGncspnOQ8H8rldeLoJ8OuqE7ypzbauE9V537TLJHQyASswij5UQ9kvHJDKeldtMn
+	2eD/XUi9SgtP671+dnULp3aTQs97k8beppnS3TTz4Q8ISDaFRkm41fLAyBXNJzFy45BnAUxOJXm
+	sO9xk7bhAQnvmL8QOMaNp+uu12iNWFvaSwzbzdUSksLVdGCkDxWPXV6AUSl/GHxRHf4KfKGeBPA
+	EZZgW5uzBd4QRAsJYUiu4jo68NqR6UI8GAAYa6odit57sp5Pn0qsjOBSLmJpf2ZJsh1xsbil97o
+	J7qaISv2S7oPlJ0E
+X-Google-Smtp-Source: AGHT+IHcp5RL49BzQ/EwQ2Jax7wwd/a8PEM1WoZpid3JGwwdtlpJzBmzwt/P9jvyh9TplD5Nus8fFpsIw/K4cuDWoP0=
+X-Received: by 2002:a05:6512:104f:b0:594:2876:c901 with SMTP id
+ 2adb3069b0e04-5957ececcc7mr1012811e87.25.1763044799557; Thu, 13 Nov 2025
+ 06:39:59 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+References: <20251107-qcom-sa8255p-emac-v5-0-01d3e3aaf388@linaro.org>
+ <20251107-qcom-sa8255p-emac-v5-8-01d3e3aaf388@linaro.org> <aRMiafCQNPVDOljU@horms.kernel.org>
+In-Reply-To: <aRMiafCQNPVDOljU@horms.kernel.org>
+From: Bartosz Golaszewski <brgl@bgdev.pl>
+Date: Thu, 13 Nov 2025 15:39:45 +0100
+X-Gm-Features: AWmQ_bmyO0__RPwdcHgOIMRaFCfnIoYFER6JzR_p2Qqf8fR68sQPWn6kw1o5zWY
+Message-ID: <CAMRc=MfEuAhichw-tPJkj_BKxy7AzvfmVJJyXzHsqa2wf=2EKw@mail.gmail.com>
+Subject: Re: [PATCH v5 8/8] net: stmmac: qcom-ethqos: add support for sa8255p
+To: Simon Horman <horms@kernel.org>
+Cc: Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, 
+	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Richard Cochran <richardcochran@gmail.com>, Andrew Lunn <andrew+netdev@lunn.ch>, 
+	"David S. Miller" <davem@davemloft.net>, Eric Dumazet <edumazet@google.com>, 
+	Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>, 
+	Maxime Coquelin <mcoquelin.stm32@gmail.com>, Alexandre Torgue <alexandre.torgue@foss.st.com>, 
+	Vinod Koul <vkoul@kernel.org>, Giuseppe Cavallaro <peppe.cavallaro@st.com>, 
+	Jose Abreu <joabreu@synopsys.com>, Chen-Yu Tsai <wens@kernel.org>, 
+	Jernej Skrabec <jernej.skrabec@gmail.com>, Samuel Holland <samuel@sholland.org>, 
+	Matthew Gerlach <matthew.gerlach@altera.com>, Neil Armstrong <neil.armstrong@linaro.org>, 
+	Kevin Hilman <khilman@baylibre.com>, Jerome Brunet <jbrunet@baylibre.com>, 
+	Martin Blumenstingl <martin.blumenstingl@googlemail.com>, 
+	Keguang Zhang <keguang.zhang@gmail.com>, Shawn Guo <shawnguo@kernel.org>, 
+	Sascha Hauer <s.hauer@pengutronix.de>, Pengutronix Kernel Team <kernel@pengutronix.de>, 
+	Fabio Estevam <festevam@gmail.com>, Jan Petrous <jan.petrous@oss.nxp.com>, s32@nxp.com, 
+	Romain Gantois <romain.gantois@bootlin.com>, 
+	Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>, Heiko Stuebner <heiko@sntech.de>, 
+	Chen Wang <unicorn_wang@outlook.com>, Inochi Amaoto <inochiama@gmail.com>, 
+	Emil Renner Berthing <kernel@esmil.dk>, Minda Chen <minda.chen@starfivetech.com>, 
+	Drew Fustini <fustini@kernel.org>, Guo Ren <guoren@kernel.org>, Fu Wei <wefu@redhat.com>, 
+	Nobuhiro Iwamatsu <nobuhiro.iwamatsu.x90@mail.toshiba>, 
+	Geert Uytterhoeven <geert+renesas@glider.be>, Magnus Damm <magnus.damm@gmail.com>, 
+	Maxime Ripard <mripard@kernel.org>, Shuang Liang <liangshuang@eswincomputing.com>, 
+	Zhi Li <lizhi2@eswincomputing.com>, Shangjuan Wei <weishangjuan@eswincomputing.com>, 
+	"G. Jaya Kumaran" <vineetha.g.jaya.kumaran@intel.com>, Clark Wang <xiaoning.wang@nxp.com>, 
+	Linux Team <linux-imx@nxp.com>, Frank Li <Frank.Li@nxp.com>, David Wu <david.wu@rock-chips.com>, 
+	Samin Guo <samin.guo@starfivetech.com>, 
+	Christophe Roullier <christophe.roullier@foss.st.com>, Swathi K S <swathi.ks@samsung.com>, 
+	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, netdev@vger.kernel.org, 
+	linux-stm32@st-md-mailman.stormreply.com, 
+	linux-arm-kernel@lists.infradead.org, Drew Fustini <dfustini@tenstorrent.com>, 
+	linux-sunxi@lists.linux.dev, linux-amlogic@lists.infradead.org, 
+	linux-mips@vger.kernel.org, imx@lists.linux.dev, 
+	linux-renesas-soc@vger.kernel.org, linux-rockchip@lists.infradead.org, 
+	sophgo@lists.linux.dev, linux-riscv@lists.infradead.org, 
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Here is the third part of the unification time printing in the kernel.
-This time for struct timespec64. The first patch brings a support
-into printf() implementation (test cases and documentation update
-included) followed by the treewide conversion of the current users.
+On Tue, Nov 11, 2025 at 12:48=E2=80=AFPM Simon Horman <horms@kernel.org> wr=
+ote:
+>
+> On Fri, Nov 07, 2025 at 11:29:58AM +0100, Bartosz Golaszewski wrote:
+> > From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+>
+> ...
+>
+> > +static int qcom_ethqos_pd_init(struct platform_device *pdev, void *pri=
+v)
+> > +{
+> > +     struct qcom_ethqos *ethqos =3D priv;
+> > +     int ret;
+> > +
+> > +     /*
+> > +      * Enable functional clock to prevent DMA reset after timeout due
+> > +      * to no PHY clock being enabled after the hardware block has bee=
+n
+> > +      * power cycled. The actual configuration will be adjusted once
+> > +      * ethqos_fix_mac_speed() is called.
+> > +      */
+> > +     ethqos_set_func_clk_en(ethqos);
+> > +
+> > +     ret =3D qcom_ethqos_domain_on(ethqos, ETHQOS_PD_CORE);
+> > +     if (ret)
+> > +             return ret;
+> > +
+> > +     ret =3D qcom_ethqos_domain_on(ethqos, ETHQOS_PD_MDIO);
+> > +     if (ret) {
+> > +             qcom_ethqos_domain_off(ethqos, ETHQOS_PD_CORE);
+> > +             return ret;
+> > +     }
+> > +
+> > +     return 0;
+> > +}
+> > +
+> > +static void qcom_ethqos_pd_exit(struct platform_device *pdev, void *da=
+ta)
+> > +{
+> > +     struct qcom_ethqos *ethqos =3D data;
+> > +
+> > +     qcom_ethqos_domain_off(ethqos, ETHQOS_PD_MDIO);
+> > +     qcom_ethqos_domain_off(ethqos, ETHQOS_PD_CORE);
+> > +}
+> > +
+> >  static void ethqos_ptp_clk_freq_config(struct stmmac_priv *priv)
+> >  {
+> >       struct plat_stmmacenet_data *plat_dat =3D priv->plat;
+>
+> ...
+>
+> > @@ -852,28 +993,63 @@ static int qcom_ethqos_probe(struct platform_devi=
+ce *pdev)
+> >       ethqos->rgmii_config_loopback_en =3D drv_data->rgmii_config_loopb=
+ack_en;
+> >       ethqos->has_emac_ge_3 =3D drv_data->has_emac_ge_3;
+> >       ethqos->needs_sgmii_loopback =3D drv_data->needs_sgmii_loopback;
+> > -
+> > -     ethqos->pm.link_clk =3D devm_clk_get(dev, clk_name);
+> > -     if (IS_ERR(ethqos->pm.link_clk))
+> > -             return dev_err_probe(dev, PTR_ERR(ethqos->pm.link_clk),
+> > -                                  "Failed to get link_clk\n");
+> > -
+> > -     ret =3D ethqos_clks_config(ethqos, true);
+> > -     if (ret)
+> > -             return ret;
+> > -
+> > -     ret =3D devm_add_action_or_reset(dev, ethqos_clks_disable, ethqos=
+);
+> > -     if (ret)
+> > -             return ret;
+> > -
+> > -     ethqos->pm.serdes_phy =3D devm_phy_optional_get(dev, "serdes");
+> > -     if (IS_ERR(ethqos->pm.serdes_phy))
+> > -             return dev_err_probe(dev, PTR_ERR(ethqos->pm.serdes_phy),
+> > -                                  "Failed to get serdes phy\n");
+> > -
+> > -     ethqos->set_serdes_speed =3D ethqos_set_serdes_speed_phy;
+> >       ethqos->serdes_speed =3D SPEED_1000;
+> > -     ethqos_update_link_clk(ethqos, SPEED_1000);
+> > +
+> > +     if (pm_data && pm_data->use_domains) {
+> > +             ethqos->set_serdes_speed =3D ethqos_set_serdes_speed_pd;
+> > +
+> > +             ret =3D devm_pm_domain_attach_list(dev, &pm_data->pd,
+> > +                                              &ethqos->pd.pd_list);
+> > +             if (ret < 0)
+> > +                     return dev_err_probe(dev, ret, "Failed to attach =
+power domains\n");
+> > +
+> > +             plat_dat->clks_config =3D ethqos_pd_clks_config;
+> > +             plat_dat->serdes_powerup =3D qcom_ethqos_pd_serdes_poweru=
+p;
+> > +             plat_dat->serdes_powerdown =3D qcom_ethqos_pd_serdes_powe=
+rdown;
+> > +             plat_dat->exit =3D qcom_ethqos_pd_exit;
+>
+> Hi Bartosz,
+>
+> It seems that the intention of this is to ensure
+> that domains turned on by qcom_ethqos_pd_init()
+> are turned off again on exit or clean-up in error paths.
+>
+> > +             plat_dat->init =3D qcom_ethqos_pd_init;
+> > +             plat_dat->clk_ptp_rate =3D pm_data->clk_ptp_rate;
+> > +
+> > +             ret =3D qcom_ethqos_pd_init(pdev, ethqos);
+> > +             if (ret)
+> > +                     return ret;
+>
+> And here those domains are turned on.
+>
+> > +
+> > +             ret =3D qcom_ethqos_domain_on(ethqos, ETHQOS_PD_SERDES);
+> > +             if (ret)
+>
+> But it seems that if we reach this error path then the cleanup is not
+> performed. This is because plat_dat and thus it's exit callback are
+> registered until the call to devm_stmmac_pltfr_probe() towards the end of
+> this function.
 
-Petr, we got like more than a half being Acked, I think if you are okay
-with this, the patches that have been tagged can be applied.
+We can only reach this if devm_stmmac_pltfr_probe() fails. Yeah it
+probably warrants a devres action.
 
-Note, not everything was compile-tested. Kunit test has been passed, though.
-
-Changelog v3:
-- fixed a compilation issue with fnic (LKP), also satisfied checkpatch
-- collected more tags
-
-Petr, I have not renamed 'p' to 'n' due to much of rework and
-noise introduction for the changes that has been reviewed.
-However, I addressed the documentation issues.
-
-v2: <20251111122735.880607-1-andriy.shevchenko@linux.intel.com>
-
-Changelog v2:
-- dropped wrong patches (Hans, Takashi)
-- fixed most of the checkpatch warnings (fdo CI, media CI)
-- collected tags
-
-v1: <20251110184727.666591-1-andriy.shevchenko@linux.intel.com>
-
-Andy Shevchenko (21):
-  lib/vsprintf: Add specifier for printing struct timespec64
-  ceph: Switch to use %ptSp
-  libceph: Switch to use %ptSp
-  dma-buf: Switch to use %ptSp
-  drm/amdgpu: Switch to use %ptSp
-  drm/msm: Switch to use %ptSp
-  drm/vblank: Switch to use %ptSp
-  drm/xe: Switch to use %ptSp
-  e1000e: Switch to use %ptSp
-  igb: Switch to use %ptSp
-  ipmi: Switch to use %ptSp
-  media: av7110: Switch to use %ptSp
-  mmc: mmc_test: Switch to use %ptSp
-  net: dsa: sja1105: Switch to use %ptSp
-  PCI: epf-test: Switch to use %ptSp
-  pps: Switch to use %ptSp
-  ptp: ocp: Switch to use %ptSp
-  s390/dasd: Switch to use %ptSp
-  scsi: fnic: Switch to use %ptSp
-  scsi: snic: Switch to use %ptSp
-  tracing: Switch to use %ptSp
-
- Documentation/core-api/printk-formats.rst     | 11 +++-
- drivers/char/ipmi/ipmi_si_intf.c              |  3 +-
- drivers/char/ipmi/ipmi_ssif.c                 |  6 +--
- drivers/dma-buf/sync_debug.c                  |  2 +-
- .../gpu/drm/amd/amdgpu/amdgpu_dev_coredump.c  |  3 +-
- drivers/gpu/drm/drm_vblank.c                  |  6 +--
- .../gpu/drm/msm/disp/msm_disp_snapshot_util.c |  3 +-
- drivers/gpu/drm/msm/msm_gpu.c                 |  3 +-
- drivers/gpu/drm/xe/xe_devcoredump.c           |  4 +-
- drivers/mmc/core/mmc_test.c                   | 20 +++----
- drivers/net/dsa/sja1105/sja1105_tas.c         |  8 ++-
- drivers/net/ethernet/intel/e1000e/ptp.c       |  7 +--
- drivers/net/ethernet/intel/igb/igb_ptp.c      |  7 +--
- drivers/pci/endpoint/functions/pci-epf-test.c |  5 +-
- drivers/pps/generators/pps_gen_parport.c      |  3 +-
- drivers/pps/kapi.c                            |  3 +-
- drivers/ptp/ptp_ocp.c                         | 13 ++---
- drivers/s390/block/dasd.c                     |  3 +-
- drivers/scsi/fnic/fnic_trace.c                | 52 ++++++++-----------
- drivers/scsi/snic/snic_debugfs.c              | 10 ++--
- drivers/scsi/snic/snic_trc.c                  |  5 +-
- drivers/staging/media/av7110/av7110.c         |  2 +-
- fs/ceph/dir.c                                 |  5 +-
- fs/ceph/inode.c                               | 49 ++++++-----------
- fs/ceph/xattr.c                               |  6 +--
- kernel/trace/trace_output.c                   |  6 +--
- lib/tests/printf_kunit.c                      |  4 ++
- lib/vsprintf.c                                | 28 +++++++++-
- net/ceph/messenger_v2.c                       |  6 +--
- 29 files changed, 130 insertions(+), 153 deletions(-)
-
--- 
-2.50.1
-
+Bartosz
 
