@@ -1,166 +1,146 @@
-Return-Path: <linux-arm-msm+bounces-81671-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-81673-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [IPv6:2605:f480:58:1:0:1994:3:14])
-	by mail.lfdr.de (Postfix) with ESMTPS id B0451C58AB5
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Nov 2025 17:20:51 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 01D04C58F47
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Nov 2025 18:00:46 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id EF1A350814E
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Nov 2025 16:06:05 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id C97B8422E48
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Nov 2025 16:49:11 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 90EE834FF79;
-	Thu, 13 Nov 2025 16:03:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3BF42364E82;
+	Thu, 13 Nov 2025 16:40:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="tSeAyupX"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ooEGjnbM"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58847347BC1;
-	Thu, 13 Nov 2025 16:03:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11E5F363C6F;
+	Thu, 13 Nov 2025 16:40:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763049786; cv=none; b=GI1DwQMVZlyjDVQHoUJrqvkdA+Dc1bm5OiiAmCNzjcFwkFXcpFm7ER7GwkQGpGPXB/aepmx2tbUKl/+dkJuBLJG1dRtz4JroV8GjmcgzWSo/xSghWTbdhDOv2RcyNcQd9amyIGjscMG1rXKR7IrD4b14pkUdG9qjMmXoivC5wV8=
+	t=1763052015; cv=none; b=rL3xG5vlJmccB/RyYgsuZphh9RIt6LvxOyqNbG5AxdffkHdfEIVxyFqCp/r+lamms4QVufktGIGNBLQfZca02llIFHBEcrgl937eowUWW7FxY22owlvn6dMzIkkkpnEp20IV5Wyuxm8sG9kHpsvtGzu9lOjdmT3hr4Jsm3nk3x4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763049786; c=relaxed/simple;
-	bh=QIuVHgS8+ahZYbIi0X11y/faUOwKz1GnquRdQ0didNs=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=BGiaXLJEnHTk/TjxlqMn4oh3QboDKN0hgkoIK5IQRkUlfKWby4enp2Hb0eQNd8MVfjxAiqa1Wpr5cwvlLi9BDwORji4l8wAMDHQepUEdXAlRUvVWp+juMbKewC80i5hufem1/mKQRhalzlsoRyO4cVLr8hYm+8rKvAmz5V65FHM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=tSeAyupX; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 4A860C116D0;
-	Thu, 13 Nov 2025 16:03:05 +0000 (UTC)
+	s=arc-20240116; t=1763052015; c=relaxed/simple;
+	bh=ee+JYwZFiWl4rPvu1lWFozwqOKR006mY1ONvIK0qE1Y=;
+	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition:In-Reply-To; b=LU82DUhl+3hfHbW3bUrClIzPIxq8VICk6k6o6Qh4a10l9fKA9XreWFh/EfdFnuHoQshO5yPOY0/17jJJmn+/BYweQ8MeCU09IY7vxoRPbS5ekN0bfkXQNt/27xyXm04WQJMV2XGMTTXN/6OnSR9pC1TF1BUWXpqdLJIwqKshh3U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ooEGjnbM; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B41ACC4CEF7;
+	Thu, 13 Nov 2025 16:40:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1763049785;
-	bh=QIuVHgS8+ahZYbIi0X11y/faUOwKz1GnquRdQ0didNs=;
-	h=From:Date:Subject:References:In-Reply-To:To:Cc:Reply-To:From;
-	b=tSeAyupXrXFw4C5M95fEd5soYFTksiErzcnE6hKnyqVRuoTENv1AoENe88AxpqR+v
-	 /XkteEkCRJGHuxtI4LTYYNbcH9/YpZxA3feV6zS1s0iAnANTykD2GeGIYENaKgkOhd
-	 FmmNaJb+VPn5kbf/cMRT/0pqpREvHm6+PZmRH4ZYBRMkVRra8Hp+wJN172xlQAlU3a
-	 CNhkTiLNcy+R9DRh3gTPFv34rco6Ua61Gt/8VjZCEYZAo1TZb9XUkWNZLK7nLcAAgZ
-	 F2RyzE0ryisBPcqdIheFcL6bvTNkSvJyWh6ZLFu712B7eM4cDVVKLP1ovJcmu14lmw
-	 B96Pr6CCrMdyA==
-Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1FC2BCD8C94;
-	Thu, 13 Nov 2025 16:03:05 +0000 (UTC)
-From: David Heidelberg via B4 Relay <devnull+david.ixit.cz@kernel.org>
-Date: Thu, 13 Nov 2025 17:02:59 +0100
-Subject: [PATCH v8 2/2] arm64: dts: qcom: sdm845-oneplus: Add alert-slider
+	s=k20201202; t=1763052014;
+	bh=ee+JYwZFiWl4rPvu1lWFozwqOKR006mY1ONvIK0qE1Y=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:From;
+	b=ooEGjnbMmSQrPkE0Ps+Q3yUSrS4YUF35htEs4f2SE24S1Uwf2aYYdJrKk5xTyAMls
+	 uiLlwGyNsKBsO2swIX+g8h8SF8XbuMxw/Dul4Qiu+zHrB/C9lKYR3v2/e/yCysRGg1
+	 T7n9h06pB8tY5zb+0ochXdGNCcEOdcjbC+23e1bj6bYQNrSddeZBnqyrDLtyJJDleT
+	 zzZyajAp7cCIRE1nKMLfxfKgNJy7YlWdBsYAujGho1cGZ9GORYmgKBQ0zy7AkK4B/l
+	 wxGABXJLJjrUQSD6S1B859/ZuyPp0NlErIwcxSnsTUViuKndFC5r0ZTk1m+AFfIpVl
+	 fNBYJ0k+MYFeA==
+Date: Thu, 13 Nov 2025 10:40:13 -0600
+From: Bjorn Helgaas <helgaas@kernel.org>
+To: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
+Cc: lpieralisi@kernel.org, kwilczynski@kernel.org, mani@kernel.org,
+	bhelgaas@google.com, will@kernel.org, linux-pci@vger.kernel.org,
+	linux-kernel@vger.kernel.org, robh@kernel.org,
+	linux-arm-msm@vger.kernel.org, zhangsenchuan@eswincomputing.com,
+	vincent.guittot@linaro.org, Frank Li <Frank.li@nxp.com>
+Subject: Re: [PATCH v2 3/3] PCI: dwc: Check for the device presence during
+ suspend and resume
+Message-ID: <20251113164013.GA2285612@bhelgaas>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-Message-Id: <20251113-op6-tri-state-v8-2-54073f3874bc@ixit.cz>
-References: <20251113-op6-tri-state-v8-0-54073f3874bc@ixit.cz>
-In-Reply-To: <20251113-op6-tri-state-v8-0-54073f3874bc@ixit.cz>
-To: Dmitry Torokhov <dmitry.torokhov@gmail.com>, 
- Jonathan Corbet <corbet@lwn.net>, Jiri Kosina <jikos@kernel.org>, 
- Benjamin Tissoires <bentiss@kernel.org>, 
- Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>, 
- Casey Connolly <casey.connolly@linaro.org>, 
- =?utf-8?q?Guido_G=C3=BCnther?= <agx@sigxcpu.org>
-Cc: linux-input@vger.kernel.org, linux-doc@vger.kernel.org, 
- linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
- devicetree@vger.kernel.org, phone-devel@vger.kernel.org, 
- Gergo Koteles <soyer@irl.hu>, Casey Connolly <casey@connolly.tech>, 
- David Heidelberg <david@ixit.cz>, Konrad Dybcio <konradybcio@kernel.org>
-X-Mailer: b4 0.14.3
-X-Developer-Signature: v=1; a=openpgp-sha256; l=2077; i=david@ixit.cz;
- h=from:subject:message-id;
- bh=dqvFSr3SuBIu+543qnkoNfG9uq0Cj2Q9+THYg6kIPK0=;
- b=owEBbQKS/ZANAwAIAWACP8TTSSByAcsmYgBpFgE3UzVo+zDBd/5cErL4bALGyVMggtI90tyiC
- L61dLnRCzWJAjMEAAEIAB0WIQTXegnP7twrvVOnBHRgAj/E00kgcgUCaRYBNwAKCRBgAj/E00kg
- cptuD/4lE1F+wE1YrI3e866r6VZ3BJ1VMxehSO5M5oPDXrvQS+qHmdLrx3q+hAvRBS9JSsSiSi/
- ug7or4TNPrF+DrjgGe3IQRp0LU0ihym5IdlvD0oW5cIy0bYRllgNOa/UChLFvoF6ksGTLoV/3Ir
- phtDYu+BXYXixMNfTZTLj/ke+MC+93Htu2W3Vbho3lzF6nNx0Xnn5RuxIRSlj6Os7/HtIy6YCUg
- X4coQnI15RRjaX4DH0K40kpeIBVo5/yWjyhNH4CxieCCUxHa/1pjAsPEbT16aJAB0RTzzFR/Jmb
- h9lmn7fyVqq0krSmHmElJ0nMU06HlFVMM2IMZEI03iqSJW2HIWyTBofMNbt1JNX633eeJZ0KxBp
- uPJS2+pRSTaJa3l71WRRJR8+aRm6OoqXkE5DH6VHV3NL8qfUqxU4kugignehUOUt1mehbCTofoj
- zSC81jH3Cylj+ghxb0k0h8YOJ1bsGv7boCtJSuqHSa0iJW3cIEm9khd+BQBh9ew9ZnU7AZlQXPp
- oSFHOYM+PRI1kZuja1+t0WdgRTthLBXNXRk5YAlCTgjXHOKlzrTyjoO7tGXKfUHWu37sPSTOsng
- NvlbuYm+coDOtwPESDR7lS7kmEbYBVgrZ3NzAN3X2as/GpGp8MQ7AtVun32yk2H0jl+KiXiAmrq
- y6zlEk0af8zcEZg==
-X-Developer-Key: i=david@ixit.cz; a=openpgp;
- fpr=D77A09CFEEDC2BBD53A7047460023FC4D3492072
-X-Endpoint-Received: by B4 Relay for david@ixit.cz/default with auth_id=355
-X-Original-From: David Heidelberg <david@ixit.cz>
-Reply-To: david@ixit.cz
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20251107044319.8356-4-manivannan.sadhasivam@oss.qualcomm.com>
 
-From: Gergo Koteles <soyer@irl.hu>
+[+cc Frank]
 
-The alert-slider is a tri-state sound profile switch found on the
-OnePlus 6, Android maps the states to "silent", "vibrate" and "ring".
-Expose them as ABS_SND_PROFILE events.
-The previous GPIO numbers were wrong. Update them to the correct ones.
+On Fri, Nov 07, 2025 at 10:13:19AM +0530, Manivannan Sadhasivam wrote:
+> If there is no device available under the Root Ports, there is no point in
+> sending PME_Turn_Off and waiting for L2/L3 transition during suspend, it
+> will result in a timeout. Hence, skip those steps if no device is available
+> during suspend.
+> 
+> During resume, do not wait for the link up if there was no device connected
+> before suspend. It is very unlikely that a device will get connected while
+> the host system was suspended.
+> 
+> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
+> ---
+>  drivers/pci/controller/dwc/pcie-designware-host.c | 13 +++++++++++++
+>  1 file changed, 13 insertions(+)
+> 
+> diff --git a/drivers/pci/controller/dwc/pcie-designware-host.c b/drivers/pci/controller/dwc/pcie-designware-host.c
+> index 20c9333bcb1c..5a39e7139ec9 100644
+> --- a/drivers/pci/controller/dwc/pcie-designware-host.c
+> +++ b/drivers/pci/controller/dwc/pcie-designware-host.c
+> @@ -20,6 +20,7 @@
+>  #include <linux/platform_device.h>
+>  
+>  #include "../../pci.h"
+> +#include "../pci-host-common.h"
+>  #include "pcie-designware.h"
+>  
+>  static struct pci_ops dw_pcie_ops;
+> @@ -1129,6 +1130,9 @@ int dw_pcie_suspend_noirq(struct dw_pcie *pci)
+>  	u32 val;
+>  	int ret;
+>  
+> +	if (!pci_root_ports_have_device(pci->pp.bridge->bus))
+> +		goto stop_link;
 
-Co-developed-by: Casey Connolly <casey@connolly.tech>
-Signed-off-by: Casey Connolly <casey@connolly.tech>
-Signed-off-by: Gergo Koteles <soyer@irl.hu>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Tested-by: Guido Günther <agx@sigxcpu.org> # oneplus,fajita & oneplus,enchilada
-Reviewed-by: Guido Günther <agx@sigxcpu.org>
-Signed-off-by: David Heidelberg <david@ixit.cz>
----
- .../arm64/boot/dts/qcom/sdm845-oneplus-common.dtsi | 35 ++++++++++++++++++++++
- 1 file changed, 35 insertions(+)
+This looks racy.  Maybe it's still OK, but I think it would be good to
+include a comment to acknowledge that and explain why either outcome
+is acceptable, e.g., if a user removes a device during suspend, it
+results in a timeout but nothing more terrible.
 
-diff --git a/arch/arm64/boot/dts/qcom/sdm845-oneplus-common.dtsi b/arch/arm64/boot/dts/qcom/sdm845-oneplus-common.dtsi
-index db6dd04c51bb5..963dc4cc3bbb8 100644
---- a/arch/arm64/boot/dts/qcom/sdm845-oneplus-common.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sdm845-oneplus-common.dtsi
-@@ -25,6 +25,41 @@ / {
- 	chassis-type = "handset";
- 	qcom,msm-id = <QCOM_ID_SDM845 0x20001>;
- 
-+	alert-slider {
-+		compatible = "gpio-keys";
-+		label = "Alert slider";
-+
-+		pinctrl-0 = <&alert_slider_default>;
-+		pinctrl-names = "default";
-+
-+		switch-top {
-+			label = "Silent";
-+			linux,input-type = <EV_ABS>;
-+			linux,code = <ABS_SND_PROFILE>;
-+			linux,input-value = <SND_PROFILE_SILENT>;
-+			gpios = <&tlmm 126 GPIO_ACTIVE_LOW>;
-+			linux,can-disable;
-+		};
-+
-+		switch-middle {
-+			label = "Vibrate";
-+			linux,input-type = <EV_ABS>;
-+			linux,code = <ABS_SND_PROFILE>;
-+			linux,input-value = <SND_PROFILE_VIBRATE>;
-+			gpios = <&tlmm 52 GPIO_ACTIVE_LOW>;
-+			linux,can-disable;
-+		};
-+
-+		switch-bottom {
-+			label = "Ring";
-+			linux,input-type = <EV_ABS>;
-+			linux,code = <ABS_SND_PROFILE>;
-+			linux,input-value = <SND_PROFILE_RING>;
-+			gpios = <&tlmm 24 GPIO_ACTIVE_LOW>;
-+			linux,can-disable;
-+		};
-+	};
-+
- 	aliases {
- 		serial0 = &uart9;
- 		serial1 = &uart6;
+>  	/*
+>  	 * If L1SS is supported, then do not put the link into L2 as some
+>  	 * devices such as NVMe expect low resume latency.
+> @@ -1162,6 +1166,7 @@ int dw_pcie_suspend_noirq(struct dw_pcie *pci)
+>  	 */
+>  	udelay(1);
+>  
+> +stop_link:
+>  	dw_pcie_stop_link(pci);
+>  	if (pci->pp.ops->deinit)
+>  		pci->pp.ops->deinit(&pci->pp);
+> @@ -1195,6 +1200,14 @@ int dw_pcie_resume_noirq(struct dw_pcie *pci)
+>  	if (ret)
+>  		return ret;
+>  
+> +	/*
+> +	 * If there was no device before suspend, skip waiting for link up as
+> +	 * it is bound to fail. It is very unlikely that a device will get
+> +	 * connected *during* suspend.
 
--- 
-2.51.0
+I'm not convinced.  Unlike the suspend side, where the race window is
+tiny, here the window is the entire time the system is suspended, and
+at least in laptop usage, there's no reason I would hesitate to plug
+something in while suspended.
 
+Regardless, the overall behavior needs to be acceptable whether or not
+a device was connected during suspend.
 
+This is probably the same thing you said, Frank, sorry if I'm just
+repeating it.
+
+> +	if (!pci_root_ports_have_device(pci->pp.bridge->bus))
+> +		return 0;
+> +
+>  	ret = dw_pcie_wait_for_link(pci);
+>  	if (ret)
+>  		return ret;
+> -- 
+> 2.48.1
+> 
 
