@@ -1,79 +1,79 @@
-Return-Path: <linux-arm-msm+bounces-81597-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-81598-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ams.mirrors.kernel.org (ams.mirrors.kernel.org [IPv6:2a01:60a::1994:3:14])
-	by mail.lfdr.de (Postfix) with ESMTPS id BA097C57522
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Nov 2025 13:03:17 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 9B597C57593
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Nov 2025 13:14:03 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ams.mirrors.kernel.org (Postfix) with ESMTPS id CC6C935095F
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Nov 2025 11:58:06 +0000 (UTC)
+	by ams.mirrors.kernel.org (Postfix) with ESMTPS id BCECB3440FB
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Nov 2025 12:12:30 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8FEF334EEEC;
-	Thu, 13 Nov 2025 11:57:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7B72C34D4C1;
+	Thu, 13 Nov 2025 12:12:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="sSh0r3cp"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="CYNF0ml1"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-f54.google.com (mail-ed1-f54.google.com [209.85.208.54])
+Received: from mail-ed1-f49.google.com (mail-ed1-f49.google.com [209.85.208.49])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77DD834E74B
-	for <linux-arm-msm@vger.kernel.org>; Thu, 13 Nov 2025 11:57:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F99F34D395
+	for <linux-arm-msm@vger.kernel.org>; Thu, 13 Nov 2025 12:12:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763035039; cv=none; b=egcQ0moIe89VRY0BUNetaUrwiKTXn/WTAJXFk0fToIGCgOj9kt6w685EtOwRwSzVKygK1jNeU4Rr71nsrpJt5KTlqmQs4i/bt3MmAxcBJADyboNf2aqKKFbVDrkR3hm9wPicvbDhhQ5bx03WKQ+L6+tN/FyHhad7Rt+5Kkh3FE4=
+	t=1763035946; cv=none; b=RGnARn/Kfdne/+R16CviMzb6JTWgaVBrpwyPuxX8KnHyVioOA26TrNUehv0LsKuNAN3LTPOwAFPAgDW60gWujlA9NbmpZjL9aKbeC5ilCBXg5H5nqR9jSe4c0VFj4O+qKMRtq6Lg6I+DiT8oKkITOF1lD6L+TVmRVZiNFC7s/oA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763035039; c=relaxed/simple;
-	bh=3C29Q45QiYOyNH9+Uzgm2x1iE6Ss30RmLieomkQXEpM=;
+	s=arc-20240116; t=1763035946; c=relaxed/simple;
+	bh=tIRyBtq6ZgmwZ/RdMREj1gR29I0tL8lowm1gb91/zSU=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=mOUnVKiMIj5ldhvbWeGf7mBXhTRrbo66wMQ3zf2xqKs3UUk7+rXCO/KJNpQYRYani4hunsGQmx5lavnjSymPt2MqEr5BEifY9BdNslCHVGdPDXpPmArpE/DJajvYUtEYoPfCaF4Am+KLqXAbgWUH0dtHuhr2lXAEdrInaG8H53E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=sSh0r3cp; arc=none smtp.client-ip=209.85.208.54
+	 Content-Type:Content-Disposition:In-Reply-To; b=npUItDiiJkjRaHSTVUHIxuHq+yVL6JAFs4qUvx9KNjOnWZ8xSwfPFuWcbfdugRzoaYUoLNjZjCrm5uTsqgwWzSso434GszdnIi9FLVXcqLwsd5JpgE/wL7p6YpMJCwpqSFvvaGg9wMO5IxLJX+BmDdG5lSaMGOPXH739rtdmkDk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=CYNF0ml1; arc=none smtp.client-ip=209.85.208.49
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ed1-f54.google.com with SMTP id 4fb4d7f45d1cf-64162c04f90so1278418a12.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 13 Nov 2025 03:57:17 -0800 (PST)
+Received: by mail-ed1-f49.google.com with SMTP id 4fb4d7f45d1cf-640860f97b5so1185940a12.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 13 Nov 2025 04:12:24 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1763035036; x=1763639836; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1763035943; x=1763640743; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=8Pfe1V+epjpy6bgW6SoCEKzjepepuLRA0eHE/Lz4yqY=;
-        b=sSh0r3cpu4mIwIgz5fFj0OyIhcgJDzVqNz1/2VE8rHJ/icz2YdsAuJeZxPUnZkBulq
-         XLIlEyE7/wnq2mDYjhLr824ibMXNS+HxKqqoELboAqCO2minCU+lf7MA8SKdN0DCXtn8
-         jATMyZnpX6slPbVL6oxWn2g4tbSIWmy0m4vq2c+/Zs3rBA34/W7HDDckyURGYpvxhpP6
-         iVK/CuyshLcEz1amTQ59udUoACRZvOsazrf2FrHVn6vl7U/rU7NrgajMrLH1ym7f1zef
-         2IAKXkiRgjK7qngopNfWe8wTUQBiUQsmM+R7l8Dbu337D65zbKVeCyVQ1YHSj7qyFmLz
-         EHsQ==
+        bh=ZmL32TLheuHbN2HDaUa3UG1QnGtlOG9N/Q5N775z6d0=;
+        b=CYNF0ml1DpleNUfz+G+2lL9hhJrYQUWslZOJEJWeGWEs6q9d8EhrKwnukmTypyCk5e
+         i4oJiVHSZF5EQTq5CLRYHRHr0JctLV6pRJTInSCEO2WrjGW0vTwzBMBooviHxzvuzxRa
+         thld1GQu+rf+00Xjt4dEjBuU55mjjMlPj3Ty482vLZ1oUT64CxGKf0t7hCG0h11YOHSC
+         COGZYFk5DJMpaepmWN1NjFBEvvCv1BdLXaJJKoWL8cI7AF45m+dgi4z0BlXeEPAw1crt
+         YUIZa+v6Wqtt02fy+NoA/fIBp4sR0iyE3ZLdH8kMmKpHzcDcFDOCpL1yuC/fTXyAOqOP
+         tJxw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1763035036; x=1763639836;
+        d=1e100.net; s=20230601; t=1763035943; x=1763640743;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=8Pfe1V+epjpy6bgW6SoCEKzjepepuLRA0eHE/Lz4yqY=;
-        b=TRKD6s8fo08eYLQk4UFgfzFHY38s8p4Pcvau5/EldhzYv5gLlDv7LUtcKrb8WEA9Eu
-         w/y4Jaa8ACDRm9pyWB4rDjHHu74VZpjCADXoS/fa+VvC7MWnVv2gX6jfGfVTG5JFEhv0
-         ua0UgeKb69oF4IgDVi7mnVjCvjjAFQF2IcSry6GLsPPDTMVrjXVZzcBSjsv2k2rY6E7V
-         oSjgC8D9FCnHa86XL+pGi8OBQtbfcO/rSOpl1LUKmG0hhPMCYdU9+yiM0FLI6H1nekIo
-         ypkuaiyB8yBGZ6UEap5KeTc7oDj0BJyb6HqLd8mn2irIVT9P4FmSEOsLgZ3Qocb1k4xG
-         Mnyw==
-X-Forwarded-Encrypted: i=1; AJvYcCWkBwEFWJgmeRSYUiFd37iy2CN4/HE53YW07lT/r5fV3r1FhnMyE8RDOOUBKyiTPl1mOHW2XyNIV9JmKLHx@vger.kernel.org
-X-Gm-Message-State: AOJu0Yz89A3RE0qvQuaa11MLh+HKtBdbhFpk6pVooQbSG8kaRNpN5CJB
-	1onpsA7J+e4K+vycw6FVNsLYkgkHsibF66BdUZJlln/OVR4pSwr2Z5G81QqIc7suFDY=
-X-Gm-Gg: ASbGnctDrHyyD1jAK26LYn20TKYWGNmiV9dUQthp118zBN1jqW7ubDfWVrJMt0Bav/t
-	VR0ml1kJP5DNu4ajNDE01JYxzAzTnVsG52lfXinEGIHqvRGaC5s7oToY2BT9eBHkURMDOR3pdY5
-	z/TAv4OqDbeGaSnMavP3K6mUvnm/KdXK17CsZLMR2EtPM/+t/MpDLx756AskDgtVmVnW7sS1YWY
-	pONDTaqoudoKVeMzrTn8lKCaLBQpDxkDY4d4XMhp7c4y+YlQfXGa+FRgJuObm74OC5UsM2TD7rL
-	ybpN8kzD8hIkJ+5BeXlmCR97bUwmp7l2LtMzTceycdxfZq3RZ3fApm76qA60W3H+9MVEslxePtk
-	Fg+g+R6m7n9pdnRtoQ5Ce3j3dhQOJoS/6FqK+4gKKfgQ628jZC+kcqHmscVDk+xOuqdWNYj7kil
-	A7N3qcjUR9QEA/
-X-Google-Smtp-Source: AGHT+IGgiSF1zetGk7scP6UPOWU5rKLto8aKAOIhNy5s1Fw9vFiOgcRh6HS62kk2VZBRDEGdVcPCCg==
-X-Received: by 2002:a05:6402:3585:b0:641:66cc:9d91 with SMTP id 4fb4d7f45d1cf-6431a56b3d7mr5951684a12.27.1763035035749;
-        Thu, 13 Nov 2025 03:57:15 -0800 (PST)
+        bh=ZmL32TLheuHbN2HDaUa3UG1QnGtlOG9N/Q5N775z6d0=;
+        b=BR5RGtJfu2a+Yc8dvZ7aME4zJMRS6pf6qTmrX4fLEEPXBJAYRHS7aO/KkNq52YIeKE
+         v07+RhH4kW9iAiUdQ0sUjKSI3K339DCt9eqNLp+W50MVPIzV9M8EQfMlXdnPzAMMaCgI
+         IMEiEAyK+jfbmBVBFHwtYVC8d6yFz5p6mvUSfJUsMm3xd+UDb/fuXkckEDHbNizo0Ikd
+         5lCO+oW6rhkUtVeECHv/9ZOtfSOU8vfog7om4cwawPFovIM60ri4AklazQx9nCyU9EYg
+         wy6ojXO/oDpYbPCS+ba27dOugvb0Zuwu8WtVDoKBQ5gWT8cJwg8pLkQuyIfOvqFZsVYq
+         VAHA==
+X-Forwarded-Encrypted: i=1; AJvYcCV9d4Y2hWh0WxXCGJg32IjlH9TMTNW6uMS97v+9sr8iaw1YKRwoAqpuXT9jRrjx9E8YBHj5xqQrPUhDheOW@vger.kernel.org
+X-Gm-Message-State: AOJu0Yzob15CK6pvuXh23WdITSRET8zXBP/wXfVsFRKn/VLTnhD6Wv5P
+	rSHLGszYemsaPdru+k3LN6dU/7vPKNGsPVcfdQDe/UP1qmP7DLHBYfE8E+KbGtvjQIk=
+X-Gm-Gg: ASbGncsGWW95Vw0eldopbPubMGTgf6lL7zes3hytG1hcWdpWDqCUpwMamQgsjCktWAM
+	PTNKsVKcKe24siwxUMjGVBOd8Ka1kHLBT1TUO6/Rw4B7SHhGKISG5qAB7MNgp6+KULo/fgrefHx
+	zsh3WklmGqbP2WZrd6U15NYwJGDrugi9Ifr50l/rEv34iV2DoE5/Iv4+ZFrUmSloyh+eAEMivJp
+	nuTC2BIuRQ8qmyCymEBw8ewYb4RYsKKK5SPLNL3oZAigUxzEF1ZzXzoVKwxEiOaDkTHBiNjFO8t
+	GzBCS7LAUv25HvXudxGsor4nANNCx1+RXymenEzWlbwVy5Rus9OJjS5Wm4amNRVBbvCedFkgqlv
+	iDudVrYE9carNX1Rwi1KN2s5F4yLGBfnRbPUF5Th6tElIfiSBY63rbYEYM4u8ORVrQ63k2eTneM
+	UQPP3Bmosnp9Ba1VocutQCUbw=
+X-Google-Smtp-Source: AGHT+IES54zSRW8sTH8TIe84JLMl9O+9k+g7kEG/EMcHoTIpOAkv6hlmsk6iKOP7BgiRYf1ZJ102EA==
+X-Received: by 2002:a17:907:6ea6:b0:b72:c103:88db with SMTP id a640c23a62f3a-b7331960ea3mr649017866b.9.1763035942693;
+        Thu, 13 Nov 2025 04:12:22 -0800 (PST)
 Received: from linaro.org ([2a02:2454:ff23:4430:e68d:9e37:1627:2b9b])
-        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-6433a4ce83dsm1309174a12.34.2025.11.13.03.57.14
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-b734fd80d27sm151837166b.40.2025.11.13.04.12.21
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 13 Nov 2025 03:57:15 -0800 (PST)
-Date: Thu, 13 Nov 2025 12:57:08 +0100
+        Thu, 13 Nov 2025 04:12:22 -0800 (PST)
+Date: Thu, 13 Nov 2025 13:12:20 +0100
 From: Stephan Gerhold <stephan.gerhold@linaro.org>
 To: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>
 Cc: Bjorn Andersson <andersson@kernel.org>,
@@ -84,12 +84,14 @@ Cc: Bjorn Andersson <andersson@kernel.org>,
 	Manivannan Sadhasivam <mani@kernel.org>,
 	Konrad Dybcio <konradybcio@kernel.org>,
 	linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v7 04/14] firmware: qcom_scm: Introduce PAS context
- initialization helper function
-Message-ID: <aRXHlL49sSGML__G@linaro.org>
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+	Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Subject: Re: [PATCH v7 09/14] firmware: qcom_scm: Simplify
+ qcom_scm_pas_init_image()
+Message-ID: <aRXLJL632V0ys6rs@linaro.org>
 References: <20251113-kvm-rproc-v7-v7-0-df4910b7c20a@oss.qualcomm.com>
- <20251113-kvm-rproc-v7-v7-4-df4910b7c20a@oss.qualcomm.com>
+ <20251113-kvm-rproc-v7-v7-9-df4910b7c20a@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -98,82 +100,66 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20251113-kvm-rproc-v7-v7-4-df4910b7c20a@oss.qualcomm.com>
+In-Reply-To: <20251113-kvm-rproc-v7-v7-9-df4910b7c20a@oss.qualcomm.com>
 
-On Thu, Nov 13, 2025 at 04:05:54PM +0530, Mukesh Ojha wrote:
-> When the Peripheral Authentication Service (PAS) method runs on a SoC
-> where Linux operates at EL2 (i.e., without the Gunyah hypervisor), the
-> reset sequences are handled by TrustZone. In such cases, Linux must
-> perform additional steps before invoking PAS SMC calls, such as creating
-> a SHM bridge. Therefore, PAS SMC calls require awareness and handling of
-> these additional steps when Linux runs at EL2.
+On Thu, Nov 13, 2025 at 04:05:59PM +0530, Mukesh Ojha wrote:
+> Simplify qcom_scm_pas_init_image() by making the memory allocation,
+> copy and free operations done in a separate function than the actual
+> SMC call.
+
+Nitpick: This feels more like "refactoring in preparation of the
+following patch" rather than a real simplification.
+
 > 
-> To support this, there is a need for a data structure that can be
-> initialized prior to invoking any SMC or MDT functions. This structure
-> allows those functions to determine whether they are operating in the
-> presence or absence of the Gunyah hypervisor and behave accordingly.
-> 
-> Currently, remoteproc and non-remoteproc subsystems use different
-> variants of the MDT loader helper API, primarily due to differences in
-> metadata context handling. Remoteproc subsystems retain the metadata
-> context until authentication and reset are completed, while
-> non-remoteproc subsystems (e.g., video, graphics, IPA, etc.) do not
-> retain the metadata context and can free it within the
-> qcom_scm_pas_init() call by passing a NULL context parameter and due to
-> these differences, it is not possible to extend metadata context
-> handling to support remoteproc and non remoteproc subsystem use PAS
-> operations, when Linux operates at EL2.
-> 
-> Add PAS context data structure and initialization helper function.
-> 
+> Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+> Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 > Signed-off-by: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>
 > ---
->  drivers/firmware/qcom/qcom_scm.c       | 32 ++++++++++++++++++++++++++++++++
->  include/linux/firmware/qcom/qcom_scm.h | 12 ++++++++++++
->  2 files changed, 44 insertions(+)
+>  drivers/firmware/qcom/qcom_scm.c | 58 +++++++++++++++++++++++-----------------
+>  1 file changed, 33 insertions(+), 25 deletions(-)
 > 
 > diff --git a/drivers/firmware/qcom/qcom_scm.c b/drivers/firmware/qcom/qcom_scm.c
-> index 0a0c48fca7cf..e4eb7f3ab7a5 100644
+> index 550707f2b46d..1d8a2c537c44 100644
 > --- a/drivers/firmware/qcom/qcom_scm.c
 > +++ b/drivers/firmware/qcom/qcom_scm.c
-> @@ -558,6 +558,38 @@ static void qcom_scm_set_download_mode(u32 dload_mode)
->  		dev_err(__scm->dev, "failed to set download mode: %d\n", ret);
+> @@ -590,6 +590,37 @@ void *devm_qcom_scm_pas_context_init(struct device *dev, u32 pas_id, phys_addr_t
 >  }
+>  EXPORT_SYMBOL_GPL(devm_qcom_scm_pas_context_init);
 >  
-> +/**
-> + * devm_qcom_scm_pas_context_init() - Initialize peripheral authentication service
-> + *				      context for a given peripheral
-> + *
-> + * PAS context is device-resource managed, so the caller does not need
-> + * to worry about freeing the context memory.
-> + *
-> + * @dev:	  PAS firmware device
-> + * @pas_id:	  peripheral authentication service id
-> + * @mem_phys:	  Subsystem reserve memory start address
-> + * @mem_size:	  Subsystem reserve memory size
-> + *
-> + * Upon successful, returns the PAS context or ERR_PTR() of the error otherwise.
-> + */
-> +void *devm_qcom_scm_pas_context_init(struct device *dev, u32 pas_id, phys_addr_t mem_phys,
+> +static int __qcom_scm_pas_init_image(u32 pas_id, dma_addr_t mdata_phys, void *metadata,
+> +				     size_t size, struct qcom_scm_res *res)
 
-Why does this return void* rather than struct qcom_scm_pas_context *?
+The metadata and size parameters do not seem to be used inside this
+function (also not after your follow-up patches), do we need them here?
 
-> +				     size_t mem_size)
 > +{
-> +	struct qcom_scm_pas_context *ctx;
+> +	struct qcom_scm_desc desc = {
+> +		.svc = QCOM_SCM_SVC_PIL,
+> +		.cmd = QCOM_SCM_PIL_PAS_INIT_IMAGE,
+> +		.arginfo = QCOM_SCM_ARGS(2, QCOM_SCM_VAL, QCOM_SCM_RW),
+> +		.args[0] = pas_id,
+> +		.owner = ARM_SMCCC_OWNER_SIP,
+> +	};
+> +	int ret;
 > +
-> +	ctx = devm_kzalloc(dev, sizeof(*ctx), GFP_KERNEL);
-> +	if (!ctx)
-> +		return ERR_PTR(-ENOMEM);
+> +	ret = qcom_scm_clk_enable();
+> +	if (ret)
+> +		return ret;
 > +
-> +	ctx->dev = dev;
-> +	ctx->pas_id = pas_id;
-> +	ctx->mem_phys = mem_phys;
-> +	ctx->mem_size = mem_size;
+> +	ret = qcom_scm_bw_enable();
+> +	if (ret)
+> +		goto disable_clk;
 > +
-> +	return ctx;
+> +	desc.args[1] = mdata_phys;
+> +
+> +	ret = qcom_scm_call(__scm->dev, &desc, res);
+> +	qcom_scm_bw_disable();
+> +
+> +disable_clk:
+> +	qcom_scm_clk_disable();
+> +
+> +	return ret;
 > +}
-> +EXPORT_SYMBOL_GPL(devm_qcom_scm_pas_context_init);
 
 Thanks,
 Stephan
