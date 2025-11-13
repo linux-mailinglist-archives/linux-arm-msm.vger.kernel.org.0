@@ -1,177 +1,137 @@
-Return-Path: <linux-arm-msm+bounces-81552-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-81553-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [142.0.200.124])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7910AC56436
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Nov 2025 09:27:44 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 2D37DC564CA
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Nov 2025 09:37:25 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id B77834E800C
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Nov 2025 08:21:31 +0000 (UTC)
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 7A4C64E5DB8
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Nov 2025 08:29:14 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4F9E1320A32;
-	Thu, 13 Nov 2025 08:21:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6A5FB3271EB;
+	Thu, 13 Nov 2025 08:29:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="RLlKPzD0"
+	dkim=pass (2048-bit key) header.d=oracle.com header.i=@oracle.com header.b="oI9oInL8"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0b-00069f02.pphosted.com (mx0b-00069f02.pphosted.com [205.220.177.32])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C6C72857FC;
-	Thu, 13 Nov 2025 08:21:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0D462857FC
+	for <linux-arm-msm@vger.kernel.org>; Thu, 13 Nov 2025 08:29:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.177.32
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763022084; cv=none; b=fjgm9KxAJIaZ/mvtihx/K0TLRH7sLhcHMh15aQkUyzJt4LZyOXi3uyzWXA1hQsmZfUrwflEu5XAYt6ZIyksstgi5jNCwKIfQBGBinirf4Zll0uZFAr4S7TnHXIU1cbKKX7LEs/GQAX8Xz1X4ajr/V7rn6yBVhZBZVD4F/9QToBE=
+	t=1763022552; cv=none; b=cyJQBWxxe6bFwOiKeZCW23wPdAcL7ylB7Ut2WQJhY8GuQ7tgDXR8jbxiAs85IIMmpk0TT/kp20Rp1iFxYQxYXNcAKO3yWPBc7mEga7Q0PLNFNQg3HhG/XZ9ST05n+G6j9c4PyTrkZOMEvnwRH09Serkw8vHIkOcMVmJKExJRhyA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763022084; c=relaxed/simple;
-	bh=sPYSbQvPupMVgvrfp8PsoPS3LuSvamSx4HJCHd3l/0o=;
-	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
-	 In-Reply-To:Content-Type; b=sXfkBCsEvhoOp2nLDXJdgoppvjZFlZSTIBm5bM7XmwgakeMSzC7tfSdOGtAyvH22R1Geha4mhvnw/YVE3x1epg4LmCU/6yPyGjgVKM3O5gMGgR/YUcM+y/R3kyu7MY6QdsQodQhk1U/FG3ZYALQSvgCQ2oNVlYdhfpRnEHaE1D4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=RLlKPzD0; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3AFBC116D0;
-	Thu, 13 Nov 2025 08:21:17 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1763022083;
-	bh=sPYSbQvPupMVgvrfp8PsoPS3LuSvamSx4HJCHd3l/0o=;
-	h=Date:Subject:From:To:Cc:References:In-Reply-To:From;
-	b=RLlKPzD02zmhLWozdmVtZ7kX2lsLpnvdRHCTB5QCTGd8AgKhlFLf57L+Ek4fpYf2w
-	 0RK8qajMuzWKQnQlG2paJyKzvBnJgkBGXxj9lX4a4YQRhuJKGnQhjPvbipj+KzkyUe
-	 x9R7UiY5rtqDsOFLL47CM1HXcvjgl86paXg8i12+f5bzP/w9SOGnfzlSjkdV/nWgWp
-	 cMgk/Mqi3DAtEq9fdpOwsonLnArWty7QyBufPRz/4Rw6FwMvdtT9XRouuxq4givdTT
-	 G/VetndQLYFmSKkXLs9oHYonlV1532DBoophH7WkH5d3JJseRZLE2YHlirlpRZjmv7
-	 lvz3Vrwj10NQQ==
-Message-ID: <58176e8c-a4f0-496e-aad8-83698986ec4b@kernel.org>
-Date: Thu, 13 Nov 2025 09:21:15 +0100
+	s=arc-20240116; t=1763022552; c=relaxed/simple;
+	bh=7ir2dzCmPjOMDDWYm7JMvNqyd6yeMfgRQ21NvYll934=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=XDnfZnzK0ypxFNmi5mPIjLAyyEgnh/pKWp5/ScpwOoipszFKTe/MUZKoy0OX00oaY59II49G/LhIQuJY24rb4K08Z/qzBjebHpRaYh7Jj5pmm6FEOpGu2xecGvCQKAHg/SCIjvCDgSc4ut9gdVZrOGa+cF9EcevTXKCLV9GICLc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oracle.com; spf=pass smtp.mailfrom=oracle.com; dkim=pass (2048-bit key) header.d=oracle.com header.i=@oracle.com header.b=oI9oInL8; arc=none smtp.client-ip=205.220.177.32
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oracle.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oracle.com
+Received: from pps.filterd (m0246632.ppops.net [127.0.0.1])
+	by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5AD1hL5f031849;
+	Thu, 13 Nov 2025 08:28:44 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
+	:content-transfer-encoding:date:from:message-id:mime-version
+	:subject:to; s=corp-2025-04-25; bh=L755pfX4QkDpSZyK7BWp0gYkFZGjW
+	0PmXIOXR6FLM6w=; b=oI9oInL877eAM6b8/YFX+pQOAG/i4q+kPdgvySR/9+UF6
+	9h+379hV8zqpWoialvNP1nXA6T/h8DuFqj94Ed4OCZF6IpjYLgE2VGvOPrzfnBZZ
+	jr8fvNcJnN83Gep3fncSQK0C8N/m3hrClGJ0vsOcZPAvKL4SOXdlszv/oUoGBcpl
+	7pveHYLNZ1ehRd5vhDkQRTaHGxNpMhrxCdHm2FMNn3BaQ86CSTzhffmScGmyqMLl
+	2makasNqwxH+DlG8EXe3BdojyRJ3KPUi7KLMd8dCeyqi6M8PmnFMOY6XxBVmrU1m
+	bZlIus9rqK4CndujKka8d7cVp5rVt3qHG1/hzz7aw==
+Received: from phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com (phxpaimrmta02.appoci.oracle.com [147.154.114.232])
+	by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 4acyra95v6-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+	Thu, 13 Nov 2025 08:28:44 +0000 (GMT)
+Received: from pps.filterd (phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
+	by phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com (8.18.1.2/8.18.1.2) with ESMTP id 5AD84fU2005516;
+	Thu, 13 Nov 2025 08:28:43 GMT
+Received: from pps.reinject (localhost [127.0.0.1])
+	by phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTPS id 4a9vabt63r-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+	Thu, 13 Nov 2025 08:28:43 +0000
+Received: from phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com (phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
+	by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 5AD8SgPq010061;
+	Thu, 13 Nov 2025 08:28:42 GMT
+Received: from ca-dev112.us.oracle.com (ca-dev112.us.oracle.com [10.129.136.47])
+	by phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTP id 4a9vabt63a-1;
+	Thu, 13 Nov 2025 08:28:42 +0000
+From: Alok Tiwari <alok.a.tiwari@oracle.com>
+To: freedreno@lists.freedesktop.org, dri-devel@lists.freedesktop.org,
+        linux-arm-msm@vger.kernel.org, antomani103@gmail.com,
+        akhilpo@oss.qualcomm.com, simona@ffwll.ch, airlied@gmail.com,
+        marijn.suijten@somainline.org, robin.clark@oss.qualcomm.com,
+        sean@poorly.run, konradybcio@kernel.org, lumag@kernel.org,
+        abhinav.kumar@linux.dev, jessica.zhang@oss.qualcomm.com
+Cc: alok.a.tiwarilinux@gmail.com, alok.a.tiwari@oracle.com
+Subject: [PATCH] drm/msm/a6xx: move preempt_prepare_postamble after error check
+Date: Thu, 13 Nov 2025 00:28:31 -0800
+Message-ID: <20251113082839.3821867-1-alok.a.tiwari@oracle.com>
+X-Mailer: git-send-email 2.50.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 20/21] dt-bindings: display/msm/gmu: Add Adreno X2-85
- GMU
-From: Krzysztof Kozlowski <krzk@kernel.org>
-To: Akhil P Oommen <akhilpo@oss.qualcomm.com>
-Cc: Rob Clark <robin.clark@oss.qualcomm.com>,
- Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>, Sean Paul <sean@poorly.run>,
- Dmitry Baryshkov <lumag@kernel.org>, Abhinav Kumar
- <abhinav.kumar@linux.dev>, Jessica Zhang <jesszhan0024@gmail.com>,
- Marijn Suijten <marijn.suijten@somainline.org>,
- David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
- Jonathan Marek <jonathan@marek.ca>, Jordan Crouse
- <jordan@cosmicpenguin.net>, Will Deacon <will@kernel.org>,
- Robin Murphy <robin.murphy@arm.com>, Joerg Roedel <joro@8bytes.org>,
- Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
- Conor Dooley <conor+dt@kernel.org>,
- Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
- Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>,
- Connor Abbott <cwabbott0@gmail.com>, linux-arm-msm@vger.kernel.org,
- linux-kernel@vger.kernel.org, dri-devel@lists.freedesktop.org,
- freedreno@lists.freedesktop.org, linux-arm-kernel@lists.infradead.org,
- iommu@lists.linux.dev, devicetree@vger.kernel.org
-References: <20251110-kaana-gpu-support-v2-0-bef18acd5e94@oss.qualcomm.com>
- <20251110-kaana-gpu-support-v2-20-bef18acd5e94@oss.qualcomm.com>
- <20251111-magnetic-jasper-slug-3abc3e@kuoka>
- <ad372979-adab-4486-ac69-90a9df1ae512@oss.qualcomm.com>
- <c5b028e4-3bc4-424c-ab02-5fb6d379c801@kernel.org>
-Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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 a/A=
-In-Reply-To: <c5b028e4-3bc4-424c-ab02-5fb6d379c801@kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
+ definitions=2025-11-12_06,2025-11-12_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 mlxlogscore=999 malwarescore=0
+ adultscore=0 bulkscore=0 suspectscore=0 spamscore=0 mlxscore=0
+ phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2510240000 definitions=main-2511130060
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMTEyMDE1MSBTYWx0ZWRfX5sE5d3HnRC0s
+ Unohqy4sNW838gfuRybSh/4Lta+QRIcdY9Sy+HE6/OsdZnP06y8x9dFebH3t0r91/JS2YC3lSqH
+ Pg3qqzgso+FuFozMmgezE0ky0Afebb9a0rQl/2OV11qQKUiVsG+TZSSF89vY5nUexZNw1YDqdgS
+ gz+bg9sLX2TuonkJu3WgGs2rVRoYwd9+xVAXaxDmeDdVS2WnMSdWYfngDTGb6pzCLNPtJ9VcF9p
+ oVMg+Dtoqz4N6+48F9KIOcT+MuXJyfed1acmfXxmn5+LorFdNEZF0C2B1WKVAE2o4018NLd2K4F
+ iW1nhDVoWo7Z+cTqmPSlgZpxbSJTiJ9FT0dnPJehWjcU5m7kHes631JUXO/CWfLMO3r31Ae/qFU
+ rXNMEWRaVHFa3hBr7iF1jOoP3XDMgw==
+X-Proofpoint-GUID: G3sjtzsN5Qw7oFEiQZTzYoGQqQjBRMBi
+X-Authority-Analysis: v=2.4 cv=ILgPywvG c=1 sm=1 tr=0 ts=691596bc cx=c_pps
+ a=OOZaFjgC48PWsiFpTAqLcw==:117 a=OOZaFjgC48PWsiFpTAqLcw==:17
+ a=6UeiqGixMTsA:10 a=VkNPw1HP01LnGYTKEx00:22 a=yPCof4ZbAAAA:8
+ a=KEv1GmVSPCL-WcEB-q4A:9 a=cPQSjfK2_nFv0Q5t_7PE:22
+X-Proofpoint-ORIG-GUID: G3sjtzsN5Qw7oFEiQZTzYoGQqQjBRMBi
 
-On 13/11/2025 09:14, Krzysztof Kozlowski wrote:
-> On 11/11/2025 15:25, Akhil P Oommen wrote:
->> On 11/11/2025 1:19 PM, Krzysztof Kozlowski wrote:
->>> On Mon, Nov 10, 2025 at 10:07:26PM +0530, Akhil P Oommen wrote:
->>>> Document Adreno X2-85 GMU found in Glymur chipsets in the
->>>> dt-binding specification. It is very similar to Adreno 840
->>>> GMU with the additional requirement of RSCC HUB clock.
->>>>
->>>> Signed-off-by: Akhil P Oommen <akhilpo@oss.qualcomm.com>
->>>> ---
->>>
->>> <form letter>
->>> This is a friendly reminder during the review process.
->>>
->>> It looks like you received a tag and forgot to add it.
->>>
->>> If you do not know the process, here is a short explanation:
->>> Please add Acked-by/Reviewed-by/Tested-by tags when posting new
->>> versions of patchset, under or above your Signed-off-by tag, unless
->>> patch changed significantly (e.g. new properties added to the DT
->>> bindings). Tag is "received", when provided in a message replied to you
->>> on the mailing list. Tools like b4 can help here. However, there's no
->>> need to repost patches *only* to add the tags. The upstream maintainer
->>> will do that for tags received on the version they apply.
->>>
->>> Please read:
->>> https://elixir.bootlin.com/linux/v6.12-rc3/source/Documentation/process/submitting-patches.rst#L577
->>>
->>> If a tag was not added on purpose, please state why and what changed.
->>> </form letter>
->>>
->>
->> I think you got confused. These are new patches I have included for
->> Glymur support in Rev 2 (as mentioned in the cover letter). Did you
->> confuse with the other patch for Kaanapali?
-> 
-> I did check in the changelog and there is nothing about new bindings
-> patch, so you expect me to keep guessing what is happening here.
-> 
-> Squash this with previous patch then. It's really churn to deal with one
-> single liner per patch and commit msg has absoutely ZERO content to be
-> useful on its own.
+Move the call to preempt_prepare_postamble() after verifying that
+preempt_postamble_ptr is valid. If preempt_postamble_ptr is NULL,
+dereferencing it in preempt_prepare_postamble() would lead to a crash.
 
-I meant, squash the second patch with one liner. This one is fine.
+This change avoids calling the preparation function when the
+postamble allocation has failed, preventing potential NULL pointer
+dereference and ensuring proper error handling.
 
-Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Fixes: 50117cad0c50 ("drm/msm/a6xx: Use posamble to reset counters on preemption")
+Signed-off-by: Alok Tiwari <alok.a.tiwari@oracle.com>
+---
+ drivers/gpu/drm/msm/adreno/a6xx_preempt.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-Best regards,
-Krzysztof
+diff --git a/drivers/gpu/drm/msm/adreno/a6xx_preempt.c b/drivers/gpu/drm/msm/adreno/a6xx_preempt.c
+index afc5f4aa3b17..747a22afad9f 100644
+--- a/drivers/gpu/drm/msm/adreno/a6xx_preempt.c
++++ b/drivers/gpu/drm/msm/adreno/a6xx_preempt.c
+@@ -454,11 +454,11 @@ void a6xx_preempt_init(struct msm_gpu *gpu)
+ 			gpu->vm, &a6xx_gpu->preempt_postamble_bo,
+ 			&a6xx_gpu->preempt_postamble_iova);
+ 
+-	preempt_prepare_postamble(a6xx_gpu);
+-
+ 	if (IS_ERR(a6xx_gpu->preempt_postamble_ptr))
+ 		goto fail;
+ 
++	preempt_prepare_postamble(a6xx_gpu);
++
+ 	timer_setup(&a6xx_gpu->preempt_timer, a6xx_preempt_timer, 0);
+ 
+ 	return;
+-- 
+2.50.1
+
 
