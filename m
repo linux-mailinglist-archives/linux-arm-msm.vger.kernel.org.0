@@ -1,61 +1,65 @@
-Return-Path: <linux-arm-msm+bounces-81515-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-81516-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [142.0.200.124])
-	by mail.lfdr.de (Postfix) with ESMTPS id BA587C55B45
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Nov 2025 05:51:50 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 8E954C55BB5
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Nov 2025 06:00:18 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 4B4D74E352A
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Nov 2025 04:51:35 +0000 (UTC)
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 341C34E3B98
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Nov 2025 04:58:00 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D0E4B305044;
-	Thu, 13 Nov 2025 04:51:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5FF843016F3;
+	Thu, 13 Nov 2025 04:57:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="glxU1Wrf"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="b0EQfKeu"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D128287246;
-	Thu, 13 Nov 2025 04:51:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25983219E8;
+	Thu, 13 Nov 2025 04:57:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763009486; cv=none; b=PqRWM08swseUxv4BUfjPfjaJ60YV7z+MVtmX78sDksazxQMBlHlhmp50U25qVPyLrwEQz+Hlw0GCdfJgMwLZES6VS2pV214eE8HEjUeczjtNbrMkLd1d1FyOwGRIB6sTG5xoBoz8EOfu5JMYU0AT5aF/piA+iBiTqMI1QjhbqHI=
+	t=1763009876; cv=none; b=N9FwE2g+6bfYQTq99NwQuxT8PF4c49fzts1e3bpBVF4WEHPkjENBUGGlO8WaL+IzkXyItlCGWeKFitdFDp0NY8pLx1dnCyS/Utgy8rlJRSjN3ePtLvxsYLozXsCNhUved358SSIxxFDdXl4hcl1yGPr7hn/EFPTejod8tKnwKB0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763009486; c=relaxed/simple;
-	bh=u1EUAM6v70Id6ffUyitEzHKUzjJqyDleo4+wyX4xB1k=;
+	s=arc-20240116; t=1763009876; c=relaxed/simple;
+	bh=Thw/uLvj2yZzys3H5OOUTp5jqFPhVUvxTtwUf6CqU3k=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=rmQXeN9IqqISaO+qkLNl3GRArViK4wxiDNu4Ztp8Mz73LJ47BqZwBJ5FdluknVv3z/YnEDm81u/lSmRy8WM4CVhWaTuudRhziJGMumRarMxxkeEAZwPg808HY2LDr5ZDLzFAJ+9kDY8W5P/B0ncMCIdun4gyk8iXqWXNKI1Pzo0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=glxU1Wrf; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE866C4CEF5;
-	Thu, 13 Nov 2025 04:51:12 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=Kv0LiiwU0KcoUKlVnJoGMjKUFEgRDLADvHnxRbr/6zV+Vc9xqnWj/5icW9gzgXvWuvzJ5aI+dOa2Sb9vfHGRmUe3FZPRK6gkLLx5ljPDoXAmnTvu6fG1lMXiiRAuV9V+pVM4n4ACN54ydG/nGUjdzLIszjR6/i3wKdmCVJ/OiTI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=b0EQfKeu; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5DC78C4CEF1;
+	Thu, 13 Nov 2025 04:57:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1763009486;
-	bh=u1EUAM6v70Id6ffUyitEzHKUzjJqyDleo4+wyX4xB1k=;
+	s=k20201202; t=1763009875;
+	bh=Thw/uLvj2yZzys3H5OOUTp5jqFPhVUvxTtwUf6CqU3k=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=glxU1WrfDP8k7P6d3p7QCqNLd/d0t4Ua5Ee2ES1XSQCxN18wR1pQ9PmT6R34ZsMIw
-	 98yDh/372bYdTHroq4t9dCea9YG1KlGigje2VMM79I5aPcbW87MGqfy2zdB5EuVoNC
-	 Y5NbC56Z1LU/eJzkxVYbsr2HRFDUMxcSCBK1xP5OYd0Z+JVPoIBHVOpv8COG/H/5GX
-	 yVVm6/g2ol54DCjzv/CvJz07pBN/iE4jwdOef808YZUHqn2vmW3M3/gjka3QWCM29G
-	 7mRdDZjQGYH/cpoRKXYI91HFubJxa7/JJf5pQnEUOw/iw2iaVTifsX2swIWmJGOQ24
-	 fgRgHp7z08NZQ==
-Date: Thu, 13 Nov 2025 10:21:06 +0530
+	b=b0EQfKeu8rCOPYNTkKylY2Ni8bO2OLrpOqtrYH6FLMLXQwY3adw1B55Mg7iCrHIuA
+	 W25opCmF+mV+zqFk9R9KLtTA6d3jaa3TpmqGktk6BZHrs1/GFjFrVVwIYPQe4ZDenf
+	 ukxLvn2E1/wbZi+EDOUxub2kkDoUdEOOjRdxc/1lJz0AgHA7atUv1zaOpXAiY3Dnqj
+	 L/pi/CcfEwn0edvWM6gS4K1scR3RJtUMXfwpbfCNE3CWJvF11o+eeuKrilzNd2sCiR
+	 FnjbiZNpawu4qK5vEJsrVzQdQmqXR8JEbETtUHHfUC5ldg+VKV9iuc8/xscqU/j14j
+	 /6lkI50UyQVhA==
+Date: Thu, 13 Nov 2025 10:27:42 +0530
 From: Manivannan Sadhasivam <mani@kernel.org>
-To: Ziyue Zhang <ziyue.zhang@oss.qualcomm.com>
-Cc: andersson@kernel.org, konradybcio@kernel.org, robh@kernel.org, 
-	krzk+dt@kernel.org, conor+dt@kernel.org, jingoohan1@gmail.com, lpieralisi@kernel.org, 
-	kwilczynski@kernel.org, bhelgaas@google.com, johan+linaro@kernel.org, vkoul@kernel.org, 
-	kishon@kernel.org, neil.armstrong@linaro.org, abel.vesa@linaro.org, kw@linux.com, 
-	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	linux-pci@vger.kernel.org, linux-phy@lists.infradead.org, qiang.yu@oss.qualcomm.com, 
-	krishna.chundru@oss.qualcomm.com, quic_vbadigan@quicinc.com
-Subject: Re: [PATCH v3 1/2] arm64: dts: qcom: Add PCIe3 and PCIe5 support for
- HAMOA-IOT-SOM platform
-Message-ID: <nkcxf3gnpvjilvw36f65e3olynta2jebki2rkc4tmka7poux6j@g6xksv3aobpp>
-References: <20251112090316.936187-1-ziyue.zhang@oss.qualcomm.com>
- <20251112090316.936187-2-ziyue.zhang@oss.qualcomm.com>
+To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Cc: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>, 
+	Bjorn Helgaas <bhelgaas@google.com>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Bartosz Golaszewski <brgl@bgdev.pl>, linux-kernel@vger.kernel.org, linux-pci@vger.kernel.org, 
+	devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+	Stephan Gerhold <stephan.gerhold@linaro.org>, linux-pm@vger.kernel.org
+Subject: Re: [PATCH v2 1/4] dt-bindings: connector: Add PCIe M.2 Mechanical
+ Key M connector
+Message-ID: <ptis4un4tz2icqfzkp76pvc3qqzuqsg7te5vw2v5nnucsthffk@3pjgzy2po3nr>
+References: <20251108-pci-m2-v2-0-e8bc4d7bf42d@oss.qualcomm.com>
+ <20251108-pci-m2-v2-1-e8bc4d7bf42d@oss.qualcomm.com>
+ <gmwg46c3za5z2ev34mms44gpq3sq7sb4jaozbdn5cejwbejbpo@wwr2j7dkjov4>
+ <qrgaulegz2tb7yzklyl7rpkgbf6ysx44bxtyn6n3tcyq4an4e5@bzngutkvfno3>
+ <5kedk7c6kc2e5j4kqeyik6i7ju54sdn6etjhpwl2vt4nq6c6ug@2yld4hpvbuzg>
+ <n3efko3q7i64qmipgxz5yjeqvgmw26b4dvwofe6qnx7xqsjtx5@bbbpxmfioxrj>
+ <zjwuk4mg6n5wm7yecsjv6lrwb42rpmpdtoyh2dnh23h6kr57d6@iqxvrrdgs7vn>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -65,142 +69,133 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20251112090316.936187-2-ziyue.zhang@oss.qualcomm.com>
+In-Reply-To: <zjwuk4mg6n5wm7yecsjv6lrwb42rpmpdtoyh2dnh23h6kr57d6@iqxvrrdgs7vn>
 
-On Wed, Nov 12, 2025 at 05:03:15PM +0800, Ziyue Zhang wrote:
-> HAMOA IoT SOM requires PCIe3 and PCIe5 connectivity for SATA controller
-> and SDX65.
-> Add the required sideband signals (PERST#, WAKE#, CLKREQ#), pinctrl states
-> and power supply properties in the device tree, which PCIe3 and PCIe5
-> require.
+On Wed, Nov 12, 2025 at 10:12:36PM +0200, Dmitry Baryshkov wrote:
+> On Tue, Nov 11, 2025 at 07:19:45PM +0530, Manivannan Sadhasivam wrote:
+> > On Sun, Nov 09, 2025 at 10:13:59PM +0200, Dmitry Baryshkov wrote:
+> > > On Sun, Nov 09, 2025 at 09:48:02PM +0530, Manivannan Sadhasivam wrote:
+> > > > On Sat, Nov 08, 2025 at 08:10:54PM +0200, Dmitry Baryshkov wrote:
+> > > > > On Sat, Nov 08, 2025 at 08:53:19AM +0530, Manivannan Sadhasivam wrote:
+> > > > > > Add the devicetree binding for PCIe M.2 Mechanical Key M connector defined
+> > > > > > in the PCI Express M.2 Specification, r4.0, sec 5.3. This connector
+> > > > > > provides interfaces like PCIe and SATA to attach the Solid State Drives
+> > > > > > (SSDs) to the host machine along with additional interfaces like USB, and
+> > > > > > SMB for debugging and supplementary features. At any point of time, the
+> > > > > > connector can only support either PCIe or SATA as the primary host
+> > > > > > interface.
+> > > > > > 
+> > > > > > The connector provides a primary power supply of 3.3v, along with an
+> > > > > > optional 1.8v VIO supply for the Adapter I/O buffer circuitry operating at
+> > > > > > 1.8v sideband signaling.
+> > > > > > 
+> > > > > > The connector also supplies optional signals in the form of GPIOs for fine
+> > > > > > grained power management.
+> > > > > > 
+> > > > > > Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
+> > > > > > ---
+> > > > > >  .../bindings/connector/pcie-m2-m-connector.yaml    | 122 +++++++++++++++++++++
+> > > > > >  1 file changed, 122 insertions(+)
+> > > > > > 
+> > > > > > diff --git a/Documentation/devicetree/bindings/connector/pcie-m2-m-connector.yaml b/Documentation/devicetree/bindings/connector/pcie-m2-m-connector.yaml
+> > > > > > new file mode 100644
+> > > > > > index 0000000000000000000000000000000000000000..be0a3b43e8fd2a2a3b76cad4808ddde79dceaa21
+> > > > > > --- /dev/null
+> > > > > > +++ b/Documentation/devicetree/bindings/connector/pcie-m2-m-connector.yaml
+> > > > > > @@ -0,0 +1,122 @@
+> > > > > > +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+> > > > > > +%YAML 1.2
+> > > > > > +---
+> > > > > > +$id: http://devicetree.org/schemas/connector/pcie-m2-m-connector.yaml#
+> > > > > > +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> > > > > > +
+> > > > > > +title: PCIe M.2 Mechanical Key M Connector
+> > > > > > +
+> > > > > > +maintainers:
+> > > > > > +  - Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
+> > > > > > +
+> > > > > > +description:
+> > > > > > +  A PCIe M.2 M connector node represents a physical PCIe M.2 Mechanical Key M
+> > > > > > +  connector. The Mechanical Key M connectors are used to connect SSDs to the
+> > > > > > +  host system over PCIe/SATA interfaces. These connectors also offer optional
+> > > > > > +  interfaces like USB, SMB.
+> > > > > > +
+> > > > > > +properties:
+> > > > > > +  compatible:
+> > > > > > +    const: pcie-m2-m-connector
+> > > > > 
+> > > > > Is a generic compatible enough here? Compare this to the USB connectors,
+> > > > > which, in case of an independent USB-B connector controlled/ing GPIOs,
+> > > > > gets additional gpio-usb-b-connector?
+> > > > > 
+> > > > 
+> > > > I can't comment on it as I've not seen such usecases as of now. But I do think
+> > > > that this generic compatible should satisfy most of the design requirements. If
+> > > > necessity arises, a custom compatible could be introduced with this generic one
+> > > > as a fallback.
+> > > 
+> > > Ack
+> > > 
+> > > > 
+> > > > > > +
+> > > > > > +  vpcie3v3-supply:
+> > > > > > +    description: A phandle to the regulator for 3.3v supply.
+> > > > > > +
+> > > > > > +  vio1v8-supply:
+> > > > > > +    description: A phandle to the regulator for VIO 1.8v supply.
+> > > > > > +
+> > > > > > +  ports:
+> > > > > > +    $ref: /schemas/graph.yaml#/properties/ports
+> > > > > > +    description: OF graph bindings modeling the interfaces exposed on the
+> > > > > > +      connector. Since a single connector can have multiple interfaces, every
+> > > > > > +      interface has an assigned OF graph port number as described below.
+> > > > > > +
+> > > > > > +    properties:
+> > > > > > +      port@0:
+> > > > > > +        $ref: /schemas/graph.yaml#/properties/port
+> > > > > > +        description: PCIe/SATA interface
+> > > > > 
+> > > > > Should it be defined as having two endpoints: one for PCIe, one for
+> > > > > SATA?
+> > > > > 
+> > > > 
+> > > > I'm not sure. From the dtschema of the connector node:
+> > > > 
+> > > > "If a single port is connected to more than one remote device, an 'endpoint'
+> > > > child node must be provided for each link"
+> > > > 
+> > > > Here, a single port is atmost connected to only one endpoint and that endpoint
+> > > > could PCIe/SATA. So IMO, defining two endpoint nodes doesn't fit here.
+> > > 
+> > > I think this needs to be better defined. E.g. there should be either one
+> > > endpoint going to the shared SATA / PCIe MUX, which should then be
+> > > controlled somehow, in a platform-specific way (how?) or there should be
+> > > two endpoints defined, e.g. @0 for SATA and @1 for PCIe (should we
+> > > prevent powering up M.2 if PEDET points out the unsupported function?).
+> > > (Note: these questions might be the definitive point for the bare
+> > > m2-m-connector vs gpio-m2-m-connector: the former one defines just the
+> > > M.2 signals, letting e.g. UEFI or PCIe controller to react to them, the
+> > > latter one defines how to control MUXes, the behaviour wrt PEDET, etc.,
+> > > performing all those actions in OS driver).
+> > > 
+> > 
+> > In the case of an external GPIO controlled MUX for PCIe/SATA interface, I would
+> > assume that the MUX will be controlled by the PEDET itself. PEDET will be driven
+> > low by the card if it uses SATA, pulled high (NC) if it uses PCIe. Then that
+> > signal will help the MUX to route the proper interface to the connector.
+> > 
+> > Even in that case, there should be a single endpoint coming from the MUX to the
+> > connector.
 > 
-> Signed-off-by: Ziyue Zhang <ziyue.zhang@oss.qualcomm.com>
-> Reviewed-by: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
-> ---
->  arch/arm64/boot/dts/qcom/hamoa-iot-som.dtsi | 79 +++++++++++++++++++++
->  1 file changed, 79 insertions(+)
+> How would you model this in the actual DT? We don't have separate
+> PCIe/SATA muxes in DT, do we?
 > 
-> diff --git a/arch/arm64/boot/dts/qcom/hamoa-iot-som.dtsi b/arch/arm64/boot/dts/qcom/hamoa-iot-som.dtsi
-> index 4de7c0abb25a..abb8ea323d78 100644
-> --- a/arch/arm64/boot/dts/qcom/hamoa-iot-som.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/hamoa-iot-som.dtsi
-> @@ -390,6 +390,22 @@ &gpu_zap_shader {
->  	firmware-name = "qcom/x1e80100/gen70500_zap.mbn";
->  };
->  
-> +&pcie3 {
-> +	pinctrl-names = "default";
-> +	pinctrl-0 = <&pcie3_default>;
-> +	perst-gpios = <&tlmm 143 GPIO_ACTIVE_LOW>;
-> +	wake-gpios = <&tlmm 145 GPIO_ACTIVE_LOW>;
 
-Can you move these GPIOs and PHY (in SoC dtsi) properties to Root Port node?
-
-Specifying Root Port properties in controller node is deprecated.
+I think I got it wrong here. Even in the case of MUX, the actual endpoint link
+should exist between PCIe and SATA nodes to the connector node. So yes, having 2
+endpoint nodes makes sense.
 
 - Mani
-
-> +
-> +	status = "okay";
-> +};
-> +
-> +&pcie3_phy {
-> +	vdda-phy-supply = <&vreg_l3c_0p8>;
-> +	vdda-pll-supply = <&vreg_l3e_1p2>;
-> +
-> +	status = "okay";
-> +};
-> +
->  &pcie4 {
->  	perst-gpios = <&tlmm 146 GPIO_ACTIVE_LOW>;
->  	wake-gpios = <&tlmm 148 GPIO_ACTIVE_LOW>;
-> @@ -407,6 +423,23 @@ &pcie4_phy {
->  	status = "okay";
->  };
->  
-> +&pcie5 {
-> +	perst-gpios = <&tlmm 149 GPIO_ACTIVE_LOW>;
-> +	wake-gpios = <&tlmm 151 GPIO_ACTIVE_LOW>;
-> +
-> +	pinctrl-0 = <&pcie5_default>;
-> +	pinctrl-names = "default";
-> +
-> +	status = "okay";
-> +};
-> +
-> +&pcie5_phy {
-> +	vdda-phy-supply = <&vreg_l3i_0p8>;
-> +	vdda-pll-supply = <&vreg_l3e_1p2>;
-> +
-> +	status = "okay";
-> +};
-> +
->  &pcie6a {
->  	perst-gpios = <&tlmm 152 GPIO_ACTIVE_LOW>;
->  	wake-gpios = <&tlmm 154 GPIO_ACTIVE_LOW>;
-> @@ -454,6 +487,29 @@ &tlmm {
->  	gpio-reserved-ranges = <34 2>, /* TPM LP & INT */
->  			       <44 4>; /* SPI (TPM) */
->  
-> +	pcie3_default: pcie3-default-state {
-> +		clkreq-n-pins {
-> +			pins = "gpio144";
-> +			function = "pcie3_clk";
-> +			drive-strength = <2>;
-> +			bias-pull-up;
-> +		};
-> +
-> +		perst-n-pins {
-> +			pins = "gpio143";
-> +			function = "gpio";
-> +			drive-strength = <2>;
-> +			bias-disable;
-> +		};
-> +
-> +		wake-n-pins {
-> +			pins = "gpio145";
-> +			function = "gpio";
-> +			drive-strength = <2>;
-> +			bias-pull-up;
-> +		};
-> +	};
-> +
->  	pcie4_default: pcie4-default-state {
->  		clkreq-n-pins {
->  			pins = "gpio147";
-> @@ -477,6 +533,29 @@ wake-n-pins {
->  		};
->  	};
->  
-> +	pcie5_default: pcie5-default-state {
-> +		clkreq-n-pins {
-> +			pins = "gpio150";
-> +			function = "pcie5_clk";
-> +			drive-strength = <2>;
-> +			bias-pull-up;
-> +		};
-> +
-> +		perst-n-pins {
-> +			pins = "gpio149";
-> +			function = "gpio";
-> +			drive-strength = <2>;
-> +			bias-disable;
-> +		};
-> +
-> +		wake-n-pins {
-> +			pins = "gpio151";
-> +			function = "gpio";
-> +			drive-strength = <2>;
-> +			bias-pull-up;
-> +		};
-> +	};
-> +
->  	pcie6a_default: pcie6a-default-state {
->  		clkreq-n-pins {
->  			pins = "gpio153";
-> -- 
-> 2.34.1
-> 
 
 -- 
 மணிவண்ணன் சதாசிவம்
