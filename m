@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-81537-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-81552-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id AD515C5630E
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Nov 2025 09:15:32 +0100 (CET)
+Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [142.0.200.124])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7910AC56436
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Nov 2025 09:27:44 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 2EEAC3B59F9
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Nov 2025 08:14:46 +0000 (UTC)
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id B77834E800C
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Nov 2025 08:21:31 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 83B3233121D;
-	Thu, 13 Nov 2025 08:14:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4F9E1320A32;
+	Thu, 13 Nov 2025 08:21:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="D7WLbIWJ"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="RLlKPzD0"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47A7933120E;
-	Thu, 13 Nov 2025 08:14:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C6C72857FC;
+	Thu, 13 Nov 2025 08:21:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763021672; cv=none; b=bzpXTeI4mJ6HsOy487QQTbgRErNHMCezsz0b8wvCGNVbfyMt00Lh/52Ab1fBpFagvxNuIBSULlHTK6ePV5d0IeMLJ4EuRq+H8myIJqvzxAbnbJONFWWZiSx89t0C5C7Xw5/Ik3t9neXj1UcNhM5s7MJwk5ofWyvzFadjGiJH+CM=
+	t=1763022084; cv=none; b=fjgm9KxAJIaZ/mvtihx/K0TLRH7sLhcHMh15aQkUyzJt4LZyOXi3uyzWXA1hQsmZfUrwflEu5XAYt6ZIyksstgi5jNCwKIfQBGBinirf4Zll0uZFAr4S7TnHXIU1cbKKX7LEs/GQAX8Xz1X4ajr/V7rn6yBVhZBZVD4F/9QToBE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763021672; c=relaxed/simple;
-	bh=HUjyFQg8cbSBM/m0KdBHYnt+AadWQlTiWGDbHUQMrBw=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=JfKU395baLN+Bctp7+rpha+aTcs/VHZ5XGBxnCJr5ZR/xZ3ptmvKd+EybnhC4Od/RK/rv1FM0ql5OGkZxPLtmteZsa5OBI90Su00J+PC0teigN2nWPd+B56bfTMOyBvjQenmlVciqjEmyXF6AZ5abu5iFHde+/MRWO96wnprNJ0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=D7WLbIWJ; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0688C16AAE;
-	Thu, 13 Nov 2025 08:14:25 +0000 (UTC)
+	s=arc-20240116; t=1763022084; c=relaxed/simple;
+	bh=sPYSbQvPupMVgvrfp8PsoPS3LuSvamSx4HJCHd3l/0o=;
+	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
+	 In-Reply-To:Content-Type; b=sXfkBCsEvhoOp2nLDXJdgoppvjZFlZSTIBm5bM7XmwgakeMSzC7tfSdOGtAyvH22R1Geha4mhvnw/YVE3x1epg4LmCU/6yPyGjgVKM3O5gMGgR/YUcM+y/R3kyu7MY6QdsQodQhk1U/FG3ZYALQSvgCQ2oNVlYdhfpRnEHaE1D4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=RLlKPzD0; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3AFBC116D0;
+	Thu, 13 Nov 2025 08:21:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1763021671;
-	bh=HUjyFQg8cbSBM/m0KdBHYnt+AadWQlTiWGDbHUQMrBw=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=D7WLbIWJ7WNL/xuRASebggpDrwwDv5EthT43rrnFTRWAxt2A23HpZAWfies/mgbxw
-	 2tWJE+AKBWd8vPHMENdKZQLgkXIdP4bW7a/BDIGL3NofKVneVCK5sZd2kgIOurGqsM
-	 n2I49BSqyiLvTs2DhemeuuCl2SbXjwoFviHRvwlfMx2oRiXDQENj/ozNCFnkOO/VDJ
-	 kEJCHfrJYwTOuUChgP34efiB/7mEWlp6kYNQN0s3fwm0WMIhXQmUnl4vG4S9rXteLz
-	 DNPjfCytz1V394QTONKCYgP7U1eJN1PN95xVxoM30NDo9fzk27zU6crELncndaH0vo
-	 dTRbIKWSahTMg==
-Message-ID: <c5b028e4-3bc4-424c-ab02-5fb6d379c801@kernel.org>
-Date: Thu, 13 Nov 2025 09:14:23 +0100
+	s=k20201202; t=1763022083;
+	bh=sPYSbQvPupMVgvrfp8PsoPS3LuSvamSx4HJCHd3l/0o=;
+	h=Date:Subject:From:To:Cc:References:In-Reply-To:From;
+	b=RLlKPzD02zmhLWozdmVtZ7kX2lsLpnvdRHCTB5QCTGd8AgKhlFLf57L+Ek4fpYf2w
+	 0RK8qajMuzWKQnQlG2paJyKzvBnJgkBGXxj9lX4a4YQRhuJKGnQhjPvbipj+KzkyUe
+	 x9R7UiY5rtqDsOFLL47CM1HXcvjgl86paXg8i12+f5bzP/w9SOGnfzlSjkdV/nWgWp
+	 cMgk/Mqi3DAtEq9fdpOwsonLnArWty7QyBufPRz/4Rw6FwMvdtT9XRouuxq4givdTT
+	 G/VetndQLYFmSKkXLs9oHYonlV1532DBoophH7WkH5d3JJseRZLE2YHlirlpRZjmv7
+	 lvz3Vrwj10NQQ==
+Message-ID: <58176e8c-a4f0-496e-aad8-83698986ec4b@kernel.org>
+Date: Thu, 13 Nov 2025 09:21:15 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -52,6 +52,7 @@ MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH v2 20/21] dt-bindings: display/msm/gmu: Add Adreno X2-85
  GMU
+From: Krzysztof Kozlowski <krzk@kernel.org>
 To: Akhil P Oommen <akhilpo@oss.qualcomm.com>
 Cc: Rob Clark <robin.clark@oss.qualcomm.com>,
  Bjorn Andersson <andersson@kernel.org>,
@@ -75,7 +76,7 @@ References: <20251110-kaana-gpu-support-v2-0-bef18acd5e94@oss.qualcomm.com>
  <20251110-kaana-gpu-support-v2-20-bef18acd5e94@oss.qualcomm.com>
  <20251111-magnetic-jasper-slug-3abc3e@kuoka>
  <ad372979-adab-4486-ac69-90a9df1ae512@oss.qualcomm.com>
-From: Krzysztof Kozlowski <krzk@kernel.org>
+ <c5b028e4-3bc4-424c-ab02-5fb6d379c801@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
  xsFNBFVDQq4BEAC6KeLOfFsAvFMBsrCrJ2bCalhPv5+KQF2PS2+iwZI8BpRZoV+Bd5kWvN79
@@ -120,53 +121,56 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  jWt87ecuHlpL3uuQ0ZZNWqHgZoQLXoqC2ZV5KrtKWb/jyiFX/sxSrodALf0zf+tfHv0FZWT2
  zHjUqd0t4njD/UOsuIMOQn4Ig0SdivYPfZukb5cdasKJukG1NOpbW7yRNivaCnfZz6dTawXw
  XRIV/KDsHQiyVxKvN73bThKhONkcX2LWuD928tAR6XMM2G5ovxLe09vuOzzfTWQDsm++9UKF a/A=
-In-Reply-To: <ad372979-adab-4486-ac69-90a9df1ae512@oss.qualcomm.com>
+In-Reply-To: <c5b028e4-3bc4-424c-ab02-5fb6d379c801@kernel.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 11/11/2025 15:25, Akhil P Oommen wrote:
-> On 11/11/2025 1:19 PM, Krzysztof Kozlowski wrote:
->> On Mon, Nov 10, 2025 at 10:07:26PM +0530, Akhil P Oommen wrote:
->>> Document Adreno X2-85 GMU found in Glymur chipsets in the
->>> dt-binding specification. It is very similar to Adreno 840
->>> GMU with the additional requirement of RSCC HUB clock.
+On 13/11/2025 09:14, Krzysztof Kozlowski wrote:
+> On 11/11/2025 15:25, Akhil P Oommen wrote:
+>> On 11/11/2025 1:19 PM, Krzysztof Kozlowski wrote:
+>>> On Mon, Nov 10, 2025 at 10:07:26PM +0530, Akhil P Oommen wrote:
+>>>> Document Adreno X2-85 GMU found in Glymur chipsets in the
+>>>> dt-binding specification. It is very similar to Adreno 840
+>>>> GMU with the additional requirement of RSCC HUB clock.
+>>>>
+>>>> Signed-off-by: Akhil P Oommen <akhilpo@oss.qualcomm.com>
+>>>> ---
 >>>
->>> Signed-off-by: Akhil P Oommen <akhilpo@oss.qualcomm.com>
->>> ---
+>>> <form letter>
+>>> This is a friendly reminder during the review process.
+>>>
+>>> It looks like you received a tag and forgot to add it.
+>>>
+>>> If you do not know the process, here is a short explanation:
+>>> Please add Acked-by/Reviewed-by/Tested-by tags when posting new
+>>> versions of patchset, under or above your Signed-off-by tag, unless
+>>> patch changed significantly (e.g. new properties added to the DT
+>>> bindings). Tag is "received", when provided in a message replied to you
+>>> on the mailing list. Tools like b4 can help here. However, there's no
+>>> need to repost patches *only* to add the tags. The upstream maintainer
+>>> will do that for tags received on the version they apply.
+>>>
+>>> Please read:
+>>> https://elixir.bootlin.com/linux/v6.12-rc3/source/Documentation/process/submitting-patches.rst#L577
+>>>
+>>> If a tag was not added on purpose, please state why and what changed.
+>>> </form letter>
+>>>
 >>
->> <form letter>
->> This is a friendly reminder during the review process.
->>
->> It looks like you received a tag and forgot to add it.
->>
->> If you do not know the process, here is a short explanation:
->> Please add Acked-by/Reviewed-by/Tested-by tags when posting new
->> versions of patchset, under or above your Signed-off-by tag, unless
->> patch changed significantly (e.g. new properties added to the DT
->> bindings). Tag is "received", when provided in a message replied to you
->> on the mailing list. Tools like b4 can help here. However, there's no
->> need to repost patches *only* to add the tags. The upstream maintainer
->> will do that for tags received on the version they apply.
->>
->> Please read:
->> https://elixir.bootlin.com/linux/v6.12-rc3/source/Documentation/process/submitting-patches.rst#L577
->>
->> If a tag was not added on purpose, please state why and what changed.
->> </form letter>
->>
+>> I think you got confused. These are new patches I have included for
+>> Glymur support in Rev 2 (as mentioned in the cover letter). Did you
+>> confuse with the other patch for Kaanapali?
 > 
-> I think you got confused. These are new patches I have included for
-> Glymur support in Rev 2 (as mentioned in the cover letter). Did you
-> confuse with the other patch for Kaanapali?
+> I did check in the changelog and there is nothing about new bindings
+> patch, so you expect me to keep guessing what is happening here.
+> 
+> Squash this with previous patch then. It's really churn to deal with one
+> single liner per patch and commit msg has absoutely ZERO content to be
+> useful on its own.
 
-I did check in the changelog and there is nothing about new bindings
-patch, so you expect me to keep guessing what is happening here.
+I meant, squash the second patch with one liner. This one is fine.
 
-Squash this with previous patch then. It's really churn to deal with one
-single liner per patch and commit msg has absoutely ZERO content to be
-useful on its own.
-
-
+Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
 Best regards,
 Krzysztof
