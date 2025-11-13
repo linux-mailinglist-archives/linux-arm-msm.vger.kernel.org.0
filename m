@@ -1,139 +1,158 @@
-Return-Path: <linux-arm-msm+bounces-81685-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-81688-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ams.mirrors.kernel.org (ams.mirrors.kernel.org [213.196.21.55])
-	by mail.lfdr.de (Postfix) with ESMTPS id CB9C4C593B3
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Nov 2025 18:42:31 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 88594C5958B
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Nov 2025 19:04:31 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ams.mirrors.kernel.org (Postfix) with ESMTPS id E0FB13444A7
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Nov 2025 17:34:40 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 9C1CB3A6B69
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Nov 2025 17:57:44 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6DF012F99A5;
-	Thu, 13 Nov 2025 17:34:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B256C3587D5;
+	Thu, 13 Nov 2025 17:57:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="DtO+0+Xg"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="dJBFf65V"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C0612F3608;
-	Thu, 13 Nov 2025 17:34:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 834552EF67F;
+	Thu, 13 Nov 2025 17:57:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763055276; cv=none; b=dH8xLI7UtVyv7KpKOzIp1ZGlgx6PMDa9IhBGdmo38ljLHJY8Woe8Fi96GMrs0EFfTH1HAyQYXlwoEVx/geR6DGvVsD0MzaMOAFa8cvv38jLlhfLHQEFR4b/ol4n6cI6tfPUvKt5ggs+VON7kGwXiwDj38uQqizlx53btEu2+52o=
+	t=1763056663; cv=none; b=Uo4/aS2uOTa/L6BIwei9D2SKFEiAE5elGsUFPo+Q+ALYkOuReevTO3ENWkFuC8aWhB2x4ajvVD0Sp3Utmbh+HB+f5kJyYl7RBidxgMDrfLTexYm2MWPfYSnntT/v2oM8gJBqqgWs2HldaJs1ph1/J3ajJawlQWvsXNc1mjYQjpg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763055276; c=relaxed/simple;
-	bh=PsQ43iPC+m7NY165IqqewmgolKO/wnPlHwhX1BL3SAk=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=QXlAtrVogu/4Ddu+wTtwHSbuU6T7eSk7UeBmc7dKUoKumLNAQ3uffbRo4rV/SYUJn7JCUL/ZRNGsKXJlVUaCzWgGMSUPiuYdv8rmclfvTnynozgrDwJIvMgr23g6c4gVlqV2Kz3hWh57P8b19k+qsU1ToM5Q5eQ9AEucPNEiVUM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=DtO+0+Xg; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05936C4CEF5;
-	Thu, 13 Nov 2025 17:34:34 +0000 (UTC)
+	s=arc-20240116; t=1763056663; c=relaxed/simple;
+	bh=vgzmso7a8Y8t5RJ9ImlUQnWFBosuuGamKlYy2aDvNqk=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=NZjHSMyODkpUQe8sGDfCK8gYpJhKx9vTeha0nCXJWXEnWAWYSi3LJOnia11YsB/t9RoYELKT9nVdvfDiMVx8J5TbaHT50c1xwiZ3LYnfN36Yu/kavvWB+ERR9trRQfNS1uc4QIqFAVZ9dZhJ4KFerFAnhLSTYhb5q3EJv5jmDLE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=dJBFf65V; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 22363C4CEF5;
+	Thu, 13 Nov 2025 17:57:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1763055275;
-	bh=PsQ43iPC+m7NY165IqqewmgolKO/wnPlHwhX1BL3SAk=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=DtO+0+XgKr0OVQWinfPOXS7/kpI4avPTAHNWYAFyFbQ2HSF9G8m0lLuFMPF6GzVeQ
-	 VziZc2IGT0vjEa1CMVxv6DqyKrsnr/LMgQO8ePUQgOFnzZ9uC9MVU+9N6RuMsqk2AB
-	 uC9Kmml+ZwcG9W7cI62XOxmJW4509GGucf39A5Ye/SgnpAhuyrCVY5Ay0C7xTgS2xs
-	 dmAm+u8iZ/TVlkzN+LjzabAod36RsSE+FYTgKz0GACITCaz+wo5rLrZWdzs3c3F8lf
-	 CTwUDx1SPasXxHI9pVefGS5YiNrxYITTMlzg8n9Gxw3F0wuqMWBVUXeAHtVNfQj8kt
-	 fFsxM6r5kr8kA==
-Date: Thu, 13 Nov 2025 11:38:58 -0600
-From: Bjorn Andersson <andersson@kernel.org>
-To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Cc: Loic Poulain <loic.poulain@oss.qualcomm.com>, konradybcio@kernel.org, 
-	robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org, sre@kernel.org, 
-	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, linux-pm@vger.kernel.org
-Subject: Re: [PATCH 3/5] dt-bindings: firmware: qcom,scm: Document reboot mode
-Message-ID: <7dxmrq2u4fn4cck5mxfmge4rr7v7zqxp33pkj2v22dzzs7vqfb@mx6ja6cu343f>
-References: <20251103182006.1158383-1-loic.poulain@oss.qualcomm.com>
- <20251103182006.1158383-4-loic.poulain@oss.qualcomm.com>
- <aqoxdaq72prkeqwxmmohlmbpx7icuc32sej7did6vt6rzrgfib@bvmt7ppkvloc>
- <CAFEp6-2GGA2gvBKfO0fZemVmJmjQpTQEJ0vLfEewfhHKOYQGSQ@mail.gmail.com>
- <be0a418b-5e8f-4895-a3b8-482b6ad6a40e@oss.qualcomm.com>
- <sdhnchve6r5i4frhlx5q7lod5npzosbfdjjyd56l2z5ksoe4t4@lhm6d2pzsztm>
- <fcb093e3-05e6-4e77-9150-25f9a76f8937@oss.qualcomm.com>
+	s=k20201202; t=1763056663;
+	bh=vgzmso7a8Y8t5RJ9ImlUQnWFBosuuGamKlYy2aDvNqk=;
+	h=From:Subject:Date:To:Cc:Reply-To:From;
+	b=dJBFf65V6xf092PTLrTR0jqE35vrSe3InxtQrAIQ/fsrzmBRilcEUllbi1zBOahIY
+	 7EFtbHk4Euo6VrBis/hbtJCKJZLbk6EYQrvOu/v15ic6ZI4JmUXkI5Fu/T7XjAj5qg
+	 Kxc0WeZTXujQrNLno+bnnidU+wbBMf2LoXZXfIRGq/gXsABtfg16s72+VHuwbbEQNt
+	 iN4vZK9W2CqPzrqSq1VaworrkMzp8uM3HuhPf4BvN9ZtmTfLuJsxsSn9iysAFWJ+0F
+	 /5vL649zGDSQL/6GFueSomJcp0xQUYr1oAUaFG0AX+YBZB7cMlpw7RBolGqNYKR3Ow
+	 /iAnB6ktyJ0PQ==
+Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 14B28CD8C9B;
+	Thu, 13 Nov 2025 17:57:43 +0000 (UTC)
+From: David Heidelberg via B4 Relay <devnull+david.ixit.cz@kernel.org>
+Subject: [PATCH v2 00/12] Make Samsung SOFEF00 DDIC and panel work
+Date: Thu, 13 Nov 2025 18:57:34 +0100
+Message-Id: <20251113-sofef00-rebuild-v2-0-e175053061ec@ixit.cz>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <fcb093e3-05e6-4e77-9150-25f9a76f8937@oss.qualcomm.com>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAA8cFmkC/3WNQQ6CMBBFr0Jmbc1Mg8W48h6GBbRTmcSAtoWgh
+ LtbceHK5XvJf3+ByEE4wqlYIPAkUYY+g94VYLumv7ISlxk06gMRlioOnj2iCtyOcnMKS+utYXP
+ kiiCv7oG9zFvxUn858GPM4fSTncQ0hOf2OtHH/j+YSKFy3vqGKm6pMmeZJe3tC+p1Xd9ajmIGw
+ QAAAA==
+X-Change-ID: 20251104-sofef00-rebuild-04cfc6e68e71
+To: Neil Armstrong <neil.armstrong@linaro.org>, 
+ Jessica Zhang <jessica.zhang@oss.qualcomm.com>, 
+ Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, 
+ Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>, 
+ David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, 
+ Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>, 
+ Thierry Reding <thierry.reding@gmail.com>, Sam Ravnborg <sam@ravnborg.org>, 
+ Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konradybcio@kernel.org>, 
+ Casey Connolly <casey.connolly@linaro.org>
+Cc: dri-devel@lists.freedesktop.org, devicetree@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+ phone-devel@vger.kernel.org, David Heidelberg <david@ixit.cz>
+X-Mailer: b4 0.14.3
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2543; i=david@ixit.cz;
+ h=from:subject:message-id;
+ bh=vgzmso7a8Y8t5RJ9ImlUQnWFBosuuGamKlYy2aDvNqk=;
+ b=owEBbQKS/ZANAwAIAWACP8TTSSByAcsmYgBpFhwUpLovHkS4Wk+TvhDkWFSO6YdoFELC9NIfw
+ X/f4peBP9eJAjMEAAEIAB0WIQTXegnP7twrvVOnBHRgAj/E00kgcgUCaRYcFAAKCRBgAj/E00kg
+ clvvEADM9AA6L1Uc0zOH7Xy9Lg+VvtzTdgFMcacL8oqV0Jxc4xA7uwMogRWbbT6AfveF0nYSWJJ
+ +RIpkBqvZ69T6klh61F3hrzhXZqOzy1kKtB65Qnp1ESAJkV1RxjLtV3G+xog7LjtK5roItWeBH6
+ SyB6/2PVRijQyrHWy0IEhKjqm0gUy2VmcgX4gecnfKFyBO07+PvNr6AkIDj0cIY550VezG5OjxD
+ 3zrqxMGKvE/+d79+pekZqZsK7hjHLW1FIPNu2GfAH8qQBuWTFsEgecLdJWCz+PdFZwan2JaNDa0
+ BE8XIw6GgXrPm2p+LyapG2h2rOj1JTm+GGs0L6GgcILpNoS1jym8eHxvErn1Lmu1ZpFgXsWRMIN
+ 1hPjN3F6feAMRmfce/iuJ3Pl1EI9trHYqtVfpy+T0IRCdkNyZ11oo4jcwPL02Dbj0z14vJYWzPb
+ vLMrqmme9zrCal67ZrmZpux/vY27ZTjls+k5YCBM9F6ZefEzs/vS43O+Mg8ayntl+Sw59bbsiNX
+ AG94WO0ZaBOMM/iE/wcb7puT1l8OSr1zu6NpOBArQidVFaOMjAjokTjJA+58uSYFvGG6ingKAaA
+ KJhrkSKaLJECwKAYNIZMRlLyiXmFEFhJhC3gfVRDjRdF4h0dXQi11/+w3RIHrrk8raKhb9ZJOfh
+ 8A9sYHFcvnHLQFw==
+X-Developer-Key: i=david@ixit.cz; a=openpgp;
+ fpr=D77A09CFEEDC2BBD53A7047460023FC4D3492072
+X-Endpoint-Received: by B4 Relay for david@ixit.cz/default with auth_id=355
+X-Original-From: David Heidelberg <david@ixit.cz>
+Reply-To: david@ixit.cz
 
-On Thu, Nov 13, 2025 at 12:00:40PM +0100, Konrad Dybcio wrote:
-> On 11/12/25 5:36 PM, Bjorn Andersson wrote:
-> > On Wed, Nov 05, 2025 at 10:44:05AM +0100, Konrad Dybcio wrote:
-> >> On 11/4/25 10:19 PM, Loic Poulain wrote:
-> >>> On Tue, Nov 4, 2025 at 3:12 AM Bjorn Andersson <andersson@kernel.org> wrote:
-> >>>>
-> >>>> On Mon, Nov 03, 2025 at 07:20:04PM +0100, Loic Poulain wrote:
-> >>>>> SCM can be used to support reboot mode such as Emergency Recovery Mode.
-> >>>>
-> >>>> "such as"? Do we have any other useful bits in here?
-> >>>
-> >>>  I heard we may have different EDL modes supported like USB or SD
-> >>> based EDL, but I don't know much about the details.
-> >>>
-> >>>>
-> >>>>>
-> >>>>> Signed-off-by: Loic Poulain <loic.poulain@oss.qualcomm.com>
-> >>>>> ---
-> >>>>>  Documentation/devicetree/bindings/firmware/qcom,scm.yaml | 4 ++++
-> >>>>>  1 file changed, 4 insertions(+)
-> >>>>>
-> >>>>> diff --git a/Documentation/devicetree/bindings/firmware/qcom,scm.yaml b/Documentation/devicetree/bindings/firmware/qcom,scm.yaml
-> >>>>> index b913192219e4..c8bb7dacd900 100644
-> >>>>> --- a/Documentation/devicetree/bindings/firmware/qcom,scm.yaml
-> >>>>> +++ b/Documentation/devicetree/bindings/firmware/qcom,scm.yaml
-> >>>>> @@ -121,6 +121,10 @@ properties:
-> >>>>>            - description: offset of the download mode control register
-> >>>>>      description: TCSR hardware block
-> >>>>>
-> >>>>> +patternProperties:
-> >>>>> +  "^mode-.*$":
-> >>>>
-> >>>> I'd only ever expect mode-edl = <1>. Do we have additional modes that
-> >>>> warrant the generic nature of this?
-> >>>
-> >>> We may extend this to mode-ramdump if it makes sense, but as of now
-> >>> it's indeed only edl, will fix it.
-> >>
-> >> Would adding ramdump here be a matter of:
-> >>
-> >> + mode-ramdump = <0xmagic>
-> >>
-> >> ?
-> >>
-> >> If so, please add it too
-> >>
-> > 
-> > But what does that mean? "Hey computer, perform a graceful shutdown and
-> > when you're done, give me a ramdump"?
-> 
-> I.. guess?
-> 
-> Perhaps it could be useful for registering a panic handler to reboot
-> into ramdump in case that's not enabled by deafult (but is that
-> possible with our fw?)
-> 
+This DDIC is essential for panels used in OnePlus 6 and Pixel 3a XL
+(SDC variant). With proper support, all downstream patches in
+sdm845-mainline and sdm670-mainline can be dropped.
 
-That should be covered the other way around today, if the user asks for
-ramdumps to be collected then we set that up at boot, which we then
-clear on a clean shutdown.
+The mainline driver was broken so far, and with my recent introduction
+of S6E3FC2X01 driver, I had to "break it even more" due to OnePlus 6
+common device-tree changes which defined all the regulators and
+corrected properties.
 
-So, that should cover the panic() case as well - although I've not
-figured out how to load the ramdump in crash, so it's been a long while
-since I had reason to test this myself.
+At this moment the first version of the patchset will not include
+Pixel 3a XL (SDC) as no testers yet volunteered.
 
-Regards,
-Bjorn
+The code, including the Pixel 3a XL enhancement can be found at
+  https://gitlab.com/dhxx/linux/-/tree/b4/sofef00-rebuild
 
-> Konrad
+There are some unknown issues with -next-20251103 - 11, so won't likely
+work there, recommend linus 6.18-rc4 and later.
+
+Signed-off-by: David Heidelberg <david@ixit.cz>
+---
+Changes in v2:
+- General fixes to device-tree binding (Krzysztof)
+- Add myself as a maintainer
+- Updated commits wording
+- Link to v1: https://lore.kernel.org/r/20251104-sofef00-rebuild-v1-0-dfcfa17eb176@ixit.cz
+
+---
+Casey Connolly (2):
+      drm/panel: sofef00: Add prepare_prev_first flag to drm_panel
+      drm/panel: sofef00: Initialise at 50% brightness
+
+David Heidelberg (10):
+      dt-bindings: panel: Convert Samsung SOFEF00 DDIC into standalone yaml
+      arch: arm64: qcom: sdm845-enchilada: Specify panel name within the compatible
+      drm/panel: sofef00: Clean up panel description after s6e3fc2x01 removal
+      drm/panel: sofef00: Handle all regulators
+      drm/panel: sofef00: Split sending commands to the enable/disable functions
+      drm/panel: sofef00: Introduce page macro
+      drm/panel: sofef00: Introduce compatible which includes the panel name
+      drm/panel: sofef00: Simplify get_modes
+      drm/panel: sofef00: Mark the LPM mode always-on
+      drm/panel: sofef00: Non-continuous mode and video burst are supported
+
+ .../bindings/display/panel/panel-simple-dsi.yaml   |  25 +----
+ .../bindings/display/panel/samsung,sofef00.yaml    |  79 ++++++++++++++++
+ MAINTAINERS                                        |   6 ++
+ .../boot/dts/qcom/sdm845-oneplus-enchilada.dts     |   4 +-
+ drivers/gpu/drm/panel/Kconfig                      |   7 +-
+ drivers/gpu/drm/panel/panel-samsung-sofef00.c      | 104 +++++++++++++--------
+ 6 files changed, 162 insertions(+), 63 deletions(-)
+---
+base-commit: 6d7e7251d03f98f26f2ee0dfd21bb0a0480a2178
+change-id: 20251104-sofef00-rebuild-04cfc6e68e71
+
+Best regards,
+-- 
+David Heidelberg <david@ixit.cz>
+
+
 
