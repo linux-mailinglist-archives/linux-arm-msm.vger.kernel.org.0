@@ -1,59 +1,58 @@
-Return-Path: <linux-arm-msm+bounces-81682-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-81683-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id E4806C5917F
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Nov 2025 18:22:15 +0100 (CET)
+Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [IPv6:2605:f480:58:1:0:1994:3:14])
+	by mail.lfdr.de (Postfix) with ESMTPS id 48F5CC595D2
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Nov 2025 19:06:52 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id A0AB14A6FDA
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Nov 2025 17:16:00 +0000 (UTC)
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id EAF24508122
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Nov 2025 17:23:37 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5BECC357A44;
-	Thu, 13 Nov 2025 17:01:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D84392DC76C;
+	Thu, 13 Nov 2025 17:22:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="TnNMsgNf"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="SKsY10Lu"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 303E029BD89;
-	Thu, 13 Nov 2025 17:01:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99D5629E0E5;
+	Thu, 13 Nov 2025 17:22:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763053298; cv=none; b=svUX1gQ8irHSTsGKCyQteT7FtrSVQYZfhJheiCkOGFYUdAKD0dPgwKcMr9gXGtKK3Y2OXMFksFwrAZ6eOOA+Vg/g6uBvI5eyQ5RqjhZS0l/+shojpqH+iqtlzV1Ktbf9xtoJYm/0lyCa3PdlcCsqtpizmpoIv2wyoI2yEPnQBBU=
+	t=1763054572; cv=none; b=mm13JgoFCM2LXoZ8vfTtHSJQ6iYefEW2/oS0139P3BY4gwwBquJmrbN4dd/frqkkQrLmPU4uYRiwZPavJBLDcxgbHoCTJRtMzMrJPCCJFlNkw0WKoNAlwA2Filrg+3McgCyD6c2uHgyZ8+aP79fShfiM9ZOhn1wXEv13BJ8H4dg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763053298; c=relaxed/simple;
-	bh=5Pf3iqIjYL2e0a3xSKvX0pYCMh3YUQRYnW5d5U0xOH0=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=erg/AeFbL1FFV+hGg9FyqUkhNH6KqdyyLVsWX8fbG8WbYFJgCoy2BAfjVu9G2IX43rrJyUWIjD/JBZ5Ddes34DKYomAhAeqL7rTJYLgeuVZoo5pP28B78IE/6CmfRuj70AUJp0JfKjCvvIdPW3fQyTNUz3qUoCUFD2eSTlSIJKw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=TnNMsgNf; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17744C2BC86;
-	Thu, 13 Nov 2025 17:01:32 +0000 (UTC)
+	s=arc-20240116; t=1763054572; c=relaxed/simple;
+	bh=e8yo/Z7TSasynCjYpy8uIS8ubYj77xNchCdhFaFEfiI=;
+	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition:In-Reply-To; b=qzxtd3DCNNqYwHeDx/69XGOuzV0AAqG5M1IPKgrOUPLXjX5l2WijcpWZqJNHVKOgOb0GmmpzoE5xkj4fcX3Lw8adZJgJc2eVPOImLk1RED6fFwkROXdMooJ6D3Ez3qC1MGlc9BzBiVvKKuX0fCvXEbnkJjLrP/RayBstDPrv1jQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=SKsY10Lu; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB614C19422;
+	Thu, 13 Nov 2025 17:22:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1763053297;
-	bh=5Pf3iqIjYL2e0a3xSKvX0pYCMh3YUQRYnW5d5U0xOH0=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=TnNMsgNfSNl2UF/eY2MehsNe0e1DkUYDOSOj3qpFLDqN3Vnahe4U/KHjZqld+Ecyj
-	 lG2MMwumEGcTUQUHfbdx0yJJAJQso0Pw18QyQ9vdqJbkqA1nU+UP9vMHLWWkILIbRV
-	 4wG2OZCiMP+uFUrLhAee6O+L4nqjOEbfk5O5iin1B/KTXtbc5fFKe9Z1xG1lDc1ONN
-	 +gqbfNdN9kuCT19sI2SoUj0A9qbdwTYWJfrLzllzZxSE1735VHLVF4k1vcZ0qj+wZq
-	 uKzkIIbHVw9Fk2E/xbMfPPDWnWqQXaOh+K2cNx+Mg3pyRcqhUjCenSO/ml+9feQZA8
-	 foBQ9MKORSVyA==
-Date: Thu, 13 Nov 2025 22:31:27 +0530
-From: Manivannan Sadhasivam <mani@kernel.org>
-To: Bjorn Helgaas <helgaas@kernel.org>
-Cc: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>, 
-	lpieralisi@kernel.org, kwilczynski@kernel.org, bhelgaas@google.com, will@kernel.org, 
-	linux-pci@vger.kernel.org, linux-kernel@vger.kernel.org, robh@kernel.org, 
-	linux-arm-msm@vger.kernel.org, zhangsenchuan@eswincomputing.com, vincent.guittot@linaro.org, 
-	Frank Li <Frank.li@nxp.com>
-Subject: Re: [PATCH v2 3/3] PCI: dwc: Check for the device presence during
- suspend and resume
-Message-ID: <6uidenlpio4lsn7cecdubxlojo4slm6g76zteu74jg7xqhnv2y@kmsnhuh3dqiz>
-References: <20251107044319.8356-4-manivannan.sadhasivam@oss.qualcomm.com>
- <20251113164013.GA2285612@bhelgaas>
+	s=k20201202; t=1763054572;
+	bh=e8yo/Z7TSasynCjYpy8uIS8ubYj77xNchCdhFaFEfiI=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:From;
+	b=SKsY10Lu/yHxBKeQ0HKqoWu1CFUlAKN0OX0fjA3NHrzL+YUOsHOi3jLvlR8t0SzCT
+	 LVWI4TGYLZCKNNz4b3RD2bp0mNZJHmolRnJBVQqunV6e5M1H8UvPGgv4omNbfWEF4I
+	 dgCUBW81c5/o3SzflOVDlEJiunEBFeGC4kzTEUAbnbZb0eyCt8pTfcK5tTADzIbvHJ
+	 dBYn4sri9xxVqLnECbWa2Mmmb4yChHFy8fj2xWsWQ7h7M9sYKHn1Vvqx1YCSrrt6WN
+	 FX02WKn1U8qLBs/gGn1RPL0Y/ZDe/NGMfp6MeBx16nRu7WB6TswO6eH+h/zbQhh4eU
+	 gi2bL1SatI0KA==
+Date: Thu, 13 Nov 2025 11:22:50 -0600
+From: Bjorn Helgaas <helgaas@kernel.org>
+To: Manivannan Sadhasivam <mani@kernel.org>
+Cc: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>,
+	lpieralisi@kernel.org, kwilczynski@kernel.org, bhelgaas@google.com,
+	will@kernel.org, linux-pci@vger.kernel.org,
+	linux-kernel@vger.kernel.org, robh@kernel.org,
+	linux-arm-msm@vger.kernel.org, zhangsenchuan@eswincomputing.com,
+	vincent.guittot@linaro.org
+Subject: Re: [PATCH v2 2/3] PCI: qcom: Check for the presence of a device
+ instead of Link up during suspend
+Message-ID: <20251113172250.GA2291436@bhelgaas>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -63,89 +62,68 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20251113164013.GA2285612@bhelgaas>
+In-Reply-To: <zgj3ubyb234ig6ndz6ov5q3szvuxnd3jkz2rjglbad4ksri6nl@ov7boxuar4va>
 
-On Thu, Nov 13, 2025 at 10:40:13AM -0600, Bjorn Helgaas wrote:
-> [+cc Frank]
-> 
-> On Fri, Nov 07, 2025 at 10:13:19AM +0530, Manivannan Sadhasivam wrote:
-> > If there is no device available under the Root Ports, there is no point in
-> > sending PME_Turn_Off and waiting for L2/L3 transition during suspend, it
-> > will result in a timeout. Hence, skip those steps if no device is available
-> > during suspend.
+On Thu, Nov 13, 2025 at 10:24:17PM +0530, Manivannan Sadhasivam wrote:
+> On Thu, Nov 13, 2025 at 10:41:47AM -0600, Bjorn Helgaas wrote:
+> > On Fri, Nov 07, 2025 at 10:13:18AM +0530, Manivannan Sadhasivam wrote:
+> > > The suspend handler checks for the PCIe Link up to decide when to turn off
+> > > the controller resources. But this check is racy as the PCIe Link can go
+> > > down just after this check.
+> > > 
+> > > So use the newly introduced API, pci_root_ports_have_device() that checks
+> > > for the presence of a device under any of the Root Ports to replace the
+> > > Link up check.
 > > 
-> > During resume, do not wait for the link up if there was no device connected
-> > before suspend. It is very unlikely that a device will get connected while
-> > the host system was suspended.
-> > 
-> > Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
-> > ---
-> >  drivers/pci/controller/dwc/pcie-designware-host.c | 13 +++++++++++++
-> >  1 file changed, 13 insertions(+)
-> > 
-> > diff --git a/drivers/pci/controller/dwc/pcie-designware-host.c b/drivers/pci/controller/dwc/pcie-designware-host.c
-> > index 20c9333bcb1c..5a39e7139ec9 100644
-> > --- a/drivers/pci/controller/dwc/pcie-designware-host.c
-> > +++ b/drivers/pci/controller/dwc/pcie-designware-host.c
-> > @@ -20,6 +20,7 @@
-> >  #include <linux/platform_device.h>
-> >  
-> >  #include "../../pci.h"
-> > +#include "../pci-host-common.h"
-> >  #include "pcie-designware.h"
-> >  
-> >  static struct pci_ops dw_pcie_ops;
-> > @@ -1129,6 +1130,9 @@ int dw_pcie_suspend_noirq(struct dw_pcie *pci)
-> >  	u32 val;
-> >  	int ret;
-> >  
-> > +	if (!pci_root_ports_have_device(pci->pp.bridge->bus))
-> > +		goto stop_link;
+> > Why is pci_root_ports_have_device() itself not racy?
 > 
-> This looks racy.  Maybe it's still OK, but I think it would be good to
-> include a comment to acknowledge that and explain why either outcome
-> is acceptable, e.g., if a user removes a device during suspend, it
-> results in a timeout but nothing more terrible.
+> Because it is very uncommon for the 'pci_dev' to go away during the
+> host controller suspend. It might still be possible in edge cases,
+> but very common as the link down. I can reword it.
+
+I guess it's better to acknowledge replacing one race with another
+than it would be to suggest that this *removes* a race.
+
+But I don't understand the point of this.  Is
+pci_root_ports_have_device() *less* racy than the
+qcom_pcie_suspend_noirq() check?  Why would that be?
+
+I'm kind of skeptical about adding pci_root_ports_have_device() at
+all.  It seems like it just encourages racy behavior in drivers.
+
+> > > Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
+> > > ---
+> > >  drivers/pci/controller/dwc/pcie-qcom.c | 6 ++++--
+> > >  1 file changed, 4 insertions(+), 2 deletions(-)
+> > > 
+> > > diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
+> > > index 805edbbfe7eb..b2b89e2e4916 100644
+> > > --- a/drivers/pci/controller/dwc/pcie-qcom.c
+> > > +++ b/drivers/pci/controller/dwc/pcie-qcom.c
+> > > @@ -2018,6 +2018,7 @@ static int qcom_pcie_probe(struct platform_device *pdev)
+> > >  static int qcom_pcie_suspend_noirq(struct device *dev)
+> > >  {
+> > >  	struct qcom_pcie *pcie;
+> > > +	struct dw_pcie_rp *pp;
+> > >  	int ret = 0;
+> > >  
+> > >  	pcie = dev_get_drvdata(dev);
+> > > @@ -2053,8 +2054,9 @@ static int qcom_pcie_suspend_noirq(struct device *dev)
+> > >  	 * powerdown state. This will affect the lifetime of the storage devices
+> > >  	 * like NVMe.
+> > >  	 */
+> > > -	if (!dw_pcie_link_up(pcie->pci)) {
+> > > -		qcom_pcie_host_deinit(&pcie->pci->pp);
+> > > +	pp = &pcie->pci->pp;
+> > > +	if (!pci_root_ports_have_device(pp->bridge->bus)) {
+> > > +		qcom_pcie_host_deinit(pp);
+> > >  		pcie->suspended = true;
+> > >  	}
+> > >  
+> > > -- 
+> > > 2.48.1
+> > > 
 > 
-
-Ok.
-
-> >  	/*
-> >  	 * If L1SS is supported, then do not put the link into L2 as some
-> >  	 * devices such as NVMe expect low resume latency.
-> > @@ -1162,6 +1166,7 @@ int dw_pcie_suspend_noirq(struct dw_pcie *pci)
-> >  	 */
-> >  	udelay(1);
-> >  
-> > +stop_link:
-> >  	dw_pcie_stop_link(pci);
-> >  	if (pci->pp.ops->deinit)
-> >  		pci->pp.ops->deinit(&pci->pp);
-> > @@ -1195,6 +1200,14 @@ int dw_pcie_resume_noirq(struct dw_pcie *pci)
-> >  	if (ret)
-> >  		return ret;
-> >  
-> > +	/*
-> > +	 * If there was no device before suspend, skip waiting for link up as
-> > +	 * it is bound to fail. It is very unlikely that a device will get
-> > +	 * connected *during* suspend.
-> 
-> I'm not convinced.  Unlike the suspend side, where the race window is
-> tiny, here the window is the entire time the system is suspended, and
-> at least in laptop usage, there's no reason I would hesitate to plug
-> something in while suspended.
-> 
-
-In that case, we just need to do:
-
-	/* Ignore errors as there could be no devices connected */
-	dw_pcie_wait_for_link()
-
-I wanted to avoid the timeout if we knew that there was no device connected
-during suspend.
-
-- Mani
-
--- 
-மணிவண்ணன் சதாசிவம்
+> -- 
+> மணிவண்ணன் சதாசிவம்
 
