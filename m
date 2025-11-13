@@ -1,134 +1,144 @@
-Return-Path: <linux-arm-msm+bounces-81523-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-81524-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 111DAC55D98
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Nov 2025 06:51:18 +0100 (CET)
+Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [IPv6:2605:f480:58:1:0:1994:3:14])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1CEA2C55DB0
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Nov 2025 06:52:24 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id C2E803A82A6
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Nov 2025 05:51:16 +0000 (UTC)
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 1AE024E3BBF
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Nov 2025 05:51:54 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7C2632FF66A;
-	Thu, 13 Nov 2025 05:51:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D8318304BDF;
+	Thu, 13 Nov 2025 05:51:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="lBOlwr4R"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="V1JliKXg"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43C362512E6;
-	Thu, 13 Nov 2025 05:51:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA5BD305053;
+	Thu, 13 Nov 2025 05:51:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763013074; cv=none; b=LDt4PtRZVC+Bs5ha6Z080ky8GUXEfZYPBdrtHL4D/+Xb3PjIanuVNSNwPtsggRs2xMe504VPecVGdNnognfOKxI/Oyhkjj4MJr9FEZ4vP2Z3c1neemeIEMFNTjCM9Vg3QMOpYSA0y6I8QDJE60AI2iUPSY/J5MfgUtrPGA4lRLA=
+	t=1763013109; cv=none; b=MZI4ljp/7nefg+O8UJc4OykrQFO5HPGmih5+CJpD5IZoCW6gvin1HTQCmm8eGMnzY+4yddN1gr3IxXWXngzSNpb0pObe4hb4CTNzdgXboHbzL+IjjJH7u83NeEr2X0LyW87zT4cBBHYarILpzuAYbIIzJSFS53/h+eniASHgIkg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763013074; c=relaxed/simple;
-	bh=DLX5/XZfkVtg0LES4vcbawkAfBpUPSg8sV2FGqstTlk=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Kwr5vAVlYOtIyKLgmlmzO8b2CsUi1YJpi0C5QxUXVN0I8V71ZZ3gyLnwmKQjo3S0KDdODXmp7dEV4Awj2aUoJumdJ5SJRONz0QDlxKyiHYl8FEC0tDfOoucboMh70T0U8ZpUO91IW8cwpiBKiCWoLyi9VXh6kCIip8Merix9aCQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=lBOlwr4R; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2FF0EC4CEF5;
-	Thu, 13 Nov 2025 05:51:03 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1763013073;
-	bh=DLX5/XZfkVtg0LES4vcbawkAfBpUPSg8sV2FGqstTlk=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=lBOlwr4Rg6b5wenq2KuXkhqgUYtlGPisHGdb/YePoOitx330sUCu8OWw3QzTxDCNW
-	 /ww0LwaWJxarbp83GgoqJsHvdTzMNdLYSGjfOe4onmuDAFQgjprSSed9X8wR/gv4by
-	 iwwR4Xu3O5WXX7uxRelM58JCDBj8oY+8LkW1b0BUUkLzSm4pHvb6FbtVTB3L9j4jrt
-	 LyChZPunGbI1N2mlQdtj9TRZNXnJUOP72qjTbm1FFn9flt0wVAxf1cF2/rGeLj268O
-	 pwJ6331Bodj8+FovI8lrI9MUq3bAZQJkj0YYD0gkPWuBX2KsQVEIHKd4gniCf3dWKG
-	 TpgLwJDmuE7RQ==
-Date: Thu, 13 Nov 2025 11:20:56 +0530
-From: Manivannan Sadhasivam <mani@kernel.org>
-To: Anand Moon <linux.amoon@gmail.com>
-Cc: Lukas Wunner <lukas@wunner.de>, 
-	Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>, andersson@kernel.org, robh@kernel.org, 
-	manivannan.sadhasivam@linaro.org, krzk@kernel.org, helgaas@kernel.org, 
-	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, lpieralisi@kernel.org, kw@linux.com, 
-	conor+dt@kernel.org, linux-pci@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	devicetree-spec@vger.kernel.org, quic_vbadigan@quicinc.com
-Subject: Re: [PATCH v2] schemas: pci: Document PCIe T_POWER_ON
-Message-ID: <vnfjiakbgw3s7dxqh3zriifxjoqcjhshat3hrnikebpa57yh3k@erc4nb5enqes>
-References: <20251110112947.2071036-1-krishna.chundru@oss.qualcomm.com>
- <aRHdiYYcn2uZkLor@wunner.de>
- <enri4affdgq4q5mibnmhldhqqoybqbdcswohoj5mst2i77ckmu@dwlaqfxyjy3w>
- <CANAwSgQcMDXitA2RLbFsD_v2KoOQMcHywxcxNs-ab-O2JddAuQ@mail.gmail.com>
+	s=arc-20240116; t=1763013109; c=relaxed/simple;
+	bh=oG5GWqPRGqYt7LGXdvogwqrrHBwuCzPlSM2JhzzUi2w=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=tQU9dKf1xaUm5UrxAOh6czCoEMGWVCIpNDkea7eMDHzQ9UaXND03JTj6VUETw+i+0/mGxx0ILQU2GkIxzNagbpCHLUfXx+a8lwF2MmvE+o012HMzAf3gM8CPId+jJRXKbu50EGUJ0CB6s8Vt+HTEPg8Ud8WE1oKqmX/WeSRNjzY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=V1JliKXg; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 5AD11SjJ2918923;
+	Thu, 13 Nov 2025 05:51:44 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	4P66KwSo6fpnnz3i2XtUdLqB3yxuIcOjbZT+apX7ha4=; b=V1JliKXgzhGBnBQH
+	j/J2r5GeYbL7gjAGnhbnEKXSbGf09NwmHiEYn6j80lQv0yi4w37OMalVrylFB1TJ
+	+i9trRaXP/G4+5aBDxIBw28zGCGF4M0fPL0mxv6drOTvTJnX3LSSuumnOxl1VDqH
+	ur1wsVjKZVsipR9LRKtWxGkdDlGqlS+V1HLCDdVgjkJS8LDbB1o+X4+Q8EX61T0k
+	2+IddSksmkSSOurqBv6Czu3xhiuqcFh2Sl8XvTKPVNEWPUNSHIvu96ZNTQwClJr7
+	vfWgDH/r6zmQxwRT6sqLa668GkGMPL3Ld678qhedIgjD/YqSTfau+ci654Qr97E2
+	VvSlMA==
+Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4acqdgkj8a-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 13 Nov 2025 05:51:43 +0000 (GMT)
+Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
+	by NASANPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 5AD5pgEL008135
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 13 Nov 2025 05:51:42 GMT
+Received: from [10.151.36.184] (10.80.80.8) by nasanex01a.na.qualcomm.com
+ (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1748.24; Wed, 12 Nov
+ 2025 21:51:39 -0800
+Message-ID: <272f7c21-16d0-25db-4d09-51a987945c3e@quicinc.com>
+Date: Thu, 13 Nov 2025 11:21:24 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CANAwSgQcMDXitA2RLbFsD_v2KoOQMcHywxcxNs-ab-O2JddAuQ@mail.gmail.com>
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.15.1
+Subject: Re: [PATCH v4] mmc: sdhci-msm: Enable ICE support for non-cmdq eMMC
+ devices
+To: Ulf Hansson <ulf.hansson@linaro.org>, Eric Biggers <ebiggers@google.com>,
+        Abel Vesa <abel.vesa@linaro.org>
+CC: <adrian.hunter@intel.com>, <linux-mmc@vger.kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <quic_varada@quicinc.com>
+References: <20251111104604.2494305-1-quic_mdalam@quicinc.com>
+ <CAPDyKFomGKtznQ4wD8O83b6uAKfNkKhERjoivrbmSqtQODDDDA@mail.gmail.com>
+Content-Language: en-US
+From: Md Sadre Alam <quic_mdalam@quicinc.com>
+In-Reply-To: <CAPDyKFomGKtznQ4wD8O83b6uAKfNkKhERjoivrbmSqtQODDDDA@mail.gmail.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01a.na.qualcomm.com (10.52.223.231)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Authority-Analysis: v=2.4 cv=dtrWylg4 c=1 sm=1 tr=0 ts=691571ef cx=c_pps
+ a=JYp8KDb2vCoCEuGobkYCKw==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17
+ a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=6UeiqGixMTsA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=COk6AnOGAAAA:8 a=QyXUC8HyAAAA:8
+ a=R0DNL_tlP23u0T8KSwUA:9 a=QEXdDO2ut3YA:10 a=TjNXssC_j7lpFel5tvFf:22
+ a=cPQSjfK2_nFv0Q5t_7PE:22 a=HhbK4dLum7pmb74im6QT:22 a=pHzHmUro8NiASowvMSCR:22
+ a=Ew2E2A-JSTLzCXPT_086:22
+X-Proofpoint-GUID: 1H9Ib84ATuz3yhJeuZ6JfWsOWhAHcvFz
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMTEzMDAzOCBTYWx0ZWRfX23SzOWWTVWjH
+ 4TYRHLXVQ/RbfNyZHvfOM14Ik/Zus+gRw0qWqvVfbl44kYWlNTSEBPIAGNrfayxCxrDDOlwYcK2
+ 1o9/XP4UEcwOVP/zvYuop6IlI/VQgWP7RIiUH57niDRPR0/dPtQ7uRrEPISq3/4QvSLdRgvBha3
+ 8jPZI1aueNkwKsNzwT1m8m/W3JpvZYOjvD+CsSlTkbPqBxeTHtG6oyrBiWpb07LqnvHsVulbCMR
+ gcIlk1kLu+JBpXfrv37eDWe8dBH/Of5vvMX9fuS4JKqEo//Dnlp5TPyDVnuGvzC45B60+sNTqar
+ YtDhwHXzP6j8jRC7lbDy/v3m1V10LksFNlBhv0KQ7Jq0fAohB0gyyZdoUs6RR3aaLA31CAsnWTJ
+ jQWgvKyKV1iTsQqxpHgWGaNG/LFDiw==
+X-Proofpoint-ORIG-GUID: 1H9Ib84ATuz3yhJeuZ6JfWsOWhAHcvFz
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
+ definitions=2025-11-12_06,2025-11-12_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501 lowpriorityscore=0 phishscore=0 clxscore=1011 adultscore=0
+ impostorscore=0 spamscore=0 suspectscore=0 malwarescore=0 bulkscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2510240001 definitions=main-2511130038
 
-On Thu, Nov 13, 2025 at 10:46:59AM +0530, Anand Moon wrote:
-> Hi Manivannan
+Hi,
+
+On 11/11/2025 11:02 PM, Ulf Hansson wrote:
+> + Eric, Abel
 > 
-> On Thu, 13 Nov 2025 at 10:01, Manivannan Sadhasivam <mani@kernel.org> wrote:
-> >
-> > On Mon, Nov 10, 2025 at 01:41:45PM +0100, Lukas Wunner wrote:
-> > > On Mon, Nov 10, 2025 at 04:59:47PM +0530, Krishna Chaitanya Chundru wrote:
-> > > > From PCIe r6, sec 5.5.4 & Table 5-11 in sec 5.5.5 T_POWER_ON is the
-> > >
-> > > Please use the latest spec version as reference, i.e. PCIe r7.0.
-> > >
-> > > > minimum amount of time(in us) that each component must wait in L1.2.Exit
-> > > > after sampling CLKREQ# asserted before actively driving the interface to
-> > > > ensure no device is ever actively driving into an unpowered component and
-> > > > these values are based on the components and AC coupling capacitors used
-> > > > in the connection linking the two components.
-> > > >
-> > > > This property should be used to indicate the T_POWER_ON for each Root Port.
-> > >
-> > > What's the difference between this property and the Port T_POWER_ON_Scale
-> > > and T_POWER_ON_Value in the L1 PM Substates Capabilities Register?
-> > >
-> > > Why do you need this in the device tree even though it's available
-> > > in the register?
-> > >
-> >
-> > Someone needs to program these registers. In the x86 world, BIOS will do it
-> > happily, but in devicetree world, OS has to do it. And since this is a platform
-> > specific value, this is getting passed from devicetree.
-> >
-> According to the RK3588 TRM Part 2, the DSP_PCIE_L1SUB_CAPABILITY_REG (0x4)
-> It is a commonly configurable parameter, It can be tuned on for the
-> Rockchip platform.
-
-T_POWER_ON is a generic value defined in the spec. All compatible platforms
-should support setting this value through 'L1 PM Substates Capabilities'
-register or by platform specific register.
-
-> > - Mani
-> >
-> > --
-> > மணிவண்ணன் சதாசிவம்
-> >
-> Thanks
-> -Anand
+> On Tue, 11 Nov 2025 at 11:46, Md Sadre Alam <quic_mdalam@quicinc.com> wrote:
+>>
+>> Enable Inline Crypto Engine (ICE) support for eMMC devices that operate
+>> without Command Queue Engine (CQE).This allows hardware-accelerated
+>> encryption and decryption for standard (non-CMDQ) requests.
+>>
+>> This patch:
+>> - Adds ICE register definitions for non-CMDQ crypto configuration
+>> - Implements a per-request crypto setup via sdhci_msm_ice_cfg()
+>> - Hooks into the request path via mmc_host_ops.request
+>>
+>> With this, non-CMDQ eMMC devices can benefit from inline encryption,
+>> improving performance for encrypted I/O while maintaining compatibility
+>> with existing CQE crypto support.
+>>
+>> Signed-off-by: Md Sadre Alam <quic_mdalam@quicinc.com>
+>> Acked-by: Adrian Hunter <adrian.hunter@intel.com>
 > 
-> I could not apply this patch
-> 
-> $ git am ./v2_20251110_krishna_chundru_schemas_pci_document_pcie_t_power_on.mbx
-> Applying: schemas: pci: Document PCIe T_POWER_ON
-> error: dtschema/schemas/pci/pci-bus-common.yaml: does not exist in index
-> Patch failed at 0001 schemas: pci: Document PCIe T_POWER_ON
-> hint: Use 'git am --show-current-patch=diff' to see the failed patch
-> hint: When you have resolved this problem, run "git am --continue".
-> hint: If you prefer to skip this patch, run "git am --skip" instead.
-> hint: To restore the original branch and stop patching, run "git am --abort".
-> hint: Disable this message with "git config set advice.mergeConflict false"
+> Please add Eric/Abel for any future submission of the patch as it's
+> for ICE. I don't feel completely confident to apply this without some
+> of their acks.
+Thank you for the guidance. I completely understand your concern and 
+will make sure to include Eric and Abel in any future submissions 
+related to ICE.
 
-This is a dtschema patch, not Linux kernel.
-
-- Mani
-
--- 
-மணிவண்ணன் சதாசிவம்
+Thanks,
+Alam.
 
