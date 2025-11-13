@@ -1,136 +1,232 @@
-Return-Path: <linux-arm-msm+bounces-81665-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-81666-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ams.mirrors.kernel.org (ams.mirrors.kernel.org [213.196.21.55])
-	by mail.lfdr.de (Postfix) with ESMTPS id B15A5C58695
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Nov 2025 16:35:42 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 08790C587E5
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Nov 2025 16:50:52 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ams.mirrors.kernel.org (Postfix) with ESMTPS id 5A6213446D6
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Nov 2025 15:28:12 +0000 (UTC)
+	by ams.mirrors.kernel.org (Postfix) with ESMTPS id CA5CF3610F5
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Nov 2025 15:42:55 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D9DBB35C1B6;
-	Thu, 13 Nov 2025 15:16:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E1E6035A12A;
+	Thu, 13 Nov 2025 15:32:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="R0YA45pp"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="AKOg9J7D"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.9])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f182.google.com (mail-pl1-f182.google.com [209.85.214.182])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BD5C358D15;
-	Thu, 13 Nov 2025 15:16:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.9
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0398535A12E
+	for <linux-arm-msm@vger.kernel.org>; Thu, 13 Nov 2025 15:32:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763046985; cv=none; b=NiLgUDoroR89oUean9OvgKxdZ2/RzbziFMOQyRTGN3Y63A0C3IK83lbgI+iJxQEFhQn86zdhp7sdrHxvTXhmSZ+tkBMgzyzDxJ6D1eZ6KroWyFsZ1wHLP7v5l7crhNTt7KXkAFmz43ZQoVScAqXq1DbFKwpIlP+Vip/wQtWi0Es=
+	t=1763047954; cv=none; b=tYPH5SwJVF8F99CFOh8hC/wsLVddPfJITPoArtgtQ4hyR2G9LDRTBU/GSbw89TLbYK/uIZneU4KtEdJWdBLF82DK9osLUT46J9AT6j5PVj2F97V3kyiCjvvvP7P8cBAUTdoGN42Ze4ugnKDLGKRsGZJfexsE4tmFm18dF8EDv6s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763046985; c=relaxed/simple;
-	bh=rUyODX56g/0PVw4q9uoPm3QtJgx5W1kE7M9udwy7iHM=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gxxFAzhtdlXalVXOYSAQjFzlfFNblLwjmLT4LikRkkBJcFs5k37KOtuW4ePh4EmieZRDLN/Q3N0RQepUxIg0OIiO9oyHrZZYGpGPRAqkbiNnHcNtrzbyOowgna2wGhMs3YpRI3KEKpfqQSxTEorKgUHITvVVB7SuWQBPcNr/ZcM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=pass smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=R0YA45pp; arc=none smtp.client-ip=192.198.163.9
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.intel.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1763046984; x=1794582984;
-  h=from:to:cc:subject:date:message-id:in-reply-to:
-   references:mime-version:content-transfer-encoding;
-  bh=rUyODX56g/0PVw4q9uoPm3QtJgx5W1kE7M9udwy7iHM=;
-  b=R0YA45ppWbWb/QLn9JpPQsfYwrMIGLFR8E2rvngTcZPNkFhmkVGC/mC2
-   7wDg86y3ByWXjJFEI2x31Zug7QNxk42dHCOCFLXCKICMUVPqUoMA+qd6C
-   aiJxFfDbv9dOGlGismc/HoMTTiMJo1qmspvbO7wJ4knu5WGz3HtL9j4Ay
-   pd46hGZxaDko8DC0tT4zkwflpkxsiTXC5Lz2dWgVR2iiltlUZNlINQTRI
-   llJy3eY7SV/G80oqLmIJYLrDmlNzIMuRthnpMDGaafo3Ii7chAl61w10i
-   G1WPAw83RelBOcwt0+zqn880HaN/a0de3mpp0yQEDRdLnXE1TGuXu0a6z
-   A==;
-X-CSE-ConnectionGUID: rLEs0fb1ShycYaAn1k7FqA==
-X-CSE-MsgGUID: 6MZX1JISQtSMQd/8q/gNnA==
-X-IronPort-AV: E=McAfee;i="6800,10657,11612"; a="75809739"
-X-IronPort-AV: E=Sophos;i="6.19,302,1754982000"; 
-   d="scan'208";a="75809739"
-Received: from orviesa005.jf.intel.com ([10.64.159.145])
-  by fmvoesa103.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 13 Nov 2025 07:16:18 -0800
-X-CSE-ConnectionGUID: iGFORkBsT1q09zPLIJz6sA==
-X-CSE-MsgGUID: NxFEkON2TuaiO/tQvDyscw==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.19,302,1754982000"; 
-   d="scan'208";a="194684676"
-Received: from black.igk.intel.com ([10.91.253.5])
-  by orviesa005.jf.intel.com with ESMTP; 13 Nov 2025 07:16:12 -0800
-Received: by black.igk.intel.com (Postfix, from userid 1003)
-	id EC114A3; Thu, 13 Nov 2025 16:16:04 +0100 (CET)
-From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-To: Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Stefan Wahren <wahrenst@gmx.net>,
-	Vinod Koul <vkoul@kernel.org>,
-	Thomas Andreatta <thomasandreatta2000@gmail.com>,
-	Caleb Sander Mateos <csander@purestorage.com>,
-	dmaengine@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	linux-rpi-kernel@lists.infradead.org,
-	linux-arm-kernel@lists.infradead.org,
-	linux-arm-msm@vger.kernel.org
-Cc: Olivier Dautricourt <olivierdautricourt@gmail.com>,
-	Stefan Roese <sr@denx.de>,
-	Florian Fainelli <florian.fainelli@broadcom.com>,
-	Broadcom internal kernel review list <bcm-kernel-feedback-list@broadcom.com>,
-	Ray Jui <rjui@broadcom.com>,
-	Scott Branden <sbranden@broadcom.com>,
-	Lars-Peter Clausen <lars@metafoo.de>,
-	Eugeniy Paltsev <Eugeniy.Paltsev@synopsys.com>,
-	Daniel Mack <daniel@zonque.org>,
-	Haojian Zhuang <haojian.zhuang@gmail.com>,
-	Robert Jarzmik <robert.jarzmik@free.fr>,
-	Lizhi Hou <lizhi.hou@amd.com>,
-	Brian Xu <brian.xu@amd.com>,
-	Raj Kumar Rampelli <raj.kumar.rampelli@amd.com>,
-	Michal Simek <michal.simek@amd.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH v3 13/13] dmaengine: xilinx: xdma: use sg_nents_for_dma() helper
-Date: Thu, 13 Nov 2025 16:13:09 +0100
-Message-ID: <20251113151603.3031717-14-andriy.shevchenko@linux.intel.com>
-X-Mailer: git-send-email 2.50.1
-In-Reply-To: <20251113151603.3031717-1-andriy.shevchenko@linux.intel.com>
-References: <20251113151603.3031717-1-andriy.shevchenko@linux.intel.com>
+	s=arc-20240116; t=1763047954; c=relaxed/simple;
+	bh=Z1vu2MOiIFQBcyrWVUVPL9kCsj3sq6loXCLsmGoUKac=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=jcrMDXJDJl7IQa2vll6yK6XV7BTvd2sGNtOniRb94jGP95s81zanYTpg1b6Sbq61qL4KF8jndd/0PDpTfTNpRZF3teb5tGIcn6uN1b2HkOvT8WmxMYdMaEWHbt4wZiBVAxB6pzdIuoEcQhPKagLzoJh37gJ7rQ+MX4hvgkvXhdw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=AKOg9J7D; arc=none smtp.client-ip=209.85.214.182
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-pl1-f182.google.com with SMTP id d9443c01a7336-2953e415b27so8734755ad.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 13 Nov 2025 07:32:32 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1763047952; x=1763652752; darn=vger.kernel.org;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=Dc807XTs3vahOFZ04ibLRMSAJaCm4V/IMq6B1/2zPgY=;
+        b=AKOg9J7D1B07L3Zh86GSs72adKKQAo9kFP0iXvWJ909llen+LapyTKuuk246YLU+SW
+         9ZrrsIEiPHi9soWwzFXzwQXsLZVyLxxNnuKUuKg2ZO9ft+J+jiN5BEoxuZxXGWTAa0zy
+         YOeraq2pUM8BG7X3A+qbpTcPaepIP2B0kN3YbDuY8f1VKOIZqSiDjmyCvH7z6r2kaHnH
+         osp6dwA5tbmapRvjSmA32Q4C5yl7WUd6dHTSWoXdsSitS76CGkYxUdhxdKDWp+iSbPYJ
+         2kQgNBYmsARlIYl/TVv7i1W79/CjvyLvkkFwBzEaRRSHvQwddKPrKwnlP0P+a2QC4PYV
+         +o5w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1763047952; x=1763652752;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=Dc807XTs3vahOFZ04ibLRMSAJaCm4V/IMq6B1/2zPgY=;
+        b=QKiqNZuOjcMljl/AIr2ZpwPnClWkzF1C7BLaJhpkrys8tKUOxLnunI09mqneQsF+rM
+         kLEdb2tGTCk93lCwYYtfAMopT7EGuiDXwVpPq5kV3cq3A1t8JoW0OdGQKMRKfbN2QKF0
+         iqM1yuIU+YkF/xTqW9Ec/UCs66xVfLoGoXg82KhY3gA4RVwKfcLbwIk7eAX8Xl78+B/F
+         WNV38ptnLhGFHiGj2qzIfT6hQI2rx4hjXw9N9prBiKh+PY3NjoYqr1vfOKP2FvGKJX7W
+         YaJBvODZzML1KVrSmPdGRVOVfRCOn6SRvUv1lI9xTxJcUeWhWRY1fuPhlmxuAa2B521J
+         W3kA==
+X-Forwarded-Encrypted: i=1; AJvYcCXtCHH/E5M8U4nIK7nbZTPZJiV7dzQRP5D30CoBAy2INS19NcIdQL/Qbnm4Zab0YpN8TLARaZSbDc9CCplR@vger.kernel.org
+X-Gm-Message-State: AOJu0YxD6CzUmM2HAbqdpgdMoTxJj406afS/+xnSApcaSNpKFbV3nrro
+	90YVzlfXty1dRmh9gfBjS2RxTIATVVoT3XPHL0/uRz879vXPQ2M/pn4GHxn3t7SeToc=
+X-Gm-Gg: ASbGncvw82MDBc4zZdUQpQa6uebmLJcPg9mefYJIH/ikVa/7jAfHEcLukuznfvkCArM
+	CJd0+Bkq2e36/YBeh+RgciiUNohPDQ5wjZ6XpnKNY2eybpbzedkC6IdJSlyUsK3aTtiYMBbbR2n
+	hwzV7geWgITWUBCmcMkRn5JGHpGk3MBMd6kI1wEvyS+ajItnzvbtGVEVYab9i3yKiiyPsQCIMkz
+	tBXO4rkuoGjaETievqF8UCX8YDzXw9foNg59daPDfZjwjKNHDpHMLTvnPVDjimOsyAxnZ8aUgmV
+	DV1S7b+i3pbugSK43QLvKgz6vZXW637tRPLp2T0sB1VHr+IHPGvs745cNY1el462BfdG54qlGqx
+	m92TphbXNzJKCyaSeCu2Arcg9c8SEx/lRJ7oWnxXws4PCsTVrC1DgxdXYoIOzAf+9J4sik6c8kG
+	XV5UfwTzJs86GyMjqq/RdTe+s=
+X-Google-Smtp-Source: AGHT+IExGtwG81uwzj9JgnEK26nwTkuowQ0TGIoI/B/ng4jHpuOWuk3RVAjeNdIAjjrFddHoISsZ3w==
+X-Received: by 2002:a17:902:d54f:b0:295:34ba:7afa with SMTP id d9443c01a7336-2984eddf6a5mr85532495ad.43.1763047952195;
+        Thu, 13 Nov 2025 07:32:32 -0800 (PST)
+Received: from p14s ([2604:3d09:148c:c800:aee4:3fd6:a52:8e9a])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2985c2bed4fsm29590765ad.75.2025.11.13.07.32.30
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 13 Nov 2025 07:32:31 -0800 (PST)
+Date: Thu, 13 Nov 2025 08:32:28 -0700
+From: Mathieu Poirier <mathieu.poirier@linaro.org>
+To: Rob Herring <robh@kernel.org>
+Cc: Bjorn Andersson <andersson@kernel.org>, Shawn Guo <shawnguo@kernel.org>,
+	Sascha Hauer <s.hauer@pengutronix.de>,
+	Pengutronix Kernel Team <kernel@pengutronix.de>,
+	Fabio Estevam <festevam@gmail.com>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Magnus Damm <magnus.damm@gmail.com>,
+	Patrice Chotard <patrice.chotard@foss.st.com>,
+	Maxime Coquelin <mcoquelin.stm32@gmail.com>,
+	Alexandre Torgue <alexandre.torgue@foss.st.com>,
+	Arnaud Pouliquen <arnaud.pouliquen@foss.st.com>,
+	Peng Fan <peng.fan@nxp.com>, linux-remoteproc@vger.kernel.org,
+	imx@lists.linux.dev, linux-arm-kernel@lists.infradead.org,
+	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+	linux-renesas-soc@vger.kernel.org,
+	linux-stm32@st-md-mailman.stormreply.com
+Subject: Re: [PATCH v6] remoteproc: Use of_reserved_mem_region_* functions
+ for "memory-region"
+Message-ID: <aRX6DJoaP4MXG3fN@p14s>
+References: <20251031175926.1465360-1-robh@kernel.org>
+ <aRN0fdOAV0B728qo@p14s>
+ <20251111195923.GA3629535-robh@kernel.org>
+ <CANLsYkwcbrTaKASdr5fj0m9ARS4xUgzVH8iWQKwTCvEsoZDDsQ@mail.gmail.com>
+ <CAL_JsqL7HcDkPgJjcqJSagdN=gH2rv6noVS57QMGNRp0YCxUBw@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAL_JsqL7HcDkPgJjcqJSagdN=gH2rv6noVS57QMGNRp0YCxUBw@mail.gmail.com>
 
-Instead of open coded variant let's use recently introduced helper.
+On Wed, Nov 12, 2025 at 10:59:42AM -0600, Rob Herring wrote:
+> On Wed, Nov 12, 2025 at 9:43 AM Mathieu Poirier
+> <mathieu.poirier@linaro.org> wrote:
+> >
+> > On Tue, 11 Nov 2025 at 12:59, Rob Herring <robh@kernel.org> wrote:
+> > >
+> > > On Tue, Nov 11, 2025 at 10:38:05AM -0700, Mathieu Poirier wrote:
+> > > > Hi Rob,
+> > > >
+> > > > Please see may comment for st_remoteproc.c
+> > > >
+> > > > On Fri, Oct 31, 2025 at 12:59:22PM -0500, Rob Herring (Arm) wrote:
+> > > > > Use the newly added of_reserved_mem_region_to_resource() and
+> > > > > of_reserved_mem_region_count() functions to handle "memory-region"
+> > > > > properties.
+> 
+> [...]
+> 
+> > > > > diff --git a/drivers/remoteproc/st_remoteproc.c b/drivers/remoteproc/st_remoteproc.c
+> > > > > index e6566a9839dc..043348366926 100644
+> > > > > --- a/drivers/remoteproc/st_remoteproc.c
+> > > > > +++ b/drivers/remoteproc/st_remoteproc.c
+> > > > > @@ -120,40 +120,37 @@ static int st_rproc_parse_fw(struct rproc *rproc, const struct firmware *fw)
+> > > > >     struct device *dev = rproc->dev.parent;
+> > > > >     struct device_node *np = dev->of_node;
+> > > > >     struct rproc_mem_entry *mem;
+> > > > > -   struct reserved_mem *rmem;
+> > > > > -   struct of_phandle_iterator it;
+> > > > > -   int index = 0;
+> > > > > -
+> > > > > -   of_phandle_iterator_init(&it, np, "memory-region", NULL, 0);
+> > > > > -   while (of_phandle_iterator_next(&it) == 0) {
+> > > > > -           rmem = of_reserved_mem_lookup(it.node);
+> > > > > -           if (!rmem) {
+> > > > > -                   of_node_put(it.node);
+> > > > > -                   dev_err(dev, "unable to acquire memory-region\n");
+> > > > > -                   return -EINVAL;
+> > > > > -           }
+> > > > > +   int index = 0, mr = 0;
+> > > > > +
+> > > > > +   while (1) {
+> > > > > +           struct resource res;
+> > > > > +           int ret;
+> > > > > +
+> > > > > +           ret = of_reserved_mem_region_to_resource(np, mr++, &res);
+> > > > > +           if (ret)
+> > > > > +                   return 0;
+> > > >
+> > > > The original code calls rproc_elf_load_rsc_table() [1] after iterating through
+> > > > the memory region, something that won't happen with the above.
+> > >
+> > > Indeed. it needs the following incremental change. It is slightly
+> > > different in that rproc_elf_load_rsc_table() is not called if
+> > > 'memory-region' is missing, but the binding says that's required.
+> > >
+> > > 8<--------------------------------------------------
+> > >
+> > > diff --git a/drivers/remoteproc/st_remoteproc.c b/drivers/remoteproc/st_remoteproc.c
+> > > index 043348366926..cb09c244fdb5 100644
+> > > --- a/drivers/remoteproc/st_remoteproc.c
+> > > +++ b/drivers/remoteproc/st_remoteproc.c
+> > > @@ -120,15 +120,19 @@ static int st_rproc_parse_fw(struct rproc *rproc, const struct firmware *fw)
+> > >         struct device *dev = rproc->dev.parent;
+> > >         struct device_node *np = dev->of_node;
+> > >         struct rproc_mem_entry *mem;
+> > > -       int index = 0, mr = 0;
+> > > +       int index = 0;
+> > >
+> > >         while (1) {
+> > >                 struct resource res;
+> > >                 int ret;
+> > >
+> > > -               ret = of_reserved_mem_region_to_resource(np, mr++, &res);
+> > > -               if (ret)
+> > > -                       return 0;
+> > > +               ret = of_reserved_mem_region_to_resource(np, index, &res);
+> > > +               if (ret) {
+> > > +                       if (index)
+> > > +                               break;
+> > > +                       else
+> > > +                               return ret;
+> > > +               }
+> >
+> > This looks brittle and I'm not sure it would work.
+> >
+> > Going back to the original implementation, the only time we want to
+> > "break" is when @index is equal to the amount of memory regions _and_
+> > ret is -EINVAL.  Any other condition should return.
+> 
+> @index equal to number of entries returns -ENODEV, so that condition
+> is impossible. We can simply it to this:
+> 
+> if (ret == -ENODEV && index)
+>     break;
+> else
+>     return ret;
 
-Reviewed-by: Bjorn Andersson <andersson@kernel.org>
-Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
----
- drivers/dma/xilinx/xdma.c | 6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+To me this needs to be:
 
-diff --git a/drivers/dma/xilinx/xdma.c b/drivers/dma/xilinx/xdma.c
-index 5ecf8223c112..118199a04902 100644
---- a/drivers/dma/xilinx/xdma.c
-+++ b/drivers/dma/xilinx/xdma.c
-@@ -605,13 +605,11 @@ xdma_prep_device_sg(struct dma_chan *chan, struct scatterlist *sgl,
- 	struct xdma_chan *xdma_chan = to_xdma_chan(chan);
- 	struct dma_async_tx_descriptor *tx_desc;
- 	struct xdma_desc *sw_desc;
--	u32 desc_num = 0, i;
- 	u64 addr, dev_addr, *src, *dst;
-+	u32 desc_num, i;
- 	struct scatterlist *sg;
- 
--	for_each_sg(sgl, sg, sg_len, i)
--		desc_num += DIV_ROUND_UP(sg_dma_len(sg), XDMA_DESC_BLEN_MAX);
--
-+	desc_num = sg_nents_for_dma(sgl, sg_len, XDMA_DESC_BLEN_MAX);
- 	sw_desc = xdma_alloc_desc(xdma_chan, desc_num, false);
- 	if (!sw_desc)
- 		return NULL;
--- 
-2.50.1
+entries = of_reserved_mem_region_count(np); 
 
+...
+...
+
+if (ret == -ENODEV && index == entries)
+        break;
+else
+        return ret;
+
+But taking a step back, it might even be easier to go from a while() to a for(),
+the same way you did in imx_rproc_addr_init().
+
+> 
+> If you want to keep the prior behavior when 'memory-region' is
+> missing, then '&& index' can be removed, but I think that was wrong
+> behavior.
+> 
+> Rob
 
