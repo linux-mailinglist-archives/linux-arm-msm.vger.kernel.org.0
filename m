@@ -1,101 +1,82 @@
-Return-Path: <linux-arm-msm+bounces-81569-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-81571-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9DD86C56AD9
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Nov 2025 10:49:18 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id AF8B7C56B52
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Nov 2025 10:57:10 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id D378D3B899E
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Nov 2025 09:43:05 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id CD8BD3BADC8
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Nov 2025 09:50:48 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7E50B2DEA68;
-	Thu, 13 Nov 2025 09:43:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5C2C22FDC30;
+	Thu, 13 Nov 2025 09:50:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="UA1XHHHd";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="AF1/bz7K"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="VbAGd2Rl"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f46.google.com (mail-wm1-f46.google.com [209.85.128.46])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E18C92D63E8
-	for <linux-arm-msm@vger.kernel.org>; Thu, 13 Nov 2025 09:43:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3A292D7DC4
+	for <linux-arm-msm@vger.kernel.org>; Thu, 13 Nov 2025 09:50:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763026982; cv=none; b=BZHPdHT0vvbl66pWhzMNCxiy+3C+7O4ONtXy4WNRqyYBUP/QSB8HOrNCiMiIFeumvAUhogsNDJ3GKo1mPd3HqO8hROxMv+nW5cK5ecUCGH/Vdy3Nj4wZyAYdOv1ji4lS3nB2nVPEY4CHmsRtgS54pRuYJD3WtNNjsDD8DHFtg6M=
+	t=1763027415; cv=none; b=WYRC5vhN4E5rSZOoJJT18yd3XSRhTdnBQKyc5D3+7MtXAOGyeGPH4vyT7L0I3gfiltN3sJNUEv5inxUlU9xh2rPBtB8hdl5KarHxKB/Mcp5CqsWif6ehG26MqNDjjI52S8oI7+IMvCk8VnSlXMcTkMx5l9hiqCkB94zWYddT4QE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763026982; c=relaxed/simple;
-	bh=8iAtj5DbgY4AaZ2Ot7jJeIbmNyqP+z+6PwnXeSkuUFk=;
+	s=arc-20240116; t=1763027415; c=relaxed/simple;
+	bh=XpBw9jNdihDIQ+USWx2ZINXrg3bak+lbfxXKptjyquk=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=CNnfqx5rsEK4FjuGWBOkCZhySClQ0XV0Zw/0fp6nVY9w2IPqWfbJx84MOw0cxnpO/YKQ1TEbIRZ4BrfiEI7vpyRHlpEQBTiW5cZgXXSbDG8SHwvOiz9qmUXB+a0sCqmOkhqMhMmXZ6P/65v4+nBv9qoOYVpGhNsle1e/XsrkBOM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=UA1XHHHd; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=AF1/bz7K; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 5AD6hjEC3801856
-	for <linux-arm-msm@vger.kernel.org>; Thu, 13 Nov 2025 09:43:00 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	omyFsDM0eGj29Q1WT1EzsONp+JQNaIFi05rWWj2fj0k=; b=UA1XHHHd06fGc5oj
-	UDE+8yWJZUDMpUakkDIBVnZ0jGSLIw1/LrjbR4g9fysnT0ovoqWOW3Ndpc7EpCbb
-	HGdAgKMXxXnmD+Cc2QrNEqE+ucptu0uYQ0uHQ1xWmVTsw2TL6sAFykqfnhw2w9T+
-	KjDzxSIR32k7vnh1wz1Rlhi5UvNBFaYzkMed/JBioNpx3Tf3bq6XtX3O925XHiML
-	7Lm4wL6pT6JfytKQ5RepsV03igwJVXDuZGar3glhxLxtkhNoBYuSFs8VMSF3BTxJ
-	yadKRTeBB63jFiY3i/ojJyr1bMOmIm6W8Kvmkf7oRVSYdY8akmubSoVY/UdiKZYN
-	L06QZw==
-Received: from mail-qt1-f197.google.com (mail-qt1-f197.google.com [209.85.160.197])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4adaam8j5a-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Thu, 13 Nov 2025 09:42:59 +0000 (GMT)
-Received: by mail-qt1-f197.google.com with SMTP id d75a77b69052e-4ed74694decso1285331cf.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 13 Nov 2025 01:42:59 -0800 (PST)
+	 In-Reply-To:Content-Type; b=WMSRR2V62TQSigme3yC4Aug0Co6fhA5vlVQqIGq/TL91w/gPXmNGFwl84SHOa0uEWmau1Nlha40exFoEFYUFlpQ2iEYKe/3uDQcyCQrJe/jADRhLobreH0P8OaYOYxU2/Q7zcWgZX6VU6AABv/PzZtzerBxAlKAM94HGNR/4DyE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=VbAGd2Rl; arc=none smtp.client-ip=209.85.128.46
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wm1-f46.google.com with SMTP id 5b1f17b1804b1-4710a1f9e4cso4487795e9.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 13 Nov 2025 01:50:11 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1763026979; x=1763631779; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
+        d=linaro.org; s=google; t=1763027410; x=1763632210; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:from
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=omyFsDM0eGj29Q1WT1EzsONp+JQNaIFi05rWWj2fj0k=;
-        b=AF1/bz7KYX+tPY0k+53qUauVVUXvzKrBqBBD/wAPTZAPSWIHLTqYVeLoUDJEmXhS6j
-         jFGXAKKQ23ojILhsAj4D7hiJgnZvOq0bPQY5yN/Ee+2EZFPohTLyF/VM6iKMCvVotnVL
-         jZIozNeYNGa6OrkvIn/F9KWsZ70kwsRfnMB8eLF9HaF7+0nC4AITAeXjWSKj0R88sj9/
-         76j+/3KsADwJfLpqwXyXEGAqarMwLvoxRiHNvfxTRnUGUlz2WOGkFRmd1KwqlN4GviNR
-         q6TEw0+L56kTLWMo7FZWa/5GcYZZqjiaxFP3XkdVDz/l6Uo7OrMto13Tse8wFfYlufpC
-         mWkQ==
+        bh=2QTjxXNOoSuI+2dGtGVFoKKzr99l+pBctFnCDAf+KgU=;
+        b=VbAGd2Rlt432SioPtslSKXqrKQUN/+yGi+VrznRgkDGkaW+qoBkvYFAXLwScGF7P8B
+         5kt1mZIiuhpRQqQld8TFnnGnAwOP7oWZ/9ARHcA1Jh6MnpXhEe2hCGmKSGvgtGbSWe6F
+         DdFpcAL/rDHwcMglniWa55IrmPF4nvRy+cNSJbi/6tRvdLL6g8UvfhNjMcO3RWGhgCCQ
+         gZ1WcsqaI2CPWzXFuUK/J48Qx72SQn8JmzKDSgOQgiQ7QMYSCeBd2TkgbHsPMgXgLGS/
+         ekQFxzV45iWhWsVrXjl0uGTvpggJjk2AJGXl3NQgS5d1/FvAny/Dyn1o9Kc6anf10pmO
+         pusg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1763026979; x=1763631779;
-        h=content-transfer-encoding:in-reply-to:from:content-language
+        d=1e100.net; s=20230601; t=1763027410; x=1763632210;
+        h=content-transfer-encoding:in-reply-to:content-language:from
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=omyFsDM0eGj29Q1WT1EzsONp+JQNaIFi05rWWj2fj0k=;
-        b=Qxv9u+X+uw8JvphPTq86kW9cjQ7TBkWvfiXDnrRiR8h6Meo6AbJr+Go2FgMWXJFHG5
-         ckacA7jayZdRuLZED/I+N7vB403hbf434KQXHqhaId5DP/49R7vaZZs3lQKmyOv91W09
-         HigcOpqM4ZNIRViOpX3l74Zl7c1SPTB1xpgFVYm5T0HJ0vJdsRsfwD6o+/7xrLiPWeD3
-         NLaEZtR86uiToQaW4rpSb7BIdOyuDnKWFuOajoSQcTcej94JELzxzDkCYv2Jrz2brta3
-         XQZUe7yCb/HXQpUpEsL6QFe3vi1n9XHj/W1WS0MGU3X+xTUeUjyCwMKhcFkj6BLdLUxd
-         78Ig==
-X-Gm-Message-State: AOJu0YxSbeQSKCrlIbo/tSfSDHLC4wo7di8ZczWElCcA8mWFRoPcBqxD
-	dHLV59Uifku3AgoKx3SJP5eUeZyTITWzwgZXTodUNv0OK7+krhQZa8MADYsVRxmACqOyne6gTfU
-	p9oIKB5tMdEcOUFoP+h6D6EaCA3TwDs32doWJASzzSVdo5ZBz7Ct3WtbnFNjZ3LT7e6G+
-X-Gm-Gg: ASbGncsUNK68KnfYxj2O8uHLE7T4jAGA9cYrAWXNA8oToeM/VAwcN2WrfM09+/MAo9y
-	vveFtDN+1Ea0hfh5zv4CR40AswKN/qb6/nzy6PW6+H9YOiuQ+cK4GaqZBFzYvxfpsgM3Sdk1zwl
-	mHWQA0uRYhZeaPTCAqqAltlRw3JZkZ7viSadEuaMEThQz4Wi83ETzDhVmUHgVpHyL1/2YXX5oCi
-	0vzeDMPjg4qpt5JIRNcQcl++yOf6z0HM8b1wRxhPjeJoXMCwjsdSggAWgVNKgpHWDEmx/iQiO2F
-	g4P/avbcBi7FrrsotJHdZGCYvuJcRbyd9ZwJsbyxdK1P0zRmBD0z+BKbKISCtTvq+h+VQiJL/fR
-	jJ0fLtEUyimVgJqyQ+/OG378R3KJ4wgKaDFa/ZcjPo8PGHBWJpqyhy9TD
-X-Received: by 2002:a05:622a:7908:b0:4ed:e284:4a18 with SMTP id d75a77b69052e-4ede2845978mr28815881cf.9.1763026978824;
-        Thu, 13 Nov 2025 01:42:58 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGvKWw3IiL7wkrQy/+jmFVdR2o6TRc+eiHUU5enpTNDh4j+/qHBb66cMr9ZJ4pw+AV310uIfA==
-X-Received: by 2002:a05:622a:7908:b0:4ed:e284:4a18 with SMTP id d75a77b69052e-4ede2845978mr28815661cf.9.1763026978200;
-        Thu, 13 Nov 2025 01:42:58 -0800 (PST)
-Received: from [192.168.119.202] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-b734fdac667sm124168766b.58.2025.11.13.01.42.54
+        bh=2QTjxXNOoSuI+2dGtGVFoKKzr99l+pBctFnCDAf+KgU=;
+        b=l0v7Lc3PggicsUn+e7OpD8OmGvG9RU2azxzhyh1BTfe/Mvy0T4cWJmkit+yzYxe5Lt
+         O3hZZeKYyBRZ8T9cSERFb3qKpq7mi0ab/lHYRZ4hAZDllqJzAfBGIZSWMl+AWWYqbC8N
+         zGuYoaD5j9U1CKvCZuIozQhAYB3HwZ5UtC7j8GaJvUNv+LLFYEIzT60VGz5yrt1cSazS
+         d2Oq17OEHW9ZPqWoBDn8fbFlEDHTAnJ/10g3OEZ3ITWOZbWxz27rsw/7ToTjqpDPJjno
+         a6MBHJdPZRT3ToOt2ZSVm6blIikiOolSMulh3m6uELPUfNA/8o/YP4835zNV2PGozQbq
+         di9Q==
+X-Forwarded-Encrypted: i=1; AJvYcCUeMtMAu1FLLyTIZdiIIpjTLxqc65pmDHVXqNX+A/jIODesa8zh18wnnnFgKFsW0b/biwYfnqdDdmqGlQcH@vger.kernel.org
+X-Gm-Message-State: AOJu0Yy4zZiqkuzkTHAgd5e4DDUElD5/9KDI69Oq8L+S8vkt9HPczCul
+	RQ2kRNQxVTAUp2dJIudnM7PEY2Wucs7uUCUYEEKaLvt8Krx8xkJ7ks3Wr0Zu7eb6vSI=
+X-Gm-Gg: ASbGncur57ta2mpWa0Yn57A9owPBgDmzBy5b1mK+9Rt2vcXwS46Xz8uP3OVH6ZqdAN+
+	JBgay+blewIqCRsks4HvhWzhbGxXANTwbpEW9KTbtTTh/z4GpWPCuxOc3Z1wh6yM+ArBtJ5oIGE
+	bLqU0YvimEHdl6QR32iHLlRgw9OzdERkAM0aIn9l0NNvoT5IkeCzanzdU6sW7zbjdiIewRyL23S
+	n0pZjLQ/fTQYYBNM2o3QQGRO9Hg5vYDBujuG4TNGXqDue6wu9dQ9+nmKJvCA9Wwo5FAi7A4AL8d
+	iPQQJc1NzjT9j1Xv1HHa8kImNh343Rdjyh6nsuseJgs64DE5/KxCXXUrercVwnzuAYr+45gUXzO
+	PAn6xYUq71u2wCjfET2f/ye57TsemREgDaNsCGKx25MGmjoXTOHln+HspV2DyNa3/7HJiOwnsPa
+	d4MHV3ndbyug7lHo2xAtB5ojpKbf1R0lOP86qdPIaF5ja8GpDZVaBs
+X-Google-Smtp-Source: AGHT+IHoIg7Efgxy6dw+w+8oXHxjzD+pmw7q6YswFEs7wPLTvdZP4dszLcwCRxeAHF9fQzgBhCOi9A==
+X-Received: by 2002:a05:600c:4695:b0:471:c72:c7f8 with SMTP id 5b1f17b1804b1-477870858b6mr59904005e9.21.1763027409874;
+        Thu, 13 Nov 2025 01:50:09 -0800 (PST)
+Received: from [192.168.0.21] (188-141-3-146.dynamic.upc.ie. [188.141.3.146])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-47787e8e798sm77714465e9.10.2025.11.13.01.50.07
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 13 Nov 2025 01:42:57 -0800 (PST)
-Message-ID: <fee56a54-5da0-47a4-b8e3-7ec01e2a1559@oss.qualcomm.com>
-Date: Thu, 13 Nov 2025 10:42:53 +0100
+        Thu, 13 Nov 2025 01:50:09 -0800 (PST)
+Message-ID: <e043ca0b-aeb1-4343-aa53-895e7c1992c4@linaro.org>
+Date: Thu, 13 Nov 2025 09:50:07 +0000
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -103,203 +84,239 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 12/21] drm/msm/a6xx: Share dependency vote table with
- GMU
-To: Akhil P Oommen <akhilpo@oss.qualcomm.com>,
-        Rob Clark <robin.clark@oss.qualcomm.com>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>, Sean Paul <sean@poorly.run>,
-        Dmitry Baryshkov <lumag@kernel.org>,
-        Abhinav Kumar
- <abhinav.kumar@linux.dev>,
-        Jessica Zhang <jesszhan0024@gmail.com>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
-        Jonathan Marek <jonathan@marek.ca>,
-        Jordan Crouse
- <jordan@cosmicpenguin.net>,
-        Will Deacon <will@kernel.org>, Robin Murphy <robin.murphy@arm.com>,
-        Joerg Roedel <joro@8bytes.org>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-        Maxime Ripard <mripard@kernel.org>,
-        Thomas Zimmermann <tzimmermann@suse.de>,
-        Connor Abbott <cwabbott0@gmail.com>
-Cc: linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
-        linux-arm-kernel@lists.infradead.org, iommu@lists.linux.dev,
-        devicetree@vger.kernel.org
-References: <20251110-kaana-gpu-support-v2-0-bef18acd5e94@oss.qualcomm.com>
- <20251110-kaana-gpu-support-v2-12-bef18acd5e94@oss.qualcomm.com>
+Subject: Re: [PATCH v5 3/6] media: qcom: iris: Add scale support for encoder
+To: Wangao Wang <wangao.wang@oss.qualcomm.com>,
+ Vikash Garodia <vikash.garodia@oss.qualcomm.com>,
+ Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>,
+ Abhinav Kumar <abhinav.kumar@linux.dev>,
+ Mauro Carvalho Chehab <mchehab@kernel.org>
+Cc: linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+ linux-kernel@vger.kernel.org, Neil Armstrong <neil.armstrong@linaro.org>,
+ quic_qiweil@quicinc.com, quic_renjiang@quicinc.com
+References: <20251110-iris_encoder_enhancements-v5-0-1dbb19968bd5@oss.qualcomm.com>
+ <HaNbXZ7myaf8gi5D0BP71ZDWX9lWp7A-KDu3_afxIoadFrHH7UIQIe__QGQbeUgeUUysuUHpldVtEdpFOTZnrA==@protonmail.internalid>
+ <20251110-iris_encoder_enhancements-v5-3-1dbb19968bd5@oss.qualcomm.com>
+From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 Content-Language: en-US
-From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-In-Reply-To: <20251110-kaana-gpu-support-v2-12-bef18acd5e94@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8
+In-Reply-To: <20251110-iris_encoder_enhancements-v5-3-1dbb19968bd5@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMTEzMDA3MCBTYWx0ZWRfX6d4QnPpjP0Nm
- Jrp81cjZyvGLdLboI68KPwyK4kFhWFHrSF13Vuaj5argRKXhJWyK8KpB5gDsyw7cPqG/yub56ea
- 8I/NwpWWMHYrOzvjWZt7/MVv2UTLzxBbREUJcxFbr0GoVGZn6B8nMCYvSpDZ3L/qaDkc8+m7UCX
- Mv3mSdMj0Bt8rZlIpq41ItJGSktQHr/HJLU1rAgbJHOMZx6RQebrB+eCTnPulCKQtaYQ9efBA52
- 40irhOEVDlABVj94d8Cncp3aiprMtKuLJGlJ/OvLqLvDO6L0baPQEi8h9ZMqKbI2bDa4zkS+TZU
- 9+Pvccy/56aPO9wOQcRPMc8ymAmp3NoOjY5+SicMjpxWDdYg8kbNB5VCZzoLlCM6N9sLfsJTRnl
- 1d74jzB+r3FXBul6SAMRSsBO1jGCuA==
-X-Authority-Analysis: v=2.4 cv=d4f4CBjE c=1 sm=1 tr=0 ts=6915a823 cx=c_pps
- a=EVbN6Ke/fEF3bsl7X48z0g==:117 a=FpWmc02/iXfjRdCD7H54yg==:17
- a=IkcTkHD0fZMA:10 a=6UeiqGixMTsA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=EUspDBNiAAAA:8 a=DqcpYa4PS6cT72Y9dlEA:9
- a=QEXdDO2ut3YA:10 a=a_PwQJl-kcHnX1M80qC6:22
-X-Proofpoint-ORIG-GUID: hNVnxjLm53DworwY8GHfqQ8sAgocMgxh
-X-Proofpoint-GUID: hNVnxjLm53DworwY8GHfqQ8sAgocMgxh
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
- definitions=2025-11-13_01,2025-11-12_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 impostorscore=0 bulkscore=0 priorityscore=1501 malwarescore=0
- phishscore=0 suspectscore=0 spamscore=0 adultscore=0 lowpriorityscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2510240001 definitions=main-2511130070
 
-On 11/10/25 5:37 PM, Akhil P Oommen wrote:
-> A8x GMU firmwares expect a separate vote table which describes the
-> relationship between the Gx rail and MxA rail (and possibly Cx rail).
-> Create this new vote table and implement the new HFI message which
-> allows passing vote tables to send this data to GMU.
+On 10/11/2025 10:23, Wangao Wang wrote:
+> Add members enc_scale_width, enc_scale_height to the struct iris_inst to
+> support scale requirements.
 > 
-> Signed-off-by: Akhil P Oommen <akhilpo@oss.qualcomm.com>
+> Add output width and height settings in iris_venc_s_fmt_output to
+> enable scaling functionality.
+> 
+> Add VPSS buffer to platform data, which the scale function requires.
+> 
+> Tested-by: Neil Armstrong <neil.armstrong@linaro.org> # on SM8650-HDK
+> Signed-off-by: Wangao Wang <wangao.wang@oss.qualcomm.com>
 > ---
-
-[...]
-
->  drivers/gpu/drm/msm/adreno/a6xx_gmu.c | 54 +++++++++++++++++++++++++++++++++++
->  drivers/gpu/drm/msm/adreno/a6xx_gmu.h |  1 +
->  drivers/gpu/drm/msm/adreno/a6xx_hfi.c | 53 ++++++++++++++++++++++++++++++++++
->  drivers/gpu/drm/msm/adreno/a6xx_hfi.h | 17 +++++++++++
->  4 files changed, 125 insertions(+)
+>   .../platform/qcom/iris/iris_hfi_gen2_command.c     | 12 +++++------
+>   .../platform/qcom/iris/iris_hfi_gen2_response.c    |  2 ++
+>   drivers/media/platform/qcom/iris/iris_instance.h   |  4 ++++
+>   .../media/platform/qcom/iris/iris_platform_gen2.c  | 12 +++++++++++
+>   drivers/media/platform/qcom/iris/iris_venc.c       | 23 +++++++++++++++++++++-
+>   drivers/media/platform/qcom/iris/iris_vpu_buffer.c |  9 +++++----
+>   6 files changed, 51 insertions(+), 11 deletions(-)
 > 
-> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
-> index 8597d7adf2f7..396da035cbe8 100644
-> --- a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
-> +++ b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
-> @@ -1591,6 +1591,57 @@ static int a6xx_gmu_rpmh_arc_votes_init(struct device *dev, u32 *votes,
->  	return 0;
->  }
->  
-> +static int a6xx_gmu_rpmh_dep_votes_init(struct device *dev, u32 *votes,
-> +		unsigned long *freqs, int freqs_count)
-
-Checkpatch should be grumpy about indentation here
-
-[...]
-
-> +	/* Construct a vote for rest of the corners */
-> +	for (int i = 1; i < freqs_count; i++) {
-> +		u8 j, index = 0;
-> +		unsigned int level = a6xx_gmu_get_arc_level(dev, freqs[i]);
-
-nit: reverse-Christmas-tree would be nice here
-
+> diff --git a/drivers/media/platform/qcom/iris/iris_hfi_gen2_command.c b/drivers/media/platform/qcom/iris/iris_hfi_gen2_command.c
+> index 30c0cbe22d1d34b5bbbc6bdbd3881dd43a6ff647..8945e94ec9e87750fc87bebf63f4fbb634d8571a 100644
+> --- a/drivers/media/platform/qcom/iris/iris_hfi_gen2_command.c
+> +++ b/drivers/media/platform/qcom/iris/iris_hfi_gen2_command.c
+> @@ -194,8 +194,8 @@ static int iris_hfi_gen2_set_bitstream_resolution(struct iris_inst *inst, u32 pl
+>   		payload_type = HFI_PAYLOAD_U32;
+>   	} else {
+>   		codec_align = inst->codec == V4L2_PIX_FMT_HEVC ? 32 : 16;
+> -		resolution = ALIGN(inst->fmt_dst->fmt.pix_mp.width, codec_align) << 16 |
+> -			ALIGN(inst->fmt_dst->fmt.pix_mp.height, codec_align);
+> +		resolution = ALIGN(inst->enc_scale_width, codec_align) << 16 |
+> +			ALIGN(inst->enc_scale_height, codec_align);
+>   		inst_hfi_gen2->dst_subcr_params.bitstream_resolution = resolution;
+>   		payload_type = HFI_PAYLOAD_32_PACKED;
+>   	}
+> @@ -237,10 +237,10 @@ static int iris_hfi_gen2_set_crop_offsets(struct iris_inst *inst, u32 plane)
+>   			left_offset = inst->crop.left;
+>   			top_offset = inst->crop.top;
+>   		} else {
+> -			bottom_offset = (ALIGN(inst->fmt_dst->fmt.pix_mp.height, codec_align) -
+> -					inst->fmt_dst->fmt.pix_mp.height);
+> -			right_offset = (ALIGN(inst->fmt_dst->fmt.pix_mp.width, codec_align) -
+> -					inst->fmt_dst->fmt.pix_mp.width);
+> +			bottom_offset = (ALIGN(inst->enc_scale_height, codec_align) -
+> +					inst->enc_scale_height);
+> +			right_offset = (ALIGN(inst->enc_scale_width, codec_align) -
+> +				       inst->enc_scale_width);
+>   			left_offset = 0;
+>   			top_offset = 0;
+>   		}
+> diff --git a/drivers/media/platform/qcom/iris/iris_hfi_gen2_response.c b/drivers/media/platform/qcom/iris/iris_hfi_gen2_response.c
+> index 2f1f118eae4f6462ab1aa1d16844b34e6e699f1e..dc3e606b6ab429a1d15536fa8316afb1e384d674 100644
+> --- a/drivers/media/platform/qcom/iris/iris_hfi_gen2_response.c
+> +++ b/drivers/media/platform/qcom/iris/iris_hfi_gen2_response.c
+> @@ -54,6 +54,8 @@ static u32 iris_hfi_gen2_buf_type_to_driver(struct iris_inst *inst,
+>   			return BUF_SCRATCH_2;
+>   	case HFI_BUFFER_PERSIST:
+>   		return BUF_PERSIST;
+> +	case HFI_BUFFER_VPSS:
+> +		return BUF_VPSS;
+>   	default:
+>   		return 0;
+>   	}
+> diff --git a/drivers/media/platform/qcom/iris/iris_instance.h b/drivers/media/platform/qcom/iris/iris_instance.h
+> index a9892988c10bc28e9b2d8c3b5482e99b5b9af623..0b36092fe4e7296da2f66aecf9083f7f1edc5459 100644
+> --- a/drivers/media/platform/qcom/iris/iris_instance.h
+> +++ b/drivers/media/platform/qcom/iris/iris_instance.h
+> @@ -66,6 +66,8 @@ struct iris_fmt {
+>    * @hfi_rc_type: rate control type
+>    * @enc_raw_width: source image width for encoder instance
+>    * @enc_raw_height: source image height for encoder instance
+> + * @enc_scale_width: scale width for encoder instance
+> + * @enc_scale_height: scale height for encoder instance
+>    */
+> 
+>   struct iris_inst {
+> @@ -106,6 +108,8 @@ struct iris_inst {
+>   	u32				hfi_rc_type;
+>   	u32				enc_raw_width;
+>   	u32				enc_raw_height;
+> +	u32				enc_scale_width;
+> +	u32				enc_scale_height;
+>   };
+> 
+>   #endif
+> diff --git a/drivers/media/platform/qcom/iris/iris_platform_gen2.c b/drivers/media/platform/qcom/iris/iris_platform_gen2.c
+> index 36d69cc73986b74534a2912524c8553970fd862e..d3306189d902a1f42666010468c9e4e4316a66e1 100644
+> --- a/drivers/media/platform/qcom/iris/iris_platform_gen2.c
+> +++ b/drivers/media/platform/qcom/iris/iris_platform_gen2.c
+> @@ -729,6 +729,10 @@ static const u32 sm8550_dec_op_int_buf_tbl[] = {
+>   	BUF_DPB,
+>   };
+> 
+> +static const u32 sm8550_enc_ip_int_buf_tbl[] = {
+> +	BUF_VPSS,
+> +};
 > +
-> +		/* Get the primary index that matches the arc level */
-> +		for (j = 0; j < count; j++) {
-> +			if (mx[j] >= level) {
-> +				index = j;
-> +				break;
-> +			}
-> +		}
+>   static const u32 sm8550_enc_op_int_buf_tbl[] = {
+>   	BUF_BIN,
+>   	BUF_COMV,
+> @@ -816,6 +820,8 @@ struct iris_platform_data sm8550_data = {
+>   	.dec_op_int_buf_tbl = sm8550_dec_op_int_buf_tbl,
+>   	.dec_op_int_buf_tbl_size = ARRAY_SIZE(sm8550_dec_op_int_buf_tbl),
+> 
+> +	.enc_ip_int_buf_tbl = sm8550_enc_ip_int_buf_tbl,
+> +	.enc_ip_int_buf_tbl_size = ARRAY_SIZE(sm8550_enc_ip_int_buf_tbl),
+>   	.enc_op_int_buf_tbl = sm8550_enc_op_int_buf_tbl,
+>   	.enc_op_int_buf_tbl_size = ARRAY_SIZE(sm8550_enc_op_int_buf_tbl),
+>   };
+> @@ -908,6 +914,8 @@ struct iris_platform_data sm8650_data = {
+>   	.dec_op_int_buf_tbl = sm8550_dec_op_int_buf_tbl,
+>   	.dec_op_int_buf_tbl_size = ARRAY_SIZE(sm8550_dec_op_int_buf_tbl),
+> 
+> +	.enc_ip_int_buf_tbl = sm8550_enc_ip_int_buf_tbl,
+> +	.enc_ip_int_buf_tbl_size = ARRAY_SIZE(sm8550_enc_ip_int_buf_tbl),
+>   	.enc_op_int_buf_tbl = sm8550_enc_op_int_buf_tbl,
+>   	.enc_op_int_buf_tbl_size = ARRAY_SIZE(sm8550_enc_op_int_buf_tbl),
+>   };
+> @@ -989,6 +997,8 @@ struct iris_platform_data sm8750_data = {
+>   	.dec_op_int_buf_tbl = sm8550_dec_op_int_buf_tbl,
+>   	.dec_op_int_buf_tbl_size = ARRAY_SIZE(sm8550_dec_op_int_buf_tbl),
+> 
+> +	.enc_ip_int_buf_tbl = sm8550_enc_ip_int_buf_tbl,
+> +	.enc_ip_int_buf_tbl_size = ARRAY_SIZE(sm8550_enc_ip_int_buf_tbl),
+>   	.enc_op_int_buf_tbl = sm8550_enc_op_int_buf_tbl,
+>   	.enc_op_int_buf_tbl_size = ARRAY_SIZE(sm8550_enc_op_int_buf_tbl),
+>   };
+> @@ -1077,6 +1087,8 @@ struct iris_platform_data qcs8300_data = {
+>   	.dec_op_int_buf_tbl = sm8550_dec_op_int_buf_tbl,
+>   	.dec_op_int_buf_tbl_size = ARRAY_SIZE(sm8550_dec_op_int_buf_tbl),
+> 
+> +	.enc_ip_int_buf_tbl = sm8550_enc_ip_int_buf_tbl,
+> +	.enc_ip_int_buf_tbl_size = ARRAY_SIZE(sm8550_enc_ip_int_buf_tbl),
+>   	.enc_op_int_buf_tbl = sm8550_enc_op_int_buf_tbl,
+>   	.enc_op_int_buf_tbl_size = ARRAY_SIZE(sm8550_enc_op_int_buf_tbl),
+>   };
+> diff --git a/drivers/media/platform/qcom/iris/iris_venc.c b/drivers/media/platform/qcom/iris/iris_venc.c
+> index 7ad747d2272f029e69a56572a188a032f898a3fb..f573408a3fc66e1bbc7814a8fc7953158e043fce 100644
+> --- a/drivers/media/platform/qcom/iris/iris_venc.c
+> +++ b/drivers/media/platform/qcom/iris/iris_venc.c
+> @@ -70,6 +70,8 @@ int iris_venc_inst_init(struct iris_inst *inst)
+> 
+>   	inst->enc_raw_width = DEFAULT_WIDTH;
+>   	inst->enc_raw_height = DEFAULT_HEIGHT;
+> +	inst->enc_scale_width = DEFAULT_WIDTH;
+> +	inst->enc_scale_height = DEFAULT_HEIGHT;
+> 
+>   	memcpy(&inst->fw_caps[0], &core->inst_fw_caps_enc[0],
+>   	       INST_FW_CAP_MAX * sizeof(struct platform_inst_fw_cap));
+> @@ -188,15 +190,32 @@ int iris_venc_try_fmt(struct iris_inst *inst, struct v4l2_format *f)
+> 
+>   static int iris_venc_s_fmt_output(struct iris_inst *inst, struct v4l2_format *f)
+>   {
+> +	const struct iris_fmt *venc_fmt;
+>   	struct v4l2_format *fmt;
+> +	u32 codec_align;
+> 
+>   	iris_venc_try_fmt(inst, f);
+> 
+> -	if (!(find_format(inst, f->fmt.pix_mp.pixelformat, f->type)))
+> +	venc_fmt = find_format(inst, f->fmt.pix_mp.pixelformat, f->type);
+> +	if (!venc_fmt)
+>   		return -EINVAL;
+> 
+> +	codec_align = venc_fmt->pixfmt == V4L2_PIX_FMT_HEVC ? 32 : 16;
 > +
-> +		if (j == count) {
-> +			DRM_DEV_ERROR(dev,
-> +				      "Mx Level %u not found in the RPMh list\n",
-> +				      level);
-> +			DRM_DEV_ERROR(dev, "Available levels:\n");
-> +			for (j = 0; j < count; j++)
-> +				DRM_DEV_ERROR(dev, "  %u\n", mx[j]);
-> +
-> +			return -EINVAL;
-> +		}
-> +
-> +		/* Construct the vote */
-> +		votes[i] = (0x3fff << 14) | (index << 8) | (0xff);
-
-FIELD_PREP() + GENMASK, please
-
-[...]
-
-> +static int a8xx_hfi_send_perf_table(struct a6xx_gmu *gmu)
-> +{
-> +	unsigned int num_gx_votes = 3, num_cx_votes = 2;
-> +	struct a6xx_hfi_table_entry *entry;
-> +	struct a6xx_hfi_table *tbl;
-> +	int ret, i;
-> +	u32 size;
-> +
-> +	size = sizeof(*tbl) +  (2 * sizeof(tbl->entry[0])) +
-> +		(gmu->nr_gpu_freqs * num_gx_votes * sizeof(gmu->gx_arc_votes[0])) +
-> +		(gmu->nr_gmu_freqs * num_cx_votes * sizeof(gmu->cx_arc_votes[0]));
-> +	tbl = devm_kzalloc(gmu->dev, size, GFP_KERNEL);
-
-devm_ only adds overhead here, there's not even an error-return path,
-go with regular kzalloc/kfree
-
-> +	tbl->type = HFI_TABLE_GPU_PERF;
-> +
-> +	/* First fill GX votes */
-> +	entry = &tbl->entry[0];
-> +	entry->count = gmu->nr_gpu_freqs;
-> +	entry->stride = num_gx_votes;
-> +
-> +	for (i = 0; i < gmu->nr_gpu_freqs; i++) {
-> +		unsigned int base = i * entry->stride;
-> +
-> +		entry->data[base+0] = gmu->gx_arc_votes[i];
-> +		entry->data[base+1] = gmu->dep_arc_votes[i];
-> +		entry->data[base+2] = gmu->gpu_freqs[i] / 1000;
-
-This is essentially struct perf_gx_level with the ACD field recycled
-
+>   	fmt = inst->fmt_dst;
+>   	fmt->type = V4L2_BUF_TYPE_VIDEO_CAPTURE_MPLANE;
+> +	/*
+> +	 * If output format size != input format size,
+> +	 * it is considered a scaling case,
+> +	 * and the scaled size needs to be saved.
+> +	 */
+> +	if (f->fmt.pix_mp.width != inst->fmt_src->fmt.pix_mp.width ||
+> +	    f->fmt.pix_mp.height != inst->fmt_src->fmt.pix_mp.height) {
+> +		inst->enc_scale_width = f->fmt.pix_mp.width;
+> +		inst->enc_scale_height = f->fmt.pix_mp.height;
+> +		fmt->fmt.pix_mp.width = ALIGN(f->fmt.pix_mp.width, codec_align);
+> +		fmt->fmt.pix_mp.height = ALIGN(f->fmt.pix_mp.height, codec_align);
 > +	}
-> +
-> +	/* Then fill CX votes */
-> +	entry = (struct a6xx_hfi_table_entry *)
-> +		&tbl->entry[0].data[gmu->nr_gpu_freqs * num_gx_votes];
-> +
-> +	entry->count = gmu->nr_gmu_freqs;
-> +	entry->stride = num_cx_votes;
-> +
-> +	for (i = 0; i < gmu->nr_gmu_freqs; i++) {
-> +		unsigned int base = i * entry->stride;
-> +
-> +		entry->data[base] = gmu->cx_arc_votes[i];
-> +		entry->data[base+1] = gmu->gmu_freqs[i] / 1000;
-
-And this is struct perf_level
-
-[...]
-
-> +#define HFI_H2F_MSG_TABLE 15
-> +
-> +struct a6xx_hfi_table_entry {
-> +	u32 count;
-> +	u32 stride;
-> +	u32 data[];
-> +};
-> +
-> +struct a6xx_hfi_table {
-> +	u32 header;
-> +	u32 version;
-> +#define HFI_TABLE_BW_VOTE 0
-> +#define HFI_TABLE_GPU_PERF 1
-
-Such defines usually go below the field definition, not above
-
-Konrad
-> +	u32 type;
-> +	struct a6xx_hfi_table_entry entry[];
-> +};
-> +
->  #define HFI_H2F_MSG_GX_BW_PERF_VOTE 30
->  
->  struct a6xx_hfi_gx_bw_perf_vote_cmd {
+>   	fmt->fmt.pix_mp.num_planes = 1;
+>   	fmt->fmt.pix_mp.plane_fmt[0].bytesperline = 0;
+>   	fmt->fmt.pix_mp.plane_fmt[0].sizeimage = iris_get_buffer_size(inst, BUF_OUTPUT);
+> @@ -254,6 +273,8 @@ static int iris_venc_s_fmt_input(struct iris_inst *inst, struct v4l2_format *f)
 > 
+>   	inst->enc_raw_width = f->fmt.pix_mp.width;
+>   	inst->enc_raw_height = f->fmt.pix_mp.height;
+> +	inst->enc_scale_width = f->fmt.pix_mp.width;
+> +	inst->enc_scale_height = f->fmt.pix_mp.height;
+> 
+>   	if (f->fmt.pix_mp.width != inst->crop.width ||
+>   	    f->fmt.pix_mp.height != inst->crop.height) {
+> diff --git a/drivers/media/platform/qcom/iris/iris_vpu_buffer.c b/drivers/media/platform/qcom/iris/iris_vpu_buffer.c
+> index 4463be05ce165adef6b152eb0c155d2e6a7b3c36..db5adadd1b39c06bc41ae6f1b3d2f924b3ebf150 100644
+> --- a/drivers/media/platform/qcom/iris/iris_vpu_buffer.c
+> +++ b/drivers/media/platform/qcom/iris/iris_vpu_buffer.c
+> @@ -1131,10 +1131,11 @@ static u32 iris_vpu_enc_arp_size(struct iris_inst *inst)
+> 
+>   inline bool is_scaling_enabled(struct iris_inst *inst)
+>   {
+> -	return inst->crop.left != inst->compose.left ||
+> -		inst->crop.top != inst->compose.top ||
+> -		inst->crop.width != inst->compose.width ||
+> -		inst->crop.height != inst->compose.height;
+> +	struct v4l2_pix_format_mplane *dst_fmt = &inst->fmt_dst->fmt.pix_mp;
+> +	struct v4l2_pix_format_mplane *src_fmt = &inst->fmt_src->fmt.pix_mp;
+> +
+> +	return dst_fmt->width != src_fmt->width ||
+> +		dst_fmt->height != src_fmt->height;
+>   }
+> 
+>   static inline
+> 
+> --
+> 2.43.0
+> 
+Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 
