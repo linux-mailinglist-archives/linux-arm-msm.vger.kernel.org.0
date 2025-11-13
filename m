@@ -1,205 +1,151 @@
-Return-Path: <linux-arm-msm+bounces-81681-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-81682-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [142.0.200.124])
-	by mail.lfdr.de (Postfix) with ESMTPS id D5E7AC59662
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Nov 2025 19:13:52 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id E4806C5917F
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Nov 2025 18:22:15 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id B74494EB0D0
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Nov 2025 17:15:46 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id A0AB14A6FDA
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Nov 2025 17:16:00 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 68892363C7A;
-	Thu, 13 Nov 2025 17:01:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5BECC357A44;
+	Thu, 13 Nov 2025 17:01:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="VWfAyCHo"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="TnNMsgNf"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C8A1342C9E;
-	Thu, 13 Nov 2025 17:01:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 303E029BD89;
+	Thu, 13 Nov 2025 17:01:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763053266; cv=none; b=nfARYRQ4NVjro2u6HbiKe0v0lkv/dwtOymoOrX/rj65DbZ3+fC1g1PHVSbLm56iK4B0ijZHJ5EyxEZF6/9QZ01rSIdXI5SVCZWerXNWdcsKgBgfVEgD3eJhgM3JH7vA+eD4hzvNJ8xnVW545ib14E/fkJa5AjWXmmY/A2+5r518=
+	t=1763053298; cv=none; b=svUX1gQ8irHSTsGKCyQteT7FtrSVQYZfhJheiCkOGFYUdAKD0dPgwKcMr9gXGtKK3Y2OXMFksFwrAZ6eOOA+Vg/g6uBvI5eyQ5RqjhZS0l/+shojpqH+iqtlzV1Ktbf9xtoJYm/0lyCa3PdlcCsqtpizmpoIv2wyoI2yEPnQBBU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763053266; c=relaxed/simple;
-	bh=ye4IyFfSxZ58g8jm53tBn5pVbrzvkxaCoznygD5nwos=;
-	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
-	 In-Reply-To:Content-Type; b=Dy0pzcnMo+htVGVkaqJw47T9WGNM/xYBLJQ7RPx3RfJSaSRx+4RFJ1e2BtmxA0Q83jLTH3CuDRXBSxNbKJrTHqe8n5Tk8kffwW6MVdxspCuREqE0WSL26YySskC8BoD97DbKpLn0+aNaoxif4kVvYE8EDlKXWr8MHoeAmWk027U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=VWfAyCHo; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92A87C4CEF5;
-	Thu, 13 Nov 2025 17:01:02 +0000 (UTC)
+	s=arc-20240116; t=1763053298; c=relaxed/simple;
+	bh=5Pf3iqIjYL2e0a3xSKvX0pYCMh3YUQRYnW5d5U0xOH0=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=erg/AeFbL1FFV+hGg9FyqUkhNH6KqdyyLVsWX8fbG8WbYFJgCoy2BAfjVu9G2IX43rrJyUWIjD/JBZ5Ddes34DKYomAhAeqL7rTJYLgeuVZoo5pP28B78IE/6CmfRuj70AUJp0JfKjCvvIdPW3fQyTNUz3qUoCUFD2eSTlSIJKw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=TnNMsgNf; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17744C2BC86;
+	Thu, 13 Nov 2025 17:01:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1763053265;
-	bh=ye4IyFfSxZ58g8jm53tBn5pVbrzvkxaCoznygD5nwos=;
-	h=Date:Subject:From:To:Cc:References:In-Reply-To:From;
-	b=VWfAyCHor9vE3FVUHPQtSJJ8LfgHYtOeLyZm25JJIwMMM7Uuc0nmeBgAryufaZgfT
-	 6PybPF7qBdKSkHeHQlMVf8ag3r13yJzYrTVVUb8sTIrWGyFPQ0cwmnbCk+nvyQZ/lf
-	 F1qLg+awhv1hckgC0lNM7HJucz9VnjhVaCMAK82oxFgGfNu639eBOnGPlzg5VENNAJ
-	 iDlsIVTNB+aa0aNEt6vAqte8NXblSUo8atpC0aFxuXK7pY3n7I1eMZTHjqKLx3moUf
-	 cUjng7+/uYXseQTncVVSI5htx6CkJXVszgYc3jdxJBE4WJhtAnAkUwrtpdXFqYYyWS
-	 FkF1RIFOTk6qg==
-Message-ID: <715b0dfd-cd75-401a-acac-0e4ea373dc7d@kernel.org>
-Date: Thu, 13 Nov 2025 18:01:00 +0100
+	s=k20201202; t=1763053297;
+	bh=5Pf3iqIjYL2e0a3xSKvX0pYCMh3YUQRYnW5d5U0xOH0=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=TnNMsgNfSNl2UF/eY2MehsNe0e1DkUYDOSOj3qpFLDqN3Vnahe4U/KHjZqld+Ecyj
+	 lG2MMwumEGcTUQUHfbdx0yJJAJQso0Pw18QyQ9vdqJbkqA1nU+UP9vMHLWWkILIbRV
+	 4wG2OZCiMP+uFUrLhAee6O+L4nqjOEbfk5O5iin1B/KTXtbc5fFKe9Z1xG1lDc1ONN
+	 +gqbfNdN9kuCT19sI2SoUj0A9qbdwTYWJfrLzllzZxSE1735VHLVF4k1vcZ0qj+wZq
+	 uKzkIIbHVw9Fk2E/xbMfPPDWnWqQXaOh+K2cNx+Mg3pyRcqhUjCenSO/ml+9feQZA8
+	 foBQ9MKORSVyA==
+Date: Thu, 13 Nov 2025 22:31:27 +0530
+From: Manivannan Sadhasivam <mani@kernel.org>
+To: Bjorn Helgaas <helgaas@kernel.org>
+Cc: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>, 
+	lpieralisi@kernel.org, kwilczynski@kernel.org, bhelgaas@google.com, will@kernel.org, 
+	linux-pci@vger.kernel.org, linux-kernel@vger.kernel.org, robh@kernel.org, 
+	linux-arm-msm@vger.kernel.org, zhangsenchuan@eswincomputing.com, vincent.guittot@linaro.org, 
+	Frank Li <Frank.li@nxp.com>
+Subject: Re: [PATCH v2 3/3] PCI: dwc: Check for the device presence during
+ suspend and resume
+Message-ID: <6uidenlpio4lsn7cecdubxlojo4slm6g76zteu74jg7xqhnv2y@kmsnhuh3dqiz>
+References: <20251107044319.8356-4-manivannan.sadhasivam@oss.qualcomm.com>
+ <20251113164013.GA2285612@bhelgaas>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] dt-bindings: mfd: qcom,tcsr: Add compatible for Kaanapali
-From: Krzysztof Kozlowski <krzk@kernel.org>
-To: "Aiqun(Maria) Yu" <aiqun.yu@oss.qualcomm.com>,
- Bjorn Andersson <andersson@kernel.org>
-Cc: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
- Jingyi Wang <jingyi.wang@oss.qualcomm.com>, Lee Jones <lee@kernel.org>,
- Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
- Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- tingwei.zhang@oss.qualcomm.com, trilok.soni@oss.qualcomm.com,
- yijie.yang@oss.qualcomm.com
-References: <20250924-knp-mfd-v1-1-6c8a98760e95@oss.qualcomm.com>
- <b623c7f6-f28f-49ba-b6f6-25084117a6b3@oss.qualcomm.com>
- <l4mb5pi7kz7uuq6o3eueoxl2ngt2sdd6dv3kyudw6i54co5v5h@w6ya2nuas322>
- <ad00835e-bc20-4f97-aba6-e1b4f5e97191@oss.qualcomm.com>
- <f2q7a7r7quq6pplcn3kklwrhdc6hxa5zvc7osygshtyurwyvi4@t5iyragt7irh>
- <b5ecf5e7-4dc4-41ac-9b56-7c52afacb950@oss.qualcomm.com>
- <01de9616-825b-4fbb-83cf-e0bf91e8cf39@oss.qualcomm.com>
- <81174278-c3c4-4dc6-856e-b58aa2cb6fea@oss.qualcomm.com>
- <br3fmilhh7fihv4atnf4olvy4w66z4p7sh4ypicuc3766ky6tb@pppfdynfhfz7>
- <bf706156-1413-42cb-a463-803063c347fc@oss.qualcomm.com>
- <4a6f7c18-82d1-499c-af9c-9681e16a0db6@kernel.org>
-Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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 a/A=
-In-Reply-To: <4a6f7c18-82d1-499c-af9c-9681e16a0db6@kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20251113164013.GA2285612@bhelgaas>
 
-On 13/11/2025 17:59, Krzysztof Kozlowski wrote:
->>> This is what we have for Hamoa:
->>>
->>> tcsr_mutex: hwlock@1f40000 {
->>>         compatible = "qcom,tcsr-mutex";
->>>         reg = <0 0x01f40000 0 0x20000>;
->>>         #hwlock-cells = <1>;
->>> };
->>>
->>> tcsr: clock-controller@1fc0000 {
->>
->>
->> It is not a clock-controller start from 0x1fc0000.
->>
->>>         compatible = "qcom,x1e80100-tcsr", "syscon";
->>>         reg = <0 0x01fc0000 0 0x30000>;
->>
->> This is what we have a discussion initialized here:
->> "qcom,<platform>-tcsr" is only a tcsr clock controller binder, reference
->> from [1].
->> "qcom,tcsr-<platform>" is a common tcsr block. reference current binding
->> patch.
-
-I forgot to trim the quote and paste here one more thing - you
-completely miss the history, so quoting:
-
-"The TCSR block is purely configuration block and should not have
-children.  Any child device should be simply moved outside of TCSR
-syscon block."
-
-This is about this binding. If you claim to make it something else, you
-are basically changing the meaning of the binding now.
-
-
->>
->> For below hardware block information, is it really a recommendation to
->> combine the tscr block with tcsr clock controller all together?
->> ______________________
->> |             |       |
->> | TCSR_MUTEX  | mutex |
->> |_____________|_______|
->> |	      |       |
->> | RANDOM_REGS |       |
->> |_____________|       |
->> |	      |       |
->> | TCSR_CLKS   | tcsr  |
->> |_____________|       |
->> |	      |       |
->> | RANDOM_REGS |       |
->> |_____________|_______|
->>
->> [1]https://lore.kernel.org/all/20251030-gcc_kaanapali-v2-v2-2-a774a587af6f@oss.qualcomm.com/
->>
->>
->>>         clocks = <&rpmhcc RPMH_CXO_CLK>;
->>>         #clock-cells = <1>;
->>>         #reset-cells = <1>;
->>> };
->>>
->>> This is exactly what I suggested above and Konrad is asking you why
->>> this doesn't work for Kaanapali. The addresses are even the same, what
->>> is the problem?
->>
->> The problem is the current patchset document a separate tcsr block as a
->> mfd. While the suggestion here is to use the tcsr clock controller
+On Thu, Nov 13, 2025 at 10:40:13AM -0600, Bjorn Helgaas wrote:
+> [+cc Frank]
 > 
-> There is no MFD. Don't use that term in context of supporting a change.
-> But regardless, this documents only random regs.
+> On Fri, Nov 07, 2025 at 10:13:19AM +0530, Manivannan Sadhasivam wrote:
+> > If there is no device available under the Root Ports, there is no point in
+> > sending PME_Turn_Off and waiting for L2/L3 transition during suspend, it
+> > will result in a timeout. Hence, skip those steps if no device is available
+> > during suspend.
+> > 
+> > During resume, do not wait for the link up if there was no device connected
+> > before suspend. It is very unlikely that a device will get connected while
+> > the host system was suspended.
+> > 
+> > Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
+> > ---
+> >  drivers/pci/controller/dwc/pcie-designware-host.c | 13 +++++++++++++
+> >  1 file changed, 13 insertions(+)
+> > 
+> > diff --git a/drivers/pci/controller/dwc/pcie-designware-host.c b/drivers/pci/controller/dwc/pcie-designware-host.c
+> > index 20c9333bcb1c..5a39e7139ec9 100644
+> > --- a/drivers/pci/controller/dwc/pcie-designware-host.c
+> > +++ b/drivers/pci/controller/dwc/pcie-designware-host.c
+> > @@ -20,6 +20,7 @@
+> >  #include <linux/platform_device.h>
+> >  
+> >  #include "../../pci.h"
+> > +#include "../pci-host-common.h"
+> >  #include "pcie-designware.h"
+> >  
+> >  static struct pci_ops dw_pcie_ops;
+> > @@ -1129,6 +1130,9 @@ int dw_pcie_suspend_noirq(struct dw_pcie *pci)
+> >  	u32 val;
+> >  	int ret;
+> >  
+> > +	if (!pci_root_ports_have_device(pci->pp.bridge->bus))
+> > +		goto stop_link;
 > 
->> binding to document the whole tcsr block which is not belonged to tcsr
->> clock controller.
+> This looks racy.  Maybe it's still OK, but I think it would be good to
+> include a comment to acknowledge that and explain why either outcome
+> is acceptable, e.g., if a user removes a device during suspend, it
+> results in a timeout but nothing more terrible.
 > 
-> I don't understand whether you claim this patch as "this suggestion" or
-> something else.
-> 
-> 
-> Best regards,
-> Krzysztof
 
+Ok.
 
-Best regards,
-Krzysztof
+> >  	/*
+> >  	 * If L1SS is supported, then do not put the link into L2 as some
+> >  	 * devices such as NVMe expect low resume latency.
+> > @@ -1162,6 +1166,7 @@ int dw_pcie_suspend_noirq(struct dw_pcie *pci)
+> >  	 */
+> >  	udelay(1);
+> >  
+> > +stop_link:
+> >  	dw_pcie_stop_link(pci);
+> >  	if (pci->pp.ops->deinit)
+> >  		pci->pp.ops->deinit(&pci->pp);
+> > @@ -1195,6 +1200,14 @@ int dw_pcie_resume_noirq(struct dw_pcie *pci)
+> >  	if (ret)
+> >  		return ret;
+> >  
+> > +	/*
+> > +	 * If there was no device before suspend, skip waiting for link up as
+> > +	 * it is bound to fail. It is very unlikely that a device will get
+> > +	 * connected *during* suspend.
+> 
+> I'm not convinced.  Unlike the suspend side, where the race window is
+> tiny, here the window is the entire time the system is suspended, and
+> at least in laptop usage, there's no reason I would hesitate to plug
+> something in while suspended.
+> 
+
+In that case, we just need to do:
+
+	/* Ignore errors as there could be no devices connected */
+	dw_pcie_wait_for_link()
+
+I wanted to avoid the timeout if we knew that there was no device connected
+during suspend.
+
+- Mani
+
+-- 
+மணிவண்ணன் சதாசிவம்
 
