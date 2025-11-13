@@ -1,118 +1,162 @@
-Return-Path: <linux-arm-msm+bounces-81520-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-81521-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ams.mirrors.kernel.org (ams.mirrors.kernel.org [213.196.21.55])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3D1DCC55C97
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Nov 2025 06:16:35 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 58682C55CA7
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Nov 2025 06:17:24 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ams.mirrors.kernel.org (Postfix) with ESMTPS id E8DC6345D1A
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Nov 2025 05:16:03 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 0B9123A5D56
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Nov 2025 05:17:23 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 46C2526D4D4;
-	Thu, 13 Nov 2025 05:16:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 24CD51D5ADE;
+	Thu, 13 Nov 2025 05:17:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="iVuiyaYu"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="AZhllMcD"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f49.google.com (mail-ed1-f49.google.com [209.85.208.49])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0400E219A89;
-	Thu, 13 Nov 2025 05:15:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73534DDAB
+	for <linux-arm-msm@vger.kernel.org>; Thu, 13 Nov 2025 05:17:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763010960; cv=none; b=KHsschAlHNVnS6sDRbUyuwTIFCWxyZKCInQi3cnWAlkFhRN7s+9nrevrmBtWlvzrDJZF/VAs3EMVZO93JhGLHNvG1ixugVoUwyggUT9raN6T5i4H4H2b2BFUXA/aRx4sxLw/1Ld2/uwIf35rgs1pBmo8VfZP17jvLDWjhh33gRM=
+	t=1763011039; cv=none; b=YhKHBFBEST7t4zTsv66YyRCN6iTothMiEvqJSaIml8htGUNuRPZ99qDIUuABATKHmr15/FX9Pky+NUZ5VJlzRbQMg18+yNFGTPLbiRzx4HJZRgKvBQYXKVtpNykpubW4khJ/vsA24ezr6YkR7BzZwCMCdFxOXm0X0I8ksDHcMLY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763010960; c=relaxed/simple;
-	bh=kYF+v51HiH8f+oyjLD8Cw6AcWEWsC5LFA5+wU5FAo20=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=YkXxB17mRAiUVtGu+2hyCgxl4JbBORy+G6HhB0GxdSKHPW7UtvKST8tGrtCaXVlaWJd7whw4lUctp49SjQvafY6yF5K1ZriTntS71bCELkkH7akddFVmvqnxaRK27s0mk2IIucM482pAq2bMJyK7YnLHWgVjjyIuguGfTgf9DlM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=iVuiyaYu; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01E95C19422;
-	Thu, 13 Nov 2025 05:15:46 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1763010959;
-	bh=kYF+v51HiH8f+oyjLD8Cw6AcWEWsC5LFA5+wU5FAo20=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=iVuiyaYucSNIVgvOzygjjmNpCJS2H3qyavnx2/sxZyLzQNuRHoJfMdE/OkjRuCDb4
-	 nCOg1PyrQ+PVf9pL6W7aGVVQcSXk7WkNBJmT4FAfJDda5LY2PmCQYi3Ugt5LqSdmD7
-	 /+3Jtl5cLtmvFA/0R0P5+9/ODBh26PWd27j1OOa2mR+9tfjM+5L1y4oennPlbqcAhD
-	 xht3cTQQ2YvguLhoIVJEHLA7MqL2UVmaivbvsadrid7nX59htdpThCWWaPWyvRdI6e
-	 rZO/VbDWV9E0Xw/fFRmamCh0ojFU29uvsXovnGgyg5ws+Z8nZ/osM2174EEcN99tsS
-	 56tWpHi+YVTFQ==
-Date: Thu, 13 Nov 2025 10:45:35 +0530
-From: Manivannan Sadhasivam <mani@kernel.org>
-To: Rob Herring <robh@kernel.org>
-Cc: manivannan.sadhasivam@oss.qualcomm.com, 
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Jiri Slaby <jirislaby@kernel.org>, 
-	Nathan Chancellor <nathan@kernel.org>, Nicolas Schier <nicolas.schier@linux.dev>, 
-	Hans de Goede <hansg@kernel.org>, Ilpo =?utf-8?B?SsOkcnZpbmVu?= <ilpo.jarvinen@linux.intel.com>, 
-	Mark Pearson <mpearson-lenovo@squebb.ca>, "Derek J. Clark" <derekjohn.clark@gmail.com>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Marcel Holtmann <marcel@holtmann.org>, Luiz Augusto von Dentz <luiz.dentz@gmail.com>, 
-	Bartosz Golaszewski <brgl@bgdev.pl>, linux-serial@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	linux-kbuild@vger.kernel.org, platform-driver-x86@vger.kernel.org, linux-pci@vger.kernel.org, 
-	devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org, linux-bluetooth@vger.kernel.org, 
-	linux-pm@vger.kernel.org, Stephan Gerhold <stephan.gerhold@linaro.org>, 
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Subject: Re: [PATCH 1/9] serdev: Convert to_serdev_device() and
- to_serdev_controller() helpers to macros
-Message-ID: <vajsqzw2z5jljmlys6gk3eltj3b2fr4xymyv252idk57lk3wm3@gfff56nn25is>
-References: <20251112-pci-m2-e-v1-0-97413d6bf824@oss.qualcomm.com>
- <20251112-pci-m2-e-v1-1-97413d6bf824@oss.qualcomm.com>
- <CAL_Jsq+dZOUCosma1QJ-aqtjWs4NDLRkAdB3Aaro=8_Ep7Y0Rg@mail.gmail.com>
+	s=arc-20240116; t=1763011039; c=relaxed/simple;
+	bh=FVc+NaRrYJ4ZZqE5HIwBsY3M0/OOCYbazwmP6gVegvE=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=ujPP+D6bvn+RVn7DEoOmGNYKb7Q+ymbEIQyBRXlbldYp+SpIKQkL9STiv5gais5eQcMqnEoDB3vFoBvEjPnMfz6GIEWoUPtPNGQAO3t7LIc2WmtUrju2ovPBOmPXyJN28JEbHiiQe0DOAXG3W5aMzQvOtDcVicRVrSMQIbOCBa4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=AZhllMcD; arc=none smtp.client-ip=209.85.208.49
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-ed1-f49.google.com with SMTP id 4fb4d7f45d1cf-64074f01a6eso673045a12.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 12 Nov 2025 21:17:17 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1763011036; x=1763615836; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=FVc+NaRrYJ4ZZqE5HIwBsY3M0/OOCYbazwmP6gVegvE=;
+        b=AZhllMcDSqtpJu65d/VjWnWtc/2PAKdL4o5aVDrrx259XEF7cjDdHMpHl8IX4FlPgX
+         K7SvyZ/3ce+WSPGHXm7b+jiDJdYxcebA4cLdK73gvPgKd98qwy5yAXLSc4KIeU8SYJ4Y
+         5DiO/IZ3GCIQQ5OrfuNivujp+SJ8JW+vtp/YHWCBtIei+n2ZF+7oVo759YB0Gp1bDX3A
+         i1QAKuNXtHfgpn1VclVkXZBka2zAcyJctViUL/nNDRNNrT4pFTi2o3K7yi8ThJRk2FUg
+         SEPuD/kKttlN95f5Kwr/YmKR2uqUulrlpOZUPhgBZlTVsSJ8yxK4cFb7YzuSBt+GSgmp
+         w36Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1763011036; x=1763615836;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=FVc+NaRrYJ4ZZqE5HIwBsY3M0/OOCYbazwmP6gVegvE=;
+        b=Tfe46QTZAfyB/t4+6PtWMz7hR/jynPLXYEzbbvQrVkWKJjzPGwq5ZupO7lNcHJvOuJ
+         xq+syffxlaqKutHtnjFlKqZ5ieuCvy4Q8why0hn2TTXjFAInpQq//pdhBxieZIOavY+H
+         7H+l88YnVWYY/+/3Bcx+UJSMvJKh1nUzp8HyBHZQ6NAU+vZApT0LlAvyMUS4vO/6aohe
+         PyIoRXRKYtIuIPLjVeCGc6Tfkca1qgk374COSDftM+DMnFeosMQJgXDU+SgDM4UKZgYW
+         087IZHE/tgeEZ3WcuK9RhRCpYDWLXyBAU3UHgME7iOm6faaTs3qr+wcoTTWCa7la6fng
+         qcSw==
+X-Forwarded-Encrypted: i=1; AJvYcCWSJ6We5YoLpZtL673Fpp5e1nM/vhj1KN1HaqXxIuPeSVZ5JHNluEvC3WfZd8VyTEImys3Xmd7dOklQCRaY@vger.kernel.org
+X-Gm-Message-State: AOJu0YziP2gw7nL//VrWJCDflQZnDAxC84XBd+2WodahTTpOZ96WjWzq
+	ioVIJ4rAfwjbXjygjXvhzLzvGDTvrZ+V65SUycNeLX3lEOHjByT2lmHDgbSFps2YLUtO12wbkDS
+	eaLuzbF4z9K31bjxY97eMcJgzWsAj79Y=
+X-Gm-Gg: ASbGnct/dH7vf+iiRYLULIPLV1x5z9LDE9FzqJThYXV/MxeUIl1m1Ibdi+SCjcBIkSA
+	D4wezzFNV8w24OAXWsTW9b09KVC2mSHkF4ihdewx833Bc19gJzzuU67IS8LHKC9lGgr2GjuIyQx
+	RGH2frNC0bl9s74aSe78P7zu/t4BszC2hqJCIXiqjv2ZWYf2aGEXDnVQMi1nXefRG+hw69mgjGT
+	Nq2JXapvUl+szTGDy0H0anZbXyerEPeQj+IMO7hrcmwZi8Ny0/wWQYaO70=
+X-Google-Smtp-Source: AGHT+IFFqzvTsN+kdWh5aXbVIuB/Xz/Sn3dBXBODVaqAA0egIjBhB/CfuwFsG1SK+AYHSWwDmsGSGFR8lLgy5baFIMI=
+X-Received: by 2002:a05:6402:520b:b0:640:9993:3cb8 with SMTP id
+ 4fb4d7f45d1cf-6431a4b41b4mr5342826a12.5.1763011035635; Wed, 12 Nov 2025
+ 21:17:15 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAL_Jsq+dZOUCosma1QJ-aqtjWs4NDLRkAdB3Aaro=8_Ep7Y0Rg@mail.gmail.com>
+References: <20251110112947.2071036-1-krishna.chundru@oss.qualcomm.com>
+ <aRHdiYYcn2uZkLor@wunner.de> <enri4affdgq4q5mibnmhldhqqoybqbdcswohoj5mst2i77ckmu@dwlaqfxyjy3w>
+In-Reply-To: <enri4affdgq4q5mibnmhldhqqoybqbdcswohoj5mst2i77ckmu@dwlaqfxyjy3w>
+From: Anand Moon <linux.amoon@gmail.com>
+Date: Thu, 13 Nov 2025 10:46:59 +0530
+X-Gm-Features: AWmQ_bnjom5y-sHR4CmC6-myx34ok_lfZLkzPXNlZa_8iQxi8N7EI8lvAYr6CnE
+Message-ID: <CANAwSgQcMDXitA2RLbFsD_v2KoOQMcHywxcxNs-ab-O2JddAuQ@mail.gmail.com>
+Subject: Re: [PATCH v2] schemas: pci: Document PCIe T_POWER_ON
+To: Manivannan Sadhasivam <mani@kernel.org>
+Cc: Lukas Wunner <lukas@wunner.de>, 
+	Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>, andersson@kernel.org, robh@kernel.org, 
+	manivannan.sadhasivam@linaro.org, krzk@kernel.org, helgaas@kernel.org, 
+	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+	lpieralisi@kernel.org, kw@linux.com, conor+dt@kernel.org, 
+	linux-pci@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	devicetree-spec@vger.kernel.org, quic_vbadigan@quicinc.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Wed, Nov 12, 2025 at 03:13:54PM -0600, Rob Herring wrote:
-> On Wed, Nov 12, 2025 at 8:45 AM Manivannan Sadhasivam via B4 Relay
-> <devnull+manivannan.sadhasivam.oss.qualcomm.com@kernel.org> wrote:
-> >
-> > From: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
-> >
-> > If these helpers receive the 'const struct device' pointer, then the const
-> > qualifier will get dropped, leading to below warning:
-> >
-> > warning: passing argument 1 of ‘to_serdev_device_driver’ discards 'const'
-> > qualifier from pointer target type [-Wdiscarded-qualifiers]
-> >
-> > This is not an issue as of now, but with the future commits adding serdev
-> > device based driver matching, this warning will get triggered. Hence,
-> > convert these helpers to macros so that the qualifier get preserved.
-> >
-> > Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
-> > ---
-> >  include/linux/serdev.h | 10 ++--------
-> >  1 file changed, 2 insertions(+), 8 deletions(-)
-> >
-> > diff --git a/include/linux/serdev.h b/include/linux/serdev.h
-> > index 34562eb99931d808e885ce5022b8aa4577566885..ab185cac556380dfa3cdf94b7af6ee168b677587 100644
-> > --- a/include/linux/serdev.h
-> > +++ b/include/linux/serdev.h
-> > @@ -49,10 +49,7 @@ struct serdev_device {
-> >         struct mutex write_lock;
-> >  };
-> >
-> > -static inline struct serdev_device *to_serdev_device(struct device *d)
-> > -{
-> > -       return container_of(d, struct serdev_device, dev);
-> 
-> See container_of_const()
-> 
+Hi Manivannan
 
-Ah, didn't know about it. Will use it in v2.
+On Thu, 13 Nov 2025 at 10:01, Manivannan Sadhasivam <mani@kernel.org> wrote=
+:
+>
+> On Mon, Nov 10, 2025 at 01:41:45PM +0100, Lukas Wunner wrote:
+> > On Mon, Nov 10, 2025 at 04:59:47PM +0530, Krishna Chaitanya Chundru wro=
+te:
+> > > From PCIe r6, sec 5.5.4 & Table 5-11 in sec 5.5.5 T_POWER_ON is the
+> >
+> > Please use the latest spec version as reference, i.e. PCIe r7.0.
+> >
+> > > minimum amount of time(in us) that each component must wait in L1.2.E=
+xit
+> > > after sampling CLKREQ# asserted before actively driving the interface=
+ to
+> > > ensure no device is ever actively driving into an unpowered component=
+ and
+> > > these values are based on the components and AC coupling capacitors u=
+sed
+> > > in the connection linking the two components.
+> > >
+> > > This property should be used to indicate the T_POWER_ON for each Root=
+ Port.
+> >
+> > What's the difference between this property and the Port T_POWER_ON_Sca=
+le
+> > and T_POWER_ON_Value in the L1 PM Substates Capabilities Register?
+> >
+> > Why do you need this in the device tree even though it's available
+> > in the register?
+> >
+>
+> Someone needs to program these registers. In the x86 world, BIOS will do =
+it
+> happily, but in devicetree world, OS has to do it. And since this is a pl=
+atform
+> specific value, this is getting passed from devicetree.
+>
+According to the RK3588 TRM Part 2, the DSP_PCIE_L1SUB_CAPABILITY_REG (0x4)
+It is a commonly configurable parameter, It can be tuned on for the
+Rockchip platform.
+> - Mani
+>
+> --
+> =E0=AE=AE=E0=AE=A3=E0=AE=BF=E0=AE=B5=E0=AE=A3=E0=AF=8D=E0=AE=A3=E0=AE=A9=
+=E0=AF=8D =E0=AE=9A=E0=AE=A4=E0=AE=BE=E0=AE=9A=E0=AE=BF=E0=AE=B5=E0=AE=AE=
+=E0=AF=8D
+>
+Thanks
+-Anand
 
-- Mani
+I could not apply this patch
 
--- 
-மணிவண்ணன் சதாசிவம்
+$ git am ./v2_20251110_krishna_chundru_schemas_pci_document_pcie_t_power_on=
+.mbx
+Applying: schemas: pci: Document PCIe T_POWER_ON
+error: dtschema/schemas/pci/pci-bus-common.yaml: does not exist in index
+Patch failed at 0001 schemas: pci: Document PCIe T_POWER_ON
+hint: Use 'git am --show-current-patch=3Ddiff' to see the failed patch
+hint: When you have resolved this problem, run "git am --continue".
+hint: If you prefer to skip this patch, run "git am --skip" instead.
+hint: To restore the original branch and stop patching, run "git am --abort=
+".
+hint: Disable this message with "git config set advice.mergeConflict false"
 
