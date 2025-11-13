@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-81616-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-81617-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id C6F2FC57D94
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Nov 2025 15:08:53 +0100 (CET)
+Received: from ams.mirrors.kernel.org (ams.mirrors.kernel.org [213.196.21.55])
+	by mail.lfdr.de (Postfix) with ESMTPS id B2FE1C57C0E
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Nov 2025 14:44:50 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 7DE1B422546
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Nov 2025 13:37:39 +0000 (UTC)
+	by ams.mirrors.kernel.org (Postfix) with ESMTPS id 581EC3453FE
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Nov 2025 13:40:13 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 409861E1A05;
-	Thu, 13 Nov 2025 13:37:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 312481E8337;
+	Thu, 13 Nov 2025 13:39:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="uLhMmTkI"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="uZ9Knb+k"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FBEA15ADB4;
-	Thu, 13 Nov 2025 13:37:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 012D813AA2D;
+	Thu, 13 Nov 2025 13:39:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763041029; cv=none; b=ZZPGjVXK0nCbXuDCB8ipA6Y6PyDEa5SSDk1mTwk03IsJrKF6YaMunVkPoxM3uAbH1ZxI0CAupB/cy/G2sHRdia7d19NdLB18XOi5r+INX16I1ojzjKI0+2dKIs0ZukK2FyzLXQ25Z8uV1Ee/EFrtErZUMnp9S1NEDNHbd15JTbY=
+	t=1763041148; cv=none; b=Um6Bgm6uHWce2vnISU6wlxHpGolEm/LKUKaDnShEV6sAHvVS3+d+3J+9LXtQduwpU+BgTFMEKf6ZuFjUqPdyfDHiIrFpreOfhDvanVhK9L5rmT4yJfnwY675IcwiOLWxd8tyGds1yw/TN8r08RyZhV1HHtoQvkAWs9H0/X6JIWc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763041029; c=relaxed/simple;
-	bh=jQSGa5PMPLrovz+yUg5I8AgsA+0MMkxoIk5I+DLsDTE=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=juoAsD9+yf/sdpCsFqHOUtryRcT2/cTKH7RXCP+c8SxZtvhTMxNFStayGrIdfgZOV126lt3nCO1ZZNynuUU8FyiD4buHjciJdJvpPrd1ZSDUEJJc46pgyJCe8l8/iZnC/3yYivWM590jv7qiS1BRuswaNnG8skeQgeGnVZ9z7BU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=uLhMmTkI; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B788C19424;
-	Thu, 13 Nov 2025 13:37:04 +0000 (UTC)
+	s=arc-20240116; t=1763041148; c=relaxed/simple;
+	bh=UC7LDskuUj1F3PHT5HO6nuQpwJh4WXXsAWBOprPtOoM=;
+	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
+	 In-Reply-To:Content-Type; b=g9wyRtBsAU4y0vcGXYcdXYY6ck4YjL4X1oUMXKg6IPR/J7o//pPzyOYI1zGl22woUtfEZM3q+Kmza7cVK5z1RSb0WEOmcd1g0/HZk45jf03/TPJAJc75D5XkWExy7MqE+8m177AV1sSziYz+k9NvMso4OnTSrqf4fkczlKhpfQg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=uZ9Knb+k; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 159F0C19424;
+	Thu, 13 Nov 2025 13:39:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1763041027;
-	bh=jQSGa5PMPLrovz+yUg5I8AgsA+0MMkxoIk5I+DLsDTE=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=uLhMmTkINgWMmuJrAJISMwSmVwO73xNjNwQInSv4lDaZoxkHQ2bEclazzeWBYok5U
-	 A2pdkPS3TUR6NxcnL3PyZw6/FnyBwoyr93HWpp7bDX7+1LyFFgXju2U1dbWoy+Haax
-	 dYa7v3sZBXbkmjnsSf4DeqEinRIc5+gGKqlK5hA91fvGnrnPrqyTGJRAAfqkxk2A9R
-	 axDVNMpgJoNtyH8C1m9TFx84AN+DqtVCsNSKZPgxoEJmSvOFLsRAGTlHahhxJK/Hf2
-	 uXq4A7P1/RQcds159E8v7h2hGxVIfzkpcpprxJTAqtukxyOgg8QmXUzSL58xQ3IReM
-	 G+BBEpuN0n2xA==
-Message-ID: <8f22f268-988b-4504-a4c0-7cc9021dc8c9@kernel.org>
-Date: Thu, 13 Nov 2025 14:37:02 +0100
+	s=k20201202; t=1763041144;
+	bh=UC7LDskuUj1F3PHT5HO6nuQpwJh4WXXsAWBOprPtOoM=;
+	h=Date:Subject:From:To:Cc:References:In-Reply-To:From;
+	b=uZ9Knb+kH6l7sXTUsiyJ672axAXskZgg7tznkIgKRiuaCvTrmcJ9iSTm7Jir3H6si
+	 Ak10bwZOSWRWUFAEyJZXNfrbC9Bg7WMKfGGEjAoD+ImgisDo9vgBAUvR1ojhgPECtH
+	 3UJ3Wft/UAksipXKbOpkd8zIo4mpM/iZiqfrnDeWegzZzOJLOmA3ncHd2vL8FCgf19
+	 iDKilIgAdAgHsjyjnG7BCT2p9lX/N40GlkW7OxASjE59EnBxae4FafIdO8+zyG+dLL
+	 zI8PiBc4PmgHHxX6kqYBqBHyYnAc4Y9t7dg2EL7lwFYZwnJlpYfJkRKMvi5bef6Cel
+	 1if6ixFpcyYlQ==
+Message-ID: <26841765-171b-475f-8019-2c349958af7d@kernel.org>
+Date: Thu, 13 Nov 2025 14:38:59 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -51,6 +51,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH] arm64: dts: qcom: qcs8300-ride: Enable Bluetooth support
+From: Krzysztof Kozlowski <krzk@kernel.org>
 To: Wei Deng <wei.deng@oss.qualcomm.com>,
  Bjorn Andersson <andersson@kernel.org>,
  Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
@@ -60,7 +61,7 @@ Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
  cheng.jiang@oss.qualcomm.com, quic_jiaymao@quicinc.com,
  quic_chezhou@quicinc.com, quic_shuaz@quicinc.com
 References: <20251113130942.2661069-1-wei.deng@oss.qualcomm.com>
-From: Krzysztof Kozlowski <krzk@kernel.org>
+ <8f22f268-988b-4504-a4c0-7cc9021dc8c9@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
  xsFNBFVDQq4BEAC6KeLOfFsAvFMBsrCrJ2bCalhPv5+KQF2PS2+iwZI8BpRZoV+Bd5kWvN79
@@ -105,42 +106,43 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  jWt87ecuHlpL3uuQ0ZZNWqHgZoQLXoqC2ZV5KrtKWb/jyiFX/sxSrodALf0zf+tfHv0FZWT2
  zHjUqd0t4njD/UOsuIMOQn4Ig0SdivYPfZukb5cdasKJukG1NOpbW7yRNivaCnfZz6dTawXw
  XRIV/KDsHQiyVxKvN73bThKhONkcX2LWuD928tAR6XMM2G5ovxLe09vuOzzfTWQDsm++9UKF a/A=
-In-Reply-To: <20251113130942.2661069-1-wei.deng@oss.qualcomm.com>
+In-Reply-To: <8f22f268-988b-4504-a4c0-7cc9021dc8c9@kernel.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 13/11/2025 14:09, Wei Deng wrote:
-> Enable BT on qcs8300-ride by adding a device tree node for BT.
+On 13/11/2025 14:37, Krzysztof Kozlowski wrote:
+> On 13/11/2025 14:09, Wei Deng wrote:
+>> Enable BT on qcs8300-ride by adding a device tree node for BT.
+>>
+>> Signed-off-by: Wei Deng <wei.deng@oss.qualcomm.com>
+>> ---
+>> This patch depends on:
+>> - WLAN
+>> https://lore.kernel.org/all/20251113055148.2729943-1-wei.zhang@oss.qualcomm.com/
 > 
-> Signed-off-by: Wei Deng <wei.deng@oss.qualcomm.com>
-> ---
-> This patch depends on:
-> - WLAN
-> https://lore.kernel.org/all/20251113055148.2729943-1-wei.zhang@oss.qualcomm.com/
-
-And that patch depends on something else.
-
-You make it very difficult to review and even more difficult to merge.
-
-> ---
->  arch/arm64/boot/dts/qcom/qcs8300-ride.dts | 28 +++++++++++++++++++++++
->  1 file changed, 28 insertions(+)
+> And that patch depends on something else.
 > 
-> diff --git a/arch/arm64/boot/dts/qcom/qcs8300-ride.dts b/arch/arm64/boot/dts/qcom/qcs8300-ride.dts
-> index cd8800a59700..08b705fe4eea 100644
-> --- a/arch/arm64/boot/dts/qcom/qcs8300-ride.dts
-> +++ b/arch/arm64/boot/dts/qcom/qcs8300-ride.dts
-> @@ -18,6 +18,7 @@ / {
->  	aliases {
->  		serial0 = &uart7;
->  		mmc0 = &sdhc_1;
+> You make it very difficult to review and even more difficult to merge.
+> 
+>> ---
+>>  arch/arm64/boot/dts/qcom/qcs8300-ride.dts | 28 +++++++++++++++++++++++
+>>  1 file changed, 28 insertions(+)
+>>
+>> diff --git a/arch/arm64/boot/dts/qcom/qcs8300-ride.dts b/arch/arm64/boot/dts/qcom/qcs8300-ride.dts
+>> index cd8800a59700..08b705fe4eea 100644
+>> --- a/arch/arm64/boot/dts/qcom/qcs8300-ride.dts
+>> +++ b/arch/arm64/boot/dts/qcom/qcs8300-ride.dts
+>> @@ -18,6 +18,7 @@ / {
+>>  	aliases {
+>>  		serial0 = &uart7;
+>>  		mmc0 = &sdhc_1;
+> 
+> There is no such alias?
 
-There is no such alias?
+Ah there is, found now added by Sayali Lokhande <quic_sayalil@quicinc.com>.
 
-> +		serial1 = &uart2;
-
-So every contributor here will add some random order...
-
+Anyway, organize your work in reasonable patchsets not 3 or more
+one-patchers spread all over the mailing list.
 
 Best regards,
 Krzysztof
