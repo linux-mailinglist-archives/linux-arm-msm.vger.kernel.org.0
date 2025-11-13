@@ -1,232 +1,144 @@
-Return-Path: <linux-arm-msm+bounces-81666-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-81667-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ams.mirrors.kernel.org (ams.mirrors.kernel.org [213.196.21.55])
-	by mail.lfdr.de (Postfix) with ESMTPS id 08790C587E5
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Nov 2025 16:50:52 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id EEC10C58928
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Nov 2025 17:07:26 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ams.mirrors.kernel.org (Postfix) with ESMTPS id CA5CF3610F5
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Nov 2025 15:42:55 +0000 (UTC)
+	by ams.mirrors.kernel.org (Postfix) with ESMTPS id 49A5036601C
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Nov 2025 15:57:26 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E1E6035A12A;
-	Thu, 13 Nov 2025 15:32:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 21A8C3557EB;
+	Thu, 13 Nov 2025 15:53:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="AKOg9J7D"
+	dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b="UnhyHl5P"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pl1-f182.google.com (mail-pl1-f182.google.com [209.85.214.182])
+Received: from mail-lf1-f53.google.com (mail-lf1-f53.google.com [209.85.167.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0398535A12E
-	for <linux-arm-msm@vger.kernel.org>; Thu, 13 Nov 2025 15:32:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BB063559E7
+	for <linux-arm-msm@vger.kernel.org>; Thu, 13 Nov 2025 15:53:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763047954; cv=none; b=tYPH5SwJVF8F99CFOh8hC/wsLVddPfJITPoArtgtQ4hyR2G9LDRTBU/GSbw89TLbYK/uIZneU4KtEdJWdBLF82DK9osLUT46J9AT6j5PVj2F97V3kyiCjvvvP7P8cBAUTdoGN42Ze4ugnKDLGKRsGZJfexsE4tmFm18dF8EDv6s=
+	t=1763049192; cv=none; b=P/onFjrtHAaXEcmeKYxoQC5eXO8IRBW5I69clFw7qGHW8OSd++GHw37xGIkESnNaEvPHxrI/WgICwSPZ6XTQ3PEwODoaKc3nQqVHIIV10YSaBwEASUqWxZDNGPUz66l3fJK1qjygrJa1WNj1a8WP/OX4gpNlwR79lQflsnFup2Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763047954; c=relaxed/simple;
-	bh=Z1vu2MOiIFQBcyrWVUVPL9kCsj3sq6loXCLsmGoUKac=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=jcrMDXJDJl7IQa2vll6yK6XV7BTvd2sGNtOniRb94jGP95s81zanYTpg1b6Sbq61qL4KF8jndd/0PDpTfTNpRZF3teb5tGIcn6uN1b2HkOvT8WmxMYdMaEWHbt4wZiBVAxB6pzdIuoEcQhPKagLzoJh37gJ7rQ+MX4hvgkvXhdw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=AKOg9J7D; arc=none smtp.client-ip=209.85.214.182
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-pl1-f182.google.com with SMTP id d9443c01a7336-2953e415b27so8734755ad.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 13 Nov 2025 07:32:32 -0800 (PST)
+	s=arc-20240116; t=1763049192; c=relaxed/simple;
+	bh=OX60sKiYWBPN5NRPN15Ciaf9MOmCSXUCmyYmlQRE8wQ=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=mOc23oez/9+oGW8oV53VZJj3dFjnR+rDzsG48HFsV52Gk1EKh+1k0Yl7zGtV4G0BdhiYlNw1IsIbbEWlCbFIpvaF77u8Fv8kwddtn7jxJEynIj/gjMvFsXPTw+FUNTtwsBlWb/jsVtek9UJhbUJYMKXSBS2uqbOhBlpesNBYvR4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl; spf=none smtp.mailfrom=bgdev.pl; dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b=UnhyHl5P; arc=none smtp.client-ip=209.85.167.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=bgdev.pl
+Received: by mail-lf1-f53.google.com with SMTP id 2adb3069b0e04-59581e32163so582433e87.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 13 Nov 2025 07:53:09 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1763047952; x=1763652752; darn=vger.kernel.org;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=Dc807XTs3vahOFZ04ibLRMSAJaCm4V/IMq6B1/2zPgY=;
-        b=AKOg9J7D1B07L3Zh86GSs72adKKQAo9kFP0iXvWJ909llen+LapyTKuuk246YLU+SW
-         9ZrrsIEiPHi9soWwzFXzwQXsLZVyLxxNnuKUuKg2ZO9ft+J+jiN5BEoxuZxXGWTAa0zy
-         YOeraq2pUM8BG7X3A+qbpTcPaepIP2B0kN3YbDuY8f1VKOIZqSiDjmyCvH7z6r2kaHnH
-         osp6dwA5tbmapRvjSmA32Q4C5yl7WUd6dHTSWoXdsSitS76CGkYxUdhxdKDWp+iSbPYJ
-         2kQgNBYmsARlIYl/TVv7i1W79/CjvyLvkkFwBzEaRRSHvQwddKPrKwnlP0P+a2QC4PYV
-         +o5w==
+        d=bgdev-pl.20230601.gappssmtp.com; s=20230601; t=1763049188; x=1763653988; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=OX60sKiYWBPN5NRPN15Ciaf9MOmCSXUCmyYmlQRE8wQ=;
+        b=UnhyHl5Pnheicwm/Lo3266MWOD40MLGfAm6zN124i5VRXHIGIdAfmPbI+hKGkSA96p
+         23cUzQWcaBUZmknmwMOZAgjabWEFqOzRioN6ooYqxGs6OFBymc6rtli14+wArQeA9aPE
+         DKQOjlpLSjbAreNJZ2gt3t3Xaz17Zue9OeSdXvw1TzoKgmOh1GtwrjqXcXHCtbq1KAJB
+         hzvy+QhJ3JBX+wiPFUPpIoKtPQtPbTSBCkfmLFHlpX8DuJWcgF2RD/4htVqFvzE0QJFm
+         v4QKy6NIleF9eTSPZR4lun5A9FQYImGaCpgtPcVk9/twQEJGfSvLDMCwVgyCeIbxUju1
+         XLTg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1763047952; x=1763652752;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Dc807XTs3vahOFZ04ibLRMSAJaCm4V/IMq6B1/2zPgY=;
-        b=QKiqNZuOjcMljl/AIr2ZpwPnClWkzF1C7BLaJhpkrys8tKUOxLnunI09mqneQsF+rM
-         kLEdb2tGTCk93lCwYYtfAMopT7EGuiDXwVpPq5kV3cq3A1t8JoW0OdGQKMRKfbN2QKF0
-         iqM1yuIU+YkF/xTqW9Ec/UCs66xVfLoGoXg82KhY3gA4RVwKfcLbwIk7eAX8Xl78+B/F
-         WNV38ptnLhGFHiGj2qzIfT6hQI2rx4hjXw9N9prBiKh+PY3NjoYqr1vfOKP2FvGKJX7W
-         YaJBvODZzML1KVrSmPdGRVOVfRCOn6SRvUv1lI9xTxJcUeWhWRY1fuPhlmxuAa2B521J
-         W3kA==
-X-Forwarded-Encrypted: i=1; AJvYcCXtCHH/E5M8U4nIK7nbZTPZJiV7dzQRP5D30CoBAy2INS19NcIdQL/Qbnm4Zab0YpN8TLARaZSbDc9CCplR@vger.kernel.org
-X-Gm-Message-State: AOJu0YxD6CzUmM2HAbqdpgdMoTxJj406afS/+xnSApcaSNpKFbV3nrro
-	90YVzlfXty1dRmh9gfBjS2RxTIATVVoT3XPHL0/uRz879vXPQ2M/pn4GHxn3t7SeToc=
-X-Gm-Gg: ASbGncvw82MDBc4zZdUQpQa6uebmLJcPg9mefYJIH/ikVa/7jAfHEcLukuznfvkCArM
-	CJd0+Bkq2e36/YBeh+RgciiUNohPDQ5wjZ6XpnKNY2eybpbzedkC6IdJSlyUsK3aTtiYMBbbR2n
-	hwzV7geWgITWUBCmcMkRn5JGHpGk3MBMd6kI1wEvyS+ajItnzvbtGVEVYab9i3yKiiyPsQCIMkz
-	tBXO4rkuoGjaETievqF8UCX8YDzXw9foNg59daPDfZjwjKNHDpHMLTvnPVDjimOsyAxnZ8aUgmV
-	DV1S7b+i3pbugSK43QLvKgz6vZXW637tRPLp2T0sB1VHr+IHPGvs745cNY1el462BfdG54qlGqx
-	m92TphbXNzJKCyaSeCu2Arcg9c8SEx/lRJ7oWnxXws4PCsTVrC1DgxdXYoIOzAf+9J4sik6c8kG
-	XV5UfwTzJs86GyMjqq/RdTe+s=
-X-Google-Smtp-Source: AGHT+IExGtwG81uwzj9JgnEK26nwTkuowQ0TGIoI/B/ng4jHpuOWuk3RVAjeNdIAjjrFddHoISsZ3w==
-X-Received: by 2002:a17:902:d54f:b0:295:34ba:7afa with SMTP id d9443c01a7336-2984eddf6a5mr85532495ad.43.1763047952195;
-        Thu, 13 Nov 2025 07:32:32 -0800 (PST)
-Received: from p14s ([2604:3d09:148c:c800:aee4:3fd6:a52:8e9a])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2985c2bed4fsm29590765ad.75.2025.11.13.07.32.30
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 13 Nov 2025 07:32:31 -0800 (PST)
-Date: Thu, 13 Nov 2025 08:32:28 -0700
-From: Mathieu Poirier <mathieu.poirier@linaro.org>
-To: Rob Herring <robh@kernel.org>
-Cc: Bjorn Andersson <andersson@kernel.org>, Shawn Guo <shawnguo@kernel.org>,
-	Sascha Hauer <s.hauer@pengutronix.de>,
-	Pengutronix Kernel Team <kernel@pengutronix.de>,
-	Fabio Estevam <festevam@gmail.com>,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	Magnus Damm <magnus.damm@gmail.com>,
-	Patrice Chotard <patrice.chotard@foss.st.com>,
-	Maxime Coquelin <mcoquelin.stm32@gmail.com>,
-	Alexandre Torgue <alexandre.torgue@foss.st.com>,
-	Arnaud Pouliquen <arnaud.pouliquen@foss.st.com>,
-	Peng Fan <peng.fan@nxp.com>, linux-remoteproc@vger.kernel.org,
-	imx@lists.linux.dev, linux-arm-kernel@lists.infradead.org,
-	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-	linux-renesas-soc@vger.kernel.org,
-	linux-stm32@st-md-mailman.stormreply.com
-Subject: Re: [PATCH v6] remoteproc: Use of_reserved_mem_region_* functions
- for "memory-region"
-Message-ID: <aRX6DJoaP4MXG3fN@p14s>
-References: <20251031175926.1465360-1-robh@kernel.org>
- <aRN0fdOAV0B728qo@p14s>
- <20251111195923.GA3629535-robh@kernel.org>
- <CANLsYkwcbrTaKASdr5fj0m9ARS4xUgzVH8iWQKwTCvEsoZDDsQ@mail.gmail.com>
- <CAL_JsqL7HcDkPgJjcqJSagdN=gH2rv6noVS57QMGNRp0YCxUBw@mail.gmail.com>
+        d=1e100.net; s=20230601; t=1763049188; x=1763653988;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=OX60sKiYWBPN5NRPN15Ciaf9MOmCSXUCmyYmlQRE8wQ=;
+        b=Dx18pubLRlYL/moNzfeGS1EeLqoCwTqkbJNBEQLyumYrjwNMdZkNTG+VAm/nESCi//
+         mLMa/3xnnBUjwrNG3/QfEVydfat7BqeQG1Fio8sF/pj41HlF8HVotFAB+fBrJZfyjN9B
+         91QRZLSqBvTFxJ7OJJlcBX/EazUdmENiSc5qnFAWpOv8axqHT7LqjSvGTqV1i6odKauC
+         ztCprlXDNRf9BehtKeRgFLxP7Qj3CMrbrA2X9hSpm34JBM6Nlpf5CpM7idN+xNNMBGUS
+         t1Zzl73D+ekbLlPjs2eX0V0x7pLRcEMmxchiRPcyN6PZ3cnyEBrNMDIIdCgDYfSG/99D
+         7H4g==
+X-Forwarded-Encrypted: i=1; AJvYcCVE6kthk6R2/4bZbBK7+K6p1lw/PjNWLRa88icr2ytoqFEX5avv79zOMNm0GNbubNn0N7htICy9qIT8UKBR@vger.kernel.org
+X-Gm-Message-State: AOJu0YzzGDh9b6VaCnmuaeg12KfAKIm+k+4iIlk+fBPiTd03vwfjKd15
+	zrOHpKbIY3y1tfT4fSfMUL3qYLNNFaTOY3C8i9uwnndD4IoygeNrreTyavifcAgXhMdGIb0Vmbo
+	e6O9o1m03GAm8HlYClSSv+9HSXt+g8XfQaZleGp2AmA==
+X-Gm-Gg: ASbGnculvdqe3Ejjl0kKuelITVkDFMJ/C7jd8HCWMYvkPSeCwkj0YL688nmZ65ItnlE
+	F00dRlSP/Ie6imLg7Y9WgkgdHLAHfXAAbASwCcho010mMUeYlqeS/G1Sn/xX/K7GkYoz6KhJMgR
+	Fa4/uipEk/7ORfxIk3FEEMNWrAA2/52YCEvDMZAGr7XUNU6WvL6l7AYzxOxcXssbPaG+9Sn+Lxr
+	sRUificTbQQim7cL/u+8jtDxge/cz5a6YtrToh/3DmX8FxtVBDiw3fvXhPDacTyGTJ456refWSo
+	7Z2qCy8gqJEEKibk
+X-Google-Smtp-Source: AGHT+IGEIHUfqwrlVSTNHLgDVI05vKsEFSndBnbm0aaakSseNyRK8XPAjnLHbbfGqrZ6iuP/tkAMQ67bsZMfd+4juQg=
+X-Received: by 2002:a05:6512:108e:b0:594:34c4:a325 with SMTP id
+ 2adb3069b0e04-59576e31216mr2694783e87.46.1763049188065; Thu, 13 Nov 2025
+ 07:53:08 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAL_JsqL7HcDkPgJjcqJSagdN=gH2rv6noVS57QMGNRp0YCxUBw@mail.gmail.com>
+References: <20251106-qcom-qce-cmd-descr-v8-0-ecddca23ca26@linaro.org>
+ <20251106-qcom-qce-cmd-descr-v8-1-ecddca23ca26@linaro.org>
+ <xozu7tlourkzuclx7brdgzzwomulrbznmejx5d4lr6dksasctd@zngg5ptmedej>
+ <CAMRc=MdC7haZ9fkCNGKoGb-8R5iB0P2UA5+Fap8Svjq-WdE-=w@mail.gmail.com> <m4puer7jzmicbjrz54yx3fsrlakz7nwkuhbyfedqwco2udcivp@ctlklvrk3ixg>
+In-Reply-To: <m4puer7jzmicbjrz54yx3fsrlakz7nwkuhbyfedqwco2udcivp@ctlklvrk3ixg>
+From: Bartosz Golaszewski <brgl@bgdev.pl>
+Date: Thu, 13 Nov 2025 16:52:56 +0100
+X-Gm-Features: AWmQ_blYu02FWethcWw51M6XQQsBTFUfg16XB4nlVnnodZzkOPobVgGS07ncuc4
+Message-ID: <CAMRc=MfkVoRGFLSp6gy0aWe_3iA2G5v0U7yvgwLp5JFjmqkzsw@mail.gmail.com>
+Subject: Re: [PATCH v8 01/11] dmaengine: Add DMA_PREP_LOCK/DMA_PREP_UNLOCK flags
+To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Cc: Vinod Koul <vkoul@kernel.org>, Jonathan Corbet <corbet@lwn.net>, 
+	Thara Gopinath <thara.gopinath@gmail.com>, Herbert Xu <herbert@gondor.apana.org.au>, 
+	"David S. Miller" <davem@davemloft.net>, Udit Tiwari <quic_utiwari@quicinc.com>, 
+	Daniel Perez-Zoghbi <dperezzo@quicinc.com>, Md Sadre Alam <mdalam@qti.qualcomm.com>, 
+	dmaengine@vger.kernel.org, linux-doc@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+	linux-crypto@vger.kernel.org, 
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Wed, Nov 12, 2025 at 10:59:42AM -0600, Rob Herring wrote:
-> On Wed, Nov 12, 2025 at 9:43 AM Mathieu Poirier
-> <mathieu.poirier@linaro.org> wrote:
-> >
-> > On Tue, 11 Nov 2025 at 12:59, Rob Herring <robh@kernel.org> wrote:
+On Thu, Nov 13, 2025 at 1:28=E2=80=AFPM Dmitry Baryshkov
+<dmitry.baryshkov@oss.qualcomm.com> wrote:
+>
+> On Thu, Nov 13, 2025 at 11:02:11AM +0100, Bartosz Golaszewski wrote:
+> > On Tue, Nov 11, 2025 at 1:30=E2=80=AFPM Dmitry Baryshkov
+> > <dmitry.baryshkov@oss.qualcomm.com> wrote:
 > > >
-> > > On Tue, Nov 11, 2025 at 10:38:05AM -0700, Mathieu Poirier wrote:
-> > > > Hi Rob,
+> > > On Thu, Nov 06, 2025 at 12:33:57PM +0100, Bartosz Golaszewski wrote:
+> > > > From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 > > > >
-> > > > Please see may comment for st_remoteproc.c
-> > > >
-> > > > On Fri, Oct 31, 2025 at 12:59:22PM -0500, Rob Herring (Arm) wrote:
-> > > > > Use the newly added of_reserved_mem_region_to_resource() and
-> > > > > of_reserved_mem_region_count() functions to handle "memory-region"
-> > > > > properties.
-> 
-> [...]
-> 
-> > > > > diff --git a/drivers/remoteproc/st_remoteproc.c b/drivers/remoteproc/st_remoteproc.c
-> > > > > index e6566a9839dc..043348366926 100644
-> > > > > --- a/drivers/remoteproc/st_remoteproc.c
-> > > > > +++ b/drivers/remoteproc/st_remoteproc.c
-> > > > > @@ -120,40 +120,37 @@ static int st_rproc_parse_fw(struct rproc *rproc, const struct firmware *fw)
-> > > > >     struct device *dev = rproc->dev.parent;
-> > > > >     struct device_node *np = dev->of_node;
-> > > > >     struct rproc_mem_entry *mem;
-> > > > > -   struct reserved_mem *rmem;
-> > > > > -   struct of_phandle_iterator it;
-> > > > > -   int index = 0;
-> > > > > -
-> > > > > -   of_phandle_iterator_init(&it, np, "memory-region", NULL, 0);
-> > > > > -   while (of_phandle_iterator_next(&it) == 0) {
-> > > > > -           rmem = of_reserved_mem_lookup(it.node);
-> > > > > -           if (!rmem) {
-> > > > > -                   of_node_put(it.node);
-> > > > > -                   dev_err(dev, "unable to acquire memory-region\n");
-> > > > > -                   return -EINVAL;
-> > > > > -           }
-> > > > > +   int index = 0, mr = 0;
-> > > > > +
-> > > > > +   while (1) {
-> > > > > +           struct resource res;
-> > > > > +           int ret;
-> > > > > +
-> > > > > +           ret = of_reserved_mem_region_to_resource(np, mr++, &res);
-> > > > > +           if (ret)
-> > > > > +                   return 0;
-> > > >
-> > > > The original code calls rproc_elf_load_rsc_table() [1] after iterating through
-> > > > the memory region, something that won't happen with the above.
+> > > > Some DMA engines may be accessed from linux and the TrustZone
+> > > > simultaneously. In order to allow synchronization, add lock and unl=
+ock
+> > > > flags for the command descriptor that allow the caller to request t=
+he
+> > > > controller to be locked for the duration of the transaction in an
+> > > > implementation-dependent way.
 > > >
-> > > Indeed. it needs the following incremental change. It is slightly
-> > > different in that rproc_elf_load_rsc_table() is not called if
-> > > 'memory-region' is missing, but the binding says that's required.
+> > > What is the expected behaviour if Linux "locks" the engine and then T=
+Z
+> > > tries to use it before Linux has a chance to unlock it.
 > > >
-> > > 8<--------------------------------------------------
-> > >
-> > > diff --git a/drivers/remoteproc/st_remoteproc.c b/drivers/remoteproc/st_remoteproc.c
-> > > index 043348366926..cb09c244fdb5 100644
-> > > --- a/drivers/remoteproc/st_remoteproc.c
-> > > +++ b/drivers/remoteproc/st_remoteproc.c
-> > > @@ -120,15 +120,19 @@ static int st_rproc_parse_fw(struct rproc *rproc, const struct firmware *fw)
-> > >         struct device *dev = rproc->dev.parent;
-> > >         struct device_node *np = dev->of_node;
-> > >         struct rproc_mem_entry *mem;
-> > > -       int index = 0, mr = 0;
-> > > +       int index = 0;
-> > >
-> > >         while (1) {
-> > >                 struct resource res;
-> > >                 int ret;
-> > >
-> > > -               ret = of_reserved_mem_region_to_resource(np, mr++, &res);
-> > > -               if (ret)
-> > > -                       return 0;
-> > > +               ret = of_reserved_mem_region_to_resource(np, index, &res);
-> > > +               if (ret) {
-> > > +                       if (index)
-> > > +                               break;
-> > > +                       else
-> > > +                               return ret;
-> > > +               }
 > >
-> > This looks brittle and I'm not sure it would work.
+> > Are you asking about the actual behavior on Qualcomm platforms or are
+> > you hinting that we should describe the behavior of the TZ in the docs
+> > here? Ideally TZ would use the same synchronization mechanism and not
+> > get in linux' way. On Qualcomm the BAM, once "locked" will not fetch
+> > the next descriptors on pipes other than the current one until
+> > unlocked so effectively DMA will just not complete on other pipes.
+> > These flags here however are more general so I'm not sure if we should
+> > describe any implementation-specific details.
 > >
-> > Going back to the original implementation, the only time we want to
-> > "break" is when @index is equal to the amount of memory regions _and_
-> > ret is -EINVAL.  Any other condition should return.
-> 
-> @index equal to number of entries returns -ENODEV, so that condition
-> is impossible. We can simply it to this:
-> 
-> if (ret == -ENODEV && index)
->     break;
-> else
->     return ret;
+> > We can say: "The DMA controller will be locked for the duration of the
+> > current transaction and other users of the controller/TrustZone will
+> > not see their transactions complete before it is unlocked"?
+>
+> So, basically, we are providing a way to stall TZ's DMA transactions?
+> Doesn't sound good enough to me.
 
-To me this needs to be:
+Can you elaborate because I'm not sure if you're opposed to the idea
+itself or the explanation is not good enough?
 
-entries = of_reserved_mem_region_count(np); 
-
-...
-...
-
-if (ret == -ENODEV && index == entries)
-        break;
-else
-        return ret;
-
-But taking a step back, it might even be easier to go from a while() to a for(),
-the same way you did in imx_rproc_addr_init().
-
-> 
-> If you want to keep the prior behavior when 'memory-region' is
-> missing, then '&& index' can be removed, but I think that was wrong
-> behavior.
-> 
-> Rob
+Bartosz
 
