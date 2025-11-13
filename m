@@ -1,146 +1,143 @@
-Return-Path: <linux-arm-msm+bounces-81673-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-81675-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 01D04C58F47
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Nov 2025 18:00:46 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id CEB59C58EC2
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Nov 2025 17:58:18 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id C97B8422E48
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Nov 2025 16:49:11 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id BE1B84A33A1
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Nov 2025 16:50:03 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3BF42364E82;
-	Thu, 13 Nov 2025 16:40:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 365AE357A5A;
+	Thu, 13 Nov 2025 16:42:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ooEGjnbM"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="qNgGXQIa"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11E5F363C6F;
-	Thu, 13 Nov 2025 16:40:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 055913557E9;
+	Thu, 13 Nov 2025 16:42:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763052015; cv=none; b=rL3xG5vlJmccB/RyYgsuZphh9RIt6LvxOyqNbG5AxdffkHdfEIVxyFqCp/r+lamms4QVufktGIGNBLQfZca02llIFHBEcrgl937eowUWW7FxY22owlvn6dMzIkkkpnEp20IV5Wyuxm8sG9kHpsvtGzu9lOjdmT3hr4Jsm3nk3x4=
+	t=1763052123; cv=none; b=PD4jXBcN/XO8di+lg2JwqyKChERwZra81U9T19qwDK/XX1IMOdXCE0+y0Q3B+gM2cT87LWIk/JUIHiHaqRMcTSZj5TwnCkPRMgCci47LeuoQrg21XIR4Uc8IFZeWCkLLgIIbdrWxL+eS7MFrXpSifhcryz8CDnX5jsCWGKN3cf0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763052015; c=relaxed/simple;
-	bh=ee+JYwZFiWl4rPvu1lWFozwqOKR006mY1ONvIK0qE1Y=;
-	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
-	 Content-Disposition:In-Reply-To; b=LU82DUhl+3hfHbW3bUrClIzPIxq8VICk6k6o6Qh4a10l9fKA9XreWFh/EfdFnuHoQshO5yPOY0/17jJJmn+/BYweQ8MeCU09IY7vxoRPbS5ekN0bfkXQNt/27xyXm04WQJMV2XGMTTXN/6OnSR9pC1TF1BUWXpqdLJIwqKshh3U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ooEGjnbM; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B41ACC4CEF7;
-	Thu, 13 Nov 2025 16:40:14 +0000 (UTC)
+	s=arc-20240116; t=1763052123; c=relaxed/simple;
+	bh=tbI30SQdpsjBi0FiA0lyqvsLgdo6wOPvrHQ/VuIekYY=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=bbEb5YOHBOo6ymN6PVG5uu9UT1SxajoUjaYyND4B8CVfbyKUrswWSptf7s6Fv2QdmyCcU8dTvWgOANVPngv8HZNoEPE4ND3P3Vv1VPXWQtfk5pt76Tg+c7JP0bUsIBwyD712JQslAICNnYVaw+GjN7X5gXjg8B2goTn9WRUSxZs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=qNgGXQIa; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46851C113D0;
+	Thu, 13 Nov 2025 16:41:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1763052014;
-	bh=ee+JYwZFiWl4rPvu1lWFozwqOKR006mY1ONvIK0qE1Y=;
-	h=Date:From:To:Cc:Subject:In-Reply-To:From;
-	b=ooEGjnbMmSQrPkE0Ps+Q3yUSrS4YUF35htEs4f2SE24S1Uwf2aYYdJrKk5xTyAMls
-	 uiLlwGyNsKBsO2swIX+g8h8SF8XbuMxw/Dul4Qiu+zHrB/C9lKYR3v2/e/yCysRGg1
-	 T7n9h06pB8tY5zb+0ochXdGNCcEOdcjbC+23e1bj6bYQNrSddeZBnqyrDLtyJJDleT
-	 zzZyajAp7cCIRE1nKMLfxfKgNJy7YlWdBsYAujGho1cGZ9GORYmgKBQ0zy7AkK4B/l
-	 wxGABXJLJjrUQSD6S1B859/ZuyPp0NlErIwcxSnsTUViuKndFC5r0ZTk1m+AFfIpVl
-	 fNBYJ0k+MYFeA==
-Date: Thu, 13 Nov 2025 10:40:13 -0600
-From: Bjorn Helgaas <helgaas@kernel.org>
-To: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
-Cc: lpieralisi@kernel.org, kwilczynski@kernel.org, mani@kernel.org,
-	bhelgaas@google.com, will@kernel.org, linux-pci@vger.kernel.org,
-	linux-kernel@vger.kernel.org, robh@kernel.org,
-	linux-arm-msm@vger.kernel.org, zhangsenchuan@eswincomputing.com,
-	vincent.guittot@linaro.org, Frank Li <Frank.li@nxp.com>
-Subject: Re: [PATCH v2 3/3] PCI: dwc: Check for the device presence during
- suspend and resume
-Message-ID: <20251113164013.GA2285612@bhelgaas>
+	s=k20201202; t=1763052122;
+	bh=tbI30SQdpsjBi0FiA0lyqvsLgdo6wOPvrHQ/VuIekYY=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=qNgGXQIajwxVe7WQ6kGYsfOs7tSWSzNInH4olIfs/uNUQzMJDBdh1uWvYgVARgS7L
+	 MkAaVG9auvsafOddLcG45jmQc3v1nOehwRhRvHGQjzcKei4eZEe5Ym44vPahLnL916
+	 QgDNMcuEuhc+oJ17Xpuavg9cl0TZ3yruFjCPTXVuEnk1T/5wBmKbNA/CfUlyK1V6se
+	 HY2sE5/OILtgWAA75hTY+o9QlRhMRAw44S+qk+cObISqfwHdtorH238PvR2M0MBqj7
+	 0GhzF8VV7KeT7s+YnwnEGp3be9KojOk5Tz6DEdtf/7g3QUK0KghiWpbgovzeetJB8B
+	 xcm4CJq+pWrVQ==
+Date: Thu, 13 Nov 2025 22:11:47 +0530
+From: Manivannan Sadhasivam <mani@kernel.org>
+To: Lukas Wunner <lukas@wunner.de>
+Cc: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>, 
+	andersson@kernel.org, robh@kernel.org, manivannan.sadhasivam@linaro.org, 
+	krzk@kernel.org, helgaas@kernel.org, linux-arm-msm@vger.kernel.org, 
+	devicetree@vger.kernel.org, lpieralisi@kernel.org, kw@linux.com, conor+dt@kernel.org, 
+	linux-pci@vger.kernel.org, linux-kernel@vger.kernel.org, devicetree-spec@vger.kernel.org, 
+	quic_vbadigan@quicinc.com
+Subject: Re: [PATCH v2] schemas: pci: Document PCIe T_POWER_ON
+Message-ID: <epqkkezjnkwznh4minlvhh7vbnwh3isqeofqamgupj7rjnhjv2@wtrx4ecjgvob>
+References: <20251110112947.2071036-1-krishna.chundru@oss.qualcomm.com>
+ <aRHdiYYcn2uZkLor@wunner.de>
+ <44c7b4a8-33ce-4516-81bf-349b5e555806@oss.qualcomm.com>
+ <aRWYoHvaCCN95ZR9@wunner.de>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20251107044319.8356-4-manivannan.sadhasivam@oss.qualcomm.com>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <aRWYoHvaCCN95ZR9@wunner.de>
 
-[+cc Frank]
-
-On Fri, Nov 07, 2025 at 10:13:19AM +0530, Manivannan Sadhasivam wrote:
-> If there is no device available under the Root Ports, there is no point in
-> sending PME_Turn_Off and waiting for L2/L3 transition during suspend, it
-> will result in a timeout. Hence, skip those steps if no device is available
-> during suspend.
+On Thu, Nov 13, 2025 at 09:36:48AM +0100, Lukas Wunner wrote:
+> On Thu, Nov 13, 2025 at 09:33:54AM +0530, Krishna Chaitanya Chundru wrote:
+> > On 11/10/2025 6:11 PM, Lukas Wunner wrote:
+> > > On Mon, Nov 10, 2025 at 04:59:47PM +0530, Krishna Chaitanya Chundru wrote:
+> > > >  From PCIe r6, sec 5.5.4 & Table 5-11 in sec 5.5.5 T_POWER_ON is the
+> > > Please use the latest spec version as reference, i.e. PCIe r7.0.
+> > ack.
+> > > > minimum amount of time(in us) that each component must wait in L1.2.Exit
+> > > > after sampling CLKREQ# asserted before actively driving the interface to
+> > > > ensure no device is ever actively driving into an unpowered component and
+> > > > these values are based on the components and AC coupling capacitors used
+> > > > in the connection linking the two components.
+> > > > 
+> > > > This property should be used to indicate the T_POWER_ON for each Root Port.
+> > > What's the difference between this property and the Port T_POWER_ON_Scale
+> > > and T_POWER_ON_Value in the L1 PM Substates Capabilities Register?
+> > > 
+> > > Why do you need this in the device tree even though it's available
+> > > in the register?
+> > 
+> > This value is same as L1 PM substates value, some controllers needs to
+> > update this
+> > value before enumeration as hardware might now program this value
+> > correctly[1].
+> > 
+> > [1]: [PATCH] PCI: qcom: Program correct T_POWER_ON value for L1.2 exit
+> > timing
+> > 
+> > <https://lore.kernel.org/all/20251104-t_power_on_fux-v1-1-eb5916e47fd7@oss.qualcomm.com/>
 > 
-> During resume, do not wait for the link up if there was no device connected
-> before suspend. It is very unlikely that a device will get connected while
-> the host system was suspended.
+> Per PCIe r7.0 sec 7.8.3.2, all fields in the L1 PM Substates Capabilities
+> Register are of type "HwInit", which sec 7.4 defines as:
 > 
-> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
-> ---
->  drivers/pci/controller/dwc/pcie-designware-host.c | 13 +++++++++++++
->  1 file changed, 13 insertions(+)
+>    "Register bits are permitted, as an implementation option, to be
+>     hard-coded, initialized by system/device firmware, or initialized
+>     by hardware mechanisms such as pin strapping or nonvolatile storage.
+>     Initialization by system firmware is permitted only for
+>     system-integrated devices.
+>     Bits must be fixed in value and read-only after initialization."
+>                                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 > 
-> diff --git a/drivers/pci/controller/dwc/pcie-designware-host.c b/drivers/pci/controller/dwc/pcie-designware-host.c
-> index 20c9333bcb1c..5a39e7139ec9 100644
-> --- a/drivers/pci/controller/dwc/pcie-designware-host.c
-> +++ b/drivers/pci/controller/dwc/pcie-designware-host.c
-> @@ -20,6 +20,7 @@
->  #include <linux/platform_device.h>
->  
->  #include "../../pci.h"
-> +#include "../pci-host-common.h"
->  #include "pcie-designware.h"
->  
->  static struct pci_ops dw_pcie_ops;
-> @@ -1129,6 +1130,9 @@ int dw_pcie_suspend_noirq(struct dw_pcie *pci)
->  	u32 val;
->  	int ret;
->  
-> +	if (!pci_root_ports_have_device(pci->pp.bridge->bus))
-> +		goto stop_link;
-
-This looks racy.  Maybe it's still OK, but I think it would be good to
-include a comment to acknowledge that and explain why either outcome
-is acceptable, e.g., if a user removes a device during suspend, it
-results in a timeout but nothing more terrible.
-
->  	/*
->  	 * If L1SS is supported, then do not put the link into L2 as some
->  	 * devices such as NVMe expect low resume latency.
-> @@ -1162,6 +1166,7 @@ int dw_pcie_suspend_noirq(struct dw_pcie *pci)
->  	 */
->  	udelay(1);
->  
-> +stop_link:
->  	dw_pcie_stop_link(pci);
->  	if (pci->pp.ops->deinit)
->  		pci->pp.ops->deinit(&pci->pp);
-> @@ -1195,6 +1200,14 @@ int dw_pcie_resume_noirq(struct dw_pcie *pci)
->  	if (ret)
->  		return ret;
->  
-> +	/*
-> +	 * If there was no device before suspend, skip waiting for link up as
-> +	 * it is bound to fail. It is very unlikely that a device will get
-> +	 * connected *during* suspend.
-
-I'm not convinced.  Unlike the suspend side, where the race window is
-tiny, here the window is the entire time the system is suspended, and
-at least in laptop usage, there's no reason I would hesitate to plug
-something in while suspended.
-
-Regardless, the overall behavior needs to be acceptable whether or not
-a device was connected during suspend.
-
-This is probably the same thing you said, Frank, sorry if I'm just
-repeating it.
-
-> +	if (!pci_root_ports_have_device(pci->pp.bridge->bus))
-> +		return 0;
-> +
->  	ret = dw_pcie_wait_for_link(pci);
->  	if (ret)
->  		return ret;
-> -- 
-> 2.48.1
+> These bits are not supposed to be writable by the operating system,
+> so what you're doing in that patch is not spec-compliant.
 > 
+
+I interpret 'initialized by system/device firmware', same as 'initialized by
+OS', as both are mostly same for the devicetree platforms. So it is fine IMO.
+Ofc, if the initialization was carried out by the firmware, then OS has no
+business in changing it, but it is not the case.
+
+> I think it needs to be made explicit in the devicetree schema that
+> the property is only intended for non-compliant hardware which allows
+> (and requires) the operating system to initialize the register.
+> 
+
+Sorry, I disagree. The hardware is spec compliant, just that the firmware missed
+initializing the fields.
+
+> Maybe it makes more sense to have a property which specifies the raw
+> 32-bit register contents, instead of having a property for each
+> individual field.  Otherwise you'll have to amend the schema
+> whenever the PCIe spec extends the register with additional fields.
+> 
+
+DT properties do not specify a register value, but instead they specify hardware
+configuration value and that's what this property is doing. The OS/other DT
+consumers should interpret this value as per the spec and program the relevant
+registers.
+
+- Mani
+
+-- 
+மணிவண்ணன் சதாசிவம்
 
