@@ -1,167 +1,571 @@
-Return-Path: <linux-arm-msm+bounces-81900-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-81903-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ams.mirrors.kernel.org (ams.mirrors.kernel.org [213.196.21.55])
-	by mail.lfdr.de (Postfix) with ESMTPS id 838A8C5E7B1
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Nov 2025 18:14:12 +0100 (CET)
+Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [142.0.200.124])
+	by mail.lfdr.de (Postfix) with ESMTPS id 11370C5E2E8
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Nov 2025 17:23:43 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ams.mirrors.kernel.org (Postfix) with ESMTPS id C8AA234518F
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Nov 2025 16:05:20 +0000 (UTC)
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 90FDA4F256B
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Nov 2025 16:13:17 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id ECC11258CE9;
-	Fri, 14 Nov 2025 15:55:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 405D22857C6;
+	Fri, 14 Nov 2025 16:09:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="N+FmMKTs"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Mb9MHPE2"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C342922173F;
-	Fri, 14 Nov 2025 15:55:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08B80284689;
+	Fri, 14 Nov 2025 16:09:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763135758; cv=none; b=FUfWL2jJuB6hCHJx2oEr6qt1Vp5DKMgmzBCVFIUNawFg8+cTHm9N2d83FbuBK620QHVs6SUQ05y1zqi/ihuG5mfzdHBQoOH6UwWOHnJpFGM3XZac0wi6FC9U2YNBWBuJa/9Q99P0UIrOJ9ZhLJofC0M4DuXFF4CvcsM3ZYkSVWw=
+	t=1763136553; cv=none; b=Nd7XRlpTSdnWHnneQi+a6IF9Rk8qnbLKTbo4NeKrPZEFk2WUCRMO5L7YZNCfn5M/izGsrPUIA3OeHmwfSpD1hdtCfLy/aY3dgMQVKWlyvu1WBcTVK3w3g6j3J0mvy6IEILFRpbzbuBZUiMdqel7rbWdd1AjCX4LXoi2/8FZoBQI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763135758; c=relaxed/simple;
-	bh=FUDCpNgNop8HGZx7sTIXYdEJpntgdXS+elPR6PEkmS0=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=UJplxLc+dYxqUJUGRrWZg9oPmQL5vXwjog/dUypqTGFnIJdIcPbO13NGxb8Bj6IoZjlt+33wvzPe6d3p52zgqA4KkasvvMpCsJKiQ6ZCsYZ8fJrRPr7Oo6h9SYaaKMabHwEGAMX82dtljU428Uy5N+4q8oSDXSJ0883lGxGUrHw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=N+FmMKTs; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43232C4CEF1;
-	Fri, 14 Nov 2025 15:55:57 +0000 (UTC)
+	s=arc-20240116; t=1763136553; c=relaxed/simple;
+	bh=/sFPf5ThU6xGJfJOrC5xx8zKQ49HY4Dgc4451tP/brQ=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=hp3EU/yFI4B0UZDijR7ZXDRkV/BtUQOdUSYoULspyaTwTo089Rr7uXqkVfmiE95C2zodNFn5zTyFL1uwFaLbWFqJbudurzNzQVlO8zuyQx6sZdcWzzjdAVFKNYAlw+SdOE0/O/I7iF9n9HR4fiWL4+jF/GuuQliwQmX9GzoO35s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Mb9MHPE2; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 853EFC113D0;
+	Fri, 14 Nov 2025 16:09:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1763135758;
-	bh=FUDCpNgNop8HGZx7sTIXYdEJpntgdXS+elPR6PEkmS0=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=N+FmMKTsbYYRhC3CrAZYJakK68v4j0ChxewBYoHv0OLIJIoHpABT8jOpTwdvOodhN
-	 UMUNQFDSDRvBIuC0nCwxDGIuzh0ywS7SLLFeXUqAk6iWS4lF82dfxpkTxzp1fAuTrK
-	 vnVg7sfA3gDke6uRsBsq42FdsxD+PSJ4QkPqct/PAWQvvXtoEG99UpRorM7SDEDbkv
-	 bYnTtHqOn4pYvLWRhQ+uU0vcPCNv3YQ1NQn/IgCknf+feHJc+Ke/GTX1ZrrzIB8sQq
-	 8UJzPEsrhPXGhBuurXy0yM4N8vinXGGheDan6yEqhCiXiLcuCR91zgQI840G9jo+Xi
-	 r7Ze6f22Awfcg==
-Date: Fri, 14 Nov 2025 10:00:25 -0600
-From: Bjorn Andersson <andersson@kernel.org>
-To: Kumari Pallavi <kumari.pallavi@oss.qualcomm.com>
-Cc: kpallavi@qti.qualcomm.com, srini@kernel.org, amahesh@qti.qualcomm.com, 
-	arnd@arndb.de, gregkh@linuxfoundation.org, quic_bkumar@quicinc.com, 
-	ekansh.gupta@oss.qualcomm.com, linux-kernel@vger.kernel.org, quic_chennak@quicinc.com, 
-	dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org, jingyi.wang@oss.qualcomm.com, 
-	aiqun.yu@oss.qualcomm.com, ktadakam@qti.qualcomm.com
-Subject: Re: [PATCH v3 4/4] misc: fastrpc: Update dma_bits for CDSP support
- on Kaanapali SoC
-Message-ID: <3gld6djjzfwu6rj47tz6gdwdpmh3hjexce5y6crqjus7ourgxf@puxrcpvijitl>
-References: <20251114084142.3386682-1-kumari.pallavi@oss.qualcomm.com>
- <20251114084142.3386682-5-kumari.pallavi@oss.qualcomm.com>
+	s=k20201202; t=1763136552;
+	bh=/sFPf5ThU6xGJfJOrC5xx8zKQ49HY4Dgc4451tP/brQ=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=Mb9MHPE2TzYaUoGHVM7nYYTH6fwyWJ5mPUvr7xH7XXUbwomE+oSmlVjJCVmChnrLz
+	 OAcYLfYP7zt6lFban0RQESp1VnFXU5MStEYqxVqVIgRTOPCk6nVeYOLtYScAMw5pNU
+	 98Ft0bMT4vCYCp8/NcLa1MqObMeJEdOJNvzN3NeWCobqJMwttfY4mi8stF7RGWJ5Yl
+	 N1QOnt/P0m32QgZX1dBKN3kZKeWpJ1SK+Fh2+m5fJgEGYYOBS1sz1JchMTOn5aT0kt
+	 iB8oDGqoRVqZU8znddarzy9Q6MIeCXOQnVsVkom92dCrh0plIhZD1Vj9wf0tbw0CdV
+	 Z24dzW4gEoVaA==
+Message-ID: <a428f8b9-c338-4404-8dc1-da6daae37d5c@kernel.org>
+Date: Fri, 14 Nov 2025 16:09:06 +0000
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20251114084142.3386682-5-kumari.pallavi@oss.qualcomm.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 1/3] dt-bindings: media: camss: Add qcom,sm6350-camss
+To: Luca Weiss <luca.weiss@fairphone.com>,
+ Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
+ Robert Foss <rfoss@kernel.org>, Todor Tomov <todor.too@gmail.com>,
+ Mauro Carvalho Chehab <mchehab@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>
+Cc: ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org, linux-media@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20251114-sm6350-camss-v2-0-d1ff67da33b6@fairphone.com>
+ <20251114-sm6350-camss-v2-1-d1ff67da33b6@fairphone.com>
+ <de7ad562-80bc-498e-a6fb-cc26bb6343f0@linaro.org>
+ <r6EgtiSu8pqs2ouFERTw7fx8kYZ3RcSbGklwd17UPxNGGd3sbRDl2BPyplkABZVu3qyfrIzRMisa0qTSrm89BA==@protonmail.internalid>
+ <DE8FV81S45S5.CH6K1QAX940D@fairphone.com>
+From: Bryan O'Donoghue <bod@kernel.org>
+Content-Language: en-US
+In-Reply-To: <DE8FV81S45S5.CH6K1QAX940D@fairphone.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Fri, Nov 14, 2025 at 02:11:42PM +0530, Kumari Pallavi wrote:
-> DSP currently supports 32-bit IOVA (32-bit PA + 4-bit SID) for
-> both Q6 and user DMA (uDMA) access. This is being upgraded to
-> 34-bit PA + 4-bit SID due to a hardware revision in CDSP for
-> Kaanapali SoC, which expands the DMA addressable range.
-> Update DMA bits configuration in the driver to support CDSP on
-> Kaanapali SoC. Set the default `dma_bits` to 32-bit and update
-> it to 34-bit based on CDSP and OF matching on the fastrpc node.
+On 14/11/2025 13:06, Luca Weiss wrote:
+> Hi Vladimir,
 > 
-> Signed-off-by: Kumari Pallavi <kumari.pallavi@oss.qualcomm.com>
-> ---
->  drivers/misc/fastrpc.c | 15 +++++++++++++--
->  1 file changed, 13 insertions(+), 2 deletions(-)
+> On Fri Nov 14, 2025 at 1:40 PM CET, Vladimir Zapolskiy wrote:
+>> Hi Luca.
+>>
+>> On 11/14/25 13:15, Luca Weiss wrote:
+>>> Add bindings for the Camera Subsystem on the SM6350 SoC.
+>>>
+>>> Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
+>>> ---
+>>>    .../bindings/media/qcom,sm6350-camss.yaml          | 349 +++++++++++++++++++++
+>>>    1 file changed, 349 insertions(+)
+>>>
+>>> diff --git a/Documentation/devicetree/bindings/media/qcom,sm6350-camss.yaml b/Documentation/devicetree/bindings/media/qcom,sm6350-camss.yaml
+>>> new file mode 100644
+>>> index 000000000000..d812b5b50c05
+>>> --- /dev/null
+>>> +++ b/Documentation/devicetree/bindings/media/qcom,sm6350-camss.yaml
+>>> @@ -0,0 +1,349 @@
+>>> +# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
+>>> +%YAML 1.2
+>>> +---
+>>> +$id: http://devicetree.org/schemas/media/qcom,sm6350-camss.yaml#
+>>> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+>>> +
+>>> +title: Qualcomm SM6350 Camera Subsystem (CAMSS)
+>>> +
+>>> +maintainers:
+>>> +  - Luca Weiss <luca.weiss@fairphone.com>
+>>> +
+>>> +description:
+>>> +  The CAMSS IP is a CSI decoder and ISP present on Qualcomm platforms.
+>>> +
+>>> +properties:
+>>> +  compatible:
+>>> +    const: qcom,sm6350-camss
+>>> +
+>>> +  reg:
+>>> +    maxItems: 12
+>>> +
+>>> +  reg-names:
+>>> +    items:
+>>> +      - const: csid0
+>>> +      - const: csid1
+>>> +      - const: csid2
+>>> +      - const: csid_lite
+>>> +      - const: csiphy0
+>>> +      - const: csiphy1
+>>> +      - const: csiphy2
+>>> +      - const: csiphy3
+>>> +      - const: vfe0
+>>> +      - const: vfe1
+>>> +      - const: vfe2
+>>> +      - const: vfe_lite
+>>> +
+>>> +  clocks:
+>>> +    maxItems: 30
+>>> +
+>>> +  clock-names:
+>>> +    items:
+>>> +      - const: cam_ahb_clk
+>>> +      - const: cam_axi
+>>> +      - const: soc_ahb
+>>> +      - const: camnoc_axi
+>>> +      - const: core_ahb
+>>> +      - const: cpas_ahb
+>>> +      - const: csiphy0
+>>> +      - const: csiphy0_timer
+>>> +      - const: csiphy1
+>>> +      - const: csiphy1_timer
+>>> +      - const: csiphy2
+>>> +      - const: csiphy2_timer
+>>> +      - const: csiphy3
+>>> +      - const: csiphy3_timer
+>>> +      - const: slow_ahb_src
+>>> +      - const: vfe0_axi
+>>> +      - const: vfe0
+>>> +      - const: vfe0_cphy_rx
+>>> +      - const: vfe0_csid
+>>> +      - const: vfe1_axi
+>>> +      - const: vfe1
+>>> +      - const: vfe1_cphy_rx
+>>> +      - const: vfe1_csid
+>>> +      - const: vfe2_axi
+>>> +      - const: vfe2
+>>> +      - const: vfe2_cphy_rx
+>>> +      - const: vfe2_csid
+>>> +      - const: vfe_lite
+>>> +      - const: vfe_lite_cphy_rx
+>>> +      - const: vfe_lite_csid
+>>
+>> The sorting order of this list does not follow the sorting order accepted
+>> in the past.
 > 
-> diff --git a/drivers/misc/fastrpc.c b/drivers/misc/fastrpc.c
-> index bcf3c7f8d3e9..2eb8d37cd9b4 100644
-> --- a/drivers/misc/fastrpc.c
-> +++ b/drivers/misc/fastrpc.c
-> @@ -267,6 +267,8 @@ struct fastrpc_session_ctx {
->  
->  struct fastrpc_soc_data {
->  	u32 sid_pos;
-> +	u32 cdsp_dma_bits;
-> +	u32 dsp_default_dma_bits;
->  };
->  
->  struct fastrpc_channel_ctx {
-> @@ -2186,6 +2188,7 @@ static int fastrpc_cb_probe(struct platform_device *pdev)
->  	int i, sessions = 0;
->  	unsigned long flags;
->  	int rc;
-> +	u32 dma_bits;
->  
->  	cctx = dev_get_drvdata(dev->parent);
->  	if (!cctx)
-> @@ -2199,12 +2202,16 @@ static int fastrpc_cb_probe(struct platform_device *pdev)
->  		spin_unlock_irqrestore(&cctx->lock, flags);
->  		return -ENOSPC;
->  	}
-> +	dma_bits = cctx->soc_data->dsp_default_dma_bits;
->  	sess = &cctx->session[cctx->sesscount++];
->  	sess->used = false;
->  	sess->valid = true;
->  	sess->dev = dev;
->  	dev_set_drvdata(dev, sess);
->  
-> +	if (cctx->domain_id == CDSP_DOMAIN_ID)
-> +		dma_bits = cctx->soc_data->cdsp_dma_bits;
-> +
->  	if (of_property_read_u32(dev->of_node, "reg", &sess->sid))
->  		dev_info(dev, "FastRPC Session ID not specified in DT\n");
->  
-> @@ -2219,9 +2226,9 @@ static int fastrpc_cb_probe(struct platform_device *pdev)
->  		}
->  	}
->  	spin_unlock_irqrestore(&cctx->lock, flags);
-> -	rc = dma_set_mask(dev, DMA_BIT_MASK(32));
-> +	rc = dma_set_mask(dev, DMA_BIT_MASK(dma_bits));
->  	if (rc) {
-> -		dev_err(dev, "32-bit DMA enable failed\n");
-> +		dev_err(dev, "%u-bit DMA enable failed\n", dma_bits);
->  		return rc;
->  	}
->  
-> @@ -2308,10 +2315,14 @@ static int fastrpc_get_domain_id(const char *domain)
->  
->  static const struct fastrpc_soc_data kaanapali_soc_data = {
->  	.sid_pos = 56,
-> +	.cdsp_dma_bits = 34,
-> +	.dsp_default_dma_bits = 32,
->  };
->  
->  static const struct fastrpc_soc_data default_soc_data = {
->  	.sid_pos = 32,
-> +	.cdsp_dma_bits = 32,
-> +	.dsp_default_dma_bits = 32,
+> What file should I best reference?
 
-So, "dsp_default_dma_bits" specified "what is the dma_mask for the
-non-CDSP fastrpc instances"? I don't find "dsp_default" to naturally
-mean "not the cdsp".
+Documentation/devicetree/bindings/media/qcom,sdm845-camss.yaml
 
-
-Wouldn't it be better to introduce two different compatibles, one being
-the "qcom,kaanapali-fastrpc" and one being the
-"qcom,kaanapali-cdsp-fastrpc" and then use that to select things here?
-
-
-PS. You store "dma_bits" just for the sake of turning it into a
-dma_mask, just store the DMA_BIT_MASK() directly here instead.
-
-Regards,
-Bjorn
-
->  };
->  
->  static int fastrpc_rpmsg_probe(struct rpmsg_device *rpdev)
-> -- 
-> 2.34.1
+>>
+>> I'm very sorry for the vagueness, but I can not pronounce the accepted
+>> sorting order name, because it triggers people.
+>>
+>>> +
+>>> +  interrupts:
+>>> +    maxItems: 12
+>>> +
+>>> +  interrupt-names:
+>>> +    items:
+>>> +      - const: csid0
+>>> +      - const: csid1
+>>> +      - const: csid2
+>>> +      - const: csid_lite
+>>> +      - const: csiphy0
+>>> +      - const: csiphy1
+>>> +      - const: csiphy2
+>>> +      - const: csiphy3
+>>> +      - const: vfe0
+>>> +      - const: vfe1
+>>> +      - const: vfe2
+>>> +      - const: vfe_lite
+>>> +
+>>> +  interconnects:
+>>> +    maxItems: 4
+>>> +
+>>> +  interconnect-names:
+>>> +    items:
+>>> +      - const: ahb
+>>> +      - const: hf_mnoc
+>>> +      - const: sf_mnoc
+>>> +      - const: sf_icp_mnoc
+>>
+>> Please remove sf_mnoc and sf_icp_mnoc, they are not needed for enabling
+>> IP to produce raw images, and one day you may use them somewhere else.
 > 
+> Ack, will give it a try.
+
+Disagree with this.
+
+See the Kanaapali patches. I'm asking new submissions to be as complete 
+as possible, instead of limiting the hardware description to the RDI.
+
+So listing the ICP noc is the right thing to do.
+
+So please include register banks for
+
+- bps
+- cdm
+- icp
+- ipe
+- jpeg
+- lrme
+
+>>
+>>> +
+>>> +  iommus:
+>>> +    maxItems: 4
+>>> +
+>>> +  power-domains:
+>>> +    items:
+>>> +      - description: IFE0 GDSC - Image Front End, Global Distributed Switch Controller.
+>>> +      - description: IFE1 GDSC - Image Front End, Global Distributed Switch Controller.
+>>> +      - description: IFE2 GDSC - Image Front End, Global Distributed Switch Controller.
+>>> +      - description: Titan Top GDSC - Titan ISP Block, Global Distributed Switch Controller.
+>>> +
+>>> +  power-domain-names:
+>>> +    items:
+>>> +      - const: top
+>>> +      - const: ife0
+>>> +      - const: ife1
+>>> +      - const: ife2
+>>
+>> Note that the list of items and the list of the item descriptions do not
+>> correspond to each other. Titan Top GDSC shall be at the end.
 > 
+> In the v1 the comment was that top can now be put on top (because a
+> limitation in the driver was fixed). But yes, forgot to modify
+> power-domains description. Will fix.
+> 
+>>
+>>> +
+>>> +  vdd-csiphy-0p9-supply:
+>>> +    description:
+>>> +      Phandle to a 0.9V regulator supply to a PHY.
+>>> +
+>>> +  vdd-csiphy-1p25-supply:
+>>> +    description:
+>>> +      Phandle to a 1.25V regulator supply to a PHY.
+>>> +
+>>
+>> Please reference to the schematics or SoC TRM, does SM6350 SoC
+>> have different pads to get supplies to different CSIPHYx IPs?
+>>
+>> If so, then please provide hardware properties to get a proper
+>> correspondence between supplies and CSIPHYx, and make all these
+>> properties optional.
+> 
+> I shared the names in replies to v1.
+> 
+> * VDD_CAMSS_PLL_0P9 - Camera SS PLL 0.9 V circuits
+>      (not referenced in downstream kernel, connected to vreg_s5a in
+>      schematics, which is MX)
+> * VDD_A_CSI_x_0P9 - MIPI CSIx 0.9 V circuits
+>      With pad names VDD_A_CSI_0_0P9 to VDD_A_CSI_3_0P9
+> * VDD_A_CSI_x_1P25 - MIPI CSIx 1.25 V circuits
+>      With pad names VDD_A_CSI_0_1P25 to VDD_A_CSI_3_1P25
+
+I'm fine with your proposed rail names, they appear to correspond to the 
+voltage values in the docs.
+
+> 
+>>
+>>> +  ports:
+>>> +    $ref: /schemas/graph.yaml#/properties/ports
+>>> +
+>>> +    description:
+>>> +      CSI input ports.
+>>> +
+>>> +    patternProperties:
+>>> +      "^port@[0-3]$":
+>>> +        $ref: /schemas/graph.yaml#/$defs/port-base
+>>> +        unevaluatedProperties: false
+>>> +
+>>> +        description:
+>>> +          Input port for receiving CSI data from a CSIPHY.
+>>> +
+>>> +        properties:
+>>> +          endpoint:
+>>> +            $ref: video-interfaces.yaml#
+>>> +            unevaluatedProperties: false
+>>> +
+>>> +            properties:
+>>> +              data-lanes:
+>>> +                minItems: 1
+>>> +                maxItems: 4
+>>> +
+>>> +              bus-type:
+>>> +                enum:
+>>> +                  - 1 # MEDIA_BUS_TYPE_CSI2_CPHY
+>>> +                  - 4 # MEDIA_BUS_TYPE_CSI2_DPHY
+>>> +
+>>> +            required:
+>>> +              - data-lanes
+>>> +
+>>> +required:
+>>> +  - compatible
+>>> +  - reg
+>>> +  - reg-names
+>>> +  - clocks
+>>> +  - clock-names
+>>> +  - interrupts
+>>> +  - interrupt-names
+>>> +  - interconnects
+>>> +  - interconnect-names
+>>> +  - iommus
+>>> +  - power-domains
+>>> +  - power-domain-names
+>>> +  - vdd-csiphy-0p9-supply
+>>> +  - vdd-csiphy-1p25-supply
+>>
+>> When a change to add CSIPHYx specific supplies is done, please remove
+>> *-supply properties from the list of the requred ones.
+> 
+> Is this pending some other change that will be posted? Or what do you mean?
+
+He means in the current CSIPHY dt its not possible to require these 
+properties.
+
+> 
+>>
+>>> +  - ports
+>>> +
+>>> +additionalProperties: false
+>>> +
+>>> +examples:
+>>> +  - |
+>>> +    #include <dt-bindings/clock/qcom,gcc-sm6350.h>
+>>> +    #include <dt-bindings/clock/qcom,sm6350-camcc.h>
+>>> +    #include <dt-bindings/interconnect/qcom,icc.h>
+>>> +    #include <dt-bindings/interconnect/qcom,sm6350.h>
+>>> +    #include <dt-bindings/interrupt-controller/arm-gic.h>
+>>> +    #include <dt-bindings/media/video-interfaces.h>
+>>> +    #include <dt-bindings/power/qcom-rpmpd.h>
+>>> +
+>>> +    soc {
+>>> +        #address-cells = <2>;
+>>> +        #size-cells = <2>;
+>>> +
+>>> +        isp@acb3000 {
+>>> +            compatible = "qcom,sm6350-camss";
+>>> +
+>>> +            reg = <0x0 0x0acb3000 0x0 0x1000>,
+>>> +                  <0x0 0x0acba000 0x0 0x1000>,
+>>> +                  <0x0 0x0acc1000 0x0 0x1000>,
+>>> +                  <0x0 0x0acc8000 0x0 0x1000>,
+>>> +                  <0x0 0x0ac65000 0x0 0x1000>,
+>>> +                  <0x0 0x0ac66000 0x0 0x1000>,
+>>> +                  <0x0 0x0ac67000 0x0 0x1000>,
+>>> +                  <0x0 0x0ac68000 0x0 0x1000>,
+>>> +                  <0x0 0x0acaf000 0x0 0x4000>,
+>>> +                  <0x0 0x0acb6000 0x0 0x4000>,
+>>> +                  <0x0 0x0acbd000 0x0 0x4000>,
+>>> +                  <0x0 0x0acc4000 0x0 0x4000>;
+>>> +            reg-names = "csid0",
+>>> +                        "csid1",
+>>> +                        "csid2",
+>>> +                        "csid_lite",
+>>> +                        "csiphy0",
+>>> +                        "csiphy1",
+>>> +                        "csiphy2",
+>>> +                        "csiphy3",
+>>> +                        "vfe0",
+>>> +                        "vfe1",
+>>> +                        "vfe2",
+>>> +                        "vfe_lite";
+>>> +
+>>> +            clocks = <&gcc GCC_CAMERA_AHB_CLK>,
+>>
+>> I believe this clock is critical, and it is set so in the SM6350 GCC driver,
+>> therefore it should not be added here.
+> 
+> True, gcc_camera_ahb_clk has CLK_IS_CRITICAL in gcc-sm6350.c
+
+DT describes hardware, not the happenstance of Linux driver setup.
+
+On that basis omitting <&gcc GCC_CAMERA_AHB_CLK> from the clock list is 
+not correct.
+
+Because being bornign, can I then reuse this DT in FreeBSD ? No I cannot 
+because it won't describe hardware it will desscirbe Linux-DT which 
+ain't the same thing.
+
+>>
+>> Multiple CAMCC drivers define some of the clocks as "critical" and always
+>> enabled, a misconfiguration in this area may cause the reported warning.
+> 
+> Will try to remove it then.
+
+I really object to that. DT is a hardware description. Listing the 
+clocks here does no harm and is factually accurate, which again is the 
+point of DT.
+
+> 
+>>
+>>> +                     <&gcc GCC_CAMERA_AXI_CLK>,
+>>> +                     <&camcc CAMCC_SOC_AHB_CLK>,
+>>> +                     <&camcc CAMCC_CAMNOC_AXI_CLK>,
+>>> +                     <&camcc CAMCC_CORE_AHB_CLK>,
+>>> +                     <&camcc CAMCC_CPAS_AHB_CLK>,
+>>> +                     <&camcc CAMCC_CSIPHY0_CLK>,
+>>> +                     <&camcc CAMCC_CSI0PHYTIMER_CLK>,
+>>> +                     <&camcc CAMCC_CSIPHY1_CLK>,
+>>> +                     <&camcc CAMCC_CSI1PHYTIMER_CLK>,
+>>> +                     <&camcc CAMCC_CSIPHY2_CLK>,
+>>> +                     <&camcc CAMCC_CSI2PHYTIMER_CLK>,
+>>> +                     <&camcc CAMCC_CSIPHY3_CLK>,
+>>> +                     <&camcc CAMCC_CSI3PHYTIMER_CLK>,
+>>> +                     <&camcc CAMCC_SLOW_AHB_CLK_SRC>,
+>>> +                     <&camcc CAMCC_IFE_0_AXI_CLK>,
+>>> +                     <&camcc CAMCC_IFE_0_CLK>,
+>>> +                     <&camcc CAMCC_IFE_0_CPHY_RX_CLK>,
+>>> +                     <&camcc CAMCC_IFE_0_CSID_CLK>,
+>>> +                     <&camcc CAMCC_IFE_1_AXI_CLK>,
+>>> +                     <&camcc CAMCC_IFE_1_CLK>,
+>>> +                     <&camcc CAMCC_IFE_1_CPHY_RX_CLK>,
+>>> +                     <&camcc CAMCC_IFE_1_CSID_CLK>,
+>>> +                     <&camcc CAMCC_IFE_2_AXI_CLK>,
+>>> +                     <&camcc CAMCC_IFE_2_CLK>,
+>>> +                     <&camcc CAMCC_IFE_2_CPHY_RX_CLK>,
+>>> +                     <&camcc CAMCC_IFE_2_CSID_CLK>,
+>>> +                     <&camcc CAMCC_IFE_LITE_CLK>,
+>>> +                     <&camcc CAMCC_IFE_LITE_CPHY_RX_CLK>,
+>>> +                     <&camcc CAMCC_IFE_LITE_CSID_CLK>;
+>>> +            clock-names = "cam_ahb_clk",
+>>> +                          "cam_axi",
+>>> +                          "soc_ahb",
+>>> +                          "camnoc_axi",
+>>> +                          "core_ahb",
+>>> +                          "cpas_ahb",
+>>> +                          "csiphy0",
+>>> +                          "csiphy0_timer",
+>>> +                          "csiphy1",
+>>> +                          "csiphy1_timer",
+>>> +                          "csiphy2",
+>>> +                          "csiphy2_timer",
+>>> +                          "csiphy3",
+>>> +                          "csiphy3_timer",
+>>> +                          "slow_ahb_src",
+>>> +                          "vfe0_axi",
+>>> +                          "vfe0",
+>>> +                          "vfe0_cphy_rx",
+>>> +                          "vfe0_csid",
+>>> +                          "vfe1_axi",
+>>> +                          "vfe1",
+>>> +                          "vfe1_cphy_rx",
+>>> +                          "vfe1_csid",
+>>> +                          "vfe2_axi",
+>>> +                          "vfe2",
+>>> +                          "vfe2_cphy_rx",
+>>> +                          "vfe2_csid",
+>>> +                          "vfe_lite",
+>>> +                          "vfe_lite_cphy_rx",
+>>> +                          "vfe_lite_csid";
+>>> +
+>>> +            interrupts = <GIC_SPI 464 IRQ_TYPE_LEVEL_HIGH>,
+>>> +                         <GIC_SPI 466 IRQ_TYPE_LEVEL_HIGH>,
+>>> +                         <GIC_SPI 717 IRQ_TYPE_LEVEL_HIGH>,
+>>> +                         <GIC_SPI 473 IRQ_TYPE_LEVEL_HIGH>,
+>>> +                         <GIC_SPI 477 IRQ_TYPE_LEVEL_HIGH>,
+>>> +                         <GIC_SPI 478 IRQ_TYPE_LEVEL_HIGH>,
+>>> +                         <GIC_SPI 479 IRQ_TYPE_LEVEL_HIGH>,
+>>> +                         <GIC_SPI 461 IRQ_TYPE_LEVEL_HIGH>,
+>>> +                         <GIC_SPI 465 IRQ_TYPE_LEVEL_HIGH>,
+>>> +                         <GIC_SPI 467 IRQ_TYPE_LEVEL_HIGH>,
+>>> +                         <GIC_SPI 718 IRQ_TYPE_LEVEL_HIGH>,
+>>> +                         <GIC_SPI 472 IRQ_TYPE_LEVEL_HIGH>;
+>>
+>> Interrupt types shall be IRQ_TYPE_EDGE_RISING.
+> 
+> Ack
+> 
+>>
+>>> +            interrupt-names = "csid0",
+>>> +                              "csid1",
+>>> +                              "csid2",
+>>> +                              "csid_lite",
+>>> +                              "csiphy0",
+>>> +                              "csiphy1",
+>>> +                              "csiphy2",
+>>> +                              "csiphy3",
+>>> +                              "vfe0",
+>>> +                              "vfe1",
+>>> +                              "vfe2",
+>>> +                              "vfe_lite";
+>>> +
+>>> +            interconnects = <&gem_noc MASTER_AMPSS_M0 QCOM_ICC_TAG_ACTIVE_ONLY
+>>> +                             &config_noc SLAVE_CAMERA_CFG QCOM_ICC_TAG_ACTIVE_ONLY>,
+>>> +                            <&mmss_noc MASTER_CAMNOC_HF QCOM_ICC_TAG_ALWAYS
+>>> +                             &clk_virt SLAVE_EBI_CH0 QCOM_ICC_TAG_ALWAYS>,
+>>> +                            <&mmss_noc MASTER_CAMNOC_SF QCOM_ICC_TAG_ALWAYS
+>>> +                             &clk_virt SLAVE_EBI_CH0 QCOM_ICC_TAG_ALWAYS>,
+>>> +                            <&mmss_noc MASTER_CAMNOC_ICP QCOM_ICC_TAG_ALWAYS
+>>> +                             &clk_virt SLAVE_EBI_CH0 QCOM_ICC_TAG_ALWAYS>;
+>>> +            interconnect-names = "ahb",
+>>> +                                 "hf_mnoc",
+>>> +                                 "sf_mnoc",
+>>> +                                 "sf_icp_mnoc";
+>>> +
+>>> +            iommus = <&apps_smmu 0x820 0xc0>,
+>>> +                     <&apps_smmu 0x840 0x0>,
+>>> +                     <&apps_smmu 0x860 0xc0>,
+>>> +                     <&apps_smmu 0x880 0x0>;
+>>> +
+>>> +            power-domains = <&camcc TITAN_TOP_GDSC>
+>>
+>> It should be the last one in the list, if the settled practice is followed.
+> 
+> See above.
+> 
+>>
+>>> +                            <&camcc IFE_0_GDSC>,
+>>> +                            <&camcc IFE_1_GDSC>,
+>>> +                            <&camcc IFE_2_GDSC>;
+>>> +            power-domain-names = "top",
+>>> +                                 "ife0",
+>>> +                                 "ife1",
+>>> +                                 "ife2";
+>>> +
+>>> +            vdd-csiphy-0p9-supply = <&vreg_l18a>;
+>>> +            vdd-csiphy-1p25-supply = <&vreg_l22a>;
+>>> +
+>>> +            ports {
+>>> +                #address-cells = <1>;
+>>> +                #size-cells = <0>;
+>>> +
+>>> +                port@0 {
+>>> +                    reg = <0>;
+>>> +                    csiphy0_ep: endpoint {
+>>
+>> An empty line before a child node is always needed.
+> 
+> Ack
+> 
+>>
+>>> +                        data-lanes = <0 1 2 3>;
+>>> +                        bus-type = <MEDIA_BUS_TYPE_CSI2_DPHY>;
+>>> +                        remote-endpoint = <&sensor_ep>;
+>>> +                    };
+>>> +                };
+>>> +            };
+>>> +        };
+>>> +    };
+>>>
+> 
+
 
