@@ -1,124 +1,148 @@
-Return-Path: <linux-arm-msm+bounces-81901-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-81902-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [IPv6:2605:f480:58:1:0:1994:3:14])
-	by mail.lfdr.de (Postfix) with ESMTPS id 492FBC5E55E
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Nov 2025 17:50:40 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1EBA0C5E28E
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Nov 2025 17:19:43 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 7DC0750393A
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Nov 2025 16:07:02 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id EEA9A4275B2
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Nov 2025 16:08:13 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9113532E143;
-	Fri, 14 Nov 2025 15:58:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5D230258CE5;
+	Fri, 14 Nov 2025 15:59:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="iwPSRCeL"
+	dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b="oJ88zzv/"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f66.google.com (mail-ed1-f66.google.com [209.85.208.66])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52720325732;
-	Fri, 14 Nov 2025 15:58:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1103F320CAF
+	for <linux-arm-msm@vger.kernel.org>; Fri, 14 Nov 2025 15:59:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.66
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763135902; cv=none; b=cVRP/BO8SC9WhvixXw1EUYBMMDpqiP1yDt8oWwJSF81hwhFdCF5KTXbgG82u9MAjVbhVAipKX3yIhz5niPrVrAUgBYyUPBlCSOya5W5rSENC93iR7fqip00MtNRmMjHl7YWEzC4WM0nWB5yqiEZIOO0eHL2YFhxOkVTZteSUiVQ=
+	t=1763135970; cv=none; b=rrw2Dw0MhK92gvjwHuRofraBEQSg3TwJhWJlKTrIwSxv/XKLQDfUPGB+aKI6icdxXyyIstjeDwLnR2qM/s5zCxyz7HGxUMEBqzBwG+N/5phSh4pRH6cOQOhajLlDK1S3fMe0JefDWC29qcU4sgqy827LyFccQ66FjjfgA9hhYlk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763135902; c=relaxed/simple;
-	bh=UrSTM5kmhxKUTGYm83kb1wdz9qhRcg8d9G1xvyGuRqA=;
-	h=Date:Content-Type:MIME-Version:From:Cc:To:In-Reply-To:References:
-	 Message-Id:Subject; b=SxA05DeUCQ7LYrTpCnfoBE51Pxae8YaZ7L9i5BRiZB4VrftYuEASe14TqgwGyhte6NS+RNkJKbA8fjIoRL+JRTh+0y7/UeNghSfezr9AfSSSGdWbcAWFrLnHWIyIVADAwC+twzfVvW5eXIPRXPKvpR20Rpf7Fv46fd2vKtSFBqk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=iwPSRCeL; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C562C4CEF8;
-	Fri, 14 Nov 2025 15:58:21 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1763135901;
-	bh=UrSTM5kmhxKUTGYm83kb1wdz9qhRcg8d9G1xvyGuRqA=;
-	h=Date:From:Cc:To:In-Reply-To:References:Subject:From;
-	b=iwPSRCeL7z8DATQdBskcL7zGCuTm+gcWRYxoKhfk3RRy4EK/dBTKNhcc71B/Jkp8D
-	 z1AOlm1Zbqz3z1f0Kj4moytfVZmitSMMFAeQ3KP+ykKMWxXL2KAk0Fc/pvy4fY6iu+
-	 O4W+rIAHli90Qr3B0812O5UArvAvHEbUytggw/8PKGEYX0saQJq2zbMcSL1dwqvPk0
-	 N36MWMvi0bD7yET+x80GxnucCES+4PYHWecQykPiDF3x8jtTZXWTH1kLpf9Rbs2dkP
-	 aXoeXFch5LMPIN12iwLCNgEgrump+TiKTt7VgDjHoAVDlBy3XFqmvIdEklU/LGSh/s
-	 pj85xG9LrKWxQ==
-Date: Fri, 14 Nov 2025 09:58:20 -0600
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
+	s=arc-20240116; t=1763135970; c=relaxed/simple;
+	bh=yXgFpiaxg0LZlcZZHrI9y6mWIPy0APOxvyrLswjcxuo=;
+	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
+	 References:In-Reply-To; b=o43mTsoL2Sj150MXWCMgmamEwY8Lvwg9o2ng9LtrslgljeTiCsYNszMSpcvSRMnwWELf/1AsUCUj/dsSqkniThbfZRS+KGef0u4bpi9Aa/eOgeRyjjA2YtAZFLlGc4cWouHCBRbb8wErGfIli8nWfpTB/YFSSbeDR7GwxAwU6EA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=fairphone.com; spf=pass smtp.mailfrom=fairphone.com; dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b=oJ88zzv/; arc=none smtp.client-ip=209.85.208.66
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=fairphone.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fairphone.com
+Received: by mail-ed1-f66.google.com with SMTP id 4fb4d7f45d1cf-64149f78c0dso3431413a12.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 14 Nov 2025 07:59:27 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=fairphone.com; s=fair; t=1763135966; x=1763740766; darn=vger.kernel.org;
+        h=in-reply-to:references:to:from:subject:cc:message-id:date
+         :content-transfer-encoding:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=yXgFpiaxg0LZlcZZHrI9y6mWIPy0APOxvyrLswjcxuo=;
+        b=oJ88zzv/L6p11dI3kq9GolQii0X1LIitDEiGab06zALjLLGcKy/2pUt/AiIdWcBaj+
+         t7LeXLBj4WKebtmH1wfCs2K8ap4pH/IMSIChyi3vpYe6K5JR1TRwTG6hyyhjdHvirNlL
+         JzEpC4dUzprfsWOdsJFf7/YIEhCzYnO7QQwhXmS4gL8d/cTy/dRPRYeN5DYzE3y+ZJus
+         6cZ3JVRwj6OWitFAxGyVeWLmPPYJj+dIqUdh85s7btp/ncy3ApPFUkGD55HgsnblooxM
+         jJGwj+q1HslgvaUSF+SNHnqI2qqJ8iYHggQVYKEaA4rxyquj7kuNajK49+6ZtmYhKng+
+         t0SA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1763135966; x=1763740766;
+        h=in-reply-to:references:to:from:subject:cc:message-id:date
+         :content-transfer-encoding:mime-version:x-gm-gg:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=yXgFpiaxg0LZlcZZHrI9y6mWIPy0APOxvyrLswjcxuo=;
+        b=w6EV5EvoCpLBDOgrkuZAOtRoP2AxzHz/JFGKnxJ/U9VsOqNgsnZEkofOWKKIiS7gaO
+         XVNb19H+EZuiqpq1Qoh5/Gl3PBNUl/8FmHdIMRmxYIAPBNqmkke+fXYy3J3ifHYJEH/f
+         9ldt+OyGgRL8HiLKQsBp4I3PqfowwA2gZULQs18WdWkJAA3u3mXqjelHGtOyeBNEpyHk
+         mYrrPHeC/o2CYzb7C2Z4eMJ1vWEUsZmPk7Q7ji3nPyBwDOxezwQtPwK5FM0Kc12hhwEm
+         lHkWl7j0F2JdsujNzzDyHgNzKLFnuKTQif5flj7r7KlCPDMT8nM3G+WaVWGx1TUGkbBi
+         45Dw==
+X-Forwarded-Encrypted: i=1; AJvYcCUm9qOa6myosDsS9XtvWNC4e0Q7qeXTgNuVuT2OiT3LW1CzN3JhQCI6zzcJFNZRZebQt33e1PUTC0e2dTVp@vger.kernel.org
+X-Gm-Message-State: AOJu0YxjBRuu2gAS70R3oXN9XMdx4iGttzshCevEPrs9/Xt5dS6eyTDf
+	z71vCEutSRZ/kHZ8k8JnlKaLQP6LCfH/DJVvbdQl8hKPV1Lstc3hZHK0Igg++MvC9rY=
+X-Gm-Gg: ASbGnctTHmuiunMaQ0SZjkb1WYBArx9G/y2r6JFVWQ/+YlB5pDQE+UWyuLE8B+BoaV4
+	l/N1QYmdTcaAi9/3sDgL8C6MijpLepYIrwxr4l1SNdc6sXLYHd1T03ZbtjK3eTfiVkJAGYcPStp
+	w8lQm1Vky7nT0l3r0HMNHuHkKo1BTA/mb/AV+tSjy9hOQbn7R63qRJ9IjHgAwY9kzlmHKjlkDUF
+	lhvB3fFJw1iRR+xAHkZGboCKifdZeF8/6WDl/T6uJsJn9LiQ+SqhLge+RiYIjUuEGN8BdMNGSpN
+	yqKoZU9B1lAvEhyAhCzb1nAKCTej7sPvK4QdAvlYyy34x4/BmvBSPYYYUm0q7dwITj6hQlVkJwY
+	J9MITglgxNyA61GqJaPN+80Bi+lVFOnhlTvJKxfNnkAd5JhBOpJf91QX09KNas70VzB+01axsKA
+	9tBqcOxMwA+5C8LF4/uJy2ss5WNdiIMhZNS8q3ghjOdyKZSoWyVOFZ668jrVlRW4FsToJyVHWXF
+	QqtrBO2LQHDvl937LBpr1g=
+X-Google-Smtp-Source: AGHT+IGWzubFZLtvC9cNEOlO/RkzPlBtEEASvIevatDsvh+QoQs8cTds4ZRPcjtgHk3tw2xqDW/ZxA==
+X-Received: by 2002:a17:907:1b04:b0:b72:ddfd:bc5a with SMTP id a640c23a62f3a-b736780b420mr340472466b.14.1763135966460;
+        Fri, 14 Nov 2025 07:59:26 -0800 (PST)
+Received: from localhost (2001-1c04-0509-ec01-156d-fa6e-7f19-0b67.cable.dynamic.v6.ziggo.nl. [2001:1c04:509:ec01:156d:fa6e:7f19:b67])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-b734fad41cesm406031466b.16.2025.11.14.07.59.25
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 14 Nov 2025 07:59:26 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-From: "Rob Herring (Arm)" <robh@kernel.org>
-Cc: Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org, 
- quic_jiaymao@quicinc.com, Konrad Dybcio <konradybcio@kernel.org>, 
- linux-kernel@vger.kernel.org, linux-bluetooth@vger.kernel.org, 
- cheng.jiang@oss.qualcomm.com, devicetree@vger.kernel.org, 
- Bjorn Andersson <andersson@kernel.org>, quic_shuaz@quicinc.com, 
- quic_chezhou@quicinc.com
-To: Wei Deng <wei.deng@oss.qualcomm.com>
-In-Reply-To: <20251113130519.2647081-1-wei.deng@oss.qualcomm.com>
-References: <20251113130519.2647081-1-wei.deng@oss.qualcomm.com>
-Message-Id: <176313578860.3262114.17056319042303889483.robh@kernel.org>
-Subject: Re: [PATCH] arm64: dts: qcom: monaco-evk: Enable Bluetooth support
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Fri, 14 Nov 2025 16:59:25 +0100
+Message-Id: <DE8JJCQA0C4Q.35NEED7XG0K0V@fairphone.com>
+Cc: <~postmarketos/upstreaming@lists.sr.ht>, <phone-devel@vger.kernel.org>,
+ <linux-arm-msm@vger.kernel.org>, <linux-media@vger.kernel.org>,
+ <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>
+Subject: Re: [PATCH v2 0/3] Add CAMSS support for SM6350
+From: "Luca Weiss" <luca.weiss@fairphone.com>
+To: "Bryan O'Donoghue" <bod@kernel.org>, "Luca Weiss"
+ <luca.weiss@fairphone.com>, "Robert Foss" <rfoss@kernel.org>, "Todor Tomov"
+ <todor.too@gmail.com>, "Vladimir Zapolskiy"
+ <vladimir.zapolskiy@linaro.org>, "Mauro Carvalho Chehab"
+ <mchehab@kernel.org>, "Rob Herring" <robh@kernel.org>, "Krzysztof
+ Kozlowski" <krzk+dt@kernel.org>, "Conor Dooley" <conor+dt@kernel.org>,
+ "Bryan O'Donoghue" <bryan.odonoghue@linaro.org>, "Bjorn Andersson"
+ <andersson@kernel.org>, "Konrad Dybcio" <konradybcio@kernel.org>
+X-Mailer: aerc 0.21.0-0-g5549850facc2
+References: <3ph8XeidoxkUIsK7qiOH29pde94sdwa3ReWKVVrPabgS5enIAmwVAC5plyFnBMJGKQBnxFB6df6j69OMFIeavw==@protonmail.internalid> <20251114-sm6350-camss-v2-0-d1ff67da33b6@fairphone.com> <df4a6a77-9004-4dbe-9b11-7af2bea7e068@kernel.org>
+In-Reply-To: <df4a6a77-9004-4dbe-9b11-7af2bea7e068@kernel.org>
 
+On Fri Nov 14, 2025 at 4:51 PM CET, Bryan O'Donoghue wrote:
+> On 14/11/2025 11:15, Luca Weiss wrote:
+>> Add bindings, driver and dts to support the Camera Subsystem on the
+>> SM6350 SoC.
+>>=20
+>> These patches were tested on a Fairphone 4 smartphone with WIP sensor
+>> drivers (Sony IMX576 and IMX582), the camera pipeline works properly as
+>> far as I can tell.
+>>=20
+>> Though when stopping the camera stream, the following clock warning
+>> appears in dmesg. But it does not interfere with any functionality,
+>> starting and stopping the stream works and debugcc is showing 426.4 MHz
+>> while the clock is on, and 'off' while it's off.
+>>=20
+>> Any suggestion how to fix this, is appreciated.
+>>=20
+>> [ 5738.590980] ------------[ cut here ]------------
+>> [ 5738.591009] gcc_camera_axi_clk status stuck at 'on'
+>> [ 5738.591049] WARNING: CPU: 0 PID: 6918 at drivers/clk/qcom/clk-branch.=
+c:87 clk_branch_toggle+0x170/0x190
+>
+> Do you have a full and complete kernel tree we could look at here ?
 
-On Thu, 13 Nov 2025 18:35:19 +0530, Wei Deng wrote:
-> There's a WCN6855 WiFi/Bluetooth module on an M.2 card. To make
-> Bluetooth work, we need to define the necessary device tree nodes,
-> including UART configuration and power supplies.
-> 
-> Since there is no standard M.2 binding in the device tree at present,
-> the PMU is described using dedicated PMU nodes to represent the
-> internal regulators required by the module.
-> 
-> The module provides a 3.3V supply, which originates from the
-> main board’s 12V rail. To represent this power hierarchy in the device
-> tree, add a fixed 12V regulator node as the DC-IN source and link it
-> to the 3.3V regulator node.
-> 
-> Signed-off-by: Wei Deng <wei.deng@oss.qualcomm.com>
+Sure, this branch has everything in:
+
+https://github.com/sm6350-mainline/linux/tree/sm6350-6.17.y/
+
+For further refence, at least two other people have tested this branch
+in postmarketOS, nothing particularly exciting to report from there,
+apart from that the sdm-skin-thermal thermal zone (thermistor right next
+to SoC) is currently configured with 55 degC as critical trip, which is
+quickly achieved when starting a video recording, but that's not really
+an issue with camss, but will need some tweaking regardless.
+
+https://gitlab.postmarketos.org/postmarketOS/pmaports/-/merge_requests/7281
+
+Regards
+Luca
+
+>
 > ---
->  arch/arm64/boot/dts/qcom/monaco-evk.dts | 99 +++++++++++++++++++++++++
->  1 file changed, 99 insertions(+)
-> 
-
-
-My bot found new DTB warnings on the .dts files added or changed in this
-series.
-
-Some warnings may be from an existing SoC .dtsi. Or perhaps the warnings
-are fixed by another series. Ultimately, it is up to the platform
-maintainer whether these warnings are acceptable or not. No need to reply
-unless the platform maintainer has comments.
-
-If you already ran DT checks and didn't see these error(s), then
-make sure dt-schema is up to date:
-
-  pip3 install dtschema --upgrade
-
-
-This patch series was applied (using b4) to base:
- Base: attempting to guess base-commit...
- Base: tags/next-20251112 (exact match)
- Base: tags/next-20251112 (use --merge-base to override)
-
-If this is not the correct base, please add 'base-commit' tag
-(or use b4 which does this automatically)
-
-New warnings running 'make CHECK_DTBS=y for arch/arm64/boot/dts/qcom/' for 20251113130519.2647081-1-wei.deng@oss.qualcomm.com:
-
-arch/arm64/boot/dts/qcom/monaco-evk.dtb: wcn6855-pmu (qcom,wcn6855-pmu): 'vddpcielp3-supply', 'vddpcielp9-supply' do not match any of the regexes: '^pinctrl-[0-9]+$'
-	from schema $id: http://devicetree.org/schemas/regulator/qcom,qca6390-pmu.yaml
-arch/arm64/boot/dts/qcom/monaco-evk.dtb: wcn6855-pmu (qcom,wcn6855-pmu): 'vddpcie1p3-supply' is a required property
-	from schema $id: http://devicetree.org/schemas/regulator/qcom,qca6390-pmu.yaml
-arch/arm64/boot/dts/qcom/monaco-evk.dtb: wcn6855-pmu (qcom,wcn6855-pmu): 'vddpcie1p9-supply' is a required property
-	from schema $id: http://devicetree.org/schemas/regulator/qcom,qca6390-pmu.yaml
-
-
-
-
+> bod
 
 
