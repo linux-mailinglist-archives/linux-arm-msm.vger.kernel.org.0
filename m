@@ -1,129 +1,251 @@
-Return-Path: <linux-arm-msm+bounces-81896-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-81895-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id B14BAC5E12D
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Nov 2025 17:04:54 +0100 (CET)
+Received: from ams.mirrors.kernel.org (ams.mirrors.kernel.org [213.196.21.55])
+	by mail.lfdr.de (Postfix) with ESMTPS id 299E5C5E71E
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Nov 2025 18:08:38 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 371504A4082
+	by ams.mirrors.kernel.org (Postfix) with ESMTPS id 16BE03C3375
 	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Nov 2025 15:56:02 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 73B6B32ABD1;
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 68582329E68;
 	Fri, 14 Nov 2025 15:47:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="m7y95dSw"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="JnGaZuMb"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49A76320CCD;
-	Fri, 14 Nov 2025 15:47:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3EC39236435;
+	Fri, 14 Nov 2025 15:47:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763135246; cv=none; b=QqbqqrF3njZWe+PuXa0RcWQRS/7bh42rhF7OqYFfWHoLcSNpGBPqwbqq/7YcYBE3VlNKrWc52FxyxRww5zHKXuohV5ZiyjCFi+VR2x4H6VuC2VwTGtOm/phZK9MUjgG7TtRXCcJplUYP+xko56Q/SsJH6HqsGyqcFj8ZK+toR6o=
+	t=1763135246; cv=none; b=t66zSsJpXwJAPEk8v14YPBRvAtZCamF3CIXSTvEKHLj5PJMDmF0mdRiH48NPQCmSYUymKuAs0eZnYIeLIokRn29D6miG1Jf6EpS0i7xQNiSTgRoOOEzBg/qFWl3mDnAgXS9WfEbzYNDWxHlUZmUA0x6Xy3rOKybrKkzD9GDpjDw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1763135246; c=relaxed/simple;
-	bh=Fka/HQ55zjncotQd4qSxORP/TNxhLgL+M0SIrJXl/BA=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=lQVtF2pGtmAM8oavO11v3MESek6Kobusdd2yDMrO5K1YaPoOx0Q35C2uMY1dSj8bULW60IHeeu2B1AaELAQJAfs+UkXOyDRfYQzwRWvTc5dmQoy97pMHqIULk9iOWfY3DjA+fZdsahf3ABrDU8AeSpfiZHIQ7Fb3DdsRiP9zFSk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=m7y95dSw; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1875EC4CEFB;
-	Fri, 14 Nov 2025 15:47:21 +0000 (UTC)
+	bh=mSrps6kcUyjP6xL+n9Pn5QzmtYa8CEWHnNnezuhW5qc=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=IpRaw7Rb3JbshBxvZgUXLV4gch3MNbZEvM7VD8deSed+8O8VolyceFyvleeu3G9c/E6LSd4tl08/yzFbeKV3nE6TyC08AvUzzzVvu+bKTV7iRKZIOaUOWZ1gKqfxIjuwblDjQKn22NdA/88DXLM2Z0IdhL97NVMKSXLNsaWf1lk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=JnGaZuMb; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC4EEC19425;
+	Fri, 14 Nov 2025 15:47:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
 	s=k20201202; t=1763135245;
-	bh=Fka/HQ55zjncotQd4qSxORP/TNxhLgL+M0SIrJXl/BA=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=m7y95dSwmeTJ6L0QOsebsv++aXe4V0HG/mQwGbYHPwA1A96Pr1hGHI409Bguk+sDT
-	 VeC1Z3VygC/xqOFQaZE4BMPHjaCqYf9srHOWuji0cAKdVZNG1SjM4Q8mcZK6aUuUfG
-	 xtYvQByygmMwzIhVU1og1Pfwyh49N7jKQsx10oxMqGA6L+ZeBScmkMNjplNLPaYKjv
-	 5/IcHMxNxMABcBahU+fsahl9FFLXiN/zlxDFAkSAfeQsTFZ1P+EOYCI4cTYgm5HAJc
-	 E51HUZQBiBh8iARx80/mTNTeARqMTMTdt5dtgQT9PoCZD6iqY0hTVKf09guSGa1Rhi
-	 rYi/MLrB6/4vA==
-Message-ID: <e387957d-b27b-47e7-adb0-3cc8c656ee8d@kernel.org>
-Date: Fri, 14 Nov 2025 16:47:20 +0100
+	bh=mSrps6kcUyjP6xL+n9Pn5QzmtYa8CEWHnNnezuhW5qc=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=JnGaZuMbaz84hdPUSNTlwoCwUgLNtmmN8SLbFpRUmTtmsInEvYkq8mUHBe5wkVmWQ
+	 ZnX4wLtyn+/pSHIvanFedENizggr+usjseA9Wl3w9OLD/Ue5DzTF8fY7T2Vf9Q9vJm
+	 VaZoqEoF8zBs+3yr0OA3XY29/GbRg/cmJAUgddXHUi+cglgnz7cnBwjxPRTkl5cU3U
+	 X6pUbWiQwT5Zthyu6++BZ0PiuIM/mvTqcWegx1f2XC7bXALLZTH4UGUVAtRtoFTJxt
+	 Y5o92F8L+3eDa3FJMHsK1ZBhOX3Zg6Une6CfO8xgI2Gt0D3BtmFeWXwxs0mSIZOBEi
+	 UI7BURzQ12V4Q==
+Date: Fri, 14 Nov 2025 09:51:53 -0600
+From: Bjorn Andersson <andersson@kernel.org>
+To: Kumari Pallavi <kumari.pallavi@oss.qualcomm.com>
+Cc: kpallavi@qti.qualcomm.com, srini@kernel.org, amahesh@qti.qualcomm.com, 
+	arnd@arndb.de, gregkh@linuxfoundation.org, quic_bkumar@quicinc.com, 
+	ekansh.gupta@oss.qualcomm.com, linux-kernel@vger.kernel.org, quic_chennak@quicinc.com, 
+	dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org, jingyi.wang@oss.qualcomm.com, 
+	aiqun.yu@oss.qualcomm.com, ktadakam@qti.qualcomm.com
+Subject: Re: [PATCH v3 3/4] misc: fastrpc: Add support for new DSP IOVA
+ formatting
+Message-ID: <di5fqyh4uygb72xov6zqvg2i2ujlllrnnzlsphlzvghgttdqpe@u6uwwa4rxiow>
+References: <20251114084142.3386682-1-kumari.pallavi@oss.qualcomm.com>
+ <20251114084142.3386682-4-kumari.pallavi@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 1/4] dt-bindings: misc: qcom,fastrpc: Add compatible
- for Kaanapali
-To: Kumari Pallavi <kumari.pallavi@oss.qualcomm.com>,
- kpallavi@qti.qualcomm.com, srini@kernel.org, amahesh@qti.qualcomm.com,
- arnd@arndb.de, gregkh@linuxfoundation.org
-Cc: quic_bkumar@quicinc.com, ekansh.gupta@oss.qualcomm.com,
- linux-kernel@vger.kernel.org, quic_chennak@quicinc.com,
- dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
- jingyi.wang@oss.qualcomm.com, aiqun.yu@oss.qualcomm.com,
- ktadakam@qti.qualcomm.com
-References: <20251114084142.3386682-1-kumari.pallavi@oss.qualcomm.com>
- <20251114084142.3386682-2-kumari.pallavi@oss.qualcomm.com>
-From: Krzysztof Kozlowski <krzk@kernel.org>
-Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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 a/A=
-In-Reply-To: <20251114084142.3386682-2-kumari.pallavi@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20251114084142.3386682-4-kumari.pallavi@oss.qualcomm.com>
 
-On 14/11/2025 09:41, Kumari Pallavi wrote:
-> Add a new compatible string "qcom,kaanapali-fastrpc" to support
-> for Kaanapali SoC.
+On Fri, Nov 14, 2025 at 02:11:41PM +0530, Kumari Pallavi wrote:
+> Implement the new IOVA formatting required by the DSP architecture change
+> on Kaanapali SoC. Place the SID for DSP DMA transactions at bit 56 in the
+> physical address. This placement is necessary for the DSPs to correctly
+> identify streams and operate as intended.
+> To address this, set SID position to bit 56 via OF matching on the fastrpc
+> node; otherwise, default to legacy 32-bit placement.
+> This change ensures consistent SID placement across DSPs.
 > 
+
+In patch 2 I said I think it would be a good idea to separate the two
+perspectives (Linux/SMMU vs remote addresses).
+
+Looking ta this patch I'm completely convinced that it's the right thing
+to do!
+
 > Signed-off-by: Kumari Pallavi <kumari.pallavi@oss.qualcomm.com>
 > ---
+>  drivers/misc/fastrpc.c | 46 +++++++++++++++++++++++++++++++++++-------
+>  1 file changed, 39 insertions(+), 7 deletions(-)
+> 
+> diff --git a/drivers/misc/fastrpc.c b/drivers/misc/fastrpc.c
+> index d6a7960fe716..bcf3c7f8d3e9 100644
+> --- a/drivers/misc/fastrpc.c
+> +++ b/drivers/misc/fastrpc.c
+> @@ -33,7 +33,6 @@
+>  #define FASTRPC_ALIGN		128
+>  #define FASTRPC_MAX_FDLIST	16
+>  #define FASTRPC_MAX_CRCLIST	64
+> -#define FASTRPC_PHYS(p)	((p) & 0xffffffff)
+>  #define FASTRPC_CTX_MAX (256)
+>  #define FASTRPC_INIT_HANDLE	1
+>  #define FASTRPC_DSP_UTILITIES_HANDLE	2
+> @@ -105,6 +104,15 @@
+>  
+>  #define miscdev_to_fdevice(d) container_of(d, struct fastrpc_device, miscdev)
+>  
+> +/* Extract smmu pa from consolidated iova */
+> +#define IPA_TO_DMA_ADDR(iova, sid_pos) (iova & ((1ULL << sid_pos) - 1ULL))
+> +/*
+> + * Prepare the consolidated iova to send to dsp by prepending the sid
+> + * to smmu pa at the appropriate position
+> + */
+> +#define IOVA_FROM_SID_PA(sid, phys, sid_pos) \
+> +       (phys += sid << sid_pos)
 
-You not only did not bother to test it - there are obvious bugs here -
-but you also did not send it to mailing lists for actual testing by
-Rob's bot.
+This is a horrible macro. It looks just like a function taking values,
+it's named to sound like it takes a sid and pa and return an iova, but
+it has side effects.
 
-NAK
+And what's up with the ordering? Take argument 1 and 3, and put the
+result in argument 2?!
 
-Best regards,
-Krzysztof
+> +
+>  struct fastrpc_phy_page {
+>  	u64 addr;		/* physical or dma address */
+>  	u64 size;		/* size of contiguous region */
+> @@ -257,6 +265,10 @@ struct fastrpc_session_ctx {
+>  	bool valid;
+>  };
+>  
+> +struct fastrpc_soc_data {
+> +	u32 sid_pos;
+> +};
+> +
+>  struct fastrpc_channel_ctx {
+>  	int domain_id;
+>  	int sesscount;
+> @@ -278,6 +290,7 @@ struct fastrpc_channel_ctx {
+>  	bool secure;
+>  	bool unsigned_support;
+>  	u64 dma_mask;
+> +	const struct fastrpc_soc_data *soc_data;
+>  };
+>  
+>  struct fastrpc_device {
+> @@ -390,7 +403,7 @@ static int fastrpc_map_lookup(struct fastrpc_user *fl, int fd,
+>  static void fastrpc_buf_free(struct fastrpc_buf *buf)
+>  {
+>  	dma_free_coherent(buf->dev, buf->size, buf->virt,
+> -			  FASTRPC_PHYS(buf->dma_addr));
+> +			  IPA_TO_DMA_ADDR(buf->dma_addr, buf->fl->cctx->soc_data->sid_pos));
+>  	kfree(buf);
+>  }
+>  
+> @@ -440,7 +453,8 @@ static int fastrpc_buf_alloc(struct fastrpc_user *fl, struct device *dev,
+>  	buf = *obuf;
+>  
+>  	if (fl->sctx && fl->sctx->sid)
+> -		buf->dma_addr += ((u64)fl->sctx->sid << 32);
+> +		IOVA_FROM_SID_PA((u64)fl->sctx->sid, buf->dma_addr,
+> +				 fl->cctx->soc_data->sid_pos);
+
+There's no way _you_ can look at this statement and feel that it's going
+to add the first argument shifted by the third argument, to the second
+argument.
+
+Please write that is easy to read, follow and possible to maintain!
+
+Regards,
+Bjorn
+
+>  
+>  	return 0;
+>  }
+> @@ -685,7 +699,8 @@ static int fastrpc_dma_buf_attach(struct dma_buf *dmabuf,
+>  		return -ENOMEM;
+>  
+>  	ret = dma_get_sgtable(buffer->dev, &a->sgt, buffer->virt,
+> -			      FASTRPC_PHYS(buffer->dma_addr), buffer->size);
+> +			      IPA_TO_DMA_ADDR(buffer->dma_addr,
+> +			      buffer->fl->cctx->soc_data->sid_pos), buffer->size);
+>  	if (ret < 0) {
+>  		dev_err(buffer->dev, "failed to get scatterlist from DMA API\n");
+>  		kfree(a);
+> @@ -734,7 +749,8 @@ static int fastrpc_mmap(struct dma_buf *dmabuf,
+>  	dma_resv_assert_held(dmabuf->resv);
+>  
+>  	return dma_mmap_coherent(buf->dev, vma, buf->virt,
+> -				 FASTRPC_PHYS(buf->dma_addr), size);
+> +				 IPA_TO_DMA_ADDR(buf->dma_addr,
+> +				 buf->fl->cctx->soc_data->sid_pos), size);
+>  }
+>  
+>  static const struct dma_buf_ops fastrpc_dma_buf_ops = {
+> @@ -789,7 +805,8 @@ static int fastrpc_map_attach(struct fastrpc_user *fl, int fd,
+>  		map->dma_addr = sg_phys(map->table->sgl);
+>  	} else {
+>  		map->dma_addr = sg_dma_address(map->table->sgl);
+> -		map->dma_addr += ((u64)fl->sctx->sid << 32);
+> +		IOVA_FROM_SID_PA((u64)fl->sctx->sid,
+> +				 map->dma_addr, fl->cctx->soc_data->sid_pos);
+>  	}
+>  	for_each_sg(map->table->sgl, sgl, map->table->nents,
+>  		sgl_index)
+> @@ -2289,6 +2306,14 @@ static int fastrpc_get_domain_id(const char *domain)
+>  	return -EINVAL;
+>  }
+>  
+> +static const struct fastrpc_soc_data kaanapali_soc_data = {
+> +	.sid_pos = 56,
+> +};
+> +
+> +static const struct fastrpc_soc_data default_soc_data = {
+> +	.sid_pos = 32,
+> +};
+> +
+>  static int fastrpc_rpmsg_probe(struct rpmsg_device *rpdev)
+>  {
+>  	struct device *rdev = &rpdev->dev;
+> @@ -2297,6 +2322,11 @@ static int fastrpc_rpmsg_probe(struct rpmsg_device *rpdev)
+>  	const char *domain;
+>  	bool secure_dsp;
+>  	unsigned int vmids[FASTRPC_MAX_VMIDS];
+> +	const struct fastrpc_soc_data *soc_data = NULL;
+> +
+> +	soc_data = device_get_match_data(rdev);
+> +	if (!soc_data)
+> +		soc_data = &default_soc_data;
+>  
+>  	err = of_property_read_string(rdev->of_node, "label", &domain);
+>  	if (err) {
+> @@ -2349,6 +2379,7 @@ static int fastrpc_rpmsg_probe(struct rpmsg_device *rpdev)
+>  
+>  	secure_dsp = !(of_property_read_bool(rdev->of_node, "qcom,non-secure-domain"));
+>  	data->secure = secure_dsp;
+> +	data->soc_data = soc_data;
+>  
+>  	switch (domain_id) {
+>  	case ADSP_DOMAIN_ID:
+> @@ -2486,7 +2517,8 @@ static int fastrpc_rpmsg_callback(struct rpmsg_device *rpdev, void *data,
+>  }
+>  
+>  static const struct of_device_id fastrpc_rpmsg_of_match[] = {
+> -	{ .compatible = "qcom,fastrpc" },
+> +	{ .compatible = "qcom,kaanapali-fastrpc", .data = &kaanapali_soc_data },
+> +	{ .compatible = "qcom,fastrpc", .data = &default_soc_data },
+>  	{ },
+>  };
+>  MODULE_DEVICE_TABLE(of, fastrpc_rpmsg_of_match);
+> -- 
+> 2.34.1
+> 
+> 
 
