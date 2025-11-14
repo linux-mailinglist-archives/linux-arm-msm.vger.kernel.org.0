@@ -1,113 +1,175 @@
-Return-Path: <linux-arm-msm+bounces-81911-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-81912-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [IPv6:2605:f480:58:1:0:1994:3:14])
-	by mail.lfdr.de (Postfix) with ESMTPS id D2913C5EBAF
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Nov 2025 19:05:54 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 99228C5F0B8
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Nov 2025 20:32:31 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 2CDF74F4598
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Nov 2025 17:58:58 +0000 (UTC)
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id F0D754E15B2
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Nov 2025 19:27:44 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 117772D3737;
-	Fri, 14 Nov 2025 17:57:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id F24D32E1EFC;
+	Fri, 14 Nov 2025 19:27:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Xu0OuBEW"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="uNaeUx2q"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C76682D29D1;
-	Fri, 14 Nov 2025 17:57:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1BB0256C61;
+	Fri, 14 Nov 2025 19:27:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763143061; cv=none; b=tYJ50XDW4EP5vZD0pRaCbyp56rg+efjZTjvYsDTbTA5URSXZ/DW7wfxDiCjJ4tfCTxDi7SUHZLBbdPmaG2maDGND/evjFOA3WneP+6kWat0E0JOctrVc6Smbus/zC6Dn2Qe8AJazc1a6My7iYjiRT7+DNmpC77flx4dnOSBrcPQ=
+	t=1763148460; cv=none; b=P72IENkxLZpgdPMuKBxp+nwKwbWcbJUBWQTdqok8wmlbh5ND6P2E85lWoNn/5Jmafs50z1YuVjS91u+9utObWgwxtIDtmLL5lfn4pSplBrTgQK9WOG7rR/J2ogYLZxLUUSTpNYGsokRVMMgwsBF9cMD5ubNr8xOCHUVLgA8JNrs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763143061; c=relaxed/simple;
-	bh=vfL1Pl5c9TiW8/PwiGRW6nnpwuYEWu4MfO4FlaLmKHI=;
+	s=arc-20240116; t=1763148460; c=relaxed/simple;
+	bh=4zS6kNpvotULTCAWIlQuSkSHH1YFH0RmzTXAaBQMR4k=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=lHbsZvGrYsPC6W0ZbEfS7Q7/BGCwStjtjZ0+D+KJcsuMSTlwc6Jt6G+Y2utVgaOpPL39qXd3OCHl0nOyZBH4pRisgbd7cdsnVD/YMGvfRFTHiJb2QIXCgB9TDa35UPsUeJ4oUhXggIQmcn7Bzh1OsarZXSHMFmO6Tx2ypK40XBs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Xu0OuBEW; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E157C4CEF1;
-	Fri, 14 Nov 2025 17:57:41 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=rwGe+Eh24hc1e3F0P2SZI8wgvo36Cq1IgGaM1JIvILWGhyPjylPRs4A8tkwkeo4cMr1BsmxcT6y7VB6MciEoHTuGeV+y0TBhEdBtydBA1PlOY3P29wQzWUm6Z4JNeFG9AhaNwnAs1IckzuwzkYpbFk1fCMeDBCvFPOTLGQpU5lk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=uNaeUx2q; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B49DC4CEF5;
+	Fri, 14 Nov 2025 19:27:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1763143061;
-	bh=vfL1Pl5c9TiW8/PwiGRW6nnpwuYEWu4MfO4FlaLmKHI=;
+	s=k20201202; t=1763148460;
+	bh=4zS6kNpvotULTCAWIlQuSkSHH1YFH0RmzTXAaBQMR4k=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=Xu0OuBEWCNcolV9hhQObYp9kEcBWREwXELrFxs6Dn5F2/wauksne/QZLElvFfOcOJ
-	 /KpeikNwouH60qUgW8TB4qMGaiId5DNDddBrp1NPKER/Dfmxl3bm7pim1IbSxFIB2B
-	 i97Qi4e1nvvr3hSFz4YqtfVti2Bg6kIpvqJP1NGVPw/dclDCR9ewE/mzoB1zy2Vbum
-	 RYMqOvufhORb6Do3p3d06qiM6vI+QHCea+0jbUF+qLau8jljoW0TM6+c/8Vu8TL0fV
-	 3YBHnaIIvL02TNvlqkVAlYJPhSCjExbFzP098OfwyMFXS7j5w9nWiA4L0hDFzUSdv4
-	 Qh3MysW9mB8UQ==
-Date: Fri, 14 Nov 2025 11:57:39 -0600
-From: Rob Herring <robh@kernel.org>
-To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc: Bjorn Helgaas <bhelgaas@google.com>,
-	Lorenzo Pieralisi <lpieralisi@kernel.org>,
-	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
-	Manivannan Sadhasivam <mani@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 00/12] dt-bindings: PCI: qcom: Move remaining devices to
- dedicated schema
-Message-ID: <20251114175739.GA3805640-robh@kernel.org>
-References: <20251103-dt-bindings-pci-qcom-v1-0-c0f6041abf9b@linaro.org>
+	b=uNaeUx2q26LSO9Ug4y9BK9zI6eQ4LVLoGARLCvMJJINSkBqiToXBchG+YscwoDAWP
+	 ZIDuaDEcQ60I+wzPQeJtTC0XZM6WgpBi0ctpMwRWd3K5EdIq0E8JGXyCuUkgTUkYOA
+	 XoCKEUdBOvA6u9xBw0fOsWWcYKH0clrO5ZbkiqloPKmq0Ld3jn1IAZFbUNFmoo5k0V
+	 DyYv1X948/0JjKjRdl5I+C4qj03VhZTEgESoZ9qKkZeY3ED1V7v+J4dpkEbGlgpoyA
+	 P8oUvy3bzUGA2rX02fe4vnHDP3jNFHlKqDan1PA4qb5HdorufY8lydZvj28cGXveeZ
+	 bLDXTeBoLfMSQ==
+Date: Fri, 14 Nov 2025 13:32:08 -0600
+From: Bjorn Andersson <andersson@kernel.org>
+To: Ram Kumar Dwivedi <ram.dwivedi@oss.qualcomm.com>
+Cc: mani@kernel.org, alim.akhtar@samsung.com, avri.altman@wdc.com, 
+	bvanassche@acm.org, robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org, 
+	James.Bottomley@hansenpartnership.com, martin.petersen@oracle.com, quic_ahari@quicinc.com, 
+	linux-arm-msm@vger.kernel.org, linux-scsi@vger.kernel.org, devicetree@vger.kernel.org, 
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH V1 2/3] dt-bindings: ufs: Document bindings for SA8255P
+ UFS Host Controller
+Message-ID: <p6a5nazgd74fwbo6c3ctgvwifcigwwn4azkiu7nrmovrn5cmqn@nxzryxyx4oao>
+References: <20251114145646.2291324-1-ram.dwivedi@oss.qualcomm.com>
+ <20251114145646.2291324-3-ram.dwivedi@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20251103-dt-bindings-pci-qcom-v1-0-c0f6041abf9b@linaro.org>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20251114145646.2291324-3-ram.dwivedi@oss.qualcomm.com>
 
-On Mon, Nov 03, 2025 at 04:14:40PM +0100, Krzysztof Kozlowski wrote:
-> Some time ago I already moved several devices from qcom,pcie.yaml
-> binding to a dedicated binding files for easier reviewing and
-> maintenance.
+On Fri, Nov 14, 2025 at 08:26:45PM +0530, Ram Kumar Dwivedi wrote:
+> From: Ram Kumar Dwivedi <quic_rdwivedi@quicinc.com>
 > 
-> Move the remaining one which makes the qcom,pcie.yaml empty thus can be
-> entirely removed.
+> Document the device tree bindings for UFS host controller on
+> Qualcomm SA8255P platform which integrates firmware-managed
+> resources.
 > 
-> Best regards,
-> Krzysztof
+> The platform firmware implements the SCMI server and manages
+> resources such as the PHY, clocks, regulators and resets via the
+> SCMI power protocol. As a result, the OS-visible DT only describes
+> the controller’s MMIO, interrupt, IOMMU and power-domain interfaces.
 > 
+> The generic "qcom,ufshc" and "jedec,ufs-2.0" compatible strings are
+> removed from the binding, since this firmware managed design won't
+> be compatible with the drivers doing full resource management.
+> 
+> Co-developed-by: Anjana Hari <quic_ahari@quicinc.com>
+> Signed-off-by: Anjana Hari <quic_ahari@quicinc.com>
+> Signed-off-by: Ram Kumar Dwivedi <quic_rdwivedi@quicinc.com>
 > ---
-> Krzysztof Kozlowski (12):
->       dt-bindings: PCI: qcom,pcie-sm8150: Merge SC8180x into SM8150
->       dt-bindings: PCI: qcom,pcie-sdx55: Move SDX55 to dedicated schema
->       dt-bindings: PCI: qcom,pcie-sdm845: Move SDM845 to dedicated schema
->       dt-bindings: PCI: qcom,pcie-qcs404: Move QCS404 to dedicated schema
->       dt-bindings: PCI: qcom,pcie-ipq5018: Move IPQ5018 to dedicated schema
->       dt-bindings: PCI: qcom,pcie-ipq6018: Move IPQ6018 and IPQ8074 Gen3 to dedicated schema
->       dt-bindings: PCI: qcom,pcie-ipq8074: Move IPQ8074 to dedicated schema
->       dt-bindings: PCI: qcom,pcie-ipq4019: Move IPQ4019 to dedicated schema
->       dt-bindings: PCI: qcom,pcie-ipq9574: Move IPQ9574 to dedicated schema
->       dt-bindings: PCI: qcom,pcie-apq8064: Move APQ8064 to dedicated schema
->       dt-bindings: PCI: qcom,pcie-msm8996: Move MSM8996 to dedicated schema
->       dt-bindings: PCI: qcom,pcie-apq8084: Move APQ8084 to dedicated schema
+>  .../bindings/ufs/qcom,sa8255p-ufshc.yaml      | 63 +++++++++++++++++++
+>  1 file changed, 63 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/ufs/qcom,sa8255p-ufshc.yaml
 > 
->  .../devicetree/bindings/pci/qcom,pcie-apq8064.yaml | 170 +++++
->  .../devicetree/bindings/pci/qcom,pcie-apq8084.yaml | 109 +++
->  .../devicetree/bindings/pci/qcom,pcie-ipq4019.yaml | 146 ++++
->  .../devicetree/bindings/pci/qcom,pcie-ipq5018.yaml | 189 +++++
->  .../devicetree/bindings/pci/qcom,pcie-ipq6018.yaml | 179 +++++
->  .../devicetree/bindings/pci/qcom,pcie-ipq8074.yaml | 165 +++++
->  .../devicetree/bindings/pci/qcom,pcie-ipq9574.yaml | 183 +++++
->  .../devicetree/bindings/pci/qcom,pcie-msm8996.yaml | 156 ++++
->  .../devicetree/bindings/pci/qcom,pcie-qcs404.yaml  | 131 ++++
->  .../devicetree/bindings/pci/qcom,pcie-sc8180x.yaml | 168 -----
->  .../devicetree/bindings/pci/qcom,pcie-sdm845.yaml  | 190 +++++
->  .../devicetree/bindings/pci/qcom,pcie-sdx55.yaml   | 172 +++++
->  .../devicetree/bindings/pci/qcom,pcie-sm8150.yaml  |   1 +
->  .../devicetree/bindings/pci/qcom,pcie.yaml         | 782 ---------------------
->  14 files changed, 1791 insertions(+), 950 deletions(-)
+> diff --git a/Documentation/devicetree/bindings/ufs/qcom,sa8255p-ufshc.yaml b/Documentation/devicetree/bindings/ufs/qcom,sa8255p-ufshc.yaml
+> new file mode 100644
+> index 000000000000..3b31f6282feb
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/ufs/qcom,sa8255p-ufshc.yaml
+> @@ -0,0 +1,63 @@
+> +# SPDX-License-Identifier: GPL-2.0-only OR BSD-2-Clause
+> +%YAML 1.2
+> +---
+> +$id: http://devicetree.org/schemas/ufs/qcom,sa8255p-ufshc.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> +
+> +title: Qualcomm SA8255P UFS Host Controller
+> +
+> +maintainers:
+> +  - Ram Kumar Dwivedi <ram.dwivedi@oss.qualcomm.com>
+> +  - Anjana Hari <quic_ahari@quicinc.com>
 
-Reviewed-by: Rob Herring (Arm) <robh@kernel.org>
+This should be @oss.qualcomm.com, or @qti.qualcomm.com, not
+@quicinc.com.
+
+> +
+> +properties:
+> +  compatible:
+> +    const: qcom,sa8255p-ufshc
+> +
+> +  reg:
+> +    maxItems: 1
+> +
+> +  interrupts:
+> +    maxItems: 1
+> +
+> +  iommus:
+> +    maxItems: 1
+> +
+> +  dma-coherent:
+> +    type: boolean
+> +
+> +  power-domains:
+> +    maxItems: 1
+> +
+> +required:
+> +  - compatible
+> +  - reg
+> +  - interrupts
+> +  - power-domains
+> +  - iommus
+> +  - dma-coherent
+> +
+> +allOf:
+> +  - $ref: ufs-common.yaml
+> +
+> +unevaluatedProperties: false
+> +
+> +examples:
+> +  - |
+> +    #include <dt-bindings/interrupt-controller/arm-gic.h>
+> +
+> +    soc {
+> +        #address-cells = <2>;
+> +        #size-cells = <2>;
+> +
+> +        ufshc@1d84000 {
+> +            compatible = "qcom,sa8255p-ufshc";
+> +            reg = <0x0 0x01d84000 0x0 0x3000>;
+
+Drop the two 0x0 and you don't need to change address/size-cells.
+
+Regards,
+Bjorn
+
+> +            interrupts = <GIC_SPI 265 IRQ_TYPE_LEVEL_HIGH>;
+> +            lanes-per-direction = <2>;
+> +
+> +            iommus = <&apps_smmu 0x100 0x0>;
+> +            power-domains = <&scmi3_pd 0>;
+> +            dma-coherent;
+> +        };
+> +    };
+> -- 
+> 2.34.1
+> 
+> 
 
