@@ -1,403 +1,194 @@
-Return-Path: <linux-arm-msm+bounces-81893-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-81889-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ams.mirrors.kernel.org (ams.mirrors.kernel.org [IPv6:2a01:60a::1994:3:14])
-	by mail.lfdr.de (Postfix) with ESMTPS id 62224C5DD25
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Nov 2025 16:21:50 +0100 (CET)
+Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [IPv6:2605:f480:58:1:0:1994:3:14])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3B7DEC5DCA5
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Nov 2025 16:15:46 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ams.mirrors.kernel.org (Postfix) with ESMTPS id ABB05368AC3
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Nov 2025 15:08:26 +0000 (UTC)
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 5B8185028B8
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Nov 2025 15:03:43 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5377A33DEF5;
-	Fri, 14 Nov 2025 14:57:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 082C0329363;
+	Fri, 14 Nov 2025 14:53:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="Aq3cTo12";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="SpXU1cgI"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Azbldzaj"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69BC633D6CB
-	for <linux-arm-msm@vger.kernel.org>; Fri, 14 Nov 2025 14:57:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF3EE3254A5;
+	Fri, 14 Nov 2025 14:53:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763132248; cv=none; b=nkDEDMvHVHUbBPK6ucisFcJpzoWVt3WTv4wT73aaH1ooCwFuqVdNWDtiEn+NrRXuZw0zrwkIVP7OXY8HCYGqvZIj8MZ7btuF0V2gH3oon11rF0D5pg/pEU+FGNo5WR8ESXtLJknZ7HfBSxJ8fe4o/eRCiIjUK8Uyq4D/LjvgExA=
+	t=1763132028; cv=none; b=iWmEidvq6Gepi+y2my26+zygyBGIc3GCj+QMHybc7AxWbPumjYVlDedU+V2ww1F4MgqLkZO9r4ZaRzx2YhrUfY51LaG5Ss2w8UJTmAAvq4Z/MxQy8AVM++8q9pFxYDBVNXdqByK2FBsK2LmqCGnNbctX9GZDAW5vp4kNPEdZbV4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763132248; c=relaxed/simple;
-	bh=NDU/9DTGFzTS6lHtk5lvp+cXA2+ZXVND12r05xXFGZw=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=cqqxOBmwCz2eIfZ2/Q+GiCTy115KQDM5GbSm/+fr+TxAktRRYlylE6WCeKPCHAY1GFG4tGzjucBu4g+A70pC5+p2Ixx/wCK9eoai6fY4mfjWjynGsu6sTQnoZBatvkPfnkYABAY5pasSDGZXCpeiRR/F/ttCdZvqcZMp773DKms=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=Aq3cTo12; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=SpXU1cgI; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 5AE80GhJ1484495
-	for <linux-arm-msm@vger.kernel.org>; Fri, 14 Nov 2025 14:57:25 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:date:from:in-reply-to:message-id
-	:mime-version:references:subject:to; s=qcppdkim1; bh=aq+XT4jKptJ
-	SUIP35BrFeVRs5wjC8qJyB9EbrAfv+z4=; b=Aq3cTo12ElBNQ94jgVomCptbPf1
-	JaUEenX5oCJTddwHklj9x+zd58hXR3oK0KOH4dC4JFnopubYwgrkP0bGRjT8B1fU
-	yjhi70mjR1dmXbL3OrxAag5/GO8XIz8LkRALKta4RfvVYRqru+YK9LG0mikuhtUA
-	tddMy6k5p5v+HEeQJb2o9Tnpur53sLSf+yBAtMY5tqx9V88ExjVDvng3Rpn7mI6x
-	db1vgHHXBlN9aYkUlArPxnhuOwlzDp/+zNJaBqHO5Okm+bIiwozARBoHv2KI6sOM
-	rHz+JohAfywYdJwBffUCSTEXEugMVTkgfzhtJwW98Hcl1VyI25YLB63x0Eg==
-Received: from mail-pg1-f199.google.com (mail-pg1-f199.google.com [209.85.215.199])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4adr9cjhu3-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Fri, 14 Nov 2025 14:57:25 +0000 (GMT)
-Received: by mail-pg1-f199.google.com with SMTP id 41be03b00d2f7-b5edecdf94eso4139906a12.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 14 Nov 2025 06:57:25 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1763132245; x=1763737045; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=aq+XT4jKptJSUIP35BrFeVRs5wjC8qJyB9EbrAfv+z4=;
-        b=SpXU1cgI6mqGqsrgcFt0RM0QHdPIuMszpsqg8SgA3t5sNMVOR9bH3lAs2KtnMG6kZx
-         KZH3DS6at3g2Ra7wwykxRVX2+0rdKvOyLQTe+Z3fO9QgjMDasB6BRSGaim+46N/MO7qG
-         jG47iWXJPkvyXUHghjVNALnl0i+OSXLkv8DJ4C6do/SR9EpE+4Bda92MPMYVtWGfoj7q
-         hGNoA+vr4KWyZrCkpbMCTSs5h1nEeyhKpYDLZn3Qi4ZLARK1fjjCtpioqZOgDysG2h+W
-         7vA6GFqtKDK9MQZIKOGJYs+0knskcDFroa4IY6xWzSbz3PiJ3eOu+OhpDZGyjdZZ9vt9
-         +BvA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1763132245; x=1763737045;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=aq+XT4jKptJSUIP35BrFeVRs5wjC8qJyB9EbrAfv+z4=;
-        b=UcjkLNLovUYmAwc921q06pyfkjLlFo6xmo3jdduCqhMpl775DjqDOQWxazK8EdVspJ
-         EznJaEwIPZxL542j23MjMKK4HzHdDbBjNZyQztBSlZJZIxD15GB8thZxSjoxOEUIoQcY
-         qz3D2NAxMJNZOXNRA6t8OHIlK5vi8x/gXxXupF3nZG9q1ZiuBKdYVeKrvxBsHvaaaHOw
-         F+4lPwPa2UISWiZPWDCcNWrRHSTutYDCaRb5ImsBIp+ZZA9f9raJAgzKFWJw/36Ysi7+
-         mqPdZnfJlV7g+4yu6LvVs7dwoJm16SfVl45eyRqQv6IJWZrq3bDm6AFECwQexVCNhtsj
-         tjVw==
-X-Gm-Message-State: AOJu0Yzq26I/Wyu3fsXcZjW8TWWg5JwgB2MB/Dy8M1WIaFNZlCursCrg
-	bwu/+kGaZ0JrNyV4wtDrN2+5H6/haSJWFSfgeF2Lj7nOuIM9DT3UduZ/5Uw9aqDRChW6LhCe/SN
-	PF8bQfRDKyxkCbRAI/vFR/fy2U/XlzOwu6ARsstEC+4H3VBVYoohkkn6QskQHC9yMp9yy
-X-Gm-Gg: ASbGncv4mx1JCitzoAuArn7r+xLhS0pLFCYQiOYIAhEMn5hJR696qvIntdLfG/ej0Fs
-	aPjfUUPUztNCn5WgerXha8zo/u0l458ONwcbJ+8OOEi+gEpZwpcHy09JPLysc6AkllWIJ1Rk6fO
-	ZlcgmIkKj8OGGRqHGIZxijHeUD9bi5u+619eCHD8w1YphPRMRx+3onZ4+QnY0qpakZ2o1S9CSzN
-	IucgO2UXqSHM9dgg21Tfkb44qT68JcePKEH8QK1iKy5XP1lH8DKXKQdwDyfFxxjwrRDP3wDPo9q
-	CQlSDKDCxBGhnu2sse1I/ZhUUIjQc8bXlSnsYvuCRfUj/ukazu6tibQEf1i/ksFCH/x7Hj88qvf
-	rSpIH6N0GdxODBhQ75xXLsSpIJdIJyA==
-X-Received: by 2002:a17:902:e548:b0:294:fb21:ae07 with SMTP id d9443c01a7336-2986a6d692dmr37469135ad.21.1763132244625;
-        Fri, 14 Nov 2025 06:57:24 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHLkk2GCSNJknT6ol4YR4oPjskABRG9VD9RIRBzBKsc5wu7Io5HACafNijLahG9P+6hwQPyAw==
-X-Received: by 2002:a17:902:e548:b0:294:fb21:ae07 with SMTP id d9443c01a7336-2986a6d692dmr37468815ad.21.1763132244095;
-        Fri, 14 Nov 2025 06:57:24 -0800 (PST)
-Received: from hu-rdwivedi-hyd.qualcomm.com ([202.46.22.19])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2985c244e13sm57548015ad.29.2025.11.14.06.57.19
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 14 Nov 2025 06:57:23 -0800 (PST)
-From: Ram Kumar Dwivedi <ram.dwivedi@oss.qualcomm.com>
-To: mani@kernel.org, alim.akhtar@samsung.com, avri.altman@wdc.com,
-        bvanassche@acm.org, robh@kernel.org, krzk+dt@kernel.org,
-        conor+dt@kernel.org, James.Bottomley@HansenPartnership.com,
-        martin.petersen@oracle.com, ram.dwivedi@oss.qualcomm.com,
-        quic_ahari@quicinc.com
-Cc: linux-arm-msm@vger.kernel.org, linux-scsi@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Shazad Hussain <quic_shazhuss@quicinc.com>
-Subject: [PATCH V1 3/3] ufs: ufs-qcom: Add support for firmware-managed resource abstraction
-Date: Fri, 14 Nov 2025 20:26:46 +0530
-Message-Id: <20251114145646.2291324-4-ram.dwivedi@oss.qualcomm.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20251114145646.2291324-1-ram.dwivedi@oss.qualcomm.com>
-References: <20251114145646.2291324-1-ram.dwivedi@oss.qualcomm.com>
+	s=arc-20240116; t=1763132028; c=relaxed/simple;
+	bh=Ro/DF230ZGwthADA1lsr1FsD+fogDSrK16pFZ2ozOzI=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=swxY9pwv7u0xg0Xfq1FtXl9sHozbameqyjFER/YZMidHsPpzuf2EtAhCr7HO5R6KzyijQW63q9NSry+WSZjgYE0oWw9HtsXbIO63h7Hfit4Dn7QAGmAWpJLxPOtukZrJ3iDuxEpO+8KNcNJScvzd6tAh1Gy0JHvnzKWsZsxDM+M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Azbldzaj; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8D07C4CEF1;
+	Fri, 14 Nov 2025 14:53:47 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1763132028;
+	bh=Ro/DF230ZGwthADA1lsr1FsD+fogDSrK16pFZ2ozOzI=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=AzbldzajoFm89ifePnj3q+hKc0BQlawjtpqydnTs2RlBdV/vJg4oT27SVuILz0FxR
+	 GJY8ItMS7YhGfRkj3WwF0ykprGQ9Zvg81Z1oXqV8BcmiMyLNiPReu4R4eI5ydEuY3f
+	 CzWUyKIMy5t2KOYmjfamKVwpuhOXyvuK7c9wtrLqsM7PoiUDvjkPGKiEKkkLCEXSv1
+	 FdiWvLI0ltZtmBRlEkluHIa9udlsrDkFIqoOwt5Ze03fiDDe1a9QE5VGvl8beAiEew
+	 R+Rct3HTgDEudzBRGyz0vR+/0Zp4KbTdejNBuqSjP1KZpaKaxB2nogHcaShNBbmrLe
+	 9y9u/sehJ5bZg==
+Date: Fri, 14 Nov 2025 08:58:15 -0600
+From: Bjorn Andersson <andersson@kernel.org>
+To: Sarthak Garg <sarthak.garg@oss.qualcomm.com>
+Cc: Adrian Hunter <adrian.hunter@intel.com>, 
+	Ulf Hansson <ulf.hansson@linaro.org>, linux-arm-msm@vger.kernel.org, linux-mmc@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, quic_nguyenb@quicinc.com, quic_rampraka@quicinc.com, 
+	quic_pragalla@quicinc.com, quic_sayalil@quicinc.com, quic_nitirawa@quicinc.com, 
+	quic_bhaskarv@quicinc.com, kernel@oss.qualcomm.com
+Subject: Re: [PATCH V2] mmc: sdhci-msm: Avoid early clock doubling during
+ HS400 transition
+Message-ID: <e4t2tutkygmka6ynytztjy47mey3trwekyyzxx7dzyqnb3xmqq@3gk5zgj5kvqg>
+References: <20251114082824.3825501-1-sarthak.garg@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-GUID: t4xelAT-kxRSBMQMMF4qBFper2dBI8ue
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMTE0MDEyMCBTYWx0ZWRfXwB88pWN/PI9w
- WNBHX/3PkDslkU1+jUbGxkFfWR6OcWyyKlKwkfeyWgb1e15j1c6r/n7CCDPi7zPyjlxZpDe03Yj
- 200RABwF55MGtRxrue+Z/8Bqrp+B3f35zWZGRPUCp9lxjAtHLNsiGApPML1KBawoZGC/Ug0Bqiv
- G01ByPEAb/2oAkGmTgOhKiiZ4cErnMtomjshYvWIUjv6YnITr30aRWznnK/uXMoxO5Sj1C4h9cV
- GngCEInXa0YV6emWir+IHo+qkAgD9TGS+DLsFk3W9XnHH3TJ659KXMBa9Hh4sZafU+fCWwDLqKE
- zTxRPxtepQD5UgBm74eJhzwJXjo+RGwkVQZ6tr3R6gryxkaA0zMz2zbq5RE2JejUCz4vCv0PbMc
- DBt7PzXtvmHJFHAZ1RRrssUXFuR0Zg==
-X-Authority-Analysis: v=2.4 cv=MNdtWcZl c=1 sm=1 tr=0 ts=69174355 cx=c_pps
- a=Oh5Dbbf/trHjhBongsHeRQ==:117 a=fChuTYTh2wq5r3m49p7fHw==:17
- a=6UeiqGixMTsA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=COk6AnOGAAAA:8 a=TgZdhWxOq2hPTxl1y-EA:9 a=_Vgx9l1VpLgwpw_dHYaR:22
- a=TjNXssC_j7lpFel5tvFf:22
-X-Proofpoint-ORIG-GUID: t4xelAT-kxRSBMQMMF4qBFper2dBI8ue
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
- definitions=2025-11-14_04,2025-11-13_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 suspectscore=0 priorityscore=1501 bulkscore=0 spamscore=0
- clxscore=1015 lowpriorityscore=0 adultscore=0 malwarescore=0 phishscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2510240001 definitions=main-2511140120
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20251114082824.3825501-1-sarthak.garg@oss.qualcomm.com>
 
-From: Ram Kumar Dwivedi <quic_rdwivedi@quicinc.com>
+On Fri, Nov 14, 2025 at 01:58:24PM +0530, Sarthak Garg wrote:
+> According to the hardware programming guide, the clock frequency must
+> remain below 52MHz during the transition to HS400 mode.
+> 
+> However,in the current implementation, the timing is set to HS400 (a
+> DDR mode) before adjusting the clock. This causes the clock to double
+> prematurely to 104MHz during the transition phase, violating the
+> specification and potentially resulting in CRC errors or CMD timeouts.
+> 
+> This change ensures that clock doubling is avoided during intermediate
+> transitions and is applied only when the card requires a 200MHz clock
+> for HS400 operation.
+> 
+> Signed-off-by: Sarthak Garg <sarthak.garg@oss.qualcomm.com>
 
-Add a compatible string for SA8255p platforms where resources such as
-PHY, clocks, regulators, and resets are managed by firmware through an
-SCMI server. Use the SCMI power protocol to abstract these resources and
-invoke power operations via runtime PM APIs (pm_runtime_get/put_sync).
+Thank you for cleaning that up.
 
-Introduce vendor operations (vops) for SA8255p targets to enable SCMI-
-based resource control. In this model, capabilities like clock scaling
-and gating are not yet supported; these will be added incrementally.
+Reviewed-by: Bjorn Andersson <andersson@kernel.org>
 
-Co-developed-by: Anjana Hari <quic_ahari@quicinc.com>
-Signed-off-by: Anjana Hari <quic_ahari@quicinc.com>
-Co-developed-by: Shazad Hussain <quic_shazhuss@quicinc.com>
-Signed-off-by: Shazad Hussain <quic_shazhuss@quicinc.com>
-Signed-off-by: Ram Kumar Dwivedi <quic_rdwivedi@quicinc.com>
----
- drivers/ufs/host/ufs-qcom.c | 161 +++++++++++++++++++++++++++++++++++-
- drivers/ufs/host/ufs-qcom.h |   1 +
- 2 files changed, 161 insertions(+), 1 deletion(-)
+Regards,
+Bjorn
 
-diff --git a/drivers/ufs/host/ufs-qcom.c b/drivers/ufs/host/ufs-qcom.c
-index 8d119b3223cb..13ccf1fb2ebf 100644
---- a/drivers/ufs/host/ufs-qcom.c
-+++ b/drivers/ufs/host/ufs-qcom.c
-@@ -14,6 +14,7 @@
- #include <linux/of.h>
- #include <linux/phy/phy.h>
- #include <linux/platform_device.h>
-+#include <linux/pm_domain.h>
- #include <linux/reset-controller.h>
- #include <linux/time.h>
- #include <linux/unaligned.h>
-@@ -619,6 +620,27 @@ static int ufs_qcom_hce_enable_notify(struct ufs_hba *hba,
- 	return err;
- }
- 
-+static int ufs_qcom_fw_managed_hce_enable_notify(struct ufs_hba *hba,
-+						 enum ufs_notify_change_status status)
-+{
-+	struct ufs_qcom_host *host = ufshcd_get_variant(hba);
-+
-+	switch (status) {
-+	case PRE_CHANGE:
-+		ufs_qcom_select_unipro_mode(host);
-+		break;
-+	case POST_CHANGE:
-+		ufs_qcom_enable_hw_clk_gating(hba);
-+		ufs_qcom_ice_enable(host);
-+		break;
-+	default:
-+		dev_err(hba->dev, "Invalid status %d\n", status);
-+		return -EINVAL;
-+	}
-+
-+	return 0;
-+}
-+
- /**
-  * ufs_qcom_cfg_timers - Configure ufs qcom cfg timers
-  *
-@@ -789,6 +811,38 @@ static int ufs_qcom_resume(struct ufs_hba *hba, enum ufs_pm_op pm_op)
- 	return ufs_qcom_ice_resume(host);
- }
- 
-+static int ufs_qcom_fw_managed_suspend(struct ufs_hba *hba, enum ufs_pm_op pm_op,
-+				       enum ufs_notify_change_status status)
-+{
-+	struct ufs_qcom_host *host = ufshcd_get_variant(hba);
-+
-+	if (status == PRE_CHANGE)
-+		return 0;
-+
-+	if (hba->spm_lvl != UFS_PM_LVL_5) {
-+		dev_err(hba->dev, "Unsupported spm level %d\n", hba->spm_lvl);
-+		return -EINVAL;
-+	}
-+
-+	pm_runtime_put_sync(hba->dev);
-+
-+	return ufs_qcom_ice_suspend(host);
-+}
-+
-+static int ufs_qcom_fw_managed_resume(struct ufs_hba *hba, enum ufs_pm_op pm_op)
-+{
-+	struct ufs_qcom_host *host = ufshcd_get_variant(hba);
-+	int err;
-+
-+	err = pm_runtime_resume_and_get(hba->dev);
-+	if (err) {
-+		dev_err(hba->dev, "PM runtime resume failed: %d\n", err);
-+		return err;
-+	}
-+
-+	return ufs_qcom_ice_resume(host);
-+}
-+
- static void ufs_qcom_dev_ref_clk_ctrl(struct ufs_qcom_host *host, bool enable)
- {
- 	if (host->dev_ref_clk_ctrl_mmio &&
-@@ -1421,6 +1475,52 @@ static void ufs_qcom_exit(struct ufs_hba *hba)
- 	phy_exit(host->generic_phy);
- }
- 
-+static int ufs_qcom_fw_managed_init(struct ufs_hba *hba)
-+{
-+	struct device *dev = hba->dev;
-+	struct ufs_qcom_host *host;
-+	int err;
-+
-+	host = devm_kzalloc(dev, sizeof(*host), GFP_KERNEL);
-+	if (!host)
-+		return -ENOMEM;
-+
-+	host->hba = hba;
-+	ufshcd_set_variant(hba, host);
-+
-+	ufs_qcom_get_controller_revision(hba, &host->hw_ver.major,
-+					 &host->hw_ver.minor, &host->hw_ver.step);
-+
-+	err = ufs_qcom_ice_init(host);
-+	if (err)
-+		goto out_variant_clear;
-+
-+	ufs_qcom_get_default_testbus_cfg(host);
-+	err = ufs_qcom_testbus_config(host);
-+	if (err)
-+		/* Failure is non-fatal */
-+		dev_warn(dev, "Failed to configure the testbus %d\n", err);
-+
-+	hba->caps |= UFSHCD_CAP_WB_EN;
-+
-+	ufs_qcom_advertise_quirks(hba);
-+	host->hba->quirks &= ~UFSHCD_QUIRK_REINIT_AFTER_MAX_GEAR_SWITCH;
-+
-+	ufs_qcom_set_host_params(hba);
-+	ufs_qcom_parse_gear_limits(hba);
-+
-+	return 0;
-+
-+out_variant_clear:
-+	ufshcd_set_variant(hba, NULL);
-+	return err;
-+}
-+
-+static void ufs_qcom_fw_managed_exit(struct ufs_hba *hba)
-+{
-+	pm_runtime_put_sync(hba->dev);
-+}
-+
- /**
-  * ufs_qcom_set_clk_40ns_cycles - Configure 40ns clk cycles
-  *
-@@ -1952,6 +2052,39 @@ static int ufs_qcom_device_reset(struct ufs_hba *hba)
- 	return 0;
- }
- 
-+/**
-+ * ufs_qcom_fw_managed_device_reset - Reset UFS device under FW-managed design
-+ * @hba: pointer to UFS host bus adapter
-+ *
-+ * In the firmware-managed reset model, cold boot power-on is handled
-+ * automatically by the PM domain framework during SCMI protocol init,
-+ * before ufshcd_device_reset() is reached. For subsequent resets
-+ * (such as suspend/resume or recovery), the UFS driver must explicitly
-+ * invoke PM runtime operations to reset the subsystem.
-+ *
-+ * Return: 0 on success or a negative error code on failure.
-+ */
-+static int ufs_qcom_fw_managed_device_reset(struct ufs_hba *hba)
-+{
-+	static bool is_boot = true;
-+	int err;
-+
-+	/* Skip reset on cold boot; perform it on subsequent calls */
-+	if (is_boot) {
-+		is_boot = false;
-+		return 0;
-+	}
-+
-+	pm_runtime_put_sync(hba->dev);
-+	err = pm_runtime_resume_and_get(hba->dev);
-+	if (err < 0) {
-+		dev_err(hba->dev, "PM runtime resume failed: %d\n", err);
-+		return err;
-+	}
-+
-+	return 0;
-+}
-+
- static void ufs_qcom_config_scaling_param(struct ufs_hba *hba,
- 					struct devfreq_dev_profile *p,
- 					struct devfreq_simple_ondemand_data *d)
-@@ -2231,6 +2364,20 @@ static const struct ufs_hba_variant_ops ufs_hba_qcom_vops = {
- 	.freq_to_gear_speed	= ufs_qcom_freq_to_gear_speed,
- };
- 
-+static const struct ufs_hba_variant_ops ufs_hba_qcom_sa8255p_vops = {
-+	.name                   = "qcom-sa8255p",
-+	.init                   = ufs_qcom_fw_managed_init,
-+	.exit                   = ufs_qcom_fw_managed_exit,
-+	.hce_enable_notify      = ufs_qcom_fw_managed_hce_enable_notify,
-+	.pwr_change_notify      = ufs_qcom_pwr_change_notify,
-+	.apply_dev_quirks       = ufs_qcom_apply_dev_quirks,
-+	.fixup_dev_quirks       = ufs_qcom_fixup_dev_quirks,
-+	.suspend                = ufs_qcom_fw_managed_suspend,
-+	.resume                 = ufs_qcom_fw_managed_resume,
-+	.dbg_register_dump      = ufs_qcom_dump_dbg_regs,
-+	.device_reset           = ufs_qcom_fw_managed_device_reset,
-+};
-+
- /**
-  * ufs_qcom_probe - probe routine of the driver
-  * @pdev: pointer to Platform device handle
-@@ -2241,9 +2388,16 @@ static int ufs_qcom_probe(struct platform_device *pdev)
- {
- 	int err;
- 	struct device *dev = &pdev->dev;
-+	const struct ufs_hba_variant_ops *vops;
-+	const struct ufs_qcom_drvdata *drvdata = device_get_match_data(dev);
-+
-+	if (drvdata && drvdata->vops)
-+		vops = drvdata->vops;
-+	else
-+		vops = &ufs_hba_qcom_vops;
- 
- 	/* Perform generic probe */
--	err = ufshcd_pltfrm_init(pdev, &ufs_hba_qcom_vops);
-+	err = ufshcd_pltfrm_init(pdev, vops);
- 	if (err)
- 		return dev_err_probe(dev, err, "ufshcd_pltfrm_init() failed\n");
- 
-@@ -2271,10 +2425,15 @@ static const struct ufs_qcom_drvdata ufs_qcom_sm8550_drvdata = {
- 	.no_phy_retention = true,
- };
- 
-+static const struct ufs_qcom_drvdata ufs_qcom_sa8255p_drvdata = {
-+	.vops = &ufs_hba_qcom_sa8255p_vops
-+};
-+
- static const struct of_device_id ufs_qcom_of_match[] __maybe_unused = {
- 	{ .compatible = "qcom,ufshc" },
- 	{ .compatible = "qcom,sm8550-ufshc", .data = &ufs_qcom_sm8550_drvdata },
- 	{ .compatible = "qcom,sm8650-ufshc", .data = &ufs_qcom_sm8550_drvdata },
-+	{ .compatible = "qcom,sa8255p-ufshc", .data = &ufs_qcom_sa8255p_drvdata },
- 	{},
- };
- MODULE_DEVICE_TABLE(of, ufs_qcom_of_match);
-diff --git a/drivers/ufs/host/ufs-qcom.h b/drivers/ufs/host/ufs-qcom.h
-index 380d02333d38..1111ab34da01 100644
---- a/drivers/ufs/host/ufs-qcom.h
-+++ b/drivers/ufs/host/ufs-qcom.h
-@@ -313,6 +313,7 @@ struct ufs_qcom_host {
- struct ufs_qcom_drvdata {
- 	enum ufshcd_quirks quirks;
- 	bool no_phy_retention;
-+	const struct ufs_hba_variant_ops *vops;
- };
- 
- static inline u32
--- 
-2.34.1
-
+> ---
+>  Changes from v1:
+>  As per Bjorn Andersson's comment :
+>  - Pass "timing" as an argument to msm_set_clock_rate_for_bus_mode(), and
+>  then pass host, clock, and timing to msm_get_clock_mult_for_bus_mode() to
+>  align with the original intent of the prototype.
+> ---
+>  drivers/mmc/host/sdhci-msm.c | 27 +++++++++++++++------------
+>  1 file changed, 15 insertions(+), 12 deletions(-)
+> 
+> diff --git a/drivers/mmc/host/sdhci-msm.c b/drivers/mmc/host/sdhci-msm.c
+> index 4e5edbf2fc9b..3b85233131b3 100644
+> --- a/drivers/mmc/host/sdhci-msm.c
+> +++ b/drivers/mmc/host/sdhci-msm.c
+> @@ -344,41 +344,43 @@ static void sdhci_msm_v5_variant_writel_relaxed(u32 val,
+>  	writel_relaxed(val, host->ioaddr + offset);
+>  }
+>  
+> -static unsigned int msm_get_clock_mult_for_bus_mode(struct sdhci_host *host)
+> +static unsigned int msm_get_clock_mult_for_bus_mode(struct sdhci_host *host,
+> +						    unsigned int clock,
+> +						    unsigned int timing)
+>  {
+> -	struct mmc_ios ios = host->mmc->ios;
+>  	/*
+>  	 * The SDHC requires internal clock frequency to be double the
+>  	 * actual clock that will be set for DDR mode. The controller
+>  	 * uses the faster clock(100/400MHz) for some of its parts and
+>  	 * send the actual required clock (50/200MHz) to the card.
+>  	 */
+> -	if (ios.timing == MMC_TIMING_UHS_DDR50 ||
+> -	    ios.timing == MMC_TIMING_MMC_DDR52 ||
+> -	    ios.timing == MMC_TIMING_MMC_HS400 ||
+> +	if (timing == MMC_TIMING_UHS_DDR50 ||
+> +	    timing == MMC_TIMING_MMC_DDR52 ||
+> +	    (timing == MMC_TIMING_MMC_HS400 &&
+> +	    clock == MMC_HS200_MAX_DTR) ||
+>  	    host->flags & SDHCI_HS400_TUNING)
+>  		return 2;
+>  	return 1;
+>  }
+>  
+>  static void msm_set_clock_rate_for_bus_mode(struct sdhci_host *host,
+> -					    unsigned int clock)
+> +					    unsigned int clock,
+> +					    unsigned int timing)
+>  {
+>  	struct sdhci_pltfm_host *pltfm_host = sdhci_priv(host);
+>  	struct sdhci_msm_host *msm_host = sdhci_pltfm_priv(pltfm_host);
+> -	struct mmc_ios curr_ios = host->mmc->ios;
+>  	struct clk *core_clk = msm_host->bulk_clks[0].clk;
+>  	unsigned long achieved_rate;
+>  	unsigned int desired_rate;
+>  	unsigned int mult;
+>  	int rc;
+>  
+> -	mult = msm_get_clock_mult_for_bus_mode(host);
+> +	mult = msm_get_clock_mult_for_bus_mode(host, clock, timing);
+>  	desired_rate = clock * mult;
+>  	rc = dev_pm_opp_set_rate(mmc_dev(host->mmc), desired_rate);
+>  	if (rc) {
+>  		pr_err("%s: Failed to set clock at rate %u at timing %d\n",
+> -		       mmc_hostname(host->mmc), desired_rate, curr_ios.timing);
+> +		       mmc_hostname(host->mmc), desired_rate, timing);
+>  		return;
+>  	}
+>  
+> @@ -397,7 +399,7 @@ static void msm_set_clock_rate_for_bus_mode(struct sdhci_host *host,
+>  	msm_host->clk_rate = desired_rate;
+>  
+>  	pr_debug("%s: Setting clock at rate %lu at timing %d\n",
+> -		 mmc_hostname(host->mmc), achieved_rate, curr_ios.timing);
+> +		 mmc_hostname(host->mmc), achieved_rate, timing);
+>  }
+>  
+>  /* Platform specific tuning */
+> @@ -1239,7 +1241,7 @@ static int sdhci_msm_execute_tuning(struct mmc_host *mmc, u32 opcode)
+>  	 */
+>  	if (host->flags & SDHCI_HS400_TUNING) {
+>  		sdhci_msm_hc_select_mode(host);
+> -		msm_set_clock_rate_for_bus_mode(host, ios.clock);
+> +		msm_set_clock_rate_for_bus_mode(host, ios.clock, ios.timing);
+>  		host->flags &= ~SDHCI_HS400_TUNING;
+>  	}
+>  
+> @@ -1864,6 +1866,7 @@ static void sdhci_msm_set_clock(struct sdhci_host *host, unsigned int clock)
+>  {
+>  	struct sdhci_pltfm_host *pltfm_host = sdhci_priv(host);
+>  	struct sdhci_msm_host *msm_host = sdhci_pltfm_priv(pltfm_host);
+> +	struct mmc_ios ios = host->mmc->ios;
+>  
+>  	if (!clock) {
+>  		host->mmc->actual_clock = msm_host->clk_rate = 0;
+> @@ -1872,7 +1875,7 @@ static void sdhci_msm_set_clock(struct sdhci_host *host, unsigned int clock)
+>  
+>  	sdhci_msm_hc_select_mode(host);
+>  
+> -	msm_set_clock_rate_for_bus_mode(host, clock);
+> +	msm_set_clock_rate_for_bus_mode(host, ios.clock, ios.timing);
+>  out:
+>  	__sdhci_msm_set_clock(host, clock);
+>  }
+> -- 
+> 2.34.1
+> 
+> 
 
