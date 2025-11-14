@@ -1,102 +1,101 @@
-Return-Path: <linux-arm-msm+bounces-81849-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-81850-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ams.mirrors.kernel.org (ams.mirrors.kernel.org [IPv6:2a01:60a::1994:3:14])
-	by mail.lfdr.de (Postfix) with ESMTPS id B533DC5CFC8
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Nov 2025 13:01:51 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 710CFC5D067
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Nov 2025 13:09:57 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ams.mirrors.kernel.org (Postfix) with ESMTPS id 17E0E35B592
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Nov 2025 12:01:11 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 982293B2FC8
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Nov 2025 12:09:07 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9CCD431A576;
-	Fri, 14 Nov 2025 12:00:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5D4B9313E16;
+	Fri, 14 Nov 2025 12:09:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="C5apUv9V";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="jymmjqd9"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="gmy6jgL1";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="Ykcflczz"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7FAA3191B4
-	for <linux-arm-msm@vger.kernel.org>; Fri, 14 Nov 2025 12:00:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABB562DFA48
+	for <linux-arm-msm@vger.kernel.org>; Fri, 14 Nov 2025 12:09:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763121643; cv=none; b=Mqh3uEKC+qxX5vu1G2hyRyhbxvJEAD+8y4LopdnFO+zc82BVbYocCbihFRTk6oy5yabwTpbRFswoiidN5JJic4UEPreuY8fEMR+oc3a/yUAlw3DfZW04x3TBjKpEE629HadeyiMwTUTewHRNNcof091S+ySjtyKbFycLgrHB05k=
+	t=1763122144; cv=none; b=N9OK5k/nAB+8KxJ4aJjkT72xfJzalO7DT0mU53UcRl8i/mrgtw58tmHbJrS/0f5Mp0VAk+ebQZSgRSTSdNhIwFJjw6YH6xLELURpURgX2HsxW0Aq9hnXF9o/q/HdbwMbd8Od/TH42KQKE8DynDBuJPy2cCQZbnUyMn12+Jp0vmw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763121643; c=relaxed/simple;
-	bh=9iQ2RCTrvng8H9uxQwOkK1diONbL/BWWV9goYuQXKaE=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=qpD1mtp9WKWkRFFC+RhMI8kMGALSc4ViEcRG4Dt4NvIbU3k4/4TkyGZkxsVuDvkFs8VJl3UO4BfZ4bZMGSqUZqexuZL3gBtveV6wt9o9xNjEPQ0kbAXyunHrW92ypEeRhX3qbQO3HWGOSQgnkY9MAnJZTZTrLZt+DJ2opLv/t/g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=C5apUv9V; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=jymmjqd9; arc=none smtp.client-ip=205.220.180.131
+	s=arc-20240116; t=1763122144; c=relaxed/simple;
+	bh=uN6vX067YSyWkT6H1MCzpwp36cvHNBITPBMNXqprdGk=;
+	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
+	 In-Reply-To:Content-Type; b=YCAlT2AgNRCWodrG6fKGYBfXcLo44dwRX2rIuHTg8FNxtLvX5qoECorJ1TeDoQF58541/8lIyI1RTPzA0kN0t2CXcmuEXEX2KGJsDAnuKTpUbDWUknP0hyEIhTV3iLuqEBrayYJuGKRj92pW36jDuLNtuBtddDzt4lYJsp/Zco4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=gmy6jgL1; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=Ykcflczz; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 5AE8trgu1431126
-	for <linux-arm-msm@vger.kernel.org>; Fri, 14 Nov 2025 12:00:40 GMT
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 5AEBXiop2263213
+	for <linux-arm-msm@vger.kernel.org>; Fri, 14 Nov 2025 12:09:02 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	4DLPECZQH/khWur4rvlzIHdP5Pl0LOj0uMKvz2Ew1/w=; b=C5apUv9VaA6lpaH1
-	KO30AaVi2i0EK2Nu3MG2bkJLJFrYhZqBPgoNTW7dTeN0QLQV1+I7zmfnU+SkrObE
-	tV83rBGTh6JZfPPKpttbgjqraycL5QQFBV/YrMAyxppb6WmOsIQ3UtqxF7Com/np
-	rcjCmz4oZq01TSFjtWOHS532BRkJBC1D6fDA2CAFnppo78C3ssV5ucdkYkeLRuLi
-	tolA71IlLJcHr5myTUie/ekSebgCbLjfQ/FsNREwSL6GTZKvB45Xqkgfd/ripkg5
-	Mi516ps9eFFiEI7xUwEV/RuTC+KbmdqVFafagdTboq86JZos6BGIrIpgh2vHJ5eA
-	5aDuwQ==
-Received: from mail-pl1-f200.google.com (mail-pl1-f200.google.com [209.85.214.200])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4adr9g21j4-1
+	djlvIamP88uSWKSXFTFObQ/yFmQ+cxMViS2ZJbYqFJ8=; b=gmy6jgL1r3oJqfWf
+	ibQa1kCUdPLuL4VMFepHhLaBfjvZpa8eMpz3v+if0kBFITxG/vNa0v+nlS0VC/6D
+	/eUy+IH/zbwKRy11hMJVGRrHv+sueqZJmQ7D896lFEfzI6jKSH7tw/7ZdLWKmKtI
+	zmHnqttfM8hiAZbJRfd5MlqJ1NZUq2gIBjoXqnZVtHCEu7JKJAM5QD+mq3nrSHxu
+	T+zhvL3TjLPzhFtI516ZCXR0EBV1B3woKb4s/0HcnfvQOEMZsDmU3BilfIaMMT+9
+	uHFgqt9EgnUKDc3yepHbQ6mDF3cK2314LqadLRjF/y9qkflqb4gaOksTe8KamJRe
+	nljxiw==
+Received: from mail-pl1-f198.google.com (mail-pl1-f198.google.com [209.85.214.198])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4adw1j1bcw-1
 	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Fri, 14 Nov 2025 12:00:39 +0000 (GMT)
-Received: by mail-pl1-f200.google.com with SMTP id d9443c01a7336-2954d676f9dso16324525ad.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 14 Nov 2025 04:00:39 -0800 (PST)
+	for <linux-arm-msm@vger.kernel.org>; Fri, 14 Nov 2025 12:09:01 +0000 (GMT)
+Received: by mail-pl1-f198.google.com with SMTP id d9443c01a7336-295952a4dd6so37534435ad.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 14 Nov 2025 04:09:01 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1763121639; x=1763726439; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=4DLPECZQH/khWur4rvlzIHdP5Pl0LOj0uMKvz2Ew1/w=;
-        b=jymmjqd9TWrTZyA6LXX0jVK7HzVHdqfF15ai0S1PQuOFHoUlPv0C9WgO+ZaaG3NMZO
-         3avyvUfbYOaumibDjzOq+rjjX0NgH+UKTdfDd9nD3gTcErIofSMhSEtDiP/iRxvcCeod
-         VOVxNsDzP5a7hFLt3ORN1cX5ayDVccpNnSIs1KU6UmhvLPCO+cDHOF2NQJ6UWv/RACLd
-         ir5iqB8oa8DxAi74Q+q3eR4pYfVVV3GqNrJCILQrRlfRhXbz+DRdbDcwb6ipquyiIzHT
-         P7cMda0+t+NUZoT/c2pajlCwnlj1DtAzkTJ7wIYBj7QmsWHcBJOI7W0fQE5IJv4YzfBS
-         Gs7g==
+        d=oss.qualcomm.com; s=google; t=1763122141; x=1763726941; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:from:subject:user-agent:mime-version:date:message-id:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=djlvIamP88uSWKSXFTFObQ/yFmQ+cxMViS2ZJbYqFJ8=;
+        b=YkcflczzFDNKwF5xTwFkib3hvVX5zdDrUlpZuRa83VeaFDg8pcOhSD5Vy6Riqe9TLC
+         3hrzq/YXwT3dOqzbAvI0OWG86Pk5ewGDAtJE0JUNB3LusKprrWkauPzIaYx1pSfaazzG
+         75TNWqmgktmNh1IxAP9RnpIB4wAJB+4lz7MmvDFW6wo0s/cSghXSYSWgk8S/ydHUdJ3y
+         xDz5F6icJ8NmRzyntzy5ryzyyuwbg28qdrIiQIqTFcPDYR0OEU7lnhQGP1ZDEXO7mZZB
+         sw25iHPgkM3EOFPEK9X3SMW1F5UPWXQAsFQu4JztrQ/efBqWSiollcaPv53BtIqVbU7Q
+         cVAw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1763121639; x=1763726439;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=4DLPECZQH/khWur4rvlzIHdP5Pl0LOj0uMKvz2Ew1/w=;
-        b=stUU9iDXU68aqO7XSkBbXxHnfTujOR3c+e3C86HB0W8SPATgF+Z7jgDIktpxBKZWxE
-         hUSVMhSeKpoDDVEu3c5+pd1dWB4FBeTF5VJr0T+KAgQjwVfuCAgdVBlvRlSCBxtXpgJX
-         2NmBm/1MjPbtANvRFDc2PJcFG/9qEiax8SrhnBm9Eid+zuOG4dp7mFwKZoCYGcthkXL4
-         8dC6wPEXsg0gwuA33OCYdpSxNkB2Ybj9Mk6BzP+cgekcE58u0ahH5R8SGAmfJr5xQnGx
-         EblH935rr/W2IFTuXAHri0vcNmYosNnXT3OUJKWEu3+ZjMxMNDpawjTXMTzAZhTIlCfh
-         +qcg==
-X-Forwarded-Encrypted: i=1; AJvYcCUhocQwGw63/cfLMeJRKAYPsM8+URVEA9JNDfyPzXuKMsdcsWE2qrWGznvzBEvJ41SsSFAmFceMI5oYIPIo@vger.kernel.org
-X-Gm-Message-State: AOJu0YwmZJnKQQTsHbwEnUtu4lrd3TnFfn07ikL/gCzPCqHYte64NU/h
-	v2DVREmt4/CFhA4Ws3Ui1zYJrYWniUGe2OfHSsMROkrZFhlS2Dvx/4r8TGECeJ3nhCs7LOHNj2a
-	wNCsgPWdSpyHDkj4z1Is7jHmxP9WNIdirn3xjsnxRNrMtZaiBQxf+4ZDYLeZH5VNJutXi
-X-Gm-Gg: ASbGncsK7njiW6rk7ql6/+1pmOaLwZgcBWrFq24hIqfuhjLxM8utey8cSRUN1hsQEv3
-	MXJSet73kLsAw7b+gALIu35HvHkfXcFuNawDQkC9qm3I6IRlWszLpOnshR350Btp7zCy8cEuGbV
-	tC9CTAcVNoA+qkW2qjzGJYBpSTY99fJvR0UDMgVpcr0Eei1u5c7ouwbImce7qDLEDJILn6hKCaa
-	sNAdvQqAl6E1d4gU2/jQkI0LQBENSiupbw6LmBBBl58LM52+IuuwjyjtO7i8wlrzelkjV1L7bQr
-	Bz8qz/mJ8BcXQRMGYHXWH5vqMjJHqiFXKaHWfSxIiWRO40EhNQRkuQEUB1KQkDEiTOmBUTVdTe5
-	KITIp1SqFRQO+v4DOEf6wAeE=
-X-Received: by 2002:a17:902:ccc3:b0:298:33c9:ed9e with SMTP id d9443c01a7336-2986a73b6f9mr29953355ad.28.1763121638539;
-        Fri, 14 Nov 2025 04:00:38 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFzUH8leg3cJEyWmO2f9+vET2WBdZoPDLVCWtrzI/9fMABfBAcZ6WIX9qxSZRR49c9MNEZAOA==
-X-Received: by 2002:a17:902:ccc3:b0:298:33c9:ed9e with SMTP id d9443c01a7336-2986a73b6f9mr29952675ad.28.1763121637765;
-        Fri, 14 Nov 2025 04:00:37 -0800 (PST)
+        d=1e100.net; s=20230601; t=1763122141; x=1763726941;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:from:subject:user-agent:mime-version:date:message-id:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=djlvIamP88uSWKSXFTFObQ/yFmQ+cxMViS2ZJbYqFJ8=;
+        b=BlHsUzhbDS7yzzGCVWCRO3nsuZQOS6vPqnUWpBdQhxmDh/pNXWwtDkVtkGs6V8UHLQ
+         tMTDp4w4bje0s8jdtMauPOXT/yUKMaE3pfvdk8gbo1biquzHLyaQUtesXHJQQuuiD5FF
+         UYRHUXx7SBxpoC3cv9zW6r+qHm1g/ctk72jmWO+AGRMhVThNmpm4FKdRKv4I/ITwsV9R
+         4czCLuZsX5i1JoDpdv/1VM9nq9/yaRdN4v1KhZHAZpTLOwiCHBrPR99cwkEdNiDB3V5M
+         pP+VJoyk2qLc7Hay2I1o2DvplIwoP1r+wuSzltj0rkwwniOx6gqc4pReUToCJ+2wwDhI
+         z66A==
+X-Forwarded-Encrypted: i=1; AJvYcCUu8hhFuxhcmdpAMSQbFICKJUwySpgrKRBt0hxwuP/uwQSTp4PrDxjOZRNB7UpFC7nVdZH/lNKunqNAq5zi@vger.kernel.org
+X-Gm-Message-State: AOJu0Yyikvrz6c7NsoMkFFMWCq2Li+WQne62jWTGdugwQCM3uX3gJEUC
+	Q73/Pz28bIUMMoSgerZjtw8hQ61pvM2FAuoBLHyqmeqEA//IQfUZD/oFdyGdKD313tuUTa67pL6
+	OcWWujmQ1gyUcjb0oariNVQCrpM+DwnCUgKKa10euXOUcLSLPfs46fmgjNiQyONDw/UDu
+X-Gm-Gg: ASbGncupy2xwQ1hx5IYXFbNiYuDKcZNoTDwbrQJs13WEddB2cJ91IJxZcEhRIe+So9N
+	lxy57Pg9TzsvvHJLgsYHvkTLpulaGvW+WNZk0srMmXcnUjiW4tMyW2ezS5wn8X848xK1XJ1lvmO
+	PZXdy5xq8vPc9nQsvBHq4Ck9YocbYu0wPp1w2tiMY1ylg/ZtaVjTMxzk+QiwuCZawMw4qBpEANy
+	qF/szxs7tmgfG0ImcTLtcxU1WPP+0I+Sb1XO1pX7OkXMpFm0fFtauMGdetHJ0WroVHw1vOBOGmK
+	ObaQOkH8yx+4tnlgEC6ISmKkUYz77OgYZkyUq7WMKyz5vFlXRNzgSRfp+8NJ/147x3ag2MRTjFi
+	HcHHNLpvFxQEbUxIyuwoYI8o=
+X-Received: by 2002:a17:903:249:b0:297:f527:885f with SMTP id d9443c01a7336-2985a40c7c7mr86057055ad.0.1763122140877;
+        Fri, 14 Nov 2025 04:09:00 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGSRcXduJStRkEjpIaI8wBB1y+r2W3c+GWZP9UFC0BdilfKeLYl63dIZH4/YZaDyD3wEO6ndw==
+X-Received: by 2002:a17:903:249:b0:297:f527:885f with SMTP id d9443c01a7336-2985a40c7c7mr86056405ad.0.1763122140280;
+        Fri, 14 Nov 2025 04:09:00 -0800 (PST)
 Received: from [192.168.1.8] ([106.222.229.203])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2985c245f8asm53328455ad.37.2025.11.14.04.00.31
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-7b921cb6f44sm5156759b3a.0.2025.11.14.04.08.53
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 14 Nov 2025 04:00:37 -0800 (PST)
-Message-ID: <f08c8707-eb72-4689-b53b-acd6e3218836@oss.qualcomm.com>
-Date: Fri, 14 Nov 2025 17:30:30 +0530
+        Fri, 14 Nov 2025 04:08:59 -0800 (PST)
+Message-ID: <e0e82b22-ecef-4136-834b-ea4a6b00e179@oss.qualcomm.com>
+Date: Fri, 14 Nov 2025 17:38:51 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -105,6 +104,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH v2 3/6] dt-bindings: display/msm/rgmu: Document A612 RGMU
+From: Akhil P Oommen <akhilpo@oss.qualcomm.com>
 To: Krzysztof Kozlowski <krzk@kernel.org>
 Cc: Rob Clark <robin.clark@oss.qualcomm.com>, Sean Paul <sean@poorly.run>,
         Konrad Dybcio <konradybcio@kernel.org>,
@@ -126,190 +126,201 @@ Cc: Rob Clark <robin.clark@oss.qualcomm.com>, Sean Paul <sean@poorly.run>,
 References: <20251107-qcs615-spin-2-v2-0-a2d7c4fbf6e6@oss.qualcomm.com>
  <20251107-qcs615-spin-2-v2-3-a2d7c4fbf6e6@oss.qualcomm.com>
  <20251110-persimmon-wombat-of-holiness-6b3f9c@kuoka>
+ <f08c8707-eb72-4689-b53b-acd6e3218836@oss.qualcomm.com>
 Content-Language: en-US
-From: Akhil P Oommen <akhilpo@oss.qualcomm.com>
-In-Reply-To: <20251110-persimmon-wombat-of-holiness-6b3f9c@kuoka>
+In-Reply-To: <f08c8707-eb72-4689-b53b-acd6e3218836@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-Authority-Analysis: v=2.4 cv=L+AQguT8 c=1 sm=1 tr=0 ts=691719e7 cx=c_pps
- a=IZJwPbhc+fLeJZngyXXI0A==:117 a=UUXEStRZTiKyGgBwSCQbmw==:17
+X-Authority-Analysis: v=2.4 cv=Jv38bc4C c=1 sm=1 tr=0 ts=69171bdd cx=c_pps
+ a=MTSHoo12Qbhz2p7MsH1ifg==:117 a=UUXEStRZTiKyGgBwSCQbmw==:17
  a=IkcTkHD0fZMA:10 a=6UeiqGixMTsA:10 a=s4-Qcg_JpJYA:10
  a=VkNPw1HP01LnGYTKEx00:22 a=gEfo2CItAAAA:8 a=UXIAUNObAAAA:8 a=EUspDBNiAAAA:8
- a=9x9RmpQyoqOX9MKIOEcA:9 a=QEXdDO2ut3YA:10 a=bFq2RbqkfqsA:10
- a=uG9DUKGECoFWVXl0Dc02:22 a=sptkURWiP4Gy88Gu7hUp:22 a=a1s67YnXd6TbAZZNj1wK:22
+ a=VxizJ4rqJv6xgcLMcuIA:9 a=QEXdDO2ut3YA:10 a=bFq2RbqkfqsA:10
+ a=GvdueXVYPmCkWapjIL-Q:22 a=sptkURWiP4Gy88Gu7hUp:22 a=a1s67YnXd6TbAZZNj1wK:22
  a=poXaRoVlC6wW9_mwW8W4:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMTE0MDA5NSBTYWx0ZWRfX9gK2PcCR8rib
- OtDNi2H5QEWSPw1qvP5Vye2NF2XulO4VdBgJfvUpvYXPRJxYR7EMpN+iOmByRsk1qqF0MPWaKZ4
- HArbMI4O9xZSDjjo0mho8tCcm5/qkNRm79Tz/MlIUUzM9bU8KyqjGkPzwMWfAR3t1GWYNpD+QLj
- AmMRM7TN8kA8KQ7gHHS7zyRP9vVVA5g9oWxD08YmkJUkuuFi/6UhDtWk62rsxCugGKAECSWFP3Y
- GOTL6LIGMLAcZoqoXKkhsd+HNY+q95ko1ZUo4aqbwSaLVF8OqEF65OzrX6b5enbxnS7QJUXu0M/
- oUD0xyAEMsrh9CDhW7mBFnb2rxxt/p4+7SziMfWy9cIClArmJMR858w5JwzV2zEjQHnRGKm1qS2
- DAwzvi79hsDDdzVnmhHy6S1PFdbx8Q==
-X-Proofpoint-ORIG-GUID: Owng2ty0-uaQQUFtnFphRhq6ZHyQA14T
-X-Proofpoint-GUID: Owng2ty0-uaQQUFtnFphRhq6ZHyQA14T
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMTE0MDA5NyBTYWx0ZWRfX3Y8+4Ech59aR
+ ajFYWWAK1X899EruxG28tEii/f/iO/rhPpaaUlPKzKzpae29n/DByz9vZIMYfxCK+UHbKn30957
+ mRlwSNBuwpgZGxAbCO82k1WYSW7RdbwjxIuhfhM30FshIvLEvM7B6Edpi753mkFnJegrOgBNjuE
+ uXoiYHU0Irzf3Ddgfm90QyGkg9y6goWFPwBpwZ/J/Kd3k12g5vPS+gzmiczwUJdc6lZhBcVwowP
+ qyv81+jRblhO0i4yMavtx7RY9t6Hv5yMzygC7FC3vJxnTjeSY83XCeK/AYVCJwPEpuTy5a4rDiD
+ wjNoa277TbgWZBn8Bj5ZRGDLg+CgYjv2dueqohxTLSDwdIHao40sV5aMrMsjKj30/2ssU+IXKaL
+ J9iJ6aO2DHHPscm7n/IKYCGS254dDw==
+X-Proofpoint-ORIG-GUID: JMcN4pydKAZNoMefxBmktVh7prNL40f6
+X-Proofpoint-GUID: JMcN4pydKAZNoMefxBmktVh7prNL40f6
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
  definitions=2025-11-14_03,2025-11-13_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 phishscore=0 impostorscore=0 priorityscore=1501 adultscore=0
- clxscore=1015 bulkscore=0 malwarescore=0 lowpriorityscore=0 suspectscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2510240001 definitions=main-2511140095
+ bulkscore=0 malwarescore=0 adultscore=0 phishscore=0 impostorscore=0
+ suspectscore=0 spamscore=0 lowpriorityscore=0 priorityscore=1501
+ clxscore=1015 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2510240001
+ definitions=main-2511140097
 
-On 11/10/2025 1:21 PM, Krzysztof Kozlowski wrote:
-> On Fri, Nov 07, 2025 at 02:20:08AM +0530, Akhil P Oommen wrote:
->> From: Jie Zhang <jie.zhang@oss.qualcomm.com>
+On 11/14/2025 5:30 PM, Akhil P Oommen wrote:
+> On 11/10/2025 1:21 PM, Krzysztof Kozlowski wrote:
+>> On Fri, Nov 07, 2025 at 02:20:08AM +0530, Akhil P Oommen wrote:
+>>> From: Jie Zhang <jie.zhang@oss.qualcomm.com>
+>>>
+>>> RGMU a.k.a Reduced Graphics Management Unit is a small state machine
+>>> with the sole purpose of providing IFPC (Inter Frame Power Collapse)
+>>> support. Compared to GMU, it doesn't manage GPU clock, voltage
+>>> scaling, bw voting or any other functionalities. All it does is detect
+>>> an idle GPU and toggle the GDSC switch. As it doesn't access DDR space,
+>>> it doesn't require iommu.
+>>>
+>>> So far, only Adreno 612 GPU has an RGMU core. Document RGMU in the GMU's
+>>> schema.
+>>>
+>>> Signed-off-by: Jie Zhang <jie.zhang@oss.qualcomm.com>
+>>> Signed-off-by: Akhil P Oommen <akhilpo@oss.qualcomm.com>
+>>> ---
+>>>  .../devicetree/bindings/display/msm/rgmu.yaml      | 131 +++++++++++++++++++++
+>>>  MAINTAINERS                                        |   1 +
+>>>  2 files changed, 132 insertions(+)
+>>>
+>>> diff --git a/Documentation/devicetree/bindings/display/msm/rgmu.yaml b/Documentation/devicetree/bindings/display/msm/rgmu.yaml
+>>> new file mode 100644
+>>> index 000000000000..7621556477d0
+>>> --- /dev/null
+>>> +++ b/Documentation/devicetree/bindings/display/msm/rgmu.yaml
 >>
->> RGMU a.k.a Reduced Graphics Management Unit is a small state machine
->> with the sole purpose of providing IFPC (Inter Frame Power Collapse)
->> support. Compared to GMU, it doesn't manage GPU clock, voltage
->> scaling, bw voting or any other functionalities. All it does is detect
->> an idle GPU and toggle the GDSC switch. As it doesn't access DDR space,
->> it doesn't require iommu.
+>> Filename matching compatible, so qcom,adreno-rgmu.yaml
 >>
->> So far, only Adreno 612 GPU has an RGMU core. Document RGMU in the GMU's
->> schema.
 >>
->> Signed-off-by: Jie Zhang <jie.zhang@oss.qualcomm.com>
->> Signed-off-by: Akhil P Oommen <akhilpo@oss.qualcomm.com>
->> ---
->>  .../devicetree/bindings/display/msm/rgmu.yaml      | 131 +++++++++++++++++++++
->>  MAINTAINERS                                        |   1 +
->>  2 files changed, 132 insertions(+)
+>>> @@ -0,0 +1,131 @@
+>>> +# SPDX-License-Identifier: GPL-2.0-only OR BSD-2-Clause
+>>> +# Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
+>>> +%YAML 1.2
+>>> +---
+>>> +
+>>> +$id: http://devicetree.org/schemas/display/msm/rgmu.yaml#
+>>> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+>>> +
+>>> +title: RGMU attached to certain Adreno GPUs
+>>> +
+>>> +maintainers:
+>>> +  - Rob Clark <robin.clark@oss.qualcomm.com>
+>>> +
+>>> +description: |
 >>
->> diff --git a/Documentation/devicetree/bindings/display/msm/rgmu.yaml b/Documentation/devicetree/bindings/display/msm/rgmu.yaml
->> new file mode 100644
->> index 000000000000..7621556477d0
->> --- /dev/null
->> +++ b/Documentation/devicetree/bindings/display/msm/rgmu.yaml
+>> Do not need '|' unless you need to preserve formatting.
+>>
+>>> +  RGMU (Reduced Graphics Management Unit) IP is present in some GPUs that
+>>> +  belong to Adreno A6xx family. It is a small state machine that helps to
+>>> +  toggle the GX GDSC (connected to CX rail) to implement IFPC feature and save
+>>> +  power.
+>>> +
+>>> +properties:
+>>> +  compatible:
+>>> +    items:
+>>> +      - const: qcom,adreno-rgmu-612.0
+>>> +      - const: qcom,adreno-rgmu
+>>> +
+>>> +  reg:
+>>> +    items:
+>>> +      - description: Core RGMU registers
+>>> +
+>>> +  reg-names:
+>>> +    items:
+>>> +      - const: gmu
+>>
+>> Drop reg-names, useless for one entry with same name as the block name.
 > 
-> Filename matching compatible, so qcom,adreno-rgmu.yaml
-> 
-> 
->> @@ -0,0 +1,131 @@
->> +# SPDX-License-Identifier: GPL-2.0-only OR BSD-2-Clause
->> +# Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
->> +%YAML 1.2
->> +---
->> +
->> +$id: http://devicetree.org/schemas/display/msm/rgmu.yaml#
->> +$schema: http://devicetree.org/meta-schemas/core.yaml#
->> +
->> +title: RGMU attached to certain Adreno GPUs
->> +
->> +maintainers:
->> +  - Rob Clark <robin.clark@oss.qualcomm.com>
->> +
->> +description: |
-> 
-> Do not need '|' unless you need to preserve formatting.
-> 
->> +  RGMU (Reduced Graphics Management Unit) IP is present in some GPUs that
->> +  belong to Adreno A6xx family. It is a small state machine that helps to
->> +  toggle the GX GDSC (connected to CX rail) to implement IFPC feature and save
->> +  power.
->> +
->> +properties:
->> +  compatible:
->> +    items:
->> +      - const: qcom,adreno-rgmu-612.0
->> +      - const: qcom,adreno-rgmu
->> +
->> +  reg:
->> +    items:
->> +      - description: Core RGMU registers
->> +
->> +  reg-names:
->> +    items:
->> +      - const: gmu
-> 
-> Drop reg-names, useless for one entry with same name as the block name.
+> Just to confirm, drop only reg-names, but keep 'reg'?
 
-Just to confirm, drop only reg-names, but keep 'reg'?
+Wait. We should keep 'reg'.
 
--Akhil
+If we remove 'reg-names' here, we cannot use reg-names in DT too because
+we are setting additionalProperties to False, right?
+
+-Akhil.
 
 > 
->> +
->> +  clocks:
->> +    items:
->> +      - description: GMU clock
->> +      - description: GPU CX clock
->> +      - description: GPU AXI clock
->> +      - description: GPU MEMNOC clock
->> +      - description: GPU SMMU vote clock
->> +
->> +  clock-names:
->> +    items:
->> +      - const: gmu
->> +      - const: cxo
->> +      - const: axi
->> +      - const: memnoc
->> +      - const: smmu_vote
->> +
->> +  power-domains:
->> +    items:
->> +      - description: CX GDSC power domain
->> +      - description: GX GDSC power domain
->> +
->> +  power-domain-names:
->> +    items:
->> +      - const: cx
->> +      - const: gx
->> +
->> +  interrupts:
->> +    items:
->> +      - description: GMU OOB interrupt
->> +      - description: GMU interrupt
->> +
->> +  interrupt-names:
->> +    items:
->> +      - const: oob
->> +      - const: gmu
->> +
->> +  operating-points-v2: true
->> +  opp-table:
->> +    type: object
->> +
->> +required:
+> -Akhil
 > 
-> compatible
-> 
->> +  - reg
->> +  - reg-names
->> +  - clocks
->> +  - clock-names
->> +  - power-domains
->> +  - power-domain-names
->> +  - interrupts
->> +  - interrupt-names
-> 
-> Keep the same order as in properties.
-> 
->> +  - operating-points-v2
->> +
->> +additionalProperties: false
->> +
->> +examples:
->> +  - |
->> +    #include <dt-bindings/clock/qcom,qcs615-gpucc.h>
->> +    #include <dt-bindings/clock/qcom,qcs615-gcc.h>
->> +    #include <dt-bindings/interrupt-controller/arm-gic.h>
->> +    #include <dt-bindings/power/qcom,rpmhpd.h>
->> +
->> +    rgmu: rgmu@506a000 {
-> 
-> Drop label.
-> 
-> Node names should be generic. See also an explanation and list of
-> examples (not exhaustive) in DT specification:
-> https://devicetree-specification.readthedocs.io/en/latest/chapter2-devicetree-basics.html#generic-names-recommendation
-> If you cannot find a name matching your device, please check in kernel
-> sources for similar cases or you can grow the spec (via pull request to
-> DT spec repo).
-> 
-> Best regards,
-> Krzysztof
+>>
+>>> +
+>>> +  clocks:
+>>> +    items:
+>>> +      - description: GMU clock
+>>> +      - description: GPU CX clock
+>>> +      - description: GPU AXI clock
+>>> +      - description: GPU MEMNOC clock
+>>> +      - description: GPU SMMU vote clock
+>>> +
+>>> +  clock-names:
+>>> +    items:
+>>> +      - const: gmu
+>>> +      - const: cxo
+>>> +      - const: axi
+>>> +      - const: memnoc
+>>> +      - const: smmu_vote
+>>> +
+>>> +  power-domains:
+>>> +    items:
+>>> +      - description: CX GDSC power domain
+>>> +      - description: GX GDSC power domain
+>>> +
+>>> +  power-domain-names:
+>>> +    items:
+>>> +      - const: cx
+>>> +      - const: gx
+>>> +
+>>> +  interrupts:
+>>> +    items:
+>>> +      - description: GMU OOB interrupt
+>>> +      - description: GMU interrupt
+>>> +
+>>> +  interrupt-names:
+>>> +    items:
+>>> +      - const: oob
+>>> +      - const: gmu
+>>> +
+>>> +  operating-points-v2: true
+>>> +  opp-table:
+>>> +    type: object
+>>> +
+>>> +required:
+>>
+>> compatible
+>>
+>>> +  - reg
+>>> +  - reg-names
+>>> +  - clocks
+>>> +  - clock-names
+>>> +  - power-domains
+>>> +  - power-domain-names
+>>> +  - interrupts
+>>> +  - interrupt-names
+>>
+>> Keep the same order as in properties.
+>>
+>>> +  - operating-points-v2
+>>> +
+>>> +additionalProperties: false
+>>> +
+>>> +examples:
+>>> +  - |
+>>> +    #include <dt-bindings/clock/qcom,qcs615-gpucc.h>
+>>> +    #include <dt-bindings/clock/qcom,qcs615-gcc.h>
+>>> +    #include <dt-bindings/interrupt-controller/arm-gic.h>
+>>> +    #include <dt-bindings/power/qcom,rpmhpd.h>
+>>> +
+>>> +    rgmu: rgmu@506a000 {
+>>
+>> Drop label.
+>>
+>> Node names should be generic. See also an explanation and list of
+>> examples (not exhaustive) in DT specification:
+>> https://devicetree-specification.readthedocs.io/en/latest/chapter2-devicetree-basics.html#generic-names-recommendation
+>> If you cannot find a name matching your device, please check in kernel
+>> sources for similar cases or you can grow the spec (via pull request to
+>> DT spec repo).
+>>
+>> Best regards,
+>> Krzysztof
+>>
 > 
 
 
