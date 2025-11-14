@@ -1,102 +1,52 @@
-Return-Path: <linux-arm-msm+bounces-81734-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-81740-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
-	by mail.lfdr.de (Postfix) with ESMTPS id B672BC5A9F6
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Nov 2025 00:35:23 +0100 (CET)
+Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [IPv6:2605:f480:58:1:0:1994:3:14])
+	by mail.lfdr.de (Postfix) with ESMTPS id 17D92C5ABF9
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Nov 2025 01:16:29 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by tor.lore.kernel.org (Postfix) with ESMTPS id 3E7F4208D8
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Nov 2025 23:35:22 +0000 (UTC)
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id CFDC94E9FB9
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Nov 2025 00:15:44 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 34B7B34679C;
-	Thu, 13 Nov 2025 23:32:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C30D2214204;
+	Fri, 14 Nov 2025 00:14:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="ThXyaQTD";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="K6ebtLN0"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Pc/DvTI/"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A630832C931
-	for <linux-arm-msm@vger.kernel.org>; Thu, 13 Nov 2025 23:32:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90F2720F079;
+	Fri, 14 Nov 2025 00:14:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763076739; cv=none; b=VnANE72Jh9PsA8388RgXNA5NXUf3lMpGmKksTcp+9eI5t3NUSHIY9v9D5WnOdPGmy1SanQkmKNzE0ycAy3vhP0XSDgHZ/AadBrSZ/eWqEYfLKk8TITQ+A2DmGFXt+O5XB6oemGzwXt1VX6OZ6Iws7KmZzga8uHcg/20ek2ra5RY=
+	t=1763079277; cv=none; b=kvYROABqPGrHfOeetYSgH57SoD1uslQzKrcTiYEUiESTHzGm9sBWvXVX4vV14spA5k4xSEADPMZGdXWreVjtBDhNAvh3cqYngjGQAryPO2fxV9SB1/AilQ38oh4DZcTEJoSBwuoHGUrrjEW+A1GCnkNrvIsKXH+gHkRbwC96tRo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763076739; c=relaxed/simple;
-	bh=DBrZfc4GPezP/e0loWuAe+68GknA5/X9CxqWpGUm6+w=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=reVk86Mnfgp71oHGwAzNHWxHQmx11cFbNBNKK4HfpWvXlVn5H0nfLqr42ii8oJxYolGO1cBcgNwkjOYuq0J80UHf+P0TGmdaxyvb8z58qeL+yV9azAMRzJF4VCG46bSRL4jQnUaOXBHXmsFHPy6h2uX1jF/mN2aNSOJtDGTzmNU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=ThXyaQTD; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=K6ebtLN0; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 5ADMaW181611840
-	for <linux-arm-msm@vger.kernel.org>; Thu, 13 Nov 2025 23:32:16 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	jRYfEhQHO/l4hKm8jFGZ03SmUwr6xcPm0oWaVVNpW6s=; b=ThXyaQTDJPqOcpAb
-	1tEkPU6On/laF1l3L7aoaFM6DzJ0yGYot74k9fRZpKoFQ9jOpKf+ce9rvXeL8nXC
-	Jl3z7rn14ut8dTx0fKahmsGm6xSazPsfYpmZCsw/J8CqgPizB6jlxTNGOVbwtv3o
-	GpgA6+7Id2RZ10O6s9GbGLpPE0IYh/f5F/T79qhql/yUkYl92xyAd9nVpvw/FT/W
-	kq9Kw/rN6m0YqrkxiYBGdnddkNctuWrY0WmfZwbamQYVuhOHo867Iil/qJOhs6hG
-	fHGf7RKjzmdeHDHtO5h9yooAHvlEGBi/rXyRpnYtuQlKvtbVtmVhBITOsp9ImlN1
-	Ww9ijQ==
-Received: from mail-pl1-f198.google.com (mail-pl1-f198.google.com [209.85.214.198])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4adr9bg484-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Thu, 13 Nov 2025 23:32:16 +0000 (GMT)
-Received: by mail-pl1-f198.google.com with SMTP id d9443c01a7336-297f8a2ba9eso34258435ad.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 13 Nov 2025 15:32:16 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1763076736; x=1763681536; darn=vger.kernel.org;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=jRYfEhQHO/l4hKm8jFGZ03SmUwr6xcPm0oWaVVNpW6s=;
-        b=K6ebtLN0hOBZHNWb5G25mz1ZBcxTx+PQIz9Usb6NdFWTJl6+1d7GSOlc+ONYuGB/Xk
-         q/V1yoKvgD01Dvsf91dp+TYunqia6uvMnB8iK3Pfbf6KOtJ6mhb/3X/DMRAQISSDKIYl
-         nX9bT5BvHlF45zH6pCe5STpWKTSClWmtvRVJfaD6gGUuBdakKs5hJtYjkfdUBvplcnmK
-         PkpMhnKDtXWaJyhreX37yp7nLWcFcO7EAfD52O9NH/rvcyTbKDIz0UvvxhIne18lagoU
-         rsQO3jGF/T+paCdZ7AxaxoZoxacCuDidYtxIkgvWWj6YT7i8d4tLCcpfPH4UhDpTeMnR
-         6bdA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1763076736; x=1763681536;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=jRYfEhQHO/l4hKm8jFGZ03SmUwr6xcPm0oWaVVNpW6s=;
-        b=w6ApBR10mpK/Dz/ipcLfZwRP1ehFqVbLzbeiJ3jXhUE11RHDclj/oUCrvLJ/0PYOJ0
-         eh1qp1lAMpteC7nB4NhsL8Xcy7RIukUMRPbglmP7u5tQOLcJN1uwB1FbfmtCsSfQBtaw
-         73s4FAqp5+P2zVZmf1h083pa5LR8MNQZv8tViDkR7RbSwO5Ec3LZtQUiO+Azpn7z4z/p
-         WQgIlP2pl/VgRbbDZR6y6mJ7AfnDFTjmFHWwsSohvVylB/QICUoxQ1kotmmABLpMFXhF
-         ko3ZerL5PjdetAAbjV525X05YGbOZYUXrLkANUMoi8lecraxN07y5w7q/xSKkwR0g29M
-         xQPg==
-X-Gm-Message-State: AOJu0YwlNmSHvav+RRJaoMf5YOlIaxUKtUipF55L8h8AiA0YqOxWpLC7
-	zY8kKi8wRkNuXbO8FBRwoZeOvuE2u1c2q4R8hKgbQEGT0WBrLVwW29wBp10fpjLzDiHtAjv3iLi
-	rh/dYX9RDAkFARkuXs5xVluRR6MJOdTWK512R6SZnx1Rid9bCmV3u57HUuyr0BMxCs/e6
-X-Gm-Gg: ASbGnct9xezlF/Gz2hc1wli+M8jNE8BX+epElEqybeSHllLPtomJYylW25wXJcLveXr
-	kTaMaKWbqZ//Nc7WLXxeqnkbfoLaR4FSnAqRXvkOSfqegR8pK8wbETRP+BgsjeRiKTwk3VtqznM
-	qxX6mW/O24Dm8iUAUmQp9JquM3Zem6OOnCwPv2/LplroH8kGRq90x5E4J3Dgp1CGVtT2DrsMElN
-	Le4OkbJXRgpy3xT1AbUHWRtW12KmRZySDLWgdxhgWXqBHNu9Kzp1GjX4yD/we9YCrPk4Zh1nMsk
-	rWm52N9IS2bXT91KoxOayjp77f0bsVU+R15S+b6lPtsLu8AIg+hl4xuuw0OY5JBCCuGCThxlTOq
-	L9pXCYnAqKOikps6VrHsg2yo=
-X-Received: by 2002:a17:903:90d:b0:297:d951:b4bb with SMTP id d9443c01a7336-2986a7435ecmr7356015ad.47.1763076735692;
-        Thu, 13 Nov 2025 15:32:15 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IEodQqYgRJkYLIy60kg92PboSbyAXwzBxQKHsvJ7k9auT4mdj7T3WB7cWTBc3Q78iQHPbKACg==
-X-Received: by 2002:a17:903:90d:b0:297:d951:b4bb with SMTP id d9443c01a7336-2986a7435ecmr7355695ad.47.1763076735212;
-        Thu, 13 Nov 2025 15:32:15 -0800 (PST)
-Received: from hu-akhilpo-hyd.qualcomm.com ([202.46.23.25])
-        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-bc36ed72cd1sm3049486a12.11.2025.11.13.15.32.08
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 13 Nov 2025 15:32:14 -0800 (PST)
-From: Akhil P Oommen <akhilpo@oss.qualcomm.com>
-Date: Fri, 14 Nov 2025 04:59:17 +0530
-Subject: [PATCH v3 20/20] dt-bindings: display/msm/gmu: Add Adreno X2-85
- GMU
+	s=arc-20240116; t=1763079277; c=relaxed/simple;
+	bh=MHwNLI/pLkI9zz0fyDQfEii43uTT524o9ApM6CwAYaY=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=Pf8mRAILE+beKM6ICJRTGe2bAGmniRM6RZ5VlQLhQaQRW/tPFahAsTBhKXl2ohBm8KumjRJ/kojTKVRdlXYkYUX1r3GQJr04y0X7f9zhbwwjtK5PLt6J4MeR8XrtX8iGQD/eAg5el/4TlbB/x1VaH7Moo9qk0KvnXIWJe3dh3og=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Pc/DvTI/; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 13D49C4CEF5;
+	Fri, 14 Nov 2025 00:14:37 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1763079277;
+	bh=MHwNLI/pLkI9zz0fyDQfEii43uTT524o9ApM6CwAYaY=;
+	h=From:Date:Subject:To:Cc:Reply-To:From;
+	b=Pc/DvTI/+vaeSjXs5FnRKb3g+DcfRh5gEpMgjsEgJaFq/Up1aYG+btnMkrMCgUr82
+	 1KExUg/6D1u1G/gWeE5yNZKAa1mrc+Z5pZqOxk+olq8YhUvt3k4cSMJ2Df95wjccZl
+	 cabD77tiSWFZS3yG8y8MRji9bTQZjMz9lUigLPpvyysnbeYiQtuhVzm7DO8iiayjBT
+	 sqw2tD2HcldtMRuLoku9kxQiBKpM0IbzqjGqzm7V+OSQ21NWB0cXymQm9po8P06OLT
+	 vmB98HrtFtkgtTusqYaeetAMkBdWvHWn4GYLRsDX7xwBDVbnKKv+4t9ZVL6foA68bw
+	 drn3+lo9EwKTw==
+Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0BA80CD98C3;
+	Fri, 14 Nov 2025 00:14:37 +0000 (UTC)
+From: David Heidelberg via B4 Relay <devnull+david.ixit.cz@kernel.org>
+Date: Fri, 14 Nov 2025 01:14:34 +0100
+Subject: [PATCH v2] ASoC: qcom: sdm845: set quaternary MI2S codec DAI to
+ I2S format
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -105,118 +55,82 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20251114-kaana-gpu-support-v3-20-92300c7ec8ff@oss.qualcomm.com>
-References: <20251114-kaana-gpu-support-v3-0-92300c7ec8ff@oss.qualcomm.com>
-In-Reply-To: <20251114-kaana-gpu-support-v3-0-92300c7ec8ff@oss.qualcomm.com>
-To: Rob Clark <robin.clark@oss.qualcomm.com>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>, Sean Paul <sean@poorly.run>,
-        Dmitry Baryshkov <lumag@kernel.org>,
-        Abhinav Kumar <abhinav.kumar@linux.dev>,
-        Jessica Zhang <jesszhan0024@gmail.com>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
-        Jonathan Marek <jonathan@marek.ca>,
-        Jordan Crouse <jordan@cosmicpenguin.net>,
-        Will Deacon <will@kernel.org>, Robin Murphy <robin.murphy@arm.com>,
-        Joerg Roedel <joro@8bytes.org>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-        Maxime Ripard <mripard@kernel.org>,
-        Thomas Zimmermann <tzimmermann@suse.de>,
-        Connor Abbott <cwabbott0@gmail.com>
-Cc: linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
-        linux-arm-kernel@lists.infradead.org, iommu@lists.linux.dev,
-        devicetree@vger.kernel.org, Akhil P Oommen <akhilpo@oss.qualcomm.com>,
-        Krzysztof Kozlowski <krzk@kernel.org>
+Message-Id: <20251114-sdm845-quaternary-v2-1-9d803bf5f7c9@ixit.cz>
+X-B4-Tracking: v=1; b=H4sIAGl0FmkC/z3MQQ7CIBBA0as0rJ0GEGxx5T2MCwrTlgRBh2psm
+ t5d4sLlW/y/sYIUsLBzszHCdyghpwp5aJibbZoQgq9mkksthFBQ/L1XGp4vuyAlSyug8SfPBy2
+ OzrDaPQjH8Pk9r7fqkfIdlpnQ/k9c8k5o2WnVKtObDgQ4G3FoXU4px7heYqjv3Gaa2L5/AdCv5
+ G6mAAAA
+X-Change-ID: 20251114-sdm845-quaternary-e9d6d0b513c9
+To: Srinivas Kandagatla <srini@kernel.org>, 
+ Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>, 
+ Jaroslav Kysela <perex@perex.cz>, Takashi Iwai <tiwai@suse.com>
+Cc: linux-sound@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, phone-devel@vger.kernel.org, 
+ "Dr. Git" <drgitx@gmail.com>, Casey Connolly <casey.connolly@linaro.org>, 
+ David Heidelberg <david@ixit.cz>
 X-Mailer: b4 0.14.3
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1763076574; l=1677;
- i=akhilpo@oss.qualcomm.com; s=20240726; h=from:subject:message-id;
- bh=DBrZfc4GPezP/e0loWuAe+68GknA5/X9CxqWpGUm6+w=;
- b=VcSmbJTK+AwALI8XC93AXkctqWpbKLucIhitRFtg+TnNd7qWT/+mcPon0M8DxlJ+BMR8C3A3A
- P4jrORXACVYDIs9gVsH1RAPyI2NIJ+HFj6zCe6e8XrFttR2KeLzGgOY
-X-Developer-Key: i=akhilpo@oss.qualcomm.com; a=ed25519;
- pk=lmVtttSHmAUYFnJsQHX80IIRmYmXA4+CzpGcWOOsfKA=
-X-Authority-Analysis: v=2.4 cv=aJz9aL9m c=1 sm=1 tr=0 ts=69166a80 cx=c_pps
- a=MTSHoo12Qbhz2p7MsH1ifg==:117 a=ZePRamnt/+rB5gQjfz0u9A==:17
- a=IkcTkHD0fZMA:10 a=6UeiqGixMTsA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=KKAkSRfTAAAA:8 a=EUspDBNiAAAA:8
- a=_Uo5JhhLEGw40-SN2AoA:9 a=QEXdDO2ut3YA:10 a=GvdueXVYPmCkWapjIL-Q:22
- a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-GUID: NANO-2fmacaw7WaYlGCSJkOGyzUKovoH
-X-Proofpoint-ORIG-GUID: NANO-2fmacaw7WaYlGCSJkOGyzUKovoH
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMTEzMDE4NSBTYWx0ZWRfXy7OZG8DGX1uW
- cFVsVA2T3tZEBrilyc0BMVrBye6Ze5EMjOAQCU7NeYR0rZhFJRHNyAR6UpOJX2NbwdbnAftU2Nl
- jxiTTIAV0NPvWbY4X0mv1cppLjrGgODm89EtmiMalVC8DUnIJGOwH93NoYeKNOsg6XiF3B6Gi7C
- m1dwRro3Brx5iF/nHHyKPdSP2wOF/x19ZKr9Mh803OUi6Y7Luawcp5ZB6B6A3IkZZKfHt6+fj2t
- J2o8fi+2PSudiR8aPREHpLIVaIRcSUHTUpXfXwyqbbmXTybDPtQ+JZWHS4yq8GV9NRepwTi0+cq
- 3grTX7LdFxnA27f0pf/byl/2vtUxmei1qu3Yun4B6n52uz1XtJuHvI1HOcsPAaao1NQvtOOhoSv
- t7zOqtYQ3sCLFPo+3PMzbO9ajZVRvw==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
- definitions=2025-11-13_06,2025-11-13_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0 lowpriorityscore=0 priorityscore=1501 malwarescore=0
- impostorscore=0 spamscore=0 suspectscore=0 adultscore=0 clxscore=1015
- bulkscore=0 classifier=typeunknown authscore=0 authtc= authcc= route=outbound
- adjust=0 reason=mlx scancount=1 engine=8.22.0-2510240001
- definitions=main-2511130185
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1341; i=david@ixit.cz;
+ h=from:subject:message-id;
+ bh=ARxpTeY9kNYvN6EYXKNHS5nPtDvu8Qayi+gAEHyLru4=;
+ b=owEBbQKS/ZANAwAIAWACP8TTSSByAcsmYgBpFnRseuDCJsmzLI7IxIXZzk7++Dy8Mqn2plbaN
+ 3Nb4kuFfNWJAjMEAAEIAB0WIQTXegnP7twrvVOnBHRgAj/E00kgcgUCaRZ0bAAKCRBgAj/E00kg
+ crilEACvkZu3ZgsuyqRA7SUxj5lMfVN9pu0+B8ucn1W91euBRLxMlqDmLhPILRJAeOZEwwpwaxm
+ QLtms3kWoOfpJMBdYLUsvZP43Ke+sVIE7zSPv81i/WRlXSw0TNiHMsFkumBt4whyj011GKkZz18
+ wCg8WVbgr1cQBrukb+STxfK83dxBRxsSdHLtYDMtDaNpSYIeVkiqmedSYXGal0BpaQgxLHhZ+cc
+ tJqsM+Y1A7J5s3incrmDwXLtIbVH7aA9KteN+ExgZtg5ttBcE/T8O+CFJMMHey7EZgKH3fVNImE
+ 4Dz87fOPKWHmCRMw5FMfnUu6dZYa4/EzVh8fi7o6sSTjjSyVEBLSKf4y6CKieDvTpfzD5Fu13f3
+ V0j9iu3hSElsc8QmBF5LhpSFdCnA5xc3FBYS/lNLI0SQjNRH9A2tAzP3K+VOpr0l3h0k6cixxIx
+ 5YNxv1aP9bWE4f95Qr9CgtdvpJpybuyEBsRSCjtZuQiEQ0O7hZERNazyFo0YUN4AWQRl7+SmhpB
+ Z5n1VYX7wjSiMtRYJ0AQG7yetDQsoaDMvPFRwEkdTgdTY69p+p7qkGSWgWw+ezyZD8cBxvEsfrH
+ 8sFFsBU37JfeBLtU/xkRkxZffd05B8h/1K/5M3KvbwCYSsMkkd+u6yVGW+1tvSGPZEAENLegYdw
+ rFaokJukicQI+Qg==
+X-Developer-Key: i=david@ixit.cz; a=openpgp;
+ fpr=D77A09CFEEDC2BBD53A7047460023FC4D3492072
+X-Endpoint-Received: by B4 Relay for david@ixit.cz/default with auth_id=355
+X-Original-From: David Heidelberg <david@ixit.cz>
+Reply-To: david@ixit.cz
 
-Document Adreno X2-85 GMU found in Glymur chipsets in the
-dt-binding specification. It is very similar to Adreno 840
-GMU with the additional requirement of RSCC HUB clock.
+From: "Dr. Git" <drgitx@gmail.com>
 
-Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Signed-off-by: Akhil P Oommen <akhilpo@oss.qualcomm.com>
+We configure the codec DAI format for primary and secondary but not the
+quaternery MI2S path. Add the missing configuration to enable speaker
+codecs on the quaternary MI2S like the MAX9827 found on the OnePlus 6.
+
+Signed-off-by: Dr. Git <drgitx@gmail.com>
+Signed-off-by: Casey Connolly <casey.connolly@linaro.org>
+Signed-off-by: David Heidelberg <david@ixit.cz>
 ---
- .../devicetree/bindings/display/msm/gmu.yaml       | 30 ++++++++++++++++++++++
- 1 file changed, 30 insertions(+)
+Changes in v2:
+ - Rebased on top of next-20251113
+---
+ sound/soc/qcom/sdm845.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/Documentation/devicetree/bindings/display/msm/gmu.yaml b/Documentation/devicetree/bindings/display/msm/gmu.yaml
-index 2ef8fd7e9f52..e32056ae0f5d 100644
---- a/Documentation/devicetree/bindings/display/msm/gmu.yaml
-+++ b/Documentation/devicetree/bindings/display/msm/gmu.yaml
-@@ -327,6 +327,36 @@ allOf:
-             - const: memnoc
-             - const: hub
+diff --git a/sound/soc/qcom/sdm845.c b/sound/soc/qcom/sdm845.c
+index e18a8e44f2db5..0ce9dff4dc525 100644
+--- a/sound/soc/qcom/sdm845.c
++++ b/sound/soc/qcom/sdm845.c
+@@ -365,10 +365,12 @@ static int sdm845_snd_startup(struct snd_pcm_substream *substream)
+ 		snd_soc_dai_set_fmt(codec_dai, codec_dai_fmt);
+ 		break;
+ 	case QUATERNARY_MI2S_RX:
++		codec_dai_fmt |= SND_SOC_DAIFMT_NB_NF | SND_SOC_DAIFMT_I2S;
+ 		snd_soc_dai_set_sysclk(cpu_dai,
+ 			Q6AFE_LPASS_CLK_ID_QUAD_MI2S_IBIT,
+ 			MI2S_BCLK_RATE, SNDRV_PCM_STREAM_PLAYBACK);
+ 		snd_soc_dai_set_fmt(cpu_dai, fmt);
++		snd_soc_dai_set_fmt(codec_dai, codec_dai_fmt);
+ 		break;
  
-+  - if:
-+      properties:
-+        compatible:
-+          contains:
-+            const: qcom,adreno-gmu-x285.1
-+    then:
-+      properties:
-+        reg:
-+          items:
-+            - description: Core GMU registers
-+        reg-names:
-+          items:
-+            - const: gmu
-+        clocks:
-+          items:
-+            - description: GPU AHB clock
-+            - description: GMU clock
-+            - description: GPU CX clock
-+            - description: GPU MEMNOC clock
-+            - description: GMU HUB clock
-+            - description: GMU RSCC HUB clock
-+        clock-names:
-+          items:
-+            - const: ahb
-+            - const: gmu
-+            - const: cxo
-+            - const: memnoc
-+            - const: hub
-+            - const: rscc
-+
-   - if:
-       properties:
-         compatible:
+ 	case QUATERNARY_TDM_RX_0:
 
+---
+base-commit: 6d7e7251d03f98f26f2ee0dfd21bb0a0480a2178
+change-id: 20251114-sdm845-quaternary-e9d6d0b513c9
+
+Best regards,
 -- 
-2.51.0
+David Heidelberg <david@ixit.cz>
+
 
 
