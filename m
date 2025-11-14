@@ -1,571 +1,147 @@
-Return-Path: <linux-arm-msm+bounces-81903-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-81904-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [142.0.200.124])
-	by mail.lfdr.de (Postfix) with ESMTPS id 11370C5E2E8
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Nov 2025 17:23:43 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id E50CEC5E393
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Nov 2025 17:27:35 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 90FDA4F256B
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Nov 2025 16:13:17 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 9891B4238D2
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Nov 2025 16:21:13 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 405D22857C6;
-	Fri, 14 Nov 2025 16:09:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CD2D0327204;
+	Fri, 14 Nov 2025 16:18:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Mb9MHPE2"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Ac3WA5Xu"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08B80284689;
-	Fri, 14 Nov 2025 16:09:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88C6A32693E
+	for <linux-arm-msm@vger.kernel.org>; Fri, 14 Nov 2025 16:18:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763136553; cv=none; b=Nd7XRlpTSdnWHnneQi+a6IF9Rk8qnbLKTbo4NeKrPZEFk2WUCRMO5L7YZNCfn5M/izGsrPUIA3OeHmwfSpD1hdtCfLy/aY3dgMQVKWlyvu1WBcTVK3w3g6j3J0mvy6IEILFRpbzbuBZUiMdqel7rbWdd1AjCX4LXoi2/8FZoBQI=
+	t=1763137106; cv=none; b=oz3CpwUTWIBipTVldTFJYszcxofmw+TKaa+tFWxJpqB4JXpbvr//IvfZ4gGcMDtolyYeuFASgAP0XhWIjkHD4kfrwnMst1zFTBPYB3GqfgC9bNH8X+9G3jQHE3PNDwkcyW48vkBRNf9Y+PQPDpz1YU9/QHQ9a/PMXuBWR47q/bY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763136553; c=relaxed/simple;
-	bh=/sFPf5ThU6xGJfJOrC5xx8zKQ49HY4Dgc4451tP/brQ=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=hp3EU/yFI4B0UZDijR7ZXDRkV/BtUQOdUSYoULspyaTwTo089Rr7uXqkVfmiE95C2zodNFn5zTyFL1uwFaLbWFqJbudurzNzQVlO8zuyQx6sZdcWzzjdAVFKNYAlw+SdOE0/O/I7iF9n9HR4fiWL4+jF/GuuQliwQmX9GzoO35s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Mb9MHPE2; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 853EFC113D0;
-	Fri, 14 Nov 2025 16:09:08 +0000 (UTC)
+	s=arc-20240116; t=1763137106; c=relaxed/simple;
+	bh=QEjF1WF/vRwN70ClSuEqTx6+UbIiyHQ3zt9JLkF/88w=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=MQnDwhZPVl7sWuUkFMO73vwUFKDtM8Kl0vMRtg8nTxUV6oWynPJDB3jxXMKReXunlQyySxDgAHIblghl3rX+/mvv5ZCXvnPlychR6a1nFG3z7cbICx52ZESkxOROPoXU2vByXY9SCeFaZfnUCFAmOZ2umWDNjZTox98jbJEXJP8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Ac3WA5Xu; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5CAB0C19421
+	for <linux-arm-msm@vger.kernel.org>; Fri, 14 Nov 2025 16:18:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1763136552;
-	bh=/sFPf5ThU6xGJfJOrC5xx8zKQ49HY4Dgc4451tP/brQ=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=Mb9MHPE2TzYaUoGHVM7nYYTH6fwyWJ5mPUvr7xH7XXUbwomE+oSmlVjJCVmChnrLz
-	 OAcYLfYP7zt6lFban0RQESp1VnFXU5MStEYqxVqVIgRTOPCk6nVeYOLtYScAMw5pNU
-	 98Ft0bMT4vCYCp8/NcLa1MqObMeJEdOJNvzN3NeWCobqJMwttfY4mi8stF7RGWJ5Yl
-	 N1QOnt/P0m32QgZX1dBKN3kZKeWpJ1SK+Fh2+m5fJgEGYYOBS1sz1JchMTOn5aT0kt
-	 iB8oDGqoRVqZU8znddarzy9Q6MIeCXOQnVsVkom92dCrh0plIhZD1Vj9wf0tbw0CdV
-	 Z24dzW4gEoVaA==
-Message-ID: <a428f8b9-c338-4404-8dc1-da6daae37d5c@kernel.org>
-Date: Fri, 14 Nov 2025 16:09:06 +0000
+	s=k20201202; t=1763137106;
+	bh=QEjF1WF/vRwN70ClSuEqTx6+UbIiyHQ3zt9JLkF/88w=;
+	h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+	b=Ac3WA5XuaQaAWGL8uFBSD+0TpGKP675lNRhFD+YZcUdIJSOqNhyLGcxJ/ap84XylO
+	 oG75GiSnC+95uA8uApQgdSauzQhKnGOI0gMWIvM6PDGZDKA//5gJb+1iPm8KeMU8Pe
+	 hxJOOL5PNqFhaZBjKdxNbdm+Vog4fvukWS+9k9xG8jvjd7jyLw4wjAdrgUZcwFzdDI
+	 37yFAIYt9lzbliOLiBImWMtjcwKMziKeR0uCaFWRgPeWYbPal66DGuFZF+WcfG8iyI
+	 jqxtzdRG93PtvBAd7R1TUcMeyiOQp8TmCxWViJzbgbSqMyVwvQ2OquFFCmYJ2z7qp+
+	 53kOMVYCt74mQ==
+Received: by mail-ej1-f54.google.com with SMTP id a640c23a62f3a-b73161849e1so367008066b.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 14 Nov 2025 08:18:26 -0800 (PST)
+X-Forwarded-Encrypted: i=1; AJvYcCV1Ibb+U9hoyGzcC7frFcPVLkSQRPPu13lGEnnCW5aR0i/yJeefSHD8LbDNHvLGKAPATYi5DCf5Fl8RQsko@vger.kernel.org
+X-Gm-Message-State: AOJu0Yz4WG/zRKzqUMjXEWmzpYImcPQvG0K4qBYG3nVc+oLdXZFx4GYE
+	6s991mx6t14zF0no73QtO+bA32Ro8Bzmzdp1dTBVbWOT5YdDb2W6XpJNWd60Cz5271JCxV5xot7
+	htmzBID5yC46rmHv1OWaCrJ6+PnwmSw==
+X-Google-Smtp-Source: AGHT+IEvLOFyqCU+gTpIpUldy/VCAnVeRKgX2Fjb/dnX2vDFUQSF+Pi1VBgJh5ukSnrIkAAXLmy9kEIRZ3yzcpYSJ/s=
+X-Received: by 2002:a17:907:a089:b0:b73:5f5e:574d with SMTP id
+ a640c23a62f3a-b736796a33bmr324954266b.59.1763137104773; Fri, 14 Nov 2025
+ 08:18:24 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/3] dt-bindings: media: camss: Add qcom,sm6350-camss
-To: Luca Weiss <luca.weiss@fairphone.com>,
- Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
- Robert Foss <rfoss@kernel.org>, Todor Tomov <todor.too@gmail.com>,
- Mauro Carvalho Chehab <mchehab@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
- Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>
-Cc: ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
- linux-arm-msm@vger.kernel.org, linux-media@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20251114-sm6350-camss-v2-0-d1ff67da33b6@fairphone.com>
- <20251114-sm6350-camss-v2-1-d1ff67da33b6@fairphone.com>
- <de7ad562-80bc-498e-a6fb-cc26bb6343f0@linaro.org>
- <r6EgtiSu8pqs2ouFERTw7fx8kYZ3RcSbGklwd17UPxNGGd3sbRDl2BPyplkABZVu3qyfrIzRMisa0qTSrm89BA==@protonmail.internalid>
- <DE8FV81S45S5.CH6K1QAX940D@fairphone.com>
-From: Bryan O'Donoghue <bod@kernel.org>
-Content-Language: en-US
-In-Reply-To: <DE8FV81S45S5.CH6K1QAX940D@fairphone.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+References: <20251113130519.2647081-1-wei.deng@oss.qualcomm.com> <176313578860.3262114.17056319042303889483.robh@kernel.org>
+In-Reply-To: <176313578860.3262114.17056319042303889483.robh@kernel.org>
+From: Rob Herring <robh@kernel.org>
+Date: Fri, 14 Nov 2025 10:18:13 -0600
+X-Gmail-Original-Message-ID: <CAL_JsqJX3doLFv-Nc6o+L1W_o8VjtvGp9dqdpsotuyG17zU7Lw@mail.gmail.com>
+X-Gm-Features: AWmQ_bkWy46OX7PgV9ZUzhlCrs70KVuhH4A3WuQtX93vwPtAy017ORp1pZrC_NY
+Message-ID: <CAL_JsqJX3doLFv-Nc6o+L1W_o8VjtvGp9dqdpsotuyG17zU7Lw@mail.gmail.com>
+Subject: Re: [PATCH] arm64: dts: qcom: monaco-evk: Enable Bluetooth support
+To: Wei Deng <wei.deng@oss.qualcomm.com>
+Cc: Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	linux-arm-msm@vger.kernel.org, quic_jiaymao@quicinc.com, 
+	Konrad Dybcio <konradybcio@kernel.org>, linux-kernel@vger.kernel.org, 
+	linux-bluetooth@vger.kernel.org, cheng.jiang@oss.qualcomm.com, 
+	devicetree@vger.kernel.org, Bjorn Andersson <andersson@kernel.org>, quic_shuaz@quicinc.com, 
+	quic_chezhou@quicinc.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On 14/11/2025 13:06, Luca Weiss wrote:
-> Hi Vladimir,
-> 
-> On Fri Nov 14, 2025 at 1:40 PM CET, Vladimir Zapolskiy wrote:
->> Hi Luca.
->>
->> On 11/14/25 13:15, Luca Weiss wrote:
->>> Add bindings for the Camera Subsystem on the SM6350 SoC.
->>>
->>> Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
->>> ---
->>>    .../bindings/media/qcom,sm6350-camss.yaml          | 349 +++++++++++++++++++++
->>>    1 file changed, 349 insertions(+)
->>>
->>> diff --git a/Documentation/devicetree/bindings/media/qcom,sm6350-camss.yaml b/Documentation/devicetree/bindings/media/qcom,sm6350-camss.yaml
->>> new file mode 100644
->>> index 000000000000..d812b5b50c05
->>> --- /dev/null
->>> +++ b/Documentation/devicetree/bindings/media/qcom,sm6350-camss.yaml
->>> @@ -0,0 +1,349 @@
->>> +# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
->>> +%YAML 1.2
->>> +---
->>> +$id: http://devicetree.org/schemas/media/qcom,sm6350-camss.yaml#
->>> +$schema: http://devicetree.org/meta-schemas/core.yaml#
->>> +
->>> +title: Qualcomm SM6350 Camera Subsystem (CAMSS)
->>> +
->>> +maintainers:
->>> +  - Luca Weiss <luca.weiss@fairphone.com>
->>> +
->>> +description:
->>> +  The CAMSS IP is a CSI decoder and ISP present on Qualcomm platforms.
->>> +
->>> +properties:
->>> +  compatible:
->>> +    const: qcom,sm6350-camss
->>> +
->>> +  reg:
->>> +    maxItems: 12
->>> +
->>> +  reg-names:
->>> +    items:
->>> +      - const: csid0
->>> +      - const: csid1
->>> +      - const: csid2
->>> +      - const: csid_lite
->>> +      - const: csiphy0
->>> +      - const: csiphy1
->>> +      - const: csiphy2
->>> +      - const: csiphy3
->>> +      - const: vfe0
->>> +      - const: vfe1
->>> +      - const: vfe2
->>> +      - const: vfe_lite
->>> +
->>> +  clocks:
->>> +    maxItems: 30
->>> +
->>> +  clock-names:
->>> +    items:
->>> +      - const: cam_ahb_clk
->>> +      - const: cam_axi
->>> +      - const: soc_ahb
->>> +      - const: camnoc_axi
->>> +      - const: core_ahb
->>> +      - const: cpas_ahb
->>> +      - const: csiphy0
->>> +      - const: csiphy0_timer
->>> +      - const: csiphy1
->>> +      - const: csiphy1_timer
->>> +      - const: csiphy2
->>> +      - const: csiphy2_timer
->>> +      - const: csiphy3
->>> +      - const: csiphy3_timer
->>> +      - const: slow_ahb_src
->>> +      - const: vfe0_axi
->>> +      - const: vfe0
->>> +      - const: vfe0_cphy_rx
->>> +      - const: vfe0_csid
->>> +      - const: vfe1_axi
->>> +      - const: vfe1
->>> +      - const: vfe1_cphy_rx
->>> +      - const: vfe1_csid
->>> +      - const: vfe2_axi
->>> +      - const: vfe2
->>> +      - const: vfe2_cphy_rx
->>> +      - const: vfe2_csid
->>> +      - const: vfe_lite
->>> +      - const: vfe_lite_cphy_rx
->>> +      - const: vfe_lite_csid
->>
->> The sorting order of this list does not follow the sorting order accepted
->> in the past.
-> 
-> What file should I best reference?
+On Fri, Nov 14, 2025 at 10:06=E2=80=AFAM Rob Herring (Arm) <robh@kernel.org=
+> wrote:
+>
+>
+> On Thu, 13 Nov 2025 18:35:19 +0530, Wei Deng wrote:
+> > There's a WCN6855 WiFi/Bluetooth module on an M.2 card. To make
+> > Bluetooth work, we need to define the necessary device tree nodes,
+> > including UART configuration and power supplies.
+> >
+> > Since there is no standard M.2 binding in the device tree at present,
+> > the PMU is described using dedicated PMU nodes to represent the
+> > internal regulators required by the module.
+> >
+> > The module provides a 3.3V supply, which originates from the
+> > main board=E2=80=99s 12V rail. To represent this power hierarchy in the=
+ device
+> > tree, add a fixed 12V regulator node as the DC-IN source and link it
+> > to the 3.3V regulator node.
+> >
+> > Signed-off-by: Wei Deng <wei.deng@oss.qualcomm.com>
+> > ---
+> >  arch/arm64/boot/dts/qcom/monaco-evk.dts | 99 +++++++++++++++++++++++++
+> >  1 file changed, 99 insertions(+)
+> >
+>
+>
+> My bot found new DTB warnings on the .dts files added or changed in this
+> series.
+>
+> Some warnings may be from an existing SoC .dtsi. Or perhaps the warnings
+> are fixed by another series. Ultimately, it is up to the platform
+> maintainer whether these warnings are acceptable or not. No need to reply
+> unless the platform maintainer has comments.
+>
+> If you already ran DT checks and didn't see these error(s), then
+> make sure dt-schema is up to date:
+>
+>   pip3 install dtschema --upgrade
+>
+>
+> This patch series was applied (using b4) to base:
+>  Base: attempting to guess base-commit...
+>  Base: tags/next-20251112 (exact match)
+>  Base: tags/next-20251112 (use --merge-base to override)
+>
+> If this is not the correct base, please add 'base-commit' tag
+> (or use b4 which does this automatically)
+>
+> New warnings running 'make CHECK_DTBS=3Dy for arch/arm64/boot/dts/qcom/' =
+for 20251113130519.2647081-1-wei.deng@oss.qualcomm.com:
+>
+> arch/arm64/boot/dts/qcom/monaco-evk.dtb: wcn6855-pmu (qcom,wcn6855-pmu): =
+'vddpcielp3-supply', 'vddpcielp9-supply' do not match any of the regexes: '=
+^pinctrl-[0-9]+$'
+>         from schema $id: http://devicetree.org/schemas/regulator/qcom,qca=
+6390-pmu.yaml
+> arch/arm64/boot/dts/qcom/monaco-evk.dtb: wcn6855-pmu (qcom,wcn6855-pmu): =
+'vddpcie1p3-supply' is a required property
+>         from schema $id: http://devicetree.org/schemas/regulator/qcom,qca=
+6390-pmu.yaml
+> arch/arm64/boot/dts/qcom/monaco-evk.dtb: wcn6855-pmu (qcom,wcn6855-pmu): =
+'vddpcie1p9-supply' is a required property
+>         from schema $id: http://devicetree.org/schemas/regulator/qcom,qca=
+6390-pmu.yaml
 
-Documentation/devicetree/bindings/media/qcom,sdm845-camss.yaml
+This is the 3rd report of your typos. Is there some reason you are
+ignoring the reports?
 
->>
->> I'm very sorry for the vagueness, but I can not pronounce the accepted
->> sorting order name, because it triggers people.
->>
->>> +
->>> +  interrupts:
->>> +    maxItems: 12
->>> +
->>> +  interrupt-names:
->>> +    items:
->>> +      - const: csid0
->>> +      - const: csid1
->>> +      - const: csid2
->>> +      - const: csid_lite
->>> +      - const: csiphy0
->>> +      - const: csiphy1
->>> +      - const: csiphy2
->>> +      - const: csiphy3
->>> +      - const: vfe0
->>> +      - const: vfe1
->>> +      - const: vfe2
->>> +      - const: vfe_lite
->>> +
->>> +  interconnects:
->>> +    maxItems: 4
->>> +
->>> +  interconnect-names:
->>> +    items:
->>> +      - const: ahb
->>> +      - const: hf_mnoc
->>> +      - const: sf_mnoc
->>> +      - const: sf_icp_mnoc
->>
->> Please remove sf_mnoc and sf_icp_mnoc, they are not needed for enabling
->> IP to produce raw images, and one day you may use them somewhere else.
-> 
-> Ack, will give it a try.
-
-Disagree with this.
-
-See the Kanaapali patches. I'm asking new submissions to be as complete 
-as possible, instead of limiting the hardware description to the RDI.
-
-So listing the ICP noc is the right thing to do.
-
-So please include register banks for
-
-- bps
-- cdm
-- icp
-- ipe
-- jpeg
-- lrme
-
->>
->>> +
->>> +  iommus:
->>> +    maxItems: 4
->>> +
->>> +  power-domains:
->>> +    items:
->>> +      - description: IFE0 GDSC - Image Front End, Global Distributed Switch Controller.
->>> +      - description: IFE1 GDSC - Image Front End, Global Distributed Switch Controller.
->>> +      - description: IFE2 GDSC - Image Front End, Global Distributed Switch Controller.
->>> +      - description: Titan Top GDSC - Titan ISP Block, Global Distributed Switch Controller.
->>> +
->>> +  power-domain-names:
->>> +    items:
->>> +      - const: top
->>> +      - const: ife0
->>> +      - const: ife1
->>> +      - const: ife2
->>
->> Note that the list of items and the list of the item descriptions do not
->> correspond to each other. Titan Top GDSC shall be at the end.
-> 
-> In the v1 the comment was that top can now be put on top (because a
-> limitation in the driver was fixed). But yes, forgot to modify
-> power-domains description. Will fix.
-> 
->>
->>> +
->>> +  vdd-csiphy-0p9-supply:
->>> +    description:
->>> +      Phandle to a 0.9V regulator supply to a PHY.
->>> +
->>> +  vdd-csiphy-1p25-supply:
->>> +    description:
->>> +      Phandle to a 1.25V regulator supply to a PHY.
->>> +
->>
->> Please reference to the schematics or SoC TRM, does SM6350 SoC
->> have different pads to get supplies to different CSIPHYx IPs?
->>
->> If so, then please provide hardware properties to get a proper
->> correspondence between supplies and CSIPHYx, and make all these
->> properties optional.
-> 
-> I shared the names in replies to v1.
-> 
-> * VDD_CAMSS_PLL_0P9 - Camera SS PLL 0.9 V circuits
->      (not referenced in downstream kernel, connected to vreg_s5a in
->      schematics, which is MX)
-> * VDD_A_CSI_x_0P9 - MIPI CSIx 0.9 V circuits
->      With pad names VDD_A_CSI_0_0P9 to VDD_A_CSI_3_0P9
-> * VDD_A_CSI_x_1P25 - MIPI CSIx 1.25 V circuits
->      With pad names VDD_A_CSI_0_1P25 to VDD_A_CSI_3_1P25
-
-I'm fine with your proposed rail names, they appear to correspond to the 
-voltage values in the docs.
-
-> 
->>
->>> +  ports:
->>> +    $ref: /schemas/graph.yaml#/properties/ports
->>> +
->>> +    description:
->>> +      CSI input ports.
->>> +
->>> +    patternProperties:
->>> +      "^port@[0-3]$":
->>> +        $ref: /schemas/graph.yaml#/$defs/port-base
->>> +        unevaluatedProperties: false
->>> +
->>> +        description:
->>> +          Input port for receiving CSI data from a CSIPHY.
->>> +
->>> +        properties:
->>> +          endpoint:
->>> +            $ref: video-interfaces.yaml#
->>> +            unevaluatedProperties: false
->>> +
->>> +            properties:
->>> +              data-lanes:
->>> +                minItems: 1
->>> +                maxItems: 4
->>> +
->>> +              bus-type:
->>> +                enum:
->>> +                  - 1 # MEDIA_BUS_TYPE_CSI2_CPHY
->>> +                  - 4 # MEDIA_BUS_TYPE_CSI2_DPHY
->>> +
->>> +            required:
->>> +              - data-lanes
->>> +
->>> +required:
->>> +  - compatible
->>> +  - reg
->>> +  - reg-names
->>> +  - clocks
->>> +  - clock-names
->>> +  - interrupts
->>> +  - interrupt-names
->>> +  - interconnects
->>> +  - interconnect-names
->>> +  - iommus
->>> +  - power-domains
->>> +  - power-domain-names
->>> +  - vdd-csiphy-0p9-supply
->>> +  - vdd-csiphy-1p25-supply
->>
->> When a change to add CSIPHYx specific supplies is done, please remove
->> *-supply properties from the list of the requred ones.
-> 
-> Is this pending some other change that will be posted? Or what do you mean?
-
-He means in the current CSIPHY dt its not possible to require these 
-properties.
-
-> 
->>
->>> +  - ports
->>> +
->>> +additionalProperties: false
->>> +
->>> +examples:
->>> +  - |
->>> +    #include <dt-bindings/clock/qcom,gcc-sm6350.h>
->>> +    #include <dt-bindings/clock/qcom,sm6350-camcc.h>
->>> +    #include <dt-bindings/interconnect/qcom,icc.h>
->>> +    #include <dt-bindings/interconnect/qcom,sm6350.h>
->>> +    #include <dt-bindings/interrupt-controller/arm-gic.h>
->>> +    #include <dt-bindings/media/video-interfaces.h>
->>> +    #include <dt-bindings/power/qcom-rpmpd.h>
->>> +
->>> +    soc {
->>> +        #address-cells = <2>;
->>> +        #size-cells = <2>;
->>> +
->>> +        isp@acb3000 {
->>> +            compatible = "qcom,sm6350-camss";
->>> +
->>> +            reg = <0x0 0x0acb3000 0x0 0x1000>,
->>> +                  <0x0 0x0acba000 0x0 0x1000>,
->>> +                  <0x0 0x0acc1000 0x0 0x1000>,
->>> +                  <0x0 0x0acc8000 0x0 0x1000>,
->>> +                  <0x0 0x0ac65000 0x0 0x1000>,
->>> +                  <0x0 0x0ac66000 0x0 0x1000>,
->>> +                  <0x0 0x0ac67000 0x0 0x1000>,
->>> +                  <0x0 0x0ac68000 0x0 0x1000>,
->>> +                  <0x0 0x0acaf000 0x0 0x4000>,
->>> +                  <0x0 0x0acb6000 0x0 0x4000>,
->>> +                  <0x0 0x0acbd000 0x0 0x4000>,
->>> +                  <0x0 0x0acc4000 0x0 0x4000>;
->>> +            reg-names = "csid0",
->>> +                        "csid1",
->>> +                        "csid2",
->>> +                        "csid_lite",
->>> +                        "csiphy0",
->>> +                        "csiphy1",
->>> +                        "csiphy2",
->>> +                        "csiphy3",
->>> +                        "vfe0",
->>> +                        "vfe1",
->>> +                        "vfe2",
->>> +                        "vfe_lite";
->>> +
->>> +            clocks = <&gcc GCC_CAMERA_AHB_CLK>,
->>
->> I believe this clock is critical, and it is set so in the SM6350 GCC driver,
->> therefore it should not be added here.
-> 
-> True, gcc_camera_ahb_clk has CLK_IS_CRITICAL in gcc-sm6350.c
-
-DT describes hardware, not the happenstance of Linux driver setup.
-
-On that basis omitting <&gcc GCC_CAMERA_AHB_CLK> from the clock list is 
-not correct.
-
-Because being bornign, can I then reuse this DT in FreeBSD ? No I cannot 
-because it won't describe hardware it will desscirbe Linux-DT which 
-ain't the same thing.
-
->>
->> Multiple CAMCC drivers define some of the clocks as "critical" and always
->> enabled, a misconfiguration in this area may cause the reported warning.
-> 
-> Will try to remove it then.
-
-I really object to that. DT is a hardware description. Listing the 
-clocks here does no harm and is factually accurate, which again is the 
-point of DT.
-
-> 
->>
->>> +                     <&gcc GCC_CAMERA_AXI_CLK>,
->>> +                     <&camcc CAMCC_SOC_AHB_CLK>,
->>> +                     <&camcc CAMCC_CAMNOC_AXI_CLK>,
->>> +                     <&camcc CAMCC_CORE_AHB_CLK>,
->>> +                     <&camcc CAMCC_CPAS_AHB_CLK>,
->>> +                     <&camcc CAMCC_CSIPHY0_CLK>,
->>> +                     <&camcc CAMCC_CSI0PHYTIMER_CLK>,
->>> +                     <&camcc CAMCC_CSIPHY1_CLK>,
->>> +                     <&camcc CAMCC_CSI1PHYTIMER_CLK>,
->>> +                     <&camcc CAMCC_CSIPHY2_CLK>,
->>> +                     <&camcc CAMCC_CSI2PHYTIMER_CLK>,
->>> +                     <&camcc CAMCC_CSIPHY3_CLK>,
->>> +                     <&camcc CAMCC_CSI3PHYTIMER_CLK>,
->>> +                     <&camcc CAMCC_SLOW_AHB_CLK_SRC>,
->>> +                     <&camcc CAMCC_IFE_0_AXI_CLK>,
->>> +                     <&camcc CAMCC_IFE_0_CLK>,
->>> +                     <&camcc CAMCC_IFE_0_CPHY_RX_CLK>,
->>> +                     <&camcc CAMCC_IFE_0_CSID_CLK>,
->>> +                     <&camcc CAMCC_IFE_1_AXI_CLK>,
->>> +                     <&camcc CAMCC_IFE_1_CLK>,
->>> +                     <&camcc CAMCC_IFE_1_CPHY_RX_CLK>,
->>> +                     <&camcc CAMCC_IFE_1_CSID_CLK>,
->>> +                     <&camcc CAMCC_IFE_2_AXI_CLK>,
->>> +                     <&camcc CAMCC_IFE_2_CLK>,
->>> +                     <&camcc CAMCC_IFE_2_CPHY_RX_CLK>,
->>> +                     <&camcc CAMCC_IFE_2_CSID_CLK>,
->>> +                     <&camcc CAMCC_IFE_LITE_CLK>,
->>> +                     <&camcc CAMCC_IFE_LITE_CPHY_RX_CLK>,
->>> +                     <&camcc CAMCC_IFE_LITE_CSID_CLK>;
->>> +            clock-names = "cam_ahb_clk",
->>> +                          "cam_axi",
->>> +                          "soc_ahb",
->>> +                          "camnoc_axi",
->>> +                          "core_ahb",
->>> +                          "cpas_ahb",
->>> +                          "csiphy0",
->>> +                          "csiphy0_timer",
->>> +                          "csiphy1",
->>> +                          "csiphy1_timer",
->>> +                          "csiphy2",
->>> +                          "csiphy2_timer",
->>> +                          "csiphy3",
->>> +                          "csiphy3_timer",
->>> +                          "slow_ahb_src",
->>> +                          "vfe0_axi",
->>> +                          "vfe0",
->>> +                          "vfe0_cphy_rx",
->>> +                          "vfe0_csid",
->>> +                          "vfe1_axi",
->>> +                          "vfe1",
->>> +                          "vfe1_cphy_rx",
->>> +                          "vfe1_csid",
->>> +                          "vfe2_axi",
->>> +                          "vfe2",
->>> +                          "vfe2_cphy_rx",
->>> +                          "vfe2_csid",
->>> +                          "vfe_lite",
->>> +                          "vfe_lite_cphy_rx",
->>> +                          "vfe_lite_csid";
->>> +
->>> +            interrupts = <GIC_SPI 464 IRQ_TYPE_LEVEL_HIGH>,
->>> +                         <GIC_SPI 466 IRQ_TYPE_LEVEL_HIGH>,
->>> +                         <GIC_SPI 717 IRQ_TYPE_LEVEL_HIGH>,
->>> +                         <GIC_SPI 473 IRQ_TYPE_LEVEL_HIGH>,
->>> +                         <GIC_SPI 477 IRQ_TYPE_LEVEL_HIGH>,
->>> +                         <GIC_SPI 478 IRQ_TYPE_LEVEL_HIGH>,
->>> +                         <GIC_SPI 479 IRQ_TYPE_LEVEL_HIGH>,
->>> +                         <GIC_SPI 461 IRQ_TYPE_LEVEL_HIGH>,
->>> +                         <GIC_SPI 465 IRQ_TYPE_LEVEL_HIGH>,
->>> +                         <GIC_SPI 467 IRQ_TYPE_LEVEL_HIGH>,
->>> +                         <GIC_SPI 718 IRQ_TYPE_LEVEL_HIGH>,
->>> +                         <GIC_SPI 472 IRQ_TYPE_LEVEL_HIGH>;
->>
->> Interrupt types shall be IRQ_TYPE_EDGE_RISING.
-> 
-> Ack
-> 
->>
->>> +            interrupt-names = "csid0",
->>> +                              "csid1",
->>> +                              "csid2",
->>> +                              "csid_lite",
->>> +                              "csiphy0",
->>> +                              "csiphy1",
->>> +                              "csiphy2",
->>> +                              "csiphy3",
->>> +                              "vfe0",
->>> +                              "vfe1",
->>> +                              "vfe2",
->>> +                              "vfe_lite";
->>> +
->>> +            interconnects = <&gem_noc MASTER_AMPSS_M0 QCOM_ICC_TAG_ACTIVE_ONLY
->>> +                             &config_noc SLAVE_CAMERA_CFG QCOM_ICC_TAG_ACTIVE_ONLY>,
->>> +                            <&mmss_noc MASTER_CAMNOC_HF QCOM_ICC_TAG_ALWAYS
->>> +                             &clk_virt SLAVE_EBI_CH0 QCOM_ICC_TAG_ALWAYS>,
->>> +                            <&mmss_noc MASTER_CAMNOC_SF QCOM_ICC_TAG_ALWAYS
->>> +                             &clk_virt SLAVE_EBI_CH0 QCOM_ICC_TAG_ALWAYS>,
->>> +                            <&mmss_noc MASTER_CAMNOC_ICP QCOM_ICC_TAG_ALWAYS
->>> +                             &clk_virt SLAVE_EBI_CH0 QCOM_ICC_TAG_ALWAYS>;
->>> +            interconnect-names = "ahb",
->>> +                                 "hf_mnoc",
->>> +                                 "sf_mnoc",
->>> +                                 "sf_icp_mnoc";
->>> +
->>> +            iommus = <&apps_smmu 0x820 0xc0>,
->>> +                     <&apps_smmu 0x840 0x0>,
->>> +                     <&apps_smmu 0x860 0xc0>,
->>> +                     <&apps_smmu 0x880 0x0>;
->>> +
->>> +            power-domains = <&camcc TITAN_TOP_GDSC>
->>
->> It should be the last one in the list, if the settled practice is followed.
-> 
-> See above.
-> 
->>
->>> +                            <&camcc IFE_0_GDSC>,
->>> +                            <&camcc IFE_1_GDSC>,
->>> +                            <&camcc IFE_2_GDSC>;
->>> +            power-domain-names = "top",
->>> +                                 "ife0",
->>> +                                 "ife1",
->>> +                                 "ife2";
->>> +
->>> +            vdd-csiphy-0p9-supply = <&vreg_l18a>;
->>> +            vdd-csiphy-1p25-supply = <&vreg_l22a>;
->>> +
->>> +            ports {
->>> +                #address-cells = <1>;
->>> +                #size-cells = <0>;
->>> +
->>> +                port@0 {
->>> +                    reg = <0>;
->>> +                    csiphy0_ep: endpoint {
->>
->> An empty line before a child node is always needed.
-> 
-> Ack
-> 
->>
->>> +                        data-lanes = <0 1 2 3>;
->>> +                        bus-type = <MEDIA_BUS_TYPE_CSI2_DPHY>;
->>> +                        remote-endpoint = <&sensor_ep>;
->>> +                    };
->>> +                };
->>> +            };
->>> +        };
->>> +    };
->>>
-> 
-
+Rob
 
