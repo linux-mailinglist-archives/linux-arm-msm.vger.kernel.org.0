@@ -1,144 +1,119 @@
-Return-Path: <linux-arm-msm+bounces-81743-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-81744-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ams.mirrors.kernel.org (ams.mirrors.kernel.org [IPv6:2a01:60a::1994:3:14])
-	by mail.lfdr.de (Postfix) with ESMTPS id 392ABC5AF8D
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Nov 2025 03:03:51 +0100 (CET)
+Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [IPv6:2605:f480:58:1:0:1994:3:14])
+	by mail.lfdr.de (Postfix) with ESMTPS id 01EC1C5B0D4
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Nov 2025 04:01:48 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ams.mirrors.kernel.org (Postfix) with ESMTPS id 835CC3540C0
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Nov 2025 02:03:50 +0000 (UTC)
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id E12674E5B5D
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Nov 2025 03:01:35 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 44B52261B98;
-	Fri, 14 Nov 2025 02:03:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id AA0FA247281;
+	Fri, 14 Nov 2025 03:01:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b="fO2DfZ3a"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from azure-sdnproxy.icoremail.net (l-sdnproxy.icoremail.net [20.188.111.126])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 02A77269CF1;
-	Fri, 14 Nov 2025 02:03:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=20.188.111.126
+Received: from bali.collaboradmins.com (bali.collaboradmins.com [148.251.105.195])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93CEA224891;
+	Fri, 14 Nov 2025 03:01:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.251.105.195
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763085827; cv=none; b=qHk9VM6swQJnSc3VaRQ+CEWAuSoOWAuKJpMiNPIYKQI59QYJHZ3ymed/8KQ+9W0V9QkqmUq4fIZQcqPz7uIXGJnaA9vk2+1guoW5r9WpRoPwnzGhodjy/FnOnL5k25hPBnWt1QhctWyLustfbHslZ8rfSQCgI/RnHspzWwdHQ6o=
+	t=1763089292; cv=none; b=ZhjXkRg96+GiUoHUT1ur9bizCE9IJGz57zcVmJMd2kp2nemUiyUs78X/s+5pTMu0QOqAU09TyrPkKXRIp0giTskVO5TXH7zRlkDaUQXkhaVi/Za5H5Y5oXy0XTh+0axzLolqENE03F1/c4Esp7UUR7STNfHp6cOU+iGBk1XQed0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763085827; c=relaxed/simple;
-	bh=fzw6wJKVwQCOolx0vN9I+ZcrGEAQLxVX5sR0rTJ+NOc=;
-	h=Date:From:To:Cc:Subject:In-Reply-To:References:Content-Type:
-	 MIME-Version:Message-ID; b=C1frWSgloXH5a5dXQrdxj5+r9QklotgIbJJy3fBO8yWL+pu+w2QPn109p5l/Q9OUqiSXGwYQNY2qyv3oejbrw3MtIWff/V3a9Zq+fqhzpRRyXfBPJfnKmhxF/OAHXTts9dGwtNdu0Z8BUq8uSFE2Ii+Dc5OqyYS/funce43AWDU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=eswincomputing.com; spf=pass smtp.mailfrom=eswincomputing.com; arc=none smtp.client-ip=20.188.111.126
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=eswincomputing.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=eswincomputing.com
-Received: from zhangsenchuan$eswincomputing.com ( [10.12.96.83] ) by
- ajax-webmail-app2 (Coremail) ; Fri, 14 Nov 2025 10:03:26 +0800 (GMT+08:00)
-Date: Fri, 14 Nov 2025 10:03:26 +0800 (GMT+08:00)
-X-CM-HeaderCharset: UTF-8
-From: zhangsenchuan <zhangsenchuan@eswincomputing.com>
-To: "Manivannan Sadhasivam" <mani@kernel.org>,
-	"Bjorn Helgaas" <helgaas@kernel.org>
-Cc: "Manivannan Sadhasivam" <manivannan.sadhasivam@oss.qualcomm.com>,
-	lpieralisi@kernel.org, kwilczynski@kernel.org, bhelgaas@google.com,
-	will@kernel.org, linux-pci@vger.kernel.org,
-	linux-kernel@vger.kernel.org, robh@kernel.org,
-	linux-arm-msm@vger.kernel.org, vincent.guittot@linaro.org,
-	"Frank Li" <Frank.li@nxp.com>
-Subject: Re: Re: [PATCH v2 3/3] PCI: dwc: Check for the device presence
- during suspend and resume
-X-Priority: 3
-X-Mailer: Coremail Webmail Server Version 2024.2-cmXT6 build
- 20241203(6b039d88) Copyright (c) 2002-2025 www.mailtech.cn
- mispb-72143050-eaf5-4703-89e0-86624513b4ce-eswincomputing.com
-In-Reply-To: <6uidenlpio4lsn7cecdubxlojo4slm6g76zteu74jg7xqhnv2y@kmsnhuh3dqiz>
-References: <20251107044319.8356-4-manivannan.sadhasivam@oss.qualcomm.com>
- <20251113164013.GA2285612@bhelgaas>
- <6uidenlpio4lsn7cecdubxlojo4slm6g76zteu74jg7xqhnv2y@kmsnhuh3dqiz>
-Content-Transfer-Encoding: base64
-Content-Type: text/plain; charset=UTF-8
+	s=arc-20240116; t=1763089292; c=relaxed/simple;
+	bh=ZCItdMAKSBYnoQbmuGe/KriN1j9Lnyjo9QM9qRu8/Tg=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=geOoa7hAbBerg+sNU2PLD07X+bQ4OjWinV3CSBSmYAhvDrRx8ySd0+SKWAUlde2Apvf8fSz4+ZAgBmlJComD/zspYNRwXZgwc7NctrfHJ/Qqk8vSDwiyFOSe2wQ95xIzdTLIL7dM1cV/lU6o5X8Xs1h8e75rzjSGpZYg/oQd0Xo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b=fO2DfZ3a; arc=none smtp.client-ip=148.251.105.195
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
+	s=mail; t=1763089287;
+	bh=ZCItdMAKSBYnoQbmuGe/KriN1j9Lnyjo9QM9qRu8/Tg=;
+	h=From:To:Cc:Subject:Date:From;
+	b=fO2DfZ3anN63JQRdUKZKbXQvW89bTHJGrjDtoZc0l4DnjlGkv0Wel/oKZnNbkOGEK
+	 JsjyJIThA99jtvIioB6Akn9r16cA9NwP3uql0Zzl5YFepprArIuVgyBrPH57/ZzVEZ
+	 Xo2KJomytJnq/4crzXj54OJvgRzrFxUIJJifeS5xYi14vZqcQvdYyrYw/roBii9C2Z
+	 dOxbRjpXHrj0eEKmp4qxpQdqs8mcpsyOFIrO3JBkArcbxMVJhQrmRzX/iozkr/xfmq
+	 GnXqIDj5NmI4i/9geKHZoBulQrJVlTnHVwoOFfbG9iEJzmzmlyPoRPu6WjGq9FoeRK
+	 YaAWv52iBCWyA==
+Received: from debian (unknown [171.76.81.120])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	(Authenticated sender: vignesh)
+	by bali.collaboradmins.com (Postfix) with ESMTPSA id 4776517E0202;
+	Fri, 14 Nov 2025 04:01:21 +0100 (CET)
+From: Vignesh Raman <vignesh.raman@collabora.com>
+To: dri-devel@lists.freedesktop.org
+Cc: daniels@collabora.com,
+	helen.fornazier@gmail.com,
+	airlied@gmail.com,
+	simona.vetter@ffwll.ch,
+	dmitry.baryshkov@oss.qualcomm.com,
+	lumag@kernel.org,
+	robdclark@gmail.com,
+	robin.clark@oss.qualcomm.com,
+	guilherme.gallo@collabora.com,
+	sergi.blanch.torne@collabora.com,
+	valentine.burley@collabora.com,
+	linux-mediatek@lists.infradead.org,
+	linux-amlogic@lists.infradead.org,
+	linux-rockchip@lists.infradead.org,
+	amd-gfx@lists.freedesktop.org,
+	linux-arm-msm@vger.kernel.org,
+	intel-gfx@lists.freedesktop.org,
+	virtualization@lists.linux.dev,
+	linux-kernel@vger.kernel.org
+Subject: [PATCH v1 0/2] drm/ci: uprev IGT and enable apq8016, apq8096
+Date: Fri, 14 Nov 2025 08:30:49 +0530
+Message-ID: <20251114030056.1139570-1-vignesh.raman@collabora.com>
+X-Mailer: git-send-email 2.51.0
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Message-ID: <62a83468.243.19a801a6d02.Coremail.zhangsenchuan@eswincomputing.com>
-X-Coremail-Locale: en_US
-X-CM-TRANSID:TQJkCgBnq67ujRZpCHh7AA--.1623W
-X-CM-SenderInfo: x2kd0wpvhquxxxdqqvxvzl0uprps33xlqjhudrp/1tbiAgEGBmkWC
-	FsJYwABsE
-X-Coremail-Antispam: 1Ur529EdanIXcx71UUUUU7IcSsGvfJ3iIAIbVAYjsxI4VWxJw
-	CS07vEb4IE77IF4wCS07vE1I0E4x80FVAKz4kxMIAIbVAFxVCaYxvI4VCIwcAKzIAtYxBI
-	daVFxhVjvjDU=
+Content-Transfer-Encoding: 8bit
 
-CgoKPiAtLS0tLU9yaWdpbmFsIE1lc3NhZ2VzLS0tLS0KPiBGcm9tOiAiTWFuaXZhbm5hbiBTYWRo
-YXNpdmFtIiA8bWFuaUBrZXJuZWwub3JnPgo+IFNlbmQgdGltZTpGcmlkYXksIDE0LzExLzIwMjUg
-MDE6MDE6MjcKPiBUbzogIkJqb3JuIEhlbGdhYXMiIDxoZWxnYWFzQGtlcm5lbC5vcmc+Cj4gQ2M6
-ICJNYW5pdmFubmFuIFNhZGhhc2l2YW0iIDxtYW5pdmFubmFuLnNhZGhhc2l2YW1Ab3NzLnF1YWxj
-b21tLmNvbT4sIGxwaWVyYWxpc2lAa2VybmVsLm9yZywga3dpbGN6eW5za2lAa2VybmVsLm9yZywg
-YmhlbGdhYXNAZ29vZ2xlLmNvbSwgd2lsbEBrZXJuZWwub3JnLCBsaW51eC1wY2lAdmdlci5rZXJu
-ZWwub3JnLCBsaW51eC1rZXJuZWxAdmdlci5rZXJuZWwub3JnLCByb2JoQGtlcm5lbC5vcmcsIGxp
-bnV4LWFybS1tc21Admdlci5rZXJuZWwub3JnLCB6aGFuZ3NlbmNodWFuQGVzd2luY29tcHV0aW5n
-LmNvbSwgdmluY2VudC5ndWl0dG90QGxpbmFyby5vcmcsICJGcmFuayBMaSIgPEZyYW5rLmxpQG54
-cC5jb20+Cj4gU3ViamVjdDogUmU6IFtQQVRDSCB2MiAzLzNdIFBDSTogZHdjOiBDaGVjayBmb3Ig
-dGhlIGRldmljZSBwcmVzZW5jZSBkdXJpbmcgc3VzcGVuZCBhbmQgcmVzdW1lCj4gCj4gT24gVGh1
-LCBOb3YgMTMsIDIwMjUgYXQgMTA6NDA6MTNBTSAtMDYwMCwgQmpvcm4gSGVsZ2FhcyB3cm90ZToK
-PiA+IFsrY2MgRnJhbmtdCj4gPiAKPiA+IE9uIEZyaSwgTm92IDA3LCAyMDI1IGF0IDEwOjEzOjE5
-QU0gKzA1MzAsIE1hbml2YW5uYW4gU2FkaGFzaXZhbSB3cm90ZToKPiA+ID4gSWYgdGhlcmUgaXMg
-bm8gZGV2aWNlIGF2YWlsYWJsZSB1bmRlciB0aGUgUm9vdCBQb3J0cywgdGhlcmUgaXMgbm8gcG9p
-bnQgaW4KPiA+ID4gc2VuZGluZyBQTUVfVHVybl9PZmYgYW5kIHdhaXRpbmcgZm9yIEwyL0wzIHRy
-YW5zaXRpb24gZHVyaW5nIHN1c3BlbmQsIGl0Cj4gPiA+IHdpbGwgcmVzdWx0IGluIGEgdGltZW91
-dC4gSGVuY2UsIHNraXAgdGhvc2Ugc3RlcHMgaWYgbm8gZGV2aWNlIGlzIGF2YWlsYWJsZQo+ID4g
-PiBkdXJpbmcgc3VzcGVuZC4KPiA+ID4gCj4gPiA+IER1cmluZyByZXN1bWUsIGRvIG5vdCB3YWl0
-IGZvciB0aGUgbGluayB1cCBpZiB0aGVyZSB3YXMgbm8gZGV2aWNlIGNvbm5lY3RlZAo+ID4gPiBi
-ZWZvcmUgc3VzcGVuZC4gSXQgaXMgdmVyeSB1bmxpa2VseSB0aGF0IGEgZGV2aWNlIHdpbGwgZ2V0
-IGNvbm5lY3RlZCB3aGlsZQo+ID4gPiB0aGUgaG9zdCBzeXN0ZW0gd2FzIHN1c3BlbmRlZC4KPiA+
-ID4gCj4gPiA+IFNpZ25lZC1vZmYtYnk6IE1hbml2YW5uYW4gU2FkaGFzaXZhbSA8bWFuaXZhbm5h
-bi5zYWRoYXNpdmFtQG9zcy5xdWFsY29tbS5jb20+Cj4gPiA+IC0tLQo+ID4gPiAgZHJpdmVycy9w
-Y2kvY29udHJvbGxlci9kd2MvcGNpZS1kZXNpZ253YXJlLWhvc3QuYyB8IDEzICsrKysrKysrKysr
-KysKPiA+ID4gIDEgZmlsZSBjaGFuZ2VkLCAxMyBpbnNlcnRpb25zKCspCj4gPiA+IAo+ID4gPiBk
-aWZmIC0tZ2l0IGEvZHJpdmVycy9wY2kvY29udHJvbGxlci9kd2MvcGNpZS1kZXNpZ253YXJlLWhv
-c3QuYyBiL2RyaXZlcnMvcGNpL2NvbnRyb2xsZXIvZHdjL3BjaWUtZGVzaWdud2FyZS1ob3N0LmMK
-PiA+ID4gaW5kZXggMjBjOTMzM2JjYjFjLi41YTM5ZTcxMzllYzkgMTAwNjQ0Cj4gPiA+IC0tLSBh
-L2RyaXZlcnMvcGNpL2NvbnRyb2xsZXIvZHdjL3BjaWUtZGVzaWdud2FyZS1ob3N0LmMKPiA+ID4g
-KysrIGIvZHJpdmVycy9wY2kvY29udHJvbGxlci9kd2MvcGNpZS1kZXNpZ253YXJlLWhvc3QuYwo+
-ID4gPiBAQCAtMjAsNiArMjAsNyBAQAo+ID4gPiAgI2luY2x1ZGUgPGxpbnV4L3BsYXRmb3JtX2Rl
-dmljZS5oPgo+ID4gPiAgCj4gPiA+ICAjaW5jbHVkZSAiLi4vLi4vcGNpLmgiCj4gPiA+ICsjaW5j
-bHVkZSAiLi4vcGNpLWhvc3QtY29tbW9uLmgiCj4gPiA+ICAjaW5jbHVkZSAicGNpZS1kZXNpZ253
-YXJlLmgiCj4gPiA+ICAKPiA+ID4gIHN0YXRpYyBzdHJ1Y3QgcGNpX29wcyBkd19wY2llX29wczsK
-PiA+ID4gQEAgLTExMjksNiArMTEzMCw5IEBAIGludCBkd19wY2llX3N1c3BlbmRfbm9pcnEoc3Ry
-dWN0IGR3X3BjaWUgKnBjaSkKPiA+ID4gIAl1MzIgdmFsOwo+ID4gPiAgCWludCByZXQ7Cj4gPiA+
-ICAKPiA+ID4gKwlpZiAoIXBjaV9yb290X3BvcnRzX2hhdmVfZGV2aWNlKHBjaS0+cHAuYnJpZGdl
-LT5idXMpKQo+ID4gPiArCQlnb3RvIHN0b3BfbGluazsKPiA+IAo+ID4gVGhpcyBsb29rcyByYWN5
-LiAgTWF5YmUgaXQncyBzdGlsbCBPSywgYnV0IEkgdGhpbmsgaXQgd291bGQgYmUgZ29vZCB0bwo+
-ID4gaW5jbHVkZSBhIGNvbW1lbnQgdG8gYWNrbm93bGVkZ2UgdGhhdCBhbmQgZXhwbGFpbiB3aHkg
-ZWl0aGVyIG91dGNvbWUKPiA+IGlzIGFjY2VwdGFibGUsIGUuZy4sIGlmIGEgdXNlciByZW1vdmVz
-IGEgZGV2aWNlIGR1cmluZyBzdXNwZW5kLCBpdAo+ID4gcmVzdWx0cyBpbiBhIHRpbWVvdXQgYnV0
-IG5vdGhpbmcgbW9yZSB0ZXJyaWJsZS4KPiA+IAo+IAo+IE9rLgo+IAo+ID4gPiAgCS8qCj4gPiA+
-ICAJICogSWYgTDFTUyBpcyBzdXBwb3J0ZWQsIHRoZW4gZG8gbm90IHB1dCB0aGUgbGluayBpbnRv
-IEwyIGFzIHNvbWUKPiA+ID4gIAkgKiBkZXZpY2VzIHN1Y2ggYXMgTlZNZSBleHBlY3QgbG93IHJl
-c3VtZSBsYXRlbmN5Lgo+ID4gPiBAQCAtMTE2Miw2ICsxMTY2LDcgQEAgaW50IGR3X3BjaWVfc3Vz
-cGVuZF9ub2lycShzdHJ1Y3QgZHdfcGNpZSAqcGNpKQo+ID4gPiAgCSAqLwo+ID4gPiAgCXVkZWxh
-eSgxKTsKPiA+ID4gIAo+ID4gPiArc3RvcF9saW5rOgo+ID4gPiAgCWR3X3BjaWVfc3RvcF9saW5r
-KHBjaSk7Cj4gPiA+ICAJaWYgKHBjaS0+cHAub3BzLT5kZWluaXQpCj4gPiA+ICAJCXBjaS0+cHAu
-b3BzLT5kZWluaXQoJnBjaS0+cHApOwo+ID4gPiBAQCAtMTE5NSw2ICsxMjAwLDE0IEBAIGludCBk
-d19wY2llX3Jlc3VtZV9ub2lycShzdHJ1Y3QgZHdfcGNpZSAqcGNpKQo+ID4gPiAgCWlmIChyZXQp
-Cj4gPiA+ICAJCXJldHVybiByZXQ7Cj4gPiA+ICAKPiA+ID4gKwkvKgo+ID4gPiArCSAqIElmIHRo
-ZXJlIHdhcyBubyBkZXZpY2UgYmVmb3JlIHN1c3BlbmQsIHNraXAgd2FpdGluZyBmb3IgbGluayB1
-cCBhcwo+ID4gPiArCSAqIGl0IGlzIGJvdW5kIHRvIGZhaWwuIEl0IGlzIHZlcnkgdW5saWtlbHkg
-dGhhdCBhIGRldmljZSB3aWxsIGdldAo+ID4gPiArCSAqIGNvbm5lY3RlZCAqZHVyaW5nKiBzdXNw
-ZW5kLgo+ID4gCj4gPiBJJ20gbm90IGNvbnZpbmNlZC4gIFVubGlrZSB0aGUgc3VzcGVuZCBzaWRl
-LCB3aGVyZSB0aGUgcmFjZSB3aW5kb3cgaXMKPiA+IHRpbnksIGhlcmUgdGhlIHdpbmRvdyBpcyB0
-aGUgZW50aXJlIHRpbWUgdGhlIHN5c3RlbSBpcyBzdXNwZW5kZWQsIGFuZAo+ID4gYXQgbGVhc3Qg
-aW4gbGFwdG9wIHVzYWdlLCB0aGVyZSdzIG5vIHJlYXNvbiBJIHdvdWxkIGhlc2l0YXRlIHRvIHBs
-dWcKPiA+IHNvbWV0aGluZyBpbiB3aGlsZSBzdXNwZW5kZWQuCj4gPiAKPiAKPiBJbiB0aGF0IGNh
-c2UsIHdlIGp1c3QgbmVlZCB0byBkbzoKPiAKPiAJLyogSWdub3JlIGVycm9ycyBhcyB0aGVyZSBj
-b3VsZCBiZSBubyBkZXZpY2VzIGNvbm5lY3RlZCAqLwo+IAlkd19wY2llX3dhaXRfZm9yX2xpbmso
-KQo+IAo+IEkgd2FudGVkIHRvIGF2b2lkIHRoZSB0aW1lb3V0IGlmIHdlIGtuZXcgdGhhdCB0aGVy
-ZSB3YXMgbm8gZGV2aWNlIGNvbm5lY3RlZAo+IGR1cmluZyBzdXNwZW5kLgo+IApIaSwgTWFuaQoK
-QWx0aG91Z2ggaXQgd2lsbCBpZ25vcmUgdGhlIGp1ZGdtZW50IGR1cmluZyBub3JtYWwgZGV2aWNl
-IGNvbm5lY3Rpb24uCkZvcnR1bmF0ZWx5LCB0aGlzIGZ1bmN0aW9uIHdpbGwgcHJpbnQgcHJvbXB0
-IGluZm9ybWF0aW9uLiBQZXJoYXBzLCB0aGlzIGlzIGEKZ29vZCBjaG9pY2UuIFRoZXJlIGlzIGFs
-c28gc3VjaCBhIHByYWN0aWNlIGluIHRoZSBkd19wY2llX2hvc3RfaW5pdCBmdW5jdGlvbi4KZm9y
-IGV4YW1wbGUgaW4gdGhlIGR3X3BjaWVfaG9zdF9pbml0OgoKICAgIC8qIElnbm9yZSBlcnJvcnMu
-IHRoZSBsaW5rIG1heSBjb21lIHVwIGxhdGVyICovCiAgICAgZHdfcGNpZV93YWl0X2Zvcl9saW5r
-KHBjaSk7CgpQZXJoYXBzIHRoZXJlIGFyZSBvdGhlciBiZXR0ZXIgbWV0aG9kcy4gRm9yIG5vdywg
-dGhpcyBpcyB3aGF0IEkgaGF2ZSBzZWVuLgoKS2luZCByZWdhcmRzLApTZW5jaHVhbiBaaGFuZw==
+This series includes,
+- Adapting to recent changes in Mesa CI, such as:
+   - LAVA overlay-based firmware handling
+   - Container/job rule separation
+   - Removal of the python-artifacts job
+   - Use lava-job-submitter for submitting jobs to LAVA
+   - Various other CI improvements
+- Move bare-metal jobs for apq8016 and apq8096 to LAVA, as these devices
+  are migrated to Collabora LAVA farm.
+
+Pipeline: https://gitlab.freedesktop.org/vigneshraman/msm/-/pipelines/1546424
+MR: https://gitlab.freedesktop.org/drm/msm/-/merge_requests/200
+
+There will be a follow up series to update expectation files for the
+other jobs.
+
+Vignesh Raman (2):
+  drm/ci: uprev mesa
+  drm/ci: Move qualcomm baremetal jobs to lava
+
+ drivers/gpu/drm/ci/arm64.config               |   1 +
+ drivers/gpu/drm/ci/build.yml                  |  22 ++--
+ drivers/gpu/drm/ci/container.yml              |  28 +++--
+ drivers/gpu/drm/ci/gitlab-ci.yml              |  95 ++++++++++++----
+ drivers/gpu/drm/ci/igt_runner.sh              |   4 +-
+ drivers/gpu/drm/ci/image-tags.yml             |  22 ++--
+ drivers/gpu/drm/ci/lava-submit.sh             | 101 ++++++++----------
+ drivers/gpu/drm/ci/static-checks.yml          |   1 +
+ drivers/gpu/drm/ci/test.yml                   |  80 ++++++--------
+ .../gpu/drm/ci/xfails/msm-apq8016-fails.txt   |   4 +
+ .../gpu/drm/ci/xfails/msm-apq8096-fails.txt   |   2 +
+ 11 files changed, 213 insertions(+), 147 deletions(-)
+
+-- 
+2.51.0
 
 
