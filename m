@@ -1,576 +1,158 @@
-Return-Path: <linux-arm-msm+bounces-81869-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-81870-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ams.mirrors.kernel.org (ams.mirrors.kernel.org [213.196.21.55])
-	by mail.lfdr.de (Postfix) with ESMTPS id 99B6AC5D43F
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Nov 2025 14:11:45 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id D36B6C5D52C
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Nov 2025 14:23:46 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ams.mirrors.kernel.org (Postfix) with ESMTPS id 5220B35C1F4
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Nov 2025 13:07:50 +0000 (UTC)
+	by ams.mirrors.kernel.org (Postfix) with ESMTPS id B047C348EEE
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Nov 2025 13:17:47 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 29C7B313E04;
-	Fri, 14 Nov 2025 13:06:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 57D34313530;
+	Fri, 14 Nov 2025 13:17:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b="Q8JdOIlG"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Y/kVW6YL"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f65.google.com (mail-ej1-f65.google.com [209.85.218.65])
+Received: from mail-wm1-f46.google.com (mail-wm1-f46.google.com [209.85.128.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1280C2F068F
-	for <linux-arm-msm@vger.kernel.org>; Fri, 14 Nov 2025 13:06:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.65
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7324B3126D9
+	for <linux-arm-msm@vger.kernel.org>; Fri, 14 Nov 2025 13:17:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763125617; cv=none; b=qECNVAi5yycS9NV6WCWz01oXCo4KOYoGdSV8X9+Do6riC/qe2MNTP76NesP3EgNBgNN6WDEJUfMuMKuUnvT/eDCxkO4puiIROP3e3zZZ7lB1k9VxCXecCCkz0IR4qhKIKs4PArVl1Z0M8voD2Rp/cHrxXqtlDm3a4Xy8OsjZ4jg=
+	t=1763126244; cv=none; b=pNEtCxY9w4cXv3zHGY1nm4yEUQINWfe6gwjGkdEv2eEl0JNm4iukaGauUWI7wVsu+SErf7blIbJkSPJtjos6Wfji9ZKZpbxTlrwRvqgjKmxRrzSZgbNQzLw+vK4Y8/BjyO3l5Dh6hUXxj32L9rF5EN2Y8Amei+CFGbA++/gjBoo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763125617; c=relaxed/simple;
-	bh=U30gWwAFBsNEZmxDPBTWg1VA0Q6ekWATqu/KWSk7AoE=;
-	h=Mime-Version:Content-Type:Date:Message-Id:From:To:Cc:Subject:
-	 References:In-Reply-To; b=q32oXAOGpZhAoDQTxwny6JswB3W99eeD/LWG7XH4TCC3IBydRSzcZaWhALybifDrmBMHOLr6lDAwMbcnjYy4Zb5YqbhubtgHBt2ytzNXw1jEl5oOqx/VCP7Fgxq84G3ccQy6niYa83aj3J/TjOMxoLGKesko1br19Y+zY65LJGc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=fairphone.com; spf=pass smtp.mailfrom=fairphone.com; dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b=Q8JdOIlG; arc=none smtp.client-ip=209.85.218.65
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=fairphone.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fairphone.com
-Received: by mail-ej1-f65.google.com with SMTP id a640c23a62f3a-b736f48ba11so90342066b.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 14 Nov 2025 05:06:53 -0800 (PST)
+	s=arc-20240116; t=1763126244; c=relaxed/simple;
+	bh=l14bAdG7sSenVgnTvQe0fC1UGWAoSkEFo21BRNcbNGc=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=rHTqRsXLpwMih7SZYwakaveCEsvyeoX5f0GGIoqHKLMQTg4O719ZtRTLVPsyq6M9iwuQ7Rx19oYxKf0kn3E1rijfD9p7epU4kTQrawP93L1pejH4WQnyLVkBKlii0NVPCv/zqtqdTeXPpXscpWPwGvJfGuE2oYrilookBd5tvUA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Y/kVW6YL; arc=none smtp.client-ip=209.85.128.46
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-wm1-f46.google.com with SMTP id 5b1f17b1804b1-4775ae77516so21957255e9.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 14 Nov 2025 05:17:22 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=fairphone.com; s=fair; t=1763125612; x=1763730412; darn=vger.kernel.org;
-        h=in-reply-to:references:subject:cc:to:from:message-id:date
-         :content-transfer-encoding:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=QFlFVp68C1Bl22T0DXVcRcXo+oBu0i4nDk6iL5q9r/s=;
-        b=Q8JdOIlGGBD1IkXjgtLe5bYWoU3HFssjuy7sJOYTQ0AVP0G3nYbX2hXaMuothzMaU1
-         ooNeXiIP7XDzfOcJZsE+HMYTo7xFHzWIhNEvbPW6t1vU3/NHRyxi/PcaU3EXPo1yRa7o
-         gQ07F2u6lbBYMxT39eu0HlDC6+lUI6Q+T66EoIoNYpLNDviD/ftBVRRSdl5N054AIYQf
-         UO3DcY0cCfpWUVwpOjb3jMB4NoX72WjFKu77QM2o0sO+0uaRI50HbIMtQHFnHCB+HT2P
-         NHjIM5pTU3tDxnqUqyB76MHVSd+LP41tuevUQFGli2okuirIO231P8mBdrXLAhZr07Ex
-         3G4w==
+        d=gmail.com; s=20230601; t=1763126241; x=1763731041; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=N0TpL/uQKcXjj/1P0tKp0hA2j+bgPUGaGAw/0f/W2wM=;
+        b=Y/kVW6YLdkdywKyhIM5phM1gGda9DINj9qS4DXw30LQ5eYeEqHRgChAK8ONNgwR5QF
+         JOUz0yZwVm1lm5HJARQotOK1y0f55d/vjXWNuBBzy+tW8bSUoog0PwPejhIaMBNQewQ9
+         ygEsmjiKo/RcO++um/7Y1DsF9DuOn/WXzKETFNrPyi+SNFKoHUeP2+BxnG1tNL2U9fT7
+         LExRYh9WvHgmd++CD1yIIp6YaHK07phureTHNU7tUxQhj3FjCwtJU7q4ZPSKOL8o9Zt8
+         PC94lG1dDPrtL95xWuRgoInTytnsJ7Xvl2qh5yAtYnJkfHzRIZtpLn8p3+lRFCboFRVD
+         ShLw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1763125612; x=1763730412;
-        h=in-reply-to:references:subject:cc:to:from:message-id:date
-         :content-transfer-encoding:mime-version:x-gm-gg:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=QFlFVp68C1Bl22T0DXVcRcXo+oBu0i4nDk6iL5q9r/s=;
-        b=F7fFHzadmodrsfgiD+uXtGCOVsxP/I6ee35AMjem3/YcpuLyeY10NUkQ+PSz1cbWFI
-         knZpz6w4017N9kSpCMuiOBvL2rKvSb8Mc4WHuCuXzVTIFPf8oc5cZ8fPCgEJtUXmyE/F
-         yWWW0DwuzzuZb30nN9iYg20pH6b2oYDlkBndgzag+/wui2d9YQ8inADTztlQedE+EzHl
-         PRMLvNntnrOhjlob0XyccwxXKN1Fm8HNRrvLwf+cPlm+SbNXD0tXqh2nKloDIcZncW+R
-         kzA7SpDrB9Cj6ObRsnU36pwbmHZXT0AnFNNPduc0IZSmi2SACGMnOsEZMxw4TTj/gpuJ
-         GDWQ==
-X-Forwarded-Encrypted: i=1; AJvYcCXLNzsaTmJ6llGxTvqz6mIxFhGUxNVn1X2yqVzVr5Lnxu7ntRlnfe/UjkII/JkPFyCMTsKDlM27qzv/owoG@vger.kernel.org
-X-Gm-Message-State: AOJu0YxQPnXTwODafsmMWY5YvMw6TKhKztMfuRBogu45qhHSHYGC5c5M
-	0X23Gx1cBzS0YEtAe7/6tTCmYIZ3LLAMNIYjXfufVdADtO6VqPE2XNrUXuiSyrtwIAM=
-X-Gm-Gg: ASbGncvbwkq+yMMXu8zzTyDjM3gxvy93OD0C4YreqZ6RuYmynORmnZLJ+BUCmOgLcAj
-	VN/mwkZ13U1Kr06IyoJcXOqr/pm19k78cfb1gD2eMxuP4348RDdtqE7YTRkB2+U/9GxjTm3mX6v
-	gjSG/g50sOJPTWodvX7RBxNdSFutxRjOFkmt9xmhjVDyJCUG2kCWLqi5Phkily8nsO2TbDoTw4K
-	NniCKCuTRpLcQPG07joBxvr/4SYNNV8H+iODT4KtAjpNg1i+N7Ba2Dn8E43IVb2fulM3Wyw3Nal
-	FFrNki2vJWxaKVCe4mWj7e+Up2dyFdqBt7B5Na1vMW3goPCkBviMaL8S6pnMlJRSLEKAowZrizW
-	QUuCC87e07LyK+samHEhmR4CRe+tVLXkZa4h1AUj0rkfNO2RaXMIbDav2hLX5qvP3lexg6T2ewa
-	MbSCo8N56mOkbGgv3/Y9CyQIO+KsUeRl1a87OXOKntyZaKuDZqb4Gpck5aUanbr/yZO47m1Qx6x
-	Ei+sGNatahQ
-X-Google-Smtp-Source: AGHT+IEh2NFr1KybwXLKbTEo02cRgnqybmLKMeCfk6Zi6ooKLjugj9KSuN02CQuj+HAZ8zCcI5xacg==
-X-Received: by 2002:a17:906:fe4d:b0:b72:7e7c:e848 with SMTP id a640c23a62f3a-b7348570744mr750353166b.17.1763125612274;
-        Fri, 14 Nov 2025 05:06:52 -0800 (PST)
-Received: from localhost (2001-1c04-0509-ec01-156d-fa6e-7f19-0b67.cable.dynamic.v6.ziggo.nl. [2001:1c04:509:ec01:156d:fa6e:7f19:b67])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-b734fa81331sm387170666b.9.2025.11.14.05.06.51
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 14 Nov 2025 05:06:51 -0800 (PST)
+        d=1e100.net; s=20230601; t=1763126241; x=1763731041;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=N0TpL/uQKcXjj/1P0tKp0hA2j+bgPUGaGAw/0f/W2wM=;
+        b=uJ/jwCxPdaVh8F68VDaUYd7ATa8fBa6zKBl/U6jWO5tVYXX4G6MwjqAOBDQFoqJksp
+         F9TKxCyTixtwF5IriJxBpOzEwmnU9TbAWSCnosBLnnEFl3LJOQDx7o2Q7jMvCMKRMj6r
+         pXvegMrA8MnNMfMcI5FJ5SpmUHmye67sGdlu35NiXewC9PA+Q7rmzULbOwDddePAT2+E
+         j2CJl+T6Z3Z+bHjFqR/03JdN7HQtynqi3wyvcJ1GkrnVx6z8/c/DWYnlxiGBOiyymh9e
+         7vomKErUOHX9BalzMGn1FBu3kKIQ5Tye1+VQWYBlmsDwVrLWSQnv3n8r+gtvSCNA8VGU
+         RVGg==
+X-Forwarded-Encrypted: i=1; AJvYcCUF8GFIwsnnJx39Vfa8DAwxvkN/O46kH4zMf+zYtI4gJEIuAxpxSn8ZmhwYqeMnijCfk+rXJ11mFfviaP2v@vger.kernel.org
+X-Gm-Message-State: AOJu0YxvlMEeFdLCOApqtDl86p2cmNp9oKgCK/ZCIbfeDu0mdi6fS0Gf
+	pg2we/cvmudbQY8P5NRWBn6OK+8QhWKvVc1KnIKQGP8KSHovV1dJxWNT
+X-Gm-Gg: ASbGncu0T9it9vDOrFObgQACFUvT5LXK1UTdJOf6H4TeDyy6VfViNAwEXMuE6BZ80Sf
+	WLP+1QRKtffFp/Pr2JbNH6zHGWk2Es2a2jprbS1KQHiTGCx1Ok4bXndRlokN1N5BuGfZVpcEFg0
+	RJrxtU3UVnu6YnMkjhFKz6NnfXACjznK1BPCT16jHRjDuAXZz1F0graIeKoMOOhvBVgra71sggF
+	9ieR1rIp/ck6vLy5APz+qFRsBmp7gxuM986Mp/8AGX2AhLORPzBI/STlPnl4Gw+HI7QtDUoCMiT
+	ubs8r7ca1th8324xciJrl0AgKpn+1fzlEZh3RtqshqAp6Ocf5H/FWthNmAs9vrGxLVk8LWjHpHz
+	shIZiMa38QSkGrX+jXPwZs6L17VgzPMds8YIKrQo/oTdmHGlG+hhTUW9QagXdtE5AGiPGhpUvDQ
+	UcyrMTv7gta8R/b7qjJkpHAhRGosRzxqZuMYVxPEM57RkzofDVkeAWSWFv3R9pT18=
+X-Google-Smtp-Source: AGHT+IE9bBUs5+fK/teaotf1hwhzAkTnpdK+HO3WDqdKR+mWJDdDdywb+mQyN3FtSPr5SthQHUQsmA==
+X-Received: by 2002:a05:600c:4695:b0:477:7b9a:bb1b with SMTP id 5b1f17b1804b1-4778fea681fmr33855485e9.32.1763126240242;
+        Fri, 14 Nov 2025 05:17:20 -0800 (PST)
+Received: from orome (p200300e41f274600f22f74fffe1f3a53.dip0.t-ipconnect.de. [2003:e4:1f27:4600:f22f:74ff:fe1f:3a53])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-47787e43c2fsm141848115e9.6.2025.11.14.05.17.18
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 14 Nov 2025 05:17:19 -0800 (PST)
+Date: Fri, 14 Nov 2025 14:17:16 +0100
+From: Thierry Reding <thierry.reding@gmail.com>
+To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc: Rob Herring <robh@kernel.org>, Saravana Kannan <saravanak@google.com>, 
+	"Rafael J. Wysocki" <rafael@kernel.org>, Viresh Kumar <viresh.kumar@linaro.org>, 
+	Matthias Brugger <matthias.bgg@gmail.com>, 
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>, Yangtao Li <tiny.windzz@gmail.com>, 
+	Chen-Yu Tsai <wens@kernel.org>, Jernej Skrabec <jernej.skrabec@gmail.com>, 
+	Samuel Holland <samuel@sholland.org>, Lorenzo Pieralisi <lpieralisi@kernel.org>, 
+	Daniel Lezcano <daniel.lezcano@linaro.org>, Bjorn Andersson <andersson@kernel.org>, 
+	Konrad Dybcio <konradybcio@kernel.org>, Thomas Gleixner <tglx@linutronix.de>, 
+	Nicolas Ferre <nicolas.ferre@microchip.com>, Alexandre Belloni <alexandre.belloni@bootlin.com>, 
+	Claudiu Beznea <claudiu.beznea@tuxon.dev>, Maximilian Luz <luzmaximilian@gmail.com>, 
+	Hans de Goede <hansg@kernel.org>, Ilpo =?utf-8?B?SsOkcnZpbmVu?= <ilpo.jarvinen@linux.intel.com>, 
+	Daniel Lezcano <daniel.lezcano@kernel.org>, Jonathan Hunter <jonathanh@nvidia.com>, 
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org, 
+	linux-arm-kernel@lists.infradead.org, linux-mediatek@lists.infradead.org, linux-sunxi@lists.linux.dev, 
+	linux-arm-msm@vger.kernel.org, platform-driver-x86@vger.kernel.org, linux-tegra@vger.kernel.org
+Subject: Re: [PATCH v2 11/11] soc: tegra: Simplify with
+ of_machine_device_match()
+Message-ID: <jhrvha3ytpt3wqvyfrlt5zirfnnnijssrufzg6bc4cfah7ahln@wxnnrdv3qbid>
+References: <20251112-b4-of-match-matchine-data-v2-0-d46b72003fd6@linaro.org>
+ <20251112-b4-of-match-matchine-data-v2-11-d46b72003fd6@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="3uqy45lsar5fgfon"
+Content-Disposition: inline
+In-Reply-To: <20251112-b4-of-match-matchine-data-v2-11-d46b72003fd6@linaro.org>
+
+
+--3uqy45lsar5fgfon
+Content-Type: text/plain; protected-headers=v1; charset=us-ascii
+Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Fri, 14 Nov 2025 14:06:51 +0100
-Message-Id: <DE8FV81S45S5.CH6K1QAX940D@fairphone.com>
-From: "Luca Weiss" <luca.weiss@fairphone.com>
-To: "Vladimir Zapolskiy" <vladimir.zapolskiy@linaro.org>, "Luca Weiss"
- <luca.weiss@fairphone.com>, "Bryan O'Donoghue" <bod@kernel.org>, "Robert
- Foss" <rfoss@kernel.org>, "Todor Tomov" <todor.too@gmail.com>, "Mauro
- Carvalho Chehab" <mchehab@kernel.org>, "Rob Herring" <robh@kernel.org>,
- "Krzysztof Kozlowski" <krzk+dt@kernel.org>, "Conor Dooley"
- <conor+dt@kernel.org>, "Bryan O'Donoghue" <bryan.odonoghue@linaro.org>,
- "Bjorn Andersson" <andersson@kernel.org>, "Konrad Dybcio"
- <konradybcio@kernel.org>
-Cc: <~postmarketos/upstreaming@lists.sr.ht>, <phone-devel@vger.kernel.org>,
- <linux-arm-msm@vger.kernel.org>, <linux-media@vger.kernel.org>,
- <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH v2 1/3] dt-bindings: media: camss: Add qcom,sm6350-camss
-X-Mailer: aerc 0.21.0-0-g5549850facc2
-References: <20251114-sm6350-camss-v2-0-d1ff67da33b6@fairphone.com>
- <20251114-sm6350-camss-v2-1-d1ff67da33b6@fairphone.com>
- <de7ad562-80bc-498e-a6fb-cc26bb6343f0@linaro.org>
-In-Reply-To: <de7ad562-80bc-498e-a6fb-cc26bb6343f0@linaro.org>
+Subject: Re: [PATCH v2 11/11] soc: tegra: Simplify with
+ of_machine_device_match()
+MIME-Version: 1.0
 
-Hi Vladimir,
+On Wed, Nov 12, 2025 at 11:28:56AM +0100, Krzysztof Kozlowski wrote:
+> Replace open-coded getting root OF node and matching against it with
+> new of_machine_device_match() helper.
+>=20
+> Reviewed-by: Jon Hunter <jonathanh@nvidia.com>
+> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> ---
+>=20
+> Depends on the first OF patch.
+> ---
+>  drivers/soc/tegra/common.c | 12 +-----------
+>  1 file changed, 1 insertion(+), 11 deletions(-)
 
-On Fri Nov 14, 2025 at 1:40 PM CET, Vladimir Zapolskiy wrote:
-> Hi Luca.
->
-> On 11/14/25 13:15, Luca Weiss wrote:
->> Add bindings for the Camera Subsystem on the SM6350 SoC.
->>=20
->> Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
->> ---
->>   .../bindings/media/qcom,sm6350-camss.yaml          | 349 +++++++++++++=
-++++++++
->>   1 file changed, 349 insertions(+)
->>=20
->> diff --git a/Documentation/devicetree/bindings/media/qcom,sm6350-camss.y=
-aml b/Documentation/devicetree/bindings/media/qcom,sm6350-camss.yaml
->> new file mode 100644
->> index 000000000000..d812b5b50c05
->> --- /dev/null
->> +++ b/Documentation/devicetree/bindings/media/qcom,sm6350-camss.yaml
->> @@ -0,0 +1,349 @@
->> +# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
->> +%YAML 1.2
->> +---
->> +$id: http://devicetree.org/schemas/media/qcom,sm6350-camss.yaml#
->> +$schema: http://devicetree.org/meta-schemas/core.yaml#
->> +
->> +title: Qualcomm SM6350 Camera Subsystem (CAMSS)
->> +
->> +maintainers:
->> +  - Luca Weiss <luca.weiss@fairphone.com>
->> +
->> +description:
->> +  The CAMSS IP is a CSI decoder and ISP present on Qualcomm platforms.
->> +
->> +properties:
->> +  compatible:
->> +    const: qcom,sm6350-camss
->> +
->> +  reg:
->> +    maxItems: 12
->> +
->> +  reg-names:
->> +    items:
->> +      - const: csid0
->> +      - const: csid1
->> +      - const: csid2
->> +      - const: csid_lite
->> +      - const: csiphy0
->> +      - const: csiphy1
->> +      - const: csiphy2
->> +      - const: csiphy3
->> +      - const: vfe0
->> +      - const: vfe1
->> +      - const: vfe2
->> +      - const: vfe_lite
->> +
->> +  clocks:
->> +    maxItems: 30
->> +
->> +  clock-names:
->> +    items:
->> +      - const: cam_ahb_clk
->> +      - const: cam_axi
->> +      - const: soc_ahb
->> +      - const: camnoc_axi
->> +      - const: core_ahb
->> +      - const: cpas_ahb
->> +      - const: csiphy0
->> +      - const: csiphy0_timer
->> +      - const: csiphy1
->> +      - const: csiphy1_timer
->> +      - const: csiphy2
->> +      - const: csiphy2_timer
->> +      - const: csiphy3
->> +      - const: csiphy3_timer
->> +      - const: slow_ahb_src
->> +      - const: vfe0_axi
->> +      - const: vfe0
->> +      - const: vfe0_cphy_rx
->> +      - const: vfe0_csid
->> +      - const: vfe1_axi
->> +      - const: vfe1
->> +      - const: vfe1_cphy_rx
->> +      - const: vfe1_csid
->> +      - const: vfe2_axi
->> +      - const: vfe2
->> +      - const: vfe2_cphy_rx
->> +      - const: vfe2_csid
->> +      - const: vfe_lite
->> +      - const: vfe_lite_cphy_rx
->> +      - const: vfe_lite_csid
->
-> The sorting order of this list does not follow the sorting order accepted
-> in the past.
+I assume that you'd want to take this through the DT (or some other)
+tree, so:
 
-What file should I best reference?
+Acked-by: Thierry Reding <treding@nvidia.com>
 
->
-> I'm very sorry for the vagueness, but I can not pronounce the accepted
-> sorting order name, because it triggers people.
->
->> +
->> +  interrupts:
->> +    maxItems: 12
->> +
->> +  interrupt-names:
->> +    items:
->> +      - const: csid0
->> +      - const: csid1
->> +      - const: csid2
->> +      - const: csid_lite
->> +      - const: csiphy0
->> +      - const: csiphy1
->> +      - const: csiphy2
->> +      - const: csiphy3
->> +      - const: vfe0
->> +      - const: vfe1
->> +      - const: vfe2
->> +      - const: vfe_lite
->> +
->> +  interconnects:
->> +    maxItems: 4
->> +
->> +  interconnect-names:
->> +    items:
->> +      - const: ahb
->> +      - const: hf_mnoc
->> +      - const: sf_mnoc
->> +      - const: sf_icp_mnoc
->
-> Please remove sf_mnoc and sf_icp_mnoc, they are not needed for enabling
-> IP to produce raw images, and one day you may use them somewhere else.
+--3uqy45lsar5fgfon
+Content-Type: application/pgp-signature; name="signature.asc"
 
-Ack, will give it a try.
+-----BEGIN PGP SIGNATURE-----
 
->
->> +
->> +  iommus:
->> +    maxItems: 4
->> +
->> +  power-domains:
->> +    items:
->> +      - description: IFE0 GDSC - Image Front End, Global Distributed Sw=
-itch Controller.
->> +      - description: IFE1 GDSC - Image Front End, Global Distributed Sw=
-itch Controller.
->> +      - description: IFE2 GDSC - Image Front End, Global Distributed Sw=
-itch Controller.
->> +      - description: Titan Top GDSC - Titan ISP Block, Global Distribut=
-ed Switch Controller.
->> +
->> +  power-domain-names:
->> +    items:
->> +      - const: top
->> +      - const: ife0
->> +      - const: ife1
->> +      - const: ife2
->
-> Note that the list of items and the list of the item descriptions do not
-> correspond to each other. Titan Top GDSC shall be at the end.
+iQIzBAABCgAdFiEEiOrDCAFJzPfAjcif3SOs138+s6EFAmkXK9wACgkQ3SOs138+
+s6GJEg/+Lvwv/Uc4dUYUzG/6oY2h1PdiGuJvJA9YspnmST4S0yhN92w4uF7VktO8
+48OfDwxqJHwx3SDbrqTyuzmBBpk+vUOVyILkxEFHIHHfU3FSie3o3o8xQ1reITF5
+xRkKWVj4drW/J3lr7dXETpSnaq8ASU9LbXzjA5V5WEZIjvOwEDTOiUtjycoL+dJN
+EZcP60yEeH9WZqPvBNJcDpppUFwZINIUJ41aLebwav40cxSOr9AWGyaIoirg0hAC
+4B5FfUrlvpG6uToKYAI+F8onTpuhbY7ucFNx420eOkY1MfcBDx6CxL2rATwe0wso
+U9+7SRCF59hiIZLQVvPj76JtLjAVrvmfanOKa5J2/Y/2vUG/3PfSdzCzqXykmv3i
+fCsdqHqur0RkWwjayS76p/QSldpOQszoGL4Uio2k7u+RM5SXEA+E1im8qq7ed2+N
+0XjgaZjOoGP24Gn+V1UUyD04j/IjPm36o1hHwa27wJnEf33rp932nOQch3/T0fA+
+3MERBRP+Px+jXOgg3D3F/gzJa3Ps7rRNp3XRHmv4EwjSMU1Hoq9ePdT38fW1Xl0o
+x+gIeNWpWoVeI7D+3OfAoJTthFdmNVUznKco4qxwigLQnoGo1s0Id7hRygTsz1fC
+MGSxHO88pn2zCtJqXCByFHjVRYA+y5zQx0zB6IX5ndliVu/HM3k=
+=GzNq
+-----END PGP SIGNATURE-----
 
-In the v1 the comment was that top can now be put on top (because a
-limitation in the driver was fixed). But yes, forgot to modify
-power-domains description. Will fix.
-
->
->> +
->> +  vdd-csiphy-0p9-supply:
->> +    description:
->> +      Phandle to a 0.9V regulator supply to a PHY.
->> +
->> +  vdd-csiphy-1p25-supply:
->> +    description:
->> +      Phandle to a 1.25V regulator supply to a PHY.
->> +
->
-> Please reference to the schematics or SoC TRM, does SM6350 SoC
-> have different pads to get supplies to different CSIPHYx IPs?
->
-> If so, then please provide hardware properties to get a proper
-> correspondence between supplies and CSIPHYx, and make all these
-> properties optional.
-
-I shared the names in replies to v1.
-
-* VDD_CAMSS_PLL_0P9 - Camera SS PLL 0.9 V circuits
-    (not referenced in downstream kernel, connected to vreg_s5a in
-    schematics, which is MX)
-* VDD_A_CSI_x_0P9 - MIPI CSIx 0.9 V circuits
-    With pad names VDD_A_CSI_0_0P9 to VDD_A_CSI_3_0P9
-* VDD_A_CSI_x_1P25 - MIPI CSIx 1.25 V circuits
-    With pad names VDD_A_CSI_0_1P25 to VDD_A_CSI_3_1P25
-
->
->> +  ports:
->> +    $ref: /schemas/graph.yaml#/properties/ports
->> +
->> +    description:
->> +      CSI input ports.
->> +
->> +    patternProperties:
->> +      "^port@[0-3]$":
->> +        $ref: /schemas/graph.yaml#/$defs/port-base
->> +        unevaluatedProperties: false
->> +
->> +        description:
->> +          Input port for receiving CSI data from a CSIPHY.
->> +
->> +        properties:
->> +          endpoint:
->> +            $ref: video-interfaces.yaml#
->> +            unevaluatedProperties: false
->> +
->> +            properties:
->> +              data-lanes:
->> +                minItems: 1
->> +                maxItems: 4
->> +
->> +              bus-type:
->> +                enum:
->> +                  - 1 # MEDIA_BUS_TYPE_CSI2_CPHY
->> +                  - 4 # MEDIA_BUS_TYPE_CSI2_DPHY
->> +
->> +            required:
->> +              - data-lanes
->> +
->> +required:
->> +  - compatible
->> +  - reg
->> +  - reg-names
->> +  - clocks
->> +  - clock-names
->> +  - interrupts
->> +  - interrupt-names
->> +  - interconnects
->> +  - interconnect-names
->> +  - iommus
->> +  - power-domains
->> +  - power-domain-names
->> +  - vdd-csiphy-0p9-supply
->> +  - vdd-csiphy-1p25-supply
->
-> When a change to add CSIPHYx specific supplies is done, please remove
-> *-supply properties from the list of the requred ones.
-
-Is this pending some other change that will be posted? Or what do you mean?
-
->
->> +  - ports
->> +
->> +additionalProperties: false
->> +
->> +examples:
->> +  - |
->> +    #include <dt-bindings/clock/qcom,gcc-sm6350.h>
->> +    #include <dt-bindings/clock/qcom,sm6350-camcc.h>
->> +    #include <dt-bindings/interconnect/qcom,icc.h>
->> +    #include <dt-bindings/interconnect/qcom,sm6350.h>
->> +    #include <dt-bindings/interrupt-controller/arm-gic.h>
->> +    #include <dt-bindings/media/video-interfaces.h>
->> +    #include <dt-bindings/power/qcom-rpmpd.h>
->> +
->> +    soc {
->> +        #address-cells =3D <2>;
->> +        #size-cells =3D <2>;
->> +
->> +        isp@acb3000 {
->> +            compatible =3D "qcom,sm6350-camss";
->> +
->> +            reg =3D <0x0 0x0acb3000 0x0 0x1000>,
->> +                  <0x0 0x0acba000 0x0 0x1000>,
->> +                  <0x0 0x0acc1000 0x0 0x1000>,
->> +                  <0x0 0x0acc8000 0x0 0x1000>,
->> +                  <0x0 0x0ac65000 0x0 0x1000>,
->> +                  <0x0 0x0ac66000 0x0 0x1000>,
->> +                  <0x0 0x0ac67000 0x0 0x1000>,
->> +                  <0x0 0x0ac68000 0x0 0x1000>,
->> +                  <0x0 0x0acaf000 0x0 0x4000>,
->> +                  <0x0 0x0acb6000 0x0 0x4000>,
->> +                  <0x0 0x0acbd000 0x0 0x4000>,
->> +                  <0x0 0x0acc4000 0x0 0x4000>;
->> +            reg-names =3D "csid0",
->> +                        "csid1",
->> +                        "csid2",
->> +                        "csid_lite",
->> +                        "csiphy0",
->> +                        "csiphy1",
->> +                        "csiphy2",
->> +                        "csiphy3",
->> +                        "vfe0",
->> +                        "vfe1",
->> +                        "vfe2",
->> +                        "vfe_lite";
->> +
->> +            clocks =3D <&gcc GCC_CAMERA_AHB_CLK>,
->
-> I believe this clock is critical, and it is set so in the SM6350 GCC driv=
-er,
-> therefore it should not be added here.
-
-True, gcc_camera_ahb_clk has CLK_IS_CRITICAL in gcc-sm6350.c
-
->
-> Multiple CAMCC drivers define some of the clocks as "critical" and always
-> enabled, a misconfiguration in this area may cause the reported warning.
-
-Will try to remove it then.
-
->
->> +                     <&gcc GCC_CAMERA_AXI_CLK>,
->> +                     <&camcc CAMCC_SOC_AHB_CLK>,
->> +                     <&camcc CAMCC_CAMNOC_AXI_CLK>,
->> +                     <&camcc CAMCC_CORE_AHB_CLK>,
->> +                     <&camcc CAMCC_CPAS_AHB_CLK>,
->> +                     <&camcc CAMCC_CSIPHY0_CLK>,
->> +                     <&camcc CAMCC_CSI0PHYTIMER_CLK>,
->> +                     <&camcc CAMCC_CSIPHY1_CLK>,
->> +                     <&camcc CAMCC_CSI1PHYTIMER_CLK>,
->> +                     <&camcc CAMCC_CSIPHY2_CLK>,
->> +                     <&camcc CAMCC_CSI2PHYTIMER_CLK>,
->> +                     <&camcc CAMCC_CSIPHY3_CLK>,
->> +                     <&camcc CAMCC_CSI3PHYTIMER_CLK>,
->> +                     <&camcc CAMCC_SLOW_AHB_CLK_SRC>,
->> +                     <&camcc CAMCC_IFE_0_AXI_CLK>,
->> +                     <&camcc CAMCC_IFE_0_CLK>,
->> +                     <&camcc CAMCC_IFE_0_CPHY_RX_CLK>,
->> +                     <&camcc CAMCC_IFE_0_CSID_CLK>,
->> +                     <&camcc CAMCC_IFE_1_AXI_CLK>,
->> +                     <&camcc CAMCC_IFE_1_CLK>,
->> +                     <&camcc CAMCC_IFE_1_CPHY_RX_CLK>,
->> +                     <&camcc CAMCC_IFE_1_CSID_CLK>,
->> +                     <&camcc CAMCC_IFE_2_AXI_CLK>,
->> +                     <&camcc CAMCC_IFE_2_CLK>,
->> +                     <&camcc CAMCC_IFE_2_CPHY_RX_CLK>,
->> +                     <&camcc CAMCC_IFE_2_CSID_CLK>,
->> +                     <&camcc CAMCC_IFE_LITE_CLK>,
->> +                     <&camcc CAMCC_IFE_LITE_CPHY_RX_CLK>,
->> +                     <&camcc CAMCC_IFE_LITE_CSID_CLK>;
->> +            clock-names =3D "cam_ahb_clk",
->> +                          "cam_axi",
->> +                          "soc_ahb",
->> +                          "camnoc_axi",
->> +                          "core_ahb",
->> +                          "cpas_ahb",
->> +                          "csiphy0",
->> +                          "csiphy0_timer",
->> +                          "csiphy1",
->> +                          "csiphy1_timer",
->> +                          "csiphy2",
->> +                          "csiphy2_timer",
->> +                          "csiphy3",
->> +                          "csiphy3_timer",
->> +                          "slow_ahb_src",
->> +                          "vfe0_axi",
->> +                          "vfe0",
->> +                          "vfe0_cphy_rx",
->> +                          "vfe0_csid",
->> +                          "vfe1_axi",
->> +                          "vfe1",
->> +                          "vfe1_cphy_rx",
->> +                          "vfe1_csid",
->> +                          "vfe2_axi",
->> +                          "vfe2",
->> +                          "vfe2_cphy_rx",
->> +                          "vfe2_csid",
->> +                          "vfe_lite",
->> +                          "vfe_lite_cphy_rx",
->> +                          "vfe_lite_csid";
->> +
->> +            interrupts =3D <GIC_SPI 464 IRQ_TYPE_LEVEL_HIGH>,
->> +                         <GIC_SPI 466 IRQ_TYPE_LEVEL_HIGH>,
->> +                         <GIC_SPI 717 IRQ_TYPE_LEVEL_HIGH>,
->> +                         <GIC_SPI 473 IRQ_TYPE_LEVEL_HIGH>,
->> +                         <GIC_SPI 477 IRQ_TYPE_LEVEL_HIGH>,
->> +                         <GIC_SPI 478 IRQ_TYPE_LEVEL_HIGH>,
->> +                         <GIC_SPI 479 IRQ_TYPE_LEVEL_HIGH>,
->> +                         <GIC_SPI 461 IRQ_TYPE_LEVEL_HIGH>,
->> +                         <GIC_SPI 465 IRQ_TYPE_LEVEL_HIGH>,
->> +                         <GIC_SPI 467 IRQ_TYPE_LEVEL_HIGH>,
->> +                         <GIC_SPI 718 IRQ_TYPE_LEVEL_HIGH>,
->> +                         <GIC_SPI 472 IRQ_TYPE_LEVEL_HIGH>;
->
-> Interrupt types shall be IRQ_TYPE_EDGE_RISING.
-
-Ack
-
->
->> +            interrupt-names =3D "csid0",
->> +                              "csid1",
->> +                              "csid2",
->> +                              "csid_lite",
->> +                              "csiphy0",
->> +                              "csiphy1",
->> +                              "csiphy2",
->> +                              "csiphy3",
->> +                              "vfe0",
->> +                              "vfe1",
->> +                              "vfe2",
->> +                              "vfe_lite";
->> +
->> +            interconnects =3D <&gem_noc MASTER_AMPSS_M0 QCOM_ICC_TAG_AC=
-TIVE_ONLY
->> +                             &config_noc SLAVE_CAMERA_CFG QCOM_ICC_TAG_=
-ACTIVE_ONLY>,
->> +                            <&mmss_noc MASTER_CAMNOC_HF QCOM_ICC_TAG_AL=
-WAYS
->> +                             &clk_virt SLAVE_EBI_CH0 QCOM_ICC_TAG_ALWAY=
-S>,
->> +                            <&mmss_noc MASTER_CAMNOC_SF QCOM_ICC_TAG_AL=
-WAYS
->> +                             &clk_virt SLAVE_EBI_CH0 QCOM_ICC_TAG_ALWAY=
-S>,
->> +                            <&mmss_noc MASTER_CAMNOC_ICP QCOM_ICC_TAG_A=
-LWAYS
->> +                             &clk_virt SLAVE_EBI_CH0 QCOM_ICC_TAG_ALWAY=
-S>;
->> +            interconnect-names =3D "ahb",
->> +                                 "hf_mnoc",
->> +                                 "sf_mnoc",
->> +                                 "sf_icp_mnoc";
->> +
->> +            iommus =3D <&apps_smmu 0x820 0xc0>,
->> +                     <&apps_smmu 0x840 0x0>,
->> +                     <&apps_smmu 0x860 0xc0>,
->> +                     <&apps_smmu 0x880 0x0>;
->> +
->> +            power-domains =3D <&camcc TITAN_TOP_GDSC>
->
-> It should be the last one in the list, if the settled practice is followe=
-d.
-
-See above.
-
->
->> +                            <&camcc IFE_0_GDSC>,
->> +                            <&camcc IFE_1_GDSC>,
->> +                            <&camcc IFE_2_GDSC>;
->> +            power-domain-names =3D "top",
->> +                                 "ife0",
->> +                                 "ife1",
->> +                                 "ife2";
->> +
->> +            vdd-csiphy-0p9-supply =3D <&vreg_l18a>;
->> +            vdd-csiphy-1p25-supply =3D <&vreg_l22a>;
->> +
->> +            ports {
->> +                #address-cells =3D <1>;
->> +                #size-cells =3D <0>;
->> +
->> +                port@0 {
->> +                    reg =3D <0>;
->> +                    csiphy0_ep: endpoint {
->
-> An empty line before a child node is always needed.
-
-Ack
-
->
->> +                        data-lanes =3D <0 1 2 3>;
->> +                        bus-type =3D <MEDIA_BUS_TYPE_CSI2_DPHY>;
->> +                        remote-endpoint =3D <&sensor_ep>;
->> +                    };
->> +                };
->> +            };
->> +        };
->> +    };
->>=20
-
+--3uqy45lsar5fgfon--
 
