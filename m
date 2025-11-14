@@ -1,60 +1,60 @@
-Return-Path: <linux-arm-msm+bounces-81909-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-81910-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 96EA1C5E71B
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Nov 2025 18:08:13 +0100 (CET)
+Received: from ams.mirrors.kernel.org (ams.mirrors.kernel.org [IPv6:2a01:60a::1994:3:14])
+	by mail.lfdr.de (Postfix) with ESMTPS id AD256C5E899
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Nov 2025 18:24:23 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 552A73BBEE0
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Nov 2025 17:08:12 +0000 (UTC)
+	by ams.mirrors.kernel.org (Postfix) with ESMTPS id EC97234B8A3
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Nov 2025 17:08:27 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 64645335BDC;
-	Fri, 14 Nov 2025 17:06:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2BCBB3375D1;
+	Fri, 14 Nov 2025 17:06:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="uMXldhH+"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="R974YA7v"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3280E3358B5;
-	Fri, 14 Nov 2025 17:06:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E998E2DC345;
+	Fri, 14 Nov 2025 17:06:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763140005; cv=none; b=WhEEuBJ65sx6Vpl5RDfwsvTprm33dzzXN7hKAiRiI/6ZFJsH7gIU2uYHAhTa+YOASHPz/gB/hwlDpBpOTFmyJFwC2c32w50eqWtnXf8ODSFIogAeJJVQMkSbdfR9n+oHCSjGIqLSot4t5obWS2VVEdO16fL+7RacZdnMg7Sz8kQ=
+	t=1763140009; cv=none; b=B29mQAB4wSKyZ1NZx+yLWUdHK7alPxFHadM3xP3ylxmuoxodiDQB0QLXF4madR1QGn91zN67t64B1Ycso0rkb9X1I7piStK4APWsJ1AVqPdKmJlDyxWHmoBquH7QdW0e7RJUo7WMx5D8ff5N29MIffSmzxIPrHqoumsnTWmg+/A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763140005; c=relaxed/simple;
-	bh=Pt5FGeKi4jvA6cfiV7J9wEvTenimivj94cYmaDpeApg=;
+	s=arc-20240116; t=1763140009; c=relaxed/simple;
+	bh=8VM0uG/P3AR5x2Yp+ncyz04JSf7l6wNPUKaGJaMheJ0=;
 	h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date:
-	 MIME-Version:Content-Type; b=iaEvnw/r8QcWtg+ykqiK4zu6dy8XJiJY/XVIQGjhVh0kYb5Hnuh37Bd/2IqqV3W7q7aB3h7zMgT+8v1tMM9Y3IHbBel7orIMBiJ7Zy2gM7rdq3ztkqbG9LDUXCw8rcdQcQWFkF/GjnR3h2LbMgYKfIdf6ba8wDlqcW0GrBNb8YI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=uMXldhH+; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48ED8C4CEFB;
-	Fri, 14 Nov 2025 17:06:42 +0000 (UTC)
+	 MIME-Version:Content-Type; b=uKO4ePBZYNY3FC4kv5ihGtoqGRzHZIxut08ZFJb2h67X1ZvOSPpb6Vo3NkJECpTAuRYvMjiisyeRdDRTA1jOGmVShB9ImGYYZrdGYsNMQ3AqZC1tmBY8UGWSbFXcym8QQydATSssXVflzfxTlU2qZJTsejpuE+soTplf159qRCE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=R974YA7v; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42A64C116B1;
+	Fri, 14 Nov 2025 17:06:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1763140004;
-	bh=Pt5FGeKi4jvA6cfiV7J9wEvTenimivj94cYmaDpeApg=;
+	s=k20201202; t=1763140007;
+	bh=8VM0uG/P3AR5x2Yp+ncyz04JSf7l6wNPUKaGJaMheJ0=;
 	h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
-	b=uMXldhH+QZZhA+enmWimEwT7tJZcaLgdcdX5M7M7K9A1T9qy+WMCHjjCgBLT7AFHw
-	 9zUrWn0FEpuiwgR5iH+Rf+2WBWMvTSuCjhbyosJxLV/bScjF7O9psFqjs+Ee6EVo7P
-	 SIMvGJg6BzcHViC9uN+cY1lFBBx3yIWY3k44RxAzMdtVSNPTtqA7JSd0sTdWoG5Yha
-	 upRmPe7zqIQJC3nPOXW4qGYoZjsU+PWvK9H1UfVvKgdSTkWyWSpIDiYTPT0rbQmXc7
-	 +CTQd9+tqjO/4jKLVLEyOymDPQGXl8KfMV3WvK+YrCvDitLoeSDqBVfECKJ9Nd2cax
-	 kzs6lIGx7r5IQ==
+	b=R974YA7vC1puvxLtRvK8xFQpfqpYFKZq4IriY3+/N5P/me0XYwLAtT8bq5Ny8bVVi
+	 FOCDD2pRuRFT960qIiqpOITBNDLgp1oEWWAwBjwAbYid+qeacAQvyhh6AyFYS3lTYS
+	 QwWA8D76GmrEuM39I2U+W9usi2cMehSp5VRp/5G4/ipdMSbYcAo3JPBJ6YvkDQvASd
+	 a6KaFRpFaoqDYMtZVkWVdPTDg7oaCPbiYjOVEdG1Kbejur6geqXGxpSC/LwlqHMevV
+	 XmUQxouRFDFM9z9peT9029eaHTSmSgVZk6n3cKP2R1wE287v3hX0dtv18EI+Ft/Vid
+	 06jNt2IWIk4fA==
 From: Mark Brown <broonie@kernel.org>
-To: robh@kernel.org, 
- Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
-Cc: krzk+dt@kernel.org, conor+dt@kernel.org, devicetree@vger.kernel.org, 
- perex@perex.cz, tiwai@suse.com, srini@kernel.org, 
- linux-sound@vger.kernel.org, linux-kernel@vger.kernel.org, 
- linux-arm-msm@vger.kernel.org, alexey.klimov@linaro.org, 
- konradybcio@kernel.org
-In-Reply-To: <20251031120703.590201-1-srinivas.kandagatla@oss.qualcomm.com>
-References: <20251031120703.590201-1-srinivas.kandagatla@oss.qualcomm.com>
-Subject: Re: [PATCH v3 0/6] ASoC: codecs: lpass-macro: complete sm6115
- support
-Message-Id: <176314000202.179998.8192520322222862009.b4-ty@kernel.org>
-Date: Fri, 14 Nov 2025 17:06:42 +0000
+To: Srinivas Kandagatla <srini@kernel.org>, 
+ Liam Girdwood <lgirdwood@gmail.com>, Jaroslav Kysela <perex@perex.cz>, 
+ Takashi Iwai <tiwai@suse.com>, Alexey Klimov <alexey.klimov@linaro.org>, 
+ Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>, 
+ linux-sound@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, stable@vger.kernel.org
+In-Reply-To: <20251023-asoc-regmap-irq-chip-v1-0-17ad32680913@linaro.org>
+References: <20251023-asoc-regmap-irq-chip-v1-0-17ad32680913@linaro.org>
+Subject: Re: [PATCH RFC 0/2] ASoC: codecs: pm4125: Two minor fixes for
+ potential issues
+Message-Id: <176314000498.179998.13753639237348930413.b4-ty@kernel.org>
+Date: Fri, 14 Nov 2025 17:06:44 +0000
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -65,13 +65,15 @@ Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
 X-Mailer: b4 0.15-dev-88d78
 
-On Fri, 31 Oct 2025 12:06:57 +0000, Srinivas Kandagatla wrote:
-> This patch series fixes SM6115 lpass codec macro support and adding
-> missing dt-bindings to complete support for SM6115.
+On Thu, 23 Oct 2025 11:02:49 +0200, Krzysztof Kozlowski wrote:
+> I marked these as fixes, but the issue is not likely to trigger in
+> normal conditions.
 > 
-> SM6115 lpass codec macro support is added partially and broken to some
-> extent, Fix this broken support and add complete lpass macro support for
-> this SoC.
+> Not tested on hardware, please kindly provide tested-by, the best with
+> some probe bind/unbind cycle.
+> 
+> Best regards,
+> Krzysztof
 > 
 > [...]
 
@@ -81,18 +83,10 @@ Applied to
 
 Thanks!
 
-[1/6] ASoC: codecs: lpass-tx-macro: fix SM6115 support
-      commit: 7c63b5a8ed972a2c8c03d984f6a43349007cea93
-[2/6] ASoC: dt-bindings: qcom,lpass-rx-macro: Add sm6115 LPASS RX
-      commit: 65d03e84d8b8e42cf4636fcabb81c9b130cec710
-[3/6] ASoC: dt-bindings: qcom,lpass-va-macro: re-arrange clock-names
-      commit: 5a0438622b49df1e723960ac9c0bf75e04370fdc
-[4/6] ASoC: dt-bindings: qcom,lpass-va-macro: Add sm6115 LPASS VA
-      commit: 675f41b8d1675d9a51a6dcb978ff76b95cbb4b92
-[5/6] ASoC: codecs: lpass-va-macro: add SM6115 compatible
-      commit: 893e2fd509e968cc1d76caadee0f5d2f2c72f137
-[6/6] ASoC: codecs: lpass-rx-macro: add SM6115 compatible
-      commit: 8ff3dcb0e8a8bf6c41f23ed4aa62d066d3948a10
+[1/2] ASoC: codecs: pm4125: Fix potential conflict when probing two devices
+      commit: fd94857a934cbe613353810a024c84d54826ead3
+[2/2] ASoC: codecs: pm4125: Remove irq_chip on component unbind
+      commit: e65b871c9b5af9265aefc5b8cd34993586d93aab
 
 All being well this means that it will be integrated into the linux-next
 tree (usually sometime in the next 24 hours) and sent to Linus during
