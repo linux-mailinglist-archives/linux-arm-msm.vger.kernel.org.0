@@ -1,57 +1,59 @@
-Return-Path: <linux-arm-msm+bounces-81735-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-81737-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1FD51C5ABC3
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Nov 2025 01:14:54 +0100 (CET)
+Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [IPv6:2605:f480:58:1:0:1994:3:14])
+	by mail.lfdr.de (Postfix) with ESMTPS id E364FC5ABD5
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Nov 2025 01:15:12 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id E7A343AE813
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Nov 2025 00:14:38 +0000 (UTC)
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 980844E632C
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Nov 2025 00:14:52 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1715D2192EA;
-	Fri, 14 Nov 2025 00:13:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id ADDE622B8AB;
+	Fri, 14 Nov 2025 00:13:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="HFJtv9To"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="k2xZPutQ"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E37F121773D;
-	Fri, 14 Nov 2025 00:13:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82D192264CC;
+	Fri, 14 Nov 2025 00:13:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763079229; cv=none; b=sT2l7xXgImx+0eaA8pdm6B0Ah5t6Tf3nfgEejHQK442/VrT7tqp+WxAz7LGY+3I5AoWDv1MQGnxWzgHpDYm0jvLjOCvP9kJarM2gtS9NCvxfC/+uR+r9mOFgl6Zgtq+bWSlofeAWdMMTFqzlKZhY/TeQqo1EbnIQIjEZN8pavgQ=
+	t=1763079230; cv=none; b=J8iMNbMs0j7XRBpTbRqSw7q7DhhJD+oXvU6WJGEXL0C2NkWquCKURobykIc0Fgfwf7fKNkXJxVLndwm1gOcpI8UbTCKNkMqJ/bXjDpEwTOMjvK+1n9dEP+IXYv4cbhxUJ+E9XXe+oxioqHp6ekbtqwigfclYhCFKx7hN7rbdKTc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763079229; c=relaxed/simple;
-	bh=qEug4otsJCrUwbTNsNXYtGwAc41UDVGLIUzMDsCsm58=;
+	s=arc-20240116; t=1763079230; c=relaxed/simple;
+	bh=gXqtBFBFIfkgGfikveDZ8wq1v53j7atXVXAfFNF4Gog=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=eMPhaNZ11KRRPoaHyxUgNyyc9GiRkcd+NzE0IeiuuXlvWHLnFP+oogC1phn41ncE+XRJNN34b6HEGvsuf35Jm0RaO6wAUVmQV9+ufKUqdsPFBh5QRxmK1u9ibzBh8wGj8QCpLii5v/gWETjU4O49CzdkKyfVL977yFKywbq4U6M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=HFJtv9To; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 224B4C4CEF5;
+	 MIME-Version:Content-Type; b=u56BfoYfu0ibpNO+M3sAxrOgj7DXWOF1Xfh+awJ4YCV/NgDBa80IQzErQNioFCnRG0PZiJe3axRH10FcQKFBb44mKE6GoYUNR/vkWxecaeOSrWGUnk5gMHNlsk6BIYFgYlTkHdy7V4YBmV4LHDbfarIuV5MAUfXAHIyp7I+h7Ck=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=k2xZPutQ; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF58DC19423;
 	Fri, 14 Nov 2025 00:13:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1763079228;
-	bh=qEug4otsJCrUwbTNsNXYtGwAc41UDVGLIUzMDsCsm58=;
+	s=k20201202; t=1763079229;
+	bh=gXqtBFBFIfkgGfikveDZ8wq1v53j7atXVXAfFNF4Gog=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HFJtv9ToW0uoL3iJ98lAp2QxMprHYFIHELYj1jyrxsS2zTCDhglcXaI0QoFlNLOtF
-	 ZTjZ0RPXbABOOcpDQ1Q+oljKiKPmi1xO0o+ILnB8xUKVNw6aXRdVExN4lR7uYKEaIP
-	 OX1tLXwTUtmmI3Pva+B84YSydVha7gAc2zphYRpPFu7jqzMqnk91evuYNH+2nNk4pf
-	 sI+WEShK2S2GqmQkEDatdKE32S2Jfh6uC4p2ZUWv4Jrl3CDgnOeISWmyTxC4B9c7bg
-	 O3syqT2X5yxBid+KharRNkjRets5mjobdQioxxpx4HAEIx1nSpL/EpUuQT/TyCeyUP
-	 HCKE3FxNtT8zA==
+	b=k2xZPutQ+8HuwIsAJud5GMhzDz6EDn48UwScwhC5AmRYAclSWkL/eaiVGTONu8exC
+	 xglPBFUAh+Ks+uTVNujE7uYDIEtv2gkBXwB2nFy6eoeTmeI1Ifl9ITHXT3KZcIrE+d
+	 tF3sBazvbUaHRs3r5GvUP1VW2HHn1jqnnNeDyxQtKDUY9wovfTfYluKIQ6f7pxBUq3
+	 OhCgo/+6lRwp65tToBk+gqtr39uXUT4suMTe/Cb1Ph8ILH9jTOR4SnrRmmFA8pvBzA
+	 TIFfoWGHYqBDt+O3kdJ+zKIll1sfuNykz3RhwE5BxVftadbXCUUBuBqbYYjA+k9eow
+	 HypveHjlOWT+A==
 From: Bjorn Andersson <andersson@kernel.org>
-To: Konrad Dybcio <konradybcio@kernel.org>,
+To: Michael Turquette <mturquette@baylibre.com>,
+	Stephen Boyd <sboyd@kernel.org>,
 	Gabor Juhos <j4g8y7@gmail.com>
 Cc: linux-arm-msm@vger.kernel.org,
+	linux-clk@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 0/2] soc: qcom: mdt_loader: minor cleanups
-Date: Thu, 13 Nov 2025 18:18:06 -0600
-Message-ID: <176307948645.2565969.9540997429398218177.b4-ty@kernel.org>
+Subject: Re: [PATCH] clk: qcom: apss-ipq5424: remove unused 'apss_clk' structure
+Date: Thu, 13 Nov 2025 18:18:07 -0600
+Message-ID: <176307948650.2565969.5257837735762779607.b4-ty@kernel.org>
 X-Mailer: git-send-email 2.51.0
-In-Reply-To: <20251111-mdt-loader-cleanup-v1-0-71afee094dce@gmail.com>
-References: <20251111-mdt-loader-cleanup-v1-0-71afee094dce@gmail.com>
+In-Reply-To: <20251113-ipq5424-remove-apss_clk-v1-1-e942e720cf99@gmail.com>
+References: <20251113-ipq5424-remove-apss_clk-v1-1-e942e720cf99@gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -62,23 +64,18 @@ Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 
 
-On Tue, 11 Nov 2025 08:40:09 +0100, Gabor Juhos wrote:
-> The series contains two small patches to clean up the mdt loader code
-> a bit.
+On Thu, 13 Nov 2025 17:15:25 +0100, Gabor Juhos wrote:
+> The locally defined 'apss_clk' structure is not used in the code, so
+> remove that.
 > 
-> The first patch merges the __mdt_load() and qcom_mdt_load_no_init()
-> functions in order to remove a superfluous wrapper function, whilst
-> the second one renames a parameter of qcom_mdt_load() to make it
-> consistent with other functions.
+> Compile tested only.
 > 
-> [...]
+> 
 
 Applied, thanks!
 
-[1/2] soc: qcom: mdt_loader: merge __qcom_mdt_load() and qcom_mdt_load_no_init()
-      commit: 0cda8823b176a5303a2c4bc2366908e3049c416e
-[2/2] soc: qcom: mdt_loader: rename 'firmware' parameter of qcom_mdt_load()
-      commit: 186b8f8fcc86949eaf0c3bd11a47048ec4c78b5b
+[1/1] clk: qcom: apss-ipq5424: remove unused 'apss_clk' structure
+      commit: dc937f12e6c3488713de1262e37a30307ee9feac
 
 Best regards,
 -- 
