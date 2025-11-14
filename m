@@ -1,125 +1,172 @@
-Return-Path: <linux-arm-msm+bounces-81815-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-81817-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [142.0.200.124])
-	by mail.lfdr.de (Postfix) with ESMTPS id 083E7C5C553
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Nov 2025 10:42:14 +0100 (CET)
+Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [IPv6:2605:f480:58:1:0:1994:3:14])
+	by mail.lfdr.de (Postfix) with ESMTPS id A46CFC5C634
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Nov 2025 10:53:48 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 06E5A4F2FAE
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Nov 2025 09:27:31 +0000 (UTC)
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 06E9B4F3CB0
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Nov 2025 09:31:23 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 38E23305E02;
-	Fri, 14 Nov 2025 09:26:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 361D83081D5;
+	Fri, 14 Nov 2025 09:31:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="QdznabUl"
+	dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b="Gt5z0wfC"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f67.google.com (mail-ej1-f67.google.com [209.85.218.67])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13C62303A28
-	for <linux-arm-msm@vger.kernel.org>; Fri, 14 Nov 2025 09:26:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A212306B0D
+	for <linux-arm-msm@vger.kernel.org>; Fri, 14 Nov 2025 09:31:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.67
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763112377; cv=none; b=MGqx4Ap3xQVIYNYVZNhKeH+eXoAoRq3PUZnUDsTRJYuO3j0YaYx90QeXZt5fEBbObM8rKKDs6P8yqAjbWsnATmONCpPS+RfpvOWX4rNBSqwtFkvzXMXG3Q6eGyo++mcyIGud+qJEF2JX0+bArsaBY/Vd/9vNWmb4Xe+G2tNj09Y=
+	t=1763112678; cv=none; b=uJxHZ7h1YlJnKhpUe4x1u96TEKwrBJcS6BTiC3yV+hmvBpMwvvMT8/mx9O+wby9cYYPOLDz7SSTXjtReoAV80psFiLXNAXkCl6hdQLx6kTJYWngyqYvtqxGFKNYydz0XuNDtFDRelOBPcivV5+YBA36jxPaSZ5xQE/FZuGaNQd8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763112377; c=relaxed/simple;
-	bh=js4PA5bRCJWVaJiozlPfhPnR8+xdEJIPSZQez/38S70=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=A/xV2Ezmgygs/YOhdjr0iqANw0C8MryYatauxY2dKow59A6vTyF8KL6uVTPB08lLNmB8rt47YXeC1XwpA0F5nzayBiebRvIxAbn5MdIOrDenRBaGpQeExBKJBSHvMzB6e7xvxIIGYG+AxDY0Pf6xoqg8iWx7HVIh2kyZjQIGLrs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=QdznabUl; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C500C16AAE
-	for <linux-arm-msm@vger.kernel.org>; Fri, 14 Nov 2025 09:26:16 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1763112376;
-	bh=js4PA5bRCJWVaJiozlPfhPnR8+xdEJIPSZQez/38S70=;
-	h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-	b=QdznabUlT/StywBayjXvsvVLHQgGlheD4oYLACQPlAKcEWyDHmIOBF0d6rJsWvQYg
-	 cXS1UdN72VyMhEa992f3xCe1/oKmhDLjeZXtXqkXQoorF0ZBh6t1Tj1g9Nq2cvPTqJ
-	 5Ib3wp47AVPo+lFJ3l8Bx+Vu/lhd+mlYrWWyAXx0Hiyys0toe7x13YRNDkCVYE57wY
-	 69VBCyK5hB1AWBnPsz8ArX55bpDxaqsIJMn8+pxlGapxODdi0fzGdIPjOiCVAedVS3
-	 Cu0sbRNkT71sr3sDFcfmq2cDXUsiuRcDGMCCcXDZoLsjpJf5GQxE2OlitnzxzZ6g3q
-	 4ypK9qeVx053A==
-Received: by mail-lf1-f45.google.com with SMTP id 2adb3069b0e04-59445ee9738so1303957e87.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 14 Nov 2025 01:26:16 -0800 (PST)
-X-Forwarded-Encrypted: i=1; AJvYcCU9s355V1zPP7UtOY5WwJysCxChBOXo+atjSoIcqd8IuE4BQu8K/YBGLH9pFepMO8I/2bVzcEOL35CNnHjB@vger.kernel.org
-X-Gm-Message-State: AOJu0Yyt/Q8QcDEcVnkdVm85sVS3Rmxjnrgw95JXDwL7ZQW6UKVq8Bbq
-	WImkAEHL1rrSuGXI1t6NW3jTDqyBs242MWbdzRoNVpIG+YoQXJrn15YjsrXOJ5DOTc1HKF+mNwb
-	Lp0d3Q7/pplsTHzgZbPHalPvG79PaXmg=
-X-Google-Smtp-Source: AGHT+IF3tFmwAcyyqBFAGn65NZXYkgHv33xvrkudgQL42Yr2p2jyMiQqIYBJjDBFA4Hy8YCD1Q4u+g7Fy/whFgTICHY=
-X-Received: by 2002:a05:6512:239d:b0:595:7ed0:9c7e with SMTP id
- 2adb3069b0e04-595841a8136mr801860e87.3.1763112374934; Fri, 14 Nov 2025
- 01:26:14 -0800 (PST)
+	s=arc-20240116; t=1763112678; c=relaxed/simple;
+	bh=ACQpx7cjZHPONgx9RRCg5HRaeFcKLESZFAJFQv7L0K4=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=emwTAxoX+W7e9z90dch66L22Zp+0YfMirCJqGH7u0G+C3hM1kBJ4/vytCFAOMcsdAvMMXvRHEvpnA35bhfr3CwTeBUblGVGzWvLJr7ogUj8NgP9lYVHKnLcGwIeWo7h1x5t18P2rW8/SeokgcP3HvkfF+kOfTlWrs3r+wBTz+4M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=fairphone.com; spf=pass smtp.mailfrom=fairphone.com; dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b=Gt5z0wfC; arc=none smtp.client-ip=209.85.218.67
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=fairphone.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fairphone.com
+Received: by mail-ej1-f67.google.com with SMTP id a640c23a62f3a-b737502f77bso5868066b.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 14 Nov 2025 01:31:14 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=fairphone.com; s=fair; t=1763112673; x=1763717473; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=OfvYbwMR85cXvJiXqvlh8kV+lNS72Io0vdeb3FdrUK8=;
+        b=Gt5z0wfCaiI1ftWmU5iVKgPjYaQKzQthmqbpbaNK1L0EDU9djSiQ/veSCISJzelRrX
+         U0cpdp40ZjTZvynmBdobuQaxBKwwdDYthYCywihYkHWl0s0yaOP3OwKbuSHKEPMh52Aq
+         wI6sym00wQLQ1Yl2LDuiK+TUG/UF6P0ev6QIHh7qLfqjNGoMCqvzQHChKs2gC7xmrWvz
+         iNtc16cBSMz13cfEn6svqKceNtti2HVodV4UpuasHxhpGjw47Q4h9xXTHXxQKtgQhVM5
+         MsxyklUiFOaOP5YuHMQ8sQXMjlgCUYnWM4V3lWXO5OegOrLCTRF3ZVuPRfEDWmS48aF1
+         e6PQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1763112673; x=1763717473;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=OfvYbwMR85cXvJiXqvlh8kV+lNS72Io0vdeb3FdrUK8=;
+        b=L75Ko3DdmigYE/aJpgX+uMFN8d/n7D7T46Ts+0Q1KHWos5RTYYStVdekay4IHW0HBp
+         uE5WzwvJTtUa5kKihh0hJym/N3rCOJpWuoelOuQcSCvF20X4yQ6r9OT2IK4sY2E7MLxe
+         NvCUUvzT5evnrcwJZAIf6Fi8esqjT6mpmiTx9KEMT0sm3nwUjDHDgM7UiEFGthawHLfZ
+         EmJO9iqSTqGZebwHnxxKtArvjXg86LedyNxgHxOQ2YBdJUE2bKN1J/9gl2BBHdT+9q1p
+         +67qN4wf7dfxXlu6V7PUrgZt1f0byJl0VgRPiVNFvnL7LD/7lkJ9q7z44vZTNHZNdx3s
+         mAmA==
+X-Forwarded-Encrypted: i=1; AJvYcCV2NHHtrhqYg5A4pnILC9biiI/jXL9OGYaXXp787LH+zjjIH8vzfDA0BHydCgv6Vn80qZQX8cDIv3zsIZRj@vger.kernel.org
+X-Gm-Message-State: AOJu0Yzkin5WpTAK8lCLnsph67eSROki8rtjyM6mLfPLHz3JinhMF8Id
+	vs2BA0YHG2O8BW7zvgOjgK/Yg3FVrFT78WFrd0tLb27oSDNqpkIlWHy5caw6BFltHQU=
+X-Gm-Gg: ASbGncvK4qIj+shsawLeUT3JFfNbqfjIMbR86J5MKNc02aKktqSA5BfYqz7zNashXDQ
+	FxTT9OKu7cw7opaOz9lI2pBPDXha9Gl4aRRzx5mEvzD0O4ATD7cT3WzEg80bmZstyJjXu+edEar
+	Rfhzr0wuTbStR+n8QyKgYOWmROkg1ejEyI63jQCfxruwxWWeavmloOc3r0Qj1D84YuEpb+cHc71
+	MO334wef+xsteGIVegl7eMoNKs0KcUN5MF1ELwXWoam//9SizJynbTQpPmar2zZr1QlVdw+5VhU
+	McP/4YNJbWGXt7+DuPMRv/bvt1dINeOOpb5p/F0v2uahr4zk24RFHglF4aWMfZfyWQ8y/gaDiuf
+	XZ7YYpRG3F3ZVOw6aJyLWTSHmKZqYfaaG92K/jNpmilkbi8ou9uBGAJhLugWRsWnN40QOk9idPD
+	zR886+E8zj42vWOoGJo9UsmxvzYQrUIdnwmQjZYw1+xaVS5eCLrOtDRnY9Z9vnBVKgcaoweXyZF
+	2eaulQIbGSzbMOB8rJNSrk=
+X-Google-Smtp-Source: AGHT+IEHPT99abpf0KPMgu3Y6RnZucQGw5ejkSL87Rxnqo9xEnFi6rEdVtOT7jKib0z0sW0Ef35W4g==
+X-Received: by 2002:a17:907:3e03:b0:b73:59b0:34d6 with SMTP id a640c23a62f3a-b73678ecc12mr273490766b.33.1763112673413;
+        Fri, 14 Nov 2025 01:31:13 -0800 (PST)
+Received: from [192.168.101.179] (2001-1c04-0509-ec01-156d-fa6e-7f19-0b67.cable.dynamic.v6.ziggo.nl. [2001:1c04:509:ec01:156d:fa6e:7f19:b67])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-b734fd80841sm352104366b.41.2025.11.14.01.31.12
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 14 Nov 2025 01:31:12 -0800 (PST)
+From: Luca Weiss <luca.weiss@fairphone.com>
+Subject: [PATCH v2 0/5] Enable QoS configuration for SM6350
+Date: Fri, 14 Nov 2025 10:31:08 +0100
+Message-Id: <20251114-sm6350-icc-qos-v2-0-6af348cb9c69@fairphone.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20251114085058.2195900-1-sumit.garg@kernel.org> <20251114085058.2195900-3-sumit.garg@kernel.org>
-In-Reply-To: <20251114085058.2195900-3-sumit.garg@kernel.org>
-From: Ard Biesheuvel <ardb@kernel.org>
-Date: Fri, 14 Nov 2025 10:26:03 +0100
-X-Gmail-Original-Message-ID: <CAMj1kXE4Fo3i9f3npB0MBSOZP0x7HgF4A0KX_aUSBEBmar=NpA@mail.gmail.com>
-X-Gm-Features: AWmQ_bkj4pWjMOHYgOZPEajb9wd6GCv0LCKBd1STFSWl45rYWURYaKvi9YfNTsw
-Message-ID: <CAMj1kXE4Fo3i9f3npB0MBSOZP0x7HgF4A0KX_aUSBEBmar=NpA@mail.gmail.com>
-Subject: Re: [PATCH 2/2] arm64: efi: Pass reboot cmd parameter to efi_reboot()
-To: Sumit Garg <sumit.garg@kernel.org>
-Cc: linux-arm-kernel@lists.infradead.org, linux-efi@vger.kernel.org, 
-	linux-arm-msm@vger.kernel.org, catalin.marinas@arm.com, will@kernel.org, 
-	mark.rutland@arm.com, andersson@kernel.org, konradybcio@kernel.org, 
-	dmitry.baryshkov@oss.qualcomm.com, shivendra.pratap@oss.qualcomm.com, 
-	leif.lindholm@oss.qualcomm.com, linux-kernel@vger.kernel.org, 
-	Sumit Garg <sumit.garg@oss.qualcomm.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAN32FmkC/3WPy26DMBBFfwXNulP5IWzCKv9RZQFmXEYVOLEpS
+ YT49zhm002X90pzzp0NEkWmBG21QaSVE4c5B/VRgRu7+ZuQh5xBCVVLKSymyehaIDuHt5Bw0PL
+ kfa/J9B7y0TWS50cBfl2OHOn2m7nLUULfJUIXpomXtprpsWBhC9XAX2nekGthpMZI9xB/ilIMu
+ rfKms6emnbV8FaMnJYQn+WFVRbHf2tXiQIbZWuqvdPeyLPvOF7HMNNnngSXfd9fDEAUPRMBAAA
+ =
+X-Change-ID: 20251107-sm6350-icc-qos-d319ffb3e6bf
+To: Georgi Djakov <djakov@kernel.org>, Rob Herring <robh@kernel.org>, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konradybcio@kernel.org>
+Cc: ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org, 
+ linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org, 
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+ Luca Weiss <luca.weiss@fairphone.com>, 
+ Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>, 
+ Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, 
+ Krzysztof Kozlowski <krzk@kernel.org>
+X-Mailer: b4 0.14.3
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1763112672; l=2923;
+ i=luca.weiss@fairphone.com; s=20250611; h=from:subject:message-id;
+ bh=ACQpx7cjZHPONgx9RRCg5HRaeFcKLESZFAJFQv7L0K4=;
+ b=KA0AoWxizz0/gD8OfkMA4rS2gAqVLcb1/7U5wBumPN8iT6dhshUZrXarIVRz1s4lnnGAnOGWR
+ valGwg+JpYfAuecKkuVTx4irGlqABIo9n/bNeNk+0OpIdZdFn6jC2hi
+X-Developer-Key: i=luca.weiss@fairphone.com; a=ed25519;
+ pk=O1aw+AAust5lEmgrNJ1Bs7PTY0fEsJm+mdkjExA69q8=
 
-On Fri, 14 Nov 2025 at 09:51, Sumit Garg <sumit.garg@kernel.org> wrote:
->
-> From: Sumit Garg <sumit.garg@oss.qualcomm.com>
->
-> EFI ResetSystem runtime service allows for platform specific reset type
-> allowing the OS to pass reset data for the UEFI implementation to take
-> corresponding action. So lets pass the reboot cmd parameter for the EFI
-> driver to determine whether it's a platform specific reset requested or
-> not.
->
-> Signed-off-by: Sumit Garg <sumit.garg@oss.qualcomm.com>
-> ---
->  arch/arm64/kernel/process.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/arch/arm64/kernel/process.c b/arch/arm64/kernel/process.c
-> index fba7ca102a8c..51784986c568 100644
-> --- a/arch/arm64/kernel/process.c
-> +++ b/arch/arm64/kernel/process.c
-> @@ -136,7 +136,7 @@ void machine_restart(char *cmd)
->          * ResetSystem().
->          */
->         if (efi_enabled(EFI_RUNTIME_SERVICES))
-> -               efi_reboot(reboot_mode, NULL);
-> +               efi_reboot(reboot_mode, cmd);
->
+Update dt-bindings, driver and dts in order to configure the QoS
+registers for the various SM6350 interconnects.
 
-I agree with the general principle. However, there are already
-existing callers of kernel_restart() that would end up passing a
-random string to efi_reboot(), resulting in platform specific reset
-with undefined result.
+Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
+---
+Changes in v2:
+- Refactor icc-rpmh.c change to be "less spaghetti" :) use less goto
+  (Dmitry)
+- Pick up tags
+- Link to v1: https://lore.kernel.org/r/20251107-sm6350-icc-qos-v1-0-8275e5fc3f61@fairphone.com
 
-E.g.,
+---
+Luca Weiss (5):
+      dt-bindings: interconnect: qcom,sm6350-rpmh: Add clocks for QoS
+      interconnect: qcom: icc-rpmh: Get parent's regmap for nested NoCs
+      interconnect: qcom: sm6350: Remove empty BCM arrays
+      interconnect: qcom: sm6350: enable QoS configuration
+      arm64: dts: qcom: sm6350: Add clocks for aggre1 & aggre2 NoC
 
-$ git grep kernel_restart\(\"
-drivers/md/dm-verity-target.c:          kernel_restart("dm-verity
-device corrupted");
-drivers/md/dm-verity-target.c:  kernel_restart("dm-verity device has
-I/O error");
-drivers/memory/emif.c:                  kernel_restart("SDRAM
-Over-temp Emergency restart");
+ .../bindings/interconnect/qcom,sm6350-rpmh.yaml    |  65 ++++-
+ arch/arm64/boot/dts/qcom/sm6350.dtsi               |   3 +
+ drivers/interconnect/qcom/icc-rpmh.c               |  19 +-
+ drivers/interconnect/qcom/sm6350.c                 | 298 ++++++++++++++++++++-
+ 4 files changed, 357 insertions(+), 28 deletions(-)
+---
+base-commit: 33b5a67d76ce575ea38bc3de55719a6cdf42287d
+change-id: 20251107-sm6350-icc-qos-d319ffb3e6bf
+prerequisite-change-id: 20250613-rework-icc-0d3b7276a798:v3
+prerequisite-patch-id: dc49cf2810a33db590997c9e9969f09fcbba207e
+prerequisite-patch-id: bd229a10bfd7485726f341f1bbc179fa032e4beb
+prerequisite-patch-id: ea3e9a509dc2d590f647560df3fa773165d5df48
+prerequisite-patch-id: 95b82df224ac0515c56d41cad8547099248697c1
+prerequisite-patch-id: c793efccb33da5b78d634fc0f7259c01854c7da2
+prerequisite-patch-id: b25a3cc84427ed3d321575d32dee239aa6dcfa65
+prerequisite-patch-id: 8262f845f906a575f9ee06c002d8626c7b25a87e
+prerequisite-patch-id: f3b9493e64d90665d7093c7f7af335452010cf13
+prerequisite-patch-id: 4e05eb6178064d4b4541fccbff31e18d4e5ae258
+prerequisite-patch-id: 4c169d0f54fb39999cf62eaba98208fd94e0d250
+prerequisite-patch-id: 91f18aff5b2cc765964c8991647dd53e75e97648
+prerequisite-patch-id: 7749a4cc2e2e8e2ac191844f8c42f338d0a80392
+prerequisite-patch-id: 75a9009c7cdbeb94b2c7528f6ecc54d7a4b7a6be
+prerequisite-patch-id: 9566648a76666548a85084664ba6fd4a240fe602
+prerequisite-patch-id: c2ba63308bedf78640d64d9662ebfe2ceb7e6d26
+prerequisite-patch-id: a08ad34a60042b2693b91f24712ccc10e0d5666b
+prerequisite-patch-id: 8227a4926c64a28215b6c03d43df5518d72094e8
+prerequisite-patch-id: 15ece9c03dbae75dbfb1b16a2e2c1d2ed1766c82
+prerequisite-patch-id: e69ae611580f951450269b4a7df8789f6b2e2c89
+prerequisite-patch-id: 5e54f850197bc33dc581ff8907fcad1dccef20a8
+prerequisite-patch-id: 73caecb9e342117c2a83832f0d2346119466a899
+prerequisite-patch-id: 79abd6d335f0bdd8725c27797d4fbc7ffc017007
+prerequisite-patch-id: faa043f224857fad9bd8368d83d5154e3f7013c1
+prerequisite-patch-id: 5d7fdb3ea01a6066079dd89a4e494165b75159db
+prerequisite-patch-id: 0234857c8f0119652dcf3fd6e7e1fe051f40a6ea
 
+Best regards,
+-- 
+Luca Weiss <luca.weiss@fairphone.com>
 
->         /* Now call the architecture specific reboot code. */
->         do_kernel_restart(cmd);
-> --
-> 2.48.1
->
 
