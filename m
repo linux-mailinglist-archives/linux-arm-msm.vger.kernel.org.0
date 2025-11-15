@@ -1,60 +1,59 @@
-Return-Path: <linux-arm-msm+bounces-81936-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-81937-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 101DAC6040A
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 15 Nov 2025 12:36:26 +0100 (CET)
+Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [142.0.200.124])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7AF2AC6046D
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 15 Nov 2025 12:55:12 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sea.lore.kernel.org (Postfix) with ESMTPS id 9AF9024167
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 15 Nov 2025 11:36:23 +0000 (UTC)
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 769CC4E3098
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 15 Nov 2025 11:55:11 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1F49027E1A1;
-	Sat, 15 Nov 2025 11:36:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 817A0296BD3;
+	Sat, 15 Nov 2025 11:55:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="awKbxM2u"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="LBzfn1kW"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDCA8E571;
-	Sat, 15 Nov 2025 11:36:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4EC1C18CC13;
+	Sat, 15 Nov 2025 11:55:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763206581; cv=none; b=bsLQPi0Sm8Idn8mIxZCXHeIDIcAZALijgBdebEwsI9b1Jm3QDxNujZ6rXxFat18LMLQ5GmtDcX3BJ6GToHz0oKeGaDLKa7ZGuKrn98LCNZhHCsAMmDd5ANqEJ/Jgp+paLrwwa/SM8RPATAoZkVUpTh1jKFlwkikw3A9IyX8yTc4=
+	t=1763207708; cv=none; b=BlhlZEj2scDovq9526hcadgXaAkiYbAUa7s4LsmiWf1gm4cNzWHFoQhq+gOuz8h1t08CVu0zR9EIXvG+BfM4f/dJdcLgbaToJOqEOiSmp6cC0FqBI0UrCOpQmyqSf2+7n27SpRo6+IBmrcnwW4O/7er2OxVZK9PdZOBcG3qjVqM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763206581; c=relaxed/simple;
-	bh=8CcSefcJ7/USdqH95R2OF8imCLNtg1E6NSwIBz3mQ+c=;
+	s=arc-20240116; t=1763207708; c=relaxed/simple;
+	bh=aBqfjB03ArE/5E9PTH0CuhNVX/n/7wlUMo2ZVHSb8fo=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=rIcYP7KJq2HBWSs30BZzFBSpEgw44qVJI1AvnKVqHng7qtsF6bOwoJZWIuW9OqDDuURZxCh5m1yV5cTT8XeBazTYy2Mt/pFnyh/II59qePNnlUyjsdE9IoT+rqaqR62XBIoz63HyHT2zTYKRKjc8KrrnWp7HVzcqLOA2Qkx8uJ4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=awKbxM2u; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6707C4CEF8;
-	Sat, 15 Nov 2025 11:36:19 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=f1etPzEsiw2ofbewJzQqgWvAlSy6Xg3Dt4WoQyMAS0NTb9EH0q5S9p8ykcGDnAZu2aYtOpL8p9VmQtFqMssAy3z96ug1z5uxfOhh7f+Z+4Ev6Xb5MvI6omD13u1TqHy0So4Z/RMZu39TnHp0SPEOEN44Yy83J1ah/AOc7HREuE4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=LBzfn1kW; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4AADAC116B1;
+	Sat, 15 Nov 2025 11:55:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1763206580;
-	bh=8CcSefcJ7/USdqH95R2OF8imCLNtg1E6NSwIBz3mQ+c=;
+	s=k20201202; t=1763207707;
+	bh=aBqfjB03ArE/5E9PTH0CuhNVX/n/7wlUMo2ZVHSb8fo=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=awKbxM2ukkwq+RWQp3uQ3uyUfoGEYP4KK7nWOi6IvaRY8Po6CNR+/7c5aJXM69b7E
-	 kUITrO0muJst2xm/9j3IDoHXRNd75Tr0+i74dqelW+U3/k9HVDIZM3eqgF0hiDlbSS
-	 pJFyCox60nlIAC/tZZm+v3uF/YKKJhQ7aow3ookIZ7EOmuBqyGeobLRtZZYLAO1qY8
-	 CZuMHgxlteQVPxw6gT71qAXhzY8nNZ+Z2REsdM7mq27nSyIDW/YegZRfBYyw/jP2UT
-	 +/cXVu3yWqzBkDyAE8/1FIVMn7b9T7q2tF/XPIHtCBJdW01qDBqH3F/TOloHNezKYj
-	 K837iELNiSjNA==
-Date: Sat, 15 Nov 2025 12:36:17 +0100
+	b=LBzfn1kWzEcYfzMxQfY8UjnQndctUHuljnI/8FyYc3PB4zX25LgEt1mykJqgW/7hk
+	 Fu1uzI/i6eHKysiUEFPhPUbtWMqLn7dpTdAkJ2IwT9N3j8NXl9b1Vp/8ns+iwWiQ5W
+	 7gRDSc2VJkyIx3FkFKswtB6uelUlUL0bGHMSFhdtHpte7KcFEdPhoBUzqiV6+6RdHa
+	 ALaA2dbLeNX/UaublFEJBtvJcqSuPRKGRJn3k6llBORxG+EF4XQPrYmMV67n6+KyNR
+	 DppeKLVM3GYeR1M/rpFf3Hd97YdlpJHc4dS4ftwvi8lJZGCO1pgVld2HDJRDdvSVJF
+	 zgoIfLxATqXUQ==
+Date: Sat, 15 Nov 2025 12:55:05 +0100
 From: Krzysztof Kozlowski <krzk@kernel.org>
-To: Riccardo Mereu <r.mereu.kernel@arduino.cc>
-Cc: andersson@kernel.org, konradybcio@kernel.org, robh@kernel.org, 
-	krzk+dt@kernel.org, conor+dt@kernel.org, broonie@kernel.org, linux@roeck-us.net, 
-	Jonathan.Cameron@huawei.com, wenswang@yeah.net, naresh.solanki@9elements.com, 
-	michal.simek@amd.com, nuno.sa@analog.com, chou.cosmo@gmail.com, 
-	grantpeltier93@gmail.com, eajames@linux.ibm.com, farouk.bouabid@cherry.de, 
-	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	linux-spi@vger.kernel.org, m.facchin@arduino.cc, Riccardo Mereu <r.mereu@arduino.cc>
-Subject: Re: [PATCH v2 1/6] dt-bindings: vendor-prefixes: Add Arduino name
-Message-ID: <20251115-spiked-hypersonic-chamois-e94fee@kuoka>
-References: <20251114121853.16472-1-r.mereu@arduino.cc>
- <20251114121853.16472-2-r.mereu@arduino.cc>
+To: Ram Kumar Dwivedi <ram.dwivedi@oss.qualcomm.com>
+Cc: mani@kernel.org, alim.akhtar@samsung.com, avri.altman@wdc.com, 
+	bvanassche@acm.org, robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org, 
+	James.Bottomley@hansenpartnership.com, martin.petersen@oracle.com, quic_ahari@quicinc.com, 
+	linux-arm-msm@vger.kernel.org, linux-scsi@vger.kernel.org, devicetree@vger.kernel.org, 
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH V1 2/3] dt-bindings: ufs: Document bindings for SA8255P
+ UFS Host Controller
+Message-ID: <20251115-polite-kakapo-of-satiation-0a0288@kuoka>
+References: <20251114145646.2291324-1-ram.dwivedi@oss.qualcomm.com>
+ <20251114145646.2291324-3-ram.dwivedi@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -63,14 +62,72 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20251114121853.16472-2-r.mereu@arduino.cc>
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <20251114145646.2291324-3-ram.dwivedi@oss.qualcomm.com>
 
-On Fri, Nov 14, 2025 at 01:18:48PM +0100, Riccardo Mereu wrote:
-> Add entry for Arduino Srl (https://arduino.cc)
-> 
-> Signed-off-by: Riccardo Mereu <r.mereu@arduino.cc>
+On Fri, Nov 14, 2025 at 08:26:45PM +0530, Ram Kumar Dwivedi wrote:
+> From: Ram Kumar Dwivedi <quic_rdwivedi@quicinc.com>
+>=20
+> Document the device tree bindings for UFS host controller on
+> Qualcomm SA8255P platform which integrates firmware-managed
+> resources.
+>=20
+> The platform firmware implements the SCMI server and manages
+> resources such as the PHY, clocks, regulators and resets via the
+> SCMI power protocol. As a result, the OS-visible DT only describes
+> the controller=E2=80=99s MMIO, interrupt, IOMMU and power-domain interfac=
+es.
+>=20
+> The generic "qcom,ufshc" and "jedec,ufs-2.0" compatible strings are
+> removed from the binding, since this firmware managed design won't
+> be compatible with the drivers doing full resource management.
+>=20
+> Co-developed-by: Anjana Hari <quic_ahari@quicinc.com>
+> Signed-off-by: Anjana Hari <quic_ahari@quicinc.com>
+> Signed-off-by: Ram Kumar Dwivedi <quic_rdwivedi@quicinc.com>
+> ---
+>  .../bindings/ufs/qcom,sa8255p-ufshc.yaml      | 63 +++++++++++++++++++
+>  1 file changed, 63 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/ufs/qcom,sa8255p-uf=
+shc.yaml
+>=20
+> diff --git a/Documentation/devicetree/bindings/ufs/qcom,sa8255p-ufshc.yam=
+l b/Documentation/devicetree/bindings/ufs/qcom,sa8255p-ufshc.yaml
+> new file mode 100644
+> index 000000000000..3b31f6282feb
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/ufs/qcom,sa8255p-ufshc.yaml
+> @@ -0,0 +1,63 @@
+> +# SPDX-License-Identifier: GPL-2.0-only OR BSD-2-Clause
+> +%YAML 1.2
+> +---
+> +$id: http://devicetree.org/schemas/ufs/qcom,sa8255p-ufshc.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> +
+> +title: Qualcomm SA8255P UFS Host Controller
+> +
+> +maintainers:
+> +  - Ram Kumar Dwivedi <ram.dwivedi@oss.qualcomm.com>
+> +  - Anjana Hari <quic_ahari@quicinc.com>
+> +
+> +properties:
+> +  compatible:
+> +    const: qcom,sa8255p-ufshc
+> +
+> +  reg:
+> +    maxItems: 1
+> +
+> +  interrupts:
+> +    maxItems: 1
+> +
+> +  iommus:
+> +    maxItems: 1
+> +
+> +  dma-coherent:
 
-You have checkpatch warnings.
+Just :true.
+
+> +    type: boolean
 
 Best regards,
 Krzysztof
