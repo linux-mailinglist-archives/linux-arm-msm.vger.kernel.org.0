@@ -1,62 +1,60 @@
-Return-Path: <linux-arm-msm+bounces-81935-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-81936-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [IPv6:2605:f480:58:1:0:1994:3:14])
-	by mail.lfdr.de (Postfix) with ESMTPS id C02F4C603D9
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 15 Nov 2025 12:25:55 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id 101DAC6040A
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 15 Nov 2025 12:36:26 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 8D4854E24FE
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 15 Nov 2025 11:25:54 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTPS id 9AF9024167
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 15 Nov 2025 11:36:23 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 03742288514;
-	Sat, 15 Nov 2025 11:25:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1F49027E1A1;
+	Sat, 15 Nov 2025 11:36:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="jzMjwTPE"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="awKbxM2u"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C16CC2222C4;
-	Sat, 15 Nov 2025 11:25:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDCA8E571;
+	Sat, 15 Nov 2025 11:36:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763205950; cv=none; b=GbMjT0V2Ej0NabHa5n9s3oKuwmVKge09fkHTYONdbHOPzOsZx2ELG1J7VN85pDn3Ul17Bsv3LqGuMsJ5Q8KkqEF86f/JV2YQZ/KnphmtE33/wMfxsJpKEQLOyJbCj1IbW6k2O45qWlgrNFeFfA4SF4YUFvPm6++gD3lfYaLSWQI=
+	t=1763206581; cv=none; b=bsLQPi0Sm8Idn8mIxZCXHeIDIcAZALijgBdebEwsI9b1Jm3QDxNujZ6rXxFat18LMLQ5GmtDcX3BJ6GToHz0oKeGaDLKa7ZGuKrn98LCNZhHCsAMmDd5ANqEJ/Jgp+paLrwwa/SM8RPATAoZkVUpTh1jKFlwkikw3A9IyX8yTc4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763205950; c=relaxed/simple;
-	bh=ihnAcrwzmNvgHB9t80E3vh83Va4si89oujP9YCym2h8=;
+	s=arc-20240116; t=1763206581; c=relaxed/simple;
+	bh=8CcSefcJ7/USdqH95R2OF8imCLNtg1E6NSwIBz3mQ+c=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=DRQZpnAmpsnqnxs1giSkcX1z89h5RtArMryQsWWtomZCVfDv4kRP++QfDCKvAb+eZhzx+nfwev54kA9LI7hqdq8Hu8lMq5fzs0cy24ifFM+ocJ+K6y23+4O6w4q+FkzHky+8rZ6hjxmfFs+dyUB+fDDXmQSqBR2l/UmS3EUjeqM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=jzMjwTPE; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5829C4CEF5;
-	Sat, 15 Nov 2025 11:25:49 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=rIcYP7KJq2HBWSs30BZzFBSpEgw44qVJI1AvnKVqHng7qtsF6bOwoJZWIuW9OqDDuURZxCh5m1yV5cTT8XeBazTYy2Mt/pFnyh/II59qePNnlUyjsdE9IoT+rqaqR62XBIoz63HyHT2zTYKRKjc8KrrnWp7HVzcqLOA2Qkx8uJ4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=awKbxM2u; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6707C4CEF8;
+	Sat, 15 Nov 2025 11:36:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1763205950;
-	bh=ihnAcrwzmNvgHB9t80E3vh83Va4si89oujP9YCym2h8=;
+	s=k20201202; t=1763206580;
+	bh=8CcSefcJ7/USdqH95R2OF8imCLNtg1E6NSwIBz3mQ+c=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=jzMjwTPEpRbot8bpnCZe84zsYrveejOWKshH765b5fhn7ws+wT9keiBLsBaVWmU68
-	 MnnjHSoWXtGYtUX9KdV9t+Fmr035XnYuDBNiP1M4X5p+W+JYj/XEGqiMoqDsfHdrrB
-	 fdPRlO8JPG4UkS87xxC4gvOJGACEk61MhWtdgREDsOgbOZRrpeKnx6MSRxGBMp0Xwa
-	 vnhq+AXrZq4pjNHp0rcy6I9KUhVYeG06y56HLEoCurT4K4MfP7WoXinQK9WzyXSyt6
-	 llQptJNNH+LGubtBPmgUXMmbaWS09hbu6Ly5FyYHEl6DAbqqYrprbIEcqz+IC4rIOW
-	 +3V8nLhkMXnoA==
-Date: Sat, 15 Nov 2025 12:25:47 +0100
+	b=awKbxM2ukkwq+RWQp3uQ3uyUfoGEYP4KK7nWOi6IvaRY8Po6CNR+/7c5aJXM69b7E
+	 kUITrO0muJst2xm/9j3IDoHXRNd75Tr0+i74dqelW+U3/k9HVDIZM3eqgF0hiDlbSS
+	 pJFyCox60nlIAC/tZZm+v3uF/YKKJhQ7aow3ookIZ7EOmuBqyGeobLRtZZYLAO1qY8
+	 CZuMHgxlteQVPxw6gT71qAXhzY8nNZ+Z2REsdM7mq27nSyIDW/YegZRfBYyw/jP2UT
+	 +/cXVu3yWqzBkDyAE8/1FIVMn7b9T7q2tF/XPIHtCBJdW01qDBqH3F/TOloHNezKYj
+	 K837iELNiSjNA==
+Date: Sat, 15 Nov 2025 12:36:17 +0100
 From: Krzysztof Kozlowski <krzk@kernel.org>
-To: Hangxiang Ma <hangxiang.ma@oss.qualcomm.com>
-Cc: Loic Poulain <loic.poulain@oss.qualcomm.com>, 
-	Robert Foss <rfoss@kernel.org>, Andi Shyti <andi.shyti@kernel.org>, 
-	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
-	Conor Dooley <conor+dt@kernel.org>, Todor Tomov <todor.too@gmail.com>, 
-	Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>, Mauro Carvalho Chehab <mchehab@kernel.org>, 
-	Bryan O'Donoghue <bryan.odonoghue@linaro.org>, linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, linux-media@vger.kernel.org, aiqun.yu@oss.qualcomm.com, 
-	tingwei.zhang@oss.qualcomm.com, trilok.soni@oss.qualcomm.com, yijie.yang@oss.qualcomm.com, 
-	Jingyi Wang <jingyi.wang@oss.qualcomm.com>, Atiya Kailany <atiya.kailany@oss.qualcomm.com>
-Subject: Re: [PATCH v6 1/5] media: dt-bindings: Add CAMSS device for Kaanapali
-Message-ID: <20251115-masterful-foamy-malkoha-ffc0e4@kuoka>
-References: <20251113-add-support-for-camss-on-kaanapali-v6-0-1e6038785a8e@oss.qualcomm.com>
- <20251113-add-support-for-camss-on-kaanapali-v6-1-1e6038785a8e@oss.qualcomm.com>
+To: Riccardo Mereu <r.mereu.kernel@arduino.cc>
+Cc: andersson@kernel.org, konradybcio@kernel.org, robh@kernel.org, 
+	krzk+dt@kernel.org, conor+dt@kernel.org, broonie@kernel.org, linux@roeck-us.net, 
+	Jonathan.Cameron@huawei.com, wenswang@yeah.net, naresh.solanki@9elements.com, 
+	michal.simek@amd.com, nuno.sa@analog.com, chou.cosmo@gmail.com, 
+	grantpeltier93@gmail.com, eajames@linux.ibm.com, farouk.bouabid@cherry.de, 
+	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	linux-spi@vger.kernel.org, m.facchin@arduino.cc, Riccardo Mereu <r.mereu@arduino.cc>
+Subject: Re: [PATCH v2 1/6] dt-bindings: vendor-prefixes: Add Arduino name
+Message-ID: <20251115-spiked-hypersonic-chamois-e94fee@kuoka>
+References: <20251114121853.16472-1-r.mereu@arduino.cc>
+ <20251114121853.16472-2-r.mereu@arduino.cc>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -65,25 +63,14 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20251113-add-support-for-camss-on-kaanapali-v6-1-1e6038785a8e@oss.qualcomm.com>
+In-Reply-To: <20251114121853.16472-2-r.mereu@arduino.cc>
 
-On Thu, Nov 13, 2025 at 07:29:18PM -0800, Hangxiang Ma wrote:
-> Add the compatible string "qcom,kaanapali-camss" to support the Camera
-> Subsystem (CAMSS) on the Qualcomm Kaanapali platform.
+On Fri, Nov 14, 2025 at 01:18:48PM +0100, Riccardo Mereu wrote:
+> Add entry for Arduino Srl (https://arduino.cc)
 > 
-> The Kaanapali platform provides:
-> - 3 x VFE, 5 RDI per VFE
-> - 2 x VFE Lite, 4 RDI per VFE Lite
-> - 3 x CSID
-> - 2 x CSID Lite
-> - 6 x CSIPHY
-> 
-> Signed-off-by: Hangxiang Ma <hangxiang.ma@oss.qualcomm.com>
-> ---
->  .../bindings/media/qcom,kaanapali-camss.yaml       | 639 +++++++++++++++++++++
->  1 file changed, 639 insertions(+)
+> Signed-off-by: Riccardo Mereu <r.mereu@arduino.cc>
 
-Reviewed-by: Krzysztof Kozlowski <krzk@kernel.org>
+You have checkpatch warnings.
 
 Best regards,
 Krzysztof
