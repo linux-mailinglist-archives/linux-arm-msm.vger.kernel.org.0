@@ -1,54 +1,54 @@
-Return-Path: <linux-arm-msm+bounces-81943-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-81946-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 834FDC6059A
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 15 Nov 2025 14:21:05 +0100 (CET)
+Received: from ams.mirrors.kernel.org (ams.mirrors.kernel.org [IPv6:2a01:60a::1994:3:14])
+	by mail.lfdr.de (Postfix) with ESMTPS id 96E03C605CD
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 15 Nov 2025 14:23:12 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 3AC3F3AE410
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 15 Nov 2025 13:21:04 +0000 (UTC)
+	by ams.mirrors.kernel.org (Postfix) with ESMTPS id 9BA52347F66
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 15 Nov 2025 13:22:19 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A690A2BDC19;
-	Sat, 15 Nov 2025 13:20:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 630452C08AB;
+	Sat, 15 Nov 2025 13:20:57 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from pegase2.c-s.fr (pegase2.c-s.fr [93.17.235.10])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8AF451DC1AB;
-	Sat, 15 Nov 2025 13:20:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 027532C0296;
+	Sat, 15 Nov 2025 13:20:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=93.17.235.10
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763212842; cv=none; b=nnSzSazOQy2TR+kRJD7eozZkkjjF+RymA0GJHH85wOdbmx/UaVGLd1tUAYRZXL88Q6a1RdJamaXM8Tc61Abvye2ygpu/VUsbWtIwRxCaxl+BKCzNDOsBFIr7+HFBAg3o3N5tmzhKqUZ8zK20GWbcakaVVjTNq/MWZT7gn75ezy8=
+	t=1763212857; cv=none; b=D2Eb/kkeBIo+Q7wcUYdGOCl9/vPwC1V4XePJbslbn00ebIUHnOozWO63RJUhe7Ad0kQ5P0/pcCaKJS6ngdeUSztoZV1D7/xuyyipOogGpeTK+RQvuMiBi3iqOudQKawdyG9lI/Xc4gu7tm+8yTuohiWjkQEMDEOMYqOB7AnbB4c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763212842; c=relaxed/simple;
-	bh=+jLfIsFreEacPTXqdxgthqnVeMFoq4cXA/3sdf1BocQ=;
+	s=arc-20240116; t=1763212857; c=relaxed/simple;
+	bh=NZOU2pdchDrd59AXbQMYen063c1FMdYvNq7KuWjU+/Q=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=tCD7/3IxfDa6UJ/mfrMhkCfGiKKnFX+3x/ToLvnfzuKHUpaIQblmot5HNb/HAQKCZaUFg43xpTlJayqmguDOHWZJ87jx0dmQ6dhqKrAkJiqw66WqkBqsn9BHH5Ckmz3iji3BuC5BrReB5RSxmCQarkaRcR4myXUFDmT85e5VSUU=
+	 In-Reply-To:Content-Type; b=HPY1Cx/DOCymhDcWNvhEEcUDXd16evIHVCbmOddlUI2z+a1GEZzZ+OuEF6yZYCGlIXrbeE7dpFJulKc3+OlbUZo+M0bs4MVS8ixaSfTsCcEkUuRMy1+jfbLMEajwxP25eb5GGcWHY1xJheVdVVsohmB7RkFAOtvQ5eUhEub4YEo=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=csgroup.eu; spf=pass smtp.mailfrom=csgroup.eu; arc=none smtp.client-ip=93.17.235.10
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=csgroup.eu
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=csgroup.eu
 Received: from localhost (mailhub4.si.c-s.fr [172.26.127.67])
-	by localhost (Postfix) with ESMTP id 4d7v8R5jXWz9sTQ;
-	Sat, 15 Nov 2025 13:53:59 +0100 (CET)
+	by localhost (Postfix) with ESMTP id 4d7v9f6SNyz9sTW;
+	Sat, 15 Nov 2025 13:55:02 +0100 (CET)
 X-Virus-Scanned: amavisd-new at c-s.fr
 Received: from pegase2.c-s.fr ([172.26.127.65])
 	by localhost (pegase2.c-s.fr [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id tZEQQDyXYcmK; Sat, 15 Nov 2025 13:53:59 +0100 (CET)
+	with ESMTP id Trl3BISnWbBX; Sat, 15 Nov 2025 13:55:02 +0100 (CET)
 Received: from messagerie.si.c-s.fr (messagerie.si.c-s.fr [192.168.25.192])
-	by pegase2.c-s.fr (Postfix) with ESMTP id 4d7v8R4hHjz9sTM;
-	Sat, 15 Nov 2025 13:53:59 +0100 (CET)
+	by pegase2.c-s.fr (Postfix) with ESMTP id 4d7v9f5Lv9z9sTS;
+	Sat, 15 Nov 2025 13:55:02 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by messagerie.si.c-s.fr (Postfix) with ESMTP id 89F228B770;
-	Sat, 15 Nov 2025 13:53:59 +0100 (CET)
+	by messagerie.si.c-s.fr (Postfix) with ESMTP id A12408B770;
+	Sat, 15 Nov 2025 13:55:02 +0100 (CET)
 X-Virus-Scanned: amavisd-new at c-s.fr
 Received: from messagerie.si.c-s.fr ([127.0.0.1])
 	by localhost (messagerie.si.c-s.fr [127.0.0.1]) (amavisd-new, port 10023)
-	with ESMTP id 9vCcXMXMl0bv; Sat, 15 Nov 2025 13:53:59 +0100 (CET)
+	with ESMTP id pGy1IFFuN1zE; Sat, 15 Nov 2025 13:55:02 +0100 (CET)
 Received: from [192.168.235.99] (unknown [192.168.235.99])
-	by messagerie.si.c-s.fr (Postfix) with ESMTP id 2AE538B76E;
-	Sat, 15 Nov 2025 13:53:58 +0100 (CET)
-Message-ID: <9422f22e-ba04-4479-a8fc-a136b9642165@csgroup.eu>
-Date: Sat, 15 Nov 2025 13:53:57 +0100
+	by messagerie.si.c-s.fr (Postfix) with ESMTP id 38C568B76E;
+	Sat, 15 Nov 2025 13:55:01 +0100 (CET)
+Message-ID: <b5c3a2d0-da1a-4333-a749-64a79acb5b44@csgroup.eu>
+Date: Sat, 15 Nov 2025 13:55:00 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -56,8 +56,8 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH net-next v16 10/15] net: phy: marvell10g: Support SFP
- through phy_port
+Subject: Re: [PATCH net-next v16 00/15] net: phy: Introduce PHY ports
+ representation
 To: Maxime Chevallier <maxime.chevallier@bootlin.com>, davem@davemloft.net
 Cc: netdev@vger.kernel.org, linux-kernel@vger.kernel.org,
  linux-arm-msm@vger.kernel.org, thomas.petazzoni@bootlin.com,
@@ -80,219 +80,247 @@ Cc: netdev@vger.kernel.org, linux-kernel@vger.kernel.org,
  Daniel Golle <daniel@makrotopia.org>,
  Dimitri Fedrau <dimitri.fedrau@liebherr.com>
 References: <20251113081418.180557-1-maxime.chevallier@bootlin.com>
- <20251113081418.180557-11-maxime.chevallier@bootlin.com>
 From: Christophe Leroy <christophe.leroy@csgroup.eu>
 Content-Language: fr-FR
-In-Reply-To: <20251113081418.180557-11-maxime.chevallier@bootlin.com>
+In-Reply-To: <20251113081418.180557-1-maxime.chevallier@bootlin.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 
 
 
 Le 13/11/2025 à 09:14, Maxime Chevallier a écrit :
-> Convert the Marvell10G driver to use the generic SFP handling, through a
-> dedicated .attach_port() handler to populate the port's supported
-> interfaces.
+> Hi everyone,
 > 
-> As the 88x3310 supports multiple MDI, the .attach_port() logic handles
-> both SFP attach with 10GBaseR support, and support for the "regular"
-> port that usually is a BaseT port.
+> This is v16 of the phy_port work. Changes are typos, a more relaxed
+> check when parsing DT pairs, and binding updates. Thanks a lot to Andrew
+> and Rob for the reviews on the last round.
 > 
-> Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-> Signed-off-by: Maxime Chevallier <maxime.chevallier@bootlin.com>
+> This series conflicts with Romain's series on fiber support for dp83869:
+> https://eur01.safelinks.protection.outlook.com/?url=https%3A%2F%2Flore.kernel.org%2Fall%2F20251110-sfp-1000basex-v2-0-dd5e8c1f5652%40bootlin.com%2F&data=05%7C02%7Cchristophe.leroy%40csgroup.eu%7Cc3434ae46bd540e2e87708de228ca8e0%7C8b87af7d86474dc78df45f69a2011bb5%7C0%7C0%7C638986184692158446%7CUnknown%7CTWFpbGZsb3d8eyJFbXB0eU1hcGkiOnRydWUsIlYiOiIwLjAuMDAwMCIsIlAiOiJXaW4zMiIsIkFOIjoiTWFpbCIsIldUIjoyfQ%3D%3D%7C0%7C%7C%7C&sdata=fbKgJgNn%2FaI%2BH3p9hjlVl7sQnVRtVtoFA3DEzKborUU%3D&reserved=0
+> 
+> As a remainder, a few important notes :
+> 
+>   - This is only a first phase. It instantiates the port, and leverage
+>     that to make the MAC <-> PHY <-> SFP usecase simpler.
+> 
+>   - Next phase will deal with controlling the port state, as well as the
+>     netlink uAPI for that.
+> 
+>   - The end-goal is to enable support for complex port MUX. This
+>     preliminary work focuses on PHY-driven ports, but this will be
+>     extended to support muxing at the MII level (Multi-phy, or compo PHY
+>     + SFP as found on Turris Omnia for example).
+> 
+>   - The naming is definitely not set in stone. I named that "phy_port",
+>     but this may convey the false sense that this is phylib-specific.
+>     Even the word "port" is not that great, as it already has several
+>     different meanings in the net world (switch port, devlink port,
+>     etc.). I used the term "connector" in the binding.
+> 
+> A bit of history on that work :
+> 
+> The end goal that I personnaly want to achieve is :
+> 
+>              + PHY - RJ45
+>              |
+>   MAC - MUX -+ PHY - RJ45
+> 
+> After many discussions here on netdev@, but also at netdevconf[1] and
+> LPC[2], there appears to be several analoguous designs that exist out
+> there.
+> 
+> [1] : https://eur01.safelinks.protection.outlook.com/?url=https%3A%2F%2Fnetdevconf.info%2F0x17%2Fsessions%2Ftalk%2Fimproving-multi-phy-and-multi-port-interfaces.html&data=05%7C02%7Cchristophe.leroy%40csgroup.eu%7Cc3434ae46bd540e2e87708de228ca8e0%7C8b87af7d86474dc78df45f69a2011bb5%7C0%7C0%7C638986184692180471%7CUnknown%7CTWFpbGZsb3d8eyJFbXB0eU1hcGkiOnRydWUsIlYiOiIwLjAuMDAwMCIsIlAiOiJXaW4zMiIsIkFOIjoiTWFpbCIsIldUIjoyfQ%3D%3D%7C0%7C%7C%7C&sdata=HJZwQP6qPup6YH1XU4WOmMY%2BLekJdvClUFIoT4ieC8s%3D&reserved=0
+> [2] : https://eur01.safelinks.protection.outlook.com/?url=https%3A%2F%2Flpc.events%2Fevent%2F18%2Fcontributions%2F1964%2F&data=05%7C02%7Cchristophe.leroy%40csgroup.eu%7Cc3434ae46bd540e2e87708de228ca8e0%7C8b87af7d86474dc78df45f69a2011bb5%7C0%7C0%7C638986184692199016%7CUnknown%7CTWFpbGZsb3d8eyJFbXB0eU1hcGkiOnRydWUsIlYiOiIwLjAuMDAwMCIsIlAiOiJXaW4zMiIsIkFOIjoiTWFpbCIsIldUIjoyfQ%3D%3D%7C0%7C%7C%7C&sdata=GfYNvE46zApzJzglRQ5xmrpVnbnFF2Q7ZkvDY84evos%3D&reserved=0 (video isn't the
+> right one)
+> 
+> Take the MAchiatobin, it has 2 interfaces that looks like this :
+> 
+>   MAC - PHY -+ RJ45
+>              |
+> 	    + SFP - Whatever the module does
+> 
+> Now, looking at the Turris Omnia, we have :
+> 
+> 
+>   MAC - MUX -+ PHY - RJ45
+>              |
+> 	    + SFP - Whatever the module does
+> 
+> We can find more example of this kind of designs, the common part is
+> that we expose multiple front-facing media ports. This is what this
+> current work aims at supporting. As of right now, it does'nt add any
+> support for muxing, but this will come later on.
+> 
+> This first phase focuses on phy-driven ports only, but there are already
+> quite some challenges already. For one, we can't really autodetect how
+> many ports are sitting behind a PHY. That's why this series introduces a
+> new binding. Describing ports in DT should however be a last-resort
+> thing when we need to clear some ambiguity about the PHY media-side.
+> 
+> The only use-cases that we have today for multi-port PHYs are combo PHYs
+> that drive both a Copper port and an SFP (the Macchiatobin case). This
+> in itself is challenging and this series only addresses part of this
+> support, by registering a phy_port for the PHY <-> SFP connection. The
+> SFP module should in the end be considered as a port as well, but that's
+> not yet the case.
+> 
+> However, because now PHYs can register phy_ports for every media-side
+> interface they have, they can register the capabilities of their ports,
+> which allows making the PHY-driver SFP case much more generic.
+> 
+> Let me know what you think, I'm all in for discussions :)
+> 
+> Regards,
 
-Reviewed-by: Christophe Leroy <christophe.leroy@csgroup.eu>
+For the series:
 
-> ---
->   drivers/net/phy/marvell10g.c | 52 ++++++++++++++++++++++--------------
->   drivers/net/phy/phy_port.c   | 44 ++++++++++++++++++++++++++++++
->   include/linux/phy_port.h     |  1 +
->   3 files changed, 77 insertions(+), 20 deletions(-)
+Tested-by: Christophe Leroy <christophe.leroy@csgroup.eu>
+
+
 > 
-> diff --git a/drivers/net/phy/marvell10g.c b/drivers/net/phy/marvell10g.c
-> index 8fd42131cdbf..d4cace758fe8 100644
-> --- a/drivers/net/phy/marvell10g.c
-> +++ b/drivers/net/phy/marvell10g.c
-> @@ -28,7 +28,7 @@
->   #include <linux/hwmon.h>
->   #include <linux/marvell_phy.h>
->   #include <linux/phy.h>
-> -#include <linux/sfp.h>
-> +#include <linux/phy_port.h>
->   #include <linux/netdevice.h>
->   
->   #define MV_PHY_ALASKA_NBT_QUIRK_MASK	0xfffffffe
-> @@ -463,35 +463,35 @@ static int mv3310_set_edpd(struct phy_device *phydev, u16 edpd)
->   	return err;
->   }
->   
-> -static int mv3310_sfp_insert(void *upstream, const struct sfp_eeprom_id *id)
-> +static int mv3310_attach_mii_port(struct phy_device *phydev,
-> +				  struct phy_port *port)
->   {
-> -	struct phy_device *phydev = upstream;
-> -	const struct sfp_module_caps *caps;
-> -	phy_interface_t iface;
-> +	__set_bit(PHY_INTERFACE_MODE_10GBASER, port->interfaces);
-> +	return 0;
-> +}
->   
-> -	caps = sfp_get_module_caps(phydev->sfp_bus);
-> -	iface = sfp_select_interface(phydev->sfp_bus, caps->link_modes);
-> +static int mv3310_attach_mdi_port(struct phy_device *phydev,
-> +				  struct phy_port *port)
-> +{
-> +	/* This PHY can do combo-ports, i.e. 2 MDI outputs, usually one
-> +	 * of them going to an SFP and the other one to a RJ45
-> +	 * connector. If we don't have any representation for the port
-> +	 * in DT, and we are dealing with a non-SFP port, then we
-> +	 * mask the port's capabilities to report BaseT-only modes
-> +	 */
-> +	if (port->not_described)
-> +		return phy_port_restrict_mediums(port,
-> +						 BIT(ETHTOOL_LINK_MEDIUM_BASET));
->   
-> -	if (iface != PHY_INTERFACE_MODE_10GBASER) {
-> -		dev_err(&phydev->mdio.dev, "incompatible SFP module inserted\n");
-> -		return -EINVAL;
-> -	}
->   	return 0;
->   }
->   
-> -static const struct sfp_upstream_ops mv3310_sfp_ops = {
-> -	.attach = phy_sfp_attach,
-> -	.detach = phy_sfp_detach,
-> -	.connect_phy = phy_sfp_connect_phy,
-> -	.disconnect_phy = phy_sfp_disconnect_phy,
-> -	.module_insert = mv3310_sfp_insert,
-> -};
-> -
->   static int mv3310_probe(struct phy_device *phydev)
->   {
->   	const struct mv3310_chip *chip = to_mv3310_chip(phydev);
->   	struct mv3310_priv *priv;
->   	u32 mmd_mask = MDIO_DEVS_PMAPMD | MDIO_DEVS_AN;
-> +	DECLARE_PHY_INTERFACE_MASK(interfaces);
->   	int ret;
->   
->   	if (!phydev->is_c45 ||
-> @@ -542,9 +542,13 @@ static int mv3310_probe(struct phy_device *phydev)
->   	if (ret)
->   		return ret;
->   
-> +	__set_bit(PHY_INTERFACE_MODE_10GBASER, interfaces);
-> +
->   	chip->init_supported_interfaces(priv->supported_interfaces);
->   
-> -	return phy_sfp_probe(phydev, &mv3310_sfp_ops);
-> +	phydev->max_n_ports = 2;
-> +
-> +	return 0;
->   }
->   
->   static void mv3310_remove(struct phy_device *phydev)
-> @@ -1405,6 +1409,8 @@ static struct phy_driver mv3310_drivers[] = {
->   		.set_loopback	= genphy_c45_loopback,
->   		.get_wol	= mv3110_get_wol,
->   		.set_wol	= mv3110_set_wol,
-> +		.attach_mii_port = mv3310_attach_mii_port,
-> +		.attach_mdi_port = mv3310_attach_mdi_port,
->   	},
->   	{
->   		.phy_id		= MARVELL_PHY_ID_88X3310,
-> @@ -1424,6 +1430,8 @@ static struct phy_driver mv3310_drivers[] = {
->   		.set_tunable	= mv3310_set_tunable,
->   		.remove		= mv3310_remove,
->   		.set_loopback	= genphy_c45_loopback,
-> +		.attach_mii_port = mv3310_attach_mii_port,
-> +		.attach_mdi_port = mv3310_attach_mdi_port,
->   	},
->   	{
->   		.phy_id		= MARVELL_PHY_ID_88E2110,
-> @@ -1444,6 +1452,8 @@ static struct phy_driver mv3310_drivers[] = {
->   		.set_loopback	= genphy_c45_loopback,
->   		.get_wol	= mv3110_get_wol,
->   		.set_wol	= mv3110_set_wol,
-> +		.attach_mii_port = mv3310_attach_mii_port,
-> +		.attach_mdi_port = mv3310_attach_mdi_port,
->   	},
->   	{
->   		.phy_id		= MARVELL_PHY_ID_88E2110,
-> @@ -1462,6 +1472,8 @@ static struct phy_driver mv3310_drivers[] = {
->   		.set_tunable	= mv3310_set_tunable,
->   		.remove		= mv3310_remove,
->   		.set_loopback	= genphy_c45_loopback,
-> +		.attach_mii_port = mv3310_attach_mii_port,
-> +		.attach_mdi_port = mv3310_attach_mdi_port,
->   	},
->   };
->   
-> diff --git a/drivers/net/phy/phy_port.c b/drivers/net/phy/phy_port.c
-> index f89f70f83593..d9099196f870 100644
-> --- a/drivers/net/phy/phy_port.c
-> +++ b/drivers/net/phy/phy_port.c
-> @@ -149,6 +149,50 @@ void phy_port_update_supported(struct phy_port *port)
->   }
->   EXPORT_SYMBOL_GPL(phy_port_update_supported);
->   
-> +/**
-> + * phy_port_filter_supported() - Make sure that port->supported match port->mediums
-> + * @port: The port to filter
-> + *
-> + * After updating a port's mediums to a more restricted subset, this helper will
-> + * make sure that port->supported only contains linkmodes that are compatible
-> + * with port->mediums.
-> + */
-> +static void phy_port_filter_supported(struct phy_port *port)
-> +{
-> +	__ETHTOOL_DECLARE_LINK_MODE_MASK(supported) = { 0 };
-> +	int i;
-> +
-> +	for_each_set_bit(i, &port->mediums, __ETHTOOL_LINK_MEDIUM_LAST)
-> +		phy_caps_medium_get_supported(supported, i, port->pairs);
-> +
-> +	linkmode_and(port->supported, port->supported, supported);
-> +}
-> +
-> +/**
-> + * phy_port_restrict_mediums - Mask away some of the port's supported mediums
-> + * @port: The port to act upon
-> + * @mediums: A mask of mediums to support on the port
-> + *
-> + * This helper allows removing some mediums from a port's list of supported
-> + * mediums, which occurs once we have enough information about the port to
-> + * know its nature.
-> + *
-> + * Returns: 0 if the change was donne correctly, a negative value otherwise.
-> + */
-> +int phy_port_restrict_mediums(struct phy_port *port, unsigned long mediums)
-> +{
-> +	/* We forbid ending-up with a port with empty mediums */
-> +	if (!(port->mediums & mediums))
-> +		return -EINVAL;
-> +
-> +	port->mediums &= mediums;
-> +
-> +	phy_port_filter_supported(port);
-> +
-> +	return 0;
-> +}
-> +EXPORT_SYMBOL_GPL(phy_port_restrict_mediums);
-> +
->   /**
->    * phy_port_get_type() - get the PORT_* attribute for that port.
->    * @port: The port we want the information from
-> diff --git a/include/linux/phy_port.h b/include/linux/phy_port.h
-> index 550c3f4ab19f..0ef0f5ce4709 100644
-> --- a/include/linux/phy_port.h
-> +++ b/include/linux/phy_port.h
-> @@ -92,6 +92,7 @@ static inline bool phy_port_is_fiber(struct phy_port *port)
->   }
->   
->   void phy_port_update_supported(struct phy_port *port);
-> +int phy_port_restrict_mediums(struct phy_port *port, unsigned long mediums);
->   
->   int phy_port_get_type(struct phy_port *port);
->   
+> Changes in v16:
+>   - From Andrew, relaxed the check on the number of pairs so that we only
+>     fail when baseT is missing pairs
+>   - Add a check for either 1, 2 or 4 pairs
+>   - Lots of typos (mostly lanes -> pairs)
+>   - Added Andrew's review tags (thanks again)
+>   - From Rob, added an "else" statement in the ethernet-connector binding
+>   - Changed the node name for ethernet connectors to be decimal
+> 
+> Changes in V15:
+>   - Update bindings, docs and code to use pairs instead of lanes
+>   - Make pairs only relevant for BaseT
+> 
+> Changes in V14:
+>   - Fixed kdoc
+>   - Use the sfp module_caps feature.
+> 
+> Changes in V13:
+>   - Added phy_caps support for interface selection
+>   - Aggregated tested-by tags
+> 
+> Changes in V12:
+>   - Moved some of phylink's internal helpers to phy_caps for reuse in
+>     phylib
+>   - Fixed SFP interface selection
+>   - Added Rob's review and changes in patch 6
+> 
+> Changes in V11:
+>   - The ti,fiber-mode property was deprecated in favor of the
+>     ethernet-connector binding
+>   - The .attach_port was split into an MDI and an MII version
+>   - I added the warning back in the AR8031 PHY driver
+>   - There is now an init-time check on the number of lanes associated to
+>     every linkmode, making sure the number of lanes is above or equal to
+>     the minimum required
+>   - Various typos were fixed all around
+>   - We no longer use sfp_select_interface() for SFP interface validation
+> 
+> Changes in V10:
+>   - Rebase on net-next
+>   - Fix a typo reported by Köry
+>   - Aggregate all reviews
+>   - Fix the conflict on the qcom driver
+> 
+> Changes in V9:
+>   - Removed maxItems and items from the connector binding
+>   - Fixed a typo in the binding
+> 
+> Changes in V8:
+>   - Added maxItems on the connector media binding
+>   - Made sure we parse a single medium
+>   - Added a missing bitwise macro
+> 
+> Changes in V7:
+>   - Move ethtool_medium_get_supported to phy_caps
+>   - support combo-ports, each with a given set of supported modes
+>   - Introduce the notion of 'not-described' ports
+> 
+> Changes in V6:
+> 
+>   - Fixed kdoc on patch 3
+>   - Addressed a missing port-ops registration for the Marvell 88x2222
+>     driver
+>   - Addressed a warning reported by Simon on the DP83822 when building
+>     without CONFIG_OF_MDIO
+> 
+> Changes in V5 :
+> 
+>   - renamed the bindings to use the term "connector" instead of "port"
+>   - Rebased, and fixed some issues reported on the 83822 driver
+>   - Use phy_caps
+> 
+> Changes in V4 :
+> 
+>   - Introduced a kernel doc
+>   - Reworked the mediums definitions in patch 2
+>   - QCA807x now uses the generic SFP support
+>   - Fixed some implementation bugs to build the support list based on the
+>     interfaces supported on a port
+> 
+> V15: https://eur01.safelinks.protection.outlook.com/?url=https%3A%2F%2Flore.kernel.org%2Fall%2F20251106094742.2104099-1-maxime.chevallier%40bootlin.com%2F&data=05%7C02%7Cchristophe.leroy%40csgroup.eu%7Cc3434ae46bd540e2e87708de228ca8e0%7C8b87af7d86474dc78df45f69a2011bb5%7C0%7C0%7C638986184692220733%7CUnknown%7CTWFpbGZsb3d8eyJFbXB0eU1hcGkiOnRydWUsIlYiOiIwLjAuMDAwMCIsIlAiOiJXaW4zMiIsIkFOIjoiTWFpbCIsIldUIjoyfQ%3D%3D%7C0%7C%7C%7C&sdata=SBossM1KcxSldiNhV71oehI66tKkBsYryLXLVuu9JWs%3D&reserved=0
+> V14: https://eur01.safelinks.protection.outlook.com/?url=https%3A%2F%2Flore.kernel.org%2Fnetdev%2F20251013143146.364919-1-maxime.chevallier%40bootlin.com%2F&data=05%7C02%7Cchristophe.leroy%40csgroup.eu%7Cc3434ae46bd540e2e87708de228ca8e0%7C8b87af7d86474dc78df45f69a2011bb5%7C0%7C0%7C638986184692237443%7CUnknown%7CTWFpbGZsb3d8eyJFbXB0eU1hcGkiOnRydWUsIlYiOiIwLjAuMDAwMCIsIlAiOiJXaW4zMiIsIkFOIjoiTWFpbCIsIldUIjoyfQ%3D%3D%7C0%7C%7C%7C&sdata=QvbbA%2BUzln1JQTwT4Hhn8SXropD4pQ8Ss8UkIAggpH0%3D&reserved=0
+> V13: https://eur01.safelinks.protection.outlook.com/?url=https%3A%2F%2Flore.kernel.org%2Fnetdev%2F20250921160419.333427-1-maxime.chevallier%40bootlin.com%2F&data=05%7C02%7Cchristophe.leroy%40csgroup.eu%7Cc3434ae46bd540e2e87708de228ca8e0%7C8b87af7d86474dc78df45f69a2011bb5%7C0%7C0%7C638986184692252741%7CUnknown%7CTWFpbGZsb3d8eyJFbXB0eU1hcGkiOnRydWUsIlYiOiIwLjAuMDAwMCIsIlAiOiJXaW4zMiIsIkFOIjoiTWFpbCIsIldUIjoyfQ%3D%3D%7C0%7C%7C%7C&sdata=vJvKSHr8SSa9L9dU4rGkoWUcKxpnG%2FxZ2zoR7FOyeYE%3D&reserved=0
+> V12: https://eur01.safelinks.protection.outlook.com/?url=https%3A%2F%2Flore.kernel.org%2Fnetdev%2F20250909152617.119554-1-maxime.chevallier%40bootlin.com%2F&data=05%7C02%7Cchristophe.leroy%40csgroup.eu%7Cc3434ae46bd540e2e87708de228ca8e0%7C8b87af7d86474dc78df45f69a2011bb5%7C0%7C0%7C638986184692268301%7CUnknown%7CTWFpbGZsb3d8eyJFbXB0eU1hcGkiOnRydWUsIlYiOiIwLjAuMDAwMCIsIlAiOiJXaW4zMiIsIkFOIjoiTWFpbCIsIldUIjoyfQ%3D%3D%7C0%7C%7C%7C&sdata=ZcyGywWFEONxQYbNszGbv57WK5KxWPP2%2FJFYVeu5ev4%3D&reserved=0
+> V11: https://eur01.safelinks.protection.outlook.com/?url=https%3A%2F%2Flore.kernel.org%2Fnetdev%2F20250814135832.174911-1-maxime.chevallier%40bootlin.com%2F&data=05%7C02%7Cchristophe.leroy%40csgroup.eu%7Cc3434ae46bd540e2e87708de228ca8e0%7C8b87af7d86474dc78df45f69a2011bb5%7C0%7C0%7C638986184692283514%7CUnknown%7CTWFpbGZsb3d8eyJFbXB0eU1hcGkiOnRydWUsIlYiOiIwLjAuMDAwMCIsIlAiOiJXaW4zMiIsIkFOIjoiTWFpbCIsIldUIjoyfQ%3D%3D%7C0%7C%7C%7C&sdata=wRthSrgiu5zV4pV6Wj6rrRp4Zj3Y%2FU7pCWuJq3Kkmi4%3D&reserved=0
+> V10: https://eur01.safelinks.protection.outlook.com/?url=https%3A%2F%2Flore.kernel.org%2Fnetdev%2F20250722121623.609732-1-maxime.chevallier%40bootlin.com%2F&data=05%7C02%7Cchristophe.leroy%40csgroup.eu%7Cc3434ae46bd540e2e87708de228ca8e0%7C8b87af7d86474dc78df45f69a2011bb5%7C0%7C0%7C638986184692298054%7CUnknown%7CTWFpbGZsb3d8eyJFbXB0eU1hcGkiOnRydWUsIlYiOiIwLjAuMDAwMCIsIlAiOiJXaW4zMiIsIkFOIjoiTWFpbCIsIldUIjoyfQ%3D%3D%7C0%7C%7C%7C&sdata=AF7a%2FNgMAoFZKQf1oURLWqCYglsKG%2FnmLkuyYc1ubMM%3D&reserved=0
+> V9: https://eur01.safelinks.protection.outlook.com/?url=https%3A%2F%2Flore.kernel.org%2Fnetdev%2F20250717073020.154010-1-maxime.chevallier%40bootlin.com%2F&data=05%7C02%7Cchristophe.leroy%40csgroup.eu%7Cc3434ae46bd540e2e87708de228ca8e0%7C8b87af7d86474dc78df45f69a2011bb5%7C0%7C0%7C638986184692316899%7CUnknown%7CTWFpbGZsb3d8eyJFbXB0eU1hcGkiOnRydWUsIlYiOiIwLjAuMDAwMCIsIlAiOiJXaW4zMiIsIkFOIjoiTWFpbCIsIldUIjoyfQ%3D%3D%7C0%7C%7C%7C&sdata=X8olmChjGo3BtOADzrwW6H5Ho9C15OB%2FTmCgYWnRdos%3D&reserved=0
+> V8: https://eur01.safelinks.protection.outlook.com/?url=https%3A%2F%2Flore.kernel.org%2Fnetdev%2F20250710134533.596123-1-maxime.chevallier%40bootlin.com%2F&data=05%7C02%7Cchristophe.leroy%40csgroup.eu%7Cc3434ae46bd540e2e87708de228ca8e0%7C8b87af7d86474dc78df45f69a2011bb5%7C0%7C0%7C638986184692334432%7CUnknown%7CTWFpbGZsb3d8eyJFbXB0eU1hcGkiOnRydWUsIlYiOiIwLjAuMDAwMCIsIlAiOiJXaW4zMiIsIkFOIjoiTWFpbCIsIldUIjoyfQ%3D%3D%7C0%7C%7C%7C&sdata=cInZohiCGoQVoSaAOw4ym7ahfyMYuVTFsWvo4fi500A%3D&reserved=0
+> v7: https://eur01.safelinks.protection.outlook.com/?url=https%3A%2F%2Flore.kernel.org%2Fnetdev%2F20250630143315.250879-1-maxime.chevallier%40bootlin.com%2F&data=05%7C02%7Cchristophe.leroy%40csgroup.eu%7Cc3434ae46bd540e2e87708de228ca8e0%7C8b87af7d86474dc78df45f69a2011bb5%7C0%7C0%7C638986184692351034%7CUnknown%7CTWFpbGZsb3d8eyJFbXB0eU1hcGkiOnRydWUsIlYiOiIwLjAuMDAwMCIsIlAiOiJXaW4zMiIsIkFOIjoiTWFpbCIsIldUIjoyfQ%3D%3D%7C0%7C%7C%7C&sdata=uvaVASBiuBBG01svghO%2BSey7q95F3LzfxDz%2FmPOGB1Q%3D&reserved=0
+> V6: https://eur01.safelinks.protection.outlook.com/?url=https%3A%2F%2Flore.kernel.org%2Fnetdev%2F20250507135331.76021-1-maxime.chevallier%40bootlin.com%2F&data=05%7C02%7Cchristophe.leroy%40csgroup.eu%7Cc3434ae46bd540e2e87708de228ca8e0%7C8b87af7d86474dc78df45f69a2011bb5%7C0%7C0%7C638986184692371801%7CUnknown%7CTWFpbGZsb3d8eyJFbXB0eU1hcGkiOnRydWUsIlYiOiIwLjAuMDAwMCIsIlAiOiJXaW4zMiIsIkFOIjoiTWFpbCIsIldUIjoyfQ%3D%3D%7C0%7C%7C%7C&sdata=gu5JPp%2BYLJwgiqvD8axB2ipjHa1ICHJlPBjvzm5mU70%3D&reserved=0
+> V5: https://eur01.safelinks.protection.outlook.com/?url=https%3A%2F%2Flore.kernel.org%2Fnetdev%2F20250425141511.182537-1-maxime.chevallier%40bootlin.com%2F&data=05%7C02%7Cchristophe.leroy%40csgroup.eu%7Cc3434ae46bd540e2e87708de228ca8e0%7C8b87af7d86474dc78df45f69a2011bb5%7C0%7C0%7C638986184692389327%7CUnknown%7CTWFpbGZsb3d8eyJFbXB0eU1hcGkiOnRydWUsIlYiOiIwLjAuMDAwMCIsIlAiOiJXaW4zMiIsIkFOIjoiTWFpbCIsIldUIjoyfQ%3D%3D%7C0%7C%7C%7C&sdata=Os1hQJEu4LbqdPMdAuwBArekFd7OfRuTG%2Fgq0CzmqY8%3D&reserved=0
+> V4: https://eur01.safelinks.protection.outlook.com/?url=https%3A%2F%2Flore.kernel.org%2Fnetdev%2F20250213101606.1154014-1-maxime.chevallier%40bootlin.com%2F&data=05%7C02%7Cchristophe.leroy%40csgroup.eu%7Cc3434ae46bd540e2e87708de228ca8e0%7C8b87af7d86474dc78df45f69a2011bb5%7C0%7C0%7C638986184692405507%7CUnknown%7CTWFpbGZsb3d8eyJFbXB0eU1hcGkiOnRydWUsIlYiOiIwLjAuMDAwMCIsIlAiOiJXaW4zMiIsIkFOIjoiTWFpbCIsIldUIjoyfQ%3D%3D%7C0%7C%7C%7C&sdata=ve3LPTeQ5KEQbIfCB8sS2mxAMIeT2nvHFa0srBqSS6M%3D&reserved=0
+> V3: https://eur01.safelinks.protection.outlook.com/?url=https%3A%2F%2Flore.kernel.org%2Fnetdev%2F20250207223634.600218-1-maxime.chevallier%40bootlin.com%2F&data=05%7C02%7Cchristophe.leroy%40csgroup.eu%7Cc3434ae46bd540e2e87708de228ca8e0%7C8b87af7d86474dc78df45f69a2011bb5%7C0%7C0%7C638986184692420383%7CUnknown%7CTWFpbGZsb3d8eyJFbXB0eU1hcGkiOnRydWUsIlYiOiIwLjAuMDAwMCIsIlAiOiJXaW4zMiIsIkFOIjoiTWFpbCIsIldUIjoyfQ%3D%3D%7C0%7C%7C%7C&sdata=gN36neiSqhj%2FslVSU8oWrOvdam2nZ08I2tVW1BjGqNQ%3D&reserved=0
+> RFC V2: https://eur01.safelinks.protection.outlook.com/?url=https%3A%2F%2Flore.kernel.org%2Fnetdev%2F20250122174252.82730-1-maxime.chevallier%40bootlin.com%2F&data=05%7C02%7Cchristophe.leroy%40csgroup.eu%7Cc3434ae46bd540e2e87708de228ca8e0%7C8b87af7d86474dc78df45f69a2011bb5%7C0%7C0%7C638986184692435564%7CUnknown%7CTWFpbGZsb3d8eyJFbXB0eU1hcGkiOnRydWUsIlYiOiIwLjAuMDAwMCIsIlAiOiJXaW4zMiIsIkFOIjoiTWFpbCIsIldUIjoyfQ%3D%3D%7C0%7C%7C%7C&sdata=ae3RoCo5SF0u5vvruXV9UGgXojDP0Xy%2BCKnMEZxXaL0%3D&reserved=0
+> RFC V1: https://eur01.safelinks.protection.outlook.com/?url=https%3A%2F%2Flore.kernel.org%2Fnetdev%2F20241220201506.2791940-1-maxime.chevallier%40bootlin.com%2F&data=05%7C02%7Cchristophe.leroy%40csgroup.eu%7Cc3434ae46bd540e2e87708de228ca8e0%7C8b87af7d86474dc78df45f69a2011bb5%7C0%7C0%7C638986184692450191%7CUnknown%7CTWFpbGZsb3d8eyJFbXB0eU1hcGkiOnRydWUsIlYiOiIwLjAuMDAwMCIsIlAiOiJXaW4zMiIsIkFOIjoiTWFpbCIsIldUIjoyfQ%3D%3D%7C0%7C%7C%7C&sdata=wXdzjfHVActY7No3GBa%2BA%2FWSIS9OXtmLwGqebXEcJvc%3D&reserved=0
+> 
+> Maxime
+> 
+> Maxime Chevallier (15):
+>    dt-bindings: net: Introduce the ethernet-connector description
+>    net: ethtool: Introduce ETHTOOL_LINK_MEDIUM_* values
+>    net: phy: Introduce PHY ports representation
+>    net: phy: dp83822: Add support for phy_port representation
+>    dt-bindings: net: dp83822: Deprecate ti,fiber-mode
+>    net: phy: Create a phy_port for PHY-driven SFPs
+>    net: phy: Introduce generic SFP handling for PHY drivers
+>    net: phy: marvell-88x2222: Support SFP through phy_port interface
+>    net: phy: marvell: Support SFP through phy_port interface
+>    net: phy: marvell10g: Support SFP through phy_port
+>    net: phy: at803x: Support SFP through phy_port interface
+>    net: phy: qca807x: Support SFP through phy_port interface
+>    net: phy: Only rely on phy_port for PHY-driven SFP
+>    net: phy: dp83822: Add SFP support through the phy_port interface
+>    Documentation: networking: Document the phy_port infrastructure
+> 
+>   .../bindings/net/ethernet-connector.yaml      |  57 +++
+>   .../devicetree/bindings/net/ethernet-phy.yaml |  18 +
+>   .../devicetree/bindings/net/ti,dp83822.yaml   |   9 +-
+>   Documentation/networking/index.rst            |   1 +
+>   Documentation/networking/phy-port.rst         | 111 ++++++
+>   MAINTAINERS                                   |   3 +
+>   drivers/net/phy/Makefile                      |   2 +-
+>   drivers/net/phy/dp83822.c                     |  78 ++--
+>   drivers/net/phy/marvell-88x2222.c             |  94 ++---
+>   drivers/net/phy/marvell.c                     |  92 ++---
+>   drivers/net/phy/marvell10g.c                  |  52 +--
+>   drivers/net/phy/phy-caps.h                    |   5 +
+>   drivers/net/phy/phy-core.c                    |   6 +
+>   drivers/net/phy/phy_caps.c                    |  65 ++++
+>   drivers/net/phy/phy_device.c                  | 337 +++++++++++++++++-
+>   drivers/net/phy/phy_port.c                    | 212 +++++++++++
+>   drivers/net/phy/qcom/at803x.c                 |  77 ++--
+>   drivers/net/phy/qcom/qca807x.c                |  72 ++--
+>   include/linux/ethtool.h                       |  39 +-
+>   include/linux/phy.h                           |  63 +++-
+>   include/linux/phy_port.h                      |  99 +++++
+>   include/uapi/linux/ethtool.h                  |  20 ++
+>   net/ethtool/common.c                          | 268 ++++++++------
+>   23 files changed, 1399 insertions(+), 381 deletions(-)
+>   create mode 100644 Documentation/devicetree/bindings/net/ethernet-connector.yaml
+>   create mode 100644 Documentation/networking/phy-port.rst
+>   create mode 100644 drivers/net/phy/phy_port.c
+>   create mode 100644 include/linux/phy_port.h
+> 
 
 
