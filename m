@@ -1,326 +1,356 @@
-Return-Path: <linux-arm-msm+bounces-81946-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-81948-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ams.mirrors.kernel.org (ams.mirrors.kernel.org [IPv6:2a01:60a::1994:3:14])
-	by mail.lfdr.de (Postfix) with ESMTPS id 96E03C605CD
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 15 Nov 2025 14:23:12 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 96078C60760
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 15 Nov 2025 15:38:44 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ams.mirrors.kernel.org (Postfix) with ESMTPS id 9BA52347F66
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 15 Nov 2025 13:22:19 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 2DDE73B1EBF
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 15 Nov 2025 14:38:43 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 630452C08AB;
-	Sat, 15 Nov 2025 13:20:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 58DAA29D26B;
+	Sat, 15 Nov 2025 14:38:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=proton.me header.i=@proton.me header.b="mcEu31bH"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from pegase2.c-s.fr (pegase2.c-s.fr [93.17.235.10])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 027532C0296;
-	Sat, 15 Nov 2025 13:20:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=93.17.235.10
+Received: from mail-4316.protonmail.ch (mail-4316.protonmail.ch [185.70.43.16])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A683927B335
+	for <linux-arm-msm@vger.kernel.org>; Sat, 15 Nov 2025 14:38:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.70.43.16
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763212857; cv=none; b=D2Eb/kkeBIo+Q7wcUYdGOCl9/vPwC1V4XePJbslbn00ebIUHnOozWO63RJUhe7Ad0kQ5P0/pcCaKJS6ngdeUSztoZV1D7/xuyyipOogGpeTK+RQvuMiBi3iqOudQKawdyG9lI/Xc4gu7tm+8yTuohiWjkQEMDEOMYqOB7AnbB4c=
+	t=1763217521; cv=none; b=ghO+PwsiETjzapmY4w3Vh1JbeGqxKePcs101lIhU8sCt39vN/+VkWjfX3Ac4AzZ3DaXMbEtCo6lcY4NgQoicRncJHKmk19fLDqPvq5yGG1xCQS+iKDl9G9hiqZTYoN/6sfQip8fouS2l8re3KeV+rPXJDi5tqOBm88L6+OjqCR4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763212857; c=relaxed/simple;
-	bh=NZOU2pdchDrd59AXbQMYen063c1FMdYvNq7KuWjU+/Q=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=HPY1Cx/DOCymhDcWNvhEEcUDXd16evIHVCbmOddlUI2z+a1GEZzZ+OuEF6yZYCGlIXrbeE7dpFJulKc3+OlbUZo+M0bs4MVS8ixaSfTsCcEkUuRMy1+jfbLMEajwxP25eb5GGcWHY1xJheVdVVsohmB7RkFAOtvQ5eUhEub4YEo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=csgroup.eu; spf=pass smtp.mailfrom=csgroup.eu; arc=none smtp.client-ip=93.17.235.10
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=csgroup.eu
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=csgroup.eu
-Received: from localhost (mailhub4.si.c-s.fr [172.26.127.67])
-	by localhost (Postfix) with ESMTP id 4d7v9f6SNyz9sTW;
-	Sat, 15 Nov 2025 13:55:02 +0100 (CET)
-X-Virus-Scanned: amavisd-new at c-s.fr
-Received: from pegase2.c-s.fr ([172.26.127.65])
-	by localhost (pegase2.c-s.fr [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id Trl3BISnWbBX; Sat, 15 Nov 2025 13:55:02 +0100 (CET)
-Received: from messagerie.si.c-s.fr (messagerie.si.c-s.fr [192.168.25.192])
-	by pegase2.c-s.fr (Postfix) with ESMTP id 4d7v9f5Lv9z9sTS;
-	Sat, 15 Nov 2025 13:55:02 +0100 (CET)
-Received: from localhost (localhost [127.0.0.1])
-	by messagerie.si.c-s.fr (Postfix) with ESMTP id A12408B770;
-	Sat, 15 Nov 2025 13:55:02 +0100 (CET)
-X-Virus-Scanned: amavisd-new at c-s.fr
-Received: from messagerie.si.c-s.fr ([127.0.0.1])
-	by localhost (messagerie.si.c-s.fr [127.0.0.1]) (amavisd-new, port 10023)
-	with ESMTP id pGy1IFFuN1zE; Sat, 15 Nov 2025 13:55:02 +0100 (CET)
-Received: from [192.168.235.99] (unknown [192.168.235.99])
-	by messagerie.si.c-s.fr (Postfix) with ESMTP id 38C568B76E;
-	Sat, 15 Nov 2025 13:55:01 +0100 (CET)
-Message-ID: <b5c3a2d0-da1a-4333-a749-64a79acb5b44@csgroup.eu>
-Date: Sat, 15 Nov 2025 13:55:00 +0100
+	s=arc-20240116; t=1763217521; c=relaxed/simple;
+	bh=E6eFL6VMRH0K6wrB3y9/qsXc782qggWzuDDF2ywkP7w=;
+	h=Date:To:From:Subject:Message-ID:MIME-Version:Content-Type; b=nX6/DQYii6tuMSjUS0sMMMKIymvm+17V/qlsXUnGk+tFeaQADmy1U1VlxfdxdOFXR0SrbQONqPrirhFwsLo0PJIEC5IZ/++K7VVI2V/TAVBS3yVfSntwqN82tuux5FzO79qWk/EJfpS+a6sXViCJE6C4VW9EbJozYUMEe4bGixg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=proton.me; spf=pass smtp.mailfrom=proton.me; dkim=pass (2048-bit key) header.d=proton.me header.i=@proton.me header.b=mcEu31bH; arc=none smtp.client-ip=185.70.43.16
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=proton.me
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=proton.me
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=proton.me;
+	s=protonmail; t=1763217509; x=1763476709;
+	bh=FQ+srCSwMGdFO23X5XnNu9U77nvkILWWQV3TL6aZ3Tk=;
+	h=Date:To:From:Subject:Message-ID:Feedback-ID:From:To:Cc:Date:
+	 Subject:Reply-To:Feedback-ID:Message-ID:BIMI-Selector;
+	b=mcEu31bHps4KlGpKFfay+I/Zkh4fv5V+QYW7mUyFT3lrzimsVuvWWKgouu4UyWRZL
+	 f1rbvH0r+8ET0xt7RMqeInjVEotTzuligbY08ZQwsMh1aiAMqFclIqZiljd9Ae4x38
+	 mOkIY2M3ZV4OmZ6gMZb4PBjQHK5dA7M/1cwuqWUu13nICqWJDApbl6iC7WiYkvOMnQ
+	 i4xL40taHKnifEgIlYFn4SASmRhnL3sgwnG3ZPh7dwx4QnzHsYsenNVWQBCjDWRnfO
+	 FhVwF73SMUZKBsM5lY+m8d/36hjb4L/S1CkXcTjNf51A+XO7mlW3BvagJsu3Td+c0p
+	 YGrFcKdXztWbA==
+Date: Sat, 15 Nov 2025 14:38:27 +0000
+To: "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>
+From: philmb3487 <philmb3487@proton.me>
+Subject: [PATCH] Add support for General Clock Controller for SM8635
+Message-ID: <Uczku8TWm_yEdSMe9v2PZC6eDhmbXxr6yhqW6poltQ_xP52gQ5ZYRsiXGlkYxfVQGQjVhr0Bl86ncNVVx8aPe0JtRtK1uYZeN3LNXH-xE7o=@proton.me>
+Feedback-ID: 109714282:user:proton
+X-Pm-Message-ID: be1e706e2016879fbe774334b7ddabb64fc8b4c8
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH net-next v16 00/15] net: phy: Introduce PHY ports
- representation
-To: Maxime Chevallier <maxime.chevallier@bootlin.com>, davem@davemloft.net
-Cc: netdev@vger.kernel.org, linux-kernel@vger.kernel.org,
- linux-arm-msm@vger.kernel.org, thomas.petazzoni@bootlin.com,
- Andrew Lunn <andrew@lunn.ch>, Jakub Kicinski <kuba@kernel.org>,
- Eric Dumazet <edumazet@google.com>, Paolo Abeni <pabeni@redhat.com>,
- Russell King <linux@armlinux.org.uk>, linux-arm-kernel@lists.infradead.org,
- Herve Codina <herve.codina@bootlin.com>,
- Florian Fainelli <f.fainelli@gmail.com>,
- Heiner Kallweit <hkallweit1@gmail.com>,
- Vladimir Oltean <vladimir.oltean@nxp.com>,
- =?UTF-8?Q?K=C3=B6ry_Maincent?= <kory.maincent@bootlin.com>,
- =?UTF-8?Q?Marek_Beh=C3=BAn?= <kabel@kernel.org>,
- Oleksij Rempel <o.rempel@pengutronix.de>,
- =?UTF-8?Q?Nicol=C3=B2_Veronese?= <nicveronese@gmail.com>,
- Simon Horman <horms@kernel.org>, mwojtas@chromium.org,
- Antoine Tenart <atenart@kernel.org>, devicetree@vger.kernel.org,
- Conor Dooley <conor+dt@kernel.org>, Krzysztof Kozlowski
- <krzk+dt@kernel.org>, Rob Herring <robh@kernel.org>,
- Romain Gantois <romain.gantois@bootlin.com>,
- Daniel Golle <daniel@makrotopia.org>,
- Dimitri Fedrau <dimitri.fedrau@liebherr.com>
-References: <20251113081418.180557-1-maxime.chevallier@bootlin.com>
-From: Christophe Leroy <christophe.leroy@csgroup.eu>
-Content-Language: fr-FR
-In-Reply-To: <20251113081418.180557-1-maxime.chevallier@bootlin.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
+From f18386e7b70afaaf557fff147d24dac4c613980d Mon Sep 17 00:00:00 2001
+From: Philippe Michaud-Boudreault <philmb3487@proton.me>
+Date: Sat, 11 Oct 2025 18:40:14 -0400
+Subject: [PATCH] dt-bindings: clock: qcom: document the SM8635 General Cloc=
+k
+ Controller
 
+Add bindings documentation for the SM8635 General Clock Controller.
+---
+ .../bindings/clock/qcom,sm8635-gcc.yaml       |  62 ++++++
+ include/dt-bindings/clock/qcom,sm8635-gcc.h   | 198 ++++++++++++++++++
+ 2 files changed, 260 insertions(+)
+ create mode 100644 Documentation/devicetree/bindings/clock/qcom,sm8635-gcc=
+.yaml
+ create mode 100644 include/dt-bindings/clock/qcom,sm8635-gcc.h
 
-Le 13/11/2025 à 09:14, Maxime Chevallier a écrit :
-> Hi everyone,
-> 
-> This is v16 of the phy_port work. Changes are typos, a more relaxed
-> check when parsing DT pairs, and binding updates. Thanks a lot to Andrew
-> and Rob for the reviews on the last round.
-> 
-> This series conflicts with Romain's series on fiber support for dp83869:
-> https://eur01.safelinks.protection.outlook.com/?url=https%3A%2F%2Flore.kernel.org%2Fall%2F20251110-sfp-1000basex-v2-0-dd5e8c1f5652%40bootlin.com%2F&data=05%7C02%7Cchristophe.leroy%40csgroup.eu%7Cc3434ae46bd540e2e87708de228ca8e0%7C8b87af7d86474dc78df45f69a2011bb5%7C0%7C0%7C638986184692158446%7CUnknown%7CTWFpbGZsb3d8eyJFbXB0eU1hcGkiOnRydWUsIlYiOiIwLjAuMDAwMCIsIlAiOiJXaW4zMiIsIkFOIjoiTWFpbCIsIldUIjoyfQ%3D%3D%7C0%7C%7C%7C&sdata=fbKgJgNn%2FaI%2BH3p9hjlVl7sQnVRtVtoFA3DEzKborUU%3D&reserved=0
-> 
-> As a remainder, a few important notes :
-> 
->   - This is only a first phase. It instantiates the port, and leverage
->     that to make the MAC <-> PHY <-> SFP usecase simpler.
-> 
->   - Next phase will deal with controlling the port state, as well as the
->     netlink uAPI for that.
-> 
->   - The end-goal is to enable support for complex port MUX. This
->     preliminary work focuses on PHY-driven ports, but this will be
->     extended to support muxing at the MII level (Multi-phy, or compo PHY
->     + SFP as found on Turris Omnia for example).
-> 
->   - The naming is definitely not set in stone. I named that "phy_port",
->     but this may convey the false sense that this is phylib-specific.
->     Even the word "port" is not that great, as it already has several
->     different meanings in the net world (switch port, devlink port,
->     etc.). I used the term "connector" in the binding.
-> 
-> A bit of history on that work :
-> 
-> The end goal that I personnaly want to achieve is :
-> 
->              + PHY - RJ45
->              |
->   MAC - MUX -+ PHY - RJ45
-> 
-> After many discussions here on netdev@, but also at netdevconf[1] and
-> LPC[2], there appears to be several analoguous designs that exist out
-> there.
-> 
-> [1] : https://eur01.safelinks.protection.outlook.com/?url=https%3A%2F%2Fnetdevconf.info%2F0x17%2Fsessions%2Ftalk%2Fimproving-multi-phy-and-multi-port-interfaces.html&data=05%7C02%7Cchristophe.leroy%40csgroup.eu%7Cc3434ae46bd540e2e87708de228ca8e0%7C8b87af7d86474dc78df45f69a2011bb5%7C0%7C0%7C638986184692180471%7CUnknown%7CTWFpbGZsb3d8eyJFbXB0eU1hcGkiOnRydWUsIlYiOiIwLjAuMDAwMCIsIlAiOiJXaW4zMiIsIkFOIjoiTWFpbCIsIldUIjoyfQ%3D%3D%7C0%7C%7C%7C&sdata=HJZwQP6qPup6YH1XU4WOmMY%2BLekJdvClUFIoT4ieC8s%3D&reserved=0
-> [2] : https://eur01.safelinks.protection.outlook.com/?url=https%3A%2F%2Flpc.events%2Fevent%2F18%2Fcontributions%2F1964%2F&data=05%7C02%7Cchristophe.leroy%40csgroup.eu%7Cc3434ae46bd540e2e87708de228ca8e0%7C8b87af7d86474dc78df45f69a2011bb5%7C0%7C0%7C638986184692199016%7CUnknown%7CTWFpbGZsb3d8eyJFbXB0eU1hcGkiOnRydWUsIlYiOiIwLjAuMDAwMCIsIlAiOiJXaW4zMiIsIkFOIjoiTWFpbCIsIldUIjoyfQ%3D%3D%7C0%7C%7C%7C&sdata=GfYNvE46zApzJzglRQ5xmrpVnbnFF2Q7ZkvDY84evos%3D&reserved=0 (video isn't the
-> right one)
-> 
-> Take the MAchiatobin, it has 2 interfaces that looks like this :
-> 
->   MAC - PHY -+ RJ45
->              |
-> 	    + SFP - Whatever the module does
-> 
-> Now, looking at the Turris Omnia, we have :
-> 
-> 
->   MAC - MUX -+ PHY - RJ45
->              |
-> 	    + SFP - Whatever the module does
-> 
-> We can find more example of this kind of designs, the common part is
-> that we expose multiple front-facing media ports. This is what this
-> current work aims at supporting. As of right now, it does'nt add any
-> support for muxing, but this will come later on.
-> 
-> This first phase focuses on phy-driven ports only, but there are already
-> quite some challenges already. For one, we can't really autodetect how
-> many ports are sitting behind a PHY. That's why this series introduces a
-> new binding. Describing ports in DT should however be a last-resort
-> thing when we need to clear some ambiguity about the PHY media-side.
-> 
-> The only use-cases that we have today for multi-port PHYs are combo PHYs
-> that drive both a Copper port and an SFP (the Macchiatobin case). This
-> in itself is challenging and this series only addresses part of this
-> support, by registering a phy_port for the PHY <-> SFP connection. The
-> SFP module should in the end be considered as a port as well, but that's
-> not yet the case.
-> 
-> However, because now PHYs can register phy_ports for every media-side
-> interface they have, they can register the capabilities of their ports,
-> which allows making the PHY-driver SFP case much more generic.
-> 
-> Let me know what you think, I'm all in for discussions :)
-> 
-> Regards,
+diff --git a/Documentation/devicetree/bindings/clock/qcom,sm8635-gcc.yaml b=
+/Documentation/devicetree/bindings/clock/qcom,sm8635-gcc.yaml
+new file mode 100644
+index 0000000000000..2e4fc56990ff8
+--- /dev/null
++++ b/Documentation/devicetree/bindings/clock/qcom,sm8635-gcc.yaml
+@@ -0,0 +1,62 @@
++# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
++%YAML 1.2
++---
++$id: http://devicetree.org/schemas/clock/qcom,sm8635-gcc.yaml#
++$schema: http://devicetree.org/meta-schemas/core.yaml#
++
++title: Qualcomm Global Clock & Reset Controller on SM8635
++
++maintainers:
++  - Philippe Michaud-Boudreault <philmb3487@proton.me>
++
++description: |
++  Qualcomm global clock control module provides the clocks, resets and pow=
+er
++  domains on SM8635
++
++  See also: include/dt-bindings/clock/qcom,sm8635-gcc.h
++
++properties:
++  compatible:
++    const: qcom,sm8635-gcc
++
++  clocks:
++    items:
++      - description: Board XO source
++      - description: Board Always On XO source
++      - description: Sleep clock source
++      - description: PCIE 0 Pipe clock source
++      - description: UFS Phy Rx symbol 0 clock source
++      - description: UFS Phy Rx symbol 1 clock source
++      - description: UFS Phy Tx symbol 0 clock source
++      - description: USB3 Phy wrapper pipe clock source
++
++required:
++  - compatible
++  - clocks
++  - '#power-domain-cells'
++
++allOf:
++  - $ref: qcom,gcc.yaml#
++
++unevaluatedProperties: false
++
++examples:
++  - |
++    #include <dt-bindings/clock/qcom,rpmh.h>
++    clock-controller@100000 {
++      compatible =3D "qcom,sm8635-gcc";
++      reg =3D <0x00100000 0x001f4200>;
++      clocks =3D <&rpmhcc RPMH_CXO_CLK>,
++               <&rpmhcc RPMH_CXO_CLK_A>,
++               <&sleep_clk>,
++               <&pcie0_phy>,
++               <&ufs_mem_phy 0>,
++               <&ufs_mem_phy 1>,
++               <&ufs_mem_phy 2>,
++               <&usb_1_qmpphy>;
++      #clock-cells =3D <1>;
++      #reset-cells =3D <1>;
++      #power-domain-cells =3D <1>;
++    };
++
++...
+diff --git a/include/dt-bindings/clock/qcom,sm8635-gcc.h b/include/dt-bindi=
+ngs/clock/qcom,sm8635-gcc.h
+new file mode 100644
+index 0000000000000..f76d5fce6153a
+--- /dev/null
++++ b/include/dt-bindings/clock/qcom,sm8635-gcc.h
+@@ -0,0 +1,198 @@
++/* SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause) */
++/*
++ * Copyright (c) 2022, Qualcomm Innovation Center, Inc. All rights reserve=
+d.
++ * Copyright (c) 2023, Linaro Limited
++ * Copyright (c) 2025, Philippe Michaud-Boudreault <philmb3487@proton.me>
++ */
++
++#ifndef _DT_BINDINGS_CLK_QCOM_GCC_SM8635_H
++#define _DT_BINDINGS_CLK_QCOM_GCC_SM8635_H
++
++/* GCC clocks */
++#define GCC_GPLL0                                               0
++#define GCC_GPLL0_OUT_EVEN                                      1
++#define GCC_GPLL1                                               2
++#define GCC_GPLL4                                               3
++#define GCC_GPLL7                                               4
++#define GCC_GPLL9                                               5
++#define GCC_AGGRE_NOC_PCIE_AXI_CLK                              6
++#define GCC_AGGRE_UFS_PHY_AXI_CLK                               7
++#define GCC_AGGRE_USB3_PRIM_AXI_CLK                             8
++#define GCC_BOOT_ROM_AHB_CLK                                    9
++#define GCC_CAMERA_AHB_CLK                                      10
++#define GCC_CAMERA_HF_AXI_CLK                                   11
++#define GCC_CAMERA_HF_XO_CLK                                    12
++#define GCC_CAMERA_SF_AXI_CLK                                   13
++#define GCC_CAMERA_SF_XO_CLK                                    14
++#define GCC_CFG_NOC_PCIE_ANOC_AHB_CLK                           15
++#define GCC_CFG_NOC_USB3_PRIM_AXI_CLK                           16
++#define GCC_CNOC_PCIE_SF_AXI_CLK                                17
++#define GCC_DDRSS_GPU_AXI_CLK                                   18
++#define GCC_DDRSS_PCIE_SF_QTB_CLK                               19
++#define GCC_DISP_AHB_CLK                                        20
++#define GCC_DISP_HF_AXI_CLK                                     21
++#define GCC_DISP_XO_CLK                                         22
++#define GCC_GP1_CLK                                             23
++#define GCC_GP1_CLK_SRC                                         24
++#define GCC_GP2_CLK                                             25
++#define GCC_GP2_CLK_SRC                                         26
++#define GCC_GP3_CLK                                             27
++#define GCC_GP3_CLK_SRC                                         28
++#define GCC_GPU_CFG_AHB_CLK                                     29
++#define GCC_GPU_GPLL0_CLK_SRC                                   30
++#define GCC_GPU_GPLL0_DIV_CLK_SRC                               31
++#define GCC_GPU_MEMNOC_GFX_CLK                                  32
++#define GCC_GPU_SNOC_DVM_GFX_CLK                                33
++#define GCC_PCIE_0_AUX_CLK                                      34
++#define GCC_PCIE_0_AUX_CLK_SRC                                  35
++#define GCC_PCIE_0_CFG_AHB_CLK                                  36
++#define GCC_PCIE_0_MSTR_AXI_CLK                                 37
++#define GCC_PCIE_0_PHY_RCHNG_CLK                                38
++#define GCC_PCIE_0_PHY_RCHNG_CLK_SRC                            39
++#define GCC_PCIE_0_PIPE_CLK                                     40
++#define GCC_PCIE_0_PIPE_CLK_SRC                                 41
++#define GCC_PCIE_0_PIPE_DIV2_CLK                                42
++#define GCC_PCIE_0_PIPE_DIV2_CLK_SRC                            43
++#define GCC_PCIE_0_SLV_AXI_CLK                                  44
++#define GCC_PCIE_0_SLV_Q2A_AXI_CLK                              45
++#define GCC_PCIE_RSCC_CFG_AHB_CLK                               46
++#define GCC_PCIE_RSCC_XO_CLK                                    47
++#define GCC_PDM2_CLK                                            48
++#define GCC_PDM2_CLK_SRC                                        49
++#define GCC_PDM_AHB_CLK                                         50
++#define GCC_PDM_XO4_CLK                                         51
++#define GCC_QMIP_CAMERA_NRT_AHB_CLK                             52
++#define GCC_QMIP_CAMERA_RT_AHB_CLK                              53
++#define GCC_QMIP_DISP_AHB_CLK                                   54
++#define GCC_QMIP_GPU_AHB_CLK                                    55
++#define GCC_QMIP_PCIE_AHB_CLK                                   56
++#define GCC_QMIP_VIDEO_CV_CPU_AHB_CLK                           57
++#define GCC_QMIP_VIDEO_CVP_AHB_CLK                              58
++#define GCC_QMIP_VIDEO_V_CPU_AHB_CLK                            59
++#define GCC_QMIP_VIDEO_VCODEC_AHB_CLK                           60
++#define GCC_QUPV3_WRAP0_CORE_2X_CLK                             61
++#define GCC_QUPV3_WRAP0_CORE_CLK                                62
++#define GCC_QUPV3_WRAP0_QSPI_REF_CLK                            63
++#define GCC_QUPV3_WRAP0_QSPI_REF_CLK_SRC                        64
++#define GCC_QUPV3_WRAP0_S0_CLK                                  65
++#define GCC_QUPV3_WRAP0_S0_CLK_SRC                              66
++#define GCC_QUPV3_WRAP0_S1_CLK                                  67
++#define GCC_QUPV3_WRAP0_S1_CLK_SRC                              68
++#define GCC_QUPV3_WRAP0_S2_CLK                                  69
++#define GCC_QUPV3_WRAP0_S2_CLK_SRC                              70
++#define GCC_QUPV3_WRAP0_S3_CLK                                  71
++#define GCC_QUPV3_WRAP0_S3_CLK_SRC                              72
++#define GCC_QUPV3_WRAP0_S4_CLK                                  73
++#define GCC_QUPV3_WRAP0_S4_CLK_SRC                              74
++#define GCC_QUPV3_WRAP0_S5_CLK                                  75
++#define GCC_QUPV3_WRAP0_S5_CLK_SRC                              76
++#define GCC_QUPV3_WRAP0_S6_CLK                                  77
++#define GCC_QUPV3_WRAP0_S6_CLK_SRC                              78
++#define GCC_QUPV3_WRAP0_S7_CLK                                  79
++#define GCC_QUPV3_WRAP0_S7_CLK_SRC                              80
++#define GCC_QUPV3_WRAP1_CORE_2X_CLK                             81
++#define GCC_QUPV3_WRAP1_CORE_CLK                                82
++#define GCC_QUPV3_WRAP1_IBI_CTRL_0_CLK_SRC                      83
++#define GCC_QUPV3_WRAP1_IBI_CTRL_2_CLK                          84
++#define GCC_QUPV3_WRAP1_IBI_CTRL_3_CLK                          85
++#define GCC_QUPV3_WRAP1_S0_CLK                                  86
++#define GCC_QUPV3_WRAP1_S0_CLK_SRC                              87
++#define GCC_QUPV3_WRAP1_S1_CLK                                  88
++#define GCC_QUPV3_WRAP1_S1_CLK_SRC                              89
++#define GCC_QUPV3_WRAP1_S2_CLK                                  90
++#define GCC_QUPV3_WRAP1_S2_CLK_SRC                              91
++#define GCC_QUPV3_WRAP1_S3_CLK                                  92
++#define GCC_QUPV3_WRAP1_S3_CLK_SRC                              93
++#define GCC_QUPV3_WRAP1_S4_CLK                                  94
++#define GCC_QUPV3_WRAP1_S4_CLK_SRC                              95
++#define GCC_QUPV3_WRAP1_S5_CLK                                  96
++#define GCC_QUPV3_WRAP1_S5_CLK_SRC                              97
++#define GCC_QUPV3_WRAP1_S6_CLK                                  98
++#define GCC_QUPV3_WRAP1_S6_CLK_SRC                              99
++#define GCC_QUPV3_WRAP1_S7_CLK                                  100
++#define GCC_QUPV3_WRAP1_S7_CLK_SRC                              101
++#define GCC_QUPV3_WRAP_0_M_AHB_CLK                              102
++#define GCC_QUPV3_WRAP_0_S_AHB_CLK                              103
++#define GCC_QUPV3_WRAP_1_IBI_2_AHB_CLK                          104
++#define GCC_QUPV3_WRAP_1_IBI_3_AHB_CLK                          105
++#define GCC_QUPV3_WRAP_1_M_AHB_CLK                              106
++#define GCC_QUPV3_WRAP_1_S_AHB_CLK                              107
++#define GCC_SDCC2_AHB_CLK                                       108
++#define GCC_SDCC2_APPS_CLK                                      109
++#define GCC_SDCC2_APPS_CLK_SRC                                  110
++#define GCC_UFS_PHY_AHB_CLK                                     111
++#define GCC_UFS_PHY_AXI_CLK                                     112
++#define GCC_UFS_PHY_AXI_CLK_SRC                                 113
++#define GCC_UFS_PHY_ICE_CORE_CLK                                114
++#define GCC_UFS_PHY_ICE_CORE_CLK_SRC                            115
++#define GCC_UFS_PHY_PHY_AUX_CLK                                 116
++#define GCC_UFS_PHY_PHY_AUX_CLK_SRC                             117
++#define GCC_UFS_PHY_RX_SYMBOL_0_CLK                             118
++#define GCC_UFS_PHY_RX_SYMBOL_0_CLK_SRC                         119
++#define GCC_UFS_PHY_RX_SYMBOL_1_CLK                             120
++#define GCC_UFS_PHY_RX_SYMBOL_1_CLK_SRC                         121
++#define GCC_UFS_PHY_TX_SYMBOL_0_CLK                             122
++#define GCC_UFS_PHY_TX_SYMBOL_0_CLK_SRC                         123
++#define GCC_UFS_PHY_UNIPRO_CORE_CLK                             124
++#define GCC_UFS_PHY_UNIPRO_CORE_CLK_SRC                         125
++#define GCC_USB30_PRIM_MASTER_CLK                               126
++#define GCC_USB30_PRIM_MASTER_CLK_SRC                           127
++#define GCC_USB30_PRIM_MOCK_UTMI_CLK                            128
++#define GCC_USB30_PRIM_MOCK_UTMI_CLK_SRC                        129
++#define GCC_USB30_PRIM_MOCK_UTMI_POSTDIV_CLK_SRC                130
++#define GCC_USB30_PRIM_SLEEP_CLK                                131
++#define GCC_USB3_PRIM_PHY_AUX_CLK                               132
++#define GCC_USB3_PRIM_PHY_AUX_CLK_SRC                           133
++#define GCC_USB3_PRIM_PHY_COM_AUX_CLK                           134
++#define GCC_USB3_PRIM_PHY_PIPE_CLK                              135
++#define GCC_USB3_PRIM_PHY_PIPE_CLK_SRC                          136
++#define GCC_VIDEO_AHB_CLK                                       137
++#define GCC_VIDEO_AXI0_CLK                                      138
++#define GCC_VIDEO_AXI1_CLK                                      139
++#define GCC_VIDEO_XO_CLK                                        140
++#define GCC_AGGRE_UFS_PHY_AXI_HW_CTL_CLK                        141
++#define GCC_UFS_PHY_AXI_HW_CTL_CLK                              142
++#define GCC_UFS_PHY_ICE_CORE_HW_CTL_CLK                         143
++#define GCC_UFS_PHY_PHY_AUX_HW_CTL_CLK                          144
++#define GCC_UFS_PHY_UNIPRO_CORE_HW_CTL_CLK                      145
++
++/* GCC resets */
++#define GCC_CAMERA_BCR                                          0
++#define GCC_DISPLAY_BCR                                         1
++#define GCC_GPU_BCR                                             2
++#define GCC_PCIE_0_BCR                                          3
++#define GCC_PCIE_0_LINK_DOWN_BCR                                4
++#define GCC_PCIE_0_NOCSR_COM_PHY_BCR                            5
++#define GCC_PCIE_0_PHY_BCR                                      6
++#define GCC_PCIE_0_PHY_NOCSR_COM_PHY_BCR                        7
++#define GCC_PCIE_PHY_BCR                                        8
++#define GCC_PCIE_PHY_CFG_AHB_BCR                                9
++#define GCC_PCIE_PHY_COM_BCR                                    10
++#define GCC_PCIE_RSCC_BCR                                       11
++#define GCC_PDM_BCR                                             12
++#define GCC_QUPV3_WRAPPER_0_BCR                                 13
++#define GCC_QUPV3_WRAPPER_1_BCR                                 14
++#define GCC_QUSB2PHY_PRIM_BCR                                   15
++#define GCC_QUSB2PHY_SEC_BCR                                    16
++#define GCC_SDCC2_BCR                                           17
++#define GCC_UFS_PHY_BCR                                         18
++#define GCC_USB30_PRIM_BCR                                      19
++#define GCC_USB3_DP_PHY_PRIM_BCR                                20
++#define GCC_USB3_DP_PHY_SEC_BCR                                 21
++#define GCC_USB3_PHY_PRIM_BCR                                   22
++#define GCC_USB3_PHY_SEC_BCR                                    23
++#define GCC_USB3PHY_PHY_PRIM_BCR                                24
++#define GCC_USB3PHY_PHY_SEC_BCR                                 25
++#define GCC_VIDEO_AXI0_CLK_ARES                                 26
++#define GCC_VIDEO_AXI1_CLK_ARES                                 27
++#define GCC_VIDEO_BCR                                           28
++
++/* GCC power domains */
++#define PCIE_0_GDSC=09=09=09=09=09=090
++#define PCIE_0_PHY_GDSC=09=09=09=09=09=091
++#define UFS_PHY_GDSC=09=09=09=09=09=092
++#define UFS_MEM_PHY_GDSC=09=09=09=09=093
++#define USB30_PRIM_GDSC=09=09=09=09=09=094
++#define USB3_PHY_GDSC=09=09=09=09=09=095
++
++#endif
+--=20
+GitLab
 
-For the series:
-
-Tested-by: Christophe Leroy <christophe.leroy@csgroup.eu>
-
-
-> 
-> Changes in v16:
->   - From Andrew, relaxed the check on the number of pairs so that we only
->     fail when baseT is missing pairs
->   - Add a check for either 1, 2 or 4 pairs
->   - Lots of typos (mostly lanes -> pairs)
->   - Added Andrew's review tags (thanks again)
->   - From Rob, added an "else" statement in the ethernet-connector binding
->   - Changed the node name for ethernet connectors to be decimal
-> 
-> Changes in V15:
->   - Update bindings, docs and code to use pairs instead of lanes
->   - Make pairs only relevant for BaseT
-> 
-> Changes in V14:
->   - Fixed kdoc
->   - Use the sfp module_caps feature.
-> 
-> Changes in V13:
->   - Added phy_caps support for interface selection
->   - Aggregated tested-by tags
-> 
-> Changes in V12:
->   - Moved some of phylink's internal helpers to phy_caps for reuse in
->     phylib
->   - Fixed SFP interface selection
->   - Added Rob's review and changes in patch 6
-> 
-> Changes in V11:
->   - The ti,fiber-mode property was deprecated in favor of the
->     ethernet-connector binding
->   - The .attach_port was split into an MDI and an MII version
->   - I added the warning back in the AR8031 PHY driver
->   - There is now an init-time check on the number of lanes associated to
->     every linkmode, making sure the number of lanes is above or equal to
->     the minimum required
->   - Various typos were fixed all around
->   - We no longer use sfp_select_interface() for SFP interface validation
-> 
-> Changes in V10:
->   - Rebase on net-next
->   - Fix a typo reported by Köry
->   - Aggregate all reviews
->   - Fix the conflict on the qcom driver
-> 
-> Changes in V9:
->   - Removed maxItems and items from the connector binding
->   - Fixed a typo in the binding
-> 
-> Changes in V8:
->   - Added maxItems on the connector media binding
->   - Made sure we parse a single medium
->   - Added a missing bitwise macro
-> 
-> Changes in V7:
->   - Move ethtool_medium_get_supported to phy_caps
->   - support combo-ports, each with a given set of supported modes
->   - Introduce the notion of 'not-described' ports
-> 
-> Changes in V6:
-> 
->   - Fixed kdoc on patch 3
->   - Addressed a missing port-ops registration for the Marvell 88x2222
->     driver
->   - Addressed a warning reported by Simon on the DP83822 when building
->     without CONFIG_OF_MDIO
-> 
-> Changes in V5 :
-> 
->   - renamed the bindings to use the term "connector" instead of "port"
->   - Rebased, and fixed some issues reported on the 83822 driver
->   - Use phy_caps
-> 
-> Changes in V4 :
-> 
->   - Introduced a kernel doc
->   - Reworked the mediums definitions in patch 2
->   - QCA807x now uses the generic SFP support
->   - Fixed some implementation bugs to build the support list based on the
->     interfaces supported on a port
-> 
-> V15: https://eur01.safelinks.protection.outlook.com/?url=https%3A%2F%2Flore.kernel.org%2Fall%2F20251106094742.2104099-1-maxime.chevallier%40bootlin.com%2F&data=05%7C02%7Cchristophe.leroy%40csgroup.eu%7Cc3434ae46bd540e2e87708de228ca8e0%7C8b87af7d86474dc78df45f69a2011bb5%7C0%7C0%7C638986184692220733%7CUnknown%7CTWFpbGZsb3d8eyJFbXB0eU1hcGkiOnRydWUsIlYiOiIwLjAuMDAwMCIsIlAiOiJXaW4zMiIsIkFOIjoiTWFpbCIsIldUIjoyfQ%3D%3D%7C0%7C%7C%7C&sdata=SBossM1KcxSldiNhV71oehI66tKkBsYryLXLVuu9JWs%3D&reserved=0
-> V14: https://eur01.safelinks.protection.outlook.com/?url=https%3A%2F%2Flore.kernel.org%2Fnetdev%2F20251013143146.364919-1-maxime.chevallier%40bootlin.com%2F&data=05%7C02%7Cchristophe.leroy%40csgroup.eu%7Cc3434ae46bd540e2e87708de228ca8e0%7C8b87af7d86474dc78df45f69a2011bb5%7C0%7C0%7C638986184692237443%7CUnknown%7CTWFpbGZsb3d8eyJFbXB0eU1hcGkiOnRydWUsIlYiOiIwLjAuMDAwMCIsIlAiOiJXaW4zMiIsIkFOIjoiTWFpbCIsIldUIjoyfQ%3D%3D%7C0%7C%7C%7C&sdata=QvbbA%2BUzln1JQTwT4Hhn8SXropD4pQ8Ss8UkIAggpH0%3D&reserved=0
-> V13: https://eur01.safelinks.protection.outlook.com/?url=https%3A%2F%2Flore.kernel.org%2Fnetdev%2F20250921160419.333427-1-maxime.chevallier%40bootlin.com%2F&data=05%7C02%7Cchristophe.leroy%40csgroup.eu%7Cc3434ae46bd540e2e87708de228ca8e0%7C8b87af7d86474dc78df45f69a2011bb5%7C0%7C0%7C638986184692252741%7CUnknown%7CTWFpbGZsb3d8eyJFbXB0eU1hcGkiOnRydWUsIlYiOiIwLjAuMDAwMCIsIlAiOiJXaW4zMiIsIkFOIjoiTWFpbCIsIldUIjoyfQ%3D%3D%7C0%7C%7C%7C&sdata=vJvKSHr8SSa9L9dU4rGkoWUcKxpnG%2FxZ2zoR7FOyeYE%3D&reserved=0
-> V12: https://eur01.safelinks.protection.outlook.com/?url=https%3A%2F%2Flore.kernel.org%2Fnetdev%2F20250909152617.119554-1-maxime.chevallier%40bootlin.com%2F&data=05%7C02%7Cchristophe.leroy%40csgroup.eu%7Cc3434ae46bd540e2e87708de228ca8e0%7C8b87af7d86474dc78df45f69a2011bb5%7C0%7C0%7C638986184692268301%7CUnknown%7CTWFpbGZsb3d8eyJFbXB0eU1hcGkiOnRydWUsIlYiOiIwLjAuMDAwMCIsIlAiOiJXaW4zMiIsIkFOIjoiTWFpbCIsIldUIjoyfQ%3D%3D%7C0%7C%7C%7C&sdata=ZcyGywWFEONxQYbNszGbv57WK5KxWPP2%2FJFYVeu5ev4%3D&reserved=0
-> V11: https://eur01.safelinks.protection.outlook.com/?url=https%3A%2F%2Flore.kernel.org%2Fnetdev%2F20250814135832.174911-1-maxime.chevallier%40bootlin.com%2F&data=05%7C02%7Cchristophe.leroy%40csgroup.eu%7Cc3434ae46bd540e2e87708de228ca8e0%7C8b87af7d86474dc78df45f69a2011bb5%7C0%7C0%7C638986184692283514%7CUnknown%7CTWFpbGZsb3d8eyJFbXB0eU1hcGkiOnRydWUsIlYiOiIwLjAuMDAwMCIsIlAiOiJXaW4zMiIsIkFOIjoiTWFpbCIsIldUIjoyfQ%3D%3D%7C0%7C%7C%7C&sdata=wRthSrgiu5zV4pV6Wj6rrRp4Zj3Y%2FU7pCWuJq3Kkmi4%3D&reserved=0
-> V10: https://eur01.safelinks.protection.outlook.com/?url=https%3A%2F%2Flore.kernel.org%2Fnetdev%2F20250722121623.609732-1-maxime.chevallier%40bootlin.com%2F&data=05%7C02%7Cchristophe.leroy%40csgroup.eu%7Cc3434ae46bd540e2e87708de228ca8e0%7C8b87af7d86474dc78df45f69a2011bb5%7C0%7C0%7C638986184692298054%7CUnknown%7CTWFpbGZsb3d8eyJFbXB0eU1hcGkiOnRydWUsIlYiOiIwLjAuMDAwMCIsIlAiOiJXaW4zMiIsIkFOIjoiTWFpbCIsIldUIjoyfQ%3D%3D%7C0%7C%7C%7C&sdata=AF7a%2FNgMAoFZKQf1oURLWqCYglsKG%2FnmLkuyYc1ubMM%3D&reserved=0
-> V9: https://eur01.safelinks.protection.outlook.com/?url=https%3A%2F%2Flore.kernel.org%2Fnetdev%2F20250717073020.154010-1-maxime.chevallier%40bootlin.com%2F&data=05%7C02%7Cchristophe.leroy%40csgroup.eu%7Cc3434ae46bd540e2e87708de228ca8e0%7C8b87af7d86474dc78df45f69a2011bb5%7C0%7C0%7C638986184692316899%7CUnknown%7CTWFpbGZsb3d8eyJFbXB0eU1hcGkiOnRydWUsIlYiOiIwLjAuMDAwMCIsIlAiOiJXaW4zMiIsIkFOIjoiTWFpbCIsIldUIjoyfQ%3D%3D%7C0%7C%7C%7C&sdata=X8olmChjGo3BtOADzrwW6H5Ho9C15OB%2FTmCgYWnRdos%3D&reserved=0
-> V8: https://eur01.safelinks.protection.outlook.com/?url=https%3A%2F%2Flore.kernel.org%2Fnetdev%2F20250710134533.596123-1-maxime.chevallier%40bootlin.com%2F&data=05%7C02%7Cchristophe.leroy%40csgroup.eu%7Cc3434ae46bd540e2e87708de228ca8e0%7C8b87af7d86474dc78df45f69a2011bb5%7C0%7C0%7C638986184692334432%7CUnknown%7CTWFpbGZsb3d8eyJFbXB0eU1hcGkiOnRydWUsIlYiOiIwLjAuMDAwMCIsIlAiOiJXaW4zMiIsIkFOIjoiTWFpbCIsIldUIjoyfQ%3D%3D%7C0%7C%7C%7C&sdata=cInZohiCGoQVoSaAOw4ym7ahfyMYuVTFsWvo4fi500A%3D&reserved=0
-> v7: https://eur01.safelinks.protection.outlook.com/?url=https%3A%2F%2Flore.kernel.org%2Fnetdev%2F20250630143315.250879-1-maxime.chevallier%40bootlin.com%2F&data=05%7C02%7Cchristophe.leroy%40csgroup.eu%7Cc3434ae46bd540e2e87708de228ca8e0%7C8b87af7d86474dc78df45f69a2011bb5%7C0%7C0%7C638986184692351034%7CUnknown%7CTWFpbGZsb3d8eyJFbXB0eU1hcGkiOnRydWUsIlYiOiIwLjAuMDAwMCIsIlAiOiJXaW4zMiIsIkFOIjoiTWFpbCIsIldUIjoyfQ%3D%3D%7C0%7C%7C%7C&sdata=uvaVASBiuBBG01svghO%2BSey7q95F3LzfxDz%2FmPOGB1Q%3D&reserved=0
-> V6: https://eur01.safelinks.protection.outlook.com/?url=https%3A%2F%2Flore.kernel.org%2Fnetdev%2F20250507135331.76021-1-maxime.chevallier%40bootlin.com%2F&data=05%7C02%7Cchristophe.leroy%40csgroup.eu%7Cc3434ae46bd540e2e87708de228ca8e0%7C8b87af7d86474dc78df45f69a2011bb5%7C0%7C0%7C638986184692371801%7CUnknown%7CTWFpbGZsb3d8eyJFbXB0eU1hcGkiOnRydWUsIlYiOiIwLjAuMDAwMCIsIlAiOiJXaW4zMiIsIkFOIjoiTWFpbCIsIldUIjoyfQ%3D%3D%7C0%7C%7C%7C&sdata=gu5JPp%2BYLJwgiqvD8axB2ipjHa1ICHJlPBjvzm5mU70%3D&reserved=0
-> V5: https://eur01.safelinks.protection.outlook.com/?url=https%3A%2F%2Flore.kernel.org%2Fnetdev%2F20250425141511.182537-1-maxime.chevallier%40bootlin.com%2F&data=05%7C02%7Cchristophe.leroy%40csgroup.eu%7Cc3434ae46bd540e2e87708de228ca8e0%7C8b87af7d86474dc78df45f69a2011bb5%7C0%7C0%7C638986184692389327%7CUnknown%7CTWFpbGZsb3d8eyJFbXB0eU1hcGkiOnRydWUsIlYiOiIwLjAuMDAwMCIsIlAiOiJXaW4zMiIsIkFOIjoiTWFpbCIsIldUIjoyfQ%3D%3D%7C0%7C%7C%7C&sdata=Os1hQJEu4LbqdPMdAuwBArekFd7OfRuTG%2Fgq0CzmqY8%3D&reserved=0
-> V4: https://eur01.safelinks.protection.outlook.com/?url=https%3A%2F%2Flore.kernel.org%2Fnetdev%2F20250213101606.1154014-1-maxime.chevallier%40bootlin.com%2F&data=05%7C02%7Cchristophe.leroy%40csgroup.eu%7Cc3434ae46bd540e2e87708de228ca8e0%7C8b87af7d86474dc78df45f69a2011bb5%7C0%7C0%7C638986184692405507%7CUnknown%7CTWFpbGZsb3d8eyJFbXB0eU1hcGkiOnRydWUsIlYiOiIwLjAuMDAwMCIsIlAiOiJXaW4zMiIsIkFOIjoiTWFpbCIsIldUIjoyfQ%3D%3D%7C0%7C%7C%7C&sdata=ve3LPTeQ5KEQbIfCB8sS2mxAMIeT2nvHFa0srBqSS6M%3D&reserved=0
-> V3: https://eur01.safelinks.protection.outlook.com/?url=https%3A%2F%2Flore.kernel.org%2Fnetdev%2F20250207223634.600218-1-maxime.chevallier%40bootlin.com%2F&data=05%7C02%7Cchristophe.leroy%40csgroup.eu%7Cc3434ae46bd540e2e87708de228ca8e0%7C8b87af7d86474dc78df45f69a2011bb5%7C0%7C0%7C638986184692420383%7CUnknown%7CTWFpbGZsb3d8eyJFbXB0eU1hcGkiOnRydWUsIlYiOiIwLjAuMDAwMCIsIlAiOiJXaW4zMiIsIkFOIjoiTWFpbCIsIldUIjoyfQ%3D%3D%7C0%7C%7C%7C&sdata=gN36neiSqhj%2FslVSU8oWrOvdam2nZ08I2tVW1BjGqNQ%3D&reserved=0
-> RFC V2: https://eur01.safelinks.protection.outlook.com/?url=https%3A%2F%2Flore.kernel.org%2Fnetdev%2F20250122174252.82730-1-maxime.chevallier%40bootlin.com%2F&data=05%7C02%7Cchristophe.leroy%40csgroup.eu%7Cc3434ae46bd540e2e87708de228ca8e0%7C8b87af7d86474dc78df45f69a2011bb5%7C0%7C0%7C638986184692435564%7CUnknown%7CTWFpbGZsb3d8eyJFbXB0eU1hcGkiOnRydWUsIlYiOiIwLjAuMDAwMCIsIlAiOiJXaW4zMiIsIkFOIjoiTWFpbCIsIldUIjoyfQ%3D%3D%7C0%7C%7C%7C&sdata=ae3RoCo5SF0u5vvruXV9UGgXojDP0Xy%2BCKnMEZxXaL0%3D&reserved=0
-> RFC V1: https://eur01.safelinks.protection.outlook.com/?url=https%3A%2F%2Flore.kernel.org%2Fnetdev%2F20241220201506.2791940-1-maxime.chevallier%40bootlin.com%2F&data=05%7C02%7Cchristophe.leroy%40csgroup.eu%7Cc3434ae46bd540e2e87708de228ca8e0%7C8b87af7d86474dc78df45f69a2011bb5%7C0%7C0%7C638986184692450191%7CUnknown%7CTWFpbGZsb3d8eyJFbXB0eU1hcGkiOnRydWUsIlYiOiIwLjAuMDAwMCIsIlAiOiJXaW4zMiIsIkFOIjoiTWFpbCIsIldUIjoyfQ%3D%3D%7C0%7C%7C%7C&sdata=wXdzjfHVActY7No3GBa%2BA%2FWSIS9OXtmLwGqebXEcJvc%3D&reserved=0
-> 
-> Maxime
-> 
-> Maxime Chevallier (15):
->    dt-bindings: net: Introduce the ethernet-connector description
->    net: ethtool: Introduce ETHTOOL_LINK_MEDIUM_* values
->    net: phy: Introduce PHY ports representation
->    net: phy: dp83822: Add support for phy_port representation
->    dt-bindings: net: dp83822: Deprecate ti,fiber-mode
->    net: phy: Create a phy_port for PHY-driven SFPs
->    net: phy: Introduce generic SFP handling for PHY drivers
->    net: phy: marvell-88x2222: Support SFP through phy_port interface
->    net: phy: marvell: Support SFP through phy_port interface
->    net: phy: marvell10g: Support SFP through phy_port
->    net: phy: at803x: Support SFP through phy_port interface
->    net: phy: qca807x: Support SFP through phy_port interface
->    net: phy: Only rely on phy_port for PHY-driven SFP
->    net: phy: dp83822: Add SFP support through the phy_port interface
->    Documentation: networking: Document the phy_port infrastructure
-> 
->   .../bindings/net/ethernet-connector.yaml      |  57 +++
->   .../devicetree/bindings/net/ethernet-phy.yaml |  18 +
->   .../devicetree/bindings/net/ti,dp83822.yaml   |   9 +-
->   Documentation/networking/index.rst            |   1 +
->   Documentation/networking/phy-port.rst         | 111 ++++++
->   MAINTAINERS                                   |   3 +
->   drivers/net/phy/Makefile                      |   2 +-
->   drivers/net/phy/dp83822.c                     |  78 ++--
->   drivers/net/phy/marvell-88x2222.c             |  94 ++---
->   drivers/net/phy/marvell.c                     |  92 ++---
->   drivers/net/phy/marvell10g.c                  |  52 +--
->   drivers/net/phy/phy-caps.h                    |   5 +
->   drivers/net/phy/phy-core.c                    |   6 +
->   drivers/net/phy/phy_caps.c                    |  65 ++++
->   drivers/net/phy/phy_device.c                  | 337 +++++++++++++++++-
->   drivers/net/phy/phy_port.c                    | 212 +++++++++++
->   drivers/net/phy/qcom/at803x.c                 |  77 ++--
->   drivers/net/phy/qcom/qca807x.c                |  72 ++--
->   include/linux/ethtool.h                       |  39 +-
->   include/linux/phy.h                           |  63 +++-
->   include/linux/phy_port.h                      |  99 +++++
->   include/uapi/linux/ethtool.h                  |  20 ++
->   net/ethtool/common.c                          | 268 ++++++++------
->   23 files changed, 1399 insertions(+), 381 deletions(-)
->   create mode 100644 Documentation/devicetree/bindings/net/ethernet-connector.yaml
->   create mode 100644 Documentation/networking/phy-port.rst
->   create mode 100644 drivers/net/phy/phy_port.c
->   create mode 100644 include/linux/phy_port.h
-> 
 
 
