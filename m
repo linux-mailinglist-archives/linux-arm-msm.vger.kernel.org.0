@@ -1,266 +1,211 @@
-Return-Path: <linux-arm-msm+bounces-81929-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-81930-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [IPv6:2605:f480:58:1:0:1994:3:14])
-	by mail.lfdr.de (Postfix) with ESMTPS id 53BF4C5FD04
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 15 Nov 2025 02:11:38 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 16E9DC5FF37
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 15 Nov 2025 04:08:19 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 774C34E85A8
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 15 Nov 2025 01:10:40 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id A35513AB8F1
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 15 Nov 2025 03:08:17 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E95491DF273;
-	Sat, 15 Nov 2025 01:10:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 518261DE4E1;
+	Sat, 15 Nov 2025 03:08:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="iaqO2cM8"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="RAWU0XNi";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="BdHMnUSj"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-il1-f176.google.com (mail-il1-f176.google.com [209.85.166.176])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D13C19D092
-	for <linux-arm-msm@vger.kernel.org>; Sat, 15 Nov 2025 01:09:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.176
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90BDD2AE99
+	for <linux-arm-msm@vger.kernel.org>; Sat, 15 Nov 2025 03:08:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763169003; cv=none; b=g0fFnG9282t4Pxjc/eqlgtKwSFNm5azttblJPTstEHLvOtZzMIZmHvUOMavX0K6P5d2ziX8zIb9MZV52kG38Yr0izwWcSJu/8dch8ugVJeEUqWeQnUgt3DRjBlZ6rvoH8J/eytwQk2cAZze5YFB0JVIuI8x1vzG2QbJkAjZl5xc=
+	t=1763176096; cv=none; b=F6WE3OzYqEGB6py/IReTJC2FBcz6mGjXiPkrgivkS0TFjk9b5CkXfX2baj36KkvD+Ud2BCL+s5DtfBjO4nqX2n55/+cxpY9fNKzmYsYvZHcz30p+6X12lZ8dakDW8t5KwmBt5Mhx8T8E0sUvKybaK6Ts3LWFzhBtE51aeXDIl/Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763169003; c=relaxed/simple;
-	bh=DKi4sfK3OoMGkgubSa+To/YAjgv5sLBhHCyNIeECLAo=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=jQiXRHZJYPIHL1WUrqG2Bkb5thOnuXyl7kcv3QSjaRfn0fOf7fpBV5P+03LonwmoHzJYPY29jdBHZqh3+gVD69tMo0S2ihM4R59u8lNCbfVrFQj8WZRihQAHneL1nko7hNL6igWk+sHA+ZVG9nrqGcaKhLTcYmMnXZBHOtgDGv8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=iaqO2cM8; arc=none smtp.client-ip=209.85.166.176
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-il1-f176.google.com with SMTP id e9e14a558f8ab-434709e7cc9so12184615ab.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 14 Nov 2025 17:09:59 -0800 (PST)
+	s=arc-20240116; t=1763176096; c=relaxed/simple;
+	bh=Ar/QIifOQLCAoE88Y/UPeNAcQ8ZidFpXscg4CHs0wGs=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=bd4PKq80CPdhl42I/cVZSku9Y+tSVDFv55Uz+GhyAWrRzB4usJIbdkU5hHKRiYsnOedFRIyHnbFiqCtcNioTFKTKUmM/E9O66HX6XulDf9fDsPAfpnP7apPnoMMt5LgIle4FyCFVbUPLZfvEN76XabpiSFLLDAuWMFHGIVa6lM8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=RAWU0XNi; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=BdHMnUSj; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 5AF0Jsws1136468
+	for <linux-arm-msm@vger.kernel.org>; Sat, 15 Nov 2025 03:08:13 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=qcppdkim1; bh=U65TdZ0xWh9RTPUOJQQdTg
+	JX0pVxkPF+VkIbt7jf5ZY=; b=RAWU0XNicy2pzeWvhi+GH8iUklYxRBrHGlITlP
+	In1P47D7RICMJOAHNrspvyOSkViaQ6ui+JklEhXF7C1+O9FYl+YWfe+bcr2DpjpP
+	Qi2u4qSFEhCMCL49BL1uRlIJYuKBsmtij8LdhNNk2q6lRxDRjqkOaVwocZboC0hm
+	RUDBfOCetco35fIqO15KPz5OdcyEY8AkpDHyaGYjeoVY1mT9+V6uv1aAW5zGqQvD
+	noKzpLwjdkFy+TvJaXqpEMISe/VmhC1OZyOaFTaGc73aptncWjfPuNJ66dhsJYU9
+	cGL/rTRxCGrZ0GTkHJxkBP2wFhQI2DJ9Y2gaJzjP6A0mCkGg==
+Received: from mail-qv1-f71.google.com (mail-qv1-f71.google.com [209.85.219.71])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4aeevpr8uk-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Sat, 15 Nov 2025 03:08:13 +0000 (GMT)
+Received: by mail-qv1-f71.google.com with SMTP id 6a1803df08f44-8803f43073bso95046166d6.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 14 Nov 2025 19:08:13 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1763168999; x=1763773799; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=o0qRv7D69CzuYjO3j1EhxqH/ct/yNh/3IP2tz5K1Gqw=;
-        b=iaqO2cM8ep5j/UT1876ewksjWsETD2ojJsc41yh97oFQy7R+mFlYJSPpxYWAFMXd8N
-         2HI54wrNHegwGsbwiEImXmFL+SRmc1gPF8kwrO6Vhk9/u4zcqs5KFTEAhkxGx9vrRXZB
-         dtE0zgJMZIlgHh/y8/Q5NdbRXjauYyon1eS3Dn0NmfnSSZTXfk2ip+rRPhsR0tmcmIzn
-         ZhHNckvpl/dVJ/04YzXnAFQn469wynIk4+l0aVglMhUV2dnYzF6KxUbMqUiqm0XTRsVT
-         Y2pDwRDXgEb9m3Yc5RO7WXwH/fmGqjWI4AfToqw1zqPYUOierG+U5VxOwv59VpK9m8Ig
-         8DvA==
+        d=oss.qualcomm.com; s=google; t=1763176092; x=1763780892; darn=vger.kernel.org;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=U65TdZ0xWh9RTPUOJQQdTgJX0pVxkPF+VkIbt7jf5ZY=;
+        b=BdHMnUSjtQuUQTEWivKPKDyc3Kqyy+k4g9DivFhZrD7MvPcMLB5NIJlxmc6qvBbwLb
+         S2ya59uxbEnRyX1meJeOMA1prXGzoMiu1X1wnRNn0OZg0qIa7/Ewk693E/43Bv7uHsV1
+         sfbxkmA6lja1lOAlWz93uPlckAwWJ6j9W5eIqxavV9tphaVhwBncfaou03N+Rtui7AAJ
+         upHFBVY7J45g+nELPCaA6Is5aOTV/s+t4/RgrSre6kjPx/XBVlDen0bwbCyWFon6wH8b
+         VmXmWcKq2d8HfI0eKx9+xM7VkDkDkL0f40GBF2g5C2mjE9c9X6okWigx2W8odJbuNipR
+         R5QQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1763168999; x=1763773799;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=o0qRv7D69CzuYjO3j1EhxqH/ct/yNh/3IP2tz5K1Gqw=;
-        b=DMJr9qtI54ZmVLoxUcSyXk3kENVbbxmsA+ctMqBV+hAtrfHBHcViF58J88A8h6/cCV
-         q7DsDku0v2JxwbB+G4F86OnFkE/t61JWG4M+5P19f80v8gXRi+VwcOyxJaJ0B9Ka+SJ/
-         AIkM8RQQkwBnbuZCRpb7IhHVYF2XCjB+gjpTsmETIZHgKQ/rVltfwsUn+2IBQOLf/68G
-         r4XOUcVUK0utySBMj+VEyqkFZO1N1Gve0HMFDT03pNj3nApCXUNbntb9jSRNFwqrH+YV
-         WcMkzVyqoz22K+7ti+NfvijU8PgGxvR8pbP2oox+e2l1c6SotzhCcu5nU9L76lgaRM7B
-         DXfA==
-X-Forwarded-Encrypted: i=1; AJvYcCWecdItCxa8sEuUQi2cqfRcVrC7R4TgXJnTOXatgBZhkZSE1t6Em74SrDFE59o58lOce28mUbpZ7da8azRn@vger.kernel.org
-X-Gm-Message-State: AOJu0YwRNrvaB+AeGfLnAbFAMfV+Z1BNKNbzO+gcUNbeSLb/TGYFaJ+R
-	a+JxA1OfWWd3wS04Jsf50vrzfc4ciTWtTq8BliObHiu+3qSlawIYzUZnUvbyFZvH0xPIkkeYd6e
-	3eTLTcCyRfX/9rNIOvDkIFZ9jr3wVHvk=
-X-Gm-Gg: ASbGncsNaXpt052h6LkQYcEqLYWYxs0iYXPgnCER3leLcGW1U7iSD9ducLZksRzk8IS
-	STo+x6obcx3fXnG8j35z3FJEjjkpBgsnA3n63qc8uX/6kNzwMwsreDEwM3WnSUsqPYslkX9xEjT
-	dz8ZFD9KXUu75/gLj1fp+DBuTGaH8/g04CqKK7Fj9qwAbkqO3aRXuHnwurXOS2Vge42HoSlg4fc
-	KDvG8OsXqe/ySdy+KY7Z8OqgW7+W14rwrq26Crqck2+7suJmCL5zjKMJuxKmMz81bDfvnq1vIPV
-	e68vZQ==
-X-Google-Smtp-Source: AGHT+IGKr+SF3i4IMqwtFmH1LrnsWvseLPJ1eP5fnws2PS56tgVe0SFilID5gX/syOfN/2tpbyjVHNc8lJjWhGJSBeY=
-X-Received: by 2002:a05:6e02:3784:b0:433:2812:8066 with SMTP id
- e9e14a558f8ab-4348c91b9ecmr67887805ab.23.1763168998948; Fri, 14 Nov 2025
- 17:09:58 -0800 (PST)
+        d=1e100.net; s=20230601; t=1763176092; x=1763780892;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=U65TdZ0xWh9RTPUOJQQdTgJX0pVxkPF+VkIbt7jf5ZY=;
+        b=PitABoMmtXwIQiFW4Z6S9HhCBF1ciHlylYEKRSvA+7hXTPgRpIwfV5R5l1q9VyUQWH
+         pmO/dfyg2CGv/taUqFs67dmConJeMG9kzStNk1aipSUn/WJ+GQ7Vi3Wbn7Z2IHzQigGH
+         Pci/tECQW1m+dRSeZtsRS45Jmmd447tJYksEcb3Xf0mpWFUu7mZV/rCX4D9kdDNkrKkf
+         u0dJQVAfP9RIQ299/jX2OYnPznacwYGTRFxAhtfoNKOiTbnlJIcJ88UDoJx5TaDmstMu
+         veIyVIrpSR+eWO3dQHjlgtwUU10ZCdNpTeL+D/7H/qw5OiNeJORlYMldBsgAnuc002tT
+         1R6w==
+X-Gm-Message-State: AOJu0YzDS1lEMRLF4ozmpK7v3qFBbZ4Pby6mjedEiM5lUEjknvvZXtGX
+	JFa45wFL4PzAyNgTUgsRA6lSjbvHHQiqHMchiH3fMd6JtYXAPd7TB/aB7h40DwKDvbNgFCZ2GgU
+	BV/CRGQPX67Htnupiy8g8oDME72xP4HfNZp6ZK87dj5ryVRAGwuvChk1kZQV5nl0p8lHY
+X-Gm-Gg: ASbGncs7iGhyzooh91IE1bx1DvtpgBnY+sC/Cem24S83qe4Vf/Iw/Qke0BJCBH4XSgG
+	MMkputs8N46jdRE0TzD46h5TnzsS2CZ7nBoxPjsizTw7M2DIfZKkNN2UaEtMrM5PE0CK8MGSXcd
+	RkvHxJ+Fq2W0qEXJUV1ubw/Mlinppcdyfs//XsvKZjdBZmD0oA+iRofzhlYwPEramcAZujjWWRI
+	iYOCeQ0+9tubrfAbtHU80+L5alEYqv3t5pJEuBW1VxDQoG//uMr9vhi5kE72X1iX9UWNNfhrRb6
+	djlxd5kMVKhUWPb86OGcrczTxFTXr+wT90cq7d2MfVWoUHmyuYVD0iITY0k2NaepoSBDRMwwd7a
+	SD5/KpeSgS96eA2dqqr83BUouWeYRalRWGFoP++bNt4M297/QIEk9TpGi+2G+S/VtCQDgTT/L1x
+	FZkiu7OmEP5T5y
+X-Received: by 2002:a05:6214:d01:b0:880:51ab:a3e3 with SMTP id 6a1803df08f44-882926e53a2mr72211576d6.67.1763176092590;
+        Fri, 14 Nov 2025 19:08:12 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IETRNQmWX8aGvtyoUqPy2210fEEuV0gG5CavmUUbG/DhynOs/idqSmfZ0BxhEj1o5mR+Mms2A==
+X-Received: by 2002:a05:6214:d01:b0:880:51ab:a3e3 with SMTP id 6a1803df08f44-882926e53a2mr72211336d6.67.1763176092032;
+        Fri, 14 Nov 2025 19:08:12 -0800 (PST)
+Received: from umbar.lan (2001-14ba-a0c3-3a00-264b-feff-fe8b-be8a.rev.dnainternet.fi. [2001:14ba:a0c3:3a00:264b:feff:fe8b:be8a])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-595804003afsm1470162e87.71.2025.11.14.19.08.10
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 14 Nov 2025 19:08:11 -0800 (PST)
+From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Date: Sat, 15 Nov 2025 05:08:08 +0200
+Subject: [PATCH] drm/msm/dpu: disable gamma correction unit on SC7180
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20251114-kaana-gpu-support-v3-0-92300c7ec8ff@oss.qualcomm.com>
-In-Reply-To: <20251114-kaana-gpu-support-v3-0-92300c7ec8ff@oss.qualcomm.com>
-From: Rob Clark <robdclark@gmail.com>
-Date: Fri, 14 Nov 2025 17:09:47 -0800
-X-Gm-Features: AWmQ_blMGRjNwnGFGy7X8EnS3-0DGpK0qt7AurVAQy8ubC4mlk6tdicKfSfYn9U
-Message-ID: <CAF6AEGt=qUeEcNbyETriZLnpwt+Zg7K2N7SUsc4Riu5z54VaoQ@mail.gmail.com>
-Subject: Re: [PATCH v3 00/20] drm/msm/adreno: Introduce Adreno 8xx family support
-To: Akhil P Oommen <akhilpo@oss.qualcomm.com>
-Cc: Rob Clark <robin.clark@oss.qualcomm.com>, Bjorn Andersson <andersson@kernel.org>, 
-	Konrad Dybcio <konradybcio@kernel.org>, Sean Paul <sean@poorly.run>, 
-	Dmitry Baryshkov <lumag@kernel.org>, Abhinav Kumar <abhinav.kumar@linux.dev>, 
-	Jessica Zhang <jesszhan0024@gmail.com>, Marijn Suijten <marijn.suijten@somainline.org>, 
-	David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, Jonathan Marek <jonathan@marek.ca>, 
-	Jordan Crouse <jordan@cosmicpenguin.net>, Will Deacon <will@kernel.org>, 
-	Robin Murphy <robin.murphy@arm.com>, Joerg Roedel <joro@8bytes.org>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, Maxime Ripard <mripard@kernel.org>, 
-	Thomas Zimmermann <tzimmermann@suse.de>, Connor Abbott <cwabbott0@gmail.com>, linux-arm-msm@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, dri-devel@lists.freedesktop.org, 
-	freedreno@lists.freedesktop.org, linux-arm-kernel@lists.infradead.org, 
-	iommu@lists.linux.dev, devicetree@vger.kernel.org, 
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, Rob Clark <rob.clark@oss.qualcomm.com>, 
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>, Krzysztof Kozlowski <krzk@kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20251115-dpu-fix-gc-v1-1-0a4fd718208d@oss.qualcomm.com>
+X-B4-Tracking: v=1; b=H4sIAJfuF2kC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyDHUUlJIzE
+ vPSU3UzU4B8JSMDI1NDQ0NT3ZSCUt20zArd9GRdS2PDtNTEZHNTcwNTJaCGgqJUoAzYsOjY2lo
+ Ac/x6PVwAAAA=
+X-Change-ID: 20251115-dpu-fix-gc-931feac75705
+To: Rob Clark <robin.clark@oss.qualcomm.com>,
+        Dmitry Baryshkov <lumag@kernel.org>,
+        Abhinav Kumar <abhinav.kumar@linux.dev>,
+        Jessica Zhang <jesszhan0024@gmail.com>, Sean Paul <sean@poorly.run>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>
+Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org,
+        Federico Amedeo Izzo <federico@izzo.pro>
+X-Mailer: b4 0.14.2
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2060;
+ i=dmitry.baryshkov@oss.qualcomm.com; h=from:subject:message-id;
+ bh=Ar/QIifOQLCAoE88Y/UPeNAcQ8ZidFpXscg4CHs0wGs=;
+ b=owEBbQGS/pANAwAKAYs8ij4CKSjVAcsmYgBpF+6aIYfjo0upzZFrpTKA6w5gwaS8l/xy/i+Bg
+ XtDzufUWqyJATMEAAEKAB0WIQRMcISVXLJjVvC4lX+LPIo+Aiko1QUCaRfumgAKCRCLPIo+Aiko
+ 1a4SCACRd6VY2fRsbqKupUjg02if9uHDZMa1MI2Rl7krml3BiE1IJahoi8BOkY3tEwKN6oP+XFE
+ HDmVMgWp+LJLImUqHSeoe/QvRjgvoZpq2piGjKWFuuSMsA0LHLIFTDkfKEURPqDIGZ3YSuChfbn
+ fuqh/6Kv7+oBml+JT1uNL3UnL4MzG0JjE/hcNBcou161YO0eLGnRwAW6vcG7IU9fowU7cktvB7D
+ HcixQQZLA/KwGO9fKVaiHdEfQ+400BUDzbwTRO9G5oMAzQoHVC2+ywnPt1p1AAujIUtwUA/FqlF
+ ptdWiKrQHXo0G2VGV0b0weiVkUmu/ntXrC7UQ4GrPffgVg1F
+X-Developer-Key: i=dmitry.baryshkov@oss.qualcomm.com; a=openpgp;
+ fpr=8F88381DD5C873E4AE487DA5199BF1243632046A
+X-Proofpoint-ORIG-GUID: IQBtzrrZTckJSSNfRku6wnmVJNuUB7kX
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMTE1MDAyNCBTYWx0ZWRfXxQSAzwywe5oC
+ 6t687Hqqit6zgrAqAWf0VNP6XfH9P8iv6lxUP9hUwCoOAJcYtovJiNIxFQU/x7sCsfIzqPrgIaL
+ za9HobAsC6SnvZ5Zubus/bN+QGG9bz2UAhzDyy2rNu1j8P320sfeZ9NMjUUa3NhfQuNrL1rb8Jn
+ 22ywVKZss/SF1rtdHkg6JqPjhXrUs2sGRRhgcKP7wtfgiuSVXMTc4sBE+FIxWNaZxkiqcA8JqjA
+ qgX86EyF1/UBIdV4Zbb8kh/IHA1EGOuwZWwVmk0/+9bSphZPNqwBOwq+9BYM3GJrX1pSwkxmvC7
+ dIeR1aOIVgEebZa0gXczOhEa1xGQbHNghVQyyw7RLzHoZI1Q+aLGfQ6L3sY/VjuhfnY5F6ZDZnl
+ ozvCyTDAXlobhGzYMybVv8TiYxCufg==
+X-Authority-Analysis: v=2.4 cv=NLfYOk6g c=1 sm=1 tr=0 ts=6917ee9d cx=c_pps
+ a=UgVkIMxJMSkC9lv97toC5g==:117 a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10
+ a=6UeiqGixMTsA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=EUspDBNiAAAA:8 a=njhVRvNgssgpu8VHMlYA:9 a=QEXdDO2ut3YA:10
+ a=1HOtulTD9v-eNWfpl4qZ:22
+X-Proofpoint-GUID: IQBtzrrZTckJSSNfRku6wnmVJNuUB7kX
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
+ definitions=2025-11-15_01,2025-11-13_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ spamscore=0 priorityscore=1501 lowpriorityscore=0 impostorscore=0
+ suspectscore=0 clxscore=1015 bulkscore=0 malwarescore=0 adultscore=0
+ phishscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2510240001
+ definitions=main-2511150024
 
-On Thu, Nov 13, 2025 at 3:29=E2=80=AFPM Akhil P Oommen <akhilpo@oss.qualcom=
-m.com> wrote:
->
-> This series adds the A8xx HWL along with Adreno 840 GPU support to the
-> drm-msm driver. A8x is the next generation in the Adreno family,
-> featuring a significant hardware design change. A major update to the
-> design is the introduction of 'Slice' architecture. Slices are sort of
-> mini-GPUs within the GPU which are more independent in processing Graphic=
-s
-> and compute workloads. Also, in addition to the BV and BR pipe we saw in
-> A7x, CP has more concurrency with additional pipes.
->
-> From KMD-HW SWI perspective, there is significant register shuffling in
-> some of the blocks. For slice or aperture related registers which are
-> virtualized now, KMD/crashdumper has to configure an aperture register
-> to access them. On the GMU front, there are some shuffling in register
-> offsets, but it is manageable as of now. There is a new HFI message to
-> transfer data tables and new power related features to support higher
-> peak currents and thermal mitigations.
->
-> Adreno 840 GPU is the second generation architecture in the A8x family
-> present in Kaanapali (a.k.a Snapdragon 8 Elite Gen 5) chipset [1]. It
-> has a maximum of 3 slices with 2 SPs per slice. Along with the 3-slice
-> configuration, there is also another 2-slice SKU (Partial Slice SKU).
-> A840 GPU has a bigger 18MB of GMEM which can be utilized for graphics
-> and compute workload. It also features improved Concurrent binning
-> support, UBWC v6 etc.
->
-> Adreno X2-85 GPU present in Glymur chipset is very similar to A840
-> architecturally. So adding initial support for it requires just an
-> additional entry in the catalog with the necessary register lists.
->
-> This series adds only the driver side support along with a few dt binding=
-s
-> updates. Devicetree patches will be sent separately, but those who
-> are interested can take look at it from the Qualcomm's public tree [2].
-> Features like coredump, gmu power features, ifpc, preemption etc will be
-> added in a future series.
->
-> Initial few patches are for improving code sharing between a6xx/a7xx and
-> a8x routines. Then there is a patch to rebase GMU register offsets from
-> GPU's base. Rest of the patches add A8x HWL and Adreno 840/X2-85 GPU
-> support.
->
-> Mesa support for A8x/A840 GPU is WIP and will be posted in the near
-> future.
+IGT reported test failures with Gamma correction block on SC7180.
+Disable GC subblock on SC7180 until we trage the issue.
 
-mesa support: https://gitlab.freedesktop.org/mesa/mesa/-/merge_requests/384=
-50
+Cc: Federico Amedeo Izzo <federico@izzo.pro>
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+---
+Most likely I will squash this into the GC patch
+---
+ drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_2_sc7180.h | 2 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c         | 9 +++++++++
+ 2 files changed, 10 insertions(+), 1 deletion(-)
 
-BR,
--R
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_2_sc7180.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_2_sc7180.h
+index c990ba3b5db02d65934179d5ad42bd740f6944b2..b6415adcea10126fb6bb29d60a9d4159052a61ba 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_2_sc7180.h
++++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_2_sc7180.h
+@@ -103,7 +103,7 @@ static const struct dpu_dspp_cfg sc7180_dspp[] = {
+ 	{
+ 		.name = "dspp_0", .id = DSPP_0,
+ 		.base = 0x54000, .len = 0x1800,
+-		.sblk = &sdm845_dspp_sblk,
++		.sblk = &sc7180_dspp_sblk,
+ 	},
+ };
+ 
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
+index 23bb39b471b71e3f313321ad1c7a6bd4d2159019..bfd34368a03641651530d9c564a74d2e9398f656 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
+@@ -389,6 +389,15 @@ static const struct dpu_dspp_sub_blks sdm845_dspp_sblk = {
+ 		.len = 0x90, .version = 0x40000},
+ };
+ 
++/*
++ * Some of Gamma-related IGT tests fail on SC7180. Disable GC until we triage
++ * those failures.
++ */
++static const struct dpu_dspp_sub_blks sc7180_dspp_sblk = {
++	.pcc = {.name = "pcc", .base = 0x1700,
++		.len = 0x90, .version = 0x40000},
++};
++
+ static const struct dpu_dspp_sub_blks sm8750_dspp_sblk = {
+ 	.pcc = {.name = "pcc", .base = 0x1700,
+ 		.len = 0x90, .version = 0x60000},
 
-> [1] https://www.qualcomm.com/products/mobile/snapdragon/smartphones/snapd=
-ragon-8-series-mobile-platforms/snapdragon-8-elite-gen-5
-> [2] https://git.codelinaro.org/clo/linux-kernel/kernel-qcom/-/commit/5fb7=
-2c27909d56660db6afe8e3e08a09bd83a284
->
-> Signed-off-by: Akhil P Oommen <akhilpo@oss.qualcomm.com>
-> ---
-> Changes in v3:
-> - Squash gpu smmu bindings patches for Kaana and Glymur (Krzysztof)
-> - Reuse a6xx_flush() and drop the patch that added submit_flush callback
-> - Fix GBIF configs for a640 and a650 family (Konrad)
-> - Add partial SKU detection support
-> - Correct Chipids in the catalog
-> - Add a new patch to drop SCRATCH reg dumps (Rob)
-> - Read slice info right after CX gdsc is up
-> - Don't drop raytracing support if preemption is unsupported
-> - Drop the unused A840 pwrup list (Konrad)
-> - Updates to A840 nonctxt list (Rob)
-> - Capture trailers
-> - Link to v2: https://lore.kernel.org/r/20251110-kaana-gpu-support-v2-0-b=
-ef18acd5e94@oss.qualcomm.com
->
-> Changes in v2:
-> - Rebase on top of next-20251110 tag
-> - Include support for Glymur chipset
-> - Drop the ubwc_config driver patch as it is picked up
-> - Sync the latest a6xx register definitions from Rob's tree
-> - New patch to do LRZ flush to fix pagefaults
-> - Reuse a7xx_cx_mem_init(). Dropped related patch (Connor)
-> - Few changes around cp protect configuration to align it with downstream
-> - Fix the incorrect register usage at few places
-> - Updates to non-ctxt register list
-> - Serialize aperture updates (Rob)
-> - More helpful cp error irq logging
-> - Split A8x GMU support patch (Dmitry)
-> - Use devm_platform_get_and_ioremap_resource in GMU init (Konrad)
-> - Link to v1: https://lore.kernel.org/r/20250930-kaana-gpu-support-v1-0-7=
-3530b0700ed@oss.qualcomm.com
->
-> ---
-> Akhil P Oommen (20):
->       drm/msm/a6xx: Flush LRZ cache before PT switch
->       drm/msm/a6xx: Fix the gemnoc workaround
->       drm/msm/a6xx: Skip dumping SCRATCH registers
->       drm/msm/adreno: Common-ize PIPE definitions
->       drm/msm/adreno: Move adreno_gpu_func to catalogue
->       drm/msm/adreno: Move gbif_halt() to adreno_gpu_func
->       drm/msm/adreno: Add MMU fault handler to adreno_gpu_func
->       drm/msm/a6xx: Sync latest register definitions
->       drm/msm/a6xx: Rebase GMU register offsets
->       drm/msm/a8xx: Add support for A8x GMU
->       drm/msm/a6xx: Improve MX rail fallback in RPMH vote init
->       drm/msm/a6xx: Share dependency vote table with GMU
->       drm/msm/adreno: Introduce A8x GPU Support
->       drm/msm/adreno: Support AQE engine
->       drm/msm/a8xx: Add support for Adreno 840 GPU
->       drm/msm/adreno: Do CX GBIF config before GMU start
->       drm/msm/a8xx: Add support for Adreno X2-85 GPU
->       dt-bindings: arm-smmu: Add Kaanapali and Glymur GPU SMMU
->       dt-bindings: display/msm/gmu: Add Adreno 840 GMU
->       dt-bindings: display/msm/gmu: Add Adreno X2-85 GMU
->
->  .../devicetree/bindings/display/msm/gmu.yaml       |   60 +-
->  .../devicetree/bindings/iommu/arm,smmu.yaml        |    2 +
->  drivers/gpu/drm/msm/Makefile                       |    2 +
->  drivers/gpu/drm/msm/adreno/a2xx_catalog.c          |    7 +-
->  drivers/gpu/drm/msm/adreno/a2xx_gpu.c              |   50 +-
->  drivers/gpu/drm/msm/adreno/a2xx_gpu.h              |    2 +
->  drivers/gpu/drm/msm/adreno/a3xx_catalog.c          |   13 +-
->  drivers/gpu/drm/msm/adreno/a3xx_gpu.c              |   52 +-
->  drivers/gpu/drm/msm/adreno/a3xx_gpu.h              |    2 +
->  drivers/gpu/drm/msm/adreno/a4xx_catalog.c          |    7 +-
->  drivers/gpu/drm/msm/adreno/a4xx_gpu.c              |   54 +-
->  drivers/gpu/drm/msm/adreno/a4xx_gpu.h              |    2 +
->  drivers/gpu/drm/msm/adreno/a5xx_catalog.c          |   17 +-
->  drivers/gpu/drm/msm/adreno/a5xx_gpu.c              |   61 +-
->  drivers/gpu/drm/msm/adreno/a5xx_gpu.h              |    1 +
->  drivers/gpu/drm/msm/adreno/a6xx_catalog.c          |  369 +++-
->  drivers/gpu/drm/msm/adreno/a6xx_gmu.c              |  287 ++-
->  drivers/gpu/drm/msm/adreno/a6xx_gmu.h              |   25 +-
->  drivers/gpu/drm/msm/adreno/a6xx_gpu.c              |  393 ++--
->  drivers/gpu/drm/msm/adreno/a6xx_gpu.h              |   31 +-
->  drivers/gpu/drm/msm/adreno/a6xx_gpu_state.h        |   18 +-
->  drivers/gpu/drm/msm/adreno/a6xx_hfi.c              |   53 +
->  drivers/gpu/drm/msm/adreno/a6xx_hfi.h              |   17 +
->  drivers/gpu/drm/msm/adreno/a8xx_gpu.c              | 1205 ++++++++++++
->  drivers/gpu/drm/msm/adreno/adreno_device.c         |    4 +-
->  .../gpu/drm/msm/adreno/adreno_gen7_0_0_snapshot.h  |  420 ++---
->  .../gpu/drm/msm/adreno/adreno_gen7_2_0_snapshot.h  |  332 ++--
->  .../gpu/drm/msm/adreno/adreno_gen7_9_0_snapshot.h  |  470 ++---
->  drivers/gpu/drm/msm/adreno/adreno_gpu.h            |   38 +-
->  drivers/gpu/drm/msm/registers/adreno/a6xx.xml      | 1954 ++++++++++++++=
-+-----
->  .../gpu/drm/msm/registers/adreno/a6xx_enums.xml    |    2 +-
->  drivers/gpu/drm/msm/registers/adreno/a6xx_gmu.xml  |  283 +--
->  .../gpu/drm/msm/registers/adreno/a7xx_enums.xml    |    7 -
->  .../drm/msm/registers/adreno/a8xx_descriptors.xml  |  120 ++
->  .../gpu/drm/msm/registers/adreno/a8xx_enums.xml    |  289 +++
->  .../gpu/drm/msm/registers/adreno/adreno_common.xml |   12 +
->  36 files changed, 5008 insertions(+), 1653 deletions(-)
-> ---
-> base-commit: edf57d8dafc63f9298a209e518ea6a2e0df78ed0
-> change-id: 20250929-kaana-gpu-support-11d21c8fa1dc
->
-> Best regards,
-> --
-> Akhil P Oommen <akhilpo@oss.qualcomm.com>
->
+---
+base-commit: e2f085ab8636fae2ebe0adf42071e7558234cd7b
+change-id: 20251115-dpu-fix-gc-931feac75705
+
+Best regards,
+-- 
+With best wishes
+Dmitry
+
 
