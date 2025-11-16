@@ -1,82 +1,54 @@
-Return-Path: <linux-arm-msm+bounces-81979-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-81980-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [IPv6:2605:f480:58:1:0:1994:3:14])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8D39AC616D7
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 16 Nov 2025 15:30:45 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 72069C61703
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 16 Nov 2025 15:42:22 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id E92154E1274
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 16 Nov 2025 14:30:41 +0000 (UTC)
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 0149E4E4704
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 16 Nov 2025 14:42:16 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2881D30BF6E;
-	Sun, 16 Nov 2025 14:30:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id BCC882EAB6E;
+	Sun, 16 Nov 2025 14:42:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="LbNGIqJN"
+	dkim=pass (1024-bit key) header.d=ixit.cz header.i=@ixit.cz header.b="b14NR+8M"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f51.google.com (mail-wr1-f51.google.com [209.85.221.51])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from ixit.cz (ip-94-112-25-9.bb.vodafone.cz [94.112.25.9])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD741244686
-	for <linux-arm-msm@vger.kernel.org>; Sun, 16 Nov 2025 14:30:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C26052DC34E;
+	Sun, 16 Nov 2025 14:42:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=94.112.25.9
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763303434; cv=none; b=fyyPVsIwT9Kj1anJqgahhJm7ImGupoKjInnxnKn4ytGcOMBWp9cJuJTBdb30L9oHhLQTwiiGYWXBJcfyr8jCIWqtvDwZTqI/pH25KCaB5H0ZFFwED9OdVywSS5zdMpBd0+yVcB8Tq2rIAYaheB67emZpUPyQCknvcXLARISr55s=
+	t=1763304133; cv=none; b=aVowmTDlKfM+uGTnpH6FIoCTCUpqRnI25hT8uLRduo3wfPXFq6KGDFAJjbKLxvTQQo2ZLqoeCU26a+ncwwUc8dmam4w7iHtHYN/zfTN9/ngQ8Wg/NvmS/Z8FG4B0f623xww9oV2L4qDc5tfyCnC5h5Kh7yg2q8FkRjDvwz5GNAs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763303434; c=relaxed/simple;
-	bh=cKfwNVXUaXw3bJO+IzX0argy2DWs0KoFFvj0/LYhR1w=;
+	s=arc-20240116; t=1763304133; c=relaxed/simple;
+	bh=Oo4FLQbmKK9z2H4gqvqF8dWs7cja2Rym2AqBnAD4nkM=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=lK7pw1yKR27O9pr+KL3GwQ55DdwGZWq+SCLOkvqkIZf1xokI6EC5QK0SCJKCZqW58FOCwoP+kRTwUL6NDQlTqvBD2IsNcLrlCr05SCcFc42UszvC3Ld8WbTfhpuXoDXhistM+MeQI8sOpyoHNWOQrNSJI3ziVHDzJCT33sonKrQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=LbNGIqJN; arc=none smtp.client-ip=209.85.221.51
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wr1-f51.google.com with SMTP id ffacd0b85a97d-42b3ac40ae4so1929847f8f.0
-        for <linux-arm-msm@vger.kernel.org>; Sun, 16 Nov 2025 06:30:30 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1763303429; x=1763908229; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=ICly7sZCAzATlOBf/FaB2qKaAu95N0j13h8tQwyhW4A=;
-        b=LbNGIqJN1fUSQv3hrhvdT5K6dvjS2eea0mF+9v+Npsn8CfGfdufTskxXV47uJ3s5oS
-         JzfZNFPv/GCZ+82ZgwdOR2FxzAai9YUlnmsZ9FYya1jxHL14K0+xJEyfe6XiKwX6z8tw
-         YnG13a5yNKadpXZ8gVPx2M8z6SNDRAYgKaFsriTCzaXjybmy2LDEEBQR+u+InaZzCUVB
-         fslTYj2pj12rfLx8iO7VUow8NxaHL4uVqP03NIbntwGly8k7PtlApahdj/uc16eYSPZA
-         mcVJ6EZX80uWOq8QHFYKOYuMtUrcMGW2RqgukNl3EjCmxEX8LZvpK5PqlZXQ0bcc4krm
-         LbNg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1763303429; x=1763908229;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=ICly7sZCAzATlOBf/FaB2qKaAu95N0j13h8tQwyhW4A=;
-        b=q9rXq060uUeagIoABfR7bC7FDBBnzL4voAhY7TsOuST5lmwJvW1ekbuW+rArX6cm22
-         DBGn5E3Emfq3iSIDQAMG/Hz7ZmpR/qL7A763beGWmfNG//OHKb6s9/XAb7zFNdBrRiMf
-         zJMYENP/UnJ47lMDg4RpjfwXh/o2wWPF/J/QD3VumuE/o70Ok/x4z/nnv1SLIusqUAOQ
-         PLvRG1790HepbWXcC6xzkKX4yONdytHosNHfzi1xgpNQWCQfJ0HVRRgx8cZLNEQsh2v4
-         zYTf2jFwixA7sp5/sSsKa0s1Uwl0vHMD77sbWvXZorEckW9b36xC2L8wYjsvFXlcxR0r
-         QOXg==
-X-Forwarded-Encrypted: i=1; AJvYcCUx1hdGiXG3u7mzom/W8u9H5mD7V2BHO7LXzURYWfOaYGtxlBNQi8fBdORCEV3mwjzBB2d0UK1O0efdmg0C@vger.kernel.org
-X-Gm-Message-State: AOJu0YwT4rpr8rurcsCLBzjIce4MWNQdNge/OwpN99R4HGc+yNMRLqmV
-	4nWb1gvapnxa3maDAikNhoH88isnzT9DjPESVxza5rH9y5HdCoAB37g/ypoZ2GWZl8k=
-X-Gm-Gg: ASbGncuPFgfafsLBKpd6+vp0QwdhjOWq8+EmTPGlFOei3uL4XfUWU9k7y3lOO/Ksgid
-	s/vpk8i0Z0+Gi8bcEEJChXlrFJ7CTmsdOigfplu/xP00FHLF+kOdDyObPCTK51Ti/0c7/JfOzj7
-	PC5pvTHUXvhyPbs+ML9+sXzJF9j3UYdv0BdZ5BDmkqUvwywptSVQB6yOfzoxhQmqCGYA1uhmeij
-	yktl8DfNsFwY5083CUh70cvDVTosVsDkDVHFyR31WeWSjEd5OrGDBafS1rRheMYpH0WbY7fpjVv
-	ZfupE2pnvKSbi55jHpQGXlIv2NFOLiME2efdgyP3mliLF6eTRvOY0q7f+U2of7+m4pVVDBfQEv9
-	Govd5TpBxBU/4urbPdSL25HVKvAXYr7eMoV25ScX3GcCo6alEa2umyN1STl23jEHLGJ5RhYdfmF
-	3RrjFWjyzjdmclO1eijC01SR+0pU1mKxmg7XmaXVL6xA==
-X-Google-Smtp-Source: AGHT+IEfYLpYpa20g5wtNTk5jZFkM5xmSMDzaYixuhuIpmallSrBBPr8uUgJe9xMGpqXeRcYfT73jQ==
-X-Received: by 2002:a05:6000:3108:b0:42b:3ee9:4775 with SMTP id ffacd0b85a97d-42b593394a9mr9581497f8f.11.1763303428862;
-        Sun, 16 Nov 2025 06:30:28 -0800 (PST)
-Received: from [192.168.0.27] (188-141-3-146.dynamic.upc.ie. [188.141.3.146])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-42b53e85cc0sm21886040f8f.17.2025.11.16.06.30.27
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 16 Nov 2025 06:30:28 -0800 (PST)
-Message-ID: <17e7ebc9-3b88-4334-b87d-1bce6d5bb120@linaro.org>
-Date: Sun, 16 Nov 2025 14:30:27 +0000
+	 In-Reply-To:Content-Type; b=GMpF333MjB9/n+EGR809augOBDPXbtF9sj5la0LOINGrrVDqTp2irv83cBJhoFW504VOQmL7jwTgt1c+tsfzAGzRzCDPGJvC7Lh6HkSqafi8fS/oKfaHae+qFd+m/cMSD83myUz8fkxn4xZtJs80+rEhlSVWx2DwIDUJQelgQxQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ixit.cz; spf=pass smtp.mailfrom=ixit.cz; dkim=pass (1024-bit key) header.d=ixit.cz header.i=@ixit.cz header.b=b14NR+8M; arc=none smtp.client-ip=94.112.25.9
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ixit.cz
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ixit.cz
+Received: from [10.0.0.200] (unknown [10.0.0.1])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange x25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	(No client certificate requested)
+	by ixit.cz (Postfix) with ESMTPSA id EE08C53412A2;
+	Sun, 16 Nov 2025 15:42:05 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ixit.cz; s=dkim;
+	t=1763304126;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+	bh=LjYOWtCffzgNMebgJlMNfWTh/7EezeDBlJxB3iE8iTM=;
+	b=b14NR+8M108ri2ILOwLsagkVEWsICtRkqyyOOjEZLraOmy7XWPNgsBnlNZT6h7JIhPHyGB
+	chPTHurujUpkqDqTKMRiexidclkxXtQMQugXVJTscD9hLSdUCQcELbRcsHAROMTnrJe8rx
+	cNcq2jnNDnc9UIUKJ7ybSJqln8oorCI=
+Message-ID: <babcd7be-40f6-4023-8781-0b7203faf662@ixit.cz>
+Date: Sun, 16 Nov 2025 15:42:05 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -84,81 +56,119 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 0/3] Add CAMSS support for SM6350
-To: Luca Weiss <luca.weiss@fairphone.com>, Bryan O'Donoghue <bod@kernel.org>,
- Robert Foss <rfoss@kernel.org>, Todor Tomov <todor.too@gmail.com>,
- Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
- Mauro Carvalho Chehab <mchehab@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
+Subject: Re: [PATCH v2 01/12] dt-bindings: panel: Convert Samsung SOFEF00 DDIC
+ into standalone yaml
+To: Casey Connolly <casey.connolly@linaro.org>,
+ Neil Armstrong <neil.armstrong@linaro.org>,
+ Jessica Zhang <jessica.zhang@oss.qualcomm.com>,
+ Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+ Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>,
+ David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+ Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
+ Conor Dooley <conor+dt@kernel.org>, Thierry Reding
+ <thierry.reding@gmail.com>, Sam Ravnborg <sam@ravnborg.org>,
+ Bjorn Andersson <andersson@kernel.org>,
  Konrad Dybcio <konradybcio@kernel.org>
-Cc: ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
- linux-arm-msm@vger.kernel.org, linux-media@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <3ph8XeidoxkUIsK7qiOH29pde94sdwa3ReWKVVrPabgS5enIAmwVAC5plyFnBMJGKQBnxFB6df6j69OMFIeavw==@protonmail.internalid>
- <20251114-sm6350-camss-v2-0-d1ff67da33b6@fairphone.com>
- <df4a6a77-9004-4dbe-9b11-7af2bea7e068@kernel.org>
- <DE8JJCQA0C4Q.35NEED7XG0K0V@fairphone.com>
-From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Cc: dri-devel@lists.freedesktop.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+ phone-devel@vger.kernel.org
+References: <20251113-sofef00-rebuild-v2-0-e175053061ec@ixit.cz>
+ <20251113-sofef00-rebuild-v2-1-e175053061ec@ixit.cz>
+ <9ef0e4f9-7594-4c26-ab45-38e62a7d0e37@linaro.org>
 Content-Language: en-US
-In-Reply-To: <DE8JJCQA0C4Q.35NEED7XG0K0V@fairphone.com>
+From: David Heidelberg <david@ixit.cz>
+Autocrypt: addr=david@ixit.cz; keydata=
+ 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
+In-Reply-To: <9ef0e4f9-7594-4c26-ab45-38e62a7d0e37@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 
-On 14/11/2025 15:59, Luca Weiss wrote:
-> On Fri Nov 14, 2025 at 4:51 PM CET, Bryan O'Donoghue wrote:
->> On 14/11/2025 11:15, Luca Weiss wrote:
->>> Add bindings, driver and dts to support the Camera Subsystem on the
->>> SM6350 SoC.
->>>
->>> These patches were tested on a Fairphone 4 smartphone with WIP sensor
->>> drivers (Sony IMX576 and IMX582), the camera pipeline works properly as
->>> far as I can tell.
->>>
->>> Though when stopping the camera stream, the following clock warning
->>> appears in dmesg. But it does not interfere with any functionality,
->>> starting and stopping the stream works and debugcc is showing 426.4 MHz
->>> while the clock is on, and 'off' while it's off.
->>>
->>> Any suggestion how to fix this, is appreciated.
->>>
->>> [ 5738.590980] ------------[ cut here ]------------
->>> [ 5738.591009] gcc_camera_axi_clk status stuck at 'on'
->>> [ 5738.591049] WARNING: CPU: 0 PID: 6918 at drivers/clk/qcom/clk-branch.c:87 clk_branch_toggle+0x170/0x190
+On 16/11/2025 14:55, Casey Connolly wrote:
+> Hi David,
+> 
+> I may not have added myself to MAINTAINERS when I submitted this driver, 
+> but a heads-up would have been appreciated before just taking it over!
+> 
+> On 11/13/25 18:57, David Heidelberg via B4 Relay wrote:
+>> From: David Heidelberg <david@ixit.cz>
+> 
+> [...]> diff --git a/MAINTAINERS b/MAINTAINERS
+>> index 7e015dcbac732..a4b16812d5a0c 100644
+>> --- a/MAINTAINERS
+>> +++ b/MAINTAINERS
+>> @@ -8117,6 +8117,12 @@ S:    Maintained
+>>   F:    Documentation/devicetree/bindings/display/panel/ 
+>> samsung,s6e3ha8.yaml
+>>   F:    drivers/gpu/drm/panel/panel-samsung-s6e3ha8.c
+>> +DRM DRIVER FOR SAMSUNG SOFEF00 DDIC
+>> +M:    David Heidelberg <david@ixit.cz>
+> 
+> M:    Casey Connolly <casey.connolly@linaro.org>
+
+Sure, I'll add you in next patch version.
+
+Could you review the patches not authored by you within the patchset too?
+
+Thank you
+David
+
+> 
+> Please and thanks!
+> Casey (she/they)
+> 
+>> +S:    Maintained
+>> +F:    Documentation/devicetree/bindings/display/panel/ 
+>> samsung,sofef00.yaml
+>> +F:    drivers/gpu/drm/panel/panel-samsung-sofef00.c
+>> +
+>>   DRM DRIVER FOR SHARP MEMORY LCD
+>>   M:    Alex Lanzano <lanzano.alex@gmail.com>
+>>   S:    Maintained
 >>
->> Do you have a full and complete kernel tree we could look at here ?
 > 
-> Sure, this branch has everything in:
-> 
-> https://github.com/sm6350-mainline/linux/tree/sm6350-6.17.y/
-> 
-> For further refence, at least two other people have tested this branch
-> in postmarketOS, nothing particularly exciting to report from there,
-> apart from that the sdm-skin-thermal thermal zone (thermistor right next
-> to SoC) is currently configured with 55 degC as critical trip, which is
-> quickly achieved when starting a video recording, but that's not really
-> an issue with camss, but will need some tweaking regardless.
-> 
-> https://gitlab.postmarketos.org/postmarketOS/pmaports/-/merge_requests/7281
 
-diff --git a/drivers/clk/qcom/gcc-sm6350.c b/drivers/clk/qcom/gcc-sm6350.c
-index a4d6dff9d0f7f..229629ef82809 100644
---- a/drivers/clk/qcom/gcc-sm6350.c
-+++ b/drivers/clk/qcom/gcc-sm6350.c
-@@ -908,9 +908,7 @@ static struct clk_branch gcc_camera_ahb_clk = {
+-- 
+David Heidelberg
 
-  static struct clk_branch gcc_camera_axi_clk = {
-         .halt_reg = 0x17018,
--       .halt_check = BRANCH_HALT,
--       .hwcg_reg = 0x17018,
--       .hwcg_bit = 1,
-+       .halt_check = BRANCH_VOTED,
-         .clkr = {
-                 .enable_reg = 0x17018,
-                 .enable_mask = BIT(0),
-
-?
-
----
-bod
 
