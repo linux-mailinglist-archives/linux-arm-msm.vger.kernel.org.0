@@ -1,155 +1,82 @@
-Return-Path: <linux-arm-msm+bounces-81952-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-81953-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ams.mirrors.kernel.org (ams.mirrors.kernel.org [213.196.21.55])
-	by mail.lfdr.de (Postfix) with ESMTPS id C62B7C60DF2
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 16 Nov 2025 00:54:14 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id E8EC3C60E1A
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 16 Nov 2025 01:43:44 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ams.mirrors.kernel.org (Postfix) with ESMTPS id 1D817357210
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 15 Nov 2025 23:54:14 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id A217C3B8D22
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 16 Nov 2025 00:43:43 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 08D4827B34D;
-	Sat, 15 Nov 2025 23:54:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 89D3716F0FE;
+	Sun, 16 Nov 2025 00:43:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="TwQ6nvw2"
+	dkim=pass (2048-bit key) header.d=proton.me header.i=@proton.me header.b="AR3pjziA"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.13])
+Received: from mail-24416.protonmail.ch (mail-24416.protonmail.ch [109.224.244.16])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E77525F97C;
-	Sat, 15 Nov 2025 23:54:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.13
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5403315665C
+	for <linux-arm-msm@vger.kernel.org>; Sun, 16 Nov 2025 00:43:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=109.224.244.16
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763250850; cv=none; b=LXFhB1U16LbXxD7hacBxIFMb37Gr6nntghjVzB7DpHKbSZXMT1NdXV7BsDCXwYYBWEIdVY1zSHY/Ct9xIPK4rwRRIl4jH3daoWVgC8NgmnS19ajQsWHaRhgHT9q/MC5EZbci/aw8QtXNUOHiizaEDqoqKBWyqeL+nh53IDRTAHA=
+	t=1763253821; cv=none; b=BqZWaFPonrvoxNZf7a2UeqQKZTVaB4FEKYYAJEIa+JK3oz47xhL8jxKb4fWQ8tW/CnPKnbOF/kQn5ldA0clmX7M0/vnxZFpD06BsEyMafg8RY2vEY0qEzgvhja/cOTvrOYMZGBWfAXl7sU2CsYKqfyd7Q/Uy1CqYl5eK4VeaQJ8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763250850; c=relaxed/simple;
-	bh=D8WoOI+gppvZIMnVLNAEUdHzU6Alj036nY1pL0ZtroU=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=lCd4hm5VFz3ndk2g426mqgBwRVlDkHnnFEvWbGPNEEzTBf8A025/cD6zqqVxf5/M0Blb8gLIfjGX6ulHc/5BlSP2tlgET6TifFPe0n2XP/9dY9Bh008eViyYUBW3t/04Va0ZlooRCXmU0NtKX/jiczQ9jmB89WR4cUpXDZ5l5aE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=TwQ6nvw2; arc=none smtp.client-ip=198.175.65.13
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1763250849; x=1794786849;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=D8WoOI+gppvZIMnVLNAEUdHzU6Alj036nY1pL0ZtroU=;
-  b=TwQ6nvw23pIMr9C7YvuBUTaP6HQpmZyBtEWq2kk0FclMC12ZRNni5VB7
-   MxDr+cqEJ7/4nXzN54keMDMbVdN2MViZgbOF6u7Y+sTJdTXU0owtcLqO8
-   XIa8wdMHnprpHsT5EdkF/GEjE8PrCJ1slwitQ0bZU/XCnZnFraBtvayz7
-   vWHmvDCkJjx9fBEUXSMFYcuGYD+m4BWRD9DEUskW4WIMxONIrQuJrJnOv
-   0puQbenM+J56Z8TDUuGu/oRWoaxAyYdcxJ3Z7U8MtEUUsF353ue4963sW
-   ydg0Kn4r3hL/OejZYvZKX68/VSgKWNkfic0/K9POP7FiNz2OMCNqLeJgx
-   A==;
-X-CSE-ConnectionGUID: sSk4qqRzR+ueuMS2sfRwVg==
-X-CSE-MsgGUID: phezhA8TT/y7Cmzo9f+HPw==
-X-IronPort-AV: E=McAfee;i="6800,10657,11614"; a="76404770"
-X-IronPort-AV: E=Sophos;i="6.19,308,1754982000"; 
-   d="scan'208";a="76404770"
-Received: from fmviesa004.fm.intel.com ([10.60.135.144])
-  by orvoesa105.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 15 Nov 2025 15:54:08 -0800
-X-CSE-ConnectionGUID: r+ho4jq0R3K+dftKK4xIcA==
-X-CSE-MsgGUID: G1FD0U3pRbm7BmaR+zfg5Q==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.19,308,1754982000"; 
-   d="scan'208";a="195067611"
-Received: from lkp-server01.sh.intel.com (HELO 7b01c990427b) ([10.239.97.150])
-  by fmviesa004.fm.intel.com with ESMTP; 15 Nov 2025 15:54:06 -0800
-Received: from kbuild by 7b01c990427b with local (Exim 4.96)
-	(envelope-from <lkp@intel.com>)
-	id 1vKQ5j-0008Lj-1n;
-	Sat, 15 Nov 2025 23:54:03 +0000
-Date: Sun, 16 Nov 2025 07:53:45 +0800
-From: kernel test robot <lkp@intel.com>
-To: quic_utiwari@quicinc.com, herbert@gondor.apana.org.au,
-	thara.gopinath@gmail.com, davem@davemloft.net
-Cc: oe-kbuild-all@lists.linux.dev, linux-crypto@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-	quic_neersoni@quicinc.com
-Subject: Re: [PATCH v3] crypto: qce - Add runtime PM and interconnect
- bandwidth scaling support
-Message-ID: <202511160711.Q6ytYvlG-lkp@intel.com>
-References: <20251115084851.2750446-1-quic_utiwari@quicinc.com>
+	s=arc-20240116; t=1763253821; c=relaxed/simple;
+	bh=AJB3AUcBgC784obzu9tq5oFUm4havbhs2C7ZT+RX87o=;
+	h=Date:To:From:Subject:Message-ID:MIME-Version:Content-Type; b=YSYjuyvUATbyQ4yvu9m6Ht/4CjJrmfh+CvdoAcSig4w/rSlA25JUvvyL7az64xNuM6Vnk9goWbo4aE6gf58QRMYwEcNLrcT4Kw+/vA0o7vrKj6zSA6gNSaMk5SCALrb+W2wr/Xy4SKgkrNcFZQABEa8J0A7zv4f9QdHcrBEXCpQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=proton.me; spf=pass smtp.mailfrom=proton.me; dkim=pass (2048-bit key) header.d=proton.me header.i=@proton.me header.b=AR3pjziA; arc=none smtp.client-ip=109.224.244.16
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=proton.me
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=proton.me
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=proton.me;
+	s=protonmail; t=1763253815; x=1763513015;
+	bh=7W5DujvGb1YjsYt2yFT+cg9Ht0m8Sw7YirdwBOKx9qw=;
+	h=Date:To:From:Subject:Message-ID:Feedback-ID:From:To:Cc:Date:
+	 Subject:Reply-To:Feedback-ID:Message-ID:BIMI-Selector;
+	b=AR3pjziA4tRuV0xDZ7TNx/YkCSAI8QEVCNMVid8ScfSjEATygC9fwxyCE3pj2m0IJ
+	 c5OmUOYhRSJtIjqgGny29p6VD6lQxkum/HQV/6/ejC0TO+CGJxemS4r1WYFH2nnb/B
+	 vxetQCLon6yS/AZGOKX2pK5Q4s8KUJfOA3cMFW7L7SYWb8H8XUQaOUHO5r/jAPXJWN
+	 9SvPtCseUVDoJVzedzFMgxuy12hl7bI60gJ2qI0q+qO34wsAEEkkBoH3MvplM7zOvs
+	 Qhy7EVPDFaAK5T/fkMQ/HSdR+Rb/EnORu0kRvnTudtr/ud/3e3PXQ2SJM/o4yuhUzK
+	 QqUIc/nI9RwEA==
+Date: Sun, 16 Nov 2025 00:43:31 +0000
+To: "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>
+From: philmb3487 <philmb3487@proton.me>
+Subject: [PATCH] dt-bindings: arm: qcom,ids: Add SoC IDs for SM8635 family
+Message-ID: <9nTdr-7UlyytB3d5Iz0IEGrAAzjPipf4NEiZvLMmpk9OmCmRuL346OxjZgpLkLdG7dFYE_rj-5aibg7bhYHrQmjwo1e096-2IGhfi1rKglE=@proton.me>
+Feedback-ID: 109714282:user:proton
+X-Pm-Message-ID: 37b87b348a5c21142e55e405679cdb8bfb064bac
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20251115084851.2750446-1-quic_utiwari@quicinc.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-Hi,
+Author: Philippe Michaud-Boudreault <philmb3487@proton.me>
+Date:   Sat Nov 15 19:41:12 2025 -0500
 
-kernel test robot noticed the following build warnings:
+    dt-bindings: arm: qcom,ids: Add SoC IDs for SM8635 family
 
-[auto build test WARNING on herbert-cryptodev-2.6/master]
-[also build test WARNING on herbert-crypto-2.6/master linus/master v6.18-rc5 next-20251114]
-[If your patch is applied to the wrong git tree, kindly drop us a note.
-And when submitting patch, we suggest to use '--base' as documented in
-https://git-scm.com/docs/git-format-patch#_base_tree_information]
+    Add the SoC ID for the SM8635.
 
-url:    https://github.com/intel-lab-lkp/linux/commits/quic_utiwari-quicinc-com/crypto-qce-Add-runtime-PM-and-interconnect-bandwidth-scaling-support/20251115-165032
-base:   https://git.kernel.org/pub/scm/linux/kernel/git/herbert/cryptodev-2.6.git master
-patch link:    https://lore.kernel.org/r/20251115084851.2750446-1-quic_utiwari%40quicinc.com
-patch subject: [PATCH v3] crypto: qce - Add runtime PM and interconnect bandwidth scaling support
-config: openrisc-allyesconfig (https://download.01.org/0day-ci/archive/20251116/202511160711.Q6ytYvlG-lkp@intel.com/config)
-compiler: or1k-linux-gcc (GCC) 15.1.0
-reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20251116/202511160711.Q6ytYvlG-lkp@intel.com/reproduce)
-
-If you fix the issue in a separate patch/commit (i.e. not just a new version of
-the same patch/commit), kindly add following tags
-| Reported-by: kernel test robot <lkp@intel.com>
-| Closes: https://lore.kernel.org/oe-kbuild-all/202511160711.Q6ytYvlG-lkp@intel.com/
-
-All warnings (new ones prefixed by >>):
-
->> drivers/crypto/qce/core.c:295:12: warning: 'qce_runtime_resume' defined but not used [-Wunused-function]
-     295 | static int qce_runtime_resume(struct device *dev)
-         |            ^~~~~~~~~~~~~~~~~~
->> drivers/crypto/qce/core.c:286:12: warning: 'qce_runtime_suspend' defined but not used [-Wunused-function]
-     286 | static int qce_runtime_suspend(struct device *dev)
-         |            ^~~~~~~~~~~~~~~~~~~
+diff --git a/include/dt-bindings/arm/qcom,ids.h b/include/dt-bindings/arm/q=
+com,ids.h
+index cb8ce53146f0..b7c4cbb7a2db 100644
+--- a/include/dt-bindings/arm/qcom,ids.h
++++ b/include/dt-bindings/arm/qcom,ids.h
+@@ -277,6 +277,7 @@
+ #define QCOM_ID_IPQ5302                        595
+ #define QCOM_ID_QCS8550                        603
+ #define QCOM_ID_QCM8550                        604
++#define QCOM_ID_SM8635                 614
+ #define QCOM_ID_SM8750                 618
+ #define QCOM_ID_IPQ5300                        624
+ #define QCOM_ID_SM7635                 636
 
 
-vim +/qce_runtime_resume +295 drivers/crypto/qce/core.c
-
-   285	
- > 286	static int qce_runtime_suspend(struct device *dev)
-   287	{
-   288		struct qce_device *qce = dev_get_drvdata(dev);
-   289	
-   290		icc_disable(qce->mem_path);
-   291	
-   292		return 0;
-   293	}
-   294	
- > 295	static int qce_runtime_resume(struct device *dev)
-   296	{
-   297		struct qce_device *qce = dev_get_drvdata(dev);
-   298		int ret = 0;
-   299	
-   300		ret = icc_enable(qce->mem_path);
-   301		if (ret)
-   302			return ret;
-   303	
-   304		ret = icc_set_bw(qce->mem_path, QCE_DEFAULT_MEM_BANDWIDTH, QCE_DEFAULT_MEM_BANDWIDTH);
-   305		if (ret)
-   306			goto err_icc;
-   307	
-   308		return 0;
-   309	
-   310	err_icc:
-   311		icc_disable(qce->mem_path);
-   312		return ret;
-   313	}
-   314	
-
--- 
-0-DAY CI Kernel Test Service
-https://github.com/intel/lkp-tests/wiki
 
