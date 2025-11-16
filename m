@@ -1,174 +1,127 @@
-Return-Path: <linux-arm-msm+bounces-81980-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-81981-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [IPv6:2605:f480:58:1:0:1994:3:14])
-	by mail.lfdr.de (Postfix) with ESMTPS id 72069C61703
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 16 Nov 2025 15:42:22 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 2A89BC6174B
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 16 Nov 2025 16:20:09 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 0149E4E4704
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 16 Nov 2025 14:42:16 +0000 (UTC)
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id C1BEC4E2C61
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 16 Nov 2025 15:20:07 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BCC882EAB6E;
-	Sun, 16 Nov 2025 14:42:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A7E4A2D9780;
+	Sun, 16 Nov 2025 15:20:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=ixit.cz header.i=@ixit.cz header.b="b14NR+8M"
+	dkim=pass (2048-bit key) header.d=proton.me header.i=@proton.me header.b="FadJNupf"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from ixit.cz (ip-94-112-25-9.bb.vodafone.cz [94.112.25.9])
+Received: from mail-4327.protonmail.ch (mail-4327.protonmail.ch [185.70.43.27])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C26052DC34E;
-	Sun, 16 Nov 2025 14:42:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=94.112.25.9
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4AE6F16A956
+	for <linux-arm-msm@vger.kernel.org>; Sun, 16 Nov 2025 15:20:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.70.43.27
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763304133; cv=none; b=aVowmTDlKfM+uGTnpH6FIoCTCUpqRnI25hT8uLRduo3wfPXFq6KGDFAJjbKLxvTQQo2ZLqoeCU26a+ncwwUc8dmam4w7iHtHYN/zfTN9/ngQ8Wg/NvmS/Z8FG4B0f623xww9oV2L4qDc5tfyCnC5h5Kh7yg2q8FkRjDvwz5GNAs=
+	t=1763306405; cv=none; b=uwCb0PA9g2jxHTDiM1fn199LbrEuBa55Y31BMW8dUZE+1qBeS7J4tF1BYdhSCF1cAKwqeLHtBiiP5YYoBg+s05r03fQzW33+4On+SmJuE/VDpWNsuo5hHCa/Xn3TkDPhPwwyPUbu9ZmdS8aQ2Mt7tWEKNiyEbq56IHiVDzzExhE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763304133; c=relaxed/simple;
-	bh=Oo4FLQbmKK9z2H4gqvqF8dWs7cja2Rym2AqBnAD4nkM=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=GMpF333MjB9/n+EGR809augOBDPXbtF9sj5la0LOINGrrVDqTp2irv83cBJhoFW504VOQmL7jwTgt1c+tsfzAGzRzCDPGJvC7Lh6HkSqafi8fS/oKfaHae+qFd+m/cMSD83myUz8fkxn4xZtJs80+rEhlSVWx2DwIDUJQelgQxQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ixit.cz; spf=pass smtp.mailfrom=ixit.cz; dkim=pass (1024-bit key) header.d=ixit.cz header.i=@ixit.cz header.b=b14NR+8M; arc=none smtp.client-ip=94.112.25.9
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ixit.cz
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ixit.cz
-Received: from [10.0.0.200] (unknown [10.0.0.1])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange x25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-	(No client certificate requested)
-	by ixit.cz (Postfix) with ESMTPSA id EE08C53412A2;
-	Sun, 16 Nov 2025 15:42:05 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ixit.cz; s=dkim;
-	t=1763304126;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
-	bh=LjYOWtCffzgNMebgJlMNfWTh/7EezeDBlJxB3iE8iTM=;
-	b=b14NR+8M108ri2ILOwLsagkVEWsICtRkqyyOOjEZLraOmy7XWPNgsBnlNZT6h7JIhPHyGB
-	chPTHurujUpkqDqTKMRiexidclkxXtQMQugXVJTscD9hLSdUCQcELbRcsHAROMTnrJe8rx
-	cNcq2jnNDnc9UIUKJ7ybSJqln8oorCI=
-Message-ID: <babcd7be-40f6-4023-8781-0b7203faf662@ixit.cz>
-Date: Sun, 16 Nov 2025 15:42:05 +0100
+	s=arc-20240116; t=1763306405; c=relaxed/simple;
+	bh=adpjExAaylQ4BgDrm5e1sssE1t25bdZNunpsUAAu984=;
+	h=Date:To:From:Subject:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=MhIl8pEER+x1K8iGrcXwbCwjb533paGlpnam8v8zjplE+ox6cAIWLF3ReaLto2E5060RvM4u2A6TbWy/h+c1xtCfioIeFORIbnPnShdYNzW1Ij/9qQxpYH2elWIciOKSIdTZc7vNyDj15+AMN1O3uCLUK6Mx2B3kxnkAA0XPX6g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=proton.me; spf=pass smtp.mailfrom=proton.me; dkim=pass (2048-bit key) header.d=proton.me header.i=@proton.me header.b=FadJNupf; arc=none smtp.client-ip=185.70.43.27
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=proton.me
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=proton.me
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=proton.me;
+	s=protonmail; t=1763306043; x=1763565243;
+	bh=adpjExAaylQ4BgDrm5e1sssE1t25bdZNunpsUAAu984=;
+	h=Date:To:From:Subject:Message-ID:In-Reply-To:References:
+	 Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
+	 Message-ID:BIMI-Selector;
+	b=FadJNupfvYIkT0e0w2t0Hot4aKCGgn1Ryn5hk9gWy90846s/Sow1bJoepnRBRa8Fz
+	 x9RWNNcOL91nQ1AI4SyVI4tu8a2iAVp6jmReuDckxXllNGYfJ9prQWK0VCbWiP9mtX
+	 pZGyjU4kuogjJN2o37Ksy+Vha5Zscz9xS2uJ/kIQ4Df5xrAE02hTaqykHxYWOhmZwM
+	 WPz7DMh/KRMboL3f9DjqsS3Edwx5UB5WOH8sKq5gAN214gzhxc8bsIYpcBfExep3eK
+	 n1zxjKWe5rNEHtSSVSemqgVIRI5qBzKY/bVseLDOprPj/11XE1RqSmhcu1V9eycNzS
+	 c6L7jCxQbrs5A==
+Date: Sun, 16 Nov 2025 15:13:58 +0000
+To: Krzysztof Kozlowski <krzk@kernel.org>, "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>
+From: philmb3487 <philmb3487@proton.me>
+Subject: Re: [PATCH] dt-bindings: arm: qcom,ids: Add SoC IDs for SM8635 family
+Message-ID: <Q4eaiByBMrzIsd0C_0QEVlu5wPEW7kRn_1zqqWiu-Jmc7wHjVfBTftv4oiLtGzJiN5dYh0tCagJEh0A-2siXiRjEe3y6QBBvEmGoiExRvfo=@proton.me>
+In-Reply-To: <66d58b6c-aefd-4848-882b-51770f7020f3@kernel.org>
+References: <9nTdr-7UlyytB3d5Iz0IEGrAAzjPipf4NEiZvLMmpk9OmCmRuL346OxjZgpLkLdG7dFYE_rj-5aibg7bhYHrQmjwo1e096-2IGhfi1rKglE=@proton.me> <66d58b6c-aefd-4848-882b-51770f7020f3@kernel.org>
+Feedback-ID: 109714282:user:proton
+X-Pm-Message-ID: c1ed678a96933ff32d521d52669fd9b9b6abbceb
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 01/12] dt-bindings: panel: Convert Samsung SOFEF00 DDIC
- into standalone yaml
-To: Casey Connolly <casey.connolly@linaro.org>,
- Neil Armstrong <neil.armstrong@linaro.org>,
- Jessica Zhang <jessica.zhang@oss.qualcomm.com>,
- Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
- Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>,
- David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
- Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
- Conor Dooley <conor+dt@kernel.org>, Thierry Reding
- <thierry.reding@gmail.com>, Sam Ravnborg <sam@ravnborg.org>,
- Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>
-Cc: dri-devel@lists.freedesktop.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
- phone-devel@vger.kernel.org
-References: <20251113-sofef00-rebuild-v2-0-e175053061ec@ixit.cz>
- <20251113-sofef00-rebuild-v2-1-e175053061ec@ixit.cz>
- <9ef0e4f9-7594-4c26-ab45-38e62a7d0e37@linaro.org>
-Content-Language: en-US
-From: David Heidelberg <david@ixit.cz>
-Autocrypt: addr=david@ixit.cz; keydata=
- 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
-In-Reply-To: <9ef0e4f9-7594-4c26-ab45-38e62a7d0e37@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-On 16/11/2025 14:55, Casey Connolly wrote:
-> Hi David,
-> 
-> I may not have added myself to MAINTAINERS when I submitted this driver, 
-> but a heads-up would have been appreciated before just taking it over!
-> 
-> On 11/13/25 18:57, David Heidelberg via B4 Relay wrote:
->> From: David Heidelberg <david@ixit.cz>
-> 
-> [...]> diff --git a/MAINTAINERS b/MAINTAINERS
->> index 7e015dcbac732..a4b16812d5a0c 100644
->> --- a/MAINTAINERS
->> +++ b/MAINTAINERS
->> @@ -8117,6 +8117,12 @@ S:    Maintained
->>   F:    Documentation/devicetree/bindings/display/panel/ 
->> samsung,s6e3ha8.yaml
->>   F:    drivers/gpu/drm/panel/panel-samsung-s6e3ha8.c
->> +DRM DRIVER FOR SAMSUNG SOFEF00 DDIC
->> +M:    David Heidelberg <david@ixit.cz>
-> 
-> M:    Casey Connolly <casey.connolly@linaro.org>
+I'm a bit overwhelmed, submitting is quite a complex process.
+Do I send an email to everyone mentioned in ./scripts/get_maintainer.pl ? W=
+hat's the difference with sending an email to linux-msm ?
 
-Sure, I'll add you in next patch version.
+I've never used tabs before, but now have to. I can't get this error fixed =
+in emacs, does emacs support the linux syntax format ?
 
-Could you review the patches not authored by you within the patchset too?
+WARNING: please, no space before tabs
+#28: FILE: include/dt-bindings/arm/qcom,ids.h:286:
++#define QCOM_ID_SM8635P ^I^I642$
 
-Thank you
-David
+total: 0 errors, 1 warnings, 13 lines checked
 
-> 
-> Please and thanks!
-> Casey (she/they)
-> 
->> +S:    Maintained
->> +F:    Documentation/devicetree/bindings/display/panel/ 
->> samsung,sofef00.yaml
->> +F:    drivers/gpu/drm/panel/panel-samsung-sofef00.c
->> +
->>   DRM DRIVER FOR SHARP MEMORY LCD
->>   M:    Alex Lanzano <lanzano.alex@gmail.com>
->>   S:    Maintained
->>
-> 
 
--- 
-David Heidelberg
+Also I tried subscribing to the list, but then I got 500 emails in a day. W=
+hat's the way to manage that, or if not, then I just don't subscribe?
 
+-- Philippe
+
+
+On Sunday, November 16th, 2025 at 6:04 AM, Krzysztof Kozlowski <krzk@kernel=
+.org> wrote:
+
+>=20
+>=20
+> On 16/11/2025 01:43, philmb3487 wrote:
+>=20
+> > Author: Philippe Michaud-Boudreault philmb3487@proton.me
+> > Date: Sat Nov 15 19:41:12 2025 -0500
+> >=20
+> > dt-bindings: arm: qcom,ids: Add SoC IDs for SM8635 family
+> >=20
+> > Add the SoC ID for the SM8635.
+>=20
+>=20
+> 1. Unfortunately this looks like a messed up patch header. Please use
+> standard tools for sending patches.
+>=20
+> 2. Also missing SoB.
+>=20
+> 3. Also, missing users of this - you have to organize your work in
+> proper patchsets. See recent guide on Linaro.org blog how to send patches=
+.
+>=20
+> ... and finally:
+>=20
+> Please use scripts/get_maintainers.pl to get a list of necessary people
+> and lists to CC (and consider --no-git-fallback argument, so you will
+> not CC people just because they made one commit years ago). It might
+> happen, that command when run on an older kernel, gives you outdated
+> entries. Therefore please be sure you base your patches on recent Linux
+> kernel.
+>=20
+> Tools like b4 or scripts/get_maintainer.pl provide you proper list of
+> people, so fix your workflow. Tools might also fail if you work on some
+> ancient tree (don't, instead use mainline) or work on fork of kernel
+> (don't, instead use mainline). Just use b4 and everything should be
+> fine, although remember about `b4 prep --auto-to-cc` if you added new
+> patches to the patchset.
+>=20
+>=20
+> Best regards,
+> Krzysztof
 
