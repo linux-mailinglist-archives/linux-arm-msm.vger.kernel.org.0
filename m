@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-81968-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-81969-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ams.mirrors.kernel.org (ams.mirrors.kernel.org [213.196.21.55])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4979BC61308
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 16 Nov 2025 12:04:26 +0100 (CET)
+Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [IPv6:2605:f480:58:1:0:1994:3:14])
+	by mail.lfdr.de (Postfix) with ESMTPS id 356F6C6130B
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 16 Nov 2025 12:05:07 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ams.mirrors.kernel.org (Postfix) with ESMTPS id BAA99358906
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 16 Nov 2025 11:04:25 +0000 (UTC)
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id CABEA4E1121
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 16 Nov 2025 11:05:05 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 49F23283FEA;
-	Sun, 16 Nov 2025 11:04:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D4E19283FEA;
+	Sun, 16 Nov 2025 11:05:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="npcuSFQQ"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="k1jiHMJE"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 245B521A459
-	for <linux-arm-msm@vger.kernel.org>; Sun, 16 Nov 2025 11:04:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF5D821A459
+	for <linux-arm-msm@vger.kernel.org>; Sun, 16 Nov 2025 11:05:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763291063; cv=none; b=fJllw7FQ2wD6O014kjiycmgL5lYUq9qPIVZVDv9RGoQDpYokIuYeF91H/A4mSXTk4aYJNcLqqPWxIsXC5YAfslpegRYGqNbQibcXNd1UtGMN5vU3GxSigNvsNumsAHKO4hD+PpDoAGnlsOy3nFPlR2LJokjHcVQkEzjGJcDAbl8=
+	t=1763291103; cv=none; b=FY+rbEZa//CBr3u/mJJigAy786AY5/zdzuewWkqJs5kbMnnbPx116hgWAaqLu97IMTAm8W7G23Mi2s7AsWJZvYWn/qd/rPMqQ/7Osq2XXgrd2jnqvJQcCjJiiGLBAx2dA/arBrRKiiNSgXFI/VMtTfAYzLyORR/VXmSdSFTOGy8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763291063; c=relaxed/simple;
-	bh=NCc6TXam2r+9EybE5Nb16xCPa+WyUczZbzZuP3crAr8=;
+	s=arc-20240116; t=1763291103; c=relaxed/simple;
+	bh=/NXRorGxlAqtxA2BGK6qgGQxdjN/4u/TuzV8OS8QleE=;
 	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
-	 In-Reply-To:Content-Type; b=Swx6LTdA6qmd5ob7ZDrlPKhFkZj2wO2RRlgdqDEahrPMqiazSdKYIKK2/TzZIkhKSFdIXLZB45U55ehq2VMSPlq1xF6Rz1lqA7zg7Sjzl2vbv1Swcu0BJWZmnisecK9Rc+N15lhaaKJ2gShnjxtWLc828gQDo0sCzKEhdtmroGk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=npcuSFQQ; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E578FC116B1;
-	Sun, 16 Nov 2025 11:04:20 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=Tc5X1km6j8ww91VdyLxlmDwNw4hnHY+paWUpyXPPN/LMtW4g2K21DH8eUNLHtvKfGok3FI7slF9sb+ePM40omZ46w6FMolF1CWOASRzulNo5ReF/NLplpKRLAdy1Wb6RjKAc3qRE2F/axeNSjFSrqsNRclRpALgObwduvs9y3O8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=k1jiHMJE; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83B23C2BC86;
+	Sun, 16 Nov 2025 11:05:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1763291061;
-	bh=NCc6TXam2r+9EybE5Nb16xCPa+WyUczZbzZuP3crAr8=;
+	s=k20201202; t=1763291103;
+	bh=/NXRorGxlAqtxA2BGK6qgGQxdjN/4u/TuzV8OS8QleE=;
 	h=Date:Subject:To:References:From:In-Reply-To:From;
-	b=npcuSFQQC0woTJPc/atvFJphHFOhvcc6esQlHnxMYDge/krILtvSYDJ+Rkksryz6B
-	 DncRTfZ1hK6Pl5jZIdeiBeY9NYaW5+EvvqTajuf9c/OT28AgK5LSmbADex7VVzDUFX
-	 LAw1/H67dR6P1SyHJLAprUOSd6Mn72eBVaRW+hMQUA1/tK7ih2sjHHfm0Up+0VvxiA
-	 DYaJABcS0NXb7MvrT8a0cO3cjklDV5s38uXwlE3ciVGQOlNGnXovJjV6TQS7a3A8q7
-	 2c8CATGjafWrT9EmGP0DvDsv4+j0IhfTTykJXPmHkbMvpBllDjZt5J8eS8bOufFMgl
-	 yr/Pw60NxzFzQ==
-Message-ID: <66d58b6c-aefd-4848-882b-51770f7020f3@kernel.org>
-Date: Sun, 16 Nov 2025 12:04:18 +0100
+	b=k1jiHMJEmF1hknJo930pNIwbO44PD3chawkfqgPGxms10J2XzY7kqyWue1WudczIt
+	 T5G1fSSDQB/lJQCVYyEQqsgn+vlS+pnuqUaGx5yD95ICuiBP9lxHZoqL5dLy0mBY/z
+	 PDRBR1sQmGsKA14K5s/I+o+WFmS5puOjv4WUq/4/NVXYKysAUwr9YgNNQruCemmf7b
+	 DJpsBfYO+lNSP2G08vTdsh0OrK721SYJhtZKQFYrMj9Bz+Hu9v7Q2HniHhdcxyC/D0
+	 xn0H4eqmQhRqGrLNlmtCCobKwlz76SpKH994RmWvKvcbdkugrpdztUz74b9zp9xFT4
+	 tuDVEW+GeB5PA==
+Message-ID: <f10a13af-c4e7-47df-9e9d-7efed30b2147@kernel.org>
+Date: Sun, 16 Nov 2025 12:05:01 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,10 +50,10 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] dt-bindings: arm: qcom,ids: Add SoC IDs for SM8635 family
+Subject: Re: [PATCH] Add support for General Clock Controller for SM8635
 To: philmb3487 <philmb3487@proton.me>,
  "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>
-References: <9nTdr-7UlyytB3d5Iz0IEGrAAzjPipf4NEiZvLMmpk9OmCmRuL346OxjZgpLkLdG7dFYE_rj-5aibg7bhYHrQmjwo1e096-2IGhfi1rKglE=@proton.me>
+References: <Uczku8TWm_yEdSMe9v2PZC6eDhmbXxr6yhqW6poltQ_xP52gQ5ZYRsiXGlkYxfVQGQjVhr0Bl86ncNVVx8aPe0JtRtK1uYZeN3LNXH-xE7o=@proton.me>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -99,34 +99,27 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  jWt87ecuHlpL3uuQ0ZZNWqHgZoQLXoqC2ZV5KrtKWb/jyiFX/sxSrodALf0zf+tfHv0FZWT2
  zHjUqd0t4njD/UOsuIMOQn4Ig0SdivYPfZukb5cdasKJukG1NOpbW7yRNivaCnfZz6dTawXw
  XRIV/KDsHQiyVxKvN73bThKhONkcX2LWuD928tAR6XMM2G5ovxLe09vuOzzfTWQDsm++9UKF a/A=
-In-Reply-To: <9nTdr-7UlyytB3d5Iz0IEGrAAzjPipf4NEiZvLMmpk9OmCmRuL346OxjZgpLkLdG7dFYE_rj-5aibg7bhYHrQmjwo1e096-2IGhfi1rKglE=@proton.me>
+In-Reply-To: <Uczku8TWm_yEdSMe9v2PZC6eDhmbXxr6yhqW6poltQ_xP52gQ5ZYRsiXGlkYxfVQGQjVhr0Bl86ncNVVx8aPe0JtRtK1uYZeN3LNXH-xE7o=@proton.me>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 16/11/2025 01:43, philmb3487 wrote:
-> Author: Philippe Michaud-Boudreault <philmb3487@proton.me>
-> Date:   Sat Nov 15 19:41:12 2025 -0500
+On 15/11/2025 15:38, philmb3487 wrote:
+> From f18386e7b70afaaf557fff147d24dac4c613980d Mon Sep 17 00:00:00 2001
+> From: Philippe Michaud-Boudreault <philmb3487@proton.me>
+> Date: Sat, 11 Oct 2025 18:40:14 -0400
+> Subject: [PATCH] dt-bindings: clock: qcom: document the SM8635 General Clock
+>  Controller
 > 
->     dt-bindings: arm: qcom,ids: Add SoC IDs for SM8635 family
-> 
->     Add the SoC ID for the SM8635.
+> Add bindings documentation for the SM8635 General Clock Controller.
 
-1. Unfortunately this looks like a messed up patch header. Please use
-standard tools for sending patches.
+Please send regular patches, not some odd "From
+f18386e7b70afaaf557fff147d24dac4c613980d".
 
-2. Also missing SoB.
-
-3. Also, missing users of this - you have to organize your work in
-proper patchsets. See recent guide on Linaro.org blog how to send patches.
-
-... and finally:
-
+<form letter>
 Please use scripts/get_maintainers.pl to get a list of necessary people
-and lists to CC (and consider --no-git-fallback argument, so you will
-not CC people just because they made one commit years ago). It might
-happen, that command when run on an older kernel, gives you outdated
-entries. Therefore please be sure you base your patches on recent Linux
-kernel.
+and lists to CC. It might happen, that command when run on an older
+kernel, gives you outdated entries. Therefore please be sure you base
+your patches on recent Linux kernel.
 
 Tools like b4 or scripts/get_maintainer.pl provide you proper list of
 people, so fix your workflow. Tools might also fail if you work on some
@@ -134,6 +127,14 @@ ancient tree (don't, instead use mainline) or work on fork of kernel
 (don't, instead use mainline). Just use b4 and everything should be
 fine, although remember about `b4 prep --auto-to-cc` if you added new
 patches to the patchset.
+
+You missed at least devicetree list (maybe more), so this won't be
+tested by automated tooling. Performing review on untested code might be
+a waste of time.
+
+Please kindly resend and include all necessary To/Cc entries.
+</form letter>
+
 
 
 Best regards,
