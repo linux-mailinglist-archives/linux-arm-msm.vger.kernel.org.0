@@ -1,123 +1,141 @@
-Return-Path: <linux-arm-msm+bounces-81967-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-81968-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ams.mirrors.kernel.org (ams.mirrors.kernel.org [213.196.21.55])
-	by mail.lfdr.de (Postfix) with ESMTPS id 853AFC612DD
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 16 Nov 2025 11:54:36 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 4979BC61308
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 16 Nov 2025 12:04:26 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ams.mirrors.kernel.org (Postfix) with ESMTPS id 69CEA3610F2
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 16 Nov 2025 10:52:54 +0000 (UTC)
+	by ams.mirrors.kernel.org (Postfix) with ESMTPS id BAA99358906
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 16 Nov 2025 11:04:25 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5545B2BE62E;
-	Sun, 16 Nov 2025 10:52:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 49F23283FEA;
+	Sun, 16 Nov 2025 11:04:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Q6SU/Htl"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="npcuSFQQ"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 000D629E0F7;
-	Sun, 16 Nov 2025 10:52:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 245B521A459
+	for <linux-arm-msm@vger.kernel.org>; Sun, 16 Nov 2025 11:04:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763290346; cv=none; b=hqy+1QnHOZK5282XRxQkTx6USBoZRBdVBiV+QtdTmgT99dny7vTRGegOYwW1ZbvtCOGaaEThv+KN1lVE/Qu+qT7NX/u4CV42EPIyqqqvai0WF/2ymjvT4zBab78rJg0w9YEGWadxHg+9RR5cIIpnA6brGBSs7jgMVsTrO9if3Sc=
+	t=1763291063; cv=none; b=fJllw7FQ2wD6O014kjiycmgL5lYUq9qPIVZVDv9RGoQDpYokIuYeF91H/A4mSXTk4aYJNcLqqPWxIsXC5YAfslpegRYGqNbQibcXNd1UtGMN5vU3GxSigNvsNumsAHKO4hD+PpDoAGnlsOy3nFPlR2LJokjHcVQkEzjGJcDAbl8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763290346; c=relaxed/simple;
-	bh=k3KRolxdNesj6iiyyyETOCkob3J9SPgOASuozIOhElA=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=bl78iQorPm0dpn3W53JmTkphnzzraMUb0FmEUBPYVWTBoMo0VyMmPuR/pv4ZnlttP61Y6n9OfrKBSXPgmM9sCf+wwsX9qb5i3D7xGY90iXIyTPTZGzv7ABb8toNtO1waunLW99xgo/EnjXnNtKIq5psZfAYHK9cSqvEPGUWRsMk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Q6SU/Htl; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 93FE7C19421;
-	Sun, 16 Nov 2025 10:52:25 +0000 (UTC)
+	s=arc-20240116; t=1763291063; c=relaxed/simple;
+	bh=NCc6TXam2r+9EybE5Nb16xCPa+WyUczZbzZuP3crAr8=;
+	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
+	 In-Reply-To:Content-Type; b=Swx6LTdA6qmd5ob7ZDrlPKhFkZj2wO2RRlgdqDEahrPMqiazSdKYIKK2/TzZIkhKSFdIXLZB45U55ehq2VMSPlq1xF6Rz1lqA7zg7Sjzl2vbv1Swcu0BJWZmnisecK9Rc+N15lhaaKJ2gShnjxtWLc828gQDo0sCzKEhdtmroGk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=npcuSFQQ; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E578FC116B1;
+	Sun, 16 Nov 2025 11:04:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1763290345;
-	bh=k3KRolxdNesj6iiyyyETOCkob3J9SPgOASuozIOhElA=;
-	h=From:Date:Subject:References:In-Reply-To:To:Cc:Reply-To:From;
-	b=Q6SU/Htl3VJwP+rcDiRZ/vo+LTaM/yg3Jnbxu8Ga35qboE1mxEr9I/rjMVn1f9F8l
-	 1SqyqJ1ETZ4fFezvQWD6pMtbNnVeyFfZa7OmXZVPN1eZaVE/vuUn1mSbA0x3EbO6mr
-	 7WGN1X22IHujoYSHGONpxsbLN+YuxcH87Ty4efBV4viHEnY4DXVF9F386Y9orCcj2Q
-	 bcpgkdf81inMXAbL4T8gYlSDA8V93eslkwiSexyOPTmg/WU3J8YaTagJr/BRL6CW1u
-	 uuwXbp8e9m9Oy9MtHOec32WoKnmd7NO8fRjJ/Rh8ApGc3L3NcDHMS8MKxp00VJ2aFD
-	 9OGcoigontAGw==
-Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8CA9FCD4F3E;
-	Sun, 16 Nov 2025 10:52:25 +0000 (UTC)
-From: Maud Spierings via B4 Relay <devnull+maud_spierings.hotmail.com@kernel.org>
-Date: Sun, 16 Nov 2025 11:52:11 +0100
-Subject: [PATCH v2 6/6] arm64: dts: qcom: x1e80100-vivobook-s15: enable
- IRIS
+	s=k20201202; t=1763291061;
+	bh=NCc6TXam2r+9EybE5Nb16xCPa+WyUczZbzZuP3crAr8=;
+	h=Date:Subject:To:References:From:In-Reply-To:From;
+	b=npcuSFQQC0woTJPc/atvFJphHFOhvcc6esQlHnxMYDge/krILtvSYDJ+Rkksryz6B
+	 DncRTfZ1hK6Pl5jZIdeiBeY9NYaW5+EvvqTajuf9c/OT28AgK5LSmbADex7VVzDUFX
+	 LAw1/H67dR6P1SyHJLAprUOSd6Mn72eBVaRW+hMQUA1/tK7ih2sjHHfm0Up+0VvxiA
+	 DYaJABcS0NXb7MvrT8a0cO3cjklDV5s38uXwlE3ciVGQOlNGnXovJjV6TQS7a3A8q7
+	 2c8CATGjafWrT9EmGP0DvDsv4+j0IhfTTykJXPmHkbMvpBllDjZt5J8eS8bOufFMgl
+	 yr/Pw60NxzFzQ==
+Message-ID: <66d58b6c-aefd-4848-882b-51770f7020f3@kernel.org>
+Date: Sun, 16 Nov 2025 12:04:18 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] dt-bindings: arm: qcom,ids: Add SoC IDs for SM8635 family
+To: philmb3487 <philmb3487@proton.me>,
+ "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>
+References: <9nTdr-7UlyytB3d5Iz0IEGrAAzjPipf4NEiZvLMmpk9OmCmRuL346OxjZgpLkLdG7dFYE_rj-5aibg7bhYHrQmjwo1e096-2IGhfi1rKglE=@proton.me>
+From: Krzysztof Kozlowski <krzk@kernel.org>
+Content-Language: en-US
+Autocrypt: addr=krzk@kernel.org; keydata=
+ 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 a/A=
+In-Reply-To: <9nTdr-7UlyytB3d5Iz0IEGrAAzjPipf4NEiZvLMmpk9OmCmRuL346OxjZgpLkLdG7dFYE_rj-5aibg7bhYHrQmjwo1e096-2IGhfi1rKglE=@proton.me>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Message-Id: <20251116-asus_usbc_dp-v2-6-cc8f51136c9f@hotmail.com>
-References: <20251116-asus_usbc_dp-v2-0-cc8f51136c9f@hotmail.com>
-In-Reply-To: <20251116-asus_usbc_dp-v2-0-cc8f51136c9f@hotmail.com>
-To: Andrzej Hajda <andrzej.hajda@intel.com>, 
- Neil Armstrong <neil.armstrong@linaro.org>, Robert Foss <rfoss@kernel.org>, 
- Laurent Pinchart <Laurent.pinchart@ideasonboard.com>, 
- Jonas Karlman <jonas@kwiboo.se>, Jernej Skrabec <jernej.skrabec@gmail.com>, 
- David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, 
- Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, 
- Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>, 
- Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konradybcio@kernel.org>
-Cc: dri-devel@lists.freedesktop.org, devicetree@vger.kernel.org, 
- linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
- Maud Spierings <maud_spierings@hotmail.com>, 
- Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-X-Mailer: b4 0.14.3
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1763290343; l=1012;
- i=maud_spierings@hotmail.com; s=20241110; h=from:subject:message-id;
- bh=ZWmCWiua5n5egQRb9x1NYydUjOW+BFATCTtHiwvWGpQ=;
- b=phmvb/RyHfB1ybeFgUHWUKLmMar+NfvGWePtX7qURUDEXGwzjyThXM+8lI4SyDMrXhwAXx2F+
- AFk4wqlw6IyBe4MbThNRTuOOSM4O0tqKhG6nHiNQlIlj4ZrdMO9Pl8P
-X-Developer-Key: i=maud_spierings@hotmail.com; a=ed25519;
- pk=CeFKVnZvRfX2QjB1DpdiAe2N+MEjwLEB9Yhx/OAcxRc=
-X-Endpoint-Received: by B4 Relay for maud_spierings@hotmail.com/20241110
- with auth_id=273
-X-Original-From: Maud Spierings <maud_spierings@hotmail.com>
-Reply-To: maud_spierings@hotmail.com
 
-From: Maud Spierings <maud_spierings@hotmail.com>
+On 16/11/2025 01:43, philmb3487 wrote:
+> Author: Philippe Michaud-Boudreault <philmb3487@proton.me>
+> Date:   Sat Nov 15 19:41:12 2025 -0500
+> 
+>     dt-bindings: arm: qcom,ids: Add SoC IDs for SM8635 family
+> 
+>     Add the SoC ID for the SM8635.
 
-Enable IRIS to allow using the hardware-accelerated video codecs. The
-firmware is not upstream in linux-firmware yet, so users need to copy it
-from Windows to qcom/x1e80100/ASUSTeK/vivobook-s15/qcvss8380.mbn (just like
-GPU/ADSP/CDSP firmware).
+1. Unfortunately this looks like a messed up patch header. Please use
+standard tools for sending patches.
 
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Signed-off-by: Maud Spierings <maud_spierings@hotmail.com>
----
- arch/arm64/boot/dts/qcom/x1e80100-asus-vivobook-s15.dts | 5 +++++
- 1 file changed, 5 insertions(+)
+2. Also missing SoB.
 
-diff --git a/arch/arm64/boot/dts/qcom/x1e80100-asus-vivobook-s15.dts b/arch/arm64/boot/dts/qcom/x1e80100-asus-vivobook-s15.dts
-index 2d9b812d299e..7e57d5029a73 100644
---- a/arch/arm64/boot/dts/qcom/x1e80100-asus-vivobook-s15.dts
-+++ b/arch/arm64/boot/dts/qcom/x1e80100-asus-vivobook-s15.dts
-@@ -839,6 +839,11 @@ retimer_ss1_con_sbu_out: endpoint {
- 	};
- };
- 
-+&iris {
-+	firmware-name = "qcom/x1e80100/ASUSTeK/vivobook-s15/qcvss8380.mbn";
-+	status = "okay";
-+};
-+
- &mdss {
- 	status = "okay";
- };
+3. Also, missing users of this - you have to organize your work in
+proper patchsets. See recent guide on Linaro.org blog how to send patches.
 
--- 
-2.51.2
+... and finally:
+
+Please use scripts/get_maintainers.pl to get a list of necessary people
+and lists to CC (and consider --no-git-fallback argument, so you will
+not CC people just because they made one commit years ago). It might
+happen, that command when run on an older kernel, gives you outdated
+entries. Therefore please be sure you base your patches on recent Linux
+kernel.
+
+Tools like b4 or scripts/get_maintainer.pl provide you proper list of
+people, so fix your workflow. Tools might also fail if you work on some
+ancient tree (don't, instead use mainline) or work on fork of kernel
+(don't, instead use mainline). Just use b4 and everything should be
+fine, although remember about `b4 prep --auto-to-cc` if you added new
+patches to the patchset.
 
 
+Best regards,
+Krzysztof
 
