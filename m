@@ -1,77 +1,59 @@
-Return-Path: <linux-arm-msm+bounces-82163-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-82164-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ams.mirrors.kernel.org (ams.mirrors.kernel.org [213.196.21.55])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7C5A5C661D3
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Nov 2025 21:33:46 +0100 (CET)
+Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [IPv6:2605:f480:58:1:0:1994:3:14])
+	by mail.lfdr.de (Postfix) with ESMTPS id BDB64C6621E
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Nov 2025 21:43:37 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ams.mirrors.kernel.org (Postfix) with ESMTPS id E825A35F442
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Nov 2025 20:33:27 +0000 (UTC)
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 3F26B4E0751
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Nov 2025 20:43:36 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2544834A793;
-	Mon, 17 Nov 2025 20:33:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 46DB532E69B;
+	Mon, 17 Nov 2025 20:43:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="IwaSjFcC"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="cJRaTK9Q"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C79E334A3D6;
-	Mon, 17 Nov 2025 20:33:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 114CA328B51;
+	Mon, 17 Nov 2025 20:43:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763411601; cv=none; b=MaO4NXfYkNx1kGetw0JZPaxB3ne5hlYQYTWRxGMPasyHcgNj892jYsfMQ5xHDbAdPVjhyPor0DKn6m3iatsxbn1ivc9GVb8phLJkKPWvYL0ot6XUDtHIZCsx/2P+xDInVHAoj07VZV2UvxggaNUygj6hL8Pl/dcQfog/aDpTAYc=
+	t=1763412213; cv=none; b=GbCglUzA/iHW3wW4G5v+OJQyHlMoccgxt0rK2nVaJ//Yo80pm6lSSN7oqgshq+YRKpNQF+vaIMyG5q4XFKQw5+GhYJJRMeVHBGNLUm2ZzOFUzn0S2ELrNKXgP+PU5o4SXqUgTyXBMQuq7w/cZdyFvPO0HEdWvLcX50jOcsw1s4E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763411601; c=relaxed/simple;
-	bh=BV6A7dBjO90aTngR1VxmTz0Cc3FxYyV4HxPja2tfCrs=;
+	s=arc-20240116; t=1763412213; c=relaxed/simple;
+	bh=U4tr+lgT7dhe7PqRFZFHjgf6eAkQ3fpbvo3Kb5hMZJI=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=FRnymgU4uFxkeFHtQgFOizADOIX5fXy92wQtO388geJVqm+631lm4CbnG0D3cJkKByOqxxyoIjsKsjFRITsPSnkrLt8qX4n+cP1Lmi/31hmWwl/Jbth/QgEMnQDDtnF7gc2On4Wnjf6KxXGMjwuSysB47fS12TznfyxNst/6Iao=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=IwaSjFcC; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0045C2BC9E;
-	Mon, 17 Nov 2025 20:33:19 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=BvfZGr11WNkaeMwGODQBA8cxYXr0kOFO6hwV2McydZ6hBVIzMOavA41c+nMDxpZMFzgEoOaUGQlzzyjxC+t4EnGCyNe07R4bS+Oj+3rIYKZDteAvCfx1j2JqafeJT2SXFxRHJpoJFOapJRbY7ymnRa1ksbXvdSYa9DyLeSgYVrs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=cJRaTK9Q; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78C8DC19424;
+	Mon, 17 Nov 2025 20:43:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1763411600;
-	bh=BV6A7dBjO90aTngR1VxmTz0Cc3FxYyV4HxPja2tfCrs=;
+	s=k20201202; t=1763412212;
+	bh=U4tr+lgT7dhe7PqRFZFHjgf6eAkQ3fpbvo3Kb5hMZJI=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=IwaSjFcC+CJt1Xd6iGnljRiCT+H+mCtIJfZZ+jxJJZkfbreYXobKxC5EnfYfdCvyM
-	 VXOFD5hZkGsx1FD6wEeEA6JpLieId9iZyELXldUOu8v3HckxnMs5Ox4ER5yai0fOkh
-	 oMwU7JRSZWE8Z3yGFMxd75xXOObKyShqO11/EIefiYWQXwvovomp5j7IAGtAK7IhZj
-	 h5nE6uSqqKCABwskWvxtc9x0P+by27/qalo9BDIA+e6xLfGyxmSPaGv6oSACQZO4k+
-	 GjNCqszjwa04QVxS54Zza7rJbTRStyKG+kTv8tdtWSz07/MZJEPf7EaXbE5b6Eilir
-	 7tpoV4h+NIHnA==
-Date: Mon, 17 Nov 2025 12:33:18 -0800
-From: Kees Cook <kees@kernel.org>
-To: Bartosz Golaszewski <brgl@bgdev.pl>
-Cc: Mika Westerberg <westeri@kernel.org>,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Linus Walleij <linus.walleij@linaro.org>,
-	Manivannan Sadhasivam <mani@kernel.org>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Saravana Kannan <saravanak@google.com>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	Andy Shevchenko <andy@kernel.org>,
-	Catalin Marinas <catalin.marinas@arm.com>,
-	Will Deacon <will@kernel.org>,
-	Srinivas Kandagatla <srini@kernel.org>,
-	Liam Girdwood <lgirdwood@gmail.com>,
-	Mark Brown <broonie@kernel.org>, Jaroslav Kysela <perex@perex.cz>,
-	Takashi Iwai <tiwai@suse.com>,
-	Alexey Klimov <alexey.klimov@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	linux-hardening@vger.kernel.org, linux-kernel@vger.kernel.org,
-	linux-gpio@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-	linux-sound@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Subject: Re: [PATCH v4 01/10] string: provide strends()
-Message-ID: <202511171230.F83EE85D0@keescook>
-References: <20251112-gpio-shared-v4-0-b51f97b1abd8@linaro.org>
- <20251112-gpio-shared-v4-1-b51f97b1abd8@linaro.org>
+	b=cJRaTK9QV9U+WKid6C7DPyH2eOzCTVGSTyT0aTrGqhXwTKe1Nq2hW4FUWbQ0U8p3J
+	 NLuOhAhPxN+d9DjEyfDjKjk6t6JtPCsqLA0Q9JVbU5nKiuZM0SvXHPZOnM6eIL0WlX
+	 D4MDwbciEULgy+JJO2cdJ5ZJt/EPrQZHHWDoIOcvo/PXFlVzqIvE6vDpaYbfwhCKBN
+	 ZfOJEfzUJWIzxmztkjLuFgYuTeF54HoClpQGQJdwJsR2NlSxe0Ba8ylEZL7L3DH246
+	 cYtLQVyvLupsWaX47f+FvE+os2bsT3MzQpzSDOSz37iMgAUUixSDb6Cct2tgeSPBdd
+	 2YBAC4hfcuofw==
+Date: Mon, 17 Nov 2025 14:48:15 -0600
+From: Bjorn Andersson <andersson@kernel.org>
+To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Cc: Shivendra Pratap <shivendra.pratap@oss.qualcomm.com>, 
+	Sebastian Reichel <sre@kernel.org>, Bartosz Golaszewski <bartosz.golaszewski@linaro.org>, 
+	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org, 
+	Sebastian Reichel <sebastian.reichel@collabora.com>
+Subject: Re: [PATCH 1/2] Documentation: ABI: Add
+ sysfs-class-reboot-mode-reboot_modes
+Message-ID: <virjbkkpdmufx2midadzwiml4boyuxtokikcvupswapwehnv65@d2ppyiaeti22>
+References: <20251116-next-15nov_expose_sysfs-v1-0-3b7880e5b40e@oss.qualcomm.com>
+ <20251116-next-15nov_expose_sysfs-v1-1-3b7880e5b40e@oss.qualcomm.com>
+ <t3hfhlp27numfxurtmtcwrovvlgwdvnujain46kwmi37zehdak@xt3vngtkxpsm>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -80,105 +62,98 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20251112-gpio-shared-v4-1-b51f97b1abd8@linaro.org>
+In-Reply-To: <t3hfhlp27numfxurtmtcwrovvlgwdvnujain46kwmi37zehdak@xt3vngtkxpsm>
 
-On Wed, Nov 12, 2025 at 02:55:30PM +0100, Bartosz Golaszewski wrote:
-> From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+On Sun, Nov 16, 2025 at 07:44:24PM +0200, Dmitry Baryshkov wrote:
+> On Sun, Nov 16, 2025 at 08:49:47PM +0530, Shivendra Pratap wrote:
+> > Add ABI documentation for /sys/class/reboot-mode/*/reboot_modes, a
+> > read-only sysfs attribute exposing the list of supported reboot-mode
+> > arguments. This file is created by reboot-mode framework and provides a
+> > user-readable interface to query available reboot-mode arguments.
+> > 
+> > Reviewed-by: Sebastian Reichel <sebastian.reichel@collabora.com>
+> > Signed-off-by: Shivendra Pratap <shivendra.pratap@oss.qualcomm.com>
+> > ---
+> >  .../testing/sysfs-class-reboot-mode-reboot_modes   | 39 ++++++++++++++++++++++
+> >  1 file changed, 39 insertions(+)
+> > 
+> > diff --git a/Documentation/ABI/testing/sysfs-class-reboot-mode-reboot_modes b/Documentation/ABI/testing/sysfs-class-reboot-mode-reboot_modes
+> > new file mode 100644
+> > index 0000000000000000000000000000000000000000..28280ffe9bf962ef9d2136ea5d7c6aef77c4bd34
+> > --- /dev/null
+> > +++ b/Documentation/ABI/testing/sysfs-class-reboot-mode-reboot_modes
+> > @@ -0,0 +1,39 @@
+> > +What:		/sys/class/reboot-mode/<driver>/reboot_modes
+> > +Date:		November 2025
+> > +KernelVersion:	6.18.0-rc5
+> > +Contact:	linux-pm@vger.kernel.org
+> > +		Description:
+> > +		This interface exposes the reboot-mode arguments
+> > +		registered with the reboot-mode framework. It is
+> > +		a read-only interface and provides a space
+> > +		separated list of reboot-mode arguments supported
+> > +		on the current platform.
+> > +		Example:
+> > +		 recovery fastboot bootloader
+> > +
+> > +		The exact sysfs path may vary depending on the
+> > +		name of the driver that registers the arguments.
+> > +		Example:
+> > +		 /sys/class/reboot-mode/nvmem-reboot-mode/reboot_modes
+> > +		 /sys/class/reboot-mode/syscon-reboot-mode/reboot_modes
+> > +		 /sys/class/reboot-mode/qcom-pon/reboot_modes
 > 
-> Implement a function for checking if a string ends with a different
-> string and add its kunit test cases.
+> This part is obvious, isn't it?
 > 
-> Acked-by: Linus Walleij <linus.walleij@linaro.org>
-> Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-> ---
->  include/linux/string.h   | 18 ++++++++++++++++++
->  lib/tests/string_kunit.c | 13 +++++++++++++
->  2 files changed, 31 insertions(+)
+> > +
+> > +		The supported arguments can be used by userspace
+> > +		to invoke device reset using the reboot() system
+> > +		call, with the "argument" as string to "*arg"
+> > +		parameter along with LINUX_REBOOT_CMD_RESTART2.
+> > +		Example:
+> > +		 reboot(LINUX_REBOOT_MAGIC1, LINUX_REBOOT_MAGIC2,
+> > +		        LINUX_REBOOT_CMD_RESTART2, "bootloader");
 > 
-> diff --git a/include/linux/string.h b/include/linux/string.h
-> index fdd3442c6bcbd786e177b6e87358e1065a0ffafc..929d05d1247c76eb9011fe34250b487834b2d3c9 100644
-> --- a/include/linux/string.h
-> +++ b/include/linux/string.h
-> @@ -562,4 +562,22 @@ static inline bool strstarts(const char *str, const char *prefix)
->  	return strncmp(str, prefix, strlen(prefix)) == 0;
->  }
->  
-> +/**
-> + * strends - Check if a string ends with another string.
-> + * @str - NULL-terminated string to check against @suffix
-> + * @suffix - NULL-terminated string defining the suffix to look for in @str
-> + *
-> + * Returns:
-> + * True if @str ends with @suffix. False in all other cases.
+> So, does one need to write a tool for invoking reboot with the corerct
+> set of args?
 
-Maybe added "empty strings never match"?
+Here's an implementation of such tool
+https://github.com/systemd/systemd/blob/main/src/shared/reboot-util.c#L80
 
-> + */
-> +static inline bool strends(const char *str, const char *suffix)
+Many other implementations of reboot provides the same.
 
-These are required to be non-NULL, so we might want to consider marking
-them as such with the "nonnull" attribute. We don't use it much in Linux
-yet, but I do see a few places.
+> If we are adding a sysfs interface, wouldn't it be logical
+> to also add another sysfs file, setting the argument?
+> 
 
-e.g.:
+The inclusion of the example indicates that we need to expose it in an
+accessible form, but I don't think we should, as it's already a
+widespread standard interface.
 
-static inline bool __attribute__((nonnull(1,2)))
-strends(const char *str, const char *suffix)
+As such, I don't think the example adds any value, but it would be
+valuable to clarify that this is a standard interface.
 
-> +{
-> +	unsigned int str_len = strlen(str), suffix_len = strlen(suffix);
-> +
-> +	if (str_len < suffix_len)
-> +		return false;
-> +
-> +	return !(strcmp(str + str_len - suffix_len, suffix));
-> +}
+Regards,
+Bjorn
 
-We should probably add it to strlen and strcmp as well. :)
-
-> +
->  #endif /* _LINUX_STRING_H_ */
-> diff --git a/lib/tests/string_kunit.c b/lib/tests/string_kunit.c
-> index 0ed7448a26d3aa0fe9e2a6a894d4c49c2c0b86e0..f9a8e557ba7734c9848d58ff986407d8000f52ee 100644
-> --- a/lib/tests/string_kunit.c
-> +++ b/lib/tests/string_kunit.c
-> @@ -602,6 +602,18 @@ static void string_test_memtostr(struct kunit *test)
->  	KUNIT_EXPECT_EQ(test, dest[7], '\0');
->  }
->  
-> +static void string_test_strends(struct kunit *test)
-> +{
-> +	KUNIT_EXPECT_TRUE(test, strends("foo-bar", "bar"));
-> +	KUNIT_EXPECT_TRUE(test, strends("foo-bar", "-bar"));
-> +	KUNIT_EXPECT_TRUE(test, strends("foobar", "foobar"));
-> +	KUNIT_EXPECT_TRUE(test, strends("foobar", ""));
-> +	KUNIT_EXPECT_FALSE(test, strends("bar", "foobar"));
-> +	KUNIT_EXPECT_FALSE(test, strends("", "foo"));
-> +	KUNIT_EXPECT_FALSE(test, strends("foobar", "ba"));
-> +	KUNIT_EXPECT_TRUE(test, strends("", ""));
-> +}
-
-Thanks for adding tests! :)
-
-> +
->  static struct kunit_case string_test_cases[] = {
->  	KUNIT_CASE(string_test_memset16),
->  	KUNIT_CASE(string_test_memset32),
-> @@ -623,6 +635,7 @@ static struct kunit_case string_test_cases[] = {
->  	KUNIT_CASE(string_test_strlcat),
->  	KUNIT_CASE(string_test_strtomem),
->  	KUNIT_CASE(string_test_memtostr),
-> +	KUNIT_CASE(string_test_strends),
->  	{}
->  };
->  
+> > +
+> > +		A driver can expose the supported arguments by
+> > +		registering them with the reboot-mode framework
+> > +		using the property names that follow the
+> > +		mode-<argument> format.
+> > +		Example:
+> > +		 mode-bootloader, mode-recovery.
+> > +
+> > +		This attribute is useful for scripts or initramfs
+> > +		logic that need to programmatically determine
+> > +		which reboot-mode arguments are valid before
+> > +		triggering a reboot.
+> > 
+> > -- 
+> > 2.34.1
+> > 
 > 
 > -- 
-> 2.51.0
-> 
-
-Reviewed-by: Kees Cook <kees@kernel.org>
-
--- 
-Kees Cook
+> With best wishes
+> Dmitry
 
