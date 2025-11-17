@@ -1,211 +1,228 @@
-Return-Path: <linux-arm-msm+bounces-82034-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-82035-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id D82E7C62634
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Nov 2025 06:20:33 +0100 (CET)
+Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [142.0.200.124])
+	by mail.lfdr.de (Postfix) with ESMTPS id E0F5AC62658
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Nov 2025 06:23:40 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 4185E3B5DA1
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Nov 2025 05:18:34 +0000 (UTC)
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 90BEB4E6690
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Nov 2025 05:23:06 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A37E93168FB;
-	Mon, 17 Nov 2025 05:17:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A28ED30E0F5;
+	Mon, 17 Nov 2025 05:23:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=marek.ca header.i=@marek.ca header.b="A+SMierF"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="V3Da/Bf4";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="X1U5p7+D"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-qk1-f179.google.com (mail-qk1-f179.google.com [209.85.222.179])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D10A0316907
-	for <linux-arm-msm@vger.kernel.org>; Mon, 17 Nov 2025 05:17:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.179
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B53630E0D8
+	for <linux-arm-msm@vger.kernel.org>; Mon, 17 Nov 2025 05:23:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763356645; cv=none; b=BvHP+7StaCnz+TVS6U7d8Iqx2gDs1wVdg8uyHSOqGVDxDKemYzBTm1/dY2Q38xRovYqo+sQDgXsjo1pX4j8IdUpwH1bxd3HbAnPCVu48Va+vEJxj0TMbboih1Kv8mEYft/glfcvayL3wMB7gsvdPIwE+F2l0PdqseSb7vG8f3t8=
+	t=1763356982; cv=none; b=Pep10zJavRuDn9WWT/bHEd0VTF+NOMrFAw4n8zZ0qRC3vpJOQHC6d5oTK0nq5JtyflPJQC9RVGeBdOhGR6z9w/CtAUk63CEQljkjalGO9xWQ/5AuDXtXsApQdg0eExihMgpJBsjDUaN7n0ZHqjHXL34v52Bq6LRZfwFcrKizDt4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763356645; c=relaxed/simple;
-	bh=fFCnrKfZ6fyKdtooA6OkkWdD4KpdkZStP4RM2O4IPe0=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZYXW1sQis0SHOoHLkLbKy56l5c1jY1bGzK//Nt1towW30Rs2Ib4AcgF0/cgxhY9/bzRPhJFBe4ciknIg8fJyYalE541IxNa79ein7FwIas3DX2lSeJCaYgYy94UpD9ryg6ENbVR9H9e4n5FuekPyv+42LD0ZAfblalWVSipoHR0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=marek.ca; spf=pass smtp.mailfrom=marek.ca; dkim=pass (2048-bit key) header.d=marek.ca header.i=@marek.ca header.b=A+SMierF; arc=none smtp.client-ip=209.85.222.179
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=marek.ca
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=marek.ca
-Received: by mail-qk1-f179.google.com with SMTP id af79cd13be357-8b21fa7b91bso367448085a.1
-        for <linux-arm-msm@vger.kernel.org>; Sun, 16 Nov 2025 21:17:23 -0800 (PST)
+	s=arc-20240116; t=1763356982; c=relaxed/simple;
+	bh=w6wiug95Uep2sy5YF1FeMxWbhb0PjR6EaPR77uu3r9I=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=EX5P+bX7xieAGfPhIJxbPtrC2n5FPheeUJH5yEwyh9LseI4FGolszWG6xNP6MS/C7yLg7ZvRjMZmbTcpQ2OuMyy7GE6xeCZhv/nvinWxAORLltaeCiWsCLizuPGZQsqlYV8XoIDZCf9lNJ0STHp69wO/sjK+jz/WJnwo5a6X1SE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=V3Da/Bf4; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=X1U5p7+D; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 5AH4o5cq3040296
+	for <linux-arm-msm@vger.kernel.org>; Mon, 17 Nov 2025 05:22:59 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	Gor2wK9jXbtsJbqjtAgbnKhqnzfjD4B3yGBZu9lQGLo=; b=V3Da/Bf4KpAbk9zE
+	0S16MAr7Hiu+5dz+MNj1x42j8NwoZ5fvGQeGcxJGACT0/jzGXvWyjLeJol+t7Dnb
+	NiZBSKILWDiI5+8fRddONEJHG69L7qXZ9PZk1Ybw8aaKi+VLFvr5KX4zNfJVrXJK
+	MK9PcNBK+MOieQicUvynnnHK6W/sQJo9UQx7uSPBtcvNNCB/yaWKTsOVVl3yGnHL
+	dE07IVN3IR/fOtCADoZhQ1opJ0DY4fExZm9axyfB0WzU8/bVVheQTg5JcMOHkszL
+	rCLnREdgtkM3wXDiMAOFl15E1Kk0rYpFxCEEk/8RrI+CXSK7OpJ02p34GdxHkv9S
+	B/9tWQ==
+Received: from mail-pg1-f197.google.com (mail-pg1-f197.google.com [209.85.215.197])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4aejh03eqk-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Mon, 17 Nov 2025 05:22:59 +0000 (GMT)
+Received: by mail-pg1-f197.google.com with SMTP id 41be03b00d2f7-bbcf3bd4c8fso3427981a12.0
+        for <linux-arm-msm@vger.kernel.org>; Sun, 16 Nov 2025 21:22:58 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=marek.ca; s=google; t=1763356642; x=1763961442; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=sjB9Qq208HC3pXFl5L+RekWRbUTIKQ1gS1VARhSM6F4=;
-        b=A+SMierF8r5wlvUMyveSTeuhJ/bX99qVdRBAsqPOeQv2L4Lhe903bypLvuzPe2tYHf
-         zYu7ysLG8k46uDPeI9MKl7XrjECxiqjVF+FhsGBjMN33FKquP//KE2IvfTP0iufz2Kul
-         7ei6tJ9Ir7MdRhbhO5blN/hWMUFT3B0CxOnwHqwbBP2685njLjxmg9IHanh+1GHaWlUd
-         ChmyYjLsVhVztUQOPgcn6jkh3N6ISvQ5YrB1GqPWP2HInWMqjQr/Wl8j8NV3tKevPbLr
-         0x3zXmWGTUpiSX0tCDhoRbQZYx6Jtm0tIA+JaxFB274/CJfuQGERU5WMj+0oCs3nC0rP
-         wetw==
+        d=oss.qualcomm.com; s=google; t=1763356978; x=1763961778; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=Gor2wK9jXbtsJbqjtAgbnKhqnzfjD4B3yGBZu9lQGLo=;
+        b=X1U5p7+DtqY7RhozpNbF/4NsUPGx4/pm78oKX3LD8b1r/PC61P59fnmOt1DCMHs+DB
+         I7e4M9SP9AHeI/VVKDpe8EyriiCgkX2mrG/yhSqlzccqefL5saTa99zy3NQ6NqF/a1vV
+         GmXYQ4PE/oU8TvAPmqBU7r5loMH7zvt/QMlghEtqUB1ITaNe0qFLEvT6pIjBkTTYAAba
+         9mltIAk7orHUuaGGal+X7PuLxS69Rs85mXKK+rJ8CmD2UCndDPwVqQdquke7C9bVfJyW
+         IAJ4VjsICGDvFRRYt4CJbhApwS8V1kc8UUde+T02AlAZRwqGddZZpIgiX93wqJYSW1t8
+         vjZQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1763356642; x=1763961442;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=sjB9Qq208HC3pXFl5L+RekWRbUTIKQ1gS1VARhSM6F4=;
-        b=VeVm9kx2zJtWp6aEAhjfmBORTn+WSUuGupfUV5r7wlGTyVmktURTF/WorL0VlCUey8
-         548Y5KTBcwYQUcG9UrUxJQ6yN2n2tju9kx8N5uLDHF3gDm4Hm1vb2K8B4EoI7SwOZA3r
-         +2HqHmFXuL9AHYno0b9uIA8Pk8qpbFrZAR0Ax6HW6BzERIUhPjg/ay6IfM9AvdWiEsVn
-         ZSH/yjtdKLB3JENTBQG+2WNqzxBXauPJ09HziNIyl60kRQ6q8nOVDdA8j3h2/3UdA7Mp
-         gZhzuGaafd/VapSIFw/Ik9A0zHqtqzbIfTic1Ig0zC5MUt0ZnbDM5EHh4qREql2wW5Ty
-         AKhg==
-X-Gm-Message-State: AOJu0Yx0FRVYM1g5iPag6OV5s2eSvvc2a/Vup/vUUzuAWXnp81tLhLwZ
-	cGVw8XOVb7wo8nqaM7RVQlaOYB3rqk+b7r6O8pvNX+nIUrevBMEvT8FlQLosjCKADJN80gLru3k
-	PP5QE
-X-Gm-Gg: ASbGncu02Iuo6BRFYjtVyg2JAOGjD5ipCBuJJIg/71ItAnEcjov4TjaHLVfMw+b8GLE
-	bQmRI0DJ4vOvoO1IU0s9JygjRhvnMcRl6xdgPtvkV3tn8iXzfDe2t7kmErDmUfMZdL/bMtUQfYl
-	CiKUMErVNB+GnqNGRVF3Avamrk/gszQIYpLP8Uqu+wzpB2dLq1Hun9wVF0TReEgqw+Am7VQxX6X
-	QlkR5wG/hBklPaHM9Ck5dgFx4aNZsdTZTXBJRBIVtcPb5honEm//jAHnBOl6yZeBDLWR2ETaVyx
-	7IHxmmrXds6DSdNCRpATfmT3zxOWFJItgnD16v5h4BOUkC03eUPQdMjgF0zrcjr8FDu3PC4OIny
-	fgob5E6YQnMhrWgbjA4pP9gIHEF1Md+pnLvKX6QtZSQaVgwe2LhfK0C1RUS876iggw4bmJwB5aN
-	f9PibZF4qs75xMDHg/ZKc329ZcPUQwVI8QOUuSubcIAALX0p5mUtS+UZM=
-X-Google-Smtp-Source: AGHT+IGOCSSak+wz7zgqeh6lwC6pX6YCBNM80+YM/AiDDTj6WYPvkidk/KXiUkkIfEgfWxGmdWb1TA==
-X-Received: by 2002:a05:620a:1917:b0:8b2:eefb:c8a6 with SMTP id af79cd13be357-8b2eefbccc1mr306815385a.88.1763356642316;
-        Sun, 16 Nov 2025 21:17:22 -0800 (PST)
-Received: from localhost.localdomain (modemcable125.110-19-135.mc.videotron.ca. [135.19.110.125])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-8b2aef2f936sm906417185a.29.2025.11.16.21.17.21
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 16 Nov 2025 21:17:22 -0800 (PST)
-From: Jonathan Marek <jonathan@marek.ca>
-To: linux-arm-msm@vger.kernel.org
-Cc: Srinivas Kandagatla <srini@kernel.org>,
-	Liam Girdwood <lgirdwood@gmail.com>,
-	Mark Brown <broonie@kernel.org>,
-	Jaroslav Kysela <perex@perex.cz>,
-	Takashi Iwai <tiwai@suse.com>,
-	linux-sound@vger.kernel.org (open list:QCOM AUDIO (ASoC) DRIVERS),
-	linux-kernel@vger.kernel.org (open list)
-Subject: [PATCH 9/9] ASoC: codecs: lpass-rx-macro: fix mute_stream affecting all paths
-Date: Mon, 17 Nov 2025 00:15:21 -0500
-Message-ID: <20251117051523.16462-9-jonathan@marek.ca>
-X-Mailer: git-send-email 2.51.0
-In-Reply-To: <20251117051523.16462-1-jonathan@marek.ca>
-References: <20251117051523.16462-1-jonathan@marek.ca>
+        d=1e100.net; s=20230601; t=1763356978; x=1763961778;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=Gor2wK9jXbtsJbqjtAgbnKhqnzfjD4B3yGBZu9lQGLo=;
+        b=GXy3kV9ZqaOtTwdA5x2RlgKexR5sQCG6FUfii4X2edZp2pnJmDe9/KnRGCSOE0lrwm
+         s4EYYX/G6XUldJNhud50iOF0hRn3HXMXTD49XlOYMwxWUaTb+N0fZ2UQwMOj9euITPD2
+         4hHlMBXWz8TARcVEXtWdVGiSoOr6DDkmMpCu4PBOX/OaVT+XIuNqBF//GXOuEaJ/CkMw
+         cF+YNOVE0Ckxt23GztSK/2xGolg/1qzeLld+7YWf2vovCknHQkrtmfu3tASUPu3M3QYD
+         /PB8VJqZKG/yQB0ISghB+d5JgkBtO99UZmKf+JVBpvQUKluMaktJb7yN0Xh+HxGiWY5d
+         4+fQ==
+X-Forwarded-Encrypted: i=1; AJvYcCVnaHZzyzaY/UycOHo0q16YxofuTOZcRAuxaq7b4HsaHJ8q4rSFaG7V1Z332T21OxAj3W9siPAaFuv6VHgJ@vger.kernel.org
+X-Gm-Message-State: AOJu0YxBuBvA6m85B2pqT7ZqTzv7jgkM+cONepHqdYiYMLy6UcaH8svc
+	OPrlGwmIBBQChRSmAS/HT8mHeScN3fBIrOf3fBHalBdUwv7BzSemsD39PlLoL+87AofL2QL9siN
+	Txa014BOWkPMf80MBjF4WkJq8r+VA0Xbwrre1Gum2XXcjdk8/Jrpk+TSiR3uow7tCm4u8
+X-Gm-Gg: ASbGncu+aWKVBUbKa4aFXNGpSIWXk3+ZeA43SPGRGagYqGuixhfzlLJMxqzF9n57MxQ
+	Y0kgB1PrHSd9zJXQddqaP4ozjM8HgPHEYZWjOEKv1aQRYO5nOEoc8YuN+qT65kvkDPMFUUDXJFK
+	OWMfzFKTkEXoni44FxrgLDtjyc49Z17NXMoG74exGVMJ4XLdtOM2/3bT+pXXUDvLI9NW95YQpog
+	jaITWczXPErnhOxqVBUt1GZb8T+vyTKWISYLrSdhjSElJljQTkMW9oXGmMSoq+XgXZysZuuzwDR
+	TCWFwVFbJRzBNo0gpq/+BXCHfo3xad6LV0Oz5tbykXLSxB8LiKszK/eenlsEodApWNkaabeRUQK
+	dDy3EgOF2USopvmk5U1N23o9+uKd1yTZDBrgTMCcmlMevmRiNmO2gc/zdbK/CUuO58MoM
+X-Received: by 2002:a05:6a20:2587:b0:35d:cc9a:8bc1 with SMTP id adf61e73a8af0-35dcc9a8d2fmr4842116637.27.1763356977996;
+        Sun, 16 Nov 2025 21:22:57 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGyqruXMe9cRMlaR2MRqRPfjUA0+sSI3KlT2wMD9cgAUh7FbBipxgghyFbOyvMu+Y0PCnyIcw==
+X-Received: by 2002:a05:6a20:2587:b0:35d:cc9a:8bc1 with SMTP id adf61e73a8af0-35dcc9a8d2fmr4842099637.27.1763356977458;
+        Sun, 16 Nov 2025 21:22:57 -0800 (PST)
+Received: from [10.133.33.145] (tpe-colo-wan-fw-bordernet.qualcomm.com. [103.229.16.4])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-7b9271505acsm11701649b3a.35.2025.11.16.21.22.55
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sun, 16 Nov 2025 21:22:57 -0800 (PST)
+Message-ID: <88535058-f385-4fb0-9b4a-bf6d854f7107@oss.qualcomm.com>
+Date: Mon, 17 Nov 2025 13:22:51 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 2/2] power: supply: qcom_battmgr: support disabling charge
+ control
+To: Val Packett <val@packett.cool>, Sebastian Reichel <sre@kernel.org>,
+        Neil Armstrong <neil.armstrong@linaro.org>
+Cc: Sebastian Reichel <sebastian.reichel@collabora.com>,
+        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20251012233333.19144-2-val@packett.cool>
+ <20251012233333.19144-4-val@packett.cool>
+Content-Language: en-US
+From: Fenglin Wu <fenglin.wu@oss.qualcomm.com>
+In-Reply-To: <20251012233333.19144-4-val@packett.cool>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Authority-Analysis: v=2.4 cv=W9U1lBWk c=1 sm=1 tr=0 ts=691ab133 cx=c_pps
+ a=rz3CxIlbcmazkYymdCej/Q==:117 a=nuhDOHQX5FNHPW3J6Bj6AA==:17
+ a=IkcTkHD0fZMA:10 a=6UeiqGixMTsA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=q9oTrLaHPds-TktH9FUA:9 a=QEXdDO2ut3YA:10
+ a=bFCP_H2QrGi7Okbo017w:22
+X-Proofpoint-GUID: JPbRcLhebbfDCXErSvA_APfcCWz08Kzw
+X-Proofpoint-ORIG-GUID: JPbRcLhebbfDCXErSvA_APfcCWz08Kzw
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMTE3MDA0MyBTYWx0ZWRfX3tC+c13hVKiO
+ sZRvmwssVh4DuB7Kq4NbIq4E4/VikogQC824abqdAxsYkNwr3Sn4onquLm0KAriJSxFy9RU+dRl
+ RWkfoJPAdVkeoLXNIrbEPj/uansdmRZfgFDxqQPgX9plcn9Sd35R/RdVq/AwZRyFzNjNx6pSVsm
+ mu9TgKagzULcNo5ffuNAQz0erdHi5Kx2LWMOkD2ahQOvNgyuhJ0Vp+BmWfAhtTK86TlQpV+yBU7
+ eu1fDHfW7VtRzjWJPItUBgI09Bg4hz1Q5uF06w4UT6vKEixUaRJATTPNVn7s4hOsptGb0qzsFnj
+ DSf+5bpfY/4UqEhrQyPdBD6QUO65iiltk+jr0jOszHEED6xj/biNcPCCG0jhnsmVbeyG+8jQoBs
+ lY2bbolOxc8q1Mu9mrDOpN9Q9JxhbQ==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
+ definitions=2025-11-17_02,2025-11-13_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ suspectscore=0 lowpriorityscore=0 impostorscore=0 adultscore=0 malwarescore=0
+ spamscore=0 clxscore=1015 phishscore=0 priorityscore=1501 bulkscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2510240001 definitions=main-2511170043
 
-The current mute_steam() implementation affects all paths instead of
-only those in use by the DAI.
 
-For example, playing to 2 DAIs simultaneously with mixing, stopping
-one will mute the other.
-
-Rework to use the same logic as hw_params() to mute only the relevant paths.
-(also, use "rx->main_clk_users[j] > 0" instead of dsm_reg, which is
-equivalent. I also don't think the clock enable should be in this function,
-but that's a change for another patch)
-
-Signed-off-by: Jonathan Marek <jonathan@marek.ca>
----
- sound/soc/codecs/lpass-rx-macro.c | 74 +++++++++++++++----------------
- 1 file changed, 35 insertions(+), 39 deletions(-)
-
-diff --git a/sound/soc/codecs/lpass-rx-macro.c b/sound/soc/codecs/lpass-rx-macro.c
-index a8fc842cc94ef..d7e51f02a9115 100644
---- a/sound/soc/codecs/lpass-rx-macro.c
-+++ b/sound/soc/codecs/lpass-rx-macro.c
-@@ -1905,52 +1905,48 @@ static int rx_macro_digital_mute(struct snd_soc_dai *dai, int mute, int stream)
- {
- 	struct snd_soc_component *component = dai->component;
- 	struct rx_macro *rx = snd_soc_component_get_drvdata(component);
--	uint16_t j, reg, mix_reg, dsm_reg;
--	u16 int_mux_cfg0, int_mux_cfg1;
-+	u32 port, j, reg, mix_reg, int_mux_cfg0, int_mux_cfg1;
-+	u32 mask, val;
- 	u8 int_mux_cfg0_val, int_mux_cfg1_val;
- 
--	switch (dai->id) {
--	case RX_MACRO_AIF1_PB:
--	case RX_MACRO_AIF2_PB:
--	case RX_MACRO_AIF3_PB:
--	case RX_MACRO_AIF4_PB:
--		for (j = 0; j < INTERP_MAX; j++) {
--			reg = CDC_RX_RXn_RX_PATH_CTL(rx, j);
--			mix_reg = CDC_RX_RXn_RX_PATH_MIX_CTL(rx, j);
--			dsm_reg = CDC_RX_RXn_RX_PATH_DSM_CTL(rx, j);
--
--			if (mute) {
--				snd_soc_component_update_bits(component, reg,
--							      CDC_RX_PATH_PGA_MUTE_MASK,
--							      CDC_RX_PATH_PGA_MUTE_ENABLE);
--				snd_soc_component_update_bits(component, mix_reg,
--							      CDC_RX_PATH_PGA_MUTE_MASK,
--							      CDC_RX_PATH_PGA_MUTE_ENABLE);
--			} else {
--				snd_soc_component_update_bits(component, reg,
--							      CDC_RX_PATH_PGA_MUTE_MASK, 0x0);
--				snd_soc_component_update_bits(component, mix_reg,
--							      CDC_RX_PATH_PGA_MUTE_MASK, 0x0);
-+	if (stream != SNDRV_PCM_STREAM_PLAYBACK)
-+		return 0;
-+
-+	for (j = 0; j < INTERP_MAX; j++) {
-+		reg = CDC_RX_RXn_RX_PATH_CTL(rx, j);
-+		mix_reg = CDC_RX_RXn_RX_PATH_MIX_CTL(rx, j);
-+
-+		mask = CDC_RX_PATH_PGA_MUTE_MASK;
-+		val = 0;
-+		if (mute)
-+			val |= CDC_RX_PATH_PGA_MUTE_ENABLE;
-+		if (rx->main_clk_users[j] > 0) {
-+			mask |= CDC_RX_PATH_CLK_EN_MASK;
-+			val |= CDC_RX_PATH_CLK_ENABLE;
-+		}
-+
-+		int_mux_cfg0 = CDC_RX_INP_MUX_RX_INT0_CFG0 + j * 8;
-+		int_mux_cfg1 = int_mux_cfg0 + 4;
-+		int_mux_cfg0_val = snd_soc_component_read(component, int_mux_cfg0);
-+		int_mux_cfg1_val = snd_soc_component_read(component, int_mux_cfg1);
-+
-+		for_each_set_bit(port, &rx->active_ch_mask[dai->id], RX_MACRO_PORTS_MAX) {
-+			if (((int_mux_cfg0_val & 0x0f) == port + INTn_1_INP_SEL_RX0) ||
-+			    ((int_mux_cfg0_val >> 4) == port + INTn_1_INP_SEL_RX0) ||
-+			    ((int_mux_cfg1_val >> 4) == port + INTn_1_INP_SEL_RX0)) {
-+				snd_soc_component_update_bits(component, reg, mask, val);
- 			}
- 
--			int_mux_cfg0 = CDC_RX_INP_MUX_RX_INT0_CFG0 + j * 8;
--			int_mux_cfg1 = int_mux_cfg0 + 4;
--			int_mux_cfg0_val = snd_soc_component_read(component, int_mux_cfg0);
--			int_mux_cfg1_val = snd_soc_component_read(component, int_mux_cfg1);
--
--			if (snd_soc_component_read(component, dsm_reg) & 0x01) {
--				if (int_mux_cfg0_val || (int_mux_cfg1_val & 0xF0))
--					snd_soc_component_update_bits(component, reg, 0x20, 0x20);
--				if (int_mux_cfg1_val & 0x0F) {
--					snd_soc_component_update_bits(component, reg, 0x20, 0x20);
--					snd_soc_component_update_bits(component, mix_reg, 0x20,
--								      0x20);
-+			if ((int_mux_cfg1_val & 0x0f) == port + INTn_2_INP_SEL_RX0) {
-+				snd_soc_component_update_bits(component, mix_reg, mask, val);
-+				/* main clock needs to be enabled for mix to be useful: */
-+				if (rx->main_clk_users[j] > 0) {
-+					snd_soc_component_update_bits(component, reg,
-+								      CDC_RX_PATH_CLK_EN_MASK,
-+								      CDC_RX_PATH_CLK_ENABLE);
- 				}
- 			}
- 		}
--		break;
--	default:
--		break;
- 	}
- 	return 0;
- }
--- 
-2.51.0
-
+On 10/13/2025 7:32 AM, Val Packett wrote:
+> Existing userspace (in particular, upower) disables charge control by
+> setting the start threshold to 0 and the stop threshold to 100.
+>
+> Handle that by actually setting the enable bit to 0 when a start
+> threshold of 0 was requested.
+>
+> Fixes: cc3e883a0625 ("power: supply: qcom_battmgr: Add charge control support")
+> Signed-off-by: Val Packett <val@packett.cool>
+> ---
+>   drivers/power/supply/qcom_battmgr.c | 12 ++++++++----
+>   1 file changed, 8 insertions(+), 4 deletions(-)
+>
+> diff --git a/drivers/power/supply/qcom_battmgr.c b/drivers/power/supply/qcom_battmgr.c
+> index c8028606bba0..e6f01e0122e1 100644
+> --- a/drivers/power/supply/qcom_battmgr.c
+> +++ b/drivers/power/supply/qcom_battmgr.c
+> @@ -257,6 +257,7 @@ struct qcom_battmgr_info {
+>   	unsigned int capacity_warning;
+>   	unsigned int cycle_count;
+>   	unsigned int charge_count;
+> +	bool charge_ctrl_enable;
+>   	unsigned int charge_ctrl_start;
+>   	unsigned int charge_ctrl_end;
+>   	char model_number[BATTMGR_STRING_LEN];
+> @@ -659,13 +660,13 @@ static int qcom_battmgr_bat_get_property(struct power_supply *psy,
+>   }
+>   
+>   static int qcom_battmgr_set_charge_control(struct qcom_battmgr *battmgr,
+> -					   u32 target_soc, u32 delta_soc)
+> +					   bool enable, u32 target_soc, u32 delta_soc)
+>   {
+>   	struct qcom_battmgr_charge_ctrl_request request = {
+>   		.hdr.owner = cpu_to_le32(PMIC_GLINK_OWNER_BATTMGR),
+>   		.hdr.type = cpu_to_le32(PMIC_GLINK_REQ_RESP),
+>   		.hdr.opcode = cpu_to_le32(BATTMGR_CHG_CTRL_LIMIT_EN),
+> -		.enable = cpu_to_le32(1),
+> +		.enable = cpu_to_le32(enable),
+>   		.target_soc = cpu_to_le32(target_soc),
+>   		.delta_soc = cpu_to_le32(delta_soc),
+>   	};
+> @@ -677,6 +678,7 @@ static int qcom_battmgr_set_charge_start_threshold(struct qcom_battmgr *battmgr,
+>   {
+>   	u32 target_soc, delta_soc;
+>   	int ret;
+> +	bool enable = start_soc != 0;
+>   
+>   	start_soc = clamp(start_soc, CHARGE_CTRL_START_THR_MIN, CHARGE_CTRL_START_THR_MAX);
+>   
+> @@ -696,9 +698,10 @@ static int qcom_battmgr_set_charge_start_threshold(struct qcom_battmgr *battmgr,
+>   	}
+>   
+>   	mutex_lock(&battmgr->lock);
+> -	ret = qcom_battmgr_set_charge_control(battmgr, target_soc, delta_soc);
+> +	ret = qcom_battmgr_set_charge_control(battmgr, enable, target_soc, delta_soc);
+>   	mutex_unlock(&battmgr->lock);
+>   	if (!ret) {
+> +		battmgr->info.charge_ctrl_enable = enable;
+>   		battmgr->info.charge_ctrl_start = start_soc;
+>   		battmgr->info.charge_ctrl_end = target_soc;
+>   	}
+> @@ -710,6 +713,7 @@ static int qcom_battmgr_set_charge_end_threshold(struct qcom_battmgr *battmgr, i
+>   {
+>   	u32 delta_soc = CHARGE_CTRL_DELTA_SOC;
+>   	int ret;
+> +	bool enable = battmgr->info.charge_ctrl_enable;
+Can you initialize "battmgr->info.charge_ctrl_enable" in 
+"qcom_battmgr_charge_control_thresholds_init()" based on the value 
+reading from the nvmem cell? Otherwise, it would have a false value by 
+default and a single write to the end threshold would result disabling 
+the charging control instead.
+>   
+>   	end_soc = clamp(end_soc, CHARGE_CTRL_END_THR_MIN, CHARGE_CTRL_END_THR_MAX);
+>   
+> @@ -717,7 +721,7 @@ static int qcom_battmgr_set_charge_end_threshold(struct qcom_battmgr *battmgr, i
+>   		delta_soc = end_soc - battmgr->info.charge_ctrl_start;
+>   
+>   	mutex_lock(&battmgr->lock);
+> -	ret = qcom_battmgr_set_charge_control(battmgr, end_soc, delta_soc);
+> +	ret = qcom_battmgr_set_charge_control(battmgr, enable, end_soc, delta_soc);
+>   	mutex_unlock(&battmgr->lock);
+>   	if (!ret) {
+>   		battmgr->info.charge_ctrl_start = end_soc - delta_soc;
 
