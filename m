@@ -1,350 +1,221 @@
-Return-Path: <linux-arm-msm+bounces-82040-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-82041-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ams.mirrors.kernel.org (ams.mirrors.kernel.org [IPv6:2a01:60a::1994:3:14])
-	by mail.lfdr.de (Postfix) with ESMTPS id B33AFC62832
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Nov 2025 07:28:10 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4AAB9C6288F
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Nov 2025 07:38:04 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ams.mirrors.kernel.org (Postfix) with ESMTPS id DEC0B35FD0C
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Nov 2025 06:28:09 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 03B5C3AE38E
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Nov 2025 06:37:48 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E8C24314D3F;
-	Mon, 17 Nov 2025 06:28:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id DEAE131579B;
+	Mon, 17 Nov 2025 06:37:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="H8kN+fok"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="dQP+MnSO"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8055174BE1;
-	Mon, 17 Nov 2025 06:28:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763360883; cv=none; b=L67zT6ILhNdiWk/anyUE2XdAPKsOuYWOF/tQ1BM2uW1MrjhN/kynz2povCGyeP2z+ypFWCAlffXwoCDRlzJFbeBWcMkbZyzsbGDAuG86pVo5klZ2K3TRG937dGp8rRYQY7+BazisoyFJEctHOn3swpTn/9rBYzT1ONkAGzESZzk=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763360883; c=relaxed/simple;
-	bh=BhWTPP7xYEQEPFMgKMHD5J7eNPFx6yi2MDnsWxqMYlA=;
-	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=R7rNLO8YZMAL8JBHnT+q416l+7gUmyB5EorOIh/2yP22ZrvtklRMv4FnAdCvfidUk9sp6DwGqz3dL1AXCwa5CrvFGvc3LVFzIkeZ+PkcWPbLuNld4vFLyHwjDnswAgDVp2+kj9XG8J5rKcrtC572N+UB28WEYgv1NK888GUkIlk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=H8kN+fok; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 5AH4oLWj2687254;
-	Mon, 17 Nov 2025 06:27:55 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:message-id
-	:mime-version:subject:to; s=qcppdkim1; bh=Ckps7lD6d38vSNMq7XtdGZ
-	t8U53Neu3i3MF/3Xb6d04=; b=H8kN+fokhjVkqDIQIAlQedvtb2tI5TAYkX2b2f
-	M05Y4/al3AME6oVjo9UCvljFwZ6nBEFfCoEy2bGQ8Y2MeX18DNZ77NQJJmvSYU1x
-	dEWdtKh2dOIok6Nz/rLTFnpOOXCCn8B6Yi357X/Pdoh/ISPRTPBbr2iYZezDhfLO
-	woyZRJ+s5+Ajdu6xoIZEpAlYjRU3iPHXfzUO4fyCZCLQRyJUDb4aFLlIkzAmZong
-	93xMgSVnFaG1A9owH4SWK8WgG3asO3E5v62eIlWls0YmOOiyU9h/XVumGT7y+JsU
-	4/3A1zxGab3/6IjqBkQbpm/rS19lY4kLlRcDECOEKydqb3uQ==
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4aejt5bjj4-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 17 Nov 2025 06:27:55 +0000 (GMT)
-Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-	by NALASPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 5AH6Rsm3023054
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 17 Nov 2025 06:27:54 GMT
-Received: from hu-utiwari-hyd.qualcomm.com (10.80.80.8) by
- nalasex01b.na.qualcomm.com (10.47.209.197) with Microsoft SMTP Server
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7679223DCE;
+	Mon, 17 Nov 2025 06:37:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=192.198.163.17
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1763361464; cv=fail; b=jbI2emmA45/KztzwW9RmrcKuRtMZ8vRpmapTYFHfC+fkgzYYoJ3R3yCIUyagYVAs7kbsCre81h5xgOR6Vy8dnhzYBdedbDP1mVOT7NJLtZUZ5r3AYA2dHgcraNwV6wwwPc3n5Lb1hR0tJav3qGbWOptQx50AeJSGZtnFXmjkn6A=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1763361464; c=relaxed/simple;
+	bh=6L5CxhrCByBPF5SjKb/BO9Tww/1e/wnpYvKbQV8pAeA=;
+	h=From:To:CC:Subject:Date:Message-ID:References:In-Reply-To:
+	 Content-Type:MIME-Version; b=pNgk1ttm4vX4qsD4yp6MomQ4aH18/s0QaCzhU8clYhYZjfWPBE/5dw1KPEABGkgOYtwLnI7zmsKS40KXJgu2nhyT0sn45t4cJDhgIAig96/lPQ6T7YtdnrcMNqk/oJz1BkFDVbmvKZVGxjzfk4S5V+6w1uRuk7VUY6xq7gysaTM=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=dQP+MnSO; arc=fail smtp.client-ip=192.198.163.17
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1763361461; x=1794897461;
+  h=from:to:cc:subject:date:message-id:references:
+   in-reply-to:content-transfer-encoding:mime-version;
+  bh=6L5CxhrCByBPF5SjKb/BO9Tww/1e/wnpYvKbQV8pAeA=;
+  b=dQP+MnSOvw47HVIgsiHUZ0Oq4NqJu1E0/pvKNMaK/unGjke2xO9sN5CI
+   0tOlq9qOVqKFl2mOdXDpN/VZfOEF0KE9iPe2tCCvwbIBySSMx+y8B4vIR
+   fjsqvtYTsKnQRWbvg61FTNHtnizn2P1H+aswZuZEaow7yirCKiAt08+IN
+   ZbQHZIQA0zpGEf20Omf7C6PdafRGHHM9tcRGWioPinWng/uEm0kOyWkK/
+   9rLK8x6Ozp7YEwxLMDYV6IPY36KA6OWdbRgEi9Uvx94vvpqMG4m62Quxx
+   /bnqSW7fMe0Z9wnsv2wjpGSthAsCtFxCkMSORYJs/HcX/wxMxM4lUf0Xd
+   A==;
+X-CSE-ConnectionGUID: ZFWmAN4aSMuAcWZNxFloZw==
+X-CSE-MsgGUID: IUw3FSaXTcC5bnZc0I/0+g==
+X-IronPort-AV: E=McAfee;i="6800,10657,11615"; a="65254765"
+X-IronPort-AV: E=Sophos;i="6.19,311,1754982000"; 
+   d="scan'208";a="65254765"
+Received: from orviesa005.jf.intel.com ([10.64.159.145])
+  by fmvoesa111.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 16 Nov 2025 22:37:40 -0800
+X-CSE-ConnectionGUID: vSOa/xKJQQWUnQoCoMb7mA==
+X-CSE-MsgGUID: IROzV58LQJmWjkiNcaqZfw==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.19,311,1754982000"; 
+   d="scan'208";a="195501634"
+Received: from fmsmsx901.amr.corp.intel.com ([10.18.126.90])
+  by orviesa005.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 16 Nov 2025 22:37:40 -0800
+Received: from FMSMSX901.amr.corp.intel.com (10.18.126.90) by
+ fmsmsx901.amr.corp.intel.com (10.18.126.90) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.17; Sun, 16 Nov 2025 22:27:51 -0800
-From: <quic_utiwari@quicinc.com>
-To: <herbert@gondor.apana.org.au>, <thara.gopinath@gmail.com>,
-        <davem@davemloft.net>
-CC: <linux-crypto@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <quic_neersoni@quicinc.com>,
-        "kernel test
- robot" <lkp@intel.com>
-Subject: [PATCH v4] crypto: qce - Add runtime PM and interconnect bandwidth scaling support
-Date: Mon, 17 Nov 2025 11:57:37 +0530
-Message-ID: <20251117062737.3946074-1-quic_utiwari@quicinc.com>
-X-Mailer: git-send-email 2.34.1
+ 15.2.2562.27; Sun, 16 Nov 2025 22:37:39 -0800
+Received: from fmsedg902.ED.cps.intel.com (10.1.192.144) by
+ FMSMSX901.amr.corp.intel.com (10.18.126.90) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.27 via Frontend Transport; Sun, 16 Nov 2025 22:37:39 -0800
+Received: from MW6PR02CU001.outbound.protection.outlook.com (52.101.48.13) by
+ edgegateway.intel.com (192.55.55.82) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.27; Sun, 16 Nov 2025 22:37:39 -0800
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=XnI3DK5Oac5Kzi9Tsh8iDIqUXXfdy0whXZo8Ga8dJtGXbCSpuxvudy+zSMymh1vof/NhIEIgTAJWfno+ceUeNT9Gd8xyGGKxP9RzB/5G2AsBY9x21Tpy1yEJDLfLNmxWT7EFPQPrGhPt4VnMBUP/wIA1+lQ+6PbCdTF0h7hTUd33+urHGpppaGVbD5YiahJO874iWLDV8joeZ/QKVJuA16B+yZyYYIi0tF0/VnqtVVXTcKDxOMR9yg6LSk5twLVi6wgii/l9pdl6Xnd/AvpN1hUDFuJd8Blek8iuZX9CeiuaJYskHPUM+hFquU+8u8XKbPOteegu3Lr5hp/LV+pSWA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=6L5CxhrCByBPF5SjKb/BO9Tww/1e/wnpYvKbQV8pAeA=;
+ b=JkAqlaRUyiayDbJrujo5gClz1I158uW7taa2U2Z18B5KfvRJN9hI4fZk79fndReCLqwlzxm8z/e4e+WXXQmIAOI0w2loygU2ssskjYX6Z5daKq9LsSiuclSyCOESPRQ6vpazwnQclkHg1rKBHAL59qVNLGOxvzWP+b293j4fgd0QHjtOBEEiGMf6guahjSV3cpV4B47qYuai6jPWCqrjyxRLTaRiLPZApB1axDvXW3Juov0cxF8GKk07XMpw6knOpFjZcyPnNnTB5Frs0R3v97dA87S6FiMHVWObDmNilJGn44yXVgFvQzUExj4pqcHDr3XwFL3i1Dk0co9fZplgXw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
+ dkim=pass header.d=intel.com; arc=none
+Received: from BN9PR11MB5276.namprd11.prod.outlook.com (2603:10b6:408:135::18)
+ by DS0PR11MB6518.namprd11.prod.outlook.com (2603:10b6:8:d2::11) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9320.21; Mon, 17 Nov
+ 2025 06:37:37 +0000
+Received: from BN9PR11MB5276.namprd11.prod.outlook.com
+ ([fe80::b576:d3bd:c8e0:4bc1]) by BN9PR11MB5276.namprd11.prod.outlook.com
+ ([fe80::b576:d3bd:c8e0:4bc1%5]) with mapi id 15.20.9320.013; Mon, 17 Nov 2025
+ 06:37:37 +0000
+From: "Tian, Kevin" <kevin.tian@intel.com>
+To: Jason Gunthorpe <jgg@nvidia.com>, AngeloGioacchino Del Regno
+	<angelogioacchino.delregno@collabora.com>, Christian Benvenuti
+	<benve@cisco.com>, Heiko Stuebner <heiko@sntech.de>, "iommu@lists.linux.dev"
+	<iommu@lists.linux.dev>, Jernej Skrabec <jernej.skrabec@gmail.com>, "Joerg
+ Roedel" <joro@8bytes.org>, Leon Romanovsky <leon@kernel.org>,
+	"linux-arm-kernel@lists.infradead.org"
+	<linux-arm-kernel@lists.infradead.org>, "linux-arm-msm@vger.kernel.org"
+	<linux-arm-msm@vger.kernel.org>, "linux-mediatek@lists.infradead.org"
+	<linux-mediatek@lists.infradead.org>, "linux-rdma@vger.kernel.org"
+	<linux-rdma@vger.kernel.org>, "linux-rockchip@lists.infradead.org"
+	<linux-rockchip@lists.infradead.org>, "linux-sunxi@lists.linux.dev"
+	<linux-sunxi@lists.linux.dev>, Matthias Brugger <matthias.bgg@gmail.com>,
+	Nelson Escobar <neescoba@cisco.com>, Rob Clark
+	<robin.clark@oss.qualcomm.com>, Robin Murphy <robin.murphy@arm.com>, "Samuel
+ Holland" <samuel@sholland.org>, Suravee Suthikulpanit
+	<suravee.suthikulpanit@amd.com>, Chen-Yu Tsai <wens@csie.org>, Will Deacon
+	<will@kernel.org>, Yong Wu <yong.wu@mediatek.com>
+CC: Lu Baolu <baolu.lu@linux.intel.com>, "patches@lists.linux.dev"
+	<patches@lists.linux.dev>
+Subject: RE: [PATCH v2 1/3] RDMA/usnic: Remove iommu_set_fault_handler()
+Thread-Topic: [PATCH v2 1/3] RDMA/usnic: Remove iommu_set_fault_handler()
+Thread-Index: AQHcT1zozTOGJgI4KEq8LgrX6rnJ97T2egOA
+Date: Mon, 17 Nov 2025 06:37:37 +0000
+Message-ID: <BN9PR11MB52768F201F306F13023AFE718CC9A@BN9PR11MB5276.namprd11.prod.outlook.com>
+References: <0-v2-25fc75484cab+ab-iommu_set_fault_jgg@nvidia.com>
+ <1-v2-25fc75484cab+ab-iommu_set_fault_jgg@nvidia.com>
+In-Reply-To: <1-v2-25fc75484cab+ab-iommu_set_fault_jgg@nvidia.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach:
+X-MS-TNEF-Correlator:
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=intel.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: BN9PR11MB5276:EE_|DS0PR11MB6518:EE_
+x-ms-office365-filtering-correlation-id: 35381628-fd43-4b02-2c91-08de25a3cc64
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;ARA:13230040|7416014|376014|366016|1800799024|921020|38070700021;
+x-microsoft-antispam-message-info: =?us-ascii?Q?Mj3i0eIAnDMN8pXFURfY0VXOsrRkC0dvPPlOFRaemxbFDoLrf+Oe9dPGSmSc?=
+ =?us-ascii?Q?90KL1vR/4daiMXouMbwx1IW8ZUNdvlqA6xibJP/QJupsK5J7iAP1hbPv6lNr?=
+ =?us-ascii?Q?Avj8HFMf7AHj6900RQb8NQURVyPKhes7GVj3mWZvLclRw1L2sf9y/X9V1miG?=
+ =?us-ascii?Q?E1+VE56xUI4aglHQxccR/hhySC+NJgbFaQIcL7V6cLMatQKZPFjDJLJaavUm?=
+ =?us-ascii?Q?w2IxfQIvQAnEFtiB/hs+CKXA/SN6hH74J+M/l5g4ap/7TkD+EycZ/UmXxnfN?=
+ =?us-ascii?Q?AGy1oEglYMC2SNA00jnITb33q/NR64L4uQMKVqT3gRHSsKbMu/siFKOQG3lJ?=
+ =?us-ascii?Q?O/ysl0pZGVC15odHBiTndevJoUY0sFwgCnepg04fbMWfIg+wUAFgdlTHlQ/J?=
+ =?us-ascii?Q?cJfyE4IntlXNHuy6VX17F+vsjT0JknzdLy2RUyO06NJIsS93EQcCA8lVytp3?=
+ =?us-ascii?Q?aeIzxA/FQ10JyWVYUnYzhyWYS0aBjVEy9yPRPkDLug/PRWOXQYHdWqKdWSz7?=
+ =?us-ascii?Q?y0J16IitQpezLZ9YmMfSSj3yeoi3owYQWjeqyX2j6dYSbJJwgbXaGw5WIGku?=
+ =?us-ascii?Q?YxP5Lqg+Bvp0xCZVVsEVjAIQQLW8jL1htUVc4WDG43M3Vuz8/YDDnss6+g/f?=
+ =?us-ascii?Q?FlhZMB5IlUOKd61Z6zW5i0JpdtYd9hDPrl/q1uhUwpKxvx0TACKgHYrlSZG9?=
+ =?us-ascii?Q?PTrr5cL5HCdglSAnOlNL1TBX3tz8d3cqhCD8TH7voPJDp47C9K6EE+vKA6Yc?=
+ =?us-ascii?Q?AejOnt8YBUx6qKXTE85Vm7qE2OZ3zjm6lIZTmK6tF86XKEMkmpJ+1ZKIwfhS?=
+ =?us-ascii?Q?LJQB0NccFrfISWseF+O9O8foLI4sdjsyaBUHBr3xV/ZbV2DYGhQ+XLM/EZKF?=
+ =?us-ascii?Q?LQwp5rkAg6w5IyaO8TA8vRQHl+O19e1rSABgLicgXdyd7O/pGnzESwYQX2Ev?=
+ =?us-ascii?Q?uIUFQD2fh5yJAqiLqPEpdQu06k3s2VSInz676mGU6/+eAc5tPyEov+Sim257?=
+ =?us-ascii?Q?pDOME3WVPRPS5qm3loW7krUFn+/EYQidoV62qhSKPQPUNHpWtlXrt155H9Ih?=
+ =?us-ascii?Q?PNeORuXSXMUjfdcbkkKVd7dmFcaNSwsL57sZ7alTg0g0UYpz9pIg3PevdRxd?=
+ =?us-ascii?Q?EJmIbpHPC9crleYz+WWDygu5l3BDUUvEGAWmkHLzrpJJpt8E+OchsFbVW22b?=
+ =?us-ascii?Q?oKjiSkIc3RefN8pUSaLcLwfbnwGQUggLFsT6cJiStTNKhGLhko7ro2dmArin?=
+ =?us-ascii?Q?jeqydvNzfEtRy/QB7cgN0nOdtoyfviUexB/N6balq8rRZLPw5l4J5Nk4Zxgx?=
+ =?us-ascii?Q?Az9qIabcjmgoSC02tVAhCJMJ0RaYg5dovTiVPKmhUX2VAQweLy5UH9WlHyYL?=
+ =?us-ascii?Q?KHQaiK01pcf6iTgalQWoHUgYBJ3ftQPj9k4YZUjkLWa6wdKg1fWHSIJyvYnx?=
+ =?us-ascii?Q?FjpsXCzwwloES8L4RguoXY+Qq6Sjzk2MvWRYMoqryKCUGLup3m51Bvah3L7p?=
+ =?us-ascii?Q?xlFuSSnEDGDCXtyyuqgIAjGMsYCzkXn7pRK6nO9s7lgzPoWxY/Wpb/HfOw?=
+ =?us-ascii?Q?=3D=3D?=
+x-forefront-antispam-report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:BN9PR11MB5276.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(7416014)(376014)(366016)(1800799024)(921020)(38070700021);DIR:OUT;SFP:1101;
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?us-ascii?Q?PXIq2v60uHPlml9iqL0MsgTzEMlbr1aAxsORmbl6fJztIQvY2llo5mq5ERAy?=
+ =?us-ascii?Q?iTA45AEauFTXGYWA4e0mqClARfyXs8KaRTiJflmxqScxC4xaUcB3gZWYcNs9?=
+ =?us-ascii?Q?9t9khr2d59OtH4li/6HEU6ayJAnsakfloBui4C3yhsgJoMhi5k50AwC0hRy+?=
+ =?us-ascii?Q?Qp8ze5C/u/VaWtVfZr7JBvXtkGSZn+1bBwhDO2HSLq+zBKYsybNyk+ZUwAr/?=
+ =?us-ascii?Q?8OTOrDq2nOHWjeOA2fHVrr6Hx0BmRUzJikMgU0O2EweNEhE1O/6JqHP1rKmh?=
+ =?us-ascii?Q?LWjbtGOP/7RHBwiYFDNEHJEkQE3jMEwPLlsh6lcpXMsdgOgB9c0rqcqIqlzb?=
+ =?us-ascii?Q?OBpxxTF1kzrTWIF16YHbmTclp3bDzhR5v01Ss8C3p71EHd5m92m5jolyOOpE?=
+ =?us-ascii?Q?jlmD6C/T1+IRWM6XJV4gi3mwv9gNVvN/9g5Q1h/UHFdvbPdpyXf6ytEFENuA?=
+ =?us-ascii?Q?gBkvVmEoAAFUQklkSlmaXehDw7DBpKAzqMUNRuj3hwrbQyIhdt+QBe7/O7cK?=
+ =?us-ascii?Q?eZBmaFLZjbgpUfxjIjimAI+4Rng1Ln7StUDhsTijOXaONwoLlDk5SrGPt3pw?=
+ =?us-ascii?Q?NJT7ZBbobFAPX0Y1utwrOmCmnDhC2GpxUBghNsye4qcQUbquRtEOsHSdqoHf?=
+ =?us-ascii?Q?FOwF1BbKTIQYRjFw9WUihq/BcLROvv8oGDPJ74z8GLp5h5g0VEUGFdLOtiL0?=
+ =?us-ascii?Q?LDett3YRkAD21hyKg4vNkfKQPSglyjrRhsDnGB6BHOxEAmsxszfpIBInYcoY?=
+ =?us-ascii?Q?7JZE5k4O0ESFj8ikhvsF6XBNDrpJy8H9dgyAd6ksFgiSeD3FlqoGzcTaee3W?=
+ =?us-ascii?Q?/r02Yo08XLcGVXyGs28uX2fus94W2wGRWrwSneTRWdRLkNUfXzmttJ5ur/af?=
+ =?us-ascii?Q?5PgZJQrwVeGwPcuw+qLbMWJcz/bE4uOnU7OdiXjivS4MBU4JLYr+C67kQ7pY?=
+ =?us-ascii?Q?DSb/fPtgDxdl13W3Y6XmBcFSzlZwFbJxZVYbT+e7W5pqSR8r6G8ABG6+my1F?=
+ =?us-ascii?Q?UtJuVnE/kMLFt4e/sbplKSrrEaGw2lkFy/0kuUGaAvKM7zhk9hZDg87XwSKJ?=
+ =?us-ascii?Q?wmxh0gJXmVdsqwa2woOs6eNW2oTWrxy/w9+km2G+zEXLHYYedSSrB3Sa2NZv?=
+ =?us-ascii?Q?AisxlfTTp0RDcjXcR9IbPE+QOWk1x0mKWgCxnibpw1vSQxSYbjqGDsM4Faqv?=
+ =?us-ascii?Q?p+fmxbN9WYHcZFdJgoUCrGbEj+b11i4hIAMXqHI6RMdSfhl6nnMA56bSHQze?=
+ =?us-ascii?Q?7cXzsyy4EnNuf4OwN3FOz7usT0tc3+1NbtgE/dUX3VrkLcxXf0900jhocJmg?=
+ =?us-ascii?Q?OPk+5vDSNgQVxxtSiA7skSmGT/ePm93R0JbcWHqxbr2q63+Y15RJoq39YR1d?=
+ =?us-ascii?Q?9cFyYp59dXUe4bu49lZYscyxT3RfzznlE2pny61NExMLgy0ylIdwQfSxxNBW?=
+ =?us-ascii?Q?PqYQpFNhK2thsijpkRs6tu5Y3OMlLijE4LpgkF5NX0wtbGP5X59G0QtcGirr?=
+ =?us-ascii?Q?Xk05z1t3vWYHyvMOyZ+HVBbH+ocUcLyGNoVFENyn/vj4a+OSptfZbCw2O9M4?=
+ =?us-ascii?Q?guFqiQURsycottcGF2e7LncqpMMsydL8fgVA/bP6?=
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01b.na.qualcomm.com (10.47.209.197)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Authority-Analysis: v=2.4 cv=LqmfC3dc c=1 sm=1 tr=0 ts=691ac06b cx=c_pps
- a=ouPCqIW2jiPt+lZRy3xVPw==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
- a=GEpy-HfZoHoA:10 a=6UeiqGixMTsA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=VwQbUJbxAAAA:8 a=QyXUC8HyAAAA:8 a=COk6AnOGAAAA:8 a=tY3p4qJyD-uLZWqq6sMA:9
- a=TjNXssC_j7lpFel5tvFf:22 a=cPQSjfK2_nFv0Q5t_7PE:22
-X-Proofpoint-ORIG-GUID: H0feEMusr0q4nERdodmsIMbElUSruEFy
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMTE3MDA1MyBTYWx0ZWRfX+h4VvdSXNefd
- YzQO8/zhh5O4QJsLpvR2Kb7e4gkEGICrRHpBaZHPDpcvYvJv2wKfZLaBW+4+pbVVisUjPnKPLAU
- ISqfjrMT1BEGNMf8c8NdmbljZmWMi/O1SYbMnL2cLnC8nTAuAg5gsSrt2/Bnc6Qdx9AbMqc0nuW
- ccJ7baZef/DZgND6euvxZkSmhcWBtPWqzSob6fbrqgDj4rFKkL0i2JUTmxqDsEGpn6I2L/GEIet
- gkHUTthqKB3FVf3huqqO5nFPrIk6bsl/YxjyOm/c0Sr2bdDFJpj8QjRitB8jkVCChxcGZl5aMAb
- rrNa9RRyuj40uzrv1WWPv5GxazujYPop2yJJbWesJkr4nbBrRwcRgCUQiQqwl1i6xsr0MpfoPHa
- 3iry6shHb8ysmfFzIW+mX5bmHmwPZw==
-X-Proofpoint-GUID: H0feEMusr0q4nERdodmsIMbElUSruEFy
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
- definitions=2025-11-17_02,2025-11-13_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 phishscore=0 spamscore=0 malwarescore=0 priorityscore=1501
- impostorscore=0 clxscore=1011 adultscore=0 bulkscore=0 lowpriorityscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2510240001 definitions=main-2511170053
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: BN9PR11MB5276.namprd11.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 35381628-fd43-4b02-2c91-08de25a3cc64
+X-MS-Exchange-CrossTenant-originalarrivaltime: 17 Nov 2025 06:37:37.2097
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 46c98d88-e344-4ed4-8496-4ed7712e255d
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: P65BT/qHD+eM2O09yrV9TJvibmRfGjp+FNRUKRyd2xXD7IdqmXTwUyyHp3t+BH1/uABRmGrqWW3Mi1HxglMs0A==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS0PR11MB6518
+X-OriginatorOrg: intel.com
 
-From: Udit Tiwari <quic_utiwari@quicinc.com>
+> From: Jason Gunthorpe <jgg@nvidia.com>
+> Sent: Friday, November 7, 2025 4:35 AM
+>=20
+> The handler in usnic just prints a fault report message, the iommu driver=
+s
+> all do a better job of that these days. Just remove the use of this old
+> API.
+>=20
+> Acked-by: Jason Gunthorpe <jgg@nvidia.com>
+> Reviewed-by: Lu Baolu <baolu.lu@linux.intel.com>
+> Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 
-The Qualcomm Crypto Engine (QCE) driver currently lacks support for
-runtime power management (PM) and interconnect bandwidth control.
-As a result, the hardware remains fully powered and clocks stay
-enabled even when the device is idle. Additionally, static
-interconnect bandwidth votes are held indefinitely, preventing the
-system from reclaiming unused bandwidth.
-
-Address this by enabling runtime PM and dynamic interconnect
-bandwidth scaling to allow the system to suspend the device when idle
-and scale interconnect usage based on actual demand. Improve overall
-system efficiency by reducing power usage and optimizing interconnect
-resource allocation.
-
-Make the following changes as part of this integration:
-
-- Add support for pm_runtime APIs to manage device power state
-  transitions.
-- Implement runtime_suspend() and runtime_resume() callbacks to gate
-  clocks and vote for interconnect bandwidth only when needed.
-- Replace devm_clk_get_optional_enabled() with devm_pm_clk_create() +
-  pm_clk_add() and let the PM core manage device clocks during runtime
-  PM and system sleep.
-- Register dev_pm_ops with the platform driver to hook into the PM
-  framework.
-
-Tested:
-
-- Verify that ICC votes drop to zero after probe and upon request
-  completion.
-- Confirm that runtime PM usage count increments during active
-  requests and decrements afterward.
-- Observe that the device correctly enters the suspended state when
-  idle.
-
-Signed-off-by: Udit Tiwari <quic_utiwari@quicinc.com>
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202511160711.Q6ytYvlG-lkp@intel.com/
----
-Changes in v4:
-- Annotate runtime PM callbacks with __maybe_unused to silence W=1 warnings.
-- Add Reported-by and Closes tags for kernel test robot warning.
-
-Changes in v3:
-- Switch from manual clock management to PM clock helpers
-  (devm_pm_clk_create() + pm_clk_add()); no direct clk_* enable/disable
-  in runtime callbacks.
-- Replace pm_runtime_get_sync() with pm_runtime_resume_and_get(); remove
-  pm_runtime_put_noidle() on error.
-- Define PM ops using helper macros and reuse runtime callbacks for system
-  sleep via pm_runtime_force_suspend()/pm_runtime_force_resume().
-- Link to v2: https://lore.kernel.org/lkml/20250826110917.3383061-1-quic_utiwari@quicinc.com/
-
-Changes in v2:
-- Extend suspend/resume support to include runtime PM and ICC scaling.
-- Register dev_pm_ops and implement runtime_suspend/resume callbacks.
-- Link to v1: https://lore.kernel.org/lkml/20250606105808.2119280-1-quic_utiwari@quicinc.com/
----
- drivers/crypto/qce/core.c | 104 +++++++++++++++++++++++++++++++-------
- 1 file changed, 87 insertions(+), 17 deletions(-)
-
-diff --git a/drivers/crypto/qce/core.c b/drivers/crypto/qce/core.c
-index b966f3365b7d..9cf8acedc325 100644
---- a/drivers/crypto/qce/core.c
-+++ b/drivers/crypto/qce/core.c
-@@ -12,6 +12,9 @@
- #include <linux/module.h>
- #include <linux/mod_devicetable.h>
- #include <linux/platform_device.h>
-+#include <linux/pm.h>
-+#include <linux/pm_runtime.h>
-+#include <linux/pm_clock.h>
- #include <linux/types.h>
- #include <crypto/algapi.h>
- #include <crypto/internal/hash.h>
-@@ -90,13 +93,17 @@ static int qce_handle_queue(struct qce_device *qce,
- 	struct crypto_async_request *async_req, *backlog;
- 	int ret = 0, err;
- 
-+	ret = pm_runtime_resume_and_get(qce->dev);
-+	if (ret < 0)
-+		return ret;
-+
- 	scoped_guard(mutex, &qce->lock) {
- 		if (req)
- 			ret = crypto_enqueue_request(&qce->queue, req);
- 
- 		/* busy, do not dequeue request */
- 		if (qce->req)
--			return ret;
-+			goto qce_suspend;
- 
- 		backlog = crypto_get_backlog(&qce->queue);
- 		async_req = crypto_dequeue_request(&qce->queue);
-@@ -105,7 +112,7 @@ static int qce_handle_queue(struct qce_device *qce,
- 	}
- 
- 	if (!async_req)
--		return ret;
-+		goto qce_suspend;
- 
- 	if (backlog) {
- 		scoped_guard(mutex, &qce->lock)
-@@ -118,6 +125,8 @@ static int qce_handle_queue(struct qce_device *qce,
- 		schedule_work(&qce->done_work);
- 	}
- 
-+qce_suspend:
-+	pm_runtime_put_autosuspend(qce->dev);
- 	return ret;
- }
- 
-@@ -207,37 +216,48 @@ static int qce_crypto_probe(struct platform_device *pdev)
- 	if (ret < 0)
- 		return ret;
- 
--	qce->core = devm_clk_get_optional_enabled(qce->dev, "core");
--	if (IS_ERR(qce->core))
--		return PTR_ERR(qce->core);
-+/* PM clock helpers: register device clocks */
-+	ret = devm_pm_clk_create(dev);
-+	if (ret)
-+		return ret;
- 
--	qce->iface = devm_clk_get_optional_enabled(qce->dev, "iface");
--	if (IS_ERR(qce->iface))
--		return PTR_ERR(qce->iface);
-+	ret = pm_clk_add(dev, "core");
-+	if (ret)
-+		return ret;
- 
--	qce->bus = devm_clk_get_optional_enabled(qce->dev, "bus");
--	if (IS_ERR(qce->bus))
--		return PTR_ERR(qce->bus);
-+	ret = pm_clk_add(dev, "iface");
-+	if (ret)
-+		return ret;
- 
--	qce->mem_path = devm_of_icc_get(qce->dev, "memory");
-+	ret = pm_clk_add(dev, "bus");
-+	if (ret)
-+		return ret;
-+
-+	qce->mem_path = devm_of_icc_get(dev, "memory");
- 	if (IS_ERR(qce->mem_path))
- 		return PTR_ERR(qce->mem_path);
- 
--	ret = icc_set_bw(qce->mem_path, QCE_DEFAULT_MEM_BANDWIDTH, QCE_DEFAULT_MEM_BANDWIDTH);
-+	/* Enable runtime PM after clocks and ICC are acquired */
-+
-+	ret = devm_pm_runtime_enable(dev);
- 	if (ret)
- 		return ret;
- 
--	ret = devm_qce_dma_request(qce->dev, &qce->dma);
-+	ret = pm_runtime_resume_and_get(dev);
- 	if (ret)
- 		return ret;
- 
-+	ret = devm_qce_dma_request(qce->dev, &qce->dma);
-+	if (ret)
-+		goto err_pm;
-+
- 	ret = qce_check_version(qce);
- 	if (ret)
--		return ret;
-+		goto err_pm;
- 
- 	ret = devm_mutex_init(qce->dev, &qce->lock);
- 	if (ret)
--		return ret;
-+		goto err_pm;
- 
- 	INIT_WORK(&qce->done_work, qce_req_done_work);
- 	crypto_init_queue(&qce->queue, QCE_QUEUE_LENGTH);
-@@ -245,9 +265,58 @@ static int qce_crypto_probe(struct platform_device *pdev)
- 	qce->async_req_enqueue = qce_async_request_enqueue;
- 	qce->async_req_done = qce_async_request_done;
- 
--	return devm_qce_register_algs(qce);
-+	ret = devm_qce_register_algs(qce);
-+	if (ret)
-+		goto err_pm;
-+
-+	/* Configure autosuspend after successful init */
-+	pm_runtime_set_autosuspend_delay(dev, 100);
-+	pm_runtime_use_autosuspend(dev);
-+	pm_runtime_mark_last_busy(dev);
-+	pm_runtime_put_autosuspend(dev);
-+
-+	return 0;
-+
-+err_pm:
-+	pm_runtime_put(dev);
-+
-+	return ret;
- }
- 
-+static int __maybe_unused qce_runtime_suspend(struct device *dev)
-+{
-+	struct qce_device *qce = dev_get_drvdata(dev);
-+
-+	icc_disable(qce->mem_path);
-+
-+	return 0;
-+}
-+
-+static int __maybe_unused qce_runtime_resume(struct device *dev)
-+{
-+	struct qce_device *qce = dev_get_drvdata(dev);
-+	int ret = 0;
-+
-+	ret = icc_enable(qce->mem_path);
-+	if (ret)
-+		return ret;
-+
-+	ret = icc_set_bw(qce->mem_path, QCE_DEFAULT_MEM_BANDWIDTH, QCE_DEFAULT_MEM_BANDWIDTH);
-+	if (ret)
-+		goto err_icc;
-+
-+	return 0;
-+
-+err_icc:
-+	icc_disable(qce->mem_path);
-+	return ret;
-+}
-+
-+static const struct dev_pm_ops qce_crypto_pm_ops = {
-+	SET_RUNTIME_PM_OPS(qce_runtime_suspend, qce_runtime_resume, NULL)
-+	SET_SYSTEM_SLEEP_PM_OPS(pm_runtime_force_suspend, pm_runtime_force_resume)
-+};
-+
- static const struct of_device_id qce_crypto_of_match[] = {
- 	{ .compatible = "qcom,crypto-v5.1", },
- 	{ .compatible = "qcom,crypto-v5.4", },
-@@ -261,6 +330,7 @@ static struct platform_driver qce_crypto_driver = {
- 	.driver = {
- 		.name = KBUILD_MODNAME,
- 		.of_match_table = qce_crypto_of_match,
-+		.pm = &qce_crypto_pm_ops,
- 	},
- };
- module_platform_driver(qce_crypto_driver);
--- 
-2.34.1
-
+Reviewed-by: Kevin Tian <kevin.tian@intel.com>
 
