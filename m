@@ -1,52 +1,52 @@
-Return-Path: <linux-arm-msm+bounces-82136-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-82139-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [IPv6:2605:f480:58:1:0:1994:3:14])
-	by mail.lfdr.de (Postfix) with ESMTPS id C6EFAC654CC
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Nov 2025 18:03:25 +0100 (CET)
+Received: from ams.mirrors.kernel.org (ams.mirrors.kernel.org [213.196.21.55])
+	by mail.lfdr.de (Postfix) with ESMTPS id F0B5BC65536
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Nov 2025 18:06:53 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 1FC6D4F099B
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Nov 2025 16:58:57 +0000 (UTC)
+	by ams.mirrors.kernel.org (Postfix) with ESMTPS id 8039F384ABF
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Nov 2025 16:59:51 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C18652FC034;
-	Mon, 17 Nov 2025 16:57:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 78F70304BA8;
+	Mon, 17 Nov 2025 16:57:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=mainlining.org header.i=@mainlining.org header.b="gaQBei8U";
-	dkim=permerror (0-bit key) header.d=mainlining.org header.i=@mainlining.org header.b="EZe+tcSD"
+	dkim=pass (2048-bit key) header.d=mainlining.org header.i=@mainlining.org header.b="qGFKbaA0";
+	dkim=permerror (0-bit key) header.d=mainlining.org header.i=@mainlining.org header.b="Df9sblQg"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mail.mainlining.org (mail.mainlining.org [5.75.144.95])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0D832F1FF5;
-	Mon, 17 Nov 2025 16:57:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64A7C270541;
+	Mon, 17 Nov 2025 16:57:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=5.75.144.95
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763398646; cv=none; b=rH3ueYTALqbd7BkEdLstJxAotLrpHfMc8ZMxDpB93MnRvh2nBA9HybE/66wiECr3tdKGKnfIGyG0MmhvTBKXfgQYER3yOVbC864JXEna/BiJWq1aEBQqNQUvzWTh/kHCYcEQAofp75zP0tOaYJTOecJjujF1cBaX77RZ/2f2Fos=
+	t=1763398669; cv=none; b=K4LJ0o5SuBWsoOjvbUTWOJMrjt6z7pub8ar57o98M6MLJI9iFiZwl4+XpCpooVMc4GsYoRPO8nh9HsOiQOArZ1GNeU78iWRaymi9EZtgdORZCz5pXeSKQKwz5zkOc9rzkTyAZDl2R7ZumdLlxGbx6FWdRSN8AhviZdec2vrgiH8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763398646; c=relaxed/simple;
-	bh=gSdwOQe/Xk9bFyCcZMI8WVd0yEC9v0Qmqh3rOcnBUlQ=;
+	s=arc-20240116; t=1763398669; c=relaxed/simple;
+	bh=y/NdFiQMbxh6jfvgv36pESn0N/nKXcpFTSMILG1Yins=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=aax+BItnV0uIOQvc9xtnygJgOE/Ug7kKBYW7fne5uYAKZczQq5ObPue9EyIrqu4Z3fNfQkirISzyOvTv+NPHTVVT5+8PBUb6Yc0wculwSGAel7TpwfulQEsJsKKVtDruRdt7TDgAYxgBBq5g0C4BQbpmoh3I69Kmg2b3cwnegs4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=mainlining.org; spf=pass smtp.mailfrom=mainlining.org; dkim=pass (2048-bit key) header.d=mainlining.org header.i=@mainlining.org header.b=gaQBei8U; dkim=permerror (0-bit key) header.d=mainlining.org header.i=@mainlining.org header.b=EZe+tcSD; arc=none smtp.client-ip=5.75.144.95
+	 In-Reply-To:To:Cc; b=Z16Wx3PmzwiwUWRbfzJWUpVfkukZELEYaiLWakMHqCiVw11wZ+/lBNHVotwDP+GWXgyYh2wTPewlgOIWp5xoinkufc6gUnNAKpMvTBomYwCp+X8Jiarc/pZ5/aen/fc2dyW4SO7siAtOVF+RVHm7njikG0nxbRteeU7DeZNaJQA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=mainlining.org; spf=pass smtp.mailfrom=mainlining.org; dkim=pass (2048-bit key) header.d=mainlining.org header.i=@mainlining.org header.b=qGFKbaA0; dkim=permerror (0-bit key) header.d=mainlining.org header.i=@mainlining.org header.b=Df9sblQg; arc=none smtp.client-ip=5.75.144.95
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=mainlining.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=mainlining.org
 DKIM-Signature: v=1; a=rsa-sha256; s=202507r; d=mainlining.org; c=relaxed/relaxed;
-	h=To:Message-Id:Subject:Date:From; t=1763398641; bh=yXCT+4e+QbC0PpPJDzKn5OY
-	LIXlYjDUXsazMj0rHz4g=; b=gaQBei8U45VAMXQ+FXkpy0j7lwrq68QW2RGfZTAMzV6ki0U+5h
-	RQakj0WR76lTSpqP1HFJeyOf76/iPe+bJCfgXBX95pJFdnViIBaF0JHFl95O0j71R1kYhdPysyn
-	tugqnPz7bK/UzGZ28u6L8tTDnNbGYkRl/givjMQgseJK+GD5dKCQnmGpTQRPuwVFI8zRdlLcmnz
-	LmB4JxY4QB5SSdgEimeJPzIvyyvzKQdyIIOyR4qZgYcIJS5pn2qgAOW4N1M2KVf5kp70UuLCog2
-	RqIqViXdOUQWRXCIxPZxYvP9FtYRQy4drJ1xS1XfWtvIYzxU+PvB+yuee5Y+ryR2kRw==;
+	h=To:Message-Id:Subject:Date:From; t=1763398642; bh=XjcNlW5tQ7bmwXpdlpghVeH
+	2s4ZWPVur0/dQayYlPjE=; b=qGFKbaA0Lg6loAseBhFKofcjBL14vftdmqQcD4RJwDEPJfRYv7
+	vckiDXEnBB5qvgyDeM1mrMFZ4QsjS2sZnB33BNk4t6KtO4YrQQKUmsFzD64p7Al1Cw3KieKZxHO
+	Uc8XKUdMjzeZkaWwsIhpjQADdwY+dvzpw7DlyMuZKJQq38iX0rO6eeRnGHYpoa2Swm4ozgifGCk
+	4lbMJQrswGtNijiVIAHQE9GqixNOnknzmbq8GO4DyW2QOLeyFuucO4tdO84dkQ50OP1sTbeJIyt
+	wiyVXxHBTLkWaCxDGeHWa4fMWowVj1L0gKdSLcKFXuzBqdvUFSJ/lH4L+1Nxuj1KNuA==;
 DKIM-Signature: v=1; a=ed25519-sha256; s=202507e; d=mainlining.org; c=relaxed/relaxed;
-	h=To:Message-Id:Subject:Date:From; t=1763398641; bh=yXCT+4e+QbC0PpPJDzKn5OY
-	LIXlYjDUXsazMj0rHz4g=; b=EZe+tcSD+MqwZHiXQrjBIMdveNCYAnzm7ZIKPfZASF2L+AlQqs
-	htb6OUpdX2Uez3ZFRs3ptQLqFt8JKKNKEXDA==;
+	h=To:Message-Id:Subject:Date:From; t=1763398642; bh=XjcNlW5tQ7bmwXpdlpghVeH
+	2s4ZWPVur0/dQayYlPjE=; b=Df9sblQgvQbg6b9WUsk5gaMSrWkAxM3s1CLsVoZ6NV/SoZDIWj
+	hA0+KUNx8EpRu0xk48zMv8buxpQLr3O7FHBw==;
 From: =?utf-8?q?Barnab=C3=A1s_Cz=C3=A9m=C3=A1n?= <barnabas.czeman@mainlining.org>
-Date: Mon, 17 Nov 2025 17:57:06 +0100
-Subject: [PATCH v2 1/4] dt-bindings: clock: qcom: Add MSM8940 Global Clock
- Controller
+Date: Mon, 17 Nov 2025 17:57:07 +0100
+Subject: [PATCH v2 2/4] clk: qcom: gcc: Add support for Global Clock
+ controller found on MSM8940
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -55,7 +55,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20251117-gcc-msm8940-sdm439-v2-1-4af57c8bc7eb@mainlining.org>
+Message-Id: <20251117-gcc-msm8940-sdm439-v2-2-4af57c8bc7eb@mainlining.org>
 References: <20251117-gcc-msm8940-sdm439-v2-0-4af57c8bc7eb@mainlining.org>
 In-Reply-To: <20251117-gcc-msm8940-sdm439-v2-0-4af57c8bc7eb@mainlining.org>
 To: Bjorn Andersson <andersson@kernel.org>, 
@@ -68,68 +68,326 @@ To: Bjorn Andersson <andersson@kernel.org>,
 Cc: linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org, 
  devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
  =?utf-8?q?Barnab=C3=A1s_Cz=C3=A9m=C3=A1n?= <barnabas.czeman@mainlining.org>, 
- Krzysztof Kozlowski <krzk@kernel.org>
+ Daniil Titov <daniilt971@gmail.com>
 X-Mailer: b4 0.14.3
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1763398640; l=2035;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1763398640; l=14367;
  i=barnabas.czeman@mainlining.org; s=20240730; h=from:subject:message-id;
- bh=gSdwOQe/Xk9bFyCcZMI8WVd0yEC9v0Qmqh3rOcnBUlQ=;
- b=L1TUSiAxYVAWiAl/zeCYDqM/AHzgYA0uGJZdOD+C98JN13coI4qxfBUrQTlYCxwVgrYdnWN++
- Ai8TKLyW4lACgWkqgZnfnV60wAQOKj1O1ZY3A1NotQ1TlKkjCPJ0k5k
+ bh=qyvBWOhMwE0VncwGe3Wrxe+f4JCg69We1yRjV7HhwBM=;
+ b=2HLhEv/s5WwFXJ1vdrFzNxXj7vKqu27I7GNAmsrw3eBo/CTj9nhfXjau1K4xHV0keAoUaRdGE
+ saWJM2mC/lGCAMs6F+N+E4Ja2sB87LPysrTcS6TXftm06E+ogyK3VDx
 X-Developer-Key: i=barnabas.czeman@mainlining.org; a=ed25519;
  pk=TWUSIGgwW/Sn4xnX25nw+lszj1AT/A3bzkahn7EhOFc=
 
-Add devicetree bindings for the global clock controller on Qualcomm
-MSM8940 platform.
+From: Daniil Titov <daniilt971@gmail.com>
 
-Reviewed-by: Krzysztof Kozlowski <krzk@kernel.org>
+Modify existing MSM8917 driver to support MSM8940 SoC. MSM8940 SoC has the
+same changes as MSM8937 SoC, but with additional IPA clk and different
+GFX3D clock frequency table.
+
+Signed-off-by: Daniil Titov <daniilt971@gmail.com>
 Signed-off-by: Barnabás Czémán <barnabas.czeman@mainlining.org>
 ---
- Documentation/devicetree/bindings/clock/qcom,gcc-msm8953.yaml | 5 +++--
- include/dt-bindings/clock/qcom,gcc-msm8917.h                  | 1 +
- 2 files changed, 4 insertions(+), 2 deletions(-)
+ drivers/clk/qcom/Kconfig       |   6 +-
+ drivers/clk/qcom/gcc-msm8917.c | 231 +++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 234 insertions(+), 3 deletions(-)
 
-diff --git a/Documentation/devicetree/bindings/clock/qcom,gcc-msm8953.yaml b/Documentation/devicetree/bindings/clock/qcom,gcc-msm8953.yaml
-index f2e37f439d28..68fcd0d6492f 100644
---- a/Documentation/devicetree/bindings/clock/qcom,gcc-msm8953.yaml
-+++ b/Documentation/devicetree/bindings/clock/qcom,gcc-msm8953.yaml
-@@ -4,7 +4,7 @@
- $id: http://devicetree.org/schemas/clock/qcom,gcc-msm8953.yaml#
- $schema: http://devicetree.org/meta-schemas/core.yaml#
+diff --git a/drivers/clk/qcom/Kconfig b/drivers/clk/qcom/Kconfig
+index 4a78099e706c..c2c62b3a5bdc 100644
+--- a/drivers/clk/qcom/Kconfig
++++ b/drivers/clk/qcom/Kconfig
+@@ -370,12 +370,12 @@ config MSM_GCC_8916
+ 	  SD/eMMC, display, graphics, camera etc.
  
--title: Qualcomm Global Clock & Reset Controller on MSM8953
-+title: Qualcomm Global Clock & Reset Controller on MSM8937, MSM8940 and MSM8953
+ config MSM_GCC_8917
+-	tristate "MSM89(17/37)/QM215 Global Clock Controller"
++	tristate "MSM89(17/37/40)/QM215 Global Clock Controller"
+ 	depends on ARM64 || COMPILE_TEST
+ 	select QCOM_GDSC
+ 	help
+-	  Support for the global clock controller on msm8917, msm8937
+-	  and qm215 devices.
++	  Support for the global clock controller on msm8917, msm8937,
++	  msm8940 and qm215 devices.
+ 	  Say Y if you want to use devices such as UART, SPI i2c, USB,
+ 	  SD/eMMC, display, graphics, camera etc.
  
- maintainers:
-   - Adam Skladowski <a_skl39@protonmail.com>
-@@ -13,7 +13,7 @@ maintainers:
+diff --git a/drivers/clk/qcom/gcc-msm8917.c b/drivers/clk/qcom/gcc-msm8917.c
+index 0a1aa623cd49..6985888def5e 100644
+--- a/drivers/clk/qcom/gcc-msm8917.c
++++ b/drivers/clk/qcom/gcc-msm8917.c
+@@ -957,6 +957,27 @@ static const struct freq_tbl ftbl_gfx3d_clk_src_msm8937[] = {
+ 	{ }
+ };
  
- description: |
-   Qualcomm global clock control module provides the clocks, resets and power
--  domains on MSM8937 or MSM8953.
-+  domains on MSM8937, MSM8940 or MSM8953.
++static const struct freq_tbl ftbl_gfx3d_clk_src_msm8940[] = {
++	F(19200000, P_XO, 1, 0, 0),
++	F(50000000, P_GPLL0, 16, 0, 0),
++	F(80000000, P_GPLL0, 10, 0, 0),
++	F(100000000, P_GPLL0, 8, 0, 0),
++	F(160000000, P_GPLL0, 5, 0, 0),
++	F(200000000, P_GPLL0, 4, 0, 0),
++	F(216000000, P_GPLL6, 5, 0, 0),
++	F(228570000, P_GPLL0, 3.5, 0, 0),
++	F(240000000, P_GPLL6, 4.5, 0, 0),
++	F(266670000, P_GPLL0, 3, 0, 0),
++	F(300000000, P_GPLL3, 1, 0, 0),
++	F(320000000, P_GPLL0, 2.5, 0, 0),
++	F(375000000, P_GPLL3, 1, 0, 0),
++	F(400000000, P_GPLL0, 2, 0, 0),
++	F(450000000, P_GPLL3, 1, 0, 0),
++	F(475000000, P_GPLL3, 1, 0, 0),
++	F(500000000, P_GPLL3, 1, 0, 0),
++	{ }
++};
++
+ static struct clk_rcg2 gfx3d_clk_src = {
+ 	.cmd_rcgr = 0x59000,
+ 	.hid_width = 5,
+@@ -3307,6 +3328,19 @@ static struct clk_branch gcc_vfe_tbu_clk = {
+ 	}
+ };
  
-   See also::
-     include/dt-bindings/clock/qcom,gcc-msm8917.h
-@@ -23,6 +23,7 @@ properties:
-   compatible:
-     enum:
-       - qcom,gcc-msm8937
-+      - qcom,gcc-msm8940
-       - qcom,gcc-msm8953
++static struct clk_branch gcc_ipa_tbu_clk = {
++	.halt_reg = 0x120a0,
++	.halt_check = BRANCH_VOTED,
++	.clkr = {
++		.enable_reg = 0x4500c,
++		.enable_mask = BIT(16),
++		.hw.init = &(struct clk_init_data){
++			.name = "gcc_ipa_tbu_clk",
++			.ops = &clk_branch2_ops,
++		},
++	},
++};
++
+ static struct gdsc venus_gdsc = {
+ 	.gdscr = 0x4c018,
+ 	.cxcs = (unsigned int []){ 0x4c024, 0x4c01c },
+@@ -3764,6 +3798,189 @@ static struct clk_regmap *gcc_msm8937_clocks[] = {
+ 	[GCC_VFE_TBU_CLK] = &gcc_vfe_tbu_clk.clkr,
+ };
  
-   clocks:
-diff --git a/include/dt-bindings/clock/qcom,gcc-msm8917.h b/include/dt-bindings/clock/qcom,gcc-msm8917.h
-index 4e3897b3669d..066acb447f4f 100644
---- a/include/dt-bindings/clock/qcom,gcc-msm8917.h
-+++ b/include/dt-bindings/clock/qcom,gcc-msm8917.h
-@@ -187,6 +187,7 @@
- #define MSM8937_GCC_MDSS_PCLK1_CLK			179
- #define MSM8937_GCC_OXILI_AON_CLK			180
- #define MSM8937_GCC_OXILI_TIMER_CLK			181
-+#define MSM8940_GCC_IPA_TBU_CLK				182
++static struct clk_regmap *gcc_msm8940_clocks[] = {
++	[GPLL0] = &gpll0.clkr,
++	[GPLL0_EARLY] = &gpll0_early.clkr,
++	[GPLL0_SLEEP_CLK_SRC] = &gpll0_sleep_clk_src.clkr,
++	[GPLL3] = &gpll3.clkr,
++	[GPLL3_EARLY] = &gpll3_early.clkr,
++	[GPLL4] = &gpll4.clkr,
++	[GPLL4_EARLY] = &gpll4_early.clkr,
++	[GPLL6] = &gpll6,
++	[GPLL6_EARLY] = &gpll6_early.clkr,
++	[APSS_AHB_CLK_SRC] = &apss_ahb_clk_src.clkr,
++	[MSM8937_BLSP1_QUP1_I2C_APPS_CLK_SRC] = &blsp1_qup1_i2c_apps_clk_src.clkr,
++	[MSM8937_BLSP1_QUP1_SPI_APPS_CLK_SRC] = &blsp1_qup1_spi_apps_clk_src.clkr,
++	[BLSP1_QUP2_I2C_APPS_CLK_SRC] = &blsp1_qup2_i2c_apps_clk_src.clkr,
++	[BLSP1_QUP2_SPI_APPS_CLK_SRC] = &blsp1_qup2_spi_apps_clk_src.clkr,
++	[BLSP1_QUP3_I2C_APPS_CLK_SRC] = &blsp1_qup3_i2c_apps_clk_src.clkr,
++	[BLSP1_QUP3_SPI_APPS_CLK_SRC] = &blsp1_qup3_spi_apps_clk_src.clkr,
++	[BLSP1_QUP4_I2C_APPS_CLK_SRC] = &blsp1_qup4_i2c_apps_clk_src.clkr,
++	[BLSP1_QUP4_SPI_APPS_CLK_SRC] = &blsp1_qup4_spi_apps_clk_src.clkr,
++	[BLSP1_UART1_APPS_CLK_SRC] = &blsp1_uart1_apps_clk_src.clkr,
++	[BLSP1_UART2_APPS_CLK_SRC] = &blsp1_uart2_apps_clk_src.clkr,
++	[BLSP2_QUP1_I2C_APPS_CLK_SRC] = &blsp2_qup1_i2c_apps_clk_src.clkr,
++	[BLSP2_QUP1_SPI_APPS_CLK_SRC] = &blsp2_qup1_spi_apps_clk_src.clkr,
++	[BLSP2_QUP2_I2C_APPS_CLK_SRC] = &blsp2_qup2_i2c_apps_clk_src.clkr,
++	[BLSP2_QUP2_SPI_APPS_CLK_SRC] = &blsp2_qup2_spi_apps_clk_src.clkr,
++	[BLSP2_QUP3_I2C_APPS_CLK_SRC] = &blsp2_qup3_i2c_apps_clk_src.clkr,
++	[BLSP2_QUP3_SPI_APPS_CLK_SRC] = &blsp2_qup3_spi_apps_clk_src.clkr,
++	[MSM8937_BLSP2_QUP4_I2C_APPS_CLK_SRC] = &blsp2_qup4_i2c_apps_clk_src.clkr,
++	[MSM8937_BLSP2_QUP4_SPI_APPS_CLK_SRC] = &blsp2_qup4_spi_apps_clk_src.clkr,
++	[BLSP2_UART1_APPS_CLK_SRC] = &blsp2_uart1_apps_clk_src.clkr,
++	[BLSP2_UART2_APPS_CLK_SRC] = &blsp2_uart2_apps_clk_src.clkr,
++	[BYTE0_CLK_SRC] = &byte0_clk_src.clkr,
++	[MSM8937_BYTE1_CLK_SRC] = &byte1_clk_src.clkr,
++	[CAMSS_GP0_CLK_SRC] = &camss_gp0_clk_src.clkr,
++	[CAMSS_GP1_CLK_SRC] = &camss_gp1_clk_src.clkr,
++	[CAMSS_TOP_AHB_CLK_SRC] = &camss_top_ahb_clk_src.clkr,
++	[CCI_CLK_SRC] = &cci_clk_src.clkr,
++	[CPP_CLK_SRC] = &cpp_clk_src.clkr,
++	[CRYPTO_CLK_SRC] = &crypto_clk_src.clkr,
++	[CSI0PHYTIMER_CLK_SRC] = &csi0phytimer_clk_src.clkr,
++	[CSI0_CLK_SRC] = &csi0_clk_src.clkr,
++	[CSI1PHYTIMER_CLK_SRC] = &csi1phytimer_clk_src.clkr,
++	[CSI1_CLK_SRC] = &csi1_clk_src.clkr,
++	[CSI2_CLK_SRC] = &csi2_clk_src.clkr,
++	[ESC0_CLK_SRC] = &esc0_clk_src.clkr,
++	[MSM8937_ESC1_CLK_SRC] = &esc1_clk_src.clkr,
++	[GFX3D_CLK_SRC] = &gfx3d_clk_src.clkr,
++	[GP1_CLK_SRC] = &gp1_clk_src.clkr,
++	[GP2_CLK_SRC] = &gp2_clk_src.clkr,
++	[GP3_CLK_SRC] = &gp3_clk_src.clkr,
++	[JPEG0_CLK_SRC] = &jpeg0_clk_src.clkr,
++	[MCLK0_CLK_SRC] = &mclk0_clk_src.clkr,
++	[MCLK1_CLK_SRC] = &mclk1_clk_src.clkr,
++	[MCLK2_CLK_SRC] = &mclk2_clk_src.clkr,
++	[MDP_CLK_SRC] = &mdp_clk_src.clkr,
++	[PCLK0_CLK_SRC] = &pclk0_clk_src.clkr,
++	[MSM8937_PCLK1_CLK_SRC] = &pclk1_clk_src.clkr,
++	[PDM2_CLK_SRC] = &pdm2_clk_src.clkr,
++	[SDCC1_APPS_CLK_SRC] = &sdcc1_apps_clk_src.clkr,
++	[SDCC1_ICE_CORE_CLK_SRC] = &sdcc1_ice_core_clk_src.clkr,
++	[SDCC2_APPS_CLK_SRC] = &sdcc2_apps_clk_src.clkr,
++	[USB_HS_SYSTEM_CLK_SRC] = &usb_hs_system_clk_src.clkr,
++	[VCODEC0_CLK_SRC] = &vcodec0_clk_src.clkr,
++	[VFE0_CLK_SRC] = &vfe0_clk_src.clkr,
++	[VFE1_CLK_SRC] = &vfe1_clk_src.clkr,
++	[VSYNC_CLK_SRC] = &vsync_clk_src.clkr,
++	[GCC_APSS_TCU_CLK] = &gcc_apss_tcu_clk.clkr,
++	[GCC_BIMC_GFX_CLK] = &gcc_bimc_gfx_clk.clkr,
++	[GCC_BIMC_GPU_CLK] = &gcc_bimc_gpu_clk.clkr,
++	[GCC_BLSP1_AHB_CLK] = &gcc_blsp1_ahb_clk.clkr,
++	[MSM8937_GCC_BLSP1_QUP1_I2C_APPS_CLK] = &gcc_blsp1_qup1_i2c_apps_clk.clkr,
++	[MSM8937_GCC_BLSP1_QUP1_SPI_APPS_CLK] = &gcc_blsp1_qup1_spi_apps_clk.clkr,
++	[GCC_BLSP1_QUP2_I2C_APPS_CLK] = &gcc_blsp1_qup2_i2c_apps_clk.clkr,
++	[GCC_BLSP1_QUP2_SPI_APPS_CLK] = &gcc_blsp1_qup2_spi_apps_clk.clkr,
++	[GCC_BLSP1_QUP3_I2C_APPS_CLK] = &gcc_blsp1_qup3_i2c_apps_clk.clkr,
++	[GCC_BLSP1_QUP3_SPI_APPS_CLK] = &gcc_blsp1_qup3_spi_apps_clk.clkr,
++	[GCC_BLSP1_QUP4_I2C_APPS_CLK] = &gcc_blsp1_qup4_i2c_apps_clk.clkr,
++	[GCC_BLSP1_QUP4_SPI_APPS_CLK] = &gcc_blsp1_qup4_spi_apps_clk.clkr,
++	[GCC_BLSP1_UART1_APPS_CLK] = &gcc_blsp1_uart1_apps_clk.clkr,
++	[GCC_BLSP1_UART2_APPS_CLK] = &gcc_blsp1_uart2_apps_clk.clkr,
++	[GCC_BLSP2_AHB_CLK] = &gcc_blsp2_ahb_clk.clkr,
++	[GCC_BLSP2_QUP1_I2C_APPS_CLK] = &gcc_blsp2_qup1_i2c_apps_clk.clkr,
++	[GCC_BLSP2_QUP1_SPI_APPS_CLK] = &gcc_blsp2_qup1_spi_apps_clk.clkr,
++	[GCC_BLSP2_QUP2_I2C_APPS_CLK] = &gcc_blsp2_qup2_i2c_apps_clk.clkr,
++	[GCC_BLSP2_QUP2_SPI_APPS_CLK] = &gcc_blsp2_qup2_spi_apps_clk.clkr,
++	[GCC_BLSP2_QUP3_I2C_APPS_CLK] = &gcc_blsp2_qup3_i2c_apps_clk.clkr,
++	[GCC_BLSP2_QUP3_SPI_APPS_CLK] = &gcc_blsp2_qup3_spi_apps_clk.clkr,
++	[MSM8937_GCC_BLSP2_QUP4_I2C_APPS_CLK] = &gcc_blsp2_qup4_i2c_apps_clk.clkr,
++	[MSM8937_GCC_BLSP2_QUP4_SPI_APPS_CLK] = &gcc_blsp2_qup4_spi_apps_clk.clkr,
++	[GCC_BLSP2_UART1_APPS_CLK] = &gcc_blsp2_uart1_apps_clk.clkr,
++	[GCC_BLSP2_UART2_APPS_CLK] = &gcc_blsp2_uart2_apps_clk.clkr,
++	[GCC_BOOT_ROM_AHB_CLK] = &gcc_boot_rom_ahb_clk.clkr,
++	[GCC_CAMSS_AHB_CLK] = &gcc_camss_ahb_clk.clkr,
++	[GCC_CAMSS_CCI_AHB_CLK] = &gcc_camss_cci_ahb_clk.clkr,
++	[GCC_CAMSS_CCI_CLK] = &gcc_camss_cci_clk.clkr,
++	[GCC_CAMSS_CPP_AHB_CLK] = &gcc_camss_cpp_ahb_clk.clkr,
++	[GCC_CAMSS_CPP_CLK] = &gcc_camss_cpp_clk.clkr,
++	[GCC_CAMSS_CSI0PHYTIMER_CLK] = &gcc_camss_csi0phytimer_clk.clkr,
++	[GCC_CAMSS_CSI0PHY_CLK] = &gcc_camss_csi0phy_clk.clkr,
++	[GCC_CAMSS_CSI0PIX_CLK] = &gcc_camss_csi0pix_clk.clkr,
++	[GCC_CAMSS_CSI0RDI_CLK] = &gcc_camss_csi0rdi_clk.clkr,
++	[GCC_CAMSS_CSI0_AHB_CLK] = &gcc_camss_csi0_ahb_clk.clkr,
++	[GCC_CAMSS_CSI0_CLK] = &gcc_camss_csi0_clk.clkr,
++	[GCC_CAMSS_CSI1PHYTIMER_CLK] = &gcc_camss_csi1phytimer_clk.clkr,
++	[GCC_CAMSS_CSI1PHY_CLK] = &gcc_camss_csi1phy_clk.clkr,
++	[GCC_CAMSS_CSI1PIX_CLK] = &gcc_camss_csi1pix_clk.clkr,
++	[GCC_CAMSS_CSI1RDI_CLK] = &gcc_camss_csi1rdi_clk.clkr,
++	[GCC_CAMSS_CSI1_AHB_CLK] = &gcc_camss_csi1_ahb_clk.clkr,
++	[GCC_CAMSS_CSI1_CLK] = &gcc_camss_csi1_clk.clkr,
++	[GCC_CAMSS_CSI2PHY_CLK] = &gcc_camss_csi2phy_clk.clkr,
++	[GCC_CAMSS_CSI2PIX_CLK] = &gcc_camss_csi2pix_clk.clkr,
++	[GCC_CAMSS_CSI2RDI_CLK] = &gcc_camss_csi2rdi_clk.clkr,
++	[GCC_CAMSS_CSI2_AHB_CLK] = &gcc_camss_csi2_ahb_clk.clkr,
++	[GCC_CAMSS_CSI2_CLK] = &gcc_camss_csi2_clk.clkr,
++	[GCC_CAMSS_CSI_VFE0_CLK] = &gcc_camss_csi_vfe0_clk.clkr,
++	[GCC_CAMSS_CSI_VFE1_CLK] = &gcc_camss_csi_vfe1_clk.clkr,
++	[GCC_CAMSS_GP0_CLK] = &gcc_camss_gp0_clk.clkr,
++	[GCC_CAMSS_GP1_CLK] = &gcc_camss_gp1_clk.clkr,
++	[GCC_CAMSS_ISPIF_AHB_CLK] = &gcc_camss_ispif_ahb_clk.clkr,
++	[GCC_CAMSS_JPEG0_CLK] = &gcc_camss_jpeg0_clk.clkr,
++	[GCC_CAMSS_JPEG_AHB_CLK] = &gcc_camss_jpeg_ahb_clk.clkr,
++	[GCC_CAMSS_JPEG_AXI_CLK] = &gcc_camss_jpeg_axi_clk.clkr,
++	[GCC_CAMSS_MCLK0_CLK] = &gcc_camss_mclk0_clk.clkr,
++	[GCC_CAMSS_MCLK1_CLK] = &gcc_camss_mclk1_clk.clkr,
++	[GCC_CAMSS_MCLK2_CLK] = &gcc_camss_mclk2_clk.clkr,
++	[GCC_CAMSS_MICRO_AHB_CLK] = &gcc_camss_micro_ahb_clk.clkr,
++	[GCC_CAMSS_TOP_AHB_CLK] = &gcc_camss_top_ahb_clk.clkr,
++	[GCC_CAMSS_VFE0_AHB_CLK] = &gcc_camss_vfe0_ahb_clk.clkr,
++	[GCC_CAMSS_VFE0_AXI_CLK] = &gcc_camss_vfe0_axi_clk.clkr,
++	[GCC_CAMSS_VFE0_CLK] = &gcc_camss_vfe0_clk.clkr,
++	[GCC_CAMSS_VFE1_AHB_CLK] = &gcc_camss_vfe1_ahb_clk.clkr,
++	[GCC_CAMSS_VFE1_AXI_CLK] = &gcc_camss_vfe1_axi_clk.clkr,
++	[GCC_CAMSS_VFE1_CLK] = &gcc_camss_vfe1_clk.clkr,
++	[GCC_CPP_TBU_CLK] = &gcc_cpp_tbu_clk.clkr,
++	[GCC_CRYPTO_AHB_CLK] = &gcc_crypto_ahb_clk.clkr,
++	[GCC_CRYPTO_AXI_CLK] = &gcc_crypto_axi_clk.clkr,
++	[GCC_CRYPTO_CLK] = &gcc_crypto_clk.clkr,
++	[GCC_DCC_CLK] = &gcc_dcc_clk.clkr,
++	[GCC_GP1_CLK] = &gcc_gp1_clk.clkr,
++	[GCC_GP2_CLK] = &gcc_gp2_clk.clkr,
++	[GCC_GP3_CLK] = &gcc_gp3_clk.clkr,
++	[GCC_JPEG_TBU_CLK] = &gcc_jpeg_tbu_clk.clkr,
++	[GCC_MDP_TBU_CLK] = &gcc_mdp_tbu_clk.clkr,
++	[GCC_MDSS_AHB_CLK] = &gcc_mdss_ahb_clk.clkr,
++	[GCC_MDSS_AXI_CLK] = &gcc_mdss_axi_clk.clkr,
++	[GCC_MDSS_BYTE0_CLK] = &gcc_mdss_byte0_clk.clkr,
++	[MSM8937_GCC_MDSS_BYTE1_CLK] = &gcc_mdss_byte1_clk.clkr,
++	[GCC_MDSS_ESC0_CLK] = &gcc_mdss_esc0_clk.clkr,
++	[MSM8937_GCC_MDSS_ESC1_CLK] = &gcc_mdss_esc1_clk.clkr,
++	[GCC_MDSS_MDP_CLK] = &gcc_mdss_mdp_clk.clkr,
++	[GCC_MDSS_PCLK0_CLK] = &gcc_mdss_pclk0_clk.clkr,
++	[MSM8937_GCC_MDSS_PCLK1_CLK] = &gcc_mdss_pclk1_clk.clkr,
++	[GCC_MDSS_VSYNC_CLK] = &gcc_mdss_vsync_clk.clkr,
++	[GCC_MSS_CFG_AHB_CLK] = &gcc_mss_cfg_ahb_clk.clkr,
++	[GCC_MSS_Q6_BIMC_AXI_CLK] = &gcc_mss_q6_bimc_axi_clk.clkr,
++	[GCC_OXILI_AHB_CLK] = &gcc_oxili_ahb_clk.clkr,
++	[MSM8937_GCC_OXILI_AON_CLK] = &gcc_oxili_aon_clk.clkr,
++	[GCC_OXILI_GFX3D_CLK] = &gcc_oxili_gfx3d_clk.clkr,
++	[MSM8937_GCC_OXILI_TIMER_CLK] = &gcc_oxili_timer_clk.clkr,
++	[GCC_PDM2_CLK] = &gcc_pdm2_clk.clkr,
++	[GCC_PDM_AHB_CLK] = &gcc_pdm_ahb_clk.clkr,
++	[GCC_PRNG_AHB_CLK] = &gcc_prng_ahb_clk.clkr,
++	[GCC_QDSS_DAP_CLK] = &gcc_qdss_dap_clk.clkr,
++	[GCC_SDCC1_AHB_CLK] = &gcc_sdcc1_ahb_clk.clkr,
++	[GCC_SDCC1_APPS_CLK] = &gcc_sdcc1_apps_clk.clkr,
++	[GCC_SDCC1_ICE_CORE_CLK] = &gcc_sdcc1_ice_core_clk.clkr,
++	[GCC_SDCC2_AHB_CLK] = &gcc_sdcc2_ahb_clk.clkr,
++	[GCC_SDCC2_APPS_CLK] = &gcc_sdcc2_apps_clk.clkr,
++	[GCC_SMMU_CFG_CLK] = &gcc_smmu_cfg_clk.clkr,
++	[GCC_USB2A_PHY_SLEEP_CLK] = &gcc_usb2a_phy_sleep_clk.clkr,
++	[GCC_USB_HS_AHB_CLK] = &gcc_usb_hs_ahb_clk.clkr,
++	[GCC_USB_HS_PHY_CFG_AHB_CLK] = &gcc_usb_hs_phy_cfg_ahb_clk.clkr,
++	[GCC_USB_HS_SYSTEM_CLK] = &gcc_usb_hs_system_clk.clkr,
++	[GCC_VENUS0_AHB_CLK] = &gcc_venus0_ahb_clk.clkr,
++	[GCC_VENUS0_AXI_CLK] = &gcc_venus0_axi_clk.clkr,
++	[GCC_VENUS0_CORE0_VCODEC0_CLK] = &gcc_venus0_core0_vcodec0_clk.clkr,
++	[GCC_VENUS0_VCODEC0_CLK] = &gcc_venus0_vcodec0_clk.clkr,
++	[GCC_VENUS_TBU_CLK] = &gcc_venus_tbu_clk.clkr,
++	[GCC_VFE1_TBU_CLK] = &gcc_vfe1_tbu_clk.clkr,
++	[GCC_VFE_TBU_CLK] = &gcc_vfe_tbu_clk.clkr,
++	[MSM8940_GCC_IPA_TBU_CLK] = &gcc_ipa_tbu_clk.clkr,
++};
++
+ static const struct qcom_reset_map gcc_msm8917_resets[] = {
+ 	[GCC_CAMSS_MICRO_BCR]		= { 0x56008 },
+ 	[GCC_MSS_BCR]			= { 0x71000 },
+@@ -3833,6 +4050,16 @@ static const struct qcom_cc_desc gcc_msm8937_desc = {
+ 	.num_gdscs = ARRAY_SIZE(gcc_msm8937_gdscs),
+ };
  
- /* GCC block resets */
- #define GCC_CAMSS_MICRO_BCR			0
++static const struct qcom_cc_desc gcc_msm8940_desc = {
++	.config = &gcc_msm8917_regmap_config,
++	.clks = gcc_msm8940_clocks,
++	.num_clks = ARRAY_SIZE(gcc_msm8940_clocks),
++	.resets = gcc_msm8917_resets,
++	.num_resets = ARRAY_SIZE(gcc_msm8917_resets),
++	.gdscs = gcc_msm8937_gdscs,
++	.num_gdscs = ARRAY_SIZE(gcc_msm8937_gdscs),
++};
++
+ static void msm8937_clock_override(void)
+ {
+ 	/* GPLL3 750MHz configuration */
+@@ -3870,6 +4097,9 @@ static int gcc_msm8917_probe(struct platform_device *pdev)
+ 	} else if (gcc_desc == &gcc_msm8937_desc) {
+ 		msm8937_clock_override();
+ 		gfx3d_clk_src.freq_tbl = ftbl_gfx3d_clk_src_msm8937;
++	} else if (gcc_desc == &gcc_msm8940_desc) {
++		msm8937_clock_override();
++		gfx3d_clk_src.freq_tbl = ftbl_gfx3d_clk_src_msm8940;
+ 	}
+ 
+ 	regmap = qcom_cc_map(pdev, gcc_desc);
+@@ -3885,6 +4115,7 @@ static const struct of_device_id gcc_msm8917_match_table[] = {
+ 	{ .compatible = "qcom,gcc-msm8917", .data = &gcc_msm8917_desc },
+ 	{ .compatible = "qcom,gcc-qm215", .data = &gcc_qm215_desc },
+ 	{ .compatible = "qcom,gcc-msm8937", .data = &gcc_msm8937_desc },
++	{ .compatible = "qcom,gcc-msm8940", .data = &gcc_msm8940_desc },
+ 	{},
+ };
+ MODULE_DEVICE_TABLE(of, gcc_msm8917_match_table);
 
 -- 
 2.51.2
