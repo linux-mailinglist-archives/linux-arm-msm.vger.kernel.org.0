@@ -1,193 +1,201 @@
-Return-Path: <linux-arm-msm+bounces-82072-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-82073-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ams.mirrors.kernel.org (ams.mirrors.kernel.org [IPv6:2a01:60a::1994:3:14])
-	by mail.lfdr.de (Postfix) with ESMTPS id B5BC5C63AF2
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Nov 2025 12:01:35 +0100 (CET)
+Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [142.0.200.124])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4038EC63C78
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Nov 2025 12:22:59 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ams.mirrors.kernel.org (Postfix) with ESMTPS id 1BEEC356445
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Nov 2025 11:01:27 +0000 (UTC)
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 986094E0336
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Nov 2025 11:22:55 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 51CC472623;
-	Mon, 17 Nov 2025 11:01:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 707952550BA;
+	Mon, 17 Nov 2025 11:22:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="id4994FU"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="PPjZwLMx";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="Th8N+AKM"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yx1-f46.google.com (mail-yx1-f46.google.com [74.125.224.46])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C02921CC44
-	for <linux-arm-msm@vger.kernel.org>; Mon, 17 Nov 2025 11:01:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.224.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D96D023BF9E
+	for <linux-arm-msm@vger.kernel.org>; Mon, 17 Nov 2025 11:22:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763377277; cv=none; b=Nv9GspuH5aD42H1tj+lUCEAzpiMal7ZIAynmqw0UbhXwzYE0n8hrll4di7HGfMrMguMEeihG1kA7M+AALx4ctscuWfkXDUyYRgsNhuZ/8TB8tdc3xbiXwUVyfEp/rnB4oslKDv06E/xFgkpqx+4kIG29J+tE6HC9fL9S/LVxDsU=
+	t=1763378573; cv=none; b=ACeeEfnL4L2RquNMddTrztXZTrmw5RacIarQrsE8+gvz6/r92A9qLbtevrN4JS6DYcgZnpxXGd5eJ6LVWlgTSbegYPTZ0k17TiUbhT4iOG9jc0arHfolHmkyt4Bave8j1mCP8oXGFfTOI8ceDXozU3gGFHmCvqZ6ngxLXZ5KpPM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763377277; c=relaxed/simple;
-	bh=7DAQpoB3R+EJpl7MbBOx5A+ZlzdqP6pGt/EDi4xzIlE=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=tQWGGjt0utb/9eAcIDxy08JFGX/2X6WTvUUlRxruDZtyg9SZsGD6cAf8Gmy5PVSe8EG5yzYNpwHwMcvF8T6o5Pb3Dxn0CElXcbGY0YiZb5n/8irjJHEB7Sz7dx7gNn0fipVuAD8VJzeY+HFtILkWSV9HmcIEi5n2w3bwjpf999s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=id4994FU; arc=none smtp.client-ip=74.125.224.46
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-yx1-f46.google.com with SMTP id 956f58d0204a3-63e16fbdd50so3634798d50.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 17 Nov 2025 03:01:14 -0800 (PST)
+	s=arc-20240116; t=1763378573; c=relaxed/simple;
+	bh=4PAt8SgcgjUDaigP16ncjdeh20S/7KnOz/cnpoWkDCM=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=fDhtyZ9H0HmEDZS53k18z0JvSEDL3eS54h1GfjiV4I6ttm1KF2R+mm719dabgZWSgLQUdT/V96sLiEhAiEbhbRBDkBljskIRZ6XrGChL3Q2NOg3ThiCwQYINp1jVAT5l1tbOjTvWGRjwwZyQWhMeXGjLkQLXiTr8+ksEecHKqAc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=PPjZwLMx; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=Th8N+AKM; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 5AHB7IQm2793251
+	for <linux-arm-msm@vger.kernel.org>; Mon, 17 Nov 2025 11:22:51 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-type:date:from:in-reply-to:message-id:mime-version
+	:references:subject:to; s=qcppdkim1; bh=saGdFln8ePIC2h1NNo48wOUc
+	8mA5/pec4NdFBXiEC9E=; b=PPjZwLMxt8qa4rC6Ww90bbmIwDL6/zWblIaqLnFk
+	AGkT/IYzz/AKY7tQN0a2+LNQ8VytzUdgz+jHQ/lJfV34HKGMUKbxxueiHXEC5Jsg
+	8V7QRdFJ/e7g1m+dUZElycPknKLPVvr49ZDdrHWG5kbQXf8LAU4pzgW2048BMTAz
+	Yt6FyvI39lQcJk9kTeIIVDCH2RuFQVyTVQhbU6tK1Ij3VzdN3EDex0DpHBq4heaP
+	lEgPZB83KyPt/iOHoReI97HrnuhN9bUVa9LfxHSxx9B2Ke2FyZA9yE5p7Bsa/ZyG
+	V8B5k+ALGJkvrQ6jJ8iy4QP3vdL4343ZJE0GrT+Vo70cPw==
+Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com [209.85.222.199])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4afu5bhck9-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Mon, 17 Nov 2025 11:22:50 +0000 (GMT)
+Received: by mail-qk1-f199.google.com with SMTP id af79cd13be357-8b2657cfcdaso522664085a.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 17 Nov 2025 03:22:50 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1763377274; x=1763982074; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=/RSfdrwfxNJQiZz80hQXf9twz6yOQXKrW5ZfA5HxaxE=;
-        b=id4994FUPu51IRxHSspL9L3GiejmCAA8gq+5m8V5Qy/ts2ASYoQqTsF8SrZu1qJCqD
-         GUQLU1kAdP494s0MaMxk3g+bRWbLLQ5BPI6XIxP0wC9S3V9humxsjMA8QeCi1B/LHm5w
-         AXkpQrcUklRFpcssfQSH+obec9yFZUY19vuPSsAFftk2+3eEeuw6/DJGcfvHxXox61cA
-         i/3/UzvFQ9JdBpOWPQhGbPX5FT90aWLV8Y+ch9DgbpdNXYBbMtOxJibX6lfYdgRopu1w
-         tz3NewpHxpPpKQS3POc517AagIYVuMrvQtXQ5yFz/1WKQ5Nws47JvpRs7mMY5pTSnsWK
-         jK+A==
+        d=oss.qualcomm.com; s=google; t=1763378570; x=1763983370; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=saGdFln8ePIC2h1NNo48wOUc8mA5/pec4NdFBXiEC9E=;
+        b=Th8N+AKMXD3YXgKo6KmzmS8EBmY7x0Od0HrqNrlBlARAYsdDh6VbFM1F1sxqYnyv8O
+         h3y4QmVl13OPMsleCViVcdOgDBTbJwrD7EcIClYvqJY9hsAGI68EzUUOse3oP5UilWRD
+         da2QgVucrqNmb4FTAlnQWJ4QWMqKtsB2sL+pSMjh48S1LmV7uwsbxulxcSiudt95rZLX
+         R0vFvP/MWvI+NVqgfqMe2wYPcDTTm+5IXfFFbu1EYwVK6VoyxsJbl8f5gG/RctZNCmei
+         ZWPSJc4fgGiypCfpmGYAACrc/5bxw8BWdaUZZxj2SutDOffSRhwjlOIfrmwPd6UkqjFM
+         5zrg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1763377274; x=1763982074;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=/RSfdrwfxNJQiZz80hQXf9twz6yOQXKrW5ZfA5HxaxE=;
-        b=fGC71XSZWZgbZF1e/h1X7ZzWZ/I2wkJ7xVO0oqKB5fpni7vHOTmsT8cW34+Hcw0O1h
-         qaEIyzc018E3VDMXbVBKeJ9F7TweBxi6xU/DYktjZbaF8OeY1L3adUrRQkAq1zbmqdPL
-         lCGUYzIigcESDYtyz2nmo4JR1EYdemXLoFDu8XBN79XIkdIyXkZtCh0DCtxJm8BNLUWR
-         vJs2TT5daQgncq8GH1Hinqb4ngiKAI7N56NGgsKMMaRw6k0UTtxZJGFRFHn9zZC/r2xg
-         /BAZt1+P4BLo/Aclj+J99hSIsPcTnrg4zXSN8/pUy9j5sn/awVf7w1+tmnYj/4J1U3Oc
-         L1/w==
-X-Forwarded-Encrypted: i=1; AJvYcCWeBUuZ9ZNCawUupnzgRT0zdj8uJE25sz8atUzqKYBu52V2mp1EimNAngViIgweZagdRceNuPhpS5ZAR0wY@vger.kernel.org
-X-Gm-Message-State: AOJu0YyIwrKvWVt6yltphXpZRJtCG8UlXwp0RulZuGzL+p2xpMmH0A2D
-	6t/3RcQsXhBupEPDGZGhOdRoeXrtm4aZRe2MfF1fcrG9j9SoRyuQ9o0Gr4hoa3Gob36eyAzJLV8
-	8w5uVMJUQJvdmRlzILm3XcemDTfTW5KkJPBmsurH5jw==
-X-Gm-Gg: ASbGncsYev6NwTX61RPvAhycSrZDc8BVGIVG1p/TFGZeH5F+wgQ1N21FrdQW32OSrog
-	Lrj8MLGOifbmJ727hdFxzAAc5rzMUOQEJtqaI7fqG7+YRHAPOuvMCXxddpV20bZaBD6Ub4DYCet
-	nMjDgpuxkDksF5C0qvhUgARLcN/de2deEK9Cu88sX94DgtUfPLsDPteo77Dw5RHbB558wX9ekwN
-	w2rH8jvxX+hdROw3pZhTXqcOQwMDZkTS4e93CkVuVNDc1rT6eyAzrBiEjr3eh46AXStOudMXL7C
-	tmLvYes=
-X-Google-Smtp-Source: AGHT+IEjvegoUIWfi8UaBD0jEKwHtT+y2Cbu5UHhJ+VHUPJu6okR0AoxTFiIq+cxtmlIxdFEnLzs3e2dtieQR/hKIVs=
-X-Received: by 2002:a05:690e:d86:b0:642:84a:7ba4 with SMTP id
- 956f58d0204a3-642084a7c6bmr1567493d50.85.1763377273901; Mon, 17 Nov 2025
- 03:01:13 -0800 (PST)
+        d=1e100.net; s=20230601; t=1763378570; x=1763983370;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=saGdFln8ePIC2h1NNo48wOUc8mA5/pec4NdFBXiEC9E=;
+        b=S1W1nEQ5yFWHm9KNgp6EpOp6SFx3dGIMwLFjRaOOPkaanm+Q37+F6o983/0o3Z7ZgG
+         HSXfEcdKaKJLB15OMYqcw5cv5lD7M6fF1Ie3/MCIwsSqsPovVapZm9Bg1NMuqaMrKJZN
+         /IwG2Be3yDc2wLtKFRBl1ajIDtNN8tXFETCJp/k0HdjDq/9VSYfaU6DFNQg+DGMu4gvF
+         qZU+2LkF9ncIVwpVWDSC/fpdJuAE3EE7WKrgEKteFi+DbOozCVSMEqUBSuvbBTzRPje3
+         3aYJjFNtrBfaAd9pVfJa9umuMC+iMsY/UD9DMRVoQH2c+cjy8pbm+BSTlwCNjMoPwpoQ
+         QuNw==
+X-Forwarded-Encrypted: i=1; AJvYcCVO752MvkA6B1lA5NOVwANSG10sPDdJo3DtoEPWLnVDisM9DOGf1rEETlEf0hzZtup4e0cODFkbEpJwMJiI@vger.kernel.org
+X-Gm-Message-State: AOJu0YwVeoC77M/m0x+7Ut14fRxA8spj5HPs33SIgjKn09Ao2Xs3Hf2M
+	hE5AqYPSweGVSxWu7upu70obLg+FDHYBWds73SK0hwm9hcMqCul5joJuhPiiQ3NQdUHYw9nl2dx
+	TBDZUxzCsYVmnxEZI5HIcY8miyguqWrxT7g4+Au4igOEc9pIhK1QqVihm70RCqL603PZy
+X-Gm-Gg: ASbGncty8D18jHhR1eL++PeOtxO/E10DjjlvupIppzv8LUt3423IrZ3U8nwxg3eWZ/T
+	jdXjBEk3bJnEOMxXxKID59U+eVNUnvd9j1Qmuk+GJIvC2TV46Uh8UUuWerAzmzNfQ6XU4uY/JLc
+	ZuOrGgNrT1UO3Sf760ORhwYrxTdIN86lGLt/Xf8CI+CdP6YD1kef6ODdO+Lg/OueZZuZvUZVv5c
+	Eha8ThRGKwwREyUY81iP9T1y3dHyLgWceOGqFbvKCf1mXr4OejfBIe8V9EKq7C33b+WaZeC6EK+
+	crwZAFz0b4yNd5ChGNthfSh0JojETtyUENxbsPpqhyPHNBmceFRfk3FP5qf2KZO1GF/MC7JqhcY
+	c2aF30jwF0dd1C4u9c5+BdrR/oQ3cwCXeOMmN1MFQWdGUm8I+ecr2RQHInOKfaTORfyHw1Rq3Cz
+	hMbRh7QAF1U79T
+X-Received: by 2002:a05:6214:f6a:b0:87c:1f7c:76ea with SMTP id 6a1803df08f44-88292686aabmr142405906d6.44.1763378569877;
+        Mon, 17 Nov 2025 03:22:49 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHM6xHarG0Uuic+iXSpLkf0hpd/24gE2X2Esqxk+QMZ4WuIdIQSPR5TNvKK4YIs3v4H/ZZ2Kg==
+X-Received: by 2002:a05:6214:f6a:b0:87c:1f7c:76ea with SMTP id 6a1803df08f44-88292686aabmr142405666d6.44.1763378569362;
+        Mon, 17 Nov 2025 03:22:49 -0800 (PST)
+Received: from umbar.lan (2001-14ba-a0c3-3a00-264b-feff-fe8b-be8a.rev.dnainternet.fi. [2001:14ba:a0c3:3a00:264b:feff:fe8b:be8a])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-595803b305bsm3044303e87.28.2025.11.17.03.22.47
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 17 Nov 2025 03:22:47 -0800 (PST)
+Date: Mon, 17 Nov 2025 13:22:46 +0200
+From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+To: Kumari Pallavi <kumari.pallavi@oss.qualcomm.com>
+Cc: Bjorn Andersson <andersson@kernel.org>, kpallavi@qti.qualcomm.com,
+        srini@kernel.org, amahesh@qti.qualcomm.com, arnd@arndb.de,
+        gregkh@linuxfoundation.org, quic_bkumar@quicinc.com,
+        ekansh.gupta@oss.qualcomm.com, linux-kernel@vger.kernel.org,
+        quic_chennak@quicinc.com, dri-devel@lists.freedesktop.org,
+        linux-arm-msm@vger.kernel.org, jingyi.wang@oss.qualcomm.com,
+        aiqun.yu@oss.qualcomm.com, ktadakam@qti.qualcomm.com
+Subject: Re: [PATCH v3 2/4] misc: fastrpc: Rename phys to dma_addr for clarity
+Message-ID: <lxa5lomfvjf6e4jxt7c67cj7q6blflvc3lpmclybag3cumxtxb@xnte42junlmc>
+References: <20251114084142.3386682-1-kumari.pallavi@oss.qualcomm.com>
+ <20251114084142.3386682-3-kumari.pallavi@oss.qualcomm.com>
+ <q46rupdndsmeojv4szm3qbtcwu6n7x2ukwrrx4jd7rph7nlq5b@xiclcnpx7rc7>
+ <83112aa3-5998-4030-98cb-d3d5ee7c0570@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20251113150217.3030010-1-andriy.shevchenko@linux.intel.com> <20251113150217.3030010-14-andriy.shevchenko@linux.intel.com>
-In-Reply-To: <20251113150217.3030010-14-andriy.shevchenko@linux.intel.com>
-From: Ulf Hansson <ulf.hansson@linaro.org>
-Date: Mon, 17 Nov 2025 12:00:38 +0100
-X-Gm-Features: AWmQ_bk2fwrMGKoLr3e8DW_NORum6cYwB-Ynf9Wgckyt3WUUk5QWFuYE7vXt0wM
-Message-ID: <CAPDyKFotmQyHzBim-8nib-KVvQaQgA_ELbgdC_Q4Y95-GrvRSw@mail.gmail.com>
-Subject: Re: [PATCH v3 13/21] mmc: mmc_test: Switch to use %ptSp
-To: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Cc: Corey Minyard <corey@minyard.net>, =?UTF-8?Q?Christian_K=C3=B6nig?= <christian.koenig@amd.com>, 
-	"Dr. David Alan Gilbert" <linux@treblig.org>, Alex Deucher <alexander.deucher@amd.com>, 
-	Thomas Zimmermann <tzimmermann@suse.de>, Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>, 
-	Rob Clark <robin.clark@oss.qualcomm.com>, Matthew Brost <matthew.brost@intel.com>, 
-	Aleksandr Loktionov <aleksandr.loktionov@intel.com>, Vitaly Lifshits <vitaly.lifshits@intel.com>, 
-	Manivannan Sadhasivam <mani@kernel.org>, Niklas Cassel <cassel@kernel.org>, Calvin Owens <calvin@wbinvd.org>, 
-	Vadim Fedorenko <vadim.fedorenko@linux.dev>, Sagi Maimon <maimon.sagi@gmail.com>, 
-	"Martin K. Petersen" <martin.petersen@oracle.com>, Karan Tilak Kumar <kartilak@cisco.com>, 
-	Hans Verkuil <hverkuil+cisco@kernel.org>, Casey Schaufler <casey@schaufler-ca.com>, 
-	Steven Rostedt <rostedt@goodmis.org>, Petr Mladek <pmladek@suse.com>, 
-	Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>, Max Kellermann <max.kellermann@ionos.com>, 
-	linux-doc@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	openipmi-developer@lists.sourceforge.net, linux-media@vger.kernel.org, 
-	dri-devel@lists.freedesktop.org, linaro-mm-sig@lists.linaro.org, 
-	amd-gfx@lists.freedesktop.org, linux-arm-msm@vger.kernel.org, 
-	freedreno@lists.freedesktop.org, intel-xe@lists.freedesktop.org, 
-	linux-mmc@vger.kernel.org, netdev@vger.kernel.org, 
-	intel-wired-lan@lists.osuosl.org, linux-pci@vger.kernel.org, 
-	linux-s390@vger.kernel.org, linux-scsi@vger.kernel.org, 
-	linux-staging@lists.linux.dev, ceph-devel@vger.kernel.org, 
-	linux-trace-kernel@vger.kernel.org, 
-	Rasmus Villemoes <linux@rasmusvillemoes.dk>, Sergey Senozhatsky <senozhatsky@chromium.org>, 
-	Jonathan Corbet <corbet@lwn.net>, Sumit Semwal <sumit.semwal@linaro.org>, 
-	Gustavo Padovan <gustavo@padovan.org>, David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, 
-	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, Maxime Ripard <mripard@kernel.org>, 
-	Dmitry Baryshkov <lumag@kernel.org>, Abhinav Kumar <abhinav.kumar@linux.dev>, 
-	Jessica Zhang <jesszhan0024@gmail.com>, Sean Paul <sean@poorly.run>, 
-	Marijn Suijten <marijn.suijten@somainline.org>, Konrad Dybcio <konradybcio@kernel.org>, 
-	Lucas De Marchi <lucas.demarchi@intel.com>, 
-	=?UTF-8?Q?Thomas_Hellstr=C3=B6m?= <thomas.hellstrom@linux.intel.com>, 
-	Rodrigo Vivi <rodrigo.vivi@intel.com>, Vladimir Oltean <olteanv@gmail.com>, Andrew Lunn <andrew@lunn.ch>, 
-	"David S. Miller" <davem@davemloft.net>, Eric Dumazet <edumazet@google.com>, 
-	Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>, 
-	Tony Nguyen <anthony.l.nguyen@intel.com>, Przemek Kitszel <przemyslaw.kitszel@intel.com>, 
-	=?UTF-8?Q?Krzysztof_Wilczy=C5=84ski?= <kwilczynski@kernel.org>, 
-	Kishon Vijay Abraham I <kishon@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>, 
-	Rodolfo Giometti <giometti@enneenne.com>, Jonathan Lemon <jonathan.lemon@gmail.com>, 
-	Richard Cochran <richardcochran@gmail.com>, Stefan Haberland <sth@linux.ibm.com>, 
-	Jan Hoeppner <hoeppner@linux.ibm.com>, Heiko Carstens <hca@linux.ibm.com>, 
-	Vasily Gorbik <gor@linux.ibm.com>, Alexander Gordeev <agordeev@linux.ibm.com>, 
-	Christian Borntraeger <borntraeger@linux.ibm.com>, Sven Schnelle <svens@linux.ibm.com>, 
-	Satish Kharat <satishkh@cisco.com>, Sesidhar Baddela <sebaddel@cisco.com>, 
-	"James E.J. Bottomley" <James.Bottomley@hansenpartnership.com>, 
-	Mauro Carvalho Chehab <mchehab@kernel.org>, Greg Kroah-Hartman <gregkh@linuxfoundation.org>, 
-	Xiubo Li <xiubli@redhat.com>, Ilya Dryomov <idryomov@gmail.com>, 
-	Masami Hiramatsu <mhiramat@kernel.org>, Mathieu Desnoyers <mathieu.desnoyers@efficios.com>, 
-	Andrew Morton <akpm@linux-foundation.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <83112aa3-5998-4030-98cb-d3d5ee7c0570@oss.qualcomm.com>
+X-Proofpoint-GUID: pzWKE4_0eJvv7a2oZB4yYf_7YtiVhRP7
+X-Proofpoint-ORIG-GUID: pzWKE4_0eJvv7a2oZB4yYf_7YtiVhRP7
+X-Authority-Analysis: v=2.4 cv=Xvz3+FF9 c=1 sm=1 tr=0 ts=691b058a cx=c_pps
+ a=HLyN3IcIa5EE8TELMZ618Q==:117 a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10
+ a=6UeiqGixMTsA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8 a=poC_On1pFPmngpHC2F4A:9 a=CjuIK1q_8ugA:10
+ a=bTQJ7kPSJx9SKPbeHEYW:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMTE3MDA5NiBTYWx0ZWRfX0+Br7q0msRHS
+ 0tqJI+J1FBe+sc23D96rLzJ+PG41tbKTLv+pAUDYdFcrqjFnPdD6KFtvYMJlDvlEXAvBap1WTN+
+ XPGgysw9i6svC7QZNZWBx7tbMMnHuQc2afvqeFgKPOCdDZPeNFxubS9/Aqq0UD/eXCCt13XakHf
+ H9iNfmNmEw+BhsYICpok0a5qDpw/DYlltuiBgoPljQgOgTesp546ES/1+tUJYSk1NdIcELYN3K6
+ zDYkEpnA1rHu4E72eD2iQAVnj1vr+xE9l37RWj1+o/TIr+0NRUbAoB8484bvjmc6i1Mum6JU3cO
+ UC/i+IBkNd4ihNibFP1xH2vlUPviwpOFMTXyQ0IPalopMfF153vBxnjGqFqo+6jh6kT+4TLEyTw
+ HBQcetR3uN4okn+6FbDxxrPP4Zb5xQ==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
+ definitions=2025-11-17_02,2025-11-13_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ adultscore=0 impostorscore=0 lowpriorityscore=0 spamscore=0 bulkscore=0
+ phishscore=0 priorityscore=1501 clxscore=1015 suspectscore=0 malwarescore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2510240001 definitions=main-2511170096
 
-On Thu, 13 Nov 2025 at 16:03, Andy Shevchenko
-<andriy.shevchenko@linux.intel.com> wrote:
->
-> Use %ptSp instead of open coded variants to print content of
-> struct timespec64 in human readable format.
->
-> Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+On Mon, Nov 17, 2025 at 12:37:33PM +0530, Kumari Pallavi wrote:
+> 
+> 
+> On 11/14/2025 9:14 PM, Bjorn Andersson wrote:
+> > On Fri, Nov 14, 2025 at 02:11:40PM +0530, Kumari Pallavi wrote:
+> > > Update all references of buf->phys and map->phys to buf->dma_addr and
+> > > map->dma_addr to accurately represent that these fields store DMA
+> > > addresses, not physical addresses. This change improves code clarity
+> > > and aligns with kernel conventions for dma_addr_t usage.
+> > > 
+> > > Signed-off-by: Kumari Pallavi <kumari.pallavi@oss.qualcomm.com>
+> > > ---
+> > >   drivers/misc/fastrpc.c | 76 ++++++++++++++++++++++--------------------
+> > >   1 file changed, 40 insertions(+), 36 deletions(-)
+> > > 
+> > > diff --git a/drivers/misc/fastrpc.c b/drivers/misc/fastrpc.c
+> > > index ee652ef01534..d6a7960fe716 100644
+> > > --- a/drivers/misc/fastrpc.c
+> > > +++ b/drivers/misc/fastrpc.c
+> > > @@ -106,7 +106,7 @@
+> > >   #define miscdev_to_fdevice(d) container_of(d, struct fastrpc_device, miscdev)
+> > >   struct fastrpc_phy_page {
+> > > -	u64 addr;		/* physical address */
+> > > +	u64 addr;		/* physical or dma address */
+> > >   	u64 size;		/* size of contiguous region */
+> > >   };
+> > > @@ -171,7 +171,7 @@ struct fastrpc_msg {
+> > >   	u64 ctx;		/* invoke caller context */
+> > >   	u32 handle;	/* handle to invoke */
+> > >   	u32 sc;		/* scalars structure describing the data */
+> > > -	u64 addr;		/* physical address */
+> > > +	u64 addr;		/* physical or dma address */
+> > 
+> > Can you go all the way and make the type dma_addr_t? That way you don't
+> > need to typecast the dma_alloc_coherent() and dma_free_coherent().
+> > 
+> > I believe it might complicate the places where you do math on it, but
+> > that is a good thing, as it highlights those places where you do
+> > something unexpected.
+> > 
+> 
+> While this not strictly limited to holding a dma_addr_t.
+> Based on historical behavior, when the FASTRPC_ATTR_SECUREMAP flag is
+> set, S2 mapping expects a physical address to be passed to the
+> qcom_scm_assign_mem() API.
+> reference-
+> https://git.kernel.org/pub/scm/linux/kernel/git/next/linux-next.git/commit/drivers/misc/fastrpc.c?id=e90d911906196bf987492c94e38f10ca611dfd7b
+> 
+> If you suggest, I can define it as dma_addr_t and perform typecasting to u64
+> wherever required.
 
-Acked-by: Ulf Hansson <ulf.hansson@linaro.org>
+You don't need to typecase dma_addr_t when passing u64.
 
-Kind regards
-Uffe
 
-> ---
->  drivers/mmc/core/mmc_test.c | 20 ++++++++------------
->  1 file changed, 8 insertions(+), 12 deletions(-)
->
-> diff --git a/drivers/mmc/core/mmc_test.c b/drivers/mmc/core/mmc_test.c
-> index a74089df4547..01d1e62c2ce7 100644
-> --- a/drivers/mmc/core/mmc_test.c
-> +++ b/drivers/mmc/core/mmc_test.c
-> @@ -586,14 +586,11 @@ static void mmc_test_print_avg_rate(struct mmc_test_card *test, uint64_t bytes,
->         rate = mmc_test_rate(tot, &ts);
->         iops = mmc_test_rate(count * 100, &ts); /* I/O ops per sec x 100 */
->
-> -       pr_info("%s: Transfer of %u x %u sectors (%u x %u%s KiB) took "
-> -                        "%llu.%09u seconds (%u kB/s, %u KiB/s, "
-> -                        "%u.%02u IOPS, sg_len %d)\n",
-> -                        mmc_hostname(test->card->host), count, sectors, count,
-> -                        sectors >> 1, (sectors & 1 ? ".5" : ""),
-> -                        (u64)ts.tv_sec, (u32)ts.tv_nsec,
-> -                        rate / 1000, rate / 1024, iops / 100, iops % 100,
-> -                        test->area.sg_len);
-> +       pr_info("%s: Transfer of %u x %u sectors (%u x %u%s KiB) took %ptSp seconds (%u kB/s, %u KiB/s, %u.%02u IOPS, sg_len %d)\n",
-> +               mmc_hostname(test->card->host), count, sectors, count,
-> +               sectors >> 1, (sectors & 1 ? ".5" : ""), &ts,
-> +               rate / 1000, rate / 1024, iops / 100, iops % 100,
-> +               test->area.sg_len);
->
->         mmc_test_save_transfer_result(test, count, sectors, ts, rate, iops);
->  }
-> @@ -3074,10 +3071,9 @@ static int mtf_test_show(struct seq_file *sf, void *data)
->                 seq_printf(sf, "Test %d: %d\n", gr->testcase + 1, gr->result);
->
->                 list_for_each_entry(tr, &gr->tr_lst, link) {
-> -                       seq_printf(sf, "%u %d %llu.%09u %u %u.%02u\n",
-> -                               tr->count, tr->sectors,
-> -                               (u64)tr->ts.tv_sec, (u32)tr->ts.tv_nsec,
-> -                               tr->rate, tr->iops / 100, tr->iops % 100);
-> +                       seq_printf(sf, "%u %d %ptSp %u %u.%02u\n",
-> +                                  tr->count, tr->sectors, &tr->ts, tr->rate,
-> +                                  tr->iops / 100, tr->iops % 100);
->                 }
->         }
->
-> --
-> 2.50.1
->
+-- 
+With best wishes
+Dmitry
 
