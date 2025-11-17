@@ -1,77 +1,79 @@
-Return-Path: <linux-arm-msm+bounces-82026-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-82027-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sin.lore.kernel.org (sin.lore.kernel.org [104.64.211.4])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3AF31C62604
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Nov 2025 06:17:23 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id B3120C6260F
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Nov 2025 06:19:08 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sin.lore.kernel.org (Postfix) with ESMTPS id D818A241F6
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Nov 2025 05:17:20 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 1637B3A5975
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Nov 2025 05:17:27 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 25A3C30E0F9;
-	Mon, 17 Nov 2025 05:17:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5AC0B30EF81;
+	Mon, 17 Nov 2025 05:17:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=marek.ca header.i=@marek.ca header.b="DoIe6IgK"
+	dkim=pass (2048-bit key) header.d=marek.ca header.i=@marek.ca header.b="PiC47BZG"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-qk1-f174.google.com (mail-qk1-f174.google.com [209.85.222.174])
+Received: from mail-qk1-f177.google.com (mail-qk1-f177.google.com [209.85.222.177])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F71B30C610
-	for <linux-arm-msm@vger.kernel.org>; Mon, 17 Nov 2025 05:17:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B012430DED4
+	for <linux-arm-msm@vger.kernel.org>; Mon, 17 Nov 2025 05:17:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.177
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763356635; cv=none; b=GdoJ5tj/Yi01cBWZbFogY1t7IrBrLSMGzuJXLhqDUqgP4LKiORUEGbqIeQwYVvuXyHMIOCsUNO4KOxcEtRySnelUQexQ9vL2JkwWMpHoOT0k8Uh1wlIR0G3DlUoh/GrbXQCV/de+NbcubBN2jCE+rOSRQbdXphLzSAxD8a1UcFI=
+	t=1763356636; cv=none; b=bh6dJ/ltWi1filDv9JwqTbu03B25ludr+Oj0xVcJ7fpuezkxOYIFxaYcEEI5wHdcAiCNDem/pcJLoAZjU0uO2ogXgX28dWcbo9VzY55Hw0rGDrZFMdhEvGqDGQWEIhrtZP75uiARvT04aTeiteGN7UzqyADx6qtpK0SvlLDtrmw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763356635; c=relaxed/simple;
-	bh=F9bqyjnaY9vppou7CJ4Gw0zGAfIlpIs/l3kwYRqX2f0=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=pSC9XBc983Wi64XXtifCLbAC78+60fGq/MvDL0pphg4fSJvugNN5DlCgvNzNgFMvYqIMjBYeu+2KeYSfcPRnqJsgrP7m29iwiqlDlc3N2BNsRGymLFvNSOohoIcvpIonSZM67wiZWCWSem6kNvr3mbQUCINFWbezJzCZCPY2Sgk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=marek.ca; spf=pass smtp.mailfrom=marek.ca; dkim=pass (2048-bit key) header.d=marek.ca header.i=@marek.ca header.b=DoIe6IgK; arc=none smtp.client-ip=209.85.222.174
+	s=arc-20240116; t=1763356636; c=relaxed/simple;
+	bh=jMetAjXswfKk89xDttBgjMjZ7rBfdZBoYOr/KWndOtI=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=tGBFcHqypp1Eg4A6XehoULnUKAGdnIcMQ9HdUPZeKLaTSA+UNd4200Nwx8jffBHj6zLADgpyWXruR8JmkGWURzqlhxrkGUWyjtldhjEwW3oCXqeJoF2tnUNqMzW2YFhq/xQa1Ch6aNkXZ6LsNjajh1mrslPPw9iapGHqbk6EZDM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=marek.ca; spf=pass smtp.mailfrom=marek.ca; dkim=pass (2048-bit key) header.d=marek.ca header.i=@marek.ca header.b=PiC47BZG; arc=none smtp.client-ip=209.85.222.177
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=marek.ca
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=marek.ca
-Received: by mail-qk1-f174.google.com with SMTP id af79cd13be357-8b220ddc189so506107685a.0
-        for <linux-arm-msm@vger.kernel.org>; Sun, 16 Nov 2025 21:17:12 -0800 (PST)
+Received: by mail-qk1-f177.google.com with SMTP id af79cd13be357-8b2ea5a44a9so76251685a.0
+        for <linux-arm-msm@vger.kernel.org>; Sun, 16 Nov 2025 21:17:13 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=marek.ca; s=google; t=1763356631; x=1763961431; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=bjJ6mSMUDnT9EfLt8zTUS1krbqS5uLTDvq+DfAEIIKg=;
-        b=DoIe6IgKQkFDV/ASs+fELUoY3hxmEcmypwbN04GaD92XkZCXA28a1K+IGWAHM8xeVJ
-         lHJyaUnxAhXmgjC/hMfOXXbtuLs/e3W0Y0ZR4g3W90M9kEVH76h4qPBWOKkpkypLSJu4
-         QTDRFTJ9FsUNbTrZMUlHJCtakV8necsA7FXcIvcDKzriR/wZkHJoXpdaElPrVfAtRhw4
-         9Q3HBcrnILfO2EbWq6SACBEFImu2paPzjmAmoWNaImUrg5TQhcTPKkiS5m5Ulv/9/MlP
-         2wRjW/G+/LJuouffkE6RKPEoNltR4ahHFw0D0c7Iwmn9MeuYIJ7mtHDSdN4Dry1gndC9
-         CFiw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1763356631; x=1763961431;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+        d=marek.ca; s=google; t=1763356632; x=1763961432; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=bjJ6mSMUDnT9EfLt8zTUS1krbqS5uLTDvq+DfAEIIKg=;
-        b=MGaYZI+I6ia1g3tJj0oD2gysoz8igVdMGDAG2q31DyyQZ7j6fyzlAgKjtuxViqgkYU
-         vUpCcIib3cxHSnjRpTiBtrUOwTPFvfhALgiZlIkCpW55IPjpfYFDqrs3UEvF9KZUsKSa
-         hFnY3AsjSlbe1Td4tlioJjoojgqAfxQT3KO62dapegPGyRxngvp8uOmdSyzAB5Syc6K6
-         GBWLCS4HNgxOggss6tets4jsNqkf/iIsrMy25W/hw1ST9z1/HA15XJSUsQk2hkYPHK0Z
-         C8cQ9C5DERG9ud4FPF1v4X6TQsYr/xjF2Qg6upxB9anC7EyQeTqqA77c3jihquZO89kN
-         3APg==
-X-Gm-Message-State: AOJu0Yyi4eHnqHxwjobOvqpiGI1oeimSeZotG3FY6SWI1mjh2cT5GtLG
-	kSxCzG2+hlDplM7qA1ojsMwcl3Jkgq2UUuQQ5j4aBQF8aTyxUwWc8UK8Nsl/J3rnFjBICilaHQu
-	Oe6sS
-X-Gm-Gg: ASbGnctwdRgVUFTXJSNxlhS2DPMlPkTC/UYRNk+h951GpBnE+xIddu5zk/RBpgwR31G
-	MVahyJCoMbR7DAFfdf3gSLrXaqF8NxrtZGE9guxYY3A8c+N2tluLwNcZ2iiZ469tzzQ+T87NYyX
-	dcU8ebfN9fDtPGaJmJFzhGS8qnsLHiyXokAG/dLUoUmLXg2wJVJOn/9MlnSLFnJWUIz2nQSiC/7
-	wAtf7e31uAH32sQBjRwmjOayyEbuNB4tauULb2JVfhl/EF6YRcXEhJWuOkSgyGBx5TmteWTp88N
-	Hyf+aHyX/d+6EZLCXrlXP/HOq/fHI6rzOqxIRNu3z4qHev7/Bzasr+fkdstsRusFmuVJf+2xA5B
-	QDgeyeBEx/Hxwao8AR+LD5KUXoWC7nJEUiOzo8aUloLPClYk3ecMS9dbIhJn/+rg4KUDJSXaRcL
-	UxeQfqD36Pc/N9mfxGx+04WKIg4Zg4tuJ524oYRB5ECJ30oPubLgB6kA8=
-X-Google-Smtp-Source: AGHT+IGrDovZ5uxWtzBZ6cBDHkf6F2Vnyg9egsBJUFuZL+TRXg+091tfkXP78NpeMOOq85KHO9Ko6Q==
-X-Received: by 2002:a05:620a:2683:b0:8b2:ea5a:4146 with SMTP id af79cd13be357-8b2ea5a454bmr366248985a.89.1763356630970;
-        Sun, 16 Nov 2025 21:17:10 -0800 (PST)
+        bh=1zPoFzhzfSfJq6z3nwCCFRs05FcCD1UdEmhhsy+Y9N4=;
+        b=PiC47BZGYCUlA1JFvPI6JxGd8ZrMt0PitZyHe2dV3YKzvS4JyCLQsV+xvo/Kf1COEb
+         LGiXqwdsgeyxrsYdyCXKD39HtXiN519niHCjdte0aC27jgHMgXhodHz3AT2M0uUTK9Bw
+         lxAKxUHsbmbp6qxQMO+fu/T4G7QqDV5iWy+UBUitgtEwNnl2jwDB/K8Fq6nuzJSY8tnK
+         Tp115MWXZj7ujr89Goie+g3gXOPV1dBL2HzKzplRGz1JxgYNAi0aoPDZ29j7UnvdpSHC
+         nJWBUupmqRw9+LW9Az7+s/TwHe5Hmq9d1eEaZEaGfKRPkh/OX/gHsOo+y//lRfXZL1Xj
+         LrmQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1763356632; x=1763961432;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=1zPoFzhzfSfJq6z3nwCCFRs05FcCD1UdEmhhsy+Y9N4=;
+        b=sNTH05zrtQ/BXYeuXKmc0VODbaxQE0corpuk7qAX47aJw/M+t9B1HqQoEycC5zbdTE
+         v5fltopLbiqjsGGFz/GKtK3uH713u49MYD2HJJyVdR8gByS9M90gGGTS2dnNOH6lN2Iz
+         9K5Yytqn28E+nqd7IQTZdbhpqCfxLNoAEXihic8IWl/ZbkkR3C9ncF7VSusrLMVtbCov
+         bFB1EVoRdnpul/z9MWy5g+IuEPKVzztTJidf62x00HFiM7PAQM7tGNX5tNhmw4apRqNJ
+         pH0NP2IH+Yk46mKn+TkhtIG85vG5hLg7mSx46ZrZX84uiEQgsmgI3w5Y08TGWQmfNFHI
+         L7Jg==
+X-Gm-Message-State: AOJu0YxBa6+6S44jh56/SzKA70xA0zN4OB+CEQAgJDY03pan0CltZJk9
+	z2moeCNUtz8MlafNYBXSOJH5l6tJTY1Ye6reDXFJrEXlpEmwLLobpMs+4LQWjfHT7xH4o4kvvxm
+	qEjtG
+X-Gm-Gg: ASbGnctxQoHtCU5mkjbMWa1pUO3/n5FNvuPwjQdBwRaZNofOOoYG0s3kz3qhwpB2EYJ
+	8bpHG/ZUcn81fJPWF67+WMpN59BoMfZ3vkpPFErZC+Y4yCTsVymvM3U7mAwGmlK08v5bvEX/b0C
+	/vU1ELE1jhfp5ughdbbCE0YV3FmfnpjPzKTRtcWT73SdeZghAPXrK+bzeaXK8tSbjj7zOxEBntw
+	NOHNbPM9Qoyxcuy1+FMACAw+CLArfdU3g3P9WbxiVawE4MCdHS/dkXdGVQrMRePWmmbh4mZTKW+
+	M6Dw+EfFF+3+zF9U79M/UAjsa3onK6ORYKPxpNyc59kxH5iwoF/LfJfqdE+gN2/inAYkeoYT3VT
+	Cmv9+PjeC+lZ6D9DrcKgDc5oYqgebONB0CHWgucsFaIV7FVXqXfPtMeU5f9setpRLr8pnuXvcBL
+	edQRHt6n0zXt8d66MGd80HeFhizH5Dd8vgXzBstcpncr41kGRmsEh7FWxiqMHOti2tYA==
+X-Google-Smtp-Source: AGHT+IEKEHjgfMdQRDp2kMcmdyptWSAZDc1BLteCr++y67jIrvfuS9EbngFPfnmOmRhGKb2Nu3/DLg==
+X-Received: by 2002:a05:620a:2908:b0:8a2:a5b2:e3bc with SMTP id af79cd13be357-8b2c31e904emr1313924985a.89.1763356632100;
+        Sun, 16 Nov 2025 21:17:12 -0800 (PST)
 Received: from localhost.localdomain (modemcable125.110-19-135.mc.videotron.ca. [135.19.110.125])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-8b2aef2f936sm906417185a.29.2025.11.16.21.17.10
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-8b2aef2f936sm906417185a.29.2025.11.16.21.17.11
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 16 Nov 2025 21:17:10 -0800 (PST)
+        Sun, 16 Nov 2025 21:17:11 -0800 (PST)
 From: Jonathan Marek <jonathan@marek.ca>
 To: linux-arm-msm@vger.kernel.org
 Cc: Srinivas Kandagatla <srini@kernel.org>,
@@ -81,10 +83,12 @@ Cc: Srinivas Kandagatla <srini@kernel.org>,
 	Takashi Iwai <tiwai@suse.com>,
 	linux-sound@vger.kernel.org (open list:QCOM AUDIO (ASoC) DRIVERS),
 	linux-kernel@vger.kernel.org (open list)
-Subject: [PATCH 1/9] ASoC: codecs: lpass-wsa-macro: remove unnecessary bounds check
-Date: Mon, 17 Nov 2025 00:15:13 -0500
-Message-ID: <20251117051523.16462-1-jonathan@marek.ca>
+Subject: [PATCH 2/9] ASoC: codecs: lpass-wsa-macro: remove useless gain read/write sequence
+Date: Mon, 17 Nov 2025 00:15:14 -0500
+Message-ID: <20251117051523.16462-2-jonathan@marek.ca>
 X-Mailer: git-send-email 2.51.0
+In-Reply-To: <20251117051523.16462-1-jonathan@marek.ca>
+References: <20251117051523.16462-1-jonathan@marek.ca>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -93,48 +97,64 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-WSA_MACRO_RX0 is 0 and WSA_MACRO_RX_MIX1 is (WSA_MACRO_RX_MAX-1), which
-means it is not possible for the bounds check to fail.
+Reading and writing the same value to this register does nothing.
 
-Removing the WSA_MACRO_RX_MIX1 limit is needed to add support for other
-ports (RX4, RX5, etc.), in which case the valid range depends on the HW
-version: rely on the driver only setting valid ports in active_ch_mask
-instead (already the case).
+Looking at downstream driver it seems there was meant to be an offset added
 
 Signed-off-by: Jonathan Marek <jonathan@marek.ca>
 ---
- sound/soc/codecs/lpass-wsa-macro.c | 11 -----------
- 1 file changed, 11 deletions(-)
+ sound/soc/codecs/lpass-wsa-macro.c | 10 +---------
+ 1 file changed, 1 insertion(+), 9 deletions(-)
 
 diff --git a/sound/soc/codecs/lpass-wsa-macro.c b/sound/soc/codecs/lpass-wsa-macro.c
-index 38faa9074ca3e..6e54c1beac8f9 100644
+index 6e54c1beac8f9..6f16d54aee401 100644
 --- a/sound/soc/codecs/lpass-wsa-macro.c
 +++ b/sound/soc/codecs/lpass-wsa-macro.c
-@@ -1168,12 +1168,6 @@ static int wsa_macro_set_prim_interpolator_rate(struct snd_soc_dai *dai,
+@@ -1567,17 +1567,14 @@ static int wsa_macro_enable_mix_path(struct snd_soc_dapm_widget *w,
+ 				     struct snd_kcontrol *kcontrol, int event)
+ {
+ 	struct snd_soc_component *component = snd_soc_dapm_to_component(w->dapm);
+-	u16 path_reg, gain_reg;
+-	int val;
++	u16 path_reg;
  
- 	for_each_set_bit(port, &wsa->active_ch_mask[dai->id], WSA_MACRO_RX_MAX) {
- 		int_1_mix1_inp = port;
--		if ((int_1_mix1_inp < WSA_MACRO_RX0) || (int_1_mix1_inp > WSA_MACRO_RX_MIX1)) {
--			dev_err(component->dev,	"%s: Invalid RX port, Dai ID is %d\n",
--				__func__, dai->id);
--			return -EINVAL;
--		}
--
- 		int_mux_cfg0 = CDC_WSA_RX_INP_MUX_RX_INT0_CFG0;
+ 	switch (w->shift) {
+ 	case WSA_MACRO_RX_MIX0:
+ 		path_reg = CDC_WSA_RX0_RX_PATH_MIX_CTL;
+-		gain_reg = CDC_WSA_RX0_RX_VOL_MIX_CTL;
+ 		break;
+ 	case WSA_MACRO_RX_MIX1:
+ 		path_reg = CDC_WSA_RX1_RX_PATH_MIX_CTL;
+-		gain_reg = CDC_WSA_RX1_RX_VOL_MIX_CTL;
+ 		break;
+ 	default:
+ 		return 0;
+@@ -1585,8 +1582,6 @@ static int wsa_macro_enable_mix_path(struct snd_soc_dapm_widget *w,
  
- 		/*
-@@ -1220,11 +1214,6 @@ static int wsa_macro_set_mix_interpolator_rate(struct snd_soc_dai *dai,
+ 	switch (event) {
+ 	case SND_SOC_DAPM_POST_PMU:
+-		val = snd_soc_component_read(component, gain_reg);
+-		snd_soc_component_write(component, gain_reg, val);
+ 		break;
+ 	case SND_SOC_DAPM_POST_PMD:
+ 		snd_soc_component_update_bits(component, path_reg,
+@@ -1931,7 +1926,6 @@ static int wsa_macro_enable_interpolator(struct snd_soc_dapm_widget *w,
+ 	struct snd_soc_component *component = snd_soc_dapm_to_component(w->dapm);
+ 	u16 gain_reg;
+ 	u16 reg;
+-	int val;
+ 	struct wsa_macro *wsa = snd_soc_component_get_drvdata(component);
  
- 	for_each_set_bit(port, &wsa->active_ch_mask[dai->id], WSA_MACRO_RX_MAX) {
- 		int_2_inp = port;
--		if ((int_2_inp < WSA_MACRO_RX0) || (int_2_inp > WSA_MACRO_RX_MIX1)) {
--			dev_err(component->dev,	"%s: Invalid RX port, Dai ID is %d\n",
--				__func__, dai->id);
--			return -EINVAL;
--		}
- 
- 		int_mux_cfg1 = CDC_WSA_RX_INP_MUX_RX_INT0_CFG1;
- 		for (j = 0; j < NUM_INTERPOLATORS; j++) {
+ 	if (w->shift == WSA_MACRO_COMP1) {
+@@ -1971,8 +1965,6 @@ static int wsa_macro_enable_interpolator(struct snd_soc_dapm_widget *w,
+ 					CDC_WSA_RX_PGA_HALF_DB_MASK,
+ 					CDC_WSA_RX_PGA_HALF_DB_ENABLE);
+ 		}
+-		val = snd_soc_component_read(component, gain_reg);
+-		snd_soc_component_write(component, gain_reg, val);
+ 		wsa_macro_config_ear_spkr_gain(component, wsa,
+ 						event, gain_reg);
+ 		break;
 -- 
 2.51.0
 
