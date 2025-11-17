@@ -1,217 +1,156 @@
-Return-Path: <linux-arm-msm+bounces-82038-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-82039-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [IPv6:2605:f480:58:1:0:1994:3:14])
-	by mail.lfdr.de (Postfix) with ESMTPS id 069B9C626C8
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Nov 2025 06:40:45 +0100 (CET)
+Received: from ams.mirrors.kernel.org (ams.mirrors.kernel.org [213.196.21.55])
+	by mail.lfdr.de (Postfix) with ESMTPS id 54833C62797
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Nov 2025 07:09:28 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id A27FC4E04F7
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Nov 2025 05:40:43 +0000 (UTC)
+	by ams.mirrors.kernel.org (Postfix) with ESMTPS id F40FA3546F2
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Nov 2025 06:09:27 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5220E30EF92;
-	Mon, 17 Nov 2025 05:40:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 49A1330EF7C;
+	Mon, 17 Nov 2025 06:09:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="oOGjgc8K";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="AJjLPwv1"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="oN1bWq2O"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4FCC26ED4A
-	for <linux-arm-msm@vger.kernel.org>; Mon, 17 Nov 2025 05:40:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1200030DECA;
+	Mon, 17 Nov 2025 06:09:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763358041; cv=none; b=oalKNwPWGhkTethpLb0jbx44edu3hSULjQybKI5OoB0X3zEuHFyZfqYF7pYI94/5QdblzN7b7z3EL8OsDZYwaqBGtCX7MPEddrjgbEmA6VN2s2t2OXxkBgn8RqcLRLS0Tf4paDS37c2NvFmweUANeCk4LZ4Y0wBF6cOJr+iNokI=
+	t=1763359764; cv=none; b=ILMaZPNCd8spjB0/9gHpi14jOn7yxK9kvAB2HMWH438zk6jjeep5Pqj0ayWRZkqsV77BTlnnBjpU9nWTm9YYW+eW4TQfXS6CqvN2OIovHvADA8hP+AxyVvvVDX6UuhrtwrQnkPF6v9SRGY9bZLpVRDM9/BAyhA8tTseOp9NYG3s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763358041; c=relaxed/simple;
-	bh=5CgktAeVU5b5o5Gv7ZUcWMPYpmWApRwqLma2om/YaYw=;
+	s=arc-20240116; t=1763359764; c=relaxed/simple;
+	bh=kbhXEelpn9JtrWYuTVvOlE9CIZBJsIqcbgqurjWTrUU=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=nYOnMtM5am0AEtTbMkGJBG4E/kgYDq9LFPZW2+UL60OAXhY2syErOLIuamuEwSUb5DpoGO8kxEH3wY0g7PCgyrj51gI9bGjkyQYfX+31tKXtu8t/BUwbzVkGx5BqZ5ou07C4rtRwQSLiCR/jURzfkDQs0hHvbsAmlC+rWO9hkbA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=oOGjgc8K; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=AJjLPwv1; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 5AH4oGg92911347
-	for <linux-arm-msm@vger.kernel.org>; Mon, 17 Nov 2025 05:40:39 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	JwGLuFJyAq4A3H7EurGW9xTM5A4YqSMPozkgARyIVrc=; b=oOGjgc8Kq3rXZrJz
-	CHfOvo5ezyaumC6LHqLq6qG53skD305fTxyljllaYLKjd9zUU0mlHDrLI1Jzesmh
-	PTqn7SklfyMxBo0v2NoITpYpS1plQOsFjMBvToMazYei7gn25mT/zXRQX6IQ544x
-	kL01vGc9x+2xLqLrltX078g1TBbZXcDCv5xJPQoPUX+JgfFVKBiiXB4eWQUobhHR
-	IGommN1T4uXSI6JDBBO+O+WjJrW3trd4sdfFyQ3kr+Qj0QlEviHvlnb5EpFmEB6F
-	KcqRmYyNf3FG6G9a4iJT/PNGJV36zbW3zYTzy6hOAhLh7+n/UDEl81qLKjWb94rS
-	a4Yeaw==
-Received: from mail-pj1-f69.google.com (mail-pj1-f69.google.com [209.85.216.69])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4aejgcbf7h-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Mon, 17 Nov 2025 05:40:38 +0000 (GMT)
-Received: by mail-pj1-f69.google.com with SMTP id 98e67ed59e1d1-34377900dbcso6909592a91.2
-        for <linux-arm-msm@vger.kernel.org>; Sun, 16 Nov 2025 21:40:38 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1763358038; x=1763962838; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=JwGLuFJyAq4A3H7EurGW9xTM5A4YqSMPozkgARyIVrc=;
-        b=AJjLPwv1/e9LtTpSlupw7gtmaAEcHGTyRj8A+E1CtmgfXMxOqxLyQDaqs72i8USQ3f
-         dp8PDnUGXq7/7iv+3szCBI4rY+r/WrvINN7+cNWpXlfdNa7rclx5GBegNa3xd8jb6yJA
-         irMqQAQ/T5116rZKZvAJgEhhLkd8oEg4TsBhTlVnOgRcF/HuyW2DG8wcX+R2qblqHAUX
-         r49KlHlWYuGH1rj/e4w4ensodSuBjH0eREH+hTSXoZUJUgEcJ1rR2NB9mPjRTUPGUQPH
-         lcfZCRU0SeDW28QB6yKxu5XtY0qp8Bqz7+rpq5cVhLYZfMQGB85oGDHoqfOocoHhp40F
-         dSnQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1763358038; x=1763962838;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=JwGLuFJyAq4A3H7EurGW9xTM5A4YqSMPozkgARyIVrc=;
-        b=bNtZoE5jsPFq5RjzJdeVSiKAXHwMhJS2si7/nMWa0nCB4MnhyGYI4yFFTrRTqJn2i8
-         JGk1Q9bOGFRCId63tMEWsXANgW/YCkW2+ov10GtCtXE8UvisUkYNWxrpRF8cF6wmjS7i
-         1LeMll/JUz4o38V6/eBoWbE7AbS3/jo053482UYIikWn8EvcmZoNu4J+f9xVh3l/AthX
-         1t//gwt4SfqmrJ606CTXhrd48rmcZy7mARv7C638tIgr1uNVYWMpn+iDIoI0h8+YavSA
-         GwxPgr6y5KqIAbW0EuF3FyLI2lSlhLxd0YlPTDnhNF+k7SbeFp+ePg7Fu7dFAsfvpexJ
-         MrJw==
-X-Forwarded-Encrypted: i=1; AJvYcCXdI41dlOxKaJohHuJc8x3vdFoq1MOLbF11AgTWKsj7kx20L5tJe/2WQFaS8JA0KIDvrxEmGWLMZ53Z6aXb@vger.kernel.org
-X-Gm-Message-State: AOJu0YwyQrLrWj9pnZpJmB6EZihjHykFJCRHws+ZI7+XlShqk7c9nQYs
-	CsOn17U03sGdkzLukTcihYGYmnJky2fWCKZAMi00Lr+NbWWnIBvaWzySh/qfaCjEsjk3yuR96pl
-	wdZyL8ampXh0AZnPRi0m81fEKNPnkCix/psRk2hgYQoiqlQQxFEtot05MU5a7Zq+ka3o7
-X-Gm-Gg: ASbGncsy+0t95Ee5jp3fY31YlDNLW7rSQjoFVsr3iTtKORj6UK8an7p+BDYzhi133Gp
-	JRI4tg2nksA2PtbfZ/cbRYYCMxZm0vULMf96JCqEqOvtcRrvpXufiQAWB+BEFJrbKTIdIkxfrTq
-	47gvsmxpgAwjlf8hd6VbeMwg/oUNdN4PdJUe8dlBTgCmUtjNGZUZVd4v+/iuBdVQXuSJIFhwRYi
-	H/cEAIQ4FoYcX8jP8KvBHVZBf9AEFp9aUW7K0i4qAA9PkbCOKXID0/5K+Bu+theP3Gq3/KANJ0z
-	FjKUfqFaBE+XVqKxBH6+FzQX9bbK+xxNL83I4RSre379OKgcwie+QF/NYs/3liz9beFPhcrupCQ
-	RzGcnJqpbLPmNPXm86z+Jpsd3Mg1I0+Ji
-X-Received: by 2002:a17:902:ebcd:b0:294:f70d:5e33 with SMTP id d9443c01a7336-2986a6ba476mr125253395ad.12.1763358038116;
-        Sun, 16 Nov 2025 21:40:38 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IEmA6o+kbOYh/BaAqHLrJj6Wk8KzmDvDjZ9KxgpwKs+YO/pyMn5IK4SjYWx/utHO71biwVziQ==
-X-Received: by 2002:a17:902:ebcd:b0:294:f70d:5e33 with SMTP id d9443c01a7336-2986a6ba476mr125253145ad.12.1763358037616;
-        Sun, 16 Nov 2025 21:40:37 -0800 (PST)
-Received: from [10.219.57.23] ([202.46.23.19])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2985c245f8asm125541655ad.37.2025.11.16.21.40.34
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 16 Nov 2025 21:40:37 -0800 (PST)
-Message-ID: <17217b83-12ba-e3f2-da78-f423275da4ad@oss.qualcomm.com>
-Date: Mon, 17 Nov 2025 11:10:33 +0530
+	 In-Reply-To:Content-Type; b=Gbm598MPgmhMhofsNtI7BmDBob+4KGqxhiE23UEQnh/nnrEXkw+otQ3j//gkuhXJEfSdn06jXgMajO13BOzP+1w2fI3T4hItZnfpMPgmlKZIfV7OLOkSn7ZG0ZM4lXENM6Khouh3KFivX9GzaRd7QmcJ5vNxnxkAHP0OQnECZVM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=oN1bWq2O; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74EA2C19424;
+	Mon, 17 Nov 2025 06:09:20 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1763359763;
+	bh=kbhXEelpn9JtrWYuTVvOlE9CIZBJsIqcbgqurjWTrUU=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=oN1bWq2OLP2VFRwMO/IOJnMutlVU7uZMzL7qvJGbr5W14bAbLP2fSu6rD4fjfrFKE
+	 VmbqiZzfyulrp/LAO8Ong1r0n0GTGkZzjQd8MH/UTBiIV7fIWqaD4Eu46pxIRO/PPR
+	 yRcU30wN6l9Wqj0WHkkkpwu6Mey0T0AejKP9p5iijdt4q9gZ6Q0iHV08kSW+r6LuBh
+	 6oxkShxEyt0WEfIcmO2s5GKHgwXwXgrg55v9z1Us2FqfB8I4drBt9KnQ1BOmLxlyvL
+	 UqxwD8AIvB8rPMUdEpmKg4rAbpU/Yl5Y2ibutZNKFFlapi4s8nCA9hw6gUCbUwJNhn
+	 l/zS4EZUg4/3w==
+Message-ID: <7fcf5917-6f22-4d2b-b846-6dbb3ee017c5@kernel.org>
+Date: Mon, 17 Nov 2025 07:09:18 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.5.1
-Subject: Re: [PATCH 1/2] Documentation: ABI: Add
- sysfs-class-reboot-mode-reboot_modes
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v1 1/2] dt-bindings: pinctrl:
+ qcom,sa8775p-lpass-lpi-pinctrl: Add SA8775P LPASS pinctrl
+To: Mohammad Rafi Shaik <mohammad.rafi.shaik@oss.qualcomm.com>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Linus Walleij <linus.walleij@linaro.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>,
+ Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
+Cc: linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+ kernel@oss.qualcomm.com, ajay.nandam@oss.qualcomm.com,
+ ravi.hothi@oss.qualcomm.com
+References: <20251116171656.3105461-1-mohammad.rafi.shaik@oss.qualcomm.com>
+ <20251116171656.3105461-2-mohammad.rafi.shaik@oss.qualcomm.com>
+ <5e48ad7f-6de3-438f-8623-8f8a9c8dedbc@kernel.org>
+ <ab5cec4e-a990-460e-a4cf-605028f9ea77@oss.qualcomm.com>
+From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
-To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Cc: Sebastian Reichel <sre@kernel.org>,
-        Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
-        Bjorn Andersson <andersson@kernel.org>, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
-        Sebastian Reichel <sebastian.reichel@collabora.com>
-References: <20251116-next-15nov_expose_sysfs-v1-0-3b7880e5b40e@oss.qualcomm.com>
- <20251116-next-15nov_expose_sysfs-v1-1-3b7880e5b40e@oss.qualcomm.com>
- <t3hfhlp27numfxurtmtcwrovvlgwdvnujain46kwmi37zehdak@xt3vngtkxpsm>
-From: Shivendra Pratap <shivendra.pratap@oss.qualcomm.com>
-In-Reply-To: <t3hfhlp27numfxurtmtcwrovvlgwdvnujain46kwmi37zehdak@xt3vngtkxpsm>
+Autocrypt: addr=krzk@kernel.org; keydata=
+ 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 a/A=
+In-Reply-To: <ab5cec4e-a990-460e-a4cf-605028f9ea77@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-ORIG-GUID: rsKihnItDxuT3mvyBXlg_bnbyVbB22ft
-X-Proofpoint-GUID: rsKihnItDxuT3mvyBXlg_bnbyVbB22ft
-X-Authority-Analysis: v=2.4 cv=PJECOPqC c=1 sm=1 tr=0 ts=691ab556 cx=c_pps
- a=vVfyC5vLCtgYJKYeQD43oA==:117 a=j4ogTh8yFefVWWEFDRgCtg==:17
- a=IkcTkHD0fZMA:10 a=6UeiqGixMTsA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=QX4gbG5DAAAA:8 a=EUspDBNiAAAA:8 a=VwQbUJbxAAAA:8
- a=NpYxkmfexd4ejymn4sUA:9 a=QEXdDO2ut3YA:10 a=rl5im9kqc5Lf4LNbBjHf:22
- a=AbAUZ8qAyYyZVLSsDulk:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMTE3MDA0NiBTYWx0ZWRfX78a1xk4XEqAC
- FGPzKGZNpXT+o/zehtTmko0cmmy5sAfPkQwpzOW6A0oFbsSMhfFj886zUsRSjJGETLM4pFHCVSn
- wLVk/8TsPYT93rHCQcWBtaYmptkX1f3EAnW4Tgx+cIrytbDEsIVHQku4fgcNZ4iryP27efMdxKc
- rZ63vp2qkeg2PRDauDEUd2fWqsyaZANn9ZoF7XmrBZ1uFkAIvQRgABqIob2qPFQICT83vwPjnJ4
- WF+RPZOnjJkDQO1pSi11wFrzBgiXhlL1iXN1pzX34zuQNAvN8AobSsrKeRt4ufB01VIj4+PU0gF
- jDyzAjy+lZOkg4fIycGDDNM4iMwH3oJqaYcdIGF0vlXWsRCT/ZjN1pL8n2tRjRxEuYTJm1GLnxR
- t+dRUHEI572JQPj8vkCFnQNY39Bahg==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
- definitions=2025-11-17_02,2025-11-13_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 lowpriorityscore=0 clxscore=1015 spamscore=0 phishscore=0
- bulkscore=0 impostorscore=0 suspectscore=0 priorityscore=1501 adultscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2510240001 definitions=main-2511170046
+Content-Transfer-Encoding: 8bit
 
-
-
-On 11/16/2025 11:14 PM, Dmitry Baryshkov wrote:
-> On Sun, Nov 16, 2025 at 08:49:47PM +0530, Shivendra Pratap wrote:
->> Add ABI documentation for /sys/class/reboot-mode/*/reboot_modes, a
->> read-only sysfs attribute exposing the list of supported reboot-mode
->> arguments. This file is created by reboot-mode framework and provides a
->> user-readable interface to query available reboot-mode arguments.
+On 16/11/2025 19:09, Mohammad Rafi Shaik wrote:
+> 
+> 
+> On 11/16/2025 10:59 PM, Krzysztof Kozlowski wrote:
+>> On 16/11/2025 18:16, Mohammad Rafi Shaik wrote:
+>>> Add bindings for the pin controller in Low Power Audio SubSystem (LPASS)
+>>> of Qualcomm SA8775P SoC.
 >>
->> Reviewed-by: Sebastian Reichel <sebastian.reichel@collabora.com>
->> Signed-off-by: Shivendra Pratap <shivendra.pratap@oss.qualcomm.com>
->> ---
->>  .../testing/sysfs-class-reboot-mode-reboot_modes   | 39 ++++++++++++++++++++++
->>  1 file changed, 39 insertions(+)
 >>
->> diff --git a/Documentation/ABI/testing/sysfs-class-reboot-mode-reboot_modes b/Documentation/ABI/testing/sysfs-class-reboot-mode-reboot_modes
->> new file mode 100644
->> index 0000000000000000000000000000000000000000..28280ffe9bf962ef9d2136ea5d7c6aef77c4bd34
->> --- /dev/null
->> +++ b/Documentation/ABI/testing/sysfs-class-reboot-mode-reboot_modes
->> @@ -0,0 +1,39 @@
->> +What:		/sys/class/reboot-mode/<driver>/reboot_modes
->> +Date:		November 2025
->> +KernelVersion:	6.18.0-rc5
->> +Contact:	linux-pm@vger.kernel.org
->> +		Description:
->> +		This interface exposes the reboot-mode arguments
->> +		registered with the reboot-mode framework. It is
->> +		a read-only interface and provides a space
->> +		separated list of reboot-mode arguments supported
->> +		on the current platform.
->> +		Example:
->> +		 recovery fastboot bootloader
->> +
->> +		The exact sysfs path may vary depending on the
->> +		name of the driver that registers the arguments.
->> +		Example:
->> +		 /sys/class/reboot-mode/nvmem-reboot-mode/reboot_modes
->> +		 /sys/class/reboot-mode/syscon-reboot-mode/reboot_modes
->> +		 /sys/class/reboot-mode/qcom-pon/reboot_modes
+>> ...
+>>
+>>> +
+>>> +unevaluatedProperties: false
+>>> +
+>>> +examples:
+>>> +  - |
+>>> +    #include <dt-bindings/sound/qcom,q6dsp-lpass-ports.h>
+>>> +
+>>> +    lpass_tlmm: pinctrl@3440000 {
+>>> +        compatible = "qcom,sa8775p-lpass-lpi-pinctrl";
+>>> +        reg = <0x0 0x03440000 0x0 0x20000>;
+>>
+>>
+>> Are you sure you tested this file? I think this should nicely fail.
+>>
 > 
-> This part is obvious, isn't it?
-
-yes thats correct. Its just added for completeness of the documentation.
-
+> ACK,
 > 
->> +
->> +		The supported arguments can be used by userspace
->> +		to invoke device reset using the reboot() system
->> +		call, with the "argument" as string to "*arg"
->> +		parameter along with LINUX_REBOOT_CMD_RESTART2.
->> +		Example:
->> +		 reboot(LINUX_REBOOT_MAGIC1, LINUX_REBOOT_MAGIC2,
->> +		        LINUX_REBOOT_CMD_RESTART2, "bootloader");
+> You’re right — DT binding check is failing.
 > 
-> So, does one need to write a tool for invoking reboot with the corerct
-> set of args? If we are adding a sysfs interface, wouldn't it be logical
-> to also add another sysfs file, setting the argument?
+> My DT binding check didn’t catch it because the schema wasn’t updated.
 
-Some of such utilities are already in use and they pass command as an "*arg"
-to the reboot SYSCALL.
+It will fail on every DT schema. Old as well, so nothing to do with
+updating it.
 
-reboot-mode is currently tied to the reboot SYSCALL - "*arg" being processed as
-command. We can open a sysfs for setting the argument - That will be a design
-change for reboot-mode and then we need to also decide that if the command
-being passes will override the sysfs?
 
-thanks,
-Shivendra
+Best regards,
+Krzysztof
 
