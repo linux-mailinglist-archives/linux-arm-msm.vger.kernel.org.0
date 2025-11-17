@@ -1,57 +1,56 @@
-Return-Path: <linux-arm-msm+bounces-82168-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-82170-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ams.mirrors.kernel.org (ams.mirrors.kernel.org [IPv6:2a01:60a::1994:3:14])
-	by mail.lfdr.de (Postfix) with ESMTPS id DC57AC66760
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Nov 2025 23:47:00 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id AD7ADC66819
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Nov 2025 00:00:39 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ams.mirrors.kernel.org (Postfix) with ESMTPS id 64BD035B022
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Nov 2025 22:46:58 +0000 (UTC)
+	by ams.mirrors.kernel.org (Postfix) with ESMTPS id 311EA34ACDC
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Nov 2025 23:00:39 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 208B833CEB6;
-	Mon, 17 Nov 2025 22:46:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9FB1723BF9F;
+	Mon, 17 Nov 2025 23:00:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="gpctVhUG"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="CUYJWMN/"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4503331A69;
-	Mon, 17 Nov 2025 22:46:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73797202F7E;
+	Mon, 17 Nov 2025 23:00:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763419599; cv=none; b=GHYNmn29LEhPf8RNISETQJrzUNtMZCcnenQQHl8nWgiG1NPF+xpug+XB9QBM8WaFL7umz2D0bcCTHyl4Cw26BJw0Vwy0CNSWNzBR3OndSEzpMvruEkgUF/uUEZQYhYG46SKzpBUWbB2Cn762V68uFt7/3HvyXIws8UsnQbsjgF8=
+	t=1763420434; cv=none; b=k61jMCtjo8pQA5megvSeWa0446sdDVjyNYzJbIZYIw3EQ+xOGRImCMvUocBvKVhHyD0ny6kLMSYO7ZNZBgj0ybOkb2aoHJVenAVsXxGkAfY0kmorxrDQBOJTq5T0EPit+GGyGzIOc7PKb3+Zho/jM3jCb0yzGJ2b4j7/K2vFQGE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763419599; c=relaxed/simple;
-	bh=Pz7+bgC77TUl0nBd3OUQpsrR8yovxoAiSUIj+X+Srj8=;
+	s=arc-20240116; t=1763420434; c=relaxed/simple;
+	bh=Wzt0LlTwI3f+J1SRPFBter72TOpmalqky+KIXLvk7DE=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=TK745lWsfNuFneoV2/5r7AgsrR41Id49no6/dvLnO904ldfv+XibEcHrul/8Ae4WovYm1t5E6K46Zum18VhrN0KO4qf1kLcdoBxdZHYRB6iLtIXBZCUtxUD0goapJmSwErOiU8pHnPous11imx8jmZk3hCrOGADmmDcmr9GyEWU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=gpctVhUG; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9EAD4C2BC86;
-	Mon, 17 Nov 2025 22:46:37 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=vEPO16OvEMZthGIFqllxzF3UcoqYPRmK5s3FNbMq5MXhKHDN9GhBP0ngwTEJk2hkAQT6uAmVJzhjqKpYmPYqunXE3h1cSYPOiXqDwu810zw3l94+aR7FsXlFxII0PDwEMzQIzDfPoInsz7vTW4yFkHPdxgJlbz5e9nryE78ZNJA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=CUYJWMN/; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC60DC19423;
+	Mon, 17 Nov 2025 23:00:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1763419598;
-	bh=Pz7+bgC77TUl0nBd3OUQpsrR8yovxoAiSUIj+X+Srj8=;
+	s=k20201202; t=1763420433;
+	bh=Wzt0LlTwI3f+J1SRPFBter72TOpmalqky+KIXLvk7DE=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=gpctVhUG9tpH9MTJ+rfbPdCqUvn7CvKPhPB+z/RswWJ3ZB9zAxIdjUiIlME2KdHR0
-	 kDnpwIayjdQ9ZFoDqUwaq0jyedaYySlyvjnzo8qSA0u6S3uZj52lDPFzUX47+zRtVL
-	 KKvXLtY1KnpuIuzfRsdEzaNgBrfFhgTcE1MgLvpMlY3E01daWmsv5+5Vt5WUgfTnYx
-	 e/IoHCqp56EXSvqlSa7cQ2jAiQpbTOkYduVn8MsJAbqquoJn5PpBo8WnJDg4goFRDz
-	 BQEUFVYh/5M+c0KVxYHyAIZLyht8AXp5HJQZOyfjKYxM2WgBOjH3aGvYsZ8i6A0u6c
-	 ERH2mDlpAVXrA==
-Date: Mon, 17 Nov 2025 16:51:22 -0600
+	b=CUYJWMN/ogkfT5Np8FQK2IE3Ni852XAtUSzAankbX1CgvnwayzW3OqJ0rxlK1bYxb
+	 c5iEUd15hYahnqyG6l5iS22mu+MBe4CLZcvONVYIuFzkHtIu5wYzzuCEK7/s72Pz5i
+	 XPzhnG0lYhnR4LLu0ycwOZa+zD1eRmI5cZ4R95yXfeQ5ZcjURXO3dDfoaluyHI2UE4
+	 Ud6Fl9nisi+BgV2efbvcgn2FH0ekciYaNI00fSmfVZbfKAPZ0b1ajwU5FOlS/XjE/z
+	 fS2oBbbyaKNPmSXdZKR9mRUBTUGfMrXI/mCOCGl6CLw2mIpuYmBB2cOBQTXVhU7SJD
+	 luECqLO7327ng==
+Date: Mon, 17 Nov 2025 17:05:17 -0600
 From: Bjorn Andersson <andersson@kernel.org>
 To: Sudarshan Shetty <tessolveupstream@gmail.com>
 Cc: konradybcio@kernel.org, robh@kernel.org, krzk+dt@kernel.org, 
 	conor+dt@kernel.org, linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
 	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v1 2/2] arm64: dts: qcom: Add support to validate direct
- DSI
-Message-ID: <2cgc7ghpc5z6cf2j5ikplu7ufcac6hk3nraps5ai2senrl7qsh@hbjcomvspn5b>
+Subject: Re: [PATCH v1 1/2] dt-bindings: arm: qcom: Add waveshare MIPI-DSI
+ panels support
+Message-ID: <hodshirikj4ohp62rlq5jaujqvxrlgnzd7jpcbt42taj6jgkq5@glybzef6jnjx>
 References: <20251111104245.3420041-1-tessolveupstream@gmail.com>
- <20251111104245.3420041-2-tessolveupstream@gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -60,111 +59,225 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20251111104245.3420041-2-tessolveupstream@gmail.com>
+In-Reply-To: <20251111104245.3420041-1-tessolveupstream@gmail.com>
 
-On Tue, Nov 11, 2025 at 04:12:45PM +0530, Sudarshan Shetty wrote:
-
-The subject indicates that you're adding support for validating DSI to
-all Qualcomm boards. Rewrite this to be more specific.
-
-> Adds device tree support for the Waveshare 10.1-inch
-> MIPI-DSI panel on the QCS615 talos evk platform.
+On Tue, Nov 11, 2025 at 04:12:44PM +0530, Sudarshan Shetty wrote:
+> Device tree bindings for Waveshare MIPI-DSI panels
+> of various sizes (5.0, 5.5, 7.0, 8.0, and 10.1).
+> These panels require proper power sequencing via an external
+> regulator and a backlight node for brightness control.
 > 
 > Signed-off-by: Sudarshan Shetty <tessolveupstream@gmail.com>
 > ---
->  arch/arm64/boot/dts/qcom/Makefile          |  1 +
->  arch/arm64/boot/dts/qcom/talos-evk-dsi.dts | 43 ++++++++++++++++++++++
->  2 files changed, 44 insertions(+)
->  create mode 100644 arch/arm64/boot/dts/qcom/talos-evk-dsi.dts
+>  .../display/panel/waveshare,dsi-panel.yaml    | 84 +++++++++++++++++++
+>  ...waveshare,touchscreen-panel-regulator.yaml | 72 ++++++++++++++++
+>  2 files changed, 156 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/display/panel/waveshare,dsi-panel.yaml
+>  create mode 100644 Documentation/devicetree/bindings/regulator/waveshare,touchscreen-panel-regulator.yaml
 > 
-> diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
-> index 282d744acd73..d5a3dd98137d 100644
-> --- a/arch/arm64/boot/dts/qcom/Makefile
-> +++ b/arch/arm64/boot/dts/qcom/Makefile
-> @@ -306,6 +306,7 @@ dtb-$(CONFIG_ARCH_QCOM)	+= sm8650-qrd.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= sm8750-mtp.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= sm8750-qrd.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= talos-evk.dtb
-> +dtb-$(CONFIG_ARCH_QCOM)	+= talos-evk-dsi.dtb
->  x1e001de-devkit-el2-dtbs	:= x1e001de-devkit.dtb x1-el2.dtbo
->  dtb-$(CONFIG_ARCH_QCOM)	+= x1e001de-devkit.dtb x1e001de-devkit-el2.dtb
->  x1e78100-lenovo-thinkpad-t14s-el2-dtbs	:= x1e78100-lenovo-thinkpad-t14s.dtb x1-el2.dtbo
-> diff --git a/arch/arm64/boot/dts/qcom/talos-evk-dsi.dts b/arch/arm64/boot/dts/qcom/talos-evk-dsi.dts
+> diff --git a/Documentation/devicetree/bindings/display/panel/waveshare,dsi-panel.yaml b/Documentation/devicetree/bindings/display/panel/waveshare,dsi-panel.yaml
 > new file mode 100644
-> index 000000000000..8a6dc8b6bf8f
+> index 000000000000..a42ce065124f
 > --- /dev/null
-> +++ b/arch/arm64/boot/dts/qcom/talos-evk-dsi.dts
-
-This isn't the one and only "EVK with DSI support" board. Please follow
-other examples and describe the connected panel as a overlay - and be
-specific.
-
-This should likely be talos-evk-waveshare-10.3.dtso - so that one can
-support other DSI panels...
-
-> @@ -0,0 +1,43 @@
-> +// SPDX-License-Identifier: BSD-3-Clause
-> +/*
-> + * Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
-> + */
-> +/dts-v1/;
+> +++ b/Documentation/devicetree/bindings/display/panel/waveshare,dsi-panel.yaml
+> @@ -0,0 +1,84 @@
+> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+> +%YAML 1.2
+> +---
+> +$id: http://devicetree.org/schemas/display/panel/waveshare,dsi-panel.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
 > +
-> +#include "talos-evk-cb.dtsi"
+> +title: Waveshare 10.1" DSI Touch Display Panel
+> +
+> +maintainers:
+> +  - Sudarshan Shetty <tessolveupstream@gmail.com>
+> +
+> +allOf:
+> +  - $ref: panel-common.yaml#
+> +
+> +properties:
+> +  compatible:
+> +    enum:
+> +      - waveshare,12.3-dsi-touch-a,4lane
+> +      - waveshare,10.1-dsi-touch-a
+> +      - waveshare,10.1-dsi-touch-a-4lane
+> +      - waveshare,10.1-dsi-touch-b
+> +      - waveshare,10.1-dsi-touch-b,4lane
+> +      - waveshare,9.0-dsi-touch-b
+> +      - waveshare,9.0-dsi-touch-b,4lane
+> +      - waveshare,8.8-dsi-touch-a
+> +      - waveshare,8.0-dsi-touch-a
+> +      - waveshare,8.0-dsi-touch-a-4lane
+> +      - waveshare,7.0-dsi-touch-a
+> +      - waveshare,7.0-dsi-touch-b
+> +      - waveshare,5.5-dsi-touch-a
+> +      - waveshare,5.0-dsi-touch-a
+> +      - waveshare,4.0-dsi-touch-c
+> +      - waveshare,3.4-dsi-touch-c
+> +
+> +  reg:
+> +    description: DSI virtual channel
+> +    maxItems: 1
+> +
+> +  vdd-supply:
+> +    description: Power supply regulator for the panel
+> +
+> +  reset-gpios:
+> +    maxItems: 1
+> +    description: GPIO to control panel reset
+> +
+> +  enable-gpios:
+> +    maxItems: 1
+> +    description: GPIO to control panel power enable
 
-This file doesn't exist, please make sure you structure your patches
-such that we don't have multiple discussions about the same topic in
-parallel.
+If this is the correct description of this pin, then this should be a
+regulator provided by the regulator node and it should likely have the
+3.3V (and 5V?) listed as -supply.
 
 > +
-> +&i2c1 {
-> +	clock-frequency = <400000>;
+> +required:
+> +  - compatible
+> +  - reg
+> +  - vdd-supply
+> +  - reset-gpios
+> +  - enable-gpios
 > +
-> +	status = "okay";
+> +unevaluatedProperties: false
 > +
-> +	display_mcu: display-mcu@45 {
-> +		compatible = "waveshare,touchscreen-panel-regulator";
-> +		reg = <0x45>;
-> +		gpio-controller;
-> +		#gpio-cells = <2>;
-> +		enable-gpio = <&display_mcu 2 GPIO_ACTIVE_HIGH>;
-> +	};
-> +};
+> +examples:
+> +  - |
+> +    #include <dt-bindings/gpio/gpio.h>
 > +
-> +&mdss_dsi0 {
-> +	vdda-supply = <&vreg_l11a>;
-> +	status = "okay";
+> +    dsi@ae94000 {
+> +        #address-cells = <1>;
+> +        #size-cells = <0>;
 > +
-> +	dsi_panel: dsi-panel@1 {
-> +		reg = <1>;
-> +		compatible = "waveshare,10.1-dsi-touch-a";
-> +		reset-gpio = <&display_mcu 1 GPIO_ACTIVE_HIGH>;
+> +        panel@1 {
+> +            compatible = "waveshare,10.1-dsi-touch-a";
+> +            reg = <1>;
+> +            vdd-supply = <&vreg_l11a>;
+> +            reset-gpios = <&display_mcu 1 GPIO_ACTIVE_HIGH>;
+> +            enable-gpios = <&display_mcu 2 GPIO_ACTIVE_HIGH>;
+> +
+> +            port {
+> +                panel_in: endpoint {
+> +                    remote-endpoint = <&mdss_dsi0_out>;
+> +                };
+> +            };
+> +        };
+> +    };
+> +
+> +    mdss_dsi0_out: endpoint {
+> +        remote-endpoint = <&panel_in>;
+> +    };
+> diff --git a/Documentation/devicetree/bindings/regulator/waveshare,touchscreen-panel-regulator.yaml b/Documentation/devicetree/bindings/regulator/waveshare,touchscreen-panel-regulator.yaml
+> new file mode 100644
+> index 000000000000..be81be5d2d74
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/regulator/waveshare,touchscreen-panel-regulator.yaml
+> @@ -0,0 +1,72 @@
+> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+> +%YAML 1.2
+> +---
+> +$id: http://devicetree.org/schemas/regulator/waveshare,touchscreen-panel-regulator.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> +
+> +title: Waveshare Touchscreen Panel Regulator
+> +
+> +maintainers:
+> +  - Sudarshan Shetty <tessolveupstream@gmail.com>
+> +
+> +description: |
+> +  Regulator driver for Waveshare touchscreen display units.
+> +  This regulator enables and disables panel power and provides
+> +  backlight control over I2C.
+> +
+> +properties:
+> +  compatible:
+> +    const: waveshare,touchscreen-panel-regulator
+> +
+> +  reg:
+> +    maxItems: 1
+> +    description: I2C address of the regulator device
+> +
+> +  vin-supply:
+> +    description: Input supply regulator for the panel
 
-Can you confirm that this actually works?
+The Waveshare takes 3.3V and 5V inputs, which then is distributed to the
+panel and the touch through some regulators controlled by the MCU that
+this binding represents.
 
-Based on the Waveshare "example" driver I had to enable pins 0, 1, and 4
-to make my 12.3 DSI panel to work on my board, and then pin 9 to make
-the Goodix touchpad work.
+So I'm pretty sure we need one more supply, and we need better
+descriptions of what they are.
 
+> +
+> +  enable-gpios:
+> +    maxItems: 1
+> +    description: GPIO to enable/disable regulator
 
-Speaking of which, I want the touchscreen support added in the same
-patch.
+This too is a pin controlled by the MCU, i.e. provided by the entity you
+describe by this node.
+
+> +
+
+The driver that you also posted, which should have been sent together
+with the binding, registers a GPIO controller, so you need
+"gpio-controller" and "#gpio-cells" here as well.
+
+> +required:
+> +  - compatible
+> +  - reg
+> +  - vin-supply
+> +
+> +additionalProperties: false
+> +
+> +examples:
+> +  - |
+> +    /dts-v1/;
+> +    /plugin/;
+> +
+> +    / {
+> +        #address-cells = <1>;
+> +        #size-cells = <1>;
+> +
+> +        gpio: gpio-controller {
+> +            compatible = "test,gpio";
+> +            #gpio-cells = <2>;
+> +        };
+> +
+> +        vdd_3v3: regulator {
+> +            compatible = "regulator-fixed";
+> +            regulator-name = "vdd_3v3";
+> +            regulator-min-microvolt = <3300000>;
+> +            regulator-max-microvolt = <3300000>;
+> +        };
+> +
+> +        i2c@980000 {
+> +            #address-cells = <1>;
+> +            #size-cells = <0>;
+> +            compatible = "test,i2c";
+> +
+> +            panel-regulator@3c {
+> +                compatible = "waveshare,touchscreen-panel-regulator";
+> +                reg = <0x3c>;
+
+Are you sure/ All the material I've found says it's 0x45
+
+> +                vin-supply = <&vdd_3v3>;
+> +                enable-gpios = <&gpio 2 0>; /* active high */
+> +            };
+> +        };
+
+This example does not show how the waveshare,touchscreen-panel-regulator
+should be added to a DeviceTree!
+
+Based on how you wrote the driver, enable-gpios should point back into
+panel-regulator itself. vin-supply 
 
 Regards,
 Bjorn
 
-> +		backlight = <&display_mcu>;
-> +
-> +		port {
-> +			panel_in: endpoint {
-> +				remote-endpoint = <&mdss_dsi0_out>;
-> +			};
-> +		};
-> +	};
-> +};
-> +
-> +&mdss_dsi0_out {
-> +	remote-endpoint = <&panel_in>;
-> +};
+> +    };
 > -- 
 > 2.34.1
 > 
