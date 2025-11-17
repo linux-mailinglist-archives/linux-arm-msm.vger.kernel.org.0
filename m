@@ -1,189 +1,127 @@
-Return-Path: <linux-arm-msm+bounces-82128-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-82129-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sin.lore.kernel.org (sin.lore.kernel.org [IPv6:2600:3c15:e001:75::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id E51DEC64B6E
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Nov 2025 15:51:49 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id E8534C64B9E
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Nov 2025 15:55:07 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sin.lore.kernel.org (Postfix) with ESMTPS id ED8A128E7B
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Nov 2025 14:51:46 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTPS id 9BD4828AD1
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Nov 2025 14:55:06 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 02FD7309DDC;
-	Mon, 17 Nov 2025 14:51:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0720F314D38;
+	Mon, 17 Nov 2025 14:55:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="YLuLI4Rx"
+	dkim=pass (1024-bit key) header.d=ixit.cz header.i=@ixit.cz header.b="IumFupgU"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f43.google.com (mail-wm1-f43.google.com [209.85.128.43])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from ixit.cz (ip-94-112-25-9.bb.vodafone.cz [94.112.25.9])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6C01335BC5
-	for <linux-arm-msm@vger.kernel.org>; Mon, 17 Nov 2025 14:51:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12868221FDA;
+	Mon, 17 Nov 2025 14:54:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=94.112.25.9
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763391102; cv=none; b=uCoq7aXfMHuSX8SEeuLPqEXFMn6FiM2/Uoxu70RwVliB924t+ycaJdKJ2AAbpsbIs8Lpxj9A6X/4brqP9exC16CW+gePxWYxyprISSkHbLpALDoP49WW3alSXjIIwor7Im004EmVxTPurGKEt0kqmSkI/dOXEat2rkQUxTSKSuQ=
+	t=1763391301; cv=none; b=uufDCnuX07G4h0qxTBjfHlEmjk89nvHFnj5p+vYjmoFN22aWBSJpBu5z9P4qu1j61YINQDmlfcMPCgi822D6DmKVfQY3P3vAd8091avgmLOUA38GDFiZg83MsMAGdovtk5JgnUYZzYDXNJ2nI3t4rXm9zFCEF0BsquFkYqz/0FY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763391102; c=relaxed/simple;
-	bh=qnOrNESQ4kON/eGGcc8Sg52LyYkaBgKNyQ10apooHYk=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=ueOHPTejsHQYYggie1RyQx3Mx5XPmt0yVkTnJD1utZtQ+cnFbYm4+lKusL/Z1vPPxjGSgE4xnXFzQzYOMJzo0Oq1YA9yv/I2dccAyCQQBvTUCJ1An01wGtG+mYFzYAr3Xq/fgDFgE2ICvCp8Xrfvoal/ycNDujU6xpXeyYA2YNY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=YLuLI4Rx; arc=none smtp.client-ip=209.85.128.43
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f43.google.com with SMTP id 5b1f17b1804b1-47790b080e4so15729955e9.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 17 Nov 2025 06:51:40 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1763391099; x=1763995899; darn=vger.kernel.org;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=lMR46b4uQ8zvIZ4z4OEE92HyB4AJdF7hHAkE7g8Mulw=;
-        b=YLuLI4Rx0gD+V7LGpoPqoIF88Swu/FuycyWLlLNBuOdOgDzyiyL5toicXFXfDrlrf3
-         zMMdF8PODi8f5XyO7jGBjXRlWwfD6EhDmUKcsxZjideChFhcrQ7CraAEHJLvcWBY0yLU
-         RuFeuuO7L8RTkfAtoZOx3DpvYI0W1Ej3NKlxcr809uALct2rJgH45Y+YRHCAG/LJyPzh
-         ouQDw5eCp3huiyYPHtSDHHWOPVkPTf2+7r7QC8bC+VsTdgR9JFXzJ9z6YBzUBmFrSnN6
-         SnizowhBmArmANtKQJy5jPuPnjUrUvIDVs1U/kW7J5hnD4jvduZmOHipHb/OmzUheybi
-         VMuQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1763391099; x=1763995899;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=lMR46b4uQ8zvIZ4z4OEE92HyB4AJdF7hHAkE7g8Mulw=;
-        b=cQ9Lxo4rruXupMF1aGpMygJqTtlB86VA4t1xpdVyRZIzVjk6EGkFZSAssvbLu5JAKO
-         Vsx4JAqq3Nhig1ls2WvpzvAxE2xNT4lCmy0QgQ1obZLOfDTv5B6ouBMh+oDAZDfy1dZ0
-         exdipsQ8HdiQaNZE4jUokh92KaKDektZbsQQAg/dSxnHgpRHZl7HhunERZ9HEUHAlkWI
-         iBZHng/6JwYvH27nEyTGm5C+526pGjVHoa+WxJMRnv3YDcx/8T4mU5AzrdnCLLlMSs6b
-         veJcL2NPSiHbLHAHnalfZeGEdn4gkexCyED/hf59MlM+PYE+d2U/yerbCWwP4om7mZ6K
-         oXsA==
-X-Gm-Message-State: AOJu0YxfWbyT5pKTxigpj7Ov9eb+2YwwJ6Bp5GfxX6V7dRFoSY0z2CDW
-	9Ach3L6GG4SHQ8MaFUboL4nyvYw83luDfXZROCsNbALnmAuO4+VXY45bB8+J2V+UwnY=
-X-Gm-Gg: ASbGncs3JiOUFNR5GQR5Bkx6bp/xnfTNTDmI9Jj1XSSk+IWUmCVoxwioU+4I5UgRyrb
-	iFSielq4qQI1gzJXNZlDk3abJy3vg5JXG+ml9mqD5tai5Jrw8kvrefb2tNhbfERbBVcX75KI5gX
-	VyrRLGCHl3SQ7vd1VDI1Nc1SSZE85EwdGhcjCdPiQ4Ukwzve/OvxXQSU6PiuE9cu1Njc4sNvi1C
-	7Q153MnoABfT6YUe2lGul44bqod8yQ0g2/KceDE9JN62+GsE+tgCuw8C60mPqfOmANjrNWEFhrB
-	f7XGNP14Fpy5ZU90gIUa1yNiUS3EcJCyV9HqkAstVDo07bl9z6HJGMYjKz5EQmbSvFvBUj52/3R
-	zUnYlRmxFvitNZrBPwUZVLOWjj5oBBXmsP/g0zrsV/YMXqWSEqj7x3R61DQV412JSMQsUmEG31u
-	HxWyaaUryxSlWyVrHyBeYp
-X-Google-Smtp-Source: AGHT+IFuPywPKGEGfDcG3XySaSMUDElkhMg930wM60SJMl2cvSXCEeRs1HGQ0d5+jXggJVKqlRTvXg==
-X-Received: by 2002:a05:600c:3b25:b0:477:7925:f7f3 with SMTP id 5b1f17b1804b1-4778fe62d4emr106393025e9.14.1763391098818;
-        Mon, 17 Nov 2025 06:51:38 -0800 (PST)
-Received: from arrakeen.starnux.net ([2a01:e0a:3d9:2080:52eb:f6ff:feb3:451a])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4779920f2cdsm154545895e9.10.2025.11.17.06.51.38
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 17 Nov 2025 06:51:38 -0800 (PST)
-From: Neil Armstrong <neil.armstrong@linaro.org>
-Date: Mon, 17 Nov 2025 15:51:35 +0100
-Subject: [PATCH] drm/msm: adreno: fix deferencing ifpc_reglist when not
- declared
+	s=arc-20240116; t=1763391301; c=relaxed/simple;
+	bh=NEGn2cCMsfNELI3j8bWTIJ5JhIMQrDcHn+TAZjgIlKs=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=fV722bGPaMJIGWBTKHAwKpgX5ya8fsQ4FW893527Fhtjwmw7/b7nIhfxc7xoarBgEjXQh6djMa3/BlqZJ2LiZyb36mVQXmeg0HiyH04keC0ZurAZSllagKZ9hwBLbYaUiCKMeFlzhdQmTFqXZgmDYDc65CQ2/v/04oqgFrGJQ3o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ixit.cz; spf=pass smtp.mailfrom=ixit.cz; dkim=pass (1024-bit key) header.d=ixit.cz header.i=@ixit.cz header.b=IumFupgU; arc=none smtp.client-ip=94.112.25.9
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ixit.cz
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ixit.cz
+Received: from [10.0.0.200] (unknown [10.0.0.1])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange x25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	(No client certificate requested)
+	by ixit.cz (Postfix) with ESMTPSA id 54DAB5340D1C;
+	Mon, 17 Nov 2025 15:54:49 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ixit.cz; s=dkim;
+	t=1763391289;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+	bh=Hfe+Ejreq4bFGmnuSP6bBOtxeHacLQPvnHhwhCTsGDY=;
+	b=IumFupgUhXQ14GN5BUgxfb1t4qy/2CHOSFAMSZgrZxgSz6e9f8Fz2IcO+1zu0qF7bSTq2D
+	m0ozt+l4rRYQuKBlCpXuP35sCXwWvnblcptgtNe3JDm38iuJzf2sB31cZIik+DnChHayKc
+	WkDhvaXB2vfowaIu7t+xkPaU2XY3/y8=
+Message-ID: <89b472cb-796d-43ca-812f-9f9b7208dd88@ixit.cz>
+Date: Mon, 17 Nov 2025 15:54:49 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] leds: rgb: leds-qcom-lpg: Allow LED_COLOR_ID_MULTI
+To: Konrad Dybcio <konradybcio@kernel.org>, Lee Jones <lee@kernel.org>,
+ Pavel Machek <pavel@kernel.org>, Bjorn Andersson <andersson@kernel.org>
+Cc: linux-leds@vger.kernel.org, linux-kernel@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org, Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+References: <20251117-topic-lpg_multi-v1-1-05604374a2dd@oss.qualcomm.com>
+Content-Language: en-US
+From: David Heidelberg <david@ixit.cz>
+Autocrypt: addr=david@ixit.cz; keydata=
+ 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
+In-Reply-To: <20251117-topic-lpg_multi-v1-1-05604374a2dd@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Message-Id: <20251117-topic-sm8x50-fix-a6xx-non-ifpc-v1-1-e4473cbf5903@linaro.org>
-X-B4-Tracking: v=1; b=H4sIAHY2G2kC/x2NywqAIBAAfyX23EIm2uNXooPYWntIRSOE6N+Tj
- gPDzAOZElOGuXkg0c2Zg68g2gbsYfxOyFtl6LteCSEGvEJki/kci+rQcUGjS0EfPLKLFmmcBiW
- Nk3rSUCMxUZX+wbK+7wfekRj+cAAAAA==
-X-Change-ID: 20251117-topic-sm8x50-fix-a6xx-non-ifpc-e89753af3696
-To: Rob Clark <robin.clark@oss.qualcomm.com>, Sean Paul <sean@poorly.run>, 
- Konrad Dybcio <konradybcio@kernel.org>, Dmitry Baryshkov <lumag@kernel.org>, 
- Abhinav Kumar <abhinav.kumar@linux.dev>, 
- Jessica Zhang <jessica.zhang@oss.qualcomm.com>, 
- Marijn Suijten <marijn.suijten@somainline.org>, 
- David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, 
- Akhil P Oommen <akhilpo@oss.qualcomm.com>
-Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, 
- freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org, 
- Neil Armstrong <neil.armstrong@linaro.org>
-X-Mailer: b4 0.14.3
-X-Developer-Signature: v=1; a=openpgp-sha256; l=2388;
- i=neil.armstrong@linaro.org; h=from:subject:message-id;
- bh=qnOrNESQ4kON/eGGcc8Sg52LyYkaBgKNyQ10apooHYk=;
- b=owEBbQKS/ZANAwAKAXfc29rIyEnRAcsmYgBpGzZ5S/Sn5xg2lbtN0jzVUFE+xgIwzsnr0zl1qiee
- xlTeTreJAjMEAAEKAB0WIQQ9U8YmyFYF/h30LIt33NvayMhJ0QUCaRs2eQAKCRB33NvayMhJ0TcKEA
- Cp3vLfgyZV/hDlI9A1dwBvwNGc+uzV5ZkylAmSAPv3hAWBvcw3mq4TTw+LnJakjLZb0nXOPq2PHdcK
- L3CWwfsRsFeURz5ozIqInxLG5jT9v9FSqWjrGoQnL8KCaof57vtMAklYzI2jO2Dv2bgTEB9bsaACN3
- suTMY4sZNjkNTDGUMDcQIG1wgcrT7Rp2NxVuPzLdl8tgHs3J/mhwpIHZQJeElkAYi/cOYeLSJwm0KA
- ZGPSevrKW/mTfER99/05xgA/+UBFKOVGFB1Y/s/R+n5Ta7cpW2v7ncx95Nu/t3h/JCh1Nnm4xrB9fX
- P2UOphJWgWrllsm4k9fjM3s9JhzXwjpG3XvoCM+8yU1wVxXWrGfTbBODGSz+eL/d9bhPvClz2QeXgw
- Uxn9T60+KBwcdkyZjMkA8psb35SDwt1Of44NrECEyM3YmfT+QqIxkz8kC6xeMMv/fXnVUTNWLEOOhD
- OrHbodeOv46BCnDcc20Mn78UX2awHRn0u3Y2VLlKpYD08/71Sf96ER82hEBfaID7goZm1BlG+4M5UL
- 8bft8AJJnjJTefgywiGKk0Qm80vKCGjyUHee2YTYzo/yIDR0yOO4g3AZPpPeMF0zQD6CSnq7Dx7i0y
- uW+hM3IBO1a5lsbpugcjFTu8Z4jYu3YVppZtY0H+QH/iMhDfCSdR13KNtsBg==
-X-Developer-Key: i=neil.armstrong@linaro.org; a=openpgp;
- fpr=89EC3D058446217450F22848169AB7B1A4CFF8AE
 
-On plaforms with an a7xx GPU not supporting IFPC, the ifpc_reglist
-if still deferenced in a7xx_patch_pwrup_reglist() which causes
-a kernel crash:
-Unable to handle kernel NULL pointer dereference at virtual address 0000000000000008
-...
-pc : a6xx_hw_init+0x155c/0x1e4c [msm]
-lr : a6xx_hw_init+0x9a8/0x1e4c [msm]
-...
-Call trace:
-  a6xx_hw_init+0x155c/0x1e4c [msm] (P)
-  msm_gpu_hw_init+0x58/0x88 [msm]
-  adreno_load_gpu+0x94/0x1fc [msm]
-  msm_open+0xe4/0xf4 [msm]
-  drm_file_alloc+0x1a0/0x2e4 [drm]
-  drm_client_init+0x7c/0x104 [drm]
-  drm_fbdev_client_setup+0x94/0xcf0 [drm_client_lib]
-  drm_client_setup+0xb4/0xd8 [drm_client_lib]
-  msm_drm_kms_post_init+0x2c/0x3c [msm]
-  msm_drm_init+0x1a4/0x228 [msm]
-  msm_drm_bind+0x30/0x3c [msm]
-...
+On 17/11/2025 14:45, Konrad Dybcio wrote:
+> From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+> 
+> There's nothing special about RGB multi-led instances. Allow any color
+> combinations by simply extending the "if _RGB" checks.
+> 
+> Signed-off-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+> ---
+>   drivers/leds/rgb/leds-qcom-lpg.c | 6 +++---
+>   1 file changed, 3 insertions(+), 3 deletions(-)
+> 
 
-Check the validity of ifpc_reglist before deferencing the table
-to setup the register values.
-
-Fixes: a6a0157cc68e ("drm/msm/a6xx: Enable IFPC on Adreno X1-85")
-Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
----
- drivers/gpu/drm/msm/adreno/a6xx_gpu.c | 18 ++++++++++--------
- 1 file changed, 10 insertions(+), 8 deletions(-)
-
-diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-index b8f8ae940b55..7ee15f339438 100644
---- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-+++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-@@ -831,15 +831,17 @@ static void a7xx_patch_pwrup_reglist(struct msm_gpu *gpu)
- 	lock->gpu_req = lock->cpu_req = lock->turn = 0;
- 
- 	reglist = adreno_gpu->info->a6xx->ifpc_reglist;
--	lock->ifpc_list_len = reglist->count;
-+	if (reglist) {
-+		lock->ifpc_list_len = reglist->count;
- 
--	/*
--	 * For each entry in each of the lists, write the offset and the current
--	 * register value into the GPU buffer
--	 */
--	for (i = 0; i < reglist->count; i++) {
--		*dest++ = reglist->regs[i];
--		*dest++ = gpu_read(gpu, reglist->regs[i]);
-+		/*
-+		 * For each entry in each of the lists, write the offset and the current
-+		 * register value into the GPU buffer
-+		 */
-+		for (i = 0; i < reglist->count; i++) {
-+			*dest++ = reglist->regs[i];
-+			*dest++ = gpu_read(gpu, reglist->regs[i]);
-+		}
- 	}
- 
- 	reglist = adreno_gpu->info->a6xx->pwrup_reglist;
-
----
-base-commit: d6556aa99b8839819267e8167f04b715cfb5d4cf
-change-id: 20251117-topic-sm8x50-fix-a6xx-non-ifpc-e89753af3696
-
-Best regards,
--- 
-Neil Armstrong <neil.armstrong@linaro.org>
-
+Reviewed-by: David Heidelberg <david@ixit.cz>
 
