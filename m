@@ -1,311 +1,187 @@
-Return-Path: <linux-arm-msm+bounces-82057-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-82058-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ams.mirrors.kernel.org (ams.mirrors.kernel.org [IPv6:2a01:60a::1994:3:14])
-	by mail.lfdr.de (Postfix) with ESMTPS id A3ACCC62C1D
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Nov 2025 08:40:14 +0100 (CET)
+Received: from ams.mirrors.kernel.org (ams.mirrors.kernel.org [213.196.21.55])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6BF1CC62D0A
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Nov 2025 08:55:51 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ams.mirrors.kernel.org (Postfix) with ESMTPS id 847CB34D351
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Nov 2025 07:37:28 +0000 (UTC)
+	by ams.mirrors.kernel.org (Postfix) with ESMTPS id 3D56635F321
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Nov 2025 07:55:26 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2090B31A546;
-	Mon, 17 Nov 2025 07:36:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D8BE931986E;
+	Mon, 17 Nov 2025 07:55:22 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yw1-f170.google.com (mail-yw1-f170.google.com [209.85.128.170])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from TYDPR03CU002.outbound.protection.outlook.com (mail-japaneastazolkn19013079.outbound.protection.outlook.com [52.103.43.79])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D591D31D725
-	for <linux-arm-msm@vger.kernel.org>; Mon, 17 Nov 2025 07:36:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.170
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763364989; cv=none; b=Ts9xbFDW2X9ElgRaEeu1MwpvTenv4yB6I793S9i+KKZS+13sLTCj9eLJVDjuEi6UVpGNVj04nPzDUV5hdyyF/H84LWy8doGZAsBEjBh/1V10BatWieeRfYzjGJ8n2qGh7d/RmXARic8UhyR5OhyPpsZFVaY2tUYibm/ZqPoSrtc=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763364989; c=relaxed/simple;
-	bh=sEIC12gY8xGmvPgbsyhw3/r0/GkwDMXGYP/Oy3YUG/c=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=S5NhcboHaILNguM/8pjEaqRTGQsnkxM3E1Dfsig4MJLdZbyNqS6BmoWiPkGJhleatkLhaAR7BZdYClmxHVXGsYT7VaWK7yLhmRI8NaC18BuAM5wR5EbLYFAzAATU1jlLdSdyCj0lo3tWn4FJXiXC3PIWC/tN00ffjYczFFDar30=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=debian.org; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.128.170
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=debian.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-yw1-f170.google.com with SMTP id 00721157ae682-789505a2fe7so6558017b3.1
-        for <linux-arm-msm@vger.kernel.org>; Sun, 16 Nov 2025 23:36:26 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1763364986; x=1763969786;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=VhKCAerPq2QkTfQSFkO+3MqZuYdSjTftIor4Yigrops=;
-        b=UuE7Xbzf9Kr0bbOror9cJnbOCxSiR4AOb+OYI5QoR5leZm5dwth841Gg0QTeBEUs6g
-         mqK6GDNsj53QR+RiT9r4cPyRsMUZoHkabtLeK/pH4Jybnb6eklZqMX4fYeGjLsmdDwLR
-         Qj0yWYuadaxi9b8czrDsgSYuJ02h4qezTgSDu3trv4XlbqE38BOO4kTQPiE16EKVLGra
-         K+xYgSm6nbsoxnAtQHLOx9H5E+Xjt1DGY82rxDxg0JdVDdf1Wo8iZA/+rdGdeAWrGy1m
-         iofT3B9ktF043Jqg2yLqdYTIAjIYKWO3BfpeHyKAJ67OUqBLJY1+0KkdjxEZZwSoUziT
-         eD5Q==
-X-Forwarded-Encrypted: i=1; AJvYcCUTUKv1uzsdSLzwbX6FO6ZFVU/FpRRYmicYPj9/WlVkimFdr2x7Ro8C8GB10ShIR+mFqaa16iWJyvyCBd4w@vger.kernel.org
-X-Gm-Message-State: AOJu0YzbXanXQTwzTfPJnmHRJOedg5G9CpYhxAHKARULLLfr2yEZxfk5
-	dUpLdh5ErXNc0kMdPCsGQPsqY+RfBCPcM2iubh5EBims8CCjTu4Dbr9pVLvk1g==
-X-Gm-Gg: ASbGncvoc9KeVGLEEAl0nBVAwvFv/wTvnRi/LpOWVva6tL/nrYvDoLTHYu+Au/ntCQl
-	6mV0zmUOcbqxjB8aIv2RybL5Jf9yIHw6x9XFX5zSsZbjq7rbpFHzijcE/A7SbWEzhE0GE+KWDD/
-	38vvs66TSOYJafoI3Vu+ma8W4BPasRCs7AY7vyAucHD76O4Ddhbb0y2wGIm9yt5FaZrJS6aDFNw
-	7gxGCxbb1WDoi43bippGbTW3awnGI+Akot8xVTD0CgGwTZ7bbC3syyDAKlsi/EpR2X8Lz4gCw7v
-	nDPjPRnv0zSHHKUcrW229wPEElfE5WM199206onpANX0wuXUtRVRij7ebFaiTxkvqb2+O0lM+4b
-	aYjlEHBZwE8/JULeNDGvpOmdF0VRvnNTqpdYc+taqbdiZUhl3TYzMdz2ZzuTnLgis5qcdy15+RY
-	VR4iboyKOXjvj1h5/ucspzyhIo+CJ1QkHgO3DYgr0WKw==
-X-Google-Smtp-Source: AGHT+IGRY9guTy33zXh4EqcoxKqQtUl6xNltjZ/vcemKheA75njz72Xv47jgRPMbPBIHMbvssjhHmg==
-X-Received: by 2002:a05:690c:6d11:b0:786:a78a:6abc with SMTP id 00721157ae682-78929e65564mr100007167b3.21.1763364985529;
-        Sun, 16 Nov 2025 23:36:25 -0800 (PST)
-Received: from mail-yx1-f50.google.com (mail-yx1-f50.google.com. [74.125.224.50])
-        by smtp.gmail.com with ESMTPSA id 00721157ae682-788221221c8sm39902187b3.36.2025.11.16.23.36.24
-        for <linux-arm-msm@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 16 Nov 2025 23:36:24 -0800 (PST)
-Received: by mail-yx1-f50.google.com with SMTP id 956f58d0204a3-640d790d444so3394175d50.0
-        for <linux-arm-msm@vger.kernel.org>; Sun, 16 Nov 2025 23:36:24 -0800 (PST)
-X-Forwarded-Encrypted: i=1; AJvYcCX8mqrh+4aoAlh4EYEIuusT71aeolYO+6e0kQhl9/gstzv7RF/e9Pvi1ytyulSpyukhAUmz2miINnNDQfu8@vger.kernel.org
-X-Received: by 2002:a05:690e:154b:10b0:63e:d1f:d685 with SMTP id
- 956f58d0204a3-641e76d648bmr7956746d50.51.1763364984565; Sun, 16 Nov 2025
- 23:36:24 -0800 (PST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10DEA1DDC2B;
+	Mon, 17 Nov 2025 07:55:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.103.43.79
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1763366122; cv=fail; b=XS6utxluA6ASitbmx3zWi2vAjJawtA6qGR5Q6xkxLYq7GTLxEnAIHSf6cde4V1fNVNUD6AKzOwsvoNNfVWVz72VpIT3Bw2GOW9DlG/yXVnz1jfntmp0jT2I/BHRP2kwvFsOrri9SIZTPlY37fIaSSbFvJNy3BPkfel4/ibbcbRE=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1763366122; c=relaxed/simple;
+	bh=BIJrI//nHHuEDc/gRGir3sFzRjiteG6JiQY9wshwL7g=;
+	h=From:To:CC:Subject:Date:Message-ID:References:In-Reply-To:
+	 Content-Type:MIME-Version; b=k3KHuX0+QUDd1H72FdHVzdoGhjtUT6cUraKFECRLjfJ8sCVbn/R2xO9a80nCasrT7bcOfUI9gaWs77SLGwUI9278zPsDeYjf/RlDYsBZrZsUBLmxncsWBB7m4nVMxJ4IoGBg8wHxoCtNyd6EvMt+2qPm7PkbjV6CGcmGP4Zmz24=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sobir.in; spf=pass smtp.mailfrom=sobir.in; arc=fail smtp.client-ip=52.103.43.79
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sobir.in
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=sobir.in
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=bW9E8xolSb+sXC1OZKerr5l895RIrGzcycNnaw1JtU1UZ/6orAtQoHb42qHGj7uFR6kdsV61w3oFZ4RdhsONUCh5aVX6DQD0jKUnAa8oJ3UeszuQ6ufSgBM9Q5nuxIEFm/+KXKx57O8prtvB0iH7PYo9r2lO0AXdKpRJuM/fm9Ptkk6x6WZl5/z1P8ys2ExshbwaOI40Ln1JanVCDZv/B6YPxblUbdRm8UgPYMg8yHuioPK5kZH7Dz45XTdi84i3CZD+CKuNwL4LIaBpqnCXmOWCv4QBOBML4hup2zXs18fm/2j8/zory2xMc6LkKhc1rzYbI0BtrZMaf8BKsFhxIQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=BIJrI//nHHuEDc/gRGir3sFzRjiteG6JiQY9wshwL7g=;
+ b=jkrKH2m3N0vjd/xc5FdV3mQyLZSkShqJEVnxgoJSr1CNOGJfhHFYDALQTo/LCrSDEbrf+qm4gyShCBserGK9RnJFltQ6Rj2QdwFBZlkMDCg8yHNjluOcb6KIttVUJZMg5d5Io7DpJE7vJV+yDFc225HJrAD3Q9J0wnxQhr9FWB1yCxNq7M1sDwJMsX1oal4ID6iFO0gX0zs8d3MnAKrxFVYOy0NN9Q8OrCWea1ow9p/K6Ek7q/OvlksqABHGfJx3+LKzgC6s/dfygT5O2ncjiInSSAgypRgEJBuy2299pkB2mWZjX1NuNRY1v5vDIewKw22kxAkVVwI4J9R+OoJSgg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
+ dkim=none; arc=none
+Received: from TYUPR06MB6099.apcprd06.prod.outlook.com (2603:1096:400:356::8)
+ by KL1PR06MB5922.apcprd06.prod.outlook.com (2603:1096:820:d0::9) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9320.21; Mon, 17 Nov
+ 2025 07:55:09 +0000
+Received: from TYUPR06MB6099.apcprd06.prod.outlook.com
+ ([fe80::2223:6c27:d5c2:aa47]) by TYUPR06MB6099.apcprd06.prod.outlook.com
+ ([fe80::2223:6c27:d5c2:aa47%5]) with mapi id 15.20.9320.013; Mon, 17 Nov 2025
+ 07:55:08 +0000
+From: Teguh Sobirin <teguh@sobir.in>
+To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+CC: Rob Clark <robin.clark@oss.qualcomm.com>, Dmitry Baryshkov
+	<lumag@kernel.org>, Abhinav Kumar <abhinav.kumar@linux.dev>, Jessica Zhang
+	<jesszhan0024@gmail.com>, Sean Paul <sean@poorly.run>, Marijn Suijten
+	<marijn.suijten@somainline.org>, David Airlie <airlied@gmail.com>, Simona
+ Vetter <simona@ffwll.ch>, "linux-arm-msm@vger.kernel.org"
+	<linux-arm-msm@vger.kernel.org>, "dri-devel@lists.freedesktop.org"
+	<dri-devel@lists.freedesktop.org>, "freedreno@lists.freedesktop.org"
+	<freedreno@lists.freedesktop.org>, "linux-kernel@vger.kernel.org"
+	<linux-kernel@vger.kernel.org>
+Subject: Re: [PATCH] drm/msm/dpu: Set vsync source irrespective of mdp top
+ support
+Thread-Topic: [PATCH] drm/msm/dpu: Set vsync source irrespective of mdp top
+ support
+Thread-Index: AQHcSAeLeEHgBtL7T0iA53+yECJXFbTXyTgAgBnf9ICABPXAew==
+Date: Mon, 17 Nov 2025 07:55:08 +0000
+Message-ID:
+ <TYUPR06MB60990F649387CA675ADF2813DDC9A@TYUPR06MB6099.apcprd06.prod.outlook.com>
+References:
+ <TYUPR06MB6099CBBE5090DB12A2C187E3DDFDA@TYUPR06MB6099.apcprd06.prod.outlook.com>
+ <ukz4djjytsne3y2w3epkdc7gzegmeeijpcqblvftcx73ccs43p@es6b4ew4nrzx>
+ <w3fffuitwki7imcpc75m2e5kv5fpg5nj6udpxytm55kqa4mkud@rkl2ywspwm5y>
+In-Reply-To: <w3fffuitwki7imcpc75m2e5kv5fpg5nj6udpxytm55kqa4mkud@rkl2ywspwm5y>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach:
+X-MS-TNEF-Correlator:
+x-ms-exchange-messagesentrepresentingtype: 1
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: TYUPR06MB6099:EE_|KL1PR06MB5922:EE_
+x-ms-office365-filtering-correlation-id: 239157f9-f7f6-4b44-b43e-08de25aea0fe
+x-microsoft-antispam:
+ BCL:0;ARA:14566002|31061999003|461199028|14091999006|8062599012|8060799015|19110799012|6072599003|15080799012|51005399006|440099028|3412199025|40105399003|102099032;
+x-microsoft-antispam-message-info:
+ =?utf-8?B?djgrdEo0V1lCTjdOMy9SZkYxZHZaY3Fnd1N6MGR0WmdCQ0V6bmd6Z0NWQi9H?=
+ =?utf-8?B?M1NqUWh5citkWTc3MVR1ZzZwUkVWZEM5MHN5SVE0TTVvQmxPd1F4T29WWkZi?=
+ =?utf-8?B?elpiMXZDWFd0Wmcyb28wSmNranp0Q3J3Nk9rNzZja0VyU1NpR0t3NUdJN2d6?=
+ =?utf-8?B?d3M0b0RQRjFKWDYwTVlyQUEvMFVKQWdHWkFWQlpGeDhkTDg1d3RWQlM4ODNu?=
+ =?utf-8?B?NkhiM2FUTFBPcU1jMmlFN1dmdW9BTUtjMy9VZ0VyK3RhbTVSVnZ2OE05bXFE?=
+ =?utf-8?B?MTdNZUs3d2hCd3RyYWZBY0VYc3ZXb1NxZ0gyQS9zUUtmYkpVWFZWa0lSbUIv?=
+ =?utf-8?B?K1N3dFp5SUwxY05mRXhycjk2c0JYSk1ycm5KWmIxTHR0bHV5V2t0VkZtVUY0?=
+ =?utf-8?B?YkxXbHdSekdvL0FXOStRV1pPMlhiWVV6Mm1ROHg2ZGoxWWdiR3IwaTNsbHND?=
+ =?utf-8?B?K3pzVDhibjZ1MkdkY0hYZ1VxY1IwamxhWjl0NTB5N1U5c2tIakRjbWtsUWhX?=
+ =?utf-8?B?MUV6cENjRk0rOVlxWEQ4UENuVmgvZTFSbE9SRUdCYTA2aGVvcHU2T2RrNDRW?=
+ =?utf-8?B?aDY0UjNXSTg2bDg5SWIwMHdHdDR2VFFkYlI2WUpRMWdoNk1JbkowZHVmQ01W?=
+ =?utf-8?B?R2JMbVhSbk93ejFaYTNwbGNoZitwN1RJanI0RWJFMTJ5Q253S0hQQXpwZDlV?=
+ =?utf-8?B?SXZpSmJWajdRL25GYjM3Mjd2bUZaNkRjUFcvZGVHZ0hnRU1CS095eEJWUmIw?=
+ =?utf-8?B?N1NONFh1NlkrOE1mcjErbndNYzFmbnVjUWFJbjlQeW5HVFRrMHB5djAvdytC?=
+ =?utf-8?B?c2ZFUVdoUWg4TExxR1IvTDJmSjFpVHR3dy9nb1VMcnpYQUFjbVRDbVF2WEV3?=
+ =?utf-8?B?WXdzS0tEbXRlNDFTVUtEUEhNV2lweEhYV2VlcloxbEJuUTZnYnRNcXZWOFVQ?=
+ =?utf-8?B?UUlKOWFtVlNMcU9vaThHNU1sbk5HNUNwSU5Pay9idnJKTUgyd0JqakJmMllE?=
+ =?utf-8?B?U0g1ZklFWXVqNWpvK0dsT0kxZE5mNmxRUTVNN3hiOU1QWFRuQkkwZk1acXV2?=
+ =?utf-8?B?SnZtMno4eCtQaUQzcGlpbzViREpncHRGYi93d2V1TWt4Y1BsSnZjOVE1NUtn?=
+ =?utf-8?B?MndUV1BYTGtYTVRJUnRtSTlSTlZjVzNscGdmNVljazVhZFNjMzR4RjlpcmNS?=
+ =?utf-8?B?ZSt2NSttalo4TUFKTisrOTYzM2gzQnVBSVI2Vjc2TVdsQ3BIQThGWUNEU1l0?=
+ =?utf-8?B?d2RxUU5CcW5BU0xBeXdqYnJremVBSzFQQ1huZEQySndEaitnaW9XMnU2NlJu?=
+ =?utf-8?B?ckFIV2JaMGRmMGRhWHJydi9KdVhsVU9VejZ4cGxvcHJuN3ZlZWxzd3FWdzFi?=
+ =?utf-8?B?WUYyUjhJaGo4OVRwaGFEejJqSFZOZEkrUUI2YTVWWVlSajQ1VUlOc0hBNEJn?=
+ =?utf-8?B?ZXhIRVQ0QmlxY0hHTUV1NjQwTHNRcC9GTWZLVWVsMXduWC9PWTZ0QlhOK29i?=
+ =?utf-8?B?TExtallOL0hqTjJ3V0lMT1hmcitMa3BRc0w1LzJ6eGtOWUYrWnRLU1ZnQXQw?=
+ =?utf-8?B?djlZK3hMdVhrY0FpRkxnV2twZ0I5VjNRQTR3aUpGTktaTGowRDJEaWVVNTU2?=
+ =?utf-8?Q?RkJb1zO4V8OoQ+lfmZFQAwmsK7KzXossRTa7NZKEkzG0=3D?=
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0:
+ =?utf-8?B?dEZPWDRXMytwSVJqZERpbjVGUHB3emxZYndPZlZncnQwcTNtRmpoTXVvdjg3?=
+ =?utf-8?B?VzVHT0FjejdWZmJpMklCMDd4Qm80VnowNXBidmpIOE83N2h6WU5YNHJZdGVT?=
+ =?utf-8?B?UWxrUE5DVnJkZTlPTFd1aG15OTZDZk15VUMwZ0JMTGFkNUl4OE5BWklrRktX?=
+ =?utf-8?B?L2YvWlpoeUlXdWYwc29ZL0xpb3QxTU5pVCtCdklEdmpzSU1jVUlNazlhLzkw?=
+ =?utf-8?B?RjVRSmVCM3VKOCtpU3FQZDhkOWI3a0tBMVlrUk9ya2xlTzc0djdoZ2NwVk80?=
+ =?utf-8?B?cGx5WnhhWHREd0ttUE5jd0psaWFYNkhpNGJMcEN0dDd3SXN3MkloYzNXS2tT?=
+ =?utf-8?B?Wi80UEVnQTBod3E4MWlyUnhRZVd2NDhLcHJoYmtwYU12Q0dCaHgwNkRyaTZ5?=
+ =?utf-8?B?T3JQR0hSNGkvaFZ0MG9rcHR1V0xsSGNIME5MSzh3ZjRXNmZENFIwRmJUay9i?=
+ =?utf-8?B?QWIyOGlOQnR0NkJ6OEd1Z1dNQU9JYUV2ZkNaZmo4eXdFZ1hGREhPZ1FBY3Bs?=
+ =?utf-8?B?Q2hyNnRkS05vbVVJSm96Q1E5b1RCWWhOSXhEQmdmSlVyYllxK3cvWnBqMVNt?=
+ =?utf-8?B?aFIvczNDbVo2eDF5Rm5wbzJtclJBZjQrZXhRVnBlZllkTWFJTEdubmwvY0pj?=
+ =?utf-8?B?ZlFxeWRzeVF1dlI0UlBFd0MzaWJoczl3eEZSalN4MkJPaFZmL3FzWS85OXBY?=
+ =?utf-8?B?U0p3Tk0xYmhjRWNKbE9tYjdqN3R2TVVqZ3dLaXFrVlMydE0yWlhwTittZmE4?=
+ =?utf-8?B?K1NsL2lsUlJ2ZTBDR2pwZmdxampCZktHRStrTXZxVE1QRXo1TVlzZUdRNlZH?=
+ =?utf-8?B?VEVBa1lGTzVoYkZNTngxMzNNaTRvUDNOOFdnMllkSFNIZEE5eDZGVHRObzQr?=
+ =?utf-8?B?dldTOGwyMDZ5MHA5cVdNWXZyQ1ZmVm1WbmtaV1plRDNZWlRJQWZIRjlHRlNl?=
+ =?utf-8?B?QlZDbFg3S253VHp6cEF3U3RBUitCSnlwcW43TUpKNnZ4aG53NVlIL1BYRVha?=
+ =?utf-8?B?aEluTENramZGeFROS1RnTHVQUnNSSHhURTk4SGtTYWJLUjYrdWcySU1kSlcv?=
+ =?utf-8?B?WlZtb3ZrM3pRbk1zdmtxdXZPUkxOdENNdERQYnYrSDZlMnNJYm1Za05qWW5L?=
+ =?utf-8?B?bDRnY0FUTVhYV2pMOG1tV3dDN01IbzY0VVdlZjhxQWJKWW83OTdHbzJpTlRS?=
+ =?utf-8?B?RHFYcmJlWkVyblBNbVJsZ1hpQ0ZkTGt6OEc0WmdNOWhqdlpFSzNTU1VqZjkr?=
+ =?utf-8?B?eSt2U3pvREJPMllNWmlwcnhOY1JBZzB4ZnpnQWtDMGdzb0thdk1EWnZkUzBF?=
+ =?utf-8?B?L0hMRklXQ1hOQnlzMlVCZFgyTmdjL2R5c3FBOFBIR2I4SXNUOVhvUm8yRHdG?=
+ =?utf-8?B?VE5LM3BsRWN6UkwvRitWL1gvdG9VWGtQME9menltd1BNL1BOWFlVaWFwR3BJ?=
+ =?utf-8?B?WEdLUnk1YTk1TTZOUlRlamFGaWppVDNoWCtTNzJQc1BPVHdxQ1lGb3NsRUIr?=
+ =?utf-8?B?OEtSNkJKbUNJWmFQcXhkYjQvdjY4Zy9iUm52Sk5GR0NOY0g4R3VHcmRBR3Bv?=
+ =?utf-8?B?eldtZ2M5MVNVRzJaNXMvUk5PaWlVWDNFWlBFRUs4NGo3NDVMczhvNnpZd3p0?=
+ =?utf-8?B?cVRwR3JPd01CZEJYVys0LzBEeXlybXc9PQ==?=
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20251115-rubikpi-next-20251114-v1-0-fc630dc5bb5d@thundersoft.com>
- <20251115-rubikpi-next-20251114-v1-1-fc630dc5bb5d@thundersoft.com> <b2d4d91f-c726-4f5a-994a-086edc9caff2@mainlining.org>
-In-Reply-To: <b2d4d91f-c726-4f5a-994a-086edc9caff2@mainlining.org>
-From: Roger Shimizu <rosh@debian.org>
-Date: Sun, 16 Nov 2025 23:36:13 -0800
-X-Gmail-Original-Message-ID: <CAEQ9gE=ztgQ+pGJVxKgk5dVWDSSfOG7r=s1cDa_x0_Zsf2eyYA@mail.gmail.com>
-X-Gm-Features: AWmQ_bmSUlkiL2vZBTUpoKENWapC_9eYXU4pMWfB_kVnKjAMmmrB_4WSgcTKk2M
-Message-ID: <CAEQ9gE=ztgQ+pGJVxKgk5dVWDSSfOG7r=s1cDa_x0_Zsf2eyYA@mail.gmail.com>
-Subject: Re: [PATCH 1/2] arm64: dts: qcom: rubikpi3: Add qcs6490-rubikpi3
- board dts
-To: Jens Reidel <adrian@mainlining.org>, 
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Cc: Hongyang Zhao <hongyang.zhao@thundersoft.com>, Bjorn Andersson <andersson@kernel.org>, 
-	Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org, 
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+X-OriginatorOrg: sct-15-20-8534-20-msonline-outlook-6a509.templateTenant
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: TYUPR06MB6099.apcprd06.prod.outlook.com
+X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg: 00000000-0000-0000-0000-000000000000
+X-MS-Exchange-CrossTenant-Network-Message-Id: 239157f9-f7f6-4b44-b43e-08de25aea0fe
+X-MS-Exchange-CrossTenant-originalarrivaltime: 17 Nov 2025 07:55:08.8628
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
+X-MS-Exchange-CrossTenant-rms-persistedconsumerorg: 00000000-0000-0000-0000-000000000000
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: KL1PR06MB5922
 
-Thanks Jens, and Dmitry for the review!
-
-On Sat, Nov 15, 2025 at 9:25=E2=80=AFAM Jens Reidel <adrian@mainlining.org>=
- wrote:
->
-> Hi,
->
-> On 11/14/25 5:34 PM, Hongyang Zhao wrote:
-> > Add DTS for Thundercomm qcs6490-rubikpi3 board which uses
-> > QCS6490 SoC.
-> >
-> > Works:
-> > - Bluetooth (AP6256)
-> > - Wi-Fi (AP6256)
-> > - Ethernet (AX88179B connected to UPD720201)
-> > - FAN
-> > - Two USB Type-A 3.0 ports (UPD720201 connected to PCIe0)
-> > - M.2 M-Key 2280 PCIe 3.0
-> > - RTC
-> > - USB Type-C
-> > - USB Type-A 2.0 port
-> > - 40PIN: I2C x1, UART x1
-> >
-> > Signed-off-by: Hongyang Zhao <hongyang.zhao@thundersoft.com>
-> > Reviewed-by: Roger Shimizu <rosh@debian.org>
-> > ---
-> >   arch/arm64/boot/dts/qcom/Makefile                  |    1 +
-> >   .../boot/dts/qcom/qcs6490-thundercomm-rubikpi3.dts | 1415 +++++++++++=
-+++++++++
-> >   2 files changed, 1416 insertions(+)
-> >
-> > diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qc=
-om/Makefile
-> > index 6f34d5ed331c..2433b15754fe 100644
-> > --- a/arch/arm64/boot/dts/qcom/Makefile
-> > +++ b/arch/arm64/boot/dts/qcom/Makefile
-> > @@ -138,6 +138,7 @@ qcs6490-rb3gen2-industrial-mezzanine-dtbs :=3D qcs6=
-490-rb3gen2.dtb qcs6490-rb3gen2
-> >
-> >   dtb-$(CONFIG_ARCH_QCOM)     +=3D qcs6490-rb3gen2-industrial-mezzanine=
-.dtb
-> >   dtb-$(CONFIG_ARCH_QCOM)     +=3D qcs6490-rb3gen2-vision-mezzanine.dtb
-> > +dtb-$(CONFIG_ARCH_QCOM)      +=3D qcs6490-thundercomm-rubikpi3.dtb
-> >   dtb-$(CONFIG_ARCH_QCOM)     +=3D qcs8300-ride.dtb
-> >   dtb-$(CONFIG_ARCH_QCOM)     +=3D qcs8550-aim300-aiot.dtb
-> >   dtb-$(CONFIG_ARCH_QCOM)     +=3D qcs9100-ride.dtb
-> > diff --git a/arch/arm64/boot/dts/qcom/qcs6490-thundercomm-rubikpi3.dts =
-b/arch/arm64/boot/dts/qcom/qcs6490-thundercomm-rubikpi3.dts
-> > new file mode 100644
-> > index 000000000000..4c9016992de3
-> > --- /dev/null
-> > +++ b/arch/arm64/boot/dts/qcom/qcs6490-thundercomm-rubikpi3.dts
-> > @@ -0,0 +1,1415 @@
->
-> [snip]
->
-> > +
-> > +&pcie0 {
-> > +     perst-gpios =3D <&tlmm 87 GPIO_ACTIVE_LOW>;
-> > +     wake-gpios =3D <&tlmm 89 GPIO_ACTIVE_HIGH>;
-> > +
-> > +     pinctrl-0 =3D <&pcie0_clkreq_n>,
-> > +                 <&pcie0_reset_n>,
-> > +                 <&pcie0_wake_n>;
-> > +     pinctrl-names =3D "default";
-> > +
-> > +     status =3D "okay";
-> > +};
-> > +
-> > +&pcie0_phy {
-> > +     vdda-phy-supply =3D <&vreg_l10c_0p88>;
-> > +     vdda-pll-supply =3D <&vreg_l6b_1p2>;
-> > +
-> > +     status =3D "okay";
-> > +};
-> > +
-> > +&pcie1 {
-> > +     /* Using traditional address mapping */
-> > +     reg =3D <0 0x01c08000 0 0x3000>,
-> > +           <0 0x40000000 0 0xf1d>,
-> > +           <0 0x40000f20 0 0xa8>,
-> > +           <0 0x40001000 0 0x1000>,
-> > +           <0 0x40100000 0 0x100000>;
-> > +
-> > +     ranges =3D <0x01000000 0x0 0x00000000 0x0 0x40200000 0x0 0x100000=
->,
-> > +              <0x02000000 0x0 0x40300000 0x0 0x40300000 0x0 0x1fd00000=
->;
->
-> Thanks for attempting to fix the PCIe issues. With your patch series
-> applied on top of linux-next, I'm still seeing PCIe issues:
->
-> [    0.380693] Internal error: synchronous external abort:
-> 0000000096000010 [#1]  SMP
-> [    0.406491] Modules linked in:
-> [    0.406495] CPU: 5 UID: 0 PID: 106 Comm: kworker/u32:6 Tainted: G   M
->                 6.18.0-rc5-next-20251113 #13 NONE
-> [    0.406499] Tainted: [M]=3DMACHINE_CHECK
-> [    0.406500] Hardware name: thundercomm Thundercomm RUBIK Pi
-> 3/Thundercomm RUBIK Pi 3, BIOS 2025.10-rc4 10/01/2025
-> [    0.406502] Workqueue: async async_run_entry_fn
-> [    0.406508] pstate: 40400005 (nZcv daif +PAN -UAO -TCO -DIT -SSBS
-> BTYPE=3D--)
-> [    0.428362] pc : __pi_memset_generic+0x16c/0x188
-> [    0.428366] lr : dma_direct_alloc+0x19c/0x3d0
-> [    0.428370] sp : ffff8000810e3920
-> [    0.428371] x29: ffff8000810e3920 x28: ffff000080d0f810 x27:
-> ffffba4c6196ec48
-> [    0.428373] x26: ffff000080d0f810 x25: ffffba4c607b31cc x24:
-> 0000000000000000
-> [    0.428375] x23: ffff000080d0f810 x22: ffff000000c00000 x21:
-> ffff000082858948
-> [    0.428376] x20: 0000000000001000 x19: fffffdffc0030000 x18:
-> 000000000000000a
-> [    0.428378] x17: ffff0000823dae00 x16: 0000000000000000 x15:
-> 0000000000000000
-> [    0.428380] x14: 00000000ffffffff x13: 0000000000000068 x12:
-> 0000000000000100
-> [    0.449344] x11: 0000000000000000 x10: ffff0001fef99500 x9 :
-> 0000000000000000
-> [    0.449345] x8 : ffff000000c00000 x7 : 0000000000000000 x6 :
-> 000000000000003f
-> [    0.449347] x5 : 0000000000000040 x4 : 0000000000000000 x3 :
-> 0000000000000004
-> [    0.449349] x2 : 0000000000000fc0 x1 : 0000000000000000 x0 :
-> ffff000000c00000
-> [    0.449350] Call trace:
-> [    0.449351]  __pi_memset_generic+0x16c/0x188 (P)
-> [    0.449354]  dma_alloc_attrs+0x94/0x210
-> [    0.449357]  dmam_alloc_attrs+0x74/0xc0
-> [    0.469967]  dw_pcie_msi_host_init+0x100/0x300
-> [    0.469971]  dw_pcie_host_init+0x5e4/0x6d8
-> [    0.491913]  qcom_pcie_probe+0x5a8/0x838
-> [    0.491916]  platform_probe+0x64/0xc0
-> [    0.491919]  really_probe+0xc8/0x3f0
-> [    0.491921]  __driver_probe_device+0x88/0x170
-> [    0.491922]  driver_probe_device+0x48/0x130
-> [    0.491923]  __device_attach_driver+0xc4/0x190
-> [    0.491925]  bus_for_each_drv+0x90/0x100
-> [    0.491928]  __device_attach_async_helper+0xb8/0x120
-> [    0.491929]  async_run_entry_fn+0x3c/0x1e0
-> [    0.491931]  process_one_work+0x150/0x3a0
-> [    0.491934]  worker_thread+0x288/0x480
-> [    0.491936]  kthread+0x118/0x1e0
-> [    0.491938]  ret_from_fork+0x10/0x20
-> [    0.513092] Code: 91010108 54ffff4a 8b040108 cb050042 (d50b7428)
-> [    0.513094] ---[ end trace 0000000000000000 ]---
->
-> I can only get the device to boot by disabling both pcie0 and pcie1.
-
-I think there're some regressions in "next-20251114".
-After some time to "git bisect", I found after running 2 revert
-commands below, it can boot for both RUBIK Pi 3 and RB3 Gen2.
-
-$ git revert b15ce3c0882c9cd2fbe4f87047874ad087b583ff -m 1
-$ git revert 03e928442d469f7d8dafc549638730647202d9ce
-
-> > +
-> > +
-> > +     perst-gpios =3D <&tlmm 2 GPIO_ACTIVE_LOW>;
-> > +     wake-gpios =3D <&tlmm 3 GPIO_ACTIVE_LOW>;
-> > +
-> > +     pinctrl-0 =3D <&pcie1_clkreq_n>,
-> > +                 <&pcie1_reset_n>,
-> > +                 <&pcie1_wake_n>;
-> > +     pinctrl-names =3D "default";
-> > +
-> > +     status =3D "okay";
-> > +};
-> > +
-> > +&pcie1_phy {
-> > +     vdda-phy-supply =3D <&vreg_l10c_0p88>;
-> > +     vdda-pll-supply =3D <&vreg_l6b_1p2>;
-> > +
-> > +     status =3D "okay";
-> > +};
-> > +
->
-> [snip]
->
-> > +
-> > +&remoteproc_adsp {
-> > +     firmware-name =3D "qcom/qcs6490/adsp.mbn";
-> > +
-> > +     status =3D "okay";
-> > +};
->
-> I'm fairly sure that this is the wrong ADSP firmware. With the firmware
-> in linux-firmware, I'm seeing charger pd crashes and the ADSP constantly
-> restarting. Using the Radxa Dragon Q6A ADSP firmware which disables the
-> charging feature in the firmware works way better and does not result in
-> crashes.
-
-I run the Ubuntu 24.04 base system:
-* https://ubuntu.com/download/qualcomm-iot#rubikpi3
-
-Currently it boots well with adsp fw from RB3 Gen2 (from deb pkg:
-firmware-qcom-hlosfw) without crash.
-But I heard from next release, adsp will be customized, so Hongyang
-will make another patch to upstream the adsp for RUBIK Pi 3.
-
-Cheers,
-Roger
-
-> > +
-> > +&remoteproc_cdsp {
-> > +     firmware-name =3D "qcom/qcs6490/cdsp.mbn";
-> > +
-> > +     status =3D "okay";
-> > +};
-> > +
->
-> [snip]
->
-> Thanks,
-> Jens
+DQo+IA0KPiBPbiAxNCBOb3YgMjAyNSwgYXQgMTIuMTAsIERtaXRyeSBCYXJ5c2hrb3YgPGRtaXRy
+eS5iYXJ5c2hrb3ZAb3NzLnF1YWxjb21tLmNvbT4gd3JvdGU6DQo+IA0KPiDvu79PbiBUdWUsIE9j
+dCAyOCwgMjAyNSBhdCAwNzowMjoyOFBNICswMjAwLCBEbWl0cnkgQmFyeXNoa292IHdyb3RlOg0K
+Pj4+IE9uIFR1ZSwgT2N0IDI4LCAyMDI1IGF0IDA4OjM2OjM1UE0gKzA4MDAsIFRlZ3VoIFNvYmly
+aW4gd3JvdGU6DQo+Pj4gTW92ZSB0aGUgbG9vcCBvdmVyIHBoeXNfZW5jcyBvdXRzaWRlIHRoZQ0K
+Pj4+IGh3X21kcHRvcC0+b3BzLnNldHVwX3ZzeW5jX3NvdXJjZSBibG9jay4NCj4+PiBUaGlzIHdh
+eSwgdnN5bmNfc2VsKCkgaXMgY2FsbGVkIGZvciBlYWNoIGludGVyZmFjZS4NCj4+PiANCj4+PiBU
+aGlzIGNoYW5nZSBlbnN1cmVzIFRFIHZzeW5jIHNlbGVjdGlvbiB3b3Jrcw0KPj4+IGV2ZW4gaWYg
+c2V0dXBfdnN5bmNfc291cmNlIGlzIG5vdCBpbXBsZW1lbnRlZC4NCj4+IA0KPj4gUGxlYXNlIHNl
+ZSBEb2N1bWVudGF0aW9uL3Byb2Nlc3NzL3N1Ym1pdHRpbmctcGF0Y2hlcy5yc3QuIERvbid0IGRl
+c2NyaWJlDQo+PiB0aGUgY2hhbmdlIGFuZCBwbGVhc3cgd3JhcCB0aGUgY29tbWl0IG1lc3NhZ2Ug
+b24gNzItNzUgY2hhcnMgYm91bmRhcnkuDQo+PiANCj4+IEkgY2FuIHN1Z2dlc3Qgc29tZXRoaW5n
+IGxpa2UgdGhpczoNCj4+IA0KPj4gU2luY2UgRFBVIDUueCB0aGUgdnN5bmMgc291cmNlIFRFIHNl
+dHVwIGlzIHNwbGl0IGJldHdlZW4gTURQIFRPUCBhbmQNCj4+IElOVEYgYmxvY2tzLiAgQ3VycmVu
+dGx5IGFsbCBjb2RlIHRvIHNldHVwIHZzeW5jX3NvdXJjZSBpcyBvbmx5IGV4ZWN0dWVkDQo+PiBp
+ZiBNRFAgVE9QIGltcGxlbWVudHMgdGhlIHNldHVwX3ZzeW5jX3NvdXJjZSgpIGNhbGxiYWNrLiBI
+b3dldmVyIG9uDQo+PiBEUFUgPj0gOC54IHRoaXMgY2FsbGJhY2sgaXMgbm90IGltcGxlbWVudGVk
+LCBtYWtpbmcgRFBVIGRyaXZlciBza2lwIGFsbA0KPj4gdnN5bmMgc2V0dXAuIE1vdmUgdGhlIElO
+VEYgcGFydCBvdXQgb2YgdGhpcyBjb25kaXRpb24sIGxldHRpbmcgRFBVDQo+PiBkcml2ZXIgdG8g
+c2V0dXAgVEUgdnN5bmMgc2VsZWN0aW9uIG9uIGFsbCBuZXcgRFBVIGRldmljZXMuDQo+PiANCj4+
+IFRoZSBwYXRjaCBpdHNlbGYgbG9va3MgZ29vZCB0byBtZS4NCj4gDQo+IA0KPiBUZWd1aCwgYW55
+IHVwZGF0ZXMgb24gdGhlIHBhdGNoPw0KPiANCj4gLS0NCj4gV2l0aCBiZXN0IHdpc2hlcw0KPiBE
+bWl0cnkNCg0KSSB3aWxsIHNlbmQgYSBuZXcgb25lIHdpdGggY29ycmVjdGVkIGNvbW1pdCBtZXNz
+YWdlDQoNClJlZ2FyZHMsDQpUZWd1aC4=
 
