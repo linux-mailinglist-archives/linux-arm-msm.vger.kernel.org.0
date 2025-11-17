@@ -1,168 +1,157 @@
-Return-Path: <linux-arm-msm+bounces-82069-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-82070-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ams.mirrors.kernel.org (ams.mirrors.kernel.org [IPv6:2a01:60a::1994:3:14])
-	by mail.lfdr.de (Postfix) with ESMTPS id C6B53C63668
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Nov 2025 11:03:43 +0100 (CET)
+Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [142.0.200.124])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8EC9FC638C3
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Nov 2025 11:30:31 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ams.mirrors.kernel.org (Postfix) with ESMTPS id 8586F351110
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Nov 2025 09:55:16 +0000 (UTC)
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 414854F5C03
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Nov 2025 10:21:56 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 824BA320CB5;
-	Mon, 17 Nov 2025 09:54:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 80FE63271EF;
+	Mon, 17 Nov 2025 10:19:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b="OlcSFWHn"
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="F8d9Z8eN";
+	dkim=pass (2048-bit key) header.d=redhat.com header.i=@redhat.com header.b="h1+z4cZp"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f42.google.com (mail-wm1-f42.google.com [209.85.128.42])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1E9E327783
-	for <linux-arm-msm@vger.kernel.org>; Mon, 17 Nov 2025 09:54:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DAA8B31E11C
+	for <linux-arm-msm@vger.kernel.org>; Mon, 17 Nov 2025 10:19:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.133.124
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763373298; cv=none; b=e3Q3A/dYd64daoTLeeQS+Eycfjqz5G2gT1czELGuTwJiY1kFkCgm30SVkyhPoCKDxFW/PgF9pmfwRZwjtYzlj5wz9q2iHSv/0u3ES1x3AIXQMfMDN8lIejc/JS1Y0Q8wBqQlmRbs+QLwbGjaAF+m1n/TW+bLML1GNVeyKvBxyKQ=
+	t=1763374787; cv=none; b=mKGaUdfEu6YI1YR/nO6yNMye9Lus7X6OK1Ml+nGgct0ASOmwMTedb6Sl1r1g+6603eGPU2sQ0U1OviIe95mZllZarb7rUmgRTpF7Ov7RsUKfx1VIyH7wCILu2vTD5CkdIW7m05jc6VRO9Mwd0fgvYZlICFv4J3F3R6fb9K3lLoA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763373298; c=relaxed/simple;
-	bh=Y8IzrJFPXEJ2OuufostQBEvuvuOKU3pbm8KlsDXPLP4=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=pvpt/4BEInUfKxmqwrLYopeh7ooDMXvujGuYh15+woBNoPTYQKKhgwRQcRxJh0UC3SAm+BGPNHH1XfQawXc1xBCV4v99W3tsNHcsomOcvQWmigKVfjB4GcOMq+TS4ahY7TQHPJ1a+KqsmyJftYzv/5AF4Nut5tX2CeisEVP7N1s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl; spf=none smtp.mailfrom=bgdev.pl; dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b=OlcSFWHn; arc=none smtp.client-ip=209.85.128.42
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=bgdev.pl
-Received: by mail-wm1-f42.google.com with SMTP id 5b1f17b1804b1-477549b3082so33464825e9.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 17 Nov 2025 01:54:54 -0800 (PST)
+	s=arc-20240116; t=1763374787; c=relaxed/simple;
+	bh=L4oSZxGBXivJMe2ukmEHRiFwNHU+FBC0lpsrXgRdbkc=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=qGR1gNntt1fbtewCprYOMsqiD/LTheTBgtGKUWxkwTka0bpvLH8nTj8FW8aD/QohwbzaqyNKANRRTGURLrwHrhA1kNqORkov+9ucZ+DIcWiiu4eF3lu1Wb+tMFx+smbkZoN7KlugQP0KZI1oZT9DkEyXQHXu/dLi03xulUVWc3g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=F8d9Z8eN; dkim=pass (2048-bit key) header.d=redhat.com header.i=@redhat.com header.b=h1+z4cZp; arc=none smtp.client-ip=170.10.133.124
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1763374784;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=8Sj1yzB+yodW9emJVWyrm3VZBnBWrcQvlOUnMxJLYhU=;
+	b=F8d9Z8eNtsXXt+aH06QSLZJBjfNYAr3S0nI+6M9kfZbnxql9ho1cc6zyRYrn7vJL0LwC4J
+	DbWwPODziEgyo0lMgVuNxM23hv/RJ3VfPTwHxAbp3UvH7GB4UyLzFAV1aX9JENl9VMjRbA
+	5TZIhEho/TzyO84ipci5sil9QemLd8M=
+Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
+ [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-330-NwzgUFDaPCmHzzmQ0DkXWg-1; Mon, 17 Nov 2025 05:19:42 -0500
+X-MC-Unique: NwzgUFDaPCmHzzmQ0DkXWg-1
+X-Mimecast-MFC-AGG-ID: NwzgUFDaPCmHzzmQ0DkXWg_1763374781
+Received: by mail-wr1-f72.google.com with SMTP id ffacd0b85a97d-42b2f79759bso2864677f8f.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 17 Nov 2025 02:19:42 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=bgdev-pl.20230601.gappssmtp.com; s=20230601; t=1763373293; x=1763978093; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=yQakO2W4jxxWZ2irP7gAZmr+hAQ7O/Ov4z2X+DwzoWo=;
-        b=OlcSFWHnw7jonSImb/lr8ZQGaqwW5wqHmTXHl/3pTnbKq0GSIxsHa4UQyf+aYAUyEz
-         rWMmIHEB1nRU9nrs/EEYevLk2eFI70Lhcm5NvEb0V9uhDoZbh5btQHyWm+B2MGqgiR/d
-         WO4QpMDWg6bG+TbuHIh1cd//iK39BlJJoXL0LTOhSNK+OBdwqGudrT2ci2ZhY0I83Ctd
-         B4LR8ml0juRryKEaeoTb69epBRDkdznea1gGMfcOQbfzhPjEfKTP0pDwFUo8jaualMSF
-         kWMFs7G+kCiD0tzDhAM5M62fIAB9bd8Fcd0HBFUyQkREyK1/wPVzkS6GYD0E1RikP83C
-         XcTQ==
+        d=redhat.com; s=google; t=1763374781; x=1763979581; darn=vger.kernel.org;
+        h=mime-version:message-id:date:references:in-reply-to:subject:cc:to
+         :from:from:to:cc:subject:date:message-id:reply-to;
+        bh=8Sj1yzB+yodW9emJVWyrm3VZBnBWrcQvlOUnMxJLYhU=;
+        b=h1+z4cZpZtbZ3GxsH9ESnqDfZiFLB1q+ey7xuSJZVoC++YjAtqZ2NgjwBSvOB6GaG2
+         0cdxeGl6Hdhj2XZiVVs30KryJ5iCqZqzDWskcHjpuLoxLQJWhqk30VzYFQ9bPe0B2aL+
+         2x7tylaOl72B48i+MflBvP8yYJGQhCipahCinRLK85MU+3aDTtQLnfyMM8Uf+T7GQ//+
+         cPVRG3z7e81PBaXoziii0Hw1ymmS8uMI0ruln/jc7QajQoB/Yox4ouDAx6GicLYqB8bU
+         t593D8goHww9excW2cHkpVxCPINfUVooTXjchCRYvupElq0XT0Qzij/Dk/3pLYgpib7f
+         /RMA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1763373293; x=1763978093;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=yQakO2W4jxxWZ2irP7gAZmr+hAQ7O/Ov4z2X+DwzoWo=;
-        b=MxPnGdrFCVICAz0Vo0qtV3GG9u5yxe4I5LzmEypOx9zKzDfWMw3XLYNLOls1dOjXvk
-         539vLi7GxgEgYWAF6TaPva7f6etO6JRcgacl694/Qie+EAjP8Vh4fRZh1SovoL16MIKB
-         xApmYD8NW3UfY5eKZsbFN13egQey1oAwImRExl4O8FRKiX9bn69+Qm7tEvITiwR2OJmD
-         SGd/GxInxqMJsienvV1jAgV0+LoQGWdiGeHvyU/GI52r1XyG3nLE7KYstJJBsa6iM58a
-         djOvmZCgn6WVtBfEbn4fTww0Wotf7BVQNTS6sjyA/XL+beoqRKAYBDkeVvUGGkgLwhuK
-         Aplw==
-X-Forwarded-Encrypted: i=1; AJvYcCUsNf8V+lvNB7k1moURfFRflLfAC04FHAzWBV4+3JdKu5oV6HWQqFJUfKD62p9gY9YJGoweOS/YJ/PwBQPv@vger.kernel.org
-X-Gm-Message-State: AOJu0Yw8roql34hSM6r6sBvxTgcVGu5e4894wmW9moLgONBy1aR7B0ck
-	esyMAxXtAvcpB5Yyk8wuCMwYBxKNiG8mqT1jAs1dLbWmsbX2IGckHQulaCzOOrK/W1U=
-X-Gm-Gg: ASbGncuegzTcz+D0vKzF2oyLdAXnzeapR655VZcrzImSTwipPGd4R/bb5wzVkrzVOlg
-	ovA/yFm4CTpsrkeL0Zksh2/+B/zhNz9o/KYvyDjSctyOmGbQxpq56/NZwOT7w18tDj7rkYLNjrR
-	CmB7YzPmeZGOZrKdSC4FzbYYpSQGcLeRWxeoJOI5TgUAMYhiYSBboQ1Af5+R5UEKsxCwJEQD1eO
-	goQvXD4wS8gjDa8GX79ZgoQBJ3wYsW8QIU7TyGB0CVHgvzkuMQa/cjfc+YwuPnznYkqwoGsSJ+Y
-	hkgfdJ8kwxHkrdJbd8aa+I67TpmfFfjOeZZ6fOHsuuSc24z2NltCO2epP2xI5LFfG6gY/HxbbI5
-	jTkcnBuLy+LNqeztuaJL7WjdxFt/AGHa8Y2ie4Pww1n9S8694JawTEekxD9xma3slu2S+8LERDB
-	e286RQ
-X-Google-Smtp-Source: AGHT+IFhjSKYX/arBJL3/rXffXBpiEHsSupWSNw5jzv7CJLF3z4ydrD8nr7kTuUVeh7M/OglnfLL9Q==
-X-Received: by 2002:a05:600c:4752:b0:477:7b30:a6fe with SMTP id 5b1f17b1804b1-4778fe6391amr100771505e9.18.1763373293056;
-        Mon, 17 Nov 2025 01:54:53 -0800 (PST)
-Received: from brgl-uxlite ([2a01:cb1d:dc:7e00:36dc:12ef:ca32:1a1c])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-47787e8e6acsm310053395e9.9.2025.11.17.01.54.52
+        d=1e100.net; s=20230601; t=1763374781; x=1763979581;
+        h=mime-version:message-id:date:references:in-reply-to:subject:cc:to
+         :from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=8Sj1yzB+yodW9emJVWyrm3VZBnBWrcQvlOUnMxJLYhU=;
+        b=R3G0VE8wp/q7fIvmAGOuZ++PjgEC+XPKtzewj/f5fz95ZS9WQb+RHS1G+5PmGzr3lq
+         7gTglv4+FbJNNp/4QZaIQNsHGePit4Yn5DRcOdDbd8Uz6MNWdH2hmtMZlj+FCwW/OHI+
+         Nf5hYbBuV9tjLumRuSbxkaM0GSv/CRcs4tqck8v7qucyyvag+hTPYVuEdJ3jIVz/e9rt
+         07efnnpVAm6dS12FyoxHQJECSSi0tksfpYkV32/DFxTRe2l6gHLNBgHmwP34qkDemy6B
+         K+0+XnG8tK0hLb3iyEWDTSUj6LAjPz27vxjTM6rl4ngw7rST0b5MKzro23Xm2hrtk4Ad
+         2lGg==
+X-Forwarded-Encrypted: i=1; AJvYcCVAjf5Hgys5PVqkbhX+uPMYWWz2NbgseyN3whazWutYxwzNRCUEtbwIhnbbhMZIURgZns+QPtxcOtYKeldA@vger.kernel.org
+X-Gm-Message-State: AOJu0YyxW/AEmWSdlIowDRKhXDKVwd7VWs4oP1oV92T9j5Qp7xcMMkpn
+	rjjEdOVRCEijj6IhNuIUcNRBzoCpSrOJUTgxDz4i44SE+PnsQIhp/fH5WNhmGKy5W9MtXX6kTBr
+	IXDRYI7QNaon4QK4rtNtzOC81AZGj+oXDd1B67ySP/bXgX2tQnZFQKwPg39dihoakHd0=
+X-Gm-Gg: ASbGncu3ddLWEvlD4AHZCaXXgC41jH/kvt42CytmOct6Aguk6XoWBfjGzz88Hb9g++n
+	bYDcUhriVGQezVNLKnddhKRzhDO+1DSqde3dfWPkIqbnAqUNi9O2kJOYHtJjU/4KZDgTT5kusFG
+	KRVIyqSBAJs9m1n7nwRDWQ51LfxPwuw9Ir+tc0XKnCoQ17IKPPWtqBS/K7jXzVC3jROJxR5nLeM
+	W+jmVpoiJos54VnwKFBTkJangvJIuXRljf+0y0TmT/mTOxrmOCSP9smUC9ohYeAFtgc5O8xsjnN
+	avETwcnpQ1a6qUmEqvc8QzdYBnZxcbjV87tzEUv15Oxfy5TwqCUXlRYBlZFv+t7JCSOoBnFP+pX
+	/h6Dn0g3D1dJk0vf+PJBgBDvEcKzIFN+wl3LJ6/oW
+X-Received: by 2002:a5d:5f47:0:b0:427:9e6:3a64 with SMTP id ffacd0b85a97d-42b593847f2mr10779183f8f.47.1763374780951;
+        Mon, 17 Nov 2025 02:19:40 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHuLJzRkeZwRTSmYiDMNFB5b9Y04M5/X3K0AsCLwjmRlR2lS/HTXuIsn1n38y2t71o3SspdXw==
+X-Received: by 2002:a5d:5f47:0:b0:427:9e6:3a64 with SMTP id ffacd0b85a97d-42b593847f2mr10779119f8f.47.1763374780429;
+        Mon, 17 Nov 2025 02:19:40 -0800 (PST)
+Received: from localhost ([195.166.127.210])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-42b53f0b8d6sm26377484f8f.28.2025.11.17.02.19.39
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 17 Nov 2025 01:54:52 -0800 (PST)
-From: Bartosz Golaszewski <brgl@bgdev.pl>
-To: Mark Brown <broonie@kernel.org>
-Cc: Linus Walleij <linus.walleij@linaro.org>,
-	linux-gpio@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	linux-arm-kernel@lists.infradead.org,
-	linux-arm-msm@vger.kernel.org,
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Subject: [GIT PULL] Immutable branch between the GPIO, ASoC and regulator trees for v6.19-rc1
-Date: Mon, 17 Nov 2025 10:54:41 +0100
-Message-ID: <20251117095441.46680-1-brgl@bgdev.pl>
-X-Mailer: git-send-email 2.51.0
+        Mon, 17 Nov 2025 02:19:39 -0800 (PST)
+From: Javier Martinez Canillas <javierm@redhat.com>
+To: Thomas Zimmermann <tzimmermann@suse.de>, airlied@gmail.com,
+ simona@ffwll.ch, linux@armlinux.org.uk, maarten.lankhorst@linux.intel.com,
+ mripard@kernel.org, inki.dae@samsung.com, sw0312.kim@samsung.com,
+ kyungmin.park@samsung.com, patrik.r.jakobsson@gmail.com,
+ jani.nikula@linux.intel.com, rodrigo.vivi@intel.com,
+ robin.clark@oss.qualcomm.com, lumag@kernel.org, abhinav.kumar@linux.dev,
+ sean@poorly.run, marijn.suijten@somainline.org,
+ tomi.valkeinen@ideasonboard.com, alexander.deucher@amd.com,
+ christian.koenig@amd.com, thierry.reding@gmail.com, mperttunen@nvidia.com,
+ jonathanh@nvidia.com
+Cc: dri-devel@lists.freedesktop.org, intel-gfx@lists.freedesktop.org,
+ intel-xe@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+ freedreno@lists.freedesktop.org, amd-gfx@lists.freedesktop.org,
+ linux-tegra@vger.kernel.org, Thomas Zimmermann <tzimmermann@suse.de>
+Subject: Re: [PATCH v2] drm/fb-helper: Allocate and release fb_info in
+ single place
+In-Reply-To: <20251027081245.80262-1-tzimmermann@suse.de>
+References: <20251027081245.80262-1-tzimmermann@suse.de>
+Date: Mon, 17 Nov 2025 11:19:38 +0100
+Message-ID: <87ikf9kll1.fsf@ocarina.mail-host-address-is-not-set>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 
-From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Thomas Zimmermann <tzimmermann@suse.de> writes:
 
-Hi Mark!
+Hello Thomas,
 
-Please pull the following changes into the ASoC and regulator trees as
-a prerequisite to applying patches 8-10 for v6.19-rc1 from the series
-improving support for shared GPIOs[1].
+> Move the calls to drm_fb_helper_alloc_info() from drivers into a
+> single place in fbdev helpers. Allocates struct fb_info for a new
+> framebuffer device. Then call drm_fb_helper_single_fb_probe() to
+> create an fbdev screen buffer. Also release the instance on errors
+> by calling drm_fb_helper_release_info().
+>
+> Simplifies the code and fixes the error cleanup for some of the
+> drivers.
+>
+> Regular release of the struct fb_info instance still happens in
+> drm_fb_helper_fini() as before.
+>
+> v2:
+> - remove error rollback in driver implementations (kernel test robot)
+> - initialize info in TTM implementation (kernel test robot)
+>
+> Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
+> ---
 
-Please note that there's a small conflict between v6.18-rc1 and my
-gpio/for-next branch where gpio_chip_hwgpio() has been renamed to
-gpiod_hwgpio().
+It simplifies the drivers' code indeed.
 
-In linux-next it can be fixed like this:
+Acked-by: Javier Martinez Canillas <javierm@redhat.com>
 
-diff --git a/drivers/gpio/gpiolib-shared.c b/drivers/gpio/gpiolib-shared.c
-index fa1d16635ea78..c22eaf05eef23 100644
---- a/drivers/gpio/gpiolib-shared.c
-+++ b/drivers/gpio/gpiolib-shared.c
-@@ -462,7 +462,7 @@ static struct gpio_shared_entry *gpiod_shared_find(struct auxiliary_device *adev
- 			entry->shared_desc = shared_desc;
- 
- 			pr_debug("Device %s acquired a reference to the shared GPIO %u owned by %s\n",
--				 dev_name(&adev->dev), gpio_chip_hwgpio(shared_desc->desc),
-+				 dev_name(&adev->dev), gpiod_hwgpio(shared_desc->desc),
- 				 gpio_device_get_label(shared_desc->desc->gdev));
+-- 
+Best regards,
 
-Thanks!
-Bartosz
+Javier Martinez Canillas
+Core Platforms
+Red Hat
 
-[1] https://lore.kernel.org/all/20251112-gpio-shared-v4-0-b51f97b1abd8@linaro.org/
-
-The following changes since commit 3a8660878839faadb4f1a6dd72c3179c1df56787:
-
-  Linux 6.18-rc1 (2025-10-12 13:42:36 -0700)
-
-are available in the Git repository at:
-
-  git://git.kernel.org/pub/scm/linux/kernel/git/brgl/linux.git tags/gpio/shared-gpios-for-v6.19-rc1
-
-for you to fetch changes up to e511d484cbe44fe48a1b9f621f6a947c72503f9e:
-
-  arm64: select HAVE_SHARED_GPIOS for ARCH_QCOM (2025-11-17 10:16:51 +0100)
-
-----------------------------------------------------------------
-Immutable branch between the GPIO, ASoC and regulator trees for v6.19-rc1
-
-Add better support for GPIOs shared by multiple consumers.
-
-----------------------------------------------------------------
-Bartosz Golaszewski (7):
-      string: provide strends()
-      gpiolib: define GPIOD_FLAG_SHARED
-      gpiolib: implement low-level, shared GPIO support
-      gpio: shared-proxy: implement the shared GPIO proxy driver
-      gpiolib: support shared GPIOs in core subsystem code
-      gpio: provide gpiod_is_shared()
-      arm64: select HAVE_SHARED_GPIOS for ARCH_QCOM
-
- arch/arm64/Kconfig.platforms     |   1 +
- drivers/gpio/Kconfig             |  17 ++
- drivers/gpio/Makefile            |   2 +
- drivers/gpio/gpio-shared-proxy.c | 333 +++++++++++++++++++++++
- drivers/gpio/gpiolib-shared.c    | 558 +++++++++++++++++++++++++++++++++++++++
- drivers/gpio/gpiolib-shared.h    |  71 +++++
- drivers/gpio/gpiolib.c           |  70 ++++-
- drivers/gpio/gpiolib.h           |   2 +
- include/linux/gpio/consumer.h    |   9 +
- include/linux/string.h           |  18 ++
- lib/tests/string_kunit.c         |  13 +
- 11 files changed, 1085 insertions(+), 9 deletions(-)
- create mode 100644 drivers/gpio/gpio-shared-proxy.c
- create mode 100644 drivers/gpio/gpiolib-shared.c
- create mode 100644 drivers/gpio/gpiolib-shared.h
 
