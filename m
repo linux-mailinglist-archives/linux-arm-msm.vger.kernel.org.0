@@ -1,154 +1,485 @@
-Return-Path: <linux-arm-msm+bounces-82151-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-82152-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ams.mirrors.kernel.org (ams.mirrors.kernel.org [IPv6:2a01:60a::1994:3:14])
-	by mail.lfdr.de (Postfix) with ESMTPS id 74A53C65987
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Nov 2025 18:47:30 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id 42577C6595A
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Nov 2025 18:45:07 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ams.mirrors.kernel.org (Postfix) with ESMTPS id 7713E355F77
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Nov 2025 17:37:24 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTPS id F09942904C
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Nov 2025 17:45:05 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B458C301015;
-	Mon, 17 Nov 2025 17:37:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 04F14309F18;
+	Mon, 17 Nov 2025 17:45:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Y1uxPfuE"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="I/6aBMSG";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="Q7eCbZME"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8336529D268;
-	Mon, 17 Nov 2025 17:37:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F069C2D6E6D
+	for <linux-arm-msm@vger.kernel.org>; Mon, 17 Nov 2025 17:45:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763401038; cv=none; b=himJruErd7nyZYD1Vh2sYgbdPwhEHCafWtZ8Ut07X2raRtjpq0BOAclpqQqQ+e9AlzPjs9miO3AVQm/cE7VvhjPg2qn5GH30B0BM8L+PxnmLapRc2grwLOxtnuXBDxdIdPCIGfhPoy8PjNqKpdMXnAI57Pi6o2oG1D89GrD/cF0=
+	t=1763401504; cv=none; b=Qqi1HII5CwVXaTVC9Ud0PL/ZZv0vhE+1kMhCicYg0ZmuV9iemqCRQC0/z4SDN94vDMz/8MCNc8KjTagqfsHMRVK0jq5VqCq/MHVItD2VRmXjdN6VmaZezNWzE0XL2GdUXvkbVQAOEbSpIfPiDguEkPPDr8UDMzKN3/DG8+2pPRQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763401038; c=relaxed/simple;
-	bh=xaJwj4w/55f9caNeZTmSEHP8i/cA6sqKW7e+HMlLTUc=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=kD8jAttRUZ2u3WOGkrLA0QbegrNVuEGsUjjQEOHcbUJCIczM4Zh4iWL+PX/zkZpD4YERV4P9PhHSiW4dsgw70MbeJIqY7SjiLtZRSTRuPynEAIKItuc8re5i5zTcuHZIW3OuxHUfLZ6lQwFY3IkEcYgGMtkLBgfCe3BsSbDV+rk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Y1uxPfuE; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F9F1C19425;
-	Mon, 17 Nov 2025 17:37:09 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1763401036;
-	bh=xaJwj4w/55f9caNeZTmSEHP8i/cA6sqKW7e+HMlLTUc=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=Y1uxPfuE5W2Lm/R/zsthGPD9m29er72tTcgxXt6CxtX7xUJWghvu2YLLYdILO7x7V
-	 zytxGct0hN5EVmcT57L5q3nD3rvpA0e6FSaWTR1sup2uAL/nhb3zbD9Urem3xmAMNk
-	 p/w8bjzMZH8H5LI+ZtXvHS1BrlYlUMRwVVP9deSlhY+M9PXkzP7nUYFhyAlEXfmO+4
-	 0RrGiLb/17Y4rSqtN6htu9i0jr2VPJ5q18/TkoNehFfheycq4zaGiGCr5L/BqyFkdr
-	 7ikWzQ/RbpbYWO+yF8J7BgB8PADlMQEWoyZcoGTyiIxyih17StZXwBAa1jf6sIfg9l
-	 0gOF2Ju/ewVLw==
-Date: Mon, 17 Nov 2025 23:07:01 +0530
-From: Manivannan Sadhasivam <mani@kernel.org>
-To: Bjorn Helgaas <helgaas@kernel.org>
-Cc: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>, 
-	lpieralisi@kernel.org, kwilczynski@kernel.org, bhelgaas@google.com, will@kernel.org, 
-	linux-pci@vger.kernel.org, linux-kernel@vger.kernel.org, robh@kernel.org, 
-	linux-arm-msm@vger.kernel.org, zhangsenchuan@eswincomputing.com, vincent.guittot@linaro.org
-Subject: Re: [PATCH v2 2/3] PCI: qcom: Check for the presence of a device
- instead of Link up during suspend
-Message-ID: <qu3gnvl7t7ehpxhkchz6ragjoeafktwr4dtstattthfv3jezd7@zrfwrlr2vzx5>
-References: <zgj3ubyb234ig6ndz6ov5q3szvuxnd3jkz2rjglbad4ksri6nl@ov7boxuar4va>
- <20251113172250.GA2291436@bhelgaas>
+	s=arc-20240116; t=1763401504; c=relaxed/simple;
+	bh=OrY5QqJzGHyH/k2TUKUNblpQX3atIXj34y5rMMffOD4=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=gfbmb3QyIncBIi67IlMRGAdcR5bGxxEPxXKtNoRJhXpW/gEyuy06sDBKzxAK8kDCz4QftLgc1yOPW8gJBeLv7MdcHar7r2SCH7VWcKD4GmuOE0RDOy6jQqg5jwzLmoD+hLJ0Viahw7D9mOUTCXJN3VdbbvjuUM5NB1y783YFjSs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=I/6aBMSG; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=Q7eCbZME; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 5AHGQIjh027433
+	for <linux-arm-msm@vger.kernel.org>; Mon, 17 Nov 2025 17:45:02 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	FZRSZJaXJK3H8KiRRFtmfmmD0X8FuwMNZIwPPdsPacU=; b=I/6aBMSGTw1rVz6E
+	/c2JmqopvTST5m+7FVkGDyjtFCMCwPfDbRZqsVzZdJ9Zjj1aIreOVxmRO23v6wuu
+	4kQhSlJaJDfypaVFbtgddphEAu+Ld+eb1TykJPTBhI7oqFLhbnuc7BIEf8me/Zyw
+	O9Fff3Q0GWCajjrzfKNbfGjKBNIzVhmlV/mHChzjxRyLPJwd2so2BW17zRJ39Uov
+	rsP4G+mNDsnbUZjXsLwNU5WxJSjfvVa6JfgHIJMcHRnjjIsur6IhlJToqirFX96S
+	2yGhi/x5Ug9MILDjBUGGpS7aJ+JsnAVQ3gxk6+jvXB5iS+kJINM5hPGKLupl9OR7
+	vEBqrQ==
+Received: from mail-pl1-f200.google.com (mail-pl1-f200.google.com [209.85.214.200])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4ag77t0853-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Mon, 17 Nov 2025 17:45:02 +0000 (GMT)
+Received: by mail-pl1-f200.google.com with SMTP id d9443c01a7336-297e66542afso151735595ad.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 17 Nov 2025 09:45:02 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=oss.qualcomm.com; s=google; t=1763401501; x=1764006301; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=FZRSZJaXJK3H8KiRRFtmfmmD0X8FuwMNZIwPPdsPacU=;
+        b=Q7eCbZME4h77cqB/c+kVdd7aecev84To/PGLKRCDaRM6zcYRK8Pgdgf0mJRduKecpM
+         TB4ahy9xjZt9oaRAzG9rAyOO1rjHwvM1VgGMnp7TJ4HKf7Dj1gmxKsWuHJO1HVLlBoAy
+         q63RT+5m8in+42w37yskzQePpJCBuzoSQoYyjEKVyawZGrbDk6RVJzupNsJsm2M1HvzU
+         Q2SdGQkgguADL3h0z+x/AyF/mbIQdqXoc3hfasdtMt+qiYraRH2Lj9zBa5Y1DEPXw17p
+         1rlHajsrJxhRkF1NYl6REv1poKmcFX2HxjlCmO3a3af8vFXB61JGjB1vzjevDKyVBXvj
+         2rdQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1763401501; x=1764006301;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=FZRSZJaXJK3H8KiRRFtmfmmD0X8FuwMNZIwPPdsPacU=;
+        b=qJFimYasd9Xnd2OvQhm5hAMaoJpgDs8nhmoOIoOHs6rjDi5PeQNEy0TToLG3DolUOI
+         Q+96ManVw20YTmA2KlCRKDZVKCYfK1HJmoQuZ2VNjnvW/fALlQYJxn8OKmIB2d4aOkIm
+         H68PCicGafyy5fcE7b3pvIg9buaoprzK9OqZGQpC0lTEfh1/xJ1fZBNvZ5LtsfBm75M9
+         /oyq0YreGlE2Jf3JkWBORz9hAbjV9nbJICL39QJmMBHotawnrj7HS2EDx+ZY/KPIfHCz
+         sz/nv6g4Biy0A7OaQI2HaARBMmHisuLUqorQ9sG2zu+uL8CFp23eXbDwBFDQPMsusCNM
+         5HXA==
+X-Forwarded-Encrypted: i=1; AJvYcCXH3FNAsX+Wxg4NO4GZvmHbBgsL45BVdHMan4XIKuWkUSQjdwK08afSPTVy8vK+VTB8lkFUBqkCYuVWXaxJ@vger.kernel.org
+X-Gm-Message-State: AOJu0Yx0Izky0wiIs9vp7B8xXV7wO3irczxBgZ06a/dqwILV3xyxmZAm
+	zMeMZ9alftB8AeqG3MEqN8WXqx25HskSlwCqRxHDGX0INbsPVa99bUEgcNjVsY+hxWMGV5on/eG
+	IptP4ntdtfhjhLNIFpQqbjWCHIzibg6GSzaix8F++zfaDMF871biQZbQnr9T9DvijIsPg
+X-Gm-Gg: ASbGncsPFL6q896/jjr2nfLltYmqDbjzYNZl+8nFL2XKWol3ne35QqdHBPXsmXzG5It
+	R+Zl5Xj+XJ9X8K0EHwBu+ejUFwIX3czv9zij9DG8FEsvvEaTGWKO8qKrHAyMftyTdNZBqpFE3JX
+	LnAnFx9qbMM/RYfyYYMcdkvUUrwmPi2q0TZr3U459ZR1Bm37wirnbCrxhAyD0E+PsilYJ1YkcwS
+	q61c1PgTONBkmFzSG+/+I9or3SX7DKDhgEqizqMggC4T6wb+7xm5dLH+Z33JSq4uTQAhECOjFMt
+	85cfsD55XSLhGHhehGDAHO+gphnb70BjNsKl+CAnsgpQK0Ke8bkM7x7Y4Z+zH6sXvKodtc43o7b
+	k30t857SQEIi0IA1noPvALmQ2R8y0zeMYHA==
+X-Received: by 2002:a17:902:ce8b:b0:298:1830:6ada with SMTP id d9443c01a7336-2986a73acbamr170447335ad.30.1763401501385;
+        Mon, 17 Nov 2025 09:45:01 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGWXmuj/8eJBzBjfLy+4VvylbQRa8VAv4dpCJkR15k6XehgEE2nvQT1IK2OEnM9MAQXxNazPA==
+X-Received: by 2002:a17:902:ce8b:b0:298:1830:6ada with SMTP id d9443c01a7336-2986a73acbamr170446975ad.30.1763401500804;
+        Mon, 17 Nov 2025 09:45:00 -0800 (PST)
+Received: from [10.216.14.226] ([202.46.23.19])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2985c2b0d34sm146466705ad.51.2025.11.17.09.44.49
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 17 Nov 2025 09:45:00 -0800 (PST)
+Message-ID: <80e68e44-a8e0-464a-056e-9f087ad40d51@oss.qualcomm.com>
+Date: Mon, 17 Nov 2025 23:14:48 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.5.1
+Subject: Re: [PATCH v17 07/12] firmware: psci: Implement vendor-specific
+ resets as reboot-mode
+Content-Language: en-US
+To: Lorenzo Pieralisi <lpieralisi@kernel.org>
+Cc: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Sebastian Reichel <sre@kernel.org>, Rob Herring <robh@kernel.org>,
+        Sudeep Holla <sudeep.holla@arm.com>,
+        Souvik Chakravarty <Souvik.Chakravarty@arm.com>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley
+ <conor+dt@kernel.org>,
+        Andy Yan <andy.yan@rock-chips.com>,
+        Mark Rutland <mark.rutland@arm.com>, Arnd Bergmann <arnd@arndb.de>,
+        Konrad Dybcio <konradybcio@kernel.org>,
+        cros-qcom-dts-watchers@chromium.org, Vinod Koul <vkoul@kernel.org>,
+        Catalin Marinas <catalin.marinas@arm.com>,
+        Will Deacon <will@kernel.org>,
+        Florian Fainelli <florian.fainelli@broadcom.com>,
+        Moritz Fischer <moritz.fischer@ettus.com>,
+        John Stultz <john.stultz@linaro.org>,
+        Matthias Brugger <matthias.bgg@gmail.com>,
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+        Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Andre Draszik
+ <andre.draszik@linaro.org>,
+        Kathiravan Thirumoorthy <kathiravan.thirumoorthy@oss.qualcomm.com>,
+        linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org,
+        Elliot Berman <quic_eberman@quicinc.com>,
+        Xin Liu <xin.liu@oss.qualcomm.com>,
+        Srinivas Kandagatla <srini@kernel.org>,
+        Umang Chheda <umang.chheda@oss.qualcomm.com>,
+        Nirmesh Kumar Singh <nirmesh.singh@oss.qualcomm.com>
+References: <20251109-arm-psci-system_reset2-vendor-reboots-v17-0-46e085bca4cc@oss.qualcomm.com>
+ <20251109-arm-psci-system_reset2-vendor-reboots-v17-7-46e085bca4cc@oss.qualcomm.com>
+ <aRIfc9iuC2b9DqI+@lpieralisi>
+From: Shivendra Pratap <shivendra.pratap@oss.qualcomm.com>
+In-Reply-To: <aRIfc9iuC2b9DqI+@lpieralisi>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20251113172250.GA2291436@bhelgaas>
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMTE3MDE1MCBTYWx0ZWRfX5W+6R/bFUMRH
+ 0l5YJdHcE95Cl35+RizgGOjVg5cQxwjJtD9uaziayzg8MqVV3T4XiHzcYJ85IDp8n0yr9ad8E41
+ 50qmeQ0oRPtYZf6Xo0+IvbkZu1hcthZZtNhApJSwWxjWKn5k7hKG8xwJMWwpPcVdvzMc3BLmc6P
+ DTlJC++N1Fupx+urnGqi0Y50CGIs3nUenRBb+oA330YePEqnhWbKRaPTH8CGQFNtOd/VYb6TgCu
+ 3w4KmWCEsukz4L0D9AQWIq0ImwOl+CW77/WGpAxpzYRUXQ6kAtjIkxr05qlhb7nIdVKuoKhjEts
+ BgcFBNSQnvMW2Dh1EDdvZuOcg4i3Gq+k6k03GZ8vSKLJVBsaWcWOMK31EGuYDionTHtefWJlDXp
+ PMwmoZIIO/9neqPRCqUqQsIzFpqVuA==
+X-Authority-Analysis: v=2.4 cv=EPoLElZC c=1 sm=1 tr=0 ts=691b5f1e cx=c_pps
+ a=IZJwPbhc+fLeJZngyXXI0A==:117 a=j4ogTh8yFefVWWEFDRgCtg==:17
+ a=IkcTkHD0fZMA:10 a=6UeiqGixMTsA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=EUspDBNiAAAA:8 a=9RDUOf2qPouKHcjUQO0A:9
+ a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=uG9DUKGECoFWVXl0Dc02:22
+X-Proofpoint-ORIG-GUID: XD08SkuNDq4p5mQ0ALiWeEijXuZPA7nj
+X-Proofpoint-GUID: XD08SkuNDq4p5mQ0ALiWeEijXuZPA7nj
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
+ definitions=2025-11-17_03,2025-11-13_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ suspectscore=0 bulkscore=0 priorityscore=1501 impostorscore=0
+ lowpriorityscore=0 phishscore=0 adultscore=0 spamscore=0 clxscore=1015
+ malwarescore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2510240001
+ definitions=main-2511170150
 
-On Thu, Nov 13, 2025 at 11:22:50AM -0600, Bjorn Helgaas wrote:
-> On Thu, Nov 13, 2025 at 10:24:17PM +0530, Manivannan Sadhasivam wrote:
-> > On Thu, Nov 13, 2025 at 10:41:47AM -0600, Bjorn Helgaas wrote:
-> > > On Fri, Nov 07, 2025 at 10:13:18AM +0530, Manivannan Sadhasivam wrote:
-> > > > The suspend handler checks for the PCIe Link up to decide when to turn off
-> > > > the controller resources. But this check is racy as the PCIe Link can go
-> > > > down just after this check.
-> > > > 
-> > > > So use the newly introduced API, pci_root_ports_have_device() that checks
-> > > > for the presence of a device under any of the Root Ports to replace the
-> > > > Link up check.
-> > > 
-> > > Why is pci_root_ports_have_device() itself not racy?
-> > 
-> > Because it is very uncommon for the 'pci_dev' to go away during the
-> > host controller suspend. It might still be possible in edge cases,
-> > but very common as the link down. I can reword it.
+
+
+On 11/10/2025 10:52 PM, Lorenzo Pieralisi wrote:
+> On Sun, Nov 09, 2025 at 08:07:20PM +0530, Shivendra Pratap wrote:
+>> SoC vendors have different types of resets which are controlled
+>> through various hardware registers. For instance, Qualcomm SoC
+>> may have a requirement that reboot with “bootloader” command
+>> should reboot the device to bootloader flashing mode and reboot
+>> with “edl” should reboot the device into Emergency flashing mode.
+>> Setting up such reboots on Qualcomm devices can be inconsistent
+>> across SoC platforms and may require setting different HW
+>> registers, where some of these registers may not be accessible to
+>> HLOS. These knobs evolve over product generations and require
+>> more drivers. PSCI spec defines, SYSTEM_RESET2, vendor-specific
+>> reset which can help align this requirement. Add support for PSCI
+>> SYSTEM_RESET2, vendor-specific resets and align the implementation
+>> to allow user-space initiated reboots to trigger these resets.
+>>
+>> Implement the PSCI vendor-specific resets by registering to the
+>> reboot-mode framework.
 > 
-> I guess it's better to acknowledge replacing one race with another
-> than it would be to suggest that this *removes* a race.
+> I think that we should expose to user space _all_ PSCI reset types,
+> cold, warm + vendor specific - as a departure from using the reboot_mode
+> variable (and possibly deprecate it - or at least stop using it).
+
+sure. We can try that. Have tried to compile it all at the end of this thread.
+
 > 
-
-Ok.
-
-> But I don't understand the point of this.  Is
-> pci_root_ports_have_device() *less* racy than the
-> qcom_pcie_suspend_noirq() check?  Why would that be?
+>> As psci init is done at early kernel init, reboot-mode registration cannot
+>> be done at the time of psci init.  This is because reboot-mode creates a
+>> “reboot-mode” class for exposing sysfs, which can fail at early kernel init.
+>> To overcome this, introduce a late_initcall to register PSCI vendor-specific
+>> resets as reboot modes. Implement a reboot-mode write function that sets
+>> reset_type and cookie values during the reboot notifier callback.  Introduce
+>> a firmware-based call for SYSTEM_RESET2 vendor-specific reset in the
+>> psci_sys_reset path, using reset_type and cookie if supported by secure
+>> firmware. Register a panic notifier and clear vendor_reset valid status
+>> during panic.  This is needed for any kernel panic that occurs post
+>> reboot_notifiers.
 > 
+> Is it because panic uses reboot_mode to determine the reset to issue ?
 
-The check is supposed to perform deinit only if there are no devices connected
-to the slot. And the reason to skip the deinit was mostly due to driver behavior
-like NVMe driver, which expects the device to be in D0 even during system
-suspend on non-x86 platforms.
+Yes. As we know, currently psci supports only two resets,
+psci_sys_reset2 (ARCH warm reset) and psci_sys_reset(COLD RESET). And kernel
+panic path should take the path set by reboot_mode to maintain backward
+compatibility. 
 
-Since the check is for the existence of the device nevertheless, I thought,
-making use of pci_root_ports_have_device() serves the purpose instead of
-checking the data link layer status.
-
-> I'm kind of skeptical about adding pci_root_ports_have_device() at
-> all.  It seems like it just encourages racy behavior in drivers.
 > 
+>> By using the above implementation, userspace will be able to issue
+>> such resets using the reboot() system call with the "*arg"
+>> parameter as a string based command. The commands can be defined
+>> in PSCI device tree node under “reboot-mode” and are based on the
+>> reboot-mode based commands.
+> 
+> IMHO - it would be nice if could add mode-cold (or mode-normal in reboot mode
+> speak) and mode-warm by default (if PSCI supports them) so that userspace
 
-I agree that though it is not very common, but with async suspend, it is
-possible that 'pci_dev' may get removed during controller suspend.
+Default mode in current kernel is cold, until explicitly set to warm.
+So should it be defaulted to cold?
 
-So I've dropped this series from controller/dwc until we conclude.
+> could issue those resets too without having to set the reboot_mode variable.
+> 
+> Reason is, since we are doing this it is worth going the whole nine
+> yards and try to decouple the reboot_mode variable from the RESTART2
+> syscall argument.
+> 
+> Reworded: just use the new userspace interface you are adding for
+> all PSCI reset types.
+> 
+> Thoughts very much welcome - I understand this is controversial.
 
-- Mani
+We can remove the dependency on reboot_mode and include all supported
+modes in a new psci_reset driver with some default modes (warm, cold)
+and other vendor-specific resets which may be picked from device tree.
+And then, reset based on the command being passed from userspace.
 
-> > > > Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
-> > > > ---
-> > > >  drivers/pci/controller/dwc/pcie-qcom.c | 6 ++++--
-> > > >  1 file changed, 4 insertions(+), 2 deletions(-)
-> > > > 
-> > > > diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
-> > > > index 805edbbfe7eb..b2b89e2e4916 100644
-> > > > --- a/drivers/pci/controller/dwc/pcie-qcom.c
-> > > > +++ b/drivers/pci/controller/dwc/pcie-qcom.c
-> > > > @@ -2018,6 +2018,7 @@ static int qcom_pcie_probe(struct platform_device *pdev)
-> > > >  static int qcom_pcie_suspend_noirq(struct device *dev)
-> > > >  {
-> > > >  	struct qcom_pcie *pcie;
-> > > > +	struct dw_pcie_rp *pp;
-> > > >  	int ret = 0;
-> > > >  
-> > > >  	pcie = dev_get_drvdata(dev);
-> > > > @@ -2053,8 +2054,9 @@ static int qcom_pcie_suspend_noirq(struct device *dev)
-> > > >  	 * powerdown state. This will affect the lifetime of the storage devices
-> > > >  	 * like NVMe.
-> > > >  	 */
-> > > > -	if (!dw_pcie_link_up(pcie->pci)) {
-> > > > -		qcom_pcie_host_deinit(&pcie->pci->pp);
-> > > > +	pp = &pcie->pci->pp;
-> > > > +	if (!pci_root_ports_have_device(pp->bridge->bus)) {
-> > > > +		qcom_pcie_host_deinit(pp);
-> > > >  		pcie->suspended = true;
-> > > >  	}
-> > > >  
-> > > > -- 
-> > > > 2.48.1
-> > > > 
-> > 
-> > -- 
-> > மணிவண்ணன் சதாசிவம்
+But yes some platforms that already reply on reboot_mode may break here
+and will need to adjust to the new design being proposed.
 
--- 
-மணிவண்ணன் சதாசிவம்
+Have summarized at the end of the thread.
+
+> 
+>> Reviewed-by: Umang Chheda <umang.chheda@oss.qualcomm.com>
+>> Reviewed-by: Kathiravan Thirumoorthy <kathiravan.thirumoorthy@oss.qualcomm.com>
+>> Reviewed-by: Nirmesh Kumar Singh <nirmesh.singh@oss.qualcomm.com>
+>> Signed-off-by: Shivendra Pratap <shivendra.pratap@oss.qualcomm.com>
+>> ---
+>>  drivers/firmware/psci/Kconfig |  2 +
+>>  drivers/firmware/psci/psci.c  | 92 ++++++++++++++++++++++++++++++++++++++++++-
+>>  2 files changed, 93 insertions(+), 1 deletion(-)
+>>
+>> diff --git a/drivers/firmware/psci/Kconfig b/drivers/firmware/psci/Kconfig
+>> index 97944168b5e66aea1e38a7eb2d4ced8348fce64b..93ff7b071a0c364a376699733e6bc5654d56a17f 100644
+>> --- a/drivers/firmware/psci/Kconfig
+>> +++ b/drivers/firmware/psci/Kconfig
+>> @@ -1,6 +1,8 @@
+>>  # SPDX-License-Identifier: GPL-2.0-only
+>>  config ARM_PSCI_FW
+>>  	bool
+>> +	select POWER_RESET
+>> +	select REBOOT_MODE
+>>  
+>>  config ARM_PSCI_CHECKER
+>>  	bool "ARM PSCI checker"
+>> diff --git a/drivers/firmware/psci/psci.c b/drivers/firmware/psci/psci.c
+>> index 38ca190d4a22d6e7e0f06420e8478a2b0ec2fe6f..ff82e7f4c27d1609a75cedc3a9790affaf839801 100644
+>> --- a/drivers/firmware/psci/psci.c
+>> +++ b/drivers/firmware/psci/psci.c
+>> @@ -8,15 +8,18 @@
+>>  
+>>  #include <linux/acpi.h>
+>>  #include <linux/arm-smccc.h>
+>> +#include <linux/bitops.h>
+>>  #include <linux/cpuidle.h>
+>>  #include <linux/debugfs.h>
+>>  #include <linux/errno.h>
+>>  #include <linux/linkage.h>
+>>  #include <linux/of.h>
+>> +#include <linux/panic_notifier.h>
+>>  #include <linux/pm.h>
+>>  #include <linux/printk.h>
+>>  #include <linux/psci.h>
+>>  #include <linux/reboot.h>
+>> +#include <linux/reboot-mode.h>
+>>  #include <linux/slab.h>
+>>  #include <linux/suspend.h>
+>>  
+>> @@ -51,6 +54,24 @@ static int resident_cpu = -1;
+>>  struct psci_operations psci_ops;
+>>  static enum arm_smccc_conduit psci_conduit = SMCCC_CONDUIT_NONE;
+>>  
+>> +struct psci_vendor_sysreset2 {
+>> +	u32 reset_type;
+>> +	u32 cookie;
+>> +	bool valid;
+>> +};
+>> +
+>> +static struct psci_vendor_sysreset2 vendor_reset;
+> 
+> I think this should represent all possible PSCI reset types, not vendor only
+> and its value is set by the reboot mode framework.
+> 
+>> +
+>> +static int psci_panic_event(struct notifier_block *nb, unsigned long v, void *p)
+>> +{
+>> +	vendor_reset.valid = false;
+> 
+> I don't like this. Basically all you want this for is to make sure that
+> we don't override the reboot_mode variable.
+
+Yes, it does not look good but as we planned to use reboot-mode framework earlier, which
+sets the modes at the at reboot_notifiers. This needs to be taken care for any panic
+that occurs between reboot_notifier and restart_notifier.
+
+> 
+> One (hack) would consist in checking the reboot_mode variable here and
+> set the struct I mentioned above to the value represented in reboot_mode.
+> 
+> Good luck if reboot_mode == REBOOT_GPIO :-)
+
+psci supports only two modes, ARCH_WARM and cold, so anything else except WARM/SOFT
+should default to cold? So even if REBOOT_GPIO is set in reboot_mode, we should default
+it to cold reset.
+
+> 
+>> +	return NOTIFY_DONE;
+>> +}
+>> +
+>> +static struct notifier_block psci_panic_block = {
+>> +	.notifier_call = psci_panic_event
+>> +};
+>> +
+>>  bool psci_tos_resident_on(int cpu)
+>>  {
+>>  	return cpu == resident_cpu;
+>> @@ -309,7 +330,10 @@ static int get_set_conduit_method(const struct device_node *np)
+>>  static int psci_sys_reset(struct notifier_block *nb, unsigned long action,
+>>  			  void *data)
+>>  {
+>> -	if ((reboot_mode == REBOOT_WARM || reboot_mode == REBOOT_SOFT) &&
+>> +	if (vendor_reset.valid && psci_system_reset2_supported) {
+>> +		invoke_psci_fn(PSCI_FN_NATIVE(1_1, SYSTEM_RESET2), vendor_reset.reset_type,
+>> +			       vendor_reset.cookie, 0);
+> 
+> See above. Two calls here: one for resets issued using the new userspace
+> interface you are adding and legacy below - no vendor vs reboot_mode, this
+> is a mess.
+
+Are we suggesting to completely remove the reboot_mode check from here in the new
+design and base it on reboot <CMD> param?
+
+> 
+>> +	} else if ((reboot_mode == REBOOT_WARM || reboot_mode == REBOOT_SOFT) &&
+>>  	    psci_system_reset2_supported) {
+>>  		/*
+>>  		 * reset_type[31] = 0 (architectural)
+>> @@ -547,6 +571,72 @@ static const struct platform_suspend_ops psci_suspend_ops = {
+>>  	.enter          = psci_system_suspend_enter,
+>>  };
+>>  
+>> +static int psci_set_vendor_sys_reset2(struct reboot_mode_driver *reboot, u64 magic)
+>> +{
+>> +	u32 magic_32;
+>> +
+>> +	if (psci_system_reset2_supported) {
+>> +		magic_32 = magic & GENMASK(31, 0);
+>> +		vendor_reset.reset_type = PSCI_1_1_RESET_TYPE_VENDOR_START | magic_32;
+>> +		vendor_reset.cookie = (magic >> 32) & GENMASK(31, 0);
+> 
+> Use FIELD_PREP/GET() please (but as mentioned above the vendor reset type
+> bit[31] should be part of the reboot mode magic value, see above).
+
+sure. Will align this. thanks.
+
+> 
+>> +		vendor_reset.valid = true;
+>> +	}
+>> +
+>> +	return NOTIFY_DONE;
+>> +}
+>> +
+>> +static int __init psci_init_vendor_reset(void)
+>> +{
+>> +	struct reboot_mode_driver *reboot;
+>> +	struct device_node *psci_np;
+>> +	struct device_node *np;
+>> +	int ret;
+>> +
+>> +	if (!psci_system_reset2_supported)
+>> +		return -EINVAL;
+>> +
+>> +	psci_np = of_find_compatible_node(NULL, NULL, "arm,psci-1.0");
+>> +	if (!psci_np)
+>> +		return -ENODEV;
+>> +
+>> +	np = of_find_node_by_name(psci_np, "reboot-mode");
+>> +	if (!np) {
+>> +		of_node_put(psci_np);
+>> +		return -ENODEV;
+>> +	}
+>> +
+>> +	ret = atomic_notifier_chain_register(&panic_notifier_list, &psci_panic_block);
+>> +	if (ret)
+>> +		goto err_notifier;
+>> +
+>> +	reboot = kzalloc(sizeof(*reboot), GFP_KERNEL);
+>> +	if (!reboot) {
+>> +		ret = -ENOMEM;
+>> +		goto err_kzalloc;
+>> +	}
+>> +
+>> +	reboot->write = psci_set_vendor_sys_reset2;
+>> +	reboot->driver_name = "psci";
+>> +
+>> +	ret = reboot_mode_register(reboot, of_fwnode_handle(np));
+>> +	if (ret)
+>> +		goto err_register;
+>> +
+>> +	of_node_put(psci_np);
+>> +	of_node_put(np);
+>> +	return 0;
+>> +
+>> +err_register:
+>> +	kfree(reboot);
+>> +err_kzalloc:
+>> +	atomic_notifier_chain_unregister(&panic_notifier_list, &psci_panic_block);
+>> +err_notifier:
+>> +	of_node_put(psci_np);
+>> +	of_node_put(np);
+>> +	return ret;
+>> +}
+>> +late_initcall(psci_init_vendor_reset)
+> 
+> I don't like adding another initcall here.
+> 
+> I wonder whether this code belongs in a PSCI reboot mode driver, possibly a
+> faux device in a way similar to what we did for cpuidle-psci (that after all
+> is a consumer of PSCI_CPU_SUSPEND in a similar way as this code is a
+> PSCI_SYSTEM_RESET{2} consumer), that communicates with
+> drivers/firmware/psci/psci.c with the struct mentioned above.
+
+sure. we can create a new driver and try it as in cpuidle: cpuidle-psci.
+Can you suggest a bit more on the overall approach we want to take here?
+Have tried to summarize the potential changes and few questions below.
+
+- new driver registers a faux device - say - power: reset: psci_reset.
+- struct with pre-built psci reset_types - (warm, soft, cold). Currently
+  only two modes supported, anything other than warm/soft defaults to cold.
+- vendor resets to be added as per vendor choice, inside psci device tree(SOC specific).
+- psci_reset registers with reboot-mode for registering  vendor resets. Here, we
+  have a problem, the pre-built psci reset_types - (warm, soft, cold) cannot be added via
+  reboot-mode framework. Should the new psci_reset driver, move away from reboot-mode
+  framework as-well? And define its own parsing logic for psci_reset_types, and have
+  its own restart_notifier instead of reboot_notifier?
+- If new psci_reset driver move away from reboot-mode, we can get rid of the panic_notifier
+  added in the psci code. Else, we may still need the panic_notifier for any kernel panic
+  that occurs between reboot_notifier and restart_notifier?
+- psci driver will export a function which will be called externally to set the current
+  psci reset_type.
+- psci_sys_reset in psci driver should remove the check on reboot_mode. It will default to
+  cold reset (for the reason the current kernel defaults to cold reset in psci.)
+  example change in psci_sys_reset:
+    if(psci_system_reset2_supported && <psci_reset_new_struct_var> != cold)
+       psci_sys_reset2(AS PER PARAMS FROM new psci_reset driver)
+    else
+       psci_sys_reset(COLD RESET)
+
+thanks,
+Shivendra
 
