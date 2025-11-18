@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-82275-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-82278-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ams.mirrors.kernel.org (ams.mirrors.kernel.org [213.196.21.55])
-	by mail.lfdr.de (Postfix) with ESMTPS id 91D20C6924B
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Nov 2025 12:41:38 +0100 (CET)
+Received: from ams.mirrors.kernel.org (ams.mirrors.kernel.org [IPv6:2a01:60a::1994:3:14])
+	by mail.lfdr.de (Postfix) with ESMTPS id 53CA2C69291
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Nov 2025 12:44:52 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ams.mirrors.kernel.org (Postfix) with ESMTPS id EE6EB380D63
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Nov 2025 11:37:44 +0000 (UTC)
+	by ams.mirrors.kernel.org (Postfix) with ESMTPS id 6D027386117
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Nov 2025 11:39:54 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C505A35A138;
-	Tue, 18 Nov 2025 11:32:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D18AE354ADC;
+	Tue, 18 Nov 2025 11:39:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="qc1PJK3u"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ChvvpIqK"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97BEF35A123;
-	Tue, 18 Nov 2025 11:32:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8030354AD0;
+	Tue, 18 Nov 2025 11:39:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763465542; cv=none; b=ZL9rpZwT3uhku6gJ+J/XBzDXsxjV+w2hUVHP5yN7odmvQYC3a3uWDFClzWWgT3g5C165laifw6gRBeX2I2rZ5d/15gB1NsEHFUKgtHMvwG3VYEyDbq5ll0mbk0SB1ZRqq9GrsNwp84AYyVxaXq6kjP5AsTSWxz+k159Aa50nQkA=
+	t=1763465940; cv=none; b=EXaVhMcOcQUjil7C7LvU5xIdTCf4HzudGSxUekLkkgPhvIngGmByTfzcer56GYZJgP72BHCRJPdbYP2k8CspHsFrcpjYPz11KmhWETMZtqn2xLQ3tjlsw8nI14DCX8D1H86t4mLdi9Rq35J6358cvk1FsVSGrabQ8uYgpDDeq+4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763465542; c=relaxed/simple;
-	bh=A9yChllo1ZD40QC3/OgevvgCNZCZ7NsMgL9U8cpUQSk=;
+	s=arc-20240116; t=1763465940; c=relaxed/simple;
+	bh=WtkvryjDqoTLTcq3Cp49JniccvXgjImCukoYpYovWL0=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=kjFSdEEFHQWFWnvoejZuFx9XljwgM7xj2ZDB6NhOOZ7COAksU6i6u39z0ep9xl/GQfIaJ1ex9WhW/8Mk7Jt4GzHc46hoxZ+LbhgbdYQFYuHpjzBf8pRhda6OAUbmhw/j3NOoD7ChFYmhVtO0uujkwWHrL/cJTvHGJIhbxwRljs0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=qc1PJK3u; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76FFBC19425;
-	Tue, 18 Nov 2025 11:32:17 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=KQvpVLSLpWj5kfDFjCR1vOoKu4laRdmMUL1TgTfZYO/JG0sjpkqljqX3qcVJ1MGp+bS31YpZ9PI6R4L9lEDv7Sh7b5QyInZiCm1XCO7JCwCeAYggSXuCse1Olxox7nXyrsoWH7FQdv3NrUKsGyipJns99nU3jpHWQFfjjItTvB0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ChvvpIqK; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 571B5C19425;
+	Tue, 18 Nov 2025 11:38:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1763465542;
-	bh=A9yChllo1ZD40QC3/OgevvgCNZCZ7NsMgL9U8cpUQSk=;
+	s=k20201202; t=1763465939;
+	bh=WtkvryjDqoTLTcq3Cp49JniccvXgjImCukoYpYovWL0=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=qc1PJK3uerTPNEpxFCiKxk4R7E1SMzH6jFTXUJewoD2oW/5XDrV2/Vc0q0a+GorDF
-	 FAeVZ5OxTUldMn7KHW4Egr0syCDveC5BTEbRpo0FQ5MEl1NOfdBnQn30hcwqL0nRoM
-	 7o1aikDKgqD6fS3DbEVD/jhtcNrEFX7tcXVLTy4p18JgboVS0FUU7Z1xTeCNDkabZv
-	 hDuJSWpryh7f2foyDVH8+YxU3IjEGeaIaDvX6PFknAxaw69gq+QuQruvUqT2qxifOo
-	 j2sjRCOEsY9A51s6hk/ZjbIw7GGM/OHjbL19xYDKg8Ciym5h3v69eSMWd8voUCEb41
-	 D7vZv/qqpApUw==
-Message-ID: <a2e5220a-3ff6-4f59-8db7-820d21dfe204@kernel.org>
-Date: Tue, 18 Nov 2025 12:32:15 +0100
+	b=ChvvpIqKMk6Rq7q/U40J2Mpq9YOW+kN1H9Ew8aVF62g/K9uAtQ15ltK0H7SwNBbTl
+	 nKw2qXEUe5+09jfkAt0tKXdFqcuGuhJvvmkBJG11jVtc1dQOmAYADG0t1nKZOj2DmN
+	 6p0UynBwClVrnEY6qDCETdoB0msHM/EtGjr7sy4QyStK5ES2x3T0QXoTJKm2RIeNyx
+	 KROUdmvwipgou7gA4CQJ89pTUVlGnLmATtet/b3Ym/CgqmjcxuH22PRKd/DzgrScuH
+	 rtGGE77nEa4E9CHFIzMkwEDGJH74ruHY14BvrZJ8eecJhl+yRi8ORH4i9dKnyOWPUd
+	 ZCvrM7/ADE2tg==
+Message-ID: <86c6bb52-921e-4644-82fe-474f63fc565e@kernel.org>
+Date: Tue, 18 Nov 2025 12:38:26 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,23 +50,13 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v8 1/2] firmware: qcom: scm: Register gunyah watchdog
- device
+Subject: Re: [PATCH] firmware: qcom: scm: Use __cleanup() for device_node
+ pointers
 To: Kathiravan Thirumoorthy <kathiravan.thirumoorthy@oss.qualcomm.com>,
- hrishabh.rajput@oss.qualcomm.com, Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>,
- Wim Van Sebroeck <wim@linux-watchdog.org>, Guenter Roeck
- <linux@roeck-us.net>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, linux-watchdog@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- Pavan Kondeti <pavan.kondeti@oss.qualcomm.com>,
- Neil Armstrong <neil.armstrong@linaro.org>,
- Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
- Shivendra Pratap <shivendra.pratap@oss.qualcomm.com>
-References: <20251118-gunyah_watchdog-v8-0-e5de12e2eef5@oss.qualcomm.com>
- <20251118-gunyah_watchdog-v8-1-e5de12e2eef5@oss.qualcomm.com>
- <88e538ee-9e70-4249-bee5-5127d344edad@oss.qualcomm.com>
+ Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20251117-scm_cleanup_of_node_put-v1-1-307d36d6b849@oss.qualcomm.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -112,63 +102,37 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  jWt87ecuHlpL3uuQ0ZZNWqHgZoQLXoqC2ZV5KrtKWb/jyiFX/sxSrodALf0zf+tfHv0FZWT2
  zHjUqd0t4njD/UOsuIMOQn4Ig0SdivYPfZukb5cdasKJukG1NOpbW7yRNivaCnfZz6dTawXw
  XRIV/KDsHQiyVxKvN73bThKhONkcX2LWuD928tAR6XMM2G5ovxLe09vuOzzfTWQDsm++9UKF a/A=
-In-Reply-To: <88e538ee-9e70-4249-bee5-5127d344edad@oss.qualcomm.com>
+In-Reply-To: <20251117-scm_cleanup_of_node_put-v1-1-307d36d6b849@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 18/11/2025 12:18, Kathiravan Thirumoorthy wrote:
+On 17/11/2025 17:22, Kathiravan Thirumoorthy wrote:
+> Make use of the __cleanup() attribute for device_node pointers to simplify
+> resource management and remove explicit of_node_put() calls.
 > 
-> On 11/18/2025 4:10 PM, Hrishabh Rajput via B4 Relay wrote:
->> From: Hrishabh Rajput <hrishabh.rajput@oss.qualcomm.com>
->>
->> To restrict Gunyah watchdog initialization to Qualcomm platforms running
->> under the Gunyah Hypervisor, register the watchdog device in the QCOM
->> SCM driver.
->>
->> When Gunyah is not present or Gunyah emulates MMIO-based watchdog, we
->> expect Qualcomm watchdog or ARM SBSA watchdog device to be present in
->> the devicetree. First, we make sure we're running under the Gunyah
->> Hypervisor. Then we move to check if any of the above mentioned
->> watchdog device nodes are present, if not then we proceed to register
->> the SMC-based Gunyah watchdog device.
->>
->> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
->> Tested-by: Shivendra Pratap <shivendra.pratap@oss.qualcomm.com>
->> Tested-by: Neil Armstrong <neil.armstrong@linaro.org>
->> Signed-off-by: Hrishabh Rajput <hrishabh.rajput@oss.qualcomm.com>
->> ---
->>   drivers/firmware/qcom/qcom_scm.c | 53 ++++++++++++++++++++++++++++++++++++++++
->>   1 file changed, 53 insertions(+)
->>
->> diff --git a/drivers/firmware/qcom/qcom_scm.c b/drivers/firmware/qcom/qcom_scm.c
->> index e777b7cb9b12..14d0663316e6 100644
->> --- a/drivers/firmware/qcom/qcom_scm.c
->> +++ b/drivers/firmware/qcom/qcom_scm.c
->> @@ -2182,6 +2182,56 @@ int qcom_scm_qtee_callback_response(phys_addr_t buf, size_t buf_size,
->>   }
->>   EXPORT_SYMBOL(qcom_scm_qtee_callback_response);
->>   
->> +static void qcom_scm_gunyah_wdt_free(void *data)
->> +{
->> +	struct platform_device *gunyah_wdt_dev = data;
->> +
->> +	platform_device_unregister(gunyah_wdt_dev);
->> +}
->> +
->> +static void qcom_scm_gunyah_wdt_init(struct qcom_scm *scm)
->> +{
->> +	struct platform_device *gunyah_wdt_dev;
->> +	struct device_node *np;
+> Signed-off-by: Kathiravan Thirumoorthy <kathiravan.thirumoorthy@oss.qualcomm.com>
+> ---
+>  drivers/firmware/qcom/qcom_scm.c | 12 +++---------
+>  1 file changed, 3 insertions(+), 9 deletions(-)
 > 
-> nit: Can we use the __cleanup() attribute for device_node like below and 
-> drop the explicit of_node_put()?
-> 
-> struct device_node *np __free(device_node) = NULL;
+> diff --git a/drivers/firmware/qcom/qcom_scm.c b/drivers/firmware/qcom/qcom_scm.c
+> index e777b7cb9b127944fe112f453cae9cbc40c06cae..7c1fffa8e7ad48b294b90e7e63f726d0ba7d55e1 100644
+> --- a/drivers/firmware/qcom/qcom_scm.c
+> +++ b/drivers/firmware/qcom/qcom_scm.c
+> @@ -1746,7 +1746,7 @@ EXPORT_SYMBOL_GPL(qcom_scm_gpu_init_regs);
+>  
+>  static int qcom_scm_find_dload_address(struct device *dev, u64 *addr)
+>  {
+> -	struct device_node *tcsr;
+> +	struct device_node *tcsr __free(device_node) = NULL;
 
-Please don't. It is not desired style, error prone and not helping.
 
-Don't use cleanup.h if you are not accustomed to its specific style.
+NAK.
 
+This is wrong syntax. This must come with constructor.
+
+Don't use cleanup.h if you do not understand its syntax. You just lead
+to worse code and encourage bugs.
 
 Best regards,
 Krzysztof
