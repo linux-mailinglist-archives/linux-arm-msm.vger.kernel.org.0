@@ -1,54 +1,101 @@
-Return-Path: <linux-arm-msm+bounces-82340-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-82341-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
-	by mail.lfdr.de (Postfix) with ESMTPS id D79F7C6A11D
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Nov 2025 15:44:14 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id 789DEC6A171
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Nov 2025 15:49:11 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by tor.lore.kernel.org (Postfix) with ESMTPS id BCC382BB0B
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Nov 2025 14:44:13 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTPS id 2E8F52AF6A
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Nov 2025 14:49:10 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 545473563D0;
-	Tue, 18 Nov 2025 14:44:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 821E035BDBA;
+	Tue, 18 Nov 2025 14:49:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=ixit.cz header.i=@ixit.cz header.b="wirDbwFH"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="JkJrik0F";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="OKgUxq4O"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from ixit.cz (ip-94-112-25-9.bb.vodafone.cz [94.112.25.9])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1651A325716;
-	Tue, 18 Nov 2025 14:44:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=94.112.25.9
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E20A435B14E
+	for <linux-arm-msm@vger.kernel.org>; Tue, 18 Nov 2025 14:49:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763477052; cv=none; b=YApUoR3ygYznkBeCFLLHQrrytX2lfXkIQt0bxBI0JWdQieV/GfctzUSJk76Dja+f76gQRo7VptA+7fyGr1d3W40HoJalBipqGcAUOcHIlLHb+0KFpOZK4KMM8bMKRiabPE2ItFJI9B1TsVc6IvewrH+TNpNgim5MTtwm8rXCTlw=
+	t=1763477347; cv=none; b=ZdQx2+KW9gouRagAd2cPXiWti3QmT0i/A7y4cL8xjMq9V7M8iKO4CMBWOS+TOW6o7BPxQQQeGEnvEOaDH0/Fa3Nf8t9TvNTkKOVWO76afKlDx3QeTmPX1vdut65nX0IqIjdLUu44cUWTWkxNR5fpn000mmX9mInWe56lAw4znp0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763477052; c=relaxed/simple;
-	bh=XHThOnyHD29oSa3YylRWWd/qr1uu6d6N9iKgcumd1Ko=;
+	s=arc-20240116; t=1763477347; c=relaxed/simple;
+	bh=0cml0rnk0Uwz5vGuT0N6RVpyBdL75FaXQOzj6ISDrio=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=UuWK6mivSNjB33yTVBXHYm6sRu93fAKcKTqPF4aRK//KjXon2v7WrM93tzaCUVHlOOH0j57WacJnpuot9HTRSBf09V4mgZ72asG9bXoXqywQywkdCJmxVpYg9Oo5WxtYL03aqU8clWpJX9WE0QkIcYKub/0uvDGiidMLmc87bZ4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ixit.cz; spf=pass smtp.mailfrom=ixit.cz; dkim=pass (1024-bit key) header.d=ixit.cz header.i=@ixit.cz header.b=wirDbwFH; arc=none smtp.client-ip=94.112.25.9
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ixit.cz
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ixit.cz
-Received: from [10.0.0.200] (unknown [10.0.0.1])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange x25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-	(No client certificate requested)
-	by ixit.cz (Postfix) with ESMTPSA id 0B6195340129;
-	Tue, 18 Nov 2025 15:44:03 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ixit.cz; s=dkim;
-	t=1763477043;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
-	bh=t1YghI9rQH/P+9n0602nFSz7s5pPH88K7oE5fw/Kmmw=;
-	b=wirDbwFHt5Ae8U429fWvOBJRLXqf76Q8TzgqjOKG0Jd6sv++hv3N1ep3eawzUJgDDbCQUo
-	69QNb88cHo1drTA3hVaDms1IcVlsEWG9+in3D9biSpBvJmoSEv5ARhGZhoXwq+iWM2QD5S
-	jGO4pai7PYXN390qtDWXT4XkQc7V6YI=
-Message-ID: <21c9a3eb-72d2-4fe2-a370-1824b811ced9@ixit.cz>
-Date: Tue, 18 Nov 2025 15:44:02 +0100
+	 In-Reply-To:Content-Type; b=SpCCDJwm3xwZuy1RSkbIAJCwMdh93wznvVIahSFLP3HIg1QQrWyrUAcPb8xLEmaOQ1cxd8P5wRE+3N1DKpyMR+aTWmFJkfyCeJZk0TAjf8+AaKHMxoCC0PE436wFFEnfJECr80Eo/A8XQ68K4ShzC0MjxHziotrQTK7Nn4N3zDo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=JkJrik0F; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=OKgUxq4O; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 5AIAQrSP2926832
+	for <linux-arm-msm@vger.kernel.org>; Tue, 18 Nov 2025 14:49:05 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	uqVucf6VKd9stWpBFdYgb4rc/AtI1spyTRvrZdXaVj4=; b=JkJrik0FahcA53+0
+	uV0cbu1TKx3dayDzX/nMfY0kL7TIAXLLjll6JunQWh1Ianu37kqw6iq1L/jSV8kd
+	ASiFUVZMcKwc94NAXENklNZff493wrxQ3pLh8CvDCtxsYT+r1LSGB0sPgcukXJ7S
+	ipkQqp/i5RtCdvHqY0vzBYrSMlDSen8WHcs8mIKItQLSCt7obTmwaD/vbbaCv72G
+	Ao0HuPBHntnkev/gc0XOLvXPy1IIkCGSyUC/oh9C3c3zGW+Yfk54mSj93WSp5Sb+
+	C+khTjxR5XNtHTHv9Dw/TOYsu8syBRCmvWJZKEJJnk0a35A3caaSdl+ruYWzG2XX
+	0AmT8g==
+Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com [209.85.222.200])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4agq290nnj-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Tue, 18 Nov 2025 14:49:04 +0000 (GMT)
+Received: by mail-qk1-f200.google.com with SMTP id af79cd13be357-8adc67e5340so186265585a.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 18 Nov 2025 06:49:04 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=oss.qualcomm.com; s=google; t=1763477344; x=1764082144; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=uqVucf6VKd9stWpBFdYgb4rc/AtI1spyTRvrZdXaVj4=;
+        b=OKgUxq4OeFlAqL2h/gAXYaEJyw5QUhcNKQJiTsWTrdSS00bgLlsB81q2JltzvYP2mT
+         SSMNwE6Kz9JMk4S19wlk/FE2IzRu/+tLv4OFTTWfIkSIBcXD9I7bpB3Hyl2d/LtvlAVz
+         shoijn8rTJpNycF1DgX8M5epxq8Cu6gNnmP438BOqoUUo62UzJzRlEplzzLcb4gxUdYR
+         ydQ2+FLkxvha/IhdsC9jl8UL9mF3etAq3e5ZCDGuGoo7CXiwSEMCiL2ve7jSHhdFZuD+
+         UnnFKnvZjWYOYipWp8FhVdphyGsHTcmRe8L95z9ept5hofY3tKSZtbL4yLoU+GCzl9JO
+         EpAg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1763477344; x=1764082144;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=uqVucf6VKd9stWpBFdYgb4rc/AtI1spyTRvrZdXaVj4=;
+        b=g+ZC5yKTs6POozNcXtszOzByZoOnpTGw8O8bSKv5LA5vX2y46gzfQrYZ5NLQ4f1zNC
+         u2LfvFqpiH2zFSWGLx6rVOh0L47jmXH2JSMpGm9uj5euEOV2Fb4/7lQTzEgN0Vmq+81m
+         eFV7sMPufduB+cWb9KJwMK00dd3XnaQ1y2L8snsJaNpGMR01lLioU9a6XPFHRN1fxio/
+         9JSzvsmPLhz1oZIa664nTACJMne6CHhnYqGIKAYNkoMgr9T4qsUO3OJS59ty4BSGVoSR
+         atV2z+RvOwt+ADXs9TMlhoIyD5Lg/zmuQZpcjbB7hL+BUWdjIGsGaEH5F1V8DzvBJfTT
+         uGtw==
+X-Gm-Message-State: AOJu0YxuaP9H6HygvZqdbLPr9shlIa0gzgxjBVBPahPZPIiuv7NkVSiB
+	1FBXKMbXbeWWXD70JIO+YcJ62Bnf8X0t7lDyYSJRwq7K9xjdYgWM1aCpKWkgT59hOvTrDq/KFqG
+	LtXkpAlbuv45zJtZ5+ZNyPkGMc54YFYmSfSF7MntNrQNQLLuEQXQejI23Zn0x8wOk3xY1
+X-Gm-Gg: ASbGncsvEZYKd9EzHMUdZYLTu2Zmc5ctwGJvd9st5pzqcNXCffawbIf+U5Y0iQJ19lM
+	GlqreVUza8K1bTYCfVTyQLC+v0XFL2p40eVZmmdRKJzl4IbDFcJdauDTMJSMyKU8A8ohWr/WPvl
+	gTHtR8Rl/9R7ArhR8U//AslVUWrDTV1pjFJ90tFB1y1y2StNCiCme6iXIun/Ih+1HzcD5cURBKz
+	hQ1JCUsizRzouQiObRCHTguwwUVR5PzeBwzdaaRtJ5bCvDT63JS7gYWWIhDPU3LwUOfII+7PTyV
+	PBSquAeG6fK9nm3LnyZxLa4OOXgK87A/HfJwdt3Al0JXVac/15xaEokFxSt0RG384ZbKE8kJePt
+	PnSdiB9HuMD7pa89EhCqRgwuKglgdvJQBG8353JmRh0QEGAt/F1jUxlXgER5DXA0i/34=
+X-Received: by 2002:a05:620a:468d:b0:8b2:fea:21ad with SMTP id af79cd13be357-8b305fc8faamr225333785a.9.1763477344171;
+        Tue, 18 Nov 2025 06:49:04 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFrPZegBrppYw6zjJa/UisDtrpFEDf1keGfRJkV3PvaMM+nTIEKz0NkaeDCDrjaQJwlHJwc4g==
+X-Received: by 2002:a05:620a:468d:b0:8b2:fea:21ad with SMTP id af79cd13be357-8b305fc8faamr225329485a.9.1763477343641;
+        Tue, 18 Nov 2025 06:49:03 -0800 (PST)
+Received: from [192.168.119.202] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-b734fed80f0sm1371812466b.66.2025.11.18.06.49.01
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 18 Nov 2025 06:49:03 -0800 (PST)
+Message-ID: <cf53c848-f65e-4956-a8c3-3768818ad50d@oss.qualcomm.com>
+Date: Tue, 18 Nov 2025 15:49:00 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -58,91 +105,70 @@ MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH 2/3] arm64: dts: qcom: sdm845-oneplus: Don't keep panel
  regulator always on
-To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
- Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
+To: David Heidelberg <david@ixit.cz>, Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>
 Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, phone-devel@vger.kernel.org,
- Casey Connolly <casey.connolly@linaro.org>
+        linux-kernel@vger.kernel.org, phone-devel@vger.kernel.org,
+        Casey Connolly <casey.connolly@linaro.org>
 References: <20251118-dts-oneplus-regulators-v1-0-79fb2f0f253b@ixit.cz>
  <20251118-dts-oneplus-regulators-v1-2-79fb2f0f253b@ixit.cz>
  <4da03f13-1e45-472c-9435-95156389ba83@oss.qualcomm.com>
+ <21c9a3eb-72d2-4fe2-a370-1824b811ced9@ixit.cz>
 Content-Language: en-US
-From: David Heidelberg <david@ixit.cz>
-Autocrypt: addr=david@ixit.cz; keydata=
- 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
-In-Reply-To: <4da03f13-1e45-472c-9435-95156389ba83@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+In-Reply-To: <21c9a3eb-72d2-4fe2-a370-1824b811ced9@ixit.cz>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
+X-Authority-Analysis: v=2.4 cv=FJgWBuos c=1 sm=1 tr=0 ts=691c8760 cx=c_pps
+ a=hnmNkyzTK/kJ09Xio7VxxA==:117 a=FpWmc02/iXfjRdCD7H54yg==:17
+ a=IkcTkHD0fZMA:10 a=6UeiqGixMTsA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=KKAkSRfTAAAA:8 a=qdQ_x7Z2-qOnOb6oBeYA:9
+ a=QEXdDO2ut3YA:10 a=zZCYzV9kfG8A:10 a=PEH46H7Ffwr30OY-TuGO:22
+ a=cvBusfyB2V15izCimMoJ:22
+X-Proofpoint-ORIG-GUID: 4Qt0Cp1gRKsidm7Vx98hJf7wBVajxKoR
+X-Proofpoint-GUID: 4Qt0Cp1gRKsidm7Vx98hJf7wBVajxKoR
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMTE4MDExOSBTYWx0ZWRfX1dHTghJVrCC4
+ hPOtKrMMBjrkhL4KLn3gioO3DKWl8gELMmRzGiPdPpmozYlFr+tl7jzW9G9NaBonyrpXy+cZ1WX
+ sFaB9ey3SOVDXESOZX3eZLh7mLOJIeZYG/eO0ctuTgFDZ9Gv5HvZfHKoZigsxdjmW0H1cSR0mst
+ EFU/e7A11Oe1LpLs4VCQEMkQxywL22PH4G+sZjbYeGorkzpRCaVI6iD1HLLEpqs0UPqlYsKuaZz
+ KTPTtBkh1azcvxcwiVrGPjD7rH4qT0ckPHfmeLlwuqU1+Po7jWD5EA8+lAZaFrVZdWvC83gPW7B
+ gFoQln5f13iwr6LP/eZqyL1du+X9wfir9xWKg52NPFRqymexxZasD4hoslNCGOxzIteuGKsQvls
+ x6l8KC5oTxIJStSlzDwI7NsKwSLl+g==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
+ definitions=2025-11-18_01,2025-11-18_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ bulkscore=0 malwarescore=0 suspectscore=0 impostorscore=0 lowpriorityscore=0
+ clxscore=1015 spamscore=0 phishscore=0 priorityscore=1501 adultscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2510240001 definitions=main-2511180119
 
-On 18/11/2025 15:32, Konrad Dybcio wrote:
-> On 11/18/25 3:11 PM, David Heidelberg via B4 Relay wrote:
->> From: Casey Connolly <casey.connolly@linaro.org>
+On 11/18/25 3:44 PM, David Heidelberg wrote:
+> On 18/11/2025 15:32, Konrad Dybcio wrote:
+>> On 11/18/25 3:11 PM, David Heidelberg via B4 Relay wrote:
+>>> From: Casey Connolly <casey.connolly@linaro.org>
+>>>
+>>> The panel regulator doesn't need to be always on, so remove this
+>>> property.
+>>>
+>>> Signed-off-by: Casey Connolly <casey.connolly@linaro.org>
+>>> Signed-off-by: David Heidelberg <david@ixit.cz>
+>>> ---
 >>
->> The panel regulator doesn't need to be always on, so remove this
->> property.
+>> Fixes?
+> 
+> I only know this works well at current next-202511xx, these patches we're also in sdm845-mainline downstream repo, but there was multiple different patches and hacks for panels and other stuff present, so it's hard for me verify that on clean mainline kernel these will work as expected (as older mainline versions also need the panel patched etc.)
+
+Fixes != backports
+
+Konrad
+
+> 
+> If you insist, I can append Fixes against when these properties we're or weren't introduced (talking about PATCH 3/3 too).
+> 
 >>
->> Signed-off-by: Casey Connolly <casey.connolly@linaro.org>
->> Signed-off-by: David Heidelberg <david@ixit.cz>
->> ---
+>> Konrad
 > 
-> Fixes?
-
-I only know this works well at current next-202511xx, these patches 
-we're also in sdm845-mainline downstream repo, but there was multiple 
-different patches and hacks for panels and other stuff present, so it's 
-hard for me verify that on clean mainline kernel these will work as 
-expected (as older mainline versions also need the panel patched etc.)
-
-If you insist, I can append Fixes against when these properties we're or 
-weren't introduced (talking about PATCH 3/3 too).
-
-> 
-> Konrad
-
--- 
-David Heidelberg
-
 
