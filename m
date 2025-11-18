@@ -1,217 +1,150 @@
-Return-Path: <linux-arm-msm+bounces-82329-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-82330-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ams.mirrors.kernel.org (ams.mirrors.kernel.org [IPv6:2a01:60a::1994:3:14])
-	by mail.lfdr.de (Postfix) with ESMTPS id 56905C69E2E
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Nov 2025 15:18:22 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id CA949C69E55
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Nov 2025 15:20:00 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ams.mirrors.kernel.org (Postfix) with ESMTPS id B9DF3352471
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Nov 2025 14:14:00 +0000 (UTC)
+	by ams.mirrors.kernel.org (Postfix) with ESMTPS id 6F2513866E0
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Nov 2025 14:15:24 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E0A1535A95B;
-	Tue, 18 Nov 2025 14:12:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 37304358D30;
+	Tue, 18 Nov 2025 14:14:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="tb7PoZoW"
+	dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b="VNe2uO88"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f46.google.com (mail-lf1-f46.google.com [209.85.167.46])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B01A935A121;
-	Tue, 18 Nov 2025 14:12:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FE3E2FBDEE
+	for <linux-arm-msm@vger.kernel.org>; Tue, 18 Nov 2025 14:14:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763475138; cv=none; b=t1iD6l4KRNFJDpHzq67R++Z88A4TdtKNB4ix+vo8Rt06BBjLdBpVb5A7arvv+PuvsyUMxDK7wBt4ZjZgUwEb4tPgPcsMyIPy/lmfk3/u2qzbuQLCV5KHat/QpT88iin3/ZEGo2LMZCIrB9LM5JW2RlqjW5G+gnPV48DIOWlOgG0=
+	t=1763475247; cv=none; b=uxevF8nSVJ2qg0M4Oqwp2WB+usx4TwtJdwYjQoKxSsbZ8tGuHiLFwV/y8Zqz6B9GZKB0SOg51ffIG5G073njBPZt/KrOZsLB2/qr6YzV7XpeuQ0wFF8lqbdMwdF7c3WAO3QdUznPLr8VOF1+7XAYmRuvMxZiE8stDGlZm9U7v9k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763475138; c=relaxed/simple;
-	bh=erS/B6QVBTWTsxbcksB+HGTRTJvgyN9RWKcpAhjnNec=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=K1KFbSOIXX0vVQ0V3SP2Wf8NSS4xs33DDrBBygDmFjjnNXNQQlYgko0RTHRw9s69J5b91T65krSFDztGOC5CkG5musRR7vxxNd/rq8to0AlNJD/HkeZiYi4XFcjxfR66BUMOPIV5R7BrdpXkRlLBHXx6jNAaCrcDGXqOmon98Qc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=tb7PoZoW; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F286C19421;
-	Tue, 18 Nov 2025 14:12:14 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1763475138;
-	bh=erS/B6QVBTWTsxbcksB+HGTRTJvgyN9RWKcpAhjnNec=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=tb7PoZoWmMWvcgZY9xfJch1UHX2xW+EfYmGmdrHZSaz1NEi/adtT/X1UEytoMVdpR
-	 BjGVroPxDIHY6tSrONTw6WdzwXDjHn74NlacWkmoNcHn1jrl83Xeh9JxmzfZay//md
-	 dCP9CFADXxBDdGEVevo0AP89RLTnpE1tqIyXmZ04JZb5Rv1ibHtozWvvwj57PXYU9m
-	 xO7kHRGDq6M57njwE5vvcdKma6gBnIqBaYyOlv4dEJ/ZEe6tXvjAzcgKuqZkE4NPwH
-	 s2zBR8U1n9Tt1US+jJU1OBN2ZzRPJlkzFJuA68fM6PbSS64m1ulm3Vb8O5wybpNqA2
-	 LTD/fNRzAhkNw==
-Message-ID: <eb34be74-6c9f-4bc8-b67e-31e387f7a850@kernel.org>
-Date: Tue, 18 Nov 2025 15:12:12 +0100
+	s=arc-20240116; t=1763475247; c=relaxed/simple;
+	bh=0oWXzIw3NrgikdygKFftKQaLFa+eqJmNB4unNCQZN/g=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=Byc+WfpW+B2s/I0x+OCj8C91O5RQ85clDFOmL9yCIjbfc5lPDfERc3S6wu0VwO9vmoZulo0DNPkki+6nHYME4QDQ2G6hxdG/W8naS9d1LEqV0bpFeitk6y9Crke/DHD6Jb8/noTosQ5B+mmMyEs+uRaIaCyT4JUQrOBw88Yw4V4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl; spf=none smtp.mailfrom=bgdev.pl; dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b=VNe2uO88; arc=none smtp.client-ip=209.85.167.46
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=bgdev.pl
+Received: by mail-lf1-f46.google.com with SMTP id 2adb3069b0e04-5957e017378so6387812e87.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 18 Nov 2025 06:14:04 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=bgdev-pl.20230601.gappssmtp.com; s=20230601; t=1763475243; x=1764080043; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=y/hsRoPuxK0ArN7QijjTpiqRdVM4dQQwSNJXwTgxb/s=;
+        b=VNe2uO88x+g9NCHAPX7nefpVdY4ApelKS+cewHfdy2xv/JGpCeWYY9eUnvLm1R84gG
+         aTdR04gzbaeTyBD1UV7uNHLLNADqvcHWAc7jAGmqRb0NzuMyx+xNDoZiswjL/UmTuWnk
+         aouoWp42YBDfx1LxzXNVgxwY0wYlAT1rCPJC/DPckJuTAaLBx+3nkm9XFlQoGYu+oH01
+         d/47THufSVxHyaBOe5p3+tB3j0cz0vF5gcOoGUH3kG3vzqf04c2np0t5iHlwRFP8PkwW
+         ISXMjU6GwdjK43pL3Fnc7iCqf4/Ar+IH4zLU6cyU4bNfaEvTcOjDpa0XelcNXGVKobrC
+         RxoQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1763475243; x=1764080043;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=y/hsRoPuxK0ArN7QijjTpiqRdVM4dQQwSNJXwTgxb/s=;
+        b=bXjrOi+Ndj28fbhHcFFS/X5if8LvUijj70znGF7raiL+me7mFamF5ZkVUrtHf1gitL
+         xfeE+RYdXgdG5pVDVzFFD5OpsJNvgTsVs6qwbcLSWoT0nBjMPczyN9NSZb2s+s0oWEUo
+         1IjlSMYFZROynITPADeMYekRii1zvF6fHy8BV4LeQ7flJFzhsV4D2MbiZ7Ri5wO2mzzj
+         0/P/Q6/sntZ6AS8pX80UciS8hWlt8e8o6CYU1DeDIDTMh1Kqcz0nLetV0npUsLVW0ORE
+         rOBkFg3ItZjuwc05i0JzMey5oC/Qk9IMiw7nGirQEB1YsQ6c7vVjaxXNuRF5n5arQYrT
+         lNFg==
+X-Forwarded-Encrypted: i=1; AJvYcCUfAitGDa66NXHa9u9QqKL7l3IpT6MQYt+XapmHU8SCBe7TulAJ5MTZmSMDHjLxarTT14/CH/p0j3N05s8S@vger.kernel.org
+X-Gm-Message-State: AOJu0YxIoPGw5kc3LwrmtyQ0qG+VvvX0o+JJuRB/zOrZ7v01YaI6yGny
+	pVEJknExPYfKKjbgSk0MOsr1WK9RgimE+u8SQx92Lw8PC/ut1ZSD4chnC4Fh8p2d0PWpKjKiMKZ
+	PjJmIw7HjsEtt0n72+nV7kS/Ybk4xoeEZiR0SWffi3A==
+X-Gm-Gg: ASbGncuUF9hLfmAoM1ViCwRHceIZR0Z90EcYmxbaifWDMUUQ8m7QlNpw865GXnFQQUy
+	CfuIsAB+iCWMnEAAbijIdJ76IhJk7MdmjeNJXUj3g27sxbCwTDp/v+7vrnJPoISffTRoTe7vHv7
+	0H7z2mCkZXDYwfoOXLSzGMESrIHk2LM5G8wnRdRuCOjxbPuBVeo2caphim74f8bn67w2X+YGQCl
+	mwdTEGXheKeK/iVVP4zv9W9mY5+mJVah7g5e2vWRANNbHSyo2hAR1B1UTOP1jUppOGDO7FMl10B
+	LkzLlHEITngq8zf6uAZvTTiAO9h3o1Zb4IxG
+X-Google-Smtp-Source: AGHT+IGJQ03bHhvSLT/Jw/p5/ciRMIhXOi1kKvgTg/A2ei7jw24+PyQrUs9nkeMJrkLlGxvJrjx4mWLznFJMN8Rsc34=
+X-Received: by 2002:a05:6512:3d21:b0:591:c346:1106 with SMTP id
+ 2adb3069b0e04-595841984b9mr4734076e87.9.1763475243255; Tue, 18 Nov 2025
+ 06:14:03 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] arm64: dts: qcom: monaco-evk: Enable Bluetooth support
-To: Wei Deng <wei.deng@oss.qualcomm.com>, Rob Herring <robh@kernel.org>
-Cc: Krzysztof Kozlowski <krzk+dt@kernel.org>,
- Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
- quic_jiaymao@quicinc.com, Konrad Dybcio <konradybcio@kernel.org>,
- linux-kernel@vger.kernel.org, linux-bluetooth@vger.kernel.org,
- cheng.jiang@oss.qualcomm.com, devicetree@vger.kernel.org,
- Bjorn Andersson <andersson@kernel.org>, quic_shuaz@quicinc.com,
- quic_chezhou@quicinc.com
-References: <20251113130519.2647081-1-wei.deng@oss.qualcomm.com>
- <176313578860.3262114.17056319042303889483.robh@kernel.org>
- <CAL_JsqJX3doLFv-Nc6o+L1W_o8VjtvGp9dqdpsotuyG17zU7Lw@mail.gmail.com>
- <ca6b02d8-07cc-4bc9-ac99-e75d8e3548fe@oss.qualcomm.com>
- <0428a5a5-fd4e-4309-9b28-f94664177692@kernel.org>
- <cef25c09-0ecb-42ea-b781-a4e0d3c61542@oss.qualcomm.com>
-From: Krzysztof Kozlowski <krzk@kernel.org>
-Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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 a/A=
-In-Reply-To: <cef25c09-0ecb-42ea-b781-a4e0d3c61542@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+References: <20251112-gpio-shared-v4-0-b51f97b1abd8@linaro.org>
+ <20251112-gpio-shared-v4-7-b51f97b1abd8@linaro.org> <dbe20642-9662-40af-a593-c1263baea73b@sirena.org.uk>
+In-Reply-To: <dbe20642-9662-40af-a593-c1263baea73b@sirena.org.uk>
+From: Bartosz Golaszewski <brgl@bgdev.pl>
+Date: Tue, 18 Nov 2025 15:13:49 +0100
+X-Gm-Features: AWmQ_bm5Da4wHKOxjtJ__aJHgfbf47KWT_x6OWvp3Fig-m3IkJbVSEO16RWkPHU
+Message-ID: <CAMRc=MesD5HchG_hfvN3H5ayu8gX_OvSsZQ4UO4f27gx1rRzSA@mail.gmail.com>
+Subject: Re: [PATCH v4 07/10] arm64: select HAVE_SHARED_GPIOS for ARCH_QCOM
+To: Mark Brown <broonie@kernel.org>
+Cc: Kees Cook <kees@kernel.org>, Mika Westerberg <westeri@kernel.org>, 
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>, Andrew Morton <akpm@linux-foundation.org>, 
+	Linus Walleij <linus.walleij@linaro.org>, Manivannan Sadhasivam <mani@kernel.org>, 
+	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Saravana Kannan <saravanak@google.com>, Greg Kroah-Hartman <gregkh@linuxfoundation.org>, 
+	Andy Shevchenko <andy@kernel.org>, Catalin Marinas <catalin.marinas@arm.com>, Will Deacon <will@kernel.org>, 
+	Srinivas Kandagatla <srini@kernel.org>, Liam Girdwood <lgirdwood@gmail.com>, Jaroslav Kysela <perex@perex.cz>, 
+	Takashi Iwai <tiwai@suse.com>, Alexey Klimov <alexey.klimov@linaro.org>, 
+	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, 
+	linux-hardening@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	linux-gpio@vger.kernel.org, linux-arm-kernel@lists.infradead.org, 
+	linux-sound@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>, Aishwarya.TCV@arm.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On 18/11/2025 14:24, Wei Deng wrote:
-> Hi Krzysztof,
-> 
-> Thanks for your comments.
-> 
-> On 11/18/2025 3:19 PM, Krzysztof Kozlowski wrote:
->> On 18/11/2025 08:07, Wei Deng wrote:
->>> Hi Rob,
->>>
->>> Thanks for your comments.
->>>
->>> On 11/15/2025 12:18 AM, Rob Herring wrote:
->>>> On Fri, Nov 14, 2025 at 10:06 AM Rob Herring (Arm) <robh@kernel.org> wrote:
->>>>>
->>>>>
->>>>> On Thu, 13 Nov 2025 18:35:19 +0530, Wei Deng wrote:
->>>>>> There's a WCN6855 WiFi/Bluetooth module on an M.2 card. To make
->>>>>> Bluetooth work, we need to define the necessary device tree nodes,
->>>>>> including UART configuration and power supplies.
->>>>>>
->>>>>> Since there is no standard M.2 binding in the device tree at present,
->>>>>> the PMU is described using dedicated PMU nodes to represent the
->>>>>> internal regulators required by the module.
->>>>>>
->>>>>> The module provides a 3.3V supply, which originates from the
->>>>>> main board’s 12V rail. To represent this power hierarchy in the device
->>>>>> tree, add a fixed 12V regulator node as the DC-IN source and link it
->>>>>> to the 3.3V regulator node.
->>>>>>
->>>>>> Signed-off-by: Wei Deng <wei.deng@oss.qualcomm.com>
->>>>>> ---
->>>>>>  arch/arm64/boot/dts/qcom/monaco-evk.dts | 99 +++++++++++++++++++++++++
->>>>>>  1 file changed, 99 insertions(+)
->>>>>>
->>>>>
->>>>>
->>>>> My bot found new DTB warnings on the .dts files added or changed in this
->>>>> series.
->>>>>
->>>>> Some warnings may be from an existing SoC .dtsi. Or perhaps the warnings
->>>>> are fixed by another series. Ultimately, it is up to the platform
->>>>> maintainer whether these warnings are acceptable or not. No need to reply
->>>>> unless the platform maintainer has comments.
->>>>>
->>>>> If you already ran DT checks and didn't see these error(s), then
->>>>> make sure dt-schema is up to date:
->>>>>
->>>>>   pip3 install dtschema --upgrade
->>>>>
->>>>>
->>>>> This patch series was applied (using b4) to base:
->>>>>  Base: attempting to guess base-commit...
->>>>>  Base: tags/next-20251112 (exact match)
->>>>>  Base: tags/next-20251112 (use --merge-base to override)
->>>>>
->>>>> If this is not the correct base, please add 'base-commit' tag
->>>>> (or use b4 which does this automatically)
->>>>>
->>>>> New warnings running 'make CHECK_DTBS=y for arch/arm64/boot/dts/qcom/' for 20251113130519.2647081-1-wei.deng@oss.qualcomm.com:
->>>>>
->>>>> arch/arm64/boot/dts/qcom/monaco-evk.dtb: wcn6855-pmu (qcom,wcn6855-pmu): 'vddpcielp3-supply', 'vddpcielp9-supply' do not match any of the regexes: '^pinctrl-[0-9]+$'
->>>>>         from schema $id: http://devicetree.org/schemas/regulator/qcom,qca6390-pmu.yaml
->>>>> arch/arm64/boot/dts/qcom/monaco-evk.dtb: wcn6855-pmu (qcom,wcn6855-pmu): 'vddpcie1p3-supply' is a required property
->>>>>         from schema $id: http://devicetree.org/schemas/regulator/qcom,qca6390-pmu.yaml
->>>>> arch/arm64/boot/dts/qcom/monaco-evk.dtb: wcn6855-pmu (qcom,wcn6855-pmu): 'vddpcie1p9-supply' is a required property
->>>>>         from schema $id: http://devicetree.org/schemas/regulator/qcom,qca6390-pmu.yaml
->>>>
->>>> This is the 3rd report of your typos. Is there some reason you are
->>>> ignoring the reports?
->>>>
->>>
->>> Sorry for the delayed response. These warnings are worth addressing 
->>> and will be resolved in the next patch.
->>>
->>
->>
->> Three of your patchsets have bugs easily pointed out by tools, so please
->> answer - are you ignoring the reports? Are you doing any tests before
->> sending?
->>
-> 
-> Testing was completed on the local hardware platform with successful 
-> compilation and normal functionality, so the tests in this section 
+On Tue, Nov 18, 2025 at 3:06=E2=80=AFPM Mark Brown <broonie@kernel.org> wro=
+te:
+>
+> On Wed, Nov 12, 2025 at 02:55:36PM +0100, Bartosz Golaszewski wrote:
+> > From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+> >
+> > Some qualcomm platforms use shared GPIOs. Enable support for them by
+> > selecting the Kconfig switch provided by GPIOLIB.
+>
+> This is causing boot failures for me in -next on the ARM FVP with
+> defconfig, the select affects all platforms not just the Qualcomm ones.
+> We get:
+>
+> [    0.137360] Unable to handle kernel NULL pointer dereference at virtua=
+l address 0000000000000058
+>
+> ...
+>
+> [    0.140979] Call trace:
+> [    0.141037]  gpio_shared_of_traverse+0x48/0x480 (P)
+> [    0.141187]  gpio_shared_init+0x28/0x14c
+> [    0.141314]  do_one_initcall+0x60/0x1d4
+> [    0.141446]  kernel_init_freeable+0x24c/0x2c8
+> [    0.141607]  kernel_init+0x20/0x140
+>
+> Full log:
+>
+>    https://lava.sirena.org.uk/scheduler/job/2101484#L692
+>
 
-Which is not enough.
+Hi Mark!
 
-Did you read kernel writing-schema guide? Or any other guide like your
-own internal guideline which asks you explicitly for other tests?
+Thanks for the heads-up. I'll try to fix it ASAP to avoid a revert.
 
+I can't open the link:
 
-> were omitted. Prior to the next submission, a dt-binding constraint 
-> check will be performed.
+500 Internal Server Error
 
-You need to read internal guideline go/upstream before you post next
-patches.
+FATAL: remaining connection slots are reserved for non-replication
+superuser connections
 
-How many other tests you did not run?
+Oops, something has gone wrong!
 
-Best regards,
-Krzysztof
+Any chance you could get the offending line out of this stack trace?
+
+Bartosz
 
