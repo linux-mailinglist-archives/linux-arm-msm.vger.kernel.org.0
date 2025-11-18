@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-82280-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-82281-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [IPv6:2605:f480:58:1:0:1994:3:14])
-	by mail.lfdr.de (Postfix) with ESMTPS id B740CC692B6
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Nov 2025 12:46:16 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 24E08C692FA
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Nov 2025 12:49:08 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 156234F055D
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Nov 2025 11:41:05 +0000 (UTC)
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 5D8824F7DEB
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Nov 2025 11:41:40 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CB244346776;
-	Tue, 18 Nov 2025 11:40:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5F51D354AE4;
+	Tue, 18 Nov 2025 11:40:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Kr3xE2T3"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="LUb5PVLb"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F5162C0303;
-	Tue, 18 Nov 2025 11:40:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 332243546F9;
+	Tue, 18 Nov 2025 11:40:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763466030; cv=none; b=gZ7jbeKF/Vb7kKtTNsWa7VjWMc7fDXlTCjT5Qu3Q08yUk8cpOAN2R6WdzZOlqevnitM5Y8zwkhiQKb+j+e5WbwlVF0Ui7nu/vEHztVpuahKDNkajecdC+pEKyXxVftGZIZPQmvizmji1siz9kvc09B9EjE+hLQrXmOdnmtlqkqc=
+	t=1763466044; cv=none; b=M5j6TZyFFxNH+wOao9866qF5iUfWqE90ze34pQGvc1GfB1s58qJIf6uvJGGXMQNgXMxeNgA/sQ/3ty0bOvvtMmRxLXefZbn8NlsTwznyyvqLhZBmIEwaEAgsmNIasO2R6uXCkcNn3yEQv2BdH2a1QvdPkJg2V+2yAgsW1d+5tbs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763466030; c=relaxed/simple;
-	bh=M9XZVjkcsCrMgoBI1zBIJvkLih0HFQstqn5OproDTAk=;
+	s=arc-20240116; t=1763466044; c=relaxed/simple;
+	bh=ZeQwpRYVKxRtZ2KX6+//hVrA06o2529fbJASe+RQpJU=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=IQ7JOnVEwFhv+I3WiiXE5Sk8xyzXoZetMMqAMQC3/E9P1JYM93MTCzaSHr+dTwji0i4rh4woZmR9EGSwjYTG+7Hcf44bcde0j7kjKVoDsR6oc5U3pZd7nTmVMm1r/3bFLM3PJa/rim9VF2u5HDSfaKjTQreCAo31JOofAHGm+h0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Kr3xE2T3; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 481E3C2BC87;
-	Tue, 18 Nov 2025 11:40:27 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=WKPCdHaFql8NmDiQx+nDao/ssoNVhl2lYyrSV2KnwQHLzs4OQnHPCAh8psT/s/hRHhATbl0U5mJcLQ8JZmIf/cUJyuOuH7JxEsFMdRaY2ztJwCBbj/MZ0PSqMlNc6wOCG8gIZ69Lgh4ZJbrH0v5JIZ0P1FbqflcXwkxNFQoRAP8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=LUb5PVLb; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C2F0C19422;
+	Tue, 18 Nov 2025 11:40:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1763466030;
-	bh=M9XZVjkcsCrMgoBI1zBIJvkLih0HFQstqn5OproDTAk=;
+	s=k20201202; t=1763466043;
+	bh=ZeQwpRYVKxRtZ2KX6+//hVrA06o2529fbJASe+RQpJU=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=Kr3xE2T3lKTszwDjmugy7EnPFY6GEAM0ZcwGQsfgZ138ugJu9AVSfFov7cdkqRgb7
-	 5+2IUOJPm0riqtWTg/Z8aILa/lHMgByizrnYTQt56nE2aioymtKmKSK+E4+1fV+DSX
-	 MDhDK1IsrautTGR6hZxZtY/KqTK8ocSXoNu/04wpY5Q08E/xTICkivPKOHs5W7JryV
-	 HBAGw1rS62Itv3Ub3C42k2XJQQfkXzoaKFWsOSsxMSkb1eVcy+Q2P5oygDfFvXIMO4
-	 Z9DPwWLKFPLNH1aHFoKepZnGhx2Egg7ZIHg8r9uWlz4fmpPO9ZLw1SVeRsgJx/xJK6
-	 ZtmOoqCy3VScg==
-Message-ID: <4ec6074b-4083-4e35-9a37-47bb2ce82a4f@kernel.org>
-Date: Tue, 18 Nov 2025 12:40:25 +0100
+	b=LUb5PVLbIlx7CeJqqDkFigDBhfjqa0LRZUQCQGy+8mXMKi1+2UXuFOfo2Q1J1bcQP
+	 UKPxUv726xXvVsM3oSCqrUGzZ4CeMpcfR8n3eRYogUK9pKwVs4er7ALMxX+/ZVVEXt
+	 Hwn+fwDaoWR65VnvKWV4qKxt7xWE9bAvJGvydB8Vu4hLzfidBbE8ggiAVSETkdPU8p
+	 xWvEvmHpbfYIV9OTB+Bmm0a1FqncA37poVB0j6KfUcD95djwV6wCCHydJRqDTt2+RW
+	 yK78xZl2cGLy7xFMOCFI1+0zEAwsiEgxvAciiQbkQJnPA99Ri3D6XVL4esR8iTRUGW
+	 uYnXvdYGPtdhQ==
+Message-ID: <941173b0-f1c0-4d34-a870-15e10749144c@kernel.org>
+Date: Tue, 18 Nov 2025 12:40:39 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,14 +50,14 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 04/10] soc: qcom: rpm-proc: Use __cleanup() for
+Subject: Re: [PATCH 05/10] soc: qcom: rpm_master_stats: Use __cleanup() for
  device_node pointers
 To: Kathiravan Thirumoorthy <kathiravan.thirumoorthy@oss.qualcomm.com>,
  Bjorn Andersson <andersson@kernel.org>,
  Konrad Dybcio <konradybcio@kernel.org>
 Cc: linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
 References: <20251117-cleanup_node_put-v1-0-5f107071d171@oss.qualcomm.com>
- <20251117-cleanup_node_put-v1-4-5f107071d171@oss.qualcomm.com>
+ <20251117-cleanup_node_put-v1-5-5f107071d171@oss.qualcomm.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -103,7 +103,7 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  jWt87ecuHlpL3uuQ0ZZNWqHgZoQLXoqC2ZV5KrtKWb/jyiFX/sxSrodALf0zf+tfHv0FZWT2
  zHjUqd0t4njD/UOsuIMOQn4Ig0SdivYPfZukb5cdasKJukG1NOpbW7yRNivaCnfZz6dTawXw
  XRIV/KDsHQiyVxKvN73bThKhONkcX2LWuD928tAR6XMM2G5ovxLe09vuOzzfTWQDsm++9UKF a/A=
-In-Reply-To: <20251117-cleanup_node_put-v1-4-5f107071d171@oss.qualcomm.com>
+In-Reply-To: <20251117-cleanup_node_put-v1-5-5f107071d171@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
@@ -113,18 +113,18 @@ On 17/11/2025 05:51, Kathiravan Thirumoorthy wrote:
 > 
 > Signed-off-by: Kathiravan Thirumoorthy <kathiravan.thirumoorthy@oss.qualcomm.com>
 > ---
->  drivers/soc/qcom/rpm-proc.c | 3 +--
+>  drivers/soc/qcom/rpm_master_stats.c | 3 +--
 >  1 file changed, 1 insertion(+), 2 deletions(-)
 > 
-> diff --git a/drivers/soc/qcom/rpm-proc.c b/drivers/soc/qcom/rpm-proc.c
-> index 2466d0400c2e9a539e0b1009ee1bfefc3bd1b589..6f0c9f2558b06323c1100caa4544872badc22599 100644
-> --- a/drivers/soc/qcom/rpm-proc.c
-> +++ b/drivers/soc/qcom/rpm-proc.c
-> @@ -9,15 +9,14 @@
+> diff --git a/drivers/soc/qcom/rpm_master_stats.c b/drivers/soc/qcom/rpm_master_stats.c
+> index c7788337e1647da386e874bcb87313e8f07241df..06a1d3fe5e9b4295018b0e5cbcf738c0e9e83c3b 100644
+> --- a/drivers/soc/qcom/rpm_master_stats.c
+> +++ b/drivers/soc/qcom/rpm_master_stats.c
+> @@ -67,9 +67,9 @@ DEFINE_SHOW_ATTRIBUTE(master_stats);
 >  
->  static int rpm_proc_probe(struct platform_device *pdev)
+>  static int master_stats_probe(struct platform_device *pdev)
 >  {
-> +	struct device_node *edge_node __free(device_node) = NULL;
+> +	struct device_node *msgram_np __free(device_node) = NULL;
 
 NAK, stop with this pattern.
 
