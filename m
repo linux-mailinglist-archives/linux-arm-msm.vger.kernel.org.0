@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-82276-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-82277-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4F062C6922D
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Nov 2025 12:39:21 +0100 (CET)
+Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [142.0.200.124])
+	by mail.lfdr.de (Postfix) with ESMTPS id 63148C69286
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Nov 2025 12:44:36 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by tor.lore.kernel.org (Postfix) with ESMTPS id 444B82AFD1
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Nov 2025 11:39:20 +0000 (UTC)
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 059854F65C0
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Nov 2025 11:39:35 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9F40330103D;
-	Tue, 18 Nov 2025 11:38:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B4B4E313E36;
+	Tue, 18 Nov 2025 11:38:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="qKmX9kJK"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="jpKSySrb"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DE5B28751D;
-	Tue, 18 Nov 2025 11:38:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FDC92F7459;
+	Tue, 18 Nov 2025 11:38:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763465926; cv=none; b=WMAlsP5t+SJPC9d6OCTFMxqPebBduYdsD3pv4+3Jdw9fncTGCpMjhVAB/+zLzsjP4TMqsTRBXonETaNesFuIKDQzabqS+ufjQtxHwyIrDB33L0gAVRtgzIVG7o4zSQr7NwiGyFW9H/B+rnpHwa5vvlZssL8HwSklkqyBzd0fg34=
+	t=1763465938; cv=none; b=hlSBbnnucIagKqg9+xfMrEC41LZWjTZbJ38GnMZqerspXrZW+xio8tXiB9/SAxFVrWp5VYODxmgs0tSdukQ/nji4MXqr5YRqAo++q4SPtFN1v+Vl6O5o+smR6SwlZtQHARdv3qfdsQ+hyC8t5RmZ8WHTwjWLgiui7zY4RlUJdBo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763465926; c=relaxed/simple;
-	bh=sgyKOdZfw+Ox0hoAZikTalLlfmViIKWJ5/p79Jut3zo=;
+	s=arc-20240116; t=1763465938; c=relaxed/simple;
+	bh=d3yxt8eFvIwsXPZETeQy1fnGOPH2X0VQyyCgxYO6b3k=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=go1mK4ZrvqjQVgZE/P/wQl7jFr+lmPCR4N3bBZ6GrE3xDAxYMicGCJtWZdrIOh20q4Hr9wOH67Eo1VFePXsHfoS7UjxrgVk36vCKoduOr8oe0wQi2mH8YNTmA7etZE4DUSVsf4cy3cidBy5aWzXfWAqKa7QH+84+oW/rHQM/4iM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=qKmX9kJK; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5737AC116D0;
-	Tue, 18 Nov 2025 11:38:44 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=Su1xETpw4ECch1nrU9/8SPBs0T4NiEIVEE7ksIiKeT9L4SYEHCaX2u4ZwpP9XFxSs85EE80y3dlGtOzUyC6ip0jhGQcTTXA/2sUNlw5coqmdV4m7Vxoui3N/ngpAFsvXgCs+5Fa5f6+KjeS+WAQhs7PbTvOtfbRmz1GYR8Qdo+A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=jpKSySrb; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09C9DC2BCB3;
+	Tue, 18 Nov 2025 11:38:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1763465925;
-	bh=sgyKOdZfw+Ox0hoAZikTalLlfmViIKWJ5/p79Jut3zo=;
+	s=k20201202; t=1763465937;
+	bh=d3yxt8eFvIwsXPZETeQy1fnGOPH2X0VQyyCgxYO6b3k=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=qKmX9kJK5LQ0kqgjmuXUG9pMh/SrEOfwD669BWnniaG7vQp15OTlgKTunosCDPQoS
-	 qcRrqbMKwS14nClSpIU3iT1I0vjIYfuJ7PPytdsr1AHjiJf7qWz5F5sTsqgjQ8+3Be
-	 raiyovzsSM4A50ip05PbQoTmE5NmlQz9tm81nsP+PbiN4vfY1K5TAH8bEAOw2MmOEn
-	 lBSbHiH0A30g/poS0VkytKgPNEYGEem5belwHSFN8jGw7uPyCbXxnXZqC6HTuD3Myp
-	 i6FEB0ygDkR7FweZF6MaiqwnLlKVa5np3/SvyUl9zovHWwUOggBUDUPusjL4KIeEiq
-	 9x7na9gO+ECoA==
-Message-ID: <55c21749-f1db-4979-a634-3c0b7e0103f4@kernel.org>
-Date: Tue, 18 Nov 2025 12:38:42 +0100
+	b=jpKSySrbGi9Rk2kRKspZOo4CETTn5A/VzONZhYhR4ph+Na6N3ygwE2qNLqEjbdTPx
+	 /83lf1OI+0ADFneEpLeGtQt214mPOoK0BeQ0o1/+/WY5I9myen0yzWjjMNk9yomvoZ
+	 LNEVVSpH/fBzhe+tTTIDIlAhVJ3jnQTTB+TAadNPMQo7OD75bRp2JkWiqJ4cI1rQ+8
+	 ZRV/SR/sjohAwRX/0cwW0XXvkxF/siStyibB0xyzyfR77LQXNxXKzlL/hxPw+MA/0S
+	 CxgvCh1To6V7LRlznnN40sVQKBer0IkMRoTuQOVfPjelqrrMyPJONEHyqug6StqHQq
+	 /HXz6Y0R2hvUQ==
+Message-ID: <74dadf14-8323-46b1-88d2-b25868b10024@kernel.org>
+Date: Tue, 18 Nov 2025 12:38:54 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,14 +50,14 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 02/10] soc: qcom: gsbi: Use __cleanup() for device_node
+Subject: Re: [PATCH 01/10] soc: qcom: aoss: Use __cleanup() for device_node
  pointers
 To: Kathiravan Thirumoorthy <kathiravan.thirumoorthy@oss.qualcomm.com>,
  Bjorn Andersson <andersson@kernel.org>,
  Konrad Dybcio <konradybcio@kernel.org>
 Cc: linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
 References: <20251117-cleanup_node_put-v1-0-5f107071d171@oss.qualcomm.com>
- <20251117-cleanup_node_put-v1-2-5f107071d171@oss.qualcomm.com>
+ <20251117-cleanup_node_put-v1-1-5f107071d171@oss.qualcomm.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -103,48 +103,30 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  jWt87ecuHlpL3uuQ0ZZNWqHgZoQLXoqC2ZV5KrtKWb/jyiFX/sxSrodALf0zf+tfHv0FZWT2
  zHjUqd0t4njD/UOsuIMOQn4Ig0SdivYPfZukb5cdasKJukG1NOpbW7yRNivaCnfZz6dTawXw
  XRIV/KDsHQiyVxKvN73bThKhONkcX2LWuD928tAR6XMM2G5ovxLe09vuOzzfTWQDsm++9UKF a/A=
-In-Reply-To: <20251117-cleanup_node_put-v1-2-5f107071d171@oss.qualcomm.com>
+In-Reply-To: <20251117-cleanup_node_put-v1-1-5f107071d171@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
 On 17/11/2025 05:51, Kathiravan Thirumoorthy wrote:
-> Apply the __cleanup() attribute to device_node pointers to simplify
+> Make use of the __cleanup() attribute for device_node pointers to simplify
 > resource management and remove explicit of_node_put() calls.
 > 
 > Signed-off-by: Kathiravan Thirumoorthy <kathiravan.thirumoorthy@oss.qualcomm.com>
 > ---
->  drivers/soc/qcom/qcom_gsbi.c | 3 +--
+>  drivers/soc/qcom/qcom_aoss.c | 3 +--
 >  1 file changed, 1 insertion(+), 2 deletions(-)
 > 
-> diff --git a/drivers/soc/qcom/qcom_gsbi.c b/drivers/soc/qcom/qcom_gsbi.c
-> index a25d1de592f060bbf6e084bd412e3a1ef47558f4..4a195c39e223c1f4cda1becf4542d4c8a79ad688 100644
-> --- a/drivers/soc/qcom/qcom_gsbi.c
-> +++ b/drivers/soc/qcom/qcom_gsbi.c
-> @@ -124,8 +124,8 @@ static const struct of_device_id tcsr_dt_match[] __maybe_unused = {
->  
->  static int gsbi_probe(struct platform_device *pdev)
+> diff --git a/drivers/soc/qcom/qcom_aoss.c b/drivers/soc/qcom/qcom_aoss.c
+> index a543ab9bee6c4efcbd7026c44af9731176d4d60c..cc9882009bcac7eae8db74815563cdf1cd9a5aa6 100644
+> --- a/drivers/soc/qcom/qcom_aoss.c
+> +++ b/drivers/soc/qcom/qcom_aoss.c
+> @@ -447,8 +447,8 @@ static void qmp_cooling_devices_remove(struct qmp *qmp)
+>   */
+>  struct qmp *qmp_get(struct device *dev)
 >  {
-> +	struct device_node *tcsr_node __free(device_node) = NULL;
+> +	struct device_node *np __free(device_node) = NULL;
 
-
-NAK. Read first how cleanup.h is supposed to look like and why this
-wasn't changed with my patches before.
-
-
->  	struct device_node *node = pdev->dev.of_node;
-> -	struct device_node *tcsr_node;
->  	const struct of_device_id *match;
->  	void __iomem *base;
->  	struct gsbi_info *gsbi;
-> @@ -154,7 +154,6 @@ static int gsbi_probe(struct platform_device *pdev)
->  			else
->  				dev_warn(&pdev->dev, "no matching TCSR\n");
->  
-> -			of_node_put(tcsr_node);
->  		}
->  	}
->  
-> 
+NAK, same reasons
 
 Best regards,
 Krzysztof
