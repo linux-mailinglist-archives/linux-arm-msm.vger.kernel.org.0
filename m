@@ -1,120 +1,217 @@
-Return-Path: <linux-arm-msm+bounces-82328-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-82329-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [IPv6:2605:f480:58:1:0:1994:3:14])
-	by mail.lfdr.de (Postfix) with ESMTPS id C1FC9C69E43
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Nov 2025 15:19:40 +0100 (CET)
+Received: from ams.mirrors.kernel.org (ams.mirrors.kernel.org [IPv6:2a01:60a::1994:3:14])
+	by mail.lfdr.de (Postfix) with ESMTPS id 56905C69E2E
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Nov 2025 15:18:22 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 91B474EE09C
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Nov 2025 14:12:18 +0000 (UTC)
+	by ams.mirrors.kernel.org (Postfix) with ESMTPS id B9DF3352471
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Nov 2025 14:14:00 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A754235A94F;
-	Tue, 18 Nov 2025 14:11:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E0A1535A95B;
+	Tue, 18 Nov 2025 14:12:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="rxxrhzxa"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="tb7PoZoW"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53FA63590BA;
-	Tue, 18 Nov 2025 14:11:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B01A935A121;
+	Tue, 18 Nov 2025 14:12:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763475098; cv=none; b=m6zn48H3Ye3FyAuGqjW1+OMrDFNQ10KxfSczMDb2EUAbIbRUjLM1ddzrgst3UJ0zb8zzDaNN+XIShgEdAjrZjFUsCewC7G1JiIPZI948MYiIwZ00uxTc2f56dZINVR1bemfeh7q4acgx2dn4fJVDdciC6AlFK/4b/DZr2Z5FBRU=
+	t=1763475138; cv=none; b=t1iD6l4KRNFJDpHzq67R++Z88A4TdtKNB4ix+vo8Rt06BBjLdBpVb5A7arvv+PuvsyUMxDK7wBt4ZjZgUwEb4tPgPcsMyIPy/lmfk3/u2qzbuQLCV5KHat/QpT88iin3/ZEGo2LMZCIrB9LM5JW2RlqjW5G+gnPV48DIOWlOgG0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763475098; c=relaxed/simple;
-	bh=Y+O338cjSPRWn8rHveQRQyUuoXCvcdx7NC8N+SHJWaQ=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=G+Bh34lZBydCxKLxVsRi/djmGzPsr39IeCzy4FU4Uotn/GGWejzTttdGvV2MQ60T8pvl6nxiFR1ZYXNobCv5+0X1LtMs2/iwdnzvUOZoEiqogzy2LaPp2B1R9dzMwZLS60uA+DNXhEB1xtjPhJBTahalF47liaeilH+Q8qo3wrs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=rxxrhzxa; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPS id CD458C2BC87;
-	Tue, 18 Nov 2025 14:11:37 +0000 (UTC)
+	s=arc-20240116; t=1763475138; c=relaxed/simple;
+	bh=erS/B6QVBTWTsxbcksB+HGTRTJvgyN9RWKcpAhjnNec=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=K1KFbSOIXX0vVQ0V3SP2Wf8NSS4xs33DDrBBygDmFjjnNXNQQlYgko0RTHRw9s69J5b91T65krSFDztGOC5CkG5musRR7vxxNd/rq8to0AlNJD/HkeZiYi4XFcjxfR66BUMOPIV5R7BrdpXkRlLBHXx6jNAaCrcDGXqOmon98Qc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=tb7PoZoW; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F286C19421;
+	Tue, 18 Nov 2025 14:12:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1763475097;
-	bh=Y+O338cjSPRWn8rHveQRQyUuoXCvcdx7NC8N+SHJWaQ=;
-	h=From:Date:Subject:References:In-Reply-To:To:Cc:Reply-To:From;
-	b=rxxrhzxawBndcEEQ+yyYgheyDtu8FNa3Y6OBm+CujEOUvi5YOjN3EfsZotX0HLbbh
-	 ajnvox7ooW5vlMf5b3G55X74LcFhbhmyAFtjRjFQZwLPmuyrgtcf657LqrelbZbcCa
-	 ec5byGlc5/j5i317LKxcwRlQLHCBrv+S14AOX1OmpCOiucrNBqSEcww1IMbkF07TP6
-	 qUEhVfOcR9xctE/a7093ocU8V5hO5/WQtNLTMAkZjGo6ZqGpx1N0dbL6yrJ0eHo2sD
-	 iD2SQ+Apl0Mm72igW5i4xpdZqaCFnJQBNnU/76Bn0HgW+gYSt41XicKV5wA+ctvTXE
-	 7sOHZMo/P/lcg==
-Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B73F5CEDD8C;
-	Tue, 18 Nov 2025 14:11:37 +0000 (UTC)
-From: David Heidelberg via B4 Relay <devnull+david.ixit.cz@kernel.org>
-Date: Tue, 18 Nov 2025 15:11:37 +0100
-Subject: [PATCH 3/3] arm64: dts: qcom: sdm845-oneplus: Mark l14a regulator
- as boot-on
+	s=k20201202; t=1763475138;
+	bh=erS/B6QVBTWTsxbcksB+HGTRTJvgyN9RWKcpAhjnNec=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=tb7PoZoWmMWvcgZY9xfJch1UHX2xW+EfYmGmdrHZSaz1NEi/adtT/X1UEytoMVdpR
+	 BjGVroPxDIHY6tSrONTw6WdzwXDjHn74NlacWkmoNcHn1jrl83Xeh9JxmzfZay//md
+	 dCP9CFADXxBDdGEVevo0AP89RLTnpE1tqIyXmZ04JZb5Rv1ibHtozWvvwj57PXYU9m
+	 xO7kHRGDq6M57njwE5vvcdKma6gBnIqBaYyOlv4dEJ/ZEe6tXvjAzcgKuqZkE4NPwH
+	 s2zBR8U1n9Tt1US+jJU1OBN2ZzRPJlkzFJuA68fM6PbSS64m1ulm3Vb8O5wybpNqA2
+	 LTD/fNRzAhkNw==
+Message-ID: <eb34be74-6c9f-4bc8-b67e-31e387f7a850@kernel.org>
+Date: Tue, 18 Nov 2025 15:12:12 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20251118-dts-oneplus-regulators-v1-3-79fb2f0f253b@ixit.cz>
-References: <20251118-dts-oneplus-regulators-v1-0-79fb2f0f253b@ixit.cz>
-In-Reply-To: <20251118-dts-oneplus-regulators-v1-0-79fb2f0f253b@ixit.cz>
-To: Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
- linux-kernel@vger.kernel.org, phone-devel@vger.kernel.org, 
- David Heidelberg <david@ixit.cz>, 
- Casey Connolly <casey.connolly@linaro.org>
-X-Mailer: b4 0.14.3
-X-Developer-Signature: v=1; a=openpgp-sha256; l=887; i=david@ixit.cz;
- h=from:subject:message-id;
- bh=Ta5X0H3ltp/2yAQWkY/Fdyk+Qj+G9KOs3FeZkTC/U5s=;
- b=owEBbQKS/ZANAwAIAWACP8TTSSByAcsmYgBpHH6YcfF51/xBAeogwUNzgphE1Yy20ZD2ET90k
- +1NWhhPMP6JAjMEAAEIAB0WIQTXegnP7twrvVOnBHRgAj/E00kgcgUCaRx+mAAKCRBgAj/E00kg
- ctXXD/9LEYvaE0K1FzUiwLuIWfYcw/VTW8WR/cKXOVllao1s06aXjdtuWREjaBnxrLx3LpHGnEw
- RAuSD9z6+R32xWd0UWHPs7J2SrZfpfVZG9/FzeSHy3plaYZw/0InpNwIoEXZaWBBOzk/ZMJnzBA
- aj230OscC2bv4nDI0kQGRWa1WLD6l1UKpJX3SNrAADEUJxczRhZFBCJdqfvxStCqSkzACSgYrne
- 9DgG2CqpV5INxVD8A1tEUBBPl5Msfa1nAFb0TU8TQhaJoZnT8E88KpWeKi3vyrJpUB9L5EMymT3
- 6ozX0ynZct0Krvf0/TQ/suNxlhDoikJvkUJmSQ2rcVXNN1UroYp3oV22ifsSfT6vOgtin+vPOpk
- 9uPWaWccwwkbh0/H/3yWO2Nzxu5G/XUbr9tfN/nCw+qaoQDtYpBKIPgBvt86Zn1Rdh6TlFSUrBY
- 1p/MOYo6cW7nFL6HX1L8d6ILaJ1xhoYS18W+6TGmAdYGQEnci+dbvmDS6DtMK6WEeMWJzFyhpBh
- hmhzCxybtK93MpogboBoRjFAo6TErEU24Lc8j/Vn2JtiZtNdt4ZC8Rbwsl3If7CVLYB6U2MfaUn
- DbZm1Pg6yLFb2U3bRt4qNIhxi72nR46xT+9tcWL2579iLjxJuHRfJfOyZCgpJm6qUFOTYGjQKts
- oM31uLMCPU+Q1Ow==
-X-Developer-Key: i=david@ixit.cz; a=openpgp;
- fpr=D77A09CFEEDC2BBD53A7047460023FC4D3492072
-X-Endpoint-Received: by B4 Relay for david@ixit.cz/default with auth_id=355
-X-Original-From: David Heidelberg <david@ixit.cz>
-Reply-To: david@ixit.cz
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] arm64: dts: qcom: monaco-evk: Enable Bluetooth support
+To: Wei Deng <wei.deng@oss.qualcomm.com>, Rob Herring <robh@kernel.org>
+Cc: Krzysztof Kozlowski <krzk+dt@kernel.org>,
+ Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
+ quic_jiaymao@quicinc.com, Konrad Dybcio <konradybcio@kernel.org>,
+ linux-kernel@vger.kernel.org, linux-bluetooth@vger.kernel.org,
+ cheng.jiang@oss.qualcomm.com, devicetree@vger.kernel.org,
+ Bjorn Andersson <andersson@kernel.org>, quic_shuaz@quicinc.com,
+ quic_chezhou@quicinc.com
+References: <20251113130519.2647081-1-wei.deng@oss.qualcomm.com>
+ <176313578860.3262114.17056319042303889483.robh@kernel.org>
+ <CAL_JsqJX3doLFv-Nc6o+L1W_o8VjtvGp9dqdpsotuyG17zU7Lw@mail.gmail.com>
+ <ca6b02d8-07cc-4bc9-ac99-e75d8e3548fe@oss.qualcomm.com>
+ <0428a5a5-fd4e-4309-9b28-f94664177692@kernel.org>
+ <cef25c09-0ecb-42ea-b781-a4e0d3c61542@oss.qualcomm.com>
+From: Krzysztof Kozlowski <krzk@kernel.org>
+Content-Language: en-US
+Autocrypt: addr=krzk@kernel.org; keydata=
+ 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 a/A=
+In-Reply-To: <cef25c09-0ecb-42ea-b781-a4e0d3c61542@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-From: Casey Connolly <casey.connolly@linaro.org>
+On 18/11/2025 14:24, Wei Deng wrote:
+> Hi Krzysztof,
+> 
+> Thanks for your comments.
+> 
+> On 11/18/2025 3:19 PM, Krzysztof Kozlowski wrote:
+>> On 18/11/2025 08:07, Wei Deng wrote:
+>>> Hi Rob,
+>>>
+>>> Thanks for your comments.
+>>>
+>>> On 11/15/2025 12:18 AM, Rob Herring wrote:
+>>>> On Fri, Nov 14, 2025 at 10:06 AM Rob Herring (Arm) <robh@kernel.org> wrote:
+>>>>>
+>>>>>
+>>>>> On Thu, 13 Nov 2025 18:35:19 +0530, Wei Deng wrote:
+>>>>>> There's a WCN6855 WiFi/Bluetooth module on an M.2 card. To make
+>>>>>> Bluetooth work, we need to define the necessary device tree nodes,
+>>>>>> including UART configuration and power supplies.
+>>>>>>
+>>>>>> Since there is no standard M.2 binding in the device tree at present,
+>>>>>> the PMU is described using dedicated PMU nodes to represent the
+>>>>>> internal regulators required by the module.
+>>>>>>
+>>>>>> The module provides a 3.3V supply, which originates from the
+>>>>>> main board’s 12V rail. To represent this power hierarchy in the device
+>>>>>> tree, add a fixed 12V regulator node as the DC-IN source and link it
+>>>>>> to the 3.3V regulator node.
+>>>>>>
+>>>>>> Signed-off-by: Wei Deng <wei.deng@oss.qualcomm.com>
+>>>>>> ---
+>>>>>>  arch/arm64/boot/dts/qcom/monaco-evk.dts | 99 +++++++++++++++++++++++++
+>>>>>>  1 file changed, 99 insertions(+)
+>>>>>>
+>>>>>
+>>>>>
+>>>>> My bot found new DTB warnings on the .dts files added or changed in this
+>>>>> series.
+>>>>>
+>>>>> Some warnings may be from an existing SoC .dtsi. Or perhaps the warnings
+>>>>> are fixed by another series. Ultimately, it is up to the platform
+>>>>> maintainer whether these warnings are acceptable or not. No need to reply
+>>>>> unless the platform maintainer has comments.
+>>>>>
+>>>>> If you already ran DT checks and didn't see these error(s), then
+>>>>> make sure dt-schema is up to date:
+>>>>>
+>>>>>   pip3 install dtschema --upgrade
+>>>>>
+>>>>>
+>>>>> This patch series was applied (using b4) to base:
+>>>>>  Base: attempting to guess base-commit...
+>>>>>  Base: tags/next-20251112 (exact match)
+>>>>>  Base: tags/next-20251112 (use --merge-base to override)
+>>>>>
+>>>>> If this is not the correct base, please add 'base-commit' tag
+>>>>> (or use b4 which does this automatically)
+>>>>>
+>>>>> New warnings running 'make CHECK_DTBS=y for arch/arm64/boot/dts/qcom/' for 20251113130519.2647081-1-wei.deng@oss.qualcomm.com:
+>>>>>
+>>>>> arch/arm64/boot/dts/qcom/monaco-evk.dtb: wcn6855-pmu (qcom,wcn6855-pmu): 'vddpcielp3-supply', 'vddpcielp9-supply' do not match any of the regexes: '^pinctrl-[0-9]+$'
+>>>>>         from schema $id: http://devicetree.org/schemas/regulator/qcom,qca6390-pmu.yaml
+>>>>> arch/arm64/boot/dts/qcom/monaco-evk.dtb: wcn6855-pmu (qcom,wcn6855-pmu): 'vddpcie1p3-supply' is a required property
+>>>>>         from schema $id: http://devicetree.org/schemas/regulator/qcom,qca6390-pmu.yaml
+>>>>> arch/arm64/boot/dts/qcom/monaco-evk.dtb: wcn6855-pmu (qcom,wcn6855-pmu): 'vddpcie1p9-supply' is a required property
+>>>>>         from schema $id: http://devicetree.org/schemas/regulator/qcom,qca6390-pmu.yaml
+>>>>
+>>>> This is the 3rd report of your typos. Is there some reason you are
+>>>> ignoring the reports?
+>>>>
+>>>
+>>> Sorry for the delayed response. These warnings are worth addressing 
+>>> and will be resolved in the next patch.
+>>>
+>>
+>>
+>> Three of your patchsets have bugs easily pointed out by tools, so please
+>> answer - are you ignoring the reports? Are you doing any tests before
+>> sending?
+>>
+> 
+> Testing was completed on the local hardware platform with successful 
+> compilation and normal functionality, so the tests in this section 
 
-This regulator is used only for the display, which is enabled by the
-bootloader and left on for continuous splash. Mark it as such.
+Which is not enough.
 
-Signed-off-by: Casey Connolly <casey.connolly@linaro.org>
-Signed-off-by: David Heidelberg <david@ixit.cz>
----
- arch/arm64/boot/dts/qcom/sdm845-oneplus-common.dtsi | 1 +
- 1 file changed, 1 insertion(+)
-
-diff --git a/arch/arm64/boot/dts/qcom/sdm845-oneplus-common.dtsi b/arch/arm64/boot/dts/qcom/sdm845-oneplus-common.dtsi
-index 5845bc3bb80b2..8251f5a2f9475 100644
---- a/arch/arm64/boot/dts/qcom/sdm845-oneplus-common.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sdm845-oneplus-common.dtsi
-@@ -272,6 +272,7 @@ vreg_l14a_1p88: ldo14 {
- 			regulator-min-microvolt = <1800000>;
- 			regulator-max-microvolt = <1800000>;
- 			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+			regulator-boot-on;
- 		};
- 
- 		vreg_l17a_1p3: ldo17 {
-
--- 
-2.51.0
+Did you read kernel writing-schema guide? Or any other guide like your
+own internal guideline which asks you explicitly for other tests?
 
 
+> were omitted. Prior to the next submission, a dt-binding constraint 
+> check will be performed.
+
+You need to read internal guideline go/upstream before you post next
+patches.
+
+How many other tests you did not run?
+
+Best regards,
+Krzysztof
 
