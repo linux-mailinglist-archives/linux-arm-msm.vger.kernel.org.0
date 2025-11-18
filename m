@@ -1,221 +1,386 @@
-Return-Path: <linux-arm-msm+bounces-82364-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-82365-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [142.0.200.124])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0867EC6A73D
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Nov 2025 16:58:48 +0100 (CET)
+Received: from ams.mirrors.kernel.org (ams.mirrors.kernel.org [IPv6:2a01:60a::1994:3:14])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0B3BEC6A7D1
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Nov 2025 17:04:55 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id AC6854EEEF7
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Nov 2025 15:56:34 +0000 (UTC)
+	by ams.mirrors.kernel.org (Postfix) with ESMTPS id B168A3495A8
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Nov 2025 15:59:40 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5D028359F89;
-	Tue, 18 Nov 2025 15:56:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 14C6A3538B9;
+	Tue, 18 Nov 2025 15:59:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VZjjMagb"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="qBuWoeOc"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pj1-f51.google.com (mail-pj1-f51.google.com [209.85.216.51])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 015CA35A954
-	for <linux-arm-msm@vger.kernel.org>; Tue, 18 Nov 2025 15:56:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E09A72F25F9;
+	Tue, 18 Nov 2025 15:59:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763481390; cv=none; b=Z860o+oKf7NcA8gJBonb90lkn/WndRQim/YvNx2HMKs3L98rkj5amCPiPduQYB4qqVfphQKJmGBvZrRd4M2ME7u0nFqPlTVCwMi4R7QFcpDbE9P4XKGb8poYPHRn16UtvYUTjb3hJPA63pkIF+1CDGIP0fQzQyATnWqvGcw00/E=
+	t=1763481578; cv=none; b=bcqNB/0/ulqnv6Q80+TyJKrDDMbaO67klFLhRyQShXWMWt70DWzEaDjqZXP7FYDbAuQvx52I25Zm8xagTRsFN4ZbSLxGU/uaGO/vUDxN4t/9zj9NHbZBtfPEPsgO8CNLGOo5ljtmblPxqFdAoNDWmDrRBMqZUICIna8bFjh61lE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763481390; c=relaxed/simple;
-	bh=FoI/0yIBhBAAdixBGW8+u3ufsR/IeE2MFhE0qzpG8vw=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=nfl3tbjkG/sp1PgUVmDsQT1VAlMp0OC0SAxqh9JlCcPCFBClnIvn/C14LhYPIYEzLGm046G/9mOYrItRqi6QYB6M8axwusTK1UMin42H6KzkionYGiMOG9sRlUqXBbtKuoOGfZje50PGlXJuV/6aIEtOPp37rsjiGefkYuBRyLE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=VZjjMagb; arc=none smtp.client-ip=209.85.216.51
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-pj1-f51.google.com with SMTP id 98e67ed59e1d1-343e2e1a580so1084186a91.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 18 Nov 2025 07:56:27 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1763481387; x=1764086187; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=M5WRdUpA2CUE7aS1AisvjTy+gobCtbtissttVLsKK2w=;
-        b=VZjjMagbP10QIhEz24Raq4vWxKzcVDKubRzDeFo2pdy9OfFOL0WeCiKFVo2OM8VSN8
-         MORRCbaSBVovipEBcFF1mcztA4el7drLrnWcc7G49QzBI+IfYYPQVyABMTGuXL4pBMLe
-         ZxkxJWJaNFY6T6gkfNVslbii02khOdFM5WnEjpBrxDkny69hqFrV1ivL9UD6JLjL/7q+
-         aHzNXS3H2a3QpSu4rx+BwRAancDFQbRDE4zhdGhVoIj7VSTUJ4L1kzCT0X29wqMvzm4r
-         oTwfKUPDuVP6XyM4kaQ+FVoNJTz0Lng+dJazexhpNMnWtWxpIUoymY8NH8nxdlRJZ7WI
-         OMXw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1763481387; x=1764086187;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=M5WRdUpA2CUE7aS1AisvjTy+gobCtbtissttVLsKK2w=;
-        b=SESsLp0t0xPQpjSXeh/sMRIlnmw6gCxm5qWXPVCE1q1oChTIKdlDz7jv6eB3P5sqT8
-         XUlEm069ZANz2s8CoF4gbWFwugiL7ebTQUMnTbjjLdQOZLCvd6LKLEX5A4v6cCwhN+dv
-         JR4Qb/ekqi+CYvyH/LAdVk7UMgHZa7wIAPf5zL1meEHt6MjAH4MwChx7JwwBVzRpQ/bs
-         Vcen3zWBq0EKOWGxmKY9TsvWFDzWmQMwssBlo5e7hBy3Ye1EAYT+SknmRaiZ85fTavnh
-         HBUr7uzkQPwjbragHwu/mQSkfSJCs1/agMJooZrpPn4hfPHVACLNsQtBxxyACftxO07l
-         iIeA==
-X-Forwarded-Encrypted: i=1; AJvYcCWHVnr+y4rRC2Weknm7kHuDyNhgrHP5g7p8BJvwgu603nvx7bU1DEY5r046x7gefnx2CLy5HdesRyEnE73B@vger.kernel.org
-X-Gm-Message-State: AOJu0Yzjby0/iibNi1dFg4o3WDvvK41y/19vkTiepQi3dhoMn4eNmSw5
-	sEfFrD+iJ7giNu1c3MISIXNPIJLz6CWXrxoCiqrTJtzz8wrvauAIfg0Vb8u11CyFJ2swlRYf/n+
-	jr4rW9yaR72OFzSodhRqHRfty8X4bR8k=
-X-Gm-Gg: ASbGnctQTdmILqGbOijJNmdDwpAnyv4U4lwD+LugN8hm7AU1vRCKfuddCR05WXlTTZ7
-	T9Kok3H3rtYNGAjwQyxHhpilrg8dEJYfcBLggiXuF60HCjQIbhkdfHhLzwihEbLQQ9BEPb92FlI
-	me0r9U9k2yK/39D62A6fGzq7vPzd6KvRkcLsnmZtGtw5dy0Ns/zYDjXPRY8X8BhrD2+Tvf2SRNe
-	sv8yFvtdksEhb3gNONvfgud6gkTRN/+VNnJgFLq4jR5zrYhIRH24nAyTF7VpgkspOP9IaFdZlWd
-	/gmQ/CkP0drk9VGT
-X-Google-Smtp-Source: AGHT+IE8t1o/EHIJG7uVd/X+qmNh/IfoMFCfRZRkp7Xo8e8ghyzgHnHIC3pizFSaKdc3W9ZzA4z9Bd0F68Sq2swtnFU=
-X-Received: by 2002:a17:90b:1b01:b0:341:b5a2:3e78 with SMTP id
- 98e67ed59e1d1-343fa74f0bfmr9250914a91.3.1763481387271; Tue, 18 Nov 2025
- 07:56:27 -0800 (PST)
+	s=arc-20240116; t=1763481578; c=relaxed/simple;
+	bh=bEzHZ/Jnn64fhupSV1OfaSiBM3yCoNN942RbQnBUkcA=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=ABCtGe1FataN2ad6HeAw5PuoxJQkMGMv7oCO7yth5QUWfL+m+xA/pEMJBftnmdVnma/iOJpjo9WqI7QTGJfXNlmVAP1I5vN6dxE+YccPcfqsTI5mIv2zPCKcfPom0vTB73i7TMrD1TlYy8tJK+2QvXtcOb5daY2mQbFfn0ku824=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=qBuWoeOc; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F366C2BCB9;
+	Tue, 18 Nov 2025 15:59:35 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1763481577;
+	bh=bEzHZ/Jnn64fhupSV1OfaSiBM3yCoNN942RbQnBUkcA=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=qBuWoeOcRLWf+3+7zSX9hQQ1FcWyrPtFeOe4prmwhxxQUQeUjp1y2e2fqxPBnyjc6
+	 BLyfNtpWi2TGnLXuTmbyZB58ZQ64P9hxVifCH5P8Y3y8kKYkxlRhqvbortFtzSOxSU
+	 rLEirOMtuEAX3e8EAueXdGyp2UEeLT5iK2XtczIOxCU3lH3x97ogk3b+X97cvT/Z8K
+	 XqhmXXaYDz8YDgHMxWZ1CD4fzBHq9acNuZb6I6RZ8HzLHzXuwch+HRqYYwP3REsE5H
+	 HEgdF1bX5guuCu3KdyxpaaO1dehO9Qjkt2Kx1cpZwpd1KrOkpNH58MOyfe6hEaQufz
+	 2fh4VP0qccHZw==
+Date: Tue, 18 Nov 2025 10:04:24 -0600
+From: Bjorn Andersson <andersson@kernel.org>
+To: Kumari Pallavi <kumari.pallavi@oss.qualcomm.com>
+Cc: kpallavi@qti.qualcomm.com, srini@kernel.org, amahesh@qti.qualcomm.com, 
+	arnd@arndb.de, gregkh@linuxfoundation.org, quic_bkumar@quicinc.com, 
+	ekansh.gupta@oss.qualcomm.com, linux-kernel@vger.kernel.org, quic_chennak@quicinc.com, 
+	dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org, jingyi.wang@oss.qualcomm.com, 
+	aiqun.yu@oss.qualcomm.com, ktadakam@qti.qualcomm.com
+Subject: Re: [PATCH v3 2/4] misc: fastrpc: Rename phys to dma_addr for clarity
+Message-ID: <yenp6ss5u5s4h75s7ggpyecmkfiiwd6vidqh7zu4yd3cahyoh2@iuja6rwwg4pi>
+References: <20251114084142.3386682-1-kumari.pallavi@oss.qualcomm.com>
+ <20251114084142.3386682-3-kumari.pallavi@oss.qualcomm.com>
+ <q46rupdndsmeojv4szm3qbtcwu6n7x2ukwrrx4jd7rph7nlq5b@xiclcnpx7rc7>
+ <83112aa3-5998-4030-98cb-d3d5ee7c0570@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20251118-kaana-gpu-support-v4-0-86eeb8e93fb6@oss.qualcomm.com> <20251118-kaana-gpu-support-v4-15-86eeb8e93fb6@oss.qualcomm.com>
-In-Reply-To: <20251118-kaana-gpu-support-v4-15-86eeb8e93fb6@oss.qualcomm.com>
-From: Connor Abbott <cwabbott0@gmail.com>
-Date: Tue, 18 Nov 2025 10:56:16 -0500
-X-Gm-Features: AWmQ_bmdki1r5-87hufvE1VD2aBWZ9nuG-r_2OiqIAnZ7-v6leUi15c6-xeP3Cc
-Message-ID: <CACu1E7HzsnSjz0SiUJT0SMNJ7cFhiNdtUE9jKHpvD3UzG6EegQ@mail.gmail.com>
-Subject: Re: [PATCH v4 15/22] drm/msm/adreno: Support AQE engine
-To: Akhil P Oommen <akhilpo@oss.qualcomm.com>
-Cc: Rob Clark <robin.clark@oss.qualcomm.com>, Bjorn Andersson <andersson@kernel.org>, 
-	Konrad Dybcio <konradybcio@kernel.org>, Sean Paul <sean@poorly.run>, 
-	Dmitry Baryshkov <lumag@kernel.org>, Abhinav Kumar <abhinav.kumar@linux.dev>, 
-	Jessica Zhang <jesszhan0024@gmail.com>, Marijn Suijten <marijn.suijten@somainline.org>, 
-	David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, Jonathan Marek <jonathan@marek.ca>, 
-	Jordan Crouse <jordan@cosmicpenguin.net>, Will Deacon <will@kernel.org>, 
-	Robin Murphy <robin.murphy@arm.com>, Joerg Roedel <joro@8bytes.org>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, Maxime Ripard <mripard@kernel.org>, 
-	Thomas Zimmermann <tzimmermann@suse.de>, linux-arm-msm@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, dri-devel@lists.freedesktop.org, 
-	freedreno@lists.freedesktop.org, linux-arm-kernel@lists.infradead.org, 
-	iommu@lists.linux.dev, devicetree@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <83112aa3-5998-4030-98cb-d3d5ee7c0570@oss.qualcomm.com>
 
-On Tue, Nov 18, 2025 at 3:53=E2=80=AFAM Akhil P Oommen <akhilpo@oss.qualcom=
-m.com> wrote:
->
-> AQE (Applicaton Qrisc Engine) is a dedicated core inside CP which aides
-> in Raytracing related workloads. Add support for loading the AQE firmware
-> and initialize the necessary registers.
->
-> Since AQE engine has dependency on preemption context records, expose
-> Raytracing support to userspace only when preemption is enabled.
+On Mon, Nov 17, 2025 at 12:37:33PM +0530, Kumari Pallavi wrote:
+> 
+> 
+> On 11/14/2025 9:14 PM, Bjorn Andersson wrote:
+> > On Fri, Nov 14, 2025 at 02:11:40PM +0530, Kumari Pallavi wrote:
+> > > Update all references of buf->phys and map->phys to buf->dma_addr and
+> > > map->dma_addr to accurately represent that these fields store DMA
+> > > addresses, not physical addresses. This change improves code clarity
+> > > and aligns with kernel conventions for dma_addr_t usage.
+> > > 
+> > > Signed-off-by: Kumari Pallavi <kumari.pallavi@oss.qualcomm.com>
+> > > ---
+> > >   drivers/misc/fastrpc.c | 76 ++++++++++++++++++++++--------------------
+> > >   1 file changed, 40 insertions(+), 36 deletions(-)
+> > > 
+> > > diff --git a/drivers/misc/fastrpc.c b/drivers/misc/fastrpc.c
+> > > index ee652ef01534..d6a7960fe716 100644
+> > > --- a/drivers/misc/fastrpc.c
+> > > +++ b/drivers/misc/fastrpc.c
+> > > @@ -106,7 +106,7 @@
+> > >   #define miscdev_to_fdevice(d) container_of(d, struct fastrpc_device, miscdev)
+> > >   struct fastrpc_phy_page {
+> > > -	u64 addr;		/* physical address */
+> > > +	u64 addr;		/* physical or dma address */
+> > >   	u64 size;		/* size of contiguous region */
+> > >   };
+> > > @@ -171,7 +171,7 @@ struct fastrpc_msg {
+> > >   	u64 ctx;		/* invoke caller context */
+> > >   	u32 handle;	/* handle to invoke */
+> > >   	u32 sc;		/* scalars structure describing the data */
+> > > -	u64 addr;		/* physical address */
+> > > +	u64 addr;		/* physical or dma address */
+> > 
+> > Can you go all the way and make the type dma_addr_t? That way you don't
+> > need to typecast the dma_alloc_coherent() and dma_free_coherent().
+> > 
+> > I believe it might complicate the places where you do math on it, but
+> > that is a good thing, as it highlights those places where you do
+> > something unexpected.
+> > 
+> 
+> While this not strictly limited to holding a dma_addr_t.
+> Based on historical behavior, when the FASTRPC_ATTR_SECUREMAP flag is
+> set, S2 mapping expects a physical address to be passed to the
+> qcom_scm_assign_mem() API.
+> reference-
+> https://git.kernel.org/pub/scm/linux/kernel/git/next/linux-next.git/commit/drivers/misc/fastrpc.c?id=e90d911906196bf987492c94e38f10ca611dfd7b
 
-I guess the plan is to expose MSM_PARAM_AQE later once preemption
-records are in place and for now just load the firmware to ensure that
-people have it?
+If I understand correctly, when FASTRPC_ATTR_SECUREMAP is set that
+implies that the mapping happens in the firmware SID, i.e. outside of
+Linux's view. So it's still a dma_addr_t, but it's mapped 1:1 with the
+physical address.
 
-The interrupt error handling is still missing, but I guess that can be
-handled later if that's the plan.
+I think this is another good reason to make the changes I suggested
+below (which you didn't comment on?). Sometimes this "addr" is the
+actual address and sometimes it contains the annotated address.
 
-Connor
+> 
+> If you suggest, I can define it as dma_addr_t and perform typecasting to u64
+> wherever required.
 
->
-> Signed-off-by: Akhil P Oommen <akhilpo@oss.qualcomm.com>
-> ---
->  drivers/gpu/drm/msm/adreno/a6xx_gpu.c   | 22 ++++++++++++++++++++++
->  drivers/gpu/drm/msm/adreno/a6xx_gpu.h   |  2 ++
->  drivers/gpu/drm/msm/adreno/a8xx_gpu.c   |  3 +++
->  drivers/gpu/drm/msm/adreno/adreno_gpu.h |  1 +
->  4 files changed, 28 insertions(+)
->
-> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c b/drivers/gpu/drm/msm/=
-adreno/a6xx_gpu.c
-> index 810b64b909f5..9a643bcccdcf 100644
-> --- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-> +++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-> @@ -1118,6 +1118,23 @@ static int a6xx_ucode_load(struct msm_gpu *gpu)
->                 }
->         }
->
-> +       if (!a6xx_gpu->aqe_bo && adreno_gpu->fw[ADRENO_FW_AQE]) {
-> +               a6xx_gpu->aqe_bo =3D adreno_fw_create_bo(gpu,
-> +                       adreno_gpu->fw[ADRENO_FW_AQE], &a6xx_gpu->aqe_iov=
-a);
-> +
-> +               if (IS_ERR(a6xx_gpu->aqe_bo)) {
-> +                       int ret =3D PTR_ERR(a6xx_gpu->aqe_bo);
-> +
-> +                       a6xx_gpu->aqe_bo =3D NULL;
-> +                       DRM_DEV_ERROR(&gpu->pdev->dev,
-> +                               "Could not allocate AQE ucode: %d\n", ret=
-);
-> +
-> +                       return ret;
-> +               }
-> +
-> +               msm_gem_object_set_name(a6xx_gpu->aqe_bo, "aqefw");
-> +       }
-> +
->         /*
->          * Expanded APRIV and targets that support WHERE_AM_I both need a
->          * privileged buffer to store the RPTR shadow
-> @@ -2400,6 +2417,11 @@ static void a6xx_destroy(struct msm_gpu *gpu)
->                 drm_gem_object_put(a6xx_gpu->sqe_bo);
->         }
->
-> +       if (a6xx_gpu->aqe_bo) {
-> +               msm_gem_unpin_iova(a6xx_gpu->aqe_bo, gpu->vm);
-> +               drm_gem_object_put(a6xx_gpu->aqe_bo);
-> +       }
-> +
->         if (a6xx_gpu->shadow_bo) {
->                 msm_gem_unpin_iova(a6xx_gpu->shadow_bo, gpu->vm);
->                 drm_gem_object_put(a6xx_gpu->shadow_bo);
-> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.h b/drivers/gpu/drm/msm/=
-adreno/a6xx_gpu.h
-> index e6218b0b9732..3a054fcdeb4a 100644
-> --- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.h
-> +++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.h
-> @@ -59,6 +59,8 @@ struct a6xx_gpu {
->
->         struct drm_gem_object *sqe_bo;
->         uint64_t sqe_iova;
-> +       struct drm_gem_object *aqe_bo;
-> +       uint64_t aqe_iova;
->
->         struct msm_ringbuffer *cur_ring;
->         struct msm_ringbuffer *next_ring;
-> diff --git a/drivers/gpu/drm/msm/adreno/a8xx_gpu.c b/drivers/gpu/drm/msm/=
-adreno/a8xx_gpu.c
-> index c9cd7546024a..e011e80ceb50 100644
-> --- a/drivers/gpu/drm/msm/adreno/a8xx_gpu.c
-> +++ b/drivers/gpu/drm/msm/adreno/a8xx_gpu.c
-> @@ -627,6 +627,9 @@ static int hw_init(struct msm_gpu *gpu)
->                 goto out;
->
->         gpu_write64(gpu, REG_A8XX_CP_SQE_INSTR_BASE, a6xx_gpu->sqe_iova);
-> +       if (a6xx_gpu->aqe_iova)
-> +               gpu_write64(gpu, REG_A8XX_CP_AQE_INSTR_BASE_0, a6xx_gpu->=
-aqe_iova);
-> +
->         /* Set the ringbuffer address */
->         gpu_write64(gpu, REG_A6XX_CP_RB_BASE, gpu->rb[0]->iova);
->         gpu_write(gpu, REG_A6XX_CP_RB_CNTL, MSM_GPU_RB_CNTL_DEFAULT);
-> diff --git a/drivers/gpu/drm/msm/adreno/adreno_gpu.h b/drivers/gpu/drm/ms=
-m/adreno/adreno_gpu.h
-> index c496b63ffd41..0aca222c46bc 100644
-> --- a/drivers/gpu/drm/msm/adreno/adreno_gpu.h
-> +++ b/drivers/gpu/drm/msm/adreno/adreno_gpu.h
-> @@ -27,6 +27,7 @@ enum {
->         ADRENO_FW_PFP =3D 1,
->         ADRENO_FW_GMU =3D 1, /* a6xx */
->         ADRENO_FW_GPMU =3D 2,
-> +       ADRENO_FW_AQE =3D 3,
->         ADRENO_FW_MAX,
->  };
->
->
-> --
-> 2.51.0
->
+Yes, maintain the mapping in a dma_addr_t, then you have the two cases:
+
+1) Contexts with SMMU, you cast the dma_addr_t and annotate it with the
+sid information before communicate the addresses to the firmware.
+
+2) Contexts without SMMU, you make it clear that your dma_addr_t is 1:1
+with physical addresses and you then pass it to qcom_scm_assign_mem() et
+al.
+
+
+That way the "addr" is always the actual iova (with or without mapping)
+and the places where it's treated as a physical address or an annotated
+"address" becomes very explicit.
+
+Regards,
+Bjorn
+
+> 
+> Thanks,
+> Pallavi
+> 
+> 
+> > >   	u64 size;		/* size of contiguous region */
+> > >   };
+> > > @@ -194,7 +194,7 @@ struct fastrpc_buf {
+> > >   	struct dma_buf *dmabuf;
+> > >   	struct device *dev;
+> > >   	void *virt;
+> > > -	u64 phys;
+> > > +	u64 dma_addr;
+> > >   	u64 size;
+> > >   	/* Lock for dma buf attachments */
+> > >   	struct mutex lock;
+> > > @@ -217,7 +217,7 @@ struct fastrpc_map {
+> > >   	struct dma_buf *buf;
+> > >   	struct sg_table *table;
+> > >   	struct dma_buf_attachment *attach;
+> > > -	u64 phys;
+> > > +	u64 dma_addr;
+> > >   	u64 size;
+> > >   	void *va;
+> > >   	u64 len;
+> > > @@ -320,11 +320,12 @@ static void fastrpc_free_map(struct kref *ref)
+> > >   			perm.vmid = QCOM_SCM_VMID_HLOS;
+> > >   			perm.perm = QCOM_SCM_PERM_RWX;
+> > > -			err = qcom_scm_assign_mem(map->phys, map->len,
+> > > +			err = qcom_scm_assign_mem(map->dma_addr, map->len,
+> > >   				&src_perms, &perm, 1);
+> > >   			if (err) {
+> > > -				dev_err(map->fl->sctx->dev, "Failed to assign memory phys 0x%llx size 0x%llx err %d\n",
+> > > -						map->phys, map->len, err);
+> > > +				dev_err(map->fl->sctx->dev,
+> > > +					"Failed to assign memory dma_addr 0x%llx size 0x%llx err %d\n",
+> > > +					map->dma_addr, map->len, err);
+> > >   				return;
+> > >   			}
+> > >   		}
+> > > @@ -389,7 +390,7 @@ static int fastrpc_map_lookup(struct fastrpc_user *fl, int fd,
+> > >   static void fastrpc_buf_free(struct fastrpc_buf *buf)
+> > >   {
+> > >   	dma_free_coherent(buf->dev, buf->size, buf->virt,
+> > > -			  FASTRPC_PHYS(buf->phys));
+> > > +			  FASTRPC_PHYS(buf->dma_addr));
+> > >   	kfree(buf);
+> > >   }
+> > > @@ -408,12 +409,12 @@ static int __fastrpc_buf_alloc(struct fastrpc_user *fl, struct device *dev,
+> > >   	buf->fl = fl;
+> > >   	buf->virt = NULL;
+> > > -	buf->phys = 0;
+> > > +	buf->dma_addr = 0;
+> > >   	buf->size = size;
+> > >   	buf->dev = dev;
+> > >   	buf->raddr = 0;
+> > > -	buf->virt = dma_alloc_coherent(dev, buf->size, (dma_addr_t *)&buf->phys,
+> > > +	buf->virt = dma_alloc_coherent(dev, buf->size, (dma_addr_t *)&buf->dma_addr,
+> > >   				       GFP_KERNEL);
+> > >   	if (!buf->virt) {
+> > >   		mutex_destroy(&buf->lock);
+> > > @@ -439,7 +440,7 @@ static int fastrpc_buf_alloc(struct fastrpc_user *fl, struct device *dev,
+> > >   	buf = *obuf;
+> > >   	if (fl->sctx && fl->sctx->sid)
+> > > -		buf->phys += ((u64)fl->sctx->sid << 32);
+> > > +		buf->dma_addr += ((u64)fl->sctx->sid << 32);
+> > >   	return 0;
+> > >   }
+> > > @@ -684,7 +685,7 @@ static int fastrpc_dma_buf_attach(struct dma_buf *dmabuf,
+> > >   		return -ENOMEM;
+> > >   	ret = dma_get_sgtable(buffer->dev, &a->sgt, buffer->virt,
+> > > -			      FASTRPC_PHYS(buffer->phys), buffer->size);
+> > > +			      FASTRPC_PHYS(buffer->dma_addr), buffer->size);
+> > >   	if (ret < 0) {
+> > >   		dev_err(buffer->dev, "failed to get scatterlist from DMA API\n");
+> > >   		kfree(a);
+> > > @@ -733,7 +734,7 @@ static int fastrpc_mmap(struct dma_buf *dmabuf,
+> > >   	dma_resv_assert_held(dmabuf->resv);
+> > >   	return dma_mmap_coherent(buf->dev, vma, buf->virt,
+> > > -				 FASTRPC_PHYS(buf->phys), size);
+> > > +				 FASTRPC_PHYS(buf->dma_addr), size);
+> > 
+> > In fact, we invoke dma_alloc_coherent() above to get a dma_addr_t, and
+> > then we call map, unmap, and free on the lower 32 bits of that
+> > address...
+> > 
+> > In other words, each time we reference dma_addr we have that implicit
+> > thing that it's a composit of a dma_addr_t as seen from Linux's point of
+> > view (which is matching the addresses in the SMMU page tables) and the
+> > adjusted address that we use in communication with the firmware to
+> > direct the accesses to the right SID + iova.
+> > 
+> > I think it would be quite nice to make this more explicit throughout the
+> > code, rather than juggling the two perspectives in the same variable.
+> > 
+> > Regards,
+> > Bjorn
+> > 
+> > >   }
+> > >   static const struct dma_buf_ops fastrpc_dma_buf_ops = {
+> > > @@ -785,10 +786,10 @@ static int fastrpc_map_attach(struct fastrpc_user *fl, int fd,
+> > >   	map->table = table;
+> > >   	if (attr & FASTRPC_ATTR_SECUREMAP) {
+> > > -		map->phys = sg_phys(map->table->sgl);
+> > > +		map->dma_addr = sg_phys(map->table->sgl);
+> > >   	} else {
+> > > -		map->phys = sg_dma_address(map->table->sgl);
+> > > -		map->phys += ((u64)fl->sctx->sid << 32);
+> > > +		map->dma_addr = sg_dma_address(map->table->sgl);
+> > > +		map->dma_addr += ((u64)fl->sctx->sid << 32);
+> > >   	}
+> > >   	for_each_sg(map->table->sgl, sgl, map->table->nents,
+> > >   		sgl_index)
+> > > @@ -815,10 +816,11 @@ static int fastrpc_map_attach(struct fastrpc_user *fl, int fd,
+> > >   		dst_perms[1].vmid = fl->cctx->vmperms[0].vmid;
+> > >   		dst_perms[1].perm = QCOM_SCM_PERM_RWX;
+> > >   		map->attr = attr;
+> > > -		err = qcom_scm_assign_mem(map->phys, (u64)map->len, &src_perms, dst_perms, 2);
+> > > +		err = qcom_scm_assign_mem(map->dma_addr, (u64)map->len, &src_perms, dst_perms, 2);
+> > >   		if (err) {
+> > > -			dev_err(sess->dev, "Failed to assign memory with phys 0x%llx size 0x%llx err %d\n",
+> > > -					map->phys, map->len, err);
+> > > +			dev_err(sess->dev,
+> > > +				"Failed to assign memory with dma_addr 0x%llx size 0x%llx err %d\n",
+> > > +				map->dma_addr, map->len, err);
+> > >   			goto map_err;
+> > >   		}
+> > >   	}
+> > > @@ -1009,7 +1011,7 @@ static int fastrpc_get_args(u32 kernel, struct fastrpc_invoke_ctx *ctx)
+> > >   			struct vm_area_struct *vma = NULL;
+> > >   			rpra[i].buf.pv = (u64) ctx->args[i].ptr;
+> > > -			pages[i].addr = ctx->maps[i]->phys;
+> > > +			pages[i].addr = ctx->maps[i]->dma_addr;
+> > >   			mmap_read_lock(current->mm);
+> > >   			vma = find_vma(current->mm, ctx->args[i].ptr);
+> > > @@ -1036,7 +1038,7 @@ static int fastrpc_get_args(u32 kernel, struct fastrpc_invoke_ctx *ctx)
+> > >   				goto bail;
+> > >   			rpra[i].buf.pv = args - ctx->olaps[oix].offset;
+> > > -			pages[i].addr = ctx->buf->phys -
+> > > +			pages[i].addr = ctx->buf->dma_addr -
+> > >   					ctx->olaps[oix].offset +
+> > >   					(pkt_size - rlen);
+> > >   			pages[i].addr = pages[i].addr &	PAGE_MASK;
+> > > @@ -1068,7 +1070,7 @@ static int fastrpc_get_args(u32 kernel, struct fastrpc_invoke_ctx *ctx)
+> > >   		list[i].num = ctx->args[i].length ? 1 : 0;
+> > >   		list[i].pgidx = i;
+> > >   		if (ctx->maps[i]) {
+> > > -			pages[i].addr = ctx->maps[i]->phys;
+> > > +			pages[i].addr = ctx->maps[i]->dma_addr;
+> > >   			pages[i].size = ctx->maps[i]->size;
+> > >   		}
+> > >   		rpra[i].dma.fd = ctx->args[i].fd;
+> > > @@ -1150,7 +1152,7 @@ static int fastrpc_invoke_send(struct fastrpc_session_ctx *sctx,
+> > >   	msg->ctx = ctx->ctxid | fl->pd;
+> > >   	msg->handle = handle;
+> > >   	msg->sc = ctx->sc;
+> > > -	msg->addr = ctx->buf ? ctx->buf->phys : 0;
+> > > +	msg->addr = ctx->buf ? ctx->buf->dma_addr : 0;
+> > >   	msg->size = roundup(ctx->msg_sz, PAGE_SIZE);
+> > >   	fastrpc_context_get(ctx);
+> > > @@ -1306,13 +1308,14 @@ static int fastrpc_init_create_static_process(struct fastrpc_user *fl,
+> > >   		if (fl->cctx->vmcount) {
+> > >   			u64 src_perms = BIT(QCOM_SCM_VMID_HLOS);
+> > > -			err = qcom_scm_assign_mem(fl->cctx->remote_heap->phys,
+> > > +			err = qcom_scm_assign_mem(fl->cctx->remote_heap->dma_addr,
+> > >   							(u64)fl->cctx->remote_heap->size,
+> > >   							&src_perms,
+> > >   							fl->cctx->vmperms, fl->cctx->vmcount);
+> > >   			if (err) {
+> > > -				dev_err(fl->sctx->dev, "Failed to assign memory with phys 0x%llx size 0x%llx err %d\n",
+> > > -					fl->cctx->remote_heap->phys, fl->cctx->remote_heap->size, err);
+> > > +				dev_err(fl->sctx->dev,
+> > > +					"Failed to assign memory with dma_addr 0x%llx size 0x%llx err %d\n",
+> > > +					fl->cctx->remote_heap->dma_addr, fl->cctx->remote_heap->size, err);
+> > >   				goto err_map;
+> > >   			}
+> > >   			scm_done = true;
+> > > @@ -1332,7 +1335,7 @@ static int fastrpc_init_create_static_process(struct fastrpc_user *fl,
+> > >   	args[1].length = inbuf.namelen;
+> > >   	args[1].fd = -1;
+> > > -	pages[0].addr = fl->cctx->remote_heap->phys;
+> > > +	pages[0].addr = fl->cctx->remote_heap->dma_addr;
+> > >   	pages[0].size = fl->cctx->remote_heap->size;
+> > >   	args[2].ptr = (u64)(uintptr_t) pages;
+> > > @@ -1361,12 +1364,12 @@ static int fastrpc_init_create_static_process(struct fastrpc_user *fl,
+> > >   		dst_perms.vmid = QCOM_SCM_VMID_HLOS;
+> > >   		dst_perms.perm = QCOM_SCM_PERM_RWX;
+> > > -		err = qcom_scm_assign_mem(fl->cctx->remote_heap->phys,
+> > > +		err = qcom_scm_assign_mem(fl->cctx->remote_heap->dma_addr,
+> > >   						(u64)fl->cctx->remote_heap->size,
+> > >   						&src_perms, &dst_perms, 1);
+> > >   		if (err)
+> > > -			dev_err(fl->sctx->dev, "Failed to assign memory phys 0x%llx size 0x%llx err %d\n",
+> > > -				fl->cctx->remote_heap->phys, fl->cctx->remote_heap->size, err);
+> > > +			dev_err(fl->sctx->dev, "Failed to assign memory dma_addr 0x%llx size 0x%llx err %d\n",
+> > > +				fl->cctx->remote_heap->dma_addr, fl->cctx->remote_heap->size, err);
+> > >   	}
+> > >   err_map:
+> > >   	fastrpc_buf_free(fl->cctx->remote_heap);
+> > > @@ -1455,7 +1458,7 @@ static int fastrpc_init_create_process(struct fastrpc_user *fl,
+> > >   	args[2].length = inbuf.filelen;
+> > >   	args[2].fd = init.filefd;
+> > > -	pages[0].addr = imem->phys;
+> > > +	pages[0].addr = imem->dma_addr;
+> > >   	pages[0].size = imem->size;
+> > >   	args[3].ptr = (u64)(uintptr_t) pages;
+> > > @@ -1913,7 +1916,7 @@ static int fastrpc_req_mmap(struct fastrpc_user *fl, char __user *argp)
+> > >   	args[0].ptr = (u64) (uintptr_t) &req_msg;
+> > >   	args[0].length = sizeof(req_msg);
+> > > -	pages.addr = buf->phys;
+> > > +	pages.addr = buf->dma_addr;
+> > >   	pages.size = buf->size;
+> > >   	args[1].ptr = (u64) (uintptr_t) &pages;
+> > > @@ -1941,11 +1944,12 @@ static int fastrpc_req_mmap(struct fastrpc_user *fl, char __user *argp)
+> > >   	if (req.flags == ADSP_MMAP_REMOTE_HEAP_ADDR && fl->cctx->vmcount) {
+> > >   		u64 src_perms = BIT(QCOM_SCM_VMID_HLOS);
+> > > -		err = qcom_scm_assign_mem(buf->phys, (u64)buf->size,
+> > > +		err = qcom_scm_assign_mem(buf->dma_addr, (u64)buf->size,
+> > >   			&src_perms, fl->cctx->vmperms, fl->cctx->vmcount);
+> > >   		if (err) {
+> > > -			dev_err(fl->sctx->dev, "Failed to assign memory phys 0x%llx size 0x%llx err %d",
+> > > -					buf->phys, buf->size, err);
+> > > +			dev_err(fl->sctx->dev,
+> > > +				"Failed to assign memory dma_addr 0x%llx size 0x%llx err %d",
+> > > +				buf->dma_addr, buf->size, err);
+> > >   			goto err_assign;
+> > >   		}
+> > >   	}
+> > > @@ -2059,7 +2063,7 @@ static int fastrpc_req_mem_map(struct fastrpc_user *fl, char __user *argp)
+> > >   	args[0].ptr = (u64) (uintptr_t) &req_msg;
+> > >   	args[0].length = sizeof(req_msg);
+> > > -	pages.addr = map->phys;
+> > > +	pages.addr = map->dma_addr;
+> > >   	pages.size = map->len;
+> > >   	args[1].ptr = (u64) (uintptr_t) &pages;
+> > > -- 
+> > > 2.34.1
+> > > 
+> > > 
+> 
 
