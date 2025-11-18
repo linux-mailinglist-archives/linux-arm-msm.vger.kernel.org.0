@@ -1,258 +1,194 @@
-Return-Path: <linux-arm-msm+bounces-82264-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-82267-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sin.lore.kernel.org (sin.lore.kernel.org [IPv6:2600:3c15:e001:75::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 440D1C69088
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Nov 2025 12:18:35 +0100 (CET)
+Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [IPv6:2605:f480:58:1:0:1994:3:14])
+	by mail.lfdr.de (Postfix) with ESMTPS id 23B13C691D6
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Nov 2025 12:35:12 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sin.lore.kernel.org (Postfix) with ESMTPS id 5B41D2AA4E
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Nov 2025 11:18:32 +0000 (UTC)
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id E9D434F3C0C
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Nov 2025 11:32:49 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 42971339701;
-	Tue, 18 Nov 2025 11:18:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3D5073557FD;
+	Tue, 18 Nov 2025 11:30:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="kbCQi1y0";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="TNQjG4eW"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="MDG2XqwH"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49D4134E768
-	for <linux-arm-msm@vger.kernel.org>; Tue, 18 Nov 2025 11:18:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C3013502BE;
+	Tue, 18 Nov 2025 11:30:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763464705; cv=none; b=IK3HZUNjsu3wu7ALq1cFpd+uoUfvn49I4t+bf0JN7GYE0QGJQe9ST/QldJNlqigpAmTaMyddSvFIa9eRUVF1nxQFVkoQrg+hgzE70xKArH0k4yk9lkOLs+Miap8787iD2sarxmkvkqKVZRxeCYCZb+9gzt9IhgcO4o6Nf+QAEro=
+	t=1763465444; cv=none; b=Pj0+83ADKJsy5VVNE7j5Lwbsj+Z73k6WlHTTUrGfzHPysQq27vSzC9Q1p0z0DGqSRWuMGHzTXtqkyBa3Q5LwYaJu8u2AFPS50rKq0ou7LN1UaWLuOooycc30i9IfFJE1Z5LxNlI1/YQEcjWZPXVcIbQAnDA1LYbPC3ruFA+RR0M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763464705; c=relaxed/simple;
-	bh=j1X8Bcz0tw2PQAuMnopNpJHPrzfuraBENhrJ0hqo3H8=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=C2hmmncJ9KiwfyO4cIxms1iwU3q2xRSe1jLrw6L6KVgcPtboeg8lS2tzVmeS/FV7XX46PUVsqxNlPhMX2c9KP8g6gY3UEI298S1Qn+Y1BmsIhhEKGoLp4li7rcCy/tcBTbcMXnqLqtUQsdEvsZgOFolhsQM6NAstx9r0yvxCOhM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=kbCQi1y0; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=TNQjG4eW; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 5AIAR4XQ2927168
-	for <linux-arm-msm@vger.kernel.org>; Tue, 18 Nov 2025 11:18:22 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	BT6MxSCrefLxE5wv9+3d366R21cpjkB5npT66y5AUFc=; b=kbCQi1y00SlDlSVz
-	UWKyI+N+b1O32Qrzw90az9OtW28Km9edlZ/8UVAd6wdO1+dWx8/hlDUMFacaUcVd
-	s9W7FlC4V4t96OBOPodVnnRjeY4pG7cjpp6fy4x6Fe1WaC/QncEEdxYSdkmxzCTD
-	9mmSN0NTKxc9oBmysZxa9ILofLFwy0Y8ejKHzxbOAAaCkXbB87/yADuGszZ0Y1Yg
-	s5YSAc4Fs2HfpkfPFeC9fpVMJCS/Af4UDPsJvLtXsfMPV1yRph86D9Q7yzYaopxr
-	Mqo5OgJVBB3vkGwNCgZXPwm9+8dpvFBwfaenrmaTOS6NFjAurX8nSyHxg2hosYoi
-	PtjCCw==
-Received: from mail-pf1-f197.google.com (mail-pf1-f197.google.com [209.85.210.197])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4agq2904a1-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Tue, 18 Nov 2025 11:18:22 +0000 (GMT)
-Received: by mail-pf1-f197.google.com with SMTP id d2e1a72fcca58-7b8a12f0cb4so5885066b3a.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 18 Nov 2025 03:18:21 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1763464701; x=1764069501; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=BT6MxSCrefLxE5wv9+3d366R21cpjkB5npT66y5AUFc=;
-        b=TNQjG4eW9B2DQbdkvXQbHHcP/dm/yTpxywk7gIUFO87rK7SekzG7/D3J8qzN/m6Hmx
-         RGiecJrp/sdCzxy9A3FRB3wmFUeAS03rgRj0SiThSWjn9gQ5jp2JC10UHBRQ1RIW1vFD
-         x09lucffgML1C06T0F7LWtfqkbKZPC8O0t7toFS+ydg9dlhmz1P2IMSYWPo/1dpjg10d
-         ZSebto/xuaYAg6WK1OtpELIGOJPZ0fA0n5YbxVeQvTr7wP4OagXs/ZPsY73pL5T/viBP
-         cSTYdR/hzBovPm3pQAbItLjj0T+pUYLbbzuPmpK6Jjekvxc+PWwFbBE63x4lr32IPYG6
-         noow==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1763464701; x=1764069501;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=BT6MxSCrefLxE5wv9+3d366R21cpjkB5npT66y5AUFc=;
-        b=LEDK0E3dSQ0G94r0vRZbR6AZ0DOFPn+zvI2oZ0d/yvTWg6ZP2Zj+yaxu52N42Hbav+
-         xDmoJpvCb1M403V8g4voBCO2Dk3tcLEzSKY6mcaJXz06557PTFtIKy2pMD2FpAhb8gvM
-         cgjnMvGYOlJ5AwrKBV/WqItyvOQ4+wPcEw4FkjqkYi7oqiR27iZCT4Y54b8MFkEwB5+W
-         XqbVRskDf6BH2VDNyGuyvH3BWU6CqTVCGWKsWUdY0cvKwtCLIR9sSFVp6ReEUFTy7492
-         uGx73X4YHhthQhCezEZ7CJPzgb5IKmTaFuL162vD6UUbdKykQotwdeOemYy0v0txRcBq
-         TGIw==
-X-Gm-Message-State: AOJu0Yw6cCpGjoy8r9MGHDWSDBgRwcmuXcM+y+qMbQlzaDs2+cmK1Rt9
-	gma9f31qcZ6PFhR9qEqkMYiBNzoSgUWYM18Qw1HPDEqqskc98/JZ9vG7VUqao+wBkk4+J4RgDu5
-	RBqV2X1Suwaz1cXLi9HWhbblslTaz2FpxxO1Pe7Goz2iE9OVtJVBwtOCrQCUUGoHlWw+l
-X-Gm-Gg: ASbGnctibxvUy5OjojmSXhXLYVDtF1RpiEkrbycWyVuWgQkFQ0dF2Wi7SvFYHq4+pMx
-	tRz9I1NIygs6oX7KxARlToNhLntf3wWjwePROWrUVuexjpoBRfZ8oGH7pPBpZS0+upYQN0hD3ok
-	Z7Z7/msU9oR4gcQrVdCsic95svEhXR0QOmkIgJxhtbo1ufBil4/bzmG7iqVtzN3ySPw1k1ZGC1x
-	y/m1PTzS4qvzflPRSXgFibHR0fPt6M1/Jcrjl5UAjnSAw4mdyPRVnzNFZ8B69xktqJYbhlLT3lI
-	5bn6yNNO11g49I0AefobL9AMnNWoSJ9DuAQKdKZ1QtUnWaqSD04dOeodEnSS/cCCuM6dS9PQNUM
-	6Fm6PAsUubDY+3t/pk41M4Bk0upwsGnSjGXgzHRyGONTNX1Xmjdi14w==
-X-Received: by 2002:a05:6a00:a28:b0:7a2:6eb3:71ee with SMTP id d2e1a72fcca58-7ba39beb4dfmr17045014b3a.9.1763464701113;
-        Tue, 18 Nov 2025 03:18:21 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IEK4YICEHIj1nlKnQLiop2iPzyANBvxiVZ7gJKumRb5uJP3w+uf6eq9GE2MS8ZF5xQcO4gnLw==
-X-Received: by 2002:a05:6a00:a28:b0:7a2:6eb3:71ee with SMTP id d2e1a72fcca58-7ba39beb4dfmr17044997b3a.9.1763464700610;
-        Tue, 18 Nov 2025 03:18:20 -0800 (PST)
-Received: from [10.151.37.217] ([202.46.23.19])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-7bedbb2a1d2sm7339512b3a.41.2025.11.18.03.18.16
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 18 Nov 2025 03:18:20 -0800 (PST)
-Message-ID: <88e538ee-9e70-4249-bee5-5127d344edad@oss.qualcomm.com>
-Date: Tue, 18 Nov 2025 16:48:14 +0530
+	s=arc-20240116; t=1763465444; c=relaxed/simple;
+	bh=tWnNYvYQRDsGGxSuDn/MWDrGcftRyl+P4vR4eD0JmvI=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=GKcAXfDqsjw+cpeg5UxbzcBA3iZe7nEDa9efBCe9GsZTnGSy0sQUOYWBywD5eGA71od0Kj4xjX5OzQHVa1aeywoWTGVsI1ru1IxsjzCQ6n5k8rxC5twPcADxtKrz7C9aDgZLMZCTqXJAJNsZ+T3lDJS4zhobsW9Im1Rku5IPAL4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=MDG2XqwH; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPS id E4197C2BC87;
+	Tue, 18 Nov 2025 11:30:42 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1763465443;
+	bh=tWnNYvYQRDsGGxSuDn/MWDrGcftRyl+P4vR4eD0JmvI=;
+	h=From:Subject:Date:To:Cc:Reply-To:From;
+	b=MDG2XqwHNLnqAMMxNhqX481Ozin7fyJnbvBMDJenJ7SdbkTw+RjGnj5bL34T7NSAC
+	 1OJaaQJrA5C2DGhjtFaZtavOM+CLJAjgNNcFWVU1REvCXrC/RDN1inqagjd/iMBowc
+	 OlX3SLAJIU2COR/KHw2DsR2mx6J7MY2Okb0w3iYRLw8PoRPTL6QcAiKwjFCrVX+szW
+	 CUEs+wBsXrHd93/p3bbdtqA/TKnV/teNRb58+fCK0r47PbQN3piUY3cRE0cn9IYHEJ
+	 hPTqw4vn2Gk1SEJFpr9CKxkaXlZWwVL6zaFZfiMxc+sfNSAy95GGWeJImKufP1zU6E
+	 mKrqcMLEZFSkg==
+Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8FAEACED61E;
+	Tue, 18 Nov 2025 11:30:42 +0000 (UTC)
+From: David Heidelberg via B4 Relay <devnull+david.ixit.cz@kernel.org>
+Subject: [PATCH v3 0/8] Add support for Pixel 3 and Pixel 3 XL
+Date: Tue, 18 Nov 2025 12:30:35 +0100
+Message-Id: <20251118-pixel-3-v3-0-317a2b400d8a@ixit.cz>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v8 1/2] firmware: qcom: scm: Register gunyah watchdog
- device
-To: hrishabh.rajput@oss.qualcomm.com, Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>,
-        Wim Van Sebroeck <wim@linux-watchdog.org>,
-        Guenter Roeck
- <linux@roeck-us.net>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, linux-watchdog@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Pavan Kondeti <pavan.kondeti@oss.qualcomm.com>,
-        Neil Armstrong <neil.armstrong@linaro.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-        Shivendra Pratap <shivendra.pratap@oss.qualcomm.com>
-References: <20251118-gunyah_watchdog-v8-0-e5de12e2eef5@oss.qualcomm.com>
- <20251118-gunyah_watchdog-v8-1-e5de12e2eef5@oss.qualcomm.com>
-Content-Language: en-US
-From: Kathiravan Thirumoorthy <kathiravan.thirumoorthy@oss.qualcomm.com>
-In-Reply-To: <20251118-gunyah_watchdog-v8-1-e5de12e2eef5@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-Authority-Analysis: v=2.4 cv=FJgWBuos c=1 sm=1 tr=0 ts=691c55fe cx=c_pps
- a=rEQLjTOiSrHUhVqRoksmgQ==:117 a=j4ogTh8yFefVWWEFDRgCtg==:17
- a=IkcTkHD0fZMA:10 a=6UeiqGixMTsA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8 a=KKAkSRfTAAAA:8
- a=h6q1wd228mELy5tlGgAA:9 a=QEXdDO2ut3YA:10 a=2VI0MkxyNR6bbpdq8BZq:22
- a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-ORIG-GUID: H6RA1MXsn_K9KtlJ9Ryljad1n3sZ7m0o
-X-Proofpoint-GUID: H6RA1MXsn_K9KtlJ9Ryljad1n3sZ7m0o
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMTE4MDA5MCBTYWx0ZWRfXw0iibHQwRHx8
- WRXTaBxxDYejlZ3SuO7kb209bTbQMZDZ9D8hNJmiPduWPqVY4lAlAScWT2dlwLOpIuVzqOKSRIe
- Hn30bDeqEtN3fPh2cHxR8HOA9gahKWqBek0XqeyI7rSUaXsMcGWZwuMU3uFbcs89x63RQSdIUIh
- ODDxIIetr7Xx8czL9mHTS8uL4JyuAJ7yW7zBh1mqW0/OYdzCeC9FdR1uPY01nGfC35i4WohtI3K
- 7cj4WWLx7egEndPKcDdcUoXroRXIqLbuTgZrcqlrAfIqbkeRve3XcIODiDiHRV+LhtwRoFINUBl
- 9WlwYlsvS3K3p63Uggnp1AKvRT73zLYLQbEx7PNkY4KsATdW29IpLqaeLZfdKzdZPULQ8yb14/Z
- WNqJazi86u1J1vhUkZH3os4DihdMrw==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
- definitions=2025-11-17_04,2025-11-13_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- bulkscore=0 malwarescore=0 suspectscore=0 impostorscore=0 lowpriorityscore=0
- clxscore=1015 spamscore=0 phishscore=0 priorityscore=1501 adultscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2510240001 definitions=main-2511180090
+X-B4-Tracking: v=1; b=H4sIANtYHGkC/02Pyw6CMBBFf8V0bc20pTxc+R/GBbSDTGIAW2xQw
+ r9b0IjLOzPn5M7EPDpCz467iTkM5KlrY1D7HTNN2V6Rk42ZSZAaElHwnka8ccW1EGiNLJMUMha
+ ve4d1XC2m8yXmhvzQuecqDmKZrg4BoH+OIDjwssqrXNepUKo+0UjDwbzYYgjyj1KwUTJSuSmtr
+ RAyaYqNmj9FHN4f8ZPh22ae38+XzMXnAAAA
+X-Change-ID: 20250419-pixel-3-511edc2a4607
+To: Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>, Sumit Semwal <sumit.semwal@linaro.org>, 
+ Casey Connolly <casey.connolly@linaro.org>, 
+ Neil Armstrong <neil.armstrong@linaro.org>, 
+ Jessica Zhang <jesszhan0024@gmail.com>, 
+ Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, 
+ Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>, 
+ David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>
+Cc: phodina@protonmail.com, linux-arm-msm@vger.kernel.org, 
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+ phone-devel@vger.kernel.org, dri-devel@lists.freedesktop.org, 
+ David Heidelberg <david@ixit.cz>, Amit Pundir <amit.pundir@linaro.org>, 
+ Casey Connolly <casey@connolly.tech>, Joel Selvaraj <foss@joelselvaraj.com>, 
+ Vinod Koul <vkoul@kernel.org>, Bjorn Andersson <andersson@kernel.org>
+X-Mailer: b4 0.14.3
+X-Developer-Signature: v=1; a=openpgp-sha256; l=3670; i=david@ixit.cz;
+ h=from:subject:message-id;
+ bh=tWnNYvYQRDsGGxSuDn/MWDrGcftRyl+P4vR4eD0JmvI=;
+ b=owEBbQKS/ZANAwAIAWACP8TTSSByAcsmYgBpHFjg+z2KM7Ixt9O1Fd1uwPNNs4KTdFRA5lbt0
+ itZnamnsUGJAjMEAAEIAB0WIQTXegnP7twrvVOnBHRgAj/E00kgcgUCaRxY4AAKCRBgAj/E00kg
+ cgiuEACFpKLhluE0HMUuoXRR78KqEyHJEmsKa0DDyyX53skNLLjJBPebBafR9vmO8BCKXuDIeBY
+ J78omfidybBS27HCy//CKzIRXeGiGwIwWy2bpO2yqAi2lUio5H0zeZ1B4qkJTDu1aw/3GvQWFnE
+ bdBc4THVllBXTdOZzD0x2HStfldBWlWIYVTIUvsuavMMWxUJTneZeeIncmcEGEek5lPPLl0aB0X
+ lKwPpe8BTLX+fgFN+j6tz5kzJCL8mostUi6PWLaNuKy03MdsIG9EHSOB4EWJ2cQ32LSZUGNiY58
+ l3HilOURssxcYlgFGHoWJA2579JAeVgd2gXGAlt7n0IV+XFDN61hdZShnY5Ffw9lkdOIaIk2j6y
+ VSlBNZnbAZeXYA4ayoHOtTXK+k/3HQk+vBu8lwbss1vmYoIyRr7mgfrceBotMrOo4oMaLbdr+jB
+ uSUi1szWqvyGsEtw8UbWt0Hcu4cEmbZz9tq4HL50eSCIeTjj8e/E9FHeA709gEcTL64h6ewioMF
+ ihz8DvZGSbjMlCCa6g0A2K71CuRcjLgMvKcO43JOLK6OdCIWT2aLmF1c2HBFnHwu+yjUJQoDIeD
+ qlHjjrpz+Yc3MGGqoqT7S8FYMxF2G8VJlLvjKekH6IpytPy2aA7ya7A1Y5YJe0T0IDjL8Mp/o5P
+ ihfeEif4G3ttvfg==
+X-Developer-Key: i=david@ixit.cz; a=openpgp;
+ fpr=D77A09CFEEDC2BBD53A7047460023FC4D3492072
+X-Endpoint-Received: by B4 Relay for david@ixit.cz/default with auth_id=355
+X-Original-From: David Heidelberg <david@ixit.cz>
+Reply-To: david@ixit.cz
+
+This adds initial device tree support for the following phones:
+
+ - Google Pixel 3 (blueline)
+ - Google Pixel 3 XL (crosshatch)
+
+Both phone boards use the same identifiers and differ only slightly
+in their connected peripherals.
+
+This is mainly focused to get the base functionality of the board and
+being able to use the upstream DTS within Linux and u-boot.
+
+Booting
+-------
+For older Pixel 3 bootloaders, bootloader-compatible board and MSM IDs are
+required for the kernel to boot, so these have been added.
+
+For recent Pixel 3 bootloaders,
+a) you want chainloaded proper bootloader (f.e. u-boot),
+b) you can also boot kernel when adding back TEXT_OFFSET
+   (partial revert of 120dc60d).
+
+This series is a beggining of cleaning up and transitioning support from
+sdm845 close to mainline tree to the mainline.
+
+Until merged, available at:
+  https://gitlab.com/sdm845/sdm845-next/-/commits/b4/pixel-3
+
+Depends on:
+- "[PATCH 0/7] arm64: dts: qcom: cleanup GPU's zap-shader node" series.
+
+Signed-off-by: David Heidelberg <david@ixit.cz>
+---
+Changes in v3:
+- dropped Documentaion: prefix from 1st commit (Krzysztof)
+- extended the compatible for panel driver
+- Document reserved GPIOs.
+- Drop some useless statuses, sort pinctrl. (Konrad)
+- Link to v2: https://lore.kernel.org/r/20251030-pixel-3-v2-0-8caddbe072c9@ixit.cz
+
+Changes in v2:
+- rebased on next-20251030
+- generalize chosen to -common (Dmitry)
+- demystify rmtfs_mem qcom,vmid
+- use qcom,use-guard-pages instead of lower/upper guard block
+- merge port@1 endpoint into label mdss_dsi0_out
+- sort pinctrl
+- sorted the nodes inside root
+- put status as a last property into mdss_dsi0 block
+- rename volume-keys to gpio-keys   
+- removed LS-UART1 label
+- removed gmu block, already enabled
+- removed accidentally introduced WIP crosshatch panel support
+- removed useless panel_pmgpio_pins (Dmitry)
+- removed usb_2 as it's unused on production units (only devkit)
+- move mdss node into the -common and disable in crosshatch (Dmitry)
+- move battery node into the -commonm
+- move framebuffer into the -common (Dmitry)
+- add all firmwares (Dmitry)
+- add Wi-Fi support
+- add Bluetooth support
+- add missing gpi_dma1 node
+- renamed regulators to follow regulator-foo-bar BCP (Dmitry)
+- adapt to recent cleanup GPU's zap-shader node
+- Link to v1: https://lore.kernel.org/r/20251005-pixel-3-v1-0-ab8b85f6133f@ixit.cz
+
+---
+David Heidelberg (8):
+      dt-bindings: arm: qcom: Add Pixel 3 and 3 XL
+      dt-bindings: panel: sw43408: adjust to reflect the DDIC and panel used
+      drm/panel: sw43408: Introduce LH546WF1-ED01 panel compatible
+      drm/panel: sw43408: Introduce disable/enable functions
+      drm/panel: sw43408: Remove manual invocation of unprepare at remove
+      drm/panel: sw43408: Switch to devm_regulator_bulk_get_const
+      drm/panel: sw43408: Improve wording when reset-gpios aren't available
+      arm64: dts: qcom: Add support for Pixel 3 and Pixel 3 XL
+
+ Documentation/devicetree/bindings/arm/qcom.yaml    |   2 +
+ .../bindings/display/panel/lg,sw43408.yaml         |  11 +-
+ arch/arm64/boot/dts/qcom/Makefile                  |   2 +
+ .../arm64/boot/dts/qcom/sdm845-google-blueline.dts |  88 ++++
+ arch/arm64/boot/dts/qcom/sdm845-google-common.dtsi | 515 +++++++++++++++++++++
+ .../boot/dts/qcom/sdm845-google-crosshatch.dts     |  33 ++
+ drivers/gpu/drm/panel/panel-lg-sw43408.c           | 123 +++--
+ 7 files changed, 721 insertions(+), 53 deletions(-)
+---
+base-commit: ace0e2ec8bedd82f153e51c5d8d36ed3cb181e69
+change-id: 20250419-pixel-3-511edc2a4607
+
+Best regards,
+-- 
+David Heidelberg <david@ixit.cz>
 
 
-On 11/18/2025 4:10 PM, Hrishabh Rajput via B4 Relay wrote:
-> From: Hrishabh Rajput <hrishabh.rajput@oss.qualcomm.com>
->
-> To restrict Gunyah watchdog initialization to Qualcomm platforms running
-> under the Gunyah Hypervisor, register the watchdog device in the QCOM
-> SCM driver.
->
-> When Gunyah is not present or Gunyah emulates MMIO-based watchdog, we
-> expect Qualcomm watchdog or ARM SBSA watchdog device to be present in
-> the devicetree. First, we make sure we're running under the Gunyah
-> Hypervisor. Then we move to check if any of the above mentioned
-> watchdog device nodes are present, if not then we proceed to register
-> the SMC-based Gunyah watchdog device.
->
-> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-> Tested-by: Shivendra Pratap <shivendra.pratap@oss.qualcomm.com>
-> Tested-by: Neil Armstrong <neil.armstrong@linaro.org>
-> Signed-off-by: Hrishabh Rajput <hrishabh.rajput@oss.qualcomm.com>
-> ---
->   drivers/firmware/qcom/qcom_scm.c | 53 ++++++++++++++++++++++++++++++++++++++++
->   1 file changed, 53 insertions(+)
->
-> diff --git a/drivers/firmware/qcom/qcom_scm.c b/drivers/firmware/qcom/qcom_scm.c
-> index e777b7cb9b12..14d0663316e6 100644
-> --- a/drivers/firmware/qcom/qcom_scm.c
-> +++ b/drivers/firmware/qcom/qcom_scm.c
-> @@ -2182,6 +2182,56 @@ int qcom_scm_qtee_callback_response(phys_addr_t buf, size_t buf_size,
->   }
->   EXPORT_SYMBOL(qcom_scm_qtee_callback_response);
->   
-> +static void qcom_scm_gunyah_wdt_free(void *data)
-> +{
-> +	struct platform_device *gunyah_wdt_dev = data;
-> +
-> +	platform_device_unregister(gunyah_wdt_dev);
-> +}
-> +
-> +static void qcom_scm_gunyah_wdt_init(struct qcom_scm *scm)
-> +{
-> +	struct platform_device *gunyah_wdt_dev;
-> +	struct device_node *np;
-
-nit: Can we use the __cleanup() attribute for device_node like below and 
-drop the explicit of_node_put()?
-
-struct device_node *np __free(device_node) = NULL;
-
-FYI - I submitted the patch which takes care of this in the SCM driver[1].
-
-[1] 
-https://lore.kernel.org/linux-arm-msm/20251117-scm_cleanup_of_node_put-v1-1-307d36d6b849@oss.qualcomm.com/
-
-> +	bool of_wdt_available;
-> +	int i;
-> +	static const uuid_t gunyah_uuid = UUID_INIT(0xc1d58fcd, 0xa453, 0x5fdb,
-> +						    0x92, 0x65, 0xce, 0x36,
-> +						    0x67, 0x3d, 0x5f, 0x14);
-> +	static const char * const of_wdt_compatible[] = {
-> +		"qcom,kpss-wdt",
-> +		"arm,sbsa-gwdt",
-> +	};
-> +
-> +	/* Bail out if we are not running under Gunyah */
-> +	if (!IS_ENABLED(CONFIG_HAVE_ARM_SMCCC_DISCOVERY) ||
-> +	    !arm_smccc_hypervisor_has_uuid(&gunyah_uuid))
-> +		return;
-> +
-> +	/*
-> +	 * Gunyah emulates either of Qualcomm watchdog or ARM SBSA watchdog on
-> +	 * newer platforms. Bail out if we find them in the devicetree.
-> +	 */
-> +	for (i = 0; i < ARRAY_SIZE(of_wdt_compatible); i++) {
-> +		np = of_find_compatible_node(NULL, NULL, of_wdt_compatible[i]);
-> +		of_wdt_available = of_device_is_available(np);
-> +		of_node_put(np);
-> +		if (of_wdt_available)
-> +			return;
-> +	}
-> +
-> +	gunyah_wdt_dev = platform_device_register_simple("gunyah-wdt", -1,
-> +							 NULL, 0);
-> +	if (IS_ERR(gunyah_wdt_dev)) {
-> +		dev_err(scm->dev, "Failed to register Gunyah watchdog device: %ld\n",
-> +			PTR_ERR(gunyah_wdt_dev));
-> +		return;
-> +	}
-> +
-> +	devm_add_action_or_reset(scm->dev, qcom_scm_gunyah_wdt_free,
-> +				 gunyah_wdt_dev);
-> +}
-> +
->   static void qcom_scm_qtee_free(void *data)
->   {
->   	struct platform_device *qtee_dev = data;
-> @@ -2448,6 +2498,9 @@ static int qcom_scm_probe(struct platform_device *pdev)
->   	/* Initialize the QTEE object interface. */
->   	qcom_scm_qtee_init(scm);
->   
-> +	/* Initialize the Gunyah watchdog platform device. */
-> +	qcom_scm_gunyah_wdt_init(scm);
-> +
->   	return 0;
->   }
->   
->
 
