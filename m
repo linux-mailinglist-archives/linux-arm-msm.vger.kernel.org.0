@@ -1,146 +1,221 @@
-Return-Path: <linux-arm-msm+bounces-82363-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-82364-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ams.mirrors.kernel.org (ams.mirrors.kernel.org [213.196.21.55])
-	by mail.lfdr.de (Postfix) with ESMTPS id 01F36C6A6BB
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Nov 2025 16:54:12 +0100 (CET)
+Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [142.0.200.124])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0867EC6A73D
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Nov 2025 16:58:48 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ams.mirrors.kernel.org (Postfix) with ESMTPS id E049034CDFB
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Nov 2025 15:48:25 +0000 (UTC)
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id AC6854EEEF7
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Nov 2025 15:56:34 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id EA4C6368287;
-	Tue, 18 Nov 2025 15:48:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5D028359F89;
+	Tue, 18 Nov 2025 15:56:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="k5pjPCDm"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VZjjMagb"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pj1-f51.google.com (mail-pj1-f51.google.com [209.85.216.51])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C013A36828F;
-	Tue, 18 Nov 2025 15:48:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 015CA35A954
+	for <linux-arm-msm@vger.kernel.org>; Tue, 18 Nov 2025 15:56:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763480883; cv=none; b=j0mp5Et8s8q1nAWW1K/HRdjVKd/v8ysC1YIk4d1lwDgWoTYOK3X0vpNBkfHRaV5/rlCIkXUgK2LnljXdbuUQkIFh/6qv6NmTUxN7pIlrA6Oq8s8RCGyidg6MrDFl1GqvYsD75PWdjH1lzrlv5adxUZEhlzDZ6asQu/eGU1UMm6k=
+	t=1763481390; cv=none; b=Z860o+oKf7NcA8gJBonb90lkn/WndRQim/YvNx2HMKs3L98rkj5amCPiPduQYB4qqVfphQKJmGBvZrRd4M2ME7u0nFqPlTVCwMi4R7QFcpDbE9P4XKGb8poYPHRn16UtvYUTjb3hJPA63pkIF+1CDGIP0fQzQyATnWqvGcw00/E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763480883; c=relaxed/simple;
-	bh=ftZPrL7pkqvYgzApMIEmVisxDVAsYx0F5C0VOMSH8Uc=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=h8EYfMzOWzhdgVI28QvMy8XlhBejiLliwwTmHJ8OHXuJXp3VOCzB8tZaqaC+8Lu+JrHN8o+5r6XDyynmUe5aqZVPn5brmAy6rOswLtEyVsxU5LpPHD4r/ZDPRTdd965E0NoR9OP9rdGO1sd6oiGROzsd2h9cLMe3jiGhWbTeU6Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=k5pjPCDm; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BED5DC4AF0C;
-	Tue, 18 Nov 2025 15:48:00 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1763480882;
-	bh=ftZPrL7pkqvYgzApMIEmVisxDVAsYx0F5C0VOMSH8Uc=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=k5pjPCDmvhAAn2oD9/OV0u6iLC0wJSXclH9vdGlaSAM+UfJxYDhpzeScPhOK42i5a
-	 novsxhH4WsGPI03LBveRVb7SU1HdfjfUyPCKxB2wPSW2SnVZAadV1fN3ytqp24ezF8
-	 gGKajyIDUkQmuc7r+OHkA700Bva3XuF2atYlX8MNRmtRxN8sU7/WKvQHUx6j3eCrIs
-	 D9SjRUcUqkSOBJisCQ6Hz+QHTrZ1Mf1srHA9CTSq2c8ybWCR0jgKKvQwGtwXCINSU4
-	 AyMM8+k847N3VhhKl9DRi1Bpv9L87t3x4tqDp5EMhbHmXXrGOkZA5HVXb+4tYKh55J
-	 ziWLY/7RtV2aA==
-Date: Tue, 18 Nov 2025 09:52:49 -0600
-From: Bjorn Andersson <andersson@kernel.org>
-To: Kumari Pallavi <kumari.pallavi@oss.qualcomm.com>
-Cc: kpallavi@qti.qualcomm.com, srini@kernel.org, amahesh@qti.qualcomm.com, 
-	arnd@arndb.de, gregkh@linuxfoundation.org, quic_bkumar@quicinc.com, 
-	ekansh.gupta@oss.qualcomm.com, linux-kernel@vger.kernel.org, quic_chennak@quicinc.com, 
-	dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org, jingyi.wang@oss.qualcomm.com, 
-	aiqun.yu@oss.qualcomm.com, ktadakam@qti.qualcomm.com
-Subject: Re: [PATCH v3 3/4] misc: fastrpc: Add support for new DSP IOVA
- formatting
-Message-ID: <yucfjksc5w2eac6fmsamknjhbwebxg7xsz6633vs2rw3qt4kfa@w2wsbfvszhb7>
-References: <20251114084142.3386682-1-kumari.pallavi@oss.qualcomm.com>
- <20251114084142.3386682-4-kumari.pallavi@oss.qualcomm.com>
- <di5fqyh4uygb72xov6zqvg2i2ujlllrnnzlsphlzvghgttdqpe@u6uwwa4rxiow>
- <8c59e08a-99cb-473b-999c-e7d08bc2124b@oss.qualcomm.com>
+	s=arc-20240116; t=1763481390; c=relaxed/simple;
+	bh=FoI/0yIBhBAAdixBGW8+u3ufsR/IeE2MFhE0qzpG8vw=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=nfl3tbjkG/sp1PgUVmDsQT1VAlMp0OC0SAxqh9JlCcPCFBClnIvn/C14LhYPIYEzLGm046G/9mOYrItRqi6QYB6M8axwusTK1UMin42H6KzkionYGiMOG9sRlUqXBbtKuoOGfZje50PGlXJuV/6aIEtOPp37rsjiGefkYuBRyLE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=VZjjMagb; arc=none smtp.client-ip=209.85.216.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-pj1-f51.google.com with SMTP id 98e67ed59e1d1-343e2e1a580so1084186a91.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 18 Nov 2025 07:56:27 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1763481387; x=1764086187; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=M5WRdUpA2CUE7aS1AisvjTy+gobCtbtissttVLsKK2w=;
+        b=VZjjMagbP10QIhEz24Raq4vWxKzcVDKubRzDeFo2pdy9OfFOL0WeCiKFVo2OM8VSN8
+         MORRCbaSBVovipEBcFF1mcztA4el7drLrnWcc7G49QzBI+IfYYPQVyABMTGuXL4pBMLe
+         ZxkxJWJaNFY6T6gkfNVslbii02khOdFM5WnEjpBrxDkny69hqFrV1ivL9UD6JLjL/7q+
+         aHzNXS3H2a3QpSu4rx+BwRAancDFQbRDE4zhdGhVoIj7VSTUJ4L1kzCT0X29wqMvzm4r
+         oTwfKUPDuVP6XyM4kaQ+FVoNJTz0Lng+dJazexhpNMnWtWxpIUoymY8NH8nxdlRJZ7WI
+         OMXw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1763481387; x=1764086187;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=M5WRdUpA2CUE7aS1AisvjTy+gobCtbtissttVLsKK2w=;
+        b=SESsLp0t0xPQpjSXeh/sMRIlnmw6gCxm5qWXPVCE1q1oChTIKdlDz7jv6eB3P5sqT8
+         XUlEm069ZANz2s8CoF4gbWFwugiL7ebTQUMnTbjjLdQOZLCvd6LKLEX5A4v6cCwhN+dv
+         JR4Qb/ekqi+CYvyH/LAdVk7UMgHZa7wIAPf5zL1meEHt6MjAH4MwChx7JwwBVzRpQ/bs
+         Vcen3zWBq0EKOWGxmKY9TsvWFDzWmQMwssBlo5e7hBy3Ye1EAYT+SknmRaiZ85fTavnh
+         HBUr7uzkQPwjbragHwu/mQSkfSJCs1/agMJooZrpPn4hfPHVACLNsQtBxxyACftxO07l
+         iIeA==
+X-Forwarded-Encrypted: i=1; AJvYcCWHVnr+y4rRC2Weknm7kHuDyNhgrHP5g7p8BJvwgu603nvx7bU1DEY5r046x7gefnx2CLy5HdesRyEnE73B@vger.kernel.org
+X-Gm-Message-State: AOJu0Yzjby0/iibNi1dFg4o3WDvvK41y/19vkTiepQi3dhoMn4eNmSw5
+	sEfFrD+iJ7giNu1c3MISIXNPIJLz6CWXrxoCiqrTJtzz8wrvauAIfg0Vb8u11CyFJ2swlRYf/n+
+	jr4rW9yaR72OFzSodhRqHRfty8X4bR8k=
+X-Gm-Gg: ASbGnctQTdmILqGbOijJNmdDwpAnyv4U4lwD+LugN8hm7AU1vRCKfuddCR05WXlTTZ7
+	T9Kok3H3rtYNGAjwQyxHhpilrg8dEJYfcBLggiXuF60HCjQIbhkdfHhLzwihEbLQQ9BEPb92FlI
+	me0r9U9k2yK/39D62A6fGzq7vPzd6KvRkcLsnmZtGtw5dy0Ns/zYDjXPRY8X8BhrD2+Tvf2SRNe
+	sv8yFvtdksEhb3gNONvfgud6gkTRN/+VNnJgFLq4jR5zrYhIRH24nAyTF7VpgkspOP9IaFdZlWd
+	/gmQ/CkP0drk9VGT
+X-Google-Smtp-Source: AGHT+IE8t1o/EHIJG7uVd/X+qmNh/IfoMFCfRZRkp7Xo8e8ghyzgHnHIC3pizFSaKdc3W9ZzA4z9Bd0F68Sq2swtnFU=
+X-Received: by 2002:a17:90b:1b01:b0:341:b5a2:3e78 with SMTP id
+ 98e67ed59e1d1-343fa74f0bfmr9250914a91.3.1763481387271; Tue, 18 Nov 2025
+ 07:56:27 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <8c59e08a-99cb-473b-999c-e7d08bc2124b@oss.qualcomm.com>
+References: <20251118-kaana-gpu-support-v4-0-86eeb8e93fb6@oss.qualcomm.com> <20251118-kaana-gpu-support-v4-15-86eeb8e93fb6@oss.qualcomm.com>
+In-Reply-To: <20251118-kaana-gpu-support-v4-15-86eeb8e93fb6@oss.qualcomm.com>
+From: Connor Abbott <cwabbott0@gmail.com>
+Date: Tue, 18 Nov 2025 10:56:16 -0500
+X-Gm-Features: AWmQ_bmdki1r5-87hufvE1VD2aBWZ9nuG-r_2OiqIAnZ7-v6leUi15c6-xeP3Cc
+Message-ID: <CACu1E7HzsnSjz0SiUJT0SMNJ7cFhiNdtUE9jKHpvD3UzG6EegQ@mail.gmail.com>
+Subject: Re: [PATCH v4 15/22] drm/msm/adreno: Support AQE engine
+To: Akhil P Oommen <akhilpo@oss.qualcomm.com>
+Cc: Rob Clark <robin.clark@oss.qualcomm.com>, Bjorn Andersson <andersson@kernel.org>, 
+	Konrad Dybcio <konradybcio@kernel.org>, Sean Paul <sean@poorly.run>, 
+	Dmitry Baryshkov <lumag@kernel.org>, Abhinav Kumar <abhinav.kumar@linux.dev>, 
+	Jessica Zhang <jesszhan0024@gmail.com>, Marijn Suijten <marijn.suijten@somainline.org>, 
+	David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, Jonathan Marek <jonathan@marek.ca>, 
+	Jordan Crouse <jordan@cosmicpenguin.net>, Will Deacon <will@kernel.org>, 
+	Robin Murphy <robin.murphy@arm.com>, Joerg Roedel <joro@8bytes.org>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, Maxime Ripard <mripard@kernel.org>, 
+	Thomas Zimmermann <tzimmermann@suse.de>, linux-arm-msm@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, dri-devel@lists.freedesktop.org, 
+	freedreno@lists.freedesktop.org, linux-arm-kernel@lists.infradead.org, 
+	iommu@lists.linux.dev, devicetree@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Mon, Nov 17, 2025 at 12:32:59PM +0530, Kumari Pallavi wrote:
-> 
-> 
-> On 11/14/2025 9:21 PM, Bjorn Andersson wrote:
-> > On Fri, Nov 14, 2025 at 02:11:41PM +0530, Kumari Pallavi wrote:
-> > > Implement the new IOVA formatting required by the DSP architecture change
-> > > on Kaanapali SoC. Place the SID for DSP DMA transactions at bit 56 in the
-> > > physical address. This placement is necessary for the DSPs to correctly
-> > > identify streams and operate as intended.
-> > > To address this, set SID position to bit 56 via OF matching on the fastrpc
-> > > node; otherwise, default to legacy 32-bit placement.
-> > > This change ensures consistent SID placement across DSPs.
-> > > 
-> > 
-> > In patch 2 I said I think it would be a good idea to separate the two
-> > perspectives (Linux/SMMU vs remote addresses).
-> > 
-> > Looking ta this patch I'm completely convinced that it's the right thing
-> > to do!
-> > 
-> > > Signed-off-by: Kumari Pallavi <kumari.pallavi@oss.qualcomm.com>
-> > > ---
-> > >   drivers/misc/fastrpc.c | 46 +++++++++++++++++++++++++++++++++++-------
-> > >   1 file changed, 39 insertions(+), 7 deletions(-)
-> > > 
-> > > diff --git a/drivers/misc/fastrpc.c b/drivers/misc/fastrpc.c
-> > > index d6a7960fe716..bcf3c7f8d3e9 100644
-> > > --- a/drivers/misc/fastrpc.c
-> > > +++ b/drivers/misc/fastrpc.c
-> > > @@ -33,7 +33,6 @@
-> > >   #define FASTRPC_ALIGN		128
-> > >   #define FASTRPC_MAX_FDLIST	16
-> > >   #define FASTRPC_MAX_CRCLIST	64
-> > > -#define FASTRPC_PHYS(p)	((p) & 0xffffffff)
-> > >   #define FASTRPC_CTX_MAX (256)
-> > >   #define FASTRPC_INIT_HANDLE	1
-> > >   #define FASTRPC_DSP_UTILITIES_HANDLE	2
-> > > @@ -105,6 +104,15 @@
-> > >   #define miscdev_to_fdevice(d) container_of(d, struct fastrpc_device, miscdev)
-> > > +/* Extract smmu pa from consolidated iova */
-> > > +#define IPA_TO_DMA_ADDR(iova, sid_pos) (iova & ((1ULL << sid_pos) - 1ULL))
-> > > +/*
-> > > + * Prepare the consolidated iova to send to dsp by prepending the sid
-> > > + * to smmu pa at the appropriate position
-> > > + */
-> > > +#define IOVA_FROM_SID_PA(sid, phys, sid_pos) \
-> > > +       (phys += sid << sid_pos)
-> > 
-> > This is a horrible macro. It looks just like a function taking values,
-> > it's named to sound like it takes a sid and pa and return an iova, but
-> > it has side effects.
-> > 
-> > And what's up with the ordering? Take argument 1 and 3, and put the
-> > result in argument 2?!
-> > 
-> 
-> Thank you for the feedback regarding the macro implementation. I understand
-> your concern about readability and hidden side effects.
-> To address this, I’ve replaced the macro with an inline function
-> 
-> 
-> static inline u64 fastrpc_compute_sid_offset(u64 sid, u32 sid_pos)
-> {
->     return sid << sid_pos;
-> }
-> 
-> 
-> buf->dma_addr += fastrpc_compute_sid_offset(sid, sid_pos);
-> 
-> Could you confirm if this is in line with what you suggested?
-> 
+On Tue, Nov 18, 2025 at 3:53=E2=80=AFAM Akhil P Oommen <akhilpo@oss.qualcom=
+m.com> wrote:
+>
+> AQE (Applicaton Qrisc Engine) is a dedicated core inside CP which aides
+> in Raytracing related workloads. Add support for loading the AQE firmware
+> and initialize the necessary registers.
+>
+> Since AQE engine has dependency on preemption context records, expose
+> Raytracing support to userspace only when preemption is enabled.
 
-That is possible to read, so yes that would be much better. 
+I guess the plan is to expose MSM_PARAM_AQE later once preemption
+records are in place and for now just load the firmware to ensure that
+people have it?
 
-Regards,
-Bjorn
+The interrupt error handling is still missing, but I guess that can be
+handled later if that's the plan.
+
+Connor
+
+>
+> Signed-off-by: Akhil P Oommen <akhilpo@oss.qualcomm.com>
+> ---
+>  drivers/gpu/drm/msm/adreno/a6xx_gpu.c   | 22 ++++++++++++++++++++++
+>  drivers/gpu/drm/msm/adreno/a6xx_gpu.h   |  2 ++
+>  drivers/gpu/drm/msm/adreno/a8xx_gpu.c   |  3 +++
+>  drivers/gpu/drm/msm/adreno/adreno_gpu.h |  1 +
+>  4 files changed, 28 insertions(+)
+>
+> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c b/drivers/gpu/drm/msm/=
+adreno/a6xx_gpu.c
+> index 810b64b909f5..9a643bcccdcf 100644
+> --- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+> +++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+> @@ -1118,6 +1118,23 @@ static int a6xx_ucode_load(struct msm_gpu *gpu)
+>                 }
+>         }
+>
+> +       if (!a6xx_gpu->aqe_bo && adreno_gpu->fw[ADRENO_FW_AQE]) {
+> +               a6xx_gpu->aqe_bo =3D adreno_fw_create_bo(gpu,
+> +                       adreno_gpu->fw[ADRENO_FW_AQE], &a6xx_gpu->aqe_iov=
+a);
+> +
+> +               if (IS_ERR(a6xx_gpu->aqe_bo)) {
+> +                       int ret =3D PTR_ERR(a6xx_gpu->aqe_bo);
+> +
+> +                       a6xx_gpu->aqe_bo =3D NULL;
+> +                       DRM_DEV_ERROR(&gpu->pdev->dev,
+> +                               "Could not allocate AQE ucode: %d\n", ret=
+);
+> +
+> +                       return ret;
+> +               }
+> +
+> +               msm_gem_object_set_name(a6xx_gpu->aqe_bo, "aqefw");
+> +       }
+> +
+>         /*
+>          * Expanded APRIV and targets that support WHERE_AM_I both need a
+>          * privileged buffer to store the RPTR shadow
+> @@ -2400,6 +2417,11 @@ static void a6xx_destroy(struct msm_gpu *gpu)
+>                 drm_gem_object_put(a6xx_gpu->sqe_bo);
+>         }
+>
+> +       if (a6xx_gpu->aqe_bo) {
+> +               msm_gem_unpin_iova(a6xx_gpu->aqe_bo, gpu->vm);
+> +               drm_gem_object_put(a6xx_gpu->aqe_bo);
+> +       }
+> +
+>         if (a6xx_gpu->shadow_bo) {
+>                 msm_gem_unpin_iova(a6xx_gpu->shadow_bo, gpu->vm);
+>                 drm_gem_object_put(a6xx_gpu->shadow_bo);
+> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.h b/drivers/gpu/drm/msm/=
+adreno/a6xx_gpu.h
+> index e6218b0b9732..3a054fcdeb4a 100644
+> --- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.h
+> +++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.h
+> @@ -59,6 +59,8 @@ struct a6xx_gpu {
+>
+>         struct drm_gem_object *sqe_bo;
+>         uint64_t sqe_iova;
+> +       struct drm_gem_object *aqe_bo;
+> +       uint64_t aqe_iova;
+>
+>         struct msm_ringbuffer *cur_ring;
+>         struct msm_ringbuffer *next_ring;
+> diff --git a/drivers/gpu/drm/msm/adreno/a8xx_gpu.c b/drivers/gpu/drm/msm/=
+adreno/a8xx_gpu.c
+> index c9cd7546024a..e011e80ceb50 100644
+> --- a/drivers/gpu/drm/msm/adreno/a8xx_gpu.c
+> +++ b/drivers/gpu/drm/msm/adreno/a8xx_gpu.c
+> @@ -627,6 +627,9 @@ static int hw_init(struct msm_gpu *gpu)
+>                 goto out;
+>
+>         gpu_write64(gpu, REG_A8XX_CP_SQE_INSTR_BASE, a6xx_gpu->sqe_iova);
+> +       if (a6xx_gpu->aqe_iova)
+> +               gpu_write64(gpu, REG_A8XX_CP_AQE_INSTR_BASE_0, a6xx_gpu->=
+aqe_iova);
+> +
+>         /* Set the ringbuffer address */
+>         gpu_write64(gpu, REG_A6XX_CP_RB_BASE, gpu->rb[0]->iova);
+>         gpu_write(gpu, REG_A6XX_CP_RB_CNTL, MSM_GPU_RB_CNTL_DEFAULT);
+> diff --git a/drivers/gpu/drm/msm/adreno/adreno_gpu.h b/drivers/gpu/drm/ms=
+m/adreno/adreno_gpu.h
+> index c496b63ffd41..0aca222c46bc 100644
+> --- a/drivers/gpu/drm/msm/adreno/adreno_gpu.h
+> +++ b/drivers/gpu/drm/msm/adreno/adreno_gpu.h
+> @@ -27,6 +27,7 @@ enum {
+>         ADRENO_FW_PFP =3D 1,
+>         ADRENO_FW_GMU =3D 1, /* a6xx */
+>         ADRENO_FW_GPMU =3D 2,
+> +       ADRENO_FW_AQE =3D 3,
+>         ADRENO_FW_MAX,
+>  };
+>
+>
+> --
+> 2.51.0
+>
 
