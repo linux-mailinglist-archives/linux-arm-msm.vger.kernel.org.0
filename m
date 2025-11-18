@@ -1,172 +1,192 @@
-Return-Path: <linux-arm-msm+bounces-82303-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-82304-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [142.0.200.124])
-	by mail.lfdr.de (Postfix) with ESMTPS id 85C00C697E9
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Nov 2025 13:55:47 +0100 (CET)
+Received: from sto.lore.kernel.org (sto.lore.kernel.org [172.232.135.74])
+	by mail.lfdr.de (Postfix) with ESMTPS id 14919C69844
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Nov 2025 14:02:21 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 6FFAA4F1143
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Nov 2025 12:55:04 +0000 (UTC)
+	by sto.lore.kernel.org (Postfix) with ESMTPS id 7E14D28D09
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Nov 2025 13:02:20 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 92264287254;
-	Tue, 18 Nov 2025 12:54:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="OTznrsjP";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="IRWvbeFV"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CA2AC22576E;
+	Tue, 18 Nov 2025 13:02:02 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qv1-f53.google.com (mail-qv1-f53.google.com [209.85.219.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9AB042580EE
-	for <linux-arm-msm@vger.kernel.org>; Tue, 18 Nov 2025 12:54:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E0D030277D
+	for <linux-arm-msm@vger.kernel.org>; Tue, 18 Nov 2025 13:02:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763470451; cv=none; b=qV8S0u2b0SMlXNwRkiBKnC2v43wAhQqLHz2az02kgEm7Syl0WB95dXtjH3tyTFN2xE9uoNGU2u0KSTbzbyJV4uo1OqRtVUN7PHYxq9oPZO6zq4lDV1shu0zxD4QEQAXiv6nJ2P96fcYoOjerV7iP5ulj5nDd+FGGfvDAomzDrjQ=
+	t=1763470922; cv=none; b=qcaGkDJV5dLeypLZ3f9jLcqL/WZsagehXuGW0typiaD18d140d6mujq3wzcidxHrAdM0XIA0nn5tHHB41QvkBtIG0/s0THnWy9MYIPtVKuHOrmTdmA+fdzvTeLfnBc8jj8qIJiChSKap2zmcaGDTeHOgkEwXGXAm7STOFrk1tPc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763470451; c=relaxed/simple;
-	bh=DuS44FqrSwdsN9o3Kl2ivQS3d3u0oobBRnrBf6xZj2s=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=p1eBRcxwmqiLnbuMZQ8OH8ejkoC0G/6/syQWGXu/HJzTrwCH5uruXSRYppV6F2oRymoXgaD0QNhOxAyyfgRsVMBcAG42TJzZ1Vt4olQ9sayNyrodcWtksgppHS+W7ZG3dkyJI5tGfz5N2QqzGQZz3CPkPoAzVtz6chX9vRJAOdk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=OTznrsjP; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=IRWvbeFV; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 5AI6YLlK623776
-	for <linux-arm-msm@vger.kernel.org>; Tue, 18 Nov 2025 12:54:09 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to; s=qcppdkim1; bh=knwBM8gjzCjsmHe3WmSNhjxC
-	d1wPbIeSMMjROVDpEWY=; b=OTznrsjPMw5+p/X++Rgm6+dwJRTUn9coNAcLK6VW
-	H/z7r6YRigZlQ5AXdQfiU90YHUGorqLKX/AOmNvedvicqJXmJvu7fxKnw7MCRi0P
-	RgGwzUQGP2CwOMgAZNHcxxV7m2UevOJ+YMSciMxRQ5vmrZpSRp7zK1tf+NT3C14Z
-	pCNB2zEYIZm3aGkGpVF7xLUXUbiEEZ8fgJzI1GuUnvH+LGml6612JatkORnsjr2s
-	KxF9p+YS9O2Ut523KOHCHoj65Un5hJ/IHV7XOgTvzL548+OvQoZpdPXHKJDHjzMk
-	DOsFjRhKgixXOcrBu2whEwrb1zN1Yc93tMv500VEmivLHA==
-Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com [209.85.160.198])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4agahfafmx-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Tue, 18 Nov 2025 12:54:08 +0000 (GMT)
-Received: by mail-qt1-f198.google.com with SMTP id d75a77b69052e-4ed6e701d26so139796551cf.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 18 Nov 2025 04:54:08 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1763470447; x=1764075247; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=knwBM8gjzCjsmHe3WmSNhjxCd1wPbIeSMMjROVDpEWY=;
-        b=IRWvbeFVn8pbnI8ijpD96a47sLab6l/Ju++Lxr25BqqLUUtQTRyJOdr37b99xpI/a3
-         31cY7G7/vh4/e/zJLgwDDJ47JuC6PWot1S6FmGnSrD8CUdhQPZ2PF2Voj5GBQRRfmBgr
-         CvJ4q6xabzx3MrADdsVGLTSzVOLGmpoBgVBbq/mGd1Ppb+liYNazyD1jdiB37u8+e/oE
-         pYiN4Rw7WuVEJexuD+ANJyguriH7ddvTdbN5coxI3RX26oNVDVYWYvQHHsxhDzhD6Wvg
-         x+6kspz4Njram/dErNvRUVPCnAMNF7pPqPtWuzldzNeIDXgCMDYCVVQUVPoluJXLwkVz
-         9Dwg==
+	s=arc-20240116; t=1763470922; c=relaxed/simple;
+	bh=/zVQ3caVQJG3gQBJgK50MyXyKcMooS7fUfIbjJLVF6Y=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=QbvVM2JmUv/D8G+5qDxeVvwKvKRntlkTSTDJ69IpGPAhGyuReJJx18u49ode2gDa9ttErjLIdYexysCLDdx2aSRHZ3CKBn1vGR/MeuwL2/ibITRCgAdEdg2+LoDKDOOKLlnRHnu1WMD5ZnLFpEEsXx8AbPBJIrux0i0KXZfs8HQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux-m68k.org; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.219.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux-m68k.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-qv1-f53.google.com with SMTP id 6a1803df08f44-880576ebe38so57373676d6.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 18 Nov 2025 05:02:00 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1763470447; x=1764075247;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=knwBM8gjzCjsmHe3WmSNhjxCd1wPbIeSMMjROVDpEWY=;
-        b=fjrKmOJL3gzzqzGwT6HUe6A98dUatypQlyQtbg4hl6TQODkN+DcTFUIghwBeRC0hYb
-         XjutEW/jvOl9yFBkLwfjAjIUEjAohmafomwnrLtIC6rS5/5I1KsiSjtjrZd9Y1F+6LOb
-         lZmh6YL+7N0vGW1wz5XuT4Ut+K3Wolxlh4tZ1YtCcSO3kZ3cQo5jwI+N2D2H4tHBJKz9
-         A+Ori6WIjWM5ykxYHyvx2cqE4LS77AbtDc2KuBZS/hVvQ6TdWFcrMXVypoIThYli+IVX
-         xhBPKTGA/1XImM63G5hAfzbE7wVN6x/0pcRXXtWybGiUkvv25e8Ty5OiiF6c/OUkeTnU
-         SA3Q==
-X-Forwarded-Encrypted: i=1; AJvYcCW/AZiyyB0yhZjD1rvB0iEPhynXZOeiONSwUjm+Q1+zeF9jclpYbYdPAS6XDsmrWO3vh8WszfI0cRAXACbT@vger.kernel.org
-X-Gm-Message-State: AOJu0YyGXZp+jzw1VSgVOQHpiAKJy4R6+7r6ZNX0RnWNmn7/mRxrz7aT
-	LNl/JV+7e3D4Ujo6SjqBYgB7o7I2oZkdpEFn/S6b2lE5D2ZxHm8lV37UW520FHuOh1x3x60Tsmh
-	452Q2lf4TIR1Ilha4QGPZFVgTjsaV99bdEcBHUwIfvY2JI994DvltePw69szNZMv3K0Tu
-X-Gm-Gg: ASbGncuyoT9RPUO3xktTPijM68K/uH3lEb1nhPPkZTnyK/z9H5Co48/hRo94BqJHgjt
-	DyBzLmCZ33MNBHiPQaMZQRtyyRYQJ7lSObvs6IkCGqk8gZye+1jXSdFLb+CvQQ++LnjzwQXOj/e
-	ulDLK0uK5BKnHUlTXKkd0fkOXYRqJuw2ddJpsi9Fg58QceGmX7W1ex0ycfmHK5BHT4PmISTwOYG
-	+L17XC8FLIUoQ8Bk9NDi6+pj55uuQOxvSsS+ROnYvXxtjZ61G0s1tc7fJQdcZ1ABRBQP/BUof9U
-	c4g931Zbz7XhgmM3euiXPNEyIqkPyLKjr6AHPy07NqdFrF5RA/+xaPsizaL3c9QpSjbZz7TcZRs
-	v2by6WFRAxeKgTi3NdZrFkgwvf3L2TwaNX55toX0Gp8XXpGZoH/DSyqD78mrUNTkVmnwQ0QtZzx
-	0VGFvT5GXjA9eE
-X-Received: by 2002:ac8:7e86:0:b0:4ec:f1a4:5511 with SMTP id d75a77b69052e-4edf2160d82mr196773521cf.65.1763470447520;
-        Tue, 18 Nov 2025 04:54:07 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IF1BSGmQOsiNlVGVnqBMLEMjdnWhWDECCBZ5McaUVooeFBMFZy4LNjq9+fVO2TBCiXuFGPywQ==
-X-Received: by 2002:ac8:7e86:0:b0:4ec:f1a4:5511 with SMTP id d75a77b69052e-4edf2160d82mr196773351cf.65.1763470447098;
-        Tue, 18 Nov 2025 04:54:07 -0800 (PST)
-Received: from umbar.lan (2001-14ba-a0c3-3a00-264b-feff-fe8b-be8a.rev.dnainternet.fi. [2001:14ba:a0c3:3a00:264b:feff:fe8b:be8a])
-        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-37b9ce2798asm37452271fa.23.2025.11.18.04.54.05
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 18 Nov 2025 04:54:06 -0800 (PST)
-Date: Tue, 18 Nov 2025 14:54:04 +0200
-From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Cc: david@ixit.cz, Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Casey Connolly <casey.connolly@linaro.org>
-Subject: Re: [PATCH RFC] arm64: dts: qcom: sdm845: add framebuffer reserved
- memory
-Message-ID: <ajsfoahkkw4rbwedkuqmcppg2xjr4gqhmsppajg6njuyxouvso@syrbqmgvxorm>
-References: <20251117-commonize-framebuffer-v1-1-e4c099b383c9@ixit.cz>
- <5c1948b7-aa3b-4c60-acf7-64a138450d57@oss.qualcomm.com>
+        d=1e100.net; s=20230601; t=1763470920; x=1764075720;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=XMYcwyn3PU+pOgxTORp/4U9I/0iJwsVP/bkqLPdjG54=;
+        b=ThSvjyiIp9aF85pkK+F8gsmj7LVgaxe71d0NDx99SPAOyW8BeaVu8Q0mDqsik8ACQi
+         gPhqhgHo8oPhz2yIcDn9uQD4bo74p7GYAYh7wkm55eR1U4Q5OMG2M54srPWjdEFgpPEC
+         59+aaXco+KUpL8qk7sLDhmqKqj99YLXiD8aUKtClSUBNzgnoUgn+P49l2DM9bGkUpEGI
+         bDBfn+FMR3Gjrrpqd83o2oHYWI88hFMjCg9/9LdhdjWRiqN4eXeaZrD8LQf9pbmZdn4u
+         XUAWgQ78UW1eB56Jrp/hLHAxTo//quQo+oahGYhos11kVhL5+ZvV8zZbytKObfLih8/B
+         3gFg==
+X-Forwarded-Encrypted: i=1; AJvYcCXF6HV9c6A4ywaxr/iZ5l6c+HroEXEczSSQBOYQbKAtppmrMThuPwJVKxhlRdvM4gKCm6gvdaZDgeGTZ3bB@vger.kernel.org
+X-Gm-Message-State: AOJu0Yyn4WxvLiDLG2cyqu5D9tCPpr5d0D0xLr3QHFsdT9TQ3U4Qjh81
+	GAvbVPiG08smWj8E/o0KPYNhA1YFRARH8a7egfzUkoeyvswMMRgrfgQIDPkWc19C
+X-Gm-Gg: ASbGncv7IT0wh8G1G+abdYsJv2+afBULEmvHqtbM2XchLbqw81RX6f7fykHJP56kapn
+	8ro67/jsO7mBnHzymKbrTOmzn0ctDl49aYN0UuFZHUWOY1WrSXJS3DCeSb10GIrUSgR5D6lX7KE
+	eQaCPEOKo4N9YTW2sQQl4e4pXOeVSJJ1xMKTBWWTYsI14+teHMwN52CDILs2tL14Nc58Sr4HiL1
+	M/IojXCQruuqT93owi6LCDm7z3TSDsoc4VxzBDQ4v/9vuY/riA/lVGUASI8QISogooKkONm6L1R
+	3nIAqCVijvtT9hUWUddFicFqV6rQBKJrVIPRFH4z0oYPmBN6AyYnSiar/QoWwTCOUmszx16bmiO
+	lZMq5k5GSklLon0kmJAjmJEXZooci+nW77GpIckVKaGHiyuOTtu5KBqq0gRSkr9jOFjKne1h/Jt
+	00OJprpiT68HmIVbWSX5cTyb+X07mLhpS2IgqqDiA1XKFiLeUlkGQv
+X-Google-Smtp-Source: AGHT+IEA2iMZszuEv+MSEI5cl8IfXb6IclgsCC1mrtbhshnuyrerRXImR6GJGNUhX0n0FFnP8qC69g==
+X-Received: by 2002:a05:6214:d67:b0:880:3293:ce75 with SMTP id 6a1803df08f44-8829258f204mr226449276d6.5.1763470917569;
+        Tue, 18 Nov 2025 05:01:57 -0800 (PST)
+Received: from mail-qk1-f172.google.com (mail-qk1-f172.google.com. [209.85.222.172])
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-882863138c0sm113180806d6.16.2025.11.18.05.01.56
+        for <linux-arm-msm@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 18 Nov 2025 05:01:57 -0800 (PST)
+Received: by mail-qk1-f172.google.com with SMTP id af79cd13be357-8b21fc25ae1so545663485a.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 18 Nov 2025 05:01:56 -0800 (PST)
+X-Forwarded-Encrypted: i=1; AJvYcCWoLw0mSHZfS+s5iKO6qNimGRsbt/JbXUowqmBGbgvuiUPe7kVHeN6sDaGPgu7OHOjmkl17ZFhReENhevpu@vger.kernel.org
+X-Received: by 2002:a05:6102:441e:b0:5db:e0fe:985c with SMTP id
+ ada2fe7eead31-5dfc54fcc32mr4842088137.10.1763470566608; Tue, 18 Nov 2025
+ 04:56:06 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <5c1948b7-aa3b-4c60-acf7-64a138450d57@oss.qualcomm.com>
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMTE4MDEwMyBTYWx0ZWRfX8LweC3s6YhIt
- b/PihT3xbOWPJTbeP3pJgY+B/g6YuArj+3lfCbeuN52iTDNOIi4Us+ixoRt8vwwYJlFRCPewEpL
- FEHFMolfhmbPF41e5DbrRc0SpMT+4Q1bxaFV+YdmPf22NJpidjC6e5fSQwXcKmMs4eejY6+Rur2
- 736vLlTscv0JcwD4/3qsKoclV8W5o27pHgQRCpFPyg9Vj2AM1tOrzQSU3gMFP1HrpvFmc4Zp8Yt
- nlygFcCrgAEJCXu6JqzfaeZCdvxhOi5RZUaCacEVpxfqtXsZjdPNWGZt6D8CLJ2uPz6694gDSBh
- ljmA7uoBVQvasTPWMzwr4q9lrBatz52B75ATOhvMaf07OpMLgk+qjs56evq/rTXSzvpwrQ2nOwz
- XcCu+1p+l0lXbAoP31fUNV7augb6dw==
-X-Authority-Analysis: v=2.4 cv=RpTI7SmK c=1 sm=1 tr=0 ts=691c6c70 cx=c_pps
- a=mPf7EqFMSY9/WdsSgAYMbA==:117 a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10
- a=6UeiqGixMTsA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=KKAkSRfTAAAA:8 a=iiYmOEhUz_7GOtcYMWYA:9 a=CjuIK1q_8ugA:10
- a=dawVfQjAaf238kedN5IG:22 a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-ORIG-GUID: 6KuSfEfxIvnmwktj4Wf96o9mLtzCzlTf
-X-Proofpoint-GUID: 6KuSfEfxIvnmwktj4Wf96o9mLtzCzlTf
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
- definitions=2025-11-17_04,2025-11-13_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 clxscore=1015 adultscore=0 bulkscore=0 suspectscore=0
- impostorscore=0 malwarescore=0 lowpriorityscore=0 phishscore=0 spamscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2510240001 definitions=main-2511180103
+References: <20251112-gpio-shared-v4-0-b51f97b1abd8@linaro.org>
+ <CAMuHMdVR9Z70+M-SqHYrHiC6H_yw=VRuDOOg=YnXSNKjPnx3WQ@mail.gmail.com> <CAMRc=Mdo__Yzigqoy4xKt0LWSvES5Jse1HeXkePfhiWyiz6tBQ@mail.gmail.com>
+In-Reply-To: <CAMRc=Mdo__Yzigqoy4xKt0LWSvES5Jse1HeXkePfhiWyiz6tBQ@mail.gmail.com>
+From: Geert Uytterhoeven <geert@linux-m68k.org>
+Date: Tue, 18 Nov 2025 13:55:55 +0100
+X-Gmail-Original-Message-ID: <CAMuHMdXpySSvjgju2LXr6puVXzHMR4ckpaKEWK_S4spTWz6B-A@mail.gmail.com>
+X-Gm-Features: AWmQ_bkC98gq3Hx-nk9zI-w6kSG9BC0TZLZ6VioIzu7f0ulaeAjNY59_KJ5q6hs
+Message-ID: <CAMuHMdXpySSvjgju2LXr6puVXzHMR4ckpaKEWK_S4spTWz6B-A@mail.gmail.com>
+Subject: Re: [PATCH v4 00/10] gpio: improve support for shared GPIOs
+To: Bartosz Golaszewski <brgl@bgdev.pl>
+Cc: Kees Cook <kees@kernel.org>, Mika Westerberg <westeri@kernel.org>, 
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>, Andrew Morton <akpm@linux-foundation.org>, 
+	Linus Walleij <linus.walleij@linaro.org>, Manivannan Sadhasivam <mani@kernel.org>, 
+	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Saravana Kannan <saravanak@google.com>, Greg Kroah-Hartman <gregkh@linuxfoundation.org>, 
+	Andy Shevchenko <andy@kernel.org>, Catalin Marinas <catalin.marinas@arm.com>, Will Deacon <will@kernel.org>, 
+	Srinivas Kandagatla <srini@kernel.org>, Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>, 
+	Jaroslav Kysela <perex@perex.cz>, Takashi Iwai <tiwai@suse.com>, 
+	Alexey Klimov <alexey.klimov@linaro.org>, Bjorn Andersson <andersson@kernel.org>, 
+	Konrad Dybcio <konradybcio@kernel.org>, linux-hardening@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, linux-gpio@vger.kernel.org, 
+	linux-arm-kernel@lists.infradead.org, linux-sound@vger.kernel.org, 
+	linux-arm-msm@vger.kernel.org, 
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>, 
+	Linux-Renesas <linux-renesas-soc@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Tue, Nov 18, 2025 at 01:26:17PM +0100, Konrad Dybcio wrote:
-> On 11/17/25 1:27 PM, David Heidelberg via B4 Relay wrote:
-> > From: Casey Connolly <casey.connolly@linaro.org>
-> > 
-> > Stick it with the other default reserved regions, all sdm845 devices
-> > use this address except for cheza.
-> > 
-> > Signed-off-by: Casey Connolly <casey.connolly@linaro.org>
-> > Signed-off-by: David Heidelberg <david@ixit.cz>
-> > ---
-> > What do you think about this proposed change?
-> > 
-> > I assume QCOM recommends or by default use the default memory region,
-> > but as can be seen on cheza or sdm850, it seems that vendor can customize
-> > the region, thus it's not guranteed to have it always on the same address.
-> > 
-> > There are two approaches I see:
-> > 1. keep as is defined in each device-tree frambuffer node
-> > 2. commonize frambuffer node to sdm845.dtsi and in case of exception
-> >    remove the node and definite it in device-tree.
-> 
-> Generally this carveout is useful only if you use the bootloader-
-> initiated framebuffer. Post that, drm/msm allocates its own
+Hi Bartosz,
 
-Previously carveout could have been used for FB memory, but with the
-switch to GPUVM I think we lost that ability.
+On Tue, 18 Nov 2025 at 12:55, Bartosz Golaszewski <brgl@bgdev.pl> wrote:
+> On Tue, Nov 18, 2025 at 12:16=E2=80=AFPM Geert Uytterhoeven
+> <geert@linux-m68k.org> wrote:
+> > On Wed, 12 Nov 2025 at 15:05, Bartosz Golaszewski <brgl@bgdev.pl> wrote=
+:
+> > > Bjorn, Konrad: I should have Cc'ed you on v1 but I just went with wha=
+t
+> > > came out of b4 --auto-to-cc. It only gave me arm-msm. :( Patch 7 from
+> > > this series however impacts Qualcomm platforms. It's a runtime depend=
+ency
+> > > of patches 8 and 9. Would you mind Acking it so that I can take it in=
+to
+> > > an immutable branch that I'll make available to Mark Brown for him to
+> > > take patches 8-10 through the ASoC and regulator trees for v6.19?
+> > >
+> > > Problem statement: GPIOs are implemented as a strictly exclusive
+> > > resource in the kernel but there are lots of platforms on which singl=
+e
+> > > pin is shared by multiple devices which don't communicate so need som=
+e
+> > > way of properly sharing access to a GPIO. What we have now is the
+> > > GPIOD_FLAGS_BIT_NONEXCLUSIVE flag which was introduced as a hack and
+> > > doesn't do any locking or arbitration of access - it literally just h=
+and
+> > > the same GPIO descriptor to all interested users.
+> > >
+> > > The proposed solution is composed of three major parts: the high-leve=
+l,
+> > > shared GPIO proxy driver that arbitrates access to the shared pin and
+> > > exposes a regular GPIO chip interface to consumers, a low-level share=
+d
+> > > GPIOLIB module that scans firmware nodes and creates auxiliary device=
+s
+> > > that attach to the proxy driver and finally a set of core GPIOLIB
+> > > changes that plug the former into the GPIO lookup path.
+> > >
+> > > The changes are implemented in a way that allows to seamlessly compil=
+e
+> > > out any code related to sharing GPIOs for systems that don't need it.
+> > >
+> > > The practical use-case for this are the powerdown GPIOs shared by
+> > > speakers on Qualcomm db845c platform, however I have also extensively
+> > > tested it using gpio-virtuser on arm64 qemu with various DT
+> > > configurations.
+> >
+> > Thanks for your series, part of which is now present linux-next.
+> > IIUIC, this requires the direction of the GPIO to be fixed?
+> >
+> > We have a long-standing use-case on various Renesas R-Car Gen3 boards
+> > (e.g. Salvator-X(S) and ULCB[1]), where GPIOs are shared by LEDs and
+> > key switches.  Basically, the GPIO is connected to:
+> >   1. A key switch connecting to GND when closed, with pull-up.
+> >   2. The gate of an N-channel MOSFET, turning on an LED when driven
+> >      high.
+> >
+> > Hence:
+> >   - In output mode, the LED can be controlled freely,
+> >   - In input mode, the LED is on, unless the key is pressed,
+> >   - Hence the switch state can only be read when the LED is turned on.
+> > If you have any idea how to handle this, feel free to reply ;-)
+>
+> How is this done currently? Even without this series and using the
+> GPIOD_FLAGS_BIT_NONEXCLUSIVE, the descriptor has a well-defined
+> direction so it's not possible for two drivers to request it as input
+> and output simultaneously. The second requester will override the
+> previous settings.
 
--- 
-With best wishes
-Dmitry
+We do not handle it yet:
+  - arch/arm64/boot/dts/renesas/salvator-common.dtsi describes only
+    the keys (key-[a-c]),
+  - arch/arm64/boot/dts/renesas/ulcb.dtsi describes the first key
+    (key-1), and the others as LEDs (led[56]).
+
+Gr{oetje,eeting}s,
+
+                        Geert
+
+--=20
+Geert Uytterhoeven -- There's lots of Linux beyond ia32 -- geert@linux-m68k=
+.org
+
+In personal conversations with technical people, I call myself a hacker. Bu=
+t
+when I'm talking to journalists I just say "programmer" or something like t=
+hat.
+                                -- Linus Torvalds
 
