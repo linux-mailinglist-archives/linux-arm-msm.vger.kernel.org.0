@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-82286-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-82287-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ams.mirrors.kernel.org (ams.mirrors.kernel.org [213.196.21.55])
-	by mail.lfdr.de (Postfix) with ESMTPS id EDDACC692FD
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Nov 2025 12:49:21 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 0F535C69307
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Nov 2025 12:49:41 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ams.mirrors.kernel.org (Postfix) with ESMTPS id 6E92A384F0E
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Nov 2025 11:43:30 +0000 (UTC)
+	by ams.mirrors.kernel.org (Postfix) with ESMTPS id 2D7A8383466
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Nov 2025 11:44:01 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 35D33313555;
-	Tue, 18 Nov 2025 11:43:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E4CA830FC1C;
+	Tue, 18 Nov 2025 11:43:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="uSdCuOBh"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="IL96nUdi"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6576307AD7;
-	Tue, 18 Nov 2025 11:43:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB8022C178E;
+	Tue, 18 Nov 2025 11:43:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763466201; cv=none; b=R95uEhpQJ6IHPbrtck+mkBwewUoMI/tvKoh9dIJk9OOchXwgAXezJFn/9JYUNSILCgNWfz+K8x7U/6fs7CaZB6ONXFjlGashS/qPfv2zi6YW/HbJmwpc1NIqOGIwaxt8yhS+vW0idh58JA6mqIBEA9/1ttOcugWr/y/XZGEGgME=
+	t=1763466236; cv=none; b=K45HBX7BBEL1SBgafpR7cXEuZQIBZBTyWw3tdkF06O3avXHSDM54fQU/xMGpOf544riOrGDTNxpjlASmlq7lYX2EMKO6W9ezx3rtqDHlgowiBHVnMelQLwUe3I/EJ+Pt0p9VuOrMMzADwv/T9s558pJyMuzV397Tv0gzc0bI7UY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763466201; c=relaxed/simple;
-	bh=+hOIxVOrCRrkzWHKVE2mAHIq0Ug1DAFw2VayoGKu1LY=;
+	s=arc-20240116; t=1763466236; c=relaxed/simple;
+	bh=aL4OZhwwp6+xZsl1euXCF3opVxiUeI1xCH8aymKYmeQ=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=pDv/EogJPH69WeSOpgsmllZOWeJiBq6vWfF39Ac2wnLLx3wH2boIcYVklWduSrGb19chNxXXwRtUJHlaGNdpiV0cEJ8x2YE/gbdfpnooO1hbNbRf3/Ofrg6YaaqmXpViIGuV4eTsy8gnLjkxQ7fzMZy/4+oDpj31aM627jWUiFc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=uSdCuOBh; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC208C2BC87;
-	Tue, 18 Nov 2025 11:43:18 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=T9cNYTa+XQfP8c0Vc7c6Ym99BCe2st3CxtcCE6fdj1K/7DyFmu69cQEzJ+mLXGrTg+Eu2skRKG/Ui5e9WRYCUpZHn+YiUAGv51MATbuK7J+3f6KkbreEeCElq1ZL9q+AapanCkerDPRTImAIkJpleE2zOHSq/cbaQf0SvqMbWQw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=IL96nUdi; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F06FC19422;
+	Tue, 18 Nov 2025 11:43:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1763466200;
-	bh=+hOIxVOrCRrkzWHKVE2mAHIq0Ug1DAFw2VayoGKu1LY=;
+	s=k20201202; t=1763466236;
+	bh=aL4OZhwwp6+xZsl1euXCF3opVxiUeI1xCH8aymKYmeQ=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=uSdCuOBhJWDCQ3Rqoac2RWRdEOtfOkdGJffIFPCkgSNd7h0XAnBZuJibP60S84CS2
-	 ACrM6BZQlPrcwGVQFCOtVnuDt4ZJq4k02SocM7ka89qQd7OrBuFNt6UbwP3dX8labe
-	 +Mj+lbxg57wU3nYDomE7+Buf8rSov6a2qZ9xVenNLFXI5qDQvqe4CDmQSS+u6mlsxY
-	 LJNji/ow2B6rFV8nY1Hmtwk8gUgV3e2v/AvA4aV5u68HHcTULRCRQRCkLXkOyLn69V
-	 HG5Vxcoe+QKDd83BxGkhBm+Gs/pfYvOUQlPcgZHZU/IwF8rLdB0wjtsIW3wu8Mttzg
-	 ZuXApahxE1KWA==
-Message-ID: <5be4ef62-6e50-4891-b434-9a07d820f561@kernel.org>
-Date: Tue, 18 Nov 2025 12:43:16 +0100
+	b=IL96nUdip5nUIpWO7z+aAPR0Em2oCA0QJB6OvCaAgWl1JfPW3pRhFs3cJ+cUc/N84
+	 yLjsQ7FrKqgdBrM2AkYiPU1gjmKG4Qjn8wfHguUQKq9zaQmQXiqEmNvTk9ZzaEgdbP
+	 J1hfDEYKsRH6km50MpEt7H6jGJONrKZSq9bOTg8MT0XsJmJ9OctLQKdObejhEp3fEJ
+	 GFpDY3Y63XmKTtbBwfO3mQZ7cCWd4RmfWRxkdSbEJrSJUAy7k34eaxrxMVDqvNljMp
+	 XkJgpFzZXY/T4zRErsSUSQhWpX7MRG0Lm7W0ZC0vGOAgJ1nPfkSOY2FEEVKsXbkoo2
+	 aHd9eYmgLd9TQ==
+Message-ID: <2ab96ac9-d492-470a-a6b0-d4dd001a86a8@kernel.org>
+Date: Tue, 18 Nov 2025 12:43:52 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,14 +50,14 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 03/10] soc: qcom: pd-mapper: Use __cleanup() for
- device_node pointers
+Subject: Re: [PATCH 10/10] soc: qcom: ubwc: Use __cleanup() for device_node
+ pointers
 To: Kathiravan Thirumoorthy <kathiravan.thirumoorthy@oss.qualcomm.com>,
  Bjorn Andersson <andersson@kernel.org>,
  Konrad Dybcio <konradybcio@kernel.org>
 Cc: linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
 References: <20251117-cleanup_node_put-v1-0-5f107071d171@oss.qualcomm.com>
- <20251117-cleanup_node_put-v1-3-5f107071d171@oss.qualcomm.com>
+ <20251117-cleanup_node_put-v1-10-5f107071d171@oss.qualcomm.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -103,7 +103,7 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  jWt87ecuHlpL3uuQ0ZZNWqHgZoQLXoqC2ZV5KrtKWb/jyiFX/sxSrodALf0zf+tfHv0FZWT2
  zHjUqd0t4njD/UOsuIMOQn4Ig0SdivYPfZukb5cdasKJukG1NOpbW7yRNivaCnfZz6dTawXw
  XRIV/KDsHQiyVxKvN73bThKhONkcX2LWuD928tAR6XMM2G5ovxLe09vuOzzfTWQDsm++9UKF a/A=
-In-Reply-To: <20251117-cleanup_node_put-v1-3-5f107071d171@oss.qualcomm.com>
+In-Reply-To: <20251117-cleanup_node_put-v1-10-5f107071d171@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
@@ -113,21 +113,23 @@ On 17/11/2025 05:51, Kathiravan Thirumoorthy wrote:
 > 
 > Signed-off-by: Kathiravan Thirumoorthy <kathiravan.thirumoorthy@oss.qualcomm.com>
 > ---
->  drivers/soc/qcom/qcom_pd_mapper.c | 3 +--
+>  drivers/soc/qcom/ubwc_config.c | 3 +--
 >  1 file changed, 1 insertion(+), 2 deletions(-)
 > 
-> diff --git a/drivers/soc/qcom/qcom_pd_mapper.c b/drivers/soc/qcom/qcom_pd_mapper.c
-> index 1bcbe69688d2bc2559a1395929e5cd74d9a7a764..5713029d6527c84e8ba410cebb67bc268c6b3721 100644
-> --- a/drivers/soc/qcom/qcom_pd_mapper.c
-> +++ b/drivers/soc/qcom/qcom_pd_mapper.c
-> @@ -612,10 +612,10 @@ static void qcom_pdm_stop(struct qcom_pdm_data *data)
+> diff --git a/drivers/soc/qcom/ubwc_config.c b/drivers/soc/qcom/ubwc_config.c
+> index 1c09796163b09a19e387c18886966514cc19b209..1e7717aba5236050d8e736fb0891534b02203aae 100644
+> --- a/drivers/soc/qcom/ubwc_config.c
+> +++ b/drivers/soc/qcom/ubwc_config.c
+> @@ -301,15 +301,14 @@ static const struct of_device_id qcom_ubwc_configs[] __maybe_unused = {
 >  
->  static struct qcom_pdm_data *qcom_pdm_start(void)
+>  const struct qcom_ubwc_cfg_data *qcom_ubwc_config_get_data(void)
 >  {
 > +	struct device_node *root __free(device_node) = NULL;
+>  	const struct of_device_id *match;
 
 
-NAK
+You are writing worse code than it was before. The code was like that
+intentionally.
 
 Best regards,
 Krzysztof
