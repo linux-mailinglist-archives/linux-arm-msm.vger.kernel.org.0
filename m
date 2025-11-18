@@ -1,129 +1,154 @@
-Return-Path: <linux-arm-msm+bounces-82334-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-82335-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sin.lore.kernel.org (sin.lore.kernel.org [104.64.211.4])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7B072C69FAF
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Nov 2025 15:31:18 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6E6C2C69F27
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Nov 2025 15:27:49 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sin.lore.kernel.org (Postfix) with ESMTPS id 76CD22DEAD
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Nov 2025 14:25:23 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTPS id 2B0962B219
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Nov 2025 14:27:48 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id AB5F93590D7;
-	Tue, 18 Nov 2025 14:23:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B57D935C1B9;
+	Tue, 18 Nov 2025 14:27:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="lUPZFt7k"
+	dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b="ivnqxogG"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lj1-f179.google.com (mail-lj1-f179.google.com [209.85.208.179])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B71027FD7D;
-	Tue, 18 Nov 2025 14:23:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF15735BDC4
+	for <linux-arm-msm@vger.kernel.org>; Tue, 18 Nov 2025 14:27:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763475791; cv=none; b=XbAnBDVdlO2vWnmeaZoco2AU5GJr4tbvtJrKdol0oCkyZCBQKh6npuyQyc0GXegr1wbwVD9L8IVZPcU8BSzVAa+WtEXxWRKZ4dbXCcbl8i/2/FWYI6KUxy+iQ3zpzj2RwkSC6Zl/HpxmhjYzrZQwVmP/hUoFyN/3kTAeIgm0Qe8=
+	t=1763476049; cv=none; b=BB56BlySB8S9VdzVcA2IECgdmoKOQJtlaZSMCYWJt+oP+w44uNLDWlOyVZtBl+Jp+JDboURbjVda55S3QOynEk5IXrpTdmhLHRq19xpeeYKcO2E01uR8rBFjTmpKxOUB0dTFRj0s/2TYwwvHISQo9ZTMzRPuyzcvXTN9FQ2IepU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763475791; c=relaxed/simple;
-	bh=d0GPPb9S++pKNwy8apoeTYz5CZavBYHgTSIfx8F2+ho=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=NUwbYp7K8lPFGK0vRyz+3z9ygoZfI1qAaXCFm+TL421TwKlMJ6JyKk3PMylXRW7AonwBqs2dh8EVhH2AYAu4hoRGl9r40nAfujqMoeTGRUxr/pWOi/wePETfe5bojAnuuJ8ENQozi9efLJxW3H6HHZHvNEpwdWUeS+3GS2/KtcU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=lUPZFt7k; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32DF1C116D0;
-	Tue, 18 Nov 2025 14:23:08 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1763475791;
-	bh=d0GPPb9S++pKNwy8apoeTYz5CZavBYHgTSIfx8F2+ho=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=lUPZFt7ke+bS6NEy9LzhZe29niujJ/wxwrdgnl5b04rg/5FPfUpl+fhmvzBJ1aRSH
-	 tJuliVWWZyRF44tljz+znWcAeM0wE8SkK4ldqzVbDglQuqoAnU91iqFOxs1D2haqhJ
-	 EaYJXWUI4GAo4ahOYcBcGQoVJmUtUConsNhOxMf41qCzLSjbfAwLkE0txduA9W6r6Z
-	 cemycbQKpuZUgkpdsdB75HTTf79Vhjn/nRa5zbCHtM2axUEXNyTD5htyhvKU+QIJ40
-	 39Y4spoGGhvUqvl+Xrh/pOD7n8uGb2ZXhQ78lApG16+/6XYYYmrVduGqMF4HRTLKqt
-	 TCMaTEAVaGzCA==
-Message-ID: <25382a45-f751-4445-8170-38d6f87cfcca@kernel.org>
-Date: Tue, 18 Nov 2025 15:23:06 +0100
+	s=arc-20240116; t=1763476049; c=relaxed/simple;
+	bh=c0U3618Vo7lc2qFgsoEiXWsByZFvKNbdECSQiI33/JE=;
+	h=From:In-Reply-To:MIME-Version:References:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=XBG3zCfxwAnIB3Hh85oXp4gUmRXcofeSOf7WBo7ptPRSlDVgjXhbrDvGPb7+tPccNcCIqaotmivklCFj9uNdhzQr6zEvhvDm+YewTVYKvpw2IsxfZ2R58kShI66eUEO/yEkUKELwFZ2TCxig4jtlaMRqByCNr8UdlgQ7vBfRsZs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl; spf=none smtp.mailfrom=bgdev.pl; dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b=ivnqxogG; arc=none smtp.client-ip=209.85.208.179
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=bgdev.pl
+Received: by mail-lj1-f179.google.com with SMTP id 38308e7fff4ca-37a875e3418so39656751fa.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 18 Nov 2025 06:27:27 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=bgdev-pl.20230601.gappssmtp.com; s=20230601; t=1763476046; x=1764080846; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:references:mime-version:in-reply-to
+         :from:from:to:cc:subject:date:message-id:reply-to;
+        bh=Hf2Cxv40+7yq8V71h6ANiFD+N1Zr8f5Q883U3V106Ak=;
+        b=ivnqxogG2kUbMlCGpAvOQIqlDiSceg3l+eOwSgM0c602mu3MeTeCr0tZaPAcjA9P5d
+         8GHywdC6yybQSJYXQqba9yRafiZJPTSSoxu78fW7PBelD782zc980PWdn7VrLSMqt3Ye
+         QCETqTaEHFfvhs3q00nFFGdTfOY+u2yXQwwiJjJCDj21v9/wQpuTc1vBjfcSGS9bs5U7
+         RBIBAu/02Pbg99TFqIEG2uEU/425lO67lUXC/++CpKiF7iMa3qgOa4r8litYKCaiaHuA
+         VfC6v5X2WjdutAj3TlYtpleLldPSx/Xc/XYhThAy6D7j5hXHI1hiYIn8v8ONzmenlSkG
+         JM2A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1763476046; x=1764080846;
+        h=cc:to:subject:message-id:date:references:mime-version:in-reply-to
+         :from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=Hf2Cxv40+7yq8V71h6ANiFD+N1Zr8f5Q883U3V106Ak=;
+        b=N9tYEtFEt79icRfxD+HuTTe2gzB4ZZcy3vyYSvoCDW+sH8TiSG/ghQQ5RWmFrDgCFZ
+         7NwY9Ejuj04RL4jX3FTTTGLgNyhR9NmNp2xOgVPUTJzqIOE3lM/iLjcQfhoGECHgrQiA
+         EATkwzADuJM3ewcqvLillUtTDeRP0kfL9N3sQt9m6dRa6zfzkmHTh9wCeYf6NtqWr9wp
+         ApaeYHA+rB1KvolgKknoK8crcep+7UqvWaioFOOjMRvcffJrx9vyP9+8Hc4BMB+C9GYl
+         /2WTFG0rb42R8FoXA+gnIy+TU4ZtOpP4k51Ag2a4fqIMOEreRhjY81Pqdez5UupvRqKh
+         NZEg==
+X-Forwarded-Encrypted: i=1; AJvYcCWw6kPWZ82fX5sqNrrpS8K1Wohx52H0QFPASG16kDCq1RsK25y6FD1/cqq99X95EwDMkpfcswP7ZkYa+7T6@vger.kernel.org
+X-Gm-Message-State: AOJu0YxR1H5eTDSSJBNeMS1f3x2wUwQRmxfHLtIvmbpMMexg38JANsMX
+	0a6mwe4UDzMC05giGaEIxN7/LNuoUVG/taFGJEzlbs6p0Tbw4sUidY5yJbyi1U+UeYOXsv1eHpT
+	iJ5sWoVCOC1O1kzVZVaixYas6tbyEwNFqRMf32v81SQ==
+X-Gm-Gg: ASbGncu5No1AZtNdDE/GVaJ9mAdDoFwvtoKYs1U2EMNH7VttXCOTVgAe++2ReRlsK+m
+	jWpdWPGKVuuDtPO2dbQcWtj/OSARk/4aArbdVFYMvzNIqpedj/J5xqxjDR0tKjVAerwty3ggpSH
+	VUnWIQNVqHB0QjlRKkVtodktBDdeXGUt2Mfi2p+TN9facsjwzDlHfROjG+2i70EJvCywPtQ44ta
+	hfemV9YT6zdcL2KOnt8UmfTMA4CIIH2VpbLQpdI1F8vBAx9Qxnbg217r5bg0zxz2D+lbL9PYPh9
+	/Otyq/sAyZuAfxoIlIw9BondkmGvvxt1Lx4A
+X-Google-Smtp-Source: AGHT+IGoA5UBOXsJ5cVSmQ6gsh1S9Dtt4hgxp5RrgYNaDgN6xDaSj9cgZ5HgZ64YpoGqqFZp56SXUGYxduiY1NHaHGU=
+X-Received: by 2002:a2e:a00a:0:b0:37b:aaf7:f007 with SMTP id
+ 38308e7fff4ca-37babd6ddb6mr36053731fa.31.1763476045857; Tue, 18 Nov 2025
+ 06:27:25 -0800 (PST)
+Received: from 969154062570 named unknown by gmailapi.google.com with
+ HTTPREST; Tue, 18 Nov 2025 06:27:23 -0800
+Received: from 969154062570 named unknown by gmailapi.google.com with
+ HTTPREST; Tue, 18 Nov 2025 06:27:23 -0800
+From: Bartosz Golaszewski <brgl@bgdev.pl>
+In-Reply-To: <ab0b2e6b-7d2a-43e6-b8e7-c97cb9763798@sirena.org.uk>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH V2 0/1] arm64: dts: qcom: qcs8300-ride: Enable Bluetooth
- support
-To: Wei Deng <wei.deng@oss.qualcomm.com>,
- Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, linux-bluetooth@vger.kernel.org,
- cheng.jiang@oss.qualcomm.com, quic_jiaymao@quicinc.com,
- quic_chezhou@quicinc.com, quic_shuaz@quicinc.com
-References: <20251118140406.1551669-1-wei.deng@oss.qualcomm.com>
-From: Krzysztof Kozlowski <krzk@kernel.org>
-Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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 a/A=
-In-Reply-To: <20251118140406.1551669-1-wei.deng@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+References: <20251112-gpio-shared-v4-0-b51f97b1abd8@linaro.org>
+ <20251112-gpio-shared-v4-7-b51f97b1abd8@linaro.org> <dbe20642-9662-40af-a593-c1263baea73b@sirena.org.uk>
+ <CAMRc=MesD5HchG_hfvN3H5ayu8gX_OvSsZQ4UO4f27gx1rRzSA@mail.gmail.com> <ab0b2e6b-7d2a-43e6-b8e7-c97cb9763798@sirena.org.uk>
+Date: Tue, 18 Nov 2025 06:27:23 -0800
+X-Gm-Features: AWmQ_bmvuv0kqhmAyv1afKHnQoK_7YeLlaSbUZcYwoK2sDVs4c1RAgiSNxeeuyE
+Message-ID: <CAMRc=Mcafi6+kRX+9sVOLHCegdU33+omLg+aW4RqeiokymxPNQ@mail.gmail.com>
+Subject: Re: [PATCH v4 07/10] arm64: select HAVE_SHARED_GPIOS for ARCH_QCOM
+To: Mark Brown <broonie@kernel.org>
+Cc: Kees Cook <kees@kernel.org>, Mika Westerberg <westeri@kernel.org>, 
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>, Andrew Morton <akpm@linux-foundation.org>, 
+	Linus Walleij <linus.walleij@linaro.org>, Manivannan Sadhasivam <mani@kernel.org>, 
+	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Saravana Kannan <saravanak@google.com>, Greg Kroah-Hartman <gregkh@linuxfoundation.org>, 
+	Andy Shevchenko <andy@kernel.org>, Catalin Marinas <catalin.marinas@arm.com>, Will Deacon <will@kernel.org>, 
+	Srinivas Kandagatla <srini@kernel.org>, Liam Girdwood <lgirdwood@gmail.com>, Jaroslav Kysela <perex@perex.cz>, 
+	Takashi Iwai <tiwai@suse.com>, Alexey Klimov <alexey.klimov@linaro.org>, 
+	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, 
+	linux-hardening@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	linux-gpio@vger.kernel.org, linux-arm-kernel@lists.infradead.org, 
+	linux-sound@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>, Aishwarya.TCV@arm.com, 
+	Bartosz Golaszewski <brgl@bgdev.pl>
+Content-Type: text/plain; charset="UTF-8"
 
-On 18/11/2025 15:04, Wei Deng wrote:
-> Changes for v2
-> - Update commit message, add firmware name detail
-> - Reorganize patchset
-> - V1 link
->   https://lore.kernel.org/all/20251113130942.2661069-1-wei.deng@oss.qualcomm.com/
-> 
-> Wei Deng (1):
->   arm64: dts: qcom: qcs8300-ride: Enable Bluetooth support
+On Tue, 18 Nov 2025 15:20:47 +0100, Mark Brown <broonie@kernel.org> said:
+> On Tue, Nov 18, 2025 at 03:13:49PM +0100, Bartosz Golaszewski wrote:
+>
+>> Thanks for the heads-up. I'll try to fix it ASAP to avoid a revert.
+>
+>> I can't open the link:
+>
+>> 500 Internal Server Error
+>
+>> FATAL: remaining connection slots are reserved for non-replication
+>> superuser connections
+>
+>> Oops, something has gone wrong!
+>
+> Retry, it's AI scrapers so those 500 responses are just glitches.
+>
+>> Any chance you could get the offending line out of this stack trace?
+>
+>    https://builds.sirena.org.uk/187dac290bfd0741b9d7d5490af825c33fd9baa4/arm64/defconfig/vmlinux.xz
+>
+> /build/stage/linux/drivers/gpio/gpiolib-shared.c:87
+>
 
+Oh, of_root may be NULL...
 
-Nothing improved. Please look at your git history BEFORE you start
-sending code.
+Could you try the following change please?
 
-Best regards,
-Krzysztof
+diff --git a/drivers/gpio/gpiolib-shared.c b/drivers/gpio/gpiolib-shared.c
+index c22eaf05eef23..4ce574a21850b 100644
+--- a/drivers/gpio/gpiolib-shared.c
++++ b/drivers/gpio/gpiolib-shared.c
+@@ -205,7 +205,10 @@ static int gpio_shared_of_traverse(struct
+device_node *curr)
+
+ static int gpio_shared_of_scan(void)
+ {
+-	return gpio_shared_of_traverse(of_root);
++	if (of_root)
++		return gpio_shared_of_traverse(of_root);
++
++	return 0;
+ }
+ #else
+ static int gpio_shared_of_scan(void)
+
+Bart
 
