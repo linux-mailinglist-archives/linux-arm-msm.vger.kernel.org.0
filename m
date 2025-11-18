@@ -1,140 +1,97 @@
-Return-Path: <linux-arm-msm+bounces-82372-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-82373-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id B87F2C6AEF1
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Nov 2025 18:24:54 +0100 (CET)
+Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [142.0.200.124])
+	by mail.lfdr.de (Postfix) with ESMTPS id 03545C6B036
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Nov 2025 18:41:25 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sea.lore.kernel.org (Postfix) with ESMTPS id 719772B274
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Nov 2025 17:24:53 +0000 (UTC)
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 942924F720A
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Nov 2025 17:34:25 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id ACFD931ED94;
-	Tue, 18 Nov 2025 17:19:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9C456349B0B;
+	Tue, 18 Nov 2025 17:33:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="ZDmp2ZFR"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="fasN/W7h"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B903731ED96;
-	Tue, 18 Nov 2025 17:19:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69EA833C1B2;
+	Tue, 18 Nov 2025 17:33:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763486354; cv=none; b=i9DPGKdn4HSymWahx+9KfPhFXP1oLnXyu3IVvTU72NqqLf/y1RmjbEGBfEEKnnwaB42ZN61Jtfz/w0kijXnHtuvL5QXjihAT42AcIWyN4qMcKNe4HXmjmI38+KsJr/hJ62d045Bny6v3MEKDcS2DU+KoVl1VLe6ySox57GgZ/wA=
+	t=1763487201; cv=none; b=UrzbqK/x6yU718ySv7BGOvrBvjS1Taucu2BcM4FdDVI9ZhDIqPC1/WN6DY4sEv3O2EEBoFgFeun9EJN8pefjpe1KngQkSgtdZjrYwkcdkKQUjcOBLxFhgYO/g8uIlMWpUifLLScLA3dvrjl6FkEZqN9wBMxF5aTxF0Ez9QaO9xE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763486354; c=relaxed/simple;
-	bh=I2i0qqoXBKX8pOqnQAYfgPCJ0mlqLM4twKODsxI/5kU=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=E6ZH2836afIG0xSfpFCCZ1e3QC1JtuSi944ejVwxmqvfs2e/fvG0RYuz+kUCQPvTR6GMbI48D7gth1VirvUyWNfldxaC+hY4ZRdzJ+lIhTuYx4Z/mR3WFWXAP8tZ9/p5SJx+fVgsr4bhr7O1OOg5qtwiTHpWc2nttGshGYClDUs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=ZDmp2ZFR; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=qualcomm.com
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 5AIAQmJw2926673;
-	Tue, 18 Nov 2025 17:18:49 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:date:from:message-id:mime-version
-	:subject:to; s=qcppdkim1; bh=TQmDCmeI6/bsQ4i+6/bcH4ArBxfNWE8Bq32
-	UP/mRbaI=; b=ZDmp2ZFRqxoIIgftPcAdPMT0OzVaS1QAK7xrk0O49frIIb4O8Iw
-	NCK+WkfJsuyNraF+mfi/6ljE3phz1I7q6fGi+8CiCInsg3QVCQY3lxnvwtStTwQm
-	G4761F9BxYOhRetkoosBbSrb61apSNVNo1tiBKJJjgx5pBQ6Ru5UDK9WGPRtYcF0
-	dhw09dbo6zjIKErq1mZgCfYoqHrBYr0qKQWakt3ElIwqJF+31ez4xS+5Z2/dQweW
-	oWmU4Yn8q089qnV2OBl/xRU0cHZ8X2s7ID5Pb6kgctVorsg8QYZyoPpZ6IzG3z9i
-	xxZJE9af9dMDc2T9sbjvbpKjSZu6DsuJ5dw==
-Received: from apblrppmta02.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4agq2915x4-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 18 Nov 2025 17:18:49 +0000 (GMT)
-Received: from pps.filterd (APBLRPPMTA02.qualcomm.com [127.0.0.1])
-	by APBLRPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTP id 5AIHIjTL018694;
-	Tue, 18 Nov 2025 17:18:45 GMT
-Received: from pps.reinject (localhost [127.0.0.1])
-	by APBLRPPMTA02.qualcomm.com (PPS) with ESMTPS id 4aejkmtk5y-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 18 Nov 2025 17:18:45 +0000
-Received: from APBLRPPMTA02.qualcomm.com (APBLRPPMTA02.qualcomm.com [127.0.0.1])
-	by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 5AIHIjtS018687;
-	Tue, 18 Nov 2025 17:18:45 GMT
-Received: from hu-devc-hyd-u22-c.qualcomm.com (hu-charante-hyd.qualcomm.com [10.213.97.134])
-	by APBLRPPMTA02.qualcomm.com (PPS) with ESMTPS id 5AIHIiOb018681
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 18 Nov 2025 17:18:44 +0000
-Received: by hu-devc-hyd-u22-c.qualcomm.com (Postfix, from userid 389980)
-	id 0EDB25CC; Tue, 18 Nov 2025 22:48:44 +0530 (+0530)
-From: Charan Teja Kalla <charan.kalla@oss.qualcomm.com>
-To: konrad.dybcio@oss.qualcomm.com, robin.clark@oss.qualcomm.com,
-        will@kernel.org, robin.murphy@arm.com, joro@8bytes.org,
-        dmitry.baryshkov@oss.qualcomm.com
-Cc: iommu@lists.linux.dev, linux-arm-msm@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
-        Charan Teja Kalla <charan.kalla@oss.qualcomm.com>
-Subject: [PATCH V2] iommu/arm-smmu: add actlr settings for mdss on sa8775p platform
-Date: Tue, 18 Nov 2025 22:48:22 +0530
-Message-Id: <20251118171822.3539062-1-charan.kalla@oss.qualcomm.com>
-X-Mailer: git-send-email 2.34.1
+	s=arc-20240116; t=1763487201; c=relaxed/simple;
+	bh=MGtVji2vSVm/fOS6ONdrpFFxYiyv80fpbkiyEEmC8io=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=XTCS41bZ7p59ilORO8jl2CtY+rZzwa67rKrpY62QnBPf89Hp+McG30hZ1ntTpkpiiNSgm7sFw3nROL1L6lUGpAJpRCKeXdZqjea+3EEj1yl2RDbfVv2XhlytFN2FMZnpqTYRr45ZAUMWRAUGN7X7wEHN5s20Ll7xVED1hkcGAvQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=fasN/W7h; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A822BC4CEF1;
+	Tue, 18 Nov 2025 17:33:16 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1763487200;
+	bh=MGtVji2vSVm/fOS6ONdrpFFxYiyv80fpbkiyEEmC8io=;
+	h=From:Subject:Date:To:Cc:From;
+	b=fasN/W7h2ZAlzq3iSmxkuMZzM963zJCUclnWpOU8Px+bTWRqwCOvsfpjn5iUgSnr+
+	 R4Futere0mqiQiitY4xhN41C742q3loUKaL2d6Uk2QlOfYwxIafN96qcphhLC2zJvz
+	 K199U9d2xJC6fERezCOmK1jEVcrmNummY9f3isqOHPeYNhs0pVIv1n6uh8Tprez3Vl
+	 WuiBcv9RpjJHVW/U83a+YjgcHiEGCM8tI0ucuvN17fl8hAyVyH0nnqymOrjOKCqkfL
+	 q/Qi5tu7T4totqDvXMt2RQMQ85lvpJrtOg+AQxo1ViI+XYOMk739zWKgsc45CDJJq3
+	 /ChdUtrelbzcQ==
+From: Konrad Dybcio <konradybcio@kernel.org>
+Subject: [PATCH 0/2] Add DISP_CC USB4 router link resets for X1E
+Date: Tue, 18 Nov 2025 18:33:10 +0100
+Message-Id: <20251118-topic-usb4_x1e_dispcc-v1-0-14c68d842c71@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-QCInternal: smtphost
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Authority-Analysis: v=2.4 cv=FJgWBuos c=1 sm=1 tr=0 ts=691caa79 cx=c_pps
- a=Ou0eQOY4+eZoSc0qltEV5Q==:117 a=Ou0eQOY4+eZoSc0qltEV5Q==:17
- a=6UeiqGixMTsA:10 a=VkNPw1HP01LnGYTKEx00:22 a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8
- a=X4sqO_BnIXgP0qhT90oA:9 a=cPQSjfK2_nFv0Q5t_7PE:22
-X-Proofpoint-ORIG-GUID: b1hvGlTH4blTEgJUm6Qa2gw-cKcekBQs
-X-Proofpoint-GUID: b1hvGlTH4blTEgJUm6Qa2gw-cKcekBQs
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMTE4MDE0MCBTYWx0ZWRfX1YsNimS3xbcd
- l5MPCLMHpKZYav7nfr+Fz4LhGkTaT4v+aR2Ill6FS5V3lKwECw9ZLWNzqiXQ+O6vlpMb6Ry1Jhn
- 3asiL1SmhcvvZpwNNcImrIp4eO/HQ1LFuZhK5BKhnoyN3TWq4EDQwrQdBEmHc7RCevCaQ1F8vFZ
- 4KoFkuvv1JZGGF1BDlRHRCsSb8N70YYe8+wRS2MyXfJrYQYPsC1WTcrbvlBzOU2QOHLbEPu7V9Z
- K+ce1UKKGJ9HTMxpGfCGMH/gHVIG1q2as77fQN9WIoHxH8vl0VC7qp8muvSkQeqUijFpQ4i0AAp
- 37fX7VZROZhGmPAR7aAo2IkaE+33CSctms5tUjvwxCrL8v5AoaB6iA2Nko/b00yalG+TZREXwPG
- mT7G4tdnpsVcOOR3ZmbUHbw8NcrRwA==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
- definitions=2025-11-18_02,2025-11-18_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- bulkscore=0 malwarescore=0 suspectscore=0 impostorscore=0 lowpriorityscore=0
- clxscore=1015 spamscore=0 phishscore=0 priorityscore=1501 adultscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2510240001 definitions=main-2511180140
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIANatHGkC/x3MQQqAIBBA0avErBMaK7CuEhGmU82mxKkQorsnL
+ d/i/weEIpNAXzwQ6WbhY8/AsgC32X0lxT4bdKVbRDTqPAI7dcncTAlp8izBOeWNQdvapZt1Dbk
+ NkRZO/3cY3/cDF3c53mcAAAA=
+X-Change-ID: 20251118-topic-usb4_x1e_dispcc-d881a5af9b23
+To: Bjorn Andersson <andersson@kernel.org>, 
+ Michael Turquette <mturquette@baylibre.com>, 
+ Stephen Boyd <sboyd@kernel.org>, Rob Herring <robh@kernel.org>, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org, 
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+ usb4-upstream@oss.qualcomm.com, 
+ Raghavendra Thoorpu <rthoorpu@qti.qualcomm.com>, 
+ Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+X-Mailer: b4 0.14.3
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1763487196; l=645;
+ i=konrad.dybcio@oss.qualcomm.com; s=20230215; h=from:subject:message-id;
+ bh=MGtVji2vSVm/fOS6ONdrpFFxYiyv80fpbkiyEEmC8io=;
+ b=nFq2k/E5LODGinAWB27vjR4EqNIypIoGIxEnMcJ09YjHWhyDtVCYMi3N4HZkJY9TOmX3iu/A8
+ 95TNxF2nHgNANi0sU7Xn3iOIf5ZiExUd7AufMtp+06NbFBj6gXanvPn
+X-Developer-Key: i=konrad.dybcio@oss.qualcomm.com; a=ed25519;
+ pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
 
-Add ACTLR settings for the mdss device on Qualcomm SA8775P platform.
-This is achieved by adding compatibility string for mdss in the actlr
-client of match table.
+Those are going to be necessary to toggle as part of the topology setup
 
-Signed-off-by: Charan Teja Kalla <charan.kalla@oss.qualcomm.com>
+Signed-off-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 ---
+Konrad Dybcio (2):
+      dt-bindings: clock: qcom: x1e80100-dispcc: Add USB4 router link resets
+      clk: qcom: x1e80100-dispcc: Add USB4 router link resets
 
-Changed from V1:
-  1) Added actlr setting only for MDSS and dropped for fastrpc. -- konrad
-  2) ACTLR table is updated per alphanumeric order -- konrad 
-  https://lore.kernel.org/all/20251105075307.1658329-1-charan.kalla@oss.qualcomm.com/
+ drivers/clk/qcom/dispcc-x1e80100.c               | 3 +++
+ include/dt-bindings/clock/qcom,x1e80100-dispcc.h | 3 +++
+ 2 files changed, 6 insertions(+)
+---
+base-commit: 187dac290bfd0741b9d7d5490af825c33fd9baa4
+change-id: 20251118-topic-usb4_x1e_dispcc-d881a5af9b23
 
- drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c | 2 ++
- 1 file changed, 2 insertions(+)
-
-diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
-index 62874b18f645..0b400e22cb00 100644
---- a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
-+++ b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
-@@ -41,6 +41,8 @@ static const struct of_device_id qcom_smmu_actlr_client_of_match[] = {
- 			.data = (const void *) (PREFETCH_DEEP | CPRE | CMTLB) },
- 	{ .compatible = "qcom,fastrpc",
- 			.data = (const void *) (PREFETCH_DEEP | CPRE | CMTLB) },
-+	{ .compatible = "qcom,sa8775p-mdss",
-+			.data = (const void *) (PREFETCH_DEFAULT | CMTLB) },
- 	{ .compatible = "qcom,sc7280-mdss",
- 			.data = (const void *) (PREFETCH_SHALLOW | CPRE | CMTLB) },
- 	{ .compatible = "qcom,sc7280-venus",
+Best regards,
 -- 
-2.34.1
+Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 
 
