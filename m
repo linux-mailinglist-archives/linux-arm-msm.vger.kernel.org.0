@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-82282-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-82283-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ams.mirrors.kernel.org (ams.mirrors.kernel.org [213.196.21.55])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3EE38C692CE
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Nov 2025 12:47:53 +0100 (CET)
+Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [142.0.200.124])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0A996C6930A
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Nov 2025 12:49:47 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ams.mirrors.kernel.org (Postfix) with ESMTPS id D47FD3840DA
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Nov 2025 11:42:10 +0000 (UTC)
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 58F9B4F36B0
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Nov 2025 11:42:27 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7C7CC2F6592;
-	Tue, 18 Nov 2025 11:41:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6D8BB31984C;
+	Tue, 18 Nov 2025 11:42:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="iRb/y0wP"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="QzfRWZ4G"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 442DE2BD030;
-	Tue, 18 Nov 2025 11:41:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4276E2D7817;
+	Tue, 18 Nov 2025 11:42:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763466119; cv=none; b=nN49upJNWFlRP2Zl4NbzeNW71SUxl9VfEs5Tx8HQMLLv7oppG+ECmrRE9KZj/CqOP+VqCRikOblxv1lwN5hvItPl1Dfq0ghQ0B76FRrJjDmDmGmWx4EOXb4KPvZmhT5l49RUAXMTXU2C1aGgjOkkLyk+SCZDtMvvLgLZadrqqbY=
+	t=1763466132; cv=none; b=GTI0ZU7IoDz1nl839ROeSmK1loH9+o50JTVH3sY5FtZZljAPpzfXxU2dH19s3zQxpkNLG9pbtiCTwZ8ULQcOf3kecSHuZTlKVqcUzN36cWOb7DpXLpQyFF/bqx3LpQKyAzCUlw034FmdaqKua5zXI6SdZEONSyMQVZvXS6w2e0Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763466119; c=relaxed/simple;
-	bh=e4lReUXcF+D3zcRVLSQzn8YmzZK1CsJTpEyyvSWeV1w=;
+	s=arc-20240116; t=1763466132; c=relaxed/simple;
+	bh=VbD6IMOk90VPampVCNL/Bu0B0pAazbvZzr1e7+CoFVM=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=C5eIJypWO4gRUhziKaKUSX678LAQMrU0+RXRV197UsBqqZu/aGpSqOi8tZqJH13NRg1sPqr+113lGpEFw4lrwZIVS2V2I6O6u/9Xcka86xub4SasZ3Wt3ZVu4InodAG1JbeB8IFmIQrS48uCTbdr8Vtuo9yghHfZGA3AsZFgy2Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=iRb/y0wP; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 523A2C4CEF1;
-	Tue, 18 Nov 2025 11:41:56 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=JsI+oS2K17jgtyVh5NCV+MPJGUjK0zdXmtNhMJqmVYCL33WhiCFfsr/if1hTFbWUwWVFlOIw7BKKqyREHqJV0MskK3ODGIlws+rhD35IVq2UUo5iRyaLz7UvcFOF899kJFRmCs61KwPYGfLFt2Ki852jt1lLZ1PERTNsoPWsO5c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=QzfRWZ4G; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D927DC2BCB2;
+	Tue, 18 Nov 2025 11:42:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1763466119;
-	bh=e4lReUXcF+D3zcRVLSQzn8YmzZK1CsJTpEyyvSWeV1w=;
+	s=k20201202; t=1763466131;
+	bh=VbD6IMOk90VPampVCNL/Bu0B0pAazbvZzr1e7+CoFVM=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=iRb/y0wPLFCfegeLI7wmsZfwBbS0mqXLhtAFFojmzy+WzOaeH/OE8rfIoKbykReey
-	 BVENlW3sDqdzravAYgUMieVDNcQn/Htf59jkbGKPXn20lqKmpdYQuhFvxf88MZr5PR
-	 eVMfiZCO7SoPZZ3mFshFJVBf5ffk5bg3PFBqcjfOH68+HBTNFlClIuxxZnJXb6sNQb
-	 o50N+4q+HQog5aCEu8sXZGXpIMC4b9o2bfWCyJ7MFey8AtxbLbLw3Z0Haw/ul8DOvA
-	 XrS009AG9FuGv7065egMc0HN6KVbhGzZ5YQ9q2lDInpDUAhUIIRIyuDUwKSZbpxTHi
-	 LeTbo1b+knSGw==
-Message-ID: <f7059edf-0e0e-4bfc-b3c5-ecb21e2a1e44@kernel.org>
-Date: Tue, 18 Nov 2025 12:41:54 +0100
+	b=QzfRWZ4G8SADH5YD9uzgEgWqybWBi1rQqD2KfNdYiLEOAaIEJqkOhvIh5bs5Hr6ty
+	 Y4+N51M+IikGJmAF54RKzONtRf2e8BvQZdISLV/a6y04IXUCc5vmN54ALu+GZNYqSX
+	 BEVZlTppT/S+2IF3in1CxBegeS0hZQyKNk0bRrEKDAKUAkdV4DpHAXVadnyyQiZi1Z
+	 0a4BJUEu9bWRQhP60z7pBNYRKpNKUqqyDzrO4aSkVeQ+x+zQZxog4FhRz+l92xooXR
+	 /kEIcDyChxyVeTAPgZO5bGDV4d47Bp6ROyar255hHQj6kVMcMGTiOAfx8C21bPs2YQ
+	 V7gmKmfN8yHhw==
+Message-ID: <7db92cad-0a65-4e2c-85ed-6fe03de71dc5@kernel.org>
+Date: Tue, 18 Nov 2025 12:42:07 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,14 +50,14 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 07/10] soc: qcom: smp2p: Use __cleanup() for device_node
+Subject: Re: [PATCH 08/10] soc: qcom: smsm: Use __cleanup() for device_node
  pointers
 To: Kathiravan Thirumoorthy <kathiravan.thirumoorthy@oss.qualcomm.com>,
  Bjorn Andersson <andersson@kernel.org>,
  Konrad Dybcio <konradybcio@kernel.org>
 Cc: linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
 References: <20251117-cleanup_node_put-v1-0-5f107071d171@oss.qualcomm.com>
- <20251117-cleanup_node_put-v1-7-5f107071d171@oss.qualcomm.com>
+ <20251117-cleanup_node_put-v1-8-5f107071d171@oss.qualcomm.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -103,7 +103,7 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  jWt87ecuHlpL3uuQ0ZZNWqHgZoQLXoqC2ZV5KrtKWb/jyiFX/sxSrodALf0zf+tfHv0FZWT2
  zHjUqd0t4njD/UOsuIMOQn4Ig0SdivYPfZukb5cdasKJukG1NOpbW7yRNivaCnfZz6dTawXw
  XRIV/KDsHQiyVxKvN73bThKhONkcX2LWuD928tAR6XMM2G5ovxLe09vuOzzfTWQDsm++9UKF a/A=
-In-Reply-To: <20251117-cleanup_node_put-v1-7-5f107071d171@oss.qualcomm.com>
+In-Reply-To: <20251117-cleanup_node_put-v1-8-5f107071d171@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
@@ -113,19 +113,20 @@ On 17/11/2025 05:51, Kathiravan Thirumoorthy wrote:
 > 
 > Signed-off-by: Kathiravan Thirumoorthy <kathiravan.thirumoorthy@oss.qualcomm.com>
 > ---
->  drivers/soc/qcom/smp2p.c | 3 +--
->  1 file changed, 1 insertion(+), 2 deletions(-)
+>  drivers/soc/qcom/smsm.c | 10 +++-------
+>  1 file changed, 3 insertions(+), 7 deletions(-)
 > 
-> diff --git a/drivers/soc/qcom/smp2p.c b/drivers/soc/qcom/smp2p.c
-> index cb515c2340c107e92ece1bb8cd3854abf9f03e4a..2e22eb4728b7412685138fc86e55058b047bcb75 100644
-> --- a/drivers/soc/qcom/smp2p.c
-> +++ b/drivers/soc/qcom/smp2p.c
-> @@ -501,7 +501,7 @@ static int qcom_smp2p_alloc_outbound_item(struct qcom_smp2p *smp2p)
->  
->  static int smp2p_parse_ipc(struct qcom_smp2p *smp2p)
+> diff --git a/drivers/soc/qcom/smsm.c b/drivers/soc/qcom/smsm.c
+> index 021e9d1f61dc5200514c5a239d52be97f7e82825..5600712f9185bba8c82da431cfb9f21f1bc44761 100644
+> --- a/drivers/soc/qcom/smsm.c
+> +++ b/drivers/soc/qcom/smsm.c
+> @@ -397,7 +397,7 @@ static int smsm_parse_mbox(struct qcom_smsm *smsm, unsigned int host_id)
+>   */
+>  static int smsm_parse_ipc(struct qcom_smsm *smsm, unsigned host_id)
 >  {
 > -	struct device_node *syscon;
 > +	struct device_node *syscon __free(device_node) = NULL;
+
 
 NAK, stop with this pattern.
 
