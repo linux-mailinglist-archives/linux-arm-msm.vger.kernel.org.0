@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-82284-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-82285-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 186CEC6926C
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Nov 2025 12:42:46 +0100 (CET)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1AA1BC69272
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Nov 2025 12:43:10 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sea.lore.kernel.org (Postfix) with ESMTPS id C79942A99F
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Nov 2025 11:42:44 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTPS id 1546F28D23
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Nov 2025 11:43:09 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D9D4C324B07;
-	Tue, 18 Nov 2025 11:42:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id ADC872FF65A;
+	Tue, 18 Nov 2025 11:43:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="QuEBYJ9S"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="WJmSaBWw"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFAA930FC1C;
-	Tue, 18 Nov 2025 11:42:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80CAA276046;
+	Tue, 18 Nov 2025 11:43:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763466148; cv=none; b=OSO5ZhM2oqTn8McvjNfWAuVCU5cw/uJ0y3db+okREZC///ctmznUo+dUBKqhCsFG+wtLJ/xkxMhqylw3YavMuuBtzcJJHknxm5H0BGm16uaT93a67drWD5jl255wLBYcqizjQMEOydWAGaPpZ2VyCxduzojEz8WVsVc1dMMtn/Y=
+	t=1763466186; cv=none; b=CWT9Hzi0ca+C19nEkAhJ6PktBe3iWzSRmJJZoh9AFCjBD6kiZBvs+RygclDAY8jCHbn4UUkfiMftacaKQuP8m/GYEXb93XESZRksmsMRY3JT+3NAHlBMtCxnenCvRb5BUfihdyDJLm0P5Rgf5Y3KWmZ2nW0QvglAzTeKHVvT0lY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763466148; c=relaxed/simple;
-	bh=wyYfV5rX58dcSbCaf1nfQ2NY4I5Rjs5ZlIDn+Adf8CY=;
+	s=arc-20240116; t=1763466186; c=relaxed/simple;
+	bh=WJNNA60+V7iWnBmtNostw++qwNXi03V8BHe2XZjktf8=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=JuUFjk/Uz8IUCEKedAyb/a3/PI7f/jDUW+zu+8uODB+5ipeZn8MX4fsBeDBsgoKDdEzHoxJzMcP13EKvFDqxxNpgXHjOrS6GliwL9E+4yyyg+WslAQy6CqEazUtmyBVwdYoBGA4KdGTWih/1k2NDGGkhBQpyIY8Ge+KeaATkc9s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=QuEBYJ9S; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93F18C2BCB2;
-	Tue, 18 Nov 2025 11:42:26 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=poranT098GL1684X8PnO8ppkbeQRWhD3VjXfrQuZI9PgjBdi0VpaKinRjWzlKL9gsqizK2uNRkaccm7skNGE4b08dz7V0oyt3FKFL8CIsbCUmu5RGF7fkhSmbSoyIMOu9/3Yy/e7GCbyz0nYrvgXOhitIMSUmL2zH2hZCBOJYJo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=WJmSaBWw; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D2D7C2BCB3;
+	Tue, 18 Nov 2025 11:43:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1763466148;
-	bh=wyYfV5rX58dcSbCaf1nfQ2NY4I5Rjs5ZlIDn+Adf8CY=;
+	s=k20201202; t=1763466183;
+	bh=WJNNA60+V7iWnBmtNostw++qwNXi03V8BHe2XZjktf8=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=QuEBYJ9Sxs4BaGPx5aym5/C6esPgZqn2K0PGlbI4E+UXJyzGw9jujTHyyZ1K7f4zQ
-	 Rs8K43zFrJl9vxhlAjm0O5TZWK15U+ts/l0A/wssGzsfOTwHaJncbP0so959hUnLV/
-	 wf5VwnJSe4NR8frIko0p2ErDZ4ShK/4kvhipFsnNVXu3GUpd4hBhF5k4X3bx8wUqgd
-	 zUyh149EdKcGgApo3yLz/C8LjgeiYCWzwFOpPdXX7XXBzY3ePJO7OEZ9UJAcSpboqf
-	 O+Jb5ROnwzASr5znt+10F0AbcfsBw+HzFmvXNPAMPpGF7Lb66klbGWULGifniWmm4n
-	 cR+D1Kj6BfJ9Q==
-Message-ID: <f65397ce-d72c-4b99-bce3-5360755dc870@kernel.org>
-Date: Tue, 18 Nov 2025 12:42:24 +0100
+	b=WJmSaBWwRMsDss9j/VcdWK+kkN9/nKHb88aMnn5ovoCuAiEVb0KrT0NNdBI8ja4U6
+	 yPLtkseMRFp1hHE05JweYmm4eKNssQ0vu2pg96YXmSFH8WFTwRikroBx7p7XA+d/Hz
+	 6D1n/XIgWoWV/nyr13V5NaYF0e04vZyx5lJCh8ZqpqMXeZZddyNdmpMvOmkrfT6WJk
+	 Gr90WC1UcSz2ymzgK9LrsILXqyl6ojiqH6yGj2jw/52UnUkS95Px1auHt8cr6Yx43T
+	 YOYmbb/pL/OtGcjTbTVVtKSS1oAUqCcNjpb0zeNQTUT5xswKOD9uXE+i/6YQtQNmhM
+	 TpFlNbCLmMmaw==
+Message-ID: <cde9f208-618a-4315-bfa6-ac154ed9cec0@kernel.org>
+Date: Tue, 18 Nov 2025 12:42:59 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,14 +50,14 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 09/10] soc: qcom: spm: Use __cleanup() for device_node
+Subject: Re: [PATCH 06/10] soc: qcom: smem: Use __cleanup() for device_node
  pointers
 To: Kathiravan Thirumoorthy <kathiravan.thirumoorthy@oss.qualcomm.com>,
  Bjorn Andersson <andersson@kernel.org>,
  Konrad Dybcio <konradybcio@kernel.org>
 Cc: linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
 References: <20251117-cleanup_node_put-v1-0-5f107071d171@oss.qualcomm.com>
- <20251117-cleanup_node_put-v1-9-5f107071d171@oss.qualcomm.com>
+ <20251117-cleanup_node_put-v1-6-5f107071d171@oss.qualcomm.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -103,7 +103,7 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  jWt87ecuHlpL3uuQ0ZZNWqHgZoQLXoqC2ZV5KrtKWb/jyiFX/sxSrodALf0zf+tfHv0FZWT2
  zHjUqd0t4njD/UOsuIMOQn4Ig0SdivYPfZukb5cdasKJukG1NOpbW7yRNivaCnfZz6dTawXw
  XRIV/KDsHQiyVxKvN73bThKhONkcX2LWuD928tAR6XMM2G5ovxLe09vuOzzfTWQDsm++9UKF a/A=
-In-Reply-To: <20251117-cleanup_node_put-v1-9-5f107071d171@oss.qualcomm.com>
+In-Reply-To: <20251117-cleanup_node_put-v1-6-5f107071d171@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
@@ -113,26 +113,23 @@ On 17/11/2025 05:51, Kathiravan Thirumoorthy wrote:
 > 
 > Signed-off-by: Kathiravan Thirumoorthy <kathiravan.thirumoorthy@oss.qualcomm.com>
 > ---
->  drivers/soc/qcom/spm.c | 5 ++---
->  1 file changed, 2 insertions(+), 3 deletions(-)
+>  drivers/soc/qcom/smem.c | 3 +--
+>  1 file changed, 1 insertion(+), 2 deletions(-)
 > 
-> diff --git a/drivers/soc/qcom/spm.c b/drivers/soc/qcom/spm.c
-> index f75659fff2874fb6a29c48ceee862b05b1ba5802..a87a8593a8b7fb2c62b14eaa9c96f46fc5eba877 100644
-> --- a/drivers/soc/qcom/spm.c
-> +++ b/drivers/soc/qcom/spm.c
-> @@ -391,7 +391,8 @@ static int spm_get_cpu(struct device *dev)
->  	bool found;
->  
->  	for_each_possible_cpu(cpu) {
-> -		struct device_node *cpu_node, *saw_node;
-> +		struct device_node *cpu_node __free(device_node) = NULL;
-> +		struct device_node *saw_node __free(device_node) = NULL;
->  
+> diff --git a/drivers/soc/qcom/smem.c b/drivers/soc/qcom/smem.c
+> index fef840b5457407a85051ded0e835430dbebfe8bb..6c3a08e1afe824402f6fbb84c9695ee57eda230b 100644
+> --- a/drivers/soc/qcom/smem.c
+> +++ b/drivers/soc/qcom/smem.c
+> @@ -1100,8 +1100,8 @@ static int qcom_smem_map_global(struct qcom_smem *smem, u32 size)
+>  static int qcom_smem_resolve_mem(struct qcom_smem *smem, const char *name,
+>  				 struct smem_region *region)
+>  {
+> +	struct device_node *np __free(device_node) = NULL;
 
 
-This is getting ridicilous. NAK, stop with this pattern.
 
-You are not simplifying anything here!
+Absolutely none of your patches is correct. ZERO. You did not understand
+how cleanup.h works but decided to send all of this.
 
 Best regards,
 Krzysztof
