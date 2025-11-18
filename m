@@ -1,41 +1,104 @@
-Return-Path: <linux-arm-msm+bounces-82171-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-82172-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3C6A8C66D60
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Nov 2025 02:30:48 +0100 (CET)
+Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [IPv6:2605:f480:58:1:0:1994:3:14])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4424BC67053
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Nov 2025 03:30:01 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by tor.lore.kernel.org (Postfix) with ESMTPS id 4438929827
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Nov 2025 01:30:47 +0000 (UTC)
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 601B54E2C8B
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Nov 2025 02:29:51 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0CA301D5CDE;
-	Tue, 18 Nov 2025 01:30:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E99BB320CB3;
+	Tue, 18 Nov 2025 02:29:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=rock-chips.com header.i=@rock-chips.com header.b="QRo1qMrO"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="KYdijhW9";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="Er+sKGhz"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-m1973177.qiye.163.com (mail-m1973177.qiye.163.com [220.197.31.77])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6EE621BFE00;
-	Tue, 18 Nov 2025 01:30:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=220.197.31.77
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E28131327A
+	for <linux-arm-msm@vger.kernel.org>; Tue, 18 Nov 2025 02:29:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763429445; cv=none; b=RWbKqOLn3XP5xlKuEkD59aP2k3S7bA8L16KJnJV2q/G7EGdcsgonbo3HJnmu0/gKk/cVr6fyoa/HBBcWA5JKoPl1IO2q0p8OiBHI0ynOaOWWwMvH/uLj9FPGO4lhBHaEvC6yY7XIj1ezEqiYjvTbif09ZF+LQRe1m8W8svtyXVM=
+	t=1763432987; cv=none; b=FAxchV8onKHeKY+6yZKvh1jTuKIPhWkc5uaPYbd+Qyrvroo9kK1Y/jCpcUWgtRs7of5YvKBQ+C+Ks3LxqYxhAp32SFFcwKV9LKS0kA9l6JnusXemSy9jHEkYJlF1jj1T3TSwQO8timqAblUIbr11zR/fG86YcK2vEiGUo9wzXew=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763429445; c=relaxed/simple;
-	bh=7+TFWmZmNoQgAfLcvdsXgt+UNGSQvvvPnRu+oq/s7IY=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=CVUJTT1XkWSwesDaaNbUaLmX1UJYLyX9ajiRIau9jAloX8MkX5gY3n6lS4MLWBZFMk7pYZ6eiXPRtpH0cceL4tmw8nDjv14wGOWiS6z9oW3YWqKpYVqnfYCPPFsDZY9PgNTRJ6LQfwAuemcrTvaB4Rpb4Y6WT5Y5sZYFe4pHdS8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=rock-chips.com; spf=pass smtp.mailfrom=rock-chips.com; dkim=pass (1024-bit key) header.d=rock-chips.com header.i=@rock-chips.com header.b=QRo1qMrO; arc=none smtp.client-ip=220.197.31.77
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=rock-chips.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=rock-chips.com
-Received: from [172.16.12.51] (unknown [58.22.7.114])
-	by smtp.qiye.163.com (Hmail) with ESMTP id 29e9711a9;
-	Tue, 18 Nov 2025 09:30:31 +0800 (GMT+08:00)
-Message-ID: <26019e39-d36a-4290-ac80-c8b0b09104c8@rock-chips.com>
-Date: Tue, 18 Nov 2025 09:30:29 +0800
+	s=arc-20240116; t=1763432987; c=relaxed/simple;
+	bh=2KOfma0sITPO/4dH2G9QHJ4relhWBo110kMOcda7Thk=;
+	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
+	 In-Reply-To:Content-Type; b=AqOdidCeOPcHU/ZKnBeiVouA0oeyPuc9kOQz8aKfDvVKvVA3DZdhOs7A65HSxxUKLH0vt4Fe9h1E7Wo5fvaUCLj/xQhKelRV+9c2EDgBZStrp4guA8LZ0BCJyxziNmDzRtpskDiZymJtypqITk1tL/Ig/tH7EAj3ppXfD9XO7BY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=KYdijhW9; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=Er+sKGhz; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 5AHGQbEM027779
+	for <linux-arm-msm@vger.kernel.org>; Tue, 18 Nov 2025 02:29:45 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	xDqii3elKukNgR40+RTb2lx/n+vGBSNGvcekTp398fU=; b=KYdijhW9h0aGpVmd
+	xAbg1APihmWlAuWKP2GrwJbGpFVIZeMYnFL0pk/BL5m69GOQcaovfVV79J94VBr7
+	ZCB/DamiCnmXXxXL1pevn04VVF1crVNJkLnFWgwlRrqfhCxbA7rd6mvpqDQlgFtJ
+	Uu4zaQAAUW6rOfuf1/f4blgXtftOR3GKnmSpTZNkk+T3K7dBP6yWyq+PqHHFXH/T
+	bVlDpwlBDfQjOLM7qGTx3LrSqx0sUzozY70EeKEM0pRHaWMvx1lCfGcuSbsZRSI4
+	knJTs1xQ798vMY5ynz2EGwbvOa4Jh9N07tElB93NHZ7tfCsa0s489NXSaJMgzdWt
+	OPmTtw==
+Received: from mail-pf1-f197.google.com (mail-pf1-f197.google.com [209.85.210.197])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4ag77t1f86-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Tue, 18 Nov 2025 02:29:45 +0000 (GMT)
+Received: by mail-pf1-f197.google.com with SMTP id d2e1a72fcca58-7b82c2c2ca2so7548936b3a.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 17 Nov 2025 18:29:45 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=oss.qualcomm.com; s=google; t=1763432985; x=1764037785; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:to:subject:user-agent:mime-version:date:message-id:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=xDqii3elKukNgR40+RTb2lx/n+vGBSNGvcekTp398fU=;
+        b=Er+sKGhz6/TlF73uASVCngfC4nurdPVYT7qtXcHQC+sKGk4AaYU0pYu18xUdekeL0x
+         qitUWTUXQ7K8x9fop/4IH9HdruZvIQUSo6jODlDolDRaPIMZSFJZqN6Gz0EG9WHHHck3
+         yMjcl+5k0UBUzGePfuB726RfmJdPJp1asIEuTP9LIrqpgR2PkV33vlZh8WeyPMBvUsXE
+         yMXdUcxiwHJKJXiXCybNq5NIa2I9OVzBGcijfkVTFrQyNfRTcdFEPrdU9nAZDljR2dQS
+         y3hxSUiGpADvSdJk5yvWgXc293fsY0ncd2DamECJbvsihTdQ3OODcmyny1afTenSa1BU
+         4s0w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1763432985; x=1764037785;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=xDqii3elKukNgR40+RTb2lx/n+vGBSNGvcekTp398fU=;
+        b=EmGDXVpNbMVHbd9HQ393vumq1dsPLNFDE33m2umx3gJtYR8uk6vzz1NrY2wZGny6A1
+         D6UiXea5nPGZHTNNMWeoK6Ruj3BIm1k5wkrHHKh18pIFAFjTt07X/gfEPFBhC06kz7WX
+         RMDek6YyCprFgIU8az4XdD5eLoT/Pnt/lSQH+ZcdtG4YN2rk2FqT5R3sh+au6NtBZShi
+         BUBb6zg5GwxAa/eqsLVNX8YTyvbjGGPHZioEPBaCHznidJgJzrVi44/y/JCvCojWRrUN
+         ZuTvQS2qkrafIMVmtlP4kUi3VhjyP4+SW7laoEaeatBXbcUkdTbFY3KfV6VUkjEu4rr7
+         xBlQ==
+X-Forwarded-Encrypted: i=1; AJvYcCX6PCJMQIsvCcOHxaJvmOPJfTm/xi4s1jpQVeh/jsNFw81uA7mjiK1bltIo/Pvpv3YoRFPkKxa90TBjjqa/@vger.kernel.org
+X-Gm-Message-State: AOJu0YyysnFH4cm+vyp9DJ4ymlVJ1JEZrZiy/r742Ywr7BpJpAcgJqbT
+	3tLgdY8yMP5lzFfNRJRyF874VXsl8bAO4RodM/Ot1jMdWGfyVlh2XXTax7rF/gmqzRS4zQl76mh
+	St7gFX3rLvpCoxMoAszdmLoe9y27phLDEkaHVO1DupLzCckd7GursYBHr3/iYge0nTUOkHp/zuA
+	Za3MY=
+X-Gm-Gg: ASbGncvxN7n90qhQSntQphhuQ3GSmVm0NNsKkykkZ2Sa8N6lTHKh3RdXvtMbcUxzVM+
+	KgNhde6mhV0M+bQDiSxuP/FkOS/BupT9EcolZvivLn3XtVy8gPzbLUl/lfhYYOhKmCyEJ40p7jv
+	UBhDPd16j6SPUNmGn6Ovk/KvUlmdhUjQgnC/Vzuslii5kYjCKQwATSUx2gFmqRgmfeENYIvC0/K
+	ejBR0NhmtIjNp0Lt85HKt9q2eTJEZ8Ni9YogIaI4ANUosS+4ygy0Upax00XTjGHwv9z3LFDl1ML
+	lKacby3RpYcaHv8+W/7geJsIRIhUVp5L4fI7aUbXpllqMn+4v/jvYVmu0jxJ9seWjLLgutDZ2iz
+	nOpwZwsdAqKi0QzC59wEOMTbwljERzHbyf3WMpvgveC5jdnPy3tZ4Bd3zaamMWweWXsmJBqCZ3x
+	ncK3U=
+X-Received: by 2002:a05:6a00:1744:b0:7b8:6e0d:6566 with SMTP id d2e1a72fcca58-7ba3be8c60fmr13776021b3a.15.1763432984575;
+        Mon, 17 Nov 2025 18:29:44 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHARX4H4UC1Tv8HJiSAkEHFZwwaJOg+neMIkMp2N3vFNfTFZNFkcsb5OXabfS1mRLsiOx+BBA==
+X-Received: by 2002:a05:6a00:1744:b0:7b8:6e0d:6566 with SMTP id d2e1a72fcca58-7ba3be8c60fmr13775991b3a.15.1763432984068;
+        Mon, 17 Nov 2025 18:29:44 -0800 (PST)
+Received: from [10.133.33.128] (tpe-colo-wan-fw-bordernet.qualcomm.com. [103.229.16.4])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-7b927c22b1bsm14420563b3a.66.2025.11.17.18.29.41
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 17 Nov 2025 18:29:43 -0800 (PST)
+Message-ID: <d92cb96b-b398-45c1-964c-0ab551ca135f@oss.qualcomm.com>
+Date: Tue, 18 Nov 2025 10:29:35 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -43,69 +106,92 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 3/3] iommu: Allow drivers to say if they use
- report_iommu_fault()
-To: Jason Gunthorpe <jgg@nvidia.com>,
- AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
- Christian Benvenuti <benve@cisco.com>, Heiko Stuebner <heiko@sntech.de>,
- iommu@lists.linux.dev, Jernej Skrabec <jernej.skrabec@gmail.com>,
- Joerg Roedel <joro@8bytes.org>, Leon Romanovsky <leon@kernel.org>,
- linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org,
- linux-mediatek@lists.infradead.org, linux-rdma@vger.kernel.org,
- linux-rockchip@lists.infradead.org, linux-sunxi@lists.linux.dev,
- Matthias Brugger <matthias.bgg@gmail.com>,
- Nelson Escobar <neescoba@cisco.com>, Rob Clark
- <robin.clark@oss.qualcomm.com>, Robin Murphy <robin.murphy@arm.com>,
- Samuel Holland <samuel@sholland.org>,
- Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>,
- Chen-Yu Tsai <wens@csie.org>, Will Deacon <will@kernel.org>,
- Yong Wu <yong.wu@mediatek.com>
-Cc: Lu Baolu <baolu.lu@linux.intel.com>, patches@lists.linux.dev
-References: <3-v2-25fc75484cab+ab-iommu_set_fault_jgg@nvidia.com>
+Subject: Re: [PATCH 0/2] power: supply: qcom_battmgr: improve charge control
+ threshold handling
+To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+        Val Packett <val@packett.cool>, Sebastian Reichel <sre@kernel.org>,
+        Neil Armstrong <neil.armstrong@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20251012233333.19144-2-val@packett.cool>
+ <faa9d74d-63d3-4569-ab36-5e0ee0241794@oss.qualcomm.com>
+ <02db51aa-6e19-411f-875f-718b8215c373@oss.qualcomm.com>
 Content-Language: en-US
-From: Chaoyi Chen <chaoyi.chen@rock-chips.com>
-In-Reply-To: <3-v2-25fc75484cab+ab-iommu_set_fault_jgg@nvidia.com>
+From: Fenglin Wu <fenglin.wu@oss.qualcomm.com>
+In-Reply-To: <02db51aa-6e19-411f-875f-718b8215c373@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-HM-Tid: 0a9a9495ba3803abkunm15b0adc69f2477
-X-HM-MType: 1
-X-HM-Spam-Status: e1kfGhgUHx5ZQUpXWQgPGg8OCBgUHx5ZQUlOS1dZFg8aDwILHllBWSg2Ly
-	tZV1koWUFDSUNOT01LS0k3V1ktWUFJV1kPCRoVCBIfWUFZGRkdHlYZGhhKTE4dT0kYQxhWFRQJFh
-	oXVRMBExYaEhckFA4PWVdZGBILWUFZTkNVSUlVTFVKSk9ZV1kWGg8SFR0UWUFZT0tIVUpLSU9PT0
-	hVSktLVUpCS0tZBg++
-DKIM-Signature: a=rsa-sha256;
-	b=QRo1qMrOcfJjKh6zkNQm7Q+laoUJwAHpzYU+Kfpz2Zq1FQVguylVfS3NwtS9e2eavcEEnmDelf0Cvg+rdRCX0a5Ga6KMJ9m3Z32pyEpqYVaYKezexAoecIhCuJTveZ363vARWnJIw7yOvVgaM6baUYg4KhPn0q2mZr+M2K8HeyY=; c=relaxed/relaxed; s=default; d=rock-chips.com; v=1;
-	bh=bxEjiiQIXypnGaMm2YV0gh5gU0/Rq/qPeCgs1Qr4rXw=;
-	h=date:mime-version:subject:message-id:from;
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMTE4MDAxOCBTYWx0ZWRfXxhwLLq3iwmug
+ 5D2wYPZ1KBIGf5wrwuJINLf3oIyzM3DQp5EcgOFLsB740sFQ190xVrRETAoqJs8e9/W6qOlhsDq
+ HAQQDpWmXl/VMIfSnbWZ1AQJu0OGX1STUx5sKPSPRVvtB0AcwtJ/R97wvE0a1aChj9Gn9S9CgQo
+ AUq3BsuDKSvwyYEg7A6/cRRpmmSy3xOLIdoSRkPYiCaCUc86kCSvLlfQvkpOztTTDj3A3ssP1do
+ DYvZeq26CrUiwzW09eMyryrkKEK1e0eEh/Il020Mmw4ysUeFauVnidIemWUu0p/WDY1kuIBKIQ1
+ /iyu4DkGuB/SMiHFUcBSwR4m4rDz681f1VCFqjGIqJr3G6IH79PJpU6rXzX1M0mkxSzUSINYeoL
+ fxtxvaoksGfv/SeYQRouQg01pTRBQg==
+X-Authority-Analysis: v=2.4 cv=EPoLElZC c=1 sm=1 tr=0 ts=691bda19 cx=c_pps
+ a=rEQLjTOiSrHUhVqRoksmgQ==:117 a=nuhDOHQX5FNHPW3J6Bj6AA==:17
+ a=IkcTkHD0fZMA:10 a=6UeiqGixMTsA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=efJFygxvcKwCkfyfGs0A:9 a=QEXdDO2ut3YA:10
+ a=2VI0MkxyNR6bbpdq8BZq:22
+X-Proofpoint-ORIG-GUID: El5UDYfumuOeHonOWiA2tCVbPcSTDdzG
+X-Proofpoint-GUID: El5UDYfumuOeHonOWiA2tCVbPcSTDdzG
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
+ definitions=2025-11-17_04,2025-11-13_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ suspectscore=0 bulkscore=0 priorityscore=1501 impostorscore=0
+ lowpriorityscore=0 phishscore=0 adultscore=0 spamscore=0 clxscore=1015
+ malwarescore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2510240001
+ definitions=main-2511180018
 
-Hello Jason,
 
-On 11/7/2025 4:34 AM, Jason Gunthorpe wrote:
-> report_iommu_fault() is an older API that has been superseded by
-> iommu_report_device_fault() which is capable to support PRI.
+On 11/17/2025 8:45 PM, Konrad Dybcio wrote:
+> On 11/17/25 6:12 AM, Fenglin Wu wrote:
+>> On 10/13/2025 7:32 AM, Val Packett wrote:
+>>> Currently, upowerd is unable to turn off the battery preservation mode[1]
+>>> on Qualcomm laptops, because it does that by setting the start threshold to
+>>> zero and the driver returns an error:
+>>>
+>>> pmic_glink.power-supply.0: charge control start threshold exceed range: [50 - 95]
+>>>
+>>> Kernel documentation says the end threshold must be clamped[2] but does
+>>> not say anything about the start threshold.
+>>>
+>>> In this proposal I've special-cased start==0 to actually disable the
+>>> functionality via the enable bit, and otherwise made both start and
+>>> end thresholds be clamped to the acceptable range. Hopefully that's
+>>> fine?
+>> It is fine to clamping the threshold to the acceptable range. Thank you for making the changes.
+>>> Or should the [1 - 49] range for start actually be rejected?
+>> The minimum charging start threshold was set to 50 to improve user experience. If the threshold is too low and the system keeps drawing power from the battery frequently due to a large system load and a weak charger, the laptop will only begin charging when the battery level falls below that threshold. If the user disconnects the charger at that time, then the device would be only having a battery below 50%. Setting the threshold at 50 ensures the battery always stays above 50%.
+> So can we set it lower?
 >
-> Only two external drivers consume this, drivers/remoteproc and
-> drivers/gpu/drm/msm. Ideally they would move over to the new APIs, but for
-> now protect against accidentally mix and matching the wrong components.
+> Such decisions are best deferred to userspace and/or the user, which can
+> limit what the kernel exposes as necessary/deemed useful
 >
-> The iommu drivers support either the old iommu_set_fault_handler() via the
-> driver calling report_iommu_fault(), or they are newer server focused
-> drivers that call iommu_report_device_fault().
->
-> Include a flag in the iommu_ops if the driver calls report_iommu_fault()
-> and block iommu_set_fault_handler() for domain's of iommu drivers that
-> can't support it.
->
-> Reviewed-by: Lu Baolu <baolu.lu@linux.intel.com>
-> Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
-> Reviewed-by: Vasant Hegde <vasant.hegde@amd.com>
-> Reviewed-by: Kevin Tian <kevin.tian@intel.com>
+> Konrad
 
-Sorry for the noise. Sometimes non-IOMMU drivers, such as DRM devices, also want to handle IOMMU fault events, so they might use iommu_set_fault_handler() before. What API should they use as an alternative now? Thank you.
+Yes, it can be set to a lower value.
 
+However, I am still having concerns that the inappropriate start and end 
+threshold settings would cause a very bad user experience if they are 
+misused, since these thresholds are stored in nvmem and they won't be 
+reset until battery is unplugged or completely drained. For example, if 
+someone intentionally sets the start threshold to 1 and end threshold to 
+6, and if the laptop was shutdown with a battery SoC less than the end 
+threshold, I am not sure if <6% percent battery level would be good 
+enough to boot up the laptop successfully, if it is not, then the laptop 
+may not have chance to charge up until you hot plug the battery.
 
--- 
-Best,
-Chaoyi
+Also, from battery management firmware point of view, the charge control 
+feature was mainly designed for battery health management, to slow the 
+aging of Li-ion battery by preventing it from being frequently charged 
+to full state. Having a too low minimum start threshold setting won't 
+help anything on that.
+
+Thanks
+
+Fenglin
 
 
