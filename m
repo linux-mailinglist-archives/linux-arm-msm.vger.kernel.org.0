@@ -1,205 +1,194 @@
-Return-Path: <linux-arm-msm+bounces-82317-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-82318-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
-	by mail.lfdr.de (Postfix) with ESMTPS id EC48BC699ED
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Nov 2025 14:37:33 +0100 (CET)
+Received: from ams.mirrors.kernel.org (ams.mirrors.kernel.org [213.196.21.55])
+	by mail.lfdr.de (Postfix) with ESMTPS id BFEACC69A40
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Nov 2025 14:41:59 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by tor.lore.kernel.org (Postfix) with ESMTPS id 215B22B5B1
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Nov 2025 13:37:32 +0000 (UTC)
+	by ams.mirrors.kernel.org (Postfix) with ESMTPS id 05DE136868B
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Nov 2025 13:41:56 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5844F30F52A;
-	Tue, 18 Nov 2025 13:37:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B9EF1354AC8;
+	Tue, 18 Nov 2025 13:41:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="dHwaacsz";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="IKT1vAqm"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-vk1-f179.google.com (mail-vk1-f179.google.com [209.85.221.179])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD1AB34B410
-	for <linux-arm-msm@vger.kernel.org>; Tue, 18 Nov 2025 13:37:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.179
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32E1234F25C
+	for <linux-arm-msm@vger.kernel.org>; Tue, 18 Nov 2025 13:41:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763473049; cv=none; b=gvlowiU63Fhkn4s6vM4HhLKN41vzcKqU/W31GnJRbYdHuEEUKGWucbAuFr9Nq69zGadry0ELi/xvJS2PfJFv2EGezLyvmyegg9q+slGlRw5FVaM2jWuB4n3OcA2CoCgE3+tvzeac0xyQP1vrI4urvs1Z1p2fetlh7gC6NTfubvk=
+	t=1763473307; cv=none; b=jnUCmsOmyrLQR4Em8Wsf7OH3pLVdUD3m3zrrx0rFIevFlFvAzkBgMkqZ+ChmY4LOERL1msWZaiN8u65lC5lSdqdzsPZF9mrwuaB6+jcWjtypsbYshA61RyaSP05cou+jmf37lkzbq8+ohBZNoxwbnn3h6mT9zPmMZ0XROISYPIY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763473049; c=relaxed/simple;
-	bh=aYLtYDuLNVEl76fJnhP2Lx52h1KY2MU3wh/+LjbIA0s=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=HNAO51xVZbo+Gn3+0Ws8w+DBp4RLOdECDOHWo85VqbyurNAX5gRd0+ixF7dRcDCSFi9ln6bcBoz7xAfzh1m2kS8tDBNiNWZ2siPlZNyMkMle32cTbgocVw6jepC7VQEJ4+Zq1Eer0wI6jpPHa1fEvb+t2o/09eRpRjnQyT+TOAU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux-m68k.org; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.221.179
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux-m68k.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-vk1-f179.google.com with SMTP id 71dfb90a1353d-5599688d06dso1233325e0c.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 18 Nov 2025 05:37:26 -0800 (PST)
+	s=arc-20240116; t=1763473307; c=relaxed/simple;
+	bh=Zo8K2yUnf9uubFIzjR8kfvtCxSbWPa+RPe4pt+y0sAY=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=AVxgC/3TzJRLN7z4U1DavDn4cD7HAW1uKT4ynwnfaWO+AD7sJGfZgcIXPSjPqkoZoOCUCXcD8vl2uDlHKjv122y9+Hs2h0j1AA1mNDljpO/nxZN/7KHB4wtZEqV4N5Or6FagT/MLzCj1mv98aSM2Mayx95RP9/DNG6f7mKmJIbM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=dHwaacsz; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=IKT1vAqm; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 5AIAcA4G375643
+	for <linux-arm-msm@vger.kernel.org>; Tue, 18 Nov 2025 13:41:45 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	eqRV2aVVd+Us1s82VVuj58sUCW2v0MN6BPbX+PLpd0g=; b=dHwaacszWgUkcRdx
+	gxzK9IXVoA8YvPwRHKvF+U6RtAb6N9x8pA/YCQmWZttBBnx7OncZgz2XGEfSlVXb
+	SfSfRrtBxjT5w7cU1dCw3O53XyfLkbRnBufksmBWwLSMrTIyRPR25C4I968eNSXL
+	IW0K9mHu9/v/oIFbPk8JDiKrQgtKuX6PBXL0aPTYar2koKrtaRnLp05adGDYcfOm
+	dgm0b1CqLovmg7AqWrw1QsIq2lQQ+fmGIoiVYnVyKh0obYS3G1TL+7cZrrGDsOG9
+	Fr2OJBrH0azhHQWeghRjIqUCU/0dWDjGQUSUVKfuGnlpWkrs2dr5F1HWVA+RebGC
+	X3UXsg==
+Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com [209.85.160.198])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4ag76nk945-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Tue, 18 Nov 2025 13:41:44 +0000 (GMT)
+Received: by mail-qt1-f198.google.com with SMTP id d75a77b69052e-4ee07f794fcso10274301cf.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 18 Nov 2025 05:41:44 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=oss.qualcomm.com; s=google; t=1763473304; x=1764078104; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=eqRV2aVVd+Us1s82VVuj58sUCW2v0MN6BPbX+PLpd0g=;
+        b=IKT1vAqmdal9mQ/s/AxAwcETy0Bdof6UIVWI0bio+EeLccdfq4ROJnuavt9FShdPxA
+         lbOlVBCZucHzOFlyWi9jP+zSUXzZ3s4gzxcuDry+DZn9gtv8mJYe0TUw+GiWt8ilc4RM
+         y4KYnpoEbwFLorb30/bcFcr9qK3yCsBp5DUGxAg6Axuzckl50SpOY0JrvlMGurdyoUxE
+         gGm9a11H8xIVNXbTybLsxwhRQXm378W3VFudvR4TLwP93zHm8i4Oej1BeqE/AqmVkRKE
+         mWz3btOj5MpLpYH10dUwFrOMm+5umHuh1Wyk4M7/HlHGF/fZcRTgJtDgXy5EqdZw3c34
+         Wjqw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1763473045; x=1764077845;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=HAgEnjBHe9vjRkHMQeQGLB6OvwD2DqiTQj/HhxtNAY0=;
-        b=RfEfc1EDwc11bS1EmkIaZMZ0T50fWtVOOOxzg9zONheUlI/RhyTyaENREs+y4ReUyl
-         mEJeWcjSsFpGElmxs0gziBKIR/a1zf4rRPujCDJJ2yN961KwZvp9xzSjkkeruE63pQ5p
-         NGQG0R4SuQHf5iLhL17xAMdMowL0qPPzxwZ0h6+L3DkYvHDhSqUwqtj6vCWpdQgjtQ5t
-         KDQaHyp0Csu3YOVbY9WVxNU5cW09QQBiD1PymeuCK7KKu/fscEyCjmQqTPi6JZG7UGLb
-         yoqzxKL1npzkz3IwzxxmDdwENtMM5/rFhqjr20ixhYtMX1JszR70EWtFKO1Nfh8XE8Re
-         IDKg==
-X-Forwarded-Encrypted: i=1; AJvYcCWERMMefJG+XBoxOG3SLr1fDYGlz0XUZbgbbwU4t6SgfEvCB68akEkKyT3SwfVIa3GvDRpnk4VahvzZJWF/@vger.kernel.org
-X-Gm-Message-State: AOJu0Yyn7fAYhrjopi6mGSpvQfXPio0MtCA2ObosEItrdsskS64TpWls
-	JxqR9VPVHJm7a7TP6XVSTKjBIpd5eGwVFbxfXfLP5Wq7onk14U8a5eUoiDhaEUmy
-X-Gm-Gg: ASbGncuYgLagIEDJ4O5go3/Hl+K31zgF2e098EvFCwc6i6pHs4M6fwlxzwh7MSRe/R8
-	HdwO7rzSCrcprBOpVKeqFUBPro24L/PwNg1ElWGMKL8PNSJ7wgsXF60rttj07xwi0R4JSTtV8eg
-	Ljxrz9cY3CKqLWoTIVnwgvOS6mO8z6l+n6nSweOze5/suBwdpUyaUyEafSeD5QeQPl0gSPkdFOX
-	OEBEsOYm/+CLW+DZIq/JInVC2cyWDFxXUwgn7CMicDPej48eDm08tffXHlJg87jzv+ZPqNj3EYk
-	caydzKtEpWI1lXGbUJcTNnZlKDxZCpsWSqkqRd6lk7CwvUwgpQ89gKx+0zdjvOegwrth79/hV15
-	89xwMAopZ3oq59Fg4bUk1Cqzw6kv+e1RxrorHzuCO4kxRapeynElv+JtEahqJ2MiMwVSorbnsp7
-	KuzqD3NAWPdLkioVWywKm1+Kt2WUlxvNwtVLB41DOnklCwVO/L9nb9Y5yXf+GVCGhPHz7M1Q==
-X-Google-Smtp-Source: AGHT+IElbEcW5LTXMzWrDLBYlTVhJXgbr6kYCuvcjS3OVuZ5u10OAhgHDj3Eth9MwouEqiVyGc6bkw==
-X-Received: by 2002:a05:6122:468c:b0:559:85d5:bfbd with SMTP id 71dfb90a1353d-55b1be9524amr5003049e0c.9.1763473045170;
-        Tue, 18 Nov 2025 05:37:25 -0800 (PST)
-Received: from mail-vs1-f43.google.com (mail-vs1-f43.google.com. [209.85.217.43])
-        by smtp.gmail.com with ESMTPSA id 71dfb90a1353d-55b0f35db02sm5322457e0c.9.2025.11.18.05.37.24
-        for <linux-arm-msm@vger.kernel.org>
+        d=1e100.net; s=20230601; t=1763473304; x=1764078104;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=eqRV2aVVd+Us1s82VVuj58sUCW2v0MN6BPbX+PLpd0g=;
+        b=lT3EF4BjJPsG3OQP4Bfwes6kP9zEwiwZg5uIrUAOYTaE7YP4WvkevUOP+GMQv1zPR2
+         ivGlFaQ2FnSYZG+wWtTX3ePpYakZ2r6YmohBu5zVsO/Z9tcMoz+bzxXvXpZTMMr3DNok
+         UDxV9AhHJYFhnDWOj+EsJGhkU10862PGEcsf1e9IiCT9ETXN+By+iAO7t1o0vx0RUVQN
+         KMDoix2bQYJ8V3UX4QsPXGsVrmqVaMmvlF4U3m16t1p94bbVm+eXRgAs45zkA8DUOr0+
+         ysTUXqZ4hnTBDXI2SS5+5jxd+i+wKJXfJj4zskCc3/bZK5pbt+RbpUGllZrzhpuIO0lB
+         Ivsg==
+X-Forwarded-Encrypted: i=1; AJvYcCXMNyB534fsHtSevX3Kv67f7CN7Ia9h1nbEbVSKaqnwgv0BWmLVicNwyCDEjwGu5eVTYNbOswMZpdAa4aa4@vger.kernel.org
+X-Gm-Message-State: AOJu0Yy++jVrOB2AizhW8JFibJkoouF+ID5EK7IRRKYb5LBzR4bO+ja0
+	BpKoQvVJ37u/cwq+xFRTWisU1JdFKF+pGlYHSG5+QcqIFV5rjLe3uSvdC8N74ASxPxmNpxRlt8e
+	cbf9fQMRsFG66mS2MLP207vGjmOULp8fszKLXXrkibh4yXtYTb4LGjo4BtdnYjFzsKjLa
+X-Gm-Gg: ASbGncvauv5UfT09A7t0w4GdhHJzkf+MAwt7NIsbLFKVV2jjxsJcasS+KCXpB3ZKnKS
+	m9p67hiC2j/+HNv2XCDl3Hmm/GwfO3hfOpdKBk3ioo/H1cRAClebu4Expua1WOCKJX6mw7nLzNs
+	+9vHM1+n5Zacpr1mcUAlTz5QSXfraS5jUu+YR8DmE+CmSOsyI2TeU7IehwKltCUy+Ozkj4otI8T
+	/Lea2z1lVsqf9/tkIfVQVFJVb+t9SlIWP/OGaVvb+E3S4EheBv6maT/f+lzZX03ppFpVtWvA7FP
+	ose/UnfB2PsZcSpDgYOenN9wqU2r1MTswaIvsc+wHC06Kqs3d05uAi2vYsJNOm0aW3AtaP5YzhN
+	rc9gQOlxJpnbR3TfKBeg+VAGLEEaxx0PkVFDuh75o95uPqe9Rp4LA30DnUJBgRBfsJ9U=
+X-Received: by 2002:ac8:570f:0:b0:4ed:94e7:97bc with SMTP id d75a77b69052e-4edf202fd18mr175516041cf.3.1763473302422;
+        Tue, 18 Nov 2025 05:41:42 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IG2L5dm2T1z2wEDohRTNQGcAvzKF98sJtsZ9cN+Q3K8DeR9Z4KdenAu1WYqthASSoj5p8VKjQ==
+X-Received: by 2002:ac8:570f:0:b0:4ed:94e7:97bc with SMTP id d75a77b69052e-4edf202fd18mr175515671cf.3.1763473301831;
+        Tue, 18 Nov 2025 05:41:41 -0800 (PST)
+Received: from [192.168.119.202] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-b734fda8da2sm1322499966b.55.2025.11.18.05.41.39
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 18 Nov 2025 05:37:24 -0800 (PST)
-Received: by mail-vs1-f43.google.com with SMTP id ada2fe7eead31-5dbe6be1ac5so2244771137.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 18 Nov 2025 05:37:24 -0800 (PST)
-X-Forwarded-Encrypted: i=1; AJvYcCVg2dKScDTIYKCfJq2YpNdyPk+kYqvWklR2KmNDy/4JIUlFhYNJV1jjIS7FQ1qL6O/fgg/Cj8YArezZ0Y4S@vger.kernel.org
-X-Received: by 2002:a05:6102:5810:b0:5db:ca9e:b57e with SMTP id
- ada2fe7eead31-5dfc5b94a4amr4590345137.43.1763473044116; Tue, 18 Nov 2025
- 05:37:24 -0800 (PST)
+        Tue, 18 Nov 2025 05:41:41 -0800 (PST)
+Message-ID: <96673da0-d8be-4b82-9e8c-2263f752881c@oss.qualcomm.com>
+Date: Tue, 18 Nov 2025 14:41:39 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20251117062737.3946074-1-quic_utiwari@quicinc.com>
- <121a5d34-e94f-4c29-9d58-4b730757760a@oss.qualcomm.com> <283e7a7d-c69b-4931-8e54-d473f0209abe@quicinc.com>
- <306f6354-1502-4b9f-9a28-dcb7a882b367@oss.qualcomm.com>
-In-Reply-To: <306f6354-1502-4b9f-9a28-dcb7a882b367@oss.qualcomm.com>
-From: Geert Uytterhoeven <geert@linux-m68k.org>
-Date: Tue, 18 Nov 2025 14:37:12 +0100
-X-Gmail-Original-Message-ID: <CAMuHMdXk91aKo6n97y8eGhfB3Ngu66mzqWhgwe3u86sPx2iaSg@mail.gmail.com>
-X-Gm-Features: AWmQ_blb27zH5h3ZZ3oFEsGZzTMAKs0a-KLhrPwJAU9pj_AZJkAdwgdJpubgSzw
-Message-ID: <CAMuHMdXk91aKo6n97y8eGhfB3Ngu66mzqWhgwe3u86sPx2iaSg@mail.gmail.com>
-Subject: Re: [PATCH v4] crypto: qce - Add runtime PM and interconnect
- bandwidth scaling support
-To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Cc: Udit Tiwari <quic_utiwari@quicinc.com>, herbert@gondor.apana.org.au, 
-	thara.gopinath@gmail.com, davem@davemloft.net, linux-crypto@vger.kernel.org, 
-	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	quic_neersoni@quicinc.com, kernel test robot <lkp@intel.com>, 
-	"Rafael J. Wysocki" <rafael@kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 8/8] arm64: dts: qcom: Add support for Pixel 3 and
+ Pixel 3 XL
+To: David Heidelberg <david@ixit.cz>, Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley
+ <conor+dt@kernel.org>,
+        Sumit Semwal <sumit.semwal@linaro.org>,
+        Casey Connolly <casey.connolly@linaro.org>,
+        Neil Armstrong <neil.armstrong@linaro.org>,
+        Jessica Zhang <jesszhan0024@gmail.com>,
+        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+        Maxime Ripard <mripard@kernel.org>,
+        Thomas Zimmermann <tzimmermann@suse.de>,
+        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+        Douglas Anderson <dianders@chromium.org>
+Cc: phodina@protonmail.com, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        phone-devel@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        Amit Pundir <amit.pundir@linaro.org>,
+        Casey Connolly <casey@connolly.tech>,
+        Joel Selvaraj <foss@joelselvaraj.com>, Vinod Koul <vkoul@kernel.org>
+References: <20251118-pixel-3-v3-0-317a2b400d8a@ixit.cz>
+ <20251118-pixel-3-v3-8-317a2b400d8a@ixit.cz>
+ <d81b0e70-5e3f-4e33-a268-e8b903904e9b@oss.qualcomm.com>
+ <d9c91625-a829-474f-9fda-5e39342bb4af@ixit.cz>
+Content-Language: en-US
+From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+In-Reply-To: <d9c91625-a829-474f-9fda-5e39342bb4af@ixit.cz>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMTE4MDExMCBTYWx0ZWRfX6gJTNvLBqlrw
+ KKtwxzZ4lzm3D9b5Pizcyc4Cyk2JWq8e+3gtLzY6sGfQOcREz5SDClX5WrkO1T8hY2y85emd6gm
+ XTcvaUwbv25fStru9m/kw5y17nNdxCtqcuEtZPUwKd4TE/AL2ZkhecmwtRr76CyVBV23UTJ2dST
+ Pfj3DFSnj3Qxx7yCRlccEmmAnfS/davrQ+Io+aOcR5TcCX4P7PJntkoT770c36ArGLVkj4mJLFG
+ u1eedp0sFbwPxVtl7+nxO3mdmx0pw6HuIu53tbZp0PE/KYnq/H7DV30Yrcj4AHWUS9dyMb17xWK
+ AcH2KRyGrjeZ5LpTwWCVofCqrYP/sfbqteBEOQxpadiiR1zROLjpnbxk9v1ZUFXuFGd0D8IFhbQ
+ mvBQDiDefONYsHjwMm9Dkm1REdi+aA==
+X-Proofpoint-GUID: oLBwXZm-WjufImLX9DTfgH7XdAibhqtD
+X-Proofpoint-ORIG-GUID: oLBwXZm-WjufImLX9DTfgH7XdAibhqtD
+X-Authority-Analysis: v=2.4 cv=a4I9NESF c=1 sm=1 tr=0 ts=691c7798 cx=c_pps
+ a=mPf7EqFMSY9/WdsSgAYMbA==:117 a=FpWmc02/iXfjRdCD7H54yg==:17
+ a=IkcTkHD0fZMA:10 a=6UeiqGixMTsA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=Oh2cFVv5AAAA:8 a=wtcFHR801LI_0YcmPCAA:9
+ a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=dawVfQjAaf238kedN5IG:22
+ a=7KeoIwV6GZqOttXkcoxL:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
+ definitions=2025-11-17_04,2025-11-18_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ lowpriorityscore=0 suspectscore=0 spamscore=0 clxscore=1015 bulkscore=0
+ adultscore=0 malwarescore=0 priorityscore=1501 impostorscore=0 phishscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2510240001 definitions=main-2511180110
 
-On Tue, 18 Nov 2025 at 14:08, Konrad Dybcio
-<konrad.dybcio@oss.qualcomm.com> wrote:
-> On 11/18/25 7:46 AM, Udit Tiwari wrote:
-> > Thanks for the review, please find my response inline.
-> >
-> > On 11/17/2025 5:55 PM, Konrad Dybcio wrote:
-> >> On 11/17/25 7:27 AM, quic_utiwari@quicinc.com wrote:
-> >>> From: Udit Tiwari <quic_utiwari@quicinc.com>
-> >>>
-> >>> The Qualcomm Crypto Engine (QCE) driver currently lacks support for
-> >>> runtime power management (PM) and interconnect bandwidth control.
-> >>> As a result, the hardware remains fully powered and clocks stay
-> >>> enabled even when the device is idle. Additionally, static
-> >>> interconnect bandwidth votes are held indefinitely, preventing the
-> >>> system from reclaiming unused bandwidth.
->
-> [...]
->
-> >>> Signed-off-by: Udit Tiwari <quic_utiwari@quicinc.com>
-> >>> Reported-by: kernel test robot <lkp@intel.com>
-> >>> Closes: https://lore.kernel.org/oe-kbuild-all/202511160711.Q6ytYvlG-l=
-kp@intel.com/
-> >>> ---
-> >>> Changes in v4:
-> >>> - Annotate runtime PM callbacks with __maybe_unused to silence W=3D1 =
-warnings.
-> >>> - Add Reported-by and Closes tags for kernel test robot warning.
-> >>
-> >> The tags are now saying
-> >>
-> >> "The kernel test robot reported that the QCE driver does not have PM
-> >> operations and this patch fixes that."
-> >>
-> >> Which doesn't have a reflection in reality.
-> >>
-> >> [...]
-> >>
-> > I may be misunderstanding this comment but the bot flagged W=3D1 unused=
--function warnings under !CONFIG_PM. In v4 I added __maybe_unused and Repor=
-ted-by/Closes for that exact warning; I didn=E2=80=99t mean to imply the dr=
-iver lacks PM ops.
->
-> The case where the tags would apply would be:
->
-> A patch is submitted
-> The patch gets reviewed and applied to the tree
-> Kernel testing robot reports an issue
-> You send a fix-up patch (incl. robot's tags)
+On 11/18/25 2:31 PM, David Heidelberg wrote:
+> On 18/11/2025 13:32, Konrad Dybcio wrote:
+>> On 11/18/25 12:30 PM, David Heidelberg via B4 Relay wrote:
+>>> From: David Heidelberg <david@ixit.cz>
+>>>
+>>> This adds initial device tree support for the following phones:
+>>>
+>>>   - Google Pixel 3 (blueline)
+>>>   - Google Pixel 3 XL (crosshatch)
 
-Exactly. The robot's report even says so:
+[...]
 
-    If you fix the issue in a separate patch/commit (i.e. not just a
-new version of
-    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^=
-^^^^^^^^
-    the same patch/commit), kindly add following tags
-    ^^^^^^^^^^^^^^^^^^^^^^
-    | Reported-by: kernel test robot <lkp@intel.com>
-    | Closes: https://lore.kernel.org/oe-kbuild-all/202511160711.Q6ytYvlG-l=
-kp@intel.com/
+>>> +&adsp_pas {
+>>> +    firmware-name = "qcom/sdm845/Google/blueline/adsp.mbn";
+>>
+>> Sorry if I asked this before, but are the binaries identical for
+>> both devices?
+> 
+> Yes, there is only one firmware, which crosshatch has different, but all listed in the initial bringup are used for both.
+> 
+> To add, crosshatch was somehow not that popular device, so as I've been suggested in u-boot discussion, I would love to keep blueline everywhere.
+> 
+> One exception is LineageOS kernels, where they go by name crosshatch, but again for the both phones.
 
->
-> [...]
->
-> >>> +    ret =3D pm_clk_add(dev, "bus");
-> >>> +    if (ret)
-> >>> +        return ret;
-> >>
-> >> Not all SoC have a pair of clocks. This is going to break those who do=
-n't
-> >>
-> >> Konrad
-> > On the concern that not all SoCs have "core/iface/bus" clocks and that =
-this could break those platforms: i believe the PM clock helpers are tolera=
-nt of missing clock entries. If a clock is not described in DT, pm_clk_add =
-will not cause the probe to fail, also on such platforms, runtime/system PM=
- will simply not toggle that clock.
-> >
-> > I=E2=80=99ve tested this on sc7280 where the QCE node has no clock entr=
-ies, and the driver probes and operates correctly; runtime PM and interconn=
-ect behavior are as expected.
-> >
-> > If you=E2=80=99d like this handled in a specific way, please let me kno=
-w=E2=80=94I=E2=80=99m happy to implement that approach.
->
-> No, you're right. I took a look at the pm_clk_add() call chain and notice=
-d
-> that clk_get() (notably not _optional) is in there, but apparently its
-> retval is never propagated if things fail
->
-> (+RJW/Geert is that intended behavior?)
+Google seems to suggest crosshatch is the 'base'
 
-I think most checking is done before calling pm_clk_add() or
-pm_clk_add_clk(). of_pm_clk_add_clks() also calls of_clk_get() first.
-So that looks intentional to me.
+https://android.googlesource.com/device/google/crosshatch/+/refs/heads/main
 
-Gr{oetje,eeting}s,
+Ultimately if none of the Googlers (hello +Doug) care that much, it's up
+to you to choose
 
-                        Geert
-
---=20
-Geert Uytterhoeven -- There's lots of Linux beyond ia32 -- geert@linux-m68k=
-.org
-
-In personal conversations with technical people, I call myself a hacker. Bu=
-t
-when I'm talking to journalists I just say "programmer" or something like t=
-hat.
-                                -- Linus Torvalds
+Konrad
 
