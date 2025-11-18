@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-82287-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-82288-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ams.mirrors.kernel.org (ams.mirrors.kernel.org [213.196.21.55])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0F535C69307
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Nov 2025 12:49:41 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id B851AC6932C
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Nov 2025 12:53:03 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ams.mirrors.kernel.org (Postfix) with ESMTPS id 2D7A8383466
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Nov 2025 11:44:01 +0000 (UTC)
+	by ams.mirrors.kernel.org (Postfix) with ESMTPS id 43DD8357799
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Nov 2025 11:46:39 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E4CA830FC1C;
-	Tue, 18 Nov 2025 11:43:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9DFE433B6D3;
+	Tue, 18 Nov 2025 11:46:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="IL96nUdi"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="qPgFpH/T"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB8022C178E;
-	Tue, 18 Nov 2025 11:43:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A5192BDC09;
+	Tue, 18 Nov 2025 11:46:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763466236; cv=none; b=K45HBX7BBEL1SBgafpR7cXEuZQIBZBTyWw3tdkF06O3avXHSDM54fQU/xMGpOf544riOrGDTNxpjlASmlq7lYX2EMKO6W9ezx3rtqDHlgowiBHVnMelQLwUe3I/EJ+Pt0p9VuOrMMzADwv/T9s558pJyMuzV397Tv0gzc0bI7UY=
+	t=1763466380; cv=none; b=oc6XO7DTHYPTHkbB8W7VZSCbHTFNmCd7MQtaJFcgCA7AaKFB6euYaN4zihwRD+kWVpEntIT7e94aS453oFS5bFl2nAD3JvZzpC60dHmAJPDDtHlHaEfY6LJOsg+hOzjWt3vMxaUlySqpiyYk29YZBi+JZTPKx/cFEezwS4mKN2Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763466236; c=relaxed/simple;
-	bh=aL4OZhwwp6+xZsl1euXCF3opVxiUeI1xCH8aymKYmeQ=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=T9cNYTa+XQfP8c0Vc7c6Ym99BCe2st3CxtcCE6fdj1K/7DyFmu69cQEzJ+mLXGrTg+Eu2skRKG/Ui5e9WRYCUpZHn+YiUAGv51MATbuK7J+3f6KkbreEeCElq1ZL9q+AapanCkerDPRTImAIkJpleE2zOHSq/cbaQf0SvqMbWQw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=IL96nUdi; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F06FC19422;
-	Tue, 18 Nov 2025 11:43:54 +0000 (UTC)
+	s=arc-20240116; t=1763466380; c=relaxed/simple;
+	bh=W/JkQ4U0diGESZkOi7amWyGqbWa3KCEdmeCe0IkPCXU=;
+	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
+	 In-Reply-To:Content-Type; b=j67dQO/q+xfnIifSgJL3rOI+krJCcj1YdCZ14Ly+Cj0HQzi/isrBeyrFdL5cR1CEg/JKePyQFZvGoVukuAoXjMb+jhsmSnUG2r8Uf0tPrYiuzNsTgLs/aExyAUz6GuJ9mLRIUWriaJMDbcFajzasvPjzc8xY5FKVC1vCMdXRyyM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=qPgFpH/T; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB967C4CEFB;
+	Tue, 18 Nov 2025 11:46:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1763466236;
-	bh=aL4OZhwwp6+xZsl1euXCF3opVxiUeI1xCH8aymKYmeQ=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=IL96nUdip5nUIpWO7z+aAPR0Em2oCA0QJB6OvCaAgWl1JfPW3pRhFs3cJ+cUc/N84
-	 yLjsQ7FrKqgdBrM2AkYiPU1gjmKG4Qjn8wfHguUQKq9zaQmQXiqEmNvTk9ZzaEgdbP
-	 J1hfDEYKsRH6km50MpEt7H6jGJONrKZSq9bOTg8MT0XsJmJ9OctLQKdObejhEp3fEJ
-	 GFpDY3Y63XmKTtbBwfO3mQZ7cCWd4RmfWRxkdSbEJrSJUAy7k34eaxrxMVDqvNljMp
-	 XkJgpFzZXY/T4zRErsSUSQhWpX7MRG0Lm7W0ZC0vGOAgJ1nPfkSOY2FEEVKsXbkoo2
-	 aHd9eYmgLd9TQ==
-Message-ID: <2ab96ac9-d492-470a-a6b0-d4dd001a86a8@kernel.org>
-Date: Tue, 18 Nov 2025 12:43:52 +0100
+	s=k20201202; t=1763466378;
+	bh=W/JkQ4U0diGESZkOi7amWyGqbWa3KCEdmeCe0IkPCXU=;
+	h=Date:Subject:From:To:Cc:References:In-Reply-To:From;
+	b=qPgFpH/T5wVLQFRc/P3GWh9cu7skFIGpVGfvKdvCDqDz4V8zEUoqtu4+XO5OHwr3o
+	 Wmko2YNu1UVd0gLpmxWhZnaxlfyJJEOL1ETtNRAui8qUd3jQXwh1pKWLuxAf3X1VB8
+	 kXHmr/Kn4MGe24UcuJllNtxWBXQzDNmO1YWFB0Rl87Yl16h9pVFsf7+1H9BTiLY2Ab
+	 6tEJGxv7lARGeutg4EwQwcDZBJQvAKqlVWi2eMEevS4nMpt8Oh208L2qCqKraXjh9h
+	 9if48VtzhGakO1MKUygIozNVU+L2Rt14WTF0nrvA+XpArJfB9mcpitYwokktQIL3m4
+	 NV76wO41dzbWw==
+Message-ID: <5377db69-13d2-4ee2-b5d4-d9d4ae681848@kernel.org>
+Date: Tue, 18 Nov 2025 12:46:11 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,15 +50,25 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 10/10] soc: qcom: ubwc: Use __cleanup() for device_node
- pointers
-To: Kathiravan Thirumoorthy <kathiravan.thirumoorthy@oss.qualcomm.com>,
- Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20251117-cleanup_node_put-v1-0-5f107071d171@oss.qualcomm.com>
- <20251117-cleanup_node_put-v1-10-5f107071d171@oss.qualcomm.com>
+Subject: Re: [PATCH v8 1/2] firmware: qcom: scm: Register gunyah watchdog
+ device
 From: Krzysztof Kozlowski <krzk@kernel.org>
+To: Kathiravan Thirumoorthy <kathiravan.thirumoorthy@oss.qualcomm.com>,
+ hrishabh.rajput@oss.qualcomm.com, Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>,
+ Wim Van Sebroeck <wim@linux-watchdog.org>, Guenter Roeck
+ <linux@roeck-us.net>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, linux-watchdog@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+ Pavan Kondeti <pavan.kondeti@oss.qualcomm.com>,
+ Neil Armstrong <neil.armstrong@linaro.org>,
+ Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+ Shivendra Pratap <shivendra.pratap@oss.qualcomm.com>
+References: <20251118-gunyah_watchdog-v8-0-e5de12e2eef5@oss.qualcomm.com>
+ <20251118-gunyah_watchdog-v8-1-e5de12e2eef5@oss.qualcomm.com>
+ <88e538ee-9e70-4249-bee5-5127d344edad@oss.qualcomm.com>
+ <a2e5220a-3ff6-4f59-8db7-820d21dfe204@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
  xsFNBFVDQq4BEAC6KeLOfFsAvFMBsrCrJ2bCalhPv5+KQF2PS2+iwZI8BpRZoV+Bd5kWvN79
@@ -103,35 +113,71 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  jWt87ecuHlpL3uuQ0ZZNWqHgZoQLXoqC2ZV5KrtKWb/jyiFX/sxSrodALf0zf+tfHv0FZWT2
  zHjUqd0t4njD/UOsuIMOQn4Ig0SdivYPfZukb5cdasKJukG1NOpbW7yRNivaCnfZz6dTawXw
  XRIV/KDsHQiyVxKvN73bThKhONkcX2LWuD928tAR6XMM2G5ovxLe09vuOzzfTWQDsm++9UKF a/A=
-In-Reply-To: <20251117-cleanup_node_put-v1-10-5f107071d171@oss.qualcomm.com>
+In-Reply-To: <a2e5220a-3ff6-4f59-8db7-820d21dfe204@kernel.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 17/11/2025 05:51, Kathiravan Thirumoorthy wrote:
-> Apply the __cleanup() attribute to device_node pointers to simplify
-> resource management and remove explicit of_node_put() calls.
+On 18/11/2025 12:32, Krzysztof Kozlowski wrote:
+> On 18/11/2025 12:18, Kathiravan Thirumoorthy wrote:
+>>
+>> On 11/18/2025 4:10 PM, Hrishabh Rajput via B4 Relay wrote:
+>>> From: Hrishabh Rajput <hrishabh.rajput@oss.qualcomm.com>
+>>>
+>>> To restrict Gunyah watchdog initialization to Qualcomm platforms running
+>>> under the Gunyah Hypervisor, register the watchdog device in the QCOM
+>>> SCM driver.
+>>>
+>>> When Gunyah is not present or Gunyah emulates MMIO-based watchdog, we
+>>> expect Qualcomm watchdog or ARM SBSA watchdog device to be present in
+>>> the devicetree. First, we make sure we're running under the Gunyah
+>>> Hypervisor. Then we move to check if any of the above mentioned
+>>> watchdog device nodes are present, if not then we proceed to register
+>>> the SMC-based Gunyah watchdog device.
+>>>
+>>> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+>>> Tested-by: Shivendra Pratap <shivendra.pratap@oss.qualcomm.com>
+>>> Tested-by: Neil Armstrong <neil.armstrong@linaro.org>
+>>> Signed-off-by: Hrishabh Rajput <hrishabh.rajput@oss.qualcomm.com>
+>>> ---
+>>>   drivers/firmware/qcom/qcom_scm.c | 53 ++++++++++++++++++++++++++++++++++++++++
+>>>   1 file changed, 53 insertions(+)
+>>>
+>>> diff --git a/drivers/firmware/qcom/qcom_scm.c b/drivers/firmware/qcom/qcom_scm.c
+>>> index e777b7cb9b12..14d0663316e6 100644
+>>> --- a/drivers/firmware/qcom/qcom_scm.c
+>>> +++ b/drivers/firmware/qcom/qcom_scm.c
+>>> @@ -2182,6 +2182,56 @@ int qcom_scm_qtee_callback_response(phys_addr_t buf, size_t buf_size,
+>>>   }
+>>>   EXPORT_SYMBOL(qcom_scm_qtee_callback_response);
+>>>   
+>>> +static void qcom_scm_gunyah_wdt_free(void *data)
+>>> +{
+>>> +	struct platform_device *gunyah_wdt_dev = data;
+>>> +
+>>> +	platform_device_unregister(gunyah_wdt_dev);
+>>> +}
+>>> +
+>>> +static void qcom_scm_gunyah_wdt_init(struct qcom_scm *scm)
+>>> +{
+>>> +	struct platform_device *gunyah_wdt_dev;
+>>> +	struct device_node *np;
+>>
+>> nit: Can we use the __cleanup() attribute for device_node like below and 
+>> drop the explicit of_node_put()?
+>>
+>> struct device_node *np __free(device_node) = NULL;
 > 
-> Signed-off-by: Kathiravan Thirumoorthy <kathiravan.thirumoorthy@oss.qualcomm.com>
-> ---
->  drivers/soc/qcom/ubwc_config.c | 3 +--
->  1 file changed, 1 insertion(+), 2 deletions(-)
+> Please don't. It is not desired style, error prone and not helping.
 > 
-> diff --git a/drivers/soc/qcom/ubwc_config.c b/drivers/soc/qcom/ubwc_config.c
-> index 1c09796163b09a19e387c18886966514cc19b209..1e7717aba5236050d8e736fb0891534b02203aae 100644
-> --- a/drivers/soc/qcom/ubwc_config.c
-> +++ b/drivers/soc/qcom/ubwc_config.c
-> @@ -301,15 +301,14 @@ static const struct of_device_id qcom_ubwc_configs[] __maybe_unused = {
->  
->  const struct qcom_ubwc_cfg_data *qcom_ubwc_config_get_data(void)
->  {
-> +	struct device_node *root __free(device_node) = NULL;
->  	const struct of_device_id *match;
+> Don't use cleanup.h if you are not accustomed to its specific style.
 
+Good that you linked here your patches, so I can NAK everything. That's
+very poor idea. Simple, readable code you transform into buggy,
+error-prone discouraged style.
 
-You are writing worse code than it was before. The code was like that
-intentionally.
+In all your patches the code was left like this ON PURPOSE.
+
 
 Best regards,
 Krzysztof
-
 
