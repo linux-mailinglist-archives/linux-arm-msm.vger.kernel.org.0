@@ -1,109 +1,122 @@
-Return-Path: <linux-arm-msm+bounces-82390-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-82391-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ams.mirrors.kernel.org (ams.mirrors.kernel.org [IPv6:2a01:60a::1994:3:14])
-	by mail.lfdr.de (Postfix) with ESMTPS id D843FC6B67A
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Nov 2025 20:21:50 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id F3A72C6B7C7
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Nov 2025 20:47:06 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ams.mirrors.kernel.org (Postfix) with ESMTPS id 6DBC73802D9
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Nov 2025 19:16:48 +0000 (UTC)
+	by ams.mirrors.kernel.org (Postfix) with ESMTPS id 9EA9F34559A
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Nov 2025 19:47:06 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id ABA5B3730D8;
-	Tue, 18 Nov 2025 19:10:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D1F472D29CF;
+	Tue, 18 Nov 2025 19:47:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="HQWGqloG"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="uN0Ch6dJ"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E34336CE07;
-	Tue, 18 Nov 2025 19:10:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9AC2F1E3DE5;
+	Tue, 18 Nov 2025 19:46:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763493021; cv=none; b=osF4+UvCRKtQt+arv2UrzvkfJMLwYmItmTL1/emcNeWoC4KITJxm1zosp8ljv7UKbL1p1khq9o6YBq/bFFJAijwXaUGNkMyMKEjXkBg6Gf58+fzfp1V4sK++v2lVMMP0WtcF+5SzHkQKUjhRCbAsK26/7hm8XOfhq5xim1PC208=
+	t=1763495220; cv=none; b=N/3U5HfG4kTe7U4yqjujwxENl9OFsuwS3MNSP7s6mbQ+wqYiMmGJf68cD0xUbe1dfiY+sfVLa6+t5Iw/Ocs1pNkVl4b3aYQPa+4V/XokTMByX9oDkq//dpGgzbB7vwldSmLrMGjZkGQipkXlF81/FZVR7lDxEAI/Vyp4xtOeMrM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763493021; c=relaxed/simple;
-	bh=iZNCfF3x67tayJ0Bqd19QsHC0wYasNnJz55BLRMRinM=;
+	s=arc-20240116; t=1763495220; c=relaxed/simple;
+	bh=LLV5ulLhdVg2ftls0Im8pJBkD7VEtlgCURwkLWF5u+k=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=IBTV5BiSlUsFPmwHUhcF+7k+7Vi+klP8o0G/U+qR2GPNTjsUirPYpajPl1sDpM+Jf9uOWQYBMOhXAaqIgY3bOYxvi6HcfZ9Ye1Bdmkye399hmYJg6rwBNphlWDw57PwSSw/jrv6a3xrBDb3qc02jiZNt2rzWH7TPr1XXHjYcXNk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=HQWGqloG; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E2A4C19421;
-	Tue, 18 Nov 2025 19:10:20 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=UXW/6YHpwHH99wF1hurTzfLZpIi+AbBE7TJ1L51UmbjiavDALjuiLt06JPBhxPDeTmp8jumpjITYrS0a0UBXm4FFIAXtF2OTvMhZesMNTvbXEPA+7Q5VNHWCbhkQ8c9h756lRyEckuxETMtZNChLxjUhR/VkLwAk2FjdWbZdgws=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=uN0Ch6dJ; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18DEDC4CEFB;
+	Tue, 18 Nov 2025 19:46:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1763493020;
-	bh=iZNCfF3x67tayJ0Bqd19QsHC0wYasNnJz55BLRMRinM=;
+	s=k20201202; t=1763495218;
+	bh=LLV5ulLhdVg2ftls0Im8pJBkD7VEtlgCURwkLWF5u+k=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=HQWGqloGD8o84B6FFrIKYg91b9WlfSDFgYRmLzlUi1dOdg1VqE6w0j0POAYGN0NCe
-	 XXBoBezv9Z1YqYa5IWXyzOpZI6rXJ+GARxSmMlYI93qd02GygEht+UrjdxDdlSB19y
-	 A6LaDKYNtuBi9fzvFxuN/M9+kof4zZCbTk7YB1eJKr50s7JFx9F6AxSsksMNFbNjio
-	 IVeLFMppBkr07aqud8EgoHrQM2F/v21zComu3gUmm1qhAdImjKGnbSIQbVEMBC7VaB
-	 J0Rh2ycmlYe8vQLLA1Whb55d/FtUVU40VWiiKnympshV8lofKQqVyXKY6lgrRoqDRE
-	 NqRFZdcbyLlYw==
-Date: Tue, 18 Nov 2025 13:10:18 -0600
-From: Rob Herring <robh@kernel.org>
-To: Christian Marangi <ansuelsmth@gmail.com>
-Cc: Ilia Lin <ilia.lin@kernel.org>, "Rafael J. Wysocki" <rafael@kernel.org>,
-	Viresh Kumar <viresh.kumar@linaro.org>,
-	linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Subject: Re: [PATCH v4 1/1] cpufreq: qcom-nvmem: add compatible fallback for
- ipq806x for no SMEM
-Message-ID: <20251118191018.GA3997357-robh@kernel.org>
-References: <20251105112136.371376-1-ansuelsmth@gmail.com>
- <20251105112136.371376-2-ansuelsmth@gmail.com>
+	b=uN0Ch6dJWqu554qFfFd7advQobZNg1gWL0A+tf5iI8GT64lHAFsR4Rb7yZOLDwwIR
+	 Wyy067ong3ccLceG42iniJiAPmdfcJOuMdLNBreRnnqs2KbM1WmrZ27N7C5Y0fPukV
+	 B3RNrpTYlktLo4DEOIaEpBednhS/xZjoaArucvjlRo6clBrcah7SrvubrL+9kSmRxx
+	 PsVcBRIdEXK6N8y8Q8+UOUg6OgpEU3BJ1vRzZwtNsuG1lteFrtUrfdvlABA2ay9k72
+	 9WmYc+Mat9ZD/BPzjF8+6Ay2VtVA0kEtPTYyFhL4+yZy9FYspXxk01bRwDZyimM5VU
+	 DO3dXFJOFOkng==
+Date: Tue, 18 Nov 2025 19:46:47 +0000
+From: Mark Brown <broonie@kernel.org>
+To: Bartosz Golaszewski <brgl@bgdev.pl>
+Cc: Kees Cook <kees@kernel.org>, Mika Westerberg <westeri@kernel.org>,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Linus Walleij <linus.walleij@linaro.org>,
+	Manivannan Sadhasivam <mani@kernel.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Saravana Kannan <saravanak@google.com>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	Andy Shevchenko <andy@kernel.org>,
+	Catalin Marinas <catalin.marinas@arm.com>,
+	Will Deacon <will@kernel.org>,
+	Srinivas Kandagatla <srini@kernel.org>,
+	Liam Girdwood <lgirdwood@gmail.com>,
+	Jaroslav Kysela <perex@perex.cz>, Takashi Iwai <tiwai@suse.com>,
+	Alexey Klimov <alexey.klimov@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	linux-hardening@vger.kernel.org, linux-kernel@vger.kernel.org,
+	linux-gpio@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+	linux-sound@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+	Aishwarya.TCV@arm.com
+Subject: Re: [PATCH v4 07/10] arm64: select HAVE_SHARED_GPIOS for ARCH_QCOM
+Message-ID: <d567c3fa-2e50-4ef8-944a-da4222fb96af@sirena.org.uk>
+References: <20251112-gpio-shared-v4-0-b51f97b1abd8@linaro.org>
+ <20251112-gpio-shared-v4-7-b51f97b1abd8@linaro.org>
+ <dbe20642-9662-40af-a593-c1263baea73b@sirena.org.uk>
+ <CAMRc=MesD5HchG_hfvN3H5ayu8gX_OvSsZQ4UO4f27gx1rRzSA@mail.gmail.com>
+ <ab0b2e6b-7d2a-43e6-b8e7-c97cb9763798@sirena.org.uk>
+ <CAMRc=Mcafi6+kRX+9sVOLHCegdU33+omLg+aW4RqeiokymxPNQ@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="aM9xPQKM74VxiVWS"
+Content-Disposition: inline
+In-Reply-To: <CAMRc=Mcafi6+kRX+9sVOLHCegdU33+omLg+aW4RqeiokymxPNQ@mail.gmail.com>
+X-Cookie: Protect from light.
+
+
+--aM9xPQKM74VxiVWS
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20251105112136.371376-2-ansuelsmth@gmail.com>
+Content-Transfer-Encoding: quoted-printable
 
-On Wed, Nov 05, 2025 at 12:21:34PM +0100, Christian Marangi wrote:
-> On some IPQ806x SoC SMEM might be not initialized by SBL. This is the
-> case for some Google devices (the OnHub family) that can't make use of
-> SMEM to detect the SoC ID (and socinfo can't be used either as it does
-> depends on SMEM presence).
-> 
-> To handle these specific case, check if the SMEM is not initialized (by
-> checking if the qcom_smem_get_soc_id returns -ENODEV) and fallback to
-> OF machine compatible checking to identify the SoC variant.
-> 
-> Suggested-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-> Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-> Signed-off-by: Christian Marangi <ansuelsmth@gmail.com>
-> ---
->  drivers/cpufreq/qcom-cpufreq-nvmem.c | 35 ++++++++++++++++++++++++++--
->  1 file changed, 33 insertions(+), 2 deletions(-)
-> 
-> diff --git a/drivers/cpufreq/qcom-cpufreq-nvmem.c b/drivers/cpufreq/qcom-cpufreq-nvmem.c
-> index 3a8ed723a23e..be44a8965e3a 100644
-> --- a/drivers/cpufreq/qcom-cpufreq-nvmem.c
-> +++ b/drivers/cpufreq/qcom-cpufreq-nvmem.c
-> @@ -252,13 +252,22 @@ static int qcom_cpufreq_krait_name_version(struct device *cpu_dev,
->  	return ret;
->  }
->  
-> +static const struct of_device_id qcom_cpufreq_ipq806x_match_list[] = {
-> +	{ .compatible = "qcom,ipq8062", .data = (const void *)QCOM_ID_IPQ8062 },
-> +	{ .compatible = "qcom,ipq8064", .data = (const void *)QCOM_ID_IPQ8064 },
-> +	{ .compatible = "qcom,ipq8065", .data = (const void *)QCOM_ID_IPQ8065 },
-> +	{ .compatible = "qcom,ipq8066", .data = (const void *)QCOM_ID_IPQ8066 },
-> +	{ .compatible = "qcom,ipq8068", .data = (const void *)QCOM_ID_IPQ8068 },
-> +	{ .compatible = "qcom,ipq8069", .data = (const void *)QCOM_ID_IPQ8069 },
+On Tue, Nov 18, 2025 at 06:27:23AM -0800, Bartosz Golaszewski wrote:
 
-These are all undocumented:
+> Oh, of_root may be NULL...
+>=20
+> Could you try the following change please?
 
-qcom,ipq8062
-qcom,ipq8066
-qcom,ipq8068
-qcom,ipq8069
+That seems to work on FVP, I've also seen the same failure on other
+platforms including Orion O6 and Graviton 3 but didn't test there.
 
-Rob
+--aM9xPQKM74VxiVWS
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmkczSYACgkQJNaLcl1U
+h9BxCQf/TvcoYIbZXiH4sSxaTvyRmoYCCaWX0P5G0lauZn1wuaRwQwiWSl6G1ls2
+EO/JYc8hnMEWsVvnMEadMf3mce8so+hpfu3pNT1dE56mvdjtKi4hsgl1t4zdBGMh
+8KBUEU1T7p1w9yffhyhVEx6gMJSdqNptauuNhdGHTbjuvUf8mlEkLt6PibGiWIIc
+Apx0tuSDZ5Ukthzt1GKXXrgkeTDHCk3vN7ePQZcmiIkRkXN1keffSzVJDMyJWIT7
+WzLnN/33WACiMLJHKD60fg6oVljFVRdyul49K1exjVRY6smlU3Ia0X599uu5I+p+
+ACqJMb+YPN8x3OV0oSUTRByRCyO7wg==
+=jedi
+-----END PGP SIGNATURE-----
+
+--aM9xPQKM74VxiVWS--
 
