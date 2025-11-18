@@ -1,101 +1,102 @@
-Return-Path: <linux-arm-msm+bounces-82319-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-82320-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ams.mirrors.kernel.org (ams.mirrors.kernel.org [IPv6:2a01:60a::1994:3:14])
-	by mail.lfdr.de (Postfix) with ESMTPS id 38ACEC69A79
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Nov 2025 14:45:11 +0100 (CET)
+Received: from sin.lore.kernel.org (sin.lore.kernel.org [IPv6:2600:3c15:e001:75::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0A7A5C69CEC
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Nov 2025 15:05:37 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ams.mirrors.kernel.org (Postfix) with ESMTPS id D5754347EA3
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Nov 2025 13:45:10 +0000 (UTC)
+	by sin.lore.kernel.org (Postfix) with ESMTPS id 589442CFB5
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Nov 2025 14:01:24 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1545B35581F;
-	Tue, 18 Nov 2025 13:45:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id ED700339701;
+	Tue, 18 Nov 2025 13:57:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="WZKjXymQ";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="NTOe76Bk"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="Ix8yE514";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="jXY2XmnS"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38662353889
-	for <linux-arm-msm@vger.kernel.org>; Tue, 18 Nov 2025 13:45:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5641E35E523
+	for <linux-arm-msm@vger.kernel.org>; Tue, 18 Nov 2025 13:57:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763473508; cv=none; b=ZG3DOvpWvJJUtj8rg+83eJv35lWUI6VH0F+0TecX6DrIhQqNzvFF9L+3GPS/sxCM03BJOxcLR9XrA4Rod9d5qaxqM11wbvil01wCKzzc3FIl+8DnjKyqxPKQhM1QC/RbGGBcgDVr9rb/FAVdi5tHFK6mEeYm5onk/BIjiNNFxP4=
+	t=1763474270; cv=none; b=TaTM6lfGqEKvCEfUjS19B5W5vY/Rslt2MkcDpOdIj2c5hZ4USf6AQvNiP8eJNknJtnrFfJny5viV3Nue+qpPecsa3coY2Vt9DfTyz5yRtEeWy0F8LRuAqtLE0rJa554+bK1qTDXjoJHKAmEuQi6C8vIcJe3UwnVuLzqLu7uQiRI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763473508; c=relaxed/simple;
-	bh=aClZuHcSb9Uhnv2j+qNn5O+e/8TzQ6va/JR7DCbHMQA=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=NrPkWYBxZLlaIdWzD0RrWUl6lRuodqKEnKotEWAHAspDmARqvBrL16841sJuCCLwOMBqk8kVxoanSBjYD5FULIkpFQ/W6QCojgNzLuGL7gRKxv/a+YXlClQJ9miO5x15ZTv6bWh8KH+5G4rGDA+vpjgIqzfkQLhZ+S6wTWxU7Pk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=WZKjXymQ; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=NTOe76Bk; arc=none smtp.client-ip=205.220.168.131
+	s=arc-20240116; t=1763474270; c=relaxed/simple;
+	bh=NZ0Q/brn3O9BKQ64Vl+FV9aGut1RxgP6wKNxGKfbRv8=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=Jd0I3VS8LfKp4UuHCBR5pyPFOsrNCWG4NgMTn6b5YpcgaokL4WTldKM/HwT9Pch97ymX4P2ztZ3HWRImg6rSCLyIJ42xFZY8F4d2ChFaTVPDVFZK7H/x5GGOcvDIARMVOM8CsIwL9sgCGlO6kUoY/WJHSqZYCESFWHsjnzCLZ8M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=Ix8yE514; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=jXY2XmnS; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 5AI6SxBO386625
-	for <linux-arm-msm@vger.kernel.org>; Tue, 18 Nov 2025 13:45:05 GMT
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 5AIATLbE375768
+	for <linux-arm-msm@vger.kernel.org>; Tue, 18 Nov 2025 13:57:48 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	03mXH2egLzCuH4ma2sa+Fb+8aa+ix6ARFLQH5PW+zhw=; b=WZKjXymQpK2hrkE1
-	W9FgV6Rfv2AJsNd8h0TmkNeeSeLPbeBJkCiLvyX5CN0Q2Ph1rUOque+/ElSFysdR
-	X5CmxFqnwCLjkvaMZaET3rjkWx1c+0bPFU37Jk3T/pMivPEcaCaKTaXYN2BPz7aU
-	eYd/fzbt6UGlRJAW618FZ2dj13C322PUfmQzEvG46p0Oiy+I34kge0/sHCA7uAeB
-	+IzorHNAaJXR2pPHHwRMfA2B/yrtikAZ+VCx0CxdufYdazKW0Y6dLQBRSeZ8PZpc
-	9nCgJJuHNops+PmOaQh2IzdFe/IKK1V8OAUqZf3omiTPuvEhzt9HQVM5CtPoPCiT
-	2a5C1Q==
-Received: from mail-pj1-f70.google.com (mail-pj1-f70.google.com [209.85.216.70])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4agag8jma9-1
+	NzVfNIUSnLL+Bi/4PwxQw0ffMQDRUvRuB9HLEZtIbwo=; b=Ix8yE514CE4ylJ3o
+	Gy2BAVuEO8mDuL6cTd5yKcLWig8ZKEQymgpgWdOTuCgiBDJOEvjTJ66axuvWksz3
+	+87pow3Yg/sRpQWG0tsz4OEqAp5kW/F8PmM51axJFvD2PpBoI7g/cUHnh6xHSV8a
+	lFuGlYaVoBWLJqASP6dfpMGcF+jTJPlmfDqWbMRsU1RUzZET2HdsMPwD5168tOUd
+	Ml8yDrHMApl8TpswPs/kk56kW0y+kFqs7nUtyBBbvlbbB95uXG/Q0U4bfeHnYCoA
+	eqJwtjgH5n1RDQYie+YjOgmksRxIZyJ2hop9LSiHvo818c7n4Qc2ih2eYnPZP+y7
+	CM3qJQ==
+Received: from mail-pg1-f200.google.com (mail-pg1-f200.google.com [209.85.215.200])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4ag76nkac2-1
 	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Tue, 18 Nov 2025 13:45:05 +0000 (GMT)
-Received: by mail-pj1-f70.google.com with SMTP id 98e67ed59e1d1-3438744f12fso16683255a91.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 18 Nov 2025 05:45:05 -0800 (PST)
+	for <linux-arm-msm@vger.kernel.org>; Tue, 18 Nov 2025 13:57:48 +0000 (GMT)
+Received: by mail-pg1-f200.google.com with SMTP id 41be03b00d2f7-b6ce1b57b9cso5752188a12.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 18 Nov 2025 05:57:48 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1763473505; x=1764078305; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:subject:from:user-agent:mime-version:date:message-id:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=03mXH2egLzCuH4ma2sa+Fb+8aa+ix6ARFLQH5PW+zhw=;
-        b=NTOe76BkATuxw1wcupHIJEAJVnnM6li++WV18eBy3qorOcmbtuvDh9VYlYOqZ8zg2c
-         HvgM9XbjR+dfdQf9MkhAgDPMxTeXHAb4jlRyWOHwI93qez7Eol7f6JL0EsHqpE535lN3
-         3gMXYXgZ1Tdm+E5Re2LQVY2vzFrDXIxN2UYD7M+OJmz2VCK9TMqy51KG8fYNUBVPAtXU
-         KZNyNDBLMas8UrE/W1bYRfpiw8KETA/exYIlsHMGGzpwLP3INmCtb0AwNh0S/TpOS563
-         YXvJ1e/ZHckP0DkNlHdPTXAFSDzUxJxDdQ7ULOGAybv+ZtlJlG5/iAawD1Jm61bME3Si
-         ZBAA==
+        d=oss.qualcomm.com; s=google; t=1763474267; x=1764079067; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=NzVfNIUSnLL+Bi/4PwxQw0ffMQDRUvRuB9HLEZtIbwo=;
+        b=jXY2XmnSS7jwGH2nh1Pv443Wo0r+xrKgOGUytESU+75RBIX5jswxOdYMETnyuOYVLQ
+         1L7rOhPSt9XT2Ey/B2VOjqiy4WidZ4AIi+KOuMXNWp3Mp00o/fDY+q5tiOjf730GgVA0
+         BiBfFqLRLHvHmwpOb7tkV11C9WCrW8xGfJqmtxD1spOlLKiRBmJ0/xxCrjdZSja158P6
+         SvAsnLI+d5Pl/WCuI1y+xUUJ7h4SHhXdm0YZptdyHDj2kRkDihQbuRHNEwi9X9DVZMMs
+         P7uDbFiRjLyvSvDQboWP+nQSKZU9WPDMfmeO17UoHH6M0hzggP/Hzk4Q28X0/n+3JQZt
+         nKPQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1763473505; x=1764078305;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:subject:from:user-agent:mime-version:date:message-id:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=03mXH2egLzCuH4ma2sa+Fb+8aa+ix6ARFLQH5PW+zhw=;
-        b=WfZeMCnnUk5PPkIQYMMF3IHojT+74m2WMSCz1o6uWJiwGYuUGG7QA/iID2pwqhRiXQ
-         /42Ik2DQfCN38Fl12m3aezmC4gxPEpi1/m/Ff+hejaioCfnCrmvyAfRZ1Zcbls0mMZjy
-         v+SJdt+pHwCMoGckpZUza/mPZA+8+p7SggBCEOYghfTZm9u82Y3pAdntC35qmBKE8Sy/
-         RU+c/K28Fcpct0u1ZSAB+2ThwSSXozEXln+/akqV5wjRp/EoIVcUaLHErL7VhlSHLNjK
-         AP973eXdsJBsDsAiVq8fc0C8Hc5h0Q2isBHaRdIvp4SdZMgaRV1TnAaymDU1k6Q2esSI
-         cFcA==
-X-Gm-Message-State: AOJu0Yxkawcny/iSXOPemLvChE8w3BqrZXIju/cbOlxXXfTjunDrSx+F
-	z667Jp3bEdEw+aUJ5+57N/jp/AcddqgLsqB19JsuqPVt1QxMxMwVDwbdw0tTyhXUloM3a6kz+rW
-	oaOtogdFsPmtNYIenPEl3zb9/GqOxsMPuCc4K+FI3weAR9mHvCPwe9l7LVRO+TtiB9iAkqF2UC1
-	PA4VlD/Q==
-X-Gm-Gg: ASbGnctlhJVEWWQ95zoojQF1w86AIwkeg/Gwmhu2N7VuYJHRfAspnBGsNLSIme4OSbS
-	FjYYi5zwQaFnhVhMprOV5VbEUxKdyp9qPWmRSWIH4H0AQsQNlUulzuTOk7b/IJzvFNW6ODdXwsQ
-	gum4PiV/hYE00R/xlCbf5ChFHn9dd38gaQlx6QV4SZATEV8KKa0F4YtTx4R1BaSbDkxis/Q1jMh
-	iHT3FqVY4aJqq665R1d3DxVfd5dqgkDySY/+N+Q7mWsXnYEJt4ArosT65zz+wrJp39rK6wTZY7l
-	USUXdR+iOWIJeQPXeiApC1C/WOExSSbQmDIUtMrQbGQYWPpzP9tzu79BhHixt1txNmz8UqjrLDq
-	970WLioNHxh3J/+qJhvbrm0F56JuAPz3qATkJLlfR5MjgE7CLtjeF2GttS/d7Rgj94w==
-X-Received: by 2002:a17:90b:1dc9:b0:330:84c8:92d0 with SMTP id 98e67ed59e1d1-343fa52bd92mr18759454a91.24.1763473504782;
-        Tue, 18 Nov 2025 05:45:04 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHqJn4PqsJV/rc1vAoylUumkDkSJ61qLBRTKe/MRB06FrArotHhlndxnoK/QPxamBdfEmWSrA==
-X-Received: by 2002:a17:90b:1dc9:b0:330:84c8:92d0 with SMTP id 98e67ed59e1d1-343fa52bd92mr18759427a91.24.1763473504295;
-        Tue, 18 Nov 2025 05:45:04 -0800 (PST)
-Received: from [10.110.92.187] (i-global254.qualcomm.com. [199.106.103.254])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-3456513d0b4sm13133199a91.5.2025.11.18.05.45.01
+        d=1e100.net; s=20230601; t=1763474267; x=1764079067;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=NzVfNIUSnLL+Bi/4PwxQw0ffMQDRUvRuB9HLEZtIbwo=;
+        b=X/ZUNXCXGW22UyMyyCf5p4op17GLxgIoPG4af/yNGbUZNoIQqik9lgDbqOrvq+L4A+
+         DKo6htjVWdufhAQ4NDYpV2oI2Rhrn24BBwn8vHfWKROmOHV7AdCYCVr6FeCY1lltyLSv
+         vFuNHiwnA91GI6hF+6fpjS1Kc07jZdsg1c3oZWCIQIKg5XotFGusUEZYNGHhrXVgHgsp
+         x3pUFtDv4QitO2GS6V7GgOKLStQ8cyOXT5YlSxF/GL9FxyAHt4lYNBQ8tfqboehDWMhG
+         /7U+ZGTfRlUeGAg06SQuwODriSG60buUmPQ5tkaXghgTBPY2rlyeySWMRw30TaqpP9ae
+         vnfg==
+X-Forwarded-Encrypted: i=1; AJvYcCXXZxIMffV0QA/Vk3Hl1sr3yKKqkHskIvhYIGl7QjiTQrhf3zHeRQLMAWZAsMQRw596uqLJGnuplLG+Uc+C@vger.kernel.org
+X-Gm-Message-State: AOJu0YxpcbOU4OprXz0Sx/JE8+FZWZsGzUC1cVwU/+GtQxdVU2mTg+wG
+	0WtAnMutLR56EhK/Lk0DqGEdW724HkAd2LzBC83q3OcFEMOUvzI2ifVv5TC6Tw0oNDL6jLXSyVT
+	3GoxJkTgcymM54RDyTbAdyxnxsATH6NoaMqOc2bdCNlYrVdfn2by70qb5dSKSo6klXNg1
+X-Gm-Gg: ASbGnctyo7I37e0CNvtqNuBrNg+etqpfH9+EOW4ORBo/FORJalESyHZr05cNUrCWCmj
+	iUTpRt9Rom7ORxQQmXn7O1Md5H5kunZ5XF0/F9u10x8UoSUGHhi2SLP9J30rItSLsi+dQR/FSM6
+	6jgi/QCWCOPflyh6Lpm+2ySPF0kAYIsg7wr+E5Ef4Y7zryjvi38XrqxzV3a18fw6hTqegyhioNz
+	JrRYZcShQsA1muo7fxXmDqfmETa4Y0vewnl+ubvL7yMInGqcaXA1vOVTvKL91hd+cayuzBbQTgn
+	EJagg0rAE2JyPOO4XKpm2T1TJKjkywk0HCYyQm7FE2Ab8dJ/rjV8M4ZCqoYt24UQGDgSem0Wag8
+	uxg8C7uBJ/AlsQbYoCm9pkQ==
+X-Received: by 2002:a05:6a20:4315:b0:34e:4352:6c65 with SMTP id adf61e73a8af0-35ba229d49emr17831550637.38.1763474266324;
+        Tue, 18 Nov 2025 05:57:46 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGqQweym02veXOx11FsV5HRruhgX6qp3xUFZXeCsTWnKmjWpJgtrfqH5Z+hC1UT51q4UkoBCg==
+X-Received: by 2002:a05:6a20:4315:b0:34e:4352:6c65 with SMTP id adf61e73a8af0-35ba229d49emr17831508637.38.1763474265862;
+        Tue, 18 Nov 2025 05:57:45 -0800 (PST)
+Received: from [10.204.104.20] ([202.46.23.25])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-7b9250d195fsm16600843b3a.18.2025.11.18.05.57.41
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 18 Nov 2025 05:45:03 -0800 (PST)
-Message-ID: <76edfe9c-1302-4e63-8bcd-ee7dd55a128d@oss.qualcomm.com>
-Date: Tue, 18 Nov 2025 21:44:57 +0800
+        Tue, 18 Nov 2025 05:57:45 -0800 (PST)
+Message-ID: <c97ee966-5864-4be5-9e6e-afc8a93dab5a@oss.qualcomm.com>
+Date: Tue, 18 Nov 2025 19:27:39 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -103,129 +104,85 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-From: Shuai Zhang <shuai.zhang@oss.qualcomm.com>
-Subject: Re: [PATCH v3 1/1] Bluetooth: btqca: Add WCN6855 firmware priority
- selection feature
-To: Bartosz Golaszewski <brgl@bgdev.pl>,
-        Marcel Holtmann
- <marcel@holtmann.org>,
-        Luiz Augusto von Dentz <luiz.dentz@gmail.com>
-Cc: linux-arm-msm@vger.kernel.org, linux-bluetooth@vger.kernel.org,
-        linux-kernel@vger.kernel.org, cheng.jiang@oss.qualcomm.com,
-        quic_chezhou@quicinc.com, wei.deng@oss.qualcomm.com
-References: <20251117021645.712753-1-shuai.zhang@oss.qualcomm.com>
- <20251117021645.712753-2-shuai.zhang@oss.qualcomm.com>
+Subject: Re: [PATCH] drm/msm/a6xx: check state before dereferencing in
+ a6xx_show
+To: Alok Tiwari <alok.a.tiwari@oracle.com>
+Cc: alok.a.tiwarilinux@gmail.com, jordan@cosmicpenguin.net,
+        freedreno@lists.freedesktop.org, dri-devel@lists.freedesktop.org,
+        linux-arm-msm@vger.kernel.org, simona@ffwll.ch, airlied@gmail.com,
+        marijn.suijten@somainline.org, robin.clark@oss.qualcomm.com,
+        sean@poorly.run, konradybcio@kernel.org, lumag@kernel.org,
+        abhinav.kumar@linux.dev, jessica.zhang@oss.qualcomm.com
+References: <20251117132516.18834-1-alok.a.tiwari@oracle.com>
 Content-Language: en-US
-In-Reply-To: <20251117021645.712753-2-shuai.zhang@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+From: Akhil P Oommen <akhilpo@oss.qualcomm.com>
+In-Reply-To: <20251117132516.18834-1-alok.a.tiwari@oracle.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-Proofpoint-GUID: gmxMFhc3d4Sp8yYgEGJBEciMfSw7qiPs
-X-Proofpoint-ORIG-GUID: gmxMFhc3d4Sp8yYgEGJBEciMfSw7qiPs
-X-Authority-Analysis: v=2.4 cv=G6sR0tk5 c=1 sm=1 tr=0 ts=691c7861 cx=c_pps
- a=0uOsjrqzRL749jD1oC5vDA==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMTE4MDExMSBTYWx0ZWRfXx8fi2xv5M6jd
+ YxD0Ap3CmAmrj4KL169bM38vKn2Wn0sKN6tHcl0KqK+WxS5/G+SSLYhNyzEbF+ufklzYjzPSMBo
+ JqLeVCRnxO+LhipNW77u/BKpWlu/b2YcV8s79jc/Xl1XijyirVw9uZTdJTZKXke9Trc7raIZcnT
+ M2M1c75IzBXV6zsEfCE+GaIsVIsE5+o9PSF1HNuEWSBrQPYoqGUAH4uQzlPMSKrCWveI8uYBSQN
+ Ni0piWC10eTolzoK223ZHie7xjXonmY9TnjwKd8I/5w3KVHOwceu6HVB5cjuH1UDYSw1J0k0TeT
+ MPRPbgiToL8qjmHGJ3iGZD/R/QX+6MsAWthxJUzn9bbFOj3SXpOjEEbh9Bzj14z5MaMgvNJL5xb
+ kIX4bfT5hBsROfiOygNM0pWQzKI3tA==
+X-Proofpoint-GUID: -SXnW4duZCy1Xc6omxwR-IqTij_ht7G4
+X-Proofpoint-ORIG-GUID: -SXnW4duZCy1Xc6omxwR-IqTij_ht7G4
+X-Authority-Analysis: v=2.4 cv=a4I9NESF c=1 sm=1 tr=0 ts=691c7b5c cx=c_pps
+ a=oF/VQ+ItUULfLr/lQ2/icg==:117 a=ZePRamnt/+rB5gQjfz0u9A==:17
  a=IkcTkHD0fZMA:10 a=6UeiqGixMTsA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=EUspDBNiAAAA:8 a=UPmepWTotxaAIdI3lfQA:9
- a=QEXdDO2ut3YA:10 a=mQ_c8vxmzFEMiUWkPHU9:22 a=HhbK4dLum7pmb74im6QT:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMTE4MDExMCBTYWx0ZWRfXzKlxEpxpRQf0
- /JylX2TQ4IRDwIwvcXnF3FtCTu/M7jw94soXWjq4LZCapzy3eqAH1vhkMrVyIpzP16ST1L91B1q
- JPli6A/nWuKAtqjsKF0JOD7pl7ZiggVQDiclr8PPXBA7UAwLSXClqaQnk+bATwk/VSXI7SQfb/z
- pTxuyVuxfsp+Qsg/8/dgWPpMgs6SLViobh+r0aGsSYdItqD26l0/ZtcLJI3ELNhWgDsC+0XiK1J
- 3INoQwdEOpxdD+cxfBDhsnIt2dsJc9auYfj4ocgS77HhpRLrDH7v5z0tFsA5OIcKZovvFOom5Xf
- O2tOUoBt9HpEu9cX0yU+zSaJaBKOAOdTE3VJyESFdCwIty1eX891eK0/gxUkTDc/DiSnJSPzYqc
- jw80ooIY6M9/+qIfjwghEYJ/ax3D4A==
+ a=VkNPw1HP01LnGYTKEx00:22 a=yPCof4ZbAAAA:8 a=73rUxmhrSfcUVL-5kvkA:9
+ a=QEXdDO2ut3YA:10 a=3WC7DwWrALyhR5TkjVHa:22
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
- definitions=2025-11-17_04,2025-11-18_02,2025-10-01_01
+ definitions=2025-11-18_01,2025-11-18_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 phishscore=0 impostorscore=0 lowpriorityscore=0
- clxscore=1015 bulkscore=0 malwarescore=0 adultscore=0 spamscore=0
- suspectscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2510240001
- definitions=main-2511180110
+ lowpriorityscore=0 suspectscore=0 spamscore=0 clxscore=1015 bulkscore=0
+ adultscore=0 malwarescore=0 priorityscore=1501 impostorscore=0 phishscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2510240001 definitions=main-2511180111
 
-Dear
-
-On 11/17/2025 10:16 AM, Shuai Zhang wrote:
-> Historically, WCN685x and QCA2066 shared the same firmware files.
-> Now, changes are planned for the firmware that will make it incompatible
-> with QCA2066, so a new firmware name is required for WCN685x.
->
-> Test Steps:
->   - Boot device
->   - Check the BTFW loading status via dmesg
->
-> Sanity pass and Test Log:
-> QCA Downloading qca/wcnhpbftfw21.tlv
-> Direct firmware load for qca/wcnhpbftfw21.tlv failed with error -2
-> QCA Downloading qca/hpbftfw21.tlv
->
-> Signed-off-by: Shuai Zhang <shuai.zhang@oss.qualcomm.com>
+On 11/17/2025 6:55 PM, Alok Tiwari wrote:
+> Currently, a6xx_show() dereferences state before checking whether it is
+> NULL or an error pointer.This can lead to invalid memory access if state
+> is invalid.
+> 
+> Move the IS_ERR_OR_NULL(state) check to the top of the function before
+> any use of state.
+> 
+> Fixes: 1707add81551 ("drm/msm/a6xx: Add a6xx gpu state")
+> Signed-off-by: Alok Tiwari <alok.a.tiwari@oracle.com>
 > ---
->   drivers/bluetooth/btqca.c | 22 ++++++++++++++++++++--
->   1 file changed, 20 insertions(+), 2 deletions(-)
->
-> diff --git a/drivers/bluetooth/btqca.c b/drivers/bluetooth/btqca.c
-> index 7c958d606..8e0004ef7 100644
-> --- a/drivers/bluetooth/btqca.c
-> +++ b/drivers/bluetooth/btqca.c
-> @@ -847,8 +847,12 @@ int qca_uart_setup(struct hci_dev *hdev, uint8_t baudrate,
->   				 "qca/msbtfw%02x.mbn", rom_ver);
->   			break;
->   		case QCA_WCN6855:
-> +			/* Due to historical reasons, WCN685x chip has been using firmware
-> +			 * without the "wcn" prefix. The mapping between the chip and its
-> +			 * corresponding firmware has now been corrected.
-> +			 */
->   			snprintf(config.fwname, sizeof(config.fwname),
-> -				 "qca/hpbtfw%02x.tlv", rom_ver);
-> +				 "qca/wcnhpbtfw%02x.tlv", rom_ver);
->   			break;
->   		case QCA_WCN7850:
->   			snprintf(config.fwname, sizeof(config.fwname),
-> @@ -861,6 +865,13 @@ int qca_uart_setup(struct hci_dev *hdev, uint8_t baudrate,
->   	}
->   
->   	err = qca_download_firmware(hdev, &config, soc_type, rom_ver);
+>  drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c | 6 +++---
+>  1 file changed, 3 insertions(+), 3 deletions(-)
+> 
+> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c
+> index 4c7f3c642f6a..e408e1d84ade 100644
+> --- a/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c
+> +++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c
+> @@ -1976,14 +1976,14 @@ static void a6xx_show_debugbus(struct a6xx_gpu_state *a6xx_state,
+>  void a6xx_show(struct msm_gpu *gpu, struct msm_gpu_state *state,
+>  		struct drm_printer *p)
+>  {
+> +	if (IS_ERR_OR_NULL(state))
+> +		return;
 > +
-> +	if (!rampatch_name && err < 0 && soc_type == QCA_WCN6855) {
-> +		snprintf(config.fwname, sizeof(config.fwname),
-> +			 "qca/hpbtfw%02x.tlv", rom_ver);
-> +		err = qca_download_firmware(hdev, &config, soc_type, rom_ver);
-> +	}
-> +
->   	if (err < 0) {
->   		bt_dev_err(hdev, "QCA Failed to download patch (%d)", err);
->   		return err;
-> @@ -923,7 +934,7 @@ int qca_uart_setup(struct hci_dev *hdev, uint8_t baudrate,
->   		case QCA_WCN6855:
->   			qca_read_fw_board_id(hdev, &boardid);
->   			qca_get_nvm_name_by_board(config.fwname, sizeof(config.fwname),
-> -						  "hpnv", soc_type, ver, rom_ver, boardid);
-> +						  "wcnhpnv", soc_type, ver, rom_ver, boardid);
->   			break;
->   		case QCA_WCN7850:
->   			qca_get_nvm_name_by_board(config.fwname, sizeof(config.fwname),
-> @@ -936,6 +947,13 @@ int qca_uart_setup(struct hci_dev *hdev, uint8_t baudrate,
->   	}
->   
->   	err = qca_download_firmware(hdev, &config, soc_type, rom_ver);
-> +
-> +	if (!firmware_name && err < 0 && soc_type == QCA_WCN6855) {
-> +		qca_get_nvm_name_by_board(config.fwname, sizeof(config.fwname),
-> +					  "hpnv", soc_type, ver, rom_ver, boardid);
-> +		err = qca_download_firmware(hdev, &config, soc_type, rom_ver);
-> +	}
-> +
->   	if (err < 0) {
->   		bt_dev_err(hdev, "QCA Failed to download NVM (%d)", err);
->   		return err;
+>  	struct adreno_gpu *adreno_gpu = to_adreno_gpu(gpu);
+>  	struct a6xx_gpu_state *a6xx_state = container_of(state,
+>  			struct a6xx_gpu_state, base);
 
-Could you confirm if it has already been accepted?
+Are you saying that this container_of does a dereference?
+I don't think so.
 
+-Akhil.
 
-Kindly,regard
-
-Shuai
-
+>  	int i;
+>  
+> -	if (IS_ERR_OR_NULL(state))
+> -		return;
+> -
+>  	drm_printf(p, "gpu-initialized: %d\n", a6xx_state->gpu_initialized);
+>  
+>  	adreno_show(gpu, state, p);
 
 
