@@ -1,48 +1,54 @@
-Return-Path: <linux-arm-msm+bounces-82314-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-82315-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [IPv6:2605:f480:58:1:0:1994:3:14])
-	by mail.lfdr.de (Postfix) with ESMTPS id 75B60C6997A
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Nov 2025 14:25:59 +0100 (CET)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id D18AFC699BC
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Nov 2025 14:31:24 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id C9D794E5AFF
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Nov 2025 13:25:57 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTPS id D46E92B579
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Nov 2025 13:31:23 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 81364353891;
-	Tue, 18 Nov 2025 13:25:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id DF6F42FB08C;
+	Tue, 18 Nov 2025 13:31:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="prvo/pWX"
+	dkim=pass (1024-bit key) header.d=ixit.cz header.i=@ixit.cz header.b="Ui9e2rg4"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from ixit.cz (ip-94-112-25-9.bb.vodafone.cz [94.112.25.9])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BA3234F490;
-	Tue, 18 Nov 2025 13:25:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C143313E36;
+	Tue, 18 Nov 2025 13:31:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=94.112.25.9
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763472350; cv=none; b=r/MqGKsbOxo8cubhdsgUnbfD21Wix/qUvhC+dvijedQvYjzMI3CY1R1foM7PzKXuV0sL9u0FBM3vKIRWuXFkSDrvX1UDwOPMpjWVisHJW8M8iMrvb4+cupV0Jfmfub4BJUGNBa9d+pIm6vDRp9zi/GFYoSuxPDhJHiQPJ1OUfVw=
+	t=1763472680; cv=none; b=HyfNl1wzmythdhgiuQ5UdAIyKIjfXCaWN9o5M8TC5N8Uegzu0WUMLG2Us4heImVGalMMPs7KTDCzUMcP5+JY8/zI+oQONPFkx2cFswSUnshQ3jzx9JFBYP63v51tXboBGH00yk8wJRGFEe603NDcmJfi86ecDKVlBk6bQ7RjsrU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763472350; c=relaxed/simple;
-	bh=x2Bh3eTSzSdkREcpE9REhcZdsNLWX3O194BwuQxxPNA=;
+	s=arc-20240116; t=1763472680; c=relaxed/simple;
+	bh=9ugQIvvJz7zikbAFPH6IUMIqsSAchpy+YXvO5z6zCtQ=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Ye+JknsKUab9IiLo3GKdc8a9KkBNpz1WbmkhLrOdfEHCHmrFWURNifVeFohW427Bh73/pybUxjTC5CAWzXb13rP0xWyPO4pSJBy39z8wzib0fQ1euWuLvmWvo2LDKLJc1eLK/4b0pStmcxuojJQYH88O/Fj8JwwXgzXcXCPuVQ8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=prvo/pWX; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C79E4C2BCB4;
-	Tue, 18 Nov 2025 13:25:47 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1763472349;
-	bh=x2Bh3eTSzSdkREcpE9REhcZdsNLWX3O194BwuQxxPNA=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=prvo/pWX+28QfWq49D80twacWVlNX9zvtPkZOHqGvrdwz8bk3uD5B3g+sO7Y+9g/I
-	 H+3q4fHViMibfDZv6qvoYHasNHLod9QA8Snz4ZVCxWD2WVmF9AzG8Nf0wzviYjnORF
-	 NmXzaoCZDBmbx5ekDV/B5EgweCWMp1F6A9vBYNkfMcRTtIlMkf6BzojkIw/iWABUTa
-	 Zg5rY/eU2yNXI1CDDXFTUWqjOSPKWizQo3TKPCz+IfMOZd5E9m+tTiidRWdmu/kgvf
-	 cZOn9Y9tZdGRtZdL3d3R0ioHdwkvNoPjl0gF7CZ2Y2GQ6HZS/5l4M3wXl/KfwiKf3n
-	 o5mROSvatKCiA==
-Message-ID: <9fff160b-e8ef-4a28-8445-e53cc5ffc407@kernel.org>
-Date: Tue, 18 Nov 2025 14:25:45 +0100
+	 In-Reply-To:Content-Type; b=gXF4kl6Plt3jVHTIjZz87Kj4AFLbwoOGl5Ou6wcITdyv2ICKTXbQXtbAWYo1IlRMiSVsRl6zc4/QE3DvXxYJR7EmbfU9I3dg7qxk9F4MAQmnAYW06/tq852ZNriwVE6nkNhJH0knT6dO3MdMtnoXVLnBfPJKSogfmcGL3W9DybY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ixit.cz; spf=pass smtp.mailfrom=ixit.cz; dkim=pass (1024-bit key) header.d=ixit.cz header.i=@ixit.cz header.b=Ui9e2rg4; arc=none smtp.client-ip=94.112.25.9
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ixit.cz
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ixit.cz
+Received: from [10.0.0.200] (unknown [10.0.0.1])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange x25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	(No client certificate requested)
+	by ixit.cz (Postfix) with ESMTPSA id 43F0A534146A;
+	Tue, 18 Nov 2025 14:31:12 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ixit.cz; s=dkim;
+	t=1763472672;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+	bh=w0PqZr/fldf/EvmdNDcZnMhCxCGAlnzGVmppfsica5Q=;
+	b=Ui9e2rg4oSC3Gmhvv7nOWuvFSKScX+hqI38VhddPR1TphYTHl/wmG4/uZYsyhhpeYxgR4G
+	kbnnqO1cOuspW0XQq2NGH0MeRjIGNMZt/24fmbZk1/7eFgYMZWn6jrDPy9I0bX8BU+y9o5
+	d7VUqzUCl1dJG0espP2pFaCQG7mTJoY=
+Message-ID: <d9c91625-a829-474f-9fda-5e39342bb4af@ixit.cz>
+Date: Tue, 18 Nov 2025 14:31:11 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,149 +56,237 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 01/10] soc: qcom: aoss: Use __cleanup() for device_node
- pointers
+Subject: Re: [PATCH v3 8/8] arm64: dts: qcom: Add support for Pixel 3 and
+ Pixel 3 XL
 To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
- Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Cc: Kathiravan Thirumoorthy <kathiravan.thirumoorthy@oss.qualcomm.com>,
  Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>, linux-arm-msm@vger.kernel.org,
- linux-kernel@vger.kernel.org
-References: <20251117-cleanup_node_put-v1-0-5f107071d171@oss.qualcomm.com>
- <20251117-cleanup_node_put-v1-1-5f107071d171@oss.qualcomm.com>
- <d9af64c8-f0b0-4e2d-b182-824078f5d185@oss.qualcomm.com>
- <9c10881d-d5c4-4e60-8960-2ead76c63a2d@kernel.org>
- <d5sn56mlwaae2hou7t6pr24h2pojvjcv4ufsxg4lbbnk6vlpfi@xc5e5uekofbt>
- <c966f8a6-2dd1-4e73-9016-c6b08d7e0337@kernel.org>
- <l4ay27t4jbycohdsf4epxftq43kceuzymb6l2tx42lxyol3btk@vsof3bbmvrrl>
- <c89a2cae-ae96-46ee-a990-0c0ef13fe4de@oss.qualcomm.com>
-From: Krzysztof Kozlowski <krzk@kernel.org>
+ Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Sumit Semwal <sumit.semwal@linaro.org>,
+ Casey Connolly <casey.connolly@linaro.org>,
+ Neil Armstrong <neil.armstrong@linaro.org>,
+ Jessica Zhang <jesszhan0024@gmail.com>,
+ Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+ Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>,
+ David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>
+Cc: phodina@protonmail.com, linux-arm-msm@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+ phone-devel@vger.kernel.org, dri-devel@lists.freedesktop.org,
+ Amit Pundir <amit.pundir@linaro.org>, Casey Connolly <casey@connolly.tech>,
+ Joel Selvaraj <foss@joelselvaraj.com>, Vinod Koul <vkoul@kernel.org>
+References: <20251118-pixel-3-v3-0-317a2b400d8a@ixit.cz>
+ <20251118-pixel-3-v3-8-317a2b400d8a@ixit.cz>
+ <d81b0e70-5e3f-4e33-a268-e8b903904e9b@oss.qualcomm.com>
 Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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 a/A=
-In-Reply-To: <c89a2cae-ae96-46ee-a990-0c0ef13fe4de@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8
+From: David Heidelberg <david@ixit.cz>
+Autocrypt: addr=david@ixit.cz; keydata=
+ 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
+In-Reply-To: <d81b0e70-5e3f-4e33-a268-e8b903904e9b@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-On 18/11/2025 14:16, Konrad Dybcio wrote:
-> On 11/18/25 1:52 PM, Dmitry Baryshkov wrote:
->> On Tue, Nov 18, 2025 at 01:32:51PM +0100, Krzysztof Kozlowski wrote:
->>> On 18/11/2025 13:25, Dmitry Baryshkov wrote:
->>>> On Tue, Nov 18, 2025 at 12:39:51PM +0100, Krzysztof Kozlowski wrote:
->>>>> On 17/11/2025 12:35, Konrad Dybcio wrote:
->>>>>> On 11/17/25 5:51 AM, Kathiravan Thirumoorthy wrote:
->>>>>>> Make use of the __cleanup() attribute for device_node pointers to simplify
->>>>>>> resource management and remove explicit of_node_put() calls.
->>>>>>>
->>>>>>> Signed-off-by: Kathiravan Thirumoorthy <kathiravan.thirumoorthy@oss.qualcomm.com>
->>>>>>> ---
->>>>>>
->>>>>> Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
->>>>>
->>>>> This is obviously wrong and not helpful patch.
->>>>
->>>> Describing why it is wrong would be helpful (or having a pointer to an
->>>> explanation). Bear in mind people who read email archives and find this
->>>> very brief note.
->>>
->>> I gave some rationale in other patches, but summarizing:
->>> 1. It is against cleanup.h - author did not bother to read it - which
->>> clearly asks for constructor with declaration. This was discussed many
->>> times in the list, including many bugs and explicit checkpatch warning
->>> (on LKML) because people don't bother to read cleanup.h.
+On 18/11/2025 13:32, Konrad Dybcio wrote:
+> On 11/18/25 12:30 PM, David Heidelberg via B4 Relay wrote:
+>> From: David Heidelberg <david@ixit.cz>
+>>
+>> This adds initial device tree support for the following phones:
+>>
+>>   - Google Pixel 3 (blueline)
+>>   - Google Pixel 3 XL (crosshatch)
+>>
+>> Both phone boards use the same identifiers and differ only slightly
+>> in their connected peripherals.
 > 
-> Looks like I didn't read it either.. now that I did, I see that
-> _free(x) = NULL is somewhat of an anti-pattern, but none of these
+> [...]
+> 
+>> +&cont_splash_mem {
+>> +	reg = <0 0x9d400000 0 0x02400000>;
+>> +};
+> 
+> You override it to the same value on both devices, keep it in common
 
-True
-
-> patches seem to introduce any bugs related to it
-
-True
+Done.
 
 > 
->>> 2. It makes simple get+put code complicated, not simpler.
+>> +
+>> +&framebuffer0 {
+>> +	width = <1080>;
+>> +	height = <2160>;
+>> +	stride = <(1080 * 4)>;
+>> +	format = "a8r8g8b8";
 > 
-> Here I tend to disagree.. 
+> The format is mandated by the UEFI specification and won't change too
+> 
 
-of_get and immediate of_put is really obvious and easy to read. It is
-really a common pattern.
+Done.
 
-OTOH code like:
+> [...]
+> 
+>> +&tlmm {
+>> +	panel_te_pin: panel-te-state {
+>> +		pins = "gpio12";
+>> +		function = "mdp_vsync";
+>> +		drive-strength = <2>;
+>> +		bias-pull-down;
+>> +	};
+>> +
+>> +	panel_reset_pins: panel-active-state {
+>> +		pins = "gpio6";
+> 
+> Pin entries would be best sorted by the GPIO index:
+> 
+> https://docs.kernel.org/devicetree/bindings/dts-coding-style.html#order-of-nodes
+> 
+> 
 
-	struct device_node *np = of_parse_whatever_which_is_get()
-	...
-	bunch of code here where np is actually used.
-	...
-	... more code
-	return;
+Done.
 
-is not simple. The lifecycle of this variable becomes very long and
-where it is acquired - at beginning - causes question - why do you need
-to acquire it there?
+>> +		function = "gpio";
+>> +		drive-strength = <8>;
+>> +		bias-disable;
+>> +	};
+>> +
+>> +	panel_suspend: panel-suspend-state {
+>> +		pins = "gpio6";
+>> +		function = "gpio";
+>> +		drive-strength = <2>;
+>> +		bias-pull-down;
+>> +	};
+>> +
+>> +};
+> 
+> Stray \n above
+> 
+> [...]
+> 
+>> +&adsp_pas {
+>> +	firmware-name = "qcom/sdm845/Google/blueline/adsp.mbn";
+> 
+> Sorry if I asked this before, but are the binaries identical for
+> both devices?
 
-That's why cleanup.h has VERY specific syntax different than rest of kernel.
+Yes, there is only one firmware, which crosshatch has different, but all 
+listed in the initial bringup are used for both.
 
-If contributor does not know this syntax, don't send the patches. They
-are wrong.
+To add, crosshatch was somehow not that popular device, so as I've been 
+suggested in u-boot discussion, I would love to keep blueline everywhere.
 
-
+One exception is LineageOS kernels, where they go by name crosshatch, 
+but again for the both phones.
 
 > 
->>> 3. It grows the scope of OF reference without benefits.
+> [...]
 > 
-> This makes sense
 > 
-> Ultimately as you've noticed, this is mostly a cosmetic change and
-> I don't mind it going either way
+>> +		vreg_l14a_1p88: ldo14 {
+>> +			regulator-min-microvolt = <1800000>;
+>> +			regulator-max-microvolt = <1800000>;
+>> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+>> +			regulator-boot-on;
+>> +			/*
+>> +			 * We can't properly bring the panel back if it gets turned off
+>> +			 * so keep it's regulators always on for now.
+>> +			 */
+>> +			regulator-always-on;
+> 
+> Is that still the case with your fixes to the panel driver?
+> 
+> [...]
 
-It is not cosmetic. It is anti-pattern.
+Sadly yes, but I think Petr Hodina has idea what needs to be addressed, 
+so likely before 6.19 this will get addressed.
 
-Anti-patterns, even without introducing bugs, make the code WORSE to
-maintain. Worse code is not cosmetic.
+> 
+>> +
+>> +		vreg_l28a_3p0: ldo28 {
+>> +			regulator-min-microvolt = <2856000>;
+>> +			regulator-max-microvolt = <3008000>;
+>> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_LPM>;
+>> +			regulator-boot-on;
+>> +			/*
+>> +			 * We can't properly bring the panel back if it gets turned off
+>> +			 * so keep it's regulators always on for now.
+>> +			 */
+>> +			regulator-always-on;
+> 
+> ditto
+> 
+> [...]
+> 
+>> +	regulators-1 {
+>> +		compatible = "qcom,pmi8998-rpmh-regulators";
+>> +		qcom,pmic-id = "b";
+>> +
+>> +		vdd-bob-supply = <&vph_pwr>;
+>> +
+>> +		vreg_bob: bob {
+>> +			regulator-min-microvolt = <3312000>;
+>> +			regulator-max-microvolt = <3600000>;
+> 
+> This is a very broad range, what voltage does it need to be?
 
+I think it's possible, I just randomly picked bob regs, and f.e. 
+qcs6490-radxa-dragon-q6a.dts has even greater range.
 
-Best regards,
-Krzysztof
+Downstream set it also this way on blueline/crosshatch.
+
+> 
+> [...]
+> 
+> [...]
+> 
+>> +&tlmm {
+>> +	gpio-reserved-ranges = < 0 4>, /* SPI (Intel MNH Pixel Visual Core) */
+> 
+> stray space before '0'
+
+done
+
+> 
+> Konrad
+
+-- 
+David Heidelberg
+
 
