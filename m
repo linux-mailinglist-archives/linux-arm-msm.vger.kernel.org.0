@@ -1,197 +1,139 @@
-Return-Path: <linux-arm-msm+bounces-82172-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-82173-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [IPv6:2605:f480:58:1:0:1994:3:14])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4424BC67053
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Nov 2025 03:30:01 +0100 (CET)
+Received: from ams.mirrors.kernel.org (ams.mirrors.kernel.org [IPv6:2a01:60a::1994:3:14])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8374AC670FB
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Nov 2025 03:49:17 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 601B54E2C8B
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Nov 2025 02:29:51 +0000 (UTC)
+	by ams.mirrors.kernel.org (Postfix) with ESMTPS id 7349436319C
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Nov 2025 02:48:12 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E99BB320CB3;
-	Tue, 18 Nov 2025 02:29:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1AB0D2D6620;
+	Tue, 18 Nov 2025 02:48:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="KYdijhW9";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="Er+sKGhz"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="KBYgu1Tv"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E28131327A
-	for <linux-arm-msm@vger.kernel.org>; Tue, 18 Nov 2025 02:29:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E013A38DEC;
+	Tue, 18 Nov 2025 02:48:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763432987; cv=none; b=FAxchV8onKHeKY+6yZKvh1jTuKIPhWkc5uaPYbd+Qyrvroo9kK1Y/jCpcUWgtRs7of5YvKBQ+C+Ks3LxqYxhAp32SFFcwKV9LKS0kA9l6JnusXemSy9jHEkYJlF1jj1T3TSwQO8timqAblUIbr11zR/fG86YcK2vEiGUo9wzXew=
+	t=1763434090; cv=none; b=ZCQ78JL13fm8Nw37yePw3PNhuuCFeyok1forVRbp2Ppl8fstCLacvvGiuzxfXLQNrDRyQRMYoHDR5pIYZRC0MiuRdGK/dbKjoerVq5jCIOrDchSkWLMAeGqM3GCtWVWVnoakqcD+bK4l8Glr/rqbNm53J8n7WsjoHnp2mYElbrk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763432987; c=relaxed/simple;
-	bh=2KOfma0sITPO/4dH2G9QHJ4relhWBo110kMOcda7Thk=;
-	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
-	 In-Reply-To:Content-Type; b=AqOdidCeOPcHU/ZKnBeiVouA0oeyPuc9kOQz8aKfDvVKvVA3DZdhOs7A65HSxxUKLH0vt4Fe9h1E7Wo5fvaUCLj/xQhKelRV+9c2EDgBZStrp4guA8LZ0BCJyxziNmDzRtpskDiZymJtypqITk1tL/Ig/tH7EAj3ppXfD9XO7BY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=KYdijhW9; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=Er+sKGhz; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 5AHGQbEM027779
-	for <linux-arm-msm@vger.kernel.org>; Tue, 18 Nov 2025 02:29:45 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	xDqii3elKukNgR40+RTb2lx/n+vGBSNGvcekTp398fU=; b=KYdijhW9h0aGpVmd
-	xAbg1APihmWlAuWKP2GrwJbGpFVIZeMYnFL0pk/BL5m69GOQcaovfVV79J94VBr7
-	ZCB/DamiCnmXXxXL1pevn04VVF1crVNJkLnFWgwlRrqfhCxbA7rd6mvpqDQlgFtJ
-	Uu4zaQAAUW6rOfuf1/f4blgXtftOR3GKnmSpTZNkk+T3K7dBP6yWyq+PqHHFXH/T
-	bVlDpwlBDfQjOLM7qGTx3LrSqx0sUzozY70EeKEM0pRHaWMvx1lCfGcuSbsZRSI4
-	knJTs1xQ798vMY5ynz2EGwbvOa4Jh9N07tElB93NHZ7tfCsa0s489NXSaJMgzdWt
-	OPmTtw==
-Received: from mail-pf1-f197.google.com (mail-pf1-f197.google.com [209.85.210.197])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4ag77t1f86-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Tue, 18 Nov 2025 02:29:45 +0000 (GMT)
-Received: by mail-pf1-f197.google.com with SMTP id d2e1a72fcca58-7b82c2c2ca2so7548936b3a.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 17 Nov 2025 18:29:45 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1763432985; x=1764037785; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:to:subject:user-agent:mime-version:date:message-id:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=xDqii3elKukNgR40+RTb2lx/n+vGBSNGvcekTp398fU=;
-        b=Er+sKGhz6/TlF73uASVCngfC4nurdPVYT7qtXcHQC+sKGk4AaYU0pYu18xUdekeL0x
-         qitUWTUXQ7K8x9fop/4IH9HdruZvIQUSo6jODlDolDRaPIMZSFJZqN6Gz0EG9WHHHck3
-         yMjcl+5k0UBUzGePfuB726RfmJdPJp1asIEuTP9LIrqpgR2PkV33vlZh8WeyPMBvUsXE
-         yMXdUcxiwHJKJXiXCybNq5NIa2I9OVzBGcijfkVTFrQyNfRTcdFEPrdU9nAZDljR2dQS
-         y3hxSUiGpADvSdJk5yvWgXc293fsY0ncd2DamECJbvsihTdQ3OODcmyny1afTenSa1BU
-         4s0w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1763432985; x=1764037785;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=xDqii3elKukNgR40+RTb2lx/n+vGBSNGvcekTp398fU=;
-        b=EmGDXVpNbMVHbd9HQ393vumq1dsPLNFDE33m2umx3gJtYR8uk6vzz1NrY2wZGny6A1
-         D6UiXea5nPGZHTNNMWeoK6Ruj3BIm1k5wkrHHKh18pIFAFjTt07X/gfEPFBhC06kz7WX
-         RMDek6YyCprFgIU8az4XdD5eLoT/Pnt/lSQH+ZcdtG4YN2rk2FqT5R3sh+au6NtBZShi
-         BUBb6zg5GwxAa/eqsLVNX8YTyvbjGGPHZioEPBaCHznidJgJzrVi44/y/JCvCojWRrUN
-         ZuTvQS2qkrafIMVmtlP4kUi3VhjyP4+SW7laoEaeatBXbcUkdTbFY3KfV6VUkjEu4rr7
-         xBlQ==
-X-Forwarded-Encrypted: i=1; AJvYcCX6PCJMQIsvCcOHxaJvmOPJfTm/xi4s1jpQVeh/jsNFw81uA7mjiK1bltIo/Pvpv3YoRFPkKxa90TBjjqa/@vger.kernel.org
-X-Gm-Message-State: AOJu0YyysnFH4cm+vyp9DJ4ymlVJ1JEZrZiy/r742Ywr7BpJpAcgJqbT
-	3tLgdY8yMP5lzFfNRJRyF874VXsl8bAO4RodM/Ot1jMdWGfyVlh2XXTax7rF/gmqzRS4zQl76mh
-	St7gFX3rLvpCoxMoAszdmLoe9y27phLDEkaHVO1DupLzCckd7GursYBHr3/iYge0nTUOkHp/zuA
-	Za3MY=
-X-Gm-Gg: ASbGncvxN7n90qhQSntQphhuQ3GSmVm0NNsKkykkZ2Sa8N6lTHKh3RdXvtMbcUxzVM+
-	KgNhde6mhV0M+bQDiSxuP/FkOS/BupT9EcolZvivLn3XtVy8gPzbLUl/lfhYYOhKmCyEJ40p7jv
-	UBhDPd16j6SPUNmGn6Ovk/KvUlmdhUjQgnC/Vzuslii5kYjCKQwATSUx2gFmqRgmfeENYIvC0/K
-	ejBR0NhmtIjNp0Lt85HKt9q2eTJEZ8Ni9YogIaI4ANUosS+4ygy0Upax00XTjGHwv9z3LFDl1ML
-	lKacby3RpYcaHv8+W/7geJsIRIhUVp5L4fI7aUbXpllqMn+4v/jvYVmu0jxJ9seWjLLgutDZ2iz
-	nOpwZwsdAqKi0QzC59wEOMTbwljERzHbyf3WMpvgveC5jdnPy3tZ4Bd3zaamMWweWXsmJBqCZ3x
-	ncK3U=
-X-Received: by 2002:a05:6a00:1744:b0:7b8:6e0d:6566 with SMTP id d2e1a72fcca58-7ba3be8c60fmr13776021b3a.15.1763432984575;
-        Mon, 17 Nov 2025 18:29:44 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHARX4H4UC1Tv8HJiSAkEHFZwwaJOg+neMIkMp2N3vFNfTFZNFkcsb5OXabfS1mRLsiOx+BBA==
-X-Received: by 2002:a05:6a00:1744:b0:7b8:6e0d:6566 with SMTP id d2e1a72fcca58-7ba3be8c60fmr13775991b3a.15.1763432984068;
-        Mon, 17 Nov 2025 18:29:44 -0800 (PST)
-Received: from [10.133.33.128] (tpe-colo-wan-fw-bordernet.qualcomm.com. [103.229.16.4])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-7b927c22b1bsm14420563b3a.66.2025.11.17.18.29.41
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 17 Nov 2025 18:29:43 -0800 (PST)
-Message-ID: <d92cb96b-b398-45c1-964c-0ab551ca135f@oss.qualcomm.com>
-Date: Tue, 18 Nov 2025 10:29:35 +0800
+	s=arc-20240116; t=1763434090; c=relaxed/simple;
+	bh=Zk+9GSdx1LmsnwA/MBfQ5+jwqwU6zNAvVmX83ccBGlY=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=gTpnKAjCwKb6x6LfJBYJpnJXw9zzW246iL/g7czCyg3DJImxDHMXBuBlrVb8I5UBAoteasb/arOv94yZZOMUyKOaEQRAxVsKHYfLutaoKya6YZBFOXVomQEPMZZyaCJyLoSYmgPbCXdtoScT3sNs5svg1y5o43IiP+tvB94NADE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=KBYgu1Tv; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 858C6C19421;
+	Tue, 18 Nov 2025 02:48:06 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1763434086;
+	bh=Zk+9GSdx1LmsnwA/MBfQ5+jwqwU6zNAvVmX83ccBGlY=;
+	h=From:Date:Subject:To:Cc:Reply-To:From;
+	b=KBYgu1Tv2Ba1dvplMPOxDJ2mY7RzqNcgb0QLSBSbLknWCkehTzoQ2sBWFh5co15BZ
+	 2BJV7XlpySPVTgJNfGwb1C9rBKWWz0SZJJOOwYdGjBQbYdyEdAfMnHV+SlvLStHU0k
+	 Rm+PRpGeOy0pVE+Yp1B4F3xs55BlI8IJ6hIHIcmQXoqJP0mW+hjwAJl9CYmmvacX2v
+	 XpTyc1x7BlNTsVB1/6p3GlaOQ+4wTn4339HmBmiHKmR7O+VTL7VNOl3O2kFdPZQ4eN
+	 mc7VUoyrdM8Csy+ApJNAs9nqzTQsCCLezSKcd+Dm5HY6yDg2KbKY+McSWfmE1l6uZt
+	 1mmNdoZ98x0lQ==
+Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 324AFCEBF91;
+	Tue, 18 Nov 2025 02:48:06 +0000 (UTC)
+From: Fenglin Wu via B4 Relay <devnull+fenglin.wu.oss.qualcomm.com@kernel.org>
+Date: Tue, 18 Nov 2025 10:48:03 +0800
+Subject: [PATCH v2] leds: rgb: leds-qcom-lpg: Don't enable TRILED when
+ configuring PWM
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/2] power: supply: qcom_battmgr: improve charge control
- threshold handling
-To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-        Val Packett <val@packett.cool>, Sebastian Reichel <sre@kernel.org>,
-        Neil Armstrong <neil.armstrong@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20251012233333.19144-2-val@packett.cool>
- <faa9d74d-63d3-4569-ab36-5e0ee0241794@oss.qualcomm.com>
- <02db51aa-6e19-411f-875f-718b8215c373@oss.qualcomm.com>
-Content-Language: en-US
-From: Fenglin Wu <fenglin.wu@oss.qualcomm.com>
-In-Reply-To: <02db51aa-6e19-411f-875f-718b8215c373@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMTE4MDAxOCBTYWx0ZWRfXxhwLLq3iwmug
- 5D2wYPZ1KBIGf5wrwuJINLf3oIyzM3DQp5EcgOFLsB740sFQ190xVrRETAoqJs8e9/W6qOlhsDq
- HAQQDpWmXl/VMIfSnbWZ1AQJu0OGX1STUx5sKPSPRVvtB0AcwtJ/R97wvE0a1aChj9Gn9S9CgQo
- AUq3BsuDKSvwyYEg7A6/cRRpmmSy3xOLIdoSRkPYiCaCUc86kCSvLlfQvkpOztTTDj3A3ssP1do
- DYvZeq26CrUiwzW09eMyryrkKEK1e0eEh/Il020Mmw4ysUeFauVnidIemWUu0p/WDY1kuIBKIQ1
- /iyu4DkGuB/SMiHFUcBSwR4m4rDz681f1VCFqjGIqJr3G6IH79PJpU6rXzX1M0mkxSzUSINYeoL
- fxtxvaoksGfv/SeYQRouQg01pTRBQg==
-X-Authority-Analysis: v=2.4 cv=EPoLElZC c=1 sm=1 tr=0 ts=691bda19 cx=c_pps
- a=rEQLjTOiSrHUhVqRoksmgQ==:117 a=nuhDOHQX5FNHPW3J6Bj6AA==:17
- a=IkcTkHD0fZMA:10 a=6UeiqGixMTsA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=efJFygxvcKwCkfyfGs0A:9 a=QEXdDO2ut3YA:10
- a=2VI0MkxyNR6bbpdq8BZq:22
-X-Proofpoint-ORIG-GUID: El5UDYfumuOeHonOWiA2tCVbPcSTDdzG
-X-Proofpoint-GUID: El5UDYfumuOeHonOWiA2tCVbPcSTDdzG
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
- definitions=2025-11-17_04,2025-11-13_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 bulkscore=0 priorityscore=1501 impostorscore=0
- lowpriorityscore=0 phishscore=0 adultscore=0 spamscore=0 clxscore=1015
- malwarescore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2510240001
- definitions=main-2511180018
+Message-Id: <20251118-lpg_triled_fix-v2-1-6d1e5831333f@oss.qualcomm.com>
+X-B4-Tracking: v=1; b=H4sIAGLeG2kC/3WMwQqDMBAFf0X23IibRGh66n8UERNTXVCjiQ0tk
+ n9v6r2XBzPw5oBgPdkAt+IAbyMFcksGfinAjN0yWEZ9ZuAVrxFRsmkd2t3TZPv2SW8mpVSopdJ
+ CVpBPq7dZn8FHk3mksDv/OfsRf/ZvKiJDpjQX6iq4qYW5uxDK7dVNxs1zmQealNIXrnZ+2LMAA
+ AA=
+X-Change-ID: 20251114-lpg_triled_fix-44491b49b340
+To: kernel@oss.qualcomm.com, Lee Jones <lee@kernel.org>, 
+ Pavel Machek <pavel@kernel.org>, 
+ Marijn Suijten <marijn.suijten@somainline.org>, 
+ Bjorn Andersson <andersson@kernel.org>, linux-arm-msm@vger.kernel.org
+Cc: Subbaraman Narayanamurthy <subbaraman.narayanamurthy@oss.qualcomm.com>, 
+ Pavel Machek <pavel@ucw.cz>, linux-leds@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, Fenglin Wu <fenglin.wu@oss.qualcomm.com>
+X-Mailer: b4 0.14.2
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1763434085; l=2025;
+ i=fenglin.wu@oss.qualcomm.com; s=20240327; h=from:subject:message-id;
+ bh=cWR4OonENS/A1Z/FgzwkreX5FEzdr4WK9WkPXocNfU0=;
+ b=1BdEDpkIUZ43lhz8o9zOnmCO9uhe6V2GhA+cLZa36KyIzzNvATnKX/Gn5oyRndv6AEVdXYvok
+ OgA+w26WvZnD8sUhOwTjNMnVrtJKcgsNkBkHsMp3HS4u5myrXz1SmnR
+X-Developer-Key: i=fenglin.wu@oss.qualcomm.com; a=ed25519;
+ pk=BF8SA4IVDk8/EBCwlBehKtn2hp6kipuuAuDAHh9s+K4=
+X-Endpoint-Received: by B4 Relay for fenglin.wu@oss.qualcomm.com/20240327
+ with auth_id=406
+X-Original-From: Fenglin Wu <fenglin.wu@oss.qualcomm.com>
+Reply-To: fenglin.wu@oss.qualcomm.com
 
+From: Fenglin Wu <fenglin.wu@oss.qualcomm.com>
 
-On 11/17/2025 8:45 PM, Konrad Dybcio wrote:
-> On 11/17/25 6:12 AM, Fenglin Wu wrote:
->> On 10/13/2025 7:32 AM, Val Packett wrote:
->>> Currently, upowerd is unable to turn off the battery preservation mode[1]
->>> on Qualcomm laptops, because it does that by setting the start threshold to
->>> zero and the driver returns an error:
->>>
->>> pmic_glink.power-supply.0: charge control start threshold exceed range: [50 - 95]
->>>
->>> Kernel documentation says the end threshold must be clamped[2] but does
->>> not say anything about the start threshold.
->>>
->>> In this proposal I've special-cased start==0 to actually disable the
->>> functionality via the enable bit, and otherwise made both start and
->>> end thresholds be clamped to the acceptable range. Hopefully that's
->>> fine?
->> It is fine to clamping the threshold to the acceptable range. Thank you for making the changes.
->>> Or should the [1 - 49] range for start actually be rejected?
->> The minimum charging start threshold was set to 50 to improve user experience. If the threshold is too low and the system keeps drawing power from the battery frequently due to a large system load and a weak charger, the laptop will only begin charging when the battery level falls below that threshold. If the user disconnects the charger at that time, then the device would be only having a battery below 50%. Setting the threshold at 50 ensures the battery always stays above 50%.
-> So can we set it lower?
->
-> Such decisions are best deferred to userspace and/or the user, which can
-> limit what the kernel exposes as necessary/deemed useful
->
-> Konrad
+The PWM signal from the LPG channel can be routed to PMIC GPIOs with
+proper GPIO configuration, and it is not necessary to enable the
+TRILED channel in that case. This also applies to the LPG channels
+that mapped to TRILED channels. Additionally, enabling the TRILED
+channel unnecessarily would cause a voltage increase in its power
+supply. Hence remove it.
 
-Yes, it can be set to a lower value.
+Fixes: 24e2d05d1b68 ("leds: Add driver for Qualcomm LPG")
+Signed-off-by: Fenglin Wu <fenglin.wu@oss.qualcomm.com>
+---
+Changes in v2:
+- Check "chan->in_use" flag in lpg_pwm_apply() is not correct, as it
+  indicates the channel is being used as a LED and this PWM API would
+  never get called. Instead, remove the code line which enables TRILED
+  in lpg_pwm_apply() and update the commit text to explain it clearly.
 
-However, I am still having concerns that the inappropriate start and end 
-threshold settings would cause a very bad user experience if they are 
-misused, since these thresholds are stored in nvmem and they won't be 
-reset until battery is unplugged or completely drained. For example, if 
-someone intentionally sets the start threshold to 1 and end threshold to 
-6, and if the laptop was shutdown with a battery SoC less than the end 
-threshold, I am not sure if <6% percent battery level would be good 
-enough to boot up the laptop successfully, if it is not, then the laptop 
-may not have chance to charge up until you hot plug the battery.
+- Link to v1: https://lore.kernel.org/r/20251114-lpg_triled_fix-v1-1-9b239832c53c@oss.qualcomm.com
+---
+ drivers/leds/rgb/leds-qcom-lpg.c | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
-Also, from battery management firmware point of view, the charge control 
-feature was mainly designed for battery health management, to slow the 
-aging of Li-ion battery by preventing it from being frequently charged 
-to full state. Having a too low minimum start threshold setting won't 
-help anything on that.
+diff --git a/drivers/leds/rgb/leds-qcom-lpg.c b/drivers/leds/rgb/leds-qcom-lpg.c
+index 4f2a178e3d265a2cc88e651d3e2ca6ae3dfac2e2..e197f548cddb03d079c54c4a0f402402c5d047e2 100644
+--- a/drivers/leds/rgb/leds-qcom-lpg.c
++++ b/drivers/leds/rgb/leds-qcom-lpg.c
+@@ -2,7 +2,7 @@
+ /*
+  * Copyright (c) 2017-2022 Linaro Ltd
+  * Copyright (c) 2010-2012, The Linux Foundation. All rights reserved.
+- * Copyright (c) 2023-2024, Qualcomm Innovation Center, Inc. All rights reserved.
++ * Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
+  */
+ #include <linux/bits.h>
+ #include <linux/bitfield.h>
+@@ -1247,8 +1247,6 @@ static int lpg_pwm_apply(struct pwm_chip *chip, struct pwm_device *pwm,
+ 
+ 	lpg_apply(chan);
+ 
+-	triled_set(lpg, chan->triled_mask, chan->enabled ? chan->triled_mask : 0);
+-
+ out_unlock:
+ 	mutex_unlock(&lpg->lock);
+ 
 
-Thanks
+---
+base-commit: ea1c4c7e648d1ca91577071fc42fdc219521098c
+change-id: 20251114-lpg_triled_fix-44491b49b340
 
-Fenglin
+Best regards,
+-- 
+Fenglin Wu <fenglin.wu@oss.qualcomm.com>
+
 
 
