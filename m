@@ -1,91 +1,201 @@
-Return-Path: <linux-arm-msm+bounces-82413-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-82409-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ams.mirrors.kernel.org (ams.mirrors.kernel.org [213.196.21.55])
-	by mail.lfdr.de (Postfix) with ESMTPS id B3F80C6C90A
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Nov 2025 04:21:35 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 60450C6C8A9
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Nov 2025 04:16:25 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ams.mirrors.kernel.org (Postfix) with ESMTPS id BDA9734CBD7
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Nov 2025 03:18:15 +0000 (UTC)
+	by ams.mirrors.kernel.org (Postfix) with ESMTPS id 653B8362A45
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Nov 2025 03:14:20 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 68D792EA158;
-	Wed, 19 Nov 2025 03:18:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8A7742E5402;
+	Wed, 19 Nov 2025 03:14:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="tz3RVSUy"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="dUhuJhFr"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 383B82E8B81;
-	Wed, 19 Nov 2025 03:18:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D6D22DFF04;
+	Wed, 19 Nov 2025 03:14:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763522284; cv=none; b=V5WIWtaF96ATyumA4S0GBnXF/ccZcfz2QI2j8jfHDn/Q2xdKFsg+X9UyXeLIncs08D9UuxG7cwbcsKiqodf4igsYeRxdGft9mGU2ho8KyhLGY/Wmw0iEfRVFBMFlY35E9wVoa0beNsbIzxxYTdj5jggGC/j7kIkIYh+eBN/ODwo=
+	t=1763522042; cv=none; b=tGjJdhcWLfhGZqli5F281+VJCodxwmAykWgycKXJ+LmV2znDMQ3tMkdE3mxqB/Nqa0XVJfdaHM/2BBsN4XujQu2aJZB9Q6zDXcRbZfeaLHz2b6OA13w+ZKu627lI/mwulPPVjXZfeyCKLKwZv/346QCoJslWxFSIU0viPSA13fQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763522284; c=relaxed/simple;
-	bh=gxvdTPLxCEGTom2KcOW4d2OIxzZkBK8tZnnpHG/Yqoo=;
-	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=hQGuhP+d++KZZzTDx/Fn2d5+9UlEVlZ1YVlxmoym/6pFkeaw1VQS7wtANqyrg/9/b4eK4i5CoZDk4TiK/LX2RrThyn3G5c4Ro5QsDQTVLQgyM1z2kNV7mQPwrPCjeU94mlPJbMzu+K6Qi1IM2p91qtDyVKcL4VW9ZO4Bc1aMmeA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=tz3RVSUy; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4C28C4AF17;
-	Wed, 19 Nov 2025 03:18:00 +0000 (UTC)
+	s=arc-20240116; t=1763522042; c=relaxed/simple;
+	bh=ShSdZ7QKer5LMw9bQOqMv3b5WIV69hePDG+tXNhunck=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=hLLRw0p6Yz27+kn5RhOd45EBYlhaSmpa5iFAzdN0GzGXoBZ6sIL80eZK7n9mC/VsYhSFIevCy0L5jKsS+qldH3G3Dv0twYw0EtD/K9rcjzAYEdl2vxBPWVVR6SpPqfk5UnMjUKFTrucfdW+DtY97okrVKWek2fPBKr9bl4sWtdU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=dUhuJhFr; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A0C9C19425;
+	Wed, 19 Nov 2025 03:13:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1763522283;
-	bh=gxvdTPLxCEGTom2KcOW4d2OIxzZkBK8tZnnpHG/Yqoo=;
-	h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-	b=tz3RVSUy64qcOSIcwGieM3noZcd3gVKOBEsnFaJrFLXtpbA/sXEgOIkMFERtQTbrb
-	 QTKvesIgOdtS5i3FRmBXs7ketsUPEin/mSp8UmqjIWq4OFdocC67Awp06GItVRjDgy
-	 tTrNzx6NEEZNcpeMgtk3TkwS4JZxK5fhT2cR881LhEsLu3rHB62Huwxh5Wv6Vq4B16
-	 97EH5U6In+fmrPnMMJd9CX3/fwL3GuVMQXnaWt+ph17MMrpUKRorloA8YTQAq3CNnb
-	 L8JvbyckRFfPAgOBSC4kpAgwVkaGZsdH8pa6sSjp5O7JDr03peT2fZJ7Aw86EJzc5X
-	 4v8jmCJGZS3Mg==
-Date: Tue, 18 Nov 2025 19:17:59 -0800
-From: Jakub Kicinski <kuba@kernel.org>
-To: Maxime Chevallier <maxime.chevallier@bootlin.com>
-Cc: davem@davemloft.net, netdev@vger.kernel.org,
- linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
- thomas.petazzoni@bootlin.com, Andrew Lunn <andrew@lunn.ch>, Eric Dumazet
- <edumazet@google.com>, Paolo Abeni <pabeni@redhat.com>, Russell King
- <linux@armlinux.org.uk>, linux-arm-kernel@lists.infradead.org, Christophe
- Leroy <christophe.leroy@csgroup.eu>, Herve Codina
- <herve.codina@bootlin.com>, Florian Fainelli <f.fainelli@gmail.com>, Heiner
- Kallweit <hkallweit1@gmail.com>, Vladimir Oltean <vladimir.oltean@nxp.com>,
- =?UTF-8?B?S8O2cnk=?= Maincent <kory.maincent@bootlin.com>, Marek
- =?UTF-8?B?QmVow7pu?= <kabel@kernel.org>, Oleksij Rempel
- <o.rempel@pengutronix.de>, =?UTF-8?B?Tmljb2zDsg==?= Veronese
- <nicveronese@gmail.com>, Simon Horman <horms@kernel.org>,
- mwojtas@chromium.org, Antoine Tenart <atenart@kernel.org>,
- devicetree@vger.kernel.org, Conor Dooley <conor+dt@kernel.org>, Krzysztof
- Kozlowski <krzk+dt@kernel.org>, Rob Herring <robh@kernel.org>, Romain
- Gantois <romain.gantois@bootlin.com>, Daniel Golle <daniel@makrotopia.org>,
- Dimitri Fedrau <dimitri.fedrau@liebherr.com>
-Subject: Re: [PATCH net-next v16 15/15] Documentation: networking: Document
- the phy_port infrastructure
-Message-ID: <20251118191759.28d14e32@kernel.org>
-In-Reply-To: <20251113081418.180557-16-maxime.chevallier@bootlin.com>
-References: <20251113081418.180557-1-maxime.chevallier@bootlin.com>
-	<20251113081418.180557-16-maxime.chevallier@bootlin.com>
+	s=k20201202; t=1763522041;
+	bh=ShSdZ7QKer5LMw9bQOqMv3b5WIV69hePDG+tXNhunck=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=dUhuJhFrNANKjnfBuUSbas6bHohUxbzDD7brqUza+OwjX+I/v3cZzOg80/2Fe39Aq
+	 FzQaTkUfpI7DXJk71oxeP/1mpqlXnBkPOUB5iDnIru6kgYOlXQ8RWeoyHdiXh0S4Up
+	 VIkCmpWFIf35LhDjVqBTqJclOayhDUKA3K/SDPoDvZ+3nIP/TJxDGHJHOvfU5uMcGd
+	 M6dpQpMr7GKNgtJNg0BGuRSj/UdqdXPcswjrJeIAgou/ZmsNx0U4UOcbuu3PL+dHV9
+	 VnDkxUODuNx9M0v1RQAoxvHQyptbUkPmwj5hJo1XZYt/HsARsPN4vV5UEDmMXEJmH0
+	 JzxZXQq5Q3ijg==
+Date: Tue, 18 Nov 2025 21:18:50 -0600
+From: Bjorn Andersson <andersson@kernel.org>
+To: Fenglin Wu <fenglin.wu@oss.qualcomm.com>
+Cc: kernel@oss.qualcomm.com, Lee Jones <lee@kernel.org>, 
+	Pavel Machek <pavel@kernel.org>, Marijn Suijten <marijn.suijten@somainline.org>, 
+	linux-arm-msm@vger.kernel.org, 
+	Subbaraman Narayanamurthy <subbaraman.narayanamurthy@oss.qualcomm.com>, Pavel Machek <pavel@ucw.cz>, linux-leds@vger.kernel.org, 
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v2] leds: rgb: leds-qcom-lpg: Don't enable TRILED when
+ configuring PWM
+Message-ID: <mrdp2ljtmoazowz37zcbirrvrozohnlgtyvwzqedoa3xnbnh6p@4nulist6gmxg>
+References: <20251118-lpg_triled_fix-v2-1-6d1e5831333f@oss.qualcomm.com>
+ <7d46k5kmygmgjje3pc3jfebestkksbnq55q44urljkrmtrvwa7@6mxkt7zlmoid>
+ <d10f7383-1eeb-44d2-a34f-15e76c3451fe@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <d10f7383-1eeb-44d2-a34f-15e76c3451fe@oss.qualcomm.com>
 
-On Thu, 13 Nov 2025 09:14:17 +0100 Maxime Chevallier wrote:
-> --- a/MAINTAINERS
-> +++ b/MAINTAINERS
-> @@ -9281,6 +9281,7 @@ F:	Documentation/devicetree/bindings/net/ethernet-connector.yaml
->  F:	Documentation/devicetree/bindings/net/ethernet-phy.yaml
->  F:	Documentation/devicetree/bindings/net/mdio*
->  F:	Documentation/devicetree/bindings/net/qca,ar803x.yaml
-> +F:	Documentation/networking/phy-port.rst
+On Wed, Nov 19, 2025 at 10:17:44AM +0800, Fenglin Wu wrote:
+> 
+> On 11/19/2025 12:27 AM, Bjorn Andersson wrote:
+> > On Tue, Nov 18, 2025 at 10:48:03AM +0800, Fenglin Wu via B4 Relay wrote:
+> > > From: Fenglin Wu <fenglin.wu@oss.qualcomm.com>
+> > > 
+> > Sorry, I didn't find the chance to answer your reply yesterday, and then
+> > you sent v2, so I'll have to continue the discussion here.
+> > 
+> > > The PWM signal from the LPG channel can be routed to PMIC GPIOs with
+> > > proper GPIO configuration, and it is not necessary to enable the
+> > > TRILED channel in that case. This also applies to the LPG channels
+> > > that mapped to TRILED channels. Additionally, enabling the TRILED
+> > > channel unnecessarily would cause a voltage increase in its power
+> > > supply. Hence remove it.
+> > > 
+> > > Fixes: 24e2d05d1b68 ("leds: Add driver for Qualcomm LPG")
+> > > Signed-off-by: Fenglin Wu <fenglin.wu@oss.qualcomm.com>
+> > > ---
+> > > Changes in v2:
+> > > - Check "chan->in_use" flag in lpg_pwm_apply() is not correct, as it
+> > >    indicates the channel is being used as a LED and this PWM API would
+> > >    never get called. Instead, remove the code line which enables TRILED
+> > >    in lpg_pwm_apply() and update the commit text to explain it clearly.
+> > > 
+> > I understand that in your case you're routing the PWM signal to a GPIO,
+> > and in that case the TRILED output should be kept disabled.
+> > 
+> > But what if I have my load connected to the TRILED and I describe my LPG
+> > channel as a PWM channel? Is this an invalid use case?
+> This is not a valid case. If a load (typically an LED) is connected to any
+> channel of theTRILED module, it means the LPG channel is used for driving an
+> LED, and sub-nodes for the LED devices must be defined. Otherwise, the PWM
+> signal will be gated by the TRILED module. Enabling a TRILED channel not
+> only opens the PWM gate but also activates an internal current sink to
+> manage the load. If you need to output PWM as a control signal, for example
+> for fan control, the hardware should connect the fan control input to a PMIC
+> GPIO. The PWM signal from an LPG channel can be routed there, rather than
+> using a TRILED channel.
 
-I think you should add a MAINTAINERS entry like the one we have for
-NETWORKING [ETHTOOL PHY TOPOLOGY] no? Please include some keyword matches
-on the relevant driver-facing APIs if you can:)
+Thanks for elaborating, I think this is an okay stance to take in the
+question. Let's document it (like you propose below) and make the change
+you're proposing.
+
+> > With this patch,
+> > everything will look like it's working, except silently my signal won't
+> > come out.
+> > 
+> > I presume there's no additional configuration on the LPG-side for your
+> > use case. We just configure the GPIO to tap into the PWM-signal through
+> > the pinmux settings?
+> That's correct.
+> > 
+> > Also, if for some reason the triled was enabled by bootloader, you will
+> > now leave it enabled forever. This perhaps isn't a big issue though...
+> In that case, I would assume that the bootloader should also be customized
+> to not enabling any LED if there is not a physical LED device connected to
+> the TRILED channel.
+> > 
+> > Perhaps none of this matters in practice, and we should just proceed
+> > with your approach. If that's the case, then we should at least document
+> > the behavior.
+> 
+> Does it look good if I push a change in the DT binding document to explain
+> this?
+> 
+> --- a/Documentation/devicetree/bindings/leds/leds-qcom-lpg.yaml
+> +++ b/Documentation/devicetree/bindings/leds/leds-qcom-lpg.yaml
+> @@ -13,6 +13,10 @@ description: >
+>    The Qualcomm Light Pulse Generator consists of three different hardware
+> blocks;
+>    a ramp generator with lookup table (LUT), the light pulse generator and a
+> three
+>    channel current sink. These blocks are found in a wide range of Qualcomm
+> PMICs.
+> +  The light pulse generator (LPG) can also be used independently to output
+> PWM
+> +  signal for standard PWM applications. In this scenario, the LPG output
+> should
+> +  be routed to a specific PMIC GPIO by setting the GPIO pin mux to the
+> special
+> +  functions indicated in the datasheet.
+
+I like this. How about continuing this sentence with ", the TRILED
+driver for the channel will not be enabled in this configuration."?
+
+That way we make sure the decided TRILED behavior is documented as well.
+
+Regards,
+Bjorn
+
+> 
+>  properties:
+>    compatible:
+> 
+> > Regards,
+> > Bjorn
+> > 
+> > > - Link to v1: https://lore.kernel.org/r/20251114-lpg_triled_fix-v1-1-9b239832c53c@oss.qualcomm.com
+> > > ---
+> > >   drivers/leds/rgb/leds-qcom-lpg.c | 4 +---
+> > >   1 file changed, 1 insertion(+), 3 deletions(-)
+> > > 
+> > > diff --git a/drivers/leds/rgb/leds-qcom-lpg.c b/drivers/leds/rgb/leds-qcom-lpg.c
+> > > index 4f2a178e3d265a2cc88e651d3e2ca6ae3dfac2e2..e197f548cddb03d079c54c4a0f402402c5d047e2 100644
+> > > --- a/drivers/leds/rgb/leds-qcom-lpg.c
+> > > +++ b/drivers/leds/rgb/leds-qcom-lpg.c
+> > > @@ -2,7 +2,7 @@
+> > >   /*
+> > >    * Copyright (c) 2017-2022 Linaro Ltd
+> > >    * Copyright (c) 2010-2012, The Linux Foundation. All rights reserved.
+> > > - * Copyright (c) 2023-2024, Qualcomm Innovation Center, Inc. All rights reserved.
+> > > + * Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
+> > >    */
+> > >   #include <linux/bits.h>
+> > >   #include <linux/bitfield.h>
+> > > @@ -1247,8 +1247,6 @@ static int lpg_pwm_apply(struct pwm_chip *chip, struct pwm_device *pwm,
+> > >   	lpg_apply(chan);
+> > > -	triled_set(lpg, chan->triled_mask, chan->enabled ? chan->triled_mask : 0);
+> > > -
+> > >   out_unlock:
+> > >   	mutex_unlock(&lpg->lock);
+> > > 
+> > > ---
+> > > base-commit: ea1c4c7e648d1ca91577071fc42fdc219521098c
+> > > change-id: 20251114-lpg_triled_fix-44491b49b340
+> > > 
+> > > Best regards,
+> > > -- 
+> > > Fenglin Wu <fenglin.wu@oss.qualcomm.com>
+> > > 
+> > > 
 
