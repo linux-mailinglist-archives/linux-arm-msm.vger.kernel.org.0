@@ -1,181 +1,163 @@
-Return-Path: <linux-arm-msm+bounces-82505-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-82509-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ams.mirrors.kernel.org (ams.mirrors.kernel.org [213.196.21.55])
-	by mail.lfdr.de (Postfix) with ESMTPS id D5A13C6F2D3
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Nov 2025 15:14:02 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id DFA24C6F3AF
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Nov 2025 15:22:03 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ams.mirrors.kernel.org (Postfix) with ESMTPS id DEE01362039
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Nov 2025 14:06:34 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTPS id 914152E3CA
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Nov 2025 14:22:02 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 451C235E52C;
-	Wed, 19 Nov 2025 14:06:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8768A3451BB;
+	Wed, 19 Nov 2025 14:21:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="aXOp3Jpq";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="S407Oyr9"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="MkQQbDBu"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CDDF3093A6
-	for <linux-arm-msm@vger.kernel.org>; Wed, 19 Nov 2025 14:06:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57EAD32A3C1;
+	Wed, 19 Nov 2025 14:21:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763561178; cv=none; b=iDpAJxPRVZk2nGSUUNKJ0o2URU24DEDtiJ29E00n0VshqhmuhcDENj0v8NMIpDNE3Z9auMULjcYrVCU2f4ZzyizS9g9/mHcjTCRIAqByFj+EgKROX8F5ddtYs2wSRtC76RZ8D0mqb33h13tlf3+VQOG2fjtOKF5lkuQThcirMmo=
+	t=1763562102; cv=none; b=iZYDjRPuJywMM9Rsbf6tSyQUPAo/NjER3KndS4aWq58W+Altatl7cjT59Ocv4sposATBZEV5Ye5QuZR3luIUAr2KZx8eQSelNEIFFGRrWEEgiJZXeAxuPiUuWcLnjz3SaM0XbkWL2rBEg4O1V3D7ZJ4fpShXcsPDZ6vTOiNwkdI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763561178; c=relaxed/simple;
-	bh=dpjWMKZAxDPDzdh5nmSMsAsebFf1j7wkXJlaXSuX6fU=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=N9hinQscooA5RxNaK3q8BGJE/LYD/Q8q9e61ACsJYBMxwCbctsT96Lga0aIKOqmz9DHOLgzXnw0A6uJ2niM9hFczclDnyYLsYS8plMf198pcJLaWbAMFd3rQ4zyxQshnNUSC1WEgEveWX51IH/G0Ya7II3bs3hO+v06xOm14f7M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=aXOp3Jpq; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=S407Oyr9; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 5AJA3C7L1791851
-	for <linux-arm-msm@vger.kernel.org>; Wed, 19 Nov 2025 14:06:14 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	0Qes0uTFZFHa9NsIpsziOa1xLGXFiHkyg/VBp5V2ZmU=; b=aXOp3JpqoNHqyPaJ
-	u94HqWlAbGcLpISp6vR89uCUErrMYEsh6QF0haF29CoDJIwFLoUJSr1MS8tLiCsc
-	6awRHBEAUdkWgNS67ygthLMlaSvJzuAsUrClsfbhQgMKtqGTe0eZf/4p236SebZ9
-	Bn6NfZPgphqX9ACp4+rri6buICluumYUppD0TubzqqjmDeVx91vqcEmaGchmu13Q
-	ZTZ+h8mCmmCycqKpmgZauQU7ci5uHREeCpjjzEBmc+iUgWzknoAIcb8oSnPyJ/+S
-	FwkxTWKAsrc2wV5inmG3GyVAmomuXlB7RLiqq+8iJYrLQWST7PFqVxD4M3rPYpXx
-	ErOjeg==
-Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com [209.85.160.200])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4ahbt6rmc8-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Wed, 19 Nov 2025 14:06:14 +0000 (GMT)
-Received: by mail-qt1-f200.google.com with SMTP id d75a77b69052e-4ee24e1559aso7659781cf.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 19 Nov 2025 06:06:14 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1763561174; x=1764165974; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=0Qes0uTFZFHa9NsIpsziOa1xLGXFiHkyg/VBp5V2ZmU=;
-        b=S407Oyr9b/GBhYKkkgjSSSuJG0AZ21eQdQQr6wpVDdRcwErou2VqfaRdli++AvCNFo
-         16tVnSZTfiLwRkuNhlzMsb6l2vTeWFXObPGv4LBEDcW+spZX/oeYYSsweWHRs1gjLM22
-         +D4p+kdS4jmkNlA18Kb0PUMrTXObvTl7RiZ+jO8oHgStAGOrM/C+0LAtfVBBBdI3sl8e
-         8l/Pa7EYB0bYgYU16HAf4J0RJSY6NuvPEqsoXTArgMfWhyQjruJIXZ0xw8QlQZoh/iyA
-         tKUEpDU+3DhNL/ni4/eJY4RKlj8rHaFSY6eqaW8+tP8dCUc45cirWmRheDf7X0zJoTvg
-         BBaw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1763561174; x=1764165974;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=0Qes0uTFZFHa9NsIpsziOa1xLGXFiHkyg/VBp5V2ZmU=;
-        b=cqPA7GVAQpE4y5iJ5zs1NtnA+xAAaRfkwRXkjOaxa5LeKFYQSdPluJ+f/7vkSPLJzE
-         nW67nrpztIRCj60oqhheMa9AS47sk9lSkNC1rZ1xiPgHBxnxIrXux+yCIWTpXbRMbe/k
-         f2aKFp6jtcyBbUmV673OIgIB0/1Ny934bz/Nm9b5KFwulfnSTCRUrEGFE3FQ4q7XDkmB
-         c/FMsrD2nKZ9jgEQlR1hPh/EMYTrENO9JFmOjgRWEfT41iMH+HpwITXz7/ZAWDMhstTD
-         K/0pL5Bv1M3rAMgy9Yn9yyXT1pBMTIqSac4cXrgycZddI8fmGXVDp9ZwY7znr2XP18wS
-         7+ew==
-X-Gm-Message-State: AOJu0YxN6rtKPdoSYYPfC+vcC1t7p8MqZqr7p4dBMdION6T8aPE/PjTJ
-	U5R5ZWFaKLLXAxOslkz/Wj0C2DVxgBkHndIGPNDF6B1Ycn6LYJ2gRPVxN7dFSQGr0pVUqGOb/OI
-	482Ekyizz3YV48I6fRLd/icqUWXlxvEPp93fO40gIVEmWl6kUReWyLzJY0soDx0rkznzw
-X-Gm-Gg: ASbGnctg1W5wkAnxcDClvMKwRrco7AB4dN0feV3Ynuv0x04DEDrFceT86Ge2Pa7kiYf
-	XpNBpe6Ie0/MbCZw/gcwbPeMA7ZvaXXsFMhtIcW29tjXtDwqQZj1We/6ELyFoGshn/xIWNjHPSD
-	DRDA8H/+tEDvRyygMK+7LFoKhPIYXU4ARO6PefID6ksgOxT7GtHF2PpjcqZkU0NWUcoyNp1Ffll
-	CiqFg3+ICfYFUboiWsJIeepIY5YWyJsGHsQ+uELAsJxSwQKJswNVerrfQwwbQjcEjdSB/JyLtDV
-	c/rQpDqX7rEZiRIM2yOIohIFM4bKnSJD20rw0JsARAI6zJQ6wpw69jtaIrkxwx3GynPd1BBhpfb
-	MIRLeboGmhmGjajWcnIjWVWVb5rKjtm6slhfmNcGwuf/Zf9UTrhF84XPSGPWG+wAuub8=
-X-Received: by 2002:a05:622a:118c:b0:4ee:87e:dee0 with SMTP id d75a77b69052e-4ee317b615emr68794961cf.9.1763561174139;
-        Wed, 19 Nov 2025 06:06:14 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGC/GxW90CSjD9X99yXw14hwGdaunyaI7OzNy4Ri4K1ArJh12VHpQw536wUemF3pk/tElXELQ==
-X-Received: by 2002:a05:622a:118c:b0:4ee:87e:dee0 with SMTP id d75a77b69052e-4ee317b615emr68794381cf.9.1763561173574;
-        Wed, 19 Nov 2025 06:06:13 -0800 (PST)
-Received: from [192.168.119.202] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
-        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-6433a3d6f5bsm15139107a12.6.2025.11.19.06.06.11
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 19 Nov 2025 06:06:13 -0800 (PST)
-Message-ID: <5b93af24-d05c-48a5-b552-d0374ed3f00a@oss.qualcomm.com>
-Date: Wed, 19 Nov 2025 15:06:11 +0100
+	s=arc-20240116; t=1763562102; c=relaxed/simple;
+	bh=30zdp00ssHhIY0HNpB1mEZhkfA29GQGRCgBxkHTNKNQ=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=pFbsokbAoeOtTkkVJsRqF4aCWoq9IC3qZAWbh5xFUq9170Qjey2b6K6Q3zQdO+0yXSsED0906ce5JUwpjSurfit5RRXk+4DyLy9mg3AC2mKC5nGeDmRV6iT0RNEAEydLbyBKCskBDozXnAtVPx6b8/pjJ2sWHKr0ZWEoX5DLtp8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=MkQQbDBu; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPS id BA3B5C2BCAF;
+	Wed, 19 Nov 2025 14:21:40 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1763562101;
+	bh=30zdp00ssHhIY0HNpB1mEZhkfA29GQGRCgBxkHTNKNQ=;
+	h=From:Subject:Date:To:Cc:Reply-To:From;
+	b=MkQQbDBulixDf7rwtVL1NJQxyL1D2A7qyKVI863DLalhC8eDronb5O1i9jRQxXjG+
+	 EfG5hhAfZ4pydJSNalTR4DiA5/n5cB2CaXJi6ZhWK6VRsu3lXPcEXWrRN/N2ByZrTS
+	 VjGn11bQcFO+K+YmOrH0DDmzQPaYcv0gU3GoqDZJmqTbiKSktw7bpG/TcaMwTIEaQn
+	 lEUKWExsp7Tch5sckjU0zhaUe78mN6ZHOvxyuol2tsIxStLwdB47AVXXJNjudwBNTR
+	 yByPslUFJNwrfbNpssGQTm5VU2KmoiW/jrWSX2U6S6c6ZxsXVqqCxjoRId4sJb1LHG
+	 KFKIbC7etQGcw==
+Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 53ABBCF2598;
+	Wed, 19 Nov 2025 14:21:40 +0000 (UTC)
+From: David Heidelberg via B4 Relay <devnull+david.ixit.cz@kernel.org>
+Subject: [PATCH v3 00/12] Make Samsung SOFEF00 DDIC and panel work
+Date: Wed, 19 Nov 2025 15:21:25 +0100
+Message-Id: <20251119-sofef00-rebuild-v3-0-6cd55471e84e@ixit.cz>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] arm64: qcom: dts: sm8750: add coresight nodes
-To: Jie Gan <jie.gan@oss.qualcomm.com>,
-        Bjorn Andersson
- <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Tingwei Zhang <tingwei.zhang@oss.qualcomm.com>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20251117-add-coresight-nodes-for-pakala-v1-1-d26bfaa44fe7@oss.qualcomm.com>
- <350ddcc0-cbab-4b58-8b50-5004f27688db@oss.qualcomm.com>
- <cfd9867a-5fa5-43f1-a1a7-81f05bacc47f@oss.qualcomm.com>
-Content-Language: en-US
-From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-In-Reply-To: <cfd9867a-5fa5-43f1-a1a7-81f05bacc47f@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-GUID: 6QwalyPPJQU9YZMH5C5C3POiQnP36FZz
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMTE5MDExMyBTYWx0ZWRfX/bKu2VkT6EQ/
- 33jwRAkzEw+gFzKOs/shKLhRThzy8UR2nNezBPO7/jzcMF40tkCPvW6whvsKZ0xYO7DKo2XTxik
- IDV13cFyRVLik9V5ZVi6zfnYDmbktyDe8taK1zPPb0EWds3t59ZAg+wehwBKv8RnOIphq1M6S7Z
- yktDxi+psuL5sLGNKHSWT59vPCLWUUwmGpNqDquIG25HeqqZv89tUXKcYRjsxgOfSwIz71qKQXa
- 4Gyo3t0twlF08s0gylob/Ykaqp+jSUr8x5NvkZbCgnDmI10JB+OnYl03NelJqjiYtIUy0c2diZw
- x3sfZP+8DS7/T8ppJ3FFx01kKFSv/+2Vdc0C6FPw4nN76BwMagUXCBaAvt1yCna/RtyMUriw+NE
- GB9BTWk5N+kmF9qxgSIP4E7Y12STsQ==
-X-Proofpoint-ORIG-GUID: 6QwalyPPJQU9YZMH5C5C3POiQnP36FZz
-X-Authority-Analysis: v=2.4 cv=PJICOPqC c=1 sm=1 tr=0 ts=691dced6 cx=c_pps
- a=JbAStetqSzwMeJznSMzCyw==:117 a=FpWmc02/iXfjRdCD7H54yg==:17
- a=IkcTkHD0fZMA:10 a=6UeiqGixMTsA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=EUspDBNiAAAA:8 a=lhKjhfexzfBmDlcAgNcA:9
- a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=uxP6HrT_eTzRwkO_Te1X:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
- definitions=2025-11-19_04,2025-11-18_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 suspectscore=0 phishscore=0 impostorscore=0 spamscore=0
- lowpriorityscore=0 adultscore=0 malwarescore=0 bulkscore=0 priorityscore=1501
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2510240001 definitions=main-2511190113
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAGXSHWkC/3WNyw6CMBBFf4V0bc1MedS48j+MCyhTmcSAttCgh
+ H+34AIT4/Lc5Jw7CU+OyYtjMglHgT13bYR0lwjTlO2VJNeRhQKVI0ImfWfJAkhH1cC3WkJmrCm
+ oOJBGEa27I8vjWjxfPuzoMcRwv40N+75zz/U14LL+PwgoQdbW2BI1VaiLE4/c781LLKWgvmxMf
+ 20VbUKdQ55CgWQ2e57nN9Ax3mn/AAAA
+X-Change-ID: 20251104-sofef00-rebuild-04cfc6e68e71
+To: Neil Armstrong <neil.armstrong@linaro.org>, 
+ Jessica Zhang <jessica.zhang@oss.qualcomm.com>, 
+ Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, 
+ Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>, 
+ David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, 
+ Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>, 
+ Thierry Reding <thierry.reding@gmail.com>, Sam Ravnborg <sam@ravnborg.org>, 
+ Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konradybcio@kernel.org>, 
+ Casey Connolly <casey.connolly@linaro.org>, 
+ Jessica Zhang <jesszhan0024@gmail.com>
+Cc: dri-devel@lists.freedesktop.org, devicetree@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+ phone-devel@vger.kernel.org, David Heidelberg <david@ixit.cz>, 
+ Krzysztof Kozlowski <krzk@kernel.org>
+X-Mailer: b4 0.14.3
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2672; i=david@ixit.cz;
+ h=from:subject:message-id;
+ bh=30zdp00ssHhIY0HNpB1mEZhkfA29GQGRCgBxkHTNKNQ=;
+ b=owEBbQKS/ZANAwAIAWACP8TTSSByAcsmYgBpHdJxCvV6m5YJzmboX2MJ3rsvOYNmpY0I/N9qe
+ qp6mD33FnyJAjMEAAEIAB0WIQTXegnP7twrvVOnBHRgAj/E00kgcgUCaR3ScQAKCRBgAj/E00kg
+ cs+4D/9HKugFefH70tsVLJ0YUo21AB/Lx+KhnQL0uFXMgzIoq5TY+ez5QDGbAKJGRSjX4nBYst0
+ Y379l6+hvpaLs3kY2+jNAm2j+IEzF0P/3RXxUNCmv8CBsk1jtMsxcJz1e3uXVU5ShJZYEe70sLa
+ puuOi07P4WTzlYtqG8SywmhzPPELdVY2vGD423hFzjSck4cdtNXYsUkUh9bh8voq1/AuLRDmgYP
+ P/N6HMOwW79paMyDifuOYSEEw6b76+x4qlcero/t8GNmGd2N3DAEu4iuNZrKssrqd/itMrRcada
+ ntcFrwdg2evJ1c+K5rC8Jm93xoJ2YOFTnGU+pB7Ivp1DIQ8nOop2HacvfDVhb/zSkbmi39IMgt9
+ Pf02dIQeo80CxqpZCZC7tw6zmwx2LUKerGk4K/eaiDSVQOlAOYQVhCcolj/FMWxtQCg9JJsz3jy
+ YN4hWg+L0q8oeYUDtoUWZp9xht0kPo9gLRhkzRoJd9TMLhIckNyo05gmb5UtLNppspjEkMrjBh7
+ vcXHseO/ejimV3/ChOChQNGqDjgFRNIM1x3dRoD/D86WRdNGYjnsXofFB4rxyXrdHmuEUH9H4/s
+ wXM0WetyjgKmgFO//scrW4GsKOPswleBaVKnfY9wEBjVQ92QHXUgVwFc1Ql7YhITpmJ/zU9sV8o
+ 1rC845UWm/IW+zw==
+X-Developer-Key: i=david@ixit.cz; a=openpgp;
+ fpr=D77A09CFEEDC2BBD53A7047460023FC4D3492072
+X-Endpoint-Received: by B4 Relay for david@ixit.cz/default with auth_id=355
+X-Original-From: David Heidelberg <david@ixit.cz>
+Reply-To: david@ixit.cz
 
-On 11/19/25 3:01 AM, Jie Gan wrote:
-> 
-> 
-> On 11/18/2025 6:03 PM, Konrad Dybcio wrote:
->> On 11/17/25 10:31 AM, Jie Gan wrote:
->>> Add CoreSight DT nodes for AOSS, QDSS, Turing, and Modem blocks to enable
->>> the STM and TPDM sources to route trace data to the ETF for debugging.
->>>
->>> Signed-off-by: Jie Gan <jie.gan@oss.qualcomm.com>
->>> ---
->>>   arch/arm64/boot/dts/qcom/sm8750.dtsi | 981 +++++++++++++++++++++++++++++++++++
->>>   1 file changed, 981 insertions(+)
->>>
->>> diff --git a/arch/arm64/boot/dts/qcom/sm8750.dtsi b/arch/arm64/boot/dts/qcom/sm8750.dtsi
->>> index 3f0b57f428bb..56c2605f3e0d 100644
->>> --- a/arch/arm64/boot/dts/qcom/sm8750.dtsi
->>> +++ b/arch/arm64/boot/dts/qcom/sm8750.dtsi
->>> @@ -3313,6 +3313,948 @@ tcsrcc: clock-controller@f204008 {
->>>               #reset-cells = <1>;
->>>           };
->>>   +        stm@10002000 {
->>> +            compatible = "arm,coresight-stm", "arm,primecell";
->>> +            reg = <0x0 0x10002000 0x0 0x1000>,
->>> +                  <0x0 0x37280000 0x0 0x180000>;
->>
->> This region is a little bigger but it's not described clearly. Is there
->> a reason to use this slice of it and not the whole thing?
-> 
-> This region is about the STM channels which are allocated for APSS/HLOS. The channel 10240-20479 is allocated for APSS/HLOS, each occupied 256. So the start address is 10240 * 256 = 2,621,440 (0x28000). The length is 0x180000 because we only use part of these channels so far.
+This DDIC is essential for panels used in OnePlus 6 and Pixel 3a XL
+(SDC variant). With proper support, all downstream patches in
+sdm845-mainline and sdm670-mainline can be dropped.
 
-This is useful information. Could we better document it internally in the
-usual place one would go to check on registers?
+The mainline driver was broken so far, and with my recent introduction
+of S6E3FC2X01 driver, I had to "break it even more" due to OnePlus 6
+common device-tree changes which defined all the regulators and
+corrected properties.
 
-Konrad
+At this moment the first version of the patchset will not include
+Pixel 3a XL (SDC) as no testers yet volunteered.
+
+The code, including the Pixel 3a XL enhancement can be found at
+  https://gitlab.com/sdm845/sdm845-next/-/commits/b4%252Fsofef00-rebuild
+
+Signed-off-by: David Heidelberg <david@ixit.cz>
+---
+Changes in v3:
+- Drop arch prefix from the commit. (Bjorn)
+- Added Casey into MAINTAINERS file. (Casey)
+- Moved compatible legacy comment inline.
+- Link to v2: https://lore.kernel.org/r/20251113-sofef00-rebuild-v2-0-e175053061ec@ixit.cz
+
+Changes in v2:
+- General fixes to device-tree binding (Krzysztof)
+- Add myself as a maintainer
+- Updated commits wording
+- Link to v1: https://lore.kernel.org/r/20251104-sofef00-rebuild-v1-0-dfcfa17eb176@ixit.cz
+
+---
+Casey Connolly (2):
+      drm/panel: sofef00: Add prepare_prev_first flag to drm_panel
+      drm/panel: sofef00: Initialise at 50% brightness
+
+David Heidelberg (10):
+      dt-bindings: panel: Convert Samsung SOFEF00 DDIC into standalone yaml
+      arm64: qcom: sdm845-enchilada: Specify panel name within the compatible
+      drm/panel: sofef00: Clean up panel description after s6e3fc2x01 removal
+      drm/panel: sofef00: Handle all regulators
+      drm/panel: sofef00: Split sending commands to the enable/disable functions
+      drm/panel: sofef00: Introduce page macro
+      drm/panel: sofef00: Introduce compatible which includes the panel name
+      drm/panel: sofef00: Simplify get_modes
+      drm/panel: sofef00: Mark the LPM mode always-on
+      drm/panel: sofef00: Non-continuous mode and video burst are supported
+
+ .../bindings/display/panel/panel-simple-dsi.yaml   |  25 +----
+ .../bindings/display/panel/samsung,sofef00.yaml    |  79 ++++++++++++++++
+ MAINTAINERS                                        |   7 ++
+ .../boot/dts/qcom/sdm845-oneplus-enchilada.dts     |   4 +-
+ drivers/gpu/drm/panel/Kconfig                      |   7 +-
+ drivers/gpu/drm/panel/panel-samsung-sofef00.c      | 105 +++++++++++++--------
+ 6 files changed, 163 insertions(+), 64 deletions(-)
+---
+base-commit: fe4d0dea039f2befb93f27569593ec209843b0f5
+change-id: 20251104-sofef00-rebuild-04cfc6e68e71
+
+Best regards,
+-- 
+David Heidelberg <david@ixit.cz>
+
+
 
