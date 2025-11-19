@@ -1,127 +1,84 @@
-Return-Path: <linux-arm-msm+bounces-82420-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-82422-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [IPv6:2605:f480:58:1:0:1994:3:14])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4D022C6CDCF
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Nov 2025 07:07:43 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 458D9C6D0F3
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Nov 2025 08:17:31 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id A835A4ECBCA
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Nov 2025 06:06:53 +0000 (UTC)
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 6EEE54EEC38
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Nov 2025 07:16:54 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8FEF631355B;
-	Wed, 19 Nov 2025 06:06:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 636312E4266;
+	Wed, 19 Nov 2025 07:16:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="aTU/6E2/"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="dFd35Sdp"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D51C2D6E44;
-	Wed, 19 Nov 2025 06:06:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33D192BD033;
+	Wed, 19 Nov 2025 07:16:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763532407; cv=none; b=pTtSqudQcBxIvVJxcLy6WMGl/2r+onXVeZOabJfjeaYojtGVBfA3zhcL6mFTpld9rrgD62MQ18EP9JG9ho87EpSRgkn+IKinLr/c1nBcwb/gd5rMrgm6vJoDhKbDFdqx0u4DrZDCKwANoky3BsmV4+c9AiK+f7CHlaOJ1LHMoW0=
+	t=1763536610; cv=none; b=O4t3IrkwP9k6tkuUAPNt1KbymzcDYUMyRXE4fcR2pWJFrIXCvGfzehqScQ++e7dSk2gas34VhalLnQNrLLElkBxozecBXGrFi805T1M53sCxxbvFPh8Z4f/EE83mzQ9rDJxT6RkNcYziQNQ9IYinT4ZoP2/Yk3Uu4kn9OJSNytQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763532407; c=relaxed/simple;
-	bh=nEQCnRbdiI4INRoD7nPaYKHd6Awpb50IGD1nJZLNKG8=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=JNEhqiP5bc9aVFVcCz18yFrTKd4ZBw0BH5iprCbRtfPh5Qf1Nz/KTUp8hWEzkJqF5zjU+DAbr3oo/iXZJ5LShdhWKZcHK4PzrD4iR7Mg19CnE5oeHgH9tCFsSj+kuTnrt7xUYy/VogEPHKtEHdMhzS5veQXuH1fK9Ntujxcv25s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=aTU/6E2/; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPS id EC6D7C4AF0F;
-	Wed, 19 Nov 2025 06:06:45 +0000 (UTC)
+	s=arc-20240116; t=1763536610; c=relaxed/simple;
+	bh=K6fBoYewA0W2GUFp/TEVvPakFM7aTKgK3hNCpBa7nNg=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=S86fRG+opV9mHvpgSb/KECdF94ZVqa3o2+Ru9cFZUoEOx4zC8jMi1AnNGkMltkwQBhC7EdnpE1z3JVqU0D3Ll1cgjIWIV9yA+cOKAbn1B3atrlCft7myoZb56unLaxzKZNDO7rc9TxAjA+drmst4OxQQJE2NWEyr9NT4oLmtZ8E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=dFd35Sdp; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70E4FC2BCB2;
+	Wed, 19 Nov 2025 07:16:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1763532406;
-	bh=nEQCnRbdiI4INRoD7nPaYKHd6Awpb50IGD1nJZLNKG8=;
-	h=From:Date:Subject:References:In-Reply-To:To:Cc:Reply-To:From;
-	b=aTU/6E2/XAqZmOXdoI+8BjtDFggxQrDcjvsPFSZBQ5S6s50uCSTk9tv2wcgPJCBn6
-	 8solaC6Uu5l6Puxnqx1Dfd9CssBSlINKJ8vvPcOYT3XwHHmDlEyQn2/hdMtKo1LHek
-	 HSBwYvKmCaFOr7c2RSTh0QNPyxfKEpSqxHZYXNdb9XJRchfB4aaVZk31Q7vPjHCT7P
-	 rEJKHCxXvC9R+RUH7bXryRo5z444vX+OCChVn/lJ2N69blND1jOLdnXdAEWAWliYER
-	 eq3Qla2kKh7A6N+OlASuHBsSDOpjWqWTmyycKfJYLZwvdppVlDNK6QJEPl0LMwRhjP
-	 1ttHKtLjg/fBw==
-Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7E165CF258F;
-	Wed, 19 Nov 2025 06:06:45 +0000 (UTC)
-From: Fenglin Wu via B4 Relay <devnull+fenglin.wu.oss.qualcomm.com@kernel.org>
-Date: Wed, 19 Nov 2025 14:06:43 +0800
-Subject: [PATCH v3 2/2] leds: rgb: leds-qcom-lpg: Don't enable TRILED when
- configuring PWM
+	s=k20201202; t=1763536609;
+	bh=K6fBoYewA0W2GUFp/TEVvPakFM7aTKgK3hNCpBa7nNg=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=dFd35Sdp7SsVOFRkacZi4ILA4NnIPtHKmU/DA7ZvBkQvHrz9TMCkcu0lQz5nbfREY
+	 JnehFsKbRk0OdEnfHu1EGhSh+YluFD3hUliVo7nmqioo8gtnPY9Ld9nAtGPdLYYPMp
+	 LdaKqhxYWGo47fB8VXp9sCRr1ow+cnOvQnLgIZvA3hE0foT14RpLJ+GW9duIqqRPvf
+	 2n/p06d00BTLGeTh1LdGybbada7/oXc3w++50v3mU19S8zOX425OnlRYJWzLehT/L8
+	 Nq6eFYo5D3QCE7tRfFrYzj7dBqo0DT54aDNSq/eRMza3CpzjU/0Sgz2+EoRstsn+PF
+	 GA7VOrmEPn0lQ==
+Date: Wed, 19 Nov 2025 08:16:45 +0100
+From: Krzysztof Kozlowski <krzk@kernel.org>
+To: David Heidelberg <david@ixit.cz>
+Cc: Bjorn Andersson <andersson@kernel.org>, 
+	Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Sumit Semwal <sumit.semwal@linaro.org>, Casey Connolly <casey.connolly@linaro.org>, 
+	Neil Armstrong <neil.armstrong@linaro.org>, Jessica Zhang <jesszhan0024@gmail.com>, 
+	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, Maxime Ripard <mripard@kernel.org>, 
+	Thomas Zimmermann <tzimmermann@suse.de>, David Airlie <airlied@gmail.com>, 
+	Simona Vetter <simona@ffwll.ch>, phodina@protonmail.com, linux-arm-msm@vger.kernel.org, 
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, phone-devel@vger.kernel.org, 
+	dri-devel@lists.freedesktop.org
+Subject: Re: [PATCH v3 1/8] dt-bindings: arm: qcom: Add Pixel 3 and 3 XL
+Message-ID: <20251119-loyal-aromatic-lionfish-c56c22@kuoka>
+References: <20251118-pixel-3-v3-0-317a2b400d8a@ixit.cz>
+ <20251118-pixel-3-v3-1-317a2b400d8a@ixit.cz>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20251119-lpg_triled_fix-v3-2-84b6dbdc774a@oss.qualcomm.com>
-References: <20251119-lpg_triled_fix-v3-0-84b6dbdc774a@oss.qualcomm.com>
-In-Reply-To: <20251119-lpg_triled_fix-v3-0-84b6dbdc774a@oss.qualcomm.com>
-To: kernel@oss.qualcomm.com, Lee Jones <lee@kernel.org>, 
- Pavel Machek <pavel@kernel.org>, 
- Marijn Suijten <marijn.suijten@somainline.org>, 
- Bjorn Andersson <andersson@kernel.org>, linux-arm-msm@vger.kernel.org, 
- Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>
-Cc: Subbaraman Narayanamurthy <subbaraman.narayanamurthy@oss.qualcomm.com>, 
- Pavel Machek <pavel@ucw.cz>, linux-leds@vger.kernel.org, 
- linux-kernel@vger.kernel.org, devicetree@vger.kernel.org, 
- Fenglin Wu <fenglin.wu@oss.qualcomm.com>
-X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1763532404; l=1457;
- i=fenglin.wu@oss.qualcomm.com; s=20240327; h=from:subject:message-id;
- bh=U+wcmaq3xYdZ4UGGBdL6UlkAePK6V2RVv6Nso37Fbso=;
- b=7NXgXUkI+Lc6RUBYvT8HCUX3BNbVJKBH/xcndfzx5AOUB6kvxNrBRFc/IlIzFADoASq4/3wos
- XA0PR8iqBqnBPoAEgnXVFJDxMS/OcEvn3/iuVGwMYBlVCqX8MhhWvf1
-X-Developer-Key: i=fenglin.wu@oss.qualcomm.com; a=ed25519;
- pk=BF8SA4IVDk8/EBCwlBehKtn2hp6kipuuAuDAHh9s+K4=
-X-Endpoint-Received: by B4 Relay for fenglin.wu@oss.qualcomm.com/20240327
- with auth_id=406
-X-Original-From: Fenglin Wu <fenglin.wu@oss.qualcomm.com>
-Reply-To: fenglin.wu@oss.qualcomm.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20251118-pixel-3-v3-1-317a2b400d8a@ixit.cz>
 
-From: Fenglin Wu <fenglin.wu@oss.qualcomm.com>
+On Tue, Nov 18, 2025 at 12:30:36PM +0100, David Heidelberg wrote:
+> Document the bindings for the Pixel 3 and 3 XL.
+> 
+> Signed-off-by: David Heidelberg <david@ixit.cz>
+> ---
+>  Documentation/devicetree/bindings/arm/qcom.yaml | 2 ++
+>  1 file changed, 2 insertions(+)
 
-The PWM signal from the LPG channel can be routed to PMIC GPIOs with
-proper GPIO configuration, and it is not necessary to enable the
-TRILED channel in that case. This also applies to the LPG channels
-that mapped to TRILED channels. Additionally, enabling the TRILED
-channel unnecessarily would cause a voltage increase in its power
-supply. Hence remove it.
+Acked-by: Krzysztof Kozlowski <krzk@kernel.org>
 
-Fixes: 24e2d05d1b68 ("leds: Add driver for Qualcomm LPG")
-Signed-off-by: Fenglin Wu <fenglin.wu@oss.qualcomm.com>
----
- drivers/leds/rgb/leds-qcom-lpg.c | 4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
-
-diff --git a/drivers/leds/rgb/leds-qcom-lpg.c b/drivers/leds/rgb/leds-qcom-lpg.c
-index 4f2a178e3d265a2cc88e651d3e2ca6ae3dfac2e2..e197f548cddb03d079c54c4a0f402402c5d047e2 100644
---- a/drivers/leds/rgb/leds-qcom-lpg.c
-+++ b/drivers/leds/rgb/leds-qcom-lpg.c
-@@ -2,7 +2,7 @@
- /*
-  * Copyright (c) 2017-2022 Linaro Ltd
-  * Copyright (c) 2010-2012, The Linux Foundation. All rights reserved.
-- * Copyright (c) 2023-2024, Qualcomm Innovation Center, Inc. All rights reserved.
-+ * Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
-  */
- #include <linux/bits.h>
- #include <linux/bitfield.h>
-@@ -1247,8 +1247,6 @@ static int lpg_pwm_apply(struct pwm_chip *chip, struct pwm_device *pwm,
- 
- 	lpg_apply(chan);
- 
--	triled_set(lpg, chan->triled_mask, chan->enabled ? chan->triled_mask : 0);
--
- out_unlock:
- 	mutex_unlock(&lpg->lock);
- 
-
--- 
-2.34.1
-
+Best regards,
+Krzysztof
 
 
