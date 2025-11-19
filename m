@@ -1,82 +1,83 @@
-Return-Path: <linux-arm-msm+bounces-82448-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-82449-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id A86E2C6D7F7
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Nov 2025 09:45:58 +0100 (CET)
+Received: from ams.mirrors.kernel.org (ams.mirrors.kernel.org [213.196.21.55])
+	by mail.lfdr.de (Postfix) with ESMTPS id 32452C6D7FD
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Nov 2025 09:46:08 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by tor.lore.kernel.org (Postfix) with ESMTPS id A33C72D667
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Nov 2025 08:45:57 +0000 (UTC)
+	by ams.mirrors.kernel.org (Postfix) with ESMTPS id 20CD634C5F2
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Nov 2025 08:46:01 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D65793002A7;
-	Wed, 19 Nov 2025 08:45:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0B7783043A1;
+	Wed, 19 Nov 2025 08:45:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="LhisBWhE"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="W41HWWO1"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f54.google.com (mail-wr1-f54.google.com [209.85.221.54])
+Received: from mail-wr1-f50.google.com (mail-wr1-f50.google.com [209.85.221.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40E332FD1B5
-	for <linux-arm-msm@vger.kernel.org>; Wed, 19 Nov 2025 08:45:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 869BE2FE564
+	for <linux-arm-msm@vger.kernel.org>; Wed, 19 Nov 2025 08:45:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763541950; cv=none; b=qdNjay5agi8+20DWqqWTkxLm1wToT2RNKrfb8If4j9J5LUFtXIos6itygLPNvYoivvUOgNSio6I+RMroLzKgp7L99/tdViCrCLbLmgFONWwa3zq06d12IzUPWnELozTW9WMz3hE6q+bed/TIUgWStmrN+vc052iB/gwywHk0V/U=
+	t=1763541950; cv=none; b=MB4d8OSCRqB19TPQ4JsJOAvYHjh2X89hYfGhOmPWIaHJLi3M0cQs/O9Pe07U7nKi6iUXQj77TFlRscSDnrEOYIODHY9+gcO+qUyks532ZpDBzsNJdWf44D5KnARAJc/k9HRL6WtAe9X7BUvzKIAQYf6EhQRX0N7JN/gpg+yRffU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1763541950; c=relaxed/simple;
-	bh=TXuhYGsW55IISOwAX0hINh3nofc7z+3ojcxWvdtoRek=;
-	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=fb9R0ZNSA9Do6U4cPiFEjxT2f/wmgX2/5phzwqYo7bA5s+JA+n0xQMzvd3g9P6w/Hc+tfxKi3v08/UwwhHUsPnoZXyG5eMu8uZa558/UpVVHXFKw0Aiz6qJmkm1rmaLP6bNX++e6RXEVX7/o91mmhGnaozAQAymuaV31zzLqS8g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=LhisBWhE; arc=none smtp.client-ip=209.85.221.54
+	bh=Wwhv46WDe0N83GsQcFn0TZLW8DtrCuNOWijlSA0+FNo=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
+	 In-Reply-To:To:Cc; b=eIiHFwntdc2K+YrEi/xiv0V++Ip00olHyoxDyJPozjdwGKHr0OuoAzzmRi5WJX4lnrIg4czuLw3qjCkfoRdi7EoQzoXOO+HVXFjBllV/xn7jcDezx4DTWd95NcNaOX9u9+YBaDfLA2+8uNikHyns4ZusoATRKFxwyxlo3WD6IPg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=W41HWWO1; arc=none smtp.client-ip=209.85.221.50
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wr1-f54.google.com with SMTP id ffacd0b85a97d-429c7869704so4822002f8f.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 19 Nov 2025 00:45:46 -0800 (PST)
+Received: by mail-wr1-f50.google.com with SMTP id ffacd0b85a97d-42b32ff5d10so395380f8f.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 19 Nov 2025 00:45:47 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google; t=1763541945; x=1764146745; darn=vger.kernel.org;
-        h=cc:to:content-transfer-encoding:mime-version:message-id:date
-         :subject:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=E3GucV+GzoG4WyLANsgiY2XfGGlIy+gJfrdoUBjs0Ww=;
-        b=LhisBWhElQa1o2QZOG3G5jfJSkOllZa7vZvFY2nD31fqs42X1hc488nyHxyl5V1g6H
-         mOuwjKxd7wtBaK+r/s00Kj0aws5BoV4vIxJhqUyt/vEzaMrQDOqchTlAKfTTmTTJ47Vb
-         eCX0MVl0pA+ddUZpk6uagV2ekxPOVxodMLbRZ9QIpa0y2AA2lc8WFL8N8H9xeO6pSJfv
-         6nt+KIMOJ/UhV3tKMXEJ2bdLiqYLXqasCYqewkgTMfJL6mHhRAwgmdfYyXklRjVpk3za
-         I0mL3rapTceTg9648J5cYeJuii01AJQAsTxOOPglFWFW50LrO87De+2zmT7teaE1EiHB
-         DTUw==
+        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=KRZnHA1TGMwuASpPE7D+kKGJIb0IcO74PDiT85kyX1U=;
+        b=W41HWWO1u31JzaOnENzEXWfS7EsE68G1lK7Xm41D4ZgIGgaM55VlLI5cp/S5yFM0Hp
+         uANQs6iDH0gE5Sim8tcTikPYPOCMCP682ce9wYj3WYvgvTcFN9nkklX1TUAt99FVPZIV
+         GdjSNXgwUMPKSYRT2Z9YttjVRo7puFteGUj4/c5ephDcNgFf45K6fl+b/DXqT1I3LcPl
+         aA1P31EpjQ8/NoAdKhnKO473BYsmOE4sIM8+u2NBI5rpDxC9+D0do1GCH5FFaBxaTV/f
+         frucBvWXmGG9KxPkE8z+yNld0OoL7J3Sk2k4NINYi8hmy7rJP4fnzMHqeLnyFsIDAxJx
+         itTw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20230601; t=1763541945; x=1764146745;
-        h=cc:to:content-transfer-encoding:mime-version:message-id:date
-         :subject:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=E3GucV+GzoG4WyLANsgiY2XfGGlIy+gJfrdoUBjs0Ww=;
-        b=sNcCqBwOzzRi9JsySKyPa4NwsMVyoidgJOSM+ep7Hxo1qjQXhoYvGYgH+TEhxrvUAk
-         q+qvnbNLAGFvzCrmqvaBOqLCK2Osv3U0xdCv6PsPor1ctvkqaVniL0GIp2XX4zP2T9ny
-         vs0w2inDAD0joR5Ym2miXKMsNxw8n2l1QM3gXbmoCcC7AewQLcM3CR6UfT6YwKSZszmr
-         rz5eBbH5tDnt9MKCfMPFVGu2zge3Y3nXn/OhMeh2jvkL8jyEw4JW4qyVQj05ZS5ATI/8
-         uLQxCYA98gmC4Ls9DjaeRF5gld/Ql3JtIZ5ztZ/IqY5YQ+tWMujfvCowPNhkRtZjyez/
-         4pmw==
-X-Forwarded-Encrypted: i=1; AJvYcCUJlkMXikkc5cvFE3vsDNu/LPjo5pQrYMEF6VhWAAAAQuF1kZlS5zY7gVJrFv9mYwJvXqbz5FcSxCvjzEWR@vger.kernel.org
-X-Gm-Message-State: AOJu0Yygq8I+kfzHDiycmYNnqrNinAALIFKpg/251TqoOwqA4bDkQwrR
-	PG1IOSrC7OwiTVTt2vKcD2wt4ANE9H+QiHWE+k8t+AiUvcCeKFdqYtCHDvlC6RLKO9I=
-X-Gm-Gg: ASbGncuF/5cGBStdIAW2dqPKDvzuQ9FOo6+bCwgkGz7KPBO6tk10wtB6Kx04uYPVoSk
-	KaaPTAW28el40j6xoViN54bKCiPXB4uqdsHUVRbJzMWz4vTzH2sBCq4Zdz9JwhQsKJLXSvixehH
-	ulUhQMIIwkIp8BnaiW+G/7gi6y1xzA+T2XF66huZPVzQuJynkNfFw2IOeZfg77yoFgvmoigTCJY
-	iUkeYjcWZMc3TE7UgQhFao1p0NUm4oOj0NhdcCz0r0LebSwSDVsekjxPJGQXB5vYatGnZ4Hm0mI
-	l692G810nyq3TEAjloC9Q8R9NI+oAoqFn9nBrVbp1OVE9xZnoRCchPYTT9WM/E3N30eD+9FSYrw
-	wb1D8oGCJSl7u/Q4m3/gzXB17Oahf3/T3pc5UCvnnb/OjmEdqSCdl8s8asZ03RVAwwiwLysed2J
-	Lvq6Wb/ymDLcUc2o5qIolys5tvptiv1+yebjbaOLKHu/v9d0ZQSBLM
-X-Google-Smtp-Source: AGHT+IG4Gv3cm9hV53MWodUTfGOGPmkC5Ip7TMWoRz7vtoZP8JZ7tgzPXUhPB/bP42Xqla588Cy9Yg==
-X-Received: by 2002:a05:6000:2909:b0:429:d66b:507f with SMTP id ffacd0b85a97d-42b5939111dmr19492885f8f.48.1763541944528;
-        Wed, 19 Nov 2025 00:45:44 -0800 (PST)
+        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+         :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=KRZnHA1TGMwuASpPE7D+kKGJIb0IcO74PDiT85kyX1U=;
+        b=Y/EMG9lCqHHOKhf1YpYju3vJOyU3krLn734LINBLa8D7VdnR0wy2BLGi6DlmQrwggi
+         /DRm8JQj5Zx8b9BehZ3qwZQ/IWUA+arlwQ5TukOlYr4Xa39hb64gavS5C0FrOljPQdNF
+         TUPOnEljU7l9IXBjrK0o1Ju0A6QvVKkDWUIfd5b0yNUFVF42dyRL7aO/r4opNJGOoUyK
+         5Wn++mTClhsvwtOKcq+j7JGWkRSNVyQaZR9ek5XvHgSXiqiEb7Q6rD4ZxWdCe2Ix62cz
+         IjwWvcuQJsW7o9KY4ZPGYKuCIgDM27etraFFk2GO7IJg5CpS0a3bx+Ety3z2GzgCkPmP
+         jQ8Q==
+X-Forwarded-Encrypted: i=1; AJvYcCUGCYv4RRWHW5JZqFY2C9y2PqXFiluehXxJwwNg7NcKsEmZR9/TlzON3/scyBvTYhZHt+epkdfCwBPvarJf@vger.kernel.org
+X-Gm-Message-State: AOJu0YwprM+5JBxAyXv9AtWMDJP0eVuGKcjht8SK89Ko+TMjp3hRtsLZ
+	pI00IUK0qUC4KFNekNnzkzUKMp7u7X6BDLCr/Baqvvu8gRCvDjd92uAWYSv/7pNGOyY=
+X-Gm-Gg: ASbGncsXJEsTxzwtLlP/IggUq5WswpIgNSqgFxUofbtHTFkX122x2jgxJpzcxFQbfsE
+	Ektsy1U+AeeDfUwqRU2hRqZ/G0yxiYerIWqhWHBuTSJkTqMkriY+LA9YWadhRMtVNjNp8Q0Z2h2
+	oYKPl39crk0bVpAhUeqIh1x8yFYM/I6X5Lk6drCmklL1N4TpHIH42yeWLn7ksPP0BeDJYVI6Jyh
+	M6IYD6loNe8JxYSgsZ5cdGHWZ9KVAxBC/QKxJTB3fljWQECtvou6ei+QMCmrA2XlBP94OyunlQn
+	aBekwCVaGndkqXb02/ezR9w+lwltvMxhAt5KKRDBytcx6N2C8jnBrgzmHLZt/xaqgXu41nU8qlv
+	OwdMI6nwij82OLhNtB1FpTScRKap4tFbwhV1Js5kns4ghFKjQVkNySbajMFQeK+YL+Ym0PAVFIo
+	UcW6REwp8XdKM9IsIryE9GSB9csg73iO4kPy0Px+QRkA==
+X-Google-Smtp-Source: AGHT+IEw4Q1mHxyV0GK0EF0R4D5Pe/ENQZYPBdBr/G/MCcXd/j+D5Ah/WQX+wudmSP9Pop/xn4L6Dg==
+X-Received: by 2002:a5d:4482:0:b0:429:b21e:49c3 with SMTP id ffacd0b85a97d-42cb2221330mr1506316f8f.26.1763541945401;
+        Wed, 19 Nov 2025 00:45:45 -0800 (PST)
 Received: from arrakeen.starnux.net ([2a01:e0a:3d9:2080:52eb:f6ff:feb3:451a])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-42b53f0b894sm38132306f8f.26.2025.11.19.00.45.43
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-42b53f0b894sm38132306f8f.26.2025.11.19.00.45.44
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
         Wed, 19 Nov 2025 00:45:44 -0800 (PST)
 From: Neil Armstrong <neil.armstrong@linaro.org>
-Subject: [PATCH v7 0/3] arm64: qcom: x1e78100-lenovo-thinkpad-t14s: add
- support for HDMI output
-Date: Wed, 19 Nov 2025 09:45:39 +0100
-Message-Id: <20251119-topic-x1e80100-hdmi-v7-0-2bee0e66cc1b@linaro.org>
+Date: Wed, 19 Nov 2025 09:45:40 +0100
+Subject: [PATCH v7 1/3] dt-bindings: phy: qcom,sc8280xp-qmp-usb43dp-phy:
+ Document lanes mapping when not using in USB-C complex
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -85,12 +86,9 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIALODHWkC/33SS07DMBAG4KtUXmM0fsZmxT1QF342liAuThoVV
- bk7TkEQFIvlP9Z8Y2nmhsZQUhjR0+GGSpjTmPJQQ/dwQK43wyng5GtGFKgARQme8jk5fCVBAQH
- AvX9LmFkvrLCeei1R7TyXENP1rr4ca+7TOOXycR8yk7X6vzcTDDgSbrzmDIJSz69pMCU/5nJCK
- zjTX0QDbSN0RbhzEULstLE7hG0R1UZYRZxgFiK1jsY9wjcIgzbCK6KkITwow7hxO0T8ILVJthG
- x/qS+MkK80L7bIXKDENZGZEWY0U7FToD08g+yfK2uhPdLvYPpe3/L8gmmTTMdJQIAAA==
-X-Change-ID: 20250821-topic-x1e80100-hdmi-3bd5b5bd2d96
+Message-Id: <20251119-topic-x1e80100-hdmi-v7-1-2bee0e66cc1b@linaro.org>
+References: <20251119-topic-x1e80100-hdmi-v7-0-2bee0e66cc1b@linaro.org>
+In-Reply-To: <20251119-topic-x1e80100-hdmi-v7-0-2bee0e66cc1b@linaro.org>
 To: Vinod Koul <vkoul@kernel.org>, 
  Kishon Vijay Abraham I <kishon@kernel.org>, Rob Herring <robh@kernel.org>, 
  Krzysztof Kozlowski <krzk+dt@kernel.org>, 
@@ -98,109 +96,136 @@ To: Vinod Koul <vkoul@kernel.org>,
  Konrad Dybcio <konradybcio@kernel.org>
 Cc: Xilin Wu <sophon@radxa.com>, linux-arm-msm@vger.kernel.org, 
  linux-phy@lists.infradead.org, devicetree@vger.kernel.org, 
- linux-kernel@vger.kernel.org, Neil Armstrong <neil.armstrong@linaro.org>, 
- Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>, 
- Abel Vesa <abel.vesa@linaro.org>, 
- Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+ linux-kernel@vger.kernel.org, Neil Armstrong <neil.armstrong@linaro.org>
 X-Mailer: b4 0.14.3
-X-Developer-Signature: v=1; a=openpgp-sha256; l=3228;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=4548;
  i=neil.armstrong@linaro.org; h=from:subject:message-id;
- bh=TXuhYGsW55IISOwAX0hINh3nofc7z+3ojcxWvdtoRek=;
- b=owEBbQKS/ZANAwAKAXfc29rIyEnRAcsmYgBpHYO1U8ojRWdv78LxWJ9eYS08dukYx1P4RMCSAkrC
- ibKx3M2JAjMEAAEKAB0WIQQ9U8YmyFYF/h30LIt33NvayMhJ0QUCaR2DtQAKCRB33NvayMhJ0VE9EA
- CVGIvcK2g0ddWKb0+iPh+T4WJK8x6lUVCl3zAI7fKh1LMi6c1xdHJNkWj9T9K4rA7NmvZyltEK9KWo
- bzN5+qkh5kkhGly8L3wELBfQBa8oMcFv8YjzwmYU6iqczQ2OxEkqG3bk82WUWAp6b7h8+YE5UZvhZv
- RJKp29IlxRt6awl1KOjsdERyM81F3zBm5VkdwP8PEdO2cDCY2d6K0Nbif1ihTx9TaV9GK6/qeBt5xa
- Y0auTfTeGxPyBzw8rSsUslHeS3kPPYlp0pOPfCnyP+iJu7SnLl4f/A8QJQpsri1fFETrvMbQYA3zeX
- Iu2lD4FwSdQkCXraV1gEMFN6j4ptokn2igg+SWENqbPAV6X3ypJXUgyCz9KJnTMrUOnkApW+m3OEnR
- Xy70o2HWTM9PYwhxWKHxyMH82VuA4a4iUob/60aOOZKGblGEohF2WNqB2NzmXSWjNBn7MefwPZEKSj
- br59xaVlSr32qxYllmq/3Jhr300Q8yQwn9h4K3c4HNVAymuVIEVLU6ogxIYaPEwS+E6L+dgXeBgio7
- yhZHgWMgCnrWdvusstfQbrx6gFB5Oq23GwamUoVT+aLHotWKZjOZWCvJVoT5MeyDz2sqMSb/DjPS/b
- gVbQH8vbbcfxmgc9itT2X+sX+YRc9IUG6Z5cQdbrg4Opv6fVA2viazMmtKKw==
+ bh=Wwhv46WDe0N83GsQcFn0TZLW8DtrCuNOWijlSA0+FNo=;
+ b=owEBbQKS/ZANAwAKAXfc29rIyEnRAcsmYgBpHYO2n8E2xlNYMqA/vWrlycejY8XU+ct7sH6PtbHN
+ /QFQdl+JAjMEAAEKAB0WIQQ9U8YmyFYF/h30LIt33NvayMhJ0QUCaR2DtgAKCRB33NvayMhJ0clkEA
+ CJJ1xBSkwbhKBqobEnJeg2Ffxcs8KjAGRW6ahppQTQkOnVDD5ju3l/aJdhj3RFJT5OQQ4xSTKVrGr3
+ 5NstALKqjtkMw4CQIuZHBJZIB9uYQShPCY5koRh4dNTLzCZWm02VvGAYwiwB2Y8nYODf9iZYc48fUw
+ 0txVzBsPT66ICYsF5CdY67molSRvFPUO25LTyAeYBndWLc0LIipqTKY+Ktxe2lETgWrCdv2Qc3Am2F
+ FlDeDDZ+q9gzdfvuDd0vb2UuCBlW+fs41+TZmTxEgUd7jWvlwZXtOV90isO158jCOm1bd+G++6MXmO
+ GRLBMnTB85QzwobTo7WwdB2T/mPudYiF2CvPoV0fdQKkRiSuCoxOdpHpTRIqDVgXcvj2yhUCRY+x2h
+ HWQXIlHLYoburfnA3anl2vtG+H9Q55qYr6+30HBPENQJJoR3+YFV7YIojyqyOk+TBvznUoW7hh5kjn
+ 9YcceGUb1F0Yu37ztPn65+Q4/Gob1pMdlcBGXM0R7ED6ohMjL5Bz5vVVM8qzkq8gKjsqGOfXEWMfrz
+ 0mS7tnEEWkn7E+CP9ouBZUKcQOcdGpNkVkEd200qB9FcLk/0rJugj+ps/74tWDVxoZp63ts7xR+RG8
+ B7Scz44SzpLCCorqQpqNzdk/2Igjd1RpPBtWnxw2vKOUcwpkdqG+AxunFTnw==
 X-Developer-Key: i=neil.armstrong@linaro.org; a=openpgp;
  fpr=89EC3D058446217450F22848169AB7B1A4CFF8AE
-
-The Thinkpad T14s embeds a transparent 4lanes DP->HDMI transceiver
-connected to the third QMP Combo PHY 4 lanes.
 
 The QMP USB3/DP Combo PHY hosts an USB3 phy and a DP PHY on top
 of a combo glue to route either lanes to the 4 shared physical lanes.
 
 The routing of the lanes can be:
-- 1/2 DP + 2 USB3
-- 1/2/4 DP
+- 2 DP + 2 USB3
+- 4 DP
 - 2 USB3
 
-We need be able to specify the lanes mapping to DisplayPort
-and/or USB3 peripherals when not connected to a Type-C complex.
+The layout of the lanes was designed to be mapped and swapped
+related to the USB-C Power Delivery negociation, so it supports
+a finite set of mappings inherited by the USB-C Altmode layouts.
 
-Add the documentation for data-lanes in the out endpoints amd
-use those in the driver to setup the right PHY mode and
-orientation.
+Nevertheless those QMP Comby PHY can be used to drive a DisplayPort
+connector, DP->HDMI bridge, USB3 A Connector, etc... without
+an USB-C connector and no PD events.
 
-Finally Add all the data routing in DT, disable mode switching and specify
-the QMP Combo PHY should be in DP-Only mode to route the 4 lanes to
-the underlying DP phy.
+Document the data-lanes on numbered port@0 out endpoints,
+allowing us to document the lanes mapping to DisplayPort
+and/or USB3 connectors/peripherals.
 
-All dependencies were merged on -next.
-
+Reviewed-by: Rob Herring (Arm) <robh@kernel.org>
 Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
 ---
-Changes in v7:
-- Rebased on -next, all dependencies are merged
-- Link to v6: https://lore.kernel.org/r/20251013-topic-x1e80100-hdmi-v6-0-3a9c8f7506d6@linaro.org
+ .../phy/qcom,sc8280xp-qmp-usb43dp-phy.yaml         | 69 +++++++++++++++++++++-
+ 1 file changed, 68 insertions(+), 1 deletion(-)
 
-Changes in v6:
-- Switched to __free(device_node)
-- Fixed to min_t, added review tags
-- Link to v5: https://lore.kernel.org/r/20251006-topic-x1e80100-hdmi-v5-0-c006311d59d7@linaro.org
+diff --git a/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-usb43dp-phy.yaml b/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-usb43dp-phy.yaml
+index c8bc512df08b..e0ec45b96bf5 100644
+--- a/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-usb43dp-phy.yaml
++++ b/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-usb43dp-phy.yaml
+@@ -78,10 +78,77 @@ properties:
+ 
+   ports:
+     $ref: /schemas/graph.yaml#/properties/ports
++
+     properties:
+       port@0:
+-        $ref: /schemas/graph.yaml#/properties/port
++        $ref: /schemas/graph.yaml#/$defs/port-base
+         description: Output endpoint of the PHY
++        unevaluatedProperties: false
++
++        properties:
++          endpoint:
++            $ref: /schemas/graph.yaml#/$defs/endpoint-base
++            unevaluatedProperties: false
++
++          endpoint@0:
++            $ref: /schemas/graph.yaml#/$defs/endpoint-base
++            description: Display Port Output lanes of the PHY when used with static mapping,
++                         The entry index is the DP lanes index, and the number is the PHY
++                         signal in the order RX0, TX0, TX1, RX1.
++            unevaluatedProperties: false
++
++            properties:
++              # Static lane mappings are mutually exclusive with typec-mux/orientation-mux
++              data-lanes:
++                $ref: /schemas/types.yaml#/definitions/uint32-array
++                minItems: 2
++                maxItems: 4
++                oneOf:
++                  - items: # DisplayPort 1 lane, normal orientation
++                      - const: 3
++                  - items: # DisplayPort 1 lane, flipped orientation
++                      - const: 0
++                  - items: # DisplayPort 2 lanes, normal orientation
++                      - const: 3
++                      - const: 2
++                  - items: # DisplayPort 2 lanes, flipped orientation
++                      - const: 0
++                      - const: 1
++                  - items: # DisplayPort 4 lanes, normal orientation
++                      - const: 3
++                      - const: 2
++                      - const: 1
++                      - const: 0
++                  - items: # DisplayPort 4 lanes, flipped orientation
++                      - const: 0
++                      - const: 1
++                      - const: 2
++                      - const: 3
++            required:
++              - data-lanes
++
++          endpoint@1:
++            $ref: /schemas/graph.yaml#/$defs/endpoint-base
++            description: USB Output lanes of the PHY when used with static mapping.
++                         The entry index is the USB3 lane in the order TX then RX, and the
++                         number is the PHY signal in the order RX0, TX0, TX1, RX1.
++            unevaluatedProperties: false
++
++            properties:
++              # Static lane mappings are mutually exclusive with typec-mux/orientation-mux
++              data-lanes:
++                $ref: /schemas/types.yaml#/definitions/uint32-array
++                minItems: 2
++                oneOf:
++                  - items: # USB3, normal orientation
++                      - const: 1
++                      - const: 0
++                  - items: # USB3, flipped orientation
++                      - const: 2
++                      - const: 3
++
++            required:
++              - data-lanes
+ 
+       port@1:
+         $ref: /schemas/graph.yaml#/properties/port
 
-Changes in v5:
-- Fixed bindings tab
-- Add comment about exlusivity of the static lanes mapping
-- Fixed the single lane phy entries
-- Switched to of_property_present()
-- Moved the ss2 nodes after ss1 in DT
-- Link to v4: https://lore.kernel.org/r/20250930-topic-x1e80100-hdmi-v4-0-86a14e8a34ac@linaro.org
-
-Changes in v4:
-- Add definition for single lane DP
-- Fix lanes mapping for DP in bindings and driver
-- Add documentation on how to interpret the data-lanes numbers
-- Rewrite driver support for be simpler and split into helpers
-- Rebase DT on next and drop phy.h include, and use proper mapping
-- Link to v3: https://lore.kernel.org/r/20250908-topic-x1e80100-hdmi-v3-0-c53b0f2bc2fb@linaro.org
-
-Changes in v3:
-- Move the static lanes mapping in data-lanes in the out endpoints
-	- new bindings
-	- new drivewr implementation
-	- new DT layout
-- rebased on next, fixed simple bridge rebase
-- added link frequencies for dp2
-- Link to v2: https://lore.kernel.org/r/20250902-topic-x1e80100-hdmi-v2-0-f4ccf0ef79ab@linaro.org
-
-Changes in v2:
-- Model the HDMI transceiver as a simple bridge
-- Switch to a static lanes mapping property
-- Link to v1: https://lore.kernel.org/r/20250821-topic-x1e80100-hdmi-v1-0-f14ad9430e88@linaro.org
-
----
-Neil Armstrong (3):
-      dt-bindings: phy: qcom,sc8280xp-qmp-usb43dp-phy: Document lanes mapping when not using in USB-C complex
-      phy: qcom: qmp-combo: get the USB3 & DisplayPort lanes mapping from DT
-      arm64: dts: qcom: x1e78100-lenovo-thinkpad-t14s: add HDMI nodes
-
- .../phy/qcom,sc8280xp-qmp-usb43dp-phy.yaml         |  69 +++++++++-
- .../dts/qcom/x1e78100-lenovo-thinkpad-t14s.dtsi    |  81 ++++++++++++
- drivers/phy/qualcomm/phy-qcom-qmp-combo.c          | 142 +++++++++++++++++++--
- 3 files changed, 283 insertions(+), 9 deletions(-)
----
-base-commit: fe4d0dea039f2befb93f27569593ec209843b0f5
-change-id: 20250821-topic-x1e80100-hdmi-3bd5b5bd2d96
-
-Best regards,
 -- 
-Neil Armstrong <neil.armstrong@linaro.org>
+2.34.1
 
 
