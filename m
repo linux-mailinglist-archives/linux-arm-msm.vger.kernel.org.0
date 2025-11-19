@@ -1,209 +1,147 @@
-Return-Path: <linux-arm-msm+bounces-82433-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-82434-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [IPv6:2605:f480:58:1:0:1994:3:14])
-	by mail.lfdr.de (Postfix) with ESMTPS id 078F2C6D589
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Nov 2025 09:14:36 +0100 (CET)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0AEB5C6D4B1
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Nov 2025 09:06:53 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 78B694F9E40
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Nov 2025 08:06:21 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTPS id D8A422D469
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Nov 2025 08:06:51 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1579332AACA;
-	Wed, 19 Nov 2025 08:02:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=ti.com header.i=@ti.com header.b="P0rQ/3D2"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 305F932571A;
+	Wed, 19 Nov 2025 08:03:47 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from SJ2PR03CU001.outbound.protection.outlook.com (mail-westusazon11012013.outbound.protection.outlook.com [52.101.43.13])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 431472C0298;
-	Wed, 19 Nov 2025 08:02:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.43.13
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763539352; cv=fail; b=Z0Z9WcTIqKEErBkWAA8BzKpagg67z54g70N3D+stfVtibOvD8fRjiuJ83Lk6ug8K6Z92Zfv+sM/IG+oRZLdfFogd0NuJfZA6kxu+RGeCfiYdVYaWGq7KHCvfvYCqkX8USt6UlJkoeWfv3lGYAnMeSN1WbYb/PykK4PHUtLQBjiM=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763539352; c=relaxed/simple;
-	bh=DzALetMYRuIFfi8+MRUnOTQOx0pH5gtfI0CWVACwcoQ=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=m3CTycTPgPxNQjd4LR/8BEsW4h6gCzhOGaBck26YRUwGd+dEHpv7h0MdVE65PHsw/9ZioAvMGpieMXbW1DGydba46Bxszedfb8G4XLEeWU+4IkMqx/ivX8wZAgHovtcq0k+FJpF753TKQdng3jDdNgyzKitGoqXNzL8pKQFMx9k=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ti.com; spf=pass smtp.mailfrom=ti.com; dkim=pass (1024-bit key) header.d=ti.com header.i=@ti.com header.b=P0rQ/3D2; arc=fail smtp.client-ip=52.101.43.13
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ti.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ti.com
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=FPhiSLWDVpGtVJ5C8SEN3rCb92x4Afa++qHnckIZFKoEk76ZoOguKTjW0IKoy0++VYQ280JdYF9HPlhY4PmPZC474OgoiEXjs9OrmBwQWqn2yGq6lzsVNB/xDmBtFZkoHqGaEDJhOQ0l//PmArniMJABllvhUjfG/QrV1OVLa5rpx0zYG2RlGy/AFe1I81RiFo3EdjPhxyPgYqjp1ZDNuTSiD7b8dtRAh66YA0PzG16Bs0CkIgA6S5pTcSpRwR887sgIbf7pOQcntVnQEmGi7xTOQLoRh7vyCiafybpGEAlRRu50R2XEtMdLpMZ9SZ5+aP41Y7VsZZny6zDQ02anJQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=13mY2eR7qW6Vl38zuwkOzuD9Ee+NuteGwGb10JK1zbM=;
- b=LJIg0sX9sGmukAUxwYtddwrjg+EoaGM3gwFJ96s7ue8o4VJnYFvR6FY/s/nYZ3wq4r0jZ72lyiELcrJgmG/Ntag3GUslt/0pMybJJhSVoAuNPhYOfjrcBvA+k6ybht9MeS16DfnXkNl4nGxENARq8epgAvTkskYbpf0sGT2uUvLdH73MmjKVPxLcpc/iPBZ0X8OWDVLDTGxY6RjmEPGjh64t9yex6fCH5go3/eRQPKm3iOsz9r6+8y3NqoJ2KlJPwTPPar4woItdrk2tydfjPhrcvmcz1lYNToj7LEwA5f10PMMmYHkgAbO3bUkKo9059Ip2rKpC3ROq0ZKOtNEV6g==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 198.47.23.195) smtp.rcpttodomain=st-md-mailman.stormreply.com
- smtp.mailfrom=ti.com; dmarc=pass (p=quarantine sp=none pct=100) action=none
- header.from=ti.com; dkim=none (message not signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ti.com; s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=13mY2eR7qW6Vl38zuwkOzuD9Ee+NuteGwGb10JK1zbM=;
- b=P0rQ/3D2BSW9PHk2FN8fHrWgYq9mEqeeGLd/YGN+sxs3h4fJ+8aBqRe872W01bHXPy3jbmAOLhei1EaXhAA1rLYIZhqByW6U7IAbSIpr6zNNVpthXEfywYI02wRWncECEPlc3cqZFcXB6WGFva0w2tqwj8TuILD+p6uU3C8AmSc=
-Received: from DS7PR03CA0018.namprd03.prod.outlook.com (2603:10b6:5:3b8::23)
- by BN0PR10MB5190.namprd10.prod.outlook.com (2603:10b6:408:12b::15) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9343.10; Wed, 19 Nov
- 2025 08:02:26 +0000
-Received: from CY4PEPF0000EE3B.namprd03.prod.outlook.com
- (2603:10b6:5:3b8:cafe::6d) by DS7PR03CA0018.outlook.office365.com
- (2603:10b6:5:3b8::23) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.20.9320.22 via Frontend Transport; Wed,
- 19 Nov 2025 08:02:26 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 198.47.23.195)
- smtp.mailfrom=ti.com; dkim=none (message not signed) header.d=none;dmarc=pass
- action=none header.from=ti.com;
-Received-SPF: Pass (protection.outlook.com: domain of ti.com designates
- 198.47.23.195 as permitted sender) receiver=protection.outlook.com;
- client-ip=198.47.23.195; helo=lewvzet201.ext.ti.com; pr=C
-Received: from lewvzet201.ext.ti.com (198.47.23.195) by
- CY4PEPF0000EE3B.mail.protection.outlook.com (10.167.242.14) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.9343.9 via Frontend Transport; Wed, 19 Nov 2025 08:02:26 +0000
-Received: from DLEE100.ent.ti.com (157.170.170.30) by lewvzet201.ext.ti.com
- (10.4.14.104) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256) id 15.2.2562.20; Wed, 19 Nov
- 2025 02:02:25 -0600
-Received: from DLEE210.ent.ti.com (157.170.170.112) by DLEE100.ent.ti.com
- (157.170.170.30) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id 15.1.2507.55; Wed, 19
- Nov 2025 02:02:24 -0600
-Received: from lelvem-mr06.itg.ti.com (10.180.75.8) by DLEE210.ent.ti.com
- (157.170.170.112) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.20 via Frontend
- Transport; Wed, 19 Nov 2025 02:02:24 -0600
-Received: from [172.24.234.212] (uda0510294.dhcp.ti.com [172.24.234.212])
-	by lelvem-mr06.itg.ti.com (8.18.1/8.18.1) with ESMTP id 5AJ82JXv1541040;
-	Wed, 19 Nov 2025 02:02:20 -0600
-Message-ID: <4c787312-2340-437d-9d52-9917d29e3eac@ti.com>
-Date: Wed, 19 Nov 2025 13:32:18 +0530
+Received: from zg8tmja2lje4os4yms4ymjma.icoremail.net (zg8tmja2lje4os4yms4ymjma.icoremail.net [206.189.21.223])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0C1DE2DC32E;
+	Wed, 19 Nov 2025 08:03:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=206.189.21.223
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1763539426; cv=none; b=LYTPGvctAmhwftiJROrf/WoDUNC2AzKfplFOpeqtFm/gvfPPuSiPhr4WNH2naZu9f7PIUVReY/HJjo3LfNKzqPyWiJ8SyaL/pq53CAt8C4WkyKLl2N4f1haZyp4iXn95Po5Y1mAM44m9ulsxBMmeuoEk5t71g16weI/0aV5Y6HY=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1763539426; c=relaxed/simple;
+	bh=e/H6vW41fo2bvHSftL/gRerCHI3QYwEuO4RpiZsYgD0=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:References:Content-Type:
+	 MIME-Version:Message-ID; b=ALPhS0DT4BXi3/OvTS5QBlyd1iGrFDiUdEPTAu1kjyu6CVIC1t8WmlwKyF/1vLUMzNGCz7Hv5q3PKMct+/UntRrPMrctxV39gp4CCUw/JTj6gSertzKVWxHawO0bvrlAXIgMbsqJNjGZTFgGWnDazk57puUjc13lb5MEpVQu1ro=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=eswincomputing.com; spf=pass smtp.mailfrom=eswincomputing.com; arc=none smtp.client-ip=206.189.21.223
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=eswincomputing.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=eswincomputing.com
+Received: from zhangsenchuan$eswincomputing.com ( [10.12.96.83] ) by
+ ajax-webmail-app2 (Coremail) ; Wed, 19 Nov 2025 16:03:22 +0800 (GMT+08:00)
+Date: Wed, 19 Nov 2025 16:03:22 +0800 (GMT+08:00)
+X-CM-HeaderCharset: UTF-8
+From: zhangsenchuan <zhangsenchuan@eswincomputing.com>
+To: "Manivannan Sadhasivam" <mani@kernel.org>
+Cc: "Bjorn Helgaas" <helgaas@kernel.org>,
+	"Manivannan Sadhasivam" <manivannan.sadhasivam@oss.qualcomm.com>,
+	lpieralisi@kernel.org, kwilczynski@kernel.org, bhelgaas@google.com,
+	will@kernel.org, linux-pci@vger.kernel.org,
+	linux-kernel@vger.kernel.org, robh@kernel.org,
+	linux-arm-msm@vger.kernel.org, vincent.guittot@linaro.org
+Subject: Re: Re: [PATCH v2 2/3] PCI: qcom: Check for the presence of a
+ device instead of Link up during suspend
+X-Priority: 3
+X-Mailer: Coremail Webmail Server Version 2024.2-cmXT6 build
+ 20241203(6b039d88) Copyright (c) 2002-2025 www.mailtech.cn
+ mispb-72143050-eaf5-4703-89e0-86624513b4ce-eswincomputing.com
+In-Reply-To: <qu3gnvl7t7ehpxhkchz6ragjoeafktwr4dtstattthfv3jezd7@zrfwrlr2vzx5>
+References: <zgj3ubyb234ig6ndz6ov5q3szvuxnd3jkz2rjglbad4ksri6nl@ov7boxuar4va>
+ <20251113172250.GA2291436@bhelgaas>
+ <qu3gnvl7t7ehpxhkchz6ragjoeafktwr4dtstattthfv3jezd7@zrfwrlr2vzx5>
+Content-Transfer-Encoding: base64
+Content-Type: text/plain; charset=UTF-8
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6] remoteproc: Use of_reserved_mem_region_* functions for
- "memory-region"
-To: "Rob Herring (Arm)" <robh@kernel.org>, Bjorn Andersson
-	<andersson@kernel.org>, Mathieu Poirier <mathieu.poirier@linaro.org>, "Shawn
- Guo" <shawnguo@kernel.org>, Sascha Hauer <s.hauer@pengutronix.de>,
-	"Pengutronix Kernel Team" <kernel@pengutronix.de>, Fabio Estevam
-	<festevam@gmail.com>, Geert Uytterhoeven <geert+renesas@glider.be>, Magnus
- Damm <magnus.damm@gmail.com>, Patrice Chotard <patrice.chotard@foss.st.com>,
-	Maxime Coquelin <mcoquelin.stm32@gmail.com>, Alexandre Torgue
-	<alexandre.torgue@foss.st.com>
-CC: Arnaud Pouliquen <arnaud.pouliquen@foss.st.com>, Peng Fan
-	<peng.fan@nxp.com>, <linux-remoteproc@vger.kernel.org>,
-	<imx@lists.linux.dev>, <linux-arm-kernel@lists.infradead.org>,
-	<linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-	<linux-renesas-soc@vger.kernel.org>,
-	<linux-stm32@st-md-mailman.stormreply.com>
-References: <20251031175926.1465360-1-robh@kernel.org>
-Content-Language: en-US
-From: Beleswar Prasad Padhi <b-padhi@ti.com>
-In-Reply-To: <20251031175926.1465360-1-robh@kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-X-C2ProcessedOrg: 333ef613-75bf-4e12-a4b1-8e3623f5dcea
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: CY4PEPF0000EE3B:EE_|BN0PR10MB5190:EE_
-X-MS-Office365-Filtering-Correlation-Id: fd28589b-aac0-4d78-3f7a-08de2741fab5
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|1800799024|82310400026|376014|36860700013|7416014|921020;
-X-Microsoft-Antispam-Message-Info:
-	=?utf-8?B?MW1LK2J3MVJ3RDF1cm1qNndudnJSd3BaNDNzMnl1MjgvSzBZcE5TMGRKUUVM?=
- =?utf-8?B?V1hCMDlZT09ncHl3MDBReUdGVXlFQmdvOFhFUCs0dElhS2M4dHcyT1VSeGQy?=
- =?utf-8?B?T2pIRk1kN3hIR1BRcVVtbkNLbXFqdG9ISURhSVJ0TXNtSHM5bjZvNld4djVP?=
- =?utf-8?B?dXBkemdMc1p2eGRzNm5ta05hYWNwMDN6cjVwSUtwU01ZTEduODJMZ1Q5eUJJ?=
- =?utf-8?B?ME9CQ1UrMktrT2xvV085bGpJdG5ySVNHV0IvTWZOT2hFbVJ1UllqZ2VxVzBS?=
- =?utf-8?B?Z1ZzQytsUTdMa0VXRjNLUWR0c21CYVAyYWYyVGhUMUR0WGxCWnRNT3VmMVRE?=
- =?utf-8?B?UEwzN2lHZWtEYnpWOWY0ZjRLSWFHWnF0aFV2ZFJjSlRoVUxjY01hMkF5Yy9C?=
- =?utf-8?B?SGVpdlRmUVAvdmUzNHhiQUF1eWNwcndiT3B5Y3hCbFRmbHNVWGlNWTh4Zngw?=
- =?utf-8?B?NkdGdWtJM0VodXRvSWJCWWRPYm5ITFk2dkl1dlFOMlRIWFgvR1dYTUFtNGZo?=
- =?utf-8?B?K3c0OE9NWUw2V0VBY1FhTU5oUHB6d3VVS0RNTStjUE96MDFXMHR6OVdaT2xL?=
- =?utf-8?B?RjN0b3MxM3BpSVpIQXJnVXhqMkM4V3M4eit5dUVOSzBKRS94RGR6NzFnUy9w?=
- =?utf-8?B?S29hTzBkLzNXbUlwYU5ieTU5YnJOYzVKSkMrOUp5dUZyV2FLdVpqZmRKTm5X?=
- =?utf-8?B?Tkk4K2trendJN3FnamtQSEIrSXZaZHRZMFdWM0szZVIrUVQ0VUJqYjVNdE1U?=
- =?utf-8?B?REc5dDVaZnptd2c5YUZvY1UxYXFqUVpQZUhKOVUrTzAvVjhSbGNKcWZhK1J5?=
- =?utf-8?B?RkFBajlWaVg1M3ZubEJGaHd5MDFFVHNEOHJCTXk5WWZaTTM0UjFmazhoL0h4?=
- =?utf-8?B?a3orTXV6NmI3amF3amRud0E3c2drNFhvT3AxVzBMdE9rSUFTbGlzZG9Jd00r?=
- =?utf-8?B?ZmxlTm9aTUlEUmxMVDZVa0lZODZMQTllYmpyQStFNndrUEhudEpGcmZYZzZE?=
- =?utf-8?B?dytpcW1wd3JvbzdoZUYzaGhhZU40aFZhN2RVRmg3amxvLytwWXVoOGJjQk5G?=
- =?utf-8?B?QVdISVRNVmFaSVErWVRaZmIvMkVxaFJwbnJscUk5a3Y2dXBIUDdQcHFKbjcw?=
- =?utf-8?B?U0Mwb1ZxWk1rQlRNNFBLTzBzQzFmbjZXQ3VYRVpLWHVNdk41MkhhV2NjRXBO?=
- =?utf-8?B?dlJDUlcrSEtwRmV4aUYreExjSFZ4aVRmWXVkSS9WQjRqU3hUVVhiVmtvOXZP?=
- =?utf-8?B?dVNXMUdoTjh1bFFKUy9EbTZSVEx3MWlZVVUzMHM5aGdiMkE2bWcwZGh3cVQ5?=
- =?utf-8?B?R2ZVY3krUG1JN0pwQldVa0lGWE1aU1M4N21lRjhFdEFiRUhWOTNiaU1ZYXE2?=
- =?utf-8?B?ZVJySUFMdmJ3OEc0UWRWY21XNnNXZlh2ckF0Q24xNVFqa1BFRkFRZ0ZFS3BV?=
- =?utf-8?B?NVBsL0tHakJsbEZySVcvbkdmenZYNzZSa1dUWm5GRmlEblV5OEUxOCtxc2l2?=
- =?utf-8?B?dm9ldDg5ZnB4VnVHMVJ4MHZycVhaZjg4WGdzN3VNVFcrWFVqOUFYT2s4Zng0?=
- =?utf-8?B?ZmZTZGVON0ZkMFN2S0FvT1RJTzFlSDRjbW5BVEg0MU1xTnFQa1VmR0RMaEhY?=
- =?utf-8?B?VUoxWUk4RExlSUt5dXBTMXFtbzJVL3dYWTVpRFpzNnFGSGRyMEtpQnVnZVpK?=
- =?utf-8?B?MUxsSEc5T25jRmQvRVhrZUNXSGVoY1ppUU15N1N3bGhGYktiZ3Q4Qy8rK1NT?=
- =?utf-8?B?aTJzY0tnVHRLQytZM1hRL09WbS9wWkxqaFA1djMrNC92NnV4MUh2cm1ONy9J?=
- =?utf-8?B?a2Zpanl1SnJEMmRTLzRGN1RBalh6R2U3U3cyMldlejQvejFtMWN5UHg0RkZJ?=
- =?utf-8?B?aUVxdUtNQWxxckZOM2N6WFF0VEFNbTlpVjZhaHRLK215NE90VFQ3YWFzNXpT?=
- =?utf-8?B?WFFLOXJRWG5hTm8xTWNKL2l0czVLVU9rWWphVG04VEg4T1UzOUU4TEJCR1E1?=
- =?utf-8?B?U3ZGMG01MGRJQ3BERStBeFJZSVY5OWFrK3hpNHJMUFB3RDJXSHBUOEJRVVJs?=
- =?utf-8?B?L2dMNzU5Y25ja0NMOXpkLzkrRlhtZjhhNDFNdWIwT2w0VFptZnlVRGsyS0ZF?=
- =?utf-8?Q?Z3yX4Xjd9AmQRvgA79tiEGZxx?=
-X-Forefront-Antispam-Report:
-	CIP:198.47.23.195;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:lewvzet201.ext.ti.com;PTR:InfoDomainNonexistent;CAT:NONE;SFS:(13230040)(1800799024)(82310400026)(376014)(36860700013)(7416014)(921020);DIR:OUT;SFP:1101;
-X-OriginatorOrg: ti.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 19 Nov 2025 08:02:26.5173
- (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: fd28589b-aac0-4d78-3f7a-08de2741fab5
-X-MS-Exchange-CrossTenant-Id: e5b49634-450b-4709-8abb-1e2b19b982b7
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=e5b49634-450b-4709-8abb-1e2b19b982b7;Ip=[198.47.23.195];Helo=[lewvzet201.ext.ti.com]
-X-MS-Exchange-CrossTenant-AuthSource:
-	CY4PEPF0000EE3B.namprd03.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: BN0PR10MB5190
+Message-ID: <7b8d757a.542.19a9b23bda4.Coremail.zhangsenchuan@eswincomputing.com>
+X-Coremail-Locale: en_US
+X-CM-TRANSID:TQJkCgBnq67KeR1pz6h8AA--.2066W
+X-CM-SenderInfo: x2kd0wpvhquxxxdqqvxvzl0uprps33xlqjhudrp/1tbiAQELBmkcn
+	4IUUQABsh
+X-Coremail-Antispam: 1Ur529EdanIXcx71UUUUU7IcSsGvfJ3iIAIbVAYjsxI4VWDJw
+	CS07vEb4IE77IF4wCS07vE1I0E4x80FVAKz4kxMIAIbVAFxVCaYxvI4VCIwcAKzIAtYxBI
+	daVFxhVjvjDU=
 
-
-On 31/10/25 23:29, Rob Herring (Arm) wrote:
-> Use the newly added of_reserved_mem_region_to_resource() and
-> of_reserved_mem_region_count() functions to handle "memory-region"
-> properties.
->
-> The error handling is a bit different in some cases. Often
-> "memory-region" is optional, so failed lookup is not an error. But then
-> an error in of_reserved_mem_lookup() is treated as an error. However,
-> that distinction is not really important. Either the region is available
-> and usable or it is not. So now, it is just
-> of_reserved_mem_region_to_resource() which is checked for an error.
->
-> Acked-by: Arnaud Pouliquen <arnaud.pouliquen@foss.st.com>
-> Tested-by: Peng Fan <peng.fan@nxp.com> # i.MX93-11x11-EVK for imx_rproc.c
-> Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be> # rcar
-> Signed-off-by: Rob Herring (Arm) <robh@kernel.org>
-
-
-All of the tests pass in our CI. Feel free to use:
-
-Tested-by: Beleswar Padhi <b-padhi@ti.com> # TI
-
-Thanks,
-Beleswar
-
-
-> ---
-> v6:
->  - Rebase on v6.18-rc1
->  - The error in v5 was fixed in v6.17 commit aea70964b5a7
->    ("of: reserved_mem: Add missing IORESOURCE_MEM flag on resources")
->
-> [...]
+CgoKPiAtLS0tLU9yaWdpbmFsIE1lc3NhZ2VzLS0tLS0KPiBGcm9tOiAiTWFuaXZhbm5hbiBTYWRo
+YXNpdmFtIiA8bWFuaUBrZXJuZWwub3JnPgo+IFNlbmQgdGltZTpUdWVzZGF5LCAxOC8xMS8yMDI1
+IDAxOjM3OjAxCj4gVG86ICJCam9ybiBIZWxnYWFzIiA8aGVsZ2Fhc0BrZXJuZWwub3JnPgo+IENj
+OiAiTWFuaXZhbm5hbiBTYWRoYXNpdmFtIiA8bWFuaXZhbm5hbi5zYWRoYXNpdmFtQG9zcy5xdWFs
+Y29tbS5jb20+LCBscGllcmFsaXNpQGtlcm5lbC5vcmcsIGt3aWxjenluc2tpQGtlcm5lbC5vcmcs
+IGJoZWxnYWFzQGdvb2dsZS5jb20sIHdpbGxAa2VybmVsLm9yZywgbGludXgtcGNpQHZnZXIua2Vy
+bmVsLm9yZywgbGludXgta2VybmVsQHZnZXIua2VybmVsLm9yZywgcm9iaEBrZXJuZWwub3JnLCBs
+aW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZywgemhhbmdzZW5jaHVhbkBlc3dpbmNvbXB1dGlu
+Zy5jb20sIHZpbmNlbnQuZ3VpdHRvdEBsaW5hcm8ub3JnCj4gU3ViamVjdDogUmU6IFtQQVRDSCB2
+MiAyLzNdIFBDSTogcWNvbTogQ2hlY2sgZm9yIHRoZSBwcmVzZW5jZSBvZiBhIGRldmljZSBpbnN0
+ZWFkIG9mIExpbmsgdXAgZHVyaW5nIHN1c3BlbmQKPiAKPiBPbiBUaHUsIE5vdiAxMywgMjAyNSBh
+dCAxMToyMjo1MEFNIC0wNjAwLCBCam9ybiBIZWxnYWFzIHdyb3RlOgo+ID4gT24gVGh1LCBOb3Yg
+MTMsIDIwMjUgYXQgMTA6MjQ6MTdQTSArMDUzMCwgTWFuaXZhbm5hbiBTYWRoYXNpdmFtIHdyb3Rl
+Ogo+ID4gPiBPbiBUaHUsIE5vdiAxMywgMjAyNSBhdCAxMDo0MTo0N0FNIC0wNjAwLCBCam9ybiBI
+ZWxnYWFzIHdyb3RlOgo+ID4gPiA+IE9uIEZyaSwgTm92IDA3LCAyMDI1IGF0IDEwOjEzOjE4QU0g
+KzA1MzAsIE1hbml2YW5uYW4gU2FkaGFzaXZhbSB3cm90ZToKPiA+ID4gPiA+IFRoZSBzdXNwZW5k
+IGhhbmRsZXIgY2hlY2tzIGZvciB0aGUgUENJZSBMaW5rIHVwIHRvIGRlY2lkZSB3aGVuIHRvIHR1
+cm4gb2ZmCj4gPiA+ID4gPiB0aGUgY29udHJvbGxlciByZXNvdXJjZXMuIEJ1dCB0aGlzIGNoZWNr
+IGlzIHJhY3kgYXMgdGhlIFBDSWUgTGluayBjYW4gZ28KPiA+ID4gPiA+IGRvd24ganVzdCBhZnRl
+ciB0aGlzIGNoZWNrLgo+ID4gPiA+ID4gCj4gPiA+ID4gPiBTbyB1c2UgdGhlIG5ld2x5IGludHJv
+ZHVjZWQgQVBJLCBwY2lfcm9vdF9wb3J0c19oYXZlX2RldmljZSgpIHRoYXQgY2hlY2tzCj4gPiA+
+ID4gPiBmb3IgdGhlIHByZXNlbmNlIG9mIGEgZGV2aWNlIHVuZGVyIGFueSBvZiB0aGUgUm9vdCBQ
+b3J0cyB0byByZXBsYWNlIHRoZQo+ID4gPiA+ID4gTGluayB1cCBjaGVjay4KPiA+ID4gPiAKPiA+
+ID4gPiBXaHkgaXMgcGNpX3Jvb3RfcG9ydHNfaGF2ZV9kZXZpY2UoKSBpdHNlbGYgbm90IHJhY3k/
+Cj4gPiA+IAo+ID4gPiBCZWNhdXNlIGl0IGlzIHZlcnkgdW5jb21tb24gZm9yIHRoZSAncGNpX2Rl
+dicgdG8gZ28gYXdheSBkdXJpbmcgdGhlCj4gPiA+IGhvc3QgY29udHJvbGxlciBzdXNwZW5kLiBJ
+dCBtaWdodCBzdGlsbCBiZSBwb3NzaWJsZSBpbiBlZGdlIGNhc2VzLAo+ID4gPiBidXQgdmVyeSBj
+b21tb24gYXMgdGhlIGxpbmsgZG93bi4gSSBjYW4gcmV3b3JkIGl0Lgo+ID4gCj4gPiBJIGd1ZXNz
+IGl0J3MgYmV0dGVyIHRvIGFja25vd2xlZGdlIHJlcGxhY2luZyBvbmUgcmFjZSB3aXRoIGFub3Ro
+ZXIKPiA+IHRoYW4gaXQgd291bGQgYmUgdG8gc3VnZ2VzdCB0aGF0IHRoaXMgKnJlbW92ZXMqIGEg
+cmFjZS4KPiA+IAo+IAo+IE9rLgo+IAo+ID4gQnV0IEkgZG9uJ3QgdW5kZXJzdGFuZCB0aGUgcG9p
+bnQgb2YgdGhpcy4gIElzCj4gPiBwY2lfcm9vdF9wb3J0c19oYXZlX2RldmljZSgpICpsZXNzKiBy
+YWN5IHRoYW4gdGhlCj4gPiBxY29tX3BjaWVfc3VzcGVuZF9ub2lycSgpIGNoZWNrPyAgV2h5IHdv
+dWxkIHRoYXQgYmU/Cj4gPiAKPiAKPiBUaGUgY2hlY2sgaXMgc3VwcG9zZWQgdG8gcGVyZm9ybSBk
+ZWluaXQgb25seSBpZiB0aGVyZSBhcmUgbm8gZGV2aWNlcyBjb25uZWN0ZWQKPiB0byB0aGUgc2xv
+dC4gQW5kIHRoZSByZWFzb24gdG8gc2tpcCB0aGUgZGVpbml0IHdhcyBtb3N0bHkgZHVlIHRvIGRy
+aXZlciBiZWhhdmlvcgo+IGxpa2UgTlZNZSBkcml2ZXIsIHdoaWNoIGV4cGVjdHMgdGhlIGRldmlj
+ZSB0byBiZSBpbiBEMCBldmVuIGR1cmluZyBzeXN0ZW0KPiBzdXNwZW5kIG9uIG5vbi14ODYgcGxh
+dGZvcm1zLgo+IAo+IFNpbmNlIHRoZSBjaGVjayBpcyBmb3IgdGhlIGV4aXN0ZW5jZSBvZiB0aGUg
+ZGV2aWNlIG5ldmVydGhlbGVzcywgSSB0aG91Z2h0LAo+IG1ha2luZyB1c2Ugb2YgcGNpX3Jvb3Rf
+cG9ydHNfaGF2ZV9kZXZpY2UoKSBzZXJ2ZXMgdGhlIHB1cnBvc2UgaW5zdGVhZCBvZgo+IGNoZWNr
+aW5nIHRoZSBkYXRhIGxpbmsgbGF5ZXIgc3RhdHVzLgo+IAo+ID4gSSdtIGtpbmQgb2Ygc2tlcHRp
+Y2FsIGFib3V0IGFkZGluZyBwY2lfcm9vdF9wb3J0c19oYXZlX2RldmljZSgpIGF0Cj4gPiBhbGwu
+ICBJdCBzZWVtcyBsaWtlIGl0IGp1c3QgZW5jb3VyYWdlcyByYWN5IGJlaGF2aW9yIGluIGRyaXZl
+cnMuCj4gPiAKPiAKPiBJIGFncmVlIHRoYXQgdGhvdWdoIGl0IGlzIG5vdCB2ZXJ5IGNvbW1vbiwg
+YnV0IHdpdGggYXN5bmMgc3VzcGVuZCwgaXQgaXMKPiBwb3NzaWJsZSB0aGF0ICdwY2lfZGV2JyBt
+YXkgZ2V0IHJlbW92ZWQgZHVyaW5nIGNvbnRyb2xsZXIgc3VzcGVuZC4KPiAKPiBTbyBJJ3ZlIGRy
+b3BwZWQgdGhpcyBzZXJpZXMgZnJvbSBjb250cm9sbGVyL2R3YyB1bnRpbCB3ZSBjb25jbHVkZS4K
+PiAKCkhpLCBNYW5pCgpJIHNlZSB0aGF0IHRoaXMgc2VyaWVzIGZyb20gY29udHJvbGxlci9kd2Mg
+aGFzIGJlZW4gdGVtcG9yYXJpbHkgcmVtb3ZlZC4gCkRvIEkgbmVlZCB0byB3YWl0IGZvciBhIGNv
+bmNsdXNpb24gbGF0ZXIgYmVmb3JlIHN1Ym1pdHRpbmcgdGhlIGNvZGUsIG9yCmRvIEkgbmVlZCB0
+byBjb250aW51ZSBzdWJtaXR0aW5nIHRoZSBwY2llIHY2IHBhdGNoIGJhc2VkIG9uIHRoZSBsYXRl
+c3QgCjYuMTgtcmM2IGJyYW5jaD8KCktpbmQgcmVnYXJkcywKU2VuY2h1YW4gWmhhbmcKCj4gCj4g
+PiA+ID4gPiBTaWduZWQtb2ZmLWJ5OiBNYW5pdmFubmFuIFNhZGhhc2l2YW0gPG1hbml2YW5uYW4u
+c2FkaGFzaXZhbUBvc3MucXVhbGNvbW0uY29tPgo+ID4gPiA+ID4gLS0tCj4gPiA+ID4gPiAgZHJp
+dmVycy9wY2kvY29udHJvbGxlci9kd2MvcGNpZS1xY29tLmMgfCA2ICsrKystLQo+ID4gPiA+ID4g
+IDEgZmlsZSBjaGFuZ2VkLCA0IGluc2VydGlvbnMoKyksIDIgZGVsZXRpb25zKC0pCj4gPiA+ID4g
+PiAKPiA+ID4gPiA+IGRpZmYgLS1naXQgYS9kcml2ZXJzL3BjaS9jb250cm9sbGVyL2R3Yy9wY2ll
+LXFjb20uYyBiL2RyaXZlcnMvcGNpL2NvbnRyb2xsZXIvZHdjL3BjaWUtcWNvbS5jCj4gPiA+ID4g
+PiBpbmRleCA4MDVlZGJiZmU3ZWIuLmIyYjg5ZTJlNDkxNiAxMDA2NDQKPiA+ID4gPiA+IC0tLSBh
+L2RyaXZlcnMvcGNpL2NvbnRyb2xsZXIvZHdjL3BjaWUtcWNvbS5jCj4gPiA+ID4gPiArKysgYi9k
+cml2ZXJzL3BjaS9jb250cm9sbGVyL2R3Yy9wY2llLXFjb20uYwo+ID4gPiA+ID4gQEAgLTIwMTgs
+NiArMjAxOCw3IEBAIHN0YXRpYyBpbnQgcWNvbV9wY2llX3Byb2JlKHN0cnVjdCBwbGF0Zm9ybV9k
+ZXZpY2UgKnBkZXYpCj4gPiA+ID4gPiAgc3RhdGljIGludCBxY29tX3BjaWVfc3VzcGVuZF9ub2ly
+cShzdHJ1Y3QgZGV2aWNlICpkZXYpCj4gPiA+ID4gPiAgewo+ID4gPiA+ID4gIAlzdHJ1Y3QgcWNv
+bV9wY2llICpwY2llOwo+ID4gPiA+ID4gKwlzdHJ1Y3QgZHdfcGNpZV9ycCAqcHA7Cj4gPiA+ID4g
+PiAgCWludCByZXQgPSAwOwo+ID4gPiA+ID4gIAo+ID4gPiA+ID4gIAlwY2llID0gZGV2X2dldF9k
+cnZkYXRhKGRldik7Cj4gPiA+ID4gPiBAQCAtMjA1Myw4ICsyMDU0LDkgQEAgc3RhdGljIGludCBx
+Y29tX3BjaWVfc3VzcGVuZF9ub2lycShzdHJ1Y3QgZGV2aWNlICpkZXYpCj4gPiA+ID4gPiAgCSAq
+IHBvd2VyZG93biBzdGF0ZS4gVGhpcyB3aWxsIGFmZmVjdCB0aGUgbGlmZXRpbWUgb2YgdGhlIHN0
+b3JhZ2UgZGV2aWNlcwo+ID4gPiA+ID4gIAkgKiBsaWtlIE5WTWUuCj4gPiA+ID4gPiAgCSAqLwo+
+ID4gPiA+ID4gLQlpZiAoIWR3X3BjaWVfbGlua191cChwY2llLT5wY2kpKSB7Cj4gPiA+ID4gPiAt
+CQlxY29tX3BjaWVfaG9zdF9kZWluaXQoJnBjaWUtPnBjaS0+cHApOwo+ID4gPiA+ID4gKwlwcCA9
+ICZwY2llLT5wY2ktPnBwOwo+ID4gPiA+ID4gKwlpZiAoIXBjaV9yb290X3BvcnRzX2hhdmVfZGV2
+aWNlKHBwLT5icmlkZ2UtPmJ1cykpIHsKPiA+ID4gPiA+ICsJCXFjb21fcGNpZV9ob3N0X2RlaW5p
+dChwcCk7Cj4gPiA+ID4gPiAgCQlwY2llLT5zdXNwZW5kZWQgPSB0cnVlOwo+ID4gPiA+ID4gIAl9
+Cj4gPiA+ID4gPiAgCj4gPiA+ID4gPiAtLSAKPiA+ID4gPiA+IDIuNDguMQo+ID4gPiA+ID4gCj4g
+PiA+IAo+ID4gPiAtLSAKCg==
 
