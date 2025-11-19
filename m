@@ -1,184 +1,253 @@
-Return-Path: <linux-arm-msm+bounces-82562-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-82563-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ams.mirrors.kernel.org (ams.mirrors.kernel.org [213.196.21.55])
-	by mail.lfdr.de (Postfix) with ESMTPS id 92306C70148
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Nov 2025 17:28:10 +0100 (CET)
+Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [142.0.200.124])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0CBEBC7031F
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Nov 2025 17:47:18 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ams.mirrors.kernel.org (Postfix) with ESMTPS id 2C77A3A458D
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Nov 2025 16:15:41 +0000 (UTC)
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 419284FCD11
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Nov 2025 16:25:39 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E0BE6341056;
-	Wed, 19 Nov 2025 16:15:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 79DD4327BFD;
+	Wed, 19 Nov 2025 16:19:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="knLlq1Qz"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="vVj410F2"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f41.google.com (mail-wm1-f41.google.com [209.85.128.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B30DF34104D;
-	Wed, 19 Nov 2025 16:15:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70B723074B1
+	for <linux-arm-msm@vger.kernel.org>; Wed, 19 Nov 2025 16:19:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763568925; cv=none; b=bcxD7eH395lNI/oxdUrlcG8zbRmQ6VigwOMrdWHRqP7K9KyCksJXU0HzBXElndR1lRpakwaJAzSOxfqxUQTVSk4aoZfne7FQhQHVqntNy087VWQyA5gFS/cjEEp7/uZEpn1PYtv1mAyEPuy+HIkHpnlL9/ySbQfoHI9ltQa9uZs=
+	t=1763569197; cv=none; b=mLwNBA2NMerp4FI3lb+8LMjKbJQeTtJl1NQ7W11TeT0ZyWXd8Scx1mLuKs8FsqN7qDuSmzVoG38KtpsIVZtSuXC4qAhLUDMmV8VbFOXYdotvc3st6JMxXr2cTQv1KnG/S7wipDQXaIrfKnQ55jo8YnMPOnBx2qgJ1ay5YDRNQ+g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763568925; c=relaxed/simple;
-	bh=6lz8gKys/60L5ZU/p0UYz+zBQaopcOtiRIrovtQVc1k=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=lQd+4UZODOUEBFq6XvWmgOUAgMcB9WQMTu6cezYAEeHLuE2LFLeq/avhaS/6IltXJ3T5NeGWIvqCtkeRxCFoW46aHOz3T9ClaX+HcHtz1K5TSGgf6dq5EPuwfR5DIWWsiji8z7gU10ENlFvSCddF/8te8gIfqM9tUi1yiebAM+c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=knLlq1Qz; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 61823C4CEF5;
-	Wed, 19 Nov 2025 16:15:18 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1763568925;
-	bh=6lz8gKys/60L5ZU/p0UYz+zBQaopcOtiRIrovtQVc1k=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=knLlq1QzIHH1/o5Zk1yyHBVpHJgmw1IaI7+EExfpJKNdImPnXqgX1/2nEGYzWJIyo
-	 RleD1IIIEhDOeAJingLhaBB9H22KYd1TUfV1kepYqMDyFYQNgNLdr0RcAaY+LSbR4I
-	 E9kKuhMG0uCov85YO2kTaQg+visqtOsGXECRHdI1WbZIqJV62ATOK8HRsI3RvGj/ZD
-	 Ei+j+ZIit1uNXd4R9C0kSkl1Wey3f1Wfi5uGg6HvTopgPyRfNWJMg9dIlqBrbNZUUU
-	 lIYoVzGGeMGKmSab9OrDQu7Kfv9OfpkN5fVXQeQepwC1yqqoNNccI6wDoP7qGT+Wsj
-	 wmx9UFfnMcStg==
-Date: Wed, 19 Nov 2025 21:45:12 +0530
-From: Manivannan Sadhasivam <mani@kernel.org>
-To: zhangsenchuan <zhangsenchuan@eswincomputing.com>
-Cc: Bjorn Helgaas <helgaas@kernel.org>, 
-	Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>, lpieralisi@kernel.org, kwilczynski@kernel.org, 
-	bhelgaas@google.com, will@kernel.org, linux-pci@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, robh@kernel.org, linux-arm-msm@vger.kernel.org, 
-	vincent.guittot@linaro.org
-Subject: Re: [PATCH v2 2/3] PCI: qcom: Check for the presence of a device
- instead of Link up during suspend
-Message-ID: <e7plmtwtkkd4ymrt2hkztcqdx4ugfjk64oksjyf6lpi2oui53d@vhuo5occyref>
-References: <zgj3ubyb234ig6ndz6ov5q3szvuxnd3jkz2rjglbad4ksri6nl@ov7boxuar4va>
- <20251113172250.GA2291436@bhelgaas>
- <qu3gnvl7t7ehpxhkchz6ragjoeafktwr4dtstattthfv3jezd7@zrfwrlr2vzx5>
- <7b8d757a.542.19a9b23bda4.Coremail.zhangsenchuan@eswincomputing.com>
+	s=arc-20240116; t=1763569197; c=relaxed/simple;
+	bh=PytOZzTAioEaMxmqRTBvSzOZkl5VeEfXc7Gpm4o827k=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=AQtcNfVpyyKrITCFeqg1qItnt9ooPH/7qIYvSHQ/fpL/VQVnxeSe2lkrZ1emhcwe8Ru2OCbIqxhfKsEFuP6X2W+Hol2NZG85gZSxnJJvz0GKIlh/fbgj1ixSECZkZbIcGfjSDmrKRtoiZK39PPeIRmJKlfYIjJcvNyNHMEmyGDs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=vVj410F2; arc=none smtp.client-ip=209.85.128.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wm1-f41.google.com with SMTP id 5b1f17b1804b1-47778b23f64so46615985e9.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 19 Nov 2025 08:19:55 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1763569194; x=1764173994; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=s+urd6hZuWEo3shlMiSBaDb8+AZAhwgeZeQG9S0pL0o=;
+        b=vVj410F2JGATilDsa/pV64I8vu/EgjtpauMLcfnve5aDLDLRggiGgiczAPhvKEsC3Y
+         qDXsmY8b9iE9k44HdeH59Jd2iOHcE1IcK3uUkBTJkxhk6m6NM0KNPb65EnIabplC90n8
+         znvjFs7XksNK3svNPrMQSSegOuGUh/I1vO0SoAHjRqxL9HT9lvLY3hwDEEms+v9mRy65
+         rD9IwyKRZ1XlMnj2ridWYuAnQdQTbSzA+VwbLOkDTMX8sr25aBhbSUh9nXF4lBNrB9B7
+         jLk/pygSgSJgEGj/qc4Lv0tZgfFZ+G/VsG8Ozxc/uEw4L4ygGFz0ftuuPGtRmO4n4LIz
+         SQWA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1763569194; x=1764173994;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=s+urd6hZuWEo3shlMiSBaDb8+AZAhwgeZeQG9S0pL0o=;
+        b=mhIj3cIup2eT5uzBjTTQyrvnPE7+1lmyqQ7+ErSjqfSheqhrY1+w0LfaYWTelAMLLw
+         N1E9wdIp7uDaigbzpXjbScsWtKCRf1H9fhnra3Q7VnxivxXWIe90CJO1+9Ypb60Z6/yD
+         pFmxLiWRBVLYH2+rWhbb/LHln49FF1VsZw7ayvmTQVpA5aUTIBDA09HzC6D+qudaIAEq
+         oocYnbbaBLfOw6Df5kM3bEZlxMib4V2442iMmM7n4g1GlMqaKVM9sjSqzrzGQB+lIew0
+         1svzLa9PRi0U8S/LZi3/OYmyAErimv4PYewgiLrItLP0/TmRxNp981MoYOO3eSlDzgQp
+         vF6g==
+X-Forwarded-Encrypted: i=1; AJvYcCUowaKNNDPp2+wZdLRQrGYxEBKokUQBPNVPfO9eMQZkCQNPtpTOWxtSyk46zjoQWBsONc194XcvyrZ8l/an@vger.kernel.org
+X-Gm-Message-State: AOJu0YwKL70x+fhg3KgCrLSn/eJz04GfcOJ1tvj01COOudeEzSZwSZq9
+	iJr5p9aZ2iXir4trchirsV5NCQUgIntqb0fV5Bli9qVqRFC/9JQ4QjiTabaeq7RDmD4=
+X-Gm-Gg: ASbGnctcRPKPwgKYTgaLsRSiB4WZ8JBGMaUwiDUip2xr/HfV0wY4VH5B9Yy1bkN6zFw
+	DkVoLOpDmlp00EAqIbWYcJsNMf04HOoD2SgIdx3d0EraTJ2r99Z8eFN9u3TK6VzQgGPu9s9giLB
+	opcbVcXRXrXdH7m6zLugVQMRmvhaQjUX1dCG8CpScZyuB93UCh2Smb9Y6D+j+0+9lGj5JUSKfHf
+	T9/CpRLmTpp0bzqj9MLAE20QH+TKZSL37AsQhgiOPTpA00XUKk6OSrweOwrRxX9HCHLDLNKcjyJ
+	LAO/yQqeRHrhSnOgUYdeUcko1PnSjXHuQQ1HRAfp+tZnxE6Nl9og10rEZJI6G6ZUtjD3flSWYph
+	chxeTz3/M7bYcMwt4HNw9iN3gJVAyahYnogxZBJ5FVRNOEDroDqqYdXFG8poDV4/5qr7+AfzVzj
+	waKPZLjPSWkCNQhKarJL+nw62gEdQ5
+X-Google-Smtp-Source: AGHT+IFwK5aAXHXIDIc3E2JseMPHhoLC/8O7sdHZVlYBJKdiPiGNYDVrkfdVj41qV4fzGcHy4cnIEg==
+X-Received: by 2002:a05:600c:4513:b0:477:2f7c:314f with SMTP id 5b1f17b1804b1-4778fe5c820mr231183085e9.10.1763569190918;
+        Wed, 19 Nov 2025 08:19:50 -0800 (PST)
+Received: from [192.168.0.39] ([82.76.24.202])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-477b0ffc90fsm61424875e9.2.2025.11.19.08.19.49
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 19 Nov 2025 08:19:50 -0800 (PST)
+Message-ID: <060e7412-8f1f-4d31-af39-79213c560e85@linaro.org>
+Date: Wed, 19 Nov 2025 18:19:48 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <7b8d757a.542.19a9b23bda4.Coremail.zhangsenchuan@eswincomputing.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 25/26] dt-bindings: reserved-memory: Add Google Kinfo
+ Pixel reserved memory
+To: Krzysztof Kozlowski <krzk@kernel.org>, linux-arm-msm@vger.kernel.org,
+ linux-kernel@vger.kernel.org, linux-mm@kvack.org, tglx@linutronix.de,
+ andersson@kernel.org, pmladek@suse.com, rdunlap@infradead.org,
+ corbet@lwn.net, david@redhat.com, mhocko@suse.com
+Cc: tudor.ambarus@linaro.org, mukesh.ojha@oss.qualcomm.com,
+ linux-arm-kernel@lists.infradead.org, linux-hardening@vger.kernel.org,
+ jonechou@google.com, rostedt@goodmis.org, linux-doc@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-remoteproc@vger.kernel.org,
+ linux-arch@vger.kernel.org, tony.luck@intel.com, kees@kernel.org
+References: <20251119154427.1033475-1-eugen.hristev@linaro.org>
+ <20251119154427.1033475-26-eugen.hristev@linaro.org>
+ <e73bdb23-c27b-4a18-b7e3-942f2d40b726@kernel.org>
+Content-Language: en-US
+From: Eugen Hristev <eugen.hristev@linaro.org>
+In-Reply-To: <e73bdb23-c27b-4a18-b7e3-942f2d40b726@kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-On Wed, Nov 19, 2025 at 04:03:22PM +0800, zhangsenchuan wrote:
+
+
+On 11/19/25 18:02, Krzysztof Kozlowski wrote:
+> On 19/11/2025 16:44, Eugen Hristev wrote:
+>> Add documentation for Google Kinfo Pixel reserved memory area.
+> 
+> Above and commit msg describe something completely else than binding. In
+> the binding you described kinfo Linux driver, above you suggest this is
+> some sort of reserved memory.
+> 
+>>
+>> Signed-off-by: Eugen Hristev <eugen.hristev@linaro.org>
+>> ---
+>>  .../reserved-memory/google,kinfo.yaml         | 49 +++++++++++++++++++
+>>  MAINTAINERS                                   |  5 ++
+>>  2 files changed, 54 insertions(+)
+>>  create mode 100644 Documentation/devicetree/bindings/reserved-memory/google,kinfo.yaml
+>>
+>> diff --git a/Documentation/devicetree/bindings/reserved-memory/google,kinfo.yaml b/Documentation/devicetree/bindings/reserved-memory/google,kinfo.yaml
+>> new file mode 100644
+>> index 000000000000..12d0b2815c02
+>> --- /dev/null
+>> +++ b/Documentation/devicetree/bindings/reserved-memory/google,kinfo.yaml
+>> @@ -0,0 +1,49 @@
+>> +# SPDX-License-Identifier: GPL-2.0 OR BSD-2-Clause
+>> +%YAML 1.2
+>> +---
+>> +$id: http://devicetree.org/schemas/reserved-memory/google,kinfo.yaml#
+> 
+> Filename based on the compatible.
+> 
+>> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+>> +
+>> +title: Google Pixel Kinfo reserved memory
+>> +
+>> +maintainers:
+>> +  - Eugen Hristev <eugen.hristev@linaro.org>
+>> +
+>> +description:
+>> +  This binding describes the Google Pixel Kinfo reserved memory, a region
+> 
+> Don't use "This binding", but please describe here hardware.
+> 
+>> +  of reserved-memory used to store data for firmware/bootloader on the Pixel
+>> +  platform. The data stored is debugging information on the running kernel.
+>> +
+>> +properties:
+>> +  compatible:
+>> +    items:
+>> +      - const: google,kinfo
+>> +
+>> +  memory-region:
+>> +    maxItems: 1
+>> +    description: Reference to the reserved-memory for the data
+> 
+> This does not match description. Unfortunately it looks like you added a
+> node just to instantiate Linux driver and this is not allowed.
+> 
+> If this was some special reserved memory region, then it would be part
+> of reserved memory bindings - see reserved-memory directory.
+
+I sent this patch for reserved-memory directory, where all the
+reserved-memory bindings reside. Or maybe I do not understand your
+comment ?>
+> Compatible suggests that it is purely Linux driver, so another hint.
+
+This reserved memory area is used by both Linux and firmware. Linux
+stores some information into this reserved memory to be used by the
+firmware/bootloader in some specific scenarios (e.g. crash or recovery
+situations)
+As the firmware reserves this memory for this specific purpose, it is
+natural to inform Linux that the memory should not be used by another
+purpose, but by the purpose it was reserved for.
+Which would be the best way to have Linux understand where is this
+memory area so it could be handled?
+
+
+> 
+> Looks like this is a SoC specific thing, so maybe this should be folded
+> in some of the soc drivers.
+> 
+Not really soc specific. Any soc who implements this at firmware level
+can use it. The firmware can reserve some memory for this specific
+purpose and then pass it to Linux, so Linux can fill it up.
+It just happens that the Pixel phone has this implemented right now, but
+it is not constrained to Pixel only.
+
+Instantiating this driver with a call like platform_device_register_data
+would make the driver unaware of where exactly the firmware looks for
+the data. This is right now passed through the DT node. Do you have a
+better suggestion on how to pass it ?
+
 > 
 > 
+>> +
+>> +required:
+>> +  - compatible
+>> +  - memory-region
+>> +
+>> +additionalProperties: true
+>> +
+>> +examples:
+>> +  - |
+>> +    reserved-memory {
+>> +      #address-cells = <1>;
+>> +      #size-cells = <1>;
+>> +      ranges;
+>> +
+>> +      kinfo_region: smem@fa00000 {
+>> +          reg = <0xfa00000 0x1000>;
+>> +          no-map;
+>> +      };
+>> +    };
 > 
-> > -----Original Messages-----
-> > From: "Manivannan Sadhasivam" <mani@kernel.org>
-> > Send time:Tuesday, 18/11/2025 01:37:01
-> > To: "Bjorn Helgaas" <helgaas@kernel.org>
-> > Cc: "Manivannan Sadhasivam" <manivannan.sadhasivam@oss.qualcomm.com>, lpieralisi@kernel.org, kwilczynski@kernel.org, bhelgaas@google.com, will@kernel.org, linux-pci@vger.kernel.org, linux-kernel@vger.kernel.org, robh@kernel.org, linux-arm-msm@vger.kernel.org, zhangsenchuan@eswincomputing.com, vincent.guittot@linaro.org
-> > Subject: Re: [PATCH v2 2/3] PCI: qcom: Check for the presence of a device instead of Link up during suspend
-> > 
-> > On Thu, Nov 13, 2025 at 11:22:50AM -0600, Bjorn Helgaas wrote:
-> > > On Thu, Nov 13, 2025 at 10:24:17PM +0530, Manivannan Sadhasivam wrote:
-> > > > On Thu, Nov 13, 2025 at 10:41:47AM -0600, Bjorn Helgaas wrote:
-> > > > > On Fri, Nov 07, 2025 at 10:13:18AM +0530, Manivannan Sadhasivam wrote:
-> > > > > > The suspend handler checks for the PCIe Link up to decide when to turn off
-> > > > > > the controller resources. But this check is racy as the PCIe Link can go
-> > > > > > down just after this check.
-> > > > > > 
-> > > > > > So use the newly introduced API, pci_root_ports_have_device() that checks
-> > > > > > for the presence of a device under any of the Root Ports to replace the
-> > > > > > Link up check.
-> > > > > 
-> > > > > Why is pci_root_ports_have_device() itself not racy?
-> > > > 
-> > > > Because it is very uncommon for the 'pci_dev' to go away during the
-> > > > host controller suspend. It might still be possible in edge cases,
-> > > > but very common as the link down. I can reword it.
-> > > 
-> > > I guess it's better to acknowledge replacing one race with another
-> > > than it would be to suggest that this *removes* a race.
-> > > 
-> > 
-> > Ok.
-> > 
-> > > But I don't understand the point of this.  Is
-> > > pci_root_ports_have_device() *less* racy than the
-> > > qcom_pcie_suspend_noirq() check?  Why would that be?
-> > > 
-> > 
-> > The check is supposed to perform deinit only if there are no devices connected
-> > to the slot. And the reason to skip the deinit was mostly due to driver behavior
-> > like NVMe driver, which expects the device to be in D0 even during system
-> > suspend on non-x86 platforms.
-> > 
-> > Since the check is for the existence of the device nevertheless, I thought,
-> > making use of pci_root_ports_have_device() serves the purpose instead of
-> > checking the data link layer status.
-> > 
-> > > I'm kind of skeptical about adding pci_root_ports_have_device() at
-> > > all.  It seems like it just encourages racy behavior in drivers.
-> > > 
-> > 
-> > I agree that though it is not very common, but with async suspend, it is
-> > possible that 'pci_dev' may get removed during controller suspend.
-> > 
-> > So I've dropped this series from controller/dwc until we conclude.
-> > 
+> Anyway, drop, not relevant.
 > 
-> Hi, Mani
 > 
-> I see that this series from controller/dwc has been temporarily removed. 
-> Do I need to wait for a conclusion later before submitting the code, or
-> do I need to continue submitting the pcie v6 patch based on the latest 
-> 6.18-rc6 branch?
+>> +
+>> +    debug-kinfo {
+>> +        compatible = "google,debug-kinfo";
+> 
+> Device node with only one phandle to reserved memory region is a proof
+> it is not a real device.
+> 
+> Also,
+> Please use scripts/get_maintainers.pl to get a list of necessary people
+> and lists to CC (and consider --no-git-fallback argument, so you will
+> not CC people just because they made one commit years ago). It might
+> happen, that command when run on an older kernel, gives you outdated
+> entries. Therefore please be sure you base your patches on recent Linux
+> kernel.
+> 
+> Tools like b4 or scripts/get_maintainer.pl provide you proper list of
+> people, so fix your workflow. Tools might also fail if you work on some
+> ancient tree (don't, instead use mainline) or work on fork of kernel
+> (don't, instead use mainline). Just use b4 and everything should be
+> fine, although remember about `b4 prep --auto-to-cc` if you added new
+> patches to the patchset.
+> 
+Thanks for your review and suggestions
+
+> 
+> Best regards,
+> Krzysztof
 > 
 
-I'm coming up with a new version of the patch, but you do not need to wait for
-it.
-
-- Mani
-
-> Kind regards,
-> Senchuan Zhang
-> 
-> > 
-> > > > > > Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
-> > > > > > ---
-> > > > > >  drivers/pci/controller/dwc/pcie-qcom.c | 6 ++++--
-> > > > > >  1 file changed, 4 insertions(+), 2 deletions(-)
-> > > > > > 
-> > > > > > diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
-> > > > > > index 805edbbfe7eb..b2b89e2e4916 100644
-> > > > > > --- a/drivers/pci/controller/dwc/pcie-qcom.c
-> > > > > > +++ b/drivers/pci/controller/dwc/pcie-qcom.c
-> > > > > > @@ -2018,6 +2018,7 @@ static int qcom_pcie_probe(struct platform_device *pdev)
-> > > > > >  static int qcom_pcie_suspend_noirq(struct device *dev)
-> > > > > >  {
-> > > > > >  	struct qcom_pcie *pcie;
-> > > > > > +	struct dw_pcie_rp *pp;
-> > > > > >  	int ret = 0;
-> > > > > >  
-> > > > > >  	pcie = dev_get_drvdata(dev);
-> > > > > > @@ -2053,8 +2054,9 @@ static int qcom_pcie_suspend_noirq(struct device *dev)
-> > > > > >  	 * powerdown state. This will affect the lifetime of the storage devices
-> > > > > >  	 * like NVMe.
-> > > > > >  	 */
-> > > > > > -	if (!dw_pcie_link_up(pcie->pci)) {
-> > > > > > -		qcom_pcie_host_deinit(&pcie->pci->pp);
-> > > > > > +	pp = &pcie->pci->pp;
-> > > > > > +	if (!pci_root_ports_have_device(pp->bridge->bus)) {
-> > > > > > +		qcom_pcie_host_deinit(pp);
-> > > > > >  		pcie->suspended = true;
-> > > > > >  	}
-> > > > > >  
-> > > > > > -- 
-> > > > > > 2.48.1
-> > > > > > 
-> > > > 
-> > > > -- 
-> 
-
--- 
-மணிவண்ணன் சதாசிவம்
 
