@@ -1,155 +1,155 @@
-Return-Path: <linux-arm-msm+bounces-82455-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-82456-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sin.lore.kernel.org (sin.lore.kernel.org [104.64.211.4])
-	by mail.lfdr.de (Postfix) with ESMTPS id 27986C6D8A2
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Nov 2025 09:58:49 +0100 (CET)
+Received: from ams.mirrors.kernel.org (ams.mirrors.kernel.org [IPv6:2a01:60a::1994:3:14])
+	by mail.lfdr.de (Postfix) with ESMTPS id 42275C6D8F9
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Nov 2025 10:03:43 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sin.lore.kernel.org (Postfix) with ESMTPS id E529928ACA
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Nov 2025 08:58:46 +0000 (UTC)
+	by ams.mirrors.kernel.org (Postfix) with ESMTPS id 8BAF03A0027
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Nov 2025 09:00:58 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5991A32E730;
-	Wed, 19 Nov 2025 08:58:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 96CE9330B08;
+	Wed, 19 Nov 2025 09:00:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="Q/U1Jp+o";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="Vle2N8pf"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="FT+cD2Uz"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f43.google.com (mail-wm1-f43.google.com [209.85.128.43])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5DB28F5B
-	for <linux-arm-msm@vger.kernel.org>; Wed, 19 Nov 2025 08:58:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89C46330310
+	for <linux-arm-msm@vger.kernel.org>; Wed, 19 Nov 2025 09:00:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763542723; cv=none; b=toe5INaAuBK196grkIUuCPKigUYr8f5mdxrfzVs4zKyKkBxZUJdpi/GUeub42T+MaaSYGYE3zjCU5rrwhTejdSxZORDoAwkupymp2OLmqjku7lxC48nkLLAaVgEagun/9zPhRmZJAIljh/Lp/kmm+rP2wZcyiCPtogj1ga0aGoM=
+	t=1763542830; cv=none; b=BmiPb7B/jlC+sNuFv83pc+/kRouoZM94kLKoASZWk5LzPJ2K5bgLB/mcm50IbQabSrg7yooLkBdDVAOF5nv5oEQ0w1Ef7QWtRJXx7ttgl63IZYl7jZOavtSEQZu58cIBDHMUQ/NOAWVcx+Gedr4dQ6b7hZBIG32s1m4bN/5iRbY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763542723; c=relaxed/simple;
-	bh=iMQjxgb2Z+rYDLrPE4JmNYBt8FANzyzUx9YKbzzMraw=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=diVW+QUi11XxiC7CgqwFuYOsNZOtqYxcfJ2+frI7o7i7+zX3H1D5cfyeHrB8RMq2mwCcrYwKW7Zr64DFfF+K9OTk6jeEbW9V0fiEf2z0QZp+MjRSCZZPLJ9QOmh8y5OnO+Gqi7M+pIv6+kH8LIcEkQ8wQAU1a0j3P5S0lIeqiP4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=Q/U1Jp+o; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=Vle2N8pf; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 5AJ1M2BJ3412658
-	for <linux-arm-msm@vger.kernel.org>; Wed, 19 Nov 2025 08:58:40 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to; s=qcppdkim1; bh=w8ArxIvCEScXV9c8RI3uKZmj
-	DUxSkzRPyK+6mLnIODM=; b=Q/U1Jp+oY0+WQ1U9yDSKS1rTdnq7TyH00Fu208K5
-	v5/0NnvmDnnF1ISqgjLlBidxTKVp4W11sF+izMBTjVflItJ3aVeL7VVzW5vFTO38
-	97apemDqHaSRhvNhXSMxudGc+kvPLYxB356sUXWf+sxNv+3F7kzHB0Oj3XsxUtSF
-	EPmsH8VD03Vv1IYnQ4JY9cqN95MDlEJb3qJ2VxV7wTbpnXpefyhGHnSG5yCvX8RX
-	EnmXA5apTSbnREQn1HimeTsbgq10hH5Z0Z++Cc8X2dfp/AUYbWF8fuRmMB0QdahR
-	a9XFAwyC+12T+MWV1CdJmggOI0zZqa3od4SjFQ7lDthhDQ==
-Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com [209.85.222.200])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4agv0v2nk7-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Wed, 19 Nov 2025 08:58:40 +0000 (GMT)
-Received: by mail-qk1-f200.google.com with SMTP id af79cd13be357-8b225760181so794835185a.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 19 Nov 2025 00:58:40 -0800 (PST)
+	s=arc-20240116; t=1763542830; c=relaxed/simple;
+	bh=apPETYlGfuXnfVmULi3TMIxRbtt9GCrIvCgIC//NDsk=;
+	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
+	 In-Reply-To:Content-Type; b=YqZDAjIv/0R160D+ggpzh039+r/d2a+d7P/qwRon8k7qxiUmjt6l6uiBL3e8UQWWoBWa+ddCQk7PAJxIWATbTO2vW8LrXaJ57S9xFICw8j9EJswIi9e2c1q0yqZQAouEecx/8GEGCBme/EAIEbo9XbIrVd1J2ve/+hEiXMQpg5k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=FT+cD2Uz; arc=none smtp.client-ip=209.85.128.43
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wm1-f43.google.com with SMTP id 5b1f17b1804b1-47775fb6c56so64563805e9.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 19 Nov 2025 01:00:28 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1763542720; x=1764147520; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=w8ArxIvCEScXV9c8RI3uKZmjDUxSkzRPyK+6mLnIODM=;
-        b=Vle2N8pfoLWnrvCgOOervJFoZgqIiT505AEjpPNJqvJr9XtjrfJWAhrEcqfnAT+fxr
-         PvrFbYOqukJuucEfpy0vEcAUfTpHDC54WZ3eHZy/OywcoIuwcM6zEjr+GL/gfR5WK30z
-         ctDQz6KqOxoywzAIQVD5g1RBy1brkNcO645h85wUyDCU0/QfA3yws9ze3xjX0wzGISCH
-         /i5s/83PNfjhEsbgjXLqwX50tuDwsfKUNl4Ot2s/bcXfOjJCm7NjaHkGkIQXZA/++0vp
-         mPZStyPWaujRxEApsJKUciCx0gJ9rymEW3rRgxfEqxPPhb70UWZL4+n+/Fbx58XqKpC0
-         iYHw==
+        d=linaro.org; s=google; t=1763542827; x=1764147627; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:organization:autocrypt
+         :content-language:from:references:to:subject:reply-to:user-agent
+         :mime-version:date:message-id:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=4o2tM+ArrmsFsspYg0k3nWsLzZ8YFxjOnE7FsUFX8Ek=;
+        b=FT+cD2UzfS4Hcu2kJ179qy4kS77lDiKW9+nNOif8MmRwK3tI8X/714xfjI8bfPv8uw
+         Y1vQ/6quDqqA6u5Kj6ZFlv/EZwPcXj4cBD/1P5n7GqZAQNLNLUzWe9DeSZmEeyQQqlGv
+         0lOGFWxZ0YLGd9ujYYvbEcmIAPSs8DCOBtlPjgInyfZt220pV1+LJqMSrtZjBcxWrMai
+         U5Z0/eWGmkCEqkBrOmSNWUS1DpfBYGGXZLWzSQ94Wx9idNPd69oKYj5Hx1s0457CEkok
+         jo7fMUhIWKB756vZ56K0OFdYmntunS5pN1X+AE01MkJJiPLaosOYKLP8Dy+c/k67ctwa
+         JPHg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1763542720; x=1764147520;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+        d=1e100.net; s=20230601; t=1763542827; x=1764147627;
+        h=content-transfer-encoding:in-reply-to:organization:autocrypt
+         :content-language:from:references:to:subject:reply-to:user-agent
+         :mime-version:date:message-id:x-gm-gg:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=w8ArxIvCEScXV9c8RI3uKZmjDUxSkzRPyK+6mLnIODM=;
-        b=b+LfDmJflhbuoIU1ft5DZOEo0jlmjgTbl1VGqkcu5Bn/2F5kNoPbInFbsuFxTBu6Xp
-         insGNgREI7mGHbHIL2MLJ1Uo/FlSDJzTDnR744m8UlO1nx1OBPqB2Ti5U77frWxZ7Qel
-         /1loO23luPPgUcbBnFGhgx9DABoeGRTZXM5wINLn7pK2DsQLbVOEZ5ltf5FZLbarxMbe
-         H3xfHJLBFLD748k47g1H+1SM+iq+i29ewQ0gNcNpP2xLHsJ+/RRWP26wVXsu+WrA0jJ8
-         6Nglr7G0K5SVUZxHCSYPh7cRwGybya9/HEp0myGYmudHGIPXpZC1f77CcsC3UZ4ed+69
-         qyoA==
-X-Forwarded-Encrypted: i=1; AJvYcCUKSDK5DhOUtB06WSYFH0vhMwxrLibP5VpG7yIi9UsP5lVSxFr5oP38uPa5NskysRc2VN5sl5fhPcljtBdA@vger.kernel.org
-X-Gm-Message-State: AOJu0YzzOT4bpYxMUGvVegtwb4I22HScdXL6gQKYD8+p56V5rVmnl4Q+
-	BXtjaR1bIlLPaNhb1ka/LcCH9FCgQsHaLnZzLivsEd6/2Fvi+yVt6PVfn16PL+0slAgVGsaWRMp
-	Wu9JPU98OIrLGfXe1IU5TTsisem8xE+jFTYxS+tntBnVRSanQ8HNgO5mLU6foLFQ7LUOR
-X-Gm-Gg: ASbGncs4LvNpVtSNFqD+w/zQ7Bju45MmWMxJVktNDtak9lznPrZfVWYtn26RC3+TRTd
-	0Eqrrc3odzbF672gO09j7dAWOfoWuab/mz5f+6Q8QZ3nqPksc8P/DsyT0XEv6rEhxGS0dAxohaF
-	4urke5cf8+lSQsiufDjlKDTN4Ff93pzW7p6jRkDp4tmdEwlQCaadcM3L+sluuOIO48BF3N7Vc/K
-	Qrkw7r4FUTaPETTRCgDFwug2hT9eAPDp6S1ICeH/mLfdTbkmJwG6eDrTbfgu3H3JsSfo2QSWRQu
-	eGpCyDAaUZlpiDIBbbL7a4dMJzOEUP1vVy6I6ypP+X2H4JRRfHMObRpf965NV+mMqKLrXp74BmW
-	JTQeU2jTi+8vheXEou81CqYkqFKNlc+1D5nxQeGoGJY1kvVBDDv/0UchL6PhjMrpl5ucNR4v8zK
-	uGZL8a+hkkg+SEmVkhuhAfo5o=
-X-Received: by 2002:a05:620a:45a7:b0:8b2:271e:a560 with SMTP id af79cd13be357-8b2c31b4408mr2288090985a.72.1763542720017;
-        Wed, 19 Nov 2025 00:58:40 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHM68qZR5ufBVNgqJOavTs2bM/nCJaPnebE1XZurspaV6TG/sRMf7k3MqnwJffcSAcFV5cDSg==
-X-Received: by 2002:a05:620a:45a7:b0:8b2:271e:a560 with SMTP id af79cd13be357-8b2c31b4408mr2288089385a.72.1763542719480;
-        Wed, 19 Nov 2025 00:58:39 -0800 (PST)
-Received: from umbar.lan (2001-14ba-a0c3-3a00-264b-feff-fe8b-be8a.rev.dnainternet.fi. [2001:14ba:a0c3:3a00:264b:feff:fe8b:be8a])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-59580405303sm4608000e87.74.2025.11.19.00.58.37
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 19 Nov 2025 00:58:38 -0800 (PST)
-Date: Wed, 19 Nov 2025 10:58:36 +0200
-From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-To: Krzysztof Kozlowski <krzk@kernel.org>
-Cc: Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] arm64: defconfig: Enable EC drivers for Qualcomm-based
- laptops
-Message-ID: <w5kt7ya6h7auppcz25s6ndrdvx3p7qsmhol224ybykwigq6nn2@kbxrst2bxod4>
-References: <20251119082408.49712-2-krzk@kernel.org>
+        bh=4o2tM+ArrmsFsspYg0k3nWsLzZ8YFxjOnE7FsUFX8Ek=;
+        b=lULSH8M9obQNF/XsZY27RRpOcdg7EbOuZSqJpt6awEASKfsM7CDDR0O/owu1+nPpZ1
+         mb32tUWBBCgCzFpTW2c1CDxfHWy5LKWcNXR2GIlbKPYgYOgCfDTqvXRZtwltNHahs4s5
+         fNx00y4qtFuo6nJUT/pn+U7t/jnfTCPIKj1i80A13qcsb6bQVo5R3CRwZXSmtYgWY2+9
+         ksd6+eAcktXk6slxFRyibJ7NnwuLkR5A0Hum/e2iotsk7uYn979pG/PT8PIJKFQxqws0
+         227muMVqtuXTe6koQRSuoe694pGndTE8tORsY5//7Ljd0ZK9ZHhGazs9fT7jboKokhMq
+         ZmtQ==
+X-Forwarded-Encrypted: i=1; AJvYcCVkbammHuKAhHZ2TZvc9lsSkw7iX5MvF1ziRrX8QGrgSnO4SrMi1ii50Qp/siBFkbLmQ9323AuU7Gmcwt/q@vger.kernel.org
+X-Gm-Message-State: AOJu0YzfbfLExY7/Fbwx4RGAcWtL+hING171jLrVtnKrF2ykCNBvcXKV
+	0m/B8skbglKn1b2/ChsbIs6DgNHS7Xq05ebYSSQo46HCQsCTexzq73m4iPZR/BVIUuw=
+X-Gm-Gg: ASbGncuptMB10Qh/FAfpTPLe/VJuibVjlRS9JQjc9UyDlWbU8y2YxvvtWGYKA+T34gL
+	Hsj3+KyDVtV76xNc2eUMRl7viv/xTV9bEOje9N42n2mub5wrq5Qk8JrPGr19sDbbw4ywiVGb+Lm
+	epcSoaJA0L+rEPxWt6vCCgKQR6tAS8migg2U4Q/VSIBk2iSbLuGnFNfI0x6AP9V8r/mpfAz4txK
+	+FBTAhpX9cU87ymUYvvLFsutf2sNMNAY7GCBuH2/kVv9umApWd/DgXUbMDEuNM8ig2sdJtR7nAc
+	IJOe5Pr7z3dIJ8RJYaSRV6R+PtIH63CXbtsiw+FTA0w1KH2oYFT0gG5YH3/L+sxgTtdufKWFOCk
+	1yeASBk/wrGoDYI8fmD5EnK3X7btn7FF0LKFaEDkO1wCsJCdmJTXG+VBjHn5lE7CF40d6r5lSX7
+	gK1gqH8ruqiScRc5ImxbHfQnc/gAygTt7SNKRGm7RIwDXNxeB8KEFMBi28vG0sKt2nkk5J7B8Qa
+	g==
+X-Google-Smtp-Source: AGHT+IFOiVbrUh5e/ITksR8f1dPUzOzEpp+5udtg2l5yOafnfxD8Gq4qiWMiWFM5lEmQkA2cz8MWYw==
+X-Received: by 2002:a05:600c:4505:b0:477:5c45:8100 with SMTP id 5b1f17b1804b1-4778fe9638dmr181221955e9.24.1763542826616;
+        Wed, 19 Nov 2025 01:00:26 -0800 (PST)
+Received: from ?IPV6:2a01:e0a:3d9:2080:94e4:fa88:414d:e1ad? ([2a01:e0a:3d9:2080:94e4:fa88:414d:e1ad])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-477b103db28sm42889625e9.14.2025.11.19.01.00.21
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 19 Nov 2025 01:00:23 -0800 (PST)
+Message-ID: <e879a799-e415-4ba5-ad2e-301c16124825@linaro.org>
+Date: Wed, 19 Nov 2025 10:00:21 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+User-Agent: Mozilla Thunderbird
+Reply-To: Neil Armstrong <neil.armstrong@linaro.org>
+Subject: Re: [PATCH] arm64: defconfig: Enable EC drivers for Qualcomm-based
+ laptops
+To: Krzysztof Kozlowski <krzk@kernel.org>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>, linux-arm-msm@vger.kernel.org,
+ linux-kernel@vger.kernel.org
+References: <20251119082408.49712-2-krzk@kernel.org>
+From: Neil Armstrong <neil.armstrong@linaro.org>
+Content-Language: en-US, fr
+Autocrypt: addr=neil.armstrong@linaro.org; keydata=
+ xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
+ GTjuhvbleoQ5Cxjr+v+1ARGCH46MxFP5DwauzPekwJUD5QKZlaw/bURTLmS2id5wWi3lqVH4
+ BVF2WzvGyyeV1o4RTCYDnZ9VLLylJ9bneEaIs/7cjCEbipGGFlfIML3sfqnIvMAxIMZrvcl9
+ qPV2k+KQ7q+aXavU5W+yLNn7QtXUB530Zlk/d2ETgzQ5FLYYnUDAaRl+8JUTjc0CNOTpCeik
+ 80TZcE6f8M76Xa6yU8VcNko94Ck7iB4vj70q76P/J7kt98hklrr85/3NU3oti3nrIHmHABEB
+ AAHNKk5laWwgQXJtc3Ryb25nIDxuZWlsLmFybXN0cm9uZ0BsaW5hcm8ub3JnPsLAkQQTAQoA
+ OwIbIwULCQgHAwUVCgkICwUWAgMBAAIeAQIXgBYhBInsPQWERiF0UPIoSBaat7Gkz/iuBQJk
+ Q5wSAhkBAAoJEBaat7Gkz/iuyhMIANiD94qDtUTJRfEW6GwXmtKWwl/mvqQtaTtZID2dos04
+ YqBbshiJbejgVJjy+HODcNUIKBB3PSLaln4ltdsV73SBcwUNdzebfKspAQunCM22Mn6FBIxQ
+ GizsMLcP/0FX4en9NaKGfK6ZdKK6kN1GR9YffMJd2P08EO8mHowmSRe/ExAODhAs9W7XXExw
+ UNCY4pVJyRPpEhv373vvff60bHxc1k/FF9WaPscMt7hlkbFLUs85kHtQAmr8pV5Hy9ezsSRa
+ GzJmiVclkPc2BY592IGBXRDQ38urXeM4nfhhvqA50b/nAEXc6FzqgXqDkEIwR66/Gbp0t3+r
+ yQzpKRyQif3OwE0ETVkGzwEIALyKDN/OGURaHBVzwjgYq+ZtifvekdrSNl8TIDH8g1xicBYp
+ QTbPn6bbSZbdvfeQPNCcD4/EhXZuhQXMcoJsQQQnO4vwVULmPGgtGf8PVc7dxKOeta+qUh6+
+ SRh3vIcAUFHDT3f/Zdspz+e2E0hPV2hiSvICLk11qO6cyJE13zeNFoeY3ggrKY+IzbFomIZY
+ 4yG6xI99NIPEVE9lNBXBKIlewIyVlkOaYvJWSV+p5gdJXOvScNN1epm5YHmf9aE2ZjnqZGoM
+ Mtsyw18YoX9BqMFInxqYQQ3j/HpVgTSvmo5ea5qQDDUaCsaTf8UeDcwYOtgI8iL4oHcsGtUX
+ oUk33HEAEQEAAcLAXwQYAQIACQUCTVkGzwIbDAAKCRAWmrexpM/4rrXiB/sGbkQ6itMrAIfn
+ M7IbRuiSZS1unlySUVYu3SD6YBYnNi3G5EpbwfBNuT3H8//rVvtOFK4OD8cRYkxXRQmTvqa3
+ 3eDIHu/zr1HMKErm+2SD6PO9umRef8V82o2oaCLvf4WeIssFjwB0b6a12opuRP7yo3E3gTCS
+ KmbUuLv1CtxKQF+fUV1cVaTPMyT25Od+RC1K+iOR0F54oUJvJeq7fUzbn/KdlhA8XPGzwGRy
+ 4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
+ QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
+Organization: Linaro
 In-Reply-To: <20251119082408.49712-2-krzk@kernel.org>
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMTE5MDA2OSBTYWx0ZWRfX7nBXy+JEwVLT
- shrtj+94bsPvLeLUyk5BLOfgx0xvDyuUGF1XcfNAC2z1frpMRnzEvUyH60KgYsqmLenWSE0/HyC
- 4/lXXdG5WRZUzKgvSTsSc4K61C849+inNb6CefzRvpujRUHophldjaQY8GHMSwU1tNYVqOqkTDH
- UaRIZIISKtXBMVnUsr9ADiIIfeaVXwvarrwWW5lv3qSEoAqljE+Bh89PkL95xyB9GG3pcariq2a
- PsiTTyqdueAbCoRx3ohmmY/sgg/KSRNGAGt79i9B2NrFXMHk6YJ/fAvG6uR333VhsclTE0A3b4d
- CuOeWJnP59oEWLNjFB3lPqsmzW9gbZgsvD7k+BfgxejT7rmZ+yTuYPkVkaeDEFgVsVclIJ1wDwc
- oK4TCKNVecVDya64UEyxooIMxfZFuA==
-X-Authority-Analysis: v=2.4 cv=S8XUAYsP c=1 sm=1 tr=0 ts=691d86c0 cx=c_pps
- a=hnmNkyzTK/kJ09Xio7VxxA==:117 a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10
- a=6UeiqGixMTsA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8 a=WXXyHQMcWFp6grFSk64A:9 a=CjuIK1q_8ugA:10
- a=PEH46H7Ffwr30OY-TuGO:22
-X-Proofpoint-ORIG-GUID: Ccr5jKyAb-4y1OWBaLR_aopGA8Bi-MIC
-X-Proofpoint-GUID: Ccr5jKyAb-4y1OWBaLR_aopGA8Bi-MIC
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
- definitions=2025-11-19_02,2025-11-18_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 malwarescore=0 adultscore=0 suspectscore=0 bulkscore=0
- lowpriorityscore=0 priorityscore=1501 impostorscore=0 spamscore=0
- phishscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2510240001
- definitions=main-2511190069
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Wed, Nov 19, 2025 at 09:24:09AM +0100, Krzysztof Kozlowski wrote:
+On 11/19/25 09:24, Krzysztof Kozlowski wrote:
 > Enable the drivers for Embedded Controllers present on laptops with
 > Qualcomm SoCs: Acer Aspire 1, Huawei Matebook E Go, Lenovo Yoga C630 and
 > Lenovo Thinkpad T14s.
 > 
 > Signed-off-by: Krzysztof Kozlowski <krzk@kernel.org>
 > ---
->  arch/arm64/configs/defconfig | 4 ++++
->  1 file changed, 4 insertions(+)
+>   arch/arm64/configs/defconfig | 4 ++++
+>   1 file changed, 4 insertions(+)
+> 
+> diff --git a/arch/arm64/configs/defconfig b/arch/arm64/configs/defconfig
+> index 8d6a1bb1e03e..7030b27528c6 100644
+> --- a/arch/arm64/configs/defconfig
+> +++ b/arch/arm64/configs/defconfig
+> @@ -1383,6 +1383,10 @@ CONFIG_CROS_EC_RPMSG=m
+>   CONFIG_CROS_EC_SPI=y
+>   CONFIG_CROS_KBD_LED_BACKLIGHT=m
+>   CONFIG_CROS_EC_CHARDEV=m
+> +CONFIG_EC_ACER_ASPIRE1=m
+> +CONFIG_EC_HUAWEI_GAOKUN=m
+> +CONFIG_EC_LENOVO_YOGA_C630=m
+> +CONFIG_EC_LENOVO_THINKPAD_T14S=m
+>   CONFIG_COMMON_CLK_RK808=y
+>   CONFIG_COMMON_CLK_SCMI=y
+>   CONFIG_COMMON_CLK_SCPI=y
 
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-
-
--- 
-With best wishes
-Dmitry
+Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
 
