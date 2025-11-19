@@ -1,102 +1,101 @@
-Return-Path: <linux-arm-msm+bounces-82416-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-82417-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sin.lore.kernel.org (sin.lore.kernel.org [IPv6:2600:3c15:e001:75::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id EDD28C6CC4C
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Nov 2025 05:49:46 +0100 (CET)
+Received: from ams.mirrors.kernel.org (ams.mirrors.kernel.org [213.196.21.55])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6EE07C6CC77
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Nov 2025 06:02:11 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sin.lore.kernel.org (Postfix) with ESMTPS id BDD872CCA3
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Nov 2025 04:49:24 +0000 (UTC)
+	by ams.mirrors.kernel.org (Postfix) with ESMTPS id B8C8335188E
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Nov 2025 05:02:10 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BDE1B30C37D;
-	Wed, 19 Nov 2025 04:49:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5CC3B227E95;
+	Wed, 19 Nov 2025 05:02:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="Xjp2yPrx";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="V4rcw+gc"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="Va3ObGAQ";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="ijQwNs3s"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4290730BF64
-	for <linux-arm-msm@vger.kernel.org>; Wed, 19 Nov 2025 04:49:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFA3A1F7569
+	for <linux-arm-msm@vger.kernel.org>; Wed, 19 Nov 2025 05:02:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763527753; cv=none; b=V/Ru2dPmcjmmamKG+7Jsiu6gsSNJ38Pw3npotx8PHxKSAuHijqr81OXNRlHSA6JTDCg6GX0pLRFXW+qz3DIPqjQ/TTeoGLz568z7FX4XmmYAB9WqZCC0qe8jEZmYg1GvuwGTKXD/JKCn/RH/wEphsT9E14VC7HxbLg2iNLGMNA8=
+	t=1763528525; cv=none; b=fDHgvV/NESSQ0aJhHcEuSpx9TwX5q9JJ9O9cieRD6kB5JD7zUbriTxGy9mxF9g+dqCiRUpXx1OIOanrLNw+7C6x0/7GRfizn4tF0bjbfSn+O8a8tUDJLszZvNl1VC5bI7WelneFSrRGMBFD0DMhAX3431DeDVzlpx9YcQ7ri070=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763527753; c=relaxed/simple;
-	bh=x+EtDfjkrUB13PELZRJL377YyzVKJ+zwQy+uMzfVcGc=;
+	s=arc-20240116; t=1763528525; c=relaxed/simple;
+	bh=SkDPb7JF1wbSbOailasNv8LOqVqSAWaBT47PG7LF3sk=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=XDIxtkAoaAAK0K7YaU20Csud004M9NnFJTO9VK63P5hYyWovn/q8vGiFLM8EBxaArdoMONdbFP2aMlpX2jAhP3wu88D4x0dsdimJINR6lPbe3mqvAdPjnz0HzWYPO1eE9EJv2+cgpLJXKlbNrEre3YGtpeuw+Ej/grpKSEJrbyI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=Xjp2yPrx; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=V4rcw+gc; arc=none smtp.client-ip=205.220.168.131
+	 In-Reply-To:Content-Type; b=Hv9p+Bpoywuw+4/gtT+rKzCRp/JPo3ATJIBAUcndKrnEyEDM10GP+Blbo1ilQsqckSGrTzkmvi4ahYYx6ry+69jUH2gNiw3xZxqj4mg79bPH7Eelz4iw/JzDAqRMnl9ndFaGqC4t8o2beQKBnVq0EgZiPxwEFk/GkvO7o45B3dk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=Va3ObGAQ; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=ijQwNs3s; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 5AJ2R5oG3165030
-	for <linux-arm-msm@vger.kernel.org>; Wed, 19 Nov 2025 04:49:09 GMT
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 5AJ0f9jD3412654
+	for <linux-arm-msm@vger.kernel.org>; Wed, 19 Nov 2025 05:02:02 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	kFG5Mqe7GlywUNGuL0mBhZFPMuuMhJqAl3FsJ7xmmik=; b=Xjp2yPrxqTLLWQhL
-	5AdlJWo/5AgORRgJbjhRZx5EmLaPOyhOLe5hTmt5Wbg5jiH/QIIzryEbMATnM+5s
-	bozDp/OnjlW+XWO7iRfVVOifV4DNnd+SpUDVZ1X7/WhmVvwP6ACPUPfpnZ4Uge3p
-	riz1QsMWnIcdeRFsPONpx4uP4qOdkmtwyyNzVcznYA2fhv7C++RIHI9GQQYSJdRV
-	8Pn/1KOSUCAhDercnuCo5OosoLoosPxj4n98de/K9UDbm1ptlhfPBYYHn5vZK8nP
-	zK1gLngXtGVUFdEJ4luSI7y5B/ra/2XaCBjUgpedNa/9JeylFprucy+4wSysiIcs
-	BcG9sA==
-Received: from mail-pj1-f70.google.com (mail-pj1-f70.google.com [209.85.216.70])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4agvqgsswp-1
+	z5NqIgx2P5nS26/g9jgskIxQbUIoH+MmlLA6OGcwLQ8=; b=Va3ObGAQhE7IG7+V
+	8fVr5FNmrv0qdE42+P7m0gLZ3EnxQWzW5uIzPnrzVn3CAGHk2YQPG1mkW3dxf3kv
+	lW8TGEB3dctlU2J6uw3v8PEi8jl8UJF1wlSvny2aJU94Q6IetegXwxMugtgxOh/D
+	syZZI9jldW6Wx99cC7me32lyLRd9SxhKj98cifJ3i2SrkuQiSXm2hFTKJ+GXGrLZ
+	+UBreJDF2jeMe5HH6H+uTZ1nduC9jW3ST7c8e/tfLFxvC4M/dX1gySBBFBoK1sO/
+	HKZlB8gDY/BB7IAfH4M7eHGiqp5o8xvnB3jNV9LnTDV7pbq0KS0ZS+Ex3YlcnvRG
+	8dKQAQ==
+Received: from mail-pf1-f197.google.com (mail-pf1-f197.google.com [209.85.210.197])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4agv0v2003-1
 	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Wed, 19 Nov 2025 04:49:09 +0000 (GMT)
-Received: by mail-pj1-f70.google.com with SMTP id 98e67ed59e1d1-34377900dbcso12419115a91.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 18 Nov 2025 20:49:09 -0800 (PST)
+	for <linux-arm-msm@vger.kernel.org>; Wed, 19 Nov 2025 05:02:02 +0000 (GMT)
+Received: by mail-pf1-f197.google.com with SMTP id d2e1a72fcca58-7b6b194cf71so9130853b3a.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 18 Nov 2025 21:02:02 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1763527748; x=1764132548; darn=vger.kernel.org;
+        d=oss.qualcomm.com; s=google; t=1763528521; x=1764133321; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=kFG5Mqe7GlywUNGuL0mBhZFPMuuMhJqAl3FsJ7xmmik=;
-        b=V4rcw+gc5cFccjBNk32VGY//xkloCvwwVbci7mTpVnwkE+iQYX520d99kHqMgzYTNL
-         rxLEeW6KrrVjK+bZ8uVpjUORnvn+03DzySecD4cjNDQccsXTynDOeCLTuOZGZjWkY8cc
-         oK0YA6WPynwrGkbckmaVpNqCtG0M10ysh/i74NIUrkhQ1qx5JAXTpguHcNAaHS4YlYgh
-         LeoPTtRsNb/ETyBCGHIPI+xWju5N239Hy2MH1awR7tTnqH/teIXD+FtEC5GEMRFRNvIr
-         fGzl2pRL54P6O+n+3fm3zhwkkCXrFYyHCTrgsha8HpUEATGAw/wRzDzY5E2Ft8tqtPuY
-         Kd5g==
+        bh=z5NqIgx2P5nS26/g9jgskIxQbUIoH+MmlLA6OGcwLQ8=;
+        b=ijQwNs3shhjtceCFJ5YxrQJFwJQAO0uxx90aQIaalpq70H+/M15rFIPZuBop7sH3sp
+         tzT91OGFNJN4FRpPXZrlVcA9YyW2LA4K9eJxcJZOaOY79Pr2cdr/kNvBAeWbZYEKcqa0
+         EqMYYkkFpCuhwGcdGy+SOM4yYAc8seezjRohw0ZPX3P3xP1/b6Ut8aqsVxh3o/Ifzwox
+         GmiB7kx5l8fsjsEu1xM2QJVxX6FxBWxGkHf7naF4e5cctT34Cjc3lNwjFfmytvPL7pK/
+         3o353n+NiDRjjjBUnNN3eTFHa3hGRspsXTPjJgcI0U/NNacjTyXASfq2Kbp0IixUBhut
+         bjOQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1763527748; x=1764132548;
+        d=1e100.net; s=20230601; t=1763528521; x=1764133321;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=kFG5Mqe7GlywUNGuL0mBhZFPMuuMhJqAl3FsJ7xmmik=;
-        b=uzgJpZS8kxyb5WuXYqkgZjbX2sQsPl/0r4PVyn2zdzcj24+pLfAqwdQb9ANOfp0rHP
-         4zdaMLdOniXxzcfspdHVinoXJTV0ZMO8y6/Qtmw+lsk8JPIkW029P52BKEwmFN9PcE4C
-         b4fP9xm1EiS3SIvmFaxEW0zAyPj+MctIWq7hLCsOTMzXbWlfGrVKebRtvaRm5zI1eEiT
-         sd18MbBEs5tTuhdJFk6e2bw3xNFMtlNtQv3/f4KVAjWjScFaF9iRqUrrRE5pFg3nUxYB
-         DwxlCs/o7PvG3+VTbFjY64JpcRGMkdCy3BDG9cK7e+Wr1EHg2HiJnX/4BBZKB/uYLVYn
-         YzOQ==
-X-Forwarded-Encrypted: i=1; AJvYcCVn8M4QghT3zvGX/syfK2X8VXzinvL4nd2QD3qb4sEWqm0bYKTBwGt9XIRhqJQJXzpjTEX80Zs6/YrFTLnu@vger.kernel.org
-X-Gm-Message-State: AOJu0YxR3j8XjRm+ZxTe3pMq3HcLJQnW+ZowvHpmTk24bWRJBPA2c+PG
-	UBkJkqSrjeHTsBb5dluMcgPNcuxlA6txAZgy1f4Z5huvf/KF7d1pCwrOjaq84nsGMNW73Hjk1NY
-	mjZ+WiN6g/qWFF8Klbj5ae+N/hM9sZhv6KpTifH5029kRQ903s8iZWkmVASCMeiA3zK/U
-X-Gm-Gg: ASbGnctyG+jz56BYbssg7NJkxkwoVJ8jaRzmzVKntoXpNW+cSjQuPxMV1JVnHEBixUl
-	gD1SojrfKVJ+ardiDa1GFsBrMxE3DgWn2ytgsSRe6mLd43E7ZYrPNrSZUw8ZHcYaMBzW7fxnmiK
-	PKgHGZEPxQ/eDrzofHa4lBNLV0BLGO5DQyZSK1vshaEUWrmZGw4tqIWWazLZuTuy77vRcWWn/5b
-	eBrMwtrTEVmSuNLk+m4GisVrNmg8L+TaQawmBfQpZg4sog7p6OjvhvvhaEGW4I4G3sYynVs171J
-	RiGaRlRYS+MH0CNAfZZWqeEP7LKUJ9I/V9kQhYHqfAiYqFraoHj3WlrpZviXYzO0ABsUpaZ/BwK
-	6J7XOhYukWIQ7TJ/JIpCWkbhjZIvucj6J
-X-Received: by 2002:a05:7022:ff42:b0:11b:c1ab:bdd0 with SMTP id a92af1059eb24-11bc1abbed3mr4995412c88.35.1763527748449;
-        Tue, 18 Nov 2025 20:49:08 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFLvJ3BtCW1AoI0h7qv8WBIu7dRN5NL2oEjk4AbsU1vWLecZW7FVCQPnhl5gsZf7titMWSCkw==
-X-Received: by 2002:a05:7022:ff42:b0:11b:c1ab:bdd0 with SMTP id a92af1059eb24-11bc1abbed3mr4995399c88.35.1763527747895;
-        Tue, 18 Nov 2025 20:49:07 -0800 (PST)
-Received: from [192.168.0.13] ([76.176.54.54])
-        by smtp.gmail.com with ESMTPSA id a92af1059eb24-11b060885f9sm59870695c88.4.2025.11.18.20.49.06
+        bh=z5NqIgx2P5nS26/g9jgskIxQbUIoH+MmlLA6OGcwLQ8=;
+        b=N924PbIOftn8YhWnYqRrwuyhRxDwJoQxywLkFHgrlecZ6YSmcbGjFkF3klZezRRHCl
+         CG/ZngfVXhqyqeKTiJ+s+eMZN2xmnCjhiN2VdaWwohhJHqiqdjREp6kd0t5FMkzgvoIt
+         Q5iJAqI/hHJ/Upe4fk067QshvkKt5jdYq3zh5QiFDeN5t4YZs8eKqXQIxgaXGGuR4UuV
+         5WkCd5a6QtaIzZP9iraE3QsaRYAkqYxCv4W9J3zOsAL6Tvlq6Wstj+202Fo/oznhzvW8
+         DoCxBSCK9EctTzTj5Vz7M6MzupfJAtU3qen2jO6ZVByRxJl9Aqgq2W7NlVYt6DPKaZKv
+         u16g==
+X-Gm-Message-State: AOJu0Yx+nmYO4Z7V8egpzSoe4oAm1ZCg2gmOel+cIrAFjV+Anwr1wvG9
+	6awxBkA4p7nc8hTqxTgqhELXBB9DiyZHxrjZC7QNfx9m4bEmK8xvROp+jZBFezdhN50PP/ft2PU
+	AGLg13pC8eB8G0q03ptJhP46XWFgevuURID1UEi+qmGvpAyKjEnF8998ekDRHe7dFxLIe
+X-Gm-Gg: ASbGncsKhf379tty+B3wNmQiEGCrtUHLcYf4XRb+nt7O/XG9Ebb79sqh1FK2v4OH+py
+	xAZ2wSlGQCYc+5LvQ0y/8ruSh08FeSgPi8HbCzJX5jZ4Ekqi6hrEYGBa1MlHbULBrZU83e1Uc8x
+	DSGLOtUiOlf+vdWc2YoDuYoDe6zpw5qHpzweL3HQVJaIgi2cQE0JTc6k/cD/L0cYdZmUVBphcHY
+	DCncPvfl9x5RuJ6RQV/VYLgkJnvBZROKs6RwP+yCi2etb8qSo1m5ukhDo6VOrrdRWsiTt2AcW2y
+	o0rlqnNtYseSP5rVpHdjO6O4zm979IfMxtHvp8AyRad6uks85o53glekwIUfEOUFNAEWbSW6iCw
+	yG5+qHw9ViAOt7++ZsLGSUktHI9jVNafKbdH/cuOwcpfVq3wx
+X-Received: by 2002:a05:6a00:1407:b0:7b8:b1ff:be51 with SMTP id d2e1a72fcca58-7ba3be8c4f5mr20546303b3a.18.1763528521509;
+        Tue, 18 Nov 2025 21:02:01 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IH063BKmkkOWeo4TjNaTNBDPjwkkczHRvzPlsft60lCBe6xwb6sabiu6gIU78Nf2irU95uk7w==
+X-Received: by 2002:a05:6a00:1407:b0:7b8:b1ff:be51 with SMTP id d2e1a72fcca58-7ba3be8c4f5mr20546272b3a.18.1763528521040;
+        Tue, 18 Nov 2025 21:02:01 -0800 (PST)
+Received: from [10.218.21.154] ([202.46.22.19])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-7b9271505acsm18149433b3a.35.2025.11.18.21.01.56
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 18 Nov 2025 20:49:07 -0800 (PST)
-Message-ID: <5c30421e-108a-41de-81c7-c0c5e5290cc1@oss.qualcomm.com>
-Date: Tue, 18 Nov 2025 20:49:05 -0800
+        Tue, 18 Nov 2025 21:02:00 -0800 (PST)
+Message-ID: <9a7ead5d-e8b8-49bd-883f-575f7eb22b78@oss.qualcomm.com>
+Date: Wed, 19 Nov 2025 10:31:55 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -104,70 +103,103 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/6] dt-bindings: vendor-prefixes: Add Arduino name
-To: Riccardo Mereu <r.mereu.kernel@arduino.cc>, andersson@kernel.org,
-        konradybcio@kernel.org, robh@kernel.org, krzk+dt@kernel.org,
-        conor+dt@kernel.org, broonie@kernel.org
-Cc: linux@roeck-us.net, Jonathan.Cameron@huawei.com, wenswang@yeah.net,
-        naresh.solanki@9elements.com, michal.simek@amd.com, nuno.sa@analog.com,
-        chou.cosmo@gmail.com, grantpeltier93@gmail.com, eajames@linux.ibm.com,
-        farouk.bouabid@cherry.de, linux-arm-msm@vger.kernel.org,
+Subject: Re: [PATCH v1 1/2] dt-bindings: pinctrl:
+ qcom,sa8775p-lpass-lpi-pinctrl: Add SA8775P LPASS pinctrl
+To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley
+ <conor+dt@kernel.org>,
+        Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
+Cc: linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-spi@vger.kernel.org, m.facchin@arduino.cc,
-        Riccardo Mereu <r.mereu@arduino.cc>
-References: <20251114121853.16472-1-r.mereu@arduino.cc>
- <20251114121853.16472-2-r.mereu@arduino.cc>
+        kernel@oss.qualcomm.com, ajay.nandam@oss.qualcomm.com,
+        ravi.hothi@oss.qualcomm.com
+References: <20251116171656.3105461-1-mohammad.rafi.shaik@oss.qualcomm.com>
+ <20251116171656.3105461-2-mohammad.rafi.shaik@oss.qualcomm.com>
+ <8a2f9708-6f3e-4c4b-942a-8df7b4d6e127@oss.qualcomm.com>
 Content-Language: en-US
-From: Trilok Soni <trilok.soni@oss.qualcomm.com>
-In-Reply-To: <20251114121853.16472-2-r.mereu@arduino.cc>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-ORIG-GUID: PFGYMoZ1Tj5H5bDQEUilt_8bvLqqciX4
-X-Proofpoint-GUID: PFGYMoZ1Tj5H5bDQEUilt_8bvLqqciX4
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMTE5MDAzNCBTYWx0ZWRfX5mCKGLiJKWiT
- ZKc0/leGeG9/fiFogqLqg3dUreD5SWwWKzJ+7MDR047Ip/xDyrmqYIsOLai+KMQJpBYXG3zlDcJ
- UroxrQZo4guWN2LH1BZAHSfhtP+8tJqgHbea+Dc3dWmUzpEfrPf/tr3nQNQr7YVkI25wtDUS0bx
- 9aPvbwSM9LUJoGCpjQglo43A79ZjGa9w6TB4DfgGjc2bpW2ZKwxcBWykclqA2BtuCJ68cSPkFy7
- 7FJswes0qwDrQIAEvWYnvmxY9ilQBbZ0aAOaPGkoTGONuAXa+rec3bBj+4b0ZNg56N7wavI6/ov
- 8bk9+xHGFdXgZTmyJg3M0d7JHPHIexsI14QMtuNGB2mllsXV3bYHFyT2KKVF0mUHSNvoRgBSjwX
- ZvdZtqLEEpe3WTc7ND7XAq5ajv3siA==
-X-Authority-Analysis: v=2.4 cv=LMJrgZW9 c=1 sm=1 tr=0 ts=691d4c45 cx=c_pps
- a=0uOsjrqzRL749jD1oC5vDA==:117 a=4DQS9OR3UOqOMXWGYgShMA==:17
+From: Mohammad Rafi Shaik <mohammad.rafi.shaik@oss.qualcomm.com>
+In-Reply-To: <8a2f9708-6f3e-4c4b-942a-8df7b4d6e127@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMTE5MDAzNiBTYWx0ZWRfX//2JMe8XNg3S
+ zjvzQnbi24mUsdcH+i4sFlSVoAim/MLhlHqYcBgrNXmmldXWQXI6fj7nE+Mbd1qMvjU7f1BdTzW
+ jZnmF57YaNHLRjZyy8q6eh7gAhOLnpH0MksIsnSQ/Bxdmw8CLtHI6CgmGVOzYBZHTL7WrCYSXO9
+ ZkfF3CuIYd/WKPWgXd6sJNdXTQFk4NerdRbkuvpgnOZF5hPEZna1B9f4Zpz+94CKxo7ADC5BWMa
+ MeXQA/FnkA8p/37tVwW0rQqvSSpRxtow0kAZ0/ihdQoC8eWWMwkzBlmrpsXFDdbq3fLhpgD1EyT
+ N6SFTFlXL5zdxXmbInMe1L/bpdHsETVxsaN7p2QOcAoJd0QjVoCizQ+M9fdj1UIWX74bOcVP8Me
+ Rv84bQ4do+qu7MN2zPhiJlocAtX7Sw==
+X-Authority-Analysis: v=2.4 cv=S8XUAYsP c=1 sm=1 tr=0 ts=691d4f4a cx=c_pps
+ a=rEQLjTOiSrHUhVqRoksmgQ==:117 a=fChuTYTh2wq5r3m49p7fHw==:17
  a=IkcTkHD0fZMA:10 a=6UeiqGixMTsA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=Ar_5JxPjAAAA:8 a=5jHDBBYAGbftYkXlaRIA:9
- a=QEXdDO2ut3YA:10 a=mQ_c8vxmzFEMiUWkPHU9:22
+ a=VkNPw1HP01LnGYTKEx00:22 a=gEfo2CItAAAA:8 a=EUspDBNiAAAA:8
+ a=pU8MzpUV3DlFKexVmMUA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=2VI0MkxyNR6bbpdq8BZq:22 a=sptkURWiP4Gy88Gu7hUp:22
+X-Proofpoint-ORIG-GUID: dedWMc-puUmiAE6uFwxc3lgbHPDxRWI8
+X-Proofpoint-GUID: dedWMc-puUmiAE6uFwxc3lgbHPDxRWI8
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
  definitions=2025-11-19_01,2025-11-18_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0 clxscore=1015 lowpriorityscore=0 spamscore=0 suspectscore=0
- bulkscore=0 adultscore=0 priorityscore=1501 malwarescore=0 impostorscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2510240001 definitions=main-2511190034
+ clxscore=1015 malwarescore=0 adultscore=0 suspectscore=0 bulkscore=0
+ lowpriorityscore=0 priorityscore=1501 impostorscore=0 spamscore=0
+ phishscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2510240001
+ definitions=main-2511190036
 
-On 11/14/2025 4:18 AM, Riccardo Mereu wrote:
-> Add entry for Arduino Srl (https://arduino.cc)
 
-Is Srl or SRL = Inc or LLC? 
 
+On 11/17/2025 6:14 PM, Konrad Dybcio wrote:
+> On 11/16/25 6:16 PM, Mohammad Rafi Shaik wrote:
+>> Add bindings for the pin controller in Low Power Audio SubSystem (LPASS)
+>> of Qualcomm SA8775P SoC.
+>>
+>> Signed-off-by: Mohammad Rafi Shaik <mohammad.rafi.shaik@oss.qualcomm.com>
+>> ---
+>>   .../qcom,sa8775p-lpass-lpi-pinctrl.yaml       | 106 ++++++++++++++++++
+>>   1 file changed, 106 insertions(+)
+>>   create mode 100644 Documentation/devicetree/bindings/pinctrl/qcom,sa8775p-lpass-lpi-pinctrl.yaml
+>>
+>> diff --git a/Documentation/devicetree/bindings/pinctrl/qcom,sa8775p-lpass-lpi-pinctrl.yaml b/Documentation/devicetree/bindings/pinctrl/qcom,sa8775p-lpass-lpi-pinctrl.yaml
+>> new file mode 100644
+>> index 000000000000..01a56dbeaeff
+>> --- /dev/null
+>> +++ b/Documentation/devicetree/bindings/pinctrl/qcom,sa8775p-lpass-lpi-pinctrl.yaml
+>> @@ -0,0 +1,106 @@
+>> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+>> +%YAML 1.2
+>> +---
+>> +$id: http://devicetree.org/schemas/pinctrl/qcom,sa8775p-lpass-lpi-pinctrl.yaml#
+>> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+>> +
+>> +title: Qualcomm SA8775P SoC LPASS LPI TLMM
+>> +
+>> +maintainers:
+>> +  - Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
+>> +
+>> +description:
+>> +  Top Level Mode Multiplexer pin controller in the Low Power Audio SubSystem
+>> +  (LPASS) Low Power Island (LPI) of Qualcomm SA8775P SoC.
+>> +
+>> +properties:
+>> +  compatible:
+>> +    const: qcom,sa8775p-lpass-lpi-pinctrl
 > 
-> Signed-off-by: Riccardo Mereu <r.mereu@arduino.cc>
-> ---
->  Documentation/devicetree/bindings/vendor-prefixes.yaml | 2 ++
->  1 file changed, 2 insertions(+)
+> Are the mappings the same for monaco? You can preemptively add the
+> compatible here too, if so
 > 
-> diff --git a/Documentation/devicetree/bindings/vendor-prefixes.yaml b/Documentation/devicetree/bindings/vendor-prefixes.yaml
-> index 42d2bc0ce027..07a285c9387e 100644
-> --- a/Documentation/devicetree/bindings/vendor-prefixes.yaml
-> +++ b/Documentation/devicetree/bindings/vendor-prefixes.yaml
-> @@ -158,6 +158,8 @@ patternProperties:
->      description: Arctic Sand
->    "^arcx,.*":
->      description: arcx Inc. / Archronix Inc.
-> +  "^arduino,.*":
-> +    description: Arduino SRL
->    "^argon40,.*":
->      description: Argon 40 Technologies Limited
->    "^ariaboard,.*":
+
+Ack,
+
+yes right, Lemans and Monaco share the same pinctrl mapping.
+I’ll include the Monaco compatible entry as well.
+
+Thanks & Regards,
+Rafi.
+
+> Konrad
 
 
