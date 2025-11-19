@@ -1,89 +1,123 @@
-Return-Path: <linux-arm-msm+bounces-82462-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-82464-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ams.mirrors.kernel.org (ams.mirrors.kernel.org [213.196.21.55])
-	by mail.lfdr.de (Postfix) with ESMTPS id A843CC6DA60
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Nov 2025 10:18:58 +0100 (CET)
+Received: from ams.mirrors.kernel.org (ams.mirrors.kernel.org [IPv6:2a01:60a::1994:3:14])
+	by mail.lfdr.de (Postfix) with ESMTPS id CA92CC6DA9F
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Nov 2025 10:21:08 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ams.mirrors.kernel.org (Postfix) with ESMTPS id 78BB7385FA7
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Nov 2025 09:13:28 +0000 (UTC)
+	by ams.mirrors.kernel.org (Postfix) with ESMTPS id 24D2A3A119E
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Nov 2025 09:15:10 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0A5A73358CA;
-	Wed, 19 Nov 2025 09:13:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E1E283370FA;
+	Wed, 19 Nov 2025 09:14:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=fail reason="signature verification failed" (1024-bit key) header.d=163.com header.i=@163.com header.b="lmbLVID1"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="cekMWXcD"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from m16.mail.163.com (m16.mail.163.com [117.135.210.3])
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.9])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD659333434;
-	Wed, 19 Nov 2025 09:13:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=117.135.210.3
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2ED65335573;
+	Wed, 19 Nov 2025 09:14:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.9
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763543590; cv=none; b=Q4/5dcRpb/m0xoSfJfCPEPR5sPttP2TpU5yLS21rKdgTek7j5d3yJcb/L1vvEcWHniKyWUjHTu+2fG2nmwrU3R5yz0WswicewhCQU4WiXXgV/wznglLYWp7t8EpLM85tFgLuRTxz2kQ7A+Gk8c4MIM7eMlCsc4wn9uVQdqeoUf4=
+	t=1763543691; cv=none; b=mgL6KwTkzI5ZRjKIHdtXCYHpw/4yzEQbf6SIXAEq+dFoX2beJBlEcQNCa7T2Hg945ER10AGVjuOIAW8RiKM1el+CfYS8wMjOmwqX+uTiZnhbHt8nvvMg3qzwngYLTkd5hJ5c+ne+3cV9lS4aan9MXx6KpNGY0agAmxpm826XVmM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763543590; c=relaxed/simple;
-	bh=NgXDY7QxjJcYHOtGGd/GQzrbOCkOJWWe71Y0GZ7Tg1o=;
-	h=Date:From:To:Cc:Subject:In-Reply-To:References:Content-Type:
-	 MIME-Version:Message-ID; b=hr5Mp950azE/2sjSMCysOQTwa5XQwfS4VSvBjK4pbpXI+u4dw/nH5tRYoE5OWwQlV/Boe/+2JhAILg+9nKZSEtImNFM6uWaAKVzaCk/5cCth+BnIA3p8MiWEGO8VB3/FuJuyDmioIHyLcNVajcx4mDLUQET3m+f7Jxjh+VakJnY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=163.com; spf=pass smtp.mailfrom=163.com; dkim=fail (1024-bit key) header.d=163.com header.i=@163.com header.b=lmbLVID1 reason="signature verification failed"; arc=none smtp.client-ip=117.135.210.3
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=163.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=163.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
-	s=s110527; h=Date:From:To:Subject:Content-Type:MIME-Version:
-	Message-ID; bh=n9idDs2A6FYZYy9dKNjBnmY+s567I+LYu9oc6ROTL8o=; b=l
-	mbLVID131Gde4ur6s3UyWxdIS938xX/Wv6wERo3UNnPGmFovqQAUYJCsax71TWDz
-	NzPa1VWfJrpyy10Xy4hIwUfMo3gOa8Cn/iFujgkMwPBnxBGCLEB2St7oqVY1DSNL
-	mgYqDxxmA5+oTDwS9VDsYrVKhgrUugedNC81gkB6Cs=
-Received: from slark_xiao$163.com (
- [2408:8459:3860:2d7a:43c4:19f8:8dc3:1342] ) by ajax-webmail-wmsvr-40-123
- (Coremail) ; Wed, 19 Nov 2025 17:12:06 +0800 (CST)
-Date: Wed, 19 Nov 2025 17:12:06 +0800 (CST)
-From: "Slark Xiao" <slark_xiao@163.com>
-To: "Dmitry Baryshkov" <dmitry.baryshkov@oss.qualcomm.com>
-Cc: mani@kernel.org, loic.poulain@oss.qualcomm.com, ryazanov.s.a@gmail.com,
-	johannes@sipsolutions.net, andrew+netdev@lunn.ch,
-	davem@davemloft.net, edumazet@google.com, kuba@kernel.org,
-	pabeni@redhat.com, netdev@vger.kernel.org, mhi@lists.linux.dev,
-	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re:Re: [PATCH v2 1/2] bus: mhi: host: pci_generic: Add Foxconn
- T99W760 modem
-X-Priority: 3
-X-Mailer: Coremail Webmail Server Version 2023.4-cmXT build
- 20250723(a044bf12) Copyright (c) 2002-2025 www.mailtech.cn 163com
-In-Reply-To: <aqhkk6sbsuvx5yoy564sd53blbb3fqcrlidrg3zuk3gsw64w24@hsxi4nj4t7vy>
-References: <20251119084537.34303-1-slark_xiao@163.com>
- <aqhkk6sbsuvx5yoy564sd53blbb3fqcrlidrg3zuk3gsw64w24@hsxi4nj4t7vy>
-X-NTES-SC: AL_Qu2dAfmfvE0p4CecY+kfmk8Sg+84W8K3v/0v1YVQOpF8jAnpyg8icVhkOV7G/8iADTKmnCKcXBVe5v9ZWqxWYqEqFk9uMnoTPeNQVzxcbDIp4w==
-Content-Transfer-Encoding: base64
-Content-Type: text/plain; charset=GBK
+	s=arc-20240116; t=1763543691; c=relaxed/simple;
+	bh=q6da8jLQtnLnim6HyWRfNmg8bV209AFrRAch7qncfbs=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=u6RxXuTVjqJ32ZE1S2NexV0Sbp/FCGCB4jW5PxmYW5FZad2iW43KyjRaI8ZpsfrGon0aGnSCrxrtXpRBJELfUhW+h8jJx1Z8BYrfyG+2gTLS/O3NifzTWcgFYikd+8/57usV3pnNq8v4WSHb/7m32uIWyXpq/7aVI4VjTARnKdU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=pass smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=cekMWXcD; arc=none smtp.client-ip=198.175.65.9
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.intel.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1763543690; x=1795079690;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=q6da8jLQtnLnim6HyWRfNmg8bV209AFrRAch7qncfbs=;
+  b=cekMWXcD4aJBhqzu2a/2fPvj8qaxdpzbQGuSHMilqF2V+cbAekelvhKK
+   +DUjCDRwzR9B8+If3AgHJCVbL2XZ/pg2HA8ozhEW68p8MQNWHfAlxoh9V
+   wqw2ba1B2LLzlVhch/3eUZGlnyfau2sb2qeljWzb7RPZL0nxRWkpExT84
+   Axk8Zh6wVDrR6e4RDEJQf/l5IDqS0eOM3FTrLK45SnQpmkJ56iFDgGMZL
+   Ejqf5IvlRKN4dliHJIcMhFi4SDWDxTAyeQqaP4bGS+qrFeTxn5/Qdm727
+   uexSKOp5A5GZHggrajymje87+RT3504euXkA3s9e+Q2w+f4pFpl/Rsnyt
+   A==;
+X-CSE-ConnectionGUID: gxkYeciaTGmtHocQixgCHA==
+X-CSE-MsgGUID: K4vUq2axReywThG1raWong==
+X-IronPort-AV: E=McAfee;i="6800,10657,11617"; a="88232433"
+X-IronPort-AV: E=Sophos;i="6.19,315,1754982000"; 
+   d="scan'208";a="88232433"
+Received: from orviesa001.jf.intel.com ([10.64.159.141])
+  by orvoesa101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 19 Nov 2025 01:14:47 -0800
+X-CSE-ConnectionGUID: oHYrWS8ATQebFcLjYXGykg==
+X-CSE-MsgGUID: DikRyuhjQLyYtee9Ng8YEQ==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.19,315,1754982000"; 
+   d="scan'208";a="228346786"
+Received: from rvuia-mobl.ger.corp.intel.com (HELO localhost) ([10.245.245.245])
+  by smtpauth.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 19 Nov 2025 01:14:41 -0800
+Date: Wed, 19 Nov 2025 11:14:38 +0200
+From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+To: Petr Mladek <pmladek@suse.com>
+Cc: Steven Rostedt <rostedt@goodmis.org>, linux-doc@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	openipmi-developer@lists.sourceforge.net,
+	linux-media@vger.kernel.org, dri-devel@lists.freedesktop.org,
+	linaro-mm-sig@lists.linaro.org, amd-gfx@lists.freedesktop.org,
+	linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
+	intel-xe@lists.freedesktop.org, linux-mmc@vger.kernel.org,
+	netdev@vger.kernel.org, intel-wired-lan@lists.osuosl.org,
+	linux-pci@vger.kernel.org, linux-s390@vger.kernel.org,
+	linux-scsi@vger.kernel.org, linux-staging@lists.linux.dev,
+	ceph-devel@vger.kernel.org, linux-trace-kernel@vger.kernel.org,
+	Rasmus Villemoes <linux@rasmusvillemoes.dk>,
+	Sergey Senozhatsky <senozhatsky@chromium.org>,
+	Jonathan Corbet <corbet@lwn.net>
+Subject: Re: [PATCH v3 01/21] lib/vsprintf: Add specifier for printing struct
+ timespec64
+Message-ID: <aR2KfgzV1_3ZzXhT@smile.fi.intel.com>
+References: <20251113150217.3030010-1-andriy.shevchenko@linux.intel.com>
+ <20251113150217.3030010-2-andriy.shevchenko@linux.intel.com>
+ <aRcnug35DOZ3IGNi@pathway.suse.cz>
+ <aRd5HHUBu2ookDv_@smile.fi.intel.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Message-ID: <7373f6c5.8783.19a9b62ad62.Coremail.slark_xiao@163.com>
-X-Coremail-Locale: zh_CN
-X-CM-TRANSID:eygvCgDXH1bmiR1pDOslAA--.1156W
-X-CM-SenderInfo: xvod2y5b0lt0i6rwjhhfrp/1tbiGRcLZGkdf8H9ewAAst
-X-Coremail-Antispam: 1U5529EdanIXcx71UUUUU7vcSsGvfC2KfnxnUU==
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <aRd5HHUBu2ookDv_@smile.fi.intel.com>
+Organization: Intel Finland Oy - BIC 0357606-4 - c/o Alberga Business Park, 6
+ krs, Bertel Jungin Aukio 5, 02600 Espoo
 
-CkF0IDIwMjUtMTEtMTkgMTc6MDU6MTcsICJEbWl0cnkgQmFyeXNoa292IiA8ZG1pdHJ5LmJhcnlz
-aGtvdkBvc3MucXVhbGNvbW0uY29tPiB3cm90ZToKPk9uIFdlZCwgTm92IDE5LCAyMDI1IGF0IDA0
-OjQ1OjM3UE0gKzA4MDAsIFNsYXJrIFhpYW8gd3JvdGU6Cj4+IFQ5OVc3NjAgbW9kZW0gaXMgYmFz
-ZWQgb24gUXVhbGNvbW0gU0RYMzUgY2hpcHNldC4KPj4gSXQgdXNlIHRoZSBzYW1lIGNoYW5uZWwg
-c2V0dGluZ3Mgd2l0aCBGb3hjb25uIFNEWDYxLgo+PiBlZGwgZmlsZSBoYXMgYmVlbiBjb21taXR0
-ZWQgdG8gbGludXgtZmlybXdhcmUuCj4+IAo+PiBTaWduZWQtb2ZmLWJ5OiBTbGFyayBYaWFvIDxz
-bGFya194aWFvQDE2My5jb20+Cj4+IC0tLQo+PiB2MjogQWRkIG5ldCBhbmQgTUhJIG1haW50YWlu
-ZXIgdG9nZXRoZXIKPj4gLS0tCj4+ICBkcml2ZXJzL2J1cy9taGkvaG9zdC9wY2lfZ2VuZXJpYy5j
-IHwgMTMgKysrKysrKysrKysrKwo+PiAgMSBmaWxlIGNoYW5nZWQsIDEzIGluc2VydGlvbnMoKykK
-Pgo+Tm90ZTogb25seSAxLzIgbWFkZSBpdCB0byBsaW51eC1hcm0tbXNtLiBJcyBpdCBpbnRlbnRp
-b25hbCBvciB3YXMgdGhlcmUKPmFueSBraW5kIG9mIGFuIGVycm9yIHdoaWxlIHNlbmRpbmcgdGhl
-IHBhdGNoZXM/Cj4KPi0tIAo+V2l0aCBiZXN0IHdpc2hlcwo+RG1pdHJ5CkJvdGggcGF0Y2hlcyBo
-YXZlIGNjIGxpbnV4LWFybS1tc21Admdlci5rZXJuZWwub3JnLgpBbmQgbm93IEkgY2FuIGZpbmQg
-Ym90aCBwYXRjaGVzIGluOgpwYXRjaHdvcmsua2VybmVsLm9yZy9wcm9qZWN0L2xpbnV4LWFybS1t
-c20vbGlzdC8K
+On Fri, Nov 14, 2025 at 08:46:52PM +0200, Andy Shevchenko wrote:
+> On Fri, Nov 14, 2025 at 01:59:38PM +0100, Petr Mladek wrote:
+> > On Thu 2025-11-13 15:32:15, Andy Shevchenko wrote:
+
+...
+
+> > I wonder how to move forward. I could take the whole patchset via
+> > printk tree. There is no conflict with linux-next at the moment.
+> > 
+> > It seems that only 3 patches haven't got any ack yet. I am going
+> > to wait for more feedback and push it later the following week
+> > (Wednesday or so) unless anyone complains.
+> 
+> Sounds good to me!
+> 
+> But in the worst case all but untagged can be pushed, the rest can go
+> to the next cycle.
+
+Just got a "BUILD SUCCESS" from LKP and since we gained even more tags
+I think it's ready to go.
+
+-- 
+With Best Regards,
+Andy Shevchenko
+
+
 
