@@ -1,157 +1,109 @@
-Return-Path: <linux-arm-msm+bounces-82412-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-82414-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ams.mirrors.kernel.org (ams.mirrors.kernel.org [IPv6:2a01:60a::1994:3:14])
-	by mail.lfdr.de (Postfix) with ESMTPS id 58336C6C8F8
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Nov 2025 04:21:06 +0100 (CET)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 034EAC6C955
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Nov 2025 04:26:21 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ams.mirrors.kernel.org (Postfix) with ESMTPS id 89F4A34A8D6
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Nov 2025 03:17:59 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTPS id 155352C6EA
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Nov 2025 03:26:20 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6952E2E6CD2;
-	Wed, 19 Nov 2025 03:17:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 114922E9EC7;
+	Wed, 19 Nov 2025 03:23:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Elehsyoe"
+	dkim=pass (1024-bit key) header.d=163.com header.i=@163.com header.b="oSRnvduV"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from m16.mail.163.com (m16.mail.163.com [220.197.31.3])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DD13260588;
-	Wed, 19 Nov 2025 03:17:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06F0248CFC;
+	Wed, 19 Nov 2025 03:23:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=220.197.31.3
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763522277; cv=none; b=THsFycL3hxYMVTHKEGk5T1D7fRi5skpXfEpBZ5uOzxgRyGSxhcSDIb2lJE2IT+S/5nF/HT/H2tCvez5tW11TS/Scx05C03KuVQ7qutzg9u3pKwWvjmMgIVXJNN0P4nk2EUv+lNzLoH5GFq3VAJdgfMZevkF67ZQsc8Xwg6/Bm48=
+	t=1763522626; cv=none; b=aSh4qRBgzh5uWhWKnLOnscAlzFeFmZXoCzHsbDmXlQXJC4FH5m9uCLNMkTEoUY3xcOhXno2NrZA19TqzCY8mTii1RiVzBjNQc52yuGmvI7+hVYfgM8j9LY+bp94Tc3Vo8c/gLMOW2MzP5qW4q29Cd2MbKuEaaSSKvsjkERNHC+E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763522277; c=relaxed/simple;
-	bh=MIjgvuB0KiPtZ+6xNAoLd+3B/qJ5CymJwizx6U/famA=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=SoflqlQAfBnzyD0QnxceLMpd/AnGjUHkJsbvA/3DSuqXUehEpUqM46lhC6B3veVUwGfVBf7C90GPlrXYzePtkRIuW8cUAWbLclGPlE3/58jBRvPzfEUyljkOEE+XVfldA9DeSZSlpEy2e88hTG81Iu6xJqych8uf1xaqSw1caGA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Elehsyoe; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8FC73C16AAE;
-	Wed, 19 Nov 2025 03:17:55 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1763522276;
-	bh=MIjgvuB0KiPtZ+6xNAoLd+3B/qJ5CymJwizx6U/famA=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=ElehsyoeaGF+JHCONkNRqSVn1gQIGVBnFS9qAFy6URSKQJmngam1W2OcbVTebjrdd
-	 2wFTCGurf47Aae50x8fCw0Glg2zLptoK36bcYjy91BmjgzWAizru4RDuZLpgUZa+Va
-	 aKMEjwctuhpctR05cXw5zAjI2b3yh7b2cdGzqz6G+jgolxjNa839itURDoob6+aY/D
-	 I05q2hVqdBdbtx8qRTWoPyCV+fKYzQwVsAArokPSIRK+Pz87/HjqwcVaNjk/jJ3wUX
-	 vREy5KykxaOf5iOkdFvTa5zoVdbjS2t8vhDFktH7HegBPOAmbpKxcYnvq6IBREGIyq
-	 y+wS/vnlVooMw==
-Date: Tue, 18 Nov 2025 21:22:46 -0600
-From: Bjorn Andersson <andersson@kernel.org>
-To: Shivendra Pratap <shivendra.pratap@oss.qualcomm.com>
-Cc: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>, 
-	Sebastian Reichel <sre@kernel.org>, Bartosz Golaszewski <bartosz.golaszewski@linaro.org>, 
-	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org, 
-	Sebastian Reichel <sebastian.reichel@collabora.com>
-Subject: Re: [PATCH 1/2] Documentation: ABI: Add
- sysfs-class-reboot-mode-reboot_modes
-Message-ID: <yxy7b4pdv4o7dvfjndi5awg5tcobkzwuewn6sal2v2eydv4aes@wkaknlotycrk>
-References: <20251116-next-15nov_expose_sysfs-v1-0-3b7880e5b40e@oss.qualcomm.com>
- <20251116-next-15nov_expose_sysfs-v1-1-3b7880e5b40e@oss.qualcomm.com>
- <t3hfhlp27numfxurtmtcwrovvlgwdvnujain46kwmi37zehdak@xt3vngtkxpsm>
- <virjbkkpdmufx2midadzwiml4boyuxtokikcvupswapwehnv65@d2ppyiaeti22>
- <1ddb483e-3c09-ff45-9d36-cf29a40ba55d@oss.qualcomm.com>
+	s=arc-20240116; t=1763522626; c=relaxed/simple;
+	bh=ZCpiVAVxhb1YiBPCTVKjzdj9RiGRlirVoDs1YOS/wpY=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=UGLIJGYClfYw+HCyZgkfjwMovX1zCv2zx1krFdSURrjh/9GYv98Tm+LGhQuxd3xR4f/VK0WhcYqwj5Il70wmenB3oXhuANhRg2F2sd0PQEYvg+0inx+9I2icKpxuVHHFKg9VMfkCe2XXCsKK1G1rldUX2tvqDCxO/xhoFNQpU/I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=163.com; spf=pass smtp.mailfrom=163.com; dkim=pass (1024-bit key) header.d=163.com header.i=@163.com header.b=oSRnvduV; arc=none smtp.client-ip=220.197.31.3
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=163.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=163.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
+	s=s110527; h=From:To:Subject:Date:Message-Id:MIME-Version; bh=WT
+	32kMdgOLoeNtu5hoZ13GATzOZ7OID01JPDzDmZTZk=; b=oSRnvduVMZw15vEV4N
+	PskiAwFlE6nrTG1nuu3Klms89L1Xwhs8adbSjKQsWziajzOurkvhYMlotetdZlZx
+	VTF0bLjYXON4jaWJ+XkAcbBwc8+UTKnCjElAIgjURTCzDvxw0SWiWOp5qM7dbIAK
+	3+ttvL337KaFwYpip6tB5kxRk=
+Received: from localhost.localdomain (unknown [])
+	by gzsmtp3 (Coremail) with SMTP id PigvCgAH7AkjOB1pu1UWEg--.29172S2;
+	Wed, 19 Nov 2025 11:23:16 +0800 (CST)
+From: Slark Xiao <slark_xiao@163.com>
+To: mani@kernel.org
+Cc: mhi@lists.linux.dev,
+	linux-arm-msm@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	Slark Xiao <slark_xiao@163.com>
+Subject: [PATCH] bus: mhi: host: pci_generic: Add Foxconn T99W760 modem
+Date: Wed, 19 Nov 2025 11:23:13 +0800
+Message-Id: <20251119032313.6119-1-slark_xiao@163.com>
+X-Mailer: git-send-email 2.25.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <1ddb483e-3c09-ff45-9d36-cf29a40ba55d@oss.qualcomm.com>
+Content-Transfer-Encoding: 8bit
+X-CM-TRANSID:PigvCgAH7AkjOB1pu1UWEg--.29172S2
+X-Coremail-Antispam: 1Uf129KBjvJXoW7ZFyDXrykZw45ZFW8Kw47twb_yoW8Ww1UpF
+	4F9rWjyF4vqr45tw4vyr9ruF95GwsxC347KFnrGw12gwn0yrZ0qrZ2gw12gF1Yva93XF4S
+	vFyUWF9Fg3WDtr7anT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
+	9KBjDUYxBIdaVFxhVjvjDU0xZFpf9x0pRhNVhUUUUU=
+X-CM-SenderInfo: xvod2y5b0lt0i6rwjhhfrp/xtbCwAS4HWkdOCR2XwAA3g
 
-On Tue, Nov 18, 2025 at 10:07:51PM +0530, Shivendra Pratap wrote:
-> 
-> 
-> On 11/18/2025 2:18 AM, Bjorn Andersson wrote:
-> > On Sun, Nov 16, 2025 at 07:44:24PM +0200, Dmitry Baryshkov wrote:
-> >> On Sun, Nov 16, 2025 at 08:49:47PM +0530, Shivendra Pratap wrote:
-> >>> Add ABI documentation for /sys/class/reboot-mode/*/reboot_modes, a
-> >>> read-only sysfs attribute exposing the list of supported reboot-mode
-> >>> arguments. This file is created by reboot-mode framework and provides a
-> >>> user-readable interface to query available reboot-mode arguments.
-> >>>
-> >>> Reviewed-by: Sebastian Reichel <sebastian.reichel@collabora.com>
-> >>> Signed-off-by: Shivendra Pratap <shivendra.pratap@oss.qualcomm.com>
-> >>> ---
-> >>>  .../testing/sysfs-class-reboot-mode-reboot_modes   | 39 ++++++++++++++++++++++
-> >>>  1 file changed, 39 insertions(+)
-> >>>
-> >>> diff --git a/Documentation/ABI/testing/sysfs-class-reboot-mode-reboot_modes b/Documentation/ABI/testing/sysfs-class-reboot-mode-reboot_modes
-> >>> new file mode 100644
-> >>> index 0000000000000000000000000000000000000000..28280ffe9bf962ef9d2136ea5d7c6aef77c4bd34
-> >>> --- /dev/null
-> >>> +++ b/Documentation/ABI/testing/sysfs-class-reboot-mode-reboot_modes
-> >>> @@ -0,0 +1,39 @@
-> >>> +What:		/sys/class/reboot-mode/<driver>/reboot_modes
-> >>> +Date:		November 2025
-> >>> +KernelVersion:	6.18.0-rc5
-> >>> +Contact:	linux-pm@vger.kernel.org
-> >>> +		Description:
-> >>> +		This interface exposes the reboot-mode arguments
-> >>> +		registered with the reboot-mode framework. It is
-> >>> +		a read-only interface and provides a space
-> >>> +		separated list of reboot-mode arguments supported
-> >>> +		on the current platform.
-> >>> +		Example:
-> >>> +		 recovery fastboot bootloader
-> >>> +
-> >>> +		The exact sysfs path may vary depending on the
-> >>> +		name of the driver that registers the arguments.
-> >>> +		Example:
-> >>> +		 /sys/class/reboot-mode/nvmem-reboot-mode/reboot_modes
-> >>> +		 /sys/class/reboot-mode/syscon-reboot-mode/reboot_modes
-> >>> +		 /sys/class/reboot-mode/qcom-pon/reboot_modes
-> >>
-> >> This part is obvious, isn't it?
-> >>
-> >>> +
-> >>> +		The supported arguments can be used by userspace
-> >>> +		to invoke device reset using the reboot() system
-> >>> +		call, with the "argument" as string to "*arg"
-> >>> +		parameter along with LINUX_REBOOT_CMD_RESTART2.
-> >>> +		Example:
-> >>> +		 reboot(LINUX_REBOOT_MAGIC1, LINUX_REBOOT_MAGIC2,
-> >>> +		        LINUX_REBOOT_CMD_RESTART2, "bootloader");
-> >>
-> >> So, does one need to write a tool for invoking reboot with the corerct
-> >> set of args?
-> > 
-> > Here's an implementation of such tool
-> > https://github.com/systemd/systemd/blob/main/src/shared/reboot-util.c#L80
-> 
-> Should i include this link for an example of existing tools or i just add
-> add a line saying that such tools are already available?
-> 
-> > 
-> > Many other implementations of reboot provides the same.
-> > 
-> >> If we are adding a sysfs interface, wouldn't it be logical
-> >> to also add another sysfs file, setting the argument?
-> >>
-> > 
-> > The inclusion of the example indicates that we need to expose it in an
-> > accessible form, but I don't think we should, as it's already a
-> > widespread standard interface.
-> > 
-> > As such, I don't think the example adds any value, but it would be
-> > valuable to clarify that this is a standard interface.
-> 
-> ok. Will remove this example of reboot syscall and add a line to
-> indicate that this is standard interface.
-> 
+T99W760 modem is based on Qualcomm SDX35 chipset.
+It use the same channel settings with Foxconn SDX61.
+edl file has been committed to linux-firmware.
 
-This sounds good to me.
+Signed-off-by: Slark Xiao <slark_xiao@163.com>
+---
+ drivers/bus/mhi/host/pci_generic.c | 13 +++++++++++++
+ 1 file changed, 13 insertions(+)
 
-Thanks,
-Bjorn
+diff --git a/drivers/bus/mhi/host/pci_generic.c b/drivers/bus/mhi/host/pci_generic.c
+index 3d8c9729fcfc..e3bc737313a2 100644
+--- a/drivers/bus/mhi/host/pci_generic.c
++++ b/drivers/bus/mhi/host/pci_generic.c
+@@ -663,6 +663,17 @@ static const struct mhi_pci_dev_info mhi_foxconn_t99w696_info = {
+ 	.sideband_wake = false,
+ };
+ 
++static const struct mhi_pci_dev_info mhi_foxconn_t99w760_info = {
++	.name = "foxconn-t99w760",
++	.edl = "qcom/sdx35/foxconn/xbl_s_devprg_ns.melf",
++	.edl_trigger = true,
++	.config = &modem_foxconn_sdx61_config,
++	.bar_num = MHI_PCI_DEFAULT_BAR_NUM,
++	.dma_data_width = 32,
++	.mru_default = 32768,
++	.sideband_wake = false,
++};
++
+ static const struct mhi_channel_config mhi_mv3x_channels[] = {
+ 	MHI_CHANNEL_CONFIG_UL(0, "LOOPBACK", 64, 0),
+ 	MHI_CHANNEL_CONFIG_DL(1, "LOOPBACK", 64, 0),
+@@ -1010,6 +1021,8 @@ static const struct pci_device_id mhi_pci_id_table[] = {
+ 	/* DW5934e(sdx72), Non-eSIM */
+ 	{ PCI_DEVICE(PCI_VENDOR_ID_FOXCONN, 0xe11e),
+ 		.driver_data = (kernel_ulong_t) &mhi_foxconn_dw5934e_info },
++	{ PCI_DEVICE(PCI_VENDOR_ID_FOXCONN, 0xe123),
++		.driver_data = (kernel_ulong_t) &mhi_foxconn_t99w760_info },
+ 	/* MV31-W (Cinterion) */
+ 	{ PCI_DEVICE(PCI_VENDOR_ID_THALES, 0x00b3),
+ 		.driver_data = (kernel_ulong_t) &mhi_mv31_info },
+-- 
+2.25.1
 
-> thanks,
-> Shivendra
 
