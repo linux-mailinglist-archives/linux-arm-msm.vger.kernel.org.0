@@ -1,82 +1,63 @@
-Return-Path: <linux-arm-msm+bounces-82563-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-82564-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [142.0.200.124])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0CBEBC7031F
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Nov 2025 17:47:18 +0100 (CET)
+Received: from sin.lore.kernel.org (sin.lore.kernel.org [IPv6:2600:3c15:e001:75::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4B9C1C7016F
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Nov 2025 17:30:22 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 419284FCD11
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Nov 2025 16:25:39 +0000 (UTC)
+	by sin.lore.kernel.org (Postfix) with ESMTPS id 98718306CE
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Nov 2025 16:26:27 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 79DD4327BFD;
-	Wed, 19 Nov 2025 16:19:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 978A93446BC;
+	Wed, 19 Nov 2025 16:21:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="vVj410F2"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="S2JFY36x"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f41.google.com (mail-wm1-f41.google.com [209.85.128.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70B723074B1
-	for <linux-arm-msm@vger.kernel.org>; Wed, 19 Nov 2025 16:19:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 738B72E7F08;
+	Wed, 19 Nov 2025 16:21:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763569197; cv=none; b=mLwNBA2NMerp4FI3lb+8LMjKbJQeTtJl1NQ7W11TeT0ZyWXd8Scx1mLuKs8FsqN7qDuSmzVoG38KtpsIVZtSuXC4qAhLUDMmV8VbFOXYdotvc3st6JMxXr2cTQv1KnG/S7wipDQXaIrfKnQ55jo8YnMPOnBx2qgJ1ay5YDRNQ+g=
+	t=1763569275; cv=none; b=XYKE6OTrSyBA7rrrk/U/+9o0cp9U5Vxp9Lydx0H6C+1WooGHqVpDnzeuLm7V674xGEgE3i2iigLkRJniqP8j1S8ROe+IUPc/38yy8y4TOG6GCnI/0xkidcse7wpxDRHFX4Gf04qpLgQOHwv3BuaRR1AI52UhomSo0pcv2jo+mUQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763569197; c=relaxed/simple;
-	bh=PytOZzTAioEaMxmqRTBvSzOZkl5VeEfXc7Gpm4o827k=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=AQtcNfVpyyKrITCFeqg1qItnt9ooPH/7qIYvSHQ/fpL/VQVnxeSe2lkrZ1emhcwe8Ru2OCbIqxhfKsEFuP6X2W+Hol2NZG85gZSxnJJvz0GKIlh/fbgj1ixSECZkZbIcGfjSDmrKRtoiZK39PPeIRmJKlfYIjJcvNyNHMEmyGDs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=vVj410F2; arc=none smtp.client-ip=209.85.128.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f41.google.com with SMTP id 5b1f17b1804b1-47778b23f64so46615985e9.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 19 Nov 2025 08:19:55 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1763569194; x=1764173994; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=s+urd6hZuWEo3shlMiSBaDb8+AZAhwgeZeQG9S0pL0o=;
-        b=vVj410F2JGATilDsa/pV64I8vu/EgjtpauMLcfnve5aDLDLRggiGgiczAPhvKEsC3Y
-         qDXsmY8b9iE9k44HdeH59Jd2iOHcE1IcK3uUkBTJkxhk6m6NM0KNPb65EnIabplC90n8
-         znvjFs7XksNK3svNPrMQSSegOuGUh/I1vO0SoAHjRqxL9HT9lvLY3hwDEEms+v9mRy65
-         rD9IwyKRZ1XlMnj2ridWYuAnQdQTbSzA+VwbLOkDTMX8sr25aBhbSUh9nXF4lBNrB9B7
-         jLk/pygSgSJgEGj/qc4Lv0tZgfFZ+G/VsG8Ozxc/uEw4L4ygGFz0ftuuPGtRmO4n4LIz
-         SQWA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1763569194; x=1764173994;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=s+urd6hZuWEo3shlMiSBaDb8+AZAhwgeZeQG9S0pL0o=;
-        b=mhIj3cIup2eT5uzBjTTQyrvnPE7+1lmyqQ7+ErSjqfSheqhrY1+w0LfaYWTelAMLLw
-         N1E9wdIp7uDaigbzpXjbScsWtKCRf1H9fhnra3Q7VnxivxXWIe90CJO1+9Ypb60Z6/yD
-         pFmxLiWRBVLYH2+rWhbb/LHln49FF1VsZw7ayvmTQVpA5aUTIBDA09HzC6D+qudaIAEq
-         oocYnbbaBLfOw6Df5kM3bEZlxMib4V2442iMmM7n4g1GlMqaKVM9sjSqzrzGQB+lIew0
-         1svzLa9PRi0U8S/LZi3/OYmyAErimv4PYewgiLrItLP0/TmRxNp981MoYOO3eSlDzgQp
-         vF6g==
-X-Forwarded-Encrypted: i=1; AJvYcCUowaKNNDPp2+wZdLRQrGYxEBKokUQBPNVPfO9eMQZkCQNPtpTOWxtSyk46zjoQWBsONc194XcvyrZ8l/an@vger.kernel.org
-X-Gm-Message-State: AOJu0YwKL70x+fhg3KgCrLSn/eJz04GfcOJ1tvj01COOudeEzSZwSZq9
-	iJr5p9aZ2iXir4trchirsV5NCQUgIntqb0fV5Bli9qVqRFC/9JQ4QjiTabaeq7RDmD4=
-X-Gm-Gg: ASbGnctcRPKPwgKYTgaLsRSiB4WZ8JBGMaUwiDUip2xr/HfV0wY4VH5B9Yy1bkN6zFw
-	DkVoLOpDmlp00EAqIbWYcJsNMf04HOoD2SgIdx3d0EraTJ2r99Z8eFN9u3TK6VzQgGPu9s9giLB
-	opcbVcXRXrXdH7m6zLugVQMRmvhaQjUX1dCG8CpScZyuB93UCh2Smb9Y6D+j+0+9lGj5JUSKfHf
-	T9/CpRLmTpp0bzqj9MLAE20QH+TKZSL37AsQhgiOPTpA00XUKk6OSrweOwrRxX9HCHLDLNKcjyJ
-	LAO/yQqeRHrhSnOgUYdeUcko1PnSjXHuQQ1HRAfp+tZnxE6Nl9og10rEZJI6G6ZUtjD3flSWYph
-	chxeTz3/M7bYcMwt4HNw9iN3gJVAyahYnogxZBJ5FVRNOEDroDqqYdXFG8poDV4/5qr7+AfzVzj
-	waKPZLjPSWkCNQhKarJL+nw62gEdQ5
-X-Google-Smtp-Source: AGHT+IFwK5aAXHXIDIc3E2JseMPHhoLC/8O7sdHZVlYBJKdiPiGNYDVrkfdVj41qV4fzGcHy4cnIEg==
-X-Received: by 2002:a05:600c:4513:b0:477:2f7c:314f with SMTP id 5b1f17b1804b1-4778fe5c820mr231183085e9.10.1763569190918;
-        Wed, 19 Nov 2025 08:19:50 -0800 (PST)
-Received: from [192.168.0.39] ([82.76.24.202])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-477b0ffc90fsm61424875e9.2.2025.11.19.08.19.49
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 19 Nov 2025 08:19:50 -0800 (PST)
-Message-ID: <060e7412-8f1f-4d31-af39-79213c560e85@linaro.org>
-Date: Wed, 19 Nov 2025 18:19:48 +0200
+	s=arc-20240116; t=1763569275; c=relaxed/simple;
+	bh=pQHUx7pwj3VkeMg1THNmUIJ6k0lIfLIH3lYl7BEGs2k=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=Am2ce6S+rHcAKFDi/yztjWpOrnQlEy3EizyFoNO/WmbzqRNhW9TsjF4buzxdsYLxOX3iX2QC7ONEgTAYQPFKrFwSebLOKPlIhTNz5BTRXE1Uh3ixD7QSBZQwANEawVEHhET9WPGkB94HL0EUg97iGW2Tk6iFIcpUpMJIzgVaEGk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=S2JFY36x; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 5AJFkCDR2188535;
+	Wed, 19 Nov 2025 16:21:04 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	X83d/c8GvCRJZx6DYWUEeDvN6c8JB87Q6Fnj7qNNgc0=; b=S2JFY36xQJAD514a
+	bnhNcKmDfVuWvFTNyTe5QPyG84wWmvzk6+e5MoNuEqRcsikMiyGHPRl49R0Ie3aq
+	59ajben7cAgY7S6dBHOufGzXiJCpPrelYeDD1+KBR9MUFDXK6rT4FoMxIGP9MOoB
+	ci92eGkXUcRBEQYx+CQqHKpHHjezqjEVQjeoKfnjEsSpkf5zHrXAu0ZOi78sR/KF
+	mRNos77S14GvBDKbviuG4xyPGMSczTDMop/eLPg1wFOFmqFWLRTy80Q6aPk2WtnC
+	d5E1MBFiCz8MrJ3oAbH30MInpeGNgZETqWtvR0M4J5lSKumxW774z5z4KhWqcbXq
+	kwbWgg==
+Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4ahdpr0r7w-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 19 Nov 2025 16:21:04 +0000 (GMT)
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+	by NASANPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 5AJGL3ZL024674
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 19 Nov 2025 16:21:03 GMT
+Received: from [10.216.11.0] (10.80.80.8) by nasanex01b.na.qualcomm.com
+ (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.17; Wed, 19 Nov
+ 2025 08:20:43 -0800
+Message-ID: <3b4153ef-eab6-4726-91ab-51dd09a2b36b@quicinc.com>
+Date: Wed, 19 Nov 2025 21:50:35 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -84,170 +65,83 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 25/26] dt-bindings: reserved-memory: Add Google Kinfo
- Pixel reserved memory
-To: Krzysztof Kozlowski <krzk@kernel.org>, linux-arm-msm@vger.kernel.org,
- linux-kernel@vger.kernel.org, linux-mm@kvack.org, tglx@linutronix.de,
- andersson@kernel.org, pmladek@suse.com, rdunlap@infradead.org,
- corbet@lwn.net, david@redhat.com, mhocko@suse.com
-Cc: tudor.ambarus@linaro.org, mukesh.ojha@oss.qualcomm.com,
- linux-arm-kernel@lists.infradead.org, linux-hardening@vger.kernel.org,
- jonechou@google.com, rostedt@goodmis.org, linux-doc@vger.kernel.org,
- devicetree@vger.kernel.org, linux-remoteproc@vger.kernel.org,
- linux-arch@vger.kernel.org, tony.luck@intel.com, kees@kernel.org
-References: <20251119154427.1033475-1-eugen.hristev@linaro.org>
- <20251119154427.1033475-26-eugen.hristev@linaro.org>
- <e73bdb23-c27b-4a18-b7e3-942f2d40b726@kernel.org>
+Subject: Re: [PATCH v1 1/2] dt-bindings: thermal: tsens: Add QCS8300
+ compatible
+To: Akhil P Oommen <akhilpo@oss.qualcomm.com>, <amitk@kernel.org>,
+        <daniel.lezcano@linaro.org>, <rui.zhang@intel.com>,
+        <lukasz.luba@arm.com>, <robh@kernel.org>, <krzk+dt@kernel.org>,
+        <andersson@kernel.org>, <konradybcio@kernel.org>
+CC: <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <quic_manafm@quicinc.com>
+References: <20250822042316.1762153-1-quic_gkohli@quicinc.com>
+ <20250822042316.1762153-2-quic_gkohli@quicinc.com>
+ <2948af7b-799d-4754-9460-c50f3f49ba8f@oss.qualcomm.com>
 Content-Language: en-US
-From: Eugen Hristev <eugen.hristev@linaro.org>
-In-Reply-To: <e73bdb23-c27b-4a18-b7e3-942f2d40b726@kernel.org>
-Content-Type: text/plain; charset=UTF-8
+From: Gaurav Kohli <quic_gkohli@quicinc.com>
+In-Reply-To: <2948af7b-799d-4754-9460-c50f3f49ba8f@oss.qualcomm.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Authority-Analysis: v=2.4 cv=Uq5u9uwB c=1 sm=1 tr=0 ts=691dee70 cx=c_pps
+ a=JYp8KDb2vCoCEuGobkYCKw==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17
+ a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=6UeiqGixMTsA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=COk6AnOGAAAA:8 a=EUspDBNiAAAA:8
+ a=Lafe_oj0IsnGLxwvIl8A:9 a=QEXdDO2ut3YA:10 a=TjNXssC_j7lpFel5tvFf:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMTE5MDEyOSBTYWx0ZWRfX45fUOSsPakB7
+ x4STesStiys6i/xAMTQ+31Ov88j3GkeliqdRLKZZI6GTYLc4H+0ShU81Tz0sq8ImwdOodJRyyIC
+ 1eJyzmJftcQNM9BDFuujoTnxVl035FumUGkVsdrvMg5SzTK1cqOoEStFEqO8mAQxX8030fFJUNz
+ WMIsCrstzK/pOLsokY4kcyhr6uW0aHR4zRO6GPEYM3VAZhgWqtYCkGcojxyBnIbIBtuvqCCcDf3
+ dr2uggnQHnfWOjRWVRNCzK7xEIkWVnbf6+8zaNJC7ax7GcZietxVEGMZ61PhwqEhDG31viV9RO1
+ HJOcnlLXxCa+DqTUawI+b4G9a6fCIpwhBLCbeJsunXkEzpRf9yHh9RwjFHs/TgRptgT2MeCaWt8
+ L25DOSFQe5wZdaNJ5kfZFP0ivb8F5Q==
+X-Proofpoint-ORIG-GUID: _ers42HQwKcwOQHUbLZqaghjRMQPs5xP
+X-Proofpoint-GUID: _ers42HQwKcwOQHUbLZqaghjRMQPs5xP
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
+ definitions=2025-11-19_04,2025-11-18_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ impostorscore=0 suspectscore=0 phishscore=0 priorityscore=1501 spamscore=0
+ malwarescore=0 lowpriorityscore=0 bulkscore=0 adultscore=0 clxscore=1011
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2510240001 definitions=main-2511190129
 
+Hi,
 
+Can this be picked up, as all approvals are present.
 
-On 11/19/25 18:02, Krzysztof Kozlowski wrote:
-> On 19/11/2025 16:44, Eugen Hristev wrote:
->> Add documentation for Google Kinfo Pixel reserved memory area.
-> 
-> Above and commit msg describe something completely else than binding. In
-> the binding you described kinfo Linux driver, above you suggest this is
-> some sort of reserved memory.
-> 
+thanks
+Gaurav
+
+On 11/6/2025 1:37 AM, Akhil P Oommen wrote:
+> On 8/22/2025 9:53 AM, Gaurav Kohli wrote:
+>> Add compatibility string for the thermal sensors on QCS8300 platform.
 >>
->> Signed-off-by: Eugen Hristev <eugen.hristev@linaro.org>
+>> Signed-off-by: Gaurav Kohli <quic_gkohli@quicinc.com>
 >> ---
->>  .../reserved-memory/google,kinfo.yaml         | 49 +++++++++++++++++++
->>  MAINTAINERS                                   |  5 ++
->>  2 files changed, 54 insertions(+)
->>  create mode 100644 Documentation/devicetree/bindings/reserved-memory/google,kinfo.yaml
+>>   Documentation/devicetree/bindings/thermal/qcom-tsens.yaml | 1 +
+>>   1 file changed, 1 insertion(+)
 >>
->> diff --git a/Documentation/devicetree/bindings/reserved-memory/google,kinfo.yaml b/Documentation/devicetree/bindings/reserved-memory/google,kinfo.yaml
->> new file mode 100644
->> index 000000000000..12d0b2815c02
->> --- /dev/null
->> +++ b/Documentation/devicetree/bindings/reserved-memory/google,kinfo.yaml
->> @@ -0,0 +1,49 @@
->> +# SPDX-License-Identifier: GPL-2.0 OR BSD-2-Clause
->> +%YAML 1.2
->> +---
->> +$id: http://devicetree.org/schemas/reserved-memory/google,kinfo.yaml#
+>> diff --git a/Documentation/devicetree/bindings/thermal/qcom-tsens.yaml b/Documentation/devicetree/bindings/thermal/qcom-tsens.yaml
+>> index 94311ebd7652..7c1f121fb417 100644
+>> --- a/Documentation/devicetree/bindings/thermal/qcom-tsens.yaml
+>> +++ b/Documentation/devicetree/bindings/thermal/qcom-tsens.yaml
+>> @@ -54,6 +54,7 @@ properties:
+>>                 - qcom,msm8996-tsens
+>>                 - qcom,msm8998-tsens
+>>                 - qcom,qcm2290-tsens
+>> +              - qcom,qcs8300-tsens
+>>                 - qcom,sa8255p-tsens
+>>                 - qcom,sa8775p-tsens
+>>                 - qcom,sar2130p-tsens
 > 
-> Filename based on the compatible.
+> Looks like this patch is still lying in the mailing list.
 > 
->> +$schema: http://devicetree.org/meta-schemas/core.yaml#
->> +
->> +title: Google Pixel Kinfo reserved memory
->> +
->> +maintainers:
->> +  - Eugen Hristev <eugen.hristev@linaro.org>
->> +
->> +description:
->> +  This binding describes the Google Pixel Kinfo reserved memory, a region
+> Reviewed-by: Akhil P Oommen <akhilpo@oss.qualcomm.com>
 > 
-> Don't use "This binding", but please describe here hardware.
-> 
->> +  of reserved-memory used to store data for firmware/bootloader on the Pixel
->> +  platform. The data stored is debugging information on the running kernel.
->> +
->> +properties:
->> +  compatible:
->> +    items:
->> +      - const: google,kinfo
->> +
->> +  memory-region:
->> +    maxItems: 1
->> +    description: Reference to the reserved-memory for the data
-> 
-> This does not match description. Unfortunately it looks like you added a
-> node just to instantiate Linux driver and this is not allowed.
-> 
-> If this was some special reserved memory region, then it would be part
-> of reserved memory bindings - see reserved-memory directory.
-
-I sent this patch for reserved-memory directory, where all the
-reserved-memory bindings reside. Or maybe I do not understand your
-comment ?>
-> Compatible suggests that it is purely Linux driver, so another hint.
-
-This reserved memory area is used by both Linux and firmware. Linux
-stores some information into this reserved memory to be used by the
-firmware/bootloader in some specific scenarios (e.g. crash or recovery
-situations)
-As the firmware reserves this memory for this specific purpose, it is
-natural to inform Linux that the memory should not be used by another
-purpose, but by the purpose it was reserved for.
-Which would be the best way to have Linux understand where is this
-memory area so it could be handled?
-
-
-> 
-> Looks like this is a SoC specific thing, so maybe this should be folded
-> in some of the soc drivers.
-> 
-Not really soc specific. Any soc who implements this at firmware level
-can use it. The firmware can reserve some memory for this specific
-purpose and then pass it to Linux, so Linux can fill it up.
-It just happens that the Pixel phone has this implemented right now, but
-it is not constrained to Pixel only.
-
-Instantiating this driver with a call like platform_device_register_data
-would make the driver unaware of where exactly the firmware looks for
-the data. This is right now passed through the DT node. Do you have a
-better suggestion on how to pass it ?
-
-> 
-> 
->> +
->> +required:
->> +  - compatible
->> +  - memory-region
->> +
->> +additionalProperties: true
->> +
->> +examples:
->> +  - |
->> +    reserved-memory {
->> +      #address-cells = <1>;
->> +      #size-cells = <1>;
->> +      ranges;
->> +
->> +      kinfo_region: smem@fa00000 {
->> +          reg = <0xfa00000 0x1000>;
->> +          no-map;
->> +      };
->> +    };
-> 
-> Anyway, drop, not relevant.
-> 
-> 
->> +
->> +    debug-kinfo {
->> +        compatible = "google,debug-kinfo";
-> 
-> Device node with only one phandle to reserved memory region is a proof
-> it is not a real device.
-> 
-> Also,
-> Please use scripts/get_maintainers.pl to get a list of necessary people
-> and lists to CC (and consider --no-git-fallback argument, so you will
-> not CC people just because they made one commit years ago). It might
-> happen, that command when run on an older kernel, gives you outdated
-> entries. Therefore please be sure you base your patches on recent Linux
-> kernel.
-> 
-> Tools like b4 or scripts/get_maintainer.pl provide you proper list of
-> people, so fix your workflow. Tools might also fail if you work on some
-> ancient tree (don't, instead use mainline) or work on fork of kernel
-> (don't, instead use mainline). Just use b4 and everything should be
-> fine, although remember about `b4 prep --auto-to-cc` if you added new
-> patches to the patchset.
-> 
-Thanks for your review and suggestions
-
-> 
-> Best regards,
-> Krzysztof
+> -Akhil
 > 
 
 
