@@ -1,53 +1,53 @@
-Return-Path: <linux-arm-msm+bounces-82580-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-82581-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ams.mirrors.kernel.org (ams.mirrors.kernel.org [213.196.21.55])
-	by mail.lfdr.de (Postfix) with ESMTPS id DE4D6C70F39
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Nov 2025 21:04:18 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id C20E6C70EEC
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Nov 2025 21:01:09 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ams.mirrors.kernel.org (Postfix) with ESMTPS id 4B5BC351B74
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Nov 2025 20:00:58 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTPS id 6925D2B570
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Nov 2025 20:01:08 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 22589377EA9;
-	Wed, 19 Nov 2025 19:59:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 63706377EA4;
+	Wed, 19 Nov 2025 19:59:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b="LRMsy1Zk"
+	dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b="xGOqvKKq"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtpout-02.galae.net (smtpout-02.galae.net [185.246.84.56])
+Received: from smtpout-03.galae.net (smtpout-03.galae.net [185.246.85.4])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 955483612E7;
-	Wed, 19 Nov 2025 19:59:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.246.84.56
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45EFD373773;
+	Wed, 19 Nov 2025 19:59:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.246.85.4
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763582391; cv=none; b=JIcjDA3gffo1VFXAWMC2pgRYHAEru3KBstAvdfjo9NeuSxNE18zFH8b7Oto/IxiJWkZo9bWQq+/M6zcFqDpxLgQqgfcB1YLZwmezkCsbsvSOakfxpuOc0JtAW2P9uonzPf3wKiEYYLTGdotqr1Ig1BM4zUcn5Qy0phVag20ghMQ=
+	t=1763582393; cv=none; b=AMlpO0FXzFi8lp0/tvt7yu/9riPaIkotxKBwyY2Aj9QnQdF5mUrPtTH6BbtxwdimZMNubXTrcfvAP4NuRRWjUfPevMzGB74VK2l5xQPeakM1TTkvTTYWQt46uzoICyXtDzVZ+zGJtoM2M49BAx8YFWS/ac39BrQcpPJwU2lLHq8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763582391; c=relaxed/simple;
-	bh=hAE9xJ5gu79fRo9qqOnhD29P45jksFvOmO7LcbGUcUw=;
+	s=arc-20240116; t=1763582393; c=relaxed/simple;
+	bh=pi/yUiE0GLIh3NoCUC5adF6wKjp71KSefaDgIXV/uPc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Nv0tS8dh3n6qxbkiwV3V191FvlJ6cp2pkqjkfLkgYYuPa/5IToUvE8QhRku0K3p4c8CNMQ88rTK4cuvGhiH6b8t4SFmU0Alf0+28/GXKb9k3gcgm1HgNT9bOm0YFJv8ryK0lJH2q+xe8BeZ0asG49KfQ6uR027H86AHDHbm5blk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com; spf=pass smtp.mailfrom=bootlin.com; dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b=LRMsy1Zk; arc=none smtp.client-ip=185.246.84.56
+	 MIME-Version; b=NIaC2PS7IK2iu3/96JFZyUVGAf4nDLckv5eI3hVk3O41cyZg8b/LM7sFgU2QRMIoLjKbsKjbmK3FQzuR6rQkzT1/4LZh+1/hC2jGBq11XGb1SiTA3wmqub1/j2IpTJwx+/wMaYkPjnA9D2uz34+QT4M841EN9lcR6kbwJvTkl4o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com; spf=pass smtp.mailfrom=bootlin.com; dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b=xGOqvKKq; arc=none smtp.client-ip=185.246.85.4
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bootlin.com
 Received: from smtpout-01.galae.net (smtpout-01.galae.net [212.83.139.233])
-	by smtpout-02.galae.net (Postfix) with ESMTPS id 54BE01A1BF8;
-	Wed, 19 Nov 2025 19:59:44 +0000 (UTC)
+	by smtpout-03.galae.net (Postfix) with ESMTPS id 9C4DD4E417A9;
+	Wed, 19 Nov 2025 19:59:47 +0000 (UTC)
 Received: from mail.galae.net (mail.galae.net [212.83.136.155])
-	by smtpout-01.galae.net (Postfix) with ESMTPS id 19A0360699;
-	Wed, 19 Nov 2025 19:59:44 +0000 (UTC)
-Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon) with ESMTPSA id 8F73310371A7F;
-	Wed, 19 Nov 2025 20:59:39 +0100 (CET)
+	by smtpout-01.galae.net (Postfix) with ESMTPS id 6A8F660699;
+	Wed, 19 Nov 2025 19:59:47 +0000 (UTC)
+Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon) with ESMTPSA id E8F7210371A98;
+	Wed, 19 Nov 2025 20:59:42 +0100 (CET)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=dkim;
-	t=1763582382; h=from:subject:date:message-id:to:cc:mime-version:
+	t=1763582385; h=from:subject:date:message-id:to:cc:mime-version:
 	 content-transfer-encoding:in-reply-to:references;
-	bh=t5Rj8+J4NJ6rir4bwaiB0nMjRTv8tw/du+IJNVpcBww=;
-	b=LRMsy1Zk41AXm9fg+z9XlEbP+CrDHCw9Cp9l5u9e1auGkDlYUWUWgE7I/LAel8a9t3Ertm
-	llXtCEa4Arwp+rUpZyoSr8Nhzq3ygB2GY7GogYJu6XPfS+BFo+knKiL7LUZjCyer0qz6iI
-	JeT24Kgtmv1fSwYxVYganXmxoSa4ucazIIVIWvB4llop3/fXYhJAMC+m2xhvvb/bKKJQE9
-	YFN+CAFRfY/8/Y7MErGXCetZccJ1/BFHKxqIThIybi48EScr1q2hkLhnb0QlVpJcNTOp3c
-	w8NNCQ3SMhpATHHkt3pwULaJ0qaC8scz2h454LwooncEpE7P3Uf9aoZ12ngE2A==
+	bh=KSlMJCkHN3qoiesq+GZbeTPd6cykEBxG8JM7oiO9bAg=;
+	b=xGOqvKKqciHmK0XMwDGP3PObWpVrkcj0qQlz53PxmVRNNKOct60H5VF6eroFfjAgOe2wAS
+	KSioe4f0KHbWj0juViA42rF+S9DjjmjdiIPEblo5rMclbRZA6TYA0ukmkPwUn0VjrYfDT3
+	NDE9tSK3OOzjB0KlsjTRgKlGthW6Y4C1nXlIBEIBsbewdeps9VwEpwSCParf8ckGd7Fwtp
+	5JdSczNd1XMvSigvQirRJk/oZQ+AvWPizycaYzjTI2jbIBWc/H2nI6d6Vd0/6E3dV74wmz
+	rPiWfNd1gi7VkXP2rhzbw3yPkQi1E2N69ZYTKscomiGPhZrJBksjcyYkau4eag==
 From: Maxime Chevallier <maxime.chevallier@bootlin.com>
 To: davem@davemloft.net
 Cc: Maxime Chevallier <maxime.chevallier@bootlin.com>,
@@ -80,9 +80,9 @@ Cc: Maxime Chevallier <maxime.chevallier@bootlin.com>,
 	Romain Gantois <romain.gantois@bootlin.com>,
 	Daniel Golle <daniel@makrotopia.org>,
 	Dimitri Fedrau <dimitri.fedrau@liebherr.com>
-Subject: [PATCH net-next v17 03/15] net: phy: Introduce PHY ports representation
-Date: Wed, 19 Nov 2025 20:59:04 +0100
-Message-ID: <20251119195920.442860-4-maxime.chevallier@bootlin.com>
+Subject: [PATCH net-next v17 04/15] net: phy: dp83822: Add support for phy_port representation
+Date: Wed, 19 Nov 2025 20:59:05 +0100
+Message-ID: <20251119195920.442860-5-maxime.chevallier@bootlin.com>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20251119195920.442860-1-maxime.chevallier@bootlin.com>
 References: <20251119195920.442860-1-maxime.chevallier@bootlin.com>
@@ -95,861 +95,135 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Last-TLS-Session-Version: TLSv1.3
 
-Ethernet provides a wide variety of layer 1 protocols and standards for
-data transmission. The front-facing ports of an interface have their own
-complexity and configurability.
+With the phy_port representation introduced, we can use .attach_port to
+populate the port information based on either the straps or the
+ti,fiber-mode property. This allows simplifying the probe function and
+allow users to override the strapping configuration.
 
-Introduce a representation of these front-facing ports. The current code
-is minimalistic and only support ports controlled by PHY devices, but
-the plan is to extend that to SFP as well as raw Ethernet MACs that
-don't use PHY devices.
-
-This minimal port representation allows describing the media and number
-of pairs of a BaseT port. From that information, we can derive the
-linkmodes usable on the port, which can be used to limit the
-capabilities of an interface.
-
-For now, the port pairs and medium is derived from devicetree, defined
-by the PHY driver, or populated with default values (as we assume that
-all PHYs expose at least one port).
-
-The typical example is 100M ethernet. 100BaseT can work using only 2
-pairs on a Cat 5 cables. However, in the situation where a 10/100/1000
-capable PHY is wired to its RJ45 port through 2 pairs only, we have no
-way of detecting that. The "max-speed" DT property can be used, but a
-more accurate representation can be used :
-
-mdi {
-	connector-0 {
-		media = "BaseT";
-		pairs = <2>;
-	};
-};
-
-From that information, we can derive the max speed reachable on the
-port.
-
-Another benefit of having that is to avoid vendor-specific DT properties
-(micrel,fiber-mode or ti,fiber-mode).
-
-This basic representation is meant to be expanded, by the introduction
-of port ops, userspace listing of ports, and support for multi-port
-devices.
-
+Reviewed-by: Christophe Leroy <christophe.leroy@csgroup.eu>
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Tested-by: Christophe Leroy <christophe.leroy@csgroup.eu>
 Signed-off-by: Maxime Chevallier <maxime.chevallier@bootlin.com>
 ---
- MAINTAINERS                  |   7 ++
- drivers/net/phy/Makefile     |   2 +-
- drivers/net/phy/phy-caps.h   |   5 +
- drivers/net/phy/phy-core.c   |   6 ++
- drivers/net/phy/phy_caps.c   |  57 +++++++++++
- drivers/net/phy/phy_device.c | 190 +++++++++++++++++++++++++++++++++++
- drivers/net/phy/phy_port.c   | 153 ++++++++++++++++++++++++++++
- include/linux/ethtool.h      |  11 ++
- include/linux/phy.h          |  55 ++++++++++
- include/linux/phy_port.h     |  96 ++++++++++++++++++
- net/ethtool/common.c         |  27 +++++
- 11 files changed, 608 insertions(+), 1 deletion(-)
- create mode 100644 drivers/net/phy/phy_port.c
- create mode 100644 include/linux/phy_port.h
+ drivers/net/phy/dp83822.c | 71 +++++++++++++++++++++++++--------------
+ 1 file changed, 45 insertions(+), 26 deletions(-)
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 0f4fb37e77b1..e0dc230df90e 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -17978,6 +17978,13 @@ F:	drivers/net/phy/phy_link_topology.c
- F:	include/linux/phy_link_topology.h
- F:	net/ethtool/phy.c
- 
-+NETWORKING [ETHTOOL PHY PORT]
-+M:	Maxime Chevallier <maxime.chevallier@bootlin.com>
-+F:	Documentation/devicetree/bindings/net/ethernet-connector.yaml
-+F:	drivers/net/phy/phy_port.c
-+F:	include/linux/phy_port.h
-+K:	struct\s+phy_port|phy_port_
-+
- NETWORKING [GENERAL]
- M:	"David S. Miller" <davem@davemloft.net>
- M:	Eric Dumazet <edumazet@google.com>
-diff --git a/drivers/net/phy/Makefile b/drivers/net/phy/Makefile
-index 76e0db40f879..3a34917adea7 100644
---- a/drivers/net/phy/Makefile
-+++ b/drivers/net/phy/Makefile
-@@ -3,7 +3,7 @@
- 
- libphy-y			:= phy.o phy-c45.o phy-core.o phy_device.o \
- 				   linkmode.o phy_link_topology.o \
--				   phy_caps.o mdio_bus_provider.o
-+				   phy_caps.o mdio_bus_provider.o phy_port.o
- mdio-bus-y			+= mdio_bus.o mdio_device.o
- 
- ifdef CONFIG_PHYLIB
-diff --git a/drivers/net/phy/phy-caps.h b/drivers/net/phy/phy-caps.h
-index b7f0c6a3037a..c94b9c852563 100644
---- a/drivers/net/phy/phy-caps.h
-+++ b/drivers/net/phy/phy-caps.h
-@@ -60,4 +60,9 @@ const struct link_capabilities *
- phy_caps_lookup(int speed, unsigned int duplex, const unsigned long *supported,
- 		bool exact);
- 
-+void phy_caps_medium_get_supported(unsigned long *supported,
-+				   enum ethtool_link_medium medium,
-+				   int lanes);
-+u32 phy_caps_mediums_from_linkmodes(unsigned long *linkmodes);
-+
- #endif /* __PHY_CAPS_H */
-diff --git a/drivers/net/phy/phy-core.c b/drivers/net/phy/phy-core.c
-index 0c63e6ba2cb0..4dfdb902b2e7 100644
---- a/drivers/net/phy/phy-core.c
-+++ b/drivers/net/phy/phy-core.c
-@@ -4,6 +4,7 @@
-  */
- #include <linux/export.h>
+diff --git a/drivers/net/phy/dp83822.c b/drivers/net/phy/dp83822.c
+index 33db21251f2e..c012dfab3171 100644
+--- a/drivers/net/phy/dp83822.c
++++ b/drivers/net/phy/dp83822.c
+@@ -11,6 +11,7 @@
+ #include <linux/module.h>
+ #include <linux/of.h>
  #include <linux/phy.h>
 +#include <linux/phy_port.h>
- #include <linux/of.h>
+ #include <linux/netdevice.h>
+ #include <linux/bitfield.h>
  
- #include "phylib.h"
-@@ -206,7 +207,12 @@ EXPORT_SYMBOL_GPL(phy_interface_num_ports);
+@@ -811,17 +812,6 @@ static int dp83822_of_init(struct phy_device *phydev)
+ 	int i, ret;
+ 	u32 val;
  
- static void __set_phy_supported(struct phy_device *phydev, u32 max_speed)
- {
-+	struct phy_port *port;
-+
- 	phy_caps_linkmode_max_speed(max_speed, phydev->supported);
-+
-+	phy_for_each_port(phydev, port)
-+		phy_caps_linkmode_max_speed(max_speed, port->supported);
- }
- 
- /**
-diff --git a/drivers/net/phy/phy_caps.c b/drivers/net/phy/phy_caps.c
-index 9a5e293c5104..080a09f29311 100644
---- a/drivers/net/phy/phy_caps.c
-+++ b/drivers/net/phy/phy_caps.c
-@@ -384,3 +384,60 @@ unsigned long phy_caps_from_interface(phy_interface_t interface)
- 	return link_caps;
- }
- EXPORT_SYMBOL_GPL(phy_caps_from_interface);
-+
-+/**
-+ * phy_caps_medium_get_supported() - Returns linkmodes supported on a given medium
-+ * @supported: After this call, contains all possible linkmodes on a given medium,
-+ *	       and with the given number of pairs, or less.
-+ * @medium: The medium to get the support from
-+ * @pairs: The number of pairs used on the given medium. Only relevant for modes
-+ *	   that support this notion, such as BaseT. Pass 0 if not applicable.
-+ *
-+ * If no match exists, the supported field is left untouched.
-+ */
-+void phy_caps_medium_get_supported(unsigned long *supported,
-+				   enum ethtool_link_medium medium,
-+				   int pairs)
-+{
-+	int i;
-+
-+	for (i = 0; i < __ETHTOOL_LINK_MODE_MASK_NBITS; i++) {
-+		/* Special bits such as Autoneg, Pause, Asym_pause, etc. are
-+		 * set and will be masked away by the port parent.
-+		 */
-+		if (link_mode_params[i].mediums == BIT(ETHTOOL_LINK_MEDIUM_NONE)) {
-+			linkmode_set_bit(i, supported);
-+			continue;
-+		}
-+
-+		/* If this medium matches, and had a non-zero min-pairs */
-+		if (link_mode_params[i].mediums & BIT(medium) &&
-+		    (!link_mode_params[i].min_pairs ||
-+		      (link_mode_params[i].min_pairs <= pairs &&
-+		      link_mode_params[i].pairs >= pairs)))
-+			linkmode_set_bit(i, supported);
-+	}
-+}
-+EXPORT_SYMBOL_GPL(phy_caps_medium_get_supported);
-+
-+/**
-+ * phy_caps_mediums_from_linkmodes() - Get all mediums from a linkmodes list
-+ * @linkmodes: A bitset of linkmodes to get the mediums from
-+ *
-+ * Returns: A bitset of ETHTOOL_MEDIUM_XXX values corresponding to all medium
-+ *	    types in the linkmodes list
-+ */
-+u32 phy_caps_mediums_from_linkmodes(unsigned long *linkmodes)
-+{
-+	const struct link_mode_info *linkmode;
-+	u32 mediums = 0;
-+	int i;
-+
-+	for_each_set_bit(i, linkmodes, __ETHTOOL_LINK_MODE_MASK_NBITS) {
-+		linkmode = &link_mode_params[i];
-+		mediums |= linkmode->mediums;
-+	}
-+
-+	return mediums;
-+}
-+EXPORT_SYMBOL_GPL(phy_caps_mediums_from_linkmodes);
-diff --git a/drivers/net/phy/phy_device.c b/drivers/net/phy/phy_device.c
-index 81984d4ebb7c..f48565c3a9b8 100644
---- a/drivers/net/phy/phy_device.c
-+++ b/drivers/net/phy/phy_device.c
-@@ -30,6 +30,7 @@
- #include <linux/phylib_stubs.h>
- #include <linux/phy_led_triggers.h>
- #include <linux/phy_link_topology.h>
-+#include <linux/phy_port.h>
- #include <linux/pse-pd/pse.h>
- #include <linux/property.h>
- #include <linux/ptp_clock_kernel.h>
-@@ -845,6 +846,13 @@ struct phy_device *phy_device_create(struct mii_bus *bus, int addr, u32 phy_id,
- 
- 	dev->state = PHY_DOWN;
- 	INIT_LIST_HEAD(&dev->leds);
-+	INIT_LIST_HEAD(&dev->ports);
-+
-+	/* The driver's probe function must change that to the real number
-+	 * of ports possible on the PHY. We assume by default we are dealing
-+	 * with a single-port PHY
-+	 */
-+	dev->max_n_ports = 1;
- 
- 	mutex_init(&dev->lock);
- 	INIT_DELAYED_WORK(&dev->state_queue, phy_state_machine);
-@@ -1590,6 +1598,51 @@ void phy_sfp_detach(void *upstream, struct sfp_bus *bus)
- }
- EXPORT_SYMBOL(phy_sfp_detach);
- 
-+static int phy_add_port(struct phy_device *phydev, struct phy_port *port)
-+{
-+	int ret = 0;
-+
-+	if (phydev->n_ports == phydev->max_n_ports)
-+		return -EBUSY;
-+
-+	/* We set all ports as active by default, PHY drivers may deactivate
-+	 * them (when unused)
-+	 */
-+	port->active = true;
-+
-+	if (port->is_mii) {
-+		if (phydev->drv && phydev->drv->attach_mii_port)
-+			ret = phydev->drv->attach_mii_port(phydev, port);
-+	} else {
-+		if (phydev->drv && phydev->drv->attach_mdi_port)
-+			ret = phydev->drv->attach_mdi_port(phydev, port);
-+	}
-+
-+	if (ret)
-+		return ret;
-+
-+	/* The PHY driver might have added, removed or set medium/pairs info,
-+	 * so update the port supported accordingly.
-+	 */
-+	phy_port_update_supported(port);
-+
-+	list_add(&port->head, &phydev->ports);
-+
-+	phydev->n_ports++;
-+
-+	return 0;
-+}
-+
-+static void phy_del_port(struct phy_device *phydev, struct phy_port *port)
-+{
-+	if (!phydev->n_ports)
-+		return;
-+
-+	list_del(&port->head);
-+
-+	phydev->n_ports--;
-+}
-+
- /**
-  * phy_sfp_probe - probe for a SFP cage attached to this PHY device
-  * @phydev: Pointer to phy_device
-@@ -3325,6 +3378,136 @@ static int of_phy_leds(struct phy_device *phydev)
+-	/* Signal detection for the PHY is only enabled if the FX_EN and the
+-	 * SD_EN pins are strapped. Signal detection can only enabled if FX_EN
+-	 * is strapped otherwise signal detection is disabled for the PHY.
+-	 */
+-	if (dp83822->fx_enabled && dp83822->fx_sd_enable)
+-		dp83822->fx_signal_det_low = device_property_present(dev,
+-								     "ti,link-loss-low");
+-	if (!dp83822->fx_enabled)
+-		dp83822->fx_enabled = device_property_present(dev,
+-							      "ti,fiber-mode");
+-
+ 	if (!device_property_read_string(dev, "ti,gpio2-clk-out", &of_val)) {
+ 		if (strcmp(of_val, "mac-if") == 0) {
+ 			dp83822->gpio2_clk_out = DP83822_CLK_SRC_MAC_IF;
+@@ -950,6 +940,48 @@ static int dp83822_read_straps(struct phy_device *phydev)
  	return 0;
  }
  
-+static void phy_cleanup_ports(struct phy_device *phydev)
++static int dp83822_attach_mdi_port(struct phy_device *phydev,
++				   struct phy_port *port)
 +{
-+	struct phy_port *tmp, *port;
-+
-+	list_for_each_entry_safe(port, tmp, &phydev->ports, head) {
-+		phy_del_port(phydev, port);
-+		phy_port_destroy(port);
-+	}
-+}
-+
-+static int phy_default_setup_single_port(struct phy_device *phydev)
-+{
-+	struct phy_port *port = phy_port_alloc();
-+	unsigned long mode;
-+
-+	if (!port)
-+		return -ENOMEM;
-+
-+	port->parent_type = PHY_PORT_PHY;
-+	port->phy = phydev;
-+
-+	/* Let the PHY driver know that this port was never described anywhere.
-+	 * This is the usual case, where we assume single-port PHY devices with
-+	 * no SFP. In that case, the port supports exactly the same thing as
-+	 * the PHY itself.
-+	 *
-+	 * However, this can also be because we have a combo-port PHY, with
-+	 * only one port described in DT, through SFP for example.
-+	 *
-+	 * In that case, the PHY driver will be in charge of saying what we can
-+	 * do on that non-represented port.
-+	 */
-+	port->not_described = true;
-+	linkmode_copy(port->supported, phydev->supported);
-+	port->mediums = phy_caps_mediums_from_linkmodes(port->supported);
-+
-+	for_each_set_bit(mode, port->supported, __ETHTOOL_LINK_MODE_MASK_NBITS)
-+		port->pairs = max_t(int, port->pairs,
-+				    ethtool_linkmode_n_pairs(mode));
-+
-+	phy_add_port(phydev, port);
-+
-+	return 0;
-+}
-+
-+static int of_phy_ports(struct phy_device *phydev)
-+{
-+	struct device_node *node = phydev->mdio.dev.of_node;
-+	struct device_node *mdi;
-+	struct phy_port *port;
-+	int err;
-+
-+	if (!IS_ENABLED(CONFIG_OF_MDIO))
-+		return 0;
-+
-+	if (!node)
-+		return 0;
-+
-+	mdi = of_get_child_by_name(node, "mdi");
-+	if (!mdi)
-+		return 0;
-+
-+	for_each_available_child_of_node_scoped(mdi, port_node) {
-+		port = phy_of_parse_port(port_node);
-+		if (IS_ERR(port)) {
-+			err = PTR_ERR(port);
-+			goto out_err;
-+		}
-+
-+		port->parent_type = PHY_PORT_PHY;
-+		port->phy = phydev;
-+		err = phy_add_port(phydev, port);
-+		if (err)
-+			goto out_err;
-+	}
-+	of_node_put(mdi);
-+
-+	return 0;
-+
-+out_err:
-+	phy_cleanup_ports(phydev);
-+	of_node_put(mdi);
-+	return err;
-+}
-+
-+static int phy_setup_ports(struct phy_device *phydev)
-+{
-+	__ETHTOOL_DECLARE_LINK_MODE_MASK(ports_supported);
-+	struct phy_port *port;
++	struct dp83822_private *dp83822 = phydev->priv;
 +	int ret;
 +
-+	ret = of_phy_ports(phydev);
-+	if (ret)
-+		return ret;
-+
-+	if (phydev->n_ports < phydev->max_n_ports) {
-+		ret = phy_default_setup_single_port(phydev);
++	if (port->mediums) {
++		if (phy_port_is_fiber(port))
++			dp83822->fx_enabled = true;
++	} else {
++		ret = dp83822_read_straps(phydev);
 +		if (ret)
-+			goto out;
-+	}
++			return ret;
 +
-+	linkmode_zero(ports_supported);
++#if IS_ENABLED(CONFIG_OF_MDIO)
++		if (dp83822->fx_enabled && dp83822->fx_sd_enable)
++			dp83822->fx_signal_det_low =
++				device_property_present(&phydev->mdio.dev,
++							"ti,link-loss-low");
 +
-+	/* Aggregate the supported modes, which are made-up of :
-+	 *  - What the PHY itself supports
-+	 *  - What the sum of all ports support
-+	 */
-+	list_for_each_entry(port, &phydev->ports, head)
-+		if (port->active)
-+			linkmode_or(ports_supported, ports_supported,
-+				    port->supported);
++		/* ti,fiber-mode is still used for backwards compatibility, but
++		 * has been replaced with the mdi node definition, see
++		 * ethernet-port.yaml
++		 */
++		if (!dp83822->fx_enabled)
++			dp83822->fx_enabled =
++				device_property_present(&phydev->mdio.dev,
++							"ti,fiber-mode");
++#endif /* CONFIG_OF_MDIO */
 +
-+	if (!linkmode_empty(ports_supported))
-+		linkmode_and(phydev->supported, phydev->supported,
-+			     ports_supported);
-+
-+	/* For now, the phy->port field is set as the first active port's type */
-+	list_for_each_entry(port, &phydev->ports, head)
-+		if (port->active) {
-+			phydev->port = phy_port_get_type(port);
-+			break;
++		if (dp83822->fx_enabled) {
++			port->mediums = BIT(ETHTOOL_LINK_MEDIUM_BASEF);
++		} else {
++			/* This PHY can only to 100BaseTX max, so on 2 pairs */
++			port->pairs = 2;
++			port->mediums = BIT(ETHTOOL_LINK_MEDIUM_BASET);
 +		}
++	}
 +
 +	return 0;
-+
-+out:
-+	phy_cleanup_ports(phydev);
-+	return ret;
 +}
 +
- /**
-  * fwnode_mdio_find_device - Given a fwnode, find the mdio_device
-  * @fwnode: pointer to the mdio_device's fwnode
-@@ -3462,6 +3645,11 @@ static int phy_probe(struct device *dev)
- 		phydev->is_gigabit_capable = 1;
+ static int dp8382x_probe(struct phy_device *phydev)
+ {
+ 	struct dp83822_private *dp83822;
+@@ -968,27 +1000,13 @@ static int dp8382x_probe(struct phy_device *phydev)
  
- 	of_set_phy_supported(phydev);
-+
-+	err = phy_setup_ports(phydev);
-+	if (err)
-+		goto out;
-+
- 	phy_advertise_supported(phydev);
+ static int dp83822_probe(struct phy_device *phydev)
+ {
+-	struct dp83822_private *dp83822;
+ 	int ret;
  
- 	/* Get PHY default EEE advertising modes and handle them as potentially
-@@ -3537,6 +3725,8 @@ static int phy_remove(struct device *dev)
+ 	ret = dp8382x_probe(phydev);
+ 	if (ret)
+ 		return ret;
  
- 	phydev->state = PHY_DOWN;
- 
-+	phy_cleanup_ports(phydev);
-+
- 	sfp_bus_del_upstream(phydev->sfp_bus);
- 	phydev->sfp_bus = NULL;
- 
-diff --git a/drivers/net/phy/phy_port.c b/drivers/net/phy/phy_port.c
-new file mode 100644
-index 000000000000..0502fe60da3e
---- /dev/null
-+++ b/drivers/net/phy/phy_port.c
-@@ -0,0 +1,153 @@
-+// SPDX-License-Identifier: GPL-2.0+
-+/* Framework to drive Ethernet ports
-+ *
-+ * Copyright (c) 2024 Maxime Chevallier <maxime.chevallier@bootlin.com>
-+ */
-+
-+#include <linux/linkmode.h>
-+#include <linux/of.h>
-+#include <linux/phy_port.h>
-+
-+#include "phy-caps.h"
-+
-+/**
-+ * phy_port_alloc() - Allocate a new phy_port
-+ *
-+ * Returns: a newly allocated struct phy_port, or NULL.
-+ */
-+struct phy_port *phy_port_alloc(void)
-+{
-+	struct phy_port *port;
-+
-+	port = kzalloc(sizeof(*port), GFP_KERNEL);
-+	if (!port)
-+		return NULL;
-+
-+	linkmode_zero(port->supported);
-+	INIT_LIST_HEAD(&port->head);
-+
-+	return port;
-+}
-+EXPORT_SYMBOL_GPL(phy_port_alloc);
-+
-+/**
-+ * phy_port_destroy() - Free a struct phy_port
-+ * @port: The port to destroy
-+ */
-+void phy_port_destroy(struct phy_port *port)
-+{
-+	kfree(port);
-+}
-+EXPORT_SYMBOL_GPL(phy_port_destroy);
-+
-+/**
-+ * phy_of_parse_port() - Create a phy_port from a firmware representation
-+ * @dn: device_node representation of the port, following the
-+ *	ethernet-connector.yaml binding
-+ *
-+ * Returns: a newly allocated and initialized phy_port pointer, or an ERR_PTR.
-+ */
-+struct phy_port *phy_of_parse_port(struct device_node *dn)
-+{
-+	struct fwnode_handle *fwnode = of_fwnode_handle(dn);
-+	enum ethtool_link_medium medium;
-+	struct phy_port *port;
-+	const char *med_str;
-+	u32 pairs = 0, mediums = 0;
-+	int ret;
-+
-+	ret = fwnode_property_read_string(fwnode, "media", &med_str);
-+	if (ret)
-+		return ERR_PTR(ret);
-+
-+	medium = ethtool_str_to_medium(med_str);
-+	if (medium == ETHTOOL_LINK_MEDIUM_NONE)
-+		return ERR_PTR(-EINVAL);
-+
-+	if (pairs && medium != ETHTOOL_LINK_MEDIUM_BASET) {
-+		pr_err("pairs property is only compatible with BaseT medium\n");
-+		return ERR_PTR(-EINVAL);
-+	}
-+
-+	if (medium == ETHTOOL_LINK_MEDIUM_BASET) {
-+		ret = fwnode_property_read_u32(fwnode, "pairs", &pairs);
-+		if (ret)
-+			return ERR_PTR(ret);
-+
-+		switch (pairs) {
-+		case 1: /* BaseT1 */
-+		case 2: /* 100BaseTX */
-+		case 4:
-+			break;
-+		default:
-+			pr_err("%u is not a valid number of pairs\n", pairs);
-+			return ERR_PTR(-EINVAL);
-+		}
-+	}
-+
-+	mediums |= BIT(medium);
-+
-+	if (!mediums)
-+		return ERR_PTR(-EINVAL);
-+
-+	port = phy_port_alloc();
-+	if (!port)
-+		return ERR_PTR(-ENOMEM);
-+
-+	port->pairs = pairs;
-+	port->mediums = mediums;
-+
-+	return port;
-+}
-+EXPORT_SYMBOL_GPL(phy_of_parse_port);
-+
-+/**
-+ * phy_port_update_supported() - Setup the port->supported field
-+ * @port: the port to update
-+ *
-+ * Once the port's medium list and number of pairs has been configured based
-+ * on firmware, straps and vendor-specific properties, this function may be
-+ * called to update the port's supported linkmodes list.
-+ *
-+ * Any mode that was manually set in the port's supported list remains set.
-+ */
-+void phy_port_update_supported(struct phy_port *port)
-+{
-+	__ETHTOOL_DECLARE_LINK_MODE_MASK(supported) = { 0 };
-+	unsigned long mode;
-+	int i;
-+
-+	for_each_set_bit(i, &port->mediums, __ETHTOOL_LINK_MEDIUM_LAST) {
-+		linkmode_zero(supported);
-+		phy_caps_medium_get_supported(supported, i, port->pairs);
-+		linkmode_or(port->supported, port->supported, supported);
-+	}
-+
-+	/* If there's no pairs specified, we grab the default number of
-+	 * pairs as the max of the default pairs for each linkmode
-+	 */
-+	if (!port->pairs)
-+		for_each_set_bit(mode, port->supported,
-+				 __ETHTOOL_LINK_MODE_MASK_NBITS)
-+			port->pairs = max_t(int, port->pairs,
-+					    ethtool_linkmode_n_pairs(mode));
-+}
-+EXPORT_SYMBOL_GPL(phy_port_update_supported);
-+
-+/**
-+ * phy_port_get_type() - get the PORT_* attribute for that port.
-+ * @port: The port we want the information from
-+ *
-+ * Returns: A PORT_XXX value.
-+ */
-+int phy_port_get_type(struct phy_port *port)
-+{
-+	if (port->mediums & BIT(ETHTOOL_LINK_MEDIUM_BASET))
-+		return PORT_TP;
-+
-+	if (phy_port_is_fiber(port))
-+		return PORT_FIBRE;
-+
-+	return PORT_OTHER;
-+}
-+EXPORT_SYMBOL_GPL(phy_port_get_type);
-diff --git a/include/linux/ethtool.h b/include/linux/ethtool.h
-index 37aede6af96f..798abec67a1b 100644
---- a/include/linux/ethtool.h
-+++ b/include/linux/ethtool.h
-@@ -242,6 +242,17 @@ enum ethtool_link_medium {
- 	__ETHTOOL_LINK_MEDIUM_LAST,
- };
- 
-+#define ETHTOOL_MEDIUM_FIBER_BITS (BIT(ETHTOOL_LINK_MEDIUM_BASES) | \
-+				   BIT(ETHTOOL_LINK_MEDIUM_BASEL) | \
-+				   BIT(ETHTOOL_LINK_MEDIUM_BASEF))
-+
-+enum ethtool_link_medium ethtool_str_to_medium(const char *str);
-+
-+static inline int ethtool_linkmode_n_pairs(unsigned int mode)
-+{
-+	return link_mode_params[mode].pairs;
-+}
-+
- /* declare a link mode bitmap */
- #define __ETHTOOL_DECLARE_LINK_MODE_MASK(name)		\
- 	DECLARE_BITMAP(name, __ETHTOOL_LINK_MODE_MASK_NBITS)
-diff --git a/include/linux/phy.h b/include/linux/phy.h
-index 65b0c3ca6a2b..36f55ad09907 100644
---- a/include/linux/phy.h
-+++ b/include/linux/phy.h
-@@ -327,6 +327,7 @@ static inline long rgmii_clock(int speed)
- struct device;
- struct kernel_hwtstamp_config;
- struct phylink;
-+struct phy_port;
- struct sfp_bus;
- struct sfp_upstream_ops;
- struct sk_buff;
-@@ -621,6 +622,9 @@ struct macsec_ops;
-  * @master_slave_state: Current master/slave configuration
-  * @mii_ts: Pointer to time stamper callbacks
-  * @psec: Pointer to Power Sourcing Equipment control struct
-+ * @ports: List of PHY ports structures
-+ * @n_ports: Number of ports currently attached to the PHY
-+ * @max_n_ports: Max number of ports this PHY can expose
-  * @lock:  Mutex for serialization access to PHY
-  * @state_queue: Work queue for state machine
-  * @link_down_events: Number of times link was lost
-@@ -758,6 +762,10 @@ struct phy_device {
- 	struct mii_timestamper *mii_ts;
- 	struct pse_control *psec;
- 
-+	struct list_head ports;
-+	int n_ports;
-+	int max_n_ports;
-+
- 	u8 mdix;
- 	u8 mdix_ctrl;
- 
-@@ -780,6 +788,9 @@ struct phy_device {
- 
- #define to_phy_device(__dev)	container_of_const(to_mdio_device(__dev), struct phy_device, mdio)
- 
-+#define phy_for_each_port(phydev, port) \
-+	list_for_each_entry(port, &(phydev)->ports, head)
-+
- /**
-  * struct phy_tdr_config - Configuration of a TDR raw test
-  *
-@@ -1480,6 +1491,49 @@ struct phy_driver {
- 	 * Returns the time in jiffies until the next update event.
- 	 */
- 	unsigned int (*get_next_update_time)(struct phy_device *dev);
-+
-+	/**
-+	 * @attach_mii_port: Attach the given MII port to the PHY device
-+	 * @dev: PHY device to notify
-+	 * @port: The port being added
-+	 *
-+	 * Called when an MII port that needs to be driven by the PHY is found.
-+	 *
-+	 * The port that is being passed may or may not be initialized. If it is
-+	 * already initialized, it is by the generic port representation from
-+	 * devicetree, which superseeds any strapping or vendor-specific
-+	 * properties.
-+	 *
-+	 * If the port isn't initialized, the port->mediums and port->lanes
-+	 * fields must be set, possibly according to strapping information.
-+	 *
-+	 * The PHY driver must set the port->interfaces field to indicate the
-+	 * possible MII modes that this PHY can output on the port.
-+	 *
-+	 * Returns 0, or an error code.
-+	 */
-+	int (*attach_mii_port)(struct phy_device *dev, struct phy_port *port);
-+
-+	/**
-+	 * @attach_mdi_port: Attach the given MII port to the PHY device
-+	 * @dev: PHY device to notify
-+	 * @port: The port being added
-+	 *
-+	 * Called when a port that needs to be driven by the PHY is found. The
-+	 * number of time this will be called depends on phydev->max_n_ports,
-+	 * which the driver can change in .probe().
-+	 *
-+	 * The port that is being passed may or may not be initialized. If it is
-+	 * already initialized, it is by the generic port representation from
-+	 * devicetree, which superseeds any strapping or vendor-specific
-+	 * properties.
-+	 *
-+	 * If the port isn't initialized, the port->mediums and port->lanes
-+	 * fields must be set, possibly according to strapping information.
-+	 *
-+	 * Returns 0, or an error code.
-+	 */
-+	int (*attach_mdi_port)(struct phy_device *dev, struct phy_port *port);
- };
- #define to_phy_driver(d) container_of_const(to_mdio_common_driver(d),		\
- 				      struct phy_driver, mdiodrv)
-@@ -2281,6 +2335,7 @@ void phy_trigger_machine(struct phy_device *phydev);
- void phy_mac_interrupt(struct phy_device *phydev);
- void phy_start_machine(struct phy_device *phydev);
- void phy_stop_machine(struct phy_device *phydev);
-+
- void phy_ethtool_ksettings_get(struct phy_device *phydev,
- 			       struct ethtool_link_ksettings *cmd);
- int phy_ethtool_ksettings_set(struct phy_device *phydev,
-diff --git a/include/linux/phy_port.h b/include/linux/phy_port.h
-new file mode 100644
-index 000000000000..ce0208fbccf7
---- /dev/null
-+++ b/include/linux/phy_port.h
-@@ -0,0 +1,96 @@
-+/* SPDX-License-Identifier: GPL-2.0-or-later */
-+
-+#ifndef __PHY_PORT_H
-+#define __PHY_PORT_H
-+
-+#include <linux/ethtool.h>
-+#include <linux/types.h>
-+#include <linux/phy.h>
-+
-+struct phy_port;
-+
-+/**
-+ * enum phy_port_parent - The device this port is attached to
-+ *
-+ * @PHY_PORT_PHY: Indicates that the port is driven by a PHY device
-+ */
-+enum phy_port_parent {
-+	PHY_PORT_PHY,
-+};
-+
-+struct phy_port_ops {
-+	/* Sometimes, the link state can be retrieved from physical,
-+	 * out-of-band channels such as the LOS signal on SFP. These
-+	 * callbacks allows notifying the port about state changes
-+	 */
-+	void (*link_up)(struct phy_port *port);
-+	void (*link_down)(struct phy_port *port);
-+
-+	/* If the port acts as a Media Independent Interface (Serdes port),
-+	 * configures the port with the relevant state and mode. When enable is
-+	 * not set, interface should be ignored
-+	 */
-+	int (*configure_mii)(struct phy_port *port, bool enable, phy_interface_t interface);
-+};
-+
-+/**
-+ * struct phy_port - A representation of a network device physical interface
-+ *
-+ * @head: Used by the port's parent to list ports
-+ * @parent_type: The type of device this port is directly connected to
-+ * @phy: If the parent is PHY_PORT_PHYDEV, the PHY controlling that port
-+ * @ops: Callback ops implemented by the port controller
-+ * @pairs: The number of  pairs this port has, 0 if not applicable
-+ * @mediums: Bitmask of the physical mediums this port provides access to
-+ * @supported: The link modes this port can expose, if this port is MDI (not MII)
-+ * @interfaces: The MII interfaces this port supports, if this port is MII
-+ * @not_described: Indicates to the parent driver if this port isn't described,
-+ *		   so it's up to the parent to filter its capabilities.
-+ * @active: Indicates if the port is currently part of the active link.
-+ * @is_mii: Indicates if this port is MII (Media Independent Interface),
-+ *          or MDI (Media Dependent Interface).
-+ */
-+struct phy_port {
-+	struct list_head head;
-+	enum phy_port_parent parent_type;
-+	union {
-+		struct phy_device *phy;
-+	};
-+
-+	const struct phy_port_ops *ops;
-+
-+	int pairs;
-+	unsigned long mediums;
-+	__ETHTOOL_DECLARE_LINK_MODE_MASK(supported);
-+	DECLARE_PHY_INTERFACE_MASK(interfaces);
-+
-+	unsigned int not_described:1;
-+	unsigned int active:1;
-+	unsigned int is_mii:1;
-+};
-+
-+struct phy_port *phy_port_alloc(void);
-+void phy_port_destroy(struct phy_port *port);
-+
-+static inline struct phy_device *port_phydev(struct phy_port *port)
-+{
-+	return port->phy;
-+}
-+
-+struct phy_port *phy_of_parse_port(struct device_node *dn);
-+
-+static inline bool phy_port_is_copper(struct phy_port *port)
-+{
-+	return port->mediums == BIT(ETHTOOL_LINK_MEDIUM_BASET);
-+}
-+
-+static inline bool phy_port_is_fiber(struct phy_port *port)
-+{
-+	return !!(port->mediums & ETHTOOL_MEDIUM_FIBER_BITS);
-+}
-+
-+void phy_port_update_supported(struct phy_port *port);
-+
-+int phy_port_get_type(struct phy_port *port);
-+
-+#endif
-diff --git a/net/ethtool/common.c b/net/ethtool/common.c
-index 2f4b70f104e8..8216e4ada58e 100644
---- a/net/ethtool/common.c
-+++ b/net/ethtool/common.c
-@@ -460,6 +460,21 @@ const struct link_mode_info link_mode_params[] = {
- static_assert(ARRAY_SIZE(link_mode_params) == __ETHTOOL_LINK_MODE_MASK_NBITS);
- EXPORT_SYMBOL_GPL(link_mode_params);
- 
-+const char ethtool_link_medium_names[][ETH_GSTRING_LEN] = {
-+	[ETHTOOL_LINK_MEDIUM_BASET] = "BaseT",
-+	[ETHTOOL_LINK_MEDIUM_BASEK] = "BaseK",
-+	[ETHTOOL_LINK_MEDIUM_BASES] = "BaseS",
-+	[ETHTOOL_LINK_MEDIUM_BASEC] = "BaseC",
-+	[ETHTOOL_LINK_MEDIUM_BASEL] = "BaseL",
-+	[ETHTOOL_LINK_MEDIUM_BASED] = "BaseD",
-+	[ETHTOOL_LINK_MEDIUM_BASEE] = "BaseE",
-+	[ETHTOOL_LINK_MEDIUM_BASEF] = "BaseF",
-+	[ETHTOOL_LINK_MEDIUM_BASEV] = "BaseV",
-+	[ETHTOOL_LINK_MEDIUM_BASEMLD] = "BaseMLD",
-+	[ETHTOOL_LINK_MEDIUM_NONE] = "None",
-+};
-+static_assert(ARRAY_SIZE(ethtool_link_medium_names) == __ETHTOOL_LINK_MEDIUM_LAST);
-+
- const char netif_msg_class_names[][ETH_GSTRING_LEN] = {
- 	[NETIF_MSG_DRV_BIT]		= "drv",
- 	[NETIF_MSG_PROBE_BIT]		= "probe",
-@@ -1193,3 +1208,15 @@ void ethtool_rxfh_context_lost(struct net_device *dev, u32 context_id)
- 	ethtool_rss_notify(dev, ETHTOOL_MSG_RSS_DELETE_NTF, context_id);
+-	dp83822 = phydev->priv;
+-
+-	ret = dp83822_read_straps(phydev);
+-	if (ret)
+-		return ret;
+-
+-	ret = dp83822_of_init(phydev);
+-	if (ret)
+-		return ret;
+-
+-	if (dp83822->fx_enabled)
+-		phydev->port = PORT_FIBRE;
+-
+-	return 0;
++	return dp83822_of_init(phydev);
  }
- EXPORT_SYMBOL(ethtool_rxfh_context_lost);
-+
-+enum ethtool_link_medium ethtool_str_to_medium(const char *str)
-+{
-+	int i;
-+
-+	for (i = 0; i < __ETHTOOL_LINK_MEDIUM_LAST; i++)
-+		if (!strcmp(ethtool_link_medium_names[i], str))
-+			return i;
-+
-+	return ETHTOOL_LINK_MEDIUM_NONE;
-+}
-+EXPORT_SYMBOL_GPL(ethtool_str_to_medium);
+ 
+ static int dp83826_probe(struct phy_device *phydev)
+@@ -1172,6 +1190,7 @@ static int dp83822_led_hw_control_get(struct phy_device *phydev, u8 index,
+ 		.led_hw_is_supported = dp83822_led_hw_is_supported,	\
+ 		.led_hw_control_set = dp83822_led_hw_control_set,	\
+ 		.led_hw_control_get = dp83822_led_hw_control_get,	\
++		.attach_mdi_port = dp83822_attach_mdi_port		\
+ 	}
+ 
+ #define DP83825_PHY_DRIVER(_id, _name)				\
 -- 
 2.49.0
 
