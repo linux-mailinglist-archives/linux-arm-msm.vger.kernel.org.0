@@ -1,115 +1,134 @@
-Return-Path: <linux-arm-msm+bounces-82499-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-82500-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ams.mirrors.kernel.org (ams.mirrors.kernel.org [213.196.21.55])
-	by mail.lfdr.de (Postfix) with ESMTPS id 16EA4C6EF53
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Nov 2025 14:41:50 +0100 (CET)
+Received: from ams.mirrors.kernel.org (ams.mirrors.kernel.org [IPv6:2a01:60a::1994:3:14])
+	by mail.lfdr.de (Postfix) with ESMTPS id D94A0C6EF79
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Nov 2025 14:43:10 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ams.mirrors.kernel.org (Postfix) with ESMTPS id 3B4BF354139
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Nov 2025 13:32:09 +0000 (UTC)
+	by ams.mirrors.kernel.org (Postfix) with ESMTPS id 96A5435B53E
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Nov 2025 13:33:30 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 664582652AC;
-	Wed, 19 Nov 2025 13:32:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 662C234B199;
+	Wed, 19 Nov 2025 13:33:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b="0gmiVh8U"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="GvlaXzzG"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtpout-04.galae.net (smtpout-04.galae.net [185.171.202.116])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8EE1233707
-	for <linux-arm-msm@vger.kernel.org>; Wed, 19 Nov 2025 13:31:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.171.202.116
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D33C3321D3;
+	Wed, 19 Nov 2025 13:33:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763559120; cv=none; b=rBJqzNqVmibQ6x2KmSUnR/7MKcDFp5aZLDM/WZEmpQfUysuiojm0ZTsLCXWk/Y+OWZ1jWUXxhDoeJlrDsXhEPuHxFdT64BFnHeSAeI9brQgaglAQGrodKT1wBdXwarOTDT993SQb7D6ZZaL+GyLYJhCusLVrcHe2KHVlczj5JVQ=
+	t=1763559193; cv=none; b=pExTnHefjdcjcrCfqtnhVpG/KCWgNQtimvoD8akBuD2vsZ2ZAcoAjXadWx4Cg80kFLSaYGmx9rLY10IVphMjZohFKgyKkpp8q/1ZZURzIJ4YyjHje2OQ2iCxTEPL/klnqHuzX4uMDI+QzINjSaML4rwEt9U48PPQrEdgxUcOXq0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763559120; c=relaxed/simple;
-	bh=L7hBarKPUmNpwYtkBk5JgY9whmoD/B5fYafhItwPHVE=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=kAx2IhKCCMIaA1QIggomYYactbWimFvYX/oRyGWGypTAcxb05gJ2MecG8HOnowpzbSUG0nbGAELHksHxDsdggMu4YE5VzpJ0LtcKcZT9B0EoNLZJ6Nw6fFTIGjAbXjyPvJCOXp4lEG3BLuj1kMAS1WttXrAcJtozakwrNCG1MbQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com; spf=pass smtp.mailfrom=bootlin.com; dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b=0gmiVh8U; arc=none smtp.client-ip=185.171.202.116
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bootlin.com
-Received: from smtpout-01.galae.net (smtpout-01.galae.net [212.83.139.233])
-	by smtpout-04.galae.net (Postfix) with ESMTPS id 22197C11188;
-	Wed, 19 Nov 2025 13:31:34 +0000 (UTC)
-Received: from mail.galae.net (mail.galae.net [212.83.136.155])
-	by smtpout-01.galae.net (Postfix) with ESMTPS id 592C060699;
-	Wed, 19 Nov 2025 13:31:56 +0000 (UTC)
-Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon) with ESMTPSA id 19C3F103719E1;
-	Wed, 19 Nov 2025 14:31:48 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=dkim;
-	t=1763559115; h=from:subject:date:message-id:to:cc:mime-version:content-type:
-	 content-transfer-encoding:content-language:in-reply-to:references;
-	bh=vaS3ZdSbPQezkjUn3kY0l8sOg9ANCiNcfd7cBBiSjJs=;
-	b=0gmiVh8UaCRT7zY9SiDcEvIiKuAsdvMVd7SaAZy19TBxbHoFKHeT4joUfdqGlfkHEil3KE
-	YDrSOX3Rlayrdt9Ue6VF60cfxajoF6LxefKpc+V0PtL9SmPDDW9b8hVZX11rzm1iLptLuF
-	cq2GRnN2gMZ2n3A0uDTV5C7E2228RMhpPNZaksuRzTvg/fHy+V9y5pUpgZol80MCyPBjtI
-	9svpCUDUrKFNBgW1SR54P9+Lb+t/6KFWt0x0sZ5j/utytcogyr2Z7lAwJb2DIrszSdrOF0
-	n6yNVdk8Bjvp0sOiQ4AWVlkPxE4ZOGNkTNiU4JSzSN3JadYqTpqzyqqIImMDJA==
-Message-ID: <2013f0f9-d1fc-46b9-b068-438cb19954b6@bootlin.com>
-Date: Wed, 19 Nov 2025 14:31:48 +0100
+	s=arc-20240116; t=1763559193; c=relaxed/simple;
+	bh=f1P6e9kOSNo5kgD6H+jb/IDvPun4CBhw4KJz2s61Gxs=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=FuWlhiNWjQFE5kpvtp5drciEAoQwDK4M3lx1Qg5E3MB4eFu5gsnvFC4/NzrFrRyBt3BXcH6fE4gc4e6pR8vmYsrqPpKvTVMV1//g85RED0I2OBTWDX105oTlUG/6fdLmpVSMos9QWclHqvKilZKV1VLwEuAnuwy1QVPqLqb891E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=GvlaXzzG; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48DA8C2BCB4;
+	Wed, 19 Nov 2025 13:32:57 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1763559192;
+	bh=f1P6e9kOSNo5kgD6H+jb/IDvPun4CBhw4KJz2s61Gxs=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=GvlaXzzGdP6rk3wHmBBL3xa4KEINI9YEfxOcs02Rtrl2F8kPCDYHaq1QyRNNQlrPR
+	 a5/gafe1AtCF4fDOPXsn3AX9dnTwNKa80UXh9sxyBn0fEbETObFQLuO+b3xeMNlbyB
+	 5RroXOKyTQex6JxlQah75JRkGqLBaiJNuangAUeg0y8knRqHfDFvmxKTyHtybOrcVa
+	 olpoiI2lCUGUKVihaqGy69QHSRT+9Xb5pMttxIiNh0yjVhM+1Z+f8IKQ/olSAE30WW
+	 f7g+BjjcHF8UvlK3zNAQjFOZl1HdUUZZFAglXWVlql6KZSwdReCMnch5lFnuhXKHTx
+	 OV9nBGsgUXglA==
+Date: Wed, 19 Nov 2025 19:02:51 +0530
+From: Manivannan Sadhasivam <mani@kernel.org>
+To: Rob Herring <robh@kernel.org>
+Cc: manivannan.sadhasivam@oss.qualcomm.com, 
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Jiri Slaby <jirislaby@kernel.org>, 
+	Nathan Chancellor <nathan@kernel.org>, Nicolas Schier <nicolas.schier@linux.dev>, 
+	Hans de Goede <hansg@kernel.org>, Ilpo =?utf-8?B?SsOkcnZpbmVu?= <ilpo.jarvinen@linux.intel.com>, 
+	Mark Pearson <mpearson-lenovo@squebb.ca>, "Derek J. Clark" <derekjohn.clark@gmail.com>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Marcel Holtmann <marcel@holtmann.org>, Luiz Augusto von Dentz <luiz.dentz@gmail.com>, 
+	Bartosz Golaszewski <brgl@bgdev.pl>, linux-serial@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	linux-kbuild@vger.kernel.org, platform-driver-x86@vger.kernel.org, linux-pci@vger.kernel.org, 
+	devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org, linux-bluetooth@vger.kernel.org, 
+	linux-pm@vger.kernel.org, Stephan Gerhold <stephan.gerhold@linaro.org>, 
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Subject: Re: [PATCH 6/9] serdev: Skip registering serdev devices from DT is
+ external connector is used
+Message-ID: <cjtnoqjr3v5o64caa6unllb2e2csyvybr6vnzwuqqrl453bgz7@drqmfkfbn5xg>
+References: <20251112-pci-m2-e-v1-0-97413d6bf824@oss.qualcomm.com>
+ <20251112-pci-m2-e-v1-6-97413d6bf824@oss.qualcomm.com>
+ <CAL_JsqKBcXH0EWguto3EFY2cJ5p=8VUZczMHz1u5fNFocv-AmA@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH net-next v16 15/15] Documentation: networking: Document
- the phy_port infrastructure
-To: Jakub Kicinski <kuba@kernel.org>
-Cc: davem@davemloft.net, netdev@vger.kernel.org,
- linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
- thomas.petazzoni@bootlin.com, Andrew Lunn <andrew@lunn.ch>,
- Eric Dumazet <edumazet@google.com>, Paolo Abeni <pabeni@redhat.com>,
- Russell King <linux@armlinux.org.uk>, linux-arm-kernel@lists.infradead.org,
- Christophe Leroy <christophe.leroy@csgroup.eu>,
- Herve Codina <herve.codina@bootlin.com>,
- Florian Fainelli <f.fainelli@gmail.com>,
- Heiner Kallweit <hkallweit1@gmail.com>,
- Vladimir Oltean <vladimir.oltean@nxp.com>,
- =?UTF-8?Q?K=C3=B6ry_Maincent?= <kory.maincent@bootlin.com>,
- =?UTF-8?Q?Marek_Beh=C3=BAn?= <kabel@kernel.org>,
- Oleksij Rempel <o.rempel@pengutronix.de>,
- =?UTF-8?Q?Nicol=C3=B2_Veronese?= <nicveronese@gmail.com>,
- Simon Horman <horms@kernel.org>, mwojtas@chromium.org,
- Antoine Tenart <atenart@kernel.org>, devicetree@vger.kernel.org,
- Conor Dooley <conor+dt@kernel.org>, Krzysztof Kozlowski
- <krzk+dt@kernel.org>, Rob Herring <robh@kernel.org>,
- Romain Gantois <romain.gantois@bootlin.com>,
- Daniel Golle <daniel@makrotopia.org>,
- Dimitri Fedrau <dimitri.fedrau@liebherr.com>
-References: <20251113081418.180557-1-maxime.chevallier@bootlin.com>
- <20251113081418.180557-16-maxime.chevallier@bootlin.com>
- <20251118191759.28d14e32@kernel.org>
-From: Maxime Chevallier <maxime.chevallier@bootlin.com>
-Content-Language: en-US
-In-Reply-To: <20251118191759.28d14e32@kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Last-TLS-Session-Version: TLSv1.3
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAL_JsqKBcXH0EWguto3EFY2cJ5p=8VUZczMHz1u5fNFocv-AmA@mail.gmail.com>
 
-
-
-On 19/11/2025 04:17, Jakub Kicinski wrote:
-> On Thu, 13 Nov 2025 09:14:17 +0100 Maxime Chevallier wrote:
->> --- a/MAINTAINERS
->> +++ b/MAINTAINERS
->> @@ -9281,6 +9281,7 @@ F:	Documentation/devicetree/bindings/net/ethernet-connector.yaml
->>  F:	Documentation/devicetree/bindings/net/ethernet-phy.yaml
->>  F:	Documentation/devicetree/bindings/net/mdio*
->>  F:	Documentation/devicetree/bindings/net/qca,ar803x.yaml
->> +F:	Documentation/networking/phy-port.rst
+On Tue, Nov 18, 2025 at 07:03:51AM -0600, Rob Herring wrote:
+> On Wed, Nov 12, 2025 at 8:45 AM Manivannan Sadhasivam via B4 Relay
+> <devnull+manivannan.sadhasivam.oss.qualcomm.com@kernel.org> wrote:
+> >
+> > From: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
+> >
+> > If an external connector like M.2 is connected to the serdev controller
+> > in DT, then the serdev devices will be created dynamically by the connector
+> > driver. So skip registering devices from DT node as there will be no
+> > statically defined devices.
 > 
-> I think you should add a MAINTAINERS entry like the one we have for
-> NETWORKING [ETHTOOL PHY TOPOLOGY] no? Please include some keyword matches
-> on the relevant driver-facing APIs if you can:)
+> You could still have statically defined devices. You are just choosing
+> to probe them later from the connector driver.
+> 
 
-I'm fine with this, I'll add that for next iteration.
+The point of coming up with the M.2 binding is to avoid hardcoding the devices
+in DT. So static devices are ruled out IMO.
 
-Thank you for the round of reviews,
+> >
+> > Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
+> > ---
+> >  drivers/tty/serdev/core.c | 10 ++++++++++
+> >  1 file changed, 10 insertions(+)
+> >
+> > diff --git a/drivers/tty/serdev/core.c b/drivers/tty/serdev/core.c
+> > index 8c2a40a537d93f4b9353a2f128cdf51b521929b1..1378587d386356ca4415fa455b2ee722b5e44d3e 100644
+> > --- a/drivers/tty/serdev/core.c
+> > +++ b/drivers/tty/serdev/core.c
+> > @@ -12,6 +12,7 @@
+> >  #include <linux/kernel.h>
+> >  #include <linux/module.h>
+> >  #include <linux/of.h>
+> > +#include <linux/of_graph.h>
+> >  #include <linux/of_device.h>
+> >  #include <linux/pm_domain.h>
+> >  #include <linux/pm_runtime.h>
+> > @@ -560,6 +561,15 @@ static int of_serdev_register_devices(struct serdev_controller *ctrl)
+> >         int err;
+> >         bool found = false;
+> >
+> > +       /*
+> > +        * When the serdev controller is connected to an external connector like
+> > +        * M.2 in DT, then the serdev devices will be created dynamically by the
+> > +        * connector driver. So skip looking for devices in DT node as there will
+> > +        * be no statically defined devices.
+> > +        */
+> > +       if (of_graph_is_present(ctrl->dev.of_node))
+> > +               return 0;
+> 
+> Where's the schema that allows graph nodes?
+> 
 
-Maxime
+Err... I missed updating it. Will do it in v2.
+
+- Mani
+
+-- 
+மணிவண்ணன் சதாசிவம்
 
