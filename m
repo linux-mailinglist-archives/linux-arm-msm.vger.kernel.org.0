@@ -1,350 +1,279 @@
-Return-Path: <linux-arm-msm+bounces-82471-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-82472-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sin.lore.kernel.org (sin.lore.kernel.org [104.64.211.4])
-	by mail.lfdr.de (Postfix) with ESMTPS id A4F84C6DD93
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Nov 2025 10:57:34 +0100 (CET)
+Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [IPv6:2605:f480:58:1:0:1994:3:14])
+	by mail.lfdr.de (Postfix) with ESMTPS id BE986C6DECB
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Nov 2025 11:15:23 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sin.lore.kernel.org (Postfix) with ESMTPS id 761A82D880
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Nov 2025 09:57:28 +0000 (UTC)
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id E1A824EEC6F
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Nov 2025 10:09:33 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 56AA8345CC8;
-	Wed, 19 Nov 2025 09:57:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id DCED734889B;
+	Wed, 19 Nov 2025 10:09:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=suse.com header.i=@suse.com header.b="Me68I3F7"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yx1-f46.google.com (mail-yx1-f46.google.com [74.125.224.46])
+Received: from mail-ej1-f53.google.com (mail-ej1-f53.google.com [209.85.218.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C7632E2667
-	for <linux-arm-msm@vger.kernel.org>; Wed, 19 Nov 2025 09:57:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.224.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6355B347FFE
+	for <linux-arm-msm@vger.kernel.org>; Wed, 19 Nov 2025 10:09:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763546240; cv=none; b=oeNN8uguK0g/wQoWO1j5GEr0Hp5GltDYXBipRZkOb3wov3U0Drl+6IHvreoWzxJN0ZXbTDTyj6nIPXnYOMGbQKOvg3eDKkeFzaq4ycyl0xsKYNCatVJkY57sNtIVvYLecVT9YHAKpzQUpTubz154BKEUm2y5QPFA/QaR1DyL3gk=
+	t=1763546968; cv=none; b=cewvz9ir6GSj+r1e9IVPQExxl/51PWx9+y3hDZBQWUprRcN7mUUpD6bH80cmyVc96+zGZ5EBXFRFJz4obzUG5mNBfu1lZJUzpU/ha0OTLM7HMEPUR3XyfZC9W7sNGgU0h3KBKBRmqpsu1lmT5M9yFeMybocNJtd1CfbLYDd8OgU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763546240; c=relaxed/simple;
-	bh=u79rK05bGjXVLdcXPTg+6TrexWR50QX9FMb4ZS2IZYY=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=JpIGanEzV6ck//u10KawbYE7DjSun+Igl6Sau25tEQt1ZHqoUEgUThWyRtpr2FOT/RZMuC6Elj4zprIDentdwG9itzWp5m2IDWuiNOsAOeDj3T5NvigRFA9oaV2t9aZna1gchL3+4ZzcFXikOUx6bygSTSyBr4cgkROkDMS67ws=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=debian.org; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=74.125.224.46
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=debian.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-yx1-f46.google.com with SMTP id 956f58d0204a3-63e1e1bf882so5696630d50.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 19 Nov 2025 01:57:12 -0800 (PST)
+	s=arc-20240116; t=1763546968; c=relaxed/simple;
+	bh=OJvuqh8SyRe//eizJsEe1K247PQ8bD47X5Q22nudA1U=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=ltg0GgXHs9fzUEgRMb/hYtR7qZEbnZljslpM3YiPsjimJqC//r3qIHj0sF93zoZgdPv8jPkUxcZawdiro7Bn3UMY1rFyw8z9PGubx0IBI0g+xTsvE4z9xLFDPAgr459ptBp7CDA72Dxtc0jaaU1q9Qt+pPwWtm2gCO74L1AE7+4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=suse.com; spf=pass smtp.mailfrom=suse.com; dkim=pass (2048-bit key) header.d=suse.com header.i=@suse.com header.b=Me68I3F7; arc=none smtp.client-ip=209.85.218.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=suse.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.com
+Received: by mail-ej1-f53.google.com with SMTP id a640c23a62f3a-b725ead5800so792648966b.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 19 Nov 2025 02:09:25 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=suse.com; s=google; t=1763546963; x=1764151763; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=mZmwnZeJsVmH4Emd6Sk7OTkRxBmCW6aXF7g1I/Zjods=;
+        b=Me68I3F7En431raJbedjbBOoq/VSyrLNPSHh1NDSm7hS35yUH6C/wWOVtLpKfCtyKl
+         pgezovtS+J6QjL9ajtb55htcb981QToFRQ+otMIJfwMjjV11g4S/+ihLcnAz/y8U6bMQ
+         vvXmi1cN/61t0y6wCN8KE5mqZ1KQunNOGGjztAYvEIM9rtm2yLoN1BWHaoGQB0l04TCm
+         cnIlJieWZmh52VixvgLDVLIKN7Oy65N1tNxRLoCQ5ndqdmyKOMCwQZUDSWQdLd5mGVUn
+         Hr8IR746a3flbusR85EkV3KQPqkp5ZhtLalhLau2pCQSTiay13R7j/1/SFqpcCg/+jVE
+         uPQw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1763546230; x=1764151030;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=u0htT7CWQPeByeqxSahyOl4zpUDCMY13dqs08SYJuOU=;
-        b=rmZijC0t2K8vlXywGcSIeQEti21d4gdbW7BY53QSBi3cXEIf9F3fpaA1I9SIehr6Nw
-         i+9eqcv6MgzMrRkSG0iPtnX/F8IF/UDK4/6Ewi95IdNeQd0JuT174SKA/BCujJNqpn+O
-         YzNWf1DtVA80rmHoT3+Z7MjLfF3dHY2oR+cuxPF9GdYTSBlgIKGR6MLAb4kTbE2+GB3Z
-         YuCPtCcY6S7NCsPrw/RIWUd++MgimTkbJ0yWIcBaENwW52rch7mfZInZNnQLThVcTZVh
-         gahky3X73AnTrXU5dKD6DecALehp+Ah6ZZvZZP91utPtxWIxh9cnTf/xSugiUFpeXu4M
-         qO8g==
-X-Forwarded-Encrypted: i=1; AJvYcCUW38cIIV7bO41NB4lxFhDPqY5g2P9aUXgD3JzoWPDWtuZsZT32Eu3cfgc8vrPv5JDAiWReHD/pUpfdJhZm@vger.kernel.org
-X-Gm-Message-State: AOJu0YyTK/PZ2cKCMf91uZc4A+9BwZdKukh1gbnsMF1ZMmN+kYG8B9Ke
-	Nlh+RXu22nC/9VWg9Nn0isaACw6af8e9JQE+6lMX3vhIN4e7xy4Q383AsWrHow==
-X-Gm-Gg: ASbGnctVkng6RE8HJ7oMwKMb5KScxogiYo43FFZ6MMZHKr0dHmIwUXZCMnqfoO5lEYZ
-	LGRU59glP2g66SLOBTBNZ2pQ9VstecWhxhiYMig9/PJ0wLoYJFA4M7818nnMYWzCFvQydHCG4dZ
-	PslsWgF2z9VRixs6yUW7ohCAXwx0CNuT1iWcwXwYdl+dmCcHgOFTmbCY4doAyKqjjw4qXp2yHht
-	WfqxRGkzMz2d/p/I8nDqdtRKJLEMctJlkzKIg1KQmLHHLuZM7ji620+Bu4gAoaGGgAnCG+qZPNg
-	ZuPFeFPfWIn8kNkW9tV9FfmfWY710437/8lB01tpfFrU8mQiuIBj+scD+b+ZqxceNbYXWKI31AJ
-	nWHEHdWAHAO/1DzN+WarWf8jUk3DvVcZVkYN3Y46dCvxvbsnVOei935Kg2JRg6civ/XOHf08TkT
-	0u4UHB9KFXOl/HnAL7TxL5OG1QcPhHdvQbsr4S2M9nZENa8SligVHcXCUp
-X-Google-Smtp-Source: AGHT+IHDbhAbThzA9CphdUTAM4R/xbD4BVYHV0WhDzQlYBgM+wL3Vk7iT2Zzi7mVD8bnk84NFFK7LA==
-X-Received: by 2002:a05:690c:3507:b0:786:96de:af5f with SMTP id 00721157ae682-78929ef8948mr325089797b3.53.1763546229602;
-        Wed, 19 Nov 2025 01:57:09 -0800 (PST)
-Received: from mail-yw1-f169.google.com (mail-yw1-f169.google.com. [209.85.128.169])
-        by smtp.gmail.com with ESMTPSA id 00721157ae682-78a70995ec8sm2586397b3.6.2025.11.19.01.57.06
-        for <linux-arm-msm@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 19 Nov 2025 01:57:07 -0800 (PST)
-Received: by mail-yw1-f169.google.com with SMTP id 00721157ae682-786d1658793so59124897b3.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 19 Nov 2025 01:57:06 -0800 (PST)
-X-Forwarded-Encrypted: i=1; AJvYcCXGaIj42Rcp9y5luaXae0dcQysfdseuDAUlfLWfA21pkXqV3yWTYiosQN2t6AI3VJ/cPD4/L+YHtVQUuAFw@vger.kernel.org
-X-Received: by 2002:a05:690c:86:b0:786:7c0a:71e5 with SMTP id
- 00721157ae682-78929e44351mr312271377b3.26.1763546226053; Wed, 19 Nov 2025
- 01:57:06 -0800 (PST)
+        d=1e100.net; s=20230601; t=1763546963; x=1764151763;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=mZmwnZeJsVmH4Emd6Sk7OTkRxBmCW6aXF7g1I/Zjods=;
+        b=w2XqiMvJztJK0EaqeQJRr5EXyJTykM9aUozwNwvodBKOnBk8r065Bqm8ejrtCwH+bw
+         owISdVSVgzdRGgUezM6iyC2llXIC5M5mtMkjD/BWM/Rduu8Mj6iiLK5Fva7Xp7mKKwm0
+         ImGoD90rQVirEvPLOkLjcqhAyu2inwYfZ6nPs49eHEp/56pB8zcvtd+J1MA0FpTxJeVn
+         sB3GcI7s4s0CeNplKY/HCkJP8acrOjR66deo/MNQTCP5wfiQKmEWNeINLZ4xOItv6OmX
+         sG0vl1Q7z/9fnjfOifFQ2DJjqAbUJELU+MJIL5m0V+BAgXh383cbAU1f1aYaoHZGAfFu
+         UFig==
+X-Forwarded-Encrypted: i=1; AJvYcCUmH5hrdGqZ7+GgIbFXTNorBtc+tEneWmXVPwug7Ke+8OhCDpcx7CZjadP71GXyZSFktTuTrW17hDQXsoEv@vger.kernel.org
+X-Gm-Message-State: AOJu0YzRsS3mSTaqwx0B1R7gn7vVUDkzYCrVDBD+0IrsJb0f62W0Qqjc
+	gx4SPWjSinZg1cmDDLDFrMQBygNEtdYoem3ces13+OnFnhA5vgWpPOfI98wiD7uYTUg=
+X-Gm-Gg: ASbGncs9wWM/vwfMH4XD7AecGzbFl7ixO9+AM4IU+6xCOYq+o6y3JOczAOR591gMNJZ
+	RnpxA3mPrOOZ8qWz76FdoyAnpCqbPcQnm+R4pUyo6Pbro3b07qdN2aZp0hK9PngGhKYh0Y4woUQ
+	+PGSSAMNsRjzU6PrGJhO05MMlb7D+kohs3emm0zrFsPoTwl2mGlSkKu5H9N6X92+mwRhV6ZMAE6
+	Blk4fK1JFwG5Gt13HrMgj28FDiZQ40joLHQwLbbtW3kIiwUmOkZEcynlkPnj9bELyVQeKYFxCCJ
+	gG0v6n3CSCL0bJEkc6new59WKgWhK5r6BO9MgHvljtW/cUe+PjI/51e194Kojb5wQzm4wJ1AxGF
+	XGeb1KUsEqtV+7lmy7RlJu0IEevLkpXiN2WHjH/yZOwrDwLUIslL+IyvAeD+u5nT8PNqOBP0nHj
+	0jkvu0VxNTLeZLs/22jrbDRGZj
+X-Google-Smtp-Source: AGHT+IHL60A5nBupA1OyvdeZdvK8rVJqcdAj2UJ8GMSSqilZDEkvpcYDaNSL65+yyn9lVOsemK499g==
+X-Received: by 2002:a17:907:1c81:b0:b72:d2df:641c with SMTP id a640c23a62f3a-b736795d498mr2006941666b.49.1763546963352;
+        Wed, 19 Nov 2025 02:09:23 -0800 (PST)
+Received: from pathway.suse.cz ([176.114.240.130])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-b734fda8bc8sm1594056066b.49.2025.11.19.02.09.20
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 19 Nov 2025 02:09:22 -0800 (PST)
+Date: Wed, 19 Nov 2025 11:08:01 +0100
+From: Petr Mladek <pmladek@suse.com>
+To: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Cc: Corey Minyard <corey@minyard.net>,
+	Christian =?iso-8859-1?Q?K=F6nig?= <christian.koenig@amd.com>,
+	"Dr. David Alan Gilbert" <linux@treblig.org>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Rob Clark <robin.clark@oss.qualcomm.com>,
+	Matthew Brost <matthew.brost@intel.com>,
+	Ulf Hansson <ulf.hansson@linaro.org>,
+	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
+	Vitaly Lifshits <vitaly.lifshits@intel.com>,
+	Manivannan Sadhasivam <mani@kernel.org>,
+	Niklas Cassel <cassel@kernel.org>, Calvin Owens <calvin@wbinvd.org>,
+	Vadim Fedorenko <vadim.fedorenko@linux.dev>,
+	Sagi Maimon <maimon.sagi@gmail.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Karan Tilak Kumar <kartilak@cisco.com>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>,
+	Casey Schaufler <casey@schaufler-ca.com>,
+	Steven Rostedt <rostedt@goodmis.org>,
+	Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>,
+	Max Kellermann <max.kellermann@ionos.com>,
+	linux-doc@vger.kernel.org, linux-kernel@vger.kernel.org,
+	openipmi-developer@lists.sourceforge.net,
+	linux-media@vger.kernel.org, dri-devel@lists.freedesktop.org,
+	linaro-mm-sig@lists.linaro.org, amd-gfx@lists.freedesktop.org,
+	linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
+	intel-xe@lists.freedesktop.org, linux-mmc@vger.kernel.org,
+	netdev@vger.kernel.org, intel-wired-lan@lists.osuosl.org,
+	linux-pci@vger.kernel.org, linux-s390@vger.kernel.org,
+	linux-scsi@vger.kernel.org, linux-staging@lists.linux.dev,
+	ceph-devel@vger.kernel.org, linux-trace-kernel@vger.kernel.org,
+	Rasmus Villemoes <linux@rasmusvillemoes.dk>,
+	Sergey Senozhatsky <senozhatsky@chromium.org>,
+	Jonathan Corbet <corbet@lwn.net>,
+	Sumit Semwal <sumit.semwal@linaro.org>,
+	Gustavo Padovan <gustavo@padovan.org>,
+	David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+	Maxime Ripard <mripard@kernel.org>,
+	Dmitry Baryshkov <lumag@kernel.org>,
+	Abhinav Kumar <abhinav.kumar@linux.dev>,
+	Jessica Zhang <jesszhan0024@gmail.com>, Sean Paul <sean@poorly.run>,
+	Marijn Suijten <marijn.suijten@somainline.org>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	Lucas De Marchi <lucas.demarchi@intel.com>,
+	Thomas =?iso-8859-1?Q?Hellstr=F6m?= <thomas.hellstrom@linux.intel.com>,
+	Rodrigo Vivi <rodrigo.vivi@intel.com>,
+	Vladimir Oltean <olteanv@gmail.com>, Andrew Lunn <andrew@lunn.ch>,
+	"David S. Miller" <davem@davemloft.net>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Przemek Kitszel <przemyslaw.kitszel@intel.com>,
+	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
+	Kishon Vijay Abraham I <kishon@kernel.org>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Rodolfo Giometti <giometti@enneenne.com>,
+	Jonathan Lemon <jonathan.lemon@gmail.com>,
+	Richard Cochran <richardcochran@gmail.com>,
+	Stefan Haberland <sth@linux.ibm.com>,
+	Jan Hoeppner <hoeppner@linux.ibm.com>,
+	Heiko Carstens <hca@linux.ibm.com>,
+	Vasily Gorbik <gor@linux.ibm.com>,
+	Alexander Gordeev <agordeev@linux.ibm.com>,
+	Christian Borntraeger <borntraeger@linux.ibm.com>,
+	Sven Schnelle <svens@linux.ibm.com>,
+	Satish Kharat <satishkh@cisco.com>,
+	Sesidhar Baddela <sebaddel@cisco.com>,
+	"James E.J. Bottomley" <James.Bottomley@hansenpartnership.com>,
+	Mauro Carvalho Chehab <mchehab@kernel.org>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	Xiubo Li <xiubli@redhat.com>, Ilya Dryomov <idryomov@gmail.com>,
+	Masami Hiramatsu <mhiramat@kernel.org>,
+	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: Re: [PATCH v3 19/21] scsi: fnic: Switch to use %ptSp
+Message-ID: <aR2XAYWTEgMZu_Mx@pathway.suse.cz>
+References: <20251113150217.3030010-1-andriy.shevchenko@linux.intel.com>
+ <20251113150217.3030010-20-andriy.shevchenko@linux.intel.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20251115-rubikpi-next-20251114-v1-0-fc630dc5bb5d@thundersoft.com>
- <20251115-rubikpi-next-20251114-v1-1-fc630dc5bb5d@thundersoft.com>
- <b2d4d91f-c726-4f5a-994a-086edc9caff2@mainlining.org> <CAEQ9gE=ztgQ+pGJVxKgk5dVWDSSfOG7r=s1cDa_x0_Zsf2eyYA@mail.gmail.com>
- <2iv3hsxcwlgfnpq75h4tfnbilurs5jelslig6gzknpb6lsupvk@xfxdofqw7b3v>
-In-Reply-To: <2iv3hsxcwlgfnpq75h4tfnbilurs5jelslig6gzknpb6lsupvk@xfxdofqw7b3v>
-From: Roger Shimizu <rosh@debian.org>
-Date: Wed, 19 Nov 2025 01:56:54 -0800
-X-Gmail-Original-Message-ID: <CAEQ9gEkke-tON2-oR9qSHgDH63gtDKu0S71XtMw=uwqRxSHkGA@mail.gmail.com>
-X-Gm-Features: AWmQ_bl_SFzQCsuk2XqZ4jDBPrsGzKnkCwo_SRBXj_zK7hVSRiz7ReegFQasHCc
-Message-ID: <CAEQ9gEkke-tON2-oR9qSHgDH63gtDKu0S71XtMw=uwqRxSHkGA@mail.gmail.com>
-Subject: Re: [PATCH 1/2] arm64: dts: qcom: rubikpi3: Add qcs6490-rubikpi3
- board dts
-To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Cc: Jens Reidel <adrian@mainlining.org>, Hongyang Zhao <hongyang.zhao@thundersoft.com>, 
-	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, 
-	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
-	linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20251113150217.3030010-20-andriy.shevchenko@linux.intel.com>
 
-Dear Dmitry,
+On Thu 2025-11-13 15:32:33, Andy Shevchenko wrote:
+> Use %ptSp instead of open coded variants to print content of
+> struct timespec64 in human readable format.
 
-Glad that you're checking for the changes for RUBIK Pi 3!
+I was about to commit the changes into printk/linux.git and
+found a mistake during the final double check, see below.
 
-On Tue, Nov 18, 2025 at 10:08=E2=80=AFAM Dmitry Baryshkov
-<dmitry.baryshkov@oss.qualcomm.com> wrote:
->
-> On Sun, Nov 16, 2025 at 11:36:13PM -0800, Roger Shimizu wrote:
-> > Thanks Jens, and Dmitry for the review!
-> >
-> > On Sat, Nov 15, 2025 at 9:25=E2=80=AFAM Jens Reidel <adrian@mainlining.=
-org> wrote:
-> > >
-> > > Hi,
-> > >
-> > > On 11/14/25 5:34 PM, Hongyang Zhao wrote:
-> > > > Add DTS for Thundercomm qcs6490-rubikpi3 board which uses
-> > > > QCS6490 SoC.
-> > > >
-> > > > Works:
-> > > > - Bluetooth (AP6256)
-> > > > - Wi-Fi (AP6256)
-> > > > - Ethernet (AX88179B connected to UPD720201)
-> > > > - FAN
-> > > > - Two USB Type-A 3.0 ports (UPD720201 connected to PCIe0)
-> > > > - M.2 M-Key 2280 PCIe 3.0
-> > > > - RTC
-> > > > - USB Type-C
-> > > > - USB Type-A 2.0 port
-> > > > - 40PIN: I2C x1, UART x1
-> > > >
-> > > > Signed-off-by: Hongyang Zhao <hongyang.zhao@thundersoft.com>
-> > > > Reviewed-by: Roger Shimizu <rosh@debian.org>
-> > > > ---
-> > > >   arch/arm64/boot/dts/qcom/Makefile                  |    1 +
-> > > >   .../boot/dts/qcom/qcs6490-thundercomm-rubikpi3.dts | 1415 +++++++=
-+++++++++++++
-> > > >   2 files changed, 1416 insertions(+)
-> > > >
-> > > > diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dt=
-s/qcom/Makefile
-> > > > index 6f34d5ed331c..2433b15754fe 100644
-> > > > --- a/arch/arm64/boot/dts/qcom/Makefile
-> > > > +++ b/arch/arm64/boot/dts/qcom/Makefile
-> > > > @@ -138,6 +138,7 @@ qcs6490-rb3gen2-industrial-mezzanine-dtbs :=3D =
-qcs6490-rb3gen2.dtb qcs6490-rb3gen2
-> > > >
-> > > >   dtb-$(CONFIG_ARCH_QCOM)     +=3D qcs6490-rb3gen2-industrial-mezza=
-nine.dtb
-> > > >   dtb-$(CONFIG_ARCH_QCOM)     +=3D qcs6490-rb3gen2-vision-mezzanine=
-.dtb
-> > > > +dtb-$(CONFIG_ARCH_QCOM)      +=3D qcs6490-thundercomm-rubikpi3.dtb
-> > > >   dtb-$(CONFIG_ARCH_QCOM)     +=3D qcs8300-ride.dtb
-> > > >   dtb-$(CONFIG_ARCH_QCOM)     +=3D qcs8550-aim300-aiot.dtb
-> > > >   dtb-$(CONFIG_ARCH_QCOM)     +=3D qcs9100-ride.dtb
-> > > > diff --git a/arch/arm64/boot/dts/qcom/qcs6490-thundercomm-rubikpi3.=
-dts b/arch/arm64/boot/dts/qcom/qcs6490-thundercomm-rubikpi3.dts
-> > > > new file mode 100644
-> > > > index 000000000000..4c9016992de3
-> > > > --- /dev/null
-> > > > +++ b/arch/arm64/boot/dts/qcom/qcs6490-thundercomm-rubikpi3.dts
-> > > > @@ -0,0 +1,1415 @@
-> > >
-> > > [snip]
-> > >
-> > > > +
-> > > > +&pcie0 {
-> > > > +     perst-gpios =3D <&tlmm 87 GPIO_ACTIVE_LOW>;
-> > > > +     wake-gpios =3D <&tlmm 89 GPIO_ACTIVE_HIGH>;
-> > > > +
-> > > > +     pinctrl-0 =3D <&pcie0_clkreq_n>,
-> > > > +                 <&pcie0_reset_n>,
-> > > > +                 <&pcie0_wake_n>;
-> > > > +     pinctrl-names =3D "default";
-> > > > +
-> > > > +     status =3D "okay";
-> > > > +};
-> > > > +
-> > > > +&pcie0_phy {
-> > > > +     vdda-phy-supply =3D <&vreg_l10c_0p88>;
-> > > > +     vdda-pll-supply =3D <&vreg_l6b_1p2>;
-> > > > +
-> > > > +     status =3D "okay";
-> > > > +};
-> > > > +
-> > > > +&pcie1 {
-> > > > +     /* Using traditional address mapping */
-> > > > +     reg =3D <0 0x01c08000 0 0x3000>,
-> > > > +           <0 0x40000000 0 0xf1d>,
-> > > > +           <0 0x40000f20 0 0xa8>,
-> > > > +           <0 0x40001000 0 0x1000>,
-> > > > +           <0 0x40100000 0 0x100000>;
-> > > > +
-> > > > +     ranges =3D <0x01000000 0x0 0x00000000 0x0 0x40200000 0x0 0x10=
-0000>,
-> > > > +              <0x02000000 0x0 0x40300000 0x0 0x40300000 0x0 0x1fd0=
-0000>;
-> > >
-> > > Thanks for attempting to fix the PCIe issues. With your patch series
-> > > applied on top of linux-next, I'm still seeing PCIe issues:
-> > >
-> > > [    0.380693] Internal error: synchronous external abort:
-> > > 0000000096000010 [#1]  SMP
-> > > [    0.406491] Modules linked in:
-> > > [    0.406495] CPU: 5 UID: 0 PID: 106 Comm: kworker/u32:6 Tainted: G =
-  M
-> > >                 6.18.0-rc5-next-20251113 #13 NONE
-> > > [    0.406499] Tainted: [M]=3DMACHINE_CHECK
-> > > [    0.406500] Hardware name: thundercomm Thundercomm RUBIK Pi
-> > > 3/Thundercomm RUBIK Pi 3, BIOS 2025.10-rc4 10/01/2025
-> > > [    0.406502] Workqueue: async async_run_entry_fn
-> > > [    0.406508] pstate: 40400005 (nZcv daif +PAN -UAO -TCO -DIT -SSBS
-> > > BTYPE=3D--)
-> > > [    0.428362] pc : __pi_memset_generic+0x16c/0x188
-> > > [    0.428366] lr : dma_direct_alloc+0x19c/0x3d0
-> > > [    0.428370] sp : ffff8000810e3920
-> > > [    0.428371] x29: ffff8000810e3920 x28: ffff000080d0f810 x27:
-> > > ffffba4c6196ec48
-> > > [    0.428373] x26: ffff000080d0f810 x25: ffffba4c607b31cc x24:
-> > > 0000000000000000
-> > > [    0.428375] x23: ffff000080d0f810 x22: ffff000000c00000 x21:
-> > > ffff000082858948
-> > > [    0.428376] x20: 0000000000001000 x19: fffffdffc0030000 x18:
-> > > 000000000000000a
-> > > [    0.428378] x17: ffff0000823dae00 x16: 0000000000000000 x15:
-> > > 0000000000000000
-> > > [    0.428380] x14: 00000000ffffffff x13: 0000000000000068 x12:
-> > > 0000000000000100
-> > > [    0.449344] x11: 0000000000000000 x10: ffff0001fef99500 x9 :
-> > > 0000000000000000
-> > > [    0.449345] x8 : ffff000000c00000 x7 : 0000000000000000 x6 :
-> > > 000000000000003f
-> > > [    0.449347] x5 : 0000000000000040 x4 : 0000000000000000 x3 :
-> > > 0000000000000004
-> > > [    0.449349] x2 : 0000000000000fc0 x1 : 0000000000000000 x0 :
-> > > ffff000000c00000
-> > > [    0.449350] Call trace:
-> > > [    0.449351]  __pi_memset_generic+0x16c/0x188 (P)
-> > > [    0.449354]  dma_alloc_attrs+0x94/0x210
-> > > [    0.449357]  dmam_alloc_attrs+0x74/0xc0
-> > > [    0.469967]  dw_pcie_msi_host_init+0x100/0x300
-> > > [    0.469971]  dw_pcie_host_init+0x5e4/0x6d8
-> > > [    0.491913]  qcom_pcie_probe+0x5a8/0x838
-> > > [    0.491916]  platform_probe+0x64/0xc0
-> > > [    0.491919]  really_probe+0xc8/0x3f0
-> > > [    0.491921]  __driver_probe_device+0x88/0x170
-> > > [    0.491922]  driver_probe_device+0x48/0x130
-> > > [    0.491923]  __device_attach_driver+0xc4/0x190
-> > > [    0.491925]  bus_for_each_drv+0x90/0x100
-> > > [    0.491928]  __device_attach_async_helper+0xb8/0x120
-> > > [    0.491929]  async_run_entry_fn+0x3c/0x1e0
-> > > [    0.491931]  process_one_work+0x150/0x3a0
-> > > [    0.491934]  worker_thread+0x288/0x480
-> > > [    0.491936]  kthread+0x118/0x1e0
-> > > [    0.491938]  ret_from_fork+0x10/0x20
-> > > [    0.513092] Code: 91010108 54ffff4a 8b040108 cb050042 (d50b7428)
-> > > [    0.513094] ---[ end trace 0000000000000000 ]---
-> > >
-> > > I can only get the device to boot by disabling both pcie0 and pcie1.
-> >
-> > I think there're some regressions in "next-20251114".
-> > After some time to "git bisect", I found after running 2 revert
-> > commands below, it can boot for both RUBIK Pi 3 and RB3 Gen2.
-> >
-> > $ git revert b15ce3c0882c9cd2fbe4f87047874ad087b583ff -m 1
-> > $ git revert 03e928442d469f7d8dafc549638730647202d9ce
-> >
-> > > > +
-> > > > +
-> > > > +     perst-gpios =3D <&tlmm 2 GPIO_ACTIVE_LOW>;
-> > > > +     wake-gpios =3D <&tlmm 3 GPIO_ACTIVE_LOW>;
-> > > > +
-> > > > +     pinctrl-0 =3D <&pcie1_clkreq_n>,
-> > > > +                 <&pcie1_reset_n>,
-> > > > +                 <&pcie1_wake_n>;
-> > > > +     pinctrl-names =3D "default";
-> > > > +
-> > > > +     status =3D "okay";
-> > > > +};
-> > > > +
-> > > > +&pcie1_phy {
-> > > > +     vdda-phy-supply =3D <&vreg_l10c_0p88>;
-> > > > +     vdda-pll-supply =3D <&vreg_l6b_1p2>;
-> > > > +
-> > > > +     status =3D "okay";
-> > > > +};
-> > > > +
-> > >
-> > > [snip]
-> > >
-> > > > +
-> > > > +&remoteproc_adsp {
-> > > > +     firmware-name =3D "qcom/qcs6490/adsp.mbn";
-> > > > +
-> > > > +     status =3D "okay";
-> > > > +};
-> > >
-> > > I'm fairly sure that this is the wrong ADSP firmware. With the firmwa=
-re
-> > > in linux-firmware, I'm seeing charger pd crashes and the ADSP constan=
-tly
-> > > restarting. Using the Radxa Dragon Q6A ADSP firmware which disables t=
-he
-> > > charging feature in the firmware works way better and does not result=
- in
-> > > crashes.
-> >
-> > I run the Ubuntu 24.04 base system:
-> > * https://ubuntu.com/download/qualcomm-iot#rubikpi3
-> >
-> > Currently it boots well with adsp fw from RB3 Gen2 (from deb pkg:
-> > firmware-qcom-hlosfw) without crash.
-> > But I heard from next release, adsp will be customized, so Hongyang
-> > will make another patch to upstream the adsp for RUBIK Pi 3.
->
-> Then it would be nice to include the new path for ADSP firmware from the
-> day 0 (you can do this even before it is sent to linux-firmware).
+> diff --git a/drivers/scsi/fnic/fnic_trace.c b/drivers/scsi/fnic/fnic_trace.c
+> index cdc6b12b1ec2..0a849a195a8e 100644
+> --- a/drivers/scsi/fnic/fnic_trace.c
+> +++ b/drivers/scsi/fnic/fnic_trace.c
+> @@ -215,30 +213,26 @@ int fnic_get_stats_data(struct stats_debug_info *debug,
+>  {
+>  	int len = 0;
+>  	int buf_size = debug->buf_size;
+> -	struct timespec64 val1, val2;
+> +	struct timespec64 val, val1, val2;
+>  	int i = 0;
+>  
+> -	ktime_get_real_ts64(&val1);
+> +	ktime_get_real_ts64(&val);
+>  	len = scnprintf(debug->debug_buffer + len, buf_size - len,
+>  		"------------------------------------------\n"
+>  		 "\t\tTime\n"
+>  		"------------------------------------------\n");
+>  
+> +	val1 = timespec64_sub(val, stats->stats_timestamps.last_reset_time);
+> +	val2 = timespec64_sub(val, stats->stats_timestamps.last_read_time);
+>  	len += scnprintf(debug->debug_buffer + len, buf_size - len,
+> -		"Current time :          [%lld:%ld]\n"
+> -		"Last stats reset time:  [%lld:%09ld]\n"
+> -		"Last stats read time:   [%lld:%ld]\n"
+> -		"delta since last reset: [%lld:%ld]\n"
+> -		"delta since last read:  [%lld:%ld]\n",
+> -	(s64)val1.tv_sec, val1.tv_nsec,
+> -	(s64)stats->stats_timestamps.last_reset_time.tv_sec,
+> -	stats->stats_timestamps.last_reset_time.tv_nsec,
+> -	(s64)stats->stats_timestamps.last_read_time.tv_sec,
+> -	stats->stats_timestamps.last_read_time.tv_nsec,
+> -	(s64)timespec64_sub(val1, stats->stats_timestamps.last_reset_time).tv_sec,
+> -	timespec64_sub(val1, stats->stats_timestamps.last_reset_time).tv_nsec,
+> -	(s64)timespec64_sub(val1, stats->stats_timestamps.last_read_time).tv_sec,
+> -	timespec64_sub(val1, stats->stats_timestamps.last_read_time).tv_nsec);
+> +			 "Current time :          [%ptSp]\n"
+> +			 "Last stats reset time:  [%ptSp]\n"
+> +			 "Last stats read time:   [%ptSp]\n"
+> +			 "delta since last reset: [%ptSp]\n"
+> +			 "delta since last read:  [%ptSp]\n",
 
-Thanks for letting me know we can post it here, before sending to
-linux-firmware!
+Both delta times are printed at the end.
 
-Currently we're using the same adsp blob as QLI1.4 for RB3 Gen2.
-It's packaged in ubuntu:
-* https://launchpad.net/~ubuntu-qcom-iot/+archive/ubuntu/qcom-ppa/+packages
-* Package: firmware-qcm6490-msl
-* Version: 1.0.r00083.0+dsp103-0ubuntu1
+> +			 &val,
+> +			 &stats->stats_timestamps.last_reset_time, &val1,
+> +			 &stats->stats_timestamps.last_read_time, &val2);
 
-I heard from Hongyang that from QLI1.5, RUBIK Pi 3 will have a
-slightly different adsp than RB3 Gen2.
-Hongyang will make it public after full testing.
+I think that this should be:
 
-Cheers,
-Roger
+			 &stats->stats_timestamps.last_reset_time,
+			 &stats->stats_timestamps.last_read_time,
+			 &val1, &val2);
 
-> > Cheers,
-> > Roger
-> >
-> > > > +
-> > > > +&remoteproc_cdsp {
-> > > > +     firmware-name =3D "qcom/qcs6490/cdsp.mbn";
-> > > > +
-> > > > +     status =3D "okay";
-> > > > +};
-> > > > +
-> > >
-> > > [snip]
-> > >
-> > > Thanks,
-> > > Jens
->
-> --
-> With best wishes
-> Dmitry
+>  	stats->stats_timestamps.last_read_time = val1;
+
+The original code stored the current time in "val1". This should be:
+
+	stats->stats_timestamps.last_read_time = val;
+
+> @@ -416,8 +410,8 @@ int fnic_get_stats_data(struct stats_debug_info *debug,
+>  	jiffies_to_timespec64(stats->misc_stats.last_ack_time, &val2);
+
+Just for record. Another values are stored into @val1 and @val2 at
+this point.
+
+>  	len += scnprintf(debug->debug_buffer + len, buf_size - len,
+> -		  "Last ISR time: %llu (%8llu.%09lu)\n"
+> -		  "Last ACK time: %llu (%8llu.%09lu)\n"
+> +		  "Last ISR time: %llu (%ptSp)\n"
+> +		  "Last ACK time: %llu (%ptSp)\n"
+>  		  "Max ISR jiffies: %llu\n"
+>  		  "Max ISR time (ms) (0 denotes < 1 ms): %llu\n"
+>  		  "Corr. work done: %llu\n"
+> @@ -437,10 +431,8 @@ int fnic_get_stats_data(struct stats_debug_info *debug,
+>  		  "Number of rport not ready: %lld\n"
+>  		 "Number of receive frame errors: %lld\n"
+>  		 "Port speed (in Mbps): %lld\n",
+> -		  (u64)stats->misc_stats.last_isr_time,
+> -		  (s64)val1.tv_sec, val1.tv_nsec,
+> -		  (u64)stats->misc_stats.last_ack_time,
+> -		  (s64)val2.tv_sec, val2.tv_nsec,
+> +		  (u64)stats->misc_stats.last_isr_time, &val1,
+> +		  (u64)stats->misc_stats.last_ack_time, &val2,
+
+So, this is correct!
+
+>  		  (u64)atomic64_read(&stats->misc_stats.max_isr_jiffies),
+>  		  (u64)atomic64_read(&stats->misc_stats.max_isr_time_ms),
+>  		  (u64)atomic64_read(&stats->misc_stats.corr_work_done),
+
+
+Now, I think that there is no need to resend the entire huge patchset.
+
+I could either fix this when comitting or commit the rest and
+you could send only this patch for review.
+
+Best Regards,
+Petr
+
+PS: All other patches look good. Well, nobody acked 7th patch yet.
+    But I think that the change is pretty straightforward and
+    we could do it even without an ack.
 
