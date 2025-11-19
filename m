@@ -1,197 +1,267 @@
-Return-Path: <linux-arm-msm+bounces-82494-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-82495-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [IPv6:2605:f480:58:1:0:1994:3:14])
-	by mail.lfdr.de (Postfix) with ESMTPS id 02968C6EDF4
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Nov 2025 14:27:41 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id A457EC6EE36
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Nov 2025 14:29:44 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 9AE224F0ECE
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Nov 2025 13:18:04 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTPS id 2AC312E58E
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Nov 2025 13:29:43 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 96BB835C185;
-	Wed, 19 Nov 2025 13:11:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id EEF803624CF;
+	Wed, 19 Nov 2025 13:28:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=suse.com header.i=@suse.com header.b="DQJFkS9T"
+	dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b="ZB0fy+cS"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f53.google.com (mail-ej1-f53.google.com [209.85.218.53])
+Received: from mail-lf1-f43.google.com (mail-lf1-f43.google.com [209.85.167.43])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D57153596F1
-	for <linux-arm-msm@vger.kernel.org>; Wed, 19 Nov 2025 13:11:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10BBD3624DC
+	for <linux-arm-msm@vger.kernel.org>; Wed, 19 Nov 2025 13:28:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763557882; cv=none; b=Bx2l82xGStqy3QUos/tRzoA0ZHr4thJxfjkRA5fAf3f5JWEmZr6R7zjXh5sghDRNVt8tqxk+bd+D89KU+tGPilC38qqsjkEUYO6g2CWoe8yTrfuQ86QU7/4wIiJoU4Hv9kXjOt7LiyytbQYJ/Lc8aqlXo0RWn0rp2iC2TcMHhRo=
+	t=1763558898; cv=none; b=cS7cBBf4x8DWkNfWdvpZ9+bV4lpHLry2RGxyFtvTlXE7CMxqQsrgVQUbqG63Jr8k+zD6RFssWtXLTaNMLt5HbaF9DeNPZ7yZspnDZo7qmxZ6sMtEv6Qp7W2UsAv2wX3m1EzmEVMMdtJPSGMG/tB3Q0lTMK3nylhWi8lnHdwWOg4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763557882; c=relaxed/simple;
-	bh=sJLZgI9vl/ePXAMiM1HFoKkY761fjwT9P7fNtQPrjMI=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=j5hqt9yxKXrwE8qNZHS99MPimba+VzMML6GPP6I+nS/w6ATMeKWc+1ZjA2OmJXppelbOYHyqepr0RstfE0+S8Ay47HpgOHwnEnokZiIp9pdpmKCO/fqRzjUpqWg6B189cqqw6Mh7D9b0vAd1HD29Yw/VapK4tNHPmZVCpBs4eLY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=suse.com; spf=pass smtp.mailfrom=suse.com; dkim=pass (2048-bit key) header.d=suse.com header.i=@suse.com header.b=DQJFkS9T; arc=none smtp.client-ip=209.85.218.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=suse.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.com
-Received: by mail-ej1-f53.google.com with SMTP id a640c23a62f3a-b7355f6ef12so1181205366b.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 19 Nov 2025 05:11:19 -0800 (PST)
+	s=arc-20240116; t=1763558898; c=relaxed/simple;
+	bh=gHpwjjREhsAd8WKsVYT8IYp6+ZQIN7Tnm8WoUEA8aZQ=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=mwm2dnqThQOZE+id72uVHHk/XmNl+wgqjA9FCzc4umdHiZ5XxeyBidoUglKWqYMJz2hVScS/kYnd64bgfQWgFFDhf9g0fM4QaYgd2zpqaHnDZPfuDti50oDKiVFg9o+aIYfPhIm3hL4/uA+boe9yJxd/bm/lS+uU4ZSV8AkSsKI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl; spf=none smtp.mailfrom=bgdev.pl; dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b=ZB0fy+cS; arc=none smtp.client-ip=209.85.167.43
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=bgdev.pl
+Received: by mail-lf1-f43.google.com with SMTP id 2adb3069b0e04-5957db5bdedso6326493e87.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 19 Nov 2025 05:28:14 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=suse.com; s=google; t=1763557878; x=1764162678; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=2hIjgqXWXn3Sbfto+9OWapsp1QwhUBtS+kZIjBq+Tlw=;
-        b=DQJFkS9TfIkIw04m01xXMLNrkosYb3FSrkUd1Mfnq3DmFPVYW5BQAF/kJ7qBH/fiSm
-         pVnVkcfKZlPcHTsyEwqHQR67eAr7CHq57OGD53huuAi4hSCw/ct6edPOGR+fsY5nGz/N
-         Yw1ooyFk/+rMnBQZngJcf6t2sX9N66HB8FZQS71x9KKl/6xkzHkV8uFKm2Iy/9fAm8Ag
-         I22CiD+iqPZDy+W/I0Ox3Jki6uwZV0vfVWc6IvJTegJWTzKaS6FEi0EnBDDhgSnIfI+y
-         k4OP4x8AdsPKrFrvmXhICnjEUtirKTXsrSbTk6Wz8fF+OXFqP7Hrg3yvNq2+bPjQ4kUM
-         Gqaw==
+        d=bgdev-pl.20230601.gappssmtp.com; s=20230601; t=1763558893; x=1764163693; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=g9Fz2SH1ZUm7FuuivONGxxUgBBznVGQP+s2/x19XhOc=;
+        b=ZB0fy+cS1xYK9vha6Tv00U0twgMJFjTq4+9aYZ8hfvmNMqly9QfDD0oXfZNzwWRpbh
+         JwGFoamRilDGXXJFFu9byVUjYTEGhBvrAkUaTW4zbHsxMiaCmJXWKWGGJ1wn+TY/2Aog
+         twpOHdet9yu8ZPQAozLB0jDV4ur4E5xF7GGdhCc+mwzbml3XhLsLF/WkE3y/uHdyVfNy
+         WSixf7XnPG58jugGaEQVpZRATC1hb9sAaUkNE1pRhY9SE4CtrJIfLMbXjMgDs4Jd1T0s
+         TnaJUFkbVzs4/Wx5SLGTYQ+q9yG5OJixmqZG+sza1llI6xYIr6g9l8B5eKkFJLn7A4Bg
+         BWYA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1763557878; x=1764162678;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=2hIjgqXWXn3Sbfto+9OWapsp1QwhUBtS+kZIjBq+Tlw=;
-        b=A3pNYnD2aG8cQcFKF4VKsarz+kr+p0SEEt2r+QPYiPkoEj/7kLN6IrdCOrhbticIOM
-         uF+uLwxrLi70hQsIUxWQ3BOL58H947VAPa7OTuyrgC4jlQhj5CkiE3xi6ZwGzs1Aqrp7
-         j/oF104Fpu38gI8kWXjy55bNg1FMC7f4kb8xbrebd4xqs502T9+3diWoSFLrSL3wOb24
-         TaDk3ckHxkatieFmRKCFymodDhWP0S/OieIV0x0YpreL0cIdPRBvtz6Ms6xInMGpJjGo
-         FA4+UeMeIsqITLXW4IurAltAg8JOxMWLAv0+WRRU2L87YyZ+3xq0FyCuoQjm4qdThonp
-         bx5g==
-X-Forwarded-Encrypted: i=1; AJvYcCVla4PIQtE+loIAYShSfws8ParLPVGn9DK4dkgla9k8Caqoqhw+QW6bE0Y1MIqRTI4Z75ckbF4nW7+7UeMB@vger.kernel.org
-X-Gm-Message-State: AOJu0Yyfr0YTPoWP6YBcepfDS9f+4Y+nXzyRX+emvPSUjJZV8YhRSbTB
-	OaymuonEI0ViytAA1tm+aVuk0SzAQU6o5IUok8J9Ti7Mv7jmqIbqQLQUxr4KT9sgcCc=
-X-Gm-Gg: ASbGncsjje6/foVKbs0JbtnGXjSckBW78Saf8UD34XBqSq40yEYlAC4Ue3fXlNFdTab
-	h+rF6fYUYby35meIIIKnL+OSSs2r5a3hi55uYAKbJn38kFxLuD57fuoKTz2b4CZ7ONoXBSmPyyt
-	YdsVgo0XH9hnqWzt5KyksgF//lLMwGoQgZcvE+uIDxCQ6gr73UpqoEl+RqV4Oy/cCQ7e/4f9ufz
-	1gUWGY8iaKR5JLy/uKLLwMKXwCptxWn+U4QLAyA4oGXTbLqOvAUFmIIdRUFQeElNhrKJLWEX+QA
-	BspgSWSclDSRQkt1BI5o+RIYxDVjj/6c1XBiBoWhoI3W6+msZUMSN342kwgR0lIXdKowv5+UkPw
-	MulD/Mcikfmf4zlWvZTwnqAky6mmjtwAc4bOJsERO8xoswMVpGzw2gTenNjlnEMl6Gs4s4hVmIZ
-	7PfAIeDrit226fUA==
-X-Google-Smtp-Source: AGHT+IHh/9HSY9QxYY7JWRlsHkQE77dEey/TQadLHho4kIFH9l0Cnuj5X98H1aD+vZkw9c2t87Tcgg==
-X-Received: by 2002:a17:907:96a7:b0:b6d:50f7:a805 with SMTP id a640c23a62f3a-b7367c02586mr2099815666b.59.1763557878059;
-        Wed, 19 Nov 2025 05:11:18 -0800 (PST)
-Received: from pathway.suse.cz ([176.114.240.130])
-        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-6433a3d8775sm15093392a12.5.2025.11.19.05.11.14
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 19 Nov 2025 05:11:17 -0800 (PST)
-Date: Wed, 19 Nov 2025 14:11:12 +0100
-From: Petr Mladek <pmladek@suse.com>
-To: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Cc: Corey Minyard <corey@minyard.net>,
-	Christian =?iso-8859-1?Q?K=F6nig?= <christian.koenig@amd.com>,
-	"Dr. David Alan Gilbert" <linux@treblig.org>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Thomas Zimmermann <tzimmermann@suse.de>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	Rob Clark <robin.clark@oss.qualcomm.com>,
-	Matthew Brost <matthew.brost@intel.com>,
-	Ulf Hansson <ulf.hansson@linaro.org>,
-	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
-	Vitaly Lifshits <vitaly.lifshits@intel.com>,
-	Manivannan Sadhasivam <mani@kernel.org>,
-	Niklas Cassel <cassel@kernel.org>, Calvin Owens <calvin@wbinvd.org>,
-	Vadim Fedorenko <vadim.fedorenko@linux.dev>,
-	Sagi Maimon <maimon.sagi@gmail.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
-	Karan Tilak Kumar <kartilak@cisco.com>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>,
-	Casey Schaufler <casey@schaufler-ca.com>,
-	Steven Rostedt <rostedt@goodmis.org>,
-	Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>,
-	Max Kellermann <max.kellermann@ionos.com>,
-	linux-doc@vger.kernel.org, linux-kernel@vger.kernel.org,
-	openipmi-developer@lists.sourceforge.net,
-	linux-media@vger.kernel.org, dri-devel@lists.freedesktop.org,
-	linaro-mm-sig@lists.linaro.org, amd-gfx@lists.freedesktop.org,
-	linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
-	intel-xe@lists.freedesktop.org, linux-mmc@vger.kernel.org,
-	netdev@vger.kernel.org, intel-wired-lan@lists.osuosl.org,
-	linux-pci@vger.kernel.org, linux-s390@vger.kernel.org,
-	linux-scsi@vger.kernel.org, linux-staging@lists.linux.dev,
-	ceph-devel@vger.kernel.org, linux-trace-kernel@vger.kernel.org,
-	Rasmus Villemoes <linux@rasmusvillemoes.dk>,
-	Sergey Senozhatsky <senozhatsky@chromium.org>,
-	Jonathan Corbet <corbet@lwn.net>,
-	Sumit Semwal <sumit.semwal@linaro.org>,
-	Gustavo Padovan <gustavo@padovan.org>,
-	David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
-	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-	Maxime Ripard <mripard@kernel.org>,
-	Dmitry Baryshkov <lumag@kernel.org>,
-	Abhinav Kumar <abhinav.kumar@linux.dev>,
-	Jessica Zhang <jesszhan0024@gmail.com>, Sean Paul <sean@poorly.run>,
-	Marijn Suijten <marijn.suijten@somainline.org>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	Lucas De Marchi <lucas.demarchi@intel.com>,
-	Thomas =?iso-8859-1?Q?Hellstr=F6m?= <thomas.hellstrom@linux.intel.com>,
-	Rodrigo Vivi <rodrigo.vivi@intel.com>,
-	Vladimir Oltean <olteanv@gmail.com>, Andrew Lunn <andrew@lunn.ch>,
-	"David S. Miller" <davem@davemloft.net>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
-	Przemek Kitszel <przemyslaw.kitszel@intel.com>,
-	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
-	Kishon Vijay Abraham I <kishon@kernel.org>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Rodolfo Giometti <giometti@enneenne.com>,
-	Jonathan Lemon <jonathan.lemon@gmail.com>,
-	Richard Cochran <richardcochran@gmail.com>,
-	Stefan Haberland <sth@linux.ibm.com>,
-	Jan Hoeppner <hoeppner@linux.ibm.com>,
-	Heiko Carstens <hca@linux.ibm.com>,
-	Vasily Gorbik <gor@linux.ibm.com>,
-	Alexander Gordeev <agordeev@linux.ibm.com>,
-	Christian Borntraeger <borntraeger@linux.ibm.com>,
-	Sven Schnelle <svens@linux.ibm.com>,
-	Satish Kharat <satishkh@cisco.com>,
-	Sesidhar Baddela <sebaddel@cisco.com>,
-	"James E.J. Bottomley" <James.Bottomley@hansenpartnership.com>,
-	Mauro Carvalho Chehab <mchehab@kernel.org>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	Xiubo Li <xiubli@redhat.com>, Ilya Dryomov <idryomov@gmail.com>,
-	Masami Hiramatsu <mhiramat@kernel.org>,
-	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: Re: [PATCH v3 00/21] treewide: Introduce %ptS for struct timespec64
- and convert users
-Message-ID: <aR3B8ECx9W6F0BV_@pathway.suse.cz>
-References: <20251113150217.3030010-1-andriy.shevchenko@linux.intel.com>
+        d=1e100.net; s=20230601; t=1763558893; x=1764163693;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=g9Fz2SH1ZUm7FuuivONGxxUgBBznVGQP+s2/x19XhOc=;
+        b=Wbm4yAWzI4DzFCs2/gPW10sm+t00ZWLxELMll4Ez7+I6v5zfoocggP2bixpN/wYVqP
+         n0F4minFX37ha13xUFxw6CncRhd9VTxQb3oL5enCrbERzgNcv1YeVM1GyuiH4BkOi+zL
+         0THKjp/ZiYVLzzKkjFdx+94z7Ww8NzePW0GZmQyNp4uRLBxJyrDBpY0L+IKpE3qjCUCe
+         OOCbWgwTlyUIOG3pWBTlMfg7y8FgV+y77aggspj/Sjzc4fCnctXBvjTKfbD++YhBySXo
+         4HpCR123hBGoFawqL5C1x9epUpIkyTee2TGszbMKFjONYSuTkZUDWIAR0HztVi76HYrQ
+         lbdQ==
+X-Forwarded-Encrypted: i=1; AJvYcCWbqcZ7egwvydTkNWjlCfDW1gBVKwFA6hYaRyIi8ONOaYbM96FbyUZAT/QcfIwyMZiurtz661B2TSirk2k9@vger.kernel.org
+X-Gm-Message-State: AOJu0YzQezw84azKFyLe8q3tycOPxFFjSD0tK4gFhT+aCp6zYSypf4bC
+	0xQKG1kUnmM9RrQY/JnAEnHgeUk4figw7AbQc1HhbA3GAvlT/5dt9NfodadumCRPRxGFiBJxlIm
+	tseCUIM3SrZGXNyxv9+HwmbAVB5v9DYdIRA0D6RncVQ==
+X-Gm-Gg: ASbGncsutxhLPheuiQqOYbqwsY4CHe1ZLwlPlpB5L//XqWtQp14atNFQyKgZel5tBj4
+	NrOFrFIWNUBYz8liHwtspGXX1h7QLJ+dpNlBpds7jZtsC2KWE1esKK/19tQSGaX9jJyPglZeF9S
+	04Fq2adABFPrYDSqEq2ZKOAjnlILig+/oEAisWr3RU7vrYTpNavO1v2RBKppwy5AbKvL2BbbTTE
+	Dav+QXM+aYZ9438deiHl7D91OvzoYIKju4JvoFU7voU1zwQsmE+aZOwSVcLTtnduTCjxh+RXQAK
+	dTEwzRw18L2Xgq7aMqz9bqMEj4Bulf3glizIq4Cn/MDtkaDy
+X-Google-Smtp-Source: AGHT+IGJBnlU8SfCgN2H396Pf5rcfKBaHkLraBwus+9No1IWypEaF8w8j8PGxkXY9nu4VlhBBrtuUvloX+iTMlSUET4=
+X-Received: by 2002:a05:6512:1326:b0:594:2cdf:1941 with SMTP id
+ 2adb3069b0e04-59604e3f4e4mr1143048e87.31.1763558892975; Wed, 19 Nov 2025
+ 05:28:12 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20251113150217.3030010-1-andriy.shevchenko@linux.intel.com>
+References: <20251112-pci-m2-e-v1-0-97413d6bf824@oss.qualcomm.com> <20251112-pci-m2-e-v1-9-97413d6bf824@oss.qualcomm.com>
+In-Reply-To: <20251112-pci-m2-e-v1-9-97413d6bf824@oss.qualcomm.com>
+From: Bartosz Golaszewski <brgl@bgdev.pl>
+Date: Wed, 19 Nov 2025 14:28:00 +0100
+X-Gm-Features: AWmQ_bm5iCKbfw8hpw1YVmAcjxIFk-iHf3DCtBX1MsQ5hHQ1VM87jgrdbOpF5Hc
+Message-ID: <CAMRc=MeyeyuNVP6CWcxNp8XSCT+P9ZNmgSj6Hktrv8ZYNN5kMg@mail.gmail.com>
+Subject: Re: [PATCH 9/9] power: sequencing: pcie-m2: Add support for PCIe M.2
+ Key E connectors
+To: manivannan.sadhasivam@oss.qualcomm.com
+Cc: Rob Herring <robh@kernel.org>, Greg Kroah-Hartman <gregkh@linuxfoundation.org>, 
+	Jiri Slaby <jirislaby@kernel.org>, Nathan Chancellor <nathan@kernel.org>, 
+	Nicolas Schier <nicolas.schier@linux.dev>, Hans de Goede <hansg@kernel.org>, 
+	=?UTF-8?Q?Ilpo_J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>, 
+	Mark Pearson <mpearson-lenovo@squebb.ca>, "Derek J. Clark" <derekjohn.clark@gmail.com>, 
+	Manivannan Sadhasivam <mani@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Marcel Holtmann <marcel@holtmann.org>, Luiz Augusto von Dentz <luiz.dentz@gmail.com>, linux-serial@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, linux-kbuild@vger.kernel.org, 
+	platform-driver-x86@vger.kernel.org, linux-pci@vger.kernel.org, 
+	devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+	linux-bluetooth@vger.kernel.org, linux-pm@vger.kernel.org, 
+	Stephan Gerhold <stephan.gerhold@linaro.org>, 
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Thu 2025-11-13 15:32:14, Andy Shevchenko wrote:
-> Here is the third part of the unification time printing in the kernel.
-> This time for struct timespec64. The first patch brings a support
-> into printf() implementation (test cases and documentation update
-> included) followed by the treewide conversion of the current users.
-> 
-> Petr, we got like more than a half being Acked, I think if you are okay
-> with this, the patches that have been tagged can be applied.
-> 
-> Note, not everything was compile-tested. Kunit test has been passed, though.
+On Wed, Nov 12, 2025 at 3:45=E2=80=AFPM Manivannan Sadhasivam via B4 Relay
+<devnull+manivannan.sadhasivam.oss.qualcomm.com@kernel.org> wrote:
+>
+> From: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
+>
+> Add support for handling the power sequence of the PCIe M.2 Key E
+> connectors. These connectors are used to attach the Wireless Connectivity
+> devices to the host machine including combinations of WiFi, BT, NFC using
+> interfaces such as PCIe/SDIO for WiFi, USB/UART for BT and I2C for NFC.
+>
+> Currently, this driver supports only the PCIe interface for WiFi and UART
+> interface for BT. The driver also only supports driving the 3.3v/1.8v pow=
+er
+> supplies and W_DISABLE{1/2}# GPIOs. The optional signals of the Key E
+> connectors are not currently supported.
+>
+> For supporting Bluetooth over the non-discoverable UART interface, the
+> driver currently creates the serdev interface after enumerating the PCIe
+> interface. This is mandatory since the device ID is only known after the
+> PCIe enumeration and the ID is used for creating the serdev device.
+>
+> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.=
+com>
+> ---
+>
+> +static int pwrseq_pci_m2_e_uart_enable(struct pwrseq_device *pwrseq)
+> +{
+> +       struct pwrseq_pcie_m2_ctx *ctx =3D pwrseq_device_get_drvdata(pwrs=
+eq);
+> +
+> +       gpiod_set_value_cansleep(ctx->w_disable2_gpio, 0);
 
-JFYI, the patchset has been committed into printk/linux.git,
-branch for-6.19-vsprintf-timespec64.
+Since this is new code and gpiod_set_value_cansleep() now returns an
+integer, can you do
 
-Note, that I have:
+  return gpiod_set_value_cansleep()?
 
-   + fixed the 19th patch as proposed, see
-     https://lore.kernel.org/all/aR2XAYWTEgMZu_Mx@pathway.suse.cz/
+Same elsewhere.
 
-   + reviewed all patches but I triple checked 7th patch which
-     did not have any ack yet. And I added my Reviewed-by tag
-     there. ;-)
+>
+> +static int pwrseq_m2_pcie_notify(struct notifier_block *nb, unsigned lon=
+g action,
+> +                             void *data)
+> +{
+> +       struct pwrseq_pcie_m2_ctx *ctx =3D container_of(nb, struct pwrseq=
+_pcie_m2_ctx, nb);
+> +       struct pci_dev *pdev =3D to_pci_dev(data);
+> +       struct device_node *remote;
+> +       struct serdev_controller *serdev_ctrl;
+> +       struct serdev_device *serdev;
+> +       struct device *dev =3D ctx->dev;
+> +       int ret;
+> +
+> +       /*
+> +        * Check whether the PCI device is associated with this M.2 conne=
+ctor or
+> +        * not, by comparing the OF node of the PCI device parent and the=
+ Port 0
+> +        * (PCIe) remote node parent OF node.
+> +        */
+> +       remote =3D of_graph_get_remote_node(dev_of_node(ctx->dev), 0, -1)=
+;
+> +       if (!remote || (remote !=3D pdev->dev.parent->of_node)) {
+> +               of_node_put(remote);
 
-   + I tried build with allyesconfig. It succeeded. I am not 100%
-     sure that it built all modified sources but...
+You could really use some __free(device_node) here. It would simplify
+the code below quite a bit and make sure you don't miss anything.
 
-Best Regards,
-Petr
+> +               return NOTIFY_DONE;
+> +       }
+> +       of_node_put(remote);
+> +
+> +       switch (action) {
+> +       case BUS_NOTIFY_ADD_DEVICE:
+> +               /* Create serdev device for WCN7850 */
+> +               if (pdev->vendor =3D=3D PCI_VENDOR_ID_QCOM && pdev->devic=
+e =3D=3D 0x1107) {
+> +                       remote =3D of_graph_get_remote_node(dev_of_node(c=
+tx->dev), 1, -1);
+> +                       if (!remote) {
+> +                               of_node_put(remote);
+> +                               return NOTIFY_DONE;
+> +                       }
+> +
+> +                       serdev_ctrl =3D of_find_serdev_controller_by_node=
+(remote);
+> +                       of_node_put(remote);
+> +                       if (!serdev_ctrl)
+> +                               return NOTIFY_DONE;
+> +
+> +                       serdev =3D serdev_device_alloc(serdev_ctrl);
+> +                       if (!serdev)
+> +                               return NOTIFY_DONE;
+> +
+> +                       ret =3D serdev_device_add(serdev, "WCN7850");
+> +                       if (ret) {
+> +                               dev_err(dev, "Failed to add serdev for WC=
+N7850: %d\n", ret);
+> +                               serdev_device_put(serdev);
+> +                               return NOTIFY_DONE;
+> +                       }
+> +               }
+> +               break;
+> +       }
+> +
+> +       return NOTIFY_DONE;
+> +}
+> +
+> +static bool pwrseq_pcie_m2_check_remote_node(struct device *dev, u8 port=
+, const char *node)
+> +{
+> +       struct device_node *remote;
+
+Same here.
+
+> +
+> +       remote =3D of_graph_get_remote_node(dev_of_node(dev), port, -1);
+> +       if (remote && of_node_name_eq(remote, node)) {
+> +               of_node_put(remote);
+> +               return true;
+> +       }
+> +
+> +       of_node_put(remote);
+> +
+> +       return false;
+> +}
+> +
+> +/*
+> + * If the connector exposes a non-discoverable bus like UART, the respec=
+tive
+> + * protocol device needs to be created manually with the help of the not=
+ifier
+> + * of the discoverable bus like PCIe.
+> + */
+
+I really like this idea BTW!
+
+> +static void pwrseq_pcie_m2_register_notifier(struct pwrseq_pcie_m2_ctx *=
+ctx, struct device *dev)
+> +{
+> +       int ret;
+> +
+> +       /*
+> +        * Register a PCI notifier for Key E connector that has PCIe as P=
+ort 0
+> +        * interface and Serial as Port 1 interface.
+> +        */
+> +       if (pwrseq_pcie_m2_check_remote_node(dev, 1, "serial")) {
+> +               if (pwrseq_pcie_m2_check_remote_node(dev, 0, "pcie")) {
+> +                       ctx->dev =3D dev;
+> +                       ctx->nb.notifier_call =3D pwrseq_m2_pcie_notify;
+> +                       ret =3D (bus_register_notifier(&pci_bus_type, &ct=
+x->nb));
+> +                       if (ret) {
+> +                               dev_err_probe(dev, ret, "Failed to regist=
+er notifier for serdev\n");
+
+If this is optional and we don't handle the error, should we really
+print it as one? I'd say a dev_dbg() would suffice unless the failure
+here impacts the driver's behavior (which it does, so maybe the
+notifier should not be optional?).
+
+Bart
 
