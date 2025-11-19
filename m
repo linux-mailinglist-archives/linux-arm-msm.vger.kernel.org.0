@@ -1,267 +1,182 @@
-Return-Path: <linux-arm-msm+bounces-82495-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-82496-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id A457EC6EE36
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Nov 2025 14:29:44 +0100 (CET)
+Received: from sto.lore.kernel.org (sto.lore.kernel.org [IPv6:2600:3c09:e001:a7::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 422CBC6EE57
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Nov 2025 14:30:24 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sea.lore.kernel.org (Postfix) with ESMTPS id 2AC312E58E
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Nov 2025 13:29:43 +0000 (UTC)
+	by sto.lore.kernel.org (Postfix) with ESMTPS id B222329744
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Nov 2025 13:30:23 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id EEF803624CF;
-	Wed, 19 Nov 2025 13:28:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8D50535E526;
+	Wed, 19 Nov 2025 13:29:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b="ZB0fy+cS"
+	dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b="Pe1Fcnas"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f43.google.com (mail-lf1-f43.google.com [209.85.167.43])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtpout-04.galae.net (smtpout-04.galae.net [185.171.202.116])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10BBD3624DC
-	for <linux-arm-msm@vger.kernel.org>; Wed, 19 Nov 2025 13:28:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5569031A05B
+	for <linux-arm-msm@vger.kernel.org>; Wed, 19 Nov 2025 13:29:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.171.202.116
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763558898; cv=none; b=cS7cBBf4x8DWkNfWdvpZ9+bV4lpHLry2RGxyFtvTlXE7CMxqQsrgVQUbqG63Jr8k+zD6RFssWtXLTaNMLt5HbaF9DeNPZ7yZspnDZo7qmxZ6sMtEv6Qp7W2UsAv2wX3m1EzmEVMMdtJPSGMG/tB3Q0lTMK3nylhWi8lnHdwWOg4=
+	t=1763558970; cv=none; b=j+TgDb1laqCvGE6PoPESG0E4WunqPXCgxxYblSrYWOTy+ixMIDEdFMqWMbtYUiPVYKQdLipzpkwHqe8LH3caziZnRZqQzVsaDE1mj8ea7U/2QIV15/n5b+Dr8YCTV8CFcyxVIQReddf9bUJVLt8ztcHmPOaSXYx1NvxYNzyXnR8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763558898; c=relaxed/simple;
-	bh=gHpwjjREhsAd8WKsVYT8IYp6+ZQIN7Tnm8WoUEA8aZQ=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=mwm2dnqThQOZE+id72uVHHk/XmNl+wgqjA9FCzc4umdHiZ5XxeyBidoUglKWqYMJz2hVScS/kYnd64bgfQWgFFDhf9g0fM4QaYgd2zpqaHnDZPfuDti50oDKiVFg9o+aIYfPhIm3hL4/uA+boe9yJxd/bm/lS+uU4ZSV8AkSsKI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl; spf=none smtp.mailfrom=bgdev.pl; dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b=ZB0fy+cS; arc=none smtp.client-ip=209.85.167.43
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=bgdev.pl
-Received: by mail-lf1-f43.google.com with SMTP id 2adb3069b0e04-5957db5bdedso6326493e87.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 19 Nov 2025 05:28:14 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=bgdev-pl.20230601.gappssmtp.com; s=20230601; t=1763558893; x=1764163693; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=g9Fz2SH1ZUm7FuuivONGxxUgBBznVGQP+s2/x19XhOc=;
-        b=ZB0fy+cS1xYK9vha6Tv00U0twgMJFjTq4+9aYZ8hfvmNMqly9QfDD0oXfZNzwWRpbh
-         JwGFoamRilDGXXJFFu9byVUjYTEGhBvrAkUaTW4zbHsxMiaCmJXWKWGGJ1wn+TY/2Aog
-         twpOHdet9yu8ZPQAozLB0jDV4ur4E5xF7GGdhCc+mwzbml3XhLsLF/WkE3y/uHdyVfNy
-         WSixf7XnPG58jugGaEQVpZRATC1hb9sAaUkNE1pRhY9SE4CtrJIfLMbXjMgDs4Jd1T0s
-         TnaJUFkbVzs4/Wx5SLGTYQ+q9yG5OJixmqZG+sza1llI6xYIr6g9l8B5eKkFJLn7A4Bg
-         BWYA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1763558893; x=1764163693;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=g9Fz2SH1ZUm7FuuivONGxxUgBBznVGQP+s2/x19XhOc=;
-        b=Wbm4yAWzI4DzFCs2/gPW10sm+t00ZWLxELMll4Ez7+I6v5zfoocggP2bixpN/wYVqP
-         n0F4minFX37ha13xUFxw6CncRhd9VTxQb3oL5enCrbERzgNcv1YeVM1GyuiH4BkOi+zL
-         0THKjp/ZiYVLzzKkjFdx+94z7Ww8NzePW0GZmQyNp4uRLBxJyrDBpY0L+IKpE3qjCUCe
-         OOCbWgwTlyUIOG3pWBTlMfg7y8FgV+y77aggspj/Sjzc4fCnctXBvjTKfbD++YhBySXo
-         4HpCR123hBGoFawqL5C1x9epUpIkyTee2TGszbMKFjONYSuTkZUDWIAR0HztVi76HYrQ
-         lbdQ==
-X-Forwarded-Encrypted: i=1; AJvYcCWbqcZ7egwvydTkNWjlCfDW1gBVKwFA6hYaRyIi8ONOaYbM96FbyUZAT/QcfIwyMZiurtz661B2TSirk2k9@vger.kernel.org
-X-Gm-Message-State: AOJu0YzQezw84azKFyLe8q3tycOPxFFjSD0tK4gFhT+aCp6zYSypf4bC
-	0xQKG1kUnmM9RrQY/JnAEnHgeUk4figw7AbQc1HhbA3GAvlT/5dt9NfodadumCRPRxGFiBJxlIm
-	tseCUIM3SrZGXNyxv9+HwmbAVB5v9DYdIRA0D6RncVQ==
-X-Gm-Gg: ASbGncsutxhLPheuiQqOYbqwsY4CHe1ZLwlPlpB5L//XqWtQp14atNFQyKgZel5tBj4
-	NrOFrFIWNUBYz8liHwtspGXX1h7QLJ+dpNlBpds7jZtsC2KWE1esKK/19tQSGaX9jJyPglZeF9S
-	04Fq2adABFPrYDSqEq2ZKOAjnlILig+/oEAisWr3RU7vrYTpNavO1v2RBKppwy5AbKvL2BbbTTE
-	Dav+QXM+aYZ9438deiHl7D91OvzoYIKju4JvoFU7voU1zwQsmE+aZOwSVcLTtnduTCjxh+RXQAK
-	dTEwzRw18L2Xgq7aMqz9bqMEj4Bulf3glizIq4Cn/MDtkaDy
-X-Google-Smtp-Source: AGHT+IGJBnlU8SfCgN2H396Pf5rcfKBaHkLraBwus+9No1IWypEaF8w8j8PGxkXY9nu4VlhBBrtuUvloX+iTMlSUET4=
-X-Received: by 2002:a05:6512:1326:b0:594:2cdf:1941 with SMTP id
- 2adb3069b0e04-59604e3f4e4mr1143048e87.31.1763558892975; Wed, 19 Nov 2025
- 05:28:12 -0800 (PST)
+	s=arc-20240116; t=1763558970; c=relaxed/simple;
+	bh=qw70Gd/8aPnigjGd4TFxyj7CW7WiK8MjE5NahwJDp/4=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=s/hPsHwGkMGPmVSgPQKyD/bFE29zb1c35Z+h38bzW9AnEQIVbC1Y/wjp2HpBr5KhDN7jEDG84eqGlqvhZ04XGBr9U8o6btW3uwIrz6Eh88Ez37HK8ShEkTLWY8ab3iuVD5ENscDlJ1CcuNXuu2SuVe2rshfqLcsQpT5nklSqtEo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com; spf=pass smtp.mailfrom=bootlin.com; dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b=Pe1Fcnas; arc=none smtp.client-ip=185.171.202.116
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bootlin.com
+Received: from smtpout-01.galae.net (smtpout-01.galae.net [212.83.139.233])
+	by smtpout-04.galae.net (Postfix) with ESMTPS id 65054C11188;
+	Wed, 19 Nov 2025 13:28:59 +0000 (UTC)
+Received: from mail.galae.net (mail.galae.net [212.83.136.155])
+	by smtpout-01.galae.net (Postfix) with ESMTPS id 9307F60699;
+	Wed, 19 Nov 2025 13:29:21 +0000 (UTC)
+Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon) with ESMTPSA id 239FB10371A57;
+	Wed, 19 Nov 2025 14:29:09 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=dkim;
+	t=1763558960; h=from:subject:date:message-id:to:cc:mime-version:content-type:
+	 content-transfer-encoding:content-language:in-reply-to:references;
+	bh=QCeVgdlyRn3to5o8svSAQCYCIaAyOrCinIsywtbsnqc=;
+	b=Pe1FcnasPMVjycj+4K0o7Bt+G5cxX2nnbT/fjuTU12uOoD4C3dTkyrWYHDi4XbjOerISVJ
+	GiBRvYSi1g+DJiRpzTmUx46bAYXMDyGPbCQO2SLSqf0G1FD5Ot/to08c5dMt4qwhoVjffU
+	37zIfMQw1phSkaC1c/UNsBu4sEVa6I96q563Ij2ZArqeBPQaaRxRQn/qFGDgK9b1CakKZw
+	+QkZhMbpKEb0PxoTkvEClXSlBk4+/4wVOW+TfgWXpgzfxptQVhNs/R9RCcqX2Xcr/leEzs
+	eAupQQBmU4B84dRKUW9STIjPPYVKbLbTmcmWdRne8rlSpmzA3wUjDBd4WnJktw==
+Message-ID: <57aa6516-ae7d-4d8d-9ae4-70bd6557547f@bootlin.com>
+Date: Wed, 19 Nov 2025 14:29:09 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20251112-pci-m2-e-v1-0-97413d6bf824@oss.qualcomm.com> <20251112-pci-m2-e-v1-9-97413d6bf824@oss.qualcomm.com>
-In-Reply-To: <20251112-pci-m2-e-v1-9-97413d6bf824@oss.qualcomm.com>
-From: Bartosz Golaszewski <brgl@bgdev.pl>
-Date: Wed, 19 Nov 2025 14:28:00 +0100
-X-Gm-Features: AWmQ_bm5iCKbfw8hpw1YVmAcjxIFk-iHf3DCtBX1MsQ5hHQ1VM87jgrdbOpF5Hc
-Message-ID: <CAMRc=MeyeyuNVP6CWcxNp8XSCT+P9ZNmgSj6Hktrv8ZYNN5kMg@mail.gmail.com>
-Subject: Re: [PATCH 9/9] power: sequencing: pcie-m2: Add support for PCIe M.2
- Key E connectors
-To: manivannan.sadhasivam@oss.qualcomm.com
-Cc: Rob Herring <robh@kernel.org>, Greg Kroah-Hartman <gregkh@linuxfoundation.org>, 
-	Jiri Slaby <jirislaby@kernel.org>, Nathan Chancellor <nathan@kernel.org>, 
-	Nicolas Schier <nicolas.schier@linux.dev>, Hans de Goede <hansg@kernel.org>, 
-	=?UTF-8?Q?Ilpo_J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>, 
-	Mark Pearson <mpearson-lenovo@squebb.ca>, "Derek J. Clark" <derekjohn.clark@gmail.com>, 
-	Manivannan Sadhasivam <mani@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Marcel Holtmann <marcel@holtmann.org>, Luiz Augusto von Dentz <luiz.dentz@gmail.com>, linux-serial@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, linux-kbuild@vger.kernel.org, 
-	platform-driver-x86@vger.kernel.org, linux-pci@vger.kernel.org, 
-	devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
-	linux-bluetooth@vger.kernel.org, linux-pm@vger.kernel.org, 
-	Stephan Gerhold <stephan.gerhold@linaro.org>, 
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH net-next v16 02/15] net: ethtool: Introduce
+ ETHTOOL_LINK_MEDIUM_* values
+To: Jakub Kicinski <kuba@kernel.org>
+Cc: davem@davemloft.net, netdev@vger.kernel.org,
+ linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+ thomas.petazzoni@bootlin.com, Andrew Lunn <andrew@lunn.ch>,
+ Eric Dumazet <edumazet@google.com>, Paolo Abeni <pabeni@redhat.com>,
+ Russell King <linux@armlinux.org.uk>, linux-arm-kernel@lists.infradead.org,
+ Christophe Leroy <christophe.leroy@csgroup.eu>,
+ Herve Codina <herve.codina@bootlin.com>,
+ Florian Fainelli <f.fainelli@gmail.com>,
+ Heiner Kallweit <hkallweit1@gmail.com>,
+ Vladimir Oltean <vladimir.oltean@nxp.com>,
+ =?UTF-8?Q?K=C3=B6ry_Maincent?= <kory.maincent@bootlin.com>,
+ =?UTF-8?Q?Marek_Beh=C3=BAn?= <kabel@kernel.org>,
+ Oleksij Rempel <o.rempel@pengutronix.de>,
+ =?UTF-8?Q?Nicol=C3=B2_Veronese?= <nicveronese@gmail.com>,
+ Simon Horman <horms@kernel.org>, mwojtas@chromium.org,
+ Antoine Tenart <atenart@kernel.org>, devicetree@vger.kernel.org,
+ Conor Dooley <conor+dt@kernel.org>, Krzysztof Kozlowski
+ <krzk+dt@kernel.org>, Rob Herring <robh@kernel.org>,
+ Romain Gantois <romain.gantois@bootlin.com>,
+ Daniel Golle <daniel@makrotopia.org>,
+ Dimitri Fedrau <dimitri.fedrau@liebherr.com>
+References: <20251113081418.180557-1-maxime.chevallier@bootlin.com>
+ <20251113081418.180557-3-maxime.chevallier@bootlin.com>
+ <20251118191517.1a369dad@kernel.org>
+From: Maxime Chevallier <maxime.chevallier@bootlin.com>
+Content-Language: en-US
+In-Reply-To: <20251118191517.1a369dad@kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Last-TLS-Session-Version: TLSv1.3
 
-On Wed, Nov 12, 2025 at 3:45=E2=80=AFPM Manivannan Sadhasivam via B4 Relay
-<devnull+manivannan.sadhasivam.oss.qualcomm.com@kernel.org> wrote:
->
-> From: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
->
-> Add support for handling the power sequence of the PCIe M.2 Key E
-> connectors. These connectors are used to attach the Wireless Connectivity
-> devices to the host machine including combinations of WiFi, BT, NFC using
-> interfaces such as PCIe/SDIO for WiFi, USB/UART for BT and I2C for NFC.
->
-> Currently, this driver supports only the PCIe interface for WiFi and UART
-> interface for BT. The driver also only supports driving the 3.3v/1.8v pow=
-er
-> supplies and W_DISABLE{1/2}# GPIOs. The optional signals of the Key E
-> connectors are not currently supported.
->
-> For supporting Bluetooth over the non-discoverable UART interface, the
-> driver currently creates the serdev interface after enumerating the PCIe
-> interface. This is mandatory since the device ID is only known after the
-> PCIe enumeration and the ID is used for creating the serdev device.
->
-> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.=
-com>
-> ---
->
-> +static int pwrseq_pci_m2_e_uart_enable(struct pwrseq_device *pwrseq)
-> +{
-> +       struct pwrseq_pcie_m2_ctx *ctx =3D pwrseq_device_get_drvdata(pwrs=
-eq);
-> +
-> +       gpiod_set_value_cansleep(ctx->w_disable2_gpio, 0);
+Hi Jakub,
 
-Since this is new code and gpiod_set_value_cansleep() now returns an
-integer, can you do
+On 19/11/2025 04:15, Jakub Kicinski wrote:
+> On Thu, 13 Nov 2025 09:14:04 +0100 Maxime Chevallier wrote:
+>> diff --git a/include/linux/ethtool.h b/include/linux/ethtool.h
+>> index c2d8b4ec62eb..ad2b5ed9522b 100644
+>> --- a/include/linux/ethtool.h
+>> +++ b/include/linux/ethtool.h
+>> @@ -216,13 +216,26 @@ static inline u8 *ethtool_rxfh_context_key(struct ethtool_rxfh_context *ctx)
+>>  void ethtool_rxfh_context_lost(struct net_device *dev, u32 context_id);
+>>  
+>>  struct link_mode_info {
+>> -	int                             speed;
+>> -	u8                              lanes;
+>> -	u8                              duplex;
+>> +	int	speed;
+>> +	u8	lanes;
+>> +	u8	min_pairs;
+>> +	u8	pairs;
+>> +	u8	duplex;
+>> +	u16	mediums;
+>>  };
+>>  
+>>  extern const struct link_mode_info link_mode_params[];
+>>  
+>> +extern const char ethtool_link_medium_names[][ETH_GSTRING_LEN];
+>> +
+>> +static inline const char *phy_mediums(enum ethtool_link_medium medium)
+>> +{
+>> +	if (medium >= __ETHTOOL_LINK_MEDIUM_LAST)
+>> +		return "unknown";
+>> +
+>> +	return ethtool_link_medium_names[medium];
+>> +}
+> 
+> Will this function be called by a lot of drivers? Would be great to
+> find a more suitable place for it, ethtool.h is included by thousands
+> of objects :(
 
-  return gpiod_set_value_cansleep()?
+I expect this to be mostly used by the current DT parsing code, as well
+as a few print statements in the core. So indeed let's move this
+somewhere more specific.
 
-Same elsewhere.
+> 
+>>  /* declare a link mode bitmap */
+>>  #define __ETHTOOL_DECLARE_LINK_MODE_MASK(name)		\
+>>  	DECLARE_BITMAP(name, __ETHTOOL_LINK_MODE_MASK_NBITS)
+>> diff --git a/include/uapi/linux/ethtool.h b/include/uapi/linux/ethtool.h
+>> index 8bd5ea5469d9..6ed235053aed 100644
+>> --- a/include/uapi/linux/ethtool.h
+>> +++ b/include/uapi/linux/ethtool.h
+>> @@ -2587,4 +2587,24 @@ enum phy_upstream {
+>>  	PHY_UPSTREAM_PHY,
+>>  };
+>>  
+>> +enum ethtool_link_medium {
+>> +	ETHTOOL_LINK_MEDIUM_BASET = 0,
+>> +	ETHTOOL_LINK_MEDIUM_BASEK,
+>> +	ETHTOOL_LINK_MEDIUM_BASES,
+>> +	ETHTOOL_LINK_MEDIUM_BASEC,
+>> +	ETHTOOL_LINK_MEDIUM_BASEL,
+>> +	ETHTOOL_LINK_MEDIUM_BASED,
+>> +	ETHTOOL_LINK_MEDIUM_BASEE,
+>> +	ETHTOOL_LINK_MEDIUM_BASEF,
+>> +	ETHTOOL_LINK_MEDIUM_BASEV,
+>> +	ETHTOOL_LINK_MEDIUM_BASEMLD,
+>> +	ETHTOOL_LINK_MEDIUM_NONE,
+>> +
+>> +	__ETHTOOL_LINK_MEDIUM_LAST,
+>> +};
+> 
+> Why is this in uAPI? I'd have expected it to either exist in the YAML
+> spec if there's a new uAPI that needs it, or in kernel headers.
+> Let's move it out for now to be safe, we can always move it in.
 
->
-> +static int pwrseq_m2_pcie_notify(struct notifier_block *nb, unsigned lon=
-g action,
-> +                             void *data)
-> +{
-> +       struct pwrseq_pcie_m2_ctx *ctx =3D container_of(nb, struct pwrseq=
-_pcie_m2_ctx, nb);
-> +       struct pci_dev *pdev =3D to_pci_dev(data);
-> +       struct device_node *remote;
-> +       struct serdev_controller *serdev_ctrl;
-> +       struct serdev_device *serdev;
-> +       struct device *dev =3D ctx->dev;
-> +       int ret;
-> +
-> +       /*
-> +        * Check whether the PCI device is associated with this M.2 conne=
-ctor or
-> +        * not, by comparing the OF node of the PCI device parent and the=
- Port 0
-> +        * (PCIe) remote node parent OF node.
-> +        */
-> +       remote =3D of_graph_get_remote_node(dev_of_node(ctx->dev), 0, -1)=
-;
-> +       if (!remote || (remote !=3D pdev->dev.parent->of_node)) {
-> +               of_node_put(remote);
+I originally planned to report that in linkmodes et.al. but changed my
+mind, let me move that out as well.
 
-You could really use some __free(device_node) here. It would simplify
-the code below quite a bit and make sure you don't miss anything.
+> 
+>> +#define ETHTOOL_MEDIUM_FIBER_BITS (BIT(ETHTOOL_LINK_MEDIUM_BASES) | \
+>> +				   BIT(ETHTOOL_LINK_MEDIUM_BASEL) | \
+>> +				   BIT(ETHTOOL_LINK_MEDIUM_BASEF))
+> 
+> Ditto.
 
-> +               return NOTIFY_DONE;
-> +       }
-> +       of_node_put(remote);
-> +
-> +       switch (action) {
-> +       case BUS_NOTIFY_ADD_DEVICE:
-> +               /* Create serdev device for WCN7850 */
-> +               if (pdev->vendor =3D=3D PCI_VENDOR_ID_QCOM && pdev->devic=
-e =3D=3D 0x1107) {
-> +                       remote =3D of_graph_get_remote_node(dev_of_node(c=
-tx->dev), 1, -1);
-> +                       if (!remote) {
-> +                               of_node_put(remote);
-> +                               return NOTIFY_DONE;
-> +                       }
-> +
-> +                       serdev_ctrl =3D of_find_serdev_controller_by_node=
-(remote);
-> +                       of_node_put(remote);
-> +                       if (!serdev_ctrl)
-> +                               return NOTIFY_DONE;
-> +
-> +                       serdev =3D serdev_device_alloc(serdev_ctrl);
-> +                       if (!serdev)
-> +                               return NOTIFY_DONE;
-> +
-> +                       ret =3D serdev_device_add(serdev, "WCN7850");
-> +                       if (ret) {
-> +                               dev_err(dev, "Failed to add serdev for WC=
-N7850: %d\n", ret);
-> +                               serdev_device_put(serdev);
-> +                               return NOTIFY_DONE;
-> +                       }
-> +               }
-> +               break;
-> +       }
-> +
-> +       return NOTIFY_DONE;
-> +}
-> +
-> +static bool pwrseq_pcie_m2_check_remote_node(struct device *dev, u8 port=
-, const char *node)
-> +{
-> +       struct device_node *remote;
+Thanks for taking a look,
 
-Same here.
-
-> +
-> +       remote =3D of_graph_get_remote_node(dev_of_node(dev), port, -1);
-> +       if (remote && of_node_name_eq(remote, node)) {
-> +               of_node_put(remote);
-> +               return true;
-> +       }
-> +
-> +       of_node_put(remote);
-> +
-> +       return false;
-> +}
-> +
-> +/*
-> + * If the connector exposes a non-discoverable bus like UART, the respec=
-tive
-> + * protocol device needs to be created manually with the help of the not=
-ifier
-> + * of the discoverable bus like PCIe.
-> + */
-
-I really like this idea BTW!
-
-> +static void pwrseq_pcie_m2_register_notifier(struct pwrseq_pcie_m2_ctx *=
-ctx, struct device *dev)
-> +{
-> +       int ret;
-> +
-> +       /*
-> +        * Register a PCI notifier for Key E connector that has PCIe as P=
-ort 0
-> +        * interface and Serial as Port 1 interface.
-> +        */
-> +       if (pwrseq_pcie_m2_check_remote_node(dev, 1, "serial")) {
-> +               if (pwrseq_pcie_m2_check_remote_node(dev, 0, "pcie")) {
-> +                       ctx->dev =3D dev;
-> +                       ctx->nb.notifier_call =3D pwrseq_m2_pcie_notify;
-> +                       ret =3D (bus_register_notifier(&pci_bus_type, &ct=
-x->nb));
-> +                       if (ret) {
-> +                               dev_err_probe(dev, ret, "Failed to regist=
-er notifier for serdev\n");
-
-If this is optional and we don't handle the error, should we really
-print it as one? I'd say a dev_dbg() would suffice unless the failure
-here impacts the driver's behavior (which it does, so maybe the
-notifier should not be optional?).
-
-Bart
+Maxime
 
