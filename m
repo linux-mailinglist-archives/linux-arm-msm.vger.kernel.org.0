@@ -1,251 +1,295 @@
-Return-Path: <linux-arm-msm+bounces-82460-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-82470-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ams.mirrors.kernel.org (ams.mirrors.kernel.org [213.196.21.55])
-	by mail.lfdr.de (Postfix) with ESMTPS id 65215C6D9E4
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Nov 2025 10:13:24 +0100 (CET)
+Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [142.0.200.124])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2F77AC6DD4E
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Nov 2025 10:55:08 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ams.mirrors.kernel.org (Postfix) with ESMTPS id 4BC853871C2
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Nov 2025 09:09:01 +0000 (UTC)
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 1DAAA4E29B2
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Nov 2025 09:45:57 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 672A1335087;
-	Wed, 19 Nov 2025 09:08:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E33CA2F9DBD;
+	Wed, 19 Nov 2025 09:45:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="TjCsFkNo";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="JeiZDdJi"
+	dkim=pass (1024-bit key) header.d=thundersoft.com header.i=@thundersoft.com header.b="MxbVVhLs"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from mail-m32118.qiye.163.com (mail-m32118.qiye.163.com [220.197.32.118])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74D6A335093
-	for <linux-arm-msm@vger.kernel.org>; Wed, 19 Nov 2025 09:08:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DB2D2F656A;
+	Wed, 19 Nov 2025 09:45:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=220.197.32.118
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763543339; cv=none; b=jT90rDjmQ0SXkg0R49ywIM4VwrgvPfDaVtldCCcCXCzbzw3cUxNK3KcLtGEEuWzqaD/SKrQ3Tcdmdlj7dD3alLzAvijVaXPa2uwFHokbiN8ZhZoi+n7KJlv0Z/W503N/09flAgCwwpFS+QDSDa8ddjcyik8zvTsVdIt3WZcuWQI=
+	t=1763545554; cv=none; b=ODogdUQYMMeZOzTOWilq2gQMW3Ivj0JpuHKTLQwvBgUKl75Mnmk3V7OOdtyPa8vw4u+/NADtRK1JnLxdt6eOrNQzIPnMGrSPmbuJQ+Y/zVWRLfs4R1WEzp5aLCqIWzdUEfS480kjKMtZwiSjiOrPEdvSgFT6E+K5jmxsTC5NDM8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763543339; c=relaxed/simple;
-	bh=jrwnzPmjdWuo+o7DXPlCIozS2cMqp4j1IJeC2T9P/qA=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=an8I8Eia+ZKneoiBIaU2BhiytJFwADJmmPruLAK12JnNpnFMutXJeGh8AwkkKBdknd/eC+yx27/J0eAuu53sR/4kgLUqz+y7KB1CDykKct0fzZsSJhSeR6Rls/0HVgB9b/qf9aog2+t/D4ErXt+SgCa/UzrtOOemwWffxlt3A1A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=TjCsFkNo; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=JeiZDdJi; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 5AJ7aIZ0718909
-	for <linux-arm-msm@vger.kernel.org>; Wed, 19 Nov 2025 09:08:55 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to; s=qcppdkim1; bh=BTbtZPuzr8b614zgVfcZ7nzI
-	mjQhffBU/Mc4TshKik4=; b=TjCsFkNoamUiOkS2tV7Dtuf2GEc3ApHpjs9lzqiS
-	sqHHSe692rrAvrjMu6nmrmdTSwm2kkksZbqBvgtHy6rnARhMJot7KcrcOZIinrHN
-	imDH+SZUDh7hcjNjsX7dz+7HNS8vpqsRsA1C0izpskT7iqCzd3i2ckvdu4c+hZb+
-	JSkQJCG36Cf1FyYHdhk+N4JTufTSlwAoYA9FW6919nMEpzSL9L+MOYOmnp/cIIS3
-	HAd2ewmKBU+cpeCww4rsu8xG18vVMuU/+pVwQMJNZ6NxiB3Di7Cmy0LzvC0la8jH
-	aH/n3hCYt93I6BUY80NZuLxJpBzpw8ejS8EQlpCLdDieTg==
-Received: from mail-qt1-f199.google.com (mail-qt1-f199.google.com [209.85.160.199])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4ah9n0r980-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Wed, 19 Nov 2025 09:08:55 +0000 (GMT)
-Received: by mail-qt1-f199.google.com with SMTP id d75a77b69052e-4edaf9e48ecso169607091cf.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 19 Nov 2025 01:08:55 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1763543334; x=1764148134; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=BTbtZPuzr8b614zgVfcZ7nzImjQhffBU/Mc4TshKik4=;
-        b=JeiZDdJinThZh0iSOLsSeihC7uydknra24JDOM3NjPMT0DExxkaxkaixXGSyFG5scd
-         l22uGmWrasZC2146MuTmm8PU5CxqPrE2nH5p9OIxvNUGTeYte3/Zd4tmUObA9SejLvNq
-         mANf2r9FOdnU0rduP/dabCnsG3F1gN6fIN8f2p+2qJuWaSqzrvDj696vlvMJbseJ7EYv
-         LBRkXFcyzdgIb20dZMld9DdzZe0zU/FW/WpHo6HU+wGmEeEMW8IY4XPUaumxADqyVZgY
-         6m3svfeYTtPTIUK6jJ1zXNaXJ2DRCcKZabc8exksbe7xvuEgZ6jIb+8IywGY72SCPAc2
-         xizQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1763543334; x=1764148134;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=BTbtZPuzr8b614zgVfcZ7nzImjQhffBU/Mc4TshKik4=;
-        b=V5bSBvu6ajqE/zTphB3xej5PdpQ/XOla8K7sGjiaeJnc1tS8w3FabAJDrzeP0TCI9u
-         aAjb7pzjZHrWr9WDGEyJcWqOezKlI6oJ8Sba8WSve3LQ1nGdrmTQ/Jt3GOPQ65Ubl8xR
-         VPGbLrQHj5sRrf7aENhapC+SzP/kF5f7TYqHzoRCuhJNSkT0uJxWhrIMLhMcCwVbBHwS
-         CONFcTtqbgLwlsSwFr3AP5ivI5UYstutp8g9R8orqTAZ79GIC1K7wQutOVoako6y5rBC
-         EBGCTcfsf7fQW60j7rS5OHLicvaba7aPkCeKMJTA6CbqrGo6FBaZrGMR2yE4hoqWHGZG
-         YFHA==
-X-Forwarded-Encrypted: i=1; AJvYcCU4ceU/Fadu70GuTokAIx6S008+lcyzOon7j6IznW6zN84ZcYtiU8hiGxF+Dv0MvhhJQHDOBTuZruMVAlxT@vger.kernel.org
-X-Gm-Message-State: AOJu0YzVWmCgBhtuYMFYvjpPh9M4YwC5Mv5YEyxCnBAhjEabKQxiSj8Q
-	lmwUJtFuMODgQAGITVh6SyOHcxrvI/lo8sUFkn70UvNSF9bVoEWUmm75cu9+y7e2DXmPWAk/zWM
-	KjjG4iQu2pjHleOpva+3HrGU5xhzVYiXtNmqtG99Vcx7KAa9T4+jJGDcGaaoV68MXX/ox
-X-Gm-Gg: ASbGncu5qfLU5/6qQbrKwIUKvh/kFQf0pf2wRIp4wLq/eI3YHEsbI9p+MrjUZkNAmkT
-	oO7T12xj77k536aDw69lfNOkZau3XA9TbMO4uPdFKEGUadeUSZOG7/Oq/2qpE3aThMPvvvP3NT+
-	2LI4uHEey3HC38dukbSyJu+77peKoIglMj4jtcNogecl5YWLQOx4Awcw00MPvw12B1F29eYLVnn
-	tJEpz9Kdz+e5b0yt8t7DVxL2/4PFcyEmnZJEdNvw5wtbAMcophsle0sdmcknNtJK5j1anGDLBQm
-	HoXGwuitHyrhC8rqEwLd5icYcJJwaCPFos2LOUsIpC5C8YRn+ajRBbXZAgfMOrIwfi3vV5/xM/5
-	MT7/xiHIY6js6FatC6679YMZ3Khx82yib1+ZHsda5A9tasEfP5FT1nz3k4FYpfNxklP/lM9mQ53
-	DyjSAf8jJ2k1eaNo6K2/IfGv0=
-X-Received: by 2002:a05:622a:1a8d:b0:4ee:219e:e66 with SMTP id d75a77b69052e-4ee219e1ccbmr132271871cf.83.1763543334098;
-        Wed, 19 Nov 2025 01:08:54 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IEvGrTwGWgt3h25w1spAqf1PMbfdl26WuMNR8Rh1qTaBhxRDJpt0kYDPqbU3TG80HYKB1z85g==
-X-Received: by 2002:a05:622a:1a8d:b0:4ee:219e:e66 with SMTP id d75a77b69052e-4ee219e1ccbmr132271461cf.83.1763543333526;
-        Wed, 19 Nov 2025 01:08:53 -0800 (PST)
-Received: from umbar.lan (2001-14ba-a0c3-3a00-264b-feff-fe8b-be8a.rev.dnainternet.fi. [2001:14ba:a0c3:3a00:264b:feff:fe8b:be8a])
-        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-37b9ce080casm42649461fa.5.2025.11.19.01.08.51
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 19 Nov 2025 01:08:51 -0800 (PST)
-Date: Wed, 19 Nov 2025 11:08:50 +0200
-From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-To: Vikash Garodia <vikash.garodia@oss.qualcomm.com>
-Cc: Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>,
-        Abhinav Kumar <abhinav.kumar@linux.dev>,
-        Bryan O'Donoghue <bod@kernel.org>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
-        Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Philipp Zabel <p.zabel@pengutronix.de>,
-        Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-        linux-arm-msm@vger.kernel.org, linux-media@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Vishnu Reddy <busanna.reddy@oss.qualcomm.com>,
-        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-        Vishnu Reddy <quic_bvisredd@quicinc.com>
-Subject: Re: [PATCH v3 0/6] media: iris: prepare support for video codecs on
- Qcom vpu4 platform
-Message-ID: <a4wd4u4qh7ldiz6qzvmse72vhsuh5i6erpbglgzgnz2zdo75tq@xnwmwrij7rqx>
-References: <20251107-knp_video-v3-0-50c86cbb0eb8@oss.qualcomm.com>
- <3vbq76dpjnadfrnufojq4zqiv7p5p555rhxfx6yoncc354p3lk@ohcs3ldhuoao>
- <2d56fc4b-6e3c-4f83-aab1-c48db3b8bb2d@oss.qualcomm.com>
- <CAO9ioeXSXwm03e_j8TuXz2Sqr1J2n3uEFH6dJoKVyE+hJx+woQ@mail.gmail.com>
- <be157faa-b062-4726-83e2-ffdeaf792b50@oss.qualcomm.com>
+	s=arc-20240116; t=1763545554; c=relaxed/simple;
+	bh=n1ZSkA/pUdH/nCvqa3lfsBbDVzmRcSU5fnGoEfre548=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=HEre14Mb5YoOQ/1aayUEe8ZTXRJt9ohWgyFuBCkxTLhabQ628fK3zKhyJS1/iec3Zc1afSjBA+w9NlHwEnnIojlh0+4ji4GXeXZplZ5rh8q8KxRmmHRxTAFVdMzFLCu7p+BfLfGk+cVumv/hFzqvP9cMZaZgTqx4rGDHAG5+k1Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=thundersoft.com; spf=pass smtp.mailfrom=thundersoft.com; dkim=pass (1024-bit key) header.d=thundersoft.com header.i=@thundersoft.com header.b=MxbVVhLs; arc=none smtp.client-ip=220.197.32.118
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=thundersoft.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=thundersoft.com
+Received: from ROG.lan (unknown [36.129.139.90])
+	by smtp.qiye.163.com (Hmail) with ESMTP id 2a202f41d;
+	Wed, 19 Nov 2025 17:10:15 +0800 (GMT+08:00)
+From: Hongyang Zhao <hongyang.zhao@thundersoft.com>
+To: adrian@mainlining.org
+Cc: andersson@kernel.org,
+	conor+dt@kernel.org,
+	devicetree@vger.kernel.org,
+	hongyang.zhao@thundersoft.com,
+	konradybcio@kernel.org,
+	krzk+dt@kernel.org,
+	linux-arm-msm@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	robh@kernel.org,
+	rosh@debian.org
+Subject: Re: [PATCH 1/2] arm64: dts: qcom: rubikpi3: Add qcs6490-rubikpi3 board dts
+Date: Wed, 19 Nov 2025 17:09:57 +0800
+Message-ID: <20251119090957.737476-1-hongyang.zhao@thundersoft.com>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <b2d4d91f-c726-4f5a-994a-086edc9caff2@mainlining.org>
+References: <b2d4d91f-c726-4f5a-994a-086edc9caff2@mainlining.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <be157faa-b062-4726-83e2-ffdeaf792b50@oss.qualcomm.com>
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMTE5MDA3MSBTYWx0ZWRfX3R7uiEOlGAI4
- DkILR6alhMSdQxzNlGwdYXFd1jjLsJf6QBn/Sb+UPV7tZziZhTO8VeCHsH8PCNpGS2o6tBmHLJZ
- 4Q8SPgD2Uw1bavWtPNUlm9gygfZ10pUnk1hFANShMugQSxKeRcYJJjZBux36NvDSnjNSUsBZbG+
- bGT2OQuqsv6+La0C1su7HxaV7cnh4Pdmf3vMxxdS00JH/yoDm8cvHR9LdtAm7Veq5z/HTdGuLO5
- Z47cvcx7tY1K4JyX5sghxGRc4lb9VgizxY+5Mf9RNwdf7lv1ydEPPe53Za6ojHFXr2kWIvsoYQ6
- 3x/OUv5SCTCk1SF3fHhlKJTt1hkk5ohS5ffAzHiwj1F7jsA+qSznLeXfJ2Dv4mS0eSBb99xCaSX
- TOcQ4YJ/4jL7tzfojj1PIqbLEcHAeQ==
-X-Proofpoint-GUID: s6bKp3aCunLYcD_u9WKO3E4F6cqYmLpI
-X-Authority-Analysis: v=2.4 cv=QZlrf8bv c=1 sm=1 tr=0 ts=691d8927 cx=c_pps
- a=WeENfcodrlLV9YRTxbY/uA==:117 a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10
- a=6UeiqGixMTsA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=EUspDBNiAAAA:8 a=74vutVrwjju_euDmxZsA:9 a=CjuIK1q_8ugA:10
- a=kacYvNCVWA4VmyqE58fU:22
-X-Proofpoint-ORIG-GUID: s6bKp3aCunLYcD_u9WKO3E4F6cqYmLpI
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
- definitions=2025-11-19_02,2025-11-18_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 spamscore=0 phishscore=0 adultscore=0 suspectscore=0
- clxscore=1015 priorityscore=1501 bulkscore=0 malwarescore=0
- lowpriorityscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2510240001
- definitions=main-2511190071
+Content-Transfer-Encoding: 8bit
+X-HM-Tid: 0a9a9b60fba809d5kunm99b42158a6f595
+X-HM-MType: 1
+X-HM-Spam-Status: e1kfGhgUHx5ZQUpXWQgPGg8OCBgUHx5ZQUlOS1dZFg8aDwILHllBWSg2Ly
+	tZV1koWUFITzdXWS1ZQUlXWQ8JGhUIEh9ZQVkaTUhLVkJCTxoaTEgfGB8eHVYVFAkWGhdVEwETFh
+	oSFyQUDg9ZV1kYEgtZQVlITVVKSUJVSkhCVUJLWVdZFhoPEhUdFFlBWU9LSFVKS0hKTkxPVUpLS1
+	VKQktLWQY+
+DKIM-Signature: a=rsa-sha256;
+	b=MxbVVhLsQhbJX4yp/k83RMYalN/k2EA0PUNF2B9ycURNeKMKRhSbCwfxxJjDPgzcpeYjEg6D7lC34tZJnK91MWcn1t235yD2OqyaJwKr/f+kPk7uSb7j3r8NKqh+qemMjgqpNrX3e8Tj9i5yHB09Ad7a8rTH57FcUh01Stjpo5M=; c=relaxed/relaxed; s=default; d=thundersoft.com; v=1;
+	bh=n77KaqZNq+DBRNDWWxF/1bb3bdgzO4It0/gFvm3liiI=;
+	h=date:mime-version:subject:message-id:from;
 
-On Wed, Nov 12, 2025 at 10:39:16AM +0530, Vikash Garodia wrote:
-> 
-> On 11/11/2025 7:09 PM, Dmitry Baryshkov wrote:
-> > On Tue, 11 Nov 2025 at 14:43, Vikash Garodia
-> > <vikash.garodia@oss.qualcomm.com> wrote:
-> > > 
-> > > 
-> > > On 11/11/2025 4:08 PM, Dmitry Baryshkov wrote:
-> > > > On Fri, Nov 07, 2025 at 03:19:35PM +0530, Vikash Garodia wrote:
-> > > > > Upcoming Qualcomm kaanapali platform have a newer generation of video
-> > > > > IP, iris4 or vpu4. The hardware have evolved mostly w.r.t higher number
-> > > > > of power domains as well as multiple clock sources. It has support for
-> > > > > new codec(apv), when compared to prior generation.
-> > > > > 
-> > > > >   From previous version of this series, the kaanapali binding patch(#1/8)
-> > > > > and the compatible patch(#8/8) have been dropped. The discussion for
-> > > > > this is captured here [1].
-> > > > > The series introducs buffer calculation and power sequence for vpu4. It
-> > > > > prepares for vpu4 when kaanapali is enabled after the binding discussion
-> > > > > is concluded.
-> > > > > 
-> > > > > 
-> > > > > gstreamer test:
-> > > > > Decoders validated with below commands, codec specific:
-> > > > Why not just run the fluster testsuite?
-> > > > 
-> > > 
-> > > yeah, fluster can also be executed. Individual codec commands were
-> > > explicitly called out incase someone wants to run standalone gst pipeline.
+Hi, thank you for your review.
+
+On 11/14/25 5:34 PM, Hongyang Zhao wrote:
+> > Add DTS for Thundercomm qcs6490-rubikpi3 board which uses
+> > QCS6490 SoC.
 > > 
-> > Please switch to fluster (in addition to Gst), ideally running all
-> > test cases for a codec. While enabling SC7280 support I found that
-> > there are enough corner cases which are being ignored by the driver.
-> > One additional bonus is that fluster runs several process in parallel
-> > by default, catching issues caused by several decode threads running
-> > in parallel.
+> > Works:
+> > - Bluetooth (AP6256)
+> > - Wi-Fi (AP6256)
+> > - Ethernet (AX88179B connected to UPD720201)
+> > - FAN
+> > - Two USB Type-A 3.0 ports (UPD720201 connected to PCIe0)
+> > - M.2 M-Key 2280 PCIe 3.0
+> > - RTC
+> > - USB Type-C
+> > - USB Type-A 2.0 port
+> > - 40PIN: I2C x1, UART x1
 > > 
-> 
-> multi process issue is due to below [1] (tried it on lemans). Due to higher
-
-I haven't seen SMMU errors on Kodiak.
-
-> concurrency, we can see that the DMA buffer is mapped into un-addressable
-> range (0-0x25800000) i.e 0x24b00000, and leading to global fault. This was
-> the reason i was keeping 2 memory-region in kaanapali binding, to restrict
-> certain ranges of IOVA.
-> 
-> Below solutions are being tried, again this is not limited to kaanapali and
-> applies to existing enabled SOCs as well.
-> 
-> 1. introduce dynamic device for output buffers which are big size
-> comparatively, via iommu-map
-> 2. introduce the restrictions to the addressable range.
-
-Hoping to see them posted and land soon.
-
-> 
-> [1]
-> 157.511807:   SMMU_ERR_FATAL_NSEC_FAULT_NAME_REG : SMMU:>> 0x0x15000000
-> NonSec Global Fault: NSGFSR=0x80000002, NSGFAR1=0x00000000,
-> NSGFAR0=0x24b00000,  NSGFSYNR0=0x00000004,  NSGFSYNR1=0x08840884,
-> NSGFSYNR2=0x00000000,  NSCR0=0x00280406
-> 
-> > > 
-> > > > > gst-launch-1.0 multifilesrc location=<input_file.h264> stop-index=0 !
-> > > > > parsebin ! v4l2h264dec ! video/x-raw ! videoconvert dither=none !
-> > > > > video/x-raw,format=I420 ! filesink location=<output_file.yuv>
-> > > > > 
-> > > > > gst-launch-1.0 multifilesrc location=<input_file.hevc> stop-index=0 !
-> > > > > parsebin ! v4l2h265dec ! video/x-raw ! videoconvert dither=none !
-> > > > > video/x-raw,format=I420 ! filesink location=<output_file.yuv>
-> > > > > 
-> > > > > gst-launch-1.0 filesrc location=<input_file.webm> stop-index=0 !
-> > > > > parsebin ! vp9dec ! video/x-raw ! videoconvert dither=none !
-> > > > > video/x-raw,format=I420 ! filesink location=<output_file.yuv>
-> > > > > 
-> > > > > Encoders validated with below commands:
-> > > > > gst-launch-1.0 -v filesrc location=<input_file.yuv> ! rawvideoparse
-> > > > > format=nv12 width=<width> height=<height> framerate=30/1 ! v4l2h264enc
-> > > > > capture-io-mode=4 output-io-mode=4 ! filesink sync=true
-> > > > > location=<output_file.h264>
-> > > > > 
-> > > > > gst-launch-1.0 -v filesrc location=<input_file.yuv> ! rawvideoparse
-> > > > > format=nv12 width=<width> height=<height> framerate=30/1 ! v4l2h265enc
-> > > > > capture-io-mode=4 output-io-mode=4 ! filesink sync=true
-> > > > > location=<output_file.hevc>
-> > > 
-> > > Regards,
-> > > Vikash
+> > Signed-off-by: Hongyang Zhao <hongyang.zhao@thundersoft.com>
+> > Reviewed-by: Roger Shimizu <rosh@debian.org>
+> > ---
+> >   arch/arm64/boot/dts/qcom/Makefile                  |    1 +
+> >   .../boot/dts/qcom/qcs6490-thundercomm-rubikpi3.dts | 1415 ++++++++++++++++++++
+> >   2 files changed, 1416 insertions(+)
 > > 
-> > 
-> > 
+> > diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
+> > index 6f34d5ed331c..2433b15754fe 100644
+> > --- a/arch/arm64/boot/dts/qcom/Makefile
+> > +++ b/arch/arm64/boot/dts/qcom/Makefile
+> > @@ -138,6 +138,7 @@ qcs6490-rb3gen2-industrial-mezzanine-dtbs := qcs6490-rb3gen2.dtb qcs6490-rb3gen2
+> >   
+> >   dtb-$(CONFIG_ARCH_QCOM)	+= qcs6490-rb3gen2-industrial-mezzanine.dtb
+> >   dtb-$(CONFIG_ARCH_QCOM)	+= qcs6490-rb3gen2-vision-mezzanine.dtb
+> > +dtb-$(CONFIG_ARCH_QCOM)	+= qcs6490-thundercomm-rubikpi3.dtb
+> >   dtb-$(CONFIG_ARCH_QCOM)	+= qcs8300-ride.dtb
+> >   dtb-$(CONFIG_ARCH_QCOM)	+= qcs8550-aim300-aiot.dtb
+> >   dtb-$(CONFIG_ARCH_QCOM)	+= qcs9100-ride.dtb
+> > diff --git a/arch/arm64/boot/dts/qcom/qcs6490-thundercomm-rubikpi3.dts b/arch/arm64/boot/dts/qcom/qcs6490-thundercomm-rubikpi3.dts
+> > new file mode 100644
+> > index 000000000000..4c9016992de3
+> > --- /dev/null
+> > +++ b/arch/arm64/boot/dts/qcom/qcs6490-thundercomm-rubikpi3.dts
+> > @@ -0,0 +1,1415 @@
+> 
+> [snip]
+> 
+> > +
+> > +&pcie0 {
+> > +	perst-gpios = <&tlmm 87 GPIO_ACTIVE_LOW>;
+> > +	wake-gpios = <&tlmm 89 GPIO_ACTIVE_HIGH>;
+> > +
+> > +	pinctrl-0 = <&pcie0_clkreq_n>,
+> > +		    <&pcie0_reset_n>,
+> > +		    <&pcie0_wake_n>;
+> > +	pinctrl-names = "default";
+> > +
+> > +	status = "okay";
+> > +};
+> > +
+> > +&pcie0_phy {
+> > +	vdda-phy-supply = <&vreg_l10c_0p88>;
+> > +	vdda-pll-supply = <&vreg_l6b_1p2>;
+> > +
+> > +	status = "okay";
+> > +};
+> > +
+> > +&pcie1 {
+> > +	/* Using traditional address mapping */
+> > +	reg = <0 0x01c08000 0 0x3000>,
+> > +	      <0 0x40000000 0 0xf1d>,
+> > +	      <0 0x40000f20 0 0xa8>,
+> > +	      <0 0x40001000 0 0x1000>,
+> > +	      <0 0x40100000 0 0x100000>;
+> > +
+> > +	ranges = <0x01000000 0x0 0x00000000 0x0 0x40200000 0x0 0x100000>,
+> > +		 <0x02000000 0x0 0x40300000 0x0 0x40300000 0x0 0x1fd00000>;
 > 
 
--- 
-With best wishes
-Dmitry
+This issue has been resolved (bba4562adc Revert "arm64: dts: qcom: sc7280: Increase config size to 256MB for ECAM feature").
+
+And I will remove this part of the modification, like this:
+
+&pcie1 {
+	perst-gpios = <&tlmm 2 GPIO_ACTIVE_LOW>;
+	wake-gpios = <&tlmm 3 GPIO_ACTIVE_LOW>;
+
+	pinctrl-0 = <&pcie1_clkreq_n>,
+		    <&pcie1_reset_n>,
+		    <&pcie1_wake_n>;
+	pinctrl-names = "default";
+
+	status = "okay";
+};
+
+> Thanks for attempting to fix the PCIe issues. With your patch series 
+> applied on top of linux-next, I'm still seeing PCIe issues:
+> 
+> [    0.380693] Internal error: synchronous external abort: 
+> 0000000096000010 [#1]  SMP
+> [    0.406491] Modules linked in:
+> [    0.406495] CPU: 5 UID: 0 PID: 106 Comm: kworker/u32:6 Tainted: G   M 
+>                 6.18.0-rc5-next-20251113 #13 NONE
+> [    0.406499] Tainted: [M]=MACHINE_CHECK
+> [    0.406500] Hardware name: thundercomm Thundercomm RUBIK Pi 
+> 3/Thundercomm RUBIK Pi 3, BIOS 2025.10-rc4 10/01/2025
+> [    0.406502] Workqueue: async async_run_entry_fn
+> [    0.406508] pstate: 40400005 (nZcv daif +PAN -UAO -TCO -DIT -SSBS 
+> BTYPE=--)
+> [    0.428362] pc : __pi_memset_generic+0x16c/0x188
+> [    0.428366] lr : dma_direct_alloc+0x19c/0x3d0
+> [    0.428370] sp : ffff8000810e3920
+> [    0.428371] x29: ffff8000810e3920 x28: ffff000080d0f810 x27: 
+> ffffba4c6196ec48
+> [    0.428373] x26: ffff000080d0f810 x25: ffffba4c607b31cc x24: 
+> 0000000000000000
+> [    0.428375] x23: ffff000080d0f810 x22: ffff000000c00000 x21: 
+> ffff000082858948
+> [    0.428376] x20: 0000000000001000 x19: fffffdffc0030000 x18: 
+> 000000000000000a
+> [    0.428378] x17: ffff0000823dae00 x16: 0000000000000000 x15: 
+> 0000000000000000
+> [    0.428380] x14: 00000000ffffffff x13: 0000000000000068 x12: 
+> 0000000000000100
+> [    0.449344] x11: 0000000000000000 x10: ffff0001fef99500 x9 : 
+> 0000000000000000
+> [    0.449345] x8 : ffff000000c00000 x7 : 0000000000000000 x6 : 
+> 000000000000003f
+> [    0.449347] x5 : 0000000000000040 x4 : 0000000000000000 x3 : 
+> 0000000000000004
+> [    0.449349] x2 : 0000000000000fc0 x1 : 0000000000000000 x0 : 
+> ffff000000c00000
+> [    0.449350] Call trace:
+> [    0.449351]  __pi_memset_generic+0x16c/0x188 (P)
+> [    0.449354]  dma_alloc_attrs+0x94/0x210
+> [    0.449357]  dmam_alloc_attrs+0x74/0xc0
+> [    0.469967]  dw_pcie_msi_host_init+0x100/0x300
+> [    0.469971]  dw_pcie_host_init+0x5e4/0x6d8
+> [    0.491913]  qcom_pcie_probe+0x5a8/0x838
+> [    0.491916]  platform_probe+0x64/0xc0
+> [    0.491919]  really_probe+0xc8/0x3f0
+> [    0.491921]  __driver_probe_device+0x88/0x170
+> [    0.491922]  driver_probe_device+0x48/0x130
+> [    0.491923]  __device_attach_driver+0xc4/0x190
+> [    0.491925]  bus_for_each_drv+0x90/0x100
+> [    0.491928]  __device_attach_async_helper+0xb8/0x120
+> [    0.491929]  async_run_entry_fn+0x3c/0x1e0
+> [    0.491931]  process_one_work+0x150/0x3a0
+> [    0.491934]  worker_thread+0x288/0x480
+> [    0.491936]  kthread+0x118/0x1e0
+> [    0.491938]  ret_from_fork+0x10/0x20
+> [    0.513092] Code: 91010108 54ffff4a 8b040108 cb050042 (d50b7428)
+> [    0.513094] ---[ end trace 0000000000000000 ]---
+> 
+> I can only get the device to boot by disabling both pcie0 and pcie1.
+> 
+
+I've tried several approaches, but the same call trace has never appeared;
+PCIe0 and PCIe1 work fine, and my boot parameters are as follows:
+
+linux /boot/vmlinuz-mainline root=UUID=131450ff-95bc-4791-b611-70855201b0cd rw console=ttyMSM0,115200n8 earlycon ignore_loglevel quiet splash vt.handoff=7
+
+> > +
+> > +
+> > +	perst-gpios = <&tlmm 2 GPIO_ACTIVE_LOW>;
+> > +	wake-gpios = <&tlmm 3 GPIO_ACTIVE_LOW>;
+> > +
+> > +	pinctrl-0 = <&pcie1_clkreq_n>,
+> > +		    <&pcie1_reset_n>,
+> > +		    <&pcie1_wake_n>;
+> > +	pinctrl-names = "default";
+> > +
+> > +	status = "okay";
+> > +};
+> > +
+> > +&pcie1_phy {
+> > +	vdda-phy-supply = <&vreg_l10c_0p88>;
+> > +	vdda-pll-supply = <&vreg_l6b_1p2>;
+> > +
+> > +	status = "okay";
+> > +};
+> > +
+> 
+> [snip]
+> 
+> > +
+> > +&remoteproc_adsp {
+> > +	firmware-name = "qcom/qcs6490/adsp.mbn";
+> > +
+> > +	status = "okay";
+> > +};
+> 
+> I'm fairly sure that this is the wrong ADSP firmware. With the firmware 
+> in linux-firmware, I'm seeing charger pd crashes and the ADSP constantly 
+> restarting. Using the Radxa Dragon Q6A ADSP firmware which disables the 
+> charging feature in the firmware works way better and does not result in 
+> crashes.
+> 
+
+Sorry, I didn't use linux-firmware for verification before.
+Using firmware customized for RUBIK Pi 3 has solved this problem,
+and I will submit this firmware to the linux-firmware repository
+with the following modifications:
+
+&remoteproc_adsp {
+	firmware-name = "qcom/qcs6490/thundercomm/rubikpi3/adsp.mbn";
+
+	status = "okay";
+};
+
+> > +
+> > +&remoteproc_cdsp {
+> > +	firmware-name = "qcom/qcs6490/cdsp.mbn";
+> > +
+> > +	status = "okay";
+> > +};
+> > +
+
+> > [snip]
+
+---
+Thank you for the review!
+Hongyang
 
