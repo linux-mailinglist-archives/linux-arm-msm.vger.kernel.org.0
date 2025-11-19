@@ -1,110 +1,147 @@
-Return-Path: <linux-arm-msm+bounces-82475-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-82476-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [142.0.200.124])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6A15CC6E001
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Nov 2025 11:33:38 +0100 (CET)
+Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [IPv6:2605:f480:58:1:0:1994:3:14])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1B0BDC6E025
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Nov 2025 11:36:57 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id D05804F717E
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Nov 2025 10:25:19 +0000 (UTC)
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 5DE794F85A6
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Nov 2025 10:27:19 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D0471299959;
-	Wed, 19 Nov 2025 10:25:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4CC3B3358B5;
+	Wed, 19 Nov 2025 10:27:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="Fof5NDdj";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="XEsZhNAv"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="MiU7xOEM"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.20])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 485D6328B7F
-	for <linux-arm-msm@vger.kernel.org>; Wed, 19 Nov 2025 10:25:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 707CD3446B8;
+	Wed, 19 Nov 2025 10:27:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.20
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763547911; cv=none; b=aP31rRLFYCgmWmougHqJ8sJnfEe5ViYk6m789w4YlWbPElZk737WaeoeUAhpftQ7EXkwRdLY4n3K6VmdF2THu/M/KogYhMDb5rNokpwcfR/13UMQyUU2dzflVfV1Jai6y4eBsdX7OG4j2stWklZ0NwUqAqToyBfv8w6rOITP0KI=
+	t=1763548037; cv=none; b=dRSeZ8LDNfgUew98rmwGSBUhsATKcvL0qflJm2YvRMbUc5pcDL8czuy5DJkHChOslbWl430nP/cxuospn/LS4F+uUGFJ81E6wRIrgHqxDPkXoGQt6+49qAe+Z0MDQQS3wHeMgc1Q+fENHeYTfCWJIncHi7WcaF4GM7LAv+QbKJE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763547911; c=relaxed/simple;
-	bh=ym5N+NqN9gnH0rLWboUPWanOhy/OGcrXxbUH557pk40=;
+	s=arc-20240116; t=1763548037; c=relaxed/simple;
+	bh=jmw9bhTP6DqEEo8SaI642JH1s3dFqQGzetmEw8f3+f0=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=CP46hgR7g+750z8P2rL4N3MjrAjZT3In13B+gfxPJdAnXNVsbcmWnaKiN7MqkOUHrwm9N0CgLZ86oi9B/52OK4c7Nn35U0fS00h0hjOFhfhs3XQ6sEpz4iDeIJvHwi8DJdFHzsbaLHb+msJQjYdABjyk2gUIR0bsqGh2v1Pl8uw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=Fof5NDdj; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=XEsZhNAv; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 5AJ2v8PZ3165141
-	for <linux-arm-msm@vger.kernel.org>; Wed, 19 Nov 2025 10:25:09 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to; s=qcppdkim1; bh=zOYGYPzsas4Ye8z2cQQ9l8Pj
-	B0eBVtk3ZyKewT1i9Bs=; b=Fof5NDdjJ0KAkI/R/4P9SmQR0qc0lEVETgqcjn5c
-	nV8xRAFzJHur+rao4pN9SCfY9RV7TuyXdSydgfSi+ToQjUvvKGVLBOBWhr+r8MVw
-	MKZZ+HkxT607IBE+1vEgKckcRNFZunOFlG0ViBjfuEiWeH/FeKiXUwED7Bz86CpC
-	njtpRHPwcQ+/x0pXCyGQgtDwodn1fXIixp3yxhrCCdUsxUCY75SO0/PNSR1crrzt
-	d7SVpxA/dWEhBF84/FTcIwU3WuorXBEd84JWiOiFAkyXY9dl7yMPjcoj9ewu42UY
-	r+uR+o+1pXbK43Afo9XewEcAkVKa3FyFjvQ/6o/2svuBXg==
-Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com [209.85.160.200])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4agvqgttnk-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Wed, 19 Nov 2025 10:25:09 +0000 (GMT)
-Received: by mail-qt1-f200.google.com with SMTP id d75a77b69052e-4edb6a94873so145976301cf.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 19 Nov 2025 02:25:09 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1763547908; x=1764152708; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=zOYGYPzsas4Ye8z2cQQ9l8PjB0eBVtk3ZyKewT1i9Bs=;
-        b=XEsZhNAvhkB7O04DKKtqiuzig5t/xjRTrlroi7ybas7vG2y8dPCar6ji0/Svml/NjE
-         zWRbDpSuwbXsFG3tgPX33+AYyC1xbDz6vpTY8peGvoXJePfmgBVC+7ZdBFbwRjAndwue
-         tlFRVFkHwuRXKLDXFQPW5n6uty6l00w90OVGIDEwpHYpoDP4bVM8wapNQOWzi6VOF04C
-         CGhB/tjffcHtz1/Eoha+u7rR0UragoQt3o4Dnr95Szxn2LyrGrJ/4rrm0z7tRxH7Gcsu
-         P+2tMEbPxYdRilpAb9WhNIcZShWlq6mnYa9ZUaaP5QsTKd5jchH1E1q7RN1XHq+ZL916
-         XGRw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1763547908; x=1764152708;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=zOYGYPzsas4Ye8z2cQQ9l8PjB0eBVtk3ZyKewT1i9Bs=;
-        b=MQatt6+A08H8r986rFjKXR1Ig5p+Y6D7ZuCrB9ySQzHCbeNYZfJ4azwqs3JUVzDiv7
-         etrkN5SSnhMFiySg/bjr0O6aHLeVL2Ej9k+i99kncasZb04QasZ9RtgfBPbRp0VihWdP
-         mm5iytMStOdnIcJmq9CdUA7MOlMO5lQ2jckb/7b6Uib8uJNeOwlKGFngOkrIp7fCZwzP
-         Ih4nyhK2Y7DgMFJu59te2wTH4EK4GXBJjm0pBWjaYdXzTCI/4fVeST6CL8fi+raEmI4x
-         7g4hnPpxvpmwBDYAFjcXkj5efdLX0eEW91529HL5mfTfvi8F4C6IzUANy4e5sulxhc3o
-         symw==
-X-Forwarded-Encrypted: i=1; AJvYcCUzpFi7wxPE2Gwj8ZE+oghhN26qIDRI4CQfOndHxjOAQQ2mtU2utZcNNhDwrcjN1ERd9rp5RQJAwDksT+JN@vger.kernel.org
-X-Gm-Message-State: AOJu0Yzl8tg5rIPeh1YoDqnpV8ObuHK2SNcj9KgsxA4IZjbQgEQIF7+U
-	GZ2tyDRmnM0Wa6coS9IIDYnnWZiDU5hRr3TPPjH8hiCbnFjcmRbh0iGJXbfsaqRuDk500he1HMe
-	Ub/yp+6j4IlpAVQV1D4oN0QgGq056fsjWarEDkslYZC8j99gk2J4VP8Gc/HohxS3CKd6Enpj9jh
-	QI
-X-Gm-Gg: ASbGncvJ+30uin/KA5yjA4IlgWf9HNj/WcoJtRQA7OapzjJgVEfeGhNTFL6kQoWEehp
-	d15Qc4yRZTw5GrhHRiGFs09IHlO7OFlpDJ6h6cBhoDds1s51J/2xM8xP4XGZXKnfIuwMum45MY5
-	2z1yH4XCTsN57kLtFElLHbHo059AbYcW6q6zfocbvaC8mpDP7kTmfKAB+VsfqO+bdD4Ut/oyDTj
-	RQam5SfDcuXEWaVN0dL4eqFG9PRSazG5/5nmS1kVfvLKWdr4xTWeD5eBdrDSwOVdzfo4gNuSwfS
-	tMxj8Ifn/QnMp35Fd2m7mVSAavF6v7IVBHaPV4V5/Zue2mdNTYreGxM60fSLdt5g4Jq2jReRTKA
-	iAwuXV4WYBPGqiMYDo85b+K5ob8V9SW0LW6xqBs7E8QskPVlKKriXS13ckYk5l5ZHnLEbUJAmiN
-	bYRh7b0T8S6GLx36eCf1g80l0=
-X-Received: by 2002:a05:622a:1787:b0:4ed:dcf0:6c42 with SMTP id d75a77b69052e-4edf20ed317mr240567801cf.40.1763547908091;
-        Wed, 19 Nov 2025 02:25:08 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGMvBRUVJt9SF9A31IZ5DavkEhnPNzijPYUPOqFxcOXgDWtfwRwMxFg48oSC74HCwIeYqiIbA==
-X-Received: by 2002:a05:622a:1787:b0:4ed:dcf0:6c42 with SMTP id d75a77b69052e-4edf20ed317mr240567541cf.40.1763547907688;
-        Wed, 19 Nov 2025 02:25:07 -0800 (PST)
-Received: from umbar.lan (2001-14ba-a0c3-3a00-264b-feff-fe8b-be8a.rev.dnainternet.fi. [2001:14ba:a0c3:3a00:264b:feff:fe8b:be8a])
-        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-37b9ce1abf9sm38262851fa.19.2025.11.19.02.25.06
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 19 Nov 2025 02:25:06 -0800 (PST)
-Date: Wed, 19 Nov 2025 12:25:04 +0200
-From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-To: Sudarshan Shetty <tessolveupstream@gmail.com>
-Cc: andersson@kernel.org, konradybcio@kernel.org, robh@kernel.org,
-        krzk+dt@kernel.org, conor+dt@kernel.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v7 2/2] arm64: dts: qcom: talos-evk: Add support for
- QCS615 talos evk board
-Message-ID: <ug4n5dpsg5v5jwhwmjaktvydhtfx6gagoum6lul2a27h44xexz@uvdu6ma42wei>
-References: <20251118130814.3554333-1-tessolveupstream@gmail.com>
- <20251118130814.3554333-3-tessolveupstream@gmail.com>
+	 Content-Type:Content-Disposition:In-Reply-To; b=ZDEndxOQsGURyNyw7HJ+3V+/jE0nKso+pQgMGxupM6YJ2sUFd8ByT5zUdqRku+eLZ/bVdynuKs7sPZ5pqALwV5kMjzwfg5VTY37HYidePcJ+UWS5jym+sVUxabI3v10TTkJHSTuvzO/b0fEfj/1JAKGuzcuYStaCZWlv5FiVTVw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=pass smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=MiU7xOEM; arc=none smtp.client-ip=198.175.65.20
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.intel.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1763548035; x=1795084035;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=jmw9bhTP6DqEEo8SaI642JH1s3dFqQGzetmEw8f3+f0=;
+  b=MiU7xOEMrvpSHRKoOGFoxjvp2olCkMHYcgyVqGCXYhxtUSjKS4HqPHZY
+   jwn1jZ20MYSLYgPZepTcbeT44WCjzhtiyp+/af2F23uBo2SxPny1E+O0E
+   i35l1wp5ztEr/UgnTalJgnFm37qhWHVpZKg8LSXY/NLmt0PE9WL14Y8tO
+   k3h/zOCwTRmKYN7LyemrWXS3V9sFi2e4KayP+OT7P6pLnL9tii32X9EIR
+   Lpgv24Cc1EEW8J6mJRkCTzvjuPiiwhLzT1y6FWYPeBcXX3xztfuWgYKGf
+   GVLiIWrx11wXkoB91Fm9V6NPb59zQvI7HbI0Bo9UlmO1kmJt9DFQYly3E
+   w==;
+X-CSE-ConnectionGUID: 2bBlveQeQxCd7RgNC0YNsw==
+X-CSE-MsgGUID: njPqeXaCSmC15wNSdDdbLw==
+X-IronPort-AV: E=McAfee;i="6800,10657,11617"; a="65286211"
+X-IronPort-AV: E=Sophos;i="6.19,315,1754982000"; 
+   d="scan'208";a="65286211"
+Received: from fmviesa005.fm.intel.com ([10.60.135.145])
+  by orvoesa112.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 19 Nov 2025 02:27:12 -0800
+X-CSE-ConnectionGUID: BabbyDhyQAOE+ZtEsTT7/g==
+X-CSE-MsgGUID: bIH3DAOlTZmt1WuzGTp/dQ==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.19,315,1754982000"; 
+   d="scan'208";a="195322765"
+Received: from rvuia-mobl.ger.corp.intel.com (HELO localhost) ([10.245.245.245])
+  by fmviesa005-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 19 Nov 2025 02:26:53 -0800
+Date: Wed, 19 Nov 2025 12:26:51 +0200
+From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+To: Petr Mladek <pmladek@suse.com>
+Cc: Corey Minyard <corey@minyard.net>,
+	Christian =?iso-8859-1?Q?K=F6nig?= <christian.koenig@amd.com>,
+	"Dr. David Alan Gilbert" <linux@treblig.org>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Rob Clark <robin.clark@oss.qualcomm.com>,
+	Matthew Brost <matthew.brost@intel.com>,
+	Ulf Hansson <ulf.hansson@linaro.org>,
+	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
+	Vitaly Lifshits <vitaly.lifshits@intel.com>,
+	Manivannan Sadhasivam <mani@kernel.org>,
+	Niklas Cassel <cassel@kernel.org>, Calvin Owens <calvin@wbinvd.org>,
+	Vadim Fedorenko <vadim.fedorenko@linux.dev>,
+	Sagi Maimon <maimon.sagi@gmail.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Karan Tilak Kumar <kartilak@cisco.com>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>,
+	Casey Schaufler <casey@schaufler-ca.com>,
+	Steven Rostedt <rostedt@goodmis.org>,
+	Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>,
+	Max Kellermann <max.kellermann@ionos.com>,
+	linux-doc@vger.kernel.org, linux-kernel@vger.kernel.org,
+	openipmi-developer@lists.sourceforge.net,
+	linux-media@vger.kernel.org, dri-devel@lists.freedesktop.org,
+	linaro-mm-sig@lists.linaro.org, amd-gfx@lists.freedesktop.org,
+	linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
+	intel-xe@lists.freedesktop.org, linux-mmc@vger.kernel.org,
+	netdev@vger.kernel.org, intel-wired-lan@lists.osuosl.org,
+	linux-pci@vger.kernel.org, linux-s390@vger.kernel.org,
+	linux-scsi@vger.kernel.org, linux-staging@lists.linux.dev,
+	ceph-devel@vger.kernel.org, linux-trace-kernel@vger.kernel.org,
+	Rasmus Villemoes <linux@rasmusvillemoes.dk>,
+	Sergey Senozhatsky <senozhatsky@chromium.org>,
+	Jonathan Corbet <corbet@lwn.net>,
+	Sumit Semwal <sumit.semwal@linaro.org>,
+	Gustavo Padovan <gustavo@padovan.org>,
+	David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+	Maxime Ripard <mripard@kernel.org>,
+	Dmitry Baryshkov <lumag@kernel.org>,
+	Abhinav Kumar <abhinav.kumar@linux.dev>,
+	Jessica Zhang <jesszhan0024@gmail.com>, Sean Paul <sean@poorly.run>,
+	Marijn Suijten <marijn.suijten@somainline.org>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	Lucas De Marchi <lucas.demarchi@intel.com>,
+	Thomas =?iso-8859-1?Q?Hellstr=F6m?= <thomas.hellstrom@linux.intel.com>,
+	Rodrigo Vivi <rodrigo.vivi@intel.com>,
+	Vladimir Oltean <olteanv@gmail.com>, Andrew Lunn <andrew@lunn.ch>,
+	"David S. Miller" <davem@davemloft.net>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Przemek Kitszel <przemyslaw.kitszel@intel.com>,
+	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
+	Kishon Vijay Abraham I <kishon@kernel.org>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Rodolfo Giometti <giometti@enneenne.com>,
+	Jonathan Lemon <jonathan.lemon@gmail.com>,
+	Richard Cochran <richardcochran@gmail.com>,
+	Stefan Haberland <sth@linux.ibm.com>,
+	Jan Hoeppner <hoeppner@linux.ibm.com>,
+	Heiko Carstens <hca@linux.ibm.com>,
+	Vasily Gorbik <gor@linux.ibm.com>,
+	Alexander Gordeev <agordeev@linux.ibm.com>,
+	Christian Borntraeger <borntraeger@linux.ibm.com>,
+	Sven Schnelle <svens@linux.ibm.com>,
+	Satish Kharat <satishkh@cisco.com>,
+	Sesidhar Baddela <sebaddel@cisco.com>,
+	"James E.J. Bottomley" <James.Bottomley@hansenpartnership.com>,
+	Mauro Carvalho Chehab <mchehab@kernel.org>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	Xiubo Li <xiubli@redhat.com>, Ilya Dryomov <idryomov@gmail.com>,
+	Masami Hiramatsu <mhiramat@kernel.org>,
+	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: Re: [PATCH v3 19/21] scsi: fnic: Switch to use %ptSp
+Message-ID: <aR2bazZn8m4EMHdW@smile.fi.intel.com>
+References: <20251113150217.3030010-1-andriy.shevchenko@linux.intel.com>
+ <20251113150217.3030010-20-andriy.shevchenko@linux.intel.com>
+ <aR2XAYWTEgMZu_Mx@pathway.suse.cz>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -113,72 +150,133 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20251118130814.3554333-3-tessolveupstream@gmail.com>
-X-Proofpoint-ORIG-GUID: x7OsyuCOB-VnH7E4WhDsXA3fiWuvs3BV
-X-Proofpoint-GUID: x7OsyuCOB-VnH7E4WhDsXA3fiWuvs3BV
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMTE5MDA4MSBTYWx0ZWRfX0ObGd/MUW3+K
- VYPdzbc40GIkz8Yn5M9OQ0DGqbyaLe4QoEgc+1kl4VNEGf+7sWwg1kLn4RNVhl7vfcjpPdErxGn
- 0smVU8wC94bsDVlqliatSRFXtIOq8xfW/ha3v1ZiIrGW+PFUAciv63xuViycrZppvI70OrCtdBA
- nJjtnGk2/vXaGMJgcayIQyRVQCV4Upmh+GEiom2I7KEXmluC0s9nANSve4XWMkS54Pw/0bB/NF6
- vCUj+y1Qe5pXhH9WwwfhiIH2ofJFyC+AOuSdAvKWHdVCnyQjlaNAq3uSMYORQM2g1P9SGnM64ht
- 8N2uQfa3Oepfh0o4Kv0BTlmE+515vNBCYWcvbD+mKrPX+xWOBVtXCh5hnPlXm7r5TJ6SW/CO4VG
- prGFK80PyK3caFl6if8+e1U3VwqyNg==
-X-Authority-Analysis: v=2.4 cv=LMJrgZW9 c=1 sm=1 tr=0 ts=691d9b05 cx=c_pps
- a=JbAStetqSzwMeJznSMzCyw==:117 a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10
- a=6UeiqGixMTsA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=pGLkceISAAAA:8 a=6q-ckXwDscysDfU1ynwA:9 a=CjuIK1q_8ugA:10
- a=uxP6HrT_eTzRwkO_Te1X:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
- definitions=2025-11-19_02,2025-11-18_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0 clxscore=1015 lowpriorityscore=0 spamscore=0 suspectscore=0
- bulkscore=0 adultscore=0 priorityscore=1501 malwarescore=0 impostorscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2510240001 definitions=main-2511190081
+In-Reply-To: <aR2XAYWTEgMZu_Mx@pathway.suse.cz>
+Organization: Intel Finland Oy - BIC 0357606-4 - c/o Alberga Business Park, 6
+ krs, Bertel Jungin Aukio 5, 02600 Espoo
 
-On Tue, Nov 18, 2025 at 06:38:14PM +0530, Sudarshan Shetty wrote:
-> Add the device tree for the QCS615-based Talos EVK platform. The
-> platform is composed of a System-on-Module following the SMARC
-> standard, and a Carrier Board.
+On Wed, Nov 19, 2025 at 11:08:01AM +0100, Petr Mladek wrote:
+> On Thu 2025-11-13 15:32:33, Andy Shevchenko wrote:
+> > Use %ptSp instead of open coded variants to print content of
+> > struct timespec64 in human readable format.
 > 
-> The Carrier Board supports several display configurations, HDMI and
-> LVDS. Both configurations use the same base hardware, with the display
-> selection controlled by a DIP switch.
+> I was about to commit the changes into printk/linux.git and
+> found a mistake during the final double check, see below.
 > 
-> To avoid duplication, use an include file, talos-evk-cb.dtsi, which
-> defines the interfaces and peripherals common to both display
-> variants. Two additional DTs (e.g. talos-evk and talos-evk-lvds)
-> can describe the selected display configuration.
+> > diff --git a/drivers/scsi/fnic/fnic_trace.c b/drivers/scsi/fnic/fnic_trace.c
+> > index cdc6b12b1ec2..0a849a195a8e 100644
+> > --- a/drivers/scsi/fnic/fnic_trace.c
+> > +++ b/drivers/scsi/fnic/fnic_trace.c
+> > @@ -215,30 +213,26 @@ int fnic_get_stats_data(struct stats_debug_info *debug,
+> >  {
+> >  	int len = 0;
+> >  	int buf_size = debug->buf_size;
+> > -	struct timespec64 val1, val2;
+> > +	struct timespec64 val, val1, val2;
+> >  	int i = 0;
+> >  
+> > -	ktime_get_real_ts64(&val1);
+> > +	ktime_get_real_ts64(&val);
+> >  	len = scnprintf(debug->debug_buffer + len, buf_size - len,
+> >  		"------------------------------------------\n"
+> >  		 "\t\tTime\n"
+> >  		"------------------------------------------\n");
+> >  
+> > +	val1 = timespec64_sub(val, stats->stats_timestamps.last_reset_time);
+> > +	val2 = timespec64_sub(val, stats->stats_timestamps.last_read_time);
+> >  	len += scnprintf(debug->debug_buffer + len, buf_size - len,
+> > -		"Current time :          [%lld:%ld]\n"
+> > -		"Last stats reset time:  [%lld:%09ld]\n"
+> > -		"Last stats read time:   [%lld:%ld]\n"
+> > -		"delta since last reset: [%lld:%ld]\n"
+> > -		"delta since last read:  [%lld:%ld]\n",
+> > -	(s64)val1.tv_sec, val1.tv_nsec,
+> > -	(s64)stats->stats_timestamps.last_reset_time.tv_sec,
+> > -	stats->stats_timestamps.last_reset_time.tv_nsec,
+> > -	(s64)stats->stats_timestamps.last_read_time.tv_sec,
+> > -	stats->stats_timestamps.last_read_time.tv_nsec,
+> > -	(s64)timespec64_sub(val1, stats->stats_timestamps.last_reset_time).tv_sec,
+> > -	timespec64_sub(val1, stats->stats_timestamps.last_reset_time).tv_nsec,
+> > -	(s64)timespec64_sub(val1, stats->stats_timestamps.last_read_time).tv_sec,
+> > -	timespec64_sub(val1, stats->stats_timestamps.last_read_time).tv_nsec);
+> > +			 "Current time :          [%ptSp]\n"
+> > +			 "Last stats reset time:  [%ptSp]\n"
+> > +			 "Last stats read time:   [%ptSp]\n"
+> > +			 "delta since last reset: [%ptSp]\n"
+> > +			 "delta since last read:  [%ptSp]\n",
 > 
-> The initial device tree includes support for:
-> - CPU and memory
-> - UART
-> - GPIOs
-> - Regulators
-> - PMIC
-> - Early console
-> - AT24MAC602 EEPROM
-> - MCP2515 SPI to CAN
-> - ADV7535 DSI-to-HDMI bridge
-> - DisplayPort interface
+> Both delta times are printed at the end.
+> 
+> > +			 &val,
+> > +			 &stats->stats_timestamps.last_reset_time, &val1,
+> > +			 &stats->stats_timestamps.last_read_time, &val2);
+> 
+> I think that this should be:
+> 
+> 			 &stats->stats_timestamps.last_reset_time,
+> 			 &stats->stats_timestamps.last_read_time,
+> 			 &val1, &val2);
+> 
+> >  	stats->stats_timestamps.last_read_time = val1;
+> 
+> The original code stored the current time in "val1". This should be:
+> 
+> 	stats->stats_timestamps.last_read_time = val;
+> 
+> > @@ -416,8 +410,8 @@ int fnic_get_stats_data(struct stats_debug_info *debug,
+> >  	jiffies_to_timespec64(stats->misc_stats.last_ack_time, &val2);
+> 
+> Just for record. Another values are stored into @val1 and @val2 at
+> this point.
+> 
+> >  	len += scnprintf(debug->debug_buffer + len, buf_size - len,
+> > -		  "Last ISR time: %llu (%8llu.%09lu)\n"
+> > -		  "Last ACK time: %llu (%8llu.%09lu)\n"
+> > +		  "Last ISR time: %llu (%ptSp)\n"
+> > +		  "Last ACK time: %llu (%ptSp)\n"
+> >  		  "Max ISR jiffies: %llu\n"
+> >  		  "Max ISR time (ms) (0 denotes < 1 ms): %llu\n"
+> >  		  "Corr. work done: %llu\n"
+> > @@ -437,10 +431,8 @@ int fnic_get_stats_data(struct stats_debug_info *debug,
+> >  		  "Number of rport not ready: %lld\n"
+> >  		 "Number of receive frame errors: %lld\n"
+> >  		 "Port speed (in Mbps): %lld\n",
+> > -		  (u64)stats->misc_stats.last_isr_time,
+> > -		  (s64)val1.tv_sec, val1.tv_nsec,
+> > -		  (u64)stats->misc_stats.last_ack_time,
+> > -		  (s64)val2.tv_sec, val2.tv_nsec,
+> > +		  (u64)stats->misc_stats.last_isr_time, &val1,
+> > +		  (u64)stats->misc_stats.last_ack_time, &val2,
+> 
+> So, this is correct!
+> 
+> >  		  (u64)atomic64_read(&stats->misc_stats.max_isr_jiffies),
+> >  		  (u64)atomic64_read(&stats->misc_stats.max_isr_time_ms),
+> >  		  (u64)atomic64_read(&stats->misc_stats.corr_work_done),
+> 
+> 
+> Now, I think that there is no need to resend the entire huge patchset.
+> 
+> I could either fix this when comitting or commit the rest and
+> you could send only this patch for review.
 
-You got the question for v6, responded there but didn't update commit
-message. What is not enabled here? E.g. why isn't venus enabled?
+Thank you for the thoroughly done review, I changed that patch between the
+versions and the problem is that for printf() specifiers (extensions) we do not
+have an automatic type checking. We starve for a GCC plugin for that, yeah...
 
-> Signed-off-by: Sudarshan Shetty <tessolveupstream@gmail.com>
-> ---
->  arch/arm64/boot/dts/qcom/Makefile           |   1 +
->  arch/arm64/boot/dts/qcom/talos-evk-cb.dtsi  |  56 +++
->  arch/arm64/boot/dts/qcom/talos-evk-som.dtsi | 447 ++++++++++++++++++++
->  arch/arm64/boot/dts/qcom/talos-evk.dts      |  94 ++++
->  4 files changed, 598 insertions(+)
->  create mode 100644 arch/arm64/boot/dts/qcom/talos-evk-cb.dtsi
->  create mode 100644 arch/arm64/boot/dts/qcom/talos-evk-som.dtsi
->  create mode 100644 arch/arm64/boot/dts/qcom/talos-evk.dts
-> 
+In any case, if you fold your changes in, I will appreciate that!
+Otherwise it's also fine with me to send a patch separately later on.
+
+> PS: All other patches look good. Well, nobody acked 7th patch yet.
+>     But I think that the change is pretty straightforward and
+>     we could do it even without an ack.
+
+This is my understanding as well. It changes the output, but that output is
+debug anyway. So I don't expect breakage of anything we have an obligation
+to keep working.
 
 -- 
-With best wishes
-Dmitry
+With Best Regards,
+Andy Shevchenko
+
+
 
