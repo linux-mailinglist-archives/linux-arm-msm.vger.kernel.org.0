@@ -1,133 +1,163 @@
-Return-Path: <linux-arm-msm+bounces-82684-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-82682-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ams.mirrors.kernel.org (ams.mirrors.kernel.org [IPv6:2a01:60a::1994:3:14])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0F4E9C744DE
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Nov 2025 14:42:22 +0100 (CET)
+Received: from ams.mirrors.kernel.org (ams.mirrors.kernel.org [213.196.21.55])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1ED06C7448D
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Nov 2025 14:37:58 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ams.mirrors.kernel.org (Postfix) with ESMTPS id 6016235ED13
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Nov 2025 13:35:26 +0000 (UTC)
+	by ams.mirrors.kernel.org (Postfix) with ESMTPS id 4354B355633
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Nov 2025 13:30:58 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1130A33ADA6;
-	Thu, 20 Nov 2025 13:35:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9B5A533A006;
+	Thu, 20 Nov 2025 13:30:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="iqEQugTO"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="DnClM+ww"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f54.google.com (mail-wr1-f54.google.com [209.85.221.54])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D74C930DD35
-	for <linux-arm-msm@vger.kernel.org>; Thu, 20 Nov 2025 13:35:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 709A0258EFC;
+	Thu, 20 Nov 2025 13:30:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763645722; cv=none; b=ixr33EfE0qUQaTdFYzpi+vMea18D/zlS1eAzYJLRasnqehPJXL5GeGb7vGCN4mSJlTuO6Nv1mKJQk0OTFSlWxr3Ld39fsbYGKDU2pGLb9Xl5zq+xZySRuujdNvZyHGxrbOj2xaEIvLvtATlmmDJ4N848AntmtroaHriMk1ezo/M=
+	t=1763645455; cv=none; b=Q9hFlakf8nI5g9Ckznqk6I1MWBSausHeWvHnMXMImYkhvry+WXB3YtMtl+iuYHhvTA749BB0VojKyxU1QpB0Gj83iP5M7zcqEZYU6hTg23F6ap06izuMcpK8Qp/o4A7B+wYW45Zgz9G99Us1j4dxgOMx8XgthtwnKQOh/WHSb00=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763645722; c=relaxed/simple;
-	bh=G8yIaxqlMSXlJp1hZsvZsMSWwE2jQYO0tbip8q7uWvo=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=iKuyE9XeSmEhFfyq5epfQZe58ED/lNzHK+fbJQb2ol/5OXyKLYHz5bJ9S5mYqeFTijL7MFcHDwNcX8olSslYO5qaJRovQfEJH4jmT955bkDzkK8iV7aLiV2+Wb6gWTadQoJpXEqRtIQJHWyH1nQ/arTHwSJB1Uw6Keie4hSlPak=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=iqEQugTO; arc=none smtp.client-ip=209.85.221.54
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-wr1-f54.google.com with SMTP id ffacd0b85a97d-42b3c965df5so513142f8f.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Nov 2025 05:35:19 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1763645718; x=1764250518; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=ivhCsjIpN+rKmvMKFUskFMdd2JcJlk5CTRXG/6h4Fp8=;
-        b=iqEQugTOred8HLJgcAfQm7em4J/hXa9o0ZJZ/EmS5wekyWk2Ndes/ez0hvJe4J8s4a
-         A4FpdGZ/INvrVktFiPUyEsbSZA02311oCI712gaqd8N9aE7fV0boJ66f2c0D4J3HvB0o
-         mDZFk1yB2I/9nOUmaeQLgukkeXatazFz/dE9xyE8kstyut1yVRfbh0p0Y8+BCjfxyz/x
-         Y9TGppKypP4YI5D3v0foPmwbLaNJwe/Y2Fvu8QTCp8Z9t3gI90uEudf8qSqi9S5ilqNN
-         c1bxVGmYzQHUxJfVF/YNNe9jFTDaRfF28wSUIM+fFfjxS5JAzOmpNl3HR90WdA9w9JnX
-         QRVw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1763645718; x=1764250518;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=ivhCsjIpN+rKmvMKFUskFMdd2JcJlk5CTRXG/6h4Fp8=;
-        b=JhZl3mo3fpdNOz+Afz3EVdesZfdJmtx3XVPDVgzrNtsMI14kWv6I386GMnHpwZauXw
-         ffNL9RM4RB4aocdM14fyWzwE3FisXdbpLFxwax0LHxBsFivCinUg/Z5etnRqEZGhAyBT
-         u2xLQByDlpuTL2rtyRXyb1WbDa57hQnZoybJRj8KRepWpm44xI9EwXQT3RF/coSAFYfU
-         hoJbEYfM+QysDc6i/uDRY2+mlShquyaT/w9ptvW4xpLZKQGB5OL5jSNE25SPF65DG+FL
-         wf3D7NcnSbRuxXCS2I8zlwBUH6gTDNXZ89YidGmpzTeWrxuMwMjK+mi/keZWUeda4nfE
-         pYvA==
-X-Forwarded-Encrypted: i=1; AJvYcCVQcHcIDiQ6y64niehkZKbZueoh7i22FX1dWJBNEDVpZg6aWxKzyMAtev96/y88nX4SOuNyuLi9BHb04TuC@vger.kernel.org
-X-Gm-Message-State: AOJu0YzwnKiqG0Zv61Tqz92F2KihCA0Sxbn9sObfhLpnGInNC86ICxr0
-	N7exwvMt3p+5Uw0gIJMRdZU9PMQx91RIAjzwrsO7zY23Id3doEO6m0p8
-X-Gm-Gg: ASbGnculIokVmk1Wif7N0ZVWz6h2hi8ds6D2F1dxSZd/GRUjn58v8AOs/zS8vqze+ky
-	Pwntd+L1F1gNt1qQ4cQJ77JasNgfmK8kpTJ/K62Oi5Ebq4QG4JiJH2mS5lqTSAxMF5PNsFiU/Jt
-	vY4j11t9LDKtbjaxsr4u15P8C+b5gkciDLgN2GfFMK6Rs6kYfh/cqg87nZkwcChQoNvJfX7uoGU
-	pTs12h/EbRZXsuTrsbBiNm8uMMLcIUa0QAk77yn+KE3hnv7YzYLSZ5lAz8lJ1Z17FGMNHVsZuRG
-	9iEdixPPWIYZcyudk0bjnr2dgMYWeLxhub2scBTlEzDj5D5PWn/PH6FaIc7AHoTLnQVtj29xQMu
-	eUMhry1ppuCssE45QZInTHEYS9OFU5GbgZIjALVnY3CHjVA7Ow1wx2VyEegOWUbrik98n9DYSkF
-	p1H9FbTnDypQLmNA6pmhkxNMJdHuWiuvl/bX0J3h+z
-X-Google-Smtp-Source: AGHT+IEMS03klaZwAAJMz9PSOT0oih6Mf5sEnZyDXJENW4M3aPZN+qxGbLvqwcRRah/8mB+rsAtzqQ==
-X-Received: by 2002:a05:6000:420a:b0:42b:389a:b49 with SMTP id ffacd0b85a97d-42cb9a60870mr3180090f8f.28.1763645717940;
-        Thu, 20 Nov 2025 05:35:17 -0800 (PST)
-Received: from Ansuel-XPS24 (93-34-90-37.ip49.fastwebnet.it. [93.34.90.37])
-        by smtp.googlemail.com with ESMTPSA id ffacd0b85a97d-42cb7fd8c47sm5724685f8f.38.2025.11.20.05.35.16
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 20 Nov 2025 05:35:17 -0800 (PST)
-From: Christian Marangi <ansuelsmth@gmail.com>
-To: Ilia Lin <ilia.lin@kernel.org>,
-	"Rafael J. Wysocki" <rafael@kernel.org>,
-	Viresh Kumar <viresh.kumar@linaro.org>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Christian Marangi <ansuelsmth@gmail.com>,
-	linux-pm@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org,
+	s=arc-20240116; t=1763645455; c=relaxed/simple;
+	bh=Givm/hktJ8XSzaSQNKnhwSeeHNx1dcVC53O89fZfg6Q=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=CipBTk91B2frwhn+1psu1j92Bh6Kq3UZ9SgXWJz2APDx7/z3oF68eoFhTlAMMjMf4NxWsdW6RSbNzElZ9dxX9eSzPMGa4t3KWtnJRabfgX0ILZkYmoXwCIQ0Etdu0SbIMM0ETyHd5PkrgDpH0JYET1lQq8JTG/pEQtS+8nnwv7I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=DnClM+ww; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4507CC4CEF1;
+	Thu, 20 Nov 2025 13:30:54 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1763645455;
+	bh=Givm/hktJ8XSzaSQNKnhwSeeHNx1dcVC53O89fZfg6Q=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=DnClM+wwarsTProD+7NUyjlc5fgHa5SgEkXIFjaXSNfy8M66Owmq1aZ5ELy7yVhdv
+	 z8MrlkMeu/A0+6xICp/VftWIW3p0R0vvWcDZhhE+rgz4ZibQGAkpqz4fHwyserz3qk
+	 h/GjUcp8ANBOIYmdBKX7jot2MayDLXPuqTrAMI0P6x4wMVHzzu7p9d2UgQIDyB6UdJ
+	 P5yH6j3jCc8HsR+pav3X+vBtHtZxhbjfV+Qs2gqXS6Hglw6Q+iyL1FDDJENBDaCEtz
+	 l0ThkGH5RjUSvX+8BTgfSOXkerjrpBVmVbfXtZPmqJSSlh7+gK0CLSxU5aIFMSjCf+
+	 GePly+1K8Lyww==
+Date: Thu, 20 Nov 2025 07:35:53 -0600
+From: Bjorn Andersson <andersson@kernel.org>
+To: Jianping Li <jianping.li@oss.qualcomm.com>
+Cc: Mohammad Rafi Shaik <mohammad.rafi.shaik@oss.qualcomm.com>, 
+	konradybcio@kernel.org, robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org, 
+	ekansh.gupta@oss.qualcomm.com, linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
 	linux-kernel@vger.kernel.org
-Cc: kernel test robot <lkp@intel.com>
-Subject: [PATCH] cpufreq: qcom-nvmem: fix compilation warning for qcom_cpufreq_ipq806x_match_list
-Date: Thu, 20 Nov 2025 14:35:02 +0100
-Message-ID: <20251120133508.4237-1-ansuelsmth@gmail.com>
-X-Mailer: git-send-email 2.51.0
+Subject: Re: [PATCH v2] arm64: dts: qcom: kodiak: Add memory region for
+ audiopd
+Message-ID: <i6dkxjngvfk4gotrtm4ompcfouppk57glngbiydnxjdstv24jw@ggsalbe4vqj2>
+References: <20251114055639.1050-1-jianping.li@oss.qualcomm.com>
+ <20251117070819.492-1-jianping.li@oss.qualcomm.com>
+ <mnmfh22usps4xy4hdck4ts2p6rej7iynsifzrqtmlklffnxrwh@f3gn5hz6yemx>
+ <63fea0e6-1ce5-4f71-8531-a01535326374@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <63fea0e6-1ce5-4f71-8531-a01535326374@oss.qualcomm.com>
 
-If CONFIG_OF is not enabled, of_match_node() is set as NULL and
-qcom_cpufreq_ipq806x_match_list won't be used causing a compilation
-warning.
+On Thu, Nov 20, 2025 at 05:08:37PM +0800, Jianping Li wrote:
+> 
+> On 11/18/2025 11:39 PM, Bjorn Andersson wrote:
+> > On Mon, Nov 17, 2025 at 03:08:19PM +0800, Jianping Li wrote:
+> > 
+> > Please don't send new versions as replies to older ones, and please
+> > adopt b4, it will take care of these practicalities for you.
+> 
+> Ack. I'll fix this going forward.
+> 
 
-Flag qcom_cpufreq_ipq806x_match_list as __maybe_unused to fix the
-compilation warning.
+Thank you. FYI, There are instructions on go/upstream on how to start
+using b4 for patches in-progress.
 
-While at it also flag as __initconst as it's used only in probe contest
-and can be freed after probe.
+> > 
+> > > Add reserved memory region for audio PD dynamic loading and remote
+> > > heap requirement. Also add LPASS and ADSP_HEAP VMIDs.
+> > > 
+> > > Signed-off-by: Jianping Li <jianping.li@oss.qualcomm.com>
+> > > ---
+> > > Patch v1: https://lore.kernel.org/all/20251114055639.1050-1-jianping.li@oss.qualcomm.com/
+> > > Changes in v2:
+> > >    - Fixed the alignment issue of the qcom,vmids properties, aligning
+> > >      the values in the second row with the first row.
+> > > ---
+> > >   arch/arm64/boot/dts/qcom/kodiak.dtsi | 8 ++++++++
+> > >   1 file changed, 8 insertions(+)
+> > > 
+> > > diff --git a/arch/arm64/boot/dts/qcom/kodiak.dtsi b/arch/arm64/boot/dts/qcom/kodiak.dtsi
+> > > index 3ef61af2ed8a..7957a9151055 100644
+> > > --- a/arch/arm64/boot/dts/qcom/kodiak.dtsi
+> > > +++ b/arch/arm64/boot/dts/qcom/kodiak.dtsi
+> > > @@ -190,6 +190,11 @@ rmtfs_mem: rmtfs@9c900000 {
+> > >   			qcom,client-id = <1>;
+> > >   			qcom,vmid = <QCOM_SCM_VMID_MSS_MSA>;
+> > >   		};
+> > > +
+> > > +		adsp_rpc_remote_heap_mem: adsp-rpc-remote-heap@9cb80000 {
+> > > +			reg = <0x0 0x9cb80000 0x0 0x800000>;
+> > > +			no-map;
+> > > +		};
+> > Is the placement of this carveout hard code somewhere in non-HLOS
+> > software? If so, its location and size universal across all Kodiak-based
+> > devices?
+> 
+> This information is not hard-coded on non-HLOS. Any region(irrespective of placement)
+> allocated by fastrpc is moved to LPASS using qcom_scm calls.
+> 
 
-This follows the pattern of the usual of_device_id variables.
+Then you can replace reg = <0x0 0x9cb80000 0x0 0x800000> with size =
+<0x0 0x800000>.
 
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202511202119.6zvvFMup-lkp@intel.com/
-Fixes: 58f5d39d5ed8 ("cpufreq: qcom-nvmem: add compatible fallback for ipq806x for no SMEM")
-Signed-off-by: Christian Marangi <ansuelsmth@gmail.com>
----
- drivers/cpufreq/qcom-cpufreq-nvmem.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+I'm assuming that this is subject to address-bit restrictions, so you
+probably need alloc-ranges = <0 0 1 0> as well though.
 
-diff --git a/drivers/cpufreq/qcom-cpufreq-nvmem.c b/drivers/cpufreq/qcom-cpufreq-nvmem.c
-index d5af74bf71c6..6c3c125f6818 100644
---- a/drivers/cpufreq/qcom-cpufreq-nvmem.c
-+++ b/drivers/cpufreq/qcom-cpufreq-nvmem.c
-@@ -256,7 +256,7 @@ static int qcom_cpufreq_krait_name_version(struct device *cpu_dev,
- 	return ret;
- }
- 
--static const struct of_device_id qcom_cpufreq_ipq806x_match_list[] = {
-+static const struct of_device_id qcom_cpufreq_ipq806x_match_list[] __initconst __maybe_unused = {
- 	{ .compatible = "qcom,ipq8062", .data = (const void *)QCOM_ID_IPQ8062 },
- 	{ .compatible = "qcom,ipq8064", .data = (const void *)QCOM_ID_IPQ8064 },
- 	{ .compatible = "qcom,ipq8065", .data = (const void *)QCOM_ID_IPQ8065 },
--- 
-2.51.0
+> > Also, the presence of arch/arm64/boot/dts/qcom/qcs6490-audioreach.dtsi
+> > tells me that we have different audio stacks in play on Kodiak. Does all
+> > of them have the same PD loading capabilities/needs?
+> 
+> This DT looks to be audioreach specific. The one I'm adding is mostly used for audio PD
+> dynamic loading purpose. Adding @Mohammad Rafi to give more details about audioreach.
+> 
 
+So, you're saying that we do dynamic audio PD loading in all Kodiak
+devices (LA, LC, LE, WP), and they all use about 8MB of RAM for this?
+
+Regards,
+Bjorn
+
+> > 
+> > 
+> > PS. Others might ask these same questions in the future (I will probably
+> > wonder in 6 months from now...), so let's make sure the git history
+> > carries the answers to why things look the way they do.
+> 
+> Ack.
+> 
+> > 
+> > Thanks,
+> > Bjorn
+> > 
+> > >   	};
+> > >   	cpus {
+> > > @@ -4139,6 +4144,9 @@ fastrpc {
+> > >   					qcom,glink-channels = "fastrpcglink-apps-dsp";
+> > >   					label = "adsp";
+> > >   					qcom,non-secure-domain;
+> > > +					memory-region = <&adsp_rpc_remote_heap_mem>;
+> > > +					qcom,vmids = <QCOM_SCM_VMID_LPASS
+> > > +						      QCOM_SCM_VMID_ADSP_HEAP>;
+> > >   					#address-cells = <1>;
+> > >   					#size-cells = <0>;
+> > > -- 
+> > > 2.43.0
+> > > 
 
