@@ -1,142 +1,99 @@
-Return-Path: <linux-arm-msm+bounces-82715-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-82716-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [142.0.200.124])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5FB19C758CF
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Nov 2025 18:08:22 +0100 (CET)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
+	by mail.lfdr.de (Postfix) with ESMTPS id 74B7DC758FC
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Nov 2025 18:11:09 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id DE0B44E1402
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Nov 2025 17:01:11 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTPS id 868812BDE7
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Nov 2025 17:11:08 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 573C836215C;
-	Thu, 20 Nov 2025 17:01:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6F2C636B047;
+	Thu, 20 Nov 2025 17:11:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="t7mEuZtQ"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ihxve8Dz"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2559233D6D2;
-	Thu, 20 Nov 2025 17:01:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE7A533A031;
+	Thu, 20 Nov 2025 17:11:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763658068; cv=none; b=I5vbu4fjzCUyxahgUgDoCbHWQOY3YEN7aw1RZUB7kM5YF39M6OkowBBERdK5ugMQFg+KHfRbicwqD5Hjautjc0qB0c8jfmMA3FxHBef43QfL4cR3qRWx2LGy+3I9WE1P9e3TiWjOWSRbKrGaetxYnBtf2EP/p2gOnbMd9mnf5cU=
+	t=1763658664; cv=none; b=UPjaaYayOGAdyEaVsMvFWTPPxv2rV0JsB8iKk88/1nx8FBzp0GQxEQ+NHkjyASjCPLMIzmucN/V7EU7AWQdORPZ02Bdjcw6Co2zTqgkEgc692x7jvH0qdCBmkNvgJex8EWsHDup+0km8cTKy+x0J85o4AYXc7rL376+BUrD/EX4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763658068; c=relaxed/simple;
-	bh=OU9uFIB9FLrcyvK6jDt5oxOa0KsIg0OKPPvOJ2Gr1FU=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=dFbbG8ySlk0LUixZg3Kss8EEIlTsfEDrGvtOazjqoa9odW0kZLfcCp8Qdz1OkvLPA/MkudK9TXX/4rBtlFjLbL7CYJN/9qfGhZPM4YuCvcOedOqJEaX8MvREAzlMn8BpO70uMcEm7MZuG5w52/dAhlZcba26AHQjopfADHWmDyY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=t7mEuZtQ; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4875CC4CEF1;
-	Thu, 20 Nov 2025 17:00:57 +0000 (UTC)
+	s=arc-20240116; t=1763658664; c=relaxed/simple;
+	bh=srEXc3YV3Z9k+S6EjyCYz4pndYvvbKnp0h6Ftjs+8L8=;
+	h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date:
+	 MIME-Version:Content-Type; b=AdEMEHiPm7W8C2fNlejvDtaKyQxtMvbH+nwNz9xkiM1z0RyCvfX6C2OxXVtTs1YZUkk2loinroi3RJB7b/juWTUb8+UzWQU9fdbo0L88aWlBBvR9uckFD5ttwUxXT0HQAVALpj47kArTHuyIvcimWKys3Nn5ex7Z3w5d265XRIY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ihxve8Dz; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D931C4CEF1;
+	Thu, 20 Nov 2025 17:10:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1763658064;
-	bh=OU9uFIB9FLrcyvK6jDt5oxOa0KsIg0OKPPvOJ2Gr1FU=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=t7mEuZtQ/X7n6k6pI962u3x5lUvCZ+mOXn2LwH6vu34M8USVcBkAY2f+VO+lKrj+i
-	 PXvssUP4X8lGDe7tTf3exN0RqmJdNyeYvNOzk+AiF9B1ash2WEItKjLwe0HWknSSRU
-	 MklLdi7FEMuyfmApfVaVDSI5u1r0x3CprP7pDQkU9U7pCMVdMyDdiqbbS1Lb3MtUAn
-	 wyV74OdIGdRim5hoZl9UwbMBo0NDPkCvLGXtblfiFbSHObXGYaSZEuImFuUfwIHvyQ
-	 L/IiOthE9zm6HBj87lP/Vi74t5AisJRP3ptkDY15wFSu8VVM/arjFAH7kLOBwN4Z4Q
-	 fNNEL2PRi+trA==
-Date: Thu, 20 Nov 2025 22:30:41 +0530
-From: Manivannan Sadhasivam <mani@kernel.org>
-To: Shawn Lin <shawn.lin@rock-chips.com>
-Cc: Qiang Yu <qiang.yu@oss.qualcomm.com>, 
-	Lorenzo Pieralisi <lpieralisi@kernel.org>, Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kwilczynski@kernel.org>, 
-	Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>, 
-	Jingoo Han <jingoohan1@gmail.com>, linux-pci@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH 3/5] PCI: dwc: Remove MSI/MSIX capability if iMSI-RX is
- used as MSI controller
-Message-ID: <7d4xj3tguhf6yodhhwnsqp5s4gvxxtmrovzwhzhrvozhkidod7@j4w2nexd5je2>
-References: <20251109-remove_cap-v1-0-2208f46f4dc2@oss.qualcomm.com>
- <20251109-remove_cap-v1-3-2208f46f4dc2@oss.qualcomm.com>
- <dc8fb64e-fcb1-4070-9565-9b4c014a548f@rock-chips.com>
+	s=k20201202; t=1763658663;
+	bh=srEXc3YV3Z9k+S6EjyCYz4pndYvvbKnp0h6Ftjs+8L8=;
+	h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
+	b=ihxve8DzixV2TWEoB5pzQv6zF5lJiNc9O+zNIBHJ+p1O3P+EAxeIFgpualrrnUUcK
+	 GM9o+qbJ2jonDThsdrpXOHcvSBF3NPB2DEXZTlI9SnMcA0ZJkteKHb9BZmnzHZVlcR
+	 aXBB1/lBhMUQHnSdmT9iw1OgJwUmWltt947pg2VwCMFOYj06hRaJcacgw/FNo3OxnQ
+	 fQoUtYZD0LyDmP43hC9um8bp28PrYl8JdiERR6dpb1QdN5L8lTx4YIx8rsNqY49+WH
+	 NVWvifn/N6DKmykahiO1ikXpWCZf8syhAlNUkBNCQAtt6DcxlX39/3MigYeKioRQdv
+	 XemZHmeMa1v4Q==
+From: Vinod Koul <vkoul@kernel.org>
+To: Kishon Vijay Abraham I <kishon@kernel.org>, 
+ Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>, 
+ Lorenzo Pieralisi <lpieralisi@kernel.org>, 
+ =?utf-8?q?Krzysztof_Wilczy=C5=84ski?= <kwilczynski@kernel.org>, 
+ Manivannan Sadhasivam <mani@kernel.org>, 
+ Bjorn Andersson <andersson@kernel.org>, 
+ Wenbin Yao <wenbin.yao@oss.qualcomm.com>
+Cc: linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org, 
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+ linux-pci@vger.kernel.org, konrad.dybcio@oss.qualcomm.com, 
+ qiang.yu@oss.qualcomm.com, Prudhvi Yarlagadda <quic_pyarlaga@quicinc.com>, 
+ Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+In-Reply-To: <20250825-glymur_pcie5-v3-0-5c1d1730c16f@oss.qualcomm.com>
+References: <20250825-glymur_pcie5-v3-0-5c1d1730c16f@oss.qualcomm.com>
+Subject: Re: (subset) [PATCH v3 0/4] PCI: qcom: Add support for Glymur PCIe
+ Gen5x4
+Message-Id: <176365865805.207696.3284794076492688749.b4-ty@kernel.org>
+Date: Thu, 20 Nov 2025 22:40:58 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <dc8fb64e-fcb1-4070-9565-9b4c014a548f@rock-chips.com>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-Mailer: b4 0.13.0
 
-On Thu, Nov 20, 2025 at 10:06:03PM +0800, Shawn Lin wrote:
-> 在 2025/11/10 星期一 14:59, Qiang Yu 写道:
-> > Some platforms may not support ITS (Interrupt Translation Service) and
-> > MBI (Message Based Interrupt), or there are not enough available empty SPI
-> > lines for MBI, in which case the msi-map and msi-parent property will not
-> > be provided in device tree node. For those cases, the DWC PCIe driver
-> > defaults to using the iMSI-RX module as MSI controller. However, due to
-> > DWC IP design, iMSI-RX cannot generate MSI interrupts for Root Ports even
-> > when MSI is properly configured and supported as iMSI-RX will only monitor
-> > and intercept incoming MSI TLPs from PCIe link, but the memory write
-> > generated by Root Port are internal system bus transactions instead of
-> > PCIe TLPs, so they are ignored.
-> > 
-> > This leads to interrupts such as PME, AER from the Root Port not received
-> 
-> This's true which also stops Rockchip's dwc IP from working with AER
-> service. But my platform can't work with AER service even with ITS support.
-> 
-> > on the host and the users have to resort to workarounds such as passing
-> > "pcie_pme=nomsi" cmdline parameter.
-> 
-> ack.
-> 
-> > 
-> > To ensure reliable interrupt handling, remove MSI and MSI-X capabilities
-> > from Root Ports when using iMSI-RX as MSI controller, which is indicated
-> > by has_msi_ctrl == true. This forces a fallback to INTx interrupts,
-> > eliminating the need for manual kernel command line workarounds.
-> > 
-> > With this behavior:
-> > - Platforms with ITS/MBI support use ITS/MBI MSI for interrupts from all
-> >    components.
-> > - Platforms without ITS/MBI support fall back to INTx for Root Ports and
-> >    use iMSI-RX for other PCI devices.
-> > 
-> > Signed-off-by: Qiang Yu <qiang.yu@oss.qualcomm.com>
-> > ---
-> >   drivers/pci/controller/dwc/pcie-designware-host.c | 10 ++++++++++
-> >   1 file changed, 10 insertions(+)
-> > 
-> > diff --git a/drivers/pci/controller/dwc/pcie-designware-host.c b/drivers/pci/controller/dwc/pcie-designware-host.c
-> > index 20c9333bcb1c4812e2fd96047a49944574df1e6f..3724aa7f9b356bfba33a6515e2c62a3170aef1e9 100644
-> > --- a/drivers/pci/controller/dwc/pcie-designware-host.c
-> > +++ b/drivers/pci/controller/dwc/pcie-designware-host.c
-> > @@ -1083,6 +1083,16 @@ int dw_pcie_setup_rc(struct dw_pcie_rp *pp)
-> >   	dw_pcie_dbi_ro_wr_dis(pci);
-> > +	/*
-> > +	 * If iMSI-RX module is used as the MSI controller, remove MSI and
-> > +	 * MSI-X capabilities from PCIe Root Ports to ensure fallback to INTx
-> > +	 * interrupt handling.
-> > +	 */
-> > +	if (pp->has_msi_ctrl) {
-> 
-> Isn't has_msi_ctrl means you have something like GIC-ITS
-> support instead of iMSI module? Am I missing anything?
-> 
 
-It is the other way around. Presence of this flag means, iMSI-RX is used. But I
-think the driver should clear the CAPs irrespective of this flag.
-
-> > +		dw_pcie_remove_capability(pci, PCI_CAP_ID_MSI);
-> > +		dw_pcie_remove_capability(pci, PCI_CAP_ID_MSIX);
+On Mon, 25 Aug 2025 23:01:46 -0700, Wenbin Yao wrote:
+> Glymur is the next generation compute SoC of Qualcomm. This patch series
+> aims to add support for the fifth PCIe instance on it. The fifth PCIe
+> instance on Glymur has a Gen5 4-lane PHY. Patch [1/4] documents PHY as a
+> separate compatible and Patch [2/4] documents controller as a separate
+> compatible. Patch [3/4] describles the new PCS offsets in a dedicated
+> header file. Patch [4/4] adds configuration and compatible for PHY.
 > 
-> Will it make all devices connected to use INTx only?
-> 
+> [...]
 
-Nah, it is just for the Root Port. The MSI/MSI-X from endpoint devices will
-continue to work as usual.
+Applied, thanks!
 
-- Mani
+[1/4] dt-bindings: phy: qcom,sc8280xp-qmp-pcie-phy: Document the Glymur QMP PCIe PHY
+      commit: d877f881cec508a46f76dbed7c46ab78bc1c0d87
+[3/4] phy: qcom-qmp: pcs: Add v8.50 register offsets
+      commit: bc2ba6e3fb8a35cd83813be1bd4c5f066a401d8b
+[4/4] phy: qcom: qmp-pcie: Add support for Glymur PCIe Gen5x4 PHY
+      commit: 1797c6677ad6298ca463b6ee42245e19e9cc1206
 
+Best regards,
 -- 
-மணிவண்ணன் சதாசிவம்
+~Vinod
+
+
 
