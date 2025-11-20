@@ -1,127 +1,124 @@
-Return-Path: <linux-arm-msm+bounces-82686-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-82687-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sin.lore.kernel.org (sin.lore.kernel.org [IPv6:2600:3c15:e001:75::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 53D8EC74502
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Nov 2025 14:43:24 +0100 (CET)
+Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [IPv6:2605:f480:58:1:0:1994:3:14])
+	by mail.lfdr.de (Postfix) with ESMTPS id 12604C74700
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Nov 2025 15:07:16 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sin.lore.kernel.org (Postfix) with ESMTPS id 3ED4230267
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Nov 2025 13:37:31 +0000 (UTC)
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id E0FB34F0DBA
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Nov 2025 13:48:02 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id F284C33D6D1;
-	Thu, 20 Nov 2025 13:37:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 90166344035;
+	Thu, 20 Nov 2025 13:47:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="iSiaEF+9"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="O5bzoH+f"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDE3233CEB7;
-	Thu, 20 Nov 2025 13:37:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2C6B341054;
+	Thu, 20 Nov 2025 13:47:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763645845; cv=none; b=OZ30o7aot2qPMw502uewzoPqXc29kW1e7Fm/Q755hvlL+8wc2o+SNo+BhhasSCIebsP6zAtkivpyY5305K6XWgvU/8YJphzKJIPIcd7BLJa2hqA/b8tBgFlC3zACku8uFvfMCqhynhMyFNYAFLSSwzPORei1y1L+hE4llyTZk44=
+	t=1763646470; cv=none; b=l0rs/I/E1rUKnUuZ86ycVUaFkrGTVI0aFTp7Hnpz9ROJdHSzrn6vX5mVnk5Ro4rsQT4V5sxsWpHs/8mKhP4gL71VtrTYgn/GmQbshFbpyXDj7jwbdL+Lv+mnw30lJIJXVVFj0JJRGFnfCd33dzUVZiDNX91O3aFoS/JuIZMISdA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763645845; c=relaxed/simple;
-	bh=VxQ5KoenGhTfG4s4dES9bE2YxDxJGNe0ebeFjslWVnE=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Nx0P+NonvjJXsO+wUbeGHOlUjZbrVVcc4r1arc6rjt5ATJYHQDbew7wb08yD2MW2VvblYO6Rfr831GunBaX15A5HCHuRiWyhMrccNDN+hpyPmxMsKNzluMA1K99P/VK87xoPzMovRbwWbCZxovH/e0ZhJStIZLMeEZ4/4qgezyc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=iSiaEF+9; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D48FFC4CEF1;
-	Thu, 20 Nov 2025 13:37:24 +0000 (UTC)
+	s=arc-20240116; t=1763646470; c=relaxed/simple;
+	bh=5ayRAEyqkMtKSXzM3wf9nh7PM7E2uEi6Aa9AoVrtxAQ=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=nW7dryPjyXefPpg5QBQ9Qe/qmeIkw7JG8Yx0HOIfCZ4zIUGF8X/Y1ByMgESnYSA6YIqRjSNMD5evgeLhyW1JVkefp1Or9KEbdRzoffnzlT3xv0UDiUecVmcc3s7Ldf84uw3vE5YR5pDfgyG88Y3RvQ0631UgmtuVVebgbxd4u9A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=O5bzoH+f; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A41ACC4CEF1;
+	Thu, 20 Nov 2025 13:47:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1763645845;
-	bh=VxQ5KoenGhTfG4s4dES9bE2YxDxJGNe0ebeFjslWVnE=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=iSiaEF+9+w3xOLviYs2O3UXANoGiXZ2HWbldxHbhmvmaYHnUF+BBtmbCKWaE4mCvu
-	 D/exhxNnobQXLvUvoJmFUHCcwiwfj4vYj7EhDIIdx5IyJBLrUgqYDEEn9UgtxNF/k1
-	 fJvhhRlQkLb8jJko3vQSzmr3cQikRffGEwy91GXT4KTue7Zha2uYh30+VtbL7nCBwx
-	 wUYXu3KDudPjdTSVEPWQE4FIizhSfzYG03qXiK8vnd5Qzwo3mN55mq133+FjUkl9BI
-	 D5/aX+RFZMcMGtgQ4tAITmqKImiHSnNyHkPLNWQnv6/u6UR94SVhjQuK6qhpCvJifM
-	 bg45SqSyZLQHg==
-Date: Thu, 20 Nov 2025 07:42:24 -0600
-From: Bjorn Andersson <andersson@kernel.org>
-To: Abhinaba Rakshit <abhinaba.rakshit@oss.qualcomm.com>
-Cc: Konrad Dybcio <konradybcio@kernel.org>, linux-arm-msm@vger.kernel.org, 
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] soc: qcom: ice: Set ICE clk to turbo on probe
-Message-ID: <ofxrykxcywloaajt6sv6nb7shfmdlips4tezrimiycsis4vamb@thkoqsdwynie>
-References: <20251001-set-ice-clock-to-turbo-v1-1-7b802cf61dda@oss.qualcomm.com>
+	s=k20201202; t=1763646470;
+	bh=5ayRAEyqkMtKSXzM3wf9nh7PM7E2uEi6Aa9AoVrtxAQ=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=O5bzoH+f492/l7cK6HHN2LTFoZElsyDCGQMooUyu55J9VnA0X7TmS6YE51kYprup+
+	 aHxnE2Hm1EGWYiCC5nQfNgKyO7XL+kZ/sdHHGeG7zll3TI3u7AbiLeDWUhIE8irwwj
+	 C0uL7tE3+vITBneLbXCzMNzxoyid3+fjCxauMQlwG7C7cOfNnQHFGmxhNz8MHI4odL
+	 emX74K8K+Fqtxm06gA6zGs7vQRi1YrD5ClJW9RjYtZqDyd/7Y0183m2urrZQstE0nn
+	 irU+hMs5jiiC0alASmsGTzKcitxuNiVLlZynujDT15WXmiTImp0QdEyW0XSV3s+5+8
+	 Lidg71w6TqagA==
+Message-ID: <74d931db-8ecf-4b71-b644-d9a82ba54c8a@kernel.org>
+Date: Thu, 20 Nov 2025 14:47:45 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20251001-set-ice-clock-to-turbo-v1-1-7b802cf61dda@oss.qualcomm.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 2/2] arm64: defconfig: Enable Lontium LT8713sx driver
+To: Vishnu Saini <vishnu.saini@oss.qualcomm.com>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org, Vishnu Saini <vishsain@qti.qualcomm.com>,
+ prahlad.valluru@oss.qualcomm.com, Prahlad Valluru <vvalluru@qti.qualcomm.com>
+References: <20251120-lt8713sx-bridge-linux-for-next-v1-0-2246fc5fb490@qti.qualcomm.com>
+ <20251120-lt8713sx-bridge-linux-for-next-v1-2-2246fc5fb490@qti.qualcomm.com>
+From: Krzysztof Kozlowski <krzk@kernel.org>
+Content-Language: en-US
+Autocrypt: addr=krzk@kernel.org; keydata=
+ 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 a/A=
+In-Reply-To: <20251120-lt8713sx-bridge-linux-for-next-v1-2-2246fc5fb490@qti.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-On Wed, Oct 01, 2025 at 05:44:32PM +0530, Abhinaba Rakshit wrote:
-> Set ICE core clock to turbo (max freq) provided by dt
-> entry at ice device probe.
-> 
-> Signed-off-by: Abhinaba Rakshit <abhinaba.rakshit@oss.qualcomm.com>
+On 20/11/2025 11:58, Vishnu Saini wrote:
+> Lontium LT8713sx DP bridge hub can be found in monaco-evk
 
-Didn't realize until your two patch series ended up next to each other in
-my inbox, but adding this support for UFS and for MMC are very much
-related, so please include all three patches in the same v2.
+Qualcomm Monaco EVK Full Name of board goes here not some keywords.
 
-Thanks,
-Bjorn
+You are adding this to common defconfig, that's not your own private one.
 
-> ---
-> MMC controller lacks a clock scaling mechanism, unlike the UFS
-> controller. By default, the MMC controller is set to TURBO mode
-> during probe, but the ICE clock remains at XO frequency,
-> leading to read/write performance degradation on eMMC.
 > 
-> To address this, set the ICE clock to TURBO during probe to
-> align it with the controller clock. This ensures consistent
-> performance and avoids mismatches between the controller
-> and ICE clock frequencies.
-> ---
->  drivers/soc/qcom/ice.c | 8 ++++++++
->  1 file changed, 8 insertions(+)
-> 
-> diff --git a/drivers/soc/qcom/ice.c b/drivers/soc/qcom/ice.c
-> index ec8d6bb9f426deee1038616282176bfc8e5b9ec1..eee06c499dc36a6bf380361f27e938331f1fcb10 100644
-> --- a/drivers/soc/qcom/ice.c
-> +++ b/drivers/soc/qcom/ice.c
-> @@ -535,6 +535,7 @@ static struct qcom_ice *qcom_ice_create(struct device *dev,
->  	struct qcom_ice *engine;
->  	const __be32 *prop;
->  	int len;
-> +	int err;
->  
->  	if (!qcom_scm_is_available())
->  		return ERR_PTR(-EPROBE_DEFER);
-> @@ -577,6 +578,13 @@ static struct qcom_ice *qcom_ice_create(struct device *dev,
->  	if (!qcom_ice_check_supported(engine))
->  		return ERR_PTR(-EOPNOTSUPP);
->  
-> +	/* Set the ICE clk rate to TURBO */
-> +	if (engine->core_clk && engine->max_freq) {
-> +		err = clk_set_rate(engine->core_clk, engine->max_freq);
-> +		if (err)
-> +			dev_err(dev, "Failed setting the clk to TURBO\n");
-> +	}
-> +
->  	dev_dbg(dev, "Registered Qualcomm Inline Crypto Engine\n");
->  
->  	return engine;
-> 
-> ---
-> base-commit: 3b9b1f8df454caa453c7fb07689064edb2eda90a
-> change-id: 20251001-set-ice-clock-to-turbo-ecab9ea46a89
-> prerequisite-change-id: 20251001-enable-ufs-ice-clock-scaling-9c55598295f6:v1
-> prerequisite-patch-id: d66f521e5e625b295a1c408cdfce9bd9524ae3ba
-> prerequisite-patch-id: 23934f3fee5aabe4a2324130ed02909352b5cf61
-> 
-> Best regards,
-> -- 
-> Abhinaba Rakshit <abhinaba.rakshit@oss.qualcomm.com>
-> 
+
+
+Best regards,
+Krzysztof
 
