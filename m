@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-82713-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-82714-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8E15AC757E8
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Nov 2025 17:57:57 +0100 (CET)
+Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [IPv6:2605:f480:58:1:0:1994:3:14])
+	by mail.lfdr.de (Postfix) with ESMTPS id B06B0C758A5
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Nov 2025 18:06:37 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by tor.lore.kernel.org (Postfix) with ESMTPS id C5D662BCDA
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Nov 2025 16:57:50 +0000 (UTC)
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id DC0634E5992
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Nov 2025 16:59:27 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id AB63236C0DE;
-	Thu, 20 Nov 2025 16:57:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id AC7BB34214C;
+	Thu, 20 Nov 2025 16:59:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Xn9NLyy+"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="JlMo2y4P"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5FB632FA00;
-	Thu, 20 Nov 2025 16:57:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E435E33F396;
+	Thu, 20 Nov 2025 16:59:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763657854; cv=none; b=O1T2fXFcZMPKBxfHEe7IjCsH56F5KgE+mpQsKf83IPpN5ekSiL82lyN+Ro5UllEY+rKH/5Up4HXZ4MCCmq+h/pL2a2MkgooqHM64RZqRwAoMokfajyB1ks+Mbit7g0MKODk/NEx3xHBB8QqWqIG6ls6rwJTnEX2RbDzheep45Pg=
+	t=1763657965; cv=none; b=TU8I3Em7ZWr+vvh4Of2SLuWNAopd2SvcojF2MwTWB9AoQYj+Wo1aFCdD5HUleTUVeXsYOKJZfFgsr4TMWueEaFi/zzXmUDFaKBHvHGvm0S/wrR9cJh/z880itL/rbVvVOzUC3AaoaCYTBTb9PwTx1ujFeGqE3BijiV7xC1XG4mU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763657854; c=relaxed/simple;
-	bh=b/Lnc53T2oiKWSL1lO6RzN3GTp5qY/VZAPR1Eu/cNb8=;
+	s=arc-20240116; t=1763657965; c=relaxed/simple;
+	bh=31PVOHheLa2FxERIWbQzHNZCnFqP06e9LEcd0yMdb38=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=rXpnrEfb8v81CYiBUGSlAKkwhEGzRh/OxYh6p486k6R4YFmQplsP0Jw0nzmTvQ6lsrjBKnjBdHPHi5T0a9x0dnTGAx370d+2edtujUB7MkxxG0oueA4W49bVoZj/3cdtgBfZfULlApSBDXb+9LTz5AfmXO3pLPf55hU1nDD/5RU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Xn9NLyy+; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A093C4CEF1;
-	Thu, 20 Nov 2025 16:57:26 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=GaZQENMd5SDubHjzUE/2TsWPBfM7fwA/IUCgGCCiFgYJT8GxVc1LXG4fUt/7P2b1lUtb3HbBFV9fzl3IoszsUOF6uZrED6i/UDYnSKfY8VmBuJXErDaVikoPrH33OTWO4WYGK/qC/uUSCTjNbjOI8scvZUnivAAZrVMSObzjB5w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=JlMo2y4P; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9FDCC4CEF1;
+	Thu, 20 Nov 2025 16:59:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1763657851;
-	bh=b/Lnc53T2oiKWSL1lO6RzN3GTp5qY/VZAPR1Eu/cNb8=;
+	s=k20201202; t=1763657964;
+	bh=31PVOHheLa2FxERIWbQzHNZCnFqP06e9LEcd0yMdb38=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=Xn9NLyy+9/gumTdwqP/tvAQb52qWep2BSIFwkVBI7tsS+JuwS3VlPoA1HGEqYLw61
-	 pzWGendRbB9ffBvHRRgEdhp43mrUVpKwaTpyGxcQ5kHNa1+yeYvxRTvFi1vG7RUElQ
-	 sZEV6vZTlN5ZFOYwuk5Llda0y+Finv17YFtD6t5OchHNyL3ypIGgg3JYkb35sKsOgR
-	 4AVoAb42/aUNRXeM1ONv2xSGM3+2xy38aHIIczhBfxh24yqmU8Rpdr52PuSCfn/4Dg
-	 hc+wagKsGHS2Uo6vCA2LR+tDKzZe9pOCWMR7Ln1h6XrWk8BUgRALh8GdQkSbhVeBRo
-	 DKnOXwxwNplcA==
-Message-ID: <98ee6b0f-2805-43ce-9228-991d2495e5ca@kernel.org>
-Date: Thu, 20 Nov 2025 17:57:24 +0100
+	b=JlMo2y4PVx2TMMyWRq7stwjWCnhqEyN16M4NxCKSXDiQf30t/KEbIeZI79ilUh+xN
+	 91u+7/PZu85pFBa4/RMfEHuzNGwFVFdwQcVaeSmTifTkFCLKfOOKSOAdlXvqhymX+P
+	 344l+/cNQA5U9X8QCC4o769kRZ4bWt70q9j034klZ45HcR7CP68F2qr3fk5EOjoIMW
+	 b3aEkgGqmJF3SVflYTEPrbhQsGYyy62w0wpGhdLugmU+VggUgipINRZ7ZY7Tsc6HG+
+	 RNma14Ye3Bj8tWH+0D3ZjFV+XZRTpBL/y8HIfMNN6A9jXO9YkTD8813hDcMC05mfg3
+	 qBAaADmB/rMQA==
+Message-ID: <0ce7b889-f03d-4a41-8866-e137ad45e77b@kernel.org>
+Date: Thu, 20 Nov 2025 17:59:17 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,8 +50,8 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 3/6] spi: spidev: add compatible for arduino spi mcu
- interface
+Subject: Re: [PATCH v3 6/6] arm64: dts: qcom: qrb2210: add dts for Arduino
+ unoq
 To: Riccardo Mereu <r.mereu.kernel@arduino.cc>, andersson@kernel.org,
  konradybcio@kernel.org, robh@kernel.org, krzk+dt@kernel.org,
  conor+dt@kernel.org, broonie@kernel.org
@@ -63,7 +63,7 @@ Cc: linux@roeck-us.net, Jonathan.Cameron@huawei.com, wenswang@yeah.net,
  linux-spi@vger.kernel.org, m.facchin@arduino.cc,
  Riccardo Mereu <r.mereu@arduino.cc>
 References: <20251120155825.121483-1-r.mereu.kernel@arduino.cc>
- <20251120155825.121483-4-r.mereu.kernel@arduino.cc>
+ <20251120155825.121483-7-r.mereu.kernel@arduino.cc>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -109,23 +109,46 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  jWt87ecuHlpL3uuQ0ZZNWqHgZoQLXoqC2ZV5KrtKWb/jyiFX/sxSrodALf0zf+tfHv0FZWT2
  zHjUqd0t4njD/UOsuIMOQn4Ig0SdivYPfZukb5cdasKJukG1NOpbW7yRNivaCnfZz6dTawXw
  XRIV/KDsHQiyVxKvN73bThKhONkcX2LWuD928tAR6XMM2G5ovxLe09vuOzzfTWQDsm++9UKF a/A=
-In-Reply-To: <20251120155825.121483-4-r.mereu.kernel@arduino.cc>
+In-Reply-To: <20251120155825.121483-7-r.mereu.kernel@arduino.cc>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 
 On 20/11/2025 16:58, Riccardo Mereu wrote:
 > From: Riccardo Mereu <r.mereu@arduino.cc>
 > 
-> Add compatible entry in spidev describing in Arduino UnoQ single-board
-> computer the interface between Qualcomm QRB2210 microprocessor and
-> STMicroelectronics STM32U585 microcontroller.
-> It is handled in user space by the arduino-router service.
+> Arduino UnoQ is a single-board computer combining Qualcomm
+> Dragonwing™ QRB2210 microprocessor with STMicroelectronics STM32U585
+> microcontroller.
+> Support to a simply boot to shell environment includes:
+> - UART, I2C, SPI
+> - onboard LEDS
+> - eMMC
+> - WLAN and BT
 > 
 > Signed-off-by: Riccardo Mereu <r.mereu@arduino.cc>
 > ---
+>  arch/arm64/boot/dts/qcom/Makefile             |   1 +
+>  .../boot/dts/qcom/qrb2210-arduino-imola.dts   | 459 ++++++++++++++++++
+>  2 files changed, 460 insertions(+)
+>  create mode 100644 arch/arm64/boot/dts/qcom/qrb2210-arduino-imola.dts
+> 
 
+
+
+> +
+> +&spi5 {
+> +	status = "okay";
+> +
+> +	spidev@0 {
+> +		reg = <0>;
+> +		compatible = "arduino,unoq-mcu";
+
+If there is going to be new version (no need to resend just for that):
+Please re-order these two, compatible is always the fist property, reg
+follows, see also DTS coding style.
 
 Reviewed-by: Krzysztof Kozlowski <krzk@kernel.org>
+
 
 Best regards,
 Krzysztof
