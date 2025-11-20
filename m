@@ -1,60 +1,90 @@
-Return-Path: <linux-arm-msm+bounces-82726-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-82727-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ams.mirrors.kernel.org (ams.mirrors.kernel.org [213.196.21.55])
-	by mail.lfdr.de (Postfix) with ESMTPS id B1572C75C72
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Nov 2025 18:46:49 +0100 (CET)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id C5157C76080
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Nov 2025 20:15:54 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ams.mirrors.kernel.org (Postfix) with ESMTPS id 2E580343648
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Nov 2025 17:41:27 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTPS id D5272289E8
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Nov 2025 19:15:53 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 02A34272810;
-	Thu, 20 Nov 2025 17:41:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 94BFD2E541E;
+	Thu, 20 Nov 2025 19:15:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Q9CMCDx9"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="HZ44JE1X"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.15])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CAFAD1E9905;
-	Thu, 20 Nov 2025 17:41:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7840A2E8B96;
+	Thu, 20 Nov 2025 19:15:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.15
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763660481; cv=none; b=EwVbY8kh66371KSgyoLOgH2Mbk+8kUaiz8a8isOPkLtwPEBFsTslpNOj8/kAuXiyBMwmrMPOa5z8wRhZLXjyJV25HLUn4H6zObv6qDSANfkcN95Zg5bjEuXn3oC4X7/lTwsg6qrapkvfLxfsazYj43+gDvyzSBGdzJQiMX0eQ2Y=
+	t=1763666112; cv=none; b=kLkehraKWz6TcJe/XNvA5jOGsX7RvKFz+we0UBBjdnToRmlApNXKonvJhoL+m49Cl3eoPCBxxb9oeEWRAAUN1W4srLS2P5E1ddYnGu/D67LZWSwgt377CDG3/56eS3ibF0Si6TiMNj3tD4dKlqiQu/vn+LHGzLGeZN01MnIyxRE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763660481; c=relaxed/simple;
-	bh=JK829sAIpe0+DrFBl0+4EDY2O6EilCGqBMpGmZHthHk=;
+	s=arc-20240116; t=1763666112; c=relaxed/simple;
+	bh=GpSmpsR9NetbPJhQGjxFutnFsKHftqvhMSFwh84zcwA=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=drEkGFivzfJ/8DROSSjXhe6EsE8iRy8h5hzaJzHARKywVs0iemlZSk60jbLk4Ux9ehUdxyVRHWPWjUlGOcYbRisVtWSml7b6pvPJJpUGWnG6EmW8TlDnGd6VZLqzsRrAle1fpklvFOkFZxtawzJc6C/VTKKsmq29/oqlA5JOKJs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Q9CMCDx9; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16671C4CEF1;
-	Thu, 20 Nov 2025 17:41:20 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1763660481;
-	bh=JK829sAIpe0+DrFBl0+4EDY2O6EilCGqBMpGmZHthHk=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=Q9CMCDx99Koz16binJQrQRi/VCOmqB5y9Otc+x3tmP2fcvBD/7NyQECHVrHBKD5Q1
-	 LWw41g6R7+0z4kpYq4mNya4X+uRFidXvL2GDbSM7au5nsRbv09JhueVUouywBqPW/C
-	 VLgILxWlHKPwzUcHGJYtB1wO/qy15QR1aOLGFIGt87nK/rGzEh3kPQkatC7rSnTSro
-	 ibceTC/1hqTyO/+nIJf6I5au6+tj1nOmxC93R46WXWvXDxfx+HSoZLZT/CjmFOgA63
-	 gLtyfKvn4R5D7ZmobGO1xJcmYTNSb7Vzl5eFeIHqWLYjgziZt/fG8kS9xbL4MsWytL
-	 pj4pqg63+cL9Q==
-Date: Thu, 20 Nov 2025 11:41:19 -0600
-From: Rob Herring <robh@kernel.org>
-To: Christian Marangi <ansuelsmth@gmail.com>
-Cc: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] dt-bindings: arm: qcom: add ipq8064 board variants
-Message-ID: <20251120174119.GA1586641-robh@kernel.org>
-References: <20251120135435.12824-1-ansuelsmth@gmail.com>
- <8e75be2b-643e-4380-a018-3cb718745101@oss.qualcomm.com>
- <691f3465.050a0220.105096.7667@mx.google.com>
+	 Content-Type:Content-Disposition:In-Reply-To; b=uCLpOqyxeMofa7h4orxvZe7vdJJizuhJKliRXw5H5VUbH+z8Q5S6gJ2h8k4CCrK+6b2ecAWYdbD8qdISldRG9JqUOT6VxB0w97nEWwGR4rx8UeHefStb5dJbxpisVDKnBSbsZPYWXlRd3KEehLuec91Cp56Qvy8ED81g/JHxS5s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=pass smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=HZ44JE1X; arc=none smtp.client-ip=192.198.163.15
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.intel.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1763666110; x=1795202110;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=GpSmpsR9NetbPJhQGjxFutnFsKHftqvhMSFwh84zcwA=;
+  b=HZ44JE1Xh5airIdPVCvxxBjnT6Ix2uvwXbQh6z0l+XQuibRKJV2VFEMS
+   QviMX1NeWkfNbjj2sPgjmOxzvDCIm4ZNDDoBARPlhcu3usRJVNytnxMPi
+   voCtIobJgzdzUydvK8SPbVOdX/4egAZ6zWBuUfLfYfy8SxKT8V/+/qDn/
+   Qz0DVbjBrpSfMdzBqvk/gQlaEOoTOoRVZwx3hPtiTtSpuBPCcmL3NpA+6
+   fCftNr/o6Pgqe0saMfhQm3gT4uFlHYgOxT7N6CzPsSVQjuzdS3baP+wZO
+   TSjmcEVDddYfg1FvTpTSyV4oaH7+Kf/z3+/CsQwXECPzvkxX6PdPDSG8Z
+   A==;
+X-CSE-ConnectionGUID: MFAEZHYxRKaFKD0gmO1BJA==
+X-CSE-MsgGUID: FZ5AXCa7Qn+byfDwg8M4PQ==
+X-IronPort-AV: E=McAfee;i="6800,10657,11619"; a="65838708"
+X-IronPort-AV: E=Sophos;i="6.20,213,1758610800"; 
+   d="scan'208";a="65838708"
+Received: from fmviesa006.fm.intel.com ([10.60.135.146])
+  by fmvoesa109.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 20 Nov 2025 11:15:09 -0800
+X-CSE-ConnectionGUID: Lj2UXwM4QvSoozpG9EqitA==
+X-CSE-MsgGUID: JRP7KrHGShi83szIQwo8rg==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.20,213,1758610800"; 
+   d="scan'208";a="191308310"
+Received: from amilburn-desk.amilburn-desk (HELO localhost) ([10.245.244.97])
+  by fmviesa006-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 20 Nov 2025 11:15:04 -0800
+Date: Thu, 20 Nov 2025 21:15:02 +0200
+From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+To: Bjorn Andersson <andersson@kernel.org>,
+	Stefan Wahren <wahrenst@gmx.net>, Vinod Koul <vkoul@kernel.org>,
+	Thomas Andreatta <thomasandreatta2000@gmail.com>,
+	Caleb Sander Mateos <csander@purestorage.com>,
+	dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org,
+	linux-rpi-kernel@lists.infradead.org,
+	linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org
+Cc: Olivier Dautricourt <olivierdautricourt@gmail.com>,
+	Stefan Roese <sr@denx.de>,
+	Florian Fainelli <florian.fainelli@broadcom.com>,
+	Broadcom internal kernel review list <bcm-kernel-feedback-list@broadcom.com>,
+	Ray Jui <rjui@broadcom.com>, Scott Branden <sbranden@broadcom.com>,
+	Lars-Peter Clausen <lars@metafoo.de>,
+	Eugeniy Paltsev <Eugeniy.Paltsev@synopsys.com>,
+	Daniel Mack <daniel@zonque.org>,
+	Haojian Zhuang <haojian.zhuang@gmail.com>,
+	Robert Jarzmik <robert.jarzmik@free.fr>,
+	Lizhi Hou <lizhi.hou@amd.com>, Brian Xu <brian.xu@amd.com>,
+	Raj Kumar Rampelli <raj.kumar.rampelli@amd.com>,
+	Michal Simek <michal.simek@amd.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: Re: [PATCH v3 00/13] dmaengine: introduce sg_nents_for_dma() and
+ convert users
+Message-ID: <aR9otpWZkPZrb9ug@smile.fi.intel.com>
+References: <20251113151603.3031717-1-andriy.shevchenko@linux.intel.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -63,64 +93,27 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <691f3465.050a0220.105096.7667@mx.google.com>
+In-Reply-To: <20251113151603.3031717-1-andriy.shevchenko@linux.intel.com>
+Organization: Intel Finland Oy - BIC 0357606-4 - c/o Alberga Business Park, 6
+ krs, Bertel Jungin Aukio 5, 02600 Espoo
 
-On Thu, Nov 20, 2025 at 04:31:47PM +0100, Christian Marangi wrote:
-> On Thu, Nov 20, 2025 at 04:25:37PM +0100, Konrad Dybcio wrote:
-> > On 11/20/25 2:54 PM, Christian Marangi wrote:
-> > > Document QCOM ipq8064 board variants ipq8062, ipq8065, ipq8066,
-> > > ipq8068, ipq8069 now matched by the QCOM cpufreq nvmem driver if
-> > > socinfo can't derive the variant from SMEM.
-> > > 
-> > > Suggested-by: Rob Herring <robh@kernel.org>
-> > > Signed-off-by: Christian Marangi <ansuelsmth@gmail.com>
-> > > ---
-> > >  .../devicetree/bindings/arm/qcom.yaml         | 20 +++++++++++++++++++
-> > >  1 file changed, 20 insertions(+)
-> > > 
-> > > diff --git a/Documentation/devicetree/bindings/arm/qcom.yaml b/Documentation/devicetree/bindings/arm/qcom.yaml
-> > > index 18b5ed044f9f..0eb1619fede8 100644
-> > > --- a/Documentation/devicetree/bindings/arm/qcom.yaml
-> > > +++ b/Documentation/devicetree/bindings/arm/qcom.yaml
-> > > @@ -299,12 +299,32 @@ properties:
-> > >                - qcom,ipq5424-rdp466
-> > >            - const: qcom,ipq5424
-> > >  
-> > > +      - items:
-> > > +          - const: qcom,ipq8062
-> > > +          - const: qcom,ipq8064
-> > 
-> > Since 'items' requires that all items are present (and in this order),
-> > we would normally have a board name go first.. but I suppose this is
-> > some sort of a fix to the issue that sparked this (posting the link
-> > for others to have more context)
-> > 
-> > But since these SoCs do exist, I wouldn't say this is necessarily
-> > wrong..
-> >
+On Thu, Nov 13, 2025 at 04:12:56PM +0100, Andy Shevchenko wrote:
+> A handful of the DMAengine drivers use same routine to calculate the number of
+> SG entries needed for the given DMA transfer. Provide a common helper for them
+> and convert.
 > 
-> Well we can see this as a ""template"" for device that might be added
-> using the ipq8062 or ipq8065 compatible.
+> I left the new helper on SG level of API because brief grepping shows potential
+> candidates outside of DMA engine, e.g.:
 > 
-> When device with that variant will be added we would have to just add an
-> enum with the real device name on top of it (as first element).
-> 
-> Honestly I should have added these compatible long time ago as on
-> OpenWrt we have tons of device that are ipq8062 or ipq8065 with the
-> compatible structure
-> 
-> "device,name", "qcom,ipq8065", "qcom,ipq8064".
+>   drivers/crypto/chelsio/chcr_algo.c:154:  nents += DIV_ROUND_UP(less, entlen);
+>   drivers/spi/spi-stm32.c:1495:  /* Count the number of entries needed */
 
-If you don't you have any boards yet, you can do:
+Vinod, what is your plan on the DMAengine patches? (Asking not only about this series)
+Please, tell if anything needs to be done from my side to help them being pulled.
 
-items:
-  - description: ...
-  - const: qcom,ipq8065
-  - const: qcom,ipq8064
+-- 
+With Best Regards,
+Andy Shevchenko
 
-Just to prevent skipping a board compatible.
 
-But you said you have tons of devices, so...
-
-Rob
 
