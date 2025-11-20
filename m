@@ -1,351 +1,497 @@
-Return-Path: <linux-arm-msm+bounces-82614-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-82617-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [142.0.200.124])
-	by mail.lfdr.de (Postfix) with ESMTPS id F2163C72584
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Nov 2025 07:29:35 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id 720A3C726C1
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Nov 2025 07:54:27 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 8CFD04E77AA
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Nov 2025 06:25:17 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTPS id 2A4C32F43E
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Nov 2025 06:54:26 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C4B8F2F6160;
-	Thu, 20 Nov 2025 06:25:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="Yg1g4UIR"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0EEBD30DEA0;
+	Thu, 20 Nov 2025 06:50:44 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4E242DECD2;
-	Thu, 20 Nov 2025 06:25:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+Received: from pegase2.c-s.fr (pegase2.c-s.fr [93.17.235.10])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3933730277D;
+	Thu, 20 Nov 2025 06:50:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=93.17.235.10
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763619911; cv=none; b=HnS/TNNupiC3Na6zEfRyViqwxQ1gM+86bo7LAC/yTO56posS0V6ACEYyLTv8zx1nlLT2Rt5/K9SHvmTap7dQLpZyjKrlic2+MlM7Gggn0su1kMirulofWBw6k/pmej97yjzOwq6b5PeHfYYVQHALB2y9KRKbWHqENCFSJR1Vdh8=
+	t=1763621443; cv=none; b=huwNDK77x1BScNrv1IhakVtpF/TFUn5wZDFLqDtWF1KeEUo1ifHOjTmOoUwj3UAoIhhJaKGRPewcIhEH0Otnb4OzZpJDAzEyMi4ujJe5USJ2fHp5MV95kyjClzhTgXx/lL+IPchoT1O6Gvdb7RY0fr1hWD2OjwOiN7VGzB6MiMw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763619911; c=relaxed/simple;
-	bh=24/4EwMfY2f7465Cyam41CVmzrHz5CcrlMxrLmS0Xns=;
-	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=ecmVycFLWir9iLK7DfRPHlyW1LDhD5PZpZpzFNzhvOcdwHqn4sZ3k5fmzVH16LbY9sGVcaywIM3/7cz2befyM7sZes2mqeFqS8KMGojaXF9hR6ZqZ/OOAOJtfThTr3huLIWqsmuxHw7I56sVZS4aCh60+zfcQxdPzaZM4XVBok8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=Yg1g4UIR; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 5AK64IrG3925993;
-	Thu, 20 Nov 2025 06:25:05 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:message-id
-	:mime-version:subject:to; s=qcppdkim1; bh=hyVxV7yR/QWeZeAzmOTtMw
-	ls/oLG4k6t5fu24Py0I5k=; b=Yg1g4UIREHyyDXx7Zigb0hsvQ7rGw8loK21nuU
-	CMqDsAuSD3BlsmxD8XNQgHd6iqvjy4igMGkD9ycOgxlRkrhlUgfCdsCMOGgy1r3k
-	0qtE0M6x/ISGXocjRMziPwoN/U2j7mrJyNPPQdTlG/9AOIlSe6kXBnUl8fiImgp1
-	jd3UdvGH4670Ma5t8F+wOPtsTMGDqI5miEY9rU2AZnyx13Cf+rgIwRwvXTs+el9q
-	8TYrKaifjCkLM14KEr4Ul5/HHiVuMO7SWVoRaLHFTpLW7FxXgYVa9xm2TxTLuTYR
-	xYtHAI8irDWoK/QjAxg7dOLzIs8WxIgvXLOTLSShXS4gq0bw==
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4ahwd781nh-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 20 Nov 2025 06:25:05 +0000 (GMT)
-Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-	by NALASPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 5AK6P4Y1012817
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 20 Nov 2025 06:25:04 GMT
-Received: from hu-utiwari-hyd.qualcomm.com (10.80.80.8) by
- nalasex01b.na.qualcomm.com (10.47.209.197) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.17; Wed, 19 Nov 2025 22:25:01 -0800
-From: <quic_utiwari@quicinc.com>
-To: <konrad.dybcio@oss.qualcomm.com>, <herbert@gondor.apana.org.au>,
-        <thara.gopinath@gmail.com>, <davem@davemloft.net>
-CC: <linux-crypto@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <quic_neersoni@quicinc.com>
-Subject: [PATCH v5] crypto: qce - Add runtime PM and interconnect bandwidth scaling support
-Date: Thu, 20 Nov 2025 11:54:43 +0530
-Message-ID: <20251120062443.2016084-1-quic_utiwari@quicinc.com>
-X-Mailer: git-send-email 2.34.1
+	s=arc-20240116; t=1763621443; c=relaxed/simple;
+	bh=Ot/b2n1QGAPmvScVPPSw82ER0TOldNBj7YlZvPreu6U=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=QW9zOFyAvXzQ73ncdLJRcIqKWEjTCoef0y+gKV8wKrL0DBic8pwHUzUhqcf1em3QvSLr+tgk1NgUQCsdIt7RqxljGQYimJ9P5bFrAOdwqQI9bU/rYfrHl787IseWsYrx/sJQofCJnVFUls6WzFbUMK5lWN1ggS4sH+13CdjaLYU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=csgroup.eu; spf=pass smtp.mailfrom=csgroup.eu; arc=none smtp.client-ip=93.17.235.10
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=csgroup.eu
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=csgroup.eu
+Received: from localhost (mailhub4.si.c-s.fr [172.26.127.67])
+	by localhost (Postfix) with ESMTP id 4dBpMs6q88z9sTD;
+	Thu, 20 Nov 2025 07:28:57 +0100 (CET)
+X-Virus-Scanned: amavisd-new at c-s.fr
+Received: from pegase2.c-s.fr ([172.26.127.65])
+	by localhost (pegase2.c-s.fr [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id TWthkfVQeV6N; Thu, 20 Nov 2025 07:28:57 +0100 (CET)
+Received: from messagerie.si.c-s.fr (messagerie.si.c-s.fr [192.168.25.192])
+	by pegase2.c-s.fr (Postfix) with ESMTP id 4dBpMs5g4qz9sSn;
+	Thu, 20 Nov 2025 07:28:57 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+	by messagerie.si.c-s.fr (Postfix) with ESMTP id AF03A8B76D;
+	Thu, 20 Nov 2025 07:28:57 +0100 (CET)
+X-Virus-Scanned: amavisd-new at c-s.fr
+Received: from messagerie.si.c-s.fr ([127.0.0.1])
+	by localhost (messagerie.si.c-s.fr [127.0.0.1]) (amavisd-new, port 10023)
+	with ESMTP id z9JhZL6TYq0h; Thu, 20 Nov 2025 07:28:57 +0100 (CET)
+Received: from [192.168.235.99] (unknown [192.168.235.99])
+	by messagerie.si.c-s.fr (Postfix) with ESMTP id 4D5678B763;
+	Thu, 20 Nov 2025 07:28:56 +0100 (CET)
+Message-ID: <6f00f854-5f0f-45df-8204-124f488d448d@csgroup.eu>
+Date: Thu, 20 Nov 2025 07:28:55 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH net-next v17 02/15] net: ethtool: Introduce
+ ETHTOOL_LINK_MEDIUM_* values
+To: Maxime Chevallier <maxime.chevallier@bootlin.com>, davem@davemloft.net
+Cc: netdev@vger.kernel.org, linux-kernel@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org, thomas.petazzoni@bootlin.com,
+ Andrew Lunn <andrew@lunn.ch>, Jakub Kicinski <kuba@kernel.org>,
+ Eric Dumazet <edumazet@google.com>, Paolo Abeni <pabeni@redhat.com>,
+ Russell King <linux@armlinux.org.uk>, linux-arm-kernel@lists.infradead.org,
+ Herve Codina <herve.codina@bootlin.com>,
+ Florian Fainelli <f.fainelli@gmail.com>,
+ Heiner Kallweit <hkallweit1@gmail.com>,
+ Vladimir Oltean <vladimir.oltean@nxp.com>,
+ =?UTF-8?Q?K=C3=B6ry_Maincent?= <kory.maincent@bootlin.com>,
+ =?UTF-8?Q?Marek_Beh=C3=BAn?= <kabel@kernel.org>,
+ Oleksij Rempel <o.rempel@pengutronix.de>,
+ =?UTF-8?Q?Nicol=C3=B2_Veronese?= <nicveronese@gmail.com>,
+ Simon Horman <horms@kernel.org>, mwojtas@chromium.org,
+ Antoine Tenart <atenart@kernel.org>, devicetree@vger.kernel.org,
+ Conor Dooley <conor+dt@kernel.org>, Krzysztof Kozlowski
+ <krzk+dt@kernel.org>, Rob Herring <robh@kernel.org>,
+ Romain Gantois <romain.gantois@bootlin.com>,
+ Daniel Golle <daniel@makrotopia.org>,
+ Dimitri Fedrau <dimitri.fedrau@liebherr.com>
+References: <20251119195920.442860-1-maxime.chevallier@bootlin.com>
+ <20251119195920.442860-3-maxime.chevallier@bootlin.com>
+From: Christophe Leroy <christophe.leroy@csgroup.eu>
+Content-Language: fr-FR
+In-Reply-To: <20251119195920.442860-3-maxime.chevallier@bootlin.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01b.na.qualcomm.com (10.47.209.197)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Authority-Analysis: v=2.4 cv=Jtf8bc4C c=1 sm=1 tr=0 ts=691eb441 cx=c_pps
- a=ouPCqIW2jiPt+lZRy3xVPw==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
- a=GEpy-HfZoHoA:10 a=6UeiqGixMTsA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=VwQbUJbxAAAA:8 a=COk6AnOGAAAA:8 a=tY3p4qJyD-uLZWqq6sMA:9
- a=TjNXssC_j7lpFel5tvFf:22
-X-Proofpoint-ORIG-GUID: Uc6Jp052qTlDkaFUboa9yNrVLLweSxhf
-X-Proofpoint-GUID: Uc6Jp052qTlDkaFUboa9yNrVLLweSxhf
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMTIwMDAzNiBTYWx0ZWRfX+AInOhd1AyoZ
- iZbXvw3vg6ANPkVRNulj20Q8k1lDYvdKul6N/rV/z+MdOEGyrhwLcYK8ucVsqs4N96Z0uGtLTnp
- LuqqYjZwwmrlhIXnGO8x1SNHzPFh5oqEn9JKjRgcN0FFW5MqVGYl5N1+MPM6KVBUKJD4TvRWOCI
- OoZ4EyTMsZA2/8s1djeB4Kd2N+NbPe3TEJseuUF0Bc+n7WQXAo57Lh6q0GfMNEwwvxugc/JoJXA
- CX1IYZusOh77u3tTHCgo0qC6LofE+IUwXCBQ3O08fZ+aACJB3RI+LEZFsmg7piYLErRBpBtrmT+
- pxFkNTrMIafVyIaYjre5MtdpdIUbcuKcQMj+Q0ZYLbj6D9wAMVWllUUfeXjqeAUIgurw4fXS95p
- LADcIdg7WXxXdjAgBhpf46xwMykktQ==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
- definitions=2025-11-20_02,2025-11-18_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 malwarescore=0 clxscore=1015 adultscore=0
- lowpriorityscore=0 bulkscore=0 impostorscore=0 phishscore=0 spamscore=0
- suspectscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2510240001
- definitions=main-2511200036
 
-From: Udit Tiwari <quic_utiwari@quicinc.com>
 
-The Qualcomm Crypto Engine (QCE) driver currently lacks support for
-runtime power management (PM) and interconnect bandwidth control.
-As a result, the hardware remains fully powered and clocks stay
-enabled even when the device is idle. Additionally, static
-interconnect bandwidth votes are held indefinitely, preventing the
-system from reclaiming unused bandwidth.
 
-Address this by enabling runtime PM and dynamic interconnect
-bandwidth scaling to allow the system to suspend the device when idle
-and scale interconnect usage based on actual demand. Improve overall
-system efficiency by reducing power usage and optimizing interconnect
-resource allocation.
+Le 19/11/2025 à 20:59, Maxime Chevallier a écrit :
+> In an effort to have a better representation of Ethernet ports,
+> introduce enumeration values representing the various ethernet Mediums.
+> 
+> This is part of the 802.3 naming convention, for example :
+> 
+> 1000 Base T 4
+>   |    |   | |
+>   |    |   | \_ pairs (4)
+>   |    |   \___ Medium (T == Twisted Copper Pairs)
+>   |    \_______ Baseband transmission
+>   \____________ Speed
+> 
+>   Other example :
+> 
+> 10000 Base K X 4
+>             | | \_ lanes (4)
+>             | \___ encoding (BaseX is 8b/10b while BaseR is 66b/64b)
+>             \_____ Medium (K is backplane ethernet)
+> 
+> In the case of representing a physical port, only the medium and number
+> of pairs should be relevant. One exception would be 1000BaseX, which is
+> currently also used as a medium in what appears to be any of
+> 1000BaseSX, 1000BaseCX and 1000BaseLX. This was reflected in the mediums
+> associated with the 1000BaseX linkmode.
+> 
+> These mediums are set in the net/ethtool/common.c lookup table that
+> maintains a list of all linkmodes with their number of pairs, medium,
+> encoding, speed and duplex.
+> 
+> One notable exception to this is 100M BaseT Ethernet. 100BaseTX is a
+> 2-pairs protocol but it will also work on 4-pairs cables, so the lookup
+> table contains 2 sets of pair numbers, indicating the min number of pairs
+> for a protocol to work and the "nominal" number of pairs as well.
+> 
+> Another set of exceptions are linkmodes such 100000baseLR4_ER4, where
+> the same link mode seems to represent 100GBaseLR4 and 100GBaseER4. The
+> macro __DEFINE_LINK_MODE_PARAMS_MEDIUMS is here used to populate the
+> .mediums bitfield with all appropriate mediums.
+> 
+> Signed-off-by: Maxime Chevallier <maxime.chevallier@bootlin.com>
 
-Make the following changes as part of this integration:
+Reviewed-by: Christophe Leroy <christophe.leroy@csgroup.eu>
 
-- Add support for pm_runtime APIs to manage device power state
-  transitions.
-- Implement runtime_suspend() and runtime_resume() callbacks to gate
-  clocks and vote for interconnect bandwidth only when needed.
-- Replace devm_clk_get_optional_enabled() with devm_pm_clk_create() +
-  pm_clk_add() and let the PM core manage device clocks during runtime
-  PM and system sleep.
-- Register dev_pm_ops with the platform driver to hook into the PM
-  framework.
-
-Tested:
-
-- Verify that ICC votes drop to zero after probe and upon request
-  completion.
-- Confirm that runtime PM usage count increments during active
-  requests and decrements afterward.
-- Observe that the device correctly enters the suspended state when
-  idle.
-
-Signed-off-by: Udit Tiwari <quic_utiwari@quicinc.com>
----
-Changes in v5:
-- Drop Reported-by and Closes tags for kernel test robot W=1 warnings, as
-  the issue was fixed within the same patch series.
-- Fix a minor comment indentation/style issue.
-
-Changes in v4:
-- Annotate runtime PM callbacks with __maybe_unused to silence W=1 warnings.
-- Add Reported-by and Closes tags for kernel test robot warning.
-
-Changes in v3:
-- Switch from manual clock management to PM clock helpers
-  (devm_pm_clk_create() + pm_clk_add()); no direct clk_* enable/disable
-  in runtime callbacks.
-- Replace pm_runtime_get_sync() with pm_runtime_resume_and_get(); remove
-  pm_runtime_put_noidle() on error.
-- Define PM ops using helper macros and reuse runtime callbacks for system
-  sleep via pm_runtime_force_suspend()/pm_runtime_force_resume().
-- Link to v2: https://lore.kernel.org/lkml/20250826110917.3383061-1-quic_utiwari@quicinc.com/
-
-Changes in v2:
-- Extend suspend/resume support to include runtime PM and ICC scaling.
-- Register dev_pm_ops and implement runtime_suspend/resume callbacks.
-- Link to v1: https://lore.kernel.org/lkml/20250606105808.2119280-1-quic_utiwari@quicinc.com/
----
- drivers/crypto/qce/core.c | 103 +++++++++++++++++++++++++++++++-------
- 1 file changed, 86 insertions(+), 17 deletions(-)
-
-diff --git a/drivers/crypto/qce/core.c b/drivers/crypto/qce/core.c
-index b966f3365b7d..2f07cc479998 100644
---- a/drivers/crypto/qce/core.c
-+++ b/drivers/crypto/qce/core.c
-@@ -12,6 +12,9 @@
- #include <linux/module.h>
- #include <linux/mod_devicetable.h>
- #include <linux/platform_device.h>
-+#include <linux/pm.h>
-+#include <linux/pm_runtime.h>
-+#include <linux/pm_clock.h>
- #include <linux/types.h>
- #include <crypto/algapi.h>
- #include <crypto/internal/hash.h>
-@@ -90,13 +93,17 @@ static int qce_handle_queue(struct qce_device *qce,
- 	struct crypto_async_request *async_req, *backlog;
- 	int ret = 0, err;
- 
-+	ret = pm_runtime_resume_and_get(qce->dev);
-+	if (ret < 0)
-+		return ret;
-+
- 	scoped_guard(mutex, &qce->lock) {
- 		if (req)
- 			ret = crypto_enqueue_request(&qce->queue, req);
- 
- 		/* busy, do not dequeue request */
- 		if (qce->req)
--			return ret;
-+			goto qce_suspend;
- 
- 		backlog = crypto_get_backlog(&qce->queue);
- 		async_req = crypto_dequeue_request(&qce->queue);
-@@ -105,7 +112,7 @@ static int qce_handle_queue(struct qce_device *qce,
- 	}
- 
- 	if (!async_req)
--		return ret;
-+		goto qce_suspend;
- 
- 	if (backlog) {
- 		scoped_guard(mutex, &qce->lock)
-@@ -118,6 +125,8 @@ static int qce_handle_queue(struct qce_device *qce,
- 		schedule_work(&qce->done_work);
- 	}
- 
-+qce_suspend:
-+	pm_runtime_put_autosuspend(qce->dev);
- 	return ret;
- }
- 
-@@ -207,37 +216,47 @@ static int qce_crypto_probe(struct platform_device *pdev)
- 	if (ret < 0)
- 		return ret;
- 
--	qce->core = devm_clk_get_optional_enabled(qce->dev, "core");
--	if (IS_ERR(qce->core))
--		return PTR_ERR(qce->core);
-+	/* PM clock helpers: register device clocks */
-+	ret = devm_pm_clk_create(dev);
-+	if (ret)
-+		return ret;
- 
--	qce->iface = devm_clk_get_optional_enabled(qce->dev, "iface");
--	if (IS_ERR(qce->iface))
--		return PTR_ERR(qce->iface);
-+	ret = pm_clk_add(dev, "core");
-+	if (ret)
-+		return ret;
- 
--	qce->bus = devm_clk_get_optional_enabled(qce->dev, "bus");
--	if (IS_ERR(qce->bus))
--		return PTR_ERR(qce->bus);
-+	ret = pm_clk_add(dev, "iface");
-+	if (ret)
-+		return ret;
- 
--	qce->mem_path = devm_of_icc_get(qce->dev, "memory");
-+	ret = pm_clk_add(dev, "bus");
-+	if (ret)
-+		return ret;
-+
-+	qce->mem_path = devm_of_icc_get(dev, "memory");
- 	if (IS_ERR(qce->mem_path))
- 		return PTR_ERR(qce->mem_path);
- 
--	ret = icc_set_bw(qce->mem_path, QCE_DEFAULT_MEM_BANDWIDTH, QCE_DEFAULT_MEM_BANDWIDTH);
-+	/* Enable runtime PM after clocks and ICC are acquired */
-+	ret = devm_pm_runtime_enable(dev);
- 	if (ret)
- 		return ret;
- 
--	ret = devm_qce_dma_request(qce->dev, &qce->dma);
-+	ret = pm_runtime_resume_and_get(dev);
- 	if (ret)
- 		return ret;
- 
-+	ret = devm_qce_dma_request(qce->dev, &qce->dma);
-+	if (ret)
-+		goto err_pm;
-+
- 	ret = qce_check_version(qce);
- 	if (ret)
--		return ret;
-+		goto err_pm;
- 
- 	ret = devm_mutex_init(qce->dev, &qce->lock);
- 	if (ret)
--		return ret;
-+		goto err_pm;
- 
- 	INIT_WORK(&qce->done_work, qce_req_done_work);
- 	crypto_init_queue(&qce->queue, QCE_QUEUE_LENGTH);
-@@ -245,9 +264,58 @@ static int qce_crypto_probe(struct platform_device *pdev)
- 	qce->async_req_enqueue = qce_async_request_enqueue;
- 	qce->async_req_done = qce_async_request_done;
- 
--	return devm_qce_register_algs(qce);
-+	ret = devm_qce_register_algs(qce);
-+	if (ret)
-+		goto err_pm;
-+
-+	/* Configure autosuspend after successful init */
-+	pm_runtime_set_autosuspend_delay(dev, 100);
-+	pm_runtime_use_autosuspend(dev);
-+	pm_runtime_mark_last_busy(dev);
-+	pm_runtime_put_autosuspend(dev);
-+
-+	return 0;
-+
-+err_pm:
-+	pm_runtime_put(dev);
-+
-+	return ret;
-+}
-+
-+static int __maybe_unused qce_runtime_suspend(struct device *dev)
-+{
-+	struct qce_device *qce = dev_get_drvdata(dev);
-+
-+	icc_disable(qce->mem_path);
-+
-+	return 0;
-+}
-+
-+static int __maybe_unused qce_runtime_resume(struct device *dev)
-+{
-+	struct qce_device *qce = dev_get_drvdata(dev);
-+	int ret = 0;
-+
-+	ret = icc_enable(qce->mem_path);
-+	if (ret)
-+		return ret;
-+
-+	ret = icc_set_bw(qce->mem_path, QCE_DEFAULT_MEM_BANDWIDTH, QCE_DEFAULT_MEM_BANDWIDTH);
-+	if (ret)
-+		goto err_icc;
-+
-+	return 0;
-+
-+err_icc:
-+	icc_disable(qce->mem_path);
-+	return ret;
- }
- 
-+static const struct dev_pm_ops qce_crypto_pm_ops = {
-+	SET_RUNTIME_PM_OPS(qce_runtime_suspend, qce_runtime_resume, NULL)
-+	SET_SYSTEM_SLEEP_PM_OPS(pm_runtime_force_suspend, pm_runtime_force_resume)
-+};
-+
- static const struct of_device_id qce_crypto_of_match[] = {
- 	{ .compatible = "qcom,crypto-v5.1", },
- 	{ .compatible = "qcom,crypto-v5.4", },
-@@ -261,6 +329,7 @@ static struct platform_driver qce_crypto_driver = {
- 	.driver = {
- 		.name = KBUILD_MODNAME,
- 		.of_match_table = qce_crypto_of_match,
-+		.pm = &qce_crypto_pm_ops,
- 	},
- };
- module_platform_driver(qce_crypto_driver);
--- 
-2.34.1
+> ---
+>   drivers/net/phy/phy_caps.c |   8 ++
+>   include/linux/ethtool.h    |  25 +++-
+>   net/ethtool/common.c       | 252 +++++++++++++++++++++----------------
+>   3 files changed, 173 insertions(+), 112 deletions(-)
+> 
+> diff --git a/drivers/net/phy/phy_caps.c b/drivers/net/phy/phy_caps.c
+> index 23c808b59b6f..9a5e293c5104 100644
+> --- a/drivers/net/phy/phy_caps.c
+> +++ b/drivers/net/phy/phy_caps.c
+> @@ -78,6 +78,14 @@ int __init phy_caps_init(void)
+>   	/* Fill the caps array from net/ethtool/common.c */
+>   	for (i = 0; i < __ETHTOOL_LINK_MODE_MASK_NBITS; i++) {
+>   		linkmode = &link_mode_params[i];
+> +
+> +		/* Sanity check the linkmodes array for number of pairs */
+> +		if (linkmode->pairs < linkmode->min_pairs) {
+> +			pr_err("Pairs count must not be under min_pairs for linkmode %d\n",
+> +			       i);
+> +			return -EINVAL;
+> +		}
+> +
+>   		capa = speed_duplex_to_capa(linkmode->speed, linkmode->duplex);
+>   
+>   		if (capa < 0) {
+> diff --git a/include/linux/ethtool.h b/include/linux/ethtool.h
+> index 5c9162193d26..37aede6af96f 100644
+> --- a/include/linux/ethtool.h
+> +++ b/include/linux/ethtool.h
+> @@ -216,13 +216,32 @@ static inline u8 *ethtool_rxfh_context_key(struct ethtool_rxfh_context *ctx)
+>   void ethtool_rxfh_context_lost(struct net_device *dev, u32 context_id);
+>   
+>   struct link_mode_info {
+> -	int                             speed;
+> -	u8                              lanes;
+> -	u8                              duplex;
+> +	int	speed;
+> +	u8	lanes;
+> +	u8	min_pairs;
+> +	u8	pairs;
+> +	u8	duplex;
+> +	u16	mediums;
+>   };
+>   
+>   extern const struct link_mode_info link_mode_params[];
+>   
+> +enum ethtool_link_medium {
+> +	ETHTOOL_LINK_MEDIUM_BASET = 0,
+> +	ETHTOOL_LINK_MEDIUM_BASEK,
+> +	ETHTOOL_LINK_MEDIUM_BASES,
+> +	ETHTOOL_LINK_MEDIUM_BASEC,
+> +	ETHTOOL_LINK_MEDIUM_BASEL,
+> +	ETHTOOL_LINK_MEDIUM_BASED,
+> +	ETHTOOL_LINK_MEDIUM_BASEE,
+> +	ETHTOOL_LINK_MEDIUM_BASEF,
+> +	ETHTOOL_LINK_MEDIUM_BASEV,
+> +	ETHTOOL_LINK_MEDIUM_BASEMLD,
+> +	ETHTOOL_LINK_MEDIUM_NONE,
+> +
+> +	__ETHTOOL_LINK_MEDIUM_LAST,
+> +};
+> +
+>   /* declare a link mode bitmap */
+>   #define __ETHTOOL_DECLARE_LINK_MODE_MASK(name)		\
+>   	DECLARE_BITMAP(name, __ETHTOOL_LINK_MODE_MASK_NBITS)
+> diff --git a/net/ethtool/common.c b/net/ethtool/common.c
+> index 55223ebc2a7e..2f4b70f104e8 100644
+> --- a/net/ethtool/common.c
+> +++ b/net/ethtool/common.c
+> @@ -281,12 +281,35 @@ static_assert(ARRAY_SIZE(link_mode_names) == __ETHTOOL_LINK_MODE_MASK_NBITS);
+>   #define __LINK_MODE_LANES_DR8_2		8
+>   #define __LINK_MODE_LANES_T1BRR		1
+>   
+> -#define __DEFINE_LINK_MODE_PARAMS(_speed, _type, _duplex)	\
+> +#define __DEFINE_LINK_MODE_PARAMS_PAIRS(_speed, _type, _min_pairs, _pairs, _duplex, _medium) \
+>   	[ETHTOOL_LINK_MODE(_speed, _type, _duplex)] = {		\
+>   		.speed  = SPEED_ ## _speed, \
+>   		.lanes  = __LINK_MODE_LANES_ ## _type, \
+> -		.duplex	= __DUPLEX_ ## _duplex \
+> +		.min_pairs = _min_pairs, \
+> +		.pairs = _pairs, \
+> +		.duplex	= __DUPLEX_ ## _duplex, \
+> +		.mediums = BIT(ETHTOOL_LINK_MEDIUM_BASE ## _medium) \
+>   	}
+> +
+> +#define __DEFINE_LINK_MODE_PARAMS(_speed, _type, _duplex, _medium)	\
+> +	[ETHTOOL_LINK_MODE(_speed, _type, _duplex)] = {		\
+> +		.speed  = SPEED_ ## _speed, \
+> +		.lanes  = __LINK_MODE_LANES_ ## _type, \
+> +		.min_pairs = 0, \
+> +		.pairs = 0, \
+> +		.duplex	= __DUPLEX_ ## _duplex, \
+> +		.mediums = BIT(ETHTOOL_LINK_MEDIUM_BASE ## _medium) \
+> +	}
+> +#define __DEFINE_LINK_MODE_PARAMS_MEDIUMS(_speed, _type, _duplex, _mediums)	\
+> +	[ETHTOOL_LINK_MODE(_speed, _type, _duplex)] = {		\
+> +		.speed  = SPEED_ ## _speed, \
+> +		.lanes  = __LINK_MODE_LANES_ ## _type, \
+> +		.min_pairs = 0, \
+> +		.pairs = 0, \
+> +		.duplex	= __DUPLEX_ ## _duplex, \
+> +		.mediums = (_mediums) \
+> +	}
+> +#define __MED(_medium)	(BIT(ETHTOOL_LINK_MEDIUM_BASE ## _medium))
+>   #define __DUPLEX_Half DUPLEX_HALF
+>   #define __DUPLEX_Full DUPLEX_FULL
+>   #define __DEFINE_SPECIAL_MODE_PARAMS(_mode) \
+> @@ -294,134 +317,145 @@ static_assert(ARRAY_SIZE(link_mode_names) == __ETHTOOL_LINK_MODE_MASK_NBITS);
+>   		.speed	= SPEED_UNKNOWN, \
+>   		.lanes	= 0, \
+>   		.duplex	= DUPLEX_UNKNOWN, \
+> +		.mediums = BIT(ETHTOOL_LINK_MEDIUM_NONE), \
+>   	}
+>   
+>   const struct link_mode_info link_mode_params[] = {
+> -	__DEFINE_LINK_MODE_PARAMS(10, T, Half),
+> -	__DEFINE_LINK_MODE_PARAMS(10, T, Full),
+> -	__DEFINE_LINK_MODE_PARAMS(100, T, Half),
+> -	__DEFINE_LINK_MODE_PARAMS(100, T, Full),
+> -	__DEFINE_LINK_MODE_PARAMS(1000, T, Half),
+> -	__DEFINE_LINK_MODE_PARAMS(1000, T, Full),
+> +	__DEFINE_LINK_MODE_PARAMS_PAIRS(10, T, 2, 4, Half, T),
+> +	__DEFINE_LINK_MODE_PARAMS_PAIRS(10, T, 2, 4, Full, T),
+> +	__DEFINE_LINK_MODE_PARAMS_PAIRS(100, T, 2, 4, Half, T),
+> +	__DEFINE_LINK_MODE_PARAMS_PAIRS(100, T, 2, 4, Full, T),
+> +	__DEFINE_LINK_MODE_PARAMS_PAIRS(1000, T, 4, 4, Half, T),
+> +	__DEFINE_LINK_MODE_PARAMS_PAIRS(1000, T, 4, 4, Full, T),
+>   	__DEFINE_SPECIAL_MODE_PARAMS(Autoneg),
+>   	__DEFINE_SPECIAL_MODE_PARAMS(TP),
+>   	__DEFINE_SPECIAL_MODE_PARAMS(AUI),
+>   	__DEFINE_SPECIAL_MODE_PARAMS(MII),
+>   	__DEFINE_SPECIAL_MODE_PARAMS(FIBRE),
+>   	__DEFINE_SPECIAL_MODE_PARAMS(BNC),
+> -	__DEFINE_LINK_MODE_PARAMS(10000, T, Full),
+> +	__DEFINE_LINK_MODE_PARAMS_PAIRS(10000, T, 4, 4, Full, T),
+>   	__DEFINE_SPECIAL_MODE_PARAMS(Pause),
+>   	__DEFINE_SPECIAL_MODE_PARAMS(Asym_Pause),
+> -	__DEFINE_LINK_MODE_PARAMS(2500, X, Full),
+> +	__DEFINE_LINK_MODE_PARAMS_MEDIUMS(2500, X, Full,
+> +					  __MED(C) | __MED(S) | __MED(L)),
+>   	__DEFINE_SPECIAL_MODE_PARAMS(Backplane),
+> -	__DEFINE_LINK_MODE_PARAMS(1000, KX, Full),
+> -	__DEFINE_LINK_MODE_PARAMS(10000, KX4, Full),
+> -	__DEFINE_LINK_MODE_PARAMS(10000, KR, Full),
+> +	__DEFINE_LINK_MODE_PARAMS(1000, KX, Full, K),
+> +	__DEFINE_LINK_MODE_PARAMS(10000, KX4, Full, K),
+> +	__DEFINE_LINK_MODE_PARAMS(10000, KR, Full, K),
+>   	[ETHTOOL_LINK_MODE_10000baseR_FEC_BIT] = {
+>   		.speed	= SPEED_10000,
+>   		.lanes	= 1,
+>   		.duplex = DUPLEX_FULL,
+>   	},
+> -	__DEFINE_LINK_MODE_PARAMS(20000, MLD2, Full),
+> -	__DEFINE_LINK_MODE_PARAMS(20000, KR2, Full),
+> -	__DEFINE_LINK_MODE_PARAMS(40000, KR4, Full),
+> -	__DEFINE_LINK_MODE_PARAMS(40000, CR4, Full),
+> -	__DEFINE_LINK_MODE_PARAMS(40000, SR4, Full),
+> -	__DEFINE_LINK_MODE_PARAMS(40000, LR4, Full),
+> -	__DEFINE_LINK_MODE_PARAMS(56000, KR4, Full),
+> -	__DEFINE_LINK_MODE_PARAMS(56000, CR4, Full),
+> -	__DEFINE_LINK_MODE_PARAMS(56000, SR4, Full),
+> -	__DEFINE_LINK_MODE_PARAMS(56000, LR4, Full),
+> -	__DEFINE_LINK_MODE_PARAMS(25000, CR, Full),
+> -	__DEFINE_LINK_MODE_PARAMS(25000, KR, Full),
+> -	__DEFINE_LINK_MODE_PARAMS(25000, SR, Full),
+> -	__DEFINE_LINK_MODE_PARAMS(50000, CR2, Full),
+> -	__DEFINE_LINK_MODE_PARAMS(50000, KR2, Full),
+> -	__DEFINE_LINK_MODE_PARAMS(100000, KR4, Full),
+> -	__DEFINE_LINK_MODE_PARAMS(100000, SR4, Full),
+> -	__DEFINE_LINK_MODE_PARAMS(100000, CR4, Full),
+> -	__DEFINE_LINK_MODE_PARAMS(100000, LR4_ER4, Full),
+> -	__DEFINE_LINK_MODE_PARAMS(50000, SR2, Full),
+> -	__DEFINE_LINK_MODE_PARAMS(1000, X, Full),
+> -	__DEFINE_LINK_MODE_PARAMS(10000, CR, Full),
+> -	__DEFINE_LINK_MODE_PARAMS(10000, SR, Full),
+> -	__DEFINE_LINK_MODE_PARAMS(10000, LR, Full),
+> -	__DEFINE_LINK_MODE_PARAMS(10000, LRM, Full),
+> -	__DEFINE_LINK_MODE_PARAMS(10000, ER, Full),
+> -	__DEFINE_LINK_MODE_PARAMS(2500, T, Full),
+> -	__DEFINE_LINK_MODE_PARAMS(5000, T, Full),
+> +	__DEFINE_LINK_MODE_PARAMS(20000, MLD2, Full, MLD),
+> +	__DEFINE_LINK_MODE_PARAMS(20000, KR2, Full, K),
+> +	__DEFINE_LINK_MODE_PARAMS(40000, KR4, Full, K),
+> +	__DEFINE_LINK_MODE_PARAMS(40000, CR4, Full, C),
+> +	__DEFINE_LINK_MODE_PARAMS(40000, SR4, Full, S),
+> +	__DEFINE_LINK_MODE_PARAMS(40000, LR4, Full, L),
+> +	__DEFINE_LINK_MODE_PARAMS(56000, KR4, Full, K),
+> +	__DEFINE_LINK_MODE_PARAMS(56000, CR4, Full, C),
+> +	__DEFINE_LINK_MODE_PARAMS(56000, SR4, Full, S),
+> +	__DEFINE_LINK_MODE_PARAMS(56000, LR4, Full, L),
+> +	__DEFINE_LINK_MODE_PARAMS(25000, CR, Full, C),
+> +	__DEFINE_LINK_MODE_PARAMS(25000, KR, Full, K),
+> +	__DEFINE_LINK_MODE_PARAMS(25000, SR, Full, S),
+> +	__DEFINE_LINK_MODE_PARAMS(50000, CR2, Full, C),
+> +	__DEFINE_LINK_MODE_PARAMS(50000, KR2, Full, K),
+> +	__DEFINE_LINK_MODE_PARAMS(100000, KR4, Full, K),
+> +	__DEFINE_LINK_MODE_PARAMS(100000, SR4, Full, S),
+> +	__DEFINE_LINK_MODE_PARAMS(100000, CR4, Full, C),
+> +	__DEFINE_LINK_MODE_PARAMS_MEDIUMS(100000, LR4_ER4, Full,
+> +					  __MED(L) | __MED(E)),
+> +	__DEFINE_LINK_MODE_PARAMS(50000, SR2, Full, S),
+> +	__DEFINE_LINK_MODE_PARAMS_MEDIUMS(1000, X, Full,
+> +					  __MED(C) | __MED(S) | __MED(L)),
+> +	__DEFINE_LINK_MODE_PARAMS(10000, CR, Full, C),
+> +	__DEFINE_LINK_MODE_PARAMS(10000, SR, Full, S),
+> +	__DEFINE_LINK_MODE_PARAMS(10000, LR, Full, L),
+> +	__DEFINE_LINK_MODE_PARAMS(10000, LRM, Full, L),
+> +	__DEFINE_LINK_MODE_PARAMS(10000, ER, Full, E),
+> +	__DEFINE_LINK_MODE_PARAMS_PAIRS(2500, T, 4, 4, Full, T),
+> +	__DEFINE_LINK_MODE_PARAMS_PAIRS(5000, T, 4, 4, Full, T),
+>   	__DEFINE_SPECIAL_MODE_PARAMS(FEC_NONE),
+>   	__DEFINE_SPECIAL_MODE_PARAMS(FEC_RS),
+>   	__DEFINE_SPECIAL_MODE_PARAMS(FEC_BASER),
+> -	__DEFINE_LINK_MODE_PARAMS(50000, KR, Full),
+> -	__DEFINE_LINK_MODE_PARAMS(50000, SR, Full),
+> -	__DEFINE_LINK_MODE_PARAMS(50000, CR, Full),
+> -	__DEFINE_LINK_MODE_PARAMS(50000, LR_ER_FR, Full),
+> -	__DEFINE_LINK_MODE_PARAMS(50000, DR, Full),
+> -	__DEFINE_LINK_MODE_PARAMS(100000, KR2, Full),
+> -	__DEFINE_LINK_MODE_PARAMS(100000, SR2, Full),
+> -	__DEFINE_LINK_MODE_PARAMS(100000, CR2, Full),
+> -	__DEFINE_LINK_MODE_PARAMS(100000, LR2_ER2_FR2, Full),
+> -	__DEFINE_LINK_MODE_PARAMS(100000, DR2, Full),
+> -	__DEFINE_LINK_MODE_PARAMS(200000, KR4, Full),
+> -	__DEFINE_LINK_MODE_PARAMS(200000, SR4, Full),
+> -	__DEFINE_LINK_MODE_PARAMS(200000, LR4_ER4_FR4, Full),
+> -	__DEFINE_LINK_MODE_PARAMS(200000, DR4, Full),
+> -	__DEFINE_LINK_MODE_PARAMS(200000, CR4, Full),
+> -	__DEFINE_LINK_MODE_PARAMS(100, T1, Full),
+> -	__DEFINE_LINK_MODE_PARAMS(1000, T1, Full),
+> -	__DEFINE_LINK_MODE_PARAMS(400000, KR8, Full),
+> -	__DEFINE_LINK_MODE_PARAMS(400000, SR8, Full),
+> -	__DEFINE_LINK_MODE_PARAMS(400000, LR8_ER8_FR8, Full),
+> -	__DEFINE_LINK_MODE_PARAMS(400000, DR8, Full),
+> -	__DEFINE_LINK_MODE_PARAMS(400000, CR8, Full),
+> +	__DEFINE_LINK_MODE_PARAMS(50000, KR, Full, K),
+> +	__DEFINE_LINK_MODE_PARAMS(50000, SR, Full, S),
+> +	__DEFINE_LINK_MODE_PARAMS(50000, CR, Full, C),
+> +	__DEFINE_LINK_MODE_PARAMS_MEDIUMS(50000, LR_ER_FR, Full,
+> +					  __MED(L) | __MED(E) | __MED(F)),
+> +	__DEFINE_LINK_MODE_PARAMS(50000, DR, Full, D),
+> +	__DEFINE_LINK_MODE_PARAMS(100000, KR2, Full, K),
+> +	__DEFINE_LINK_MODE_PARAMS(100000, SR2, Full, S),
+> +	__DEFINE_LINK_MODE_PARAMS(100000, CR2, Full, C),
+> +	__DEFINE_LINK_MODE_PARAMS_MEDIUMS(100000, LR2_ER2_FR2, Full,
+> +					  __MED(L) | __MED(E) | __MED(F)),
+> +	__DEFINE_LINK_MODE_PARAMS(100000, DR2, Full, D),
+> +	__DEFINE_LINK_MODE_PARAMS(200000, KR4, Full, K),
+> +	__DEFINE_LINK_MODE_PARAMS(200000, SR4, Full, S),
+> +	__DEFINE_LINK_MODE_PARAMS_MEDIUMS(200000, LR4_ER4_FR4, Full,
+> +					  __MED(L) | __MED(E) | __MED(F)),
+> +	__DEFINE_LINK_MODE_PARAMS(200000, DR4, Full, D),
+> +	__DEFINE_LINK_MODE_PARAMS(200000, CR4, Full, C),
+> +	__DEFINE_LINK_MODE_PARAMS_PAIRS(100, T1, 1, 1, Full, T),
+> +	__DEFINE_LINK_MODE_PARAMS_PAIRS(1000, T1, 1, 1, Full, T),
+> +	__DEFINE_LINK_MODE_PARAMS(400000, KR8, Full, K),
+> +	__DEFINE_LINK_MODE_PARAMS(400000, SR8, Full, S),
+> +	__DEFINE_LINK_MODE_PARAMS_MEDIUMS(400000, LR8_ER8_FR8, Full,
+> +					  __MED(L) | __MED(E) | __MED(F)),
+> +	__DEFINE_LINK_MODE_PARAMS(400000, DR8, Full, D),
+> +	__DEFINE_LINK_MODE_PARAMS(400000, CR8, Full, C),
+>   	__DEFINE_SPECIAL_MODE_PARAMS(FEC_LLRS),
+> -	__DEFINE_LINK_MODE_PARAMS(100000, KR, Full),
+> -	__DEFINE_LINK_MODE_PARAMS(100000, SR, Full),
+> -	__DEFINE_LINK_MODE_PARAMS(100000, LR_ER_FR, Full),
+> -	__DEFINE_LINK_MODE_PARAMS(100000, DR, Full),
+> -	__DEFINE_LINK_MODE_PARAMS(100000, CR, Full),
+> -	__DEFINE_LINK_MODE_PARAMS(200000, KR2, Full),
+> -	__DEFINE_LINK_MODE_PARAMS(200000, SR2, Full),
+> -	__DEFINE_LINK_MODE_PARAMS(200000, LR2_ER2_FR2, Full),
+> -	__DEFINE_LINK_MODE_PARAMS(200000, DR2, Full),
+> -	__DEFINE_LINK_MODE_PARAMS(200000, CR2, Full),
+> -	__DEFINE_LINK_MODE_PARAMS(400000, KR4, Full),
+> -	__DEFINE_LINK_MODE_PARAMS(400000, SR4, Full),
+> -	__DEFINE_LINK_MODE_PARAMS(400000, LR4_ER4_FR4, Full),
+> -	__DEFINE_LINK_MODE_PARAMS(400000, DR4, Full),
+> -	__DEFINE_LINK_MODE_PARAMS(400000, CR4, Full),
+> -	__DEFINE_LINK_MODE_PARAMS(100, FX, Half),
+> -	__DEFINE_LINK_MODE_PARAMS(100, FX, Full),
+> -	__DEFINE_LINK_MODE_PARAMS(10, T1L, Full),
+> -	__DEFINE_LINK_MODE_PARAMS(800000, CR8, Full),
+> -	__DEFINE_LINK_MODE_PARAMS(800000, KR8, Full),
+> -	__DEFINE_LINK_MODE_PARAMS(800000, DR8, Full),
+> -	__DEFINE_LINK_MODE_PARAMS(800000, DR8_2, Full),
+> -	__DEFINE_LINK_MODE_PARAMS(800000, SR8, Full),
+> -	__DEFINE_LINK_MODE_PARAMS(800000, VR8, Full),
+> -	__DEFINE_LINK_MODE_PARAMS(10, T1S, Full),
+> -	__DEFINE_LINK_MODE_PARAMS(10, T1S, Half),
+> -	__DEFINE_LINK_MODE_PARAMS(10, T1S_P2MP, Half),
+> -	__DEFINE_LINK_MODE_PARAMS(10, T1BRR, Full),
+> -	__DEFINE_LINK_MODE_PARAMS(200000, CR, Full),
+> -	__DEFINE_LINK_MODE_PARAMS(200000, KR, Full),
+> -	__DEFINE_LINK_MODE_PARAMS(200000, DR, Full),
+> -	__DEFINE_LINK_MODE_PARAMS(200000, DR_2, Full),
+> -	__DEFINE_LINK_MODE_PARAMS(200000, SR, Full),
+> -	__DEFINE_LINK_MODE_PARAMS(200000, VR, Full),
+> -	__DEFINE_LINK_MODE_PARAMS(400000, CR2, Full),
+> -	__DEFINE_LINK_MODE_PARAMS(400000, KR2, Full),
+> -	__DEFINE_LINK_MODE_PARAMS(400000, DR2, Full),
+> -	__DEFINE_LINK_MODE_PARAMS(400000, DR2_2, Full),
+> -	__DEFINE_LINK_MODE_PARAMS(400000, SR2, Full),
+> -	__DEFINE_LINK_MODE_PARAMS(400000, VR2, Full),
+> -	__DEFINE_LINK_MODE_PARAMS(800000, CR4, Full),
+> -	__DEFINE_LINK_MODE_PARAMS(800000, KR4, Full),
+> -	__DEFINE_LINK_MODE_PARAMS(800000, DR4, Full),
+> -	__DEFINE_LINK_MODE_PARAMS(800000, DR4_2, Full),
+> -	__DEFINE_LINK_MODE_PARAMS(800000, SR4, Full),
+> -	__DEFINE_LINK_MODE_PARAMS(800000, VR4, Full),
+> +	__DEFINE_LINK_MODE_PARAMS(100000, KR, Full, K),
+> +	__DEFINE_LINK_MODE_PARAMS(100000, SR, Full, S),
+> +	__DEFINE_LINK_MODE_PARAMS_MEDIUMS(100000, LR_ER_FR, Full,
+> +					  __MED(L) | __MED(E) | __MED(F)),
+> +	__DEFINE_LINK_MODE_PARAMS(100000, DR, Full, D),
+> +	__DEFINE_LINK_MODE_PARAMS(100000, CR, Full, C),
+> +	__DEFINE_LINK_MODE_PARAMS(200000, KR2, Full, K),
+> +	__DEFINE_LINK_MODE_PARAMS(200000, SR2, Full, S),
+> +	__DEFINE_LINK_MODE_PARAMS_MEDIUMS(200000, LR2_ER2_FR2, Full,
+> +					  __MED(L) | __MED(E) | __MED(F)),
+> +	__DEFINE_LINK_MODE_PARAMS(200000, DR2, Full, D),
+> +	__DEFINE_LINK_MODE_PARAMS(200000, CR2, Full, C),
+> +	__DEFINE_LINK_MODE_PARAMS(400000, KR4, Full, K),
+> +	__DEFINE_LINK_MODE_PARAMS(400000, SR4, Full, S),
+> +	__DEFINE_LINK_MODE_PARAMS_MEDIUMS(400000, LR4_ER4_FR4, Full,
+> +					  __MED(L) | __MED(E) | __MED(F)),
+> +	__DEFINE_LINK_MODE_PARAMS(400000, DR4, Full, D),
+> +	__DEFINE_LINK_MODE_PARAMS(400000, CR4, Full, C),
+> +	__DEFINE_LINK_MODE_PARAMS(100, FX, Half, F),
+> +	__DEFINE_LINK_MODE_PARAMS(100, FX, Full, F),
+> +	__DEFINE_LINK_MODE_PARAMS_PAIRS(10, T1L, 1, 1, Full, T),
+> +	__DEFINE_LINK_MODE_PARAMS(800000, CR8, Full, C),
+> +	__DEFINE_LINK_MODE_PARAMS(800000, KR8, Full, K),
+> +	__DEFINE_LINK_MODE_PARAMS(800000, DR8, Full, D),
+> +	__DEFINE_LINK_MODE_PARAMS(800000, DR8_2, Full, D),
+> +	__DEFINE_LINK_MODE_PARAMS(800000, SR8, Full, S),
+> +	__DEFINE_LINK_MODE_PARAMS(800000, VR8, Full, V),
+> +	__DEFINE_LINK_MODE_PARAMS_PAIRS(10, T1S, 1, 1, Full, T),
+> +	__DEFINE_LINK_MODE_PARAMS_PAIRS(10, T1S, 1, 1, Half, T),
+> +	__DEFINE_LINK_MODE_PARAMS_PAIRS(10, T1S_P2MP, 1, 1, Half, T),
+> +	__DEFINE_LINK_MODE_PARAMS_PAIRS(10, T1BRR, 1, 1, Full, T),
+> +	__DEFINE_LINK_MODE_PARAMS(200000, CR, Full, C),
+> +	__DEFINE_LINK_MODE_PARAMS(200000, KR, Full, K),
+> +	__DEFINE_LINK_MODE_PARAMS(200000, DR, Full, D),
+> +	__DEFINE_LINK_MODE_PARAMS(200000, DR_2, Full, D),
+> +	__DEFINE_LINK_MODE_PARAMS(200000, SR, Full, S),
+> +	__DEFINE_LINK_MODE_PARAMS(200000, VR, Full, V),
+> +	__DEFINE_LINK_MODE_PARAMS(400000, CR2, Full, C),
+> +	__DEFINE_LINK_MODE_PARAMS(400000, KR2, Full, K),
+> +	__DEFINE_LINK_MODE_PARAMS(400000, DR2, Full, D),
+> +	__DEFINE_LINK_MODE_PARAMS(400000, DR2_2, Full, D),
+> +	__DEFINE_LINK_MODE_PARAMS(400000, SR2, Full, S),
+> +	__DEFINE_LINK_MODE_PARAMS(400000, VR2, Full, V),
+> +	__DEFINE_LINK_MODE_PARAMS(800000, CR4, Full, C),
+> +	__DEFINE_LINK_MODE_PARAMS(800000, KR4, Full, K),
+> +	__DEFINE_LINK_MODE_PARAMS(800000, DR4, Full, D),
+> +	__DEFINE_LINK_MODE_PARAMS(800000, DR4_2, Full, D),
+> +	__DEFINE_LINK_MODE_PARAMS(800000, SR4, Full, S),
+> +	__DEFINE_LINK_MODE_PARAMS(800000, VR4, Full, V),
+>   };
+>   static_assert(ARRAY_SIZE(link_mode_params) == __ETHTOOL_LINK_MODE_MASK_NBITS);
+>   EXPORT_SYMBOL_GPL(link_mode_params);
 
 
