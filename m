@@ -1,183 +1,110 @@
-Return-Path: <linux-arm-msm+bounces-82671-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-82672-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9CB00C73B75
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Nov 2025 12:27:26 +0100 (CET)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id A6522C73BC3
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Nov 2025 12:31:12 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by tor.lore.kernel.org (Postfix) with ESMTPS id A0F1F2C33D
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Nov 2025 11:27:25 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTPS id 89E2B2BD14
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Nov 2025 11:31:11 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 108DE32FA0C;
-	Thu, 20 Nov 2025 11:25:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 67AD82E4266;
+	Thu, 20 Nov 2025 11:31:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=armlinux.org.uk header.i=@armlinux.org.uk header.b="V1Qg33MX"
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=armlinux.org.uk header.i=@armlinux.org.uk header.b="VxgBKxUq"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from pandora.armlinux.org.uk (pandora.armlinux.org.uk [78.32.30.218])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4430733120B;
-	Thu, 20 Nov 2025 11:25:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE6A14A3C;
+	Thu, 20 Nov 2025 11:31:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=78.32.30.218
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763637937; cv=none; b=LQpZokDjKgU17u2nTro49iKwn9U24d1vKKMa+YDoIT5jP9dhy1pznTkgA0CIBNVDZEX2tmXcUOKAJNk1aIjThmN1Ph7cS8x1xJlXeEPC3rSat7uFdJKcBQI7fWfmb11GG/inqyPKeWMtI7Hs7FUgY+NU4TQyHIk/wFfEIM386Xc=
+	t=1763638270; cv=none; b=VnbiU6c89zs3ZxsGJegoE9sU55txjrdwiPOVxfCWxqoVBzmi6HwdJ5n9YiaDFGi4TGHy8MHBVtO+n1zIApYrsm+zUDt5nAvU7fuvcWjUZpQGfQJ3ITgVtBi4OWb8kt6dJo3Zm8E8fyyIAe7bjl2J7wY9T6U58OthPIzEseewgco=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763637937; c=relaxed/simple;
-	bh=UdYLZQ434/sW+ppwfVUxxPDfBNTZClC/i0GYLfj1TzM=;
-	h=In-Reply-To:References:From:To:Cc:Subject:MIME-Version:
-	 Content-Disposition:Content-Type:Message-Id:Date; b=BI6WXFLzdaKOHZnd1iNbiLRGaG9FbhIrXK5jmEcxocnG0UQp58qCnJOS19xUZNlZ8K+STUw1l2lZn/Zx3ZI0kOmUNzB0KOxhcRgXImuMY13Cnh2j0zc/j1yWBlPysxrdLspXXjB+dvJAt0q+8EIQuhqZn4HpSHr7MhkITVZtvJs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=armlinux.org.uk; spf=none smtp.mailfrom=armlinux.org.uk; dkim=pass (2048-bit key) header.d=armlinux.org.uk header.i=@armlinux.org.uk header.b=V1Qg33MX; arc=none smtp.client-ip=78.32.30.218
+	s=arc-20240116; t=1763638270; c=relaxed/simple;
+	bh=QJGUiA83Zy67wUbf2pESMCDtasYTZsnvSogijE02TjY=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=iec8t78BZ25GfCrUZ7UlNtnpeRP/jPpir9ZEMQsvr8Jh7my9I2w1zc9IphlQ/H+UXyqNNx6ZwZKKjjI90yFosf/EsV1+5LBmzaR6efaQwcKwJvQw43MC5Mowq/VorTCEr9h/7oAc9531Vp69Qdnp3cJlJwm0VloX1rKkD1BDg6c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=armlinux.org.uk; spf=none smtp.mailfrom=armlinux.org.uk; dkim=pass (2048-bit key) header.d=armlinux.org.uk header.i=@armlinux.org.uk header.b=VxgBKxUq; arc=none smtp.client-ip=78.32.30.218
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=armlinux.org.uk
 Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=armlinux.org.uk
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=armlinux.org.uk; s=pandora-2019; h=Date:Sender:Message-Id:Content-Type:
-	Content-Transfer-Encoding:MIME-Version:Subject:Cc:To:From:References:
-	In-Reply-To:Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:
-	Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:
-	List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
-	bh=CUQy2hOqXXIR84E1BC+cMB3jx+mhZuD2NvtfYPa21vM=; b=V1Qg33MXF+j1p6vBTjqK/gquwP
-	5DSdqAkUbrrWdSH83Z2akdEDXH203/eVsorJiziJCnnxmJshfTViBrvxjDQhoBtyCnCcPfq5Sl9Ei
-	WmiGUIi8k/gtbTmb8LZzVsmO9nn5NU3OjwwIFLTnDXm/OvdHsgHYZNqFLgxl8qhgl6C9bk95TTst6
-	LwfL750B6cudq/zCqmZ1smaSmcYJ+6hL1kP8j96NKYx3FL+7Pa17tBiNZtnCApX7igIhiGEw+f1GY
-	h+budSTOQkbKoLHWv4tNBwEex9yzH7XyYOLP9XDzeATkFgoYsywQV0uI5z/V/eU87AAFoXa922qid
-	ien1Pdig==;
-Received: from e0022681537dd.dyn.armlinux.org.uk ([fd8f:7570:feb6:1:222:68ff:fe15:37dd]:46748 helo=rmk-PC.armlinux.org.uk)
+	d=armlinux.org.uk; s=pandora-2019; h=Sender:In-Reply-To:Content-Type:
+	MIME-Version:References:Message-ID:Subject:Cc:To:From:Date:Reply-To:
+	Content-Transfer-Encoding:Content-ID:Content-Description:Resent-Date:
+	Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:
+	List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
+	bh=kiWH0/YZBx9aFxNDPIFdolJuvMUpl0yJwssz6YI10nY=; b=VxgBKxUq2Aq7FKSBV1RbjVUfju
+	+zReZgekJzT9LDjDfe4qebH7lqQNCk7+WUnAV/ZO+7Qxnh5EBuxb8ZX6Z1jVpkGi4x/bc++LYkMVQ
+	F35otdxM3SNxdjDcBH+5J6gAgmjqlNRsV4zD9R9QS9KsoWOA/VdMggGSKQfchF0R0y6QrN61nq2vQ
+	LHH3nuW1mbDsOF9PT2srPRfQhpFUiVCvuep1RQnrQ/3Tk8vWY74m9wdgIA7/xP8CoqguR/mhEffIS
+	Is28Cbajewd52w6d9Ky14ayNlSVvKFowAjsP2q07eCDZh11rPRLA8JCNmRefn87+4LlOWXhmTPzWP
+	qqOt9epQ==;
+Received: from shell.armlinux.org.uk ([fd8f:7570:feb6:1:5054:ff:fe00:4ec]:54204)
 	by pandora.armlinux.org.uk with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
 	(Exim 4.98.2)
-	(envelope-from <rmk@armlinux.org.uk>)
-	id 1vM2n2-0000000068e-0Ro8;
-	Thu, 20 Nov 2025 11:25:28 +0000
-Received: from rmk by rmk-PC.armlinux.org.uk with local (Exim 4.98.2)
-	(envelope-from <rmk@rmk-PC.armlinux.org.uk>)
-	id 1vM2n1-0000000FRTu-0js9;
-	Thu, 20 Nov 2025 11:25:27 +0000
-In-Reply-To: <aR76i0HjXitfl7xk@shell.armlinux.org.uk>
-References: <aR76i0HjXitfl7xk@shell.armlinux.org.uk>
-From: "Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>
-To: Andrew Lunn <andrew@lunn.ch>,
-	Heiner Kallweit <hkallweit1@gmail.com>
+	(envelope-from <linux@armlinux.org.uk>)
+	id 1vM2sQ-000000006A3-0xfZ;
+	Thu, 20 Nov 2025 11:31:02 +0000
+Received: from linux by shell.armlinux.org.uk with local (Exim 4.98.2)
+	(envelope-from <linux@shell.armlinux.org.uk>)
+	id 1vM2sO-000000004LM-0FuK;
+	Thu, 20 Nov 2025 11:31:00 +0000
+Date: Thu, 20 Nov 2025 11:30:59 +0000
+From: "Russell King (Oracle)" <linux@armlinux.org.uk>
+To: Andrew Lunn <andrew@lunn.ch>, Heiner Kallweit <hkallweit1@gmail.com>
 Cc: Alexandre Torgue <alexandre.torgue@foss.st.com>,
 	Andrew Lunn <andrew+netdev@lunn.ch>,
 	"David S. Miller" <davem@davemloft.net>,
 	Eric Dumazet <edumazet@google.com>,
 	Jakub Kicinski <kuba@kernel.org>,
-	linux-arm-kernel@lists.infradead.org,
-	linux-arm-msm@vger.kernel.org,
+	linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org,
 	linux-stm32@st-md-mailman.stormreply.com,
-	Maxime Coquelin <mcoquelin.stm32@gmail.com>,
-	netdev@vger.kernel.org,
-	Paolo Abeni <pabeni@redhat.com>,
-	Vinod Koul <vkoul@kernel.org>
-Subject: [PATCH net-next v2 3/3] net: stmmac: qcom-ethqos: use
- read_poll_timeout_atomic()
+	Maxime Coquelin <mcoquelin.stm32@gmail.com>, netdev@vger.kernel.org,
+	Paolo Abeni <pabeni@redhat.com>, Vinod Koul <vkoul@kernel.org>
+Subject: Re: [PATCH net-next v2 1/3] net: stmmac: qcom-ethqos: use u32 for
+ rgmii read/write/update
+Message-ID: <aR778ygQp-SZO19n@shell.armlinux.org.uk>
+References: <aR76i0HjXitfl7xk@shell.armlinux.org.uk>
+ <E1vM2mq-0000000FRTi-3y5F@rmk-PC.armlinux.org.uk>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain; charset="utf-8"
-Message-Id: <E1vM2n1-0000000FRTu-0js9@rmk-PC.armlinux.org.uk>
-Sender: Russell King <rmk@armlinux.org.uk>
-Date: Thu, 20 Nov 2025 11:25:27 +0000
+In-Reply-To: <E1vM2mq-0000000FRTi-3y5F@rmk-PC.armlinux.org.uk>
+Sender: Russell King (Oracle) <linux@armlinux.org.uk>
 
-Use read_poll_timeout_atomic() to poll the rgmii registers rather than
-open-coding the polling.
+On Thu, Nov 20, 2025 at 11:25:16AM +0000, Russell King (Oracle) wrote:
+> readl() returns a u32, and writel() takes a "u32" for the value. These
+> are used in rgmii_readl()() and rgmii_writel(), but the value and
+> return are "int". As these are 32-bit register values which are not
+> signed, use "u32".
+> 
+> These changes do not cause generated code changes.
+> 
+> Update rgmii_updatel() to use u32 for mask and val. Changing "mask"
+> to "u32" also does not cause generated code changes. However, changing
+> "val" causes the generated assembly to be re-ordered for aarch64.
+> 
+> Update the temporary variables used with the rgmii functions to use
+> u32.
+> 
+> Signed-off-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
+
+Konrad provided his reviewed-by in
+https://lore.kernel.org/r/76d153cf-8048-4c6f-8765-51741de78298@oss.qualcomm.com
+but for some reason I forgot to add it, so:
 
 Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Signed-off-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
----
- .../stmicro/stmmac/dwmac-qcom-ethqos.c        | 44 ++++++-------------
- 1 file changed, 14 insertions(+), 30 deletions(-)
 
-diff --git a/drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c b/drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c
-index 1f84bd821c4e..0826a7bd32ff 100644
---- a/drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c
-@@ -311,7 +311,6 @@ static const struct ethqos_emac_driver_data emac_v4_0_0_data = {
- static int ethqos_dll_configure(struct qcom_ethqos *ethqos)
- {
- 	struct device *dev = &ethqos->pdev->dev;
--	int retry = 1000;
- 	u32 val;
- 
- 	/* Set CDR_EN */
-@@ -337,15 +336,10 @@ static int ethqos_dll_configure(struct qcom_ethqos *ethqos)
- 	}
- 
- 	/* Wait for CK_OUT_EN clear */
--	do {
--		val = rgmii_readl(ethqos, SDCC_HC_REG_DLL_CONFIG);
--		val &= SDCC_DLL_CONFIG_CK_OUT_EN;
--		if (!val)
--			break;
--		mdelay(1);
--		retry--;
--	} while (retry > 0);
--	if (!retry)
-+	if (read_poll_timeout_atomic(rgmii_readl, val,
-+				     !(val & SDCC_DLL_CONFIG_CK_OUT_EN),
-+				     1000, 1000000, false,
-+				     ethqos, SDCC_HC_REG_DLL_CONFIG))
- 		dev_err(dev, "Clear CK_OUT_EN timedout\n");
- 
- 	/* Set CK_OUT_EN */
-@@ -353,16 +347,10 @@ static int ethqos_dll_configure(struct qcom_ethqos *ethqos)
- 		      SDCC_HC_REG_DLL_CONFIG);
- 
- 	/* Wait for CK_OUT_EN set */
--	retry = 1000;
--	do {
--		val = rgmii_readl(ethqos, SDCC_HC_REG_DLL_CONFIG);
--		val &= SDCC_DLL_CONFIG_CK_OUT_EN;
--		if (val)
--			break;
--		mdelay(1);
--		retry--;
--	} while (retry > 0);
--	if (!retry)
-+	if (read_poll_timeout_atomic(rgmii_readl, val,
-+				     val & SDCC_DLL_CONFIG_CK_OUT_EN,
-+				     1000, 1000000, false,
-+				     ethqos, SDCC_HC_REG_DLL_CONFIG))
- 		dev_err(dev, "Set CK_OUT_EN timedout\n");
- 
- 	/* Set DDR_CAL_EN */
-@@ -531,8 +519,8 @@ static int ethqos_rgmii_macro_init(struct qcom_ethqos *ethqos, int speed)
- static int ethqos_configure_rgmii(struct qcom_ethqos *ethqos, int speed)
- {
- 	struct device *dev = &ethqos->pdev->dev;
--	volatile u32 dll_lock;
--	unsigned int i, retry = 1000;
-+	unsigned int i;
-+	u32 val;
- 
- 	/* Reset to POR values and enable clk */
- 	for (i = 0; i < ethqos->num_por; i++)
-@@ -582,14 +570,10 @@ static int ethqos_configure_rgmii(struct qcom_ethqos *ethqos, int speed)
- 				      SDCC_USR_CTL);
- 
- 		/* wait for DLL LOCK */
--		do {
--			mdelay(1);
--			dll_lock = rgmii_readl(ethqos, SDC4_STATUS);
--			if (dll_lock & SDC4_STATUS_DLL_LOCK)
--				break;
--			retry--;
--		} while (retry > 0);
--		if (!retry)
-+		if (read_poll_timeout_atomic(rgmii_readl, val,
-+					     val & SDC4_STATUS_DLL_LOCK,
-+					     1000, 1000000, true,
-+					     ethqos, SDC4_STATUS))
- 			dev_err(dev, "Timeout while waiting for DLL lock\n");
- 	}
- 
 -- 
-2.47.3
-
+RMK's Patch system: https://www.armlinux.org.uk/developer/patches/
+FTTP is here! 80Mbps down 10Mbps up. Decent connectivity at last!
 
