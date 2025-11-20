@@ -1,58 +1,58 @@
-Return-Path: <linux-arm-msm+bounces-82644-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-82645-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
-	by mail.lfdr.de (Postfix) with ESMTPS id 22F80C733A5
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Nov 2025 10:40:21 +0100 (CET)
+Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [IPv6:2605:f480:58:1:0:1994:3:14])
+	by mail.lfdr.de (Postfix) with ESMTPS id C8BCBC73444
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Nov 2025 10:44:57 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by tor.lore.kernel.org (Postfix) with ESMTPS id 2DDEE2C19B
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Nov 2025 09:40:20 +0000 (UTC)
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id CB6C04EC107
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Nov 2025 09:41:21 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 654FD2DAFBA;
-	Thu, 20 Nov 2025 09:40:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B482B31AF10;
+	Thu, 20 Nov 2025 09:40:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="TKfF73rS"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="r2M7sCq0"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3287A2D5C74;
-	Thu, 20 Nov 2025 09:40:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 737523126B0;
+	Thu, 20 Nov 2025 09:40:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763631617; cv=none; b=AVOWWbqZRivhRR1b0S0q7hh2gtX9TqPWnKrCicKF1fzk3NymvS6n5b5ZKyaTIzAkZGDO6GKsFV1Vl9NvCAUztDN6EIzM+Wavs8jDZoXGOsUmiffMg7fjvQCKF3Yyvq/HErR8lUZIMFXV+dzCB5SrypkoOu16oacYLkibv7v/S2E=
+	t=1763631620; cv=none; b=jJKt9a2oJVkzIV+yTrCJKKFZ9mvo1mhcysGgeGnhxisiy9H7gZ1h1UGBw9hdkfmbiyPSuF4mE2FfHY7KN/DapUeNb9MLQ52vIlC/sNbffvb8X/YQGfmiNIvID0JzjvDShO1tjvhLUvckiQ720y9WgPf9uNoAdqibY1y5LoIQOZA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763631617; c=relaxed/simple;
-	bh=mle9micMgPxJOYqTNBN4UC+hRCO+Vzu7gBsiog5Faoo=;
+	s=arc-20240116; t=1763631620; c=relaxed/simple;
+	bh=XfQswiTVWSyi5w2NUxFcWVIZ/qG15qo2KsoHEKzFk1w=;
 	h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date:
-	 MIME-Version:Content-Type; b=KK4p7oJRZLOmn1Xfs+DfeGRTJ6BeUYukWPy3Jw/uy0kRyfeA4zaQ9nifYPDXY0ME0uVE6Q50UZrcr3GOc9j/TYXwTdGZPVAqRFejE9AxLRzQz6uqthcOpdGyCM7bcdxFhwiNgDO60TDYJlKPwjDdW8Wb2zeh0rr5bleDwdgwLus=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=TKfF73rS; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47D03C4CEF1;
-	Thu, 20 Nov 2025 09:40:13 +0000 (UTC)
+	 MIME-Version:Content-Type; b=FUAt12fO1XCL1FKETPqAM0lnzRoaY9FRkJvhrGiuRSewFC7OgkJWdBNhXbaB1ou3r3Gh2i7BJvrEG4OLK5txEisX0MVgCQt6lt4spUqhAsLk/k2GgpdFbNAw20/9nWSstJEnOuN5VqXl29Ff1fMjP1njyaqyQ8oAbO8gGmC4KRs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=r2M7sCq0; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F05EAC4CEF1;
+	Thu, 20 Nov 2025 09:40:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1763631615;
-	bh=mle9micMgPxJOYqTNBN4UC+hRCO+Vzu7gBsiog5Faoo=;
+	s=k20201202; t=1763631620;
+	bh=XfQswiTVWSyi5w2NUxFcWVIZ/qG15qo2KsoHEKzFk1w=;
 	h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
-	b=TKfF73rSBNgHoMee5iQkCIluPrrhedniU6I+iQdFJC1eifDZLhiNaFR53AaKaJHbY
-	 CB8XAnQ/IXKY85f9LMIYxoeuAEAmqyBBFvPnIbO0FCvGAT4YojsxO3IDKWE2DCwWm5
-	 0Iu4Pya6NHd2wRFBpYYfDzLZFDjDH1hRzVL4qjyRG6BeZe/bvMXBObz2fxVnAjonHD
-	 CWePOQo5L0sG4G+9ssuNZ6np3/Fs6k7JDHWDQWuVCjSu1ySkqNcyKfTiAlKWFx0m9B
-	 jnSJJlpxGeHUI3AVyzoCGz9QS+A6T713XsuxXgwhLptzQky5GbrFcace8OM6702Kab
-	 5EE2INF8JSKgw==
+	b=r2M7sCq0lqBNGZb8iBGuRTW6I66mR7pviiLGKiL2YmMndmxGx0Inx0bjR+ciYIJ8g
+	 dszLNFcSEWZOteHCc83Ou5W4o60ZKAlh5Nybl42ycB6o7JLxV9E0nzETNULbIAzLh4
+	 rC/ZhYSuKMJGj9G9eVRfHKfwpprbTd+i7ojGpQ4uRZ97fTuOoiVAGdlI/ooLHlee0G
+	 EDKvmEKC/9CwvVwc+RDQQ5TN2erPHXs6U9Hkb83MtV5TDW+cVLk/8rsd+3f4eHGQks
+	 xfIRBQZdlX152dz0pP0sj+CK0BAkcMmfaZ1i5TXEdgjkiPkT+58U/L7MjRCFcHBPdz
+	 Mvnuqp3ZPMUyA==
 From: Mark Brown <broonie@kernel.org>
 To: srini@kernel.org, lgirdwood@gmail.com, perex@perex.cz, tiwai@suse.com, 
- dmitry.baryshkov@oss.qualcomm.com, Ma Ke <make24@iscas.ac.cn>
+ alexey.klimov@linaro.org, Ma Ke <make24@iscas.ac.cn>
 Cc: linux-sound@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
  linux-kernel@vger.kernel.org, akpm@linux-foundation.org, 
  stable@vger.kernel.org
-In-Reply-To: <20251116061623.11830-1-make24@iscas.ac.cn>
-References: <20251116061623.11830-1-make24@iscas.ac.cn>
-Subject: Re: [PATCH] ASoC: codecs: wcd937x: Fix error handling in wcd937x
- codec driver
-Message-Id: <176363161218.559933.9857333808970075663.b4-ty@kernel.org>
-Date: Thu, 20 Nov 2025 09:40:12 +0000
+In-Reply-To: <20251116033716.29369-1-make24@iscas.ac.cn>
+References: <20251116033716.29369-1-make24@iscas.ac.cn>
+Subject: Re: [PATCH] ASoC: codecs: Fix error handling in pm4125 audio codec
+ driver
+Message-Id: <176363161689.559933.14528225856640173736.b4-ty@kernel.org>
+Date: Thu, 20 Nov 2025 09:40:16 +0000
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -63,15 +63,15 @@ Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
 X-Mailer: b4 0.15-dev-a6db3
 
-On Sun, 16 Nov 2025 14:16:23 +0800, Ma Ke wrote:
-> In wcd937x_bind(), the driver calls of_sdw_find_device_by_node() to
-> obtain references to RX and TX SoundWire devices, which increment the
-> device reference counts. However, the corresponding put_device() are
-> missing in both the error paths and the normal unbind path in
-> wcd937x_unbind().
+On Sun, 16 Nov 2025 11:37:16 +0800, Ma Ke wrote:
+> pm4125_bind() acquires references through pm4125_sdw_device_get() but
+> fails to release them in error paths and during normal unbind
+> operations. This could result in reference count leaks, preventing
+> proper cleanup and potentially causing resource exhaustion over
+> multiple bind/unbind cycles.
 > 
-> Add proper error handling with put_device() calls in all error paths
-> of wcd937x_bind() and ensure devices are released in wcd937x_unbind().
+> Calling path: pm4125_sdw_device_get() -> bus_find_device_by_of_node()
+> -> bus_find_device() -> get_device.
 > 
 > [...]
 
@@ -81,8 +81,8 @@ Applied to
 
 Thanks!
 
-[1/1] ASoC: codecs: wcd937x: Fix error handling in wcd937x codec driver
-      commit: 578ccfe344c5f421c2c6343b872995b397ffd3ff
+[1/1] ASoC: codecs: Fix error handling in pm4125 audio codec driver
+      commit: 2196e8172bee2002e9baaa0d02b2f9f2dd213949
 
 All being well this means that it will be integrated into the linux-next
 tree (usually sometime in the next 24 hours) and sent to Linus during
