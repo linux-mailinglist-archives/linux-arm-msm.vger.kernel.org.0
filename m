@@ -1,63 +1,103 @@
-Return-Path: <linux-arm-msm+bounces-82637-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-82638-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ams.mirrors.kernel.org (ams.mirrors.kernel.org [213.196.21.55])
-	by mail.lfdr.de (Postfix) with ESMTPS id C6A1EC7300D
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Nov 2025 10:02:44 +0100 (CET)
+Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [IPv6:2605:f480:58:1:0:1994:3:14])
+	by mail.lfdr.de (Postfix) with ESMTPS id D73ABC73091
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Nov 2025 10:11:27 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ams.mirrors.kernel.org (Postfix) with ESMTPS id F15C8347F01
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Nov 2025 09:02:36 +0000 (UTC)
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 1D6244E74A8
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Nov 2025 09:08:52 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 05CE9284888;
-	Thu, 20 Nov 2025 09:02:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CDE7F31062C;
+	Thu, 20 Nov 2025 09:08:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="lhcnnLRm"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="i03Wa1Kl";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="A3+rZumv"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5EC3212FF69;
-	Thu, 20 Nov 2025 09:02:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43FD926F443
+	for <linux-arm-msm@vger.kernel.org>; Thu, 20 Nov 2025 09:08:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763629352; cv=none; b=DkmbSobieP+GDmF1I0YJ6edfFoUFsgvelxlQPb2bLOrqQRhz8tIiAfvQnta256LQecnsFeEvDMyMJIhO9F/ds+MiUpQAue5Zd+D27TzkvPJOME5rbYSZbmiggf8WsWbYoeEkv1WM0ariUboBMvatw9FbzyM4V7y8WeTAG4cwQSU=
+	t=1763629729; cv=none; b=dpLT6Q/DmOwHrIcRRwlIfJqDRHG86/1BzJBel0owi7hjuXNOAouk27JeZYq4W1Lpb7sFtr1AmDaDbF4c+sSG8BIBXEmZ0gsuxSqD1C7T0vH+mfw0KVAa+IwPHGAJPzFYDYAx+ONRohhp7bX0BlKYqZQs5gDlR5anK0dEL0oWOzU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763629352; c=relaxed/simple;
-	bh=tvr5KEl+5jdPz5g3r0dby9/xor5+786slh8yb2SIF7c=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=WC5yUz8vxbKLBqHnNDx3X1EXgWk4x5GbWqv58uNPCJon9t2AVkfSQnzJS+O9R+iLOYi8Y8aa5HLQUL/euRquRUMv/FfT5AdaNF7Vd4q5VjPeJordB+cJBS+PvFYPAj4JstR9VnbjA8hXs78C5BnPLWehRBRAW5OYO63T6RVL8pI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=lhcnnLRm; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 5AK4pu8Y4185034;
-	Thu, 20 Nov 2025 09:02:04 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	s=arc-20240116; t=1763629729; c=relaxed/simple;
+	bh=3XgE8nzjlFnG5w7yTHIlKYeLdGWsQdHgYXqGvq3XWQ8=;
+	h=Message-ID:Date:MIME-Version:Subject:To:References:From:Cc:
+	 In-Reply-To:Content-Type; b=UOQAx/eyCiE9tvMh91pnR+yRrlzdvtDYy94K3yvK7KFPxoTeFVITFwZNIj0m9VJoHjOzJuQOHRetiwws7YFzLm05evlYpKj24w/yNy1HSNTi6D2dqHma8RARGEuBoXvoR9dQ844LRRBXDdz8aQ/O7FaCCNcLjxfU4N+C1wQB4GU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=i03Wa1Kl; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=A3+rZumv; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 5AK56O844026174
+	for <linux-arm-msm@vger.kernel.org>; Thu, 20 Nov 2025 09:08:45 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	cD9jmBh6F6XRkchGZaRUwfUZ0TpdFNa6MKHRpBt8wFY=; b=lhcnnLRmne1XZSs+
-	x2MniyNrWyTN/0ZY04UwiIEjtYC7xazLfTXFL9moa4yCgVUe91/XStoE6bTdkK/x
-	Yp8fTthE5A0LnTjsUaN4zb5/ZNBEerRaF3LhP24CWKixTrAOr5jrb7NBD9VkDBz/
-	TcvrWTlPl25/tmFih+CntIyQkd089dpFZW5M7RbFpl+rjgrjdHc9u52QLNmdfECj
-	2o/CtfoVKNNksqMng3wucSrlPs8cfl8TBR+RX25juA3RqXjVV2OKKrxWPVimSGf0
-	IXgMguUX89Bp6DZsI7ya/sb/G0K2cxbmXbew5jF2nAqpgxg4iaLjxA3c02qetNfB
-	o3IBtg==
-Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4ahbt6unuq-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 20 Nov 2025 09:02:03 +0000 (GMT)
-Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
-	by NASANPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 5AK922e4015795
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 20 Nov 2025 09:02:02 GMT
-Received: from [10.204.78.57] (10.80.80.8) by nasanex01a.na.qualcomm.com
- (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.17; Thu, 20 Nov
- 2025 01:01:10 -0800
-Message-ID: <b4a4493b-0b4a-42d8-b4ee-ddbb348f0b01@quicinc.com>
-Date: Thu, 20 Nov 2025 14:31:07 +0530
+	ai+/yCdmM2wE0r8VW/1OQ/CHWsFY0swhqxkIqvv02i0=; b=i03Wa1KlHJrtWRKm
+	nsovooCjguse9mFoVqtRbJg3Msy981FmCPDEPs18DxSXnZ4eDwKbv7+dVVTcZ7pC
+	A9yV5s6UwYKxCUM2PU2fcs9xXCRHlMV2Nq3pkmKg7cEQf+khcbohPHUgKOyu1MWx
+	Kgbkt6ilT3cCTBZLt0VrFDCchE+S4zumi3QqVC+mXWRtLOoBfCT3gJlqX6qLUdTx
+	JaBNXk0xFD9Vap9+83okzpaybwgC0R8KT2C7ckDDgV9hxWxFk8GQkiN7qYvUM3fQ
+	vqnR51XDk0XM5iSGPtJiNE2n7tAhcnKpurYwo/bwYDV+uHKKUpe/dkjA1Ll+XQdo
+	QduR9A==
+Received: from mail-pl1-f199.google.com (mail-pl1-f199.google.com [209.85.214.199])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4ahvj3gnxd-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Thu, 20 Nov 2025 09:08:45 +0000 (GMT)
+Received: by mail-pl1-f199.google.com with SMTP id d9443c01a7336-2958c80fcabso21861195ad.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Nov 2025 01:08:45 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=oss.qualcomm.com; s=google; t=1763629724; x=1764234524; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:cc:from:content-language
+         :references:to:subject:user-agent:mime-version:date:message-id:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=ai+/yCdmM2wE0r8VW/1OQ/CHWsFY0swhqxkIqvv02i0=;
+        b=A3+rZumvi4gT25C0FyXNAKrFBL/I99ScBiv/VX+m5zdzSSMIa+eVbxcj5KLEqX+LRJ
+         2gmrGqTRvZsqAkwYFUYiV93ebKbJsUI1FQZsrPCYsz5ATvHy7IMtB5s0TMubQtwHaeIx
+         S1K5VXAQZmupHnnGU4syt8pEupCOD8YM9fUO61aWCezdBRCUbMW3W/b259uB5lAhza02
+         1biJzHcvJyOFkaCmDzPPA5IYaMpSwyCHh5Wk6MqegOV4yRUfNoYUAd0rdMZQbmb+3AXE
+         Rgbds6PEYk/epVIo+5JMV0KwtEbuYz9/lcOVom0Ot86encdPDjX8dm3J5GLtkrSIO7+k
+         amoA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1763629724; x=1764234524;
+        h=content-transfer-encoding:in-reply-to:cc:from:content-language
+         :references:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=ai+/yCdmM2wE0r8VW/1OQ/CHWsFY0swhqxkIqvv02i0=;
+        b=ljmLZYnAKw2f53hu1Vf3fHGoEqeZAfDrcowMJxTJlVpBikIWkyV6fKrwXYW2z589B1
+         l56QpEnoC3RCftU/psghWXCO8Gk0fGB15PMrUZZXNGSpTNUsMeiPzgQAiONx6j2aH4Is
+         OtkKtamM8Tft4C0wQivkRWrBEI8SeBrRKRl85rqDI2xxU3U4XHxfP9uBnho5SRQNM64P
+         oge12apO5YeInJYLj5aUH5jO4r9TP0R6dpVO9h3P2xhw73wNXhBs88QQ9piXTKnw3snB
+         7rBu4tBydr2Ak42y+W8zGrv5j4fVlYM1KLGwLBcWDpcw+sFInIwiEXMUnD54i4dtyH1x
+         DQYg==
+X-Forwarded-Encrypted: i=1; AJvYcCWdhbbk3Cd+48blzUkhfSpE0iGbkiUTCSUH8o1HZdGml59NwqTSfOn937J9yzpRvorqAosPaEZAyQI1EUDN@vger.kernel.org
+X-Gm-Message-State: AOJu0YzNClW9HM8MjQWcOPsDlugzVHDNQbbeygrzQIu89ERKfiA68Ous
+	oFtmXHOpAEJdW75Bc/gmirEzKbN3k6B+NXSCdKQ1nsr+1uERTOjG3j9biU7YBloFZJ1W76ENEIm
+	U9DCpjYVXysPHZdIdhFBHQ+L1lfAbGI3ljUy9FCMqAro68VCOPmr/u6ZjqzVUAB29d1dP
+X-Gm-Gg: ASbGnctc39KP4XrNN//qqElyh2jfaqY9mE7u6e+v/0PBVjOu1RWidjUJcpi5IZ0Icob
+	uB9ak5h3SAS9GxYrPT7pE1kWW4QkPDxJBsmLHB03S+ZLYK1+QmQq3wweUJfUfUro8F9BBaokv43
+	RaPezHrYP05/USm9MUbznEddCldLdnDi/mNtobQCCE0oj+yAT5eVN56NCtlDeORcAwROHTI4YNW
+	+q/96qa6mat6RqqJuVt3hPOYefcotq4JvcURhk7mBKYkQa4oeR2GG0Zuw1Lk+s4/OXNwwJO332Z
+	kAP0RZc+u8i6fbRG7CQl2RYH7NOmYEk2JKKH4gRKWycaUJkkUd5d1z4P/TaPT9nxfDj1IWG6cwS
+	DNKs63Wbwd6UhmIZj1z65m+Kiir5g5wjHBg8jwkZ3N63uQSVGLaaiWExAo0/mMmIAhKIVlD6EJH
+	7v8oah
+X-Received: by 2002:a17:902:ebca:b0:298:485d:5576 with SMTP id d9443c01a7336-29b5cccdb92mr23444545ad.8.1763629724367;
+        Thu, 20 Nov 2025 01:08:44 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHAH62cUQ+tdqLl8UgT0ThXtjWfj7cqkt5nH/Im2b6NF937Lzu04lbfzZwMTb2BWazn175b3Q==
+X-Received: by 2002:a17:902:ebca:b0:298:485d:5576 with SMTP id d9443c01a7336-29b5cccdb92mr23444225ad.8.1763629723913;
+        Thu, 20 Nov 2025 01:08:43 -0800 (PST)
+Received: from [10.133.33.205] (tpe-colo-wan-fw-bordernet.qualcomm.com. [103.229.16.4])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-29b5b00e1fasm19903285ad.0.2025.11.20.01.08.40
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 20 Nov 2025 01:08:43 -0800 (PST)
+Message-ID: <63fea0e6-1ce5-4f71-8531-a01535326374@oss.qualcomm.com>
+Date: Thu, 20 Nov 2025 17:08:37 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -65,89 +105,122 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 3/4] arm64: dts: qcom: lemans-ride: Enable dispcc1
-To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-        Dmitry Baryshkov
-	<dmitry.baryshkov@oss.qualcomm.com>
-CC: <marijn.suijten@somainline.org>, <swboyd@chromium.org>,
-        <mripard@kernel.org>, <abel.vesa@linaro.org>, <andersson@kernel.org>,
-        <konradybcio@kernel.org>, <robh@kernel.org>, <krzk+dt@kernel.org>,
-        <conor+dt@kernel.org>, <robin.clark@oss.qualcomm.com>,
-        <jessica.zhang@oss.qualcomm.com>, <abhinav.kumar@linux.dev>,
-        <sean@poorly.run>, <airlied@gmail.com>, <simona@ffwll.ch>,
-        <alex.vinarskis@gmail.com>, <linux-arm-msm@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-arm-kernel@lists.infradead.org>,
-        <freedreno@lists.freedesktop.org>, <dri-devel@lists.freedesktop.org>,
-        <quic_rajeevny@quicinc.com>, <quic_vproddut@quicinc.com>,
-        <quic_riteshk@quicinc.com>, <quic_amitsi@quicinc.com>
-References: <20250926085956.2346179-1-quic_mkuntuma@quicinc.com>
- <20250926085956.2346179-4-quic_mkuntuma@quicinc.com>
- <v4b35cmwbkoosdgs3d6ftml4yvdkyh27q65ssqojplb7uyniwp@wuxbeof7cikr>
- <869d1f94-9d66-4045-abdb-6e88d504a884@oss.qualcomm.com>
+Subject: Re: [PATCH v2] arm64: dts: qcom: kodiak: Add memory region for
+ audiopd
+To: Bjorn Andersson <andersson@kernel.org>,
+        Mohammad Rafi Shaik <mohammad.rafi.shaik@oss.qualcomm.com>
+References: <20251114055639.1050-1-jianping.li@oss.qualcomm.com>
+ <20251117070819.492-1-jianping.li@oss.qualcomm.com>
+ <mnmfh22usps4xy4hdck4ts2p6rej7iynsifzrqtmlklffnxrwh@f3gn5hz6yemx>
 Content-Language: en-US
-From: Mani Chandana Kuntumalla <quic_mkuntuma@quicinc.com>
-In-Reply-To: <869d1f94-9d66-4045-abdb-6e88d504a884@oss.qualcomm.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+From: Jianping Li <jianping.li@oss.qualcomm.com>
+Cc: konradybcio@kernel.org, robh@kernel.org, krzk+dt@kernel.org,
+        conor+dt@kernel.org, ekansh.gupta@oss.qualcomm.com,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+In-Reply-To: <mnmfh22usps4xy4hdck4ts2p6rej7iynsifzrqtmlklffnxrwh@f3gn5hz6yemx>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01a.na.qualcomm.com (10.52.223.231)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: PqNPwdwjcpIGtsDjBllpy6cYIDZ8zK_L
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMTIwMDA1MyBTYWx0ZWRfX/o/pD8dGN+Hb
- HIUYZph3N10Geu1hkO2nFgoR3Wv/FvRTF0QZWi5Ebv13Tnx6OPSSbhEEGfvurebndAI0OraASBk
- vhA2a1DcUter6PxyGXO+OHYvLxQxzLIpCUmlvQ7JIEE4EtMoNa/WZWmrlJzF8dsmtOq+fC1+HQx
- AkWA8G+TRqqGW7iBA/MPRJM/549T4DxBN1u7+NVk3/IJOZgnBFlxgeSE5Orv+06dzHb30NfQAvy
- qN16Bc2HrXCRUczVxzGxW1gn/nDkoqw4Fhj+cvjwX6RhM1Et8rqP1IIIz1DniqwVPY/VKP9bw24
- tBCbuoz1poUqZjIxLVNvqyZhQjIfMgHoF8BNmdC36tijDZwCgnZM++V6MDyzLzzGEnwh2YJX0ZJ
- 6v+K8C1AH1WB/B1RXuFeg3VT5FH9pg==
-X-Proofpoint-ORIG-GUID: PqNPwdwjcpIGtsDjBllpy6cYIDZ8zK_L
-X-Authority-Analysis: v=2.4 cv=PJICOPqC c=1 sm=1 tr=0 ts=691ed90b cx=c_pps
- a=JYp8KDb2vCoCEuGobkYCKw==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17
- a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=6UeiqGixMTsA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=COk6AnOGAAAA:8 a=-2IW8HrhzCBWiBGBFSsA:9
- a=QEXdDO2ut3YA:10 a=TjNXssC_j7lpFel5tvFf:22
+X-Authority-Analysis: v=2.4 cv=J8WnLQnS c=1 sm=1 tr=0 ts=691eda9d cx=c_pps
+ a=JL+w9abYAAE89/QcEU+0QA==:117 a=nuhDOHQX5FNHPW3J6Bj6AA==:17
+ a=IkcTkHD0fZMA:10 a=6UeiqGixMTsA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8
+ a=hviViZdL3PNssb8YJeMA:9 a=QEXdDO2ut3YA:10 a=324X-CrmTo6CU4MGRt3R:22
+X-Proofpoint-GUID: emTp0PniRqdocD41v14ZffTghmE58JhP
+X-Proofpoint-ORIG-GUID: emTp0PniRqdocD41v14ZffTghmE58JhP
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMTIwMDA1NCBTYWx0ZWRfX+BzuaWdaYldY
+ 4uIp1u49gBS1M6O0Uw7fIe3fB7kzMnhLNvDO3J9uyhviY5T2Svwhu7MM6WckVRIab4wuJKuHSJB
+ j2Vk/7CEvkgTDyuOBZCgDZibmmE/FC3kSpxIKi0RX80p4yDGg7Q9Ej7bCTvliAJrljHbaGlBHtw
+ pQLGXg3hNua9IUnZjb/7T9WetB7Udnw5gen6hUVlHoafTThfEI/ksf1WuUORWtbbcPgA0ppoHIr
+ 3MroTq7sTqDT31svF9EM9jSIjVQPFywLvVsxzIyHrQL4prTiggQ8cDCLZ5aagwTOmSgx4kLqPwo
+ n/XBx7gHhzoWrRMhc3qHL2j4eBrGB3e4DblS9diA9RNE4KdIIOQCuDDpSnvEAyLj2xPY2jiy7f/
+ jeB5anWfp3y/dCvy1DB9opR9dVZIjA==
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
  definitions=2025-11-20_03,2025-11-18_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 suspectscore=0 phishscore=0 impostorscore=0 spamscore=0
- lowpriorityscore=0 adultscore=0 malwarescore=0 bulkscore=0 priorityscore=1501
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2510240001 definitions=main-2511200053
+ clxscore=1015 priorityscore=1501 suspectscore=0 impostorscore=0
+ malwarescore=0 lowpriorityscore=0 adultscore=0 spamscore=0 phishscore=0
+ bulkscore=0 classifier=typeunknown authscore=0 authtc= authcc= route=outbound
+ adjust=0 reason=mlx scancount=1 engine=8.22.0-2510240001
+ definitions=main-2511200054
 
 
+On 11/18/2025 11:39 PM, Bjorn Andersson wrote:
+> On Mon, Nov 17, 2025 at 03:08:19PM +0800, Jianping Li wrote:
+>
+> Please don't send new versions as replies to older ones, and please
+> adopt b4, it will take care of these practicalities for you.
 
-On 10/1/2025 3:13 PM, Konrad Dybcio wrote:
-> On 9/26/25 3:53 PM, Dmitry Baryshkov wrote:
->> On Fri, Sep 26, 2025 at 02:29:55PM +0530, Mani Chandana Ballary Kuntumalla wrote:
->>> This change enables display1 clock controller.
->>>
->>> Signed-off-by: Mani Chandana Ballary Kuntumalla <quic_mkuntuma@quicinc.com>
->>> ---
->>>   arch/arm64/boot/dts/qcom/lemans-ride-common.dtsi | 4 ++++
->>>   1 file changed, 4 insertions(+)
->>>
->>> diff --git a/arch/arm64/boot/dts/qcom/lemans-ride-common.dtsi b/arch/arm64/boot/dts/qcom/lemans-ride-common.dtsi
->>> index c69aa2f41ce2..d4436bc473ba 100644
->>> --- a/arch/arm64/boot/dts/qcom/lemans-ride-common.dtsi
->>> +++ b/arch/arm64/boot/dts/qcom/lemans-ride-common.dtsi
->>> @@ -436,6 +436,10 @@ vreg_l8e: ldo8 {
->>>   	};
->>>   };
->>>   
->>> +&dispcc1 {
->>> +	status = "okay";
+Ack. I'll fix this going forward.
+
+>
+>> Add reserved memory region for audio PD dynamic loading and remote
+>> heap requirement. Also add LPASS and ADSP_HEAP VMIDs.
 >>
->> I think this one should be enabled by default. Unless Konrad or Bjorn
->> disagrees, please fix lemans.dtsi.
-> 
-> Of course there is no reason for clock controllers to be disabled
-> 
+>> Signed-off-by: Jianping Li <jianping.li@oss.qualcomm.com>
+>> ---
+>> Patch v1: https://lore.kernel.org/all/20251114055639.1050-1-jianping.li@oss.qualcomm.com/
+>> Changes in v2:
+>>    - Fixed the alignment issue of the qcom,vmids properties, aligning
+>>      the values in the second row with the first row.
+>> ---
+>>   arch/arm64/boot/dts/qcom/kodiak.dtsi | 8 ++++++++
+>>   1 file changed, 8 insertions(+)
+>>
+>> diff --git a/arch/arm64/boot/dts/qcom/kodiak.dtsi b/arch/arm64/boot/dts/qcom/kodiak.dtsi
+>> index 3ef61af2ed8a..7957a9151055 100644
+>> --- a/arch/arm64/boot/dts/qcom/kodiak.dtsi
+>> +++ b/arch/arm64/boot/dts/qcom/kodiak.dtsi
+>> @@ -190,6 +190,11 @@ rmtfs_mem: rmtfs@9c900000 {
+>>   			qcom,client-id = <1>;
+>>   			qcom,vmid = <QCOM_SCM_VMID_MSS_MSA>;
+>>   		};
+>> +
+>> +		adsp_rpc_remote_heap_mem: adsp-rpc-remote-heap@9cb80000 {
+>> +			reg = <0x0 0x9cb80000 0x0 0x800000>;
+>> +			no-map;
+>> +		};
+> Is the placement of this carveout hard code somewhere in non-HLOS
+> software? If so, its location and size universal across all Kodiak-based
+> devices?
 
-Sure, will enable dispcc1 in the main dtsi file.
+This information is not hard-coded on non-HLOS. Any region(irrespective of placement)
+allocated by fastrpc is moved to LPASS using qcom_scm calls.
 
-> Konrad
+> Also, the presence of arch/arm64/boot/dts/qcom/qcs6490-audioreach.dtsi
+> tells me that we have different audio stacks in play on Kodiak. Does all
+> of them have the same PD loading capabilities/needs?
 
+This DT looks to be audioreach specific. The one I'm adding is mostly used for audio PD
+dynamic loading purpose. Adding @Mohammad Rafi to give more details about audioreach.
+
+>
+>
+> PS. Others might ask these same questions in the future (I will probably
+> wonder in 6 months from now...), so let's make sure the git history
+> carries the answers to why things look the way they do.
+
+Ack.
+
+>
+> Thanks,
+> Bjorn
+>
+>>   	};
+>>   
+>>   	cpus {
+>> @@ -4139,6 +4144,9 @@ fastrpc {
+>>   					qcom,glink-channels = "fastrpcglink-apps-dsp";
+>>   					label = "adsp";
+>>   					qcom,non-secure-domain;
+>> +					memory-region = <&adsp_rpc_remote_heap_mem>;
+>> +					qcom,vmids = <QCOM_SCM_VMID_LPASS
+>> +						      QCOM_SCM_VMID_ADSP_HEAP>;
+>>   					#address-cells = <1>;
+>>   					#size-cells = <0>;
+>>   
+>> -- 
+>> 2.43.0
+>>
 
