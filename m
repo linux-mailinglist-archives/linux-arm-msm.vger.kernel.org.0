@@ -1,122 +1,132 @@
-Return-Path: <linux-arm-msm+bounces-82694-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-82695-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ams.mirrors.kernel.org (ams.mirrors.kernel.org [IPv6:2a01:60a::1994:3:14])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1EC4AC74BF9
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Nov 2025 16:10:21 +0100 (CET)
+Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [142.0.200.124])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1F47BC75045
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Nov 2025 16:37:33 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ams.mirrors.kernel.org (Postfix) with ESMTPS id 300E135A036
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Nov 2025 15:00:23 +0000 (UTC)
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 8B7A34EDAD7
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Nov 2025 15:26:25 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 15BF42E62C4;
-	Thu, 20 Nov 2025 15:00:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id F329735C1B1;
+	Thu, 20 Nov 2025 15:18:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="KwcJ34sb"
+	dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b="l9S42diO"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pf1-f178.google.com (mail-pf1-f178.google.com [209.85.210.178])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtpout-03.galae.net (smtpout-03.galae.net [185.246.85.4])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F5BC2D6E6B
-	for <linux-arm-msm@vger.kernel.org>; Thu, 20 Nov 2025 15:00:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.178
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6AC57366DB4
+	for <linux-arm-msm@vger.kernel.org>; Thu, 20 Nov 2025 15:18:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.246.85.4
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763650817; cv=none; b=mzDCI0XWhis2eT7qc3prJ98K2YXHbcgplkptj3qTjZ4Rxvc8YlzdhcZVugq/gbpKXuhAR3LTC9xtag7Pa9FdNasJnFGxClEh4u2QGYKaVgdA3opbUl1ctlUszeQna8ShfSPIYFdI7G+SSoJGXMg+kG0aOoTaVaBWbkxtyMP6SaM=
+	t=1763651908; cv=none; b=sVWPoucCi/x+OAYPj+nnB0XPzEdwJsDr18Ejxayr4+jUwzI3ucqBAtzgutXScxWWTC+JPv/twIqLsN1KZLjwo2CH09/T8j7KNRDe0VfbYTK27lLoQ2+rF35fgxC7TVE6ES4e3UBD3DJpifCOSJduwP4Dn/0KJfBV7ZuCTAfG9P4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763650817; c=relaxed/simple;
-	bh=xgjesNCRh05U41XtZs4CNpAsHg3mkNPSmnZ/h+qOQrM=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Ode2Eei35FSFoD1rlCSBzyE68lICUvrZPlkA0XbcmC0O1z8R7UVmruNENLyonPNI8VSVytxUJwRTtJ1qg95oKdh6DGCd2Gb+Rxvevbe7MAnRpdTDM9wuzzvpfdpXV17PwmtQ0vwOhGTz3OOntWYNja7qNI0Qin0aPtBaiLOfwf0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=KwcJ34sb; arc=none smtp.client-ip=209.85.210.178
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-pf1-f178.google.com with SMTP id d2e1a72fcca58-7b9a98b751eso828070b3a.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Nov 2025 07:00:14 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1763650814; x=1764255614; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=guN3/A9RDKesdWeSExyBOWXz8WsrEM+zBWVUbp5CDDo=;
-        b=KwcJ34sbx0BuqevuLuo1gEH5WoPRecJEJYIs7WbBIGcflf6Nojs7CgFsUBr63UhZEm
-         3APA3jhUDr+klFkLV7+hEeh8upVvFblLgbuRYZmzffUIsgVbdG3f9wZM0gvemOh2A/es
-         MSBeIeeN8W+qN1sHsEOiH87uo+nneP3ZJ30Dm/TOxhmpFcXg71vS02TdmccDuvmcbgd6
-         ehGKYJnIZbsltAKwgI9bondFnP7gd665ZEcifTjq1RVwygOcACY33h7YV5V9eFvx8xZZ
-         78+5HcHaJt+8X+7rGlTcu9gBbx0ZQq2vqwKNiVSV3g+HBQSZGKAr1yqv+Kh1i1zdm0Gg
-         cioQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1763650814; x=1764255614;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=guN3/A9RDKesdWeSExyBOWXz8WsrEM+zBWVUbp5CDDo=;
-        b=k231ILldXVnSt/GNudd2AkgN7zTB2HWy29cziXVSKBYV5Mhz6yOr13sxjQMZWoRAZO
-         HBwyUVL7uH5tzMLLK/gZqx0yOtn1HD0Gph5LQvwaQCcDuNsBV33+ajqL/Je/cC2fBXif
-         OwSz1jpUcHuJTyx+Mae0QxjNDVQGdYO49pLZhjwMFdCG0iMzOvxQcCzby9bIGtFCJjOe
-         P+3hGIAHbxSyJmGgkfR17xihMcIJcYa9U4O4ntYPewsKAcfVjkeKA22AJhBvTUE3Goub
-         efurMsIC/kkLWSYyVKXe3/FSDaK68O3rWv5qOIIRBGZ9TxRR51ji5qx3g/TT9AvQdBTG
-         9w3A==
-X-Forwarded-Encrypted: i=1; AJvYcCXjecmFRr3DWnj3eeaHeYQTAQwZIMiS8KkmSkV5emQDeVq2GM5kKpOVuSP261bhD40hgK6KjkxhPozDCMr9@vger.kernel.org
-X-Gm-Message-State: AOJu0YyJ5Uij5CsgrOpRQKPpI0VbrTCacFekI6PLgHTdInINkYHMpz6u
-	GBUoKlnXs0jmNZ0MYolM90Fld6qw9cpBhMXnk8UDuM5E8Fwf1uNdKkxBggQQYf1UQpw=
-X-Gm-Gg: ASbGnctb58/3yQ3QClK3mXKzG+7VqINBg76+VALn2LfFj/CrSBScV0CsVNtVkKgSOxI
-	fp6Q+RVZxi85E1xyIDxJEYD9GUcwPr4IGz2qIZ9OmQcG5t9MZGBqVOK+/wJGjpQVzNJygaP3gu1
-	5j0dwaav2A+3LCpJDMTLv31QLNUe5fQe5/aeTyDGE/aSxtWPno1Gx14AF2D5J8r2f/E0wfFR+vK
-	4JJBqrQYlQgzu3HtLqO3NODjjHhCOcg4+Fa7Ib3ELXnICXi3gHndcyzjmd2d3IqtOBZz6newjDG
-	4y2t/ZajPWoZxZ2jixobe9Je/spov0cW+NDQBZDmDFW8biY1QkYT2Z9OgWrp7C3DilVVpsrAnGh
-	gYfQP3+iU+uwM7AK8T7/nRU7ytsHiAmSgWSThWWP64TS7v3MgL+DxZiYTtG54hou2p3gotKxmsa
-	9+VeA7CxFg90yrin9UsmPC9CyeE+/N/kQc
-X-Google-Smtp-Source: AGHT+IFQUlIetO8So3GJH/GYIL89TsemkOodGy6g+HZcCYNwqLeei6RZkHpwINCTUqkre5rA/o3bJA==
-X-Received: by 2002:a05:6a00:1a86:b0:781:261b:7524 with SMTP id d2e1a72fcca58-7c3eef7de45mr4122134b3a.14.1763650812076;
-        Thu, 20 Nov 2025 07:00:12 -0800 (PST)
-Received: from localhost ([122.172.86.94])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-7c3ed37b0c7sm3093109b3a.20.2025.11.20.07.00.10
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 20 Nov 2025 07:00:11 -0800 (PST)
-Date: Thu, 20 Nov 2025 20:30:08 +0530
-From: Viresh Kumar <viresh.kumar@linaro.org>
-To: Christian Marangi <ansuelsmth@gmail.com>
-Cc: Ilia Lin <ilia.lin@kernel.org>, 
-	"Rafael J. Wysocki" <rafael@kernel.org>, Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, 
-	linux-pm@vger.kernel.org, linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	kernel test robot <lkp@intel.com>
-Subject: Re: [PATCH] cpufreq: qcom-nvmem: fix compilation warning for
- qcom_cpufreq_ipq806x_match_list
-Message-ID: <632sxqm4vxqg2e5aetuoakl5kkjb5x4zsyrdzqes7ylutiokxy@6tejdqp5x6ko>
-References: <20251120133508.4237-1-ansuelsmth@gmail.com>
+	s=arc-20240116; t=1763651908; c=relaxed/simple;
+	bh=KiKmLPo0LId2AqBx7SKloWwEHaffPU4qyU54oEDKIa8=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=FQL9P7T6S1zOUN3ZpkyrkSDKOYlQ0c1kE8g5de1V9CyNEvjXHo0GY+0lI/ypCH4mbcKeAFOd4swg1XGW4bjVrfJVUGXHUn+i2EI9i8eprrqwSIvbC3LoJIMtGTONsAToMcV39QxpJvuGUMZwv9lhTwKONNYKpYkwI119VcnOQ1w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com; spf=pass smtp.mailfrom=bootlin.com; dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b=l9S42diO; arc=none smtp.client-ip=185.246.85.4
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bootlin.com
+Received: from smtpout-01.galae.net (smtpout-01.galae.net [212.83.139.233])
+	by smtpout-03.galae.net (Postfix) with ESMTPS id 5E5094E41778;
+	Thu, 20 Nov 2025 15:18:24 +0000 (UTC)
+Received: from mail.galae.net (mail.galae.net [212.83.136.155])
+	by smtpout-01.galae.net (Postfix) with ESMTPS id 2C8EC6068C;
+	Thu, 20 Nov 2025 15:18:24 +0000 (UTC)
+Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon) with ESMTPSA id 1371810371C4F;
+	Thu, 20 Nov 2025 16:18:14 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=dkim;
+	t=1763651902; h=from:subject:date:message-id:to:cc:mime-version:content-type:
+	 content-transfer-encoding:content-language:in-reply-to:references;
+	bh=W+w9uzAPuUadr/2vcu3RjzEbTIq1CSq9medNjoIyd0c=;
+	b=l9S42diO51gPGUNuhEnHQSnWSxeL7UtQyzWf+pSUkD1kHEiJLJ2pxLkp7FW9teyxIjXeM7
+	GjWKcU9mPtqPUARnLTB3ODK0eZk1VkcUWYggdmpPLYWEwWavemElCdfRIimMfNBGkrc44R
+	GfJd21OqCv3vIdx3ElchM3qWyG5kH3MY8B17grroqx8eE6LefdKu7NWY2NY9qgsXmOufzK
+	SPI/OvH7FwMVdEIafwEKK2MLS+gq44ozi4hBBVG84S8XT/UIoO2PlY0dPj4Mx0IwzrYzDc
+	aCTBmsdZC7uM6gAaoQzZlnJlVWbMcQ7lEVSNmdFhnJRosCsGAmk0OA+xXUyoPw==
+Message-ID: <2fbd40ed-40e6-4ba2-b914-1f6d2d26dc85@bootlin.com>
+Date: Thu, 20 Nov 2025 16:18:14 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20251120133508.4237-1-ansuelsmth@gmail.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH net-next v17 03/15] net: phy: Introduce PHY ports
+ representation
+To: Jakub Kicinski <kuba@kernel.org>
+Cc: davem@davemloft.net, netdev@vger.kernel.org,
+ linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+ thomas.petazzoni@bootlin.com, Andrew Lunn <andrew@lunn.ch>,
+ Eric Dumazet <edumazet@google.com>, Paolo Abeni <pabeni@redhat.com>,
+ Russell King <linux@armlinux.org.uk>, linux-arm-kernel@lists.infradead.org,
+ Christophe Leroy <christophe.leroy@csgroup.eu>,
+ Herve Codina <herve.codina@bootlin.com>,
+ Florian Fainelli <f.fainelli@gmail.com>,
+ Heiner Kallweit <hkallweit1@gmail.com>,
+ Vladimir Oltean <vladimir.oltean@nxp.com>,
+ =?UTF-8?Q?K=C3=B6ry_Maincent?= <kory.maincent@bootlin.com>,
+ =?UTF-8?Q?Marek_Beh=C3=BAn?= <kabel@kernel.org>,
+ Oleksij Rempel <o.rempel@pengutronix.de>,
+ =?UTF-8?Q?Nicol=C3=B2_Veronese?= <nicveronese@gmail.com>,
+ Simon Horman <horms@kernel.org>, mwojtas@chromium.org,
+ Antoine Tenart <atenart@kernel.org>, devicetree@vger.kernel.org,
+ Conor Dooley <conor+dt@kernel.org>, Krzysztof Kozlowski
+ <krzk+dt@kernel.org>, Rob Herring <robh@kernel.org>,
+ Romain Gantois <romain.gantois@bootlin.com>,
+ Daniel Golle <daniel@makrotopia.org>,
+ Dimitri Fedrau <dimitri.fedrau@liebherr.com>
+References: <20251119195920.442860-1-maxime.chevallier@bootlin.com>
+ <20251119195920.442860-4-maxime.chevallier@bootlin.com>
+ <20251119195400.1bf0cc68@kernel.org>
+From: Maxime Chevallier <maxime.chevallier@bootlin.com>
+Content-Language: en-US
+In-Reply-To: <20251119195400.1bf0cc68@kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Last-TLS-Session-Version: TLSv1.3
 
-On 20-11-25, 14:35, Christian Marangi wrote:
-> If CONFIG_OF is not enabled, of_match_node() is set as NULL and
-> qcom_cpufreq_ipq806x_match_list won't be used causing a compilation
-> warning.
-> 
-> Flag qcom_cpufreq_ipq806x_match_list as __maybe_unused to fix the
-> compilation warning.
-> 
-> While at it also flag as __initconst as it's used only in probe contest
-> and can be freed after probe.
-> 
-> This follows the pattern of the usual of_device_id variables.
-> 
-> Reported-by: kernel test robot <lkp@intel.com>
-> Closes: https://lore.kernel.org/oe-kbuild-all/202511202119.6zvvFMup-lkp@intel.com/
-> Fixes: 58f5d39d5ed8 ("cpufreq: qcom-nvmem: add compatible fallback for ipq806x for no SMEM")
-> Signed-off-by: Christian Marangi <ansuelsmth@gmail.com>
-> ---
->  drivers/cpufreq/qcom-cpufreq-nvmem.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
 
-Applied. Thanks.
 
--- 
-viresh
+On 20/11/2025 04:54, Jakub Kicinski wrote:
+> On Wed, 19 Nov 2025 20:59:04 +0100 Maxime Chevallier wrote:
+>> diff --git a/net/ethtool/common.c b/net/ethtool/common.c
+>> index 2f4b70f104e8..8216e4ada58e 100644
+>> --- a/net/ethtool/common.c
+>> +++ b/net/ethtool/common.c
+>> @@ -460,6 +460,21 @@ const struct link_mode_info link_mode_params[] = {
+>>  static_assert(ARRAY_SIZE(link_mode_params) == __ETHTOOL_LINK_MODE_MASK_NBITS);
+>>  EXPORT_SYMBOL_GPL(link_mode_params);
+>>  
+>> +const char ethtool_link_medium_names[][ETH_GSTRING_LEN] = {
+>> +	[ETHTOOL_LINK_MEDIUM_BASET] = "BaseT",
+>> +	[ETHTOOL_LINK_MEDIUM_BASEK] = "BaseK",
+>> +	[ETHTOOL_LINK_MEDIUM_BASES] = "BaseS",
+>> +	[ETHTOOL_LINK_MEDIUM_BASEC] = "BaseC",
+>> +	[ETHTOOL_LINK_MEDIUM_BASEL] = "BaseL",
+>> +	[ETHTOOL_LINK_MEDIUM_BASED] = "BaseD",
+>> +	[ETHTOOL_LINK_MEDIUM_BASEE] = "BaseE",
+>> +	[ETHTOOL_LINK_MEDIUM_BASEF] = "BaseF",
+>> +	[ETHTOOL_LINK_MEDIUM_BASEV] = "BaseV",
+>> +	[ETHTOOL_LINK_MEDIUM_BASEMLD] = "BaseMLD",
+>> +	[ETHTOOL_LINK_MEDIUM_NONE] = "None",
+>> +};
+>> +static_assert(ARRAY_SIZE(ethtool_link_medium_names) == __ETHTOOL_LINK_MEDIUM_LAST);
+> 
+> Thanks for reshuffling things, this one needs a static tho:
+> 
+> net/ethtool/common.c:463:12: warning: symbol 'ethtool_link_medium_names' was not declared. Should it be static?
+
+Ok I figured that I didn't have sparse installed locally, so the
+local NIPA build "build_allmodconfig_warn" didn't go through.
+
+That's fixed now, hopefully even less bugs next time !
+
+Maxime
+
 
