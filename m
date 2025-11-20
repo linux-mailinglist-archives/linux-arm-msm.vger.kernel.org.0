@@ -1,238 +1,133 @@
-Return-Path: <linux-arm-msm+bounces-82681-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-82684-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [IPv6:2605:f480:58:1:0:1994:3:14])
-	by mail.lfdr.de (Postfix) with ESMTPS id AD90BC740ED
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Nov 2025 13:57:38 +0100 (CET)
+Received: from ams.mirrors.kernel.org (ams.mirrors.kernel.org [IPv6:2a01:60a::1994:3:14])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0F4E9C744DE
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Nov 2025 14:42:22 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 6AF944E1469
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Nov 2025 12:57:37 +0000 (UTC)
+	by ams.mirrors.kernel.org (Postfix) with ESMTPS id 6016235ED13
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Nov 2025 13:35:26 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id AFC3E2ECEAE;
-	Thu, 20 Nov 2025 12:57:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1130A33ADA6;
+	Thu, 20 Nov 2025 13:35:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="U6dAjwAN"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="iqEQugTO"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f54.google.com (mail-wr1-f54.google.com [209.85.221.54])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C5682DD60F;
-	Thu, 20 Nov 2025 12:57:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D74C930DD35
+	for <linux-arm-msm@vger.kernel.org>; Thu, 20 Nov 2025 13:35:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763643454; cv=none; b=m2mUAPJ3vYnGYESM0Uyj+mUuQtU+kTNijvjfkJua/+ciXW3fShrMHK07rYXZdwaaHjxUed8zNcAPmYcxbwXWY4znDxpiVCIcKNC32xQqFrIs18aAuMcyCpCsUysRo9Re+w0HTKIXjYApwwCN6zfmO1tufSvkRmF++nUltAmQdec=
+	t=1763645722; cv=none; b=ixr33EfE0qUQaTdFYzpi+vMea18D/zlS1eAzYJLRasnqehPJXL5GeGb7vGCN4mSJlTuO6Nv1mKJQk0OTFSlWxr3Ld39fsbYGKDU2pGLb9Xl5zq+xZySRuujdNvZyHGxrbOj2xaEIvLvtATlmmDJ4N848AntmtroaHriMk1ezo/M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763643454; c=relaxed/simple;
-	bh=BSAJnV6hGwIlrdf26TVWYrTtWavqRfw5o5IS/pX+paY=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Agz7etuS7gI0daIhRzKUf+hysz9lnjEdi8VozmiOlKQLNI7AHGn/SJsWE5D/YObVYIkzjvGlRPknXw4wDi3SIiDTivCcYA/UL9Hk9XC2iG+uxjL0+KExfgtWRaEhp96ZPhvJTO3pC7N1e5YrMha8FWQb03Mg22Ff7d3Ern18Qy8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=U6dAjwAN; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35235C4CEF1;
-	Thu, 20 Nov 2025 12:57:18 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1763643454;
-	bh=BSAJnV6hGwIlrdf26TVWYrTtWavqRfw5o5IS/pX+paY=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=U6dAjwANw4n/6ZVjJ+Seqdabz28l0Onx7duGdEvU7ZZtHs5Hc8Ggfu7Z0js38Nx86
-	 diRyJUNdPGO+7TgPQMXk/o6MQigTi+HXCP5LV7yM4EqH8cQCrWMB1ZLvS2ZCjul6G5
-	 Lms68eWAqPWHkzqprGdEz+wxr/CwjlnDd9HyU0Ehj9fPavXce0DbENY3r53MXvia8p
-	 8cKtJTZFsjfNItIpdoD8iPrfj/ikp/MKUNpbzbfjmPUGTMC6ggVjznVJbNbc0MS3Lj
-	 zzsNZ78ijnO+25UNbWxxvGaLb9H4AMxQNir5Xr5f3xShPNl56yyA9ajVlBr1ROb2SZ
-	 M1kOF05OwM0wQ==
-Date: Thu, 20 Nov 2025 18:27:06 +0530
-From: Manivannan Sadhasivam <mani@kernel.org>
-To: Rob Herring <robh@kernel.org>
-Cc: Frank Li <Frank.li@nxp.com>, 
-	Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>, Greg Kroah-Hartman <gregkh@linuxfoundation.org>, 
-	Jiri Slaby <jirislaby@kernel.org>, Nathan Chancellor <nathan@kernel.org>, 
-	Nicolas Schier <nicolas.schier@linux.dev>, Hans de Goede <hansg@kernel.org>, 
-	Ilpo =?utf-8?B?SsOkcnZpbmVu?= <ilpo.jarvinen@linux.intel.com>, Mark Pearson <mpearson-lenovo@squebb.ca>, 
-	"Derek J. Clark" <derekjohn.clark@gmail.com>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
-	Conor Dooley <conor+dt@kernel.org>, Marcel Holtmann <marcel@holtmann.org>, 
-	Luiz Augusto von Dentz <luiz.dentz@gmail.com>, Bartosz Golaszewski <brgl@bgdev.pl>, 
-	linux-serial@vger.kernel.org, linux-kernel@vger.kernel.org, linux-kbuild@vger.kernel.org, 
-	platform-driver-x86@vger.kernel.org, linux-pci@vger.kernel.org, devicetree@vger.kernel.org, 
-	linux-arm-msm@vger.kernel.org, linux-bluetooth@vger.kernel.org, linux-pm@vger.kernel.org, 
-	Stephan Gerhold <stephan.gerhold@linaro.org>, Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Subject: Re: [PATCH 7/9] dt-bindings: connector: Add PCIe M.2 Mechanical Key
- E connector
-Message-ID: <2dtqb5cpuhb4ln3vfuudortjesrcamwpokkcwoih6gz7u25rxr@mgtdturwyhq3>
-References: <20251112-pci-m2-e-v1-0-97413d6bf824@oss.qualcomm.com>
- <20251112-pci-m2-e-v1-7-97413d6bf824@oss.qualcomm.com>
- <aRS/3OTerCBGlmBm@lizhi-Precision-Tower-5810>
- <qiwgnela4b6gbwuuq7xaqjong47c2ix6caagjl6ryqukzqkswn@6l7rvkf4dfyx>
- <20251119235905.GA3575788-robh@kernel.org>
+	s=arc-20240116; t=1763645722; c=relaxed/simple;
+	bh=G8yIaxqlMSXlJp1hZsvZsMSWwE2jQYO0tbip8q7uWvo=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=iKuyE9XeSmEhFfyq5epfQZe58ED/lNzHK+fbJQb2ol/5OXyKLYHz5bJ9S5mYqeFTijL7MFcHDwNcX8olSslYO5qaJRovQfEJH4jmT955bkDzkK8iV7aLiV2+Wb6gWTadQoJpXEqRtIQJHWyH1nQ/arTHwSJB1Uw6Keie4hSlPak=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=iqEQugTO; arc=none smtp.client-ip=209.85.221.54
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-wr1-f54.google.com with SMTP id ffacd0b85a97d-42b3c965df5so513142f8f.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Nov 2025 05:35:19 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1763645718; x=1764250518; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=ivhCsjIpN+rKmvMKFUskFMdd2JcJlk5CTRXG/6h4Fp8=;
+        b=iqEQugTOred8HLJgcAfQm7em4J/hXa9o0ZJZ/EmS5wekyWk2Ndes/ez0hvJe4J8s4a
+         A4FpdGZ/INvrVktFiPUyEsbSZA02311oCI712gaqd8N9aE7fV0boJ66f2c0D4J3HvB0o
+         mDZFk1yB2I/9nOUmaeQLgukkeXatazFz/dE9xyE8kstyut1yVRfbh0p0Y8+BCjfxyz/x
+         Y9TGppKypP4YI5D3v0foPmwbLaNJwe/Y2Fvu8QTCp8Z9t3gI90uEudf8qSqi9S5ilqNN
+         c1bxVGmYzQHUxJfVF/YNNe9jFTDaRfF28wSUIM+fFfjxS5JAzOmpNl3HR90WdA9w9JnX
+         QRVw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1763645718; x=1764250518;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=ivhCsjIpN+rKmvMKFUskFMdd2JcJlk5CTRXG/6h4Fp8=;
+        b=JhZl3mo3fpdNOz+Afz3EVdesZfdJmtx3XVPDVgzrNtsMI14kWv6I386GMnHpwZauXw
+         ffNL9RM4RB4aocdM14fyWzwE3FisXdbpLFxwax0LHxBsFivCinUg/Z5etnRqEZGhAyBT
+         u2xLQByDlpuTL2rtyRXyb1WbDa57hQnZoybJRj8KRepWpm44xI9EwXQT3RF/coSAFYfU
+         hoJbEYfM+QysDc6i/uDRY2+mlShquyaT/w9ptvW4xpLZKQGB5OL5jSNE25SPF65DG+FL
+         wf3D7NcnSbRuxXCS2I8zlwBUH6gTDNXZ89YidGmpzTeWrxuMwMjK+mi/keZWUeda4nfE
+         pYvA==
+X-Forwarded-Encrypted: i=1; AJvYcCVQcHcIDiQ6y64niehkZKbZueoh7i22FX1dWJBNEDVpZg6aWxKzyMAtev96/y88nX4SOuNyuLi9BHb04TuC@vger.kernel.org
+X-Gm-Message-State: AOJu0YzwnKiqG0Zv61Tqz92F2KihCA0Sxbn9sObfhLpnGInNC86ICxr0
+	N7exwvMt3p+5Uw0gIJMRdZU9PMQx91RIAjzwrsO7zY23Id3doEO6m0p8
+X-Gm-Gg: ASbGnculIokVmk1Wif7N0ZVWz6h2hi8ds6D2F1dxSZd/GRUjn58v8AOs/zS8vqze+ky
+	Pwntd+L1F1gNt1qQ4cQJ77JasNgfmK8kpTJ/K62Oi5Ebq4QG4JiJH2mS5lqTSAxMF5PNsFiU/Jt
+	vY4j11t9LDKtbjaxsr4u15P8C+b5gkciDLgN2GfFMK6Rs6kYfh/cqg87nZkwcChQoNvJfX7uoGU
+	pTs12h/EbRZXsuTrsbBiNm8uMMLcIUa0QAk77yn+KE3hnv7YzYLSZ5lAz8lJ1Z17FGMNHVsZuRG
+	9iEdixPPWIYZcyudk0bjnr2dgMYWeLxhub2scBTlEzDj5D5PWn/PH6FaIc7AHoTLnQVtj29xQMu
+	eUMhry1ppuCssE45QZInTHEYS9OFU5GbgZIjALVnY3CHjVA7Ow1wx2VyEegOWUbrik98n9DYSkF
+	p1H9FbTnDypQLmNA6pmhkxNMJdHuWiuvl/bX0J3h+z
+X-Google-Smtp-Source: AGHT+IEMS03klaZwAAJMz9PSOT0oih6Mf5sEnZyDXJENW4M3aPZN+qxGbLvqwcRRah/8mB+rsAtzqQ==
+X-Received: by 2002:a05:6000:420a:b0:42b:389a:b49 with SMTP id ffacd0b85a97d-42cb9a60870mr3180090f8f.28.1763645717940;
+        Thu, 20 Nov 2025 05:35:17 -0800 (PST)
+Received: from Ansuel-XPS24 (93-34-90-37.ip49.fastwebnet.it. [93.34.90.37])
+        by smtp.googlemail.com with ESMTPSA id ffacd0b85a97d-42cb7fd8c47sm5724685f8f.38.2025.11.20.05.35.16
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 20 Nov 2025 05:35:17 -0800 (PST)
+From: Christian Marangi <ansuelsmth@gmail.com>
+To: Ilia Lin <ilia.lin@kernel.org>,
+	"Rafael J. Wysocki" <rafael@kernel.org>,
+	Viresh Kumar <viresh.kumar@linaro.org>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Christian Marangi <ansuelsmth@gmail.com>,
+	linux-pm@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Cc: kernel test robot <lkp@intel.com>
+Subject: [PATCH] cpufreq: qcom-nvmem: fix compilation warning for qcom_cpufreq_ipq806x_match_list
+Date: Thu, 20 Nov 2025 14:35:02 +0100
+Message-ID: <20251120133508.4237-1-ansuelsmth@gmail.com>
+X-Mailer: git-send-email 2.51.0
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20251119235905.GA3575788-robh@kernel.org>
 
-On Wed, Nov 19, 2025 at 05:59:05PM -0600, Rob Herring wrote:
-> On Thu, Nov 13, 2025 at 10:30:42AM +0530, Manivannan Sadhasivam wrote:
-> > On Wed, Nov 12, 2025 at 12:11:56PM -0500, Frank Li wrote:
-> > > On Wed, Nov 12, 2025 at 08:15:19PM +0530, Manivannan Sadhasivam wrote:
-> > > > Add the devicetree binding for PCIe M.2 Mechanical Key E connector defined
-> > > > in the PCI Express M.2 Specification, r4.0, sec 5.1.2. This connector
-> > > > provides interfaces like PCIe or SDIO to attach the WiFi devices to the
-> > > > host machine, USB or UART+PCM interfaces to attach the Bluetooth (BT)
-> > > > devices along with additional interfaces like I2C for NFC solution. At any
-> > > > point of time, the connector can only support either PCIe or SDIO as the
-> > > > WiFi interface and USB or UART as the BT interface.
-> > > >
-> > > > The connector provides a primary power supply of 3.3v, along with an
-> > > > optional 1.8v VIO supply for the Adapter I/O buffer circuitry operating at
-> > > > 1.8v sideband signaling.
-> > > >
-> > > > The connector also supplies optional signals in the form of GPIOs for fine
-> > > > grained power management.
-> > > >
-> > > > Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
-> > > > ---
-> > > >  .../bindings/connector/pcie-m2-e-connector.yaml    | 154 +++++++++++++++++++++
-> > > >  MAINTAINERS                                        |   1 +
-> > > >  2 files changed, 155 insertions(+)
-> > > >
-> > > > diff --git a/Documentation/devicetree/bindings/connector/pcie-m2-e-connector.yaml b/Documentation/devicetree/bindings/connector/pcie-m2-e-connector.yaml
-> > > > new file mode 100644
-> > > > index 0000000000000000000000000000000000000000..91cb56b1a75b7e3de3b9fe9a7537089f96875746
-> > > > --- /dev/null
-> > > > +++ b/Documentation/devicetree/bindings/connector/pcie-m2-e-connector.yaml
-> > > > @@ -0,0 +1,154 @@
-> > > > +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
-> > > > +%YAML 1.2
-> > > > +---
-> > > > +$id: http://devicetree.org/schemas/connector/pcie-m2-e-connector.yaml#
-> > > > +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> > > > +
-> > > > +title: PCIe M.2 Mechanical Key E Connector
-> > > > +
-> > > > +maintainers:
-> > > > +  - Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
-> > > > +
-> > > > +description:
-> > > > +  A PCIe M.2 E connector node represents a physical PCIe M.2 Mechanical Key E
-> > > > +  connector. Mechanical Key E connectors are used to connect Wireless
-> > > > +  Connectivity devices including combinations of Wi-Fi, BT, NFC to the host
-> > > > +  machine over interfaces like PCIe/SDIO, USB/UART+PCM, and I2C.
-> > > > +
-> > > > +properties:
-> > > > +  compatible:
-> > > > +    const: pcie-m2-e-connector
-> > > > +
-> > > > +  vpcie3v3-supply:
-> > > > +    description: A phandle to the regulator for 3.3v supply.
-> > > > +
-> > > > +  vpcie1v8-supply:
-> > > > +    description: A phandle to the regulator for VIO 1.8v supply.
-> > > > +
-> > > > +  ports:
-> > > > +    $ref: /schemas/graph.yaml#/properties/ports
-> > > > +    description: OF graph bindings modeling the interfaces exposed on the
-> > > > +      connector. Since a single connector can have multiple interfaces, every
-> > > > +      interface has an assigned OF graph port number as described below.
-> > > > +
-> > > > +    properties:
-> > > > +      port@0:
-> > > > +        $ref: /schemas/graph.yaml#/properties/port
-> > > > +        description: PCIe/SDIO interface
-> > > 
-> > > 
-> > > PCIe and SDIO is difference signal at key E. why combine to one port? The
-> > > similar case is USB2.0/UART
-> > > 
-> > 
-> > They will be defined as separate endpoints in the next version.
-> > 
-> > > > +
-> > > > +      port@1:
-> > > > +        $ref: /schemas/graph.yaml#/properties/port
-> > > > +        description: USB 2.0/UART interface
-> > > > +
-> > > > +      port@2:
-> > > > +        $ref: /schemas/graph.yaml#/properties/port
-> > > > +        description: PCM/I2S interface
-> > > > +
-> > > > +      port@3:
-> > > > +        $ref: /schemas/graph.yaml#/properties/port
-> > > > +        description: I2C interface
-> > > > +
-> > > > +    oneOf:
-> > > > +      - required:
-> > > > +          - port@0
-> > > > +
-> > > > +  clocks:
-> > > > +    description: 32.768 KHz Suspend Clock (SUSCLK) input from the host system to
-> > > > +      the M.2 card. Refer, PCI Express M.2 Specification r4.0, sec 3.1.12.1 for
-> > > > +      more details.
-> > > > +    maxItems: 1
-> > > 
-> > > Do we need add pciref clock here?
-> > > 
-> > > > +
-> > > > +  w_disable1-gpios:
-> > > 
-> > > use "-"
-> > > 
-> > > w-disable1-gpios
-> > > 
-> > 
-> > I just went with the spec that defines the signal as W_DISABLE.
-> > 
-> > > > +    description: GPIO controlled connection to W_DISABLE1# signal. This signal
-> > > > +      is used by the system to disable WiFi radio in the M.2 card. Refer, PCI
-> > > > +      Express M.2 Specification r4.0, sec 3.1.12.3 for more details.
-> > > > +    maxItems: 1
-> > > > +
-> > > > +  w_disable2-gpios:
-> > > > +    description: GPIO controlled connection to W_DISABLE2# signal. This signal
-> > > > +      is used by the system to disable BT radio in the M.2 card. Refer, PCI
-> > > > +      Express M.2 Specification r4.0, sec 3.1.12.3 for more details.
-> > > > +    maxItems: 1
-> > > > +
-> > > > +  led1-gpios:
-> > > > +    description: GPIO controlled connection to LED_1# signal. This signal is
-> > > > +      used by the M.2 card to indicate the card status via the system mounted
-> > > > +      LED. Refer, PCI Express M.2 Specification r4.0, sec 3.1.12.2 for more
-> > > > +      details.
-> > > > +    maxItems: 1
-> > > > +
-> > > > +  led2-gpios:
-> > > > +    description: GPIO controlled connection to LED_2# signal. This signal is
-> > > > +      used by the M.2 card to indicate the card status via the system mounted
-> > > > +      LED. Refer, PCI Express M.2 Specification r4.0, sec 3.1.12.2 for more
-> > > > +      details.
-> > > > +    maxItems: 1
-> > > > +
-> > > > +  viocfg-gpios:
-> > > > +    description: GPIO controlled connection to IO voltage configuration
-> > > > +      (VIO_CFG) signal. This signal is used by the M.2 card to indicate to the
-> > > > +      host system that the card supports an independent IO voltage domain for
-> > > > +      the sideband signals. Refer, PCI Express M.2 Specification r4.0, sec
-> > > > +      3.1.15.1 for more details.
-> > > > +    maxItems: 1
-> > > > +
-> > > > +  uim_power_src-gpios:
-> > > 
-> > > property use -
-> > > 
-> > 
-> > Again, this is as per the spec. If DT maintainers object to it, I'll change it.
-> 
-> Use '-'.
-> 
+If CONFIG_OF is not enabled, of_match_node() is set as NULL and
+qcom_cpufreq_ipq806x_match_list won't be used causing a compilation
+warning.
 
-OK!
+Flag qcom_cpufreq_ipq806x_match_list as __maybe_unused to fix the
+compilation warning.
 
-- Mani
+While at it also flag as __initconst as it's used only in probe contest
+and can be freed after probe.
 
+This follows the pattern of the usual of_device_id variables.
+
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202511202119.6zvvFMup-lkp@intel.com/
+Fixes: 58f5d39d5ed8 ("cpufreq: qcom-nvmem: add compatible fallback for ipq806x for no SMEM")
+Signed-off-by: Christian Marangi <ansuelsmth@gmail.com>
+---
+ drivers/cpufreq/qcom-cpufreq-nvmem.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/drivers/cpufreq/qcom-cpufreq-nvmem.c b/drivers/cpufreq/qcom-cpufreq-nvmem.c
+index d5af74bf71c6..6c3c125f6818 100644
+--- a/drivers/cpufreq/qcom-cpufreq-nvmem.c
++++ b/drivers/cpufreq/qcom-cpufreq-nvmem.c
+@@ -256,7 +256,7 @@ static int qcom_cpufreq_krait_name_version(struct device *cpu_dev,
+ 	return ret;
+ }
+ 
+-static const struct of_device_id qcom_cpufreq_ipq806x_match_list[] = {
++static const struct of_device_id qcom_cpufreq_ipq806x_match_list[] __initconst __maybe_unused = {
+ 	{ .compatible = "qcom,ipq8062", .data = (const void *)QCOM_ID_IPQ8062 },
+ 	{ .compatible = "qcom,ipq8064", .data = (const void *)QCOM_ID_IPQ8064 },
+ 	{ .compatible = "qcom,ipq8065", .data = (const void *)QCOM_ID_IPQ8065 },
 -- 
-மணிவண்ணன் சதாசிவம்
+2.51.0
+
 
