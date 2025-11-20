@@ -1,961 +1,438 @@
-Return-Path: <linux-arm-msm+bounces-82616-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-82615-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [IPv6:2605:f480:58:1:0:1994:3:14])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5AA34C7276F
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Nov 2025 07:59:57 +0100 (CET)
+Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [142.0.200.124])
+	by mail.lfdr.de (Postfix) with ESMTPS id A4168C725BA
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Nov 2025 07:41:11 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id EFAB54E9434
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Nov 2025 06:53:48 +0000 (UTC)
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 8A75E4E023A
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Nov 2025 06:41:10 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5509230BBBB;
-	Thu, 20 Nov 2025 06:50:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B1B1221B9FD;
+	Thu, 20 Nov 2025 06:41:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="IyY9bz/5"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from pegase2.c-s.fr (pegase2.c-s.fr [93.17.235.10])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id EECC52BDC01;
-	Thu, 20 Nov 2025 06:50:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=93.17.235.10
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763621438; cv=none; b=qvm39xoFESbXkS6YE5OvbiafiryANwJGCA88VWS0830fwJ13B9bi6FqtuIdPBc+BMo7YxS2tFMLWEnmwXkiGmSQ4nG1EWfIUQ+JcLREQo0akqIDEL9h8IEFuUFwH+tXnAFe6uH2QCbXZYdxcBGmGRUVU2l3GvpvIeYfoh1Y0FNo=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763621438; c=relaxed/simple;
-	bh=6jyQHuzsU1n5fR9SvSQ7xEiDBBK/eSXnQ/2+2dQ1sTY=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=gy4r1Cx4wYwNYhezW2bEC8OesS+W/1dpNuYLtOPAqaTmDdIsWiIrT6sDAIdxRX9S9EFvhG17JhM4GJ0bMcb+mAVvJXRI1818ihf99SO7+lonSuHodsRGjiTN1M5lViXDpjvax0X1xzgZoOkGZ0VG8JhmHSnf/XkFLnPuAz1Dc4o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=csgroup.eu; spf=pass smtp.mailfrom=csgroup.eu; arc=none smtp.client-ip=93.17.235.10
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=csgroup.eu
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=csgroup.eu
-Received: from localhost (mailhub4.si.c-s.fr [172.26.127.67])
-	by localhost (Postfix) with ESMTP id 4dBpP741Smz9sTQ;
-	Thu, 20 Nov 2025 07:30:03 +0100 (CET)
-X-Virus-Scanned: amavisd-new at c-s.fr
-Received: from pegase2.c-s.fr ([172.26.127.65])
-	by localhost (pegase2.c-s.fr [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id tDZTtLqaEXX9; Thu, 20 Nov 2025 07:30:03 +0100 (CET)
-Received: from messagerie.si.c-s.fr (messagerie.si.c-s.fr [192.168.25.192])
-	by pegase2.c-s.fr (Postfix) with ESMTP id 4dBpP72gYBz9sTL;
-	Thu, 20 Nov 2025 07:30:03 +0100 (CET)
-Received: from localhost (localhost [127.0.0.1])
-	by messagerie.si.c-s.fr (Postfix) with ESMTP id 4420F8B76D;
-	Thu, 20 Nov 2025 07:30:03 +0100 (CET)
-X-Virus-Scanned: amavisd-new at c-s.fr
-Received: from messagerie.si.c-s.fr ([127.0.0.1])
-	by localhost (messagerie.si.c-s.fr [127.0.0.1]) (amavisd-new, port 10023)
-	with ESMTP id oD9-E17-2Ud8; Thu, 20 Nov 2025 07:30:03 +0100 (CET)
-Received: from [192.168.235.99] (unknown [192.168.235.99])
-	by messagerie.si.c-s.fr (Postfix) with ESMTP id AF07A8B763;
-	Thu, 20 Nov 2025 07:30:01 +0100 (CET)
-Message-ID: <1b180d9e-a45c-42da-80c5-c1cfa0f19966@csgroup.eu>
-Date: Thu, 20 Nov 2025 07:30:00 +0100
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.17])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F06CD531;
+	Thu, 20 Nov 2025 06:41:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=198.175.65.17
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1763620867; cv=fail; b=YIbebNbju5Of8i3HSOk1k0aExMJYIQmNxlA3Mj7ItbWWMrapjeoo+SoM9sHAgcpP2wK9rtvkuU7uW6gEXhPmNda1I7B2lJDz9vLmeHAJMv+TILWYqSvUoLBF1cWirxyqG0xYN2/P5g0fk5pQycIGfWTEGsdqtn5ZoAfOR2+Gvpw=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1763620867; c=relaxed/simple;
+	bh=2u7nHupECcXO0Rrvteu0jQ2e3t6x/fjl+8DqcT7FiEk=;
+	h=Message-ID:Date:Subject:To:References:From:In-Reply-To:
+	 Content-Type:MIME-Version; b=t/z9eNiklpKWZ/kVQ0uIW3K2cB7sW5uM0J1LXy+5b3N/qpVfhEHe9Bp0vxkdOo6CEHZ4PEYHyehI8+Z6xwGzZmgJG7uvqSXoshk7ejCknbVvx7lH/f+YHO8UxPQVb0g4iDq3I734otdh4kRC7M0ppRMHTNOCI92i0wpYI8+MqHw=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=IyY9bz/5; arc=fail smtp.client-ip=198.175.65.17
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1763620862; x=1795156862;
+  h=message-id:date:subject:to:references:from:in-reply-to:
+   content-transfer-encoding:mime-version;
+  bh=2u7nHupECcXO0Rrvteu0jQ2e3t6x/fjl+8DqcT7FiEk=;
+  b=IyY9bz/5mxp/feQJdf5Ct8kgbX9JsqfXuq4Y/GMq/aRsyRDDAppCnT5o
+   6fYcdHfNTJviRDNGdFoCg6d5k85+1OBG4cEyOa/QR5OpaKjL3ri7R38l/
+   j2B5Q+aEvFAUmVDMr2+qB8BK9yj76zY6PEgKCmjwffnpqAAJdCLAbkZat
+   i3YnIDKdHOO/gHVycxgCMwSN4a5sz4DCR4crQLEpdeJMsDrEB5l98VvEy
+   oznLUOw/IGOhJw1ZDLpkhEesCiNqklXli5TBFEyefyirqH/4TM6cHnaze
+   s7FblCFTILwuKnSqmijQjkQBigsEay6HpgjgW95tfjfjbiMB6HJc0YO7Y
+   Q==;
+X-CSE-ConnectionGUID: SuPlOrJGQ3aU2SRPx6SCKg==
+X-CSE-MsgGUID: 9Cd+mX1dQ9SRPY5T68Tv2A==
+X-IronPort-AV: E=McAfee;i="6800,10657,11618"; a="65616487"
+X-IronPort-AV: E=Sophos;i="6.19,317,1754982000"; 
+   d="scan'208";a="65616487"
+Received: from fmviesa009.fm.intel.com ([10.60.135.149])
+  by orvoesa109.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 19 Nov 2025 22:41:01 -0800
+X-CSE-ConnectionGUID: SNrEF9xDTwuWqPFj5V51Mg==
+X-CSE-MsgGUID: wAOCOa2kQAKQAojzWWhbSQ==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.19,317,1754982000"; 
+   d="scan'208";a="191705957"
+Received: from orsmsx902.amr.corp.intel.com ([10.22.229.24])
+  by fmviesa009.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 19 Nov 2025 22:41:01 -0800
+Received: from ORSMSX901.amr.corp.intel.com (10.22.229.23) by
+ ORSMSX902.amr.corp.intel.com (10.22.229.24) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.27; Wed, 19 Nov 2025 22:41:00 -0800
+Received: from ORSEDG903.ED.cps.intel.com (10.7.248.13) by
+ ORSMSX901.amr.corp.intel.com (10.22.229.23) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.27 via Frontend Transport; Wed, 19 Nov 2025 22:41:00 -0800
+Received: from DM5PR21CU001.outbound.protection.outlook.com (52.101.62.44) by
+ edgegateway.intel.com (134.134.137.113) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.27; Wed, 19 Nov 2025 22:41:00 -0800
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=sNgSr++o8UHd8+wyLSgpW7r86afsbxcnPl3xsvxKg3qoObS6aYjXvNgqhExoaeMnOJgWdIhh26RtOclpWfd/NUL4CAF/31k2kfSTQcOlLd6b5DPoNYRgQwU+2koHdSMhale2JK1HwphNW0t1IbGUu69M2joCN2czNqN1sTCsHaqMPv6MrS/l8GOi8jEZA4//vnqu3AzdO4xIpj46UEiKm86B5JSOhwdhqaGptdsuW8HnIBGQ2VT5wVKvBQHhy+XHNGJGFGI9n0NxTqvARmYW7zYFAPU7WevgPI4W2N3b9vQc9ElAudzt2LW9B0WVzWZfYSJMJT57Coeji4zi/JXg8g==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=wlnm7B/HhGiSy0R7vWYAazKHyxprRpyMKFuK64Vjwxg=;
+ b=tKjT+bAoDJjQ2LeRmU7q1YcF6FTRxib6mT8mFQ2LDvW14Hn3YQ2cu1hDdtGLWdmxWfsrKLb9jbIsCoJvcjxbzyvUTXJRBnpeYshuIebjtCUMqFVYTMfDEgCPEZPUXBkAZza+HtxYAbYVWkaRH2DIU7Yh4joII28gb/+HbnvL9kT62n13h5esNLM4vOYtYp/NMhxyr6Dulod2NDv2NCK0iyWYcBbTpKbL2eL2L3aSk+eM6Pnv4HvU/uJW+fgxsmF9l5YiL2bKFuhwanY1l+z1z9VVEAxf+2Q4u+DTpiUa20ycRvJByJisYDKhZJ+gxdBeFYQFhvgGEz2bUwSZFLJarA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
+ dkim=pass header.d=intel.com; arc=none
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=intel.com;
+Received: from IA1PR11MB7198.namprd11.prod.outlook.com (2603:10b6:208:419::15)
+ by PH7PR11MB6769.namprd11.prod.outlook.com (2603:10b6:510:1af::19) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9343.10; Thu, 20 Nov
+ 2025 06:40:56 +0000
+Received: from IA1PR11MB7198.namprd11.prod.outlook.com
+ ([fe80::eeac:69b0:1990:4905]) by IA1PR11MB7198.namprd11.prod.outlook.com
+ ([fe80::eeac:69b0:1990:4905%7]) with mapi id 15.20.9320.021; Thu, 20 Nov 2025
+ 06:40:56 +0000
+Message-ID: <2888130d-3910-49fe-95ef-3864b1e2ff2d@intel.com>
+Date: Thu, 20 Nov 2025 08:40:52 +0200
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v5] mmc: sdhci-msm: Enable ICE for CQE-capable controllers
+ with non-CQE cards
+To: Md Sadre Alam <quic_mdalam@quicinc.com>, <ulf.hansson@linaro.org>,
+	<abel.vesa@linaro.org>, <ebiggers@google.com>,
+	<linux-arm-msm@vger.kernel.org>, <linux-mmc@vger.kernel.org>,
+	<linux-kernel@vger.kernel.org>
+References: <20251119114653.751992-1-quic_mdalam@quicinc.com>
+Content-Language: en-US
+From: Adrian Hunter <adrian.hunter@intel.com>
+Organization: Intel Finland Oy, Registered Address: c/o Alberga Business Park,
+ 6 krs, Bertel Jungin Aukio 5, 02600 Espoo, Business Identity Code: 0357606 -
+ 4, Domiciled in Helsinki
+In-Reply-To: <20251119114653.751992-1-quic_mdalam@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: DUZPR01CA0288.eurprd01.prod.exchangelabs.com
+ (2603:10a6:10:4b7::21) To IA1PR11MB7198.namprd11.prod.outlook.com
+ (2603:10b6:208:419::15)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH net-next v17 03/15] net: phy: Introduce PHY ports
- representation
-To: Maxime Chevallier <maxime.chevallier@bootlin.com>, davem@davemloft.net
-Cc: netdev@vger.kernel.org, linux-kernel@vger.kernel.org,
- linux-arm-msm@vger.kernel.org, thomas.petazzoni@bootlin.com,
- Andrew Lunn <andrew@lunn.ch>, Jakub Kicinski <kuba@kernel.org>,
- Eric Dumazet <edumazet@google.com>, Paolo Abeni <pabeni@redhat.com>,
- Russell King <linux@armlinux.org.uk>, linux-arm-kernel@lists.infradead.org,
- Herve Codina <herve.codina@bootlin.com>,
- Florian Fainelli <f.fainelli@gmail.com>,
- Heiner Kallweit <hkallweit1@gmail.com>,
- Vladimir Oltean <vladimir.oltean@nxp.com>,
- =?UTF-8?Q?K=C3=B6ry_Maincent?= <kory.maincent@bootlin.com>,
- =?UTF-8?Q?Marek_Beh=C3=BAn?= <kabel@kernel.org>,
- Oleksij Rempel <o.rempel@pengutronix.de>,
- =?UTF-8?Q?Nicol=C3=B2_Veronese?= <nicveronese@gmail.com>,
- Simon Horman <horms@kernel.org>, mwojtas@chromium.org,
- Antoine Tenart <atenart@kernel.org>, devicetree@vger.kernel.org,
- Conor Dooley <conor+dt@kernel.org>, Krzysztof Kozlowski
- <krzk+dt@kernel.org>, Rob Herring <robh@kernel.org>,
- Romain Gantois <romain.gantois@bootlin.com>,
- Daniel Golle <daniel@makrotopia.org>,
- Dimitri Fedrau <dimitri.fedrau@liebherr.com>
-References: <20251119195920.442860-1-maxime.chevallier@bootlin.com>
- <20251119195920.442860-4-maxime.chevallier@bootlin.com>
-From: Christophe Leroy <christophe.leroy@csgroup.eu>
-Content-Language: fr-FR
-In-Reply-To: <20251119195920.442860-4-maxime.chevallier@bootlin.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: IA1PR11MB7198:EE_|PH7PR11MB6769:EE_
+X-MS-Office365-Filtering-Correlation-Id: 5465a1d7-cd5c-484a-d07d-08de27ffc210
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;ARA:13230040|376014|1800799024|366016|7053199007;
+X-Microsoft-Antispam-Message-Info: =?utf-8?B?NVA5TXJzU25tTGJSVzVxUlNUYzBJeWFhQjJIbTVLdFI2ckZadXNpM0gvYktG?=
+ =?utf-8?B?RUNZOFdiOVgxa1U4cklEWE9ra000Y1NQR2EzQWtyM3RWemd5Mk9JWE1ReGNY?=
+ =?utf-8?B?OHBRc0VGbTVuN29Hb3VTcXBib3N0VmdpbCszcXpZWjRuOXp1M0Y2bXJqcUQ4?=
+ =?utf-8?B?TDVTVms2Qnk3TXNXaUpMeFlQVnRpU1FUQ1krcXgzY0VRN0Nid2dvSVA4RTk1?=
+ =?utf-8?B?NnRsaEdvR2tRYUJ0QlFyMkl5VEJOOElSbGJES0lFdmNSUkM2TVR0NjdYN25n?=
+ =?utf-8?B?aVJ1WGxtWXl4QXBJanFOanpMbnZ3VjRkS3VKY3h4eWpKc013TitTOGtPcDBK?=
+ =?utf-8?B?Vm52ai9VcUxRUlVmblVQQ1JuMWN4MmlBVkpPM2Rkck9xYmo1VFhuRVE5L2lD?=
+ =?utf-8?B?dk8rZzNSRGNsVVV2b1JOTGxlUFJ6cDM3RW9uY0cwb05YUTkwS0E1S1VGQVhU?=
+ =?utf-8?B?aGJ0SFVEYzlTeEVEMldvRDk5aUxSenpUUUZtbW5MYnhuYUkxV2NzTE1VcmdU?=
+ =?utf-8?B?MUtjajlwY28vNTI0c0hFMWZQdGdsQkRnR1dKZlNCTXR5Sk1lWE9OQWxla08x?=
+ =?utf-8?B?MVhlK2JIVXRXRHdobE1YTjNTNE5oWDVjeGprZmlGWGJ6Zm55SVRsbDhBeFBX?=
+ =?utf-8?B?cVBPUW5XdWh1bnY1VzRhSXhYNFE0a3lPNWFnaklPVUp5Y2ZqRnZlRXZ2UlJ1?=
+ =?utf-8?B?NTB6ZXlKQ3gzSGtoSWorOFczUnVBR3R5NHV1WktKdnJRSkhlK0RmMXdaZmdC?=
+ =?utf-8?B?ZVkxUGJuNEliRGpnV2ZKTzBGdW9DSGFRWE91cHQxMi9ZWUlibzluSHBmTWpu?=
+ =?utf-8?B?Tzh4TVhEZENHUkhsaDN2R2U2MDF5dVlUOS8waTVTYnZkdGNhZjZ3MUgyYU9F?=
+ =?utf-8?B?UEh0MkR3cVBnMUEyNGx1NFZQTXZlcmlpdENkU2tnZlE1RUl4TlRmZTdmaG1Y?=
+ =?utf-8?B?V0hhS3ZYSXU4dVEzM2FqQlV1UUpoR3RKb3NpMzZyZEtoYUhMZk9HdXFTTGdx?=
+ =?utf-8?B?OVNFUWdDcWNkeCtuMHBFYzNzbXd1c0laVHRXczFvTjNVRmZ0eUx3TjNRTEtv?=
+ =?utf-8?B?S1ZWS0kvTVNVWmxzeEg5RDJkbStSSTJyN1EyT1phbENVSkVNcS9GKzltbnFv?=
+ =?utf-8?B?cC9SVWJaSUlhTTVLZVZkaXB5WWh4T1ByaHN1aThwV2UyZm5qQ1VwK0NaYXlB?=
+ =?utf-8?B?SG9wOTFPcE8rd1RxYVRrMnhoaE5Ma0gxR1U2TnVUeHFLWnRLUkl2MFRvTnpO?=
+ =?utf-8?B?d0lDVVRadlBxQUoxdlR4NWg2U29DU2xuREZZZE9IWlJCZDBUaVVROTBqTnY1?=
+ =?utf-8?B?UmJ3RytTVkgxNHNjT0FMVkh2NkczVGpkODJjM2Z2S1BvKzBJOUlZQUNnNDNy?=
+ =?utf-8?B?VnJxc1ZDNWdnWmpiRDFXc2pFb3hoamZsSi8zZ2xpWFJrbWFYMjlGMW9OaHp6?=
+ =?utf-8?B?NE9GVmxKQ2U3WGFha1RqSDUxRk0zbjJwRVVVbGhTWk5qUXRjdGtyVVhSaWh5?=
+ =?utf-8?B?c0dQNFkzOFRDZkFYUlZuZk45N0RieU1yWGpXbE9yUXNhV2NlU2JnWXk0bkxI?=
+ =?utf-8?B?MWVZMTVBWG0rbWsvSXo1RFVCd1JHV3dxVjAzSU10MUtSTTJkS24yUXlUWk5r?=
+ =?utf-8?B?WVhwcW91Q2dpUkdVOWZNdDN4aHJGRDV1emZ0QitmSzJ5WjFTdnVNZUpzTjV6?=
+ =?utf-8?B?NmlTV2tUMTU2ajZyK3JnRVNVR0QwRHpqTHNRY1lsNW1QdWIya2d6Ry9HOG1m?=
+ =?utf-8?B?V2JmVFRiQWdyL0VTR0R5UkhYdzBTb0hxS253anRITllQaGtiU2oyQkRub0pK?=
+ =?utf-8?B?dGVsc2orQWlNeFNjc1Q2aXhJUlBRS04zMHlORVkvTFBVb1dOKytESWd4c095?=
+ =?utf-8?B?VkMwSW9pS1diSFFFaTgxRm5BMWV6R1JSMEg1ZUNCald6TVV1RU05ekhwbW9S?=
+ =?utf-8?Q?3w316/mtOjV8oEw0wPbWHM5u9+vkId07?=
+X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:IA1PR11MB7198.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(1800799024)(366016)(7053199007);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?a0paZ2E2S2FjNTVPaVRwVG5xYVR6SzZMd3RuRkdiVmxsMEF4TTM0OWZhU2Uw?=
+ =?utf-8?B?a2NmU0gvbHFDQ0pVS05qWTdscUpVbncrYitJdGV5TmI4UVpVZmJTM2NJbTF6?=
+ =?utf-8?B?eE9jTUN3NFcxMVpza200S01mNFNiVmJoRkZ6V0Nlbm1CclcrNVg0QW8vbWZ0?=
+ =?utf-8?B?czBQa3BlaStpSGlLWVFwSUJQS1ZsSVBzMjFBVmY5TFNUeWIzcGxsSlVCZ1Rj?=
+ =?utf-8?B?NkY1LzNEYXk1Sks5M1VIeDhqR0hENEJkVmcvTXNzYU01cnNBZ3dpQzdsVklp?=
+ =?utf-8?B?aHNjc0JOT0VZYm5zZVc2cC9hWTJ2dGxmNGhhcTFPdHlwUTYrVDZsL0JNV25N?=
+ =?utf-8?B?MDN1QjdIOTNxTE1RR3JyV092SkVDd0Exb1pzWFQwWUNtYk9rMVdsVEFiRSt4?=
+ =?utf-8?B?Z3Bvak04SjhBd1hGaXQ3UENPNlpoWjFkbHhReWdiM3VLWitHYjRHTmhDdFF4?=
+ =?utf-8?B?RXk2aFdVbm1QeThRaDRNY1Y3OUl1MlpxNTRuVU5WZ1hvTGlKN24yejJtMkpW?=
+ =?utf-8?B?RGwwbko0endmNUh1di9zck50ZkxIV2RpM0JzY3pNLzBDd1hnWVFSUmJVRUVV?=
+ =?utf-8?B?aFkwbVhLQ29mUVlaT0g4TWxCK0REbGs3VFJPUExzMnpXbEtFMUdiNlJDcW4v?=
+ =?utf-8?B?aXM3T0ZLRjRoaURPMTNWUzVRWDk1UEVDb3N0dlViKzQ3UEZVYWJkQW84emY4?=
+ =?utf-8?B?Q0NJYVREMlMrM3E1SmZsbnFib0tYRXNlb2FPZngzWUZ4Y2VoTisvbTZiWlBJ?=
+ =?utf-8?B?ZlBXM1d0WWRNMUJIL2UyNHN4eGRaZ1R2eG11UGYrSkc2Y2Q3cjc4eVhQR1RH?=
+ =?utf-8?B?U3kvRFJaQkZXR1lvNHBsTUg2THFqbWowL0xnRTg5bzJ5amphY0pQU1lVemlM?=
+ =?utf-8?B?TWtMTGJPS1prNVJGZ3dIMFl2NWVPRmNUSjVzbWdOdXZuZjcycU9qeStreEFG?=
+ =?utf-8?B?RENPeDlzY2UvOTZLWjYxN1A4eE1IYms4WWVVdVkreFVKbmFlbWUzcGMwNFl1?=
+ =?utf-8?B?am1XTk5LZGhoQnFkTlhFdGZJSWwxRWVsbXBoc1VtQ0Y2QmUwYTJxS2FlVWYy?=
+ =?utf-8?B?b3ZjSC8zbWhka1VqaS9xaXBJdU9lSWFVUmFOUU5ITzNiVEpEQWt5Y2ltOFlm?=
+ =?utf-8?B?ZGNHRG9iSCtwVkpiVTYyYURySmk2dm02RUlyNSsxOEs4bXFFbURIcm0zc1ZL?=
+ =?utf-8?B?aXdKdXhRWFFHRjNFa2dJd3hGdkdHYU1pdDg4b0dnaUhWRUhzSnp0T0lWMDJW?=
+ =?utf-8?B?MGU0R2JwS1pnYVdoaXFMNWord0xHNCtjc1haa2kzbnNMbGxyN2tWKzFJeTFK?=
+ =?utf-8?B?cWpRVkFkaGdOUnNoNTQ3c3NjUmRLUU8wZ1p6N1lTNW00U3IrRW9ZWTViSGhn?=
+ =?utf-8?B?U3FHMGphMVB0Rjc1NWFUY3h6Rm1BUTdQOGwzeVV1QlJ0c2VQWURaaGJhUG5X?=
+ =?utf-8?B?cFQ0dkt0QURvamJOQmNUejZ1SWh6VVlOYlFBQWcyOGZpc3JqWFlvUHdUZGZr?=
+ =?utf-8?B?c010eFdhUGZIS2p4OG42TkM1WTBSb0x1cmp4U3pMU3J5WSt0L1BLMHJFd3RU?=
+ =?utf-8?B?QWhkVFB4SE9UKzhmemdGa0lOa0RETTRKbGRZQ0VTTXplZllFNjlic2xGbFNJ?=
+ =?utf-8?B?Q01tcS8rTUlrZlVub1JrMW54ZVlIL1BjcllyTW5sYXRVdEF4NStlTUhXV2Vr?=
+ =?utf-8?B?MlN4ZWNTUmFVRDJIUzJTWDY3WVMxcC9DRUpLYWNqZkgwOXp0a2dNN1Z0bDFq?=
+ =?utf-8?B?cGk4Rk9XRlZVcnYzTUozNldJUno3Wm1Nc1I4ZDFOVzFEVWxEc1FZMFdPYmhC?=
+ =?utf-8?B?QnhpZHovY2sxUFB4UEllWjdzLy92ZjBRVy80MWN3UEdEWjRHT3czRjFQZmYv?=
+ =?utf-8?B?MlNlalhHR0F2b2NHSTZsbEN1R2J5cEhEeTBlUXc3dUppeW56ZS9vbjc0Zm1x?=
+ =?utf-8?B?Y1pjV0JyV3lqZFJCbVphMjdmUWtpcWlGVG1wUTBPNmVac1VqTnB4ODlweWFZ?=
+ =?utf-8?B?NUx6NUVBbnBRUDg4dnA3YUZSL2YvV1BBKzM5WFFLdFZJaGNLMTV1c242QUJK?=
+ =?utf-8?B?VUJhYUJBcFdMK2d6T1V2MHBkVUlaQVc0SDRVSlU1SmFZekh1cTNHVlBUZWdX?=
+ =?utf-8?B?NjR4bGxQUVFZV0VuZUJIRk5MT3ZqUE10N2svbS8vRW1rZC9LdnY1ZHFLRE0x?=
+ =?utf-8?B?VXc9PQ==?=
+X-MS-Exchange-CrossTenant-Network-Message-Id: 5465a1d7-cd5c-484a-d07d-08de27ffc210
+X-MS-Exchange-CrossTenant-AuthSource: IA1PR11MB7198.namprd11.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 20 Nov 2025 06:40:56.3187
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: G/fE6SVZeygwFr5GA/T4a5zXvdqCObTZbCF3Mkf4OeoqPo8dYtAFES6Vv/7G3kdBZ0h4lzlTRo7fcZS+4hHZDQ==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH7PR11MB6769
+X-OriginatorOrg: intel.com
 
-
-
-Le 19/11/2025 à 20:59, Maxime Chevallier a écrit :
-> Ethernet provides a wide variety of layer 1 protocols and standards for
-> data transmission. The front-facing ports of an interface have their own
-> complexity and configurability.
+On 19/11/2025 13:46, Md Sadre Alam wrote:
+> Enable Inline Crypto Engine (ICE) support for CQE-capable sdhci-msm
+> controllers when used with eMMC cards that do not support CQE.
 > 
-> Introduce a representation of these front-facing ports. The current code
-> is minimalistic and only support ports controlled by PHY devices, but
-> the plan is to extend that to SFP as well as raw Ethernet MACs that
-> don't use PHY devices.
+> This addresses the scenario where:
+> - The host controller supports CQE (and has CQHCI crypto infrastructure)
+> - The eMMC card does not support CQE
+> - Standard (non-CMDQ) requests need crypto support
 > 
-> This minimal port representation allows describing the media and number
-> of pairs of a BaseT port. From that information, we can derive the
-> linkmodes usable on the port, which can be used to limit the
-> capabilities of an interface.
+> This allows hardware-accelerated encryption and decryption for standard
+> requests on CQE-capable hardware by utilizing the existing CQHCI crypto
+> register space even when CQE functionality is not available due to card
+> limitations.
 > 
-> For now, the port pairs and medium is derived from devicetree, defined
-> by the PHY driver, or populated with default values (as we assume that
-> all PHYs expose at least one port).
+> The implementation:
+> - Adds ICE register definitions for non-CQE crypto configuration
+> - Implements per-request crypto setup via sdhci_msm_ice_cfg()
+> - Hooks into the request path via mmc_host_ops.request for non-CQE requests
+> - Uses CQHCI register space (NONCQ_CRYPTO_PARM/DUN) for crypto configuration
 > 
-> The typical example is 100M ethernet. 100BaseT can work using only 2
-> pairs on a Cat 5 cables. However, in the situation where a 10/100/1000
-> capable PHY is wired to its RJ45 port through 2 pairs only, we have no
-> way of detecting that. The "max-speed" DT property can be used, but a
-> more accurate representation can be used :
+> With this, CQE-capable controllers can benefit from inline encryption
+> when paired with non-CQE cards, improving performance for encrypted I/O
+> while maintaining compatibility with existing CQE crypto support.
 > 
-> mdi {
-> 	connector-0 {
-> 		media = "BaseT";
-> 		pairs = <2>;
-> 	};
-> };
-> 
->  From that information, we can derive the max speed reachable on the
-> port.
-> 
-> Another benefit of having that is to avoid vendor-specific DT properties
-> (micrel,fiber-mode or ti,fiber-mode).
-> 
-> This basic representation is meant to be expanded, by the introduction
-> of port ops, userspace listing of ports, and support for multi-port
-> devices.
-> 
-> Signed-off-by: Maxime Chevallier <maxime.chevallier@bootlin.com>
-
-As mentionned by Jakub, we get:
-
-   CC      net/ethtool/common.o
-   CHECK   net/ethtool/common.c
-net/ethtool/common.c:463:12: warning: symbol 'ethtool_link_medium_names' 
-was not declared. Should it be static?
-
-With that fixed,
-
-Reviewed-by: Christophe Leroy <christophe.leroy@csgroup.eu>
-
+> Signed-off-by: Md Sadre Alam <quic_mdalam@quicinc.com>
+> Acked-by: Adrian Hunter <adrian.hunter@intel.com>
 > ---
->   MAINTAINERS                  |   7 ++
->   drivers/net/phy/Makefile     |   2 +-
->   drivers/net/phy/phy-caps.h   |   5 +
->   drivers/net/phy/phy-core.c   |   6 ++
->   drivers/net/phy/phy_caps.c   |  57 +++++++++++
->   drivers/net/phy/phy_device.c | 190 +++++++++++++++++++++++++++++++++++
->   drivers/net/phy/phy_port.c   | 153 ++++++++++++++++++++++++++++
->   include/linux/ethtool.h      |  11 ++
->   include/linux/phy.h          |  55 ++++++++++
->   include/linux/phy_port.h     |  96 ++++++++++++++++++
->   net/ethtool/common.c         |  27 +++++
->   11 files changed, 608 insertions(+), 1 deletion(-)
->   create mode 100644 drivers/net/phy/phy_port.c
->   create mode 100644 include/linux/phy_port.h
 > 
-> diff --git a/MAINTAINERS b/MAINTAINERS
-> index 0f4fb37e77b1..e0dc230df90e 100644
-> --- a/MAINTAINERS
-> +++ b/MAINTAINERS
-> @@ -17978,6 +17978,13 @@ F:	drivers/net/phy/phy_link_topology.c
->   F:	include/linux/phy_link_topology.h
->   F:	net/ethtool/phy.c
->   
-> +NETWORKING [ETHTOOL PHY PORT]
-> +M:	Maxime Chevallier <maxime.chevallier@bootlin.com>
-> +F:	Documentation/devicetree/bindings/net/ethernet-connector.yaml
-> +F:	drivers/net/phy/phy_port.c
-> +F:	include/linux/phy_port.h
-> +K:	struct\s+phy_port|phy_port_
+> Change in [v5]
+> 
+> * Removed unused variable
+> 
+> * Added proper comment for sdhci_msm_request()
+> 
+> * Removed sdhci_msm_ice_enable(); it is already invoked during resume
+> 
+> Change in [v4]
+> 
+> * Moved ICE initialization for non cmdq into sdhci_msm_ice_cfg() and made
+>   it conditional on mrq->crypto_ctx to enable lazy setup.
+> 
+> * Added msm_host->ice_init_done guard to prevent redundant initialization.
+> 
+> * Updated commit message
+> 
+> Change in [v3]
+> 
+> * Refactored logic to use separate code paths for crypto_ctx != NULL and
+>   crypto_ctx == NULL to improve readability.
+> 
+> * Renamed bypass to crypto_enable to align with bitfield semantics.
+> 
+> * Removed slot variable
+> 
+> * Added ICE initialization sequence for non-CMDQ eMMC devices before
+>   __sdhci_add_host()
+> 
+> Change in [v2]
+> 
+> * Moved NONCQ_CRYPTO_PARM and NONCQ_CRYPTO_DUN register definitions into
+>   sdhci-msm.c
+> 
+> * Introduced use of GENMASK() and FIELD_PREP() macros for cleaner and more
+>   maintainable bitfield handling in ICE configuration.
+> 
+> * Removed redundant if (!mrq || !cq_host) check from sdhci_msm_ice_cfg()
+>   as both are guaranteed to be valid in the current call path.
+> 
+> * Added assignment of host->mmc_host_ops.request = sdhci_msm_request; to
+>   integrate ICE configuration into the standard request path for non-CMDQ
+>   eMMC devices.
+> 
+> * Removed sdhci_crypto_cfg() from sdhci.c and its invocation in sdhci_request()
+> 
+> Change in [v1]
+> 
+> * Added initial support for Inline Crypto Engine (ICE) on non-CMDQ eMMC
+>   devices.
+> 
+>  drivers/mmc/host/sdhci-msm.c | 101 +++++++++++++++++++++++++++++++++++
+>  1 file changed, 101 insertions(+)
+> 
+> diff --git a/drivers/mmc/host/sdhci-msm.c b/drivers/mmc/host/sdhci-msm.c
+> index 4e5edbf2fc9b..69c67242519c 100644
+> --- a/drivers/mmc/host/sdhci-msm.c
+> +++ b/drivers/mmc/host/sdhci-msm.c
+> @@ -157,6 +157,18 @@
+>  #define CQHCI_VENDOR_CFG1	0xA00
+>  #define CQHCI_VENDOR_DIS_RST_ON_CQ_EN	(0x3 << 13)
+>  
+> +/* non command queue crypto enable register*/
+> +#define NONCQ_CRYPTO_PARM		0x70
+> +#define NONCQ_CRYPTO_DUN		0x74
 > +
->   NETWORKING [GENERAL]
->   M:	"David S. Miller" <davem@davemloft.net>
->   M:	Eric Dumazet <edumazet@google.com>
-> diff --git a/drivers/net/phy/Makefile b/drivers/net/phy/Makefile
-> index 76e0db40f879..3a34917adea7 100644
-> --- a/drivers/net/phy/Makefile
-> +++ b/drivers/net/phy/Makefile
-> @@ -3,7 +3,7 @@
->   
->   libphy-y			:= phy.o phy-c45.o phy-core.o phy_device.o \
->   				   linkmode.o phy_link_topology.o \
-> -				   phy_caps.o mdio_bus_provider.o
-> +				   phy_caps.o mdio_bus_provider.o phy_port.o
->   mdio-bus-y			+= mdio_bus.o mdio_device.o
->   
->   ifdef CONFIG_PHYLIB
-> diff --git a/drivers/net/phy/phy-caps.h b/drivers/net/phy/phy-caps.h
-> index b7f0c6a3037a..c94b9c852563 100644
-> --- a/drivers/net/phy/phy-caps.h
-> +++ b/drivers/net/phy/phy-caps.h
-> @@ -60,4 +60,9 @@ const struct link_capabilities *
->   phy_caps_lookup(int speed, unsigned int duplex, const unsigned long *supported,
->   		bool exact);
->   
-> +void phy_caps_medium_get_supported(unsigned long *supported,
-> +				   enum ethtool_link_medium medium,
-> +				   int lanes);
-> +u32 phy_caps_mediums_from_linkmodes(unsigned long *linkmodes);
+> +#define DISABLE_CRYPTO			BIT(15)
+> +#define CRYPTO_GENERAL_ENABLE		BIT(1)
+> +#define HC_VENDOR_SPECIFIC_FUNC4	0x260
+> +#define ICE_HCI_SUPPORT			BIT(28)
 > +
->   #endif /* __PHY_CAPS_H */
-> diff --git a/drivers/net/phy/phy-core.c b/drivers/net/phy/phy-core.c
-> index 0c63e6ba2cb0..4dfdb902b2e7 100644
-> --- a/drivers/net/phy/phy-core.c
-> +++ b/drivers/net/phy/phy-core.c
-> @@ -4,6 +4,7 @@
->    */
->   #include <linux/export.h>
->   #include <linux/phy.h>
-> +#include <linux/phy_port.h>
->   #include <linux/of.h>
->   
->   #include "phylib.h"
-> @@ -206,7 +207,12 @@ EXPORT_SYMBOL_GPL(phy_interface_num_ports);
->   
->   static void __set_phy_supported(struct phy_device *phydev, u32 max_speed)
->   {
-> +	struct phy_port *port;
+> +#define ICE_HCI_PARAM_CCI	GENMASK(7, 0)
+> +#define ICE_HCI_PARAM_CE	GENMASK(8, 8)
 > +
->   	phy_caps_linkmode_max_speed(max_speed, phydev->supported);
-> +
-> +	phy_for_each_port(phydev, port)
-> +		phy_caps_linkmode_max_speed(max_speed, port->supported);
->   }
->   
->   /**
-> diff --git a/drivers/net/phy/phy_caps.c b/drivers/net/phy/phy_caps.c
-> index 9a5e293c5104..080a09f29311 100644
-> --- a/drivers/net/phy/phy_caps.c
-> +++ b/drivers/net/phy/phy_caps.c
-> @@ -384,3 +384,60 @@ unsigned long phy_caps_from_interface(phy_interface_t interface)
->   	return link_caps;
->   }
->   EXPORT_SYMBOL_GPL(phy_caps_from_interface);
-> +
-> +/**
-> + * phy_caps_medium_get_supported() - Returns linkmodes supported on a given medium
-> + * @supported: After this call, contains all possible linkmodes on a given medium,
-> + *	       and with the given number of pairs, or less.
-> + * @medium: The medium to get the support from
-> + * @pairs: The number of pairs used on the given medium. Only relevant for modes
-> + *	   that support this notion, such as BaseT. Pass 0 if not applicable.
-> + *
-> + * If no match exists, the supported field is left untouched.
-> + */
-> +void phy_caps_medium_get_supported(unsigned long *supported,
-> +				   enum ethtool_link_medium medium,
-> +				   int pairs)
+>  struct sdhci_msm_offset {
+>  	u32 core_hc_mode;
+>  	u32 core_mci_data_cnt;
+> @@ -300,6 +312,7 @@ struct sdhci_msm_host {
+>  	u32 dll_config;
+>  	u32 ddr_config;
+>  	bool vqmmc_enabled;
+> +	bool ice_init_done;
+>  };
+>  
+>  static const struct sdhci_msm_offset *sdhci_priv_msm_offset(struct sdhci_host *host)
+> @@ -2009,6 +2022,91 @@ static int sdhci_msm_ice_keyslot_evict(struct blk_crypto_profile *profile,
+>  	return qcom_ice_evict_key(msm_host->ice, slot);
+>  }
+>  
+> +static void sdhci_msm_non_cqe_ice_init(struct sdhci_host *host)
 > +{
-> +	int i;
+> +	struct sdhci_pltfm_host *pltfm_host = sdhci_priv(host);
+> +	struct sdhci_msm_host *msm_host = sdhci_pltfm_priv(pltfm_host);
+> +	struct mmc_host *mmc = msm_host->mmc;
+> +	struct cqhci_host *cq_host = mmc->cqe_private;
+> +	u32 config;
+> +	u32 ice_cap;
 > +
-> +	for (i = 0; i < __ETHTOOL_LINK_MODE_MASK_NBITS; i++) {
-> +		/* Special bits such as Autoneg, Pause, Asym_pause, etc. are
-> +		 * set and will be masked away by the port parent.
-> +		 */
-> +		if (link_mode_params[i].mediums == BIT(ETHTOOL_LINK_MEDIUM_NONE)) {
-> +			linkmode_set_bit(i, supported);
-> +			continue;
+> +	config = sdhci_readl(host, HC_VENDOR_SPECIFIC_FUNC4);
+> +	config &= ~DISABLE_CRYPTO;
+> +	sdhci_writel(host, config, HC_VENDOR_SPECIFIC_FUNC4);
+> +	ice_cap = cqhci_readl(cq_host, CQHCI_CAP);
+> +	if (ice_cap & ICE_HCI_SUPPORT) {
+> +		config = cqhci_readl(cq_host, CQHCI_CFG);
+> +		config |= CRYPTO_GENERAL_ENABLE;
+> +		cqhci_writel(cq_host, config, CQHCI_CFG);
+> +	}
+> +}
+> +
+> +static int sdhci_msm_ice_cfg(struct sdhci_host *host, struct mmc_request *mrq)
+> +{
+> +	struct sdhci_pltfm_host *pltfm_host = sdhci_priv(host);
+> +	struct sdhci_msm_host *msm_host = sdhci_pltfm_priv(pltfm_host);
+> +	struct mmc_host *mmc = msm_host->mmc;
+> +	struct cqhci_host *cq_host = mmc->cqe_private;
+> +	unsigned int crypto_params = 0;
+> +	int key_index;
+> +	bool crypto_enable;
+> +	u64 dun = 0;
+> +
+> +	if (mrq->crypto_ctx) {
+> +		if (!msm_host->ice_init_done) {
+> +			sdhci_msm_non_cqe_ice_init(host);
+> +			msm_host->ice_init_done = true;
 > +		}
 > +
-> +		/* If this medium matches, and had a non-zero min-pairs */
-> +		if (link_mode_params[i].mediums & BIT(medium) &&
-> +		    (!link_mode_params[i].min_pairs ||
-> +		      (link_mode_params[i].min_pairs <= pairs &&
-> +		      link_mode_params[i].pairs >= pairs)))
-> +			linkmode_set_bit(i, supported);
-> +	}
-> +}
-> +EXPORT_SYMBOL_GPL(phy_caps_medium_get_supported);
+> +		crypto_enable = true;
+> +		dun = mrq->crypto_ctx->bc_dun[0];
+> +		key_index = mrq->crypto_key_slot;
+> +		crypto_params = FIELD_PREP(ICE_HCI_PARAM_CE, crypto_enable) |
+> +				FIELD_PREP(ICE_HCI_PARAM_CCI, key_index);
 > +
-> +/**
-> + * phy_caps_mediums_from_linkmodes() - Get all mediums from a linkmodes list
-> + * @linkmodes: A bitset of linkmodes to get the mediums from
-> + *
-> + * Returns: A bitset of ETHTOOL_MEDIUM_XXX values corresponding to all medium
-> + *	    types in the linkmodes list
-> + */
-> +u32 phy_caps_mediums_from_linkmodes(unsigned long *linkmodes)
-> +{
-> +	const struct link_mode_info *linkmode;
-> +	u32 mediums = 0;
-> +	int i;
-> +
-> +	for_each_set_bit(i, linkmodes, __ETHTOOL_LINK_MODE_MASK_NBITS) {
-> +		linkmode = &link_mode_params[i];
-> +		mediums |= linkmode->mediums;
-> +	}
-> +
-> +	return mediums;
-> +}
-> +EXPORT_SYMBOL_GPL(phy_caps_mediums_from_linkmodes);
-> diff --git a/drivers/net/phy/phy_device.c b/drivers/net/phy/phy_device.c
-> index 81984d4ebb7c..f48565c3a9b8 100644
-> --- a/drivers/net/phy/phy_device.c
-> +++ b/drivers/net/phy/phy_device.c
-> @@ -30,6 +30,7 @@
->   #include <linux/phylib_stubs.h>
->   #include <linux/phy_led_triggers.h>
->   #include <linux/phy_link_topology.h>
-> +#include <linux/phy_port.h>
->   #include <linux/pse-pd/pse.h>
->   #include <linux/property.h>
->   #include <linux/ptp_clock_kernel.h>
-> @@ -845,6 +846,13 @@ struct phy_device *phy_device_create(struct mii_bus *bus, int addr, u32 phy_id,
->   
->   	dev->state = PHY_DOWN;
->   	INIT_LIST_HEAD(&dev->leds);
-> +	INIT_LIST_HEAD(&dev->ports);
-> +
-> +	/* The driver's probe function must change that to the real number
-> +	 * of ports possible on the PHY. We assume by default we are dealing
-> +	 * with a single-port PHY
-> +	 */
-> +	dev->max_n_ports = 1;
->   
->   	mutex_init(&dev->lock);
->   	INIT_DELAYED_WORK(&dev->state_queue, phy_state_machine);
-> @@ -1590,6 +1598,51 @@ void phy_sfp_detach(void *upstream, struct sfp_bus *bus)
->   }
->   EXPORT_SYMBOL(phy_sfp_detach);
->   
-> +static int phy_add_port(struct phy_device *phydev, struct phy_port *port)
-> +{
-> +	int ret = 0;
-> +
-> +	if (phydev->n_ports == phydev->max_n_ports)
-> +		return -EBUSY;
-> +
-> +	/* We set all ports as active by default, PHY drivers may deactivate
-> +	 * them (when unused)
-> +	 */
-> +	port->active = true;
-> +
-> +	if (port->is_mii) {
-> +		if (phydev->drv && phydev->drv->attach_mii_port)
-> +			ret = phydev->drv->attach_mii_port(phydev, port);
+> +		cqhci_writel(cq_host, crypto_params, NONCQ_CRYPTO_PARM);
+> +		cqhci_writel(cq_host, lower_32_bits(dun), NONCQ_CRYPTO_DUN);
 > +	} else {
-> +		if (phydev->drv && phydev->drv->attach_mdi_port)
-> +			ret = phydev->drv->attach_mdi_port(phydev, port);
+> +		cqhci_writel(cq_host, crypto_params, NONCQ_CRYPTO_PARM);
 > +	}
 > +
-> +	if (ret)
-> +		return ret;
-> +
-> +	/* The PHY driver might have added, removed or set medium/pairs info,
-> +	 * so update the port supported accordingly.
-> +	 */
-> +	phy_port_update_supported(port);
-> +
-> +	list_add(&port->head, &phydev->ports);
-> +
-> +	phydev->n_ports++;
+> +	/* Ensure crypto configuration is written before proceeding */
+> +	wmb();
 > +
 > +	return 0;
 > +}
 > +
-> +static void phy_del_port(struct phy_device *phydev, struct phy_port *port)
-> +{
-> +	if (!phydev->n_ports)
-> +		return;
-> +
-> +	list_del(&port->head);
-> +
-> +	phydev->n_ports--;
-> +}
-> +
->   /**
->    * phy_sfp_probe - probe for a SFP cage attached to this PHY device
->    * @phydev: Pointer to phy_device
-> @@ -3325,6 +3378,136 @@ static int of_phy_leds(struct phy_device *phydev)
->   	return 0;
->   }
->   
-> +static void phy_cleanup_ports(struct phy_device *phydev)
-> +{
-> +	struct phy_port *tmp, *port;
-> +
-> +	list_for_each_entry_safe(port, tmp, &phydev->ports, head) {
-> +		phy_del_port(phydev, port);
-> +		phy_port_destroy(port);
-> +	}
-> +}
-> +
-> +static int phy_default_setup_single_port(struct phy_device *phydev)
-> +{
-> +	struct phy_port *port = phy_port_alloc();
-> +	unsigned long mode;
-> +
-> +	if (!port)
-> +		return -ENOMEM;
-> +
-> +	port->parent_type = PHY_PORT_PHY;
-> +	port->phy = phydev;
-> +
-> +	/* Let the PHY driver know that this port was never described anywhere.
-> +	 * This is the usual case, where we assume single-port PHY devices with
-> +	 * no SFP. In that case, the port supports exactly the same thing as
-> +	 * the PHY itself.
-> +	 *
-> +	 * However, this can also be because we have a combo-port PHY, with
-> +	 * only one port described in DT, through SFP for example.
-> +	 *
-> +	 * In that case, the PHY driver will be in charge of saying what we can
-> +	 * do on that non-represented port.
-> +	 */
-> +	port->not_described = true;
-> +	linkmode_copy(port->supported, phydev->supported);
-> +	port->mediums = phy_caps_mediums_from_linkmodes(port->supported);
-> +
-> +	for_each_set_bit(mode, port->supported, __ETHTOOL_LINK_MODE_MASK_NBITS)
-> +		port->pairs = max_t(int, port->pairs,
-> +				    ethtool_linkmode_n_pairs(mode));
-> +
-> +	phy_add_port(phydev, port);
-> +
-> +	return 0;
-> +}
-> +
-> +static int of_phy_ports(struct phy_device *phydev)
-> +{
-> +	struct device_node *node = phydev->mdio.dev.of_node;
-> +	struct device_node *mdi;
-> +	struct phy_port *port;
-> +	int err;
-> +
-> +	if (!IS_ENABLED(CONFIG_OF_MDIO))
-> +		return 0;
-> +
-> +	if (!node)
-> +		return 0;
-> +
-> +	mdi = of_get_child_by_name(node, "mdi");
-> +	if (!mdi)
-> +		return 0;
-> +
-> +	for_each_available_child_of_node_scoped(mdi, port_node) {
-> +		port = phy_of_parse_port(port_node);
-> +		if (IS_ERR(port)) {
-> +			err = PTR_ERR(port);
-> +			goto out_err;
-> +		}
-> +
-> +		port->parent_type = PHY_PORT_PHY;
-> +		port->phy = phydev;
-> +		err = phy_add_port(phydev, port);
-> +		if (err)
-> +			goto out_err;
-> +	}
-> +	of_node_put(mdi);
-> +
-> +	return 0;
-> +
-> +out_err:
-> +	phy_cleanup_ports(phydev);
-> +	of_node_put(mdi);
-> +	return err;
-> +}
-> +
-> +static int phy_setup_ports(struct phy_device *phydev)
-> +{
-> +	__ETHTOOL_DECLARE_LINK_MODE_MASK(ports_supported);
-> +	struct phy_port *port;
-> +	int ret;
-> +
-> +	ret = of_phy_ports(phydev);
-> +	if (ret)
-> +		return ret;
-> +
-> +	if (phydev->n_ports < phydev->max_n_ports) {
-> +		ret = phy_default_setup_single_port(phydev);
-> +		if (ret)
-> +			goto out;
-> +	}
-> +
-> +	linkmode_zero(ports_supported);
-> +
-> +	/* Aggregate the supported modes, which are made-up of :
-> +	 *  - What the PHY itself supports
-> +	 *  - What the sum of all ports support
-> +	 */
-> +	list_for_each_entry(port, &phydev->ports, head)
-> +		if (port->active)
-> +			linkmode_or(ports_supported, ports_supported,
-> +				    port->supported);
-> +
-> +	if (!linkmode_empty(ports_supported))
-> +		linkmode_and(phydev->supported, phydev->supported,
-> +			     ports_supported);
-> +
-> +	/* For now, the phy->port field is set as the first active port's type */
-> +	list_for_each_entry(port, &phydev->ports, head)
-> +		if (port->active) {
-> +			phydev->port = phy_port_get_type(port);
-> +			break;
-> +		}
-> +
-> +	return 0;
-> +
-> +out:
-> +	phy_cleanup_ports(phydev);
-> +	return ret;
-> +}
-> +
->   /**
->    * fwnode_mdio_find_device - Given a fwnode, find the mdio_device
->    * @fwnode: pointer to the mdio_device's fwnode
-> @@ -3462,6 +3645,11 @@ static int phy_probe(struct device *dev)
->   		phydev->is_gigabit_capable = 1;
->   
->   	of_set_phy_supported(phydev);
-> +
-> +	err = phy_setup_ports(phydev);
-> +	if (err)
-> +		goto out;
-> +
->   	phy_advertise_supported(phydev);
->   
->   	/* Get PHY default EEE advertising modes and handle them as potentially
-> @@ -3537,6 +3725,8 @@ static int phy_remove(struct device *dev)
->   
->   	phydev->state = PHY_DOWN;
->   
-> +	phy_cleanup_ports(phydev);
-> +
->   	sfp_bus_del_upstream(phydev->sfp_bus);
->   	phydev->sfp_bus = NULL;
->   
-> diff --git a/drivers/net/phy/phy_port.c b/drivers/net/phy/phy_port.c
-> new file mode 100644
-> index 000000000000..0502fe60da3e
-> --- /dev/null
-> +++ b/drivers/net/phy/phy_port.c
-> @@ -0,0 +1,153 @@
-> +// SPDX-License-Identifier: GPL-2.0+
-> +/* Framework to drive Ethernet ports
+> +/*
+> + * sdhci_msm_request - Handle non-CQE MMC requests with crypto support
+> + * @mmc: MMC host
+> + * @mrq: MMC request
 > + *
-> + * Copyright (c) 2024 Maxime Chevallier <maxime.chevallier@bootlin.com>
-> + */
-> +
-> +#include <linux/linkmode.h>
-> +#include <linux/of.h>
-> +#include <linux/phy_port.h>
-> +
-> +#include "phy-caps.h"
-> +
-> +/**
-> + * phy_port_alloc() - Allocate a new phy_port
+> + * This function is called for non-CQE requests only. The MMC block layer
+> + * routes requests as follows:
 > + *
-> + * Returns: a newly allocated struct phy_port, or NULL.
-> + */
-> +struct phy_port *phy_port_alloc(void)
-> +{
-> +	struct phy_port *port;
-> +
-> +	port = kzalloc(sizeof(*port), GFP_KERNEL);
-> +	if (!port)
-> +		return NULL;
-> +
-> +	linkmode_zero(port->supported);
-> +	INIT_LIST_HEAD(&port->head);
-> +
-> +	return port;
-> +}
-> +EXPORT_SYMBOL_GPL(phy_port_alloc);
-> +
-> +/**
-> + * phy_port_destroy() - Free a struct phy_port
-> + * @port: The port to destroy
-> + */
-> +void phy_port_destroy(struct phy_port *port)
-> +{
-> +	kfree(port);
-> +}
-> +EXPORT_SYMBOL_GPL(phy_port_destroy);
-> +
-> +/**
-> + * phy_of_parse_port() - Create a phy_port from a firmware representation
-> + * @dn: device_node representation of the port, following the
-> + *	ethernet-connector.yaml binding
+> + * if (host->cqe_enabled)
+> + *     ret = mmc_blk_cqe_issue_rw_rq(mq, req);  // → cqhci_request()
+> + * else
+> + *     ret = mmc_blk_mq_issue_rw_rq(mq, req);   // → sdhci_msm_request()
 > + *
-> + * Returns: a newly allocated and initialized phy_port pointer, or an ERR_PTR.
-> + */
-> +struct phy_port *phy_of_parse_port(struct device_node *dn)
-> +{
-> +	struct fwnode_handle *fwnode = of_fwnode_handle(dn);
-> +	enum ethtool_link_medium medium;
-> +	struct phy_port *port;
-> +	const char *med_str;
-> +	u32 pairs = 0, mediums = 0;
-> +	int ret;
-> +
-> +	ret = fwnode_property_read_string(fwnode, "media", &med_str);
-> +	if (ret)
-> +		return ERR_PTR(ret);
-> +
-> +	medium = ethtool_str_to_medium(med_str);
-> +	if (medium == ETHTOOL_LINK_MEDIUM_NONE)
-> +		return ERR_PTR(-EINVAL);
-> +
-> +	if (pairs && medium != ETHTOOL_LINK_MEDIUM_BASET) {
-> +		pr_err("pairs property is only compatible with BaseT medium\n");
-> +		return ERR_PTR(-EINVAL);
-> +	}
-> +
-> +	if (medium == ETHTOOL_LINK_MEDIUM_BASET) {
-> +		ret = fwnode_property_read_u32(fwnode, "pairs", &pairs);
-> +		if (ret)
-> +			return ERR_PTR(ret);
-> +
-> +		switch (pairs) {
-> +		case 1: /* BaseT1 */
-> +		case 2: /* 100BaseTX */
-> +		case 4:
-> +			break;
-> +		default:
-> +			pr_err("%u is not a valid number of pairs\n", pairs);
-> +			return ERR_PTR(-EINVAL);
-> +		}
-> +	}
-> +
-> +	mediums |= BIT(medium);
-> +
-> +	if (!mediums)
-> +		return ERR_PTR(-EINVAL);
-> +
-> +	port = phy_port_alloc();
-> +	if (!port)
-> +		return ERR_PTR(-ENOMEM);
-> +
-> +	port->pairs = pairs;
-> +	port->mediums = mediums;
-> +
-> +	return port;
-> +}
-> +EXPORT_SYMBOL_GPL(phy_of_parse_port);
-> +
-> +/**
-> + * phy_port_update_supported() - Setup the port->supported field
-> + * @port: the port to update
+> + * For CQE requests, crypto is handled in cqhci_request() in
+> + * drivers/mmc/host/cqhci-core.c using the existing CQE crypto infrastructure.
 > + *
-> + * Once the port's medium list and number of pairs has been configured based
-> + * on firmware, straps and vendor-specific properties, this function may be
-> + * called to update the port's supported linkmodes list.
-> + *
-> + * Any mode that was manually set in the port's supported list remains set.
+> + * For non-CQE requests, this function provides crypto support by configuring
+> + * the ICE (Inline Crypto Engine) registers before passing the request to
+> + * the standard SDHCI request handler.
 > + */
-> +void phy_port_update_supported(struct phy_port *port)
+
+Kernel-style is not to put kernel-doc like comments on call-back
+functions, since the functionality is defined by the upper layer,
+and there is no point duplicating the information for every single
+implementation.
+
+> +static void sdhci_msm_request(struct mmc_host *mmc, struct mmc_request *mrq)
 > +{
-> +	__ETHTOOL_DECLARE_LINK_MODE_MASK(supported) = { 0 };
-> +	unsigned long mode;
-> +	int i;
+> +	struct sdhci_host *host = mmc_priv(mmc);
 > +
-> +	for_each_set_bit(i, &port->mediums, __ETHTOOL_LINK_MEDIUM_LAST) {
-> +		linkmode_zero(supported);
-> +		phy_caps_medium_get_supported(supported, i, port->pairs);
-> +		linkmode_or(port->supported, port->supported, supported);
-> +	}
+
+A simple comment here would suffice, say something like:
+
+	/* Only need to handle non-CQE crypto requests in this path */
+
+> +	if (mmc->caps2 & MMC_CAP2_CRYPTO)
+> +		sdhci_msm_ice_cfg(host, mrq);
 > +
-> +	/* If there's no pairs specified, we grab the default number of
-> +	 * pairs as the max of the default pairs for each linkmode
-> +	 */
-> +	if (!port->pairs)
-> +		for_each_set_bit(mode, port->supported,
-> +				 __ETHTOOL_LINK_MODE_MASK_NBITS)
-> +			port->pairs = max_t(int, port->pairs,
-> +					    ethtool_linkmode_n_pairs(mode));
-> +}
-> +EXPORT_SYMBOL_GPL(phy_port_update_supported);
-> +
-> +/**
-> + * phy_port_get_type() - get the PORT_* attribute for that port.
-> + * @port: The port we want the information from
-> + *
-> + * Returns: A PORT_XXX value.
-> + */
-> +int phy_port_get_type(struct phy_port *port)
-> +{
-> +	if (port->mediums & BIT(ETHTOOL_LINK_MEDIUM_BASET))
-> +		return PORT_TP;
-> +
-> +	if (phy_port_is_fiber(port))
-> +		return PORT_FIBRE;
-> +
-> +	return PORT_OTHER;
-> +}
-> +EXPORT_SYMBOL_GPL(phy_port_get_type);
-> diff --git a/include/linux/ethtool.h b/include/linux/ethtool.h
-> index 37aede6af96f..798abec67a1b 100644
-> --- a/include/linux/ethtool.h
-> +++ b/include/linux/ethtool.h
-> @@ -242,6 +242,17 @@ enum ethtool_link_medium {
->   	__ETHTOOL_LINK_MEDIUM_LAST,
->   };
->   
-> +#define ETHTOOL_MEDIUM_FIBER_BITS (BIT(ETHTOOL_LINK_MEDIUM_BASES) | \
-> +				   BIT(ETHTOOL_LINK_MEDIUM_BASEL) | \
-> +				   BIT(ETHTOOL_LINK_MEDIUM_BASEF))
-> +
-> +enum ethtool_link_medium ethtool_str_to_medium(const char *str);
-> +
-> +static inline int ethtool_linkmode_n_pairs(unsigned int mode)
-> +{
-> +	return link_mode_params[mode].pairs;
+> +	sdhci_request(mmc, mrq);
 > +}
 > +
->   /* declare a link mode bitmap */
->   #define __ETHTOOL_DECLARE_LINK_MODE_MASK(name)		\
->   	DECLARE_BITMAP(name, __ETHTOOL_LINK_MODE_MASK_NBITS)
-> diff --git a/include/linux/phy.h b/include/linux/phy.h
-> index 65b0c3ca6a2b..36f55ad09907 100644
-> --- a/include/linux/phy.h
-> +++ b/include/linux/phy.h
-> @@ -327,6 +327,7 @@ static inline long rgmii_clock(int speed)
->   struct device;
->   struct kernel_hwtstamp_config;
->   struct phylink;
-> +struct phy_port;
->   struct sfp_bus;
->   struct sfp_upstream_ops;
->   struct sk_buff;
-> @@ -621,6 +622,9 @@ struct macsec_ops;
->    * @master_slave_state: Current master/slave configuration
->    * @mii_ts: Pointer to time stamper callbacks
->    * @psec: Pointer to Power Sourcing Equipment control struct
-> + * @ports: List of PHY ports structures
-> + * @n_ports: Number of ports currently attached to the PHY
-> + * @max_n_ports: Max number of ports this PHY can expose
->    * @lock:  Mutex for serialization access to PHY
->    * @state_queue: Work queue for state machine
->    * @link_down_events: Number of times link was lost
-> @@ -758,6 +762,10 @@ struct phy_device {
->   	struct mii_timestamper *mii_ts;
->   	struct pse_control *psec;
->   
-> +	struct list_head ports;
-> +	int n_ports;
-> +	int max_n_ports;
-> +
->   	u8 mdix;
->   	u8 mdix_ctrl;
->   
-> @@ -780,6 +788,9 @@ struct phy_device {
->   
->   #define to_phy_device(__dev)	container_of_const(to_mdio_device(__dev), struct phy_device, mdio)
->   
-> +#define phy_for_each_port(phydev, port) \
-> +	list_for_each_entry(port, &(phydev)->ports, head)
-> +
->   /**
->    * struct phy_tdr_config - Configuration of a TDR raw test
->    *
-> @@ -1480,6 +1491,49 @@ struct phy_driver {
->   	 * Returns the time in jiffies until the next update event.
->   	 */
->   	unsigned int (*get_next_update_time)(struct phy_device *dev);
-> +
-> +	/**
-> +	 * @attach_mii_port: Attach the given MII port to the PHY device
-> +	 * @dev: PHY device to notify
-> +	 * @port: The port being added
-> +	 *
-> +	 * Called when an MII port that needs to be driven by the PHY is found.
-> +	 *
-> +	 * The port that is being passed may or may not be initialized. If it is
-> +	 * already initialized, it is by the generic port representation from
-> +	 * devicetree, which superseeds any strapping or vendor-specific
-> +	 * properties.
-> +	 *
-> +	 * If the port isn't initialized, the port->mediums and port->lanes
-> +	 * fields must be set, possibly according to strapping information.
-> +	 *
-> +	 * The PHY driver must set the port->interfaces field to indicate the
-> +	 * possible MII modes that this PHY can output on the port.
-> +	 *
-> +	 * Returns 0, or an error code.
-> +	 */
-> +	int (*attach_mii_port)(struct phy_device *dev, struct phy_port *port);
-> +
-> +	/**
-> +	 * @attach_mdi_port: Attach the given MII port to the PHY device
-> +	 * @dev: PHY device to notify
-> +	 * @port: The port being added
-> +	 *
-> +	 * Called when a port that needs to be driven by the PHY is found. The
-> +	 * number of time this will be called depends on phydev->max_n_ports,
-> +	 * which the driver can change in .probe().
-> +	 *
-> +	 * The port that is being passed may or may not be initialized. If it is
-> +	 * already initialized, it is by the generic port representation from
-> +	 * devicetree, which superseeds any strapping or vendor-specific
-> +	 * properties.
-> +	 *
-> +	 * If the port isn't initialized, the port->mediums and port->lanes
-> +	 * fields must be set, possibly according to strapping information.
-> +	 *
-> +	 * Returns 0, or an error code.
-> +	 */
-> +	int (*attach_mdi_port)(struct phy_device *dev, struct phy_port *port);
->   };
->   #define to_phy_driver(d) container_of_const(to_mdio_common_driver(d),		\
->   				      struct phy_driver, mdiodrv)
-> @@ -2281,6 +2335,7 @@ void phy_trigger_machine(struct phy_device *phydev);
->   void phy_mac_interrupt(struct phy_device *phydev);
->   void phy_start_machine(struct phy_device *phydev);
->   void phy_stop_machine(struct phy_device *phydev);
-> +
->   void phy_ethtool_ksettings_get(struct phy_device *phydev,
->   			       struct ethtool_link_ksettings *cmd);
->   int phy_ethtool_ksettings_set(struct phy_device *phydev,
-> diff --git a/include/linux/phy_port.h b/include/linux/phy_port.h
-> new file mode 100644
-> index 000000000000..ce0208fbccf7
-> --- /dev/null
-> +++ b/include/linux/phy_port.h
-> @@ -0,0 +1,96 @@
-> +/* SPDX-License-Identifier: GPL-2.0-or-later */
-> +
-> +#ifndef __PHY_PORT_H
-> +#define __PHY_PORT_H
-> +
-> +#include <linux/ethtool.h>
-> +#include <linux/types.h>
-> +#include <linux/phy.h>
-> +
-> +struct phy_port;
-> +
-> +/**
-> + * enum phy_port_parent - The device this port is attached to
-> + *
-> + * @PHY_PORT_PHY: Indicates that the port is driven by a PHY device
-> + */
-> +enum phy_port_parent {
-> +	PHY_PORT_PHY,
-> +};
-> +
-> +struct phy_port_ops {
-> +	/* Sometimes, the link state can be retrieved from physical,
-> +	 * out-of-band channels such as the LOS signal on SFP. These
-> +	 * callbacks allows notifying the port about state changes
-> +	 */
-> +	void (*link_up)(struct phy_port *port);
-> +	void (*link_down)(struct phy_port *port);
-> +
-> +	/* If the port acts as a Media Independent Interface (Serdes port),
-> +	 * configures the port with the relevant state and mode. When enable is
-> +	 * not set, interface should be ignored
-> +	 */
-> +	int (*configure_mii)(struct phy_port *port, bool enable, phy_interface_t interface);
-> +};
-> +
-> +/**
-> + * struct phy_port - A representation of a network device physical interface
-> + *
-> + * @head: Used by the port's parent to list ports
-> + * @parent_type: The type of device this port is directly connected to
-> + * @phy: If the parent is PHY_PORT_PHYDEV, the PHY controlling that port
-> + * @ops: Callback ops implemented by the port controller
-> + * @pairs: The number of  pairs this port has, 0 if not applicable
-> + * @mediums: Bitmask of the physical mediums this port provides access to
-> + * @supported: The link modes this port can expose, if this port is MDI (not MII)
-> + * @interfaces: The MII interfaces this port supports, if this port is MII
-> + * @not_described: Indicates to the parent driver if this port isn't described,
-> + *		   so it's up to the parent to filter its capabilities.
-> + * @active: Indicates if the port is currently part of the active link.
-> + * @is_mii: Indicates if this port is MII (Media Independent Interface),
-> + *          or MDI (Media Dependent Interface).
-> + */
-> +struct phy_port {
-> +	struct list_head head;
-> +	enum phy_port_parent parent_type;
-> +	union {
-> +		struct phy_device *phy;
-> +	};
-> +
-> +	const struct phy_port_ops *ops;
-> +
-> +	int pairs;
-> +	unsigned long mediums;
-> +	__ETHTOOL_DECLARE_LINK_MODE_MASK(supported);
-> +	DECLARE_PHY_INTERFACE_MASK(interfaces);
-> +
-> +	unsigned int not_described:1;
-> +	unsigned int active:1;
-> +	unsigned int is_mii:1;
-> +};
-> +
-> +struct phy_port *phy_port_alloc(void);
-> +void phy_port_destroy(struct phy_port *port);
-> +
-> +static inline struct phy_device *port_phydev(struct phy_port *port)
-> +{
-> +	return port->phy;
-> +}
-> +
-> +struct phy_port *phy_of_parse_port(struct device_node *dn);
-> +
-> +static inline bool phy_port_is_copper(struct phy_port *port)
-> +{
-> +	return port->mediums == BIT(ETHTOOL_LINK_MEDIUM_BASET);
-> +}
-> +
-> +static inline bool phy_port_is_fiber(struct phy_port *port)
-> +{
-> +	return !!(port->mediums & ETHTOOL_MEDIUM_FIBER_BITS);
-> +}
-> +
-> +void phy_port_update_supported(struct phy_port *port);
-> +
-> +int phy_port_get_type(struct phy_port *port);
-> +
+>  static const struct blk_crypto_ll_ops sdhci_msm_crypto_ops = {
+>  	.keyslot_program	= sdhci_msm_ice_keyslot_program,
+>  	.keyslot_evict		= sdhci_msm_ice_keyslot_evict,
+> @@ -2759,6 +2857,9 @@ static int sdhci_msm_probe(struct platform_device *pdev)
+>  
+>  	msm_host->mmc->caps |= MMC_CAP_WAIT_WHILE_BUSY | MMC_CAP_NEED_RSP_BUSY;
+>  
+> +#ifdef CONFIG_MMC_CRYPTO
+> +	host->mmc_host_ops.request = sdhci_msm_request;
 > +#endif
-> diff --git a/net/ethtool/common.c b/net/ethtool/common.c
-> index 2f4b70f104e8..8216e4ada58e 100644
-> --- a/net/ethtool/common.c
-> +++ b/net/ethtool/common.c
-> @@ -460,6 +460,21 @@ const struct link_mode_info link_mode_params[] = {
->   static_assert(ARRAY_SIZE(link_mode_params) == __ETHTOOL_LINK_MODE_MASK_NBITS);
->   EXPORT_SYMBOL_GPL(link_mode_params);
->   
-> +const char ethtool_link_medium_names[][ETH_GSTRING_LEN] = {
-> +	[ETHTOOL_LINK_MEDIUM_BASET] = "BaseT",
-> +	[ETHTOOL_LINK_MEDIUM_BASEK] = "BaseK",
-> +	[ETHTOOL_LINK_MEDIUM_BASES] = "BaseS",
-> +	[ETHTOOL_LINK_MEDIUM_BASEC] = "BaseC",
-> +	[ETHTOOL_LINK_MEDIUM_BASEL] = "BaseL",
-> +	[ETHTOOL_LINK_MEDIUM_BASED] = "BaseD",
-> +	[ETHTOOL_LINK_MEDIUM_BASEE] = "BaseE",
-> +	[ETHTOOL_LINK_MEDIUM_BASEF] = "BaseF",
-> +	[ETHTOOL_LINK_MEDIUM_BASEV] = "BaseV",
-> +	[ETHTOOL_LINK_MEDIUM_BASEMLD] = "BaseMLD",
-> +	[ETHTOOL_LINK_MEDIUM_NONE] = "None",
-> +};
-> +static_assert(ARRAY_SIZE(ethtool_link_medium_names) == __ETHTOOL_LINK_MEDIUM_LAST);
-> +
->   const char netif_msg_class_names[][ETH_GSTRING_LEN] = {
->   	[NETIF_MSG_DRV_BIT]		= "drv",
->   	[NETIF_MSG_PROBE_BIT]		= "probe",
-> @@ -1193,3 +1208,15 @@ void ethtool_rxfh_context_lost(struct net_device *dev, u32 context_id)
->   	ethtool_rss_notify(dev, ETHTOOL_MSG_RSS_DELETE_NTF, context_id);
->   }
->   EXPORT_SYMBOL(ethtool_rxfh_context_lost);
-> +
-> +enum ethtool_link_medium ethtool_str_to_medium(const char *str)
-> +{
-> +	int i;
-> +
-> +	for (i = 0; i < __ETHTOOL_LINK_MEDIUM_LAST; i++)
-> +		if (!strcmp(ethtool_link_medium_names[i], str))
-> +			return i;
-> +
-> +	return ETHTOOL_LINK_MEDIUM_NONE;
-> +}
-> +EXPORT_SYMBOL_GPL(ethtool_str_to_medium);
+>  	/* Set the timeout value to max possible */
+>  	host->max_timeout_count = 0xF;
+>  
 
 
