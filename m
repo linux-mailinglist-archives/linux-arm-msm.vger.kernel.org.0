@@ -1,87 +1,87 @@
-Return-Path: <linux-arm-msm+bounces-82755-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-82756-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id DEBD9C7656F
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Nov 2025 22:14:16 +0100 (CET)
+Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [IPv6:2605:f480:58:1:0:1994:3:14])
+	by mail.lfdr.de (Postfix) with ESMTPS id 22F97C76584
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Nov 2025 22:14:49 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by tor.lore.kernel.org (Postfix) with ESMTPS id 6796F2C56F
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Nov 2025 21:14:15 +0000 (UTC)
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 8EBAC4E3AB2
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Nov 2025 21:14:27 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 33E7A30DD16;
-	Thu, 20 Nov 2025 21:13:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 37EF4308F14;
+	Thu, 20 Nov 2025 21:13:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=marek.ca header.i=@marek.ca header.b="VSqwrmj3"
+	dkim=pass (2048-bit key) header.d=marek.ca header.i=@marek.ca header.b="A1vV/pzQ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-qk1-f170.google.com (mail-qk1-f170.google.com [209.85.222.170])
+Received: from mail-qk1-f171.google.com (mail-qk1-f171.google.com [209.85.222.171])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E4953064A3
-	for <linux-arm-msm@vger.kernel.org>; Thu, 20 Nov 2025 21:13:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.170
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83F74309DD8
+	for <linux-arm-msm@vger.kernel.org>; Thu, 20 Nov 2025 21:13:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763673231; cv=none; b=iwr1xUPtZvLy/R6o/BoaKwbI8YdamkPergaHG2Ne8M68PWJNQQ98PzdsTGl5D0TY9OUKmdlvs9BSqV6gyfLE+5YvAsVLxhUTOR51pzCJXH2QmRGsg67NedddUsR9XorwfTGNVgCE+1wqgxSIJxm6hhmP4QjQTDMvRs9FYG4peHU=
+	t=1763673232; cv=none; b=d6rM74o25UkSKBciO7To/r3TRvJHicimqelIDkm7aztPXQuN7g+E6qI+WKET1GUH0qsL5P6w/U7ctQqM9pscdlipoAXb+7z5kx1sNr6767Wcv2XL1oxLI2uyMO5J/FpkP04w2+UBlN8mrTfpp7VJ68wfBFqmggqGWIQnjSTrVIQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763673231; c=relaxed/simple;
-	bh=/QBHhu5/mf5VqkoFrsU7ZBKAZLJ0DAd9JGOgESKJEj4=;
+	s=arc-20240116; t=1763673232; c=relaxed/simple;
+	bh=VnDw0zvv3GogQgXhxGuqkFEbxhLcCxNhOQ3NhXqX+6o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Yca7Tl7WtnCrI2AxAn6L2T2brHN1DWnuRExIoHC8zq6Vtc5xUqegigK2UQ5tyoU0tpmP5w9kbAKmvHatHijWmda64b7p8Y+TOg3RUojHUjDgnTvUF/zeWWJwg9Hv+ErA5GZLGNiK9YwfrteQdlYej7BcdX+w/rDUfFq6wHvgLk8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=marek.ca; spf=pass smtp.mailfrom=marek.ca; dkim=pass (2048-bit key) header.d=marek.ca header.i=@marek.ca header.b=VSqwrmj3; arc=none smtp.client-ip=209.85.222.170
+	 MIME-Version; b=O9D+F5/B+ghVwrXtAHJ/j0JCyQijwD35DuV5Agwsxv2K84ad6HkFoyQBwXGQRh8P58Rozr8MKQpRNZ5lFPio1audn3cvp3P7hOCS2iKbJ0qe+1yBJO1djuixjuDs3h7pPLBQpJPK0MB+kpBJc8nkq4+4djtxinAB2dp3clMsrAw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=marek.ca; spf=pass smtp.mailfrom=marek.ca; dkim=pass (2048-bit key) header.d=marek.ca header.i=@marek.ca header.b=A1vV/pzQ; arc=none smtp.client-ip=209.85.222.171
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=marek.ca
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=marek.ca
-Received: by mail-qk1-f170.google.com with SMTP id af79cd13be357-8b1b8264c86so126304585a.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Nov 2025 13:13:49 -0800 (PST)
+Received: by mail-qk1-f171.google.com with SMTP id af79cd13be357-8b21fc25ae1so121205185a.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Nov 2025 13:13:50 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=marek.ca; s=google; t=1763673228; x=1764278028; darn=vger.kernel.org;
+        d=marek.ca; s=google; t=1763673229; x=1764278029; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=fKI5rd+bNks7evkZ2sb5RD79CIhkTakhfZrmrMaIYvc=;
-        b=VSqwrmj3U6kuX6Lxhl4OVVv6+R9iqunUDz9euDYO3DbVzivYR/MAdgWSNOrzMhTHd9
-         LZRnWnVCIyqTGsvHHza/xdIZEcvVq7AiOPDg52qZWOtw3urzEhGWeUl6R2P9fY3SAaZM
-         /lS5b/vQLFBTKY1FniDMUNx9RLN171LlDUrdsnRtqhiYcdgOZzcBa7rCDp9hn/uljZkp
-         O7uv+MX5IVrYfWRXwNsYmyCrcVW1HHohKeJFhsqcvBodJQztQTdASbYMWsMImiJxPi0d
-         wVwiQJ8MEEl96P+Kfj6StCyLdNT3BaEYIt+f45nwBXuffMeOpOymmF+axXmwhtiTuk+R
-         Gw/g==
+        bh=GCl3US01BHeY7ipE4Tn2LpS35TI5yu+VHTAF1Nv080k=;
+        b=A1vV/pzQXZfAGpJKZZDCgvkGJK2DLTxmAlBU5hXmDC4YxSU+dDGQ7QqCTCg4dt5KL3
+         xnBj3G2E9KipxNO0iacyyW+BekIG2GyylnpBDaFMtm3ooJCoerju0+9Z8FjHHC4Q0Raq
+         cK/sYeuP+arMi3AW32+diYL1OlL9driUetCUI1wocNU6VHm4jnn7BBfviqjPhvXIaf4I
+         yMadcX5tb/Pbjt/YAUUpeE/oTqDfuGV2iEg5Mp8JCFUEpMePmiAF4bHg320Nn7tvWzkO
+         OAimJFZvOt7rKLqlTT0dpovrdNcX5cHRklrn2fL2szi+I3J0DM1Xp8w/YYUUfupuAMU/
+         fdAw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1763673228; x=1764278028;
+        d=1e100.net; s=20230601; t=1763673229; x=1764278029;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=fKI5rd+bNks7evkZ2sb5RD79CIhkTakhfZrmrMaIYvc=;
-        b=QZGGiOvtB62hlHjEtxWEr9WUe3F+o7tsGOscsmjqGvE9fjRxPWRA5GMy3Ts1rhZiom
-         pORndb99KB/dbMOJ2AAmvLmsjwvlTS2gd6VhfiWhAB4wNFEY9nisRh/UJc0ReD65lupI
-         aB1IaDmxIKoziuGSCRuj4xuUT/mIv2SJUPVXgy58EbQOo0p1OeeHWkWPetmRqSR2CCi2
-         N343TgB7MUNyVssd0uSVvwflBgFannSFazhkYN++GrBmcwlqI8cIZ+43jtnXo90MM/Kf
-         pTZH5ovEjS91tHhDEKWiK7MDWuksnH0JoX/lDT65CAC8rvah3U47LSKF+qycC7TiXKEZ
-         bneQ==
-X-Gm-Message-State: AOJu0YwIL6KNAU6H9dc8OTYS5gP3uJpNJDdZMZeExDgeT1PHvI4gQOJj
-	hEl/Bx7Dy/+I94BYTZL5GNgx4MA02NSjat4lvcbmRHPJYoD+Olx1iTbg4O/4k/R/cOv2h8POlua
-	+TJ+9
-X-Gm-Gg: ASbGncvP2RptHrXVjTo6HOwW+CMZC/GAuxLWTKAU34vKAtU5SUQEO2ofAwJFhjG5GJg
-	U2tu2S3w6wcOhOBlQ4/Hd/JSl2YgQ7iBdpr6fPp03AFxVxMYRXSEf8eZf8YtyXTmcNproSPk/ES
-	Y+xGjmsAJjp4HPLLdoQ6byvmWiMNNMighcAwautqaHeBTKJkSaF68itlbHX72g9BxyImhBHtlHM
-	BkJTHP7YQK5+pooyupElMH/CYbki4Z6DjlzsX7iDCz5vn7KG/VB2o/NP96Rz/fjF6JOAGqafVh6
-	0wNEUFSjptqfcBwnk8iote4UR3AYN1hDSZNls0JEnVdcEezHXRdzpnB9IiiSEaCgZ1D9ajZYmhf
-	SQzb3BNSk41fS+bT8ZFMaerOPBB0YuXew9IA6zRgvdmk0hl00DiE5nQRcv62ENc+9uBfNaWLLvQ
-	i8CeHl6jdmmXysmmCSgxfJ8FPyM1ziZjoQNM/fZgc36tum7mLASWUJywWuhbVgVQxQTA==
-X-Google-Smtp-Source: AGHT+IGvwgDIhs39jzthQlsKnE3PoNiaSD7wWyoE+gOYX6zCfolKtDiYjS30zyf3wqexvj4RjVflig==
-X-Received: by 2002:a05:620a:29d6:b0:865:916b:2751 with SMTP id af79cd13be357-8b3385e943emr162330185a.14.1763673227980;
-        Thu, 20 Nov 2025 13:13:47 -0800 (PST)
+        bh=GCl3US01BHeY7ipE4Tn2LpS35TI5yu+VHTAF1Nv080k=;
+        b=A85sQYBm7PDqZAXFnZ41JVIBBQI4cHL90SaHEln9QdrwTfiTgnTlhMy3oxj0Tc/UIE
+         fzZR+X5HP9fOvb53IaanITJ7jR/B00UrE2Bozpvhr24oIEPdGi7mAb4i0UQ9qpwkRW40
+         /6KoYj2IjlWW6/qMeb4IMvZuSG7jmAn4mTJdElQT/6WsOYR2t2J4F7VGCbATUEGoS1Hb
+         fOr9Q6iGTeJbSc2a221uhoPDB3y7wTNaPoPWNvBhu972yV08+YvuWbgpw2cebv5EPDwm
+         ggYMCvwcx0Kskv8l5Nys2w1br/MUhK+ljeU85lL+0G4DpZ9jr27LJg4QpDDuAvFFRnzG
+         kAjg==
+X-Gm-Message-State: AOJu0Yxc74vFPH8AWW0sNDmzbPpnFMBKkKrmvPtfkwocVDKzIP81XEEz
+	hP+QtsL7xr1HwLLnokclAt7VMydU3GgRS/MmVmexJVoB+C7CGL+J7qJbuF+9+Nj246jdYXU8yZp
+	5OIf3
+X-Gm-Gg: ASbGnct7tapz33va+i3kW1tIj3OkEwebHRWvIPluDEaamGvSYpk1RPfuJJfELGnxMpj
+	YtdPE8Sfx6xf39nM8P+ufVsSLdq5w26JmbDDyDh7BuouhOvY1o7cVvSp4Y1JubIf3rF809EmDrr
+	pD/tm6ZnU4q3QbBKf0LwgPPvTfCozYDjgiRchb/waOP6+Fp37lksun7ixtpF2QjWO4EA8YUuvUM
+	dGzHffWOTMPBFmp0T5aYPqRuyPlhsIR4IznG4EOhEGk7yW3eSKyNtKuK4W0FJN6E1ybVBfArFuF
+	4bEc1jO+NksQKybzBdqinRyt9WKF/vqfxpU50yBHhCaul5ZgjhG7uMiMkuHKnZ8Mg0xf51wrPgI
+	2dJ8jeP4Nd8NX1VSbYqv4LNYLnhweEQ5QQMIXPnGzFfWozP9d7KiVBM5NjkV11ol8QDmzLGt+yO
+	ORnQCndgJvEcu3/PMH8el5kcBCXaa/5oLFBZfqkL8k2NAdii+IVPc9pZneKx+yFCd26w==
+X-Google-Smtp-Source: AGHT+IHuBplFI5V5Lb1dDPP3u7qdP7GhmlzsKYMVNTFhNncVoUA4QK3005YkGNWMWRXcdG28p7xdfg==
+X-Received: by 2002:a05:620a:4506:b0:892:5b57:ea41 with SMTP id af79cd13be357-8b327310f9emr616076185a.4.1763673229090;
+        Thu, 20 Nov 2025 13:13:49 -0800 (PST)
 Received: from localhost.localdomain (modemcable125.110-19-135.mc.videotron.ca. [135.19.110.125])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-8b32953735dsm225958685a.24.2025.11.20.13.13.47
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-8b32953735dsm225958685a.24.2025.11.20.13.13.48
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 20 Nov 2025 13:13:47 -0800 (PST)
+        Thu, 20 Nov 2025 13:13:48 -0800 (PST)
 From: Jonathan Marek <jonathan@marek.ca>
 To: linux-arm-msm@vger.kernel.org
 Cc: Mark Brown <broonie@kernel.org>,
 	linux-spi@vger.kernel.org (open list:SPI SUBSYSTEM),
 	linux-kernel@vger.kernel.org (open list)
-Subject: [PATCH 4/5] spi-geni-qcom: initialize mode related registers to 0
-Date: Thu, 20 Nov 2025 16:12:01 -0500
-Message-ID: <20251120211204.24078-4-jonathan@marek.ca>
+Subject: [PATCH 5/5] spi-geni-qcom: rework setup_fifo_params
+Date: Thu, 20 Nov 2025 16:12:02 -0500
+Message-ID: <20251120211204.24078-5-jonathan@marek.ca>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251120211204.24078-1-jonathan@marek.ca>
 References: <20251120211204.24078-1-jonathan@marek.ca>
@@ -93,31 +93,82 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-setup_fifo_params assumes these will be zero, it won't write these
-registers if the initial mode is zero.
+Update each register only if it changes.
+
+This also fixes the chipselect related registers not being changed when
+chipselect changes but not the mode.
 
 Signed-off-by: Jonathan Marek <jonathan@marek.ca>
 ---
- drivers/spi/spi-geni-qcom.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/spi/spi-geni-qcom.c | 48 ++++++++++++++++---------------------
+ 1 file changed, 20 insertions(+), 28 deletions(-)
 
 diff --git a/drivers/spi/spi-geni-qcom.c b/drivers/spi/spi-geni-qcom.c
-index 575b112d4acb1..53229150b86b5 100644
+index 53229150b86b5..5cca356cb673a 100644
 --- a/drivers/spi/spi-geni-qcom.c
 +++ b/drivers/spi/spi-geni-qcom.c
-@@ -675,6 +675,12 @@ static int spi_geni_init(struct spi_geni_master *mas)
- 	case 0:
- 		mas->cur_xfer_mode = GENI_SE_FIFO;
- 		geni_se_select_mode(se, GENI_SE_FIFO);
-+		/* setup_fifo_params assumes that these registers start with a zero value */
-+		writel(0, se->base + SE_SPI_LOOPBACK);
-+		writel(0, se->base + SE_SPI_DEMUX_SEL);
-+		writel(0, se->base + SE_SPI_CPHA);
-+		writel(0, se->base + SE_SPI_CPOL);
-+		writel(0, se->base + SE_SPI_DEMUX_OUTPUT_INV);
- 		ret = 0;
- 		break;
- 	}
+@@ -82,6 +82,7 @@ struct spi_geni_master {
+ 	u32 fifo_width_bits;
+ 	u32 tx_wm;
+ 	u32 last_mode;
++	u8 last_cs;
+ 	unsigned long cur_speed_hz;
+ 	unsigned long cur_sclk_hz;
+ 	unsigned int cur_bits_per_word;
+@@ -350,34 +351,25 @@ static int setup_fifo_params(struct spi_device *spi_slv,
+ {
+ 	struct spi_geni_master *mas = spi_controller_get_devdata(spi);
+ 	struct geni_se *se = &mas->se;
+-	u32 loopback_cfg = 0, cpol = 0, cpha = 0, demux_output_inv = 0;
+-	u32 demux_sel;
+-
+-	if (mas->last_mode != spi_slv->mode) {
+-		if (spi_slv->mode & SPI_LOOP)
+-			loopback_cfg = LOOPBACK_ENABLE;
+-
+-		if (spi_slv->mode & SPI_CPOL)
+-			cpol = CPOL;
+-
+-		if (spi_slv->mode & SPI_CPHA)
+-			cpha = CPHA;
+-
+-		if (spi_slv->mode & SPI_CS_HIGH)
+-			demux_output_inv = BIT(spi_get_chipselect(spi_slv, 0));
+-
+-		demux_sel = spi_get_chipselect(spi_slv, 0);
+-		mas->cur_bits_per_word = spi_slv->bits_per_word;
+-
+-		spi_setup_word_len(mas, spi_slv->mode, spi_slv->bits_per_word);
+-		writel(loopback_cfg, se->base + SE_SPI_LOOPBACK);
+-		writel(demux_sel, se->base + SE_SPI_DEMUX_SEL);
+-		writel(cpha, se->base + SE_SPI_CPHA);
+-		writel(cpol, se->base + SE_SPI_CPOL);
+-		writel(demux_output_inv, se->base + SE_SPI_DEMUX_OUTPUT_INV);
+-
+-		mas->last_mode = spi_slv->mode;
+-	}
++	u8 chipselect = spi_get_chipselect(spi_slv, 0);
++	bool cs_changed = (mas->last_cs != chipselect);
++	u32 mode_changed = mas->last_mode ^ spi_slv->mode;
++
++	mas->last_cs = chipselect;
++	mas->last_mode = spi_slv->mode;
++
++	if (mode_changed & SPI_LSB_FIRST)
++		mas->cur_bits_per_word = 0; /* force next setup_se_xfer to call spi_setup_word_len */
++	if (mode_changed & SPI_LOOP)
++		writel((spi_slv->mode & SPI_LOOP) ? LOOPBACK_ENABLE : 0, se->base + SE_SPI_LOOPBACK);
++	if (cs_changed)
++		writel(chipselect, se->base + SE_SPI_DEMUX_SEL);
++	if (mode_changed & SE_SPI_CPHA)
++		writel((spi_slv->mode & SPI_CPHA) ? CPHA : 0, se->base + SE_SPI_CPHA);
++	if (mode_changed & SE_SPI_CPOL)
++		writel((spi_slv->mode & SPI_CPOL) ? CPOL : 0, se->base + SE_SPI_CPOL);
++	if ((mode_changed & SPI_CS_HIGH) || (cs_changed && (spi_slv->mode & SPI_CS_HIGH)))
++		writel((spi_slv->mode & SPI_CS_HIGH) ? BIT(chipselect) : 0, se->base + SE_SPI_DEMUX_OUTPUT_INV);
+ 
+ 	return 0;
+ }
 -- 
 2.51.0
 
