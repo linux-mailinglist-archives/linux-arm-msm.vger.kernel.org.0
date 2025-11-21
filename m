@@ -1,124 +1,197 @@
-Return-Path: <linux-arm-msm+bounces-82897-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-82898-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 63105C7B143
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Nov 2025 18:32:19 +0100 (CET)
+Received: from ams.mirrors.kernel.org (ams.mirrors.kernel.org [213.196.21.55])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5C8E7C7B24D
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Nov 2025 18:56:48 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 1C8573A2669
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Nov 2025 17:32:18 +0000 (UTC)
+	by ams.mirrors.kernel.org (Postfix) with ESMTPS id E242135DE1B
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Nov 2025 17:56:47 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9B3F12405E7;
-	Fri, 21 Nov 2025 17:32:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 68701302CAB;
+	Fri, 21 Nov 2025 17:56:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b="v8zLkXCM"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="Jb+JRjff";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="Fg2JaNmd"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f42.google.com (mail-lf1-f42.google.com [209.85.167.42])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C8CC230BDB
-	for <linux-arm-msm@vger.kernel.org>; Fri, 21 Nov 2025 17:32:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC7002E7BD2
+	for <linux-arm-msm@vger.kernel.org>; Fri, 21 Nov 2025 17:56:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763746334; cv=none; b=i3Ah9L/IQqjy2B5AjuKHz11SgNWCL3POi5ao1y2lPTy7vYz0AD9r1zDE231MEmryIkOXNGmVfNZdJK9kVClLVBxcJzcn/MpXDy4V2ixiB7VDLiTuxoE9HqdxHPTDoR16RI40w2sRbzh+UggZWc1+UswrNSIDrsQx7UoCg46Dh+E=
+	t=1763747803; cv=none; b=M6z1ZRCRrYAhsmarJZX/l8Z8neDCJge+2oiJ7VGrs3RygvhmEAVGc/ROrrtkx7JgCq0CWt3Lr1E/Bb/iIMRhoxmHPPXnt+RjvFuwwAy1MzxNWXSYmIugP8k1xBTbAOnj4JeOrVXVZWdodAY9EURyQ1sg5ZTEHYi7HYRkKPGSTnQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763746334; c=relaxed/simple;
-	bh=kth0y7HTa9SOKIU9g0nLJ1NK5z0zg64snesxFb7xaaU=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=W0OUwJRYMHl+OdcUtVo71ZuwgOYJd7/8U9rdgVfshUgy3ODIqsmoyOI8JUv5Pe1TvOuJin24Ki9zI3dUAVfLoKeGrOVK+uWWxYJ6gHdtsw87mB9Fo06CUx0EZdlXXxyaAW+xF0K20oUYxb/bNpfEUg979x69TbDjAgN0cEYX2OI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl; spf=none smtp.mailfrom=bgdev.pl; dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b=v8zLkXCM; arc=none smtp.client-ip=209.85.167.42
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=bgdev.pl
-Received: by mail-lf1-f42.google.com with SMTP id 2adb3069b0e04-59581e32163so2462338e87.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 21 Nov 2025 09:32:12 -0800 (PST)
+	s=arc-20240116; t=1763747803; c=relaxed/simple;
+	bh=fy1OAyiWQ8tXXNz1A9JL1EaMw9CTUDiIXUySzIRwG/M=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=aJQKJjKm+T3lkLgmnOtF+lMAqTaSSAQ5cA4QIaZ2GijVKuVGkahhPLSowUAPNrHz5GYwKZuMe77XTJV0RLDQHv2H8m0r4U/d2P16R6HdoFd9ZGNOZi7P1It96LbHzksRe8DvEEguYeRP8zKwKihmO7P6C2WeJpuarKlmOEnFTmk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=Jb+JRjff; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=Fg2JaNmd; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 5ALFCTKK1390896
+	for <linux-arm-msm@vger.kernel.org>; Fri, 21 Nov 2025 17:56:41 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=qcppdkim1; bh=hF45yioN2i80AO+xrs7lpU
+	uXfS68L4/pxMqxakhD/Yk=; b=Jb+JRjffRGqLIe1I9+zF+9nu691NBuVM4wZU6Z
+	HAfcumlpTYe8JxyoHMFJ1gvy3wHfZCdWZZLaCEzInBq91UR/nv15Q1z938DNIH2B
+	oXuWGoKdOutbu3bYnnmKa+mlh9b94zRQaID6WpvM2Eor1s33ZNZb6PD1T163Voon
+	CyiDHnsAwKT918eSOHIqpkHJcvK1Vxg0FWc74O6cuH557L2dJdAkv93bWMLmpZAp
+	ZUJZQJgJUerhE1DX1XPD78o0FN4uV1gnyndjnQA9cb2gtE67XufdvK4bueFyUaeS
+	2lJinrbCDofNAI59VH71F8rAE+anqPV3M2olw6eXMs6VrSgA==
+Received: from mail-pf1-f200.google.com (mail-pf1-f200.google.com [209.85.210.200])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4ajb533h2b-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Fri, 21 Nov 2025 17:56:40 +0000 (GMT)
+Received: by mail-pf1-f200.google.com with SMTP id d2e1a72fcca58-7a998ab7f87so4243252b3a.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 21 Nov 2025 09:56:40 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=bgdev-pl.20230601.gappssmtp.com; s=20230601; t=1763746331; x=1764351131; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=kth0y7HTa9SOKIU9g0nLJ1NK5z0zg64snesxFb7xaaU=;
-        b=v8zLkXCMMFZcibfoyLGEaykfU0GqSzBf/fH8MzvfOx4UpRlJtaZZ45ZSTu/2lasd7n
-         Yne74jDpttIVknxLguSWthBre3JFNRoUK6tMT52M4fex+CxTb3TJMvO/r3DEniCL/ams
-         hWBWsa9zEW6h7qQTmeV2WkJ8h//2KVzAthUREbfx+4kMnbk7SpuxDC7mef08sDvfNe0j
-         fBtzNGSoCwcTDlvI9c2t1E9MQRm0/sOTCfFt1i4KajiA3M3nZcmRY9C/AAsVVczz29UZ
-         DbR+PPOK80PG0Ht+PzGhNT326rqyxKZrjGXIuy2Bk694a1fcGEl9BpXm1KN1WQL6X4yG
-         o8tA==
+        d=oss.qualcomm.com; s=google; t=1763747799; x=1764352599; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=hF45yioN2i80AO+xrs7lpUuXfS68L4/pxMqxakhD/Yk=;
+        b=Fg2JaNmdignCyvWG1NR7oR/nb49ZdlQkfpO71YIuGwyTbatJlXG1U93qHweIv71vL0
+         CEYjp1/eduM/AhBJkHp44a/xh9f4etYhP9FwSJuUxnDWSy3qptzmnbpDdfyUaqMzu4ET
+         3GyDo/k+OVyoyxIYWIxGEqesKneHJoXAxDJaVePz+Ae4g4TxABwSL/QtIs4xZYYDWFAk
+         m1P5TFtYax9bE+DqNSqXTbqIU6I6tNrJ/HTzA8A/GtPBvGRKGwbSJgvmRatWZ9zNA6A1
+         ExrdssFTcl78KbUd/esDD5RBNfuCklCDaYZk+URo6A7ty7/8rMnP/7W9JjGqWNysVU/Y
+         grxw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1763746331; x=1764351131;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=kth0y7HTa9SOKIU9g0nLJ1NK5z0zg64snesxFb7xaaU=;
-        b=rLE8W+GhYuam2pQWOjRbb/fR0REXMXgpyoYyBYMTSAXNf7fPSBIEla2cmvCN+dybNO
-         gRTTIcBPeuaakf+nGxsjz/tmSkSyeselCpJKi/d9dbDRErF1vbmwnBVHvwrU96AROnY7
-         E9jjP2m+yLztCx+B+CzKof4lvI3zTg3SNyeHRwCDL16gdTndHvRbWrgDa2r9KWEPumpA
-         yE+5jQNpstrJKR0T3kTEFleTnJ8e6gCxnEb3hTNHmJkBfWfmYeisCx9naaT1QUW74w5w
-         6xoFKBrsg6csHcH9Lw5KF1/p7F1zKT9cNRxorPP3Z1M6VwOjt5wIFhpYYspveGH8j7+o
-         3qgQ==
-X-Forwarded-Encrypted: i=1; AJvYcCV+S/J1KtNVm1Ug+nmF3SH8Fd6H1xPS49bwnlNVZQeaH+moodDO2/FU6B+M9evoXHOAjhUdshCD3dybmfNy@vger.kernel.org
-X-Gm-Message-State: AOJu0YwlC6/GFl8HQnpHfUi3ZroJMfVBDABSAWk29S7DO4sxULXm1lZB
-	tCsHcHI1B7yXyTorwzFLa1lwohgHJf3JdGrnB+xZVf7mfCliawWvsuWQ1NXyazyzLrldyUfFizz
-	Mx4tkWQMMHTE8VRCD5QW377ReKtU27E23IJaSXVvwHg==
-X-Gm-Gg: ASbGnctLp/tw7ddeDzCgckzxy2aeXqCKpXTiT+/7Udbw6yVs5y0fMSWU+kWEafdw1/u
-	ltzIJZiuqF6BFxLE+mRuV7UHaC1cj3ZUdv1tKCi4NWBFLsQjijIdya7BAg5nRIJzcMqrq9oLW3K
-	vw780uIS8i8hKgNuP/RADZhBZoG+Iw1QdyQMUfAc7lDL25xF80HqdVvpW/J12zLG4PEzvfnGDNA
-	E//SLgO4H0NlGTtEAkKM/Xh/wsVqA6LWMtCfXooZ8DYKcRPuFfPlpOfPX5rZgRK/H1/AP7pjtgm
-	t/wYsujztwpFAdZV6mS0OcLIk2Y=
-X-Google-Smtp-Source: AGHT+IFrdM3hZhHWz0WyuYbt+MGt6Thaf3kFt5DbPs90YPkIC9rrtnEFnyWeJ+DyEDb8IAb42i1R+G+ZOCDA0C98CKc=
-X-Received: by 2002:ac2:4e0a:0:b0:595:8258:ccc7 with SMTP id
- 2adb3069b0e04-596a3e9eb1bmr1000163e87.1.1763746330475; Fri, 21 Nov 2025
- 09:32:10 -0800 (PST)
+        d=1e100.net; s=20230601; t=1763747799; x=1764352599;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=hF45yioN2i80AO+xrs7lpUuXfS68L4/pxMqxakhD/Yk=;
+        b=T2/d8gIzMLEKEP7nK48GtUwKedfMLxx1u6VhTeVfpCO/ScY787gVrFfAVH1f//v5Bq
+         xo4a3PC14ZeDu2Ag8IxeqMC4DAjyDesRvlqS4LHGHMEUtUnqpjy8qcilWDRCecqMm6BH
+         lmXDREMI7HFxcF4lR5FOOG8HGwOhIWu7LloOMXcwokL6aY+uhUZBe7/5mqbx22XpLkYk
+         4zQ/Wci+IawQuGUtUXka6aSl1FTXFDagD/gfzUjIx2iBR9j1tBW0gVSvmfZ/vaf59TQf
+         1DsP3UzMaADXNVeo2tnnrh0dDz77n0ulCS2xIHI0FBWQOh1IDwgyoYaoXtlVBOLPo1Th
+         zZ7A==
+X-Forwarded-Encrypted: i=1; AJvYcCXb+wd3GFvVuEMKyIPEGYMNj/L5oS69jJ+H3B814WGKxe8+KBdxoPgiwyItARV5EJYm0DZ4LrpErsZJGtkW@vger.kernel.org
+X-Gm-Message-State: AOJu0Yw+uTIGroOpE3gAGOWJfpehja5C6YvTeGCOxVroAHYJfefoGPrb
+	HvxAQ1hI5LMWOuZyg/D3k1D8e53ClvJbiv9fzoGQSN1stMLmdTMjycjRkctIFSme5zz9tJY4Acx
+	e1gdEuQIxAA8y7uO+8N7HIJR3g3P2nHsm5rxphOeSVgQDn36I6rc9qIwv5oxGw7tzCU2e
+X-Gm-Gg: ASbGncvM+ZIi4w4wDNxWNtDu900QA/noHGRvovxlHKWJj7OR9/rwifP0J3K9m0NylUh
+	p2LgG+f5JqnUWh2ecHyZVOoP6PH8qH+dhqz4Jwx3DbYBYGgWVTFnmisa5fqXkxjoiygEYsUTaM3
+	muF015WiUVSQ7774XVe9eO9/j6UbZLFwP9xZTQw9paZmDPCxcEwDbjhoubpLV0aOS/cfjYRRpwa
+	m4Osr24Yn/dBGQz/tKyfYsCRnpwhKplEVFieNg2W4wmOB304Mhmg660/f1NYBGA5k4lvPPHPCt/
+	w3FPgr2bwfUPBwiD4Psj+m5c9si2GpqWJpwqbXRNpIVSKX3lXUfBCT018t8BIUfopytlbqB2YbV
+	buTB130nY9njmPA+cDMM8pH2bh6IUw8reag==
+X-Received: by 2002:a05:6a00:18aa:b0:783:9b67:e96a with SMTP id d2e1a72fcca58-7c58988f790mr3572981b3a.0.1763747799366;
+        Fri, 21 Nov 2025 09:56:39 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFia0ajsNrlxP3jp5L8oHybsoZjqxRqeOSII1csnsLzjtyHZxIWW/jRb0d9MR0h8htoND6VPw==
+X-Received: by 2002:a05:6a00:18aa:b0:783:9b67:e96a with SMTP id d2e1a72fcca58-7c58988f790mr3572945b3a.0.1763747798832;
+        Fri, 21 Nov 2025 09:56:38 -0800 (PST)
+Received: from hu-tdas-hyd.qualcomm.com ([202.46.22.19])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-7c3ed471060sm6727883b3a.15.2025.11.21.09.56.35
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 21 Nov 2025 09:56:38 -0800 (PST)
+From: Taniya Das <taniya.das@oss.qualcomm.com>
+Subject: [PATCH v3 0/3] Add support for Clock controllers for Kaanapali
+Date: Fri, 21 Nov 2025 23:26:26 +0530
+Message-Id: <20251121-gcc_kaanapali-v3-v3-0-89a594985a46@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20251106-qcom-qce-cmd-descr-v8-0-ecddca23ca26@linaro.org>
- <20251106-qcom-qce-cmd-descr-v8-1-ecddca23ca26@linaro.org>
- <xozu7tlourkzuclx7brdgzzwomulrbznmejx5d4lr6dksasctd@zngg5ptmedej>
- <CAMRc=MdC7haZ9fkCNGKoGb-8R5iB0P2UA5+Fap8Svjq-WdE-=w@mail.gmail.com>
- <m4puer7jzmicbjrz54yx3fsrlakz7nwkuhbyfedqwco2udcivp@ctlklvrk3ixg>
- <CAMRc=MfkVoRGFLSp6gy0aWe_3iA2G5v0U7yvgwLp5JFjmqkzsw@mail.gmail.com>
- <66nhvrt4krn7lvmsrqoc5quygh7ckc36fax3fgol2feymqfbdp@lqlfye47cs2p>
- <CAMRc=McYTdgoAR8AOz-n5JEroyndML1ZQvW=oxiheye3WQmvRw@mail.gmail.com> <whxi2ikode53vrxqpanryw74zd7oovfielgdvhpkka5zy76g75@dxreidnb77y5>
-In-Reply-To: <whxi2ikode53vrxqpanryw74zd7oovfielgdvhpkka5zy76g75@dxreidnb77y5>
-From: Bartosz Golaszewski <brgl@bgdev.pl>
-Date: Fri, 21 Nov 2025 18:31:59 +0100
-X-Gm-Features: AWmQ_bnls5aC2uYMxiloODvlLPPtaHGzyORZnXBgt1VZ07gmTcD09CgNCNE_vtQ
-Message-ID: <CAMRc=MfqYiuLaz_28nE+5QSdiG-MyTk885HSO4OYz8Wf4myfJQ@mail.gmail.com>
-Subject: Re: [PATCH v8 01/11] dmaengine: Add DMA_PREP_LOCK/DMA_PREP_UNLOCK flags
-To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Cc: Vinod Koul <vkoul@kernel.org>, Jonathan Corbet <corbet@lwn.net>, 
-	Thara Gopinath <thara.gopinath@gmail.com>, Herbert Xu <herbert@gondor.apana.org.au>, 
-	"David S. Miller" <davem@davemloft.net>, Udit Tiwari <quic_utiwari@quicinc.com>, 
-	Daniel Perez-Zoghbi <dperezzo@quicinc.com>, Md Sadre Alam <mdalam@qti.qualcomm.com>, 
-	dmaengine@vger.kernel.org, linux-doc@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
-	linux-crypto@vger.kernel.org, 
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAMqnIGkC/x3MQQqAIBBA0avErBMaraCuEhGTTjUUFgoSRHdPW
+ r7F/w9EDsIR+uKBwEminD7DlAXYjfzKSlw26Eo3iBrVau20E3m66BCVjKK5Q8aqbWZXQ86uwIv
+ c/3IY3/cDEG/aqGIAAAA=
+X-Change-ID: 20251121-gcc_kaanapali-v3-ab91e1065bd4
+To: Bjorn Andersson <andersson@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>
+Cc: Ajit Pandey <ajit.pandey@oss.qualcomm.com>,
+        Imran Shaik <imran.shaik@oss.qualcomm.com>,
+        Jagadeesh Kona <jagadeesh.kona@oss.qualcomm.com>,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        linux-kernel@vger.kernel.org, Taniya Das <taniya.das@oss.qualcomm.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+        Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+X-Mailer: b4 0.15-dev-aa3f6
+X-Proofpoint-GUID: yvnV3Kxe0ouorImD2je3lmNgQge1hmC-
+X-Proofpoint-ORIG-GUID: yvnV3Kxe0ouorImD2je3lmNgQge1hmC-
+X-Authority-Analysis: v=2.4 cv=Wugm8Nfv c=1 sm=1 tr=0 ts=6920a7d8 cx=c_pps
+ a=mDZGXZTwRPZaeRUbqKGCBw==:117 a=fChuTYTh2wq5r3m49p7fHw==:17
+ a=IkcTkHD0fZMA:10 a=6UeiqGixMTsA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=EUspDBNiAAAA:8 a=VwQbUJbxAAAA:8
+ a=pU5keNj5C49EkLXuPzUA:9 a=QEXdDO2ut3YA:10 a=zc0IvFSfCIW2DFIPzwfm:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMTIxMDEzNCBTYWx0ZWRfX0Spc8MPZlV++
+ OKqxo+SFHLmB3g3gIF591a0q8gcfwxVIRO0vETZnEd7SnszK3bkEpv2sQTEYc0V2tEI6TWgHaAb
+ Rik6yNbjb9ZbJtvcXW31Bth2/CMfJIL4OxZGh4ct1WLR2K8jMD6bE3HiICAq+J19DrrMAu7r0ch
+ 2qCFXq0V50kKaxfolY+q7XwTIXozUQJpTmXZUDnQCp39xeT8xkzcYV7oncvVPM48ZMn8n5OjTKY
+ baifWbCLGH9YnUSOdV9U66Fv5O0y9CZIsHnlYX/XUxaUiCccmo680wcVH9PwBzT1Fc63Bf+j9HZ
+ DhrnoVssBQwscfGF8AenTOkd5CHTJBeHkxp6NOoFrEKlPSiVIdA+X5jIoLehpi/nwpaDV8r6mk8
+ qe39+aZ/JrSvUF4l3CpA/kgnQwmv1g==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
+ definitions=2025-11-21_05,2025-11-21_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ spamscore=0 clxscore=1015 phishscore=0 bulkscore=0 adultscore=0
+ suspectscore=0 impostorscore=0 priorityscore=1501 malwarescore=0
+ lowpriorityscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2510240001
+ definitions=main-2511210134
 
-On Fri, Nov 21, 2025 at 5:36=E2=80=AFPM Dmitry Baryshkov
-<dmitry.baryshkov@oss.qualcomm.com> wrote:
->
-> >
-> > The flag has to be passed to the BAM driver at the time of calling of
-> > dmaengine_prep_slave_sg() and attrs seems to be the only way with the
-> > current interface. Off the top of my head: we could extend struct
-> > scatterlist to allow passing some arbitrary driver data but that
-> > doesn't sound like a good approach.
->
-> Can we use DMA metadata in order to pass the lock / unlock flags
-> instead? I might be missing something, but the LOCK / UNLOCK ops defined
-> in this patchset seem to be too usecase-specific. Using metadata seems
-> to allow for this kind of driver-specific sidechannel.
->
+Add support for Global clock controller(GCC), TCSR and the RPMH clock
+controller for the Qualcomm Kaanapali SoC.
 
-I'll look into it, thanks.
+Kaanapali(Snapdragon SoC from Qualcomm):
+https://www.qualcomm.com/products/mobile/snapdragon/smartphones/snapdragon-8-series-mobile-platforms/snapdragon-8-elite-gen-5
 
-Bart
+Changes in v3:
+ - Update the new RPMH clocks to use 'clkN' convention which was not
+   moved completely in v2 patchset [Dmitry].
+ - Use lower case of the target name in Kconfig and Driver code [Dmitry]
+ - Update the TCSRCC clock offsets as per the latest discussion for
+   mapping the TCSR base to '0x1fc0000'.
+ - Add RB tag from [Konrad] for GCC
+ - Link to v2: https://lore.kernel.org/r/20251030-gcc_kaanapali-v2-v2-0-a774a587af6f@oss.qualcomm.com
+
+Changes in v2:
+  - Update the commit message for all dt-bindings to incorporate
+    "SoC/platform" inplace of drivers [Krzysztof]
+  - Add RB tag from [Krzysztof] for dt-bindings
+  - Split the TCSRCC to a new driver instead of reusing the SM8750
+    driver with offset updates [Dmitry]
+  - Update the new RPMH clocks to use 'clkN' convention [Dmitry]
+  - Add RB tag from [Dmitry] for GCC
+  - This series does not have any strict PLL code dependencies [Bjorn], thus
+    drop them and will be added in the Multimedia clock controller
+    series. Drop the following patches.
+	- Update the PLL support for cal_l
+	- Add support for controlling Pongo EKO_T PLL
+	- Add support for controlling Rivian PLL
+  - Link to v1: https://lore.kernel.org/lkml/20250924-knp-clk-v1-0-29b02b818782@oss.qualcomm.com/
+
+Signed-off-by: Taniya Das <taniya.das@oss.qualcomm.com>
+---
+Taniya Das (3):
+      clk: qcom: rpmh: Add support for Kaanapali rpmh clocks
+      clk: qcom: Add TCSR clock driver for Kaanapali
+      clk: qcom: Add support for Global clock controller on Kaanapali
+
+ drivers/clk/qcom/Kconfig            |   17 +
+ drivers/clk/qcom/Makefile           |    2 +
+ drivers/clk/qcom/clk-rpmh.c         |   41 +
+ drivers/clk/qcom/gcc-kaanapali.c    | 3541 +++++++++++++++++++++++++++++++++++
+ drivers/clk/qcom/tcsrcc-kaanapali.c |  141 ++
+ 5 files changed, 3742 insertions(+)
+---
+base-commit: 88cbd8ac379cf5ce68b7efcfd4d1484a6871ee0b
+change-id: 20251121-gcc_kaanapali-v3-ab91e1065bd4
+
+Best regards,
+-- 
+Taniya Das <taniya.das@oss.qualcomm.com>
+
 
