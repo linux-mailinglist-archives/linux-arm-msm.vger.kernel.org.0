@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-82799-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-82804-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ams.mirrors.kernel.org (ams.mirrors.kernel.org [IPv6:2a01:60a::1994:3:14])
-	by mail.lfdr.de (Postfix) with ESMTPS id 95A6CC788A4
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Nov 2025 11:36:28 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 30645C788CB
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Nov 2025 11:37:44 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ams.mirrors.kernel.org (Postfix) with ESMTPS id 30C993453AF
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Nov 2025 10:36:28 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTPS id ED81E3226E
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Nov 2025 10:37:42 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id ED48D33FE0A;
-	Fri, 21 Nov 2025 10:36:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id F26F23431EC;
+	Fri, 21 Nov 2025 10:37:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="dMMkY9/o"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="q0NcL31P"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD1983370EE;
-	Fri, 21 Nov 2025 10:36:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B717733F8A4;
+	Fri, 21 Nov 2025 10:37:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763721383; cv=none; b=V+Lg3Qxio72yMBp0Em+fPmXXlXZvfVtIOWcEHQKcFC3RirreisoKK4ccRqLNd9cGk4LXhmExkfXDQjERnGEiLrTtr62O6SXjqzVhMU9DzpDgxaIo5do5uQwVe1rlh+7k6IR3bwqoLYiqSP/vhV/poxLupdLHEgtrHuayXNn+PYE=
+	t=1763721431; cv=none; b=Y0pdFLlC+RmLN8nv0mC23ryVxYsqNJC1TVw8heWsHUY5m6pZmyk730qI9QwPlaiVZ7XM+e8iAZYQczq1ey1actRdO37jnj5h1VyLlwm45X0e2bP9a9FOQCrGoWtD3hS4PK/oIGbVbSV0mI+6QY/iyK/pH2O5GXjV8ZYx0Td71h4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763721383; c=relaxed/simple;
-	bh=pRXqSJURymbccYWTQkb2HlC6TsWnsMMqs45Ng/VOuCo=;
+	s=arc-20240116; t=1763721431; c=relaxed/simple;
+	bh=J7FhIu/QRNQB7FTtcYRvMt7DBAVUX39t15JODTOuYs8=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=aQWuMYL3X1EpU1GdFfG3R6WprpeXpnT2e/hpcQnsYdghwI3KmUQvEQIC004M+uTpos6pdLvWES9B2sDo178haxSqQV7YzzsAVGkyso/mse5E0P922J/cvn0tzzrWtqSObXFrHNLzHiolDhVGRtWmp4BYzL/oIw+s3NUcgFnipXw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=dMMkY9/o; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B12A9C4CEF1;
-	Fri, 21 Nov 2025 10:36:20 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=ndpvFNu/NSfqQqxIddEcvERHOHYR6+/Xacg+jsRVsNOWiULyQnvbKr+CICF4Ws5E4Hg3JYyHbdLGANk/oLXJEnJY1F98hwzngA46X3zUOHt/qk5QaOTMimch23yLPHr/E6QIfGR3scVk6QOiiWjP8l/vGC/kvdTr5l37pEdWylo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=q0NcL31P; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EAFF1C4CEF1;
+	Fri, 21 Nov 2025 10:37:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1763721383;
-	bh=pRXqSJURymbccYWTQkb2HlC6TsWnsMMqs45Ng/VOuCo=;
+	s=k20201202; t=1763721431;
+	bh=J7FhIu/QRNQB7FTtcYRvMt7DBAVUX39t15JODTOuYs8=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=dMMkY9/oODkK46nt7OJDedG9JOh/AZPVgqIaCcx+HzsBmb60KNp8p3qE8GTVCzILP
-	 kSbtqycxFSIskj1kexG06yqabmED6RAZjQ1KgGYcj1NqKSXhm5l2QBbPJWQuc4YyVL
-	 hPv2BC1K4suRLT8FT5f3DbcZGKcP7BrCszM7MFcMELksypv9XTYUpZV8rnN6rS9HLz
-	 2SNteI/f2bH4c7VvFQR8l1JedEg2mZQAY7JL9TcK135C5VDlu3QQSlsCIwMnbd5rdC
-	 eE/TbfuejUPJw8LRbQ4nqnrJL0JCatMuiks2cuuwqFZNewUIASHP8OFqAng5ZwDKw7
-	 zD4Gc0BFwicmg==
-Message-ID: <9056e0fd-bcc9-490a-a103-d0da384338b8@kernel.org>
-Date: Fri, 21 Nov 2025 11:36:19 +0100
+	b=q0NcL31PhllGsebfjM9+SvoKEUuwOKivIl1WB947vPzG0oM7wV61P1LVsWOGFSCPQ
+	 O/UTYa4eOd9ZSjWMRYLqnz0zdnWkbGg0wyRxHX+LYhL2PfVl7KZGVuWNkq2gYXEQdY
+	 1nTTwVDs+LQroGs9ld5A4H9qitw38bRhIlZpuN9u0ouqSGvVtqXkBipU6uIRGDidkz
+	 kPq8EX69KedZIkMT2rmlO267ZjYYgsSe9nWGZvQXkYt+Um2LpX9QfPOxhbKgTGF3/3
+	 zbN8B1lMybddEa4CJsMJQBxna+5Zimj5LKvmA085huBdGxf6yQn0NZedVJhFkmUBaP
+	 GK/1C1LtoOK1A==
+Message-ID: <bc8cbca0-3bfc-44e2-a7ff-401e52f76b90@kernel.org>
+Date: Fri, 21 Nov 2025 11:37:07 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,7 +50,8 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 3/4] soc: qcom: llcc: Fix usecase id macro alignment
+Subject: Re: [PATCH 2/4] soc: qcom: llcc: Enable additional usecase id for
+ Glymur
 To: Pankaj Patil <pankaj.patil@oss.qualcomm.com>,
  Bjorn Andersson <andersson@kernel.org>,
  Konrad Dybcio <konradybcio@kernel.org>, Conor Dooley <conor@kernel.org>,
@@ -59,7 +60,7 @@ Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
  linux-kernel@vger.kernel.org, sibi.sankar@oss.qualcomm.com,
  rajendra.nayak@oss.qualcomm.com
 References: <20251121-glymur_llcc_enablement-v1-0-336b851b8dcb@oss.qualcomm.com>
- <20251121-glymur_llcc_enablement-v1-3-336b851b8dcb@oss.qualcomm.com>
+ <20251121-glymur_llcc_enablement-v1-2-336b851b8dcb@oss.qualcomm.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -105,24 +106,33 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  jWt87ecuHlpL3uuQ0ZZNWqHgZoQLXoqC2ZV5KrtKWb/jyiFX/sxSrodALf0zf+tfHv0FZWT2
  zHjUqd0t4njD/UOsuIMOQn4Ig0SdivYPfZukb5cdasKJukG1NOpbW7yRNivaCnfZz6dTawXw
  XRIV/KDsHQiyVxKvN73bThKhONkcX2LWuD928tAR6XMM2G5ovxLe09vuOzzfTWQDsm++9UKF a/A=
-In-Reply-To: <20251121-glymur_llcc_enablement-v1-3-336b851b8dcb@oss.qualcomm.com>
+In-Reply-To: <20251121-glymur_llcc_enablement-v1-2-336b851b8dcb@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
 On 21/11/2025 10:53, Pankaj Patil wrote:
-> Fixed spacing for usecase id macro along the
+> Update the list of usecase id's to enable additional clients
+> for Glymur SoC
+> 
+> Signed-off-by: Pankaj Patil <pankaj.patil@oss.qualcomm.com>
+> ---
+>  include/linux/soc/qcom/llcc-qcom.h | 4 ++++
 
-What is exactly fixed?
+That's not a separate patch. We do not want defines just for defines.
+You add defines because some code uses it, so there is a user. Where? It
+must be in this patch, for all typical cases.
 
-> column length
-
-
-Please wrap commit message according to Linux coding style / submission
-process (neither too early nor over the limit):
-https://elixir.bootlin.com/linux/v6.4-rc1/source/Documentation/process/submitting-patches.rst#L597
-
-Cleanups go before new features/devices.
-
+>  1 file changed, 4 insertions(+)
+> 
+> diff --git a/include/linux/soc/qcom/llcc-qcom.h b/include/linux/soc/qcom/llcc-qcom.h
+> index 0287f9182c4d..8243ab3a12a8 100644
+> --- a/include/linux/soc/qcom/llcc-qcom.h
+> +++ b/include/linux/soc/qcom/llcc-qcom.h
+> @@ -74,13 +74,17 @@
+>  #define LLCC_CAMSRTIP	 73
+>  #define LLCC_CAMRTRF	 74
+>  #define LLCC_CAMSRTRF	 75
+> +#define LLCC_OOBM_NS	 81
 Best regards,
 Krzysztof
 
