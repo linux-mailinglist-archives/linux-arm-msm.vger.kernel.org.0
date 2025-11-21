@@ -1,205 +1,268 @@
-Return-Path: <linux-arm-msm+bounces-82771-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-82772-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
-	by mail.lfdr.de (Postfix) with ESMTPS id BEDA5C777FB
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Nov 2025 07:03:50 +0100 (CET)
+Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [IPv6:2605:f480:58:1:0:1994:3:14])
+	by mail.lfdr.de (Postfix) with ESMTPS id 70F97C7780D
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Nov 2025 07:06:19 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by tor.lore.kernel.org (Postfix) with ESMTPS id B6EAB23FDA
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Nov 2025 06:03:49 +0000 (UTC)
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 513674E3E1C
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Nov 2025 06:06:18 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7B54026ED4C;
-	Fri, 21 Nov 2025 06:03:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 635B42D97BE;
+	Fri, 21 Nov 2025 06:06:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=marek.ca header.i=@marek.ca header.b="HASdJYUk"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from SEYPR02CU001.outbound.protection.outlook.com (mail-koreacentralazolkn19013077.outbound.protection.outlook.com [52.103.74.77])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qt1-f177.google.com (mail-qt1-f177.google.com [209.85.160.177])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10AD726C39F;
-	Fri, 21 Nov 2025 06:03:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.103.74.77
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763705027; cv=fail; b=l0/prAKVV7pAqjX+kunYNQCMZo07Qqo4uhsWxKn2AMQAuCnMAH9K/kNQ//DtfCWEE+y5xv4elLhys79+2El79cX/GBiRU4n9z/JlL1aBcvAcNeW9rY4XAoQOsXrPRaRZOZZNNE2IWJsETns6ivz+E8NUYbFoZpD4KL/3Mq1Ce10=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763705027; c=relaxed/simple;
-	bh=aaRd0LdrVAkvFg1dqHkpj7RAXAQXUCJ16ffzPQf8d98=;
-	h=From:To:Cc:Subject:Date:Message-ID:Content-Type:MIME-Version; b=HrH6szVPw2AUnZBhQE9DZdYakXRTWDrLdB4VVntclZDM8IH8auagmm7jH4i3hiTh2zdeXvq6otNbGBJu1toAAsktqCYwwK2qHXTrt7lt833GKPSSjkuJSCp45kNkHG9q8SR+c9e8u6v8MxfOncPb9copHIZ4oKJ4YUZNQR7OTls=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sobir.in; spf=pass smtp.mailfrom=sobir.in; arc=fail smtp.client-ip=52.103.74.77
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sobir.in
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=sobir.in
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=rYSDLH+wsQq1NrAP1pIpZx/aicnyZMREH84UKfI7UlpAIMReQ/CGxO6Br+dvdNB9RAW7XvP4YUdQYdA46mwcwyrAqhTeiQB7qHjrQ2qTgs7yZUJZmn4sRtBOqI4SIqiUhj9yQ1l8b9B6601bZN8BJxDuWSErz9ETArvzwMO5fH85Cvj7mrBztKqIAQBp7QRFU66W9V3b6FzZiD37+XN+4P3DVRgLNp7x/TmTSyuRn3U6haO3rp6Wqcuw/rmumfsknifSHh+DjNKRdQ7ClZwWNNARyL15wAY4KEcAJ4BbnD4lt6cBFdn4+yenmZ+kPSG4TuN/ekImDDHiHavdK1SGEA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=OEuXGghlXifS3UFu6BCDdTcCQ0MF2WWGO1PZOe+x6gE=;
- b=aIVlAfkXxgAxPBhYntWFt7494WooOFmZxWjqXrc4/QuEyziimakTc5oc9h10HvFvToEYBd3+jNOtKHwHAgQ6l2ST2ZtI6+VHEDzqrtER+ovw1t3GMIft4VGSWMAD2n7vCuBIiVrzVRZvgNN3wyJfQcLKIX6w8pG6XyjkmSbevNwFO6BQlQ92I88tstbMAcTz6n66WVA/0wRY1exQ5E3Ls6JQwoG7l+QaxxSuEhRcDlF7afENfDnCgwoESFVKof/qdxrdqTmKE5ptYRI/mbCc3GfYtes/d7X6Zog4uMwFbrUXAiWt+2clec9pMKCCDmdpdLpqmyiCUwF8qX54ol87FQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
- dkim=none; arc=none
-Received: from TYUPR06MB6099.apcprd06.prod.outlook.com (2603:1096:400:356::8)
- by KL1PR06MB6710.apcprd06.prod.outlook.com (2603:1096:820:fe::9) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9343.11; Fri, 21 Nov
- 2025 06:03:38 +0000
-Received: from TYUPR06MB6099.apcprd06.prod.outlook.com
- ([fe80::2223:6c27:d5c2:aa47]) by TYUPR06MB6099.apcprd06.prod.outlook.com
- ([fe80::2223:6c27:d5c2:aa47%5]) with mapi id 15.20.9320.013; Fri, 21 Nov 2025
- 06:03:38 +0000
-From: Teguh Sobirin <teguh@sobir.in>
-To: Rob Clark <robin.clark@oss.qualcomm.com>,
-	Dmitry Baryshkov <lumag@kernel.org>,
-	Abhinav Kumar <abhinav.kumar@linux.dev>,
-	Jessica Zhang <jesszhan0024@gmail.com>,
-	Sean Paul <sean@poorly.run>,
-	Marijn Suijten <marijn.suijten@somainline.org>,
-	David Airlie <airlied@gmail.com>,
-	Simona Vetter <simona@ffwll.ch>
-Cc: linux-arm-msm@vger.kernel.org,
-	dri-devel@lists.freedesktop.org,
-	freedreno@lists.freedesktop.org,
-	linux-kernel@vger.kernel.org,
-	Teguh Sobirin <teguh@sobir.in>
-Subject: [PATCH v2] drm/msm/dpu: Set vsync source irrespective of mdp top support
-Date: Fri, 21 Nov 2025 14:02:08 +0800
-Message-ID:
- <TYUPR06MB6099C539BD2C937F8630FF8EDDD5A@TYUPR06MB6099.apcprd06.prod.outlook.com>
-X-Mailer: git-send-email 2.34.1
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: BY3PR04CA0011.namprd04.prod.outlook.com
- (2603:10b6:a03:217::16) To TYUPR06MB6099.apcprd06.prod.outlook.com
- (2603:1096:400:356::8)
-X-Microsoft-Original-Message-ID: <20251121060207.148684-1-teguh@sobir.in>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71A8E271A94
+	for <linux-arm-msm@vger.kernel.org>; Fri, 21 Nov 2025 06:06:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.177
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1763705173; cv=none; b=dJUUw+vPsKWGcws8wtyt1eJFzSyVHCNnPO1L4fyKvRcIacwzXgc68KniYG7o6fsmCE0e092h5XSJC+oj8gm9Hfr+hvl50Ts9F3YgBHvfmV5U1w1DYJ7XVzrTehZOvDRtZ2WP6xQ9kb2r8UoWyvabdETzikU8H8UEBN9wvCBRDlo=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1763705173; c=relaxed/simple;
+	bh=GcROR96JF5hCwBimwpg3lqL3nafgW194peOGSoR1pUA=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=eOug0YXycSzce038ef7J0tUrTAU8Zzy22PVNtyWpFVh+WxZNXGr3MI1pCZorTsNrvXg8DnsCCu5w4DW25yjFpd01L551aLcwcIV7i9kxLw5dXYhEGsFyHk5XnoVmkxS0aFQACna96pQdLmkA6urzAEwG9mc8j070JKFpmuei4RM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=marek.ca; spf=pass smtp.mailfrom=marek.ca; dkim=pass (2048-bit key) header.d=marek.ca header.i=@marek.ca header.b=HASdJYUk; arc=none smtp.client-ip=209.85.160.177
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=marek.ca
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=marek.ca
+Received: by mail-qt1-f177.google.com with SMTP id d75a77b69052e-4ee2014c228so13327231cf.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Nov 2025 22:06:11 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=marek.ca; s=google; t=1763705170; x=1764309970; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=La5vJNM1jWM5YiAHSf9v+V5WGA4ndFbbe8gW9RIdiFU=;
+        b=HASdJYUkgCBJXUhfrnr5RVJ+DI+K7lQxO4c6FhtW0J+dJUD7pr4vvtslEvKOu8+VLU
+         XHX9LLS7XAthXRnYTw+unVASUbHamogMwiQG5axrizfj+u/DOZBtSU+qloUCVzuXGtbD
+         xOUcV2YEAls0Jh0GX+ArnUCUN0hf9/5xeip2s3J+YIDrdtt4eRPuKaD6O6IINLMFelEt
+         Q43vQHMpbxeDnbcxvvVD/hO3nHFYC7NbmQpxnnaR5fBQcJTLnaiXGgC105dsiAhi+Lpv
+         JUq/K4p5Yrz2XMQfQF12yXvinXM/Cc62xZICiQV0/BRdRTK82GikzZkbuQC6qejJ4UkF
+         RspQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1763705170; x=1764309970;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=La5vJNM1jWM5YiAHSf9v+V5WGA4ndFbbe8gW9RIdiFU=;
+        b=PoXhtSwVZzETPHWZZOIg39Kug8rQpY1zCWjJ3DYryQZnkznse5yZpbdkB5JgrD7sQ7
+         cP01Mv2fQx8KWmFFepCJHs0jaoD/C710TUEJLkAvb456hYAWKKX+tlfo5uxKYVP7GNbs
+         kLI4XpPIPo5BxvMTZlHlxb4tY6Y0ksgwyENQ9IKJI693zocdluL5K//hoFA25oRNW2rE
+         ztDxU6xdCK+YutDFAQszPdseVzBmoziqOIjqr77RMydjy7f4KmCSctpL2cEp/Hh3hQ+k
+         kEHjr2HjR6Dt+tXltR+prbm23li79xDBUFLsdCbPtt7L6jDj9173lIVG/4xp2GfSapTb
+         8vJg==
+X-Gm-Message-State: AOJu0YwiJ35Fg0mtjKo5Ooy7QIcVQnEUf9Xgj4pENrJazldNShFVXWaZ
+	KwURCn0akOnakYVEgFkU2v6MMusehsgMa1r0vmfJvRu4C2mHyUYm/o2pde0tzSx4DNzWcQ7+2W/
+	hh4WH
+X-Gm-Gg: ASbGnctfu+pa5b9F6Xl7Ju09+2iDtzhBaSUUMt+0DmJUxnu1l/MuvuoQ3ZAKHhjCZMb
+	/nBotokBe0cLbgaCAAqKe7IorZUzlOk4v63kn524sQcEp3cIpf2BceDpBsDDrRUTx86hgAkWukO
+	rolHSPXk4SmfA0eKHopY+4CkEHbkFTt7090NsmOfg3VcpIDi6e48DPseASZ2Edr4Lfm02K7zRIJ
+	60UO2UM2f0pVN+yi3o093fY8Uz3WXwmvbxcpzItW7XI7FjtD+AXfs2exuOx6h5jGNqcYdV01V44
+	bNSWDeAmjHWUG8IOI2MLEyQ+8BPTUUKGwZSTykG+10Ftn3qTJBVWzcwuzK65gvO5g9fbRZz2xE9
+	rNzCV8m1VkHJmWMoH9HiRtU8jfPC0RjQwRTtv4bf1ZWurqhq6qn1E5YtnWXwqvWOtfRdN2f/3sU
+	S/ZzdlE+e5qPUhjkqal7+ZX9Lw70BjkkLjNX8yQTRkjUoGzCCRAo+psXmlW1cGoaT87Tk5pNg8T
+	jzo
+X-Google-Smtp-Source: AGHT+IFQdwMnwbIyaAZ09s2AcuDIc3ln2beikKLvPXoaLdoe4d+jYtLW2a8X7J1WM977sGr1YJ8SNA==
+X-Received: by 2002:ac8:5846:0:b0:4ed:213c:1582 with SMTP id d75a77b69052e-4ee588194e0mr19087991cf.7.1763705169906;
+        Thu, 20 Nov 2025 22:06:09 -0800 (PST)
+Received: from localhost.localdomain (modemcable125.110-19-135.mc.videotron.ca. [135.19.110.125])
+        by smtp.gmail.com with ESMTPSA id d75a77b69052e-4ee48d6aab4sm30245831cf.15.2025.11.20.22.06.08
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 20 Nov 2025 22:06:08 -0800 (PST)
+From: Jonathan Marek <jonathan@marek.ca>
+To: linux-arm-msm@vger.kernel.org
+Cc: Srinivas Kandagatla <srini@kernel.org>,
+	Liam Girdwood <lgirdwood@gmail.com>,
+	Mark Brown <broonie@kernel.org>,
+	Jaroslav Kysela <perex@perex.cz>,
+	Takashi Iwai <tiwai@suse.com>,
+	linux-sound@vger.kernel.org (open list:QCOM AUDIO (ASoC) DRIVERS),
+	linux-kernel@vger.kernel.org (open list)
+Subject: [PATCH v2] ASoC: codecs: lpass-wsa-macro: add RX4/RX5/RX6/RX7/RX8
+Date: Fri, 21 Nov 2025 01:03:30 -0500
+Message-ID: <20251121060437.26704-1-jonathan@marek.ca>
+X-Mailer: git-send-email 2.51.0
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-MS-Exchange-MessageSentRepresentingType: 1
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: TYUPR06MB6099:EE_|KL1PR06MB6710:EE_
-X-MS-Office365-Filtering-Correlation-Id: 3a688eb9-d040-4d9f-3f83-08de28c3b614
-X-MS-Exchange-SLBlob-MailProps:
-	a+H6FLLcF3rgze9d9FGU1K9+vGKRAfgQURV+DDaV8ESDn5UT3UKppYR+0Dkw2lkRA9grYQNvS7snCv7t+QU8YjPA10tZOesc0eypjp9U24GVrYhV+tPkaTlmI7NXL9xUVi3AdEk48YZslvpED+IiYPIWVm0mvDorHow1F1JEHpiRIIquejBfvUx2NpyEQmPeCZUK4OpgWX1wytmkOX4tfOZk+k6AEm3LFkWwSR9vY6wZCYJwctHW6e40+1ueAqsI/efD2YAb6bxvUmTCtIuweSiQ6NYoEgEBWhzC1Egef5G2Bp+8kYlgji+PMheAe+yfukLQ+dBLkxoWU93laqS6puO1hitx6eftBGbl3eSPm6onYNzww5PZVTMwjK+kZdLCR96kO5QvJ/10KrWN5rlxii9D9G22KqgBHKFuXG/KxMVh/6hK6zpOEqaFMEg9Dr6DvnA5X11xq7MHqW/otmkyT58DE/hFEc31ulgZvvl/Hanv1YQTu3s0jzdf52WRYUkJ39S7+Kchzg+qIZ/1GtohHcWFTbFwuh5HyOGbL758NhQGDl4TBudJepL+VtWI4bycKqfw0SRMhxesoEY4rS05fe/IHoX05UQiI2q7noWTQ/KsfTbwDPUTiDyH4ls32SuNtE+ocFoRgd6tDuchJtCOIWcli7h7BUhZ2JoHfEedAtJxZIDr/k6FpF02Zvz0Yv7p82ttV+c+h+wdW043Hr/XpBPrv/44rdh7+mKK0TUS+77v76D71ogRsqA7jHkmqY7cVPRn38ESN/ZNRYsrajnnfMJmTd+WI3zPyZQsiaTwCuuvVjJ9otjk2iBGCRDGsgzn
-X-Microsoft-Antispam:
-	BCL:0;ARA:14566002|51005399006|461199028|19110799012|15080799012|8060799015|23021999003|41001999006|5062599005|5072599009|1602099012|40105399003|3412199025|4302099013|440099028|10035399007|1710799026;
-X-Microsoft-Antispam-Message-Info:
-	=?us-ascii?Q?ZO8GW+acHbrczRdORbVJH3hzkacXIHzCLRpxcdDX7dnBD3N4Ee9ljHhLCdi0?=
- =?us-ascii?Q?y9QkF5p4lpQKxz5Fp7YEmLs7ahtGFafzm6Y8Ntp2i2Z0zIujNuwso2clBX6+?=
- =?us-ascii?Q?IF8KCBQ9bbf7KIzzqMZ0x92w0g5jMtzsw1rPA6VXSf8+//OJuHS5SyQtrWGa?=
- =?us-ascii?Q?sGJ3Kn+pmdjxoXXt3xGRJYeB7+LelUqeJGz4a4bH78vlJE6TF4cN4gE0WPxg?=
- =?us-ascii?Q?PvU/raR5f/4Fzm9jIKDVGNKePL+Oq2DwK66KPWqouGBZSgnty2RgZb4OUICC?=
- =?us-ascii?Q?QEziezeShWgy83rn8pRwvuRjypN9BWmaxoCEznF2Mx8HzWFDNE3DSUu/03FU?=
- =?us-ascii?Q?RADqXO4NUSCwEHK8t/tM/5Q/CasfeAXfMqys+tKd3LmPJI1kqhwgt5N8V0r9?=
- =?us-ascii?Q?BsRkK8h7fUaEdBqVTIqMPDf9P5SuhSWDc04vUbp58YdZQ1jI+6YPT0yUMDn8?=
- =?us-ascii?Q?FDFFNR3jj18AajdiKf4S3Xhcw3jUIHWJOdQM+6cfTjYXaT7arJKHc45TnXNm?=
- =?us-ascii?Q?wSaoDkiookMiVULKTBubfdXrPTARvw95IvKvhJVRY1qZ/GXFBpVM5aIos5KH?=
- =?us-ascii?Q?L/FqK1W75euwRPQuVkjO3i377e4NkHSzEGUsrwWp+JDzoJMBSM5jFK9VzFwg?=
- =?us-ascii?Q?C34AXL+iZ78ufuwx2GtMRpy8uq53A4nf8jIO1idwU0hvpLBlqbyoN0z5AVR4?=
- =?us-ascii?Q?FGA4FNTIYiStsrpUHGN2dtZmaLsYKt5q07soq2E0GtRTSuSXGp4ypy+t+bpm?=
- =?us-ascii?Q?DzMmQ9vHLOthncz7SatKU6s8C65VptgNZLg5FcGotL1DRGqc0WOPz8eJE68a?=
- =?us-ascii?Q?3pJot+3MR6jTd9mdNnWFLO7BJmGvA0q0IsbyldxdPDjeuAJb8pe+f7kI6yZy?=
- =?us-ascii?Q?MLYSudLZbBYB3ZzmHaxlIrIJzbIKvCvsAmJU1bH8F8pEsvcV9c2fNhnikc1Z?=
- =?us-ascii?Q?04wf11eF5i+B/qC9ff1bdoaf/axfykWG9YRFNK4ANT68tc9n3Hf4UiRY2FHi?=
- =?us-ascii?Q?ZxRvZ4aOGld4ZAH42vp2gKuXsuncH4DCQgRpEQYb7Nnv+04YslbLmL1oBSGm?=
- =?us-ascii?Q?YVerMUV2FViTewhYRHcK4tRBaEjYFFUJ1VY8mYtMzRwgIGDdmoM4tE8yv/OP?=
- =?us-ascii?Q?3N8atav8W58GxtoLnO+4HBeN90MWdqIpA5ACSDtPRHjtoIbDdR2R+S3wvnqp?=
- =?us-ascii?Q?9VLMEcwxDly8ftEmf9Yte29HErsRN6ldtGWwTs12OQcQREVNJWvyIa4gLsCd?=
- =?us-ascii?Q?aRaNVI02d2adDsa7sP5w4OMOlN5B25KHAhzQzx3D1p9dfrQb6iyfFVztWRXH?=
- =?us-ascii?Q?fn+kegJDBmIALABmiZ/XzkQ9ah/Fr20d7XKIJH6Os9iYZXT+6P9/9Ic5kTKc?=
- =?us-ascii?Q?LZLwRPqa6Ajf5Pi6U+qKOd/LsUzyF2qZbx/d5ivU7c8dAcxMjQ=3D=3D?=
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?A/knN+E/Btn3MTED0pS0eLtLTWLpJK3YUsc3vf+kIdEHDs2qtwcZiBiX7JbS?=
- =?us-ascii?Q?UoDxSu8L9fwAaQHlZsilorWeKkeqv7uCkuhkIvFTA+YjkaGHWQCOTLpIvqbc?=
- =?us-ascii?Q?EhqT8HN3ZOG8akjvc7dZwDUJq/hFEe13tqGTt8ouZd/QD74mhu2ONMrvFzR5?=
- =?us-ascii?Q?fsj8CF6x6D45dtgOFcE4Z8cRonBixwfC13YL1A+JEdOE13zzdzg+mtxg+Y53?=
- =?us-ascii?Q?l+HL8GBFR/HwNmtCm2NDyNOOzd2EIT7XUASvZmoMoPrIZu1GIelJgULufvMz?=
- =?us-ascii?Q?qKQPg26cywLKQV6JwZDeeVQVnVEAxs/Kq8d57xO+qGWGNGWnIMuNUu+TWJsl?=
- =?us-ascii?Q?tpyqE3WE6yisn/LQntAedwPOxrrYNh8f3WERcAyoVaFZ69P/h3mZuW0AxR+U?=
- =?us-ascii?Q?iJkdm0DO2N5+W1gktozZbzCodED6MwSLFP6JitHaLXWqSZr3JSoDg9FX5hfR?=
- =?us-ascii?Q?ppgwiX67A9sp8LGpoKeQ5yt07RT7SfN4aH8ctLswDcKf0+4W+1qR3wFm7J4Q?=
- =?us-ascii?Q?Su6RTo/uvI3o+WUyxD4TtOsXwVsdKFkCqp1SgAKnYf/tyHE+JC3Zzbj8WS3u?=
- =?us-ascii?Q?RVMUT9ZwsAWi1JyXqbCbSWpg2BF5XZNm/oLpA/Cno9TRGFiM3OOABA6jexjy?=
- =?us-ascii?Q?m3qT/epxEu/fyEilD8+KMf8GXyM0ukAnUWV6+bcpXNJGtdCPi3kQB8Sajrpb?=
- =?us-ascii?Q?ehEQGMkpZ0iOQcyn7/aPlUWlcSsuTtmFQUSre2Rs5EHr6QBtGl4VnIBl4X3x?=
- =?us-ascii?Q?Lg3lWNjVusxh+d6rOp2HjKuwJAvb8kif3KiYYFHLwtEDLS6JzHUrqXQ+hjGy?=
- =?us-ascii?Q?mUTlWg6r/ycBM6XYYygPqQaqEV9s+WsRazPedKs1tCkSsHCbkgYXAJSjfDWe?=
- =?us-ascii?Q?HaIw9BA571g+pZdOph4uEFV0vQDCBjZUyJ4RcSG/wi3DW6t7oMOwMaci85s2?=
- =?us-ascii?Q?6zVnzJ1KWBNW96moqqwz4rvqXcgvJzrsV1UXvz01bJ20T2ts+8ETJqg7kM/n?=
- =?us-ascii?Q?3ldGgrmVcgIu83NN/8zUpCGfbrRAjHBYKM27w4W5CJ8R+uwrPM+F6at34BGY?=
- =?us-ascii?Q?KArFMh4t1CNxHTziHtDepmL81gQtHGFFjIIMKX/Ap85eXUXed0++YQpg7D1f?=
- =?us-ascii?Q?4SHwcE0hr6dYNrqsAQ+juqoAijR2AUiy+t8vd2TbxEPGtbY91mvdOEiQn7IT?=
- =?us-ascii?Q?v79iIdgt7gD6H/mf1yBlFwAWYnqx5E1lzEB9sQ=3D=3D?=
-X-OriginatorOrg: sct-15-20-8534-20-msonline-outlook-6a509.templateTenant
-X-MS-Exchange-CrossTenant-Network-Message-Id: 3a688eb9-d040-4d9f-3f83-08de28c3b614
-X-MS-Exchange-CrossTenant-AuthSource: TYUPR06MB6099.apcprd06.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 21 Nov 2025 06:03:37.9359
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
-X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg:
-	00000000-0000-0000-0000-000000000000
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: KL1PR06MB6710
+Content-Transfer-Encoding: 8bit
 
-Since DPU 5.x the vsync source TE setup is split between MDP TOP and
-INTF blocks.  Currently all code to setup vsync_source is only exectued
-if MDP TOP implements the setup_vsync_source() callback. However on
-DPU >= 8.x this callback is not implemented, making DPU driver skip all
-vsync setup. Move the INTF part out of this condition, letting DPU
-driver to setup TE vsync selection on all new DPU devices.
+This allows playback using the WSA_2CH AIF, which feeds RX4 and RX5 on both
+WSA and WSA2.
 
-Signed-off-by: Teguh Sobirin <teguh@sobir.in>
+RX6/RX7/RX8 can be tested with the regular WSA AIF (the 3rd intf is RX8,
+the 5th intf is RX6/7).
+
+Signed-off-by: Jonathan Marek <jonathan@marek.ca>
 ---
-Changes in v2:
-- Corrected commit message suggested by Dmitry Baryshkov.
-- Link to v1: https://lore.kernel.org/linux-arm-msm/TYUPR06MB6099CBBE5090DB12A2C187E3DDFDA@TYUPR06MB6099.apcprd06.prod.outlook.com/
----
- drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c | 22 +++++++++------------
- 1 file changed, 9 insertions(+), 13 deletions(-)
+v2: added RX6/RX7/RX8
+this depends on the other patches from the original series
 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-index d1cfe81a3373..f468d054f5bd 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-@@ -774,24 +774,20 @@ static void _dpu_encoder_update_vsync_source(struct dpu_encoder_virt *dpu_enc,
- 		return;
- 	}
+ sound/soc/codecs/lpass-wsa-macro.c | 96 +++++++++++++++++++++++++++++-
+ 1 file changed, 94 insertions(+), 2 deletions(-)
+
+diff --git a/sound/soc/codecs/lpass-wsa-macro.c b/sound/soc/codecs/lpass-wsa-macro.c
+index e2e78ff6dd54e..5d440a839e733 100644
+--- a/sound/soc/codecs/lpass-wsa-macro.c
++++ b/sound/soc/codecs/lpass-wsa-macro.c
+@@ -300,6 +300,11 @@ enum {
+ 	WSA_MACRO_RX_MIX,
+ 	WSA_MACRO_RX_MIX0 = WSA_MACRO_RX_MIX,
+ 	WSA_MACRO_RX_MIX1,
++	WSA_MACRO_RX4,
++	WSA_MACRO_RX5,
++	WSA_MACRO_RX6,
++	WSA_MACRO_RX7,
++	WSA_MACRO_RX8,
+ 	WSA_MACRO_RX_MAX,
+ };
  
-+	/* Set vsync source irrespective of mdp top support */
-+	vsync_cfg.vsync_source = disp_info->vsync_source;
+@@ -2228,6 +2233,16 @@ static const struct snd_kcontrol_new rx_mux[WSA_MACRO_RX_MAX] = {
+ 			  wsa_macro_rx_mux_get, wsa_macro_rx_mux_put),
+ 	SOC_DAPM_ENUM_EXT("WSA RX_MIX1 Mux", rx_mux_enum,
+ 			  wsa_macro_rx_mux_get, wsa_macro_rx_mux_put),
++	SOC_DAPM_ENUM_EXT("WSA RX4 Mux", rx_mux_enum,
++			  wsa_macro_rx_mux_get, wsa_macro_rx_mux_put),
++	SOC_DAPM_ENUM_EXT("WSA RX5 Mux", rx_mux_enum,
++			  wsa_macro_rx_mux_get, wsa_macro_rx_mux_put),
++	SOC_DAPM_ENUM_EXT("WSA RX6 Mux", rx_mux_enum,
++			  wsa_macro_rx_mux_get, wsa_macro_rx_mux_put),
++	SOC_DAPM_ENUM_EXT("WSA RX7 Mux", rx_mux_enum,
++			  wsa_macro_rx_mux_get, wsa_macro_rx_mux_put),
++	SOC_DAPM_ENUM_EXT("WSA RX8 Mux", rx_mux_enum,
++			  wsa_macro_rx_mux_get, wsa_macro_rx_mux_put),
+ };
+ 
+ static int wsa_macro_vi_feed_mixer_get(struct snd_kcontrol *kcontrol,
+@@ -2410,6 +2425,16 @@ static const struct snd_soc_dapm_widget wsa_macro_dapm_widgets_v2_5[] = {
+ 	SND_SOC_DAPM_MUX("WSA_RX1 INP1", SND_SOC_NOPM, 0, 0, &rx1_prim_inp1_mux_v2_5),
+ 	SND_SOC_DAPM_MUX("WSA_RX1 INP2", SND_SOC_NOPM, 0, 0, &rx1_prim_inp2_mux_v2_5),
+ 	SND_SOC_DAPM_MUX("WSA_RX1 MIX INP", SND_SOC_NOPM, 0, 0, &rx1_mix_mux_v2_5),
++	SND_SOC_DAPM_MIXER("WSA RX4", SND_SOC_NOPM, 0, 0, NULL, 0),
++	SND_SOC_DAPM_MIXER("WSA RX5", SND_SOC_NOPM, 0, 0, NULL, 0),
++	SND_SOC_DAPM_MIXER("WSA RX6", SND_SOC_NOPM, 0, 0, NULL, 0),
++	SND_SOC_DAPM_MIXER("WSA RX7", SND_SOC_NOPM, 0, 0, NULL, 0),
++	SND_SOC_DAPM_MIXER("WSA RX8", SND_SOC_NOPM, 0, 0, NULL, 0),
++	SND_SOC_DAPM_MUX("WSA RX4 MUX", SND_SOC_NOPM, WSA_MACRO_RX4, 0, &rx_mux[WSA_MACRO_RX4]),
++	SND_SOC_DAPM_MUX("WSA RX5 MUX", SND_SOC_NOPM, WSA_MACRO_RX5, 0, &rx_mux[WSA_MACRO_RX5]),
++	SND_SOC_DAPM_MUX("WSA RX6 MUX", SND_SOC_NOPM, WSA_MACRO_RX6, 0, &rx_mux[WSA_MACRO_RX6]),
++	SND_SOC_DAPM_MUX("WSA RX7 MUX", SND_SOC_NOPM, WSA_MACRO_RX7, 0, &rx_mux[WSA_MACRO_RX7]),
++	SND_SOC_DAPM_MUX("WSA RX8 MUX", SND_SOC_NOPM, WSA_MACRO_RX8, 0, &rx_mux[WSA_MACRO_RX8]),
+ };
+ 
+ static const struct snd_soc_dapm_route wsa_audio_map[] = {
+@@ -2529,6 +2554,64 @@ static const struct snd_soc_dapm_route wsa_audio_map[] = {
+ 	{"WSA_SPK2 OUT", NULL, "WSA_MCLK"},
+ };
+ 
++static const struct snd_soc_dapm_route wsa_audio_map_v2_5[] = {
++	{"WSA RX4 MUX", "AIF1_PB", "WSA AIF1 PB"},
++	{"WSA RX5 MUX", "AIF1_PB", "WSA AIF1 PB"},
++	{"WSA RX6 MUX", "AIF1_PB", "WSA AIF1 PB"},
++	{"WSA RX7 MUX", "AIF1_PB", "WSA AIF1 PB"},
++	{"WSA RX8 MUX", "AIF1_PB", "WSA AIF1 PB"},
++	{"WSA RX4 MUX", "AIF_MIX1_PB", "WSA AIF_MIX1 PB"},
++	{"WSA RX5 MUX", "AIF_MIX1_PB", "WSA AIF_MIX1 PB"},
++	{"WSA RX6 MUX", "AIF_MIX1_PB", "WSA AIF_MIX1 PB"},
++	{"WSA RX7 MUX", "AIF_MIX1_PB", "WSA AIF_MIX1 PB"},
++	{"WSA RX8 MUX", "AIF_MIX1_PB", "WSA AIF_MIX1 PB"},
++	{"WSA RX4", NULL, "WSA RX4 MUX"},
++	{"WSA RX5", NULL, "WSA RX5 MUX"},
++	{"WSA RX6", NULL, "WSA RX6 MUX"},
++	{"WSA RX7", NULL, "WSA RX7 MUX"},
++	{"WSA RX8", NULL, "WSA RX8 MUX"},
++	{"WSA_RX0 INP0", "RX4", "WSA RX4"},
++	{"WSA_RX0 INP0", "RX5", "WSA RX5"},
++	{"WSA_RX0 INP0", "RX6", "WSA RX6"},
++	{"WSA_RX0 INP0", "RX7", "WSA RX7"},
++	{"WSA_RX0 INP0", "RX8", "WSA RX8"},
++	{"WSA_RX0 INP1", "RX4", "WSA RX4"},
++	{"WSA_RX0 INP1", "RX5", "WSA RX5"},
++	{"WSA_RX0 INP1", "RX6", "WSA RX6"},
++	{"WSA_RX0 INP1", "RX7", "WSA RX7"},
++	{"WSA_RX0 INP1", "RX8", "WSA RX8"},
++	{"WSA_RX0 INP2", "RX4", "WSA RX4"},
++	{"WSA_RX0 INP2", "RX5", "WSA RX5"},
++	{"WSA_RX0 INP2", "RX6", "WSA RX6"},
++	{"WSA_RX0 INP2", "RX7", "WSA RX7"},
++	{"WSA_RX0 INP2", "RX8", "WSA RX8"},
++	{"WSA_RX0 MIX INP", "RX4", "WSA RX4"},
++	{"WSA_RX0 MIX INP", "RX5", "WSA RX5"},
++	{"WSA_RX0 MIX INP", "RX6", "WSA RX6"},
++	{"WSA_RX0 MIX INP", "RX7", "WSA RX7"},
++	{"WSA_RX0 MIX INP", "RX8", "WSA RX8"},
++	{"WSA_RX1 INP0", "RX4", "WSA RX4"},
++	{"WSA_RX1 INP0", "RX5", "WSA RX5"},
++	{"WSA_RX1 INP0", "RX6", "WSA RX6"},
++	{"WSA_RX1 INP0", "RX7", "WSA RX7"},
++	{"WSA_RX1 INP0", "RX8", "WSA RX8"},
++	{"WSA_RX1 INP1", "RX4", "WSA RX4"},
++	{"WSA_RX1 INP1", "RX5", "WSA RX5"},
++	{"WSA_RX1 INP1", "RX6", "WSA RX6"},
++	{"WSA_RX1 INP1", "RX7", "WSA RX7"},
++	{"WSA_RX1 INP1", "RX8", "WSA RX8"},
++	{"WSA_RX1 INP2", "RX4", "WSA RX4"},
++	{"WSA_RX1 INP2", "RX5", "WSA RX5"},
++	{"WSA_RX1 INP2", "RX6", "WSA RX6"},
++	{"WSA_RX1 INP2", "RX7", "WSA RX7"},
++	{"WSA_RX1 INP2", "RX8", "WSA RX8"},
++	{"WSA_RX1 MIX INP", "RX4", "WSA RX4"},
++	{"WSA_RX1 MIX INP", "RX5", "WSA RX5"},
++	{"WSA_RX1 MIX INP", "RX6", "WSA RX6"},
++	{"WSA_RX1 MIX INP", "RX7", "WSA RX7"},
++	{"WSA_RX1 MIX INP", "RX8", "WSA RX8"},
++};
 +
- 	if (hw_mdptop->ops.setup_vsync_source) {
- 		for (i = 0; i < dpu_enc->num_phys_encs; i++)
- 			vsync_cfg.ppnumber[i] = dpu_enc->hw_pp[i]->idx;
-+	}
+ static int wsa_swrm_clock(struct wsa_macro *wsa, bool enable)
+ {
+ 	struct regmap *regmap = wsa->regmap;
+@@ -2562,7 +2645,9 @@ static int wsa_macro_component_probe(struct snd_soc_component *comp)
+ 	struct snd_soc_dapm_context *dapm = snd_soc_component_get_dapm(comp);
+ 	struct wsa_macro *wsa = snd_soc_component_get_drvdata(comp);
+ 	const struct snd_soc_dapm_widget *widgets;
+-	unsigned int num_widgets;
++	const struct snd_soc_dapm_route *routes;
++	unsigned int num_widgets, num_routes;
++	int ret;
  
--		vsync_cfg.pp_count = dpu_enc->num_phys_encs;
--		vsync_cfg.frame_rate = drm_mode_vrefresh(&dpu_enc->base.crtc->state->adjusted_mode);
--
--		vsync_cfg.vsync_source = disp_info->vsync_source;
--
--		hw_mdptop->ops.setup_vsync_source(hw_mdptop, &vsync_cfg);
--
--		for (i = 0; i < dpu_enc->num_phys_encs; i++) {
--			phys_enc = dpu_enc->phys_encs[i];
-+	for (i = 0; i < dpu_enc->num_phys_encs; i++) {
-+		phys_enc = dpu_enc->phys_encs[i];
+ 	snd_soc_component_init_regmap(comp, wsa->regmap);
  
--			if (phys_enc->has_intf_te && phys_enc->hw_intf->ops.vsync_sel)
--				phys_enc->hw_intf->ops.vsync_sel(phys_enc->hw_intf,
--						vsync_cfg.vsync_source);
--		}
-+		if (phys_enc->has_intf_te && phys_enc->hw_intf->ops.vsync_sel)
-+			phys_enc->hw_intf->ops.vsync_sel(phys_enc->hw_intf,
-+					vsync_cfg.vsync_source);
+@@ -2587,6 +2672,7 @@ static int wsa_macro_component_probe(struct snd_soc_component *comp)
+ 	case LPASS_CODEC_VERSION_2_1:
+ 		widgets = wsa_macro_dapm_widgets_v2_1;
+ 		num_widgets = ARRAY_SIZE(wsa_macro_dapm_widgets_v2_1);
++		num_routes = 0;
+ 		break;
+ 	case LPASS_CODEC_VERSION_2_5:
+ 	case LPASS_CODEC_VERSION_2_6:
+@@ -2595,12 +2681,18 @@ static int wsa_macro_component_probe(struct snd_soc_component *comp)
+ 	case LPASS_CODEC_VERSION_2_9:
+ 		widgets = wsa_macro_dapm_widgets_v2_5;
+ 		num_widgets = ARRAY_SIZE(wsa_macro_dapm_widgets_v2_5);
++		routes = wsa_audio_map_v2_5;
++		num_routes = ARRAY_SIZE(wsa_audio_map_v2_5);
+ 		break;
+ 	default:
+ 		return -EINVAL;
  	}
+ 
+-	return snd_soc_dapm_new_controls(dapm, widgets, num_widgets);
++	ret = snd_soc_dapm_new_controls(dapm, widgets, num_widgets);
++	if (ret)
++		return ret;
++
++	return snd_soc_dapm_add_routes(dapm, routes, num_routes);
  }
  
+ static int swclk_gate_enable(struct clk_hw *hw)
 -- 
-2.34.1
+2.51.0
 
 
