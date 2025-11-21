@@ -1,232 +1,351 @@
-Return-Path: <linux-arm-msm+bounces-82775-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-82776-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [142.0.200.124])
-	by mail.lfdr.de (Postfix) with ESMTPS id 27514C77AF8
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Nov 2025 08:24:29 +0100 (CET)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id A0501C77C1C
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Nov 2025 08:50:29 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 12DCF4E159C
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Nov 2025 07:24:28 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTPS id 51C612B869
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Nov 2025 07:50:28 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 528F732FA2B;
-	Fri, 21 Nov 2025 07:24:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D1F22338904;
+	Fri, 21 Nov 2025 07:50:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="BdCQa8aS"
+	dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b="AaGLNKZi"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.8])
+Received: from smtpout-04.galae.net (smtpout-04.galae.net [185.171.202.116])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB35422D7B6;
-	Fri, 21 Nov 2025 07:24:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=192.198.163.8
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763709863; cv=fail; b=lCVELigIEAP7A37HUMQttRTORv+WBdcT1cq0e1tcMjTg69x9/CWl1NRCh+ei27eLU8POAvHpyEdtf8tk2i7PuqjDDc1B5AFGf+l+8Lz0KEGt3P7QgxUnl79ZV5dJ5fytfGbu/FXqmdAPW5Kt164Q8+B2jPCMgAvycByAoVxgowM=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763709863; c=relaxed/simple;
-	bh=i1nfHxSl3r/S7W+N07RVJxnT8ED7aavTgmBN3Z/rt8w=;
-	h=From:To:CC:Subject:Date:Message-ID:References:In-Reply-To:
-	 Content-Type:MIME-Version; b=JFZkFb7wGCNKMhe8x/BYtnw5zFShHJIC0zEyqHmzt6w+RHexGj/LZgTxov6XQMVvNitqL5kQt5jgIfuHfEmlhgPOLijmgGFJl68BCfvtpZkvF+00UHel2/hafx8j/2OpoU0X/88ofH+2JJ77XHm301fXTpP0wP5Ue2r10Tb0+DI=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=BdCQa8aS; arc=fail smtp.client-ip=192.198.163.8
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1763709861; x=1795245861;
-  h=from:to:cc:subject:date:message-id:references:
-   in-reply-to:content-transfer-encoding:mime-version;
-  bh=i1nfHxSl3r/S7W+N07RVJxnT8ED7aavTgmBN3Z/rt8w=;
-  b=BdCQa8aSsoqA2GhIClHxXeCp9Hs1XXiwA1opL6WwtI6yra1PfovFE3+Z
-   LkGB7GI+FQNlOaAbGAd+ve/BvvTRIUvOcq6Mx9zV4e2NrvQnPEFuLYv8i
-   aKdkW5J0EAghaMDRKJc0PIvPKMawatIDyDevuPB0TROOQMGBpbxO0GLTi
-   mazsDPy7vioBCMr5PO2bKq4s2Tz+DC9543itB4BvYpiR+KoKp969e8ax1
-   Z5I6jTW6/Y+/ENr0FOS+XYh6BQ7p0UUNxeacimipWCzpTV125ZstQVErj
-   +AACLy2+Q1Dwk4130ab/DoKnRmzZTxDjjudpDXOzHKtFJO3VQNzps4U7H
-   Q==;
-X-CSE-ConnectionGUID: +6vEZf0sSeuoZ+BawvbzcA==
-X-CSE-MsgGUID: p/9eOFHpRCWPl56sNxEe2w==
-X-IronPort-AV: E=McAfee;i="6800,10657,11619"; a="83420838"
-X-IronPort-AV: E=Sophos;i="6.20,215,1758610800"; 
-   d="scan'208";a="83420838"
-Received: from orviesa003.jf.intel.com ([10.64.159.143])
-  by fmvoesa102.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 20 Nov 2025 23:24:21 -0800
-X-CSE-ConnectionGUID: 5crExYjnQDKv+o1OH9z0YQ==
-X-CSE-MsgGUID: CcWH2rqWQ1GKTB7dr27Kgg==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.20,215,1758610800"; 
-   d="scan'208";a="195788697"
-Received: from fmsmsx902.amr.corp.intel.com ([10.18.126.91])
-  by orviesa003.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 20 Nov 2025 23:24:20 -0800
-Received: from FMSMSX901.amr.corp.intel.com (10.18.126.90) by
- fmsmsx902.amr.corp.intel.com (10.18.126.91) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.27; Thu, 20 Nov 2025 23:24:19 -0800
-Received: from fmsedg903.ED.cps.intel.com (10.1.192.145) by
- FMSMSX901.amr.corp.intel.com (10.18.126.90) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.27 via Frontend Transport; Thu, 20 Nov 2025 23:24:19 -0800
-Received: from SJ2PR03CU001.outbound.protection.outlook.com (52.101.43.68) by
- edgegateway.intel.com (192.55.55.83) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.27; Thu, 20 Nov 2025 23:24:19 -0800
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=bppcHFknLpGM9y9zdqgE7Brthvko7om4tbUDnV8UeRTf0X/PtTOfp3n8qJCB9vYVVfmAkyv7zvFzwyqxBoOuzLfQwumyo35BKD25scEDnn218wVUs1+eaZ6lCr4UnUsKnONueN7TUkCkyIPUYF9ekJOYYl1DaHCkhItJ8Db1Z9YenHld0Bv0Hy7jjUks84RqN2ooG9IXSMcMEZuqwlkN76mlQxN95Erh4MjoyRo5yQ8fsRREWxG6uqS95x0TJHwnKkDyOHnk1tRBs5RRa4M6WNFtW7Z60JKyWXCmC7tXmtaq1utm0nD9ILtrGTVUPdJ4qtEowl03OmN4NKtNP61vTw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=i1nfHxSl3r/S7W+N07RVJxnT8ED7aavTgmBN3Z/rt8w=;
- b=r45AWs9vv/6iDzG5tgWJpzE3Puk+Ppr8OhWbFmC9qUJhRfuX8SY2NjK3xSWvbH2496Shu//aBkcJ8LHqQmk9CpWkC280FbzIchuAb1h3BuIB5rV3YKQYyq5HQNcAaq1DqHyRsnHt4qwUmXP2BX56MgBBizkKvQt4qE0QvqCSugzH38yOwGGp+OLX+F8B6NaGcXnupzaSTzQyWwZGZzLqAQiZeXx+/wfOIku/OWgUSf0NHeEQyDahn2vS7JWSMOD21tiKu6GXnTEHQMgWP6sz6pK4cu7Ts8eJla84x1YQ4WkKOLWj0dNj8RcV5jvVXV7ExavU/wfLnp4xEooz4TnsCQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
- dkim=pass header.d=intel.com; arc=none
-Received: from BN9PR11MB5276.namprd11.prod.outlook.com (2603:10b6:408:135::18)
- by SA1PR11MB6822.namprd11.prod.outlook.com (2603:10b6:806:29f::8) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9343.10; Fri, 21 Nov
- 2025 07:24:15 +0000
-Received: from BN9PR11MB5276.namprd11.prod.outlook.com
- ([fe80::b576:d3bd:c8e0:4bc1]) by BN9PR11MB5276.namprd11.prod.outlook.com
- ([fe80::b576:d3bd:c8e0:4bc1%5]) with mapi id 15.20.9343.011; Fri, 21 Nov 2025
- 07:24:15 +0000
-From: "Tian, Kevin" <kevin.tian@intel.com>
-To: Jason Gunthorpe <jgg@nvidia.com>, AngeloGioacchino Del Regno
-	<angelogioacchino.delregno@collabora.com>, Christian Benvenuti
-	<benve@cisco.com>, Heiko Stuebner <heiko@sntech.de>, "iommu@lists.linux.dev"
-	<iommu@lists.linux.dev>, Jernej Skrabec <jernej.skrabec@gmail.com>, "Joerg
- Roedel" <joro@8bytes.org>, Leon Romanovsky <leon@kernel.org>,
-	"linux-arm-kernel@lists.infradead.org"
-	<linux-arm-kernel@lists.infradead.org>, "linux-arm-msm@vger.kernel.org"
-	<linux-arm-msm@vger.kernel.org>, "linux-mediatek@lists.infradead.org"
-	<linux-mediatek@lists.infradead.org>, "linux-rdma@vger.kernel.org"
-	<linux-rdma@vger.kernel.org>, "linux-rockchip@lists.infradead.org"
-	<linux-rockchip@lists.infradead.org>, "linux-sunxi@lists.linux.dev"
-	<linux-sunxi@lists.linux.dev>, Matthias Brugger <matthias.bgg@gmail.com>,
-	Nelson Escobar <neescoba@cisco.com>, Rob Clark
-	<robin.clark@oss.qualcomm.com>, Robin Murphy <robin.murphy@arm.com>, "Samuel
- Holland" <samuel@sholland.org>, Suravee Suthikulpanit
-	<suravee.suthikulpanit@amd.com>, Chen-Yu Tsai <wens@csie.org>, Will Deacon
-	<will@kernel.org>, Yong Wu <yong.wu@mediatek.com>
-CC: Lu Baolu <baolu.lu@linux.intel.com>, "patches@lists.linux.dev"
-	<patches@lists.linux.dev>, Vasant Hegde <vasant.hegde@amd.com>
-Subject: RE: [PATCH v3 2/3] iommu/amd: Don't call report_iommu_fault()
-Thread-Topic: [PATCH v3 2/3] iommu/amd: Don't call report_iommu_fault()
-Thread-Index: AQHcWlZpt+W/iQ8GL0OIi49xXzUHj7T8uvVw
-Date: Fri, 21 Nov 2025 07:24:15 +0000
-Message-ID: <BN9PR11MB5276F59FE864DB7E6AE685C38CD5A@BN9PR11MB5276.namprd11.prod.outlook.com>
-References: <0-v3-e5d08e2d551e+109-iommu_set_fault_jgg@nvidia.com>
- <2-v3-e5d08e2d551e+109-iommu_set_fault_jgg@nvidia.com>
-In-Reply-To: <2-v3-e5d08e2d551e+109-iommu_set_fault_jgg@nvidia.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach:
-X-MS-TNEF-Correlator:
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=intel.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: BN9PR11MB5276:EE_|SA1PR11MB6822:EE_
-x-ms-office365-filtering-correlation-id: 92673248-67a5-4fdc-e869-08de28cefa1c
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;ARA:13230040|366016|1800799024|7416014|376014|38070700021|921020;
-x-microsoft-antispam-message-info: =?us-ascii?Q?f8mMtiXTu3wkirVI1mGotjQ102jTiYs9Jv8G30iGJMrMnkvoElru3q2bACki?=
- =?us-ascii?Q?eXbuWwqhmvJD/3S4dlgb/u9lkb3KnmrIzhKL07eXCmDa5LsFyHDxpCINIHZs?=
- =?us-ascii?Q?4OXHxjaIqAl3I3lDN0HkNbkZzGBgcrRj0Pxjh/LYAxbb+VlAEH9BhpVynfoc?=
- =?us-ascii?Q?d6ln5bFFUJ9PptBXldWE24RtpAOHADML9jh73L2LiB4UKS81eEwIhlJc+hgX?=
- =?us-ascii?Q?RcVZj9iWZfCRktEMTTwUCDZmLJKSA8oXydZpIYze+w+zEbEG3S5bnfFXbitE?=
- =?us-ascii?Q?v2A9ebeYhshrGES43bQW5GX0iJp+BPfw+96FXBAQ9J76AdcOPYdtBOBs5Nrg?=
- =?us-ascii?Q?WtSnaq3iwzm2AIZqjCeWni59qO0OlqXXbDZci8HpY11xt92varlNIa8z9mY+?=
- =?us-ascii?Q?r2+z5A4M+fbAiqY9RX9575qju5Xt3T3SwZdjC1+9P7VyXct+T4SLw2on3nYB?=
- =?us-ascii?Q?wQUbpo1+JF9zT2VCxZOA8KUH7Y3AeM2H9+2guhjH7i8kVJaRShI8dIwElUTJ?=
- =?us-ascii?Q?y0UgECQw9h9DZb6Bq35jJ4t8TpbNKbTlfNHNpQ6wrK6QpBM4DRtixKyZU7mZ?=
- =?us-ascii?Q?9Ala4lhhyOxtohvEJSQfUNg4YufawGkonA0FIKqaKB9QC4xgCh6arEKR9rkx?=
- =?us-ascii?Q?F+MDMix5iJMROTSuMC6VemQqvVA3pWb1gzpKpJoItI8Ue+T3m8bIDGvumHzy?=
- =?us-ascii?Q?0qEyUEy57OA5/QzwqF7bg4mI9HSTYOjY2pR0UyA0bpzXhCK1tW2NFYe1TrWL?=
- =?us-ascii?Q?FvA2MEtJOW2oZPAoZiK7WaqthTj3/CxwMZoXwOt2RomqM+tP46SWRuZ4AYE2?=
- =?us-ascii?Q?hXRfaKLc4TWo/vrRvcN96mwOPHki2Phgm28qDF+J5tRrDQhMluFnIy2nKqzc?=
- =?us-ascii?Q?MdA5NgYF47cxyE/T+Hb1VsTG72veqf9HH1j9QaRvcFTqQcGUmZiJ7IHT29wC?=
- =?us-ascii?Q?BMYoQx704zKQIf3SmUoTAODGHMxzzZO4qQBZzoL9xF/BpIAwlKD24e/yzgZ2?=
- =?us-ascii?Q?QgO1VQYeQ9wBc8n3OWBW7HHGEr/kPcmAcnK6jMvBb48nKW1M23s3uvnQnhNB?=
- =?us-ascii?Q?9Pxi1rHqhwkIAt1SavFrRa8Eg6JThCKW+dagjumICmw8Lq+a1L7U3l5xKBp+?=
- =?us-ascii?Q?ybG8l1uVnct61iLimqeSKZE/ltTTbIBbNwUiyR/662UBe7KyFelf3p9kK0NK?=
- =?us-ascii?Q?FKuAMViiwNfpRX25WsVV0/jl1pfKJqEBiMG99WHwd6WHs99kFvghaLh/CsBL?=
- =?us-ascii?Q?XbpIimfdk0YuINTiAxI33/vi1kKpG4gcIl7I17463zU+KbdPhwzNGVuW6qyx?=
- =?us-ascii?Q?keqxvE9/CxtMCCi2ItoefE9ylz4moPqmuQ0XwZWFDmvHtsslfScQgl2FWE1B?=
- =?us-ascii?Q?qsBEE9Wi4OzIfzHsB7z1dcmaDaN+EuilZ71Gw458mIwGRe+lkZIiVlFISfCl?=
- =?us-ascii?Q?FwZLdj6ki3k9aF7m4tGyU19BjGa7ht1MvYy8PGjKm0giI/09zkJWbd3p6hZd?=
- =?us-ascii?Q?LYS5ljOQuNXg8TiPBSak3rQSNhXZXPvD6Tbr9Y+7yr2hb7koYSA1DqHPDw?=
- =?us-ascii?Q?=3D=3D?=
-x-forefront-antispam-report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:BN9PR11MB5276.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(1800799024)(7416014)(376014)(38070700021)(921020);DIR:OUT;SFP:1101;
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?us-ascii?Q?LZz99LWzvZL/N2eqxQ/QfbF/RyJhWXeH+j2sbb2TJiMYe3S19pCbpse3vQDC?=
- =?us-ascii?Q?gpvsxSTeqznEV6FW/iz4jZeEd2PhoDSirWjJQ7088xUstuedOqF2BwOfut3B?=
- =?us-ascii?Q?BHRRtOf5ovkXB2IHPw6sid0X2q3O0iKnyEVW6f1M1bWp9mT6eN2Ky5sGtVjI?=
- =?us-ascii?Q?eNxror5C8WYiSMqDEyHlwcvI6ozx+ucMak8riKRI2GdcqbFU1gB300nO5V2/?=
- =?us-ascii?Q?rmKm4dLB3MzdqiBAODy6ZXJ+rPw4FwuWZY/MONFO5DUNCQFgsG8XYaCYuy2u?=
- =?us-ascii?Q?7yLuNYpf1SiGUh+5hvh6HWWNJf1v4vb9lzt94TcgJAfm4wRCnSMJRTNTYS+b?=
- =?us-ascii?Q?+IFF3wAPMzpB9q994jg1EKOLZwXII0CX7yoVLrA5sTPzNLsFXciF0DnvyfR2?=
- =?us-ascii?Q?mdul0/gF5Smg67lenGfWDf/wQ9NPVBH/Onxod6xZq/jVIcSPkmh4+1QLBbah?=
- =?us-ascii?Q?8jYhXx7x2N/FqLwLQsr9AlEz9M/81ofUqo0jUOkSwoJMcLU5DTVhN2VxZU5a?=
- =?us-ascii?Q?EArBkXLhrsIjAhju9Sk/Co9teWBlx+HAaQY4JEORDmrbl0+kmLlkqQaBmzcY?=
- =?us-ascii?Q?2+ugqjvifPE0rsq9zPyUPdqAXfj5puQsIqTuOl4Ge4c3SnB9HPCu+3AdWtRt?=
- =?us-ascii?Q?HwS0vB3gFrGsIRjPc5KswLhDJ+VAaps/Qa3s1dGxmM75YCWGgJdvuwWw+86O?=
- =?us-ascii?Q?s1VSrPSk+HtDdzmgfqnaf5Oi79cbXT8WHiqpSw62kKJ/vZjbMRloMY7qttxl?=
- =?us-ascii?Q?mbBkgH2wIoGZZVIjAxx+Ti0xAb9KWfyMTS78SKr3Gi1xq27GVMWoo5frTyLJ?=
- =?us-ascii?Q?C1m82/L0Urxblf823dSJJZVMuIcND+6okIj5q3cZz541kMahwg1aQRIeRScE?=
- =?us-ascii?Q?ezYCflbIMLd6w55KgBUx3IRAjsA+343SeRxg+mety1PD194a7xTvIDJnmINh?=
- =?us-ascii?Q?kpD7kP4PNnaPbcHalBAz6AWsvXumJ8V/iUToeyhpH1bwdQpvLMDiI7t4Xm2z?=
- =?us-ascii?Q?35zso3rHWkXxNIY/00OWX8T8/q+MJitckqQBsU9JGAw0LNMU2dqIcYrgT9cc?=
- =?us-ascii?Q?nuzYvq1oiu1I7SoWKYlyA9Tf0WtYpvP02heYqMwQ4VmQu/Q7SryBwBxz5ECZ?=
- =?us-ascii?Q?s4+cU1kAdT4kEMt9OtJfug25qCodBe/PfHxbfW+ImuQmXxi/gh7q0IJzQLBS?=
- =?us-ascii?Q?ummFQ7ALXU8qW9vGMWNkq252dgPgLJlxqgwf+qlMUAil4mJLdcZ8nPomDRZ5?=
- =?us-ascii?Q?PfX6DIRwdHW1XeP7UZ3r7urMF8J4vfJlsGBvCgTuxmmfdDnvrkgRrn4ZGFQA?=
- =?us-ascii?Q?+FaeBVaZ1dQZOtIhkOrnNbGwgfmpeI3qLSWhYT17JvQfYUJhktsx/zdZDcHO?=
- =?us-ascii?Q?P6edGLquaTW2gJTUjIZmx+k6DJYGwd6/OsEQcccG+gKj2Rgrm2Xq+52A2JLp?=
- =?us-ascii?Q?JuospcaR2t4MDRg1+6uYYFV1Ptludsdo1ApfjgK0yI7uJR/TNVM/sgmS5ABx?=
- =?us-ascii?Q?T4UZ3lsWbslFd5zJqDhYae0/yNe2tlwOgy/JaZj8v/5g7PzBWQS+dVG0caFl?=
- =?us-ascii?Q?CJYvJpmLsiHGs57oa3yrr+6lFZUXpeSBHJsJHEiY?=
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A786C1C5D59;
+	Fri, 21 Nov 2025 07:50:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.171.202.116
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1763711423; cv=none; b=LxiiRnqK/ZmazccKhhUsywwvX+dOpP4oDI6OFIFcogr64I+P06zxg4l22YtsyvFAwoMXS5LSk51kCgcfNUs0tRmJRso7kw7wF9rtz27OpB9VgfcCDqwu93EwQgumsiMBvlXfw2ihaPiWio0utQFJhPeIIs87f08yEJLCLnFENrE=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1763711423; c=relaxed/simple;
+	bh=Ofd7ZYO+qzo/OWnYAKnoavnGqiDvpuJ+17HtYhWf1ws=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=k0oBmgK9XBGprwmzW37W0p85AD+GrBNORzA5ym+N7+M/uaKTXjL0qh5N3L1j5Oq7FHmzZIBkbKaDeusffb/nepHKTD3KaePzr7xiPyHYBAQmIhbQXU1mEYXJwjFeTwsLUNAUhwbGCGjT3IdnfxxFeIpw5x2S+iRUrWbOi4AFN7U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com; spf=pass smtp.mailfrom=bootlin.com; dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b=AaGLNKZi; arc=none smtp.client-ip=185.171.202.116
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bootlin.com
+Received: from smtpout-01.galae.net (smtpout-01.galae.net [212.83.139.233])
+	by smtpout-04.galae.net (Postfix) with ESMTPS id 4DADBC10198;
+	Fri, 21 Nov 2025 07:49:55 +0000 (UTC)
+Received: from mail.galae.net (mail.galae.net [212.83.136.155])
+	by smtpout-01.galae.net (Postfix) with ESMTPS id 97F3D60719;
+	Fri, 21 Nov 2025 07:50:17 +0000 (UTC)
+Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon) with ESMTPSA id 4FE2410371BD6;
+	Fri, 21 Nov 2025 08:50:06 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=dkim;
+	t=1763711416; h=from:subject:date:message-id:to:cc:mime-version:content-type:
+	 content-transfer-encoding:content-language:in-reply-to:references;
+	bh=UihALN939dWtBx8J7xdZLo4PIOkiBcQrrRl1xffnn3c=;
+	b=AaGLNKZiCp1ON4rV/8afRL2xarmo40rJz8YMUk9aiUIRKoKT0iB+QR1ab+7vKTp07CSiuH
+	AECYlbEX/pHr8aOlYFfHCVY3gc+xEK4fRvE71oP9i6HxyITtCL1WfAP1L58nLFMqu+iSYt
+	4pLeVrV4Ee0GdWy7GM/FoumkSienWOJo5YD0d575Pqpc/KJYk4S1A7RgBIBl2Ari/yEKjM
+	G1scsObnBmOmQBVErp7AU71RlXRcZD+MYVDM0Qm+OrFTX7oPmfhubfG4PBGJKhkAwBg+lv
+	OQyu2RnjlKH/XbO0KFO3DcwxUgxVqnp7auviUnHX5dPpHd0v+nsDOwb8WNpK6g==
+Message-ID: <73a3228a-6124-4d42-985d-aca0e572bb8f@bootlin.com>
+Date: Fri, 21 Nov 2025 08:50:06 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: BN9PR11MB5276.namprd11.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 92673248-67a5-4fdc-e869-08de28cefa1c
-X-MS-Exchange-CrossTenant-originalarrivaltime: 21 Nov 2025 07:24:15.7473
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 46c98d88-e344-4ed4-8496-4ed7712e255d
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: S++7zzImCOlgleIgrRTbh3UBWx+sLC7LBA1b5I0pkqlxaE2QOFgXrJKjWRxhH4aJXL3WF01U4750Wj++xVhkEw==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SA1PR11MB6822
-X-OriginatorOrg: intel.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH net-next v18 00/15] net: phy: Introduce PHY ports
+ representation
+To: davem@davemloft.net
+Cc: netdev@vger.kernel.org, linux-kernel@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org, thomas.petazzoni@bootlin.com,
+ Andrew Lunn <andrew@lunn.ch>, Jakub Kicinski <kuba@kernel.org>,
+ Eric Dumazet <edumazet@google.com>, Paolo Abeni <pabeni@redhat.com>,
+ Russell King <linux@armlinux.org.uk>, linux-arm-kernel@lists.infradead.org,
+ Christophe Leroy <christophe.leroy@csgroup.eu>,
+ Herve Codina <herve.codina@bootlin.com>,
+ Florian Fainelli <f.fainelli@gmail.com>,
+ Heiner Kallweit <hkallweit1@gmail.com>,
+ Vladimir Oltean <vladimir.oltean@nxp.com>,
+ =?UTF-8?Q?K=C3=B6ry_Maincent?= <kory.maincent@bootlin.com>,
+ =?UTF-8?Q?Marek_Beh=C3=BAn?= <kabel@kernel.org>,
+ Oleksij Rempel <o.rempel@pengutronix.de>,
+ =?UTF-8?Q?Nicol=C3=B2_Veronese?= <nicveronese@gmail.com>,
+ Simon Horman <horms@kernel.org>, mwojtas@chromium.org,
+ Antoine Tenart <atenart@kernel.org>, devicetree@vger.kernel.org,
+ Conor Dooley <conor+dt@kernel.org>, Krzysztof Kozlowski
+ <krzk+dt@kernel.org>, Rob Herring <robh@kernel.org>,
+ Romain Gantois <romain.gantois@bootlin.com>,
+ Daniel Golle <daniel@makrotopia.org>,
+ Dimitri Fedrau <dimitri.fedrau@liebherr.com>,
+ Tariq Toukan <tariqt@nvidia.com>
+References: <20251120205508.553909-1-maxime.chevallier@bootlin.com>
+From: Maxime Chevallier <maxime.chevallier@bootlin.com>
+Content-Language: en-US
+In-Reply-To: <20251120205508.553909-1-maxime.chevallier@bootlin.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Last-TLS-Session-Version: TLSv1.3
 
-> From: Jason Gunthorpe <jgg@nvidia.com>
-> Sent: Friday, November 21, 2025 3:46 AM
->=20
-> This old style API is only used by drivers/gpu/drm/msm,
-> drivers/remoteproc/omap_remoteproc.c, and
-> drivers/remoteproc/qcom_q6v5_adsp.c none are used on x86 HW.
->=20
-> Remove the dead code to discourage new users.
->=20
-> Also remove the domain =3D=3D NULL print because it was intended to prote=
-ct
-> against a NULL deref inside report_iommu_fault() which is no longer
-> possible.
->=20
-> Just always print the fault in the same format if it could get a dev_data=
-.
-> There is no value to be gained by also printing if the domain is NULL. In
-> today's kernel when the dev_data is populated the domain will be made
-> !NULL very quickly during iommu device probing.
->=20
-> Reviewed-by: Vasant Hegde <vasant.hegde@amd.com>
-> Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+Hi folks,
 
-Reviewed-by: Kevin Tian <kevin.tian@intel.com>
+On 20/11/2025 21:54, Maxime Chevallier wrote:
+> Hi everyone,
+> 
+> This is v18 of the phy_port work. This iteration adds a missing 'static'
+> keyword in the ethtool_link_medium_names compared to V17. 
+> 
+> Patches 2 and 3 lack PHY maintainers reviews.
+> 
+> This series conflicts with Tariq's 1.6Tbps (wow !) series :
+> 
+> https://lore.kernel.org/all/1763585297-1243980-1-git-send-email-tariqt@nvidia.com/
+
+It has been recently merged, I'll resend with a rebase on this works
+after the 24h cooldown.
+
+Any review is welcome in the meantime :)
+
+Thanks,
+
+Maxime
+
+> 
+> Thanks for everyone's patience and reviews on that work ! Now, the
+> usual blurb for the series description.
+> 
+> As a remainder, a few important notes :
+> 
+>  - This is only a first phase. It instantiates the port, and leverage
+>    that to make the MAC <-> PHY <-> SFP usecase simpler.
+> 
+>  - Next phase will deal with controlling the port state, as well as the
+>    netlink uAPI for that.
+> 
+>  - The end-goal is to enable support for complex port MUX. This
+>    preliminary work focuses on PHY-driven ports, but this will be
+>    extended to support muxing at the MII level (Multi-phy, or compo PHY
+>    + SFP as found on Turris Omnia for example).
+> 
+>  - The naming is definitely not set in stone. I named that "phy_port",
+>    but this may convey the false sense that this is phylib-specific.
+>    Even the word "port" is not that great, as it already has several
+>    different meanings in the net world (switch port, devlink port,
+>    etc.). I used the term "connector" in the binding.
+> 
+> A bit of history on that work :
+> 
+> The end goal that I personnaly want to achieve is :
+> 
+>             + PHY - RJ45
+>             | 
+>  MAC - MUX -+ PHY - RJ45
+> 
+> After many discussions here on netdev@, but also at netdevconf[1] and
+> LPC[2], there appears to be several analoguous designs that exist out
+> there.
+> 
+> [1] : https://netdevconf.info/0x17/sessions/talk/improving-multi-phy-and-multi-port-interfaces.html
+> [2] : https://lpc.events/event/18/contributions/1964/ (video isn't the
+> right one)
+> 
+> Take the MAchiatobin, it has 2 interfaces that looks like this :
+> 
+>  MAC - PHY -+ RJ45
+>             |
+> 	    + SFP - Whatever the module does
+> 
+> Now, looking at the Turris Omnia, we have :
+> 
+> 
+>  MAC - MUX -+ PHY - RJ45
+>             |
+> 	    + SFP - Whatever the module does
+> 
+> We can find more example of this kind of designs, the common part is
+> that we expose multiple front-facing media ports. This is what this
+> current work aims at supporting. As of right now, it does'nt add any
+> support for muxing, but this will come later on.
+> 
+> This first phase focuses on phy-driven ports only, but there are already
+> quite some challenges already. For one, we can't really autodetect how
+> many ports are sitting behind a PHY. That's why this series introduces a
+> new binding. Describing ports in DT should however be a last-resort
+> thing when we need to clear some ambiguity about the PHY media-side.
+> 
+> The only use-cases that we have today for multi-port PHYs are combo PHYs
+> that drive both a Copper port and an SFP (the Macchiatobin case). This
+> in itself is challenging and this series only addresses part of this
+> support, by registering a phy_port for the PHY <-> SFP connection. The
+> SFP module should in the end be considered as a port as well, but that's
+> not yet the case.
+> 
+> However, because now PHYs can register phy_ports for every media-side
+> interface they have, they can register the capabilities of their ports,
+> which allows making the PHY-driver SFP case much more generic.
+> 
+> Let me know what you think, I'm all in for discussions :)
+> 
+> Regards,
+> 
+> Changes in v18:
+>  - Added a missing 'static' when declaring the medium names.
+> 
+> Changes in v17:
+>  - Moved the medium names to patch 3
+>  - Moved some mediums helpers out of uapi, and the logic into
+>    net/ethtool/common.c instead of inline functions in headers
+>  - Added a MAINTAINERS entry
+>  - Aggregated reviews/tests
+>  - Rebased on net-next
+> 
+> Changes in v16:
+>  - From Andrew, relaxed the check on the number of pairs so that we only
+>    fail when baseT is missing pairs
+>  - Add a check for either 1, 2 or 4 pairs
+>  - Lots of typos (mostly lanes -> pairs)
+>  - Added Andrew's review tags (thanks again)
+>  - From Rob, added an "else" statement in the ethernet-connector binding
+>  - Changed the node name for ethernet connectors to be decimal
+> 
+> Changes in V15:
+>  - Update bindings, docs and code to use pairs instead of lanes
+>  - Make pairs only relevant for BaseT
+> 
+> Changes in V14:
+>  - Fixed kdoc
+>  - Use the sfp module_caps feature.
+> 
+> Changes in V13:
+>  - Added phy_caps support for interface selection
+>  - Aggregated tested-by tags
+> 
+> Changes in V12:
+>  - Moved some of phylink's internal helpers to phy_caps for reuse in
+>    phylib
+>  - Fixed SFP interface selection
+>  - Added Rob's review and changes in patch 6
+> 
+> Changes in V11:
+>  - The ti,fiber-mode property was deprecated in favor of the
+>    ethernet-connector binding
+>  - The .attach_port was split into an MDI and an MII version
+>  - I added the warning back in the AR8031 PHY driver
+>  - There is now an init-time check on the number of lanes associated to
+>    every linkmode, making sure the number of lanes is above or equal to
+>    the minimum required
+>  - Various typos were fixed all around
+>  - We no longer use sfp_select_interface() for SFP interface validation
+> 
+> Changes in V10:
+>  - Rebase on net-next
+>  - Fix a typo reported by Köry
+>  - Aggregate all reviews
+>  - Fix the conflict on the qcom driver
+> 
+> Changes in V9:
+>  - Removed maxItems and items from the connector binding
+>  - Fixed a typo in the binding
+> 
+> Changes in V8:
+>  - Added maxItems on the connector media binding
+>  - Made sure we parse a single medium
+>  - Added a missing bitwise macro
+> 
+> Changes in V7:
+>  - Move ethtool_medium_get_supported to phy_caps
+>  - support combo-ports, each with a given set of supported modes
+>  - Introduce the notion of 'not-described' ports
+> 
+> Changes in V6:
+> 
+>  - Fixed kdoc on patch 3
+>  - Addressed a missing port-ops registration for the Marvell 88x2222
+>    driver
+>  - Addressed a warning reported by Simon on the DP83822 when building
+>    without CONFIG_OF_MDIO
+> 
+> Changes in V5 :
+> 
+>  - renamed the bindings to use the term "connector" instead of "port"
+>  - Rebased, and fixed some issues reported on the 83822 driver
+>  - Use phy_caps
+> 
+> Changes in V4 :
+> 
+>  - Introduced a kernel doc
+>  - Reworked the mediums definitions in patch 2
+>  - QCA807x now uses the generic SFP support
+>  - Fixed some implementation bugs to build the support list based on the
+>    interfaces supported on a port
+> 
+> V17: https://lore.kernel.org/all/20251119195920.442860-1-maxime.chevallier@bootlin.com/
+> V16: https://lore.kernel.org/all/20251113081418.180557-2-maxime.chevallier@bootlin.com/
+> V15: https://lore.kernel.org/all/20251106094742.2104099-1-maxime.chevallier@bootlin.com/
+> V14: https://lore.kernel.org/netdev/20251013143146.364919-1-maxime.chevallier@bootlin.com/
+> V13: https://lore.kernel.org/netdev/20250921160419.333427-1-maxime.chevallier@bootlin.com/
+> V12: https://lore.kernel.org/netdev/20250909152617.119554-1-maxime.chevallier@bootlin.com/
+> V11: https://lore.kernel.org/netdev/20250814135832.174911-1-maxime.chevallier@bootlin.com/
+> V10: https://lore.kernel.org/netdev/20250722121623.609732-1-maxime.chevallier@bootlin.com/
+> V9: https://lore.kernel.org/netdev/20250717073020.154010-1-maxime.chevallier@bootlin.com/
+> V8: https://lore.kernel.org/netdev/20250710134533.596123-1-maxime.chevallier@bootlin.com/
+> v7: https://lore.kernel.org/netdev/20250630143315.250879-1-maxime.chevallier@bootlin.com/
+> V6: https://lore.kernel.org/netdev/20250507135331.76021-1-maxime.chevallier@bootlin.com/
+> V5: https://lore.kernel.org/netdev/20250425141511.182537-1-maxime.chevallier@bootlin.com/
+> V4: https://lore.kernel.org/netdev/20250213101606.1154014-1-maxime.chevallier@bootlin.com/
+> V3: https://lore.kernel.org/netdev/20250207223634.600218-1-maxime.chevallier@bootlin.com/
+> RFC V2: https://lore.kernel.org/netdev/20250122174252.82730-1-maxime.chevallier@bootlin.com/
+> RFC V1: https://lore.kernel.org/netdev/20241220201506.2791940-1-maxime.chevallier@bootlin.com/
+> 
+> Maxime
+> 
+> Maxime Chevallier (15):
+>   dt-bindings: net: Introduce the ethernet-connector description
+>   net: ethtool: Introduce ETHTOOL_LINK_MEDIUM_* values
+>   net: phy: Introduce PHY ports representation
+>   net: phy: dp83822: Add support for phy_port representation
+>   dt-bindings: net: dp83822: Deprecate ti,fiber-mode
+>   net: phy: Create a phy_port for PHY-driven SFPs
+>   net: phy: Introduce generic SFP handling for PHY drivers
+>   net: phy: marvell-88x2222: Support SFP through phy_port interface
+>   net: phy: marvell: Support SFP through phy_port interface
+>   net: phy: marvell10g: Support SFP through phy_port
+>   net: phy: at803x: Support SFP through phy_port interface
+>   net: phy: qca807x: Support SFP through phy_port interface
+>   net: phy: Only rely on phy_port for PHY-driven SFP
+>   net: phy: dp83822: Add SFP support through the phy_port interface
+>   Documentation: networking: Document the phy_port infrastructure
+> 
+>  .../bindings/net/ethernet-connector.yaml      |  57 +++
+>  .../devicetree/bindings/net/ethernet-phy.yaml |  18 +
+>  .../devicetree/bindings/net/ti,dp83822.yaml   |   9 +-
+>  Documentation/networking/index.rst            |   1 +
+>  Documentation/networking/phy-port.rst         | 111 ++++++
+>  MAINTAINERS                                   |  10 +
+>  drivers/net/phy/Makefile                      |   2 +-
+>  drivers/net/phy/dp83822.c                     |  78 ++--
+>  drivers/net/phy/marvell-88x2222.c             |  94 ++---
+>  drivers/net/phy/marvell.c                     |  92 ++---
+>  drivers/net/phy/marvell10g.c                  |  52 +--
+>  drivers/net/phy/phy-caps.h                    |   5 +
+>  drivers/net/phy/phy-core.c                    |   6 +
+>  drivers/net/phy/phy_caps.c                    |  65 ++++
+>  drivers/net/phy/phy_device.c                  | 337 +++++++++++++++++-
+>  drivers/net/phy/phy_port.c                    | 212 +++++++++++
+>  drivers/net/phy/qcom/at803x.c                 |  77 ++--
+>  drivers/net/phy/qcom/qca807x.c                |  72 ++--
+>  include/linux/ethtool.h                       |  36 +-
+>  include/linux/phy.h                           |  63 +++-
+>  include/linux/phy_port.h                      |  99 +++++
+>  net/ethtool/common.c                          | 279 +++++++++------
+>  22 files changed, 1394 insertions(+), 381 deletions(-)
+>  create mode 100644 Documentation/devicetree/bindings/net/ethernet-connector.yaml
+>  create mode 100644 Documentation/networking/phy-port.rst
+>  create mode 100644 drivers/net/phy/phy_port.c
+>  create mode 100644 include/linux/phy_port.h
+> 
+
 
