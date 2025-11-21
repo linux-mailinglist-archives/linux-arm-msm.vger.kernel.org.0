@@ -1,70 +1,133 @@
-Return-Path: <linux-arm-msm+bounces-82883-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-82884-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ams.mirrors.kernel.org (ams.mirrors.kernel.org [213.196.21.55])
-	by mail.lfdr.de (Postfix) with ESMTPS id 921F1C7AA2D
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Nov 2025 16:52:30 +0100 (CET)
+Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [IPv6:2605:f480:58:1:0:1994:3:14])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1854CC7AB73
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Nov 2025 17:08:14 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ams.mirrors.kernel.org (Postfix) with ESMTPS id E3989358925
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Nov 2025 15:48:13 +0000 (UTC)
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id ED8B94E14E8
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Nov 2025 16:08:12 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 63CC83451A3;
-	Fri, 21 Nov 2025 15:48:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1F2832DCC1B;
+	Fri, 21 Nov 2025 16:08:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="gArfeFEl"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="hIXXKixN";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="Z6zzIkR9"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16C9D34402B;
-	Fri, 21 Nov 2025 15:48:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A8AF280A5B
+	for <linux-arm-msm@vger.kernel.org>; Fri, 21 Nov 2025 16:08:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763740089; cv=none; b=SCtVRtBRgn+A7EGXpVX5sk1ixQoADjG/DUkBZzt+7WrXc1bdY6jlp1V2kiaNQXVSb1Ld3s/UMY685NWXQdfFp+YMASl2icsWhs3alAlyjl8iHDxVvudrSNO3g7J6snQyrzd+vmwixiCwVlpR2jHmleeBNBm2aOn2dueqmFcU4v8=
+	t=1763741291; cv=none; b=Ns9kO59epn7KCBxEQHa4LGDH8NJC7gSHDIkJ8L///cudQQpNZo8Hz9h5BTIM+5LCbEg0l3fsL9qLK4VWzc2D7KXU0Cw3Xvy0TXR74j6lN7fPXpHHAOkYt+bwVeCy8MQ/KofpNIeKuUbsvzXcGlBAzgZE1VtPtmeyb8wk4oTLcfY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763740089; c=relaxed/simple;
-	bh=LP19xB2HDi68fuNxVCCeUKCjpFYJR01O9e89Ljq/vBE=;
+	s=arc-20240116; t=1763741291; c=relaxed/simple;
+	bh=zTGCikSwl1HVduTQn/LyAeDLC8y2tPasfgfZ85I33ys=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=aOJAv5K9Q/HtqW2YELLzxKrw3G98GlK8tEC7XBFNxVtr0UJZx1sN7e/otcU2iEv+19OSHOwjMhjxVQKPo+uMP+mIObjGsVOBXrINsXele8FPM/AVLA+U2YsQgYQUWG3cQnDEHhsoJKszAoKFmTTj0Fwl4Pv/IZQNPeJ9ZjI3Fqg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=gArfeFEl; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58CF7C4CEF1;
-	Fri, 21 Nov 2025 15:48:04 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1763740084;
-	bh=LP19xB2HDi68fuNxVCCeUKCjpFYJR01O9e89Ljq/vBE=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=gArfeFEl7E2v8V9k8s2WjNhF4wZMdNkZzkWgc7KQY8OQ/FD5Hc+1k+raO/DlGaXWx
-	 /GceRDthNXPsCEH4F2NCAVsMsVJwHJP/PlMNkiMVfx39FlHwL1/ma3z734ELDG2Oyd
-	 LldNcvyOwLeV/boYVeOAYG6A4XF2fPqfz4loVZhgi7bS1Pk+ppALCIT326VJe04F44
-	 ZvSW+Z7e8o710Rg/3/P64GqV2ZzTp390cBoGs83UqrDC4gnWvhssHMfEDesVbRGZGz
-	 575P6s9ja9jrdFOmW3pQeHf7jHjtrLlcjw59AcxB/MsvNzwrbd22kf8IswCoJvDDwo
-	 5/qlR1iV7lZOw==
-Date: Fri, 21 Nov 2025 16:48:02 +0100
-From: Maxime Ripard <mripard@kernel.org>
-To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Cc: Andrzej Hajda <andrzej.hajda@intel.com>, 
-	Neil Armstrong <neil.armstrong@linaro.org>, Robert Foss <rfoss@kernel.org>, 
-	Laurent Pinchart <Laurent.pinchart@ideasonboard.com>, Jonas Karlman <jonas@kwiboo.se>, 
-	Jernej Skrabec <jernej.skrabec@gmail.com>, Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, 
-	Thomas Zimmermann <tzimmermann@suse.de>, David Airlie <airlied@gmail.com>, 
-	Simona Vetter <simona@ffwll.ch>, Sandy Huang <hjc@rock-chips.com>, 
-	Heiko =?utf-8?Q?St=C3=BCbner?= <heiko@sntech.de>, Andy Yan <andy.yan@rock-chips.com>, Chen-Yu Tsai <wens@csie.org>, 
-	Samuel Holland <samuel@sholland.org>, Dave Stevenson <dave.stevenson@raspberrypi.com>, 
-	=?utf-8?B?TWHDrXJh?= Canal <mcanal@igalia.com>, Raspberry Pi Kernel Maintenance <kernel-list@raspberrypi.com>, 
-	Liu Ying <victor.liu@nxp.com>, Rob Clark <robin.clark@oss.qualcomm.com>, 
-	Dmitry Baryshkov <lumag@kernel.org>, Abhinav Kumar <abhinav.kumar@linux.dev>, 
-	Jessica Zhang <jessica.zhang@oss.qualcomm.com>, Sean Paul <sean@poorly.run>, 
-	Marijn Suijten <marijn.suijten@somainline.org>, dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org, 
-	linux-arm-kernel@lists.infradead.org, linux-rockchip@lists.infradead.org, linux-sunxi@lists.linux.dev, 
-	linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org, 
-	Daniel Stone <daniels@collabora.com>
+	 Content-Type:Content-Disposition:In-Reply-To; b=L/s8qQfQepViiHe37kHyFe4qcMV14m3RR0KMrQmBeTQAVrNlyLgOehhNLuWA9Qf8w9nXANzheI5VBFjhSphxmgSNxum4vqxH8TnMxDWOWACUIvU1y3oIODTMyzRsU0xJw2jwnSlQhiIYd6OTGK8sfflxeOOMsbuY2J3dg4BCtVA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=hIXXKixN; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=Z6zzIkR9; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 5ALBxaLC3007419
+	for <linux-arm-msm@vger.kernel.org>; Fri, 21 Nov 2025 16:08:08 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-type:date:from:in-reply-to:message-id:mime-version
+	:references:subject:to; s=qcppdkim1; bh=Ufeoh7bUM/nJ4GaNvnQRw4cW
+	bujDEIpSOeuZ5ieZIV8=; b=hIXXKixNU13SiX+lrJVmgBdkops/RLgPt5jtIm4X
+	3ThhrPw9dH+49IIbUKhVU4Js8MKRhBc2fBU3eAoW80ztIiCFqJOo83GqCO47/vQb
+	RrSSCCNObh7mXJCtGW+ytCRWJk5bfoMUcP9iyVFBTpw3uKJPmoER9ELDoA+X66zM
+	NGJfo5NCYxOAUGtAaANZT7yEDz9ARwRWiwFKaHLToKMZjPk3pqQ2AvXBosWYSeQB
+	bIhATxwCxXvQUsgvLYSIWE7v1Y+AKFeOcZdwPAxmunfjq2cFVQsdVXUOPWoV1WLf
+	lKoOrYhjobYngek4mmU0vi4PpcLVf0MM2JCRThLtgWJETA==
+Received: from mail-vk1-f197.google.com (mail-vk1-f197.google.com [209.85.221.197])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4ajhkf22x7-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Fri, 21 Nov 2025 16:08:07 +0000 (GMT)
+Received: by mail-vk1-f197.google.com with SMTP id 71dfb90a1353d-55b2b3ef606so3788491e0c.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 21 Nov 2025 08:08:07 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=oss.qualcomm.com; s=google; t=1763741287; x=1764346087; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=Ufeoh7bUM/nJ4GaNvnQRw4cWbujDEIpSOeuZ5ieZIV8=;
+        b=Z6zzIkR9vCe2UbdkD+b9NwEVszkIJq7bfuXIQW8D2qjyGT1oqmXtH3rfU4O5OIsukG
+         9+/rPWHvTEJjweEqq+acdHTpAhhMZ1/N4mA0V99xrWMNpfUy60udijy8d26RFqlvBJaw
+         YOEHdTVkEtdvYv12Ihs7qWN++HnGNc2yXBz5xeUGDs2Qar8YSgJsTosjACclYFlLH9Bx
+         +CHinOVRwXrlXK4vEI/1IfaqSi4wjOmmjgmyqR1aXh2LFmAlYWbKDjDtBqw90M902eAb
+         UhkQ9T7tAucp43n3f3bD/0S2FOV/06Q7Jh2g7yL/M5Do/0iNbSRql1MhPztVy3LVDcz7
+         21ww==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1763741287; x=1764346087;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=Ufeoh7bUM/nJ4GaNvnQRw4cWbujDEIpSOeuZ5ieZIV8=;
+        b=ERzswZPLruwTSag5369OGqdhQ2XWBEpN2r8snsnhtUYWjEwUll3ciJg1wbkK12h6al
+         1LJNE2ZbUpt8wVasJ+m0L7lPAlZK3RtMa8fVTqB6l5RDOcXwvXzJZMQksgrDSTPuG8vm
+         lbJ8CCnIQNihXGbM8lqO73EmF5Q3ID0yTOj00quJlfrDFeaGQql3j1YuBxf7KlmKZR+r
+         me8WONVEj1xfs+AdzMMUpJXziZKvd+TI3GhLN/UJi3RjdbWhQM3kaTRpE5WjXxa1FZrG
+         YbuSbU9+x3U2Kg0r/PrSqnh46/elOsvZt5jjBvl0Smmo52/Et30w48hMyiT/feRekAOu
+         dQpQ==
+X-Forwarded-Encrypted: i=1; AJvYcCWz4hEMlRNBiaM+3mw3wBDKEA9yj8rQ6NYhOjVevYGBs266f8qi1323CDOK4DLHDNtgm6a4U2mrmKhcr+qr@vger.kernel.org
+X-Gm-Message-State: AOJu0YzlHgwElMRe4gdz0mdqwYp2kx8fSN1nOFTe5aNKh+lh50Pz5737
+	c6eG4bVa7miXYVt5SvsL7Gg61oD44Agn9du5P7FG7U6E/u5ux+y1hz5glo8SJpA+RjCMf9rNXBk
+	4zzITA3/8vD+mgsY0rI5wuOhAOx2k1W5SBotwjbdrFusLoNWQM/BaoU0bphlJv9D3dLsO
+X-Gm-Gg: ASbGncvPgc7ZDcKBiFnErmeFg5it5VgLOgK5lHxWw1ChV9BgLCvbm+trechxlyKbybB
+	+0hSzOAvshHdlMYawHzE1CzNLkvlN+41+Ho4kZDEDUG5DhI+iHZPdIIWnELobIPSB2A1bNrL/FR
+	tTzwz8l7gMA8aFTW1S9zlOH8ciB0Km5Fh2FCVzGduQ8WCsKwJ6apWVWTS7jCE1oAHb/O1fKpR8r
+	pT7ATWHozZhquCB40FNH/sOKHBRnUq4dgqv877Aa8m6Q+69cuwTNA2cZfUvW/XJpcRfZhTljjjJ
+	z7RNfzx7tzsBMAG8Jv8/GbZG7STjSBbKtKS8GvGeaR3+BPz7ysNIUypX8ElGMY4vhB1D+IWj6BO
+	P6xyQXgSwGONh98McSqg+BAZzcgHri9zMvxOoIPGgYXCrZJNw23P/mihBGz59puuLaRQ6mXlScY
+	JSDtCEVuto8v8TzrztB6UUW9w=
+X-Received: by 2002:a05:6122:2c07:b0:559:83e9:290 with SMTP id 71dfb90a1353d-55b81923b82mr2151500e0c.1.1763741287290;
+        Fri, 21 Nov 2025 08:08:07 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGVq7cAAt3X3C7SUO92wc6199AKDzCdd4I14oiTzCPYWOFGE06Zbz1JGXbXRXaOPE1XR2OH2Q==
+X-Received: by 2002:a05:6122:2c07:b0:559:83e9:290 with SMTP id 71dfb90a1353d-55b81923b82mr2151424e0c.1.1763741286683;
+        Fri, 21 Nov 2025 08:08:06 -0800 (PST)
+Received: from umbar.lan (2001-14ba-a0c3-3a00-264b-feff-fe8b-be8a.rev.dnainternet.fi. [2001:14ba:a0c3:3a00:264b:feff:fe8b:be8a])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-5969dbbeea7sm1718367e87.65.2025.11.21.08.08.05
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 21 Nov 2025 08:08:05 -0800 (PST)
+Date: Fri, 21 Nov 2025 18:08:03 +0200
+From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+To: Maxime Ripard <mripard@kernel.org>
+Cc: Andrzej Hajda <andrzej.hajda@intel.com>,
+        Neil Armstrong <neil.armstrong@linaro.org>,
+        Robert Foss <rfoss@kernel.org>,
+        Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
+        Jonas Karlman <jonas@kwiboo.se>,
+        Jernej Skrabec <jernej.skrabec@gmail.com>,
+        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+        Thomas Zimmermann <tzimmermann@suse.de>,
+        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+        Sandy Huang <hjc@rock-chips.com>,
+        Heiko =?utf-8?Q?St=C3=BCbner?= <heiko@sntech.de>,
+        Andy Yan <andy.yan@rock-chips.com>, Chen-Yu Tsai <wens@csie.org>,
+        Samuel Holland <samuel@sholland.org>,
+        Dave Stevenson <dave.stevenson@raspberrypi.com>,
+        =?utf-8?B?TWHDrXJh?= Canal <mcanal@igalia.com>,
+        Raspberry Pi Kernel Maintenance <kernel-list@raspberrypi.com>,
+        Liu Ying <victor.liu@nxp.com>,
+        Rob Clark <robin.clark@oss.qualcomm.com>,
+        Dmitry Baryshkov <lumag@kernel.org>,
+        Abhinav Kumar <abhinav.kumar@linux.dev>,
+        Jessica Zhang <jessica.zhang@oss.qualcomm.com>,
+        Sean Paul <sean@poorly.run>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org,
+        linux-rockchip@lists.infradead.org, linux-sunxi@lists.linux.dev,
+        linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
+        Daniel Stone <daniels@collabora.com>
 Subject: Re: [PATCH v4 01/10] drm/connector: let drivers declare infoframes
  as unsupported
-Message-ID: <eiaxss57hauegv64ek4ddi3ib5x4t4g4xwiqvuaj43b52wpctb@p63ewh6tqblk>
-References: <20250909-drm-limit-infoframes-v4-0-53fd0a65a4a2@oss.qualcomm.com>
- <20250909-drm-limit-infoframes-v4-1-53fd0a65a4a2@oss.qualcomm.com>
+Message-ID: <5qncx5sww7feugjmtkskvoussd376rgxtcx3fqqgmgatjrdamx@iio4gxk2ildp>
+References: <20250909-drm-limit-infoframes-v4-1-53fd0a65a4a2@oss.qualcomm.com>
  <20250910-furry-singing-axolotl-9aceac@houat>
  <z333ysst5ifakomo35jtbpydj44epqwwn4da76rcnsq4are62m@32gsmgx2pcdi>
  <20250925-didactic-spiked-lobster-fefabe@penduick>
@@ -73,188 +136,160 @@ References: <20250909-drm-limit-infoframes-v4-0-53fd0a65a4a2@oss.qualcomm.com>
  <54a06852-4897-4dae-ab9c-330d99f3bf42@oss.qualcomm.com>
  <5cc5l2dihgdbgnwyugelwrklpaiiy5yaczqllu4bi6asvlt354@kib3flskh34g>
  <ez6y7q4lgbwt7kpnlpausjpznckr3yyejrwtxm7o6qw6wlhqoj@6iypzdhfthzy>
+ <eiaxss57hauegv64ek4ddi3ib5x4t4g4xwiqvuaj43b52wpctb@p63ewh6tqblk>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha384;
-	protocol="application/pgp-signature"; boundary="vnfz4xpbantfwz3r"
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <ez6y7q4lgbwt7kpnlpausjpznckr3yyejrwtxm7o6qw6wlhqoj@6iypzdhfthzy>
+In-Reply-To: <eiaxss57hauegv64ek4ddi3ib5x4t4g4xwiqvuaj43b52wpctb@p63ewh6tqblk>
+X-Proofpoint-GUID: AuqWfmZqGb8rIVubvke9c-7zsLUY4uue
+X-Authority-Analysis: v=2.4 cv=ApPjHe9P c=1 sm=1 tr=0 ts=69208e68 cx=c_pps
+ a=JIY1xp/sjQ9K5JH4t62bdg==:117 a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10
+ a=6UeiqGixMTsA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=siajl1OzrqvGOPi-8wUA:9 a=CjuIK1q_8ugA:10 a=tNoRWFLymzeba-QzToBc:22
+X-Proofpoint-ORIG-GUID: AuqWfmZqGb8rIVubvke9c-7zsLUY4uue
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMTIxMDExOSBTYWx0ZWRfX8IJ734+cRiSe
+ EOlIHgLQI6zzDmRHlw5cnhdNRFrYxFmF9y4sU+ofGU1lZJGIBg21TDxZXkxyN6W94w5RA+8bDai
+ 4Tn3cOihkWfuF8EfnuQA18xK/RKvV2UbAXw6R2hoUuVKVB35Ab1N1bA2PuAg36OFc3Drdu8C14J
+ VNb5iBI9wNwZFU1T+pEwLsfDzEsiYCwRop7VsQxDEi9kPKehLZQt9QRVAkSx6c360pa3GFVK8xL
+ wpyGUWUhUlTpM1f3ZQKPqRhgJxEI5sivRTef84x66p2MjwUVNQxUMrbY+Q4XS3otYXzXTMbLyYs
+ u1u5QIeCcguBUbjO2yEEvldeyPii1wz+QmO96ZeRz3ytoNPh3FBII8xMDygl4mBjGsICYJW9g5z
+ 90JxoHFxNic8Dnnew5CuYRFVOLjpPA==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
+ definitions=2025-11-21_04,2025-11-21_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ spamscore=0 adultscore=0 priorityscore=1501 impostorscore=0 malwarescore=0
+ lowpriorityscore=0 suspectscore=0 bulkscore=0 phishscore=0 clxscore=1015
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2510240001 definitions=main-2511210119
 
+On Fri, Nov 21, 2025 at 04:48:02PM +0100, Maxime Ripard wrote:
+> On Tue, Oct 14, 2025 at 07:02:03PM +0300, Dmitry Baryshkov wrote:
+> > On Tue, Oct 14, 2025 at 02:43:58PM +0200, Maxime Ripard wrote:
+> > > On Fri, Oct 03, 2025 at 06:41:58PM +0300, Dmitry Baryshkov wrote:
+> > > > On 03/10/2025 17:23, Maxime Ripard wrote:
+> > > > > On Thu, Sep 25, 2025 at 05:55:06PM +0300, Dmitry Baryshkov wrote:
+> > > > > > > > As we will be getting more and more features, some of the InfoFrames
+> > > > > > > > or data packets will be 'good to have, but not required'.
+> > > > > > > 
+> > > > > > > And drivers would be free to ignore those.
+> > > > > > > 
+> > > > > > > > > So, no, sorry. That's still a no for me. Please stop sending that patch
+> > > > > > > > 
+> > > > > > > > Oops :-)
+> > > > > > > > 
+> > > > > > > > > unless we have a discussion about it and you convince me that it's
+> > > > > > > > > actually something that we'd need.
+> > > > > > > > 
+> > > > > > > > My main concern is that the drivers should not opt-out of the features.
+> > > > > > > > E.g. if we start supporting ISRC packets or MPEG or NTSC VBI InfoFrames
+> > > > > > > > (yes, stupid examples), it should not be required to go through all the
+> > > > > > > > drivers, making sure that they disable those. Instead the DRM framework
+> > > > > > > > should be able to make decisions like:
+> > > > > > > > 
+> > > > > > > > - The driver supports SPD and the VSDB defines SPD, enable this
+> > > > > > > >    InfoFrame (BTW, this needs to be done anyway, we should not be sending
+> > > > > > > >    SPD if it's not defined in VSDB, if I read it correctly).
+> > > > > > > > 
+> > > > > > > > - The driver hints that the pixel data has only 10 meaninful bits of
+> > > > > > > >    data per component (e.g. out of 12 for DeepColor 36), the Sink has
+> > > > > > > >    HF-VSDB, send HF-VSIF.
+> > > > > > > > 
+> > > > > > > > - The driver has enabled 3D stereo mode, but it doesn't declare support
+> > > > > > > >    for HF-VSIF. Send only H14b-VSIF.
+> > > > > > > > 
+> > > > > > > > Similarly (no, I don't have these on my TODO list, these are just
+> > > > > > > > examples):
+> > > > > > > > - The driver defines support for NTSC VBI, register a VBI device.
+> > > > > > > > 
+> > > > > > > > - The driver defines support for ISRC packets, register ISRC-related
+> > > > > > > >    properties.
+> > > > > > > > 
+> > > > > > > > - The driver defines support for MPEG Source InfoFrame, provide a way
+> > > > > > > >    for media players to report frame type and bit rate.
+> > > > > > > > 
+> > > > > > > > - The driver provides limited support for Extended HDR DM InfoFrames,
+> > > > > > > >    select the correct frame type according to driver capabilities.
+> > > > > > > > 
+> > > > > > > > Without the 'supported' information we should change atomic_check()
+> > > > > > > > functions to set infoframe->set to false for all unsupported InfoFrames
+> > > > > > > > _and_ go through all the drivers again each time we add support for a
+> > > > > > > > feature (e.g. after adding HF-VSIF support).
+> > > > > > > 
+> > > > > > >  From what you described here, I think we share a similar goal and have
+> > > > > > > somewhat similar concerns (thanks, btw, it wasn't obvious to me before),
+> > > > > > > we just disagree on the trade-offs and ideal solution :)
+> > > > > > > 
+> > > > > > > I agree that we need to sanity check the drivers, and I don't want to go
+> > > > > > > back to the situation we had before where drivers could just ignore
+> > > > > > > infoframes and take the easy way out.
+> > > > > > > 
+> > > > > > > It should be hard, and easy to catch during review.
+> > > > > > > 
+> > > > > > > I don't think bitflag are a solution because, to me, it kind of fails
+> > > > > > > both.
+> > > > > > > 
+> > > > > > > What if, just like the debugfs discussion, we split write_infoframe into
+> > > > > > > write_avi_infoframe (mandatory), write_spd_infoframe (optional),
+> > > > > > > write_audio_infoframe (checked by drm_connector_hdmi_audio_init?) and
+> > > > > > > write_hdr_infoframe (checked in drmm_connector_hdmi_init if max_bpc > 8)
+> > > > > > > 
+> > > > > > > How does that sound?
+> > > > > > 
+> > > > > > I'd say, I really like the single function to be called for writing the
+> > > > > > infoframes. It makes it much harder for drivers to misbehave or to skip
+> > > > > > something.
+> > > > > 
+> > > > >  From a driver PoV, I believe we should still have that single function
+> > > > > indeed. It would be drm_atomic_helper_connector_hdmi_update_infoframes's
+> > > > > job to fan out and call the multiple callbacks, not the drivers.
+> > > > 
+> > > > I like this idea, however it stops at the drm_bridge_connector abstraction.
+> > > > The only way to handle this I can foresee is to make individual bridges
+> > > > provide struct drm_connector_hdmi_funcs implementation (which I'm fine with)
+> > > > and store void *data or struct drm_bridge *hdmi_bridge somewhere inside
+> > > > struct drm_connector_hdmi in order to let bridge drivers find their data.
+> > > 
+> > > Does it change anything? The last HDMI bridge should implement all the
+> > > infoframes it supports. I don't think we should take care of one bridge
+> > > with one infoframe type and some other with another?
+> > 
+> > Note: I wrote about the _data_. So far the connector's write_infoframe /
+> > clear_infoframe callbacks get drm_connector as an arg. The fact that
+> > there is a drm_bridge which implements a callback is hidden well inside
+> > drm_bridge_connector (and only it knows the bridge_hdmi pointer).
+> > Otherwise, the bridge, trying to implement drm_connector_hdmi_funcs has
+> > no way to go from drm_connector to drm_bridge.
+> > 
+> > The only possible solution would be to introduce something like
+> > drm_connector_hdmi::data (either void* or drm_bridge*) and use it
+> > internally. But for me this looks like a bit loose abstraction. Though,
+> > if it looks good from your POV, I agree, it would solve enough of
+> > issues.
+> 
+> I'm not sure I understand, sorry.
+> 
+> What prevents us from adding ~4 functions to bridge->funcs that take the
+> bridge, and drm_bridge_connector would get the connector, retrieve the
+> bridge instance from it, and pass it to the bridge actually implementing
+> it? Like we do currently for write_infoframe and clear_infoframe
+> already?
 
---vnfz4xpbantfwz3r
-Content-Type: text/plain; protected-headers=v1; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-Subject: Re: [PATCH v4 01/10] drm/connector: let drivers declare infoframes
- as unsupported
-MIME-Version: 1.0
+Well, we discussed that having the write_foo_infoframe in the
+drm_connector_hdmi_funcs means that the connector supports that
+infoframe (and it can be used to e.g. report errors). However with
+drm_bridge_container, we need to set all callbacks in
+drm_connector_hdmi_funcs, even if the underlying bridge reports them as
+unsupported.
 
-On Tue, Oct 14, 2025 at 07:02:03PM +0300, Dmitry Baryshkov wrote:
-> On Tue, Oct 14, 2025 at 02:43:58PM +0200, Maxime Ripard wrote:
-> > On Fri, Oct 03, 2025 at 06:41:58PM +0300, Dmitry Baryshkov wrote:
-> > > On 03/10/2025 17:23, Maxime Ripard wrote:
-> > > > On Thu, Sep 25, 2025 at 05:55:06PM +0300, Dmitry Baryshkov wrote:
-> > > > > > > As we will be getting more and more features, some of the Inf=
-oFrames
-> > > > > > > or data packets will be 'good to have, but not required'.
-> > > > > >=20
-> > > > > > And drivers would be free to ignore those.
-> > > > > >=20
-> > > > > > > > So, no, sorry. That's still a no for me. Please stop sendin=
-g that patch
-> > > > > > >=20
-> > > > > > > Oops :-)
-> > > > > > >=20
-> > > > > > > > unless we have a discussion about it and you convince me th=
-at it's
-> > > > > > > > actually something that we'd need.
-> > > > > > >=20
-> > > > > > > My main concern is that the drivers should not opt-out of the=
- features.
-> > > > > > > E.g. if we start supporting ISRC packets or MPEG or NTSC VBI =
-InfoFrames
-> > > > > > > (yes, stupid examples), it should not be required to go throu=
-gh all the
-> > > > > > > drivers, making sure that they disable those. Instead the DRM=
- framework
-> > > > > > > should be able to make decisions like:
-> > > > > > >=20
-> > > > > > > - The driver supports SPD and the VSDB defines SPD, enable th=
-is
-> > > > > > >    InfoFrame (BTW, this needs to be done anyway, we should no=
-t be sending
-> > > > > > >    SPD if it's not defined in VSDB, if I read it correctly).
-> > > > > > >=20
-> > > > > > > - The driver hints that the pixel data has only 10 meaninful =
-bits of
-> > > > > > >    data per component (e.g. out of 12 for DeepColor 36), the =
-Sink has
-> > > > > > >    HF-VSDB, send HF-VSIF.
-> > > > > > >=20
-> > > > > > > - The driver has enabled 3D stereo mode, but it doesn't decla=
-re support
-> > > > > > >    for HF-VSIF. Send only H14b-VSIF.
-> > > > > > >=20
-> > > > > > > Similarly (no, I don't have these on my TODO list, these are =
-just
-> > > > > > > examples):
-> > > > > > > - The driver defines support for NTSC VBI, register a VBI dev=
-ice.
-> > > > > > >=20
-> > > > > > > - The driver defines support for ISRC packets, register ISRC-=
-related
-> > > > > > >    properties.
-> > > > > > >=20
-> > > > > > > - The driver defines support for MPEG Source InfoFrame, provi=
-de a way
-> > > > > > >    for media players to report frame type and bit rate.
-> > > > > > >=20
-> > > > > > > - The driver provides limited support for Extended HDR DM Inf=
-oFrames,
-> > > > > > >    select the correct frame type according to driver capabili=
-ties.
-> > > > > > >=20
-> > > > > > > Without the 'supported' information we should change atomic_c=
-heck()
-> > > > > > > functions to set infoframe->set to false for all unsupported =
-InfoFrames
-> > > > > > > _and_ go through all the drivers again each time we add suppo=
-rt for a
-> > > > > > > feature (e.g. after adding HF-VSIF support).
-> > > > > >=20
-> > > > > >  From what you described here, I think we share a similar goal =
-and have
-> > > > > > somewhat similar concerns (thanks, btw, it wasn't obvious to me=
- before),
-> > > > > > we just disagree on the trade-offs and ideal solution :)
-> > > > > >=20
-> > > > > > I agree that we need to sanity check the drivers, and I don't w=
-ant to go
-> > > > > > back to the situation we had before where drivers could just ig=
-nore
-> > > > > > infoframes and take the easy way out.
-> > > > > >=20
-> > > > > > It should be hard, and easy to catch during review.
-> > > > > >=20
-> > > > > > I don't think bitflag are a solution because, to me, it kind of=
- fails
-> > > > > > both.
-> > > > > >=20
-> > > > > > What if, just like the debugfs discussion, we split write_infof=
-rame into
-> > > > > > write_avi_infoframe (mandatory), write_spd_infoframe (optional),
-> > > > > > write_audio_infoframe (checked by drm_connector_hdmi_audio_init=
-?) and
-> > > > > > write_hdr_infoframe (checked in drmm_connector_hdmi_init if max=
-_bpc > 8)
-> > > > > >=20
-> > > > > > How does that sound?
-> > > > >=20
-> > > > > I'd say, I really like the single function to be called for writi=
-ng the
-> > > > > infoframes. It makes it much harder for drivers to misbehave or t=
-o skip
-> > > > > something.
-> > > >=20
-> > > >  From a driver PoV, I believe we should still have that single func=
-tion
-> > > > indeed. It would be drm_atomic_helper_connector_hdmi_update_infofra=
-mes's
-> > > > job to fan out and call the multiple callbacks, not the drivers.
-> > >=20
-> > > I like this idea, however it stops at the drm_bridge_connector abstra=
-ction.
-> > > The only way to handle this I can foresee is to make individual bridg=
-es
-> > > provide struct drm_connector_hdmi_funcs implementation (which I'm fin=
-e with)
-> > > and store void *data or struct drm_bridge *hdmi_bridge somewhere insi=
-de
-> > > struct drm_connector_hdmi in order to let bridge drivers find their d=
-ata.
-> >=20
-> > Does it change anything? The last HDMI bridge should implement all the
-> > infoframes it supports. I don't think we should take care of one bridge
-> > with one infoframe type and some other with another?
->=20
-> Note: I wrote about the _data_. So far the connector's write_infoframe /
-> clear_infoframe callbacks get drm_connector as an arg. The fact that
-> there is a drm_bridge which implements a callback is hidden well inside
-> drm_bridge_connector (and only it knows the bridge_hdmi pointer).
-> Otherwise, the bridge, trying to implement drm_connector_hdmi_funcs has
-> no way to go from drm_connector to drm_bridge.
->=20
-> The only possible solution would be to introduce something like
-> drm_connector_hdmi::data (either void* or drm_bridge*) and use it
-> internally. But for me this looks like a bit loose abstraction. Though,
-> if it looks good from your POV, I agree, it would solve enough of
-> issues.
+Am I missing something?
 
-I'm not sure I understand, sorry.
-
-What prevents us from adding ~4 functions to bridge->funcs that take the
-bridge, and drm_bridge_connector would get the connector, retrieve the
-bridge instance from it, and pass it to the bridge actually implementing
-it? Like we do currently for write_infoframe and clear_infoframe
-already?
-
-Maxime
-
---vnfz4xpbantfwz3r
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iJUEABMJAB0WIQTkHFbLp4ejekA/qfgnX84Zoj2+dgUCaSCJsgAKCRAnX84Zoj2+
-dh89AYC3OvDkzVUlxqCCClS0XtTSV3f+Nh4/Ge3ApQd7tPCinePMjVqIhRTX3dQG
-WVZWcbMBfitqxdp4k9BqJt3mOot50bZme9uev5F+nwaHhM+5UZP2cO8R3UKSWVxx
-o5Zr7qAz4A==
-=c8cr
------END PGP SIGNATURE-----
-
---vnfz4xpbantfwz3r--
+-- 
+With best wishes
+Dmitry
 
