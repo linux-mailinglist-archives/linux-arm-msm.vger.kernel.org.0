@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-82902-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-82903-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ams.mirrors.kernel.org (ams.mirrors.kernel.org [213.196.21.55])
-	by mail.lfdr.de (Postfix) with ESMTPS id E4FCAC7B3A9
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Nov 2025 19:08:57 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id E1FA7C7B35E
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Nov 2025 19:06:16 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ams.mirrors.kernel.org (Postfix) with ESMTPS id C0B4436741F
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Nov 2025 18:05:11 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id C988C3A49CD
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Nov 2025 18:05:34 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A381A3502B1;
-	Fri, 21 Nov 2025 18:03:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A2F36352928;
+	Fri, 21 Nov 2025 18:03:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="AwgOdXv0"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="XT3C8PGh"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7678C34D4DC;
-	Fri, 21 Nov 2025 18:03:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 772D5346E46;
+	Fri, 21 Nov 2025 18:03:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763748223; cv=none; b=plggVqxiEBidnacqHmXKLTe8M5nqdB1QobKo+51RyaKQhVa/qbsfBkzhGEhtWYy7eK9N5Ooi/2T7fnqjr9MhXtfgyt1OpXUIeyYHRyMJYBqfT/PMYg4k+fBBm8LOUfJYo4eBPrNaMnzAKWVUEf0c2aN+wmo1ijniCPmqoe+mk+s=
+	t=1763748238; cv=none; b=l0o7M7vx8xYM5XebvFTt32A9oVzHP3o9OsNfs27vuMcK6l9Cs7hUmnN020Tbn68WrMNWFG2GEESdNoIu13vZX6Dpoc54Bd+a2O5HT7mBgi6DDMFdVNWuLz858tOoK3STO5/UvgHE947feTZeLLMe4tmDQj7i3GLxOT+buxtfOnw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763748223; c=relaxed/simple;
-	bh=hWczLQZrWmOZKkgHmVVs6onVe1uMkp2Ve3IptdaS7/o=;
+	s=arc-20240116; t=1763748238; c=relaxed/simple;
+	bh=JFJmijjRQmcj3rsYuw2jxFhc1l4HUoCmUGZNv8rA/F8=;
 	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=aFMGM6C93F+S/vtAmWEAxHLeyN1QlXvJBHwb3KN76WNn12TQvvtpZ+5mfoDth00uZ5muBoKmwflfAootZY91YZY7W+yjfdrOaXvm2Wqu/6vriHswyR3AraXvwWBD3BrC25NQp9SVxj9M8ywwa1HYcAFVahg3zsq7PRk0GyyeMbk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=AwgOdXv0; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A079EC4CEF1;
-	Fri, 21 Nov 2025 18:03:39 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=OyOTTMjQcQTA8/1FwN1kHAYPDEuJ3RmOFXirRNPpSIj3udqbXFdoLVYXofvQDvlC2jmzFwU3iVlXsrkgAWoH/cPhIY3qL4NPDuHLxrOh43VNGW18q84/rV5h3HvyhY6qgQCoRgeTbgmcS0F/PeC8Rekgm0HBR6cZbBMxWKQZDJg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=XT3C8PGh; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2813C4CEF1;
+	Fri, 21 Nov 2025 18:03:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1763748223;
-	bh=hWczLQZrWmOZKkgHmVVs6onVe1uMkp2Ve3IptdaS7/o=;
+	s=k20201202; t=1763748238;
+	bh=JFJmijjRQmcj3rsYuw2jxFhc1l4HUoCmUGZNv8rA/F8=;
 	h=Date:From:Subject:To:Cc:References:In-Reply-To:From;
-	b=AwgOdXv0Lvo2Yo3qBpMZMB31dTMZ6KR2pl0P9kFSl7g2mVtgGsxccrOppccgo85mU
-	 SV2pelv9NGukiJ2PtHe7mdu628GEDVW28eF/mDRT6o9fohjhxuLByVhN5sk9nfDoFE
-	 sRhhH1VAHdDI4OyH2XOAr9Wax+2gMCuKVzicLiTH+EoFS/9ADCCHbWrr9Xuof0uTNk
-	 /M8nITZkR3Xd3Taap8uz2rukZs7qJowxtg+6GGor1dUPyjrouQpsLMOSpkRM3TCKIZ
-	 QaYMYeviKWh9VLxtECvh6UnvnFrsHU1uiWnXi0PFJoCMyWMAOaLieT/bq4QE+fwPLL
-	 ckUxktsfHbWRA==
-Message-ID: <04f15f7d-6ccb-47df-af63-e3f52b46159d@kernel.org>
-Date: Fri, 21 Nov 2025 19:03:38 +0100
+	b=XT3C8PGhNaPxiWrWCgDO3c5/noxBG6UIL75KnQnb89qrb6uasXRPLFUgxJHOARCaM
+	 2mAJVZWkjHYWIZ35Nyp1C8Ha/s7RInhVbELUDsH1HWUyDvzAHoVzPbk/RXQNIoIlRr
+	 j6jSLHF3YuXan2pZO3fXmWn4uTyP5bFD9jnCb0L4GP5fjXZxlwgI7E1L9uTMn3nk08
+	 Lf7LzqnPKzz9cpYLbPrQ1A9MBk8CqE/9G2MTR/LN6oOejYPkg0C/KB9ZyxJ8qOd0pr
+	 AGocEdYSMqaNHSOoxtylvDFVqqgw08mGRqVPtCfQytSvn0k0GEz8zxPYRRFITYKwld
+	 mSL46GI6ZmO4A==
+Message-ID: <f59484f5-aced-4ddb-abef-b57e1217547e@kernel.org>
+Date: Fri, 21 Nov 2025 19:03:51 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -51,18 +51,26 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 From: Krzysztof Kozlowski <krzk@kernel.org>
-Subject: Re: [PATCH v3 5/7] dt-bindings: arm: qcom: Add TUXEDO Computers
- device
+Subject: Re: [PATCH v3 2/7] dt-bindings: display: bridge: simple: document the
+ ASL CS5263 DP-to-HDMI bridge
 To: Georg Gottleuber <ggo@tuxedocomputers.com>,
  Bjorn Andersson <andersson@kernel.org>,
  Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Andrzej Hajda <andrzej.hajda@intel.com>,
+ Neil Armstrong <neil.armstrong@linaro.org>, Robert Foss <rfoss@kernel.org>,
+ Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
+ Jonas Karlman <jonas@kwiboo.se>, Jernej Skrabec <jernej.skrabec@gmail.com>,
+ David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+ Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+ Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>
 Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
  linux-kernel@vger.kernel.org, Ettore Chimenti <ettore.chimenti@linaro.org>,
  Srinivas Kandagatla <srini@kernel.org>, stefan.schmidt@linaro.org,
- stephan.gerhold@linaro.org, wse@tuxedocomputers.com, cs@tuxedo.de
+ stephan.gerhold@linaro.org, wse@tuxedocomputers.com, cs@tuxedo.de,
+ dri-devel@lists.freedesktop.org
 References: <20251121142623.251118-1-ggo@tuxedocomputers.com>
- <20251121142623.251118-6-ggo@tuxedocomputers.com>
+ <20251121142623.251118-3-ggo@tuxedocomputers.com>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
  xsFNBFVDQq4BEAC6KeLOfFsAvFMBsrCrJ2bCalhPv5+KQF2PS2+iwZI8BpRZoV+Bd5kWvN79
@@ -107,22 +115,27 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  jWt87ecuHlpL3uuQ0ZZNWqHgZoQLXoqC2ZV5KrtKWb/jyiFX/sxSrodALf0zf+tfHv0FZWT2
  zHjUqd0t4njD/UOsuIMOQn4Ig0SdivYPfZukb5cdasKJukG1NOpbW7yRNivaCnfZz6dTawXw
  XRIV/KDsHQiyVxKvN73bThKhONkcX2LWuD928tAR6XMM2G5ovxLe09vuOzzfTWQDsm++9UKF a/A=
-In-Reply-To: <20251121142623.251118-6-ggo@tuxedocomputers.com>
+In-Reply-To: <20251121142623.251118-3-ggo@tuxedocomputers.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
 On 21/11/2025 15:26, Georg Gottleuber wrote:
-> Introduce new binding for the TUXEDO Elite 14 Gen1 laptop with X1E78100
-> SoC.
+> From: Ettore Chimenti <ettore.chimenti@linaro.org>
 > 
+> The ASL CS5263 is a high-performance DP1.4 to HDMI2.0b converter,
+> designed to connect a DP1.4 source to an HDMI2.0b sink. The CS5263AN
+> integrates a DP1.4 compliant receiver, and a HDMI2.0b compliant
+> transmitter.
+> 
+> Signed-off-by: Ettore Chimenti <ettore.chimenti@linaro.org>
 > Signed-off-by: Georg Gottleuber <ggo@tuxedocomputers.com>
 > ---
->  Documentation/devicetree/bindings/arm/qcom.yaml | 6 ++++++
->  1 file changed, 6 insertions(+)
 
 
-Reviewed-by: Krzysztof Kozlowski <krzk@kernel.org>
+Acked-by: Krzysztof Kozlowski <krzk@kernel.org>
+
 
 Best regards,
 Krzysztof
+
 
