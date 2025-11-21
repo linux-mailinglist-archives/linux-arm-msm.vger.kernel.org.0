@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-82797-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-82798-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [IPv6:2605:f480:58:1:0:1994:3:14])
-	by mail.lfdr.de (Postfix) with ESMTPS id D8B24C78805
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Nov 2025 11:25:23 +0100 (CET)
+Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [142.0.200.124])
+	by mail.lfdr.de (Postfix) with ESMTPS id 606E8C7889B
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Nov 2025 11:35:39 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id E5B994ECC04
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Nov 2025 10:21:41 +0000 (UTC)
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 282D94E2151
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Nov 2025 10:35:38 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id F2476344038;
-	Fri, 21 Nov 2025 10:20:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 061DD33F8A4;
+	Fri, 21 Nov 2025 10:35:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="cuHCcysW"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Y9H7sHMy"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B879C343201;
-	Fri, 21 Nov 2025 10:20:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC5463370EE;
+	Fri, 21 Nov 2025 10:35:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763720428; cv=none; b=XaR0J+pfImZq51CjTUTuCDgY+auBIfklWcBBLaGQBZEoq/xKz/XYsEq/GKfa8KfKv+hsjCDKyq84KzCBh9hwnqxLchE9kDwu+w5nagtw75gBm4oThf0AoBGt414avcHP36R2psf2RaaUiHcEHFeDr/oT1pvA/VwVjOf3n0LsvU4=
+	t=1763721334; cv=none; b=immkI/ngWIXbMgJ/y/Us3bSLrTC4pS0ByFnglwt/ruragoOX9+4ebGK7ACcD5/SGwdRJv/EBkziR1UP3sQ2x0IpQaUrcJZ+TZTzf0/l4gJz5+VsDHHCT1+GOUWuKvFg0ghilzKQAsS6qQDqQGE5cEIfBVqRl1npo2d50dtpbNhQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763720428; c=relaxed/simple;
-	bh=iWqnAe3/O6/plnWbSTIG2BUYeub0UScAt2PUN//TgMw=;
+	s=arc-20240116; t=1763721334; c=relaxed/simple;
+	bh=JTVcxFY+N0ePohEgVAcIVZFT86TMErD4s13HGO/aF/Y=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=bs23lyW7hzLzmPNgey6CErKEL0lAs3OwGuN1s08Lw0GLkcvYcoX5wIoo13qN5XbEr5auYPQgFvhCziNHtUuLfWgGY7QCC5pAiv9DE/OrD7cb0AQHbmVxX9wOSFUIyr1OG/YROEX9abyylnhrbyh2YVq+jg30JmZRz76zKmU5Z5I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=cuHCcysW; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 126C3C4CEF1;
-	Fri, 21 Nov 2025 10:20:21 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=UI79UE5Aef/7qoKvmAhka2e80G/okSbcNi+TKpDXaRVLzjWYTQNHT5V1xhJ3iLl69OHlDHBlXmufN0jYhnPmdzZSmxllCHsSXHkFQyY4IjdyhXITnJa/Vd3ye7WXF36BCsqKsjpQxMNZPRqtVTLkqWPUcxAdnIivNMKdOqGfYHU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Y9H7sHMy; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17B5EC116C6;
+	Fri, 21 Nov 2025 10:35:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1763720428;
-	bh=iWqnAe3/O6/plnWbSTIG2BUYeub0UScAt2PUN//TgMw=;
+	s=k20201202; t=1763721334;
+	bh=JTVcxFY+N0ePohEgVAcIVZFT86TMErD4s13HGO/aF/Y=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=cuHCcysWsoxtxgwICw6OTThJvO4dPnZ4jA4TSmgF+iit+i2g3Du3jEAGU3krgF4d3
-	 S6/97IraiN60AsumeiTAvOH2MVkzAKXzxgUYUD5qFbXfheP+aEmg4iEFISRNnQGhCW
-	 H0wjQJutHn5Iat/aAISJ0wv5YAguL/8fcaDzEpCSbnQ2eo173RcAkyJjzJWc6XUmxI
-	 LZgz2Rj15UCG7QOSjO7yYy1uwQjUuxf2zb8E08sh5+6pxrYRKg2783Vv3ZR4V2ppRN
-	 Y44wThgFJLNYdLCLCrFsvQumqncopPw96v1qr0yicOy5Xdn3ZXZ7pmSJfn6FkOkNfk
-	 dwkSAfls6B1WA==
-Message-ID: <e27e1a6b-53ae-4416-8322-dbfb1c212755@kernel.org>
-Date: Fri, 21 Nov 2025 11:20:20 +0100
+	b=Y9H7sHMyUFr2dMxcyB7bDAyUw9LVx/klrj3CeCzOBVHzGc1mIsMc/h/9gest4nRC9
+	 49hFRlzkIfoe57sIltWRi+jKd1k5IlxxDd4xUkr2pah5RXOmVpkROJI6ayw4GJhE1M
+	 NwxuIoPOnqLpcVtfpCSPBy4qTIVhzJokJ0SM2otSD5arhqtzBGsftXT9zCzbR9rWV9
+	 MYq+oCB6j/mGfn6YFnce/Kj54Dn3b7MVHBO5l5zy6PfIX3FdXdkVZXiXld+a9dCHyJ
+	 jB/eevvCpVt7LpbGSIP06pUiI1PhW6IlN4qneay9djngB4SBBo3dVupIZdqecsFVqe
+	 BICETwfNT/k4Q==
+Message-ID: <40c930a4-2dc0-4fe1-b430-02ca05a1b517@kernel.org>
+Date: Fri, 21 Nov 2025 11:35:30 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,30 +50,17 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 00/10] gpio: improve support for shared GPIOs
-To: Bartosz Golaszewski <brgl@bgdev.pl>, Val Packett <val@packett.cool>
-Cc: Kees Cook <kees@kernel.org>, Mika Westerberg <westeri@kernel.org>,
- Dmitry Torokhov <dmitry.torokhov@gmail.com>,
- Andrew Morton <akpm@linux-foundation.org>,
- Linus Walleij <linus.walleij@linaro.org>,
- Manivannan Sadhasivam <mani@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Saravana Kannan <saravanak@google.com>,
- Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
- Andy Shevchenko <andy@kernel.org>, Catalin Marinas
- <catalin.marinas@arm.com>, Will Deacon <will@kernel.org>,
- Srinivas Kandagatla <srini@kernel.org>, Liam Girdwood <lgirdwood@gmail.com>,
- Mark Brown <broonie@kernel.org>, Jaroslav Kysela <perex@perex.cz>,
- Takashi Iwai <tiwai@suse.com>, Alexey Klimov <alexey.klimov@linaro.org>,
+Subject: Re: [PATCH 1/4] dt-bindings: cache: qcom,llcc: Document Glymur LLCC
+ block
+To: Pankaj Patil <pankaj.patil@oss.qualcomm.com>,
  Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>, linux-hardening@vger.kernel.org,
- linux-kernel@vger.kernel.org, linux-gpio@vger.kernel.org,
- linux-arm-kernel@lists.infradead.org, linux-sound@vger.kernel.org,
- linux-arm-msm@vger.kernel.org,
- Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-References: <20251112-gpio-shared-v4-0-b51f97b1abd8@linaro.org>
- <3b5d9df5-934d-4591-8827-6c9573a6f7ba@packett.cool>
- <CAMRc=McHCG8N0zeVUUvYF+rHqBrBKe52o+pf+Hjp5dnG3+NmjA@mail.gmail.com>
+ Konrad Dybcio <konradybcio@kernel.org>, Conor Dooley <conor@kernel.org>,
+ Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org, sibi.sankar@oss.qualcomm.com,
+ rajendra.nayak@oss.qualcomm.com
+References: <20251121-glymur_llcc_enablement-v1-0-336b851b8dcb@oss.qualcomm.com>
+ <20251121-glymur_llcc_enablement-v1-1-336b851b8dcb@oss.qualcomm.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -119,60 +106,39 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  jWt87ecuHlpL3uuQ0ZZNWqHgZoQLXoqC2ZV5KrtKWb/jyiFX/sxSrodALf0zf+tfHv0FZWT2
  zHjUqd0t4njD/UOsuIMOQn4Ig0SdivYPfZukb5cdasKJukG1NOpbW7yRNivaCnfZz6dTawXw
  XRIV/KDsHQiyVxKvN73bThKhONkcX2LWuD928tAR6XMM2G5ovxLe09vuOzzfTWQDsm++9UKF a/A=
-In-Reply-To: <CAMRc=McHCG8N0zeVUUvYF+rHqBrBKe52o+pf+Hjp5dnG3+NmjA@mail.gmail.com>
+In-Reply-To: <20251121-glymur_llcc_enablement-v1-1-336b851b8dcb@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 
-On 21/11/2025 10:03, Bartosz Golaszewski wrote:
-> On Fri, Nov 21, 2025 at 1:28 AM Val Packett <val@packett.cool> wrote:
->>
->> Hi,
->>
->> On 11/12/25 10:55 AM, Bartosz Golaszewski wrote:
->>> ---
->>> Bartosz Golaszewski (10):
->>>        string: provide strends()
->>>        gpiolib: define GPIOD_FLAG_SHARED
->>>        gpiolib: implement low-level, shared GPIO support
->>>        gpio: shared-proxy: implement the shared GPIO proxy driver
->>>        gpiolib: support shared GPIOs in core subsystem code
->>>        gpio: provide gpiod_is_shared()
->>>        arm64: select HAVE_SHARED_GPIOS for ARCH_QCOM
->>>        ASoC: wsa881x: drop GPIOD_FLAGS_BIT_NONEXCLUSIVE flag from GPIO lookup
->>>        ASoC: wsa883x: drop GPIOD_FLAGS_BIT_NONEXCLUSIVE flag from GPIO lookup
->>>        regulator: make the subsystem aware of shared GPIOs
->>
->> this seems to actually have caused a regression for me, audio does not
->> initialize anymore on hamoa due to EBUSY since upgrading
->> from next-20251114 to next-20251118 or next-20251120:
->>
-> 
-> Thanks for the heads-up.
-> 
->> [   11.748781] platform
->> 6800000.remoteproc:glink-edge:gpr:service@1:dais: Adding to iommu group 30
->> [   11.785864] wsa_macro 6aa0000.codec: using zero-initialized flat
->> cache, this may cause unexpected behavior
->> [   11.796964] reset-gpio reset-gpio.0: error -EBUSY: Could not get
->> reset gpios
->> [   11.796984] reset-gpio reset-gpio.0: probe with driver reset-gpio
->> failed with error -16
->> [   11.894662] reset-gpio reset-gpio.1: error -EBUSY: Could not get
->> reset gpios
->> [   11.894676] reset-gpio reset-gpio.1: probe with driver reset-gpio
->> failed with error -16
-> 
-> It seems like it's the reset-gpio driver, not shared GPIOLIB path?
-> This driver has never used the GPIOD_FLAGS_BIT_NONEXCLUSIVE flag.
+On 21/11/2025 10:53, Pankaj Patil wrote:
+> +  - if:
+> +      properties:
+> +        compatible:
+> +          contains:
+> +            enum:
+> +              - qcom,glymur-llcc
+> +    then:
+> +      properties:
+> +        reg:
+> +          items:
+> +            - description: LLCC0 base register region
+> +            - description: LLCC1 base register region
+> +            - description: LLCC2 base register region
+> +            - description: LLCC3 base register region
+> +            - description: LLCC4 base register region
+> +            - description: LLCC5 base register region
+> +            - description: LLCC6 base register region
+> +            - description: LLCC7 base register region
+> +            - description: LLCC8 base register region
+> +            - description: LLCC9 base register region
+> +            - description: LLCC10 base register region
+> +            - description: LLCC11 base register region
+> +            - description: LLCC broadcast base register region
+> +            - description: LLCC broadcast AND register region
 
-NONEXCLUSIVE does not matter here. I think this is just broken code -
-your patch 3 goes through allnodes for_each_property_of_node() and then
-assumes it is shared GPIO, so probably this nicely breaks existing DTS
-and reset-gpio. Well, it is not a shared GPIO, so all your assumptions
-here are just wrong.
+Max is 10, so this is too many. You need to fix top-level constraints.
 
-reset-gpio is already used on multiple Qualcomm and other SoC  platforms.
-
+> +        reg-names:
 Best regards,
 Krzysztof
 
