@@ -1,213 +1,170 @@
-Return-Path: <linux-arm-msm+bounces-82839-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-82840-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [IPv6:2605:f480:58:1:0:1994:3:14])
-	by mail.lfdr.de (Postfix) with ESMTPS id D38FFC78FD5
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Nov 2025 13:16:07 +0100 (CET)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id CE8DBC78FEB
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Nov 2025 13:17:12 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 6B3B04E9698
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Nov 2025 12:13:48 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTPS id BA7D22DAB8
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Nov 2025 12:17:11 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E284C334C2A;
-	Fri, 21 Nov 2025 12:13:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id EE39B29E11E;
+	Fri, 21 Nov 2025 12:17:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=mainlining.org header.i=@mainlining.org header.b="AlGpNY9v";
-	dkim=permerror (0-bit key) header.d=mainlining.org header.i=@mainlining.org header.b="9lOrZcRE"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="mT508ZRs";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="XWyfhlci"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail.mainlining.org (mail.mainlining.org [5.75.144.95])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8571F3491D5;
-	Fri, 21 Nov 2025 12:13:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=5.75.144.95
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6648F46BF
+	for <linux-arm-msm@vger.kernel.org>; Fri, 21 Nov 2025 12:17:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763727223; cv=none; b=Qc+BN5YBu5sNFyrk9nO/aoi5fPrSNRvk53u5C2YRSTOdr6UWgbOHvWbKTS9x9i5KyKUhMz5Ew7EGqsXq4LWTABaIryyF1efJBfgbPGYOjFImPu2cqtCUOlc2UeTz81i5OgLZUtS5Ql8bKtn75ukR+CHe6NRipaDg3eC6E4G+c8w=
+	t=1763727422; cv=none; b=og1ltXvPWaTdz1FPbeA5obAKZJaA/NZMCo5PLrf/R8arNOeTCEFXjsb7wyzAaVruBqt+svMa+bPtVqQeiK5mUGf7PHvm6h/b8ukJ2Od/nbXwP8lG1qA+ve1Yrw4Zr5Wa5FCw9Wn/VoHZ+kdPp1nXdVHwFrhhO/FxDkl2+X9HX3M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763727223; c=relaxed/simple;
-	bh=H35SWhia7AAytWR4jRFnbSMEP8FXb18hqHkhDE5d5bE=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=fETfDIif0jfhXfDhhSn9C9bc1wgXx8w3KO/aDMEA5M9t30ElmRo1NqLkkvNxeODnf/sExj6eqvBw8h5gnfmLMMHk5BvoXEo1RDViWUN8gqVXEFYcy24If2OkArSew/BVrfj/HCds3qPE+eD4tLXH8WDpIL1A56Y1acNsdYr7KDA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=mainlining.org; spf=pass smtp.mailfrom=mainlining.org; dkim=pass (2048-bit key) header.d=mainlining.org header.i=@mainlining.org header.b=AlGpNY9v; dkim=permerror (0-bit key) header.d=mainlining.org header.i=@mainlining.org header.b=9lOrZcRE; arc=none smtp.client-ip=5.75.144.95
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=mainlining.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=mainlining.org
-DKIM-Signature: v=1; a=rsa-sha256; s=202507r; d=mainlining.org; c=relaxed/relaxed;
-	h=From:To:Subject:Date:Message-ID; t=1763727191; bh=uXAawLauHqZfOJlMubFCzxe
-	zUFUJfMoZtDOE8XI82oU=; b=AlGpNY9vtGbdiffH544O3W7CqnXXV7E0saNH62NCNATDjgWcvD
-	8A4B5l5HU4jx7SbWxEF8xGwEjDX4rEWmoTvXUcP5pi+ces1xfDjKp6Kscb6GYMSlsXU+gVcw/ay
-	gVkVo2aBb+rLShbdPpy7GiBYSuIKtjfUJX4LG7nu3+4SHlNMTINbNnrEgeQTjgKv/rFSlvy9Ocg
-	oqd4BPuWoNZpoFcFexjZzYaLtnseLlffVRcQiOaszjyQabUQpKNEgtOrxwpCpP8TgIAG9lvYbZx
-	TlrdQbyn3Kc5bQ1E3ivO19oseFF6MTX1gESYBEKeaGZhZSYjTbb31GJFj7Yq8ItP7BA==;
-DKIM-Signature: v=1; a=ed25519-sha256; s=202507e; d=mainlining.org; c=relaxed/relaxed;
-	h=From:To:Subject:Date:Message-ID; t=1763727191; bh=uXAawLauHqZfOJlMubFCzxe
-	zUFUJfMoZtDOE8XI82oU=; b=9lOrZcRE6DDf7ZsS/mEKZ+oOYp4btGlNAQekWrqPFWEtgOtX/k
-	vj3UMWpQ2qLumH06Lmycrqfwx6f2z/A0b7Dg==;
-Message-ID: <23798422-52cf-4010-a2af-94be8a3a4481@mainlining.org>
-Date: Fri, 21 Nov 2025 15:13:10 +0300
+	s=arc-20240116; t=1763727422; c=relaxed/simple;
+	bh=FqNTIVaqJr2eN/W1bQX6Jk44J3Bq6cqUQY2BiOC7CvY=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=ElPpiELg7zN+HNKNu3AdIL9i+gLNsv8d5GUNmE3NRBEVX/KJaqXD8eS1BkbpZan1RwJEq71SK8YCkTybPrl5MzoJXKuAE4DewRXfa8Iom9xYpzAps6oSF+AMgBpUWwe+lSDPwPqBNqLeqiQ4clPGWMXvHywsZH1fpvkldU8JWa0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=mT508ZRs; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=XWyfhlci; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 5AL8YwXd3139698
+	for <linux-arm-msm@vger.kernel.org>; Fri, 21 Nov 2025 12:16:59 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-type:date:from:in-reply-to:message-id:mime-version
+	:references:subject:to; s=qcppdkim1; bh=QaNnVLYnlnRhWIm4jNcLz6mZ
+	ygcebyyLlqzwUaRtrnI=; b=mT508ZRsNRTqr8DnFSkjCZTkAd4GvUBjLQDw99zg
+	Tjsl919tISAJp86joL1PZInJ6CpdjjXMNTmeRjMC3rETaklabmdoLekmgOiMP750
+	SzQYbWukdIQ2Ow2mlpnuXZwTxS7IqgzgUAwzV9i275tS7T1FJ1/kkEt/DPeRyLCK
+	jXbkZGSnyHo2KlZL4faVNA13LX8EmH6ADe9wF9mZ/2Chud4Cbw/OlLcN3UnBA1Dd
+	b7mKe9ajPbvRh+vZgpPueE7FcyJd+8QtjamxyDt0kc+8hb/LCgBbmGOPHEz8YYRU
+	OnIVAkpHyFS7v7/VluOvAdCeD8K1S3BSGC8g1ROmaukgOA==
+Received: from mail-qv1-f70.google.com (mail-qv1-f70.google.com [209.85.219.70])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4ajmppgtxh-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Fri, 21 Nov 2025 12:16:59 +0000 (GMT)
+Received: by mail-qv1-f70.google.com with SMTP id 6a1803df08f44-8804b991a54so77854526d6.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 21 Nov 2025 04:16:59 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=oss.qualcomm.com; s=google; t=1763727418; x=1764332218; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=QaNnVLYnlnRhWIm4jNcLz6mZygcebyyLlqzwUaRtrnI=;
+        b=XWyfhlciIUtNWiI1rN9RJPlfoIPgUuWxt1lS3MldllWQOoWnoewuqnJ6miHm5Ls1gG
+         F8oj441gJ6aNCeL9rrgctSMCaKzP6lmnzH+lW2fj992yR8Q8GYxyDl07G/1Ryjit4iSX
+         fBPQIvaovMQWqU2PlFNqTTSktgEeeJWyIih2ZnFceg84Axu3jExdpboDLEh/ZxINtEvE
+         el5D8grJ0EFZeIqSKxGYTNwIQBV7TwO8L2IWWOVLG5hcBttRs3aLMFQ1fQ0juJGJz9wq
+         QRk5bAuKghoAtqmiCJQ2PqdoD8vWYRy9eDxIkAgyI4xf7GykLxLh8C+GY287MyXFmJ+N
+         knKw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1763727418; x=1764332218;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=QaNnVLYnlnRhWIm4jNcLz6mZygcebyyLlqzwUaRtrnI=;
+        b=Ul90dNT6UEorw7PGppyvEiSkl9wIzvjDGChdNl1yAXiQYWdPSq1e4vG/PksGUKSffR
+         O+ksWfkTUWEaU9X/KuZc6d7pX0IdVjgdh1YEtRsaHNNhAEeQRqzFRffxIJk6v+M4OXqL
+         X4/JX1bXy9VWZpTwygveGjtRw5exTyQJ5r9VvyJBjNcWasI0ljrT2WUDRuEBWcWu5dGx
+         dALEhzz8RgC5KXBHxpC/fFFVc7hHpJEbMEz7hqm5C0DJS3bbXPUweo+M6PTY8E5tOyOM
+         ZXSsh0i36iJ8JIU8FJWfqimGiFz8AhLmBtBvA2QPy7lKO5Sf1303IlVSOn7uvMMAUN9U
+         9PSA==
+X-Forwarded-Encrypted: i=1; AJvYcCXpa+vxw/c5P5pAuk7nYlbo62ufS8U4S0W9Jv0qS2RUdYvuT/RHm1uKlbHEI1Sy8EcCTzYxr0IDaQGuPjms@vger.kernel.org
+X-Gm-Message-State: AOJu0YyR4GOQV0IbTXJ3pn8aLcdoEE+d8iNetg53tIwFo544bjNSKhxo
+	MdQZ8BpnmqnGfUQd9a50okQNQWRCBKO5ALbjugSwNxXPcPA6urlNYInwD7ydyFlEDp3K3s5ioht
+	ydh1rqP6D4GYLaQ2rcgq2rfWBV1ZL/YR5YGBQ9wwxEDBqxug57LSwpuJNOSm4gjR5ufsH
+X-Gm-Gg: ASbGncuD/kics9Efi/d8oOkYkjNv3NwMX26C+g/M7J3u6A3py/522qMGO36uaM+YLvn
+	zmB4ST56Y8pinP3SQPYNtECsg+AHjI++J5TqU8KMk1BJTh0VMPzyiepiI5JZiyk8kFCcYogVcLK
+	uIHmzXhy9Kl6EJtwSEgQLPOBFlJ7+F7j+lcvvPGVSz29YR6CpihYamd+sZicUFICUIkt0V8aUqR
+	xk8TaUcPiYb2d3WyTggYS+9pnYWgXMyB3FRxZKsasfRCtQCzZ5Std5ouERnO/6wvwsGdh/xnN/X
+	vw7OKKPQEDe5MuWtdcZwDp9MHRfTTIRALbur0F6nupabeL+XNuBZPeQU6zFPZW9qjkeQysc5jIi
+	+6wIv+JuU5iNExSFMif5Z73QGgmQHYO/HXiuyWP+ZVkiR867OIBr9ykmaaj6G//NAYv1lWooaa7
+	tu/3ncEaqWtqypODEYpFKfm3I=
+X-Received: by 2002:ad4:4ea6:0:b0:86a:7c95:126f with SMTP id 6a1803df08f44-8847c4c7de0mr27551446d6.27.1763727418531;
+        Fri, 21 Nov 2025 04:16:58 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IEUoX/mjzI1b4o1ytqdR+jI1yLiJw/zVz9VwmNQMbCqUbuv4Gu6bPjAqN2mH2X/VzpmYNsHKQ==
+X-Received: by 2002:ad4:4ea6:0:b0:86a:7c95:126f with SMTP id 6a1803df08f44-8847c4c7de0mr27551126d6.27.1763727418121;
+        Fri, 21 Nov 2025 04:16:58 -0800 (PST)
+Received: from umbar.lan (2001-14ba-a0c3-3a00-264b-feff-fe8b-be8a.rev.dnainternet.fi. [2001:14ba:a0c3:3a00:264b:feff:fe8b:be8a])
+        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-37cc6a9fb2dsm10503991fa.0.2025.11.21.04.16.57
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 21 Nov 2025 04:16:57 -0800 (PST)
+Date: Fri, 21 Nov 2025 14:16:55 +0200
+From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+To: Teguh Sobirin <teguh@sobir.in>
+Cc: Rob Clark <robin.clark@oss.qualcomm.com>,
+        Dmitry Baryshkov <lumag@kernel.org>,
+        Abhinav Kumar <abhinav.kumar@linux.dev>,
+        Jessica Zhang <jesszhan0024@gmail.com>, Sean Paul <sean@poorly.run>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v2] drm/msm/dpu: Set vsync source irrespective of mdp top
+ support
+Message-ID: <52avqc3n4fxuypv6fkejuxkmuounxa67e5lsnfeynek6yxq6tm@ink6yoklpxes>
+References: <TYUPR06MB6099C539BD2C937F8630FF8EDDD5A@TYUPR06MB6099.apcprd06.prod.outlook.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/3] arm64: dts: qcom: sdm630/660: Add CDSP-related
- nodes
-To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Cc: Ekansh Gupta <ekansh.gupta@oss.qualcomm.com>,
- Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
- Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>,
- Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- ~postmarketos/upstreaming@lists.sr.ht, linux@mainlining.org,
- Chenna Kesava Raju <chennak@qti.qualcomm.com>,
- Bharath Kumar <bkumar@qti.qualcomm.com>
-References: <83c3aea5-764e-4e60-8b16-67b474f19357@oss.qualcomm.com>
- <d17548bb-ddce-4d60-8dc4-2c0633989299@oss.qualcomm.com>
- <f5c7eb1c-28b1-4cf1-afb0-b993384b7712@oss.qualcomm.com>
- <80836b8f-16a8-4520-ad11-5ca0abb3403e@oss.qualcomm.com>
- <99c22e73-797c-4a30-92ba-bc3bd8cf70f0@oss.qualcomm.com>
- <eddc16cb-d951-401c-8fb8-fccfcf600143@mainlining.org>
- <0b06f744-b695-43d9-8da3-4424e2b53a5e@oss.qualcomm.com>
- <24221ce7-24e4-4eaa-8681-ed9b4b9f2d6e@oss.qualcomm.com>
- <be4e2715-882d-4358-8575-374187f7ee2f@oss.qualcomm.com>
- <975b468f-e5fc-40df-a9b6-2630f6ed99cc@mainlining.org>
- <iwtasncd3wu73xv4ot5sl5zjukhqzxo2m4s4aeetj2ylrke7b3@47trnxo2lcci>
-Content-Language: ru-RU, en-US
-From: Nickolay Goppen <setotau@mainlining.org>
-In-Reply-To: <iwtasncd3wu73xv4ot5sl5zjukhqzxo2m4s4aeetj2ylrke7b3@47trnxo2lcci>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <TYUPR06MB6099C539BD2C937F8630FF8EDDD5A@TYUPR06MB6099.apcprd06.prod.outlook.com>
+X-Proofpoint-ORIG-GUID: _2D2-a5MQntWOCJkCDiP7yZ67p4Y4anL
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMTIxMDA5MiBTYWx0ZWRfXw+0MGJx2lB3H
+ PGT+FwItDvB3h2IL9m+TOQYMfVnj9yDDKAcz1qt0UE/93tRSEUgp7sVDNVhY3xxbq5E8vGlDTxz
+ fhH+xuy3MmiyK7D7Iscz1k/Q3ZrZypce3EtR6l/vu4uADvl25MLO8ocNUXYZhCqBmXr3BtVmh3b
+ QPURb/7mvwgLiowzgqkRBq8DrCPWfWCUN6rKKbzV44gfbl6v7gh1EMB82m7XeDS7TAQvrDivYeB
+ vB40oZgIR5g22tvrYpMEQo6lL8LpnJf2zH1S8QZUSrLvIOoycv6DIxgurDSGTKAGDQ3TktefPI3
+ W/a3v7ZNsU1xq0jJhQ5XZfPSTnR3wYWruHRPcI/NFkAa9bIam5KkrIryYgd+7H9+KXDCu6cx9hx
+ f4hkDKrVdKnECQT+yaXQNFNZMxdsNg==
+X-Proofpoint-GUID: _2D2-a5MQntWOCJkCDiP7yZ67p4Y4anL
+X-Authority-Analysis: v=2.4 cv=CK4nnBrD c=1 sm=1 tr=0 ts=6920583b cx=c_pps
+ a=oc9J++0uMp73DTRD5QyR2A==:117 a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10
+ a=6UeiqGixMTsA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=VwQbUJbxAAAA:8 a=UqCG9HQmAAAA:8 a=EUspDBNiAAAA:8 a=Weq4iwZbzhTgL2Q6ZfAA:9
+ a=CjuIK1q_8ugA:10 a=iYH6xdkBrDN1Jqds4HTS:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
+ definitions=2025-11-21_03,2025-11-20_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ phishscore=0 bulkscore=0 adultscore=0 spamscore=0 impostorscore=0
+ suspectscore=0 lowpriorityscore=0 clxscore=1015 malwarescore=0
+ priorityscore=1501 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2510240001
+ definitions=main-2511210092
+
+On Fri, Nov 21, 2025 at 02:02:08PM +0800, Teguh Sobirin wrote:
+> Since DPU 5.x the vsync source TE setup is split between MDP TOP and
+> INTF blocks.  Currently all code to setup vsync_source is only exectued
+> if MDP TOP implements the setup_vsync_source() callback. However on
+> DPU >= 8.x this callback is not implemented, making DPU driver skip all
+> vsync setup. Move the INTF part out of this condition, letting DPU
+> driver to setup TE vsync selection on all new DPU devices.
+> 
+> Signed-off-by: Teguh Sobirin <teguh@sobir.in>
+> ---
+> Changes in v2:
+> - Corrected commit message suggested by Dmitry Baryshkov.
+> - Link to v1: https://lore.kernel.org/linux-arm-msm/TYUPR06MB6099CBBE5090DB12A2C187E3DDFDA@TYUPR06MB6099.apcprd06.prod.outlook.com/
+> ---
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c | 22 +++++++++------------
+>  1 file changed, 9 insertions(+), 13 deletions(-)
+
+Fixes: e955a3f0d86e ("drm/msm/dpu: Implement tearcheck support on INTF block")
 
 
-21.11.2025 15:11, Dmitry Baryshkov пишет:
-> On Fri, Nov 21, 2025 at 11:18:31AM +0300, Nickolay Goppen wrote:
->> 21.11.2025 11:11, Ekansh Gupta пишет:
->>> On 11/20/2025 5:17 PM, Konrad Dybcio wrote:
->>>> On 11/20/25 11:54 AM, Ekansh Gupta wrote:
->>>>> On 11/20/2025 1:27 PM, Nickolay Goppen wrote:
->>>>>> 20.11.2025 07:55, Ekansh Gupta пишет:
->>>>>>> On 11/20/2025 1:58 AM, Srinivas Kandagatla wrote:
->>>>>>>> On 11/12/25 1:52 PM, Konrad Dybcio wrote:
->>>>>>>>> On 11/10/25 6:41 PM, Srinivas Kandagatla wrote:
->>>>>>>>>> On 11/3/25 12:52 PM, Konrad Dybcio wrote:
->>>>>>>>>>> On 10/31/25 12:30 PM, Nickolay Goppen wrote:
->>>>>>>>>>>> 24.10.2025 16:58, Nickolay Goppen пишет:
->>>>>>>>>>>>> 24.10.2025 11:28, Konrad Dybcio пишет:
->>>>>>>>>>>>>> On 10/23/25 9:51 PM, Nickolay Goppen wrote:
->>>>>>>>>>>>>>> In order to enable CDSP support for SDM660 SoC:
->>>>>>>>>>>>>>>      * add shared memory p2p nodes for CDSP
->>>>>>>>>>>>>>>      * add CDSP-specific smmu node
->>>>>>>>>>>>>>>      * add CDSP peripheral image loader node
->>>>>>>>>>>>>>>
->>>>>>>>>>>>>>> Memory region for CDSP in SDM660 occupies the same spot as
->>>>>>>>>>>>>>> TZ buffer mem defined in sdm630.dtsi (which does not have CDSP).
->>>>>>>>>>>>>>> In sdm660.dtsi replace buffer_mem inherited from SDM630 with
->>>>>>>>>>>>>>> cdsp_region, which is also larger in size.
->>>>>>>>>>>>>>>
->>>>>>>>>>>>>>> SDM636 also doesn't have CDSP, so remove inherited from sdm660.dtsi
->>>>>>>>>>>>>>> related nodes and add buffer_mem back.
->>>>>>>>>>>>>>>
->>>>>>>>>>>>>>> Signed-off-by: Nickolay Goppen <setotau@mainlining.org>
->>>>>>>>>>>>>>> ---
->>>>>>>>>>>>>> [...]
->>>>>>>>>>>>>>
->>>>>>>>>>>>>>> +            label = "turing";
->>>>>>>>>>>>>> "cdsp"
->>>>>>>>>>>>> Ok, I'll change this in the next revision.
->>>>>>>>>>>>>>> +            mboxes = <&apcs_glb 29>;
->>>>>>>>>>>>>>> +            qcom,remote-pid = <5>;
->>>>>>>>>>>>>>> +
->>>>>>>>>>>>>>> +            fastrpc {
->>>>>>>>>>>>>>> +                compatible = "qcom,fastrpc";
->>>>>>>>>>>>>>> +                qcom,glink-channels = "fastrpcglink-apps-dsp";
->>>>>>>>>>>>>>> +                label = "cdsp";
->>>>>>>>>>>>>>> +                qcom,non-secure-domain;
->>>>>>>>>>>>>> This shouldn't matter, both a secure and a non-secure device is
->>>>>>>>>>>>>> created for CDSP
->>>>>>>>>>>>> I've added this property, because it is used in other SoC's, such as SDM845 and SM6115 for both ADSP and CDSP
->>>>>>>>>>>> Is this property not neccessary anymore?
->>>>>>>>>>> +Srini?
->>>>>>>>>> That is true, we do not require this for CDSP, as CDSP allows both
->>>>>>>>>> unsigned and signed loading, we create both secured and non-secure node
->>>>>>>>>> by default. May be we can provide that clarity in yaml bindings so that
->>>>>>>>>> it gets caught during dtb checks.
->>>>>>>>>>
->>>>>>>>>>
->>>>>>>>>> However in ADSP case, we only support singed modules, due to historical
->>>>>>>>>> reasons how this driver evolved over years, we have this flag to allow
->>>>>>>>>> compatiblity for such users.
->>>>>>>>> Does that mean that we can only load signed modules on the ADSP, but
->>>>>>>>> the driver behavior was previously such that unsigned modules were
->>>>>>>>> allowed (which was presumably fine on devboards, but not on fused
->>>>>>>>> devices)?
->>>>>>>> Yes, its true that we allowed full access to adsp device nodes when we
->>>>>>>> first started upstreaming fastrpc driver.
->>>>>>>>
->>>>>>>> irrespective of the board only signed modules are supported on the ADSP.
->>>>>>>> I think there was one version of SoC i think 8016 or some older one
->>>>>>>> which had adsp with hvx which can load unsigned modules for compute
->>>>>>>> usecase only.
->>>>>>>>
->>>>>>>> I have added @Ekansh for more clarity.
->>>>>>>>
->>>>>>>> --srini
->>>>>>> For all the available platforms, ADSP supports only signed modules. Unsigned
->>>>>>> modules(as well as signed) are supported by CDSP and GDSP subsystems.
->>>>>>>
->>>>>>> qcom,non-secure-domain property marks the corresponding DSP as non-secure DSP.
->>>>>>> The implications of adding this property would be the following:
->>>>>>> on ADSP, SDSP, MDSP:
->>>>>>> - Only non-secure device node(/dev/fastrpc-Xdsp) is created.
->>>>>>> - Non-secure device node can be used for signed DSP PD offload.
->>>>>>>
->>>>>>> on CDSP, GDSP:
->>>>>>> - Both secure(/dev/fastrpc-Xdsp-secure) and non-secure(/dev/fastrpc-Xdsp) devices
->>>>>>>      are created, regardless of this property.
->>>>>>> - Both the nodes can be used for signed and unsigned DSP PD offload.
->>>>>>>
->>>>>>> Note: If the property is not added for CDSP/GDSP, only secure device node can
->>>>>>> be used for signed PD offload, if non-secure device is used, the request gets
->>>>>>> rejected[1].
->>>>>>>
->>>>>>> [1] https://git.kernel.org/pub/scm/linux/kernel/git/next/linux-next.git/tree/drivers/misc/fastrpc.c#n1245
->>>>>>>
->>>>>>> //Ekansh
->>>>>> Does this mean that the qcom,non-secure-domain property should be dropped from both nodes?
->>>>> I checked again and found that unsigned module support for CDSP is
->>>>> not available on this platform. Given this, the safest approach would
->>>>> be to add the property for both ADSP and CDSP, ensuring that all
->>>>> created device nodes can be used for signed PD offload. I can provide
->>>> The property allows *unsigned* PD offload though
->>> I don't think I can directly relate this property to unsigned PD offload. This is just
->>> defining what type of device node will be created and whether the channel is secure
->>> or not. There is a possibility of making unsigned PD request(on CDSP/GDSP) irrespective
->>> of whether this property is added or not. If DSP does not support unsigned offload, it
->>> should return failures for such requests.
->>>>> a more definitive recommendation once I know the specific use cases
->>>>> you plan to run.
->>>> Why would the usecase affect this?
->>> I'm saying this as per past discussions where some application was relying on non-secure
->>> device node on some old platform(on postmarketOS)[1] and having this property in place.
->>> So if similar usecase is being enabled here, the property might be required[1].
->> I'm testing these changes on postmarketOS. However, sensors aren't working
->> through FastRPC on sdm660.
-> How? Could you mention, what exactly doesn't work?
-I meant that smgr doesn't use the FastRPC
->> Is it better to leave this property for both nodes?
->>
->>> [1] https://lkml.org/lkml/2024/8/15/117
->>>> Konrad
->> -- 
->> Best regards,
->> Nickolay
->>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+
+
 -- 
-Best regards,
-Nickolay
-
+With best wishes
+Dmitry
 
