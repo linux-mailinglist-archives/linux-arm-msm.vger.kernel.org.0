@@ -1,137 +1,182 @@
-Return-Path: <linux-arm-msm+bounces-82785-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-82786-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
-	by mail.lfdr.de (Postfix) with ESMTPS id 91AE2C78039
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Nov 2025 09:56:05 +0100 (CET)
+Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [IPv6:2605:f480:58:1:0:1994:3:14])
+	by mail.lfdr.de (Postfix) with ESMTPS id A8F41C780AA
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Nov 2025 10:04:04 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by tor.lore.kernel.org (Postfix) with ESMTPS id A767B2CF38
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Nov 2025 08:56:03 +0000 (UTC)
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 6812F4E649F
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Nov 2025 09:04:03 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E1ADE33C50E;
-	Fri, 21 Nov 2025 08:55:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A26D933E341;
+	Fri, 21 Nov 2025 09:03:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="eJOhqxZI"
+	dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b="crNDnz7J"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f54.google.com (mail-wm1-f54.google.com [209.85.128.54])
+Received: from mail-lf1-f41.google.com (mail-lf1-f41.google.com [209.85.167.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35B1B7405A
-	for <linux-arm-msm@vger.kernel.org>; Fri, 21 Nov 2025 08:55:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6105333A6E6
+	for <linux-arm-msm@vger.kernel.org>; Fri, 21 Nov 2025 09:03:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763715355; cv=none; b=GyNO7Nm90yuzkuoedlDGBWoLRY4B5LFHOdS+WNWnAk8DBCnwrw+VFlbGf3ROIV/LiRynyKaaLWnWRm7+fblOmqMSQRqks2ymzh9jSL2Rp3wz3zMAK5DSov1CTzuxqAxynXg4UQvfCoP4WHfzPMDxlPN2X48q5Kr7Eqwj2NSDUzg=
+	t=1763715837; cv=none; b=ptF1vHDDTpau7g5hOsFB1au8k2fg3HjR93q5mByWXFQiDHTkl3v5M2ZePEH/AHF1Xvcs7cfTx83d8V1330zeZtbALqpngNTtTRJ3qXECm7l6nWktMV7RLKDNMPj2dX5f20v4iGa1XeSCDMaPok3+TxPn8yRfE3kfMqthrsD3bB4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763715355; c=relaxed/simple;
-	bh=OoL2umZT03m72CkFeJusRaWHWhvFa9IHNPN2eP9Kd9g=;
-	h=Message-ID:Date:From:To:Cc:Subject:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=iNokYw9JtCMvSuYjyAhSqNWVCMCBgz7usN5XUYFsHGqFAJ8XzAPohdVE3sTlMFRHMPR98ff8iBRD8pw/8vybKGpp6n0dc07lw7o1wWuV4pkoDx4xLmi5lI0knniKFR7/2LlH9LegSUZJif/wGh5KIf9FYMgg5feg0L01Ycru2MQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=eJOhqxZI; arc=none smtp.client-ip=209.85.128.54
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-wm1-f54.google.com with SMTP id 5b1f17b1804b1-477563e28a3so12290805e9.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 21 Nov 2025 00:55:53 -0800 (PST)
+	s=arc-20240116; t=1763715837; c=relaxed/simple;
+	bh=7oJ3FzW76jvcvPZYZdFnXMjjUYeOTlfsS6uSULymDYU=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=YXq+YA5xkCWavEuwCJ1MjMWqewjywI865XVql/rJb0G++oWglQMNhMRgeYU1Ly///ISfCIGzN2kDWhV0t1eyYDfxf51tPyATQJ/jNdQoaadiPf1vOoYc2cn21J6oiiraHVSjihVfZHNyyD93PZqR76rM5k9FttWsCWHb+Cv15jo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl; spf=none smtp.mailfrom=bgdev.pl; dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b=crNDnz7J; arc=none smtp.client-ip=209.85.167.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=bgdev.pl
+Received: by mail-lf1-f41.google.com with SMTP id 2adb3069b0e04-5942bac322dso1575492e87.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 21 Nov 2025 01:03:55 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1763715352; x=1764320152; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:subject:cc
-         :to:from:date:message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=SMm/YL9VsIZIkUk1u+E8h9LVIR7JYnW9dD/TgeFH9hE=;
-        b=eJOhqxZIzB9/hEwxQjPRJif6AyoDigeP1L0SpgSJURrD5DAgQDurduKyqVnn1EXgSG
-         X0B1uYeKEEfNpIF7JUR9Fbr3xd9edaL/+968PTSawNpiEBFzMcNRAVKvRS3kdL1EsFqK
-         bgkozwQVzv496Caw9zKX5BEy2gi2ACdQMD88qUF77yPZAe3G+luGRuvSKzgKljOBQbHw
-         CNetYgxrsyEvdfIrRkbqxfKMLLv5xm/9v0GCMtenQ6qscHYTrw6thipEwaXEuRkj7fg2
-         GtBmUhwZpfHJNe6nAtBz8DUHSB2+hS38gZDMvUhzledCvek3TSX3qb5mnBIr9FYkKv+n
-         CZVQ==
+        d=bgdev-pl.20230601.gappssmtp.com; s=20230601; t=1763715833; x=1764320633; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=qcWFlcuSs7Y0eO4oq2DsaroJj7DisvwmuRZnugA2UKI=;
+        b=crNDnz7JsKDrVf+c9ML/Yi+wl+7ATQVsTeDb7bd1ZUZ70TcLTwxSohtrwcY8zcZDE7
+         ebiP3Uph5U4pDL9jBv9CM9hmLkIqU+MRGi+0jwvV3MD52m6d09loKJvpDu7iZNQqNFZw
+         UnE55uyAv8afXzudxDdS0IGR+MROfaDgUDAJHZYHYOIKlh5sk1+KVSfoDyfiXAStHGkC
+         86niqR/buV09FsAgkYyVa2nRx5NqXW049/otL7pzrwneiSXiNCDwdSdEm7D5x0uo48T4
+         YLxJIvgfOON7gtGahs584M6LoOsUB2OrS6zD1Qg2YtV58G30k5B3aIujKzHFKxjWIIdH
+         v2Cg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1763715352; x=1764320152;
-        h=in-reply-to:content-disposition:mime-version:references:subject:cc
-         :to:from:date:message-id:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=SMm/YL9VsIZIkUk1u+E8h9LVIR7JYnW9dD/TgeFH9hE=;
-        b=kIzch6O48NRyuAWHAV2jLTib1Nh8Jh5/d1wJupjsoZi2YmQ9UQympzkudIAtmxgFnB
-         6po2uW7mkwUgUKi+f/4T+FN4WNKHVx1ydNpeVfW/WsYPxC20dPLCCPPoa31rGyIxAxrC
-         uK/7Jo0TE+46x+Akeaer66WR/AKgdMswWSZerPRwAi9tNFAJtTqvrVY2dwFMh9a/xMck
-         OtHrIHoTMFqOThTOuGCETTlfllPbbRKJZLHylq8R6GIz/7shlaMfTwGMNXZxRlBVGb2L
-         4ba8b9ZYRHOMoXGDqf5ZMgj+8aGHHL3h1HaAxgG3Zz80YwhtGB3865o7P0HXD8WuhTPW
-         SReQ==
-X-Gm-Message-State: AOJu0YypN1oqZWv/CIdICzjm76eLp2SFKKrQJP9jdlvllLzPXEsnvUdr
-	xxvi1oOkqkgxGRSwXXR3egCj910qAx4QV/70DOs7Raqk9GW4GuPB1WOS289cBA==
-X-Gm-Gg: ASbGncu9hKo9Q1DMT6jSs6a7X9zR2dB3S6D43ePkSyNJD4T3Zd2vGOQsvOVwAMuP3qw
-	cilCdR8aZ9Metzgh4r40LuVgE16LgB7BJ8bigd2V70IwqZlp6dB9Geg1RaRm8++1m0JzegZt0w7
-	47NGClKQ9KE9wT9C6eqK8Fyn7IUzJRBbOPShRSfkpwMLtmUbcFwA1srddpJRBhB18qT+8py9N5i
-	lYnSrGBOZo097fBESuTJL9eurC+EYY6z4BwM/lPDUzEvGSbW9nt7pquCyQzXffet13GA4ALiJdR
-	A2MvTRlfQhRJzlMJq6BXEdev0KAnfSIuHnxSFm90DFhlVd9MGdYvJdOV0/tDtdf391Hews7tSYq
-	fSpGatFRAJQ5M5rYC2L+9KIry+C5U3LNr/gl8O3Mtk9Twsmlff5ZiMX2FM5+KZqF7odw1fdFaX2
-	YbXnb//zKgpgC2djgGVhWZ9TgoyeEm4ZHZiF0J0fiqFeoC7ByhsA==
-X-Google-Smtp-Source: AGHT+IHWgdKXsY37uiJeh/GHImX5sD3eIwyAoodvXy8X4oRJ+Y+XJcHEJulJZ1TZPsZK0kLmINMseg==
-X-Received: by 2002:a05:600c:1d14:b0:477:9d88:2da6 with SMTP id 5b1f17b1804b1-477c026ed62mr15395755e9.0.1763715352200;
-        Fri, 21 Nov 2025 00:55:52 -0800 (PST)
-Received: from Ansuel-XPS. (93-34-90-37.ip49.fastwebnet.it. [93.34.90.37])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-477bf355933sm33758365e9.2.2025.11.21.00.55.51
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 21 Nov 2025 00:55:51 -0800 (PST)
-Message-ID: <69202917.7b0a0220.234ce9.9e36@mx.google.com>
-X-Google-Original-Message-ID: <aSApFlqNOF6D9zGM@Ansuel-XPS.>
-Date: Fri, 21 Nov 2025 09:55:50 +0100
-From: Christian Marangi <ansuelsmth@gmail.com>
-To: Dan Carpenter <dan.carpenter@linaro.org>
-Cc: linux-arm-msm@vger.kernel.org
-Subject: Re: [bug report] soc: qcom: smem: better track SMEM uninitialized
- state
-References: <aSAnR3ECa04CoPqp@stanley.mountain>
+        d=1e100.net; s=20230601; t=1763715833; x=1764320633;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=qcWFlcuSs7Y0eO4oq2DsaroJj7DisvwmuRZnugA2UKI=;
+        b=QWUoS8fGXs4ZEZoaJ3zmPUkD/qlwv0dnxKdigyEBCOvAq+Nle4x6Qd0fUEK/XbaQRV
+         jtD0OvrskRltkq+hBgOwAOK3iCGULjZAMaex3tHGGrPEDlMBUnQAyt0u+zWcpzhh45XV
+         p4hSn0mhiNP/DypaQXTX3mVemxq6POXob4Ix+qffcbAC6G9gADqMpKl7mY/Kjsi1Kg5T
+         qEt0q4p6hray18RVA6gRgA7dggIic7qEdrtEsin4i99u1tatjsYJbXa0S23gkevBzF1i
+         Ub+o+vwlzGsxhTubKnIEj8eCCCMu8EvZivyS9e4y3qPmwWkYrn46ZfkKujp0xMWoLden
+         +tuw==
+X-Forwarded-Encrypted: i=1; AJvYcCWkf8TjQgFWSuktDb1lHVopMAr/ZitqmMV3OdkDJQOW/88Y170YH0qRSHtMlIQa0IsPq6NILb6Q6rLmZD8F@vger.kernel.org
+X-Gm-Message-State: AOJu0YyMWC2NrpDd3Os0pyAZ68LNLXkwKDeJ6HY9Gj3hlq5yjgAdhevR
+	VjUBt7FswBaZXIO9QOuG1c2l1QiSJq7L0p03ntJ/cyshUoYZsshyXiw4/mkpekZjIh0lq+IyzQP
+	sDZYidrkm7XZZP1WgFWA9VIYwwrgku6QPTmcyc5zPvw==
+X-Gm-Gg: ASbGnctuJS4Hb3xauiyzCDLHDctNk7xxSN3+TNTYmN71L2bivgSPQMrzrUK44WHTp5T
+	x8A9zfR3IZ3UE7ifAfD00uLIlOjMD8svbl5BKBoP5eMaAS5/olQfHLYpCug1cVXjtVM7RErxlrT
+	hG252wOES0ubMImXabiuI+3ozLPiE+8/BfDTEvo2Pz40cKm2GuNrCvvfUUayzJIMLTGH+UDsNIh
+	6MzTR00xtJFghHfcBt/g8HZqbp5pt6c3kmnOasyEJOgj4Ya/s4Mt5FQOZfm6nuZ60ilQtd9lmxa
+	Fr3GYa8roZO41jVOul1ZHgH5a0k=
+X-Google-Smtp-Source: AGHT+IG0xMLdX41Lvo7vBm08ZV8ZEpQ5JhaXD6X3/W4zoN34NhHz8H25fTpuCQYyNb+ut5xnYF/JFxp9/xuV++nbU+8=
+X-Received: by 2002:a05:6512:e8c:b0:594:2f72:2f7b with SMTP id
+ 2adb3069b0e04-596a3e9fd96mr603564e87.6.1763715833160; Fri, 21 Nov 2025
+ 01:03:53 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <aSAnR3ECa04CoPqp@stanley.mountain>
+References: <20251112-gpio-shared-v4-0-b51f97b1abd8@linaro.org> <3b5d9df5-934d-4591-8827-6c9573a6f7ba@packett.cool>
+In-Reply-To: <3b5d9df5-934d-4591-8827-6c9573a6f7ba@packett.cool>
+From: Bartosz Golaszewski <brgl@bgdev.pl>
+Date: Fri, 21 Nov 2025 10:03:40 +0100
+X-Gm-Features: AWmQ_bkRtfIm-ZUN8rNvHIz8drG7ooSNLpBN4-3cE0G66VIlgSyBd_sHX8YgQAA
+Message-ID: <CAMRc=McHCG8N0zeVUUvYF+rHqBrBKe52o+pf+Hjp5dnG3+NmjA@mail.gmail.com>
+Subject: Re: [PATCH v4 00/10] gpio: improve support for shared GPIOs
+To: Val Packett <val@packett.cool>
+Cc: Kees Cook <kees@kernel.org>, Mika Westerberg <westeri@kernel.org>, 
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>, Andrew Morton <akpm@linux-foundation.org>, 
+	Linus Walleij <linus.walleij@linaro.org>, Manivannan Sadhasivam <mani@kernel.org>, 
+	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Saravana Kannan <saravanak@google.com>, Greg Kroah-Hartman <gregkh@linuxfoundation.org>, 
+	Andy Shevchenko <andy@kernel.org>, Catalin Marinas <catalin.marinas@arm.com>, Will Deacon <will@kernel.org>, 
+	Srinivas Kandagatla <srini@kernel.org>, Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>, 
+	Jaroslav Kysela <perex@perex.cz>, Takashi Iwai <tiwai@suse.com>, 
+	Alexey Klimov <alexey.klimov@linaro.org>, Bjorn Andersson <andersson@kernel.org>, 
+	Konrad Dybcio <konradybcio@kernel.org>, linux-hardening@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, linux-gpio@vger.kernel.org, 
+	linux-arm-kernel@lists.infradead.org, linux-sound@vger.kernel.org, 
+	linux-arm-msm@vger.kernel.org, 
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Fri, Nov 21, 2025 at 11:48:07AM +0300, Dan Carpenter wrote:
-> Hello Christian Marangi,
-> 
-> Commit 7a94d5f31b54 ("soc: qcom: smem: better track SMEM
-> uninitialized state") from Oct 31, 2025 (linux-next), leads to the
-> following Smatch static checker warning:
-> 
-> 	drivers/soc/qcom/smem.c:519 qcom_smem_alloc()
-> 	warn: '__smem' can also be NULL
-> 
-> drivers/soc/qcom/smem.c
->     509 int qcom_smem_alloc(unsigned host, unsigned item, size_t size)
->     510 {
->     511         struct smem_partition *part;
->     512         unsigned long flags;
->     513         int ret;
->     514 
->     515         if (IS_ERR(__smem))
->     516                 return PTR_ERR(__smem);
-> 
-> We recently changed this from being NULL at the start to being -EPROBE_DEFER
-> but the qcom_smem_remove() function still sets it to NULL and the
-> qcom_smem_is_available() still expects it to be NULL at the start so it
-> needs to be updated as well.
-> 
->     517 
->     518         if (item < SMEM_ITEM_LAST_FIXED) {
-> --> 519                 dev_err(__smem->dev,
->     520                         "Rejecting allocation of static entry %d\n", item);
->     521                 return -EINVAL;
->     522         }
-> 
+On Fri, Nov 21, 2025 at 1:28=E2=80=AFAM Val Packett <val@packett.cool> wrot=
+e:
+>
+> Hi,
+>
+> On 11/12/25 10:55 AM, Bartosz Golaszewski wrote:
+> > ---
+> > Bartosz Golaszewski (10):
+> >        string: provide strends()
+> >        gpiolib: define GPIOD_FLAG_SHARED
+> >        gpiolib: implement low-level, shared GPIO support
+> >        gpio: shared-proxy: implement the shared GPIO proxy driver
+> >        gpiolib: support shared GPIOs in core subsystem code
+> >        gpio: provide gpiod_is_shared()
+> >        arm64: select HAVE_SHARED_GPIOS for ARCH_QCOM
+> >        ASoC: wsa881x: drop GPIOD_FLAGS_BIT_NONEXCLUSIVE flag from GPIO =
+lookup
+> >        ASoC: wsa883x: drop GPIOD_FLAGS_BIT_NONEXCLUSIVE flag from GPIO =
+lookup
+> >        regulator: make the subsystem aware of shared GPIOs
+>
+> this seems to actually have caused a regression for me, audio does not
+> initialize anymore on hamoa due to EBUSY since upgrading
+> from next-20251114 to next-20251118 or next-20251120:
+>
 
-Hi,
+Thanks for the heads-up.
 
-I remember editing qcom_smem_is_available but probably it got lost when
-amending the changes.
+> [   11.748781] platform
+> 6800000.remoteproc:glink-edge:gpr:service@1:dais: Adding to iommu group 3=
+0
+> [   11.785864] wsa_macro 6aa0000.codec: using zero-initialized flat
+> cache, this may cause unexpected behavior
+> [   11.796964] reset-gpio reset-gpio.0: error -EBUSY: Could not get
+> reset gpios
+> [   11.796984] reset-gpio reset-gpio.0: probe with driver reset-gpio
+> failed with error -16
+> [   11.894662] reset-gpio reset-gpio.1: error -EBUSY: Could not get
+> reset gpios
+> [   11.894676] reset-gpio reset-gpio.1: probe with driver reset-gpio
+> failed with error -16
 
-Creating a fix patch just now. Can you help me with what link I should
-put in the Closes tag?
+It seems like it's the reset-gpio driver, not shared GPIOLIB path?
+This driver has never used the GPIOD_FLAGS_BIT_NONEXCLUSIVE flag.
 
--- 
-	Ansuel
+> [   12.006938] wcd938x_codec audio-codec: bound sdw:2:0:0217:010d:00:4
+> (ops wcd_sdw_component_ops [snd_soc_wcd_common])
+> [   12.006964] wcd938x_codec audio-codec: bound sdw:3:0:0217:010d:00:3
+> (ops wcd_sdw_component_ops [snd_soc_wcd_common])
+> [   15.424657] qcom-soundwire 6ab0000.soundwire: qcom_swrm_irq_handler:
+> SWR CMD error, fifo status 0x4e00c00f, flushing fifo
+> [   21.994354] qcom-soundwire 6ab0000.soundwire: qcom_swrm_irq_handler:
+> SWR CMD error, fifo status 0xe00c000, flushing fifo
+> [   21.996001] qcom-soundwire 6b10000.soundwire: qcom_swrm_irq_handler:
+> SWR CMD error, fifo status 0x4e00c00f, flushing fifo
+> [   21.996239] platform sound: deferred probe pending: snd-x1e80100: WSA
+> Playback: codec dai not found
+> [   21.996248] soundwire sdw:4:0:0217:0204:00:0: deferred probe pending:
+> wsa884x-codec: Failed to get reset
+> [   21.996250] soundwire sdw:4:0:0217:0204:00:1: deferred probe pending:
+> wsa884x-codec: Failed to get reset
+> [   21.996251] soundwire sdw:1:0:0217:0204:00:0: deferred probe pending:
+> wsa884x-codec: Failed to get reset
+> [   21.996253] soundwire sdw:1:0:0217:0204:00:1: deferred probe pending:
+> wsa884x-codec: Failed to get reset
+>
+> gpio_shared_proxy, reset_gpio, pinctrl_sm8550_lpass_lpi are all built as
+> modules and were autoloaded fine.
+>
+> This is wsa884x (not wsa881x nor wsa883x), failing in
+> devm_reset_control_get_optional_shared..
+>
+
+Can you enable DEBUG_GPIO in menuconfig and post the entire kernel log
+somewhere as well as the output of gpiodetect and gpioinfo after
+booting?
+
+Bartosz
 
