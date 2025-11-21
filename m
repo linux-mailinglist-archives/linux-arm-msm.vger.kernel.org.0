@@ -1,156 +1,147 @@
-Return-Path: <linux-arm-msm+bounces-82760-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-82761-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id A88E4C7694F
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Nov 2025 00:11:51 +0100 (CET)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7AE32C76C65
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Nov 2025 01:28:08 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by tor.lore.kernel.org (Postfix) with ESMTPS id 6EBD828FB8
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Nov 2025 23:11:50 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTPS id 762E1208DC
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Nov 2025 00:28:07 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id AC94A30F95E;
-	Thu, 20 Nov 2025 23:11:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id BB3F5247289;
+	Fri, 21 Nov 2025 00:28:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="TPS7EjBc"
+	dkim=pass (2048-bit key) header.d=packett.cool header.i=@packett.cool header.b="u0pinqtH"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yw1-f179.google.com (mail-yw1-f179.google.com [209.85.128.179])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from out-176.mta1.migadu.com (out-176.mta1.migadu.com [95.215.58.176])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D844330C353
-	for <linux-arm-msm@vger.kernel.org>; Thu, 20 Nov 2025 23:11:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.179
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8023F22688C
+	for <linux-arm-msm@vger.kernel.org>; Fri, 21 Nov 2025 00:28:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.176
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763680277; cv=none; b=NGYTsit7fHPSGIlqq/OUWf/94Oah477Uf7oW15TFi8bc5+flk0CPTirQy8kDIxaKdKc2ZxuR8bYqmK6y6ymrNIMm4o8yOQvHiA1DTeGMo6hUbpS/Mg0qq/OcobpcXDAsduLFuQPQukGrb+X+3hax7vGiA3pca5VXkSRMYRlMGBo=
+	t=1763684884; cv=none; b=u9sb5a4JuSb0YoiZcVYFQRz40ORb0P17EWDcN09YuB+whzjs26cyGduHWwpXcQIB9p+B03oAQIzHpiUDkHEDbS+bwMtGyAgqScxRZ7jYdIIgi1bjNaSIKTzH+rHePGnuCHe08E4xvGUvn0rFI2ic2SLOtCTrRaOCQR9Xx+RoAIg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763680277; c=relaxed/simple;
-	bh=RWbkz0FLNAqiFbTIDMPZWfStC9RZXbov6DV0vU/FWDI=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=KzYmrX8E+HdwEwJD/2EYoFzfUZAzGVGmji7uglaW0URd6OdHdEyruRHsJfvVg46T2qtXwS04ZCgygtndNYxyz2T9Z8Zpd6UXlkMtlcCQgffAxFueh56x0FkVoCPEKQubB88Qu4hokTG8hkOMTJ55jbAbJiArpEPfiIYQPkeM7yY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=TPS7EjBc; arc=none smtp.client-ip=209.85.128.179
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-yw1-f179.google.com with SMTP id 00721157ae682-7866aca9ff4so14705817b3.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Nov 2025 15:11:15 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1763680275; x=1764285075; darn=vger.kernel.org;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=ByHN86RKXbbjzL7Ln3obHD3GU9SMY5OMdZPiBZnxHUA=;
-        b=TPS7EjBcboNVZe72bKawkMHSU3gQUHQ0ip1aX8M5+UqLIst3R42q1gKHE+KIBWzxVt
-         ECOmJQ4M20+ZdO+knkAIRki92tFMGXt4dPVbW4QSCs1q04qAFgBEAmAxeR9TQ9SfTdJe
-         xYBok/kataXs8QeJ+f3XaLd9986+nQgz/IZykPCA7m18XD4fH1wS7NiCMomgj1dEN3TM
-         rrHlwgM8dpSmKMblBZQu04gTNd9Tq/gdis7Rccv3lvd2LtWpe/ujPA6rnQhrhNnxmteX
-         TSr1L/yrIIL039jY/Rod7n4GxnTTPBnkZKF1NZX9zMqhmwUWkspao1AoGXxnfv1mdY6k
-         wL6w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1763680275; x=1764285075;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=ByHN86RKXbbjzL7Ln3obHD3GU9SMY5OMdZPiBZnxHUA=;
-        b=o2Jdbcc3qDMUapNkRdXt1kNFUoaxZ4d+5j+itcy2GVG7EjzKh11A1C9IgcHFyVclIJ
-         M2n/eNlP0F3cgm07Qsu5If7u5Hnx01k/RMFaSUZ+mL7RxtSzafUUWsF10It3md+Gwk0j
-         BOqGXDOHFREBk+k5T3sLCzBiQdTqMNJ3tdfUUB4TjxpGicmGT8ARir22v6ZMiJ3I0aC3
-         HcJgmxvxL1Il7vVLoPAEDnIWW71kMZohHqWtv+I5TcQAouP/wp2PV9MW30ZE2/NL91rz
-         AWshV+G8kaAaQR/8XFF+Wn2Q7vr1FMTD2DQcK4TUT5m++s/nC7tPO7Sn6kdiUEgGOJ6h
-         G+Vg==
-X-Gm-Message-State: AOJu0YyfVfj0b2Id0XEPunk/TZH4xdpJ3jnVwre1Q4HDORuq6pzzPZaU
-	DsrahnhnkiPp81Ckh+2/oP9S/D8d51MgyM1CrYeTttvNLiCa/0s8QyMY
-X-Gm-Gg: ASbGncvt/bFK4mVFDT1ABEsYlSLOdY3jORTbJD/bOyRD/fjJGa0FEFKEMa1o7oXaLk5
-	LoZs2BD4Pa2OLHYWIiDbH0GeQCKCcQVDZR04Mr1T4ghOvZRly6PPPE/oBAu7WhpjCD/TEs7rS/n
-	5voi7QAxY8bDm11bo8jf6jQeGdc0OWlax7eDenu400srj28m9YAKtUq3asijthRPmQ6O7MsQ953
-	yl4GXNyfUQxmziLDuEIgMVqEkPbOV5c7d4QZaUzv1AQli/HXxHXYvy4i2QIEKpPrH/v6JuX+umf
-	jNC1CqEIwS2sPQ4Z2p99YBCCNJ7yi/h2xmyLv0vlYlgo0J3D2ftwp1SwLuzNoFozIyjSbY1skt3
-	mcKO0kZDqIzCjmKFiiZHG0sA12QBfClNMXc0PTgD6pNo/2xWr6XfVBVlms8c5ivQqzXC5zcJ6gy
-	UjoCHAehtJVe53HQ==
-X-Google-Smtp-Source: AGHT+IHAqrI4OKxe6x7HzMwP3ZGJuM+Wn2lQgIYDF8LTfS7H2cC7/bDnF1Smik688KfunshhtI7BPw==
-X-Received: by 2002:a05:690c:4c12:b0:786:68da:26d6 with SMTP id 00721157ae682-78a8b47f539mr1457147b3.2.1763680274745;
-        Thu, 20 Nov 2025 15:11:14 -0800 (PST)
-Received: from [192.168.0.39] ([79.133.247.80])
-        by smtp.gmail.com with ESMTPSA id 00721157ae682-78a798a7f19sm11356807b3.20.2025.11.20.15.11.12
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 20 Nov 2025 15:11:14 -0800 (PST)
-From: Erikas Bitovtas <xerikasxx@gmail.com>
-Date: Fri, 21 Nov 2025 01:10:49 +0200
-Subject: [PATCH v2 2/2] arm64: dts: qcom: msm8939-asus-z00t: add hall
- sensor
+	s=arc-20240116; t=1763684884; c=relaxed/simple;
+	bh=iAtyAHeFXno+x3emC1dduNajG8biFIGO/mpNi/3NyWo=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=T6INlt8oBFod6nDgqNm9EvVkNDi/d3njmgIY7J+xC3VP60ohCZ0IJE6GF1JGFZ2ShFoxy2zYjn6qsAfxJ8+D6Km68hpPmVMxzUtG/bEJfE76bQ9ub8uE5m1/Ube84eWRCMcIiDQFCoBvdofFiNVu2AD3yq+b4jo9RnpeKSbY7Rg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=packett.cool; spf=pass smtp.mailfrom=packett.cool; dkim=pass (2048-bit key) header.d=packett.cool header.i=@packett.cool header.b=u0pinqtH; arc=none smtp.client-ip=95.215.58.176
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=packett.cool
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=packett.cool
+Message-ID: <3b5d9df5-934d-4591-8827-6c9573a6f7ba@packett.cool>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=packett.cool;
+	s=key1; t=1763684880;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=AsdQVZDTYPb+WJU5W+qBd4HHdK8qY/Whv5lgvrY3/f4=;
+	b=u0pinqtH5K5gMsYy6NyVpNY8dBuXeK5wBOcc2uf8rR1UgTk27xhJcC4Hj3lRoUnQHyyesm
+	XtKuphT7jjVztBw5mmcMZ9nsEyPEge4LHLnbmkUQLmEipQwAeeARmAV3+Zv8F8MtMQR88H
+	GNm3VkgBHJQ34FpknGh5YM4A8fMJNFGWMepFqY8hmb0xGyu7BY2z+T5AwQ2baE3G+EwjI5
+	xuYD3tS3H1InSop+P0eI4NkXDdZy+A6VrV0ubA2Na1REKSrjDr+4HGe0jKa6mFVVoXOV5O
+	5qXieNcr64wSjFk/5s5DFjfb8eXE5bpDolBEKQ9+bAtF9O9D8BpiY3XdQPnwqA==
+Date: Thu, 20 Nov 2025 21:27:46 -0300
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20251121-battery-hall-v2-2-d29e0828f214@gmail.com>
-References: <20251121-battery-hall-v2-0-d29e0828f214@gmail.com>
-In-Reply-To: <20251121-battery-hall-v2-0-d29e0828f214@gmail.com>
-To: Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
- linux-kernel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht, 
- phone-devel@vger.kernel.org, Erikas Bitovtas <xerikasxx@gmail.com>
-X-Mailer: b4 0.14.3
+Subject: Re: [PATCH v4 00/10] gpio: improve support for shared GPIOs
+To: Bartosz Golaszewski <brgl@bgdev.pl>, Kees Cook <kees@kernel.org>,
+ Mika Westerberg <westeri@kernel.org>,
+ Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+ Andrew Morton <akpm@linux-foundation.org>,
+ Linus Walleij <linus.walleij@linaro.org>,
+ Manivannan Sadhasivam <mani@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Saravana Kannan <saravanak@google.com>,
+ Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+ Andy Shevchenko <andy@kernel.org>, Catalin Marinas
+ <catalin.marinas@arm.com>, Will Deacon <will@kernel.org>,
+ Srinivas Kandagatla <srini@kernel.org>, Liam Girdwood <lgirdwood@gmail.com>,
+ Mark Brown <broonie@kernel.org>, Jaroslav Kysela <perex@perex.cz>,
+ Takashi Iwai <tiwai@suse.com>, Alexey Klimov <alexey.klimov@linaro.org>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>
+Cc: linux-hardening@vger.kernel.org, linux-kernel@vger.kernel.org,
+ linux-gpio@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+ linux-sound@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+ Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+References: <20251112-gpio-shared-v4-0-b51f97b1abd8@linaro.org>
+Content-Language: en-US
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
+From: Val Packett <val@packett.cool>
+In-Reply-To: <20251112-gpio-shared-v4-0-b51f97b1abd8@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Migadu-Flow: FLOW_OUT
 
-This device uses ANPEC APX9131 hall sensor. It is a basic GPIO hall
-sensor for which a generic "gpio-keys" device tree node configuration
-suffices.
+Hi,
 
-Signed-off-by: Erikas Bitovtas <xerikasxx@gmail.com>
----
- arch/arm64/boot/dts/qcom/msm8939-asus-z00t.dts | 18 +++++++++++++++++-
- 1 file changed, 17 insertions(+), 1 deletion(-)
+On 11/12/25 10:55 AM, Bartosz Golaszewski wrote:
+> ---
+> Bartosz Golaszewski (10):
+>        string: provide strends()
+>        gpiolib: define GPIOD_FLAG_SHARED
+>        gpiolib: implement low-level, shared GPIO support
+>        gpio: shared-proxy: implement the shared GPIO proxy driver
+>        gpiolib: support shared GPIOs in core subsystem code
+>        gpio: provide gpiod_is_shared()
+>        arm64: select HAVE_SHARED_GPIOS for ARCH_QCOM
+>        ASoC: wsa881x: drop GPIOD_FLAGS_BIT_NONEXCLUSIVE flag from GPIO lookup
+>        ASoC: wsa883x: drop GPIOD_FLAGS_BIT_NONEXCLUSIVE flag from GPIO lookup
+>        regulator: make the subsystem aware of shared GPIOs
 
-diff --git a/arch/arm64/boot/dts/qcom/msm8939-asus-z00t.dts b/arch/arm64/boot/dts/qcom/msm8939-asus-z00t.dts
-index b58f0a04abfd..7343fb00f986 100644
---- a/arch/arm64/boot/dts/qcom/msm8939-asus-z00t.dts
-+++ b/arch/arm64/boot/dts/qcom/msm8939-asus-z00t.dts
-@@ -46,7 +46,7 @@ chosen {
- 	gpio-keys {
- 		compatible = "gpio-keys";
- 
--		pinctrl-0 = <&gpio_keys_default>;
-+		pinctrl-0 = <&gpio_hall_sensor_default>, <&gpio_keys_default>;
- 		pinctrl-names = "default";
- 
- 		button-volume-up {
-@@ -62,6 +62,15 @@ button-volume-down {
- 			linux,code = <KEY_VOLUMEDOWN>;
- 			debounce-interval = <15>;
- 		};
-+
-+		event-hall-sensor {
-+			label = "Hall Effect Sensor";
-+			gpios = <&tlmm 108 GPIO_ACTIVE_LOW>;
-+			linux,input-type = <EV_SW>;
-+			linux,code = <SW_LID>;
-+			linux,can-disable;
-+			debounce-interval = <150>;
-+		};
- 	};
- 
- 	reg_sd_vmmc: regulator-sdcard-vmmc {
-@@ -265,6 +274,13 @@ gpio_keys_default: gpio-keys-default-state {
- 		bias-pull-up;
- 	};
- 
-+	gpio_hall_sensor_default: gpio-hall-sensor-default-state {
-+		pins = "gpio108";
-+		function = "gpio";
-+		drive-strength = <2>;
-+		bias-pull-up;
-+	};
-+
- 	usb_id_default: usb-id-default-state {
- 		pins = "gpio110";
- 		function = "gpio";
+this seems to actually have caused a regression for me, audio does not 
+initialize anymore on hamoa due to EBUSY since upgrading 
+from next-20251114 to next-20251118 or next-20251120:
 
--- 
-2.52.0
+[   11.748781] platform 
+6800000.remoteproc:glink-edge:gpr:service@1:dais: Adding to iommu group 30
+[   11.785864] wsa_macro 6aa0000.codec: using zero-initialized flat 
+cache, this may cause unexpected behavior
+[   11.796964] reset-gpio reset-gpio.0: error -EBUSY: Could not get 
+reset gpios
+[   11.796984] reset-gpio reset-gpio.0: probe with driver reset-gpio 
+failed with error -16
+[   11.894662] reset-gpio reset-gpio.1: error -EBUSY: Could not get 
+reset gpios
+[   11.894676] reset-gpio reset-gpio.1: probe with driver reset-gpio 
+failed with error -16
+[   12.006938] wcd938x_codec audio-codec: bound sdw:2:0:0217:010d:00:4 
+(ops wcd_sdw_component_ops [snd_soc_wcd_common])
+[   12.006964] wcd938x_codec audio-codec: bound sdw:3:0:0217:010d:00:3 
+(ops wcd_sdw_component_ops [snd_soc_wcd_common])
+[   15.424657] qcom-soundwire 6ab0000.soundwire: qcom_swrm_irq_handler: 
+SWR CMD error, fifo status 0x4e00c00f, flushing fifo
+[   21.994354] qcom-soundwire 6ab0000.soundwire: qcom_swrm_irq_handler: 
+SWR CMD error, fifo status 0xe00c000, flushing fifo
+[   21.996001] qcom-soundwire 6b10000.soundwire: qcom_swrm_irq_handler: 
+SWR CMD error, fifo status 0x4e00c00f, flushing fifo
+[   21.996239] platform sound: deferred probe pending: snd-x1e80100: WSA 
+Playback: codec dai not found
+[   21.996248] soundwire sdw:4:0:0217:0204:00:0: deferred probe pending: 
+wsa884x-codec: Failed to get reset
+[   21.996250] soundwire sdw:4:0:0217:0204:00:1: deferred probe pending: 
+wsa884x-codec: Failed to get reset
+[   21.996251] soundwire sdw:1:0:0217:0204:00:0: deferred probe pending: 
+wsa884x-codec: Failed to get reset
+[   21.996253] soundwire sdw:1:0:0217:0204:00:1: deferred probe pending: 
+wsa884x-codec: Failed to get reset
+
+gpio_shared_proxy, reset_gpio, pinctrl_sm8550_lpass_lpi are all built as 
+modules and were autoloaded fine.
+
+This is wsa884x (not wsa881x nor wsa883x), failing in 
+devm_reset_control_get_optional_shared..
+
+
+Thanks,
+~val
 
 
