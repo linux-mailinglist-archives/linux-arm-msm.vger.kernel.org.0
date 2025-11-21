@@ -1,103 +1,102 @@
-Return-Path: <linux-arm-msm+bounces-82900-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-82899-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ams.mirrors.kernel.org (ams.mirrors.kernel.org [IPv6:2a01:60a::1994:3:14])
-	by mail.lfdr.de (Postfix) with ESMTPS id 38194C7B25F
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Nov 2025 18:57:21 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 19A29C7B25C
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Nov 2025 18:57:19 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ams.mirrors.kernel.org (Postfix) with ESMTPS id 3E39335D944
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Nov 2025 17:57:15 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 804FE3A3C2F
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Nov 2025 17:57:08 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id EEFE1350A29;
-	Fri, 21 Nov 2025 17:56:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 558523446CA;
+	Fri, 21 Nov 2025 17:56:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="ObFOOSAs";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="TIW8sXuH"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="PmkCP4QW";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="BlAy+TuF"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6EEFB350D6B
-	for <linux-arm-msm@vger.kernel.org>; Fri, 21 Nov 2025 17:56:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94C862FF656
+	for <linux-arm-msm@vger.kernel.org>; Fri, 21 Nov 2025 17:56:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763747811; cv=none; b=ESgyqnE0quDimCQDhBQZjP4gs1brAkz1FMafd7W5R2La/WEDhGbCRft2bLkzLWHZkyjarCCCOLuxziy/gBjVJfJmDnDjX9Ye4GIo6pCWZHd7559WrVhBOd0bKLysFSrD+oTD7btevIRYeC3GulmyQx0SFqXN8zFO+QnGJZiDCic=
+	t=1763747810; cv=none; b=jMrVE/wsEvnrHgRKtBc8/x3S96Pk7RxaDHokbq0ZZagr7WdBJmlN14bSuOO3b1iMECRVdJ8dLu9Z2bJ267str3Iglp4tlMMk8uYPwM6sxhu5vMUH7OcxqslgtwYePiO1AjqlvYicxcwAxKkl2/7l6xIGsvxvm5u5zg/Z+5YAeWs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763747811; c=relaxed/simple;
-	bh=ZVWDlh+/Xsn6DDxCrzSIDVLLN5JDvQzk8ly8UD1foQQ=;
+	s=arc-20240116; t=1763747810; c=relaxed/simple;
+	bh=YL2uVLUnrx/XNmW+ag5zQ2S2yrydcIJys0KbZZEEAKc=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=Z7tfXQkXaDlE+SLnhXqN4Ap3l4kOeL9mM5k1TEqkmDy3tCG+gARjESbAd9tJrN7UK2QJmaP3FIzSD4SI2v6oipme+GvUT6NgmjjA+RtzXtlG7eWx2xeOMW33HIwuB34u77T5A8PdB66DhSCaiZRL1XvWkBS4+5PoA5APbPoEV6I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=ObFOOSAs; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=TIW8sXuH; arc=none smtp.client-ip=205.220.168.131
+	 In-Reply-To:To:Cc; b=ugksfoCbMF3zbvg5l7b0tfxbvwu1vF6k2kQdypKa4/v7g86ekwymhd3lA8G00iO6mW5DNijN7DuhPgcHS0PlnWaBUh7frbMMf+ExpeETsk1cgwdrVPJgBrP/I8jlSMEph6ppzhM+fVr2HZur4iRO51BdvugC0FQlpGuSTaXuDLM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=PmkCP4QW; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=BlAy+TuF; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 5ALDYEi91638465
-	for <linux-arm-msm@vger.kernel.org>; Fri, 21 Nov 2025 17:56:48 GMT
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 5ALC60uM2759593
+	for <linux-arm-msm@vger.kernel.org>; Fri, 21 Nov 2025 17:56:47 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	G7zLRovQLnfFzAWundusPfszZbOzT0qbIZqUGlay+rE=; b=ObFOOSAsRcNnZZJ2
-	xXkJ+Ixs+yDyBEf8S8VKbLBvt4boEogNkZb+yA8iOgLt5ENPli0mQcZjPVtVU8U2
-	/lLvZ4ekCC78vz1LIMG2IehwnPGhwSM8KMQ/7wrVZY5MKmcOrAviJNfOU1+9sv3G
-	2y40j+hI6W6G8+J65XCFygd/phVLKEVgKCFLCdB81YUEifSZFKZnBLMVy1pHHcZN
-	tJSK+mRxSk0MBOO6IzsD5H/wrkbwsf4Qls+7cU1on6TOboJD2FFK4LU5vjbvPzQo
-	tNaG54xIX3YMBRwUf5WkrFV17vABi1CKS4X6EDIHqk/2kD31TKKOwCN/56csnyde
-	6Tgcbw==
-Received: from mail-pf1-f197.google.com (mail-pf1-f197.google.com [209.85.210.197])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4ajagaumvd-1
+	KGhryrcnb/27GJBj3vmuX8SUtcqUYKOKpzof9fiQq3s=; b=PmkCP4QWYNuB4Wp1
+	uDWUStKCsuIU8O7NW1iPsdNE7AsXcAuvwxUrrpSTciUHvDsqKfqL6FPZS8Xawnl2
+	kb+AuvUaIfx2/iptOtjJd/+KomtfIWPSKYcjNKROoa508zVo01mMYYtrpPjwZt5q
+	aZeA9Xqd5rTsectpXypNODyHTcktpudPdq7oi5DKfqRh3PMo6zL0lQkCvETeYMb/
+	ZuxURfFeOelnjLXaQ1VGIPLMzr8RBEQL0NTV/5jRkJC1g3kcMk1BkfO28l3GjmJI
+	ehYGd7eoLyL+MIED3MAjxWf7nShtAs/DTnNSgSARKg/la1xDo1a220vlAU7V0hN3
+	bRBMrg==
+Received: from mail-pf1-f198.google.com (mail-pf1-f198.google.com [209.85.210.198])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4ajhy62efh-1
 	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Fri, 21 Nov 2025 17:56:43 +0000 (GMT)
-Received: by mail-pf1-f197.google.com with SMTP id d2e1a72fcca58-7bf15b82042so3311534b3a.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 21 Nov 2025 09:56:43 -0800 (PST)
+	for <linux-arm-msm@vger.kernel.org>; Fri, 21 Nov 2025 17:56:47 +0000 (GMT)
+Received: by mail-pf1-f198.google.com with SMTP id d2e1a72fcca58-7b952a966d7so4813396b3a.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 21 Nov 2025 09:56:47 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1763747803; x=1764352603; darn=vger.kernel.org;
+        d=oss.qualcomm.com; s=google; t=1763747807; x=1764352607; darn=vger.kernel.org;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=G7zLRovQLnfFzAWundusPfszZbOzT0qbIZqUGlay+rE=;
-        b=TIW8sXuH+3gloyXlNoDquqKBl7iARFgpEULwShHGJUZY4jmrWGg+iJc+ZsmjZnRIBq
-         tFztbDy/EBtSJRshDivZjD2sFxtBwswcazQOWGD5TVBt6pe8NrIMRVOpoqF19jSXVN0z
-         DWw78K8D2vCqG/tyJvlLDGk0WdMrwTFeHZftWV9hSSuD8MQ+ZF149nJH6+7KtQEqhO3p
-         /Fhu3sg7Koln3LW5ZiSNK/JZZITbpCiesjd5v+vp/3O5O3t69JhxKhnabdPUxDlDFhx1
-         pPBGhs9K9OR555o4HBk47gwxrOfpL2MauHs7rRfdoxg/K6Yobb5Z7XyFHa/W0FXuUmbA
-         cTZQ==
+        bh=KGhryrcnb/27GJBj3vmuX8SUtcqUYKOKpzof9fiQq3s=;
+        b=BlAy+TuFTYBuC8Cb3Dy4CM7nQX73C/WvL3msyD1jHCGnuTgC4cFZ9lrJR5gE2f9vR/
+         9tY2XhcQ8+MjYYThDcAseXrCToDTTFdijOjWq+umkaSk5wLRDAibtuGlNLyVqQ85O8NH
+         hhsk0hxEvUEoODqbbws5SuOxFMl4tX79H4Ewt2Jx5GAD7Lgjz77E4kc4VC2UbCCp54CW
+         bnCn4dCTEc5/EL6PGBhi7hpMAOtnq/M7dBvISywkQt+ZOjwyQGrHO8QeE7KJ4M+eK4xs
+         Rx2/MCdPEB+bFc0cQelZ8FfcnhCcUnuFUZ0ncSeI7oDtM8pVVFNgo7FZ1PKP8guQzl75
+         Vk2A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1763747803; x=1764352603;
+        d=1e100.net; s=20230601; t=1763747807; x=1764352607;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
          :cc:subject:date:message-id:reply-to;
-        bh=G7zLRovQLnfFzAWundusPfszZbOzT0qbIZqUGlay+rE=;
-        b=t2jwww4EglSJk2j+81RlE0oTD7xj5ysvS2Re6XrYBOJVSMIBCKVE9YKkkNiWQvEdQg
-         ZBvaM1L+Vw0EnXdXylJxPeXehu0vUUiDZZasTRDZylacLPv96eER5bKAZJYXNYGiOyHP
-         dnIB9AgpgN8ZCJRN44nYDM1OlvvJkQCbqWyf/fxSXlow5TRBXn3RGCfhuBR3awAy6jhy
-         TceLExQvEB0V/MEBw1egvKDAMxCA6EJ2IODRSbNuUsDOJV4G1vqP1T5t5FRCIMeSbnPB
-         cEm3d0+KLsef5aWVmKRFT1gPavVslgSrj13oyrOOWUXA98KfVQfwMD1UkRFHk/pl0zCh
-         0FTw==
-X-Forwarded-Encrypted: i=1; AJvYcCXpjcLCWvqNNeiqAECg/vGEQn8qA3LdyDGUQxaxUvi1oKfdq/fsjrlo+SKR+hY+Tx55RjroX1ea67Kb6Aix@vger.kernel.org
-X-Gm-Message-State: AOJu0YwOoEFl3R93eVKvCvzYobbJCba94gCjoQ+QtZTy6sjsNCF2q4Mv
-	GQt8q/OdR/QyAgaahUuV0TXWIBivQaqssiL0ydV7FqP5foh2IVcHd5/qs2eMEb8sttECWoGJtYZ
-	wz7vYWc8mD0SSIaKNZ09fGvG7iatqL893PYacFLgjALGcvxmKM9+cLWy8H4S305isLiXr
-X-Gm-Gg: ASbGncsjFBsSPx5Chuy7szBAcoQxkRZKDcqp09NMMMjCFnZqzkPTDXX5yoAqP4+ZCEK
-	TeOa5DQxtFdKeXD6Eb28naw49hveOIVw1S8xWvewIcbyV3L5oIZo+FbW0PnJxN0gUx1IaAGVPES
-	2fystLJMnBNGq+C8ed+/PgAyBG4KcXoZp2QBQ4HP1MvamSqqK7ptWnsSOafdYeaf5ZzhEdAb3fk
-	JvokNZ+T6ctLlCv4h2WKu+xYTYgVJDium9HWSHXfSp5fNY5CflUrlgon1Gtr9vFOC6gI8oRuSeo
-	P5tZpFRK251QA/zRCcqw2Z/zhWwDJZc9Kvwap5pd+7tKvAK7Cj/QFDnDF9KePHNSoNFm7NMY5fy
-	iJ/dVRVfIO7O+QWWyl+BlFIEI6ND23KlpWA==
-X-Received: by 2002:a05:6a00:23d5:b0:7ad:9e8a:1f72 with SMTP id d2e1a72fcca58-7c58c7a7601mr3856793b3a.14.1763747802934;
-        Fri, 21 Nov 2025 09:56:42 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IE9IrLKOvKvH3L3/dRSDJrMrFn5NOnMwZJJ0Plqlu4O+PsbIpNzMiWEB+dM6cJA2aAlobsqBA==
-X-Received: by 2002:a05:6a00:23d5:b0:7ad:9e8a:1f72 with SMTP id d2e1a72fcca58-7c58c7a7601mr3856760b3a.14.1763747802430;
-        Fri, 21 Nov 2025 09:56:42 -0800 (PST)
+        bh=KGhryrcnb/27GJBj3vmuX8SUtcqUYKOKpzof9fiQq3s=;
+        b=ixW+joMIP9shEg6X2QZudMGAv7nwAvZ1XMQLbsuBmRHmJ73+JBntHypYp4qyvsajHm
+         cDRUxrZgc77v1JSorK1LWa9aVe9ofuLZTTubNzftN478gRrRynE809eJ4DTZhChrnUpk
+         ktiYRUzC1vLKtIlVNFbljYnj7rqZ/gMw6HkRMU8yedxmvD5gP3B2Ygfh7s6KEq+ogKBQ
+         EfDhW+iPKF0zUBjIRXfds/4jlQzcjiQydh0ctN64we2mdvySwXjT+4mdZI4lD5C8+dfe
+         Du27U4Oy+8gBLFgD1TqEsX8TYDUXQnIM/Y0kiVxyZVFWDjw8jti4n7xchj0VfV6TTDwv
+         m8ow==
+X-Forwarded-Encrypted: i=1; AJvYcCUfXQfa5Cs4GvB2RENd26hPzfzs4is1BPXOzJ3AJdq36Rko7y7kEh482KXHj5D24a2qAWjWqM0T8SJ/+WsJ@vger.kernel.org
+X-Gm-Message-State: AOJu0YwKfxSXxMUeIIJlrREp3jtU8CpSNeW55tJriMV2l/Yk355Whk8G
+	IFYInl+S7bYaj/YJP3NuqOrFR3fPo0AwTs8l2jns6prr+iuHdxVDaqEQGclH4PQOPC7lxd+vKC/
+	2aJ5ACL6M6r0yk5D9czv37kl5QBU3bStC5mBBrTIEhlksnv8msbyGCGZZdEfY7ETunPi7
+X-Gm-Gg: ASbGncttEiqOsoOpq/zB1hYnUo3IPX6mfgfefOWZgRrd3dABgGNmUNBtMBzaa0BeQJo
+	CxoN+3qkR0NpjBlGm2kxG+4m1YrHlDgiViLkxnZYbD8MhZB8WNSArONqme31ZCiZVB1OM4vU5iv
+	+//yFDAqVy2ZriaqPw89bwOXZb0xcOVwC5ePlVQpK8iN6vA+SHVjcnmoONA21lARd2k6JgLWI8A
+	hW2AhmZzdslRt46Q+jC1xZJZTxL5oeMI+23OP9uUj8bkbWxzO4IiBtfieH5WBMBKuylskvuZCDo
+	GwCxb3qqI7THxFKM+/ZK5kTzayqAHBz5TcYq6kU4ox7n88XZpRyj7NwFq86BTyo0QZ68lZD2GjG
+	efj3qxd4qA0onjiOX4mpZrpVz3NI9AwqstQ==
+X-Received: by 2002:a05:6a00:13a4:b0:7ab:fc99:d856 with SMTP id d2e1a72fcca58-7c58db2cccdmr3616036b3a.18.1763747806503;
+        Fri, 21 Nov 2025 09:56:46 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHFQGhm0brpljD+qoKFM/X7Al99AltwubaWNS4jIOoZi8WedofVGzd2/6Ep4L4vnWkGkttebQ==
+X-Received: by 2002:a05:6a00:13a4:b0:7ab:fc99:d856 with SMTP id d2e1a72fcca58-7c58db2cccdmr3615997b3a.18.1763747806019;
+        Fri, 21 Nov 2025 09:56:46 -0800 (PST)
 Received: from hu-tdas-hyd.qualcomm.com ([202.46.22.19])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-7c3ed471060sm6727883b3a.15.2025.11.21.09.56.39
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-7c3ed471060sm6727883b3a.15.2025.11.21.09.56.42
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 21 Nov 2025 09:56:41 -0800 (PST)
+        Fri, 21 Nov 2025 09:56:45 -0800 (PST)
 From: Taniya Das <taniya.das@oss.qualcomm.com>
-Date: Fri, 21 Nov 2025 23:26:27 +0530
-Subject: [PATCH v3 1/3] clk: qcom: rpmh: Add support for Kaanapali rpmh
- clocks
+Date: Fri, 21 Nov 2025 23:26:28 +0530
+Subject: [PATCH v3 2/3] clk: qcom: Add TCSR clock driver for Kaanapali
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -106,7 +105,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20251121-gcc_kaanapali-v3-v3-1-89a594985a46@oss.qualcomm.com>
+Message-Id: <20251121-gcc_kaanapali-v3-v3-2-89a594985a46@oss.qualcomm.com>
 References: <20251121-gcc_kaanapali-v3-v3-0-89a594985a46@oss.qualcomm.com>
 In-Reply-To: <20251121-gcc_kaanapali-v3-v3-0-89a594985a46@oss.qualcomm.com>
 To: Bjorn Andersson <andersson@kernel.org>,
@@ -118,102 +117,217 @@ Cc: Ajit Pandey <ajit.pandey@oss.qualcomm.com>,
         linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
         linux-kernel@vger.kernel.org, Taniya Das <taniya.das@oss.qualcomm.com>
 X-Mailer: b4 0.15-dev-aa3f6
-X-Authority-Analysis: v=2.4 cv=Ce8FJbrl c=1 sm=1 tr=0 ts=6920a7db cx=c_pps
- a=rEQLjTOiSrHUhVqRoksmgQ==:117 a=fChuTYTh2wq5r3m49p7fHw==:17
+X-Authority-Analysis: v=2.4 cv=Lb0xKzfi c=1 sm=1 tr=0 ts=6920a7df cx=c_pps
+ a=m5Vt/hrsBiPMCU0y4gIsQw==:117 a=fChuTYTh2wq5r3m49p7fHw==:17
  a=IkcTkHD0fZMA:10 a=6UeiqGixMTsA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=EUspDBNiAAAA:8 a=gxflGWy-rYv13cvyobsA:9
- a=QEXdDO2ut3YA:10 a=2VI0MkxyNR6bbpdq8BZq:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMTIxMDEzNCBTYWx0ZWRfXxM6+SAfU/NVV
- jMuvtWjp3UIDdTFJ4TCgPDpWX3iPpts6y9/CVX4rk2u6NGwaq3LOFOICfq7TsXsAXdpupNhqH50
- OboBBRieouPG0dwWAkpEd+jLT/NXlXCcr+ugtMi4L+LnmTUTi4tfLGCTgzOMtQIAQHNElJZzYj4
- zY6OXQb+bqrwT9t9OrwvR+rcG0jQJdT5vmFxAiFYG7K8a3RfxjYSWdV3BSgnxm1ccAc4U8WrmZ2
- wUGaTBwy2hDQgE/azaLXmgwQcUhpzVrrms5KY1Q/NsB/2TkXpSczM2q+e2Hf7vDLI/9BCmErdzd
- yNbIK6illI19zOr4HTb2q8IS13XMHWvRXSliLk+cIALQxI5sIxc2MZEMc9c13DzlUDbGV6vMB0c
- Eiw5ogGmqQUx3luRPm+/1rV9/5Vx9A==
-X-Proofpoint-ORIG-GUID: re0oc1lHmLmmNUOoaRZ0JTcVHldLxUK6
-X-Proofpoint-GUID: re0oc1lHmLmmNUOoaRZ0JTcVHldLxUK6
+ a=VkNPw1HP01LnGYTKEx00:22 a=EUspDBNiAAAA:8 a=hY4tN0yg6o136M3hR0AA:9
+ a=QEXdDO2ut3YA:10 a=IoOABgeZipijB_acs4fv:22
+X-Proofpoint-ORIG-GUID: Fw-naq2U6Jc1lvrrMuJovRbTk0b7UHNn
+X-Proofpoint-GUID: Fw-naq2U6Jc1lvrrMuJovRbTk0b7UHNn
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMTIxMDEzNCBTYWx0ZWRfX8PruED90QSgf
+ zivcqQAy83CD/xvNQYpVoRZqDWBZTxP1ZmnAc226Wiupd9qqwhDy374HVslsKPtcgoRKgbyqr9v
+ AV8VLW/v7NmA0i3WysOQSU4MCVY5qwvJRxkEkzZ51XO4uug0POkuXU54YzTgCUnWKUPeOf+P2a4
+ IzllFM6YsaJmMpOH/PLlX/5xALD49z8xC5/cbAECSQg7iXMssnmuCeh0YQDiM5JCPQ/AXUWqkOt
+ I2zEpnkIjjLgpyd3BOrLPufShW/4txTNp3So0h2oeCDHbOZfbfBcVTVtncGpX+bx0i6vJvAY+uR
+ KUq/NZHxcyk23Y4MTg3DFuhnYIYSfeNCdlvtgtH0+9+9xmMiuOYosvHroft0ZJniKBPMYamnypm
+ hyPF17oQjZy1FhoNHcls4FtGjymbng==
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
  definitions=2025-11-21_05,2025-11-21_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- bulkscore=0 suspectscore=0 lowpriorityscore=0 priorityscore=1501 adultscore=0
- phishscore=0 malwarescore=0 spamscore=0 impostorscore=0 clxscore=1015
+ priorityscore=1501 spamscore=0 impostorscore=0 clxscore=1015 malwarescore=0
+ lowpriorityscore=0 suspectscore=0 adultscore=0 bulkscore=0 phishscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.22.0-2510240001 definitions=main-2511210134
 
-Add the RPMH clocks present in Kaanapali SoC.
+Add the TCSR clock controller that provides the refclks on Kaanapali
+platform for PCIe, USB and UFS subsystems.
 
 Signed-off-by: Taniya Das <taniya.das@oss.qualcomm.com>
 ---
- drivers/clk/qcom/clk-rpmh.c | 41 +++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 41 insertions(+)
+ drivers/clk/qcom/Kconfig            |   8 ++
+ drivers/clk/qcom/Makefile           |   1 +
+ drivers/clk/qcom/tcsrcc-kaanapali.c | 141 ++++++++++++++++++++++++++++++++++++
+ 3 files changed, 150 insertions(+)
 
-diff --git a/drivers/clk/qcom/clk-rpmh.c b/drivers/clk/qcom/clk-rpmh.c
-index 1a98b3a0c528c24b600326e6b951b2edb6dcadd7..c3d923a829f16f5a73ea148aca231a0d61d3396d 100644
---- a/drivers/clk/qcom/clk-rpmh.c
-+++ b/drivers/clk/qcom/clk-rpmh.c
-@@ -395,6 +395,18 @@ DEFINE_CLK_RPMH_VRM(clk4, _a, "C4A_E0", 1);
- DEFINE_CLK_RPMH_VRM(clk5, _a, "C5A_E0", 1);
- DEFINE_CLK_RPMH_VRM(clk8, _a, "C8A_E0", 1);
+diff --git a/drivers/clk/qcom/Kconfig b/drivers/clk/qcom/Kconfig
+index a284ba040b78ba2f7b7c7ead14023c0ec637f841..efaf32bb517e47be3da59410eca5332abe5bc25c 100644
+--- a/drivers/clk/qcom/Kconfig
++++ b/drivers/clk/qcom/Kconfig
+@@ -46,6 +46,14 @@ config CLK_GLYMUR_TCSRCC
+ 	  Support for the TCSR clock controller on GLYMUR devices.
+ 	  Say Y if you want to use peripheral devices such as USB/PCIe/EDP.
  
-+DEFINE_CLK_RPMH_VRM(clk1, _a1_e0, "C1A_E0", 1);
-+DEFINE_CLK_RPMH_VRM(clk2, _a1_e0, "C2A_E0", 1);
++config CLK_KAANAPALI_TCSRCC
++	tristate "Kaanapali TCSR Clock Controller"
++	depends on ARM64 || COMPILE_TEST
++	select QCOM_GDSC
++	help
++	  Support for the TCSR clock controller on Kaanapali devices.
++	  Say Y if you want to use peripheral devices such as PCIe, USB, UFS.
 +
-+DEFINE_CLK_RPMH_VRM(clk3, _a2_e0, "C3A_E0", 2);
-+DEFINE_CLK_RPMH_VRM(clk4, _a2_e0, "C4A_E0", 2);
-+DEFINE_CLK_RPMH_VRM(clk5, _a2_e0, "C5A_E0", 2);
-+DEFINE_CLK_RPMH_VRM(clk6, _a2_e0, "C6A_E0", 2);
-+DEFINE_CLK_RPMH_VRM(clk7, _a2_e0, "C7A_E0", 2);
-+DEFINE_CLK_RPMH_VRM(clk8, _a2_e0, "C8A_E0", 2);
+ config CLK_X1E80100_CAMCC
+ 	tristate "X1E80100 Camera Clock Controller"
+ 	depends on ARM64 || COMPILE_TEST
+diff --git a/drivers/clk/qcom/Makefile b/drivers/clk/qcom/Makefile
+index 0ac8a9055a43230d848c6a0c1ac118c03c3e18d2..6e45410d572bdb9f088a32095fe78a81ba176c09 100644
+--- a/drivers/clk/qcom/Makefile
++++ b/drivers/clk/qcom/Makefile
+@@ -24,6 +24,7 @@ obj-$(CONFIG_CLK_GFM_LPASS_SM8250) += lpass-gfm-sm8250.o
+ obj-$(CONFIG_CLK_GLYMUR_DISPCC) += dispcc-glymur.o
+ obj-$(CONFIG_CLK_GLYMUR_GCC) += gcc-glymur.o
+ obj-$(CONFIG_CLK_GLYMUR_TCSRCC) += tcsrcc-glymur.o
++obj-$(CONFIG_CLK_KAANAPALI_TCSRCC) += tcsrcc-kaanapali.o
+ obj-$(CONFIG_CLK_X1E80100_CAMCC) += camcc-x1e80100.o
+ obj-$(CONFIG_CLK_X1E80100_DISPCC) += dispcc-x1e80100.o
+ obj-$(CONFIG_CLK_X1E80100_GCC) += gcc-x1e80100.o
+diff --git a/drivers/clk/qcom/tcsrcc-kaanapali.c b/drivers/clk/qcom/tcsrcc-kaanapali.c
+new file mode 100644
+index 0000000000000000000000000000000000000000..a03b80884b9c06dd8a72ea1086429cef95698d56
+--- /dev/null
++++ b/drivers/clk/qcom/tcsrcc-kaanapali.c
+@@ -0,0 +1,141 @@
++// SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
++/*
++ * Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
++ */
 +
-+DEFINE_CLK_RPMH_VRM(clk11, _a4_e0, "C11A_E0", 4);
++#include <linux/clk-provider.h>
++#include <linux/module.h>
++#include <linux/of.h>
++#include <linux/platform_device.h>
++#include <linux/regmap.h>
 +
- DEFINE_CLK_RPMH_BCM(ce, "CE0");
- DEFINE_CLK_RPMH_BCM(hwkm, "HK0");
- DEFINE_CLK_RPMH_BCM(ipa, "IP0");
-@@ -901,6 +913,34 @@ static const struct clk_rpmh_desc clk_rpmh_glymur = {
- 	.num_clks = ARRAY_SIZE(glymur_rpmh_clocks),
- };
- 
-+static struct clk_hw *kaanapali_rpmh_clocks[] = {
-+	[RPMH_CXO_CLK]		= &clk_rpmh_bi_tcxo_div2.hw,
-+	[RPMH_CXO_CLK_A]	= &clk_rpmh_bi_tcxo_div2_ao.hw,
-+	[RPMH_DIV_CLK1]		= &clk_rpmh_clk11_a4_e0.hw,
-+	[RPMH_LN_BB_CLK1]	= &clk_rpmh_clk6_a2_e0.hw,
-+	[RPMH_LN_BB_CLK1_A]	= &clk_rpmh_clk6_a2_e0_ao.hw,
-+	[RPMH_LN_BB_CLK2]	= &clk_rpmh_clk7_a2_e0.hw,
-+	[RPMH_LN_BB_CLK2_A]	= &clk_rpmh_clk7_a2_e0_ao.hw,
-+	[RPMH_LN_BB_CLK3]	= &clk_rpmh_clk8_a2_e0.hw,
-+	[RPMH_LN_BB_CLK3_A]	= &clk_rpmh_clk8_a2_e0_ao.hw,
-+	[RPMH_RF_CLK1]		= &clk_rpmh_clk1_a1_e0.hw,
-+	[RPMH_RF_CLK1_A]	= &clk_rpmh_clk1_a1_e0_ao.hw,
-+	[RPMH_RF_CLK2]		= &clk_rpmh_clk2_a1_e0.hw,
-+	[RPMH_RF_CLK2_A]	= &clk_rpmh_clk2_a1_e0_ao.hw,
-+	[RPMH_RF_CLK3]		= &clk_rpmh_clk3_a2_e0.hw,
-+	[RPMH_RF_CLK3_A]	= &clk_rpmh_clk3_a2_e0_ao.hw,
-+	[RPMH_RF_CLK4]		= &clk_rpmh_clk4_a2_e0.hw,
-+	[RPMH_RF_CLK4]		= &clk_rpmh_clk4_a2_e0_ao.hw,
-+	[RPMH_RF_CLK5_A]	= &clk_rpmh_clk5_a2_e0.hw,
-+	[RPMH_RF_CLK5_A]	= &clk_rpmh_clk5_a2_e0_ao.hw,
-+	[RPMH_IPA_CLK]		= &clk_rpmh_ipa.hw,
++#include <dt-bindings/clock/qcom,sm8750-tcsr.h>
++
++#include "clk-branch.h"
++#include "clk-regmap.h"
++#include "clk-regmap-divider.h"
++#include "clk-regmap-mux.h"
++#include "common.h"
++
++enum {
++	DT_BI_TCXO_PAD,
 +};
 +
-+static const struct clk_rpmh_desc clk_rpmh_kaanapali = {
-+	.clks = kaanapali_rpmh_clocks,
-+	.num_clks = ARRAY_SIZE(kaanapali_rpmh_clocks),
++static struct clk_branch tcsr_pcie_0_clkref_en = {
++	.halt_reg = 0x15044,
++	.halt_check = BRANCH_HALT_DELAY,
++	.clkr = {
++		.enable_reg = 0x15044,
++		.enable_mask = BIT(0),
++		.hw.init = &(const struct clk_init_data) {
++			.name = "tcsr_pcie_0_clkref_en",
++			.ops = &clk_branch2_ops,
++		},
++	},
 +};
 +
- static struct clk_hw *of_clk_rpmh_hw_get(struct of_phandle_args *clkspec,
- 					 void *data)
- {
-@@ -991,6 +1031,7 @@ static int clk_rpmh_probe(struct platform_device *pdev)
- 
- static const struct of_device_id clk_rpmh_match_table[] = {
- 	{ .compatible = "qcom,glymur-rpmh-clk", .data = &clk_rpmh_glymur},
-+	{ .compatible = "qcom,kaanapali-rpmh-clk", .data = &clk_rpmh_kaanapali},
- 	{ .compatible = "qcom,milos-rpmh-clk", .data = &clk_rpmh_milos},
- 	{ .compatible = "qcom,qcs615-rpmh-clk", .data = &clk_rpmh_qcs615},
- 	{ .compatible = "qcom,qdu1000-rpmh-clk", .data = &clk_rpmh_qdu1000},
++static struct clk_branch tcsr_usb3_clkref_en = {
++	.halt_reg = 0x1504c,
++	.halt_check = BRANCH_HALT_DELAY,
++	.clkr = {
++		.enable_reg = 0x1504c,
++		.enable_mask = BIT(0),
++		.hw.init = &(const struct clk_init_data) {
++			.name = "tcsr_usb3_clkref_en",
++			.parent_data = &(const struct clk_parent_data){
++				.index = DT_BI_TCXO_PAD,
++			},
++			.num_parents = 1,
++			.ops = &clk_branch2_ops,
++		},
++	},
++};
++
++static struct clk_branch tcsr_ufs_clkref_en = {
++	.halt_reg = 0x15054,
++	.halt_check = BRANCH_HALT_DELAY,
++	.clkr = {
++		.enable_reg = 0x15054,
++		.enable_mask = BIT(0),
++		.hw.init = &(const struct clk_init_data) {
++			.name = "tcsr_ufs_clkref_en",
++			.parent_data = &(const struct clk_parent_data){
++				.index = DT_BI_TCXO_PAD,
++			},
++			.num_parents = 1,
++			.ops = &clk_branch2_ops,
++		},
++	},
++};
++
++static struct clk_branch tcsr_usb2_clkref_en = {
++	.halt_reg = 0x1505c,
++	.halt_check = BRANCH_HALT_DELAY,
++	.clkr = {
++		.enable_reg = 0x1505c,
++		.enable_mask = BIT(0),
++		.hw.init = &(const struct clk_init_data) {
++			.name = "tcsr_usb2_clkref_en",
++			.parent_data = &(const struct clk_parent_data){
++				.index = DT_BI_TCXO_PAD,
++			},
++			.num_parents = 1,
++			.ops = &clk_branch2_ops,
++		},
++	},
++};
++
++static struct clk_regmap *tcsr_cc_kaanapali_clocks[] = {
++	[TCSR_PCIE_0_CLKREF_EN] = &tcsr_pcie_0_clkref_en.clkr,
++	[TCSR_UFS_CLKREF_EN] = &tcsr_ufs_clkref_en.clkr,
++	[TCSR_USB2_CLKREF_EN] = &tcsr_usb2_clkref_en.clkr,
++	[TCSR_USB3_CLKREF_EN] = &tcsr_usb3_clkref_en.clkr,
++};
++
++static const struct regmap_config tcsr_cc_kaanapali_regmap_config = {
++	.reg_bits = 32,
++	.reg_stride = 4,
++	.val_bits = 32,
++	.max_register = 0x2f000,
++	.fast_io = true,
++};
++
++static const struct qcom_cc_desc tcsr_cc_kaanapali_desc = {
++	.config = &tcsr_cc_kaanapali_regmap_config,
++	.clks = tcsr_cc_kaanapali_clocks,
++	.num_clks = ARRAY_SIZE(tcsr_cc_kaanapali_clocks),
++};
++
++static const struct of_device_id tcsr_cc_kaanapali_match_table[] = {
++	{ .compatible = "qcom,kaanapali-tcsr" },
++	{ }
++};
++MODULE_DEVICE_TABLE(of, tcsr_cc_kaanapali_match_table);
++
++static int tcsr_cc_kaanapali_probe(struct platform_device *pdev)
++{
++	return qcom_cc_probe(pdev, &tcsr_cc_kaanapali_desc);
++}
++
++static struct platform_driver tcsr_cc_kaanapali_driver = {
++	.probe = tcsr_cc_kaanapali_probe,
++	.driver = {
++		.name = "tcsr_cc-kaanapali",
++		.of_match_table = tcsr_cc_kaanapali_match_table,
++	},
++};
++
++static int __init tcsr_cc_kaanapali_init(void)
++{
++	return platform_driver_register(&tcsr_cc_kaanapali_driver);
++}
++subsys_initcall(tcsr_cc_kaanapali_init);
++
++static void __exit tcsr_cc_kaanapali_exit(void)
++{
++	platform_driver_unregister(&tcsr_cc_kaanapali_driver);
++}
++module_exit(tcsr_cc_kaanapali_exit);
++
++MODULE_DESCRIPTION("QTI TCSR_CC Kaanapali Driver");
++MODULE_LICENSE("GPL");
 
 -- 
 2.34.1
