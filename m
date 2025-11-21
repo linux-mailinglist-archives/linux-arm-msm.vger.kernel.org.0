@@ -1,120 +1,183 @@
-Return-Path: <linux-arm-msm+bounces-82852-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-82846-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ams.mirrors.kernel.org (ams.mirrors.kernel.org [IPv6:2a01:60a::1994:3:14])
-	by mail.lfdr.de (Postfix) with ESMTPS id AE338C79BFA
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Nov 2025 14:53:48 +0100 (CET)
+Received: from sin.lore.kernel.org (sin.lore.kernel.org [104.64.211.4])
+	by mail.lfdr.de (Postfix) with ESMTPS id D5E7DC79253
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Nov 2025 14:12:06 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ams.mirrors.kernel.org (Postfix) with ESMTPS id 6B8C2352E14
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Nov 2025 13:45:45 +0000 (UTC)
+	by sin.lore.kernel.org (Postfix) with ESMTPS id 92D382BB24
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Nov 2025 13:11:18 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A1CFD350282;
-	Fri, 21 Nov 2025 13:41:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 779DE345743;
+	Fri, 21 Nov 2025 13:11:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2vjXuSQv"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="V8n//RAo"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75CE834FF75;
-	Fri, 21 Nov 2025 13:41:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50E762F363E
+	for <linux-arm-msm@vger.kernel.org>; Fri, 21 Nov 2025 13:11:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763732513; cv=none; b=d4MCdMJrPo5VN8Tco836LP7tMgrQvEu08SqmmSAAvUzLWSvwEDUh26URATqW9ZQlctkpVmOU3KzVkI3vy2ISmZ27r67C2XDYxiRWwGGEx9uiveUiqElh5gxZ8nioZ3y50Vz1YkgYXbr6sxAGFo6CD4Rb6POehzhHA5Z3wz+qAb0=
+	t=1763730670; cv=none; b=i29JtufObs95ed5Dcf99DXIuqUjWjl29u61vuydhWbgBf7ORDsyJu2jwiMpZKftxE02Cb0HwGcz8rUaLr0KmVnoqdSHDVdbd27ncc5Wvh0o4lujBq1V9o6Wf6xlcDvvM/dk4ckXQz2UCcJDXQXFm+2vlwqDYnZE4RHfAnEsG4PU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763732513; c=relaxed/simple;
-	bh=MBslhgRo4Udwj5iuRyDcveGwcLLV67fJLWk/eIAfnh4=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CTRRWdrSGhK00WsiIuSKsi9zeLZFEwRJvE97nN36oyRkup9p37kH9TC/L/9G7yVBSrlkr5O7ZAb6opM5gQlwO+n2cbgxXvqbbuwn4U78QWWIe2aFhyLOeAwvlbpLxN6J6lfWNYxI581eSGGqvqYA7wMOJ+52yHfU7fzYvffDrvE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2vjXuSQv; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EEC6CC4CEF1;
-	Fri, 21 Nov 2025 13:41:52 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1763732513;
-	bh=MBslhgRo4Udwj5iuRyDcveGwcLLV67fJLWk/eIAfnh4=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2vjXuSQv5eft32J3wyCBZ5451ul0KCrWlHy5PTcvh8HK8G2WL0k8O0eE6Zvz9RrJD
-	 7l+NQiNQvhgpbSI6bUy2Ls5PNjv8doPAKQ0iw04wlpKF8/IilSaYYdDgXBF0czFAFS
-	 bVKAQ2MhNkV66nXgCtDKcYvx0nAWymrvbmZk8n5w=
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: stable@vger.kernel.org
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	patches@lists.linux.dev,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	linux-arm-msm@vger.kernel.org,
-	Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 148/529] drm/bridge: display-connector: dont set OP_DETECT for DisplayPorts
-Date: Fri, 21 Nov 2025 14:07:27 +0100
-Message-ID: <20251121130236.286200030@linuxfoundation.org>
-X-Mailer: git-send-email 2.52.0
-In-Reply-To: <20251121130230.985163914@linuxfoundation.org>
-References: <20251121130230.985163914@linuxfoundation.org>
-User-Agent: quilt/0.69
-X-stable: review
-X-Patchwork-Hint: ignore
+	s=arc-20240116; t=1763730670; c=relaxed/simple;
+	bh=JIYgszXNH0+jUKbQeR1Qnn/VbarzzshNt59U4gEqEK0=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=TFYo7LfLlnMNfCj922qndPsSUfExK18ACW/1xG2FHmFrOyzeOnXAiRyCVhwIdHwRUOfSedfjizwFEUuwlMVa6tnlZHI2qIlTSOvjjEyaxrHwjnF4zRN8R9kYfwm/Zbdy6sb7hDul05lg3hcJva7kpFlv2h3tNWbwObJWackau4M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=V8n//RAo; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4A41C19423
+	for <linux-arm-msm@vger.kernel.org>; Fri, 21 Nov 2025 13:11:09 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1763730669;
+	bh=JIYgszXNH0+jUKbQeR1Qnn/VbarzzshNt59U4gEqEK0=;
+	h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+	b=V8n//RAoJaXbyG/NykKaLbrkpW9S3T/XfJSSPZvw/T+v/rlrCrjAUtEhNTOfasiGc
+	 sH8oRb+G5/TVBpeSYrgfxws/B+fZy5/Ad/nbH+vzMgAYrDKZwT94xRzFETzgjeTadr
+	 koJM6ouwQ+O6JEJVwLnjv9Jvcp3wgLRIEMSYddi/+TKEGrtZQI2NRQcRcnNGJa5P9s
+	 V9hM+HUmFeI28PwiyaVX2sFA6G+gsIwkBq/nszvnDvBhidLgz40UuN1eLWn9gUm32W
+	 xrpmhB9wEHwhmRBYUeSBbSlTXDevUoUudgM5QY5X0vjmyQq0DbubQCV88/OF4vQZXe
+	 xcKhJY1X3oBjA==
+Received: by mail-oi1-f173.google.com with SMTP id 5614622812f47-450063be247so676355b6e.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 21 Nov 2025 05:11:09 -0800 (PST)
+X-Forwarded-Encrypted: i=1; AJvYcCW3mz5PDElFXtGYbGXYb//1mrvEr0ENuTIK3MdgScqJN9hXgEW8vP0xgxlTGcUtrDK2yfduwYqv5qRl/1AD@vger.kernel.org
+X-Gm-Message-State: AOJu0Yw5kC05dclAaJX0HSQvRbVfO4St55Ns1MTEC+QRBtJEpGPX9MR2
+	FxPuwG2DvFpVxC6OtgZeijFFDU3HJx8Awv5aXXWAwJPwhXGUO+gODTOJJVTVQdwmVfNF2/fcIZh
+	5O88waxKU8T1YslXLwbms7/00jxudfrA=
+X-Google-Smtp-Source: AGHT+IGN3qq9mxPnMrC9Lfj98rFkvXMzHsdrNeR1Gcm9BGsVmmtpx4DeRJz1cZ8PyQVmNJWLKd/C2lpyhpx400YUIdU=
+X-Received: by 2002:a05:6808:2110:b0:450:ba5b:a46b with SMTP id
+ 5614622812f47-45112d8cc9bmr807890b6e.64.1763730669214; Fri, 21 Nov 2025
+ 05:11:09 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20251121010756.6687-1-val@packett.cool>
+In-Reply-To: <20251121010756.6687-1-val@packett.cool>
+From: "Rafael J. Wysocki" <rafael@kernel.org>
+Date: Fri, 21 Nov 2025 14:10:57 +0100
+X-Gmail-Original-Message-ID: <CAJZ5v0h1VTozCKweKvma3dQiUCz8KkR88Hue1cL_jDaKiP+BEw@mail.gmail.com>
+X-Gm-Features: AWmQ_blcWB5zoePI22y4acEeAzm9bTDT2TYoTrkXb4JkvJhzZsLYBoEjcWPdnG0
+Message-ID: <CAJZ5v0h1VTozCKweKvma3dQiUCz8KkR88Hue1cL_jDaKiP+BEw@mail.gmail.com>
+Subject: Re: [PATCH] cpuidle: warn and fixup on sanity check instead of
+ rejecting the driver
+To: Val Packett <val@packett.cool>
+Cc: "Rafael J. Wysocki" <rafael@kernel.org>, Daniel Lezcano <daniel.lezcano@linaro.org>, 
+	Christian Loehle <christian.loehle@arm.com>, 
+	Artem Bityutskiy <artem.bityutskiy@linux.intel.com>, linux-arm-kernel@lists.infradead.org, 
+	linux-arm-msm@vger.kernel.org, 
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>, linux-pm@vger.kernel.org, 
+	linux-kernel@vger.kernel.org
+Content-Type: multipart/mixed; boundary="00000000000004b6f206441a8c22"
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+--00000000000004b6f206441a8c22
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-------------------
+On Fri, Nov 21, 2025 at 2:08=E2=80=AFAM Val Packett <val@packett.cool> wrot=
+e:
+>
+> On Device Tree platforms, the latency and target residency values come
+> directly from device trees, which are numerous and weren't all written
+> with cpuidle invariants in mind. For example, qcom/hamoa.dtsi currently
+> trips this check: exit latency 680000 > residency 600000.
 
-From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+So this breaks cpuidle expectations and it doesn't work correctly on
+the affected platforms.
 
-[ Upstream commit cb640b2ca54617f4a9d4d6efd5ff2afd6be11f19 ]
+> Instead of harshly rejecting the entire cpuidle driver with a mysterious
+> error message, print a warning and set the target residency value to be
+> equal to the exit latency.
 
-Detecting the monitor for DisplayPort targets is more complicated than
-just reading the HPD pin level: it requires reading the DPCD in order to
-check what kind of device is attached to the port and whether there is
-an actual display attached.
+This generally doesn't work because the new target residency may be
+greater than the target residency of the next state.
 
-In order to let DRM framework handle such configurations, disable
-DRM_BRIDGE_OP_DETECT for dp-connector devices, letting the actual DP
-driver perform detection. This still keeps DRM_BRIDGE_OP_HPD enabled, so
-it is valid for the bridge to report HPD events.
+> Fixes: 76934e495cdc ("cpuidle: Add sanity check for exit latency and targ=
+et residency")
+> Signed-off-by: Val Packett <val@packett.cool>
+> ---
+>  drivers/cpuidle/driver.c | 7 +++++--
+>  1 file changed, 5 insertions(+), 2 deletions(-)
+>
+> diff --git a/drivers/cpuidle/driver.c b/drivers/cpuidle/driver.c
+> index 1c295a93d582..06aeb59c1017 100644
+> --- a/drivers/cpuidle/driver.c
+> +++ b/drivers/cpuidle/driver.c
+> @@ -199,8 +199,11 @@ static int __cpuidle_driver_init(struct cpuidle_driv=
+er *drv)
+>                  * exceed its target residency which is assumed in cpuidl=
+e in
+>                  * multiple places.
+>                  */
+> -               if (s->exit_latency_ns > s->target_residency_ns)
+> -                       return -EINVAL;
+> +               if (s->exit_latency_ns > s->target_residency_ns) {
+> +                       pr_warn("cpuidle: state %d: exit latency %lld > r=
+esidency %lld (fixing)\n",
+> +                               i, s->exit_latency_ns, s->target_residenc=
+y_ns);
+> +                       s->target_residency_ns =3D s->exit_latency_ns;
 
-Currently inside the kernel there are only two targets which list
-hpd-gpios for dp-connector devices: arm64/qcom/qcs6490-rb3gen2 and
-arm64/qcom/sa8295p-adp. Both should be fine with this change.
+And you also need to update s->target_residency.
 
-Cc: Bjorn Andersson <andersson@kernel.org>
-Cc: Konrad Dybcio <konradybcio@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org
-Acked-by: Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>
-Link: https://lore.kernel.org/r/20250802-dp-conn-no-detect-v1-1-2748c2b946da@oss.qualcomm.com
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
----
- drivers/gpu/drm/bridge/display-connector.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+Moreover, that needs to be done when all of the target residency and
+exit latency values have been computed and full sanitization of all
+the states would need to be done (including the ordering checks), but
+the kernel has insufficient information to do that (for instance, if
+the ordering is not as expected, it is not clear how to fix it up).
+Even the above sanitization is unlikely to result in the intended
+behavior.
 
-diff --git a/drivers/gpu/drm/bridge/display-connector.c b/drivers/gpu/drm/bridge/display-connector.c
-index 08bd5695ddae0..0f3714aae6089 100644
---- a/drivers/gpu/drm/bridge/display-connector.c
-+++ b/drivers/gpu/drm/bridge/display-connector.c
-@@ -363,7 +363,8 @@ static int display_connector_probe(struct platform_device *pdev)
- 	if (conn->bridge.ddc)
- 		conn->bridge.ops |= DRM_BRIDGE_OP_EDID
- 				 |  DRM_BRIDGE_OP_DETECT;
--	if (conn->hpd_gpio)
-+	/* Detecting the monitor requires reading DPCD */
-+	if (conn->hpd_gpio && type != DRM_MODE_CONNECTOR_DisplayPort)
- 		conn->bridge.ops |= DRM_BRIDGE_OP_DETECT;
- 	if (conn->hpd_irq >= 0)
- 		conn->bridge.ops |= DRM_BRIDGE_OP_HPD;
--- 
-2.51.0
+So if returning the error code doesn't work, printing a warning is as
+much as can be done, like in the attached patch.
 
+If this works for you, I'll submit it properly later.
 
+> +               }
+>         }
+>
+>         return 0;
+> --
 
+--00000000000004b6f206441a8c22
+Content-Type: text/x-patch; charset="US-ASCII"; name="cpuidle-warn.patch"
+Content-Disposition: attachment; filename="cpuidle-warn.patch"
+Content-Transfer-Encoding: base64
+Content-ID: <f_mi8vnx550>
+X-Attachment-Id: f_mi8vnx550
+
+LS0tCiBkcml2ZXJzL2NwdWlkbGUvZHJpdmVyLmMgfCAgIDE4ICsrKysrKysrLS0tLS0tLS0tLQog
+MSBmaWxlIGNoYW5nZWQsIDggaW5zZXJ0aW9ucygrKSwgMTAgZGVsZXRpb25zKC0pCgotLS0gYS9k
+cml2ZXJzL2NwdWlkbGUvZHJpdmVyLmMKKysrIGIvZHJpdmVycy9jcHVpZGxlL2RyaXZlci5jCkBA
+IC04LDYgKzgsOCBAQAogICogVGhpcyBjb2RlIGlzIGxpY2VuY2VkIHVuZGVyIHRoZSBHUEwuCiAg
+Ki8KIAorI2RlZmluZSBwcl9mbXQoZm10KSBLQlVJTERfTU9ETkFNRSAiOiAiIGZtdAorCiAjaW5j
+bHVkZSA8bGludXgvbXV0ZXguaD4KICNpbmNsdWRlIDxsaW51eC9tb2R1bGUuaD4KICNpbmNsdWRl
+IDxsaW51eC9zY2hlZC5oPgpAQCAtMTUyLDcgKzE1NCw3IEBAIHN0YXRpYyB2b2lkIGNwdWlkbGVf
+c2V0dXBfYnJvYWRjYXN0X3RpbWUKICAqIF9fY3B1aWRsZV9kcml2ZXJfaW5pdCAtIGluaXRpYWxp
+emUgdGhlIGRyaXZlcidzIGludGVybmFsIGRhdGEKICAqIEBkcnY6IGEgdmFsaWQgcG9pbnRlciB0
+byBhIHN0cnVjdCBjcHVpZGxlX2RyaXZlcgogICovCi1zdGF0aWMgaW50IF9fY3B1aWRsZV9kcml2
+ZXJfaW5pdChzdHJ1Y3QgY3B1aWRsZV9kcml2ZXIgKmRydikKK3N0YXRpYyB2b2lkIF9fY3B1aWRs
+ZV9kcml2ZXJfaW5pdChzdHJ1Y3QgY3B1aWRsZV9kcml2ZXIgKmRydikKIHsKIAlpbnQgaTsKIApA
+QCAtMTk1LDE1ICsxOTcsMTMgQEAgc3RhdGljIGludCBfX2NwdWlkbGVfZHJpdmVyX2luaXQoc3Ry
+dWN0CiAJCQlzLT5leGl0X2xhdGVuY3kgPSBkaXZfdTY0KHMtPmV4aXRfbGF0ZW5jeV9ucywgTlNF
+Q19QRVJfVVNFQyk7CiAKIAkJLyoKLQkJICogRW5zdXJlIHRoYXQgdGhlIGV4aXQgbGF0ZW5jeSBv
+ZiBhIENQVSBpZGxlIHN0YXRlIGRvZXMgbm90Ci0JCSAqIGV4Y2VlZCBpdHMgdGFyZ2V0IHJlc2lk
+ZW5jeSB3aGljaCBpcyBhc3N1bWVkIGluIGNwdWlkbGUgaW4KLQkJICogbXVsdGlwbGUgcGxhY2Vz
+LgorCQkgKiBXYXJuIGlmIHRoZSBleGl0IGxhdGVuY3kgb2YgYSBDUFUgaWRsZSBzdGF0ZSBleGNl
+ZWRzIGl0cworCQkgKiB0YXJnZXQgcmVzaWRlbmN5IHdoaWNoIGlzIGFzc3VtZWQgdG8gbmV2ZXIg
+aGFwcGVuIGluIGNwdWlkbGUKKwkJICogaW4gbXVsdGlwbGUgcGxhY2VzLgogCQkgKi8KIAkJaWYg
+KHMtPmV4aXRfbGF0ZW5jeV9ucyA+IHMtPnRhcmdldF9yZXNpZGVuY3lfbnMpCi0JCQlyZXR1cm4g
+LUVJTlZBTDsKKwkJCXByX3dhcm4oIklkbGUgc3RhdGUgJWQgdGFyZ2V0IHJlc2lkZW5jeSB0b28g
+bG93XG4iLCBpKTsKIAl9Ci0KLQlyZXR1cm4gMDsKIH0KIAogLyoqCkBAIC0yMzMsOSArMjMzLDcg
+QEAgc3RhdGljIGludCBfX2NwdWlkbGVfcmVnaXN0ZXJfZHJpdmVyKHN0cgogCWlmIChjcHVpZGxl
+X2Rpc2FibGVkKCkpCiAJCXJldHVybiAtRU5PREVWOwogCi0JcmV0ID0gX19jcHVpZGxlX2RyaXZl
+cl9pbml0KGRydik7Ci0JaWYgKHJldCkKLQkJcmV0dXJuIHJldDsKKwlfX2NwdWlkbGVfZHJpdmVy
+X2luaXQoZHJ2KTsKIAogCXJldCA9IF9fY3B1aWRsZV9zZXRfZHJpdmVyKGRydik7CiAJaWYgKHJl
+dCkK
+--00000000000004b6f206441a8c22--
 
