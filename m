@@ -1,248 +1,181 @@
-Return-Path: <linux-arm-msm+bounces-82853-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-82854-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id AF8CCC79AEB
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Nov 2025 14:51:11 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 96645C79AF7
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Nov 2025 14:51:16 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by tor.lore.kernel.org (Postfix) with ESMTPS id D94A62E1CB
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Nov 2025 13:50:43 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTPS id D8D3D2DE9F
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Nov 2025 13:50:49 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id EE62B350D5E;
-	Fri, 21 Nov 2025 13:46:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id EEF5B350D70;
+	Fri, 21 Nov 2025 13:46:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b="X+eHXmBv"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="XC4IgcGQ";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="JcubMNZb"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f45.google.com (mail-wm1-f45.google.com [209.85.128.45])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D96F934DB77
-	for <linux-arm-msm@vger.kernel.org>; Fri, 21 Nov 2025 13:46:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BE6A33CE92
+	for <linux-arm-msm@vger.kernel.org>; Fri, 21 Nov 2025 13:46:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763732817; cv=none; b=DesLje88RZIDMpaUxJF92Zjp2z3GJ6dCnoZY03o/6QZ7z2hmdtAsbjq1OV8s8r+dTNJ5G9Akl3ftF2x5dyVLdhxqmUCh+YyFtDeYjNGzE13YRVth56IQP7hARYxoQJKDr5alVPTev5yFNXdUaJoavj2SX33FgdFIuGGLe3TBqsw=
+	t=1763732818; cv=none; b=G7/v9ShqCONOcoyDeugXHCd2L5wTJYkBMWV7pn3uu+x1MlvuC/kuHm4KGFpRY5qCXySqDfjawTuj2C7iwFJuOzUgStBRO4advt9eH7Foj+AyfiIm2Gpu2iv1OpfCRLRSsVMRjUmpkkfg4Q5ZhUGMbITBD1wrYE/apOxbvuO2PBA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763732817; c=relaxed/simple;
-	bh=FefB8Oa165QcwPjxAwa19N04x26PcV1dV9ghQDSDEKU=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=FbcJNutPAqjnoU0t0vvxvMPvg248hLwfNfnnFbN6yZSG8jEDOh6BvvCD0f5HikJ+DhBp0rkIdCllik4abbtxlAFN+opkLBrK0fFuwMRd9kDH0tb13HBqpdpstk/lZM7jZcP1dXE549w8lSienE7lTDyUAVvKRupSthaQFdKKygY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl; spf=none smtp.mailfrom=bgdev.pl; dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b=X+eHXmBv; arc=none smtp.client-ip=209.85.128.45
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=bgdev.pl
-Received: by mail-wm1-f45.google.com with SMTP id 5b1f17b1804b1-4779ce2a624so18533855e9.2
+	s=arc-20240116; t=1763732818; c=relaxed/simple;
+	bh=+WSh/nrOulGAjXJGC0pDYRfoXLb6sCiD5Gc02jtCuTs=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=YS7CkcSW23QMLMyNxkAYVzK3wzpxg57dk3O+s7LQdVL2whxSlBYM8TnwBMs7fLgJTqdHBlKXUpP7Fu3kiu7DubG54K98eVvNBV0VJAFgXk0pJoUpqx9ZXwLboI3QYscoWroIqIb/HGz7xm3fDKxf3kfewOl3lZYYbz0SxwfG34M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=XC4IgcGQ; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=JcubMNZb; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 5ALB49Jr3911311
+	for <linux-arm-msm@vger.kernel.org>; Fri, 21 Nov 2025 13:46:56 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	j+DO9BekeG00CRw1FjqoZ6sLkEuK+yJJGU53v8nxNZk=; b=XC4IgcGQxhnMoFwW
+	AJMvAyCMqowJDywOL1vS+Vpl0Uw99bP5Hh4MK6DTDa/d5zCE6cukp5mleKA1y88w
+	O6cSeSFlPfRfBX3L8zUrSBXDVmdbP96rRKoXFboJsT7bE29rP93OilGaI3jPU/H5
+	tdcVwNff2HeVA5Zuz2asiBQcvkm0BzjMwws6iYyf+8pKgaO2nvXy7h2BeHzv0aiv
+	WQN876VSNAplyKIPr6UEu6u0i59QWOA+HL2KI6XY1hcDN/BExJNJC851qZyO64ap
+	wgTyA1E9l21nVyV0+geBYCYWJ9g8QeKpyAJCrSdee6CK16IeG9cplA1nvX8UdnAl
+	bcVydg==
+Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com [209.85.160.198])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4ajpvsge8u-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Fri, 21 Nov 2025 13:46:55 +0000 (GMT)
+Received: by mail-qt1-f198.google.com with SMTP id d75a77b69052e-4ed5ff5e770so4178521cf.3
         for <linux-arm-msm@vger.kernel.org>; Fri, 21 Nov 2025 05:46:55 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=bgdev-pl.20230601.gappssmtp.com; s=20230601; t=1763732814; x=1764337614; darn=vger.kernel.org;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=FaEPcePt981dVwwnls49VRiHkn8PVQt12TDY2f0CvzU=;
-        b=X+eHXmBvgwmdgMKDJpZ2bifUYJbKk/RYZEWCpeq/iYPKHmFAmtHZLjXFjJS60BF67w
-         otYc/5XvOyYh0Gu/nfavWpBuuwXxbPspw9DV3rgdbI36CbvIzOC62bbjrHKWQtMWIq+/
-         mVBTq93LSm5XxmZo59SxeNjVukRAMvuBDWdEEAo+f1LZu/42pON20E2kUs1crpjYS3K5
-         Qp3iJ5jaebTtjOwBFuNYdp0Qcrx/wmPAXa/NRb1PVahQjVLyEjy0Pz5iaZ3UK1hf2iDD
-         Sjtf5vJ1HxL5YxoaezoSXpulvvUJ2qDJuOyuGC9VBhiGe1XCMGNiyMQYiziK+iRIcN6R
-         yYow==
+        d=oss.qualcomm.com; s=google; t=1763732815; x=1764337615; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=j+DO9BekeG00CRw1FjqoZ6sLkEuK+yJJGU53v8nxNZk=;
+        b=JcubMNZbF5mjAja4WcDyplrRub5z2QIj3rhAm8nRwL5Yw7SySDJSHbI96fl3v5dGes
+         kZatGuDyTBwhSRF1REXm5D5OHH7nR+HGk3ZZT0XK5+57gta6caux8SeO4E/b0n9Gih8z
+         YU250YXEHkUA68AkhlSRFJ/dN+GrUGIclmELfNTS4TckGnpUi2sfHv2M5xK2F/JBsK8r
+         mOHoFQmAuIOp0UPYtDQ94WJYvMw2HAbbWxU6P6JFgO6VN9+DZY6IMsCQvZ47zEMo9399
+         En3rotmOa/7hEMUtu5B4C5SdXgz2uCZrabZmfbtAesqA9kJDerIan//Ps/GHXYSIsx2t
+         FBGg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1763732814; x=1764337614;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=FaEPcePt981dVwwnls49VRiHkn8PVQt12TDY2f0CvzU=;
-        b=H8Q1cbEOZWr8pQXMr+egLYS9SorFWeEQqjV+kFOYthCbTp4a++HwoKbYIHCUhj4Hw+
-         +W14fkkiM4A9aNkpZQN6p3+qeMJWdrjX/eFcND8sxZS46XCY1A4sBjY+XNE2hQoPgHMf
-         5NI10/TdiXTjsE/oVdHgah7OwJs/qgDClzS2pjMN3Wk9E5tW7KjcgROj0w8HjZeye//j
-         DXnOC1EUIAXpWfuYT5loPmNQ38YFUY7gl/eGRxFaFFOLctIVUnakKOHiaP6OyzEUlfOt
-         eKtJ8mtqHqtw28fOzJOVR89AP954/nXssuzKMLkw2ZKzGBs5SMVKqhwQ2AtvC8XufcpM
-         X0RQ==
-X-Forwarded-Encrypted: i=1; AJvYcCUHJHCs7isbWUcfwY+eA0Avg6qA1v05o4FIesc+4hUF10jjKn9Ghcz0tZ8GVv3osWU7rgLRxsIcbwIqjvY4@vger.kernel.org
-X-Gm-Message-State: AOJu0YxqHZMHERGlB06LLVSpAdjBvQdGCO3gqQvwhcKGDgoHz8dzu2yx
-	vm2iZVhfZ4oTTiH0c5TBovpHlB1uukpkPAzmQtI+iazJaMRvEwdisuZdhc1AaTx1HKc=
-X-Gm-Gg: ASbGncuHmrYvNaFJx6AVB0gVcUWg28NHpiQ14+bLBFnC7tZfbw6GUnM/ols47FG6meR
-	zSwR0JhRZcAqPSXnpp6hOhHHJh6oYzJ47S9ksOn5D0J3c3zDAYSmyjqRDfC2b8Y9x3YLLdG4GMJ
-	EFx3AO55MDVF+8F8SsjYI/6MSzMjasdMEk/JVhs/ujyldO99i+eYpC3G5mItguFxD18uffroXa6
-	i4GQdYrN3xOuO6wxh8we66F1EqKFerNpLvd2BM1UxDE8eY7BI/Jq3cSJAuoIOE5EaLfGHrwlU6F
-	l2bo9SfUNtcULx1QTMpfdCxm8sTLyPNKgXAzJgXghnQebfj1XqbmW0Igf4gB4eTGl2hWLxWbs+b
-	IiyPpT2pRUcsVHl2LZcnUu36pEMpXX3Z+NbW6kcE2aUD+AbHFiV4Lq5csfcasp+RuYac6b9Xgn9
-	ZxDuCiVQ==
-X-Google-Smtp-Source: AGHT+IG1IDA9LyEdnJY0Cwy4g36lQtjE3/pcaWfz37nHT+TWsKr+STHJEDzj6iLqyGPcCYccI6yU6g==
-X-Received: by 2002:a05:600c:444d:b0:477:3f35:66d5 with SMTP id 5b1f17b1804b1-477c01df3a1mr22712665e9.26.1763732813889;
-        Fri, 21 Nov 2025 05:46:53 -0800 (PST)
-Received: from [127.0.1.1] ([2a01:cb1d:dc:7e00:ab1f:63b4:bcef:12ba])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-42cb7f2e432sm10712844f8f.9.2025.11.21.05.46.52
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 21 Nov 2025 05:46:52 -0800 (PST)
-From: Bartosz Golaszewski <brgl@bgdev.pl>
-Date: Fri, 21 Nov 2025 14:46:44 +0100
-Subject: [PATCH] gpio: shared: handle the reset-gpios corner case
+        d=1e100.net; s=20230601; t=1763732815; x=1764337615;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=j+DO9BekeG00CRw1FjqoZ6sLkEuK+yJJGU53v8nxNZk=;
+        b=lynzYienqiF91q5X+m8shiuV16w66GvsBgGBJdLxaxA5LGk25gMFmDHUvH3WB0tSkG
+         iNFH1N666i2Y07/fCsR+g9zDo+hiFbsLYR57wTZILALpXu7+i8jB7zNr7uHROGYMrqpe
+         aQyppYTJLS+0WQ986PKQgx6ZrKHhj24dXXGryuC6IfYTK4hO9cFPPzqyVPuLte+6xbWK
+         26nLPYN8goywgZSI+fmq8cNfxaXE+hk1RBAyl+tKQOv5lpCB6Yy+Fcx5fi++bMq5jsHb
+         c00btAq976iaU+VlX47pVY0YDcJVEJN+hFymut3tD0GXC8vmZJWDmZWpnt6HyevbC59M
+         clvg==
+X-Gm-Message-State: AOJu0YwleG3zpTltbG7v/UpJeDMeI7R+zKdndl4ak6/lYCCp2z7vYUCM
+	6Kiey26zF3jMFYXSAIRqoq1FLQBaCTb2H4XQE4HdkHm6WgA9P1IeT5oRlUy9G//Sf5/ZY9OFAdv
+	hPuz/LmHpXNteuEf5Tznj3y94V5UhatzB74m7LM17iNHlCv83/3PPzKp241WBbhj+eGna
+X-Gm-Gg: ASbGncsua6bLpVJcOmhpbH/fRVkyMxjZa4830oQB9g592w55ZspsS7DP5RKI3Z1JD7C
+	1/Md3o7yEQsRqvXQOVTPUFc3YqQgpIV3hloNVyEdIvOAGj2Xi5xQ7wUO2uZQAfW0Z/URODSLSGZ
+	wwVhk3F6jbO/IvbVgdqc4rJLcGt4RTNy0dWCS6WmiUvqE4ED++YbjWt2dhtabOLLv/YHuEveuX+
+	Pc4PnrlggRkyd+EtbaZE2aNaZIK1nGZu9Am/s8SB+odTL5uLivVq5/Hjlo1JcsxC7bpPWkKZf20
+	iJ6x3pqc0wxTPLH+WhjbVfqlA2fPX1oHW+EeIcDXkSAhCfuykQxDRsmoAZk8t08/0MNp8TlVSgQ
+	yYiMkgoakUqkdwn5eijhCChGFC0pt2qznqPiSpGzkok6M1Ddu6vgn1Wj3brw/UnCzoT0=
+X-Received: by 2002:a05:622a:1184:b0:4ed:afb4:5e30 with SMTP id d75a77b69052e-4ee5895624cmr23133071cf.11.1763732815245;
+        Fri, 21 Nov 2025 05:46:55 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IF7DtYkRqUxlcO+pemjw2RleQ5P1i+dCdeHRUXrMnmyJnA8E8Rx1MkOitI3BlsemaFfVRZ7bw==
+X-Received: by 2002:a05:622a:1184:b0:4ed:afb4:5e30 with SMTP id d75a77b69052e-4ee5895624cmr23132801cf.11.1763732814788;
+        Fri, 21 Nov 2025 05:46:54 -0800 (PST)
+Received: from [192.168.119.202] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-b7654cdd5e0sm496933766b.1.2025.11.21.05.46.53
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 21 Nov 2025 05:46:54 -0800 (PST)
+Message-ID: <c04cd051-b6d0-4d98-ac2d-4fc7ffcb4301@oss.qualcomm.com>
+Date: Fri, 21 Nov 2025 14:46:52 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 1/3] soc: qcom: ice: Add OPP-based clock scaling
+ support for ICE
+To: Abhinaba Rakshit <abhinaba.rakshit@oss.qualcomm.com>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>,
+        Manivannan Sadhasivam <mani@kernel.org>,
+        "James E.J. Bottomley" <James.Bottomley@HansenPartnership.com>,
+        "Martin K. Petersen" <martin.petersen@oracle.com>,
+        Neeraj Soni <neeraj.soni@oss.qualcomm.com>
+Cc: linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-scsi@vger.kernel.org
+References: <20251121-enable-ufs-ice-clock-scaling-v2-0-66cb72998041@oss.qualcomm.com>
+ <20251121-enable-ufs-ice-clock-scaling-v2-1-66cb72998041@oss.qualcomm.com>
+Content-Language: en-US
+From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+In-Reply-To: <20251121-enable-ufs-ice-clock-scaling-v2-1-66cb72998041@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Message-Id: <20251121-gpiolib-shared-reset-gpio-fix-v1-1-cf0128fe4b47@linaro.org>
-X-B4-Tracking: v=1; b=H4sIAENtIGkC/x3MQQqDQAxG4atI1gaagUrrVaQLZ/xnDBSVpIgg3
- r2Dy/ct3kkOUzj1zUmGXV3XpYa0DaV5XApYp9oUHuEpEoTLputXI/s8GiY2OH43ctaD0wvSSXz
- nLkWqj81Q+f4Pn+v6AzijE59vAAAA
-X-Change-ID: 20251121-gpiolib-shared-reset-gpio-fix-c8e161b9f6cb
-To: Val Packett <val@packett.cool>, Krzysztof Kozlowski <krzk@kernel.org>, 
- Philipp Zabel <p.zabel@pengutronix.de>, 
- Linus Walleij <linus.walleij@linaro.org>, 
- Bartosz Golaszewski <brgl@kernel.org>
-Cc: linux-gpio@vger.kernel.org, linux-kernel@vger.kernel.org, 
- linux-arm-msm@vger.kernel.org, 
- Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=5123;
- i=bartosz.golaszewski@linaro.org; h=from:subject:message-id;
- bh=O+8PieNk55lnbjyGEdqrNeBbrr42Vyrq9aoUliMf1bI=;
- b=owEBbQKS/ZANAwAKAQWdLsv/NoTDAcsmYgBpIG1JrkeQS6/dOV/t9+xvO5M+FBFzbYxvZawDg
- ZX0r70gpfyJAjMEAAEKAB0WIQSR5RMt5bVGHXuiZfwFnS7L/zaEwwUCaSBtSQAKCRAFnS7L/zaE
- w/JWD/0Z39ASJ9IT8wtlKFQ24PPmdcql1wFRWmFe6bjWiTjxSfTDQMQDvfWFspEBN8Ub0I0v1sy
- Yvx995chXF5qflunWmAGkMHGwHkSiJzBS7p8h4/P5KaX1ALmaml6dGSedrCaXKJf4kn9uWJUOmm
- r2/hb9y/j45NBkOmVClDSbek4xhN5tUX5v2jmeaqPcIGMU4xGENRDKGAjUOGQhyDR7A5IVMskQL
- cQUMBHOstzMmlsEqSjWFbnnUD9B0/bG7N7mvz0jjcHowIYG+EuRuQKt4OyVRMoPcQyKE0aevNax
- avzucxAkQa36/jF2OZlXdAG5gsub4X9X6dk2bOYw+T/U8MrX85R0ys1qqr/eF3bTciwUNfuQTlH
- Oga74Q7H3Oau3NJKNOFWcc5yR6vzY2Hya0In+zoGnQ8kUuFjlCIAQUCKAinEZhruXMGjRdn3G4S
- hUMvjqpeiQjsIFr/cYarp0RAwLvOLo1hlFG5HPwzcxdPDy/03uo56mplHnsC6jL19eeStqkLHFC
- EVnDUMpS3dHcB+NWc2nbYgG0ec1hfYBgPMSfqBRrgAEvWhw503Z2WtMQUUhi3qjDsaeoLBkVGHX
- ha0PndiGeZB08ccCKguYlGp7Iwx4vfphktYFH5JZ+82Pf7CUT9vg5/K+C99OOMaPS3hmskbKb2m
- hiU6KefkOF3xbSA==
-X-Developer-Key: i=bartosz.golaszewski@linaro.org; a=openpgp;
- fpr=169DEB6C0BC3C46013D2C79F11A72EA01471D772
+X-Proofpoint-GUID: STQrYHv5_ilE4wcXAulsMUXOuE3doGSe
+X-Proofpoint-ORIG-GUID: STQrYHv5_ilE4wcXAulsMUXOuE3doGSe
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMTIxMDEwMCBTYWx0ZWRfX1gE10r0Q236h
+ LQ7+/X3pn0YiqWWsh5uIIHyFfexHQDcqkayAeAl2hr//Kt753yk7uTBig6iLzdFXLYYKv+boH+Z
+ tFY8qH00m10L+lFjIJMaXpn82q8hyZeWTAVrg5mAZ4Qg48fI5qaYbSnRm06EKXhpyzDNY5UzI/B
+ QadUp+7qEkiCGRDmAijWVaJU/KPKw4c05vasp6chMN5BBsSMiwejk1hYRw6MNIUW8OVgQQbkAQl
+ l606DuLN/GOYW9LsO+r5mRAYF3S6Z9GkcdRXlg2kTk7Z54ILj0+IGeVW67SUPJc6/1jjck6RAQ8
+ 8tNvW8sXCWrQemRLXdk4QP1h7UbGYY6qC4UsrPtCekxMFhNVGTCwUSxbnHo+Dtaudb0bN/CmteV
+ 5wzhk5O4TyJPXTnUVh+0i/i73/PQQQ==
+X-Authority-Analysis: v=2.4 cv=MqFfKmae c=1 sm=1 tr=0 ts=69206d4f cx=c_pps
+ a=mPf7EqFMSY9/WdsSgAYMbA==:117 a=FpWmc02/iXfjRdCD7H54yg==:17
+ a=IkcTkHD0fZMA:10 a=6UeiqGixMTsA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=DINW31QT5aIcAUPt0q8A:9 a=QEXdDO2ut3YA:10
+ a=dawVfQjAaf238kedN5IG:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
+ definitions=2025-11-21_03,2025-11-21_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ impostorscore=0 suspectscore=0 phishscore=0 clxscore=1015 spamscore=0
+ lowpriorityscore=0 priorityscore=1501 bulkscore=0 adultscore=0 malwarescore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2510240001 definitions=main-2511210100
 
-From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+On 11/21/25 11:36 AM, Abhinaba Rakshit wrote:
+> Register optional operation-points-v2 table for ICE device
+> and aquire its minimum and maximum frequency during ICE
+> device probe.
+> 
+> Introduce clock scaling API qcom_ice_scale_clk which scale ICE
+> core clock if valid (non-zero) frequencies are obtained from
+> OPP-table. Zero min and max (default values) frequencies depicts
+> clock scaling is disabled.
+> 
+> When an ICE-device specific OPP table is available, use the PM OPP
+> framework to manage frequency scaling and maintain proper power-domain
+> constraints. For legacy targets without an ICE-device specific OPP table,
+> fall back to the standard clock framework APIs to set the frequency.
 
-There's an unexpected interaction between the reset-gpio driver and the
-shared GPIO support. The reset-gpio device is an auxiliary device that's
-created dynamically and fulfills a similar role to the gpio-shared-proxy
-driver but is limited in scope to just supporting the "reset-gpios"
-property.
+You can still set a frequency through OPP APIs if the table is empty
+(and one is always created even if devm_pm_opp_of_add_table() fails)
 
-The shared GPIO core code does not take into account that the machine
-lookup entry we create when scanning the device-tree must connect the
-reset-gpio device - that is the actual consumer of the GPIO and not the
-consumer defined on the device tree, which in turn consumes the shared
-reset control exposed by the reset-gpio device - to the GPIO controller.
+[...]
 
-We also must not skip the gpio-shared-proxy driver as it's possible that
-a shared GPIO may be used by one consumer as a reset-gpios going through
-the reset-gpio device and another that uses GPIOLIB.
+>  	/*
+>  	 * Legacy DT binding uses different clk names for each consumer,
+> -	 * so lets try those first. If none of those are a match, it means
+> -	 * the we only have one clock and it is part of the dedicated DT node.
+> -	 * Also, enable the clock before we check what HW version the driver
+> -	 * supports.
+> +	 * so lets try those first. Also get its corresponding clock index.
+> +	 */
 
-We need to make it a special case handled in gpiolib-shared.c. Add a new
-function - gpio_shared_dev_is_reset_gpio() - whose role it is to verify
-if a non-matching consumer of a shared pin is a reset-gpio device and
-make sure it's the right one for this pin. To that end make sure that
-its parent is the GPIO controller in question and that the fwnode we
-identified as sharing the pin references that controller via the
-"reset-gpios" property.
+I would argue *not* setting the rate on targets utilizing a binding without
+an OPP table for the ICE is probably a smart thing to do, because we may
+brownout the SoC this way
 
-Only include that code if the reset-gpio driver is enabled.
-
-Fixes: a060b8c511ab ("gpiolib: implement low-level, shared GPIO support")
-Reported-by: Val Packett <val@packett.cool>
-Closes: https://lore.kernel.org/all/3b5d9df5-934d-4591-8827-6c9573a6f7ba@packett.cool/
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
----
-This is targetting linux-next where the reset-gpio driver is now using
-the auxiliary bus and software nodes rather than the platform bus and
-GPIO machine lookup. The bug is the same in both cases but the fix would
-be completely different.
----
- drivers/gpio/gpiolib-shared.c | 63 ++++++++++++++++++++++++++++++++++++++++++-
- 1 file changed, 62 insertions(+), 1 deletion(-)
-
-diff --git a/drivers/gpio/gpiolib-shared.c b/drivers/gpio/gpiolib-shared.c
-index 3803b5c938f9933dab01c6d777c349ed3b42ce9b..5d06ec66f55eb1478950caa01cd4b680ce606c52 100644
---- a/drivers/gpio/gpiolib-shared.c
-+++ b/drivers/gpio/gpiolib-shared.c
-@@ -253,6 +253,66 @@ static int gpio_shared_make_adev(struct gpio_device *gdev,
- 	return 0;
- }
- 
-+#if IS_ENABLED(CONFIG_RESET_GPIO)
-+/*
-+ * Special case: reset-gpio is an auxiliary device that's created dynamically
-+ * and put in between the GPIO controller and consumers of shared GPIOs
-+ * referred to by the "reset-gpios" property.
-+ *
-+ * If the supposed consumer of a shared GPIO didn't match any of the mappings
-+ * we created when scanning the firmware nodes, it's still possible that it's
-+ * the reset-gpio device which didn't exist at the time of the scan.
-+ *
-+ * This function verifies it an return true if it's the case.
-+ */
-+static bool gpio_shared_dev_is_reset_gpio(struct device *consumer,
-+					  struct gpio_shared_entry *entry,
-+					  struct gpio_shared_ref *ref)
-+{
-+	struct device *parent = consumer->parent;
-+	struct fwnode_handle *remote;
-+	bool ret;
-+
-+	if (!parent)
-+		return false;
-+
-+	/*
-+	 * FIXME: use device_is_compatible() once the reset-gpio drivers gains
-+	 * a compatible string which it currently does not have.
-+	 */
-+	if (!strstarts(dev_name(consumer), "reset.gpio."))
-+		return false;
-+
-+	/*
-+	 * Parent of the reset-gpio auxiliary device is the GPIO chip whose
-+	 * fwnode we stored in the entry structure.
-+	 */
-+	if (!device_match_fwnode(parent, entry->fwnode))
-+		return false;
-+
-+	/*
-+	 * The device associated with the shared reference's firmware node is
-+	 * the consumer of the reset control exposed by the reset-gpio device.
-+	 * It must have a "reset-gpios" property that's referencing the entry's
-+	 * firmware node.
-+	 */
-+	remote = fwnode_find_reference(ref->fwnode, "reset-gpios", 0);
-+	if (IS_ERR(remote))
-+		return false;
-+
-+	ret = (remote == entry->fwnode);
-+	fwnode_handle_put(remote);
-+	return ret;
-+}
-+#else
-+static bool gpio_shared_dev_is_reset_gpio(struct device *consumer,
-+					  struct gpio_shared_entry *entry,
-+					  struct gpio_shared_ref *ref)
-+{
-+	return false;
-+}
-+#endif /* CONFIG_RESET_GPIO */
-+
- int gpio_shared_add_proxy_lookup(struct device *consumer, unsigned long lflags)
- {
- 	const char *dev_id = dev_name(consumer);
-@@ -268,7 +328,8 @@ int gpio_shared_add_proxy_lookup(struct device *consumer, unsigned long lflags)
- 
- 	list_for_each_entry(entry, &gpio_shared_list, list) {
- 		list_for_each_entry(ref, &entry->refs, list) {
--			if (!device_match_fwnode(consumer, ref->fwnode))
-+			if (!device_match_fwnode(consumer, ref->fwnode) &&
-+			    !gpio_shared_dev_is_reset_gpio(consumer, entry, ref))
- 				continue;
- 
- 			/* We've already done that on a previous request. */
-
----
-base-commit: 6d12dd55830ab67dfd8569ff86322f949a1ac916
-change-id: 20251121-gpiolib-shared-reset-gpio-fix-c8e161b9f6cb
-
-Best regards,
--- 
-Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-
+Konrad
 
