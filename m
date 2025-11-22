@@ -1,48 +1,54 @@
-Return-Path: <linux-arm-msm+bounces-82952-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-82953-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id CDB3FC7CE06
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 22 Nov 2025 12:15:49 +0100 (CET)
+Received: from ams.mirrors.kernel.org (ams.mirrors.kernel.org [213.196.21.55])
+	by mail.lfdr.de (Postfix) with ESMTPS id CA562C7CE25
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 22 Nov 2025 12:24:26 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 6E5A33A96AD
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 22 Nov 2025 11:15:48 +0000 (UTC)
+	by ams.mirrors.kernel.org (Postfix) with ESMTPS id 5D72B341871
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 22 Nov 2025 11:24:00 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6A32519E839;
-	Sat, 22 Nov 2025 11:15:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E41FB27FD7C;
+	Sat, 22 Nov 2025 11:23:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="bpSa+eAj"
+	dkim=pass (1024-bit key) header.d=tuxedocomputers.com header.i=@tuxedocomputers.com header.b="GqjPZSKh"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail.tuxedocomputers.com (mail.tuxedocomputers.com [157.90.84.7])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CA51219EB;
-	Sat, 22 Nov 2025 11:15:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13F062D8387;
+	Sat, 22 Nov 2025 11:23:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=157.90.84.7
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763810146; cv=none; b=f4V2E4T5DhyXowEi32pZjvijY/TInoOQ9ohLvqDIt0uwtAXK+m2Deit2JhIdCelXGD7RZ22EcjbmFbvoVYhxWq8XleiS27s1DP8HdfngZdl9Uvev1oiCT8k4evE8x9LsMpnzECuk/J6NEbHijcQhKdhmnTQSGpcaQ6qRScQQfhA=
+	t=1763810637; cv=none; b=B9VAsWmiTtS7E/LfBhVMc6YnizcdBvgWO1dnMNZmgsRBe6CpKMNM7muo5+qUT4458sCztTI6CPznBBAAAXhTNtxvMgUoS0N0Kt3DmMGrVmti3wtVZfFfyA2uuOuLmukmm217Sr/hVr/gyhd6OCXDMylnFSnEgk8FLF3agWYd/Is=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763810146; c=relaxed/simple;
-	bh=5vrxjnx51zxB+v5UZpcUFOyOuKmgI9qmvzbtwXGINQc=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=e2PLmURoSvNG3r4GIvYWwj6SmULo9GxEQZgJU29QCMAcKuySXjH2bqWrlncTPCUOdmKJhpP8gp3aK5adcZdCBdE8IeFBLdMTG6s/OHtsrNUyDU+OVo0NHOOWZeiGJDTS/wFnySgu36ctQ4S08PjEujhttQ3cgR4VuU6rWOGBo80=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=bpSa+eAj; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89576C4CEF5;
-	Sat, 22 Nov 2025 11:15:42 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1763810145;
-	bh=5vrxjnx51zxB+v5UZpcUFOyOuKmgI9qmvzbtwXGINQc=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=bpSa+eAjuiVmQMfJf5YPUdxad1dB4+2jCBcuQz2j9dhXIe9vkT/ToqMHxZXX0KLeZ
-	 sC+3vNhYYF03daIVNNjeiSVc5y2cP4hW9FL0BXxlzdbODL4JI552tt6ksV5iVSOZoc
-	 2CT4mtUw9vrupgLY6dd/mIsmWAz8cpbWSS/5HzMje8uYvAdE6UlK7WBZ1Gan7b0g93
-	 IYB6DVFDsCryjOXTPyW6oWMYPAhg5ZS6sKJ9I1tYammEmSA8ZiM1Csh3VcQfcYNBV3
-	 lrOfvscRm2F5oeIhLvhwIN2AZDN3dEXjVp0J3P6brnzR7b0fm8IyYtBr8MJEfwfX6l
-	 iQyrQmvluzKvw==
-Message-ID: <280982b8-ce86-45aa-812b-ef1bf6e57e3d@kernel.org>
-Date: Sat, 22 Nov 2025 12:15:40 +0100
+	s=arc-20240116; t=1763810637; c=relaxed/simple;
+	bh=1YmvoQJ8PirE1SIeaFeIz+ka7SH10h7n8BK/IbvokT4=;
+	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
+	 In-Reply-To:Content-Type; b=a3it8a8uU2p7VSoD7Q3N6bx8xkRkqIwFvF5y9Pd6UVzPX2YoON2ZRGDwY2LXYG1oS1d6NyRTRbxuqcDc7iN70g0M3W+Npe0rB5UMSmFIWy1p6Yp5one/6GOHK8oaqIR59aGg4bF0l7zKdvSvJ3Ytz7so2wtRIThR5sazvinLPRc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=tuxedocomputers.com; spf=pass smtp.mailfrom=tuxedocomputers.com; dkim=pass (1024-bit key) header.d=tuxedocomputers.com header.i=@tuxedocomputers.com header.b=GqjPZSKh; arc=none smtp.client-ip=157.90.84.7
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=tuxedocomputers.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=tuxedocomputers.com
+Received: from [192.168.178.76] (business-24-134-207-61.pool2.vodafone-ip.de [24.134.207.61])
+	(Authenticated sender: g.gottleuber@tuxedocomputers.com)
+	by mail.tuxedocomputers.com (Postfix) with ESMTPSA id F2E802FC0055;
+	Sat, 22 Nov 2025 12:23:50 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=tuxedocomputers.com;
+	s=default; t=1763810631;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+	bh=U5KpPc8w70ov8a7p1A1Nup9baSkb22Rjui7n7KEdlo0=;
+	b=GqjPZSKhXyOr4GGgJ2lXPcVhArbM88OWqXVe8x0+1zU6Uz2sGJuoj44ZUbOuGqVZC+8YsW
+	2iJdvh0KgH3x6dCcL3MbyDamM4gX5KM7MeNDQpbCy0EP3lGbgp5TIPV8wh6sTujejjPAxM
+	wgXZPwEK93FMzsJpGhaDX5Lhym+IAxU=
+Authentication-Results: mail.tuxedocomputers.com;
+	auth=pass smtp.auth=g.gottleuber@tuxedocomputers.com smtp.mailfrom=ggo@tuxedocomputers.com
+Message-ID: <ce0303d4-b6b7-4920-a3f3-9dbee18032f1@tuxedocomputers.com>
+Date: Sat, 22 Nov 2025 12:23:50 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,147 +56,141 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 0/7] Add TUXEDO Elite 14 Gen1 (X1E78100)
-To: Stephan Gerhold <stephan.gerhold@linaro.org>
-Cc: Georg Gottleuber <ggo@tuxedocomputers.com>,
+Subject: Re: [PATCH v3 6/7] arm64: dts: qcom: Add device tree for TUXEDO Elite
+ 14 Gen1
+From: Georg Gottleuber <ggo@tuxedocomputers.com>
+To: Krzysztof Kozlowski <krzk@kernel.org>,
+ Georg Gottleuber <ggo@tuxedocomputers.com>,
  Bjorn Andersson <andersson@kernel.org>,
  Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- Ettore Chimenti <ettore.chimenti@linaro.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org, Ettore Chimenti <ettore.chimenti@linaro.org>,
  Srinivas Kandagatla <srini@kernel.org>, stefan.schmidt@linaro.org,
- wse@tuxedocomputers.com, cs@tuxedo.de
+ stephan.gerhold@linaro.org, wse@tuxedocomputers.com, cs@tuxedo.de
 References: <20251121142623.251118-1-ggo@tuxedocomputers.com>
- <af3d3295-1340-417f-8682-7d7e2bc6c812@kernel.org>
- <aSGXu7IhPDNSkYhi@linaro.org>
-From: Krzysztof Kozlowski <krzk@kernel.org>
+ <20251121142623.251118-7-ggo@tuxedocomputers.com>
+ <d66c9cd7-bc4c-4cbe-9549-0d24c8a6ae8f@kernel.org>
+ <8269aebd-ef1a-42c3-9bf3-580e00589821@kernel.org>
+ <63c0a929-4833-420a-88fc-ee6e53b1d5fd@tuxedocomputers.com>
 Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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 a/A=
-In-Reply-To: <aSGXu7IhPDNSkYhi@linaro.org>
+Autocrypt: addr=g.gottleuber@tuxedocomputers.com; keydata=
+ xsFNBGgPWcABEACY/HWP9mAEt7CbrAzgH6KCAyrre7Bot8sgoTbhMZ9cb+BYrQEmeW05Hr5Z
+ XsuwV63VgjR1rBnecySAsfl8IPEuOTncE0Ox7prT9U3pVKsY+v3HOYJiaB9UbQ2cMjXsKbIX
+ uaQWYVkQNWCF0cQhiq0tmROq2WQjtc9ZbRgogi5G1VE/ePbGH8a+LQG4+aJdeRgZLeEQOm88
+ ljnWfbnVbQNJXqq5IAyCjU9ZfnNtC+Y2o2KM4T+XC1NMfAWG82ef8WuXk9jNuRPDcIfwoI0w
+ mnZGy/KSWLRJxOPzqOgNrpmmhjSBqykyQmiE9t9vjPGWlgF+s/ac1GaFuLTVJnYlO3OA5iLT
+ 9VjGu4RuHBjwzmHPvp1eHN7GncoE4571TMXbeW6TCeGngv+RTm4dBtB1lOds/1CFOxc4ENZC
+ TnGJHzciO7/hM3NB4HM9tkg31LoKTAoWRLiEQvtMTLmtrqHukd5OJp9Zoero8RUEhykSnFt8
+ ojjcm4mZYf25n7r47nTpUq5G73jAF84biNh6PDp8RFoyWbTgzXQpDCwtUUjX2TgVomQZ5t3H
+ 3gNYT5jfeLe5djxpR6as50k9XHE3Ux5wGlQvDqHAnY4bUq250WzzR0/RdJlKpzoczPaohAuB
+ ggAXIHlmpVxcqUIBY9pTw1ILuQ+keia3DoBaliqwGrTam6lCBQARAQABzTNHZW9yZyBHb3R0
+ bGV1YmVyIDxnLmdvdHRsZXViZXJAdHV4ZWRvY29tcHV0ZXJzLmNvbT7CwY0EEwEIADcWIQT9
+ C+gw5/8BKoEjHTXh93ExJiZfygUCaA9ZwgUJBaOagAIbAwQLCQgHBRUICQoLBRYCAwEAAAoJ
+ EOH3cTEmJl/K+7AP/RPo5hpY2anSDAlB2/Zrdp9LhAc8H6xA/9JnpvBgrbUakoVs7Z+hUexa
+ eFSu0WM4EOX5U0mfS2RcLjChVLcLqnFEXe80JzloZdRNzDCb7AoaUqb5zocPa4JKFLNlk341
+ vbkm9G5FCoy+qAXG4KSOMaxEE0MaeZR1p3js9c1puFaazrJbdLEN/KU5O5KZ8Jd6+TdIXqf6
+ Ujf8rgIpsgeABcbE9Yg6PiFBuCa/BoSLsk+k4L9Sef9xoqFAiJHhcGkxULuRr5gRpPn8uHce
+ ICv8qipFeI/YDI1mpjSzP8Vd5FU42qvSq2SCvwAbF1YFrwL5/8yeuE7jVHZb6oWJ9PuCQ/gC
+ Ik9HjNLFUS6lKW7TvBWlpBO6Qu9Uh+PrPmciXLRJEdOJFiXRJBWxnF4hJqBufWss77aWn8TX
+ rf56+zeyle4RPULbOZEjcbF0Zu7UgSS/vimAIGYkpOBFWxmXCjamcIk4nnFIcu6HweDyzTba
+ 3ZLGx0ulHPyk/XkOaNNwJpAzqp0r5evQIoAu8m8XfKoDbx5sLQyHCihQjepKC37yE/FVOVSA
+ QK0MjD+vTqCAnYAhiraXwre7kvUYMa7cxdGf6mQkyRkkvzOya7l6d9hBsx76XhCXuWuzYPd2
+ eDd0vgAaIwXV1auVchshmM+2HtjnCmVKYLdkgWWwtnPd/7EApb4XzsFNBGgPWcMBEADsDpi3
+ jr3oHFtaTOskn1YyywlgqdhWzDYHRxK/UAQ8R3Orknapb0Z+g0PQ70oxTjVqg/XopGrzS3yx
+ Y3IN1bLHoRzfXXf/xhhZRsVu6cFATNpgw5133adn9Z35+3rvGPaZUh1eXr24ps9j9krKvzel
+ XbcW1OrKQ/mzcleYOetMizmKK40DaxJdjpKVRU03BACvoIUdpWMUTqUyNkDqemt1px0nTyGb
+ kObGaV6+3D1dXpz5loYjCG9MnDFFEll9pRgObTO0p7N2YrXUz9uoYHHG5OddD3HrGgSm2N75
+ 8P35jobO/RLpBcJtqIBR3zGGfDlWkahkUESGSnImqELA8X1gise71VqpLc8ETHoRENAiuSzi
+ Rb8HSKzuMpXr20o602Y46CYXkgwb6KAzT2QbBFKi7mQ79u1NcbC2mPkhdeDiUK2nF7lR7mKt
+ r2sfGOG1uoYt6h57Ija5hQKHcaqEXeRZLKnR2O6vMpabEsZBewLJymAtay4oLhSm6ya6et8c
+ CBftq0Pigj7H+zcalURdr8g8Xa2if5EI7C8LIxRmq9U7eCBnQDHnczIudtDT856QMsIfqcb7
+ nGJFLpw1HIBiwquNzfzwIGlEyfxSepM6uY16HlCwthK+nw7zFbxS/PNqYLVQxvyl8fBjqcNt
+ ROZnd7IY9CECa9St892EU1SLk1OPIwARAQABwsF8BBgBCAAmFiEE/QvoMOf/ASqBIx014fdx
+ MSYmX8oFAmgPWcMFCQWjmoACGwwACgkQ4fdxMSYmX8rbdA//ajzMle1dGtsnJC7gITmEO2qf
+ mcvmVE3+n4A6193oPlStCePyET2AHyRWv4rAbY3Wl2e3ii0z4G3f3ONWkxjvemnzJFl/EjyO
+ HoEX8e+cncr3lWyudw8IqXFVogdlPdMNfI6SX1EKekCVPot/dNoCKrZUqbn3Ag4pldHUehuD
+ M6FaI6zDO3jdiDWY+MxwvY0isleNT7J/EXSVUEURo6pcA6hASadHqYs7lBBE/GmEJNqTbfMY
+ wKWEzSoxWAV8nVWVLej1uqffmoSXJt2M8SV41i3OA2SaSVSnQNd/KAEPk9Uhn/d7ZFdBLO+L
+ USSsfabGu8Uv9Ez5+gXF7QoElqrUjwJQ+d8L1BfotSJMbAuikij9XyBkBbRuj3FxM8Yfp9cP
+ l5vI0gqfMbj36QaNhXZYl5kK0Erw+mwnK8a2p7j7RtvtrvEu+khfTLrDQCpgznTK2W8G7oLn
+ iAVOWlEtKQXXVoSoDRDCETJV6bfOzuA9qVNjXgwaQQfA/QrFMusPKW0oOgmE3sobkmo6PZVD
+ Cj0BY3cLZSuTw5fXtFuYf3rhyrDfzu7KYCMlwJiadQSrhUWU7hBG3Ip3bbgXayqcG3ytQb/F
+ j2o6LfW/2XyMPLuL42mc+aKmuHqk5PqTkvlTr/pn0temEL/ofJ0c2ygkgSZqAhg/yr01AQcX
+ bsxTTcOuRnk=
+In-Reply-To: <63c0a929-4833-420a-88fc-ee6e53b1d5fd@tuxedocomputers.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 22/11/2025 12:00, Stephan Gerhold wrote:
-> On Sat, Nov 22, 2025 at 11:16:25AM +0100, Krzysztof Kozlowski wrote:
->> On 21/11/2025 15:26, Georg Gottleuber wrote:
->>> [...]
->>> Initial support for TUXEDO Elite 14 Gen1 laptop. It is based on Qualcomm
->>> Snapdragon X Elite SoC (X1E78100).
+
+
+Am 22.11.25 um 12:10 schrieb Georg Gottleuber:
+> 
+> Am 22.11.25 um 11:09 schrieb Krzysztof Kozlowski:
+>> On 22/11/2025 11:07, Krzysztof Kozlowski wrote:
+>>> On 21/11/2025 15:26, Georg Gottleuber wrote:
+>>>> Initial support for TUXEDO Elite 14 Gen1 based on Qualcomm Snapdragon X
+>>>> Elite SoC (X1E78100).
+>>>>
+>>>> Working:
+>>>> * Touchpad
+>>>> * Keyboard
+>>>> * eDP (no brightness control yet)
+>>>> * NVMe
+>>>> * USB Type-C port
+>>>> * USB-C DP altmode
+>>>> * HDMI-A port
+>>>> * WiFi (WiFi 7 untested)
+>>>> * Bluetooth
+>>>> * GPU
+>>>> * Video decoding
+>>>> * USB Type-A
+>>>> * Audio, speakers, microphones
+>>>> 	- 4x speakers.
+>>>> 	- 2x dmic
+>>>> 	- headset
+>>>> * Camera
+>>>> * Fingerprint reader
+>>>>
+>>>> Co-developed-by: Srinivas Kandagatla <srini@kernel.org>
+>>>> Signed-off-by: Srinivas Kandagatla <srini@kernel.org>
+>>>> Co-developed-by: Ettore Chimenti <ettore.chimenti@linaro.org>
+>>>> Signed-off-by: Ettore Chimenti <ettore.chimenti@linaro.org>
+>>>> Signed-off-by: Georg Gottleuber <ggo@tuxedocomputers.com>
+>>>> ---
 >>>
->> [...]
+>>>
+>>> I guess all our reviews are irrelevant now and this should be abandoned:
+>>>
+>>> https://www.tuxedocomputers.com/en/Discontinuation-of-ARM-notebooks-with-Snapdragon-X-Elite-SoC.tuxedo
 >>
->>> Because the SoC is now outdated and some functions still do not work as
->>> well as customers would expect from the TUXEDO brand, TUXEDO Elite 14 Gen1
->>> will not be offered for sale. We would still like to submit our device
->>> tree to the mainline kernel and thus contribute to Linux support for a
->>> compatible device sold by Medion (SPRCHRGD 14 S1 Elite). At least in
->>> Germany, this device was sold in many large stores. (An official press
->>> statement will follow on our website.)
->>
->> For me this is unmergeable, because we do not take stuff which no one
->> uses (no one can even use), and I am sad I put effort in reviewing AFTER
->> this was known to be cancelled.
->>
+>> Heh, I see you sent it AFTER the above announcement, so knowing this is
+>> not going to be merged. Reviewing code which is not going to be need is
+>> waste of time, so I feel tricked. That's not nice.
 > 
-> I don't think we have any requirement to have a large user base in order
-> to merge changes. There is already support for plenty of cancelled
-> products with only a few (if any) remaining users in mainline, e.g.
+> Hi Krzysztof, I am very sorry about that. That was precisely NOT my
+> intention. That's why I updated the cover letter for v3 and made sure
+> that this information was first released to the kernel maintainers (so
+> that they wouldn't find out about it through the press). My patch set
+> was deliberately published hours before the official press statement.
+> (Maybe the time gap was too short.)
 > 
->  - Snapdragon X Elite Dev Kit (x1e001de-devkit), shipped only to a
->    handful of users before cancelled
->  - All ChromeOS SC7280 devices (including DTB variants for several
->    revisions of pre-production samples), never shipped to anyone
+> Please read the updated cover letter.
+
+One more thing: The timestamp on
+https://www.tuxedocomputers.com/en/Discontinuation-of-ARM-notebooks-with-Snapdragon-X-Elite-SoC.tuxedo
+is obviously (for me) the date of creation not the date of publication.
+I can understand that it made you suspicious.
+
+Regards,
+Georg
+
+
+> Regards,
+> Georg
+> 
+>> Best regards,
+>> Krzysztof
 > 
 
-I discuss here the timing primarily and I don't know the timing about them.
-
-> There are also plenty of internal reference devices that only a handful
-> of people have access to (MTP, HDK, CRD etc). What makes these any
-
-They are still "maintained" and "offered", even if only for handful
-(like 3000 EACH variant) people. That's the amount of board of each
-variant, e.g. MTP8750, and all of them run some sort of Linux, even if
-downstream. So sorry, but 3000 (or whatever number it is) is not handful.
-
-> different? Ettore has been actively testing and contributing to the port
-> for the TUXEDO laptop, so if he wants to continue that, I don't think
-> anything speaks against merging this device tree.
-
-I won't be maintaining it, so not my effort in that, but since you speak
-about that - maintenance is an effort, thus I decide not to spend it on
-cancelled products.
-
-> 
-> In any case, I don't think the time reviewing these changes is wasted:
-
-I am happy that you do not find my time wasted, but I disagree on that
-because knowing this is cancelled, I would probably not care and review
-products which are not cancelled at this time.
-
-> As Georg wrote, there is also the Medion SPRCHRGD 14 S1 Elite laptop
-> that uses basically the same hardware design. I'm sure there are (or
-> eventually will be) users of that device who would appreciate having a
-> fully-functional device tree ready to use. There is an open issue in one
-> of the Ubuntu repositories for example [1] to add automatic DTB
-> selection for it.
-> 
-> In other words, even if we decide against adding support for the
-> "x1e80100-tuxedo-elite-14-gen1", the same changes renamed to
-> "x1e80100-medion-sprchrgd-14-s1" would still be valid and valuable.
-
-That's why you send such patches with RFC title and FIRST (literally
-first) explanation in cover letter WHY, so people can decide.
-
-> I wouldn't expect any other changes to be needed, although obviously
-> someone with access to the device should confirm that before submitting.
-
-You still cannot apply my review to that other board, so still wasted
-time because I would need to review again.
-
-
-Best regards,
-Krzysztof
 
