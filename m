@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-82945-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-82946-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id AC06BC7CC4E
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 22 Nov 2025 11:10:05 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8BDECC7CC6F
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 22 Nov 2025 11:16:36 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 661AE3A8A22
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 22 Nov 2025 10:10:04 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 4587E3A7DA1
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 22 Nov 2025 10:16:35 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 511CA2C21C4;
-	Sat, 22 Nov 2025 10:10:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 97F362F99B5;
+	Sat, 22 Nov 2025 10:16:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="T6S6r9rc"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="br9KKYgh"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 238E11E1A05;
-	Sat, 22 Nov 2025 10:10:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E3522F0C66;
+	Sat, 22 Nov 2025 10:16:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763806202; cv=none; b=tlPVBcf9yebt38n5/4lGz1Yd5/nXoE1wU4M7al2c6oy5HGYGC4hK+Yj5QIrWmspWT/xB4Q8+Yo3NmcskkY6ew5czctX+58NjRAgvCvLDEksk+vfK7mgHlbpOD4ROscfM7NvOwZGkRw9J0knVPO9RJxzpIhTKxT2HWGdbuzn6Hoc=
+	t=1763806590; cv=none; b=N1qtB/uFgAC11rqGDBWbRq+CsmQ003GntsRtc50tZF79Bxtmzd1sne4y7DGdELj5kHjusfwuh8VUi3KRvE7wRPdONobd9o6W+UmkBLL6X+jze9dy43x/4Ug6jkCVCBZ3MFS/LVlqgc+xFka6WiBDy2FiespVchKtNfCSTqNWj2w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763806202; c=relaxed/simple;
-	bh=2bvN74thXb2Kl6D161o/YZdeY+mRWcVzoAjcaObhHog=;
-	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
-	 In-Reply-To:Content-Type; b=awXjkqPrxzqZbkiU60C2m/y9/HaSmVhYBrVPXSWeYxCAXW4pzwLl7mjv9I/vOdtiaJthnHGasKhJmYPiHppSADM7BBVWdijksjvqXYmcWaAXYfIKYdgfrJOw3UttmEcnzPIGBzyR0/P1JzibBdCRO+AuIpmI/vTZf+kDA0EC+cA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=T6S6r9rc; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52CE2C4CEF5;
-	Sat, 22 Nov 2025 10:09:57 +0000 (UTC)
+	s=arc-20240116; t=1763806590; c=relaxed/simple;
+	bh=hZ2wdq4gl82O1Rm4fAtlQLFIoSUKbXjgtpyiNYHEjp4=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=HD3tcCWNlm/4yeklmPx7EOItiPcU54iBdsTRfVcUHPTARJHiSypzfOOcRII1LBm6OzBushWH0EPo5Qpvm3fWGMq/KRPxsxTnE85BqecXejOL2/rQz5n59R2aVGsRJTvx7ufd8umK05kQzuaOcuaOUzapYm+wfMhOXgvEaf7Hj70=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=br9KKYgh; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13087C4CEF5;
+	Sat, 22 Nov 2025 10:16:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1763806200;
-	bh=2bvN74thXb2Kl6D161o/YZdeY+mRWcVzoAjcaObhHog=;
-	h=Date:Subject:From:To:Cc:References:In-Reply-To:From;
-	b=T6S6r9rcltNAnr+3zF419JsYeq1PNzvMmQMT6hjN1RiQV7TDBT8ESsKowr4n9pRuB
-	 aAA2q2sidv6K7/IsoJrCpnFl9Yw3eavzZYdFBX06B+Dk8WbQ7un0VeIzxn//aPyQTa
-	 zu/9iHM41hoyzk+SzBrpnftKA79HRrC5WY2v/tVrp+6evRDom7UN/RD6Ts9tC3/Gki
-	 g54F7QNtP5lrk6G3KdfAa/mf3DJRYBxAWu5a98CIzNJV/CNZ2aVzoKKN5LLihDa84P
-	 bOXftBa0LxONPi+HuLB0Etuza1/z3CNFQGUig+tuv5D+ZAof8Y5g1uPrRc5eRVImw6
-	 s1N/0eQr/AFxg==
-Message-ID: <8269aebd-ef1a-42c3-9bf3-580e00589821@kernel.org>
-Date: Sat, 22 Nov 2025 11:09:55 +0100
+	s=k20201202; t=1763806590;
+	bh=hZ2wdq4gl82O1Rm4fAtlQLFIoSUKbXjgtpyiNYHEjp4=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=br9KKYghEEw68+Fg2suL5WkeOYj07aYoqtf9rNkdN2z11KwrYwYUvyMbKqrl85dq4
+	 LErRS6+YIRMT2bIDrsZeBJTUlC7jc5UVRtspO+aB67cdnreS6l6PIdGmNPIB8liRxY
+	 HDkF4YgZ/bVOvV8/A1T+crFEbhE9h4f9jbzMLgoGvZItjPA+LBstVJ3Lg6q0r+8D3j
+	 ELxL8fdltbjR2UTq3LBMcjDHajyV+5TAmH6JoMopeuTPqnwXl7vP72OIjvAIVfCblG
+	 EadKvJtPiorJlYR1FdIs9zkGN73NMiRyuG0609qG9oL9hSG5wImug5Ejajo/Zp1CHW
+	 5uPaPv1GhIx5Q==
+Message-ID: <af3d3295-1340-417f-8682-7d7e2bc6c812@kernel.org>
+Date: Sat, 22 Nov 2025 11:16:25 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,9 +50,7 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 6/7] arm64: dts: qcom: Add device tree for TUXEDO Elite
- 14 Gen1
-From: Krzysztof Kozlowski <krzk@kernel.org>
+Subject: Re: [PATCH v3 0/7] Add TUXEDO Elite 14 Gen1 (X1E78100)
 To: Georg Gottleuber <ggo@tuxedocomputers.com>,
  Bjorn Andersson <andersson@kernel.org>,
  Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
@@ -62,8 +60,7 @@ Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
  Srinivas Kandagatla <srini@kernel.org>, stefan.schmidt@linaro.org,
  stephan.gerhold@linaro.org, wse@tuxedocomputers.com, cs@tuxedo.de
 References: <20251121142623.251118-1-ggo@tuxedocomputers.com>
- <20251121142623.251118-7-ggo@tuxedocomputers.com>
- <d66c9cd7-bc4c-4cbe-9549-0d24c8a6ae8f@kernel.org>
+From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
  xsFNBFVDQq4BEAC6KeLOfFsAvFMBsrCrJ2bCalhPv5+KQF2PS2+iwZI8BpRZoV+Bd5kWvN79
@@ -108,50 +105,67 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  jWt87ecuHlpL3uuQ0ZZNWqHgZoQLXoqC2ZV5KrtKWb/jyiFX/sxSrodALf0zf+tfHv0FZWT2
  zHjUqd0t4njD/UOsuIMOQn4Ig0SdivYPfZukb5cdasKJukG1NOpbW7yRNivaCnfZz6dTawXw
  XRIV/KDsHQiyVxKvN73bThKhONkcX2LWuD928tAR6XMM2G5ovxLe09vuOzzfTWQDsm++9UKF a/A=
-In-Reply-To: <d66c9cd7-bc4c-4cbe-9549-0d24c8a6ae8f@kernel.org>
+In-Reply-To: <20251121142623.251118-1-ggo@tuxedocomputers.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 22/11/2025 11:07, Krzysztof Kozlowski wrote:
-> On 21/11/2025 15:26, Georg Gottleuber wrote:
->> Initial support for TUXEDO Elite 14 Gen1 based on Qualcomm Snapdragon X
->> Elite SoC (X1E78100).
->>
->> Working:
->> * Touchpad
->> * Keyboard
->> * eDP (no brightness control yet)
->> * NVMe
->> * USB Type-C port
->> * USB-C DP altmode
->> * HDMI-A port
->> * WiFi (WiFi 7 untested)
->> * Bluetooth
->> * GPU
->> * Video decoding
->> * USB Type-A
->> * Audio, speakers, microphones
->> 	- 4x speakers.
->> 	- 2x dmic
->> 	- headset
->> * Camera
->> * Fingerprint reader
->>
->> Co-developed-by: Srinivas Kandagatla <srini@kernel.org>
->> Signed-off-by: Srinivas Kandagatla <srini@kernel.org>
->> Co-developed-by: Ettore Chimenti <ettore.chimenti@linaro.org>
->> Signed-off-by: Ettore Chimenti <ettore.chimenti@linaro.org>
->> Signed-off-by: Georg Gottleuber <ggo@tuxedocomputers.com>
->> ---
+On 21/11/2025 15:26, Georg Gottleuber wrote:
+> Initial support for TUXEDO Elite 14 Gen1 laptop. It is based on Qualcomm
+> Snapdragon X Elite SoC (X1E78100).
 > 
+> Changes in v3:
+> - add DisplayPort audio to dts
+> - add el2.dtb to Makefile
+> - change dts firmware paths
+> - fix dt-binding (x1e78100 instead of x1e80100)
+> - improve commit message for elite14gen1 dt-bindings
+> - remove smb2360_1 from dts (only one USB-C port is present)
+> - remove "VA MIC BIAS1" from dts
+> - remove regulator-always-on from vreg_edp_3p3 (display) in dts
+> - rename vendor prefix of ASL Xiamen Technology to asl-tek
+> - sort dts
 > 
-> I guess all our reviews are irrelevant now and this should be abandoned:
+> Changes in v2:
+> - Rebase to v6.18-rc4/master
+> - Add support for accelerated video decoding
+> - Add support for audio (speakers, microphones, headset)
+> - Add support for Bluetooth
+> - Add support for camera
+> - Add support for fingerprint reader
+> - Add support for HDMI-A port
+> - Add support for QSEECOM
+> - Add support for USB Type-A
+> - Add support for USB-C DP altmode
+> - Add ASL Xiamen Technology Co. Ltd. vendor prefix
+> - Add TUXEDO vendor prefix
+> - Add cover letter
+> - Removal of pointless comments
+> - Coding style fixes
+> - Spell check
 > 
-> https://www.tuxedocomputers.com/en/Discontinuation-of-ARM-notebooks-with-Snapdragon-X-Elite-SoC.tuxedo
+> The device tree uses the dtschema from Linaro DisplayPort PHY patch [1].
+> ALSA UCM and Audioreach topology patches are available at [2] and [3].
+> The fingerprint reader requires USB IDs to be patched into libfprint.
+> WiFi requires a firmware patch [4].
+> 
+> Announcement and request for comments:
 
-Heh, I see you sent it AFTER the above announcement, so knowing this is
-not going to be merged. Reviewing code which is not going to be need is
-waste of time, so I feel tricked. That's not nice.
+This should be FIRST part of cover letter, so we won't waste time on
+reviewing it, instead of burying it deep. Additionally, you should have
+named the series RFC.
+
+> Because the SoC is now outdated and some functions still do not work as
+> well as customers would expect from the TUXEDO brand, TUXEDO Elite 14 Gen1
+> will not be offered for sale. We would still like to submit our device
+> tree to the mainline kernel and thus contribute to Linux support for a
+> compatible device sold by Medion (SPRCHRGD 14 S1 Elite). At least in
+> Germany, this device was sold in many large stores. (An official press
+> statement will follow on our website.)
+
+For me this is unmergeable, because we do not take stuff which no one
+uses (no one can even use), and I am sad I put effort in reviewing AFTER
+this was known to be cancelled.
+
 
 Best regards,
 Krzysztof
