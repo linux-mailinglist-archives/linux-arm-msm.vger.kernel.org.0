@@ -1,128 +1,101 @@
-Return-Path: <linux-arm-msm+bounces-82924-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-82925-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [142.0.200.124])
-	by mail.lfdr.de (Postfix) with ESMTPS id 174A8C7BFD1
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 22 Nov 2025 01:05:14 +0100 (CET)
+Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [IPv6:2605:f480:58:1:0:1994:3:14])
+	by mail.lfdr.de (Postfix) with ESMTPS id 95CE6C7C2C3
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 22 Nov 2025 03:21:08 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id A5E184E1A98
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 22 Nov 2025 00:05:12 +0000 (UTC)
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id EB6F14E1553
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 22 Nov 2025 02:21:05 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 99CA14F5E0;
-	Sat, 22 Nov 2025 00:05:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 77AC426F476;
+	Sat, 22 Nov 2025 02:20:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="lo+1hFAx"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="vDn0ls5e"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.13])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75EC42AEE1;
-	Sat, 22 Nov 2025 00:05:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.13
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E01F2A1AA;
+	Sat, 22 Nov 2025 02:20:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763769907; cv=none; b=qnUjtexUX92S5QI+dPfAOVTOrRQtObOnSizTp0K/Y6HrC5T5k5WWlvhLxLY8dbw7dHFt6T0IwFRzpN74/gtYJnz2raclaZFr5Vgh0z3rQhDvOPjGkaJrYy4wtpjBFFwjoodH1NJsFUDcuCevpVduTDbm5ytiVv8V5WtJtciQA2U=
+	t=1763778052; cv=none; b=s9gWCPjQ0JTxB9CVvFx/JyXgvqfv4RFOs6gt8XZgoTERggRzzIWHMykFaY+yXMP02YEZTzg2YkhlUoAuIwgR7b1HQVEZqgnTLpB+KgWjNJSql/cuQUoLnVt7xX8W3FRfGsgLGufs+IwLk5pHqBnNhD5orus2em5L5uyKawFRwnY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763769907; c=relaxed/simple;
-	bh=lKk63OBIxTgAZL2BQA9bHbccK1TAmQ6Nota8WFvpBkg=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=MnVjWz4bd1MD8ryOsqEO6tEbAny7EwmnlAH+Sr/o7amq2456er66QO/D3agsFmhtU1VS6CDAzuGxSeScx5TKcn7lmM6SIUWSHzyokjYbPdwDfOUNR8R4fyt3fPjB+kqUix6n+DFm5ow2TzmhTZvt6sdrD4eyIaS6phK6UaY9/M0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=lo+1hFAx; arc=none smtp.client-ip=198.175.65.13
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1763769906; x=1795305906;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=lKk63OBIxTgAZL2BQA9bHbccK1TAmQ6Nota8WFvpBkg=;
-  b=lo+1hFAxH06+sytQZxKbwsDz0D4+BSsgFqQn+9GNccChG+4jv4Mn5OHt
-   fK/gvRxyVI13LnIYqns1QtNh87sxMgAj3pfoQHY6JMRP8QQVEuiy7hb0P
-   05ZCLzPmyYifqbRErYklia0iA4h5QCek86ussYMTzmrKDwBQ4kgBNiyBF
-   +ZbUF+0Ldp70eI9mPN57stORcg1exZ+xWSjZnxHPRI9tXkVy3exhF5yJV
-   Mp72Yv03CgCCjJWcug/Yi+SJylt1vYGLEoqb7U5tm6T5JIXpDrIGGC2kW
-   TRp+QsrlFIk6I3ZS2EzUf1TbAjec22yRtgbtnefe8BNUsnjmWhfFWEUeD
-   A==;
-X-CSE-ConnectionGUID: eXdvH3xBROqRksv7Ny2OQA==
-X-CSE-MsgGUID: IUk3NfPXSqGA+N/kFaThdQ==
-X-IronPort-AV: E=McAfee;i="6800,10657,11620"; a="76980187"
-X-IronPort-AV: E=Sophos;i="6.20,217,1758610800"; 
-   d="scan'208";a="76980187"
-Received: from fmviesa004.fm.intel.com ([10.60.135.144])
-  by orvoesa105.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 21 Nov 2025 16:05:04 -0800
-X-CSE-ConnectionGUID: 0m1MqlNQSeC7xJO5WxDOzw==
-X-CSE-MsgGUID: PhKw3WinTWa2mGSgArHQNA==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.20,217,1758610800"; 
-   d="scan'208";a="196760418"
-Received: from lkp-server01.sh.intel.com (HELO adf6d29aa8d9) ([10.239.97.150])
-  by fmviesa004.fm.intel.com with ESMTP; 21 Nov 2025 16:04:59 -0800
-Received: from kbuild by adf6d29aa8d9 with local (Exim 4.96)
-	(envelope-from <lkp@intel.com>)
-	id 1vMb7Y-0006zb-2u;
-	Sat, 22 Nov 2025 00:04:56 +0000
-Date: Sat, 22 Nov 2025 08:04:02 +0800
-From: kernel test robot <lkp@intel.com>
-To: Eugen Hristev <eugen.hristev@linaro.org>, linux-arm-msm@vger.kernel.org,
-	linux-kernel@vger.kernel.org, linux-mm@kvack.org,
-	tglx@linutronix.de, andersson@kernel.org, pmladek@suse.com,
-	rdunlap@infradead.org, corbet@lwn.net, david@redhat.com,
-	mhocko@suse.com
-Cc: oe-kbuild-all@lists.linux.dev, tudor.ambarus@linaro.org,
-	mukesh.ojha@oss.qualcomm.com, linux-arm-kernel@lists.infradead.org,
-	linux-hardening@vger.kernel.org, jonechou@google.com,
-	rostedt@goodmis.org, linux-doc@vger.kernel.org,
-	devicetree@vger.kernel.org, linux-remoteproc@vger.kernel.org,
-	linux-arch@vger.kernel.org, tony.luck@intel.com, kees@kernel.org,
-	Eugen Hristev <eugen.hristev@linaro.org>
-Subject: Re: [PATCH 01/26] kernel: Introduce meminspect
-Message-ID: <202511220712.LEcYEMJx-lkp@intel.com>
-References: <20251119154427.1033475-2-eugen.hristev@linaro.org>
+	s=arc-20240116; t=1763778052; c=relaxed/simple;
+	bh=N/GqJc5kp4W33XuSJpLT2jBZ4MHlInurgmhHBSKSiAc=;
+	h=Content-Type:MIME-Version:Subject:From:Message-Id:Date:References:
+	 In-Reply-To:To:Cc; b=IQ1WJNmz8HbuJQy0RNZqrNqMd+pldQMKKiR3r9G3BIqDkvtodcRnWmRMtZG6cPFFk+DV+SL7jWEf6Uq4KoJS+f6b7CWJcoPcNrIeYmIzygJVq26Ca6iFhTT6ltMpskTqDx4MfzmXvcA4ASBBTTDL3c9iU4lIMQHsNz3pskzGxY8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=vDn0ls5e; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2420C4CEF1;
+	Sat, 22 Nov 2025 02:20:51 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1763778051;
+	bh=N/GqJc5kp4W33XuSJpLT2jBZ4MHlInurgmhHBSKSiAc=;
+	h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
+	b=vDn0ls5eNfi3PLIKOS56zjr42iSAO/TrxI3WymCFuEAFPjhcCZ3eA0VS8kcZpg64c
+	 Cs7v3QTZLXc73kfsOBaVBjuvB/MU/SMYC/X6FIJtWaYN4A2EMnxwj9c5UmmuEfGBW6
+	 nx4jfhsQwsC6+c7FUSn5nupGkj4Y1Bf+pE2E8+Q9446/SfGM2cHGwt3eiwPeFzA4cZ
+	 MIz6LTQ5gQLHZgJ+I7I5rNvKjsOXSWnDz8GVu+9IIDXcH4gRhhyM4moZ2YjdokbH+W
+	 4DIW9rDvbmpbmUlbAgkfiyvOaMftePQ/eRq8wyzaM7Jw+yUiESHieKRACIlNf86e8Y
+	 +EW5qOFPd+GmA==
+Received: from [10.30.226.235] (localhost [IPv6:::1])
+	by aws-us-west-2-korg-oddjob-rhel9-1.codeaurora.org (Postfix) with ESMTP id 7112F3A78B25;
+	Sat, 22 Nov 2025 02:20:17 +0000 (UTC)
+Content-Type: text/plain; charset="utf-8"
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20251119154427.1033475-2-eugen.hristev@linaro.org>
+Content-Transfer-Encoding: 8bit
+Subject: Re: [PATCH net-next v2 0/3] net: stmmac: qcon-ethqos: "rgmii"
+ accessor
+ cleanups
+From: patchwork-bot+netdevbpf@kernel.org
+Message-Id: 
+ <176377801599.2657243.16800744775068465298.git-patchwork-notify@kernel.org>
+Date: Sat, 22 Nov 2025 02:20:15 +0000
+References: <aR76i0HjXitfl7xk@shell.armlinux.org.uk>
+In-Reply-To: <aR76i0HjXitfl7xk@shell.armlinux.org.uk>
+To: Russell King (Oracle) <linux@armlinux.org.uk>
+Cc: andrew@lunn.ch, hkallweit1@gmail.com, alexandre.torgue@foss.st.com,
+ andrew+netdev@lunn.ch, davem@davemloft.net, edumazet@google.com,
+ kuba@kernel.org, linux-arm-kernel@lists.infradead.org,
+ linux-arm-msm@vger.kernel.org, linux-stm32@st-md-mailman.stormreply.com,
+ mcoquelin.stm32@gmail.com, netdev@vger.kernel.org, pabeni@redhat.com,
+ vkoul@kernel.org
 
-Hi Eugen,
+Hello:
 
-kernel test robot noticed the following build warnings:
+This series was applied to netdev/net-next.git (main)
+by Jakub Kicinski <kuba@kernel.org>:
 
-[auto build test WARNING on rppt-memblock/fixes]
-[also build test WARNING on linus/master v6.18-rc6]
-[cannot apply to akpm-mm/mm-everything rppt-memblock/for-next next-20251121]
-[If your patch is applied to the wrong git tree, kindly drop us a note.
-And when submitting patch, we suggest to use '--base' as documented in
-https://git-scm.com/docs/git-format-patch#_base_tree_information]
+On Thu, 20 Nov 2025 11:24:59 +0000 you wrote:
+> This series cleans up the "rgmii" accessors in qcom-ethqos.
+> 
+> readl() and writel() return and take a u32 for the value. Rather than
+> implicitly casting this to an int, keep it as a u32.
+> 
+> Add set/clear functions to reduce the code and make it easier to read.
+> 
+> [...]
 
-url:    https://github.com/intel-lab-lkp/linux/commits/Eugen-Hristev/kernel-Introduce-meminspect/20251119-235912
-base:   https://git.kernel.org/pub/scm/linux/kernel/git/rppt/memblock.git fixes
-patch link:    https://lore.kernel.org/r/20251119154427.1033475-2-eugen.hristev%40linaro.org
-patch subject: [PATCH 01/26] kernel: Introduce meminspect
-config: nios2-randconfig-r131-20251122 (https://download.01.org/0day-ci/archive/20251122/202511220712.LEcYEMJx-lkp@intel.com/config)
-compiler: nios2-linux-gcc (GCC) 8.5.0
-reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20251122/202511220712.LEcYEMJx-lkp@intel.com/reproduce)
+Here is the summary with links:
+  - [net-next,v2,1/3] net: stmmac: qcom-ethqos: use u32 for rgmii read/write/update
+    https://git.kernel.org/netdev/net-next/c/f54bbd390f5f
+  - [net-next,v2,2/3] net: stmmac: qcom-ethqos: add rgmii set/clear functions
+    https://git.kernel.org/netdev/net-next/c/819212185ae5
+  - [net-next,v2,3/3] net: stmmac: qcom-ethqos: use read_poll_timeout_atomic()
+    https://git.kernel.org/netdev/net-next/c/9b60ba512c7f
 
-If you fix the issue in a separate patch/commit (i.e. not just a new version of
-the same patch/commit), kindly add following tags
-| Reported-by: kernel test robot <lkp@intel.com>
-| Closes: https://lore.kernel.org/oe-kbuild-all/202511220712.LEcYEMJx-lkp@intel.com/
-
-sparse warnings: (new ones prefixed by >>)
->> kernel/meminspect/meminspect.c:15:1: sparse: sparse: symbol 'meminspect_notifier_list' was not declared. Should it be static?
-
-vim +/meminspect_notifier_list +15 kernel/meminspect/meminspect.c
-
-    14	
-  > 15	ATOMIC_NOTIFIER_HEAD(meminspect_notifier_list);
-    16	
-
+You are awesome, thank you!
 -- 
-0-DAY CI Kernel Test Service
-https://github.com/intel/lkp-tests/wiki
+Deet-doot-dot, I am a bot.
+https://korg.docs.kernel.org/patchwork/pwbot.html
+
+
 
