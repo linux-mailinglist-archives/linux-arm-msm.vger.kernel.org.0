@@ -1,297 +1,240 @@
-Return-Path: <linux-arm-msm+bounces-82939-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-82940-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 82797C7C7C8
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 22 Nov 2025 06:04:51 +0100 (CET)
+Received: from ams.mirrors.kernel.org (ams.mirrors.kernel.org [213.196.21.55])
+	by mail.lfdr.de (Postfix) with ESMTPS id 231E8C7CA5E
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 22 Nov 2025 08:55:55 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id BECB03A77A0
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 22 Nov 2025 05:03:17 +0000 (UTC)
+	by ams.mirrors.kernel.org (Postfix) with ESMTPS id 9E3C9349622
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 22 Nov 2025 07:55:54 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9D21F2C11EF;
-	Sat, 22 Nov 2025 05:01:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id ABDAE22A1D5;
+	Sat, 22 Nov 2025 07:55:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="hYvBfpky";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="dHEazmVz"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="QVM9mC5G"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.12])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5E2129ACF7
-	for <linux-arm-msm@vger.kernel.org>; Sat, 22 Nov 2025 05:01:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF3C317A2F0;
+	Sat, 22 Nov 2025 07:55:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.12
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763787715; cv=none; b=d3DHhDhg+KgkpoLc7SO8321KK3ARTejWJzqGbyOLroQ6p+MJzMrCH/mCks81V8s5LLF+Kgmo+iG7IATlNNi/kN7JLfmoDVxXX1kiP8JkPeB5n5PIQvzofOyFYbaJhI/3j+MHrFA7wOsKIqY7j57iVLR0it1D5g0HUkJc9WqTXoY=
+	t=1763798150; cv=none; b=b2ddTg2nFDuufs2PyzaR+lk50IpAQCePpdwrZTg8lxliMKazMG9CB/2Q1/WkVG7JH8k4+q/dpOPy3mFMSTGWBTGiU8+cKufaUCnTDO9Ov9+De82/fzou6djYp5YYOjoIb7juqQLEd1baBNfAYXqyKKsfGcSUY0FYrjh6qW0Vh4Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763787715; c=relaxed/simple;
-	bh=MBM+ts/VrBooDvo02TVv4oxPcwhNnUNkwE9LXeeYjfM=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=F55fkZcfo925GDnZ5cOPxUErdofmyEHugNxOegZ4WiQsDLPAnZpQSnoAQh5J6MJLWN6b25zbCjJvW/4gV0khm3KHQZfDqefXUPMhVVK6bp5Oh0D2QwVCIUbHEKXV05otgiWhc25kHXzSYt4SWRnT1yGlVHYpjQ5PoOtLKr+hI3c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=hYvBfpky; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=dHEazmVz; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 5AM4YrUZ1478872
-	for <linux-arm-msm@vger.kernel.org>; Sat, 22 Nov 2025 05:01:53 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:date:from:in-reply-to:message-id
-	:mime-version:references:subject:to; s=qcppdkim1; bh=LvNM59OZXdb
-	EJkj2qOKcKocVhop40G1a3Ur1tuOXqxc=; b=hYvBfpky3c5i0vi++CejKMEa/ez
-	o13Q95GPSRCAAV1MtbCcJfYpnGtepjBNg5+93KsfrRdOzgznwiFwXBYtuqzBIf/K
-	6ePuZnpzooObfGJe1wK1sbhov6h4qI5AojuDzyxlqxdQgL9cJRsc4raY8nDxWhZs
-	jYeU+rCNVABjqYym/j1Rz1Xw9/Y6M5FDOEVYdkBi/lvt2R0zS+V6PPrId5HDGp2G
-	8ezNhRJuX6Fod+k87g01MeOH/K2jLwScfpiieIINpPuWr4Gno1gAcLxAEmD0VLOR
-	uuy5xcQooAeRUMGWPy95YiAR1XT6u8hqDU8mnc6ewssn+v6lFomnLk3VTnw==
-Received: from mail-pl1-f198.google.com (mail-pl1-f198.google.com [209.85.214.198])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4ak694r1bd-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Sat, 22 Nov 2025 05:01:53 +0000 (GMT)
-Received: by mail-pl1-f198.google.com with SMTP id d9443c01a7336-297fbfb4e53so46116665ad.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 21 Nov 2025 21:01:52 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1763787712; x=1764392512; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=LvNM59OZXdbEJkj2qOKcKocVhop40G1a3Ur1tuOXqxc=;
-        b=dHEazmVzRA+j2qenrkffpSycheFor/D/gHzoWh/CY+2K183fdKZ1iw38FwX4sH2TA0
-         csufK5xS35g5fa5RzjP4IdXRPgATaA4RlqnFOHDjajy+0SgUVRGp5fVrCQcwgs0WaadC
-         lktgwj5yGiSXrZgbR55KTi1Q8J4OQ6Bv2la9cyCqj8axPpjq33ZYgU0QD/TyEc8LOXvB
-         Z1KjGCHrNj8D3C9C2RPhjNckqdWAWTX/s9gOXkzqUQtKFTL999d6TdX0ICpvkbZzqPNr
-         r8ph1epYceCUojF2XD8GXw0Xv6kUzJaYsES/t53PErYTEATJu5qjzb6zZs9By/wXgUqc
-         bA4g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1763787712; x=1764392512;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=LvNM59OZXdbEJkj2qOKcKocVhop40G1a3Ur1tuOXqxc=;
-        b=YGiRQNMIuZnvIkKgLpeJu6R39sQaLiT0c7U9qvF6g4pwGHh5RxtlgcTpHkMcNxkKeL
-         Fv17QXiKYIJ+jl5/g+Q9WZnLARt+r5ql/LEB/v8qVUZqmEnCthJqTKnDImnQw3YaxvY7
-         z6/C5p706ztulJJsdUmbD1LTLmHg6kTxF2knNexTkM4FE5AGMhJtPqF+BzfmJ6CLrJhQ
-         LSD8H0BD+mac0wCc43ZILGhaWfOmhLAHdg0FVHXr8mIBV2HgRAGxZeYkeplhk6wNqD2j
-         7zhcAN77xzdtNVprWdeUqWcYmws7Q5lLFTM7BApbsZ5jzMMZ5UmGpDnUd9fJSvkYt8Md
-         K35Q==
-X-Forwarded-Encrypted: i=1; AJvYcCVv9aZDRsMgOZinHYp3uPYH4bUzVvdc/7iPgPdCqZXd/gzwDaqBRyAhfsedrrSte5JV4bbiYBhMlMgDhU2v@vger.kernel.org
-X-Gm-Message-State: AOJu0YwS3dihe20Vpg1n+nwalLE5vLmEa3C1pYS3fworjaQyIrecCQUT
-	QImwr5gL4dfwcU2dkAuJwDWWoqsvQ5F1IsNgb3BdEhTCw7RtH6GLQk3y0RpBoU2rqHhuKkJ/6BA
-	eFZsC1BReWieEj7xOan/U6lh9NnNFBSZKgQUAsaT6OFc62VyZN9v042HP1jWjbr9uyCM+
-X-Gm-Gg: ASbGncswnvC4wmK79sm9zSUr6In+sbhW1uUKdS4zHAhNUidWhpqFEEd7Em6KYtDAmso
-	aTHCWKdQ6cqSV9hIA7812FPIMlSHlJxZij6LwOb31tmg6NLJiSSVOWAoqYmyeC6PU3rKB1FN3V1
-	PdfepeV4zLNuQdest6Z6gt/WD0LHeIf2fGCnerW650v+JVdUgIOjk7BqXkBJGFIqJVs5KwkryMq
-	/zA+/Bp/ifIeLfUBpmMfSaN49VSMFTAjT/4XxeTAE6RbpPZ67O6WlzEWb45H3FeSEtnR64TIRo1
-	6k8PPcmwfmAbDYXbVl2l6g7fGYo3HV6Fb8lcL2lXns49oznbuO4mARMFwCWWJuaN/QszzPLWaN8
-	BwQJP4ALUKjm+Q4kwdead+gzXilR9udwbPJ74PIKthuo=
-X-Received: by 2002:a17:903:3845:b0:297:f0a8:e84c with SMTP id d9443c01a7336-29b6bf8421emr56606615ad.52.1763787712329;
-        Fri, 21 Nov 2025 21:01:52 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IEi5gdhxHblCVbwFYsMyPI/0c2BwM2BYTDZ1N6c03YFZBk5YPwz4N45Ux9hHRFwXYiaHY1/nA==
-X-Received: by 2002:a17:903:3845:b0:297:f0a8:e84c with SMTP id d9443c01a7336-29b6bf8421emr56606255ad.52.1763787711762;
-        Fri, 21 Nov 2025 21:01:51 -0800 (PST)
-Received: from hu-ptalari-hyd.qualcomm.com ([202.46.22.19])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-29b5b138c08sm70688725ad.25.2025.11.21.21.01.46
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 21 Nov 2025 21:01:51 -0800 (PST)
-From: Praveen Talari <praveen.talari@oss.qualcomm.com>
-To: Andi Shyti <andi.shyti@kernel.org>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Mukesh Kumar Savaliya <mukesh.savaliya@oss.qualcomm.com>,
-        Viken Dadhaniya <viken.dadhaniya@oss.qualcomm.com>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>,
-        Praveen Talari <praveen.talari@oss.qualcomm.com>,
-        linux-arm-msm@vger.kernel.org, linux-i2c@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Cc: psodagud@quicinc.com, djaggi@quicinc.com, quic_msavaliy@quicinc.com,
-        quic_vtanuku@quicinc.com, quic_arandive@quicinc.com,
-        quic_shazhuss@quicinc.com
-Subject: [PATCH v1 12/12] i2c: qcom-geni: Enable I2C on SA8255p Qualcomm platforms
-Date: Sat, 22 Nov 2025 10:30:18 +0530
-Message-Id: <20251122050018.283669-13-praveen.talari@oss.qualcomm.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20251122050018.283669-1-praveen.talari@oss.qualcomm.com>
-References: <20251122050018.283669-1-praveen.talari@oss.qualcomm.com>
+	s=arc-20240116; t=1763798150; c=relaxed/simple;
+	bh=SXw40nk81lfewjY1S+9hPKCWNPlyLR4zHML4HwWfuNQ=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=nsLp58wfJS/P4Mv7EIxVIQFjnd1rP7rRaNsCePRqPdydqSZTVKX8gJ9KCYW1PM/n7fTO1aBCNeYrAgWTBJwMIgOGnl1VnnaCUslJZxlvWAYcvl1knUsCUQFABLdhSa5RfSQT9dXaF90ocm+nzRRKAYHG21OANbUx5BZAgFmnjMY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=QVM9mC5G; arc=none smtp.client-ip=192.198.163.12
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1763798149; x=1795334149;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=SXw40nk81lfewjY1S+9hPKCWNPlyLR4zHML4HwWfuNQ=;
+  b=QVM9mC5GJ0P1V3L2M/VZh8bvwnbxYhpmWtr7FeFr+cRdbghWKhXAjUMq
+   nnmT6oTArYPZ2Z3woTbDhCbFA18yi6oeLw+knEOivXmaGf/V1Gh1gKH2i
+   2h3Wdarrpv1sm5J4aoGlBntQVFqdjpRAFMBqEZ0U1GXxGv7Ecgj/8+uvC
+   2oOkvmzMnWq3yTbrpsgxL3A2DamMS7n6bUmrPHKuu73BIqMa6CDiOAxgH
+   sMCiBihE3WaJQlx760FIZULJbH25La+HHUn6Qo2Oi5UL6hwszdi3TJUuW
+   2bH9ke2PDrVDLuDR6UPzAEwEXnFMYKWKusQx+DGdEt5zHZE5dfjKVsBf2
+   A==;
+X-CSE-ConnectionGUID: d4b1Iu1hTJeJdzQgIiiBfg==
+X-CSE-MsgGUID: ZCqV2pBfQ8KuUS2MaLu7Ag==
+X-IronPort-AV: E=McAfee;i="6800,10657,11620"; a="69748450"
+X-IronPort-AV: E=Sophos;i="6.20,217,1758610800"; 
+   d="scan'208";a="69748450"
+Received: from fmviesa001.fm.intel.com ([10.60.135.141])
+  by fmvoesa106.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 21 Nov 2025 23:55:48 -0800
+X-CSE-ConnectionGUID: wOeO3mLQSJuDwYi3qD24uQ==
+X-CSE-MsgGUID: AycttFy4TB+6j12x7ifhWg==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.20,217,1758610800"; 
+   d="scan'208";a="222833433"
+Received: from lkp-server01.sh.intel.com (HELO adf6d29aa8d9) ([10.239.97.150])
+  by fmviesa001.fm.intel.com with ESMTP; 21 Nov 2025 23:55:43 -0800
+Received: from kbuild by adf6d29aa8d9 with local (Exim 4.96)
+	(envelope-from <lkp@intel.com>)
+	id 1vMiT6-0007Gp-1a;
+	Sat, 22 Nov 2025 07:55:40 +0000
+Date: Sat, 22 Nov 2025 15:54:59 +0800
+From: kernel test robot <lkp@intel.com>
+To: Eugen Hristev <eugen.hristev@linaro.org>, linux-arm-msm@vger.kernel.org,
+	linux-kernel@vger.kernel.org, linux-mm@kvack.org,
+	tglx@linutronix.de, andersson@kernel.org, pmladek@suse.com,
+	rdunlap@infradead.org, corbet@lwn.net, david@redhat.com,
+	mhocko@suse.com
+Cc: oe-kbuild-all@lists.linux.dev, tudor.ambarus@linaro.org,
+	mukesh.ojha@oss.qualcomm.com, linux-arm-kernel@lists.infradead.org,
+	linux-hardening@vger.kernel.org, jonechou@google.com,
+	rostedt@goodmis.org, linux-doc@vger.kernel.org,
+	devicetree@vger.kernel.org, linux-remoteproc@vger.kernel.org,
+	linux-arch@vger.kernel.org, tony.luck@intel.com, kees@kernel.org,
+	Eugen Hristev <eugen.hristev@linaro.org>
+Subject: Re: [PATCH 23/26] soc: qcom: Add minidump driver
+Message-ID: <202511221521.2OINSDPK-lkp@intel.com>
+References: <20251119154427.1033475-24-eugen.hristev@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMTIyMDAzNyBTYWx0ZWRfX/RrntkeA2L0G
- RSlkXWZ50ZJuRHqNsFusn89JY9lvvd0wOWXTfydrYBzzqFzDCOKRuRG5LIVAiZNEuc9+onFJwXF
- uSULKT/8lW1+xWUmhjVVImCD19kQ5CcNaMX4gZJUhZfMC9B7a6bGhmypZsb+p6AHib9HXUe6uds
- zZTnN5HL7kpLW2tEQzxjWffPSKBQVQ8VOkoPxSqp6aiX5EJY15ViKU3CBoRjeUvpkZDIAog9YKt
- ckjvUkybd426AIDVIJHa6GaqE8vieWnr5JZQbzOZZ2cxEbwxkFHB70037rotECXyjk4k2qXJx8r
- 4NuSR/IA8f6Chk+XaZ4f8s8orvBZhUMWI0MxSm0KJgjMASfaJX43AUuDwp+pthV7nEkskN7uFpT
- J9H6nWOUsxcbv4neLIVw9V99l+Iaog==
-X-Authority-Analysis: v=2.4 cv=YJqSCBGx c=1 sm=1 tr=0 ts=692143c1 cx=c_pps
- a=MTSHoo12Qbhz2p7MsH1ifg==:117 a=fChuTYTh2wq5r3m49p7fHw==:17
- a=6UeiqGixMTsA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=EUspDBNiAAAA:8 a=Gro-kpSgzSE2vTo3mCsA:9 a=GvdueXVYPmCkWapjIL-Q:22
-X-Proofpoint-GUID: Y27zGYWd2-7ac-iH_bWakTD2pg19P-Xe
-X-Proofpoint-ORIG-GUID: Y27zGYWd2-7ac-iH_bWakTD2pg19P-Xe
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
- definitions=2025-11-22_01,2025-11-21_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 bulkscore=0 suspectscore=0 phishscore=0 clxscore=1015
- lowpriorityscore=0 malwarescore=0 impostorscore=0 spamscore=0 adultscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2510240001 definitions=main-2511220037
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20251119154427.1033475-24-eugen.hristev@linaro.org>
 
-The Qualcomm automotive SA8255p SoC relies on firmware to configure
-platform resources, including clocks, interconnects and TLMM.
-The driver requests resources operations over SCMI using power
-and performance protocols.
+Hi Eugen,
 
-The SCMI power protocol enables or disables resources like clocks,
-interconnect paths, and TLMM (GPIOs) using runtime PM framework APIs,
-such as resume/suspend, to control power states(on/off).
+kernel test robot noticed the following build warnings:
 
-The SCMI performance protocol manages I2C frequency, with each
-frequency rate represented by a performance level. The driver uses
-geni_se_set_perf_opp() API to request the desired frequency rate..
+[auto build test WARNING on rppt-memblock/fixes]
+[also build test WARNING on linus/master v6.18-rc6]
+[cannot apply to akpm-mm/mm-everything rppt-memblock/for-next next-20251121]
+[If your patch is applied to the wrong git tree, kindly drop us a note.
+And when submitting patch, we suggest to use '--base' as documented in
+https://git-scm.com/docs/git-format-patch#_base_tree_information]
 
-As part of geni_se_set_perf_opp(), the OPP for the requested frequency
-is obtained using dev_pm_opp_find_freq_floor() and the performance
-level is set using dev_pm_opp_set_opp().
+url:    https://github.com/intel-lab-lkp/linux/commits/Eugen-Hristev/kernel-Introduce-meminspect/20251119-235912
+base:   https://git.kernel.org/pub/scm/linux/kernel/git/rppt/memblock.git fixes
+patch link:    https://lore.kernel.org/r/20251119154427.1033475-24-eugen.hristev%40linaro.org
+patch subject: [PATCH 23/26] soc: qcom: Add minidump driver
+config: nios2-randconfig-r123-20251122 (https://download.01.org/0day-ci/archive/20251122/202511221521.2OINSDPK-lkp@intel.com/config)
+compiler: nios2-linux-gcc (GCC) 11.5.0
+reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20251122/202511221521.2OINSDPK-lkp@intel.com/reproduce)
 
-Signed-off-by: Praveen Talari <praveen.talari@oss.qualcomm.com>
----
- drivers/i2c/busses/i2c-qcom-geni.c | 46 +++++++++++++++++++++++-------
- 1 file changed, 35 insertions(+), 11 deletions(-)
+If you fix the issue in a separate patch/commit (i.e. not just a new version of
+the same patch/commit), kindly add following tags
+| Reported-by: kernel test robot <lkp@intel.com>
+| Closes: https://lore.kernel.org/oe-kbuild-all/202511221521.2OINSDPK-lkp@intel.com/
 
-diff --git a/drivers/i2c/busses/i2c-qcom-geni.c b/drivers/i2c/busses/i2c-qcom-geni.c
-index a0f68fdd4078..78154879f02d 100644
---- a/drivers/i2c/busses/i2c-qcom-geni.c
-+++ b/drivers/i2c/busses/i2c-qcom-geni.c
-@@ -82,6 +82,9 @@ struct geni_i2c_desc {
- 	char *icc_ddr;
- 	bool no_dma_support;
- 	unsigned int tx_fifo_depth;
-+	int (*resources_init)(struct geni_se *se);
-+	int (*set_rate)(struct geni_se *se, unsigned long freq);
-+	int (*power_state)(struct geni_se *se, bool state);
- };
- 
- #define QCOM_I2C_MIN_NUM_OF_MSGS_MULTI_DESC	2
-@@ -203,8 +206,9 @@ static int geni_i2c_clk_map_idx(struct geni_i2c_dev *gi2c)
- 	return -EINVAL;
- }
- 
--static void qcom_geni_i2c_conf(struct geni_i2c_dev *gi2c)
-+static int qcom_geni_i2c_conf(struct geni_se *se, unsigned long freq)
- {
-+	struct geni_i2c_dev *gi2c = dev_get_drvdata(se->dev);
- 	const struct geni_i2c_clk_fld *itr = gi2c->clk_fld;
- 	u32 val;
- 
-@@ -217,6 +221,7 @@ static void qcom_geni_i2c_conf(struct geni_i2c_dev *gi2c)
- 	val |= itr->t_low_cnt << LOW_COUNTER_SHFT;
- 	val |= itr->t_cycle_cnt;
- 	writel_relaxed(val, gi2c->se.base + SE_I2C_SCL_COUNTERS);
-+	return 0;
- }
- 
- static void geni_i2c_err_misc(struct geni_i2c_dev *gi2c)
-@@ -908,7 +913,9 @@ static int geni_i2c_xfer(struct i2c_adapter *adap,
- 		return ret;
- 	}
- 
--	qcom_geni_i2c_conf(gi2c);
-+	ret = gi2c->dev_data->set_rate(&gi2c->se, gi2c->clk_freq_out);
-+	if (ret)
-+		return ret;
- 
- 	if (gi2c->gpi_mode)
- 		ret = geni_i2c_gpi_xfer(gi2c, msgs, num);
-@@ -1041,8 +1048,9 @@ static int geni_i2c_init(struct geni_i2c_dev *gi2c)
- 	return ret;
- }
- 
--static int geni_i2c_resources_init(struct geni_i2c_dev *gi2c)
-+static int geni_i2c_resources_init(struct geni_se *se)
- {
-+	struct geni_i2c_dev *gi2c = dev_get_drvdata(se->dev);
- 	int ret;
- 
- 	ret = geni_se_resources_init(&gi2c->se);
-@@ -1095,7 +1103,7 @@ static int geni_i2c_probe(struct platform_device *pdev)
- 	spin_lock_init(&gi2c->lock);
- 	platform_set_drvdata(pdev, gi2c);
- 
--	ret = geni_i2c_resources_init(gi2c);
-+	ret = gi2c->dev_data->resources_init(&gi2c->se);
- 	if (ret)
- 		return ret;
- 
-@@ -1165,10 +1173,12 @@ static int __maybe_unused geni_i2c_runtime_suspend(struct device *dev)
- 
- 	disable_irq(gi2c->irq);
- 
--	ret = geni_se_resources_state(&gi2c->se, false);
--	if (ret) {
--		enable_irq(gi2c->irq);
--		return ret;
-+	if (gi2c->dev_data->power_state) {
-+		ret = gi2c->dev_data->power_state(&gi2c->se, false);
-+		if (ret) {
-+			enable_irq(gi2c->irq);
-+			return ret;
-+		}
- 	}
- 
- 	gi2c->suspended = 1;
-@@ -1180,9 +1190,11 @@ static int __maybe_unused geni_i2c_runtime_resume(struct device *dev)
- 	int ret;
- 	struct geni_i2c_dev *gi2c = dev_get_drvdata(dev);
- 
--	ret = geni_se_resources_state(&gi2c->se, true);
--	if (ret)
--		return ret;
-+	if (gi2c->dev_data->power_state) {
-+		ret = gi2c->dev_data->power_state(&gi2c->se, true);
-+		if (ret)
-+			return ret;
-+	}
- 
- 	enable_irq(gi2c->irq);
- 	gi2c->suspended = 0;
-@@ -1221,6 +1233,9 @@ static const struct dev_pm_ops geni_i2c_pm_ops = {
- 
- static const struct geni_i2c_desc geni_i2c = {
- 	.icc_ddr = "qup-memory",
-+	.resources_init = geni_i2c_resources_init,
-+	.set_rate = qcom_geni_i2c_conf,
-+	.power_state = geni_se_resources_state,
- };
- 
- static const struct geni_i2c_desc i2c_master_hub = {
-@@ -1228,11 +1243,20 @@ static const struct geni_i2c_desc i2c_master_hub = {
- 	.icc_ddr = NULL,
- 	.no_dma_support = true,
- 	.tx_fifo_depth = 16,
-+	.resources_init = geni_i2c_resources_init,
-+	.set_rate = qcom_geni_i2c_conf,
-+	.power_state = geni_se_resources_state,
-+};
-+
-+static const struct geni_i2c_desc sa8255p_geni_i2c = {
-+	.resources_init = geni_se_domain_attach,
-+	.set_rate = geni_se_set_perf_opp,
- };
- 
- static const struct of_device_id geni_i2c_dt_match[] = {
- 	{ .compatible = "qcom,geni-i2c", .data = &geni_i2c },
- 	{ .compatible = "qcom,geni-i2c-master-hub", .data = &i2c_master_hub },
-+	{ .compatible = "qcom,sa8255p-geni-i2c", .data = &sa8255p_geni_i2c },
- 	{}
- };
- MODULE_DEVICE_TABLE(of, geni_i2c_dt_match);
+sparse warnings: (new ones prefixed by >>)
+>> drivers/soc/qcom/minidump.c:108:35: sparse: sparse: restricted __le32 degrades to integer
+>> drivers/soc/qcom/minidump.c:154:22: sparse: sparse: incorrect type in assignment (different base types) @@     expected restricted __le32 [usertype] seq_num @@     got unsigned int enum meminspect_uid const id @@
+   drivers/soc/qcom/minidump.c:154:22: sparse:     expected restricted __le32 [usertype] seq_num
+   drivers/soc/qcom/minidump.c:154:22: sparse:     got unsigned int enum meminspect_uid const id
+>> drivers/soc/qcom/minidump.c:184:19: sparse: sparse: unsigned value that used to be signed checked against zero?
+   drivers/soc/qcom/minidump.c:183:39: sparse: signed value source
+
+vim +108 drivers/soc/qcom/minidump.c
+
+    93	
+    94	/**
+    95	 * qcom_md_get_region_index() - Lookup minidump region by id
+    96	 * @md: minidump data
+    97	 * @id: minidump region id
+    98	 *
+    99	 * Return: On success, it returns the internal region index, on failure,
+   100	 *	returns	negative error value
+   101	 */
+   102	static int qcom_md_get_region_index(struct minidump *md, int id)
+   103	{
+   104		unsigned int count = le32_to_cpu(md->toc->region_count);
+   105		unsigned int i;
+   106	
+   107		for (i = 0; i < count; i++)
+ > 108			if (md->regions[i].seq_num == id)
+   109				return i;
+   110	
+   111		return -ENOENT;
+   112	}
+   113	
+   114	/**
+   115	 * register_md_region() - Register a new minidump region
+   116	 * @priv: private data
+   117	 * @e: pointer to inspect entry
+   118	 *
+   119	 * Return: None
+   120	 */
+   121	static void __maybe_unused register_md_region(void *priv,
+   122						      const struct inspect_entry *e)
+   123	{
+   124		unsigned int num_region, region_cnt;
+   125		const char *name = "unknown";
+   126		struct minidump_region *mdr;
+   127		struct minidump *md = priv;
+   128	
+   129		if (!(e->va || e->pa) || !e->size) {
+   130			dev_dbg(md->dev, "invalid region requested\n");
+   131			return;
+   132		}
+   133	
+   134		if (e->id < ARRAY_SIZE(meminspect_id_to_md_string))
+   135			name = meminspect_id_to_md_string[e->id];
+   136	
+   137		if (qcom_md_get_region_index(md, e->id) >= 0) {
+   138			dev_dbg(md->dev, "%s:%d region is already registered\n",
+   139				name, e->id);
+   140			return;
+   141		}
+   142	
+   143		/* Check if there is a room for a new entry */
+   144		num_region = le32_to_cpu(md->toc->region_count);
+   145		if (num_region >= MAX_NUM_REGIONS) {
+   146			dev_dbg(md->dev, "maximum region limit %u reached\n",
+   147				num_region);
+   148			return;
+   149		}
+   150	
+   151		region_cnt = le32_to_cpu(md->toc->region_count);
+   152		mdr = &md->regions[region_cnt];
+   153		scnprintf(mdr->name, MAX_REGION_NAME_LENGTH, "K%.8s", name);
+ > 154		mdr->seq_num = e->id;
+   155		if (e->pa)
+   156			mdr->address = cpu_to_le64(e->pa);
+   157		else if (e->va)
+   158			mdr->address = cpu_to_le64(__pa(e->va));
+   159		mdr->size = cpu_to_le64(ALIGN(e->size, 4));
+   160		mdr->valid = cpu_to_le32(MINIDUMP_REGION_VALID);
+   161		region_cnt++;
+   162		md->toc->region_count = cpu_to_le32(region_cnt);
+   163	
+   164		dev_dbg(md->dev, "%s:%d region registered %llx:%llx\n",
+   165			mdr->name, mdr->seq_num, mdr->address, mdr->size);
+   166	}
+   167	
+   168	/**
+   169	 * unregister_md_region() - Unregister a previously registered minidump region
+   170	 * @priv: private data
+   171	 * @e: pointer to inspect entry
+   172	 *
+   173	 * Return: None
+   174	 */
+   175	static void __maybe_unused unregister_md_region(void *priv,
+   176							const struct inspect_entry *e)
+   177	{
+   178		struct minidump_region *mdr;
+   179		struct minidump *md = priv;
+   180		unsigned int region_cnt;
+   181		unsigned int idx;
+   182	
+   183		idx = qcom_md_get_region_index(md, e->id);
+ > 184		if (idx < 0) {
+   185			dev_dbg(md->dev, "%d region is not present\n", e->id);
+   186			return;
+   187		}
+   188	
+   189		mdr = &md->regions[0];
+   190		region_cnt = le32_to_cpu(md->toc->region_count);
+   191	
+   192		/*
+   193		 * Left shift one position all the regions located after the
+   194		 * region being removed, in order to fill the gap.
+   195		 * Then, zero out the last region at the end.
+   196		 */
+   197		memmove(&mdr[idx], &mdr[idx + 1], (region_cnt - idx - 1) * sizeof(*mdr));
+   198		memset(&mdr[region_cnt - 1], 0, sizeof(*mdr));
+   199		region_cnt--;
+   200		md->toc->region_count = cpu_to_le32(region_cnt);
+   201	}
+   202	
+
 -- 
-2.34.1
-
+0-DAY CI Kernel Test Service
+https://github.com/intel/lkp-tests/wiki
 
