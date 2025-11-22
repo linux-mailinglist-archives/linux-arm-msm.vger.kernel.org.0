@@ -1,140 +1,105 @@
-Return-Path: <linux-arm-msm+bounces-82982-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-82983-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id BBB20C7D604
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 22 Nov 2025 19:50:16 +0100 (CET)
+Received: from ams.mirrors.kernel.org (ams.mirrors.kernel.org [IPv6:2a01:60a::1994:3:14])
+	by mail.lfdr.de (Postfix) with ESMTPS id 94D8BC7D704
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 22 Nov 2025 21:07:09 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 7AF233A14ED
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 22 Nov 2025 18:50:15 +0000 (UTC)
+	by ams.mirrors.kernel.org (Postfix) with ESMTPS id 3DFDA34D2CC
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 22 Nov 2025 20:07:09 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 922CB22F388;
-	Sat, 22 Nov 2025 18:50:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id EB5F62C1788;
+	Sat, 22 Nov 2025 20:07:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="P/f4qhMr"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="HAcox4cV"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f50.google.com (mail-wm1-f50.google.com [209.85.128.50])
+Received: from mail-wm1-f48.google.com (mail-wm1-f48.google.com [209.85.128.48])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB3961F37A1
-	for <linux-arm-msm@vger.kernel.org>; Sat, 22 Nov 2025 18:50:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FBCB286419
+	for <linux-arm-msm@vger.kernel.org>; Sat, 22 Nov 2025 20:07:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763837413; cv=none; b=TUVpqd1cXPcju+sDAqhj7+JpgHa/uuZZDPp8EcYDMhYNpaNudQrNryenBk5e0El3Oi/uaKBcqX8V42bmCvKVJ5gnu/Nft8ebuilz9NofxjZaTf7qICGIMQNrU35cfyRvpK28LgyycEulO/1xzHdydttVBbPvyuKGqKJR7l3jaao=
+	t=1763842023; cv=none; b=q0pD8JX2iN7Vyp+csedCJwLZQIfI+iXvrOWC0ncXMUYZ2JE70Q7Rfi1bMkErcH6fUxIQoG98hs17m6e4h4WvrsRYDxSgAvoPONzuc91naOwPx4NZ9AvY4FSeuQjjUw5tkKyRNT2alY+xI5/Z8yJMId370ZuMPpX6sdYbNEoACrE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763837413; c=relaxed/simple;
-	bh=EpucUUr6+JapJBZmrTFAng/xqEIN+aULKRSMhV3h9Ec=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=dfKo4pkAONCag8WB3xOW84+Xdsc/o+X6vMlPin6/vDZiwDUKn8Q1ljx6hQspR7rHJxLyHTUrhA9YtK6xP1IM2rOVT1AWNfmZ/DQCdQAFATjvE/Kf+ZLpgDlEwKeRGDjwvkAYDu5rGQVeoZEStl2mDuaByYaS+qiEc8ECmZ7e/Rk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=P/f4qhMr; arc=none smtp.client-ip=209.85.128.50
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-wm1-f50.google.com with SMTP id 5b1f17b1804b1-47118259fd8so26719255e9.3
-        for <linux-arm-msm@vger.kernel.org>; Sat, 22 Nov 2025 10:50:11 -0800 (PST)
+	s=arc-20240116; t=1763842023; c=relaxed/simple;
+	bh=BfOGTFe2RDdikzJaB8b7S+Xxbnvnlg0I6+3xBKNkkJo=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Qrey3I5DJ0mgBzrhJE1HqDaVCjiuc0mRsqqyajqWMQHvqTmA1rjFCCfQGeoGaq05Z1AU0MytStAN8wemx9b3qHKGvat4rCPPc0iYEejz1v4jxbp2vTXH/e/hboaMxql+dMmXOjFp4obCvbJ8xZwXF0Eh83jrp2GW8S/4kMldMV4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=HAcox4cV; arc=none smtp.client-ip=209.85.128.48
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wm1-f48.google.com with SMTP id 5b1f17b1804b1-47755de027eso16781895e9.0
+        for <linux-arm-msm@vger.kernel.org>; Sat, 22 Nov 2025 12:07:01 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1763837410; x=1764442210; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=rJ8y42NprNFMBfVavEZyzrfZZtf4tjZ19hVBv6BlKNk=;
-        b=P/f4qhMrjROv09nU9D9MpifLkiTQdy2fbAvfyuwCkfvZ2nHNCmzMmGmxxNgZ/N0m65
-         th9c2MBnPUKcqWxz98fOquIE/CtTat0uX23cVNA8ZZbWdhceVOywJFY0GiRWPs8QIbQ6
-         YnSzyRp+WF/7ykIOg+geFAiL3QzRcoxpc3yd+6p/9mfx8gwt2pk7B1uwT7K8LMjj2Uzd
-         dOheVJ+dwbohDdxBD0FcVC2Xlne6vp8dHMs8mHBsXWo4G7XlI7BXYUNil3RWcFf0qszq
-         QBeZ2IFDzmtO+ciL6Nj0O85MV1dTQtBKThtHaRi2HJFk7huxVpVVlcplFtYqCxLCgi0H
-         RKZw==
+        d=linaro.org; s=google; t=1763842020; x=1764446820; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=scbiovI1ofyVHzq2gs5GMumOlOFIE2l40+/m1mFDagg=;
+        b=HAcox4cVzUyMEVfRm2JF8HPXyufZRNhwaGoZXGRk6CPfUX8hVT3uYeipPRrUiyjM+Q
+         VFREQLw0b0d7XCt2CThqNG3/TqqNRhstGeXjc85jo8Opy/el66Ljy0G9NmG72VBbtXas
+         +NAM09MLZoT9NhXhPPIUnWm+02WNJxvExd6yQIEx6+g9RMVsHOZYdA4afLBTjEfxaUTK
+         JjCfuUt+G/Z7yIL9sDJidnu0pYiBPl5eGt/Dl4Db5nVL06IaE2ny1tEPa5Q390WQF63n
+         X8+aK/NZbA6CJUMaCVj5C6U05UePteD4i09XXO/pzYaFU1icNagBxG0HtfUuUWLbBTVK
+         ntFw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1763837410; x=1764442210;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=rJ8y42NprNFMBfVavEZyzrfZZtf4tjZ19hVBv6BlKNk=;
-        b=bfES/mCH+ETOfy0/0cC62vgAC2Fmp93IyVvC2WxH0/08j+YKNzIRlEQdoNC9YVSLrv
-         HgqJElbWhboHmt5veSkIG9zZ5ycygPmJuOiQ0fmQYiDX/85TVl+pu6l65jeHV1XXtxZA
-         w5g2NDCjG8RT6xjDvv2meTm92KtAJbp97/rqJwss5OJ4tOdfLuDqI+9jXzlCi8PqxMDl
-         LLmS7Be4ne6C7VYVJrYUTsJgjd5xBxcppQ7F0mb2sBFMVwhGWb8Tv5mVhBvldK0jgrxG
-         lUMOqqblxnAqveXyXVKdTv2NM9z+u70PJvRUY0w03apWgYyKJj/8escIFKVcfo5aRcAQ
-         wXTw==
-X-Forwarded-Encrypted: i=1; AJvYcCXwIQQagelOjEor/SdQ4Z+UZp4GSui2IbXlnGiWHlUf5hDUnMpktufhitLjKaXHRhyIDVby8+yfWrH3I8zI@vger.kernel.org
-X-Gm-Message-State: AOJu0Yx2WcQ8rM5ptu1j3Ao51tmDiATR+4L/LwKLY7KxX3ojHmwLwK7e
-	D4szMsZgknzQ2HWYFqT1XScyv+3S0VIQqAJbX96uODOLrIaZeaWu38RV
-X-Gm-Gg: ASbGncuudpLnd5G4SC/8BDSf/YQcwxtrR+5px0ZMg2QBEHPscwH/tIbn/fJJFy993dn
-	yOI8RxLAlF7qyfaJReiL7HkAxYTUP68ntFq9ImPysfhdlWD32o03gtmMI5g33P6fBIPxq1KGGrI
-	g1NvIaepNxaZGsJ8GX3hfHuvTHOhVduX5C8DELRv16ejqJVygSXNVm2ZFx9AEYR2jaz/lL7jUg2
-	nkZL/mlJnHj65DrdbTXoRvpObyFi+ucDk/lBiphakxOCym2pqRTNDwRRI7/yzI+k/RNGz06l5zB
-	eYoclVg3ATEAeZ6PBkqUNY9XCs/8T8yDhpxGdwM6VdfcIiN/5s3gWI6PoQB1G0CLLNArlHFQJdk
-	WoCPXqCU0d7IW8uNA6yJQ3/aJGlhQVOgjLoNFXmFV31aCMb2hLBpBPbv+UgU3VDEMOXFf878HDg
-	D9T2L/FuFuzlosIOXYXfOL08u3syc2UuiWY/vEGW6u
-X-Google-Smtp-Source: AGHT+IGJZpqmDfN9eSIBxSbiBA4I0WL4OE97LxOUVQMyn5cFkeQv1kE0+aXZFfEqYZD5CZsk+7fnIQ==
-X-Received: by 2002:a05:600c:1994:b0:477:a9e:859a with SMTP id 5b1f17b1804b1-477c01c0073mr59371525e9.22.1763837409879;
-        Sat, 22 Nov 2025 10:50:09 -0800 (PST)
-Received: from Ansuel-XPS24 (93-34-90-37.ip49.fastwebnet.it. [93.34.90.37])
-        by smtp.googlemail.com with ESMTPSA id 5b1f17b1804b1-477bf22dfc1sm106733955e9.12.2025.11.22.10.50.08
+        d=1e100.net; s=20230601; t=1763842020; x=1764446820;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=scbiovI1ofyVHzq2gs5GMumOlOFIE2l40+/m1mFDagg=;
+        b=nF66AfD0nxg4KvyyrpUPioUA0mpPLO6VmwkxH7BLNppaMcb86t31UYXie8RFhqSWqK
+         DJbuH+kBNb7hyn5cx/19Sbc2fYLkZ2sdIIt9TG2V23iqGRk6gwrAnyeThu1mqABwFjvg
+         zu0sFOrt5MxLDO94Ih72AeYInVKmJw3djkKVu5Vm2FQmnkkIjFpULw8K8EiedvyDryBN
+         CNLDVioHOmkRUn1kWrBL/HaiSVfbCOu4sxET8sza5fGh1b+E64TR7+SgaYI3FZ/JyILV
+         m2z7Q6cDxPfZZBJNBEdkS8lAps942ax05aREwbiNv2YJ5cvAn67r58yuIZxnULaZ90sA
+         z6Cw==
+X-Forwarded-Encrypted: i=1; AJvYcCVRDBmq8XpqD/u0KCw82L0P9kO2FSziWntWwMevDMzWnysCiv7URW4hNXWEe63nwfJIiX3NkAT5j4USRMoo@vger.kernel.org
+X-Gm-Message-State: AOJu0Yx2AnRASXV82q07HyGg6cUE/tjd7PV/iE6u8V56+I/xr2Gz3aZz
+	JCqze7AduxaaZ360LV3nF+UQawZgub3SH9d+evj17Tw+74t60vzIYLhDdRzNHK/IKO0=
+X-Gm-Gg: ASbGncsKZKfjLyq8MyZGYTJomVmervo79YS59Gv+u2TKeeeJAu30V/AqzPQbhif1NCs
+	UYEy7abIzr5aXm3w4V5/Z63wsK04yG0d7zz0KATGtECZWINDesdKjRu/UXzLz1J1en9Wx5eQSaF
+	MJTfgp8+sxEvCESUptgjLsrfD5IT1su7n92k1N7/AzvARFJsFVm8c80VaKdgz7fmos6ewrWCRhh
+	NcRSVBrxdY0jbCvYJ+UJ5xvIxuywTYx+P0/ocy1oj60RZIWQHw5A4ozoMp6p2Xj7Gtko7onXhH6
+	iM80a/uxAKejMOCgvE9G6RorYUCTk/jaxfMBqkPKfJORtMhlw3Kc/5jCK/K6EsARBIE4ol3apNR
+	VwaHlt+YakmkqWwzScD+LV1dMV4Hlym/UPHypBGTtD2721Y/TVKGv9i928DcO5m7kq3Zf5jezNf
+	abEXECCdM=
+X-Google-Smtp-Source: AGHT+IEkdNyBisXIocC7/wQzw62k7sUipLUjv7aKHG865BoRXs3aebU7fEY/rhvatBXJb770s/EvTw==
+X-Received: by 2002:a05:600c:a01:b0:477:7f4a:44b0 with SMTP id 5b1f17b1804b1-477c01f5980mr57357315e9.33.1763842020168;
+        Sat, 22 Nov 2025 12:07:00 -0800 (PST)
+Received: from linaro.org ([86.121.7.169])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-42cb7fba201sm18445335f8f.32.2025.11.22.12.06.58
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 22 Nov 2025 10:50:09 -0800 (PST)
-From: Christian Marangi <ansuelsmth@gmail.com>
-To: Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	Christian Marangi <ansuelsmth@gmail.com>,
-	linux-arm-msm@vger.kernel.org,
+        Sat, 22 Nov 2025 12:06:59 -0800 (PST)
+Date: Sat, 22 Nov 2025 22:06:57 +0200
+From: Abel Vesa <abel.vesa@linaro.org>
+To: Taniya Das <taniya.das@oss.qualcomm.com>
+Cc: Bjorn Andersson <andersson@kernel.org>, 
+	Michael Turquette <mturquette@baylibre.com>, Stephen Boyd <sboyd@kernel.org>, 
+	Ajit Pandey <ajit.pandey@oss.qualcomm.com>, Imran Shaik <imran.shaik@oss.qualcomm.com>, 
+	Jagadeesh Kona <jagadeesh.kona@oss.qualcomm.com>, linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org, 
 	linux-kernel@vger.kernel.org
-Cc: Dan Carpenter <dan.carpenter@linaro.org>
-Subject: [PATCH v2] soc: qcom: smem: fix qcom_smem_is_available and check if __smem is valid
-Date: Sat, 22 Nov 2025 19:49:56 +0100
-Message-ID: <20251122185002.26524-1-ansuelsmth@gmail.com>
-X-Mailer: git-send-email 2.51.0
+Subject: Re: [PATCH v3 2/3] clk: qcom: Add TCSR clock driver for Kaanapali
+Message-ID: <sskqfkm2ui4a44w2y7nra5vpdml6tqsxsyrahwvbi3f3tovfad@kql6fm3mwyqq>
+References: <20251121-gcc_kaanapali-v3-v3-0-89a594985a46@oss.qualcomm.com>
+ <20251121-gcc_kaanapali-v3-v3-2-89a594985a46@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20251121-gcc_kaanapali-v3-v3-2-89a594985a46@oss.qualcomm.com>
 
-Commit 7a94d5f31b54 ("soc: qcom: smem: better track SMEM uninitialized
-state") changed the usage of __smem and init now as an error pointer
-instead of NULL.
+On 25-11-21 23:26:28, Taniya Das wrote:
+> Add the TCSR clock controller that provides the refclks on Kaanapali
+> platform for PCIe, USB and UFS subsystems.
+> 
+> Signed-off-by: Taniya Das <taniya.das@oss.qualcomm.com>
 
-qcom_smem_is_available() wasn't updated to reflect this change and also
-.qcom_smem_remove doesn't reset it on module exit.
-
-Update both entry to reflect new handling of __smem.
-
-Fixes: 7a94d5f31b54 ("soc: qcom: smem: better track SMEM uninitialized state")
-Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
-Closes: https://lore.kernel.org/all/aSAnR3ECa04CoPqp@stanley.mountain/
-Signed-off-by: Christian Marangi <ansuelsmth@gmail.com>
----
-Changes v2:
-- Drop unrelated changes
-
- drivers/soc/qcom/smem.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
-
-diff --git a/drivers/soc/qcom/smem.c b/drivers/soc/qcom/smem.c
-index fef840b54574..c18a0c946f76 100644
---- a/drivers/soc/qcom/smem.c
-+++ b/drivers/soc/qcom/smem.c
-@@ -396,7 +396,7 @@ EXPORT_SYMBOL_GPL(qcom_smem_bust_hwspin_lock_by_host);
-  */
- bool qcom_smem_is_available(void)
- {
--	return !!__smem;
-+	return !IS_ERR(__smem);
- }
- EXPORT_SYMBOL_GPL(qcom_smem_is_available);
- 
-@@ -1247,7 +1247,8 @@ static void qcom_smem_remove(struct platform_device *pdev)
- {
- 	platform_device_unregister(__smem->socinfo);
- 
--	__smem = NULL;
-+	/* Set to -EPROBE_DEFER to signal unprobed state */
-+	__smem = ERR_PTR(-EPROBE_DEFER);
- }
- 
- static const struct of_device_id qcom_smem_of_match[] = {
--- 
-2.51.0
-
+Reviewed-by: Abel Vesa <abel.vesa@linaro.org>
 
