@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-82944-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-82945-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 50E25C7CC3F
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 22 Nov 2025 11:08:08 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id AC06BC7CC4E
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 22 Nov 2025 11:10:05 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 3E8673A8B3B
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 22 Nov 2025 10:07:59 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 661AE3A8A22
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 22 Nov 2025 10:10:04 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 44CC92F7462;
-	Sat, 22 Nov 2025 10:07:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 511CA2C21C4;
+	Sat, 22 Nov 2025 10:10:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="mZL8lkkT"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="T6S6r9rc"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 148312D0292;
-	Sat, 22 Nov 2025 10:07:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 238E11E1A05;
+	Sat, 22 Nov 2025 10:10:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763806076; cv=none; b=O5f9PqhYJzBy4yFqtzbv0+W6YQPrWrvuu0n26jOWAHCrsBghBkBZ8ptHDm4QsH5o9r3j/IaeIu9lcF6T3X5OJVostBJn4MOFt+GMyy1oaYs/+3MNG3bmpIKElo31cWKN/9k0ctSRVKhdAmYU/2UosKR/uAv5/pGL3pdBEXP+34E=
+	t=1763806202; cv=none; b=tlPVBcf9yebt38n5/4lGz1Yd5/nXoE1wU4M7al2c6oy5HGYGC4hK+Yj5QIrWmspWT/xB4Q8+Yo3NmcskkY6ew5czctX+58NjRAgvCvLDEksk+vfK7mgHlbpOD4ROscfM7NvOwZGkRw9J0knVPO9RJxzpIhTKxT2HWGdbuzn6Hoc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763806076; c=relaxed/simple;
-	bh=eoFXn2+sfsFMfC/qnyIMHypm1uKeRrHP1i6piRLnmoE=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=jlklsJiTZImOcAMk9jYeFnbH7dGem071eCiBiuNpiwvlIyR54bPlvAglbIh4QL8NcBOE7Z7aQ0F45db4YxdBU/TiIXJVKAxprCGk0+ypunNgbcjBSGQJQrWFx+88W0wx9HsgkW0JWy/8OHwqH0rBWauwv4fJrJzJKWzd94Sn41s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=mZL8lkkT; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7CC3FC4CEFB;
-	Sat, 22 Nov 2025 10:07:52 +0000 (UTC)
+	s=arc-20240116; t=1763806202; c=relaxed/simple;
+	bh=2bvN74thXb2Kl6D161o/YZdeY+mRWcVzoAjcaObhHog=;
+	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
+	 In-Reply-To:Content-Type; b=awXjkqPrxzqZbkiU60C2m/y9/HaSmVhYBrVPXSWeYxCAXW4pzwLl7mjv9I/vOdtiaJthnHGasKhJmYPiHppSADM7BBVWdijksjvqXYmcWaAXYfIKYdgfrJOw3UttmEcnzPIGBzyR0/P1JzibBdCRO+AuIpmI/vTZf+kDA0EC+cA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=T6S6r9rc; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52CE2C4CEF5;
+	Sat, 22 Nov 2025 10:09:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1763806075;
-	bh=eoFXn2+sfsFMfC/qnyIMHypm1uKeRrHP1i6piRLnmoE=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=mZL8lkkTpIzLSLtLbXb0Y4gmUimFq3Q9our8/TOyvaflRDQlx67k7IaoOlwGvgX+E
-	 JWcfFI7dC1uJPLzgGx0+5hXN09S29ztDpQdBS3UTLjZNIRRb6DZJgVtr7Vg1U2RG/B
-	 BOxuwKz9CqyyYATaxWHEt37PnGjhnJAO9d1aDxmsXwk/tGGa00Z+ZlS1gNLZx0oKlH
-	 KoH74sZaLcfJuaRfNk4vYeXNLMtAUkfMtGoEDUOE3zhxcaKruymimezdR7vx7gEK2t
-	 Gje2aWohKTi1oE4uN92puY3SDpBFmzKvOO4XEElfCK54TTb8gkr73GQFgDXcD8eE/g
-	 v4hztmIbZhEMQ==
-Message-ID: <d66c9cd7-bc4c-4cbe-9549-0d24c8a6ae8f@kernel.org>
-Date: Sat, 22 Nov 2025 11:07:50 +0100
+	s=k20201202; t=1763806200;
+	bh=2bvN74thXb2Kl6D161o/YZdeY+mRWcVzoAjcaObhHog=;
+	h=Date:Subject:From:To:Cc:References:In-Reply-To:From;
+	b=T6S6r9rcltNAnr+3zF419JsYeq1PNzvMmQMT6hjN1RiQV7TDBT8ESsKowr4n9pRuB
+	 aAA2q2sidv6K7/IsoJrCpnFl9Yw3eavzZYdFBX06B+Dk8WbQ7un0VeIzxn//aPyQTa
+	 zu/9iHM41hoyzk+SzBrpnftKA79HRrC5WY2v/tVrp+6evRDom7UN/RD6Ts9tC3/Gki
+	 g54F7QNtP5lrk6G3KdfAa/mf3DJRYBxAWu5a98CIzNJV/CNZ2aVzoKKN5LLihDa84P
+	 bOXftBa0LxONPi+HuLB0Etuza1/z3CNFQGUig+tuv5D+ZAof8Y5g1uPrRc5eRVImw6
+	 s1N/0eQr/AFxg==
+Message-ID: <8269aebd-ef1a-42c3-9bf3-580e00589821@kernel.org>
+Date: Sat, 22 Nov 2025 11:09:55 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -52,6 +52,7 @@ MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH v3 6/7] arm64: dts: qcom: Add device tree for TUXEDO Elite
  14 Gen1
+From: Krzysztof Kozlowski <krzk@kernel.org>
 To: Georg Gottleuber <ggo@tuxedocomputers.com>,
  Bjorn Andersson <andersson@kernel.org>,
  Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
@@ -62,7 +63,7 @@ Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
  stephan.gerhold@linaro.org, wse@tuxedocomputers.com, cs@tuxedo.de
 References: <20251121142623.251118-1-ggo@tuxedocomputers.com>
  <20251121142623.251118-7-ggo@tuxedocomputers.com>
-From: Krzysztof Kozlowski <krzk@kernel.org>
+ <d66c9cd7-bc4c-4cbe-9549-0d24c8a6ae8f@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
  xsFNBFVDQq4BEAC6KeLOfFsAvFMBsrCrJ2bCalhPv5+KQF2PS2+iwZI8BpRZoV+Bd5kWvN79
@@ -107,45 +108,50 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  jWt87ecuHlpL3uuQ0ZZNWqHgZoQLXoqC2ZV5KrtKWb/jyiFX/sxSrodALf0zf+tfHv0FZWT2
  zHjUqd0t4njD/UOsuIMOQn4Ig0SdivYPfZukb5cdasKJukG1NOpbW7yRNivaCnfZz6dTawXw
  XRIV/KDsHQiyVxKvN73bThKhONkcX2LWuD928tAR6XMM2G5ovxLe09vuOzzfTWQDsm++9UKF a/A=
-In-Reply-To: <20251121142623.251118-7-ggo@tuxedocomputers.com>
+In-Reply-To: <d66c9cd7-bc4c-4cbe-9549-0d24c8a6ae8f@kernel.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 21/11/2025 15:26, Georg Gottleuber wrote:
-> Initial support for TUXEDO Elite 14 Gen1 based on Qualcomm Snapdragon X
-> Elite SoC (X1E78100).
+On 22/11/2025 11:07, Krzysztof Kozlowski wrote:
+> On 21/11/2025 15:26, Georg Gottleuber wrote:
+>> Initial support for TUXEDO Elite 14 Gen1 based on Qualcomm Snapdragon X
+>> Elite SoC (X1E78100).
+>>
+>> Working:
+>> * Touchpad
+>> * Keyboard
+>> * eDP (no brightness control yet)
+>> * NVMe
+>> * USB Type-C port
+>> * USB-C DP altmode
+>> * HDMI-A port
+>> * WiFi (WiFi 7 untested)
+>> * Bluetooth
+>> * GPU
+>> * Video decoding
+>> * USB Type-A
+>> * Audio, speakers, microphones
+>> 	- 4x speakers.
+>> 	- 2x dmic
+>> 	- headset
+>> * Camera
+>> * Fingerprint reader
+>>
+>> Co-developed-by: Srinivas Kandagatla <srini@kernel.org>
+>> Signed-off-by: Srinivas Kandagatla <srini@kernel.org>
+>> Co-developed-by: Ettore Chimenti <ettore.chimenti@linaro.org>
+>> Signed-off-by: Ettore Chimenti <ettore.chimenti@linaro.org>
+>> Signed-off-by: Georg Gottleuber <ggo@tuxedocomputers.com>
+>> ---
 > 
-> Working:
-> * Touchpad
-> * Keyboard
-> * eDP (no brightness control yet)
-> * NVMe
-> * USB Type-C port
-> * USB-C DP altmode
-> * HDMI-A port
-> * WiFi (WiFi 7 untested)
-> * Bluetooth
-> * GPU
-> * Video decoding
-> * USB Type-A
-> * Audio, speakers, microphones
-> 	- 4x speakers.
-> 	- 2x dmic
-> 	- headset
-> * Camera
-> * Fingerprint reader
 > 
-> Co-developed-by: Srinivas Kandagatla <srini@kernel.org>
-> Signed-off-by: Srinivas Kandagatla <srini@kernel.org>
-> Co-developed-by: Ettore Chimenti <ettore.chimenti@linaro.org>
-> Signed-off-by: Ettore Chimenti <ettore.chimenti@linaro.org>
-> Signed-off-by: Georg Gottleuber <ggo@tuxedocomputers.com>
-> ---
+> I guess all our reviews are irrelevant now and this should be abandoned:
+> 
+> https://www.tuxedocomputers.com/en/Discontinuation-of-ARM-notebooks-with-Snapdragon-X-Elite-SoC.tuxedo
 
-
-I guess all our reviews are irrelevant now and this should be abandoned:
-
-https://www.tuxedocomputers.com/en/Discontinuation-of-ARM-notebooks-with-Snapdragon-X-Elite-SoC.tuxedo
+Heh, I see you sent it AFTER the above announcement, so knowing this is
+not going to be merged. Reviewing code which is not going to be need is
+waste of time, so I feel tricked. That's not nice.
 
 Best regards,
 Krzysztof
