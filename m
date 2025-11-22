@@ -1,53 +1,53 @@
-Return-Path: <linux-arm-msm+bounces-82966-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-82967-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [142.0.200.124])
-	by mail.lfdr.de (Postfix) with ESMTPS id 224A0C7D089
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 22 Nov 2025 13:49:28 +0100 (CET)
+Received: from ams.mirrors.kernel.org (ams.mirrors.kernel.org [213.196.21.55])
+	by mail.lfdr.de (Postfix) with ESMTPS id E3CC1C7D0C3
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 22 Nov 2025 13:50:30 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id C455B4E83B7
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 22 Nov 2025 12:47:10 +0000 (UTC)
+	by ams.mirrors.kernel.org (Postfix) with ESMTPS id 192BF35D4EC
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 22 Nov 2025 12:47:32 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A9CDF306D3D;
-	Sat, 22 Nov 2025 12:44:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 51AF4308F07;
+	Sat, 22 Nov 2025 12:44:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b="NgxFYCck"
+	dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b="XKbTm02t"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtpout-02.galae.net (smtpout-02.galae.net [185.246.84.56])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E137F2FE594
-	for <linux-arm-msm@vger.kernel.org>; Sat, 22 Nov 2025 12:44:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50D6D304BA3;
+	Sat, 22 Nov 2025 12:44:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.246.84.56
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763815447; cv=none; b=E7G/3QBIrqAUJBSzIed6e3ACOA55fRdDeAKQrZS+jKkdPsKehSJzJ3A3OpxCar9bmhNwnWWRq0IihCBayQqtheyNNvhbUsvMIXvmCgnve/wDyze8+M3Zu92crX529IMMlKl4DQxPivaLBs2jtKmfvl7zvsfyVm8U6FgpWOnXz5Y=
+	t=1763815451; cv=none; b=LZMzz1mWDx4hcuOChygX2AVm+6qtyjcgrLsyswlf8Wep/lIgOCHD9WFTYN1xIAztCYpS8liFED249yNuhoPdAH0NMIyYvBYO7YLb/oTmIiMGU6U9OeTrkfYqvUKOlpezVcutTWp17ikmMwe1P/GhYgIm5yODr9Y0bxY3KqDsesw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763815447; c=relaxed/simple;
-	bh=FPOPOiaHiMS1DGiB15UET9ZTvHI8/dOj06ra13vuyiE=;
+	s=arc-20240116; t=1763815451; c=relaxed/simple;
+	bh=4N8v2KuuWJiFFdDvLQAu3AxJQTp2J6eEXtQhiOrOwUY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Z/8Cj6xRNy07bJFTNH2HkyZ5VuyhDP9+C7ovqNtczv0xHRuFnsdEpTU+qrFtfOOvn41h0ehghPjNMhN1okAZ0oYm+2yZ5//AXJNpEUDpsP7rnkaKm6OyoMadavevYSO5mvyMDX4NtEhlklE5FmIYiktDrdCTfVgmvQERcWp7IDQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com; spf=pass smtp.mailfrom=bootlin.com; dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b=NgxFYCck; arc=none smtp.client-ip=185.246.84.56
+	 MIME-Version; b=GYPFgeRP/TL8F2zD1G52sQ+ZYfdInA5uScRwnEb6ZRsEjMxP9MJhBXqsMyzT9+5bdpDi6/NU7EEXOVnbN87dDi5ot2we5oGr931UHyn+ppg+ZEw0ZFUW8vxEu7ktOiV9BlrcHOPt/Kb36nv0F258bhj6fJOIfXt6vJgU9xR07l0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com; spf=pass smtp.mailfrom=bootlin.com; dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b=XKbTm02t; arc=none smtp.client-ip=185.246.84.56
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bootlin.com
 Received: from smtpout-01.galae.net (smtpout-01.galae.net [212.83.139.233])
-	by smtpout-02.galae.net (Postfix) with ESMTPS id 7A2F31A1CA1;
-	Sat, 22 Nov 2025 12:44:04 +0000 (UTC)
+	by smtpout-02.galae.net (Postfix) with ESMTPS id 070821A1C9C;
+	Sat, 22 Nov 2025 12:44:08 +0000 (UTC)
 Received: from mail.galae.net (mail.galae.net [212.83.136.155])
-	by smtpout-01.galae.net (Postfix) with ESMTPS id 4D61D606C5;
-	Sat, 22 Nov 2025 12:44:04 +0000 (UTC)
-Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon) with ESMTPSA id E5B4C10371E72;
-	Sat, 22 Nov 2025 13:43:59 +0100 (CET)
+	by smtpout-01.galae.net (Postfix) with ESMTPS id D0511606C5;
+	Sat, 22 Nov 2025 12:44:07 +0000 (UTC)
+Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon) with ESMTPSA id 2D8DF10371E63;
+	Sat, 22 Nov 2025 13:44:03 +0100 (CET)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=dkim;
-	t=1763815442; h=from:subject:date:message-id:to:cc:mime-version:
+	t=1763815446; h=from:subject:date:message-id:to:cc:mime-version:
 	 content-transfer-encoding:in-reply-to:references;
-	bh=246FoifQioiJlJKgK0l+PteqgHVK9qea+qwvqnjBY1s=;
-	b=NgxFYCck55sI4UDjpmSD4zOc+PzxKjJDZd0xstMFCcLaJWSeWLrizpHcmlKjBKmItLOaJT
-	M2DmZYdNaMLBPQu3u9Z/DUgFQWbBU63JiiPQX2t8q26YEvLl0AgPqHHtJa5uetWVR2sQJq
-	irfgh+DZGHxcxHimDsFNiSmKAX5EZBfq68h7W9pu4eVK/6SBvPJC7Hap9lIMln87MEcDkf
-	pSDvKPM48iUUbyg4khhhtU1+6b+gQ/86TbP2Ja7RE07z3spFL3L1IWAXZqmt6G6dWOqwrR
-	IQE2ioWm4rPpn0kjy48QbqT3QfyhV/Yz1n3utbmtxab+rWCao1dxqk8nmIj9bw==
+	bh=RwnFhKTWvcMiLm1Et/DfqdWvufrCtHepMfYsjNpJGhU=;
+	b=XKbTm02tO+2OmxwyISru5qGW5urq732mah68mWpnFDk3xs0Fb+OUHzTA+AMx7u0wYHoEi+
+	ZBWQCi4xV0EayRAriq5JQbCjNXpYvPB+/dOXegOv7pgCXBTjrJLkb1dhExUmdlzgcQxlPz
+	7VkoD8eHiPv4ZlJbGreo0wvOfYsEOa6VUtKUdbiJFRGHfIrejj/O6KoZBwKzGag1eU1kdx
+	E737RcaFRaU4Qz3te63FVOjlXPrXpq6EN94a3mNKspHipMm1fn/XAres0M5Ib+vueQgr5k
+	8VANKZuaNrBCCoqt4Xltqvqyl3Z3WoSDRTutoBbK+uU7i3/9LrsMGwmtVx/qEQ==
 From: Maxime Chevallier <maxime.chevallier@bootlin.com>
 To: davem@davemloft.net
 Cc: Maxime Chevallier <maxime.chevallier@bootlin.com>,
@@ -81,9 +81,9 @@ Cc: Maxime Chevallier <maxime.chevallier@bootlin.com>,
 	Daniel Golle <daniel@makrotopia.org>,
 	Dimitri Fedrau <dimitri.fedrau@liebherr.com>,
 	Tariq Toukan <tariqt@nvidia.com>
-Subject: [PATCH net-next v19 11/15] net: phy: at803x: Support SFP through phy_port interface
-Date: Sat, 22 Nov 2025 13:43:10 +0100
-Message-ID: <20251122124317.92346-12-maxime.chevallier@bootlin.com>
+Subject: [PATCH net-next v19 12/15] net: phy: qca807x: Support SFP through phy_port interface
+Date: Sat, 22 Nov 2025 13:43:11 +0100
+Message-ID: <20251122124317.92346-13-maxime.chevallier@bootlin.com>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20251122124317.92346-1-maxime.chevallier@bootlin.com>
 References: <20251122124317.92346-1-maxime.chevallier@bootlin.com>
@@ -96,140 +96,156 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Last-TLS-Session-Version: TLSv1.3
 
-Convert the at803x driver to use the generic phylib SFP handling, via a
-dedicated .attach_port() callback, populating the supported interfaces.
+QCA8072/8075 may be used as combo-port PHYs, with Serdes (100/1000BaseX)
+ and Copper interfaces. The PHY has the ability to read the configuration
+it's in.  If the configuration indicates the PHY is in combo mode, allow
+registering up to 2 ports.
 
-As these devices are limited to 1000BaseX, a workaround is used to also
-support, in a very limited way, copper modules. This is done by
-supporting SGMII but limiting it to 1G full duplex (in which case it's
-somewhat compatible with 1000BaseX).
+Register a dedicated set of port ops to handle the serdes port, and rely
+on generic phylib SFP support for the SFP handling.
 
 Reviewed-by: Christophe Leroy <christophe.leroy@csgroup.eu>
 Reviewed-by: Andrew Lunn <andrew@lunn.ch>
 Tested-by: Christophe Leroy <christophe.leroy@csgroup.eu>
 Signed-off-by: Maxime Chevallier <maxime.chevallier@bootlin.com>
 ---
- drivers/net/phy/qcom/at803x.c | 77 +++++++++++++++--------------------
- 1 file changed, 32 insertions(+), 45 deletions(-)
+ drivers/net/phy/qcom/qca807x.c | 72 ++++++++++++++--------------------
+ 1 file changed, 30 insertions(+), 42 deletions(-)
 
-diff --git a/drivers/net/phy/qcom/at803x.c b/drivers/net/phy/qcom/at803x.c
-index 338acd11a9b6..2995b08bac96 100644
---- a/drivers/net/phy/qcom/at803x.c
-+++ b/drivers/net/phy/qcom/at803x.c
-@@ -20,7 +20,7 @@
- #include <linux/of.h>
- #include <linux/phylink.h>
- #include <linux/reset.h>
+diff --git a/drivers/net/phy/qcom/qca807x.c b/drivers/net/phy/qcom/qca807x.c
+index 1be8295a95cb..d8f1ce5a7128 100644
+--- a/drivers/net/phy/qcom/qca807x.c
++++ b/drivers/net/phy/qcom/qca807x.c
+@@ -13,7 +13,7 @@
+ #include <linux/phy.h>
+ #include <linux/bitfield.h>
+ #include <linux/gpio/driver.h>
 -#include <linux/sfp.h>
 +#include <linux/phy_port.h>
- #include <dt-bindings/net/qca-ar803x.h>
  
+ #include "../phylib.h"
  #include "qcom.h"
-@@ -769,57 +769,44 @@ static int at8031_register_regulators(struct phy_device *phydev)
- 	return 0;
+@@ -643,67 +643,54 @@ static int qca807x_phy_package_config_init_once(struct phy_device *phydev)
+ 	return ret;
  }
  
--static int at8031_sfp_insert(void *upstream, const struct sfp_eeprom_id *id)
-+static int at803x_configure_mii(struct phy_port *port, bool enable,
-+				phy_interface_t interface)
+-static int qca807x_sfp_insert(void *upstream, const struct sfp_eeprom_id *id)
++static int qca807x_configure_serdes(struct phy_port *port, bool enable,
++				    phy_interface_t interface)
  {
--	__ETHTOOL_DECLARE_LINK_MODE_MASK(phy_support);
--	__ETHTOOL_DECLARE_LINK_MODE_MASK(sfp_support);
 -	struct phy_device *phydev = upstream;
 -	const struct sfp_module_caps *caps;
 -	phy_interface_t iface;
--
--	linkmode_zero(phy_support);
--	phylink_set(phy_support, 1000baseX_Full);
--	phylink_set(phy_support, 1000baseT_Full);
--	phylink_set(phy_support, Autoneg);
--	phylink_set(phy_support, Pause);
--	phylink_set(phy_support, Asym_Pause);
--
--	caps = sfp_get_module_caps(phydev->sfp_bus);
--	/* Some modules support 10G modes as well as others we support.
--	 * Mask out non-supported modes so the correct interface is picked.
--	 */
--	linkmode_and(sfp_support, phy_support, caps->link_modes);
 +	struct phy_device *phydev = port_phydev(port);
+ 	int ret;
  
--	if (linkmode_empty(sfp_support)) {
--		dev_err(&phydev->mdio.dev, "incompatible SFP module inserted\n");
+-	caps = sfp_get_module_caps(phydev->sfp_bus);
+-	iface = sfp_select_interface(phydev->sfp_bus, caps->link_modes);
++	if (!phydev)
++		return -ENODEV;
+ 
+-	dev_info(&phydev->mdio.dev, "%s SFP module inserted\n", phy_modes(iface));
+-
+-	switch (iface) {
+-	case PHY_INTERFACE_MODE_1000BASEX:
+-	case PHY_INTERFACE_MODE_100BASEX:
++	if (enable) {
+ 		/* Set PHY mode to PSGMII combo (1/4 copper + combo ports) mode */
+ 		ret = phy_modify(phydev,
+ 				 QCA807X_CHIP_CONFIGURATION,
+ 				 QCA807X_CHIP_CONFIGURATION_MODE_CFG_MASK,
+ 				 QCA807X_CHIP_CONFIGURATION_MODE_PSGMII_FIBER);
++		if (ret)
++			return ret;
+ 		/* Enable fiber mode autodection (1000Base-X or 100Base-FX) */
+ 		ret = phy_set_bits_mmd(phydev,
+ 				       MDIO_MMD_AN,
+ 				       QCA807X_MMD7_FIBER_MODE_AUTO_DETECTION,
+ 				       QCA807X_MMD7_FIBER_MODE_AUTO_DETECTION_EN);
+-		/* Select fiber page */
+-		ret = phy_clear_bits(phydev,
+-				     QCA807X_CHIP_CONFIGURATION,
+-				     QCA807X_BT_BX_REG_SEL);
+-
+-		phydev->port = PORT_FIBRE;
+-		break;
+-	default:
+-		dev_err(&phydev->mdio.dev, "Incompatible SFP module inserted\n");
 -		return -EINVAL;
--	}
-+	if (interface == PHY_INTERFACE_MODE_SGMII)
-+		dev_warn(&phydev->mdio.dev,
-+			 "module may not function if 1000Base-X not supported\n");
-+
-+	return 0;
-+}
++		if (ret)
++			return ret;
+ 	}
  
--	iface = sfp_select_interface(phydev->sfp_bus, sfp_support);
-+static const struct phy_port_ops at803x_port_ops = {
-+	.configure_mii = at803x_configure_mii,
-+};
- 
--	/* Only 1000Base-X is supported by AR8031/8033 as the downstream SerDes
--	 * interface for use with SFP modules.
--	 * However, some copper modules detected as having a preferred SGMII
--	 * interface do default to and function in 1000Base-X mode, so just
--	 * print a warning and allow such modules, as they may have some chance
--	 * of working.
-+static int at8031_attach_mii_port(struct phy_device *phydev,
-+				  struct phy_port *port)
-+{
-+	linkmode_zero(port->supported);
-+	phylink_set(port->supported, 1000baseX_Full);
-+	phylink_set(port->supported, 1000baseT_Full);
-+	phylink_set(port->supported, Autoneg);
-+	phylink_set(port->supported, Pause);
-+	phylink_set(port->supported, Asym_Pause);
+-	return ret;
++	phydev->port = enable ? PORT_FIBRE : PORT_TP;
 +
-+	/* This device doesn't really support SGMII. However, do our best
-+	 * to be compatible with copper modules (that usually require SGMII),
-+	 * in a degraded mode as we only allow 1000BaseT Full
- 	 */
--	if (iface == PHY_INTERFACE_MODE_SGMII)
--		dev_warn(&phydev->mdio.dev, "module may not function if 1000Base-X not supported\n");
--	else if (iface != PHY_INTERFACE_MODE_1000BASEX)
--		return -EINVAL;
-+	__set_bit(PHY_INTERFACE_MODE_SGMII, port->interfaces);
-+	__set_bit(PHY_INTERFACE_MODE_1000BASEX, port->interfaces);
-+
-+	port->ops = &at803x_port_ops;
- 
- 	return 0;
++	return phy_modify(phydev, QCA807X_CHIP_CONFIGURATION,
++			  QCA807X_BT_BX_REG_SEL,
++			  enable ? 0 : QCA807X_BT_BX_REG_SEL);
  }
  
--static const struct sfp_upstream_ops at8031_sfp_ops = {
+-static void qca807x_sfp_remove(void *upstream)
++static const struct phy_port_ops qca807x_serdes_port_ops = {
++	.configure_mii = qca807x_configure_serdes,
++};
++
++static int qca807x_attach_mii_port(struct phy_device *phydev,
++				   struct phy_port *port)
+ {
+-	struct phy_device *phydev = upstream;
++	__set_bit(PHY_INTERFACE_MODE_1000BASEX, port->interfaces);
++	__set_bit(PHY_INTERFACE_MODE_100BASEX, port->interfaces);
+ 
+-	/* Select copper page */
+-	phy_set_bits(phydev,
+-		     QCA807X_CHIP_CONFIGURATION,
+-		     QCA807X_BT_BX_REG_SEL);
++	port->ops = &qca807x_serdes_port_ops;
+ 
+-	phydev->port = PORT_TP;
++	return 0;
+ }
+ 
+-static const struct sfp_upstream_ops qca807x_sfp_ops = {
 -	.attach = phy_sfp_attach,
 -	.detach = phy_sfp_detach,
--	.module_insert = at8031_sfp_insert,
+-	.module_insert = qca807x_sfp_insert,
+-	.module_remove = qca807x_sfp_remove,
 -	.connect_phy = phy_sfp_connect_phy,
 -	.disconnect_phy = phy_sfp_disconnect_phy,
 -};
 -
- static int at8031_parse_dt(struct phy_device *phydev)
+ static int qca807x_probe(struct phy_device *phydev)
  {
  	struct device_node *node = phydev->mdio.dev.of_node;
-@@ -840,8 +827,7 @@ static int at8031_parse_dt(struct phy_device *phydev)
- 		return ret;
+@@ -744,9 +731,8 @@ static int qca807x_probe(struct phy_device *phydev)
+ 
+ 	/* Attach SFP bus on combo port*/
+ 	if (phy_read(phydev, QCA807X_CHIP_CONFIGURATION)) {
+-		ret = phy_sfp_probe(phydev, &qca807x_sfp_ops);
+-		if (ret)
+-			return ret;
++		phydev->max_n_ports = 2;
++
+ 		linkmode_set_bit(ETHTOOL_LINK_MODE_FIBRE_BIT, phydev->supported);
+ 		linkmode_set_bit(ETHTOOL_LINK_MODE_FIBRE_BIT, phydev->advertising);
  	}
- 
--	/* Only AR8031/8033 support 1000Base-X for SFP modules */
--	return phy_sfp_probe(phydev, &at8031_sfp_ops);
-+	return 0;
- }
- 
- static int at8031_probe(struct phy_device *phydev)
-@@ -1172,6 +1158,7 @@ static struct phy_driver at803x_driver[] = {
- 	.set_tunable		= at803x_set_tunable,
- 	.cable_test_start	= at8031_cable_test_start,
- 	.cable_test_get_status	= at8031_cable_test_get_status,
-+	.attach_mii_port	= at8031_attach_mii_port,
- }, {
- 	/* Qualcomm Atheros AR8032 */
- 	PHY_ID_MATCH_EXACT(ATH8032_PHY_ID),
+@@ -824,6 +810,7 @@ static struct phy_driver qca807x_drivers[] = {
+ 		.get_phy_stats		= qca807x_get_phy_stats,
+ 		.set_wol		= at8031_set_wol,
+ 		.get_wol		= at803x_get_wol,
++		.attach_mii_port	= qca807x_attach_mii_port,
+ 	},
+ 	{
+ 		PHY_ID_MATCH_EXACT(PHY_ID_QCA8075),
+@@ -851,6 +838,7 @@ static struct phy_driver qca807x_drivers[] = {
+ 		.get_phy_stats		= qca807x_get_phy_stats,
+ 		.set_wol		= at8031_set_wol,
+ 		.get_wol		= at803x_get_wol,
++		.attach_mii_port	= qca807x_attach_mii_port,
+ 	},
+ };
+ module_phy_driver(qca807x_drivers);
 -- 
 2.49.0
 
