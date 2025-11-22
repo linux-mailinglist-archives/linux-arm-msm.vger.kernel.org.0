@@ -1,102 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-82943-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-82944-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ams.mirrors.kernel.org (ams.mirrors.kernel.org [IPv6:2a01:60a::1994:3:14])
-	by mail.lfdr.de (Postfix) with ESMTPS id 11C27C7CC2A
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 22 Nov 2025 11:00:31 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 50E25C7CC3F
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 22 Nov 2025 11:08:08 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ams.mirrors.kernel.org (Postfix) with ESMTPS id 8461A355EC6
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 22 Nov 2025 10:00:29 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 3E8673A8B3B
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 22 Nov 2025 10:07:59 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 624AA2F7AB4;
-	Sat, 22 Nov 2025 10:00:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 44CC92F7462;
+	Sat, 22 Nov 2025 10:07:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="Dr2tumK6";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="XiWcR0Xx"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="mZL8lkkT"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADADA1D79BE
-	for <linux-arm-msm@vger.kernel.org>; Sat, 22 Nov 2025 10:00:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 148312D0292;
+	Sat, 22 Nov 2025 10:07:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763805625; cv=none; b=cFEo0suR9u3Ly5+B4kHIvGfSYGXmtgr2FjYiAxepabSFLAp7gWrkFD4M6FkcU11UOEu4P2NDOUjrVqh/oseaO4U9IzvtOJ8LAtUrmgQnrHP/fCTIlhcJKAw1rMynyxXtSE0Eu+CElm1zDADmSVneHPqL1YvJMsj4cdbAhVfY4Hs=
+	t=1763806076; cv=none; b=O5f9PqhYJzBy4yFqtzbv0+W6YQPrWrvuu0n26jOWAHCrsBghBkBZ8ptHDm4QsH5o9r3j/IaeIu9lcF6T3X5OJVostBJn4MOFt+GMyy1oaYs/+3MNG3bmpIKElo31cWKN/9k0ctSRVKhdAmYU/2UosKR/uAv5/pGL3pdBEXP+34E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763805625; c=relaxed/simple;
-	bh=vFK/fopWYKEcnzmzg2WZKqHLl202dBId2vQhix3vFbw=;
+	s=arc-20240116; t=1763806076; c=relaxed/simple;
+	bh=eoFXn2+sfsFMfC/qnyIMHypm1uKeRrHP1i6piRLnmoE=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=KO1memJOYJ8D0CFJ2Vm6H9/em0Ta4YBl6JFrsDHTkFDgCfrTonw0oQjFkWc9aqEUPf+DP2admMuFsvXQQwEGZvt5lmyJjq67WyTQ62DSyE4BUdXs3TEcExTH8DLcWDFev7DhZqaqnVuapIwV6odFEGLaVXJbt+d7NcCYVDc0X40=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=Dr2tumK6; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=XiWcR0Xx; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 5AM5JPBC1720580
-	for <linux-arm-msm@vger.kernel.org>; Sat, 22 Nov 2025 10:00:22 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	xuiWhSv+yQ61PQJwV+/RVVkjNi5HEs6bt1N7Kfg5jW0=; b=Dr2tumK6mU/LM+cI
-	N10VUxRY7FMSqwSDAAguebDEIFy5V1BHwbw2QHTzaVOl4/b0oGIk8m/ULXAKrnto
-	4dxTgFOI2QDHTheRKOUKXUWS2yeW9tOilB0uGTCp7Wvg4oNKZfvV1YjuqEqWYox6
-	NJFxMIs7kY8REP427yts6Rd4ZcixCKXJiq/MKKupQn6utLD5TiRi0S7Ena3pJaoE
-	rKipVB6ivI5vt4l/mROXvoWz1tFXUVQ0+M+0ghTtlOXpZi680s0meqL/B9JksGxw
-	2UqDtP0hxyAbBhzbR5buTJv5K1VgofzZPQg3Y04/WludKaTH+KWhtJkN61L6+lP2
-	NcDikg==
-Received: from mail-pl1-f198.google.com (mail-pl1-f198.google.com [209.85.214.198])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4ak685rewg-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Sat, 22 Nov 2025 10:00:22 +0000 (GMT)
-Received: by mail-pl1-f198.google.com with SMTP id d9443c01a7336-297ddb3c707so25243305ad.2
-        for <linux-arm-msm@vger.kernel.org>; Sat, 22 Nov 2025 02:00:22 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1763805621; x=1764410421; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=xuiWhSv+yQ61PQJwV+/RVVkjNi5HEs6bt1N7Kfg5jW0=;
-        b=XiWcR0XxNNGwHyEkKIDUrVdjW3i11ipmBN17qth/GHh4RoJ3xDk3K3BGzTyh9ELjsn
-         VkfRCLUPK6+wXLU0ybduwgH1AFevauVfWzREBQdQ90l6dH/jXH1JNgA4+eFzWSK9C1WO
-         RsfwiXHFm77hzvZCnZ9lIYQoTHfrffwxX202l8i41NOkrW+jdRObPYqDcm8PkLo67FkO
-         kEObkDjINEconl1uRxLMehHMR+ZyBU+SOTqrQoSibW35Utyl2UUIXLhtbBln4Wio/mPo
-         CcwaTKwNfDM0ponzp6QpnLYlHE9tNaeeIRH0YscNRt6zcXsLN/67amkFpv7/NCGDsoj5
-         pr8Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1763805621; x=1764410421;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=xuiWhSv+yQ61PQJwV+/RVVkjNi5HEs6bt1N7Kfg5jW0=;
-        b=JWiFwEoZEaHciAmaM0tk3rkh3P0n9TP+th5ae+qMA8uAlfoq/7yEqTA1BGgiKcqUGB
-         WPFatyGOpONhW3WU/A5R8eWfeOvgQ/3w4bKfdzSkbMou0+iUgmv9GsuYXGP5ntR/nObX
-         mYlwIQMhKhgAN9/y4pw2WyY+i+VV2y6TE0bFRzqiUc75uJHkBbcCI78Ucza2sMIrXD26
-         47f9zKWNEEmJLKCvm5RL8+zU+xU2/I7XZSx+81qxgnQNiowciFkeA7AM/+CsqVfx3W9R
-         +QT+fhomRw1n4A2G00fk3SzVf/I6GYESncxEhpDU3Um6vAq8ZmLC4smDpn4f35BF3Ae5
-         2GcA==
-X-Forwarded-Encrypted: i=1; AJvYcCV+1Q555iXGY6rDw4sNNv86gpvh78scLe/xT2lHxMgogRQo4fudZbbQd00YQrqZLuI6j0/IE6l2dP09yzfH@vger.kernel.org
-X-Gm-Message-State: AOJu0YzK228VBPYb5qnORZbAMPSRoOBQRZzZEQFek8t0LRuDvnqkNdrh
-	v/ayiOpMFf+y49VTcuRUJWHqEljyEYby/rBRly3mSYn1BvXElOfDEGkUOWFxe+wkxkdix5SV05v
-	y9ng66iPHme4aWRke/jXoC5pJ7DsJ+RCOlFmql/GSw7uKP3ftSaolLJcbgBhYx9embABK
-X-Gm-Gg: ASbGnctihqw2zj3r8a7JUBdmkStIGj1NplMHJLy6vMM/1Tz6bkLBJTzY2qx2nyoDLU4
-	jWaGKnUjZV+/a08pTpA0EKrGABL/qPXgIBjHzsyzGCyqaU/8xLrBLDsM9S2Vp9qXiS1pMxpleV0
-	7TG5LYFi/CU9D1qb7ojdUQw8VqD4FA49J2sE577nOSNHAFY872EP5bmBqLnFxMkIXFKGFQ0qi/p
-	Wx8W+1Kelh5ugnI0zfIlZ2Vy1Ztj0yEUW1yGA9t850lVQesII/CG8xLcR9pHwlzemZECHCvKz8h
-	1+5E+aOolvtOv2h4IpjcqGKYS127VTXDLWHaC0fEq752to35vKOfOqr1GOBuOItkXX99kT3xwyF
-	BwA6RpMC2X3ARW1dZBztJuicygwBWy8pkoyJ1Ew==
-X-Received: by 2002:a17:902:d508:b0:295:7f3f:b943 with SMTP id d9443c01a7336-29b6bf3bce7mr76385615ad.28.1763805621348;
-        Sat, 22 Nov 2025 02:00:21 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IEDEf35TVfVNEVsmLpL4nghzk513GLPSV00sS6BwfLhBbhSj/WbuA002eWMZfAjwPFPQhu8jw==
-X-Received: by 2002:a17:902:d508:b0:295:7f3f:b943 with SMTP id d9443c01a7336-29b6bf3bce7mr76385145ad.28.1763805620832;
-        Sat, 22 Nov 2025 02:00:20 -0800 (PST)
-Received: from [192.168.0.195] ([49.204.24.129])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-29b5b2a155fsm79677115ad.88.2025.11.22.02.00.17
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 22 Nov 2025 02:00:20 -0800 (PST)
-Message-ID: <ab4bd349-9f63-4a2f-b643-414510adf8f9@oss.qualcomm.com>
-Date: Sat, 22 Nov 2025 15:30:15 +0530
+	 In-Reply-To:Content-Type; b=jlklsJiTZImOcAMk9jYeFnbH7dGem071eCiBiuNpiwvlIyR54bPlvAglbIh4QL8NcBOE7Z7aQ0F45db4YxdBU/TiIXJVKAxprCGk0+ypunNgbcjBSGQJQrWFx+88W0wx9HsgkW0JWy/8OHwqH0rBWauwv4fJrJzJKWzd94Sn41s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=mZL8lkkT; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7CC3FC4CEFB;
+	Sat, 22 Nov 2025 10:07:52 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1763806075;
+	bh=eoFXn2+sfsFMfC/qnyIMHypm1uKeRrHP1i6piRLnmoE=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=mZL8lkkTpIzLSLtLbXb0Y4gmUimFq3Q9our8/TOyvaflRDQlx67k7IaoOlwGvgX+E
+	 JWcfFI7dC1uJPLzgGx0+5hXN09S29ztDpQdBS3UTLjZNIRRb6DZJgVtr7Vg1U2RG/B
+	 BOxuwKz9CqyyYATaxWHEt37PnGjhnJAO9d1aDxmsXwk/tGGa00Z+ZlS1gNLZx0oKlH
+	 KoH74sZaLcfJuaRfNk4vYeXNLMtAUkfMtGoEDUOE3zhxcaKruymimezdR7vx7gEK2t
+	 Gje2aWohKTi1oE4uN92puY3SDpBFmzKvOO4XEElfCK54TTb8gkr73GQFgDXcD8eE/g
+	 v4hztmIbZhEMQ==
+Message-ID: <d66c9cd7-bc4c-4cbe-9549-0d24c8a6ae8f@kernel.org>
+Date: Sat, 22 Nov 2025 11:07:50 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -104,93 +50,103 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 1/3] clk: qcom: rpmh: Add support for Kaanapali rpmh
- clocks
-To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Cc: Bjorn Andersson <andersson@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd
- <sboyd@kernel.org>,
-        Ajit Pandey <ajit.pandey@oss.qualcomm.com>,
-        Imran Shaik <imran.shaik@oss.qualcomm.com>,
-        Jagadeesh Kona <jagadeesh.kona@oss.qualcomm.com>,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20251121-gcc_kaanapali-v3-v3-0-89a594985a46@oss.qualcomm.com>
- <20251121-gcc_kaanapali-v3-v3-1-89a594985a46@oss.qualcomm.com>
- <gxjidpjoc6h2rvuqpv2wjynumj6qfk6ktznte6igem5g4gt4ai@ukflachqlg3i>
+Subject: Re: [PATCH v3 6/7] arm64: dts: qcom: Add device tree for TUXEDO Elite
+ 14 Gen1
+To: Georg Gottleuber <ggo@tuxedocomputers.com>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org, Ettore Chimenti <ettore.chimenti@linaro.org>,
+ Srinivas Kandagatla <srini@kernel.org>, stefan.schmidt@linaro.org,
+ stephan.gerhold@linaro.org, wse@tuxedocomputers.com, cs@tuxedo.de
+References: <20251121142623.251118-1-ggo@tuxedocomputers.com>
+ <20251121142623.251118-7-ggo@tuxedocomputers.com>
+From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
-From: Taniya Das <taniya.das@oss.qualcomm.com>
-In-Reply-To: <gxjidpjoc6h2rvuqpv2wjynumj6qfk6ktznte6igem5g4gt4ai@ukflachqlg3i>
+Autocrypt: addr=krzk@kernel.org; keydata=
+ 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 a/A=
+In-Reply-To: <20251121142623.251118-7-ggo@tuxedocomputers.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-Authority-Analysis: v=2.4 cv=Woom8Nfv c=1 sm=1 tr=0 ts=692189b6 cx=c_pps
- a=MTSHoo12Qbhz2p7MsH1ifg==:117 a=GH/ppe9Zt0ppH6VRuhbLmg==:17
- a=IkcTkHD0fZMA:10 a=6UeiqGixMTsA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=EUspDBNiAAAA:8 a=6HBrFCV5obpdwvJ6M5YA:9
- a=QEXdDO2ut3YA:10 a=GvdueXVYPmCkWapjIL-Q:22
-X-Proofpoint-GUID: F0gySkB04z9594xBGuqY-bSePhKKpSen
-X-Proofpoint-ORIG-GUID: F0gySkB04z9594xBGuqY-bSePhKKpSen
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMTIyMDA3OSBTYWx0ZWRfX+sLv+KwX/YT6
- Kjkksn45igJ1AwvxRJNOVkZza7RuRtVoAYGp793bYL+w9Dtu7BDQONnw44jQZKLL1SiVHz2PPx2
- 3XRJ4yN2fb/2Ncfxwvv/7srD6jbX/0EC9kEMgUTTOduaKuyAGIYJkonNkDqdm4HXLjOnPiwAeqI
- q5I99qtBZMLxr5d4uST6hql58K7/fI/FEmiVhI5XFL9hy6THPc0pE+2mlJvcqkw6/5SL59l460m
- SvQJJKAbce/VsProIZ+3PEo8WrOeD+2btWtBP3hM6eFcrT1WcJIbx3XzhJG9dJ7YOU3TmbnGw3Y
- +if8m4RcNUnhIo4O5uJER993lY3A0N65XcUZXHmCkeyispHPSTcmKnzZSxx3AlLA7wLBAXwRHFu
- BvOR0/nWH6Z6RUYSU45mVAnMRogLXg==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
- definitions=2025-11-22_03,2025-11-21_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 phishscore=0 adultscore=0 malwarescore=0 suspectscore=0
- impostorscore=0 spamscore=0 bulkscore=0 lowpriorityscore=0 priorityscore=1501
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2510240001 definitions=main-2511220079
 
-
-
-On 11/22/2025 2:10 AM, Dmitry Baryshkov wrote:
-> On Fri, Nov 21, 2025 at 11:26:27PM +0530, Taniya Das wrote:
->> Add the RPMH clocks present in Kaanapali SoC.
->>
->> Signed-off-by: Taniya Das <taniya.das@oss.qualcomm.com>
->> ---
->>  drivers/clk/qcom/clk-rpmh.c | 41 +++++++++++++++++++++++++++++++++++++++++
->>  1 file changed, 41 insertions(+)
->>
->> diff --git a/drivers/clk/qcom/clk-rpmh.c b/drivers/clk/qcom/clk-rpmh.c
->> index 1a98b3a0c528c24b600326e6b951b2edb6dcadd7..c3d923a829f16f5a73ea148aca231a0d61d3396d 100644
->> --- a/drivers/clk/qcom/clk-rpmh.c
->> +++ b/drivers/clk/qcom/clk-rpmh.c
->> @@ -395,6 +395,18 @@ DEFINE_CLK_RPMH_VRM(clk4, _a, "C4A_E0", 1);
->>  DEFINE_CLK_RPMH_VRM(clk5, _a, "C5A_E0", 1);
->>  DEFINE_CLK_RPMH_VRM(clk8, _a, "C8A_E0", 1);
->>  
->> +DEFINE_CLK_RPMH_VRM(clk1, _a1_e0, "C1A_E0", 1);
->> +DEFINE_CLK_RPMH_VRM(clk2, _a1_e0, "C2A_E0", 1);
+On 21/11/2025 15:26, Georg Gottleuber wrote:
+> Initial support for TUXEDO Elite 14 Gen1 based on Qualcomm Snapdragon X
+> Elite SoC (X1E78100).
 > 
-> This got better, but not enough. Why do we have now clk[12]_a1_e0, but
-> clk[3458]_a, describing the same kind of resources?
-
-I am going to fix those as Dmitry.
-
->> +
->> +DEFINE_CLK_RPMH_VRM(clk3, _a2_e0, "C3A_E0", 2);
->> +DEFINE_CLK_RPMH_VRM(clk4, _a2_e0, "C4A_E0", 2);
->> +DEFINE_CLK_RPMH_VRM(clk5, _a2_e0, "C5A_E0", 2);
->> +DEFINE_CLK_RPMH_VRM(clk6, _a2_e0, "C6A_E0", 2);
->> +DEFINE_CLK_RPMH_VRM(clk7, _a2_e0, "C7A_E0", 2);
->> +DEFINE_CLK_RPMH_VRM(clk8, _a2_e0, "C8A_E0", 2);
->> +
->> +DEFINE_CLK_RPMH_VRM(clk11, _a4_e0, "C11A_E0", 4);
->> +
->>  DEFINE_CLK_RPMH_BCM(ce, "CE0");
->>  DEFINE_CLK_RPMH_BCM(hwkm, "HK0");
->>  DEFINE_CLK_RPMH_BCM(ipa, "IP0");
+> Working:
+> * Touchpad
+> * Keyboard
+> * eDP (no brightness control yet)
+> * NVMe
+> * USB Type-C port
+> * USB-C DP altmode
+> * HDMI-A port
+> * WiFi (WiFi 7 untested)
+> * Bluetooth
+> * GPU
+> * Video decoding
+> * USB Type-A
+> * Audio, speakers, microphones
+> 	- 4x speakers.
+> 	- 2x dmic
+> 	- headset
+> * Camera
+> * Fingerprint reader
 > 
+> Co-developed-by: Srinivas Kandagatla <srini@kernel.org>
+> Signed-off-by: Srinivas Kandagatla <srini@kernel.org>
+> Co-developed-by: Ettore Chimenti <ettore.chimenti@linaro.org>
+> Signed-off-by: Ettore Chimenti <ettore.chimenti@linaro.org>
+> Signed-off-by: Georg Gottleuber <ggo@tuxedocomputers.com>
+> ---
 
--- 
-Thanks,
-Taniya Das
 
+I guess all our reviews are irrelevant now and this should be abandoned:
+
+https://www.tuxedocomputers.com/en/Discontinuation-of-ARM-notebooks-with-Snapdragon-X-Elite-SoC.tuxedo
+
+Best regards,
+Krzysztof
 
