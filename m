@@ -1,53 +1,52 @@
-Return-Path: <linux-arm-msm+bounces-82988-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-82987-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [142.0.200.124])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2236DC7DC52
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 23 Nov 2025 07:44:52 +0100 (CET)
+Received: from ams.mirrors.kernel.org (ams.mirrors.kernel.org [IPv6:2a01:60a::1994:3:14])
+	by mail.lfdr.de (Postfix) with ESMTPS id CF7B5C7DC49
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 23 Nov 2025 07:44:48 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id E65274E12B9
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 23 Nov 2025 06:44:50 +0000 (UTC)
+	by ams.mirrors.kernel.org (Postfix) with ESMTPS id 2A2A934F888
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 23 Nov 2025 06:44:48 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CF47C285073;
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CE93E2848AA;
 	Sun, 23 Nov 2025 06:44:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="LUtz9uOo"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="s8SDmFho"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0FBC27FD59;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A101D28313D;
 	Sun, 23 Nov 2025 06:44:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763880284; cv=none; b=QGdEZCUzCqUt0Fz3/T0CZf+FRxgFsshWzQZAlQ9eMvqKYKMlgLwUoUbhMwT0TdKDCUbHfZ/TXR1WGjYz2yr45J3aYNRjkG56zQTFZzf6P79Ik87M5FPqLuSNKPiB/fmtCX4Kh1ZCrIT2HWQCcRGIVhFcvNvmzuKT1bvFD6/n+CQ=
+	t=1763880284; cv=none; b=Nf6WHjoerfHT2r/H3bMLW1vo1KavgQ+HJ/e6vRGsfnk5uF7k5LXu9rnyEDhqfVV3qV3SFxrdNzJWc4yA9S1VEU1CfTnagJpuNgvoEpbjDoVk4UFOd4D9oAFo8IJBclMyek/9MezKxnBGLaGv84ekV2V/UECnzFGBgWkQxdVrRT4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1763880284; c=relaxed/simple;
-	bh=8NUXGBoCZMozJu+Ndmf4cKRPIKek+O/M3Gt0Gpz1SDE=;
-	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=GUUaG9HQosyfO7Mf57sf+zBc4q6WSFbGLJ2n7ZGtqUCUUUXoDpLN6jIccbPKaGon4Mv5GArqCKB3GrvAeiUrhhuelX0a/tqEcFECXWE/fDvsoSNhCdRFgp/+r1B0ti3ohfMviICJKxlCFOu3N0Uvkzf/Li8P2ucb3InpjMuR+2k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=LUtz9uOo; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 246D4C116B1;
+	bh=2+2D57vUBJDKAdDzoMNELJCQxPSzsQHTvkfFA03FK70=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
+	 In-Reply-To:To:Cc; b=OBy+PeC4cUxoYDJ2nmJsZlDLhG7I+94KVXZOq0tZ93342ty6dDPPwaAVe2czsdHmSThoeUFnk6J0YnFTkier+L4H/iyCI6jDX/+2mdkfKSXuBtN3aPr3d5gArbLB3GMytHdOcd8iGuKnGGdn8qyLxFPFadwbkbY0gY6Rhl60lCA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=s8SDmFho; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 32F06C16AAE;
 	Sun, 23 Nov 2025 06:44:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
 	s=k20201202; t=1763880284;
-	bh=8NUXGBoCZMozJu+Ndmf4cKRPIKek+O/M3Gt0Gpz1SDE=;
-	h=From:Subject:Date:To:Cc:Reply-To:From;
-	b=LUtz9uOo8Bbfj/N5/FHm9h3paMSwCUfRtEYdwmEgKOjeEc62T/WQ96sqmGfoD2DwJ
-	 05AuvU86aEtf2vtq2l1d4nXnqng1IIZFiXXsUJ685giPYW73+5mZshcqf5gPTLBfaA
-	 B5Vstf0vpkuoVPZg29pKv9oBcuekSJoX3qGBPUnQhKzZYhqlTtIpAyD165Dy4oyQab
-	 CmyI5xULrOsy/5BjcmwDU6BHf9kUrwMlod2i2kJ28leZPdzuRBnyGB/93o737p4kLn
-	 faudaxqBIsyLWRPJo5CS3Uy1voNYjWsd2DcYD53lTZqDtnmIzhnfjBrlW1xS1IczrR
-	 gjGnsF0jx9ERg==
+	bh=2+2D57vUBJDKAdDzoMNELJCQxPSzsQHTvkfFA03FK70=;
+	h=From:Date:Subject:References:In-Reply-To:To:Cc:Reply-To:From;
+	b=s8SDmFhoIP76+6IJ2HgbXdQTxxuuN4yn4zgTZfuDaziSr0gpTrw7NP2z50FTy5kHw
+	 ILYsqF0pN5c4DrH4bp/aWYMl2Uokq+0uqXAV/QvlG4nvI2LC8gLyoodVhQSbHl0lEi
+	 2P1gHKyk80yB8pcOSp7wgnMA+hh/8kXsRFy72AjdDZpvYWu+QqZvSD8Wcdixo8My43
+	 a+/EJy+l5sXQZ0JuEd68raZEiDLgFLjjcm6EkW4XzuuCs23dk54UW7fvTuGIafD5d4
+	 nVPHBmm3GOGFoN+hZPR6/ZOWdiy0E/QpLRO85kUGooa02iOlWwhY+tpZxUjdZkACN/
+	 i53Ea7kLjh7Ww==
 Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 11641CFC26D;
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 268A4CFA46B;
 	Sun, 23 Nov 2025 06:44:44 +0000 (UTC)
 From: Rudraksha Gupta via B4 Relay <devnull+guptarud.gmail.com@kernel.org>
-Subject: [PATCH v3 0/5] ARM: dts: qcom: msm8960: expressatt: Add more
- peripherals
-Date: Sat, 22 Nov 2025 22:44:41 -0800
-Message-Id: <20251122-expressatt_nfc_accel_magn_light-v3-0-78d198632360@gmail.com>
+Date: Sat, 22 Nov 2025 22:44:42 -0800
+Subject: [PATCH v3 1/5] ARM: dts: qcom: msm8960: Add GSBI2 & GSBI7
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -56,12 +55,9 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIAFmtImkC/43PTW7DIBAF4KtYrIvFgMEQVVXuEVWWSwcb1T8NU
- CtR5LuXkE127fKNRt+buZGIwWMkh+pGAm4++nXJQbxUxI79MiD1nzkTzrgEAEPx8h0wxj6lbnG
- 2663FqZv7YekmP4yJulYj49q0oBXJSt52/lIaTu+PHPD8k4vSY0jmO1eKDtUrtIoDU0YrYWojW
- g2iVo2QWnJmALQWBoypPxqarscvDAtO9RqGN3K3Rx/TGq7lmQ0K/u+7N6CMKqEcKMekdc1xmHs
- /1Xadi73xJ4/D3x7PnmwsNkZYq6x79vZ9/wX4EL3LegEAAA==
-X-Change-ID: 20251119-expressatt_nfc_accel_magn_light-f78e02897186
+Message-Id: <20251122-expressatt_nfc_accel_magn_light-v3-1-78d198632360@gmail.com>
+References: <20251122-expressatt_nfc_accel_magn_light-v3-0-78d198632360@gmail.com>
+In-Reply-To: <20251122-expressatt_nfc_accel_magn_light-v3-0-78d198632360@gmail.com>
 To: Bjorn Andersson <andersson@kernel.org>, 
  Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
  Krzysztof Kozlowski <krzk+dt@kernel.org>, 
@@ -70,11 +66,11 @@ Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
  linux-kernel@vger.kernel.org, Rudraksha Gupta <guptarud@gmail.com>, 
  Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 X-Mailer: b4 0.14.3
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1763880283; l=5042;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1763880283; l=3530;
  i=guptarud@gmail.com; s=20240916; h=from:subject:message-id;
- bh=8NUXGBoCZMozJu+Ndmf4cKRPIKek+O/M3Gt0Gpz1SDE=;
- b=I8ro388ukVAMsA3At0ZekHrN7DUrhAg8tGGirbzwsTVjWv9RNrNf8WdDaPtWPiT7xPYGovFNc
- V/Kzt40x0wMAPWwTiyk7HQl0DsgOP5w/XRDT0FQyU/OYnPLumm1QGQL
+ bh=2ICK00hH1Y/N2rJ/MOOdERF0k2Q1yj8a78xAIbTZBmM=;
+ b=GIDpc613vT55FqRpJawFEKHmJy86q3X3rXW/pTlAybc57o0nZmiZnPtGDqwsMUd0LJ4zl6ZbN
+ LV6HpxAkHgDCeeigIfppASaKEmBdN5YKoPxU3zgpslrX77577aPZwPC
 X-Developer-Key: i=guptarud@gmail.com; a=ed25519;
  pk=ETrudRugWAtOpr0OhRiheQ1lXM4Kk4KGFnBySlKDi2I=
 X-Endpoint-Received: by B4 Relay for guptarud@gmail.com/20240916 with
@@ -82,155 +78,148 @@ X-Endpoint-Received: by B4 Relay for guptarud@gmail.com/20240916 with
 X-Original-From: Rudraksha Gupta <guptarud@gmail.com>
 Reply-To: guptarud@gmail.com
 
-Intro:
-=================
-The following is now working on the Samsung Galaxy Express SGH-I437, an
-old 2012 Android phone:
-- Light Sensor
-    - Proximity is currently floating, even though it matches downstream
-      GPIO pin
-- Magnetometer
-    - Regardless of orientation:
-        - X axis seems to always be negative
-        - Y and Z axis seems to always be positive
-- NFC
-- Accelerometer
+From: Rudraksha Gupta <guptarud@gmail.com>
 
-Tests:
-=================
-Light Sensor
-=================
-// no external light on sensor
-/sys/bus/iio/devices/iio:device2 # cat in_intensity0_raw && cat \
-in_intensity1_raw
-0
-0
+Add the GSBI2 & GSBI7 Node, which is similar to the
+other GSBI nodes in this file.
 
-// external light shining on sensor
-samsung-expressatt:/sys/bus/iio/devices/iio:device2$ cat \
-in_intensity0_raw in_intensity1_raw
-915
-163
-
-=================
-NFC
-=================
-samsung-expressatt:~$ sudo nfctool -d nfc0 -1 -p
-doas (user@samsung-expressatt) password: 
-nfc0:
-          Tags: [ ]
-          Devices: [ ]
-          Protocols: [ Felica MIFARE Jewel ISO-DEP NFC-DEP ]
-          Powered: Yes
-          RF Mode: None
-          lto: 150
-          rw: 15
-          miux: 2047
-
-Start polling on nfc0 as initiator
-
-Targets found for nfc0
-  Tags: [ tag0 ]
-  Devices: [ ]
-
-=================
-Magnetometer
-=================
-// no matter the orientation x is always negative and y and z are always
-// positive. The values seem to be changing during rotation, but for some
-// reason the magnitude is extremely large
-/sys/bus/iio/devices/iio:device1 # cat in_magn_x_raw && cat \
-in_magn_y_raw && cat in_magn_z_raw
--441672
-1223706
-3275580
-
-=================
-Accelerometer
-=================
-I believe it follows the mount matrix guide located in the kernel:
-https://github.com/torvalds/linux/blob/master/Documentation/devicetree/bindings/iio/mount-matrix.txt
-
-// phone is vertical with charger port closest to the ground and the
-// camera closest to the sky. result: +y
-samsung-expressatt:/sys/bus/iio/devices/iio:device0$ cat in_accel_x_raw \
-in_accel_y_raw in_accel_z_raw
-4
-488
--47
-
-// phone is flat on the ground with the back of the phone closest to the
-// ground and the screen closest to the sky. result: +z
-samsung-expressatt:/sys/bus/iio/devices/iio:device0$ cat in_accel_x_raw \
-in_accel_y_raw in_accel_z_raw
--4
-2
-496
-
-// start with phone flat on the ground and the back of the phone
-// closest to the ground and the screen closest to the sky. then rotate the
-// phone so the charger is closest to you
-// next, tilt the phone onto it's left edge. in this case, it would be
-// the side with the volume buttons. result: +x
-samsung-expressatt:/sys/bus/iio/devices/iio:device0$ cat in_accel_x_raw \
-in_accel_y_raw in_accel_z_raw
-499
--5
-8
-
-More Information:
-=================
-- Device page:
-https://wiki.postmarketos.org/wiki/Samsung_Galaxy_Express_SGH-I437_(samsung-expressatt)
-- Downstream kernel (uses board files):
-https://github.com/LineageOS/android_kernel_samsung_d2/blob/stable/cm-12.0-YNG4N/arch/arm/mach-msm/board-express.c
-
-Note: These patches were assisted with AI (specifically Claude) as it
-was easily able to translate the old board file into a DTS format that
-mainline understands.
-
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 Signed-off-by: Rudraksha Gupta <guptarud@gmail.com>
 ---
-Changes in v3:
-- More formatting changes
-- Remove output-low on nfc_enable
-- Resolved TODO mount matrix for accelerometer. My tests are above.
-- Will try to eventually solve the following problems:
-    - Couldn't figure out the mount matrix for magnetometer
-    - Proximity is a floating value even though the downstream kernel
-      matches the GPIO pin
-- Link to v2: https://lore.kernel.org/r/20251121-expressatt_nfc_accel_magn_light-v2-0-54ce493cc6cf@gmail.com
+ arch/arm/boot/dts/qcom/qcom-msm8960.dtsi | 96 ++++++++++++++++++++++++++++++++
+ 1 file changed, 96 insertions(+)
 
-Changes in v2:
-- Fixed formatting issues
-- Use GSBI instead of i2c-gpio
-- Remove regulator-always-on
-- Link to v1: https://lore.kernel.org/r/20251119-expressatt_nfc_accel_magn_light-v1-0-636f16f05cf4@gmail.com
+diff --git a/arch/arm/boot/dts/qcom/qcom-msm8960.dtsi b/arch/arm/boot/dts/qcom/qcom-msm8960.dtsi
+index 38bd4fd8dda5..fd28401cebb5 100644
+--- a/arch/arm/boot/dts/qcom/qcom-msm8960.dtsi
++++ b/arch/arm/boot/dts/qcom/qcom-msm8960.dtsi
+@@ -149,6 +149,24 @@ i2c1-pins {
+ 				};
+ 			};
+ 
++			i2c2_default_state: i2c2-default-state {
++				i2c2-pins {
++					pins = "gpio12", "gpio13";
++					function = "gsbi2";
++					drive-strength = <8>;
++					bias-disable;
++				};
++			};
++
++			i2c2_sleep_state: i2c2-sleep-state {
++				i2c2-pins {
++					pins = "gpio12", "gpio13";
++					function = "gpio";
++					drive-strength = <2>;
++					bias-bus-hold;
++				};
++			};
++
+ 			i2c3_default_state: i2c3-default-state {
+ 				i2c3-pins {
+ 					pins = "gpio16", "gpio17";
+@@ -167,6 +185,24 @@ i2c3-pins {
+ 				};
+ 			};
+ 
++			i2c7_default_state: i2c7-default-state {
++				i2c7-pins {
++					pins = "gpio32", "gpio33";
++					function = "gsbi7";
++					drive-strength = <8>;
++					bias-disable;
++				};
++			};
++
++			i2c7_sleep_state: i2c7-sleep-state {
++				i2c7-pins {
++					pins = "gpio32", "gpio33";
++					function = "gpio";
++					drive-strength = <2>;
++					bias-bus-hold;
++				};
++			};
++
+ 			i2c8_default_state: i2c8-default-state {
+ 				i2c8-pins {
+ 					pins = "gpio36", "gpio37";
+@@ -543,6 +579,36 @@ gsbi1_spi: spi@16080000 {
+ 			};
+ 		};
+ 
++		gsbi2: gsbi@16100000 {
++			compatible = "qcom,gsbi-v1.0.0";
++			reg = <0x16100000 0x100>;
++			ranges;
++			cell-index = <2>;
++			clocks = <&gcc GSBI2_H_CLK>;
++			clock-names = "iface";
++			#address-cells = <1>;
++			#size-cells = <1>;
++
++			status = "disabled";
++
++			gsbi2_i2c: i2c@16180000 {
++				compatible = "qcom,i2c-qup-v1.1.1";
++				reg = <0x16180000 0x1000>;
++				pinctrl-0 = <&i2c2_default_state>;
++				pinctrl-1 = <&i2c2_sleep_state>;
++				pinctrl-names = "default", "sleep";
++				interrupts = <GIC_SPI 149 IRQ_TYPE_LEVEL_HIGH>;
++				clocks = <&gcc GSBI2_QUP_CLK>,
++					 <&gcc GSBI2_H_CLK>;
++				clock-names = "core",
++					      "iface";
++				#address-cells = <1>;
++				#size-cells = <0>;
++
++				status = "disabled";
++			};
++		};
++
+ 		gsbi3: gsbi@16200000 {
+ 			compatible = "qcom,gsbi-v1.0.0";
+ 			reg = <0x16200000 0x100>;
+@@ -600,6 +666,36 @@ gsbi5_serial: serial@16440000 {
+ 			};
+ 		};
+ 
++		gsbi7: gsbi@16600000 {
++			compatible = "qcom,gsbi-v1.0.0";
++			reg = <0x16600000 0x100>;
++			ranges;
++			cell-index = <7>;
++			clocks = <&gcc GSBI7_H_CLK>;
++			clock-names = "iface";
++			#address-cells = <1>;
++			#size-cells = <1>;
++
++			status = "disabled";
++
++			gsbi7_i2c: i2c@16680000 {
++				compatible = "qcom,i2c-qup-v1.1.1";
++				reg = <0x16680000 0x1000>;
++				pinctrl-0 = <&i2c7_default_state>;
++				pinctrl-1 = <&i2c7_sleep_state>;
++				pinctrl-names = "default", "sleep";
++				interrupts = <GIC_SPI 159 IRQ_TYPE_LEVEL_HIGH>;
++				clocks = <&gcc GSBI7_QUP_CLK>,
++					 <&gcc GSBI7_H_CLK>;
++				clock-names = "core",
++					      "iface";
++				#address-cells = <1>;
++				#size-cells = <0>;
++
++				status = "disabled";
++			};
++		};
++
+ 		gsbi8: gsbi@1a000000 {
+ 			compatible = "qcom,gsbi-v1.0.0";
+ 			reg = <0x1a000000 0x100>;
 
----
-Rudraksha Gupta (5):
-      ARM: dts: qcom: msm8960: Add GSBI2 & GSBI7
-      ARM: dts: qcom: msm8960: expressatt: Add Light/Proximity Sensor
-      ARM: dts: qcom: msm8960: expressatt: Add NFC
-      ARM: dts: qcom: msm8960: expressatt: Add Magnetometer
-      ARM: dts: qcom: msm8960: expressatt: Add Accelerometer
-
- .../dts/qcom/qcom-msm8960-samsung-expressatt.dts   | 105 +++++++++++++++++++++
- arch/arm/boot/dts/qcom/qcom-msm8960.dtsi           |  96 +++++++++++++++++++
- 2 files changed, 201 insertions(+)
----
-base-commit: a771210bab42017434c91411e16694ac4fd7afc2
-change-id: 20251119-expressatt_nfc_accel_magn_light-f78e02897186
-prerequisite-message-id: <176210698639.937813.643585209118839199.b4-ty@kernel.org>
-prerequisite-patch-id: befdfe1948c2fbfb867597a6de917c8067fd57be
-prerequisite-patch-id: 70a2b0837b9846d8a775f464295da73ca8ff26b4
-prerequisite-patch-id: 20e005aa4312c3525e1b90f33a398189b9e2b3b7
-prerequisite-patch-id: 970e0eb8af1736e4565fc37830576a67bf7b3227
-prerequisite-patch-id: babd3b55d9ff28f19dbc3f7978742c58ef436aee
-
-Best regards,
 -- 
-Rudraksha Gupta <guptarud@gmail.com>
+2.52.0
 
 
 
