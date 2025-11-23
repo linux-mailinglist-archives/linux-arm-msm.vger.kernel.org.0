@@ -1,173 +1,209 @@
-Return-Path: <linux-arm-msm+bounces-82994-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-82995-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1B953C7DF63
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 23 Nov 2025 11:24:30 +0100 (CET)
+Received: from ams.mirrors.kernel.org (ams.mirrors.kernel.org [213.196.21.55])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9246CC7DFCC
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 23 Nov 2025 11:52:17 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id CA7B33A9647
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 23 Nov 2025 10:24:28 +0000 (UTC)
+	by ams.mirrors.kernel.org (Postfix) with ESMTPS id 138F9341B89
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 23 Nov 2025 10:52:17 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2CB502C21E7;
-	Sun, 23 Nov 2025 10:24:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 70CF71A76D4;
+	Sun, 23 Nov 2025 10:52:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="Q1YJhYT9"
+	dkim=pass (2048-bit key) header.d=mainlining.org header.i=@mainlining.org header.b="p4rpiksi";
+	dkim=permerror (0-bit key) header.d=mainlining.org header.i=@mainlining.org header.b="0zoYY16w"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.15])
+Received: from mail.mainlining.org (mail.mainlining.org [5.75.144.95])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03A3F299928;
-	Sun, 23 Nov 2025 10:24:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.15
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFB0613B7A3;
+	Sun, 23 Nov 2025 10:52:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=5.75.144.95
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763893466; cv=none; b=RS0KHFT0x+Vrg3tyIWfHNGwoHb6wmTw+ty18yIVj8aFyhzsLYMBqApk1rJCzy0p7mINC3mwyn2risbfWqkv06eNo/eAtazC9QZpudPhdQAoqnVSFvaYIBBHEu1Hgtf6ONI3P6xUVPB2TuxNG6HHS4SM0oiVR5QSrsHV7YpzHJuw=
+	t=1763895133; cv=none; b=BCLmb15fOMYxd3JMf6yfDnAQGZvvTDHj75sskkIH4n1ZEscZHPCodFT48KT3FAwUJAzeD8Xa518+YIrYhnq8Ak6MVxjc4PLmQzHFrRqbhnG/gLmYtaPZ0TttRZM2aGjdu2oIg1E/ZS3MJOOrzJVqLzmPGFAnP0SVBSTlWWCOqyE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763893466; c=relaxed/simple;
-	bh=MqXY389cFH5UMcUPlSXH9uPa/8KZTxgMoJ1/hoC4agI=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=t7xhbgfXxH4QqWqXmnyj3wwzFjeuh0K3FgvBCfVrvEPhV50Kc0M0VHmuZ6TPO2oqQ+1XAkdrnWaJIcnFS4TikxMVpORYAAqPcLCxEsiuSWKVQvc8N8UjfAmAv9ggQtM3g8KVt74fgao3/GP0tr1qSKeaORHmE6Dse225ITxKWsA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=Q1YJhYT9; arc=none smtp.client-ip=198.175.65.15
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1763893464; x=1795429464;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=MqXY389cFH5UMcUPlSXH9uPa/8KZTxgMoJ1/hoC4agI=;
-  b=Q1YJhYT9qlD4IjyzC8q1xaxszM40u+nYMXxyvm8D5YOyeKkP0klmCRWY
-   tXDKk1U95nkeqWGaRZW5ho19SbXVnV4JvYXzVaJNiLxreLsR8MgV08KqO
-   JYPd+YOCx1U2sFVqoj5LSCMDPLUdCCi1H1a8G3TEMjTKRwVGSL37nG7kh
-   yeB8ifU04x0Id0r9gteyq4AMH8DWczPBy1SZ1MhZFXC3kpDoq3kGrhWy3
-   fYWP6klGQBTDgnc7n1vNjp4zQTAmRxGouYHq0KKPiGk+KLDok5XJ8lWm8
-   a2gucZlyrchrpft1eoOnDa2fxWl7swASRxkwcKgVj4zzzEDYtjPF6Cc84
-   Q==;
-X-CSE-ConnectionGUID: mz2ovoYBTd6Rb4bd/hcmeA==
-X-CSE-MsgGUID: Y3dFu+nLSEiYx+PFWYNt9w==
-X-IronPort-AV: E=McAfee;i="6800,10657,11621"; a="69539478"
-X-IronPort-AV: E=Sophos;i="6.20,220,1758610800"; 
-   d="scan'208";a="69539478"
-Received: from fmviesa003.fm.intel.com ([10.60.135.143])
-  by orvoesa107.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 23 Nov 2025 02:24:23 -0800
-X-CSE-ConnectionGUID: IOlcPXmdTe2zhrKUUd+6tA==
-X-CSE-MsgGUID: wiT+jHJwSv6BnQBDmtjWvA==
-X-ExtLoop1: 1
-Received: from lkp-server01.sh.intel.com (HELO adf6d29aa8d9) ([10.239.97.150])
-  by fmviesa003.fm.intel.com with ESMTP; 23 Nov 2025 02:24:19 -0800
-Received: from kbuild by adf6d29aa8d9 with local (Exim 4.96)
-	(envelope-from <lkp@intel.com>)
-	id 1vN7GS-0008D1-1r;
-	Sun, 23 Nov 2025 10:24:16 +0000
-Date: Sun, 23 Nov 2025 18:23:47 +0800
-From: kernel test robot <lkp@intel.com>
-To: Praveen Talari <praveen.talari@oss.qualcomm.com>,
-	Andi Shyti <andi.shyti@kernel.org>, Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Mukesh Kumar Savaliya <mukesh.savaliya@oss.qualcomm.com>,
-	Viken Dadhaniya <viken.dadhaniya@oss.qualcomm.com>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	linux-arm-msm@vger.kernel.org, linux-i2c@vger.kernel.org,
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Cc: llvm@lists.linux.dev, oe-kbuild-all@lists.linux.dev,
-	psodagud@quicinc.com, djaggi@quicinc.com, quic_msavaliy@quicinc.com,
-	quic_vtanuku@quicinc.com, quic_arandive@quicinc.com,
-	quic_shazhuss@quicinc.com
-Subject: Re: [PATCH v1 03/12] soc: qcom: geni-se: Introduce helper API for
- resource initialization
-Message-ID: <202511231819.jiLYo6Fl-lkp@intel.com>
-References: <20251122050018.283669-4-praveen.talari@oss.qualcomm.com>
+	s=arc-20240116; t=1763895133; c=relaxed/simple;
+	bh=no70eWGGIftQYFOp9hmMcZz2jvTCbMsLujdI+KwbwU4=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=URe3i0TncKtphfDmc9TCCIrKxzeJCKeRZ1/mgX+q9JfimLHJJh7bwhY6sEAQvSKpccCMSuXbKc0T3lsPigThu05VemICgTY/Y0WWXM53I2qWb/XmXVF9sxQ7OyyUgOeTrgGdukWTCnLCn8s/sRG/jwP8902E5LpfXh6S6mXh2Ds=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=mainlining.org; spf=pass smtp.mailfrom=mainlining.org; dkim=pass (2048-bit key) header.d=mainlining.org header.i=@mainlining.org header.b=p4rpiksi; dkim=permerror (0-bit key) header.d=mainlining.org header.i=@mainlining.org header.b=0zoYY16w; arc=none smtp.client-ip=5.75.144.95
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=mainlining.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=mainlining.org
+DKIM-Signature: v=1; a=rsa-sha256; s=202507r; d=mainlining.org; c=relaxed/relaxed;
+	h=From:To:Subject:Date:Message-ID; t=1763895110; bh=2/2LcYEhr5gfpXqm959iLku
+	gDfIjyMkf7XuhZNUD+po=; b=p4rpiksiZN5MRTRKSBuvTDzvZY1zPFFZ41c819UsuDsXmptaz5
+	T+lju9Yhnw78Mm4PQVEYz9oClFRgb5ngtAHYacXzrUTj4G2KVB8S0Q+u5UIauCv/U2vc0Fgt2lY
+	LUw+3Cv3RYiOqgXLkSzqDOK1VjFLu0gDXcJZfgMkQ7zzUkB3yWJG+baDBW3QbTeP7g3RkA8yvGr
+	QuzPTaSMNEjaDsNMbuVxAkzPCYpqUWNpd6n50OIaLp4tcJPk4JffpcagokIC8X858WmVgdYgVBM
+	jLag7MNLHAn+DlN3XMTcOS5RWNH67a6mVFELcXLt7HYl+s/c/udnBPhb3gC/Bf4Rpog==;
+DKIM-Signature: v=1; a=ed25519-sha256; s=202507e; d=mainlining.org; c=relaxed/relaxed;
+	h=From:To:Subject:Date:Message-ID; t=1763895110; bh=2/2LcYEhr5gfpXqm959iLku
+	gDfIjyMkf7XuhZNUD+po=; b=0zoYY16wkdxXGUE14wmdP/PxwE+pEUW6dL2HaW/emeD/k7oQ6I
+	A3dXXmJnCO7drOXmyie8oxbYh/ppNRP0D0Aw==;
+Message-ID: <f0c41563-dcd1-4cf9-8b73-fb9fedd52710@mainlining.org>
+Date: Sun, 23 Nov 2025 13:51:49 +0300
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20251122050018.283669-4-praveen.talari@oss.qualcomm.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 1/3] arm64: dts: qcom: sdm630/660: Add CDSP-related
+ nodes
+To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+ Ekansh Gupta <ekansh.gupta@oss.qualcomm.com>
+Cc: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+ Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+ ~postmarketos/upstreaming@lists.sr.ht, linux@mainlining.org,
+ Chenna Kesava Raju <chennak@qti.qualcomm.com>,
+ Bharath Kumar <bkumar@qti.qualcomm.com>
+References: <a3cb6633-1595-41e7-8e87-ca48a98f822c@mainlining.org>
+ <83c3aea5-764e-4e60-8b16-67b474f19357@oss.qualcomm.com>
+ <d17548bb-ddce-4d60-8dc4-2c0633989299@oss.qualcomm.com>
+ <f5c7eb1c-28b1-4cf1-afb0-b993384b7712@oss.qualcomm.com>
+ <80836b8f-16a8-4520-ad11-5ca0abb3403e@oss.qualcomm.com>
+ <99c22e73-797c-4a30-92ba-bc3bd8cf70f0@oss.qualcomm.com>
+ <eddc16cb-d951-401c-8fb8-fccfcf600143@mainlining.org>
+ <0b06f744-b695-43d9-8da3-4424e2b53a5e@oss.qualcomm.com>
+ <24221ce7-24e4-4eaa-8681-ed9b4b9f2d6e@oss.qualcomm.com>
+ <be4e2715-882d-4358-8575-374187f7ee2f@oss.qualcomm.com>
+ <2h222ejvc37cldeno7e4qom5tnvdblqn2zypuquvadbcu7d3pr@765qomrwfvwl>
+Content-Language: ru-RU, en-US
+From: Nickolay Goppen <setotau@mainlining.org>
+In-Reply-To: <2h222ejvc37cldeno7e4qom5tnvdblqn2zypuquvadbcu7d3pr@765qomrwfvwl>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-Hi Praveen,
 
-kernel test robot noticed the following build errors:
-
-[auto build test ERROR on d724c6f85e80a23ed46b7ebc6e38b527c09d64f5]
-
-url:    https://github.com/intel-lab-lkp/linux/commits/Praveen-Talari/soc-qcom-geni-se-Refactor-geni_icc_get-and-make-qup-memory-ICC-path-optional/20251122-130449
-base:   d724c6f85e80a23ed46b7ebc6e38b527c09d64f5
-patch link:    https://lore.kernel.org/r/20251122050018.283669-4-praveen.talari%40oss.qualcomm.com
-patch subject: [PATCH v1 03/12] soc: qcom: geni-se: Introduce helper API for resource initialization
-config: loongarch-randconfig-002-20251123 (https://download.01.org/0day-ci/archive/20251123/202511231819.jiLYo6Fl-lkp@intel.com/config)
-compiler: clang version 18.1.8 (https://github.com/llvm/llvm-project 3b5b5c1ec4a3095ab096dd780e84d7ab81f3d7ff)
-reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20251123/202511231819.jiLYo6Fl-lkp@intel.com/reproduce)
-
-If you fix the issue in a separate patch/commit (i.e. not just a new version of
-the same patch/commit), kindly add following tags
-| Reported-by: kernel test robot <lkp@intel.com>
-| Closes: https://lore.kernel.org/oe-kbuild-all/202511231819.jiLYo6Fl-lkp@intel.com/
-
-All errors (new ones prefixed by >>):
-
->> drivers/soc/qcom/qcom-geni-se.c:1046:10: error: incompatible pointer to integer conversion returning 'void *' from a function with result type 'int' [-Wint-conversion]
-    1046 |                 return ERR_PTR(ret);
-         |                        ^~~~~~~~~~~~
-   1 error generated.
-
-
-vim +1046 drivers/soc/qcom/qcom-geni-se.c
-
-  1015	
-  1016	/**
-  1017	 * geni_se_resources_init() - Initialize resources for a GENI SE device.
-  1018	 * @se: Pointer to the geni_se structure representing the GENI SE device.
-  1019	 *
-  1020	 * This function initializes various resources required by the GENI Serial Engine
-  1021	 * (SE) device, including clock resources (core and SE clocks), interconnect
-  1022	 * paths for communication.
-  1023	 * It retrieves optional and mandatory clock resources, adds an OF-based
-  1024	 * operating performance point (OPP) table, and sets up interconnect paths
-  1025	 * with default bandwidths. The function also sets a flag (`has_opp`) to
-  1026	 * indicate whether OPP support is available for the device.
-  1027	 *
-  1028	 * Return: 0 on success, or a negative errno on failure.
-  1029	 */
-  1030	int geni_se_resources_init(struct geni_se *se)
-  1031	{
-  1032		int ret;
-  1033	
-  1034		se->core_clk = devm_clk_get_optional(se->dev, "core");
-  1035		if (IS_ERR(se->core_clk))
-  1036			return dev_err_probe(se->dev, PTR_ERR(se->core_clk),
-  1037					     "Failed to get optional core clk\n");
-  1038	
-  1039		se->clk = devm_clk_get(se->dev, "se");
-  1040		if (IS_ERR(se->clk) && !has_acpi_companion(se->dev))
-  1041			return dev_err_probe(se->dev, PTR_ERR(se->clk),
-  1042					     "Failed to get SE clk\n");
-  1043	
-  1044		ret = devm_pm_opp_set_clkname(se->dev, "se");
-  1045		if (ret)
-> 1046			return ERR_PTR(ret);
-  1047	
-  1048		ret = devm_pm_opp_of_add_table(se->dev);
-  1049		if (ret && ret != -ENODEV)
-  1050			return dev_err_probe(se->dev, ret, "Failed to add OPP table\n");
-  1051	
-  1052		se->has_opp = (ret == 0);
-  1053	
-  1054		ret = geni_icc_get(se, "qup-memory");
-  1055		if (ret)
-  1056			return ret;
-  1057	
-  1058		return geni_icc_set_bw_ab(se, GENI_DEFAULT_BW, GENI_DEFAULT_BW, GENI_DEFAULT_BW);
-  1059	}
-  1060	EXPORT_SYMBOL_GPL(geni_se_resources_init);
-  1061	
+21.11.2025 15:09, Dmitry Baryshkov пишет:
+> On Fri, Nov 21, 2025 at 01:41:21PM +0530, Ekansh Gupta wrote:
+>>
+>> On 11/20/2025 5:17 PM, Konrad Dybcio wrote:
+>>> On 11/20/25 11:54 AM, Ekansh Gupta wrote:
+>>>> On 11/20/2025 1:27 PM, Nickolay Goppen wrote:
+>>>>> 20.11.2025 07:55, Ekansh Gupta пишет:
+>>>>>> On 11/20/2025 1:58 AM, Srinivas Kandagatla wrote:
+>>>>>>> On 11/12/25 1:52 PM, Konrad Dybcio wrote:
+>>>>>>>> On 11/10/25 6:41 PM, Srinivas Kandagatla wrote:
+>>>>>>>>> On 11/3/25 12:52 PM, Konrad Dybcio wrote:
+>>>>>>>>>> On 10/31/25 12:30 PM, Nickolay Goppen wrote:
+>>>>>>>>>>> 24.10.2025 16:58, Nickolay Goppen пишет:
+>>>>>>>>>>>> 24.10.2025 11:28, Konrad Dybcio пишет:
+>>>>>>>>>>>>> On 10/23/25 9:51 PM, Nickolay Goppen wrote:
+>>>>>>>>>>>>>> In order to enable CDSP support for SDM660 SoC:
+>>>>>>>>>>>>>>     * add shared memory p2p nodes for CDSP
+>>>>>>>>>>>>>>     * add CDSP-specific smmu node
+>>>>>>>>>>>>>>     * add CDSP peripheral image loader node
+>>>>>>>>>>>>>>
+>>>>>>>>>>>>>> Memory region for CDSP in SDM660 occupies the same spot as
+>>>>>>>>>>>>>> TZ buffer mem defined in sdm630.dtsi (which does not have CDSP).
+>>>>>>>>>>>>>> In sdm660.dtsi replace buffer_mem inherited from SDM630 with
+>>>>>>>>>>>>>> cdsp_region, which is also larger in size.
+>>>>>>>>>>>>>>
+>>>>>>>>>>>>>> SDM636 also doesn't have CDSP, so remove inherited from sdm660.dtsi
+>>>>>>>>>>>>>> related nodes and add buffer_mem back.
+>>>>>>>>>>>>>>
+>>>>>>>>>>>>>> Signed-off-by: Nickolay Goppen <setotau@mainlining.org>
+>>>>>>>>>>>>>> ---
+>>>>>>>>>>>>> [...]
+>>>>>>>>>>>>>
+>>>>>>>>>>>>>> +            label = "turing";
+>>>>>>>>>>>>> "cdsp"
+>>>>>>>>>>>> Ok, I'll change this in the next revision.
+>>>>>>>>>>>>>> +            mboxes = <&apcs_glb 29>;
+>>>>>>>>>>>>>> +            qcom,remote-pid = <5>;
+>>>>>>>>>>>>>> +
+>>>>>>>>>>>>>> +            fastrpc {
+>>>>>>>>>>>>>> +                compatible = "qcom,fastrpc";
+>>>>>>>>>>>>>> +                qcom,glink-channels = "fastrpcglink-apps-dsp";
+>>>>>>>>>>>>>> +                label = "cdsp";
+>>>>>>>>>>>>>> +                qcom,non-secure-domain;
+>>>>>>>>>>>>> This shouldn't matter, both a secure and a non-secure device is
+>>>>>>>>>>>>> created for CDSP
+>>>>>>>>>>>> I've added this property, because it is used in other SoC's, such as SDM845 and SM6115 for both ADSP and CDSP
+>>>>>>>>>>> Is this property not neccessary anymore?
+>>>>>>>>>> +Srini?
+>>>>>>>>> That is true, we do not require this for CDSP, as CDSP allows both
+>>>>>>>>> unsigned and signed loading, we create both secured and non-secure node
+>>>>>>>>> by default. May be we can provide that clarity in yaml bindings so that
+>>>>>>>>> it gets caught during dtb checks.
+>>>>>>>>>
+>>>>>>>>>
+>>>>>>>>> However in ADSP case, we only support singed modules, due to historical
+>>>>>>>>> reasons how this driver evolved over years, we have this flag to allow
+>>>>>>>>> compatiblity for such users.
+>>>>>>>> Does that mean that we can only load signed modules on the ADSP, but
+>>>>>>>> the driver behavior was previously such that unsigned modules were
+>>>>>>>> allowed (which was presumably fine on devboards, but not on fused
+>>>>>>>> devices)?
+>>>>>>> Yes, its true that we allowed full access to adsp device nodes when we
+>>>>>>> first started upstreaming fastrpc driver.
+>>>>>>>
+>>>>>>> irrespective of the board only signed modules are supported on the ADSP.
+>>>>>>> I think there was one version of SoC i think 8016 or some older one
+>>>>>>> which had adsp with hvx which can load unsigned modules for compute
+>>>>>>> usecase only.
+>>>>>>>
+>>>>>>> I have added @Ekansh for more clarity.
+>>>>>>>
+>>>>>>> --srini
+>>>>>> For all the available platforms, ADSP supports only signed modules. Unsigned
+>>>>>> modules(as well as signed) are supported by CDSP and GDSP subsystems.
+>>>>>>
+>>>>>> qcom,non-secure-domain property marks the corresponding DSP as non-secure DSP.
+>>>>>> The implications of adding this property would be the following:
+>>>>>> on ADSP, SDSP, MDSP:
+>>>>>> - Only non-secure device node(/dev/fastrpc-Xdsp) is created.
+>>>>>> - Non-secure device node can be used for signed DSP PD offload.
+>>>>>>
+>>>>>> on CDSP, GDSP:
+>>>>>> - Both secure(/dev/fastrpc-Xdsp-secure) and non-secure(/dev/fastrpc-Xdsp) devices
+>>>>>>     are created, regardless of this property.
+>>>>>> - Both the nodes can be used for signed and unsigned DSP PD offload.
+>>>>>>
+>>>>>> Note: If the property is not added for CDSP/GDSP, only secure device node can
+>>>>>> be used for signed PD offload, if non-secure device is used, the request gets
+>>>>>> rejected[1].
+>>>>>>
+>>>>>> [1] https://git.kernel.org/pub/scm/linux/kernel/git/next/linux-next.git/tree/drivers/misc/fastrpc.c#n1245
+>>>>>>
+>>>>>> //Ekansh
+>>>>> Does this mean that the qcom,non-secure-domain property should be dropped from both nodes?
+>>>> I checked again and found that unsigned module support for CDSP is
+>>>> not available on this platform. Given this, the safest approach would
+>>>> be to add the property for both ADSP and CDSP, ensuring that all
+>>>> created device nodes can be used for signed PD offload. I can provide
+>>> The property allows *unsigned* PD offload though
+>> I don't think I can directly relate this property to unsigned PD offload. This is just
+>> defining what type of device node will be created and whether the channel is secure
+>> or not. There is a possibility of making unsigned PD request(on CDSP/GDSP) irrespective
+>> of whether this property is added or not. If DSP does not support unsigned offload, it
+>> should return failures for such requests.
+> Which part of the hardware and/or firmware interface does it define? If
+> it simply declared Linux behaviour, it is incorrect and probably should
+> be dropped.
+I still don't understand, do I need this property or not?
+>>>> a more definitive recommendation once I know the specific use cases
+>>>> you plan to run.
+>>> Why would the usecase affect this?
+>> I'm saying this as per past discussions where some application was relying on non-secure
+>> device node on some old platform(on postmarketOS)[1] and having this property in place.
+>> So if similar usecase is being enabled here, the property might be required[1].
+> DT files are not usecase-based.
+>
+>> [1] https://lkml.org/lkml/2024/8/15/117
 
 -- 
-0-DAY CI Kernel Test Service
-https://github.com/intel/lkp-tests/wiki
+Best regards,
+Nickolay
+
 
