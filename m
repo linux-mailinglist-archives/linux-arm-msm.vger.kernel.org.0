@@ -1,128 +1,140 @@
-Return-Path: <linux-arm-msm+bounces-83135-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-83136-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 16B01C82BC2
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Nov 2025 23:48:00 +0100 (CET)
+Received: from ams.mirrors.kernel.org (ams.mirrors.kernel.org [213.196.21.55])
+	by mail.lfdr.de (Postfix) with ESMTPS id 92995C82C4B
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Nov 2025 00:05:51 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 1DA5C3ABA4A
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Nov 2025 22:47:57 +0000 (UTC)
+	by ams.mirrors.kernel.org (Postfix) with ESMTPS id 79D0534AB6A
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Nov 2025 23:05:49 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DE48627144B;
-	Mon, 24 Nov 2025 22:47:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id BC61026B75C;
+	Mon, 24 Nov 2025 23:05:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="j6sLIVRM"
+	dkim=pass (2048-bit key) header.d=packett.cool header.i=@packett.cool header.b="EWskoSh1"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pf1-f173.google.com (mail-pf1-f173.google.com [209.85.210.173])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from out-174.mta1.migadu.com (out-174.mta1.migadu.com [95.215.58.174])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F74B2253EF
-	for <linux-arm-msm@vger.kernel.org>; Mon, 24 Nov 2025 22:47:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6EEEF2E7F20
+	for <linux-arm-msm@vger.kernel.org>; Mon, 24 Nov 2025 23:05:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764024473; cv=none; b=rzj86RkIo78xJRluCZ6pArmU52k7Kfm6FL5PrXE8cho/ovp77DvC7JNFWi3xyA26RALIfigvqeQnJ9TzmTWUku8ioZZz5iLU8AiJYr9Uj5xMi+lRJKj0pGACcaodi4y8D2+4wQ1qaqPc+cGrzYR+QhU4fMaLgnAW4VDxjOkv5qQ=
+	t=1764025544; cv=none; b=hCNUOyb9j7IJiTzhXU/3PPyQdNDVPCzog1S7OXTIT9BVuN3QqM1UPFMXd5S12WnY3C1ojKMGDAiG01XdtJTrI3JZpJ4vlNXM3DeqgsYDzeHMqW3Cwg3fHfXv2VC1Hoxq2swi8XBb2webiv4+NXQhF+UiSJHba6zEgXHg73RpSxo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764024473; c=relaxed/simple;
-	bh=aA1YUuC43wocVJj+6NswUWK8Q5/HyZu5I5uveCK5vyU=;
+	s=arc-20240116; t=1764025544; c=relaxed/simple;
+	bh=Z0bfPsrJxiR5XYzKIGaSDc/1QPUUhDJBzVL1+arosfI=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=XbIfQr96ftpMHBbkuY33wJd5Li0pEb4LpT9rdduMpQ/tLsxsKvLzi7/+y8P+pmNCKGZG06JmqBwA1cqfmpa8PpqdqbVSxrfHe3/YmWYAwl4AbFoU+JrS5+otH/kauZZyKyzSXrKreT80TfH5s/qkSFUShf2MB74pe6WxI/4RVos=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=j6sLIVRM; arc=none smtp.client-ip=209.85.210.173
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-pf1-f173.google.com with SMTP id d2e1a72fcca58-7b86e0d9615so5799673b3a.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 24 Nov 2025 14:47:51 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1764024471; x=1764629271; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=6e3N2N50lDJoWd8HR2Vtb36h0pURk4NZSWfVy+aqbs0=;
-        b=j6sLIVRMwVa9MaNIEl9vbhIoJHK8k48Vu/GvFQjnyJG0AwrcFlXYGhnfT8YhSQX4YS
-         bCI21BE1Z2vmkm3dlGIrILxwpm6b3fIf4OYs9kKQl0WAz5iOFPxrzf+kijjZyn3kcErU
-         abnF7E3uZEiXdv7eIetcrX32wyv+HM6Sd9zXc9ZGqq+UUdTClpv9aGeO3AsPzjW5bjKh
-         J+UpzlB93JWYAvbF86L/rGolOyehdNvUKGNIIFVqk22weB3upQTkukE48BlY+msHfbDb
-         65umKlJyhlsG7WEwDgvVnBRbA/kGCiN6UurfuMD9bNZrX5LW8ecHkKpbbgHSeGuuwQhc
-         ZASw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1764024471; x=1764629271;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=6e3N2N50lDJoWd8HR2Vtb36h0pURk4NZSWfVy+aqbs0=;
-        b=ReRWTSbjXTbfjSYPpUXkE3v0yLQXsWYtOaXlmEI0A+/iMCgrb0+N6prhQPmsLEginZ
-         EpE+VYLlPeH3hDSxO4oys58xYLk2lkN8LTy4hMqsJFmXYnocJE02F7oTikDZpZZ7BHvH
-         qH3LOmP63cVRcstCJB3pH185kJc7OTQGrdctnhlwWUglCVGKXBhtHxVts+2uPWzW1o/o
-         jg1iymurC1Sqso64ve5k0LCithLsDA5X1KX4osWKjXuKM7NVY4CwdldsjIWCNT8oTa1y
-         fTNYgvMSo7kREhf0nz+eHClLRvHMZqq94hSrf868S2PFsJEKjENlYOqDB2cvU+/FBZ5S
-         wLlA==
-X-Gm-Message-State: AOJu0YzAqMlhdRA/IouPnpONU4oZ4V4t8uJt7Du53Ot+0jP6HaWyQyXQ
-	LN3GbV5MP3zyhAEmVf50kf3U0D2F557TqDXagwzWgfqDqSoAAOHlhWCn
-X-Gm-Gg: ASbGncszVSkobpiEsbXK2yLwzD1wHD9PzKgnEr2a10ExZFsOv0bhrDTzE5j5ak+4GaZ
-	pXezNfAldawnHS+B6W4wMsWfYkB/ckrz7uxEkJ9Vge3jSmctrweCyYhqZ3hfnNvarnH0t/opoFe
-	RC8rabEHG4lVEOXnY/BbC8zIaBhBFmz36NJloQhU4dmKtcAW6X5a+96AhFA+zNfEM0a51Qkc6Vf
-	CkqIlmaFmY9FfM2RVuRK1ChnqFxMmXMlget4NgpNBq/9VvasYCfpAHhxGSxDBHEi1XT7q+GoOgp
-	kHYk/Wj90qyq26fYZo/JmmFHiHNE63RcsDCx8vl6ijs0yv3XfN7L2Sfd0876xFBZvp/8QUUJJbG
-	uaEN+syut/MAYeLQeWLZ+6mPbgjZmTGKwghwKO13Dg4VA15FlK661Fr0DYMIguqlYua0MU1+fhy
-	vOScMQaN6GUpJkGUIUbW0k74RidQA5uxx2u7K7+Qz4mPJjc1TalxSrZQ1Sz+2RS0BL
-X-Google-Smtp-Source: AGHT+IGH6IqlruzANVtCT25Q+8rULkZQZIvff4WTLqlZgY+442DpZenW6IpY+Xhp3eFvitb70kqLTA==
-X-Received: by 2002:a05:7022:2390:b0:11b:2de8:6271 with SMTP id a92af1059eb24-11c9d8635bcmr10491404c88.39.1764024470297;
-        Mon, 24 Nov 2025 14:47:50 -0800 (PST)
-Received: from [192.168.68.63] (104-12-136-65.lightspeed.irvnca.sbcglobal.net. [104.12.136.65])
-        by smtp.gmail.com with ESMTPSA id a92af1059eb24-11cc631c236sm1964112c88.7.2025.11.24.14.47.49
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 24 Nov 2025 14:47:49 -0800 (PST)
-Message-ID: <c68cb4ca-61b4-419a-a4b0-b4d9f77cee4c@gmail.com>
-Date: Mon, 24 Nov 2025 14:47:49 -0800
+	 In-Reply-To:Content-Type; b=tFCjQ/LN+koLkRkAvSrV6IooP+YDRA5Q39fDNjBJGYz/hWY9i2N+Sp/b14cmNStZEH1+x4r6KhCouEMjcTrLUixqWiULD7YaVWSQ8PZY+VizGQl88WITHIDJHsd7Kh1kbiI09IkDnv6TMl/w1neNThUZK+No6zWGvZiBTiAD2gk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=packett.cool; spf=pass smtp.mailfrom=packett.cool; dkim=pass (2048-bit key) header.d=packett.cool header.i=@packett.cool header.b=EWskoSh1; arc=none smtp.client-ip=95.215.58.174
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=packett.cool
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=packett.cool
+Message-ID: <98c0f185-b0e0-49ea-896c-f3972dd011ca@packett.cool>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=packett.cool;
+	s=key1; t=1764025530;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=0rigrPoZ4oOxcaiyz20Ooyz0eENH2D9rnHH7Vg05+nM=;
+	b=EWskoSh1eFEakqp0SUJGgnS3DIW7sm5zhi4S8heVAXVYLlxR88jqAHMt2H70oYQpMV8PB7
+	pyMNTgmqvx2DS2o2RSoU11S8MRkNTR7Ai91YnZ75Fu89PE4GjzOFPWlG4yKR1ZUweZc91z
+	+zIJ7pfOOypgekjKdZzL/Lh6vLeHUJYwaCk1xTsUd+0GhYLJ4Ju4wMJpX4t0lTmiYujQsX
+	CC+aAxHxQcXb2N72sOiSqoclVl1SsVICrZ4wQNFyEvGNnp2AVy54ccty/WtkUUkwCOMFDo
+	OeXYcGaAKw2KXh4swkWXxQOQkH+wAZzzSOJCYyu/CO60mrJYrrFGK0HBj18tBw==
+Date: Mon, 24 Nov 2025 20:05:24 -0300
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 5/5] ARM: dts: qcom: msm8960: expressatt: Add
- Accelerometer
-To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
- Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org
-References: <20251122-expressatt_nfc_accel_magn_light-v3-0-78d198632360@gmail.com>
- <20251122-expressatt_nfc_accel_magn_light-v3-5-78d198632360@gmail.com>
- <a6b824d8-9299-475f-bedf-c75d0912e538@oss.qualcomm.com>
+Subject: Re: [PATCH] gpio: shared: handle the reset-gpios corner case
+To: Bartosz Golaszewski <brgl@bgdev.pl>
+Cc: Krzysztof Kozlowski <krzk@kernel.org>,
+ Philipp Zabel <p.zabel@pengutronix.de>,
+ Linus Walleij <linus.walleij@linaro.org>, linux-gpio@vger.kernel.org,
+ linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+ Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+References: <20251121-gpiolib-shared-reset-gpio-fix-v1-1-cf0128fe4b47@linaro.org>
+ <be7fd390-e81d-4e93-880a-1b6404398408@packett.cool>
+ <CAMRc=MdW3AkkivE=sA4STZAmmee7bCBkD5oEsXiRcKA80Ggd4A@mail.gmail.com>
+ <CAMRc=MfQhu9GY2+3G+Ba71JnXUnU4akAfNbsMDnwkCRNzAXQCw@mail.gmail.com>
 Content-Language: en-US
-From: Rudraksha Gupta <guptarud@gmail.com>
-In-Reply-To: <a6b824d8-9299-475f-bedf-c75d0912e538@oss.qualcomm.com>
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
+From: Val Packett <val@packett.cool>
+In-Reply-To: <CAMRc=MfQhu9GY2+3G+Ba71JnXUnU4akAfNbsMDnwkCRNzAXQCw@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
+X-Migadu-Flow: FLOW_OUT
 
 
-On 11/24/25 02:31, Konrad Dybcio wrote:
-> On 11/23/25 7:44 AM, Rudraksha Gupta via B4 Relay wrote:
->> From: Rudraksha Gupta <guptarud@gmail.com>
+On 11/24/25 12:36 PM, Bartosz Golaszewski wrote:
+> On Mon, Nov 24, 2025 at 9:38 AM Bartosz Golaszewski <brgl@bgdev.pl> wrote:
+>> On Sun, Nov 23, 2025 at 2:03 AM Val Packett <val@packett.cool> wrote:
+>>>> ---
+>>>> This is targetting linux-next where the reset-gpio driver is now using
+>>>> the auxiliary bus and software nodes rather than the platform bus and
+>>>> GPIO machine lookup. The bug is the same in both cases but the fix would
+>>>> be completely different.
+>>>> ---
+>>>> [..]
+>>> Tried applying only this, as well as this +
+>>> https://lore.kernel.org/all/20251120-reset-gpios-swnodes-v7-0-a100493a0f4b@linaro.org/
+>>> + https://lore.kernel.org/all/20251121135739.66528-1-brgl@bgdev.pl/ (on
+>>> top of next-20251120) and the issue is still present.. am I missing
+>>> something?
+>> Can you try this branch?
 >>
->> Add the Bosch Accelerometer.
+>>    https://github.com/brgl/linux test/gpiolib-shared-reset-gpio-fix
 >>
->> Signed-off-by: Rudraksha Gupta <guptarud@gmail.com>
->> ---
-> I'm assuming this essentially means "the default settings (no
-> mount matrix) work out fine"
-
-I initially thought so... but I recently discovered monitor-sensor:
-
-https://gitlab.freedesktop.org/hadess/iio-sensor-proxy
-
-
-And it turns out that my testing is wrong. Will send another revision 
-with the updated mount-matrix and fixing a driver nullptr bug.
-
-
+>> I confirmed it works on my setup and fixes the problem with multiple
+>> users of reset-gpio AND shared GPIOs enabled.
+> Actually linux-next got updated with all the prerequisites so you can
+> try this patch on top of next-20251124. I tested it and it works for
+> me. If it still doesn't for you, can you enable GPIO debug messages
+> and send me the entire kernel log?
 >
-> Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
->
-> Konrad
+> Bartosz
+
+Rebased to next-20251124, still the same..
+
+Here's a full dmesg: https://owo.packett.cool/lin/sound.gpio.dmesg
+
+I even added a custom print to confirm the reason of the EBUSY:
+
+[    9.233613] gpiolib: swnode: swnode_find_gpio: parsed 'reset-gpios' 
+property of node 'node4[0]' - status (0)
+[    9.233624] gpiolib_shared: Adding machine lookup entry for a shared 
+GPIO for consumer reset.gpio.0, with key 'gpiolib_shared.proxy.8' and 
+con_id 'reset'
+[    9.233630] reset_gpio reset.gpio.0: using lookup tables for GPIO lookup
+[    9.233640] gpio_shared_proxy gpiolib_shared.proxy.8: Shared GPIO 
+requested, number of users: 1
+[    9.233652] gpio_shared_proxy gpiolib_shared.proxy.8: Only one user 
+of this shared GPIO, allowing to set direction to output with value 'low'
+[    9.332317] reset_gpio reset.gpio.1: using swnode 'node5' for 'reset' 
+GPIO lookup
+[    9.332337] gpiolib: swnode: swnode_find_gpio: parsed 'reset-gpios' 
+property of node 'node5[0]' - status (0)
+[    9.332343] gpiolib_shared: Adding machine lookup entry for a shared 
+GPIO for consumer reset.gpio.1, with key 'gpiolib_shared.proxy.8' and 
+con_id 'reset'
+[    9.332347] reset_gpio reset.gpio.1: using lookup tables for GPIO lookup
+[    9.332353] gpio-856 (reset): gpiod_request_commit: flags 200043 
+test_and_set_bit GPIOD_FLAG_REQUESTED -> EBUSY
+[    9.332356] gpio-856 (reset): gpiod_request: status -16
+[    9.332358] reset_gpio reset.gpio.1: error -EBUSY: Could not get 
+reset gpios
+[    9.332362] reset_gpio reset.gpio.1: probe with driver reset_gpio 
+failed with error -16
+[    9.441612] wcd938x_codec audio-codec: bound sdw:2:0:0217:010d:00:4 
+(ops wcd_sdw_component_ops [snd_soc_wcd_common])
+[    9.441644] wcd938x_codec audio-codec: bound sdw:3:0:0217:010d:00:3 
+(ops wcd_sdw_component_ops [snd_soc_wcd_common])
+[    9.445771] gpio_shared_proxy gpiolib_shared.proxy.8: Voted for value 
+'high', effective value is 'high', number of votes for 'high': 1
+
 
