@@ -1,91 +1,59 @@
-Return-Path: <linux-arm-msm+bounces-83056-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-83071-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id E0EA8C80689
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Nov 2025 13:14:59 +0100 (CET)
+Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [142.0.200.124])
+	by mail.lfdr.de (Postfix) with ESMTPS id D854DC807DB
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Nov 2025 13:38:01 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 7F90B3A93F6
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Nov 2025 12:10:22 +0000 (UTC)
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id C92244E0563
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Nov 2025 12:38:00 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A699A2FE560;
-	Mon, 24 Nov 2025 12:10:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9D12C2FFDF3;
+	Mon, 24 Nov 2025 12:37:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="gUen6ELn"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Oj1T3K9Z"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.19])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61F2E2248BD;
-	Mon, 24 Nov 2025 12:10:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.19
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6EDE22701CC;
+	Mon, 24 Nov 2025 12:37:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763986219; cv=none; b=sMrmAf648VKcpBWjZltul6ftBkhjoiuAJBGLDZ56cS8yq7uBnqbQk33gqnfIuvKc43x+N8vfkbRlfNN69b6kB5E2AQ1XPVPLaxOSH6DuB04JZzW4f1d9NKys63xlnugE5mn7oHeJnpO2Z4Jog3DaTv1VJnAGmoBIx5VwubbjfMc=
+	t=1763987878; cv=none; b=fOf9TWGqe9u9VVlrVz3Zm6L3dsOu4SsT1CC3yKD5D+n3OQaS8k3AOiJdQhZflj1q003ZKk8ekVNAjAc4ysiBw8jLdkjx5oVVF5lTUYN2PvdNuLQZIo9Mb4QkiFTsppJUt2cXcv2vFAEXdSy46XIr4uqHK27xPxho4vxLc0yZPoA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763986219; c=relaxed/simple;
-	bh=d5nNg3j4GXG9OHJ73JYH0c5+/jyYRN1qHBQffAJxf+Q=;
+	s=arc-20240116; t=1763987878; c=relaxed/simple;
+	bh=FKPMg3uIfj2UWT9aHfXB2xyEkoogoVhivvuGZBBOJGc=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ad7N6WFq/9HZY0lvZUCbcQ5IwwZLYQuVUtULjtcnKsLkBk+Nk/t+HwLlLPGaD816BeAHLFjCPSWSGUE2AO1vK4+Mcf33gy6HxLNHg3MLy0wqBiymRnJWfHsHgifS85z8V7wRUYM+vw/X62wXHB9CgYawg82NnmZz770rgRsPulM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=pass smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=gUen6ELn; arc=none smtp.client-ip=192.198.163.19
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.intel.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1763986217; x=1795522217;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:content-transfer-encoding:in-reply-to;
-  bh=d5nNg3j4GXG9OHJ73JYH0c5+/jyYRN1qHBQffAJxf+Q=;
-  b=gUen6ELnFSsM6kK6YAMHMNobscoPv0yDTJQzhGw3EfX4kLYH6KRnEQeO
-   4/N65JICpuu2MaW8ZJnQUMv+WbU+jSD3itTtMQ9/JagQLYAGMmF/3uIhE
-   urVkG/mPnVnP3RLkHMSoe+ZHsj2LsuGyRa1YThJVgX3Xofa6vXvE8sP4B
-   MITjL5na2N7InZwG+2/SlVEH6f6cew5NA8oqv+C2+9sqoCK4q9CpG0wNN
-   ZOapC2n0L/y4XV2n8LDChkC34QkRFTlifjDeZNIRfeUNEhSM5W1BbSYlg
-   W88aebFd4GycCH/aTa+JSV42M8yLPnOSfajnP06CR6oSBmhM/MfKnLnUx
-   A==;
-X-CSE-ConnectionGUID: Sy7CxMYjQXaDM8aia0/tOQ==
-X-CSE-MsgGUID: TrLMyXmFRH67Wm7It8JN/w==
-X-IronPort-AV: E=McAfee;i="6800,10657,11622"; a="64984403"
-X-IronPort-AV: E=Sophos;i="6.20,222,1758610800"; 
-   d="scan'208";a="64984403"
-Received: from fmviesa007.fm.intel.com ([10.60.135.147])
-  by fmvoesa113.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 24 Nov 2025 04:10:16 -0800
-X-CSE-ConnectionGUID: kCgZIcdZRl+BizAz96HPnQ==
-X-CSE-MsgGUID: ATl7n97tSL2Horct6YF6tg==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.20,222,1758610800"; 
-   d="scan'208";a="191986359"
-Received: from egrumbac-mobl6.ger.corp.intel.com (HELO localhost) ([10.245.244.5])
-  by fmviesa007-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 24 Nov 2025 04:10:11 -0800
-Date: Mon, 24 Nov 2025 14:10:09 +0200
-From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-To: Vinod Koul <vkoul@kernel.org>
-Cc: Stefan Wahren <wahrenst@gmx.net>,
-	Thomas Andreatta <thomasandreatta2000@gmail.com>,
-	Caleb Sander Mateos <csander@purestorage.com>,
-	dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org,
-	linux-rpi-kernel@lists.infradead.org,
-	linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org,
-	Olivier Dautricourt <olivierdautricourt@gmail.com>,
-	Stefan Roese <sr@denx.de>,
-	Florian Fainelli <florian.fainelli@broadcom.com>,
-	Broadcom internal kernel review list <bcm-kernel-feedback-list@broadcom.com>,
-	Ray Jui <rjui@broadcom.com>, Scott Branden <sbranden@broadcom.com>,
-	Lars-Peter Clausen <lars@metafoo.de>,
-	Eugeniy Paltsev <Eugeniy.Paltsev@synopsys.com>,
-	Daniel Mack <daniel@zonque.org>,
-	Haojian Zhuang <haojian.zhuang@gmail.com>,
-	Robert Jarzmik <robert.jarzmik@free.fr>,
-	Lizhi Hou <lizhi.hou@amd.com>, Brian Xu <brian.xu@amd.com>,
-	Raj Kumar Rampelli <raj.kumar.rampelli@amd.com>,
-	Michal Simek <michal.simek@amd.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: Re: [PATCH v2 07/13] dmaengine: lgm: use sg_nents_for_dma() helper
-Message-ID: <aSRLIY4KmhAxePq1@smile.fi.intel.com>
-References: <20251110103805.3562136-1-andriy.shevchenko@linux.intel.com>
- <20251110103805.3562136-8-andriy.shevchenko@linux.intel.com>
- <aSGCJQc152Y9V10E@vaman>
+	 Content-Type:Content-Disposition:In-Reply-To; b=bPo7rDjzPkzpy5Jxwvw6Dqs4qdnNJJWfoXaHM2Ui12cuVCO2MwAo48EvkbRBYsKb1KTXbuYnAYiHJjPyaFMBEXXh4jy/K+syHTedixg1BQlD3eGoVcK0lrSpqChvb1AGBdHRZ0kT8F3ZT9mJ/QoELhZ7HMPYjdVzkhZh3Im13Ck=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Oj1T3K9Z; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A385C4CEF1;
+	Mon, 24 Nov 2025 12:37:50 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1763987878;
+	bh=FKPMg3uIfj2UWT9aHfXB2xyEkoogoVhivvuGZBBOJGc=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=Oj1T3K9ZkUT3h5FIilNKp9UIlOF0kOeYy9B12BU1Ea2vPhHix5HIkzy6DujgrAgJE
+	 xJn68EYHNNUfmE3/q8O6VAzu+1ANOaFBltp2zSVHFJGw3/dmXMKdBaS1q44yMuX/cT
+	 9QfDZstg5rCrVGLXFwImgUTkk43f0C8CH5eJKlVf6VHI9jx+XwitHyDuv8DUvVsz0r
+	 BX9LLdz/uu0JpeRUWymWnacr0JRQ5Etug1ff/qOhB2ir6DjceZiWXoEB7HbwG+VJPO
+	 l4gVf13KcLrT6xqAugMB0vqdcr7SOlMDTbdX9Iva3RGu0pTV7dff/zw5TfTFkXxoMe
+	 zxVOOIY3rGfFQ==
+Date: Mon, 24 Nov 2025 18:07:44 +0530
+From: Manivannan Sadhasivam <mani@kernel.org>
+To: Niklas Cassel <cassel@kernel.org>
+Cc: Jingoo Han <jingoohan1@gmail.com>, 
+	Lorenzo Pieralisi <lpieralisi@kernel.org>, Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kwilczynski@kernel.org>, 
+	Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>, 
+	Heiko Stuebner <heiko@sntech.de>, Shawn Lin <shawn.lin@rock-chips.com>, 
+	FUKAUMI Naoki <naoki@radxa.com>, Krishna chaitanya chundru <quic_krichai@quicinc.com>, 
+	linux-pci@vger.kernel.org, linux-arm-kernel@lists.infradead.org, 
+	linux-rockchip@lists.infradead.org, linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH 0/6] PCI: dwc: Revert Link Up IRQ support
+Message-ID: <mt7miqkipr4dvxemftq6octxqzauueln252ncrcwy6i2t7wfhi@jtwokeilhwsi>
+References: <20251111105100.869997-8-cassel@kernel.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -95,30 +63,68 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <aSGCJQc152Y9V10E@vaman>
-Organization: Intel Finland Oy - BIC 0357606-4 - c/o Alberga Business Park, 6
- krs, Bertel Jungin Aukio 5, 02600 Espoo
+In-Reply-To: <20251111105100.869997-8-cassel@kernel.org>
 
-On Sat, Nov 22, 2025 at 02:58:05PM +0530, Vinod Koul wrote:
-> On 10-11-25, 11:23, Andy Shevchenko wrote:
-> > Instead of open coded variant let's use recently introduced helper.
-
-...
-
-> > +	num = sg_nents_for_dma(sgl, sg_len, DMA_MAX_SIZE);
+On Tue, Nov 11, 2025 at 11:51:00AM +0100, Niklas Cassel wrote:
+> Revert all patches related to pcie-designware Root Complex Link Up IRQ
+> support.
 > 
-> drivers/dma/lgm/lgm-dma.c:1176:37: error: ‘sg_len’ undeclared (first use in this function); did you mean ‘sglen’?
->          num = sg_nents_for_dma(sgl, sg_len, DMA_MAX_SIZE);
+> While this fake hotplugging was a nice idea, it has shown that this feature
+> does not handle PCIe switches correctly:
+> pci_bus 0004:43: busn_res: can not insert [bus 43-41] under [bus 42-41] (conflicts with (null) [bus 42-41])
+> pci_bus 0004:43: busn_res: [bus 43-41] end is updated to 43
+> pci_bus 0004:43: busn_res: can not insert [bus 43] under [bus 42-41] (conflicts with (null) [bus 42-41])
+> pci 0004:42:00.0: devices behind bridge are unusable because [bus 43] cannot be assigned for them
+> pci_bus 0004:44: busn_res: can not insert [bus 44-41] under [bus 42-41] (conflicts with (null) [bus 42-41])
+> pci_bus 0004:44: busn_res: [bus 44-41] end is updated to 44
+> pci_bus 0004:44: busn_res: can not insert [bus 44] under [bus 42-41] (conflicts with (null) [bus 42-41])
+> pci 0004:42:02.0: devices behind bridge are unusable because [bus 44] cannot be assigned for them
+> pci_bus 0004:45: busn_res: can not insert [bus 45-41] under [bus 42-41] (conflicts with (null) [bus 42-41])
+> pci_bus 0004:45: busn_res: [bus 45-41] end is updated to 45
+> pci_bus 0004:45: busn_res: can not insert [bus 45] under [bus 42-41] (conflicts with (null) [bus 42-41])
+> pci 0004:42:06.0: devices behind bridge are unusable because [bus 45] cannot be assigned for them
+> pci_bus 0004:46: busn_res: can not insert [bus 46-41] under [bus 42-41] (conflicts with (null) [bus 42-41])
+> pci_bus 0004:46: busn_res: [bus 46-41] end is updated to 46
+> pci_bus 0004:46: busn_res: can not insert [bus 46] under [bus 42-41] (conflicts with (null) [bus 42-41])
+> pci 0004:42:0e.0: devices behind bridge are unusable because [bus 46] cannot be assigned for them
+> pci_bus 0004:42: busn_res: [bus 42-41] end is updated to 46
+> pci_bus 0004:42: busn_res: can not insert [bus 42-46] under [bus 41] (conflicts with (null) [bus 41])
+> pci 0004:41:00.0: devices behind bridge are unusable because [bus 42-46] cannot be assigned for them
+> pcieport 0004:40:00.0: bridge has subordinate 41 but max busn 46
 > 
-> I am getting the build failure, as well as few unused warning with this,
-> pls fix
+> During the initial scan, PCI core doesn't see the switch and since the Root
+> Port is not hot plug capable, the secondary bus number gets assigned as the
+> subordinate bus number. This means, the PCI core assumes that only one bus
+> will appear behind the Root Port since the Root Port is not hot plug
+> capable.
+> 
+> This works perfectly fine for PCIe endpoints connected to the Root Port,
+> since they don't extend the bus. However, if a PCIe switch is connected,
+> then there is a problem when the downstream busses starts showing up and
+> the PCI core doesn't extend the subordinate bus number after initial scan
+> during boot.
+> 
+> The long term plan is to migrate this driver to the pwrctrl framework,
+> once it adds proper support for powering up and enumerating PCIe switches.
+> 
 
-Indeed, sorry for that, in v4 should be fixed.
-Thanks!
+While I suggested to revert the link up IRQ patch for rockchip earlier, I didn't
+expect to drop the support for Qcom. The reason is, on Qcom SoCs, we have not
+seen a case where people connect a random PCIe switch and saw failures. Most of
+the Qcom usecases were around the M.2 and other proprietary connectors. There is
+only one in-house PCIe switch that is being actively used in our products, but
+so far, none of the bootloaders have turned them ON before kernel booting. So
+kernel relies on the newly merged pwrctrl driver to do the job. Even though it
+also suffers from the same resource allocation issue, this series won't help in
+any way as pwrctrl core performs rescan after the switch power ON, and by that
+time, it will be very late anyway.
+
+So I'm happy to take the rockhip patches from this series as they fix the real
+issue that people have reported. But once the pwrctrl rework series gets merged,
+and the rockchip drivers support them, we can bring back the reverted changes.
+
+- Mani
 
 -- 
-With Best Regards,
-Andy Shevchenko
-
-
+மணிவண்ணன் சதாசிவம்
 
