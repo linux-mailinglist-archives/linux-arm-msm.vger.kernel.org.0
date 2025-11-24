@@ -1,133 +1,192 @@
-Return-Path: <linux-arm-msm+bounces-83132-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-83134-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2F618C8298A
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Nov 2025 22:54:29 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 1A683C82A0E
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Nov 2025 23:10:46 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id E1EFB3A635F
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Nov 2025 21:54:27 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 471933AE020
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Nov 2025 22:10:44 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1BB72331210;
-	Mon, 24 Nov 2025 21:53:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 90D75335066;
+	Mon, 24 Nov 2025 22:10:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="RDXdOcni"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="IX8JCe81";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="ay9kDwvW"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34E2732FA32;
-	Mon, 24 Nov 2025 21:53:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC812330B36
+	for <linux-arm-msm@vger.kernel.org>; Mon, 24 Nov 2025 22:10:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764021219; cv=none; b=hBQjsOQGnQZ5MCzOxtq0muJPXaIhab0XNvi63hglk8x6qMMBvd8xzw09/A26qit/5IP78hROp98OpkaVNvfKerwGQyP1BSTjBr6xcaWtMDD42U+HheKVb1/ivjyVtsFrxVwb/nH7zFL+ifqqQhbpDoipQGQI6HUXrsktGSB8QQM=
+	t=1764022240; cv=none; b=nMbCU/i1VstYX5Mj9WbbfuzYv4yH+pJw9tlPN8Bi0QK3aDUhBAO2VynMC2qJFdLDtM89F5zhu3qYAfBddwyKK5uWsJTbNgZc7MtLe8w+H+sbrvLFSyS8/VZBo0FU/gIJaQRNLaedjtVTrbuK5KlN916hOrdeYmu3ywQKqXGt760=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764021219; c=relaxed/simple;
-	bh=3IKw0nkX63RBBXH8cToT4cBaJzlDdChJSInpUsVpcyA=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=o9c26mA5ngu/Yhull065WHhITt5V8aVEC4eDhku4CKTwmip/ZtWEPqS5DuyB+GqPOY8Q40ZScFMrpflHbjQvE8Z8SlehQ/M+ANd6jCf+HsMaRwGY4yEd9ktz58lhAlLPe9UErYXbZVVPCfXcjayxIBHLt68Jefitp283jxumqXI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=RDXdOcni; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPS id B76C1C19421;
-	Mon, 24 Nov 2025 21:53:38 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1764021218;
-	bh=3IKw0nkX63RBBXH8cToT4cBaJzlDdChJSInpUsVpcyA=;
-	h=From:Date:Subject:References:In-Reply-To:To:Cc:Reply-To:From;
-	b=RDXdOcni3FSC5b1r8qwe7fWzs8w/k1cc3XcJOA67qh+HB37tYBXn0LdBvjwvpPKMo
-	 rN1i0/hrd5gXDi0cnNWSkw4lGVOjWWqX4ubXjcMTOP4fppmJRt3RoeKjMK1utDybuF
-	 7PoXV4LGJISTG51fIvP3NM2mshUH/v8TlRgXhgljLQ87i9R/Z7MzOUAOqSfcmk5HND
-	 uDbHEu4aJoo3QEzNWs2sO4oPosUrx8HMv7KySqQyAmHjhljG4L8sqkRbUrQ5ZzacIy
-	 tu4qrA+NSG3GTR1rP+c4kh/FWuDCjcTSp+RMsMqeK5WKzbogNSHtWEHtHdvSzhfreO
-	 I3gsb4uJY2qSw==
-Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AD6BDCFD360;
-	Mon, 24 Nov 2025 21:53:38 +0000 (UTC)
-From: David Heidelberg via B4 Relay <devnull+david.ixit.cz@kernel.org>
-Date: Mon, 24 Nov 2025 22:53:41 +0100
-Subject: [PATCH RFC 8/8] arm64: dts: qcom: sdm670-google-sargo: Enable fuel
- gauge
+	s=arc-20240116; t=1764022240; c=relaxed/simple;
+	bh=5asoTe/RpVZq0z10toOW9rTiNGWjHr1jmYmj/9QBvhw=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=jP24RyUG3RLIAmdDaxldajyaShH9kwK4IkT+S2HVQwvyYJV3P14Xrhkt8GSekY1Qy02V+gHmHNRSCaU26vEsDlO1xabzfKqhhVHe9PwKDC0/+dtt6El5VdoCfJieXS8yqn+OfXpBCe/t9cf1Jbw5NIi6VtZBFSBu7KMrelwzfIg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=IX8JCe81; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=ay9kDwvW; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 5AOJt2l1998281
+	for <linux-arm-msm@vger.kernel.org>; Mon, 24 Nov 2025 22:10:37 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	P1IkRQX90E+6SINHSGTIxDgXOYU24GZeFnRVS4Zye7g=; b=IX8JCe81aZ4Z96ad
+	LQ93m1F98NWgE2XRNocVygHnvwMc6pPv1IGhmTGeXZXEiwBpVbABwFB/Md3+rF+C
+	nRBdK8UnvdLQZh4XU0JcNnIkdhgYRqGY+nOLkFZZ2jTaoZ4+VfSx1OHoOXmQdRIB
+	dJxsXD8fTn/RD/AVsDThTFaAfNF5NHxrmgA4YxRvVI3dcQ3rWXtlknGEU/UvrvJ5
+	QE1lal5uNXo6TAa5uiQ5fmvMAL6Wei8+tiu8oU9jruplalbakG36bFa8Ln5e2gpW
+	vh44BBkQF+s7PHnLtZ+qjnC1z3iomsRiCkOJpZXWLya7JB2A/l67ZJ0p3HeayXWP
+	xvqMuw==
+Received: from mail-pl1-f197.google.com (mail-pl1-f197.google.com [209.85.214.197])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4amu6q8uda-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Mon, 24 Nov 2025 22:10:37 +0000 (GMT)
+Received: by mail-pl1-f197.google.com with SMTP id d9443c01a7336-29557f43d56so60241745ad.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 24 Nov 2025 14:10:37 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=oss.qualcomm.com; s=google; t=1764022237; x=1764627037; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=P1IkRQX90E+6SINHSGTIxDgXOYU24GZeFnRVS4Zye7g=;
+        b=ay9kDwvWXUpGzc0IUMnYlL15YkCOuFI7kuGJHzO4doHkn+n04RoX7UMnuLRNITKITk
+         XKa2fLjCKpczcTJQjwdDdfVPQWaRkMpNCJGBb/LETsFrKRp+JenvLfif/P1WAS9kJVJ6
+         MDQ4MKFRXtp8LvR5HryCJSpluCbBYobJyDuVaCVFep1LkiPDDKGK+YMw3w1Y/7OqTRy+
+         4erXsAxPX6tfTYv2rQf/1+/u27oJ4SWTs+qCp7D4EmEctv0voAGTLwa5kOzq8dlfA+vl
+         elS6XP9ZVWuaoRwIr0z+IHtbmU9aZq4jt0hORLyRleVHPw6fYoMI1/PNyP/6+iWq9/I0
+         Yseg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1764022237; x=1764627037;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=P1IkRQX90E+6SINHSGTIxDgXOYU24GZeFnRVS4Zye7g=;
+        b=JYCkH9/H0ihzYWnIPoiHDdRzDAtRAVdo4+MVsMIbtudGgbYnfWmyJcdEcjjrRaFIU3
+         kQgLnGQzM4jlH03XQ7Mvzqz1TNYzHX6CVOqpla+0sHlm+hE6ymS5v/AE1KAXdTekY0xn
+         e7a84EFEgDywMRFIEtBoEjjZxbjWablYtm80RbyZY8hRfXjvRwfxncLmo7/mXchANyqg
+         Ccudq4Puu8GCxKw1s/0CP9h/q8XGfJIDIX81lUpee0tNLt3sh1iNe6n3gm45IqgZTJFG
+         d9zbBjC4qI8YjKALrcdlFGpEMaN0MOzv6dkiYNMaF2ao5q8qJtsLXSp4rcrPQ75iTluv
+         DBRQ==
+X-Forwarded-Encrypted: i=1; AJvYcCXr41CVGV16uZpcjogLFj4afRtnCrlNIQFCVOf9R8ftQLu6LWMOX3eEuoRrUhsvhzoN9Lo81ia4JSNr9sTy@vger.kernel.org
+X-Gm-Message-State: AOJu0YyRV1WoL7EYg5iXkd76oeCpwBh73XWsqACRB1kCk4uNghx9q4d4
+	BSiAKYjG+A8rFOLs4nuhFN4NaiRuFBYn34FS7wMe2IBOWk7AjMfNTE4JF9ldA7+pcblajZTnnQi
+	Cdao6FpC2P0Vkn6ZWnFAYnedoHHKNgTdo5ZcrK7RhumQrO+5MJQJo0wSJYbEcEozZ8pWx
+X-Gm-Gg: ASbGnctuBzqKHfiFyigBH/Q6S9T/kH7SrFbxY32bNLGYENtwNgY2F+XZ/LDEyDE3RkL
+	ubcnV2KE8IKkLDw/70vSLAsgh82ExHZq0N4DmTkG40fl7rdypMS2w5p7fnOyrARYxhxbWFl7lbf
+	hhB8Vac8tWmZBB+Ux986/WWYhJGBz/5hm+FWc1Sj5tX6Oh+WmckL+2d7MSFZq6RQsEpyyU4EeAY
+	xPupP6ZWgWxFlzKLMIoy4dM1FzD4ViMlyorpAJ7E57ZNxyKYQMWrCg5ddEuplrLSK7WO0y7hSwj
+	tYbKpG/R88i/bhLuYfYoJbxKMUDaHnsrVljSTWe8zYWzEFU9rVCY8bQNL2A6pd4EOa29gvZBwHI
+	e7pVXe4x86RnRwr1XA5y88q1CiCCFvtLXcS0=
+X-Received: by 2002:a17:903:1aa5:b0:298:4ee3:c21a with SMTP id d9443c01a7336-29baae40a33mr4509325ad.2.1764022236563;
+        Mon, 24 Nov 2025 14:10:36 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGCFlcdURGFYX9T7gTdXnUcf8Uq2t38PcEn5iAANu+rMB94bLXIscK2ROxQ/LO/fYuI22iQTw==
+X-Received: by 2002:a17:903:1aa5:b0:298:4ee3:c21a with SMTP id d9443c01a7336-29baae40a33mr4508935ad.2.1764022236070;
+        Mon, 24 Nov 2025 14:10:36 -0800 (PST)
+Received: from [192.168.1.14] ([106.222.231.199])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-29b5b1387e3sm142941995ad.24.2025.11.24.14.10.29
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 24 Nov 2025 14:10:35 -0800 (PST)
+Message-ID: <efa2f4e7-97b7-465d-81e5-98d86975548f@oss.qualcomm.com>
+Date: Tue, 25 Nov 2025 03:40:28 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 1/6] drm/msm/a6xx: Retrieve gmu core range by index
+To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Cc: Rob Clark <robin.clark@oss.qualcomm.com>, Sean Paul <sean@poorly.run>,
+        Konrad Dybcio <konradybcio@kernel.org>,
+        Dmitry Baryshkov <lumag@kernel.org>,
+        Abhinav Kumar <abhinav.kumar@linux.dev>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+        Maxime Ripard <mripard@kernel.org>,
+        Thomas Zimmermann <tzimmermann@suse.de>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Jessica Zhang <jesszhan0024@gmail.com>,
+        Dan Carpenter <dan.carpenter@linaro.org>,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org,
+        devicetree@vger.kernel.org
+References: <20251122-qcs615-spin-2-v3-0-9f4d4c87f51d@oss.qualcomm.com>
+ <20251122-qcs615-spin-2-v3-1-9f4d4c87f51d@oss.qualcomm.com>
+ <9cc55934-6980-4673-8501-2d1efe2f816e@oss.qualcomm.com>
+Content-Language: en-US
+From: Akhil P Oommen <akhilpo@oss.qualcomm.com>
+In-Reply-To: <9cc55934-6980-4673-8501-2d1efe2f816e@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Message-Id: <20251124-pmi8998_fuel_gauge-v1-8-dd3791f61478@ixit.cz>
-References: <20251124-pmi8998_fuel_gauge-v1-0-dd3791f61478@ixit.cz>
-In-Reply-To: <20251124-pmi8998_fuel_gauge-v1-0-dd3791f61478@ixit.cz>
-To: Sebastian Reichel <sre@kernel.org>, Rob Herring <robh@kernel.org>, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>, 
- Casey Connolly <casey.connolly@linaro.org>, 
- Casey Connolly <casey@connolly.tech>, Joel Selvaraj <foss@joelselvaraj.com>, 
- Yassine Oudjana <y.oudjana@protonmail.com>, 
- Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konradybcio@kernel.org>, 
- Alexander Martinz <amartinz@shiftphones.com>, 
- =?utf-8?q?Barnab=C3=A1s_Cz=C3=A9m=C3=A1n?= <barnabas.czeman@mainlining.org>, 
- Richard Acayan <mailingradian@gmail.com>, 
- Alexey Minnekhanov <alexeymin@postmarketos.org>
-Cc: linux-pm@vger.kernel.org, devicetree@vger.kernel.org, 
- linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
- phone-devel@vger.kernel.org, David Heidelberg <david@ixit.cz>
-X-Mailer: b4 0.14.3
-X-Developer-Signature: v=1; a=openpgp-sha256; l=813; i=david@ixit.cz;
- h=from:subject:message-id;
- bh=SyGBCL9VTEPA+aAWTUKzUH7OLMbCTKZV+KFoRbFN9oM=;
- b=owEBbQKS/ZANAwAIAWACP8TTSSByAcsmYgBpJNPgenmWLfuDKhq15mBg6v1tJzJPi9mONOtDK
- +nbgiB4RcSJAjMEAAEIAB0WIQTXegnP7twrvVOnBHRgAj/E00kgcgUCaSTT4AAKCRBgAj/E00kg
- ct3+D/9FOzgDdTeSSuMnpUerlqxXHRc7EteoshYCabmOBQfZkQfTUgC+p7Nnbujn8EyVH35kHb2
- 04thXEH3bbZXwDcQ37886myN5Mtm7HRNkGg2/FzE3FYSClXrJoIo+9XdzSWRFTqh7jgLHGYW7bW
- IKK/9Qq3KPlvhlmiYyhegZSxWdKzhbxFMBprU2gcomvExFvuT9mFU4A8UjddL9SxgXLlmXhn1vC
- 7Mbvfvd7eBwQ3/n/T4jqKkb7mw5V5ZX3KaSade6jOq3tjcv9pVH/Ui8Ds8BenYgsOYKYPbyIGvT
- K4W6HBLQfUd3Y2CBEPSGB7wUZW58vhoRNjDUz26iBZ8ofu/gdimjAjo84FQtLpq89gvQpot+2do
- nJkFJVFN4uDf6Oh4/AaEk3bysrf2gZ0QaeGAMyL0yasVutQO2bELurmwmfVVBGvPVi1Ri0CpYF9
- dqxm8E8uvzWkxcRFsi9OymhD9I+WIUN5tdCFlvyihsMMlOSGpOyJoEVJ6kgfCmYBNbmPiWfPyHS
- xDH5NX8mvn0rQcchS2DL04az9PEzKLSgvyHVl/+StqKya6kPzZGnlsJteKA63dlWzhDCgg/hr2f
- ej8jQ1LL8+E+bTikNcpcJfR1nUt1P8VPgayWzBhDG2UHB7465QB9YCfpV2U8+zTqpCxJer7NCAF
- BVXLpg4Ve72CGEw==
-X-Developer-Key: i=david@ixit.cz; a=openpgp;
- fpr=D77A09CFEEDC2BBD53A7047460023FC4D3492072
-X-Endpoint-Received: by B4 Relay for david@ixit.cz/default with auth_id=355
-X-Original-From: David Heidelberg <david@ixit.cz>
-Reply-To: david@ixit.cz
+X-Proofpoint-ORIG-GUID: B8xOMw5ZHk5VRDlo25STRoDCjcNnCYtX
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMTI0MDE5MiBTYWx0ZWRfX8eJoOIXHS3Sw
+ y3kDP/rFLXUvw/Vl5NCo5a/J0FnB997irBarHI7aR5MpkL7S8Opn2NzAbRghxv1SJBjR0Ym2Ow7
+ nA3FyDfb8YbXi538hI2YHEQXBo57J8aNe8U6EUXsjg05VJxr2Y4IfXrUn+biYOK6GFNwunziF47
+ UyIJTXFYEDMhXxiKTEXSpDyaqyOWfy8bKMDBFcv5xvhqATV6i62MPeSPwhvyclL5ezCQTNxbhsN
+ 0pzZk9hdkMSRsdUsDfaf9zv3dFABE+HkKPARZRC3tMJBEiD/LCg1CJ1h5jIv5ScFfOBQPxdrwUi
+ yo9gOyNCOmqHlVE//fvV4Jt6ZqS1M00RSXfydRdyMzEi5pW7fOBZxxEAR1fu1BTFnz7wIgM9ShP
+ dycF7tIsLuw+tgNeVUaRcJowpahJJQ==
+X-Proofpoint-GUID: B8xOMw5ZHk5VRDlo25STRoDCjcNnCYtX
+X-Authority-Analysis: v=2.4 cv=S6PUAYsP c=1 sm=1 tr=0 ts=6924d7dd cx=c_pps
+ a=cmESyDAEBpBGqyK7t0alAg==:117 a=QME20dCx57Gc1q/4dZKLgg==:17
+ a=IkcTkHD0fZMA:10 a=6UeiqGixMTsA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=EUspDBNiAAAA:8 a=6yKHOGsdPNW3Y-1pzmYA:9
+ a=QEXdDO2ut3YA:10 a=1OuFwYUASf3TG4hYMiVC:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
+ definitions=2025-11-24_08,2025-11-24_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ bulkscore=0 suspectscore=0 phishscore=0 lowpriorityscore=0 adultscore=0
+ spamscore=0 clxscore=1015 priorityscore=1501 impostorscore=0 malwarescore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2510240001 definitions=main-2511240192
 
-From: Richard Acayan <mailingradian@gmail.com>
+On 11/22/2025 7:08 PM, Konrad Dybcio wrote:
+> On 11/21/25 10:52 PM, Akhil P Oommen wrote:
+>> Some GPUs like A612 doesn't use a named register range resource. This
+>> is because the reg-name property is discouraged when there is just a
+>> single resource.
+>>
+>> To address this, retrieve the 'gmu' register range by its index. It is
+>> always guaranteed to be at index 0.
+>>
+>> Signed-off-by: Akhil P Oommen <akhilpo@oss.qualcomm.com>
+>> ---
+>>  drivers/gpu/drm/msm/adreno/a6xx_gmu.c | 14 ++++++--------
+>>  1 file changed, 6 insertions(+), 8 deletions(-)
+>>
+>> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
+>> index 5903cd891b49..9662201cd2e9 100644
+>> --- a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
+>> +++ b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
+>> @@ -2029,21 +2029,19 @@ static int cxpd_notifier_cb(struct notifier_block *nb,
+>>  	return 0;
+>>  }
+>>  
+>> -static void __iomem *a6xx_gmu_get_mmio(struct platform_device *pdev,
+>> -		const char *name, resource_size_t *start)
+>> +static void __iomem *a6xx_gmu_get_mmio(struct platform_device *pdev, resource_size_t *start)
+> 
+> Can we drop this and just use devm_platform_get_and_ioremap_resource()?
 
-The PM660 fuel gauge determines the battery charge. Enable it for full
-battery support.
+That's better. Nice.
 
-Signed-off-by: Richard Acayan <mailingradian@gmail.com>
-Signed-off-by: David Heidelberg <david@ixit.cz>
----
- arch/arm64/boot/dts/qcom/sdm670-google-sargo.dts | 7 +++++++
- 1 file changed, 7 insertions(+)
+-Akhil.
 
-diff --git a/arch/arm64/boot/dts/qcom/sdm670-google-sargo.dts b/arch/arm64/boot/dts/qcom/sdm670-google-sargo.dts
-index ed55646ca419d..a8e0e85c42cd2 100644
---- a/arch/arm64/boot/dts/qcom/sdm670-google-sargo.dts
-+++ b/arch/arm64/boot/dts/qcom/sdm670-google-sargo.dts
-@@ -490,6 +490,13 @@ &pm660_charger {
- 	status = "okay";
- };
- 
-+&pm660_fg {
-+	monitored-battery = <&battery>;
-+	power-supplies = <&pm660_charger>;
-+
-+	status = "okay";
-+};
-+
- &pm660_rradc {
- 	status = "okay";
- };
-
--- 
-2.51.0
-
+> 
+> Konrad
 
 
