@@ -1,259 +1,221 @@
-Return-Path: <linux-arm-msm+bounces-83094-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-83096-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ams.mirrors.kernel.org (ams.mirrors.kernel.org [IPv6:2a01:60a::1994:3:14])
-	by mail.lfdr.de (Postfix) with ESMTPS id 05A53C8163A
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Nov 2025 16:40:48 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 75C4FC816F0
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Nov 2025 16:54:03 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ams.mirrors.kernel.org (Postfix) with ESMTPS id 7E552341D70
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Nov 2025 15:40:47 +0000 (UTC)
+	by ams.mirrors.kernel.org (Postfix) with ESMTPS id EB23D3450BA
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Nov 2025 15:53:48 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3ED54313E0B;
-	Mon, 24 Nov 2025 15:40:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7B144314A87;
+	Mon, 24 Nov 2025 15:53:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="B71CXKXG"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="SmmoEyFx";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="OfR7/b5b"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pj1-f45.google.com (mail-pj1-f45.google.com [209.85.216.45])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40B5631355D
-	for <linux-arm-msm@vger.kernel.org>; Mon, 24 Nov 2025 15:40:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD6F92D59F7
+	for <linux-arm-msm@vger.kernel.org>; Mon, 24 Nov 2025 15:53:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763998845; cv=none; b=LHKH5XtqTwfVpDqTVINArPeI/GLYsfCOpdSz3KItv/BXOZP82tOxXMY9xIUWPfPbYOowORi70hq31MX03dXW0tJ2++s395rn3RUVriBQ3je57IeXWgsZOa9lOXi/vxqls0Gz0v+oQ1IN9ZUgyrZbzPFDIXkISeaZy/iuNWqxxRw=
+	t=1763999626; cv=none; b=ddlC5j1gub5qkB8OWUwKivfXodhZizDSOCTra2Z5e376reJv1Vo+FDfEZVjWkUZzKL+yLyx6SZwT8rYmhD+egJjYIKTK/1vklKi836X7DChS6gdzOzLXXvhqbH7OYUZUwHt4vljtr71wJdTLWq6OYObwcOE3f9fr+WxBvVeM/6g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763998845; c=relaxed/simple;
-	bh=Ur80bf67IWJP9P3NyHLEyhZMGM2yEXjoM26RAeQoVDY=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Q+Q3aLvKHmccVAD7zH6ddVn6sAIlMON1eyHkFvksbYpNGkLogPhOjRhjJGodNI7WDdXLfib3DUg8nuFYgBeUx3jN1PPnR4XwsQQLJxAcb28AXcDn8RIFzmC+3WyQGlqRrCiFO7OQ85W9b3hxY81gVCf/ameLi1/A6LoVa2towHo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=roeck-us.net; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=B71CXKXG; arc=none smtp.client-ip=209.85.216.45
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=roeck-us.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-pj1-f45.google.com with SMTP id 98e67ed59e1d1-3438d4ae152so4940947a91.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 24 Nov 2025 07:40:43 -0800 (PST)
+	s=arc-20240116; t=1763999626; c=relaxed/simple;
+	bh=apeR+6JuSlimj28Oe4oBgpLM9V5n83U3UdyhU34El0w=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=NMCeqtOdouwY3X/NrHpAQmIV7hJOwKQf42FohgjSPLMAdR5tr31cKF62xxLRZMizqmK6K1U9gNzw2uHakyFjqmyHgM4EEQtOcKDUHTQZ87lqlhdPhtN68vPi4tW7OZEiUKjGEUB5g2UKskkmpyRpiGZvlOK2UwXBX2xd2qaDqOA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=SmmoEyFx; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=OfR7/b5b; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 5AOE96ME079616
+	for <linux-arm-msm@vger.kernel.org>; Mon, 24 Nov 2025 15:53:44 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-type:date:from:in-reply-to:message-id:mime-version
+	:references:subject:to; s=qcppdkim1; bh=lcUfwtPY7I4dq2SqD63B3hhl
+	sbHh9OxaMGpG1z80cTU=; b=SmmoEyFx/TjdE4OMgwuhPtdGYepaygrPdB8T9VTT
+	c8QPAw2fLeaYT3Xxif+6sGfFYmNi84BqOoLyjzvjZ3AUDbiVpIgh7io+/Sty8Nnu
+	zAHWLUcxEw+JUym4YG7Qrud1qhUzyvrlP00cpZBDeGwhvpKlJJL35/a2OZlYtklU
+	fy/JtVk2zbTUrODFpJ408r5pckm/VWtANbwVf30Lr5qPBP6SpvZPFv0CDsY94swX
+	f8JNbJ2+R/frMTrnn2YYoYswbinLTHfa250hw7BbiS8b4KHy0MROXLw41IeZ996G
+	ziyavERP4WG+/eDIMCdwPsrc+iHClBTqvOd0xunbvycSvg==
+Received: from mail-pj1-f70.google.com (mail-pj1-f70.google.com [209.85.216.70])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4amrv689uy-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Mon, 24 Nov 2025 15:53:44 +0000 (GMT)
+Received: by mail-pj1-f70.google.com with SMTP id 98e67ed59e1d1-340c261fb38so8288276a91.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 24 Nov 2025 07:53:44 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1763998842; x=1764603642; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:sender:from:to:cc:subject:date:message-id:reply-to;
-        bh=Llp8FG6WVJOxC42YZnLNsTS0zXwdgkxLlwBk+kzHwR8=;
-        b=B71CXKXGRfl4sO0Qd4Bp3nwb2CR0DYeEU05+DJf3VB2iALLwOVrDANowFVPuyt8jG4
-         P4f3SEx9KrnIV6opSeFm2y6TfC2DlzsPscmZ0T8EPXWIhBVazs8GtRmLgVFVOtQy9bgM
-         bBJmEF3TYWU8z8ykZIhO8383OYuNk/paUf+6e5g18cg8M+jBwy7Ip15szx1CoTS2UPDP
-         F0XtWn9XSpSeUt59CEndLHW9k97WQQ+snM/q7pu7aH/asJGE46znCRvh8b8STAUgvm+A
-         hcKZbIMlwdPPMBHXy3Yc9kFdiqfGq1TiWRHf8nq/9tN8VW7Ag7aRkDmPdYRAsjXfc1He
-         8urA==
+        d=oss.qualcomm.com; s=google; t=1763999623; x=1764604423; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=lcUfwtPY7I4dq2SqD63B3hhlsbHh9OxaMGpG1z80cTU=;
+        b=OfR7/b5baYsfsUQZxLBOyh+2CxTRWATfwzBoNZ9N/2G5UZY2Njr9H9z4HEAfMtoqP+
+         swfcJtkBwfrgdRQ6Lm+wvkcanUMVkvTykXshZplNigF3iUg/ec0y77t3AG8ayt/awagy
+         gX/4Eg0lKWnVr4B7DW3z5BwM7luS6QSnUd8i5yjUpgg00ZLpxl4vY4ZKzkGeJGT8FeOw
+         Z8INuEeVtulDld3VqSl0DbqsCrlIUca+l4xANqcqtXVOa7fgCTPJClLT6N2EKG9BFxxe
+         Anysh8eNegh+/K2h8NtcSuPQn/L1JsJQj4fdOrApNX8RIjLnjgH6ZxMdWUruT5WkrTFR
+         s4CQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1763998842; x=1764603642;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:sender:x-gm-gg:x-gm-message-state:from:to:cc
+        d=1e100.net; s=20230601; t=1763999623; x=1764604423;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=Llp8FG6WVJOxC42YZnLNsTS0zXwdgkxLlwBk+kzHwR8=;
-        b=pOf+N0kDlHc5A7BIke/sZI7uVq8Uxyr+dh/c3zu2Kd/Hgje7eLEbUpIjipiO4U7xM6
-         0fGzFCIu/QOZZ3QxzUicfKNp1Fg545mRTZKtX/IJ38sPnTQjdTH4O6yLWCQYzzfLMC9t
-         EK94YG8gy52tsiUfKqhoX4tz8y5mpNE0rK5uRs4pMMdDqkqcS0eXUULBKDmqIb80LwLA
-         NYSX+NJvOdn94AmYGdLLvHL0JkHbZqdpdKT/UpZMPdy+jFfdQS+WaT8LucnJG92fLKCd
-         KEqinBPNqdoLs3PMjbXUlgaUu4/5qDQbyHR9j3wzPREixpH3lCEXKfiS08Pl0awXSDq7
-         2BEg==
-X-Forwarded-Encrypted: i=1; AJvYcCUJVyai1dTxe/2EL0pRutBJz+FNy+A7ta0S4V9LpkpDbisBpAfXuXyU+b+SzE5eVDm5bUrO79sHXdvn87UK@vger.kernel.org
-X-Gm-Message-State: AOJu0YxSKbJuGLKYg6NOpjIcKTeBgxIU8m1H8i5Ym7tzBiQVZPybk28v
-	+6I4NmyW5j+JljdxvYj7poRZhUkRszPccoLdFTaUB3MMAXQ3SPgjGtv4
-X-Gm-Gg: ASbGncscMEDEbiiGjl0+iC4BsQNx+DYhW+bZcFmd2BoA9j7w9dCV41Ksf3da6hcUBN0
-	QQaUd+xKgDWv7d2ovf4eDd3UfwfC62IFvquydvadHd3WsfJsY59Pt+RFKiylJ8KPcG2em82jdVD
-	kh/d042BfjaGhhVglZJVa9Hi5QyGK+f9EcTJtlQFhRsQ1NvqBBkSl0teU5niR+HpXPX6Rwqf/Rb
-	m5592Ab87pbwFoPH1yL/ggGgrWsg4yhgFh9bTeV8XVOwEcslrLYZDBq/7Sv76K0OHiwRwIIYiFk
-	0svNKjLsm3LZ+pEQNZnCovlpoGobj1h7PjBPKigvUVzoNVhYqRL/THacy5aMWySskGPdeE3COwX
-	NA1ntR4W5sIx3P9iJ0oLrI9sDrDtYfk4AGUIn6p9dywRZjCQFTygl16Zu0nCxzFey/a4T6Jai7a
-	EjyU7pfFuc3xYNuebyw9Eyn8l5XNQLeOjKFJk8plxNpPtFYPIshfSXxIZ3XY0=
-X-Google-Smtp-Source: AGHT+IEFPQhBfCYRI3nTm1u+iQCIbAQZlcFtON++Fnq7DdJGduD9vDQYDBrSvMWcgiV0KUw17gd6Yw==
-X-Received: by 2002:a17:90b:5112:b0:340:bde5:c9e3 with SMTP id 98e67ed59e1d1-34733f2d207mr11198788a91.23.1763998842365;
-        Mon, 24 Nov 2025 07:40:42 -0800 (PST)
-Received: from ?IPV6:2600:1700:e321:62f0:da43:aeff:fecc:bfd5? ([2600:1700:e321:62f0:da43:aeff:fecc:bfd5])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-3472692e5c8sm14034703a91.11.2025.11.24.07.40.37
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 24 Nov 2025 07:40:41 -0800 (PST)
-Sender: Guenter Roeck <groeck7@gmail.com>
-Message-ID: <da5457ea-c1ed-4c90-8743-fc982a02ed88@roeck-us.net>
-Date: Mon, 24 Nov 2025 07:40:37 -0800
+        bh=lcUfwtPY7I4dq2SqD63B3hhlsbHh9OxaMGpG1z80cTU=;
+        b=SkiOa5a6OmQgUtxehE1/lHdFHCuySJKZbtEL576q0jsPOLR8M+ubvB/YCejcFJ0OyA
+         EWgtkNzGRg7WFulvjAyhgPYZDTZgaf0jFa9IFARwk2g0kVevOptdpjVr6Dl70Y5FnxKq
+         TsMbpdiEqCqwvtmYY95rzMZ2huWHrZEDqXOIa9QrZEojqYgIS5xihag4Ka5IkIZS2reb
+         0kI701Dez/EYPoct6LJ/vECLOdtnMp93HNnmVywpUNjcFkqBXKAkirbdDoQ0aTl+IxZN
+         iWXvw6VE/sXl6QePlbfBN+Xk4lZXTfBb72veKhZvImJtQ+lLh6IIkww8+a2FcCm9X6pF
+         d46A==
+X-Forwarded-Encrypted: i=1; AJvYcCWUDX2xdSWIueDqb2fJXDvgYw0wGg+zetnmoU43iYrHD57iqg2bWNTJfCRn++KrwLnH1rHh2UFkAB4MywDQ@vger.kernel.org
+X-Gm-Message-State: AOJu0Yw0JYD5bpo6hP1Yldsu2rZbIql135Ap4UpEOFaRrPSiSUzjdkdT
+	bcuSqMLzxLtdndAqbA+0hxv2KDBjqmlGGkNj9TiuXJSu272fxad/9vog6Bx1/hGFoXQiG+Ir6+o
+	0NU/B6CFu8Um6S2NdSZm1KVGQuuvXyXtrU4P/CRcIOPu/EpSRHQzx3hh/IeMWc+xkSxdE
+X-Gm-Gg: ASbGnctnX78S5cN7FWMNWPlOveP1hZIe+J5YA+r8NxGxiLshlBUBporHTve6CprDyDJ
+	4ait1dwQbTzEHdiWZ75lnUKbF8znohmN0oADzMcP/F+g4W5Of1OMj7bNrgHGtxXDObRklTb6nbx
+	mVRIBtebrxGStjeb1vXCxZMV/wm1aA4TOgW0APcxaO2owkcxLjsf90fxh2I77GG+jQ0FleFL1pG
+	/sUtTWVI3pRRqy13A4q0ng2t7zrAWGIhTwJCls2fejcOS7eRR1sI0oubiAv1tPXDxCa/jpL6mAr
+	wT52H67GwQ/10o07Pw8ugcTlscnOVrNiUrCZY7M4MPHZwy0X7y/EJLtmDVEcyacaMAaSYtvDbI6
+	CXVtqD322gRHHFugSutCkJHVPUO83yQFXjXLS
+X-Received: by 2002:a17:90b:48c6:b0:340:5c38:3a56 with SMTP id 98e67ed59e1d1-34733f5cef1mr11983285a91.37.1763999623312;
+        Mon, 24 Nov 2025 07:53:43 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGpyUmJzIx88EvSZBo3rN3kdAqiVkHc3BEVZBVRfdX+do+UkkNHg6B1NeQz2X4n+wL0IvGJqw==
+X-Received: by 2002:a17:90b:48c6:b0:340:5c38:3a56 with SMTP id 98e67ed59e1d1-34733f5cef1mr11983248a91.37.1763999622671;
+        Mon, 24 Nov 2025 07:53:42 -0800 (PST)
+Received: from hu-mojha-hyd.qualcomm.com ([202.46.23.25])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-34727bca9aasm13807991a91.3.2025.11.24.07.53.38
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 24 Nov 2025 07:53:42 -0800 (PST)
+Date: Mon, 24 Nov 2025 21:23:36 +0530
+From: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>
+To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Cc: Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Mathieu Poirier <mathieu.poirier@linaro.org>,
+        Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Manivannan Sadhasivam <mani@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>, linux-arm-msm@vger.kernel.org,
+        linux-remoteproc@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v8 00/14] Peripheral Image Loader support for Qualcomm
+ SoCs running Linux host at EL2
+Message-ID: <20251124155336.6b45ddgwc5mh6q2y@hu-mojha-hyd.qualcomm.com>
+References: <20251121-kvm_rproc_v8-v8-0-8e8e9fb0eca0@oss.qualcomm.com>
+ <0156c327-b867-481e-af24-679f037bfa56@linaro.org>
+ <20251121113751.tnqw5abm5sd2rgr7@hu-mojha-hyd.qualcomm.com>
+ <238adfbb-3773-4318-93d3-b23697aa4b18@oss.qualcomm.com>
+ <20251124064558.aaartbglgvcj7w5r@hu-mojha-hyd.qualcomm.com>
+ <5dc2f787-56f7-44ca-89b2-754a0c46a1dd@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 0/6] Add support for the LTM8054 voltage regulator
-To: Romain Gantois <romain.gantois@bootlin.com>,
- Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>,
- Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
- Conor Dooley <conor+dt@kernel.org>, Jonathan Cameron <jic23@kernel.org>,
- David Lechner <dlechner@baylibre.com>, =?UTF-8?Q?Nuno_S=C3=A1?=
- <nuno.sa@analog.com>, Andy Shevchenko <andy@kernel.org>
-Cc: Thomas Petazzoni <thomas.petazzoni@bootlin.com>,
- linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
- linux-iio@vger.kernel.org, Conor Dooley <conor.dooley@microchip.com>,
- MyungJoo Ham <myungjoo.ham@samsung.com>, Chanwoo Choi
- <cw00.choi@samsung.com>, Peter Rosin <peda@axentia.se>,
- Mariel Tinaco <Mariel.Tinaco@analog.com>,
- Lars-Peter Clausen <lars@metafoo.de>,
- Michael Hennerich <Michael.Hennerich@analog.com>,
- Kevin Tsai <ktsai@capellamicro.com>, Linus Walleij
- <linus.walleij@linaro.org>, Dmitry Torokhov <dmitry.torokhov@gmail.com>,
- Eugen Hristev <eugen.hristev@linaro.org>, Vinod Koul <vkoul@kernel.org>,
- Kishon Vijay Abraham I <kishon@kernel.org>,
- Sebastian Reichel <sre@kernel.org>, Chen-Yu Tsai <wens@csie.org>,
- Support Opensource <support.opensource@diasemi.com>,
- Paul Cercueil <paul@crapouillou.net>, Iskren Chernev <me@iskren.info>,
- Marek Szyprowski <m.szyprowski@samsung.com>,
- Matheus Castello <matheus@castello.eng.br>,
- Saravanan Sekar <sravanhome@gmail.com>,
- Matthias Brugger <matthias.bgg@gmail.com>,
- AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
- Casey Connolly <casey.connolly@linaro.org>, =?UTF-8?Q?Pali_Roh=C3=A1r?=
- <pali@kernel.org>, Orson Zhai <orsonzhai@gmail.com>,
- Baolin Wang <baolin.wang@linux.alibaba.com>,
- Chunyan Zhang <zhang.lyra@gmail.com>, Amit Kucheria <amitk@kernel.org>,
- Thara Gopinath <thara.gopinath@gmail.com>,
- "Rafael J. Wysocki" <rafael@kernel.org>,
- Daniel Lezcano <daniel.lezcano@linaro.org>, Zhang Rui <rui.zhang@intel.com>,
- Lukasz Luba <lukasz.luba@arm.com>,
- Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>,
- Jaroslav Kysela <perex@perex.cz>, Takashi Iwai <tiwai@suse.com>,
- Sylwester Nawrocki <s.nawrocki@samsung.com>,
- Olivier Moysan <olivier.moysan@foss.st.com>,
- Arnaud Pouliquen <arnaud.pouliquen@foss.st.com>,
- Maxime Coquelin <mcoquelin.stm32@gmail.com>,
- Alexandre Torgue <alexandre.torgue@foss.st.com>,
- Dixit Parmar <dixitparmar19@gmail.com>, linux-hwmon@vger.kernel.org,
- linux-input@vger.kernel.org, linux-phy@lists.infradead.org,
- linux-pm@vger.kernel.org, linux-mips@vger.kernel.org,
- linux-arm-kernel@lists.infradead.org, linux-mediatek@lists.infradead.org,
- linux-arm-msm@vger.kernel.org, linux-sound@vger.kernel.org,
- linux-stm32@st-md-mailman.stormreply.com,
- Andy Shevchenko <andriy.shevchenko@intel.com>
-References: <20251124-ltm8054-driver-v4-0-107a8a814abe@bootlin.com>
- <24527d76-4f6a-4008-a369-23510d492a94@roeck-us.net>
- <23111366.EfDdHjke4D@fw-rgant>
-Content-Language: en-US
-From: Guenter Roeck <linux@roeck-us.net>
-Autocrypt: addr=linux@roeck-us.net; keydata=
- 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
- np3900V20aS7eD9K8GTU0TGC1pyz6IVJwIE=
-In-Reply-To: <23111366.EfDdHjke4D@fw-rgant>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <5dc2f787-56f7-44ca-89b2-754a0c46a1dd@oss.qualcomm.com>
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMTI0MDEzOSBTYWx0ZWRfX1OqOsnrlu3kE
+ yuF9MVcGJNQTS7pPXE4gCJQdcK4Bd/3ZB45jKWeqeix5TSFePDluyDMdqoOSVslK1sqdBsHgO9k
+ ENm1FR7xCzIKnka6h2mvNd+TYG7LOiWVL0plbenhx1Wf4fPf5L56E6o7OT17x+lwwTz3Q56w7C3
+ 9e0YCiOeh0+bLMPpMsLcZdCNtjanRcD8Vkse1yYPzHr3eKjJuoEe1kqOV50pOhUWZ1aah5xU9+R
+ GpyWdcjttcynkzuB3HzrANj6IbyQyMfDh8MQ387bPn8qhKQ34NKuOAP+kmX05hOi0tDSLPubBmB
+ lJBYBDMiWynRv5rhhyk2SkehX7Wm7O6cLaHf3kA90uOKMwlivVJlh3bNLYtO7svZl4ljX7yzR7Q
+ uyvy/RJdVkuKwethfeOCleCIXsJS+Q==
+X-Proofpoint-GUID: op5IyI0eJ6X0-JNYSEtTEuo6q5M2O_Vw
+X-Authority-Analysis: v=2.4 cv=f7BFxeyM c=1 sm=1 tr=0 ts=69247f88 cx=c_pps
+ a=0uOsjrqzRL749jD1oC5vDA==:117 a=ZePRamnt/+rB5gQjfz0u9A==:17
+ a=kj9zAlcOel0A:10 a=6UeiqGixMTsA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=KKAkSRfTAAAA:8 a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8
+ a=zU0Ex8qXXkjpmaSxHigA:9 a=CjuIK1q_8ugA:10 a=mQ_c8vxmzFEMiUWkPHU9:22
+ a=cvBusfyB2V15izCimMoJ:22
+X-Proofpoint-ORIG-GUID: op5IyI0eJ6X0-JNYSEtTEuo6q5M2O_Vw
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
+ definitions=2025-11-24_06,2025-11-24_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ malwarescore=0 spamscore=0 phishscore=0 adultscore=0 priorityscore=1501
+ impostorscore=0 lowpriorityscore=0 suspectscore=0 clxscore=1015 bulkscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2510240001 definitions=main-2511240139
 
-On 11/24/25 07:13, Romain Gantois wrote:
-> Hello Guenter,
-> 
-> 
-> On Monday, 24 November 2025 15:57:41 CET Guenter Roeck wrote:
-> 
->  > On 11/24/25 06:48, Romain Gantois wrote:
-> 
->  > > Hello everyone,
-> 
->  > >
-> 
->  > > This is version four of my series which adds initial support of the Linear
-> 
->  > > Technology LTM8054 voltage regulator. The driver supports a fixed voltage
-> 
->  > > and a tunable output current limit using a DAC-controlled pin.
-> 
->  > >
-> 
->  > > I'd say that the most unusual part of this series is the usage of the IIO
-> 
->  > > consumer API in a regulator driver. I think this makes sense here, since
-> 
->  > > the regulator driver has to access a DAC to read/set the output current
-> 
->  > > limit.
-> 
->  >
-> 
->  > I don't think that is a valid reason. Literally every driver measuring
-> 
->  > voltages or current uses a DAC to do it. How else would one convert an
-> 
->  > analog value into a digital value ?
-> 
-> 
-> Sorry, I don't quite understand your remark. To integrate this voltage
-> 
-> regulator component into the Linux regulator abstraction, I'm providing a
-> 
-> current limit control function. To provide such a function, the voltage level
-> 
-> on a pin has to be controlled. AFAIK, the kernel abstraction used to set
-> 
-> precise voltages on lines is an IO channel.
-> 
-> 
-> Do you think that using the IIO consumer API is not correct here? What other
-> 
-> method do you think I should use?
-> 
+On Mon, Nov 24, 2025 at 12:33:47PM +0100, Konrad Dybcio wrote:
+> On 11/24/25 7:45 AM, Mukesh Ojha wrote:
+> > On Fri, Nov 21, 2025 at 04:08:36PM +0100, Konrad Dybcio wrote:
+> >> On 11/21/25 12:37 PM, Mukesh Ojha wrote:
+> >>> On Fri, Nov 21, 2025 at 11:27:57AM +0000, Bryan O'Donoghue wrote:
+> >>>> On 21/11/2025 11:01, Mukesh Ojha wrote:
+> >>>>> In May 2025, we discussed the challenges at Linaro Connect 2025 [1]
+> >>>>> related to Secure PAS remoteproc enablement when Linux is running at EL2
+> >>>>> for Qualcomm SoCs.
+> >>>>>
+> >>>>> [1] https://resources.linaro.org/en/resource/sF8jXifdb9V1mUefdbfafa
+> >>>>>
 
-Ok, I had a look into the datasheet. Unless I am missing something, the chip doesn't
-have a digital control or monitoring interface such as I2C or SPI.
+[...]
 
-At the same time, you copied the hardware monitoring mailing list on this summary and
-on (at least) one of the patches, but apparently not on all of them. This lead to my
-apparently wrong assumption that iio is used to monitor (not [just] control) something
-on the chip. I wrongly assumed that IIO is used to report chip status (voltage, current,
-temperature) using an internal DAC. Obviously that was a wrong assumption.
-Sorry for that.
+> >>>>>
+> >>>>> Changes in v8: https://lore.kernel.org/lkml/20251113-kvm-rproc-v7-v7-0-df4910b7c20a@oss.qualcomm.com/
+> >>>>>   - Addressed suggestion from Stephen which was regarding commit message(9/14),
+> >>>>>     debug log(12/14) suggestion, and return type change(4/14).
+> >>>>>   - Added R-b tag on 10/14 .
+> >>>> Sorry.
+> >>>>
+> >>>> Did we actually come up with a cogent reason to omit the video firmware
+> >>>> loading here ?
+> >>>>
+> >>>> AFAIU it is required for Lemans and Glymur - leaving it out is blocking
+> >>>> getting video stuff done and storing up trouble.
+> >>>>
+> >>>> What exactly is the blockage - is it something you want help with ?
+> >>>
+> >>> I replied to you here[1] and given my reason..till something concluded on
+> >>> "multi-cell IOMMU[2]", I can not add video and block what is working
+> >>> already.
+> >>>
+> >>> [1]
+> >>> https://lore.kernel.org/lkml/20251105081421.f6j7ks5bd4dfgr67@hu-mojha-hyd.qualcomm.com/
+> >>>
+> >>> [2]
+> >>> https://lore.kernel.org/lkml/cover.1762235099.git.charan.kalla@oss.qualcomm.com/
+> >>
+> >> I see that the following files call qcom_scm_pas_auth_.*():
+> >>
+> >> drivers/firmware/qcom/qcom_scm.c
+> >> drivers/gpu/drm/msm/adreno/adreno_gpu.c
+> >> drivers/media/platform/qcom/iris/iris_firmware.c
+> >> drivers/media/platform/qcom/venus/firmware.c
+> >> drivers/net/ipa/ipa_main.c
+> >> drivers/net/wireless/ath/ath12k/ahb.c
+> >> drivers/remoteproc/qcom_q6v5_pas.c
+> >> drivers/remoteproc/qcom_wcnss.c
+> >>
+> >> iris is difficult, rproc is done, adreno doesn't need it..
+> >>
+> >> would ath12k_ahb or IPA be affected by this series as well?
+> > 
+> > Yes, they would be affected, and the modem as well, when Linux is
+> > running at EL2. However, I do not see them present in any of the QLi and
+> > targeted compute SoCs at the moment. Therefore, our firmware does not
+> > support it yet.
+> 
+> Hamoa's little brother should have ath12k_ahb.. and I assume IPA is
+> present on at least some platforms where there's a modem (QCM6490?)
 
-Apparently you copied the hwmon mailing list for the introduction of an IIO namespace
-and its use in a couple of hwmon drivers in one of the patches. My personal opinion
-is that this should not be part of this series but a series of its own. That is just
-my personal opinion, though.
+Sure, We will add the support for IP's when there is a need for SoC running Linux
+at EL2 (backed by firmware).
 
-Guenter
+> 
+> Konrad
 
+-- 
+-Mukesh Ojha
 
