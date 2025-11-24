@@ -1,123 +1,199 @@
-Return-Path: <linux-arm-msm+bounces-83017-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-83018-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ams.mirrors.kernel.org (ams.mirrors.kernel.org [213.196.21.55])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7E728C7F676
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Nov 2025 09:38:35 +0100 (CET)
+Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [142.0.200.124])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6FDC3C7F9E8
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Nov 2025 10:27:40 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ams.mirrors.kernel.org (Postfix) with ESMTPS id A68CD342212
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Nov 2025 08:38:32 +0000 (UTC)
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 7C3F04E4664
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Nov 2025 09:26:03 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6EE8F2EC0A2;
-	Mon, 24 Nov 2025 08:38:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 552292F5467;
+	Mon, 24 Nov 2025 09:25:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b="e/gOvjmc"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="e3urMDeS";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="BMjUmObb"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f175.google.com (mail-lj1-f175.google.com [209.85.208.175])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8361E2EC0B4
-	for <linux-arm-msm@vger.kernel.org>; Mon, 24 Nov 2025 08:38:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.175
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88344226541
+	for <linux-arm-msm@vger.kernel.org>; Mon, 24 Nov 2025 09:25:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763973509; cv=none; b=UoteyGQrpVhoRXFYxCPcR0wJi0A3kX75O248wsE2LNdGvVKKO2rISjO/k9X5Y1t2CvVOqz+cg8qaQCbOcQeYS6L3iipV+wHj2xNCyQ0qcDOtHSAPvNq+OXIgbQmrrYZ9NmxXtEB4MWXQb5k8OTljolVjeRsPruUPKimatmORftI=
+	t=1763976359; cv=none; b=afxoixPtnoVz14E2th9wG+hLESkuroqPay7jdqJXPJIVYWvlsKeN7hl3XU/U+txouwZ9C293MFhMuEW7lx/kVvOqA7HOr3koCTz9LGlvUJEmFBrXM8X/G1joyj8eanbNT4lrR6swaFZbNBnI7LKKrNvavDhHI8s4eBV4yO3a4T4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763973509; c=relaxed/simple;
-	bh=A4ko1llTfnMpZKhwN6XAGIF19i93xfliAblBu+9SIoA=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=Zv4b/n+evRW+uQy/k9tXL7/MYM5NsAmoURCZU4AHmoeGjZ3NUZeNSXKSY/iO4bAPP9D5/nH++N1GVhqfpfaGXLRse6EhPor4/vJZUTqYbeOFjj/PM+cruvacTBwvohWKYCsW/h3bcDN4MHL9kyHYOOLqvJlUpR9GjT3eBlrYw1Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl; spf=none smtp.mailfrom=bgdev.pl; dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b=e/gOvjmc; arc=none smtp.client-ip=209.85.208.175
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=bgdev.pl
-Received: by mail-lj1-f175.google.com with SMTP id 38308e7fff4ca-37b96cbd875so28616391fa.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 24 Nov 2025 00:38:26 -0800 (PST)
+	s=arc-20240116; t=1763976359; c=relaxed/simple;
+	bh=oRRfUKdL+GmbC9P6NIsS1/W+cYLgkE8khqt3B0OtrCQ=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=Tyyd1HI7uxBoBveubkm74VwHWQ1eki5Pa4QzDn52lYBSmZ7lLcqih5PDrEneYQEnivejOyapP1v9h0vdeeI2lVo0emNtgrP3RmYSEVo2cC9Vlzgtw5OTyutoQHNdd7BD70foBoFzJ7Nq7SsXQeXlAoqD3JcleloaaqqPTqOYLaw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=e3urMDeS; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=BMjUmObb; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 5AO8cn8M2979239
+	for <linux-arm-msm@vger.kernel.org>; Mon, 24 Nov 2025 09:25:56 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=qcppdkim1; bh=GGkbpCdUpu5rIxgk+rlTy5
+	TL4Vx3yHm2kdYqOkYYbMU=; b=e3urMDeSwnPrrYHNLCco6jndcLcjBTyrVcsR5B
+	9AMnRSQRCJf7GLz5imOMtUYQ06S06Yb+qFmfRKgmpu9BWA/5Yh77uivSuab7DmVe
+	P+EchGSAq/tXIRtju8TI/l7vYD9YRQ40fYC4/4wG1J6qoBp+lcmwUwmhPkrZ/jad
+	DNFPyIdZAy5NVEqWg1RbTKt2kUYoP/20xqWzzANB19ov5FbWvd0yaTHbnUXOAeSg
+	j2iAx3A6nTJWzN7YUsfmZhnV7fraIrCSra9b7qezZByEAr7Zn0CWtHMRiQUopOme
+	2ZVOZ9xxxvNwEY58jmPYmy/aaRQGKzZCUpI58Oz8/+OK26Mg==
+Received: from mail-pl1-f198.google.com (mail-pl1-f198.google.com [209.85.214.198])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4ak69smebj-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Mon, 24 Nov 2025 09:25:56 +0000 (GMT)
+Received: by mail-pl1-f198.google.com with SMTP id d9443c01a7336-297dabf9fd0so52475795ad.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 24 Nov 2025 01:25:56 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=bgdev-pl.20230601.gappssmtp.com; s=20230601; t=1763973504; x=1764578304; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=0Ya6oXSuW5HKGVZ0GUoG6QlLfgFpzkuWfKoJsDP0RZ0=;
-        b=e/gOvjmcirMdLpSd1+COw4etcwgdEoeXYLos3MvMPScXWOFLRmsdXgUx7gI0ZsCf91
-         rAhmaRSMI5jE8cZtZOHgTeu3GMacAM4KK6q74Cjg0sNQWDA7iXgFpSq6+fEaH3i7KxOT
-         k2bN9h/QdEjzJo6rUjX0OBNxVz8WiO8iVM2XK+kDO5wIUSqz87Y2t5Wd1/wJ4bUXq43M
-         SKVMZEWZ4ZRZB1kWHs9GAqg5XxtYcJmGGBKzxNTtpvJpkeY9P5r1OIUP0IWA2Eul4m19
-         /9ceC/0UklkJkf3jfd22VVh+OKHpz0PYc5GMY+nTRzaYgImtWEnOh9YZU59WBtQgkuvx
-         h4wg==
+        d=oss.qualcomm.com; s=google; t=1763976355; x=1764581155; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=GGkbpCdUpu5rIxgk+rlTy5TL4Vx3yHm2kdYqOkYYbMU=;
+        b=BMjUmObbeV7g4bkWkDZ2l8o4W9oo/e2kpA8fJEXp39WGME6/0CbFHmZlMGnN/yujtc
+         U6fzPw66fZ/MWksKMRnj3K5K3a0ekXI6bYpCN/RzrTXKlgSHqlow8ElYzskrr+OC2/m9
+         WU1wD+K3KtOhbImcWi8S6GzwNv99Jxk2+iUzcnVb8TbRBpy8rY0g0KAVlmlIrd0UIjoS
+         NXd0u+AliI6hB4hLg+Du6hPlBLqI3Qnzs8WQhcpaR8vXLjE3dOwrFbTD9vI3Jhdvq7D7
+         ZJhkj3io8nu8MyqywqShrlCO6T0LD6TtOrp0nY2smmAlXRxkwF8pfy1AbSy7OClfSFBD
+         13KA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1763973504; x=1764578304;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=0Ya6oXSuW5HKGVZ0GUoG6QlLfgFpzkuWfKoJsDP0RZ0=;
-        b=uQtEcd827CHAI7Qt07oIcZvLdqjau0JOHA7eiy3MYoCHwhrDhWzoZM1cWMbfyBK82G
-         yarnY47LnPObvJlIqhJNXN0BXVOdebOQg4bModPnqzMy3q36UJMcziEfi7+wFYcABlNv
-         2SYUnd9lfJDEuAaRsbe64n7DxFYfXdg3RJpbqbZbiZ9LZkWLjRnMw2m/1M5eytoZ/ckA
-         SEremIzcWmClcrlciqGuo+GyJoQW1rDi4XScySDOhrHp6sLqQZBR1i8GSDV+05ev2O2P
-         0ZukF4MbBhkCsPRAJd+Tk+e35Wxm7LhweequRCzxttL9VeppDspMm37sJcNqtc6ASpKO
-         XkXw==
-X-Forwarded-Encrypted: i=1; AJvYcCWikq20WzGK/f5NEovVXNHXF4JzeDU/acv30wDo7BqLS50+yMbLFBrCuX9r7dQLFdFaTTOS05c2Bizdq4o4@vger.kernel.org
-X-Gm-Message-State: AOJu0Yx7HEpK0IGDt2/pvcUup/qste9FsbzZ2rQtaTcOHEKqbpMaPGWf
-	L06+odBitspT7e4e8T01u/xbP7z3E4G/UjOJboC4Llpx61WOQqETvzv5llj7cj2eRO/sXdhJL0u
-	21GCZP1NwT3FIEoM1vogqrsRJQPTn4/K1sBWhMHqypQ==
-X-Gm-Gg: ASbGncvxx8Gakj5TmN8LengD9VVLiM+nlTGRkPn6gSE+Q9BWQzzXVhKAZ2lLq3Hi8u9
-	n9KYS75mAGcvYnQWYrEyxuL8gvq8yVoTgUYyK5rgRCZoIv3ciSLNl0n6j1JI+DTRQ8EsfzM963k
-	5ni5PehJ8sq4RqfHwlB2mi/BuLiitQ8IMJQgTb2wKyT2g81otUNPnaPPKDHeEMS2HErsB5b5B+W
-	Lg7XfYWTJjaUDh4YPO7n8CU4pAxDEqsolRLp174ADeedOWu4gGi4/SV/PfdC8PXi9CeEQHAYciI
-	/0DKyhq/BAnZMBmQLw67wZM6iPw=
-X-Google-Smtp-Source: AGHT+IHddP45Iw1u4x5gRhDKYJif/xDaoPtzoUcfY5zo1vTJhPnOEF4e60BFJI6rchMqF8oMYnvc4vWnv0O61qtodtg=
-X-Received: by 2002:a05:6512:110a:b0:594:253c:209f with SMTP id
- 2adb3069b0e04-596a3edc91fmr3270301e87.39.1763973503967; Mon, 24 Nov 2025
- 00:38:23 -0800 (PST)
+        d=1e100.net; s=20230601; t=1763976355; x=1764581155;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=GGkbpCdUpu5rIxgk+rlTy5TL4Vx3yHm2kdYqOkYYbMU=;
+        b=R3ounTwwYvECud9g79cJ3/JzUgLLACEkH0rHGpK1QcKP8w8NaY/ItGqrIb+tchI4J0
+         cR8X+T5I5arVPQQ2GerZryWwaWo9mxgx8JYRf4TR448KHZqrdTKh8lSELCFxvBWwl+//
+         8ZFPUFyVfFZYbOp/p9q/OT6b8tLmtC8h4FA4oM66a67xMvulrTvdeg4h1csD5c3AIKfe
+         9P/O5T2DW7qA3JJ6lT2AWuQ/tsXwFQYNcVTsa2kqcfqWQxPpxKfUNZ+QGOmg1J62sBPN
+         IqEmqUetSSen1c6Q1qf8w7jBn9PydkS0P7f7G9FqRuDFfd8FHNqvy7jmU7IU82jdhjCS
+         +U2Q==
+X-Gm-Message-State: AOJu0Yy99fttLmCzlZHZ6J1YPukn363khqFfawC8V4pdr7+lUovsNu6r
+	b148O95NCkoFFLcqnE8F31yfcxH+V5zsyklWjac1Ky1w5vpEslvuUC8lFof+tg16flBZT3C0A4E
+	v7r7PexfAd8DPd3DnHdLCUbs2nb43C7y0+fvXKyGeITaIoEqMfLUkYkWNs5o/6O+92CP6
+X-Gm-Gg: ASbGncst2jEE4sIrXuQRrQOPjwohDh+TJTjByKrEKs36VWJd29rfmZHLlncH5Ys9d7Q
+	XMGCZNpmktyKRaYrC3aF1gqLfEn4mjfSwVEPguKCBiRVQlKIgzKYqGBGcW0UFtDNoATOF3Kbh1r
+	bW8zLh7AqyESKn7CBktnb/834h5g9V+j7ScNQIvX6zbn3tjmSleY4dNiXSedBywag3ULdqqF5jZ
+	rSZuIkYcGoApjy0ekyuVVzozU/rq2j2ZdEtuNVxK3ngR+BHSr5rGaFTeVWi3AHtMldsmSClP05o
+	P6C5BY+9XHzCTKBQpF6simlqvWHmEKYITOISCcy9fnlVRaZHc01JFz16UXAmC83K1YPIjEZszU8
+	YQrIfixZ1lcS3u8GEFLKnwXRTwgCV2j1cBYMXv9I=
+X-Received: by 2002:a17:903:1a06:b0:297:db6a:a82f with SMTP id d9443c01a7336-29b6c5088ccmr133368075ad.24.1763976355254;
+        Mon, 24 Nov 2025 01:25:55 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFrJrf3FlSDWzx0QjNnW+yGQKfRH94449PpVh7Ybt2aT0dzg7QCeH1s9XXGDqan4thpmpBtpA==
+X-Received: by 2002:a17:903:1a06:b0:297:db6a:a82f with SMTP id d9443c01a7336-29b6c5088ccmr133367805ad.24.1763976354736;
+        Mon, 24 Nov 2025 01:25:54 -0800 (PST)
+Received: from hu-mohdayaa-hyd.qualcomm.com ([202.46.23.25])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-29b5b29b1c2sm128444675ad.81.2025.11.24.01.25.50
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 24 Nov 2025 01:25:54 -0800 (PST)
+From: Mohd Ayaan Anwar <mohd.anwar@oss.qualcomm.com>
+Subject: [PATCH 0/6] Additional regulator support for the Qualcomm SGMII
+ SerDes PHY
+Date: Mon, 24 Nov 2025 14:55:16 +0530
+Message-Id: <20251124-sgmiieth_serdes_regulator-v1-0-73ae8f9cbe2a@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20251121-gpiolib-shared-reset-gpio-fix-v1-1-cf0128fe4b47@linaro.org>
- <be7fd390-e81d-4e93-880a-1b6404398408@packett.cool>
-In-Reply-To: <be7fd390-e81d-4e93-880a-1b6404398408@packett.cool>
-From: Bartosz Golaszewski <brgl@bgdev.pl>
-Date: Mon, 24 Nov 2025 09:38:12 +0100
-X-Gm-Features: AWmQ_bnn18M7d0OcQOnbJTJz4lGmLFoHp7b-dn-7mGA9R5vcmt5vBbCxue_57oU
-Message-ID: <CAMRc=MdW3AkkivE=sA4STZAmmee7bCBkD5oEsXiRcKA80Ggd4A@mail.gmail.com>
-Subject: Re: [PATCH] gpio: shared: handle the reset-gpios corner case
-To: Val Packett <val@packett.cool>
-Cc: Krzysztof Kozlowski <krzk@kernel.org>, Philipp Zabel <p.zabel@pengutronix.de>, 
-	Linus Walleij <linus.walleij@linaro.org>, linux-gpio@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAH0kJGkC/x3MSQqAQAwAwa9Izg6Y4AJ+RURc4hhwI1ERxL87e
+ OxD9QPGKmxQRg8oX2KyrSEwjqCf2tWzkyE0UEIZIqXO/CLCx9QEOLA1yv6c22NTl1Ax9nmHGWE
+ Owe/Ko9z/u6rf9wObmecfawAAAA==
+X-Change-ID: 20251124-sgmiieth_serdes_regulator-027fc6b15216
+To: Vinod Koul <vkoul@kernel.org>, Kishon Vijay Abraham I <kishon@kernel.org>,
+        Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>,
+        Wasim Nazir <wasim.nazir@oss.qualcomm.com>,
+        Mohd Ayaan Anwar <quic_mohdayaa@quicinc.com>,
+        Yijie Yang <quic_yijiyang@quicinc.com>
+Cc: linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+        Mohd Ayaan Anwar <mohd.anwar@oss.qualcomm.com>
+X-Mailer: b4 0.14.2
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1763976350; l=2187;
+ i=mohd.anwar@oss.qualcomm.com; s=20250907; h=from:subject:message-id;
+ bh=oRRfUKdL+GmbC9P6NIsS1/W+cYLgkE8khqt3B0OtrCQ=;
+ b=LY2dCeXA0T+ip1EL+9qn+4Jg8LpL5jU3mJK9bqBvk0LpWn6tZP1ql0WNS5GFxHNG3Gw9zOQ38
+ ZtoU2cyZxK2DGnhZpojw80bw6Up3eU4rx0eAgH7Ir2/Y6u3xH7VYZBh
+X-Developer-Key: i=mohd.anwar@oss.qualcomm.com; a=ed25519;
+ pk=7JNY72mz7r6hQstsamPYlUbLhQ5+W64pY4LgfSh9DJU=
+X-Authority-Analysis: v=2.4 cv=PNMCOPqC c=1 sm=1 tr=0 ts=692424a4 cx=c_pps
+ a=MTSHoo12Qbhz2p7MsH1ifg==:117 a=ZePRamnt/+rB5gQjfz0u9A==:17
+ a=IkcTkHD0fZMA:10 a=6UeiqGixMTsA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=EUspDBNiAAAA:8 a=kig__V_yA1QLnvhfcNIA:9
+ a=QEXdDO2ut3YA:10 a=GvdueXVYPmCkWapjIL-Q:22
+X-Proofpoint-ORIG-GUID: VLLAY1VWoqh7Ve7td2KhdJ0MkJAy7Miz
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMTI0MDA4MiBTYWx0ZWRfX29hMFia4b2NC
+ fTnQ4uIo42sq6iVMl6WBmt9Syi4SJLzJPf/meE8OhJt64UNUzoteHF4qoxRcUVn9X9jjzcEqDA/
+ VZo4oCkdf1A5O7dtD734J80Obse9iXwZVGjgFJiESXp4SKe+za7frfWfbnqLKGn53bgw2d7eVTL
+ EkJLKWNkYyelCAFIfGWlv+ScbtufBetbJj0sCQt54vg45gg/EuYU4HCgYt5QRTQN6fUioyodzso
+ 4uebohFBqs09gaiVi7hNmlip6iEF4700dVP18C2/wBgV5ZWcteQGU1RA16cH6Arzgy5bFDgLGnt
+ gNnbLxu4kbJeAy63sBQcTE1bt/nXU66/KLDCCjn5maSWH/gIV0OrcJ90DAOUxLIyc4p+weFingm
+ Ee2c+ThTqXGv+lX3yZxU7bc1U4eapg==
+X-Proofpoint-GUID: VLLAY1VWoqh7Ve7td2KhdJ0MkJAy7Miz
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
+ definitions=2025-11-24_04,2025-11-21_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ bulkscore=0 spamscore=0 priorityscore=1501 malwarescore=0 lowpriorityscore=0
+ clxscore=1015 phishscore=0 suspectscore=0 adultscore=0 impostorscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2510240001 definitions=main-2511240082
 
-On Sun, Nov 23, 2025 at 2:03=E2=80=AFAM Val Packett <val@packett.cool> wrot=
-e:
->
-> > ---
-> > This is targetting linux-next where the reset-gpio driver is now using
-> > the auxiliary bus and software nodes rather than the platform bus and
-> > GPIO machine lookup. The bug is the same in both cases but the fix woul=
-d
-> > be completely different.
-> > ---
-> > [..]
->
-> Tried applying only this, as well as this +
-> https://lore.kernel.org/all/20251120-reset-gpios-swnodes-v7-0-a100493a0f4=
-b@linaro.org/
-> + https://lore.kernel.org/all/20251121135739.66528-1-brgl@bgdev.pl/ (on
-> top of next-20251120) and the issue is still present.. am I missing
-> something?
->
+This patch series addresses a SerDes power-up failure observed on the
+QCS8300 Ride board using the phy-qcom-sgmii-eth driver. The issue occurs
+because the SerDes PHY requires both L5A and L4A regulators to be
+enabled during initialization. If either one of them is disabled, the
+status register does not reset, and the Ethernet interface fails to come
+up due to a timeout:
 
-Can you try this branch?
+[   77.105651] qcom-dwmac-sgmii-phy 8909000.phy: QSERDES_COM_C_READY_STATUS timed-out
+[   77.113447] qcom-ethqos 23040000.ethernet eth0: __stmmac_open: Serdes powerup failed
 
-  https://github.com/brgl/linux test/gpiolib-shared-reset-gpio-fix
+Presumably, the issue is not seen on all users of this PHY because both
+regulators are often shared with other peripherals. However, the power
+rail schematics for boards using this SerDes PHY show that it is
+supplied by both L5A (1.2V) and L4A (0.9V) regulators.
 
-I confirmed it works on my setup and fixes the problem with multiple
-users of reset-gpio AND shared GPIOs enabled.
+This series has been tested on the QCS8300 Ride board, and the reported
+issue was resolved. All Monaco and Lemans derivative boards require this
+new configuration as they use the same SerDes PHY.
 
-Bart
+Signed-off-by: Mohd Ayaan Anwar <mohd.anwar@oss.qualcomm.com>
+---
+Mohd Ayaan Anwar (6):
+      dt-bindings: phy: describe additional regulator for Qualcomm SGMII PHY
+      arm64: dts: qcom: lemans-evk: add additional SerDes PHY regulator
+      arm64: dts: qcom: lemans-ride-common: add additional SerDes PHY regulators
+      arm64: dts: qcom: monaco-evk: fix the SerDes PHY regulators
+      arm64: dts: qcom: qcs8300-ride: add additional SerDes PHY regulator
+      phy: qcom: sgmii-eth: add second regulator support
+
+ .../bindings/phy/qcom,sa8775p-dwmac-sgmii-phy.yaml |  4 ++++
+ arch/arm64/boot/dts/qcom/lemans-evk.dts            |  1 +
+ arch/arm64/boot/dts/qcom/lemans-ride-common.dtsi   |  4 ++++
+ arch/arm64/boot/dts/qcom/monaco-evk.dts            |  3 ++-
+ arch/arm64/boot/dts/qcom/qcs8300-ride.dts          |  2 ++
+ drivers/phy/qualcomm/phy-qcom-sgmii-eth.c          | 24 +++++++++++++++++++++-
+ 6 files changed, 36 insertions(+), 2 deletions(-)
+---
+base-commit: 0f2995693867bfb26197b117cd55624ddc57582f
+change-id: 20251124-sgmiieth_serdes_regulator-027fc6b15216
+
+Best regards,
+-- 
+Mohd Ayaan Anwar <mohd.anwar@oss.qualcomm.com>
+
 
