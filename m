@@ -1,199 +1,123 @@
-Return-Path: <linux-arm-msm+bounces-83016-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-83017-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ams.mirrors.kernel.org (ams.mirrors.kernel.org [IPv6:2a01:60a::1994:3:14])
-	by mail.lfdr.de (Postfix) with ESMTPS id D566CC7F54F
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Nov 2025 09:07:19 +0100 (CET)
+Received: from ams.mirrors.kernel.org (ams.mirrors.kernel.org [213.196.21.55])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7E728C7F676
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Nov 2025 09:38:35 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ams.mirrors.kernel.org (Postfix) with ESMTPS id 3B56834590F
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Nov 2025 08:07:11 +0000 (UTC)
+	by ams.mirrors.kernel.org (Postfix) with ESMTPS id A68CD342212
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Nov 2025 08:38:32 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CDA382EC0A5;
-	Mon, 24 Nov 2025 08:06:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6EE8F2EC0A2;
+	Mon, 24 Nov 2025 08:38:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="HzRnuL+z"
+	dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b="e/gOvjmc"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lj1-f175.google.com (mail-lj1-f175.google.com [209.85.208.175])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E50B2EB847;
-	Mon, 24 Nov 2025 08:06:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8361E2EC0B4
+	for <linux-arm-msm@vger.kernel.org>; Mon, 24 Nov 2025 08:38:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.175
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763971613; cv=none; b=mWlnvxgEAhUeXJJEDIy8rfg/HHyDKBC2upDMAV0bhN7N6T8NBpydwD4LUF/oYlXZFwkaJNLycgYO3K3LRLsQsGHNayEy/Ap8ymOlte6cah8TWPGRuPR45MR/m0kvuCUGchJFjdNNbEGe1fludy5crkc51z912BI2/y1uI7CQK3w=
+	t=1763973509; cv=none; b=UoteyGQrpVhoRXFYxCPcR0wJi0A3kX75O248wsE2LNdGvVKKO2rISjO/k9X5Y1t2CvVOqz+cg8qaQCbOcQeYS6L3iipV+wHj2xNCyQ0qcDOtHSAPvNq+OXIgbQmrrYZ9NmxXtEB4MWXQb5k8OTljolVjeRsPruUPKimatmORftI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763971613; c=relaxed/simple;
-	bh=17YbgJ4cjsUWhoPTxaQqkj19FzshHy7B0XLlDSidKHg=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MMnnDKNcxEsh0O0816iKwH/MVu71VDmi4ZEWe5iS+lDd4p5Xo/tCpvMd++XhQ4McAij7OlsdkAd3bV+tY+jTdCdAIyXpovNftcpQhuPBvxaXYbwG0pvY/piUAAiXgevgr6zvAX71EJ6G5yl1vCGxyyRhBh/UqZvBsrT+iPFl91U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=HzRnuL+z; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E6A6C4CEF1;
-	Mon, 24 Nov 2025 08:06:52 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1763971613;
-	bh=17YbgJ4cjsUWhoPTxaQqkj19FzshHy7B0XLlDSidKHg=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HzRnuL+zGUWN7cjrs3XXhgilz3ZPfxnb8/eDhAtyFwELZ37ps9dKsSJSo4zwjHfGH
-	 ihxoysQljXAq15R3AAozbMhOiQZ6qIlisdWyQM5bRvjc+lWgOC6YXd6ZYALq5Babpx
-	 p2vWIFYVkFogHAd14/5Slc+DIGUcha3gDMgjGBZiTeQO6Z4YTJIcNoApNVyoAQ2LMm
-	 nxUPRjKEBuImTWjiioupdS824QhJb/wteSq69t3Tz4e6UsOG89bnLZ7Oou4fKz0KvW
-	 bXIOWYBJhB6Op2ENlkyDb9mzox5PhfBx1U0Xe8Kljsa14/A/uOHgB5Pg5Tz/2c2PR0
-	 htHS4LYLqueCA==
-From: Sasha Levin <sashal@kernel.org>
-To: patches@lists.linux.dev,
-	stable@vger.kernel.org
-Cc: Praveen Talari <praveen.talari@oss.qualcomm.com>,
-	Prasad Sodagudi <prasad.sodagudi@oss.qualcomm.com>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Linus Walleij <linus.walleij@linaro.org>,
-	Sasha Levin <sashal@kernel.org>,
-	linux-arm-msm@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.17-5.10] pinctrl: qcom: msm: Fix deadlock in pinmux configuration
-Date: Mon, 24 Nov 2025 03:06:20 -0500
-Message-ID: <20251124080644.3871678-6-sashal@kernel.org>
-X-Mailer: git-send-email 2.51.0
-In-Reply-To: <20251124080644.3871678-1-sashal@kernel.org>
-References: <20251124080644.3871678-1-sashal@kernel.org>
+	s=arc-20240116; t=1763973509; c=relaxed/simple;
+	bh=A4ko1llTfnMpZKhwN6XAGIF19i93xfliAblBu+9SIoA=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=Zv4b/n+evRW+uQy/k9tXL7/MYM5NsAmoURCZU4AHmoeGjZ3NUZeNSXKSY/iO4bAPP9D5/nH++N1GVhqfpfaGXLRse6EhPor4/vJZUTqYbeOFjj/PM+cruvacTBwvohWKYCsW/h3bcDN4MHL9kyHYOOLqvJlUpR9GjT3eBlrYw1Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl; spf=none smtp.mailfrom=bgdev.pl; dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b=e/gOvjmc; arc=none smtp.client-ip=209.85.208.175
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=bgdev.pl
+Received: by mail-lj1-f175.google.com with SMTP id 38308e7fff4ca-37b96cbd875so28616391fa.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 24 Nov 2025 00:38:26 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=bgdev-pl.20230601.gappssmtp.com; s=20230601; t=1763973504; x=1764578304; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=0Ya6oXSuW5HKGVZ0GUoG6QlLfgFpzkuWfKoJsDP0RZ0=;
+        b=e/gOvjmcirMdLpSd1+COw4etcwgdEoeXYLos3MvMPScXWOFLRmsdXgUx7gI0ZsCf91
+         rAhmaRSMI5jE8cZtZOHgTeu3GMacAM4KK6q74Cjg0sNQWDA7iXgFpSq6+fEaH3i7KxOT
+         k2bN9h/QdEjzJo6rUjX0OBNxVz8WiO8iVM2XK+kDO5wIUSqz87Y2t5Wd1/wJ4bUXq43M
+         SKVMZEWZ4ZRZB1kWHs9GAqg5XxtYcJmGGBKzxNTtpvJpkeY9P5r1OIUP0IWA2Eul4m19
+         /9ceC/0UklkJkf3jfd22VVh+OKHpz0PYc5GMY+nTRzaYgImtWEnOh9YZU59WBtQgkuvx
+         h4wg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1763973504; x=1764578304;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=0Ya6oXSuW5HKGVZ0GUoG6QlLfgFpzkuWfKoJsDP0RZ0=;
+        b=uQtEcd827CHAI7Qt07oIcZvLdqjau0JOHA7eiy3MYoCHwhrDhWzoZM1cWMbfyBK82G
+         yarnY47LnPObvJlIqhJNXN0BXVOdebOQg4bModPnqzMy3q36UJMcziEfi7+wFYcABlNv
+         2SYUnd9lfJDEuAaRsbe64n7DxFYfXdg3RJpbqbZbiZ9LZkWLjRnMw2m/1M5eytoZ/ckA
+         SEremIzcWmClcrlciqGuo+GyJoQW1rDi4XScySDOhrHp6sLqQZBR1i8GSDV+05ev2O2P
+         0ZukF4MbBhkCsPRAJd+Tk+e35Wxm7LhweequRCzxttL9VeppDspMm37sJcNqtc6ASpKO
+         XkXw==
+X-Forwarded-Encrypted: i=1; AJvYcCWikq20WzGK/f5NEovVXNHXF4JzeDU/acv30wDo7BqLS50+yMbLFBrCuX9r7dQLFdFaTTOS05c2Bizdq4o4@vger.kernel.org
+X-Gm-Message-State: AOJu0Yx7HEpK0IGDt2/pvcUup/qste9FsbzZ2rQtaTcOHEKqbpMaPGWf
+	L06+odBitspT7e4e8T01u/xbP7z3E4G/UjOJboC4Llpx61WOQqETvzv5llj7cj2eRO/sXdhJL0u
+	21GCZP1NwT3FIEoM1vogqrsRJQPTn4/K1sBWhMHqypQ==
+X-Gm-Gg: ASbGncvxx8Gakj5TmN8LengD9VVLiM+nlTGRkPn6gSE+Q9BWQzzXVhKAZ2lLq3Hi8u9
+	n9KYS75mAGcvYnQWYrEyxuL8gvq8yVoTgUYyK5rgRCZoIv3ciSLNl0n6j1JI+DTRQ8EsfzM963k
+	5ni5PehJ8sq4RqfHwlB2mi/BuLiitQ8IMJQgTb2wKyT2g81otUNPnaPPKDHeEMS2HErsB5b5B+W
+	Lg7XfYWTJjaUDh4YPO7n8CU4pAxDEqsolRLp174ADeedOWu4gGi4/SV/PfdC8PXi9CeEQHAYciI
+	/0DKyhq/BAnZMBmQLw67wZM6iPw=
+X-Google-Smtp-Source: AGHT+IHddP45Iw1u4x5gRhDKYJif/xDaoPtzoUcfY5zo1vTJhPnOEF4e60BFJI6rchMqF8oMYnvc4vWnv0O61qtodtg=
+X-Received: by 2002:a05:6512:110a:b0:594:253c:209f with SMTP id
+ 2adb3069b0e04-596a3edc91fmr3270301e87.39.1763973503967; Mon, 24 Nov 2025
+ 00:38:23 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-stable: review
-X-Patchwork-Hint: Ignore
-X-stable-base: Linux 6.17.8
-Content-Transfer-Encoding: 8bit
+References: <20251121-gpiolib-shared-reset-gpio-fix-v1-1-cf0128fe4b47@linaro.org>
+ <be7fd390-e81d-4e93-880a-1b6404398408@packett.cool>
+In-Reply-To: <be7fd390-e81d-4e93-880a-1b6404398408@packett.cool>
+From: Bartosz Golaszewski <brgl@bgdev.pl>
+Date: Mon, 24 Nov 2025 09:38:12 +0100
+X-Gm-Features: AWmQ_bnn18M7d0OcQOnbJTJz4lGmLFoHp7b-dn-7mGA9R5vcmt5vBbCxue_57oU
+Message-ID: <CAMRc=MdW3AkkivE=sA4STZAmmee7bCBkD5oEsXiRcKA80Ggd4A@mail.gmail.com>
+Subject: Re: [PATCH] gpio: shared: handle the reset-gpios corner case
+To: Val Packett <val@packett.cool>
+Cc: Krzysztof Kozlowski <krzk@kernel.org>, Philipp Zabel <p.zabel@pengutronix.de>, 
+	Linus Walleij <linus.walleij@linaro.org>, linux-gpio@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-From: Praveen Talari <praveen.talari@oss.qualcomm.com>
+On Sun, Nov 23, 2025 at 2:03=E2=80=AFAM Val Packett <val@packett.cool> wrot=
+e:
+>
+> > ---
+> > This is targetting linux-next where the reset-gpio driver is now using
+> > the auxiliary bus and software nodes rather than the platform bus and
+> > GPIO machine lookup. The bug is the same in both cases but the fix woul=
+d
+> > be completely different.
+> > ---
+> > [..]
+>
+> Tried applying only this, as well as this +
+> https://lore.kernel.org/all/20251120-reset-gpios-swnodes-v7-0-a100493a0f4=
+b@linaro.org/
+> + https://lore.kernel.org/all/20251121135739.66528-1-brgl@bgdev.pl/ (on
+> top of next-20251120) and the issue is still present.. am I missing
+> something?
+>
 
-[ Upstream commit 1c2e70397b4125022dba80f6111271a37fb36bae ]
+Can you try this branch?
 
-Replace disable_irq() with disable_irq_nosync() in msm_pinmux_set_mux()
-to prevent deadlock when wakeup IRQ is triggered on the same
-GPIO being reconfigured.
+  https://github.com/brgl/linux test/gpiolib-shared-reset-gpio-fix
 
-The issue occurs when a wakeup IRQ is triggered on a GPIO and the IRQ
-handler attempts to reconfigure the same GPIO's pinmux. In this scenario,
-msm_pinmux_set_mux() calls disable_irq() which waits for the currently
-running IRQ handler to complete, creating a circular dependency that
-results in deadlock.
+I confirmed it works on my setup and fixes the problem with multiple
+users of reset-gpio AND shared GPIOs enabled.
 
-Using disable_irq_nosync() avoids waiting for the IRQ handler to
-complete, preventing the deadlock condition while still properly
-disabling the interrupt during pinmux reconfiguration.
-
-Suggested-by: Prasad Sodagudi <prasad.sodagudi@oss.qualcomm.com>
-Signed-off-by: Praveen Talari <praveen.talari@oss.qualcomm.com>
-Reviewed-by: Bjorn Andersson <andersson@kernel.org>
-Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
----
-
-LLM Generated explanations, may be completely bogus:
-
-## COMPREHENSIVE ANALYSIS
-
-### 1. COMMIT MESSAGE & CODE ANALYSIS
-
-**Problem Identified:** A circular dependency deadlock occurs in the
-Qualcomm pin control driver (`pinctrl-msm.c`).
-**Mechanism:** The function `msm_pinmux_set_mux()` is responsible for
-changing a pin's function. When switching away from a GPIO that has an
-interrupt enabled, it calls `disable_irq()` to mask the interrupt.
-**The Deadlock:** `disable_irq()` synchronously waits for any running
-IRQ handlers to complete. If `msm_pinmux_set_mux()` is called *from
-within* the handler of the very interrupt being disabled (common in
-wakeup scenarios where a device wakes up and immediately reconfigures
-pins), the code waits for itself to finish, resulting in a hard system
-hang.
-**The Fix:** The commit replaces `disable_irq()` with
-`disable_irq_nosync()`. This variant masks the interrupt without waiting
-for pending handlers, effectively breaking the circular dependency while
-maintaining the required hardware state safety.
-
-### 2. DEEP CODE RESEARCH
-
-**History and Origin:**
-- The problematic `disable_irq()` call was introduced in commit
-  `cf9d052aa6005f` ("pinctrl: qcom: Don't clear pending interrupts when
-  enabling"), merged in January 2021 (Linux v5.11).
-- This means the bug has been present for approximately 4 years and
-  affects multiple Long Term Support (LTS) kernels, including 5.15.y,
-  6.1.y, and 6.6.y.
-
-**Code Correctness:**
-- `disable_irq_nosync()` is the specific API designed for this exact use
-  case (disabling an interrupt from within its own handler or call
-  chain).
-- The change is surgical (one line) and does not alter the logical flow
-  of the driver other than removing the synchronous wait.
-- The interrupt is properly re-enabled later in the function (if
-  switching back to GPIO), ensuring the logic remains consistent.
-
-### 3. BUG SEVERITY AND USER IMPACT
-
-**Severity:** **CRITICAL**. A deadlock causes a complete system freeze,
-requiring a hard reset.
-**Target Users:** This affects devices using Qualcomm SoCs (MSM/QCOM),
-which includes a vast ecosystem of:
-- Android smartphones and tablets
-- Embedded IoT devices
-- Chromebooks
-- Automotive IVI systems
-**Trigger:** The issue is triggered during wakeup events when a GPIO IRQ
-fires and the handler attempts to reconfigure the pinmux. This is a
-realistic scenario in power management flows (suspend/resume).
-
-### 4. STABLE KERNEL RULES COMPLIANCE
-
-This commit perfectly fits the criteria for stable backporting:
-- **Obviously Correct:** It uses the standard kernel API (`_nosync`) to
-  resolve a known deadlock pattern.
-- **Fixes a Real Bug:** It addresses a system hang/deadlock.
-- **Small Scope:** Only 1 line changed in 1 file.
-- **No New Features:** Pure bug fix.
-- **Low Risk:** The fix relaxes a synchronization constraint that was
-  incorrect for this context; it does not introduce complex new logic.
-
-### 5. BACKPORT FEASIBILITY
-
-Because the surrounding code has been stable since v5.11, this patch
-should apply cleanly (cherry-pick) to all active stable branches:
-- v6.12.y
-- v6.11.y
-- v6.6.y (LTS)
-- v6.1.y (LTS)
-- v5.15.y (LTS)
-
-### CONCLUSION
-
-This is a critical fix for a deadlock that affects widely deployed
-hardware. The solution is trivial, correct, and low-risk. Despite the
-lack of a "Cc: stable" tag, the nature of the bug (system hang) makes it
-a mandatory backport candidate.
-
-**YES**
-
- drivers/pinctrl/qcom/pinctrl-msm.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/drivers/pinctrl/qcom/pinctrl-msm.c b/drivers/pinctrl/qcom/pinctrl-msm.c
-index 83eb075b6bfa1..3d6601dc6fcc5 100644
---- a/drivers/pinctrl/qcom/pinctrl-msm.c
-+++ b/drivers/pinctrl/qcom/pinctrl-msm.c
-@@ -215,7 +215,7 @@ static int msm_pinmux_set_mux(struct pinctrl_dev *pctldev,
- 	 */
- 	if (d && i != gpio_func &&
- 	    !test_and_set_bit(d->hwirq, pctrl->disabled_for_mux))
--		disable_irq(irq);
-+		disable_irq_nosync(irq);
- 
- 	raw_spin_lock_irqsave(&pctrl->lock, flags);
- 
--- 
-2.51.0
-
+Bart
 
