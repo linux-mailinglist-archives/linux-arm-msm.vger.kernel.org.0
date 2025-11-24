@@ -1,433 +1,177 @@
-Return-Path: <linux-arm-msm+bounces-83005-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-83006-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id DC331C7EDE0
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Nov 2025 04:02:52 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id BC231C7EFA5
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Nov 2025 06:07:12 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id ECE743A38DC
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Nov 2025 03:02:49 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 6C40B3A3585
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Nov 2025 05:07:11 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E887E2727FC;
-	Mon, 24 Nov 2025 03:02:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D108C29D29A;
+	Mon, 24 Nov 2025 05:07:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="MVAmXbmS"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="huGqx5uI"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pj1-f42.google.com (mail-pj1-f42.google.com [209.85.216.42])
+Received: from mail-pf1-f180.google.com (mail-pf1-f180.google.com [209.85.210.180])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA91B25F7B9
-	for <linux-arm-msm@vger.kernel.org>; Mon, 24 Nov 2025 03:02:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46FC62BEC26
+	for <linux-arm-msm@vger.kernel.org>; Mon, 24 Nov 2025 05:07:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.180
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763953365; cv=none; b=HCU0nDRaEeRudeYs5m0imF9fuH4woKCZybW+MOZOG6dZSkhPne+VbQk98E3f4Mym02HmiQ7VzgLlchFRq2quNGXi/zqkfq/+rEdlQivXgmhxCVbpIHOpUv+yOWrI4peCwRBl+2aug7l3bFptsjkCoonkg74u5FbHU5cy9vtXLWU=
+	t=1763960828; cv=none; b=Xn17aeZVGncFpy1p6PkTyWb61qKJtfmHZtQBR/+ICk5bmUmDfFHtShOIHhbnI+VAkgieXW2lu8vvtorGMHjb/OkCFzm4YMV2gueDZcfNKNjjpUODZiS/90Ly58PlpunvEJV0TH4aCtQLNZUoZfIl4zc+IGuhRKVADv2ofCxF43g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763953365; c=relaxed/simple;
-	bh=7lglDPhhscPmEKRf/7UQETmGZN6t/kqZ2e38UElfHN4=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=dYhckDanG12hcriM4eCYbQN+FE5vFcbabiuFgwjfk/Y+hFPxh2fstarRm5p9gMhz9au9GMPHpa0dppaoYcandNCnXJ80T3h3huRToxNh2qc++KULdkwKYoajEiWSW7DPfGXpFN1cpY0NW+9KowipQbnxs7v4eU8WSWCZdOyHXAM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=MVAmXbmS; arc=none smtp.client-ip=209.85.216.42
+	s=arc-20240116; t=1763960828; c=relaxed/simple;
+	bh=bHA6HQFx71grWgiZiVMPzotW5/atqoFERPTknZaJaPM=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=dxY67dF4LtmDr8lptkDJ3cuZAhfY9KNmeQ8F7SUQ+jUKoMjLRCV0/xR3c/RsT1wmMUPGsEJlV0U56rqA0ILmBF1eAQjI5nwx2fjK4hoifhp7bv1j3ECW8y/QY+/jIgkD2/whDVMPG8WXb1EBWEVoUcz4XSkhrIj4o6e2OnuLuy0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=huGqx5uI; arc=none smtp.client-ip=209.85.210.180
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-pj1-f42.google.com with SMTP id 98e67ed59e1d1-340ba29d518so2276847a91.3
-        for <linux-arm-msm@vger.kernel.org>; Sun, 23 Nov 2025 19:02:42 -0800 (PST)
+Received: by mail-pf1-f180.google.com with SMTP id d2e1a72fcca58-7b80fed1505so4375275b3a.3
+        for <linux-arm-msm@vger.kernel.org>; Sun, 23 Nov 2025 21:07:06 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1763953362; x=1764558162; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=EThjVRtG3u91ThHtH8s7htB0Qt2hP8NHKg4Z/0u1oC4=;
-        b=MVAmXbmSW7Fd6KYzUTcIcWzZIVBJDYo7LcDY3hPwDsNA0jeRa+S4ogElHg98etyUQy
-         DPaufFik0PtlgjYMzycv2zaC1sNE1D4UWqg1MSMRPUrn92U58bXfghSsJajMIekGueB8
-         Z5tscZHPLrglDGRpzuU8SXKOOCuS9ogOCzyvaxZqqSrdCBKNiKqKFeopFU0RNrOgCbYZ
-         yTAkLLyTPofxrBkxqkLYGw0zoeic4R4gowdMXbpwcncKRGe/oWbbnK53xcm74YsEoxvs
-         uBCbj9ZMB3wAtFYl6evnzwEXcDp3P7IqKpl77522z+75VX/z31Uat2H6O7gJu0z49AKk
-         5tGw==
+        d=gmail.com; s=20230601; t=1763960825; x=1764565625; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=PhcCOqzgmJN6F2HgJqP8P4Fbp35gJAyNyrXxslklYZ0=;
+        b=huGqx5uIKVRf6rRVNgAwpLRH9hHg/J967BGfyWnEldqfUmnfsQL32/T6ao/s6o3z9l
+         PJRdQFwwDNXcYY2oMhQi6tLruSlgMB3BWeptdbg+N6ewNnQhCrzxqLxoPO0xmeFDifea
+         Sy3xHELjnHgMbyKvcqmnekGN/iuWbNWRaQAH48G4+aNFMLBqMQAFQdkKvpXbS3oElkIU
+         +H/k8bURFhQon6jX6dL2F9dVvswTc3mnmuZz1V7Us1uKZqE001rY9VkymxrBphGC77fZ
+         kH4DWE0auHx80DD9hhvaNBAwbDlfwAeF72/GcUVaTtsQYfmNGE6d9sVhkNH7fXUVKbiH
+         aGQQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1763953362; x=1764558162;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=EThjVRtG3u91ThHtH8s7htB0Qt2hP8NHKg4Z/0u1oC4=;
-        b=Ntc6GwBlZ4pQ3COAfGtPRoLa/hG6wYmuGDU7+tAAokUdz2mfKYWRPhduNAv+z86VOL
-         VeJ2IVtQWVXXQK4JRKZdvaJgv3qqL+ujazxTDSwX9y50Rd3oLXZswX7lehR1gx7GPDUi
-         xtq2GaVP9Kob8I+hyJUhLeoBU7JY8lCSn9KaFeebzfyHHodWADpolduEMBDVY+zJpIFA
-         09jeoYIFu4SUoQOTJZiQ1b4fxT9dDEul1nSFoau+Jhb5DcHq1KnM8dR28nd0FUZ/LxMm
-         Hk7mj3Xnmajs4uLRPY3/lMA6nEiE9BURc/pHQqOvJagK5esuJcMhX/jUHx+/R3mDfXwV
-         +1qg==
-X-Forwarded-Encrypted: i=1; AJvYcCUZ6ze+tukyzWitjpoctBhKgsWqx0pxLX1B7CevswBidQrYYeLBnRAlyrXAPnvxpJp4lplWm5HUCNocTXjP@vger.kernel.org
-X-Gm-Message-State: AOJu0YygoIMBGjrKmcTn7CPwkaeeJmkUM03VekcgcT/4e84+Pl2Gpb/j
-	wi3CV6reVeJSs37+7I6hlXIpmjfDU4BoWkmLysQrjwRhlhE7Y0338Mas
-X-Gm-Gg: ASbGncvnx3vSvngVn9ThtQs1sfg5SNJH0YUjjeWKVlJ5FNOdi+aH9wxo6Sb2+TrXQTQ
-	Cs9Yt4orJGAtU+GW8qyyj5C1it0KXHZfdLC8nZIn4KSUT9k+KPiHyv4a0xmBCq6NBDA1WcQ5Pqm
-	nMFQno6qEz7LbuOtg9sJDHPSAzNMgK5fnYeULxt/XdTrPUm68MZu1ifsh+mfmycLEh5SzC+rUAc
-	A/rnpk0l594jenRh24kldMNkRWu63MfPUfnBOBWbxy0I8BaAf9T/3VWHY9itM4lHNtqxu7hYWZQ
-	jabpxNCg5VsHlSj8/3MnE5vTgUduhGPCHOuhUjboob3Wviw1B5unrJFiI1en1DesP48zSmmqM82
-	GSHiOFaS1TCVr6uKv0l2tIdvtbRoglSEeEAWwg8axthkGV/+HtkXO1xDFP5tvliJa8U73FJH6da
-	16dAop8SQeyEU=
-X-Google-Smtp-Source: AGHT+IEMt538xCkv+fqIIYil9IQfkAkpZOfttXOCrxqxU9ijd4Z/n1H3Gpy/X0jI7VxwtTCqcmNbzA==
-X-Received: by 2002:a17:90b:35cc:b0:341:194:5e7d with SMTP id 98e67ed59e1d1-34733f19c00mr11223472a91.24.1763953361678;
-        Sun, 23 Nov 2025 19:02:41 -0800 (PST)
-Received: from archie.me ([210.87.74.117])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-34727d5178esm11869866a91.16.2025.11.23.19.02.39
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 23 Nov 2025 19:02:40 -0800 (PST)
-Received: by archie.me (Postfix, from userid 1000)
-	id 8D1794209E72; Mon, 24 Nov 2025 10:02:37 +0700 (WIB)
-Date: Mon, 24 Nov 2025 10:02:37 +0700
-From: Bagas Sanjaya <bagasdotme@gmail.com>
-To: Eugen Hristev <eugen.hristev@linaro.org>, linux-arm-msm@vger.kernel.org,
-	linux-kernel@vger.kernel.org, linux-mm@kvack.org,
-	tglx@linutronix.de, andersson@kernel.org, pmladek@suse.com,
-	rdunlap@infradead.org, corbet@lwn.net, david@redhat.com,
-	mhocko@suse.com
-Cc: tudor.ambarus@linaro.org, mukesh.ojha@oss.qualcomm.com,
-	linux-arm-kernel@lists.infradead.org,
-	linux-hardening@vger.kernel.org, jonechou@google.com,
-	rostedt@goodmis.org, linux-doc@vger.kernel.org,
-	devicetree@vger.kernel.org, linux-remoteproc@vger.kernel.org,
-	linux-arch@vger.kernel.org, tony.luck@intel.com, kees@kernel.org
-Subject: Re: [PATCH 01/26] kernel: Introduce meminspect
-Message-ID: <aSPKzcsFixn48edg@archie.me>
-References: <20251119154427.1033475-1-eugen.hristev@linaro.org>
- <20251119154427.1033475-2-eugen.hristev@linaro.org>
+        d=1e100.net; s=20230601; t=1763960825; x=1764565625;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=PhcCOqzgmJN6F2HgJqP8P4Fbp35gJAyNyrXxslklYZ0=;
+        b=Fh8HYPhMSuirNM6Y3f1sEUkjle1iqNI8XWntqZAH9w2dbfICk+brIXAoT364GTpDlV
+         z6Vzb83JyYdzxYen7+kqEYCt/ltxAtYPcpUxjtOXv5KTZLjjcYxUj2cNMZYiJ5w1Mbpn
+         Dmp22AZvRSoi1CaqUVjJZa3zM5C6CDwCe3KeSBovuXhnoBxfxYHEpWRCrnkKY8tVaEPr
+         3klTsxoxOgNe9VmRG4BhFlHXwwj2WtssqbNf9NTNhz0wXdyGko4VVfHPnfxS7E5/IkDi
+         FeLwU1gJaJ66piNZES9POI771WRIWZZW9I91vyk+CRzt9BBRLG7H3cODiPXY1ZwONqNb
+         B8Sw==
+X-Forwarded-Encrypted: i=1; AJvYcCWVkBh1aiEWFhzCd2J7h3jTtf0GFpckck/+JxDzWkX1+QP4msxuOZ0Mi2olzKT+XAZarUqRnAWHivuYNA4Z@vger.kernel.org
+X-Gm-Message-State: AOJu0YzK/o2tvcpl4xqA8RXE5QjspDCra0ygyIMNOMJCPqYo6WCkutYd
+	OHMv2LIgtD64J4xVL+vO4mInRiDjWIUdoyupWoNYf5w7g5NrtJ6gcvEN
+X-Gm-Gg: ASbGncus7p0I9Cegfte3egQQ62Zh2PSujmTig5w62OTGLOk9RqAtmLwFJEtWIX58sHi
+	mFVKfzovsojeIbJtGBKJYn9jYlSqRH8Z0s/MGNnFP3qB+W1nHGghNtdZ2ygQcqWUE7pm4t2EU0g
+	HYU7y1tzS5YHwNTXeO9CNo+EtTRkgvdmyv7lC9tpAWlJEmv8c7LoP1ralFLvfWDSMuc6Ja0RiA/
+	dfru17ZXdtsUiG72B1BcgitP5OZPJHJQNc6uPbpVA5hqXKV9AXM3ayKXmTQTcksoRHKrDG3WxLH
+	IqD3HvaBpI+sYJvlc2xazJ0rpc85SlicI22PMPXgpp0Yj8LQbQTm/27F89Y66MYIc1FLE38yrys
+	a5FSAth6Rr1hzswWL4EpyuPPyOkXlm7gcEIdPx/4pxq93tpdTy6FJ+7C8F2aZTL63wMW6gnfB4F
+	9M8o4iKK7P8++WkxkbzJagdTZEIgSy9fegAaI=
+X-Google-Smtp-Source: AGHT+IEM2Kgb8TlQyecx0p4KgN/dW/pTxN9bPMT3jawCrbVzBpSC9udaTjUxa6J6NHq2xeaq5SEBAQ==
+X-Received: by 2002:a05:6a00:12e1:b0:7b9:e4af:719a with SMTP id d2e1a72fcca58-7c58c4a7d77mr10655880b3a.1.1763960825405;
+        Sun, 23 Nov 2025 21:07:05 -0800 (PST)
+Received: from [172.16.20.12] ([136.226.244.251])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-7c3f0b69e1dsm12949353b3a.51.2025.11.23.21.07.02
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sun, 23 Nov 2025 21:07:04 -0800 (PST)
+Message-ID: <2e0a7e3e-eb20-449a-84a5-6d4e2f147ef9@gmail.com>
+Date: Mon, 24 Nov 2025 10:37:36 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="jjzv1iO7GRx9l9vd"
-Content-Disposition: inline
-In-Reply-To: <20251119154427.1033475-2-eugen.hristev@linaro.org>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v7 2/2] arm64: dts: qcom: talos-evk: Add support for
+ QCS615 talos evk board
+To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Cc: andersson@kernel.org, konradybcio@kernel.org, robh@kernel.org,
+ krzk+dt@kernel.org, conor+dt@kernel.org, linux-arm-msm@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20251118130814.3554333-1-tessolveupstream@gmail.com>
+ <20251118130814.3554333-3-tessolveupstream@gmail.com>
+ <ug4n5dpsg5v5jwhwmjaktvydhtfx6gagoum6lul2a27h44xexz@uvdu6ma42wei>
+ <17085f43-22fc-4590-bf42-6869ca3d7bd3@gmail.com>
+ <46k4uvtoit5tty3ojh7da7yliqz27tdcscu2co5tuowy33uicc@v3f3cojpwvzp>
+Content-Language: en-US
+From: tessolveupstream@gmail.com
+In-Reply-To: <46k4uvtoit5tty3ojh7da7yliqz27tdcscu2co5tuowy33uicc@v3f3cojpwvzp>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
 
---jjzv1iO7GRx9l9vd
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
 
-On Wed, Nov 19, 2025 at 05:44:02PM +0200, Eugen Hristev wrote:
-> diff --git a/Documentation/dev-tools/index.rst b/Documentation/dev-tools/=
-index.rst
-> index 4b8425e348ab..8ce605de8ee6 100644
-> --- a/Documentation/dev-tools/index.rst
-> +++ b/Documentation/dev-tools/index.rst
-> @@ -38,6 +38,7 @@ Documentation/process/debugging/index.rst
->     gpio-sloppy-logic-analyzer
->     autofdo
->     propeller
-> +   meminspect
-> =20
-> =20
->  .. only::  subproject and html
-> diff --git a/Documentation/dev-tools/meminspect.rst b/Documentation/dev-t=
-ools/meminspect.rst
-> new file mode 100644
-> index 000000000000..2a0bd4d6e448
-> --- /dev/null
-> +++ b/Documentation/dev-tools/meminspect.rst
-> @@ -0,0 +1,139 @@
-> +.. SPDX-License-Identifier: GPL-2.0
-> +
-> +=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-> +meminspect
-> +=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-> +
-> +This document provides information about the meminspect feature.
-> +
-> +Overview
-> +=3D=3D=3D=3D=3D=3D=3D=3D
-> +
-> +meminspect is a mechanism that allows the kernel to register a chunk of
-> +memory into a table, to be used at a later time for a specific
-> +inspection purpose like debugging, memory dumping or statistics.
-> +
-> +meminspect allows drivers to traverse the inspection table on demand,
-> +or to register a notifier to be called whenever a new entry is being add=
-ed
-> +or removed.
-> +
-> +The reasoning for meminspect is also to minimize the required information
-> +in case of a kernel problem. For example a traditional debug method invo=
-lves
-> +dumping the whole kernel memory and then inspecting it. Meminspect allow=
-s the
-> +users to select which memory is of interest, in order to help this speci=
-fic
-> +use case in production, where memory and connectivity are limited.
-> +
-> +Although the kernel has multiple internal mechanisms, meminspect fits
-> +a particular model which is not covered by the others.
-> +
-> +meminspect Internals
-> +=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-> +
-> +API
-> +---
-> +
-> +Static memory can be registered at compile time, by instructing the comp=
-iler
-> +to create a separate section with annotation info.
-> +For each such annotated memory (variables usually), a dedicated struct
-> +is being created with the required information.
-> +To achieve this goal, some basic APIs are available:
-> +
-> +  MEMINSPECT_ENTRY(idx, sym, sz)
-> +is the basic macro that takes an ID, the symbol, and a size.
-> +
-> +To make it easier, some wrappers are also defined:
-> +  MEMINSPECT_SIMPLE_ENTRY(sym)
-> +will use the dedicated MEMINSPECT_ID_##sym with a size equal to sizeof(s=
-ym)
-> +
-> +  MEMINSPECT_NAMED_ENTRY(name, sym)
-> +will be a simple entry that has an id that cannot be derived from the sy=
-m,
-> +so a name has to be provided
-> +
-> +  MEMINSPECT_AREA_ENTRY(sym, sz)
-> +this will register sym, but with the size given as sz, useful for e.g.
-> +arrays which do not have a fixed size at compile time.
-> +
-> +For dynamically allocated memory, or for other cases, the following APIs
-> +are being defined:
-> +  meminspect_register_id_pa(enum meminspect_uid id, phys_addr_t zone,
-> +                            size_t size, unsigned int type);
-> +which takes the ID and the physical address.
-> +Similarly there are variations:
-> +  meminspect_register_pa() omits the ID
-> +  meminspect_register_id_va() requires the ID but takes a virtual address
-> +  meminspect_register_va() omits the ID and requires a virtual address
-> +
-> +If the ID is not given, the next avialable dynamic ID is allocated.
-> +
-> +To unregister a dynamic entry, some APIs are being defined:
-> +  meminspect_unregister_pa(phys_addr_t zone, size_t size);
-> +  meminspect_unregister_id(enum meminspect_uid id);
-> +  meminspect_unregister_va(va, size);
-> +
-> +All of the above have a lock variant that ensures the lock on the table
-> +is taken.
-> +
-> +
-> +meminspect drivers
-> +------------------
-> +
-> +Drivers are free to traverse the table by using a dedicated function
-> +meminspect_traverse(void *priv, MEMINSPECT_ITERATOR_CB cb)
-> +The callback will be called for each entry in the table.
-> +
-> +Drivers can also register a notifier with
-> +  meminspect_notifier_register()
-> +and unregister with
-> +  meminspect_notifier_unregister()
-> +to be called when a new entry is being added or removed.
-> +
-> +Data structures
-> +---------------
-> +
-> +The regions are being stored in a simple fixed size array. It avoids
-> +memory allocation overhead. This is not performance critical nor does
-> +allocating a few hundred entries create a memory consumption problem.
-> +
-> +The static variables registered into meminspect are being annotated into
-> +a dedicated .inspect_table memory section. This is then walked by memins=
-pect
-> +at a later time and each variable is then copied to the whole inspect ta=
-ble.
-> +
-> +meminspect Initialization
-> +-------------------------
-> +
-> +At any time, meminspect will be ready to accept region registration
-> +from any part of the kernel. The table does not require any initializati=
-on.
-> +In case CONFIG_CRASH_DUMP is enabled, meminspect will create an ELF head=
-er
-> +corresponding to a core dump image, in which each region is added as a
-> +program header. In this scenario, the first region is this ELF header, a=
-nd
-> +the second region is the vmcoreinfo ELF note.
-> +By using this mechanism, all the meminspect table, if dumped, can be
-> +concatenated to obtain a core image that is loadable with the `crash` to=
-ol.
-> +
-> +meminspect example
-> +=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-> +
-> +A simple scenario for meminspect is the following:
-> +The kernel registers the linux_banner variable into meminspect with
-> +a simple annotation like:
-> +
-> +  MEMINSPECT_SIMPLE_ENTRY(linux_banner);
-> +
-> +The meminspect late initcall will parse the compilation time created tab=
-le
-> +and copy the entry information into the inspection table.
-> +At a later point, any interested driver can call the traverse function to
-> +find out all entries in the table.
-> +A specific driver will then note into a specific table the address of the
-> +banner and the size of it.
-> +The specific table is then written to a shared memory area that can be
-> +read by upper level firmware.
-> +When the kernel freezes (hypothetically), the kernel will no longer feed
-> +the watchdog. The watchdog will trigger a higher exception level interru=
-pt
-> +which will be handled by the upper level firmware. This firmware will th=
-en
-> +read the shared memory table and find an entry with the start and size of
-> +the banner. It will then copy it for debugging purpose. The upper level
-> +firmware will then be able to provide useful debugging information,
-> +like in this example, the banner.
-> +
-> +As seen here, meminspect facilitates the interaction between the kernel
-> +and a specific firmware.
+On 21-11-2025 22:16, Dmitry Baryshkov wrote:
+> On Thu, Nov 20, 2025 at 01:02:39PM +0530, tessolveupstream@gmail.com wrote:
+>>
+>>
+>> On 19-11-2025 15:55, Dmitry Baryshkov wrote:
+>>> On Tue, Nov 18, 2025 at 06:38:14PM +0530, Sudarshan Shetty wrote:
+>>>> Add the device tree for the QCS615-based Talos EVK platform. The
+>>>> platform is composed of a System-on-Module following the SMARC
+>>>> standard, and a Carrier Board.
+>>>>
+>>>> The Carrier Board supports several display configurations, HDMI and
+>>>> LVDS. Both configurations use the same base hardware, with the display
+>>>> selection controlled by a DIP switch.
+>>>>
+>>>> To avoid duplication, use an include file, talos-evk-cb.dtsi, which
+>>>> defines the interfaces and peripherals common to both display
+>>>> variants. Two additional DTs (e.g. talos-evk and talos-evk-lvds)
+>>>> can describe the selected display configuration.
+>>>>
+>>>> The initial device tree includes support for:
+>>>> - CPU and memory
+>>>> - UART
+>>>> - GPIOs
+>>>> - Regulators
+>>>> - PMIC
+>>>> - Early console
+>>>> - AT24MAC602 EEPROM
+>>>> - MCP2515 SPI to CAN
+>>>> - ADV7535 DSI-to-HDMI bridge
+>>>> - DisplayPort interface
+>>>
+>>> You got the question for v6, responded there but didn't update commit
+>>> message. What is not enabled here? E.g. why isn't venus enabled?
+>>
+>> In earlier patch, we have added 'Wi-Fi/BT and ethernet is not 
+>> supported'as a commit message. Later,based on 
+>> Krzysztof Kozlowski’s review comments, we removed the same. 
+>> Please find the below review comment for your reference.
+>> https://lore.kernel.org/all/20251028053248.723560-1-tessolveupstream@gmail.com/T/#mda58996a7abac13780f8ce2cd49b84c32d4c50a6
+>>
+>> We are not clear whether 'Wi-Fi/BT and ethernet is not supported'
+>> should be added back to the commit message or not. 
+>> Could you please confirm your preference?
+> 
+> If you are unsure, you can add this info to the cover letter. Or you can
+> write something like 'Ethernet and WiFi/BT are not (yet) supported.'.
 
-Sphinx reports htmldocs warnings:
+Okay, we will add the info 'Ethernet and WiFi/BT are not (yet) 
+supported' to the cover letter.
+> 
+>>
+>> Venus is enabled in this patch.
+> 
+> Ack, excuse me.
+> 
+>>>
+>>>> Signed-off-by: Sudarshan Shetty <tessolveupstream@gmail.com>
+>>>> ---
+>>>>  arch/arm64/boot/dts/qcom/Makefile           |   1 +
+>>>>  arch/arm64/boot/dts/qcom/talos-evk-cb.dtsi  |  56 +++
+>>>>  arch/arm64/boot/dts/qcom/talos-evk-som.dtsi | 447 ++++++++++++++++++++
+>>>>  arch/arm64/boot/dts/qcom/talos-evk.dts      |  94 ++++
+>>>>  4 files changed, 598 insertions(+)
+>>>>  create mode 100644 arch/arm64/boot/dts/qcom/talos-evk-cb.dtsi
+>>>>  create mode 100644 arch/arm64/boot/dts/qcom/talos-evk-som.dtsi
+>>>>  create mode 100644 arch/arm64/boot/dts/qcom/talos-evk.dts
+>>>>
+>>>
+>>
+> 
 
-Documentation/dev-tools/meminspect.rst:42: WARNING: Block quote ends withou=
-t a blank line; unexpected unindent. [docutils]
-Documentation/dev-tools/meminspect.rst:46: WARNING: Definition list ends wi=
-thout a blank line; unexpected unindent. [docutils]
-Documentation/dev-tools/meminspect.rst:49: WARNING: Block quote ends withou=
-t a blank line; unexpected unindent. [docutils]
-Documentation/dev-tools/meminspect.rst:53: WARNING: Block quote ends withou=
-t a blank line; unexpected unindent. [docutils]
-Documentation/dev-tools/meminspect.rst:58: ERROR: Unexpected indentation. [=
-docutils]
-Documentation/dev-tools/meminspect.rst:60: WARNING: Block quote ends withou=
-t a blank line; unexpected unindent. [docutils]
-Documentation/dev-tools/meminspect.rst:62: ERROR: Unexpected indentation. [=
-docutils]
-Documentation/dev-tools/meminspect.rst:80: WARNING: Inline emphasis start-s=
-tring without end-string. [docutils]
-Documentation/dev-tools/meminspect.rst:88: WARNING: Definition list ends wi=
-thout a blank line; unexpected unindent. [docutils]
-
-I have to fix them up:
-
----- >8 ----
-diff --git a/Documentation/dev-tools/meminspect.rst b/Documentation/dev-too=
-ls/meminspect.rst
-index 2a0bd4d6e4481e..d6a221b1169f04 100644
---- a/Documentation/dev-tools/meminspect.rst
-+++ b/Documentation/dev-tools/meminspect.rst
-@@ -38,37 +38,43 @@ For each such annotated memory (variables usually), a d=
-edicated struct
- is being created with the required information.
- To achieve this goal, some basic APIs are available:
-=20
--  MEMINSPECT_ENTRY(idx, sym, sz)
--is the basic macro that takes an ID, the symbol, and a size.
-+  * MEMINSPECT_ENTRY(idx, sym, sz)
-+    is the basic macro that takes an ID, the symbol, and a size.
-=20
- To make it easier, some wrappers are also defined:
--  MEMINSPECT_SIMPLE_ENTRY(sym)
--will use the dedicated MEMINSPECT_ID_##sym with a size equal to sizeof(sym)
-=20
--  MEMINSPECT_NAMED_ENTRY(name, sym)
--will be a simple entry that has an id that cannot be derived from the sym,
--so a name has to be provided
-+  * MEMINSPECT_SIMPLE_ENTRY(sym)
-+    will use the dedicated MEMINSPECT_ID_##sym with a size equal to sizeof=
-(sym)
-=20
--  MEMINSPECT_AREA_ENTRY(sym, sz)
--this will register sym, but with the size given as sz, useful for e.g.
--arrays which do not have a fixed size at compile time.
-+  * MEMINSPECT_NAMED_ENTRY(name, sym)
-+    will be a simple entry that has an id that cannot be derived from the =
-sym,
-+    so a name has to be provided
-+
-+  * MEMINSPECT_AREA_ENTRY(sym, sz)
-+    this will register sym, but with the size given as sz, useful for e.g.
-+    arrays which do not have a fixed size at compile time.
-=20
- For dynamically allocated memory, or for other cases, the following APIs
--are being defined:
-+are being defined::
-+
-   meminspect_register_id_pa(enum meminspect_uid id, phys_addr_t zone,
-                             size_t size, unsigned int type);
-+
- which takes the ID and the physical address.
-+
- Similarly there are variations:
--  meminspect_register_pa() omits the ID
--  meminspect_register_id_va() requires the ID but takes a virtual address
--  meminspect_register_va() omits the ID and requires a virtual address
-+
-+  * meminspect_register_pa() omits the ID
-+  * meminspect_register_id_va() requires the ID but takes a virtual address
-+  * meminspect_register_va() omits the ID and requires a virtual address
-=20
- If the ID is not given, the next avialable dynamic ID is allocated.
-=20
- To unregister a dynamic entry, some APIs are being defined:
--  meminspect_unregister_pa(phys_addr_t zone, size_t size);
--  meminspect_unregister_id(enum meminspect_uid id);
--  meminspect_unregister_va(va, size);
-+
-+  * meminspect_unregister_pa(phys_addr_t zone, size_t size);
-+  * meminspect_unregister_id(enum meminspect_uid id);
-+  * meminspect_unregister_va(va, size);
-=20
- All of the above have a lock variant that ensures the lock on the table
- is taken.
-@@ -77,15 +83,15 @@ is taken.
- meminspect drivers
- ------------------
-=20
--Drivers are free to traverse the table by using a dedicated function
--meminspect_traverse(void *priv, MEMINSPECT_ITERATOR_CB cb)
-+Drivers are free to traverse the table by using a dedicated function::
-+
-+  meminspect_traverse(void *priv, MEMINSPECT_ITERATOR_CB cb)
-+
- The callback will be called for each entry in the table.
-=20
--Drivers can also register a notifier with
--  meminspect_notifier_register()
--and unregister with
--  meminspect_notifier_unregister()
--to be called when a new entry is being added or removed.
-+Drivers can also register a notifier with meminspect_notifier_register()
-+and unregister with meminspect_notifier_unregister() to be called when a n=
-ew
-+entry is being added or removed.
-=20
- Data structures
- ---------------
-@@ -115,7 +121,7 @@ meminspect example
-=20
- A simple scenario for meminspect is the following:
- The kernel registers the linux_banner variable into meminspect with
--a simple annotation like:
-+a simple annotation like::
-=20
-   MEMINSPECT_SIMPLE_ENTRY(linux_banner);
-=20
-
-Thanks.
-
---=20
-An old man doll... just what I always wanted! - Clara
-
---jjzv1iO7GRx9l9vd
-Content-Type: application/pgp-signature; name=signature.asc
-
------BEGIN PGP SIGNATURE-----
-
-iHUEABYKAB0WIQSSYQ6Cy7oyFNCHrUH2uYlJVVFOowUCaSPKyAAKCRD2uYlJVVFO
-o3X1AQDv/TE1tWTJ8ZXxzegUA8QbZl8nMDxfkacY7FNjZC/xRQD8DSFK9tPqxhS0
-Zf7jek/k/PHFmMUwkhTyDVy+lTogUgc=
-=cIN1
------END PGP SIGNATURE-----
-
---jjzv1iO7GRx9l9vd--
 
