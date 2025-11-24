@@ -1,197 +1,237 @@
-Return-Path: <linux-arm-msm+bounces-83087-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-83088-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8279AC81406
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Nov 2025 16:10:40 +0100 (CET)
+Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [142.0.200.124])
+	by mail.lfdr.de (Postfix) with ESMTPS id A98CFC8143E
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Nov 2025 16:14:07 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id BD0793AB4E5
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Nov 2025 15:10:05 +0000 (UTC)
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id D55C54E1AAA
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Nov 2025 15:14:03 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 335C030EF7F;
-	Mon, 24 Nov 2025 15:10:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5D76931329E;
+	Mon, 24 Nov 2025 15:13:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="SgtJb3fS"
+	dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b="TntYoh8A"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from smtpout-03.galae.net (smtpout-03.galae.net [185.246.85.4])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 061FB30DEDC;
-	Mon, 24 Nov 2025 15:10:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC8C83128A1;
+	Mon, 24 Nov 2025 15:13:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.246.85.4
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763997002; cv=none; b=DqzBsU2M09ktD1VOX+pAaYf6wv4szAPfNg7FjGR1pIPcbmbGPKGcWUcj8SrXdYjqqJxhGgLL5Fb6a69/Nm0bGAqmTPZAxMeymJ+/HvEOT8zAhzFhUaEqcx8MPVqDCg0fHwwnOjcMvcluXMxesue4tyCkB6QQ2Mztn4hOIc1AAus=
+	t=1763997237; cv=none; b=SbdayHZ5h09UGa/lSUPwz5Ap50wjcD/Hey4qAlhcy5WW6gh+3Y5s/dLtZnq+FLnz7+6z48weBoXdjLwwcdxT/kQLyD45xdWHItS6z8yFCCRSJ/nPB399n4Ywq5EATtj6zHH+31ad2voGeCoAScm2z3VnAzTjPfnKLdHd3mepmxg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763997002; c=relaxed/simple;
-	bh=z4Z8xdOb++e/GW/xOyGMraTP8foIwEr0+MZSo8Kqt8M=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=t8IqCJUjKBCTGTidGdeSUG4RwrVFng0xjMmZ2QOKQmht0646wOyokKaqEggX1G4zhxHulq11hyS0y+2LS+9yBOtVBfU/4txrJ8ojHeJqU35uS98YNsrka0cEwcfyrsxTrm67voiQgcrrhiKPST8tNP9rFdxsaOaN4SYnirG7gIs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=SgtJb3fS; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28149C4CEF1;
-	Mon, 24 Nov 2025 15:09:57 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1763997001;
-	bh=z4Z8xdOb++e/GW/xOyGMraTP8foIwEr0+MZSo8Kqt8M=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=SgtJb3fSPtXcLT9XE6JHdKPFILB/DnMO240LlX5i71DvNe2DXVXRy6fyDGL+OPbBT
-	 kbVJLEl7sjIMSFXIVrDZfdDbc0JKztFOm32vyoCd65L17GpAtR7U/Jtn+flpZ+/4wz
-	 gzgxu5q1+AL0aS1mv9gEccjhkgML2t5CVBNySzJAFc3ahGH+yvpDm5UoMtgR34q/fk
-	 xTJsVIQLrswBg0lDR+YNxfco3NW88lzXfGbRF4OQG2RCbsV/wNtxsIfcY0qKrqRdCG
-	 ZYftXrf0l8tIW2m5YRxhDi9ftT5UPqmRzwrPFwO0FpInWfzwnnqSBO3/20MmlAEGBo
-	 YI8LCz4gw9mLA==
-Message-ID: <1a5d8d8b-a866-4112-a619-11c18547b63a@kernel.org>
-Date: Mon, 24 Nov 2025 16:09:56 +0100
+	s=arc-20240116; t=1763997237; c=relaxed/simple;
+	bh=gBhx8Mbf0EyBCb2GMYE7V3/PC7aCPdL0yiJrn3XgNAM=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=KWlw6EixN0LnJpwnsTwZ0Rg50AmVLL0CWPR3ziKTO00aLwer6hrQ3410EO/qJ1ojjrJUlFBcgloieOVG3rVYygQaPQdhPGTnRPd0xeRlKwo/U5QrtBdRVIKxjqPGW2/U89lB/qwYZvCArg5wwgG66GFPUSWlYLHUQ3rCuqwspT0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com; spf=pass smtp.mailfrom=bootlin.com; dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b=TntYoh8A; arc=none smtp.client-ip=185.246.85.4
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bootlin.com
+Received: from smtpout-01.galae.net (smtpout-01.galae.net [212.83.139.233])
+	by smtpout-03.galae.net (Postfix) with ESMTPS id 2C30A4E418A4;
+	Mon, 24 Nov 2025 15:13:53 +0000 (UTC)
+Received: from mail.galae.net (mail.galae.net [212.83.136.155])
+	by smtpout-01.galae.net (Postfix) with ESMTPS id DF0D660705;
+	Mon, 24 Nov 2025 15:13:52 +0000 (UTC)
+Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon) with ESMTPSA id 8382810371A40;
+	Mon, 24 Nov 2025 16:13:31 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=dkim;
+	t=1763997229; h=from:subject:date:message-id:to:cc:mime-version:content-type:
+	 in-reply-to:references; bh=KeHRsQWQWHgCUqrAiXnJp1WIeWLgxqdNlTv4+nJhNOg=;
+	b=TntYoh8AeSRn4I+5TNL9anc2ksbdcU3gCGIIM0uCozEReM6pGtWO+C/NwdpLkYeLztP3/w
+	5RuxgzByVoF1vNmgCkNzCXV1qRBqjxwRgvSYjxhVPkkK4flld6reO+1Fq3hyEOMkslukjN
+	8l6OJQAzvyy/7zkY7oB2nW6bvSrtwRW83lB0m3bEi3RMQ8QTbDMmT8ucAdBnLKHO6Yrh12
+	PAIZLO55VpDOobuDS8v4RYmFPVUBdJNkNmKo4n82qa/5ugkeG7xT2UXZl9OV2JNEhITFqj
+	aMjr9X3XwgfbShXaoK3UFtga1GgP/ZO9Y16VJaeDTrgb3pSkfMOtanXC/Tl3og==
+From: Romain Gantois <romain.gantois@bootlin.com>
+To: Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>,
+ Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
+ Conor Dooley <conor+dt@kernel.org>, Jonathan Cameron <jic23@kernel.org>,
+ David Lechner <dlechner@baylibre.com>,
+ Nuno =?UTF-8?B?U8Oh?= <nuno.sa@analog.com>,
+ Andy Shevchenko <andy@kernel.org>, Guenter Roeck <linux@roeck-us.net>
+Cc: Thomas Petazzoni <thomas.petazzoni@bootlin.com>,
+ linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-iio@vger.kernel.org, Conor Dooley <conor.dooley@microchip.com>,
+ MyungJoo Ham <myungjoo.ham@samsung.com>,
+ Chanwoo Choi <cw00.choi@samsung.com>, Peter Rosin <peda@axentia.se>,
+ Mariel Tinaco <Mariel.Tinaco@analog.com>,
+ Lars-Peter Clausen <lars@metafoo.de>,
+ Michael Hennerich <Michael.Hennerich@analog.com>,
+ Kevin Tsai <ktsai@capellamicro.com>,
+ Linus Walleij <linus.walleij@linaro.org>,
+ Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+ Eugen Hristev <eugen.hristev@linaro.org>, Vinod Koul <vkoul@kernel.org>,
+ Kishon Vijay Abraham I <kishon@kernel.org>,
+ Sebastian Reichel <sre@kernel.org>, Chen-Yu Tsai <wens@csie.org>,
+ Support Opensource <support.opensource@diasemi.com>,
+ Paul Cercueil <paul@crapouillou.net>, Iskren Chernev <me@iskren.info>,
+ Marek Szyprowski <m.szyprowski@samsung.com>,
+ Matheus Castello <matheus@castello.eng.br>,
+ Saravanan Sekar <sravanhome@gmail.com>,
+ Matthias Brugger <matthias.bgg@gmail.com>,
+ AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+ Casey Connolly <casey.connolly@linaro.org>,
+ Pali =?UTF-8?B?Um9ow6Fy?= <pali@kernel.org>,
+ Orson Zhai <orsonzhai@gmail.com>,
+ Baolin Wang <baolin.wang@linux.alibaba.com>,
+ Chunyan Zhang <zhang.lyra@gmail.com>, Amit Kucheria <amitk@kernel.org>,
+ Thara Gopinath <thara.gopinath@gmail.com>,
+ "Rafael J. Wysocki" <rafael@kernel.org>,
+ Daniel Lezcano <daniel.lezcano@linaro.org>, Zhang Rui <rui.zhang@intel.com>,
+ Lukasz Luba <lukasz.luba@arm.com>,
+ Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>,
+ Jaroslav Kysela <perex@perex.cz>, Takashi Iwai <tiwai@suse.com>,
+ Sylwester Nawrocki <s.nawrocki@samsung.com>,
+ Olivier Moysan <olivier.moysan@foss.st.com>,
+ Arnaud Pouliquen <arnaud.pouliquen@foss.st.com>,
+ Maxime Coquelin <mcoquelin.stm32@gmail.com>,
+ Alexandre Torgue <alexandre.torgue@foss.st.com>,
+ Dixit Parmar <dixitparmar19@gmail.com>, linux-hwmon@vger.kernel.org,
+ linux-input@vger.kernel.org, linux-phy@lists.infradead.org,
+ linux-pm@vger.kernel.org, linux-mips@vger.kernel.org,
+ linux-arm-kernel@lists.infradead.org, linux-mediatek@lists.infradead.org,
+ linux-arm-msm@vger.kernel.org, linux-sound@vger.kernel.org,
+ linux-stm32@st-md-mailman.stormreply.com,
+ Andy Shevchenko <andriy.shevchenko@intel.com>
+Subject: Re: [PATCH v4 0/6] Add support for the LTM8054 voltage regulator
+Date: Mon, 24 Nov 2025 16:13:26 +0100
+Message-ID: <23111366.EfDdHjke4D@fw-rgant>
+In-Reply-To: <24527d76-4f6a-4008-a369-23510d492a94@roeck-us.net>
+References:
+ <20251124-ltm8054-driver-v4-0-107a8a814abe@bootlin.com>
+ <24527d76-4f6a-4008-a369-23510d492a94@roeck-us.net>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 0/7] Add TUXEDO Elite 14 Gen1 (X1E78100)
-To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Cc: Stephan Gerhold <stephan.gerhold@linaro.org>,
- Georg Gottleuber <ggo@tuxedocomputers.com>,
- Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- Ettore Chimenti <ettore.chimenti@linaro.org>,
- Srinivas Kandagatla <srini@kernel.org>, stefan.schmidt@linaro.org,
- wse@tuxedocomputers.com, cs@tuxedo.de
-References: <20251121142623.251118-1-ggo@tuxedocomputers.com>
- <af3d3295-1340-417f-8682-7d7e2bc6c812@kernel.org>
- <aSGXu7IhPDNSkYhi@linaro.org>
- <280982b8-ce86-45aa-812b-ef1bf6e57e3d@kernel.org>
- <tceqigutnu6xqlprxbbm667szlnfwlhfgzxxroj6xldupk2ejt@4izqdv22rmku>
-From: Krzysztof Kozlowski <krzk@kernel.org>
-Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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 a/A=
-In-Reply-To: <tceqigutnu6xqlprxbbm667szlnfwlhfgzxxroj6xldupk2ejt@4izqdv22rmku>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: multipart/signed; boundary="nextPart4113614.kQq0lBPeGt";
+ micalg="pgp-sha512"; protocol="application/pgp-signature"
+X-Last-TLS-Session-Version: TLSv1.3
 
-On 24/11/2025 15:34, Dmitry Baryshkov wrote:
-> On Sat, Nov 22, 2025 at 12:15:40PM +0100, Krzysztof Kozlowski wrote:
->> On 22/11/2025 12:00, Stephan Gerhold wrote:
->>> On Sat, Nov 22, 2025 at 11:16:25AM +0100, Krzysztof Kozlowski wrote:
->>>> On 21/11/2025 15:26, Georg Gottleuber wrote:
->>>>> [...]
->>>>> Initial support for TUXEDO Elite 14 Gen1 laptop. It is based on Qualcomm
->>>>> Snapdragon X Elite SoC (X1E78100).
->>>>>
->>>> [...]
->>>>
->>>>> Because the SoC is now outdated and some functions still do not work as
->>>>> well as customers would expect from the TUXEDO brand, TUXEDO Elite 14 Gen1
->>>>> will not be offered for sale. We would still like to submit our device
->>>>> tree to the mainline kernel and thus contribute to Linux support for a
->>>>> compatible device sold by Medion (SPRCHRGD 14 S1 Elite). At least in
->>>>> Germany, this device was sold in many large stores. (An official press
->>>>> statement will follow on our website.)
->>>>
->>>> For me this is unmergeable, because we do not take stuff which no one
->>>> uses (no one can even use), and I am sad I put effort in reviewing AFTER
->>>> this was known to be cancelled.
->>>>
->>>
->>> I don't think we have any requirement to have a large user base in order
->>> to merge changes. There is already support for plenty of cancelled
->>> products with only a few (if any) remaining users in mainline, e.g.
->>>
->>>  - Snapdragon X Elite Dev Kit (x1e001de-devkit), shipped only to a
->>>    handful of users before cancelled
->>>  - All ChromeOS SC7280 devices (including DTB variants for several
->>>    revisions of pre-production samples), never shipped to anyone
->>>
->>
->> I discuss here the timing primarily and I don't know the timing about them.
->>
->>> There are also plenty of internal reference devices that only a handful
->>> of people have access to (MTP, HDK, CRD etc). What makes these any
->>
->> They are still "maintained" and "offered", even if only for handful
->> (like 3000 EACH variant) people. That's the amount of board of each
->> variant, e.g. MTP8750, and all of them run some sort of Linux, even if
->> downstream. So sorry, but 3000 (or whatever number it is) is not handful.
+--nextPart4113614.kQq0lBPeGt
+Content-Type: multipart/alternative; boundary="nextPart8077299.EvYhyI6sBW";
+ protected-headers="v1"
+Content-Transfer-Encoding: 7Bit
+From: Romain Gantois <romain.gantois@bootlin.com>
+Date: Mon, 24 Nov 2025 16:13:26 +0100
+Message-ID: <23111366.EfDdHjke4D@fw-rgant>
+In-Reply-To: <24527d76-4f6a-4008-a369-23510d492a94@roeck-us.net>
+MIME-Version: 1.0
+
+This is a multi-part message in MIME format.
+
+--nextPart8077299.EvYhyI6sBW
+Content-Transfer-Encoding: 7Bit
+Content-Type: text/plain; charset="utf-8"
+
+Hello Guenter,
+
+On Monday, 24 November 2025 15:57:41 CET Guenter Roeck wrote:
+> On 11/24/25 06:48, Romain Gantois wrote:
+> > Hello everyone,
+> > 
+> > This is version four of my series which adds initial support of the Linear
+> > Technology LTM8054 voltage regulator. The driver supports a fixed voltage
+> > and a tunable output current limit using a DAC-controlled pin.
+> > 
+> > I'd say that the most unusual part of this series is the usage of the IIO
+> > consumer API in a regulator driver. I think this makes sense here, since
+> > the regulator driver has to access a DAC to read/set the output current
+> > limit.
 > 
-> Where does 3000 come from? The Bible says 10 people were enough to
-> maintain Sodom and Gomorrah. For Herobrine we know that there are very
-> few people still using those devices (maybe less than 10), but we still
-> keep it. Cheeza was dropped after it was known that the count is exactly
-> zero.
-> 
->>
->>> different? Ettore has been actively testing and contributing to the port
->>> for the TUXEDO laptop, so if he wants to continue that, I don't think
->>> anything speaks against merging this device tree.
->>
->> I won't be maintaining it, so not my effort in that, but since you speak
->> about that - maintenance is an effort, thus I decide not to spend it on
->> cancelled products.
->>
->>>
->>> In any case, I don't think the time reviewing these changes is wasted:
->>
->> I am happy that you do not find my time wasted, but I disagree on that
->> because knowing this is cancelled, I would probably not care and review
->> products which are not cancelled at this time.
-> 
-> There still people owning and being happy with those laptops. It's
-> Bjorn's and Konrad's time being spent on maintaining those. What's the
-> issue?
+> I don't think that is a valid reason. Literally every driver measuring
+> voltages or current uses a DAC to do it. How else would one convert an
+> analog value into a digital value ?
+
+Sorry, I don't quite understand your remark. To integrate this voltage 
+regulator component into the Linux regulator abstraction, I'm providing a 
+current limit control function. To provide such a function, the voltage level 
+on a pin has to be controlled. AFAIK, the kernel abstraction used to set 
+precise voltages on lines is an IO channel.
+
+Do you think that using the IIO consumer API is not correct here? What other 
+method do you think I should use?
+
+Thanks,
+
+-- 
+Romain Gantois, Bootlin
+Embedded Linux and Kernel engineering
+https://bootlin.com
 
 
-I think I described my issue very precise. Please read my first reply in
-this thread. Joining discussion at the end of it, not reading it and
-then asking "what is the issue" is not really encouraging me to discuss
-whether this is a problem or not.
+--nextPart8077299.EvYhyI6sBW
+Content-Transfer-Encoding: 7Bit
+Content-Type: text/html; charset="utf-8"
 
-Best regards,
-Krzysztof
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+</head>
+<body><p style="margin-top:0;margin-bottom:0;margin-left:0;margin-right:0;">Hello Guenter,</p>
+<br /><p style="margin-top:0;margin-bottom:0;margin-left:0;margin-right:0;">On Monday, 24 November 2025 15:57:41 CET Guenter Roeck wrote:</p>
+<p style="margin-top:0;margin-bottom:0;margin-left:0;margin-right:0;">&gt; On 11/24/25 06:48, Romain Gantois wrote:</p>
+<p style="margin-top:0;margin-bottom:0;margin-left:0;margin-right:0;">&gt; &gt; Hello everyone,</p>
+<p style="margin-top:0;margin-bottom:0;margin-left:0;margin-right:0;">&gt; &gt; </p>
+<p style="margin-top:0;margin-bottom:0;margin-left:0;margin-right:0;">&gt; &gt; This is version four of my series which adds initial support of the Linear</p>
+<p style="margin-top:0;margin-bottom:0;margin-left:0;margin-right:0;">&gt; &gt; Technology LTM8054 voltage regulator. The driver supports a fixed voltage</p>
+<p style="margin-top:0;margin-bottom:0;margin-left:0;margin-right:0;">&gt; &gt; and a tunable output current limit using a DAC-controlled pin.</p>
+<p style="margin-top:0;margin-bottom:0;margin-left:0;margin-right:0;">&gt; &gt; </p>
+<p style="margin-top:0;margin-bottom:0;margin-left:0;margin-right:0;">&gt; &gt; I'd say that the most unusual part of this series is the usage of the IIO</p>
+<p style="margin-top:0;margin-bottom:0;margin-left:0;margin-right:0;">&gt; &gt; consumer API in a regulator driver. I think this makes sense here, since</p>
+<p style="margin-top:0;margin-bottom:0;margin-left:0;margin-right:0;">&gt; &gt; the regulator driver has to access a DAC to read/set the output current</p>
+<p style="margin-top:0;margin-bottom:0;margin-left:0;margin-right:0;">&gt; &gt; limit.</p>
+<p style="margin-top:0;margin-bottom:0;margin-left:0;margin-right:0;">&gt; </p>
+<p style="margin-top:0;margin-bottom:0;margin-left:0;margin-right:0;">&gt; I don't think that is a valid reason. Literally every driver measuring</p>
+<p style="margin-top:0;margin-bottom:0;margin-left:0;margin-right:0;">&gt; voltages or current uses a DAC to do it. How else would one convert an</p>
+<p style="margin-top:0;margin-bottom:0;margin-left:0;margin-right:0;">&gt; analog value into a digital value ?</p>
+<br /><p style="margin-top:0;margin-bottom:0;margin-left:0;margin-right:0;">Sorry, I don't quite understand your remark. To integrate this voltage </p>
+<p style="margin-top:0;margin-bottom:0;margin-left:0;margin-right:0;">regulator component into the Linux regulator abstraction, I'm providing a </p>
+<p style="margin-top:0;margin-bottom:0;margin-left:0;margin-right:0;">current limit control function. To provide such a function, the voltage level </p>
+<p style="margin-top:0;margin-bottom:0;margin-left:0;margin-right:0;">on a pin has to be controlled. AFAIK, the kernel abstraction used to set </p>
+<p style="margin-top:0;margin-bottom:0;margin-left:0;margin-right:0;">precise voltages on lines is an IO channel.</p>
+<br /><p style="margin-top:0;margin-bottom:0;margin-left:0;margin-right:0;">Do you think that using the IIO consumer API is not correct here? What other </p>
+<p style="margin-top:0;margin-bottom:0;margin-left:0;margin-right:0;">method do you think I should use?</p>
+<br /><p style="margin-top:0;margin-bottom:0;margin-left:0;margin-right:0;">Thanks,</p>
+<br /><p style="margin-top:0;margin-bottom:0;margin-left:0;margin-right:0;">-- </p>
+<p style="margin-top:0;margin-bottom:0;margin-left:0;margin-right:0;">Romain Gantois, Bootlin</p>
+<p style="margin-top:0;margin-bottom:0;margin-left:0;margin-right:0;">Embedded Linux and Kernel engineering</p>
+<p style="margin-top:0;margin-bottom:0;margin-left:0;margin-right:0;">https://bootlin.com</p>
+<br /></body>
+</html>
+--nextPart8077299.EvYhyI6sBW--
+
+--nextPart4113614.kQq0lBPeGt
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: This is a digitally signed message part.
+Content-Transfer-Encoding: 7Bit
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCgAdFiEEIcCsAScRrtr7W0x0KCYAIARzeA4FAmkkdhYACgkQKCYAIARz
+eA7Qpw//QZmn8Z6KMjxYRaV2oFT+8zEG5iKQ7jzafgDDFy0In7oKyj1RV8ZqVkxI
+5YLcWx1HZUN25O9ysPGCiSE/uSvFGyZeMjCI4vQcEUrjPc2LgrzKc78YE3C2Rzk3
+FVp2JmSU26N8JWgb76E8XsmdQsD9gYFgEvptccUYauluiw98CsLLd416CTRUG4ko
+AWiRXWQc4iNKIV5Xzr+PYzRDp0w0TtqI0jgZZPOsL+QHzrMvq7nIbDvmiCOaSBJG
+BMW5zhT075/cTv0swZYoTdljT18cPC3HqsXeUwADYgzlB/+5z5Ji8Lew3BVtoQmd
+pbsehIp2cC7r5HQvbgtyb1Zbjo534R8rPYMM2vujv3E1N5/+3p7WWr7UQCzm+Hll
+X4MSDSI6FczjKXBEfPUlPAuDPo2Ms5C7cTdh0MdFjXnX6kRZkfawuYhwjxuS6Vl0
+lqtZpG1OlMbm5gRcGYxZehWxhYZW3+fG4gG6V3NdgXJBgT0VoxlA3Wq3uG7sU/MM
+Mn4yZWXRs+JyiVnWoxbg6L3AB6PFChnD29VbJ372najkvwwJKmDoV7BdRNx/K9vC
+3C1215jYC3lElxPoTNmPTV6sdtp+wtPdJ2k5ZN/rGPm4LuMrNfVplLWsqH/U8GY4
+SOtoXDr+y5wsgtsVqvKWrzlJD6HcAeef7v8oIqP/v8LaH3xkhKQ=
+=xKLG
+-----END PGP SIGNATURE-----
+
+--nextPart4113614.kQq0lBPeGt--
+
+
+
 
