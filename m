@@ -1,131 +1,242 @@
-Return-Path: <linux-arm-msm+bounces-83105-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-83106-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ams.mirrors.kernel.org (ams.mirrors.kernel.org [IPv6:2a01:60a::1994:3:14])
-	by mail.lfdr.de (Postfix) with ESMTPS id 40D84C81948
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Nov 2025 17:32:47 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 13CBAC8199F
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Nov 2025 17:36:27 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ams.mirrors.kernel.org (Postfix) with ESMTPS id B6B94348E9E
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Nov 2025 16:31:23 +0000 (UTC)
+	by ams.mirrors.kernel.org (Postfix) with ESMTPS id 7A78B3470D1
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Nov 2025 16:34:26 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 553E131618F;
-	Mon, 24 Nov 2025 16:30:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 421B929AB11;
+	Mon, 24 Nov 2025 16:34:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="moihKQi3"
+	dkim=pass (2048-bit key) header.d=mainlining.org header.i=@mainlining.org header.b="nQfbJhwS";
+	dkim=permerror (0-bit key) header.d=mainlining.org header.i=@mainlining.org header.b="vJdZ6dKD"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f48.google.com (mail-lf1-f48.google.com [209.85.167.48])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mail.mainlining.org (mail.mainlining.org [5.75.144.95])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A380314D28
-	for <linux-arm-msm@vger.kernel.org>; Mon, 24 Nov 2025 16:30:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48F55298CA5;
+	Mon, 24 Nov 2025 16:34:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=5.75.144.95
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764001802; cv=none; b=X+K7uEtR+Dn3GL3JPbHMFKvLBNzHxqC9pZxO2RtsFOR1tzDscOe6MKJymt5l2jTiS6qjxFmddX5j5cZrZ1Woy9PyBwbc/xxuc6721KNXVHiraK3zGcnInZzbbRjgRJ9MaRp+d+KLaxDDDIk/tNuZpy/lRggRZ16Ex2DIanH3mkA=
+	t=1764002063; cv=none; b=bY0J7p4m/u6Req84KUQJX6Oung5e81TLxmdhImWW4PdlBIHRYZZbkpgiUFbWMy8fcDB/VQMqmD4+cLnr+sJhRmGgYzcTUc4CbBmoG87Z2jBDOaVp8kX8tPDafraksuqbIeNN0RAjfcENMC682Ry1RIMZP1cJb4EUzun1FzGhWuw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764001802; c=relaxed/simple;
-	bh=6o9Xk8YbBV+yQureABx1GwT4sevwwW5O5AfMT3sLf5c=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=i9aEac/Me9TBmZA0lRUV8ymT+FbaiWC7TUlC+GZxpF+G7CfvBaUuPOfVSdlNsEXVzu2mgkDMQGeY2IeP07GA8vHwr9uLki2/Lj9ACGIb4PUdlIlkJPL4BfrkBRiXL/V4/jCtXJhKgKu5iNpDUtQ/6UtCLH5gsNywJu3dPBY+bGs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=moihKQi3; arc=none smtp.client-ip=209.85.167.48
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f48.google.com with SMTP id 2adb3069b0e04-5957befc880so593016e87.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 24 Nov 2025 08:29:59 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1764001798; x=1764606598; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=x8SFzpOuhO5EV5iKn74UZD68ssvHanb60bdCcaWpzCo=;
-        b=moihKQi368dAhAnrfE2d2pABuJRsmHiyRmqXWicMlfMtPJg+9g5UAD0kwpFIa4yEOU
-         GzloKOJcfqVi7p/9Ei9p+KVYYceIPxD55J42fpiQUAUmHIkHJfKjDBHySohRg6+y2yk0
-         tCaFS+uU6SbvarxU8FMN7Da7lxolDWWxT0RGPGF069bwu+pqHYuAOu0kfcoI79wNGNYr
-         DAnDFJhSnX19HdGtD1c7tqphLezkbHm1loH/i3dISQP3jLw6Sm2rP8j686g8EB6TwIlp
-         OXa4UuLkO1OpgZfXTHEzPKI9E/DTPxtQ5UBt96+1AtREu3/HtryqcyCpNOBAlh0RPJHT
-         RppA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1764001798; x=1764606598;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=x8SFzpOuhO5EV5iKn74UZD68ssvHanb60bdCcaWpzCo=;
-        b=f1/5mJ6Sme+0NZiqeRxnKWYmrjEYTAw7c9E0yTmJWlYjMxzW2vYd28JZA2Odw7jXLi
-         fSjyWIXLvMKoQINQd0fIJLo+nm1KsBVCGM16FiOsRpF0a/fMmgfSLl4kPRdTFQj8WEjR
-         hgVzrFfIhnucSD/x9V+NVNytVpbekLcYGgNRRz4t/bPi/fmcAKXERrfCCBV5rrzkFkVF
-         tCKaFinEFLlBKitZSH2yxKI7ATrsYmI0T0N3YarTrmyNavfDv//Nb9CBLm4wI8VzT7Fn
-         uG3ihNCK0w6OxA7G56lcCf9ipNKUxKnsdhvbX2yJ2+nv26K/AblTkqddVIzzCAHK+gxZ
-         4eXQ==
-X-Forwarded-Encrypted: i=1; AJvYcCUNXpr3KXKOT1/Ll7B/UP7gLvYauL53V3zpojyAksfSLUybrJtPVOQuN7WwAqBVZ66YiuCUODNxKUpoWq2F@vger.kernel.org
-X-Gm-Message-State: AOJu0Yx2F/8xsE1JGufgrkIErWe8xkeOxyYQIhQfdbA37mZguG8x2wax
-	scyAimQN6qi7bVM5x7HE6CO/47T7eGLi/EyqNQ258eAYTjslPa0xaVPkqBLu7m24ipM=
-X-Gm-Gg: ASbGncu6lETAdO91zHde1gPuIXQaCFKITooGG+mNSCbvUSzB3wz/3af1ERcW/YnvRbi
-	maBhPPra9ihDa4JQf7yYX0Q0UdhqFRhO5izlkctzrgM7hy+X33UY1wvyjs0YJVbs+t/yMiSMv6F
-	OSdpcTbC4j5ay7xHyw9lSvT0TCj/eZYKc55HHkAN70XDkC0QBWsuPN/GDdxspJj1nbVs4qbfTT4
-	MN8MvVbjPx/anpuJeOoJBCO+4pMEH2SHw4MzyDeKyo4xtk7BJItc3P3UEcghkin5+YK24umJMqP
-	+6Mi5QqG0F6eqBg3+1T/nPB0pnUOuBqVtkICIJeRUV5shx19Dyb/Xcnv3GPfqkHytBg6obL3Kni
-	yKpAx1dbeiqqKFoFeMy4IJE5eX1MLWF4JTpVxlseFSNVRmk3A0ve0mnffVsf5egnBy7kjoT+iIw
-	/yN/9yBWizPNjGhInz3TDRBxeMdgy+SknaA2g0QKZ1hFyDHz3+dGpV5w==
-X-Google-Smtp-Source: AGHT+IGZmldA/dcXthKfsFSI/Byy+Zk4BBl9hUAYfTjD9FcbnSy7TF6y62wi1hHTVinHRFed17AYiA==
-X-Received: by 2002:a05:651c:31cd:b0:37b:926c:26f7 with SMTP id 38308e7fff4ca-37cdc1a7ba9mr17520421fa.2.1764001798220;
-        Mon, 24 Nov 2025 08:29:58 -0800 (PST)
-Received: from thyme.. (91-159-24-186.elisa-laajakaista.fi. [91.159.24.186])
-        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-37cc6b63acbsm28357671fa.21.2025.11.24.08.29.57
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 24 Nov 2025 08:29:57 -0800 (PST)
-From: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
-To: Catalin Marinas <catalin.marinas@arm.com>,
-	Will Deacon <will@kernel.org>
-Cc: Marc Zyngier <maz@kernel.org>,
-	Mark Brown <broonie@kernel.org>,
-	linux-arm-kernel@lists.infradead.org,
-	linux-arm-msm@vger.kernel.org
-Subject: [PATCH] arm64: cpufeature: Unrestrict ID_AA64MMFR1_EL1 bit assignments
-Date: Mon, 24 Nov 2025 18:29:55 +0200
-Message-ID: <20251124162955.3616314-1-vladimir.zapolskiy@linaro.org>
-X-Mailer: git-send-email 2.49.0
+	s=arc-20240116; t=1764002063; c=relaxed/simple;
+	bh=bLNUntFA190P6T8OWsNO75VHvXpIqvxazFS9OQAK+00=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=bmCM4vk9zrsQVQ8rAOJEJ9VuWiv99IB1Rt6ukxOBqcKRwxJKm8FXZe5r0hYo4tQ03a5/G68szEyllvx/xlFssVdt09Xj1tcbiog0kGR5QvXeryv7NAaUy8gMQsMpBbSKjuJw+WdUVjVNBpgFAPByns91RQQMUYQQ1z7bRLIf1EU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=mainlining.org; spf=pass smtp.mailfrom=mainlining.org; dkim=pass (2048-bit key) header.d=mainlining.org header.i=@mainlining.org header.b=nQfbJhwS; dkim=permerror (0-bit key) header.d=mainlining.org header.i=@mainlining.org header.b=vJdZ6dKD; arc=none smtp.client-ip=5.75.144.95
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=mainlining.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=mainlining.org
+DKIM-Signature: v=1; a=rsa-sha256; s=202507r; d=mainlining.org; c=relaxed/relaxed;
+	h=From:To:Subject:Date:Message-ID; t=1764002016; bh=t3iiIyLjsNz/9iVAMYIb9dy
+	URt3jS7A9CBG5Ng6Av9Y=; b=nQfbJhwSl9Ch9At1qj8ZxBVu1yTESs/6Ita7lz87gRh0oEdmRF
+	pYDMoaiNwIXyw+2Dn35oHHOX0smmzvlvpKYPLVZNJCH/m4AdW4/Bjvxj3fJxx0kBP34pxtO2/r8
+	weMUdZLbnOb8CZubo/HkV5PZjbGsCIjqcKJlJ41OaSlDG2nHpvfsDW0c9eo14PY9m3u0kRAihC4
+	TNbZtQInqWjVoljQ9JiXGiGbQM2q9VCwvD6cJDvdzGNwUpg1yiuuLGRme3RhDqRVpx4M+fBbp8D
+	LJQpNlJF4Cbn0DBoJDbiyBkW/Sybov++p3ymWZaGCeLDTj1a5nWDeN/HXjGRz+nPfFg==;
+DKIM-Signature: v=1; a=ed25519-sha256; s=202507e; d=mainlining.org; c=relaxed/relaxed;
+	h=From:To:Subject:Date:Message-ID; t=1764002016; bh=t3iiIyLjsNz/9iVAMYIb9dy
+	URt3jS7A9CBG5Ng6Av9Y=; b=vJdZ6dKDcB2EuUtgFlmkCD8dUw8eicd0/J/MOuiMxHBeAFGUIR
+	T4uzKO/2MejgCHoQHq9Rlz0EqOhTQ7fshGBQ==;
+Message-ID: <87d40d9d-0b04-4bfe-b035-260e094d1886@mainlining.org>
+Date: Mon, 24 Nov 2025 19:33:35 +0300
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 1/3] arm64: dts: qcom: sdm630/660: Add CDSP-related
+ nodes
+To: Ekansh Gupta <ekansh.gupta@oss.qualcomm.com>,
+ Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Cc: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+ Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+ ~postmarketos/upstreaming@lists.sr.ht, linux@mainlining.org,
+ Chenna Kesava Raju <chennak@qti.qualcomm.com>,
+ Bharath Kumar <bkumar@qti.qualcomm.com>
+References: <a3cb6633-1595-41e7-8e87-ca48a98f822c@mainlining.org>
+ <83c3aea5-764e-4e60-8b16-67b474f19357@oss.qualcomm.com>
+ <d17548bb-ddce-4d60-8dc4-2c0633989299@oss.qualcomm.com>
+ <f5c7eb1c-28b1-4cf1-afb0-b993384b7712@oss.qualcomm.com>
+ <80836b8f-16a8-4520-ad11-5ca0abb3403e@oss.qualcomm.com>
+ <99c22e73-797c-4a30-92ba-bc3bd8cf70f0@oss.qualcomm.com>
+ <eddc16cb-d951-401c-8fb8-fccfcf600143@mainlining.org>
+ <0b06f744-b695-43d9-8da3-4424e2b53a5e@oss.qualcomm.com>
+ <24221ce7-24e4-4eaa-8681-ed9b4b9f2d6e@oss.qualcomm.com>
+ <be4e2715-882d-4358-8575-374187f7ee2f@oss.qualcomm.com>
+ <2h222ejvc37cldeno7e4qom5tnvdblqn2zypuquvadbcu7d3pr@765qomrwfvwl>
+ <f0c41563-dcd1-4cf9-8b73-fb9fedd52710@mainlining.org>
+ <bacb6293-a4e3-4d23-8a1f-cf42f221ba4b@mainlining.org>
+ <51e5945d-e800-4f97-8e2e-f97f61b76fc8@oss.qualcomm.com>
+Content-Language: ru-RU, en-US
+From: Nickolay Goppen <setotau@mainlining.org>
+In-Reply-To: <51e5945d-e800-4f97-8e2e-f97f61b76fc8@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 
-It appears that 4 out of 8 Qualcomm SM8450 SoC cores do not generate
-an SError interrupt due to an External abort on a speculative read,
-and it is reported as a failed sanity check on boot:
 
-    CPU features: SANITY CHECK: Unexpected variation in SYS_ID_AA64MMFR1_EL1. Boot CPU: 0x00000011212122, CPU4: 0x00000010212122
-    CPU features: SANITY CHECK: Unexpected variation in SYS_ID_AA64MMFR1_EL1. Boot CPU: 0x00000011212122, CPU5: 0x0000001021212
-    CPU features: SANITY CHECK: Unexpected variation in SYS_ID_AA64MMFR1_EL1. Boot CPU: 0x00000011212122, CPU6: 0x00000010212122
-    CPU features: SANITY CHECK: Unexpected variation in SYS_ID_AA64MMFR1_EL1. Boot CPU: 0x00000011212122, CPU7: 0x00000010212122
+24.11.2025 18:29, Ekansh Gupta пишет:
+>
+> On 11/24/2025 8:32 PM, Nickolay Goppen wrote:
+>> 23.11.2025 13:51, Nickolay Goppen пишет:
+>>> 21.11.2025 15:09, Dmitry Baryshkov пишет:
+>>>> On Fri, Nov 21, 2025 at 01:41:21PM +0530, Ekansh Gupta wrote:
+>>>>> On 11/20/2025 5:17 PM, Konrad Dybcio wrote:
+>>>>>> On 11/20/25 11:54 AM, Ekansh Gupta wrote:
+>>>>>>> On 11/20/2025 1:27 PM, Nickolay Goppen wrote:
+>>>>>>>> 20.11.2025 07:55, Ekansh Gupta пишет:
+>>>>>>>>> On 11/20/2025 1:58 AM, Srinivas Kandagatla wrote:
+>>>>>>>>>> On 11/12/25 1:52 PM, Konrad Dybcio wrote:
+>>>>>>>>>>> On 11/10/25 6:41 PM, Srinivas Kandagatla wrote:
+>>>>>>>>>>>> On 11/3/25 12:52 PM, Konrad Dybcio wrote:
+>>>>>>>>>>>>> On 10/31/25 12:30 PM, Nickolay Goppen wrote:
+>>>>>>>>>>>>>> 24.10.2025 16:58, Nickolay Goppen пишет:
+>>>>>>>>>>>>>>> 24.10.2025 11:28, Konrad Dybcio пишет:
+>>>>>>>>>>>>>>>> On 10/23/25 9:51 PM, Nickolay Goppen wrote:
+>>>>>>>>>>>>>>>>> In order to enable CDSP support for SDM660 SoC:
+>>>>>>>>>>>>>>>>>      * add shared memory p2p nodes for CDSP
+>>>>>>>>>>>>>>>>>      * add CDSP-specific smmu node
+>>>>>>>>>>>>>>>>>      * add CDSP peripheral image loader node
+>>>>>>>>>>>>>>>>>
+>>>>>>>>>>>>>>>>> Memory region for CDSP in SDM660 occupies the same spot as
+>>>>>>>>>>>>>>>>> TZ buffer mem defined in sdm630.dtsi (which does not have CDSP).
+>>>>>>>>>>>>>>>>> In sdm660.dtsi replace buffer_mem inherited from SDM630 with
+>>>>>>>>>>>>>>>>> cdsp_region, which is also larger in size.
+>>>>>>>>>>>>>>>>>
+>>>>>>>>>>>>>>>>> SDM636 also doesn't have CDSP, so remove inherited from sdm660.dtsi
+>>>>>>>>>>>>>>>>> related nodes and add buffer_mem back.
+>>>>>>>>>>>>>>>>>
+>>>>>>>>>>>>>>>>> Signed-off-by: Nickolay Goppen <setotau@mainlining.org>
+>>>>>>>>>>>>>>>>> ---
+>>>>>>>>>>>>>>>> [...]
+>>>>>>>>>>>>>>>>
+>>>>>>>>>>>>>>>>> + label = "turing";
+>>>>>>>>>>>>>>>> "cdsp"
+>>>>>>>>>>>>>>> Ok, I'll change this in the next revision.
+>>>>>>>>>>>>>>>>> + mboxes = <&apcs_glb 29>;
+>>>>>>>>>>>>>>>>> +            qcom,remote-pid = <5>;
+>>>>>>>>>>>>>>>>> +
+>>>>>>>>>>>>>>>>> +            fastrpc {
+>>>>>>>>>>>>>>>>> +                compatible = "qcom,fastrpc";
+>>>>>>>>>>>>>>>>> +                qcom,glink-channels = "fastrpcglink-apps-dsp";
+>>>>>>>>>>>>>>>>> +                label = "cdsp";
+>>>>>>>>>>>>>>>>> + qcom,non-secure-domain;
+>>>>>>>>>>>>>>>> This shouldn't matter, both a secure and a non-secure device is
+>>>>>>>>>>>>>>>> created for CDSP
+>>>>>>>>>>>>>>> I've added this property, because it is used in other SoC's, such as SDM845 and SM6115 for both ADSP and CDSP
+>>>>>>>>>>>>>> Is this property not neccessary anymore?
+>>>>>>>>>>>>> +Srini?
+>>>>>>>>>>>> That is true, we do not require this for CDSP, as CDSP allows both
+>>>>>>>>>>>> unsigned and signed loading, we create both secured and non-secure node
+>>>>>>>>>>>> by default. May be we can provide that clarity in yaml bindings so that
+>>>>>>>>>>>> it gets caught during dtb checks.
+>>>>>>>>>>>>
+>>>>>>>>>>>>
+>>>>>>>>>>>> However in ADSP case, we only support singed modules, due to historical
+>>>>>>>>>>>> reasons how this driver evolved over years, we have this flag to allow
+>>>>>>>>>>>> compatiblity for such users.
+>>>>>>>>>>> Does that mean that we can only load signed modules on the ADSP, but
+>>>>>>>>>>> the driver behavior was previously such that unsigned modules were
+>>>>>>>>>>> allowed (which was presumably fine on devboards, but not on fused
+>>>>>>>>>>> devices)?
+>>>>>>>>>> Yes, its true that we allowed full access to adsp device nodes when we
+>>>>>>>>>> first started upstreaming fastrpc driver.
+>>>>>>>>>>
+>>>>>>>>>> irrespective of the board only signed modules are supported on the ADSP.
+>>>>>>>>>> I think there was one version of SoC i think 8016 or some older one
+>>>>>>>>>> which had adsp with hvx which can load unsigned modules for compute
+>>>>>>>>>> usecase only.
+>>>>>>>>>>
+>>>>>>>>>> I have added @Ekansh for more clarity.
+>>>>>>>>>>
+>>>>>>>>>> --srini
+>>>>>>>>> For all the available platforms, ADSP supports only signed modules. Unsigned
+>>>>>>>>> modules(as well as signed) are supported by CDSP and GDSP subsystems.
+>>>>>>>>>
+>>>>>>>>> qcom,non-secure-domain property marks the corresponding DSP as non-secure DSP.
+>>>>>>>>> The implications of adding this property would be the following:
+>>>>>>>>> on ADSP, SDSP, MDSP:
+>>>>>>>>> - Only non-secure device node(/dev/fastrpc-Xdsp) is created.
+>>>>>>>>> - Non-secure device node can be used for signed DSP PD offload.
+>>>>>>>>>
+>>>>>>>>> on CDSP, GDSP:
+>>>>>>>>> - Both secure(/dev/fastrpc-Xdsp-secure) and non-secure(/dev/fastrpc-Xdsp) devices
+>>>>>>>>>      are created, regardless of this property.
+>>>>>>>>> - Both the nodes can be used for signed and unsigned DSP PD offload.
+>>>>>>>>>
+>>>>>>>>> Note: If the property is not added for CDSP/GDSP, only secure device node can
+>>>>>>>>> be used for signed PD offload, if non-secure device is used, the request gets
+>>>>>>>>> rejected[1].
+>>>>>>>>>
+>>>>>>>>> [1] https://git.kernel.org/pub/scm/linux/kernel/git/next/linux-next.git/tree/drivers/misc/fastrpc.c#n1245
+>>>>>>>>>
+>>>>>>>>> //Ekansh
+>>>>>>>> Does this mean that the qcom,non-secure-domain property should be dropped from both nodes?
+>>>>>>> I checked again and found that unsigned module support for CDSP is
+>>>>>>> not available on this platform. Given this, the safest approach would
+>>>>>>> be to add the property for both ADSP and CDSP, ensuring that all
+>>>>>>> created device nodes can be used for signed PD offload. I can provide
+>>>>>> The property allows *unsigned* PD offload though
+>>>>> I don't think I can directly relate this property to unsigned PD offload. This is just
+>>>>> defining what type of device node will be created and whether the channel is secure
+>>>>> or not. There is a possibility of making unsigned PD request(on CDSP/GDSP) irrespective
+>>>>> of whether this property is added or not. If DSP does not support unsigned offload, it
+>>>>> should return failures for such requests.
+>>>> Which part of the hardware and/or firmware interface does it define? If
+>>>> it simply declared Linux behaviour, it is incorrect and probably should
+>>>> be dropped.
+>>> I still don't understand, do I need this property or not?
+>> I've began testing the FastRPC on CDSP and the command
+>>
+>> sudo fastrpc_test -d 3 -U 1 -t linux -a v68
+>> has caused the following errors:
+>>
+>> [   60.810545] arm-smmu 5180000.iommu: Unhandled context fault: fsr=0x402, iova=0xfffff000, fsynr=0x1, cbfrsynra=0x6, cb=3
+>> [   60.810588] arm-smmu 5180000.iommu: FSR    = 00000402 [Format=2 TF], SID=0x6
+>> [   60.810603] arm-smmu 5180000.iommu: FSYNR0 = 00000001 [S1CBNDX=0 PLVL=1]
+>> [   60.815657] qcom_q6v5_pas 1a300000.remoteproc: fatal error received: :0:EX:kernel:0:frpck_0_0:77:PC=c0117de0
+>> [   60.815684] remoteproc remoteproc2: crash detected in cdsp: type fatal error
+>> [   60.815738] remoteproc remoteproc2: handling crash #1 in cdsp
+>> [   60.815754] remoteproc remoteproc2: recovering cdsp
+>> [   60.819267] (NULL device *): Error: dsp information is incorrect err: -32
+> Are you trying out only calculator or all the libs? If yes, can you please
+> help with creating an issue in the above mentioned github project?
+>
+> On older platforms, I would suggest to only try with calculator as other
+> libs are not stable.
+>
+> We are getting a better version of other test libs signed and will update
+> the project with new libs post signing.
+>
+> //Ekansh
+I've tested the calculator only and it also fails. I think that the CDSP 
+has Hexagon version v60, that is lower than minimal v68 in the repo. I 
+can help with creating an issue, what should I do?
+>>
+>>>>>>> a more definitive recommendation once I know the specific use cases
+>>>>>>> you plan to run.
+>>>>>> Why would the usecase affect this?
+>>>>> I'm saying this as per past discussions where some application was relying on non-secure
+>>>>> device node on some old platform(on postmarketOS)[1] and having this property in place.
+>>>>> So if similar usecase is being enabled here, the property might be required[1].
+>>>> DT files are not usecase-based.
+>>>>
+>>>>> [1] https://lkml.org/lkml/2024/8/15/117
 
-Due to the failed sanity check the kernel is marked as tainted in runtime:
-
-    Tainted: [S]=CPU_OUT_OF_SPEC
-
-Unrestrict the ID_AA64MMFR1_EL1 SpecSEI bits, since apparently it's
-a supported option at least on this heterogeneous SoC.
-
-Signed-off-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
----
- arch/arm64/kernel/cpufeature.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/arch/arm64/kernel/cpufeature.c b/arch/arm64/kernel/cpufeature.c
-index 5ed401ff79e3..df562b0f42af 100644
---- a/arch/arm64/kernel/cpufeature.c
-+++ b/arch/arm64/kernel/cpufeature.c
-@@ -472,7 +472,7 @@ static const struct arm64_ftr_bits ftr_id_aa64mmfr1[] = {
- 	ARM64_FTR_BITS(FTR_HIDDEN, FTR_STRICT, FTR_LOWER_SAFE, ID_AA64MMFR1_EL1_ETS_SHIFT, 4, 0),
- 	ARM64_FTR_BITS(FTR_HIDDEN, FTR_STRICT, FTR_LOWER_SAFE, ID_AA64MMFR1_EL1_TWED_SHIFT, 4, 0),
- 	ARM64_FTR_BITS(FTR_HIDDEN, FTR_STRICT, FTR_LOWER_SAFE, ID_AA64MMFR1_EL1_XNX_SHIFT, 4, 0),
--	ARM64_FTR_BITS(FTR_HIDDEN, FTR_STRICT, FTR_HIGHER_SAFE, ID_AA64MMFR1_EL1_SpecSEI_SHIFT, 4, 0),
-+	ARM64_FTR_BITS(FTR_HIDDEN, FTR_NONSTRICT, FTR_HIGHER_SAFE, ID_AA64MMFR1_EL1_SpecSEI_SHIFT, 4, 0),
- 	ARM64_FTR_BITS(FTR_HIDDEN, FTR_STRICT, FTR_LOWER_SAFE, ID_AA64MMFR1_EL1_PAN_SHIFT, 4, 0),
- 	ARM64_FTR_BITS(FTR_HIDDEN, FTR_STRICT, FTR_LOWER_SAFE, ID_AA64MMFR1_EL1_LO_SHIFT, 4, 0),
- 	ARM64_FTR_BITS(FTR_HIDDEN, FTR_STRICT, FTR_LOWER_SAFE, ID_AA64MMFR1_EL1_HPDS_SHIFT, 4, 0),
 -- 
-2.49.0
+Best regards,
+Nickolay
 
 
