@@ -1,122 +1,204 @@
-Return-Path: <linux-arm-msm+bounces-83043-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-83044-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 29048C7FF9A
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Nov 2025 11:47:10 +0100 (CET)
+Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [IPv6:2605:f480:58:1:0:1994:3:14])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8402AC800AA
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Nov 2025 11:59:32 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id B46A83A535A
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Nov 2025 10:47:08 +0000 (UTC)
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id B5F3C4E5E2C
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Nov 2025 10:58:32 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4F34526F47D;
-	Mon, 24 Nov 2025 10:47:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C3F9B2FB962;
+	Mon, 24 Nov 2025 10:58:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="F+flXnpO"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="L2N5K9UO";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="e0/xiDrI"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.20])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88C484A21;
-	Mon, 24 Nov 2025 10:47:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.20
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED9442EFD9F
+	for <linux-arm-msm@vger.kernel.org>; Mon, 24 Nov 2025 10:58:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763981226; cv=none; b=W0pGpOQvD0i9+lkG3l4uG4sR+DSX12NzgBP2hr0Xjnj06GZtavS+ivl/vyOoYp1jh+bXjMJWa9eXMx/QsKeOOyCkZFa4FZdnPqg8i2RCsC/FDS827eK3LrNLY2FFVc9VLuWrfVosogQqmDLk/sGEohoEwAFv3xISrCNrnyWaZ50=
+	t=1763981900; cv=none; b=oCe45RnC3BQlnus8aepbkuy/w6FO5wjDZLOCaJcvtBBaS2q+4zvkD8StLiN2dZZoj4YwQBnFfdnKHnviYP5GVqpCjn48i2xYe/w2x1Efrnr0SNuzNPJzg7Wz/OU2txsn4Eqh+ZXwjqMTec94E3vstWol7Iom5wb94LZ6RJMGQf8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763981226; c=relaxed/simple;
-	bh=O1DoJQRcsVDEuEHmu6uH3W3rQ/B5VVI6DKhygLJlqCE=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=UCQMYovFKlSvvGTsbdbkn4UsT/rAVvyzAMGwSCHY3AQ4JojhqC8SmCae8VRe4il9onW87YsT2umoyCojtP4iQ8jIc01zYZANnoL+U0s/Gmy+C9SchgA+ZpMQOeKCBywiR8zRqOYQIbBRrrA+BG24VM0hZDieuThyf+n7xlGdG24=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=F+flXnpO; arc=none smtp.client-ip=198.175.65.20
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1763981225; x=1795517225;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=O1DoJQRcsVDEuEHmu6uH3W3rQ/B5VVI6DKhygLJlqCE=;
-  b=F+flXnpOKar/fNo1lrD4gFT4Xfyj3OU1C8FvYIu5kPUoQItZ5ADTqy4g
-   tss62cy5PFA4LfzajmBgw0XkhIwXmcMDP1D4/F6UeN3xDIfUB944nFqIP
-   TF+S5aMtTY4A28lFiWRMFDGpUMZGJ8lhUjfSceC1McNPDXnyHAYfFdQG2
-   lQm/R7WPpyJajNrPg4w869lmaFdrLAfWv6JradfOSjvcH47/zvRuV6ySn
-   mX3nJmYJDSN7/k13TUYNw9H3lvLrMMd6lmpnH2fNvUmoug53IfyLkl6vK
-   S5HpCt5ELj1muGCfUsxjuG8RWTJ2UzuBFqWcL50XV9ArTLPel1cdTXMVX
-   w==;
-X-CSE-ConnectionGUID: 8Ux/Uzx+QMGvcWsKy6X5Zw==
-X-CSE-MsgGUID: Ka5UeC2RQXCeMGgDuN1JrA==
-X-IronPort-AV: E=McAfee;i="6800,10657,11622"; a="65673774"
-X-IronPort-AV: E=Sophos;i="6.20,222,1758610800"; 
-   d="scan'208";a="65673774"
-Received: from fmviesa004.fm.intel.com ([10.60.135.144])
-  by orvoesa112.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 24 Nov 2025 02:47:04 -0800
-X-CSE-ConnectionGUID: 504uDi2WTcSU/QPWo04NTA==
-X-CSE-MsgGUID: 0CQkW1s6REqH3Iq/jvAOcw==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.20,222,1758610800"; 
-   d="scan'208";a="197228550"
-Received: from lkp-server01.sh.intel.com (HELO 4664bbef4914) ([10.239.97.150])
-  by fmviesa004.fm.intel.com with ESMTP; 24 Nov 2025 02:47:01 -0800
-Received: from kbuild by 4664bbef4914 with local (Exim 4.98.2)
-	(envelope-from <lkp@intel.com>)
-	id 1vNU5y-000000000cX-3mux;
-	Mon, 24 Nov 2025 10:46:58 +0000
-Date: Mon, 24 Nov 2025 18:46:30 +0800
-From: kernel test robot <lkp@intel.com>
-To: Vishnu Saini <vishnu.saini@oss.qualcomm.com>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>
-Cc: oe-kbuild-all@lists.linux.dev, linux-arm-msm@vger.kernel.org,
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-	Vishnu Saini <vishsain@qti.qualcomm.com>,
-	prahlad.valluru@oss.qualcomm.com,
-	Prahlad Valluru <vvalluru@qti.qualcomm.com>
-Subject: Re: [PATCH 1/2] arm64: dts: qcom: monaco: add lt8713sx bridge with
- displayport
-Message-ID: <202511241826.Maela061-lkp@intel.com>
-References: <20251120-lt8713sx-bridge-linux-for-next-v1-1-2246fc5fb490@qti.qualcomm.com>
+	s=arc-20240116; t=1763981900; c=relaxed/simple;
+	bh=ni6nRajr/9IWgjJSJFTYnjkPbTVNkGisZH/rYykPg7Y=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=XSKoLRXPxOKJNtozbcLup5EByLyL2e8HVMZ4ASzozAGiwiVGCTp+sRQHEVikopXnJSYFt1ULqqsZMuCG9kwzRRy0pbaWMaLeQJpHTWTecr/9Y2L3vaPTEbSeDsydm/J80GRp+Bg12g05zx2bBMn2c0LgUda35555kk/Z+mawUVs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=L2N5K9UO; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=e0/xiDrI; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 5AO8CkpC2344066
+	for <linux-arm-msm@vger.kernel.org>; Mon, 24 Nov 2025 10:58:18 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=qcppdkim1; bh=Dr84khA//YhdbLJpgQ2RHm
+	tsBKa/OK3FcQ0pc2ZjBOY=; b=L2N5K9UOnpXn5T7+8x7rOw3u3pKANBnhgARwK/
+	AooeoGJouWd9h5DLLH7GurHLb5pmGhMkKkP8OY75nMS4rvd/yjjbGi/NSb3LU4hg
+	HVPbM8ll6PmSRb9UDrY5kSKSpALPOdo4wsrr7NgAqJFxQ200YjLYaVQqCn6Tc4D/
+	TY/14IKS+efHRSZlqymP10st438dNj90RTtAKBqeTeQg9/IhtyI9u43DqqtYO6nS
+	P/ZS6G1urelp6O43icXrxscTOvjQlx+ryxyJcR3LWA8fQBOuO+B0BFXzTffpcSop
+	hxJJoXYBoi6lVYd5GKKQWG7zBrWdI+cjZxf6bP3QSKHoXyZg==
+Received: from mail-pj1-f69.google.com (mail-pj1-f69.google.com [209.85.216.69])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4ak69evp2d-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Mon, 24 Nov 2025 10:58:18 +0000 (GMT)
+Received: by mail-pj1-f69.google.com with SMTP id 98e67ed59e1d1-3438b1220bcso4479412a91.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 24 Nov 2025 02:58:18 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=oss.qualcomm.com; s=google; t=1763981897; x=1764586697; darn=vger.kernel.org;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=Dr84khA//YhdbLJpgQ2RHmtsBKa/OK3FcQ0pc2ZjBOY=;
+        b=e0/xiDrI8mnUsrUMkwCexL+gFt3r8pmPjkAxPDqAqHayMsipm0HAWhDYVIeTBLJf5g
+         E+bDbtbehTrGRi7u+g1H8znzY/JJOr4RZHdPBbhuZK+4shqu5UsQJEnD7t54DlxCLBM9
+         4DEZQpL0jCrwCMtluFjoECVnO/qHZdFy0Sk0PvQ9kci8lkBxzG1q7G2Fch1sT3tkzgOd
+         hmqWk+ep+5J7QnAibFKpkxuk1G3fVHVMKPolRuNLLBuReSxjY1I2ifQRy1rzt71IJ2LC
+         wbx33kiO+NxmEqoHVo3ODl1jmn8S4ZnubEaU1+9+eHeH1K/bAJ1MduFrrP+VTa09dJKU
+         PgYQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1763981897; x=1764586697;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=Dr84khA//YhdbLJpgQ2RHmtsBKa/OK3FcQ0pc2ZjBOY=;
+        b=HWC2Pbdepmj9WpfIYdO8d5B6xgruE60DRb+KOo9RKXMdTgbLSmyKU//qX3GJn4PHWx
+         GaNGn5XXhK0ZORni3uNx1VU2LF+IibLmJL8eL4k3/pzLrsTkY+uFR2jKfkcgq+EoehJj
+         Cr6+/D8TjFZ39gU/iCI2WS4GixHuGh6+N5dVXorX5jTnUWPfM4LJXb8lo0snlBgoCusv
+         uyTTL5SIeIfCbEWbUDlVqfTG08XJWy3aopPMTo32YmEXiBgk+8re5M6yxd9iymRBYTQn
+         ggUm7QwkvXfrSfJ/PBp37cwDoPgROmQIELbEh3lOo2E+dp+xsNa3aP7rqG5m/xtjbdc+
+         2aWg==
+X-Forwarded-Encrypted: i=1; AJvYcCXvRe6f7h0HjMS+TP0oZ5fUWypsPzaqHQtE1bPo/Y6XYlw/AeS+ZrLsRMqdCv5CKdT3zRaf62wUYtMuplZs@vger.kernel.org
+X-Gm-Message-State: AOJu0YzuOTS9PGPXL9V3ClR13zsIWFatBeX1SXXCIeJEO3ND3+vTCdRZ
+	logBcaSBsuUequ/yReYPdbgIIxBAMsFCz6yY4tHH451CClznMQTyjuxCFQou0cCPUClzfsRXFMa
+	RSjgR9l5LbGqrDdImZIHuPlQrc8D6ixABooahVKNfNi92h6nuhvCpl/BxIyPJopim5upp
+X-Gm-Gg: ASbGncv+C5NUIOhWA7RIZkTTaekt7nqFAfxxNOtUXsf82L9LeugyKlbDB15M091OAl8
+	5RkA7Y+nJqk1Yg5XfzlatTvVaL7jZl6z36gzHsa+KHrO9szI4GF1nIXu3/Xw2q7RfJtMVeVeXCe
+	fBTKCSZLf4yE9kPycjfYYHoiG9KIVUamKAXm+fHMoJi1eJeR6DO3xezISnFx4yxUPsKJ0YkoFIx
+	aFZG+uK8Za7zuEPgMgEv0dktVdu6KZ7/TRG+w3nNDgK1Z2QbbxUjaIhKbm7aNXD7HkqdhcS3dLc
+	/qgOwCVloRqkZiDSbB3zSVSK6BAl5MEsDY70KxH86rpWFIJ++EsdI00I2f/JJk1bu1IRR6VQIoV
+	kIcC5qxEafGOqpQTK1gulQmQX1qRFld7ZsOSSzueCFzZd/aY=
+X-Received: by 2002:a17:90b:3d92:b0:32e:a4d:41cb with SMTP id 98e67ed59e1d1-34733e49f05mr9391337a91.1.1763981897404;
+        Mon, 24 Nov 2025 02:58:17 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IEnOYu6pjZZiKwrHPswD4z8R4kparPgMfKJaN8Zt5TA6m3UTgxM2gG07lNAVRU9duMSOBwuBA==
+X-Received: by 2002:a17:90b:3d92:b0:32e:a4d:41cb with SMTP id 98e67ed59e1d1-34733e49f05mr9391313a91.1.1763981896557;
+        Mon, 24 Nov 2025 02:58:16 -0800 (PST)
+Received: from hu-dikshita-hyd.qualcomm.com ([202.46.23.25])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-347267a1231sm13391598a91.6.2025.11.24.02.58.12
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 24 Nov 2025 02:58:16 -0800 (PST)
+From: Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>
+Date: Mon, 24 Nov 2025 16:28:07 +0530
+Subject: [PATCH] media: venus: vdec: restrict EOS addr quirk to IRIS2 only
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20251120-lt8713sx-bridge-linux-for-next-v1-1-2246fc5fb490@qti.qualcomm.com>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20251124-venus-vp9-fix-v1-1-2ff36d9f2374@oss.qualcomm.com>
+X-B4-Tracking: v=1; b=H4sIAD46JGkC/x2MSQqAMAwAv1JyNtAEF/Qr4kE01VyqtFiE0r9bP
+ M7ATIYoQSXCZDIESRr18hWoMbCdqz8Eda8MbLkjYsIk/omY7hGdvkjO9ZYHbjfLUJs7SNX/b15
+ K+QCAZZoIXwAAAA==
+X-Change-ID: 20251121-venus-vp9-fix-1ff602724c02
+To: Vikash Garodia <vikash.garodia@oss.qualcomm.com>,
+        Bryan O'Donoghue <bod@kernel.org>,
+        Mauro Carvalho Chehab <mchehab@kernel.org>,
+        Viswanath Boma <quic_vboma@quicinc.com>,
+        Stanimir Varbanov <stanimir.k.varbanov@gmail.com>
+Cc: Konrad Dybcio <konradybcio@kernel.org>, linux-media@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        stable@vger.kernel.org, Mecid <notifications@github.com>,
+        Renjiang Han <renjiang.han@oss.qualcomm.com>,
+        Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>
+X-Mailer: b4 0.14.2
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1763981892; l=2343;
+ i=dikshita.agarwal@oss.qualcomm.com; s=20240917; h=from:subject:message-id;
+ bh=ni6nRajr/9IWgjJSJFTYnjkPbTVNkGisZH/rYykPg7Y=;
+ b=jPwN0fpIuU62B3ktzcnCGs3k3HGGVIR0CGUCxGLChQkOgZQxe5d5QzaW3EI4ul2JbAtp0TMDa
+ yr3e2Zyf9j2B8XamGQpOv9Hi/qRJ26lrCKWK5L8NpVAiz3/C+nJ6tHI
+X-Developer-Key: i=dikshita.agarwal@oss.qualcomm.com; a=ed25519;
+ pk=EEvKY6Ar1OI5SWf44FJ1Ebo1KuQEVbbf5UNPO+UHVhM=
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMTI0MDA5NyBTYWx0ZWRfX7h0UXcTWC3Vc
+ n4+6kgFyrn8GdEXKuo+wy/1uFeSwQRnYwOZcYz8byHxPbDTCnFhXtD+udO1ATzdtad+sKzxDbuH
+ hzhL22iSkIXiCe5q0AuhOBjQ09PGptQSFz4dV4JCfZGBbJs9j5UZNztgrmOdZjsIzuP2E4gso59
+ hJnJG3qSwH7ZfbSn5RAtBG6EO5EZR+9WLzawcObqZh23bX+pnbCo5WX+7TvmzC+D3KIPLTVC9jj
+ evUzcav2kTQm+P0AVffsyOgGBJZN1F2wrtsaGiE/8ln6NM6kHgMlRBlklTp4aNo7os4Daw74qBj
+ 93ZeWNFQ8Fz4jW4Sg0aNZ3mD5qrLiGCA1w4fdf0dT7QpIJy+SfPTR7CqVcoX9XbqVeVPpkkaF+p
+ 7Omxwq3Me7aOK+ZlbJPM8vW+nanhTQ==
+X-Authority-Analysis: v=2.4 cv=cMjtc1eN c=1 sm=1 tr=0 ts=69243a4a cx=c_pps
+ a=vVfyC5vLCtgYJKYeQD43oA==:117 a=ZePRamnt/+rB5gQjfz0u9A==:17
+ a=IkcTkHD0fZMA:10 a=6UeiqGixMTsA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=NEAV23lmAAAA:8 a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8
+ a=fVowlSO3gPwIgFNTVWQA:9 a=QEXdDO2ut3YA:10 a=rl5im9kqc5Lf4LNbBjHf:22
+X-Proofpoint-ORIG-GUID: dHRZyimEK3edBG2BxVNw-xaApqE5BZTL
+X-Proofpoint-GUID: dHRZyimEK3edBG2BxVNw-xaApqE5BZTL
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
+ definitions=2025-11-24_04,2025-11-21_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ lowpriorityscore=0 suspectscore=0 phishscore=0 clxscore=1015 impostorscore=0
+ adultscore=0 spamscore=0 priorityscore=1501 malwarescore=0 bulkscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2510240001 definitions=main-2511240097
 
-Hi Vishnu,
+On SM8250 (IRIS2) with firmware older than 1.0.087, the firmware could
+not handle a dummy device address for EOS buffers, so a NULL device
+address is sent instead. The existing check used IS_V6() alongside a
+firmware version gate:
 
-kernel test robot noticed the following build errors:
+    if (IS_V6(core) && is_fw_rev_or_older(core, 1, 0, 87))
+        fdata.device_addr = 0;
+    else
+	fdata.device_addr = 0xdeadb000;
 
-[auto build test ERROR on 3c3d81183061b9e49dd3207fbbbc36314744bf3f]
+However, SC7280 which is also V6, uses a firmware string of the form
+"1.0.<commit-hash>", which the version parser translates to 1.0.0. This
+unintentionally satisfies the `is_fw_rev_or_older(..., 1, 0, 87)`
+condition on SC7280. Combined with IS_V6() matching there as well, the
+quirk is incorrectly applied to SC7280, causing VP9 decode failures.
 
-url:    https://github.com/intel-lab-lkp/linux/commits/Vishnu-Saini/arm64-dts-qcom-monaco-add-lt8713sx-bridge-with-displayport/20251120-190522
-base:   3c3d81183061b9e49dd3207fbbbc36314744bf3f
-patch link:    https://lore.kernel.org/r/20251120-lt8713sx-bridge-linux-for-next-v1-1-2246fc5fb490%40qti.qualcomm.com
-patch subject: [PATCH 1/2] arm64: dts: qcom: monaco: add lt8713sx bridge with displayport
-config: arm64-defconfig (https://download.01.org/0day-ci/archive/20251124/202511241826.Maela061-lkp@intel.com/config)
-compiler: aarch64-linux-gcc (GCC) 15.1.0
-reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20251124/202511241826.Maela061-lkp@intel.com/reproduce)
+Constrain the check to IRIS2 (SM8250) only, which is the only platform
+that needed this quirk, by replacing IS_V6() with IS_IRIS2(). This
+restores correct behavior on SC7280 (no forced NULL EOS buffer address).
 
-If you fix the issue in a separate patch/commit (i.e. not just a new version of
-the same patch/commit), kindly add following tags
-| Reported-by: kernel test robot <lkp@intel.com>
-| Closes: https://lore.kernel.org/oe-kbuild-all/202511241826.Maela061-lkp@intel.com/
+Fixes: 47f867cb1b63 ("media: venus: fix EOS handling in decoder stop command")
+Cc: stable@vger.kernel.org
+Reported-by: Mecid <notifications@github.com>
+Closes: https://github.com/qualcomm-linux/kernel-topics/issues/222
+Co-developed-by: Renjiang Han <renjiang.han@oss.qualcomm.com>
+Signed-off-by: Renjiang Han <renjiang.han@oss.qualcomm.com>
+Signed-off-by: Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>
+---
+ drivers/media/platform/qcom/venus/vdec.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-All errors (new ones prefixed by >>):
+diff --git a/drivers/media/platform/qcom/venus/vdec.c b/drivers/media/platform/qcom/venus/vdec.c
+index 4a6641fdffcf79705893be58c7ec5cf485e2fab9..dc85a5b8c989eb8339e5de9fea7ab49532e7f15a 100644
+--- a/drivers/media/platform/qcom/venus/vdec.c
++++ b/drivers/media/platform/qcom/venus/vdec.c
+@@ -565,7 +565,7 @@ vdec_decoder_cmd(struct file *file, void *fh, struct v4l2_decoder_cmd *cmd)
+ 
+ 		fdata.buffer_type = HFI_BUFFER_INPUT;
+ 		fdata.flags |= HFI_BUFFERFLAG_EOS;
+-		if (IS_V6(inst->core) && is_fw_rev_or_older(inst->core, 1, 0, 87))
++		if (IS_IRIS2(inst->core) && is_fw_rev_or_older(inst->core, 1, 0, 87))
+ 			fdata.device_addr = 0;
+ 		else
+ 			fdata.device_addr = 0xdeadb000;
 
-   Error: arch/arm64/boot/dts/qcom/monaco-evk.dts:413.1-6 Label or path mdss not found
-   Error: arch/arm64/boot/dts/qcom/monaco-evk.dts:417.1-10 Label or path mdss_dp0 not found
-   Error: arch/arm64/boot/dts/qcom/monaco-evk.dts:421.1-14 Label or path mdss_dp0_out not found
-   Error: arch/arm64/boot/dts/qcom/monaco-evk.dts:426.1-14 Label or path mdss_dp0_phy not found
->> FATAL ERROR: Syntax error parsing input tree
+---
+base-commit: 1f2353f5a1af995efbf7bea44341aa0d03460b28
+change-id: 20251121-venus-vp9-fix-1ff602724c02
 
+Best regards,
 -- 
-0-DAY CI Kernel Test Service
-https://github.com/intel/lkp-tests/wiki
+Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>
+
 
