@@ -1,297 +1,191 @@
-Return-Path: <linux-arm-msm+bounces-83204-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-83205-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [142.0.200.124])
-	by mail.lfdr.de (Postfix) with ESMTPS id B6449C83F49
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Nov 2025 09:22:30 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 084ADC83FAB
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Nov 2025 09:28:30 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 5ED244E238C
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Nov 2025 08:22:29 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 1D5123A41DE
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Nov 2025 08:28:22 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 325702D73A9;
-	Tue, 25 Nov 2025 08:22:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 08D172D879F;
+	Tue, 25 Nov 2025 08:28:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="l8SXRchO";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="aQNdBXzE"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="QXb7/Qqo";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="JUygYNCl"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F981214A8B
-	for <linux-arm-msm@vger.kernel.org>; Tue, 25 Nov 2025 08:22:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52ECE2D8390
+	for <linux-arm-msm@vger.kernel.org>; Tue, 25 Nov 2025 08:28:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764058948; cv=none; b=RwlELqGO/N5kb2sXuky/SzI/SQSBNJFCUWQ+h0Wik5XQC1+TmT+yKgoEfk9+OHUkxS+8gm08juP/h5GDzDjbX8vn9P6TRnikRUp1ZtDk8qJK8dPpXRMH2oWrBU/EwEDVWYQ1CQiWLgATlxEQxxgQmlJTQwMlrhmXQYuYMWeeTjs=
+	t=1764059299; cv=none; b=Ccz61GxoTqW8smq2vYF3+58tgztQaG2f19MgwYdwcPGWROpmq0QdmpAWJQ+tPaNstxHP9Tlbl6v0XfYr0TvCWAzMINN+cie43XE1pwlcgNYzmPIB+2zT4H6d++sRrBdZlMouQo0XEArpOgCcgwcspT6aFNxSnxebtPqdR2zYVOk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764058948; c=relaxed/simple;
-	bh=WB24QFNmXXWomGiUjxHlvGtx4Nh8ZCf8Vo0oBbEPwS0=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=hk8Qsro1VOzIZjyqZYrt/iOoIi2CmVCPZRcrodooXktSSeDi2TwsW375LkaDAj6aa8SUWqsI2+5+Jkiluz0Ds/R7QHPUu5ZbxaSwuhOTAQXKzo6RN7udUOQom3QeHGWsAHsbvI+eL8lO+XPjJv+7vPPlkhSrd+sI9CFC5o5ECQE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=l8SXRchO; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=aQNdBXzE; arc=none smtp.client-ip=205.220.180.131
+	s=arc-20240116; t=1764059299; c=relaxed/simple;
+	bh=1ljUoMLs4Xd8HIIH6BvfQHOYw+YCbHBK8EVzVkrolQE=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=k0eXXXDZyadIe3A3/lIWpweLY1OdYYXbMXyp86wUHuod340fVO+f5o3eMVfH4XgPo4ob+JvfbvOThagfD4WqTxHqh8KMskvhyz2NKO6JCsp2qPY8VMD9hou+4m0u/K4wulBAmLMHd6WIKYna55kQN02SdBDUa/4cfBbrxNit2rM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=QXb7/Qqo; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=JUygYNCl; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 5AP2geQ22216814
-	for <linux-arm-msm@vger.kernel.org>; Tue, 25 Nov 2025 08:22:25 GMT
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 5AP8Di4j2726752
+	for <linux-arm-msm@vger.kernel.org>; Tue, 25 Nov 2025 08:28:17 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:message-id
-	:mime-version:subject:to; s=qcppdkim1; bh=YRjpKsqoY99+JF5M3oGMFE
-	Bu2vsC0vfO0ibxsB+T3/Q=; b=l8SXRchOnF7TCQ9kqERONX+G5/lFAuL0hV2Zql
-	thJufKpP9ueAgi1A7JMVX21KIe7GyPlYdQgAzA81R8wzNk4sks/IYV+3JEu2M+sp
-	JVxJfMVEsjQK96f93f5517OmFNr4Uii91jwVhbM+IllVQ5+xaJsITLRnwxZ5hTdY
-	iUmu5IQsK7gHXRhBSdHmKs9kDsig5p77z0BRNovGm5Md8MccPyWqk3Wn/wZ+jrJc
-	UHTh75Nlnq4z03INALaN37cQVgAlVACKkh/JQt+U7swZi3OAwWT93KD6peaWRDFf
-	nzZu/EniSdwOIJ8FpJOYNFV5WwU3zyxUpm4uA5keTNJdrdGg==
-Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com [209.85.222.199])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4amsk6ap9c-1
+	cc:content-type:date:from:in-reply-to:message-id:mime-version
+	:references:subject:to; s=qcppdkim1; bh=C0xyVDHLDCvMVkzkodB7GPpu
+	M+6tZS/+sWy8NjN5kXU=; b=QXb7/QqoTVMFS/a56YPst9Cs45G/ycmOzegR32gb
+	rWQa12kmCT6cGrdMZ+kHEMMN4Ap0w7gDfXrOB5gZATXx222rgvg2sMy133gXWaaA
+	8Lqk9VXzbhPg7kAlOD6SMt5z5bivlWbPe2aigeZWCwrp1YXVxgCbB8L8F8KcmN6k
+	+o3vCaJTJUa4WWG1hxDBY1Ej/v8rl0Wrf2c6E7GN3Xw49MHUqGJqviIOrZ9izXtC
+	tJED0oFmECq0TJEzBtZR69XlYpRc1EvhwqcbiiZNiZdaTNAUJ+upBnwH3nion3w4
+	daqjSaRuFYIPJcPJRU1v44TeKxqPYQ5CiQEyKC+XeW0+9Q==
+Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com [209.85.222.198])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4an8rvr1mf-1
 	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Tue, 25 Nov 2025 08:22:25 +0000 (GMT)
-Received: by mail-qk1-f199.google.com with SMTP id af79cd13be357-89eb8ee2a79so2570697585a.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 25 Nov 2025 00:22:25 -0800 (PST)
+	for <linux-arm-msm@vger.kernel.org>; Tue, 25 Nov 2025 08:28:17 +0000 (GMT)
+Received: by mail-qk1-f198.google.com with SMTP id af79cd13be357-89ee646359cso1440970185a.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 25 Nov 2025 00:28:17 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1764058945; x=1764663745; darn=vger.kernel.org;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=YRjpKsqoY99+JF5M3oGMFEBu2vsC0vfO0ibxsB+T3/Q=;
-        b=aQNdBXzESguWZbE/mhryLeSYDGNfTGxNOdQ63QRZ92vyNddTBCsIC5/rUD/TByYOBo
-         PgT0IZ+3FEGG45f9B4ZTP+ZWKktja0UALl4bN+kB+yFm3xCmb7aGjXUXv3zhRgbmg3XB
-         buCvLkx40GwQxTp0NcDlQiocnDVT+UeYHjQSQ/MiXU5IRK1mrJtoYXltYXFR+29O/5FB
-         jHjiIwVeSvKEYBHQOimD9fF+cKLblYNt9RIvCMPV6MZT8cagP0G9x3piO1RPfPywvtjW
-         YWKift5J8zCV5I66Gl6Xkd1lr9AbSBie0w8X0Heyy6fWqHP/M8Ui6gL0PiDHZuVIhIrv
-         9jmw==
+        d=oss.qualcomm.com; s=google; t=1764059296; x=1764664096; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=C0xyVDHLDCvMVkzkodB7GPpuM+6tZS/+sWy8NjN5kXU=;
+        b=JUygYNCldPvHkaZ/YqUG4pxGdRmLW+hTK1tuRIhvD179ejsI8JQU0l8aEnsobiXNQF
+         XgFqgsT8xrwQPVvNIbi0LA7LuhOW1bOl9hBjbcdi1Vl3m6xb/bS2Qp3Hq2oxpsz/xf2N
+         RzY2qeLiX0BEo9qbJhpivOthAsq6G8FIk4msTjcCV37ihrsPp7n6Lv9DB5osxmKfKQbY
+         7OFYzauom6rW1xYEK+uULLwV1YgGuwOv6VOi+ayzaKGvlRgKSvlK3YcNgPPM9kC2QfxE
+         PwwalnzXAGcOdCO7vo5ViIcpOLrWkx9ksDWzwbRJS7Zk8tC2nJ809635eza1vKnn0099
+         zz+Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1764058945; x=1764663745;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=YRjpKsqoY99+JF5M3oGMFEBu2vsC0vfO0ibxsB+T3/Q=;
-        b=K8pKGbKB+oN0XXfyHibxQjy7oSE6ATAFjps4wl/vqs5Afse8url1EhXg8sMcObL8OY
-         FB2FEzfPp1pHB5NykLboTizUg+bu1t8fc3kt2hrreOqZ+dTs7gkBDjQn6saGdanq0F3v
-         qs/BDHzx5HslB87cDrf/5RfGXWjQK7aosuCLDArLt78ObbWlY6a+utISB+NZGQ2c+YaS
-         OMn+ncH3gkazqZ9381Jp5IV+/lDtS6kJ48Hw7L0Vywe3/XJu+bmX2eAsitdr1l7evAT3
-         Z44PVXAvtvU2arUr+1MdGV8U2+Rj1hc5pkTFoi4VQi7pbO0Bc3eaLFoMP1m1Bzg5rYIv
-         7NuA==
-X-Gm-Message-State: AOJu0YwJJuKUe5THMNEtPYQCsbKMecvCALuuEdMftywh6b4+HFVQpRX2
-	6OsoOmdVRu0ZR10AQmyHKhEgN/yPai2X5flYoqm/pJQUw6plR4cZheyYAmEzE0pGpwIbVGNJZAN
-	GAVqZNHep+9KTwbZXgUC2bJwn+5QoYTy28uca647TwTyBbhAVXIE1gLatVVIUm1tRbTLa
-X-Gm-Gg: ASbGncsNYLhZcjxeAJ/DvLrCh1r+I3bigzS5ZufhGIlJIsDHBslUTkpNitEtqXHP7x8
-	wEONvK4usycVemGQn0AlnNZ9D6Bu2EttUH7cVKJRAWAzTUGp5k32YUYtOZJbG1Es+gSJ+te5iuK
-	qZH6fUOTX4t2nUio2bIsIleZYD3SX7iVw692cKtp/Lr40R+xGPfROoW+zDyR+n5xTyr/ci6Bf9S
-	5u3+EwrHqQSp2MAvhhmrVGCSZQVqO/3r25IrxcFykld10TStyeYubVjshOs12M/XcRII0bKIdO7
-	rRV+axdrsWWMP9oT8e2beJwxrEO4bPLc6RvqqYkMZ82qKLTjdxXxLZ8hFUCnKS6aDw4qop4EbS2
-	/ak5xxVlLzIKp/QfyKfe9G5lJnfDwZdl+7pTDbVXqjdAX3xxDlU1rC7wXSx/pya6NlIR8Vfgou/
+        d=1e100.net; s=20230601; t=1764059296; x=1764664096;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=C0xyVDHLDCvMVkzkodB7GPpuM+6tZS/+sWy8NjN5kXU=;
+        b=Fk5aB75lk/yI3bfEr7NJANWh2eoCHu8Qnqbw2sn/YMBrSBghOoFu4XX0YfnTtW+Lwf
+         yAzGo4MzeVaq2NmFaSQX6x/++qrSi0daeRtdCvAeemdy4xPAFqJ5Btpwiu4XmuQ/xZed
+         d319Adc0oLagNtrro26gkZN8iWtAV6kGVgzqOlDENvwCLLeddzWsbnSTqnPgairQKBPn
+         aXd+m3bzooDumyy80OCveABG0/FSMcqSyOzZAKEPV4y/vQmJSIKy3AAaR+n+suQPVWIt
+         OeWBV5zQ/GuTAHahoW2vifqHKJGwq9X0cxDRkS4suBeveC64E92ujUcmdfGFLav/Sd++
+         RrFw==
+X-Forwarded-Encrypted: i=1; AJvYcCVqKflUo9lNmJ7JUpTDOojG8WKUvKOj+hFqndZThdjoUIIgUpuLQ5AOMf3hXRnxP+byWIlrbINRUcnmgO+p@vger.kernel.org
+X-Gm-Message-State: AOJu0YxLJLtcNuF2pcth6lL4pnrufEYTUNR9tWEsG5ARx2EpNRJo2s0A
+	h2b2PUmG31ish4+dtz/04XnvTlio0SQTemMpstGsw1IMrhCP+c4J7LZ1TL7pkwvjlUfW5jHYnMj
+	TJqD2PUaylN+yZaxbj5lQsFASQOonqLu2jwwp8PqgAR6Z4sbn00kqxfS4pK+e1tnGvUjo
+X-Gm-Gg: ASbGncsl7k6B5jAH+Wiu2p03DENHB7yZMyIGWmN8gDQYevTJiG2CENRroE8HX+Tmo+i
+	09Er2jL0RAf5DK5GrnKevngT9XxLayT3ya5Ql2E5veuIFUxCWVMRmnOccjVCTBTautXMKqvWs3O
+	SOecGEpmVKApy3B8PIF5+3YySwn0UAFQ5uvApEs9INqFC3ZEGwkGWBhir0inzbYKPs/SBbfF0Xl
+	JogQHGdxu2isq/0QdV8768IwiUYad074CSPcUuY2HOGV3kCSSyUgxjXHOPjLGbx6EYFU7Ko0Xp3
+	aJ/TtZrddItcQSuppGjWggnYJiWenjJ1U7uDzlFE2vDdpBbhmz/f2L5ZTA3juemmAEjM867E2Jg
+	p0r1aOiDx3WegS3A+jH4sXhx7NYv6ZKTd+ZMrOD1KAduCKPQYRDBqOSCTJa08sjDZPBIghrQYwj
 	0=
-X-Received: by 2002:a05:620a:44ca:b0:8b2:e4f0:74d2 with SMTP id af79cd13be357-8b33d5e0708mr2088684285a.88.1764058944614;
-        Tue, 25 Nov 2025 00:22:24 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IEgbw5+t2RFxd5vwgHS2/xP58ds7tCi3xfgDuWhOL9/5kLj/9xSxrzjaWShPdduWP/LVNaZPg==
-X-Received: by 2002:a05:620a:44ca:b0:8b2:e4f0:74d2 with SMTP id af79cd13be357-8b33d5e0708mr2088681185a.88.1764058944092;
-        Tue, 25 Nov 2025 00:22:24 -0800 (PST)
-Received: from yongmou2.ap.qualcomm.com (Global_NAT1_IAD_FW.qualcomm.com. [129.46.232.65])
-        by smtp.gmail.com with ESMTPSA id d75a77b69052e-4ee48d6aab4sm103530771cf.15.2025.11.25.00.22.18
+X-Received: by 2002:a05:620a:468f:b0:8a9:b469:efc1 with SMTP id af79cd13be357-8b4ebd6fac3mr250222885a.24.1764059296551;
+        Tue, 25 Nov 2025 00:28:16 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGcN96mL/Mi34nfBciX8M+hnzh6AlZnpTJoX9gJ2nCN4RnvbdoR1QuCweSHuB3nSFJ2g4zXiw==
+X-Received: by 2002:a05:620a:468f:b0:8a9:b469:efc1 with SMTP id af79cd13be357-8b4ebd6fac3mr250220685a.24.1764059296108;
+        Tue, 25 Nov 2025 00:28:16 -0800 (PST)
+Received: from yuanjiey.ap.qualcomm.com (Global_NAT1_IAD_FW.qualcomm.com. [129.46.232.65])
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-8b3295f17dcsm1112575385a.55.2025.11.25.00.28.08
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 25 Nov 2025 00:22:23 -0800 (PST)
-From: Yongxing Mou <yongxing.mou@oss.qualcomm.com>
-Date: Tue, 25 Nov 2025 16:22:12 +0800
-Subject: [PATCH v4] drm/msm/dp: fix the intf_type of MST interfaces
+        Tue, 25 Nov 2025 00:28:15 -0800 (PST)
+Date: Tue, 25 Nov 2025 16:28:05 +0800
+From: yuanjiey <yuanjie.yang@oss.qualcomm.com>
+To: Krzysztof Kozlowski <krzk@kernel.org>
+Cc: robin.clark@oss.qualcomm.com, lumag@kernel.org, abhinav.kumar@linux.dev,
+        sean@poorly.run, marijn.suijten@somainline.org, airlied@gmail.com,
+        simona@ffwll.ch, maarten.lankhorst@linux.intel.com, mripard@kernel.org,
+        tzimmermann@suse.de, robh@kernel.org, krzk+dt@kernel.org,
+        conor+dt@kernel.org, quic_mkrishn@quicinc.com, jonathan@marek.ca,
+        quic_khsieh@quicinc.com, neil.armstrong@linaro.org,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org,
+        tingwei.zhang@oss.qualcomm.com, aiqun.yu@oss.qualcomm.com,
+        Yongxing Mou <yongxing.mou@oss.qualcomm.com>
+Subject: Re: [PATCH v2 04/10] dt-bindings: display/msm: qcom,kaanapali-mdss:
+ Add Kaanapali
+Message-ID: <aSVolV1gkWRK6Slb@yuanjiey.ap.qualcomm.com>
+References: <20251125064758.7207-1-yuanjie.yang@oss.qualcomm.com>
+ <20251125064758.7207-5-yuanjie.yang@oss.qualcomm.com>
+ <2f7aa593-6b11-4dbd-a0e6-f60eee16d7b5@kernel.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20251125-mdss_catalog-v4-1-df651fba2702@oss.qualcomm.com>
-X-B4-Tracking: v=1; b=H4sIADNnJWkC/yXM2QrCMBCF4Vcpc20gmS6JfRUpkmWmBuxiUkUof
- XeDvfwPnG+HTClShr7aIdEn5rjMJZpLBf5h55FEDKUBJbZKYSumkPPd280+l1HUlo027Dr2Dsp
- lTcTx++duw9mJXu+ibucIzmYSfpmmuPVVFzTp4gZZ89UwdoxEMnBA5Zy0sjHSotIGhuP4AQ+Z2
- RuqAAAA
-X-Change-ID: 20251125-mdss_catalog-3af878fb6fcb
-To: Rob Clark <robin.clark@oss.qualcomm.com>,
-        Dmitry Baryshkov <lumag@kernel.org>,
-        Abhinav Kumar <abhinav.kumar@linux.dev>,
-        Jessica Zhang <jesszhan0024@gmail.com>, Sean Paul <sean@poorly.run>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>
-Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Yongxing Mou <yongxing.mou@oss.qualcomm.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-X-Mailer: b4 0.14.3
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1764058938; l=5994;
- i=yongxing.mou@oss.qualcomm.com; s=20250910; h=from:subject:message-id;
- bh=T4+veceh43Iz1HC9uB499V8TtofoUBw/GEaYL11J+pk=;
- b=gJUYv20WEI5ukHHHm1d/Hca0uVR3M5CdBme19aSpBo0+vWXjKk2qdxhhWSGVE1YlGSQEUNfa7
- Leti51tE9+XDypwOYKNC0lxZzQfg/JyqJA4B59QQLLKLiFeZRAHXaDz
-X-Developer-Key: i=yongxing.mou@oss.qualcomm.com; a=ed25519;
- pk=rAy5J1eP+V7OXqH5FJ7ngMCtUrnHhut30ZTldOj52UM=
-X-Proofpoint-GUID: M9SG9imaXZTOZqeXKit5sY1Sdug1ikBm
-X-Proofpoint-ORIG-GUID: M9SG9imaXZTOZqeXKit5sY1Sdug1ikBm
-X-Authority-Analysis: v=2.4 cv=WL5yn3sR c=1 sm=1 tr=0 ts=69256741 cx=c_pps
- a=HLyN3IcIa5EE8TELMZ618Q==:117 a=C3Dk8TwHQYyIj7nOf9RCJw==:17
- a=IkcTkHD0fZMA:10 a=6UeiqGixMTsA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8 a=COk6AnOGAAAA:8
- a=3SrrOXIG8BVLCHsxiMcA:9 a=QEXdDO2ut3YA:10 a=bTQJ7kPSJx9SKPbeHEYW:22
- a=TjNXssC_j7lpFel5tvFf:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMTI1MDA2OCBTYWx0ZWRfX4mG61o3o+pyT
- /Lc1uAlrtEaYgo2ogHSbRCYKb+RDI8NSQa5QVdOFjo8/rpO1z7bcVZxMRxCKKFrJhJGzJp2DJZO
- szbBvIRM2+9C+A5w3cSs/hBzUITydr41EGjpAVYvX42IVMkHTLV97scxzpQXM+VGxwgAk47FNef
- H/38gX0DtCxU99c3yMrxK4FycQSakN0F9wz8JyAVf9ukmr1NfkIhoWzbqJ7lIY8k6sqXOffjyr0
- aeTfEVtBFGpAi7LlQk4BYSVXFY607iIC/1TWRCcXQ6kTmbXHtgeWhqHVVSPI6TqXfb3kFAfSwK/
- HBg02MB6CZsIilr9FWSvWuHVYw5DVuJ3+/HTyAp1ErfaJwillNHeL9Gyl9s0sjHd2NpALqk9wR4
- rz3hYXHrslwHA8M6gVruh+5wLTmqyA==
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <2f7aa593-6b11-4dbd-a0e6-f60eee16d7b5@kernel.org>
+X-Proofpoint-ORIG-GUID: 3aTsyGF2-nRNRI9aIc276Szmv0HZ0jP-
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMTI1MDA2NyBTYWx0ZWRfX5PLfiGNHDmh7
+ qDpgmWfbcYHIdk4umfEAYgHo0yNorFxkEcnkFR/EeTnXF4uX3KTbi26p2BRT2Cu6ET36NnTjHk7
+ Z+2swojOQsedntp/rIo59yBFSlvH9k+i1l+YABg7L7kJphniXYyJNysS0U29Tr+e30GnrrDrAqS
+ qh0MckrX/OCsEwWmeTBjCMvazwLHkBylZ4211nlbDW/Ia0pOQXB0Ix7K0PJU3MwEdJ7KLgbiW0F
+ iNdCWWcvJeWE5unVX9VXcwEoJm6eib8H0bReboM3VzWovkRu4f9oHLJrzX3Iio/Klln2THuZDeh
+ zdgl8muirarMg44aRyCOHs+mYh8v+Xzva2iawJzBu3u39TW1/RdCmtAmPUGGdiEh4xp23EAPt5k
+ qTGGR4p8BRyPWFKZGA/6Flu4uxlJ6Q==
+X-Proofpoint-GUID: 3aTsyGF2-nRNRI9aIc276Szmv0HZ0jP-
+X-Authority-Analysis: v=2.4 cv=Ushu9uwB c=1 sm=1 tr=0 ts=692568a1 cx=c_pps
+ a=qKBjSQ1v91RyAK45QCPf5w==:117 a=C3Dk8TwHQYyIj7nOf9RCJw==:17
+ a=kj9zAlcOel0A:10 a=6UeiqGixMTsA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=EUspDBNiAAAA:8 a=Kua_XrAaXZ40T8CRvF8A:9
+ a=CjuIK1q_8ugA:10 a=NFOGd7dJGGMPyQGDc5-O:22
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
  definitions=2025-11-25_02,2025-11-24_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0 bulkscore=0 lowpriorityscore=0 priorityscore=1501 adultscore=0
- clxscore=1015 impostorscore=0 suspectscore=0 malwarescore=0 spamscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2510240001 definitions=main-2511250068
+ clxscore=1015 phishscore=0 bulkscore=0 malwarescore=0 spamscore=0
+ suspectscore=0 adultscore=0 lowpriorityscore=0 priorityscore=1501
+ impostorscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2510240001
+ definitions=main-2511250067
 
-From: Abhinav Kumar <quic_abhinavk@quicinc.com>
+On Tue, Nov 25, 2025 at 09:17:50AM +0100, Krzysztof Kozlowski wrote:
+> On 25/11/2025 07:47, yuanjie yang wrote:
+> > From: Yuanjie Yang <yuanjie.yang@oss.qualcomm.com>
+> > 
+> > Kaanapali introduces DPU 13.0.0 and DSI 2.10. Compared to SM8750,
+> > Kaanapali has significant register changes, making it incompatible
+> > with SM8750. So add MDSS/MDP display subsystem for Qualcomm Kaanapali.
+> > 
+> > Co-developed-by: Yongxing Mou <yongxing.mou@oss.qualcomm.com>
+> > Signed-off-by: Yongxing Mou <yongxing.mou@oss.qualcomm.com>
+> > Signed-off-by: Yuanjie Yang <yuanjie.yang@oss.qualcomm.com>
+> 
+> 
+> I don't understand why you have random four quicinc or qualcomm.com
+> addresses not related to kernel development, but you did not include
+> necessary addresses.
+> 
+> Please trim your list to only necessary addresses.
+> 
+> Please use scripts/get_maintainers.pl to get a list of necessary people
+> and lists to CC. It might happen, that command when run on an older
+> kernel, gives you outdated entries. Therefore please be sure you base
+> your patches on recent Linux kernel.
+> 
+> Tools like b4 or scripts/get_maintainer.pl provide you proper list of
+> people, so fix your workflow. Tools might also fail if you work on some
+> ancient tree (don't, instead use mainline) or work on fork of kernel
+> (don't, instead use mainline). Just use b4 and everything should be
+> fine, although remember about `b4 prep --auto-to-cc` if you added new
+> patches to the patchset.
+> 
+> You missed at least devicetree list (maybe more), so this won't be
+> tested by automated tooling. Performing review on untested code might be
+> a waste of time.
+> 
+> Please kindly resend and include all necessary To/Cc entries.
+OK, will check all necessary To/Cc entries.
 
-Interface type of MST interfaces is currently INTF_NONE. Update this to
-INTF_DP. And correct the intf_6 intr_underrun/intr_vsync index for
-dpu_8_4_sa8775p.
-
-Signed-off-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
-Signed-off-by: Yongxing Mou <yongxing.mou@oss.qualcomm.com>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
----
-This patch was split out from the MST V3 patch series:
-https://lore.kernel.org/all/20250825-msm-dp-mst-v3-0-01faacfcdedd@oss.qualcomm.com/
----
-Changes in v4:
-- Splite chagne out from the MST V3 series.
-- Link to v3: https://lore.kernel.org/all/20250825-msm-dp-mst-v3-37-01faacfcdedd@oss.qualcomm.com/
-
-Changes in v3:
-- Fix through the whole catalog
-- Link to v2: https://lore.kernel.org/all/20250609-msm-dp-mst-v2-37-a54d8902a23d@quicinc.com/
-
-Changes in v2:
-- Change the patch order in the series.
-- Link to v1: https://lore.kernel.org/all/20241205-dp_mst-v1-3-f8618d42a99a@quicinc.com/
----
- drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_0_sc8280xp.h |  6 +++---
- drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_4_sa8775p.h  | 12 ++++++------
- drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_9_2_x1e80100.h |  6 +++---
- 3 files changed, 12 insertions(+), 12 deletions(-)
-
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_0_sc8280xp.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_0_sc8280xp.h
-index 303d33dc7783..ea2329f0b5e9 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_0_sc8280xp.h
-+++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_0_sc8280xp.h
-@@ -319,7 +319,7 @@ static const struct dpu_intf_cfg sc8280xp_intf[] = {
- 	}, {
- 		.name = "intf_3", .id = INTF_3,
- 		.base = 0x37000, .len = 0x280,
--		.type = INTF_NONE,
-+		.type = INTF_DP,
- 		.controller_id = MSM_DP_CONTROLLER_0,
- 		.prog_fetch_lines_worst_case = 24,
- 		.intr_underrun = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 30),
-@@ -351,7 +351,7 @@ static const struct dpu_intf_cfg sc8280xp_intf[] = {
- 	}, {
- 		.name = "intf_7", .id = INTF_7,
- 		.base = 0x3b000, .len = 0x280,
--		.type = INTF_NONE,
-+		.type = INTF_DP,
- 		.controller_id = MSM_DP_CONTROLLER_2,
- 		.prog_fetch_lines_worst_case = 24,
- 		.intr_underrun = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 18),
-@@ -359,7 +359,7 @@ static const struct dpu_intf_cfg sc8280xp_intf[] = {
- 	}, {
- 		.name = "intf_8", .id = INTF_8,
- 		.base = 0x3c000, .len = 0x280,
--		.type = INTF_NONE,
-+		.type = INTF_DP,
- 		.controller_id = MSM_DP_CONTROLLER_1,
- 		.prog_fetch_lines_worst_case = 24,
- 		.intr_underrun = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 12),
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_4_sa8775p.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_4_sa8775p.h
-index 0f7b4a224e4c..00fd0c8cc115 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_4_sa8775p.h
-+++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_4_sa8775p.h
-@@ -347,7 +347,7 @@ static const struct dpu_intf_cfg sa8775p_intf[] = {
- 	}, {
- 		.name = "intf_3", .id = INTF_3,
- 		.base = 0x37000, .len = 0x280,
--		.type = INTF_NONE,
-+		.type = INTF_DP,
- 		.controller_id = MSM_DP_CONTROLLER_0,	/* pair with intf_0 for DP MST */
- 		.prog_fetch_lines_worst_case = 24,
- 		.intr_underrun = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 30),
-@@ -363,15 +363,15 @@ static const struct dpu_intf_cfg sa8775p_intf[] = {
- 	}, {
- 		.name = "intf_6", .id = INTF_6,
- 		.base = 0x3A000, .len = 0x280,
--		.type = INTF_NONE,
-+		.type = INTF_DP,
- 		.controller_id = MSM_DP_CONTROLLER_0,	/* pair with intf_0 for DP MST */
- 		.prog_fetch_lines_worst_case = 24,
--		.intr_underrun = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 17),
--		.intr_vsync = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 16),
-+		.intr_underrun = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 16),
-+		.intr_vsync = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 17),
- 	}, {
- 		.name = "intf_7", .id = INTF_7,
- 		.base = 0x3b000, .len = 0x280,
--		.type = INTF_NONE,
-+		.type = INTF_DP,
- 		.controller_id = MSM_DP_CONTROLLER_0,	/* pair with intf_0 for DP MST */
- 		.prog_fetch_lines_worst_case = 24,
- 		.intr_underrun = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 18),
-@@ -379,7 +379,7 @@ static const struct dpu_intf_cfg sa8775p_intf[] = {
- 	}, {
- 		.name = "intf_8", .id = INTF_8,
- 		.base = 0x3c000, .len = 0x280,
--		.type = INTF_NONE,
-+		.type = INTF_DP,
- 		.controller_id = MSM_DP_CONTROLLER_1,	/* pair with intf_4 for DP MST */
- 		.prog_fetch_lines_worst_case = 24,
- 		.intr_underrun = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 12),
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_9_2_x1e80100.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_9_2_x1e80100.h
-index 7243eebb85f3..826f65adb18b 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_9_2_x1e80100.h
-+++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_9_2_x1e80100.h
-@@ -335,7 +335,7 @@ static const struct dpu_intf_cfg x1e80100_intf[] = {
- 	}, {
- 		.name = "intf_3", .id = INTF_3,
- 		.base = 0x37000, .len = 0x280,
--		.type = INTF_NONE,
-+		.type = INTF_DP,
- 		.controller_id = MSM_DP_CONTROLLER_0,	/* pair with intf_0 for DP MST */
- 		.prog_fetch_lines_worst_case = 24,
- 		.intr_underrun = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 30),
-@@ -367,7 +367,7 @@ static const struct dpu_intf_cfg x1e80100_intf[] = {
- 	}, {
- 		.name = "intf_7", .id = INTF_7,
- 		.base = 0x3b000, .len = 0x280,
--		.type = INTF_NONE,
-+		.type = INTF_DP,
- 		.controller_id = MSM_DP_CONTROLLER_2,	/* pair with intf_6 for DP MST */
- 		.prog_fetch_lines_worst_case = 24,
- 		.intr_underrun = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 18),
-@@ -375,7 +375,7 @@ static const struct dpu_intf_cfg x1e80100_intf[] = {
- 	}, {
- 		.name = "intf_8", .id = INTF_8,
- 		.base = 0x3c000, .len = 0x280,
--		.type = INTF_NONE,
-+		.type = INTF_DP,
- 		.controller_id = MSM_DP_CONTROLLER_1,	/* pair with intf_4 for DP MST */
- 		.prog_fetch_lines_worst_case = 24,
- 		.intr_underrun = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 12),
-
----
-base-commit: 6d7e7251d03f98f26f2ee0dfd21bb0a0480a2178
-change-id: 20251125-mdss_catalog-3af878fb6fcb
-
-Best regards,
--- 
-Yongxing Mou <yongxing.mou@oss.qualcomm.com>
-
+Thanks,
+Yuanjie
+ 
+> Best regards,
+> Krzysztof
 
