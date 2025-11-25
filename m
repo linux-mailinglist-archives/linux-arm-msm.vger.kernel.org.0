@@ -1,99 +1,99 @@
-Return-Path: <linux-arm-msm+bounces-83308-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-83309-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 37FC9C8690D
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Nov 2025 19:21:14 +0100 (CET)
+Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [142.0.200.124])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1C502C86976
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Nov 2025 19:24:48 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id E0BCC3AA930
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Nov 2025 18:21:12 +0000 (UTC)
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id CF5A04E01EA
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Nov 2025 18:24:46 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 77F4A32B98C;
-	Tue, 25 Nov 2025 18:21:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id EF87732D0CA;
+	Tue, 25 Nov 2025 18:24:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="cpRjYBg8";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="hbftoaok"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="Ur+eU95m";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="Jn6dDLCZ"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D49192264D3
-	for <linux-arm-msm@vger.kernel.org>; Tue, 25 Nov 2025 18:21:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69872329E5E
+	for <linux-arm-msm@vger.kernel.org>; Tue, 25 Nov 2025 18:24:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764094871; cv=none; b=L6vwZyGXm0CkxHi9XLz1oOQksfdJYdde8RmO11hmMLRwIvqxuldQ/gx0PvsacXw1LR0oT4fuA5mXIUd+sK3SLhCJ5wOpUZ9Bsfg8tLbI8ZrsM2UKKCUsT51PYj737yDP6KbUotXpoLVerAjP0M2vUHvK3LsamAWhNvtreneMAoA=
+	t=1764095082; cv=none; b=H49Z6/2SdvxPvFz2kXKG3E6IROj8TV+hnRCwf2iCrhw5YP+xS1aE1uLSRmVQALYV33t05+MTGyoU9F49r6zNuVI+PU3KCWVZFWaoiXPu5YjnLZuhtXDGOWL6ZSnfXLiJr5WIfo4/GlJt7VnFx+A3HqeOJwJQrzg5w2HG+aF91V8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764094871; c=relaxed/simple;
-	bh=JRv16t92xTAYZAINyXlB7iZdxDJQeaMtk7R7Ck2G2ag=;
+	s=arc-20240116; t=1764095082; c=relaxed/simple;
+	bh=aCJPX/JrC/AEf5t5t+ZMbYdDuSPsFCbn/5lDk4CTYTA=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=oyUfHsXmYYDIejggZYCCv2CdgY54P1ghGrGCBrv5c/qINJ+K89DWiYaFb8qkeUp11DPwKcVxyoaJnbjJfAYmSy4X1lSL67+svZCh5voVXYVH2rHxpjjcZhBWm8b5I1nY6Ca07WPAg8S3Nm2bDrvxiD3T6vLur3KQugQqS9ljol4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=cpRjYBg8; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=hbftoaok; arc=none smtp.client-ip=205.220.168.131
+	 Content-Type:Content-Disposition:In-Reply-To; b=OD+CEtOoERFF3fqQUW6lAtlVEP9KD/uez6pIDEbjmelctBA+5zdsgqeeGjRFgF16m4/+3RugClulhp83Lm7t8bEP9qKvRcoQYDimZe4yn/lMBlYU69G2a9gVYxXm3hi55suEsziLZ9fffYKudSkfJorHUjR0DVMvYqT79ZAIVNI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=Ur+eU95m; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=Jn6dDLCZ; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 5APGgnYk3588312
-	for <linux-arm-msm@vger.kernel.org>; Tue, 25 Nov 2025 18:21:07 GMT
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 5AP9wL9c2659009
+	for <linux-arm-msm@vger.kernel.org>; Tue, 25 Nov 2025 18:24:40 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
 	cc:content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to; s=qcppdkim1; bh=NzYyGBB3mLby2mlCraMEkWFk
-	vO4XGO0FnATD2b6ZxNc=; b=cpRjYBg8508Q8iaHGbgXy4HEUyDOeqs6gbv/2+w7
-	Uv9XuiBFLVMkneI5jnhZsLNhgKI+MJbzuJ870/xDlVDYCltt/HQWGZ5gMWinFtOM
-	JYYBPWTHSVIVPee5sf2ZmzcMyDr0JHiO9jx1ifD0rx0iFoBIzF6kCBYoK7iJ0eRf
-	Km4mr8EutycZ4T/ng4LDTvalTzYnshORRjn/rRRbtTMwCBrwZ/VR0XfANv+8SROf
-	pkOrj1uB91NpiIWh+LpTFIvkCVoT31EF6uVGCf07FVwKdZ2Z4yNNlK/gRf33aGiS
-	zy0urFwskpJQDBmTWlD/WlmzTj2QskkPiA1G565x+8TRnA==
-Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com [209.85.222.197])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4ang7909u5-1
+	:references:subject:to; s=qcppdkim1; bh=1W2pZNd5o2xExOvwqTzV3PfS
+	MN7hG4UWUiuznKEkBfE=; b=Ur+eU95mifuE9XNyJ5XC7WWeigz1+ESiy9qAu9sy
+	ONFXvdMcfN4wdL95ek/giXY4BoDdytPxVAeVXoLXgsr+3KtcaglkhyjGoNyQCRt5
+	lSePbR6ngZa02QoE8T4nkY17GDwl6Y1LeC9RQT24Y+4EBzIFDdkZBcwK0vfQliDF
+	B50F7iqkoLl3iA9Tpo97dljrWKuKJMmdPPODMYiEHBU6UF9K7uTur4YbcvM1GugE
+	9RqBAf2ahpwMM1iqdrWn/QHDrP0elo8FtSTFKUCiOQC8KnUgQ0pGefbslkVwfLdb
+	ggLwqCA5ncWK8uf1BdKzxXrUE7MWnWnLZluax7xBeaf57Q==
+Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com [209.85.222.199])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4ana9x9fen-1
 	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Tue, 25 Nov 2025 18:21:06 +0000 (GMT)
-Received: by mail-qk1-f197.google.com with SMTP id af79cd13be357-8b2d2c91215so1456604285a.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 25 Nov 2025 10:21:05 -0800 (PST)
+	for <linux-arm-msm@vger.kernel.org>; Tue, 25 Nov 2025 18:24:40 +0000 (GMT)
+Received: by mail-qk1-f199.google.com with SMTP id af79cd13be357-8b26bc4984bso2209239085a.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 25 Nov 2025 10:24:40 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1764094865; x=1764699665; darn=vger.kernel.org;
+        d=oss.qualcomm.com; s=google; t=1764095079; x=1764699879; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=NzYyGBB3mLby2mlCraMEkWFkvO4XGO0FnATD2b6ZxNc=;
-        b=hbftoaokoCg30OREt0Pit6Qcjx/dt1//2qmkoQ0gbkO8icfr8nvNuQv8s1DPRfYp0V
-         xTf7CKQd/TY5iMzC88bUEjeYTcpF7Iiz5qPokqNpBVx9hmh6QV3XpkAk98Wu03Th7RjY
-         jFtQ4J22waJWOsx2dob7eAj5lWEWWg9RDRFTKPc7gCouOA6P0xN9YSJ0CQWhXSE8zgqI
-         ND/dWoWV3Zu0UmmtO0VwRpfUx/yXTGLkU8n+GGcdrhCWZ2b3B7hrsO1o7TN+YQfrysif
-         ZwT+EGGZU3gHDL6L+5rrza+8HKJ9kcVmkClNu8KasLPoijk1XwIU6CuClf2Kw6z08qLW
-         8t4A==
+        bh=1W2pZNd5o2xExOvwqTzV3PfSMN7hG4UWUiuznKEkBfE=;
+        b=Jn6dDLCZCORp6tPjdTUvm6S0CTLKYNYBrTuzvzmdPpCCQe9eo6+SUdgRjlHT75eYOj
+         3wjgFCSXHp5dXbuDwYZKurHwpY3Kz/hSpZstF9GinY6mX+aed2r6OboKHaJF47seBQGg
+         I3ZigbT9qrGXblG61gB6J0mnygD8hQWoUZcVH/l1RW5FhHuuwfSNhMvnJHOrzfRTxnb3
+         uO+INKKgdKHM13yM/EEI2NxAPOHIHGxEi29h8BuRTNJZAE/S2oa1IBZ9ugo8ChEaGepi
+         H323chLOjz1lcWWN+roEz5pDIcBYD3Rj58ndsPD7xyLQnZ8C3kidSD4uN6A/3pNoxNXM
+         gqsA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1764094865; x=1764699665;
+        d=1e100.net; s=20230601; t=1764095079; x=1764699879;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=NzYyGBB3mLby2mlCraMEkWFkvO4XGO0FnATD2b6ZxNc=;
-        b=L/b9fzedOqFC25AC2TFXrbVm2akQ1gmR+ELrD69JE93WjVLI/BOTyYTTDmZxj5zMv6
-         cod7VAnmZa6YEH69Y9Pe0DGQcj3cPLZopJM5IwLMMCE1G3TRaitI6Sn24USZpuVkOnNo
-         SaE2Vw+7UPevGHxmFF0WfBgHy+6Rs+aHu5xDDW0Fsryt3FBor8C7qYGwtrk6bHWI1gE+
-         r6SR+JvTzVK5KhddpAB4CLGtv6xnjfO1H03O4dzYtnbWGfLzWqzdsitQNsnqOEJm5t6a
-         eDFmhEvjxQy7kUrXwUkMliZuAVOS+nOqDju5UIfmIVOFoWODeQVb3PkKSPvp5uMfNzX7
-         ecoA==
-X-Forwarded-Encrypted: i=1; AJvYcCXqWn1WDI8dGMOWSgQVGPru87u+6yCobGLJWbuOxAte/GsnSYU5BmYfKuNCOPv0reoixPH7n8cAE1pMJ1Cz@vger.kernel.org
-X-Gm-Message-State: AOJu0Yz0vHD2hKJHgmffAEucKs8MKuQAuN3F538L6XufAhGBTNPvBICr
-	sU3YHcRrezOfXKBVqVfAxjuYWfzvFjjXUVuIkpIuSNIJF+LHFJrLB1Cp9ofP8msn8M8F1HkPCoK
-	zgfP0JjI5265zIn+/ioikBKnhqDizx0W1b7l1uzPnVatwhZx+yu0QHPJ5qAcZfqPEP7A3
-X-Gm-Gg: ASbGncsKLiS6d1/v7B/091n8CXmXmOArNRGI9tPE09e+HDplX3fiRPz+3AkCEjzSw8x
-	A6Q9uJ4uUSDwA+mPQIqRL1yo10p+PGARCp/FcfFHnB0EZqdhySnHonSjYeRN1Nmtf4toYJAnKsj
-	juIHP/4nXn8DndecHuS9Abg6E0JafpEwT4eJl3n1XgJFaFT8/m5UVTGMtd77ihbF5zhHRayam4F
-	rO2UtbQNmoJUAvsgEKAFQhTPVQ/tXuWzBTsoIrgMYGTIAc6ftEr0Cx2R4HWxlFOQ2qkxCruRkX2
-	K6YeBqNAICemcNDnuFbkmOxq8h+m8Pr2Zw/0h7l9JVfjOUBIUV4SIf2YUkAJRB58NkRX6AZkWUb
-	r/Gg+T38Q32coxZmxMS4xR1yRaePGwvi2qUa9EDiLq0g7E7XhbtnxuC7Y4lNSKBSQAnxGHUdOeB
-	0mnwjj2KXUCugm+IzN5IFedHQ=
-X-Received: by 2002:a05:620a:4593:b0:8b2:74e5:b13 with SMTP id af79cd13be357-8b33d1d1118mr2256387585a.32.1764094864689;
-        Tue, 25 Nov 2025 10:21:04 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHBicLIWd9CtIXuz4A1229bk+zDyDHoRQA/6RSUygm7fAjL3PiUHyQuUR1w+IWHkkE/VMYx8A==
-X-Received: by 2002:a05:620a:4593:b0:8b2:74e5:b13 with SMTP id af79cd13be357-8b33d1d1118mr2256374185a.32.1764094863705;
-        Tue, 25 Nov 2025 10:21:03 -0800 (PST)
+        bh=1W2pZNd5o2xExOvwqTzV3PfSMN7hG4UWUiuznKEkBfE=;
+        b=WiB+BV1cBs2YR7fWL1V+UPmRCf5o2DpEZ/1WlkGDse9LyR9M/FvSTHd3niC5RXBhvE
+         FQHevaAzMkHpkd3eYlR8ZGuVcrUVJzUbVhfe3WCIk0DXTa6gXgig9OLiLGFglrZTPUy1
+         V3bWw47zDhbqt7x+RNJjJ+UcBSectZaobdUzKYNrQEsmR04vgklZjhMszhAG1tdj8rdj
+         3rK9thew+S+dXa5wbInEoSLoCf8cg4oTRZtTSYXOUp61YFzG7ZXVAtKwNiW6HWsVeaXQ
+         5YAk/KVLMDDwYYsWjClFDtLa1larJw+0r5NC26iY1u8MSqeD35uBhxW07mIBTgIFs5oZ
+         uZuA==
+X-Forwarded-Encrypted: i=1; AJvYcCUnZ21hnurGfPO/Tq1lIcp+CdblmJrEX/d/NYK+D68xLaDeoSRk9uz787WszAtL3DnTuTh0M+OYHLEUJSMf@vger.kernel.org
+X-Gm-Message-State: AOJu0Yzjj5EKyerAMYh6WTNt5WWf7yw/wvFDJsjXMaBVQoa8z3KupJ1D
+	UKCUaCjzXIH6dHjw5fn6intNDIU/gSR8TTmi7Y1Der9k7vXUVUaEwkRVgQX8UbA3AoIUzdp1FN4
+	xppedTG6KduzvX0tTESrbnVG9UZunTaAIoLR0JtERVrJUfKwoMT3JkRohEvxysfnr4aqt
+X-Gm-Gg: ASbGnct42VjbB8mDHEbwFPGOXQLuMl7A1M41CBobBRhCiQ0bXImFwg86U7gpzG0GVwv
+	WDCEjQURL1IO4WKb2ycnCMh8m7j+pHGrhXhlxNPRweKpyVxlaAHETF+YK0C3IsS9iW09LsWCCRs
+	lNjRKM6nq050vIovY6ry6ahPoUsbkZxgGkvzUibddnQ0B4Q2MrLTIL+vGcE6asyWwWb9YpUztZO
+	lBNatHbauWa7SiV/k1SHErnc0mTYvIEZS3V6cbws2eXHJxCeXszC3XDBUctjeEe9oPZqO8Bk7Pa
+	iQer5FnyXje694zqHtmwItZ4K/JNs+dL/kiqM5jrXiHIT++wMqwIRx0HsKPES6zBFIz9Fm/lIeN
+	phymuduNi5J5pDCXNyOAlS6sh8vokNlGlQ6ZhRTpTO7J/kybyYcif3FYm58Yc8NJ8A5m13Oox/0
+	U1Wh9TJlCKrPPdSkul4hAzWz0=
+X-Received: by 2002:a05:620a:29d2:b0:891:a6b0:7cda with SMTP id af79cd13be357-8b33d5de395mr1943569585a.81.1764095079535;
+        Tue, 25 Nov 2025 10:24:39 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IF/LwsjMNs5hDAMrUk2thSQ409OAJVsMNAKG7KN5/TDjooNvMHnsCDt1A7pnyNx3Aq4GT59vA==
+X-Received: by 2002:a05:620a:29d2:b0:891:a6b0:7cda with SMTP id af79cd13be357-8b33d5de395mr1943506585a.81.1764095071636;
+        Tue, 25 Nov 2025 10:24:31 -0800 (PST)
 Received: from umbar.lan (2001-14ba-a0c3-3a00-264b-feff-fe8b-be8a.rev.dnainternet.fi. [2001:14ba:a0c3:3a00:264b:feff:fe8b:be8a])
-        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-37cc6bafc06sm33704981fa.23.2025.11.25.10.21.02
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-5969db74711sm5356013e87.12.2025.11.25.10.24.30
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 25 Nov 2025 10:21:02 -0800 (PST)
-Date: Tue, 25 Nov 2025 20:21:01 +0200
+        Tue, 25 Nov 2025 10:24:30 -0800 (PST)
+Date: Tue, 25 Nov 2025 20:24:29 +0200
 From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 To: yuanjie yang <yuanjie.yang@oss.qualcomm.com>
 Cc: robin.clark@oss.qualcomm.com, lumag@kernel.org, abhinav.kumar@linux.dev,
@@ -106,11 +106,10 @@ Cc: robin.clark@oss.qualcomm.com, lumag@kernel.org, abhinav.kumar@linux.dev,
         freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org,
         tingwei.zhang@oss.qualcomm.com, aiqun.yu@oss.qualcomm.com,
         Yongxing Mou <yongxing.mou@oss.qualcomm.com>
-Subject: Re: [PATCH v2 09/10] drm/msm/dpu: Add Kaanapali SSPP sub-block
- support
-Message-ID: <2a6qysb63icgu3mpolwgnfnfevl6w56ver4hbswyg4pjtbbtvt@mxtwwnmmpqhg>
+Subject: Re: [PATCH v2 10/10] drm/msm/dpu: Add support for Kaanapali DPU
+Message-ID: <xf2v2idn64mbmnjofih76thot7iudiy5winekxwhki3snlqnd2@qaols2ykqgyd>
 References: <20251125064758.7207-1-yuanjie.yang@oss.qualcomm.com>
- <20251125064758.7207-10-yuanjie.yang@oss.qualcomm.com>
+ <20251125064758.7207-11-yuanjie.yang@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -119,1172 +118,54 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20251125064758.7207-10-yuanjie.yang@oss.qualcomm.com>
-X-Authority-Analysis: v=2.4 cv=P9Q3RyAu c=1 sm=1 tr=0 ts=6925f392 cx=c_pps
- a=50t2pK5VMbmlHzFWWp8p/g==:117 a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10
+In-Reply-To: <20251125064758.7207-11-yuanjie.yang@oss.qualcomm.com>
+X-Proofpoint-GUID: _x0JLwQ_gh1WTqecx8gUQvS3yqZurtpS
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMTI1MDE1MyBTYWx0ZWRfX+MCttea8HpNg
+ i5HNFvFkJn9MCEgzQwm2WbxP0y4MXKU3IAtojKvltqmqsJG8vrZ8RuslQWLcIRmR6bVpp93J6vS
+ /32HN/qfgXOAvH6ItNlHVXn9/Obd9qbMcOKv3hdl5ho0HYC1gWqMCAPO5h9gqzMO3FjSKVLJXON
+ GuLsPQzAXlUI3TxX1+XFqAAKf3bShu0V+c2S0owfH3BqpwK9u4w/KUAvoXApvcr0xIjvMksp8Nb
+ bHIZFO4f3l4IbRu2BA1ck7R3OCXiUcXEwqAYdxUkafg9HqVTrkF9x2jzJ6czSVSJVFZFJdZl0Q5
+ xICjrtkc8EQBu85q9Sszudjq1x5mEql3mYCA0U9OPAVwLaie1EUiMcTbTuhQP38HqPFWdP+SnF3
+ 3prfZxdmJjps/OkKa2Ri3yehm1/I4A==
+X-Authority-Analysis: v=2.4 cv=Sfj6t/Ru c=1 sm=1 tr=0 ts=6925f468 cx=c_pps
+ a=HLyN3IcIa5EE8TELMZ618Q==:117 a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10
  a=6UeiqGixMTsA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=EUspDBNiAAAA:8 a=ygI5iuTb6cMDIvTLW_0A:9 a=CjuIK1q_8ugA:10
- a=IoWCM6iH3mJn3m4BftBB:22
-X-Proofpoint-GUID: jTV0BSs3JrlRmDztT3CQf5A-WlCVO2Pc
-X-Proofpoint-ORIG-GUID: jTV0BSs3JrlRmDztT3CQf5A-WlCVO2Pc
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMTI1MDE1MyBTYWx0ZWRfX62K95cek3b+f
- tkeoys/dhHM9PhKiILLK9oF5gBSIX2twYtsRfhfeDB0pv3psQOV2eVuIYVlMN8ZxvGGiCmjbTfN
- zC5qtgKi8Jrag9SDS2rZ02MOYCSglCLxU/qs8ePODGw7Fed1zoDFaUhpU6FcsYGIFaRcgFlroXX
- 15KnpLDbw2xKk7m6yq6aaCZa0x6Jpuoke5c2GboBhpJ/4jqYctgMXfxBxn8QEKbNNciHzhmxvZZ
- GmGsJH+796iHDnXrBP+ItcqPRHpghyt9H2Q9rJoCPcOfUPAd5/KPUeEq3SoQXw1GTCcOx4gxICQ
- E1CfmbipqRea5knlmRXJ/3IiYR0n2//QjgVXn6yEs8eBvND77ZUhQ1NO1D/ox+hVCdOBOTskYcS
- vCkA32Umtoi9SdwlWk+0PP63rX058w==
+ a=EUspDBNiAAAA:8 a=8hlrZ4-jp5Ul6jFpUz4A:9 a=CjuIK1q_8ugA:10
+ a=bTQJ7kPSJx9SKPbeHEYW:22
+X-Proofpoint-ORIG-GUID: _x0JLwQ_gh1WTqecx8gUQvS3yqZurtpS
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
  definitions=2025-11-25_02,2025-11-25_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 adultscore=0 spamscore=0 phishscore=0 bulkscore=0
- priorityscore=1501 lowpriorityscore=0 impostorscore=0 malwarescore=0
- suspectscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ bulkscore=0 adultscore=0 malwarescore=0 suspectscore=0 clxscore=1015
+ spamscore=0 impostorscore=0 phishscore=0 lowpriorityscore=0
+ priorityscore=1501 classifier=typeunknown authscore=0 authtc= authcc=
  route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2510240001
  definitions=main-2511250153
 
-On Tue, Nov 25, 2025 at 02:47:57PM +0800, yuanjie yang wrote:
+On Tue, Nov 25, 2025 at 02:47:58PM +0800, yuanjie yang wrote:
 > From: Yuanjie Yang <yuanjie.yang@oss.qualcomm.com>
 > 
-> Add support for Kaanapali platform SSPP sub-blocks, which
-> introduce structural changes including register additions,
-> removals, and relocations. Add the new common and rectangle
-> blocks, and update register definitions and handling to
-> ensure compatibility with DPU v13.0.
-
-Please split this into two pieces:
-- refactoring of the current code,
-- addition of DPU 13.x.x support.
-
+> Add support for Display Processing Unit (DPU) version 13.0
+> on the Kaanapali platform. This version introduces changes
+> to the SSPP sub-block structure. Add common block and rectangle
+> blocks to accommodate these structural modifications for
+> compatibility.
 > 
 > Co-developed-by: Yongxing Mou <yongxing.mou@oss.qualcomm.com>
 > Signed-off-by: Yongxing Mou <yongxing.mou@oss.qualcomm.com>
 > Signed-off-by: Yuanjie Yang <yuanjie.yang@oss.qualcomm.com>
 > ---
->  drivers/gpu/drm/msm/Makefile                  |   1 +
->  .../gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h    |  27 +-
->  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.c   | 276 +++++++-----------
->  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.h   | 264 +++++++++++++++++
->  .../gpu/drm/msm/disp/dpu1/dpu_hw_ssppv13.c    | 224 ++++++++++++++
->  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_util.c   |  23 ++
->  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_util.h   |   4 +
->  7 files changed, 645 insertions(+), 174 deletions(-)
->  create mode 100644 drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ssppv13.c
+>  .../disp/dpu1/catalog/dpu_13_0_kaanapali.h    | 492 ++++++++++++++++++
+>  .../gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c    |  41 ++
+>  .../gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h    |   1 +
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c       |   1 +
+>  4 files changed, 535 insertions(+)
+>  create mode 100644 drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_13_0_kaanapali.h
 > 
-> diff --git a/drivers/gpu/drm/msm/Makefile b/drivers/gpu/drm/msm/Makefile
-> index 8aa7d07303fb..664e71dfa880 100644
-> --- a/drivers/gpu/drm/msm/Makefile
-> +++ b/drivers/gpu/drm/msm/Makefile
-> @@ -86,6 +86,7 @@ msm-display-$(CONFIG_DRM_MSM_DPU) += \
->  	disp/dpu1/dpu_hw_lm.o \
->  	disp/dpu1/dpu_hw_pingpong.o \
->  	disp/dpu1/dpu_hw_sspp.o \
-> +	disp/dpu1/dpu_hw_ssppv13.o \
 
-dpu_hw_sspp_v13
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 
->  	disp/dpu1/dpu_hw_dspp.o \
->  	disp/dpu1/dpu_hw_merge3d.o \
->  	disp/dpu1/dpu_hw_top.o \
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
-> index 336757103b5a..c996b08076a9 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
-> @@ -208,6 +208,30 @@ struct dpu_dsc_blk {
->  	u32 len;
->  };
->  
-> +/**
-> + * struct dpu_sspp_rec_blk - SSPP REC sub-blk information
-> + * @name: string name for debug purposes
-> + * @base: offset of this sub-block relative to the block offset
-> + * @len: register block length of this sub-block
-> + */
-> +struct dpu_sspp_rec_blk {
-
-dpu_sspp_v13_rec_blk
-
-> +	char name[DPU_HW_BLK_NAME_LEN];
-> +	u32 base;
-> +	u32 len;
-> +};
-> +
-> +/**
-> + * struct dpu_sspp_cmn_blk - SSPP common sub-blk information
-> + * @name: string name for debug purposes
-> + * @base: offset of this sub-block relative to the block offset
-> + * @len: register block length of this sub-block
-> + */
-> +struct dpu_sspp_cmn_blk {
-> +	char name[DPU_HW_BLK_NAME_LEN];
-> +	u32 base;
-> +	u32 len;
-> +};
-
-There is no separate "cmn" block, it's just SSPP's base. Drop
-
-> +
->  /**
->   * enum dpu_qos_lut_usage - define QoS LUT use cases
->   */
-> @@ -294,7 +318,8 @@ struct dpu_sspp_sub_blks {
->  	u32 qseed_ver;
->  	struct dpu_scaler_blk scaler_blk;
->  	struct dpu_pp_blk csc_blk;
-> -
-> +	struct dpu_sspp_rec_blk sspp_rec0_blk;
-> +	struct dpu_sspp_rec_blk sspp_rec1_blk;
->  	const u32 *format_list;
->  	u32 num_formats;
->  	const struct dpu_rotation_cfg *rotation_cfg;
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.c
-> index 6f1fc790ad6d..a2c5d1433f13 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.c
-> @@ -15,141 +15,24 @@
->  
->  #include <linux/soc/qcom/ubwc.h>
->  
-> -#define DPU_FETCH_CONFIG_RESET_VALUE   0x00000087
-> -
-> -/* SSPP registers */
-> -#define SSPP_SRC_SIZE                      0x00
-> -#define SSPP_SRC_XY                        0x08
-> -#define SSPP_OUT_SIZE                      0x0c
-> -#define SSPP_OUT_XY                        0x10
-> -#define SSPP_SRC0_ADDR                     0x14
-> -#define SSPP_SRC1_ADDR                     0x18
-> -#define SSPP_SRC2_ADDR                     0x1C
-> -#define SSPP_SRC3_ADDR                     0x20
-> -#define SSPP_SRC_YSTRIDE0                  0x24
-> -#define SSPP_SRC_YSTRIDE1                  0x28
-> -#define SSPP_SRC_FORMAT                    0x30
-> -#define SSPP_SRC_UNPACK_PATTERN            0x34
-> -#define SSPP_SRC_OP_MODE                   0x38
-> -#define SSPP_SRC_CONSTANT_COLOR            0x3c
-> -#define SSPP_EXCL_REC_CTL                  0x40
-> -#define SSPP_UBWC_STATIC_CTRL              0x44
-> -#define SSPP_FETCH_CONFIG                  0x48
-> -#define SSPP_DANGER_LUT                    0x60
-> -#define SSPP_SAFE_LUT                      0x64
-> -#define SSPP_CREQ_LUT                      0x68
-> -#define SSPP_QOS_CTRL                      0x6C
-> -#define SSPP_SRC_ADDR_SW_STATUS            0x70
-> -#define SSPP_CREQ_LUT_0                    0x74
-> -#define SSPP_CREQ_LUT_1                    0x78
-> -#define SSPP_DECIMATION_CONFIG             0xB4
-> -#define SSPP_SW_PIX_EXT_C0_LR              0x100
-> -#define SSPP_SW_PIX_EXT_C0_TB              0x104
-> -#define SSPP_SW_PIX_EXT_C0_REQ_PIXELS      0x108
-> -#define SSPP_SW_PIX_EXT_C1C2_LR            0x110
-> -#define SSPP_SW_PIX_EXT_C1C2_TB            0x114
-> -#define SSPP_SW_PIX_EXT_C1C2_REQ_PIXELS    0x118
-> -#define SSPP_SW_PIX_EXT_C3_LR              0x120
-> -#define SSPP_SW_PIX_EXT_C3_TB              0x124
-> -#define SSPP_SW_PIX_EXT_C3_REQ_PIXELS      0x128
-> -#define SSPP_TRAFFIC_SHAPER                0x130
-> -#define SSPP_CDP_CNTL                      0x134
-> -#define SSPP_UBWC_ERROR_STATUS             0x138
-> -#define SSPP_CDP_CNTL_REC1                 0x13c
-> -#define SSPP_TRAFFIC_SHAPER_PREFILL        0x150
-> -#define SSPP_TRAFFIC_SHAPER_REC1_PREFILL   0x154
-> -#define SSPP_TRAFFIC_SHAPER_REC1           0x158
-> -#define SSPP_OUT_SIZE_REC1                 0x160
-> -#define SSPP_OUT_XY_REC1                   0x164
-> -#define SSPP_SRC_XY_REC1                   0x168
-> -#define SSPP_SRC_SIZE_REC1                 0x16C
-> -#define SSPP_MULTIRECT_OPMODE              0x170
-> -#define SSPP_SRC_FORMAT_REC1               0x174
-> -#define SSPP_SRC_UNPACK_PATTERN_REC1       0x178
-> -#define SSPP_SRC_OP_MODE_REC1              0x17C
-> -#define SSPP_SRC_CONSTANT_COLOR_REC1       0x180
-> -#define SSPP_EXCL_REC_SIZE_REC1            0x184
-> -#define SSPP_EXCL_REC_XY_REC1              0x188
-> -#define SSPP_EXCL_REC_SIZE                 0x1B4
-> -#define SSPP_EXCL_REC_XY                   0x1B8
-> -#define SSPP_CLK_CTRL                      0x330
-> -
-> -/* SSPP_SRC_OP_MODE & OP_MODE_REC1 */
-> -#define MDSS_MDP_OP_DEINTERLACE            BIT(22)
-> -#define MDSS_MDP_OP_DEINTERLACE_ODD        BIT(23)
-> -#define MDSS_MDP_OP_IGC_ROM_1              BIT(18)
-> -#define MDSS_MDP_OP_IGC_ROM_0              BIT(17)
-> -#define MDSS_MDP_OP_IGC_EN                 BIT(16)
-> -#define MDSS_MDP_OP_FLIP_UD                BIT(14)
-> -#define MDSS_MDP_OP_FLIP_LR                BIT(13)
-> -#define MDSS_MDP_OP_BWC_EN                 BIT(0)
-> -#define MDSS_MDP_OP_PE_OVERRIDE            BIT(31)
-> -#define MDSS_MDP_OP_BWC_LOSSLESS           (0 << 1)
-> -#define MDSS_MDP_OP_BWC_Q_HIGH             (1 << 1)
-> -#define MDSS_MDP_OP_BWC_Q_MED              (2 << 1)
-> -
-> -/* SSPP_QOS_CTRL */
-> -#define SSPP_QOS_CTRL_VBLANK_EN            BIT(16)
-> -#define SSPP_QOS_CTRL_DANGER_SAFE_EN       BIT(0)
-> -#define SSPP_QOS_CTRL_DANGER_VBLANK_MASK   0x3
-> -#define SSPP_QOS_CTRL_DANGER_VBLANK_OFF    4
-> -#define SSPP_QOS_CTRL_CREQ_VBLANK_MASK     0x3
-> -#define SSPP_QOS_CTRL_CREQ_VBLANK_OFF      20
-> -
-> -/* DPU_SSPP_SCALER_QSEED2 */
-> -#define SSPP_VIG_OP_MODE                   0x0
-> -#define SCALE_CONFIG                       0x04
-> -#define COMP0_3_PHASE_STEP_X               0x10
-> -#define COMP0_3_PHASE_STEP_Y               0x14
-> -#define COMP1_2_PHASE_STEP_X               0x18
-> -#define COMP1_2_PHASE_STEP_Y               0x1c
-> -#define COMP0_3_INIT_PHASE_X               0x20
-> -#define COMP0_3_INIT_PHASE_Y               0x24
-> -#define COMP1_2_INIT_PHASE_X               0x28
-> -#define COMP1_2_INIT_PHASE_Y               0x2C
-> -#define VIG_0_QSEED2_SHARP                 0x30
-> -
-> -/* SSPP_TRAFFIC_SHAPER and _REC1 */
-> -#define SSPP_TRAFFIC_SHAPER_BPC_MAX        0xFF
-> -
-> -/*
-> - * Definitions for ViG op modes
-> - */
-> -#define VIG_OP_CSC_DST_DATAFMT BIT(19)
-> -#define VIG_OP_CSC_SRC_DATAFMT BIT(18)
-> -#define VIG_OP_CSC_EN          BIT(17)
-> -#define VIG_OP_MEM_PROT_CONT   BIT(15)
-> -#define VIG_OP_MEM_PROT_VAL    BIT(14)
-> -#define VIG_OP_MEM_PROT_SAT    BIT(13)
-> -#define VIG_OP_MEM_PROT_HUE    BIT(12)
-> -#define VIG_OP_HIST            BIT(8)
-> -#define VIG_OP_SKY_COL         BIT(7)
-> -#define VIG_OP_FOIL            BIT(6)
-> -#define VIG_OP_SKIN_COL        BIT(5)
-> -#define VIG_OP_PA_EN           BIT(4)
-> -#define VIG_OP_PA_SAT_ZERO_EXP BIT(2)
-> -#define VIG_OP_MEM_PROT_BLEND  BIT(1)
-> -
-> -/*
-> - * Definitions for CSC 10 op modes
-> - */
-> -#define SSPP_VIG_CSC_10_OP_MODE            0x0
-> -#define VIG_CSC_10_SRC_DATAFMT BIT(1)
-> -#define VIG_CSC_10_EN          BIT(0)
-> -#define CSC_10BIT_OFFSET       4
-> -
-> -/* traffic shaper clock in Hz */
-> -#define TS_CLK			19200000
-> -
-> -
->  static void dpu_hw_sspp_setup_multirect(struct dpu_sw_pipe *pipe)
->  {
->  	struct dpu_hw_sspp *ctx = pipe->sspp;
-> -	u32 mode_mask;
-> +	u32 op_mode_off;
->  
->  	if (!ctx)
->  		return;
->  
-> +	op_mode_off = SSPP_MULTIRECT_OPMODE;
-
-You don't need a variable to pass a constant.
-
-> +
-> +	_dpu_hw_setup_multirect(pipe, ctx, op_mode_off);
-> +}
-> +
-> +void _dpu_hw_setup_multirect(struct dpu_sw_pipe *pipe,
-> +			     struct dpu_hw_sspp *ctx, u32 op_mode_off)
-> +{
-> +	u32 mode_mask;
-> +
->  	if (pipe->multirect_index == DPU_SSPP_RECT_SOLO) {
->  		/**
->  		 * if rect index is RECT_SOLO, we cannot expect a
-> @@ -158,7 +41,7 @@ static void dpu_hw_sspp_setup_multirect(struct dpu_sw_pipe *pipe)
->  		 */
->  		mode_mask = 0;
->  	} else {
-> -		mode_mask = DPU_REG_READ(&ctx->hw, SSPP_MULTIRECT_OPMODE);
-> +		mode_mask = DPU_REG_READ(&ctx->hw, op_mode_off);
->  		mode_mask |= pipe->multirect_index;
->  		if (pipe->multirect_mode == DPU_SSPP_MULTIRECT_TIME_MX)
->  			mode_mask |= BIT(2);
-> @@ -166,11 +49,11 @@ static void dpu_hw_sspp_setup_multirect(struct dpu_sw_pipe *pipe)
->  			mode_mask &= ~BIT(2);
->  	}
->  
-> -	DPU_REG_WRITE(&ctx->hw, SSPP_MULTIRECT_OPMODE, mode_mask);
-> +	DPU_REG_WRITE(&ctx->hw, op_mode_off, mode_mask);
->  }
->  
-> -static void _sspp_setup_opmode(struct dpu_hw_sspp *ctx,
-> -		u32 mask, u8 en)
-> +void _sspp_setup_opmode(struct dpu_hw_sspp *ctx,
-> +			u32 mask, u8 en)
->  {
->  	const struct dpu_sspp_sub_blks *sblk = ctx->cap->sblk;
->  	u32 opmode;
-> @@ -189,8 +72,8 @@ static void _sspp_setup_opmode(struct dpu_hw_sspp *ctx,
->  	DPU_REG_WRITE(&ctx->hw, sblk->scaler_blk.base + SSPP_VIG_OP_MODE, opmode);
->  }
->  
-> -static void _sspp_setup_csc10_opmode(struct dpu_hw_sspp *ctx,
-> -		u32 mask, u8 en)
-> +void _sspp_setup_csc10_opmode(struct dpu_hw_sspp *ctx,
-> +			      u32 mask, u8 en)
->  {
->  	const struct dpu_sspp_sub_blks *sblk = ctx->cap->sblk;
->  	u32 opmode;
-> @@ -211,11 +94,8 @@ static void dpu_hw_sspp_setup_format(struct dpu_sw_pipe *pipe,
->  		const struct msm_format *fmt, u32 flags)
->  {
->  	struct dpu_hw_sspp *ctx = pipe->sspp;
-> -	struct dpu_hw_blk_reg_map *c;
-> -	u32 chroma_samp, unpack, src_format;
-> -	u32 opmode = 0;
-> -	u32 fast_clear = 0;
->  	u32 op_mode_off, unpack_pat_off, format_off;
-> +	u32 ubwc_ctrl_off, ubwc_err_off;
->  
->  	if (!ctx || !fmt)
->  		return;
-> @@ -230,16 +110,42 @@ static void dpu_hw_sspp_setup_format(struct dpu_sw_pipe *pipe,
->  		unpack_pat_off = SSPP_SRC_UNPACK_PATTERN_REC1;
->  		format_off = SSPP_SRC_FORMAT_REC1;
->  	}
-> +	ubwc_ctrl_off = SSPP_UBWC_STATIC_CTRL;
-> +	ubwc_err_off = SSPP_UBWC_ERROR_STATUS;
-
-The same. No need for a variable to pass out register offset.
-
-> +
-> +	_dpu_hw_setup_format(pipe, fmt, flags, ctx, op_mode_off,
-> +			     unpack_pat_off, format_off, ubwc_ctrl_off, ubwc_err_off);
-> +}
-> +
-> +void _dpu_hw_setup_format(struct dpu_sw_pipe *pipe, const struct msm_format *fmt,
-> +			  u32 flags, struct dpu_hw_sspp *ctx, u32 op_mode_off,
-> +			  u32 unpack_pat_off, u32 format_off, u32 ubwc_ctrl_off, u32 ubwc_err_off)
-> +{
-> +	struct dpu_hw_blk_reg_map *c;
-> +	u32 chroma_samp, unpack, src_format;
-> +	u32 opmode;
-> +	u32 fast_clear;
-> +	u8 core_major_ver;
->  
->  	c = &ctx->hw;
-> +	core_major_ver = ctx->mdss_ver->core_major_ver;
-> +
->  	opmode = DPU_REG_READ(c, op_mode_off);
-> -	opmode &= ~(MDSS_MDP_OP_FLIP_LR | MDSS_MDP_OP_FLIP_UD |
-> +	if (core_major_ver >= 13)
-
-If it is common, there should be no if(version) checks. But do we need a
-version check here at all?
-
-> +		opmode &= ~(MDSS_MDP_OP_FLIP_LR | MDSS_MDP_OP_FLIP_UD |
-> +				MDSS_MDP_OP_BWC_EN | MDSS_MDP_OP_PE_OVERRIDE
-> +				| MDSS_MDP_OP_ROT_90);
-> +	else
-> +		opmode &= ~(MDSS_MDP_OP_FLIP_LR | MDSS_MDP_OP_FLIP_UD |
->  			MDSS_MDP_OP_BWC_EN | MDSS_MDP_OP_PE_OVERRIDE);
->  
->  	if (flags & DPU_SSPP_FLIP_LR)
->  		opmode |= MDSS_MDP_OP_FLIP_LR;
->  	if (flags & DPU_SSPP_FLIP_UD)
->  		opmode |= MDSS_MDP_OP_FLIP_UD;
-> +	if (core_major_ver >= 13)
-> +		if (flags & DPU_SSPP_ROT_90)
-> +			opmode |= MDSS_MDP_OP_ROT_90;
-
-And here?
-
->  
->  	chroma_samp = fmt->chroma_sample;
->  	if (flags & DPU_SSPP_SOURCE_ROTATED_90) {
-> @@ -273,31 +179,34 @@ static void dpu_hw_sspp_setup_format(struct dpu_sw_pipe *pipe,
->  		if (MSM_FORMAT_IS_UBWC(fmt))
->  			opmode |= MDSS_MDP_OP_BWC_EN;
->  		src_format |= (fmt->fetch_mode & 3) << 30; /*FRAME_FORMAT */
-> -		DPU_REG_WRITE(c, SSPP_FETCH_CONFIG,
-> -			DPU_FETCH_CONFIG_RESET_VALUE |
-> -			ctx->ubwc->highest_bank_bit << 18);
-> +
-> +		if (core_major_ver < 13)
-> +			DPU_REG_WRITE(c, SSPP_FETCH_CONFIG,
-> +				      DPU_FETCH_CONFIG_RESET_VALUE |
-> +				      ctx->ubwc->highest_bank_bit << 18);
-> +
->  		switch (ctx->ubwc->ubwc_enc_version) {
->  		case UBWC_1_0:
->  			fast_clear = fmt->alpha_enable ? BIT(31) : 0;
-> -			DPU_REG_WRITE(c, SSPP_UBWC_STATIC_CTRL,
-> -					fast_clear | (ctx->ubwc->ubwc_swizzle & 0x1) |
-> -					BIT(8) |
-> -					(ctx->ubwc->highest_bank_bit << 4));
-> +			DPU_REG_WRITE(c, ubwc_ctrl_off,
-> +				      fast_clear | (ctx->ubwc->ubwc_swizzle & 0x1) |
-> +				      BIT(8) |
-> +				     (ctx->ubwc->highest_bank_bit << 4));
-
-No unrelated changes, please.
-
->  			break;
->  		case UBWC_2_0:
->  			fast_clear = fmt->alpha_enable ? BIT(31) : 0;
-> -			DPU_REG_WRITE(c, SSPP_UBWC_STATIC_CTRL,
-> -					fast_clear | (ctx->ubwc->ubwc_swizzle) |
-> -					(ctx->ubwc->highest_bank_bit << 4));
-> +			DPU_REG_WRITE(c, ubwc_ctrl_off,
-> +				      fast_clear | (ctx->ubwc->ubwc_swizzle) |
-> +				     (ctx->ubwc->highest_bank_bit << 4));
->  			break;
->  		case UBWC_3_0:
-> -			DPU_REG_WRITE(c, SSPP_UBWC_STATIC_CTRL,
-> -					BIT(30) | (ctx->ubwc->ubwc_swizzle) |
-> -					(ctx->ubwc->highest_bank_bit << 4));
-> +			DPU_REG_WRITE(c, ubwc_ctrl_off,
-> +				      BIT(30) | (ctx->ubwc->ubwc_swizzle) |
-> +				     (ctx->ubwc->highest_bank_bit << 4));
->  			break;
->  		case UBWC_4_0:
-> -			DPU_REG_WRITE(c, SSPP_UBWC_STATIC_CTRL,
-> -					MSM_FORMAT_IS_YUV(fmt) ? 0 : BIT(30));
-> +			DPU_REG_WRITE(c, ubwc_ctrl_off,
-> +				      MSM_FORMAT_IS_YUV(fmt) ? 0 : BIT(30));
->  			break;
->  		}
->  	}
-> @@ -323,9 +232,8 @@ static void dpu_hw_sspp_setup_format(struct dpu_sw_pipe *pipe,
->  	DPU_REG_WRITE(c, format_off, src_format);
->  	DPU_REG_WRITE(c, unpack_pat_off, unpack);
->  	DPU_REG_WRITE(c, op_mode_off, opmode);
-> -
->  	/* clear previous UBWC error */
-> -	DPU_REG_WRITE(c, SSPP_UBWC_ERROR_STATUS, BIT(31));
-> +	DPU_REG_WRITE(c, ubwc_err_off, BIT(31));
->  }
->  
->  static void dpu_hw_sspp_setup_pe_config(struct dpu_hw_sspp *ctx,
-> @@ -385,9 +293,9 @@ static void dpu_hw_sspp_setup_pe_config(struct dpu_hw_sspp *ctx,
->  			tot_req_pixels[3]);
->  }
->  
-> -static void _dpu_hw_sspp_setup_scaler3(struct dpu_hw_sspp *ctx,
-> -		struct dpu_hw_scaler3_cfg *scaler3_cfg,
-> -		const struct msm_format *format)
-> +void _dpu_hw_sspp_setup_scaler3(struct dpu_hw_sspp *ctx,
-> +				struct dpu_hw_scaler3_cfg *scaler3_cfg,
-> +				const struct msm_format *format)
->  {
->  	if (!ctx || !scaler3_cfg)
->  		return;
-> @@ -405,15 +313,11 @@ static void dpu_hw_sspp_setup_rects(struct dpu_sw_pipe *pipe,
->  		struct dpu_sw_pipe_cfg *cfg)
->  {
->  	struct dpu_hw_sspp *ctx = pipe->sspp;
-> -	struct dpu_hw_blk_reg_map *c;
-> -	u32 src_size, src_xy, dst_size, dst_xy;
->  	u32 src_size_off, src_xy_off, out_size_off, out_xy_off;
->  
->  	if (!ctx || !cfg)
->  		return;
->  
-> -	c = &ctx->hw;
-> -
->  	if (pipe->multirect_index == DPU_SSPP_RECT_SOLO ||
->  	    pipe->multirect_index == DPU_SSPP_RECT_0) {
->  		src_size_off = SSPP_SRC_SIZE;
-> @@ -427,6 +331,19 @@ static void dpu_hw_sspp_setup_rects(struct dpu_sw_pipe *pipe,
->  		out_xy_off = SSPP_OUT_XY_REC1;
->  	}
->  
-> +	_dpu_hw_setup_rects(pipe, cfg, ctx, src_size_off,
-> +			    src_xy_off, out_size_off, out_xy_off);
-> +}
-> +
-> +void _dpu_hw_setup_rects(struct dpu_sw_pipe *pipe,
-> +			 struct dpu_sw_pipe_cfg *cfg, struct dpu_hw_sspp *ctx,
-> +			 u32 src_size_off, u32 src_xy_off,
-> +			 u32 out_size_off, u32 out_xy_off)
-> +{
-> +	struct dpu_hw_blk_reg_map *c;
-> +	u32 src_size, src_xy, dst_size, dst_xy;
-> +
-> +	c = &ctx->hw;
->  
->  	/* src and dest rect programming */
->  	src_xy = (cfg->src_rect.y1 << 16) | cfg->src_rect.x1;
-> @@ -497,8 +414,8 @@ static void dpu_hw_sspp_setup_sourceaddress(struct dpu_sw_pipe *pipe,
->  	DPU_REG_WRITE(&ctx->hw, SSPP_SRC_YSTRIDE1, ystride1);
->  }
->  
-> -static void dpu_hw_sspp_setup_csc(struct dpu_hw_sspp *ctx,
-> -		const struct dpu_csc_cfg *data)
-> +void dpu_hw_sspp_setup_csc(struct dpu_hw_sspp *ctx,
-> +			   const struct dpu_csc_cfg *data)
->  {
->  	u32 offset;
->  	bool csc10 = false;
-> @@ -519,21 +436,31 @@ static void dpu_hw_sspp_setup_csc(struct dpu_hw_sspp *ctx,
->  static void dpu_hw_sspp_setup_solidfill(struct dpu_sw_pipe *pipe, u32 color)
->  {
->  	struct dpu_hw_sspp *ctx = pipe->sspp;
-> -	struct dpu_hw_fmt_layout cfg;
-> +	u32 const_clr_off;
->  
->  	if (!ctx)
->  		return;
->  
-> +	if (pipe->multirect_index == DPU_SSPP_RECT_SOLO ||
-> +	    pipe->multirect_index == DPU_SSPP_RECT_0)
-> +		const_clr_off = SSPP_SRC_CONSTANT_COLOR;
-> +	else
-> +		const_clr_off = SSPP_SRC_CONSTANT_COLOR_REC1;
-> +
-> +	_dpu_hw_setup_solidfill(pipe, color, ctx, const_clr_off);
-> +}
-> +
-> +void _dpu_hw_setup_solidfill(struct dpu_sw_pipe *pipe,
-> +			     u32 color, struct dpu_hw_sspp *ctx,
-> +			     u32 const_clr_off)
-> +{
-> +	struct dpu_hw_fmt_layout cfg;
-> +
->  	/* cleanup source addresses */
->  	memset(&cfg, 0, sizeof(cfg));
->  	ctx->ops.setup_sourceaddress(pipe, &cfg);
->  
-> -	if (pipe->multirect_index == DPU_SSPP_RECT_SOLO ||
-> -	    pipe->multirect_index == DPU_SSPP_RECT_0)
-> -		DPU_REG_WRITE(&ctx->hw, SSPP_SRC_CONSTANT_COLOR, color);
-> -	else
-> -		DPU_REG_WRITE(&ctx->hw, SSPP_SRC_CONSTANT_COLOR_REC1,
-> -				color);
-> +	DPU_REG_WRITE(&ctx->hw, const_clr_off, color);
->  }
->  
->  static void dpu_hw_sspp_setup_qos_lut(struct dpu_hw_sspp *ctx,
-> @@ -706,7 +633,10 @@ struct dpu_hw_sspp *dpu_hw_sspp_init(struct drm_device *dev,
->  
->  	hw_pipe->mdss_ver = mdss_rev;
->  
-> -	_setup_layer_ops(hw_pipe, hw_pipe->cap->features, mdss_rev);
-> +	if (mdss_rev->core_major_ver >= 13)
-> +		_setup_layer_ops_v13(hw_pipe, hw_pipe->cap->features, mdss_rev);
-> +	else
-> +		_setup_layer_ops(hw_pipe, hw_pipe->cap->features, mdss_rev);
->  
->  	return hw_pipe;
->  }
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.h
-> index bdac5c04bf79..8ae4091e6e63 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.h
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.h
-> @@ -14,6 +14,167 @@ struct dpu_hw_sspp;
->  
->  #define DPU_SSPP_MAX_PITCH_SIZE		0xffff
->  
-> +/* <= v12 DPU */
-> +/* SSPP registers */
-
-No, keep them as they were.
-
-> +#define SSPP_SRC_SIZE                      0x00
-> +#define SSPP_SRC_XY                        0x08
-> +#define SSPP_OUT_SIZE                      0x0c
-> +#define SSPP_OUT_XY                        0x10
-> +#define SSPP_SRC0_ADDR                     0x14
-> +#define SSPP_SRC1_ADDR                     0x18
-> +#define SSPP_SRC2_ADDR                     0x1C
-> +#define SSPP_SRC3_ADDR                     0x20
-> +#define SSPP_SRC_YSTRIDE0                  0x24
-> +#define SSPP_SRC_YSTRIDE1                  0x28
-> +#define SSPP_SRC_FORMAT                    0x30
-> +#define SSPP_SRC_UNPACK_PATTERN            0x34
-> +#define SSPP_SRC_OP_MODE                   0x38
-> +#define SSPP_SRC_CONSTANT_COLOR            0x3c
-> +#define SSPP_EXCL_REC_CTL                  0x40
-> +#define SSPP_UBWC_STATIC_CTRL              0x44
-> +#define SSPP_FETCH_CONFIG                  0x48
-> +#define SSPP_DANGER_LUT                    0x60
-> +#define SSPP_SAFE_LUT                      0x64
-> +#define SSPP_CREQ_LUT                      0x68
-> +#define SSPP_QOS_CTRL                      0x6C
-> +#define SSPP_SRC_ADDR_SW_STATUS            0x70
-> +#define SSPP_CREQ_LUT_0                    0x74
-> +#define SSPP_CREQ_LUT_1                    0x78
-> +#define SSPP_DECIMATION_CONFIG             0xB4
-> +#define SSPP_SW_PIX_EXT_C0_LR              0x100
-> +#define SSPP_SW_PIX_EXT_C0_TB              0x104
-> +#define SSPP_SW_PIX_EXT_C0_REQ_PIXELS      0x108
-> +#define SSPP_SW_PIX_EXT_C1C2_LR            0x110
-> +#define SSPP_SW_PIX_EXT_C1C2_TB            0x114
-> +#define SSPP_SW_PIX_EXT_C1C2_REQ_PIXELS    0x118
-> +#define SSPP_SW_PIX_EXT_C3_LR              0x120
-> +#define SSPP_SW_PIX_EXT_C3_TB              0x124
-> +#define SSPP_SW_PIX_EXT_C3_REQ_PIXELS      0x128
-> +#define SSPP_TRAFFIC_SHAPER                0x130
-> +#define SSPP_CDP_CNTL                      0x134
-> +#define SSPP_UBWC_ERROR_STATUS             0x138
-> +#define SSPP_CDP_CNTL_REC1                 0x13c
-> +#define SSPP_TRAFFIC_SHAPER_PREFILL        0x150
-> +#define SSPP_TRAFFIC_SHAPER_REC1_PREFILL   0x154
-> +#define SSPP_TRAFFIC_SHAPER_REC1           0x158
-> +#define SSPP_OUT_SIZE_REC1                 0x160
-> +#define SSPP_OUT_XY_REC1                   0x164
-> +#define SSPP_SRC_XY_REC1                   0x168
-> +#define SSPP_SRC_SIZE_REC1                 0x16C
-> +#define SSPP_MULTIRECT_OPMODE              0x170
-> +#define SSPP_SRC_FORMAT_REC1               0x174
-> +#define SSPP_SRC_UNPACK_PATTERN_REC1       0x178
-> +#define SSPP_SRC_OP_MODE_REC1              0x17C
-> +#define SSPP_SRC_CONSTANT_COLOR_REC1       0x180
-> +#define SSPP_EXCL_REC_SIZE_REC1            0x184
-> +#define SSPP_EXCL_REC_XY_REC1              0x188
-> +#define SSPP_EXCL_REC_SIZE                 0x1B4
-> +#define SSPP_EXCL_REC_XY                   0x1B8
-> +#define SSPP_CLK_CTRL                      0x330
-> +
-> +/* >= v13 DPU */
-> +/* CMN Registers -> Source Surface Processing Pipe Common SSPP registers */
-> +/*      Name                                        Offset */
-> +#define SSPP_CMN_CLK_CTRL                0x0
-> +#define SSPP_CMN_CLK_STATUS              0x4
-> +#define SSPP_CMN_MULTI_REC_OP_MODE       0x10
-> +#define SSPP_CMN_ADDR_CONFIG             0x14
-> +#define SSPP_CMN_CAC_CTRL                0x20
-> +#define SSPP_CMN_SYS_CACHE_MODE          0x24
-> +#define SSPP_CMN_QOS_CTRL                0x28
-> +#define SSPP_CMN_DANGER_LUT              0x2c
-> +#define SSPP_CMN_SAFE_LUT                0x30
-> +
-> +#define SSPP_CMN_FILL_LEVEL_SCALE                0x3c
-> +#define SSPP_CMN_FILL_LEVELS                     0x40
-> +#define SSPP_CMN_STATUS                          0x44
-> +#define SSPP_CMN_FETCH_DMA_RD_OTS                0x48
-> +#define SSPP_CMN_FETCH_DTB_WR_PLANE0             0x4c
-> +#define SSPP_CMN_FETCH_DTB_WR_PLANE1             0x50
-> +#define SSPP_CMN_FETCH_DTB_WR_PLANE2             0x54
-> +#define SSPP_CMN_DTB_UNPACK_RD_PLANE0            0x58
-> +#define SSPP_CMN_DTB_UNPACK_RD_PLANE1            0x5c
-> +#define SSPP_CMN_DTB_UNPACK_RD_PLANE2            0x60
-> +#define SSPP_CMN_UNPACK_LINE_COUNT               0x64
-> +#define SSPP_CMN_TPG_CONTROL                     0x68
-> +#define SSPP_CMN_TPG_CONFIG                      0x6c
-> +#define SSPP_CMN_TPG_COMPONENT_LIMITS            0x70
-> +#define SSPP_CMN_TPG_RECTANGLE                   0x74
-> +#define SSPP_CMN_TPG_BLACK_WHITE_PATTERN_FRAMES  0x78
-> +#define SSPP_CMN_TPG_RGB_MAPPING                 0x7c
-> +#define SSPP_CMN_TPG_PATTERN_GEN_INIT_VAL        0x80
-> +
-> +/*RECRegisterset*/
-> +/*Name        Offset*/
-> +#define SSPP_REC_SRC_FORMAT                             0x0
-> +#define SSPP_REC_SRC_UNPACK_PATTERN                     0x4
-> +#define SSPP_REC_SRC_OP_MODE                            0x8
-> +#define SSPP_REC_SRC_CONSTANT_COLOR                     0xc
-> +#define SSPP_REC_SRC_IMG_SIZE                           0x10
-> +#define SSPP_REC_SRC_SIZE                               0x14
-> +#define SSPP_REC_SRC_XY                                 0x18
-> +#define SSPP_REC_OUT_SIZE                               0x1c
-> +#define SSPP_REC_OUT_XY                                 0x20
-> +#define SSPP_REC_SW_PIX_EXT_LR                          0x24
-> +#define SSPP_REC_SW_PIX_EXT_TB                          0x28
-> +#define SSPP_REC_SRC_SIZE_ODX                           0x30
-> +#define SSPP_REC_SRC_XY_ODX                             0x34
-> +#define SSPP_REC_OUT_SIZE_ODX                           0x38
-> +#define SSPP_REC_OUT_XY_ODX                             0x3c
-> +#define SSPP_REC_SW_PIX_EXT_LR_ODX                      0x40
-> +#define SSPP_REC_SW_PIX_EXT_TB_ODX                      0x44
-> +#define SSPP_REC_PRE_DOWN_SCALE                         0x48
-> +#define SSPP_REC_SRC0_ADDR                              0x4c
-> +#define SSPP_REC_SRC1_ADDR                              0x50
-> +#define SSPP_REC_SRC2_ADDR                              0x54
-> +#define SSPP_REC_SRC3_ADDR                              0x58
-> +#define SSPP_REC_SRC_YSTRIDE0                           0x5c
-> +#define SSPP_REC_SRC_YSTRIDE1                           0x60
-> +#define SSPP_REC_CURRENT_SRC0_ADDR                      0x64
-> +#define SSPP_REC_CURRENT_SRC1_ADDR                      0x68
-> +#define SSPP_REC_CURRENT_SRC2_ADDR                      0x6c
-> +#define SSPP_REC_CURRENT_SRC3_ADDR                      0x70
-> +#define SSPP_REC_SRC_ADDR_SW_STATUS                     0x74
-> +#define SSPP_REC_CDP_CNTL                               0x78
-> +#define SSPP_REC_TRAFFIC_SHAPER                         0x7c
-> +#define SSPP_REC_TRAFFIC_SHAPER_PREFILL                 0x80
-> +#define SSPP_REC_PD_MEM_ALLOC                           0x84
-> +#define SSPP_REC_QOS_CLAMP                              0x88
-> +#define SSPP_REC_UIDLE_CTRL_VALUE                       0x8c
-> +#define SSPP_REC_UBWC_STATIC_CTRL                       0x90
-> +#define SSPP_REC_UBWC_STATIC_CTRL_OVERRIDE              0x94
-> +#define SSPP_REC_UBWC_STATS_ROI                         0x98
-> +#define SSPP_REC_UBWC_STATS_WORST_TILE_ROW_BW_ROI0      0x9c
-> +#define SSPP_REC_UBWC_STATS_TOTAL_BW_ROI0               0xa0
-> +#define SSPP_REC_UBWC_STATS_WORST_TILE_ROW_BW_ROI1      0xa4
-> +#define SSPP_REC_UBWC_STATS_TOTAL_BW_ROI1               0xa8
-> +#define SSPP_REC_UBWC_STATS_WORST_TILE_ROW_BW_ROI2      0xac
-> +#define SSPP_REC_UBWC_STATS_TOTAL_BW_ROI2               0xb0
-> +#define SSPP_REC_EXCL_REC_CTRL                          0xb4
-> +#define SSPP_REC_EXCL_REC_SIZE                          0xb8
-> +#define SSPP_REC_EXCL_REC_XY                            0xbc
-> +#define SSPP_REC_LINE_INSERTION_CTRL                    0xc0
-> +#define SSPP_REC_LINE_INSERTION_OUT_SIZE                0xc4
-> +#define SSPP_REC_FETCH_PIPE_ACTIVE                      0xc8
-> +#define SSPP_REC_META_ERROR_STATUS                      0xcc
-> +#define SSPP_REC_UBWC_ERROR_STATUS                      0xd0
-> +#define SSPP_REC_FLUSH_CTRL                             0xd4
-> +#define SSPP_REC_INTR_EN                                0xd8
-> +#define SSPP_REC_INTR_STATUS                            0xdc
-> +#define SSPP_REC_INTR_CLEAR                             0xe0
-> +#define SSPP_REC_HSYNC_STATUS                           0xe4
-> +#define SSPP_REC_FP16_CONFIG                            0x150
-> +#define SSPP_REC_FP16_CSC_MATRIX_COEFF_R_0              0x154
-> +#define SSPP_REC_FP16_CSC_MATRIX_COEFF_R_1              0x158
-> +#define SSPP_REC_FP16_CSC_MATRIX_COEFF_G_0              0x15c
-> +#define SSPP_REC_FP16_CSC_MATRIX_COEFF_G_1              0x160
-> +#define SSPP_REC_FP16_CSC_MATRIX_COEFF_B_0              0x164
-> +#define SSPP_REC_FP16_CSC_MATRIX_COEFF_B_1              0x168
-> +#define SSPP_REC_FP16_CSC_PRE_CLAMP_R                   0x16c
-> +#define SSPP_REC_FP16_CSC_PRE_CLAMP_G                   0x170
-> +#define SSPP_REC_FP16_CSC_PRE_CLAMP_B                   0x174
-> +#define SSPP_REC_FP16_CSC_POST_CLAMP                    0x178
-> +
->  /**
->   * Flags
->   */
-> @@ -23,6 +184,76 @@ struct dpu_hw_sspp;
->  #define DPU_SSPP_ROT_90			BIT(3)
->  #define DPU_SSPP_SOLID_FILL		BIT(4)
->  
-> +/* SSPP_SRC_OP_MODE & OP_MODE_REC1 */
-> +#define MDSS_MDP_OP_DEINTERLACE            BIT(22)
-> +#define MDSS_MDP_OP_DEINTERLACE_ODD        BIT(23)
-> +#define MDSS_MDP_OP_IGC_ROM_1              BIT(18)
-> +#define MDSS_MDP_OP_IGC_ROM_0              BIT(17)
-> +#define MDSS_MDP_OP_IGC_EN                 BIT(16)
-> +#define MDSS_MDP_OP_ROT_90                 BIT(15)
-> +#define MDSS_MDP_OP_FLIP_UD                BIT(14)
-> +#define MDSS_MDP_OP_FLIP_LR                BIT(13)
-> +#define MDSS_MDP_OP_BWC_EN                 BIT(0)
-> +#define MDSS_MDP_OP_PE_OVERRIDE            BIT(31)
-> +#define MDSS_MDP_OP_BWC_LOSSLESS           (0 << 1)
-> +#define MDSS_MDP_OP_BWC_Q_HIGH             (1 << 1)
-> +#define MDSS_MDP_OP_BWC_Q_MED              (2 << 1)
-> +
-> +/*
-> + * Definitions for ViG op modes
-> + */
-> +#define VIG_OP_CSC_DST_DATAFMT BIT(19)
-> +#define VIG_OP_CSC_SRC_DATAFMT BIT(18)
-> +#define VIG_OP_CSC_EN          BIT(17)
-> +#define VIG_OP_MEM_PROT_CONT   BIT(15)
-> +#define VIG_OP_MEM_PROT_VAL    BIT(14)
-> +#define VIG_OP_MEM_PROT_SAT    BIT(13)
-> +#define VIG_OP_MEM_PROT_HUE    BIT(12)
-> +#define VIG_OP_HIST            BIT(8)
-> +#define VIG_OP_SKY_COL         BIT(7)
-> +#define VIG_OP_FOIL            BIT(6)
-> +#define VIG_OP_SKIN_COL        BIT(5)
-> +#define VIG_OP_PA_EN           BIT(4)
-> +#define VIG_OP_PA_SAT_ZERO_EXP BIT(2)
-> +#define VIG_OP_MEM_PROT_BLEND  BIT(1)
-> +
-> +/*
-> + * Definitions for CSC 10 op modes
-> + */
-> +#define SSPP_VIG_CSC_10_OP_MODE            0x0
-> +#define VIG_CSC_10_SRC_DATAFMT BIT(1)
-> +#define VIG_CSC_10_EN          BIT(0)
-> +#define CSC_10BIT_OFFSET       4
-> +
-> +/* SSPP_QOS_CTRL */
-> +#define SSPP_QOS_CTRL_VBLANK_EN            BIT(16)
-> +#define SSPP_QOS_CTRL_DANGER_SAFE_EN       BIT(0)
-> +#define SSPP_QOS_CTRL_DANGER_VBLANK_MASK   0x3
-> +#define SSPP_QOS_CTRL_DANGER_VBLANK_OFF    4
-> +#define SSPP_QOS_CTRL_CREQ_VBLANK_MASK     0x3
-> +#define SSPP_QOS_CTRL_CREQ_VBLANK_OFF      20
-> +
-> +#define DPU_FETCH_CONFIG_RESET_VALUE   0x00000087
-> +
-> +/* DPU_SSPP_SCALER_QSEED2 */
-> +#define SSPP_VIG_OP_MODE                   0x0
-> +#define SCALE_CONFIG                       0x04
-> +#define COMP0_3_PHASE_STEP_X               0x10
-> +#define COMP0_3_PHASE_STEP_Y               0x14
-> +#define COMP1_2_PHASE_STEP_X               0x18
-> +#define COMP1_2_PHASE_STEP_Y               0x1c
-> +#define COMP0_3_INIT_PHASE_X               0x20
-> +#define COMP0_3_INIT_PHASE_Y               0x24
-> +#define COMP1_2_INIT_PHASE_X               0x28
-> +#define COMP1_2_INIT_PHASE_Y               0x2C
-> +#define VIG_0_QSEED2_SHARP                 0x30
-> +
-> +/* SSPP_TRAFFIC_SHAPER and _REC1 */
-> +#define SSPP_TRAFFIC_SHAPER_BPC_MAX        0xFF
-> +
-> +/* traffic shaper clock in Hz */
-> +#define TS_CLK			19200000
-> +
->  /**
->   * Component indices
->   */
-> @@ -331,5 +562,38 @@ struct dpu_hw_sspp *dpu_hw_sspp_init(struct drm_device *dev,
->  int _dpu_hw_sspp_init_debugfs(struct dpu_hw_sspp *hw_pipe, struct dpu_kms *kms,
->  			      struct dentry *entry);
->  
-> +void _sspp_setup_opmode(struct dpu_hw_sspp *ctx,
-> +			u32 mask, u8 en);
-
-Don't you see an issue with these names? Please use a sensible prefix
-that is used by the rest of the driver.
-
-> +
-> +void _sspp_setup_csc10_opmode(struct dpu_hw_sspp *ctx,
-> +			      u32 mask, u8 en);
-> +
-> +void _dpu_hw_sspp_setup_scaler3(struct dpu_hw_sspp *ctx,
-> +				struct dpu_hw_scaler3_cfg *scaler3_cfg,
-> +				const struct msm_format *format);
-> +
-> +void _setup_layer_ops_v13(struct dpu_hw_sspp *c,
-
-I'd rather have dpu_hw_sspp_init_v13
-
-> +			  unsigned long features,
-> +			  const struct dpu_mdss_version *mdss_rev);
-> +
-> +void dpu_hw_sspp_setup_csc(struct dpu_hw_sspp *ctx,
-> +			   const struct dpu_csc_cfg *data);
-> +
-> +void _dpu_hw_setup_multirect(struct dpu_sw_pipe *pipe,
-> +			     struct dpu_hw_sspp *ctx,
-> +			     u32 op_mode_off);
-> +
-> +void _dpu_hw_setup_format(struct dpu_sw_pipe *pipe, const struct msm_format *fmt,
-> +			  u32 flags, struct dpu_hw_sspp *ctx,
-> +			  u32 op_mode_off, u32 unpack_pat_off, u32 format_off,
-> +			  u32 ubwc_ctrl_off, u32 ubwc_err_off);
-> +
-> +void _dpu_hw_setup_rects(struct dpu_sw_pipe *pipe, struct dpu_sw_pipe_cfg *cfg,
-> +			 struct dpu_hw_sspp *ctx, u32 src_size_off, u32 src_xy_off,
-> +			 u32 out_size_off, u32 out_xy_off);
-> +
-> +void _dpu_hw_setup_solidfill(struct dpu_sw_pipe *pipe,
-> +			     u32 color, struct dpu_hw_sspp *ctx, u32 const_clr_off);
-> +
->  #endif /*_DPU_HW_SSPP_H */
->  
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ssppv13.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ssppv13.c
-> new file mode 100644
-> index 000000000000..ba2d70182d58
-> --- /dev/null
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ssppv13.c
-> @@ -0,0 +1,224 @@
-> +// SPDX-License-Identifier: BSD-3-Clause
-> +/*
-> + * Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
-> + */
-> +
-> +#include <linux/printk.h>
-> +#include <linux/soc/qcom/ubwc.h>
-> +
-> +#include "dpu_hw_sspp.h"
-> +
-> +static inline u32 _sspp_calculate_rect_off(enum dpu_sspp_multirect_index rect_index,
-
-prefix with dpu_hw_sspp
-
-> +					   struct dpu_hw_sspp *ctx)
-
-ctx should be the first argument.
-
-> +{
-> +	return (rect_index == DPU_SSPP_RECT_SOLO || rect_index == DPU_SSPP_RECT_0) ?
-> +		ctx->cap->sblk->sspp_rec0_blk.base : ctx->cap->sblk->sspp_rec1_blk.base;
-> +}
-> +
-> +static void dpu_hw_sspp_setup_multirect_v13(struct dpu_sw_pipe *pipe)
-> +{
-> +	struct dpu_hw_sspp *ctx = pipe->sspp;
-> +	u32 op_mode_off;
-> +
-> +	if (!ctx)
-> +		return;
-> +
-> +	op_mode_off = SSPP_CMN_MULTI_REC_OP_MODE;
-
-You can guess my comment.
-
-> +
-> +	_dpu_hw_setup_multirect(pipe, ctx, op_mode_off);
-> +}
-> +
-> +static void dpu_hw_sspp_setup_format_v13(struct dpu_sw_pipe *pipe,
-> +					 const struct msm_format *fmt, u32 flags)
-> +{
-> +	struct dpu_hw_sspp *ctx = pipe->sspp;
-> +	u32 op_mode_off, unpack_pat_off, format_off;
-> +	u32 ubwc_ctrl_off, ubwc_err_off;
-> +	u32 offset;
-> +
-> +	if (!ctx || !fmt)
-> +		return;
-> +
-> +	offset = _sspp_calculate_rect_off(pipe->multirect_index, ctx);
-> +
-> +	op_mode_off = offset + SSPP_REC_SRC_OP_MODE;
-> +	unpack_pat_off = offset + SSPP_REC_SRC_UNPACK_PATTERN;
-> +	format_off = offset + SSPP_REC_SRC_FORMAT;
-> +	ubwc_ctrl_off = offset + SSPP_REC_UBWC_STATIC_CTRL;
-> +	ubwc_err_off = offset + SSPP_REC_UBWC_ERROR_STATUS;
-> +
-> +	_dpu_hw_setup_format(pipe, fmt, flags, ctx, op_mode_off,
-> +			     unpack_pat_off, format_off, ubwc_ctrl_off, ubwc_err_off);
-> +}
-> +
-> +static void dpu_hw_sspp_setup_pe_config_v13(struct dpu_hw_sspp *ctx,
-> +					    struct dpu_hw_pixel_ext *pe_ext)
-> +{
-> +	struct dpu_hw_blk_reg_map *c;
-> +	u8 color;
-> +	u32 lr_pe[4], tb_pe[4];
-> +	const u32 bytemask = 0xff;
-> +	u32 offset = ctx->cap->sblk->sspp_rec0_blk.base;
-> +
-> +	if (!ctx || !pe_ext)
-> +		return;
-> +
-> +	c = &ctx->hw;
-> +	/* program SW pixel extension override for all pipes*/
-> +	for (color = 0; color < DPU_MAX_PLANES; color++) {
-> +		/* color 2 has the same set of registers as color 1 */
-> +		if (color == 2)
-> +			continue;
-> +
-> +		lr_pe[color] = ((pe_ext->right_ftch[color] & bytemask) << 24) |
-> +			       ((pe_ext->right_rpt[color] & bytemask) << 16) |
-> +			       ((pe_ext->left_ftch[color] & bytemask) << 8) |
-> +			       (pe_ext->left_rpt[color] & bytemask);
-> +
-> +		tb_pe[color] = ((pe_ext->btm_ftch[color] & bytemask) << 24) |
-> +			       ((pe_ext->btm_rpt[color] & bytemask) << 16) |
-> +			       ((pe_ext->top_ftch[color] & bytemask) << 8) |
-> +			       (pe_ext->top_rpt[color] & bytemask);
-> +	}
-> +
-> +	/* color 0 */
-> +	DPU_REG_WRITE(c, SSPP_REC_SW_PIX_EXT_LR + offset, lr_pe[0]);
-> +	DPU_REG_WRITE(c, SSPP_REC_SW_PIX_EXT_TB + offset, tb_pe[0]);
-> +
-> +	/* color 1 and color 2 */
-> +	DPU_REG_WRITE(c, SSPP_REC_SW_PIX_EXT_LR_ODX + offset, lr_pe[1]);
-> +	DPU_REG_WRITE(c, SSPP_REC_SW_PIX_EXT_TB_ODX + offset, tb_pe[1]);
-> +}
-> +
-> +static void dpu_hw_sspp_setup_rects_v13(struct dpu_sw_pipe *pipe,
-> +					struct dpu_sw_pipe_cfg *cfg)
-> +{
-> +	struct dpu_hw_sspp *ctx = pipe->sspp;
-> +	u32 src_size_off, src_xy_off, out_size_off, out_xy_off;
-> +	u32 offset;
-> +
-> +	if (!ctx || !cfg)
-> +		return;
-> +
-> +	offset = _sspp_calculate_rect_off(pipe->multirect_index, ctx);
-> +
-> +	src_size_off = offset + SSPP_REC_SRC_SIZE;
-> +	src_xy_off = offset + SSPP_REC_SRC_XY;
-> +	out_size_off = offset + SSPP_REC_OUT_SIZE;
-> +	out_xy_off = offset + SSPP_REC_OUT_XY;
-> +
-> +	_dpu_hw_setup_rects(pipe, cfg, ctx, src_size_off,
-> +			    src_xy_off, out_size_off, out_xy_off);
-
-I think this can be inlined, there is very little in performing (x << 16) | y.
-
-> +}
-> +
-> +static void dpu_hw_sspp_setup_sourceaddress_v13(struct dpu_sw_pipe *pipe,
-> +						struct dpu_hw_fmt_layout *layout)
-> +{
-> +	struct dpu_hw_sspp *ctx = pipe->sspp;
-> +	int i;
-> +	u32 offset, ystride0, ystride1;
-> +
-> +	if (!ctx)
-> +		return;
-> +
-> +	offset = _sspp_calculate_rect_off(pipe->multirect_index, ctx);
-> +
-> +	for (i = 0; i < ARRAY_SIZE(layout->plane_addr); i++)
-> +		DPU_REG_WRITE(&ctx->hw, offset + SSPP_REC_SRC0_ADDR + i * 0x4,
-> +			      layout->plane_addr[i]);
-> +
-> +	ystride0 = (layout->plane_pitch[0]) | (layout->plane_pitch[2] << 16);
-> +	ystride1 = (layout->plane_pitch[1]) | (layout->plane_pitch[3] << 16);
-> +
-> +	DPU_REG_WRITE(&ctx->hw, offset + SSPP_REC_SRC_YSTRIDE0, ystride0);
-> +	DPU_REG_WRITE(&ctx->hw, offset + SSPP_REC_SRC_YSTRIDE1, ystride1);
-> +}
-> +
-> +static void dpu_hw_sspp_setup_solidfill_v13(struct dpu_sw_pipe *pipe, u32 color)
-> +{
-> +	struct dpu_hw_sspp *ctx = pipe->sspp;
-> +	u32 const_clr_off;
-> +	u32 offset;
-> +
-> +	if (!ctx)
-> +		return;
-> +
-> +	offset = _sspp_calculate_rect_off(pipe->multirect_index, ctx);
-> +	const_clr_off = offset + SSPP_REC_SRC_CONSTANT_COLOR;
-> +
-> +	_dpu_hw_setup_solidfill(pipe, color, ctx, const_clr_off);
-> +}
-> +
-> +static void dpu_hw_sspp_setup_qos_lut_v13(struct dpu_hw_sspp *ctx,
-> +					  struct dpu_hw_qos_cfg *cfg)
-> +{
-> +	if (!ctx || !cfg)
-> +		return;
-> +
-> +	_dpu_hw_setup_qos_lut_v13(&ctx->hw, 0, 1, cfg);
-> +}
-> +
-> +static void dpu_hw_sspp_setup_qos_ctrl_v13(struct dpu_hw_sspp *ctx,
-> +					   bool danger_safe_en)
-> +{
-> +	if (!ctx)
-> +		return;
-> +
-> +	DPU_REG_WRITE(&ctx->hw, SSPP_CMN_QOS_CTRL,
-> +		      danger_safe_en ? SSPP_QOS_CTRL_DANGER_SAFE_EN : 0);
-> +}
-> +
-> +static void dpu_hw_sspp_setup_cdp_v13(struct dpu_sw_pipe *pipe,
-> +				      const struct msm_format *fmt,
-> +				      bool enable)
-> +{
-> +	struct dpu_hw_sspp *ctx = pipe->sspp;
-> +	u32 offset = 0;
-> +
-> +	if (!ctx)
-> +		return;
-> +
-> +	offset = _sspp_calculate_rect_off(pipe->multirect_index, ctx);
-> +	dpu_setup_cdp(&ctx->hw, offset + SSPP_REC_CDP_CNTL, fmt, enable);
-> +}
-> +
-> +static bool dpu_hw_sspp_setup_clk_force_ctrl_v13(struct dpu_hw_sspp *ctx, bool enable)
-> +{
-> +	static const struct dpu_clk_ctrl_reg sspp_clk_ctrl = {
-> +		.reg_off = SSPP_CMN_CLK_CTRL,
-> +		.bit_off = 0
-> +	};
-> +
-> +	return dpu_hw_clk_force_ctrl(&ctx->hw, &sspp_clk_ctrl, enable);
-> +}
-> +
-> +void _setup_layer_ops_v13(struct dpu_hw_sspp *c,
-> +			  unsigned long features, const struct dpu_mdss_version *mdss_rev)
-> +{
-> +		c->ops.setup_format = dpu_hw_sspp_setup_format_v13;
-> +		c->ops.setup_rects = dpu_hw_sspp_setup_rects_v13;
-> +		c->ops.setup_sourceaddress = dpu_hw_sspp_setup_sourceaddress_v13;
-> +		c->ops.setup_solidfill = dpu_hw_sspp_setup_solidfill_v13;
-> +		c->ops.setup_pe = dpu_hw_sspp_setup_pe_config_v13;
-> +
-> +		if (test_bit(DPU_SSPP_QOS, &features)) {
-> +			c->ops.setup_qos_lut = dpu_hw_sspp_setup_qos_lut_v13;
-> +			c->ops.setup_qos_ctrl = dpu_hw_sspp_setup_qos_ctrl_v13;
-> +		}
-> +
-> +		if (test_bit(DPU_SSPP_CSC, &features) ||
-> +		    test_bit(DPU_SSPP_CSC_10BIT, &features))
-> +			c->ops.setup_csc = dpu_hw_sspp_setup_csc;
-> +
-> +		if (test_bit(DPU_SSPP_SMART_DMA_V1, &c->cap->features) ||
-> +		    test_bit(DPU_SSPP_SMART_DMA_V2, &c->cap->features))
-> +			c->ops.setup_multirect = dpu_hw_sspp_setup_multirect_v13;
-> +
-> +		if (test_bit(DPU_SSPP_SCALER_QSEED3_COMPATIBLE, &features))
-> +			c->ops.setup_scaler = _dpu_hw_sspp_setup_scaler3;
-> +
-> +		if (test_bit(DPU_SSPP_CDP, &features))
-> +			c->ops.setup_cdp = dpu_hw_sspp_setup_cdp_v13;
-> +
-> +		c->ops.setup_clk_force_ctrl = dpu_hw_sspp_setup_clk_force_ctrl_v13;
-> +}
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_util.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_util.c
-> index 486be346d40d..968020967bc5 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_util.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_util.c
-> @@ -81,6 +81,13 @@ static u32 dpu_hw_util_log_mask = DPU_DBG_MASK_NONE;
->  #define QOS_CREQ_LUT_0                    0x14
->  #define QOS_CREQ_LUT_1                    0x18
->  
-> +/* CMN_QOS_LUT */
-> +#define SSPP_CMN_DANGER_LUT                    0x2C
-
-Any reason why this wasn't lowecased?
-
-> +#define SSPP_CMN_SAFE_LUT                      0x30
-> +#define SSPP_CMN_CREQ_LUT_0                    0x34
-> +#define SSPP_CMN_CREQ_LUT_1                    0x38
-> +#define SSPP_CMN_QOS_CTRL	                   0x28
-> +
->  /* QOS_QOS_CTRL */
->  #define QOS_QOS_CTRL_DANGER_SAFE_EN       BIT(0)
->  #define QOS_QOS_CTRL_DANGER_VBLANK_MASK   GENMASK(5, 4)
-> @@ -475,6 +482,22 @@ void _dpu_hw_setup_qos_lut(struct dpu_hw_blk_reg_map *c, u32 offset,
->  		      cfg->danger_safe_en ? QOS_QOS_CTRL_DANGER_SAFE_EN : 0);
->  }
->  
-> +void _dpu_hw_setup_qos_lut_v13(struct dpu_hw_blk_reg_map *c, u32 offset,
-> +			       bool qos_8lvl,
-> +			       const struct dpu_hw_qos_cfg *cfg)
-
-Does WB blcok also use new regisger format? If yes, the register offsets
-should be named differently. If no, there is no reason to have the
-function here, it can be inlined.
-
-> +{
-> +	DPU_REG_WRITE(c, offset + SSPP_CMN_DANGER_LUT, cfg->danger_lut);
-> +	DPU_REG_WRITE(c, offset + SSPP_CMN_SAFE_LUT, cfg->safe_lut);
-> +
-> +	if (qos_8lvl) {
-
-This is redundant, we know that on DPU >= 13 we have 8 level QoS.
-
-> +		DPU_REG_WRITE(c, offset + SSPP_CMN_CREQ_LUT_0, cfg->creq_lut);
-> +		DPU_REG_WRITE(c, offset + SSPP_CMN_CREQ_LUT_1, cfg->creq_lut >> 32);
-> +	}
-> +
-> +	DPU_REG_WRITE(c, offset + SSPP_CMN_QOS_CTRL,
-> +		      cfg->danger_safe_en ? QOS_QOS_CTRL_DANGER_SAFE_EN : 0);
-> +}
-> +
->  /*
->   * note: Aside from encoders, input_sel should be set to 0x0 by default
->   */
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_util.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_util.h
-> index 67b08e99335d..9d442d6fc11c 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_util.h
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_util.h
-> @@ -360,6 +360,10 @@ void _dpu_hw_setup_qos_lut(struct dpu_hw_blk_reg_map *c, u32 offset,
->  			   bool qos_8lvl,
->  			   const struct dpu_hw_qos_cfg *cfg);
->  
-> +void _dpu_hw_setup_qos_lut_v13(struct dpu_hw_blk_reg_map *c, u32 offset,
-> +			       bool qos_8lvl,
-> +			       const struct dpu_hw_qos_cfg *cfg);
-> +
->  void dpu_hw_setup_misr(struct dpu_hw_blk_reg_map *c,
->  		u32 misr_ctrl_offset, u8 input_sel);
->  
-> -- 
-> 2.34.1
-> 
 
 -- 
 With best wishes
