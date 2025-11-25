@@ -1,67 +1,68 @@
-Return-Path: <linux-arm-msm+bounces-83147-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-83149-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [IPv6:2605:f480:58:1:0:1994:3:14])
-	by mail.lfdr.de (Postfix) with ESMTPS id BA609C83052
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Nov 2025 02:33:35 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id EDE10C8306A
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Nov 2025 02:33:51 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id CD7894E3A84
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Nov 2025 01:33:33 +0000 (UTC)
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id B63F44E5D8B
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Nov 2025 01:33:44 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 73143274FEB;
-	Tue, 25 Nov 2025 01:33:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4E6B1285050;
+	Tue, 25 Nov 2025 01:33:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="NAphW0z+"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="WK/PEvpK"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8CA31A254E;
-	Tue, 25 Nov 2025 01:33:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE2501EB195;
+	Tue, 25 Nov 2025 01:33:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764034407; cv=none; b=GiqoiU06+lnCvR5NZ04RWN9O5MRk//hM3qd7u+wZPMKh2ecAs0cvWofeCpSEahp6q0F/rIayPXaRzYDlGhIvMEJNCjAU/BKMfF6baaHhH8HB8HjzCOxusTnGaCtdzH0Yvn26dEgd1sjZqDkz/+8jThmNNyq6HBRAZdO0KxxrQek=
+	t=1764034408; cv=none; b=ChJYNdiKbJpB7h7cLK/Wp+hC0SlC6E7W3gIYUPLv4yjtQ8FvtA40JKnZfpxhkZJcjzP88r5eMhX4Fsp+t4kv2KUQYyCe6ZidKRiNuXftlXRJxCUQzD9G7DxpOGnchlg4B3gnOAmCdphqhC6/kHYKNhFfhqFFn8Hz01DWW3Cj5kE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764034407; c=relaxed/simple;
-	bh=CO6uBDFOak/OjCHqXncQ3TtoB4XefmM5wU+fNLLFB+A=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=hl9+lFk0I1aRVDkRd/x+T47Eb/Os40YqtbGAIAWjGcJmozzTzcP5mbFvJ3VURJHavoWq5ebmjVp6uVioet9lSHUnfDOZXLwiathDiQNOBN93v5aPW6nv+LGfVO47Om0UOGUhKK8TK8UEy0nOfr45bKXft8r1v33FsiB7/CijbW8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=qualcomm.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=NAphW0z+; arc=none smtp.client-ip=205.220.180.131
+	s=arc-20240116; t=1764034408; c=relaxed/simple;
+	bh=zWDohBuHGCbVaynzSRDxQlI7G7QUQywTDw5l360oR4w=;
+	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
+	 MIME-Version; b=DgX6Id3LhlJ2/JXyWxRoM8cdf2a8j6bG0AHMy9FtsdwYNDDRcrJsnG7Aravpc+XCh0ghBZlLtn4ZndYADlFz8ViqSg5UZkCwN4N1aes3pdcImw938SAvMuU65NlZyQAejChPRBQXuEpQO8PVD6v3Xb43NC5sHcpIOT2qAetlU9g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=qualcomm.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=WK/PEvpK; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=qualcomm.com
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 5AOJtDon1303807;
-	Tue, 25 Nov 2025 01:33:09 GMT
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 5AOJrqmV543284;
+	Tue, 25 Nov 2025 01:33:10 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:date:from:message-id:mime-version
-	:subject:to; s=qcppdkim1; bh=5s1GUpaHhDBmLyWnK4z7vrDo5bWUi8vrF01
-	2fDReU0A=; b=NAphW0z+aOrn3PEicZogyCPqcpzKvyhntTswyOBaqZPEXRGhBQ9
-	Bm6tliz156X/am57aNeOyrXhiH5+orHrWX7+BYzZL1374bsLuZCURTzFE2BkYijt
-	hi4/l3yyF3DOfmPqR3JD7eEuo9xZRP8DpdHoT8geVkCqjPp4ns3nY73u22xlmgx6
-	QOitEr+ZxPvzbdW/IGzAULW6KhJhXWChGzmdRUm0sqDtMuQdupu/w8P0/DbK2HWA
-	dS8L8DBUl16B/haI881oA8kWtVPbBDB4yCxlp+2JdoFzi4hdGsFLTIvjTkEpVvsh
-	9HpsrhRJnjbNOHyx+lGLwggW7P8/igrNCzQ==
+	cc:content-transfer-encoding:date:from:in-reply-to:message-id
+	:mime-version:references:subject:to; s=qcppdkim1; bh=jW7f0AdjkTz
+	8mnJHXkYkYMzOGrGE8Ug51QiY10kxrQ8=; b=WK/PEvpKlRvTEClgq8GMokkmQzk
+	/pI+HbaHU7kO25SdMl3521HrSZBkQDApsYX1e/zsc3UQgusRkeniQu8xwKoh9BYo
+	NJSR6FdkCULCjDwLw3R/1/2lJX9cpJ7ROpOEVwyzDBGlaxmCM6dIJHfVXEkKWCMj
+	U3PDSQNhKODhuz/a3fkqwE8fIGS7Potjl8/l7kXFumP5Jb40nkcSLW4IPVR7KVX0
+	WBtJWVBuoNSPpCUWVgGloA65GkEMgedbLzqqpvW/LOlOTEv4sD8B7z+2IpNzID4n
+	EsqfDesSLAuTv4+lrEiMb8X3RwJs4YO/NZ1bTSIY1Jc88NaiUmLdvSSoS5w==
 Received: from apblrppmta02.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4amr8s9u05-1
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4amk10jv95-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
 	Tue, 25 Nov 2025 01:33:09 +0000 (GMT)
 Received: from pps.filterd (APBLRPPMTA02.qualcomm.com [127.0.0.1])
-	by APBLRPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTP id 5AP1X68L027346;
+	by APBLRPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTP id 5AP1X6GO027345;
 	Tue, 25 Nov 2025 01:33:06 GMT
 Received: from pps.reinject (localhost [127.0.0.1])
-	by APBLRPPMTA02.qualcomm.com (PPS) with ESMTPS id 4ak68mvfg6-1
+	by APBLRPPMTA02.qualcomm.com (PPS) with ESMTPS id 4ak68mvfg4-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
 	Tue, 25 Nov 2025 01:33:06 +0000
 Received: from APBLRPPMTA02.qualcomm.com (APBLRPPMTA02.qualcomm.com [127.0.0.1])
-	by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 5AP1X5tU027320;
+	by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 5AP1X5eH027319;
 	Tue, 25 Nov 2025 01:33:05 GMT
 Received: from hu-devc-hyd-u22-c.qualcomm.com (hu-amakhija-hyd.qualcomm.com [10.213.99.91])
-	by APBLRPPMTA02.qualcomm.com (PPS) with ESMTPS id 5AP1X5DN027312
+	by APBLRPPMTA02.qualcomm.com (PPS) with ESMTPS id 5AP1X5sT027314
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
 	Tue, 25 Nov 2025 01:33:05 +0000
 Received: by hu-devc-hyd-u22-c.qualcomm.com (Postfix, from userid 4090850)
-	id 9D20B596; Tue, 25 Nov 2025 07:03:04 +0530 (+0530)
+	id A08405A0; Tue, 25 Nov 2025 07:03:04 +0530 (+0530)
 From: Ayushi Makhija <quic_amakhija@quicinc.com>
 To: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
         freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
@@ -75,10 +76,12 @@ Cc: Ayushi Makhija <quic_amakhija@quicinc.com>, robdclark@gmail.com,
         Laurent.pinchart@ideasonboard.com, jonathan@marek.ca, jonas@kwiboo.se,
         jernej.skrabec@gmail.com, quic_rajeevny@quicinc.com,
         quic_vproddut@quicinc.com
-Subject: [PATCH v3 0/5] Add DSI display support for QCS8300 target
-Date: Tue, 25 Nov 2025 07:02:57 +0530
-Message-Id: <20251125013302.3835909-1-quic_amakhija@quicinc.com>
+Subject: [PATCH v3 1/5] dt-bindings: display: msm-dsi-phy-7nm: document the QCS8300 DSI PHY
+Date: Tue, 25 Nov 2025 07:02:58 +0530
+Message-Id: <20251125013302.3835909-2-quic_amakhija@quicinc.com>
 X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20251125013302.3835909-1-quic_amakhija@quicinc.com>
+References: <20251125013302.3835909-1-quic_amakhija@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -90,77 +93,76 @@ X-QCInternal: smtphost
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: 9O6U5txyNqDmYeixXFCyR9gBhRbTx57V
-X-Authority-Analysis: v=2.4 cv=KP5XzVFo c=1 sm=1 tr=0 ts=69250755 cx=c_pps
+X-Proofpoint-GUID: LYIbBrIvGeIad-rW8bwCbH2NYlH-MKrO
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMTI1MDAxMSBTYWx0ZWRfXzHbTBnLf+HSI
+ UCTB1Jn8dI1shHKjwM+QbI1Ii9Jszvm8gQDXEDGq7qIlsZLN46tZidbi4iOYl/7y1Hzw13q/dvZ
+ 5cwsNlGNQX4HwqtHk2C0MiFWtfLyEuqwHxlsIBGA/MWRe5QAFswaJCG1G+rL5fRenVfZo5IEnWF
+ t9xTLn4Z/f9JGl/4Z7iJQBoMPLky/U1piRBDdUjbpM4BHtmCb5bC61eHIn60xcq+wjJoBK2tSar
+ 6HX+rocWMuFSctTeKgMx3UF7yW9Q5PMY+mWzagpFo7Vcly5Z+pxuSl/6Fd4aBs0UIZ3FkZS8qGW
+ sQPHr70vOF1QE2zclVR09rh+YKSJ2Z/HAKKNlSTT0noG7JG1ioA1gBj/NiRcOc5C/VavROs+Bvf
+ TGPboqFCJ91dbObM801hAODOpAaP+Q==
+X-Proofpoint-ORIG-GUID: LYIbBrIvGeIad-rW8bwCbH2NYlH-MKrO
+X-Authority-Analysis: v=2.4 cv=SP9PlevH c=1 sm=1 tr=0 ts=69250756 cx=c_pps
  a=Ou0eQOY4+eZoSc0qltEV5Q==:117 a=Ou0eQOY4+eZoSc0qltEV5Q==:17
- a=6UeiqGixMTsA:10 a=VkNPw1HP01LnGYTKEx00:22 a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8
- a=COk6AnOGAAAA:8 a=RBJW5-z34AXF7GF-XkcA:9 a=TjNXssC_j7lpFel5tvFf:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMTI1MDAxMSBTYWx0ZWRfX5N9V645aOTyS
- h0tHQTCxJO3bxQWdOw3cSnywZzvdfCNkYPMHpqOclvb70fRUDA96xYaSx/PFqhyjiRRbyejm05m
- EknPKLlISwou8M3JouIkUBqm/McpKDkbAhrGnjnFPMfQHX+c/Xwp+7p0AGBK4ocdnzzKbCnFRWU
- 3sfjodJ6ga3X7A0xhF8ElZum5oDWKHRaA6O6/I1uHS84TcIro/K1/ODOd334rITTwY5CNsivs19
- U7qN3iZqdASnhopN+0y2BvzlEbffoOL8rqPWApj6pEpRjHM8QB26yBkLg9QoFK+QSXqwjZmYVWO
- 6nTCQ1JVngKJHmP8bSMB5CO7n6RMsDszzxqPXFztpP56O1N06r4IjRzAW6rwzkUY7sc2qF9kezZ
- ilhJ6E2Fi8gj+/SrKsBk62ENGsk7rw==
-X-Proofpoint-GUID: 9O6U5txyNqDmYeixXFCyR9gBhRbTx57V
+ a=6UeiqGixMTsA:10 a=VkNPw1HP01LnGYTKEx00:22 a=COk6AnOGAAAA:8
+ a=Zt1aTBg4y79HU88dGMIA:9 a=TjNXssC_j7lpFel5tvFf:22
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
  definitions=2025-11-25_01,2025-11-24_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 impostorscore=0 clxscore=1015 lowpriorityscore=0 phishscore=0
- bulkscore=0 spamscore=0 priorityscore=1501 suspectscore=0 adultscore=0
+ malwarescore=0 priorityscore=1501 bulkscore=0 adultscore=0 suspectscore=0
+ phishscore=0 lowpriorityscore=0 clxscore=1015 impostorscore=0 spamscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.22.0-2510240001 definitions=main-2511250011
 
-This series enables the support for DSI to DP bridge port
-(labeled as DSI0) of the Qualcomm's QCS8300 Ride platform.
+Document the DSI PHY on the QCS8300 Platform.
 
-QCS8300 SoC has DSI controller v2.5.1 and DSI PHY v4.2.
-The Ride platform is having ANX7625 DSI to DP bridge chip from Analogix.
-
+Signed-off-by: Ayushi Makhija <quic_amakhija@quicinc.com>
 ---
-This patch depends on following series:
-https://lore.kernel.org/all/20251117-dts_qcs8300-v7-0-bf42d39e7828@oss.qualcomm.com/
-(Enable DPU and Display Port for Qualcomm QCS8300-ride platform)
+ .../bindings/display/msm/dsi-phy-7nm.yaml     | 30 +++++++++++--------
+ 1 file changed, 18 insertions(+), 12 deletions(-)
 
-Changes in v3: Addressed review comments from konard and Dmitry
-   - Patch 2: Remove qcom,qcs8300-dsi-ctrl from clk details. [Dmitry]
-   - Remove PHY and CTRL driver support. The CTRL and PHY versions for
-     Monaco are the same as LeMans, and Monaco will use the same CTRL
-     and PHY based on the fallback compatible string [Dmitry/Konard]
-   - Patch 5: Rename the regulator used and arrange the compatible, reg,
-     address and size cell for i2cmux in proper order. [Dmitry]
-   - Link to v2: https://lore.kernel.org/all/20251006013924.1114833-1-quic_amakhija@quicinc.com/
-
-Changes in v2: Addressed review comments from Konard and Dmitry
-   - Patch 1: Documented the qcom,qcs8300-dsi-phy-5nm compatible string.
-   - Patch 2: Documented the qcom,qcs8300-dsi-ctrl compatible string.
-   - Patch 3:
-           - Added qcom,qcs8300-dsi-ctrl and qcom,qcs8300-dsi-phy-5nm compatible strings
-             to the Device Tree bindings. [Dmitry/Konard]
-           - Fixed indentation issue. [Dmitry]
-           - Drop the extra empty line. [Dmitry]
-   - Patch 4: Added PHY driver support for qcom,qcs8300-dsi-phy-5nm.
-   - Patch 5: Added CTRL driver support for qcom,qcs8300-dsi-ctrl.
-   - Patch 6: Included qcom,qcs8300-dsi-ctrl and qcom,qcs8300-dsi-phy-5nm
-              compatible strings in the Device Tree. [Dmitry/Konard]
-   - Link to v1: https://lore.kernel.org/all/20250925053602.4105329-1-quic_amakhija@quicinc.com/
-
-Ayushi Makhija (5):
-  dt-bindings: display: msm-dsi-phy-7nm: document the QCS8300 DSI PHY
-  dt-bindings: msm: dsi-controller-main: document the QCS8300 DSI CTRL
-  dt-bindings: display: msm: document DSI controller and phy on QCS8300
-  arm64: dts: qcom: qcs8300: add Display Serial Interface device nodes
-  arm64: dts: qcom: qcs8300-ride: add anx7625 DSI to DP bridge node
-
- .../display/msm/dsi-controller-main.yaml      |   5 +
- .../bindings/display/msm/dsi-phy-7nm.yaml     |  30 ++--
- .../display/msm/qcom,qcs8300-mdss.yaml        | 102 ++++++++++-
- arch/arm64/boot/dts/qcom/monaco.dtsi          |  98 +++++++++-
- arch/arm64/boot/dts/qcom/qcs8300-ride.dts     | 170 ++++++++++++++++++
- 5 files changed, 391 insertions(+), 14 deletions(-)
-
-base-commit: d724c6f85e80a23ed46b7ebc6e38b527c09d64f5 ("next-20251121")
+diff --git a/Documentation/devicetree/bindings/display/msm/dsi-phy-7nm.yaml b/Documentation/devicetree/bindings/display/msm/dsi-phy-7nm.yaml
+index 1ca820a500b7..7a83387502da 100644
+--- a/Documentation/devicetree/bindings/display/msm/dsi-phy-7nm.yaml
++++ b/Documentation/devicetree/bindings/display/msm/dsi-phy-7nm.yaml
+@@ -14,18 +14,24 @@ allOf:
+ 
+ properties:
+   compatible:
+-    enum:
+-      - qcom,dsi-phy-7nm
+-      - qcom,dsi-phy-7nm-8150
+-      - qcom,sa8775p-dsi-phy-5nm
+-      - qcom,sar2130p-dsi-phy-5nm
+-      - qcom,sc7280-dsi-phy-7nm
+-      - qcom,sm6375-dsi-phy-7nm
+-      - qcom,sm8350-dsi-phy-5nm
+-      - qcom,sm8450-dsi-phy-5nm
+-      - qcom,sm8550-dsi-phy-4nm
+-      - qcom,sm8650-dsi-phy-4nm
+-      - qcom,sm8750-dsi-phy-3nm
++    oneOf:
++      - items:
++          - enum:
++              - qcom,dsi-phy-7nm
++              - qcom,dsi-phy-7nm-8150
++              - qcom,sa8775p-dsi-phy-5nm
++              - qcom,sar2130p-dsi-phy-5nm
++              - qcom,sc7280-dsi-phy-7nm
++              - qcom,sm6375-dsi-phy-7nm
++              - qcom,sm8350-dsi-phy-5nm
++              - qcom,sm8450-dsi-phy-5nm
++              - qcom,sm8550-dsi-phy-4nm
++              - qcom,sm8650-dsi-phy-4nm
++              - qcom,sm8750-dsi-phy-3nm
++      - items:
++          - enum:
++              - qcom,qcs8300-dsi-phy-5nm
++          - const: qcom,sa8775p-dsi-phy-5nm
+ 
+   reg:
+     items:
 -- 
 2.34.1
 
