@@ -1,175 +1,172 @@
-Return-Path: <linux-arm-msm+bounces-83186-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-83187-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [IPv6:2605:f480:58:1:0:1994:3:14])
-	by mail.lfdr.de (Postfix) with ESMTPS id F0077C83D4B
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Nov 2025 08:58:25 +0100 (CET)
+Received: from ams.mirrors.kernel.org (ams.mirrors.kernel.org [IPv6:2a01:60a::1994:3:14])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8180AC83E48
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Nov 2025 09:09:31 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id B7ACD4E0625
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Nov 2025 07:58:24 +0000 (UTC)
+	by ams.mirrors.kernel.org (Postfix) with ESMTPS id C9DAD3466AC
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Nov 2025 08:09:26 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 33E132FA0DB;
-	Tue, 25 Nov 2025 07:58:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3BA882C3770;
+	Tue, 25 Nov 2025 08:09:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ioOqVP7i"
+	dkim=pass (2048-bit key) header.d=postmarketos.org header.i=@postmarketos.org header.b="LNqH9EMA"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from out-181.mta1.migadu.com (out-181.mta1.migadu.com [95.215.58.181])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 062F42F99AD;
-	Tue, 25 Nov 2025 07:58:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C712230BD5
+	for <linux-arm-msm@vger.kernel.org>; Tue, 25 Nov 2025 08:09:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.181
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764057502; cv=none; b=SJCEp13dciLLf/jk+31bHPWXKI7SxTn+pPdiVYMz7lRQZONolHdAL2YJoQ3OMsCoVaGGbu9B+xo6LOSOC7Uj06k6ZdQpC5nPSRh1gFZ+Bi+bZFHrenGy0XsaMuQcOx6Z9Z8oYsS7pAPaKjrTyrXHJk/9vVWn0Hazq3jWS5KhKuY=
+	t=1764058165; cv=none; b=FXXV5wG8HQJZ2jkkWd+Oy9I+uBSHJtSFEmTitIZ+Ow4dZnYtpHRD5l+osuR0LUjY/NEXnynTmHfxdHw4Q7fRuP1dFQkQsEgUxBWUnTqQJ1hQEpph7tFnidLB/cXYPmi2n7l/xS1/2Z3GXplnR1jKQ21iGN51XqYnWqzNd1MI+5I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764057502; c=relaxed/simple;
-	bh=1pmGmJBeXhSAvASam0vRKjUxYf0D5FwlRO1qil6CU68=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=UjsrYc1JUBbVmYmbA+WWYXkRLzM9Tdp2XhllCMZlihnBe/71x06WWHSfi+Dxu8G8/KxyPAySf9EF+01zzbvQuGCNxX3TDRrDQ/tqyXDjcyizHCOyIk/DfV/I/lveTEpPkU4Jttll+11MKRgGqdNmxePgjulC6qgzpsTlfBZ91/8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ioOqVP7i; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AEEDEC4CEF1;
-	Tue, 25 Nov 2025 07:58:16 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1764057501;
-	bh=1pmGmJBeXhSAvASam0vRKjUxYf0D5FwlRO1qil6CU68=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=ioOqVP7i9feGc23LoNL1OXaBIrYrJMPnOSj0DgwWqun+dBUpfK/u/HWqQ6fM4bwjv
-	 R1N3vIrkmt/MuKIcccnfHz7bcg2UmZaFY6N36+DdV/+/9hcWAx5aN05Pjivh9eOvPL
-	 MwoAdhG6VNevALzQfhilr2W/9oFvni4mcHQApOPIHE5TohSm8IVlItQUzPCtHufd95
-	 Ks4LSsWBa3BKV+A59yutrp3mZsGFdnj1xGzVKlKD1yuOphCPV842DLVNPITWki4Uvu
-	 cedO1gBDUIc96ovOfRfikvUsFrNBEShMH3B6TcTblLZfN7opcCUGTXWifyV6DtHuJ9
-	 Xnk5CooU7OJvg==
-Message-ID: <89601075-a312-478e-925d-3cc0b1e9471a@kernel.org>
-Date: Tue, 25 Nov 2025 08:58:14 +0100
+	s=arc-20240116; t=1764058165; c=relaxed/simple;
+	bh=2FiDWAy4dzApR6kN2gSsWRY9om4E1YgQis0mYlV1oaQ=;
+	h=MIME-Version:Date:Content-Type:From:Message-ID:Subject:To:Cc:
+	 In-Reply-To:References; b=s8qAVD7kR5e6XsGHsPz+A86yqNiauVUMRK/36EZqnQ64ikBT/SvxM4vOZlmvikBaPzFG70TxpnSYri6U9xKK/aekVXRoGOGvzvJGWeUcA5xUk4W9t4hWnXbTPoLuzz1vsYc2V7hOsOgfC3WxOHf/+PS0kYNWNzl17oh9tHbQoQ8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=postmarketos.org; spf=pass smtp.mailfrom=postmarketos.org; dkim=pass (2048-bit key) header.d=postmarketos.org header.i=@postmarketos.org header.b=LNqH9EMA; arc=none smtp.client-ip=95.215.58.181
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=postmarketos.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=postmarketos.org
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 2/6] dt-bindings: display/msm: gpu: Document A612 GPU
-To: Akhil P Oommen <akhilpo@oss.qualcomm.com>
-Cc: Rob Clark <robin.clark@oss.qualcomm.com>, Sean Paul <sean@poorly.run>,
- Konrad Dybcio <konradybcio@kernel.org>, Dmitry Baryshkov <lumag@kernel.org>,
- Abhinav Kumar <abhinav.kumar@linux.dev>,
- Marijn Suijten <marijn.suijten@somainline.org>,
- David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
- Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
- Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>,
- Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
- Conor Dooley <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
- Jessica Zhang <jesszhan0024@gmail.com>,
- Dan Carpenter <dan.carpenter@linaro.org>, linux-arm-msm@vger.kernel.org,
- dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
- linux-kernel@vger.kernel.org, devicetree@vger.kernel.org
-References: <20251122-qcs615-spin-2-v3-0-9f4d4c87f51d@oss.qualcomm.com>
- <20251122-qcs615-spin-2-v3-2-9f4d4c87f51d@oss.qualcomm.com>
- <20251122-savvy-camouflaged-chinchilla-f600ce@kuoka>
- <1207b70e-dcf1-47cf-be26-ff2928932e3e@oss.qualcomm.com>
-From: Krzysztof Kozlowski <krzk@kernel.org>
-Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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 a/A=
-In-Reply-To: <1207b70e-dcf1-47cf-be26-ff2928932e3e@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=postmarketos.org;
+	s=key1; t=1764058159;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=UZDmlYFu0TJ42/du0B4JgWp/3RyRXiT38keF1ISqat0=;
+	b=LNqH9EMAEFF0AbUTH0YDt4XuZ+Mk1EbNqCT+HoYIgtP4gf/Sl3FTSATS2KYEwI8rTIZzrj
+	PmZvY+iEvSxFv7nlJ5AccIDXsKW2zK8tMVgQ8ew1GdsiZ6uLVIyrvW/rgoIkr9c7uFLMCm
+	QaWAAJQeR8MuIKg/vZk7B9z+aYJgqvtO+chVW58uDKYheXht4YmEtCN3xkylVNPKK2iAFv
+	42qEC4em/MYa8OEAdlYAjHv0lcZFfZDgRbxsWl3aZSR4ZnPrb92ZmA7FFqF63zh6DdqhwR
+	uFDJEB17PPD6zQUe5gYMgqypxrEz7akdNqyJUEZRdyZA9jRyJCF+hzoBfRn9Vw==
+Date: Tue, 25 Nov 2025 08:09:12 +0000
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
+From: "Paul Sajna" <sajattack@postmarketos.org>
+Message-ID: <151736b1b2fc3432ad19631ea359c1679e370259@postmarketos.org>
+TLS-Required: No
+Subject: Re: [PATCH v3 10/11] arm64: dts: qcom: sdm845-lg-judyln: Add lab/ibb
+To: "Konrad Dybcio" <konrad.dybcio@oss.qualcomm.com>, "Bjorn Andersson"
+ <andersson@kernel.org>, "Konrad Dybcio" <konradybcio@kernel.org>, "Rob
+ Herring" <robh@kernel.org>, "Krzysztof Kozlowski" <krzk+dt@kernel.org>,
+ "Conor Dooley" <conor+dt@kernel.org>, "David Heidelberg" <david@ixit.cz>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org, phone-devel@vger.kernel.org, "Amir Dahan"
+ <system64fumo@protonmail.com>, "Christopher Brown"
+ <crispybrown@gmail.com>
+In-Reply-To: <38c70e06-f7bf-4ca6-8fe9-2a4012017cff@oss.qualcomm.com>
+References: <20250928-judyln-dts-v3-0-b14cf9e9a928@postmarketos.org>
+ <20250928-judyln-dts-v3-10-b14cf9e9a928@postmarketos.org>
+ <38c70e06-f7bf-4ca6-8fe9-2a4012017cff@oss.qualcomm.com>
+X-Migadu-Flow: FLOW_OUT
 
-On 24/11/2025 22:39, Akhil P Oommen wrote:
-> On 11/22/2025 4:32 PM, Krzysztof Kozlowski wrote:
->> On Sat, Nov 22, 2025 at 03:22:16AM +0530, Akhil P Oommen wrote:
->>> +
->>> +  - if:
->>> +      properties:
->>> +        compatible:
->>> +          contains:
->>> +            const: qcom,adreno-612.0
->>> +    then:
->>> +      properties:
->>> +        clocks:
->>> +          items:
->>> +            - description: GPU Core clock
->>> +
->>> +        clock-names:
->>> +          items:
->>> +            - const: core
->>> +
->>> +      required:
->>> +        - clocks
->>> +        - clock-names
->>> +
->>>      else:
->>
->> I am pretty sure you break not only intention/logic behindi this else,
->> but actually cause real warnings to appear.
->>
->> The else was intentional, right? So the pattern further will not match
->> some of devices defined in if:. Now else is for different part, so only
->> 612 out of these devices is excluded.
->>
->> There is a reason we do not want ever else:if: in bindings. If it
->> appeared, sure, maybe there is some benefit of it, but it means you need
->> to be more careful now.
-> 
-> Aah! I missed that this comes under an 'allOf'. Not an expert in this
-
-The allOf does not matter here. If these were separate if:then: then it
-would be the same.
-
-> syntax, does moving this entire block under an 'else' make sense? Or is
-
-No, never nest blocks.
-
-> there a saner alternative?
-
-Not sure, I don't remember the code. Original code was not easy to read,
-with your changes it will not be easier. So the only alternative I see
-is to make it simple and obvious.
+October 1, 2025 at 9:09 AM, "Konrad Dybcio" <konrad.dybcio@oss.qualcomm.c=
+om mailto:konrad.dybcio@oss.qualcomm.com?to=3D%22Konrad%20Dybcio%22%20%3C=
+konrad.dybcio%40oss.qualcomm.com%3E > wrote:
 
 
-Best regards,
-Krzysztof
+>=20
+>=20On 9/29/25 7:05 AM, Paul Sajna wrote:
+>=20
+>=20>=20
+>=20> These regulators seemingly help the lcd to work better
+> >=20
+>=20Electronics generally work better when the required power supplies
+> are enabled..
+>=20
+>=20>=20
+>=20> Signed-off-by: Paul Sajna <sajattack@postmarketos.org>
+> >  ---
+> >  arch/arm64/boot/dts/qcom/sdm845-lg-judyln.dts | 17 +++++++++++++++++
+> >  1 file changed, 17 insertions(+)
+> >=20=20
+>=20>  diff --git a/arch/arm64/boot/dts/qcom/sdm845-lg-judyln.dts b/arch/=
+arm64/boot/dts/qcom/sdm845-lg-judyln.dts
+> >  index 3106fdc9b679bc6a43a1a490c61b73a63003f7e1..9c3662a3d93e12466747=
+4753e0f11d0e98698aa0 100644
+> >  --- a/arch/arm64/boot/dts/qcom/sdm845-lg-judyln.dts
+> >  +++ b/arch/arm64/boot/dts/qcom/sdm845-lg-judyln.dts
+> >  @@ -48,10 +48,27 @@ zap-shader {
+> >  };
+> >  };
+> >=20=20
+>=20>  +&ibb {
+> >  + regulator-min-microvolt =3D <4600000>;
+> >  + regulator-max-microvolt =3D <6000000>;
+> >  + regulator-over-current-protection;
+> >  + regulator-pull-down;
+> >  + regulator-soft-start;
+> >  + qcom,discharge-resistor-kohms =3D <300>;
+> >  +};
+> >  +
+> >  &ipa {
+> >  firmware-name =3D "qcom/sdm845/lg/judyln/ipa_fws.mbn";
+> >  };
+> >=20=20
+>=20>  +&lab {
+> >  + regulator-min-microvolt =3D <4600000>;
+> >  + regulator-max-microvolt =3D <6000000>;
+> >  + regulator-over-current-protection;
+> >  + regulator-pull-down;
+> >  + regulator-soft-start;
+> >  +};
+> >=20
+>=20This patch will allow any values between 4.6 V and 6.0 V to
+> be set on your phone, with the kernel defaulting to 4.6 V at
+> boot and staying there until (if?) any driver requests that to
+> change.
+>=20
+>=20Your panel probably expects a *very* specific pair of voltages
+> and any deviation may cause unpredictable consequences, including
+> magic smoke if you happen to go over a certain limit.
+>=20
+>=20You should most likely hardcode that specific expected voltage here
+>=20
+>=20Konrad
+>
+
+Here is the decompiled downstream dts.
+
+qcom,ibb@dc00 {
+						qcom,qpnp-ibb-init-voltage =3D <0x53ec60>;
+						qcom,qpnp-ibb-init-amoled-voltage =3D "", "=3D\t";
+						qcom,qpnp-ibb-soft-start =3D <0x3e8>;
+						qcom,qpnp-ibb-use-default-voltage;
+						qcom,qpnp-ibb-init-lcd-voltage =3D <0x53ec60>;
+						reg-names =3D "ibb_reg";
+						qcom,qpnp-ibb-slew-rate =3D <0x1e8480>;
+						qcom,qpnp-ibb-en-discharge;
+						qcom,qpnp-ibb-ps-enable;
+						qcom,qpnp-ibb-limit-max-current-enable;
+						interrupts =3D <0x03 0xdc 0x02 0x01>;
+						qcom,qpnp-ibb-lab-pwrup-delay =3D <0x3e8>;
+						phandle =3D <0x4ec>;
+						qcom,qpnp-ibb-debounce-cycle =3D <0x10>;
+						regulator-min-microvolt =3D <0x4630c0>;
+						qcom,qpnp-ibb-limit-maximum-current =3D <0x60e>;
+						reg =3D <0xdc00 0x100>;
+						regulator-max-microvolt =3D <0x5b8d80>;
+						qcom,qpnp-ibb-step-size =3D <0x186a0>;
+						qcom,qpnp-ibb-full-pull-down;
+						qcom,qpnp-ibb-switching-clock-frequency =3D <0x5c8>;
+						regulator-name =3D "ibb_reg";
+						interrupt-names =3D "ibb-sc-err";
+						qcom,qpnp-ibb-min-voltage =3D <0x155cc0>;
+						qcom,qpnp-ibb-pull-down-enable;
+						qcom,qpnp-ibb-lab-pwrdn-delay =3D <0x7d0>;
+					};
+				};
+
+Should I use the init-voltage for min and max microvolt?
 
