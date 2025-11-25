@@ -1,434 +1,218 @@
-Return-Path: <linux-arm-msm+bounces-83277-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-83278-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1A3F4C858AB
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Nov 2025 15:48:34 +0100 (CET)
+Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [IPv6:2605:f480:58:1:0:1994:3:14])
+	by mail.lfdr.de (Postfix) with ESMTPS id A23D7C858FE
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Nov 2025 15:52:46 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 883A53B5EFC
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Nov 2025 14:46:05 +0000 (UTC)
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 48B954EB853
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Nov 2025 14:48:04 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 51383329E68;
-	Tue, 25 Nov 2025 14:45:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B0DD432695D;
+	Tue, 25 Nov 2025 14:47:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="fqQ8izpo"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="WSN1UBh3";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="S22K4HqI"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FC353271E8;
-	Tue, 25 Nov 2025 14:45:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 268A33246F0
+	for <linux-arm-msm@vger.kernel.org>; Tue, 25 Nov 2025 14:47:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764081912; cv=none; b=utpVDjNWPohFNHDdcrQ3Z/m4vaIJMT5/KfgdNcZNY9iz/4KhoMpNO+D8orKdt5ocqNeONWXfXLQbnMnaBmnKc8rg34z4EVUkyLnG/PwHvu/7pJFOzD1ZcXG7fn5xBtaN388Il6csQSPmzsyIGcB4ROopD74HUaM46YI9EdTjxXw=
+	t=1764082038; cv=none; b=uaGckXTobczMqGbdAL2a6SZvWoYZYFf37A+4BEDOqxOAomK4c006NgKgIlfRVieUcBovwEfasQBOdHEKP2K/CaGB6jESKppv0d5AL00wpMacZWAtlODHrqiWEIheIKGGJ8mHJuzuyEZdwtGGNBCko1dcPuccuuJ6lNs2FJ9bBkQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764081912; c=relaxed/simple;
-	bh=uVTeK5QXYJAKEXrVJHIu2uAlEF+bu5ja7nlz/3qqyE4=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=GRnmxNJkRAtccyjl4nrbrsSdD8TPJ8GGHtT5crOW615gZw7VdiybISbMxeYak95eJ5or7BWgC6gmGg0CHyXBYx1XtdoD0PtDFpn8Dzj5cL5CHq/UkJXuEdDDUJghNAZ///diUAvO6tcipj7C6PA7ozEusuRs0J50NhjTjKP07bg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=fqQ8izpo; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPS id B69B5C116B1;
-	Tue, 25 Nov 2025 14:45:11 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1764081911;
-	bh=uVTeK5QXYJAKEXrVJHIu2uAlEF+bu5ja7nlz/3qqyE4=;
-	h=From:Date:Subject:References:In-Reply-To:To:Cc:Reply-To:From;
-	b=fqQ8izpodQMCH+c8ZXRjf2Xmt6GXMylMvl6jYZdOMs2anrq86fp4RQM9uIkMopm5E
-	 I9w5V0ke3VqPc5P33DB+LHWOiui4MU1R1AiJmXuLYE6ZMaU/1eI3n9UrMECl8I91u0
-	 XQ5CCPp16HljY6Kvp+b7JTKkqIiuKKTYCzK5lEXt3a4f22W1LfH9chF6p4esIoHxQK
-	 bPyYNNIfiaWMLorZFH9Le5fbHVRjYBTMNqUydxJkpKsMEAmAfCG9fL4aDm+AGn3u6i
-	 iHvx0GGt1XxYtAogIwO2yT1ecH4CmHhi776NguShj0BFkjDuUbbmhPUJ6V+pOwPPam
-	 eFLUOqzaBFwaA==
-Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A7B30D0E6F4;
-	Tue, 25 Nov 2025 14:45:11 +0000 (UTC)
-From: Manivannan Sadhasivam via B4 Relay <devnull+manivannan.sadhasivam.oss.qualcomm.com@kernel.org>
-Date: Tue, 25 Nov 2025 20:15:14 +0530
-Subject: [PATCH v2 10/10] power: sequencing: pcie-m2: Add support for PCIe
- M.2 Key E connectors
+	s=arc-20240116; t=1764082038; c=relaxed/simple;
+	bh=vrXzx5bVCEQ/DIJoAm6G8tgINhpEI3fCQRh/EucAaMQ=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=cs0vl3VmpbCNYmjuKNWAbdSxZoapTsrfnC9xnwZQEaTr5LPy2QqGAWlV2OYXXTkAA4Xna5ZUT7cA5NqlKELL8GUvozpvrtN+HJSo88/rhBfFIYlZied8+HKuWvhYfU4rMqvQf96btCJn0G4/4/dqHMniefQZlVRkNSorYHB6+I0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=WSN1UBh3; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=S22K4HqI; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 5AP9xPcX2650982
+	for <linux-arm-msm@vger.kernel.org>; Tue, 25 Nov 2025 14:47:15 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-type:date:from:in-reply-to:message-id:mime-version
+	:references:subject:to; s=qcppdkim1; bh=0OtSc4Iv//RzAZHCwgmMh85n
+	iL32lnUpnwK33iA2iag=; b=WSN1UBh3oO4OzK6Tk0pSjA/1hOqvHqA+hgShwSyY
+	4lexRVBlWAb9QBTO49fkLvldQx1SGHMy6wxOVQS5UgCvW/CHvqey4Yvgzwm+78wK
+	HNSx9R5lHaGDmDkicvwhBAHfMooi/jvzINeKlgjoV0ci42xssMQzO1FuDq+ACL+j
+	0ODcZ1LtuhOdkSSYneaUm1KWvKUrkrqik/t9TJ5O55NFhJRzMr3SVGhHT7EQHuQK
+	tZzxmcTAn+vS+gr8mLJ3WIUPuT5ohHVekm5ONva7jeI14Q3uKKPm8CZO/rGxq7c0
+	+y9Rsfh6H+f0liX3mynCkWBF8X8wCNq6KNMXtU3zqn8Aug==
+Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com [209.85.222.199])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4anaabrs29-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Tue, 25 Nov 2025 14:47:15 +0000 (GMT)
+Received: by mail-qk1-f199.google.com with SMTP id af79cd13be357-8b2e235d4d2so2062740685a.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 25 Nov 2025 06:47:15 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=oss.qualcomm.com; s=google; t=1764082034; x=1764686834; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=0OtSc4Iv//RzAZHCwgmMh85niL32lnUpnwK33iA2iag=;
+        b=S22K4HqIYLYQcIsR1/Lmjj7Anq3/RtutzaevM/nJwxoWdC5MlBzKiAD9cbYWpxq8id
+         9687Pw7Squ7aCvsJuW+6u+adN4O6kOX+1jDFTlFVmsLzA0BnZs7sVxHA9lvo8nuvpXq5
+         2ltdNryDtbxLcLsWL9UJpU6iSiLBXkjMBABOkC5taL8TnpixctJtTSdULaaTuXQVLyLJ
+         /fR2cIrgYOC7Cqf+K4ViZ1uVno2hWY4xWg48LXTtJsifwIrga3tzmtfCRGJRkWnanYHO
+         AX44HbBfl3B/1cmcB/FpsXSuK9yNPxec/ICHsYqpcnUIaiuxBeN0tqdvARsSncQl6wfV
+         qPQg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1764082034; x=1764686834;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=0OtSc4Iv//RzAZHCwgmMh85niL32lnUpnwK33iA2iag=;
+        b=nwfYyXS7JzsjoBCvuzyc3KjtObhT6P74x9eDBQAxZD5JnRfoR0/+BuPJ5d5FAxpFox
+         JhlzHaItFTAPBzbP+Y+cAuZx2OkTMs/0/vmVkD0sFbGCRWAiGNMCjk6Ypi2yFkP4DYe/
+         g6BJ4akWmeX1zCQoiB9nQadfrgUCJLjFmSNqngFnHJechtsNXO7s2CrgsrlPUyIrzxN3
+         /JBuxicrQLzsnvDsyogSeSwOub+tWyEdDswaqdKGkeinVPfBA0sSnQHSFTABZIqxPbxB
+         guQ/hccGgkmhBrHs1nR7CXbVl9kjZm3sOoC8nbT9OZ2ykyQ2xrdHqJkLtleQzA1L4SNs
+         npvg==
+X-Forwarded-Encrypted: i=1; AJvYcCW12takBrS4/y6orfBfwHgQRhE5z38fNbp15WilzNcxYNg2M8bD8rQEjnxNyxmrMy+1Qx5SZSs/2+IfzM2h@vger.kernel.org
+X-Gm-Message-State: AOJu0YykPW+c5Wpkb4KiqRGT7wALrxysErz8+XSIyJCLNLCODhuxPASx
+	KFn7eyxeKe/Av4AkNXym21pc7+y6gSCyzIVGqlg2h7m+1Vmt8sCC4Q1MQ2IHP2rJ5TNbsZiGtJM
+	+A7yAuBp9/LF9KKeSQwPSHi8li9+zpbvwkNC+VP8eajtVVLldZ4tUEqLkl84OpHuLyVCV
+X-Gm-Gg: ASbGnctK+S6sa9quja+bs0oJj7mSeKe2PMh3sFBSaobtHJOBAV/fK8qIRsO77bgHdl9
+	rPwp0Qqp5blElb66IQbkvwf5CY+zlqf1qR/X8qfFOEJElFFw81V6cABunkGp38LPIi13nUfhIm7
+	vQ1JCzBJC47on2ZCWM7un6CqQieyPfrDAWxBKObkY60RMi4rVWdyHIaSRghsbol8skamEKfnuhd
+	+0p4l6R9fxaeB1tAXUokUzPOurCQ9ihSkKNJQema1Frx/F4AjZ7mz2jNZWHxIdFzKtxhNaomao5
+	LsZx8hS7pmVK9fTWJmfuY+iFv4EFNqhTJMQUb0isvDaaiiL290dv7U6PmpOS+Arl4RiG8huIyIp
+	R+Ev7AwKAYg1I3IyPeJGB9rZCzCiiWYV/SR8a27cFJIzQw0/oVgi9NsdrErLO5kibjCpJTgP8ZC
+	sfATPC+1MTH1lMub0moLdEtzI=
+X-Received: by 2002:a05:620a:1aa7:b0:8b2:ef70:64ec with SMTP id af79cd13be357-8b33d4a72c3mr1768049585a.46.1764082034085;
+        Tue, 25 Nov 2025 06:47:14 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGG7UOLRXXghJiqS+TfOorFOsx005dRphXTelmvvYi2z9s+6NL/AWnFV8TeVC1x1Pw/DIRsiw==
+X-Received: by 2002:a05:620a:1aa7:b0:8b2:ef70:64ec with SMTP id af79cd13be357-8b33d4a72c3mr1768044685a.46.1764082033476;
+        Tue, 25 Nov 2025 06:47:13 -0800 (PST)
+Received: from umbar.lan (2001-14ba-a0c3-3a00-264b-feff-fe8b-be8a.rev.dnainternet.fi. [2001:14ba:a0c3:3a00:264b:feff:fe8b:be8a])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-5969db88f71sm5301984e87.34.2025.11.25.06.47.11
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 25 Nov 2025 06:47:11 -0800 (PST)
+Date: Tue, 25 Nov 2025 16:47:09 +0200
+From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+To: yuanjie yang <yuanjie.yang@oss.qualcomm.com>
+Cc: robin.clark@oss.qualcomm.com, lumag@kernel.org, abhinav.kumar@linux.dev,
+        sean@poorly.run, marijn.suijten@somainline.org, airlied@gmail.com,
+        simona@ffwll.ch, maarten.lankhorst@linux.intel.com, mripard@kernel.org,
+        tzimmermann@suse.de, robh@kernel.org, krzk+dt@kernel.org,
+        conor+dt@kernel.org, quic_mkrishn@quicinc.com, jonathan@marek.ca,
+        quic_khsieh@quicinc.com, neil.armstrong@linaro.org,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org,
+        tingwei.zhang@oss.qualcomm.com, aiqun.yu@oss.qualcomm.com,
+        Yongxing Mou <yongxing.mou@oss.qualcomm.com>
+Subject: Re: [PATCH v2 05/10] drm/msm/mdss: Add support for Kaanapali
+Message-ID: <teg6is2sw35s5nyd6df74hwhctnx4txjd355reqpgfwl7xtkq2@e2rzbskjfz26>
+References: <20251125064758.7207-1-yuanjie.yang@oss.qualcomm.com>
+ <20251125064758.7207-6-yuanjie.yang@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20251125-pci-m2-e-v2-10-32826de07cc5@oss.qualcomm.com>
-References: <20251125-pci-m2-e-v2-0-32826de07cc5@oss.qualcomm.com>
-In-Reply-To: <20251125-pci-m2-e-v2-0-32826de07cc5@oss.qualcomm.com>
-To: Rob Herring <robh@kernel.org>, 
- Greg Kroah-Hartman <gregkh@linuxfoundation.org>, 
- Jiri Slaby <jirislaby@kernel.org>, Nathan Chancellor <nathan@kernel.org>, 
- Nicolas Schier <nicolas.schier@linux.dev>, Hans de Goede <hansg@kernel.org>, 
- =?utf-8?q?Ilpo_J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>, 
- Mark Pearson <mpearson-lenovo@squebb.ca>, 
- "Derek J. Clark" <derekjohn.clark@gmail.com>, 
- Manivannan Sadhasivam <mani@kernel.org>, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>, Marcel Holtmann <marcel@holtmann.org>, 
- Luiz Augusto von Dentz <luiz.dentz@gmail.com>, 
- Bartosz Golaszewski <brgl@bgdev.pl>
-Cc: linux-serial@vger.kernel.org, linux-kernel@vger.kernel.org, 
- linux-kbuild@vger.kernel.org, platform-driver-x86@vger.kernel.org, 
- linux-pci@vger.kernel.org, devicetree@vger.kernel.org, 
- linux-arm-msm@vger.kernel.org, linux-bluetooth@vger.kernel.org, 
- linux-pm@vger.kernel.org, Stephan Gerhold <stephan.gerhold@linaro.org>, 
- Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>, 
- Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
-X-Mailer: b4 0.14.3
-X-Developer-Signature: v=1; a=openpgp-sha256; l=11211;
- i=manivannan.sadhasivam@oss.qualcomm.com; h=from:subject:message-id;
- bh=icdy0cEagCCZDZk1SjAL+YixAm1oqa2r7NEVrGE9+pI=;
- b=owEBbQGS/pANAwAKAVWfEeb+kc71AcsmYgBpJcDzqQgUp84ba4lBRijiZIEuI2jtoWHH5P4lM
- f13O6DkJGiJATMEAAEKAB0WIQRnpUMqgUjL2KRYJ5dVnxHm/pHO9QUCaSXA8wAKCRBVnxHm/pHO
- 9YjfCACVhKLtculT1OE7fu9pKGjRV5hGxnTMVHrl+x80lI65ilz4P7vvOYX90oa5ZG8taVBj/kP
- g9p6YagWgCUF9pQ6jHglIcOtyiqH9S9iN0LMRd30hMNcnK3GwCuVjQ2108UG8mUFPqtVtd8MYZv
- 7UOTggxKtT2S9T/1hOUPY1FUPbW8T9MnZxEpAe2sf/PPDTd+TAS1pF1aUAbsCqPx/w3eLVldozX
- AOxr6wwtUDiRSdpfc7o8vp0dLr7LnpkxbA6733M4Qo+1/WOqsJgbkvdGZDXORud258ZzO3NtiUr
- VuYb8c4rGhKwNiahaUYuYpBC3T3VyuChRs/ndWB8h3pIfniH
-X-Developer-Key: i=manivannan.sadhasivam@oss.qualcomm.com; a=openpgp;
- fpr=C668AEC3C3188E4C611465E7488550E901166008
-X-Endpoint-Received: by B4 Relay for
- manivannan.sadhasivam@oss.qualcomm.com/default with auth_id=461
-X-Original-From: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
-Reply-To: manivannan.sadhasivam@oss.qualcomm.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20251125064758.7207-6-yuanjie.yang@oss.qualcomm.com>
+X-Authority-Analysis: v=2.4 cv=Vd36/Vp9 c=1 sm=1 tr=0 ts=6925c173 cx=c_pps
+ a=HLyN3IcIa5EE8TELMZ618Q==:117 a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10
+ a=6UeiqGixMTsA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=EUspDBNiAAAA:8 a=-U1_elcvvKRzM9PYnLcA:9 a=CjuIK1q_8ugA:10
+ a=bTQJ7kPSJx9SKPbeHEYW:22
+X-Proofpoint-ORIG-GUID: 0oiplgNy3EEyd7A90NsTY8Rf0badHknT
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMTI1MDEyMyBTYWx0ZWRfX3mU8frmJHkdn
+ /g8xJld3wBOGB8H90nZTy+LqTLwbnDocu3PV5gbap3GIpd/jHnPD4CYNFdco6Q7HFSua/1z//4V
+ /dgO5OiqmCjMtYQbwJ+Dx03ZxKIicvnOZrviqpfa9WJkpfuKZOicUvB6+pI+F/2suz0dIUFoQCE
+ ypG/qHcaDAVwBh4d8u8nVtaCQyF5ZMVpIlR/7pI56oc8plw389oajzHVuzJjNE0QHz3lRfJ0XHu
+ /f+IBLfgYO80Ay5utbqTmSnKOpjZpCWBoQYHF6rBY4EeBS2OgBsCJzqwGQJhwkGnI2RjbsKC0Wk
+ BIYeyQSARuDfKMPnZGbpDF2HXyM+olZQwG5X9C6+7qdPyHUvi1oCorVE6UqpvwrOYQbjWCIiQR5
+ VSrlQLKgzgVAo1wo/ZQX98ypCEg1Ag==
+X-Proofpoint-GUID: 0oiplgNy3EEyd7A90NsTY8Rf0badHknT
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
+ definitions=2025-11-25_02,2025-11-25_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ clxscore=1015 spamscore=0 impostorscore=0 adultscore=0 phishscore=0
+ suspectscore=0 malwarescore=0 priorityscore=1501 bulkscore=0
+ lowpriorityscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2510240001
+ definitions=main-2511250123
 
-From: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
+On Tue, Nov 25, 2025 at 02:47:53PM +0800, yuanjie yang wrote:
+> From: Yuanjie Yang <yuanjie.yang@oss.qualcomm.com>
+> 
+> Add mdss support for the Qualcomm Kaanapali platform.
+> 
+> Co-developed-by: Yongxing Mou <yongxing.mou@oss.qualcomm.com>
+> Signed-off-by: Yongxing Mou <yongxing.mou@oss.qualcomm.com>
+> Signed-off-by: Yuanjie Yang <yuanjie.yang@oss.qualcomm.com>
+> ---
+>  drivers/gpu/drm/msm/msm_mdss.c | 22 ++++++++++++++++++++++
+>  1 file changed, 22 insertions(+)
+> 
+> diff --git a/drivers/gpu/drm/msm/msm_mdss.c b/drivers/gpu/drm/msm/msm_mdss.c
+> index bf9a33e925ac..797ef134e081 100644
+> --- a/drivers/gpu/drm/msm/msm_mdss.c
+> +++ b/drivers/gpu/drm/msm/msm_mdss.c
+> @@ -243,6 +243,24 @@ static void msm_mdss_setup_ubwc_dec_50(struct msm_mdss *msm_mdss)
+>  	writel_relaxed(1, msm_mdss->mmio + REG_MDSS_UBWC_PREDICTION_MODE);
+>  }
+>  
+> +static void msm_mdss_setup_ubwc_dec_60(struct msm_mdss *msm_mdss)
+> +{
+> +	const struct qcom_ubwc_cfg_data *data = msm_mdss->mdss_data;
+> +	u32 value = MDSS_UBWC_STATIC_UBWC_SWIZZLE(data->ubwc_swizzle) |
+> +		    MDSS_UBWC_STATIC_HIGHEST_BANK_BIT(data->highest_bank_bit);
+> +
+> +	if (data->ubwc_bank_spread)
+> +		value |= MDSS_UBWC_STATIC_UBWC_BANK_SPREAD;
+> +
+> +	if (data->macrotile_mode)
+> +		value |= MDSS_UBWC_STATIC_MACROTILE_MODE;
+> +
+> +	writel_relaxed(value, msm_mdss->mmio + REG_MDSS_UBWC_STATIC);
+> +
+> +	writel_relaxed(5, msm_mdss->mmio + REG_MDSS_UBWC_CTRL_2);
+> +	writel_relaxed(1, msm_mdss->mmio + REG_MDSS_UBWC_PREDICTION_MODE);
+> +}
 
-Add support for handling the power sequence of the PCIe M.2 Key E
-connectors. These connectors are used to attach the Wireless Connectivity
-devices to the host machine including combinations of WiFi, BT, NFC using
-interfaces such as PCIe/SDIO for WiFi, USB/UART for BT and I2C for NFC.
+Can we please merge this with 4.0 and 5.0 functions?
 
-Currently, this driver supports only the PCIe interface for WiFi and UART
-interface for BT. The driver also only supports driving the 3.3v/1.8v power
-supplies and W_DISABLE{1/2}# GPIOs. The optional signals of the Key E
-connectors are not currently supported.
+> +
+>  static int msm_mdss_enable(struct msm_mdss *msm_mdss)
+>  {
+>  	int ret, i;
+> @@ -296,6 +314,9 @@ static int msm_mdss_enable(struct msm_mdss *msm_mdss)
+>  	case UBWC_5_0:
+>  		msm_mdss_setup_ubwc_dec_50(msm_mdss);
+>  		break;
+> +	case UBWC_6_0:
+> +		msm_mdss_setup_ubwc_dec_60(msm_mdss);
+> +		break;
+>  	default:
+>  		dev_err(msm_mdss->dev, "Unsupported UBWC decoder version %x\n",
+>  			msm_mdss->mdss_data->ubwc_dec_version);
+> @@ -552,6 +573,7 @@ static const struct msm_mdss_data data_153k6 = {
+>  };
+>  
+>  static const struct of_device_id mdss_dt_match[] = {
+> +	{ .compatible = "qcom,kaanapali-mdss", .data = &data_57k },
 
-For supporting Bluetooth over the non-discoverable UART interface, the
-driver currently creates the serdev interface after enumerating the PCIe
-interface. This is mandatory since the device ID is only known after the
-PCIe enumeration and the ID is used for creating the serdev device.
+After glymur, please.
 
-Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
----
- drivers/power/sequencing/Kconfig          |   1 +
- drivers/power/sequencing/pwrseq-pcie-m2.c | 205 +++++++++++++++++++++++++++++-
- 2 files changed, 199 insertions(+), 7 deletions(-)
-
-diff --git a/drivers/power/sequencing/Kconfig b/drivers/power/sequencing/Kconfig
-index f5fff84566ba..29bd204319cc 100644
---- a/drivers/power/sequencing/Kconfig
-+++ b/drivers/power/sequencing/Kconfig
-@@ -38,6 +38,7 @@ config POWER_SEQUENCING_TH1520_GPU
- config POWER_SEQUENCING_PCIE_M2
- 	tristate "PCIe M.2 connector power sequencing driver"
- 	depends on OF || COMPILE_TEST
-+	depends on PCI
- 	help
- 	  Say Y here to enable the power sequencing driver for PCIe M.2
- 	  connectors. This driver handles the power sequencing for the M.2
-diff --git a/drivers/power/sequencing/pwrseq-pcie-m2.c b/drivers/power/sequencing/pwrseq-pcie-m2.c
-index 4835d099d967..c2cc129f6917 100644
---- a/drivers/power/sequencing/pwrseq-pcie-m2.c
-+++ b/drivers/power/sequencing/pwrseq-pcie-m2.c
-@@ -5,14 +5,17 @@
-  */
- 
- #include <linux/device.h>
-+#include <linux/gpio/consumer.h>
- #include <linux/mod_devicetable.h>
- #include <linux/module.h>
- #include <linux/of.h>
- #include <linux/of_graph.h>
- #include <linux/of_platform.h>
-+#include <linux/pci.h>
- #include <linux/platform_device.h>
- #include <linux/pwrseq/provider.h>
- #include <linux/regulator/consumer.h>
-+#include <linux/serdev.h>
- #include <linux/slab.h>
- 
- struct pwrseq_pcie_m2_pdata {
-@@ -25,17 +28,20 @@ struct pwrseq_pcie_m2_ctx {
- 	const struct pwrseq_pcie_m2_pdata *pdata;
- 	struct regulator_bulk_data *regs;
- 	size_t num_vregs;
-+	struct gpio_desc *w_disable1_gpio;
-+	struct gpio_desc *w_disable2_gpio;
- 	struct notifier_block nb;
-+	struct device *dev;
- };
- 
--static int pwrseq_pcie_m2_m_vregs_enable(struct pwrseq_device *pwrseq)
-+static int pwrseq_pcie_m2_vregs_enable(struct pwrseq_device *pwrseq)
- {
- 	struct pwrseq_pcie_m2_ctx *ctx = pwrseq_device_get_drvdata(pwrseq);
- 
- 	return regulator_bulk_enable(ctx->num_vregs, ctx->regs);
- }
- 
--static int pwrseq_pcie_m2_m_vregs_disable(struct pwrseq_device *pwrseq)
-+static int pwrseq_pcie_m2_vregs_disable(struct pwrseq_device *pwrseq)
- {
- 	struct pwrseq_pcie_m2_ctx *ctx = pwrseq_device_get_drvdata(pwrseq);
- 
-@@ -44,18 +50,84 @@ static int pwrseq_pcie_m2_m_vregs_disable(struct pwrseq_device *pwrseq)
- 
- static const struct pwrseq_unit_data pwrseq_pcie_m2_vregs_unit_data = {
- 	.name = "regulators-enable",
--	.enable = pwrseq_pcie_m2_m_vregs_enable,
--	.disable = pwrseq_pcie_m2_m_vregs_disable,
-+	.enable = pwrseq_pcie_m2_vregs_enable,
-+	.disable = pwrseq_pcie_m2_vregs_disable,
- };
- 
--static const struct pwrseq_unit_data *pwrseq_pcie_m2_m_unit_deps[] = {
-+static const struct pwrseq_unit_data *pwrseq_pcie_m2_unit_deps[] = {
- 	&pwrseq_pcie_m2_vregs_unit_data,
- 	NULL
- };
- 
-+static int pwrseq_pci_m2_e_uart_enable(struct pwrseq_device *pwrseq)
-+{
-+	struct pwrseq_pcie_m2_ctx *ctx = pwrseq_device_get_drvdata(pwrseq);
-+
-+	return gpiod_set_value_cansleep(ctx->w_disable2_gpio, 0);
-+}
-+
-+static int pwrseq_pci_m2_e_uart_disable(struct pwrseq_device *pwrseq)
-+{
-+	struct pwrseq_pcie_m2_ctx *ctx = pwrseq_device_get_drvdata(pwrseq);
-+
-+	return gpiod_set_value_cansleep(ctx->w_disable2_gpio, 1);
-+}
-+
-+static const struct pwrseq_unit_data pwrseq_pcie_m2_e_uart_unit_data = {
-+	.name = "uart-enable",
-+	.deps = pwrseq_pcie_m2_unit_deps,
-+	.enable = pwrseq_pci_m2_e_uart_enable,
-+	.disable = pwrseq_pci_m2_e_uart_disable,
-+};
-+
-+static int pwrseq_pci_m2_e_pcie_enable(struct pwrseq_device *pwrseq)
-+{
-+	struct pwrseq_pcie_m2_ctx *ctx = pwrseq_device_get_drvdata(pwrseq);
-+
-+	return gpiod_set_value_cansleep(ctx->w_disable1_gpio, 0);
-+}
-+
-+static int pwrseq_pci_m2_e_pcie_disable(struct pwrseq_device *pwrseq)
-+{
-+	struct pwrseq_pcie_m2_ctx *ctx = pwrseq_device_get_drvdata(pwrseq);
-+
-+	return gpiod_set_value_cansleep(ctx->w_disable1_gpio, 1);
-+}
-+
-+static const struct pwrseq_unit_data pwrseq_pcie_m2_e_pcie_unit_data = {
-+	.name = "pcie-enable",
-+	.deps = pwrseq_pcie_m2_unit_deps,
-+	.enable = pwrseq_pci_m2_e_pcie_enable,
-+	.disable = pwrseq_pci_m2_e_pcie_disable,
-+};
-+
- static const struct pwrseq_unit_data pwrseq_pcie_m2_m_pcie_unit_data = {
- 	.name = "pcie-enable",
--	.deps = pwrseq_pcie_m2_m_unit_deps,
-+	.deps = pwrseq_pcie_m2_unit_deps,
-+};
-+
-+static int pwrseq_pcie_m2_e_pwup_delay(struct pwrseq_device *pwrseq)
-+{
-+	/*
-+	 * FIXME: This delay is only required for some Qcom WLAN/BT cards like
-+	 * WCN7850 and not for all devices. But currently, there is no way to
-+	 * identify the device model before enumeration.
-+	 */
-+	msleep(50);
-+
-+	return 0;
-+}
-+
-+static const struct pwrseq_target_data pwrseq_pcie_m2_e_uart_target_data = {
-+	.name = "uart",
-+	.unit = &pwrseq_pcie_m2_e_uart_unit_data,
-+	.post_enable = pwrseq_pcie_m2_e_pwup_delay,
-+};
-+
-+static const struct pwrseq_target_data pwrseq_pcie_m2_e_pcie_target_data = {
-+	.name = "pcie",
-+	.unit = &pwrseq_pcie_m2_e_pcie_unit_data,
-+	.post_enable = pwrseq_pcie_m2_e_pwup_delay,
- };
- 
- static const struct pwrseq_target_data pwrseq_pcie_m2_m_pcie_target_data = {
-@@ -63,11 +135,21 @@ static const struct pwrseq_target_data pwrseq_pcie_m2_m_pcie_target_data = {
- 	.unit = &pwrseq_pcie_m2_m_pcie_unit_data,
- };
- 
-+static const struct pwrseq_target_data *pwrseq_pcie_m2_e_targets[] = {
-+	&pwrseq_pcie_m2_e_pcie_target_data,
-+	&pwrseq_pcie_m2_e_uart_target_data,
-+	NULL
-+};
-+
- static const struct pwrseq_target_data *pwrseq_pcie_m2_m_targets[] = {
- 	&pwrseq_pcie_m2_m_pcie_target_data,
- 	NULL
- };
- 
-+static const struct pwrseq_pcie_m2_pdata pwrseq_pcie_m2_e_of_data = {
-+	.targets = pwrseq_pcie_m2_e_targets,
-+};
-+
- static const struct pwrseq_pcie_m2_pdata pwrseq_pcie_m2_m_of_data = {
- 	.targets = pwrseq_pcie_m2_m_targets,
- };
-@@ -92,6 +174,96 @@ static int pwrseq_pcie_m2_match(struct pwrseq_device *pwrseq,
- 	return PWRSEQ_NO_MATCH;
- }
- 
-+static int pwrseq_m2_pcie_notify(struct notifier_block *nb, unsigned long action,
-+			      void *data)
-+{
-+	struct pwrseq_pcie_m2_ctx *ctx = container_of(nb, struct pwrseq_pcie_m2_ctx, nb);
-+	struct pci_dev *pdev = to_pci_dev(data);
-+	struct device_node *pci_remote __free(device_node) = NULL;
-+	struct device_node *serdev_remote __free(device_node) = NULL;
-+	struct serdev_controller *serdev_ctrl;
-+	struct serdev_device *serdev;
-+	struct device *dev = ctx->dev;
-+	int ret;
-+
-+	/*
-+	 * Check whether the PCI device is associated with this M.2 connector or
-+	 * not, by comparing the OF node of the PCI device parent and the Port 0
-+	 * (PCIe) remote node parent OF node.
-+	 */
-+	pci_remote = of_graph_get_remote_node(dev_of_node(ctx->dev), 0, 0);
-+	if (!pci_remote || (pci_remote != pdev->dev.parent->of_node))
-+		return NOTIFY_DONE;
-+
-+	switch (action) {
-+	case BUS_NOTIFY_ADD_DEVICE:
-+		/* Create serdev device for WCN7850 */
-+		if (pdev->vendor == PCI_VENDOR_ID_QCOM && pdev->device == 0x1107) {
-+			serdev_remote = of_graph_get_remote_node(dev_of_node(ctx->dev), 1, 1);
-+			if (!serdev_remote)
-+				return NOTIFY_DONE;
-+
-+			serdev_ctrl = of_find_serdev_controller_by_node(serdev_remote);
-+			if (!serdev_ctrl)
-+				return NOTIFY_DONE;
-+
-+			serdev = serdev_device_alloc(serdev_ctrl);
-+			if (!serdev)
-+				return NOTIFY_BAD;
-+
-+			ret = serdev_device_add(serdev, "WCN7850");
-+			if (ret) {
-+				dev_err(dev, "Failed to add serdev for WCN7850: %d\n", ret);
-+				serdev_device_put(serdev);
-+				return NOTIFY_BAD;
-+			}
-+		}
-+		break;
-+	}
-+
-+	return NOTIFY_OK;
-+}
-+
-+static bool pwrseq_pcie_m2_check_remote_node(struct device *dev, u8 port, u8 endpoint,
-+					     const char *node)
-+{
-+	struct device_node *remote __free(device_node) = NULL;
-+
-+	remote = of_graph_get_remote_node(dev_of_node(dev), port, endpoint);
-+	if (remote && of_node_name_eq(remote, node))
-+		return true;
-+
-+	return false;
-+}
-+
-+/*
-+ * If the connector exposes a non-discoverable bus like UART, the respective
-+ * protocol device needs to be created manually with the help of the notifier
-+ * of the discoverable bus like PCIe.
-+ */
-+static int pwrseq_pcie_m2_register_notifier(struct pwrseq_pcie_m2_ctx *ctx, struct device *dev)
-+{
-+	int ret;
-+
-+	/*
-+	 * Register a PCI notifier for Key E connector that has PCIe as Port
-+	 * 0/Endpoint 0 interface and Serial as Port 1/Endpoint 1 interface.
-+	 */
-+	if (pwrseq_pcie_m2_check_remote_node(dev, 1, 1, "serial")) {
-+		if (pwrseq_pcie_m2_check_remote_node(dev, 0, 0, "pcie")) {
-+			ctx->dev = dev;
-+			ctx->nb.notifier_call = pwrseq_m2_pcie_notify;
-+			ret = bus_register_notifier(&pci_bus_type, &ctx->nb);
-+			if (ret) {
-+				dev_err_probe(dev, ret, "Failed to register notifier for serdev\n");
-+				return ret;
-+			}
-+		}
-+	}
-+
-+	return 0;
-+}
-+
- static int pwrseq_pcie_m2_probe(struct platform_device *pdev)
- {
- 	struct device *dev = &pdev->dev;
-@@ -119,6 +291,16 @@ static int pwrseq_pcie_m2_probe(struct platform_device *pdev)
- 		return dev_err_probe(dev, ret,
- 				     "Failed to get all regulators\n");
- 
-+	ctx->w_disable1_gpio = devm_gpiod_get_optional(dev, "w-disable1", GPIOD_OUT_HIGH);
-+	if (IS_ERR(ctx->w_disable1_gpio))
-+		return dev_err_probe(dev, PTR_ERR(ctx->w_disable1_gpio),
-+				     "Failed to get the W_DISABLE_1# GPIO\n");
-+
-+	ctx->w_disable2_gpio = devm_gpiod_get_optional(dev, "w-disable2", GPIOD_OUT_HIGH);
-+	if (IS_ERR(ctx->w_disable2_gpio))
-+		return dev_err_probe(dev, PTR_ERR(ctx->w_disable2_gpio),
-+				     "Failed to get the W_DISABLE_2# GPIO\n");
-+
- 	ctx->num_vregs = ret;
- 
- 	config.parent = dev;
-@@ -134,14 +316,23 @@ static int pwrseq_pcie_m2_probe(struct platform_device *pdev)
- 				     "Failed to register the power sequencer\n");
- 	}
- 
--	return 0;
-+	/*
-+	 * Register a notifier for creating protocol devices for
-+	 * non-discoverable busses like UART.
-+	 */
-+	return pwrseq_pcie_m2_register_notifier(ctx, dev);
- }
- 
-+
- static const struct of_device_id pwrseq_pcie_m2_of_match[] = {
- 	{
- 		.compatible = "pcie-m2-m-connector",
- 		.data = &pwrseq_pcie_m2_m_of_data,
- 	},
-+	{
-+		.compatible = "pcie-m2-e-connector",
-+		.data = &pwrseq_pcie_m2_e_of_data,
-+	},
- 	{ }
- };
- MODULE_DEVICE_TABLE(of, pwrseq_pcie_m2_of_match);
+>  	{ .compatible = "qcom,mdss", .data = &data_153k6 },
+>  	{ .compatible = "qcom,glymur-mdss", .data = &data_57k },
+>  	{ .compatible = "qcom,msm8998-mdss", .data = &data_76k8 },
+> -- 
+> 2.34.1
+> 
 
 -- 
-2.48.1
-
-
+With best wishes
+Dmitry
 
