@@ -1,136 +1,269 @@
-Return-Path: <linux-arm-msm+bounces-83262-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-83263-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [IPv6:2605:f480:58:1:0:1994:3:14])
-	by mail.lfdr.de (Postfix) with ESMTPS id E0ED9C855D3
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Nov 2025 15:20:32 +0100 (CET)
+Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [142.0.200.124])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4DEFDC8570A
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Nov 2025 15:33:35 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 9B99D4EA102
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Nov 2025 14:19:39 +0000 (UTC)
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id A53B04E3E96
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Nov 2025 14:33:25 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id AD2DB324B24;
-	Tue, 25 Nov 2025 14:19:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b="xLdAGdtJ"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 53F44325719;
+	Tue, 25 Nov 2025 14:33:24 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f54.google.com (mail-lf1-f54.google.com [209.85.167.54])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from metis.whiteo.stw.pengutronix.de (metis.whiteo.stw.pengutronix.de [185.203.201.7])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58A8331BC84
-	for <linux-arm-msm@vger.kernel.org>; Tue, 25 Nov 2025 14:19:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DCCA31771E
+	for <linux-arm-msm@vger.kernel.org>; Tue, 25 Nov 2025 14:33:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.203.201.7
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764080375; cv=none; b=OpwTY4s89D09JU2vPqb035P7ir/inOjCmWjKUxvsw/Ye7cOeuhhqou0itFz6lN6StGBKuAYK8Alzzy8CA0dFUppbN3gxQuoKL0qSPyukwoxXRQmK/yTdN2un/cmv0vp/TTBDCbSUHaA12ngy3OsEnxHFSTHlnjmx5duDqnZpCCs=
+	t=1764081204; cv=none; b=dflI6PAREke3xDhhXOssFEwu8XdSO+D/cRjT8kHJu4Zw3XhiC0wwWMM1hPHUpdfA2p1qSd7KtO0uYOtc9lWCvieLTpjuh+li/aiDWrKcRA/5nmYKDHmtTByhWvvbyRFF9bm6sZ32lTbLbYajPiABOqVpz5ibUJJRuuDS7Ppy+Fs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764080375; c=relaxed/simple;
-	bh=P7SIxPhHJVLDbgEW2nk/FMKjMfpphtAbr1C9o0Cw9xg=;
-	h=From:In-Reply-To:MIME-Version:References:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=a5KyknrpHm2K1MZsYXl9cuzKFkhVwFYYnfrhIa+nVB4z241UhGuT3rpEzhS+YykCFuf/51XQm2hDku8r3B4G8J+w6y7OCYzKo7wdMKnb34UkZqPnZMBcjhx+2tbWjrFkD4DZ/dIVV0wowxGondVBQIYcxep7vEpDAfcPjczdCLo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl; spf=none smtp.mailfrom=bgdev.pl; dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b=xLdAGdtJ; arc=none smtp.client-ip=209.85.167.54
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=bgdev.pl
-Received: by mail-lf1-f54.google.com with SMTP id 2adb3069b0e04-5943d20f352so5719201e87.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 25 Nov 2025 06:19:32 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=bgdev-pl.20230601.gappssmtp.com; s=20230601; t=1764080371; x=1764685171; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:references
-         :mime-version:in-reply-to:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=P7SIxPhHJVLDbgEW2nk/FMKjMfpphtAbr1C9o0Cw9xg=;
-        b=xLdAGdtJZKnHKXDs2bPLeUMVFde3M8NKz/NOcaiuoV6q0Ojj5/cCx96ID4QLhfFuAl
-         Ie+v4ZKQU2fJbG9mNO8Ziidec/uxj8Po+ypMguPgPG0+XV4KY53UTww+4V7antu/uOAI
-         F5UHQmzoR/A19k/XZuUDW+bCBUjGab/UdEwFqFNLqfv1BZrBcg7GWpCqw4NUWpGtWmTy
-         cFlQXhHjDH9UjiP3bYi6JpS78ZdXxq+xr6ihq2UOnmd062Nf4oyYJ+Y/VumBIrIVbjCt
-         aDo44X8vbeXorCNJhoM7C/kxt0k1eqs88T3G+mnKRmNRjq8piH/VHFlYdwSgZyd2fpMp
-         HW0w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1764080371; x=1764685171;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:references
-         :mime-version:in-reply-to:from:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=P7SIxPhHJVLDbgEW2nk/FMKjMfpphtAbr1C9o0Cw9xg=;
-        b=oBMoIyAMXrOAe+x9L531X44i2K0aJwCv1igOBdxsvz6AeptioKyUgrreomxAfSOc4a
-         M7vZ0AcAkSlh7oD7qsiUSPQAh6MNW+KH/y7gxypyphKbix1M5GjZ5Sey7tf+9UTJTyBN
-         HKa1t/HdPevAIRQyLuel/mklmopYvPAO4VfuOmA3pPwZ+9cF40gOMTMaRHHMUgtWBXFV
-         n0YgpGryI3xBUtGQbwDAEjnUL11+M5ovkqx2wP66uAvWMsVkfk6McuxrJFpWAFKNYdoV
-         eKbzebxd+TmZPsKtgA9gRoSqNG91FgbFNwTwuEEwAdkGZMRIyw5TUQJmnqdh6D1w5TL7
-         gs8Q==
-X-Gm-Message-State: AOJu0YzpaCn5lXlpSgKI69f66rTj00SESJ8fND/O/iQUMctigHG2P58v
-	v0LgnR0bk1nfPg5d22khcNGAt1BW4hWwTKcO3Uc17Q+muh3L1k7uTaruAd0TRVBPJvEvDSWgZ3X
-	KGiVsbw31ReO/8dG1tY1rKlCDjLSOcelGH49jx7mc/Q==
-X-Gm-Gg: ASbGncu1sAsKU0X1QWRvzgyhMuD5FW7o7ICzUqquI3Xxd4oijLE+RnmCGiga3pqxbJe
-	6wYIaS2gYU2apGJ9ODYp8ndAiWdhW9sCBXbrRZAfOSPazj3y6o1hmd586a4fAYUj57gHxmtGuBw
-	11zzX5EyDI0JnePVwhKlZQb2Mi8cSM57kFodzJY3NVwLcTlOZyq4kKSLiYpKFuMkfbzapcI6WHH
-	V32IW8wWT3ISH1w4oEF4KoaPQIhT/ru3tyLKEpkqTIjN2aZJRanbTqCLUZzKjot56yh4XPkI7Qo
-	QuGRXD8/76QkajZQVsfKtc407YY=
-X-Google-Smtp-Source: AGHT+IHjykXDXRuYmyiHgRlKoptIq/bzLmVXtn+AKtKhnsSb1GSQNb7m7uuQ2lGcPAQr9tqzDp7jUORCN1C+V6UvgI0=
-X-Received: by 2002:a05:6512:3e10:b0:595:9dbc:2ed7 with SMTP id
- 2adb3069b0e04-596a3edf0c1mr4648188e87.43.1764080371371; Tue, 25 Nov 2025
- 06:19:31 -0800 (PST)
-Received: from 969154062570 named unknown by gmailapi.google.com with
- HTTPREST; Tue, 25 Nov 2025 06:19:30 -0800
-Received: from 969154062570 named unknown by gmailapi.google.com with
- HTTPREST; Tue, 25 Nov 2025 06:19:30 -0800
-From: Bartosz Golaszewski <brgl@bgdev.pl>
-In-Reply-To: <20251123-multi_waitq_scm-v9-2-0080fc259d4d@oss.qualcomm.com>
+	s=arc-20240116; t=1764081204; c=relaxed/simple;
+	bh=hUUrqFVKpiS53ziImxSZ3RnEwgozGk2te25nEj0CvUA=;
+	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
+	 Content-Type:MIME-Version; b=BlnqhXWs6q3KZ7z5ukTQw5CrPMlVaRApOAB0LyEkTDqrvhKxG9HOmnU5Qrmi0RcNirYICRpORNnGEI+cb3PZn751EWs68nWFecNGa2Qdf+1cllePtP+1/gZ/uj4ILgESafgMHs+Ussyada8fVNnQQVxkQX8KdBAvXnGo5Q9EFbU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pengutronix.de; spf=pass smtp.mailfrom=pengutronix.de; arc=none smtp.client-ip=185.203.201.7
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pengutronix.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pengutronix.de
+Received: from drehscheibe.grey.stw.pengutronix.de ([2a0a:edc0:0:c01:1d::a2])
+	by metis.whiteo.stw.pengutronix.de with esmtps (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
+	(Exim 4.92)
+	(envelope-from <p.zabel@pengutronix.de>)
+	id 1vNu6Y-0004Mq-Dc; Tue, 25 Nov 2025 15:33:18 +0100
+Received: from lupine.office.stw.pengutronix.de ([2a0a:edc0:0:900:1d::4e] helo=lupine)
+	by drehscheibe.grey.stw.pengutronix.de with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.96)
+	(envelope-from <p.zabel@pengutronix.de>)
+	id 1vNu6X-002Pr1-1t;
+	Tue, 25 Nov 2025 15:33:17 +0100
+Received: from pza by lupine with local (Exim 4.98.2)
+	(envelope-from <p.zabel@pengutronix.de>)
+	id 1vNu6X-000000007sN-29MZ;
+	Tue, 25 Nov 2025 15:33:17 +0100
+Message-ID: <c478f7a0f3b91585618ec8e5ee57c5c4efd59f32.camel@pengutronix.de>
+Subject: Re: [PATCH] reset: gpio: add a devlink between reset-gpio and its
+ consumer
+From: Philipp Zabel <p.zabel@pengutronix.de>
+To: Bartosz Golaszewski <brgl@bgdev.pl>, Krzysztof Kozlowski
+ <krzk@kernel.org>,  Val Packett <val@packett.cool>
+Cc: linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, Bartosz
+ Golaszewski <bartosz.golaszewski@linaro.org>
+Date: Tue, 25 Nov 2025 15:33:17 +0100
+In-Reply-To: <20251125-reset-gpio-add-devlink-v1-1-a1909fef227b@linaro.org>
+References: <20251125-reset-gpio-add-devlink-v1-1-a1909fef227b@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.56.2-0+deb13u1 
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20251123-multi_waitq_scm-v9-0-0080fc259d4d@oss.qualcomm.com> <20251123-multi_waitq_scm-v9-2-0080fc259d4d@oss.qualcomm.com>
-Date: Tue, 25 Nov 2025 06:19:30 -0800
-X-Gm-Features: AWmQ_blf4hIx0pH_pVxabJproDhmOxJXfb15QSx_VDU8EPdwe_cs53CND3hxUkI
-Message-ID: <CAMRc=Mduqp1MaGZ2_Kfmb31WMntAW1FtAUgr1GBhGEy7PY21fg@mail.gmail.com>
-Subject: Re: [PATCH v9 2/3] firmware: qcom_scm: Support multiple waitq contexts
-To: Shivendra Pratap <shivendra.pratap@oss.qualcomm.com>
-Cc: linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	Unnathi Chalicheemala <unnathi.chalicheemala@oss.qualcomm.com>, 
-	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+X-SA-Exim-Connect-IP: 2a0a:edc0:0:c01:1d::a2
+X-SA-Exim-Mail-From: p.zabel@pengutronix.de
+X-SA-Exim-Scanned: No (on metis.whiteo.stw.pengutronix.de); SAEximRunCond expanded to false
+X-PTX-Original-Recipient: linux-arm-msm@vger.kernel.org
 
-On Sun, 23 Nov 2025 15:19:31 +0100, Shivendra Pratap
-<shivendra.pratap@oss.qualcomm.com> said:
-> From: Unnathi Chalicheemala <unnathi.chalicheemala@oss.qualcomm.com>
->
-> Currently, only a single waitqueue context exists in the driver.
-> Multi-waitqueue mechanism is added in firmware to support the case,
-> when multiple VMs make SMC calls or single VM making multiple calls on
-> same CPU. Enhance the driver to support multiple waitqueue when
-> support is present in the firmware.
->
-> When VMs make a SMC call, firmware allocates a waitqueue context,
-> assuming the SMC call to be a blocking call. The SMC calls that cannot
-> acquire resources, while execution in firmware, are returned to sleep
-> in the calling VM. When the resource becomes available in the
-> firmware, the VM gets notified to wake the sleeping thread and resume
-> SMC call. The current qcom_scm driver supports single waitqueue as the
-> old firmwares support only single waitqueue with waitqueue id zero.
-> Multi-waitqueue mechanism is added in firmware starting SM8650 to
-> support the case when multiple VMs make SMC calls or single VM making
-> multiple calls on same CPU. To enable this support in qcom_scm driver,
-> add support for handling multiple waitqueues. For instance, SM8650
-> firmware can allocate two such waitq contexts, so the driver needs to
-> implement two waitqueue contexts. For a generalized approach, the
-> number of supported waitqueues can be queried from the firmware using
-> a SMC call.
->
-> Introduce qcom_scm_query_waitq_count to get the number of waitqueue
-> contexts supported by the firmware and allocate =E2=80=9CN=E2=80=9D uniqu=
-e waitqueue
-> contexts with a dynamic sized array where each unique wq_ctx is
-> associated with a struct completion variable for easy lookup. Older
-> targets which support only a single waitqueue, may return an error for
-> qcom_scm_query_waitq_count, set the wq_cnt to one for such failures.
->
-> Signed-off-by: Unnathi Chalicheemala <unnathi.chalicheemala@oss.qualcomm.=
-com>
-> Signed-off-by: Shivendra Pratap <shivendra.pratap@oss.qualcomm.com>
+Hi Bartosz,
+
+On Di, 2025-11-25 at 13:55 +0100, Bartosz Golaszewski wrote:
+> From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+>=20
+> The device that requests the reset control managed by the reset-gpio
+> device is effectively its consumer but the devlink is only established
+> between it and the GPIO controller exposing the reset pin. Add a devlink
+> between the consumer of the reset control and its supplier. This will
+> allow us to simplify the GPIOLIB code managing shared GPIOs when
+> handling the corner case of reset-gpio and gpiolib-shared interacting.
+>=20
+> Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 > ---
+> This change will allow us to simplify the code in gpiolib-shared.c in
+> the next cycle, so it would be awesome if it could make v6.19.
+>=20
+> Val: I'm Cc'ing you as you're already playing with audio on hamoa. If v2
+> of the reset-gpios fix works for you, could you please also test this
+> and make sure it doesn't break anything with soundwire?
+>=20
+> Thanks in advance,
+> Bart
+> ---
+>  drivers/reset/core.c | 73 +++++++++++++++++++++++++++++++++++++++++-----=
+------
+>  1 file changed, 58 insertions(+), 15 deletions(-)
+>=20
+> diff --git a/drivers/reset/core.c b/drivers/reset/core.c
+> index 0135dd0ae20498396fdb5a682f913b6048cb5750..15b8da9ebcf196f7d5ce7921e=
+4f8aba0ea6b0de4 100644
+> --- a/drivers/reset/core.c
+> +++ b/drivers/reset/core.c
+> @@ -20,6 +20,7 @@
+>  #include <linux/kref.h>
+>  #include <linux/module.h>
+>  #include <linux/of.h>
+> +#include <linux/of_platform.h>
+>  #include <linux/reset.h>
+>  #include <linux/reset-controller.h>
+>  #include <linux/slab.h>
+> @@ -82,6 +83,7 @@ struct reset_gpio_lookup {
+>  	struct of_phandle_args of_args;
+>  	struct fwnode_handle *swnode;
+>  	struct list_head list;
+> +	struct auxiliary_device *adev;
+>  };
+> =20
+>  static const char *rcdev_name(struct reset_controller_dev *rcdev)
+> @@ -829,16 +831,16 @@ static void reset_gpio_aux_device_release(struct de=
+vice *dev)
+>  	kfree(adev);
+>  }
+> =20
+> -static int reset_add_gpio_aux_device(struct device *parent,
+> -				     struct fwnode_handle *swnode,
+> -				     int id, void *pdata)
+> +static struct auxiliary_device *
+> +reset_add_gpio_aux_device(struct device *parent, struct fwnode_handle *s=
+wnode,
+> +			  int id, void *pdata)
 
-Reviewed-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+This function grows ever more similar to auxiliary_device_create().
+
+s/add/create/?
+
+>  {
+>  	struct auxiliary_device *adev;
+>  	int ret;
+> =20
+>  	adev =3D kzalloc(sizeof(*adev), GFP_KERNEL);
+>  	if (!adev)
+> -		return -ENOMEM;
+> +		return ERR_PTR(-ENOMEM);
+> =20
+>  	adev->id =3D id;
+>  	adev->name =3D "gpio";
+> @@ -850,23 +852,55 @@ static int reset_add_gpio_aux_device(struct device =
+*parent,
+>  	ret =3D auxiliary_device_init(adev);
+>  	if (ret) {
+>  		kfree(adev);
+> -		return ret;
+> +		return ERR_PTR(ret);
+>  	}
+> =20
+>  	ret =3D __auxiliary_device_add(adev, "reset");
+>  	if (ret) {
+>  		auxiliary_device_uninit(adev);
+>  		kfree(adev);
+> -		return ret;
+> +		return ERR_PTR(ret);
+>  	}
+> =20
+> -	return ret;
+> +	return adev;
+> +}
+> +
+> +static void reset_gpio_add_devlink(struct device_node *np,
+> +				   struct reset_gpio_lookup *rgpio_dev)
+> +{
+> +	struct device *consumer;
+> +
+> +	/*
+> +	 * We must use get_dev_from_fwnode() and not of_find_device_by_node()
+> +	 * because the latter only considers the platform bus while we want to
+> +	 * get consumers of any kind that can be associated with firmware
+> +	 * nodes: auxiliary, soundwire, etc.
+> +	 */
+> +	consumer =3D get_dev_from_fwnode(of_fwnode_handle(np));
+
+If called via __reset_control_get(), this just reconstructs the device
+from dev->of_node. I think it would be better to move the linking into
+__reset_control_get() and use the passed in consumer device directly.
+
+> +	if (consumer) {
+> +		if (!device_link_add(consumer, &rgpio_dev->adev->dev, DL_FLAG_STATELES=
+S))
+
+Who removes this link when the consumer puts the reset control, or if
+we error out later?
+
+> +			pr_warn("Failed to create a device link between reset-gpio and its co=
+nsumer");
+> +
+> +		put_device(consumer);
+> +	}
+> +	/*
+> +	 * else { }
+> +	 *
+> +	 * TODO: If ever there's a case where we need to support shared
+> +	 * reset-gpios retrieved from a device node for which there's no
+> +	 * device present yet, this is where we'd set up a notifier waiting
+> +	 * for the device to appear in the system. This would be a lot of code
+> +	 * that would go unused for now so let's cross that bridge when and if
+> +	 * we get there.
+> +	 */
+>  }
+> =20
+>  /*
+> - * @args:	phandle to the GPIO provider with all the args like GPIO numbe=
+r
+> + * @np: OF-node associated with the consumer
+> + * @args: phandle to the GPIO provider with all the args like GPIO numbe=
+r
+>   */
+> -static int __reset_add_reset_gpio_device(const struct of_phandle_args *a=
+rgs)
+> +static int __reset_add_reset_gpio_device(struct device_node *np,
+> +					 const struct of_phandle_args *args)
+>  {
+>  	struct property_entry properties[2] =3D { };
+>  	unsigned int offset, of_flags, lflags;
+> @@ -916,8 +950,14 @@ static int __reset_add_reset_gpio_device(const struc=
+t of_phandle_args *args)
+> =20
+>  	list_for_each_entry(rgpio_dev, &reset_gpio_lookup_list, list) {
+>  		if (args->np =3D=3D rgpio_dev->of_args.np) {
+> -			if (of_phandle_args_equal(args, &rgpio_dev->of_args))
+> -				return 0; /* Already on the list, done */
+> +			if (of_phandle_args_equal(args, &rgpio_dev->of_args)) {
+> +				/*
+> +				 * Already on the list, create the device link
+> +				 * and stop here.
+> +				 */
+> +				reset_gpio_add_devlink(np, rgpio_dev);
+
+I think instead of linking here ...
+
+> +				return 0;
+> +			}
+>  		}
+>  	}
+> =20
+> @@ -950,11 +990,14 @@ static int __reset_add_reset_gpio_device(const stru=
+ct of_phandle_args *args)
+>  		goto err_put_of_node;
+>  	}
+> =20
+> -	ret =3D reset_add_gpio_aux_device(parent, rgpio_dev->swnode, id,
+> -					&rgpio_dev->of_args);
+> -	if (ret)
+> +	rgpio_dev->adev =3D reset_add_gpio_aux_device(parent, rgpio_dev->swnode=
+,
+> +						    id, &rgpio_dev->of_args);
+> +	if (IS_ERR(rgpio_dev->adev)) {
+> +		ret =3D PTR_ERR(rgpio_dev->adev);
+>  		goto err_del_swnode;
+> +	}
+> =20
+> +	reset_gpio_add_devlink(np, rgpio_dev);
+
+... and here, we could just create a device link between the passed in
+consumer dev and rstc->rcdev->dev in __reset_control_get().
+
+regards
+Philipp
 
