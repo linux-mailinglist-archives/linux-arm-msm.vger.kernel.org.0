@@ -1,155 +1,229 @@
-Return-Path: <linux-arm-msm+bounces-83202-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-83203-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [142.0.200.124])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5BA16C83F15
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Nov 2025 09:18:14 +0100 (CET)
+Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [IPv6:2605:f480:58:1:0:1994:3:14])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7126DC83F1F
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Nov 2025 09:19:19 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 4CBB94E6FE6
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Nov 2025 08:18:13 +0000 (UTC)
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 49D274E8145
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Nov 2025 08:19:08 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CE1EA2C026E;
-	Tue, 25 Nov 2025 08:17:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E1BA12D2391;
+	Tue, 25 Nov 2025 08:19:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="HsMspT7m"
+	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="j2WQ7PVd"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f44.google.com (mail-lf1-f44.google.com [209.85.167.44])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6A9027D77D;
-	Tue, 25 Nov 2025 08:17:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB71D288C25
+	for <linux-arm-msm@vger.kernel.org>; Tue, 25 Nov 2025 08:19:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764058677; cv=none; b=iR5vAPPwrCyGhWB8WJ1OfhAFZ+SXVUFs7bPzYEdmNgap5FRePrjl6Bqg8MsG6WsoOrUYArfHUv2y+2MXYWvCdFf/jMLT+tZP+8zRbet7a3sKIG9TbA70vuNXnBH655lcqNk47Yglh1ot3y1RtN/6r2SrBagkj+1i/UWBXf+6d+w=
+	t=1764058744; cv=none; b=NocHJ+mPqRWlYvETbwyzwVi3y7e/C9IjV44+MaVp4p/k1rbhPtAJ1pC2bHYFPZLeNwpSqbuk4qHV7GC0AISlkN2kTFObyXqjH7zAAEHt/OY+5TI1k0EIbXr/USQ5yovb5vdfyaV0uCf2/woNmJ2YrW3uibXdxMwJCMG/whKeu8k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764058677; c=relaxed/simple;
-	bh=ke5TeaqU7+VGjiCrRGBI5uJypjLqehjyXNatwA4MnwQ=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=T1PbNyUog+QxIL8TIFufumLnJnCJ6Mk3GbQRYNB7QownfLI8+0FglMAT/STxFKkSSlRnXbw6TqkxqSpph5Lsh0muFl9HNcP3LxKUDmt4AYlWxrTnHi9ZfN47EvBOxYnqhHQzRpxDQq1lYo2nVVclGmgMoTIeD/ULcEmbB11ZQFA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=HsMspT7m; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17E92C4CEF1;
-	Tue, 25 Nov 2025 08:17:51 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1764058677;
-	bh=ke5TeaqU7+VGjiCrRGBI5uJypjLqehjyXNatwA4MnwQ=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=HsMspT7mPP8EUweXqgeiszG/diR7embr0wkBftKDKjeDagHMa3vxtYVT9KYo9RTp9
-	 6QeWanwZt7f/9vyDryjB15yOeXPDZ8PMTV6tt9fZ5wvtJpqpSyMHj4cwZgQCD0vOiJ
-	 0xmxdVs829AexVZIEQeD31GXUNK2+xNVzcoICvf0JQq+pBCt412lHQOukvz3X+qzPh
-	 8YfwKzZFJDZ4MDvxztC/7vroheNoFQSdFBWFqVdPPjk6vABmT5imtvC1Uk/gHWsIbM
-	 lWSMgYPBh/B3oPcdQcBVcUdzizAFENKmfRo+5D90IyGpZFQG4UDKk7rNc+RInZVO+7
-	 Nilqe89M/ok4A==
-Message-ID: <2f7aa593-6b11-4dbd-a0e6-f60eee16d7b5@kernel.org>
-Date: Tue, 25 Nov 2025 09:17:50 +0100
+	s=arc-20240116; t=1764058744; c=relaxed/simple;
+	bh=zor+RSumMm7bO9S/VD6/XBUvwQWnH42SDPcawz1z5X8=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=FErdhSm5pgQES+q1O0f0Keiz48w+SkQttT+HMLqYIioxZoBf20+xyOfgFhqL5ziR5UdcZsgM4/p4tyy5kDlcpv8raf97CddTvK9DFyoflKRwB8kVxWeWCD1ZE5heLvhjX/TyUkNdsjckDUnqLc2uVXWPWclFPbgARa8rTXdYFMI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=j2WQ7PVd; arc=none smtp.client-ip=209.85.167.44
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
+Received: by mail-lf1-f44.google.com with SMTP id 2adb3069b0e04-5957d7e0bf3so5897592e87.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 25 Nov 2025 00:19:02 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google; t=1764058741; x=1764663541; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=ZV1wd0RBNRffIVLLzUybH3O3hc5b+Hoh+1Ef3J9avQU=;
+        b=j2WQ7PVdyNX4vHVb1HX12lLF5ZnUYUjV6EcPyUXHduiSghhJwIV+ZyRe49mPoDpWcT
+         X9adhvVaf7QzA84H0/gefPrHmHGyD56XvwDmqjPObHw7MwocEcKj6kkL0RGJatNSoG2/
+         KxuWBIP2tqRQMaaqpkU6fi0uyN8p+Ra6WNNlw=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1764058741; x=1764663541;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=ZV1wd0RBNRffIVLLzUybH3O3hc5b+Hoh+1Ef3J9avQU=;
+        b=UYTCRxK5i49mxXmE3UGaYGmW0/zpUZIB4X9HC61s4YLlJ8O8r75433t3uxaPri9gpO
+         0UvIQ8+j1JYReg8CM6z8ypBzxO67dQuIr/iWEo0I1wmLZXZ7EkB3+/VypVikh7iHf0mL
+         HUPT7ObGLQiTjzXzcNHbsxzJUZh+v+hVay+BvJ9A2hrEFyTHO4/7IZvCEGFmSgdVtsLk
+         eiMdMAvhW41rGpPomnIxQmEpns3HQ1LWt2HiIpZlmlcIDGocAyPfCQRH1M8tDMkiRFbv
+         7M3MbrT2F+tRI58e5/NtfNY5fXpB+lkt7Ttdbn3AjKxNv8U3fyRGDrMlG9Ea1HAinQAN
+         Q5tw==
+X-Forwarded-Encrypted: i=1; AJvYcCVpzvvRzzKKurFeWcg6zqUBRRAgQxj1VvKiJlfl4yWpunuRjTAH0CAITiJwt4oUM6w2AF4arFqcU9rdHBsj@vger.kernel.org
+X-Gm-Message-State: AOJu0YxpGQjw3zEmy94MdZBy/IJblNm6Hlwdhm1e6SGkOnd6KlyJmk4i
+	lbUBilVqn/4qckGUJS+OaswrQpv22mxjwZ9Ihcq4Vr1NezEQkKEe8RcMDyASW/ur19MYs3LxSmt
+	1rG6VN5Fz+lZdCqQ9h423fX27eeGO2Z9iW/57tgZI
+X-Gm-Gg: ASbGncvbhyqVRhaHNeHjXPu67fcaCehe3HoDM5kAOJSS1bhmUVax56crEEqtr6XgVfl
+	WkyVojKq2qHdSGOQB2nwiabEx57eRUqDaWv4uhOMnaRE6uDWI1n32alyoAq97lwpuqLzrsV4iQ0
+	RqWhznayzeqFFJvZHXc0I4B3X1XabKer+jvYP7AXRMXp8n3ymKg5BRe30CGucxzf41xc76eucdh
+	IRD9D4wuLDMrtukyP9TcdmGENDz642MZkcmQMUkAQnwVGhqJmXnqC/eyr7dAYkeJ69G/Ey2pU3G
+	Zei+nyo4BJtcJ0LuIgB1ljbMWA==
+X-Google-Smtp-Source: AGHT+IHi2gdMuYFmg+AgrADHC4yrWhD9HWFMVG6P7ZsI1BLiNn/Orpx+b8it5IAqqf95qPLHI1Al/MkkSWIXbNGJKhc=
+X-Received: by 2002:a05:6512:3d9e:b0:595:997e:19ad with SMTP id
+ 2adb3069b0e04-5969ea31e39mr6650085e87.21.1764058740770; Tue, 25 Nov 2025
+ 00:19:00 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 04/10] dt-bindings: display/msm: qcom,kaanapali-mdss:
- Add Kaanapali
-To: yuanjie yang <yuanjie.yang@oss.qualcomm.com>,
- robin.clark@oss.qualcomm.com, lumag@kernel.org, abhinav.kumar@linux.dev,
- sean@poorly.run, marijn.suijten@somainline.org, airlied@gmail.com,
- simona@ffwll.ch, maarten.lankhorst@linux.intel.com, mripard@kernel.org,
- tzimmermann@suse.de, robh@kernel.org, krzk+dt@kernel.org,
- conor+dt@kernel.org, quic_mkrishn@quicinc.com, jonathan@marek.ca,
- quic_khsieh@quicinc.com, neil.armstrong@linaro.org
-Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
- freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org,
- tingwei.zhang@oss.qualcomm.com, aiqun.yu@oss.qualcomm.com,
- Yongxing Mou <yongxing.mou@oss.qualcomm.com>
-References: <20251125064758.7207-1-yuanjie.yang@oss.qualcomm.com>
- <20251125064758.7207-5-yuanjie.yang@oss.qualcomm.com>
-From: Krzysztof Kozlowski <krzk@kernel.org>
-Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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 a/A=
-In-Reply-To: <20251125064758.7207-5-yuanjie.yang@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+References: <20251124-pci-pwrctrl-rework-v1-0-78a72627683d@oss.qualcomm.com> <20251124-pci-pwrctrl-rework-v1-3-78a72627683d@oss.qualcomm.com>
+In-Reply-To: <20251124-pci-pwrctrl-rework-v1-3-78a72627683d@oss.qualcomm.com>
+From: Chen-Yu Tsai <wenst@chromium.org>
+Date: Tue, 25 Nov 2025 16:18:49 +0800
+X-Gm-Features: AWmQ_bnl_TKiY4NjKvFlKoM2py7fy89Gm9jFvwJltzOJo-37UQGh1Ss64Akup3k
+Message-ID: <CAGXv+5EyOOwZjUARfLzLvhX_vGdYHRz+0M=GbXaBMcaJ=0w+aA@mail.gmail.com>
+Subject: Re: [PATCH 3/5] PCI/pwrctrl: Add APIs for explicitly creating and
+ destroying pwrctrl devices
+To: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
+Cc: Manivannan Sadhasivam <mani@kernel.org>, Lorenzo Pieralisi <lpieralisi@kernel.org>, 
+	=?UTF-8?Q?Krzysztof_Wilczy=C5=84ski?= <kwilczynski@kernel.org>, 
+	Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>, 
+	Bartosz Golaszewski <brgl@bgdev.pl>, linux-pci@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, Chen-Yu Tsai <wens@kernel.org>, 
+	Brian Norris <briannorris@chromium.org>, 
+	Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>, Niklas Cassel <cassel@kernel.org>, 
+	Alex Elder <elder@riscstar.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On 25/11/2025 07:47, yuanjie yang wrote:
-> From: Yuanjie Yang <yuanjie.yang@oss.qualcomm.com>
-> 
-> Kaanapali introduces DPU 13.0.0 and DSI 2.10. Compared to SM8750,
-> Kaanapali has significant register changes, making it incompatible
-> with SM8750. So add MDSS/MDP display subsystem for Qualcomm Kaanapali.
-> 
-> Co-developed-by: Yongxing Mou <yongxing.mou@oss.qualcomm.com>
-> Signed-off-by: Yongxing Mou <yongxing.mou@oss.qualcomm.com>
-> Signed-off-by: Yuanjie Yang <yuanjie.yang@oss.qualcomm.com>
+On Tue, Nov 25, 2025 at 3:13=E2=80=AFPM Manivannan Sadhasivam
+<manivannan.sadhasivam@oss.qualcomm.com> wrote:
+>
+> From: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
+>
+> Previously, the PCI core created pwrctrl devices during pci_scan_device()
+> on its own and then skipped enumeration of those devices, hoping the
+> pwrctrl driver would power them on and trigger a bus rescan.
+>
+> This approach works for endpoint devices directly connected to Root Ports=
+,
+> but it fails for PCIe switches acting as bus extenders. When the switch
+> requires pwrctrl support, and the pwrctrl driver is not available during
+> the pwrctrl device creation, it's enumeration will be skipped during the
+> initial PCI bus scan.
+>
+> This premature scan leads the PCI core to allocate resources (bridge
+> windows, bus numbers) for the upstream bridge based on available downstre=
+am
+> buses at scan time. For non-hotplug capable bridges, PCI core typically
+> allocates resources based on the number of buses available during the
+> initial bus scan, which happens to be just one if the switch is not power=
+ed
+> on and enumerated at that time. When the switch gets enumerated later on,
+> it will fail due to the lack of upstream resources.
+>
+> As a result, a PCIe switch powered on by the pwrctrl driver cannot be
+> reliably enumerated currently. Either the switch has to be enabled in the
+> bootloader or the switch pwrctrl driver has to be loaded during the pwrct=
+rl
+> device creation time to workaround these issues.
+>
+> This commit introduces new APIs to explicitly create and destroy pwrctrl
+> devices from controller drivers by recursively scanning the PCI child nod=
+es
+> of the controller. These APIs allow creating pwrctrl devices based on the
+> original criteria and are intended to be called during controller probe a=
+nd
+> removal.
+>
+> These APIs, together with the upcoming APIs for power on/off will allow t=
+he
+> controller drivers to power on all the devices before starting the initia=
+l
+> bus scan, thereby solving the resource allocation issue.
+>
+> Signed-off-by: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.co=
+m>
+> [mani: splitted the patch, cleaned up the code, and rewrote description]
+> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.=
+com>
+> ---
+>  drivers/pci/pwrctrl/core.c  | 112 ++++++++++++++++++++++++++++++++++++++=
+++++++
+>  include/linux/pci-pwrctrl.h |   8 +++-
+>  2 files changed, 119 insertions(+), 1 deletion(-)
+>
+> diff --git a/drivers/pci/pwrctrl/core.c b/drivers/pci/pwrctrl/core.c
+> index 6bdbfed584d6..6eca54e0d540 100644
+> --- a/drivers/pci/pwrctrl/core.c
+> +++ b/drivers/pci/pwrctrl/core.c
+> @@ -3,14 +3,21 @@
+>   * Copyright (C) 2024 Linaro Ltd.
+>   */
+>
+> +#define dev_fmt(fmt) "Pwrctrl: " fmt
+> +
+>  #include <linux/device.h>
+>  #include <linux/export.h>
+>  #include <linux/kernel.h>
+> +#include <linux/of.h>
+> +#include <linux/of_platform.h>
+>  #include <linux/pci.h>
+>  #include <linux/pci-pwrctrl.h>
+> +#include <linux/platform_device.h>
+>  #include <linux/property.h>
+>  #include <linux/slab.h>
+>
+> +#include "../pci.h"
+> +
+>  static int pci_pwrctrl_notify(struct notifier_block *nb, unsigned long a=
+ction,
+>                               void *data)
+>  {
+> @@ -145,6 +152,111 @@ int devm_pci_pwrctrl_device_set_ready(struct device=
+ *dev,
+>  }
+>  EXPORT_SYMBOL_GPL(devm_pci_pwrctrl_device_set_ready);
+>
+> +static int pci_pwrctrl_create_device(struct device_node *np, struct devi=
+ce *parent)
+> +{
+> +       struct platform_device *pdev;
+> +       int ret;
+> +
+> +       for_each_available_child_of_node_scoped(np, child) {
+> +               ret =3D pci_pwrctrl_create_device(child, parent);
+> +               if (ret)
+> +                       return ret;
+> +       }
+> +
+> +       /* Bail out if the platform device is already available for the n=
+ode */
+> +       pdev =3D of_find_device_by_node(np);
+> +       if (pdev) {
+> +               put_device(&pdev->dev);
+> +               return 0;
+> +       }
+> +
+> +       /*
+> +        * Sanity check to make sure that the node has the compatible pro=
+perty
+> +        * to allow driver binding.
+> +        */
+> +       if (!of_property_present(np, "compatible"))
+> +               return 0;
+> +
+> +       /*
+> +        * Check whether the pwrctrl device really needs to be created or=
+ not.
+> +        * This is decided based on at least one of the power supplies be=
+ing
+> +        * defined in the devicetree node of the device.
+> +        */
+> +       if (!of_pci_supply_present(np)) {
+
+This symbol is not exported for modules to use, and will cause the build
+to fail if PCI_PWRCTRL* is m.
+
+[...]
 
 
-I don't understand why you have random four quicinc or qualcomm.com
-addresses not related to kernel development, but you did not include
-necessary addresses.
-
-Please trim your list to only necessary addresses.
-
-Please use scripts/get_maintainers.pl to get a list of necessary people
-and lists to CC. It might happen, that command when run on an older
-kernel, gives you outdated entries. Therefore please be sure you base
-your patches on recent Linux kernel.
-
-Tools like b4 or scripts/get_maintainer.pl provide you proper list of
-people, so fix your workflow. Tools might also fail if you work on some
-ancient tree (don't, instead use mainline) or work on fork of kernel
-(don't, instead use mainline). Just use b4 and everything should be
-fine, although remember about `b4 prep --auto-to-cc` if you added new
-patches to the patchset.
-
-You missed at least devicetree list (maybe more), so this won't be
-tested by automated tooling. Performing review on untested code might be
-a waste of time.
-
-Please kindly resend and include all necessary To/Cc entries.
-
-Best regards,
-Krzysztof
+ChenYu
 
