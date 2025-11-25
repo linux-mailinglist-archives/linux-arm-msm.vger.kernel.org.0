@@ -1,54 +1,54 @@
-Return-Path: <linux-arm-msm+bounces-83215-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-83216-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8CA04C84396
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Nov 2025 10:29:31 +0100 (CET)
+Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [IPv6:2605:f480:58:1:0:1994:3:14])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1CFE3C843A5
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Nov 2025 10:30:00 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id BD9443AC860
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Nov 2025 09:29:29 +0000 (UTC)
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 039394E7C34
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Nov 2025 09:29:59 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A0C1F2D97A4;
-	Tue, 25 Nov 2025 09:29:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8473A2DC765;
+	Tue, 25 Nov 2025 09:29:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=ixit.cz header.i=@ixit.cz header.b="H4j5W/bA"
+	dkim=pass (1024-bit key) header.d=ixit.cz header.i=@ixit.cz header.b="Msl3chlD"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from ixit.cz (ip-94-112-25-9.bb.vodafone.cz [94.112.25.9])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5185D2D5932;
-	Tue, 25 Nov 2025 09:29:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45848254AFF;
+	Tue, 25 Nov 2025 09:29:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=94.112.25.9
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764062967; cv=none; b=qv30qJLM70FLZhqHSlMzXA+ATKZiuOISghgf4iSS4SPPZp83LdQDq6imQ+BH1DX8JDc135m4LiuiLHVf6cO52A/CkVnC7JJ6YQsZqL5A1xayjVc8x92Tqvl4HWTq7cDMxxRnOHG4s+7LINzd5rwJ2D4jyGmSF7c7JFndoMfRsRA=
+	t=1764062996; cv=none; b=uiFv2DSuykBjLOq+850553TWYe3XDo9kfGvyVhEfQ2LHKojA3GTDf4iMTrEeKBoPY0NQ3MVi87u6jR+azuF4FX/VI68wS7grGTVhyH2hDv9AJ5S1Nk6J0bB1ZDYC4xyAQFT+OxwMjaqgNZPIv3juQW4ot6FNDsIUsvm4CJOZaRg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764062967; c=relaxed/simple;
-	bh=POwLnpLps9uoZN1nQhets1xMis2BGD0lch35xzJoUgM=;
+	s=arc-20240116; t=1764062996; c=relaxed/simple;
+	bh=7RrSQaMkln9unrIaF4la3zw4qjp+xybEnBuw8Fep5nM=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Oa3Q1QkeMKq6lWZmbw03I2zjECoFX0NKrcIH7xzZ7qFurgiqFwr1zApbpK3SQeQhq/Xn1fNGr/LjQBgfkztPFmiE5ehbdQ6fGOb0ozF5ignKm7xqWYbhtCrclKbVk/LKR9RgsZoGmPyVLrgosWA4rhKS8n5A/GqK1QWxV7+HK5w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ixit.cz; spf=pass smtp.mailfrom=ixit.cz; dkim=pass (1024-bit key) header.d=ixit.cz header.i=@ixit.cz header.b=H4j5W/bA; arc=none smtp.client-ip=94.112.25.9
+	 In-Reply-To:Content-Type; b=q/YPjQt617yPDLc+tqjzoyx2dfqemsv+S31MwznGPD8nubF7+/+NQdS8mT7uBZ8o0KewFobJIqQ0tgztOz3QuEEvVx1JbwAy4/fP/4lI6qd+E/SsDo9eV66HmK4eVFrIGa8gzezvvBMW+4J8PYjcAjFXRODb611ZNoOhfEj0P/s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ixit.cz; spf=pass smtp.mailfrom=ixit.cz; dkim=pass (1024-bit key) header.d=ixit.cz header.i=@ixit.cz header.b=Msl3chlD; arc=none smtp.client-ip=94.112.25.9
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ixit.cz
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ixit.cz
 Received: from [10.0.0.200] (unknown [10.0.0.1])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange x25519)
+	 key-exchange x25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by ixit.cz (Postfix) with ESMTPSA id 5A87F534106A;
-	Tue, 25 Nov 2025 10:29:23 +0100 (CET)
+	by ixit.cz (Postfix) with ESMTPSA id EA3AB5341071;
+	Tue, 25 Nov 2025 10:29:51 +0100 (CET)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ixit.cz; s=dkim;
-	t=1764062963;
+	t=1764062992;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
-	bh=lYzXk0SF6qhePnLhO5yraLudKiFlG8Gvc7RDGwIs+nM=;
-	b=H4j5W/bA13YPQ6jSseT7T7AdVCHsd2Gbb5Fk95AILJCnNVLRQ1mNqPRLzqOs3Ur8eEWExl
-	zqbM5220kKEd64c2ywH9YVF4/tHt3sD5pqv/XqkmVWux3Yu75xvHh5zv8cjfWvCSa9+tWj
-	mY2wrbA2JMW5XtsldypQAVgEtPwhIYo=
-Message-ID: <6a3448cf-dd18-4b3d-a8fa-fe282ee779de@ixit.cz>
-Date: Tue, 25 Nov 2025 10:29:23 +0100
+	bh=do71UOcAB92LqBEpHo/ImBCX5aDNHx8nP1zAWe+eDxs=;
+	b=Msl3chlDRhB4HnIWcodv/70TN5zFPAJUK3nBv+GSux79gtGROaPAOyvhUTkOPUbdHaunUB
+	xAOe5R9bVs/QJzYRXkwA+by7wo8IvWBTgCMpfw15riPa/C0lQc/OR0aw359IqsRzVqjacY
+	6cRqFc/DeAJR2EXBCGnQebF8AnPFwKg=
+Message-ID: <fcf09acb-4ce3-485c-a2cf-4a7738e63752@ixit.cz>
+Date: Tue, 25 Nov 2025 10:29:51 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -56,21 +56,18 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 0/3] ath10k: Introduce a devicetree quirk to skip host
- cap QMI requests
-To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
- Jeff Johnson <jeff.johnson@oss.qualcomm.com>
-Cc: Johannes Berg <johannes@sipsolutions.net>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Jeff Johnson <jjohnson@kernel.org>,
+Subject: Re: [PATCH v4 06/12] arm64: dts: qcom: sdm845-lg-judyln: Add firmware
+ nodes, change path
+To: Paul Sajna <sajattack@postmarketos.org>,
  Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>, linux-wireless@vger.kernel.org,
- devicetree@vger.kernel.org, ath10k@lists.infradead.org,
- linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
- phone-devel@vger.kernel.org, Amit Pundir <amit.pundir@linaro.org>
-References: <20251110-skip-host-cam-qmi-req-v2-0-0daf485a987a@ixit.cz>
- <2b34ceae-5e31-4dba-93e5-3fa35754fab6@oss.qualcomm.com>
- <ttka4uevai7tzf4c3r7rgozzpd3hsdhjzf5uyysfzj24ex2o2v@r64z6pvxb6sv>
+ Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org, phone-devel@vger.kernel.org,
+ Amir Dahan <system64fumo@protonmail.com>,
+ Christopher Brown <crispybrown@gmail.com>
+References: <20251125-judyln-dts-v4-0-a5a60500b267@postmarketos.org>
+ <20251125-judyln-dts-v4-6-a5a60500b267@postmarketos.org>
 Content-Language: en-US
 From: David Heidelberg <david@ixit.cz>
 Autocrypt: addr=david@ixit.cz; keydata=
@@ -116,36 +113,124 @@ Autocrypt: addr=david@ixit.cz; keydata=
  zRKcgRumz2Tc1ouHj6qINlzEe3a5ldctIn/dvR1l2Ko7GBTG+VGp9U5NOAEkGpxHG9yg6eeY
  fFYnMme51H/HKiyUlFiE3yd5LSmv8Dhbf+vsI4x6BOOOq4Iyop/Exavj1owGxW0hpdUGcCl1
  ovlwVPO/6l/XLAmSGwdnGqok5eGZQzSst0tj9RC9O0dXO1TZocOsf0tJ8dR2egX4kxM=
-In-Reply-To: <ttka4uevai7tzf4c3r7rgozzpd3hsdhjzf5uyysfzj24ex2o2v@r64z6pvxb6sv>
+In-Reply-To: <20251125-judyln-dts-v4-6-a5a60500b267@postmarketos.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-On 10/11/2025 21:41, Dmitry Baryshkov wrote:
+On 25/11/2025 09:12, Paul Sajna wrote:
+> Add paths for Qualcomm firmware, including:
+> ipa, modem, bluetooth, venus, gpu
+> 
+> Enable adsp and cdsp nodes since their firmware is present
+> 
+> GPU and bluetooth are confirmed working, others may need more
+> testing/fixes
+> 
+> But regardless they will need the firmware paths specified here
+> and firmware added upstream before they will work, so might as well
+> get started on it now.
+> 
+> Signed-off-by: Paul Sajna <sajattack@postmarketos.org>
+> ---
+>   arch/arm64/boot/dts/qcom/sdm845-lg-common.dtsi | 10 ++++++++++
+>   arch/arm64/boot/dts/qcom/sdm845-lg-judyln.dts  | 23 ++++++++++++++++++-----
+>   2 files changed, 28 insertions(+), 5 deletions(-)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/sdm845-lg-common.dtsi b/arch/arm64/boot/dts/qcom/sdm845-lg-common.dtsi
+> index 50921af83a51..315fdc5dc392 100644
+> --- a/arch/arm64/boot/dts/qcom/sdm845-lg-common.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sdm845-lg-common.dtsi
+> @@ -162,6 +162,10 @@ &adsp_pas {
+>   	status = "okay";
+>   };
+>   
+> +&cdsp_pas {
+> +	status = "okay";
+> +};
+> +
+>   &apps_rsc {
+>   	regulators-0 {
+>   		compatible = "qcom,pm8998-rpmh-regulators";
+> @@ -464,6 +468,8 @@ &gpu {
+>   
+>   &ipa {
+>   	qcom,gsi-loader = "modem";
+> +	memory-region = <&ipa_fw_mem>;
+> +
+>   	status = "okay";
+>   };
+>   
+> @@ -663,3 +669,7 @@ &wifi {
+>   
+>   	qcom,snoc-host-cap-skip-quirk;
+>   };
+> +
+> +&venus {
+> +	status = "okay";
+> +};
+> diff --git a/arch/arm64/boot/dts/qcom/sdm845-lg-judyln.dts b/arch/arm64/boot/dts/qcom/sdm845-lg-judyln.dts
+> index 8e4214b83bf1..9ec2edf6134c 100644
+> --- a/arch/arm64/boot/dts/qcom/sdm845-lg-judyln.dts
+> +++ b/arch/arm64/boot/dts/qcom/sdm845-lg-judyln.dts
+> @@ -35,7 +35,7 @@ battery: battery {
+>   };
+>   
+>   &adsp_pas {
+> -	firmware-name = "qcom/sdm845/judyln/adsp.mbn";
+> +	firmware-name = "qcom/sdm845/lg/judyln/adsp.mbn";
+>   };
+>   
+>   &bluetooth {
+> @@ -47,11 +47,17 @@ &bluetooth {
+>   };
+>   
+>   &cdsp_pas {
+> -	firmware-name = "qcom/sdm845/judyln/cdsp.mbn";
+> +	firmware-name = "qcom/sdm845/lg/judyln/cdsp.mbn";
+>   };
+>   
+> -&gpu_zap_shader {
+> -	firmware-name = "qcom/sdm845/judyln/a630_zap.mbn";
+> +&gpu {
+> +	zap-shader {
+> +		firmware-name = "qcom/sdm845/lg/judyln/a630_zap.mbn";
+> +	};
+> +};
+> +
+> +&ipa {
+> +	firmware-name = "qcom/sdm845/lg/judyln/ipa_fws.mbn";
+>   };
+>   
+>   &mdss {
+> @@ -96,7 +102,7 @@ &mdss_dsi0_out {
+>   };
+>   
+>   &mss_pil {
+> -	firmware-name = "qcom/sdm845/judyln/mba.mbn", "qcom/sdm845/judyln/modem.mbn";
+> +	firmware-name = "qcom/sdm845/lg/judyln/mba.mbn", "qcom/sdm845/lg/judyln/modem.mbn";
+>   };
+>   
+>   &pmi8998_charger {
+> @@ -135,3 +141,10 @@ sde_te_active_sleep: sde-te-active-sleep-state {
+>   		bias-pull-down;
+>   	};
+>   };
+> +<<<<<<< HEAD
+> +=======
+> +
+> +&venus {
+> +	firmware-name = "qcom/sdm845/lg/judyln/venus.mbn";
+> +};
+> +>>>>>>> d58184825fa5 (arm64: dts: qcom: sdm845-lg-judyln: Add firmware nodes, change path)
 
-[...]
+Accidental rebase leftovers, please remove in this patch.
 
-> I think this should go to the firmware-N file. SNOC platforms now allow
-> per-platform firmware description files, so it's possible to describe
-> quirks for the particular firmware file.
-
-Since the approach to put it into the firmware failed due to early 
-initialization, see
-https://lore.kernel.org/linux-wireless/20251111-xiaomi-beryllium-firmware-v1-0-836b9c51ad86@ixit.cz/
-
-I wondering if I should get back on this series?
-
-Also, meanwhile Paul found another device [1] in need of this quirk.
+I see it been removed in followup patch, but it's always best walk 
+trough your patches one by one before sending.
 
 David
 
-[1] 
-https://lore.kernel.org/all/20250928-judyln-dts-v3-0-b14cf9e9a928@postmarketos.org/T/#m90e8087d4388e588b71a0eff01b88f1721f73b73
-
-> 
->>
->> So I'm personally OK with this suggested approach.
->>
->> /jeff
+P.S. Happy to see the quirk is useful.
 > 
 
 -- 
