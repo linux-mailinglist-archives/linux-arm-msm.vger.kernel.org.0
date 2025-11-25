@@ -1,139 +1,176 @@
-Return-Path: <linux-arm-msm+bounces-83241-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-83235-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [142.0.200.124])
-	by mail.lfdr.de (Postfix) with ESMTPS id 212CDC84B03
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Nov 2025 12:16:17 +0100 (CET)
+Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [IPv6:2605:f480:58:1:0:1994:3:14])
+	by mail.lfdr.de (Postfix) with ESMTPS id 32657C84A75
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Nov 2025 12:12:38 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 9EEBD4E92DD
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Nov 2025 11:15:21 +0000 (UTC)
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 91F524E29A2
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Nov 2025 11:12:36 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1D4F93168E0;
-	Tue, 25 Nov 2025 11:14:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2BEBF314A89;
+	Tue, 25 Nov 2025 11:12:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="VrWFRG0d"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Om/MXhBE"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f52.google.com (mail-lf1-f52.google.com [209.85.167.52])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCC3A316912
-	for <linux-arm-msm@vger.kernel.org>; Tue, 25 Nov 2025 11:14:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDF423101C9;
+	Tue, 25 Nov 2025 11:12:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764069294; cv=none; b=TC1k4bzXmW0TFDRLL3kzDD8cIVuNIs2us5tGjClEoNaZA0IcOFfFqKZpYiDaRkSGdKCFD9aMh4Aj1WHlONvMZRTJLXNmIS469Wy2b8IeDjUP0aQ4j9ovmOsjGRyV+zKkYuc+irFS4Wn8W6jP1JVxOMrUPDyrdz2G7NIcHF3Wec4=
+	t=1764069153; cv=none; b=u+ZVlpiMBoJFAbGdi9ACV+ziWoySU8OWFnuuOOZg7kv5nbT1xfMWHFN6w1aqC75H2D94XnC1/nJughykVsVMIgM2hcVl8niKwYQdXd1NrYgb5dr9e9KsvSYDONoldVC83UGeKSjln14TR60N2CFa80TMYhAwVJEQTcUMELHg9/U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764069294; c=relaxed/simple;
-	bh=2zviYWMpRPXc7yqUPhvqUBifZAL4AmGZqkh12A+yNQ0=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=e1YFRlvqg2CQr+K8oXVpQU/1HihsgzeHoPfDiqZRzEEJ1UA2LPgmlw4jqyftUu4iCVewHvPh0apt+Xjske6dIn6613W67OTm1vTyuc4h7+c03ac+tfkQVHf/hz7ib85uVPtJMA9u/CpnCN+zaIG8NlfHlV5oubnbWn16Nq9LSxg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=VrWFRG0d; arc=none smtp.client-ip=209.85.167.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f52.google.com with SMTP id 2adb3069b0e04-595819064cdso7514847e87.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 25 Nov 2025 03:14:51 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1764069290; x=1764674090; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=2zviYWMpRPXc7yqUPhvqUBifZAL4AmGZqkh12A+yNQ0=;
-        b=VrWFRG0dKomuUzcS2XLhJZDCGANBcAE12w2w2kh0Xda0UDi0ZhycStdM7o+x4w2QpS
-         +ZWg3P5i9/hMPPU/GYoIE8Urj7BW4xGtgbKePcLSyxBOSz165Fxe4MZo7mBUlp/RZ/CM
-         o0ghC9HLrss2wvfdc21hgNdj9+u2P/JGtgDphLpHoEoABHotr7/yqu3pG6D0S/jBAozl
-         HE4rH/7Jp6+mbqEZctfNi190Kn7iIU9nDRf5gk48X0zHpEK8uv/k0lu6s75c07P4MOlu
-         57dbI01atHgk5T23xiIMS43+hpr6Xao7D7QIGm1ki5hKOCx58yMwTCY97T8qMSdMtQ5y
-         MO2g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1764069290; x=1764674090;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=2zviYWMpRPXc7yqUPhvqUBifZAL4AmGZqkh12A+yNQ0=;
-        b=cRNzngSNhLckNRJ9v8fsvRxSm85/bW05agN3y6Ooy3zq/osoNqPU+KRbPXpdMjywco
-         KPqmFCluQGMO/qtLfqqDHeQ3fkpTy8ussIgvRfh9rhWto/0bwSfjbC95GZNnIfV9LyTH
-         1yNlixzFBy0e0LWunhQDGqYC1nEUbYI8HUkZ0aiWTPuzJSYbNFla+qrwm7WSwwBDIqnZ
-         A4xYkqopm79dr5dfBqDfD8e6+Sgd8tkigH07ErHV9eanf2IvD3b9HNBw0Vwpcw1znwKm
-         XNU7yxQSPGm1+0DJIEVOqmYihUUZBnq/0i2XCY8r5UyRGwn1NRryy0MOUuEnbX92AldT
-         OzPw==
-X-Forwarded-Encrypted: i=1; AJvYcCUrcqD98/jDdb/bS1cR+gJDwJaVPeDAhkeEq8BeRe7k/NQa1ABaT+G8rjkrHE3DbukwIQXmfPSgUelAIIG4@vger.kernel.org
-X-Gm-Message-State: AOJu0YxdQZOwV6LO5TWUqy32HSyli8nr3vGIdcA8NEEOZR9RHmepLMVC
-	07D1Cpuc8WXP/eLufLoE0LPIReAEkuRUakkuXweAWePeLz9YvZuEAUb8eEY7zoJ7VNBMvvttOKp
-	gAXU0OcIWFmXRtcmu2a0gsPhUUTJVyiJVbeqYZ73E2EQsqWy4C8JOsEQe7A==
-X-Gm-Gg: ASbGncv/SYMkkzeHn2eqPSZBV5aI8ymP+AxMWn+7JP3Liiv/+eo5NVdIDoKfUFxjzDk
-	11mwo8V029ZrN8yIoFJYWnNElJq+4otARMzGnqd4H27rPIdmjEydPR4s3IGJvbHygk3ZiDlYlxg
-	5WZkp+0gykHiXsrlQqPbsAcKC3CkDF87tJOAbIyBOIaSVCSaJgDgCOXhXnpkeo9KusTMOjHd9mK
-	+L3XYdLvoF4sbkZWiuMzPEepKSAmQL/p7gRZ3oYHkPX9FiQwEVEZwsziUmj7r5hyMQBvg==
-X-Google-Smtp-Source: AGHT+IHg2+2QxlVeXNyTPHfpqpewNYQ2OW0QcIQRhS9rdrtPTlPGG+LpQTObtaQA8pOcEc/dOqmtT1WQQgzDShvVdJM=
-X-Received: by 2002:a17:907:3f97:b0:b73:2d9c:9581 with SMTP id
- a640c23a62f3a-b766efaded0mr1943285166b.28.1764068858360; Tue, 25 Nov 2025
- 03:07:38 -0800 (PST)
+	s=arc-20240116; t=1764069153; c=relaxed/simple;
+	bh=4W5N3HFT9XqK9ao5zUtwS6grnw6Chec77zAq2yGW/nQ=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=K9uu75j5VlaSjT68X+eEpSych4vl5hvcHggDtxAEeIm2LAR0oR/To3wq5f2+r43Jp1Ez6wXNWAxWLXZszisJzZpRcls/qV3NrltSlEI/jqLPIU0rTd/qha7GF3YVKf9+wqOIkYhMLa8ZPEDKte3i3jzkGiQQywcV0necYrVRr2E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Om/MXhBE; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 86319C4CEF1;
+	Tue, 25 Nov 2025 11:12:32 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1764069152;
+	bh=4W5N3HFT9XqK9ao5zUtwS6grnw6Chec77zAq2yGW/nQ=;
+	h=From:Subject:Date:To:Cc:Reply-To:From;
+	b=Om/MXhBEbDdzbE4dTjNnsYIax+1nxg+rxybxE/PLRzbmODm9uq4pupnr03IpRwkzC
+	 W+0kyxCdfbf+nKh1gpmd+kQsCv37mug/AL1b+Eld4fDVPRXl1WJqECyn5UC9nB6uwC
+	 XSuiH9auHE5zDziScucBxmS3ORJs0OwTMK6+emaB3T6ZqwMj413Luec5BkVcQjNL+v
+	 uevVF0YntTyRxoktHJ6Rek+luQhmYW+QrfYtyOD2ItkP5dr8AmBudR7CBW88sveQDq
+	 YGmVwG00issU2Tbs213ajLB2Y2DNn+lSB1epsShVKH/8dzD53/vqXn+gDT1iqAqJuD
+	 N2qmR6KID3Wkg==
+Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 71145CFD368;
+	Tue, 25 Nov 2025 11:12:32 +0000 (UTC)
+From: Manivannan Sadhasivam via B4 Relay <devnull+manivannan.sadhasivam.oss.qualcomm.com@kernel.org>
+Subject: [PATCH v3 0/4] PCI: Add initial support for handling PCIe M.2
+ connectors in devicetree
+Date: Tue, 25 Nov 2025 16:42:25 +0530
+Message-Id: <20251125-pci-m2-v3-0-c528042aea47@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20251121142623.251118-1-ggo@tuxedocomputers.com>
- <af3d3295-1340-417f-8682-7d7e2bc6c812@kernel.org> <aSGXu7IhPDNSkYhi@linaro.org>
- <280982b8-ce86-45aa-812b-ef1bf6e57e3d@kernel.org> <f8ebe524-1f0a-4f54-96ce-aa36f8659adc@tuxedocomputers.com>
- <7716b83f-409c-4fa8-8232-89d3d1be5dd6@linaro.org> <7a3e2e3a-1a6d-460c-846c-209474c2311c@oss.qualcomm.com>
-In-Reply-To: <7a3e2e3a-1a6d-460c-846c-209474c2311c@oss.qualcomm.com>
-From: Ettore Chimenti <ettore.chimenti@linaro.org>
-Date: Tue, 25 Nov 2025 12:07:26 +0100
-X-Gm-Features: AWmQ_blURkPornvVq9QQ5IxYAUQrQZu5rkeLI5vLb1vMNoivF5xocKd8GUSWksI
-Message-ID: <CACBDSOWcacFoKFjrNpDm0zCEk0AJcYcgJPOfcDQxE3mSussQ4w@mail.gmail.com>
-Subject: Re: [PATCH v3 0/7] Add TUXEDO Elite 14 Gen1 (X1E78100)
-To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Cc: Neil Armstrong <neil.armstrong@linaro.org>, 
-	Georg Gottleuber <g.gottleuber@tuxedocomputers.com>, Krzysztof Kozlowski <krzk@kernel.org>, 
-	Stephan Gerhold <stephan.gerhold@linaro.org>, Georg Gottleuber <ggo@tuxedocomputers.com>, 
-	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, 
-	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, Srinivas Kandagatla <srini@kernel.org>, stefan.schmidt@linaro.org, 
-	wse@tuxedocomputers.com, cs@tuxedo.de
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIABmPJWkC/22MQQ6CMBBFr0JmbQltKTSuvIdx0ZapNBGKrTYaw
+ t0tJBgXbiZ5k//eDBGDwwjHYoaAyUXnxwz8UIDp1XhF4rrMwComKK04mYwjAyNtw3nDqW6sUpD
+ HU0DrXlvofMncu/jw4b11E12/e0LsiURJRWSthaWWokB58jGW96e6GT8MZT6wlhL7teXXZtlGq
+ U3dtdrWrPtjL8vyAQcd/ifhAAAA
+X-Change-ID: 20251103-pci-m2-7633631b6faa
+To: Bjorn Helgaas <bhelgaas@google.com>, 
+ Manivannan Sadhasivam <mani@kernel.org>, Rob Herring <robh@kernel.org>, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>, Bartosz Golaszewski <brgl@bgdev.pl>
+Cc: linux-kernel@vger.kernel.org, linux-pci@vger.kernel.org, 
+ devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+ Stephan Gerhold <stephan.gerhold@linaro.org>, 
+ Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>, 
+ linux-pm@vger.kernel.org, 
+ Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>, 
+ Frank Li <Frank.Li@nxp.com>, 
+ Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+X-Mailer: b4 0.14.3
+X-Developer-Signature: v=1; a=openpgp-sha256; l=3890;
+ i=manivannan.sadhasivam@oss.qualcomm.com; h=from:subject:message-id;
+ bh=4W5N3HFT9XqK9ao5zUtwS6grnw6Chec77zAq2yGW/nQ=;
+ b=owEBbQGS/pANAwAKAVWfEeb+kc71AcsmYgBpJY8dErVC8h8htWvNiDSqBzHfQ3sLVCilBhBXK
+ hUvQA1ST2uJATMEAAEKAB0WIQRnpUMqgUjL2KRYJ5dVnxHm/pHO9QUCaSWPHQAKCRBVnxHm/pHO
+ 9bb6CACMnk1JcvfM0PgRT7maZnabMUcVjF/crON1hr1C+sNZx9zlvXNhu1vTVkN8hY/Sw3ujP2a
+ KmoZaypYTZEAM3+n/w3yO0eZlgCte1/DWtevGEJ0s5pN+t0VfsoWav2GTk084ImlfeYaP4UJSiN
+ Q1fCSa0DFfGl19p1iygp10MDI5zDllfjHIFc+6oi1d+7nN/YP1XgjM7UStTEetfsUDSRGY1aGYC
+ R4LpdZzyTSMNX3yBFBtA63yROanfGNqBlgZFphWjKr4E2B5DpkKLUjjd7Q/yG1RgBD/x8c4cb6V
+ 4IdEA3KXMN41G9jD57PA0aZEmUg8wNx9Mr6YkfcyPu3bqGxo
+X-Developer-Key: i=manivannan.sadhasivam@oss.qualcomm.com; a=openpgp;
+ fpr=C668AEC3C3188E4C611465E7488550E901166008
+X-Endpoint-Received: by B4 Relay for
+ manivannan.sadhasivam@oss.qualcomm.com/default with auth_id=461
+X-Original-From: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
+Reply-To: manivannan.sadhasivam@oss.qualcomm.com
 
 Hi,
 
-On Tue, 25 Nov 2025 at 11:50, Konrad Dybcio
-<konrad.dybcio@oss.qualcomm.com> wrote:
->
-> On 11/25/25 11:37 AM, Neil Armstrong wrote:
-> > On 11/24/25 15:09, Georg Gottleuber wrote:
-> >> Hello Krzysztof.
-> >>
-> >> Am 22.11.25 um 12:15 schrieb Krzysztof Kozlowski:
-> >>> On 22/11/2025 12:00, Stephan Gerhold wrote:
-> >>>> On Sat, Nov 22, 2025 at 11:16:25AM +0100, Krzysztof Kozlowski wrote:
-> >>>>> On 21/11/2025 15:26, Georg Gottleuber wrote:
-> >>>>>> [...]
-> >>>>>> Initial support for TUXEDO Elite 14 Gen1 laptop. It is based on Qualcomm
-> >>>>>> Snapdragon X Elite SoC (X1E78100).
->
-> [...]
->
-> >> I understand your frustration, but I'm still learning how to contribute
-> >> to the Linux kernel. However, we may be able to find a constructive
-> >> solution. Here at TUXEDO, we have the necessary Medion device and have
-> >> already adapted the device tree.
-> >>
-> >> Would you review a patch set for Medion SPRCHRGD 14 S1 Elite?
-> >
-> > I think it's worth re-spining this patchset for the Medion SPRCHRGD 14 S1 Elite
-> > with a comment in the DT mentioning the device tree is compatible with
-> > the defunct Tuxedo Elite 14 Gen 1, since the Medion is an actual product
-> > people can buy it's worth it.
->
-> +1, especially since you mentioned you have an actual Medion at hand
+This series is an initial attempt to support the PCIe M.2 connectors in the
+kernel and devicetree binding. The PCIe M.2 connectors as defined in the PCI
+Express M.2 Specification are widely used in Notebooks/Tablet form factors (even
+in PCs). On the ACPI platforms, power to these connectors are mostly handled by
+the firmware/BIOS and the kernel never bothered to directly power manage them as
+like other PCIe connectors. But on the devicetree platforms, the kernel needs to
+power manage these connectors with the help of the devicetree description. But
+so far, there is no proper representation of the M.2 connectors in devicetree
+binding. This forced the developers to fake the M.2 connectors as PMU nodes [1]
+and fixed regulators in devicetree.
 
-I agree, we can actually try to respin the patches for Medion if
-TUXEDO is not worth it.
+So to properly support the M.2 connectors in devicetree platforms, this series
+introduces the devicetree binding for Mechanical Key M connector as an example
+and also the corresponding pwrseq driver and PCI changes in kernel to driver the
+connector.
 
-Regards,
-Ettore
+The Mechanical Key M connector is used to connect SSDs to the host machine over
+PCIe/SATA interfaces. Due to the hardware constraints, this series only adds
+support for driving the PCIe interface of the connector in the kernel.
 
->
-> Konrad
+Also, the optional interfaces supported by the Key M connectors are not
+supported in the driver and left for the future enhancements.
+
+Future work
+===========
+
+I'm planning to submit the follow-up series to add support for the Mechanical
+Key A connector for connecting the WiFI/BT cards, once some initial review
+happens on this series.
+
+Testing
+=======
+
+This series, together with the devicetree changes [2] [3] were tested on the
+Qualcomm X1e based Lenovo Thinkpad T14s Laptop which has the NVMe SSD connected
+over PCIe.
+
+[1] https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/arch/arm64/boot/dts/qcom/x1e80100-qcp.dts?h=v6.18-rc4&id=d09ab685a8f51ba412d37305ea62628a01cbea57
+[2] https://github.com/Mani-Sadhasivam/linux/commit/40120d02219f34d2040ffa6328f0d406b1e4c04d
+[3] https://github.com/Mani-Sadhasivam/linux/commit/ff6c3075836cc794a3700b0ec6a4a9eb21d14c6f
+
+Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
+---
+Changes in v3:
+- Changed the VIO supply name as per dtschema
+- Added explicit endpoint properties to port 0 node for host I/F
+- Used scope based cleanup for OF node in pwrseq driver
+- Collected review tags
+- Link to v2: https://lore.kernel.org/r/20251108-pci-m2-v2-0-e8bc4d7bf42d@oss.qualcomm.com
+
+Changes in v2:
+- Incorporated comments from Bartosz and Frank for pwrseq and dt-binding
+  patches, especially adding the pwrseq match() code.
+- Link to v1: https://lore.kernel.org/r/20251105-pci-m2-v1-0-84b5f1f1e5e8@oss.qualcomm.com
+
+---
+Manivannan Sadhasivam (4):
+      dt-bindings: connector: Add PCIe M.2 Mechanical Key M connector
+      PCI/pwrctrl: Add support for handling PCIe M.2 connectors
+      PCI/pwrctrl: Create pwrctrl device if the graph port is found
+      power: sequencing: Add the Power Sequencing driver for the PCIe M.2 connectors
+
+ .../bindings/connector/pcie-m2-m-connector.yaml    | 141 ++++++++++++++++++
+ MAINTAINERS                                        |   7 +
+ drivers/pci/probe.c                                |   3 +-
+ drivers/pci/pwrctrl/Kconfig                        |   1 +
+ drivers/pci/pwrctrl/slot.c                         |  35 ++++-
+ drivers/power/sequencing/Kconfig                   |   8 ++
+ drivers/power/sequencing/Makefile                  |   1 +
+ drivers/power/sequencing/pwrseq-pcie-m2.c          | 160 +++++++++++++++++++++
+ 8 files changed, 350 insertions(+), 6 deletions(-)
+---
+base-commit: 3a8660878839faadb4f1a6dd72c3179c1df56787
+change-id: 20251103-pci-m2-7633631b6faa
+
+Best regards,
+-- 
+Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
+
+
 
