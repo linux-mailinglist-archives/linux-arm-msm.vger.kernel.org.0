@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-83201-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-83202-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id A82E8C83EFD
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Nov 2025 09:17:25 +0100 (CET)
+Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [142.0.200.124])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5BA16C83F15
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Nov 2025 09:18:14 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 6F76A3A4B3A
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Nov 2025 08:17:17 +0000 (UTC)
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 4CBB94E6FE6
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Nov 2025 08:18:13 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3B0E62D7D30;
-	Tue, 25 Nov 2025 08:16:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CE1EA2C026E;
+	Tue, 25 Nov 2025 08:17:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="SFNGgIq0"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="HsMspT7m"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 016012D7813;
-	Tue, 25 Nov 2025 08:16:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6A9027D77D;
+	Tue, 25 Nov 2025 08:17:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764058599; cv=none; b=K4BTNUa1hvBiGTYrquVCelSK2Pj+bvFpHh2m+36XS2sbfAkd3HZPSaYaftCnDR+V0wDggyvcFGrmQcFWz91IGhAcOiTkB1bzQdjO8+33c+oDD0OiFQXlrn6eI359udaaVfZkwO1P5bJf2t+T7Enm8xg5UOKUrdax3hOfYt5nO8M=
+	t=1764058677; cv=none; b=iR5vAPPwrCyGhWB8WJ1OfhAFZ+SXVUFs7bPzYEdmNgap5FRePrjl6Bqg8MsG6WsoOrUYArfHUv2y+2MXYWvCdFf/jMLT+tZP+8zRbet7a3sKIG9TbA70vuNXnBH655lcqNk47Yglh1ot3y1RtN/6r2SrBagkj+1i/UWBXf+6d+w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764058599; c=relaxed/simple;
-	bh=5wgdcTj1KJbTC2xHzImYJ8OdikbVyCwSxzZIfn0r8dY=;
+	s=arc-20240116; t=1764058677; c=relaxed/simple;
+	bh=ke5TeaqU7+VGjiCrRGBI5uJypjLqehjyXNatwA4MnwQ=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Usq/nVCzzjmhwX/59mle8BsPWTVMTRLZd1LXhH2DLhz7G+XA14sE0khx3tO7wzU5FRUPEkddxr+8F/Q1O7oR0Oq0FnM2MB6O51qQa5xICtVscKXsvEm79vrC0fdLReIwYmwzYPoW8aPh6pvFOOSjJQ5hmHYIA/m0LpOcdpWBjGs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=SFNGgIq0; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AEC43C4CEF1;
-	Tue, 25 Nov 2025 08:16:33 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=T1PbNyUog+QxIL8TIFufumLnJnCJ6Mk3GbQRYNB7QownfLI8+0FglMAT/STxFKkSSlRnXbw6TqkxqSpph5Lsh0muFl9HNcP3LxKUDmt4AYlWxrTnHi9ZfN47EvBOxYnqhHQzRpxDQq1lYo2nVVclGmgMoTIeD/ULcEmbB11ZQFA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=HsMspT7m; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17E92C4CEF1;
+	Tue, 25 Nov 2025 08:17:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1764058598;
-	bh=5wgdcTj1KJbTC2xHzImYJ8OdikbVyCwSxzZIfn0r8dY=;
+	s=k20201202; t=1764058677;
+	bh=ke5TeaqU7+VGjiCrRGBI5uJypjLqehjyXNatwA4MnwQ=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=SFNGgIq04QJ8z6YGNma2DNonyRTX2+UAFFTiUgZl368UW6s4cDQzv2RosteXWXXur
-	 8lDoh8dNq9JM/Xk+oGPZN56rccV4WcFo4ZtEWLYlwxt6qsmMGDEC8A7wwh2NW0Ux2+
-	 hefjKOBpsBjFWy4yElsfMGEDti1cu5wbCq1xZKsjnjB2aTgir7Pmb2iPKo/yGqSWuo
-	 am0xkjdU+A5VVeG0SQ/wXkP1tRJHKOnt2DQkIRGTZ/dbQ12d7CWSc1uXdRtiprMn4x
-	 Y7W3DcV4OyvuvvzNJ+9kIVCvbjhv4HEpN1HhtImieBrvsMWnzpw038KD4pj8JCKpAP
-	 OgfmtxVfxN1YA==
-Message-ID: <774e5c50-f470-40b8-8b06-ee7806401d09@kernel.org>
-Date: Tue, 25 Nov 2025 09:16:31 +0100
+	b=HsMspT7mPP8EUweXqgeiszG/diR7embr0wkBftKDKjeDagHMa3vxtYVT9KYo9RTp9
+	 6QeWanwZt7f/9vyDryjB15yOeXPDZ8PMTV6tt9fZ5wvtJpqpSyMHj4cwZgQCD0vOiJ
+	 0xmxdVs829AexVZIEQeD31GXUNK2+xNVzcoICvf0JQq+pBCt412lHQOukvz3X+qzPh
+	 8YfwKzZFJDZ4MDvxztC/7vroheNoFQSdFBWFqVdPPjk6vABmT5imtvC1Uk/gHWsIbM
+	 lWSMgYPBh/B3oPcdQcBVcUdzizAFENKmfRo+5D90IyGpZFQG4UDKk7rNc+RInZVO+7
+	 Nilqe89M/ok4A==
+Message-ID: <2f7aa593-6b11-4dbd-a0e6-f60eee16d7b5@kernel.org>
+Date: Tue, 25 Nov 2025 09:17:50 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,8 +50,8 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 02/10] dt-bindings: display/msm: dsi-phy-7nm: Add
- Kaanapali DSI PHY
+Subject: Re: [PATCH v2 04/10] dt-bindings: display/msm: qcom,kaanapali-mdss:
+ Add Kaanapali
 To: yuanjie yang <yuanjie.yang@oss.qualcomm.com>,
  robin.clark@oss.qualcomm.com, lumag@kernel.org, abhinav.kumar@linux.dev,
  sean@poorly.run, marijn.suijten@somainline.org, airlied@gmail.com,
@@ -61,9 +61,10 @@ To: yuanjie yang <yuanjie.yang@oss.qualcomm.com>,
  quic_khsieh@quicinc.com, neil.armstrong@linaro.org
 Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
  freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org,
- tingwei.zhang@oss.qualcomm.com, aiqun.yu@oss.qualcomm.com
+ tingwei.zhang@oss.qualcomm.com, aiqun.yu@oss.qualcomm.com,
+ Yongxing Mou <yongxing.mou@oss.qualcomm.com>
 References: <20251125064758.7207-1-yuanjie.yang@oss.qualcomm.com>
- <20251125064758.7207-3-yuanjie.yang@oss.qualcomm.com>
+ <20251125064758.7207-5-yuanjie.yang@oss.qualcomm.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -109,17 +110,27 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  jWt87ecuHlpL3uuQ0ZZNWqHgZoQLXoqC2ZV5KrtKWb/jyiFX/sxSrodALf0zf+tfHv0FZWT2
  zHjUqd0t4njD/UOsuIMOQn4Ig0SdivYPfZukb5cdasKJukG1NOpbW7yRNivaCnfZz6dTawXw
  XRIV/KDsHQiyVxKvN73bThKhONkcX2LWuD928tAR6XMM2G5ovxLe09vuOzzfTWQDsm++9UKF a/A=
-In-Reply-To: <20251125064758.7207-3-yuanjie.yang@oss.qualcomm.com>
+In-Reply-To: <20251125064758.7207-5-yuanjie.yang@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
 On 25/11/2025 07:47, yuanjie yang wrote:
 > From: Yuanjie Yang <yuanjie.yang@oss.qualcomm.com>
 > 
-> The DSI PHY registers on the Kaanapali platform differ from those
-> on SM8750. So add DSI PHY for Kaanapali to compatible these changes.
+> Kaanapali introduces DPU 13.0.0 and DSI 2.10. Compared to SM8750,
+> Kaanapali has significant register changes, making it incompatible
+> with SM8750. So add MDSS/MDP display subsystem for Qualcomm Kaanapali.
 > 
+> Co-developed-by: Yongxing Mou <yongxing.mou@oss.qualcomm.com>
+> Signed-off-by: Yongxing Mou <yongxing.mou@oss.qualcomm.com>
+> Signed-off-by: Yuanjie Yang <yuanjie.yang@oss.qualcomm.com>
 
+
+I don't understand why you have random four quicinc or qualcomm.com
+addresses not related to kernel development, but you did not include
+necessary addresses.
+
+Please trim your list to only necessary addresses.
 
 Please use scripts/get_maintainers.pl to get a list of necessary people
 and lists to CC. It might happen, that command when run on an older
@@ -138,7 +149,6 @@ tested by automated tooling. Performing review on untested code might be
 a waste of time.
 
 Please kindly resend and include all necessary To/Cc entries.
-
 
 Best regards,
 Krzysztof
