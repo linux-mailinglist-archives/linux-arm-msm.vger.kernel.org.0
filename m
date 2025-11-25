@@ -1,205 +1,226 @@
-Return-Path: <linux-arm-msm+bounces-83154-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-83155-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id E8A28C833F5
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Nov 2025 04:33:47 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 10482C834DB
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Nov 2025 05:03:44 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 23F893AD3D8
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Nov 2025 03:33:40 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id B31F83A6132
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Nov 2025 04:03:42 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E37AD26F293;
-	Tue, 25 Nov 2025 03:33:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6547B2701CF;
+	Tue, 25 Nov 2025 04:03:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="l8Qk98C4"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="iTOjykQM";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="BMA44kIB"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 491292609DC;
-	Tue, 25 Nov 2025 03:33:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA8311FC110
+	for <linux-arm-msm@vger.kernel.org>; Tue, 25 Nov 2025 04:03:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764041609; cv=none; b=WEnCmlo8I8kD1pA04QB9j+kICHG3SxnB5LZvQaKNKQw2H3WXuG+kd+imj+XDBFtq0ylO5kpRKARUbFRIXXwcCsVCaZsIgjins2S72CrOf9PAjkC4oor68HyLp4a25ECfldnNE9we8jxYOh1xidkKA7NE4zVQUHBKoQH3pDT2EGA=
+	t=1764043422; cv=none; b=AEpXjs/0pwrzfaAN0WskSHhdu9ua8zvx6Ezx/LP+50fTxLDlw/N6yU2IRRYnSaz1YaTMG7PwwgTow29W8catxT+XQAM2u6hzfm8kMjwAVHT9YyfIuo+CX/PtuOQIQhd9x8FVv5uj9n+W0ce+NMY4m+tLJMKHglnMUSLJCRnhOlI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764041609; c=relaxed/simple;
-	bh=WYiBp1cx0TPZllUF6MRGjPEXcFBB+8zMl1RhMgirOuc=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=swjjgyIu5BaIxLMdLBZwwyombdtP3T61bmwwF92b38hVvPIDl/jHg1XNvdSBSYfekQ1pf2NA59X8Emmg+gsY4VDUg/g1EKDbjGpkZRoH1objfAdozLkzrU1ubtwnNW7jYhypo6FDB4iV0Heq8sqMBLWdJP/vwFBbc93+KlHQN0E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=l8Qk98C4; arc=none smtp.client-ip=205.220.168.131
+	s=arc-20240116; t=1764043422; c=relaxed/simple;
+	bh=k2GS4P5SjOGTn2hwGSYALJoFfEQ0BxzyyK0D8wDyZv4=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=i1+2EjqVgoDHIT1d26ts9T4AnD3ktqBPCSfevlfQYVG/sNGdkEsVbZ/mm1UwYPHiiNfuCkKEx+y0/GhWr23CeqNuRh752wbhS7SOXLCodBnEIhZvlsfuj6w+WP/Wa4S1dRc9xUgLFu4kZA6Vn3WQJFLtFAaJfN518Fl6Giev5+U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=iTOjykQM; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=BMA44kIB; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=qualcomm.com
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 5AP2giu31820780;
-	Tue, 25 Nov 2025 03:33:26 GMT
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 5AP2gdBw1232185
+	for <linux-arm-msm@vger.kernel.org>; Tue, 25 Nov 2025 04:03:40 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:date:from:in-reply-to:message-id
-	:mime-version:references:subject:to; s=qcppdkim1; bh=VOJcxVPUaqR
-	/45Wtb29py+AlIAh74sMI86ROjSxI5KE=; b=l8Qk98C4FQrLOb/oI8rSB+Uj8G9
-	K4EuFVctkprhcNACN2F2TBbxQ/lO+DNI265yJu8vurp8kJazVd+5kC7Uwze/YKsW
-	e8CyAwl6a9q0SXoMh2KT1+xVCO6c8fHTj/AfhwO6jL38xiiwVtd8xjCsxfQjNsG6
-	6LMQeYvABtp2Nu7LJcSTYZ5ly1c81ZRhff9e1D5DC7q4/wBZx6nsZbLjhoh9hWtW
-	A9eC5F7JiXrghcbDRogzv3nKg80AKjHWUwcfLb1/1NIklWlg37FIJz3e94tPxz2y
-	q0Ep+hTCaEWaO6jZve0I9T1PfOy2rYFPMYbLYsVmmOzVrh6yCIOxUKkgqzQ==
-Received: from aptaippmta01.qualcomm.com (tpe-colo-wan-fw-bordernet.qualcomm.com [103.229.16.4])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4amp6h2haq-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 25 Nov 2025 03:33:25 +0000 (GMT)
-Received: from pps.filterd (APTAIPPMTA01.qualcomm.com [127.0.0.1])
-	by APTAIPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTP id 5AP3XN4X014111;
-	Tue, 25 Nov 2025 03:33:23 GMT
-Received: from pps.reinject (localhost [127.0.0.1])
-	by APTAIPPMTA01.qualcomm.com (PPS) with ESMTPS id 4ak68m5458-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 25 Nov 2025 03:33:23 +0000
-Received: from APTAIPPMTA01.qualcomm.com (APTAIPPMTA01.qualcomm.com [127.0.0.1])
-	by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 5AP3XNJa014105;
-	Tue, 25 Nov 2025 03:33:23 GMT
-Received: from cse-cd01-lnx.ap.qualcomm.com (cse-cd01-lnx.qualcomm.com [10.64.75.209])
-	by APTAIPPMTA01.qualcomm.com (PPS) with ESMTPS id 5AP3XMCt014102
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 25 Nov 2025 03:33:23 +0000
-Received: by cse-cd01-lnx.ap.qualcomm.com (Postfix, from userid 4531182)
-	id 9F59322794; Tue, 25 Nov 2025 11:33:21 +0800 (CST)
-From: Le Qi <le.qi@oss.qualcomm.com>
-To: Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, kernel@oss.qualcomm.com,
-        Le Qi <le.qi@oss.qualcomm.com>
-Subject: [PATCH v2 2/2] arm64: dts: qcom: talos-evk: Add sound card support with DA7212 codec
-Date: Tue, 25 Nov 2025 11:33:11 +0800
-Message-Id: <20251125033311.254869-3-le.qi@oss.qualcomm.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20251125033311.254869-1-le.qi@oss.qualcomm.com>
-References: <20251125033311.254869-1-le.qi@oss.qualcomm.com>
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	iJAan29NfWgHaIXPs2LbrGAwitqmKY5u7Inpq94wzsg=; b=iTOjykQMRLRilt7N
+	UKJCyh8hJwNEfSrRgfe4WmmIwvLn1+jbFFd58QNJocyM/JjqQyTd64mgy4widJyJ
+	vAnKKi4OK7ahfFNl2cyMUvExBZd7Cvgam8vOgIutvNJZ1xaTSyK96VvhX8rK+v63
+	ppKD2MRHFKZOmdeF4T6TjiKAob15X/38nVc3kV+b2ILXUF8xyZ2GKvqflXXfFiXx
+	Yxq6L09XQ8yggiOU0VrLQRwVdLiEIYyyVFDPnUZZv9ppTH5PMIdkqxZr6zToP4ff
+	VcIolwpn6ggcoP4imSC4otiSaTgh2xdicqG1fgzkeVuHVUMjy2TFSSvHc7bCO4EQ
+	bLYI8g==
+Received: from mail-pl1-f197.google.com (mail-pl1-f197.google.com [209.85.214.197])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4an0xygmsu-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Tue, 25 Nov 2025 04:03:39 +0000 (GMT)
+Received: by mail-pl1-f197.google.com with SMTP id d9443c01a7336-297f3710070so121383665ad.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 24 Nov 2025 20:03:39 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=oss.qualcomm.com; s=google; t=1764043419; x=1764648219; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=iJAan29NfWgHaIXPs2LbrGAwitqmKY5u7Inpq94wzsg=;
+        b=BMA44kIBvb8mJTQHZauSJFkaX1Fc3gO5QNHqySjCke2zCLKa1RCwD5ROKcYm9tVbNL
+         RX2On7PPWbL38uxCbr8fXs3DnqTd5vyQqeNuakeiSqir4NycjI5cWi+6UVFpvK0kGruc
+         14Hl+c18T06evoqTntQVn6IVwvEm/HVcfQhnpSvQ45H+Wk4ipP6Ee/Vv86X5cuiIfqwI
+         iVvkT2rAjcA6Nee+DkfBYPp7HO1Hh3zL/2XZCk3vJYofWcyIsHmWu9teCVj3Wjw4KWfj
+         ImkeF4vvG6itjRTofND86xpom5Ijm/b6FA2AMLxQx9b0n/kVB08aF+THpWGd1eStDJuQ
+         uC5w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1764043419; x=1764648219;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=iJAan29NfWgHaIXPs2LbrGAwitqmKY5u7Inpq94wzsg=;
+        b=GHC5hbUNSNymUJveK9A5yoSWlGV3Kvp0UnrFLMaGZ+UesOlriQorV/8gVLxfzq+r8E
+         xB68L+qhdrczg8f3se2DLJhx0Gty2xgrO9cKwIWS/XdL1NpwumMDMhbacjVZv9Tg4agg
+         2AUYWRkFrpQMTfNp5iyxPcVuyFhpTWU9W+DmMJBa1idklP3/z2Z57xuVWE2yoxJ0i85K
+         tIoK9WBmTnk89goftF3isG3gayHRoSYWfnSvxHRgnySPIrbq7xRGZe+lr1hoxPc6NV/G
+         NY7a7+ceCToAa/FZoeMXE+HjOOUpiSmTBQ2vuPX9w5uvLMyRDWczW82m6rigLn3gjVZ8
+         XPvA==
+X-Forwarded-Encrypted: i=1; AJvYcCXVVqDSD3R7C+oSYloOhADZVGPJIUALiwNtoyT5bs9G11gntc33vUDPAOeAj62PXnLSW0UV3EZcL89gLV57@vger.kernel.org
+X-Gm-Message-State: AOJu0YxlDMwq4LtzMDqoWfhgZj5g0N4+BvtKPV7zrFqVgVQXormKjqLM
+	rclxB3dbDx4SjaaTyXjZPPXFjLD85sErUE4QvuNT7P5GVlQES4DYIh/UAWgurTlIlj0oaE/ssnS
+	UBfryeyDqktWtuulnCwPf5a68voRVY3s/NKMCeB45veXBWOlXBWoEl34NCSfgWXFRE1IL
+X-Gm-Gg: ASbGncsK5C6yaJiW4MDwo+TZ6EQ8Ms/EVoomZa6XWilpZk1h6OOr7hGCcVSyKCirb5/
+	KGYFMMoRy593Pvikuo7cCQ5LbzE5SVFpZ4tr9J+zB4EDemonE20qVXBejw+YEyT9HEPODnq4Olc
+	TNRbdGhEtCjRE0uyeJUZizdLVYMt73J2/mEAYRerAAOSf1S5hocO9b1Oymp3sR4wFY4RPj4nSQf
+	u61HFf8AnOrFyErkY7coTDs6Eb9MQozSzFaXYva2lT45s5IftpVzfK9dK6t6IIFX+VTLlBp3Ext
+	aDNRiculB+Q1//B+Ks7ISI0A+m8Q0L8H4J42A/EUzLNEOe/onoTTbM+0AVEwp1SWKuAVYAAQPoF
+	hVYLRCuxLPvUoUWXLLLqW/3CujIwWjED72BfVLRDuTA==
+X-Received: by 2002:a17:903:19d0:b0:295:2276:6704 with SMTP id d9443c01a7336-29b6c6cdf6cmr129665505ad.51.1764043419311;
+        Mon, 24 Nov 2025 20:03:39 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHEd/OVAmEmn14OXrHOQkPdPyyGneeaBeJEM4duM1dJGYj7jDrXbUvk8iKDwsZaTE0sXS7pOg==
+X-Received: by 2002:a17:903:19d0:b0:295:2276:6704 with SMTP id d9443c01a7336-29b6c6cdf6cmr129665135ad.51.1764043418737;
+        Mon, 24 Nov 2025 20:03:38 -0800 (PST)
+Received: from [10.218.32.171] ([202.46.22.19])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-29b5b111acfsm152248715ad.19.2025.11.24.20.03.32
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 24 Nov 2025 20:03:37 -0800 (PST)
+Message-ID: <98c74c0e-2ca3-4139-a906-620c061dac5a@oss.qualcomm.com>
+Date: Tue, 25 Nov 2025 09:33:30 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v1 07/12] dt-bindings: i2c: Describe SA8255p
+To: Krzysztof Kozlowski <krzk@kernel.org>
+Cc: Andi Shyti <andi.shyti@kernel.org>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley
+ <conor+dt@kernel.org>,
+        Mukesh Kumar Savaliya <mukesh.savaliya@oss.qualcomm.com>,
+        Viken Dadhaniya <viken.dadhaniya@oss.qualcomm.com>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>, linux-arm-msm@vger.kernel.org,
+        linux-i2c@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, psodagud@quicinc.com, djaggi@quicinc.com,
+        quic_msavaliy@quicinc.com, quic_vtanuku@quicinc.com,
+        quic_arandive@quicinc.com, quic_shazhuss@quicinc.com,
+        Nikunj Kela <quic_nkela@quicinc.com>
+References: <20251122050018.283669-1-praveen.talari@oss.qualcomm.com>
+ <20251122050018.283669-8-praveen.talari@oss.qualcomm.com>
+ <20251122-rich-imported-buzzard-b7aae7@kuoka>
+Content-Language: en-US
+From: Praveen Talari <praveen.talari@oss.qualcomm.com>
+In-Reply-To: <20251122-rich-imported-buzzard-b7aae7@kuoka>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-QCInternal: smtphost
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMTI1MDAyNyBTYWx0ZWRfX58zxBjguQnUa
- 5iVMA/Ilj1qLdsyzU00r2MUSYAhXusDymC625Ja6iuWyZawVtyuCmCsau6Ov6KDSWKUrk+pjjc1
- OOunLmy7Vs/uoCxMIyTEDJbaRun9f9Yk72WiETZij/6BxyrUp1cQbTQFgFlYBarHWVU3Fus1wzx
- SRaSuEIYyixI7lzWisiT0dIZo0oWzI9gfWqLywp0NtZJxst1XQd92qzQSWwEmS1Op+skTmEppQV
- efUAjdlfVqa7IKgulzoD53XXizmkKbX8caLXYAjcISxG+MSINHCGc6EahKcSGlrZTtk3pquKnGe
- rXg4qe6jqCtCIKErDYQfHR9N1RgzgDtEypi7il5k4O0fHAobKkzBsaIBe0z5aAbxmutcxxBN3by
- cGbjplJ4NbAbJM4iROcsDSFeheWIYQ==
-X-Proofpoint-GUID: 58tSBoPST7c43LUjLcNBw4sX7r5vY-77
-X-Proofpoint-ORIG-GUID: 58tSBoPST7c43LUjLcNBw4sX7r5vY-77
-X-Authority-Analysis: v=2.4 cv=GoFPO01C c=1 sm=1 tr=0 ts=69252385 cx=c_pps
- a=nuhDOHQX5FNHPW3J6Bj6AA==:117 a=nuhDOHQX5FNHPW3J6Bj6AA==:17
- a=6UeiqGixMTsA:10 a=VkNPw1HP01LnGYTKEx00:22 a=EUspDBNiAAAA:8
- a=NsbSkSjWJLNazAhNrCgA:9
+X-Authority-Analysis: v=2.4 cv=S+bUAYsP c=1 sm=1 tr=0 ts=69252a9b cx=c_pps
+ a=cmESyDAEBpBGqyK7t0alAg==:117 a=fChuTYTh2wq5r3m49p7fHw==:17
+ a=IkcTkHD0fZMA:10 a=6UeiqGixMTsA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=HWnqrvMQCMn6R42oSBoA:9 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10 a=1OuFwYUASf3TG4hYMiVC:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMTI1MDAzMCBTYWx0ZWRfX9e3wNeixXgY5
+ hztnqinUvrPJZhOq8Nrk5G2LzpNpA6sYXrvRyll7Nb409V821KY8tINJJivkYqrAUt9GaWVfc4A
+ E4FAzqFDj0+5vCfC2q9FxmLHfSgeMuW1aYDZFqLqPysGHiXPtj+0qoLam6g1P9LYNiA4wqKHdwp
+ 0BIor5bb5b7Zc+frqA4Rq+vkNz6PKsgaPsBD10LMuSVtNPrj+n61m0mk93TD7DHdQC7m9QDz1QV
+ 4N/CQtL2OASauUujsjFf2N3LYVxDjzBZlenxHVBYCpVfg/WA5NJvQzpVJvQeyAOIoN9aOU8nBFM
+ UaU4u3JDM3vSgGnlzSREt0NOfrNzTTFmZrS9b7W1wodeZa5vFTXBE/TG8qZyAVpWEeofZvgE/h4
+ BHwMfRTBEA97eK+NQpNlpfm3G6pCjw==
+X-Proofpoint-ORIG-GUID: 6bBbsrPN9YVnjELyZ8A2EhJ1965Evnfq
+X-Proofpoint-GUID: 6bBbsrPN9YVnjELyZ8A2EhJ1965Evnfq
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
  definitions=2025-11-25_01,2025-11-24_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 suspectscore=0 impostorscore=0 bulkscore=0 adultscore=0
- phishscore=0 clxscore=1015 lowpriorityscore=0 priorityscore=1501 spamscore=0
+ adultscore=0 impostorscore=0 clxscore=1015 suspectscore=0 phishscore=0
+ malwarescore=0 lowpriorityscore=0 bulkscore=0 spamscore=0 priorityscore=1501
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2510240001 definitions=main-2511250027
+ reason=mlx scancount=1 engine=8.22.0-2510240001 definitions=main-2511250030
 
-Add the sound card node for QCS615 Talos EVK with DA7212 codec
-connected over the Primary MI2S interface. The configuration enables
-headphone playback and headset microphone capture, both of which have
-been tested to work.
+Hi Krzysztof,
 
-Signed-off-by: Le Qi <le.qi@oss.qualcomm.com>
----
- arch/arm64/boot/dts/qcom/talos-evk.dts | 54 ++++++++++++++++++++++++++
- 1 file changed, 54 insertions(+)
+Thank you for review.
 
-diff --git a/arch/arm64/boot/dts/qcom/talos-evk.dts b/arch/arm64/boot/dts/qcom/talos-evk.dts
-index 8ca0699e3c40..3f382fb6d1f5 100644
---- a/arch/arm64/boot/dts/qcom/talos-evk.dts
-+++ b/arch/arm64/boot/dts/qcom/talos-evk.dts
-@@ -5,6 +5,7 @@
- /dts-v1/;
- 
- #include "talos-evk-cb.dtsi"
-+#include <dt-bindings/sound/qcom,q6afe.h>
- 
- / {
- 	hdmi-out {
-@@ -18,6 +19,46 @@ hdmi_con_out: endpoint {
- 		};
- 	};
- 
-+	sound {
-+		compatible = "qcom,qcs615-sndcard";
-+		model = "qcs615-snd-card";
-+
-+		pinctrl-0 = <&mi2s1_pins>;
-+		pinctrl-names = "default";
-+
-+		pri-mi2s-playback-dai-link {
-+			link-name = "Primary MI2S Playback";
-+
-+			codec {
-+				sound-dai = <&codec_da7212>;
-+			};
-+
-+			cpu {
-+				sound-dai = <&q6apmbedai PRIMARY_MI2S_RX>;
-+			};
-+
-+			platform {
-+				sound-dai = <&q6apm>;
-+			};
-+		};
-+
-+		pri-mi2s-capture-dai-link {
-+			link-name = "Primary MI2S Capture";
-+
-+			codec {
-+				sound-dai = <&codec_da7212>;
-+			};
-+
-+			cpu {
-+				sound-dai = <&q6apmbedai PRIMARY_MI2S_TX>;
-+			};
-+
-+			platform {
-+				sound-dai = <&q6apm>;
-+			};
-+		};
-+	};
-+
- 	vreg_v5p0_out: regulator-v5p0-out {
- 		compatible = "regulator-fixed";
- 		regulator-name = "vreg-v5p0-out";
-@@ -88,6 +129,19 @@ adv7535_out: endpoint {
- 	};
- };
- 
-+&i2c5 {
-+	status = "okay";
-+
-+	codec_da7212: codec@1a {
-+		compatible = "dlg,da7212";
-+		reg = <0x1a>;
-+		#sound-dai-cells = <0>;
-+		VDDA-supply = <&vreg_v1p8_out>;
-+		VDDIO-supply = <&vreg_v1p8_out>;
-+		VDDMIC-supply = <&vreg_v3p3_out>;
-+	};
-+};
-+
- &mdss_dsi0_out {
- 	remote-endpoint = <&adv7535_in>;
- 	data-lanes = <0 1 2 3>;
--- 
-2.34.1
+On 11/22/2025 5:10 PM, Krzysztof Kozlowski wrote:
+> On Sat, Nov 22, 2025 at 10:30:13AM +0530, Praveen Talari wrote:
+>> +  dmas:
+>> +    maxItems: 2
+>> +
+>> +  dma-names:
+>> +    items:
+>> +      - const: tx
+>> +      - const: rx
+>> +
+>> +  interrupts:
+>> +    maxItems: 1
+>> +
+>> +  power-domains:
+>> +    minItems: 2
+> 
+> Drop
 
+sure, will do it in next version.
+
+> 
+>> +    maxItems: 2
+>> +
+>> +  power-domain-names:
+>> +    items:
+>> +      - const: power
+>> +      - const: perf
+>> +
+>> +required:
+>> +  - compatible
+>> +  - reg
+>> +  - interrupts
+>> +  - power-domains
+>> +
+>> +allOf:
+> 
+> So common SE properties are not applicable? If so explain why in the
+> commit msg.
+
+Are you referring to clocks, ICC paths, and pin control?
+Please let me know if I’m mistaken.
+
+> 
+>> +  - $ref: /schemas/i2c/i2c-controller.yaml#
+>> +
+>> +unevaluatedProperties: false
+>> +
+>> +examples:
+>> +  - |
+>> +    #include <dt-bindings/interrupt-controller/arm-gic.h>
+>> +
+>> +    i2c@a90000 {
+>> +        compatible = "qcom,sa8255p-geni-i2c";
+>> +        reg = <0xa90000 0x4000>;
+>> +        interrupts = <GIC_SPI 357 IRQ_TYPE_LEVEL_HIGH>;
+>> +        power-domains = <&scmi0_pd 0>, <&scmi0_dvfs 0>;
+>> +        power-domain-names = "power", "perf";
+> 
+> dmas and dma-names
+
+sure.
+
+Thanks,
+Praveen
+
+> 
+> Best regards,
+> Krzysztof
+> 
 
