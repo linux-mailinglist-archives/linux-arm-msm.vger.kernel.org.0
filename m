@@ -1,105 +1,77 @@
-Return-Path: <linux-arm-msm+bounces-83314-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-83315-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ams.mirrors.kernel.org (ams.mirrors.kernel.org [213.196.21.55])
-	by mail.lfdr.de (Postfix) with ESMTPS id 619D2C86E4C
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Nov 2025 20:57:39 +0100 (CET)
+Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [142.0.200.124])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6CF47C86EC4
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Nov 2025 21:08:19 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ams.mirrors.kernel.org (Postfix) with ESMTPS id DE0B33518AA
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Nov 2025 19:57:38 +0000 (UTC)
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id ECDE44EA754
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Nov 2025 20:08:07 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E6B232FF144;
-	Tue, 25 Nov 2025 19:57:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C5E5432B9A6;
+	Tue, 25 Nov 2025 20:07:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="E3+WFYd7"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="hFk85Yno"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f65.google.com (mail-wr1-f65.google.com [209.85.221.65])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.9])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1BA02E0B5B
-	for <linux-arm-msm@vger.kernel.org>; Tue, 25 Nov 2025 19:57:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.65
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDC6033C198
+	for <linux-arm-msm@vger.kernel.org>; Tue, 25 Nov 2025 20:07:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.9
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764100647; cv=none; b=b9+UH/tMUcTadT7fYJ4tOjWAPN8H0YSOJpSS7a7N/zz1oPl2vUFxzYr7sgpDK1K96+ddvpvtCBAk9kmxVOMJSUSvY3exb8TRTtwxLa/jrhBksHEG3/dKa2kQePb/c8ZgeAQ94rMblor/R9fzmbxFU7+kvVaigEd6y4t39UJZ5jo=
+	t=1764101238; cv=none; b=cia2RSDQ6FQs4w7Du32JgC1QGxvlT0V+6wTpa5nucqnVYlTn0M0/KLSHB5GN1rDz4T1NCc/ipnBYu1RDQS7IVnhw34FWzkkjxmm/r6DOpxT22eD1ByCsJlfxEP+1cbVFXwbG7HOpdczIkjapAYAgU8z3ff7CoxlEPgvAkkSegJ8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764100647; c=relaxed/simple;
-	bh=iokwoTFVPBOTaPfOIU5c7pX/GalN7fc0nJfgCYlBKvM=;
+	s=arc-20240116; t=1764101238; c=relaxed/simple;
+	bh=KDAMEcekW0GbeCdlt1+A39flE38a3ZcvoP/43pcRNmI=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=VJuaN2qk8fSqvp5YKZ5K73RMrulDQM5/Vq6dLG3KVl65ry588qhzQtt+9scqqXzOgvJzwNj7wBbb773/cxPqoPxUFO8SnSYpBkeAny/dNvDSxRRiQAXWAenLhPTeWH9xgewN7viuo3whDBLTgwUWDCkR/sb6k0cfyAYgoBekPcc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=E3+WFYd7; arc=none smtp.client-ip=209.85.221.65
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wr1-f65.google.com with SMTP id ffacd0b85a97d-42b3377aaf2so3469628f8f.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 25 Nov 2025 11:57:24 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1764100643; x=1764705443; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=E1UnNoOWnCZ6jNATqSLrvL0gVBX8cPau2AT5/t6kV9Y=;
-        b=E3+WFYd7f5+MIm16F523Jp2L/0FdmLr2llL7NvcjJTaVC7gDZ4jAJ3ZT92cjbATxxy
-         K1neAO0iFSJp8rd6CMc46LL0vFY2ZxYuff7IhW47BekmuS9OlG6eozp9ZPoQWIpHT89C
-         NFXd3qkiLizg7f/a3lWPgX8VVnaHVdcUt3zGL+uCUE6EbbzGXUYHSpasPSbAXqfSPobO
-         e3LLS+2RS+Ol8n/1DBwdv47Vl9IdOsxUE+KJBIv0pUYV78VVC55KiqzuPCPQcRc/6xDg
-         F0O6d/mQ47TNSJurO7m1fpqIYpSPMarRaECaISWbkqPu5iLzwy0CSkkxPMjANFl2VqeJ
-         lzpg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1764100643; x=1764705443;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=E1UnNoOWnCZ6jNATqSLrvL0gVBX8cPau2AT5/t6kV9Y=;
-        b=UByyEN+hzpPtIpeEEMc6G0RzszsbIuN/+T2GIqoDBZc+5Cr8zt+h61EbmiQ0VLO24o
-         qtBMGrUfLR7qWNWeEcX+6dnyqaXSkGL8gzeccwdw/iTZIo7spimkvRhfER7Q4CSLchFg
-         w9Tbil2r3c/Sdpl++9ydTndiejRmJn9kBsxqcdPKwpCOwTcdnIN1C6LiYlra0P93LR2K
-         r50aAn44wUqsarYPzBlvuU1DTYlbJox7DzV0nBAypiGpJls9tYfZuMXCJrjRjpXNiC/C
-         TAYLu+RC/R1cpEq5qYQLYyJHFZO/1B0EPDYK3w7Fo3TkXLjafxwQFQ3QHtQpXRvpdDq5
-         4gMg==
-X-Forwarded-Encrypted: i=1; AJvYcCVelJffHZD32qHDbvYhM97iORT5kvRUw3Ip58GBul9J0PJ1WkSb6XmXXgv5T7FwegrtgghGzuJ2J89Pm9C8@vger.kernel.org
-X-Gm-Message-State: AOJu0Yz5dmsx1XEE4/CIaI/TRsnIhiGSkGFqd20RZimU9R7OnnSwy+DW
-	pN33wQypXH6HD/mgal6KJ8ntyPXPoYOIN9nhOLRuppYkJsIHl7UqQNtcJcCCtqAkb9o=
-X-Gm-Gg: ASbGncseuMqpMBqdvZQObJYlVq7JZesOd9P0Khpxdfwk0HD5lkyWdUrpJIzjnqsD/js
-	r3By0MomD2kso/fAkNATg+EAvCCpDxtm8prMpWoLjtLtHlEvpVFVtEc+qkHPuRcIDqufRMlil//
-	ZMfXLD0RIBdF7k6RLSmMh/5HI+/yam7dRQLpzuXpi7T4aLv7ZRUP0NO5w7ato3PX1imtkXF6jdL
-	q3hDeqRJd33hfwtXauJdKrAI5EC+jAX0TE4/2zbUZhIyiy6e3/LIbA3XLt2Rm38gIBycxjwlKU6
-	nk2hfztPXNh/KBHLxpWZ7qxadEIPq5yO8yJKyPoSTc5GdJBE9OfU3pmlFyeCAyeGJ/jDNod1N/y
-	qMFPhyj7YZnluLqEF9SQxFWvX+AH5i/3iF8nclK/CKZSO+Q6ZMOwml6rUoa6ytoJW+Dx1vTWiYm
-	QU/1cbxU2u/eG6DyzlLmHeiYI=
-X-Google-Smtp-Source: AGHT+IEAbkYexDq6opE/RHcWGXGaG9IQZqQuowS+lidqh7NE88eFU6gVV4oNIEt+OqoiQG7s1o7+ow==
-X-Received: by 2002:a05:6000:2881:b0:42b:3dfb:645c with SMTP id ffacd0b85a97d-42cc1ac9debmr18306375f8f.12.1764100643122;
-        Tue, 25 Nov 2025 11:57:23 -0800 (PST)
-Received: from linaro.org ([2a02:2454:ff23:4430:a656:9e9b:eea0:17e9])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-42cb7fb9190sm36157180f8f.33.2025.11.25.11.57.21
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 25 Nov 2025 11:57:22 -0800 (PST)
-Date: Tue, 25 Nov 2025 20:57:18 +0100
-From: Stephan Gerhold <stephan.gerhold@linaro.org>
-To: manivannan.sadhasivam@oss.qualcomm.com
-Cc: Rob Herring <robh@kernel.org>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	Jiri Slaby <jirislaby@kernel.org>,
-	Nathan Chancellor <nathan@kernel.org>,
-	Nicolas Schier <nicolas.schier@linux.dev>,
-	Hans de Goede <hansg@kernel.org>,
-	Ilpo =?iso-8859-1?Q?J=E4rvinen?= <ilpo.jarvinen@linux.intel.com>,
-	Mark Pearson <mpearson-lenovo@squebb.ca>,
-	"Derek J. Clark" <derekjohn.clark@gmail.com>,
-	Manivannan Sadhasivam <mani@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Marcel Holtmann <marcel@holtmann.org>,
-	Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
-	Bartosz Golaszewski <brgl@bgdev.pl>, linux-serial@vger.kernel.org,
-	linux-kernel@vger.kernel.org, linux-kbuild@vger.kernel.org,
-	platform-driver-x86@vger.kernel.org, linux-pci@vger.kernel.org,
-	devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-	linux-bluetooth@vger.kernel.org, linux-pm@vger.kernel.org,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Subject: Re: [PATCH v2 00/10] Add support for handling PCIe M.2 Key E
- connectors in devicetree
-Message-ID: <aSYKHjpJkXWUVIyo@linaro.org>
-References: <20251125-pci-m2-e-v2-0-32826de07cc5@oss.qualcomm.com>
+	 Content-Type:Content-Disposition:In-Reply-To; b=FGDUH8RB2n6i/edP3rtOGtgVc8TJ0VdF8BWIAA9T4rZPDDADR+SbONr/OUTyT2aG8LckOuB6S5WP2DAkutzhJlqXKfgWVAHq44UsdFP67vnxy3E0ieO8jCPH+Mj1ikJFcEm5Po9WgkfzceWcVOieu9dJXHMDi5ZH5d60c5lcUYA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=hFk85Yno; arc=none smtp.client-ip=192.198.163.9
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1764101237; x=1795637237;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=KDAMEcekW0GbeCdlt1+A39flE38a3ZcvoP/43pcRNmI=;
+  b=hFk85YnoVJjlsycC9UfOT9Ha7wnEGMUWFw8PKOw6FTdZuwJNTgPgNuQB
+   3MAXHkd3X0VJkqJmEs/puN09OSxRJ7cH74J8fRwFRW+u4aArT4GmpxJYS
+   JaWkEpOV1KGjmeaw3teQjiJc2x55+RoW3SjfWgSbyhGELWhYuPJnnI/pk
+   1iYtKlEyo7msvSlvcBHDKt+66+IjiHIGZgVTa1tOISynoWoZzdQyI6mnC
+   ETrOK40l0sa1eh8yi/B+Z7udH6+vB2VNMXfHagNnQ6exQ5wmy9G8/AOlM
+   rDZFFP4HEQYtZem/Gsg1+F8vQQvXSd+SqEFxIsiNL6vhU6AAEAtzbJ/if
+   A==;
+X-CSE-ConnectionGUID: S4F8gDLvTQGqby3IhLfMWA==
+X-CSE-MsgGUID: +iBjlMWzT2yWnhGuSmxWlQ==
+X-IronPort-AV: E=McAfee;i="6800,10657,11624"; a="76814360"
+X-IronPort-AV: E=Sophos;i="6.20,226,1758610800"; 
+   d="scan'208";a="76814360"
+Received: from fmviesa010.fm.intel.com ([10.60.135.150])
+  by fmvoesa103.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 25 Nov 2025 12:07:15 -0800
+X-CSE-ConnectionGUID: /M1ViyviQSqztxx+pfyhCA==
+X-CSE-MsgGUID: KvAHAXFBQOqrGjb1oPcNfg==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.20,226,1758610800"; 
+   d="scan'208";a="193554410"
+Received: from black.igk.intel.com ([10.91.253.5])
+  by fmviesa010.fm.intel.com with ESMTP; 25 Nov 2025 12:07:13 -0800
+Received: by black.igk.intel.com (Postfix, from userid 1003)
+	id CE696A0; Tue, 25 Nov 2025 21:07:11 +0100 (CET)
+Date: Tue, 25 Nov 2025 21:07:11 +0100
+From: Andy Shevchenko <andriy.shevchenko@intel.com>
+To: Youssef Samir <youssef.abdulrahman@oss.qualcomm.com>,
+	David Laight <david.laight.linux@gmail.com>
+Cc: jeff.hugo@oss.qualcomm.com, carl.vanderlip@oss.qualcomm.com,
+	troy.hanson@oss.qualcomm.com, zachary.mckevitt@oss.qualcomm.com,
+	ogabbay@kernel.org, lizhi.hou@amd.com,
+	karol.wachowski@linux.intel.com, linux-arm-msm@vger.kernel.org,
+	dri-devel@lists.freedesktop.org
+Subject: Re: [PATCH] accel/qaic: Fix mismatched types in min()
+Message-ID: <aSYMb4EKFCaYrWTI@black.igk.intel.com>
+References: <20251015153715.184143-1-youssef.abdulrahman@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -108,125 +80,44 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20251125-pci-m2-e-v2-0-32826de07cc5@oss.qualcomm.com>
+In-Reply-To: <20251015153715.184143-1-youssef.abdulrahman@oss.qualcomm.com>
+Organization: Intel Finland Oy - BIC 0357606-4 - Westendinkatu 7, 02160 Espoo
 
-On Tue, Nov 25, 2025 at 08:15:04PM +0530, Manivannan Sadhasivam via B4 Relay wrote:
-> This series is the continuation of the series [1] that added the initial support
-> for the PCIe M.2 connectors. This series extends it by adding support for Key E
-> connectors. These connectors are used to connect the Wireless Connectivity
-> devices such as WiFi, BT, NFC and GNSS devices to the host machine over
-> interfaces such as PCIe/SDIO, USB/UART and NFC. This series adds support for
-> connectors that expose PCIe interface for WiFi and UART interface for BT. Other
-> interfaces are left for future improvements.
-> 
-> Serdev device support for BT
-> ============================
-> 
-> Adding support for the PCIe interface was mostly straightforward and a lot
-> similar to the previous Key M connector. But adding UART interface has proved to
-> be tricky. This is mostly because of the fact UART is a non-discoverable bus,
-> unlike PCIe which is discoverable. So this series relied on the PCI notifier to
-> create the serdev device for UART/BT. This means the PCIe interface will be
-> brought up first and after the PCIe device enumeration, the serdev device will
-> be created by the pwrseq driver. This logic is necessary since the connector
-> driver and DT node don't describe the device, but just the connector. So to make
-> the connector interface Plug and Play, the connector driver uses the PCIe device
-> ID to identify the card and creates the serdev device. This logic could be
-> extended in the future to support more M.2 cards. Even if the M.2 card uses SDIO
-> interface for connecting WLAN, a SDIO notifier could be added to create the
-> serdev device.
-> 
-> Open questions
-> ==============
-> 
-> Though this series adds the relevant functionality for handling the M.2 Key M
-> connectors, there are still a few open questions exists on the design. 
-> 
-> 1. I've used the M.2 card model name as the serdev device name. This is found
-> out by comparing the PCIe VID:PID in the notifier. Is this approach acceptable?
-> I did not use the PID as the serdev name since it will vary if the SDIO
-> interface is used in the future.
-> 
-> 2. PCIe client drivers of some M.2 WLAN cards like the Qcom QCA6390, rely on
-> the PCIe device DT node to extract properties such as
-> 'qcom,calibration-variant', 'firmware-name', etc... For those drivers, should we
-> add the PCIe DT node in the Root Port in conjunction with the Port node as
-> below?
-> 
-> pcie@0 {
-> 	wifi@0 {
-> 		compatible = "pci17cb,1103";
-> 		...
-> 		qcom,calibration-variant = "LE_X13S";
-> 	};
-> 
-> 	port {
-> 		pcie4_port0_ep: endpoint {
-> 			remote-endpoint = <&m2_e_pcie_ep>;
-> 		};
-> 	};
-> };
-> 
-> This will also require marking the PMU supplies optional in the relevant ath
-> bindings for M.2 cards.
-> 
-> 3. Some M.2 cards require specific power up sequence like delays between
-> regulator/GPIO and such. For instance, the WCN7850 card supported in this series
-> requires 50ms delay between powering up an interface and driving it. I've just
-> hardcoded the delay in the driver, but it is a pure hack. Since the pwrseq
-> driver doesn't know anything about the device it is dealing with before powering
-> it ON, how should it handle the device specific power requirements? Should we
-> hardcode the device specific property in the connector node? But then, it will
-> no longer become a generic M.2 connector and sort of defeats the purpose of the
-> connector binding.
-> 
-> I hope to address these questions with the help of the relevant subsystem
-> maintainers and the community. 
-> 
-> Testing
-> =======
-> 
-> This series, together with the devicetree changes [2] was tested on the
-> Qualcomm X1e based Lenovo Thinkpad T14s Laptop which has the WCN7850 WLAN/BT M.2
-> card connected over PCIe and UART.
-> 
-> [2] https://github.com/Mani-Sadhasivam/linux/commit/acbee74a5c90fc8839bb7b6f326c677ee1c0d89c
++Cc: David
 
-Thanks for working on describing the M.2 connectors properly in the
-device tree!
+On Wed, Oct 15, 2025 at 05:37:15PM +0200, Youssef Samir wrote:
+> 
+> Use min_t() instead of min() to resolve compiler warnings for mismatched
+> types.
 
-I haven't had time to look into this in detail yet, but a quick look at
-the dt-bindings and examples looks good to me! Thanks for keeping the
-bindings as generic as possible.
+I believe it's the opposite to what has to be done here.
+At first glance it should be umin(), but I Cc'ed David
+who is the expert in this topic.
 
-I have a small nitpick for the specific example you have here: The
-Lenovo ThinkPad T14s does not actually have a "M.2 Mechanical Key E
-connector". If you look at a picture of the mainboard [1], the WLAN/BT
-module is "soldered-down" (look on the right, on the right side next to
-the large copper bracket). In the M.2 specification, "soldered-down"
-modules do not have a "key", they have a specific pinout that is
-followed (see section 5.4). The power sequencing etc and the set of pins
-is quite similar/the same though.
+> --- a/drivers/accel/qaic/sahara.c
+> +++ b/drivers/accel/qaic/sahara.c
+> @@ -615,7 +615,7 @@ static void sahara_parse_dump_table(struct sahara_context *context)
+>  
+>  	/* Request the first chunk of the first image */
+>  	context->dump_image = &image_out_table[0];
+> -	dump_length = min(context->dump_image->length, SAHARA_READ_MAX_SIZE);
+> +	dump_length = min_t(u64, context->dump_image->length, SAHARA_READ_MAX_SIZE);
+>  	/* Avoid requesting EOI sized data so that we can identify errors */
+>  	if (dump_length == SAHARA_END_OF_IMAGE_LENGTH)
+>  		dump_length = SAHARA_END_OF_IMAGE_LENGTH / 2;
+> @@ -663,7 +663,7 @@ static void sahara_parse_dump_image(struct sahara_context *context)
+>  
+>  	/* Get next image chunk */
+>  	dump_length = context->dump_image->length - context->dump_image_offset;
+> -	dump_length = min(dump_length, SAHARA_READ_MAX_SIZE);
+> +	dump_length = min_t(u64, dump_length, SAHARA_READ_MAX_SIZE);
+>  	/* Avoid requesting EOI sized data so that we can identify errors */
+>  	if (dump_length == SAHARA_END_OF_IMAGE_LENGTH)
+>  		dump_length = SAHARA_END_OF_IMAGE_LENGTH / 2;
 
-My notes (from a few months ago) suggest the T14s probably uses a
-non-standard M.2 Type 1620 LGA pinout. I don't remember the exact chain
-of thought behind that, but you can find similarly looking modules with
-this type, e.g. https://www.sparklan.com/product/wnsq-290be/. There is a
-1620 *BGA* pinout in the M.2 specification, but a 1620 *LGA* pinout does
-not exist there. Interestingly, in the block diagram of the module in
-the link above this type is called *Q*M.2 1620 LGA 168 pin, as if this
-is some Qualcomm-specific form factor.
+-- 
+With Best Regards,
+Andy Shevchenko
 
-A real mechanical key E connector can be found e.g. in the X1E CRD, X1E
-Devkit, or I think some of the X1E-based HP laptops (would need to check
-which one exactly).
 
-I'm not sure if it's really appropriate modeling the "soldered-down"
-variant as "Mechanical Key E connector" in the DT. We might need
-a separate compatible for this. Do you have any thoughts about that?
-
-Thanks,
-Stephan
-
-[1]: https://www.notebookcheck.com/fileadmin/_processed_/d/c/csm_DSC_0003_aadae1ddd2.jpg
 
