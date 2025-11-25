@@ -1,254 +1,134 @@
-Return-Path: <linux-arm-msm+bounces-83260-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-83261-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 849DFC854A0
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Nov 2025 14:59:42 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id E0F79C8558D
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Nov 2025 15:16:06 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id D0DAB3A17D6
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Nov 2025 13:59:40 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id CA3513B2C9E
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Nov 2025 14:16:00 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D20D2322A38;
-	Tue, 25 Nov 2025 13:59:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E4FB132548E;
+	Tue, 25 Nov 2025 14:15:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="aGJ4aySe"
+	dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b="cfr7112z"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f41.google.com (mail-lf1-f41.google.com [209.85.167.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D60A32252D;
-	Tue, 25 Nov 2025 13:59:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB5B322FE0A
+	for <linux-arm-msm@vger.kernel.org>; Tue, 25 Nov 2025 14:15:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764079179; cv=none; b=AMkV+d+BZJHoUf0hg4bi/M/dt+p9aidhw+zGx6Vw+PvFXvRIP05Tvjqh9uE3Ek1TkRf0xcDpRdy98Uz8sa8RzoH1P5VXawYd+ELWi5MOnwniylZWjlph7C0Yq10YB9vfKm5Toju6Nb3TWTkqSQY4ToXY6LzoSu/7Apy8dX8E870=
+	t=1764080155; cv=none; b=W73FI8Lb2C65m1QD8k7OYHsFjenkZFJn7HMvewrI6BpK887dc+QmsAWvHLCrCUW+2LjKycVHnT6CKTpoaQ+pcbRPDkSJTq2LMWUHlWe8JCVeZRQYhV681b4T/IhOIhp69W0yxE/rUMsVUA8a5J/IukdeIlGpKe8yQd/t0WkAekM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764079179; c=relaxed/simple;
-	bh=Z5MZqbhGWCdvXjszxA6M6hsjDa6b0nb6Wcf+buJZgnQ=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=PlBOmbltwt+i+ymADZsL8T8R3Su3c1+Tg0RcNI+62sVsSK08VkZAGVz4JksraSEcRvn0XHzkQ7vtOaEDy4gqEvzHK4iMaRcOcZMGf6iQqlhPwM/QkuN/OzsGHlbmMLTRnv63Ex7xRVV8zZuCDWNiR9og20mDZGltpMeXpc9A7EE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=aGJ4aySe; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 600E1C4CEF1;
-	Tue, 25 Nov 2025 13:59:31 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1764079179;
-	bh=Z5MZqbhGWCdvXjszxA6M6hsjDa6b0nb6Wcf+buJZgnQ=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=aGJ4aySem6cT9OudWMRyoWp+0U4Co6q/cOFLWwJcEBDioUF3z/RfBaCxySh598t+4
-	 fV45qC+0rm5OpAqe2WO3kTZR/jPXmdKIO+/xxuYjCjk7T1ZbFoiTii3x1+3/vXghXs
-	 YWQI9KWB7x05xuLhWA6SdqAZEDlf2PrjSLIgoyNsQEKAXHp5zALjTe6BNK4mhxn1s+
-	 dZuMWQDkEOKB1uyxppoM9JRYfuYUL2AcDis8Ju+eIAscv8TcELO/+aUOUQqGvQBA+m
-	 mR5Vajv+6CID+fvDck5D2l+wzIg/8AWELCRmrMOHcPP8p0uZQ1hcLGzfQb8A79aXZb
-	 ZcosSFpvXdbog==
-Date: Tue, 25 Nov 2025 19:29:27 +0530
-From: Manivannan Sadhasivam <mani@kernel.org>
-To: manivannan.sadhasivam@oss.qualcomm.com
-Cc: Bjorn Helgaas <bhelgaas@google.com>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Bartosz Golaszewski <brgl@bgdev.pl>, linux-kernel@vger.kernel.org, linux-pci@vger.kernel.org, 
-	devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
-	Stephan Gerhold <stephan.gerhold@linaro.org>, Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>, 
-	linux-pm@vger.kernel.org, Frank Li <Frank.Li@nxp.com>
-Subject: Re: [PATCH v3 1/4] dt-bindings: connector: Add PCIe M.2 Mechanical
- Key M connector
-Message-ID: <77wbvss7mgli5nacnjpxwsb4cexxjoykwhsvhwdc3jkn2nm24m@7kwmcchjedwn>
-References: <20251125-pci-m2-v3-0-c528042aea47@oss.qualcomm.com>
- <20251125-pci-m2-v3-1-c528042aea47@oss.qualcomm.com>
+	s=arc-20240116; t=1764080155; c=relaxed/simple;
+	bh=mFb5cLfcBOJUAcCe7EzWAbK41v2KAhfkFMw1cs0g+5E=;
+	h=From:In-Reply-To:MIME-Version:References:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=d+qqPAmML+HczwNZmZJJDtC76fjHNvazO8TqfIboQXdaZLF9ZzmvXrKyiqXEfOS2+0qjUz+AkDYB+hjjci8vvSyr7CZ35JOnpqM3OHfZaJwcMEG/WDwp2ZTYQoEGymWGO3FONZGcK6p80N2d7n7y1ZontLlck/jhcXqH5n9mgac=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl; spf=none smtp.mailfrom=bgdev.pl; dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b=cfr7112z; arc=none smtp.client-ip=209.85.167.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=bgdev.pl
+Received: by mail-lf1-f41.google.com with SMTP id 2adb3069b0e04-59583505988so7516536e87.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 25 Nov 2025 06:15:53 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=bgdev-pl.20230601.gappssmtp.com; s=20230601; t=1764080152; x=1764684952; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:references:mime-version:in-reply-to
+         :from:from:to:cc:subject:date:message-id:reply-to;
+        bh=1lX++QWc3Le3AqWqnqp0eBw0RQAx4IHJZgNq/+fapis=;
+        b=cfr7112z39tDacvMz0W+kaJ8OPBELxchEm+OO2lJtd+upjfw4IpPdmo1G2i7ioh9SF
+         5DM5Nei4KW6PzW4nEUTQ3nbDYDGBt+j9kxlfUj+9TReOLM5ayxO+68TWzKnUV5NSTSBS
+         DtrNa28Q1WC5vElao/0vuMf6s1YYvcUQnmq6GubVddk5PY/V11Rlw1+d4lflawT/0phm
+         uz3KAR3CVvCX24iBQtY/qkDnTcLdT9I1HUNxSLqeGg6hZ5wH6nL2p3Jsr51mysjjJS5Y
+         pr7ZRnwJXIsIxfCELDPZzyDJHxu21PJPj9dlUkYOJhP51grRF1BYnbJaeGBJye1AvnMW
+         ogwQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1764080152; x=1764684952;
+        h=cc:to:subject:message-id:date:references:mime-version:in-reply-to
+         :from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=1lX++QWc3Le3AqWqnqp0eBw0RQAx4IHJZgNq/+fapis=;
+        b=Hv9GJqZYFvr3Z3EepCZnsC3KDpwLETUx0R9zR+VOuZn3I5mWfrk+aZyHRaU0c19bgT
+         30mQw+W1GujLRW3yOTshQma5IPMcKH7aPxNK5RmrIGWVG2SEB2LXnGQN0e7cr5cdNPFz
+         HimLjVN0ijz0UNEthZPFgES5z/7XZ1Arrc7tEwl0hCteMUuiuWoDzIzNv8RaBgNf5PN+
+         vdmpkNyIW+JFX/mpe3wThmwrRqzns+tQIjIMkpO3Gxn356fjzb8hN2wcOlk/vbtwee1M
+         vk78pcW0sDAtZ0sn1YG+17lQBRFEkyJ17FNAIjyvNSGGaSB+JvarYThaPMAaRexdRDaI
+         U+DA==
+X-Gm-Message-State: AOJu0YxZoFrEZwZTfMPAcC83p57rFakVkKruP14sbPOO4sJsZ8W6Yasu
+	MySvEJcxWei/sRTBST8WAG+sp4gy9v8+L67Qropdpd9/boNcPFY+dqy/gh3OBsldfTVXM5LQlx7
+	5Mdb15L6Uom0uQfT9YhZwxMlKfrQVTowVO/tNCrTsHA==
+X-Gm-Gg: ASbGncs06XsVu+CFRhkFM57DeobEW3cwP2DC1kzB1G5ZTsju3xpla172zHirOzCxfNf
+	9MnZ3WI9rB7BvBJfg+d84cr1gOJi7jyXmz/tB2b1Ex3K9+bmr8ncrC8jxGa2g+aGBxVknMrEWfQ
+	zmnzR1GDxaIpjvQooT9VRkry+SsKNKWSewZssYquqDg9kWBh7i8rsM+oFE9lZIA1FWMnQmEn6ej
+	Zr9SMK27/wMZ8UenRkW1lbOrCsuBk59TsRPblEMeBib3RyqEshMWaGgmtEmzH8jzZt0ujgiPdMf
+	rHHR+yTZmv+BplPGhsyRN2kb8xxwU3XyXtqCsA==
+X-Google-Smtp-Source: AGHT+IGw0f+YcE/b9XOY4nzyRDLXQofKTsibyWbTH3ng33GClAIakTZfRBxIMB6uBbCki2tbS4Cge5r+UiRlJGAvq8s=
+X-Received: by 2002:a05:6512:3c89:b0:594:34c7:cb6c with SMTP id
+ 2adb3069b0e04-5969ea1b9e4mr6470181e87.15.1764080151955; Tue, 25 Nov 2025
+ 06:15:51 -0800 (PST)
+Received: from 969154062570 named unknown by gmailapi.google.com with
+ HTTPREST; Tue, 25 Nov 2025 06:15:50 -0800
+Received: from 969154062570 named unknown by gmailapi.google.com with
+ HTTPREST; Tue, 25 Nov 2025 06:15:50 -0800
+From: Bartosz Golaszewski <brgl@bgdev.pl>
+In-Reply-To: <20251123-multi_waitq_scm-v9-3-0080fc259d4d@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20251125-pci-m2-v3-1-c528042aea47@oss.qualcomm.com>
+References: <20251123-multi_waitq_scm-v9-0-0080fc259d4d@oss.qualcomm.com> <20251123-multi_waitq_scm-v9-3-0080fc259d4d@oss.qualcomm.com>
+Date: Tue, 25 Nov 2025 06:15:50 -0800
+X-Gm-Features: AWmQ_bkhKUiXVfQMMZaJrmrGItcxiRVME4IaWtMuxFWjPL8wqdvgjyDECEBuwXY
+Message-ID: <CAMRc=MfB6c=Fpxuapq9JXpGnFnx2SxpKjVk5yQNXFdtNF7FYZQ@mail.gmail.com>
+Subject: Re: [PATCH v9 3/3] firmware: qcom_scm: Use TASK_IDLE state in wait_for_wq_completion()
+To: Shivendra Pratap <shivendra.pratap@oss.qualcomm.com>
+Cc: linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	Unnathi Chalicheemala <unnathi.chalicheemala@oss.qualcomm.com>, 
+	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 
-On Tue, Nov 25, 2025 at 04:42:26PM +0530, Manivannan Sadhasivam via B4 Relay wrote:
-> From: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
-> 
-> Add the devicetree binding for PCIe M.2 Mechanical Key M connector defined
-> in the PCI Express M.2 Specification, r4.0, sec 5.3. This connector
-> provides interfaces like PCIe and SATA to attach the Solid State Drives
-> (SSDs) to the host machine along with additional interfaces like USB, and
-> SMB for debugging and supplementary features. At any point of time, the
-> connector can only support either PCIe or SATA as the primary host
-> interface.
-> 
-> The connector provides a primary power supply of 3.3v, along with an
-> optional 1.8v VIO supply for the Adapter I/O buffer circuitry operating at
-> 1.8v sideband signaling.
-> 
-> The connector also supplies optional signals in the form of GPIOs for fine
-> grained power management.
-> 
-> Reviewed-by: Frank Li <Frank.Li@nxp.com>
-> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
+On Sun, 23 Nov 2025 15:19:32 +0100, Shivendra Pratap
+<shivendra.pratap@oss.qualcomm.com> said:
+> From: Unnathi Chalicheemala <unnathi.chalicheemala@oss.qualcomm.com>
+>
+> When the kernel issues an SMC (Secure Monitor Call) and the firmware
+> requests the kernel to wait, the waiting thread enters an
+> uninterruptible (D) state. In case of an extended wait request by the
+> firmware, any device suspend request, cannot proceed because of the
+> thread stuck in D state. This blocks the device suspend.
+>
+> Replace wait_for_completion() with wait_for_completion_state(...,
+> TASK_IDLE), so that the waiting thread, show up in TASK_IDLE state,
+> instead of TASK_UNINTERRUPTIBLE (D state). This allows the thread to
+> block until completion, without blocking the device suspend.
+>
+> Signed-off-by: Unnathi Chalicheemala <unnathi.chalicheemala@oss.qualcomm.com>
+> Signed-off-by: Shivendra Pratap <shivendra.pratap@oss.qualcomm.com>
 > ---
->  .../bindings/connector/pcie-m2-m-connector.yaml    | 141 +++++++++++++++++++++
->  1 file changed, 141 insertions(+)
-> 
-> diff --git a/Documentation/devicetree/bindings/connector/pcie-m2-m-connector.yaml b/Documentation/devicetree/bindings/connector/pcie-m2-m-connector.yaml
-> new file mode 100644
-> index 000000000000..f65a05d93735
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/connector/pcie-m2-m-connector.yaml
-> @@ -0,0 +1,141 @@
-> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
-> +%YAML 1.2
-> +---
-> +$id: http://devicetree.org/schemas/connector/pcie-m2-m-connector.yaml#
-> +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> +
-> +title: PCIe M.2 Mechanical Key M Connector
-> +
-> +maintainers:
-> +  - Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
-> +
-> +description:
-> +  A PCIe M.2 M connector node represents a physical PCIe M.2 Mechanical Key M
-> +  connector. The Mechanical Key M connectors are used to connect SSDs to the
-> +  host system over PCIe/SATA interfaces. These connectors also offer optional
-> +  interfaces like USB, SMB.
-> +
-> +properties:
-> +  compatible:
-> +    const: pcie-m2-m-connector
-> +
-> +  vpcie3v3-supply:
-> +    description: A phandle to the regulator for 3.3v supply.
-> +
-> +  vpcie1v8-supply:
-> +    description: A phandle to the regulator for VIO 1.8v supply.
-> +
-> +  ports:
-> +    $ref: /schemas/graph.yaml#/properties/ports
-> +    description: OF graph bindings modeling the interfaces exposed on the
-> +      connector. Since a single connector can have multiple interfaces, every
-> +      interface has an assigned OF graph port number as described below.
-> +
-> +    properties:
-> +      port@0:
-> +        $ref: /schemas/graph.yaml#/properties/port
-> +        description: Host interfaces of the connector
-> +
-> +        properties:
-> +          endpoint@0:
-> +            $ref: /schemas/graph.yaml#/properties/endpoint
-> +            description: PCIe interface
-> +
-> +          endpoint@1:
-> +            $ref: /schemas/graph.yaml#/properties/endpoint
-> +            description: SATA interface
-> +
-> +        anyOf:
-> +          - required:
-> +              - endpoint@0
-> +          - required:
-> +              - endpoint@1
-> +
-> +      port@1:
-> +        $ref: /schemas/graph.yaml#/properties/port
-> +        description: USB 2.0 interface
-> +
-> +      port@2:
-> +        $ref: /schemas/graph.yaml#/properties/port
-> +        description: SMB interface
-> +
-> +    required:
-> +      - port@0
-> +
-> +  clocks:
-> +    description: 32.768 KHz Suspend Clock (SUSCLK) input from the host system to
-> +      the M.2 card. Refer, PCI Express M.2 Specification r4.0, sec 3.1.12.1 for
-> +      more details.
-> +    maxItems: 1
-> +
-> +  pedet-gpios:
-> +    description: GPIO controlled connection to PEDET signal. This signal is used
-> +      by the host systems to determine the communication protocol that the M.2
-> +      card uses; SATA signaling (low) or PCIe signaling (high). Refer, PCI
-> +      Express M.2 Specification r4.0, sec 3.3.4.2 for more details.
-> +    maxItems: 1
-> +
-> +  led1-gpios:
-> +    description: GPIO controlled connection to LED_1# signal. This signal is
-> +      used by the M.2 card to indicate the card status via the system mounted
-> +      LED. Refer, PCI Express M.2 Specification r4.0, sec 3.1.12.2 for more
-> +      details.
-> +    maxItems: 1
+>  drivers/firmware/qcom/qcom_scm.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/drivers/firmware/qcom/qcom_scm.c b/drivers/firmware/qcom/qcom_scm.c
+> index 149c2ccec2a5ff77054178fa021fd0b721d9f8d7..dfe0410fa9f965b16f8b0a9d98f3046e80b8b97b 100644
+> --- a/drivers/firmware/qcom/qcom_scm.c
+> +++ b/drivers/firmware/qcom/qcom_scm.c
+> @@ -2320,7 +2320,7 @@ int qcom_scm_wait_for_wq_completion(u32 wq_ctx)
+>  	if (IS_ERR(wq))
+>  		return PTR_ERR(wq);
+>
+> -	wait_for_completion(wq);
+> +	wait_for_completion_state(wq, TASK_IDLE);
+>
+>  	return 0;
+>  }
+>
+> --
+> 2.34.1
+>
 
-This led1-gpios property should be removed as this GPIO directly goes to the
-LED, not to the host.
-
-- Mani
-
-> +
-> +  viocfg-gpios:
-> +    description: GPIO controlled connection to IO voltage configuration
-> +      (VIO_CFG) signal. This signal is used by the M.2 card to indicate to the
-> +      host system that the card supports an independent IO voltage domain for
-> +      the sideband signals. Refer, PCI Express M.2 Specification r4.0, sec
-> +      3.1.15.1 for more details.
-> +    maxItems: 1
-> +
-> +  pwrdis-gpios:
-> +    description: GPIO controlled connection to Power Disable (PWRDIS) signal.
-> +      This signal is used by the host system to disable power on the M.2 card.
-> +      Refer, PCI Express M.2 Specification r4.0, sec 3.3.5.2 for more details.
-> +    maxItems: 1
-> +
-> +  pln-gpios:
-> +    description: GPIO controlled connection to Power Loss Notification (PLN#)
-> +      signal. This signal is use to notify the M.2 card by the host system that
-> +      the power loss event is expected to occur. Refer, PCI Express M.2
-> +      Specification r4.0, sec 3.2.17.1 for more details.
-> +    maxItems: 1
-> +
-> +  plas3-gpios:
-> +    description: GPIO controlled connection to Power Loss Acknowledge (PLA_S3#)
-> +      signal. This signal is used by the M.2 card to notify the host system, the
-> +      status of the M.2 card's preparation for power loss.
-> +    maxItems: 1
-> +
-> +required:
-> +  - compatible
-> +  - vpcie3v3-supply
-> +
-> +additionalProperties: false
-> +
-> +examples:
-> +  # PCI M.2 Key M connector for SSDs with PCIe interface
-> +  - |
-> +    connector {
-> +        compatible = "pcie-m2-m-connector";
-> +        vpcie3v3-supply = <&vreg_nvme>;
-> +
-> +        ports {
-> +            #address-cells = <1>;
-> +            #size-cells = <0>;
-> +
-> +            port@0 {
-> +                #address-cells = <1>;
-> +                #size-cells = <0>;
-> +
-> +                reg = <0>;
-> +
-> +                endpoint@0 {
-> +                    reg = <0>;
-> +                    remote-endpoint = <&pcie6_port0_ep>;
-> +                };
-> +            };
-> +        };
-> +    };
-> 
-> -- 
-> 2.48.1
-> 
-> 
-
--- 
-மணிவண்ணன் சதாசிவம்
+Reviewed-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 
