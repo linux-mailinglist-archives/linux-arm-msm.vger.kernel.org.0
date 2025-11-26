@@ -1,140 +1,181 @@
-Return-Path: <linux-arm-msm+bounces-83478-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-83477-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 61064C8A84E
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Nov 2025 16:05:42 +0100 (CET)
+Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [IPv6:2605:f480:58:1:0:1994:3:14])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6BAACC8A873
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Nov 2025 16:07:54 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 851D33A4C2E
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Nov 2025 15:05:38 +0000 (UTC)
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 26E9A4E2B6C
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Nov 2025 15:01:35 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BCDFE30215D;
-	Wed, 26 Nov 2025 15:05:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 22963306482;
+	Wed, 26 Nov 2025 15:01:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b="3Wtgqi98"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="gSnGmT1m"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f173.google.com (mail-lj1-f173.google.com [209.85.208.173])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9106304BBD
-	for <linux-arm-msm@vger.kernel.org>; Wed, 26 Nov 2025 15:05:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4949305969;
+	Wed, 26 Nov 2025 15:01:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764169533; cv=none; b=kZ7oiehbby+3e/+u/+UBxVk4MVj7dwkK+400LNdt31eVCd7z6Bv+uGhpr1ZtiaSj9+4XKQwYOfeJjvI9vgHllxi+p3Xl9C193sBW1Z1O3EZok9IRYOtHAeGET+Je/p10+45feq1JuoK02xugoovGCLxQ+a665fZg6sz5mHlw09E=
+	t=1764169293; cv=none; b=qwZGzOrUVSNIUoNumgw725UUy0IB/thXOjVzKjPSOaa2F0YnD2n3DOs3BiYHcrEu4akSeYfqwrrPcipCTSXOWeNKsbGDWAb7OQSIBmFDcB5SxExXnHe5HqYeT84sp9h45tB2gG31bLaAXsPg0FGDeAOA6NezREBexmqBbnkgrX4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764169533; c=relaxed/simple;
-	bh=J+oyg1mBBqSSQQkvSrNBpiZ7W6zMitALsCYhR3FXK+s=;
-	h=From:In-Reply-To:MIME-Version:References:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=u22ZSWn+jCKnWO9tmp4CW+pHKKz3V+K0Uk9YM/ZjswFIcIcLr/wyT+YUPGGYA+DgfjFc+PMZvyDdpG+2ZytmLkcJQubuiwsJJBr14VYYNycotOG/BhsfV8prWXdaqMkcLUMWsrXaVuEQz5SshfOQIgUt1pq+f6ddCacOfLmpS2s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl; spf=none smtp.mailfrom=bgdev.pl; dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b=3Wtgqi98; arc=none smtp.client-ip=209.85.208.173
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=bgdev.pl
-Received: by mail-lj1-f173.google.com with SMTP id 38308e7fff4ca-37a2dcc52aeso65704901fa.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 26 Nov 2025 07:05:31 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=bgdev-pl.20230601.gappssmtp.com; s=20230601; t=1764169530; x=1764774330; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:references:mime-version:in-reply-to
-         :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=ZdozIWg11HXn8YrxuTHyeRPHWCFIep7IAFKsHH2Slm4=;
-        b=3Wtgqi98DePCWX3LVQHFO8RvE/Uoctt4R6OLMyobJSdTCkfut6H3uSSejsiM2Wh0+t
-         N8Sq1CISf/NnD1674k0f+jXFK4Q5/ueq/UQgrCAgSyakuDlQ06o3tNPqp1fjd7Bhodn5
-         yIwb3CREJ8EQ9gkb9xkTKxLISO6byCyKAgSQY0IzMmVWuyTLYSECzlMS3c357eudzVN4
-         0H/WU2X9T+ANnPruXCjmu9vSWit+hukqceg4wPIeKiZJDlyFOe+xdWtmF5jV9Uhb/0uj
-         XFlBonSqH0dbr45jKeCPMN9rLBVJwvFjVLeXYFT5BdLzEYpAaIumMZBbTkA48bregwBH
-         oObA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1764169530; x=1764774330;
-        h=cc:to:subject:message-id:date:references:mime-version:in-reply-to
-         :from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=ZdozIWg11HXn8YrxuTHyeRPHWCFIep7IAFKsHH2Slm4=;
-        b=sWw/KwDXozqbmtvaQKoujxqpJ+YnmpFyaM3sk8PCk/DtEytSc9ue381PRFNi/vlT3B
-         zpXm+dof+QJx1LQpLOBQ+mgsbDWfCef8cM7dLdEhdg3plw/t7HZbvkpuGMUuyRRz/Fy2
-         a+ewC5/b2079hdaoQy6BnK8mBaAB8UFFVZmPujrUh1qNjKh05zD+Iaqj8nJbkDxqQY7q
-         /jjNw2ySEFDlO8z/2dgyI0qX1XRA/QJWPc5cI2B/xeTsRBXkQEgNm9+v1RMp0zOZOe2U
-         wNrgd0MuufNlFIUKRNutoV4svJWI+BaMeXto6cASTGWIFALAht405yj7VRVkGAWWEXp2
-         WQ0Q==
-X-Forwarded-Encrypted: i=1; AJvYcCWQkbu4ZJKNLCskFoz4cVP/lRC7XR+rHW1HjrOBfq/IyQFF9OsHnjxm4SpSXIpARmzNJXJzMcM694KcOkoY@vger.kernel.org
-X-Gm-Message-State: AOJu0YzXzAp6tqtHzcjtEAWfoAy+9VxYZR4oYw7s+wMnH6TiEdbrgIF+
-	uDCRlEsMtPBcWAJTyi1UkPgSJVKfdkpD3KoHYwhYUpIYXblZrpBhp+kpRt+z9XSK/OglYYphkn/
-	2sqgpctSAppL3rH28i03vIVTVZvJvEzpnFblSFIowag==
-X-Gm-Gg: ASbGncteZjZTTzCMlI40ZDjgFop1kOaUa4cf3v/gbnLb5v/lhOImKdkAqFqkRJGuU3x
-	fvpZ58t2mz6Y+vdvSP/deES/eYwzI3pb5UcbjNt6ThpHit1iH1+m7bIH1ZNoYq6ymhT1PBGO8X4
-	Q8JOmQArDVR7wEZ8GRAqfdzrVaWnxUm4vqWufRH41B5R/LDarPTSa/zaqycxwdnA17pn7iG9AjB
-	FgAeDmgFzq6CAk6ROJyyeYRpF40ADdhqfHpWy+GnflAKc3vmXM3nxdGLL0DKBvKZR+ZY98JC8Wr
-	n86KXcECIFuJ1qJ5iHLdNvJRkb4=
-X-Google-Smtp-Source: AGHT+IFW4CVHKhpnJ+JDeABCBeOEaqoUOa+vDI4F3g0UIFLPs7i4zmAKKWQz/RrJb85q7OyTg13Elak/IxVETnc6Fz0=
-X-Received: by 2002:a2e:9f4b:0:b0:36a:925e:cf3c with SMTP id
- 38308e7fff4ca-37d07952b19mr17246381fa.31.1764169529898; Wed, 26 Nov 2025
- 07:05:29 -0800 (PST)
-Received: from 969154062570 named unknown by gmailapi.google.com with
- HTTPREST; Wed, 26 Nov 2025 07:05:27 -0800
-Received: from 969154062570 named unknown by gmailapi.google.com with
- HTTPREST; Wed, 26 Nov 2025 07:05:27 -0800
-From: Bartosz Golaszewski <brgl@bgdev.pl>
-In-Reply-To: <d56ac97f-24bb-4ea5-a46c-a07dfd0c9e62@nvidia.com>
+	s=arc-20240116; t=1764169293; c=relaxed/simple;
+	bh=6zhLnYcBNO7oE7VrqoJCi8J+9W+4pP7HaFmoXrIQEk0=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=WT8Kl9oK1x6HMTvsNa1vL5NX85s+wM6tPha4JzJ/ATN+YiP3IYeODnw9iSo1KyHE7GRZkuf6GgXRnQC+yt8/QTtatoG9lduDE1Mmru+b9OSOAzzrHI4Mgq8x0V7Kx1d3F76m5Qa7VXCP7lu1VEh+NUHUkudyOgoPHr9gVMiBJSs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=gSnGmT1m; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50307C4CEF7;
+	Wed, 26 Nov 2025 15:01:31 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1764169292;
+	bh=6zhLnYcBNO7oE7VrqoJCi8J+9W+4pP7HaFmoXrIQEk0=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=gSnGmT1mGiutRvEa6ss3zMDXzIM/lQGRd5WDJaIuzEIsolfytzyiHLYu2KY4b/Vpp
+	 8mS+gas/fnAWTP3nEnoX8KPlVm7XFQXlKZwx5AvgNKHDdszrU8u/XNFDgv9gE+kGzo
+	 0aMHo1yGql+vdfzvCkpjoxCmLA4L9v1jNy/Tgo4iznekwE5m0Ub0PNj+yP8XfTnrkF
+	 xZyMHOypi2faUgWGlHuUXgJfEY5sdiaBXGj+NQWfXMxjWS4gcSfiu63hfFFvP+vdeD
+	 fSCs2CiV/ceTXK8fh2UCgBajWfWqFVS9xrohzcu6LwMcCVj3wJgZe7MQ2BxC0hYN6j
+	 eilZXrfqiP+RQ==
+Date: Wed, 26 Nov 2025 09:07:02 -0600
+From: Bjorn Andersson <andersson@kernel.org>
+To: Praveen Talari <praveen.talari@oss.qualcomm.com>
+Cc: Andi Shyti <andi.shyti@kernel.org>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Mukesh Kumar Savaliya <mukesh.savaliya@oss.qualcomm.com>, Viken Dadhaniya <viken.dadhaniya@oss.qualcomm.com>, 
+	Konrad Dybcio <konradybcio@kernel.org>, linux-arm-msm@vger.kernel.org, linux-i2c@vger.kernel.org, 
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, psodagud@quicinc.com, 
+	djaggi@quicinc.com, quic_msavaliy@quicinc.com, quic_vtanuku@quicinc.com, 
+	quic_arandive@quicinc.com, quic_shazhuss@quicinc.com, 
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Subject: Re: [PATCH v1 01/12] soc: qcom: geni-se: Refactor geni_icc_get() and
+ make qup-memory ICC path optional
+Message-ID: <c4qgjg3npsi6dkvqyj2z5drd7mfg2w2o4cjjcgepxdsrgiyiic@qdpkcic56iwv>
+References: <20251122050018.283669-1-praveen.talari@oss.qualcomm.com>
+ <20251122050018.283669-2-praveen.talari@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20251112-gpio-shared-v4-0-b51f97b1abd8@linaro.org>
- <20251112-gpio-shared-v4-7-b51f97b1abd8@linaro.org> <0829a21c-f97d-41b6-90bc-2acaec42caab@nvidia.com>
- <CAMRc=MdPvF+okfnRuwvAFG9UfyZ-araDsaaKMxKASEbc3rhyjQ@mail.gmail.com>
- <705186a9-a9db-46f0-bf2b-b499def050dd@nvidia.com> <CAMRc=MdQ8QgbdAd2sudZLgcDZu9DxBRJh5sfLeXwcTDEE0F7Uw@mail.gmail.com>
- <d56ac97f-24bb-4ea5-a46c-a07dfd0c9e62@nvidia.com>
-Date: Wed, 26 Nov 2025 07:05:27 -0800
-X-Gm-Features: AWmQ_blhTm345iaYZ4rHG9m3t_z_cQOEDjbyggM_ksomZgdEfdTrTBoPz53r_Yc
-Message-ID: <CAMRc=MerzKQTSj6PXeiWDA4qfNou8ApKYLgJhUGLP0QBatqtVQ@mail.gmail.com>
-Subject: Re: [PATCH v4 07/10] arm64: select HAVE_SHARED_GPIOS for ARCH_QCOM
-To: Jon Hunter <jonathanh@nvidia.com>
-Cc: Kees Cook <kees@kernel.org>, Mika Westerberg <westeri@kernel.org>, 
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>, Andrew Morton <akpm@linux-foundation.org>, 
-	Linus Walleij <linus.walleij@linaro.org>, Manivannan Sadhasivam <mani@kernel.org>, 
-	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Saravana Kannan <saravanak@google.com>, Greg Kroah-Hartman <gregkh@linuxfoundation.org>, 
-	Andy Shevchenko <andy@kernel.org>, Catalin Marinas <catalin.marinas@arm.com>, Will Deacon <will@kernel.org>, 
-	Srinivas Kandagatla <srini@kernel.org>, Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>, 
-	Jaroslav Kysela <perex@perex.cz>, Takashi Iwai <tiwai@suse.com>, 
-	Alexey Klimov <alexey.klimov@linaro.org>, Bjorn Andersson <andersson@kernel.org>, 
-	Konrad Dybcio <konradybcio@kernel.org>, linux-hardening@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, linux-gpio@vger.kernel.org, 
-	linux-arm-kernel@lists.infradead.org, linux-sound@vger.kernel.org, 
-	linux-arm-msm@vger.kernel.org, 
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>, 
-	"linux-tegra@vger.kernel.org" <linux-tegra@vger.kernel.org>, Bartosz Golaszewski <brgl@bgdev.pl>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20251122050018.283669-2-praveen.talari@oss.qualcomm.com>
 
-On Wed, 26 Nov 2025 15:55:54 +0100, Jon Hunter <jonathanh@nvidia.com> said:
->
->> Is the device-tree used here upstream? Can you enable DEBUG_GPIO in
->> Kconfig and post the entire kernel log on pastebin?
->
-> Yes this is the upstream device-tree in
-> arch/arm64/boot/dts/nvidia/tegra194-p2972-0000.dts. OK I will get the
-> entire log for review.
->
+On Sat, Nov 22, 2025 at 10:30:07AM +0530, Praveen Talari wrote:
+> Refactor the geni_icc_get() function to replace the loop-based ICC path
+> initialization with explicit handling of each interconnect path. This
+> improves code readability and allows for different error handling per
+> path type.
 
-If you could also add the following:
+I don't think this "improves code readability", IMO you're turning a
+clean loop into a unrolled mess.
 
-diff --git a/drivers/gpio/gpiolib-shared.c b/drivers/gpio/gpiolib-shared.c
-index 3803b5c938f99..51af7886d9f2d 100644
---- a/drivers/gpio/gpiolib-shared.c
-+++ b/drivers/gpio/gpiolib-shared.c
-@@ -101,6 +101,8 @@ static int gpio_shared_of_traverse(struct device_node *curr)
- 		    strcmp(prop->name, "gpio") != 0)
- 			continue;
 
-+		printk("%s: %pOF %s\n", __func__, curr, prop->name);
-+
- 		count = of_count_phandle_with_args(curr, prop->name,
- 						   "#gpio-cells");
- 		if (count <= 0)
+But then comes the least significant portion of your "problem
+description" (i.e. the last words of it), where you indicate that this
+would allow you to have different error handling for "qup-memory".
 
-That would help me.
+This is actually a valid reason to make this change, so say that!
 
-Bart
+
+> 
+> The "qup-core" and "qup-config" paths remain mandatory, while "qup-memory"
+> is now optional and skipped if not defined in DT.
+> 
+
+Please rewrite this message to _start_ with the problem description.
+Make it clear on the first line/sentence why the change should be done.
+
+E.g. compare with something like this:
+
+"""
+"qup-memory" is an optional interconnect path, unroll the geni_icc_get()
+loop in order to allow specific error handling for this path.
+"""
+
+You only need to read 4 words to understand exactly why this patch
+exists.
+
+> Co-developed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+> Signed-off-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+> Signed-off-by: Praveen Talari <praveen.talari@oss.qualcomm.com>
+> ---
+>  drivers/soc/qcom/qcom-geni-se.c | 36 +++++++++++++++++----------------
+>  1 file changed, 19 insertions(+), 17 deletions(-)
+> 
+> diff --git a/drivers/soc/qcom/qcom-geni-se.c b/drivers/soc/qcom/qcom-geni-se.c
+> index cd1779b6a91a..b6167b968ef6 100644
+> --- a/drivers/soc/qcom/qcom-geni-se.c
+> +++ b/drivers/soc/qcom/qcom-geni-se.c
+> @@ -899,30 +899,32 @@ EXPORT_SYMBOL_GPL(geni_se_rx_dma_unprep);
+>  
+>  int geni_icc_get(struct geni_se *se, const char *icc_ddr)
+>  {
+> -	int i, err;
+> -	const char *icc_names[] = {"qup-core", "qup-config", icc_ddr};
+> +	struct geni_icc_path *icc_paths = se->icc_paths;
+>  
+>  	if (has_acpi_companion(se->dev))
+>  		return 0;
+>  
+> -	for (i = 0; i < ARRAY_SIZE(se->icc_paths); i++) {
+> -		if (!icc_names[i])
+> -			continue;
+> -
+> -		se->icc_paths[i].path = devm_of_icc_get(se->dev, icc_names[i]);
+> -		if (IS_ERR(se->icc_paths[i].path))
+> -			goto err;
+> +	icc_paths[GENI_TO_CORE].path = devm_of_icc_get(se->dev, "qup-core");
+> +	if (IS_ERR(icc_paths[GENI_TO_CORE].path))
+> +		return dev_err_probe(se->dev, PTR_ERR(icc_paths[GENI_TO_CORE].path),
+> +				     "Failed to get 'qup-core' ICC path\n");
+
+To taste, but I think a local variable would be helpful to make this
+less dense.
+
+	path = devm_of_icc_get(se->dev, "qup-core");
+	if (IS_ERR(path))
+		return dev_err_probe(se->dev, PTR_ERR(path), "Failed to get 'qup-core' ICC path\n");
+	icc_paths[GENI_TO_CORE].path = path;
+
+Regards,
+Bjorn
+
+> +
+> +	icc_paths[CPU_TO_GENI].path = devm_of_icc_get(se->dev, "qup-config");
+> +	if (IS_ERR(icc_paths[CPU_TO_GENI].path))
+> +		return dev_err_probe(se->dev, PTR_ERR(icc_paths[CPU_TO_GENI].path),
+> +				     "Failed to get 'qup-config' ICC path\n");
+> +
+> +	/* The DDR path is optional, depending on protocol and hw capabilities */
+> +	icc_paths[GENI_TO_DDR].path = devm_of_icc_get(se->dev, "qup-memory");
+> +	if (IS_ERR(icc_paths[GENI_TO_DDR].path)) {
+> +		if (PTR_ERR(icc_paths[GENI_TO_DDR].path) == -ENODATA)
+> +			icc_paths[GENI_TO_DDR].path = NULL;
+> +		else
+> +			return dev_err_probe(se->dev, PTR_ERR(icc_paths[GENI_TO_DDR].path),
+> +					     "Failed to get 'qup-memory' ICC path\n");
+>  	}
+>  
+>  	return 0;
+> -
+> -err:
+> -	err = PTR_ERR(se->icc_paths[i].path);
+> -	if (err != -EPROBE_DEFER)
+> -		dev_err_ratelimited(se->dev, "Failed to get ICC path '%s': %d\n",
+> -					icc_names[i], err);
+> -	return err;
+> -
+>  }
+>  EXPORT_SYMBOL_GPL(geni_icc_get);
+>  
+> -- 
+> 2.34.1
+> 
 
