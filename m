@@ -1,206 +1,310 @@
-Return-Path: <linux-arm-msm+bounces-83380-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-83381-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id E801EC884B5
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Nov 2025 07:41:35 +0100 (CET)
+Received: from ams.mirrors.kernel.org (ams.mirrors.kernel.org [IPv6:2a01:60a::1994:3:14])
+	by mail.lfdr.de (Postfix) with ESMTPS id 534EFC884D4
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Nov 2025 07:43:30 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 778683B42B6
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Nov 2025 06:41:34 +0000 (UTC)
+	by ams.mirrors.kernel.org (Postfix) with ESMTPS id 5A3FE356125
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Nov 2025 06:43:26 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 17D6931691A;
-	Wed, 26 Nov 2025 06:41:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CC4D930CDA4;
+	Wed, 26 Nov 2025 06:43:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=outlook.com header.i=@outlook.com header.b="Cr8/Hp6c"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="XZmc4rU6"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from CH4PR04CU002.outbound.protection.outlook.com (mail-northcentralusazolkn19013070.outbound.protection.outlook.com [52.103.20.70])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DB02313E31;
-	Wed, 26 Nov 2025 06:41:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.103.20.70
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764139283; cv=fail; b=b808A7HxIpPJ9RFcUXdLleSylfxlvx2xd+88pB9RNLO8f+xLrgliuXi9393PaGy5djy0mOb9ZkE74bjHMa2bHcuht3KoGNz+z7t+TAmarqEdWrAMNooqX0iB5ZYyVWe0cJnlEIqpObEzvrzMSfVvu8G28n5fa/jbMkdxPTWyEtw=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764139283; c=relaxed/simple;
-	bh=q88JB2uR876E1r7mKMWTvmBHENdhBctlTP35ATrxdvk=;
-	h=Message-ID:Date:Subject:To:Cc:References:From:In-Reply-To:
-	 Content-Type:MIME-Version; b=IHvdl69xBXQ8JoYTct/aFOwrSB3SkkH+6OzNgxV2dzKzelBIt0nd/LqL0CBoIriO7tGAPrEghFa300jjcVeWou2fqPxD8SKIVtrWSmt00dZs44VVjKvDUQ5JQz80jYOID+T5k7nR56oF7l1Mrj5aRDzHHHpaX36lSCWiBarxELg=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=outlook.com; spf=pass smtp.mailfrom=outlook.com; dkim=pass (2048-bit key) header.d=outlook.com header.i=@outlook.com header.b=Cr8/Hp6c; arc=fail smtp.client-ip=52.103.20.70
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=outlook.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=outlook.com
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=INkzRD++urYilw4pDDe2hKR8ohtQyuukesFqTUvDE3Ig8ZBBlH5be54A1dKM+1y0B7eYqg/5hXETX9DatmTK1B6RVie1Srh9EP7js6Q/df9DWfB1u3fdpJa+u2b7+4gjE4BKWrdQWkn+m0sf3c/sIa+/2OmAddVUCI+22lPGe28oWcDJBd7zSPQIaynem9+yvfoKVBOE98qDdX7BufQZiz2jMKyb+xO0QGeYZC1Y2+twYIlUgYiVM41G8Nez006rMOugBINohGGIVWFADPwYTE0SoHbuI7sIvA9uCNDV/QFKg2VEnICuyo/4igL0klzmPRDqD3kSs+4p3Py+isjNAQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=0LdIB0EadAtuOqupvGi2DWv7JWVfmXNNX5qWkwsvqLQ=;
- b=qHouWCrMxSeuTzO6Im+uZqZxqA3np5GKZZuJ+y6mWqH+yx1yTiIlGkFM11qL8LGQjp8ubImylZ4Wy+2yX9YC7eUDV05GMALHi9wwc1dkvyBQEaemRmB/QfWqs2LJWffaTTRBO7Tfy5y8lCWf1pAma3q01oiCK4tFIkCb6k8yrto7zKNIz7IjYGUR7dYFYE97JyFGgb8bQLTnYHYMzcA6Q2Awruepf/6BikPHq/QWzdLpfFfilGCDksGIQ8L306ASB9G/I9dad3TJPabcMNVjFeVpMNJj3TOkMQtLZjvhjOz53dyXr0yz1f8NIOakSh8hac1CeJ8o8gKw3JmNC6QZGA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
- dkim=none; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=outlook.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=0LdIB0EadAtuOqupvGi2DWv7JWVfmXNNX5qWkwsvqLQ=;
- b=Cr8/Hp6cl6jZfZDR1XdI/SqJa0xNfUR0WDxDr5jr/DHP6EjLZeVpf2fwdhzpv2j5BNtjdSHtlXt4RK78rsB7nFpve5DMENd4PqSSFaBz2o23CoJVSlZ7yayT6H/Q9NqEqS0rFtQJEvv5mDCaYcoblyBIY9Y7NokO0pvYiJjHv9+pWBt11awuUnHjcXELEG8irsVAQUjhgQXtCtnfYv3V2ufzarGHE499kVaqz3UO5VJ6vmMCAgfuYZlT+D7aKdEZVuKeOZU+8hEhFNYiksAokjMSC6whSaAbpfLsIMctFQ+YwSNaXEBsnFNwC+MB2qcv6mGzies+jCk64qpUaiaszw==
-Received: from DS7PR19MB8883.namprd19.prod.outlook.com (2603:10b6:8:253::16)
- by SJ0PR19MB4809.namprd19.prod.outlook.com (2603:10b6:a03:2e0::17) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9366.11; Wed, 26 Nov
- 2025 06:41:17 +0000
-Received: from DS7PR19MB8883.namprd19.prod.outlook.com
- ([fe80::5880:19f:c819:c921]) by DS7PR19MB8883.namprd19.prod.outlook.com
- ([fe80::5880:19f:c819:c921%5]) with mapi id 15.20.9343.016; Wed, 26 Nov 2025
- 06:41:17 +0000
-Message-ID:
- <DS7PR19MB888336A2FF72E59289F7E4B29DDEA@DS7PR19MB8883.namprd19.prod.outlook.com>
-Date: Wed, 26 Nov 2025 10:41:07 +0400
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/2] dt-bindings: thermal: qcom-tsens: make ipq5018 tsens
- standalone compatible
-To: Daniel Lezcano <daniel.lezcano@linaro.org>,
- Amit Kucheria <amitk@kernel.org>, Thara Gopinath <thara.gopinath@gmail.com>,
- "Rafael J. Wysocki" <rafael@kernel.org>, Zhang Rui <rui.zhang@intel.com>,
- Lukasz Luba <lukasz.luba@arm.com>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Sricharan Ramabadhran <quic_srichara@quicinc.com>,
- Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>
-Cc: linux-pm@vger.kernel.org, linux-arm-msm@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- Dmitry Baryshkov <lumag@kernel.org>,
- Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-References: <20250818-ipq5018-tsens-fix-v1-0-0f08cf09182d@outlook.com>
- <20250818-ipq5018-tsens-fix-v1-1-0f08cf09182d@outlook.com>
- <fe1efb30-9d23-4291-a21e-80a5ffb954b1@linaro.org>
-Content-Language: en-US
-From: George Moussalem <george.moussalem@outlook.com>
-In-Reply-To: <fe1efb30-9d23-4291-a21e-80a5ffb954b1@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: DX0P273CA0001.AREP273.PROD.OUTLOOK.COM
- (2603:1086:300:26::6) To DS7PR19MB8883.namprd19.prod.outlook.com
- (2603:10b6:8:253::16)
-X-Microsoft-Original-Message-ID:
- <a1516a75-47a7-441d-b960-b37009458f2e@outlook.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE8C23126D4;
+	Wed, 26 Nov 2025 06:43:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1764139403; cv=none; b=HZxkSwDdul5fDqjTY3jAenR9C1Bw1u6L3y7UDMsiBwmo+rU1C7+swwgiQtUP88PlJw90AnqLHYk1YgJfPf2mjORI70OHu16TUaG6nXMWyDEqGBSOC4QLoqLzzG7f7+MYR1hUB+JcXc+rxbjg0R7VrWkrHunYneU0Vpg9bwI4nvg=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1764139403; c=relaxed/simple;
+	bh=kmKsnZpFmEl6BUWq+YciP0YejMR7MApvaXYd8yMllik=;
+	h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type; b=sJDf410krx3CNtVXQFdr73FtmfuMWR+lXcAPqS12KCCGaWQCmzYdkY8D5XS2PyodBakF5N8dmcK/ZgbLDXluhSw5W3mAKliloLJUrIJu5wuG+JupDTUAwuEqQPRqf0rDQ0xNRNw9azR2NKUVneOFYPBmRFrQqXn37+mXrS6I+/M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=XZmc4rU6; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 5AQ52wxA2726797;
+	Wed, 26 Nov 2025 06:43:15 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=qcppdkim1; bh=6lRzbzAne2eodyVs4ztJeD
+	MaNBKrvZMbavDV0LKHBPk=; b=XZmc4rU6iiXZY8zMACsoKLIO/ABuze9+Ev/0m5
+	kUsFgA+Wj7W7sQ7veyIEFd30O43rO135Ip4KqhGAOEilPt2bhqBuJWDXOEO2ha4p
+	tGbBTXD94JUrftahsn9llcwNaoRYhHG7UhWvieLDtI+MB7yS5PDRdeSy1aqTehrv
+	KpYL3Jiqwgif3FMAjjjcGg/pt8xGXUtkIy3ZvCuFMHRrZ9TcilBH+IJbAU6KUAAN
+	Hwz2zTQpgQGPw4vpbdN0k0yunSzcHMxnT3Z4c03bBSyZK30NvNOSlEK7j6pWXkl7
+	NTPZ0sGldGzFq3Qd2Jyw8RmLoy7brNCHzeNBv277dVwTDyCA==
+Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4an8rvuevn-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 26 Nov 2025 06:43:15 +0000 (GMT)
+Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
+	by NASANPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 5AQ6hESm032106
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 26 Nov 2025 06:43:14 GMT
+Received: from hu-mdalam-blr.qualcomm.com (10.80.80.8) by
+ nasanex01a.na.qualcomm.com (10.52.223.231) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.17; Tue, 25 Nov 2025 22:43:11 -0800
+From: Md Sadre Alam <quic_mdalam@quicinc.com>
+To: <adrian.hunter@intel.com>, <ulf.hansson@linaro.org>,
+        <linux-arm-msm@vger.kernel.org>, <linux-mmc@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <abel.vesa@linaro.org>,
+        <ebiggers@kernel.org>
+Subject: [PATCH v6] mmc: sdhci-msm: Enable ICE for CQE-capable controllers with non-CQE cards
+Date: Wed, 26 Nov 2025 12:12:51 +0530
+Message-ID: <20251126064251.1928529-1-quic_mdalam@quicinc.com>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-MS-Exchange-MessageSentRepresentingType: 1
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: DS7PR19MB8883:EE_|SJ0PR19MB4809:EE_
-X-MS-Office365-Filtering-Correlation-Id: 220884d1-642c-4c52-8cff-08de2cb6ccd9
-X-MS-Exchange-SLBlob-MailProps:
-	rYPt1fhvLTXldmhndCG1doo/61GR+z6VFYLBOTBtoH/B5l1IOYJ/dyKkU9fxuMbTNvHhvpTPJukgneIQHNVXL7dh00RBWOwyw1ZOayyhGsJb9vwzXfaUXV1iF/DJL+KfmZXYL3KE0qQd+Qcsvj3KAySSORWh/DvN8vKlJZjfzfLp2n8dRbzjKU81x1W8GlS1bC2sGUzKGj3mY2IjN1IA1M2/mEmiT48GrYevnUWJ7MraxdeyAQIsVZdB1CmWS9KV/WbqXL5HSCPU6D+ImvZuyQJbVHUh3rxucyX44vB40yBAgvkm2uhmAikMS7vaDLVYR7JRQYmewwjN87rSEnn7kyjpz0WXMPOpxbujEpy1lt/iqXd8cpytbQJ3kyeEF0O+uZFc0/CAP0p01VL4vH7xrp8KA4KOvCvvciwoHtpUp4D1lyTk9SsKoNcrx1Ldo38zb7R+FmjpaPMv8fn8Xuja9zG3rgXzGs/8g4ZdQeuTYVFmu83DjT+a9glo4YPQNl0lj8a1N/73VVASZHEXtAujfi+EdFkF+SpxoSI8TzHGe0VnC7OxO29IpcffWv2W9aR2cliYydFhXsY8N7LwL230PuFXTAjhDTamzrKv9Llmtl7pPVaUv0e+UQO+yYH3WRqrCjJ/11yJEQv+1WPnTO8R0WdTVhxOdxqdM9Ej55dfzoLelr5xDBsxAkZxQQrxSNsi+g3yUf5PuJQxpp34Qy+0Xg==
-X-Microsoft-Antispam:
-	BCL:0;ARA:14566002|51005399006|8060799015|23021999003|19110799012|461199028|15080799012|5072599009|6090799003|40105399003|440099028|3412199025;
-X-Microsoft-Antispam-Message-Info:
-	=?utf-8?B?bU9jZThnYWlqZnVOaktQYUlRUU1QcnIyTks1MWlUaTkvWGFkcENsdTB0ejFt?=
- =?utf-8?B?VHBTWWx2Wkh3ajY3M1IyT3FValN2aUJIYVVCS3pEOWt3aE02NE4zTVRtY2VJ?=
- =?utf-8?B?ZzAzQkRENGM4WVpnRVoycnVoVVlJVUdBaE9NY3hrcUp0WkhSQkwxMVZPU1Yv?=
- =?utf-8?B?TGRBQnN0MUp6b05FUHhOeG41eG03TGp5akhIK3JLN2NNUUx2a0xvRkUzL0xU?=
- =?utf-8?B?RStZS1RyeHdEU05PeXRRWUk5b3FvZnlEdUt3a3lZTElZejJLOW5aUW5XZzJ3?=
- =?utf-8?B?a29Ka3B6bGhEWExlcmFkd3FFM3p1bGxuSkE0OThvRDdBNnNhaVJjekZxd3M5?=
- =?utf-8?B?Znk3K2hBMmFKSFJZclBMY1Y3eTR6UEdJTDRmUHBCVVZhWHo5K280bzdBenQ3?=
- =?utf-8?B?a3N6ak5ETWNhVnUxeFpwdUZLR2E0TjNnS29ld3lOMDRrRnZTc0RiNnBqRDhu?=
- =?utf-8?B?dGpuYkhhNHdWK25GamI5ZDZub1A1REcwalVPbEpwUGhvTGJmMytBK0FIdjVX?=
- =?utf-8?B?Q3c1eEovUEg4NkM4cjA4RXBaRW93U3o2a2VPMGpuNktRNHBrbUdmQWFJSHpU?=
- =?utf-8?B?VkFQaFRmaWZJV0ptdE9ORUxtSEpoSW8waXNsOU5SSjRLUVVRV3dwSDJPRTF1?=
- =?utf-8?B?dzBLZWVCc0lMUmZTb1pBMTA0N1Q5SWtWb1llU1VaSzIvNlVLR3VSSkphNGMx?=
- =?utf-8?B?M3RIWjBYZkRKM0tTSUhNcnQxV21LamxaVXNGR1NKbmI0MVFxMkxQRUltazVi?=
- =?utf-8?B?TnR1Q3prN2ZUZTVERVArU3ZHQ2w1REF1b2xqb1JpbXBuWTJNajFvelZtRjEw?=
- =?utf-8?B?SFRrVTZVODF0T0VweGwxd1FRSlJoUndHcFNqUTUrVTVlUGdwRk82UTcxNkhU?=
- =?utf-8?B?d291U3piMC9TTk1TK2k5SDlrQ0xTUVM3TUU2cDdmS3ZDUWNuaG14UzhNV1kv?=
- =?utf-8?B?cFY1S1dmSE5sMUQyVGFMY3VpNWxOdGp6TG1yNHFXZXlqQW9zS1J6TDR5Q25B?=
- =?utf-8?B?R1I5ajVPT2xuMm96MjlHd3VpcGJoeW93UlI0QTc3Snp0K1VYeDY4TFNYR0dC?=
- =?utf-8?B?M21GRlJ3amhqUk1KTWFDMEZiWjlDRFgySUxhNnlWVWphZzljL0VFaWFyL0w3?=
- =?utf-8?B?Z3FaYnR2Y1BLeWNxeXY3Q0dmWEJvY3B0cmRQekhPOVNEZFFCVHZaWWFDd1hY?=
- =?utf-8?B?SlNmV0dlT2RablJWVExnV0EwZGlDMDFUTlpTYWN1RnJYdGJlam5nbE1FK1hZ?=
- =?utf-8?B?eTVUeDFQNmVURnkrb3llaFl2b2REREE1MzRsZ0c3MTAwY0NXMzU5Tysxa2x0?=
- =?utf-8?B?THFFYkUydGFndXZXNVNXa3pqeGdYenVmQjdvUzU5bllFcGYwckdZN09qalB4?=
- =?utf-8?B?dngrOXp3b2J1aVZsSkZLeHg5Mk02UHpvYnVYdyt0cnFOMEhlUVA4alBCQnhx?=
- =?utf-8?B?TE1qVFhCeEhkQS9YaC84MGMyQ0wzT1lsbUNZL3NnWXZBSUoxU2V2Q3JQdk9t?=
- =?utf-8?B?b2xrUnpaWTc4VXdmdkhrZG1KOUFjUG5jVHlOWlVyUEhTQmZkbG1kdDI1dlpU?=
- =?utf-8?B?VythRnJxQURGcW5qVitUdzhpN1FtMzVNcUdJcG5ONUtOVGlMRDV3cXNaR2k5?=
- =?utf-8?B?eFJ4QW9lZWJmdTFQRkZlRmpMVnZlcVE9PQ==?=
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?utf-8?B?djU3NzMvSkM2U09SQ0pLRHJDbmczS1lXTldQaEFGSlowVGo3ejhvMGFMNVFQ?=
- =?utf-8?B?Rzd1RGliUFVla3BGcHBSWkt1bm4xVHh0eGZNQnI3UEY5eU1UMlZwN1lONXl5?=
- =?utf-8?B?eEppUGp0WmlMQU9uVjlDS0FPaFIwZGYyWE9sdkpLZ2tIWTdGbk52ZUpqTXV5?=
- =?utf-8?B?YjlWeVh2VkFrank4YWU1cnJpbUVMelp3a3NuMmpLS2lvR3c5YkpkVjlsVFA3?=
- =?utf-8?B?a2hrL2dSNTMvZlh4ckptM2VNajhtSUowNm9lY0l6OTdVLzd1NG9lVU0xcmRl?=
- =?utf-8?B?bGVBUURzT05oSmdxZU9henhrSnQ3dkNxTWxiZlRqYTVzUnBxait5V2liNHNk?=
- =?utf-8?B?aHJtUVNBZ3hocDZyMjNOR3YwUU83WG5YODV0RWFmS3F1Q1hrSklqNjZkeTVL?=
- =?utf-8?B?STF6TG9VWVl1MzhFTFdIUllyYkYzei9EYWFlbzh1QjBpRHp4NTNNYU1iSWlG?=
- =?utf-8?B?dGxNakdjQTJsaENnMmxrMGFjeHV4TmRtMCs1Y2h3L1hZVXIwek4xTnBVOFds?=
- =?utf-8?B?ZjE1Vkl6cXY1aCsxQXJ5N3huSDFBRDBhUXdadTdZL04zQVl2Zmhnem56MXVV?=
- =?utf-8?B?S0NqaVd0OGt5R3pCSmZMU3JiMXc5REY0T0ZjUjM1cmtDbXMwL1Uvd1N3V2I0?=
- =?utf-8?B?a1VIemxBL2k5TDhOTVVpU3Y5akdRVDBDTU9CUXpDaFZldmVWTG9TUG5zUWZv?=
- =?utf-8?B?U1Z0dWNxZFRycnhPaFNLeE0vVUFuZzhzTHFtTDBaQk5sVnNtTzFUTDdKZk5W?=
- =?utf-8?B?UEFEUWdCUFdIbm1zWkYwS0lnOStESlpDcnIxS0g1NTJ0bjRvMmEvUGtDSlBM?=
- =?utf-8?B?TkNaUGJNYk4xVTdPZEhmTmRyQmVsd2tNYU1RQm9zNlBRK1ZkZlNxQmd3MXNj?=
- =?utf-8?B?TGcvVEJhTXRiZXV4UC92RE9SazZIcSsvY0NKaVN1RncvSHVwSlpzRmpsaVZs?=
- =?utf-8?B?OXZoSk1LRTdodnczRjIvS2E1UlNKaUFqSDVZaFBLRWlOR2hoZXh1Q3NGSXRB?=
- =?utf-8?B?ZFVyRTBOTkNqdUw1UVlWVG8vNndiUGVCRXMvUGxKV2xJVUZsOGJqUmhPMm0y?=
- =?utf-8?B?eEJKZVdlRndxY00rMHFRRWhKdVZXaTZSdjdENGQ3UmJXSVl3Z3hNTUFEMk1o?=
- =?utf-8?B?MDBzQ0NIRW1wU0VjYVM0endIVm55RHNuaU1kbkNKb2NKbmVCR2RQbW11NCtZ?=
- =?utf-8?B?clZFc0N2SjdIWFE1UGJtekM2K2FiTHhBbDNlLzkzUER2VDJITExBQk93TTJT?=
- =?utf-8?B?OFBXVmV3NThkdnlINUJnK3BhWlJZek1wdFVqeUJPdmJtNzhSTWpQNjdQUzRp?=
- =?utf-8?B?dHd1SGhJZXlSSXQzT3EyalVjSFB6WERCNWxHYzhhd2lST0tBUEF4a3F2bCs4?=
- =?utf-8?B?ZkZON1RQeWpEMnNVNGU3ZGJIdGYwQWIvSHNUTzk5bHdMd1hFSkhYMTEyZDRV?=
- =?utf-8?B?Z2U2aExpWDIrQjQ1M01PTFBsS1hlMVdPVmUvNHU0SGVET2cvRXlHb05yVXpz?=
- =?utf-8?B?OW13TVlJR0Y5WURvcmZwcEZDejQxQ25KOVFuekhpei9GZEtOWG81NjdTaVVM?=
- =?utf-8?B?bEZUTmd0bXdnLzB3c3I1ZW1EWm1yWEdLek0zeTRhdkQ4cm5RZFdZRVh5ZTln?=
- =?utf-8?B?MVA0d2tpNUs1a2lxejEwUmJFbTFQSFhvcWRlcnpHYnNzcXZady8rUWlacWxt?=
- =?utf-8?Q?yZnUYB4U6g0UIzeNixkc?=
-X-OriginatorOrg: outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 220884d1-642c-4c52-8cff-08de2cb6ccd9
-X-MS-Exchange-CrossTenant-AuthSource: DS7PR19MB8883.namprd19.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 26 Nov 2025 06:41:17.2418
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
-X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg:
-	00000000-0000-0000-0000-000000000000
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SJ0PR19MB4809
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01a.na.qualcomm.com (10.52.223.231)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: CJVqr-JiKHHL38SMHLvniMKDyJzjz7ct
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMTI2MDA1MyBTYWx0ZWRfX3lxRAOMJWaLw
+ CSVJ5ZBtFSyCBgQGBOpDJlW6emTXLbtSo7KktP1EoFmB8QDhQmcrzqUl6ujwnvk87MRqbwrNWvq
+ WP/0fmt/Ju/+jXF+lkVROrbc1RJzSLuW3koGRghu+/UMgIPSCFp/TcCPgI7FPvG9ntroRXmfhf4
+ EMI3iIY/j7HzWlttinuf4J628FR9gcDCylrwdyhK1D2ScYBV0cZVV0Wqnl3ocJtTmyWjQlG57wh
+ mcpIG/K66M6+/k/5mwnYergKZ1uyi1f7pCiY+32jDCvcWt++Foav6OMP5JDauwqrSqhnR7yQFiv
+ kEta/rS/8gBYfKmdonTj+CHv7Uvgj253ADzrvyYMJRPG/GJVDJ4nhESP29TXkfLwVgLudKGusVM
+ KIYSCMNHSuXgv03JoLlxeSUDPY52NA==
+X-Proofpoint-GUID: CJVqr-JiKHHL38SMHLvniMKDyJzjz7ct
+X-Authority-Analysis: v=2.4 cv=Ushu9uwB c=1 sm=1 tr=0 ts=6926a183 cx=c_pps
+ a=JYp8KDb2vCoCEuGobkYCKw==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17
+ a=GEpy-HfZoHoA:10 a=6UeiqGixMTsA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=COk6AnOGAAAA:8 a=QyXUC8HyAAAA:8 a=VFLTqZJuPoDEIE11KTgA:9
+ a=TjNXssC_j7lpFel5tvFf:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
+ definitions=2025-11-25_02,2025-11-25_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ clxscore=1015 phishscore=0 bulkscore=0 malwarescore=0 spamscore=0
+ suspectscore=0 adultscore=0 lowpriorityscore=0 priorityscore=1501
+ impostorscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2510240001
+ definitions=main-2511260053
 
+Enable Inline Crypto Engine (ICE) support for CQE-capable sdhci-msm
+controllers when used with eMMC cards that do not support CQE.
 
+This addresses the scenario where:
+- The host controller supports CQE (and has CQHCI crypto infrastructure)
+- The eMMC card does not support CQE
+- Standard (non-CMDQ) requests need crypto support
 
-On 11/25/25 13:58, Daniel Lezcano wrote:
-> On 8/18/25 13:33, George Moussalem via B4 Relay wrote:
->> From: George Moussalem <george.moussalem@outlook.com>
->>
->> The tsens IP found in the IPQ5018 SoC should not use qcom,tsens-v1 as
->> fallback since it has no RPM and, as such, must deviate from the
->> standard v1 init routine as this version of tsens needs to be explicitly
->> reset and enabled in the driver.
->>
->> So let's make qcom,ipq5018-tsens a standalone compatible in the bindings.
->>
->> Fixes: 77c6d28192ef ("dt-bindings: thermal: qcom-tsens: Add ipq5018 compatible")
->> Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
->> Signed-off-by: George Moussalem <george.moussalem@outlook.com>
->> ---
-> 
-> Applied patch 1/2
+This allows hardware-accelerated encryption and decryption for standard
+requests on CQE-capable hardware by utilizing the existing CQHCI crypto
+register space even when CQE functionality is not available due to card
+limitations.
 
-Thank you, Daniel.
+The implementation:
+- Adds ICE register definitions for non-CQE crypto configuration
+- Implements per-request crypto setup via sdhci_msm_ice_cfg()
+- Hooks into the request path via mmc_host_ops.request for non-CQE requests
+- Uses CQHCI register space (NONCQ_CRYPTO_PARM/DUN) for crypto configuration
 
-Can this also be backported to 6.18 as it's currently broke?
+With this, CQE-capable controllers can benefit from inline encryption
+when paired with non-CQE cards, improving performance for encrypted I/O
+while maintaining compatibility with existing CQE crypto support.
 
-> 
-> Thanks
-> 
->    -- Daniel
-> 
+Signed-off-by: Md Sadre Alam <quic_mdalam@quicinc.com>
+Acked-by: Adrian Hunter <adrian.hunter@intel.com>
+---
 
-Best regards,
-George
+Change in [v6]
+
+* Changed the variable name from ice_init_done to non_cqe_ice_init_done
+
+* Eliminated the ICE_HCI_SUPPORT check inside the sdhci_msm_non_cqe_ice_init()
+  function
+
+* Updated the sdhci_msm_ice_cfg() function to use a void return type instead
+  of int
+
+* Removed the crypto_enable and dun variables from the sdhci_msm_ice_cfg()
+  function
+
+* Revised the comment associated with the sdhci_msm_request() function
+
+Change in [v5]
+
+* Removed unused variable
+
+* Added proper comment for sdhci_msm_request()
+
+* Removed sdhci_msm_ice_enable(); it is already invoked during resume
+
+Change in [v4]
+
+* Moved ICE initialization for non cmdq into sdhci_msm_ice_cfg() and made
+  it conditional on mrq->crypto_ctx to enable lazy setup.
+
+* Added msm_host->ice_init_done guard to prevent redundant initialization.
+
+* Updated commit message
+
+Change in [v3]
+
+* Refactored logic to use separate code paths for crypto_ctx != NULL and
+  crypto_ctx == NULL to improve readability.
+
+* Renamed bypass to crypto_enable to align with bitfield semantics.
+
+* Removed slot variable
+
+* Added ICE initialization sequence for non-CMDQ eMMC devices before
+  __sdhci_add_host()
+
+Change in [v2]
+
+* Moved NONCQ_CRYPTO_PARM and NONCQ_CRYPTO_DUN register definitions into
+  sdhci-msm.c
+
+* Introduced use of GENMASK() and FIELD_PREP() macros for cleaner and more
+  maintainable bitfield handling in ICE configuration.
+
+* Removed redundant if (!mrq || !cq_host) check from sdhci_msm_ice_cfg()
+  as both are guaranteed to be valid in the current call path.
+
+* Added assignment of host->mmc_host_ops.request = sdhci_msm_request; to
+  integrate ICE configuration into the standard request path for non-CMDQ
+  eMMC devices.
+
+* Removed sdhci_crypto_cfg() from sdhci.c and its invocation in sdhci_request()
+
+Change in [v1]
+
+* Added initial support for Inline Crypto Engine (ICE) on non-CMDQ eMMC
+  devices.
+
+ drivers/mmc/host/sdhci-msm.c | 77 ++++++++++++++++++++++++++++++++++++
+ 1 file changed, 77 insertions(+)
+
+diff --git a/drivers/mmc/host/sdhci-msm.c b/drivers/mmc/host/sdhci-msm.c
+index 3b85233131b3..da356627d9de 100644
+--- a/drivers/mmc/host/sdhci-msm.c
++++ b/drivers/mmc/host/sdhci-msm.c
+@@ -157,6 +157,17 @@
+ #define CQHCI_VENDOR_CFG1	0xA00
+ #define CQHCI_VENDOR_DIS_RST_ON_CQ_EN	(0x3 << 13)
+ 
++/* non command queue crypto enable register*/
++#define NONCQ_CRYPTO_PARM		0x70
++#define NONCQ_CRYPTO_DUN		0x74
++
++#define DISABLE_CRYPTO			BIT(15)
++#define CRYPTO_GENERAL_ENABLE		BIT(1)
++#define HC_VENDOR_SPECIFIC_FUNC4	0x260
++
++#define ICE_HCI_PARAM_CCI	GENMASK(7, 0)
++#define ICE_HCI_PARAM_CE	GENMASK(8, 8)
++
+ struct sdhci_msm_offset {
+ 	u32 core_hc_mode;
+ 	u32 core_mci_data_cnt;
+@@ -300,6 +311,7 @@ struct sdhci_msm_host {
+ 	u32 dll_config;
+ 	u32 ddr_config;
+ 	bool vqmmc_enabled;
++	bool non_cqe_ice_init_done;
+ };
+ 
+ static const struct sdhci_msm_offset *sdhci_priv_msm_offset(struct sdhci_host *host)
+@@ -2012,6 +2024,68 @@ static int sdhci_msm_ice_keyslot_evict(struct blk_crypto_profile *profile,
+ 	return qcom_ice_evict_key(msm_host->ice, slot);
+ }
+ 
++static void sdhci_msm_non_cqe_ice_init(struct sdhci_host *host)
++{
++	struct sdhci_pltfm_host *pltfm_host = sdhci_priv(host);
++	struct sdhci_msm_host *msm_host = sdhci_pltfm_priv(pltfm_host);
++	struct mmc_host *mmc = msm_host->mmc;
++	struct cqhci_host *cq_host = mmc->cqe_private;
++	u32 config;
++
++	config = sdhci_readl(host, HC_VENDOR_SPECIFIC_FUNC4);
++	config &= ~DISABLE_CRYPTO;
++	sdhci_writel(host, config, HC_VENDOR_SPECIFIC_FUNC4);
++	config = cqhci_readl(cq_host, CQHCI_CFG);
++	config |= CRYPTO_GENERAL_ENABLE;
++	cqhci_writel(cq_host, config, CQHCI_CFG);
++}
++
++static void sdhci_msm_ice_cfg(struct sdhci_host *host, struct mmc_request *mrq)
++{
++	struct sdhci_pltfm_host *pltfm_host = sdhci_priv(host);
++	struct sdhci_msm_host *msm_host = sdhci_pltfm_priv(pltfm_host);
++	struct mmc_host *mmc = msm_host->mmc;
++	struct cqhci_host *cq_host = mmc->cqe_private;
++	unsigned int crypto_params = 0;
++	int key_index;
++
++	if (mrq->crypto_ctx) {
++		if (!msm_host->non_cqe_ice_init_done) {
++			sdhci_msm_non_cqe_ice_init(host);
++			msm_host->non_cqe_ice_init_done = true;
++		}
++
++		key_index = mrq->crypto_key_slot;
++		crypto_params = FIELD_PREP(ICE_HCI_PARAM_CE, 1) |
++				FIELD_PREP(ICE_HCI_PARAM_CCI, key_index);
++
++		cqhci_writel(cq_host, crypto_params, NONCQ_CRYPTO_PARM);
++		cqhci_writel(cq_host, lower_32_bits(mrq->crypto_ctx->bc_dun[0]),
++			     NONCQ_CRYPTO_DUN);
++	} else {
++		cqhci_writel(cq_host, crypto_params, NONCQ_CRYPTO_PARM);
++	}
++
++	/* Ensure crypto configuration is written before proceeding */
++	wmb();
++}
++
++/*
++ * Handle non-CQE MMC requests with ICE crypto support.
++ * Configures ICE registers before passing the request to
++ * the standard SDHCI handler.
++ */
++static void sdhci_msm_request(struct mmc_host *mmc, struct mmc_request *mrq)
++{
++	struct sdhci_host *host = mmc_priv(mmc);
++
++	/* Only need to handle non-CQE crypto requests in this path */
++	if (mmc->caps2 & MMC_CAP2_CRYPTO)
++		sdhci_msm_ice_cfg(host, mrq);
++
++	sdhci_request(mmc, mrq);
++}
++
+ static const struct blk_crypto_ll_ops sdhci_msm_crypto_ops = {
+ 	.keyslot_program	= sdhci_msm_ice_keyslot_program,
+ 	.keyslot_evict		= sdhci_msm_ice_keyslot_evict,
+@@ -2762,6 +2836,9 @@ static int sdhci_msm_probe(struct platform_device *pdev)
+ 
+ 	msm_host->mmc->caps |= MMC_CAP_WAIT_WHILE_BUSY | MMC_CAP_NEED_RSP_BUSY;
+ 
++#ifdef CONFIG_MMC_CRYPTO
++	host->mmc_host_ops.request = sdhci_msm_request;
++#endif
+ 	/* Set the timeout value to max possible */
+ 	host->max_timeout_count = 0xF;
+ 
+-- 
+2.34.1
+
 
