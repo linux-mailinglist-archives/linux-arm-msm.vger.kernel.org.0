@@ -1,66 +1,66 @@
-Return-Path: <linux-arm-msm+bounces-83455-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-83456-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [IPv6:2605:f480:58:1:0:1994:3:14])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2F5C9C89E45
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Nov 2025 14:01:54 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id CAD76C89EE7
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Nov 2025 14:08:29 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id D46534E23D6
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Nov 2025 13:01:52 +0000 (UTC)
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 893AA4EA081
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Nov 2025 13:08:22 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 17E5D18E02A;
-	Wed, 26 Nov 2025 13:01:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 55D7C2288E3;
+	Wed, 26 Nov 2025 13:06:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="DMS8Qaqv"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="g5w/HxZn"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.21])
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.10])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 566D22629D;
-	Wed, 26 Nov 2025 13:01:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.21
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32D93225A5B;
+	Wed, 26 Nov 2025 13:06:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.10
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764162108; cv=none; b=aPUPTdgaZk6y1hdPMIXFSZ7WlpcO4Xo0Dz44qcARPJZEu4MLrwte+pqmb5hOLteLYiJvsQj5obAvNh7o9vvLNHw06gPfZNyXAKtos7Mv6lKGrpXifuhW2ikDS36coPGcNQgbNQw4l0EB7elN67gpFvPax5+vqREv3DVXsAF9x70=
+	t=1764162412; cv=none; b=euttt4WjqaW/sNtKXCn9k9IeP2VF92Ud9dmh7htWsOWU2PtKtbwvXKWA5LDsTf3p++Y9lND7w8SHAhfUwkLLSxbWStzXUJRhW9OOSr59pqBOEVvWiukoTXkbVrjRt92cNvToWBKa4KdQLMMr72Ik6PEU/KDB15egX8NC8OFoMVo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764162108; c=relaxed/simple;
-	bh=An3uYWCi2Xvr+ZbPILQiXOQydrNPvCqpTTR5CFjldNI=;
+	s=arc-20240116; t=1764162412; c=relaxed/simple;
+	bh=mS6MwChLlrnU9SKlzCRc4xW3NM1SPshvO/AD1kbOhgU=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ZOTobA8F2mgEjcePQjWMSt5HJtM6sC9YzV9f5GHU6v0jC4E9VQ1aObG0ZG7zX5m/wAU9pq6giaYfUyC/lvPFj7u/tCuQuoTTp8/weSxrKxoCY6VLuhiWrxPUhY1hvIUORgJkDc084FAS8ntasGB7BZFnAN4SbwABbc1XAzF9SKI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=DMS8Qaqv; arc=none smtp.client-ip=198.175.65.21
+	 Content-Type:Content-Disposition:In-Reply-To; b=Z0sI0ux45BdYW89fNlNzf4vvDXcwZZzTI+WIP2S0xKrmQVojbP3J9NLqVxzuGT9M+7CXxmt4tzCQPeIdBuGmE2BAZq3GXW1FBVJiTa9q8YvWbsky8p+XzfF1bXbAK7g0JnADkVNl4mdP4/ouqr2V73wApPMAaUqUQhdnvc1fbew=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=g5w/HxZn; arc=none smtp.client-ip=192.198.163.10
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1764162106; x=1795698106;
+  t=1764162411; x=1795698411;
   h=date:from:to:cc:subject:message-id:references:
    mime-version:in-reply-to;
-  bh=An3uYWCi2Xvr+ZbPILQiXOQydrNPvCqpTTR5CFjldNI=;
-  b=DMS8QaqvoV57L4z/qP4WLAQy0+HJiEZGB8v9igbTMi1MlEU7OhXY8qEw
-   OjpTA7fopWeFLtnNZGQYPfc0AASA5rtU7QFVMACv3kJXN7DEHjuVXHF05
-   tI0ON2N9uUu2nNnIxbodnMFrnnvSAy1s0AlG6HBhVJ0V3GoZH+XYJANEO
-   Apqtp3+3XBWNOubapYYfFKa0KbBBkcvlIXVWdOngC27NLyUe/Nw+TBtQB
-   4KbTii8fWkPDb8P3YZcGAaqzgErZQmlj92o0W1LfXYphcAZ/KR2rafvhF
-   XjYEvp5hPQ/PcdwBdFQ3xqDu1HmJC2ralJZQQhTIKxj2Oj+HOPO7Ts9K5
-   g==;
-X-CSE-ConnectionGUID: cesHNq2oTKOXT3Qu4jHdig==
-X-CSE-MsgGUID: zu1YXCNjQ4msNXf/lEU0QA==
-X-IronPort-AV: E=McAfee;i="6800,10657,11624"; a="66145589"
+  bh=mS6MwChLlrnU9SKlzCRc4xW3NM1SPshvO/AD1kbOhgU=;
+  b=g5w/HxZnHFavyk3SNSt5Vbv/uw57sM5ZN4ZQY7yuH8QQVv2dYCu95Wmk
+   nlvv8ngxT3JtZSdX25yLa9DGArN9KVof5AwH4IeLwpyRHkNwbJ8RlI8JY
+   4+X8YWsHNo+xXR64Gx3dCJnL1pIoQmUcWU/HtIfj3IR8AJ0aIDkth7rwj
+   kBOh5ws+d5D2NkdgLotEFDF5O6OhT7J9qULdDkGMcj1vhlm2YBSNKK4hn
+   2LGtuNtOijat9RvLv4Fz0nBnQanQUPDHPbdE2mxJbGoQy4kSfeNWexSdL
+   pQV6rWeMvqj2CgPL0ENL8wfUDBnaZp6wgDbxgOk38j2+N0dYZvtJPTCwb
+   w==;
+X-CSE-ConnectionGUID: Uvy7H4m3RByyORp85NrQxA==
+X-CSE-MsgGUID: +NYrjC8sQ/epKimlefHJ0A==
+X-IronPort-AV: E=McAfee;i="6800,10657,11624"; a="77563525"
 X-IronPort-AV: E=Sophos;i="6.20,228,1758610800"; 
-   d="scan'208";a="66145589"
-Received: from orviesa003.jf.intel.com ([10.64.159.143])
-  by orvoesa113.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 26 Nov 2025 05:01:46 -0800
-X-CSE-ConnectionGUID: RF+qD0YuTD+GlxyzJsSkzA==
-X-CSE-MsgGUID: VXMMLDE0RvmnowPHfzEjBQ==
+   d="scan'208";a="77563525"
+Received: from orviesa009.jf.intel.com ([10.64.159.149])
+  by fmvoesa104.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 26 Nov 2025 05:06:47 -0800
+X-CSE-ConnectionGUID: wnzOtTXMS7SwitAwXXpgnA==
+X-CSE-MsgGUID: duYij1bZSKyi6i0j+WSoBw==
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="6.20,228,1758610800"; 
-   d="scan'208";a="197099215"
+   d="scan'208";a="192724593"
 Received: from black.igk.intel.com ([10.91.253.5])
-  by orviesa003.jf.intel.com with ESMTP; 26 Nov 2025 05:01:38 -0800
+  by orviesa009.jf.intel.com with ESMTP; 26 Nov 2025 05:06:40 -0800
 Received: by black.igk.intel.com (Postfix, from userid 1003)
-	id 607CCA0; Wed, 26 Nov 2025 14:01:37 +0100 (CET)
-Date: Wed, 26 Nov 2025 14:01:37 +0100
+	id 6FE7FA0; Wed, 26 Nov 2025 14:06:38 +0100 (CET)
+Date: Wed, 26 Nov 2025 14:06:38 +0100
 From: Andy Shevchenko <andriy.shevchenko@intel.com>
 To: Praveen Talari <praveen.talari@oss.qualcomm.com>
 Cc: Bjorn Andersson <andersson@kernel.org>,
@@ -81,11 +81,11 @@ Cc: Bjorn Andersson <andersson@kernel.org>,
 	psodagud@quicinc.com, djaggi@quicinc.com, quic_msavaliy@quicinc.com,
 	quic_vtanuku@quicinc.com, quic_arandive@quicinc.com,
 	quic_shazhuss@quicinc.com, quic_cchiluve@quicinc.com
-Subject: Re: [PATCH v1 3/4] serial: qcom-geni: Enable PM runtime for serial
- driver
-Message-ID: <aSb6MSAoG68EmnLq@black.igk.intel.com>
+Subject: Re: [PATCH v1 4/4] serial: qcom-geni: Enable Serial on SA8255p
+ Qualcomm platforms
+Message-ID: <aSb7XhbTTtF3Wd-3@black.igk.intel.com>
 References: <20251110101043.2108414-1-praveen.talari@oss.qualcomm.com>
- <20251110101043.2108414-4-praveen.talari@oss.qualcomm.com>
+ <20251110101043.2108414-5-praveen.talari@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -94,53 +94,97 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20251110101043.2108414-4-praveen.talari@oss.qualcomm.com>
+In-Reply-To: <20251110101043.2108414-5-praveen.talari@oss.qualcomm.com>
 Organization: Intel Finland Oy - BIC 0357606-4 - Westendinkatu 7, 02160 Espoo
 
-On Mon, Nov 10, 2025 at 03:40:42PM +0530, Praveen Talari wrote:
-> The GENI serial driver currently handles power resource management
-> through calls to the statically defined geni_serial_resources_on() and
-> geni_serial_resources_off() functions. This approach reduces modularity
-> and limits support for platforms with diverse power management
-> mechanisms, including resource managed by firmware.
+On Mon, Nov 10, 2025 at 03:40:43PM +0530, Praveen Talari wrote:
+> The Qualcomm automotive SA8255p SoC relies on firmware to configure
+> platform resources, including clocks, interconnects and TLMM.
+> The driver requests resources operations over SCMI using power
+> and performance protocols.
 > 
-> Improve modularity and enable better integration with platform-specific
-> power management, introduce support for runtime PM. Use
-> pm_runtime_resume_and_get() and pm_runtime_put_sync() within the
-> qcom_geni_serial_pm() callback to control resource power state
-> transitions based on UART power state changes.
+> The SCMI power protocol enables or disables resources like clocks,
+> interconnect paths, and TLMM (GPIOs) using runtime PM framework APIs,
+> such as resume/suspend, to control power states(on/off).
+> 
+> The SCMI performance protocol manages UART baud rates, with each baud
+> rate represented by a performance level. The driver uses the
+> dev_pm_opp_set_level() API to request the desired baud rate by
+> specifying the performance level.
 
 ...
 
-> +	devm_pm_runtime_enable(port->se.dev);
+> +static int geni_serial_pwr_init(struct uart_port *uport)
+> +{
+> +	struct qcom_geni_serial_port *port = to_dev_port(uport);
+> +	int ret;
+> +
+> +	ret = dev_pm_domain_attach_list(port->se.dev,
+> +					&port->dev_data->pd_data, &port->pd_list);
+> +	if (ret <= 0)
+> +		return -EINVAL;
+> +
+> +	return 0;
 
-First of all, this misses the error check.
+Why shadowing an error code?
 
-> +static int __maybe_unused qcom_geni_serial_runtime_suspend(struct device *dev)
+This should be
 
-Second, we have a new (already like 2+ years) approach, so, drop __maybe_unused
-and try not to add more in a new code.
+	ret = dev_pm_domain_attach_list(port->se.dev,
+					&port->dev_data->pd_data, &port->pd_list);
+	if (ret < 0)
+		return ret; // assuming it returns a Linux err code.
+	/* Some comment, perhaps? */
+	if (ret == 0)
+		return -EINVAL;
+
+	return 0;
+
+> +}
 
 ...
 
-> +static int __maybe_unused qcom_geni_serial_runtime_resume(struct device *dev)
+>  		port->rx_buf = devm_kzalloc(uport->dev,
+>  					    DMA_RX_BUF_SIZE, GFP_KERNEL);
+> -		if (!port->rx_buf)
+> -			return -ENOMEM;
+> +		if (!port->rx_buf) {
+> +			ret = -ENOMEM;
+> +			goto error;
+
+This is wrong. After devm_*() calls should not be goto:s. It should be very
+exceptional cases otherwise.
+
+> +		}
+
+...
+
+>  	port->name = devm_kasprintf(uport->dev, GFP_KERNEL,
+>  			"qcom_geni_serial_%s%d",
+>  			uart_console(uport) ? "console" : "uart", uport->line);
+> -	if (!port->name)
+> -		return -ENOMEM;
+> +	if (!port->name) {
+> +		ret = -ENOMEM;
+> +		goto error;
+> +	}
 
 Ditto.
 
 ...
 
->  static const struct dev_pm_ops qcom_geni_serial_pm_ops = {
-> +	SET_RUNTIME_PM_OPS(qcom_geni_serial_runtime_suspend,
-> +			   qcom_geni_serial_runtime_resume, NULL)
->  	SYSTEM_SLEEP_PM_OPS(qcom_geni_serial_suspend, qcom_geni_serial_resume)
->  };
+> +	if (irq < 0) {
+> +		ret = irq;
+> +		goto error;
 
-Please, do not use deprecated macros, switch to new ones in conjunction with
-pm_ptr() at the PM ops assignment below.
+Ditto. And so on...
+
+> +	}
 
 ...
 
-Since it's going to be applied, I think, send a followup to fix this.
+Hint: use devm_add_action_or_reset() above and drop most of the changes in this
+patch.
 
 -- 
 With Best Regards,
