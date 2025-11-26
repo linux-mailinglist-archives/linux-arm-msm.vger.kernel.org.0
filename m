@@ -1,238 +1,178 @@
-Return-Path: <linux-arm-msm+bounces-83485-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-83488-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id D57FAC8ABA3
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Nov 2025 16:47:27 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5167AC8ACDB
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Nov 2025 17:03:22 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 8613A3A65D7
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Nov 2025 15:47:26 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 594153B9752
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Nov 2025 16:00:25 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id EAA1333B97E;
-	Wed, 26 Nov 2025 15:47:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id EB79133CEA5;
+	Wed, 26 Nov 2025 16:00:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="tuiST38E"
+	dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b="sX53AFUk"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f52.google.com (mail-lf1-f52.google.com [209.85.167.52])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B90DE1FC7C5;
-	Wed, 26 Nov 2025 15:47:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFCBE33CE82
+	for <linux-arm-msm@vger.kernel.org>; Wed, 26 Nov 2025 16:00:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764172029; cv=none; b=hL2z8valUwwLZ4eCgcIEWpIx0WqycEpD2BaNKqLJPetLABAUHCUJ+1WnoobCFVU/luEKqL0MZH3DOagPGUF8blZJc+9b5bG2FXu+V/A/Rt6SWhGIHbPA/+fqwLQvS9iypn6/ZXpPXIjvcyMESi331Bbb0gIHBeNsviFFEA21+rU=
+	t=1764172822; cv=none; b=GSeiSowEzMwK3qQDjgMfag0VKYCe1WcplrDQ7vt5N468S4bIxgJdRtgjW4Sy/y6KQnwyHkXClV6puuRXBNy8jPwmr/Rm76UiflKTM/R2k+g2QWB1AC71K0OGz0Z20acxwW2lY1YQ5hXTXo+8f49jd6BqWGZcLz5+UA0ihchwo0w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764172029; c=relaxed/simple;
-	bh=DUZirXcwc71Z+jIStyr86QpnCJLfkISWi1F3mf2tlFQ=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=DT/P802NhjjFKIhqcyzmJe7AN1j97LJJyrB680LGn8FMf7PXthSnNK897qmvJc42I38akNP/RzhW4LI31yy0dUoEkbR2IS6BA2Z/gAxumr8uVs7PzlYhBQ+dMI8UJhUdhaJjLb7es9hhnsWKgAsuhIfD1I63sIFOBc1UgMUiY4A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=tuiST38E; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A630C4CEF7;
-	Wed, 26 Nov 2025 15:47:08 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1764172029;
-	bh=DUZirXcwc71Z+jIStyr86QpnCJLfkISWi1F3mf2tlFQ=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=tuiST38EgaBds+eRYUE5ppHAdvIvOu3T9UgkcRaCE0S5BtIkK2BJXA2coxyDl0qGk
-	 ELowJCjvNi3ZXT7sa+ljCLGtXRrg6/DGy4bwujtqxSf+K1HSnj0tHF0l+eoKHZMJwC
-	 NneMrqaT+ERLHBrrg6tpHCvud/3eNe99tpZeXZWZOgwUZlbD0DlacyxBvHZpm63rzx
-	 U96ABKRB3gXcglDCjqtp4P3Y7BWA4aPwIfVY51UJou33mrqzIIMVFbJ1/7M4fUYzHn
-	 /r2aI/XC/KSmG/yDmN1ngJgyJ6vq6K6loMq0NOZOH0TpNU3kWXeUC+Qn4ndDYY40R1
-	 n6mLZa/XGloXg==
-Date: Wed, 26 Nov 2025 09:52:38 -0600
-From: Bjorn Andersson <andersson@kernel.org>
-To: Praveen Talari <praveen.talari@oss.qualcomm.com>
-Cc: Andi Shyti <andi.shyti@kernel.org>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Mukesh Kumar Savaliya <mukesh.savaliya@oss.qualcomm.com>, Viken Dadhaniya <viken.dadhaniya@oss.qualcomm.com>, 
-	Konrad Dybcio <konradybcio@kernel.org>, linux-arm-msm@vger.kernel.org, linux-i2c@vger.kernel.org, 
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, psodagud@quicinc.com, 
-	djaggi@quicinc.com, quic_msavaliy@quicinc.com, quic_vtanuku@quicinc.com, 
-	quic_arandive@quicinc.com, quic_shazhuss@quicinc.com
-Subject: Re: [PATCH v1 12/12] i2c: qcom-geni: Enable I2C on SA8255p Qualcomm
- platforms
-Message-ID: <4kjkadmhf67ts4pryhvqdk57b2k27ggwkt2vqdijvhmwygpspb@rpdwcpxpq2up>
-References: <20251122050018.283669-1-praveen.talari@oss.qualcomm.com>
- <20251122050018.283669-13-praveen.talari@oss.qualcomm.com>
+	s=arc-20240116; t=1764172822; c=relaxed/simple;
+	bh=9E4LZUqF4+RrmDwPg5Nf1aBB5ZvzocoQZTyPs+XXDOk=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=N6JlPTsi7LMaIzdiHRhtnXhuC62ToEmmS50BBTjCTtq6TWBn8zJ56Xb7ATCuTjEydBHbIAfqi3RAFNQS6aNVIh+iBmKPx9woUA+51ZU2Dh2bjLCUOjJnr1wmmDm3ulBS6NED7dVqWBkmrL52Gf9lCoJATHNtmlH5iKcuXVkVTOo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl; spf=none smtp.mailfrom=bgdev.pl; dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b=sX53AFUk; arc=none smtp.client-ip=209.85.167.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=bgdev.pl
+Received: by mail-lf1-f52.google.com with SMTP id 2adb3069b0e04-59577c4c7c1so996265e87.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 26 Nov 2025 08:00:20 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=bgdev-pl.20230601.gappssmtp.com; s=20230601; t=1764172819; x=1764777619; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=CKUmPojsBEaS1Fv5ikaphx/1DJX8hiMLHRzmJuvC1HY=;
+        b=sX53AFUkPrebVr+JYqcYgOg9/tVZBJBdETXhbH8Qj7qZk2sNOlZ7GLA8Z2cJapL8yC
+         WYTRzwAMStrt7FrW5Duq5Yd+lMmQ4t5LEp2QIF4Z4pu2P8f8aSIqjo5XJSGdNoWrXPT1
+         +v9lfCK18ej2k53NTVO/YW+xr+KaRt01ifAGAGt5bGc9+S8/s//vsJOT8Jyv8ZIIVqZ4
+         KmSNrHCLqM+DQEV3wtRCXx5uVIFd7EHnjUA8u4CnbgMehxX7g/E9tyzegkFQuBlGrQ97
+         lYjpS/zubBOthFvs0NzPr0nmzJEGDFQVt15vBDgtqkG8cw7Ze7/TpwaO5+OoU3naNERz
+         zT4g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1764172819; x=1764777619;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=CKUmPojsBEaS1Fv5ikaphx/1DJX8hiMLHRzmJuvC1HY=;
+        b=Abllwbm2+tl1sAEljcQRRBiwMSxKtUVYWXmouzq5MoGJVitbz+xw9093FQUUUCfph8
+         pgXoIdg0h5nR5D8mjzyI+A+EVkgJYITmpFea4EXMyAr71UrCY+Mam3ECyUp+sbzdM/Fi
+         amZfay7aYTDiiXfCIS8CK6CgCtI2FhejcaG1liGlydU/y/FYsd3Jw35pZ7qoii1TTtus
+         Euol2myADnJlno3fx5sbEBT9BZb90TWcU45ERoRaqjHxrLefllCQKj64XKACRusUq/2l
+         Jxj6eTephsB9DmYn/rxpnpiK02hP+biluRTWfQpqyckbm0PQhYO8u/nzPFMgV0ttBKvS
+         2+Ng==
+X-Forwarded-Encrypted: i=1; AJvYcCV/NUN3dy5Z9eACuhdKSs3weRtg3RfTDjQsMkzVUEQwNmPsR50r2ByHI67qDNnJEztByGqRdJwCpZEfW5y+@vger.kernel.org
+X-Gm-Message-State: AOJu0YxWne563ePwo9al3IwphtK3IC+FKBoG06dvTSC1mrqWYm7AyC0L
+	uzVHvFIx41YclYqbT1OE2qfu6V/KJyWTyidTbkecBM1iThrQ1wlsxf5ETrqmA62ghZ9uFD9kyLw
+	huG5DodlO6MdQ8KjY5DrPj1Jum+hXdU6l8jyblYhRGw==
+X-Gm-Gg: ASbGnctF6ExDJcAnw/dl/LjM2sP9rQU33puxRM+P8pIAegkcObkYqFzYDaXWOl6ZP8A
+	cJoyKqTq/I8q3KYUDq/4iBYXpWhFi1RzOhwdWsxR+q4wriD5XgckfVS7FVF+eKoHOySEcHUj0n4
+	fQPyATKZCxusiF6SGB9yWjo9JWhY++pZSG7vAFPQWw20HHV9UZnlKZFjoq67IhieZKBLxmTJgBa
+	v3tWe2lEvLmZe2oTRwF4SvJzzym0cS/JIPT1WHxHJWyeGEihDiSDNZZqHp+WlmVT6XH5QIj0jfd
+	wvfXQxybwdMhtBdxazqwQd6QsCM=
+X-Google-Smtp-Source: AGHT+IG/dq5r5WmQcoWn78HBF8tifFKLQkNqXoHsJ8uu05KTdYoqo/JzkNcCqS3q8x6xdOxAcwscTDG+CXZmPir3agk=
+X-Received: by 2002:a05:6512:33cc:b0:595:9929:c8a4 with SMTP id
+ 2adb3069b0e04-5969ea35615mr7886071e87.22.1764172818843; Wed, 26 Nov 2025
+ 08:00:18 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20251122050018.283669-13-praveen.talari@oss.qualcomm.com>
+References: <20251112-gpio-shared-v4-0-b51f97b1abd8@linaro.org>
+ <20251112-gpio-shared-v4-7-b51f97b1abd8@linaro.org> <0829a21c-f97d-41b6-90bc-2acaec42caab@nvidia.com>
+ <CAMRc=MdPvF+okfnRuwvAFG9UfyZ-araDsaaKMxKASEbc3rhyjQ@mail.gmail.com>
+ <705186a9-a9db-46f0-bf2b-b499def050dd@nvidia.com> <CAMRc=MdQ8QgbdAd2sudZLgcDZu9DxBRJh5sfLeXwcTDEE0F7Uw@mail.gmail.com>
+ <c4081961-0875-4a2d-ac84-40df128534e7@nvidia.com> <CAMRc=McSrKgL=q8xfH_Vndg7rCfy1TVgRh+dFRqFCiBwT_J2yw@mail.gmail.com>
+ <b166f160-e4e2-43a2-866a-3341cc91a13e@nvidia.com>
+In-Reply-To: <b166f160-e4e2-43a2-866a-3341cc91a13e@nvidia.com>
+From: Bartosz Golaszewski <brgl@bgdev.pl>
+Date: Wed, 26 Nov 2025 17:00:05 +0100
+X-Gm-Features: AWmQ_blfhwNoOC_5q4Y6Ua8mUZE4gIa1ItGMpnk3IeLNBCFsJ0ovvbGWZGIVjOo
+Message-ID: <CAMRc=MfWi=cU1tK_AXW18A0X7K2TGp_u9Dwg4uSfW7Te83HvqQ@mail.gmail.com>
+Subject: Re: [PATCH v4 07/10] arm64: select HAVE_SHARED_GPIOS for ARCH_QCOM
+To: Jon Hunter <jonathanh@nvidia.com>
+Cc: Kees Cook <kees@kernel.org>, Mika Westerberg <westeri@kernel.org>, 
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>, Andrew Morton <akpm@linux-foundation.org>, 
+	Linus Walleij <linus.walleij@linaro.org>, Manivannan Sadhasivam <mani@kernel.org>, 
+	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Saravana Kannan <saravanak@google.com>, Greg Kroah-Hartman <gregkh@linuxfoundation.org>, 
+	Andy Shevchenko <andy@kernel.org>, Catalin Marinas <catalin.marinas@arm.com>, Will Deacon <will@kernel.org>, 
+	Srinivas Kandagatla <srini@kernel.org>, Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>, 
+	Jaroslav Kysela <perex@perex.cz>, Takashi Iwai <tiwai@suse.com>, 
+	Alexey Klimov <alexey.klimov@linaro.org>, Bjorn Andersson <andersson@kernel.org>, 
+	Konrad Dybcio <konradybcio@kernel.org>, linux-hardening@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, linux-gpio@vger.kernel.org, 
+	linux-arm-kernel@lists.infradead.org, linux-sound@vger.kernel.org, 
+	linux-arm-msm@vger.kernel.org, 
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>, 
+	"linux-tegra@vger.kernel.org" <linux-tegra@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Sat, Nov 22, 2025 at 10:30:18AM +0530, Praveen Talari wrote:
-> The Qualcomm automotive SA8255p SoC relies on firmware to configure
-> platform resources, including clocks, interconnects and TLMM.
-> The driver requests resources operations over SCMI using power
-> and performance protocols.
-> 
-> The SCMI power protocol enables or disables resources like clocks,
-> interconnect paths, and TLMM (GPIOs) using runtime PM framework APIs,
-> such as resume/suspend, to control power states(on/off).
-> 
-> The SCMI performance protocol manages I2C frequency, with each
-> frequency rate represented by a performance level. The driver uses
-> geni_se_set_perf_opp() API to request the desired frequency rate..
-> 
-> As part of geni_se_set_perf_opp(), the OPP for the requested frequency
-> is obtained using dev_pm_opp_find_freq_floor() and the performance
-> level is set using dev_pm_opp_set_opp().
-> 
-> Signed-off-by: Praveen Talari <praveen.talari@oss.qualcomm.com>
-> ---
->  drivers/i2c/busses/i2c-qcom-geni.c | 46 +++++++++++++++++++++++-------
->  1 file changed, 35 insertions(+), 11 deletions(-)
-> 
-> diff --git a/drivers/i2c/busses/i2c-qcom-geni.c b/drivers/i2c/busses/i2c-qcom-geni.c
-> index a0f68fdd4078..78154879f02d 100644
-> --- a/drivers/i2c/busses/i2c-qcom-geni.c
-> +++ b/drivers/i2c/busses/i2c-qcom-geni.c
-> @@ -82,6 +82,9 @@ struct geni_i2c_desc {
->  	char *icc_ddr;
->  	bool no_dma_support;
->  	unsigned int tx_fifo_depth;
-> +	int (*resources_init)(struct geni_se *se);
-> +	int (*set_rate)(struct geni_se *se, unsigned long freq);
-> +	int (*power_state)(struct geni_se *se, bool state);
+On Wed, Nov 26, 2025 at 4:47=E2=80=AFPM Jon Hunter <jonathanh@nvidia.com> w=
+rote:
+>
+>
+>
+> On 26/11/2025 15:33, Bartosz Golaszewski wrote:
+> > On Wed, Nov 26, 2025 at 4:29=E2=80=AFPM Jon Hunter <jonathanh@nvidia.co=
+m> wrote:
+> >>
+> >>>>
+> >>>
+> >>> Is the device-tree used here upstream? Can you enable DEBUG_GPIO in
+> >>> Kconfig and post the entire kernel log on pastebin?
+> >>
+> >> The kernel log is here: https://pastebin.com/7rBh3T3T
+> >
+> > This is not telling me much, can you try again with the printk() I
+> > posted earlier, please?
+>
+> Yes, sorry I missed that before kicking off the last test. With
+> this print I see ...
+>
+> [    0.120432] gpio_shared_of_traverse: /bus@0/ethernet@2490000 phy-reset=
+-gpios
+> [    0.121407] gpio_shared_of_traverse: /bus@0/mmc@3400000 cd-gpios
+> [    0.121891] gpio_shared_of_traverse: /bus@0/host1x@13e00000/sor@15b800=
+00 nvidia,hpd-gpio
+> [    0.122035] gpio_shared_of_traverse: /bus@0/pcie-ep@141a0000 reset-gpi=
+os
+> [    0.122075] gpio_shared_of_traverse: /bus@0/pcie-ep@141a0000 nvidia,re=
+fclk-select-gpios
+> [    0.122342] gpio_shared_of_traverse: /regulator-vdd-hdmi gpio
+> [    0.122381] gpio_shared_of_traverse: /regulator-vdd-3v3-pcie gpio
+> [    0.122420] gpio_shared_of_traverse: /regulator-vdd-12v-pcie gpio
+> [    0.122453] gpio_shared_of_traverse: /regulator-vdd-5v0-sata gpio
+> [    0.122486] gpio_shared_of_traverse: /gpio-keys/key-force-recovery gpi=
+os
+> [    0.122551] gpio_shared_of_traverse: /gpio-keys/key-power gpios
+> [    0.122615] gpio_shared_of_traverse: /__symbols__ gpio
 
-You have isolated this quite nicely now, so I'd prefer 3 (four to keep
-power on/off separate) if statements, over these function pointers, at
-this point.
+So I have no idea why the special __symbols__ node has a "gpio"
+property but as this is a special case, I think we should just
+explicitly ignore it.
 
-This saves the future reader from having to remember the combination of
-function pointer targets in the various cases - and allow things like
-"jump to definition" in your editor to still work.
+Let me send a patch.
 
->  };
->  
->  #define QCOM_I2C_MIN_NUM_OF_MSGS_MULTI_DESC	2
-> @@ -203,8 +206,9 @@ static int geni_i2c_clk_map_idx(struct geni_i2c_dev *gi2c)
->  	return -EINVAL;
->  }
->  
-> -static void qcom_geni_i2c_conf(struct geni_i2c_dev *gi2c)
-> +static int qcom_geni_i2c_conf(struct geni_se *se, unsigned long freq)
+Bart
 
-This sounds like a qcom_geni_i2c_set_rate() now that it takes a
-frequency argument.
-
-Regards,
-Bjorn
-
->  {
-> +	struct geni_i2c_dev *gi2c = dev_get_drvdata(se->dev);
->  	const struct geni_i2c_clk_fld *itr = gi2c->clk_fld;
->  	u32 val;
->  
-> @@ -217,6 +221,7 @@ static void qcom_geni_i2c_conf(struct geni_i2c_dev *gi2c)
->  	val |= itr->t_low_cnt << LOW_COUNTER_SHFT;
->  	val |= itr->t_cycle_cnt;
->  	writel_relaxed(val, gi2c->se.base + SE_I2C_SCL_COUNTERS);
-> +	return 0;
->  }
->  
->  static void geni_i2c_err_misc(struct geni_i2c_dev *gi2c)
-> @@ -908,7 +913,9 @@ static int geni_i2c_xfer(struct i2c_adapter *adap,
->  		return ret;
->  	}
->  
-> -	qcom_geni_i2c_conf(gi2c);
-> +	ret = gi2c->dev_data->set_rate(&gi2c->se, gi2c->clk_freq_out);
-> +	if (ret)
-> +		return ret;
->  
->  	if (gi2c->gpi_mode)
->  		ret = geni_i2c_gpi_xfer(gi2c, msgs, num);
-> @@ -1041,8 +1048,9 @@ static int geni_i2c_init(struct geni_i2c_dev *gi2c)
->  	return ret;
->  }
->  
-> -static int geni_i2c_resources_init(struct geni_i2c_dev *gi2c)
-> +static int geni_i2c_resources_init(struct geni_se *se)
->  {
-> +	struct geni_i2c_dev *gi2c = dev_get_drvdata(se->dev);
->  	int ret;
->  
->  	ret = geni_se_resources_init(&gi2c->se);
-> @@ -1095,7 +1103,7 @@ static int geni_i2c_probe(struct platform_device *pdev)
->  	spin_lock_init(&gi2c->lock);
->  	platform_set_drvdata(pdev, gi2c);
->  
-> -	ret = geni_i2c_resources_init(gi2c);
-> +	ret = gi2c->dev_data->resources_init(&gi2c->se);
->  	if (ret)
->  		return ret;
->  
-> @@ -1165,10 +1173,12 @@ static int __maybe_unused geni_i2c_runtime_suspend(struct device *dev)
->  
->  	disable_irq(gi2c->irq);
->  
-> -	ret = geni_se_resources_state(&gi2c->se, false);
-> -	if (ret) {
-> -		enable_irq(gi2c->irq);
-> -		return ret;
-> +	if (gi2c->dev_data->power_state) {
-> +		ret = gi2c->dev_data->power_state(&gi2c->se, false);
-> +		if (ret) {
-> +			enable_irq(gi2c->irq);
-> +			return ret;
-> +		}
->  	}
->  
->  	gi2c->suspended = 1;
-> @@ -1180,9 +1190,11 @@ static int __maybe_unused geni_i2c_runtime_resume(struct device *dev)
->  	int ret;
->  	struct geni_i2c_dev *gi2c = dev_get_drvdata(dev);
->  
-> -	ret = geni_se_resources_state(&gi2c->se, true);
-> -	if (ret)
-> -		return ret;
-> +	if (gi2c->dev_data->power_state) {
-> +		ret = gi2c->dev_data->power_state(&gi2c->se, true);
-> +		if (ret)
-> +			return ret;
-> +	}
->  
->  	enable_irq(gi2c->irq);
->  	gi2c->suspended = 0;
-> @@ -1221,6 +1233,9 @@ static const struct dev_pm_ops geni_i2c_pm_ops = {
->  
->  static const struct geni_i2c_desc geni_i2c = {
->  	.icc_ddr = "qup-memory",
-> +	.resources_init = geni_i2c_resources_init,
-> +	.set_rate = qcom_geni_i2c_conf,
-> +	.power_state = geni_se_resources_state,
->  };
->  
->  static const struct geni_i2c_desc i2c_master_hub = {
-> @@ -1228,11 +1243,20 @@ static const struct geni_i2c_desc i2c_master_hub = {
->  	.icc_ddr = NULL,
->  	.no_dma_support = true,
->  	.tx_fifo_depth = 16,
-> +	.resources_init = geni_i2c_resources_init,
-> +	.set_rate = qcom_geni_i2c_conf,
-> +	.power_state = geni_se_resources_state,
-> +};
-> +
-> +static const struct geni_i2c_desc sa8255p_geni_i2c = {
-> +	.resources_init = geni_se_domain_attach,
-> +	.set_rate = geni_se_set_perf_opp,
->  };
->  
->  static const struct of_device_id geni_i2c_dt_match[] = {
->  	{ .compatible = "qcom,geni-i2c", .data = &geni_i2c },
->  	{ .compatible = "qcom,geni-i2c-master-hub", .data = &i2c_master_hub },
-> +	{ .compatible = "qcom,sa8255p-geni-i2c", .data = &sa8255p_geni_i2c },
->  	{}
->  };
->  MODULE_DEVICE_TABLE(of, geni_i2c_dt_match);
-> -- 
-> 2.34.1
-> 
+> [    0.122672] OF: /__symbols__: could not find phandle 794981747
+> [    0.122701] CPU: 0 UID: 0 PID: 1 Comm: swapper/0 Not tainted 6.18.0-rc=
+7-next-20251126-00002-g1cd98992c487-dirty #21 PREEMPT
+> [    0.122739] Hardware name: NVIDIA Jetson AGX Xavier Developer Kit (DT)
+> [    0.122747] Call trace:
+> [    0.122753]  show_stack+0x18/0x24 (C)
+> [    0.122772]  dump_stack_lvl+0x74/0x8c
+> [    0.122788]  dump_stack+0x18/0x24
+> [    0.122801]  of_phandle_iterator_next+0x18c/0x1c4
+> [    0.122819]  of_count_phandle_with_args+0xa0/0xc8
+> [    0.122832]  gpio_shared_of_traverse+0xd4/0x4c8
+> [    0.122848]  gpio_shared_of_traverse+0x178/0x4c8
+> [    0.122860]  gpio_shared_init+0x11c/0x1f8
+> [    0.122878]  do_one_initcall+0x7c/0x1c0
+> [    0.122892]  kernel_init_freeable+0x204/0x2e0
+> [    0.122908]  kernel_init+0x20/0x1d8
+> [    0.122923]  ret_from_fork+0x10/0x20
+> [    0.123055] gpiolib_shared: Finished scanning firmware nodes for share=
+d GPIOs
+>
 
