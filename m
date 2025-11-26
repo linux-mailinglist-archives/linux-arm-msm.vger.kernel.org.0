@@ -1,221 +1,201 @@
-Return-Path: <linux-arm-msm+bounces-83501-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-83502-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [IPv6:2605:f480:58:1:0:1994:3:14])
-	by mail.lfdr.de (Postfix) with ESMTPS id D68E4C8B329
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Nov 2025 18:29:03 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 31430C8B36E
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Nov 2025 18:35:14 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id B6EFF4E4E9F
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Nov 2025 17:29:02 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id ECE053B4510
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Nov 2025 17:35:02 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6065B286400;
-	Wed, 26 Nov 2025 17:29:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 943553090E6;
+	Wed, 26 Nov 2025 17:35:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="PKe6QrMK"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="Y4gBdTtc";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="UKPBISvl"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0607E286419;
-	Wed, 26 Nov 2025 17:28:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D81CA219A81
+	for <linux-arm-msm@vger.kernel.org>; Wed, 26 Nov 2025 17:34:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764178140; cv=none; b=PREFbGNIj7DhAhr3p7iUJTaBiOYqce9oNNwPeBrhcxBZf5RyD2e1UrzVAg+xAceSlg1biXa+dgxxz4gISM645tVzjm95zOc6VTk+qFmrPmhJsLvEfKcyVBxA0OW+f9aGQlAzEMzcY3HkKc6AL/YOR1mNhluO3GAHCh1/oE3/gUs=
+	t=1764178500; cv=none; b=p+66Q2L2S0nLebmps4taej67nfXAJHljh7iKv0BocLXIzq1bRjVsu+qHV7Ai2x9HRemmqZqWuIQdYvtAwXSKjTngTjACCVu42rzBGG62YZ0DlSV4oCHCk67vRvZvSqQwzfqnvbOKPwydRhn3oIm2tmYj3n++T6Xn4nce5VgXQk8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764178140; c=relaxed/simple;
-	bh=CRd9ZrPYpoyGd8r/7/O5tFeVFSuVBLHqNThxe4BQ6DY=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=M+7r9yznnOuMO4p67cqhM4TSfOZioGaM2QgzL+pRcZ+LjN7qxVSDcY3TLlq6ypyJVAPM/OSYaqoOIVE8Ub4kZ28Uayq0Qhfu9BoVRIa3PfLWBP+QL52EDHf6aaJk48Fg9fmBtOGmfFXa15lnwbzqBS3TPkKI8Bm3Yo8DwccZOQo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=PKe6QrMK; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51E7BC4CEF7;
-	Wed, 26 Nov 2025 17:28:58 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1764178139;
-	bh=CRd9ZrPYpoyGd8r/7/O5tFeVFSuVBLHqNThxe4BQ6DY=;
-	h=From:To:Cc:Subject:Date:From;
-	b=PKe6QrMK9/RRLA2iPoGFGomnlP/IGi0Rfu4K8dfgQXiKHMaAbuT9BFpQO950pPOSh
-	 /PdOcxwGIUFC7BvPAhflnJiVI3w/VURWOYtz4JDYPUJc5Hgjs6G8uMJRnf1QTAd91z
-	 r8MVUj2fDEjxSdMbFrLZ+71OkV4bnZ9To4gyHIZyEQA0y2WSXoTbk6ma2YgOOswgrZ
-	 uLIUP4cGotrOPORToq3obJq1lcmi/w1iCs0O8D9WU6ablY5rhuuh/TzSc3PUjPAwN4
-	 1ruRZUgJx4+Bse8OdPgkygBq/ILQLM//ny9wTNwdkOregdb3Hj67CtYANM9EgGl6Av
-	 DEp8ZBcO11hbg==
-From: Bjorn Andersson <andersson@kernel.org>
-To: Stephen Boyd <sboyd@kernel.org>,
-	linux-clk@vger.kernel.org
-Cc: linux-arm-msm@vger.kernel.org,
-	linux-arm-kernel@lists.infradead.org,
-	Taniya Das <taniya.das@oss.qualcomm.com>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Luo Jie <quic_luoj@quicinc.com>,
-	Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
-	Luca Weiss <luca.weiss@fairphone.com>,
-	Jens Reidel <adrian@mainlining.org>,
-	Alexey Minnekhanov <alexeymin@postmarketos.org>,
-	Gabor Juhos <j4g8y7@gmail.com>,
-	Nathan Chancellor <nathan@kernel.org>
-Subject: [GIT PULL] Qualcomm clock updates for v6.19
-Date: Wed, 26 Nov 2025 11:34:30 -0600
-Message-ID: <20251126173430.1556604-1-andersson@kernel.org>
-X-Mailer: git-send-email 2.51.0
+	s=arc-20240116; t=1764178500; c=relaxed/simple;
+	bh=aYf26yclBpU0W0OI36KWcQYEgzBrpPhalYGhwg5ECvI=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=FZCtv9NBJnJEVoVpU58KGXn8YMH5csRSipNcns0N+E9VbZO8MeGuK2tR0+xQJlKRUDQtG14qABti/BDcJPGJcgLodCf4138DQcMbP9l+U9Y2zVq/9T4cJkhgptTbwOsql8Rk6hCLKxpOTl/MAquTdxnHZEBCrv7dUV4g8qPnCOA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=Y4gBdTtc; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=UKPBISvl; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 5AQF7Y5r1457809
+	for <linux-arm-msm@vger.kernel.org>; Wed, 26 Nov 2025 17:34:56 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	rpjYolbjS4vunxVJ2dZZFzYQTvEyWd8Alh2O3vaKm7Y=; b=Y4gBdTtcTXVaP+A1
+	sMvbLaZVuStEDUkZTwCty87p2SMVDE9x2l4fo3Tqh0nOkjMklaJ+WE+U3Rukik9v
+	jdb7AGz6P70eM0GxSHbMpaDYvCDkhwq3rIpPkL3/FYRw3jFowYFhsOMFv+38O4YH
+	uF3lGdfU5bizWszZd/WEA1gpP0dcjTo56VwzuJS6193O7E2uhu9TNQpOnYQX3RjN
+	tQY6wEtfCsgdgcx/+ypzF/v6ozqM0sDY84i6zeZV/aqZ4gxMMaJ5glPnS22LxBp8
+	/xuZ0rBAaIfBhMwVetl2O64oUsS5YCKHhcYT6Zw2kZnv7Zh4m5b4CG6uilQ6gu2m
+	MzXGPw==
+Received: from mail-pj1-f72.google.com (mail-pj1-f72.google.com [209.85.216.72])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4anvqvhtrw-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Wed, 26 Nov 2025 17:34:56 +0000 (GMT)
+Received: by mail-pj1-f72.google.com with SMTP id 98e67ed59e1d1-340bc4ef67fso7565399a91.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 26 Nov 2025 09:34:56 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=oss.qualcomm.com; s=google; t=1764178496; x=1764783296; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=rpjYolbjS4vunxVJ2dZZFzYQTvEyWd8Alh2O3vaKm7Y=;
+        b=UKPBISvlJ/ms3LjE2ePelsXjbU6ZrQkZYxeK8XUPKOG+Gs7vCCPpQd9sQ21Tcqn4ip
+         T0aqdIiDO0pFG5ADj9tKGBQsiQP14I49EaLWjyfbgDCsd3QUyk+p45dX1RsjpAjkD4yw
+         2QuFnHheRbdXYoDWjjo4qIBslNQQCi+zsGEyCBS4DLjxLRkDouLdBhSChj+Gr6UR12uM
+         lIgcAve2hUuE71MVZFRRwZMhgGfyfAZqymCMrZcfGloGt2lXRlBr/Y+w1KEcviARbukG
+         p6nJGIOT+kGi1mBWzrUYeYstoMiGIZpxr8tlEbUcsZgaxWCcxYM/dUPNUsBkeyNKtHoR
+         oUEw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1764178496; x=1764783296;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=rpjYolbjS4vunxVJ2dZZFzYQTvEyWd8Alh2O3vaKm7Y=;
+        b=OFuHX9iAYAjRbPGreXJa+ScvLUz/mdaV/yTO5IdrdE90gmQuQqH3UAwZO5ld5biBtG
+         UenRGr3LIvDGE6sdTZOUq+X7gV7IU9skjI/snXP4Qem6qC5dLQ7FvjmBgPcxTakqjmZa
+         vWaHsmlTH1PE8FaiRqVzIsPQ9aGEeccpsklFao+dY+8avCjzxPo6jtllCOkbEAbSIa+y
+         xalw4eAE+KRPuCqMKj8rwbcsHF7kdOECew4pxkzhu0Lj4z6U85bEqjhmdnfZFfh2zncH
+         50jhtWdlKApDP8DIZg3RZ9vAMmJXYODihhqF7DuI6p45k82+zHeMVazcf201M8vfOWxb
+         E2AQ==
+X-Forwarded-Encrypted: i=1; AJvYcCU004xrZZYkOcbcxzTEIdw2TLFI2DaJ/hesGMQajX/dVnwo589400+Hagmq+WkeBXA1mhjp9bRyYNCJW8cP@vger.kernel.org
+X-Gm-Message-State: AOJu0YwQf3BbNfQ4NnpF8GxaIvISW4XU2s/30Th7uU1Rae7T7pm3EIiN
+	a64A0h76YrIykqDChxm84YbLk6a2HOLOt+3/60ZO+WAU//IWnj/fCYgXebgDh7ZzRYx8LTszd8Z
+	tlo8W+zwniqv8SkO8CcpawzqN1Sib9zahdfhSSToXs9aDCXUkmG9ZnLA1qfndaJNcHgb8
+X-Gm-Gg: ASbGncuajNZnJmNun3MGhmc02doahhyAOmSM2Y38Mzeaa26BD98Eafge0VImJ6lFs8p
+	uv0DqCgM2cZpJw4xlIFzpuLTGOF/Z1GLBNq+B0GGQS7hsZ6vNrE0e42tXa2VIbBIwcGCjJd+1mp
+	4e3FU70FKiwe7MAD+iiSt7yaZcThuClNpBwAAl/ut0+NEWPCUkz26ZCoyBLsrxvQKB3JM4xj2Bx
+	ecaMn3HMDxy5fIYg/tCIYcAW9tS4LYriqFlyg061M0/Tv5xLz1QMPj5h+o3yjVfqSQD08zdG5PZ
+	BGW2nztXzdny3g0V1lCek6U7P7W3iLjy5nMZqfH6VRQ7eo8wA7bRMtntDCXEmMVtZoVOcMgLzV0
+	9ypdIVnH+qs6HtosLmiQr8haba7nxf9tT2RYajK7EEQ==
+X-Received: by 2002:a17:90b:2f83:b0:341:194:5e7d with SMTP id 98e67ed59e1d1-3475ed51453mr7919482a91.24.1764178495553;
+        Wed, 26 Nov 2025 09:34:55 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHp5mCdN9f9LFiefcsSriDXhzKm7ugs3IpHAqPHcQDDWsl8AfaEfO8/utu17ZBzu2FzrtVCbA==
+X-Received: by 2002:a17:90b:2f83:b0:341:194:5e7d with SMTP id 98e67ed59e1d1-3475ed51453mr7919455a91.24.1764178495041;
+        Wed, 26 Nov 2025 09:34:55 -0800 (PST)
+Received: from [192.168.0.100] ([49.206.43.76])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-3476a7c3f1asm3232645a91.16.2025.11.26.09.34.45
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 26 Nov 2025 09:34:53 -0800 (PST)
+Message-ID: <7eb0eb2c-c011-486c-b41a-3ac8baabe2d7@oss.qualcomm.com>
+Date: Wed, 26 Nov 2025 23:04:43 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 0/5] clk: qcom: gcc: Update the SDCC RCGs to use
+ shared_floor_ops
+To: Imran Shaik <imran.shaik@oss.qualcomm.com>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd
+ <sboyd@kernel.org>, Vinod Koul <vkoul@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>,
+        Dmitry Baryshkov <lumag@kernel.org>,
+        Taniya Das <quic_tdas@quicinc.com>,
+        Melody Olvera
+ <quic_molvera@quicinc.com>,
+        Ajit Pandey <quic_ajipan@quicinc.com>,
+        Imran Shaik <quic_imrashai@quicinc.com>,
+        Luca Weiss <luca.weiss@fairphone.com>
+Cc: Ajit Pandey <ajit.pandey@oss.qualcomm.com>,
+        Taniya Das <taniya.das@oss.qualcomm.com>,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20251126-sdcc_shared_floor_ops-v1-0-9038430dfed4@oss.qualcomm.com>
+ <daef579c-6289-433c-b1cd-0a8c182f4b8b@oss.qualcomm.com>
+Content-Language: en-US
+From: Jagadeesh Kona <jagadeesh.kona@oss.qualcomm.com>
+In-Reply-To: <daef579c-6289-433c-b1cd-0a8c182f4b8b@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMTI2MDE0MyBTYWx0ZWRfX3ySQLq5d1z2Z
+ 2CfDLJrRFYOtlRpj38045bQPDXPQiAJrFjTlqvPnqorCRhE5QfGXc5ZH/My+OuumFlDtgrhX95P
+ 5o+N9E8ViuCcarG2FwDns/CrQJKCCQTvHEd12qwQ2rVQzJQFo7RC4gMKelMZBTP+G4kxFgze/aa
+ 0K3tcGw5qF6o6R2JgwzKnryDgAurkpcyg+5pilNEVu7Wqel1Wol4u+9mupam6K607VTFwlB8g1F
+ Ym6UQ+UttqOnBe71MG70TXL9/xkpR2gTkNWQ2KeMxayiJrQZWMLx8ahdwlljlP4juC4g4giYgUX
+ wFnpb1ou5zP5jM3SMYFGQbHak7S3FeyViH/o+UIVlD6g6YLeC1HPUSh6oUUWLLkvVAEFCu3VAn/
+ 0rdN71auBwSCx/rzj5xUC6xWl5mjnA==
+X-Proofpoint-GUID: LVbY0kw8df26e3y2A0HQ2itjFvBnWcJx
+X-Proofpoint-ORIG-GUID: LVbY0kw8df26e3y2A0HQ2itjFvBnWcJx
+X-Authority-Analysis: v=2.4 cv=feugCkQF c=1 sm=1 tr=0 ts=69273a40 cx=c_pps
+ a=RP+M6JBNLl+fLTcSJhASfg==:117 a=qGQbs1vc2yhDUS/Kx3M+Dw==:17
+ a=IkcTkHD0fZMA:10 a=6UeiqGixMTsA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=EUspDBNiAAAA:8 a=FvykduKxJR7RWhW4CT4A:9
+ a=QEXdDO2ut3YA:10 a=iS9zxrgQBfv6-_F4QbHw:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
+ definitions=2025-11-25_02,2025-11-26_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ adultscore=0 priorityscore=1501 suspectscore=0 bulkscore=0 clxscore=1015
+ impostorscore=0 lowpriorityscore=0 phishscore=0 spamscore=0 malwarescore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2510240001 definitions=main-2511260143
 
 
-The following changes since commit 3a8660878839faadb4f1a6dd72c3179c1df56787:
 
-  Linux 6.18-rc1 (2025-10-12 13:42:36 -0700)
+On 11/26/2025 2:20 PM, Imran Shaik wrote:
+> 
+> 
+> On 11/26/2025 9:45 AM, Jagadeesh Kona wrote:
+>> This series updates the clock ops to clk_rcg2_shared_floor_ops
+>> for the SDCC RCGs on SM8450, SM8750, SM4450, SDX75 and Milos
+>> chipsets.
+>>
+>> This change is required to ensure RCG is safely parked during
+>> disable and new parent configuration is programmed in hardware
+>> only when new parent is enabled, to avoid cases where RCG
+>> configuration fails to update and overclocking issues.
+>>
+>> Signed-off-by: Jagadeesh Kona <jagadeesh.kona@oss.qualcomm.com>
+>> ---
+>> Jagadeesh Kona (5):
+>>       clk: qcom: gcc-sm8450: Update the SDCC RCGs to use shared_floor_ops
+>>       clk: qcom: gcc-sm8750: Update the SDCC RCGs to use shared_floor_ops
+>>       clk: qcom: gcc-sm4450: Update the SDCC RCGs to use shared_floor_ops
+>>       clk: qcom: gcc-sdx75: Update the SDCC RCGs to use shared_floor_ops
+>>       clk: qcom: gcc-milos: Update the SDCC RCGs to use shared_floor_ops
+>>
+>>  drivers/clk/qcom/gcc-milos.c  | 6 +++---
+>>  drivers/clk/qcom/gcc-sdx75.c  | 4 ++--
+>>  drivers/clk/qcom/gcc-sm4450.c | 6 +++---
+>>  drivers/clk/qcom/gcc-sm8450.c | 4 ++--
+>>  drivers/clk/qcom/gcc-sm8750.c | 4 ++--
+>>  5 files changed, 12 insertions(+), 12 deletions(-)
+>> ---
+>> base-commit: 92fd6e84175befa1775e5c0ab682938eca27c0b2
+>> change-id: 20251125-sdcc_shared_floor_ops-722ccecfe787
+>>
+>> Best regards,
+> 
+> Can you please add similar fix-ups for gcc-qdu1000.c/gcc-x1e80100.c as well.
+> 
 
-are available in the Git repository at:
+Sure, I will add fix-ups for above targets also and post v2.
 
-  https://git.kernel.org/pub/scm/linux/kernel/git/qcom/linux.git tags/qcom-clk-for-6.19
+Thanks,
+Jagadeesh
 
-for you to fetch changes up to 3664282f3345fdfa6a154feb6ed6c3217a8b3b0d:
 
-  clk: qcom: x1e80100-dispcc: Add USB4 router link resets (2025-11-18 16:11:37 -0600)
-
-----------------------------------------------------------------
-Qualcomm clock updates for v6.19
-
-Introduce support for the IPQ5424 Network Subsystem Clock Controller and
-the video clock controller for SM8750.
-
-Describe the parent/child relationship among the Titan GDSCs on SM845,
-SM6350, SM7150, SM8250, SM8450, and SM8550.
-
-Define display subsystem reset signals for SM6350, SM7150, and SDM660.
-
-Add missing USB4 clocks and resets on Hamoa.
-
-Address a variety of smaller issues across the drivers, and a few more
-Kconfig dependency issues.
-
-----------------------------------------------------------------
-Alexey Minnekhanov (2):
-      dt-bindings: clock: mmcc-sdm660: Add missing MDSS reset
-      clk: qcom: mmcc-sdm660: Add missing MDSS reset
-
-Bjorn Andersson (5):
-      Merge branch '20251003-topic-hamoa_gcc_usb4-v2-1-61d27a14ee65@oss.qualcomm.com' into clk-for-6.19
-      Merge branch '20250919-sm6350-mdss-reset-v1-1-48dcac917c73@fairphone.com' into clk-for-6.19
-      Merge branch '20250919-sm7150-dispcc-fixes-v1-1-308ad47c5fce@mainlining.org' into clk-for-6.19
-      Merge branch '20251014-qcom_ipq5424_nsscc-v7-2-081f4956be02@quicinc.com' into clk-for-6.19
-      Merge branch '20251030-gcc_kaanapali-v2-v2-3-a774a587af6f@oss.qualcomm.com' into clk-for-6.19
-
-Gabor Juhos (2):
-      clk: qcom: apss-ipq5424: remove unused 'apss_clk' structure
-      clk: qcom: use different Kconfig prompts for APSS IPQ5424/6018 drivers
-
-Jens Reidel (3):
-      dt-bindings: clock: sm7150-dispcc: Add MDSS_CORE reset
-      clk: qcom: dispcc-sm7150: Add MDSS_CORE reset
-      clk: qcom: dispcc-sm7150: Fix dispcc_mdss_pclk0_clk_src
-
-Konrad Dybcio (8):
-      dt-bindings: clock: qcom,x1e80100-gcc: Add missing USB4 clocks/resets
-      clk: qcom: gcc-x1e80100: Add missing USB4 clocks/resets
-      clk: qcom: rpmh: Define RPMH_IPA_CLK on QCS615
-      clk: qcom: gcc-sc8280xp: Remove 85.71 MHz USB4 master clock frequency
-      clk: qcom: gcc-x1e80100: Remove 85.71 MHz USB4 master clock frequency
-      clk: qcom: gcc-glymur: Remove 85.71 MHz USB4 master clock frequency
-      dt-bindings: clock: qcom: x1e80100-dispcc: Add USB4 router link resets
-      clk: qcom: x1e80100-dispcc: Add USB4 router link resets
-
-Luca Weiss (4):
-      dt-bindings: clock: dispcc-sm6350: Add MDSS_CORE & MDSS_RSCC resets
-      clk: qcom: dispcc-sm6350: Add MDSS_CORE & MDSS_RSCC resets
-      clk: qcom: camcc-sm6350: Fix PLL config of PLL2
-      clk: qcom: camcc-sm7150: Fix PLL config of PLL2
-
-Luo Jie (8):
-      dt-bindings: clock: Add "#interconnect-cells" property in IPQ9574 example
-      dt-bindings: interconnect: Add Qualcomm IPQ5424 NSSNOC IDs
-      dt-bindings: clock: gcc-ipq5424: Add definition for GPLL0_OUT_AUX
-      dt-bindings: clock: qcom: Add NSS clock controller for IPQ5424 SoC
-      clk: qcom: gcc-ipq5424: Correct the icc_first_node_id
-      clk: qcom: gcc-ipq5424: Enable NSS NoC clocks to use icc-clk
-      clk: qcom: gcc-ipq5424: Add gpll0_out_aux clock
-      clk: qcom: Add NSS clock controller driver for IPQ5424
-
-Nathan Chancellor (2):
-      clk: qcom: Fix SM_VIDEOCC_6350 dependencies
-      clk: qcom: Fix dependencies of QCS_{DISP,GPU,VIDEO}CC_615
-
-Taniya Das (12):
-      clk: qcom: gcc-sm8750: Add a new frequency for sdcc2 clock
-      clk: qcom: gcc-glymur: Update the halt check flags for pipe clocks
-      clk: qcom: gcc-qcs615: Update the SDCC clock to use shared_floor_ops
-      clk: qcom: tcsrcc-glymur: Update register offsets for clock refs
-      dt-bindings: clock: qcom-rpmhcc: Add RPMHCC for Kaanapali
-      dt-bindings: clock: qcom: Document the Kaanapali TCSR Clock Controller
-      dt-bindings: clock: qcom: Add Kaanapali Global clock controller
-      clk: qcom: clk_mem_branch: add enable mask and invert flags
-      clk: qcom: ecpricc-qdu100: Add mem_enable_mask to the clock memory branch
-      clk: qcom: branch: Extend invert logic for branch2 mem clocks
-      dt-bindings: clock: qcom: Add SM8750 video clock controller
-      clk: qcom: videocc-sm8750: Add video clock controller driver for SM8750
-
-Vladimir Zapolskiy (6):
-      clk: qcom: camcc-sm8550: Specify Titan GDSC power domain as a parent to other
-      clk: qcom: camcc-sm6350: Specify Titan GDSC power domain as a parent to other
-      clk: qcom: camcc-sdm845: Specify Titan GDSC power domain as a parent to other
-      clk: qcom: camcc-sm7150: Specify Titan GDSC power domain as a parent to IPEx and BPS
-      clk: qcom: camcc-sm8250: Specify Titan GDSC power domain as a parent to IPE/BPS/SBI
-      clk: qcom: camcc-sm8450: Specify Titan GDSC power domain as a parent to IPE/BPS/SBI
-
- .../bindings/clock/qcom,ipq9574-nsscc.yaml         |   63 +-
- .../devicetree/bindings/clock/qcom,rpmhcc.yaml     |    1 +
- .../bindings/clock/qcom,sm8450-videocc.yaml        |    5 +-
- .../bindings/clock/qcom,sm8550-tcsr.yaml           |    1 +
- .../devicetree/bindings/clock/qcom,sm8750-gcc.yaml |    8 +-
- .../bindings/clock/qcom,x1e80100-gcc.yaml          |   62 +-
- drivers/clk/qcom/Kconfig                           |   32 +-
- drivers/clk/qcom/Makefile                          |    2 +
- drivers/clk/qcom/apss-ipq5424.c                    |    7 -
- drivers/clk/qcom/camcc-sdm845.c                    |    3 +
- drivers/clk/qcom/camcc-sm6350.c                    |   13 +-
- drivers/clk/qcom/camcc-sm7150.c                    |    9 +-
- drivers/clk/qcom/camcc-sm8250.c                    |    3 +
- drivers/clk/qcom/camcc-sm8450.c                    |    3 +
- drivers/clk/qcom/camcc-sm8550.c                    |   10 +
- drivers/clk/qcom/clk-branch.c                      |    8 +-
- drivers/clk/qcom/clk-branch.h                      |    4 +
- drivers/clk/qcom/clk-rpmh.c                        |    1 +
- drivers/clk/qcom/dispcc-sm6350.c                   |    7 +
- drivers/clk/qcom/dispcc-sm7150.c                   |    9 +-
- drivers/clk/qcom/dispcc-x1e80100.c                 |    3 +
- drivers/clk/qcom/ecpricc-qdu1000.c                 |   30 +
- drivers/clk/qcom/gcc-glymur.c                      |   25 +-
- drivers/clk/qcom/gcc-ipq5424.c                     |   28 +-
- drivers/clk/qcom/gcc-qcs615.c                      |    6 +-
- drivers/clk/qcom/gcc-sc8280xp.c                    |    1 -
- drivers/clk/qcom/gcc-sm8750.c                      |    1 +
- drivers/clk/qcom/gcc-x1e80100.c                    |  699 +++++++++-
- drivers/clk/qcom/mmcc-sdm660.c                     |    1 +
- drivers/clk/qcom/nsscc-ipq5424.c                   | 1340 ++++++++++++++++++++
- drivers/clk/qcom/tcsrcc-glymur.c                   |   54 +-
- drivers/clk/qcom/videocc-sm8750.c                  |  463 +++++++
- include/dt-bindings/clock/qcom,dispcc-sm6350.h     |    4 +
- include/dt-bindings/clock/qcom,ipq5424-gcc.h       |    3 +-
- include/dt-bindings/clock/qcom,ipq5424-nsscc.h     |   65 +
- include/dt-bindings/clock/qcom,kaanapali-gcc.h     |  241 ++++
- include/dt-bindings/clock/qcom,mmcc-sdm660.h       |    1 +
- include/dt-bindings/clock/qcom,sm7150-dispcc.h     |    3 +
- include/dt-bindings/clock/qcom,sm8750-videocc.h    |   40 +
- include/dt-bindings/clock/qcom,x1e80100-dispcc.h   |    3 +
- include/dt-bindings/clock/qcom,x1e80100-gcc.h      |   61 +
- include/dt-bindings/interconnect/qcom,ipq5424.h    |   33 +
- include/dt-bindings/reset/qcom,ipq5424-nsscc.h     |   46 +
- 43 files changed, 3298 insertions(+), 104 deletions(-)
- create mode 100644 drivers/clk/qcom/nsscc-ipq5424.c
- create mode 100644 drivers/clk/qcom/videocc-sm8750.c
- create mode 100644 include/dt-bindings/clock/qcom,ipq5424-nsscc.h
- create mode 100644 include/dt-bindings/clock/qcom,kaanapali-gcc.h
- create mode 100644 include/dt-bindings/clock/qcom,sm8750-videocc.h
- create mode 100644 include/dt-bindings/reset/qcom,ipq5424-nsscc.h
 
