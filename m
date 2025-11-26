@@ -1,299 +1,336 @@
-Return-Path: <linux-arm-msm+bounces-83382-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-83383-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [IPv6:2605:f480:58:1:0:1994:3:14])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3A716C88670
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Nov 2025 08:22:34 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id C60A7C88751
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Nov 2025 08:40:25 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 1ECC84E12A7
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Nov 2025 07:22:33 +0000 (UTC)
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 7F07A4E4348
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Nov 2025 07:40:24 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A58B3288520;
-	Wed, 26 Nov 2025 07:22:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id DB6762C0F90;
+	Wed, 26 Nov 2025 07:40:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="EU87JyEd"
+	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="nxsdbyPw";
+	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="+VLEA8R0";
+	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="nxsdbyPw";
+	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="+VLEA8R0"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f42.google.com (mail-lf1-f42.google.com [209.85.167.42])
+Received: from smtp-out1.suse.de (smtp-out1.suse.de [195.135.223.130])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E2F61BBBE5
-	for <linux-arm-msm@vger.kernel.org>; Wed, 26 Nov 2025 07:22:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83D992BEFFA
+	for <linux-arm-msm@vger.kernel.org>; Wed, 26 Nov 2025 07:40:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.135.223.130
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764141751; cv=none; b=XEsSstnw6W3J2yGv2OcF8KZk72uE64aMK20y3JXPu/Gn7CGmvD+9U5w66FZ2yJjUMHiIgMZUTWhhp+94CZeoqEGNQlmYR4n5HUL1qI8f9rSu17t72+KTMxayeZ7Xh/wUn6oyGIqWPCB9MJKX+R6DUS2o0TW2uzlW/uUouUJgOzM=
+	t=1764142820; cv=none; b=WqTFJmcKkVFllCFZtUZ8MgxPHH3+q7Kp8EPHAX8FlMcrfBBROG9RrdWJ6rVsYUvRJgPSYli7k3njU6KDR8umeRh8c0VM8olcuFTq97Sw2YFM0Pjukv2pPRRlDW6EtSOBxwmkR8yZwAnufvaFAVlM+XnikCrdkgXzGmGkA5ghY7Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764141751; c=relaxed/simple;
-	bh=HAjRhP9wtDJZJIqyxRpme2sTURNRzMB+f8a7CBTtfrQ=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=mQ4WGyrp8gdDLA9Mz7AYwntVs9CcOJiv5m1YbMaHetcruxiWqVzIAFgcXmglHMFARgLjGms6FbaR6r+Uc+yiUtxZNisk5PnYQUlZ+nX3HVoAXtHhKXqfdQpYpvaEz1MXdT02ZJOhcpgZhAfij1a1qX59E9TrtqIdP59SnEfF+0E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=EU87JyEd; arc=none smtp.client-ip=209.85.167.42
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
-Received: by mail-lf1-f42.google.com with SMTP id 2adb3069b0e04-5957f617ff0so6792364e87.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 25 Nov 2025 23:22:29 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google; t=1764141748; x=1764746548; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=jxNG74JUJk+lK7SFMjIhhhwrVaUC7P24hMEewqUp0eY=;
-        b=EU87JyEd7t1vj6WPrbyOarP/85Sq/nPBsxF2AspE1QJU6cla+iemfg1OsXQwQtWdYQ
-         7Do1k/L5n9sD0L4ApczbXNIwMPcvKpnJgHG33ra8lGF9emmZmtyYYkf4C1GWLIM20nmj
-         tY+rim7qaCgxfteWNT3I33wtELxSuJj+v/Vq8=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1764141748; x=1764746548;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=jxNG74JUJk+lK7SFMjIhhhwrVaUC7P24hMEewqUp0eY=;
-        b=dnPZoF9g5oWBVBQl/qSlqotEBj4tvnL0yI4/puKhL71lT6hBPJoANZlcL5Os55zifW
-         IfY5J2parjz9zdgfu8rjzlj7t7Z1V16Xwi2UaV2gSws0G/9R2Tb3YNuTlQUsRcH67kuA
-         spoJJCvY/zWeAlz13xFvNYaAAITPcn90d0PeB3AgZ2RuFQZ8QaELlUMxl5vGFtClpaVe
-         X2Mi1ok9nTvsGva+X6UwLty2Md+0AJDEXVPr4nJm2x3nt4z1nCf20zZKK63Dve8lsLy0
-         ve2CdvX7Rgd4De+wplrylBhFGsLRmqeHyrD6g3zV8qDVicDd+wBuxlgAQIFWRUfrt1bT
-         39Uw==
-X-Forwarded-Encrypted: i=1; AJvYcCV5euws8oVJXXfdXiHu4XbncJHg+xFVLD9FCxdn1UKqLnwM1nNLOkqxHQn8rFqbaU9uRqs8bksgoR7moLz8@vger.kernel.org
-X-Gm-Message-State: AOJu0YwQx9XXDmqg8peYKZfeCcRcru8TOIFtuGSRJ9jNrDkfa98r8Xi2
-	POrVWvqEuL6KYYq1iYMINqvmdl+knKDCJtK65C4V2RsVKn53CynS+fASfC/nOUSVpUhvQX4AnUr
-	t36yCljr8f2gf9P1Ak9r6bdtP9T+VBnm5rVcgajMf
-X-Gm-Gg: ASbGncsFJiFWZi9SfCgk2jsdxJUKOjRwmDnT/oCrmzsqj6UHP+V8cO/qWHPcj9N7l44
-	cEYwrEbrQmyAwlhQ1HBqBraYK+XJJanXWFW314cJ2PrSdIL8+XoGdX5qPue1eaDAYWDwfiuj35A
-	VaA5jmB5cRWkPyZkTv+ClkCsjwkKTHeRlga00ub7icC/J/UcR7Gs8cPggOr+T5bT/J0ER4mMvms
-	2zbFClUpJ1k3mNYi5axaCn9ZfbdpI7DVsTohETXxQKTO5h993LmOCi7Mt4srfpiCUEzvSDlbvkL
-	vPql8tcRIZ/FgSJKJVIxXxHOMqmZ5mfm276t
-X-Google-Smtp-Source: AGHT+IELttdSAYYhDDT+Ci+Ox38/nz7RKJ+v8Tyb7B7TrkHsaUAi6rnTmUi+qUjbylofJYaH2MAEHwFsqYlLSj3b6kc=
-X-Received: by 2002:a05:6512:b9d:b0:594:493a:a27f with SMTP id
- 2adb3069b0e04-596a3eddab2mr7291270e87.36.1764141747623; Tue, 25 Nov 2025
- 23:22:27 -0800 (PST)
+	s=arc-20240116; t=1764142820; c=relaxed/simple;
+	bh=wQ/9/DY5ZYccAaDZksK7IFxZDLe0yw3KxcFfeF+Rn3E=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=ncxCFDj8LI40ICyz4GhblJgeRzzsjIIezzjyxAY3y0p1+2TV5NxUGICDY2sAgPyabsg8eGrSiNldUytit0qgDr00zFaR0eQxoV0ZFFTgVqRXg/MGTtTrEHeX4QhgQJ2brs498V9AqnyefCJ/AlK6+hJjbh124nEhagegmkSZx9c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de; spf=pass smtp.mailfrom=suse.de; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=nxsdbyPw; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=+VLEA8R0; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=nxsdbyPw; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=+VLEA8R0; arc=none smtp.client-ip=195.135.223.130
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.de
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org [IPv6:2a07:de40:b281:104:10:150:64:97])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by smtp-out1.suse.de (Postfix) with ESMTPS id 5C6CA22C7B;
+	Wed, 26 Nov 2025 07:40:10 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+	t=1764142810; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+	bh=N/IKV4NTtJDFriBCvdPujoI7Ss0dmnp2XYDv3sBK7Do=;
+	b=nxsdbyPwMPWjnG5L8rQDkkJKR+yuEw2QDk1AxcRidFERWys4o+v8VAgfQvHrM26PCj9Wyv
+	Wnt1aYIPzuKMZ0jTkgOT4WQxIQkuGEz/laT1YlcwTWqRpIvuMC8IFT/HOkyuE2Fw4hheDM
+	J2zRAnG9B9cfHlTTelwwpCOfrUZQQW0=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+	s=susede2_ed25519; t=1764142810;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+	bh=N/IKV4NTtJDFriBCvdPujoI7Ss0dmnp2XYDv3sBK7Do=;
+	b=+VLEA8R0mOGMJCFmnuWFparRdoUKNmXgpZ7YnSUkRUbCju5PQ8EpYFuuIW0TdhGD0Ajpz1
+	EExCAwui7CyMDZCg==
+Authentication-Results: smtp-out1.suse.de;
+	dkim=pass header.d=suse.de header.s=susede2_rsa header.b=nxsdbyPw;
+	dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=+VLEA8R0
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+	t=1764142810; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+	bh=N/IKV4NTtJDFriBCvdPujoI7Ss0dmnp2XYDv3sBK7Do=;
+	b=nxsdbyPwMPWjnG5L8rQDkkJKR+yuEw2QDk1AxcRidFERWys4o+v8VAgfQvHrM26PCj9Wyv
+	Wnt1aYIPzuKMZ0jTkgOT4WQxIQkuGEz/laT1YlcwTWqRpIvuMC8IFT/HOkyuE2Fw4hheDM
+	J2zRAnG9B9cfHlTTelwwpCOfrUZQQW0=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+	s=susede2_ed25519; t=1764142810;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+	bh=N/IKV4NTtJDFriBCvdPujoI7Ss0dmnp2XYDv3sBK7Do=;
+	b=+VLEA8R0mOGMJCFmnuWFparRdoUKNmXgpZ7YnSUkRUbCju5PQ8EpYFuuIW0TdhGD0Ajpz1
+	EExCAwui7CyMDZCg==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id C9E573EA63;
+	Wed, 26 Nov 2025 07:40:09 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+	by imap1.dmz-prg2.suse.org with ESMTPSA
+	id pmTZL9muJmmfKgAAD6G6ig
+	(envelope-from <tzimmermann@suse.de>); Wed, 26 Nov 2025 07:40:09 +0000
+Message-ID: <58b768ad-00fb-4fe5-924c-9cf6ec12f75c@suse.de>
+Date: Wed, 26 Nov 2025 08:40:09 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20251124-pci-pwrctrl-rework-v1-0-78a72627683d@oss.qualcomm.com>
-In-Reply-To: <20251124-pci-pwrctrl-rework-v1-0-78a72627683d@oss.qualcomm.com>
-From: Chen-Yu Tsai <wenst@chromium.org>
-Date: Wed, 26 Nov 2025 15:22:16 +0800
-X-Gm-Features: AWmQ_bmsWAkF-LlHoz-BQzJMUBBtQQK8vTK3HVxXtKG5iMcZspRSUn6rFoT05ME
-Message-ID: <CAGXv+5HRaYVMjwiqeVVm2-abnyga_-hzWM_tXw9hrqo74x47hA@mail.gmail.com>
-Subject: Re: [PATCH 0/5] PCI/pwrctrl: Major rework to integrate pwrctrl
- devices with controller drivers
-To: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
-Cc: Manivannan Sadhasivam <mani@kernel.org>, Lorenzo Pieralisi <lpieralisi@kernel.org>, 
-	=?UTF-8?Q?Krzysztof_Wilczy=C5=84ski?= <kwilczynski@kernel.org>, 
-	Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>, 
-	Bartosz Golaszewski <brgl@bgdev.pl>, linux-pci@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, Chen-Yu Tsai <wens@kernel.org>, 
-	Brian Norris <briannorris@chromium.org>, 
-	Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>, Niklas Cassel <cassel@kernel.org>, 
-	Alex Elder <elder@riscstar.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v6 03/25] drm/gem-dma: Compute dumb-buffer sizes with
+ drm_mode_size_dumb()
+To: Ludovic.Desroches@microchip.com, simona@ffwll.ch, airlied@gmail.com,
+ mripard@kernel.org, maarten.lankhorst@linux.intel.com, geert@linux-m68k.org,
+ tomi.valkeinen@ideasonboard.com
+Cc: dri-devel@lists.freedesktop.org, linux-mediatek@lists.infradead.org,
+ freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+ imx@lists.linux.dev, linux-samsung-soc@vger.kernel.org,
+ nouveau@lists.freedesktop.org, virtualization@lists.linux.dev,
+ spice-devel@lists.freedesktop.org, linux-renesas-soc@vger.kernel.org,
+ linux-rockchip@lists.infradead.org, linux-tegra@vger.kernel.org,
+ intel-xe@lists.freedesktop.org, xen-devel@lists.xenproject.org
+References: <20250821081918.79786-1-tzimmermann@suse.de>
+ <20250821081918.79786-4-tzimmermann@suse.de>
+ <52600bf4-2c1c-49a6-82c5-b31818141a43@microchip.com>
+ <a11c195d-197c-45a4-962a-e2336c7360c2@suse.de>
+ <2fbe0d43-67c5-4816-aff0-c23ac1507ec5@microchip.com>
+Content-Language: en-US
+From: Thomas Zimmermann <tzimmermann@suse.de>
+Autocrypt: addr=tzimmermann@suse.de; keydata=
+ xsBNBFs50uABCADEHPidWt974CaxBVbrIBwqcq/WURinJ3+2WlIrKWspiP83vfZKaXhFYsdg
+ XH47fDVbPPj+d6tQrw5lPQCyqjwrCPYnq3WlIBnGPJ4/jreTL6V+qfKRDlGLWFjZcsrPJGE0
+ BeB5BbqP5erN1qylK9i3gPoQjXGhpBpQYwRrEyQyjuvk+Ev0K1Jc5tVDeJAuau3TGNgah4Yc
+ hdHm3bkPjz9EErV85RwvImQ1dptvx6s7xzwXTgGAsaYZsL8WCwDaTuqFa1d1jjlaxg6+tZsB
+ 9GluwvIhSezPgnEmimZDkGnZRRSFiGP8yjqTjjWuf0bSj5rUnTGiyLyRZRNGcXmu6hjlABEB
+ AAHNJ1Rob21hcyBaaW1tZXJtYW5uIDx0emltbWVybWFubkBzdXNlLmRlPsLAjgQTAQgAOAIb
+ AwULCQgHAgYVCgkICwIEFgIDAQIeAQIXgBYhBHIX+6yM6c9jRKFo5WgNwR1TC3ojBQJftODH
+ AAoJEGgNwR1TC3ojx1wH/0hKGWugiqDgLNXLRD/4TfHBEKmxIrmfu9Z5t7vwUKfwhFL6hqvo
+ lXPJJKQpQ2z8+X2vZm/slsLn7J1yjrOsoJhKABDi+3QWWSGkaGwRJAdPVVyJMfJRNNNIKwVb
+ U6B1BkX2XDKDGffF4TxlOpSQzdtNI/9gleOoUA8+jy8knnDYzjBNOZqLG2FuTdicBXblz0Mf
+ vg41gd9kCwYXDnD91rJU8tzylXv03E75NCaTxTM+FBXPmsAVYQ4GYhhgFt8S2UWMoaaABLDe
+ 7l5FdnLdDEcbmd8uLU2CaG4W2cLrUaI4jz2XbkcPQkqTQ3EB67hYkjiEE6Zy3ggOitiQGcqp
+ j//OwE0EWznS4AEIAMYmP4M/V+T5RY5at/g7rUdNsLhWv1APYrh9RQefODYHrNRHUE9eosYb
+ T6XMryR9hT8XlGOYRwKWwiQBoWSDiTMo/Xi29jUnn4BXfI2px2DTXwc22LKtLAgTRjP+qbU6
+ 3Y0xnQN29UGDbYgyyK51DW3H0If2a3JNsheAAK+Xc9baj0LGIc8T9uiEWHBnCH+RdhgATnWW
+ GKdDegUR5BkDfDg5O/FISymJBHx2Dyoklv5g4BzkgqTqwmaYzsl8UxZKvbaxq0zbehDda8lv
+ hFXodNFMAgTLJlLuDYOGLK2AwbrS3Sp0AEbkpdJBb44qVlGm5bApZouHeJ/+n+7r12+lqdsA
+ EQEAAcLAdgQYAQgAIAIbDBYhBHIX+6yM6c9jRKFo5WgNwR1TC3ojBQJftOH6AAoJEGgNwR1T
+ C3ojVSkIALpAPkIJPQoURPb1VWjh34l0HlglmYHvZszJWTXYwavHR8+k6Baa6H7ufXNQtThR
+ yIxJrQLW6rV5lm7TjhffEhxVCn37+cg0zZ3j7zIsSS0rx/aMwi6VhFJA5hfn3T0TtrijKP4A
+ SAQO9xD1Zk9/61JWk8OysuIh7MXkl0fxbRKWE93XeQBhIJHQfnc+YBLprdnxR446Sh8Wn/2D
+ Ya8cavuWf2zrB6cZurs048xe0UbSW5AOSo4V9M0jzYI4nZqTmPxYyXbm30Kvmz0rYVRaitYJ
+ 4kyYYMhuULvrJDMjZRvaNe52tkKAvMevcGdt38H4KSVXAylqyQOW5zvPc4/sq9c=
+In-Reply-To: <2fbe0d43-67c5-4816-aff0-c23ac1507ec5@microchip.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Rspamd-Queue-Id: 5C6CA22C7B
+X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
+X-Spamd-Result: default: False [-3.01 / 50.00];
+	BAYES_HAM(-3.00)[100.00%];
+	SUSPICIOUS_RECIPS(1.50)[];
+	NEURAL_HAM_LONG(-1.00)[-1.000];
+	R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+	NEURAL_HAM_SHORT(-0.20)[-1.000];
+	MIME_GOOD(-0.10)[text/plain];
+	MX_GOOD(-0.01)[];
+	FUZZY_RATELIMITED(0.00)[rspamd.com];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	FREEMAIL_TO(0.00)[microchip.com,ffwll.ch,gmail.com,kernel.org,linux.intel.com,linux-m68k.org,ideasonboard.com];
+	MIME_TRACE(0.00)[0:+];
+	ARC_NA(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[microchip.com:email,suse.com:url];
+	FREEMAIL_ENVRCPT(0.00)[gmail.com];
+	RCPT_COUNT_TWELVE(0.00)[21];
+	RCVD_TLS_ALL(0.00)[];
+	FROM_EQ_ENVFROM(0.00)[];
+	FROM_HAS_DN(0.00)[];
+	MID_RHS_MATCH_FROM(0.00)[];
+	TO_DN_NONE(0.00)[];
+	RCVD_COUNT_TWO(0.00)[2];
+	TO_MATCH_ENVRCPT_ALL(0.00)[];
+	DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+	DKIM_TRACE(0.00)[suse.de:+]
+X-Rspamd-Action: no action
+X-Spam-Flag: NO
+X-Spam-Score: -3.01
+X-Spam-Level: 
 
-On Tue, Nov 25, 2025 at 3:13=E2=80=AFPM Manivannan Sadhasivam
-<manivannan.sadhasivam@oss.qualcomm.com> wrote:
->
-> Hi,
->
-> This series provides a major rework for the PCI power control (pwrctrl)
-> framework to enable the pwrctrl devices to be controlled by the PCI contr=
-oller
-> drivers.
->
-> Problem Statement
-> =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
->
-> Currently, the pwrctrl framework faces two major issues:
->
-> 1. Missing PERST# integration
-> 2. Inability to properly handle bus extenders such as PCIe switch devices
->
-> First issue arises from the disconnect between the PCI controller drivers=
- and
-> pwrctrl framework. At present, the pwrctrl framework just operates on its=
- own
-> with the help of the PCI core. The pwrctrl devices are created by the PCI=
- core
-> during initial bus scan and the pwrctrl drivers once bind, just power on =
-the
-> PCI devices during their probe(). This design conflicts with the PCI Expr=
-ess
-> Card Electromechanical Specification requirements for PERST# timing. The =
-reason
-> is, PERST# signals are mostly handled by the controller drivers and often
-> deasserted even before the pwrctrl drivers probe. According to the spec, =
-PERST#
-> should be deasserted only after power and reference clock to the device a=
-re
-> stable, within predefined timing parameters.
->
-> The second issue stems from the PCI bus scan completing before pwrctrl dr=
-ivers
-> probe. This poses a significant problem for PCI bus extenders like switch=
-es
-> because the PCI core allocates upstream bridge resources during the initi=
-al
-> scan. If the upstream bridge is not hotplug capable, resources are alloca=
-ted
-> only for the number of downstream buses detected at scan time, which migh=
-t be
-> just one if the switch was not powered and enumerated at that time. Later=
-, when
-> the pwrctrl driver powers on and enumerates the switch, enumeration fails=
- due to
-> insufficient upstream bridge resources.
->
-> Proposal
-> =3D=3D=3D=3D=3D=3D=3D=3D
->
-> This series addresses both issues by introducing new individual APIs for =
-pwrctrl
-> device creation, destruction, power on, and power off operations. Control=
-ler
-> drivers are expected to invoke these APIs during their probe(), remove(),
-> suspend(), and resume() operations. This integration allows better coordi=
-nation
-> between controller drivers and the pwrctrl framework, enabling enhanced f=
-eatures
-> such as D3Cold support.
->
-> The original design aimed to avoid modifying controller drivers for pwrct=
-rl
-> integration. However, this approach lacked scalability because different
-> controllers have varying requirements for when devices should be powered =
-on. For
-> example, controller drivers require devices to be powered on early for
-> successful PHY initialization.
->
-> By using these explicit APIs, controller drivers gain fine grained contro=
-l over
-> their associated pwrctrl devices.
->
-> This series modified the pcie-qcom driver (only consumer of pwrctrl frame=
-work)
-> to adopt to these APIs and also removed the old pwrctrl code from PCI cor=
-e. This
-> could be used as a reference to add pwrctrl support for other controller =
-drivers
-> also.
->
-> For example, to control the 3.3v supply to the PCI slot where the NVMe de=
-vice is
-> connected, below modifications are required:
->
-> Devicetree
-> ----------
->
->         // In SoC dtsi:
->
->         pci@1bf8000 { // controller node
->                 ...
->                 pcie1_port0: pcie@0 { // PCI Root Port node
->                         compatible =3D "pciclass,0604"; // required for p=
-wrctrl
->                                                          driver bind
->                         ...
->                 };
->         };
->
->         // In board dts:
->
->         &pcie1_port0 {
->                 reset-gpios =3D <&tlmm 152 GPIO_ACTIVE_LOW>; // optional
->                 vpcie3v3-supply =3D <&vreg_nvme>; // NVMe power supply
->         };
->
-> Controller driver
-> -----------------
->
->         // Select PCI_PWRCTRL_SLOT in controller Kconfig
->
->         probe() {
->                 ...
->                 // Initialize controller resources
->                 pci_pwrctrl_create_devices(&pdev->dev);
->                 pci_pwrctrl_power_on_devices(&pdev->dev);
->                 // Deassert PERST# (optional)
->                 ...
->                 pci_host_probe(); // Allocate host bridge and start bus s=
-can
->         }
->
->         suspend {
->                 // PME_Turn_Off broadcast
->                 // Assert PERST# (optional)
->                 pci_pwrctrl_power_off_devices(&pdev->dev);
->                 ...
->         }
->
->         resume {
->                 ...
->                 pci_pwrctrl_power_on_devices(&pdev->dev);
->                 // Deassert PERST# (optional)
->         }
->
-> I will add a documentation for the pwrctrl framework in the coming days t=
-o make
-> it easier to use.
->
-> Testing
-> =3D=3D=3D=3D=3D=3D=3D
->
-> This series is tested on the Lenovo Thinkpad T14s laptop based on Qcom X1=
-E
-> chipset and RB3Gen2 development board with TC9563 switch based on Qcom QC=
-S6490
-> chipset.
->
-> **NOTE**: With this series, the controller driver may undergo multiple pr=
-obe
-> deferral if the pwrctrl driver was not available during the controller dr=
-iver
-> probe. This is pretty much required to avoid the resource allocation issu=
-e.
->
-> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.=
-com>
-> ---
-> Krishna Chaitanya Chundru (1):
->       PCI/pwrctrl: Add APIs for explicitly creating and destroying pwrctr=
-l devices
->
-> Manivannan Sadhasivam (4):
->       PCI: qcom: Parse PERST# from all PCIe bridge nodes
+Hi
 
-I see this is still handled in the driver. Reading the cover letter,
-it seems the plan is to move this into pwrctrl, perhaps as a separate
-function?
+Am 26.11.25 um 07:24 schrieb Ludovic.Desroches@microchip.com:
+> On 11/25/25 16:03, Thomas Zimmermann wrote:
+>> EXTERNAL EMAIL: Do not click links or open attachments unless you know
+>> the content is safe
+>>
+>> Hi
+>>
+>> Am 25.11.25 um 15:39 schrieb Ludovic.Desroches@microchip.com:
+>>> On 8/21/25 10:17, Thomas Zimmermann wrote:
+>>>> Call drm_mode_size_dumb() to compute dumb-buffer scanline pitch and
+>>>> buffer size. Align the pitch to a multiple of 8.
+>> I missed a chance to explain it here. :/
+> I was wondering if it was 8-bits or 8-bytes.
+>
+>>>> Push the current calculation into the only direct caller imx. Imx's
+>>>> hardware requires the framebuffer width to be aligned to 8. The
+>>>> driver's current approach is actually incorrect, as it only guarantees
+>>>> this implicitly and requires bpp to be a multiple of 8 already. A
+>>>> later commit will fix this problem by aligning the scanline pitch
+>>>> such that an aligned width still fits into each scanline's memory.
+>>>>
+>>>> A number of other drivers are build on top of gem-dma helpers and
+>>>> implement their own dumb-buffer allocation. These drivers invoke
+>>>> drm_gem_dma_dumb_create_internal(), which is not affected by this
+>>>> commit.
+>>>>
+>>>> v5:
+>>>> - avoid reset of arguments (Tomi)
+>>>>
+>>>> Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
+>>>> Reviewed-by: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
+>>>> ---
+>>>>     drivers/gpu/drm/drm_gem_dma_helper.c     | 7 +++++--
+>>>>     drivers/gpu/drm/imx/ipuv3/imx-drm-core.c | 4 +++-
+>>>>     2 files changed, 8 insertions(+), 3 deletions(-)
+>>>>
+>>>> diff --git a/drivers/gpu/drm/drm_gem_dma_helper.c b/drivers/gpu/drm/
+>>>> drm_gem_dma_helper.c
+>>>> index 4f0320df858f..ab1a70b1d6f1 100644
+>>>> --- a/drivers/gpu/drm/drm_gem_dma_helper.c
+>>>> +++ b/drivers/gpu/drm/drm_gem_dma_helper.c
+>>>> @@ -20,6 +20,7 @@
+>>>>     #include <drm/drm.h>
+>>>>     #include <drm/drm_device.h>
+>>>>     #include <drm/drm_drv.h>
+>>>> +#include <drm/drm_dumb_buffers.h>
+>>>>     #include <drm/drm_gem_dma_helper.h>
+>>>>     #include <drm/drm_vma_manager.h>
+>>>>
+>>>> @@ -304,9 +305,11 @@ int drm_gem_dma_dumb_create(struct drm_file
+>>>> *file_priv,
+>>>>                           struct drm_mode_create_dumb *args)
+>>>>     {
+>>>>       struct drm_gem_dma_object *dma_obj;
+>>>> +    int ret;
+>>>>
+>>>> -    args->pitch = DIV_ROUND_UP(args->width * args->bpp, 8);
+>>>> -    args->size = args->pitch * args->height;
+>>>> +    ret = drm_mode_size_dumb(drm, args, SZ_8, 0);
+>>>> +    if (ret)
+>>>> +            return ret;
+>>> Hi,
+>>>
+>>> Was it intentional for this change to alter the pitch?
+>> Most hardware does not need the pitch to be of a certain alignment. But
+>> these buffers are possibly shared with other hardware, which sometimes
+>> needs alignment to certain values. Using SZ_8 improves compatible with
+>> that hardware.
+>>
+>>> The alignment requirement has been updated—from 8-bit alignment to
+>>> 64-bit alignment. Since the pitch is expressed in bytes, we should pass
+>>> SZ_1 instead of SZ_8 for hw_patch_align.
+>>>
+>>> For example, for an 850×480 framebuffer at 16 bpp, the pitch should be
+>>> 1700 bytes. With the new alignment, the pitch becomes 1704 bytes.
+>> Many display modes have an 8-byte alignment in their width. 850 pixels
+>> is somewhat of an exception.
+> Indeed, but overlay-type planes are often used to display windows that
+> are not the same size as the screen, and therefore potentially not on
+> 8-bytes aligned.
+>
+>>> Please let me know if you’d like me to submit a fix.
+>> Do you see a bug with your hardware? Unless this creates a real problem,
+>> I'd like to keep it as it is now.
+> Yes, that’s how I noticed this change. I have an application that
+> requests a framebuffer larger than my screen, in this case 850x480 in
+> RGB565 for an 800x480 display. So I have a pitch of 1700 bytes. Now it’s
+> using a pitch of 1704, which shifts my lines.
 
->       PCI/pwrctrl: Add 'struct pci_pwrctrl::power_{on/off}' callbacks
->       PCI/pwrctrl: Add APIs to power on/off the pwrctrl devices
->       PCI/pwrctrl: Switch to the new pwrctrl APIs
+Honestly, your application is broken. The ioctl returns the pitch value 
+to user space and that's what the program should use. Some hardware has 
+hard constraints on the pitch, so you will sooner or later run into the 
+same problem again.
 
-Tested-by: Chen-Yu Tsai <wenst@chromium.org>
+Anyway, feel free to submit a patch to call drm_mode_size_dumb() without 
+SZ_8. The best value would be 0, so that the function picks a default by 
+itself. Since you're at it, maybe also look at patches 4 and 5 of this 
+series. They have similar code for other memory managers.
 
-on an MT8188-based Chromebook which has on-board PCIe-based WiFi.
-The pcie-mediatek-gen3.c driver was reworked to integrate the new API.
+Best regards
+Thomas
+
+>
+> Regards,
+> Ludovic
+>
+>> Best regards
+>> Thomas
+>>
+>>> Regards,
+>>> Ludovic
+>>>
+>>>
+>>>>       dma_obj = drm_gem_dma_create_with_handle(file_priv, drm, args-
+>>>>> size,
+>>>>                                                &args->handle);
+>>>> diff --git a/drivers/gpu/drm/imx/ipuv3/imx-drm-core.c b/drivers/gpu/
+>>>> drm/imx/ipuv3/imx-drm-core.c
+>>>> index ec5fd9a01f1e..af4a30311e18 100644
+>>>> --- a/drivers/gpu/drm/imx/ipuv3/imx-drm-core.c
+>>>> +++ b/drivers/gpu/drm/imx/ipuv3/imx-drm-core.c
+>>>> @@ -145,8 +145,10 @@ static int imx_drm_dumb_create(struct drm_file
+>>>> *file_priv,
+>>>>       int ret;
+>>>>
+>>>>       args->width = ALIGN(width, 8);
+>>>> +    args->pitch = DIV_ROUND_UP(args->width * args->bpp, 8);
+>>>> +    args->size = args->pitch * args->height;
+>>>>
+>>>> -    ret = drm_gem_dma_dumb_create(file_priv, drm, args);
+>>>> +    ret = drm_gem_dma_dumb_create_internal(file_priv, drm, args);
+>>>>       if (ret)
+>>>>               return ret;
+>>>>
+>> -- 
+>> -- 
+>> Thomas Zimmermann
+>> Graphics Driver Developer
+>> SUSE Software Solutions Germany GmbH
+>> Frankenstr. 146, 90461 Nürnberg, Germany, www.suse.com
+>> GF: Jochen Jaser, Andrew McDonald, Werner Knoblich, (HRB 36809, AG
+>> Nürnberg)
+>>
+>>
+>
+
+-- 
+--
+Thomas Zimmermann
+Graphics Driver Developer
+SUSE Software Solutions Germany GmbH
+Frankenstr. 146, 90461 Nürnberg, Germany, www.suse.com
+GF: Jochen Jaser, Andrew McDonald, Werner Knoblich, (HRB 36809, AG Nürnberg)
 
 
->  drivers/pci/controller/dwc/pcie-qcom.c   | 124 +++++++++++++---
->  drivers/pci/probe.c                      |  59 --------
->  drivers/pci/pwrctrl/core.c               | 248 +++++++++++++++++++++++++=
-++++--
->  drivers/pci/pwrctrl/pci-pwrctrl-pwrseq.c |  30 +++-
->  drivers/pci/pwrctrl/slot.c               |  46 ++++--
->  drivers/pci/remove.c                     |  20 ---
->  include/linux/pci-pwrctrl.h              |  16 +-
->  7 files changed, 407 insertions(+), 136 deletions(-)
-> ---
-> base-commit: 3a8660878839faadb4f1a6dd72c3179c1df56787
-> change-id: 20251124-pci-pwrctrl-rework-c91a6e16c2f6
->
-> Best regards,
-> --
-> Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
->
 
