@@ -1,133 +1,127 @@
-Return-Path: <linux-arm-msm+bounces-83444-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-83445-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ams.mirrors.kernel.org (ams.mirrors.kernel.org [213.196.21.55])
-	by mail.lfdr.de (Postfix) with ESMTPS id AA0D2C8956F
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Nov 2025 11:39:45 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id D81E2C896F7
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Nov 2025 12:06:18 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ams.mirrors.kernel.org (Postfix) with ESMTPS id 109B4352284
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Nov 2025 10:39:45 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 96EB43B14D0
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Nov 2025 11:06:17 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CD46D31A069;
-	Wed, 26 Nov 2025 10:39:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3100030170B;
+	Wed, 26 Nov 2025 11:06:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Oz8iRin+"
+	dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b="B7gtE4Th"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f51.google.com (mail-wm1-f51.google.com [209.85.128.51])
+Received: from mail-lf1-f46.google.com (mail-lf1-f46.google.com [209.85.167.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7C023191DF
-	for <linux-arm-msm@vger.kernel.org>; Wed, 26 Nov 2025 10:39:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 410811E5207
+	for <linux-arm-msm@vger.kernel.org>; Wed, 26 Nov 2025 11:06:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764153582; cv=none; b=q3E67Y/JwSc7CNTsU2F/DSXupW0dMeqzVEFdBoAqOqKTqh6EtwIyJQ+FGxWs9dgCTYqHkt4bRUPzuDhgu0l4ltZc5Niur5RNTtl6bIDd7JZCgUtKEEc+AXx0mEG9lvjdFF57GaQO+ULDor7xVHZewvmpoL2aOYMV5dqM2UX4BrY=
+	t=1764155174; cv=none; b=fS8HjQoU3GzBp7alscx4KxwF5w3Pd8Mz7JZcyu/YHf8U0tODHHmBG1d0J0J0G5KFf9z4W1ANs3Irb5JzbAEOA0Hw+sYRq4EniFsJ4eNEqrm6kbWxnVUeXApcMSoGGXfuuKPVP862HhyVvPv70G43WBbVF08yhJ0DYNiqv8HLCoA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764153582; c=relaxed/simple;
-	bh=Ma+j9/IG0gN/ZMtP3TKUGZ11Gs/QhGIN9uMeMZmqeXE=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=i976x6Dapfq3PNvX7pPTjaYNBcH91Mn1smHRYbJGbidiZVImkRaO/cw8bpWzC5FqdW5ABaBS9FJ8pdm0T4BhHmX4+taqlRljAO1lw1WV3Go6bqBQgK8ke9gmtpfqj1FjWd9B9Yxjz9TcAcR7g74OtOIruGdoiFQt1koI/kefz0A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Oz8iRin+; arc=none smtp.client-ip=209.85.128.51
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f51.google.com with SMTP id 5b1f17b1804b1-47775fb6cb4so43300885e9.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 26 Nov 2025 02:39:40 -0800 (PST)
+	s=arc-20240116; t=1764155174; c=relaxed/simple;
+	bh=2bIZIjS4HrmO7R9uzDSsHgXFV053PstE/sLYADP/ZlA=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=u0dWp4a9gqJfMSNqdlpcRPTxXwhcjp3omk4sDZJB+5tqzxYVm9BPk57kMDTgdFaRjX9hA+Bsq4dq1eyZt9EMG+ROW4vnuwmzskHk6GFSNWnI27yxxnuUiIOZO4/Z/Jbjy/L0Z/HuRDVT1Vdbj+Cfchwky17kDo8lqlRWqR6uI5s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl; spf=none smtp.mailfrom=bgdev.pl; dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b=B7gtE4Th; arc=none smtp.client-ip=209.85.167.46
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=bgdev.pl
+Received: by mail-lf1-f46.google.com with SMTP id 2adb3069b0e04-5959187c5a9so5293427e87.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 26 Nov 2025 03:06:10 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1764153579; x=1764758379; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=JGVus5CDA/A0OxI5mofdpy0uE/6hkaceE4RdVntZ8gs=;
-        b=Oz8iRin+MJ+BQ8g+T85uY77q5CEiqILD6pTaN5UWdZgqxz/Mxckes4Z5vsgrCNGlOr
-         /hYFypca5wlf2uiiQKIC6ATNRpJzg/k9uwZZhUcKe+5W5jCKNl3IS+nuUyCGcHPTkMFe
-         bcr6tOBBSWmWgyF+Y+/h/G+X1naCqHtduoQC5xZpESl88W+XCXv786DGNuyreMNyE8eF
-         IEeN0gG28LtbcC0+/VCCMFI1XLv+oyV2aw5nZMdhn3RpnRyHpxiUss2KYZvqJOTa1qqN
-         dim0Mq4Mc/Do9ujxcivARuk8FfpXhc+e7VP578+UXeZzpbsiSiz7IC9xyIRnUKts6iCn
-         N3Dw==
+        d=bgdev-pl.20230601.gappssmtp.com; s=20230601; t=1764155169; x=1764759969; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=Lz2Tsdt3UtcXOJMvCpZToro/2G6vjP28nuVWXusvERk=;
+        b=B7gtE4ThioJXd0tP1IrVic+AxeusAEAcS3iuYN0cU0YdGggNp4b5N0XK/k0Nhqwmjk
+         dLoCd3KxmF19/ls9dXPCuWrTsqV+tmFcbfPLsmrEq+TtaXUNrxN3f2UzKx8NFUu1zazH
+         fPiD40CDH4tPngSaDRm91eduyMv0PDVhI5CYyveJOIV0TSO2Fm0qvhT+4poDL4CObozP
+         uMvlJPBB68u944b6KPC7EshEACF47aKmOlelcmrhdqbt/zcrwz/18uxjNBJyXzA0s1nG
+         pGtBxX7rS8W7ryOOFP87/38qLleilNrvlI4VmRQfMvOTvxudgi3X84gR9NCIcJt52ze9
+         SXyA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1764153579; x=1764758379;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=JGVus5CDA/A0OxI5mofdpy0uE/6hkaceE4RdVntZ8gs=;
-        b=CY/SEkFKtkiNtH9Z+V/mia4o8cPBkNkn1XEkwRRx702qyDq/F0yPQPjUDnI5vOazxv
-         y+UeVk64dlYU2aGiLmCmc+HIiwllPkI9RzWcrKCYeJtMqoY+vF9Z8QqgLeVhaBymZnTO
-         jUlTBjk6lnLEPKHbO5QCDyuD7wERK7Vjg1pRbRlbFRM+antCDCZc0+n02ozmOfZpVzdT
-         jL8Sh0HeSLH7Bcor5U/YpX4xim3VBpLgPUDdToPmrBVXJR7/AZ8xMa4IfDggY/i0H4rx
-         wzHna7BigjD7lPgdyQN3EULswyQIAi0SceIq/YV+eIWHag0Vid1BfTfi3XqHjW3yFC0z
-         PWFg==
-X-Forwarded-Encrypted: i=1; AJvYcCWzPEoBh652GeRJANvwZcB9HkxLdwb4Vt7Hs3U5M+H5MStISQqZ5giNAVk2BVG6E5O69hen0oYMOhK0Yzdg@vger.kernel.org
-X-Gm-Message-State: AOJu0YyHkdA6AOXFG0Rnx1w4bZ5dzyCMshhMSDQAcO4FbDUatvAISAds
-	ThjNlemoqbgRVXJK/bGEvU57Ry9tflWd8hI2SDitVoATgghL7xopp5PhqImsv271wGo=
-X-Gm-Gg: ASbGnct14FteFG+uoZ1Z5rqa2LPW0XHfiHXhfApdo1ThZ1qVOCFWL+1flh4/KbSI7AQ
-	7aTVPVUWJLH1R9Z9Nh88Vz3keuEwKPJeWUGlNHosL3gxsgJ8UYow6rRE3h3BzWWuHS/gI3DwpQH
-	F5i3+oAwsD52RSrIrMwkGvki1eX6JUOo06mYWTGF7PcKjhtUWGWZszZlODUOAaVzUn4YLYxr2j8
-	yE0rnn8T0dgRZwh/TTB9NsYc5Mswxz4Eo0Z8BkSF2K3dN6U/7mu3jmfTyI/kfKxinozY1VKH5l0
-	RqT/pZVeAKvDVLLMgi6TytxWdVV5Nsjjk2VC2TZ+bSp9JD4tmrLhMSxTRks0mBKUn+IzjR1s6Pk
-	EpD7yp1dFzvyZcX9XEM+Wl1wHwjj6FWv7ECdFiANO/O0+lS1Gu7BcuEcl/ywwSOJWbAEGRvmtPt
-	9bD73b2q8=
-X-Google-Smtp-Source: AGHT+IEhisDRJKx3724AhFETUp/XTi9FCjcatqKQGEMNBIIRl2bRvFx5a0Gu/L9CGl93q9KQ1RFytg==
-X-Received: by 2002:a05:600c:450f:b0:477:54cd:202e with SMTP id 5b1f17b1804b1-477c10c84b8mr182307075e9.2.1764153578995;
-        Wed, 26 Nov 2025 02:39:38 -0800 (PST)
-Received: from linaro.org ([86.121.7.169])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4790adf0b2asm34698135e9.11.2025.11.26.02.39.36
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 26 Nov 2025 02:39:38 -0800 (PST)
-Date: Wed, 26 Nov 2025 12:39:35 +0200
-From: Abel Vesa <abel.vesa@linaro.org>
-To: Bartosz Golaszewski <brgl@bgdev.pl>
-Cc: Val Packett <val@packett.cool>, Krzysztof Kozlowski <krzk@kernel.org>, 
-	Philipp Zabel <p.zabel@pengutronix.de>, Linus Walleij <linus.walleij@linaro.org>, 
-	Bartosz Golaszewski <brgl@kernel.org>, linux-gpio@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	linux-arm-msm@vger.kernel.org, Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Subject: Re: [PATCH v2] gpio: shared: handle the reset-gpios corner case
-Message-ID: <wa5fnedqtf2prksnqmb7oin5j3e5tqx7uopypkl2qwbker3inm@ed7tag6bk2qw>
-References: <20251125-gpiolib-shared-reset-gpio-fix-v2-1-4eb6fa41f1dd@linaro.org>
+        d=1e100.net; s=20230601; t=1764155169; x=1764759969;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=Lz2Tsdt3UtcXOJMvCpZToro/2G6vjP28nuVWXusvERk=;
+        b=Glu8yZKIYUCC+G61pXhhCz0Z0cQQzWyVpv/I2kPihQCh2BqXIGMVxCvfubLD1XZRiS
+         nWle/31DSMPYfLIMFhfa4aBZn1EUbL1OeeCZCq/y65I+ImCEpW+PRiF5WuRIyKBfOmbT
+         3nLsG163d7mMBRJ7/U5KZ+EQR8IyRx+dOEHVc3OhqQ3b6TDjojclbSOiYAH6rQrBUT7a
+         /bx4qHugppqYEjILOw12GPFFzv6UvBPmLSmDrfB6MtvelDhnMwDH4iFM1Gq5ApxQV4rp
+         wdRCAbNRM0VbR3TVghsTLlQ9MMnx34xaKAzWqnmj0Jw3MUhDiuvis7Z3z+e9f+Mah0Kx
+         p2vA==
+X-Forwarded-Encrypted: i=1; AJvYcCUwzUdjjlLa5O6eI1uh4smycmt6tWlpz0CYzPrZODfG7rHaOljUo/Kk/b7HN3vCV2WP2DZhZi/AIBecD1Ov@vger.kernel.org
+X-Gm-Message-State: AOJu0YzPHlQQcQKWlebxe8b2YPe1uoITE51LA9s8tfbisxnocr13zAsS
+	RjNSwvME/cZxraPOSMka8gx67lhu19fW5tQbsz8di6fI4H2mfUBGu5UAwBLjt4ICr1nCYlb0gzN
+	7iK5AXZVHAHtFK9u4zhFL3UMtOgPCwmws8nxicb1hrQ==
+X-Gm-Gg: ASbGncse/drtZl2t4TjssNBdkuSMzLeQ36royzdvt4oyO7w+Sz+Wn4yjsinLsCDDRM1
+	J9YfxOE8l7xA29HgKA+DimulikVWn9p2jRE7tgSDuGkcnOtzMHT2PnqV3jlqZhjjIiJWKMKXjrM
+	fSRLYxjRPEZYEG0CxfsSpc3at0Cwo0maGEYQqq3SJ8iGz+DdvRnjuRPMSGhq+D71ncnvpmDKnsZ
+	73IpOmnSn84N49HN+43EbIJyDNqHeFzW7vHMX4peHMUfuLaeLPoo2KIrO2JGvsSYoaQPOBeW44+
+	kM/I2tmxxhQMyd+NySDErOnBgx3GWBBzCfxFhQ==
+X-Google-Smtp-Source: AGHT+IGi+XjKDYKdMYaNEz2loytks0cbhZsdm3MRuNtdJ1OW69fREkEouQw+A7ueTMLHwQgAPi4dSH8ZmI1nf3UNyIw=
+X-Received: by 2002:a05:6512:104a:b0:595:90ee:f476 with SMTP id
+ 2adb3069b0e04-596a3edab46mr7870935e87.28.1764155169023; Wed, 26 Nov 2025
+ 03:06:09 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20251125-gpiolib-shared-reset-gpio-fix-v2-1-4eb6fa41f1dd@linaro.org>
+References: <20251125-reset-gpio-add-devlink-v1-1-a1909fef227b@linaro.org>
+ <c478f7a0f3b91585618ec8e5ee57c5c4efd59f32.camel@pengutronix.de>
+ <CAMRc=Mf7CMeZSUJLnteC9Xk5WvG_EKn3vx+jzcWNaWAvpvT00Q@mail.gmail.com> <ac9132249e594001801c2bbbc4245ff2e40c7a62.camel@pengutronix.de>
+In-Reply-To: <ac9132249e594001801c2bbbc4245ff2e40c7a62.camel@pengutronix.de>
+From: Bartosz Golaszewski <brgl@bgdev.pl>
+Date: Wed, 26 Nov 2025 12:05:55 +0100
+X-Gm-Features: AWmQ_blpDO0Nz72Jem-BMA7OsiFWQMI_A-FiX2dE_bS8IDWiLp7IgmgFw-wAMpw
+Message-ID: <CAMRc=MdA0e8=aFuy-zsbFJg+BcRGb23ZBqaMib1mi4r-iK85FQ@mail.gmail.com>
+Subject: Re: [PATCH] reset: gpio: add a devlink between reset-gpio and its consumer
+To: Philipp Zabel <p.zabel@pengutronix.de>
+Cc: Krzysztof Kozlowski <krzk@kernel.org>, Val Packett <val@packett.cool>, linux-arm-msm@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, 
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On 25-11-25 11:19:09, Bartosz Golaszewski wrote:
-> From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-> 
-> There's an unexpected interaction between the reset-gpio driver and the
-> shared GPIO support. The reset-gpio device is an auxiliary device that's
-> created dynamically and fulfills a similar role to the gpio-shared-proxy
-> driver but is limited in scope to just supporting the "reset-gpios"
-> property.
-> 
-> The shared GPIO core code does not take into account that the machine
-> lookup entry we create when scanning the device-tree must connect the
-> reset-gpio device - that is the actual consumer of the GPIO and not the
-> consumer defined on the device tree, which in turn consumes the shared
-> reset control exposed by the reset-gpio device - to the GPIO controller.
-> 
-> We also must not skip the gpio-shared-proxy driver as it's possible that
-> a shared GPIO may be used by one consumer as a reset-gpios going through
-> the reset-gpio device and another that uses GPIOLIB.
-> 
-> We need to make it a special case handled in gpiolib-shared.c. Add a new
-> function - gpio_shared_dev_is_reset_gpio() - whose role it is to verify
-> if a non-matching consumer of a shared pin is a reset-gpio device and
-> make sure it's the right one for this pin. To that end make sure that
-> its parent is the GPIO controller in question and that the fwnode we
-> identified as sharing the pin references that controller via the
-> "reset-gpios" property.
-> 
-> Only include that code if the reset-gpio driver is enabled.
-> 
-> Fixes: a060b8c511ab ("gpiolib: implement low-level, shared GPIO support")
-> Reported-by: Val Packett <val@packett.cool>
-> Closes: https://lore.kernel.org/all/3b5d9df5-934d-4591-8827-6c9573a6f7ba@packett.cool/
-> Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+On Wed, Nov 26, 2025 at 11:38=E2=80=AFAM Philipp Zabel <p.zabel@pengutronix=
+.de> wrote:
+>
+> [...]
+> > > > +     consumer =3D get_dev_from_fwnode(of_fwnode_handle(np));
+> > >
+> > > If called via __reset_control_get(), this just reconstructs the devic=
+e
+> > > from dev->of_node. I think it would be better to move the linking int=
+o
+> > > __reset_control_get() and use the passed in consumer device directly.
+> > >
+> >
+> > That would affect all users, do we want this? In most cases they will
+> > already have a link with different flags. I don't think this is
+> > correct.
+>
+> Right. We could also pass an optional dev into __of_reset_control_get()
+> and then just go
+>
+>         if (gpio_fallback)
+>                 device_link_add(dev, rcdev->dev, DL_FLAG_STATELESS);
+>
+> at the end.
 
-Tested on top of next-20251126, with Hamoa (x1e80100) CRD.
+I think I'll do the conversion to fwnode first and see about adding
+this next. I'm facing a different issue that may make it harder to use
+devlinks in gpiolib-shared than I expected.
 
-Tested-by: Abel Vesa <abel.vesa@linaro.org>
+Let's leave this for now.
+
+Bart
 
