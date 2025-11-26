@@ -1,153 +1,140 @@
-Return-Path: <linux-arm-msm+bounces-83476-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-83478-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id E5BD2C8A7F6
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Nov 2025 15:59:59 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 61064C8A84E
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Nov 2025 16:05:42 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 938293A284A
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Nov 2025 14:59:58 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 851D33A4C2E
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Nov 2025 15:05:38 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3F6873043CF;
-	Wed, 26 Nov 2025 14:59:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id BCDFE30215D;
+	Wed, 26 Nov 2025 15:05:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=ixit.cz header.i=@ixit.cz header.b="YrLHo9uK"
+	dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b="3Wtgqi98"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from ixit.cz (ip-94-112-25-9.bb.vodafone.cz [94.112.25.9])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lj1-f173.google.com (mail-lj1-f173.google.com [209.85.208.173])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C225326ED54;
-	Wed, 26 Nov 2025 14:59:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=94.112.25.9
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9106304BBD
+	for <linux-arm-msm@vger.kernel.org>; Wed, 26 Nov 2025 15:05:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.173
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764169196; cv=none; b=bwhr9328E8iVrTCnbFI6Vh4m1G568JO5DX0d0SF7R1uIh/gSrS+GKPh4PRPECVIW4HV/YQgeb0fpACvOxrd4itHfpJu+bQmxdMaOpnvxBLcNZYeeERCPOfaYqolMjScxbBvUFik4ceA85gtfe6UU2rxvu0ISRlx4VR9ehFrr2PE=
+	t=1764169533; cv=none; b=kZ7oiehbby+3e/+u/+UBxVk4MVj7dwkK+400LNdt31eVCd7z6Bv+uGhpr1ZtiaSj9+4XKQwYOfeJjvI9vgHllxi+p3Xl9C193sBW1Z1O3EZok9IRYOtHAeGET+Je/p10+45feq1JuoK02xugoovGCLxQ+a665fZg6sz5mHlw09E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764169196; c=relaxed/simple;
-	bh=Nt7E8UD7UkkmdpmvO1L9cOyiGWaqO1g7qD9kTbyWOTw=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=qI50m0mujapkqYpj6sNx0iDsz7L8dVbd6EOv8QZo9B7+N8WUSKmdJ06FDoxq/xtYt4Db6GTlGX2LUb1nA44MLaoDJowA0d2rAQXZ3hWmACFd5q3fTRjccNqPHsPrqDzKrirPgDThNYRCgrxwtMCvxdLlCBef/Ls1fuWIyjCpCHk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ixit.cz; spf=pass smtp.mailfrom=ixit.cz; dkim=pass (1024-bit key) header.d=ixit.cz header.i=@ixit.cz header.b=YrLHo9uK; arc=none smtp.client-ip=94.112.25.9
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ixit.cz
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ixit.cz
-Received: from [10.0.0.200] (unknown [10.0.0.1])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange x25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-	(No client certificate requested)
-	by ixit.cz (Postfix) with ESMTPSA id DACF95341605;
-	Wed, 26 Nov 2025 15:59:48 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ixit.cz; s=dkim;
-	t=1764169188;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
-	bh=TsYkSsOo0GY66ZABxmtTbdXC7PotU5PUTzj79Ek+lXw=;
-	b=YrLHo9uK8bNUzEQthpbQsjfBhcOtP/UfOmn3JW8dwUMGBxP4FMfwbhYjjvrkOoU6ZhUHkq
-	AhUxVoYLqagzM/qf9IixgxIj4aFomTFWThxb2hhLBkYqHqp3TzLpN/6T3xarXWN7O9AHbu
-	AWqO4xFUUw1uCrAdOPlfOistdsvVTes=
-Message-ID: <2c7fc579-6d46-4821-9059-4ccce589ffdb@ixit.cz>
-Date: Wed, 26 Nov 2025 15:59:48 +0100
+	s=arc-20240116; t=1764169533; c=relaxed/simple;
+	bh=J+oyg1mBBqSSQQkvSrNBpiZ7W6zMitALsCYhR3FXK+s=;
+	h=From:In-Reply-To:MIME-Version:References:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=u22ZSWn+jCKnWO9tmp4CW+pHKKz3V+K0Uk9YM/ZjswFIcIcLr/wyT+YUPGGYA+DgfjFc+PMZvyDdpG+2ZytmLkcJQubuiwsJJBr14VYYNycotOG/BhsfV8prWXdaqMkcLUMWsrXaVuEQz5SshfOQIgUt1pq+f6ddCacOfLmpS2s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl; spf=none smtp.mailfrom=bgdev.pl; dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b=3Wtgqi98; arc=none smtp.client-ip=209.85.208.173
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=bgdev.pl
+Received: by mail-lj1-f173.google.com with SMTP id 38308e7fff4ca-37a2dcc52aeso65704901fa.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 26 Nov 2025 07:05:31 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=bgdev-pl.20230601.gappssmtp.com; s=20230601; t=1764169530; x=1764774330; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:references:mime-version:in-reply-to
+         :from:from:to:cc:subject:date:message-id:reply-to;
+        bh=ZdozIWg11HXn8YrxuTHyeRPHWCFIep7IAFKsHH2Slm4=;
+        b=3Wtgqi98DePCWX3LVQHFO8RvE/Uoctt4R6OLMyobJSdTCkfut6H3uSSejsiM2Wh0+t
+         N8Sq1CISf/NnD1674k0f+jXFK4Q5/ueq/UQgrCAgSyakuDlQ06o3tNPqp1fjd7Bhodn5
+         yIwb3CREJ8EQ9gkb9xkTKxLISO6byCyKAgSQY0IzMmVWuyTLYSECzlMS3c357eudzVN4
+         0H/WU2X9T+ANnPruXCjmu9vSWit+hukqceg4wPIeKiZJDlyFOe+xdWtmF5jV9Uhb/0uj
+         XFlBonSqH0dbr45jKeCPMN9rLBVJwvFjVLeXYFT5BdLzEYpAaIumMZBbTkA48bregwBH
+         oObA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1764169530; x=1764774330;
+        h=cc:to:subject:message-id:date:references:mime-version:in-reply-to
+         :from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=ZdozIWg11HXn8YrxuTHyeRPHWCFIep7IAFKsHH2Slm4=;
+        b=sWw/KwDXozqbmtvaQKoujxqpJ+YnmpFyaM3sk8PCk/DtEytSc9ue381PRFNi/vlT3B
+         zpXm+dof+QJx1LQpLOBQ+mgsbDWfCef8cM7dLdEhdg3plw/t7HZbvkpuGMUuyRRz/Fy2
+         a+ewC5/b2079hdaoQy6BnK8mBaAB8UFFVZmPujrUh1qNjKh05zD+Iaqj8nJbkDxqQY7q
+         /jjNw2ySEFDlO8z/2dgyI0qX1XRA/QJWPc5cI2B/xeTsRBXkQEgNm9+v1RMp0zOZOe2U
+         wNrgd0MuufNlFIUKRNutoV4svJWI+BaMeXto6cASTGWIFALAht405yj7VRVkGAWWEXp2
+         WQ0Q==
+X-Forwarded-Encrypted: i=1; AJvYcCWQkbu4ZJKNLCskFoz4cVP/lRC7XR+rHW1HjrOBfq/IyQFF9OsHnjxm4SpSXIpARmzNJXJzMcM694KcOkoY@vger.kernel.org
+X-Gm-Message-State: AOJu0YzXzAp6tqtHzcjtEAWfoAy+9VxYZR4oYw7s+wMnH6TiEdbrgIF+
+	uDCRlEsMtPBcWAJTyi1UkPgSJVKfdkpD3KoHYwhYUpIYXblZrpBhp+kpRt+z9XSK/OglYYphkn/
+	2sqgpctSAppL3rH28i03vIVTVZvJvEzpnFblSFIowag==
+X-Gm-Gg: ASbGncteZjZTTzCMlI40ZDjgFop1kOaUa4cf3v/gbnLb5v/lhOImKdkAqFqkRJGuU3x
+	fvpZ58t2mz6Y+vdvSP/deES/eYwzI3pb5UcbjNt6ThpHit1iH1+m7bIH1ZNoYq6ymhT1PBGO8X4
+	Q8JOmQArDVR7wEZ8GRAqfdzrVaWnxUm4vqWufRH41B5R/LDarPTSa/zaqycxwdnA17pn7iG9AjB
+	FgAeDmgFzq6CAk6ROJyyeYRpF40ADdhqfHpWy+GnflAKc3vmXM3nxdGLL0DKBvKZR+ZY98JC8Wr
+	n86KXcECIFuJ1qJ5iHLdNvJRkb4=
+X-Google-Smtp-Source: AGHT+IFW4CVHKhpnJ+JDeABCBeOEaqoUOa+vDI4F3g0UIFLPs7i4zmAKKWQz/RrJb85q7OyTg13Elak/IxVETnc6Fz0=
+X-Received: by 2002:a2e:9f4b:0:b0:36a:925e:cf3c with SMTP id
+ 38308e7fff4ca-37d07952b19mr17246381fa.31.1764169529898; Wed, 26 Nov 2025
+ 07:05:29 -0800 (PST)
+Received: from 969154062570 named unknown by gmailapi.google.com with
+ HTTPREST; Wed, 26 Nov 2025 07:05:27 -0800
+Received: from 969154062570 named unknown by gmailapi.google.com with
+ HTTPREST; Wed, 26 Nov 2025 07:05:27 -0800
+From: Bartosz Golaszewski <brgl@bgdev.pl>
+In-Reply-To: <d56ac97f-24bb-4ea5-a46c-a07dfd0c9e62@nvidia.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/2] arm64: dts: qcom: sdm845-xiaomi-beryllium: Enable
- SLPI
-To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
- longnoserob@gmail.com
-Cc: Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
- devicetree@vger.kernel.org, phone-devel@vger.kernel.org,
- linux-kernel@vger.kernel.org
-References: <20251126-slpi-v1-0-c101d08beaf2@gmail.com>
- <20251126-slpi-v1-1-c101d08beaf2@gmail.com>
- <jxlq4fbtl5rkiyyaivoelynw5hjpb3xtg4klcyocyzbs6ncpqa@rhqcwbehisjv>
-Content-Language: en-US
-From: David Heidelberg <david@ixit.cz>
-Autocrypt: addr=david@ixit.cz; keydata=
- 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
-In-Reply-To: <jxlq4fbtl5rkiyyaivoelynw5hjpb3xtg4klcyocyzbs6ncpqa@rhqcwbehisjv>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+References: <20251112-gpio-shared-v4-0-b51f97b1abd8@linaro.org>
+ <20251112-gpio-shared-v4-7-b51f97b1abd8@linaro.org> <0829a21c-f97d-41b6-90bc-2acaec42caab@nvidia.com>
+ <CAMRc=MdPvF+okfnRuwvAFG9UfyZ-araDsaaKMxKASEbc3rhyjQ@mail.gmail.com>
+ <705186a9-a9db-46f0-bf2b-b499def050dd@nvidia.com> <CAMRc=MdQ8QgbdAd2sudZLgcDZu9DxBRJh5sfLeXwcTDEE0F7Uw@mail.gmail.com>
+ <d56ac97f-24bb-4ea5-a46c-a07dfd0c9e62@nvidia.com>
+Date: Wed, 26 Nov 2025 07:05:27 -0800
+X-Gm-Features: AWmQ_blhTm345iaYZ4rHG9m3t_z_cQOEDjbyggM_ksomZgdEfdTrTBoPz53r_Yc
+Message-ID: <CAMRc=MerzKQTSj6PXeiWDA4qfNou8ApKYLgJhUGLP0QBatqtVQ@mail.gmail.com>
+Subject: Re: [PATCH v4 07/10] arm64: select HAVE_SHARED_GPIOS for ARCH_QCOM
+To: Jon Hunter <jonathanh@nvidia.com>
+Cc: Kees Cook <kees@kernel.org>, Mika Westerberg <westeri@kernel.org>, 
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>, Andrew Morton <akpm@linux-foundation.org>, 
+	Linus Walleij <linus.walleij@linaro.org>, Manivannan Sadhasivam <mani@kernel.org>, 
+	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Saravana Kannan <saravanak@google.com>, Greg Kroah-Hartman <gregkh@linuxfoundation.org>, 
+	Andy Shevchenko <andy@kernel.org>, Catalin Marinas <catalin.marinas@arm.com>, Will Deacon <will@kernel.org>, 
+	Srinivas Kandagatla <srini@kernel.org>, Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>, 
+	Jaroslav Kysela <perex@perex.cz>, Takashi Iwai <tiwai@suse.com>, 
+	Alexey Klimov <alexey.klimov@linaro.org>, Bjorn Andersson <andersson@kernel.org>, 
+	Konrad Dybcio <konradybcio@kernel.org>, linux-hardening@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, linux-gpio@vger.kernel.org, 
+	linux-arm-kernel@lists.infradead.org, linux-sound@vger.kernel.org, 
+	linux-arm-msm@vger.kernel.org, 
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>, 
+	"linux-tegra@vger.kernel.org" <linux-tegra@vger.kernel.org>, Bartosz Golaszewski <brgl@bgdev.pl>
+Content-Type: text/plain; charset="UTF-8"
 
-On 26/11/2025 15:41, Dmitry Baryshkov wrote:
-> On Wed, Nov 26, 2025 at 09:08:35PM +0900, Robert Eckelmann via B4 Relay wrote:
->> From: Robert Eckelmann <longnoserob@gmail.com>
->>
->> Enable the SLPI dsp on the Xiaomi Pocophone F1 with Qualcom SDM845 SoC.
->>
->> Signed-off-by: Robert Eckelmann <longnoserob@gmail.com>
->> Signed-off-by: David Heidelberg <david@ixit.cz>
->> ---
->>   arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium-common.dtsi | 7 +++++++
->>   1 file changed, 7 insertions(+)
->>
->> diff --git a/arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium-common.dtsi b/arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium-common.dtsi
->> index 785006a15e97..0fb1d7e724c4 100644
->> --- a/arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium-common.dtsi
->> +++ b/arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium-common.dtsi
->> @@ -425,6 +425,12 @@ &sdhc_2 {
->>   	cd-gpios = <&tlmm 126 GPIO_ACTIVE_HIGH>;
->>   };
->>   
->> +&slpi_pas {
->> +	firmware-name = "qcom/sdm845/beryllium/slpi.mbn";
-> 
-> qcom/sdm845/Xiaomi/beryllium/slpi.mbn
+On Wed, 26 Nov 2025 15:55:54 +0100, Jon Hunter <jonathanh@nvidia.com> said:
+>
+>> Is the device-tree used here upstream? Can you enable DEBUG_GPIO in
+>> Kconfig and post the entire kernel log on pastebin?
+>
+> Yes this is the upstream device-tree in
+> arch/arm64/boot/dts/nvidia/tegra194-p2972-0000.dts. OK I will get the
+> entire log for review.
+>
 
-Could be this change done for all the firmware files at once but later?
+If you could also add the following:
 
-Currently all the firmwares using this legacy path.
+diff --git a/drivers/gpio/gpiolib-shared.c b/drivers/gpio/gpiolib-shared.c
+index 3803b5c938f99..51af7886d9f2d 100644
+--- a/drivers/gpio/gpiolib-shared.c
++++ b/drivers/gpio/gpiolib-shared.c
+@@ -101,6 +101,8 @@ static int gpio_shared_of_traverse(struct device_node *curr)
+ 		    strcmp(prop->name, "gpio") != 0)
+ 			continue;
 
-David
++		printk("%s: %pOF %s\n", __func__, curr, prop->name);
++
+ 		count = of_count_phandle_with_args(curr, prop->name,
+ 						   "#gpio-cells");
+ 		if (count <= 0)
 
-[...]
+That would help me.
+
+Bart
 
